@@ -1,6 +1,7 @@
 import { displayText } from "@/lib/display-text";
 import { isDemoId } from "@/lib/demo-id";
 import { HighlightedContentCard } from "@/components/reading/HighlightedContentCard";
+import { UnsourcedBadge } from "@/components/UnsourcedBadge";
 import { getQaViewCount } from "@/lib/qa-utils";
 
 const QA_RULING_MOD: Record<string, string> = {
@@ -28,6 +29,7 @@ type Props = {
     ruling_type?: string;
     evidence?: string;
     reference?: string;
+    documentation_status?: string | null;
     qa_categories?: { name?: string };
   };
   defaultOpen?: boolean;
@@ -37,6 +39,12 @@ export function QaCard({ item, defaultOpen = false }: Props) {
   const catName = item.qa_categories?.name;
   const question = displayText(item.question);
   const answer = displayText(item.answer || "");
+  const badges = (
+    <>
+      {item.ruling_type ? <RulingBadge ruling={item.ruling_type} /> : null}
+      <UnsourcedBadge status={item.documentation_status} />
+    </>
+  );
 
   return (
     <HighlightedContentCard
@@ -45,7 +53,7 @@ export function QaCard({ item, defaultOpen = false }: Props) {
       primaryText={question}
       secondaryText={answer}
       tags={catName ? [catName] : []}
-      badges={item.ruling_type ? <RulingBadge ruling={item.ruling_type} /> : undefined}
+      badges={badges}
       meta={[
         { label: "المشاهدات", value: `${getQaViewCount(item)}` },
         ...(item.reference ? [{ label: "المرجع", value: displayText(item.reference) }] : []),

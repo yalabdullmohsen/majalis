@@ -14,3 +14,6 @@ export function isCurriculumRuling(item: {
   const key = item.external_key || item.id || "";
   return key.startsWith("curriculum-");
 }
+
+/** عرض وسم «بلا تخريج» للسجلات غير الموثّقة */
+export const SHOW_UNSOURCED_BADGE = true;

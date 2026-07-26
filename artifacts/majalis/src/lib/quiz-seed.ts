@@ -25,7 +25,7 @@ export type QuizQuestion = {
 
 export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   {
-    "id": "demo-quiz-1",
+    "id": "demo-quiz-1", "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -33,7 +33,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "نوح عليه السلام"
   },
   {
-    "id": "demo-quiz-2",
+    "id": "demo-quiz-2", "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -41,7 +41,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "إبراهيم عليه السلام"
   },
   {
-    "id": "demo-quiz-3",
+    "id": "demo-quiz-3", "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -49,7 +49,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "موسى عليه السلام"
   },
   {
-    "id": "demo-quiz-4",
+    "id": "demo-quiz-4", "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -57,7 +57,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "هود عليه السلام"
   },
   {
-    "id": "demo-quiz-5",
+    "id": "demo-quiz-5", "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -65,7 +65,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "صالح عليه السلام"
   },
   {
-    "id": "demo-quiz-6",
+    "id": "demo-quiz-6", "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -73,7 +73,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "يونس عليه السلام"
   },
   {
-    "id": "demo-quiz-7",
+    "id": "demo-quiz-7", "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -81,7 +81,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عيسى عليه السلام"
   },
   {
-    "id": "demo-quiz-8",
+    "id": "demo-quiz-8", "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -89,7 +89,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "إبراهيم عليه السلام"
   },
   {
-    "id": "demo-quiz-10",
+    "id": "demo-quiz-10", "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -97,7 +97,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أيوب عليه السلام"
   },
   {
-    "id": "demo-quiz-11",
+    "id": "demo-quiz-11", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "الخلفاء",
     "level": "متوسط",
@@ -105,7 +105,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أبو بكر الصديق"
   },
   {
-    "id": "demo-quiz-12",
+    "id": "demo-quiz-12", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "الخلفاء",
     "level": "متوسط",
@@ -113,7 +113,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عمر بن الخطاب"
   },
   {
-    "id": "demo-quiz-13",
+    "id": "demo-quiz-13", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "الخلفاء",
     "level": "متوسط",
@@ -121,7 +121,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عثمان بن عفان"
   },
   {
-    "id": "demo-quiz-14",
+    "id": "demo-quiz-14", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "الخلفاء",
     "level": "متوسط",
@@ -129,7 +129,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "علي بن أبي طالب"
   },
   {
-    "id": "demo-quiz-15",
+    "id": "demo-quiz-15", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "الألقاب",
     "level": "متوسط",
@@ -137,7 +137,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عثمان بن عفان"
   },
   {
-    "id": "demo-quiz-16",
+    "id": "demo-quiz-16", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "الألقاب",
     "level": "متوسط",
@@ -145,7 +145,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عمر بن الخطاب"
   },
   {
-    "id": "demo-quiz-18",
+    "id": "demo-quiz-18", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "السيرة",
     "level": "متوسط",
@@ -153,7 +153,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أبو بكر الصديق"
   },
   {
-    "id": "demo-quiz-19",
+    "id": "demo-quiz-19", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "السيرة",
     "level": "متوسط",
@@ -161,7 +161,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "علي بن أبي طالب"
   },
   {
-    "id": "demo-quiz-20",
+    "id": "demo-quiz-20", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "أمهات المؤمنين",
     "level": "متوسط",
@@ -169,7 +169,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عائشة رضي الله عنها"
   },
   {
-    "id": "demo-quiz-21",
+    "id": "demo-quiz-21", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الدعوة",
     "level": "متوسط",
@@ -177,7 +177,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "غار حراء"
   },
   {
-    "id": "demo-quiz-22",
+    "id": "demo-quiz-22", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الدعوة",
     "level": "متوسط",
@@ -185,7 +185,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "خديجة بنت خويلد"
   },
   {
-    "id": "demo-quiz-23",
+    "id": "demo-quiz-23", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الهجرة",
     "level": "متوسط",
@@ -193,7 +193,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "المدينة المنورة"
   },
   {
-    "id": "demo-quiz-24",
+    "id": "demo-quiz-24", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الهجرة",
     "level": "متوسط",
@@ -201,7 +201,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أبو بكر الصديق"
   },
   {
-    "id": "demo-quiz-25",
+    "id": "demo-quiz-25", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "المساجد",
     "level": "متوسط",
@@ -209,7 +209,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "مسجد قباء"
   },
   {
-    "id": "demo-quiz-26",
+    "id": "demo-quiz-26", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الغزوات",
     "level": "متوسط",
@@ -217,7 +217,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "غزوة بدر"
   },
   {
-    "id": "demo-quiz-27",
+    "id": "demo-quiz-27", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الغزوات",
     "level": "متوسط",
@@ -225,7 +225,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "غزوة الخندق"
   },
   {
-    "id": "demo-quiz-28",
+    "id": "demo-quiz-28", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الغزوات",
     "level": "متوسط",
@@ -233,7 +233,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "غزوة أحد"
   },
   {
-    "id": "demo-quiz-29",
+    "id": "demo-quiz-29", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الصلح",
     "level": "متوسط",
@@ -241,7 +241,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "صلح الحديبية"
   },
   {
-    "id": "demo-quiz-30",
+    "id": "demo-quiz-30", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الفتح",
     "level": "متوسط",
@@ -249,7 +249,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "فتح مكة"
   },
   {
-    "id": "demo-quiz-31",
+    "id": "demo-quiz-31", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصلاة",
     "level": "متوسط",
@@ -257,7 +257,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الصلاة"
   },
   {
-    "id": "demo-quiz-32",
+    "id": "demo-quiz-32", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصلاة",
     "level": "متوسط",
@@ -265,7 +265,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "خمس صلوات"
   },
   {
-    "id": "demo-quiz-33",
+    "id": "demo-quiz-33", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصلاة",
     "level": "متوسط",
@@ -273,7 +273,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الكعبة"
   },
   {
-    "id": "demo-quiz-34",
+    "id": "demo-quiz-34", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الطهارة",
     "level": "متوسط",
@@ -281,7 +281,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "التيمم"
   },
   {
-    "id": "demo-quiz-35",
+    "id": "demo-quiz-35", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الطهارة",
     "level": "متوسط",
@@ -289,7 +289,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الوضوء"
   },
   {
-    "id": "demo-quiz-36",
+    "id": "demo-quiz-36", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصيام",
     "level": "متوسط",
@@ -297,7 +297,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "رمضان"
   },
   {
-    "id": "demo-quiz-37",
+    "id": "demo-quiz-37", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصيام",
     "level": "متوسط",
@@ -305,7 +305,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "السحور"
   },
   {
-    "id": "demo-quiz-38",
+    "id": "demo-quiz-38", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الزكاة",
     "level": "متوسط",
@@ -313,7 +313,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الزكاة"
   },
   {
-    "id": "demo-quiz-39",
+    "id": "demo-quiz-39", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الحج",
     "level": "متوسط",
@@ -321,7 +321,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الوقوف بعرفة"
   },
   {
-    "id": "demo-quiz-40",
+    "id": "demo-quiz-40", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الحج",
     "level": "متوسط",
@@ -329,7 +329,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الكعبة"
   },
   {
-    "id": "demo-quiz-41",
+    "id": "demo-quiz-41", "documentation_status": "unsourced",
     "section": "الصالحون",
     "category": "العلماء",
     "level": "متوسط",
@@ -337,7 +337,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أبو حنيفة النعمان"
   },
   {
-    "id": "demo-quiz-42",
+    "id": "demo-quiz-42", "documentation_status": "unsourced",
     "section": "الصالحون",
     "category": "العلماء",
     "level": "متوسط",
@@ -345,7 +345,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "مالك بن أنس"
   },
   {
-    "id": "demo-quiz-43",
+    "id": "demo-quiz-43", "documentation_status": "unsourced",
     "section": "الصالحون",
     "category": "العلماء",
     "level": "متوسط",
@@ -353,7 +353,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "محمد بن إدريس الشافعي"
   },
   {
-    "id": "demo-quiz-44",
+    "id": "demo-quiz-44", "documentation_status": "unsourced",
     "section": "الصالحون",
     "category": "العلماء",
     "level": "متوسط",
@@ -361,7 +361,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أحمد بن حنبل"
   },
   {
-    "id": "demo-quiz-45",
+    "id": "demo-quiz-45", "documentation_status": "unsourced",
     "section": "الصالحون",
     "category": "الحديث",
     "level": "متوسط",
@@ -369,7 +369,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "محمد بن إسماعيل البخاري"
   },
   {
-    "id": "demo-quiz-46",
+    "id": "demo-quiz-46", "documentation_status": "unsourced",
     "section": "الصالحون",
     "category": "الحديث",
     "level": "متوسط",
@@ -377,7 +377,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "مسلم بن الحجاج"
   },
   {
-    "id": "demo-quiz-47",
+    "id": "demo-quiz-47", "documentation_status": "unsourced",
     "section": "الصالحون",
     "category": "الفقه",
     "level": "متوسط",
@@ -385,7 +385,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "مالك بن أنس"
   },
   {
-    "id": "demo-quiz-48",
+    "id": "demo-quiz-48", "documentation_status": "unsourced",
     "section": "الصالحون",
     "category": "التفسير",
     "level": "متوسط",
@@ -393,7 +393,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عبد الله بن عباس"
   },
   {
-    "id": "demo-quiz-49",
+    "id": "demo-quiz-49", "documentation_status": "unsourced",
     "section": "الصالحون",
     "category": "الزهد",
     "level": "متوسط",
@@ -401,7 +401,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الحسن البصري"
   },
   {
-    "id": "demo-quiz-50",
+    "id": "demo-quiz-50", "documentation_status": "unsourced",
     "section": "الصالحون",
     "category": "العلماء",
     "level": "متوسط",
@@ -409,7 +409,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "مالك بن أنس"
   },
   {
-    "id": "demo-quiz-51",
+    "id": "demo-quiz-51", "documentation_status": "unsourced",
     "section": "الألغاز الشرعية",
     "category": "عام",
     "level": "متوسط",
@@ -417,7 +417,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الأجر"
   },
   {
-    "id": "demo-quiz-52",
+    "id": "demo-quiz-52", "documentation_status": "unsourced",
     "section": "الألغاز الشرعية",
     "category": "عام",
     "level": "متوسط",
@@ -425,7 +425,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الصلاة"
   },
   {
-    "id": "demo-quiz-53",
+    "id": "demo-quiz-53", "documentation_status": "unsourced",
     "section": "الألغاز الشرعية",
     "category": "عام",
     "level": "متوسط",
@@ -433,7 +433,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "رمضان"
   },
   {
-    "id": "demo-quiz-54",
+    "id": "demo-quiz-54", "documentation_status": "unsourced",
     "section": "الألغاز الشرعية",
     "category": "عام",
     "level": "متوسط",
@@ -441,7 +441,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "القرآن الكريم"
   },
   {
-    "id": "demo-quiz-55",
+    "id": "demo-quiz-55", "documentation_status": "unsourced",
     "section": "الألغاز الشرعية",
     "category": "عام",
     "level": "متوسط",
@@ -450,7 +450,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   // ── القرآن الكريم ──────────────────────────────────────────
   {
-    "id": "demo-quiz-56",
+    "id": "demo-quiz-56", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور",
     "level": "سهل",
@@ -458,7 +458,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "114 سورة"
   },
   {
-    "id": "demo-quiz-59",
+    "id": "demo-quiz-59", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور",
     "level": "متوسط",
@@ -466,7 +466,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "سورة الفاتحة"
   },
   {
-    "id": "demo-quiz-62",
+    "id": "demo-quiz-62", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "الآيات",
     "level": "متوسط",
@@ -474,7 +474,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "سورة البقرة"
   },
   {
-    "id": "demo-quiz-63",
+    "id": "demo-quiz-63", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور",
     "level": "متوسط",
@@ -482,7 +482,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "سورة التوبة"
   },
   {
-    "id": "demo-quiz-64",
+    "id": "demo-quiz-64", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور",
     "level": "صعب",
@@ -490,7 +490,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "سورة النمل"
   },
   {
-    "id": "demo-quiz-66",
+    "id": "demo-quiz-66", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "النزول",
     "level": "متوسط",
@@ -498,7 +498,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "سورة النصر"
   },
   {
-    "id": "demo-quiz-67",
+    "id": "demo-quiz-67", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "الجمع",
     "level": "متوسط",
@@ -506,7 +506,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "زيد بن ثابت"
   },
   {
-    "id": "demo-quiz-68",
+    "id": "demo-quiz-68", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "الجمع",
     "level": "متوسط",
@@ -514,7 +514,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عثمان بن عفان"
   },
   {
-    "id": "demo-quiz-69",
+    "id": "demo-quiz-69", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور",
     "level": "متوسط",
@@ -522,7 +522,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "سورة الكهف"
   },
   {
-    "id": "demo-quiz-70",
+    "id": "demo-quiz-70", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور",
     "level": "متوسط",
@@ -530,7 +530,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "سورة يوسف"
   },
   {
-    "id": "demo-quiz-71",
+    "id": "demo-quiz-71", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "الآيات",
     "level": "صعب",
@@ -538,7 +538,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أربع مرات: آل عمران (144)، والأحزاب (40)، ومحمد (2)، والفتح (29) — وذُكر باسم «أحمد» مرة واحدة في الصف (6)"
   },
   {
-    "id": "demo-quiz-73",
+    "id": "demo-quiz-73", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور",
     "level": "صعب",
@@ -546,7 +546,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "28 سورة"
   },
   {
-    "id": "demo-quiz-74",
+    "id": "demo-quiz-74", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور",
     "level": "متوسط",
@@ -554,7 +554,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "سورة يس — وهذه تسمية مشتهرة على الألسنة، والحديث الوارد فيها «إن لكل شيء قلباً وقلب القرآن يس» لا يصح: قال أبو حاتم الرازي: باطل لا أصل له، وحكم عليه الألباني بالوضع في ضعيف الترمذي والسلسلة الضعيفة (5870)، وقال ابن باز: ليس له أصل"
   },
   {
-    "id": "demo-quiz-75",
+    "id": "demo-quiz-75", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور",
     "level": "متوسط",
@@ -563,7 +563,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   // ── الأحاديث النبوية ──────────────────────────────────────
   {
-    "id": "demo-quiz-76",
+    "id": "demo-quiz-76", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "المصطلح",
     "level": "سهل",
@@ -571,7 +571,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "«إنما الأعمال بالنيات، وإنما لكل امرئ ما نوى» — رواه البخاري (1) ومسلم (1907) عن عمر بن الخطاب رضي الله عنه"
   },
   {
-    "id": "demo-quiz-78",
+    "id": "demo-quiz-78", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "الكتب",
     "level": "سهل",
@@ -579,7 +579,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "صحيح مسلم — وهو الثاني بعد صحيح البخاري في الصحة عند جمهور العلماء؛ وذهب أبو علي النيسابوري وبعض علماء المغرب إلى تفضيل صحيح مسلم، ومرادهم حسن السياق وجمع طرق الحديث في موضع واحد لا رجحان أصل الصحة"
   },
   {
-    "id": "demo-quiz-79",
+    "id": "demo-quiz-79", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "الكتب",
     "level": "متوسط",
@@ -587,7 +587,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "صحيح البخاري، وصحيح مسلم، وسنن أبي داود، وجامع الترمذي، وسنن النسائي، وسنن ابن ماجه. وتسميتها «الصحاح الستة» تسامح شائع؛ فالحكم بالصحة على الإطلاق إنما هو للصحيحين، أما السنن الأربعة ففيها الصحيح والحسن والضعيف، ولهذا يسميها المحدثون «الكتب الستة» أو «الأصول الستة»"
   },
   {
-    "id": "demo-quiz-80",
+    "id": "demo-quiz-80", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "الكتب",
     "level": "متوسط",
@@ -595,7 +595,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الإمام أحمد بن حنبل رحمه الله جمعه وانتقاه؛ ورواه عنه ابنه عبد الله وزاد فيه زيادات، ثم رواه عن عبد الله أبو بكر القطيعي وله فيه زيادات أيضًا — فليس كل ما في المطبوع من رواية الإمام أحمد نفسه"
   },
   {
-    "id": "demo-quiz-81",
+    "id": "demo-quiz-81", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "الكتب",
     "level": "متوسط",
@@ -603,7 +603,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الموطأ لمالك بن أنس"
   },
   {
-    "id": "demo-quiz-82",
+    "id": "demo-quiz-82", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "المصطلح",
     "level": "متوسط",
@@ -611,7 +611,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "ما أضافه النبي ﷺ إلى ربه عز وجل مما أوحي إليه من غير القرآن، فيرويه عن ربه. وهل لفظه من الله أم المعنى من الله واللفظ من النبي ﷺ؟ مسألة خلافية بين أهل العلم والقولان مشهوران. ويفارق القرآنَ بأنه لا يُتعبَّد بتلاوته، ولا تصح به الصلاة، ولا يلزم فيه التواتر، وفيه الصحيح والضعيف"
   },
   {
-    "id": "demo-quiz-85",
+    "id": "demo-quiz-85", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "الرواة",
     "level": "متوسط",
@@ -619,7 +619,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أبو هريرة رضي الله عنه"
   },
   {
-    "id": "demo-quiz-86",
+    "id": "demo-quiz-86", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "الرواة",
     "level": "متوسط",
@@ -627,7 +627,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عمر بن عبد العزيز رحمه الله؛ كتب إلى أبي بكر بن محمد بن حزم: «انظر ما كان من حديث رسول الله ﷺ فاكتبه، فإني خفت دروس العلم وذهاب العلماء» — علّقه البخاري في كتاب العلم. وأشهر من قام بالتدوين بأمره: محمد بن مسلم بن شهاب الزهري"
   },
   {
-    "id": "demo-quiz-87",
+    "id": "demo-quiz-87", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "الأحاديث الجامعة",
     "level": "متوسط",
@@ -635,7 +635,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "«من حسن إسلام المرء تركه ما لا يعنيه» — رواه الترمذي (2317) وابن ماجه، وهو الحديث الثاني عشر من الأربعين النووية، وحسّنه النووي"
   },
   {
-    "id": "demo-quiz-88",
+    "id": "demo-quiz-88", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "الأحاديث الجامعة",
     "level": "متوسط",
@@ -643,7 +643,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "حسن الخلق؛ لقوله ﷺ: «ما من شيء أثقل في ميزان المؤمن يوم القيامة من خلق حسن» — رواه أبو داود (4799) والترمذي (2002) عن أبي الدرداء رضي الله عنه، وصححه الألباني"
   },
   {
-    "id": "demo-quiz-89",
+    "id": "demo-quiz-89", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "الأحاديث الجامعة",
     "level": "سهل",
@@ -651,7 +651,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "«ما يحب لنفسه» — متفق عليه: البخاري (13) ومسلم (45) عن أنس بن مالك رضي الله عنه"
   },
   {
-    "id": "demo-quiz-90",
+    "id": "demo-quiz-90", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "الأربعون النووية",
     "level": "متوسط",
@@ -660,7 +660,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   // ── التاريخ الإسلامي ──────────────────────────────────────
   {
-    "id": "demo-quiz-91",
+    "id": "demo-quiz-91", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الفتوحات",
     "level": "متوسط",
@@ -668,7 +668,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "سعد بن أبي وقاص"
   },
   {
-    "id": "demo-quiz-92",
+    "id": "demo-quiz-92", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الفتوحات",
     "level": "متوسط",
@@ -676,7 +676,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عمرو بن العاص"
   },
   {
-    "id": "demo-quiz-93",
+    "id": "demo-quiz-93", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الفتوحات",
     "level": "متوسط",
@@ -684,7 +684,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "طارق بن زياد؛ بدأ الفتح سنة 92هـ بأمر موسى بن نصير والي إفريقية، ثم عبر إليه موسى بن نصير في العام التالي فأتمّا الفتح معًا"
   },
   {
-    "id": "demo-quiz-94",
+    "id": "demo-quiz-94", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الفتوحات",
     "level": "متوسط",
@@ -692,7 +692,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "92هـ / 711م"
   },
   {
-    "id": "demo-quiz-95",
+    "id": "demo-quiz-95", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدول",
     "level": "متوسط",
@@ -700,7 +700,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "معاوية بن أبي سفيان"
   },
   {
-    "id": "demo-quiz-96",
+    "id": "demo-quiz-96", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدول",
     "level": "متوسط",
@@ -708,7 +708,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "دمشق"
   },
   {
-    "id": "demo-quiz-97",
+    "id": "demo-quiz-97", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدول",
     "level": "متوسط",
@@ -716,7 +716,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أبو العباس السفاح"
   },
   {
-    "id": "demo-quiz-98",
+    "id": "demo-quiz-98", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدول",
     "level": "متوسط",
@@ -724,7 +724,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أبو جعفر المنصور"
   },
   {
-    "id": "demo-quiz-100",
+    "id": "demo-quiz-100", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "المعارك",
     "level": "متوسط",
@@ -732,7 +732,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "معركة عين جالوت"
   },
   {
-    "id": "demo-quiz-101",
+    "id": "demo-quiz-101", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "المعارك",
     "level": "متوسط",
@@ -740,7 +740,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "السلطان قطز"
   },
   {
-    "id": "demo-quiz-102",
+    "id": "demo-quiz-102", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الفتوحات",
     "level": "متوسط",
@@ -748,7 +748,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "السلطان محمد الفاتح"
   },
   {
-    "id": "demo-quiz-103",
+    "id": "demo-quiz-103", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الفتوحات",
     "level": "متوسط",
@@ -756,7 +756,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "857هـ / 1453م"
   },
   {
-    "id": "demo-quiz-104",
+    "id": "demo-quiz-104", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدول",
     "level": "متوسط",
@@ -764,7 +764,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عبد الملك بن مروان"
   },
   {
-    "id": "demo-quiz-105",
+    "id": "demo-quiz-105", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدول",
     "level": "صعب",
@@ -772,7 +772,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عمر بن عبد العزيز"
   },
   {
-    "id": "demo-quiz-106",
+    "id": "demo-quiz-106", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "المعارك",
     "level": "متوسط",
@@ -780,7 +780,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "موقعة الجمل"
   },
   {
-    "id": "demo-quiz-107",
+    "id": "demo-quiz-107", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الفتوحات",
     "level": "متوسط",
@@ -788,7 +788,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "حاصرها الجيش الإسلامي بقيادة أبي عبيدة بن الجراح رضي الله عنه، واشترط أهلها أن يتسلّمها أمير المؤمنين بنفسه، فقدم عمر بن الخطاب رضي الله عنه من المدينة وتسلّمها صلحًا وكتب لأهلها العهدة العمرية سنة 15هـ (وقيل 16هـ)"
   },
   {
-    "id": "demo-quiz-108",
+    "id": "demo-quiz-108", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "المعارك",
     "level": "صعب",
@@ -796,7 +796,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "معركة فاصلة بين المسلمين والروم على نهر اليرموك بالشام، أميرُ الجيش فيها أبو عبيدة بن الجراح وللمسلمين فيها تدبير خالد بن الوليد رضي الله عنهما، وبها انكسرت قوة الروم وتمّ فتح الشام. وأشهر ما قيل في تاريخها رجب سنة 15هـ، وقيل سنة 13هـ"
   },
   {
-    "id": "demo-quiz-109",
+    "id": "demo-quiz-109", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدول",
     "level": "صعب",
@@ -804,7 +804,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "القسطنطينية (إسطنبول) منذ فتحها سنة 857هـ/1453م إلى نهاية الدولة؛ وقد سبقتها عاصمتان: بورصة ثم أدرنة"
   },
   {
-    "id": "demo-quiz-110",
+    "id": "demo-quiz-110", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدول",
     "level": "صعب",
@@ -813,7 +813,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   // ── العقيدة ───────────────────────────────────────────────
   {
-    "id": "demo-quiz-111",
+    "id": "demo-quiz-111", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "أركان الإيمان",
     "level": "سهل",
@@ -821,7 +821,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "ستة أركان"
   },
   {
-    "id": "demo-quiz-113",
+    "id": "demo-quiz-113", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "أركان الإسلام",
     "level": "سهل",
@@ -829,7 +829,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الشهادتان (شهادة أن لا إله إلا الله وأن محمداً رسول الله)"
   },
   {
-    "id": "demo-quiz-114",
+    "id": "demo-quiz-114", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "التوحيد",
     "level": "متوسط",
@@ -837,7 +837,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "إفراد الله تعالى بما يختصّ به: بالربوبية (الخلق والملك والتدبير)، وبالألوهية (العبادة)، وبالأسماء والصفات"
   },
   {
-    "id": "demo-quiz-116",
+    "id": "demo-quiz-116", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "التوحيد",
     "level": "سهل",
@@ -845,7 +845,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الشرك بالله"
   },
   {
-    "id": "demo-quiz-117",
+    "id": "demo-quiz-117", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "أسماء الله",
     "level": "سهل",
@@ -853,7 +853,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "تسعة وتسعون اسماً؛ لقوله ﷺ: «إن لله تسعة وتسعين اسماً، مائة إلا واحداً، من أحصاها دخل الجنة» (البخاري 2736، مسلم 2677). وليس في الحديث حصر أسماء الله في هذا العدد، فأسماؤه سبحانه لا يحصيها أحد كما في حديث ابن مسعود عند أحمد (3712)؛ وأما سردها المعروف في رواية الترمذي (3507) فمُدرَج ضعّفه المحققون"
   },
   {
-    "id": "demo-quiz-119",
+    "id": "demo-quiz-119", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "اليوم الآخر",
     "level": "متوسط",
@@ -861,7 +861,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "منكر ونكير"
   },
   {
-    "id": "demo-quiz-120",
+    "id": "demo-quiz-120", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "اليوم الآخر",
     "level": "متوسط",
@@ -869,7 +869,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "جنة عدن والفردوس ودار السلام ودار المقامة والمأوى"
   },
   {
-    "id": "demo-quiz-121",
+    "id": "demo-quiz-121", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "الملائكة",
     "level": "سهل",
@@ -877,7 +877,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "جبريل عليه السلام"
   },
   {
-    "id": "demo-quiz-123",
+    "id": "demo-quiz-123", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "الملائكة",
     "level": "متوسط",
@@ -885,7 +885,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "إسرافيل عليه السلام، وهو المشهور عند أهل العلم؛ واسمه ثابت في دعاء الاستفتاح: «اللهم رب جبرائيل وميكائيل وإسرافيل» (مسلم 770)، وأما القرآن والصحيحان فجاء فيها ذكر النفخ في الصور دون تسمية النافخ"
   },
   {
-    "id": "demo-quiz-125",
+    "id": "demo-quiz-125", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "القدر",
     "level": "متوسط",
@@ -894,7 +894,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   // ── الأنبياء (إضافة) ──────────────────────────────────────
   {
-    "id": "demo-quiz-127",
+    "id": "demo-quiz-127", "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -902,7 +902,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "تسعمائة وخمسون سنة؛ قال تعالى: ﴿فَلَبِثَ فِيهِمْ أَلْفَ سَنَةٍ إِلَّا خَمْسِينَ عَامًا﴾ (العنكبوت 14)، وهي مدة لبثه فيهم قبل الطوفان لا جملة عمره"
   },
   {
-    "id": "demo-quiz-128",
+    "id": "demo-quiz-128", "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "المعجزات",
     "level": "متوسط",
@@ -910,7 +910,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عصاه؛ انقلبت ثعباناً مبيناً ﴿فَأَلْقَىٰ عَصَاهُ فَإِذَا هِيَ ثُعْبَانٌ مُّبِينٌ﴾ (الأعراف 107)، وضرب بها البحر فانفلق ﴿أَنِ اضْرِب بِّعَصَاكَ الْبَحْرَ فَانفَلَقَ﴾ (الشعراء 63)"
   },
   {
-    "id": "demo-quiz-129",
+    "id": "demo-quiz-129", "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "المعجزات",
     "level": "متوسط",
@@ -918,7 +918,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "إحياء الموتى بإذن الله، وإبراء الأكمه والأبرص، وخلق هيئة الطير من الطين فتكون طيراً بإذن الله (آل عمران 49)"
   },
   {
-    "id": "demo-quiz-130",
+    "id": "demo-quiz-130", "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -926,7 +926,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "سليمان عليه السلام"
   },
   {
-    "id": "demo-quiz-131",
+    "id": "demo-quiz-131", "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -934,7 +934,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "هو يعقوب عليه السلام، وإسرائيل لقب له، ونسبه: يعقوب بن إسحاق بن إبراهيم عليهم السلام"
   },
   {
-    "id": "demo-quiz-132",
+    "id": "demo-quiz-132", "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -942,7 +942,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "اثنا عشر ابناً"
   },
   {
-    "id": "demo-quiz-133",
+    "id": "demo-quiz-133", "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -950,7 +950,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "في غيابة الجُبّ، أي في قاع البئر؛ ﴿وَأَلْقُوهُ فِي غَيَابَتِ الْجُبِّ﴾ (يوسف 10)، ولم يُعيّن القرآن موضع هذا الجبّ"
   },
   {
-    "id": "demo-quiz-134",
+    "id": "demo-quiz-134", "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "سهل",
@@ -958,7 +958,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "داود عليه السلام"
   },
   {
-    "id": "demo-quiz-135",
+    "id": "demo-quiz-135", "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "سهل",
@@ -966,7 +966,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "موسى عليه السلام"
   },
   {
-    "id": "demo-quiz-136",
+    "id": "demo-quiz-136", "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "سهل",
@@ -974,7 +974,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عيسى عليه السلام"
   },
   {
-    "id": "demo-quiz-137",
+    "id": "demo-quiz-137", "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -982,7 +982,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "يونس عليه السلام؛ ﴿فَالْتَقَمَهُ الْحُوتُ وَهُوَ مُلِيمٌ﴾ (الصافات 142)، وهو ذو النون (الأنبياء 87)"
   },
   {
-    "id": "demo-quiz-138",
+    "id": "demo-quiz-138", "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "صعب",
@@ -990,7 +990,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "نوح وإبراهيم وموسى وعيسى ومحمد عليهم الصلاة والسلام، وهم المذكورون في قوله تعالى: ﴿وَإِذْ أَخَذْنَا مِنَ النَّبِيِّينَ مِيثَاقَهُمْ وَمِنكَ وَمِن نُّوحٍ وَإِبْرَاهِيمَ وَمُوسَىٰ وَعِيسَى ابْنِ مَرْيَمَ﴾ (الأحزاب 7)، وكذا في الشورى 13؛ وتخصيصهم بأولي العزم قول جمهور المفسرين"
   },
   {
-    "id": "demo-quiz-139",
+    "id": "demo-quiz-139", "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -998,7 +998,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "آدم عليه السلام؛ ﴿وَعَلَّمَ آدَمَ الْأَسْمَاءَ كُلَّهَا﴾ (البقرة 31)، وهو أبو البشر وأول الأنبياء"
   },
   {
-    "id": "demo-quiz-140",
+    "id": "demo-quiz-140", "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -1007,7 +1007,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   // ── الصحابة (إضافة) ──────────────────────────────────────
   {
-    "id": "demo-quiz-141",
+    "id": "demo-quiz-141", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "الألقاب",
     "level": "متوسط",
@@ -1015,7 +1015,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "خالد بن الوليد"
   },
   {
-    "id": "demo-quiz-142",
+    "id": "demo-quiz-142", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "الألقاب",
     "level": "متوسط",
@@ -1023,7 +1023,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "حمزة بن عبد المطلب"
   },
   {
-    "id": "demo-quiz-143",
+    "id": "demo-quiz-143", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "الألقاب",
     "level": "متوسط",
@@ -1031,7 +1031,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أبو عبيدة عامر بن الجراح رضي الله عنه؛ لقوله ﷺ: «إن لكل أمة أميناً، وإن أميننا أيتها الأمة أبو عبيدة بن الجراح» (البخاري 3744، مسلم 2419)"
   },
   {
-    "id": "demo-quiz-144",
+    "id": "demo-quiz-144", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "الشهداء",
     "level": "متوسط",
@@ -1039,7 +1039,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "سمية بنت خياط أم عمار بن ياسر"
   },
   {
-    "id": "demo-quiz-145",
+    "id": "demo-quiz-145", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "السيرة",
     "level": "سهل",
@@ -1047,7 +1047,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "بلال بن رباح"
   },
   {
-    "id": "demo-quiz-146",
+    "id": "demo-quiz-146", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "أمهات المؤمنين",
     "level": "متوسط",
@@ -1055,7 +1055,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "توفي رسول الله ﷺ عن تسع، وجملة من دخل بهنّ إحدى عشرة؛ إذ توفيت خديجة بنت خويلد وزينب بنت خزيمة رضي الله عنهما في حياته ﷺ"
   },
   {
-    "id": "demo-quiz-147",
+    "id": "demo-quiz-147", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "أمهات المؤمنين",
     "level": "سهل",
@@ -1063,7 +1063,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "خديجة بنت خويلد"
   },
   {
-    "id": "demo-quiz-148",
+    "id": "demo-quiz-148", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "أمهات المؤمنين",
     "level": "متوسط",
@@ -1071,7 +1071,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عائشة رضي الله عنها. وينبغي التنبيه إلى أن هذا اللقب اشتهر في المتأخر من الكتب، وقد نصّ ابن القيم في «المنار المنيف» على أن ما يُروى فيه من الأحاديث لا يثبت، ونحوه عن الذهبي في «سير أعلام النبلاء»"
   },
   {
-    "id": "demo-quiz-150",
+    "id": "demo-quiz-150", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "الحديث",
     "level": "متوسط",
@@ -1079,7 +1079,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عائشة رضي الله عنها؛ قال أبو موسى الأشعري: «ما أشكل علينا أصحابَ رسول الله ﷺ حديثٌ قط فسألنا عائشة إلا وجدنا عندها منه علمًا» (رواه الترمذي). وأما ما يشتهر على الألسنة من عبارة «خذوا نصف دينكم عن هذه الحميراء» فلا أصل له، نصّ على ذلك ابن القيم في «المنار المنيف»"
   },
   {
-    "id": "demo-quiz-151",
+    "id": "demo-quiz-151", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "الشعراء",
     "level": "متوسط",
@@ -1087,7 +1087,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "حسان بن ثابت رضي الله عنه، وهو أشهرهم، ومعه كعب بن مالك وعبد الله بن رواحة رضي الله عنهما"
   },
   {
-    "id": "demo-quiz-152",
+    "id": "demo-quiz-152", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "السيرة",
     "level": "متوسط",
@@ -1095,7 +1095,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "خارجة بن زيد بن أبي زهير الأنصاري الخزرجي رضي الله عنه، وكان أبو بكر ينزل عليه بالسُّنح في بني الحارث بن الخزرج"
   },
   {
-    "id": "demo-quiz-153",
+    "id": "demo-quiz-153", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "الكتّاب",
     "level": "متوسط",
@@ -1103,7 +1103,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "زيد بن ثابت وأُبيّ بن كعب، والخلفاء الراشدون أبو بكر وعمر وعثمان وعلي، ومعاوية بن أبي سفيان رضي الله عنهم؛ وكتّاب الوحي أكثر من ذلك، وأشهرهم في المدينة زيد بن ثابت"
   },
   {
-    "id": "demo-quiz-154",
+    "id": "demo-quiz-154", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "الألقاب",
     "level": "متوسط",
@@ -1111,7 +1111,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "«عائذ البيت» لاستجارته بالكعبة واعتصامه بحرم الله؛ وهو أول مولود للمهاجرين بالمدينة بعد الهجرة، وأمه أسماء بنت أبي بكر «ذات النطاقين»، وبُويع له بالخلافة فدُعي أمير المؤمنين"
   },
   {
-    "id": "demo-quiz-155",
+    "id": "demo-quiz-155", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "السيرة",
     "level": "متوسط",
@@ -1120,7 +1120,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   // ── السيرة النبوية (إضافة) ────────────────────────────────
   {
-    "id": "demo-quiz-156",
+    "id": "demo-quiz-156", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "المولد",
     "level": "سهل",
@@ -1128,7 +1128,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عام الفيل، ويوافق سنة 571م على المشهور، وقيل 570م — والمحقَّق أنه عام الفيل، وأما تحريره بالتقويم الميلادي فمحل خلاف بين المؤرخين"
   },
   {
-    "id": "demo-quiz-157",
+    "id": "demo-quiz-157", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "المولد",
     "level": "متوسط",
@@ -1136,7 +1136,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "في شهر ربيع الأول، يوم الاثنين؛ لحديث أبي قتادة رضي الله عنه عند مسلم أن النبي ﷺ سُئل عن صوم يوم الاثنين فقال: «ذاك يوم وُلدت فيه». وأما تعيين اليوم من الشهر فمحل خلاف: الثاني عشر هو المشهور، ورجّح جماعة من المتأخرين التاسع"
   },
   {
-    "id": "demo-quiz-158",
+    "id": "demo-quiz-158", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الدعوة",
     "level": "سهل",
@@ -1144,7 +1144,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "في الأربعين من عمره"
   },
   {
-    "id": "demo-quiz-160",
+    "id": "demo-quiz-160", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الوفاة",
     "level": "متوسط",
@@ -1152,7 +1152,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "11هـ / 632م"
   },
   {
-    "id": "demo-quiz-161",
+    "id": "demo-quiz-161", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الوفاة",
     "level": "متوسط",
@@ -1160,7 +1160,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "ثلاث وستون سنة، وهو الثابت في الصحيحين عن عائشة وابن عباس رضي الله عنهم؛ ووردت روايتا «ستين» و«خمس وستين»، وجمع العلماء بينها بترجيح رواية الثلاث والستين، وحمْل رواية الستين على إلغاء الكسر"
   },
   {
-    "id": "demo-quiz-162",
+    "id": "demo-quiz-162", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الغزوات",
     "level": "صعب",
@@ -1168,7 +1168,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "المشهور عند أهل السير والمغازي (كابن إسحاق) سبع وعشرون غزوة، قاتل في تسع منها. وثبت في الصحيحين عن زيد بن أرقم رضي الله عنه أنه غزا تسع عشرة غزوة، وجمع العلماء بأن الاختلاف راجع إلى اختلاف المعدود: فمن عدّ السرايا والمنازل مستقلة كثّر العدد، ومن اقتصر على ما اشتُهر منها غزوةً قلّله"
   },
   {
-    "id": "demo-quiz-163",
+    "id": "demo-quiz-163", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الغزوات",
     "level": "متوسط",
@@ -1176,7 +1176,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "غزوة أحد"
   },
   {
-    "id": "demo-quiz-164",
+    "id": "demo-quiz-164", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الغزوات",
     "level": "متوسط",
@@ -1184,7 +1184,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "سلمان الفارسي رضي الله عنه، كما ذكره ابن إسحاق وأهل المغازي؛ وأصل حفر الخندق ثابت في الصحيحين، وأما تعيين المشير به فمن رواية أهل السير"
   },
   {
-    "id": "demo-quiz-165",
+    "id": "demo-quiz-165", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الصلح",
     "level": "متوسط",
@@ -1192,7 +1192,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "وضع الحرب عشر سنين، ورجوع المسلمين عامهم ذاك على أن يعتمروا من العام القابل ويقيموا بمكة ثلاثة أيام، وأن يُردّ إلى قريش من أتى النبيَّ ﷺ منهم مسلمًا بغير إذن وليّه ولا يُردّ إلى المسلمين من رجع إلى قريش، وأن من أحبّ أن يدخل في عهد النبي ﷺ أو في عهد قريش دخل فيه — كما في حديث المِسْوَر بن مخرمة ومروان بن الحكم عند البخاري. وعمرة العام القابل هي «عمرة القضاء» لا حجًّا"
   },
   {
-    "id": "demo-quiz-167",
+    "id": "demo-quiz-167", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الدعوة",
     "level": "متوسط",
@@ -1200,7 +1200,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أبو لهب عبد العزى"
   },
   {
-    "id": "demo-quiz-168",
+    "id": "demo-quiz-168", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الإسراء والمعراج",
     "level": "سهل",
@@ -1208,7 +1208,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "المسجد الأقصى"
   },
   {
-    "id": "demo-quiz-169",
+    "id": "demo-quiz-169", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الإسراء والمعراج",
     "level": "متوسط",
@@ -1216,7 +1216,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الصلوات الخمس؛ وقد فُرضت خمسين صلاة ثم خُففت إلى خمس، وفي حديث الإسراء في الصحيحين: «هي خمس وهي خمسون، لا يُبدَّل القول لديّ»"
   },
   {
-    "id": "demo-quiz-170",
+    "id": "demo-quiz-170", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الدعوة",
     "level": "متوسط",
@@ -1225,7 +1225,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   // ── الأحكام الشرعية (إضافة) ──────────────────────────────
   {
-    "id": "demo-quiz-171",
+    "id": "demo-quiz-171", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصلاة",
     "level": "سهل",
@@ -1233,7 +1233,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "ركعتان"
   },
   {
-    "id": "demo-quiz-172",
+    "id": "demo-quiz-172", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصلاة",
     "level": "سهل",
@@ -1241,7 +1241,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أربع ركعات"
   },
   {
-    "id": "demo-quiz-173",
+    "id": "demo-quiz-173", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصلاة",
     "level": "سهل",
@@ -1249,7 +1249,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "ثلاث ركعات"
   },
   {
-    "id": "demo-quiz-174",
+    "id": "demo-quiz-174", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصلاة",
     "level": "سهل",
@@ -1257,7 +1257,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "اثنتا عشرة ركعة، لحديث أم حبيبة رضي الله عنها عند مسلم: «من صلّى اثنتي عشرة ركعة في يوم وليلة بُني له بهنّ بيت في الجنة»، وفُسِّرت عند الترمذي بأربع قبل الظهر وركعتين بعدها وركعتين بعد المغرب وركعتين بعد العشاء وركعتين قبل صلاة الفجر. وفي حديث ابن عمر رضي الله عنهما في الصحيحين عدُّها عشرًا (ركعتان قبل الظهر بدل الأربع)، والأمر في ذلك واسع"
   },
   {
-    "id": "demo-quiz-175",
+    "id": "demo-quiz-175", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الطهارة",
     "level": "سهل",
@@ -1265,7 +1265,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أربعة منصوصة في قوله تعالى في سورة المائدة (الآية 6): ﴿فَٱغْسِلُوا۟ وُجُوهَكُمْ وَأَيْدِيَكُمْ إِلَى ٱلْمَرَافِقِ وَٱمْسَحُوا۟ بِرُءُوسِكُمْ وَأَرْجُلَكُمْ إِلَى ٱلْكَعْبَيْنِ﴾: غسل الوجه، وغسل اليدين إلى المرفقين، ومسح الرأس، وغسل الرجلين إلى الكعبين. وزاد الجمهور النيةَ ركنًا (خلافًا للحنفية)، وزاد الشافعية والحنابلة الترتيبَ، وزاد المالكية والحنابلة الموالاةَ"
   },
   {
-    "id": "demo-quiz-176",
+    "id": "demo-quiz-176", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الطهارة",
     "level": "متوسط",
@@ -1273,7 +1273,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "المتفق عليه: الخارج من السبيلين، وزوال العقل بجنون أو إغماء أو سكر، والنوم المستغرق الذي لا يبقى معه إحساس. وما عداه محل خلاف بين الفقهاء: أكل لحم الإبل (ينقض عند الحنابلة لحديث جابر بن سمرة عند مسلم، وذهب الجمهور إلى خلافه)، ومسّ الفرج، ولمس المرأة بشهوة"
   },
   {
-    "id": "demo-quiz-177",
+    "id": "demo-quiz-177", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الزكاة",
     "level": "متوسط",
@@ -1281,7 +1281,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "ربع العشر، أي 2.5%؛ بشرط بلوغ النصاب وحولان الحول عليه. ونصاب الذهب عشرون مثقالًا (نحو 85 غرامًا)، ونصاب الفضة مئتا درهم (نحو 595 غرامًا)، وتُقوَّم النقود الورقية بأحدهما"
   },
   {
-    "id": "demo-quiz-179",
+    "id": "demo-quiz-179", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصيام",
     "level": "متوسط",
@@ -1289,7 +1289,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "يوما العيدين (الفطر والأضحى) بالاتفاق، لنهيه ﷺ عن صيامهما في الصحيحين، وأيام التشريق الثلاثة بعد عيد الأضحى؛ لقوله ﷺ فيما رواه مسلم: «أيام التشريق أيام أكل وشرب وذكر لله» — ورخّص فيها للمتمتع الذي لم يجد الهدي كما في البخاري عن ابن عمر وعائشة رضي الله عنهم"
   },
   {
-    "id": "demo-quiz-180",
+    "id": "demo-quiz-180", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصيام",
     "level": "متوسط",
@@ -1297,7 +1297,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "صاع من غالب قوت البلد، يُخرج قبل صلاة العيد؛ لحديث ابن عمر رضي الله عنهما في البخاري أن رسول الله ﷺ فرض زكاة الفطر صاعًا من تمر أو صاعًا من شعير، وأمر بها أن تُؤدَّى قبل خروج الناس إلى الصلاة. ويجوز تعجيلها بيوم أو يومين؛ قال ابن عمر: «وكانوا يعطون قبل الفطر بيوم أو يومين» (البخاري 1511)"
   },
   {
-    "id": "demo-quiz-182",
+    "id": "demo-quiz-182", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الحج",
     "level": "متوسط",
@@ -1305,7 +1305,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "هو اليوم التاسع من ذي الحجة، وفيه الوقوف بعرفة وهو ركن الحج الأعظم الذي يفوت الحج بفواته؛ لقوله ﷺ: «الحجُّ عرفةُ» (أخرجه أبو داود ١٩٤٩ والترمذي ٨٨٩ والنسائي ٣٠١٦ عن عبد الرحمن بن يَعْمَر الدِّيلي). والركن هو الوقوف الواقع في هذا اليوم لا اليوم نفسه. ويُستحب صيامه لغير الحاج"
   },
   {
-    "id": "demo-quiz-183",
+    "id": "demo-quiz-183", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الحج",
     "level": "متوسط",
@@ -1313,7 +1313,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "ثلاثة فروق رئيسة: (١) الوقت: الحج مؤقَّت بأشهر معلومات ولا يصح إلا فيها، والعمرة تصح في كل وقت من السنة. (٢) المناسك: في الحج وقوف بعرفة ومبيت بمزدلفة ومنى ورمي الجمرات، وليس شيء من ذلك في العمرة، وإنما هي إحرام وطواف وسعي وحلق أو تقصير. (٣) الحكم: الحج ركن واجب مرة في العمر بالإجماع، وأما العمرة فواجبة عند الشافعية والحنابلة، سنة مؤكدة عند الحنفية والمالكية"
   },
   {
-    "id": "demo-quiz-184",
+    "id": "demo-quiz-184", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الحلال والحرام",
     "level": "سهل",
@@ -1321,7 +1321,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "محرّم بنص القرآن الكريم؛ قال تعالى: ﴿إِنَّمَا حَرَّمَ عَلَيْكُمُ ٱلْمَيْتَةَ وَٱلدَّمَ وَلَحْمَ ٱلْخِنزِيرِ وَمَآ أُهِلَّ بِهِۦ لِغَيْرِ ٱللَّهِ﴾ [البقرة: ١٧٣]، ونحوها في [المائدة: ٣]. ويشمل التحريم سائر أجزائه لا لحمه وحده، ويُستثنى حال الاضطرار بقيده في الآية نفسها: ﴿فَمَنِ ٱضْطُرَّ غَيْرَ بَاغٍۢ وَلَا عَادٍۢ فَلَآ إِثْمَ عَلَيْهِ﴾"
   },
   {
-    "id": "demo-quiz-185",
+    "id": "demo-quiz-185", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الحلال والحرام",
     "level": "متوسط",
@@ -1329,7 +1329,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أربعة شروط: (١) أهلية الذابح: أن يكون مسلمًا أو كتابيًّا؛ لقوله تعالى: ﴿وَطَعَامُ ٱلَّذِينَ أُوتُوا۟ ٱلْكِتَٰبَ حِلٌّۭ لَّكُمْ﴾ [المائدة: ٥]. (٢) الآلة: كل ما أنهر الدم غير السنّ والظفر؛ لحديث رافع بن خديج: «ما أنهر الدم وذُكر اسم الله عليه فكُلوا، ليس السنَّ والظفرَ» (البخاري ٥٤٩٨، مسلم ١٩٦٨). (٣) قطع الحلقوم والمريء، والأكمل معهما الودجان؛ وفي القدر المجزئ خلاف: الحنفية يُجزئ عندهم قطع أكثر العروق الأربعة، والشافعية يكتفون بالحلقوم والمريء. (٤) التسمية عند الذبح: شرط عند الحنفية والحنابلة تسقط بالنسيان، وسنة عند الشافعية"
   },
   {
-    "id": "demo-quiz-186",
+    "id": "demo-quiz-186", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "النكاح",
     "level": "متوسط",
@@ -1337,7 +1337,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الركن عند الجمهور هو الصيغة (الإيجاب والقبول) مع الزوجين الخاليين من الموانع، وأما الوليّ والشهود فشرطا صحة لا ركنان. والمسألة خلافية: الشافعية والحنابلة يشترطون الولي والشاهدين معًا، والحنفية لا يشترطون الولي لصحة نكاح البالغة العاقلة ويشترطون الشهود، والمالكية لا يشترطون الإشهاد حال العقد ويكتفون بالإعلان والإشهاد عند الدخول"
   },
   {
-    "id": "demo-quiz-187",
+    "id": "demo-quiz-187", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "النكاح",
     "level": "متوسط",
@@ -1345,7 +1345,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "المهر الذي يبذله الزوج للزوجة، وهو حق واجب لها خالص لا لأوليائها؛ قال تعالى: ﴿وَءَاتُوا۟ ٱلنِّسَآءَ صَدُقَٰتِهِنَّ نِحْلَةًۭ﴾ [النساء: ٤]. ولا حدّ لأكثره اتفاقًا، وفي أقلّه خلاف: لا حدّ لأقله عند الشافعية والحنابلة، وأقلّه عشرة دراهم عند الحنفية، وربع دينار عند المالكية"
   },
   {
-    "id": "demo-quiz-188",
+    "id": "demo-quiz-188", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "المواريث",
     "level": "صعب",
@@ -1353,7 +1353,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "النصف فرضًا؛ لقوله تعالى: ﴿وَإِن كَانَتْ وَٰحِدَةًۭ فَلَهَا ٱلنِّصْفُ﴾ [النساء: ١١]، ويكون الباقي بعد الفروض لمن يستحقه من العصبة. فإن وُجد معها ابن سقط فرضها وصارت عصبة به: ﴿لِلذَّكَرِ مِثْلُ حَظِّ ٱلْأُنثَيَيْنِ﴾"
   },
   {
-    "id": "demo-quiz-189",
+    "id": "demo-quiz-189", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "المواريث",
     "level": "صعب",
@@ -1361,7 +1361,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الثمن؛ لقوله تعالى: ﴿فَإِن كَانَ لَكُمْ وَلَدٌۭ فَلَهُنَّ ٱلثُّمُنُ مِمَّا تَرَكْتُم﴾ [النساء: ١٢]، وذلك من بعد الوصية والدين. وإن تعددت الزوجات اشتركن في الثمن نفسه لا لكل واحدة ثمن. فإن لم يكن له ولد فلهن الربع"
   },
   {
-    "id": "demo-quiz-190",
+    "id": "demo-quiz-190", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصلاة",
     "level": "متوسط",
@@ -1370,7 +1370,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   // ── الصالحون (إضافة) ──────────────────────────────────────
   {
-    "id": "demo-quiz-191",
+    "id": "demo-quiz-191", "documentation_status": "unsourced",
     "section": "الصالحون",
     "category": "العلماء",
     "level": "متوسط",
@@ -1378,7 +1378,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أبو حامد الغزالي"
   },
   {
-    "id": "demo-quiz-192",
+    "id": "demo-quiz-192", "documentation_status": "unsourced",
     "section": "الصالحون",
     "category": "العلماء",
     "level": "متوسط",
@@ -1386,7 +1386,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أحمد بن عبد الحليم بن تيمية الحرّاني (٦٦١-٧٢٨هـ). و«مجموع الفتاوى» ليس كتابًا صنّفه بنفسه، وإنما هو جمعٌ لرسائله وفتاواه قام به الشيخ عبد الرحمن بن قاسم النجدي وابنه محمد بعد قرون من وفاته. ولقب «شيخ الإسلام» أُطلق على غيره من العلماء أيضًا"
   },
   {
-    "id": "demo-quiz-193",
+    "id": "demo-quiz-193", "documentation_status": "unsourced",
     "section": "الصالحون",
     "category": "العلماء",
     "level": "متوسط",
@@ -1394,7 +1394,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "محمد بن أبي بكر الزُّرَعي ثم الدمشقي، المعروف بابن قيِّم الجوزية (٦٩١-٧٥١هـ)، تلميذ ابن تيمية. ونسبته إلى أن أباه كان قيِّمًا على المدرسة الجوزية بدمشق، فالصواب في اسمه «ابن قيِّم الجوزية» لا «ابن القيم الجوزية»"
   },
   {
-    "id": "demo-quiz-194",
+    "id": "demo-quiz-194", "documentation_status": "unsourced",
     "section": "الصالحون",
     "category": "التفسير",
     "level": "متوسط",
@@ -1402,7 +1402,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "محمد بن جرير الطبري (٢٢٤-٣١٠هـ)، واسم تفسيره كاملًا «جامع البيان عن تأويل آي القرآن»"
   },
   {
-    "id": "demo-quiz-195",
+    "id": "demo-quiz-195", "documentation_status": "unsourced",
     "section": "الصالحون",
     "category": "التفسير",
     "level": "متوسط",
@@ -1410,7 +1410,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "إسماعيل بن عمر بن كثير القرشي الدمشقي (٧٠٠-٧٧٤هـ)، واسم كتابه «تفسير القرآن العظيم»"
   },
   {
-    "id": "demo-quiz-196",
+    "id": "demo-quiz-196", "documentation_status": "unsourced",
     "section": "الصالحون",
     "category": "الفقه",
     "level": "متوسط",
@@ -1418,7 +1418,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الإمام الشافعي"
   },
   {
-    "id": "demo-quiz-197",
+    "id": "demo-quiz-197", "documentation_status": "unsourced",
     "section": "الصالحون",
     "category": "الحديث",
     "level": "صعب",
@@ -1426,7 +1426,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "لقبٌ أُطلق على جماعة من كبار الحفاظ لا على واحد بعينه، منهم شعبة بن الحجاج وسفيان الثوري وعبد الله بن المبارك وأحمد بن حنبل والبخاري والدارقطني؛ وأشهر من ينصرف إليه اللقب عند الإطلاق: الإمام البخاري"
   },
   {
-    "id": "demo-quiz-198",
+    "id": "demo-quiz-198", "documentation_status": "unsourced",
     "section": "الصالحون",
     "category": "العلماء",
     "level": "صعب",
@@ -1434,7 +1434,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الإمام محمد بن إدريس الشافعي (١٥٠-٢٠٤هـ)، وُلد سنة وفاة أبي حنيفة. وعدّه جماعة من العلماء مجدّد رأس المئة الثانية، وقيل بل هو الإمام أحمد بن حنبل؛ والمسألة اجتهادية في تنزيل حديث «إن الله يبعث لهذه الأمة على رأس كل مئة سنة من يجدد لها دينها» (أخرجه أبو داود ٤٢٩١)"
   },
   {
-    "id": "demo-quiz-199",
+    "id": "demo-quiz-199", "documentation_status": "unsourced",
     "section": "الصالحون",
     "category": "العلماء",
     "level": "متوسط",
@@ -1442,7 +1442,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "يحيى بن شرف النووي"
   },
   {
-    "id": "demo-quiz-200",
+    "id": "demo-quiz-200", "documentation_status": "unsourced",
     "section": "الصالحون",
     "category": "العلماء",
     "level": "صعب",
@@ -1451,7 +1451,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   // ── الألغاز الشرعية (إضافة) ──────────────────────────────
   {
-    "id": "demo-quiz-201",
+    "id": "demo-quiz-201", "documentation_status": "unsourced",
     "section": "الألغاز الشرعية",
     "category": "عام",
     "level": "متوسط",
@@ -1459,7 +1459,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الحج"
   },
   {
-    "id": "demo-quiz-202",
+    "id": "demo-quiz-202", "documentation_status": "unsourced",
     "section": "الألغاز الشرعية",
     "category": "عام",
     "level": "متوسط",
@@ -1467,7 +1467,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "ليلة القدر"
   },
   {
-    "id": "demo-quiz-203",
+    "id": "demo-quiz-203", "documentation_status": "unsourced",
     "section": "الألغاز الشرعية",
     "category": "عام",
     "level": "متوسط",
@@ -1475,7 +1475,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "المال؛ لقوله ﷺ: «ما نقصت صدقةٌ من مال» (أخرجه مسلم ٢٥٨٨ من حديث أبي هريرة)، فالصدقة لا تنقص المال بل يُخلف الله عليه بالبركة والأجر"
   },
   {
-    "id": "demo-quiz-204",
+    "id": "demo-quiz-204", "documentation_status": "unsourced",
     "section": "الألغاز الشرعية",
     "category": "عام",
     "level": "صعب",
@@ -1483,7 +1483,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "حسن الخُلُق؛ لقوله ﷺ: «ما من شيء أثقل في ميزان المؤمن يوم القيامة من خُلُق حسن» (أخرجه أبو داود ٤٧٩٩ والترمذي ٢٠٠٢ وقال: حسن صحيح، من حديث أبي الدرداء)"
   },
   {
-    "id": "demo-quiz-205",
+    "id": "demo-quiz-205", "documentation_status": "unsourced",
     "section": "الألغاز الشرعية",
     "category": "عام",
     "level": "متوسط",
@@ -1491,7 +1491,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "«لا إله إلا الله»؛ لقوله ﷺ: «من كان آخر كلامه لا إله إلا الله دخل الجنة» (أخرجه أبو داود ٣١١٦ من حديث معاذ بن جبل رضي الله عنه، وحسّنه الألباني)"
   },
   {
-    "id": "demo-quiz-206",
+    "id": "demo-quiz-206", "documentation_status": "unsourced",
     "section": "الألغاز الشرعية",
     "category": "عام",
     "level": "متوسط",
@@ -1499,7 +1499,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "صلاة العشاء في جماعة؛ لقوله ﷺ: «من صلّى العشاء في جماعة فكأنما قام نصف الليل، ومن صلّى الصبح في جماعة فكأنما صلّى الليل كله» (أخرجه مسلم ٦٥٦ من حديث عثمان بن عفان رضي الله عنه)"
   },
   {
-    "id": "demo-quiz-207",
+    "id": "demo-quiz-207", "documentation_status": "unsourced",
     "section": "الألغاز الشرعية",
     "category": "عام",
     "level": "متوسط",
@@ -1507,7 +1507,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "يوم عرفة (التاسع من ذي الحجة)؛ قال ﷺ في صيامه: «أحتسب على الله أن يُكفّر السنة التي قبله والسنة التي بعده» (أخرجه مسلم ١١٦٢ من حديث أبي قتادة، وفيه أن صيام عاشوراء يُكفّر السنة الماضية). والتكفير للصغائر، وصيام عرفة مستحب لغير الحاج، وأما الحاج بعرفة فالسنة له فطره كما في حديث أم الفضل (البخاري ١٩٨٨، مسلم ١١٢٣)"
   },
   {
-    "id": "demo-quiz-208",
+    "id": "demo-quiz-208", "documentation_status": "unsourced",
     "section": "الألغاز الشرعية",
     "category": "عام",
     "level": "سهل",
@@ -1515,7 +1515,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "المدينة النبوية (المنورة)، وكانت تُسمى قبل الهجرة يثرب؛ وفي فضلها قوله ﷺ: «لا يصبر على لأوائها وشدتها أحد إلا كنتُ له شفيعًا أو شهيدًا يوم القيامة» (أخرجه مسلم في كتاب الحج، باب الترغيب في سكنى المدينة والصبر على لأوائها)"
   },
   {
-    "id": "demo-quiz-209",
+    "id": "demo-quiz-209", "documentation_status": "unsourced",
     "section": "الألغاز الشرعية",
     "category": "عام",
     "level": "متوسط",
@@ -1523,7 +1523,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "نوح عليه السلام؛ قال تعالى: ﴿وَلَقَدْ أَرْسَلْنَا نُوحًا إِلَىٰ قَوْمِهِۦ فَلَبِثَ فِيهِمْ أَلْفَ سَنَةٍ إِلَّا خَمْسِينَ عَامًۭا﴾ [العنكبوت: ١٤]. والمذكور في الآية هو مدة لبثه داعيًا في قومه لا مجموع عمره، فمجموع عمره لم يرد فيه نص قاطع وإنما هي أقوال للمفسرين"
   },
   {
-    "id": "demo-quiz-210",
+    "id": "demo-quiz-210", "documentation_status": "unsourced",
     "section": "الألغاز الشرعية",
     "category": "عام",
     "level": "صعب",
@@ -1532,7 +1532,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   // ── الأخلاق الإسلامية ─────────────────────────────────────
   {
-    "id": "demo-quiz-211",
+    "id": "demo-quiz-211", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "الأخلاق العامة",
     "level": "سهل",
@@ -1540,7 +1540,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "إتمام صالح الأخلاق ومكارمها؛ لقوله ﷺ: «إنما بُعثتُ لأتمم صالح الأخلاق» (أخرجه أحمد في المسند والبخاري في «الأدب المفرد» ٢٧٣ من حديث أبي هريرة، وصححه الألباني)، وجاء عند البيهقي بلفظ «مكارم الأخلاق»"
   },
   {
-    "id": "demo-quiz-212",
+    "id": "demo-quiz-212", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "الأخلاق العامة",
     "level": "سهل",
@@ -1548,7 +1548,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "وصفه بأنه صدقة، قال ﷺ: «تبسُّمك في وجه أخيك لك صدقة». وهو جزء من حديث أطول عدّد فيه أبواب الصدقة: «...وأمرك بالمعروف ونهيك عن المنكر صدقة، وإرشادك الرجل في أرض الضلال لك صدقة، وإماطتك الحجر والشوكة والعظم عن الطريق لك صدقة، وإفراغك من دلوك في دلو أخيك لك صدقة». رواه الترمذي عن أبي ذر الغفاري رضي الله عنه"
   },
   {
-    "id": "demo-quiz-213",
+    "id": "demo-quiz-213", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "الأخلاق العامة",
     "level": "متوسط",
@@ -1556,7 +1556,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "هي ذكرك أخاك بما يكره وهو غائب، ولا تكون غيبةً إلا إذا كان ما قيل فيه حقاً؛ فإن كان باطلاً فهو البهتان وهو أشدّ. قال ﷺ: «أتدرون ما الغيبة؟ قالوا: الله ورسوله أعلم. قال: ذكرك أخاك بما يكره. قيل: أفرأيت إن كان في أخي ما أقول؟ قال: إن كان فيه ما تقول فقد اغتبته، وإن لم يكن فيه فقد بهتَّه». رواه مسلم"
   },
   {
-    "id": "demo-quiz-215",
+    "id": "demo-quiz-215", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "بر الوالدين",
     "level": "سهل",
@@ -1564,7 +1564,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "واجب وهو من أعظم القربات إلى الله، قال تعالى: ﴿وَقَضَىٰ رَبُّكَ أَلَّا تَعْبُدُوا إِلَّا إِيَّاهُ وَبِالْوَالِدَيْنِ إِحْسَانًا﴾ [الإسراء: 23]. وضدّه — العقوق — من أكبر الكبائر، قال ﷺ: «ألا أنبئكم بأكبر الكبائر؟ الإشراك بالله، وعقوق الوالدين، وشهادة الزور» متفق عليه"
   },
   {
-    "id": "demo-quiz-216",
+    "id": "demo-quiz-216", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "بر الوالدين",
     "level": "متوسط",
@@ -1572,7 +1572,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الوالدان؛ قرن الإحسان إليهما بعبادته وحده في قوله: ﴿وَقَضَىٰ رَبُّكَ أَلَّا تَعْبُدُوا إِلَّا إِيَّاهُ وَبِالْوَالِدَيْنِ إِحْسَانًا﴾ [الإسراء: 23]، وقرن شكرهما بشكره في قوله: ﴿أَنِ اشْكُرْ لِي وَلِوَالِدَيْكَ إِلَيَّ الْمَصِيرُ﴾ [لقمان: 14]"
   },
   {
-    "id": "demo-quiz-217",
+    "id": "demo-quiz-217", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "الصدق والأمانة",
     "level": "سهل",
@@ -1580,7 +1580,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الصادق الأمين"
   },
   {
-    "id": "demo-quiz-218",
+    "id": "demo-quiz-218", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "الصدق والأمانة",
     "level": "متوسط",
@@ -1588,7 +1588,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "قال ﷺ: «آية المنافق ثلاث: إذا حدَّث كذب، وإذا وعد أخلف، وإذا اؤتمن خان» متفق عليه. وجاء في رواية أخرى بلفظ: «أربع من كُنّ فيه كان منافقاً خالصاً: إذا حدّث كذب، وإذا عاهد غدر، وإذا وعد أخلف، وإذا خاصم فجر» متفق عليه"
   },
   {
-    "id": "demo-quiz-219",
+    "id": "demo-quiz-219", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور والآيات",
     "level": "سهل",
@@ -1596,7 +1596,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "سورة الجن (السورة الثانية والسبعون). ولا يعني ذلك انفرادها بذكرهم، فقد ورد لفظ «الجن» في إحدى عشرة سورة: الأنعام والأعراف والإسراء والكهف والنمل وسبأ وفصلت والأحقاف والذاريات والرحمن والجن"
   },
   {
-    "id": "demo-quiz-220",
+    "id": "demo-quiz-220", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور والآيات",
     "level": "سهل",
@@ -1604,7 +1604,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "سبع آيات، ومأخذ ذلك قوله تعالى: ﴿وَلَقَدْ آتَيْنَاكَ سَبْعًا مِّنَ الْمَثَانِي وَالْقُرْآنَ الْعَظِيمَ﴾ [الحجر: 87]. والعدد سبع لا خلاف فيه، وإنما الخلاف في وجه العدّ: فمن عدّ البسملة آيةً منها (وهو مذهب الشافعية وعدّ أهل مكة والكوفة، وعليه المصحف المتداول) جعل ﴿صِرَاطَ الَّذِينَ أَنْعَمْتَ عَلَيْهِمْ...﴾ آيةً واحدة، ومن لم يعدّها منها (وهو مذهب المالكية والحنفية وعدّ أهل المدينة والبصرة والشام) عدّ ما بعدها آيتين؛ فيتفق العدد على القولين"
   },
   {
-    "id": "demo-quiz-221",
+    "id": "demo-quiz-221", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "نزول القرآن",
     "level": "متوسط",
@@ -1612,7 +1612,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "«اقرأ»؛ فأول ما نزل من القرآن صدر سورة العلق: ﴿اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ * خَلَقَ الْإِنسَانَ مِنْ عَلَقٍ * اقْرَأْ وَرَبُّكَ الْأَكْرَمُ * الَّذِي عَلَّمَ بِالْقَلَمِ * عَلَّمَ الْإِنسَانَ مَا لَمْ يَعْلَمْ﴾ [العلق: 1-5]، كما في حديث عائشة رضي الله عنها في بدء الوحي — رواه البخاري في أول صحيحه ومسلم. وهذا في أول ما نزل مطلقًا؛ وأما أول ما نزل بعد فترة الوحي فصدر سورة المدثر"
   },
   {
-    "id": "demo-quiz-222",
+    "id": "demo-quiz-222", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "نزول القرآن",
     "level": "متوسط",
@@ -1620,7 +1620,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "زيد بن ثابت رضي الله عنه، وكان على رأس اللجنة ومعه نفرٌ من الصحابة كلَّفهم عثمان رضي الله عنه بالنسخ من الصحف التي كانت عند أم المؤمنين حفصة؛ وعثمان هو الذي أمر بالنسخ وأرسل المصاحف إلى الأمصار"
   },
   {
-    "id": "demo-quiz-223",
+    "id": "demo-quiz-223", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "نزول القرآن",
     "level": "متوسط",
@@ -1628,7 +1628,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "في ستة أيام، وقد تكرّر ذلك في سبعة مواضع من القرآن: الأعراف 54، ويونس 3، وهود 7، والفرقان 59، والسجدة 4، وق 38، والحديد 4؛ قال تعالى: ﴿إِنَّ رَبَّكُمُ اللَّهُ الَّذِي خَلَقَ السَّمَاوَاتِ وَالْأَرْضَ فِي سِتَّةِ أَيَّامٍ ثُمَّ اسْتَوَىٰ عَلَى الْعَرْشِ﴾ [الأعراف: 54]"
   },
   {
-    "id": "demo-quiz-224",
+    "id": "demo-quiz-224", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور والآيات",
     "level": "متوسط",
@@ -1636,7 +1636,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "سورة الكهف"
   },
   {
-    "id": "demo-quiz-225",
+    "id": "demo-quiz-225", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور والآيات",
     "level": "متوسط",
@@ -1644,7 +1644,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "سورة البروج"
   },
   {
-    "id": "demo-quiz-226",
+    "id": "demo-quiz-226", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور والآيات",
     "level": "سهل",
@@ -1652,7 +1652,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "سورة المسد (تبّت يدا أبي لهب)"
   },
   {
-    "id": "demo-quiz-227",
+    "id": "demo-quiz-227", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور والآيات",
     "level": "متوسط",
@@ -1660,7 +1660,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الحواميم السبع، وهي سبع سور متتالية في ترتيب المصحف من رقم 40 إلى 46: غافر، وفصلت، والشورى (وفيها ﴿حم * عسق﴾)، والزخرف، والدخان، والجاثية، والأحقاف"
   },
   {
-    "id": "demo-quiz-228",
+    "id": "demo-quiz-228", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "الأنبياء في القرآن",
     "level": "متوسط",
@@ -1668,7 +1668,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "خمساً وعشرين مرة، موزّعة على إحدى عشرة سورة. وهذا في ذكره باسمه «عيسى» خاصةً؛ فقد ذُكر أيضاً بأوصافه وألقابه في مواضع أخرى مثل «المسيح» و«ابن مريم» و«كلمته» و«روح منه»"
   },
   {
-    "id": "demo-quiz-229",
+    "id": "demo-quiz-229", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور والآيات",
     "level": "متوسط",
@@ -1676,7 +1676,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أصل التسمية من قوله تعالى: ﴿وَلَقَدْ آتَيْنَاكَ سَبْعًا مِّنَ الْمَثَانِي وَالْقُرْآنَ الْعَظِيمَ﴾ [الحجر: 87]. وأشهر ما قيل في وجهها: أنها تُثنى أي تُكرر في كل ركعة من الصلاة، وهو أحد أقوال أهل العلم في المسألة"
   },
   {
-    "id": "demo-quiz-230",
+    "id": "demo-quiz-230", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور والآيات",
     "level": "سهل",
@@ -1684,7 +1684,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "آية الدَّين، وهي الآية 282 من سورة البقرة، ومطلعها: ﴿يَا أَيُّهَا الَّذِينَ آمَنُوا إِذَا تَدَايَنتُم بِدَيْنٍ إِلَىٰ أَجَلٍ مُّسَمًّى فَاكْتُبُوهُ﴾. وسُمّيت بذلك لأنها أطول آية في كتاب الله وفيها أحكام توثيق الدَّين بالكتابة والإشهاد والرهن"
   },
   {
-    "id": "demo-quiz-231",
+    "id": "demo-quiz-231", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور والآيات",
     "level": "صعب",
@@ -1692,7 +1692,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "قوله تعالى: ﴿وَاتَّقُوا يَوْمًا تُرْجَعُونَ فِيهِ إِلَى اللَّهِ ثُمَّ تُوَفَّىٰ كُلُّ نَفْسٍ مَّا كَسَبَتْ وَهُمْ لَا يُظْلَمُونَ﴾ [البقرة: 281]"
   },
   {
-    "id": "demo-quiz-233",
+    "id": "demo-quiz-233", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "فضائل السور",
     "level": "متوسط",
@@ -1700,7 +1700,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "سورة السجدة في الركعة الأولى، وسورة الإنسان في الثانية؛ ثبت ذلك من فعله ﷺ في حديث أبي هريرة رضي الله عنه: «كان النبي ﷺ يقرأ في صلاة الفجر يوم الجمعة: الم تنزيل السجدة، وهل أتى على الإنسان» متفق عليه. وهو استحباب لا وجوب، وقصده اتّباع السنة لا السجدة وحدها؛ وقد كره بعض أهل العلم — منهم الإمام مالك — المداومة عليهما خشية أن يظن العامة وجوبهما"
   },
   {
-    "id": "demo-quiz-234",
+    "id": "demo-quiz-234", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "علوم القرآن",
     "level": "صعب",
@@ -1708,7 +1708,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "المشهور المتداول في كتب الإحصاء القرآني نحو 2699 مرة، ولا يصح الجزم برقم واحد؛ فالأعداد تختلف باختلاف طريقة العدّ: هل تُحسب الصور المسبوقة بحرف (والله، بالله، لله، ولله، تالله، فالله، فلله) مع اللفظ المجرد أم لا، وهل يُعدّ «اللهم» منه. وبعدٍّ آليّ مباشر على نص المصحف: ورد اللفظ مجرداً «الله» 2265 مرة، ويبلغ المجموع مع سائر صوره المسبوقة بحرف نحو 2800 موضع"
   },
   {
-    "id": "demo-quiz-235",
+    "id": "demo-quiz-235", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "علوم القرآن",
     "level": "متوسط",
@@ -1716,7 +1716,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "المعتمد عند جمهور أهل علوم القرآن اعتبار زمن النزول: فالمكي ما نزل قبل الهجرة ولو نزل بغير مكة، والمدني ما نزل بعد الهجرة ولو نزل بمكة؛ ولذلك عُدَّ ما نزل عام الفتح بمكة وما نزل بعرفة في حجة الوداع مدنيًّا. وثمّ اصطلاحان آخران أقلّ اعتبارًا: اعتبار مكان النزول (فما نزل بمكة وما حولها مكي، وما نزل بالمدينة وما حولها مدني)، واعتبار المخاطَبين (فما صُدِّر بـ«يا أيها الناس» مكي، وما صُدِّر بـ«يا أيها الذين آمنوا» مدني) — وهذان لا يطّردان"
   },
   {
-    "id": "demo-quiz-236",
+    "id": "demo-quiz-236", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "علوم القرآن",
     "level": "صعب",
@@ -1724,7 +1724,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "قوله تعالى: ﴿رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ﴾ [البقرة: 201]؛ ففي حديث أنس بن مالك رضي الله عنه أن أكثر دعاء النبي ﷺ كان بهذه الدعوة — متفق عليه"
   },
   {
-    "id": "demo-quiz-237",
+    "id": "demo-quiz-237", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور والآيات",
     "level": "صعب",
@@ -1732,7 +1732,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "سورة النصر، وهي مدنية باتفاق؛ نزلت في أواخر حياته ﷺ. ولا يصح وصفها بأنها المدنية الوحيدة في جزء عمّ، فقد وُصفت بالمدنية أيضاً — على ما جرى عليه المصحف المتداول وبيانات المصحف المعتمدة في المنصة — سورتا البيّنة والزلزلة، وكلتاهما مختلَف في نزولها بين أهل العلم؛ كما اختُلف في المطفِّفين والفلق والناس"
   },
   {
-    "id": "demo-quiz-238",
+    "id": "demo-quiz-238", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "علوم القرآن",
     "level": "صعب",
@@ -1740,7 +1740,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الرِّبا؛ ورد لفظه ثماني مرات: سبعاً معرَّفاً بـ«ال» في البقرة 275 (ثلاث مرات) و276 و278، وآل عمران 130، والنساء 161، ومرةً نكرةً في الروم 39: ﴿وَمَا آتَيْتُم مِّن رِّبًا لِّيَرْبُوَ فِي أَمْوَالِ النَّاسِ فَلَا يَرْبُو عِندَ اللَّهِ﴾. وموضع التصريح بتحريمه قوله تعالى: ﴿وَأَحَلَّ اللَّهُ الْبَيْعَ وَحَرَّمَ الرِّبَا﴾ [البقرة: 275]"
   },
   {
-    "id": "demo-quiz-239",
+    "id": "demo-quiz-239", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الفتوحات",
     "level": "متوسط",
@@ -1748,7 +1748,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عمرو بن العاص رضي الله عنه، اختطّها نحو سنة 20هـ/641م بعد فتح حصن بابليون، فكانت أول مدينة أسسها المسلمون في مصر وأول عواصمها الإسلامية. وسُميت بالفسطاط — ومعناه الخيمة أو مجتمع أهل الكورة — لأن مسجد عمرو بُني في موضع فسطاطه، وهو أول مسجد بُني في مصر وإفريقية"
   },
   {
-    "id": "demo-quiz-240",
+    "id": "demo-quiz-240", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "المؤسسات الإسلامية",
     "level": "متوسط",
@@ -1756,7 +1756,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "القرويين بمدينة فاس في المغرب؛ أسّستها فاطمة الفهرية سنة 245هـ/859م مسجداً جامعاً، ثم صارت حلقات علم فمؤسسة تعليمية جامعة، وهي مسجَّلة لدى اليونسكو وموسوعة غينيس بوصفها أقدم مؤسسة تعليمية ما زالت تمنح الشهادات. ووصفها بـ«الجامعة» بالمعنى النظامي الحديث متأخر عن نشأتها. ويليها في القدم الجامع الأزهر بالقاهرة (بُني سنة 359هـ/970م)"
   },
   {
-    "id": "demo-quiz-241",
+    "id": "demo-quiz-241", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الأيوبيون",
     "level": "سهل",
@@ -1764,7 +1764,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "السلطان صلاح الدين يوسف بن أيوب (532-589هـ)؛ كانت حطين في ربيع الآخر سنة 583هـ/تموز 1187م قرب طبرية، وانكسر بها جيش الصليبيين، فتتابعت له فتوح الساحل حتى استُرِدَّ بيت المقدس في رجب من السنة نفسها/تشرين الأول 1187م، بعد نحو 88 سنة ميلادية (91 سنة هجرية) من احتلاله سنة 492هـ/1099م"
   },
   {
-    "id": "demo-quiz-242",
+    "id": "demo-quiz-242", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدول الإسلامية",
     "level": "متوسط",
@@ -1772,7 +1772,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "تعاقبت لها عواصم ولم تكن القاهرة أولها: قامت أولاً بإفريقية (تونس اليوم) واتخذت رقّادة ثم بنى مؤسسها مدينة المهدية سنة 308هـ فصارت عاصمتها، ثم المنصورية (صبرة) قرب القيروان، ثم انتقل مركزها إلى مصر بعد أن فتحها القائد جوهر الصقلي سنة 358هـ/969م فبنى مدينة القاهرة، فصارت عاصمة الدولة إلى سقوطها سنة 567هـ/1171م"
   },
   {
-    "id": "demo-quiz-243",
+    "id": "demo-quiz-243", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدول الإسلامية",
     "level": "متوسط",
@@ -1780,7 +1780,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أبو محمد عبيد الله المهدي؛ أُعلنت دولته بإفريقية سنة 297هـ/909م بعد أن مهّد له داعيته أبو عبد الله الشيعي بإسقاط دولة الأغالبة، وتلقّب بـ«المهدي أمير المؤمنين»، وبنى مدينة المهدية. والدولة إسماعيلية المذهب، وقد نازع كثير من المؤرخين وأهل العلم في صحة انتسابهم إلى فاطمة رضي الله عنها، ومن أشهر ما يُذكر في ذلك المحضر الذي كُتب ببغداد سنة 402هـ في إنكار نسبهم"
   },
   {
-    "id": "demo-quiz-244",
+    "id": "demo-quiz-244", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الفتوحات",
     "level": "سهل",
@@ -1788,7 +1788,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "محمد بن القاسم الثقفي، وجّهه الحجاج بن يوسف والي العراق سنة 92هـ/711م في خلافة الوليد بن عبد الملك، ففتح الدَّيبُل ثم بلاد السند والمُلتان. والذي فتحه هو السند (غربي شبه القارة) لا شبه القارة كلها؛ وإنما امتدّ الإسلام إلى داخلها بعد ذلك بقرون على أيدي الغزنويين (محمود الغزنوي) ثم الغوريين ثم دولة المغول المسلمين في الهند. وقد عُزل محمد بن القاسم بعد موت الحجاج والوليد، وسُجن فمات في خلافة سليمان بن عبد الملك"
   },
   {
-    "id": "demo-quiz-245",
+    "id": "demo-quiz-245", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "المعارك",
     "level": "متوسط",
@@ -1796,7 +1796,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "معركة القادسية سنة 15هـ/636م وقيل 14هـ؛ أمير المسلمين فيها سعد بن أبي وقاص رضي الله عنه بتكليف من عمر بن الخطاب رضي الله عنه، وقائد الفرس رستم. وبها استقرّ السواد (العراق) للمسلمين وسقطت المدائن بعدها. وأما المعركة التي أنهت مقاومة الدولة الساسانية في المشرق فهي نهاوند سنة 21هـ، وهي التي سمّاها المؤرخون «فتح الفتوح»"
   },
   {
-    "id": "demo-quiz-246",
+    "id": "demo-quiz-246", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الخلفاء",
     "level": "متوسط",
@@ -1804,7 +1804,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عمر بن الخطاب رضي الله عنه، وسّعه سنة 17هـ، ثم وسّعه عثمان بن عفان رضي الله عنه سنة 29هـ فبناه بالحجارة المنقوشة. وينبّه على أن أول زيادة في المسجد كانت من النبي ﷺ نفسه بعد فتح خيبر، فتوسعة عمر رضي الله عنه هي أول توسعة بعده ﷺ"
   },
   {
-    "id": "demo-quiz-247",
+    "id": "demo-quiz-247", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "المعارك",
     "level": "سهل",
@@ -1812,7 +1812,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "في السابع عشر من رمضان سنة اثنتين للهجرة (رمضان 2هـ / مارس 624م) على المشهور عند أهل السير؛ وسمّى الله تعالى يومها «يوم الفرقان» في قوله: ﴿وَمَا أَنْزَلْنَا عَلَى عَبْدِنَا يَوْمَ الْفُرْقَانِ يَوْمَ الْتَقَى الْجَمْعَانِ﴾ [الأنفال: 41]، وقال: ﴿وَلَقَدْ نَصَرَكُمُ اللَّهُ بِبَدْرٍ وَأَنْتُمْ أَذِلَّةٌ﴾ [آل عمران: 123]. وكان المسلمون فيها ثلاث مئة وبضعة عشر رجلًا، ثبت ذلك في البخاري عن البراء بن عازب رضي الله عنه"
   },
   {
-    "id": "demo-quiz-248",
+    "id": "demo-quiz-248", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدولة الإسلامية",
     "level": "متوسط",
@@ -1820,7 +1820,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "المدينة المنورة (وكانت تُسمّى يثرب قبل الهجرة)؛ اتخذها النبي ﷺ دار الهجرة ومركز الدولة سنة 1هـ، وبقيت عاصمةً في خلافة أبي بكر وعمر وعثمان رضي الله عنهم، ثم صار مركز الخلافة إلى الكوفة في خلافة علي بن أبي طالب رضي الله عنه سنة 36هـ، ثم إلى دمشق في الدولة الأموية"
   },
   {
-    "id": "demo-quiz-249",
+    "id": "demo-quiz-249", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الفتوحات",
     "level": "متوسط",
@@ -1828,7 +1828,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "سعد بن أبي وقاص رضي الله عنه؛ اختطّ الكوفة سنة 17هـ بأمر عمر بن الخطاب رضي الله عنه لتكون منزلًا لجيوش المسلمين. وأما فتح العراق فلم ينفرد به سعد: بدأه خالد بن الوليد رضي الله عنه بفتح الحيرة سنة 12هـ، وتابعه المثنى بن حارثة الشيباني رضي الله عنه، ثم حسمه سعد رضي الله عنه بالقادسية"
   },
   {
-    "id": "demo-quiz-250",
+    "id": "demo-quiz-250", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "المعارك",
     "level": "صعب",
@@ -1836,7 +1836,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "معركة بلاط الشهداء سنة 114هـ/732م، بين تور (Tours) وبواتييه (Poitiers) في بلاد الفرنجة؛ قائد المسلمين عبد الرحمن الغافقي والي الأندلس واستُشهد فيها، وقائد الفرنجة شارل مارتل. ولم تكن نهاية الوجود الإسلامي شمال جبال البرانس: بقيت أربونة (Narbonne) وأقاليم سبتمانيا بأيدي المسلمين بعدها نحو سبع وعشرين سنة (حتى 759م)، وتكررت الحملات، لكنها كانت منتهى التوسّع المنظَّم في داخل بلاد الغال"
   },
   {
-    "id": "demo-quiz-251",
+    "id": "demo-quiz-251", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الخلفاء",
     "level": "متوسط",
@@ -1844,7 +1844,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عمر بن الخطاب رضي الله عنه؛ حاصر بيت المقدس أبو عبيدة بن الجراح رضي الله عنه، فاشترط أهلها أن يتسلّمها أمير المؤمنين نفسه، فقدم عمر رضي الله عنه من الجابية وكتب لهم العهدة المعروفة بـ«العهدة العمرية» في تأمينهم على أنفسهم وكنائسهم، وذلك سنة 15هـ وقيل 16هـ"
   },
   {
-    "id": "demo-quiz-252",
+    "id": "demo-quiz-252", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدول الإسلامية",
     "level": "صعب",
@@ -1852,7 +1852,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أبو سلمة حفص بن سليمان الخلّال، وكان يُلقَّب «وزير آل محمد»؛ قام بأمر الوزارة للخليفة أبي العباس السفاح، ثم قُتل سنة 132هـ لِما نُسب إليه من الميل إلى العلويين. وينبّه على أن الوزارة بنظامها المكتمل واستقلال ديوانها إنما تأخّرت إلى عهد البرامكة في خلافة أبي جعفر المنصور ومن بعده"
   },
   {
-    "id": "demo-quiz-254",
+    "id": "demo-quiz-254", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "السيرة النبوية",
     "level": "متوسط",
@@ -1860,7 +1860,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "المشهور عند أهل السير والمغازي (كابن إسحاق) سبع وعشرون غزوة، قاتل في تسع منها. وثبت في الصحيحين عن زيد بن أرقم رضي الله عنه أنه غزا ﷺ تسع عشرة غزوة، وجمع العلماء بأن الاختلاف راجع إلى اختلاف المعدود لا إلى تعارض حقيقي: فمن عدّ المنازل والسرايا مستقلةً كثّر العدد، ومن اقتصر على ما اشتُهر منها غزوةً قلّله"
   },
   {
-    "id": "demo-quiz-255",
+    "id": "demo-quiz-255", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدول الإسلامية",
     "level": "صعب",
@@ -1868,7 +1868,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الأمين محمد بن هارون الرشيد؛ قُتل سنة 198هـ/813م في حصار بغداد أثناء الفتنة بينه وبين أخيه المأمون، فصارت الخلافة إلى المأمون. ولم يقتله المأمون بيده ولا كان حاضرًا — كان بخُراسان — وإنما قتله رجال جيشه الذي قاده طاهر بن الحسين، فالخلط بين الآمر والمنفِّذ خطأ شائع في هذه الواقعة"
   },
   {
-    "id": "demo-quiz-256",
+    "id": "demo-quiz-256", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدول الإسلامية",
     "level": "متوسط",
@@ -1876,7 +1876,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الدولة الأموية؛ وبلغت أقصى اتساعها في عهد الوليد بن عبد الملك (86-96هـ) الذي تمّ فيه فتح الأندلس وبلاد السند وما وراء النهر، فامتدّت من الأندلس والمغرب غربًا إلى تخوم الصين وحدود الهند شرقًا — أي إلى أطراف الصين لا إلى الصين نفسها. وتقديرات مساحتها عند المؤرخين المعاصرين متفاوتة، وهي تُعدّ من أوسع الدول في التاريخ مساحةً"
   },
   {
-    "id": "demo-quiz-257",
+    "id": "demo-quiz-257", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "إسلام الصحابة",
     "level": "متوسط",
@@ -1884,7 +1884,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عمر بن الخطاب رضي الله عنه. وقصة خروجه متوشحًا سيفه، ولقائه نعيم بن عبد الله، ودخوله على أخته فاطمة، وقراءته الصحيفة التي فيها سورة طه — إنما هي من رواية أهل السير (ابن إسحاق ومن بعده) لا من الصحيحين، فلا يُجزم بتفاصيلها جزمَ الحديث المرفوع الصحيح. وأما عزّة الإسلام بإسلامه فمما جاء في السنن من دعائه ﷺ: «اللهم أعزّ الإسلام بأحبّ هذين الرجلين إليك: بأبي جهل أو بعمر بن الخطاب» أخرجه الترمذي وابن ماجه من حديث ابن عمر رضي الله عنهما"
   },
   {
-    "id": "demo-quiz-258",
+    "id": "demo-quiz-258", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "فضائل الصحابة",
     "level": "متوسط",
@@ -1892,7 +1892,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "سلمان الفارسي رضي الله عنه. وينبّه على أن هذه العبارة تُروى مرفوعةً إلى النبي ﷺ (أخرجها الحاكم في المستدرك والطبراني) لا موقوفةً على علي بن أبي طالب رضي الله عنه كما يشتهر، وإسنادها متكلَّم فيه عند أهل الحديث فلا يُجزم بنسبتها، وفضل سلمان رضي الله عنه ثابت بغيرها"
   },
   {
-    "id": "demo-quiz-259",
+    "id": "demo-quiz-259", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "حفظة القرآن",
     "level": "متوسط",
@@ -1900,7 +1900,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "زيد بن ثابت رضي الله عنه؛ كان من كتّاب الوحي وهم جماعة من الصحابة لا هو وحده، وكلّفه أبو بكر الصديق رضي الله عنه بجمع القرآن في الصحف بمشورة عمر بن الخطاب رضي الله عنه، ثم كان على رأس اللجنة التي أمر عثمان بن عفان رضي الله عنه بنسخ المصاحف منها ومعه عبد الله بن الزبير وسعيد بن العاص وعبد الرحمن بن الحارث بن هشام رضي الله عنهم. فالآمر بالجمع أبو بكر وبالنسخ عثمان رضي الله عنهما، وزيد هو المنفِّذ. وأصل ذلك في البخاري في كتاب فضائل القرآن"
   },
   {
-    "id": "demo-quiz-260",
+    "id": "demo-quiz-260", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "فضائل الصحابة",
     "level": "صعب",
@@ -1908,7 +1908,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أبو الطفيل عامر بن واثلة الليثي (توفي نحو سنة 110هـ)"
   },
   {
-    "id": "demo-quiz-261",
+    "id": "demo-quiz-261", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "فضائل الصحابة",
     "level": "صعب",
@@ -1916,7 +1916,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "سعد بن أبي وقاص رضي الله عنه"
   },
   {
-    "id": "demo-quiz-262",
+    "id": "demo-quiz-262", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "الأذان",
     "level": "متوسط",
@@ -1924,7 +1924,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عبد الله بن زيد بن عبد ربه الأنصاري الخزرجي رضي الله عنه، وحديثه في رؤيا الأذان أخرجه أبو داود والترمذي وابن ماجه في كتاب الصلاة. وفي الحديث نفسه أن عمر بن الخطاب رضي الله عنه قال: لقد رأيت مثل الذي رأى، فرؤياه لم تنفرد. ويُنبّه على التمييز بينه وبين عبد الله بن زيد بن عاصم المازني رضي الله عنه راوي حديث صفة الوضوء، فهما صحابيان مختلفان يُخلط بينهما"
   },
   {
-    "id": "demo-quiz-263",
+    "id": "demo-quiz-263", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "خدمة النبي",
     "level": "سهل",
@@ -1932,7 +1932,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أنس بن مالك رضي الله عنه، وهو القائل: «خدمت النبي ﷺ عشر سنين» متفق عليه؛ خدمه من مَقدَمه ﷺ المدينة إلى وفاته، ودعا له النبي ﷺ بالبركة في المال والولد كما في الصحيحين"
   },
   {
-    "id": "demo-quiz-264",
+    "id": "demo-quiz-264", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "أزواج النبي",
     "level": "متوسط",
@@ -1940,7 +1940,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عائشة رضي الله عنها؛ قال أبو موسى الأشعري رضي الله عنه: «ما أشكل علينا أصحابَ رسول الله ﷺ حديثٌ قط فسألنا عائشة إلا وجدنا عندها منه علمًا» رواه الترمذي. وهي من المكثرين في رواية الحديث، وعنها أخذ كبار التابعين كعروة بن الزبير والقاسم بن محمد"
   },
   {
-    "id": "demo-quiz-265",
+    "id": "demo-quiz-265", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "أزواج النبي",
     "level": "صعب",
@@ -1948,7 +1948,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "ميمونة بنت الحارث الهلالية رضي الله عنها، وتعيينها آخرَ من تزوّج ﷺ قولُ أكثر أهل السير؛ تزوّجها سنة 7هـ في عمرة القضاء، وهي خالة عبد الله بن عباس وخالة خالد بن الوليد رضي الله عنهم، وتوفيت بسَرِف — وهو الموضع نفسه الذي بُني بها فيه"
   },
   {
-    "id": "demo-quiz-266",
+    "id": "demo-quiz-266", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "فضائل الصحابة",
     "level": "سهل",
@@ -1956,7 +1956,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أنس بن مالك بن النضر الأنصاري الخزرجي رضي الله عنه، وأمه أم سُليم بنت مِلحان رضي الله عنها؛ قدم النبي ﷺ المدينة وأنسٌ ابن عشر سنين كما جاء عنه، فخدمه إلى وفاته ﷺ. وهو أحد المكثرين في رواية الحديث، وتوفي بالبصرة سنة 93هـ وقيل غير ذلك، وهو آخر من مات بها من الصحابة"
   },
   {
-    "id": "demo-quiz-267",
+    "id": "demo-quiz-267", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "فضائل الصحابة",
     "level": "متوسط",
@@ -1964,7 +1964,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "ثابت بن قيس بن شمّاس الأنصاري رضي الله عنه خطيب الأنصار؛ ففي البخاري (كتاب التفسير، تفسير سورة الحجرات) عن أنس رضي الله عنه أنه لما نزلت: ﴿يَا أَيُّهَا الَّذِينَ آمَنُوا لَا تَرْفَعُوا أَصْوَاتَكُمْ فَوْقَ صَوْتِ النَّبِيِّ وَلَا تَجْهَرُوا لَهُ بِالْقَوْلِ كَجَهْرِ بَعْضِكُمْ لِبَعْضٍ أَنْ تَحْبَطَ أَعْمَالُكُمْ وَأَنْتُمْ لَا تَشْعُرُونَ﴾ [الحجرات: 2] جلس ثابت في بيته وقال: أنا من أهل النار، واحتبس عن النبي ﷺ، فبشّره النبي ﷺ بأنه من أهل الجنة. وليس في الحديث أن الآية نزلت فيه، وإنما ذُكر أثرُها فيه؛ وقد ذكر المفسرون في سبب نزولها أقوالًا أخرى، فلا يُجزم بنزولها في معيَّن"
   },
   {
-    "id": "demo-quiz-268",
+    "id": "demo-quiz-268", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "المعارك",
     "level": "متوسط",
@@ -1972,7 +1972,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "قدّر أهل السير والمغازي (كابن إسحاق) عددهم بنحو تسع مئة إلى ألف مقاتل، وهذا تقديرٌ منهم لا نصٌّ مرفوع. وأما عدد المسلمين فثابت في البخاري عن البراء بن عازب رضي الله عنه قال: «كنا نتحدّث أن أصحاب بدر ثلاث مئة وبضعة عشر»، وقال الله تعالى: ﴿وَلَقَدْ نَصَرَكُمُ اللَّهُ بِبَدْرٍ وَأَنْتُمْ أَذِلَّةٌ﴾ [آل عمران: 123]"
   },
   {
-    "id": "demo-quiz-269",
+    "id": "demo-quiz-269", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "فضائل الصحابة",
     "level": "صعب",
@@ -1980,7 +1980,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "«سلمان الخير»، كذا يذكره أهل التراجم ومنهم الذهبي في «سير أعلام النبلاء»، ورُوي عنه أنه سُئل عن نسبه فقال: «أنا سلمان بن الإسلام». وأما «سلمان باك» الذي يشتهر فليس لقبًا له في كتب التراجم، وإنما هو اسم الموضع في العراق قرب المدائن الذي يُنسب إليه مدفنه، و«باك» بالفارسية بمعنى الطاهر"
   },
   {
-    "id": "demo-quiz-270",
+    "id": "demo-quiz-270", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "فضائل الصحابة",
     "level": "متوسط",
@@ -1988,7 +1988,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الزبير بن العوام رضي الله عنه؛ أخرج البخاري من حديث جابر رضي الله عنه قوله ﷺ: «إنّ لكل نبيٍّ حواريًّا، وحواريَّ الزبير بن العوام». وهو ابن عمة النبي ﷺ صفية بنت عبد المطلب، وأحد العشرة المشهود لهم بالجنة، وقُتل يوم الجمل سنة 36هـ"
   },
   {
-    "id": "demo-quiz-271",
+    "id": "demo-quiz-271", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "إسلام الصحابة",
     "level": "سهل",
@@ -1996,7 +1996,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أبو بكر الصديق رضي الله عنه على قول جمهور أهل السير. ورتّب أهل العلم الأولية بحسب الأصناف رفعًا للتعارض بين الآثار: خديجة بنت خويلد رضي الله عنها أول من أسلم من النساء، وأبو بكر أول من أسلم من الرجال الأحرار، وعلي بن أبي طالب رضي الله عنه أول من أسلم من الصبيان، وزيد بن حارثة رضي الله عنه أول من أسلم من الموالي، وبلال بن رباح رضي الله عنه من أول من أسلم من المستضعفين. وقد رُوي في تقديم غير أبي بكر أقوالٌ أخرى، فلا يُجزم بحصر الأولية في وجهٍ واحد"
   },
   {
-    "id": "demo-quiz-272",
+    "id": "demo-quiz-272", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "فضائل الصحابة",
     "level": "صعب",
@@ -2004,7 +2004,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أبو بكر الصديق رضي الله عنه. والعبارة المذكورة أثرٌ يُنسب إلى عمر بن الخطاب رضي الله عنه في كتب الفضائل، ولا تصحّ نسبتها إلى النبي ﷺ فلا تُروى على أنها حديث. وأما الثابت في فضله فمنه قوله ﷺ: «لو كنت متخذًا خليلًا لاتخذت أبا بكر خليلًا» أخرجه البخاري ومسلم"
   },
   {
-    "id": "demo-quiz-273",
+    "id": "demo-quiz-273", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "خاتم النبيين",
     "level": "سهل",
@@ -2012,7 +2012,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "محمد ﷺ؛ قال الله تعالى: ﴿مَا كَانَ مُحَمَّدٌ أَبَا أَحَدٍ مِنْ رِجَالِكُمْ وَلَكِنْ رَسُولَ اللَّهِ وَخَاتَمَ النَّبِيِّينَ﴾ [الأحزاب: 40]، وفي الصحيحين من حديث جبير بن مُطعِم رضي الله عنه في ذكر أسمائه ﷺ: «وأنا العاقب الذي ليس بعده نبي»، واللفظ لمسلم"
   },
   {
-    "id": "demo-quiz-274",
+    "id": "demo-quiz-274", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "فضائل الصحابة",
     "level": "صعب",
@@ -2020,7 +2020,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أسماء بنت أبي بكر رضي الله عنها"
   },
   {
-    "id": "demo-quiz-275",
+    "id": "demo-quiz-275", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "فضائل الصحابة",
     "level": "متوسط",
@@ -2028,7 +2028,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عويمر بن زيد الأنصاري رضي الله عنه"
   },
   {
-    "id": "demo-quiz-276",
+    "id": "demo-quiz-276", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "فضائل الصحابة",
     "level": "متوسط",
@@ -2036,7 +2036,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "زيد بن حارثة رضي الله عنه"
   },
   {
-    "id": "demo-quiz-277",
+    "id": "demo-quiz-277", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "أركان الإيمان",
     "level": "سهل",
@@ -2044,7 +2044,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الإسلام: الأعمال الظاهرة (أركانه الخمسة)، الإيمان: الاعتقادات الباطنة (أركانه الستة)، الإحسان: أعلى الدرجات وهو أن تعبد الله كأنك تراه"
   },
   {
-    "id": "demo-quiz-278",
+    "id": "demo-quiz-278", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "الكبائر",
     "level": "متوسط",
@@ -2052,7 +2052,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عقوق الوالدين، كما في حديث أبي بكرة المتفق عليه: «ألا أنبئكم بأكبر الكبائر؟ الإشراك بالله، وعقوق الوالدين» ثم قال: «ألا وقول الزور»، وفي رواية أنس عُدَّ معها قتل النفس"
   },
   {
-    "id": "demo-quiz-279",
+    "id": "demo-quiz-279", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "أركان الإيمان",
     "level": "سهل",
@@ -2060,7 +2060,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أن تعبد الله كأنك تراه فإن لم تكن تراه فإنه يراك"
   },
   {
-    "id": "demo-quiz-280",
+    "id": "demo-quiz-280", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "الشرك",
     "level": "متوسط",
@@ -2068,7 +2068,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الرياء"
   },
   {
-    "id": "demo-quiz-281",
+    "id": "demo-quiz-281", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "أخلاق مذمومة",
     "level": "متوسط",
@@ -2076,7 +2076,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "بطر الحق وغمط الناس (رد الحق واحتقار الناس)"
   },
   {
-    "id": "demo-quiz-282",
+    "id": "demo-quiz-282", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "أخلاق مذمومة",
     "level": "متوسط",
@@ -2084,7 +2084,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "تمني زوال النعمة عن الغير"
   },
   {
-    "id": "demo-quiz-283",
+    "id": "demo-quiz-283", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "أخلاق محمودة",
     "level": "متوسط",
@@ -2092,7 +2092,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "تمني مثل ما عند الغير من الخير دون تمني زواله عنه"
   },
   {
-    "id": "demo-quiz-284",
+    "id": "demo-quiz-284", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "أخلاق محمودة",
     "level": "متوسط",
@@ -2100,7 +2100,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الصبر على طاعة الله، والصبر عن معصية الله، والصبر على أقدار الله المؤلمة"
   },
   {
-    "id": "demo-quiz-285",
+    "id": "demo-quiz-285", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "أخلاق محمودة",
     "level": "سهل",
@@ -2108,7 +2108,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الرضا بما قسمه الله وترك التطلع إلى ما في أيدي الناس، وفضلها الفلاح كما في صحيح مسلم: «قد أفلح من أسلم ورُزق كفافًا وقنَّعه الله بما آتاه»"
   },
   {
-    "id": "demo-quiz-286",
+    "id": "demo-quiz-286", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "أخلاق محمودة",
     "level": "سهل",
@@ -2116,7 +2116,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الاعتراف بنعمة الله قلباً ولساناً وصرفها في طاعته"
   },
   {
-    "id": "demo-quiz-287",
+    "id": "demo-quiz-287", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "أخلاق محمودة",
     "level": "متوسط",
@@ -2124,7 +2124,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الاعتماد على الله مع الأخذ بالأسباب المشروعة"
   },
   {
-    "id": "demo-quiz-289",
+    "id": "demo-quiz-289", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "الزهد",
     "level": "متوسط",
@@ -2132,7 +2132,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "ترك ما لا ينفع في الآخرة وليس التقلل من الدنيا فحسب"
   },
   {
-    "id": "demo-quiz-290",
+    "id": "demo-quiz-290", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "الابتلاء",
     "level": "متوسط",
@@ -2140,7 +2140,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "تمحيص المؤمنين ورفع درجاتهم وتكفير سيئاتهم"
   },
   {
-    "id": "demo-quiz-291",
+    "id": "demo-quiz-291", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "أهل السنة",
     "level": "متوسط",
@@ -2148,7 +2148,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "اتباع الكتاب والسنة بفهم السلف الصالح"
   },
   {
-    "id": "demo-quiz-292",
+    "id": "demo-quiz-292", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "عقيدة الأنبياء",
     "level": "متوسط",
@@ -2156,7 +2156,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عصمتهم من الكفر ومن الكبائر بالإجماع، ومن الخطأ في التبليغ عن الله فلا يكذبون ولا ينسون، ولا يُقرّون على صغيرة بل يُنبَّهون عليها"
   },
   {
-    "id": "demo-quiz-293",
+    "id": "demo-quiz-293", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "أصول الفقه",
     "level": "متوسط",
@@ -2164,7 +2164,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "اتفاق مجتهدي أمة محمد ﷺ بعد وفاته في عصر من العصور على حكم شرعي"
   },
   {
-    "id": "demo-quiz-294",
+    "id": "demo-quiz-294", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "أصول الفقه",
     "level": "متوسط",
@@ -2172,7 +2172,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "إلحاق فرع بأصل في الحكم لعلة جامعة بينهما"
   },
   {
-    "id": "demo-quiz-295",
+    "id": "demo-quiz-295", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "حسن الخاتمة",
     "level": "متوسط",
@@ -2180,7 +2180,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "النطق بالشهادة عند الموت، والوفاة على عمل صالح، وغير ذلك مما جاءت به الأحاديث"
   },
   {
-    "id": "demo-quiz-296",
+    "id": "demo-quiz-296", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "أخلاق محمودة",
     "level": "سهل",
@@ -2188,7 +2188,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "التواضع لأمر الله ولعباده لا الذل والهوان"
   },
   {
-    "id": "demo-quiz-297",
+    "id": "demo-quiz-297", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "أركان الإسلام",
     "level": "سهل",
@@ -2196,7 +2196,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "خمسة أركان: الشهادتان والصلاة والزكاة والصوم والحج"
   },
   {
-    "id": "demo-quiz-299",
+    "id": "demo-quiz-299", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "التوحيد",
     "level": "سهل",
@@ -2204,7 +2204,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "توحيد الله وشهادة أن لا إله إلا الله، لحديث ابن عباس المتفق عليه في بعث معاذ إلى اليمن: «فليكن أولَ ما تدعوهم إليه شهادة أن لا إله إلا الله»؛ وأما القول بأن أول واجب النظر أو المعرفة فقول المتكلمين"
   },
   {
-    "id": "demo-quiz-300",
+    "id": "demo-quiz-300", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "التوحيد",
     "level": "سهل",
@@ -2212,7 +2212,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "إفراد الله بالعبادة كالدعاء والصلاة والذبح والنذر"
   },
   {
-    "id": "demo-quiz-303",
+    "id": "demo-quiz-303", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "التوحيد",
     "level": "متوسط",
@@ -2220,7 +2220,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "ما أطلق عليه الشرع اسم الشرك ولم يبلغ حد الأكبر كالرياء والحلف بغير الله"
   },
   {
-    "id": "demo-quiz-304",
+    "id": "demo-quiz-304", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "الإيمان",
     "level": "سهل",
@@ -2228,7 +2228,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "ستة أركان: الله وملائكته وكتبه ورسله واليوم الآخر والقدر"
   },
   {
-    "id": "demo-quiz-305",
+    "id": "demo-quiz-305", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "الإيمان",
     "level": "متوسط",
@@ -2236,7 +2236,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "نعم، يزيد بالطاعة وينقص بالمعصية عند أهل السنة"
   },
   {
-    "id": "demo-quiz-306",
+    "id": "demo-quiz-306", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "الإيمان",
     "level": "صعب",
@@ -2244,7 +2244,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "قول باللسان وتصديق بالقلب وعمل بالجوارح"
   },
   {
-    "id": "demo-quiz-307",
+    "id": "demo-quiz-307", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "الملائكة",
     "level": "سهل",
@@ -2252,7 +2252,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "خُلقت الملائكة من نور كما في صحيح مسلم"
   },
   {
-    "id": "demo-quiz-308",
+    "id": "demo-quiz-308", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "الملائكة",
     "level": "متوسط",
@@ -2260,7 +2260,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "جبريل عليه السلام"
   },
   {
-    "id": "demo-quiz-310",
+    "id": "demo-quiz-310", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "اليوم الآخر",
     "level": "سهل",
@@ -2268,7 +2268,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "يسأله ملكان: من ربك؟ وما دينك؟ ومن نبيك؟ — حديث البراء بن عازب، أخرجه أبو داود وأحمد"
   },
   {
-    "id": "demo-quiz-311",
+    "id": "demo-quiz-311", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "اليوم الآخر",
     "level": "متوسط",
@@ -2276,7 +2276,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "ميزان حقيقي له كفتان توزن به أعمال العباد وصحائفها والعامل نفسه، لا يُظلم عنده أحد؛ ﴿وَنَضَعُ الْمَوَازِينَ الْقِسْطَ لِيَوْمِ الْقِيَامَةِ فَلَا تُظْلَمُ نَفْسٌ شَيْئًا﴾ (الأنبياء: 47)"
   },
   {
-    "id": "demo-quiz-312",
+    "id": "demo-quiz-312", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "اليوم الآخر",
     "level": "متوسط",
@@ -2284,7 +2284,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "جسر ممدود على متن جهنم يمر عليه الناس يوم القيامة على قدر أعمالهم؛ ثبت وصفه في حديث الشفاعة المتفق عليه"
   },
   {
-    "id": "demo-quiz-313",
+    "id": "demo-quiz-313", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "القضاء والقدر",
     "level": "سهل",
@@ -2292,7 +2292,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "لا، فللعبد إرادة واختيار ويُحاسب على عمله"
   },
   {
-    "id": "demo-quiz-315",
+    "id": "demo-quiz-315", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "القضاء والقدر",
     "level": "صعب",
@@ -2300,7 +2300,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الكتاب الذي أثبت الله فيه كل شيء؛ ﴿بَلْ هُوَ قُرْآنٌ مَجِيدٌ * فِي لَوْحٍ مَحْفُوظٍ﴾ (البروج: 21-22). وكتابة المقادير سبقت خلق السماوات والأرض بخمسين ألف سنة، كما في حديث عبدالله بن عمرو عند مسلم: «كتب الله مقادير الخلائق قبل أن يخلق السماوات والأرض بخمسين ألف سنة»"
   },
   {
-    "id": "demo-quiz-316",
+    "id": "demo-quiz-316", "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "سهل",
@@ -2308,7 +2308,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "آدم عليه السلام"
   },
   {
-    "id": "demo-quiz-317",
+    "id": "demo-quiz-317", "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "سهل",
@@ -2316,7 +2316,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "آدم عليه السلام"
   },
   {
-    "id": "demo-quiz-318",
+    "id": "demo-quiz-318", "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -2324,7 +2324,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "السفينة التي صنعها بوحي الله فنجا بها المؤمنون، والطوفان الذي أغرق الكافرين"
   },
   {
-    "id": "demo-quiz-319",
+    "id": "demo-quiz-319", "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -2332,7 +2332,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "خليلاً؛ ﴿وَاتَّخَذَ اللَّهُ إِبْرَاهِيمَ خَلِيلًا﴾ (النساء: 125)"
   },
   {
-    "id": "demo-quiz-320",
+    "id": "demo-quiz-320", "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -2340,7 +2340,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "إبراهيم وإسماعيل عليهما السلام؛ ﴿وَإِذْ يَرْفَعُ إِبْرَاهِيمُ الْقَوَاعِدَ مِنَ الْبَيْتِ وَإِسْمَاعِيلُ﴾ (البقرة: 127)"
   },
   {
-    "id": "demo-quiz-322",
+    "id": "demo-quiz-322", "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -2348,7 +2348,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "العصا؛ انقلبت ثعباناً مبيناً ﴿فَأَلْقَىٰ عَصَاهُ فَإِذَا هِيَ ثُعْبَانٌ مُبِينٌ﴾ (الأعراف: 107)، وبها فُلق البحر ﴿أَنِ اضْرِب بِّعَصَاكَ الْبَحْرَ فَانفَلَقَ﴾ (الشعراء: 63)"
   },
   {
-    "id": "demo-quiz-323",
+    "id": "demo-quiz-323", "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -2356,7 +2356,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "داود عليه السلام؛ ﴿إِنَّا سَخَّرْنَا الْجِبَالَ مَعَهُ يُسَبِّحْنَ بِالْعَشِيِّ وَالْإِشْرَاقِ﴾ (ص: 18)"
   },
   {
-    "id": "demo-quiz-324",
+    "id": "demo-quiz-324", "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "صعب",
@@ -2364,7 +2364,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "تسعمئة وخمسون سنة، وهي مدة لبثه فيهم داعياً لا مجموع عمره؛ ﴿فَلَبِثَ فِيهِمْ أَلْفَ سَنَةٍ إِلَّا خَمْسِينَ عَامًا﴾ (العنكبوت: 14)"
   },
   {
-    "id": "demo-quiz-325",
+    "id": "demo-quiz-325", "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -2372,7 +2372,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "سليمان عليه السلام، سأله ربه فأعطاه؛ ﴿رَبِّ اغْفِرْ لِي وَهَبْ لِي مُلْكًا لَّا يَنبَغِي لِأَحَدٍ مِّن بَعْدِي﴾ (ص: 35)"
   },
   {
-    "id": "demo-quiz-326",
+    "id": "demo-quiz-326", "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -2380,7 +2380,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الزبور؛ ﴿وَآتَيْنَا دَاوُودَ زَبُورًا﴾ (النساء: 163، والإسراء: 55)"
   },
   {
-    "id": "demo-quiz-327",
+    "id": "demo-quiz-327", "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "سهل",
@@ -2388,7 +2388,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أيوب عليه السلام"
   },
   {
-    "id": "demo-quiz-328",
+    "id": "demo-quiz-328", "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -2396,7 +2396,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "مريم بنت عمران عليها السلام"
   },
   {
-    "id": "demo-quiz-329",
+    "id": "demo-quiz-329", "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -2404,7 +2404,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "خلق الطير من الطين وإبراء الأكمه والأبرص وإحياء الموتى، كل ذلك بإذن الله؛ ﴿وَأُبْرِئُ الْأَكْمَهَ وَالْأَبْرَصَ وَأُحْيِي الْمَوْتَىٰ بِإِذْنِ اللَّهِ﴾ (آل عمران: 49)"
   },
   {
-    "id": "demo-quiz-331",
+    "id": "demo-quiz-331", "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -2412,7 +2412,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الإنجيل؛ ﴿وَقَفَّيْنَا بِعِيسَى ابْنِ مَرْيَمَ وَآتَيْنَاهُ الْإِنجِيلَ﴾ (الحديد: 27)"
   },
   {
-    "id": "demo-quiz-333",
+    "id": "demo-quiz-333", "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -2420,7 +2420,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "نبي أُرسل إلى أهل نينوى ﴿وَأَرْسَلْنَاهُ إِلَىٰ مِائَةِ أَلْفٍ أَوْ يَزِيدُونَ﴾ (الصافات: 147)، فذهب مغاضباً قبل إذن ربه فالتقمه الحوت ﴿فَالْتَقَمَهُ الْحُوتُ وَهُوَ مُلِيمٌ﴾ (الصافات: 142)"
   },
   {
-    "id": "demo-quiz-334",
+    "id": "demo-quiz-334", "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -2428,7 +2428,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أثنى عليه بالصدّيقية والنبوة ورفعه مكاناً عليّاً؛ ﴿وَاذْكُرْ فِي الْكِتَابِ إِدْرِيسَ إِنَّهُ كَانَ صِدِّيقًا نَبِيًّا * وَرَفَعْنَاهُ مَكَانًا عَلِيًّا﴾ (مريم: 56-57)"
   },
   {
-    "id": "demo-quiz-335",
+    "id": "demo-quiz-335", "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "صعب",
@@ -2436,7 +2436,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "لقب يعقوب عليه السلام ومعناه «عبد الله» أو «صفوة الله»"
   },
   {
-    "id": "demo-quiz-336",
+    "id": "demo-quiz-336", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "المولد والنشأة",
     "level": "سهل",
@@ -2444,7 +2444,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عام الفيل (570م تقريباً)"
   },
   {
-    "id": "demo-quiz-337",
+    "id": "demo-quiz-337", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "المولد والنشأة",
     "level": "سهل",
@@ -2452,7 +2452,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عبدالله بن عبد المطلب"
   },
   {
-    "id": "demo-quiz-338",
+    "id": "demo-quiz-338", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "المولد والنشأة",
     "level": "سهل",
@@ -2460,7 +2460,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "آمنة بنت وهب"
   },
   {
-    "id": "demo-quiz-339",
+    "id": "demo-quiz-339", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "المولد والنشأة",
     "level": "متوسط",
@@ -2468,7 +2468,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "حليمة بنت أبي ذؤيب السعدية في بني سعد، وقد أرضعته قبلها ثويبة مولاة أبي لهب أياماً"
   },
   {
-    "id": "demo-quiz-340",
+    "id": "demo-quiz-340", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "المولد والنشأة",
     "level": "متوسط",
@@ -2476,7 +2476,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "قريش، وهو ﷺ من بني هاشم وهم بطن من بطونها"
   },
   {
-    "id": "demo-quiz-341",
+    "id": "demo-quiz-341", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "البعثة",
     "level": "سهل",
@@ -2484,7 +2484,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "في الأربعين من عمره"
   },
   {
-    "id": "demo-quiz-342",
+    "id": "demo-quiz-342", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "البعثة",
     "level": "سهل",
@@ -2492,7 +2492,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "لا؛ أول ما نزل عليه ﷺ صدر سورة العلق خمس آيات لا سورة تامة: ﴿اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ * خَلَقَ الْإِنسَانَ مِنْ عَلَقٍ * اقْرَأْ وَرَبُّكَ الْأَكْرَمُ * الَّذِي عَلَّمَ بِالْقَلَمِ * عَلَّمَ الْإِنسَانَ مَا لَمْ يَعْلَمْ﴾ (العلق: 1-5)، كما في حديث عائشة رضي الله عنها في بدء الوحي (رواه البخاري في أول صحيحه ومسلم). وأما أول سورة نزلت كاملةً فمختلف فيه بين أهل العلم، وأول ما نزل بعد فترة الوحي صدر سورة المدثر: ﴿يَا أَيُّهَا الْمُدَّثِّرُ﴾ (المدثر: 1)"
   },
   {
-    "id": "demo-quiz-343",
+    "id": "demo-quiz-343", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "البعثة",
     "level": "متوسط",
@@ -2500,7 +2500,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "في غار حراء بجبل النور قرب مكة، وهو ابن أربعين سنة، كما في حديث عائشة رضي الله عنها في بدء الوحي: «وكان يخلو بغار حراء فيتحنّث فيه» (رواه البخاري ومسلم)"
   },
   {
-    "id": "demo-quiz-344",
+    "id": "demo-quiz-344", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الهجرة",
     "level": "سهل",
@@ -2508,7 +2508,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "إلى يثرب التي صارت تُسمّى بعد مقدمه ﷺ: المدينة المنورة، وذلك في السنة الثالثة عشرة من البعثة، وبسنة هجرته هذه جُعل مبدأ التأريخ الهجري في خلافة عمر رضي الله عنه"
   },
   {
-    "id": "demo-quiz-345",
+    "id": "demo-quiz-345", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الهجرة",
     "level": "متوسط",
@@ -2516,7 +2516,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "صاحبه في الهجرة أبو بكر الصديق رضي الله عنه، وهو المذكور في قوله تعالى: ﴿ثَانِيَ اثْنَيْنِ إِذْ هُمَا فِي الْغَارِ إِذْ يَقُولُ لِصَاحِبِهِ لَا تَحْزَنْ إِنَّ اللَّهَ مَعَنَا﴾ (التوبة: 40). ولم يكن معهما غيرُهما في الصحبة، وإنما رافقهما في الطريق عامر بن فهيرة مولى أبي بكر خادمًا، وعبد الله بن أُريقط دليلًا وكان على دين قومه"
   },
   {
-    "id": "demo-quiz-348",
+    "id": "demo-quiz-348", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الغزوات",
     "level": "متوسط",
@@ -2524,7 +2524,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عند جبل أُحد شمال المدينة المنورة، وكانت في شوال من السنة الثالثة للهجرة"
   },
   {
-    "id": "demo-quiz-349",
+    "id": "demo-quiz-349", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الغزوات",
     "level": "صعب",
@@ -2532,7 +2532,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "مخالفة الرماة أمر النبي ﷺ بلزوم موضعهم، ونزولهم عن الجبل طمعاً في الغنائم، فاستغل خالد بن الوليد — وكان يومها مع المشركين — الثغرة فالتفّ بالفرسان من خلف المسلمين. وقد أشار القرآن إلى هذا السبب: ﴿حَتَّى إِذَا فَشِلْتُمْ وَتَنَازَعْتُمْ فِي الْأَمْرِ وَعَصَيْتُمْ مِنْ بَعْدِ مَا أَرَاكُمْ مَا تُحِبُّونَ﴾ (آل عمران: 152)"
   },
   {
-    "id": "demo-quiz-350",
+    "id": "demo-quiz-350", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الغزوات",
     "level": "متوسط",
@@ -2540,7 +2540,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "دخول النبي ﷺ مكة منتصراً في رمضان سنة 8 للهجرة من غير قتال عام، بعد أن نقضت قريش صلح الحديبية؛ إلا مناوشة يسيرة جرت في ناحية خالد بن الوليد رضي الله عنه عند دخوله من أسفل مكة؛ وقد أمّن النبي ﷺ أهلها ولم يُقِم فيها ثأرًا"
   },
   {
-    "id": "demo-quiz-351",
+    "id": "demo-quiz-351", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الوفاة",
     "level": "سهل",
@@ -2548,7 +2548,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "ثلاثاً وستين سنة على الصحيح، كما في صحيح مسلم عن عائشة وابن عباس رضي الله عنهما؛ أربعون قبل البعثة، وثلاث عشرة بمكة بعد البعثة، وعشر بالمدينة"
   },
   {
-    "id": "demo-quiz-352",
+    "id": "demo-quiz-352", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الوفاة",
     "level": "متوسط",
@@ -2556,7 +2556,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "توفي ﷺ ضحى يوم الاثنين من ربيع الأول سنة 11 للهجرة؛ فكونه يوم الاثنين ثابت لا خلاف فيه، وأما تعيين اليوم من الشهر فمختلف فيه، وأشهر الأقوال أنه الثاني عشر من ربيع الأول، وقيل غير ذلك"
   },
   {
-    "id": "demo-quiz-353",
+    "id": "demo-quiz-353", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الوفاة",
     "level": "متوسط",
@@ -2564,7 +2564,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "في حجرة عائشة رضي الله عنها بالمدينة المنورة، في موضع فراشه الذي توفي فيه؛ ودُفن معه بعدُ أبو بكر وعمر رضي الله عنهما"
   },
   {
-    "id": "demo-quiz-354",
+    "id": "demo-quiz-354", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الشمائل",
     "level": "سهل",
@@ -2572,7 +2572,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الصادق الأمين"
   },
   {
-    "id": "demo-quiz-355",
+    "id": "demo-quiz-355", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الشمائل",
     "level": "متوسط",
@@ -2580,7 +2580,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "لا تُذكر أي من زوجات النبي ﷺ باسمها الصريح في القرآن، وإنما ذُكرن بالوصف جملةً، كقوله تعالى: ﴿وَأَزْوَاجُهُ أُمَّهَاتُهُمْ﴾ (الأحزاب: 6)؛ لكن زينب بنت جحش أُشير إلى قصة زواجها ضمنياً في قوله تعالى ﴿فَلَمَّا قَضَىٰ زَيْدٌ مِّنْهَا وَطَرًا زَوَّجْنَاكَهَا﴾ (الأحزاب: 37) دون تسميتها، وأُشير إلى عائشة وحفصة رضي الله عنهما تلميحاً في مطلع سورة التحريم دون ذكر اسميهما أيضاً. والصحابي الوحيد المسمّى صريحاً في القرآن هو زيد بن حارثة رضي الله عنه في الآية نفسها"
   },
   {
-    "id": "demo-quiz-356",
+    "id": "demo-quiz-356", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الطهارة",
     "level": "سهل",
@@ -2588,7 +2588,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عند الحنابلة: الإسلام والعقل والتمييز، والنية واستمرار حكمها، وانقطاعُ ما يوجب الوضوء، والاستنجاءُ قبله، وماءٌ طهور مباح، وإزالةُ ما يمنع وصول الماء إلى البشرة، ودخولُ الوقت لمن حدثُه دائم. وأصلُ النية قوله ﷺ: «إنما الأعمال بالنيات» (متفق عليه)؛ وهي شرط عند الجمهور، وعدّها الحنفية سُنّة في الوضوء لا شرطاً"
   },
   {
-    "id": "demo-quiz-357",
+    "id": "demo-quiz-357", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الطهارة",
     "level": "متوسط",
@@ -2596,7 +2596,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عند الجمهور فرضان: النية، وتعميم الماء جميعَ البدن حتى أصول الشعر. وزاد المالكية الدلك؛ وأما الحنفية فجعلوا فرائضه ثلاثاً: المضمضة والاستنشاق وتعميم البدن، والنية عندهم سُنّة لا فرضاً"
   },
   {
-    "id": "demo-quiz-358",
+    "id": "demo-quiz-358", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الطهارة",
     "level": "متوسط",
@@ -2604,7 +2604,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الجنابةُ وهي بأحد أمرين: خروج المني بشهوة، والجماعُ ولو بلا إنزال لقوله ﷺ: «إذا جلس بين شُعَبها الأربع ثم جهَدها فقد وجب الغسل» (رواه مسلم من حديث أبي هريرة رضي الله عنه)؛ ثم الحيضُ والنفاس، والموتُ فيجب غسل الميت على الأحياء إلا شهيدَ المعركة، وإسلامُ الكافر — وهو واجب عند الحنابلة والمالكية، مستحبٌّ عند الشافعية والحنفية"
   },
   {
-    "id": "demo-quiz-359",
+    "id": "demo-quiz-359", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصلاة",
     "level": "سهل",
@@ -2612,7 +2612,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "خمس صلوات"
   },
   {
-    "id": "demo-quiz-360",
+    "id": "demo-quiz-360", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصلاة",
     "level": "سهل",
@@ -2620,7 +2620,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "ركعتان"
   },
   {
-    "id": "demo-quiz-361",
+    "id": "demo-quiz-361", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصلاة",
     "level": "سهل",
@@ -2628,7 +2628,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "ثلاث ركعات"
   },
   {
-    "id": "demo-quiz-362",
+    "id": "demo-quiz-362", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصلاة",
     "level": "متوسط",
@@ -2636,7 +2636,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "ركن لا تنعقد الصلاة إلا بها عند الجمهور، وعدّها الحنفية شرطاً لانعقادها لا ركناً فيها؛ ودليلها قوله ﷺ للمسيء صلاته: «إذا قمتَ إلى الصلاة فكبِّر» (متفق عليه)، وقوله: «وتحريمها التكبير وتحليلها التسليم» (رواه أبو داود والترمذي عن علي رضي الله عنه)"
   },
   {
-    "id": "demo-quiz-363",
+    "id": "demo-quiz-363", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الزكاة",
     "level": "سهل",
@@ -2644,7 +2644,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "مئتا درهم، وتُقدَّر بنحو 595 غراماً من الفضة الخالصة؛ والواجب فيها ربع العشر (2.5%) لما في كتاب أبي بكر رضي الله عنه في الصدقات: «وفي الرِّقَة ربع العُشر» (رواه البخاري)"
   },
   {
-    "id": "demo-quiz-365",
+    "id": "demo-quiz-365", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الزكاة",
     "level": "متوسط",
@@ -2652,7 +2652,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "العشر (10%) لما سُقي بلا كلفة كالمطر والعيون، ونصف العشر (5%) لما سُقي بكلفة كالآلات؛ لقوله ﷺ: «فيما سقت السماء والعيون أو كان عَثَرِيّاً العُشر، وما سُقي بالنَّضح نصف العُشر» (رواه البخاري من حديث ابن عمر رضي الله عنهما). ولا تجب حتى يبلغ النصاب: خمسة أوسق — نحو 653 كيلوغراماً من الحبوب — لقوله ﷺ: «ليس فيما دون خمسة أوسق صدقة» (متفق عليه)"
   },
   {
-    "id": "demo-quiz-366",
+    "id": "demo-quiz-366", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصيام",
     "level": "سهل",
@@ -2660,7 +2660,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "في شعبان من السنة الثانية للهجرة، بقوله تعالى: ﴿يَا أَيُّهَا الَّذِينَ آمَنُوا كُتِبَ عَلَيْكُمُ الصِّيَامُ كَمَا كُتِبَ عَلَى الَّذِينَ مِنْ قَبْلِكُمْ لَعَلَّكُمْ تَتَّقُونَ﴾ (البقرة: 183)؛ فصام النبي ﷺ تسع رمضانات"
   },
   {
-    "id": "demo-quiz-367",
+    "id": "demo-quiz-367", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصيام",
     "level": "متوسط",
@@ -2668,7 +2668,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "كفارة مرتَّبة: عتق رقبة، فإن لم يجد فصيام شهرين متتابعين، فإن لم يستطع فإطعام ستين مسكيناً؛ لحديث أبي هريرة رضي الله عنه في الرجل الذي وقع على امرأته في رمضان (متفق عليه). ويلزمه مع الكفارة التوبةُ وقضاءُ ذلك اليوم عند الجمهور"
   },
   {
-    "id": "demo-quiz-369",
+    "id": "demo-quiz-369", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الحج",
     "level": "متوسط",
@@ -2676,7 +2676,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "من زوال يوم التاسع من ذي الحجة إلى فجر يوم النحر (العاشر) عند الجمهور، وذهب بعض أهل العلم إلى أنه يبدأ من فجر التاسع؛ ومن وقف نهاراً لزمه البقاء إلى الغروب، فإن دفع قبله لزمه دم عند الجمهور. ودليل امتداده إلى الليل قوله ﷺ: «من شهد صلاتنا هذه ووقف معنا حتى ندفع، وقد وقف بعرفة قبل ذلك ليلاً أو نهاراً، فقد تمّ حجُّه» (رواه الترمذي وصححه)"
   },
   {
-    "id": "demo-quiz-370",
+    "id": "demo-quiz-370", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الحج",
     "level": "صعب",
@@ -2684,7 +2684,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "هدي التمتع والقِران: يجب على المتمتع والقارن دون المفرِد؛ وهو ذبح شاة أو سُبع بدنة أو بقرة، فمن لم يجده صام عشرة أيام: ﴿فَمَنْ تَمَتَّعَ بِالْعُمْرَةِ إِلَى الْحَجِّ فَمَا اسْتَيْسَرَ مِنَ الْهَدْيِ فَمَنْ لَمْ يَجِدْ فَصِيَامُ ثَلَاثَةِ أَيَّامٍ فِي الْحَجِّ وَسَبْعَةٍ إِذَا رَجَعْتُمْ تِلْكَ عَشَرَةٌ كَامِلَةٌ﴾ (البقرة: 196)"
   },
   {
-    "id": "demo-quiz-371",
+    "id": "demo-quiz-371", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "المعاملات",
     "level": "متوسط",
@@ -2692,7 +2692,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الربا نوعان: ربا الدَّين وهو كل زيادة مشروطة على الدَّين في مقابل الأجل، وهو ربا الجاهلية الذي نزل فيه: ﴿وَأَحَلَّ اللَّهُ الْبَيْعَ وَحَرَّمَ الرِّبَا﴾ (البقرة: 275)؛ وربا البيوع وهو قسمان: ربا الفضل (بيع الجنس بجنسه متفاضلاً) وربا النَّساء (تأخير أحد البدلين)، ومحله الأموال الربوية الواردة في قوله ﷺ: «الذهب بالذهب، والفضة بالفضة، والبُرّ بالبُرّ، والشعير بالشعير، والتمر بالتمر، والملح بالملح، مثلاً بمثل، سواءً بسواء، يداً بيد» (رواه مسلم)"
   },
   {
-    "id": "demo-quiz-372",
+    "id": "demo-quiz-372", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "المعاملات",
     "level": "متوسط",
@@ -2700,7 +2700,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "التراضي بين العاقدين، وكونُ كلٍّ منهما جائزَ التصرف، وكونُ المعقود عليه مالاً مباحاً منتفَعاً به، وكونُه ملكاً للبائع أو مأذوناً له فيه، والقدرةُ على تسليمه، والعلمُ به رؤيةً أو وصفاً منضبطاً، والعلمُ بالثمن — فينتفي بذلك الغرر والجهالة والغش"
   },
   {
-    "id": "demo-quiz-373",
+    "id": "demo-quiz-373", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "النكاح",
     "level": "سهل",
@@ -2708,7 +2708,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "لا يصح النكاح إلا بالزوجين الخاليين من الموانع، والصيغة (الإيجاب والقبول)، والولي، والشاهدين، ورضا الزوجين. وتختلف المذاهب في تسمية ذلك: فالشافعية يعدّونها خمسة أركان، والحنابلة يجعلون الأركان الزوجين والصيغةَ والولي والشهودَ من الشروط، والحنفية يقصرون الركن على الإيجاب والقبول ولا يشترطون الوليَّ لنكاح الحرة البالغة العاقلة. ودليل اشتراط الولي عند الجمهور قوله ﷺ: «لا نكاح إلا بولي» (رواه أبو داود والترمذي وصححه أهل العلم)"
   },
   {
-    "id": "demo-quiz-374",
+    "id": "demo-quiz-374", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "النكاح",
     "level": "متوسط",
@@ -2716,7 +2716,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "منع الولي موليّته من الزواج بالكفء إذا رضيته، وهو محرَّم؛ لقوله تعالى: ﴿فَلَا تَعْضُلُوهُنَّ أَنْ يَنْكِحْنَ أَزْوَاجَهُنَّ إِذَا تَرَاضَوْا بَيْنَهُمْ بِالْمَعْرُوفِ﴾ (البقرة: 232). ومن عضَل صار عاضلاً ظالماً وسقطت ولايته، فتنتقل إلى الولي الأبعد أو إلى القاضي"
   },
   {
-    "id": "demo-quiz-375",
+    "id": "demo-quiz-375", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الجنائز",
     "level": "سهل",
@@ -2724,7 +2724,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أربعة: غسلُ الميت، وتكفينُه، والصلاةُ عليه، ودفنُه (ويدخل فيها حملُه إلى قبره)؛ وهي فرض كفاية إذا قام بها البعض سقط الإثم عن الباقين. ويُستثنى شهيد المعركة فلا يُغسَّل ولا يُكفَّن بغير ثيابه التي قُتل فيها، كما فعل النبي ﷺ بشهداء أُحد"
   },
   {
-    "id": "demo-quiz-376",
+    "id": "demo-quiz-376", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الجنائز",
     "level": "متوسط",
@@ -2732,7 +2732,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أربع تكبيرات، وعليه عمل جمهور الفقهاء؛ لحديث أبي هريرة رضي الله عنه أن النبي ﷺ نعى النجاشي في اليوم الذي مات فيه، وخرج بهم إلى المصلى فصفَّ بهم وكبَّر أربع تكبيرات (رواه البخاري ومسلم). وصحَّ عن زيد بن أرقم رضي الله عنه أنه كبَّر على جنازة خمسًا وقال: كان رسول الله ﷺ يكبِّرها (رواه مسلم)، فذهب بعض أهل العلم إلى جواز الزيادة. وترتيب ما بين التكبيرات عند الجمهور: بعد الأولى قراءة الفاتحة، وبعد الثانية الصلاة على النبي ﷺ، وبعد الثالثة الدعاء للميت، ثم يُسلِّم بعد الرابعة"
   },
   {
-    "id": "demo-quiz-377",
+    "id": "demo-quiz-377", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الأيمان",
     "level": "متوسط",
@@ -2740,7 +2740,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "هي على التخيير بين ثلاثة: إطعام عشرة مساكين من أوسط ما يُطعِم الحالفُ أهلَه، أو كسوتهم، أو تحرير رقبة؛ فمن لم يجد شيئًا منها انتقل إلى صيام ثلاثة أيام. ونصُّها في قوله تعالى: ﴿فَكَفَّٰرَتُهُۥٓ إِطْعَامُ عَشَرَةِ مَسَٰكِينَ مِنْ أَوْسَطِ مَا تُطْعِمُونَ أَهْلِيكُمْ أَوْ كِسْوَتُهُمْ أَوْ تَحْرِيرُ رَقَبَةٍۢ ۖ فَمَن لَّمْ يَجِدْ فَصِيَامُ ثَلَٰثَةِ أَيَّامٍۢ﴾ [المائدة: 89]. وإنما تجب الكفارة بالحنث في اليمين المنعقدة، ولا كفارة في لغو اليمين لقوله في صدر الآية: ﴿لَا يُؤَاخِذُكُمُ ٱللَّهُ بِٱللَّغْوِ فِىٓ أَيْمَٰنِكُمْ﴾"
   },
   {
-    "id": "demo-quiz-378",
+    "id": "demo-quiz-378", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الأطعمة",
     "level": "سهل",
@@ -2748,7 +2748,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "نعم؛ حرام بنص القرآن: ﴿حُرِّمَتْ عَلَيْكُمُ ٱلْمَيْتَةُ وَٱلدَّمُ وَلَحْمُ ٱلْخِنزِيرِ وَمَآ أُهِلَّ لِغَيْرِ ٱللَّهِ بِهِۦ﴾ [المائدة: 3]. ومن اضطر إليه في مجاعة غير متجاوز قدر الضرورة فلا إثم عليه؛ لقوله في آخر الآية نفسها: ﴿فَمَنِ ٱضْطُرَّ فِى مَخْمَصَةٍ غَيْرَ مُتَجَانِفٍۢ لِّإِثْمٍۢ ۙ فَإِنَّ ٱللَّهَ غَفُورٌۭ رَّحِيمٌۭ﴾"
   },
   {
-    "id": "demo-quiz-379",
+    "id": "demo-quiz-379", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الأطعمة",
     "level": "متوسط",
@@ -2756,7 +2756,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أكله حلال بالاتفاق. وأمّا نقضه للوضوء فمسألة خلافية: ذهب الحنابلة إلى أن أكل لحم الإبل ينقض الوضوء؛ لحديث جابر بن سمرة رضي الله عنه أن رجلًا سأل النبي ﷺ: أنتوضأ من لحوم الغنم؟ قال: «إن شئتَ»، قال: أنتوضأ من لحوم الإبل؟ قال: «نعم» (رواه مسلم). وذهب جمهور الفقهاء من الحنفية والمالكية والشافعية إلى أنه لا ينقض الوضوء"
   },
   {
-    "id": "demo-quiz-380",
+    "id": "demo-quiz-380", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الفرائض",
     "level": "صعب",
@@ -2764,7 +2764,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "لها النصف فرضًا بشرطين: ألا يكون للميت ابن — فإن كان صارت عصبة به فيقتسمان «للذكر مثل حظ الأنثيين» — وألا تكون معها بنت أخرى، فإن كنّ اثنتين فأكثر فلهنّ الثلثان. ودليله قوله تعالى: ﴿فَإِن كُنَّ نِسَآءًۭ فَوْقَ ٱثْنَتَيْنِ فَلَهُنَّ ثُلُثَا مَا تَرَكَ ۖ وَإِن كَانَتْ وَٰحِدَةًۭ فَلَهَا ٱلنِّصْفُ﴾ [النساء: 11]، وذلك كله بعد قضاء الدَّين وتنفيذ الوصية"
   },
   {
-    "id": "demo-quiz-381",
+    "id": "demo-quiz-381", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور",
     "level": "سهل",
@@ -2772,7 +2772,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "سورة الفاتحة، ولذلك سُميت «فاتحة الكتاب». ولا يلزم من كونها أول المصحف أن تكون أول ما نزل، فإن أول ما نزل من القرآن صدر سورة العلق"
   },
   {
-    "id": "demo-quiz-382",
+    "id": "demo-quiz-382", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور",
     "level": "سهل",
@@ -2780,7 +2780,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "سورة الناس"
   },
   {
-    "id": "demo-quiz-383",
+    "id": "demo-quiz-383", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور",
     "level": "متوسط",
@@ -2788,7 +2788,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أول خمس آيات من سورة العلق (اقرأ)"
   },
   {
-    "id": "demo-quiz-384",
+    "id": "demo-quiz-384", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور",
     "level": "متوسط",
@@ -2796,7 +2796,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "آية ﴿وَاتَّقُوا يَوْمًا تُرْجَعُونَ فِيهِ إِلَى اللَّهِ﴾ في قول أكثر العلماء"
   },
   {
-    "id": "demo-quiz-385",
+    "id": "demo-quiz-385", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور",
     "level": "متوسط",
@@ -2804,7 +2804,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "البقرة وآل عمران والنساء والمائدة والأنفال والتوبة. والمدنيّ في اصطلاح أكثر أهل العلم ما نزل بعد الهجرة ولو نزل بمكة، لا ما نزل بالمدينة فحسب"
   },
   {
-    "id": "demo-quiz-386",
+    "id": "demo-quiz-386", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "الآيات",
     "level": "سهل",
@@ -2812,7 +2812,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "آية الكرسي [البقرة: 255]، ومطلعها: ﴿ٱللَّهُ لَآ إِلَٰهَ إِلَّا هُوَ ٱلْحَىُّ ٱلْقَيُّومُ﴾؛ لحديث أُبيّ بن كعب رضي الله عنه أن النبي ﷺ سأله: «أتدري أيُّ آية من كتاب الله معك أعظم؟» فقال: آية الكرسي، فضرب في صدره وقال: «ليَهْنِكَ العلمُ أبا المنذر» (رواه مسلم)"
   },
   {
-    "id": "demo-quiz-387",
+    "id": "demo-quiz-387", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "الآيات",
     "level": "متوسط",
@@ -2820,7 +2820,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "هي أطول آية في القرآن [البقرة: 282]، وموضوعها توثيق الدَّين المؤجَّل بالكتابة والإشهاد؛ تفتتح بقوله تعالى: ﴿يَٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوٓا۟ إِذَا تَدَايَنتُم بِدَيْنٍ إِلَىٰٓ أَجَلٍۢ مُّسَمًّۭى فَٱكْتُبُوهُ﴾، وفيها أوسع تفصيل تشريعي جاء في آية واحدة"
   },
   {
-    "id": "demo-quiz-388",
+    "id": "demo-quiz-388", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "الآيات",
     "level": "متوسط",
@@ -2828,7 +2828,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "مئتان وستٌّ وثمانون آية (286)، وهي أطول سور القرآن، وهي مدنية"
   },
   {
-    "id": "demo-quiz-389",
+    "id": "demo-quiz-389", "documentation_status": "unsourced",
     "section": "التجويد",
     "category": "المخارج",
     "level": "سهل",
@@ -2836,7 +2836,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "خمسة مخارج عامة: الجوف (لحروف المد الثلاثة)، والحلق، واللسان، والشفتان، والخيشوم (مخرج الغنة). ويتفرع منها على المذهب المختار — وهو اختيار ابن الجزري — سبعة عشر مخرجًا خاصًّا"
   },
   {
-    "id": "demo-quiz-390",
+    "id": "demo-quiz-390", "documentation_status": "unsourced",
     "section": "التجويد",
     "category": "المخارج",
     "level": "متوسط",
@@ -2844,7 +2844,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "من أدنى الحلق، أي أقربه إلى الفم، ومعه حرف الخاء. والحلق ثلاثة مخارج: أقصاه — وهو أبعده عن الفم — للهمزة والهاء، ووسطه للعين والحاء، وأدناه للغين والخاء"
   },
   {
-    "id": "demo-quiz-391",
+    "id": "demo-quiz-391", "documentation_status": "unsourced",
     "section": "التجويد",
     "category": "الأحكام",
     "level": "سهل",
@@ -2852,7 +2852,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "إدخال حرف ساكن في حرف متحرك بعده بحيث يصيران حرفاً واحداً مشدداً من جنس الثاني. وحروفه عند النون الساكنة والتنوين ستة مجموعة في «يرملون»، وينقسم إلى إدغام بغنة في حروف «ينمو»، وإدغام بغير غنة في اللام والراء"
   },
   {
-    "id": "demo-quiz-392",
+    "id": "demo-quiz-392", "documentation_status": "unsourced",
     "section": "التجويد",
     "category": "الأحكام",
     "level": "متوسط",
@@ -2860,7 +2860,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "النطق بالنون الساكنة أو التنوين بصفة بين الإظهار والإدغام، عارياً عن التشديد، مع بقاء الغنة مقدار حركتين. وحروفه خمسة عشر، وهي الباقية بعد حروف الإظهار الستة وحروف الإدغام الستة وحرف الإقلاب (الباء)"
   },
   {
-    "id": "demo-quiz-394",
+    "id": "demo-quiz-394", "documentation_status": "unsourced",
     "section": "التجويد",
     "category": "الأحكام",
     "level": "صعب",
@@ -2868,7 +2868,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "مدٌّ سببه همزة وقعت بعد حرف المد في الكلمة نفسها، نحو ﴿ٱلسَّمَآءِ﴾ و﴿مَآءًۭ﴾، وحكمه الوجوب عند القراء ولذلك سُمي «المد الواجب»، ويُمدّ أربع أو خمس حركات في رواية حفص"
   },
   {
-    "id": "demo-quiz-395",
+    "id": "demo-quiz-395", "documentation_status": "unsourced",
     "section": "التجويد",
     "category": "الأحكام",
     "level": "صعب",
@@ -2876,7 +2876,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "اضطراب الصوت عند النطق بالحرف ساكناً حتى تُسمع له نبرة قوية، وحروفها خمسة مجموعة في «قُطْبُ جَدٍّ»: القاف والطاء والباء والجيم والدال. وتكون صغرى إذا سكن الحرف في وسط الكلمة، وكبرى إذا وقع الوقف عليه في آخرها"
   },
   {
-    "id": "demo-quiz-396",
+    "id": "demo-quiz-396", "documentation_status": "unsourced",
     "section": "التجويد",
     "category": "الأحكام",
     "level": "متوسط",
@@ -2884,7 +2884,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "صوت رنّان يخرج من الخيشوم لا عمل للسان فيه، وهي صفة لازمة للنون والميم في جميع أحوالهما؛ وتُكمَل مقدار حركتين في مواضعها: النون والميم المشدَّدتين، والإدغام بغنة، والإخفاء"
   },
   {
-    "id": "demo-quiz-397",
+    "id": "demo-quiz-397", "documentation_status": "unsourced",
     "section": "التجويد",
     "category": "الأحكام",
     "level": "سهل",
@@ -2892,7 +2892,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "تعلُّمه وتعليمه فرض كفاية على الأمة. وأمّا تطبيقه فيُفرَّق فيه: ما يختلّ به المعنى أو تتغير به بنية الكلمة — وهو اللحن الجليّ كإبدال حرف بحرف أو تغيير حركة الإعراب — فلا يجوز باتفاق؛ وأمّا اللحن الخفيّ المتعلق بكمال الأداء كمقادير المدود وإتمام الغنّة فمحل خلاف بين أهل العلم: منهم من ألحقه بالواجب أخذًا بقول ابن الجزري «والأخذ بالتجويد حتمٌ لازم»، ومنهم من عدّه من كمال الأداء المستحبّ لا الواجب"
   },
   {
-    "id": "demo-quiz-398",
+    "id": "demo-quiz-398", "documentation_status": "unsourced",
     "section": "التجويد",
     "category": "الأحكام",
     "level": "متوسط",
@@ -2900,7 +2900,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "قسمان: المد الطبيعي (الأصلي) وهو ما لا يقوم حرف المد إلا به ولا سبب بعده، ومقداره حركتان؛ والمد الفرعي وهو ما زاد على الطبيعي لسبب، والسبب إمّا همز (المتصل والمنفصل والبدل) وإمّا سكون (العارض للسكون واللازم بأنواعه)"
   },
   {
-    "id": "demo-quiz-399",
+    "id": "demo-quiz-399", "documentation_status": "unsourced",
     "section": "التجويد",
     "category": "الأحكام",
     "level": "صعب",
@@ -2908,7 +2908,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "إذا وقعت اللام أو الراء بعد نون ساكنة أو تنوين، فتُدغم فيهما بغير غنة، نحو ﴿مِّن لَّدُنْهُ﴾ و﴿مِّن رَّبِّهِمْ﴾. وأمّا حروف «ينمو» — الياء والنون والميم والواو — فالإدغام فيها بغنة"
   },
   {
-    "id": "demo-quiz-400",
+    "id": "demo-quiz-400", "documentation_status": "unsourced",
     "section": "التجويد",
     "category": "الأحكام",
     "level": "متوسط",
@@ -2916,7 +2916,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "التفخيم تسمين الحرف حتى يمتلئ الفم بصداه، والترقيق تنحيفه. فحروف الاستعلاء السبعة المجموعة في «خُصَّ ضَغْطٍ قِظْ» مفخَّمة دائماً، وسائر الحروف مرقَّقة، وتتردد بين الحالين الراء ولام لفظ الجلالة والألف تبعاً لما قبلها؛ فتُفخَّم الراء إذا كانت مفتوحة أو مضمومة أو ساكنة بعد فتح أو ضم، وتُرقَّق إذا كانت مكسورة أو ساكنة بعد كسر أصلي"
   },
   {
-    "id": "demo-quiz-402",
+    "id": "demo-quiz-402", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "الصحاح",
     "level": "متوسط",
@@ -2924,7 +2924,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "صحيح البخاري، وصحيح مسلم، وسنن أبي داود، وجامع الترمذي، وسنن النسائي، وسنن ابن ماجه. وتسميتها «الصحاح الستة» تسامح شائع لا يصح اصطلاحاً؛ فالصحيح المحض منها الصحيحان، وأمّا السنن الأربعة ففيها الصحيح والحسن والضعيف. والسادس منها سنن ابن ماجه عند ابن طاهر المقدسي، وجعل بعضهم مكانه موطأ مالك"
   },
   {
-    "id": "demo-quiz-404",
+    "id": "demo-quiz-404", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "المصطلح",
     "level": "متوسط",
@@ -2932,7 +2932,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "ما اتصل سنده بنقل عدلٍ خفيفِ الضبط عن مثله إلى منتهاه، من غير شذوذ ولا علة؛ فهو كالصحيح في شروطه إلا أن راويه أخفُّ ضبطاً. وينقسم إلى حسن لذاته، وحسن لغيره وهو الضعيف الذي تعددت طرقه فجبر بعضها بعضاً"
   },
   {
-    "id": "demo-quiz-405",
+    "id": "demo-quiz-405", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "المصطلح",
     "level": "صعب",
@@ -2940,7 +2940,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "سلسلة الرجال الموصِّلة إلى المتن؛ وقد ينتهي إلى النبي ﷺ فيكون الحديث مرفوعاً، أو إلى صحابي فيكون موقوفاً، أو إلى تابعي فيكون مقطوعاً. وبه تُعرف صحة الرواية من ضعفها؛ قال عبد الله بن المبارك: «الإسناد من الدين، ولولا الإسناد لقال من شاء ما شاء» (رواه مسلم في مقدمة صحيحه)"
   },
   {
-    "id": "demo-quiz-406",
+    "id": "demo-quiz-406", "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "الصباح والمساء",
     "level": "سهل",
@@ -2948,7 +2948,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "«أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ» (رواه مسلم)، وكان النبي ﷺ يقوله إذا أمسى بلفظ: «أمسينا وأمسى الملك لله». ولا يثبت ترتيب معيَّن يجعل ذكراً بعينه «أول» أذكار الصباح، وإنما هي أذكار مأثورة يقولها المسلم في وقتها"
   },
   {
-    "id": "demo-quiz-407",
+    "id": "demo-quiz-407", "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "الصباح والمساء",
     "level": "متوسط",
@@ -2956,7 +2956,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أثبتُ ما ورد فيها أنها حِرزٌ عند النوم؛ ففي حديث أبي هريرة رضي الله عنه في قصة الشيطان الذي كان يأخذ من تمر الصدقة أنه قال له: «إذا أويتَ إلى فراشك فاقرأ آية الكرسي، لن يزال عليك من الله حافظ، ولا يقربك شيطان حتى تصبح»، فقال النبي ﷺ: «صدَقَك وهو كذوب» (رواه البخاري). وأمّا تخصيصها بالصباح والمساء فجاء من طرق أخرى تكلَّم أهل العلم في ثبوتها، والأصل المحفوظ في فضلها ما تقدَّم"
   },
   {
-    "id": "demo-quiz-408",
+    "id": "demo-quiz-408", "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "الصلاة",
     "level": "سهل",
@@ -2964,7 +2964,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "«سُبْحَانَ رَبِّيَ الْعَظِيمِ»؛ ثبت من فعله ﷺ في حديث حذيفة بن اليمان رضي الله عنه في وصف صلاته بالليل (رواه مسلم)، وأدنى الكمال ثلاث مرات. وهو واجب عند الحنابلة، سنة عند جمهور الفقهاء لا تبطل الصلاة بتركه"
   },
   {
-    "id": "demo-quiz-409",
+    "id": "demo-quiz-409", "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "الصلاة",
     "level": "سهل",
@@ -2972,7 +2972,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "«سُبْحَانَ رَبِّيَ الْأَعْلَى»؛ ثبت من فعله ﷺ في حديث حذيفة بن اليمان رضي الله عنه (رواه مسلم)، وأدنى الكمال ثلاث مرات. وحكمه كحكم تسبيح الركوع: واجب عند الحنابلة، سنة عند الجمهور. ويُستحب الإكثار من الدعاء في السجود لقوله ﷺ: «وأمّا السجود فاجتهدوا في الدعاء، فقَمِنٌ أن يُستجاب لكم» (رواه مسلم)"
   },
   {
-    "id": "demo-quiz-410",
+    "id": "demo-quiz-410", "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "بعد الصلاة",
     "level": "متوسط",
@@ -2980,7 +2980,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "غُفرت خطاياه وإن كانت مثل زبد البحر — بشرط أن يُتمّ المائة بالتهليل؛ ففي حديث أبي هريرة رضي الله عنه: «من سبَّح الله في دُبُر كل صلاة ثلاثاً وثلاثين، وحمِد الله ثلاثاً وثلاثين، وكبَّر الله ثلاثاً وثلاثين، فتلك تسعة وتسعون، وقال تمام المائة: لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير — غُفرت خطاياه وإن كانت مثل زبد البحر» (رواه مسلم: ٥٩٧). فالفضل مرتَّب على إتمام المائة بالتهليل لا على التسع والتسعين وحدها"
   },
   {
-    "id": "demo-quiz-411",
+    "id": "demo-quiz-411", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "آداب الطعام",
     "level": "سهل",
@@ -2988,7 +2988,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "يُسمّي الله؛ قال ﷺ لعمر بن أبي سلمة رضي الله عنهما: «يا غلامُ، سمِّ الله، وكُلْ بيمينك، وكُلْ ممّا يليك» (متفق عليه: البخاري ٥٣٧٦، مسلم ٢٠٢٢)، ويُجزئ في ذلك قول: «بسم الله». فمن نسي التسمية في أول طعامه قال إذا ذكر: «بسم الله أوّله وآخره» (رواه أبو داود والترمذي وحسّنه، وهو في حصن المسلم)"
   },
   {
-    "id": "demo-quiz-412",
+    "id": "demo-quiz-412", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "آداب الطعام",
     "level": "سهل",
@@ -2996,7 +2996,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "من أشهر ما ورد: «الحمد لله الذي أطعمنا وسقانا وجعلنا مسلمين» (رواه أبو داود والترمذي، وهو في حصن المسلم). وورد أيضًا: «الحمد لله الذي أطعمني هذا ورزقنيه من غير حولٍ منّي ولا قوّة»، وفي فضله: «غُفر له ما تقدّم من ذنبه» (رواه الترمذي وحسّنه). ولا يتعيّن لفظ بعينه؛ فأصل السنّة حمد الله على الطعام، وقد قال ﷺ: «إنّ الله ليرضى عن العبد أن يأكل الأكلة فيحمده عليها، أو يشرب الشربة فيحمده عليها» (رواه مسلم ٢٧٣٤)"
   },
   {
-    "id": "demo-quiz-413",
+    "id": "demo-quiz-413", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "آداب الطعام",
     "level": "متوسط",
@@ -3004,7 +3004,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "جمعها النبي ﷺ في وصيته لعمر بن أبي سلمة رضي الله عنهما وقد كانت يده تطيش في الصحفة: «يا غلامُ، سمِّ الله، وكُلْ بيمينك، وكُلْ ممّا يليك» (متفق عليه: البخاري ٥٣٧٦، مسلم ٢٠٢٢). فهي: التسمية، والأكل باليمين — وقد نهى ﷺ عن الأكل بالشمال وقال: «فإنّ الشيطان يأكل بشماله» (رواه مسلم ٢٠٢٠) — والأكل ممّا يلي الآكل. وقيّد أهل العلم الأدب الثالث بالطعام الصنف الواحد، أمّا إذا اختلفت الأصناف فلا بأس بمدّ اليد إلى غير ما يليه"
   },
   {
-    "id": "demo-quiz-414",
+    "id": "demo-quiz-414", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "آداب السلام",
     "level": "سهل",
@@ -3012,7 +3012,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "جاء ترتيبه في حديث أبي هريرة رضي الله عنه: «يُسلّم الصغير على الكبير، والمارّ على القاعد، والقليل على الكثير» (رواه البخاري ٦٢٣١)، وفي رواية الصحيحين: «يُسلّم الراكب على الماشي، والماشي على القاعد». وهذا ترتيب استحباب لا إلزام؛ وخيرهما الذي يبدأ بالسلام (رواه أبو داود). وابتداء السلام سنّة، وردّه واجب — فرض كفاية إذا كانوا جماعة، وعينٌ على المنفرد — قال تعالى: ﴿وَإِذَا حُيِّيتُم بِتَحِيَّةٍ فَحَيُّوا بِأَحْسَنَ مِنْهَا أَوْ رُدُّوهَا﴾ (النساء: ٨٦)"
   },
   {
-    "id": "demo-quiz-415",
+    "id": "demo-quiz-415", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "آداب المجلس",
     "level": "سهل",
@@ -3020,7 +3020,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "«سبحانك اللهمّ وبحمدك، أشهد أن لا إله إلا أنت، أستغفرك وأتوب إليك»؛ قال ﷺ: «من جلس في مجلسٍ فكثُر فيه لَغَطُه، فقال قبل أن يقوم من مجلسه ذلك: سبحانك اللهمّ وبحمدك... إلا غُفر له ما كان في مجلسه ذلك» (رواه الترمذي وقال: حسن صحيح، وأبو داود، وهو في حصن المسلم). فمحلّها عند القيام من المجلس، وهي كفّارة لما يقع فيه من اللغط واللغو"
   },
   {
-    "id": "demo-quiz-416",
+    "id": "demo-quiz-416", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "بر الوالدين",
     "level": "سهل",
@@ -3028,7 +3028,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عقوق الوالدين؛ ففي حديث أبي بكرة رضي الله عنه قال ﷺ: «ألا أُنبّئكم بأكبر الكبائر؟ — ثلاثًا — قلنا: بلى يا رسول الله. قال: الإشراك بالله، وعقوق الوالدين» (متفق عليه: البخاري ٢٦٥٤، مسلم ٨٧). ونظير هذا الاقتران في القرآن: ﴿وَقَضَىٰ رَبُّكَ أَلَّا تَعْبُدُوا إِلَّا إِيَّاهُ وَبِالْوَالِدَيْنِ إِحْسَانًا﴾ (الإسراء: ٢٣)"
   },
   {
-    "id": "demo-quiz-417",
+    "id": "demo-quiz-417", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "بر الوالدين",
     "level": "متوسط",
@@ -3036,7 +3036,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "ضبطه أهل العلم بأنّه: كلّ ما يتأذّى به الوالدان من قول أو فعل ممّا ليس بواجبٍ شرعيّ على الولد تركُه، أو تركُ ما يلزمه من برّهما مع القدرة وانتفاء العذر. وأدنى ما نُهي عنه التأفّف: ﴿فَلَا تَقُل لَّهُمَا أُفٍّ وَلَا تَنْهَرْهُمَا وَقُل لَّهُمَا قَوْلًا كَرِيمًا﴾ (الإسراء: ٢٣)، فما فوقه أشدّ. وطاعتهما واجبة في المعروف لا في معصية الله، ومع ذلك تبقى الصحبة بالإحسان: ﴿وَإِن جَاهَدَاكَ عَلَىٰ أَن تُشْرِكَ بِي مَا لَيْسَ لَكَ بِهِ عِلْمٌ فَلَا تُطِعْهُمَا ۖ وَصَاحِبْهُمَا فِي الدُّنْيَا مَعْرُوفًا﴾ (لقمان: ١٥)"
   },
   {
-    "id": "demo-quiz-418",
+    "id": "demo-quiz-418", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "صلة الرحم",
     "level": "سهل",
@@ -3044,7 +3044,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "قال ﷺ: «من أحبّ أن يُبسَط له في رزقه، ويُنسَأ له في أثره، فليَصِلْ رحمه» (متفق عليه: البخاري ٥٩٨٦، مسلم ٢٥٥٧). ومعنى «يُنسَأ له في أثره»: يُؤخَّر له في أجله. وللعلماء في توجيهها وجهان مشهوران: أنّ المراد البركة في العمر والتوفيق لعمارته بالطاعة، أو أنّ الزيادة والنقص في علم الملك المُوكَّل وفيما في صحف الملائكة، وأمّا ما في علم الله فلا يتغيّر ولا يتبدّل"
   },
   {
-    "id": "demo-quiz-419",
+    "id": "demo-quiz-419", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "الجوار",
     "level": "متوسط",
@@ -3052,7 +3052,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "بتكرار وصية جبريل به حتى ظنّ ﷺ أنّه سيجعل له نصيبًا من الميراث؛ قال: «ما زال جبريل يوصيني بالجار حتى ظننتُ أنّه سَيُوَرِّثُه» (متفق عليه: البخاري ٦٠١٤، مسلم ٢٦٢٤) — والظنّ هنا منه ﷺ لا من الصحابة. وقرن الإيمانَ بحقّه فقال: «من كان يؤمن بالله واليوم الآخر فليُكرم جاره» (متفق عليه)، وقال: «والله لا يؤمن — ثلاثًا — قيل: ومن يا رسول الله؟ قال: الذي لا يأمن جارُه بوائقه» (رواه البخاري ٦٠١٦)"
   },
   {
-    "id": "demo-quiz-420",
+    "id": "demo-quiz-420", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "أخلاق المسلم",
     "level": "سهل",
@@ -3060,7 +3060,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "قال ﷺ: «إنّ الرفق لا يكون في شيء إلا زانه، ولا يُنزع من شيء إلا شانه» (رواه مسلم ٢٥٩٤). وفي الباب نفسه: «إنّ الله رفيقٌ يحبّ الرفق، ويُعطي على الرفق ما لا يُعطي على العُنف، وما لا يُعطي على ما سواه» (رواه مسلم ٢٥٩٣)، وقال: «من يُحرَم الرفق يُحرَم الخير كلّه» (رواه مسلم ٢٥٩٢)"
   },
   {
-    "id": "demo-quiz-422",
+    "id": "demo-quiz-422", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "الخلفاء الراشدون",
     "level": "متوسط",
@@ -3068,7 +3068,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "نحو سنتين وثلاثة أشهر؛ بويع له في ربيع الأول سنة ١١هـ يوم وفاة النبي ﷺ، وتوفّي في جمادى الآخرة سنة ١٣هـ رضي الله عنه. وأهل السِّيَر يزيدون على ذلك أيامًا أو ينقصونها تبعًا لاختلافهم في تعيين يوم البيعة ويوم الوفاة، والمحرَّر أنّها سنتان وأشهر — وهي أقصر مدد الخلفاء الراشدين"
   },
   {
-    "id": "demo-quiz-423",
+    "id": "demo-quiz-423", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "الخلفاء الراشدون",
     "level": "متوسط",
@@ -3076,7 +3076,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "هما مرحلتان متمايزتان لا مرحلة واحدة: الأولى جمعه في صُحُفٍ في خلافة أبي بكر الصدّيق رضي الله عنه، بمشورة عمر بن الخطاب بعد استحرار القتل بالقُرّاء يوم اليمامة، وتولّى الكتابة زيد بن ثابت رضي الله عنه. والثانية جمع الناس على مصحف واحد ونسخ المصاحف وإرسالها إلى الأمصار، وكانت في خلافة عثمان بن عفان رضي الله عنه لمّا اختلف الناس في القراءة — ولهذا سُمّي «المصحف الإمام» أو «المصحف العثماني». والقصّتان في صحيح البخاري (كتاب فضائل القرآن: ٤٩٨٦ و٤٩٨٧)"
   },
   {
-    "id": "demo-quiz-425",
+    "id": "demo-quiz-425", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "الصحابيات",
     "level": "سهل",
@@ -3084,7 +3084,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عائشة بنت أبي بكر الصدّيق رضي الله عنهما، وهي معدودة في المكثرين من الرواية مطلقًا؛ قال أبو موسى الأشعري رضي الله عنه: «ما أشكل علينا — أصحابَ رسول الله ﷺ — حديثٌ قطّ فسألنا عائشة إلا وجدنا عندها منه علمًا» (رواه الترمذي). وتنبيه لازم: لقب «أمّ المؤمنين» ليس خاصًّا بها، بل هو لأزواج النبي ﷺ جميعًا بنصّ القرآن: ﴿النَّبِيُّ أَوْلَىٰ بِالْمُؤْمِنِينَ مِنْ أَنفُسِهِمْ ۖ وَأَزْوَاجُهُ أُمَّهَاتُهُمْ﴾ (الأحزاب: ٦)، وإنّما تميّزت عائشة بالرواية والفقه"
   },
   {
-    "id": "demo-quiz-427",
+    "id": "demo-quiz-427", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "المهاجرون",
     "level": "متوسط",
@@ -3092,7 +3092,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "لا يُعرف هذا اللقب في كتب السنّة ولا في كتب السِّيَر، والسؤال المبنيّ عليه يفترض ما لا يثبت. والوارد في القرآن ثناءٌ على الطبقة كلّها لا ترتيبٌ برقمٍ معيّن: ﴿وَالسَّابِقُونَ الْأَوَّلُونَ مِنَ الْمُهَاجِرِينَ وَالْأَنصَارِ وَالَّذِينَ اتَّبَعُوهُم بِإِحْسَانٍ رَّضِيَ اللَّهُ عَنْهُمْ وَرَضُوا عَنْهُ﴾ (التوبة: ١٠٠). وأمّا ترتيب السابقين إلى الإسلام واحدًا واحدًا فقد اختلف فيه أهل السِّيَر ولم يُحرَّر على وجهٍ قاطع. والمهاجرون في الاصطلاح: من هاجر إلى المدينة قبل الفتح نُصرةً للدين"
   },
   {
-    "id": "demo-quiz-428",
+    "id": "demo-quiz-428", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "الأنصار",
     "level": "متوسط",
@@ -3100,7 +3100,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "هم الأوس والخزرج من أهل المدينة، الذين آووا رسول الله ﷺ وأصحابه المهاجرين ونصروهم؛ وهو اسمٌ شرعيّ غلب عليهم في عهد النبوة. وأثنى الله عليهم بالإيثار: ﴿وَالَّذِينَ تَبَوَّءُوا الدَّارَ وَالْإِيمَانَ مِن قَبْلِهِمْ يُحِبُّونَ مَنْ هَاجَرَ إِلَيْهِمْ وَلَا يَجِدُونَ فِي صُدُورِهِمْ حَاجَةً مِّمَّا أُوتُوا وَيُؤْثِرُونَ عَلَىٰ أَنفُسِهِمْ وَلَوْ كَانَ بِهِمْ خَصَاصَةٌ﴾ (الحشر: ٩)، وقرنهم بالمهاجرين في آية الرضا (التوبة: ١٠٠). وقال ﷺ: «آية الإيمان حبّ الأنصار، وآية النفاق بُغض الأنصار» (متفق عليه)"
   },
   {
-    "id": "demo-quiz-429",
+    "id": "demo-quiz-429", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "الصحابة المحدّثون",
     "level": "صعب",
@@ -3108,7 +3108,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أبو هريرة رضي الله عنه — يُنسب إليه 5374 حديثاً بعدّ «مسند بقي بن مخلد» كما نقله ابن الجوزي، وهذا العدد يشمل المكرَّر بتعدد الطرق والروايات لا أحاديث مستقلة بهذا العدد. وسبب كثرة روايته أمران بيّنهما هو ﷺ وهو رضي الله عنه: ملازمته للنبي ﷺ على شبع بطنه حين كان المهاجرون يشغلهم الصفق بالأسواق والأنصار عملُ أموالهم (رواه البخاري ١١٨)، ودعوة النبي ﷺ له بالحفظ في قصة بسط الثوب: «فما نسيتُ شيئًا بعده» (رواه البخاري ١١٩)"
   },
   {
-    "id": "demo-quiz-430",
+    "id": "demo-quiz-430", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "الصحابة المحدّثون",
     "level": "متوسط",
@@ -3116,7 +3116,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عبدالله بن عباس رضي الله عنهما، ولُقّب بـ«البحر» و«حَبر الأمة» و«ترجمان القرآن» لسعة علمه، خصوصًا في التفسير. وأصل ذلك دعوة النبي ﷺ له وقد ضمّه إليه: «اللهمّ فقّهه في الدين» (متفق عليه: البخاري ١٤٣)، وفي رواية: «وعلّمه التأويل» (رواها أحمد). وكان عمر بن الخطاب رضي الله عنه يُدخله مع أشياخ بدر ويسأله معهم مع حداثة سنّه (رواه البخاري)"
   },
   {
-    "id": "demo-quiz-431",
+    "id": "demo-quiz-431", "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "دعاء الكرب",
     "level": "سهل",
@@ -3124,7 +3124,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "«لا إله إلا الله العظيم الحليم، لا إله إلا الله ربّ العرش العظيم، لا إله إلا الله ربّ السماوات وربّ الأرض وربّ العرش الكريم»؛ كان النبي ﷺ يدعو به عند الكرب (متفق عليه: البخاري ٦٣٤٦، مسلم ٢٧٣٠). وتنبيه: الجملة الثالثة من متن الحديث فلا يُقتصر على الجملتين الأوليين"
   },
   {
-    "id": "demo-quiz-432",
+    "id": "demo-quiz-432", "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "دعاء الكرب",
     "level": "متوسط",
@@ -3132,7 +3132,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "«إنّا لله وإنّا إليه راجعون، اللهمّ أْجُرني في مصيبتي، وأَخْلِفْ لي خيرًا منها»؛ قال ﷺ: «ما من مسلم تصيبه مصيبة فيقول ما أمره الله... إلا أخلف الله له خيرًا منها» (رواه مسلم ٩١٨ من حديث أمّ سلمة رضي الله عنها، وفيه أنّها قالتها فأخلف الله لها رسولَ الله ﷺ). وأصل الاسترجاع قوله تعالى: ﴿الَّذِينَ إِذَا أَصَابَتْهُم مُّصِيبَةٌ قَالُوا إِنَّا لِلَّهِ وَإِنَّا إِلَيْهِ رَاجِعُونَ﴾ (البقرة: ١٥٦)"
   },
   {
-    "id": "demo-quiz-433",
+    "id": "demo-quiz-433", "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "الاستغفار",
     "level": "سهل",
@@ -3140,7 +3140,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "«اللهمّ أنت ربّي لا إله إلا أنت، خلقتني وأنا عبدك، وأنا على عهدك ووعدك ما استطعت، أعوذ بك من شرّ ما صنعت، أبوء لك بنعمتك عليّ وأبوء بذنبي، فاغفر لي فإنّه لا يغفر الذنوب إلا أنت». وفضله في تمام الحديث: «من قالها من النهار موقنًا بها فمات من يومه قبل أن يُمسي فهو من أهل الجنة، ومن قالها من الليل وهو موقن بها فمات قبل أن يُصبح فهو من أهل الجنة» (رواه البخاري ٦٣٠٦ من حديث شدّاد بن أوس رضي الله عنه)"
   },
   {
-    "id": "demo-quiz-434",
+    "id": "demo-quiz-434", "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "الاستغفار",
     "level": "متوسط",
@@ -3148,7 +3148,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "جاء ذلك بروايتين لا تعارض بينهما: «والله إنّي لأستغفر الله وأتوب إليه في اليوم أكثر من سبعين مرّة» (رواه البخاري ٦٣٠٧)، و«إنّه ليُغان على قلبي، وإنّي لأستغفر الله في اليوم مئة مرّة» (رواه مسلم ٢٧٠٢) — وجمع أهل العلم بينهما بأنّ ذلك يختلف باختلاف الأحوال والأوقات، وأنّ ذكر العدد لا يُراد به الحصر. وليس العدد شرطًا في الفضل، وإنّما المقصود الإكثار؛ وهو ﷺ مغفور له ما تقدّم من ذنبه وما تأخّر، فاستغفاره تعبّدٌ وشكرٌ وتعليمٌ للأمة"
   },
   {
-    "id": "demo-quiz-435",
+    "id": "demo-quiz-435", "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "الصلاة على النبي",
     "level": "سهل",
@@ -3156,7 +3156,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "«اللهمّ صلِّ على محمد وعلى آل محمد كما صلّيت على إبراهيم وعلى آل إبراهيم إنّك حميد مجيد، اللهمّ بارك على محمد وعلى آل محمد كما باركت على إبراهيم وعلى آل إبراهيم إنّك حميد مجيد». وأصلها أنّ الصحابة سألوا: كيف نصلّي عليك؟ فعلّمهم إيّاها (متفق عليه: البخاري ٣٣٧٠، مسلم ٤٠٦ من حديث كعب بن عُجرة رضي الله عنه). ومحلّها المتأكِّد في التشهد الأخير من الصلاة، وتُقال في كل حين"
   },
   {
-    "id": "demo-quiz-436",
+    "id": "demo-quiz-436", "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "الصلاة على النبي",
     "level": "متوسط",
@@ -3164,7 +3164,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "قال ﷺ: «من صلّى عليّ صلاةً واحدةً صلّى الله عليه بها عشرًا» (رواه مسلم ٤٠٨ من حديث أبي هريرة رضي الله عنه). ومعنى صلاة الله على عبده كما فسّره أبو العالية — وعلّقه البخاري في صحيحه — : «ثناؤه عليه في الملأ الأعلى»، لا الدعاء؛ فليست صلاة الله كصلاة العباد. والأمر بها في قوله تعالى: ﴿إِنَّ اللَّهَ وَمَلَائِكَتَهُ يُصَلُّونَ عَلَى النَّبِيِّ ۚ يَا أَيُّهَا الَّذِينَ آمَنُوا صَلُّوا عَلَيْهِ وَسَلِّمُوا تَسْلِيمًا﴾ (الأحزاب: ٥٦)"
   },
   {
-    "id": "demo-quiz-437",
+    "id": "demo-quiz-437", "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "التسبيح",
     "level": "سهل",
@@ -3172,7 +3172,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "تنزيه الله عزّ وجلّ عن كلّ نقص وعيب، وعمّا لا يليق بجلاله، وعمّا يصفه به الجاحدون؛ وأصلها في اللغة من «السَّبْح» بمعنى البُعد، فمعناها تبعيد الله عن السوء. وهي مقرونة بالحمد في القرآن على ألسنة الملائكة: ﴿وَنَحْنُ نُسَبِّحُ بِحَمْدِكَ وَنُقَدِّسُ لَكَ﴾ (البقرة: ٣٠)، والتنزيه وحده لا يكفي حتى يُقرَن بإثبات صفات الكمال"
   },
   {
-    "id": "demo-quiz-438",
+    "id": "demo-quiz-438", "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "التسبيح",
     "level": "متوسط",
@@ -3180,7 +3180,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "قال ﷺ: «كلمتان خفيفتان على اللسان، ثقيلتان في الميزان، حبيبتان إلى الرحمن: سبحان الله وبحمده، سبحان الله العظيم» (متفق عليه: البخاري ٦٦٨٢، مسلم ٢٦٩٤ من حديث أبي هريرة رضي الله عنه). ولا يعارض هذا حديث: «ما من شيء أثقل في ميزان المؤمن يوم القيامة من خُلُقٍ حسن»، فذاك في أعمال الجوارح والأخلاق، وهذا في الكلمتين من الذكر"
   },
   {
-    "id": "demo-quiz-439",
+    "id": "demo-quiz-439", "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "الدعاء",
     "level": "سهل",
@@ -3188,7 +3188,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "ليست على درجة واحدة، فمنها شرطٌ ومنها مانع: فالشرط إخلاص الدعاء لله وحده وسؤاله دون سواه، وحضور القلب؛ قال تعالى: ﴿ادْعُونِي أَسْتَجِبْ لَكُمْ﴾ (غافر: ٦٠)، وقال ﷺ: «الدعاء هو العبادة» (الترمذي ٢٩٦٩، صححه الألباني). وأما لفظ «ادعوا الله وأنتم موقنون بالإجابة» فضعيف عند المحققين فلا يُستقل به شرطًا. والموانع أظهرها اثنان: الاستعجال، قال ﷺ: «يُستجاب لأحدكم ما لم يعجل، يقول: دعوتُ فلم يُستجب لي» (متفق عليه: البخاري ٦٣٤٠، مسلم ٢٧٣٥)؛ والمطعم الحرام، ففي حديث مسلم (١٠١٥) ذكر ﷺ الرجل يُطيل السفر أشعثَ أغبرَ يمدّ يديه إلى السماء ثم قال: «ومطعمه حرام، ومشربه حرام، وملبسه حرام، وغُذي بالحرام، فأنّى يُستجاب لذلك؟». وأمَر الله الداعيَ بالاستجابة له: ﴿فَلْيَسْتَجِيبُوا لِي وَلْيُؤْمِنُوا بِي لَعَلَّهُمْ يَرْشُدُونَ﴾ (البقرة: ١٨٦). ثمّ الإجابة لا تتخلّف: إمّا أن يُعجَّل له دعوته، أو تُدَّخر له في الآخرة، أو يُصرف عنه من السوء مثلها"
   },
   {
-    "id": "demo-quiz-440",
+    "id": "demo-quiz-440", "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "الدعاء",
     "level": "متوسط",
@@ -3196,7 +3196,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "من أشهرها: جوف الليل الآخر — لحديث النزول: «ينزل ربّنا تبارك وتعالى كلّ ليلة إلى السماء الدنيا حين يبقى ثلث الليل الآخر فيقول: من يدعوني فأستجيب له» (متفق عليه: البخاري ١١٤٥)؛ وساعة يوم الجمعة: «فيه ساعة لا يوافقها عبد مسلم وهو قائم يصلّي يسأل الله شيئًا إلا أعطاه إيّاه» (متفق عليه: البخاري ٩٣٥، مسلم ٨٥٢) — وتعيينها محلّ خلافٍ بين أهل العلم، وأقواها قولان: ما بين جلوس الإمام إلى انقضاء الصلاة، وآخر ساعة بعد العصر؛ وبين الأذان والإقامة: «الدعاء لا يُردّ بين الأذان والإقامة» (أبو داود ٥٢١ والترمذي ٢١٢، حسّنه الألباني)؛ وحال السجود: «أقرب ما يكون العبد من ربّه وهو ساجد، فأكثِروا الدعاء» (رواه مسلم ٤٨٢). وتُضاف مواطن أخرى كدُبُر الصلوات المكتوبة، وعند نزول الغيث، وفي السفر، ودعوة الصائم"
   },
   {
-    "id": "demo-quiz-441",
+    "id": "demo-quiz-441", "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "الدعاء",
     "level": "متوسط",
@@ -3204,7 +3204,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "صفتها أن يركع ركعتين من غير الفريضة ثم يقول: «اللهمّ إنّي أستخيرك بعلمك، وأستقدرك بقدرتك، وأسألك من فضلك العظيم، فإنّك تقدِر ولا أقدِر، وتعلم ولا أعلم، وأنت علّام الغيوب. اللهمّ إن كنت تعلم أنّ هذا الأمر خيرٌ لي في ديني ومعاشي وعاقبة أمري فاقدُره لي ويسّره لي ثمّ بارك لي فيه، وإن كنت تعلم أنّ هذا الأمر شرٌّ لي في ديني ومعاشي وعاقبة أمري فاصرفه عنّي واصرفني عنه، واقدُر لي الخير حيث كان ثمّ أرضِني به» — ويُسمّي حاجته موضع «هذا الأمر». وأصله حديث جابر بن عبدالله رضي الله عنهما: «كان رسول الله ﷺ يعلّمنا الاستخارة في الأمور كلّها كما يعلّمنا السورة من القرآن» (رواه البخاري ١١٦٢)"
   },
   {
-    "id": "demo-quiz-442",
+    "id": "demo-quiz-442", "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "الحوقلة",
     "level": "سهل",
@@ -3212,7 +3212,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "تفويض الأمر إلى الله والتبرّؤ من الحول والقوّة إلا به؛ فـ«الحول» التحوّل من حال إلى حال، و«القوّة» الطاقة والقدرة. ومن أشهر ما فُسّرت به عند أهل العلم: لا تحوُّل عن معصية الله إلا بعصمته، ولا قوّة على طاعته إلا بمعونته. فهي كلمة استسلامٍ وتوكّلٍ لا كلمة عجزٍ وقعود، ولذلك شُرعت عند مباشرة الأسباب كالخروج من البيت: «بسم الله، توكّلتُ على الله، ولا حول ولا قوّة إلا بالله» (رواه أبو داود والترمذي)"
   },
   {
-    "id": "demo-quiz-443",
+    "id": "demo-quiz-443", "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "الحوقلة",
     "level": "متوسط",
@@ -3220,7 +3220,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "وصفها بأنّها كنزٌ من كنوز الجنة؛ قال ﷺ لأبي موسى الأشعري رضي الله عنه: «يا عبدالله بن قيس، ألا أدلّك على كنزٍ من كنوز الجنة؟ — قلت: بلى يا رسول الله. قال: لا حول ولا قوّة إلا بالله» (متفق عليه: البخاري ٦٣٨٤، مسلم ٢٧٠٤). وسمّاها كنزًا لعِظَم ثوابها المدَّخر لصاحبها كما يُدَّخر الكنز"
   },
   {
-    "id": "demo-quiz-444",
+    "id": "demo-quiz-444", "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "التوبة",
     "level": "سهل",
@@ -3228,7 +3228,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "شروطها ثلاثة في كل توبة: الإقلاع عن الذنب، والندم على ما مضى، والعزم على ألّا يعود إليه. فإن كان الذنب متعلقًا بحقّ آدميّ زِيد شرط رابع خاصّ به: ردّ الحقّ أو الاستحلال من صاحبه. قال تعالى: ﴿يَٰٓأَيُّهَا ٱلَّذِينَ ءَامَنُوا۟ تُوبُوٓا۟ إِلَى ٱللَّهِ تَوْبَةًۭ نَّصُوحًا﴾ (التحريم: ٨)"
   },
   {
-    "id": "demo-quiz-445",
+    "id": "demo-quiz-445", "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "التوبة",
     "level": "متوسط",
@@ -3236,7 +3236,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الاستغفار طلب المغفرة، والتوبة الرجوع إلى الله بترك الذنب والندم عليه والعزم على ألّا يعود؛ فقد يستغفر العبد بلسانه وهو مقيم على ذنبه، ولا تصحّ التوبة مع الإقامة عليه"
   },
   {
-    "id": "demo-quiz-446",
+    "id": "demo-quiz-446", "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "الشكر",
     "level": "سهل",
@@ -3244,7 +3244,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أنها تملأ الميزان، لقوله ﷺ: «الطُّهورُ شطرُ الإيمانِ، والحمدُ للهِ تملأُ الميزانَ، وسبحانَ اللهِ والحمدُ للهِ تملآنِ — أو تملأُ — ما بينَ السماواتِ والأرضِ» (مسلم ٢٢٣)"
   },
   {
-    "id": "demo-quiz-447",
+    "id": "demo-quiz-447", "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "الشكر",
     "level": "متوسط",
@@ -3252,7 +3252,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "«الحمدُ للهِ الذي بنعمتِه تتمُّ الصالحاتُ» — كان النبي ﷺ إذا رأى ما يُسرّه قالها، وإذا رأى ما يكره قال: «الحمدُ للهِ على كلِّ حالٍ» (ابن ماجه ٣٨٠٣، وحسّنه الألباني)"
   },
   {
-    "id": "demo-quiz-448",
+    "id": "demo-quiz-448", "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "العوذ",
     "level": "سهل",
@@ -3260,7 +3260,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "«أعوذ بالله من الشيطان الرجيم»، لقوله تعالى: ﴿فَإِذَا قَرَأْتَ ٱلْقُرْءَانَ فَٱسْتَعِذْ بِٱللَّهِ مِنَ ٱلشَّيْطَٰنِ ٱلرَّجِيمِ﴾ (النحل: ٩٨)"
   },
   {
-    "id": "demo-quiz-449",
+    "id": "demo-quiz-449", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "المصطلح",
     "level": "متوسط",
@@ -3268,7 +3268,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "اتفاق مجتهدي أمة محمد ﷺ بعد وفاته في عصر من العصور على حكم شرعي — فلا يُعتدّ فيه بقول من ليس من أهل الاجتهاد"
   },
   {
-    "id": "demo-quiz-450",
+    "id": "demo-quiz-450", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "المصطلح",
     "level": "متوسط",
@@ -3276,7 +3276,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "إلحاق مسألة غير منصوص عليها بمسألة منصوص عليها لاشتراكهما في العلة. وأركانه أربعة: الأصل (المقيس عليه)، والفرع (المقيس)، وحكم الأصل، والعلة الجامعة بينهما"
   },
   {
-    "id": "demo-quiz-454",
+    "id": "demo-quiz-454", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "المصطلح",
     "level": "سهل",
@@ -3284,7 +3284,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "قال ابن تيمية: «الزهد ترك ما لا ينفع في الآخرة»؛ فليس هو ترك المال والطيبات، بل خلوّ القلب من التعلّق بالدنيا وإن كانت في اليد"
   },
   {
-    "id": "demo-quiz-455",
+    "id": "demo-quiz-455", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "المصطلح",
     "level": "سهل",
@@ -3292,7 +3292,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "قال ابن تيمية: «الورع ترك ما تخاف ضرره في الآخرة»، ومنه اجتناب المشتبهات خشية الوقوع في الحرام. فالورع أخصّ من الزهد وداخل فيه"
   },
   {
-    "id": "demo-quiz-456",
+    "id": "demo-quiz-456", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "المصطلح",
     "level": "متوسط",
@@ -3300,7 +3300,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الفرض ما ثبت بدليل قطعي كالقرآن والسنة المتواترة، والواجب ما ثبت بدليل ظنّي كخبر الواحد. وأثر الفرق عملًا في الصلاة: ترك الفرض (الركن) يُبطلها، وترك الواجب سهوًا لا يُبطلها ويُجبر بسجود السهو"
   },
   {
-    "id": "demo-quiz-457",
+    "id": "demo-quiz-457", "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "الحج",
     "level": "سهل",
@@ -3308,7 +3308,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الإحرام والوقوف بعرفة وطواف الإفاضة والسعي بين الصفا والمروة"
   },
   {
-    "id": "demo-quiz-459",
+    "id": "demo-quiz-459", "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "الحج",
     "level": "متوسط",
@@ -3316,7 +3316,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "ذو الحُلَيفة (أبيار علي)، ويُحرم منه أهل المدينة ومن مرّ به من غيرهم، وهو أبعد المواقيت عن مكة"
   },
   {
-    "id": "demo-quiz-460",
+    "id": "demo-quiz-460", "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "الحج",
     "level": "متوسط",
@@ -3324,7 +3324,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "طواف الإفاضة (طواف الزيارة): ركن من أركان الحج لا يصحّ الحج بتركه ولا يُجبر بدم — بخلاف الواجب الذي يُجبر بدم — ووقته يوم النحر وما بعده، بعد الوقوف بعرفة. وأصله قوله تعالى: ﴿وَلْيَطَّوَّفُوا۟ بِٱلْبَيْتِ ٱلْعَتِيقِ﴾ (الحج: ٢٩)"
   },
   {
-    "id": "demo-quiz-461",
+    "id": "demo-quiz-461", "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "الحج",
     "level": "متوسط",
@@ -3332,7 +3332,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "سبعة أشواط، يبدأ بالصفا وينتهي بالمروة؛ فالذهاب من الصفا إلى المروة شوط، والرجوع من المروة إلى الصفا شوط ثانٍ"
   },
   {
-    "id": "demo-quiz-462",
+    "id": "demo-quiz-462", "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "الحج",
     "level": "سهل",
@@ -3340,7 +3340,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "نية الدخول في النسك (الحج أو العمرة). والتلبية عندها سنة مؤكدة عند الشافعية والحنابلة، وواجب عند المالكية، وشرطٌ لانعقاد الإحرام عند الحنفية فلا ينعقد عندهم إلا بها أو بما يقوم مقامها"
   },
   {
-    "id": "demo-quiz-463",
+    "id": "demo-quiz-463", "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "الحج",
     "level": "صعب",
@@ -3348,7 +3348,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "القِران: أن يُحرم بالحج والعمرة معًا بإحرام واحد. التمتّع: أن يُحرم بالعمرة أولاً فيتحلّل منها، ثم يُحرم بالحج في عامه. الإفراد: أن يُحرم بالحج وحده. ويلزم المتمتّع والقارن هَدْيٌ ولا هَدْيَ على المُفرِد، قال تعالى: ﴿فَمَن تَمَتَّعَ بِٱلْعُمْرَةِ إِلَى ٱلْحَجِّ فَمَا ٱسْتَيْسَرَ مِنَ ٱلْهَدْىِ﴾ (البقرة: ١٩٦)"
   },
   {
-    "id": "demo-quiz-464",
+    "id": "demo-quiz-464", "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "الحج",
     "level": "متوسط",
@@ -3356,7 +3356,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أن يُمنع المُحرِم من إتمام نسكه، فيتحلّل بنحر هَدْي، قال تعالى: ﴿فَإِنْ أُحْصِرْتُمْ فَمَا ٱسْتَيْسَرَ مِنَ ٱلْهَدْىِ﴾ (البقرة: ١٩٦). وقصره المالكية والشافعية على المنع بالعدوّ، ووسّعه الحنفية فأدخلوا فيه المرض وذهاب النفقة والحبس ونحوها"
   },
   {
-    "id": "demo-quiz-465",
+    "id": "demo-quiz-465", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "التوحيد",
     "level": "سهل",
@@ -3364,7 +3364,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "توحيد الربوبية، وتوحيد الألوهية، وتوحيد الأسماء والصفات. وبعض أهل العلم يجعله قسمين: توحيد المعرفة والإثبات (ويدخل فيه الربوبية والأسماء والصفات)، وتوحيد الطلب والقصد (وهو الألوهية)، ولا تنافي بين العدّين"
   },
   {
-    "id": "demo-quiz-466",
+    "id": "demo-quiz-466", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "التوحيد",
     "level": "سهل",
@@ -3372,7 +3372,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الإقرار بأن الله وحده الخالق المالك الرازق المدبِّر لشؤون الكون، لا شريك له في شيء من ذلك"
   },
   {
-    "id": "demo-quiz-467",
+    "id": "demo-quiz-467", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "التوحيد",
     "level": "سهل",
@@ -3380,7 +3380,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "إفراد الله بجميع أنواع العبادة — كالدعاء والخوف والرجاء والتوكل والنذر والذبح — فلا يُصرف شيء منها لغيره، وهو معنى «لا إله إلا الله»"
   },
   {
-    "id": "demo-quiz-468",
+    "id": "demo-quiz-468", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "التوحيد",
     "level": "متوسط",
@@ -3388,7 +3388,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "إثبات ما أثبته الله لنفسه في كتابه وسنّة نبيه ﷺ، ونفي ما نفاه عن نفسه، من غير تحريف ولا تعطيل ولا تكييف ولا تمثيل"
   },
   {
-    "id": "demo-quiz-470",
+    "id": "demo-quiz-470", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "التوحيد",
     "level": "متوسط",
@@ -3396,7 +3396,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "صرف شيء من العبادة لغير الله كالدعاء والذبح والنذر لغيره، وهو يُخرج من الملّة ولا يُغفر لصاحبه إن مات عليه، قال تعالى: ﴿إِنَّ ٱللَّهَ لَا يَغْفِرُ أَن يُشْرَكَ بِهِۦ وَيَغْفِرُ مَا دُونَ ذَٰلِكَ لِمَن يَشَآءُ﴾ (النساء: ٤٨)"
   },
   {
-    "id": "demo-quiz-472",
+    "id": "demo-quiz-472", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "التوحيد",
     "level": "صعب",
@@ -3404,7 +3404,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "العلم، واليقين، والقبول، والانقياد، والصدق، والإخلاص، والمحبة. وزاد بعض أهل العلم ثامنًا: الكفر بما يُعبد من دون الله، والاختلاف في العدّ لا تنافي بينه، فالمفصَّل عند بعضهم مُجمَل عند غيره"
   },
   {
-    "id": "demo-quiz-473",
+    "id": "demo-quiz-473", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "المعارك",
     "level": "سهل",
@@ -3412,7 +3412,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "غزوة الأبواء (ودّان) في صفر من السنة الثانية للهجرة — وهي أول غزوة خرج فيها النبي ﷺ بنفسه، ولم يلقَ فيها كيدًا ولا قتالًا، بل وادَع فيها بني ضَمرة. أما أول سَرِيّة (وهي ما بعثها ﷺ ولم يخرج فيها) فسَرِيّة حمزة بن عبد المطلب إلى سيف البحر في رمضان من السنة الأولى"
   },
   {
-    "id": "demo-quiz-475",
+    "id": "demo-quiz-475", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "المعارك",
     "level": "متوسط",
@@ -3420,7 +3420,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "خالد بن الوليد رضي الله عنه — أخذ الراية أولاً ثابت بن أرقم الأنصاري فأبى الإمارة وقال للناس: اصطلحوا على رجل منكم، فاصطلحوا على خالد. قال ﷺ: «ثم أخذها خالد بن الوليد من غير إمرة فَفُتِح له» (البخاري ١٢٤٦)"
   },
   {
-    "id": "demo-quiz-476",
+    "id": "demo-quiz-476", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "المعارك",
     "level": "متوسط",
@@ -3428,7 +3428,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "انصراف الأحزاب بغير شيء؛ ولم يقع بين الجيشين التحامٌ عامّ لأن الخندق حال بينهما، فاقتصر الأمر على المراماة بالسهام، واستُشهد من المسلمين ستة (عند ابن هشام). قال تعالى: ﴿وَرَدَّ ٱللَّهُ ٱلَّذِينَ كَفَرُوا۟ بِغَيْظِهِمْ لَمْ يَنَالُوا۟ خَيْرًۭا ۚ وَكَفَى ٱللَّهُ ٱلْمُؤْمِنِينَ ٱلْقِتَالَ﴾ (الأحزاب: ٢٥)"
   },
   {
-    "id": "demo-quiz-478",
+    "id": "demo-quiz-478", "documentation_status": "unsourced",
     "section": "الفتوحات الإسلامية",
     "category": "المعارك",
     "level": "متوسط",
@@ -3436,7 +3436,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "فتح عظيم في الشام هزم فيه المسلمون الروم في رجب سنة 15هـ في خلافة عمر بن الخطاب رضي الله عنه؛ أميرُ الجيش أبو عبيدة بن الجرّاح، وتولّى قيادة القتال خالد بن الوليد، وبها زال حكم الروم عن الشام"
   },
   {
-    "id": "demo-quiz-479",
+    "id": "demo-quiz-479", "documentation_status": "unsourced",
     "section": "الفتوحات الإسلامية",
     "category": "المعارك",
     "level": "متوسط",
@@ -3444,7 +3444,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "سعد بن أبي وقاص رضي الله عنه — كانت في شعبان سنة 15هـ في خلافة عمر بن الخطاب، وقائد الفرس فيها رستم وقُتل فيها، وكانت مفتاح فتح العراق"
   },
   {
-    "id": "demo-quiz-480",
+    "id": "demo-quiz-480", "documentation_status": "unsourced",
     "section": "الفتوحات الإسلامية",
     "category": "المعارك",
     "level": "صعب",
@@ -3452,7 +3452,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "معركة فاصلة في ربيع الآخر سنة 583هـ قادها صلاح الدين الأيوبي وهزم فيها الصليبيين هزيمة حطّمت قوّتهم في الشام، فاستُردّ بعدها بيت المقدس في رجب من السنة نفسها بعد نحو إحدى وتسعين سنة هجرية (88 سنة ميلادية) من احتلاله (وقع في أيديهم سنة 492هـ)"
   },
   {
-    "id": "demo-quiz-483",
+    "id": "demo-quiz-483", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدول",
     "level": "متوسط",
@@ -3460,7 +3460,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "معاوية بن أبي سفيان رضي الله عنه سنة 41هـ، حين تنازل له الحسن بن علي رضي الله عنهما فاجتمعت عليه الأمة، وسُمّي ذلك العام «عام الجماعة»"
   },
   {
-    "id": "demo-quiz-484",
+    "id": "demo-quiz-484", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدول",
     "level": "متوسط",
@@ -3468,7 +3468,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أبو العبّاس عبد الله بن محمد بن علي بن عبد الله بن العبّاس، الملقّب بالسفّاح — بويع بالخلافة في الكوفة سنة 132هـ بسقوط الدولة الأموية"
   },
   {
-    "id": "demo-quiz-485",
+    "id": "demo-quiz-485", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدول",
     "level": "متوسط",
@@ -3476,7 +3476,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أُلغيت رسميًّا في الثالث من مارس سنة 1924م (1342هـ) بقرار الجمعية الوطنية التركية برئاسة مصطفى كمال (ولم يُلقَّب بـ«أتاتورك» إلا سنة 1934م)؛ وقد سبق ذلك إلغاء السلطنة سنة 1341هـ/1922م، وآخر من حمل لقب الخليفة عبد المجيد الثاني. والأدقّ أنها أُلغيت بقرارٍ داخليّ لا أنها «سقطت» بغزو"
   },
   {
-    "id": "demo-quiz-486",
+    "id": "demo-quiz-486", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدول",
     "level": "متوسط",
@@ -3484,7 +3484,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عثمان الأول بن أرطغرل سنة 699هـ/1299م، وكانت في أوّلها إمارةً حدوديّةً صغيرة في شمال غرب الأناضول (سُكود/سوغوت) بعد تفكّك دولة سلاجقة الروم؛ ولم تُوصف بـ«الخلافة» إلا بعد فتح سليم الأول لمصر سنة 923هـ/1517م وزوال الخلافة العباسية الاسمية بالقاهرة — فالتسمية بالسلطنة أدقّ في أوّل عهدها"
   },
   {
-    "id": "demo-quiz-487",
+    "id": "demo-quiz-487", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدول",
     "level": "صعب",
@@ -3492,7 +3492,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الدولة العثمانية؛ امتدّت 643 سنة هجرية (699-1342هـ) وهي نحو 625 سنة ميلادية (1299-1924م) — والتنبّه للفرق بين التقويمين لازم، فالسنة الهجرية أقصر — وتُعدّ أطول دولة إسلامية بسلطة سياسية فعلية متصلة. تليها الخلافة العباسية ببغداد: 524 سنة هجرية (132-656هـ) وهي نحو 508 سنوات ميلادية (750-1258م)، وما بقي منها بالقاهرة بعد ذلك (659-923هـ) كان خلافةً اسميّةً تحت المماليك بلا سلطة فعلية"
   },
   {
-    "id": "demo-quiz-488",
+    "id": "demo-quiz-488", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدول",
     "level": "متوسط",
@@ -3500,7 +3500,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "دولة بني أمية في الأندلس؛ أسّسها عبد الرحمن الداخل إمارةً سنة 138هـ/756م، وأعلنها عبد الرحمن الناصر خلافةً سنة 316هـ/929م، وانتهت سنة 422هـ/1031م فقام عصر ملوك الطوائف — فمدّتها 284 سنة هجرية (نحو 275 ميلادية)، تليها دولة بني نصر (بني الأحمر) بغرناطة نحو 262 سنة هجرية (635-897هـ)"
   },
   {
-    "id": "demo-quiz-489",
+    "id": "demo-quiz-489", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدول",
     "level": "صعب",
@@ -3508,7 +3508,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "سنة 656هـ/1258م على يد هولاكو حفيد جنكيز خان؛ وقُتل فيها المستعصم بالله آخر خلفاء بني العباس ببغداد فانتهت الخلافة العباسية في العراق، ثم أُقيمت خلافة عباسية اسمية بالقاهرة في ظلّ المماليك سنة 659هـ. وأوقف زحفَ المغول انتصارُ المماليك في عين جالوت سنة 658هـ/1260م"
   },
   {
-    "id": "demo-quiz-490",
+    "id": "demo-quiz-490", "documentation_status": "unsourced",
     "section": "التجويد",
     "category": "أحكام النون الساكنة والتنوين",
     "level": "سهل",
@@ -3516,7 +3516,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الإخفاء الحقيقي، وهو النطق بالنون الساكنة أو التنوين بصفةٍ بين الإظهار والإدغام، عاريًا عن التشديد، مع بقاء الغنة مقدار حركتين. وحروفه خمسة عشر، وهي الباقية بعد حروف الإظهار الستة وحروف الإدغام الستة وحرف الإقلاب (الباء)، ويقع في كلمة وفي كلمتين، نحو ﴿أَنفُسَهُمْ﴾ و﴿مِن قَبْلُ﴾"
   },
   {
-    "id": "demo-quiz-491",
+    "id": "demo-quiz-491", "documentation_status": "unsourced",
     "section": "التجويد",
     "category": "أحكام النون الساكنة والتنوين",
     "level": "سهل",
@@ -3524,7 +3524,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أربعة مجموعة في «ينمو»: الياء والنون والميم والواو. وشرطه أن يكون الحرف في كلمة أخرى، فإن اجتمع مع النون في كلمة واحدة وجب «الإظهار المطلق»، ولم يقع ذلك في القرآن إلا في أربع كلمات: ﴿ٱلدُّنْيَا﴾ و﴿بُنْيَٰنٌۭ﴾ و﴿قِنْوَانٌۭ﴾ و﴿صِنْوَانٌۭ﴾. والإدغام في النون والميم كامل، وفي الياء والواو ناقص تبقى معه صفة الغنة دون ذات الحرف"
   },
   {
-    "id": "demo-quiz-492",
+    "id": "demo-quiz-492", "documentation_status": "unsourced",
     "section": "التجويد",
     "category": "أحكام النون الساكنة والتنوين",
     "level": "سهل",
@@ -3532,7 +3532,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "ستة حروف حلقية مجموعة في «أخي هاكَ علمًا حازه غيرُ خاسر»: الهمزة والهاء من أقصى الحلق، والعين والحاء من وسطه، والغين والخاء من أدناه. والإظهار: إخراج كل حرف من مخرجه من غير غنّة كاملة في الحرف المُظهَر، وسُمّي حلقيًّا لأن حروفه من الحلق؛ ومراتبه ثلاث تتفاوت بحسب قرب المخرج من مخرج النون: عليا مع الهمزة والهاء، ووسطى مع العين والحاء، ودنيا مع الغين والخاء"
   },
   {
-    "id": "demo-quiz-493",
+    "id": "demo-quiz-493", "documentation_status": "unsourced",
     "section": "التجويد",
     "category": "أحكام الميم الساكنة",
     "level": "سهل",
@@ -3540,7 +3540,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الإخفاء الشفوي، وهو النطق بالميم مخفاةً عند الباء مع بقاء الغنة مقدار حركتين من غير كزٍّ على الشفتين، نحو ﴿تَرْمِيهِم بِحِجَارَةٍۢ﴾؛ وهو مذهب جمهور أهل الأداء، وذهب بعضهم إلى إظهارها. وأحكام الميم الساكنة ثلاثة: الإخفاء الشفوي عند الباء، وإدغام المِثلين الصغير عند الميم، والإظهار الشفوي عند بقية الحروف، ويتأكّد بيانه عند الواو والفاء لاتحاد المخرج أو قربه"
   },
   {
-    "id": "demo-quiz-494",
+    "id": "demo-quiz-494", "documentation_status": "unsourced",
     "section": "التجويد",
     "category": "المدود",
     "level": "سهل",
@@ -3548,7 +3548,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "المد الطبيعي (ويُسمى الأصلي): ما لا تقوم ذات حرف المد إلا به، ولا يتوقف على سببٍ من همزٍ أو سكون، ومقداره حركتان. وحروفه ثلاثة مجموعة في ﴿نُوحِيهَآ﴾: الألف الساكنة المفتوح ما قبلها، والواو الساكنة المضموم ما قبلها، والياء الساكنة المكسور ما قبلها"
   },
   {
-    "id": "demo-quiz-495",
+    "id": "demo-quiz-495", "documentation_status": "unsourced",
     "section": "التجويد",
     "category": "القلقلة",
     "level": "سهل",
@@ -3556,7 +3556,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "اضطراب المخرج عند النطق بالحرف ساكنًا حتى تُسمع له نبرة قوية، وحروفها خمسة مجموعة في «قُطْبُ جَدٍّ»: القاف والطاء والباء والجيم والدال. وتكون صغرى إذا سكن الحرف في وسط الكلمة، وكبرى إذا وقع الوقف عليه في آخرها"
   },
   {
-    "id": "demo-quiz-496",
+    "id": "demo-quiz-496", "documentation_status": "unsourced",
     "section": "التجويد",
     "category": "الغنة",
     "level": "سهل",
@@ -3564,7 +3564,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "صوت رنّان يخرج من الخيشوم لا عمل للسان فيه، وهي صفة لازمة للنون والميم في جميع أحوالهما فلا تنفكّان عنها؛ وليست مقدَّرة بحركتين على الإطلاق، وإنما تُكمَل مقدار حركتين في مواضعها: النون والميم المشدَّدتين، والإدغام بغنة، والإخفاء الحقيقي والشفوي، والإقلاب"
   },
   {
-    "id": "demo-quiz-497",
+    "id": "demo-quiz-497", "documentation_status": "unsourced",
     "section": "التجويد",
     "category": "المدود",
     "level": "متوسط",
@@ -3572,7 +3572,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أربع أو خمس حركات في رواية حفص، وتجوز فيه ست حركات عند الوقف على همزٍ متطرِّف نحو ﴿ٱلسَّمَآءِ﴾ — فليست «الست» قولًا مطلقًا. ووجوبه وجوبٌ صناعيّ اصطلاحيّ عند القرّاء، بمعنى اتفاقهم على مدّه زيادةً على الطبيعي، لا وجوبٌ شرعيّ يأثم تاركه، ولهذا سُمّي «المد الواجب»"
   },
   {
-    "id": "demo-quiz-498",
+    "id": "demo-quiz-498", "documentation_status": "unsourced",
     "section": "التجويد",
     "category": "صفات الحروف",
     "level": "متوسط",
@@ -3580,7 +3580,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "ارتفاع أقصى اللسان إلى الحنك الأعلى عند النطق بالحرف، وحروفها سبعة مجموعة في «خُصَّ ضَغْطٍ قِظْ»: الخاء والصاد والضاد والغين والطاء والقاف والظاء، وكلها مفخَّمة. وأربعة منها مطبقة (الصاد والضاد والطاء والظاء) فهي أقوى تفخيمًا لانضمام الإطباق إلى الاستعلاء، وثلاثة منفتحة (الخاء والغين والقاف)"
   },
   {
-    "id": "demo-quiz-499",
+    "id": "demo-quiz-499", "documentation_status": "unsourced",
     "section": "التجويد",
     "category": "أحكام النون الساكنة والتنوين",
     "level": "سهل",
@@ -3588,7 +3588,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أربعة: الإظهار الحلقي، والإدغام (بغنة في «ينمو» وبغير غنة في اللام والراء)، والإقلاب عند الباء، والإخفاء الحقيقي في الخمسة عشر الباقية. والنون الساكنة نونٌ خالية من الحركة ثابتة لفظًا وخطًّا ووصلًا ووقفًا، تقع في الاسم والفعل والحرف وفي وسط الكلمة وطرفها؛ والتنوين نونٌ ساكنة زائدة تلحق آخر الاسم لفظًا ووصلًا لا خطًّا ولا وقفًا"
   },
   {
-    "id": "demo-quiz-500",
+    "id": "demo-quiz-500", "documentation_status": "unsourced",
     "section": "التجويد",
     "category": "أحكام النون الساكنة والتنوين",
     "level": "سهل",
@@ -3596,7 +3596,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عند الباء وحدها، وهذا هو «الإقلاب»: قلب النون الساكنة أو التنوين ميمًا خالصة، مع إخفاء هذه الميم عند الباء وبقاء الغنة مقدار حركتين — فليس قلبًا محضًا، إذ لو أُظهرت الميم لخرج عن حدّ الإقلاب. ومثاله في كلمة ﴿أَنۢبِئْهُم﴾، وفي كلمتين ﴿سَمِيعٌۢ بَصِيرٌۭ﴾"
   },
   {
-    "id": "demo-quiz-501",
+    "id": "demo-quiz-501", "documentation_status": "unsourced",
     "section": "التجويد",
     "category": "أحكام النون الساكنة والتنوين",
     "level": "متوسط",
@@ -3604,7 +3604,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الإدغام بغنة في حروف «ينمو» وتبقى معه الغنة مقدار حركتين، وهو في النون والميم كامل (تذهب ذات الحرف وصفته)، وفي الياء والواو ناقص (تذهب ذات الحرف وتبقى صفة الغنة). والإدغام بغير غنة في اللام والراء وهو كامل لا تبقى معه غنة. وكلاهما مشروط بأن يكون الحرف في كلمة أخرى، وإلا وجب الإظهار المطلق"
   },
   {
-    "id": "demo-quiz-502",
+    "id": "demo-quiz-502", "documentation_status": "unsourced",
     "section": "الفتوحات الإسلامية",
     "category": "الفتوحات الإسلامية",
     "level": "سهل",
@@ -3612,7 +3612,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "في رمضان من السنة الثامنة للهجرة (8هـ/630م)، بعد أن نقضت قريش صلح الحديبية بإعانة حلفائها بني بكر على خزاعة حلفاء النبي ﷺ؛ ودخلها ﷺ من غير قتال عامّ إلا مناوشة يسيرة في ناحية خالد بن الوليد رضي الله عنه، وأمّن أهلها فقال: «اذهبوا فأنتم الطلقاء» (عند ابن هشام وأهل المغازي). وأكثر المفسرين على أن «الفتح» في قوله تعالى ﴿إِذَا جَآءَ نَصْرُ ٱللَّهِ وَٱلْفَتْحُ﴾ [النصر: 1] هو فتح مكة"
   },
   {
-    "id": "demo-quiz-503",
+    "id": "demo-quiz-503", "documentation_status": "unsourced",
     "section": "الفتوحات الإسلامية",
     "category": "الفتوحات الإسلامية",
     "level": "متوسط",
@@ -3620,7 +3620,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "السلطان محمد الثاني العثماني الملقَّب بـ«الفاتح» يوم الثلاثاء العشرين من جمادى الأولى سنة 857هـ / التاسع والعشرين من مايو 1453م، فصارت القسطنطينية (إسطنبول) عاصمةَ الدولة بعد بورصة ثم أدرنة. ويربط كثير من أهل العلم هذا الفتح بحديث: «لتُفتحنّ القسطنطينية، فلنعم الأمير أميرها ولنعم الجيش ذلك الجيش» (رواه أحمد في المسند 18189، والبخاري في «التاريخ الكبير»)، وقد تكلّم بعض المحدّثين في إسناده"
   },
   {
-    "id": "demo-quiz-504",
+    "id": "demo-quiz-504", "documentation_status": "unsourced",
     "section": "الفتوحات الإسلامية",
     "category": "الفتوحات الإسلامية",
     "level": "متوسط",
@@ -3628,7 +3628,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "بدأ الفتح بأمر أبي بكر الصدّيق رضي الله عنه، فوجّه إلى الشام أمراء منهم أبو عبيدة بن الجرّاح وعمرو بن العاص ويزيد بن أبي سفيان وشرحبيل بن حسنة رضي الله عنهم، وأمدّهم بخالد بن الوليد قادمًا من العراق. ثم كانت اليرموك في رجب سنة 15هـ في خلافة عمر بن الخطاب رضي الله عنه، وأميرُ الجيش يومئذ أبو عبيدة وقائدُ القتال خالد، وبها زال حكم الروم عن الشام، ثم فُتحت دمشق وبيت المقدس"
   },
   {
-    "id": "demo-quiz-505",
+    "id": "demo-quiz-505", "documentation_status": "unsourced",
     "section": "الفتوحات الإسلامية",
     "category": "الفتوحات الإسلامية",
     "level": "متوسط",
@@ -3636,7 +3636,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عمرو بن العاص رضي الله عنه في خلافة عمر بن الخطاب رضي الله عنه؛ ولم يكن الفتح في سنة واحدة: دخل مصر سنة 19هـ، وسقط حصن بابليون سنة 20هـ/641م، ثم فُتحت الإسكندرية سنة 21هـ. واختطّ الفسطاط فكانت أول مدينة أسّسها المسلمون بمصر، وبها مسجده أول مسجد بُني في مصر"
   },
   {
-    "id": "demo-quiz-506",
+    "id": "demo-quiz-506", "documentation_status": "unsourced",
     "section": "الفتوحات الإسلامية",
     "category": "الفتوحات الإسلامية",
     "level": "متوسط",
@@ -3644,7 +3644,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "طارق بن زياد مولى موسى بن نصير والي إفريقية وبأمرٍ منه، عبر المضيق المعروف اليوم بمضيق جبل طارق سنة 92هـ/711م، وحُسم الأمر بهزيمة لُذريق ملك القوط في معركة وادي لكّة (شذونة)؛ ثم عبر موسى بن نصير في العام التالي بجيش آخر فأتمّا فتح ما بقي من المدن كإشبيلية وماردة"
   },
   {
-    "id": "demo-quiz-507",
+    "id": "demo-quiz-507", "documentation_status": "unsourced",
     "section": "الفتوحات الإسلامية",
     "category": "الغزوات",
     "level": "سهل",
@@ -3652,7 +3652,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "ثلاث مئة وبضعة عشر رجلًا؛ وهو الثابت في صحيح البخاري عن البراء بن عازب رضي الله عنه قال: «كنّا نتحدّث أنّ أصحاب بدر ثلاث مئة وبضعة عشر». وأمّا عدد المشركين فتقديرُ أهل السير والمغازي (كابن إسحاق) بنحو تسع مئة إلى ألف، وهو تقديرٌ منهم لا نصٌّ مرفوع. وكانت في السابع عشر من رمضان سنة 2هـ، وسمّى الله يومَها «يوم الفرقان»"
   },
   {
-    "id": "demo-quiz-508",
+    "id": "demo-quiz-508", "documentation_status": "unsourced",
     "section": "الفتوحات الإسلامية",
     "category": "الغزوات",
     "level": "سهل",
@@ -3660,7 +3660,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "في شوّال من السنة الثالثة للهجرة (3هـ)؛ خرج النبي ﷺ في نحو ألف فرجع عبد الله بن أُبَيّ بثلث الجيش، والمشركون نحو ثلاثة آلاف. وكانت الدائرة للمسلمين أوّلًا ثم انقلبت لمّا ترك الرماة مواقعهم، واستُشهد نحو سبعين من المسلمين منهم حمزة بن عبد المطلب رضي الله عنه؛ قال تعالى: ﴿حَتَّىٰٓ إِذَا فَشِلْتُمْ وَتَنَٰزَعْتُمْ فِى ٱلْأَمْرِ وَعَصَيْتُم مِّنۢ بَعْدِ مَآ أَرَىٰكُم مَّا تُحِبُّونَ﴾ [آل عمران: 152]"
   },
   {
-    "id": "demo-quiz-509",
+    "id": "demo-quiz-509", "documentation_status": "unsourced",
     "section": "الفتوحات الإسلامية",
     "category": "الغزوات",
     "level": "متوسط",
@@ -3668,7 +3668,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "لأن المسلمين حفروا خندقًا حول المدينة يمنع المشركين من اقتحامها — وأصل حفر الخندق ثابت في الصحيحين، وأمّا تعيين سلمان الفارسي رضي الله عنه مشيرًا به فمن رواية أهل السِّيَر. وسُمّيت «الأحزاب» لتحزّب قبائل المشركين واليهود على المسلمين، وكانت في شوّال سنة 5هـ في نحو عشرة آلاف من الأحزاب، ولم يقع بين الجيشين التحامٌ عامّ لأن الخندق حال بينهما"
   },
   {
-    "id": "demo-quiz-510",
+    "id": "demo-quiz-510", "documentation_status": "unsourced",
     "section": "الفتوحات الإسلامية",
     "category": "الفتوحات الإسلامية",
     "level": "متوسط",
@@ -3676,7 +3676,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "سعد بن أبي وقاص رضي الله عنه، وأشهر معاركه القادسية سنة 15هـ على المشهور عند أهل السير وقيل 14هـ، ثم فتح المدائن عاصمة الفرس — أمّا معركة نهاوند (21هـ) التي سمّاها المؤرخون «فتح الفتوح» فقادها النعمان بن مقرن المزني رضي الله عنه (واستُشهد فيها) لا سعد"
   },
   {
-    "id": "demo-quiz-511",
+    "id": "demo-quiz-511", "documentation_status": "unsourced",
     "section": "الفتوحات الإسلامية",
     "category": "الغزوات",
     "level": "صعب",
@@ -3684,7 +3684,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "صلح الحديبية في ذي القعدة سنة 6هـ؛ ونزلت سورة الفتح وهو ﷺ راجعٌ منها بين مكة والمدينة لا في أثنائها، كما في حديث عمر بن الخطاب رضي الله عنه عند البخاري في كتاب المغازي (باب غزوة الحديبية). وهي معدودة عند أهل المغازي في مخارجه ﷺ ولم يقع فيها قتال، وسمّى الله الصلح فتحًا مبينًا لما أعقبه من الأمن ودخول الناس في الإسلام"
   },
   {
-    "id": "demo-quiz-513",
+    "id": "demo-quiz-513", "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "المكي والمدني",
     "level": "سهل",
@@ -3692,7 +3692,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "المعتمد عند جمهور أهل العلم اعتبار زمن النزول: فالمكيّ ما نزل قبل هجرة النبي ﷺ ولو نزل بغير مكة، والمدنيّ ما نزل بعد الهجرة ولو نزل بمكة؛ ولذلك عُدّ قوله تعالى ﴿ٱلْيَوْمَ أَكْمَلْتُ لَكُمْ دِينَكُمْ﴾ [المائدة: 3] مدنيًّا وقد نزل بعرفة في حجة الوداع. وقيل في ضبطهما بالمكان (ما نزل بمكة وما نزل بالمدينة) وبالمخاطَبين (يا أيها الناس/يا أيها الذين آمنوا)، وكلاهما غير مطّرد"
   },
   {
-    "id": "demo-quiz-514",
+    "id": "demo-quiz-514", "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "السبع المثاني",
     "level": "سهل",
@@ -3700,7 +3700,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "هي سورة الفاتحة، وهو الثابت المرفوع في حديث أبي سعيد بن المُعلّى رضي الله عنه أن النبي ﷺ قال له: «الحمد لله رب العالمين هي السبع المثاني والقرآن العظيم الذي أوتيته» (رواه البخاري في فضائل القرآن). وقيل: هي السبع الطُّوَل، ورُوي عن ابن مسعود وابن عباس رضي الله عنهم، والأول أصحّ لثبوته مرفوعًا. وأشهر ما قيل في وجه التسمية بالمثاني أنها تُثنى أي تُكرَّر في كل ركعة، وهو أحد أقوال أهل العلم"
   },
   {
-    "id": "demo-quiz-515",
+    "id": "demo-quiz-515", "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "جمع القرآن",
     "level": "متوسط",
@@ -3708,7 +3708,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "زيد بن ثابت الأنصاري رضي الله عنه؛ وكان ذلك بمشورة عمر بن الخطاب رضي الله عنه بعد استحرار القتل بالقُرّاء يوم اليمامة، فجُمع القرآن في صُحُف بقيت عند أبي بكر ثم عمر ثم حفصة بنت عمر رضي الله عنهم، والقصة في صحيح البخاري (٤٩٨٦). وهو غير جمع عثمان رضي الله عنه الذي نسخ منها المصاحف وأرسلها إلى الأمصار (البخاري ٤٩٨٧)"
   },
   {
-    "id": "demo-quiz-516",
+    "id": "demo-quiz-516", "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "جمع القرآن",
     "level": "متوسط",
@@ -3716,7 +3716,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "في عهد عثمان بن عفان رضي الله عنه، فنُسخت المصاحف العثمانية وأُرسلت إلى الأمصار"
   },
   {
-    "id": "demo-quiz-517",
+    "id": "demo-quiz-517", "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "أسباب النزول",
     "level": "متوسط",
@@ -3724,7 +3724,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الحوادث والأسئلة والوقائع التي كانت سبباً في نزول آية أو آيات من القرآن الكريم"
   },
   {
-    "id": "demo-quiz-520",
+    "id": "demo-quiz-520", "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "إحصاءات القرآن",
     "level": "سهل",
@@ -3732,7 +3732,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "القرآن 30 جزءاً و114 سورة و6236 آية"
   },
   {
-    "id": "demo-quiz-521",
+    "id": "demo-quiz-521", "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "المحكم والمتشابه",
     "level": "صعب",
@@ -3740,7 +3740,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "المحكم ما وضح معناه ولا يحتمل غيره، والمتشابه ما احتمل معاني متعددة ويحتاج إلى تدبر وتأويل"
   },
   {
-    "id": "demo-quiz-522",
+    "id": "demo-quiz-522", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "آداب الطعام",
     "level": "سهل",
@@ -3748,7 +3748,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "التسمية قبل الأكل، والأكل باليمين، والأكل مما يلي، وحمد الله بعد الانتهاء"
   },
   {
-    "id": "demo-quiz-523",
+    "id": "demo-quiz-523", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "صفات المؤمن",
     "level": "سهل",
@@ -3756,7 +3756,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الحياء خُلق يبعث على ترك القبيح ويمنع التقصير، وهو شعبة من شعب الإيمان وخير كله"
   },
   {
-    "id": "demo-quiz-524",
+    "id": "demo-quiz-524", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "الصدق",
     "level": "سهل",
@@ -3764,7 +3764,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الصدق يهدي إلى البر، والبر يهدي إلى الجنة، وما يزال الرجل يصدق حتى يُكتب عند الله صدّيقاً"
   },
   {
-    "id": "demo-quiz-525",
+    "id": "demo-quiz-525", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "الأمانة",
     "level": "سهل",
@@ -3772,7 +3772,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الأمانة أداء ما ائتُمن عليه الإنسان من حقوق الله والناس، وهي ركن الإيمان وخُلق الأنبياء"
   },
   {
-    "id": "demo-quiz-526",
+    "id": "demo-quiz-526", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "آداب النوم",
     "level": "سهل",
@@ -3780,7 +3780,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الوضوء قبل النوم، والنوم على الشق الأيمن، وقراءة الأذكار الواردة كآية الكرسي والمعوذتين"
   },
   {
-    "id": "demo-quiz-527",
+    "id": "demo-quiz-527", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "صفات المؤمن",
     "level": "سهل",
@@ -3788,7 +3788,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "إكرام الجار وعدم إيذائه والإحسان إليه، وقد أوصى النبي ﷺ بالجار حتى ظنوا أنه سيُورَّث"
   },
   {
-    "id": "demo-quiz-528",
+    "id": "demo-quiz-528", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "المحرمات الأخلاقية",
     "level": "متوسط",
@@ -3796,7 +3796,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الغيبة ذكر الأخ بما يكره وهو غائب، وحكمها التحريم لقوله تعالى: (ولا يغتب بعضكم بعضاً)"
   },
   {
-    "id": "demo-quiz-529",
+    "id": "demo-quiz-529", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "المحرمات الأخلاقية",
     "level": "متوسط",
@@ -3804,7 +3804,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الغيبة ذكر الشخص بما فيه من عيب حقيقي، والبهتان اتهامه بما ليس فيه وهو أشد إثماً"
   },
   {
-    "id": "demo-quiz-530",
+    "id": "demo-quiz-530", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "النفاق",
     "level": "سهل",
@@ -3812,7 +3812,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "إذا حدّث كذب، وإذا وعد أخلف، وإذا اؤتمن خان"
   },
   {
-    "id": "demo-quiz-531",
+    "id": "demo-quiz-531", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "الكبر والتواضع",
     "level": "متوسط",
@@ -3820,7 +3820,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الكبر بطر الحق وغمط الناس، أي رد الحق ورفضه واحتقار الناس"
   },
   {
-    "id": "demo-quiz-532",
+    "id": "demo-quiz-532", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "الكبر والتواضع",
     "level": "سهل",
@@ -3828,7 +3828,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "ضد الكبر التواضع، وهو من أفضل الأخلاق؛ قال النبي ﷺ: وما تواضع أحد لله إلا رفعه الله"
   },
   {
-    "id": "demo-quiz-533",
+    "id": "demo-quiz-533", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "الزهد",
     "level": "متوسط",
@@ -3836,7 +3836,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الزهد ترك الركون إلى الدنيا والانشغال بها عن الآخرة، ولا يعني الفقر أو ترك الكسب المشروع"
   },
   {
-    "id": "demo-quiz-534",
+    "id": "demo-quiz-534", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "مصطلح الحديث",
     "level": "متوسط",
@@ -3844,7 +3844,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "ما اتصل سنده بنقل العدل الضابط عن مثله إلى منتهاه، وسلم من الشذوذ والعلة"
   },
   {
-    "id": "demo-quiz-535",
+    "id": "demo-quiz-535", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "مصطلح الحديث",
     "level": "متوسط",
@@ -3852,7 +3852,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الحسن ما اتصل سنده ورواته عدول لكن خفيف الضبط، وهو دون الصحيح في المرتبة ويُحتج به"
   },
   {
-    "id": "demo-quiz-536",
+    "id": "demo-quiz-536", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "مصطلح الحديث",
     "level": "متوسط",
@@ -3860,7 +3860,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "ما فقد شرطاً فأكثر من شروط القبول (الصحيح أو الحسن). ومنهج هذا الموقع: لا يُعمل بالضعيف في الأحكام ولا العقائد ولا الترغيب ولا التعبّد؛ والخلاف التاريخي في فضائل الأعمال يُذكر للعلم مع ترجيح الترك والاستغناء بالصحيح والحسن"
   },
   {
-    "id": "demo-quiz-538",
+    "id": "demo-quiz-538", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "مصطلح الحديث",
     "level": "متوسط",
@@ -3868,7 +3868,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "سلسلة الرواة الذين نقلوا الحديث من الصحابي إلى المصنِّف، ويُسمى أيضاً السند"
   },
   {
-    "id": "demo-quiz-539",
+    "id": "demo-quiz-539", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "مصطلح الحديث",
     "level": "صعب",
@@ -3876,7 +3876,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "ما رواه جمع كثير يستحيل عادةً تواطؤهم على الكذب في كل طبقة، وهو يُفيد العلم القطعي"
   },
   {
-    "id": "demo-quiz-541",
+    "id": "demo-quiz-541", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "مصطلح الحديث",
     "level": "صعب",
@@ -3884,7 +3884,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الحديث القدسي ما نسبه النبي ﷺ إلى ربه، ويختلف عن القرآن بأن القرآن معجز ومتعبَّد بتلاوته بخلاف القدسي"
   },
   {
-    "id": "demo-quiz-542",
+    "id": "demo-quiz-542", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "آداب الاستئذان",
     "level": "سهل",
@@ -3892,7 +3892,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "يستأذن ثلاث مرات، فإن أُذن له دخل وإلا انصرف، ولا يقف أمام الباب مباشرةً"
   },
   {
-    "id": "demo-quiz-543",
+    "id": "demo-quiz-543", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "آداب الضيافة",
     "level": "متوسط",
@@ -3900,7 +3900,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الضيافة ثلاثة أيام، وما زاد فهو صدقة، ويجب إكرام الضيف وإطعامه دون تكلُّف مُضرّ"
   },
   {
-    "id": "demo-quiz-544",
+    "id": "demo-quiz-544", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "آداب الكلام",
     "level": "سهل",
@@ -3908,7 +3908,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الصدق في القول، والرفق في الأسلوب، وانتقاء الكلمات الطيبة، وترك الفحش والبذاءة"
   },
   {
-    "id": "demo-quiz-545",
+    "id": "demo-quiz-545", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "آداب السفر",
     "level": "متوسط",
@@ -3916,7 +3916,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الاستخارة والاستشارة، وداع الأهل بالدعاء، والتكبير على المرتفعات، والتسبيح في الهبوط، والدعاء عند العودة"
   },
   {
-    "id": "demo-quiz-546",
+    "id": "demo-quiz-546", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "آداب المسجد",
     "level": "سهل",
@@ -3924,7 +3924,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الدخول باليمنى مع الدعاء المأثور، وتقديم الصلاة تحية المسجد، والخروج باليسرى مع الدعاء"
   },
   {
-    "id": "demo-quiz-547",
+    "id": "demo-quiz-547", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "آداب تلاوة القرآن",
     "level": "سهل",
@@ -3932,7 +3932,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الطهارة، والتعوذ بالله من الشيطان قبل القراءة، والترتيل والتدبر، والخشوع وحضور القلب"
   },
   {
-    "id": "demo-quiz-548",
+    "id": "demo-quiz-548", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "آداب العطاس",
     "level": "سهل",
@@ -3940,7 +3940,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "يقول العاطس: الحمد لله، فيقول من سمعه: يرحمك الله، فيرد العاطس: يهديكم الله ويُصلح بالكم"
   },
   {
-    "id": "demo-quiz-549",
+    "id": "demo-quiz-549", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "آداب السلام",
     "level": "سهل",
@@ -3948,7 +3948,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "يبدأ الصغير بالكبير، والماشي بالجالس، والراكب بالماشي، والقليل بالكثير"
   },
   {
-    "id": "demo-quiz-550",
+    "id": "demo-quiz-550", "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "أركان الحج",
     "level": "سهل",
@@ -3956,7 +3956,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الإحرام، والوقوف بعرفة، وطواف الإفاضة، والسعي بين الصفا والمروة"
   },
   {
-    "id": "demo-quiz-551",
+    "id": "demo-quiz-551", "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "مناسك الحج",
     "level": "متوسط",
@@ -3964,7 +3964,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "هو التاسع من ذي الحجة، وفيه الوقوف بعرفة الذي هو ركن الحج الأعظم، وصيامه يكفّر سنتين"
   },
   {
-    "id": "demo-quiz-553",
+    "id": "demo-quiz-553", "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "مناسك الحج",
     "level": "سهل",
@@ -3972,7 +3972,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "هو النية لأداء نسك الحج أو العمرة مع ترك المحظورات، ويبدأ من الميقات المحدد لكل جهة"
   },
   {
-    "id": "demo-quiz-554",
+    "id": "demo-quiz-554", "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "مناسك الحج",
     "level": "صعب",
@@ -3980,7 +3980,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "حلق الشعر، وتقليم الأظافر، ولبس المخيط للرجل، والطيب، والصيد، وعقد النكاح، والرفث"
   },
   {
-    "id": "demo-quiz-555",
+    "id": "demo-quiz-555", "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "رمي الجمرات",
     "level": "متوسط",
@@ -3988,7 +3988,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "ترمى وحدها يوم النحر (العاشر من ذي الحجة)، ثم تُرمى مرة أخرى مع الجمرتين الصغرى والوسطى في كل يوم من أيام التشريق الثلاثة بعد زوال الشمس"
   },
   {
-    "id": "demo-quiz-556",
+    "id": "demo-quiz-556", "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "مواقيت الحج",
     "level": "صعب",
@@ -3996,7 +3996,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "شوال وذو القعدة وعشر من ذي الحجة، وهي أشهر الحج المذكورة في القرآن"
   },
   {
-    "id": "demo-quiz-557",
+    "id": "demo-quiz-557", "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "السعي",
     "level": "سهل",
@@ -4004,7 +4004,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "ركن من أركان الحج والعمرة لا يصح النسك بدونه، لقوله تعالى: ﴿إن الصفا والمروة من شعائر الله﴾"
   },
   {
-    "id": "demo-quiz-558",
+    "id": "demo-quiz-558", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "أسماء القرآن",
     "level": "متوسط",
@@ -4012,7 +4012,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "القرآن، والفرقان، والكتاب، والذكر، والتنزيل، والنور، والهدى، والشفاء"
   },
   {
-    "id": "demo-quiz-560",
+    "id": "demo-quiz-560", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "إحصاءات القرآن",
     "level": "سهل",
@@ -4020,7 +4020,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "30 جزءاً و60 حزباً"
   },
   {
-    "id": "demo-quiz-564",
+    "id": "demo-quiz-564", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "مكي ومدني",
     "level": "متوسط",
@@ -4028,7 +4028,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "المكية تتناول أصول العقيدة والتوحيد وقصص الأنبياء. المدنية تتناول التشريعات والأحكام الاجتماعية والعبادات"
   },
   {
-    "id": "demo-quiz-565",
+    "id": "demo-quiz-565", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الخلفاء الراشدون",
     "level": "سهل",
@@ -4036,7 +4036,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أبو بكر الصديق، ثم عمر بن الخطاب، ثم عثمان بن عفان، ثم علي بن أبي طالب رضي الله عنهم"
   },
   {
-    "id": "demo-quiz-566",
+    "id": "demo-quiz-566", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الفتوحات",
     "level": "متوسط",
@@ -4044,7 +4044,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "في عهد أمير المؤمنين عمر بن الخطاب رضي الله عنه"
   },
   {
-    "id": "demo-quiz-567",
+    "id": "demo-quiz-567", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدولة الأموية",
     "level": "متوسط",
@@ -4052,7 +4052,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "معاوية بن أبي سفيان رضي الله عنه، واتخذت دمشق عاصمة لها"
   },
   {
-    "id": "demo-quiz-568",
+    "id": "demo-quiz-568", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدولة العباسية",
     "level": "متوسط",
@@ -4060,7 +4060,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "مدينة بغداد التي بناها المنصور عام 762م"
   },
   {
-    "id": "demo-quiz-569",
+    "id": "demo-quiz-569", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "فتح الأندلس",
     "level": "متوسط",
@@ -4068,7 +4068,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "طارق بن زياد عام 92 هجرية / 711 ميلادية"
   },
   {
-    "id": "demo-quiz-570",
+    "id": "demo-quiz-570", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "فتح القسطنطينية",
     "level": "متوسط",
@@ -4076,7 +4076,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "السلطان محمد الفاتح عام 857 هجرية / 1453 ميلادية"
   },
   {
-    "id": "demo-quiz-571",
+    "id": "demo-quiz-571", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "حروب الردة",
     "level": "صعب",
@@ -4084,7 +4084,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أبو بكر الصديق رضي الله عنه، وكان من أبرز قادة جيوشه خالد بن الوليد رضي الله عنه"
   },
   {
-    "id": "demo-quiz-572",
+    "id": "demo-quiz-572", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "حادثة الفيل",
     "level": "سهل",
@@ -4092,7 +4092,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "غزو أبرهة الحبشي بجيش الفيل لهدم الكعبة عام ميلاد النبي ﷺ، وأهلكهم الله بطيور الأبابيل"
   },
   {
-    "id": "demo-quiz-573",
+    "id": "demo-quiz-573", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "مكارم الأخلاق",
     "level": "سهل",
@@ -4100,7 +4100,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "حسن الخلق، لقوله ﷺ: ما من شيء أثقل في ميزان المؤمن يوم القيامة من حسن الخلق (رواه الترمذي)"
   },
   {
-    "id": "demo-quiz-574",
+    "id": "demo-quiz-574", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "الأخلاق الذميمة",
     "level": "سهل",
@@ -4108,7 +4108,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الكبر: بَطَر الحق وغمط الناس، قال ﷺ: لا يدخل الجنة من كان في قلبه مثقال ذرة من كبر (رواه مسلم)"
   },
   {
-    "id": "demo-quiz-575",
+    "id": "demo-quiz-575", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "الاجتماعيات",
     "level": "سهل",
@@ -4116,7 +4116,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "خمس خصال: رد السلام، وعيادة المريض، واتباع الجنائز، وإجابة الدعوة، وتشميت العاطس (رواه البخاري ومسلم)"
   },
   {
-    "id": "demo-quiz-576",
+    "id": "demo-quiz-576", "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "التفسير",
     "level": "متوسط",
@@ -4124,7 +4124,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "التفسير بالمأثور: ما جاء عن النبي ﷺ والصحابة والتابعين. التفسير بالرأي: ما يُستنبَط بالاجتهاد والنظر مع الشروط العلمية"
   },
   {
-    "id": "demo-quiz-577",
+    "id": "demo-quiz-577", "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "النسخ",
     "level": "صعب",
@@ -4132,7 +4132,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "رفع حكم شرعي أو تلاوة بدليل شرعي متأخر، وله أنواع: نسخ الحكم دون التلاوة، ونسخ التلاوة دون الحكم، ونسخهما معاً"
   },
   {
-    "id": "demo-quiz-578",
+    "id": "demo-quiz-578", "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "الإعجاز",
     "level": "متوسط",
@@ -4140,7 +4140,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الإعجاز البياني والبلاغي، والإعجاز التشريعي، والإعجاز العلمي، والإعجاز الغيبي، والإعجاز العددي عند بعض العلماء"
   },
   {
-    "id": "demo-quiz-579",
+    "id": "demo-quiz-579", "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "أسباب النزول",
     "level": "متوسط",
@@ -4148,7 +4148,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "فهم الآيات وتفسيرها الصحيح، ومعرفة الحكمة من التشريع، وتحديد المقصود بالعام والخاص، ودفع الإشكالات"
   },
   {
-    "id": "demo-quiz-580",
+    "id": "demo-quiz-580", "documentation_status": "unsourced",
     "section": "الفتوحات الإسلامية",
     "category": "فتح مكة",
     "level": "سهل",
@@ -4156,7 +4156,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "السنة الثامنة من الهجرة النبوية، في شهر رمضان"
   },
   {
-    "id": "demo-quiz-581",
+    "id": "demo-quiz-581", "documentation_status": "unsourced",
     "section": "الفتوحات الإسلامية",
     "category": "الفتوحات الشامية",
     "level": "متوسط",
@@ -4164,7 +4164,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "معركة فاصلة عام 15 هجرية بين المسلمين والروم في الشام، انتصر فيها المسلمون وأفضت إلى فتح بلاد الشام"
   },
   {
-    "id": "demo-quiz-582",
+    "id": "demo-quiz-582", "documentation_status": "unsourced",
     "section": "الفتوحات الإسلامية",
     "category": "الفتوحات الفارسية",
     "level": "متوسط",
@@ -4172,7 +4172,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "معركة نهاوند عام 21 هجرية، سُميت فتح الفتوح لأنها الضربة القاضية على الإمبراطورية الساسانية"
   },
   {
-    "id": "demo-quiz-583",
+    "id": "demo-quiz-583", "documentation_status": "unsourced",
     "section": "الفتوحات الإسلامية",
     "category": "فتح مصر",
     "level": "متوسط",
@@ -4180,7 +4180,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عمرو بن العاص رضي الله عنه، عام 19-21 هجرية، وأسس الفسطاط عاصمةً للدولة الإسلامية في مصر"
   },
   {
-    "id": "demo-quiz-584",
+    "id": "demo-quiz-584", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "حديث جبريل",
     "level": "متوسط",
@@ -4188,7 +4188,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الحديث الذي سأل فيه جبريل النبيَّ ﷺ عن الإسلام والإيمان والإحسان وأشراط الساعة، وهو أصل جامع لعلوم الدين"
   },
   {
-    "id": "demo-quiz-585",
+    "id": "demo-quiz-585", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "الأحاديث الجامعة",
     "level": "سهل",
@@ -4196,7 +4196,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "النصيحة هنا بمعنى الإخلاص والصدق، أي أن الدين قائم على الإخلاص لله ولكتابه ولرسوله وللمسلمين عامة وخاصة"
   },
   {
-    "id": "demo-quiz-586",
+    "id": "demo-quiz-586", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "صحيح البخاري",
     "level": "سهل",
@@ -4204,7 +4204,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "حديث: إنما الأعمال بالنيات — رواه عمر بن الخطاب رضي الله عنه"
   },
   {
-    "id": "demo-quiz-587",
+    "id": "demo-quiz-587", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "الصدق",
     "level": "سهل",
@@ -4212,7 +4212,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الصدق يهدي إلى البر والبر يهدي إلى الجنة، لقوله ﷺ: عليكم بالصدق فإن الصدق يهدي إلى البر وإن البر يهدي إلى الجنة (رواه البخاري)"
   },
   {
-    "id": "demo-quiz-588",
+    "id": "demo-quiz-588", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "الصبر",
     "level": "سهل",
@@ -4220,7 +4220,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "صبر على طاعة الله، وصبر عن معصية الله، وصبر على أقدار الله المؤلمة — وأرفعها الصبر على الطاعة"
   },
   {
-    "id": "demo-quiz-589",
+    "id": "demo-quiz-589", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "حسن الظن",
     "level": "متوسط",
@@ -4228,7 +4228,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "محرم لقوله تعالى: ﴿يا أيها الذين آمنوا اجتنبوا كثيراً من الظن إن بعض الظن إثم﴾، إلا ما دلت عليه القرائن الواضحة"
   },
   {
-    "id": "demo-quiz-590",
+    "id": "demo-quiz-590", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "التواضع",
     "level": "سهل",
@@ -4236,7 +4236,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "التواضع: لين الجانب وعدم الاستعلاء، وضده الكبر والغرور. قال ﷺ: ما تواضع أحد لله إلا رفعه الله (رواه مسلم)"
   },
   {
-    "id": "demo-quiz-591",
+    "id": "demo-quiz-591", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "الصدق",
     "level": "سهل",
@@ -4244,7 +4244,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "مطابقة الكلام للواقع، والصدق في القول والعمل والنية. قال ﷺ: عليكم بالصدق فإن الصدق يهدي إلى البر (رواه البخاري)"
   },
   {
-    "id": "demo-quiz-592",
+    "id": "demo-quiz-592", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "الحلم",
     "level": "متوسط",
@@ -4252,7 +4252,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الحلم هو كظم الغيظ وترك المبادرة بالعقوبة عند القدرة عليها. قال ﷺ: إن الله رفيق يحب الرفق ويعطي على الرفق ما لا يعطي على العنف (رواه مسلم)"
   },
   {
-    "id": "demo-quiz-593",
+    "id": "demo-quiz-593", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "العفو",
     "level": "سهل",
@@ -4260,7 +4260,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "العزة والرفعة في الدنيا والآخرة. قال ﷺ: ما زاد الله عبداً بعفو إلا عزاً (رواه مسلم). والعفو عند المقدرة من أعلى مراتب الأخلاق"
   },
   {
-    "id": "demo-quiz-594",
+    "id": "demo-quiz-594", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "الأمانة",
     "level": "متوسط",
@@ -4268,7 +4268,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "في أداء الحقوق لأصحابها، وحفظ الأسرار، والوفاء بالعقود، والنصيحة للغير. الأمانة شاملة لكل ما استُودع الإنسان من مسؤوليات"
   },
   {
-    "id": "demo-quiz-595",
+    "id": "demo-quiz-595", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "الكرم",
     "level": "سهل",
@@ -4276,7 +4276,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الكرم: بذل المال في محله بغير أذى ولا منٍّ. الإسراف: الزيادة عن الحاجة والخروج عن الاعتدال. قال تعالى: ولا تبذر تبذيراً إن المبذرين كانوا إخوان الشياطين"
   },
   {
-    "id": "demo-quiz-596",
+    "id": "demo-quiz-596", "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "الناسخ والمنسوخ",
     "level": "صعب",
@@ -4284,7 +4284,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "رفع الحكم الشرعي بدليل شرعي متأخر عنه. النسخ في القرآن نوعان: نسخ التلاوة دون الحكم، ونسخ الحكم دون التلاوة"
   },
   {
-    "id": "demo-quiz-597",
+    "id": "demo-quiz-597", "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "المحكم والمتشابه",
     "level": "متوسط",
@@ -4292,7 +4292,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "المحكم: ما اتضح معناه ولا لبس فيه. المتشابه: ما خفي معناه واحتمل تأويلات. قال تعالى: هو الذي أنزل عليك الكتاب منه آيات محكمات هن أم الكتاب وأخر متشابهات"
   },
   {
-    "id": "demo-quiz-598",
+    "id": "demo-quiz-598", "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "الإعجاز",
     "level": "متوسط",
@@ -4300,7 +4300,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الإعجاز اللغوي والبياني، والإعجاز التشريعي، والإعجاز العلمي، والإعجاز الغيبي، والتحدي المستمر للإنس والجن على الإتيان بمثله"
   },
   {
-    "id": "demo-quiz-599",
+    "id": "demo-quiz-599", "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "التفسير",
     "level": "متوسط",
@@ -4308,7 +4308,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "التفسير بالمأثور (تفسير القرآن بالقرآن أو بالسنة أو بأقوال الصحابة)، والتفسير بالرأي (العقلي المنضبط)، والتفسير الموضوعي"
   },
   {
-    "id": "demo-quiz-600",
+    "id": "demo-quiz-600", "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "القراءات",
     "level": "صعب",
@@ -4316,7 +4316,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "ثلاثة شروط: موافقة أحد المصاحف العثمانية ولو احتمالاً، وصحة الإسناد، وموافقة وجه من أوجه العربية"
   },
   {
-    "id": "demo-quiz-601",
+    "id": "demo-quiz-601", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "آداب الطعام",
     "level": "سهل",
@@ -4324,7 +4324,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "التسمية في الابتداء، والحمد في الانتهاء، والأكل باليمين، والأكل مما يلي، وعدم النفخ في الطعام، وترك الشبع المفرط"
   },
   {
-    "id": "demo-quiz-602",
+    "id": "demo-quiz-602", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "آداب المجلس",
     "level": "سهل",
@@ -4332,7 +4332,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الإنصات وعدم قطع المتحدث، والسؤال بأدب، وعدم الإكثار من الكلام، وإكرام أهل العلم، ومغادرة المجلس بالسلام"
   },
   {
-    "id": "demo-quiz-603",
+    "id": "demo-quiz-603", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "آداب النوم",
     "level": "سهل",
@@ -4340,7 +4340,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "قراءة آية الكرسي وآخر سورة البقرة، والتسبيح ثلاثاً وثلاثين والتحميد ثلاثاً وثلاثين والتكبير أربعاً وثلاثين (متفق عليه من حديث علي وفاطمة)، والنوم على الشق الأيمن، والنفث في اليدين"
   },
   {
-    "id": "demo-quiz-604",
+    "id": "demo-quiz-604", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "آداب السفر",
     "level": "متوسط",
@@ -4348,7 +4348,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "التوديع وطلب الدعاء، وتكبير الله عند الركوب، والدعاء بدعاء السفر، وصلة الرحم بعد العودة، والحذر من سفر الفرد ليلاً"
   },
   {
-    "id": "demo-quiz-605",
+    "id": "demo-quiz-605", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "مصطلح الحديث",
     "level": "متوسط",
@@ -4356,7 +4356,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "ما رواه جمع كثير يستحيل تواطؤهم على الكذب في كل طبقة من طبقات السند. وهو يفيد العلم اليقيني القطعي"
   },
   {
-    "id": "demo-quiz-606",
+    "id": "demo-quiz-606", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "مصطلح الحديث",
     "level": "متوسط",
@@ -4364,7 +4364,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "ما لم يبلغ حد التواتر. وينقسم إلى: مشهور وعزيز وغريب. يفيد الظن الراجح ويجب العمل به في الأحكام الشرعية عند الصحة"
   },
   {
-    "id": "demo-quiz-607",
+    "id": "demo-quiz-607", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "علم الرجال",
     "level": "صعب",
@@ -4372,7 +4372,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "التعديل: توثيق الراوي بأنه ضابط عدل مقبول الرواية. الجرح: بيان ما يخل بعدالة الراوي أو ضبطه. وهو ميزان نقد المحدثين للرواة"
   },
   {
-    "id": "demo-quiz-608",
+    "id": "demo-quiz-608", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "كتب السنة",
     "level": "سهل",
@@ -4380,7 +4380,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "صحيح البخاري (الجامع الصحيح) عند جمهور العلماء، ثم صحيح مسلم. وهما المعروفان بـ (الصحيحين)"
   },
   {
-    "id": "demo-quiz-609",
+    "id": "demo-quiz-609", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "السنة النبوية",
     "level": "متوسط",
@@ -4388,7 +4388,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "القولية: ما قاله النبي ﷺ. الفعلية: ما فعله. التقريرية: ما سكت عنه وأقره ولم ينكره. والجميع حجة شرعية"
   },
   {
-    "id": "demo-quiz-610",
+    "id": "demo-quiz-610", "documentation_status": "unsourced",
     "section": "الألغاز الشرعية",
     "category": "ألغاز الطهارة",
     "level": "صعب",
@@ -4396,7 +4396,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "المرأة التي تطوف في المسجد الحرام فإنها تصلي ركعتي الطواف في وقت النهي (بعد العصر مثلاً) مرتين إذا أعادتها وقت الجواز"
   },
   {
-    "id": "demo-quiz-611",
+    "id": "demo-quiz-611", "documentation_status": "unsourced",
     "section": "الألغاز الشرعية",
     "category": "ألغاز الصلاة",
     "level": "صعب",
@@ -4404,7 +4404,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "صلاة الجنازة — وإن كانت دعاءً وتكبيراً وسلاماً. أو بعض العلماء يعدّ صلاة المأموم المسبوق في التكبيرات"
   },
   {
-    "id": "demo-quiz-612",
+    "id": "demo-quiz-612", "documentation_status": "unsourced",
     "section": "الألغاز الشرعية",
     "category": "ألغاز الصيام",
     "level": "متوسط",
@@ -4412,7 +4412,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "المسلم الذي نوى الصوم من المساء ثم نسي النية، وصيامه صحيح عند الجمهور لأن النية الضمنية قائمة بالتزام الصوم"
   },
   {
-    "id": "demo-quiz-613",
+    "id": "demo-quiz-613", "documentation_status": "unsourced",
     "section": "الألغاز الشرعية",
     "category": "ألغاز الزكاة",
     "level": "صعب",
@@ -4420,7 +4420,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الزروع والثمار — تجب فيها الزكاة عند حصادها لا بحلول حول. قال تعالى: وآتوا حقه يوم حصاده"
   },
   {
-    "id": "demo-quiz-614",
+    "id": "demo-quiz-614", "documentation_status": "unsourced",
     "section": "الألغاز الشرعية",
     "category": "ألغاز متنوعة",
     "level": "صعب",
@@ -4428,7 +4428,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الذكر والدعاء والتسبيح — لا يُشترط لها الطهارة وإن كانت أفضل. وكذلك الصلاة على النبي ﷺ وقراءة الكتب الشرعية"
   },
   {
-    "id": "demo-quiz-615",
+    "id": "demo-quiz-615", "documentation_status": "unsourced",
     "section": "الألغاز الشرعية",
     "category": "ألغاز متنوعة",
     "level": "متوسط",
@@ -4436,7 +4436,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "النبي ﷺ — أباح الله له الزواج بالهبة بلا مهر مسمى، وهو خصيصة له دون سائر المؤمنين كما أشارت الآية الكريمة"
   },
   {
-    "id": "demo-quiz-616",
+    "id": "demo-quiz-616", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الغزوات",
     "level": "سهل",
@@ -4444,7 +4444,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "في السنة الثانية من الهجرة النبوية (624م)، وكانت أول معركة فاصلة بين المسلمين والمشركين."
   },
   {
-    "id": "demo-quiz-617",
+    "id": "demo-quiz-617", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الغزوات",
     "level": "متوسط",
@@ -4452,7 +4452,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أبو سفيان بن حرب. انتهت بانتكاسة للمسلمين بعد مخالفة الرماة لأمر النبي ﷺ بعدم النزول عن الجبل."
   },
   {
-    "id": "demo-quiz-618",
+    "id": "demo-quiz-618", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الأحكام",
     "level": "متوسط",
@@ -4460,7 +4460,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الزكاة: فريضة لها نصاب وشروط محددة وأصناف مستحقة. الصدقة: تطوعية بلا قيود. وكل زكاة صدقة وليس كل صدقة زكاة."
   },
   {
-    "id": "demo-quiz-620",
+    "id": "demo-quiz-620", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "اليوم الآخر",
     "level": "سهل",
@@ -4468,7 +4468,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "كما في حديث حذيفة بن أسيد (رواه مسلم): الدخان، والدجال، والدابة، وطلوع الشمس من مغربها، ونزول عيسى ابن مريم عليه السلام، ويأجوج ومأجوج، وثلاثة خسوف (بالمشرق والمغرب وجزيرة العرب)، ونار تخرج من اليمن تطرد الناس إلى محشرهم."
   },
   {
-    "id": "demo-quiz-621",
+    "id": "demo-quiz-621", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الفتوحات",
     "level": "متوسط",
@@ -4476,7 +4476,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عمرو بن العاص رضي الله عنه، فتحها عام 20هـ وأسّس مدينة الفسطاط."
   },
   {
-    "id": "demo-quiz-622",
+    "id": "demo-quiz-622", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الفتوحات",
     "level": "متوسط",
@@ -4484,7 +4484,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "خالد بن الوليد رضي الله عنه، لقّبه النبي ﷺ بعد انتصاراته الباهرة في المعارك، وكان يُقال إنه لم يُهزم في مواجهة قط."
   },
   {
-    "id": "demo-quiz-624",
+    "id": "demo-quiz-624", "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "السور",
     "level": "سهل",
@@ -4492,7 +4492,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "سورة الكوثر — 3 آيات، وهي أقصر السور. سُمّيت بالكوثر لأن الله بشّر فيها النبي ﷺ بنهر الكوثر."
   },
   {
-    "id": "demo-quiz-625",
+    "id": "demo-quiz-625", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "الأربعون النووية",
     "level": "متوسط",
@@ -4500,7 +4500,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "إنما الأعمال بالنيات — معناه أن صحة الأعمال وقبولها مرتبط بالنية الخالصة لله تعالى."
   },
   {
-    "id": "demo-quiz-626",
+    "id": "demo-quiz-626", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "الأربعون النووية",
     "level": "متوسط",
@@ -4508,7 +4508,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "حديث جبريل — سأل جبريل النبي ﷺ عن الإسلام والإيمان والإحسان، فأجابه النبي. وهو حديث عمر بن الخطاب رضي الله عنه."
   },
   {
-    "id": "demo-quiz-627",
+    "id": "demo-quiz-627", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الطهارة",
     "level": "متوسط",
@@ -4516,7 +4516,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "خروج شيء من السبيلين — زوال العقل (نوم أو إغماء) — مسّ الفرج بشهوة — أكل لحم الإبل (عند جمهور المحققين)."
   },
   {
-    "id": "demo-quiz-628",
+    "id": "demo-quiz-628", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "الملائكة",
     "level": "سهل",
@@ -4524,7 +4524,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "جبريل عليه السلام موكّل بالوحي. ميكائيل موكّل بالأمطار والأرزاق."
   },
   {
-    "id": "demo-quiz-629",
+    "id": "demo-quiz-629", "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "أخلاق المسلم",
     "level": "سهل",
@@ -4532,7 +4532,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عين اليقين — ذكرت في سورة التكاثر. وحق اليقين — ذكرت في سورة الواقعة والحاقة. وعلم اليقين — في سورة التكاثر أيضاً."
   },
   {
-    "id": "demo-quiz-630",
+    "id": "demo-quiz-630", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الصحابة",
     "level": "متوسط",
@@ -4540,7 +4540,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "من النساء: خديجة. من الرجال الأحرار: أبو بكر الصديق. من الصبيان: علي بن أبي طالب. من العبيد: زيد بن حارثة."
   },
   {
-    "id": "demo-quiz-631",
+    "id": "demo-quiz-631", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الزكاة",
     "level": "متوسط",
@@ -4548,7 +4548,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "نصاب الذهب: 85 جراماً (20 مثقالاً). نصاب الفضة: 595 جراماً (200 درهم). ومتى بلغ المال النصاب وحال عليه الحول وجبت فيه الزكاة."
   },
   {
-    "id": "demo-quiz-632",
+    "id": "demo-quiz-632", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الزكاة",
     "level": "سهل",
@@ -4556,7 +4556,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "ربع العشر أي 2.5٪ من المال الذي بلغ النصاب وحال عليه الحول."
   },
   {
-    "id": "demo-quiz-633",
+    "id": "demo-quiz-633", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "اليوم الآخر",
     "level": "متوسط",
@@ -4564,7 +4564,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "جهنم، ولظى، والحُطمة، والسعير، والسقر، والجحيم، والهاوية. وذهب بعض العلماء إلى أن هذه الأسماء لدركات جهنم المتفاوتة في العذاب."
   },
   {
-    "id": "demo-quiz-634",
+    "id": "demo-quiz-634", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "اليوم الآخر",
     "level": "سهل",
@@ -4572,7 +4572,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الصلاة — قال ﷺ: «أول ما يحاسب به العبد يوم القيامة صلاته، فإن صلحت صلح سائر عمله، وإن فسدت فسد سائر عمله» — رواه الترمذي."
   },
   {
-    "id": "demo-quiz-635",
+    "id": "demo-quiz-635", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "الملائكة",
     "level": "سهل",
@@ -4580,7 +4580,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "مَلَك الموت — وقد يُسمى عزرائيل في كتب التراث، لكن هذا الاسم لم يرد في القرآن ولا في صحيح السنة. وصفه الله تعالى بـ«مَلَك الموت» في قوله: ﴿قُلْ يَتَوَفَّاكُمْ مَلَكُ الْمَوْتِ الَّذِي وُكِّلَ بِكُمْ﴾ [السجدة: 11]."
   },
   {
-    "id": "demo-quiz-636",
+    "id": "demo-quiz-636", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "الملائكة",
     "level": "متوسط",
@@ -4588,7 +4588,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أربعة ملائكة حافظون: ملكان بالليل وملكان بالنهار، يتعاقبون على كتابة الحسنات والسيئات. قال تعالى: ﴿لَهُ مُعَقِّبَاتٌ مِنْ بَيْنِ يَدَيْهِ وَمِنْ خَلْفِهِ﴾."
   },
   {
-    "id": "demo-quiz-637",
+    "id": "demo-quiz-637", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الأذان",
     "level": "سهل",
@@ -4596,7 +4596,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أربع مرات في أول الأذان."
   },
   {
-    "id": "demo-quiz-638",
+    "id": "demo-quiz-638", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الأذان",
     "level": "متوسط",
@@ -4604,7 +4604,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "يُزاد في أذان الفجر جملة «الصلاة خير من النوم» مرتين — وتُسمى التثويب. أما الإقامة فتختلف عن الأذان بأن جملة «قد قامت الصلاة» تُضاف مرتين بعد «حي على الفلاح» (لا تحل محله)، عند جمهور الفقهاء."
   },
   {
-    "id": "demo-quiz-639",
+    "id": "demo-quiz-639", "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "آداب الكلام",
     "level": "سهل",
@@ -4612,7 +4612,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "مكروه ومنهي عنه — قال ﷺ: «من صمت نجا» وقال: «إن من حسن إسلام المرء تركه ما لا يعنيه» — رواه الترمذي."
   },
   {
-    "id": "demo-quiz-640",
+    "id": "demo-quiz-640", "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "آداب المسجد",
     "level": "سهل",
@@ -4620,7 +4620,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "بالرجل اليمنى — لحديث: «إذا دخل أحدكم المسجد فليبدأ بيمينه» ومثله الخروج يبدأ باليسرى."
   },
   {
-    "id": "demo-quiz-641",
+    "id": "demo-quiz-641", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "الأنبياء في القرآن",
     "level": "سهل",
@@ -4628,7 +4628,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "خمسة وعشرون نبياً بالاسم: آدم، إدريس، نوح، هود، صالح، إبراهيم، لوط، إسماعيل، إسحاق، يعقوب، يوسف، شعيب، أيوب، موسى، هارون، يونس، إلياس، اليسع، ذو الكفل، داوود، سليمان، زكريا، يحيى، عيسى، محمد ﷺ."
   },
   {
-    "id": "demo-quiz-643",
+    "id": "demo-quiz-643", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "مصطلح الحديث",
     "level": "متوسط",
@@ -4636,7 +4636,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "المسند: ما اتصل سنده من راويه إلى النبي ﷺ دون انقطاع. المرسل: ما سقط من سنده الصحابي، فيُروى من التابعي مباشرةً إلى النبي ﷺ دون ذكر الصحابي."
   },
   {
-    "id": "demo-quiz-644",
+    "id": "demo-quiz-644", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الطهارة",
     "level": "سهل",
@@ -4644,7 +4644,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عند الوضوء — عند الصلاة — عند قراءة القرآن — عند الاستيقاظ من النوم — عند تغير رائحة الفم."
   },
   {
-    "id": "demo-quiz-645",
+    "id": "demo-quiz-645", "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "الأخلاق الذميمة",
     "level": "متوسط",
@@ -4652,7 +4652,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "سُئل ﷺ: ألا أنبئكم بأكبر الكبائر؟ قلنا: بلى يا رسول الله، قال: «الإشراك بالله، وعقوق الوالدين» ثم جلس وقال: «ألا وقول الزور، وشهادة الزور» (متفق عليه — رواه البخاري ومسلم عن أبي بكرة)"
   },
   {
-    "id": "demo-quiz-646",
+    "id": "demo-quiz-646", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصيام",
     "level": "سهل",
@@ -4660,7 +4660,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الفطر: ترك الصيام بعذر شرعي كالمرض والسفر مع وجوب القضاء. الإفطار العمد بلا عذر: إثم كبير يوجب القضاء والكفارة عند جمهور الفقهاء."
   },
   {
-    "id": "demo-quiz-647",
+    "id": "demo-quiz-647", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "القضاء والقدر",
     "level": "متوسط",
@@ -4676,7 +4676,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أبو بكر الصديق رضي الله عنه — قال الله تعالى: {إِذْ يَقُولُ لِصَاحِبِهِ لَا تَحْزَنْ إِنَّ اللَّهَ مَعَنَا}. وكان الصاحب هو أبو بكر الصديق في الغار."
   },
   {
-    "id": "demo-quiz-649",
+    "id": "demo-quiz-649", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور",
     "level": "متوسط",
@@ -4684,7 +4684,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "سورة الإخلاص — قال ﷺ: «قل هو الله أحد تعدل ثلث القرآن» (رواه مسلم: 811، عن أبي الدرداء رضي الله عنه؛ وأصله في البخاري من حديث أبي سعيد الخدري بلفظ «إنها تعدل ثلث القرآن») — وذلك لاشتمالها على توحيد الأسماء والصفات."
   },
   {
-    "id": "demo-quiz-650",
+    "id": "demo-quiz-650", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الزكاة",
     "level": "متوسط",
@@ -4692,7 +4692,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عشرون مثقالاً وهو ما يعادل 85 غراماً من الذهب الخالص تقريباً، إذا بلغها المسلم وحال عليها الحول وجبت فيها الزكاة بمقدار ربع العُشر (2.5٪)."
   },
   {
-    "id": "demo-quiz-652",
+    "id": "demo-quiz-652", "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "الدعاء",
     "level": "سهل",
@@ -4700,7 +4700,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "«الحمد لله الذي أحيانا بعد ما أماتنا وإليه النشور» — رواه البخاري. أو: «لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير» عشراً."
   },
   {
-    "id": "demo-quiz-653",
+    "id": "demo-quiz-653", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الفتوحات",
     "level": "متوسط",
@@ -4708,7 +4708,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "فُتحت القسطنطينية عام 857هـ / 1453م على يد السلطان العثماني محمد الفاتح. يربط كثير من العلماء هذا الفتح بحديث «لتُفتحنّ القسطنطينية، فلنعم الأمير أميرها ولنعم الجيش ذلك الجيش» (رواه أحمد في المسند 18189 والبخاري في التاريخ الكبير)، وقد تكلّم بعض المحدّثين في إسناده لجهالة أحد رواته."
   },
   {
-    "id": "demo-quiz-654",
+    "id": "demo-quiz-654", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصلاة",
     "level": "متوسط",
@@ -4724,7 +4724,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "جبريل عليه السلام — وهو أمين الوحي، الذي نزل بالقرآن الكريم على قلب النبي ﷺ. قال الله: {نَزَلَ بِهِ الرُّوحُ الْأَمِينُ ﴿١٩٣﴾ عَلَىٰ قَلْبِكَ لِتَكُونَ مِنَ الْمُنذِرِينَ}."
   },
   {
-    "id": "demo-quiz-656",
+    "id": "demo-quiz-656", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الغزوات",
     "level": "متوسط",
@@ -4732,7 +4732,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "غزوة الخندق (الأحزاب) عام 5هـ — حيث أشار سلمان الفارسي رضي الله عنه بحفر الخندق حول المدينة، وكان ذلك من تكتيكات الفرس. وانتهت الغزوة بصرف الله الأحزاب دون قتال."
   },
   {
-    "id": "demo-quiz-657",
+    "id": "demo-quiz-657", "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "الذكر والدعاء",
     "level": "سهل",
@@ -4740,7 +4740,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "قال لها ﷺ: «ألا أدلّك على ما هو خير لك من خادم؟ تسبّحين ثلاثاً وثلاثين، وتحمدين ثلاثاً وثلاثين، وتكبّرين أربعاً وثلاثين حين تأخذين مضجعك» (متفق عليه — رواه البخاري 3705 ومسلم 2727 عن علي بن أبي طالب)."
   },
   {
-    "id": "demo-quiz-658",
+    "id": "demo-quiz-658", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "آيات الأحكام",
     "level": "صعب",
@@ -4748,7 +4748,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "خمسمئة آية تقريباً — وهو ما اشتهر عند الفقهاء والأصوليين، وإن اختلفوا في الدقيق منها. وقيل أقل أو أكثر بحسب طريقة الإحصاء ومنهج كل عالم."
   },
   {
-    "id": "demo-quiz-659",
+    "id": "demo-quiz-659", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الحج",
     "level": "متوسط",
@@ -4756,7 +4756,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "1- الإحرام (النية). 2- الوقوف بعرفة — وهو الركن الأعظم للحديث «الحج عرفة». 3- طواف الإفاضة (طواف الزيارة). 4- السعي بين الصفا والمروة. ومن أخلّ بركن لم يصح حجه."
   },
   {
-    "id": "demo-quiz-660",
+    "id": "demo-quiz-660", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الخلفاء الراشدون",
     "level": "سهل",
@@ -4764,7 +4764,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "1- أبو بكر الصديق (11-13هـ). 2- عمر بن الخطاب (13-23هـ). 3- عثمان بن عفان (23-35هـ). 4- علي بن أبي طالب (35-40هـ). وهذا ترتيبهم في الفضل عند أهل السنة."
   },
   {
-    "id": "demo-quiz-661",
+    "id": "demo-quiz-661", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "أسماء الله وصفاته",
     "level": "سهل",
@@ -4772,7 +4772,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الصمد هو السيد الذي يُصمَد إليه في الحوائج؛ أي يُقصد في كل حاجة ويُلجأ إليه في كل أمر. وهو صمد بمعنى أنه لا جوف له، فهو كامل الذات لا يحتاج إلى طعام ولا شراب."
   },
   {
-    "id": "demo-quiz-662",
+    "id": "demo-quiz-662", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الطهارة",
     "level": "متوسط",
@@ -4780,7 +4780,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "فرائض الوضوء: 1- النية. 2- غسل الوجه. 3- غسل اليدين إلى المرفقين. 4- مسح الرأس. 5- غسل الرجلين إلى الكعبين. 6- الترتيب (عند الشافعية والحنابلة). 7- الموالاة (عند المالكية والحنابلة)."
   },
   {
-    "id": "demo-quiz-663",
+    "id": "demo-quiz-663", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور والآيات",
     "level": "سهل",
@@ -4788,7 +4788,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أطول سورة في القرآن الكريم هي سورة البقرة، وتتكون من 286 آية، وتبدأ بـ(الم) وتنتهي بآيتَي الختام (285-286)، وفيها آية الكرسي (255)."
   },
   {
-    "id": "demo-quiz-664",
+    "id": "demo-quiz-664", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الصحابة",
     "level": "متوسط",
@@ -4796,7 +4796,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أول من أسلم من النساء هي خديجة بنت خويلد رضي الله عنها، زوج النبي ﷺ الأولى. وكان إسلامها فور نزول الوحي وعودة النبي ﷺ من غار حراء."
   },
   {
-    "id": "demo-quiz-665",
+    "id": "demo-quiz-665", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "مصطلح الحديث",
     "level": "صعب",
@@ -4804,7 +4804,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "المرسَل: ما سقط منه الصحابي فقط، إذ يرويه التابعي مباشرة عن النبي ﷺ. المنقطع: ما سقط من إسناده راوٍ واحد في أي موضع غير الصحابي، أو اثنان غير متواليين. كلاهما من أقسام الحديث الضعيف."
   },
   {
-    "id": "demo-quiz-666",
+    "id": "demo-quiz-666", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الفتوحات",
     "level": "متوسط",
@@ -4812,7 +4812,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "فُتحت القدس على يد عمر بن الخطاب رضي الله عنه عام 15هـ / 637م، حين توجّه بنفسه إلى القدس وتسلّم مفاتيحها من بطريرك القدس صفرونيوس، وكتب العهدة العمرية لأهلها."
   },
   {
-    "id": "demo-quiz-667",
+    "id": "demo-quiz-667", "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "التوبة والاستغفار",
     "level": "سهل",
@@ -4820,7 +4820,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "تسمى سيد الاستغفار: «اللهم أنت ربي لا إله إلا أنت، خلقتني وأنا عبدك، وأنا على عهدك ووعدك ما استطعت، أعوذ بك من شر ما صنعت، أبوء لك بنعمتك عليّ وأبوء بذنبي فاغفر لي فإنه لا يغفر الذنوب إلا أنت»."
   },
   {
-    "id": "demo-quiz-669",
+    "id": "demo-quiz-669", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الزكاة",
     "level": "متوسط",
@@ -4828,7 +4828,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "ذكرهم الله في سورة التوبة: 1- الفقراء. 2- المساكين. 3- العاملون عليها. 4- المؤلفة قلوبهم. 5- في الرقاب (العتق). 6- الغارمون (أصحاب الديون). 7- في سبيل الله. 8- ابن السبيل."
   },
   {
-    "id": "demo-quiz-671",
+    "id": "demo-quiz-671", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "مصطلح الحديث",
     "level": "متوسط",
@@ -4836,7 +4836,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "المرفوع: ما أُسند إلى النبي ﷺ قولاً أو فعلاً أو تقريراً. الموقوف: ما أُسند إلى الصحابي ولم يرفعه إلى النبي. المقطوع: ما أُسند إلى التابعي."
   },
   {
-    "id": "demo-quiz-672",
+    "id": "demo-quiz-672", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصلاة",
     "level": "سهل",
@@ -4844,7 +4844,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أقلها ركعة واحدة بسلام. وأكثرها إحدى عشرة ركعة. والوتر بثلاث ركعات مشهور وجائز. قال النبي ﷺ: «الوتر حق على كل مسلم»."
   },
   {
-    "id": "demo-quiz-673",
+    "id": "demo-quiz-673", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "غزوات النبي",
     "level": "متوسط",
@@ -4852,7 +4852,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "حُفر الخندق في غزوة الأحزاب (الخندق) سنة 5هـ، واقترح حفره سلمان الفارسي رضي الله عنه بعد أن كان أسلوباً حربياً معروفاً في بلاد فارس."
   },
   {
-    "id": "demo-quiz-674",
+    "id": "demo-quiz-674", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "علوم القرآن",
     "level": "متوسط",
@@ -4860,7 +4860,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الناسخ: الحكم الجديد الذي رفع حكماً سابقاً. المنسوخ: الحكم الذي رُفع. مثاله: نُسخت استقبال بيت المقدس باستقبال الكعبة المشرفة. والنسخ لا يقع في الأخبار بل في الأحكام."
   },
   {
-    "id": "demo-quiz-675",
+    "id": "demo-quiz-675", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "الإيمان",
     "level": "سهل",
@@ -4868,7 +4868,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "1- الإيمان بالله. 2- وملائكته. 3- وكتبه. 4- ورسله. 5- واليوم الآخر. 6- والقدر خيره وشره. دليله حديث جبريل في الصحيحين."
   },
   {
-    "id": "demo-quiz-676",
+    "id": "demo-quiz-676", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الخلافة الإسلامية",
     "level": "متوسط",
@@ -4876,7 +4876,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عمر بن الخطاب رضي الله عنه هو أول من لُقّب بأمير المؤمنين رسمياً، وقد درج الناس على نداء أبي بكر بـ«خليفة رسول الله» فلما ولي عمر قيل «خليفة خليفة رسول الله» فتعقيداً لُقّب بأمير المؤمنين."
   },
   {
-    "id": "demo-quiz-677",
+    "id": "demo-quiz-677", "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "التوبة والاستغفار",
     "level": "سهل",
@@ -4884,7 +4884,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "ثلاثة شروط: 1- الإقلاع عن الذنب فوراً. 2- الندم على ما فات. 3- العزم على عدم العودة. وإن كان الذنب يتعلق بحق آدمي زُيد شرط رابع: رد الحقوق أو الاستحلال من أصحابها."
   },
   {
-    "id": "demo-quiz-678",
+    "id": "demo-quiz-678", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصيام",
     "level": "متوسط",
@@ -4892,7 +4892,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الجماع في نهار رمضان عمداً مع القدرة يوجب القضاء والكفارة المغلّظة: عتق رقبة، فإن لم يجد فصيام شهرين متتابعين، فإن لم يستطع فإطعام ستين مسكيناً."
   },
   {
-    "id": "demo-quiz-679",
+    "id": "demo-quiz-679", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الصحابة",
     "level": "سهل",
@@ -4900,7 +4900,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "خالد بن الوليد رضي الله عنه، لقّبه النبي ﷺ بسيف الله المسلول، وهو من أعظم القادة في التاريخ الإسلامي، قاد معارك اليرموك والقادسية وفتوح الشام."
   },
   {
-    "id": "demo-quiz-680",
+    "id": "demo-quiz-680", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "أسماء الله وصفاته",
     "level": "متوسط",
@@ -4908,7 +4908,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الحكيم: ذو الحكمة البالغة في الخلق والتشريع؛ يضع كل شيء في موضعه اللائق به. واقترن بالعليم في آيات كثيرة إذ الحكمة تستلزم العلم: «وَاللَّهُ عَلِيمٌ حَكِيمٌ» (النساء: 26)."
   },
   {
-    "id": "demo-quiz-681",
+    "id": "demo-quiz-681", "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "التزكية",
     "level": "سهل",
@@ -4916,7 +4916,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الفم والفرج — قال ﷺ: «أكثر ما يُدخل الناسَ النار الأجوفان: الفم والفرج» (الترمذي ٢٠٠٤، صححه الألباني). واللسان مفتاح الفم ومدخل أعظم الذنوب."
   },
   {
-    "id": "demo-quiz-682",
+    "id": "demo-quiz-682", "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "الزهد",
     "level": "متوسط",
@@ -4924,7 +4924,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الزهد: ترك ما لا ينفع في الآخرة وإيثار ما فيه رضا الله. وهو حال القلب لا المال؛ فقد كان سليمان ﷺ ذا ملك عظيم وهو زاهد، وقد يكون الفقير حريصاً غير زاهد."
   },
   {
-    "id": "demo-quiz-683",
+    "id": "demo-quiz-683", "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "أمراض القلوب",
     "level": "متوسط",
@@ -4932,7 +4932,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "قال ﷺ: «الكبر: بطَر الحق وغمط الناس» (رواه مسلم). بطر الحق: رد الحق وعدم قبوله. غمط الناس: احتقارهم. وهو من الكبائر المهلكة للقلب."
   },
   {
-    "id": "demo-quiz-684",
+    "id": "demo-quiz-684", "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "التوبة",
     "level": "سهل",
@@ -4940,7 +4940,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "وقت الأسحار قُبيل الفجر — قال الله تعالى: ﴿وَالْمُسْتَغْفِرِينَ بِالْأَسْحَارِ﴾ (آل عمران: 17). وثبت في السنة نزول الرب تبارك وتعالى في كل ليلة إلى السماء الدنيا في الثلث الأخير."
   },
   {
-    "id": "demo-quiz-685",
+    "id": "demo-quiz-685", "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "اليقين",
     "level": "صعب",
@@ -4948,7 +4948,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "وسواس الشيطان: خاطر إثمي عارض يُقاومه العبد بالذكر والاستعاذة ولا حرج فيه. والوسواس القهري الطبي: حالة مرضية تستدعي العلاج الطبي. وحكمهما يختلف: الأول مُمانَع شرعاً، والثاني مُعالَج طباً."
   },
   {
-    "id": "demo-quiz-686",
+    "id": "demo-quiz-686", "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "التفكر",
     "level": "سهل",
@@ -4956,7 +4956,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "خير أوقاته بعد صلاة الفجر قبل شروق الشمس، وفي الليل. فقد نزلت عليه ﷺ ذات ليلة آيات ختام سورة آل عمران (في خلق السماوات والأرض واختلاف الليل والنهار) وقال: «لقد أُنزلت عليّ الليلة آيات، ويل لمن قرأها ولم يتفكر فيها» (رواه ابن حبان في صحيحه بإسناد صحيح على شرط مسلم)."
   },
   {
-    "id": "demo-quiz-687",
+    "id": "demo-quiz-687", "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "ذكر الموت",
     "level": "متوسط",
@@ -4964,7 +4964,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "قال ﷺ: «أكثروا ذكر هاذم اللذات: الموت» (رواه الترمذي والنسائي، صحيح). والمعنى: قاطع اللذات وهادمها لأنه يُذكّر بزوال النعيم."
   },
   {
-    "id": "demo-quiz-688",
+    "id": "demo-quiz-688", "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "الخوف والرجاء",
     "level": "متوسط",
@@ -4972,7 +4972,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "اليأس من رحمة الله كبيرة من الكبائر — قال الله تعالى: ﴿إِنَّهُ لَا يَيْأَسُ مِن رَّوْحِ اللَّهِ إِلَّا الْقَوْمُ الْكَافِرُونَ﴾ (يوسف: 87). فاليأس من سمات الكافرين، والمؤمن يجمع الخوف والرجاء."
   },
   {
-    "id": "demo-quiz-689",
+    "id": "demo-quiz-689", "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "المحبة والشوق",
     "level": "سهل",
@@ -4980,7 +4980,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "من علاماتها: 1- محبة النبي ﷺ واتباعه. 2- كثرة ذكر الله. 3- إيثار ما يُحب الله على ما يشتهي النفس. 4- الشوق إلى لقاء الله. قال ﷺ: «من أحب لقاء الله أحب الله لقاءه» (البخاري)."
   },
   {
-    "id": "demo-quiz-690",
+    "id": "demo-quiz-690", "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "العبودية",
     "level": "صعب",
@@ -4988,7 +4988,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "العبودية لله هي أشرف مقامات الإنسان لأنها غاية الخلق. وصف الله نبيه بالعبد في ثلاثة مقامات عظيمة: الإسراء ﴿سُبْحَانَ الَّذِي أَسْرَى بِعَبْدِهِ﴾، والتحدي ﴿فَأْتُوا بِسُورَةٍ مِّن مِّثْلِهِ﴾، والدعوة ﴿وَأَنَّهُ لَمَّا قَامَ عَبْدُ اللَّهِ يَدْعُوهُ﴾."
   },
   {
-    "id": "demo-quiz-691",
+    "id": "demo-quiz-691", "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "المكي والمدني",
     "level": "متوسط",
@@ -4996,7 +4996,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الراجح: المعتبر الزمان؛ فالمكي ما نزل قبل الهجرة والمدني ما نزل بعدها. وفي كلٍّ ما نزل في مكة بعد الهجرة أو في السفر. قيل أيضاً: المعتبر المكان ابتداءً، والأقوال متعددة والأول أشهر."
   },
   {
-    "id": "demo-quiz-692",
+    "id": "demo-quiz-692", "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "الناسخ والمنسوخ",
     "level": "صعب",
@@ -5004,7 +5004,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الجمهور: لا يجوز نسخ القرآن بالسنة الآحادية، لقوله تعالى: ﴿مَا نَنسَخْ مِنْ آيَةٍ أَوْ نُنسِهَا نَأْتِ بِخَيْرٍ مِّنْهَا أَوْ مِثْلِهَا﴾ (البقرة: 106). وأجاز بعضهم النسخ بالسنة المتواترة."
   },
   {
-    "id": "demo-quiz-693",
+    "id": "demo-quiz-693", "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "القراءات",
     "level": "متوسط",
@@ -5012,7 +5012,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "ثلاثة شروط: 1- موافقة وجه من وجوه العربية ولو احتمالاً. 2- موافقة رسم المصحف العثماني ولو تقديراً. 3- صحة السند إلى النبي ﷺ. فمتى اختل شرط منها ردت القراءة."
   },
   {
-    "id": "demo-quiz-694",
+    "id": "demo-quiz-694", "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "الإعجاز",
     "level": "متوسط",
@@ -5020,7 +5020,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "تحدّى القرآن الفصحاء بالإتيان بمثله ﴿قُل لَّئِنِ اجْتَمَعَتِ الْإِنسُ وَالْجِنُّ﴾ (الإسراء: 88). وجه الإعجاز: 1- التناسق البديع بين المعنى والإيقاع. 2- الإيجاز البالغ. 3- نظم فريد لا يُحاكى. 4- تأثيره في القلوب لدى من يسمعه بلا إكراه."
   },
   {
-    "id": "demo-quiz-695",
+    "id": "demo-quiz-695", "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "الجمع والتدوين",
     "level": "متوسط",
@@ -5028,7 +5028,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أبو بكر الصديق رضي الله عنه بأمره ونظارة زيد بن ثابت. السبب: مقتل عدد كبير من حفّاظ القرآن في موقعة اليمامة (معركة القضاء على مسيلمة الكذاب) مما خشي عمر معه ضياع بعض القرآن."
   },
   {
-    "id": "demo-quiz-696",
+    "id": "demo-quiz-696", "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "الأحرف السبعة",
     "level": "صعب",
@@ -5036,7 +5036,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "قال ﷺ: «أُنزل القرآن على سبعة أحرف» (البخاري). اختُلف في معناه على أربعين قولاً والراجح: سبعة أوجه يجوز أداء القرآن بها وكلها صحيح، توسعة على الأمة. وليست الأحرف السبعة هي القراءات السبع المشهورة."
   },
   {
-    "id": "demo-quiz-697",
+    "id": "demo-quiz-697", "documentation_status": "unsourced",
     "section": "الفرائض والمواريث",
     "category": "المواريث",
     "level": "متوسط",
@@ -5044,7 +5044,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "ثلاثة: 1- القتل العمد العدوان (القاتل لا يرث ممن قتله). 2- اختلاف الدين (المسلم لا يرث الكافر ولا الكافر المسلم بالإجماع). 3- الرق (العبد لا يرث ولا يُورَث في حكمه)."
   },
   {
-    "id": "demo-quiz-698",
+    "id": "demo-quiz-698", "documentation_status": "unsourced",
     "section": "الفرائض والمواريث",
     "category": "الفروض",
     "level": "صعب",
@@ -5052,7 +5052,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "ستة فروض مقدّرة: النصف (1/2)، الربع (1/4)، الثمن (1/8)، الثلثان (2/3)، الثلث (1/3)، السدس (1/6) — وكل منها لمستحق محدد بآيات النساء (11-12 و176)."
   },
   {
-    "id": "demo-quiz-699",
+    "id": "demo-quiz-699", "documentation_status": "unsourced",
     "section": "الفرائض والمواريث",
     "category": "الحجب",
     "level": "صعب",
@@ -5060,7 +5060,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "حجب الحرمان: حجب الوارث كلياً عن الإرث — كحجب الأخ بالابن. حجب النقصان: نقل الوارث من فرض أعلى إلى أدنى — كانتقال الزوج من النصف (1/2) إلى الربع (1/4) عند وجود الولد."
   },
   {
-    "id": "demo-quiz-700",
+    "id": "demo-quiz-700", "documentation_status": "unsourced",
     "section": "الفرائض والمواريث",
     "category": "أصحاب الفروض",
     "level": "متوسط",
@@ -5068,7 +5068,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "ستة: الأب، الأم، الابن، البنت، الزوج، الزوجة — لا يُحجبون حجب حرمان مطلقاً وإن نقص نصيبهم بحجب النقصان (كانتقال الزوج من النصف إلى الربع عند وجود الولد). أما ابن الابن (الحفيد) فليس منهم؛ إذ يُحجب حجب حرمان تاماً بوجود الابن."
   },
   {
-    "id": "demo-quiz-701",
+    "id": "demo-quiz-701", "documentation_status": "unsourced",
     "section": "الفرائض والمواريث",
     "category": "الوصية",
     "level": "متوسط",
@@ -5076,7 +5076,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "لا تجوز الوصية بأكثر من ثلث المال للأجانب — لحديث سعد رضي الله عنه: «الثلث والثلث كثير» (البخاري). ولا تجوز الوصية لوارث ألبتة إلا بإجازة بقية الورثة."
   },
   {
-    "id": "demo-quiz-702",
+    "id": "demo-quiz-702", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدولة الأموية",
     "level": "متوسط",
@@ -5084,7 +5084,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "معاوية بن أبي سفيان رضي الله عنه، اتخذ دمشق عاصمةً للخلافة بعد انتقال السلطة إليه عام 41هـ (عام الجماعة). وامتدت الدولة الأموية إلى عام 132هـ."
   },
   {
-    "id": "demo-quiz-703",
+    "id": "demo-quiz-703", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدولة العباسية",
     "level": "متوسط",
@@ -5092,7 +5092,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "مدينة السلام (بغداد) — بناها الخليفة المنصور عام 145هـ على نهر دجلة. وكانت من أكبر مدن العالم في القرون الوسطى وحاضرة العلم والحضارة الإسلامية."
   },
   {
-    "id": "demo-quiz-704",
+    "id": "demo-quiz-704", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الحضارة",
     "level": "متوسط",
@@ -5100,7 +5100,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "محمد بن عبدالله بن بطوطة (703-779هـ)، رحّالة مغربي قطع نحو 120 ألف كيلومتر في آسيا وأفريقيا وأوروبا في 29 سنة. رحلته «تحفة النظار» من أنفس ما دُوِّن في الجغرافيا والتاريخ الإسلامي."
   },
   {
-    "id": "demo-quiz-705",
+    "id": "demo-quiz-705", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "المغول",
     "level": "متوسط",
@@ -5108,7 +5108,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "معركة عين جالوت (658هـ/ 1260م): بين المماليك بقيادة سيف الدين قُطُز والمغول. انتصر فيها المسلمون وأوقفوا الزحف المغولي بعد سقوط بغداد، وكانت نقطة تحوّل كبرى في التاريخ الإسلامي."
   },
   {
-    "id": "demo-quiz-706",
+    "id": "demo-quiz-706", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الأندلس",
     "level": "متوسط",
@@ -5116,7 +5116,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "طارق بن زياد عام 92هـ (711م)، عبر مضيق الجبل المسمى بجبل طارق (Gibraltar). أرسله موسى بن نصير والياً على المغرب. حُسمت الفتح في معركة وادي لكة."
   },
   {
-    "id": "demo-quiz-707",
+    "id": "demo-quiz-707", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الأيوبيون",
     "level": "سهل",
@@ -5124,7 +5124,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "يوسف بن أيوب (532-589هـ)، مؤسس الدولة الأيوبية. اشتُهر بتحرير بيت المقدس من الصليبيين في معركة حطين عام 583هـ (1187م) بعد احتلال 91 سنة هجرية (88 سنة ميلادية)، واشتُهر بالعدل والكرم."
   },
   {
-    "id": "demo-quiz-708",
+    "id": "demo-quiz-708", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "العثمانيون",
     "level": "متوسط",
@@ -5132,7 +5132,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "ألغاها مصطفى كمال أتاتورك عام 1924م (1342هـ)، بقرار من الجمعية الوطنية التركية. كانت آخر خلافة إسلامية معترف بها دولياً، وامتدت قرابة ستة قرون (699-1342هـ)."
   },
   {
-    "id": "demo-quiz-709",
+    "id": "demo-quiz-709", "documentation_status": "unsourced",
     "section": "الفتوحات الإسلامية",
     "category": "فتوح الشام",
     "level": "متوسط",
@@ -5140,7 +5140,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "معركة اليرموك (15هـ/ 636م): بين المسلمين بقيادة خالد بن الوليد وجيش الروم البيزنطي. انتصر فيها المسلمون نصراً ساحقاً فاتحاً لبلاد الشام كلها. تُعد من أكبر المعارك في التاريخ وأعظم فتوح الإسلام."
   },
   {
-    "id": "demo-quiz-710",
+    "id": "demo-quiz-710", "documentation_status": "unsourced",
     "section": "الفتوحات الإسلامية",
     "category": "فتوح العراق",
     "level": "متوسط",
@@ -5148,7 +5148,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "معركة القادسية (14-15هـ/ 636م): بين المسلمين بقيادة سعد بن أبي وقاص والفرس الساسانيين. انتصر فيها المسلمون وفتحت العراق وأسقطت الإمبراطورية الساسانية. تُعد من أعظم الفتوح الإسلامية."
   },
   {
-    "id": "demo-quiz-711",
+    "id": "demo-quiz-711", "documentation_status": "unsourced",
     "section": "الفتوحات الإسلامية",
     "category": "فتوح مصر",
     "level": "متوسط",
@@ -5156,7 +5156,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عمرو بن العاص رضي الله عنه فتحها عام 20هـ (641م). كانت تحت سيطرة الرومان البيزنطيين. وبنى عمرو مدينة الفسطاط أول مدينة إسلامية في مصر، وبنى مسجد عمرو أول مسجد في أفريقيا."
   },
   {
-    "id": "demo-quiz-712",
+    "id": "demo-quiz-712", "documentation_status": "unsourced",
     "section": "الفتوحات الإسلامية",
     "category": "فتوح فارس",
     "level": "متوسط",
@@ -5164,7 +5164,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "المدائن (Ctesiphon): عاصمة الفرس الساسانيين على نهر دجلة. فتحها سعد بن أبي وقاص عام 16هـ (637م). كانت من أعظم مدن العالم ومقر كسرى وملوك الفرس. فتحها أسقط الدولة الساسانية."
   },
   {
-    "id": "demo-quiz-713",
+    "id": "demo-quiz-713", "documentation_status": "unsourced",
     "section": "الفتوحات الإسلامية",
     "category": "فتوح المغرب",
     "level": "متوسط",
@@ -5172,7 +5172,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عقبة بن نافع رضي الله عنه — بنى مدينة القيروان عام 50هـ (670م) لتكون قاعدة الفتح الإسلامي في المغرب. وامتد الفتح حتى المحيط الأطلسي قبل دخول الأندلس."
   },
   {
-    "id": "demo-quiz-714",
+    "id": "demo-quiz-714", "documentation_status": "unsourced",
     "section": "الفتوحات الإسلامية",
     "category": "فتح مكة",
     "level": "سهل",
@@ -5180,7 +5180,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "فتحت مكة عام 8هـ (630م) في شهر رمضان. أعلن النبي ﷺ الأمان لأهل مكة قائلاً: «من دخل دار أبي سفيان فهو آمن، ومن أغلق بابه فهو آمن، ومن دخل المسجد فهو آمن» — وعفا عن أهلها جميعاً."
   },
   {
-    "id": "demo-quiz-715",
+    "id": "demo-quiz-715", "documentation_status": "unsourced",
     "section": "الفتوحات الإسلامية",
     "category": "فتح فلسطين",
     "level": "متوسط",
@@ -5188,7 +5188,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عمر بن الخطاب رضي الله عنه — جاء بنفسه من المدينة عام 16هـ (638م) لتسلّم مفاتح القدس من بطريرك المدينة صفرونيوس (سوفرونيوس). وكتب العهدة العمرية ضامناً أمان أهل إيلياء."
   },
   {
-    "id": "demo-quiz-716",
+    "id": "demo-quiz-716", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور والآيات",
     "level": "سهل",
@@ -5196,7 +5196,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "سورة البقرة — وتحتوي على 286 آية، وهي أطول سور القرآن. قال ﷺ: «اقرؤوا سورة البقرة فإن أخذها بركة» (رواه مسلم)."
   },
   {
-    "id": "demo-quiz-717",
+    "id": "demo-quiz-717", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور والآيات",
     "level": "سهل",
@@ -5204,7 +5204,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "سورة الكوثر — ثلاث آيات فقط. وهي أقصر سور القرآن من حيث عدد الآيات. ونزلت لتبشير النبي ﷺ بالكوثر وترد على من عيّروه بقطع النسل."
   },
   {
-    "id": "demo-quiz-718",
+    "id": "demo-quiz-718", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "أسماء القرآن",
     "level": "متوسط",
@@ -5212,7 +5212,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "من أبرزها: القرآن، الكتاب، الفرقان، الذكر، التنزيل، الوحي. قال الله: ﴿إِنَّ هَذَا الْقُرْآنَ يَهْدِي لِلَّتِي هِيَ أَقْوَمُ﴾ (الإسراء: 9)."
   },
   {
-    "id": "demo-quiz-719",
+    "id": "demo-quiz-719", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "فضل التلاوة",
     "level": "سهل",
@@ -5220,7 +5220,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "قال ﷺ: «من قرأ حرفاً من كتاب الله فله به حسنة والحسنة بعشر أمثالها. لا أقول (الم) حرف ولكن ألف حرف ولام حرف وميم حرف» (الترمذي ٢٩١٠، صححه الألباني)."
   },
   {
-    "id": "demo-quiz-720",
+    "id": "demo-quiz-720", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "الحفظ",
     "level": "متوسط",
@@ -5228,7 +5228,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أول ما نزل: صدر سورة العلق ﴿اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ﴾ — خمس آيات، نزلت في غار حراء في رمضان في السنة الأولى من النبوة. وأما تحديد الليلة بعينها فمحل خلاف بين أهل السيرة: قيل لسبع عشرة خلت من رمضان، وقيل للحادي والعشرين، وقيل للرابع والعشرين."
   },
   {
-    "id": "demo-quiz-721",
+    "id": "demo-quiz-721", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "غزوات النبي",
     "level": "متوسط",
@@ -5236,7 +5236,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "غزوة الأبواء (ودّان) في صفر من السنة الثانية للهجرة — وهي أول خروج له ﷺ بنفسه. ولم يلتقِ فيها بالعدو."
   },
   {
-    "id": "demo-quiz-722",
+    "id": "demo-quiz-722", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "معارك النبي",
     "level": "سهل",
@@ -5244,7 +5244,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "غزا النبي ﷺ بنفسه سبعاً وعشرين غزوة، قاتل في تسع منها: بدر وأحد والخندق وبني قريظة والمريسيع (المصطلق) وخيبر والفتح وحنين والطائف. والباقي لم يقع فيها قتال مباشر."
   },
   {
-    "id": "demo-quiz-723",
+    "id": "demo-quiz-723", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الهجرة",
     "level": "متوسط",
@@ -5252,7 +5252,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "ثلاثة عشر عاماً من النبوة يدعو في مكة (من أول الوحي إلى الهجرة)، بدأت الدعوة سراً ثلاث سنوات ثم جهراً عشر سنوات. وكانت الهجرة في السنة الثالثة عشرة من النبوة."
   },
   {
-    "id": "demo-quiz-724",
+    "id": "demo-quiz-724", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "شمائل النبي",
     "level": "سهل",
@@ -5260,7 +5260,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "كان شعره ﷺ أسود ليس بالجعد ولا المسترسل — بين ذلك، يبلغ شحمة أذنيه أو يتجاوزها إلى منكبيه أحياناً. وكان يفرقه من وسط رأسه. وصفه الصحابة بأنه حسن البهجة."
   },
   {
-    "id": "demo-quiz-725",
+    "id": "demo-quiz-725", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "وفاة النبي",
     "level": "متوسط",
@@ -5268,7 +5268,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "توفي ﷺ في الثاني عشر من ربيع الأول سنة 11هـ (8 يونيو 632م)، يوم الاثنين ضحىً. وكان عمره ثلاثاً وستين سنة. توفي في بيت عائشة رضي الله عنها وهي تُسنده إلى صدرها."
   },
   {
-    "id": "demo-quiz-726",
+    "id": "demo-quiz-726", "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "فريضة الحج",
     "level": "سهل",
@@ -5276,7 +5276,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "حج النبي ﷺ مرة واحدة بعد الهجرة وهي حجة الوداع عام 10هـ (632م)، وكان معه أكثر من مئة ألف من الصحابة. ألقى فيها خطبة الوداع الجامعة."
   },
   {
-    "id": "demo-quiz-727",
+    "id": "demo-quiz-727", "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "مناسك الحج",
     "level": "متوسط",
@@ -5284,7 +5284,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "المفرد: الإحرام بالحج وحده من الميقات. القِران: الإحرام بالحج والعمرة معاً. التمتع: الإحرام بالعمرة أولاً ثم التحلل منها ثم الإحرام بالحج في أشهره. والثلاثة جائزة بالإجماع، وأفضلها محل خلاف بين المذاهب: الحنابلة يرون التمتع أفضل، والمالكية والشافعية يرون الإفراد أفضل، والحنفية يرون القِران أفضل."
   },
   {
-    "id": "demo-quiz-728",
+    "id": "demo-quiz-728", "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "أركان الحج",
     "level": "متوسط",
@@ -5292,7 +5292,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أركان الحج أربعة: 1- الإحرام (النية). 2- الوقوف بعرفة وهو أعظم الأركان («الحج عرفة»). 3- طواف الإفاضة (الزيارة). 4- السعي بين الصفا والمروة. وهذا مذهب الشافعية والحنابلة."
   },
   {
-    "id": "demo-quiz-729",
+    "id": "demo-quiz-729", "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "الميقات",
     "level": "متوسط",
@@ -5300,7 +5300,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "ميقات أهل الكويت هو ذو الحليفة (أبيار علي) إذا مروا بطريق المدينة، أو ميقات قرن المنازل (السيل الكبير) إذا مروا بالطريق الشمالي السعودي الشرقي. وبعضهم يُحرم من الكويت إن نوى من الجو."
   },
   {
-    "id": "demo-quiz-730",
+    "id": "demo-quiz-730", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "الصدق",
     "level": "سهل",
@@ -5308,7 +5308,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "قال ﷺ: «عليكم بالصدق فإن الصدق يهدي إلى البر وإن البر يهدي إلى الجنة. وإياكم والكذب فإن الكذب يهدي إلى الفجور وإن الفجور يهدي إلى النار» (البخاري ومسلم)."
   },
   {
-    "id": "demo-quiz-731",
+    "id": "demo-quiz-731", "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "المكي والمدني",
     "level": "متوسط",
@@ -5316,7 +5316,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الضابط الأشهر: المكي ما نزل قبل الهجرة والمدني ما نزل بعدها بغض النظر عن مكان النزول. وثمة ضابط آخر: المكي ما فيه خطاب «يا أيها الناس» غالباً والمدني ما فيه «يا أيها الذين آمنوا». السور المكية أكثر تركيزاً على العقيدة والتوحيد والأخلاق، والمدنية تكثر فيها أحكام الفقه والتشريع."
   },
   {
-    "id": "demo-quiz-732",
+    "id": "demo-quiz-732", "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "أقسام السور",
     "level": "صعب",
@@ -5324,7 +5324,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الطوال السبع: البقرة وآل عمران والنساء والمائدة والأنعام والأعراف ويونس (أو الأنفال والتوبة معاً). المئين: ما يقارب مئة آية أو يزيد. المثاني: ما دون المئة. المفصّل: من سورة ق إلى آخر القرآن، وسُمّي مفصّلاً لكثرة الفصل بين سوره بالبسملة."
   },
   {
-    "id": "demo-quiz-733",
+    "id": "demo-quiz-733", "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "أسباب النزول",
     "level": "متوسط",
@@ -5332,7 +5332,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أسباب النزول هي الأحداث والأسئلة والوقائع التي نزلت الآيات في شأنها أو بسببها. ومعرفتها مهمة لأنها: تعين على فهم المعنى الصحيح، وتوضح الحكمة التشريعية، وتُزيل الإشكال في بعض الآيات، وتدفع توهم التعارض. والقاعدة الأصولية: «العبرة بعموم اللفظ لا بخصوص السبب»."
   },
   {
-    "id": "demo-quiz-734",
+    "id": "demo-quiz-734", "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "الناسخ والمنسوخ",
     "level": "صعب",
@@ -5340,7 +5340,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "النسخ: رفع الحكم الشرعي المتقدم بدليل شرعي متأخر. أنواعه: 1- نسخ التلاوة والحكم معاً (كآية الشيخ والشيخة على رأي بعضهم). 2- نسخ الحكم مع بقاء التلاوة كآيات تحريم الخمر التدريجي، ونسخ إلزام الثبات أمام عشرة أضعاف العدد (الأنفال: 65) إلى الثبات أمام ضعفين فقط (الأنفال: 66). 3- نسخ التلاوة مع بقاء الحكم. وللعلماء ضوابط صارمة في إثباته."
   },
   {
-    "id": "demo-quiz-735",
+    "id": "demo-quiz-735", "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "تقسيم المصحف",
     "level": "سهل",
@@ -5348,7 +5348,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "يتكون المصحف من: 30 جزءاً، كل جزء حزبان فالجموع 60 حزباً، وكل حزب أربعة أرباع فالجموع 240 ربعاً. وهذا التقسيم وضعه العلماء لتيسير التلاوة والختم في ثلاثين يوماً."
   },
   {
-    "id": "demo-quiz-737",
+    "id": "demo-quiz-737", "documentation_status": "unsourced",
     "section": "الأسماء الحسنى",
     "category": "شرح الأسماء",
     "level": "متوسط",
@@ -5356,7 +5356,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الغفور: يدل على سعة المغفرة في ذاتها مهما عظمت الذنوب. الغفّار: يدل على كثرة المغفرة وتكرارها مراراً وتكراراً، أي كثير المغفرة لا ينضب عفوه. والاسمان معاً يُعطيان المؤمن رجاءً بسعة المغفرة واستمرارها مهما كان العبد مذنباً وكثُرت عودته بالتوبة."
   },
   {
-    "id": "demo-quiz-738",
+    "id": "demo-quiz-738", "documentation_status": "unsourced",
     "section": "الأسماء الحسنى",
     "category": "شرح الأسماء",
     "level": "سهل",
@@ -5364,7 +5364,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الحليم: الذي لا يستفزه عصيان العصاة ولا يُقلقه انتشار المعاصي، فيؤخر العقوبة رحمةً وحكمةً. الصبور في المقابل: يركز على التأخير الطويل مع الإحاطة بالخلق. الحليم يُشير إلى الطمأنينة التامة وعدم تغيّر حال الله بمعصية عبده."
   },
   {
-    "id": "demo-quiz-739",
+    "id": "demo-quiz-739", "documentation_status": "unsourced",
     "section": "الأسماء الحسنى",
     "category": "شرح الأسماء",
     "level": "متوسط",
@@ -5372,7 +5372,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الوكيل: الذي يتولى مصالح عباده ويكفيهم ما يهمهم. قال تعالى: ﴿وَكَفَىٰ بِاللَّهِ وَكِيلاً﴾. ومعناه التفويض التام إليه والاعتماد عليه وحده في جلب المصالح ودرء المفاسد. وهو ضمنياً يتضمن الكفالة والرعاية الكاملة لمن توكل عليه."
   },
   {
-    "id": "demo-quiz-740",
+    "id": "demo-quiz-740", "documentation_status": "unsourced",
     "section": "الأسماء الحسنى",
     "category": "الأسماء الحسنى عموماً",
     "level": "سهل",
@@ -5380,7 +5380,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "تسعة وتسعون اسماً في حديث: «إن لله تسعة وتسعين اسماً مئةً إلا واحداً من أحصاها دخل الجنة» (البخاري ومسلم). غير أن العلماء اختلفوا في تعداد تلك الأسماء لأن الحديث في الصحيحين لم يذكرها، بل ذِكرها في رواية الترمذي من زيادة راوٍ يناقشها العلماء."
   },
   {
-    "id": "demo-quiz-741",
+    "id": "demo-quiz-741", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "مصطلح الحديث",
     "level": "متوسط",
@@ -5388,7 +5388,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "المتواتر: ما رواه جمع عن جمع يستحيل تواطؤهم على الكذب من أول السند إلى آخره، ويفيد العلم القطعي. الآحاد: ما لم يبلغ حد التواتر، ويفيد الظن الغالب، ويُحتج به في العقيدة والأحكام عند جمهور العلماء. ولا تصح العبادة ولا الحكم إلا بمعرفة درجة الحديث."
   },
   {
-    "id": "demo-quiz-742",
+    "id": "demo-quiz-742", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "رجال الحديث",
     "level": "متوسط",
@@ -5396,7 +5396,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "المكثرون الستة: 1- أبو هريرة (5374 حديثاً). 2- عبد الله بن عمر (2630). 3- أنس بن مالك (2286). 4- عائشة أم المؤمنين (2210). 5- عبد الله بن عباس (1660). 6- جابر بن عبد الله (1540). ويأتي أبو هريرة في المرتبة الأولى لكثرة ملازمته للنبي ﷺ وصدق حفظه."
   },
   {
-    "id": "demo-quiz-743",
+    "id": "demo-quiz-743", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "كتب الحديث",
     "level": "سهل",
@@ -5404,7 +5404,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أصح الكتب بعد القرآن: صحيح البخاري ثم صحيح مسلم بإجماع أهل العلم. والكتب الستة (الصحاح الستة): البخاري، ومسلم، وسنن أبي داود، والترمذي، والنسائي، وابن ماجه. وعند بعضهم تُبدَّل ابن ماجه بموطأ الإمام مالك."
   },
   {
-    "id": "demo-quiz-744",
+    "id": "demo-quiz-744", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "مصطلح الحديث",
     "level": "صعب",
@@ -5412,7 +5412,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "علم الجرح والتعديل: علم يُبحث فيه عن رواة الحديث من حيث القبول والرد. الجرح: بيان ما في الراوي من ضعف يوجب رد روايته. التعديل: توثيق الراوي وقبول حديثه. نشأ لصون السنة النبوية من الوضع والكذب والتدليس، ويُعد ابن معين والبخاري والنسائي من أبرز أئمته."
   },
   {
-    "id": "demo-quiz-745",
+    "id": "demo-quiz-745", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "أحاديث مشهورة",
     "level": "سهل",
@@ -5420,7 +5420,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "«إنما الأعمال بالنيات وإنما لكل امرئ ما نوى» (البخاري). اختاره البخاري ليُنبه أن العمل لا يُقبل إلا بالنية الخالصة لله. وهذا الحديث يُعد ثُلث العلم عند كثير من الأئمة كالشافعي وأبي داود وابن مهدي."
   },
   {
-    "id": "demo-quiz-746",
+    "id": "demo-quiz-746", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الجمع والقصر",
     "level": "متوسط",
@@ -5428,7 +5428,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "القصر: تُقصر الصلاة الرباعية إلى ركعتين، وشروطه: سفر مباح، مسافة ستة عشر فرسخاً (نحو 80 كم) فأكثر عند الجمهور. الجمع: ضم صلاتين جمع تقديم أو تأخير، ويجوز للمسافر والمريض والمطر والخوف. والراجح أن الأيام في مكان واحد أكثر من أربعة أيام يُتم الصلاة."
   },
   {
-    "id": "demo-quiz-747",
+    "id": "demo-quiz-747", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "صلاة الجمعة",
     "level": "سهل",
@@ -5436,7 +5436,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "صلاة الجمعة فرض عين بدليل قوله تعالى: ﴿يَا أَيُّهَا الَّذِينَ آمَنُوا إِذَا نُودِيَ لِلصَّلَاةِ مِن يَوْمِ الْجُمُعَةِ فَاسْعَوْا إِلَىٰ ذِكْرِ اللَّهِ﴾. شروط وجوبها: الإسلام، والبلوغ، والذكورة، والإقامة (الاستيطان)، والصحة، والحرية. ومن تركها تهاوناً بلا عذر ختم الله على قلبه."
   },
   {
-    "id": "demo-quiz-748",
+    "id": "demo-quiz-748", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "النكاح",
     "level": "متوسط",
@@ -5444,7 +5444,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "شروط صحة النكاح: 1- الإيجاب والقبول (الصيغة). 2- الولي (عند الجمهور). 3- الشاهدان (اثنان عدلان). 4- انتفاء الموانع كالمحرمية والعدة والردة. 5- تعيين الزوجين. ويُستحب الإعلان والصداق، والصداق ركن لا شرط عند بعضهم وشرط عند آخرين."
   },
   {
-    "id": "demo-quiz-749",
+    "id": "demo-quiz-749", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الطلاق",
     "level": "متوسط",
@@ -5452,7 +5452,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الطلاق نوعان: 1- الرجعي: وهو الطلقة الأولى والثانية، وللزوج حق الرجعة خلال العدة دون عقد جديد. 2- البائن: وهو الطلقة الثالثة (المغلَّظة) ولا تحل له إلا بعد نكاح رجل آخر نكاحاً حقيقياً. وثمة البائن بينونة صغرى كالمختلعة لا تعود إلا بعقد جديد ومهر."
   },
   {
-    "id": "demo-quiz-750",
+    "id": "demo-quiz-750", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "القضاء",
     "level": "صعب",
@@ -5460,7 +5460,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "شروط القاضي: الإسلام، والعقل، والبلوغ، والعدالة، والعلم بالفقه وأحكام القضاء. ويشترط الجمهور الذكورة في القضاء العام. وينبغي أن يكون صابراً محتملاً للأذى، بصيراً بأحوال الناس، خبيراً بالمعاملات. وتحرم الرشوة على القاضي تحريماً قطعياً."
   },
   {
-    "id": "demo-quiz-751",
+    "id": "demo-quiz-751", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الفتوحات",
     "level": "متوسط",
@@ -5468,7 +5468,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "فُتحت الأندلس عام 92هـ (711م) على يد طارق بن زياد القائد البربري المسلم، بأمر من موسى بن نصير والي المغرب. عبر المضيق المعروف اليوم بمضيق جبل طارق وهزم القوط الغربيين في معركة وادي لكة (شذونة). ثم عبر موسى بن نصير نفسه في العام التالي بجيش آخر وأتم فتح ما تبقى من المدن كإشبيلية وماردة."
   },
   {
-    "id": "demo-quiz-752",
+    "id": "demo-quiz-752", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "جمع القرآن",
     "level": "متوسط",
@@ -5476,7 +5476,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "بادر أبو بكر الصديق رضي الله عنه بجمع القرآن بعد معركة اليمامة سنة 12هـ لما استُشهد كثير من حفّاظ القرآن. وقد أشار بذلك عمر بن الخطاب، وكلّف أبو بكر زيد بن ثابت للقيام بهذا العمل الجليل. فجمع القرآن في صحف وبقيت عند أبي بكر ثم عمر ثم حفصة."
   },
   {
-    "id": "demo-quiz-753",
+    "id": "demo-quiz-753", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "جمع القرآن",
     "level": "متوسط",
@@ -5484,7 +5484,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "في عهد عثمان رضي الله عنه (عام 25هـ) شكا حذيفة بن اليمان الاختلاف في قراءة القرآن، فأمر عثمان بنسخ المصاحف الموحدة (المصحف العثماني) من الصحف التي عند حفصة، وأرسل نسخاً إلى الأمصار وأمر بإحراق ما خالفها. وهذا العمل صان القرآن من الاختلاف."
   },
   {
-    "id": "demo-quiz-754",
+    "id": "demo-quiz-754", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الحضارة الإسلامية",
     "level": "صعب",
@@ -5492,7 +5492,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الطب: ابن سينا (القانون في الطب) والرازي وابن رشد. الرياضيات: الخوارزمي مؤسس علم الجبر، والكندي. الفلك: البتاني والبيروني. الجغرافيا: الإدريسي. الفلسفة: ابن رشد. وتُرجمت أعمالهم للاتينية وكانت أساساً للنهضة الأوروبية. العصر الذهبي امتد تقريباً من القرن 8 إلى 13 ميلادي."
   },
   {
-    "id": "demo-quiz-755",
+    "id": "demo-quiz-755", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الخلافة الراشدة",
     "level": "سهل",
@@ -5500,7 +5500,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الخلفاء الراشدون: 1- أبو بكر الصديق (11-13هـ). 2- عمر بن الخطاب (13-23هـ). 3- عثمان بن عفان (23-35هـ). 4- علي بن أبي طالب (35-40هـ). قال النبي ﷺ: «عليكم بسنتي وسنة الخلفاء الراشدين المهديين من بعدي» (أبو داود والترمذي). وبلغت الفتوحات في عهدهم ذروتها."
   },
   {
-    "id": "demo-quiz-756",
+    "id": "demo-quiz-756", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "أحكام الجنائز",
     "level": "متوسط",
@@ -5508,7 +5508,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "فروض الكفاية عند موت المسلم أربعة: 1- غسله: وفق السنة النبوية. 2- تكفينه في ثوب أبيض. 3- الصلاة عليه صلاة الجنازة. 4- دفنه. وتسقط هذه الفروض إذا قام بها بعض المسلمين. والميت الشهيد في ساحة الحرب يُدفن بثيابه ولا يُغسل عند الجمهور."
   },
   {
-    "id": "demo-quiz-757",
+    "id": "demo-quiz-757", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "أحكام الجنائز",
     "level": "متوسط",
@@ -5516,7 +5516,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "صلاة الجنازة أربع تكبيرات: بعد التكبيرة الأولى يُقرأ الفاتحة. بعد الثانية الصلاة الإبراهيمية. بعد الثالثة الدعاء للميت. بعد الرابعة التسليم. ولا ركوع فيها ولا سجود. ومن السنة الوقوف عند رأس الرجل وعند وسط المرأة. والأفضل الإسراع بها إلى دفنها."
   },
   {
-    "id": "demo-quiz-758",
+    "id": "demo-quiz-758", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "أحكام الجنائز",
     "level": "سهل",
@@ -5524,7 +5524,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "البكاء من غير رفع صوت ولا ضرب خدود ولا نياحة: جائز ومشروع. قال ﷺ لما مات ابنه إبراهيم: «إن العين تدمع والقلب يحزن ولا نقول إلا ما يرضي ربنا وإنا بك يا إبراهيم لمحزونون» (البخاري). أما النياحة والندب (الندب بالمنادمة وتعداد المآثر بالصراخ) فمحرمة."
   },
   {
-    "id": "demo-quiz-759",
+    "id": "demo-quiz-759", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "أحكام الجنائز",
     "level": "صعب",
@@ -5532,7 +5532,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "يجوز دفن المسلم في بلاد الكفر إذا تعذّر نقله، فالمقبرة تُخصص للمسلمين أو يُدفن في جهة مستقلة. نقل الجثة: جائز قبل الدفن مع خوف التغيّر. بعد الدفن: يكره نبشه ونقله إلا لضرورة أو خوف الانتهاك. والأفضل الإسراع بالدفن في البلد نفسه تأسياً بالسنة."
   },
   {
-    "id": "demo-quiz-760",
+    "id": "demo-quiz-760", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "أحكام الجنائز",
     "level": "صعب",
@@ -5540,7 +5540,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "التلقين بعد الدفن مختلف فيه. حديث أبي أمامة ضعّفه أكثر المحققين فلا يُستدل به كسنة ثابتة. الثابت المستحب الدعاء للميت بالمغفرة والثبات. من فعل التلقين لخلاف بعض الأئمة فلا يُنكر عليه بشدّة، ومن تركه فالأصل معه."
   },
   {
-    "id": "demo-quiz-761",
+    "id": "demo-quiz-761", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "علوم القرآن",
     "level": "سهل",
@@ -5548,7 +5548,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عدد سور القرآن: 114 سورة. أطول سورة: سورة البقرة (286 آية). أقصر سورة: سورة الكوثر (3 آيات)."
   },
   {
-    "id": "demo-quiz-762",
+    "id": "demo-quiz-762", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "علوم القرآن",
     "level": "متوسط",
@@ -5556,7 +5556,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "المكي: ما نزل قبل الهجرة، والمدني: ما نزل بعدها. المكي غالباً: قصير الآيات، يتناول العقيدة وإثبات التوحيد والبعث والمعاد. المدني غالباً: أطول آيات، يتناول التشريع والأحكام والعبادات والمعاملات والجهاد. وهذا التمييز يُفيد في فهم تاريخ التشريع الإسلامي وتدرّجه."
   },
   {
-    "id": "demo-quiz-763",
+    "id": "demo-quiz-763", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "علوم القرآن",
     "level": "صعب",
@@ -5564,7 +5564,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أسباب النزول: الحوادث والوقائع التي نزلت بسببها الآيات أو السور. فوائد معرفتها: 1) فهم معنى الآية فهماً صحيحاً بعيداً عن الإشكال. 2) الوقوف على الحكمة من التشريع. 3) تحديد المخصَّص من العام. 4) فهم سياق الخطاب القرآني. وقاعدة العلماء: «العبرة بعموم اللفظ لا بخصوص السبب» في الغالب."
   },
   {
-    "id": "demo-quiz-764",
+    "id": "demo-quiz-764", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "علوم القرآن",
     "level": "سهل",
@@ -5572,7 +5572,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أول ما نزل: صدر سورة العلق ﴿اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ﴾ على الراجح (في غار حراء). آخر ما نزل: قيل آية الربا ﴿وَاتَّقُوا يَوْمًا تُرْجَعُونَ فِيهِ إِلَى اللَّهِ﴾ أو آية ﴿الْيَوْمَ أَكْمَلْتُ لَكُمْ دِينَكُمْ﴾ في سورة المائدة. وقيل آية المواريث. والأصح أن آية التقوى آخر ما نزل."
   },
   {
-    "id": "demo-quiz-765",
+    "id": "demo-quiz-765", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور والآيات",
     "level": "متوسط",
@@ -5580,7 +5580,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الجزء: القرآن مقسّم إلى 30 جزءاً متقاربة في الحجم. الحزب: كل جزء مقسّم إلى حزبين، فالقرآن 60 حزباً. الربع: كل حزب مقسّم إلى 4 أرباع، فالقرآن 240 ربعاً. وهذا التقسيم يُسهّل على الحافظ والقارئ تنظيم وِرده اليومي."
   },
   {
-    "id": "demo-quiz-766",
+    "id": "demo-quiz-766", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "التفسير",
     "level": "سهل",
@@ -5588,7 +5588,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أبرز المفسرين من الصحابة: ابن عباس (حبر الأمة)، عبد الله بن مسعود، علي بن أبي طالب، أُبي بن كعب، زيد بن ثابت. أبرز المفسرين في التاريخ: الطبري (أشمل تفسير بالمأثور)، الزمخشري (الكشاف — لغوي)، ابن كثير (أقرب للصواب عقدياً)، القرطبي (أحكام)، السعدي (تيسير الكريم الرحمن — للعصر الحديث)."
   },
   {
-    "id": "demo-quiz-767",
+    "id": "demo-quiz-767", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "التفسير",
     "level": "متوسط",
@@ -5596,7 +5596,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "النسخ: رفع الحكم الشرعي الثابت بدليل شرعي متأخر. الناسخ: الدليل الجديد. المنسوخ: الحكم الملغى. مثال: كان المسلمون أول الأمر يصلون نحو القدس (المنسوخ)، ثم نُسخ بالأمر بالتوجه نحو الكعبة (الناسخ) في قوله تعالى: ﴿فَوَلِّ وَجْهَكَ شَطْرَ الْمَسْجِدِ الْحَرَامِ﴾."
   },
   {
-    "id": "demo-quiz-768",
+    "id": "demo-quiz-768", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "التفسير",
     "level": "صعب",
@@ -5604,7 +5604,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "المحكم: ما كان واضح المعنى مستقلاً في دلالته، وهو أم الكتاب. المتشابه: ما احتمل أكثر من معنى أو أشكل فهمه. طريقة أهل العلم: 1) ردّ المتشابه إلى المحكم. 2) الإيمان بظاهر اللفظ مع تفويض الكيفية (الأشاعرة والماتريدية). 3) إثبات المعنى مع نفي التشبيه (أهل السنة والجماعة). قال تعالى: ﴿وَمَا يَعْلَمُ تَأْوِيلَهُ إِلَّا اللَّهُ وَالرَّاسِخُونَ فِي الْعِلْمِ﴾."
   },
   {
-    "id": "demo-quiz-769",
+    "id": "demo-quiz-769", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور والآيات",
     "level": "سهل",
@@ -5612,7 +5612,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الفواتح الحرفية: الحروف التي تبدأ بها بعض السور كـ (الم، الر، حم، ق، ص، ن). عددها: تبدأ 29 سورة بهذه الفواتح. رأي العلماء: أظهر الأقوال أنها من المتشابه الذي استأثر الله بعلمه. وقيل: هي إشارة إلى إعجاز القرآن بأنه مُركَّب من هذه الحروف العربية البسيطة ومع ذلك لا يُعارَض."
   },
   {
-    "id": "demo-quiz-770",
+    "id": "demo-quiz-770", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور والآيات",
     "level": "متوسط",
@@ -5620,7 +5620,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "السور التي تبدأ بـ«الحمد لله»: الفاتحة (الحمد لله رب العالمين)، الأنعام، الكهف، سبأ، فاطر. تشترك في: تمجيد الله وتحميده، وإثبات صفاته من الخلق والرزق والعلم. وهذه السور تُؤصّل لمبدأ الشكر والثناء على الله ابتداءً قبل الشروع في الموضوع الرئيسي."
   },
   {
-    "id": "demo-quiz-771",
+    "id": "demo-quiz-771", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "علوم الحديث",
     "level": "متوسط",
@@ -5628,7 +5628,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الصحيح: ما اتصل سنده بنقل العدل الضابط عن مثله إلى منتهاه من غير شذوذ ولا علة. الحسن: ما توفرت فيه شروط الصحيح إلا أن ضبط راويه أخف. الضعيف: ما فقد شرطاً أو أكثر من شروط القبول. شروط الصحيح الخمسة: 1) اتصال السند. 2) عدالة الرواة. 3) ضبط الرواة. 4) عدم الشذوذ. 5) انتفاء العلة القادحة."
   },
   {
-    "id": "demo-quiz-772",
+    "id": "demo-quiz-772", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "علوم الحديث",
     "level": "سهل",
@@ -5636,7 +5636,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أبو هريرة رضي الله عنه — روى 5374 حديثاً. وهو أكثر الصحابة رواية للحديث لملازمته النبي ﷺ طوال حياته في المدينة منذ إسلامه عام 7هـ. ومن أكثر الصحابة رواية: عبد الله بن عمر (2630)، وعائشة (2210)، وابن عباس (1660)، وجابر بن عبد الله (1540)، وأنس بن مالك (2286)."
   },
   {
-    "id": "demo-quiz-773",
+    "id": "demo-quiz-773", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "أركان الإسلام",
     "level": "سهل",
@@ -5644,7 +5644,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "شروط وجوب الزكاة: 1) الإسلام. 2) الحرية. 3) ملك النصاب. 4) حولان الحول. 5) ألا يكون المال ديناً عليه. نصاب الذهب: 85 غرام (20 مثقالاً). نصاب الفضة: 595 غرام (200 درهم). ومقدار الزكاة ربع العشر (2.5%). والفضة هي الأنفع للفقراء في تحديد نصاب المال الورقي."
   },
   {
-    "id": "demo-quiz-774",
+    "id": "demo-quiz-774", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصيام",
     "level": "متوسط",
@@ -5652,7 +5652,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "مفطرات تستوجب القضاء فقط: الأكل والشرب ناسياً عند بعض العلماء، وإفطار المريض والمسافر، وحيض النفاس. مفطرات تستوجب القضاء والكفارة: الجماع في نهار رمضان عمداً. والكفارة مرتّبة: عتق رقبة، فإن لم يستطع فصيام شهرين متتابعين، فإن لم يستطع فإطعام ستين مسكيناً. أما مفطر الأكل والشرب عمداً فيوجب القضاء عند جمهور العلماء."
   },
   {
-    "id": "demo-quiz-775",
+    "id": "demo-quiz-775", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "التوحيد",
     "level": "متوسط",
@@ -5660,7 +5660,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أقسام التوحيد الثلاثة: 1) توحيد الربوبية: الإقرار بأن الله وحده هو الخالق الرازق المحيي المميت المدبّر — وهذا أقرّ به المشركون. 2) توحيد الألوهية (العبادة): إفراد الله بجميع العبادات من صلاة ودعاء وذبح ونذر — وهذا ما جحده المشركون. 3) توحيد الأسماء والصفات: إثبات ما أثبته الله لنفسه من أسماء وصفات على ما يليق بجلاله بلا تحريف ولا تعطيل ولا تكييف ولا تمثيل."
   },
   {
-    "id": "demo-quiz-776",
+    "id": "demo-quiz-776", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "الإيمان",
     "level": "سهل",
@@ -5668,7 +5668,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أركان الإيمان: 1) الإيمان بالله. 2) الإيمان بالملائكة. 3) الإيمان بالكتب. 4) الإيمان بالرسل. 5) الإيمان باليوم الآخر. 6) الإيمان بالقدر خيره وشره. الدليل: حديث جبريل عندما سأل النبي ﷺ عن الإيمان فقال: «أن تؤمن بالله وملائكته وكتبه ورسله واليوم الآخر وتؤمن بالقدر خيره وشره» — رواه مسلم (8)."
   },
   {
-    "id": "demo-quiz-777",
+    "id": "demo-quiz-777", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "غزوات وأحداث",
     "level": "متوسط",
@@ -5676,7 +5676,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "سببها: خروج النبي ﷺ لاعتراض قافلة قريش بقيادة أبي سفيان، فأفلتت القافلة وأقبل جيش قريش لمواجهة المسلمين. وقعت: 17 رمضان 2هـ (مارس 624م). أبرز نتائجها: 1) انتصار المسلمين وعدد المشركين ثلاثة أضعافهم. 2) قتل 70 من صناديد قريش. 3) أسر 70 منهم. 4) تعزيز ثقة المسلمين. 5) فضح النفاق. وقد سمّاها الله يوم الفرقان: ﴿يَوْمَ الْفُرْقَانِ يَوْمَ الْتَقَى الْجَمْعَانِ﴾."
   },
   {
-    "id": "demo-quiz-778",
+    "id": "demo-quiz-778", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الصحابة الكرام",
     "level": "سهل",
@@ -5684,7 +5684,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "العشرة المبشرون بالجنة: 1) أبو بكر الصديق. 2) عمر بن الخطاب. 3) عثمان بن عفان. 4) علي بن أبي طالب. 5) طلحة بن عبيد الله. 6) الزبير بن العوام. 7) عبد الرحمن بن عوف. 8) سعد بن أبي وقاص. 9) سعيد بن زيد. 10) أبو عبيدة عامر بن الجراح. المصدر: رواه الترمذي (3747) وصحّحه."
   },
   {
-    "id": "demo-quiz-779",
+    "id": "demo-quiz-779", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "آداب المسلم",
     "level": "سهل",
@@ -5692,7 +5692,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "آداب الطعام: 1) التسمية في البداية (البخاري). 2) الأكل باليمين (مسلم — 2020). 3) الأكل مما يلي المرء (البخاري). 4) عدم الأكل متكئاً «لا آكل متكئاً» (البخاري — 5398). 5) لعق الأصابع وعدم مسحها حتى يلعقها فإنه لا يدري في أي طعامه البركة (مسلم). 6) الحمد بعد الفراغ «الحمد لله الذي أطعمنا وسقانا وجعلنا مسلمين» (الترمذي — صحيح)."
   },
   {
-    "id": "demo-quiz-780",
+    "id": "demo-quiz-780", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "الزهد والرقائق",
     "level": "متوسط",
@@ -5700,7 +5700,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الزهد حقيقته: ألا تميل النفس إلى شيء من الدنيا إلا لضرورة، لا أن يتركها المرء بالكلية. قال ابن القيم: «الزهد ترك ما لا ينفع في الآخرة». وقال بعض السلف: «الزاهد هو الذي إذا أتته الدنيا لم يفرح وإذا ذهبت لم يحزن». والإسلام لا يأمر بترك الدنيا بل بعدم الاستعباد لها — قال ﷺ: «نعم المال الصالح للرجل الصالح» (أحمد — صحيح)."
   },
   {
-    "id": "demo-quiz-781",
+    "id": "demo-quiz-781", "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "التوبة والاستغفار",
     "level": "سهل",
@@ -5708,7 +5708,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "شروط التوبة النصوح ثلاثة: 1) الإقلاع عن الذنب فوراً. 2) الندم على ما مضى. 3) العزم على عدم العودة إليه أبداً. وإن كان الذنب يتعلق بحق آدمي يُضاف شرط رابع: رد الحق أو الاستحلال من صاحبه. قال تعالى: ﴿يَا أَيُّهَا الَّذِينَ آمَنُوا تُوبُوا إِلَى اللَّهِ تَوْبَةً نَّصُوحًا﴾ (التحريم: 8)."
   },
   {
-    "id": "demo-quiz-782",
+    "id": "demo-quiz-782", "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "الورع والتقوى",
     "level": "متوسط",
@@ -5716,7 +5716,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "التقوى: اتقاء سخط الله بفعل أوامره وترك نواهيه — وهي أعم. الورع: ترك ما يُشكل حله مخافة الوقوع في الحرام — وهو أخص. قال ابن القيم: «التقوى جماع الدين، والورع هو تركك ما تخشى ضرره في الآخرة». ومن أمثلته: ترك شبهات المعاملات خوف الربا، وترك ما لا يُعلم مصدره. قال ﷺ: «فمن اتقى الشبهات استبرأ لدينه وعرضه» (متفق عليه)."
   },
   {
-    "id": "demo-quiz-783",
+    "id": "demo-quiz-783", "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "المراقبة والمحاسبة",
     "level": "متوسط",
@@ -5724,7 +5724,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "محاسبة النفس: أن يقف العبد مع نفسه يومياً فيسألها عن ما فعلت وما تركت. قال عمر بن الخطاب: «حاسبوا أنفسكم قبل أن تُحاسَبوا». تطبيقه عملياً: 1) المراجعة المسائية: ما فعلت اليوم من خير أو شر؟ 2) معاهدة النفس على الإصلاح قبل النوم. 3) التوبة فور الوقوع. 4) تفقد الصلاة والذكر والمعاملة مع الناس."
   },
   {
-    "id": "demo-quiz-784",
+    "id": "demo-quiz-784", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "أركان الإيمان",
     "level": "سهل",
@@ -5732,7 +5732,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أركان الإيمان ستة: 1) الإيمان بالله. 2) بملائكته. 3) بكتبه. 4) برسله. 5) باليوم الآخر. 6) بالقدر خيره وشره. دليلها: حديث جبريل الشهير: «أن تؤمن بالله وملائكته وكتبه ورسله واليوم الآخر وتؤمن بالقدر خيره وشره» (مسلم: 8)."
   },
   {
-    "id": "demo-quiz-785",
+    "id": "demo-quiz-785", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "صفات الله",
     "level": "متوسط",
@@ -5740,7 +5740,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "القاعدة: الإثبات بلا تمثيل، والتنزيه بلا تعطيل. أي: نُثبت لله ما أثبته لنفسه أو أثبته له نبيه ﷺ على وجه يليق بجلاله، مع نفي المشابهة للمخلوقات. قال تعالى: ﴿لَيْسَ كَمِثْلِهِ شَيْءٌ وَهُوَ السَّمِيعُ الْبَصِيرُ﴾ (الشورى: 11). فأثبت السمع والبصر ونفى المثيل."
   },
   {
-    "id": "demo-quiz-786",
+    "id": "demo-quiz-786", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "الشرك وأنواعه",
     "level": "متوسط",
@@ -5748,7 +5748,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الشرك نوعان: 1) الشرك الأكبر: صرف عبادة لغير الله كالدعاء والذبح والنذر لغيره — وهو ناقض للإسلام ومخلد في النار إن مات صاحبه عليه بلا توبة. 2) الشرك الأصغر: الرياء والسمعة والحلف بغير الله — كبيرة لا تبلغ الأكبر. قال ﷺ: «إن أخوف ما أخاف عليكم الشرك الأصغر» فسُئل عنه فقال: «الرياء» (أحمد — صحيح)."
   },
   {
-    "id": "demo-quiz-787",
+    "id": "demo-quiz-787", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "مقاصد الشريعة",
     "level": "متوسط",
@@ -5756,7 +5756,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "مقاصد الشريعة الخمسة: 1) حفظ الدين (عقوبة المرتد). 2) حفظ النفس (القصاص). 3) حفظ العقل (تحريم الخمر). 4) حفظ النسل (تحريم الزنا). 5) حفظ المال (تحريم السرقة والربا). صاغها الإمام الغزالي في المستصفى وتبعه الشاطبي في الموافقات. وهي الأصول التي تدور عليها أحكام الشريعة."
   },
   {
-    "id": "demo-quiz-788",
+    "id": "demo-quiz-788", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "أصول الفقه",
     "level": "متوسط",
@@ -5764,7 +5764,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "مصادر التشريع الأربعة: 1) القرآن الكريم — أعلى المصادر وقطعي الثبوت. 2) السنة النبوية — تُفصّل القرآن وتُقيّد مطلقه. 3) الإجماع — اتفاق مجتهدي الأمة على حكم. 4) القياس — إلحاق مسألة بمسألة بجامع. وثمة مصادر أخرى خلافية كالمصلحة المرسلة والاستحسان والعرف."
   },
   {
-    "id": "demo-quiz-789",
+    "id": "demo-quiz-789", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الفقه الميسر",
     "level": "سهل",
@@ -5772,7 +5772,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الحكم التكليفي هو: ما يتعلق بأفعال المكلّفين من أمر أو نهي أو تخيير. أقسامه خمسة: 1) الواجب: ما يُثاب فاعله ويُعاقب تاركه. 2) المندوب (السنة): ما يُثاب فاعله ولا يُعاقب تاركه. 3) المباح: ما يستوي فعله وتركه. 4) المكروه: ما يُثاب تاركه ولا يُعاقب فاعله. 5) الحرام: ما يُعاقب فاعله ويُثاب تاركه احتساباً."
   },
   {
-    "id": "demo-quiz-790",
+    "id": "demo-quiz-790", "documentation_status": "unsourced",
     "section": "الأسماء الحسنى",
     "category": "الأسماء الحسنى",
     "level": "سهل",
@@ -5780,7 +5780,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الغفور: صيغة مبالغة تدل على عِظَم المغفرة وشمولها — أي أنه يغفر الذنب العظيم. الغفار: صيغة مبالغة تدل على تكرار المغفرة ودوامها — أي أنه يغفر مرة بعد مرة. فالغفور يشير إلى الكمية والعِظَم، والغفار يشير إلى التكرار والاستمرار. قال تعالى: ﴿إِنَّهُ كَانَ غَفَّاراً﴾ (نوح: 10) وقال: ﴿وَهُوَ الْغَفُورُ الرَّحِيمُ﴾."
   },
   {
-    "id": "demo-quiz-791",
+    "id": "demo-quiz-791", "documentation_status": "unsourced",
     "section": "الأسماء الحسنى",
     "category": "الأسماء الحسنى",
     "level": "متوسط",
@@ -5788,7 +5788,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "القيوم: من قام يقوم — صيغة مبالغة تجمع معنيين: 1) القائم بنفسه: أي الغني عن كل شيء الذي لا يحتاج لأحد في وجوده. 2) المُقيم لغيره: أي الذي يقوم على كل مخلوق فيحفظه ويرزقه ويُدبّره. الدلالة الاعتقادية: استقلال الله التام عن خلقه، وحاجة المخلوقات جميعاً إليه. ولذا جُمع مع «الحي» في آية الكرسي: ﴿اللَّهُ لَا إِلَهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ﴾."
   },
   {
-    "id": "demo-quiz-792",
+    "id": "demo-quiz-792", "documentation_status": "unsourced",
     "section": "الفرائض والمواريث",
     "category": "الميراث",
     "level": "متوسط",
@@ -5796,7 +5796,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أصحاب الفروض المقدَّرة في القرآن: 1) الزوج: النصف أو الربع. 2) الزوجة/الزوجات: الربع أو الثمن. 3) الأم: الثلث أو السدس. 4) الأب: السدس (عصبة). 5) البنت/البنات: النصف أو الثلثان. 6) الأخت الشقيقة: النصف أو الثلثان. 7) الجدة: السدس. 8) الأخ لأم والأخت لأم: السدس أو الثلث."
   },
   {
-    "id": "demo-quiz-793",
+    "id": "demo-quiz-793", "documentation_status": "unsourced",
     "section": "الفرائض والمواريث",
     "category": "الميراث",
     "level": "متوسط",
@@ -5804,7 +5804,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "حجب الحرمان: حرمان الوارث من الإرث بسبب وجود وارث أقوى منه. أمثلة: 1) الجد يُحجَب بوجود الأب. 2) الإخوة يُحجَبون بوجود الابن أو الأب. 3) بنت الابن تُحجَب بوجود بنتين فأكثر إلا إذا وُجد معها ابن ابن. 4) الأخت لأم تُحجَب بوجود الفرع الوارث أو الأصل الذكر. والمانعون من الإرث: الكفر، والقتل العمد، والرق."
   },
   {
-    "id": "demo-quiz-794",
+    "id": "demo-quiz-794", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "آداب الحديث والكلام",
     "level": "سهل",
@@ -5812,7 +5812,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "آداب الكلام: 1) الصدق في القول — «قولوا الحق ولو على أنفسكم». 2) الكلام بما ينفع وتجنب الفضول. 3) الإنصات للمتحدث دون مقاطعة. 4) التلطف في العبارة وتجنب الغِلظة. 5) إكمال المعنى قبل السكوت. والأهم: قال ﷺ «من كان يؤمن بالله واليوم الآخر فليقل خيراً أو ليصمت» (متفق عليه)."
   },
   {
-    "id": "demo-quiz-795",
+    "id": "demo-quiz-795", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "آداب الصداقة والإخاء",
     "level": "متوسط",
@@ -5820,7 +5820,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "حقوق المسلم على المسلم ستة — قال ﷺ: «حق المسلم على المسلم ست: إذا لقيته فسلّم عليه، وإذا دعاك فأجبه، وإذا استنصحك فانصحه، وإذا عطس فحمد الله فشمّته، وإذا مرض فعُده، وإذا مات فاتّبعه» (صحيح مسلم — 2162)."
   },
   {
-    "id": "demo-quiz-796",
+    "id": "demo-quiz-796", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "الحِلم والأناة",
     "level": "متوسط",
@@ -5828,7 +5828,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الحِلم: ضبط النفس عند الغضب مع القدرة على العقوبة — وهو صفة كمال ممدوحة. الضعف: العجز عن الرد مع الخضوع للظلم — وهو مذموم. التوازن: أن يَحلُم المرء عن الجاهل ويعفو عن المسيء لله لا لعجزه، لكن لا يُقرّ ظلماً يتعدى إلى غيره. قال ﷺ: «ليس الشديد بالصُّرَعة، إنما الشديد الذي يملك نفسه عند الغضب» (متفق عليه)."
   },
   {
-    "id": "demo-quiz-797",
+    "id": "demo-quiz-797", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "علم مصطلح الحديث",
     "level": "متوسط",
@@ -5836,7 +5836,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "المتواتر: حديث رواه عدد كبير من الرواة في كل طبقة يستحيل تواطؤهم على الكذب — يُفيد العلم القطعي ووجوب العمل. الآحاد: ما لم يبلغ حد التواتر — يُفيد غلبة الظن ووجوب العمل به في الأحكام، ويُحتج به في العقيدة والأحكام عند جمهور العلماء. أنواع الآحاد: المشهور (3 فأكثر)، العزيز (2)، الغريب (1)."
   },
   {
-    "id": "demo-quiz-798",
+    "id": "demo-quiz-798", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "علم الرجال",
     "level": "متوسط",
@@ -5844,7 +5844,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "شروط قبول الراوي خمسة: 1) الإسلام — لا تُقبل رواية الكافر. 2) البلوغ والعقل — لا تُقبل رواية الصبي في حال الأداء. 3) العدالة — أن يكون مسلماً مستقيم الدين بعيداً عن الفسق والبدعة المكفّرة. 4) الضبط — إتقان ما يروي حفظاً أو كتابة. 5) انتفاء الشذوذ والعلة — أن لا تخالف روايته الثقات."
   },
   {
-    "id": "demo-quiz-799",
+    "id": "demo-quiz-799", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "مصطلح الحديث",
     "level": "سهل",
@@ -5852,7 +5852,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الحديث الحسن: هو ما اتصل سنده برواة عدول مقلّي الضبط (أقل ضبطاً من رجال الصحيح) من غير شذوذ ولا علة. عرّفه الترمذي بأنه: «ما لا يكون في إسناده من يُتهم بالكذب ولا يكون شاذاً ولا يُروى من وجوه أخرى». يُحتج به عند أهل الحديث وأصحاب المذاهب."
   },
   {
-    "id": "demo-quiz-800",
+    "id": "demo-quiz-800", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "مراحل البعثة",
     "level": "متوسط",
@@ -5860,7 +5860,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "استمرت الدعوة السرية ثلاث سنوات (610-613م). أبرز من أسلم فيها: 1) خديجة بنت خويلد رضي الله عنها — أول المسلمين. 2) علي بن أبي طالب — أول الصبيان. 3) أبو بكر الصديق — أول أصحابه من الرجال. 4) زيد بن حارثة — أول المُعتَقين. 5) بلال بن رباح. 6) عثمان بن عفان. التحول إلى الجهر كان بنزول: ﴿فَاصْدَعْ بِمَا تُؤْمَرُ﴾."
   },
   {
-    "id": "demo-quiz-801",
+    "id": "demo-quiz-801", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الهجرة",
     "level": "متوسط",
@@ -5868,7 +5868,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أسباب الهجرة: 1) تصاعد أذى قريش واستحالة استمرار الدعوة في مكة. 2) مبايعة الأنصار في العقبة الثانية ووعدهم بالنصرة. 3) الإذن الإلهي بالهجرة. 4) مؤامرة قريش لاغتيال النبي ﷺ (دار الندوة). تاريخها: 12 ربيع الأول سنة 1هـ الموافق 622م. رفيقه: أبو بكر الصديق. الغار الذي اختبأا فيه: غار ثور (جنوب مكة) ثلاثة أيام."
   },
   {
-    "id": "demo-quiz-802",
+    "id": "demo-quiz-802", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "وفاة النبي",
     "level": "سهل",
@@ -5876,7 +5876,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "توفي النبي محمد ﷺ في الثاني عشر من ربيع الأول سنة 11هـ (632م). وكان عمره ثلاثاً وستين عاماً. ودُفن في الحجرة النبوية الشريفة — داخل ما بات يُعرف بالمسجد النبوي في المدينة المنورة. وكان قبل وفاته ﷺ قد أدى حجة الوداع سنة 10هـ وخطب فيها الخطبة الجامعة الشهيرة."
   },
   {
-    "id": "demo-quiz-803",
+    "id": "demo-quiz-803", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "فضائل الصحابة",
     "level": "سهل",
@@ -5884,7 +5884,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أبو عبيدة عامر بن الجراح رضي الله عنه — لقّبه النبي ﷺ بـ«أمين هذه الأمة». كان من السابقين إلى الإسلام، وشهد بدراً وسائر المشاهد. تولّى قيادة الجيوش الإسلامية في فتوحات الشام وحقق انتصارات كبرى. توفي في طاعون عمواس سنة 18هـ وهو أمير على الشام."
   },
   {
-    "id": "demo-quiz-804",
+    "id": "demo-quiz-804", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "الألقاب",
     "level": "متوسط",
@@ -5892,7 +5892,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "لُقّب ابن عباس بـ«حَبر الأمة» و«ترجمان القرآن». وهو ابن عم النبي ﷺ. دعا له النبي قائلاً: «اللهم فقّهه في الدين وعلّمه التأويل». اشتُهر بتفسير القرآن الكريم وكان مرجعاً للصحابة في المسائل الدقيقة. أسّس مدرسة مكة في التفسير، وتوفي في الطائف سنة 68هـ."
   },
   {
-    "id": "demo-quiz-805",
+    "id": "demo-quiz-805", "documentation_status": "unsourced",
     "section": "العلماء والأئمة",
     "category": "العلماء",
     "level": "متوسط",
@@ -5900,7 +5900,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "هو شيخ الإسلام أحمد بن عبد الحليم بن تيمية الحراني الحنبلي (661-728هـ). وُلد في حرّان وعاش في دمشق. أبرز مؤلفاته: «درء تعارض العقل والنقل»، «منهاج السنة النبوية»، «الفتاوى الكبرى»، «الاستقامة»، «اقتضاء الصراط المستقيم». اشتُهر بالتجديد في مسائل العقيدة والرد على الفلسفة الكلامية وعلى الغلو والبدع."
   },
   {
-    "id": "demo-quiz-806",
+    "id": "demo-quiz-806", "documentation_status": "unsourced",
     "section": "العلماء والأئمة",
     "category": "العلماء",
     "level": "صعب",
@@ -5908,7 +5908,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الإسناد (السند): هو سلسلة الرواة الذين نقلوا الحديث من راوٍ إلى آخر حتى وصل إلى النبي ﷺ. والمتن: هو نص الحديث ومضمونه الذي قاله النبي ﷺ أو فعله. الحكم على الحديث صحةً وضعفاً يعتمد في الأساس على دراسة الإسناد (رجاله وعلله)، ثم دراسة المتن للكشف عن الشذوذ والنكارة."
   },
   {
-    "id": "demo-quiz-807",
+    "id": "demo-quiz-807", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدول",
     "level": "متوسط",
@@ -5916,7 +5916,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أسّسها معاوية بن أبي سفيان رضي الله عنه سنة 41هـ — المعروف بعام الجماعة. عاصمتها دمشق في بلاد الشام. استمرت قرابة تسعين عاماً (41-132هـ). أبرز خلفائها: معاوية الأول، عبد الملك بن مروان (الذي بنى قبة الصخرة)، الوليد الأول (فتوحات المغرب وإسبانيا)، عمر بن عبد العزيز. انتهت بثورة العباسيين وانتصار قائدهم أبي مسلم الخراساني."
   },
   {
-    "id": "demo-quiz-808",
+    "id": "demo-quiz-808", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الفتوحات الإسلامية",
     "level": "متوسط",
@@ -5924,7 +5924,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "دخل الإسلام الأندلس سنة 92هـ (711م) على يد طارق بن زياد مولى موسى بن نصير. عبر طارق مضيق جبل طارق بجيش قوامه سبعة آلاف مقاتل معظمهم من البربر. هزم الملك القوطي لذريق (رودريك) في معركة وادي لكة (أو شريش). ثم تبعه موسى بن نصير بجيش أكبر فأكملا الفتح. استمر الوجود الإسلامي في الأندلس قرابة ثمانية قرون حتى سقوط غرناطة 1492م."
   },
   {
-    "id": "demo-quiz-809",
+    "id": "demo-quiz-809", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصلاة",
     "level": "سهل",
@@ -5932,7 +5932,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "شروط صحة الصلاة: 1) الإسلام. 2) العقل. 3) التمييز. 4) دخول الوقت. 5) استقبال القبلة. 6) الطهارة من الحدث الأصغر والأكبر. 7) إزالة النجاسة من البدن والثوب والمكان. 8) ستر العورة. 9) النية. وتزيد بعض المذاهب: الموالاة، وعدم الكلام، وعدم الحركة الكثيرة."
   },
   {
-    "id": "demo-quiz-810",
+    "id": "demo-quiz-810", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الزكاة",
     "level": "متوسط",
@@ -5940,7 +5940,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "نصاب الذهب: عشرون مثقالاً = 85 غراماً من الذهب الخالص (عيار 24). وتجب فيه الزكاة إذا مضى عليه حول كامل (سنة قمرية). مقدار الزكاة: ربع العُشر = 2.5% من إجمالي الذهب المملوك. ويُضاف إليه ما تملكه من فضة وأموال نقدية يبلغ مجموعها النصاب. هذا هو المذهب الجمهور من الحنفية والمالكية والحنابلة، أما الشافعية فلا يرون ضم الذهب للفضة."
   },
   {
-    "id": "demo-quiz-811",
+    "id": "demo-quiz-811", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور والآيات",
     "level": "سهل",
@@ -5948,7 +5948,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أول سورة نزلت كاملة: اختلف العلماء — قيل سورة الفاتحة، وقيل المدثر. أما أول ما نزل مطلقاً فهو صدر سورة العلق: ﴿اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ﴾. وأطول سورة في القرآن: سورة البقرة (286 آية، تقريباً ثلاثة أحزاب ونصف). وأقصر سورة: سورة الكوثر (3 آيات)."
   },
   {
-    "id": "demo-quiz-812",
+    "id": "demo-quiz-812", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "علوم القرآن",
     "level": "صعب",
@@ -5956,7 +5956,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "النسخ: رفع الحكم الشرعي بدليل شرعي متأخر. الناسخ: الآية المتأخرة التي رفعت الحكم. المنسوخ: الآية السابقة التي رُفع حكمها. مثال: نسخ وجوب مناجاة الرسول ﷺ بالصدقة (المجادلة: 12) بالآية التي بعدها مباشرة (المجادلة: 13). ومن المشهور: نسخ عقوبة الحبس في البيت للزانية (النساء: 15) بآية الجلد (النور: 2). وقد أُلّفت فيه كتب مستقلة كـ«الناسخ والمنسوخ» لأبي عبيد القاسم بن سلام."
   },
   {
-    "id": "demo-quiz-813",
+    "id": "demo-quiz-813", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "اليوم الآخر",
     "level": "متوسط",
@@ -5964,7 +5964,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "مراحل يوم القيامة: 1) النفخة الأولى في الصور — فيصعق من في السماوات والأرض. 2) البعث — النفخة الثانية فيقوم الناس. 3) الحشر — جمع الناس في صعيد واحد. 4) الحساب — عرض الأعمال وإيتاء الكتب. 5) الميزان — وزن الأعمال. 6) الصراط — الجسر على جهنم. 7) الشفاعة. 8) الجنة والنار — الجزاء الأبدي."
   },
   {
-    "id": "demo-quiz-814",
+    "id": "demo-quiz-814", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "الملائكة",
     "level": "سهل",
@@ -5972,7 +5972,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "جبريل عليه السلام: الوحي والرسالة — ينزل بالوحي على الأنبياء. ميكائيل عليه السلام: موكَّل بالقَطْر (المطر) وتصاريفه. إسرافيل عليه السلام: موكَّل بالصور والنفخ فيه يوم القيامة. ملك الموت عليه السلام: قبض الأرواح — ولم تثبت تسميته «عزرائيل» في القرآن ولا في السنة، وإنما جاءت في الإسرائيليات، والثابت في الوحي تسميته «ملك الموت» (إسلام ويب 51101 و5989). وقد جُمع الثلاثة الأُوَل في دعاء النبي ﷺ إذا قام من الليل: «اللهم ربَّ جبرائيل وميكائيل وإسرافيل، فاطرَ السماوات والأرض» (رواه مسلم ٧٧٠). ولا يصحّ وصف بعض الملائكة بأنهم «أولو العزم»؛ فإنما أولو العزم من الرسل."
   },
   {
-    "id": "demo-quiz-815",
+    "id": "demo-quiz-815", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "أخلاق محمودة",
     "level": "سهل",
@@ -5980,7 +5980,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الوَرَع: هو اجتناب الشبهات خشية الوقوع في الحرام. فالمتورع يترك ما لا بأس به حذراً مما فيه بأس. أما التقوى: فهي اتقاء المحرمات الصريحة واجتناب ما نهى الله عنه. والعلاقة بينهما: التقوى أوسع وهي الأصل، والورع درجة أعلى منها — فكل وَرِع متقٍ ولا عكس. قال ابن القيم: «الوَرَع ترك ما يَريبك إلى ما لا يريبك»."
   },
   {
-    "id": "demo-quiz-816",
+    "id": "demo-quiz-816", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "عام",
     "level": "سهل",
@@ -5988,7 +5988,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "آداب زيارة المريض: 1) اختيار الوقت المناسب وعدم الإطالة. 2) السؤال عن حاله بلطف. 3) الدعاء له بالشفاء. 4) تخفيف همّه وبثّ الأمل. 5) عدم ذكر ما يُحزنه. 6) وضع اليد على رأسه أو يده والدعاء. 7) التذكير بالصبر وفضل المرض في تكفير الذنوب. حق المريض: من حقوق المسلم على أخيه كما جاء في النصوص الشرعية."
   },
   {
-    "id": "demo-quiz-817",
+    "id": "demo-quiz-817", "documentation_status": "unsourced",
     "section": "الفتوحات الإسلامية",
     "category": "المعارك",
     "level": "متوسط",
@@ -5996,7 +5996,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "معركة القادسية: إحدى أعظم المعارك في تاريخ الفتوحات الإسلامية. وقعت في خلافة عمر بن الخطاب رضي الله عنه؛ ذكرها الطبري وابن الأثير وابن كثير في حوادث سنة 14هـ، وذهب ابن إسحاق وغيره إلى أنها سنة 15هـ (636م). والقادسية موضعٌ بالعراق قريبٌ من الكوفة مما يلي البادية، وبقربه نهر العتيق. قادها سعد بن أبي وقاص رضي الله عنه من جانب المسلمين، وقاد الفرس رستم فرُّخزاد. ودارت أيامًا سمّاها أهل الأخبار: أرماث، وأغواث، وعِماس، وليلة الهرير، ثم كان الفتح في اليوم الرابع بانتصار ساحق للمسلمين ومقتل رستم. وكانت فاتحة لسقوط الإمبراطورية الساسانية الفارسية ودخول الإسلام بلاد فارس."
   },
   {
-    "id": "demo-quiz-818",
+    "id": "demo-quiz-818", "documentation_status": "unsourced",
     "section": "الفتوحات الإسلامية",
     "category": "المعارك",
     "level": "متوسط",
@@ -6004,7 +6004,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "معركة اليرموك: وقعت في رجب سنة 15هـ (636م) على المشهور — وذكرها ابن كثير وابن الأثير في حوادث سنة 13هـ — بأرض حوران على نهر اليرموك بين الشام والأردن. وكان أميرَ الجيش أبو عبيدة بن الجراح رضي الله عنه، وفوَّض القيادة الميدانية يومئذٍ إلى خالد بن الوليد رضي الله عنه، في مواجهة الجيش البيزنطي بقيادة أحد قادة الإمبراطور هرقل. انتهت بهزيمة ساحقة للروم وفتح طريق الشام أمام الجيوش الإسلامية. وكانت نهاية الحكم البيزنطي في بلاد الشام وفلسطين. تُعدّ من أكبر المعارك في التاريخ العالمي."
   },
   {
-    "id": "demo-quiz-819",
+    "id": "demo-quiz-819", "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -6012,7 +6012,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أبرز معجزات موسى عليه السلام: 1) العصا — تتحول إلى ثعبان وتبتلع حبال السحرة. 2) اليد البيضاء — تُخرج يده بيضاء مضيئة دون أذى. 3) فلق البحر — انفلاق البحر لبني إسرائيل. 4) التسع آيات في فرعون — الطوفان والجراد والقُمَّل والضفادع والدم. 5) إنزال المنّ والسلوى والماء من الحجر. وقد ذكر الله سبحانه في سورة الإسراء: ﴿وَلَقَدْ آتَيْنَا مُوسَى تِسْعَ آيَاتٍ بَيِّنَاتٍ﴾."
   },
   {
-    "id": "demo-quiz-820",
+    "id": "demo-quiz-820", "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "سهل",
@@ -6020,7 +6020,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "ذُكر في القرآن الكريم خمسة وعشرون نبياً ورسولاً بأسمائهم: آدم، وإدريس، ونوح، وهود، وصالح، وإبراهيم، ولوط، وإسماعيل، وإسحاق، ويعقوب، ويوسف، وشعيب، وأيوب، وذو الكفل، ويونس، وموسى، وهارون، واليسع، وإلياس، وداود، وسليمان، وزكريا، ويحيى، وعيسى، ومحمد ﷺ. وقد أُرسل أنبياء ورسل آخرون كثيرون لم تُذكر أسماؤهم."
   },
   {
-    "id": "demo-quiz-821",
+    "id": "demo-quiz-821", "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "عام",
     "level": "سهل",
@@ -6028,7 +6028,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "من أفضل الأذكار وأجمعها: قال ﷺ: «كلمتان خفيفتان على اللسان، ثقيلتان في الميزان، حبيبتان إلى الرحمن: سبحان الله وبحمده، سبحان الله العظيم» (متفق عليه: البخاري ٦٤٠٦، مسلم ٢٦٩٤) — وهذا لفظه، فتقديم «خفيفتان» على «ثقيلتان» هو الوارد. وقال ﷺ: «أفضل الذكر لا إله إلا الله، وأفضل الدعاء الحمد لله» (رواه الترمذي ٣٣٨٣ وحسّنه). و«الباقيات الصالحات» فُسِّرت بقوله ﷺ: «سبحان الله، والحمد لله، ولا إله إلا الله، والله أكبر... وهنّ الباقيات الصالحات» — رواه أحمد والنسائي والحاكم وصححه على شرط مسلم، وصححه الألباني، وليس في الصحيحين."
   },
   {
-    "id": "demo-quiz-822",
+    "id": "demo-quiz-822", "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "عام",
     "level": "متوسط",
@@ -6036,7 +6036,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الذِّكر: هو كل قول يُذكر الله به من تسبيح وتهليل وتكبير وتحميد وتلاوة. والدعاء: هو طلب العبد من ربه الحاجات وصرف المضار وجلب المنافع. أيهما أفضل؟ اختلف العلماء: ذهب ابن تيمية وابن القيم إلى أن الذِّكر الخالص أفضل من الدعاء في الجملة، لأن الذكر ثناء على الله وهو حق الله الخالص، والدعاء حظّ العبد من ربه. وكلاهما عبادة عظيمة يُثاب عليها المسلم."
   },
   {
-    "id": "demo-quiz-823",
+    "id": "demo-quiz-823", "documentation_status": "unsourced",
     "section": "العلماء والأئمة",
     "category": "العلماء",
     "level": "متوسط",
@@ -6044,7 +6044,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "هو الإمام يحيى بن شرف النووي الشافعي (631-676هـ)، من أكبر علماء الإسلام وأتقاهم. وُلد في نوى بسوريا. أبرز مؤلفاته: «رياض الصالحين» و«الأذكار» و«المنهاج في شرح صحيح مسلم» (المعروف بشرح النووي) و«المجموع شرح المهذب» و«الأربعون النووية». توفي وعمره 45 سنة لكنه ترك إرثاً علمياً ضخماً يُدرَّس حتى اليوم."
   },
   {
-    "id": "demo-quiz-824",
+    "id": "demo-quiz-824", "documentation_status": "unsourced",
     "section": "العلماء والأئمة",
     "category": "العلماء",
     "level": "صعب",
@@ -6052,7 +6052,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "المذاهب الفقهية الأربعة: 1) الحنفي — مؤسسه الإمام أبو حنيفة النعمان (80-150هـ). 2) المالكي — مؤسسه الإمام مالك بن أنس (93-179هـ). 3) الشافعي — مؤسسه الإمام محمد بن إدريس الشافعي (150-204هـ). 4) الحنبلي — مؤسسه الإمام أحمد بن حنبل (164-241هـ). كل مذهب له منهجه في الاجتهاد والاستدلال، ويُعبّر عن فهم دقيق للنصوص الشرعية، والخلاف بينها رحمة وتوسعة."
   },
   {
-    "id": "demo-quiz-825",
+    "id": "demo-quiz-825", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "عام",
     "level": "سهل",
@@ -6060,7 +6060,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "حق الوالدين على الأبناء: 1) البر والإحسان بالقول والفعل. 2) الطاعة في غير معصية الله. 3) الإنفاق عليهما عند الحاجة. 4) الدعاء لهما في الحياة وبعد الوفاة. 5) الاستئذان قبل السفر والإقامة. 6) صلة أصدقائهما بعد وفاتهما. دليله: قوله تعالى: ﴿وَقَضَى رَبُّكَ أَلَّا تَعْبُدُوا إِلَّا إِيَّاهُ وَبِالْوَالِدَيْنِ إِحْسَانًا﴾ (الإسراء: 23). وعُقوق الوالدين من الكبائر."
   },
   {
-    "id": "demo-quiz-826",
+    "id": "demo-quiz-826", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الطهارة",
     "level": "سهل",
@@ -6068,7 +6068,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الحدث الأصغر: ما أوجب الوضوء كالبول والغائط والريح والنوم. الحدث الأكبر: ما أوجب الغسل كالجنابة والحيض والنفاس. الفرق في الطهارة: الحدث الأصغر يرتفع بالوضوء. الحدث الأكبر يرتفع بالغسل (وقد يكفي التيمم عند العجز). أثرهما في العبادة: الحدث الأصغر يمنع الصلاة ومس المصحف. الحدث الأكبر يمنع إضافةً: قراءة القرآن واللبث في المسجد."
   },
   {
-    "id": "demo-quiz-827",
+    "id": "demo-quiz-827", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الخلفاء",
     "level": "متوسط",
@@ -6076,7 +6076,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الخلفاء الراشدون الأربعة: 1) أبو بكر الصديق (11-13هـ): سنتان وثلاثة أشهر. 2) عمر بن الخطاب (13-23هـ): عشر سنوات ونصف. 3) عثمان بن عفان (23-35هـ): اثنتا عشرة سنة. 4) علي بن أبي طالب (35-40هـ): خمس سنوات تقريباً. قال النبي ﷺ: «فعليكم بسنتي وسنة الخلفاء الراشدين المهديين من بعدي، تمسّكوا بها وعضّوا عليها بالنواجذ» (رواه أحمد 17145 وأبو داود 4607 والترمذي 2676 عن العرباض بن سارية، وحسّنه الترمذي وصححه الألباني)."
   },
   {
-    "id": "demo-quiz-828",
+    "id": "demo-quiz-828", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدول",
     "level": "متوسط",
@@ -6084,7 +6084,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أسّس الدولة العباسية أبو العباس عبد الله السفاح سنة 132هـ (750م) بعد قضائه على الدولة الأموية في معركة الزاب الكبير. عاصمتها بغداد التي أسّسها المنصور سنة 145هـ. عُرف عصر هارون الرشيد والمأمون بعصر ازدهار الحضارة الإسلامية. سقطت الخلافة العباسية في بغداد على يد المغول بقيادة هولاكو سنة 656هـ (1258م) الذي قتل الخليفة المستعصم بالله وأحرق بغداد."
   },
   {
-    "id": "demo-quiz-829",
+    "id": "demo-quiz-829", "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -6092,7 +6092,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "وُصفت قصة يوسف بـ«أحسن القصص» لقوله تعالى في مطلعها: ﴿نَحْنُ نَقُصُّ عَلَيْكَ أَحْسَنَ الْقَصَصِ﴾ (يوسف: ٣)، ولاشتمالها على: 1) صبر النبي على البلاء (حسد إخوته، السجن). 2) العفو والحلم (عفا عن إخوته). 3) التوكل على الله وحسن الظن به. 4) درس تربوي وإيماني شامل. أبرز أحداثها: حسد الإخوة وإلقاؤه في البئر، وبيعه ومصيره إلى مصر، ومراودة امرأة العزيز له وسجنه، تأويل الأحلام، توليه خزائن مصر، ثم لقاؤه بأبيه يعقوب عليه السلام."
   },
   {
-    "id": "demo-quiz-830",
+    "id": "demo-quiz-830", "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "الحج",
     "level": "سهل",
@@ -6100,7 +6100,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أركان الحج الأربعة: 1) الإحرام بنية الحج. 2) الوقوف بعرفة — وهو ركن الحج الأعظم. 3) طواف الإفاضة (الزيارة). 4) السعي بين الصفا والمروة. الفرق بين الركن والواجب: الركن — ما لا يصح الحج بتركه مطلقاً (لا يُجبر بدم). الواجب — ما يصح الحج بتركه ويُجبر بدم. والسنن — ما يُثاب على فعله ولا يُعاقب على تركه."
   },
   {
-    "id": "demo-quiz-831",
+    "id": "demo-quiz-831", "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "الحج",
     "level": "متوسط",
@@ -6108,7 +6108,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أعمال يوم النحر بالترتيب: 1) رمي جمرة العقبة الكبرى (بعد منتصف ليلة العيد أو بعد الفجر). 2) ذبح الهدي. 3) حلق الرأس أو التقصير — يرفع الإحرام الأول (إلا النساء والمحرم). 4) طواف الإفاضة (الحلُّ الكامل بعده). 5) السعي (من لم يسعَ بعد طواف القدوم). ويجوز التقديم والتأخير بين هذه الأعمال الثلاثة الأخيرة كما دلّت عليه الأحاديث."
   },
   {
-    "id": "demo-quiz-832",
+    "id": "demo-quiz-832", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "التفسير",
     "level": "متوسط",
@@ -6116,7 +6116,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "التفسير بالمأثور: هو تفسير القرآن بالقرآن، أو بالسنة، أو بأقوال الصحابة والتابعين. التفسير بالرأي: هو تفسيره بالاجتهاد والاستنباط. أيهما أصح؟ التفسير بالمأثور أعلى مرتبةً وأوثق. التفسير بالرأي المحمود: ما استند إلى اللغة والعلم الشرعي. التفسير بالرأي المذموم: ما كان بالهوى دون علم. من أبرز كتب التفسير بالمأثور: تفسير الطبري. ومن أبرز كتب التفسير بالرأي المحمود: تفسير الرازي والزمخشري."
   },
   {
-    "id": "demo-quiz-833",
+    "id": "demo-quiz-833", "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "علوم القرآن",
     "level": "صعب",
@@ -6124,7 +6124,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "المكي والمدني ضابطهما بحسب الجمهور: ما نزل قبل الهجرة مكي، وما نزل بعدها مدني (بصرف النظر عن مكان النزول). خصائص المكي: قِصَر الآيات — التوحيد والعقيدة — قصص الأنبياء — مجادلة المشركين. خصائص المدني: طول الآيات — التشريع والأحكام — أحكام الجهاد والمعاهدات — خطاب أهل الكتاب. أطول سورة مدنية: البقرة. أطول سورة مكية: الأعراف."
   },
   {
-    "id": "demo-quiz-834",
+    "id": "demo-quiz-834", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "فضائل الصحابة",
     "level": "متوسط",
@@ -6132,7 +6132,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "العشرة المبشرون بالجنة: 1) أبو بكر الصديق. 2) عمر بن الخطاب. 3) عثمان بن عفان. 4) علي بن أبي طالب. 5) طلحة بن عبيد الله. 6) الزبير بن العوام. 7) عبد الرحمن بن عوف. 8) سعد بن أبي وقاص. 9) سعيد بن زيد. 10) أبو عبيدة عامر بن الجراح. دليله: حديث عبد الرحمن بن عوف عند الترمذي (3747) وصحّحه الألباني، وحديث سعيد بن زيد عند أبي داود (4649). ويُضاف إليهم فيمن بُشِّروا بالجنة بنصوص أخرى: خديجة وبلال وسواهم."
   },
   {
-    "id": "demo-quiz-835",
+    "id": "demo-quiz-835", "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "فضائل الصحابة",
     "level": "سهل",
@@ -6140,7 +6140,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أوائل المسلمين: أولهم من النساء: خديجة بنت خويلد رضي الله عنها. أولهم من الرجال الأحرار: أبو بكر الصديق رضي الله عنه. أولهم من الصبيان: علي بن أبي طالب رضي الله عنه. أولهم من الموالي (المُعتَقين): زيد بن حارثة رضي الله عنه. أولهم من العبيد: بلال بن رباح الحبشي رضي الله عنه. وقد أشارت كتب السيرة إلى هذا الترتيب مع وجود خلاف يسير في بعض تفاصيله."
   },
   {
-    "id": "demo-quiz-836",
+    "id": "demo-quiz-836", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "التوحيد",
     "level": "متوسط",
@@ -6148,7 +6148,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "توحيد الربوبية: الإقرار بأن الله وحده هو الخالق الرازق المدبّر — وقد أقرّ به كثير من المشركين كما قال تعالى: ﴿وَلَئِن سَأَلْتَهُم مَّنْ خَلَقَهُمْ لَيَقُولُنَّ اللَّهُ﴾. توحيد الألوهية (العبادة): إفراد الله بالعبادة وحده دون سواه — وهو الذي اختلف فيه المشركون ودعا إليه الرسل. توحيد الأسماء والصفات: الإيمان بأسماء الله وصفاته الواردة في القرآن والسنة دون تحريف ولا تعطيل ولا تكييف ولا تمثيل."
   },
   {
-    "id": "demo-quiz-837",
+    "id": "demo-quiz-837", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "مصطلح الحديث",
     "level": "صعب",
@@ -6156,7 +6156,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "درجات الحديث من الأعلى للأدنى: 1) الصحيح لذاته. 2) الصحيح لغيره. 3) الحسن لذاته. 4) الحسن لغيره. 5) الضعيف. 6) الموضوع. العمل بالصحيح والحسن؛ ومنهج هذا الموقع ترك الضعيف مطلقاً في الأحكام والعقائد والترغيب والتعبّد، مع ذكر الخلاف التاريخي للعلم فقط."
   },
   {
-    "id": "demo-quiz-838",
+    "id": "demo-quiz-838", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الأمر بالمعروف والنهي عن المنكر",
     "level": "متوسط",
@@ -6164,7 +6164,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "المرتبة الأولى (اليد): تغيير المنكر باليد وهي أعلى المراتب ولا تكون إلا لمن له صلاحية. المرتبة الثانية (اللسان): الإنكار باللسان والبيان. المرتبة الثالثة (القلب): الإنكار بالقلب وهو أدنى الإيمان وهو واجب على كل مسلم لا يستطيع غيره. الدليل: قال ﷺ: 'من رأى منكم منكراً فليغيّره بيده، فإن لم يستطع فبلسانه، فإن لم يستطع فبقلبه وذلك أضعف الإيمان' (مسلم)."
   },
   {
-    "id": "demo-quiz-839",
+    "id": "demo-quiz-839", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الأمر بالمعروف والنهي عن المنكر",
     "level": "صعب",
@@ -6172,7 +6172,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "يشترط للإنكار باليد: 1) أن يكون الشخص قادراً على الإنكار دون إفساد أكبر. 2) أن يكون المُنكَر منكراً ظاهراً معلوماً بالضرورة. 3) ألا يترتب على الإنكار مفسدة أعظم منه. 4) أن يكون للشخص صلاحية شرعية أو ولاية. والإمام النووي وابن القيم اشترطا أن لا يفضي إلى فتنة أعظم من المنكر."
   },
   {
-    "id": "demo-quiz-840",
+    "id": "demo-quiz-840", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الفتاوى المعاصرة",
     "level": "متوسط",
@@ -6180,7 +6180,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أبرز المجامع والهيئات: 1) مجمع الفقه الإسلامي الدولي التابع لمنظمة التعاون الإسلامي (OIC) في جدة. 2) هيئة كبار العلماء في المملكة العربية السعودية. 3) اللجنة الدائمة للبحوث العلمية والإفتاء (السعودية). 4) رابطة العالم الإسلامي ومجمعها الفقهي في مكة. 5) المجلس الأوروبي للإفتاء والبحوث (أقليات مسلمة). 6) دار الإفتاء المصرية. 7) إدارة الإفتاء الكويتية (وزارة الأوقاف)."
   },
   {
-    "id": "demo-quiz-841",
+    "id": "demo-quiz-841", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الطهارة",
     "level": "سهل",
@@ -6188,7 +6188,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الحدث الأصغر: ما يوجب الوضوء كخروج الريح والبول والغائط والنوم. يرتفع بالوضوء. الحدث الأكبر: ما يوجب الغسل كالجنابة والحيض والنفاس. يرتفع بالغسل. والمتيمم يرفع كليهما بالتيمم عند العجز عن الماء."
   },
   {
-    "id": "demo-quiz-842",
+    "id": "demo-quiz-842", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الغزوات",
     "level": "متوسط",
@@ -6196,7 +6196,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "سُمِّيت بالأحزاب لأن أحزاباً متعددة من القبائل والمشركين واليهود اجتمعوا لمحاصرة المدينة المنورة في السنة الخامسة الهجرية. حفر المسلمون بنصيحة سلمان الفارسي خندقاً عظيماً دفاعاً. انتهت الغزوة بانسحاب الأحزاب دون قتال حاسم بفضل الرياح والبرد وخلافات الأحزاب. قال تعالى عنها: ﴿وَرَدَّ اللَّهُ الَّذِينَ كَفَرُوا بِغَيْظِهِمْ لَمْ يَنَالُوا خَيْرًا﴾ (الأحزاب: 25)."
   },
   {
-    "id": "demo-quiz-843",
+    "id": "demo-quiz-843", "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "علوم القرآن",
     "level": "متوسط",
@@ -6204,7 +6204,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "المكي: ما نزل من القرآن قبل هجرة النبي ﷺ إلى المدينة المنورة، سواء نزل في مكة أو غيرها. سماته: قصر الآيات، تكرار الحجج على التوحيد، ذكر الجنة والنار، قصص الأنبياء. المدني: ما نزل بعد الهجرة. سماته: تشريع الأحكام والعبادات، ذكر المنافقين، تفصيل المعاملات والحدود والجهاد. والمكي ثلثا القرآن تقريباً والمدني ثلثه."
   },
   {
-    "id": "demo-quiz-844",
+    "id": "demo-quiz-844", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "الأخلاق",
     "level": "سهل",
@@ -6212,7 +6212,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الصدق من أعظم الأخلاق وقد أوصى النبي ﷺ به فقال: 'عليكم بالصدق فإن الصدق يهدي إلى البر وإن البر يهدي إلى الجنة، ولا يزال الرجل يصدق ويتحرى الصدق حتى يُكتب عند الله صدِّيقاً' (البخاري). وقال تعالى: ﴿يَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ وَكُونُوا مَعَ الصَّادِقِينَ﴾ (التوبة: 119). الصدق يُكسب الثقة ويُحفظ الأمانة ويُنشر الخير."
   },
   {
-    "id": "demo-quiz-845",
+    "id": "demo-quiz-845", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الحضارة الإسلامية",
     "level": "متوسط",
@@ -6220,7 +6220,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "في الطب: ابن سينا صاحب القانون في الطب الذي تُدرَّس منه الجامعات الأوروبية 6 قرون، الرازي صاحب الحاوي وأول من فرّق بين الجدري والحصبة، الزهراوي أبو الجراحة الحديثة. في الرياضيات: الخوارزمي واضع أسس الجبر وأعطاه اسمه (Algebra من الجبر)، الكندي طوّر رياضيات التشفير، ابن الهيثم في البصريات وأسس المنهج العلمي. في الفلك: البيروني احتسب محيط الأرض بدقة فائقة، ابن يونس والزرقالي في رصد الكواكب."
   },
   {
-    "id": "demo-quiz-846",
+    "id": "demo-quiz-846", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "التوحيد",
     "level": "سهل",
@@ -6228,7 +6228,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "شهادة لا إله إلا الله تعني: نفي الألوهية عن كل ما سوى الله (لا إله)، وإثباتها لله وحده (إلا الله). شروطها السبعة: العلم بمعناها، اليقين بها، القبول لمقتضاها، الانقياد بالعمل، الصدق من القلب، الإخلاص لله وحده، المحبة لله ولما تقتضيه الشهادة. وهي مفتاح الجنة لكن لها أسنان كما قال وهب."
   },
   {
-    "id": "demo-quiz-847",
+    "id": "demo-quiz-847", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الزكاة",
     "level": "متوسط",
@@ -6236,7 +6236,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "مصارف الزكاة مذكورة في قوله تعالى: ﴿إِنَّمَا الصَّدَقَاتُ لِلْفُقَرَاءِ وَالْمَسَاكِينِ وَالْعَامِلِينَ عَلَيْهَا وَالْمُؤَلَّفَةِ قُلُوبُهُمْ وَفِي الرِّقَابِ وَالْغَارِمِينَ وَفِي سَبِيلِ اللَّهِ وَابْنِ السَّبِيلِ﴾ (التوبة: 60). وهي: 1) الفقراء، 2) المساكين، 3) العاملون عليها، 4) المؤلفة قلوبهم، 5) الرقاب (تحرير العبيد)، 6) الغارمون (المدينون عاجزون)، 7) في سبيل الله، 8) ابن السبيل (المسافر المنقطع)."
   },
   {
-    "id": "demo-quiz-848",
+    "id": "demo-quiz-848", "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "القراءات",
     "level": "متوسط",
@@ -6244,7 +6244,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "القراءات المتواترة المعتمدة عشر قراءات، منسوبة إلى: نافع المدني، وابن كثير المكي، وأبي عمرو البصري، وابن عامر الشامي، وعاصم الكوفي، وحمزة الكوفي، والكسائي الكوفي، وأبي جعفر المدني، ويعقوب البصري، وخلف البزار. وأشهرها اليوم رواية حفص عن عاصم المنتشرة في أغلب العالم الإسلامي، ورواية ورش عن نافع المنتشرة في شمال أفريقيا."
   },
   {
-    "id": "demo-quiz-849",
+    "id": "demo-quiz-849", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "علوم الحديث",
     "level": "متوسط",
@@ -6252,7 +6252,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الحديث الصحيح: ما اتصل سنده بنقل العدل الضابط تام الضبط عن مثله إلى منتهاه، من غير شذوذ ولا علة قادحة. الحديث الحسن: كالصحيح لكن راويه خفيف الضبط أو قاصره، وليس شاذاً ولا معللاً. فالفرق الجوهري في درجة الضبط: الصحيح تامّه، والحسن خفيفه. وكلاهما حجة في الأحكام، وكلاهما في «الصحيح» عند كثير من المحدثين كابن خزيمة وابن حبان."
   },
   {
-    "id": "demo-quiz-850",
+    "id": "demo-quiz-850", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصلاة",
     "level": "سهل",
@@ -6260,7 +6260,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "واجبات الصلاة الثمانية عند الحنابلة: 1) التكبيرات الانتقالية بين الأركان، 2) قول «سمع الله لمن حمده» للإمام والمنفرد، 3) قول «ربنا ولك الحمد» للجميع، 4) التسبيح في الركوع (سبحان ربي العظيم)، 5) التسبيح في السجود (سبحان ربي الأعلى)، 6) قول «رب اغفر لي» بين السجدتين، 7) التشهد الأول، 8) الجلوس للتشهد الأول. من تركها عمداً بطلت صلاته، ومن تركها سهواً جبرها بسجود السهو."
   },
   {
-    "id": "demo-quiz-851",
+    "id": "demo-quiz-851", "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الهجرة",
     "level": "متوسط",
@@ -6268,7 +6268,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "مكث النبي ﷺ في مكة بعد البعثة ثلاث عشرة سنة (13 سنة)، وفق القول الراجح عند أكثر أهل السيرة. بُعث ﷺ وله أربعون سنة، وهاجر وله ثلاث وخمسون سنة. مرحلة مكة شملت: الدعوة السرية ثلاث سنوات، ثم الجهر بالدعوة عشر سنوات. وفي العام الثالث عشر من البعثة كانت الهجرة المباركة إلى المدينة."
   },
   {
-    "id": "demo-quiz-852",
+    "id": "demo-quiz-852", "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "الأسماء والصفات",
     "level": "متوسط",
@@ -6276,7 +6276,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "مذهب أهل السنة والجماعة في صفات الله: الإثبات لكل ما أثبته الله لنفسه في القرآن والسنة الصحيحة بلا تحريف (تأويل يُفسد المعنى) ولا تعطيل (نفي الصفة) ولا تكييف (وصف الكيفية) ولا تمثيل (مشابهة المخلوق). قال تعالى: ﴿لَيْسَ كَمِثْلِهِ شَيْءٌ وَهُوَ السَّمِيعُ الْبَصِيرُ﴾. فنُثبت أن لله يداً ووجهاً وعيناً كما أخبر، لكن لا نعلم كيفيتها لأنها تليق بجلاله وليست كصفات المخلوقين."
   },
   {
-    "id": "demo-quiz-853",
+    "id": "demo-quiz-853", "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "السيرة والآداب",
     "level": "سهل",
@@ -6284,7 +6284,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "دخول المسجد: يُقدِّم رجله اليمنى ويقول: «بسم الله، اللهم صلِّ على محمد، اللهم افتح لي أبواب رحمتك». الخروج من المسجد: يُقدِّم اليسرى ويقول: «بسم الله، اللهم صلِّ على محمد، اللهم إني أسألك من فضلك». ومن الآداب أيضاً: تحية المسجد بركعتين، وعدم الحديث الدنيوي المفرط فيه، وتعظيم بيوت الله، وعدم مزاحمة المصلين."
   },
   {
-    "id": "demo-quiz-854",
+    "id": "demo-quiz-854", "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصيام",
     "level": "متوسط",
@@ -6292,7 +6292,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "صيام القضاء: واجب على من أفطر في رمضان بعذر مشروع (مرض أو سفر)، وهو بديل عن الأيام المفوَّتة يُؤدَّى في غير رمضان. صيام الكفارة: واجب لجبر ذنب معين كالإفطار في رمضان بجماع، أو كفارة اليمين، أو كفارة القتل الخطأ. الكفارة لها أشكال: إطعام أو عتق أو صيام بحسب نوعها. والقضاء لا يرتبط بالكفارة، وقد يجتمعان إذا أفطر بالجماع فيلزمه القضاء والكفارة معاً."
   },
   {
-    "id": "demo-quiz-855",
+    "id": "demo-quiz-855", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الفتوحات",
     "level": "متوسط",
@@ -6300,7 +6300,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "فُتح بيت المقدس أول مرة في الإسلام في عهد الخليفة عمر بن الخطاب رضي الله عنه سنة 15 أو 16 هـ (637م). وقد أبى صفرونيوس بطريرك القدس تسليمها إلا للخليفة نفسه، فقَدِم عمر من المدينة وتسلَّمها بنفسه وكتب وثيقة الأمان الشهيرة (العهدة العمرية). ثم فُتحت مرة أخرى في العهد الأيوبي بعد الحروب الصليبية على يد صلاح الدين الأيوبي سنة 583 هـ (1187م)."
   },
   {
-    "id": "demo-quiz-856",
+    "id": "demo-quiz-856", "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "التفسير",
     "level": "صعب",
@@ -6308,7 +6308,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أشهر كتب التفسير بالمأثور: 1) جامع البيان للطبري (310هـ): أقدمها وأوسعها، يجمع الروايات مع الترجيح. 2) تفسير ابن كثير (774هـ): يمتاز بسلامة العقيدة والتركيز على أحاديث التفسير مع نقدها. 3) الدر المنثور للسيوطي (911هـ): يجمع الروايات دون ترجيح. 4) تفسير البغوي (516هـ): مختصر موثوق. التفسير بالمأثور يعتمد على: تفسير القرآن بالقرآن، ثم بالسنة النبوية، ثم بأقوال الصحابة، ثم بأقوال التابعين."
   },
   {
-    "id": "demo-quiz-857",
+    "id": "demo-quiz-857", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الأندلس",
     "level": "سهل",
@@ -6316,7 +6316,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "قرطبة (Córdoba)، التي بلغت في عهد الخلافة الأموية أوجَ مجدها، وكانت من أكبر مدن أوروبا وأكثرها تحضراً في القرن العاشر الميلادي، يقطنها نحو نصف مليون نسمة."
   },
   {
-    "id": "demo-quiz-858",
+    "id": "demo-quiz-858", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الأندلس",
     "level": "متوسط",
@@ -6324,7 +6324,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "سقطت غرناطة عام 897هـ (1492م) على يد فرديناند وإيزابيلا، وكان آخر ملوكها محمد الثاني عشر المعروف بأبي عبدالله الصغير. وبسقوطها انتهى نحو ثمانية قرون من الحضارة الإسلامية في شبه الجزيرة الإيبيرية."
   },
   {
-    "id": "demo-quiz-859",
+    "id": "demo-quiz-859", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الأندلس",
     "level": "متوسط",
@@ -6332,7 +6332,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "بناها الخليفة عبد الرحمن الناصر (عبد الرحمن الثالث) عام 325هـ (936م) على مقربة من قرطبة، وأصبحت مقرَّ حكومته وفخراً للحضارة الأندلسية. دمَّرها البربر إبان الفوضى الكبرى (الفتنة) في القرن الحادي عشر الميلادي."
   },
   {
-    "id": "demo-quiz-860",
+    "id": "demo-quiz-860", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الأندلس",
     "level": "صعب",
@@ -6340,7 +6340,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "معركة بلاط الشهداء (Tours/Poitiers) عام 114هـ (732م) بين جيش الأندلس بقيادة عبد الرحمن الغافقي والفرنجة بقيادة شارل مارتل. انتهت بهزيمة المسلمين ومقتل قائدهم، وتُعدُّ نقطة توقف الزحف الإسلامي نحو قلب أوروبا."
   },
   {
-    "id": "demo-quiz-861",
+    "id": "demo-quiz-861", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الأندلس",
     "level": "سهل",
@@ -6348,7 +6348,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أبو الوليد محمد بن رشد (520-595هـ / 1126-1198م)، فيلسوف وطبيب أندلسي من قرطبة. اشتُهر بشرحه الواسع لفلسفة أرسطو حتى لُقِّب بـ\"الشارح\" في أوروبا. ترجمت أعماله إلى اللاتينية وأثّرت تأثيراً بالغاً في الفكر الأوروبي الوسيط."
   },
   {
-    "id": "demo-quiz-862",
+    "id": "demo-quiz-862", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الخلفاء",
     "level": "متوسط",
@@ -6356,7 +6356,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عمر بن عبد العزيز (61-101هـ) ثامن الخلفاء الأمويين. لُقِّب بخامس الخلفاء الراشدين لعدله وزهده وإصلاحاته؛ فردَّ المظالم وخفَّف الضرائب وأرسى العدل حتى شحَّت الفقراء في عهده. حكم سنتين ونصفاً فقط (99-101هـ)."
   },
   {
-    "id": "demo-quiz-863",
+    "id": "demo-quiz-863", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الخلفاء",
     "level": "متوسط",
@@ -6364,7 +6364,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أبو العباس عبد الله بن محمد السفَّاح، أسَّس الخلافة العباسية عام 132هـ (750م) بعد هزيمة الأمويين في معركة الزاب الكبير. ونقل عاصمة الخلافة من دمشق إلى الكوفة ثم الأنبار (حيث بنى مدينة الهاشمية)، قبل أن ينقلها المنصور إلى بغداد."
   },
   {
-    "id": "demo-quiz-864",
+    "id": "demo-quiz-864", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الخلفاء",
     "level": "سهل",
@@ -6372,7 +6372,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الخليفة العباسي أبو جعفر المنصور عام 145هـ (762م)، وسمَّاها \"مدينة السلام\". شُيِّدت على ضفاف نهر دجلة واتخذها عاصمةً للخلافة العباسية، وسرعان ما غدت أكبر مدن العالم وعاصمة العلم والثقافة."
   },
   {
-    "id": "demo-quiz-865",
+    "id": "demo-quiz-865", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الخلفاء",
     "level": "متوسط",
@@ -6380,7 +6380,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "في عهد الخليفة الأموي هشام بن عبد الملك (105-125هـ) وما سبقه قليلاً من عهود، بلغت الدولة الإسلامية أقصى اتساع جغرافي لها: من حدود الصين شرقاً إلى جنوب فرنسا غرباً، ومن وسط آسيا شمالاً إلى السند جنوباً."
   },
   {
-    "id": "demo-quiz-866",
+    "id": "demo-quiz-866", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "العلماء",
     "level": "سهل",
@@ -6388,7 +6388,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عبد الرحمن بن خلدون (732-808هـ / 1332-1406م)، مؤرخ وفيلسوف اجتماعي من تونس. أبرز مؤلفاته «المقدمة» التي تُعدُّ من أوائل أعمال علم الاجتماع، إذ درس فيها قوانين العمران البشري وأسباب قيام الحضارات وسقوطها."
   },
   {
-    "id": "demo-quiz-867",
+    "id": "demo-quiz-867", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "العلماء",
     "level": "سهل",
@@ -6396,7 +6396,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أبو علي الحسين بن عبد الله بن سينا (370-428هـ / 980-1037م)، طبيب وفيلسوف فارسي. اشتُهر بكتابه «القانون في الطب» الذي ظلَّ مرجعاً طبياً أساسياً في أوروبا وآسيا قروناً طويلة. درَّس في إصفهان وهمدان وبخارى."
   },
   {
-    "id": "demo-quiz-868",
+    "id": "demo-quiz-868", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "العلماء",
     "level": "متوسط",
@@ -6404,7 +6404,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "محمد بن إدريس الشافعي (150-204هـ / 767-820م)، مؤسس المذهب الشافعي. وُلد في غزة وتلمَّذ على الإمام مالك في المدينة، ثم أسَّس مذهبه الفقهي المستقل. من أبرز مؤلفاته «الرسالة» أول كتاب في أصول الفقه، و«الأم» في الفروع."
   },
   {
-    "id": "demo-quiz-869",
+    "id": "demo-quiz-869", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "المعارك",
     "level": "سهل",
@@ -6412,7 +6412,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "وقعت معركة اليرموك عام 15هـ (636م) في بلاد الشام بين الجيش الإسلامي بقيادة خالد بن الوليد والجيش البيزنطي. انتصر فيها المسلمون انتصاراً ساحقاً وفتح الطريق أمامهم لفتح بلاد الشام كاملةً."
   },
   {
-    "id": "demo-quiz-870",
+    "id": "demo-quiz-870", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "المعارك",
     "level": "سهل",
@@ -6420,7 +6420,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "وقعت معركة القادسية عام 14 أو 15هـ (636م) بالعراق بين المسلمين بقيادة سعد بن أبي وقاص والفرس بقيادة رستم الفرخزاد. استغرقت أربعة أيام وانتهت بهزيمة الفرس ومقتل رستم، وفتحت الباب لفتح إيران."
   },
   {
-    "id": "demo-quiz-871",
+    "id": "demo-quiz-871", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الفتوحات",
     "level": "سهل",
@@ -6428,7 +6428,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "فتح عمرو بن العاص مصر في عهد الخليفة عمر بن الخطاب عام 20هـ (641م) بعد معركة عين شمس وحصار حصن بابليون. وأسَّس مدينة الفسطاط عاصمةً للمسلمين في مصر، وهي نواة القاهرة اليوم."
   },
   {
-    "id": "demo-quiz-872",
+    "id": "demo-quiz-872", "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الفتوحات",
     "level": "متوسط",
@@ -6436,7 +6436,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "فتح المسلمون فارس في عهد عمر بن الخطاب (13-23هـ). أبرز معاركه: القادسية (14هـ) التي فتحت العراق، ثم جلولاء ونهاوند (21هـ) التي سُمِّيت «فتح الفتوح» لأنها حسمت فارس. وكان سعد بن أبي وقاص والنعمان بن مقرن من أبرز قادة هذا الفتح."
   },
   {
-    "id": "demo-quiz-873",
+    "id": "demo-quiz-873", "documentation_status": "unsourced",
     "section": "العلماء والأئمة",
     "category": "العلماء والأئمة",
     "level": "سهل",
@@ -6444,7 +6444,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "هو محمد بن إسماعيل البخاري (194-256هـ)، وُلد في بخارى بأوزبكستان. مؤلف أصح كتاب بعد كتاب الله وهو الجامع الصحيح المعروف بصحيح البخاري الذي يحتوي على 7563 حديثاً مكرراً، وهو إمام علماء الحديث."
   },
   {
-    "id": "demo-quiz-875",
+    "id": "demo-quiz-875", "documentation_status": "unsourced",
     "section": "العلماء والأئمة",
     "category": "العلماء والأئمة",
     "level": "متوسط",
@@ -6452,7 +6452,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عاش أبو حامد الغزالي (450-505هـ) في القرن الخامس الهجري. لقّبه العلماء بـ«حجة الإسلام» لعلمه الغزير ومواقفه الدفاعية عن الإسلام. وُلد في طوس بخراسان (إيران)، وأشهر كتبه إحياء علوم الدين."
   },
   {
-    "id": "demo-quiz-876",
+    "id": "demo-quiz-876", "documentation_status": "unsourced",
     "section": "العلماء والأئمة",
     "category": "العلماء والأئمة",
     "level": "متوسط",
@@ -6460,7 +6460,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "هو أحمد بن عبد الحليم ابن تيمية الحراني (661-728هـ). وُلد في حران (جنوب تركيا) وتوفي في سجن دمشق. عالم حنبلي موسوعي في الفقه والعقيدة والتفسير. أشهر طلابه ابن قيم الجوزية، وأشهر كتبه الفتاوى الكبرى ومنهاج السنة."
   },
   {
-    "id": "demo-quiz-877",
+    "id": "demo-quiz-877", "documentation_status": "unsourced",
     "section": "العلماء والأئمة",
     "category": "العلماء والأئمة",
     "level": "متوسط",
@@ -6468,7 +6468,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "هو محمد بن إدريس الشافعي القرشي (150-204هـ). وُلد في غزة (فلسطين) وتوفي في مصر. مؤسس المذهب الشافعي وصاحب كتاب الرسالة أول مصنَّف في أصول الفقه. حفظ القرآن في سن السابعة وحفظ الموطأ في سن العاشرة."
   },
   {
-    "id": "demo-quiz-878",
+    "id": "demo-quiz-878", "documentation_status": "unsourced",
     "section": "العلماء والأئمة",
     "category": "العلماء والأئمة",
     "level": "صعب",
@@ -6476,7 +6476,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "هو أحمد بن علي بن حجر العسقلاني (773-852هـ)، مصري الأصل من عسقلان. أمير المؤمنين في الحديث. أشهر مؤلفاته: فتح الباري شرح صحيح البخاري (13 مجلداً)، والإصابة في تمييز الصحابة، وتقريب التهذيب. استغرق فتح الباري منه 25 عاماً."
   },
   {
-    "id": "demo-quiz-879",
+    "id": "demo-quiz-879", "documentation_status": "unsourced",
     "section": "العلماء والأئمة",
     "category": "العلماء والأئمة",
     "level": "صعب",
@@ -6484,7 +6484,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أبو حنيفة: وُلد في الكوفة وتوفي في بغداد. مالك بن أنس: وُلد وتوفي في المدينة المنورة. الشافعي: وُلد في غزة وتوفي في الفسطاط (القاهرة). أحمد بن حنبل: وُلد وتوفي في بغداد."
   },
   {
-    "id": "demo-quiz-880",
+    "id": "demo-quiz-880", "documentation_status": "unsourced",
     "section": "العلماء والأئمة",
     "category": "العلماء والأئمة",
     "level": "صعب",
@@ -6492,7 +6492,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "هو محمد بن أبي بكر ابن قيّم الجوزية (691-751هـ)، من دمشق. لازم شيخه ابن تيمية نحو 17 عاماً وسجن معه في قلعة دمشق. أشهر كتبه: زاد المعاد، إغاثة اللهفان، مدارج السالكين. أتم كثيراً مما بدأه ابن تيمية."
   },
   {
-    "id": "demo-quiz-881",
+    "id": "demo-quiz-881", "documentation_status": "unsourced",
     "section": "الأسماء الحسنى",
     "category": "الأسماء الحسنى",
     "level": "سهل",
@@ -6500,7 +6500,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "تسعة وتسعون (99) اسماً، وردت في حديث أبي هريرة أن النبي ﷺ قال: «إن لله تسعة وتسعين اسماً من أحصاها دخل الجنة»، والمقصود بـ«الإحصاء» معرفتها وحفظها والتعبد لله بمعانيها."
   },
   {
-    "id": "demo-quiz-882",
+    "id": "demo-quiz-882", "documentation_status": "unsourced",
     "section": "الأسماء الحسنى",
     "category": "الأسماء الحسنى",
     "level": "سهل",
@@ -6508,7 +6508,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الرحمن مشتق من الرحمة، وهو من أبنية المبالغة على وزن فَعْلان مما يدل على السعة والامتلاء، أي ذو الرحمة الواسعة الشاملة لجميع الخلق في الدنيا. واسم الرحمن خاص بالله لا يُطلق على غيره، بخلاف الرحيم الذي وُصف به بعض الناس."
   },
   {
-    "id": "demo-quiz-883",
+    "id": "demo-quiz-883", "documentation_status": "unsourced",
     "section": "الأسماء الحسنى",
     "category": "الأسماء الحسنى",
     "level": "متوسط",
@@ -6516,7 +6516,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "العزيز: ذو العزة الكاملة، غير المغلوب، الذي يعتز به كل شيء ويحتاج إليه كل شيء. القوي: ذو القوة التامة التي لا تنقص ولا تعتريها غلبة. العزة تتضمن معنى الامتناع وعدم الانكسار، بينما القوة تتضمن الاقتدار والمَكنة."
   },
   {
-    "id": "demo-quiz-884",
+    "id": "demo-quiz-884", "documentation_status": "unsourced",
     "section": "الأسماء الحسنى",
     "category": "الأسماء الحسنى",
     "level": "متوسط",
@@ -6524,7 +6524,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "اسم «الإله» أو «الله» بالعلمية. أما في أسماء الله الحسنى: «الواحد» و«الأحد» يدلان على انفراده بالوحدانية. الواحد: المنفرد الذي لا نظير له. الأحد: المنفرد الذي لا يقبل الانقسام ولا الشركة في أي وجه."
   },
   {
-    "id": "demo-quiz-885",
+    "id": "demo-quiz-885", "documentation_status": "unsourced",
     "section": "الأسماء الحسنى",
     "category": "الأسماء الحسنى",
     "level": "صعب",
@@ -6532,7 +6532,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "العليم: ذو العلم الشامل بكل شيء ظاهراً وباطناً، ماضياً وحاضراً ومستقبلاً، لا يخفى عليه مثقال ذرة. الحكيم: ذو الحكمة في كل أفعاله وأقواله وأقداره، بمعنى إتقان الأشياء وإحكامها ووضعها في مواضعها اللائقة. فالعلم يتعلق بالمعرفة، والحكمة بحُسن التصرف."
   },
   {
-    "id": "demo-quiz-886",
+    "id": "demo-quiz-886", "documentation_status": "unsourced",
     "section": "الأسماء الحسنى",
     "category": "الأسماء الحسنى",
     "level": "صعب",
@@ -6540,7 +6540,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أبرز من ألّف في الأسماء الحسنى: ابن القيم في «مدارج السالكين» وكتابه المستقل «شفاء العليل» وبدائع الفوائد. والبيهقي في «الأسماء والصفات». وابن منده في «التوحيد». والرازي في «لوامع البينات». وفي المعاصرين سعيد حوّى في «الأساس في السنة»."
   },
   {
-    "id": "demo-quiz-887",
+    "id": "demo-quiz-887", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "المصطلح",
     "level": "سهل",
@@ -6548,7 +6548,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "ما لم تتوافر فيه شروط الصحيح أو الحسن كالانقطاع أو ضعف الراوي"
   },
   {
-    "id": "demo-quiz-888",
+    "id": "demo-quiz-888", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "المصطلح",
     "level": "سهل",
@@ -6556,7 +6556,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الحديث المكذوب المختلق على النبي ﷺ لا تحل روايته إلا مع بيان وضعه"
   },
   {
-    "id": "demo-quiz-889",
+    "id": "demo-quiz-889", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "المصطلح",
     "level": "متوسط",
@@ -6564,7 +6564,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الحديث القدسي ما رواه النبي ﷺ عن ربه بمعناه ويُصاغ بلفظه؛ بينما القرآن معجز بلفظ الله ومتواتر يُتعبَّد بتلاوته"
   },
   {
-    "id": "demo-quiz-890",
+    "id": "demo-quiz-890", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "الصحاح",
     "level": "متوسط",
@@ -6572,7 +6572,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "مسلم بن الحجاج القشيري، وُلد في نيسابور سنة 206هـ وتوفي 261هـ، صاحب الصحيح الثاني"
   },
   {
-    "id": "demo-quiz-891",
+    "id": "demo-quiz-891", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "الصحاح",
     "level": "متوسط",
@@ -6580,7 +6580,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أكبر مسانيد الحديث، جمعه الإمام أحمد بن حنبل (164-241هـ) ويضم نحو أربعين ألف حديث"
   },
   {
-    "id": "demo-quiz-892",
+    "id": "demo-quiz-892", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "علم الرجال",
     "level": "متوسط",
@@ -6588,7 +6588,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "علم يبحث في أحوال رواة الحديث قبولاً أو رداً، به يُعرف الثقة من الضعيف"
   },
   {
-    "id": "demo-quiz-893",
+    "id": "demo-quiz-893", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "علم الرجال",
     "level": "صعب",
@@ -6596,7 +6596,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "يحيى بن معين وأحمد بن حنبل والبخاري وأبو حاتم الرازي وابن حجر العسقلاني"
   },
   {
-    "id": "demo-quiz-894",
+    "id": "demo-quiz-894", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "المصطلح",
     "level": "صعب",
@@ -6604,7 +6604,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "ما رواه جمع كبير يستحيل تواطؤهم على الكذب في كل طبقات السند حتى يُفيد العلم اليقيني"
   },
   {
-    "id": "demo-quiz-895",
+    "id": "demo-quiz-895", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "الصحاح",
     "level": "صعب",
@@ -6612,7 +6612,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "اشترط الاتصال مع ثقة الراوي وضبطه وعدم الشذوذ والعلة، وزاد اشتراط اللقاء الفعلي لا مجرد المعاصرة"
   },
   {
-    "id": "demo-quiz-896",
+    "id": "demo-quiz-896", "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "الكتب",
     "level": "سهل",
@@ -6620,7 +6620,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "مختارات النووي من أهم الأحاديث المرشّحة للتعلم، وعددها اثنان وأربعون حديثاً تجمع أصول الإسلام"
   },
   {
-    "id": "demo-quiz-897",
+    "id": "demo-quiz-897", "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "الصباح والمساء",
     "level": "سهل",
@@ -6628,7 +6628,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "قول «لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير» مئة مرة في اليوم"
   },
   {
-    "id": "demo-quiz-898",
+    "id": "demo-quiz-898", "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "أذكار النوم",
     "level": "سهل",
@@ -6636,7 +6636,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "«اللهم بسمك أموت وأحيا» وعند الاستيقاظ: «الحمد لله الذي أحيانا بعد ما أماتنا وإليه النشور»"
   },
   {
-    "id": "demo-quiz-899",
+    "id": "demo-quiz-899", "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "التسبيح",
     "level": "سهل",
@@ -6644,7 +6644,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "كلمتان خفيفتان على اللسان ثقيلتان في الميزان حبيبتان إلى الرحمن كما في البخاري ومسلم"
   },
   {
-    "id": "demo-quiz-900",
+    "id": "demo-quiz-900", "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "الاستغفار",
     "level": "متوسط",
@@ -6652,7 +6652,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "«اللهم أنت ربي لا إله إلا أنت خلقتني وأنا عبدك...» وأركانه الاعتراف بالربوبية والعبودية وبالذنب والرجاء في المغفرة"
   },
   {
-    "id": "demo-quiz-901",
+    "id": "demo-quiz-901", "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "الذكر العام",
     "level": "متوسط",
@@ -6660,7 +6660,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "سبحان الله والحمد لله ولا إله إلا الله والله أكبر، قال تعالى: والباقيات الصالحات خير عند ربك ثواباً وخير أملاً"
   },
   {
-    "id": "demo-quiz-902",
+    "id": "demo-quiz-902", "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "الدعاء",
     "level": "متوسط",
@@ -6668,7 +6668,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الإخلاص وحضور القلب، وأكل الحلال، والابتعاد عن الحرام، وعدم الاستعجال، وأن لا يكون الدعاء بإثم أو قطيعة رحم"
   },
   {
-    "id": "demo-quiz-903",
+    "id": "demo-quiz-903", "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "التعوذات",
     "level": "متوسط",
@@ -6676,7 +6676,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "كان يتعوذ من العجز والكسل والجبن والبخل والهرم وعذاب القبر وفتنة المحيا والممات (رواه البخاري ومسلم عن أنس بن مالك)"
   },
   {
-    "id": "demo-quiz-904",
+    "id": "demo-quiz-904", "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "الأدعية النبوية",
     "level": "صعب",
@@ -6684,7 +6684,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "«يا مقلّب القلوب ثبّت قلبي على دينك» وهو من أكثر ما كان ﷺ يدعو به (رواه الترمذي 3522 عن أم سلمة، وصححه الألباني)"
   },
   {
-    "id": "demo-quiz-905",
+    "id": "demo-quiz-905", "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "الصلاة على النبي",
     "level": "سهل",
@@ -6692,7 +6692,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "«اللهم صلِّ على محمد وعلى آل محمد كما صليت على إبراهيم وعلى آل إبراهيم إنك حميد مجيد»"
   },
   {
-    "id": "demo-quiz-906",
+    "id": "demo-quiz-906", "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "الأوقات الفاضلة",
     "level": "صعب",
@@ -6700,7 +6700,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "قيل هي ساعة بعد العصر حتى المغرب، وقيل وقت جلوس الإمام على المنبر حتى انقضاء الصلاة. والراجح أنها بعد العصر"
   },
   {
-    "id": "demo-quiz-907",
+    "id": "demo-quiz-907", "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "الزهد",
     "level": "سهل",
@@ -6708,7 +6708,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عدم تعلق القلب بالدنيا وعدم الفرح بما أُوتي منها والحزن على ما فاته منها، مع أداء الواجبات الشرعية"
   },
   {
-    "id": "demo-quiz-908",
+    "id": "demo-quiz-908", "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "الموت والآخرة",
     "level": "سهل",
@@ -6716,7 +6716,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "«كن في الدنيا كأنك غريب أو عابر سبيل» وكان ابن عمر يقول: إذا أمسيت فلا تنتظر الصباح وإذا أصبحت فلا تنتظر المساء"
   },
   {
-    "id": "demo-quiz-909",
+    "id": "demo-quiz-909", "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "محاسبة النفس",
     "level": "متوسط",
@@ -6724,7 +6724,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "«حاسبوا أنفسكم قبل أن تُحاسَبوا وزِنوا أعمالكم قبل أن تُوزَن عليكم وتزيّنوا للعرض الأكبر»"
   },
   {
-    "id": "demo-quiz-911",
+    "id": "demo-quiz-911", "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "الموت والآخرة",
     "level": "متوسط",
@@ -6732,7 +6732,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "يُسأل الميت عن ربه ودينه ونبيّه، فيقول المؤمن: ربي الله وديني الإسلام ونبيي محمد ﷺ، ويعجز الكافر عن الإجابة"
   },
   {
-    "id": "demo-quiz-912",
+    "id": "demo-quiz-912", "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "الإخلاص",
     "level": "متوسط",
@@ -6740,7 +6740,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الإخلاص هو إفراد الله بالعبادة دون شريك. الرياء هو إرادة العبد بعبادته الدنيا ومراءاة الناس، وهو من الشرك الأصغر"
   },
   {
-    "id": "demo-quiz-913",
+    "id": "demo-quiz-913", "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "القلب",
     "level": "صعب",
@@ -6748,7 +6748,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "أمراض القلب: الشك والشهوة. علاجها بالقرآن والذكر والصوم ومجالسة الصالحين وترك المعاصي، وقد بسط ابن القيم ذلك في «الداء والدواء»"
   },
   {
-    "id": "demo-quiz-914",
+    "id": "demo-quiz-914", "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "الورع",
     "level": "صعب",
@@ -6756,7 +6756,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الورع: ترك الشبهات خشية الوقوع في الحرام. أقسامه: فرض (ترك الحرام)، ومستحب (ترك الشبهات)، وفاضل (ترك المباحات خشية أن تُفضي إلى المنهي عنه)"
   },
   {
-    "id": "demo-quiz-915",
+    "id": "demo-quiz-915", "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "التوكل",
     "level": "متوسط",
@@ -6764,7 +6764,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "التوكل: الاعتماد على الله مع الأخذ بالأسباب المشروعة. التواكل: ترك الأسباب بحجة التوكل وهو مذموم"
   },
   {
-    "id": "demo-quiz-916",
+    "id": "demo-quiz-916", "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "الصبر",
     "level": "سهل",
@@ -6772,7 +6772,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "صبر على طاعة الله (كالصلاة والصوم)، وصبر عن معصية الله (كترك المحرمات)، وصبر على أقدار الله المؤلمة (كالمرض والمصيبة)"
   },
   {
-    "id": "demo-quiz-917",
+    "id": "demo-quiz-917", "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "الفرائض",
     "level": "سهل",
@@ -6780,7 +6780,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الإحرام من الميقات، والمبيت بمزدلفة، والمبيت بمنى ليالي التشريق، ورمي الجمرات، والحلق أو التقصير، وطواف الوداع"
   },
   {
-    "id": "demo-quiz-918",
+    "id": "demo-quiz-918", "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "العمرة",
     "level": "سهل",
@@ -6788,7 +6788,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الإحرام والنية، والطواف بالبيت، والسعي بين الصفا والمروة، والحلق أو التقصير"
   },
   {
-    "id": "demo-quiz-919",
+    "id": "demo-quiz-919", "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "المحظورات",
     "level": "متوسط",
@@ -6796,7 +6796,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "حلق الشعر، قص الأظافر، لبس المخيط للرجل، تغطية الرأس للرجل أو الوجه للمرأة، استخدام الطيب، عقد النكاح، الجماع وما دونه، وقتل الصيد"
   },
   {
-    "id": "demo-quiz-920",
+    "id": "demo-quiz-920", "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "المناسك",
     "level": "متوسط",
@@ -6804,7 +6804,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "رمي جمرة العقبة ثم ذبح الهدي ثم الحلق أو التقصير ثم طواف الإفاضة ثم السعي إن لم يكن سعى قبل"
   },
   {
-    "id": "demo-quiz-921",
+    "id": "demo-quiz-921", "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "المشاعر",
     "level": "متوسط",
@@ -6812,7 +6812,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "عرفات: الركن الأعظم. مزدلفة: الوقوف بها واجب وجمع الصلاتين. منى: رمي الجمرات والمبيت. مكة: الطواف والسعي"
   },
   {
-    "id": "demo-quiz-922",
+    "id": "demo-quiz-922", "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "أنواع الحج",
     "level": "متوسط",
@@ -6820,7 +6820,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "التمتع: أن يُحرم بعمرة ثم يتحلل ثم يُحرم بالحج. القران: أن يجمعهما في إحرام واحد. الإفراد: أن يُحرم بالحج وحده. الراجح أن التمتع أفضل"
   },
   {
-    "id": "demo-quiz-923",
+    "id": "demo-quiz-923", "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "الهدي",
     "level": "متوسط",
@@ -6828,7 +6828,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "الهدي: ما يُذبح من بهيمة الأنعام في أيام النحر لله تعالى. يجب على المتمتع والقارن، ومن فات وقوف عرفة عليه قضاء وفدية"
   },
   {
-    "id": "demo-quiz-924",
+    "id": "demo-quiz-924", "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "الوقوف بعرفة",
     "level": "صعب",
@@ -6836,7 +6836,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "يبدأ الوقوف بعرفة من زوال شمس التاسع من ذي الحجة ويمتد إلى طلوع فجر يوم النحر (العاشر). ومن وقف ولو لحظة في هذا الوقت أجزأه"
   },
   {
-    "id": "demo-quiz-925",
+    "id": "demo-quiz-925", "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "التاريخ",
     "level": "صعب",
@@ -6844,87 +6844,87 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "answer": "حجة النبي ﷺ الوحيدة كانت في السنة العاشرة للهجرة، وخطب فيها خطبة الوداع وقال: «إن دماءكم وأموالكم وأعراضكم عليكم حرام، كحرمة يومكم هذا في شهركم هذا في بلدكم هذا» — رواه البخاري (1739) ومسلم (1679)"
   },
   {
-    "id": "demo-quiz-926",
+    "id": "demo-quiz-926", "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "الكفارات",
     "level": "صعب",
     "question": "ما الجزاء الشرعي لمن أفسد حجه بالجماع قبل التحلل الأول؟",
     "answer": "يفسد الحج ويجب المضي في فساده وإتمامه، ثم قضاؤه في العام القابل، والهدي جزاءً عن الإفساد"
   },
-  { "id": "demo-quiz-927", "section": "الفرائض والمواريث", "category": "مبادئ", "level": "سهل", "question": "ما أسباب الإرث الثلاثة في الفقه الإسلامي؟", "answer": "النسب (القرابة)، والنكاح (الزوجية)، والولاء (ولاء العتق)" },
-  { "id": "demo-quiz-929", "section": "الفرائض والمواريث", "category": "الفروض", "level": "متوسط", "question": "ما نصيب الزوجة من تركة زوجها إذا لم يكن له ولد؟", "answer": "الربع (تستقل به إن كانت واحدة، فإن كانت أكثر اشتركن فيه)" },
-  { "id": "demo-quiz-930", "section": "الفرائض والمواريث", "category": "الفروض", "level": "متوسط", "question": "ما نصيب البنت الواحدة من تركة أبيها إذا لم يكن معها أخ؟", "answer": "النصف (الفرض المقرر لها حال الانفراد بلا مشارك)" },
-  { "id": "demo-quiz-931", "section": "الفرائض والمواريث", "category": "الحجب", "level": "متوسط", "question": "هل يرث الإخوة مع وجود الأب؟", "answer": "لا، الأب يحجب الإخوة جميعاً (شقيقاً ولأب ولأم) حجب حرمان" },
-  { "id": "demo-quiz-932", "section": "الفرائض والمواريث", "category": "التعصيب", "level": "متوسط", "question": "ما معنى التعصيب في علم الفرائض؟", "answer": "الإرث بلا تحديد نصيب مُسبَّق، بل يأخذ العاصب ما تبقى بعد أصحاب الفروض، أو الكل إن لم يوجدوا" },
-  { "id": "demo-quiz-933", "section": "الفرائض والمواريث", "category": "الفروض", "level": "متوسط", "question": "ما نصيب الأم من تركة ابنها إذا لم يكن للمتوفى ولد ولا جمع من الإخوة؟", "answer": "الثلث كاملاً (فإذا كان للمتوفى ولد أو جمع من الإخوة فللأم السدس)" },
-  { "id": "demo-quiz-934", "section": "الفرائض والمواريث", "category": "العول", "level": "صعب", "question": "ما العول في الميراث وما سببه؟", "answer": "العول: زيادة الفروض حتى تتجاوز المسألة الأصلية فتُعال (تُزاد) بقدر الزيادة وينقص نصيب كل وارث بنسبة واحدة. سببه: اجتماع الفروض وتزاحمها" },
-  { "id": "demo-quiz-935", "section": "الفرائض والمواريث", "category": "الرد", "level": "صعب", "question": "ما الرد في الميراث وما ضده؟", "answer": "الرد: إعادة ما فضل من التركة بعد الفروض على أصحاب الفروض أنفسهم بنسبة فروضهم (ضده: العول)" },
-  { "id": "demo-quiz-936", "section": "الفرائض والمواريث", "category": "مسائل", "level": "صعب", "question": "من الوارثون الذين لا يُحجبون حجب حرمان بأي حال؟", "answer": "ستة: الزوج، والزوجة، والأب، والأم، والابن، والبنت — هؤلاء لا يُسقطهم أحد بل يُقلِّل نصيبهم أحياناً" },
-  { "id": "demo-quiz-937", "section": "الأسماء الحسنى", "category": "المعنى", "level": "سهل", "question": "ما معنى اسم الله (الرحمن الرحيم)؟", "answer": "الرحمن: ذو الرحمة الواسعة الشاملة للخلق أجمعين. الرحيم: ذو الرحمة الخاصة بالمؤمنين يوم القيامة" },
-  { "id": "demo-quiz-938", "section": "الأسماء الحسنى", "category": "المعنى", "level": "سهل", "question": "ما معنى اسم الله (الرزاق)؟", "answer": "الذي يرزق جميع الخلق ويُوصل إليهم أرزاقهم، ورزقه لا ينقطع: ﴿إِنَّ اللَّهَ هُوَ الرَّزَّاقُ ذُو الْقُوَّةِ الْمَتِينُ﴾" },
-  { "id": "demo-quiz-940", "section": "الأسماء الحسنى", "category": "المعنى", "level": "متوسط", "question": "ما معنى اسم الله (الغني) وما أثره في حياة المسلم؟", "answer": "الغني: المستغني عن كل ما سواه، لا يحتاج إلى أحد بينما يحتاج إليه الجميع. أثره: اليأس مما في أيدي الناس والتعلق بالله وحده" },
-  { "id": "demo-quiz-941", "section": "الأسماء الحسنى", "category": "الفضل", "level": "متوسط", "question": "ما الأسماء الستة التي قال عنها النبي ﷺ إن فيها اسم الله الأعظم؟", "answer": "اختلف العلماء، والمشهور: الحي القيوم، وذو الجلال والإكرام، والرحمن الرحيم، إلى جانب الله والصمد" },
-  { "id": "demo-quiz-942", "section": "الأسماء الحسنى", "category": "العدد", "level": "سهل", "question": "كم عدد الأسماء الحسنى الواردة في الحديث الصحيح؟", "answer": "تسعة وتسعون اسماً: قال ﷺ: «إن لله تسعة وتسعين اسماً من أحصاها دخل الجنة» — رواه البخاري ومسلم" },
-  { "id": "demo-quiz-943", "section": "الأسماء الحسنى", "category": "الدلالة", "level": "صعب", "question": "ما معنى الإحصاء في حديث أسماء الله الحسنى؟", "answer": "قال ابن القيم: الإحصاء ثلاثة مراتب: حفظ ألفاظها، وفهم معانيها، والتعبد لله بمقتضاها في الدعاء والتوكل والرجاء والخوف" },
-  { "id": "demo-quiz-944", "section": "العلماء والأئمة", "category": "الأئمة الأربعة", "level": "سهل", "question": "من هو إمام أهل السنة الذي سُجن وجُلد في فتنة خلق القرآن ولم يَرْجِع؟", "answer": "الإمام أحمد بن حنبل رحمه الله (164 - 241 هـ)" },
-  { "id": "demo-quiz-945", "section": "العلماء والأئمة", "category": "الأئمة الأربعة", "level": "سهل", "question": "ما المذهب الفقهي الذي أسسه الإمام مالك بن أنس؟", "answer": "المذهب المالكي، وكتابه الأشهر: الموطأ — أقدم كتاب حديثي وصل إلينا" },
-  { "id": "demo-quiz-946", "section": "العلماء والأئمة", "category": "المحدثون", "level": "متوسط", "question": "من صاحب أشهر كتاب في الحديث وهو الصحيح المعروف بـ(صحيح البخاري)؟", "answer": "الإمام محمد بن إسماعيل البخاري (194 - 256 هـ)" },
-  { "id": "demo-quiz-947", "section": "العلماء والأئمة", "category": "المفسرون", "level": "متوسط", "question": "من الإمام الذي قال عنه ابن خزيمة بعدما قرأ تفسيره من أوله إلى آخره: ما أعلم على أديم الأرض أعلم منه؟", "answer": "ابن جرير الطبري صاحب (جامع البيان في تأويل القرآن) — أكبر تفاسير الحديث" },
-  { "id": "demo-quiz-948", "section": "العلماء والأئمة", "category": "الأصوليون", "level": "متوسط", "question": "من أول من صنَّف في أصول الفقه ووضع قواعده؟", "answer": "الإمام محمد بن إدريس الشافعي في كتابه (الرسالة)" },
-  { "id": "demo-quiz-949", "section": "العلماء والأئمة", "category": "المجددون", "level": "صعب", "question": "من العالم الذي جدَّد الإسلام على رأس المئة الثامنة وأُثني عليه بأنه مجدد عصره؟", "answer": "شيخ الإسلام ابن تيمية الحراني (661 - 728 هـ)، وتلميذه ابن قيم الجوزية (691 - 751 هـ)" },
-  { "id": "demo-quiz-950", "section": "العلماء والأئمة", "category": "العلماء العرب", "level": "صعب", "question": "من عالم الأندلس الذي تولى الوزارة في عهد بني أمية بقرطبة وأشهر كتبه (المحلى) و(الإحكام)؟", "answer": "الإمام ابن حزم الأندلسي الظاهري (384 - 456 هـ)" },
+  { "id": "demo-quiz-927", "documentation_status": "unsourced", "section": "الفرائض والمواريث", "category": "مبادئ", "level": "سهل", "question": "ما أسباب الإرث الثلاثة في الفقه الإسلامي؟", "answer": "النسب (القرابة)، والنكاح (الزوجية)، والولاء (ولاء العتق)" },
+  { "id": "demo-quiz-929", "documentation_status": "unsourced", "section": "الفرائض والمواريث", "category": "الفروض", "level": "متوسط", "question": "ما نصيب الزوجة من تركة زوجها إذا لم يكن له ولد؟", "answer": "الربع (تستقل به إن كانت واحدة، فإن كانت أكثر اشتركن فيه)" },
+  { "id": "demo-quiz-930", "documentation_status": "unsourced", "section": "الفرائض والمواريث", "category": "الفروض", "level": "متوسط", "question": "ما نصيب البنت الواحدة من تركة أبيها إذا لم يكن معها أخ؟", "answer": "النصف (الفرض المقرر لها حال الانفراد بلا مشارك)" },
+  { "id": "demo-quiz-931", "documentation_status": "unsourced", "section": "الفرائض والمواريث", "category": "الحجب", "level": "متوسط", "question": "هل يرث الإخوة مع وجود الأب؟", "answer": "لا، الأب يحجب الإخوة جميعاً (شقيقاً ولأب ولأم) حجب حرمان" },
+  { "id": "demo-quiz-932", "documentation_status": "unsourced", "section": "الفرائض والمواريث", "category": "التعصيب", "level": "متوسط", "question": "ما معنى التعصيب في علم الفرائض؟", "answer": "الإرث بلا تحديد نصيب مُسبَّق، بل يأخذ العاصب ما تبقى بعد أصحاب الفروض، أو الكل إن لم يوجدوا" },
+  { "id": "demo-quiz-933", "documentation_status": "unsourced", "section": "الفرائض والمواريث", "category": "الفروض", "level": "متوسط", "question": "ما نصيب الأم من تركة ابنها إذا لم يكن للمتوفى ولد ولا جمع من الإخوة؟", "answer": "الثلث كاملاً (فإذا كان للمتوفى ولد أو جمع من الإخوة فللأم السدس)" },
+  { "id": "demo-quiz-934", "documentation_status": "unsourced", "section": "الفرائض والمواريث", "category": "العول", "level": "صعب", "question": "ما العول في الميراث وما سببه؟", "answer": "العول: زيادة الفروض حتى تتجاوز المسألة الأصلية فتُعال (تُزاد) بقدر الزيادة وينقص نصيب كل وارث بنسبة واحدة. سببه: اجتماع الفروض وتزاحمها" },
+  { "id": "demo-quiz-935", "documentation_status": "unsourced", "section": "الفرائض والمواريث", "category": "الرد", "level": "صعب", "question": "ما الرد في الميراث وما ضده؟", "answer": "الرد: إعادة ما فضل من التركة بعد الفروض على أصحاب الفروض أنفسهم بنسبة فروضهم (ضده: العول)" },
+  { "id": "demo-quiz-936", "documentation_status": "unsourced", "section": "الفرائض والمواريث", "category": "مسائل", "level": "صعب", "question": "من الوارثون الذين لا يُحجبون حجب حرمان بأي حال؟", "answer": "ستة: الزوج، والزوجة، والأب، والأم، والابن، والبنت — هؤلاء لا يُسقطهم أحد بل يُقلِّل نصيبهم أحياناً" },
+  { "id": "demo-quiz-937", "documentation_status": "unsourced", "section": "الأسماء الحسنى", "category": "المعنى", "level": "سهل", "question": "ما معنى اسم الله (الرحمن الرحيم)؟", "answer": "الرحمن: ذو الرحمة الواسعة الشاملة للخلق أجمعين. الرحيم: ذو الرحمة الخاصة بالمؤمنين يوم القيامة" },
+  { "id": "demo-quiz-938", "documentation_status": "unsourced", "section": "الأسماء الحسنى", "category": "المعنى", "level": "سهل", "question": "ما معنى اسم الله (الرزاق)؟", "answer": "الذي يرزق جميع الخلق ويُوصل إليهم أرزاقهم، ورزقه لا ينقطع: ﴿إِنَّ اللَّهَ هُوَ الرَّزَّاقُ ذُو الْقُوَّةِ الْمَتِينُ﴾" },
+  { "id": "demo-quiz-940", "documentation_status": "unsourced", "section": "الأسماء الحسنى", "category": "المعنى", "level": "متوسط", "question": "ما معنى اسم الله (الغني) وما أثره في حياة المسلم؟", "answer": "الغني: المستغني عن كل ما سواه، لا يحتاج إلى أحد بينما يحتاج إليه الجميع. أثره: اليأس مما في أيدي الناس والتعلق بالله وحده" },
+  { "id": "demo-quiz-941", "documentation_status": "unsourced", "section": "الأسماء الحسنى", "category": "الفضل", "level": "متوسط", "question": "ما الأسماء الستة التي قال عنها النبي ﷺ إن فيها اسم الله الأعظم؟", "answer": "اختلف العلماء، والمشهور: الحي القيوم، وذو الجلال والإكرام، والرحمن الرحيم، إلى جانب الله والصمد" },
+  { "id": "demo-quiz-942", "documentation_status": "unsourced", "section": "الأسماء الحسنى", "category": "العدد", "level": "سهل", "question": "كم عدد الأسماء الحسنى الواردة في الحديث الصحيح؟", "answer": "تسعة وتسعون اسماً: قال ﷺ: «إن لله تسعة وتسعين اسماً من أحصاها دخل الجنة» — رواه البخاري ومسلم" },
+  { "id": "demo-quiz-943", "documentation_status": "unsourced", "section": "الأسماء الحسنى", "category": "الدلالة", "level": "صعب", "question": "ما معنى الإحصاء في حديث أسماء الله الحسنى؟", "answer": "قال ابن القيم: الإحصاء ثلاثة مراتب: حفظ ألفاظها، وفهم معانيها، والتعبد لله بمقتضاها في الدعاء والتوكل والرجاء والخوف" },
+  { "id": "demo-quiz-944", "documentation_status": "unsourced", "section": "العلماء والأئمة", "category": "الأئمة الأربعة", "level": "سهل", "question": "من هو إمام أهل السنة الذي سُجن وجُلد في فتنة خلق القرآن ولم يَرْجِع؟", "answer": "الإمام أحمد بن حنبل رحمه الله (164 - 241 هـ)" },
+  { "id": "demo-quiz-945", "documentation_status": "unsourced", "section": "العلماء والأئمة", "category": "الأئمة الأربعة", "level": "سهل", "question": "ما المذهب الفقهي الذي أسسه الإمام مالك بن أنس؟", "answer": "المذهب المالكي، وكتابه الأشهر: الموطأ — أقدم كتاب حديثي وصل إلينا" },
+  { "id": "demo-quiz-946", "documentation_status": "unsourced", "section": "العلماء والأئمة", "category": "المحدثون", "level": "متوسط", "question": "من صاحب أشهر كتاب في الحديث وهو الصحيح المعروف بـ(صحيح البخاري)؟", "answer": "الإمام محمد بن إسماعيل البخاري (194 - 256 هـ)" },
+  { "id": "demo-quiz-947", "documentation_status": "unsourced", "section": "العلماء والأئمة", "category": "المفسرون", "level": "متوسط", "question": "من الإمام الذي قال عنه ابن خزيمة بعدما قرأ تفسيره من أوله إلى آخره: ما أعلم على أديم الأرض أعلم منه؟", "answer": "ابن جرير الطبري صاحب (جامع البيان في تأويل القرآن) — أكبر تفاسير الحديث" },
+  { "id": "demo-quiz-948", "documentation_status": "unsourced", "section": "العلماء والأئمة", "category": "الأصوليون", "level": "متوسط", "question": "من أول من صنَّف في أصول الفقه ووضع قواعده؟", "answer": "الإمام محمد بن إدريس الشافعي في كتابه (الرسالة)" },
+  { "id": "demo-quiz-949", "documentation_status": "unsourced", "section": "العلماء والأئمة", "category": "المجددون", "level": "صعب", "question": "من العالم الذي جدَّد الإسلام على رأس المئة الثامنة وأُثني عليه بأنه مجدد عصره؟", "answer": "شيخ الإسلام ابن تيمية الحراني (661 - 728 هـ)، وتلميذه ابن قيم الجوزية (691 - 751 هـ)" },
+  { "id": "demo-quiz-950", "documentation_status": "unsourced", "section": "العلماء والأئمة", "category": "العلماء العرب", "level": "صعب", "question": "من عالم الأندلس الذي تولى الوزارة في عهد بني أمية بقرطبة وأشهر كتبه (المحلى) و(الإحكام)؟", "answer": "الإمام ابن حزم الأندلسي الظاهري (384 - 456 هـ)" },
 
   // ── دفعة توسيع Phase 9 (2026-07-18) — 12 سؤالاً جديداً موزَّعة على
   // أقسام ناقصة فعلياً (كانت 1-4 أسئلة فقط)، كل سؤال بحقلي explanation
   // وreference جديدين (اختياريان، راجع تعليق النوع أعلاه لسبب عدم
   // استهلاكهما بعد في واجهة اللعبة الحية) ──────────────────────────────
-  { "id": "demo-quiz-951", "section": "الآداب والأخلاق", "category": "آداب الاستئذان", "level": "سهل", "question": "كم مرة يُستحب للمسلم أن يستأذن قبل دخول بيت غيره؟ وماذا يفعل إن لم يُؤذَن له؟", "answer": "ثلاث مرات، فإن لم يُؤذَن له فليرجع.", "explanation": "دليله حديث أبي موسى الأشعري رضي الله عنه أن النبي ﷺ قال: «الاستئذان ثلاث، فإن أُذِن لك وإلا فارجع».", "reference": "رواه البخاري (6245) ومسلم (2153)" },
-  { "id": "demo-quiz-952", "section": "الآداب والأخلاق", "category": "آداب المجلس", "level": "سهل", "question": "ما حكم إقامة الرجل من مجلسه ثم الجلوس فيه؟", "answer": "لا يجوز؛ نهى النبي ﷺ عن أن يُقيم الرجل أخاه من مجلسه ثم يجلس فيه، بل يُقال: تفسَّحوا وتوسَّعوا.", "explanation": "من آداب المجالس احترام من سبق إلى مكانه، والأمر بالتوسع بدل إخراج الجالس.", "reference": "رواه البخاري (6270) ومسلم (2177) من حديث ابن عمر رضي الله عنهما" },
-  { "id": "demo-quiz-953", "section": "الآداب والأخلاق", "category": "آداب الطريق", "level": "متوسط", "question": "ما حق الطريق الذي أمر النبي ﷺ بأدائه عند الجلوس على الطرقات؟", "answer": "غض البصر، وكف الأذى، ورد السلام، والأمر بالمعروف والنهي عن المنكر.", "explanation": "لما قال الصحابة: ما لنا بدّ من مجالسنا نتحدث فيها، قال ﷺ: «فإذا أبيتم إلا المجلس فأعطوا الطريق حقه» فذكروا هذه الحقوق.", "reference": "رواه البخاري (2465) ومسلم (2121) من حديث أبي سعيد الخدري رضي الله عنه" },
-  { "id": "demo-quiz-954", "section": "الحج والعمرة", "category": "أركان الحج", "level": "متوسط", "question": "ما أركان الحج الأربعة عند جمهور الفقهاء؟", "answer": "الإحرام، والوقوف بعرفة، وطواف الإفاضة، والسعي بين الصفا والمروة.", "explanation": "هذه الأركان الأربعة لا يصح الحج بدونها ولا يُجبَر تركها بدم. ملاحظة: الحنفية يرون أن الأركان اثنان فقط (الوقوف بعرفة وطواف الإفاضة) ويعدّون الإحرام شرطاً والسعي واجباً لا ركناً — خلاف فقهي معروف بين المذاهب.", "reference": "الفقه على المذاهب الأربعة — عبد الرحمن الجزيري" },
-  { "id": "demo-quiz-955", "section": "الحج والعمرة", "category": "محظورات الإحرام", "level": "متوسط", "question": "اذكر ثلاثة من محظورات الإحرام العامة (المشتركة بين الرجل والمرأة).", "answer": "تقليم الأظفار، وإزالة الشعر، والتطيب، وقتل الصيد البري، وعقد النكاح.", "explanation": "محظورات الإحرام أحد عشر محظوراً، بعضها خاص بالرجل (كتغطية الرأس ولبس المخيط) وبعضها خاص بالمرأة (كتغطية الوجه والكفين)، وبعضها مشترك بين الجميع كالمذكور في الإجابة.", "reference": "الفقه الإسلامي وأدلته — وهبة الزحيلي، كتاب الحج" },
-  { "id": "demo-quiz-956", "section": "الحج والعمرة", "category": "الفرق بين الحج والعمرة", "level": "سهل", "question": "ما الفرق الرئيسي بين الحج والعمرة من حيث الزمن والأركان؟", "answer": "الحج له وقت محدد (أشهر الحج، ويجب أداؤه في أيام معينة من ذي الحجة) وله أركان إضافية كالوقوف بعرفة، بينما العمرة تصح في أي وقت من العام وأركانها أقل (الإحرام والطواف والسعي والحلق أو التقصير).", "explanation": "لذلك تُسمى العمرة أحياناً بـ«الحج الأصغر»، وكلاهما عبادة مستقلة لهما نفس الميقات المكاني لكن يختلفان في الزمن والأركان.", "reference": "الفقه الإسلامي وأدلته — وهبة الزحيلي، كتاب الحج والعمرة" },
-  { "id": "demo-quiz-957", "section": "الأنبياء", "category": "أولو العزم", "level": "سهل", "question": "من هم أولو العزم من الرسل الخمسة؟", "answer": "نوح، وإبراهيم، وموسى، وعيسى، ومحمد صلى الله عليهم وسلم.", "explanation": "سُمّوا أولي العزم لعظيم صبرهم وثباتهم على الدعوة رغم شدة الأذى الذي لاقوه من أقوامهم. قال تعالى: ﴿فَٱصْبِرْ كَمَا صَبَرَ أُو۟لُوا۟ ٱلْعَزْمِ مِنَ ٱلرُّسُلِ﴾.", "reference": "سورة الأحقاف: 35" },
-  { "id": "demo-quiz-958", "section": "الأنبياء", "category": "قصص الأنبياء", "level": "متوسط", "question": "ما معجزة سيدنا صالح عليه السلام التي أرسلها الله لقومه ثمود؟", "answer": "الناقة، التي أخرجها الله له من صخرة بمعجزة خاصة، وأمر قومه بعدم إيذائها وإعطائها نصيبها من الماء.", "explanation": "لما عقروا الناقة عصياناً لأمر نبيهم، أخذهم الله بصيحة أهلكتهم جميعاً إلا صالحاً ومن آمن معه.", "reference": "سورة الأعراف: 73-79، وسورة الشمس: 11-14" },
-  { "id": "demo-quiz-959", "section": "الأنبياء", "category": "قصص الأنبياء", "level": "سهل", "question": "كم المدة التي مكثها نبي الله نوح عليه السلام يدعو قومه كما وردت في القرآن الكريم؟", "answer": "ألف سنة إلا خمسين عاماً (950 سنة).", "explanation": "قال تعالى: ﴿وَلَقَدْ أَرْسَلْنَا نُوحًا إِلَىٰ قَوْمِهِۦ فَلَبِثَ فِيهِمْ أَلْفَ سَنَةٍ إِلَّا خَمْسِينَ عَامًا فَأَخَذَهُمُ ٱلطُّوفَانُ وَهُمْ ظَٰلِمُونَ﴾ — وهذه أطول مدة دعوة مذكورة لنبي في القرآن الكريم.", "reference": "سورة العنكبوت: 14" },
-  { "id": "demo-quiz-960", "section": "الفرائض والمواريث", "category": "الفروض المقدرة", "level": "صعب", "question": "ما الفروض الستة المقدَّرة في علم المواريث؟", "answer": "النصف، والربع، والثمن، والثلثان، والثلث، والسدس.", "explanation": "هذه هي الأنصبة الستة التي حدَّدها الشرع لأصحاب الفروض (كالزوج والزوجة والأبناء والوالدين)، ولكل صنف من الورثة نصيب من هذه الفروض حسب حالته وقربه من المتوفى ووجود أو عدم وجود ورثة آخرين معه.", "reference": "الفقه الإسلامي وأدلته — وهبة الزحيلي، كتاب الفرائض" },
-  { "id": "demo-quiz-961", "section": "الفرائض والمواريث", "category": "ميراث الزوجة", "level": "متوسط", "question": "كم نصيب الزوجة من ميراث زوجها إن كان له منها أو من غيرها أولاد؟", "answer": "الثُّمن.", "explanation": "أما إن لم يكن للزوج أولاد فنصيب الزوجة يرتفع إلى الرُّبع. قال تعالى: ﴿وَلَهُنَّ ٱلرُّبُعُ مِمَّا تَرَكْتُمْ إِن لَّمْ يَكُن لَّكُمْ وَلَدٌ ۚ فَإِن كَانَ لَكُمْ وَلَدٌ فَلَهُنَّ ٱلثُّمُنُ مِمَّا تَرَكْتُم﴾.", "reference": "سورة النساء: 12" },
-  { "id": "demo-quiz-962", "section": "الفرائض والمواريث", "category": "العول", "level": "صعب", "question": "ما المقصود بـ«العول» في علم الفرائض؟", "answer": "زيادة مجموع أنصبة أصحاب الفروض عن أصل التركة (أي تتجاوز سهامهم مجموع المال)، فيُنقَص نصيب كل وارث بنسبة متساوية ليتساوى المجموع مع أصل التركة.", "explanation": "أول من قضى بالعول هو الخليفة عمر بن الخطاب رضي الله عنه حين اجتمع عنده فرضيّون في مسألة زادت فيها الفروض عن التركة، فاستشار الصحابة وقضى بالعول.", "reference": "الفقه الإسلامي وأدلته — وهبة الزحيلي، كتاب الفرائض (باب العول)" },
+  { "id": "demo-quiz-951", "documentation_status": "sourced", "section": "الآداب والأخلاق", "category": "آداب الاستئذان", "level": "سهل", "question": "كم مرة يُستحب للمسلم أن يستأذن قبل دخول بيت غيره؟ وماذا يفعل إن لم يُؤذَن له؟", "answer": "ثلاث مرات، فإن لم يُؤذَن له فليرجع.", "explanation": "دليله حديث أبي موسى الأشعري رضي الله عنه أن النبي ﷺ قال: «الاستئذان ثلاث، فإن أُذِن لك وإلا فارجع».", "reference": "رواه البخاري (6245) ومسلم (2153)" },
+  { "id": "demo-quiz-952", "documentation_status": "sourced", "section": "الآداب والأخلاق", "category": "آداب المجلس", "level": "سهل", "question": "ما حكم إقامة الرجل من مجلسه ثم الجلوس فيه؟", "answer": "لا يجوز؛ نهى النبي ﷺ عن أن يُقيم الرجل أخاه من مجلسه ثم يجلس فيه، بل يُقال: تفسَّحوا وتوسَّعوا.", "explanation": "من آداب المجالس احترام من سبق إلى مكانه، والأمر بالتوسع بدل إخراج الجالس.", "reference": "رواه البخاري (6270) ومسلم (2177) من حديث ابن عمر رضي الله عنهما" },
+  { "id": "demo-quiz-953", "documentation_status": "sourced", "section": "الآداب والأخلاق", "category": "آداب الطريق", "level": "متوسط", "question": "ما حق الطريق الذي أمر النبي ﷺ بأدائه عند الجلوس على الطرقات؟", "answer": "غض البصر، وكف الأذى، ورد السلام، والأمر بالمعروف والنهي عن المنكر.", "explanation": "لما قال الصحابة: ما لنا بدّ من مجالسنا نتحدث فيها، قال ﷺ: «فإذا أبيتم إلا المجلس فأعطوا الطريق حقه» فذكروا هذه الحقوق.", "reference": "رواه البخاري (2465) ومسلم (2121) من حديث أبي سعيد الخدري رضي الله عنه" },
+  { "id": "demo-quiz-954", "documentation_status": "sourced", "section": "الحج والعمرة", "category": "أركان الحج", "level": "متوسط", "question": "ما أركان الحج الأربعة عند جمهور الفقهاء؟", "answer": "الإحرام، والوقوف بعرفة، وطواف الإفاضة، والسعي بين الصفا والمروة.", "explanation": "هذه الأركان الأربعة لا يصح الحج بدونها ولا يُجبَر تركها بدم. ملاحظة: الحنفية يرون أن الأركان اثنان فقط (الوقوف بعرفة وطواف الإفاضة) ويعدّون الإحرام شرطاً والسعي واجباً لا ركناً — خلاف فقهي معروف بين المذاهب.", "reference": "الفقه على المذاهب الأربعة — عبد الرحمن الجزيري" },
+  { "id": "demo-quiz-955", "documentation_status": "sourced", "section": "الحج والعمرة", "category": "محظورات الإحرام", "level": "متوسط", "question": "اذكر ثلاثة من محظورات الإحرام العامة (المشتركة بين الرجل والمرأة).", "answer": "تقليم الأظفار، وإزالة الشعر، والتطيب، وقتل الصيد البري، وعقد النكاح.", "explanation": "محظورات الإحرام أحد عشر محظوراً، بعضها خاص بالرجل (كتغطية الرأس ولبس المخيط) وبعضها خاص بالمرأة (كتغطية الوجه والكفين)، وبعضها مشترك بين الجميع كالمذكور في الإجابة.", "reference": "الفقه الإسلامي وأدلته — وهبة الزحيلي، كتاب الحج" },
+  { "id": "demo-quiz-956", "documentation_status": "sourced", "section": "الحج والعمرة", "category": "الفرق بين الحج والعمرة", "level": "سهل", "question": "ما الفرق الرئيسي بين الحج والعمرة من حيث الزمن والأركان؟", "answer": "الحج له وقت محدد (أشهر الحج، ويجب أداؤه في أيام معينة من ذي الحجة) وله أركان إضافية كالوقوف بعرفة، بينما العمرة تصح في أي وقت من العام وأركانها أقل (الإحرام والطواف والسعي والحلق أو التقصير).", "explanation": "لذلك تُسمى العمرة أحياناً بـ«الحج الأصغر»، وكلاهما عبادة مستقلة لهما نفس الميقات المكاني لكن يختلفان في الزمن والأركان.", "reference": "الفقه الإسلامي وأدلته — وهبة الزحيلي، كتاب الحج والعمرة" },
+  { "id": "demo-quiz-957", "documentation_status": "sourced", "section": "الأنبياء", "category": "أولو العزم", "level": "سهل", "question": "من هم أولو العزم من الرسل الخمسة؟", "answer": "نوح، وإبراهيم، وموسى، وعيسى، ومحمد صلى الله عليهم وسلم.", "explanation": "سُمّوا أولي العزم لعظيم صبرهم وثباتهم على الدعوة رغم شدة الأذى الذي لاقوه من أقوامهم. قال تعالى: ﴿فَٱصْبِرْ كَمَا صَبَرَ أُو۟لُوا۟ ٱلْعَزْمِ مِنَ ٱلرُّسُلِ﴾.", "reference": "سورة الأحقاف: 35" },
+  { "id": "demo-quiz-958", "documentation_status": "sourced", "section": "الأنبياء", "category": "قصص الأنبياء", "level": "متوسط", "question": "ما معجزة سيدنا صالح عليه السلام التي أرسلها الله لقومه ثمود؟", "answer": "الناقة، التي أخرجها الله له من صخرة بمعجزة خاصة، وأمر قومه بعدم إيذائها وإعطائها نصيبها من الماء.", "explanation": "لما عقروا الناقة عصياناً لأمر نبيهم، أخذهم الله بصيحة أهلكتهم جميعاً إلا صالحاً ومن آمن معه.", "reference": "سورة الأعراف: 73-79، وسورة الشمس: 11-14" },
+  { "id": "demo-quiz-959", "documentation_status": "sourced", "section": "الأنبياء", "category": "قصص الأنبياء", "level": "سهل", "question": "كم المدة التي مكثها نبي الله نوح عليه السلام يدعو قومه كما وردت في القرآن الكريم؟", "answer": "ألف سنة إلا خمسين عاماً (950 سنة).", "explanation": "قال تعالى: ﴿وَلَقَدْ أَرْسَلْنَا نُوحًا إِلَىٰ قَوْمِهِۦ فَلَبِثَ فِيهِمْ أَلْفَ سَنَةٍ إِلَّا خَمْسِينَ عَامًا فَأَخَذَهُمُ ٱلطُّوفَانُ وَهُمْ ظَٰلِمُونَ﴾ — وهذه أطول مدة دعوة مذكورة لنبي في القرآن الكريم.", "reference": "سورة العنكبوت: 14" },
+  { "id": "demo-quiz-960", "documentation_status": "sourced", "section": "الفرائض والمواريث", "category": "الفروض المقدرة", "level": "صعب", "question": "ما الفروض الستة المقدَّرة في علم المواريث؟", "answer": "النصف، والربع، والثمن، والثلثان، والثلث، والسدس.", "explanation": "هذه هي الأنصبة الستة التي حدَّدها الشرع لأصحاب الفروض (كالزوج والزوجة والأبناء والوالدين)، ولكل صنف من الورثة نصيب من هذه الفروض حسب حالته وقربه من المتوفى ووجود أو عدم وجود ورثة آخرين معه.", "reference": "الفقه الإسلامي وأدلته — وهبة الزحيلي، كتاب الفرائض" },
+  { "id": "demo-quiz-961", "documentation_status": "sourced", "section": "الفرائض والمواريث", "category": "ميراث الزوجة", "level": "متوسط", "question": "كم نصيب الزوجة من ميراث زوجها إن كان له منها أو من غيرها أولاد؟", "answer": "الثُّمن.", "explanation": "أما إن لم يكن للزوج أولاد فنصيب الزوجة يرتفع إلى الرُّبع. قال تعالى: ﴿وَلَهُنَّ ٱلرُّبُعُ مِمَّا تَرَكْتُمْ إِن لَّمْ يَكُن لَّكُمْ وَلَدٌ ۚ فَإِن كَانَ لَكُمْ وَلَدٌ فَلَهُنَّ ٱلثُّمُنُ مِمَّا تَرَكْتُم﴾.", "reference": "سورة النساء: 12" },
+  { "id": "demo-quiz-962", "documentation_status": "sourced", "section": "الفرائض والمواريث", "category": "العول", "level": "صعب", "question": "ما المقصود بـ«العول» في علم الفرائض؟", "answer": "زيادة مجموع أنصبة أصحاب الفروض عن أصل التركة (أي تتجاوز سهامهم مجموع المال)، فيُنقَص نصيب كل وارث بنسبة متساوية ليتساوى المجموع مع أصل التركة.", "explanation": "أول من قضى بالعول هو الخليفة عمر بن الخطاب رضي الله عنه حين اجتمع عنده فرضيّون في مسألة زادت فيها الفروض عن التركة، فاستشار الصحابة وقضى بالعول.", "reference": "الفقه الإسلامي وأدلته — وهبة الزحيلي، كتاب الفرائض (باب العول)" },
 
   // ── دفعة توسيع Phase 9 الثانية (2026-07-18) — 9 أسئلة إضافية موزَّعة
   // على أقسام بقيت رقيقة بعد الدفعة الأولى ──────────────────────────────
-  { "id": "demo-quiz-963", "section": "الفتوحات الإسلامية", "category": "فتح بيت المقدس", "level": "متوسط", "question": "في عهد أي خليفة فُتح بيت المقدس؟ ومتى؟", "answer": "في عهد الخليفة عمر بن الخطاب رضي الله عنه، سنة 16 هـ (وذكر بعض المؤرخين سنة 15 هـ) الموافقة لعام 637م.", "explanation": "تميّز فتح بيت المقدس بأن عمر رضي الله عنه قدم بنفسه لتسلّم مفاتيح المدينة صلحاً بعد طلب أهلها ألّا يُسلِّموها إلا للخليفة نفسه، فكتب لهم العهدة العمرية التي أمّنت أهل المدينة على أنفسهم وكنائسهم.", "reference": "البداية والنهاية — ابن كثير، أحداث سنة 16 هـ" },
-  { "id": "demo-quiz-964", "section": "الفتوحات الإسلامية", "category": "فتح الأندلس", "level": "سهل", "question": "من القائد المسلم الذي فتح الأندلس؟ وفي أي سنة؟", "answer": "طارق بن زياد، سنة 92 هـ (711م).", "explanation": "عبر طارق بن زياد بجيشه من المغرب إلى شبه الجزيرة الأيبيرية عند الجبل الذي يحمل اسمه اليوم (جبل طارق)، وكانت بداية الفتح الإسلامي للأندلس الذي استمر قرابة ثمانية قرون.", "reference": "الفتح الإسلامي للأندلس — مصادر تاريخية متعددة، سنة 92 هـ" },
-  { "id": "demo-quiz-965", "section": "الفتوحات الإسلامية", "category": "فتح مكة", "level": "سهل", "question": "في أي سنة كان فتح مكة؟ وما موقف النبي ﷺ من أهلها بعد الفتح؟", "answer": "سنة 8 هـ. قال النبي ﷺ لأهل مكة: «اذهبوا فأنتم الطلقاء» — رواه البيهقي في السنن الكبرى وابن هشام في السيرة، وهو مشهور في كتب المغازي عفواً عاماً عنهم رغم ما لاقاه من أذاهم سابقاً.", "explanation": "فتح مكة كان فتحاً بلا قتال يُذكر، ودخل النبي ﷺ مكة متواضعاً خاشعاً لله شكراً على النصر، لا فخراً أو انتقاماً، وهو أعظم مثال على سماحة الإسلام مع المخالفين بعد التمكين.", "reference": "الرحيق المختوم — صفي الرحمن المباركفوري، فصل فتح مكة" },
-  { "id": "demo-quiz-966", "section": "الأذكار والأدعية", "category": "أذكار الصلاة", "level": "سهل", "question": "ماذا يُشرع للمصلي أن يقول عقب السلام من الصلاة المكتوبة (أول الأذكار)؟", "answer": "أستغفر الله (ثلاثاً)، ثم: اللهم أنت السلام ومنك السلام تباركت يا ذا الجلال والإكرام.", "explanation": "هذا أول ما يُبدَأ به من أذكار ما بعد الصلاة المكتوبة، ثم تتلوه بقية الأذكار المعروفة (التسبيح والتحميد والتكبير، وآية الكرسي، والمعوذات).", "reference": "رواه مسلم (591) من حديث ثوبان رضي الله عنه" },
-  { "id": "demo-quiz-967", "section": "الأذكار والأدعية", "category": "فضل الاستغفار", "level": "متوسط", "question": "ما الأثران اللذان وعد الله بهما من لازم الاستغفار كما في سورة نوح؟", "answer": "إرسال المطر (الغيث) عليهم مدراراً، وإمدادهم بالأموال والبنين.", "explanation": "قال تعالى على لسان نوح عليه السلام: ﴿فَقُلْتُ ٱسْتَغْفِرُوا۟ رَبَّكُمْ إِنَّهُۥ كَانَ غَفَّارًا * يُرْسِلِ ٱلسَّمَآءَ عَلَيْكُم مِّدْرَارًا * وَيُمْدِدْكُم بِأَمْوَٰلٍ وَبَنِينَ وَيَجْعَل لَّكُمْ جَنَّٰتٍ وَيَجْعَل لَّكُمْ أَنْهَٰرًا﴾.", "reference": "سورة نوح: 10-12" },
-  { "id": "demo-quiz-968", "section": "الأذكار والأدعية", "category": "أذكار الصباح والمساء", "level": "سهل", "question": "لماذا شُرعت أذكار الصباح والمساء تحديداً في هذين الوقتين؟", "answer": "لأنهما وقتا تبدُّل الحراسة الملائكية وبداية يوم جديد أو ليلة جديدة، ولحاجة العبد للاستعانة بالله وحفظه في مطلع النهار ومطلع الليل من شرور الجن والإنس وآفات النفس.", "explanation": "وردت أحاديث كثيرة صحيحة في فضل المحافظة على أذكار الصباح والمساء وأنها حرز للعبد من الآفات والمكاره بإذن الله طوال يومه أو ليلته.", "reference": "الأذكار النووية — الإمام النووي، باب أذكار الصباح والمساء" },
-  { "id": "demo-quiz-969", "section": "الحديث", "category": "مصطلح الحديث", "level": "متوسط", "question": "ما شروط الحديث الصحيح الخمسة عند علماء الحديث؟", "answer": "اتصال السند، وعدالة الرواة، وتمام ضبطهم، والسلامة من الشذوذ، والسلامة من العلة القادحة.", "explanation": "إذا اختل شرط واحد من هذه الشروط الخمسة خرج الحديث من رتبة الصحيح إلى مرتبة أدنى (حسن أو ضعيف) بحسب الشرط المختل وشدة الخلل فيه.", "reference": "نخبة الفكر في مصطلح أهل الأثر — ابن حجر العسقلاني" },
-  { "id": "demo-quiz-970", "section": "الحديث", "category": "مصطلح الحديث", "level": "صعب", "question": "ما تعريف الحديث المتواتر؟ وما حكمه من حيث القبول؟", "answer": "هو ما رواه جمع كثير عن جمع كثير يستحيل عادةً تواطؤهم على الكذب، في كل طبقات السند، عن شيء محسوس. حكمه: يفيد العلم اليقيني القطعي، ولا يُبحث في عدالة رواته لكثرتهم.", "explanation": "المتواتر أعلى مراتب الحديث من حيث القبول، ويقابله خبر الآحاد (ما لم يبلغ حد التواتر) الذي يفيد الظن الغالب لا اليقين القطعي عند جمهور الأصوليين، وإن كان العمل به واجباً إذا صح.", "reference": "نزهة النظر شرح نخبة الفكر — ابن حجر العسقلاني" },
-  { "id": "demo-quiz-971", "section": "الحديث", "category": "أول التصنيف", "level": "صعب", "question": "ما أول كتاب حديثي مُصنَّف على الأبواب الفقهية وصل إلينا كاملاً؟", "answer": "الموطأ للإمام مالك بن أنس.", "explanation": "سبق تصنيف مالك للموطأ تصنيف صحيح البخاري بأكثر من قرن ونصف؛ ولذلك يُعدّ الموطأ من أقدم وأوثق المصنفات الحديثية الفقهية التي وصلت إلينا كاملة، وقد وصفه الإمام الشافعي بأنه أصح كتاب بعد كتاب الله في زمانه (قبل ظهور الصحيحين).", "reference": "موطأ الإمام مالك — مقدمة التحقيق، وسير أعلام النبلاء للذهبي" },
+  { "id": "demo-quiz-963", "documentation_status": "sourced", "section": "الفتوحات الإسلامية", "category": "فتح بيت المقدس", "level": "متوسط", "question": "في عهد أي خليفة فُتح بيت المقدس؟ ومتى؟", "answer": "في عهد الخليفة عمر بن الخطاب رضي الله عنه، سنة 16 هـ (وذكر بعض المؤرخين سنة 15 هـ) الموافقة لعام 637م.", "explanation": "تميّز فتح بيت المقدس بأن عمر رضي الله عنه قدم بنفسه لتسلّم مفاتيح المدينة صلحاً بعد طلب أهلها ألّا يُسلِّموها إلا للخليفة نفسه، فكتب لهم العهدة العمرية التي أمّنت أهل المدينة على أنفسهم وكنائسهم.", "reference": "البداية والنهاية — ابن كثير، أحداث سنة 16 هـ" },
+  { "id": "demo-quiz-964", "documentation_status": "sourced", "section": "الفتوحات الإسلامية", "category": "فتح الأندلس", "level": "سهل", "question": "من القائد المسلم الذي فتح الأندلس؟ وفي أي سنة؟", "answer": "طارق بن زياد، سنة 92 هـ (711م).", "explanation": "عبر طارق بن زياد بجيشه من المغرب إلى شبه الجزيرة الأيبيرية عند الجبل الذي يحمل اسمه اليوم (جبل طارق)، وكانت بداية الفتح الإسلامي للأندلس الذي استمر قرابة ثمانية قرون.", "reference": "الفتح الإسلامي للأندلس — مصادر تاريخية متعددة، سنة 92 هـ" },
+  { "id": "demo-quiz-965", "documentation_status": "sourced", "section": "الفتوحات الإسلامية", "category": "فتح مكة", "level": "سهل", "question": "في أي سنة كان فتح مكة؟ وما موقف النبي ﷺ من أهلها بعد الفتح؟", "answer": "سنة 8 هـ. قال النبي ﷺ لأهل مكة: «اذهبوا فأنتم الطلقاء» — رواه البيهقي في السنن الكبرى وابن هشام في السيرة، وهو مشهور في كتب المغازي عفواً عاماً عنهم رغم ما لاقاه من أذاهم سابقاً.", "explanation": "فتح مكة كان فتحاً بلا قتال يُذكر، ودخل النبي ﷺ مكة متواضعاً خاشعاً لله شكراً على النصر، لا فخراً أو انتقاماً، وهو أعظم مثال على سماحة الإسلام مع المخالفين بعد التمكين.", "reference": "الرحيق المختوم — صفي الرحمن المباركفوري، فصل فتح مكة" },
+  { "id": "demo-quiz-966", "documentation_status": "sourced", "section": "الأذكار والأدعية", "category": "أذكار الصلاة", "level": "سهل", "question": "ماذا يُشرع للمصلي أن يقول عقب السلام من الصلاة المكتوبة (أول الأذكار)؟", "answer": "أستغفر الله (ثلاثاً)، ثم: اللهم أنت السلام ومنك السلام تباركت يا ذا الجلال والإكرام.", "explanation": "هذا أول ما يُبدَأ به من أذكار ما بعد الصلاة المكتوبة، ثم تتلوه بقية الأذكار المعروفة (التسبيح والتحميد والتكبير، وآية الكرسي، والمعوذات).", "reference": "رواه مسلم (591) من حديث ثوبان رضي الله عنه" },
+  { "id": "demo-quiz-967", "documentation_status": "sourced", "section": "الأذكار والأدعية", "category": "فضل الاستغفار", "level": "متوسط", "question": "ما الأثران اللذان وعد الله بهما من لازم الاستغفار كما في سورة نوح؟", "answer": "إرسال المطر (الغيث) عليهم مدراراً، وإمدادهم بالأموال والبنين.", "explanation": "قال تعالى على لسان نوح عليه السلام: ﴿فَقُلْتُ ٱسْتَغْفِرُوا۟ رَبَّكُمْ إِنَّهُۥ كَانَ غَفَّارًا * يُرْسِلِ ٱلسَّمَآءَ عَلَيْكُم مِّدْرَارًا * وَيُمْدِدْكُم بِأَمْوَٰلٍ وَبَنِينَ وَيَجْعَل لَّكُمْ جَنَّٰتٍ وَيَجْعَل لَّكُمْ أَنْهَٰرًا﴾.", "reference": "سورة نوح: 10-12" },
+  { "id": "demo-quiz-968", "documentation_status": "sourced", "section": "الأذكار والأدعية", "category": "أذكار الصباح والمساء", "level": "سهل", "question": "لماذا شُرعت أذكار الصباح والمساء تحديداً في هذين الوقتين؟", "answer": "لأنهما وقتا تبدُّل الحراسة الملائكية وبداية يوم جديد أو ليلة جديدة، ولحاجة العبد للاستعانة بالله وحفظه في مطلع النهار ومطلع الليل من شرور الجن والإنس وآفات النفس.", "explanation": "وردت أحاديث كثيرة صحيحة في فضل المحافظة على أذكار الصباح والمساء وأنها حرز للعبد من الآفات والمكاره بإذن الله طوال يومه أو ليلته.", "reference": "الأذكار النووية — الإمام النووي، باب أذكار الصباح والمساء" },
+  { "id": "demo-quiz-969", "documentation_status": "sourced", "section": "الحديث", "category": "مصطلح الحديث", "level": "متوسط", "question": "ما شروط الحديث الصحيح الخمسة عند علماء الحديث؟", "answer": "اتصال السند، وعدالة الرواة، وتمام ضبطهم، والسلامة من الشذوذ، والسلامة من العلة القادحة.", "explanation": "إذا اختل شرط واحد من هذه الشروط الخمسة خرج الحديث من رتبة الصحيح إلى مرتبة أدنى (حسن أو ضعيف) بحسب الشرط المختل وشدة الخلل فيه.", "reference": "نخبة الفكر في مصطلح أهل الأثر — ابن حجر العسقلاني" },
+  { "id": "demo-quiz-970", "documentation_status": "sourced", "section": "الحديث", "category": "مصطلح الحديث", "level": "صعب", "question": "ما تعريف الحديث المتواتر؟ وما حكمه من حيث القبول؟", "answer": "هو ما رواه جمع كثير عن جمع كثير يستحيل عادةً تواطؤهم على الكذب، في كل طبقات السند، عن شيء محسوس. حكمه: يفيد العلم اليقيني القطعي، ولا يُبحث في عدالة رواته لكثرتهم.", "explanation": "المتواتر أعلى مراتب الحديث من حيث القبول، ويقابله خبر الآحاد (ما لم يبلغ حد التواتر) الذي يفيد الظن الغالب لا اليقين القطعي عند جمهور الأصوليين، وإن كان العمل به واجباً إذا صح.", "reference": "نزهة النظر شرح نخبة الفكر — ابن حجر العسقلاني" },
+  { "id": "demo-quiz-971", "documentation_status": "sourced", "section": "الحديث", "category": "أول التصنيف", "level": "صعب", "question": "ما أول كتاب حديثي مُصنَّف على الأبواب الفقهية وصل إلينا كاملاً؟", "answer": "الموطأ للإمام مالك بن أنس.", "explanation": "سبق تصنيف مالك للموطأ تصنيف صحيح البخاري بأكثر من قرن ونصف؛ ولذلك يُعدّ الموطأ من أقدم وأوثق المصنفات الحديثية الفقهية التي وصلت إلينا كاملة، وقد وصفه الإمام الشافعي بأنه أصح كتاب بعد كتاب الله في زمانه (قبل ظهور الصحيحين).", "reference": "موطأ الإمام مالك — مقدمة التحقيق، وسير أعلام النبلاء للذهبي" },
 
   // ── دفعة توسيع Phase 9 الثالثة (2026-07-18) — استهدفت أرقّ خلية فعلية
   // في اللعبة الحية (مستوى "صعب" لفئتي sira وanbiya بعد فحص SECTION_TO_
   // CATEGORY في islamicQuizData.ts، لا فحص section الخام فقط) ──────────
-  { "id": "demo-quiz-972", "section": "السيرة", "category": "الرضاعة", "level": "صعب", "question": "من أول من أرضع النبي ﷺ قبل حليمة السعدية؟", "answer": "ثويبة مولاة أبي لهب، أرضعته أياماً قليلة بلبن ابنها مسروح قبل قدوم حليمة السعدية.", "explanation": "أرضعت ثويبة مع النبي ﷺ عمّه حمزة بن عبد المطلب وأبا سلمة بن عبد الأسد المخزومي فصاروا إخوته من الرضاعة؛ ثم أكملت حليمة السعدية رضاعته بلبن ابنها عبد الله.", "reference": "الرحيق المختوم — صفي الرحمن المباركفوري" },
-  { "id": "demo-quiz-973", "section": "السيرة", "category": "الحصار والمقاطعة", "level": "صعب", "question": "من الذي كتب صحيفة مقاطعة قريش لبني هاشم وبني المطلب، وماذا أصابه بدعوة النبي ﷺ؟", "answer": "كتبها منصور بن عكرمة العبدري، فدعا عليه النبي ﷺ فشلَّت يده (أصابعه).", "explanation": "عُلِّقت الصحيفة في جوف الكعبة، وحين انتهت المقاطعة بعد نحو ثلاث سنوات وُجدت قد أكلتها الأرضة ولم يبقَ فيها إلا اسم الله تعالى.", "reference": "الرحيق المختوم — صفي الرحمن المباركفوري؛ البداية والنهاية — ابن كثير" },
-  { "id": "demo-quiz-974", "section": "السيرة", "category": "الهجرة إلى الحبشة", "level": "صعب", "question": "كم كان عدد المهاجرين في الهجرة الأولى إلى الحبشة، ومتى كانت؟", "answer": "أحد عشر رجلاً وأربع نسوة على أشهر الروايات، في رجب من السنة الخامسة من البعثة، بقيادة عثمان بن مظعون رضي الله عنه.", "explanation": "أشار النبي ﷺ على ضعفاء المسلمين بالهجرة إلى الحبشة لوجود ملك عادل هناك (النجاشي) لا يُظلم عنده أحد.", "reference": "الرحيق المختوم — صفي الرحمن المباركفوري، فصل الهجرة إلى الحبشة" },
-  { "id": "demo-quiz-975", "section": "السيرة", "category": "شعب أبي طالب", "level": "صعب", "question": "في أي سنة من البعثة النبوية خرج بنو هاشم وبنو المطلب من شعب أبي طالب بعد انتهاء المقاطعة؟", "answer": "السنة العاشرة من البعثة.", "explanation": "استمر الحصار نحو ثلاث سنوات، وتُوفيت في هذه السنة أيضاً خديجة رضي الله عنها وأبو طالب، فسُمِّيت «عام الحزن».", "reference": "البداية والنهاية — ابن كثير؛ الرحيق المختوم — المباركفوري" },
-  { "id": "demo-quiz-976", "section": "الأنبياء", "category": "شعيب عليه السلام", "level": "صعب", "question": "هل نبي الله شعيب عليه السلام هو نفسه صهر موسى عليه السلام الذي زوّجه إحدى ابنتيه في مدين؟", "answer": "هذا قول مشهور غير محقَّق؛ رجّح محققون من أهل العلم (منهم ابن تيمية وابن القيم والسعدي) أنهما شخصان مختلفان.", "explanation": "القرآن لم يُسمِّ صهر موسى في قصة مدين، والربط بينه وبين شعيب اجتهاد من بعض المفسرين المتقدمين لا نص قطعي، والراجح عند المحققين أنهما غير متعاصرَين.", "reference": "تفسير السعدي، سورة القصص" },
-  { "id": "demo-quiz-977", "section": "الأنبياء", "category": "إدريس عليه السلام", "level": "صعب", "question": "إلى أي سماء رُفع نبي الله إدريس عليه السلام كما ثبت في حديث الإسراء والمعراج؟", "answer": "السماء الرابعة.", "explanation": "رآه النبي ﷺ فيها ليلة الإسراء والمعراج كما في الحديث الصحيح، وهذا ما رجّحه ابن كثير في تفسيره لقوله تعالى: ﴿وَرَفَعْنَٰهُ مَكَانًا عَلِيًّا﴾.", "reference": "سورة مريم: 57؛ تفسير ابن كثير؛ صحيح البخاري ومسلم (حديث الإسراء)" },
-  { "id": "demo-quiz-978", "section": "الأنبياء", "category": "يونس عليه السلام", "level": "صعب", "question": "كم المدة الدقيقة التي بقيها نبي الله يونس عليه السلام في بطن الحوت كما وردت في القرآن الكريم؟", "answer": "لم يرد نص قرآني أو حديث نبوي صحيح يحدد مدة زمنية دقيقة؛ اختلف المفسرون فيها اختلافاً واسعاً من بضع ساعات إلى أربعين يوماً، فلا يصح الجزم برقم معين.", "explanation": "الثابت قرآنياً هو المعنى لا العدد: أن الله أنجاه بعد أن نادى في الظلمات: ﴿لَّآ إِلَٰهَ إِلَّآ أَنتَ سُبْحَٰنَكَ إِنِّى كُنتُ مِنَ ٱلظَّٰلِمِينَ﴾.", "reference": "سورة الأنبياء: 87" },
-  { "id": "demo-quiz-979", "section": "الأنبياء", "category": "شعيب عليه السلام", "level": "صعب", "question": "ما اسم القوم الذين أُرسل إليهم نبي الله شعيب عليه السلام؟", "answer": "قوم مدين، ويُذكرون في بعض الآيات أيضاً بـ«أصحاب الأيكة».", "explanation": "أهلكهم الله بصيحة وبعذاب يوم الظلة بعد تكذيبهم لشعيب عليه السلام وبخسهم الكيل والميزان.", "reference": "سورة الأعراف: 85؛ سورة الشعراء: 176-189" },
+  { "id": "demo-quiz-972", "documentation_status": "sourced", "section": "السيرة", "category": "الرضاعة", "level": "صعب", "question": "من أول من أرضع النبي ﷺ قبل حليمة السعدية؟", "answer": "ثويبة مولاة أبي لهب، أرضعته أياماً قليلة بلبن ابنها مسروح قبل قدوم حليمة السعدية.", "explanation": "أرضعت ثويبة مع النبي ﷺ عمّه حمزة بن عبد المطلب وأبا سلمة بن عبد الأسد المخزومي فصاروا إخوته من الرضاعة؛ ثم أكملت حليمة السعدية رضاعته بلبن ابنها عبد الله.", "reference": "الرحيق المختوم — صفي الرحمن المباركفوري" },
+  { "id": "demo-quiz-973", "documentation_status": "sourced", "section": "السيرة", "category": "الحصار والمقاطعة", "level": "صعب", "question": "من الذي كتب صحيفة مقاطعة قريش لبني هاشم وبني المطلب، وماذا أصابه بدعوة النبي ﷺ؟", "answer": "كتبها منصور بن عكرمة العبدري، فدعا عليه النبي ﷺ فشلَّت يده (أصابعه).", "explanation": "عُلِّقت الصحيفة في جوف الكعبة، وحين انتهت المقاطعة بعد نحو ثلاث سنوات وُجدت قد أكلتها الأرضة ولم يبقَ فيها إلا اسم الله تعالى.", "reference": "الرحيق المختوم — صفي الرحمن المباركفوري؛ البداية والنهاية — ابن كثير" },
+  { "id": "demo-quiz-974", "documentation_status": "sourced", "section": "السيرة", "category": "الهجرة إلى الحبشة", "level": "صعب", "question": "كم كان عدد المهاجرين في الهجرة الأولى إلى الحبشة، ومتى كانت؟", "answer": "أحد عشر رجلاً وأربع نسوة على أشهر الروايات، في رجب من السنة الخامسة من البعثة، بقيادة عثمان بن مظعون رضي الله عنه.", "explanation": "أشار النبي ﷺ على ضعفاء المسلمين بالهجرة إلى الحبشة لوجود ملك عادل هناك (النجاشي) لا يُظلم عنده أحد.", "reference": "الرحيق المختوم — صفي الرحمن المباركفوري، فصل الهجرة إلى الحبشة" },
+  { "id": "demo-quiz-975", "documentation_status": "sourced", "section": "السيرة", "category": "شعب أبي طالب", "level": "صعب", "question": "في أي سنة من البعثة النبوية خرج بنو هاشم وبنو المطلب من شعب أبي طالب بعد انتهاء المقاطعة؟", "answer": "السنة العاشرة من البعثة.", "explanation": "استمر الحصار نحو ثلاث سنوات، وتُوفيت في هذه السنة أيضاً خديجة رضي الله عنها وأبو طالب، فسُمِّيت «عام الحزن».", "reference": "البداية والنهاية — ابن كثير؛ الرحيق المختوم — المباركفوري" },
+  { "id": "demo-quiz-976", "documentation_status": "sourced", "section": "الأنبياء", "category": "شعيب عليه السلام", "level": "صعب", "question": "هل نبي الله شعيب عليه السلام هو نفسه صهر موسى عليه السلام الذي زوّجه إحدى ابنتيه في مدين؟", "answer": "هذا قول مشهور غير محقَّق؛ رجّح محققون من أهل العلم (منهم ابن تيمية وابن القيم والسعدي) أنهما شخصان مختلفان.", "explanation": "القرآن لم يُسمِّ صهر موسى في قصة مدين، والربط بينه وبين شعيب اجتهاد من بعض المفسرين المتقدمين لا نص قطعي، والراجح عند المحققين أنهما غير متعاصرَين.", "reference": "تفسير السعدي، سورة القصص" },
+  { "id": "demo-quiz-977", "documentation_status": "sourced", "section": "الأنبياء", "category": "إدريس عليه السلام", "level": "صعب", "question": "إلى أي سماء رُفع نبي الله إدريس عليه السلام كما ثبت في حديث الإسراء والمعراج؟", "answer": "السماء الرابعة.", "explanation": "رآه النبي ﷺ فيها ليلة الإسراء والمعراج كما في الحديث الصحيح، وهذا ما رجّحه ابن كثير في تفسيره لقوله تعالى: ﴿وَرَفَعْنَٰهُ مَكَانًا عَلِيًّا﴾.", "reference": "سورة مريم: 57؛ تفسير ابن كثير؛ صحيح البخاري ومسلم (حديث الإسراء)" },
+  { "id": "demo-quiz-978", "documentation_status": "sourced", "section": "الأنبياء", "category": "يونس عليه السلام", "level": "صعب", "question": "كم المدة الدقيقة التي بقيها نبي الله يونس عليه السلام في بطن الحوت كما وردت في القرآن الكريم؟", "answer": "لم يرد نص قرآني أو حديث نبوي صحيح يحدد مدة زمنية دقيقة؛ اختلف المفسرون فيها اختلافاً واسعاً من بضع ساعات إلى أربعين يوماً، فلا يصح الجزم برقم معين.", "explanation": "الثابت قرآنياً هو المعنى لا العدد: أن الله أنجاه بعد أن نادى في الظلمات: ﴿لَّآ إِلَٰهَ إِلَّآ أَنتَ سُبْحَٰنَكَ إِنِّى كُنتُ مِنَ ٱلظَّٰلِمِينَ﴾.", "reference": "سورة الأنبياء: 87" },
+  { "id": "demo-quiz-979", "documentation_status": "sourced", "section": "الأنبياء", "category": "شعيب عليه السلام", "level": "صعب", "question": "ما اسم القوم الذين أُرسل إليهم نبي الله شعيب عليه السلام؟", "answer": "قوم مدين، ويُذكرون في بعض الآيات أيضاً بـ«أصحاب الأيكة».", "explanation": "أهلكهم الله بصيحة وبعذاب يوم الظلة بعد تكذيبهم لشعيب عليه السلام وبخسهم الكيل والميزان.", "reference": "سورة الأعراف: 85؛ سورة الشعراء: 176-189" },
 
   // ── دفعة توسيع Phase 9 الرابعة (2026-07-18) — استهدفت أرقّ خلية فعلية
   // حية بعد إصلاح مزامنة quiz_questions هذه الجلسة (فحص مباشر عبر DB:
   // section×level حسب SECTION_TO_CATEGORY الفعلية، لا افتراضاً) — aqeeda
   // كانت أرقّ فئة "صعب" لم تُستهدَف من قبل (8 فقط، خلافاً لـsira/anbiya
   // اللتين استُهدفتا فعلاً في الدفعة الثالثة أعلاه) ──────────────────
-  { "id": "demo-quiz-980", "section": "العقيدة", "category": "توحيد الأسماء والصفات", "level": "صعب", "question": "ما الفرق بين توحيد الأسماء والصفات وتوحيد الألوهية؟", "answer": "توحيد الأسماء والصفات: إثبات ما وصف الله به نفسه أو وصفه به رسوله ﷺ من الأسماء والصفات إثباتاً بلا تمثيل ولا تعطيل. توحيد الألوهية: إفراد الله وحده بالعبادة كالدعاء والذبح والنذر.", "explanation": "توحيد الأسماء والصفات يتعلق بالاعتقاد في ذات الله وصفاته، بينما توحيد الألوهية يتعلق بأعمال العبد وعباداته؛ والتفريط في أحدهما لا يُغني عن الآخر عند أهل السنة والجماعة.", "reference": "شرح العقيدة الواسطية — ابن عثيمين" },
-  { "id": "demo-quiz-981", "section": "العقيدة", "category": "الفرق الكلامية", "level": "صعب", "question": "من هم الجهمية، وما أبرز ضلالهم في باب الأسماء والصفات؟", "answer": "أتباع الجهم بن صفوان، اشتهروا بتعطيل أسماء الله وصفاته إنكاراً لها بالكلية، بدعوى تنزيه الله عن مشابهة المخلوقين.", "explanation": "يقابل التعطيل عند الجهمية طرفٌ آخر منحرف هو التمثيل (تشبيه صفات الله بصفات المخلوقين)؛ ومنهج أهل السنة الوسط بينهما: إثبات بلا تمثيل، وتنزيه بلا تعطيل.", "reference": "شرح العقيدة الطحاوية — ابن أبي العز الحنفي" },
-  { "id": "demo-quiz-982", "section": "العقيدة", "category": "القضاء والقدر", "level": "صعب", "question": "ما مراتب الإيمان بالقدر الأربع عند أهل السنة والجماعة؟", "answer": "العلم (علم الله الأزلي بكل شيء قبل وقوعه)، والكتابة (كتابة الله لكل ذلك في اللوح المحفوظ)، والمشيئة (مشيئة الله النافذة لكل ما يقع)، والخلق (خلق الله لكل شيء بما فيها أفعال العباد).", "explanation": "إنكار أي مرتبة من هذه الأربع يُخرج عن الإيمان الكامل بالقدر؛ وقد فصّلها ابن القيم تفصيلاً واسعاً في كتبه، وهي مضمونة إجمالاً في قوله ﷺ في حديث جبريل: «وتؤمن بالقدر خيره وشره».", "reference": "شفاء العليل في القضاء والقدر — ابن القيم" },
-  { "id": "demo-quiz-983", "section": "العقيدة", "category": "أركان الإيمان", "level": "صعب", "question": "ما حكم من جحد ركناً من أركان الإيمان الستة عمداً وهو عالم بثبوته؟", "answer": "يكفر ويخرج من الملة، لأن أركان الإيمان الستة ثابتة بالنص القطعي المتفق عليه (حديث جبريل)، وجحد المعلوم من الدين بالضرورة كفر عند جماهير أهل العلم.", "explanation": "يُستثنى من هذا الحكم من كان جاهلاً أو حديث عهد بإسلام أو نشأ ببادية بعيدة عن أهل العلم، فيُعلَّم ويُبيَّن له قبل الحكم عليه، خلافاً للمعاند العالم بالحكم.", "reference": "شرح العقيدة الواسطية — ابن عثيمين، باب أركان الإيمان" },
-  { "id": "demo-quiz-984", "section": "العقيدة", "category": "الولاء والبراء", "level": "صعب", "question": "ما معنى الولاء والبراء عند أهل السنة والجماعة؟", "answer": "الولاء: محبة المؤمنين ونصرتهم وموالاتهم لأجل إيمانهم. والبراء: التبرؤ من الكفر وأهله وبغضهم لأجل كفرهم، لا ظلماً ولا عدواناً على حقوقهم الإنسانية أو معاملتهم بالعدل.", "explanation": "الولاء والبراء أصل عقدي عند أهل السنة، مبني على المحبة والبغض في الله لا على الهوى، ولا يمنع ذلك من بر غير المسلمين والعدل معهم فيما لا يخالف الشرع.", "reference": "شرح العقيدة الواسطية — ابن عثيمين" },
+  { "id": "demo-quiz-980", "documentation_status": "sourced", "section": "العقيدة", "category": "توحيد الأسماء والصفات", "level": "صعب", "question": "ما الفرق بين توحيد الأسماء والصفات وتوحيد الألوهية؟", "answer": "توحيد الأسماء والصفات: إثبات ما وصف الله به نفسه أو وصفه به رسوله ﷺ من الأسماء والصفات إثباتاً بلا تمثيل ولا تعطيل. توحيد الألوهية: إفراد الله وحده بالعبادة كالدعاء والذبح والنذر.", "explanation": "توحيد الأسماء والصفات يتعلق بالاعتقاد في ذات الله وصفاته، بينما توحيد الألوهية يتعلق بأعمال العبد وعباداته؛ والتفريط في أحدهما لا يُغني عن الآخر عند أهل السنة والجماعة.", "reference": "شرح العقيدة الواسطية — ابن عثيمين" },
+  { "id": "demo-quiz-981", "documentation_status": "sourced", "section": "العقيدة", "category": "الفرق الكلامية", "level": "صعب", "question": "من هم الجهمية، وما أبرز ضلالهم في باب الأسماء والصفات؟", "answer": "أتباع الجهم بن صفوان، اشتهروا بتعطيل أسماء الله وصفاته إنكاراً لها بالكلية، بدعوى تنزيه الله عن مشابهة المخلوقين.", "explanation": "يقابل التعطيل عند الجهمية طرفٌ آخر منحرف هو التمثيل (تشبيه صفات الله بصفات المخلوقين)؛ ومنهج أهل السنة الوسط بينهما: إثبات بلا تمثيل، وتنزيه بلا تعطيل.", "reference": "شرح العقيدة الطحاوية — ابن أبي العز الحنفي" },
+  { "id": "demo-quiz-982", "documentation_status": "sourced", "section": "العقيدة", "category": "القضاء والقدر", "level": "صعب", "question": "ما مراتب الإيمان بالقدر الأربع عند أهل السنة والجماعة؟", "answer": "العلم (علم الله الأزلي بكل شيء قبل وقوعه)، والكتابة (كتابة الله لكل ذلك في اللوح المحفوظ)، والمشيئة (مشيئة الله النافذة لكل ما يقع)، والخلق (خلق الله لكل شيء بما فيها أفعال العباد).", "explanation": "إنكار أي مرتبة من هذه الأربع يُخرج عن الإيمان الكامل بالقدر؛ وقد فصّلها ابن القيم تفصيلاً واسعاً في كتبه، وهي مضمونة إجمالاً في قوله ﷺ في حديث جبريل: «وتؤمن بالقدر خيره وشره».", "reference": "شفاء العليل في القضاء والقدر — ابن القيم" },
+  { "id": "demo-quiz-983", "documentation_status": "sourced", "section": "العقيدة", "category": "أركان الإيمان", "level": "صعب", "question": "ما حكم من جحد ركناً من أركان الإيمان الستة عمداً وهو عالم بثبوته؟", "answer": "يكفر ويخرج من الملة، لأن أركان الإيمان الستة ثابتة بالنص القطعي المتفق عليه (حديث جبريل)، وجحد المعلوم من الدين بالضرورة كفر عند جماهير أهل العلم.", "explanation": "يُستثنى من هذا الحكم من كان جاهلاً أو حديث عهد بإسلام أو نشأ ببادية بعيدة عن أهل العلم، فيُعلَّم ويُبيَّن له قبل الحكم عليه، خلافاً للمعاند العالم بالحكم.", "reference": "شرح العقيدة الواسطية — ابن عثيمين، باب أركان الإيمان" },
+  { "id": "demo-quiz-984", "documentation_status": "sourced", "section": "العقيدة", "category": "الولاء والبراء", "level": "صعب", "question": "ما معنى الولاء والبراء عند أهل السنة والجماعة؟", "answer": "الولاء: محبة المؤمنين ونصرتهم وموالاتهم لأجل إيمانهم. والبراء: التبرؤ من الكفر وأهله وبغضهم لأجل كفرهم، لا ظلماً ولا عدواناً على حقوقهم الإنسانية أو معاملتهم بالعدل.", "explanation": "الولاء والبراء أصل عقدي عند أهل السنة، مبني على المحبة والبغض في الله لا على الهوى، ولا يمنع ذلك من بر غير المسلمين والعدل معهم فيما لا يخالف الشرع.", "reference": "شرح العقيدة الواسطية — ابن عثيمين" },
 
   // ── دفعة توسيع Phase 9 الخامسة (2026-07-19) — قسم "اللغة العربية" لم
   // يكن موجوداً إطلاقاً عبر كل بنك الأسئلة (تحقُّق مباشر: grep شامل لأي
@@ -6934,20 +6934,20 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   // عبر كتب النحو الكلاسيكية (لا رأي خلافي محل نزاع)، لا حاجة لاستشهاد
   // حديثي/قرآني محدَّد كبقية الأقسام — المرجع "قواعد نحوية" يشير لعموم
   // كتب النحو الأساسية (الآجرومية وشروحها) لا لكتاب بعينه ──────────────
-  { "id": "demo-quiz-985", "section": "اللغة العربية", "category": "النحو", "level": "سهل", "question": "ما حكم إعراب الفاعل في اللغة العربية؟", "answer": "الفاعل مرفوع دائماً.", "explanation": "الفاعل: اسم مرفوع تقدَّمه فعل مبني للمعلوم دلّ على من فعل الفعل أو اتصف به، وعلامة رفعه الضمة إن كان مفرداً أو جمع تكسير، والألف إن كان مثنى، والواو إن كان جمع مذكر سالماً.", "reference": "قواعد نحوية أساسية — الآجرومية وشروحها" },
-  { "id": "demo-quiz-986", "section": "اللغة العربية", "category": "النحو", "level": "سهل", "question": "ما حكم إعراب المفعول به؟", "answer": "المفعول به منصوب دائماً.", "explanation": "المفعول به: اسم منصوب وقع عليه فعل الفاعل، وعلامة نصبه الفتحة إن كان مفرداً أو جمع تكسير، والياء إن كان مثنى أو جمع مذكر سالماً، والكسرة إن كان جمع مؤنث سالماً.", "reference": "قواعد نحوية أساسية — الآجرومية وشروحها" },
-  { "id": "demo-quiz-987", "section": "اللغة العربية", "category": "النحو", "level": "سهل", "question": "إلى كم قسم تنقسم الكلمة في اللغة العربية؟", "answer": "ثلاثة أقسام: اسم، وفعل، وحرف.", "explanation": "الاسم: ما دلَّ على معنى في نفسه غير مقترن بزمن (كـ«رجل»)، والفعل: ما دلَّ على معنى مقترن بزمن (كـ«كتب»)، والحرف: ما دلَّ على معنى في غيره لا يظهر معناه إلا مع غيره (كـ«من» و«إلى»).", "reference": "متن الآجرومية — ابن آجروم" },
-  { "id": "demo-quiz-988", "section": "اللغة العربية", "category": "النحو", "level": "متوسط", "question": "إلى كم قسم ينقسم الفعل باعتبار زمنه؟", "answer": "ثلاثة أقسام: الفعل الماضي، والفعل المضارع، وفعل الأمر.", "explanation": "الماضي يدل على حدث وقع قبل زمن التكلم (كـ«كتبَ»)، والمضارع يدل على حدث يقع في الحال أو الاستقبال (كـ«يكتبُ»)، والأمر يدل على طلب حدوث الفعل (كـ«اكتبْ»).", "reference": "متن الآجرومية — ابن آجروم" },
-  { "id": "demo-quiz-989", "section": "اللغة العربية", "category": "النحو", "level": "متوسط", "question": "ما هي الأفعال الخمسة في النحو العربي؟", "answer": "كل فعل مضارع اتصلت به ألف الاثنين، أو واو الجماعة، أو ياء المخاطبة، مثل: يفعلان، تفعلان، يفعلون، تفعلون، تفعلين.", "explanation": "تُرفع الأفعال الخمسة بثبوت النون، وتُنصب وتُجزم بحذفها، خلافاً لبقية الأفعال المضارعة التي تُرفع بالضمة وتُنصب بالفتحة وتُجزم بالسكون.", "reference": "قواعد نحوية أساسية — ألفية ابن مالك وشروحها" },
-  { "id": "demo-quiz-990", "section": "اللغة العربية", "category": "النحو", "level": "متوسط", "question": "متى يُنصب الفعل المضارع؟", "answer": "إذا سبقته إحدى أدوات النصب، مثل: أن، لن، كي، إذن (بشروطها).", "explanation": "من أشهر أدوات نصب الفعل المضارع: «أن» المصدرية، و«لن» النافية، و«كي» التعليلية، وتظهر علامة النصب فتحة على آخره إن لم يكن من الأفعال الخمسة.", "reference": "قواعد نحوية أساسية — الآجرومية وشروحها" },
-  { "id": "demo-quiz-991", "section": "اللغة العربية", "category": "الصرف", "level": "سهل", "question": "ما هو الميزان الصرفي الذي يُقاس عليه وزن الكلمات العربية؟", "answer": "الوزن «فَعَلَ» بأصوله الثلاثة (الفاء والعين واللام)، تُقابَل بها أحرف الكلمة الأصلية عند وزنها.", "explanation": "مثال: كلمة «كَتَبَ» على وزن «فَعَلَ»، وكلمة «مُعَلِّم» على وزن «مُفَعِّل»؛ يُستخدم هذا الميزان لمعرفة الحروف الأصلية من الزائدة في الكلمة.", "reference": "علم الصرف — أساسيات الميزان الصرفي" },
-  { "id": "demo-quiz-992", "section": "اللغة العربية", "category": "الصرف", "level": "متوسط", "question": "ما هو المصدر في علم الصرف؟", "answer": "اسم يدل على الحدث مجرداً من الزمن، وتُشتق منه الأفعال والمشتقات الأخرى.", "explanation": "مثال: «كتابة» مصدر الفعل «كتب»، و«فهم» مصدر الفعل «فهم»؛ يختلف الصرفيون والنحاة قديماً في أصالة المصدر أو الفعل (أيهما اشتُقَّ من الآخر)، لكن الراجح عند جمهورهم أصالة المصدر.", "reference": "علم الصرف — أساسيات الاشتقاق" },
-  { "id": "demo-quiz-993", "section": "اللغة العربية", "category": "الصرف", "level": "متوسط", "question": "ما الفرق بين الفعل اللازم والفعل المتعدي؟", "answer": "اللازم: فعل يكتفي بفاعله ولا يحتاج إلى مفعول به لتمام معناه (كـ«نام»). المتعدي: فعل يحتاج إلى مفعول به واحد أو أكثر لتمام معناه (كـ«كتبَ» يحتاج مفعولاً: «كتبَ الدرسَ»).", "explanation": "بعض الأفعال المتعدية تنصب مفعولين (كـ«أعطى»)، وبعضها ثلاثة مفاعيل (كـ«أعلمَ»)، بينما تبقى الأفعال اللازمة مكتفية بالفاعل وحده.", "reference": "علم الصرف والنحو — أساسيات" },
-  { "id": "demo-quiz-994", "section": "اللغة العربية", "category": "البلاغة", "level": "متوسط", "question": "ما هو التشبيه في علم البلاغة؟", "answer": "عقد مماثلة بين أمرين (مشبَّه ومشبَّه به) اشتركا في صفة أو أكثر، غالباً بأداة تشبيه كالكاف أو «مثل».", "explanation": "مثال: «العلمُ كالنورِ» شبَّه العلم بالنور في صفة الهداية والإضاءة؛ أركان التشبيه أربعة: المشبَّه، والمشبَّه به، وأداة التشبيه، ووجه الشبه.", "reference": "علم البيان — أساسيات البلاغة العربية" },
-  { "id": "demo-quiz-995", "section": "اللغة العربية", "category": "البلاغة", "level": "صعب", "question": "ما هي الاستعارة في علم البيان؟", "answer": "تشبيه حُذف أحد طرفيه (المشبَّه أو المشبَّه به) وبقي الطرف الآخر يدل عليه بقرينة.", "explanation": "مثال: «رأيت أسداً يحارب» فحُذف المشبَّه (الرجل الشجاع) وبقي المشبَّه به (الأسد) استعارة عنه؛ تُقسَّم الاستعارة إلى تصريحية (بقي فيها لفظ المشبَّه به) ومكنية (بقي فيها لفظ المشبَّه مع ذكر شيء من لوازم المشبَّه به).", "reference": "علم البيان — أساسيات البلاغة العربية" },
-  { "id": "demo-quiz-996", "section": "اللغة العربية", "category": "البلاغة", "level": "صعب", "question": "ما هو الجناس في علم البديع؟", "answer": "تشابه لفظين في النطق (كل حروفهما أو أغلبها) مع اختلافهما في المعنى.", "explanation": "مثال قرآني: ﴿وَيَوْمَ تَقُومُ السَّاعَةُ يُقْسِمُ الْمُجْرِمُونَ مَا لَبِثُوا غَيْرَ سَاعَةٍ﴾ استُخدمت «الساعة» بمعنيين مختلفين (القيامة، ومدة زمنية قصيرة) بلفظ واحد؛ يُقسَّم الجناس إلى تام (تطابق الحروف كلها) وناقص (اختلاف في بعضها).", "reference": "علم البديع — أساسيات المحسنات اللفظية" },
-  { "id": "demo-quiz-997", "section": "اللغة العربية", "category": "النحو", "level": "صعب", "question": "من يُنسب إليه تاريخياً وضع أسس علم النحو العربي؟", "answer": "أبو الأسود الدُّؤلي، بأمر من الإمام علي بن أبي طالب رضي الله عنه، بعد أن لاحظ انتشار اللحن (الخطأ في الإعراب) بين الناس مع اتساع الفتوحات الإسلامية.", "explanation": "تُروى القصة في كتب أخبار النحاة (كطبقات النحويين واللغويين للزبيدي) بأن علياً رضي الله عنه وضع لأبي الأسود أصولاً أولية (الكلام كله اسم وفعل وحرف)، ثم بنى عليها أبو الأسود، وتوسَّع من بعده تلاميذه كنصر بن عاصم ويحيى بن يعمر.", "reference": "طبقات النحويين واللغويين — الزبيدي" },
-  { "id": "demo-quiz-998", "section": "اللغة العربية", "category": "النحو", "level": "متوسط", "question": "ما هي علامات رفع الاسم المفرد ونصبه وجره؟", "answer": "الرفع: الضمة. النصب: الفتحة. الجر: الكسرة.", "explanation": "هذه العلامات الأصلية للاسم المفرد (وجمع التكسير)، وتختلف العلامات في المثنى وجمعي المذكر والمؤنث السالمين والأسماء الخمسة، حيث تُستبدَل بحروف بدل الحركات في بعض الحالات.", "reference": "قواعد نحوية أساسية — الآجرومية وشروحها" },
+  { "id": "demo-quiz-985", "documentation_status": "sourced", "section": "اللغة العربية", "category": "النحو", "level": "سهل", "question": "ما حكم إعراب الفاعل في اللغة العربية؟", "answer": "الفاعل مرفوع دائماً.", "explanation": "الفاعل: اسم مرفوع تقدَّمه فعل مبني للمعلوم دلّ على من فعل الفعل أو اتصف به، وعلامة رفعه الضمة إن كان مفرداً أو جمع تكسير، والألف إن كان مثنى، والواو إن كان جمع مذكر سالماً.", "reference": "قواعد نحوية أساسية — الآجرومية وشروحها" },
+  { "id": "demo-quiz-986", "documentation_status": "sourced", "section": "اللغة العربية", "category": "النحو", "level": "سهل", "question": "ما حكم إعراب المفعول به؟", "answer": "المفعول به منصوب دائماً.", "explanation": "المفعول به: اسم منصوب وقع عليه فعل الفاعل، وعلامة نصبه الفتحة إن كان مفرداً أو جمع تكسير، والياء إن كان مثنى أو جمع مذكر سالماً، والكسرة إن كان جمع مؤنث سالماً.", "reference": "قواعد نحوية أساسية — الآجرومية وشروحها" },
+  { "id": "demo-quiz-987", "documentation_status": "sourced", "section": "اللغة العربية", "category": "النحو", "level": "سهل", "question": "إلى كم قسم تنقسم الكلمة في اللغة العربية؟", "answer": "ثلاثة أقسام: اسم، وفعل، وحرف.", "explanation": "الاسم: ما دلَّ على معنى في نفسه غير مقترن بزمن (كـ«رجل»)، والفعل: ما دلَّ على معنى مقترن بزمن (كـ«كتب»)، والحرف: ما دلَّ على معنى في غيره لا يظهر معناه إلا مع غيره (كـ«من» و«إلى»).", "reference": "متن الآجرومية — ابن آجروم" },
+  { "id": "demo-quiz-988", "documentation_status": "sourced", "section": "اللغة العربية", "category": "النحو", "level": "متوسط", "question": "إلى كم قسم ينقسم الفعل باعتبار زمنه؟", "answer": "ثلاثة أقسام: الفعل الماضي، والفعل المضارع، وفعل الأمر.", "explanation": "الماضي يدل على حدث وقع قبل زمن التكلم (كـ«كتبَ»)، والمضارع يدل على حدث يقع في الحال أو الاستقبال (كـ«يكتبُ»)، والأمر يدل على طلب حدوث الفعل (كـ«اكتبْ»).", "reference": "متن الآجرومية — ابن آجروم" },
+  { "id": "demo-quiz-989", "documentation_status": "sourced", "section": "اللغة العربية", "category": "النحو", "level": "متوسط", "question": "ما هي الأفعال الخمسة في النحو العربي؟", "answer": "كل فعل مضارع اتصلت به ألف الاثنين، أو واو الجماعة، أو ياء المخاطبة، مثل: يفعلان، تفعلان، يفعلون، تفعلون، تفعلين.", "explanation": "تُرفع الأفعال الخمسة بثبوت النون، وتُنصب وتُجزم بحذفها، خلافاً لبقية الأفعال المضارعة التي تُرفع بالضمة وتُنصب بالفتحة وتُجزم بالسكون.", "reference": "قواعد نحوية أساسية — ألفية ابن مالك وشروحها" },
+  { "id": "demo-quiz-990", "documentation_status": "sourced", "section": "اللغة العربية", "category": "النحو", "level": "متوسط", "question": "متى يُنصب الفعل المضارع؟", "answer": "إذا سبقته إحدى أدوات النصب، مثل: أن، لن، كي، إذن (بشروطها).", "explanation": "من أشهر أدوات نصب الفعل المضارع: «أن» المصدرية، و«لن» النافية، و«كي» التعليلية، وتظهر علامة النصب فتحة على آخره إن لم يكن من الأفعال الخمسة.", "reference": "قواعد نحوية أساسية — الآجرومية وشروحها" },
+  { "id": "demo-quiz-991", "documentation_status": "sourced", "section": "اللغة العربية", "category": "الصرف", "level": "سهل", "question": "ما هو الميزان الصرفي الذي يُقاس عليه وزن الكلمات العربية؟", "answer": "الوزن «فَعَلَ» بأصوله الثلاثة (الفاء والعين واللام)، تُقابَل بها أحرف الكلمة الأصلية عند وزنها.", "explanation": "مثال: كلمة «كَتَبَ» على وزن «فَعَلَ»، وكلمة «مُعَلِّم» على وزن «مُفَعِّل»؛ يُستخدم هذا الميزان لمعرفة الحروف الأصلية من الزائدة في الكلمة.", "reference": "علم الصرف — أساسيات الميزان الصرفي" },
+  { "id": "demo-quiz-992", "documentation_status": "sourced", "section": "اللغة العربية", "category": "الصرف", "level": "متوسط", "question": "ما هو المصدر في علم الصرف؟", "answer": "اسم يدل على الحدث مجرداً من الزمن، وتُشتق منه الأفعال والمشتقات الأخرى.", "explanation": "مثال: «كتابة» مصدر الفعل «كتب»، و«فهم» مصدر الفعل «فهم»؛ يختلف الصرفيون والنحاة قديماً في أصالة المصدر أو الفعل (أيهما اشتُقَّ من الآخر)، لكن الراجح عند جمهورهم أصالة المصدر.", "reference": "علم الصرف — أساسيات الاشتقاق" },
+  { "id": "demo-quiz-993", "documentation_status": "sourced", "section": "اللغة العربية", "category": "الصرف", "level": "متوسط", "question": "ما الفرق بين الفعل اللازم والفعل المتعدي؟", "answer": "اللازم: فعل يكتفي بفاعله ولا يحتاج إلى مفعول به لتمام معناه (كـ«نام»). المتعدي: فعل يحتاج إلى مفعول به واحد أو أكثر لتمام معناه (كـ«كتبَ» يحتاج مفعولاً: «كتبَ الدرسَ»).", "explanation": "بعض الأفعال المتعدية تنصب مفعولين (كـ«أعطى»)، وبعضها ثلاثة مفاعيل (كـ«أعلمَ»)، بينما تبقى الأفعال اللازمة مكتفية بالفاعل وحده.", "reference": "علم الصرف والنحو — أساسيات" },
+  { "id": "demo-quiz-994", "documentation_status": "sourced", "section": "اللغة العربية", "category": "البلاغة", "level": "متوسط", "question": "ما هو التشبيه في علم البلاغة؟", "answer": "عقد مماثلة بين أمرين (مشبَّه ومشبَّه به) اشتركا في صفة أو أكثر، غالباً بأداة تشبيه كالكاف أو «مثل».", "explanation": "مثال: «العلمُ كالنورِ» شبَّه العلم بالنور في صفة الهداية والإضاءة؛ أركان التشبيه أربعة: المشبَّه، والمشبَّه به، وأداة التشبيه، ووجه الشبه.", "reference": "علم البيان — أساسيات البلاغة العربية" },
+  { "id": "demo-quiz-995", "documentation_status": "sourced", "section": "اللغة العربية", "category": "البلاغة", "level": "صعب", "question": "ما هي الاستعارة في علم البيان؟", "answer": "تشبيه حُذف أحد طرفيه (المشبَّه أو المشبَّه به) وبقي الطرف الآخر يدل عليه بقرينة.", "explanation": "مثال: «رأيت أسداً يحارب» فحُذف المشبَّه (الرجل الشجاع) وبقي المشبَّه به (الأسد) استعارة عنه؛ تُقسَّم الاستعارة إلى تصريحية (بقي فيها لفظ المشبَّه به) ومكنية (بقي فيها لفظ المشبَّه مع ذكر شيء من لوازم المشبَّه به).", "reference": "علم البيان — أساسيات البلاغة العربية" },
+  { "id": "demo-quiz-996", "documentation_status": "sourced", "section": "اللغة العربية", "category": "البلاغة", "level": "صعب", "question": "ما هو الجناس في علم البديع؟", "answer": "تشابه لفظين في النطق (كل حروفهما أو أغلبها) مع اختلافهما في المعنى.", "explanation": "مثال قرآني: ﴿وَيَوْمَ تَقُومُ السَّاعَةُ يُقْسِمُ الْمُجْرِمُونَ مَا لَبِثُوا غَيْرَ سَاعَةٍ﴾ استُخدمت «الساعة» بمعنيين مختلفين (القيامة، ومدة زمنية قصيرة) بلفظ واحد؛ يُقسَّم الجناس إلى تام (تطابق الحروف كلها) وناقص (اختلاف في بعضها).", "reference": "علم البديع — أساسيات المحسنات اللفظية" },
+  { "id": "demo-quiz-997", "documentation_status": "sourced", "section": "اللغة العربية", "category": "النحو", "level": "صعب", "question": "من يُنسب إليه تاريخياً وضع أسس علم النحو العربي؟", "answer": "أبو الأسود الدُّؤلي، بأمر من الإمام علي بن أبي طالب رضي الله عنه، بعد أن لاحظ انتشار اللحن (الخطأ في الإعراب) بين الناس مع اتساع الفتوحات الإسلامية.", "explanation": "تُروى القصة في كتب أخبار النحاة (كطبقات النحويين واللغويين للزبيدي) بأن علياً رضي الله عنه وضع لأبي الأسود أصولاً أولية (الكلام كله اسم وفعل وحرف)، ثم بنى عليها أبو الأسود، وتوسَّع من بعده تلاميذه كنصر بن عاصم ويحيى بن يعمر.", "reference": "طبقات النحويين واللغويين — الزبيدي" },
+  { "id": "demo-quiz-998", "documentation_status": "sourced", "section": "اللغة العربية", "category": "النحو", "level": "متوسط", "question": "ما هي علامات رفع الاسم المفرد ونصبه وجره؟", "answer": "الرفع: الضمة. النصب: الفتحة. الجر: الكسرة.", "explanation": "هذه العلامات الأصلية للاسم المفرد (وجمع التكسير)، وتختلف العلامات في المثنى وجمعي المذكر والمؤنث السالمين والأسماء الخمسة، حيث تُستبدَل بحروف بدل الحركات في بعض الحالات.", "reference": "قواعد نحوية أساسية — الآجرومية وشروحها" },
 
   // ── دفعة توسيع Phase 9 السادسة (2026-07-19) — بطلب المنسِّق: فحص شامل
   // لتوزيع section/category عبر كل بنك الأسئلة (بعد دفعة اللغة العربية)
@@ -6960,14 +6960,14 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   // الزوجات: صفر تام. أُضيفت 8 أسئلة تستند لنفس الاستشهادات المُتحقَّق
   // منها بالفعل هذه الجلسة عبر WebFetch عند بناء fiqh-muamalat وfiqh-usra
   // (لا حاجة لتحقُّق جديد، إعادة استخدام بحث مُوثَّق) ──────────────────
-  { "id": "demo-quiz-999", "section": "الفقه", "category": "المعاملات المالية", "level": "متوسط", "question": "ما حكم دفع أجرة الأجير، ومتى يجب إعطاؤها؟", "answer": "تجب أجرة الأجير فور انتهاء عمله دون مماطلة؛ ويُستدل بحديث «أعطوا الأجير أجره قبل أن يجف عرقه» — ابن ماجه ٢٤٤٣، حسّنه الألباني بمجموع الطرق.", "explanation": "رواه ابن ماجه (٢٤٤٣) وحسّنه الألباني؛ يدل على المبادرة بدفع حق الأجير. ويُعضَد بعموم تحريم مطل الغني في الصحيحين.", "reference": "سنن ابن ماجه ٢٤٤٣ — حسّنه الألباني" },
-  { "id": "demo-quiz-1000", "section": "الفقه", "category": "المعاملات المالية", "level": "متوسط", "question": "ما الرهن في الفقه الإسلامي، وما دليله من القرآن؟", "answer": "الرهن: توثيق دَين بعين مالية تُحبَس ضماناً لاستيفائه. قال الله تعالى: ﴿وَإِن كُنتُمْ عَلَىٰ سَفَرٍ وَلَمْ تَجِدُوا كَاتِبًا فَرِهَانٌ مَّقْبُوضَةٌ﴾ (البقرة: 283).", "explanation": "خصَّت الآية حالة السفر بالذكر، لكن جمهور الفقهاء أجازوا الرهن في الحضر أيضاً استناداً لفعل النبي ﷺ نفسه إذ رهن درعه عند يهودي بالمدينة.", "reference": "سورة البقرة: 283" },
-  { "id": "demo-quiz-1001", "section": "الفقه", "category": "المعاملات المالية", "level": "متوسط", "question": "ما دليل مشروعية الوكالة (التوكيل) من القرآن الكريم؟", "answer": "قصة أصحاب الكهف حين أرسلوا أحدهم وكيلاً عنهم لشراء الطعام: ﴿فَابْعَثُوا أَحَدَكُم بِوَرِقِكُمْ هَٰذِهِ إِلَى الْمَدِينَةِ فَلْيَنظُرْ أَيُّهَا أَزْكَىٰ طَعَامًا فَلْيَأْتِكُم بِرِزْقٍ مِّنْهُ﴾ (الكهف: 19).", "explanation": "الوكالة: تفويض شخص لآخر للتصرف عنه في أمر جائز؛ من شروطها أن يكون التصرف المُوكَّل فيه جائزاً شرعاً وأن يكون الوكيل أهلاً له.", "reference": "سورة الكهف: 19" },
-  { "id": "demo-quiz-1002", "section": "الفقه", "category": "المعاملات المالية", "level": "صعب", "question": "ما قصة أصل مشروعية الوقف في الإسلام كما وردت في حديث عمر بن الخطاب؟", "answer": "أصاب عمر أرضاً بخيبر فسأل النبي ﷺ عنها، فقال له: «إن شئت حبَّست أصلها وتصدَّقت بها»، فتصدَّق بها عمر على ألا يُباع أصلها ولا يُوهب ولا يُورَث.", "explanation": "رواه البخاري، كتاب الوصايا (حديث 2737)؛ هذا الحديث هو الأصل الأول الذي بُني عليه فقه الوقف الإسلامي بأكمله.", "reference": "صحيح البخاري، حديث 2737" },
-  { "id": "demo-quiz-1003", "section": "الفقه", "category": "المعاملات المالية", "level": "متوسط", "question": "ما هو خيار المجلس في عقد البيع؟", "answer": "حق كل من المتبايعين في فسخ عقد البيع أو إمضائه ما داما في مجلس العقد لم يتفرقا بأبدانهما.", "explanation": "لحديث ابن عمر رضي الله عنهما: «البيعان بالخيار ما لم يتفرقا، فإن صدقا وبيَّنا بورك لهما في بيعهما، وإن كذبا وكتما محقت بركة بيعهما» — رواه البخاري (حديث 2079).", "reference": "صحيح البخاري، حديث 2079" },
-  { "id": "demo-quiz-1004", "section": "الفقه", "category": "أحكام الأسرة", "level": "متوسط", "question": "ما الشرط الأساسي لجواز تعدد الزوجات في الإسلام؟", "answer": "القدرة على العدل بين الزوجات في النفقة والمبيت والمعاملة الظاهرة؛ فمن خشي عدم القدرة على ذلك اقتصر على واحدة.", "explanation": "قال الله تعالى: ﴿فَإِنْ خِفْتُمْ أَلَّا تَعْدِلُوا فَوَاحِدَةً أَوْ مَا مَلَكَتْ أَيْمَانُكُمْ ذَٰلِكَ أَدْنَىٰ أَلَّا تَعُولُوا﴾ (النساء: 3)، وقيَّد جمهور الفقهاء عدد الزوجات بأربع كحد أقصى.", "reference": "سورة النساء: 3" },
-  { "id": "demo-quiz-1005", "section": "الفقه", "category": "أحكام الأسرة", "level": "متوسط", "question": "لمن تكون أولوية حضانة الطفل بعد الطلاق عند جمهور الفقهاء؟", "answer": "للأم، لحديث المرأة التي سألت النبي ﷺ عن حضانة ابنها فقال لها: «أنتِ أحق به ما لم تنكحي».", "explanation": "رواه أبو داود، كتاب الطلاق (حديث 2276)، عن عبد الله بن عمرو بن العاص رضي الله عنهما؛ فحق الأم في الحضانة مقدَّم ما دامت لم تتزوج بآخر.", "reference": "سنن أبي داود، حديث 2276" },
-  { "id": "demo-quiz-1006", "section": "الفقه", "category": "أحكام الأسرة", "level": "متوسط", "question": "على من تجب نفقة الأولاد بعد الطلاق، وما دليلها من القرآن؟", "answer": "تجب على الأب لا على الأم ولو كانت الأم حاضنة، لقوله تعالى: ﴿وَعَلَى الْمَوْلُودِ لَهُ رِزْقُهُنَّ وَكِسْوَتُهُنَّ بِالْمَعْرُوفِ﴾ (البقرة: 233).", "explanation": "عبَّرت الآية عن الأب بـ«المولود له» لا بـ«الزوج»، تنبيهاً على أن سبب وجوب النفقة هو البنوة لا الزوجية، فتستمر بعد الطلاق ما دام الولد يحتاجها.", "reference": "سورة البقرة: 233" },
+  { "id": "demo-quiz-999", "documentation_status": "sourced", "section": "الفقه", "category": "المعاملات المالية", "level": "متوسط", "question": "ما حكم دفع أجرة الأجير، ومتى يجب إعطاؤها؟", "answer": "تجب أجرة الأجير فور انتهاء عمله دون مماطلة؛ ويُستدل بحديث «أعطوا الأجير أجره قبل أن يجف عرقه» — ابن ماجه ٢٤٤٣، حسّنه الألباني بمجموع الطرق.", "explanation": "رواه ابن ماجه (٢٤٤٣) وحسّنه الألباني؛ يدل على المبادرة بدفع حق الأجير. ويُعضَد بعموم تحريم مطل الغني في الصحيحين.", "reference": "سنن ابن ماجه ٢٤٤٣ — حسّنه الألباني" },
+  { "id": "demo-quiz-1000", "documentation_status": "sourced", "section": "الفقه", "category": "المعاملات المالية", "level": "متوسط", "question": "ما الرهن في الفقه الإسلامي، وما دليله من القرآن؟", "answer": "الرهن: توثيق دَين بعين مالية تُحبَس ضماناً لاستيفائه. قال الله تعالى: ﴿وَإِن كُنتُمْ عَلَىٰ سَفَرٍ وَلَمْ تَجِدُوا كَاتِبًا فَرِهَانٌ مَّقْبُوضَةٌ﴾ (البقرة: 283).", "explanation": "خصَّت الآية حالة السفر بالذكر، لكن جمهور الفقهاء أجازوا الرهن في الحضر أيضاً استناداً لفعل النبي ﷺ نفسه إذ رهن درعه عند يهودي بالمدينة.", "reference": "سورة البقرة: 283" },
+  { "id": "demo-quiz-1001", "documentation_status": "sourced", "section": "الفقه", "category": "المعاملات المالية", "level": "متوسط", "question": "ما دليل مشروعية الوكالة (التوكيل) من القرآن الكريم؟", "answer": "قصة أصحاب الكهف حين أرسلوا أحدهم وكيلاً عنهم لشراء الطعام: ﴿فَابْعَثُوا أَحَدَكُم بِوَرِقِكُمْ هَٰذِهِ إِلَى الْمَدِينَةِ فَلْيَنظُرْ أَيُّهَا أَزْكَىٰ طَعَامًا فَلْيَأْتِكُم بِرِزْقٍ مِّنْهُ﴾ (الكهف: 19).", "explanation": "الوكالة: تفويض شخص لآخر للتصرف عنه في أمر جائز؛ من شروطها أن يكون التصرف المُوكَّل فيه جائزاً شرعاً وأن يكون الوكيل أهلاً له.", "reference": "سورة الكهف: 19" },
+  { "id": "demo-quiz-1002", "documentation_status": "sourced", "section": "الفقه", "category": "المعاملات المالية", "level": "صعب", "question": "ما قصة أصل مشروعية الوقف في الإسلام كما وردت في حديث عمر بن الخطاب؟", "answer": "أصاب عمر أرضاً بخيبر فسأل النبي ﷺ عنها، فقال له: «إن شئت حبَّست أصلها وتصدَّقت بها»، فتصدَّق بها عمر على ألا يُباع أصلها ولا يُوهب ولا يُورَث.", "explanation": "رواه البخاري، كتاب الوصايا (حديث 2737)؛ هذا الحديث هو الأصل الأول الذي بُني عليه فقه الوقف الإسلامي بأكمله.", "reference": "صحيح البخاري، حديث 2737" },
+  { "id": "demo-quiz-1003", "documentation_status": "sourced", "section": "الفقه", "category": "المعاملات المالية", "level": "متوسط", "question": "ما هو خيار المجلس في عقد البيع؟", "answer": "حق كل من المتبايعين في فسخ عقد البيع أو إمضائه ما داما في مجلس العقد لم يتفرقا بأبدانهما.", "explanation": "لحديث ابن عمر رضي الله عنهما: «البيعان بالخيار ما لم يتفرقا، فإن صدقا وبيَّنا بورك لهما في بيعهما، وإن كذبا وكتما محقت بركة بيعهما» — رواه البخاري (حديث 2079).", "reference": "صحيح البخاري، حديث 2079" },
+  { "id": "demo-quiz-1004", "documentation_status": "sourced", "section": "الفقه", "category": "أحكام الأسرة", "level": "متوسط", "question": "ما الشرط الأساسي لجواز تعدد الزوجات في الإسلام؟", "answer": "القدرة على العدل بين الزوجات في النفقة والمبيت والمعاملة الظاهرة؛ فمن خشي عدم القدرة على ذلك اقتصر على واحدة.", "explanation": "قال الله تعالى: ﴿فَإِنْ خِفْتُمْ أَلَّا تَعْدِلُوا فَوَاحِدَةً أَوْ مَا مَلَكَتْ أَيْمَانُكُمْ ذَٰلِكَ أَدْنَىٰ أَلَّا تَعُولُوا﴾ (النساء: 3)، وقيَّد جمهور الفقهاء عدد الزوجات بأربع كحد أقصى.", "reference": "سورة النساء: 3" },
+  { "id": "demo-quiz-1005", "documentation_status": "sourced", "section": "الفقه", "category": "أحكام الأسرة", "level": "متوسط", "question": "لمن تكون أولوية حضانة الطفل بعد الطلاق عند جمهور الفقهاء؟", "answer": "للأم، لحديث المرأة التي سألت النبي ﷺ عن حضانة ابنها فقال لها: «أنتِ أحق به ما لم تنكحي».", "explanation": "رواه أبو داود، كتاب الطلاق (حديث 2276)، عن عبد الله بن عمرو بن العاص رضي الله عنهما؛ فحق الأم في الحضانة مقدَّم ما دامت لم تتزوج بآخر.", "reference": "سنن أبي داود، حديث 2276" },
+  { "id": "demo-quiz-1006", "documentation_status": "sourced", "section": "الفقه", "category": "أحكام الأسرة", "level": "متوسط", "question": "على من تجب نفقة الأولاد بعد الطلاق، وما دليلها من القرآن؟", "answer": "تجب على الأب لا على الأم ولو كانت الأم حاضنة، لقوله تعالى: ﴿وَعَلَى الْمَوْلُودِ لَهُ رِزْقُهُنَّ وَكِسْوَتُهُنَّ بِالْمَعْرُوفِ﴾ (البقرة: 233).", "explanation": "عبَّرت الآية عن الأب بـ«المولود له» لا بـ«الزوج»، تنبيهاً على أن سبب وجوب النفقة هو البنوة لا الزوجية، فتستمر بعد الطلاق ما دام الولد يحتاجها.", "reference": "سورة البقرة: 233" },
 
   // ── دفعة توسيع Phase 9 السابعة (2026-07-19) — الفجوتان المتبقيتان
   // المرصودتان سابقاً: الطب النبوي والجغرافيا الإسلامية. فحص تكرار مسبق
@@ -6980,98 +6980,98 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   // "قصة موسى والخضر" في tafsir-kahf يغطي الآيات 60-82 كاملة. كل أحاديث
   // الطب تحقَّقت عبر WebFetch من ar.wikisource.org (صحيح البخاري، كتاب
   // الطب) بنصها وأرقامها ──────────────────────────────────────────────
-  { "id": "demo-quiz-1007", "section": "الطب النبوي", "category": "أحاديث علاجية", "level": "متوسط", "question": "ما الحبة التي وصفها النبي ﷺ بأنها «شفاء من كل داء إلا السام»؟", "answer": "الحبة السوداء (الشونيز/حبة البركة).", "explanation": "عن أبي هريرة رضي الله عنه، عن النبي ﷺ: «إن هذه الحبة السوداء شفاء من كل داء، إلا من السام» — رواه البخاري، كتاب الطب (حديث 5687-5688). والسام: الموت.", "reference": "صحيح البخاري، حديث 5687-5688" },
-  { "id": "demo-quiz-1008", "section": "الطب النبوي", "category": "أحاديث علاجية", "level": "متوسط", "question": "في أي ثلاثة أشياء حصر النبي ﷺ الشفاء كما ورد في الحديث الصحيح؟", "answer": "«شرطة محجم» (الحجامة)، و«شربة عسل»، و«كيَّة بنار» (الكي، مع كراهته لها).", "explanation": "عن ابن عباس رضي الله عنهما: «الشفاء في ثلاثة: في شرطة محجم، أو شربة عسل، أو كيَّة بنار، وأنا أنهى أمتي عن الكي» — رواه البخاري، كتاب الطب (حديث 5680-5681).", "reference": "صحيح البخاري، حديث 5680-5681" },
-  { "id": "demo-quiz-1009", "section": "الطب النبوي", "category": "أحاديث علاجية", "level": "سهل", "question": "بم وصف النبي ﷺ الحمى، وبم أمر لعلاجها؟", "answer": "وصفها بأنها «من فيح جهنم»، وأمر بتبريدها بالماء.", "explanation": "عن النبي ﷺ: «الحمى من فيح جهنم، فأبردوها بالماء» — رواه البخاري، كتاب الطب (حديث 5726).", "reference": "صحيح البخاري، حديث 5726" },
-  { "id": "demo-quiz-1010", "section": "الطب النبوي", "category": "أحاديث علاجية", "level": "صعب", "question": "ماذا أمر النبي ﷺ من وقع الذباب في إنائه أن يفعل؟", "answer": "أن يغمس الذباب كله في الإناء ثم يطرحه، لأن في أحد جناحيه داء وفي الآخر شفاء.", "explanation": "عن أبي هريرة رضي الله عنه: «إذا وقع الذباب في إناء أحدكم فليغمسه كله، ثم ليطرحه، فإن في أحد جناحيه شفاء وفي الآخر داء» — رواه البخاري، كتاب الطب (حديث 5782).", "reference": "صحيح البخاري، حديث 5782" },
-  { "id": "demo-quiz-1011", "section": "التاريخ الإسلامي", "category": "المعالم المقدسة", "level": "متوسط", "question": "أين يقع الجبل الذي فيه غار حراء الذي بدأ فيه الوحي على النبي ﷺ؟", "answer": "جبل النور، بالقرب من مكة المكرمة.", "explanation": "كان النبي ﷺ يتعبد في غار حراء بجبل النور قبل البعثة، وفيه نزل عليه الوحي أول مرة بقوله تعالى: ﴿اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ﴾.", "reference": "سورة العلق: 1؛ كتب السيرة النبوية" },
-  { "id": "demo-quiz-1012", "section": "التاريخ الإسلامي", "category": "المعالم المقدسة", "level": "متوسط", "question": "في أي جبل اختبأ النبي ﷺ وأبو بكر الصديق رضي الله عنه أثناء الهجرة إلى المدينة؟", "answer": "جبل ثور، جنوب مكة المكرمة (عكس اتجاه المدينة، تمويهاً على المشركين).", "explanation": "مكثا في غار ثور ثلاث ليالٍ حتى هدأ الطلب، ثم انطلقا إلى المدينة المنورة، وفي ذلك نزل قوله تعالى: ﴿إِذْ هُمَا فِي الْغَارِ إِذْ يَقُولُ لِصَاحِبِهِ لَا تَحْزَنْ إِنَّ اللَّهَ مَعَنَا﴾.", "reference": "سورة التوبة: 40؛ كتب السيرة النبوية" },
-  { "id": "demo-quiz-1013", "section": "التاريخ الإسلامي", "category": "المعالم المقدسة", "level": "صعب", "question": "ما هي أول قبلة صلَّى إليها المسلمون قبل تحويل القبلة إلى الكعبة؟", "answer": "بيت المقدس (المسجد الأقصى) في القدس.", "explanation": "صلَّى المسلمون إلى بيت المقدس نحو 16-17 شهراً بعد الهجرة، ثم حُوِّلت القبلة إلى الكعبة المشرَّفة بمكة بأمر إلهي، لقوله تعالى: ﴿فَوَلِّ وَجْهَكَ شَطْرَ الْمَسْجِدِ الْحَرَامِ﴾.", "reference": "سورة البقرة: 144" },
-  { "id": "demo-quiz-1014", "section": "التاريخ الإسلامي", "category": "التضاريس", "level": "سهل", "question": "في أي شبه جزيرة تقع مكة المكرمة والمدينة المنورة؟", "answer": "شبه الجزيرة العربية.", "explanation": "تقع مكة والمدينة في منطقة الحجاز غرب شبه الجزيرة العربية، وهي منطقة جبلية تطل على البحر الأحمر، وتُعَدُّ مهد الإسلام ومهبط الوحي.", "reference": "جغرافيا الجزيرة العربية — معرفة عامة" },
-  { "id": "demo-quiz-1015", "section": "الطب النبوي", "category": "أحاديث علاجية", "level": "متوسط", "question": "بم وصف النبي ﷺ الحجامة في الحديث الصحيح؟", "answer": "بأنها خير ما يُتداوى به.", "explanation": "عن ابن عباس رضي الله عنهما مرفوعاً: «إن كان في شيء مما تداووا به خيرٌ فالحجامة» — رواه أبو داود (3857) وابن ماجه (3476).", "reference": "سنن أبي داود، حديث 3857؛ سنن ابن ماجه، حديث 3476" },
-  { "id": "demo-quiz-1016", "section": "الطب النبوي", "category": "أحاديث علاجية", "level": "سهل", "question": "بم أمر النبي ﷺ أمته في السواك، وما الحكمة التي بيّنها لولا خشية المشقة عليهم؟", "answer": "أمر بالسواك عند كل صلاة، وبيّن أنه كان يأمرهم به وجوباً لولا خشية المشقة عليهم.", "explanation": "عن أبي هريرة رضي الله عنه مرفوعاً: «لولا أن أشقّ على أمتي لأمرتهم بالسواك عند كل صلاة» — رواه البخاري (887) ومسلم (252).", "reference": "صحيح البخاري، حديث 887؛ صحيح مسلم، حديث 252" },
-  { "id": "demo-quiz-1017", "section": "الطب النبوي", "category": "أحاديث علاجية", "level": "متوسط", "question": "كم تمرة أوصى النبي ﷺ بتناولها صباحاً من تمر العجوة، وما الفائدة التي ذكرها؟", "answer": "سبع تمرات، وذكر أنها تقي متناولها في ذلك اليوم من السم والسحر.", "explanation": "عن سعد بن أبي وقاص رضي الله عنه مرفوعاً: «من تصبَّح بسبع تمرات عَجوة لم يضرّه ذلك اليوم سُمٌّ ولا سِحر» — رواه البخاري (5445) ومسلم (2047).", "reference": "صحيح البخاري، حديث 5445؛ صحيح مسلم، حديث 2047" },
-  { "id": "demo-quiz-1018", "section": "الطب النبوي", "category": "أحاديث علاجية", "level": "سهل", "question": "بم وصف النبي ﷺ زيت الزيتون في الحديث، وبماذا أمر فيه؟", "answer": "وصفه بأنه من شجرة مباركة، وأمر بأكله والادّهان به.", "explanation": "عن النبي ﷺ: «كلوا الزيت وادّهنوا به، فإنه من شجرة مباركة» — رواه الترمذي (1851) وابن ماجه (3319)، وصححه الألباني.", "reference": "سنن الترمذي، حديث 1851؛ سنن ابن ماجه، حديث 3319" },
-  { "id": "demo-quiz-1019", "section": "الطب النبوي", "category": "أطعمة نبوية", "level": "متوسط", "question": "أي نبات ذكره القرآن الكريم ضمن وصف شراب أهل الجنة؟", "answer": "الزنجبيل.", "explanation": "قال تعالى: ﴿وَيُسْقَوْنَ فِيهَا كَأْسًا كَانَ مِزَاجُهَا زَنجَبِيلًا﴾ — سورة الإنسان: 17. وذكره ابن القيم في «زاد المعاد» ضمن الأغذية النافعة التي وردت بها السنة.", "reference": "سورة الإنسان: 17" },
-  { "id": "demo-quiz-1020", "section": "الطب النبوي", "category": "أحاديث علاجية", "level": "صعب", "question": "ما معنى قول النبي ﷺ «ماء زمزم لما شُرب له»؟", "answer": "أن ماء زمزم يُستشفى ويُستفاد به بحسب النية التي يشربه المرء من أجلها، فإن شربه للشفاء أو لقضاء حاجة رجا حصول ذلك بإذن الله.", "explanation": "رواه ابن ماجه (3062) وصححه الألباني بمجموع طرقه (صحيح لغيره). بيّن أهل العلم استحباب استحضار النية الصالحة عند شربه.", "reference": "سنن ابن ماجه، حديث 3062" },
-  {"id": "demo-quiz-1021", "section": "اللغة العربية", "category": "النحو", "level": "صعب", "question": "ما وجه رفع «الصابرون» في قوله تعالى: ﴿وَالْمُوفُونَ بِعَهْدِهِمْ إِذَا عَاهَدُوا وَالصَّابِرِينَ فِي الْبَأْسَاءِ﴾؟", "answer": "«الصابرين» منصوبة لا مرفوعة، على الاختصاص أو المدح، أي: وأخصُّ الصابرين.", "explanation": "وهو أسلوب عربي فصيح يُقطع فيه النعت عن المنعوت للنصب على المدح، ذكره سيبويه وأكثر المعربين.", "reference": "سورة البقرة: 177"},
-  {"id": "demo-quiz-1022", "section": "اللغة العربية", "category": "البلاغة", "level": "صعب", "question": "ما نوع المجاز في قوله تعالى: ﴿وَاسْأَلِ الْقَرْيَةَ﴾؟", "answer": "مجاز مرسل علاقته المحلية، أي: واسأل أهل القرية.", "explanation": "أُطلق المحل (القرية) وأُريد الحالّ فيه (أهلها)، وهو من أشهر أمثلة المجاز المرسل في كتب البلاغة.", "reference": "سورة يوسف: 82"},
-  {"id": "demo-quiz-1023", "section": "اللغة العربية", "category": "الصرف", "level": "متوسط", "question": "ما وزن كلمة «استغفر» في الميزان الصرفي؟", "answer": "استفعل.", "explanation": "الهمزة والسين والتاء زوائد، والأصول: غ ف ر، فوزنه استفعل، ويفيد الطلب."},
-  {"id": "demo-quiz-1024", "section": "اللغة العربية", "category": "النحو", "level": "متوسط", "question": "لماذا مُنع «مساجد» من الصرف؟", "answer": "لأنه على صيغة منتهى الجموع، وهي علة واحدة تقوم مقام علتين.", "explanation": "صيغ منتهى الجموع كمفاعل ومفاعيل ممنوعة من الصرف، فتُجرّ بالفتحة ما لم تُعرَّف أو تُضَف."},
-  {"id": "demo-quiz-1025", "section": "العلماء والأئمة", "category": "المحدثون", "level": "صعب", "question": "من صاحب كتاب «العلل» الذي يُعدّ من أدق ما صُنّف في علل الحديث الخفية؟", "answer": "الإمام علي بن المديني، وللدارقطني وابن أبي حاتم كتب في العلل كذلك.", "explanation": "قال البخاري: ما استصغرت نفسي عند أحد إلا عند علي بن المديني. وعلم العلل من أدق علوم الحديث وأعزّها."},
-  {"id": "demo-quiz-1026", "section": "العلماء والأئمة", "category": "الأصوليون", "level": "صعب", "question": "من مؤلف كتاب «الموافقات» الذي أرسى قواعد علم مقاصد الشريعة؟", "answer": "الإمام أبو إسحاق الشاطبي (ت 790 هـ).", "explanation": "جعل المقاصد قطعية مستقرأة من مجموع أدلة الشريعة لا من دليل مفرد، وهو أول من أفرد المقاصد بتصنيف منهجي مستقل."},
-  {"id": "demo-quiz-1027", "section": "العلماء والأئمة", "category": "المفسرون", "level": "متوسط", "question": "من مؤلف تفسير «التحرير والتنوير»؟", "answer": "الشيخ محمد الطاهر ابن عاشور التونسي (ت 1393 هـ).", "explanation": "من أوسع تفاسير القرن الرابع عشر الهجري، وله عناية ظاهرة بالمقاصد والبلاغة والمناسبات بين الآيات."},
-  {"id": "demo-quiz-1028", "section": "الفرائض والمواريث", "category": "أصحاب الفروض", "level": "صعب", "question": "ما المسألة المشهورة بـ«المشرَّكة» أو «الحمارية»؟", "answer": "زوج وأمّ وإخوة لأمّ وإخوة أشقاء، فيأخذ الأشقاء مع الإخوة لأمّ الثلث بالتشريك عند عمر وعثمان رضي الله عنهما، ولا شيء لهم عند علي رضي الله عنه.", "explanation": "سُميت حمارية لأن الأشقاء قالوا: هبْ أن أبانا كان حماراً، أليست أمنا واحدة؟ والمسألة من مواضع الخلاف المعتبر بين الصحابة."},
-  {"id": "demo-quiz-1029", "section": "الفرائض والمواريث", "category": "الحجب", "level": "متوسط", "question": "من الذي لا يُحجب حجب حرمان بحال من الأحوال؟", "answer": "الأبوان والولدان والزوجان: الأب والأم والابن والبنت والزوج والزوجة.", "explanation": "هؤلاء الستة لا يسقطون بالكلية، وإن نقص نصيبهم بالحجب النقصاني."},
-  {"id": "demo-quiz-1030", "section": "الفرائض والمواريث", "category": "العول", "level": "صعب", "question": "ما العول في علم الفرائض، ومن أول من قضى به؟", "answer": "زيادة سهام الفروض على أصل المسألة فيُنقص نصيب كل وارث بالنسبة، وأول من قضى به عمر بن الخطاب رضي الله عنه بمشورة الصحابة.", "explanation": "مثاله: زوج وأختان شقيقتان؛ أصلها ستة وتعول إلى سبعة."},
-  {"id": "demo-quiz-1031", "section": "التجويد", "category": "أحكام النون", "level": "متوسط", "question": "ما حكم النون الساكنة في قوله تعالى: ﴿مِن وَالٍ﴾؟", "answer": "إدغام بغير غنّة (إدغام ناقص عند من يعدّه كذلك)، لوقوع الواو بعد النون الساكنة.", "explanation": "حروف الإدغام ستة يجمعها «يرملون»، ويكون بغنّة في (ينمو) وبغير غنّة في اللام والراء؛ والواو من حروف الإدغام بغنّة عند حفص. — راجع المتون: تحفة الأطفال والجزرية."},
-  {"id": "demo-quiz-1032", "section": "التجويد", "category": "المدود", "level": "صعب", "question": "ما مقدار مدّ اللازم الكلمي المثقَّل ومثاله؟", "answer": "ست حركات وجوباً، ومثاله ﴿وَلَا الضَّالِّينَ﴾.", "explanation": "سُمي لازماً للزوم مدّه ست حركات وصلاً ووقفاً، ومثقَّلاً لأن بعد حرف المد حرفاً مشدداً."},
-  {"id": "demo-quiz-1033", "section": "التجويد", "category": "الوقف", "level": "صعب", "question": "ما الفرق بين الوقف اللازم والوقف الممنوع في المصحف؟", "answer": "اللازم (م) يجب الوقف عنده لأن وصله يوهم معنى فاسداً، والممنوع (لا) لا يُبتدأ بما بعده لارتباطه بما قبله ارتباطاً يفسد بالوقف.", "explanation": "وعلامات الوقف اصطلاحية وضعها العلماء لخدمة المعنى، وليست جزءاً من الرسم العثماني الأصلي."},
-  {"id": "demo-quiz-1034", "section": "الأسماء الحسنى", "category": "الدلالة", "level": "صعب", "question": "ما الفرق بين اسمَي الله «الخالق» و«البارئ» و«المصوّر»؟", "answer": "الخالق: المقدِّر المُوجِد من العدم، والبارئ: المُنشئ للخلق بريئاً من التفاوت، والمصوّر: الذي أعطى كل مخلوق صورته الخاصة به.", "explanation": "جُمعت الثلاثة في قوله تعالى: ﴿هُوَ اللَّهُ الْخَالِقُ الْبَارِئُ الْمُصَوِّرُ﴾ — الحشر: 24، وبين معانيها ابن القيم وابن كثير.", "reference": "سورة الحشر: 24"},
-  {"id": "demo-quiz-1035", "section": "الأسماء الحسنى", "category": "العقيدة", "level": "صعب", "question": "ما ضابط أسماء الله الحسنى عند أهل السنة؟", "answer": "أنها توقيفية لا تُثبت إلا بنص من الكتاب أو السنة الصحيحة، ولا مجال فيها للقياس أو الاجتهاد.", "explanation": "لأن الإخبار عن الله بما لم يُخبر به عن نفسه قولٌ على الله بغير علم، وهو محرّم بنص القرآن."},
-  {"id": "demo-quiz-1036", "section": "الطب النبوي", "category": "منهج", "level": "صعب", "question": "ما الضابط الذي قرّره ابن القيم في التعامل مع الطب النبوي؟", "answer": "التفريق بين ما ثبت عنه ﷺ على وجه الشرع والتعبد وبين ما كان من عادات أهل زمانه وطبّهم، فالأول مُتَّبع والثاني اجتهادي يُنظر فيه.", "explanation": "قرّر ذلك في «زاد المعاد»، وعليه فلا يُلزَم المسلم بترك الطب الحديث المجرَّب."},
-  {"id": "demo-quiz-1037", "section": "الطب النبوي", "category": "أحاديث علاجية", "level": "متوسط", "question": "ما الحكمة النبوية في النهي عن الدخول إلى أرضٍ وقع بها الطاعون؟", "answer": "قال ﷺ: «إذا سمعتم بالطاعون بأرضٍ فلا تقدموا عليها، وإذا وقع بأرضٍ وأنتم بها فلا تخرجوا فراراً منه» — متفق عليه.", "explanation": "أصلٌ نبويّ في الحجر الصحي، جمع بين الأخذ بالأسباب ومنع نقل الوباء إلى غير أهله.", "reference": "متفق عليه من حديث عبدالرحمن بن عوف وأسامة بن زيد رضي الله عنهما"},
-  {"id": "demo-quiz-1038", "section": "علوم القرآن", "category": "الرسم", "level": "صعب", "question": "ما المقصود بالرسم العثماني، وما حكم الالتزام به؟", "answer": "هو هيئة كتابة المصحف التي أقرّها عثمان رضي الله عنه في المصاحف الإمام، وجمهور العلماء على وجوب الالتزام به في كتابة المصحف.", "explanation": "خالف في ذلك بعض المتأخرين فأجازوا الكتابة الإملائية للتعليم، مع بقاء المصحف على الرسم العثماني."},
-  {"id": "demo-quiz-1039", "section": "علوم القرآن", "category": "النسخ", "level": "صعب", "question": "ما أقسام النسخ في القرآن عند العلماء؟", "answer": "ثلاثة: نسخ التلاوة والحكم معاً، ونسخ الحكم وبقاء التلاوة، ونسخ التلاوة وبقاء الحكم.", "explanation": "ومثال الثاني آية العدة بالحول في البقرة، ومثال الثالث ما ورد في آية الرجم على قول من أثبته."},
-  {"id": "demo-quiz-1040", "section": "علوم القرآن", "category": "أسباب النزول", "level": "متوسط", "question": "ما القاعدة المشهورة عند الأصوليين في العلاقة بين سبب النزول وعموم اللفظ؟", "answer": "«العبرة بعموم اللفظ لا بخصوص السبب» عند جمهور العلماء.", "explanation": "فالآية تشمل كل من انطبق عليه وصفها وإن نزلت في واقعة معيّنة، وخالف بعض أهل العلم فقصرها على سببها."},
-  {"id": "demo-quiz-1041", "section": "الحديث", "category": "مصطلح", "level": "صعب", "question": "ما الحديث المدرَج؟", "answer": "ما أُدخل في متنه أو سنده ما ليس منه من كلام الراوي بلا فصل يميّزه.", "explanation": "ومن أمثلته الشهيرة زيادة «أسبغوا الوضوء» في بعض الروايات، ويُعرف الإدراج بورود الرواية مفصولة في طريق آخر."},
-  {"id": "demo-quiz-1042", "section": "الحديث", "category": "مصطلح", "level": "صعب", "question": "ما الفرق بين الحديث الشاذ والحديث المنكر؟", "answer": "الشاذ: ما خالف فيه المقبول من هو أولى منه، والمنكر: ما خالف فيه الضعيف الثقات.", "explanation": "وهذا تحرير الحافظ ابن حجر في «نخبة الفكر»، وكلاهما من أقسام الحديث المردود بسبب المخالفة."},
-  {"id": "demo-quiz-1043", "section": "الحديث", "category": "مصطلح", "level": "متوسط", "question": "ما معنى قول المحدثين «متفق عليه»؟", "answer": "أن الحديث رواه البخاري ومسلم كلاهما في صحيحيهما.", "explanation": "وهو أعلى درجات الصحة عند أهل الحديث، ولا يعني اتفاق الأمة كلها كما يظنه بعض الناس."},
-  {"id": "demo-quiz-1044", "section": "الصالحون", "category": "التابعون", "level": "صعب", "question": "من سيد التابعين الذي قال عنه النبي ﷺ إنه يشفع في مثل ربيعة ومُضَر؟", "answer": "أويس القرني رحمه الله.", "explanation": "ورد في صحيح مسلم أن النبي ﷺ أوصى عمر رضي الله عنه أن يطلب منه الاستغفار إن لقيه، ولم يرَ النبيَّ ﷺ لكنه أدرك زمانه.", "reference": "صحيح مسلم"},
-  {"id": "demo-quiz-1045", "section": "الصالحون", "category": "العُبّاد", "level": "متوسط", "question": "من الإمام الذي اشتُهر بقوله: «إن في الدنيا جنة، من لم يدخلها لم يدخل جنة الآخرة»؟", "answer": "شيخ الإسلام ابن تيمية رحمه الله، يعني جنة معرفة الله ومحبته.", "explanation": "نقلها عنه تلميذه ابن القيم في «الوابل الصيب» وغيره، وفيها بيان أثر الإيمان في طمأنينة القلب."},
-  {"id": "demo-quiz-1046", "section": "الفتوحات الإسلامية", "category": "القادة", "level": "صعب", "question": "من القائد الذي فتح بلاد السند وهو دون العشرين من عمره؟", "answer": "محمد بن القاسم الثقفي، فتح السند سنة 92 هـ تقريباً.", "explanation": "وكان فتحه بابَ دخول الإسلام إلى شبه القارة الهندية، وسار فيه بسياسة حفظت للناس معابدهم وأمنهم."},
-  {"id": "demo-quiz-1047", "section": "الفتوحات الإسلامية", "category": "المعارك", "level": "متوسط", "question": "في أي معركة أُوقف الزحف المغولي وانكسرت أسطورة عدم هزيمتهم؟", "answer": "معركة عين جالوت سنة 658 هـ / 1260 م بقيادة قطز والظاهر بيبرس.", "explanation": "كانت بعد سقوط بغداد بسنتين، وأعادت التوازن للعالم الإسلامي في المشرق."},
-  {"id": "demo-quiz-1048", "section": "التاريخ الإسلامي", "category": "الدول", "level": "صعب", "question": "ما الدولة التي أسسها يوسف بن تاشفين وانتصرت في معركة الزلاقة؟", "answer": "دولة المرابطين، وكانت الزلاقة سنة 479 هـ / 1086 م.", "explanation": "أخّرت الزلاقة سقوط الأندلس قروناً، وجاءت بعد استنجاد ملوك الطوائف بيوسف بن تاشفين."},
-  {"id": "demo-quiz-1049", "section": "التاريخ الإسلامي", "category": "الحضارة", "level": "صعب", "question": "ما وظيفة «المحتسب» في الدولة الإسلامية؟", "answer": "مراقبة الأسواق والمرافق العامة، ومنع الغش والتطفيف، والقيام بالأمر بالمعروف والنهي عن المنكر فيما يتعلق بالحقوق العامة.", "explanation": "صُنّفت فيها كتب مستقلة مثل «معالم القربة في أحكام الحسبة» لابن الأخوة."},
-  {"id": "demo-quiz-1050", "section": "الفقه", "category": "القواعد", "level": "صعب", "question": "ما القواعد الفقهية الخمس الكبرى؟", "answer": "الأمور بمقاصدها، واليقين لا يزول بالشك، والمشقة تجلب التيسير، والضرر يُزال، والعادة محكَّمة.", "explanation": "تُردّ إليها أكثر مسائل الفقه، وقد بسطها السيوطي في «الأشباه والنظائر» وابن نجيم في كتابه بالاسم نفسه."},
-  {"id": "demo-quiz-1051", "section": "الفقه", "category": "أصول", "level": "صعب", "question": "ما الفرق بين الواجب والفرض عند جمهور العلماء وعند الحنفية؟", "answer": "هما مترادفان عند الجمهور، وفرّق الحنفية: فالفرض ما ثبت بدليل قطعي، والواجب ما ثبت بدليل ظني.", "explanation": "وبنوا على التفريق أحكاماً، منها أن جاحد الفرض يكفر دون جاحد الواجب."},
-  {"id": "demo-quiz-1052", "section": "الفقه", "category": "العبادات", "level": "متوسط", "question": "ما حكم من تذكّر صلاة فائتة وهو في صلاة حاضرة؟", "answer": "يمضي في صلاته الحاضرة ثم يقضي الفائتة عند الجمهور، وتلزم الترتيب رواية عند الحنابلة ما لم يخشَ فوات الحاضرة.", "explanation": "والمسألة من مواضع الخلاف المعتبر بين الفقهاء، وسعة الشرع فيها ظاهرة."},
-  {"id": "demo-quiz-1053", "section": "العقيدة", "category": "الأسماء والصفات", "level": "صعب", "question": "ما قاعدة أهل السنة في باب الصفات؟", "answer": "إثبات ما أثبته الله لنفسه وأثبته له رسوله ﷺ من غير تحريف ولا تعطيل ولا تكييف ولا تمثيل.", "explanation": "قال تعالى: ﴿لَيْسَ كَمِثْلِهِ شَيْءٌ وَهُوَ السَّمِيعُ الْبَصِيرُ﴾ — ففي أولها نفي التمثيل وفي آخرها إثبات الصفات.", "reference": "سورة الشورى: 11"},
-  {"id": "demo-quiz-1054", "section": "العقيدة", "category": "القدر", "level": "صعب", "question": "ما مراتب الإيمان بالقدر الأربع؟", "answer": "العلم، والكتابة، والمشيئة، والخلق.", "explanation": "فيعلم أن الله علم كل شيء أزلاً، وكتبه في اللوح المحفوظ، وأن ما شاء كان وما لم يشأ لم يكن، وأنه خالق كل شيء ومنه أفعال العباد."},
-  {"id": "demo-quiz-1055", "section": "الآداب والأخلاق", "category": "أدب النفس", "level": "متوسط", "question": "ما ضابط الغيبة الجائزة عند العلماء؟", "answer": "تُباح لغرض صحيح لا يمكن الوصول إليه إلا بها، كالتظلم والاستفتاء والتحذير من مفسدة وتعريف المجهول.", "explanation": "عدّها النووي في «رياض الصالحين» ستة أسباب، ونظمها بعضهم في بيتين مشهورين."},
-  {"id": "demo-quiz-1056", "section": "الرقائق", "category": "محاسبة", "level": "صعب", "question": "ما الفرق بين المحاسبة والمراقبة عند أهل السلوك؟", "answer": "المراقبة قبل العمل وأثناءه باستحضار اطلاع الله، والمحاسبة بعده بوزن ما كان منه.", "explanation": "قال عمر رضي الله عنه: «حاسبوا أنفسكم قبل أن تُحاسَبوا»، وبسط ذلك ابن القيم في «مدارج السالكين»."},
-  {"id": "demo-quiz-1057", "section": "الأذكار والأدعية", "category": "الفقه", "level": "صعب", "question": "ما حكم الذكر الجماعي بصوت واحد عقب الصلاة؟", "answer": "مسألة خلافية: منعها جمهور المتأخرين من أهل السنة لعدم ورودها عن النبي ﷺ وأصحابه، وأجازها بعض أهل العلم إذا قُصد بها التعليم.", "explanation": "والمتفق عليه أن أصل الذكر عقب الصلاة سنة ثابتة، وإنما الخلاف في هيئة الاجتماع عليه بصوت واحد."},
-  {"id": "demo-quiz-1058", "section": "الحج والعمرة", "category": "المناسك", "level": "صعب", "question": "ما حكم من ترك طواف الوداع من الحجاج؟", "answer": "عليه دم عند جمهور الفقهاء لتركه واجباً، وسقط عن الحائض والنفساء بالنص.", "explanation": "لحديث ابن عباس رضي الله عنهما: «أُمر الناس أن يكون آخر عهدهم بالبيت، إلا أنه خُفّف عن الحائض» — متفق عليه.", "reference": "متفق عليه"},
-  {"id": "demo-quiz-1059", "section": "الصحابة", "category": "الفقهاء", "level": "صعب", "question": "من الصحابي الذي لقّبه النبي ﷺ بـ«ترجمان القرآن» بالدعاء له بالفقه في الدين؟", "answer": "عبدالله بن عباس رضي الله عنهما، قال له النبي ﷺ: «اللهم فقّهه في الدين وعلّمه التأويل».", "explanation": "وكان عمر رضي الله عنه يُدخله مع أشياخ بدر لسعة علمه رغم صغر سنه."},
-  {"id": "demo-quiz-1060", "section": "الأنبياء", "category": "أولو العزم", "level": "متوسط", "question": "من أولو العزم من الرسل؟", "answer": "نوح وإبراهيم وموسى وعيسى ومحمد عليهم الصلاة والسلام.", "explanation": "جُمعوا في آيتين: ﴿وَإِذْ أَخَذْنَا مِنَ النَّبِيِّينَ مِيثَاقَهُمْ﴾ — الأحزاب: 7، و﴿شَرَعَ لَكُم مِّنَ الدِّينِ﴾ — الشورى: 13.", "reference": "سورة الأحزاب: 7، والشورى: 13"},
-  {"id": "demo-quiz-1061", "section": "العقيدة", "category": "الإيمان", "level": "صعب", "question": "ما الفرق بين الإسلام والإيمان إذا اجتمعا وإذا افترقا؟", "answer": "إذا اجتمعا في نصٍّ واحد فُسِّر الإسلام بالأعمال الظاهرة والإيمان بالأعمال الباطنة، وإذا افترقا شمل كلٌّ منهما الدين كله.", "explanation": "وهي قاعدة مشهورة: «إذا اجتمعا افترقا، وإذا افترقا اجتمعا»، ودليل الاجتماع حديث جبريل عليه السلام — رواه مسلم."},
-  {"id": "demo-quiz-1062", "section": "الأنبياء", "category": "القصص", "level": "صعب", "question": "ما النبي الذي ذُكر اسمه صريحاً في القرآن أكثر من غيره؟", "answer": "موسى عليه السلام، ذُكر في أكثر من مئة وثلاثين موضعاً.", "explanation": "وتكرار قصته لتنوّع العبر فيها: في الدعوة والصبر على الأذى وقيادة الأمة وابتلاءات الطريق."},
-  {"id": "demo-quiz-1063", "section": "الحديث", "category": "مصطلح", "level": "صعب", "question": "ما الحديث المعلَّق، وأين يكثر وروده؟", "answer": "ما حُذف من أول إسناده راوٍ فأكثر على التوالي، ويكثر في صحيح البخاري في التراجم والمتابعات.", "explanation": "وما جزم به البخاري بصيغة الجزم (قال، رَوى) فهو صحيح إلى من عُلِّق عنه، وما ذكره بصيغة التمريض (يُروى، يُذكر) ففيه نظر."},
-  {"id": "demo-quiz-1064", "section": "الأنبياء", "category": "الأمم السابقة", "level": "سهل", "question": "ما نوع العذاب الذي أُهلكت به عاد؟", "answer": "ريح صرصر عاتية سُخِّرت عليهم سبع ليالٍ وثمانية أيام حُسوماً.", "explanation": "﴿وَأَمَّا عَادٌ فَأُهْلِكُوا بِرِيحٍ صَرْصَرٍ عَاتِيَةٍ﴾ — الحاقة: 6، ويؤيده حديث «أُهلكت عادٌ بالدَّبور» متفق عليه.", "reference": "سورة الحاقة: 6-7"},
-  {"id": "demo-quiz-1065", "section": "الأنبياء", "category": "الأمم السابقة", "level": "متوسط", "question": "ما الآية التي طلبها ثمود فأعطاهم الله إياها، وما الشرط الذي نقضوه؟", "answer": "الناقة، وشرطُها قسمة الماء: ﴿لَّهَا شِرْبٌ وَلَكُمْ شِرْبُ يَوْمٍ مَّعْلُومٍ﴾، فعقروها.", "explanation": "نسب الله العقر إليهم جميعاً ﴿فَعَقَرُوهَا﴾ وإن باشره واحد، لأنهم رضوا وتمالؤوا.", "reference": "سورة الشعراء: 155-157"},
-  {"id": "demo-quiz-1066", "section": "الأنبياء", "category": "الأمم السابقة", "level": "متوسط", "question": "كم لبث نوح عليه السلام في قومه؟", "answer": "ألف سنة إلا خمسين عاماً.", "explanation": "﴿فَلَبِثَ فِيهِمْ أَلْفَ سَنَةٍ إِلَّا خَمْسِينَ عَامًا﴾ — العنكبوت: 14، واختلف المفسرون: أهي مدة الدعوة وحدها أم عمره كله؟", "reference": "سورة العنكبوت: 14"},
-  {"id": "demo-quiz-1067", "section": "الأنبياء", "category": "الأمم السابقة", "level": "صعب", "question": "ما الذنب الذي اشتُهر به أهل مدين قومُ شعيب بعد الشرك؟", "answer": "بخس المكيال والميزان وتطفيفه، وقطع السبيل والإفساد في الأرض.", "explanation": "﴿وَيَا قَوْمِ أَوْفُوا الْمِكْيَالَ وَالْمِيزَانَ بِالْقِسْطِ وَلَا تَبْخَسُوا النَّاسَ أَشْيَاءَهُمْ﴾ — هود: 85.", "reference": "سورة هود: 85"},
-  {"id": "demo-quiz-1068", "section": "الأنبياء", "category": "الأمم السابقة", "level": "صعب", "question": "من الفريق الذي نصّ القرآن على نجاته من أصحاب السبت؟", "answer": "الذين ينهون عن السوء: ﴿أَنجَيْنَا الَّذِينَ يَنْهَوْنَ عَنِ السُّوءِ وَأَخَذْنَا الَّذِينَ ظَلَمُوا بِعَذَابٍ بَئِيسٍ﴾.", "explanation": "وأما الفريق الساكت الذي قال ﴿لِمَ تَعِظُونَ قَوْمًا﴾ فقد اختُلف في مصيره بين المفسرين، ولم ينصّ القرآن عليه.", "reference": "سورة الأعراف: 165"},
-  {"id": "demo-quiz-1069", "section": "الأنبياء", "category": "الأمم السابقة", "level": "متوسط", "question": "بم أُهلك أصحاب الفيل؟", "answer": "بطيرٍ أبابيل ترميهم بحجارة من سجّيل فجعلهم كعصفٍ مأكول.", "explanation": "سورة الفيل كاملة، ويؤيدها قول النبي ﷺ يوم الحديبية: «حبسها حابس الفيل» — رواه البخاري.", "reference": "سورة الفيل: 3-5"},
-  {"id": "demo-quiz-1070", "section": "الأنبياء", "category": "الأمم السابقة", "level": "صعب", "question": "ما سبب زوال نعمة سبأ، وما العقوبة التي نزلت بهم؟", "answer": "الإعراض عن شكر النعمة، فأُرسل عليهم سيل العرم وبُدّلت جنّتاهم، وجعلهم الله أحاديث ومزّقهم كل ممزّق.", "explanation": "﴿فَأَعْرَضُوا فَأَرْسَلْنَا عَلَيْهِمْ سَيْلَ الْعَرِمِ﴾ — سبأ: 16. وقد أسلمت ملكتهم في زمن سليمان عليه السلام قبل ذلك.", "reference": "سورة سبأ: 15-19"},
-  {"id": "demo-quiz-1071", "section": "الأنبياء", "category": "الأمم السابقة", "level": "صعب", "question": "ما الحكم الشرعي في تحديد هوية أصحاب الرسّ؟", "answer": "لا يصح تعيينهم؛ ذكرهم القرآن مرتين في سياق المكذبين دون تفصيل، وأقوال المفسرين فيهم متعارضة لا يصح منها شيء مرفوع.", "explanation": "موضعا ذكرهم: الفرقان: 38، وق: 12. والموقف العلمي هو التوقف عند حدّ النص.", "reference": "سورة الفرقان: 38"},
-  {"id": "demo-quiz-1072", "section": "الأنبياء", "category": "الأمم السابقة", "level": "متوسط", "question": "من الذي بنى الردم الحابس ليأجوج ومأجوج، وماذا قال بعد إتمامه؟", "answer": "ذو القرنين، وقال: ﴿هَٰذَا رَحْمَةٌ مِّن رَّبِّي فَإِذَا جَاءَ وَعْدُ رَبِّي جَعَلَهُ دَكَّاءَ﴾.", "explanation": "ورفض المال الذي عُرض عليه وقال ﴿مَا مَكَّنِّي فِيهِ رَبِّي خَيْرٌ فَأَعِينُونِي بِقُوَّةٍ﴾ — طلب العمل لا الأجر.", "reference": "سورة الكهف: 95-98"},
-  {"id": "demo-quiz-1073", "section": "الأنبياء", "category": "الأمم السابقة", "level": "صعب", "question": "ما الذي عزم عليه أصحاب الجنة في سورة القلم، وما الذي أخطؤوا فيه في قسمهم؟", "answer": "عزموا على جذاذ بستانهم مبكراً ليمنعوا حق المساكين، وأقسموا على ذلك ولم يستثنوا فيقولوا «إن شاء الله».", "explanation": "﴿إِذْ أَقْسَمُوا لَيَصْرِمُنَّهَا مُصْبِحِينَ * وَلَا يَسْتَثْنُونَ﴾ — القلم: 17-18، ثم طاف عليها طائف من ربهم وهم نائمون.", "reference": "سورة القلم: 17-20"},
-  {"id": "demo-quiz-1074", "section": "الطب النبوي", "category": "قواعد", "level": "متوسط", "question": "ما القاعدة النبوية الجامعة في إثبات الأسباب العلاجية؟", "answer": "«ما أنزل الله داءً إلا أنزل له شفاءً» — فالتداوي أخذٌ بالسبب لا منافاة للتوكل.", "explanation": "رواه البخاري (5678) من حديث أبي هريرة رضي الله عنه، وفي رواية مسلم: «لكل داءٍ دواء، فإذا أُصيب دواءُ الداء برأ بإذن الله».", "reference": "صحيح البخاري 5678"},
-  {"id": "demo-quiz-1075", "section": "الطب النبوي", "category": "الرقية", "level": "صعب", "question": "ما شروط الرقية الشرعية التي تُخرجها عن الشرك؟", "answer": "أن تكون بكلام الله أو أسمائه وصفاته، وباللسان العربي المفهوم، وأن يعتقد أنها سبب لا مؤثرة بذاتها.", "explanation": "قال ﷺ: «لا بأس بالرُّقى ما لم تكن شركاً» — رواه مسلم (2200)، وهذه الشروط الثلاثة نقل السيوطي الإجماع عليها.", "reference": "صحيح مسلم 2200"},
-  {"id": "demo-quiz-1076", "section": "الطب النبوي", "category": "الوقاية", "level": "متوسط", "question": "ما التوجيه النبوي في الوقاية من انتقال الوباء؟", "answer": "«إذا سمعتم بالطاعون بأرضٍ فلا تقدموا عليها، وإذا وقع بأرضٍ وأنتم بها فلا تخرجوا فراراً منه».", "explanation": "متفق عليه من حديث عبدالرحمن بن عوف وأسامة بن زيد رضي الله عنهما؛ وهو أصلٌ نبوي في الحجر الصحي.", "reference": "متفق عليه"},
-  {"id": "demo-quiz-1077", "section": "الطب النبوي", "category": "أطعمة", "level": "سهل", "question": "بمَ وصف النبي ﷺ الحبة السوداء؟", "answer": "«في الحبة السوداء شفاءٌ من كل داء إلا السام» — والسام: الموت.", "explanation": "متفق عليه: البخاري (5688)، مسلم (2215) من حديث أبي هريرة رضي الله عنه.", "reference": "متفق عليه"},
-  {"id": "demo-quiz-1078", "section": "اللغة العربية", "category": "النحو", "level": "متوسط", "question": "ما إعراب «كلَّ» في قولك: «قرأتُ الكتابَ كلَّه»؟", "answer": "توكيد معنوي منصوب، وهو تابعٌ للمؤكَّد في إعرابه.", "explanation": "التوكيد المعنوي يكون بألفاظ محددة: نفس، عين، كل، جميع، كلا، كلتا — ويجب اتصاله بضمير يعود على المؤكَّد."},
-  {"id": "demo-quiz-1079", "section": "اللغة العربية", "category": "البلاغة", "level": "صعب", "question": "ما الفرق بين التشبيه البليغ والاستعارة؟", "answer": "البليغ حُذفت منه الأداة ووجه الشبه وبقي الطرفان، والاستعارة حُذف فيها أحد الطرفين.", "explanation": "«زيدٌ أسدٌ» تشبيه بليغ لبقاء المشبه والمشبه به، و«رأيت أسداً يخطب» استعارة تصريحية لحذف المشبه."},
-  {"id": "demo-quiz-1080", "section": "اللغة العربية", "category": "الصرف", "level": "صعب", "question": "ما وزن «اطَّلع» وما أصله؟", "answer": "وزنه افتعل، وأصله «اطتلع» فأُبدلت تاء الافتعال طاءً وأُدغمت لوقوعها بعد الطاء.", "explanation": "من قواعد الإبدال: تاء الافتعال تُبدل طاءً بعد الصاد والضاد والطاء والظاء، ودالاً بعد الدال والذال والزاي."},
-  {"id": "demo-quiz-1081", "section": "اللغة العربية", "category": "النحو", "level": "سهل", "question": "متى تُحذف نون الأفعال الخمسة؟", "answer": "عند النصب أو الجزم؛ ونونها علامة رفعها.", "explanation": "مثل: لن تذهبوا (نصب)، لم تذهبوا (جزم)، تذهبون (رفع بثبوت النون)."},
-  {"id": "demo-quiz-1082", "section": "الأسماء الحسنى", "category": "الدلالة", "level": "صعب", "question": "ما الفرق بين «الرحمن» و«الرحيم»؟", "answer": "الرحمن: ذو الرحمة الواسعة الشاملة للخلق كلهم، والرحيم: الموصِل رحمتَه لمن شاء من عباده؛ فالأول وصف ذات والثاني وصف فعل.", "explanation": "وذكر ابن القيم أن «الرحمن» دالٌّ على الصفة القائمة به سبحانه، و«الرحيم» دالٌّ على تعلقها بالمرحوم."},
-  {"id": "demo-quiz-1083", "section": "الأسماء الحسنى", "category": "العقيدة", "level": "متوسط", "question": "هل ورد تعيين الأسماء التسعة والتسعين في حديث صحيح؟", "answer": "ثبت العدد في الصحيحين، وأما سردُها المعيَّن فجاء عند الترمذي وابن ماجه وضعّفه المحققون؛ فلا يُجزم بتعيينها.", "explanation": "قال ﷺ: «إن لله تسعة وتسعين اسماً، مئة إلا واحداً، من أحصاها دخل الجنة» — متفق عليه. وسرد الأسماء من إدراج بعض الرواة كما بيّن ابن حجر وابن كثير.", "reference": "متفق عليه"},
-  {"id": "demo-quiz-1084", "section": "الأسماء الحسنى", "category": "الدلالة", "level": "صعب", "question": "ما الفرق بين «القدير» و«المقتدر»؟", "answer": "القدير: التام القدرة، والمقتدر: الذي تظهر آثار قدرته في خلقه قهراً ونفوذاً.", "explanation": "جاءا مقترنين في قوله تعالى: ﴿عِندَ مَلِيكٍ مُّقْتَدِرٍ﴾ — القمر: 55، وقوله: ﴿إِنَّ اللَّهَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ﴾ — البقرة: 20."},
-  {"id": "demo-quiz-1085", "section": "العلماء والأئمة", "category": "المحدثون", "level": "صعب", "question": "من صاحب «الجرح والتعديل» ومن أبوه من أئمة العلل؟", "answer": "عبد الرحمن بن أبي حاتم الرازي، وأبوه أبو حاتم الرازي من كبار أئمة الجرح والتعديل.", "explanation": "وكتابه من أوسع كتب تراجم الرواة، ونقل فيه أقوال أبيه وأبي زرعة الرازي."},
-  {"id": "demo-quiz-1086", "section": "العلماء والأئمة", "category": "الأصوليون", "level": "متوسط", "question": "من صاحب «المستصفى» في أصول الفقه؟", "answer": "أبو حامد الغزالي (ت 505 هـ).", "explanation": "وهو من أشهر كتب الأصول على طريقة المتكلمين، وعليه مدار كثير من المختصرات بعده."},
-  {"id": "demo-quiz-1087", "section": "العلماء والأئمة", "category": "اللغويون", "level": "صعب", "question": "من مؤلف «الكتاب» أول كتاب جامع في النحو العربي؟", "answer": "سيبويه، عمرو بن عثمان (ت نحو 180 هـ).", "explanation": "سمّاه أهل العلم «قرآن النحو» لجمعه أصول العربية، وأخذه عن الخليل بن أحمد الفراهيدي."},
-  {"id": "demo-quiz-1088", "section": "الصالحون", "category": "التابعون", "level": "متوسط", "question": "من فقهاء المدينة السبعة؟", "answer": "سعيد بن المسيب، وعروة بن الزبير، والقاسم بن محمد، وخارجة بن زيد، وأبو سلمة بن عبد الرحمن، وعبيد الله بن عبد الله، وسليمان بن يسار.", "explanation": "عليهم مدار فقه المدينة في عصر التابعين، وعنهم أخذ الزهري ومالك وغيرهما."},
-  {"id": "demo-quiz-1089", "section": "الصالحون", "category": "العُبّاد", "level": "صعب", "question": "من الخليفة الذي قيل فيه: «خامس الخلفاء الراشدين»؟", "answer": "عمر بن عبد العزيز (ت 101 هـ).", "explanation": "لعدله وسيرته في خلافته التي لم تتجاوز سنتين ونصفاً، ورد المظالم وإحياء السنن."},
-  {"id": "demo-quiz-1090", "section": "الفرائض والمواريث", "category": "أصول المسائل", "level": "صعب", "question": "ما أصول مسائل الفرائض السبعة؟", "answer": "2 و3 و4 و6 و8 و12 و24.", "explanation": "وتعول منها ثلاثة: الستة إلى عشرة، والاثنا عشر إلى سبعة عشر، والأربعة والعشرون إلى سبعة وعشرين."},
-  {"id": "demo-quiz-1091", "section": "الفرائض والمواريث", "category": "موانع الإرث", "level": "متوسط", "question": "ما موانع الإرث المتفق عليها؟", "answer": "ثلاثة: القتل، واختلاف الدين، والرقّ.", "explanation": "لقوله ﷺ: «ليس للقاتل شيء» — رواه أبو داود (4564)، وقوله: «لا يرث المسلم الكافر ولا الكافر المسلم» — متفق عليه.", "reference": "متفق عليه"},
-  {"id": "demo-quiz-1092", "section": "الفرائض والمواريث", "category": "مسائل", "level": "صعب", "question": "ما المسألة المشهورة بـ«المشتركة» ولماذا سُمّيت «الحمارية»؟", "answer": "زوج وأمّ وإخوة لأمّ وإخوة أشقاء؛ سُمّيت حمارية لقول الأشقاء: هَبْ أن أبانا كان حماراً، أليست أمنا واحدة؟", "explanation": "قضى فيها عمر وعثمان رضي الله عنهما بالتشريك، وذهب علي رضي الله عنه إلى أن الأشقاء لا شيء لهم؛ وهي من مواضع الخلاف المعتبر."},
-  {"id": "demo-quiz-1093", "section": "التجويد", "category": "صفات الحروف", "level": "صعب", "question": "ما حروف القلقلة وما ضابطها؟", "answer": "خمسة يجمعها «قطب جد»: القاف والطاء والباء والجيم والدال، وتُقلقل إذا سكنت.", "explanation": "والقلقلة اضطراب المخرج عند النطق بالحرف الساكن حتى يُسمع له نبرة قوية."},
-  {"id": "demo-quiz-1094", "section": "التجويد", "category": "المدود", "level": "متوسط", "question": "ما مقدار المدّ المتصل وسبب وجوبه؟", "answer": "أربع أو خمس حركات وجوباً، وسببه اجتماع حرف المد مع الهمزة في كلمة واحدة.", "explanation": "مثاله ﴿جَاءَ﴾ و﴿السَّمَاءِ﴾؛ وسُمّي متصلاً لاتصال سببه بحرف المد في كلمة واحدة."},
-  {"id": "demo-quiz-1095", "section": "التجويد", "category": "أحكام اللام", "level": "صعب", "question": "متى تُفخَّم لام لفظ الجلالة؟", "answer": "إذا سبقها فتحٌ أو ضمّ، وتُرقَّق إذا سبقها كسر.", "explanation": "مثل: قال اللهُ (تفخيم)، ونصرُ الله (تفخيم)، وبسم اللهِ (ترقيق)."},
-  {"id": "demo-quiz-1096", "section": "الفتوحات الإسلامية", "category": "المعارك", "level": "صعب", "question": "ما معركة نهاوند ولماذا سُمّيت «فتح الفتوح»؟", "answer": "معركة سنة 21 هـ بقيادة النعمان بن مقرّن رضي الله عنه، سُمّيت بذلك لأنها حسمت أمر الدولة الفارسية نهائياً.", "explanation": "وبعدها تتابعت فتوح فارس بلا مقاومة منظمة تُذكر."},
-  {"id": "demo-quiz-1097", "section": "الفتوحات الإسلامية", "category": "السياسة", "level": "متوسط", "question": "ما العهدة العمرية؟", "answer": "عهد الأمان الذي كتبه عمر بن الخطاب رضي الله عنه لأهل بيت المقدس عند فتحها، وأمّنهم فيه على أنفسهم وكنائسهم وصلبانهم.", "explanation": "وهو من أشهر وثائق التسامح في التاريخ، نقله الطبري في تاريخه."},
-  {"id": "demo-quiz-1098", "section": "الرقائق", "category": "محاسبة", "level": "متوسط", "question": "ما الأسئلة الأربعة التي لا تزول قدما العبد يوم القيامة حتى يُسأل عنها؟", "answer": "عن عمره فيم أفناه، وعن علمه فيم فعل فيه، وعن ماله من أين اكتسبه وفيم أنفقه، وعن جسمه فيم أبلاه.", "explanation": "رواه الترمذي (2417) من حديث أبي برزة الأسلمي رضي الله عنه وقال: حسن صحيح.", "reference": "سنن الترمذي 2417"},
-  {"id": "demo-quiz-1099", "section": "الرقائق", "category": "الزهد", "level": "صعب", "question": "بمَ وصف النبي ﷺ حال المؤمن في الدنيا؟", "answer": "«كن في الدنيا كأنك غريب أو عابر سبيل».", "explanation": "رواه البخاري (6416) من حديث ابن عمر رضي الله عنهما، وكان ابن عمر يقول: إذا أمسيت فلا تنتظر الصباح.", "reference": "صحيح البخاري 6416"},
-  {"id": "demo-quiz-1100", "section": "الآداب والأخلاق", "category": "أدب المجلس", "level": "متوسط", "question": "ما حكم إقامة الرجل من مجلسه ليجلس فيه غيره؟", "answer": "منهيٌّ عنه؛ قال ﷺ: «لا يُقيمنَّ أحدُكم رجلاً من مجلسه ثم يجلس فيه، ولكن تفسّحوا وتوسّعوا».", "explanation": "متفق عليه: البخاري (6270)، مسلم (2177) من حديث ابن عمر رضي الله عنهما.", "reference": "متفق عليه"}
+  { "id": "demo-quiz-1007", "documentation_status": "sourced", "section": "الطب النبوي", "category": "أحاديث علاجية", "level": "متوسط", "question": "ما الحبة التي وصفها النبي ﷺ بأنها «شفاء من كل داء إلا السام»؟", "answer": "الحبة السوداء (الشونيز/حبة البركة).", "explanation": "عن أبي هريرة رضي الله عنه، عن النبي ﷺ: «إن هذه الحبة السوداء شفاء من كل داء، إلا من السام» — رواه البخاري، كتاب الطب (حديث 5687-5688). والسام: الموت.", "reference": "صحيح البخاري، حديث 5687-5688" },
+  { "id": "demo-quiz-1008", "documentation_status": "sourced", "section": "الطب النبوي", "category": "أحاديث علاجية", "level": "متوسط", "question": "في أي ثلاثة أشياء حصر النبي ﷺ الشفاء كما ورد في الحديث الصحيح؟", "answer": "«شرطة محجم» (الحجامة)، و«شربة عسل»، و«كيَّة بنار» (الكي، مع كراهته لها).", "explanation": "عن ابن عباس رضي الله عنهما: «الشفاء في ثلاثة: في شرطة محجم، أو شربة عسل، أو كيَّة بنار، وأنا أنهى أمتي عن الكي» — رواه البخاري، كتاب الطب (حديث 5680-5681).", "reference": "صحيح البخاري، حديث 5680-5681" },
+  { "id": "demo-quiz-1009", "documentation_status": "sourced", "section": "الطب النبوي", "category": "أحاديث علاجية", "level": "سهل", "question": "بم وصف النبي ﷺ الحمى، وبم أمر لعلاجها؟", "answer": "وصفها بأنها «من فيح جهنم»، وأمر بتبريدها بالماء.", "explanation": "عن النبي ﷺ: «الحمى من فيح جهنم، فأبردوها بالماء» — رواه البخاري، كتاب الطب (حديث 5726).", "reference": "صحيح البخاري، حديث 5726" },
+  { "id": "demo-quiz-1010", "documentation_status": "sourced", "section": "الطب النبوي", "category": "أحاديث علاجية", "level": "صعب", "question": "ماذا أمر النبي ﷺ من وقع الذباب في إنائه أن يفعل؟", "answer": "أن يغمس الذباب كله في الإناء ثم يطرحه، لأن في أحد جناحيه داء وفي الآخر شفاء.", "explanation": "عن أبي هريرة رضي الله عنه: «إذا وقع الذباب في إناء أحدكم فليغمسه كله، ثم ليطرحه، فإن في أحد جناحيه شفاء وفي الآخر داء» — رواه البخاري، كتاب الطب (حديث 5782).", "reference": "صحيح البخاري، حديث 5782" },
+  { "id": "demo-quiz-1011", "documentation_status": "sourced", "section": "التاريخ الإسلامي", "category": "المعالم المقدسة", "level": "متوسط", "question": "أين يقع الجبل الذي فيه غار حراء الذي بدأ فيه الوحي على النبي ﷺ؟", "answer": "جبل النور، بالقرب من مكة المكرمة.", "explanation": "كان النبي ﷺ يتعبد في غار حراء بجبل النور قبل البعثة، وفيه نزل عليه الوحي أول مرة بقوله تعالى: ﴿اقْرَأْ بِاسْمِ رَبِّكَ الَّذِي خَلَقَ﴾.", "reference": "سورة العلق: 1؛ كتب السيرة النبوية" },
+  { "id": "demo-quiz-1012", "documentation_status": "sourced", "section": "التاريخ الإسلامي", "category": "المعالم المقدسة", "level": "متوسط", "question": "في أي جبل اختبأ النبي ﷺ وأبو بكر الصديق رضي الله عنه أثناء الهجرة إلى المدينة؟", "answer": "جبل ثور، جنوب مكة المكرمة (عكس اتجاه المدينة، تمويهاً على المشركين).", "explanation": "مكثا في غار ثور ثلاث ليالٍ حتى هدأ الطلب، ثم انطلقا إلى المدينة المنورة، وفي ذلك نزل قوله تعالى: ﴿إِذْ هُمَا فِي الْغَارِ إِذْ يَقُولُ لِصَاحِبِهِ لَا تَحْزَنْ إِنَّ اللَّهَ مَعَنَا﴾.", "reference": "سورة التوبة: 40؛ كتب السيرة النبوية" },
+  { "id": "demo-quiz-1013", "documentation_status": "sourced", "section": "التاريخ الإسلامي", "category": "المعالم المقدسة", "level": "صعب", "question": "ما هي أول قبلة صلَّى إليها المسلمون قبل تحويل القبلة إلى الكعبة؟", "answer": "بيت المقدس (المسجد الأقصى) في القدس.", "explanation": "صلَّى المسلمون إلى بيت المقدس نحو 16-17 شهراً بعد الهجرة، ثم حُوِّلت القبلة إلى الكعبة المشرَّفة بمكة بأمر إلهي، لقوله تعالى: ﴿فَوَلِّ وَجْهَكَ شَطْرَ الْمَسْجِدِ الْحَرَامِ﴾.", "reference": "سورة البقرة: 144" },
+  { "id": "demo-quiz-1014", "documentation_status": "sourced", "section": "التاريخ الإسلامي", "category": "التضاريس", "level": "سهل", "question": "في أي شبه جزيرة تقع مكة المكرمة والمدينة المنورة؟", "answer": "شبه الجزيرة العربية.", "explanation": "تقع مكة والمدينة في منطقة الحجاز غرب شبه الجزيرة العربية، وهي منطقة جبلية تطل على البحر الأحمر، وتُعَدُّ مهد الإسلام ومهبط الوحي.", "reference": "جغرافيا الجزيرة العربية — معرفة عامة" },
+  { "id": "demo-quiz-1015", "documentation_status": "sourced", "section": "الطب النبوي", "category": "أحاديث علاجية", "level": "متوسط", "question": "بم وصف النبي ﷺ الحجامة في الحديث الصحيح؟", "answer": "بأنها خير ما يُتداوى به.", "explanation": "عن ابن عباس رضي الله عنهما مرفوعاً: «إن كان في شيء مما تداووا به خيرٌ فالحجامة» — رواه أبو داود (3857) وابن ماجه (3476).", "reference": "سنن أبي داود، حديث 3857؛ سنن ابن ماجه، حديث 3476" },
+  { "id": "demo-quiz-1016", "documentation_status": "sourced", "section": "الطب النبوي", "category": "أحاديث علاجية", "level": "سهل", "question": "بم أمر النبي ﷺ أمته في السواك، وما الحكمة التي بيّنها لولا خشية المشقة عليهم؟", "answer": "أمر بالسواك عند كل صلاة، وبيّن أنه كان يأمرهم به وجوباً لولا خشية المشقة عليهم.", "explanation": "عن أبي هريرة رضي الله عنه مرفوعاً: «لولا أن أشقّ على أمتي لأمرتهم بالسواك عند كل صلاة» — رواه البخاري (887) ومسلم (252).", "reference": "صحيح البخاري، حديث 887؛ صحيح مسلم، حديث 252" },
+  { "id": "demo-quiz-1017", "documentation_status": "sourced", "section": "الطب النبوي", "category": "أحاديث علاجية", "level": "متوسط", "question": "كم تمرة أوصى النبي ﷺ بتناولها صباحاً من تمر العجوة، وما الفائدة التي ذكرها؟", "answer": "سبع تمرات، وذكر أنها تقي متناولها في ذلك اليوم من السم والسحر.", "explanation": "عن سعد بن أبي وقاص رضي الله عنه مرفوعاً: «من تصبَّح بسبع تمرات عَجوة لم يضرّه ذلك اليوم سُمٌّ ولا سِحر» — رواه البخاري (5445) ومسلم (2047).", "reference": "صحيح البخاري، حديث 5445؛ صحيح مسلم، حديث 2047" },
+  { "id": "demo-quiz-1018", "documentation_status": "sourced", "section": "الطب النبوي", "category": "أحاديث علاجية", "level": "سهل", "question": "بم وصف النبي ﷺ زيت الزيتون في الحديث، وبماذا أمر فيه؟", "answer": "وصفه بأنه من شجرة مباركة، وأمر بأكله والادّهان به.", "explanation": "عن النبي ﷺ: «كلوا الزيت وادّهنوا به، فإنه من شجرة مباركة» — رواه الترمذي (1851) وابن ماجه (3319)، وصححه الألباني.", "reference": "سنن الترمذي، حديث 1851؛ سنن ابن ماجه، حديث 3319" },
+  { "id": "demo-quiz-1019", "documentation_status": "sourced", "section": "الطب النبوي", "category": "أطعمة نبوية", "level": "متوسط", "question": "أي نبات ذكره القرآن الكريم ضمن وصف شراب أهل الجنة؟", "answer": "الزنجبيل.", "explanation": "قال تعالى: ﴿وَيُسْقَوْنَ فِيهَا كَأْسًا كَانَ مِزَاجُهَا زَنجَبِيلًا﴾ — سورة الإنسان: 17. وذكره ابن القيم في «زاد المعاد» ضمن الأغذية النافعة التي وردت بها السنة.", "reference": "سورة الإنسان: 17" },
+  { "id": "demo-quiz-1020", "documentation_status": "sourced", "section": "الطب النبوي", "category": "أحاديث علاجية", "level": "صعب", "question": "ما معنى قول النبي ﷺ «ماء زمزم لما شُرب له»؟", "answer": "أن ماء زمزم يُستشفى ويُستفاد به بحسب النية التي يشربه المرء من أجلها، فإن شربه للشفاء أو لقضاء حاجة رجا حصول ذلك بإذن الله.", "explanation": "رواه ابن ماجه (3062) وصححه الألباني بمجموع طرقه (صحيح لغيره). بيّن أهل العلم استحباب استحضار النية الصالحة عند شربه.", "reference": "سنن ابن ماجه، حديث 3062" },
+  {"id": "demo-quiz-1021", "documentation_status": "sourced", "section": "اللغة العربية", "category": "النحو", "level": "صعب", "question": "ما وجه رفع «الصابرون» في قوله تعالى: ﴿وَالْمُوفُونَ بِعَهْدِهِمْ إِذَا عَاهَدُوا وَالصَّابِرِينَ فِي الْبَأْسَاءِ﴾؟", "answer": "«الصابرين» منصوبة لا مرفوعة، على الاختصاص أو المدح، أي: وأخصُّ الصابرين.", "explanation": "وهو أسلوب عربي فصيح يُقطع فيه النعت عن المنعوت للنصب على المدح، ذكره سيبويه وأكثر المعربين.", "reference": "سورة البقرة: 177"},
+  {"id": "demo-quiz-1022", "documentation_status": "sourced", "section": "اللغة العربية", "category": "البلاغة", "level": "صعب", "question": "ما نوع المجاز في قوله تعالى: ﴿وَاسْأَلِ الْقَرْيَةَ﴾؟", "answer": "مجاز مرسل علاقته المحلية، أي: واسأل أهل القرية.", "explanation": "أُطلق المحل (القرية) وأُريد الحالّ فيه (أهلها)، وهو من أشهر أمثلة المجاز المرسل في كتب البلاغة.", "reference": "سورة يوسف: 82"},
+  {"id": "demo-quiz-1023", "documentation_status": "unsourced", "section": "اللغة العربية", "category": "الصرف", "level": "متوسط", "question": "ما وزن كلمة «استغفر» في الميزان الصرفي؟", "answer": "استفعل.", "explanation": "الهمزة والسين والتاء زوائد، والأصول: غ ف ر، فوزنه استفعل، ويفيد الطلب."},
+  {"id": "demo-quiz-1024", "documentation_status": "unsourced", "section": "اللغة العربية", "category": "النحو", "level": "متوسط", "question": "لماذا مُنع «مساجد» من الصرف؟", "answer": "لأنه على صيغة منتهى الجموع، وهي علة واحدة تقوم مقام علتين.", "explanation": "صيغ منتهى الجموع كمفاعل ومفاعيل ممنوعة من الصرف، فتُجرّ بالفتحة ما لم تُعرَّف أو تُضَف."},
+  {"id": "demo-quiz-1025", "documentation_status": "unsourced", "section": "العلماء والأئمة", "category": "المحدثون", "level": "صعب", "question": "من صاحب كتاب «العلل» الذي يُعدّ من أدق ما صُنّف في علل الحديث الخفية؟", "answer": "الإمام علي بن المديني، وللدارقطني وابن أبي حاتم كتب في العلل كذلك.", "explanation": "قال البخاري: ما استصغرت نفسي عند أحد إلا عند علي بن المديني. وعلم العلل من أدق علوم الحديث وأعزّها."},
+  {"id": "demo-quiz-1026", "documentation_status": "unsourced", "section": "العلماء والأئمة", "category": "الأصوليون", "level": "صعب", "question": "من مؤلف كتاب «الموافقات» الذي أرسى قواعد علم مقاصد الشريعة؟", "answer": "الإمام أبو إسحاق الشاطبي (ت 790 هـ).", "explanation": "جعل المقاصد قطعية مستقرأة من مجموع أدلة الشريعة لا من دليل مفرد، وهو أول من أفرد المقاصد بتصنيف منهجي مستقل."},
+  {"id": "demo-quiz-1027", "documentation_status": "unsourced", "section": "العلماء والأئمة", "category": "المفسرون", "level": "متوسط", "question": "من مؤلف تفسير «التحرير والتنوير»؟", "answer": "الشيخ محمد الطاهر ابن عاشور التونسي (ت 1393 هـ).", "explanation": "من أوسع تفاسير القرن الرابع عشر الهجري، وله عناية ظاهرة بالمقاصد والبلاغة والمناسبات بين الآيات."},
+  {"id": "demo-quiz-1028", "documentation_status": "unsourced", "section": "الفرائض والمواريث", "category": "أصحاب الفروض", "level": "صعب", "question": "ما المسألة المشهورة بـ«المشرَّكة» أو «الحمارية»؟", "answer": "زوج وأمّ وإخوة لأمّ وإخوة أشقاء، فيأخذ الأشقاء مع الإخوة لأمّ الثلث بالتشريك عند عمر وعثمان رضي الله عنهما، ولا شيء لهم عند علي رضي الله عنه.", "explanation": "سُميت حمارية لأن الأشقاء قالوا: هبْ أن أبانا كان حماراً، أليست أمنا واحدة؟ والمسألة من مواضع الخلاف المعتبر بين الصحابة."},
+  {"id": "demo-quiz-1029", "documentation_status": "unsourced", "section": "الفرائض والمواريث", "category": "الحجب", "level": "متوسط", "question": "من الذي لا يُحجب حجب حرمان بحال من الأحوال؟", "answer": "الأبوان والولدان والزوجان: الأب والأم والابن والبنت والزوج والزوجة.", "explanation": "هؤلاء الستة لا يسقطون بالكلية، وإن نقص نصيبهم بالحجب النقصاني."},
+  {"id": "demo-quiz-1030", "documentation_status": "unsourced", "section": "الفرائض والمواريث", "category": "العول", "level": "صعب", "question": "ما العول في علم الفرائض، ومن أول من قضى به؟", "answer": "زيادة سهام الفروض على أصل المسألة فيُنقص نصيب كل وارث بالنسبة، وأول من قضى به عمر بن الخطاب رضي الله عنه بمشورة الصحابة.", "explanation": "مثاله: زوج وأختان شقيقتان؛ أصلها ستة وتعول إلى سبعة."},
+  {"id": "demo-quiz-1031", "documentation_status": "unsourced", "section": "التجويد", "category": "أحكام النون", "level": "متوسط", "question": "ما حكم النون الساكنة في قوله تعالى: ﴿مِن وَالٍ﴾؟", "answer": "إدغام بغير غنّة (إدغام ناقص عند من يعدّه كذلك)، لوقوع الواو بعد النون الساكنة.", "explanation": "حروف الإدغام ستة يجمعها «يرملون»، ويكون بغنّة في (ينمو) وبغير غنّة في اللام والراء؛ والواو من حروف الإدغام بغنّة عند حفص. — راجع المتون: تحفة الأطفال والجزرية."},
+  {"id": "demo-quiz-1032", "documentation_status": "unsourced", "section": "التجويد", "category": "المدود", "level": "صعب", "question": "ما مقدار مدّ اللازم الكلمي المثقَّل ومثاله؟", "answer": "ست حركات وجوباً، ومثاله ﴿وَلَا الضَّالِّينَ﴾.", "explanation": "سُمي لازماً للزوم مدّه ست حركات وصلاً ووقفاً، ومثقَّلاً لأن بعد حرف المد حرفاً مشدداً."},
+  {"id": "demo-quiz-1033", "documentation_status": "unsourced", "section": "التجويد", "category": "الوقف", "level": "صعب", "question": "ما الفرق بين الوقف اللازم والوقف الممنوع في المصحف؟", "answer": "اللازم (م) يجب الوقف عنده لأن وصله يوهم معنى فاسداً، والممنوع (لا) لا يُبتدأ بما بعده لارتباطه بما قبله ارتباطاً يفسد بالوقف.", "explanation": "وعلامات الوقف اصطلاحية وضعها العلماء لخدمة المعنى، وليست جزءاً من الرسم العثماني الأصلي."},
+  {"id": "demo-quiz-1034", "documentation_status": "sourced", "section": "الأسماء الحسنى", "category": "الدلالة", "level": "صعب", "question": "ما الفرق بين اسمَي الله «الخالق» و«البارئ» و«المصوّر»؟", "answer": "الخالق: المقدِّر المُوجِد من العدم، والبارئ: المُنشئ للخلق بريئاً من التفاوت، والمصوّر: الذي أعطى كل مخلوق صورته الخاصة به.", "explanation": "جُمعت الثلاثة في قوله تعالى: ﴿هُوَ اللَّهُ الْخَالِقُ الْبَارِئُ الْمُصَوِّرُ﴾ — الحشر: 24، وبين معانيها ابن القيم وابن كثير.", "reference": "سورة الحشر: 24"},
+  {"id": "demo-quiz-1035", "documentation_status": "unsourced", "section": "الأسماء الحسنى", "category": "العقيدة", "level": "صعب", "question": "ما ضابط أسماء الله الحسنى عند أهل السنة؟", "answer": "أنها توقيفية لا تُثبت إلا بنص من الكتاب أو السنة الصحيحة، ولا مجال فيها للقياس أو الاجتهاد.", "explanation": "لأن الإخبار عن الله بما لم يُخبر به عن نفسه قولٌ على الله بغير علم، وهو محرّم بنص القرآن."},
+  {"id": "demo-quiz-1036", "documentation_status": "unsourced", "section": "الطب النبوي", "category": "منهج", "level": "صعب", "question": "ما الضابط الذي قرّره ابن القيم في التعامل مع الطب النبوي؟", "answer": "التفريق بين ما ثبت عنه ﷺ على وجه الشرع والتعبد وبين ما كان من عادات أهل زمانه وطبّهم، فالأول مُتَّبع والثاني اجتهادي يُنظر فيه.", "explanation": "قرّر ذلك في «زاد المعاد»، وعليه فلا يُلزَم المسلم بترك الطب الحديث المجرَّب."},
+  {"id": "demo-quiz-1037", "documentation_status": "sourced", "section": "الطب النبوي", "category": "أحاديث علاجية", "level": "متوسط", "question": "ما الحكمة النبوية في النهي عن الدخول إلى أرضٍ وقع بها الطاعون؟", "answer": "قال ﷺ: «إذا سمعتم بالطاعون بأرضٍ فلا تقدموا عليها، وإذا وقع بأرضٍ وأنتم بها فلا تخرجوا فراراً منه» — متفق عليه.", "explanation": "أصلٌ نبويّ في الحجر الصحي، جمع بين الأخذ بالأسباب ومنع نقل الوباء إلى غير أهله.", "reference": "متفق عليه من حديث عبدالرحمن بن عوف وأسامة بن زيد رضي الله عنهما"},
+  {"id": "demo-quiz-1038", "documentation_status": "unsourced", "section": "علوم القرآن", "category": "الرسم", "level": "صعب", "question": "ما المقصود بالرسم العثماني، وما حكم الالتزام به؟", "answer": "هو هيئة كتابة المصحف التي أقرّها عثمان رضي الله عنه في المصاحف الإمام، وجمهور العلماء على وجوب الالتزام به في كتابة المصحف.", "explanation": "خالف في ذلك بعض المتأخرين فأجازوا الكتابة الإملائية للتعليم، مع بقاء المصحف على الرسم العثماني."},
+  {"id": "demo-quiz-1039", "documentation_status": "unsourced", "section": "علوم القرآن", "category": "النسخ", "level": "صعب", "question": "ما أقسام النسخ في القرآن عند العلماء؟", "answer": "ثلاثة: نسخ التلاوة والحكم معاً، ونسخ الحكم وبقاء التلاوة، ونسخ التلاوة وبقاء الحكم.", "explanation": "ومثال الثاني آية العدة بالحول في البقرة، ومثال الثالث ما ورد في آية الرجم على قول من أثبته."},
+  {"id": "demo-quiz-1040", "documentation_status": "unsourced", "section": "علوم القرآن", "category": "أسباب النزول", "level": "متوسط", "question": "ما القاعدة المشهورة عند الأصوليين في العلاقة بين سبب النزول وعموم اللفظ؟", "answer": "«العبرة بعموم اللفظ لا بخصوص السبب» عند جمهور العلماء.", "explanation": "فالآية تشمل كل من انطبق عليه وصفها وإن نزلت في واقعة معيّنة، وخالف بعض أهل العلم فقصرها على سببها."},
+  {"id": "demo-quiz-1041", "documentation_status": "unsourced", "section": "الحديث", "category": "مصطلح", "level": "صعب", "question": "ما الحديث المدرَج؟", "answer": "ما أُدخل في متنه أو سنده ما ليس منه من كلام الراوي بلا فصل يميّزه.", "explanation": "ومن أمثلته الشهيرة زيادة «أسبغوا الوضوء» في بعض الروايات، ويُعرف الإدراج بورود الرواية مفصولة في طريق آخر."},
+  {"id": "demo-quiz-1042", "documentation_status": "unsourced", "section": "الحديث", "category": "مصطلح", "level": "صعب", "question": "ما الفرق بين الحديث الشاذ والحديث المنكر؟", "answer": "الشاذ: ما خالف فيه المقبول من هو أولى منه، والمنكر: ما خالف فيه الضعيف الثقات.", "explanation": "وهذا تحرير الحافظ ابن حجر في «نخبة الفكر»، وكلاهما من أقسام الحديث المردود بسبب المخالفة."},
+  {"id": "demo-quiz-1043", "documentation_status": "unsourced", "section": "الحديث", "category": "مصطلح", "level": "متوسط", "question": "ما معنى قول المحدثين «متفق عليه»؟", "answer": "أن الحديث رواه البخاري ومسلم كلاهما في صحيحيهما.", "explanation": "وهو أعلى درجات الصحة عند أهل الحديث، ولا يعني اتفاق الأمة كلها كما يظنه بعض الناس."},
+  {"id": "demo-quiz-1044", "documentation_status": "sourced", "section": "الصالحون", "category": "التابعون", "level": "صعب", "question": "من سيد التابعين الذي قال عنه النبي ﷺ إنه يشفع في مثل ربيعة ومُضَر؟", "answer": "أويس القرني رحمه الله.", "explanation": "ورد في صحيح مسلم أن النبي ﷺ أوصى عمر رضي الله عنه أن يطلب منه الاستغفار إن لقيه، ولم يرَ النبيَّ ﷺ لكنه أدرك زمانه.", "reference": "صحيح مسلم"},
+  {"id": "demo-quiz-1045", "documentation_status": "unsourced", "section": "الصالحون", "category": "العُبّاد", "level": "متوسط", "question": "من الإمام الذي اشتُهر بقوله: «إن في الدنيا جنة، من لم يدخلها لم يدخل جنة الآخرة»؟", "answer": "شيخ الإسلام ابن تيمية رحمه الله، يعني جنة معرفة الله ومحبته.", "explanation": "نقلها عنه تلميذه ابن القيم في «الوابل الصيب» وغيره، وفيها بيان أثر الإيمان في طمأنينة القلب."},
+  {"id": "demo-quiz-1046", "documentation_status": "unsourced", "section": "الفتوحات الإسلامية", "category": "القادة", "level": "صعب", "question": "من القائد الذي فتح بلاد السند وهو دون العشرين من عمره؟", "answer": "محمد بن القاسم الثقفي، فتح السند سنة 92 هـ تقريباً.", "explanation": "وكان فتحه بابَ دخول الإسلام إلى شبه القارة الهندية، وسار فيه بسياسة حفظت للناس معابدهم وأمنهم."},
+  {"id": "demo-quiz-1047", "documentation_status": "unsourced", "section": "الفتوحات الإسلامية", "category": "المعارك", "level": "متوسط", "question": "في أي معركة أُوقف الزحف المغولي وانكسرت أسطورة عدم هزيمتهم؟", "answer": "معركة عين جالوت سنة 658 هـ / 1260 م بقيادة قطز والظاهر بيبرس.", "explanation": "كانت بعد سقوط بغداد بسنتين، وأعادت التوازن للعالم الإسلامي في المشرق."},
+  {"id": "demo-quiz-1048", "documentation_status": "unsourced", "section": "التاريخ الإسلامي", "category": "الدول", "level": "صعب", "question": "ما الدولة التي أسسها يوسف بن تاشفين وانتصرت في معركة الزلاقة؟", "answer": "دولة المرابطين، وكانت الزلاقة سنة 479 هـ / 1086 م.", "explanation": "أخّرت الزلاقة سقوط الأندلس قروناً، وجاءت بعد استنجاد ملوك الطوائف بيوسف بن تاشفين."},
+  {"id": "demo-quiz-1049", "documentation_status": "unsourced", "section": "التاريخ الإسلامي", "category": "الحضارة", "level": "صعب", "question": "ما وظيفة «المحتسب» في الدولة الإسلامية؟", "answer": "مراقبة الأسواق والمرافق العامة، ومنع الغش والتطفيف، والقيام بالأمر بالمعروف والنهي عن المنكر فيما يتعلق بالحقوق العامة.", "explanation": "صُنّفت فيها كتب مستقلة مثل «معالم القربة في أحكام الحسبة» لابن الأخوة."},
+  {"id": "demo-quiz-1050", "documentation_status": "unsourced", "section": "الفقه", "category": "القواعد", "level": "صعب", "question": "ما القواعد الفقهية الخمس الكبرى؟", "answer": "الأمور بمقاصدها، واليقين لا يزول بالشك، والمشقة تجلب التيسير، والضرر يُزال، والعادة محكَّمة.", "explanation": "تُردّ إليها أكثر مسائل الفقه، وقد بسطها السيوطي في «الأشباه والنظائر» وابن نجيم في كتابه بالاسم نفسه."},
+  {"id": "demo-quiz-1051", "documentation_status": "unsourced", "section": "الفقه", "category": "أصول", "level": "صعب", "question": "ما الفرق بين الواجب والفرض عند جمهور العلماء وعند الحنفية؟", "answer": "هما مترادفان عند الجمهور، وفرّق الحنفية: فالفرض ما ثبت بدليل قطعي، والواجب ما ثبت بدليل ظني.", "explanation": "وبنوا على التفريق أحكاماً، منها أن جاحد الفرض يكفر دون جاحد الواجب."},
+  {"id": "demo-quiz-1052", "documentation_status": "unsourced", "section": "الفقه", "category": "العبادات", "level": "متوسط", "question": "ما حكم من تذكّر صلاة فائتة وهو في صلاة حاضرة؟", "answer": "يمضي في صلاته الحاضرة ثم يقضي الفائتة عند الجمهور، وتلزم الترتيب رواية عند الحنابلة ما لم يخشَ فوات الحاضرة.", "explanation": "والمسألة من مواضع الخلاف المعتبر بين الفقهاء، وسعة الشرع فيها ظاهرة."},
+  {"id": "demo-quiz-1053", "documentation_status": "sourced", "section": "العقيدة", "category": "الأسماء والصفات", "level": "صعب", "question": "ما قاعدة أهل السنة في باب الصفات؟", "answer": "إثبات ما أثبته الله لنفسه وأثبته له رسوله ﷺ من غير تحريف ولا تعطيل ولا تكييف ولا تمثيل.", "explanation": "قال تعالى: ﴿لَيْسَ كَمِثْلِهِ شَيْءٌ وَهُوَ السَّمِيعُ الْبَصِيرُ﴾ — ففي أولها نفي التمثيل وفي آخرها إثبات الصفات.", "reference": "سورة الشورى: 11"},
+  {"id": "demo-quiz-1054", "documentation_status": "unsourced", "section": "العقيدة", "category": "القدر", "level": "صعب", "question": "ما مراتب الإيمان بالقدر الأربع؟", "answer": "العلم، والكتابة، والمشيئة، والخلق.", "explanation": "فيعلم أن الله علم كل شيء أزلاً، وكتبه في اللوح المحفوظ، وأن ما شاء كان وما لم يشأ لم يكن، وأنه خالق كل شيء ومنه أفعال العباد."},
+  {"id": "demo-quiz-1055", "documentation_status": "unsourced", "section": "الآداب والأخلاق", "category": "أدب النفس", "level": "متوسط", "question": "ما ضابط الغيبة الجائزة عند العلماء؟", "answer": "تُباح لغرض صحيح لا يمكن الوصول إليه إلا بها، كالتظلم والاستفتاء والتحذير من مفسدة وتعريف المجهول.", "explanation": "عدّها النووي في «رياض الصالحين» ستة أسباب، ونظمها بعضهم في بيتين مشهورين."},
+  {"id": "demo-quiz-1056", "documentation_status": "unsourced", "section": "الرقائق", "category": "محاسبة", "level": "صعب", "question": "ما الفرق بين المحاسبة والمراقبة عند أهل السلوك؟", "answer": "المراقبة قبل العمل وأثناءه باستحضار اطلاع الله، والمحاسبة بعده بوزن ما كان منه.", "explanation": "قال عمر رضي الله عنه: «حاسبوا أنفسكم قبل أن تُحاسَبوا»، وبسط ذلك ابن القيم في «مدارج السالكين»."},
+  {"id": "demo-quiz-1057", "documentation_status": "unsourced", "section": "الأذكار والأدعية", "category": "الفقه", "level": "صعب", "question": "ما حكم الذكر الجماعي بصوت واحد عقب الصلاة؟", "answer": "مسألة خلافية: منعها جمهور المتأخرين من أهل السنة لعدم ورودها عن النبي ﷺ وأصحابه، وأجازها بعض أهل العلم إذا قُصد بها التعليم.", "explanation": "والمتفق عليه أن أصل الذكر عقب الصلاة سنة ثابتة، وإنما الخلاف في هيئة الاجتماع عليه بصوت واحد."},
+  {"id": "demo-quiz-1058", "documentation_status": "sourced", "section": "الحج والعمرة", "category": "المناسك", "level": "صعب", "question": "ما حكم من ترك طواف الوداع من الحجاج؟", "answer": "عليه دم عند جمهور الفقهاء لتركه واجباً، وسقط عن الحائض والنفساء بالنص.", "explanation": "لحديث ابن عباس رضي الله عنهما: «أُمر الناس أن يكون آخر عهدهم بالبيت، إلا أنه خُفّف عن الحائض» — متفق عليه.", "reference": "متفق عليه"},
+  {"id": "demo-quiz-1059", "documentation_status": "unsourced", "section": "الصحابة", "category": "الفقهاء", "level": "صعب", "question": "من الصحابي الذي لقّبه النبي ﷺ بـ«ترجمان القرآن» بالدعاء له بالفقه في الدين؟", "answer": "عبدالله بن عباس رضي الله عنهما، قال له النبي ﷺ: «اللهم فقّهه في الدين وعلّمه التأويل».", "explanation": "وكان عمر رضي الله عنه يُدخله مع أشياخ بدر لسعة علمه رغم صغر سنه."},
+  {"id": "demo-quiz-1060", "documentation_status": "sourced", "section": "الأنبياء", "category": "أولو العزم", "level": "متوسط", "question": "من أولو العزم من الرسل؟", "answer": "نوح وإبراهيم وموسى وعيسى ومحمد عليهم الصلاة والسلام.", "explanation": "جُمعوا في آيتين: ﴿وَإِذْ أَخَذْنَا مِنَ النَّبِيِّينَ مِيثَاقَهُمْ﴾ — الأحزاب: 7، و﴿شَرَعَ لَكُم مِّنَ الدِّينِ﴾ — الشورى: 13.", "reference": "سورة الأحزاب: 7، والشورى: 13"},
+  {"id": "demo-quiz-1061", "documentation_status": "unsourced", "section": "العقيدة", "category": "الإيمان", "level": "صعب", "question": "ما الفرق بين الإسلام والإيمان إذا اجتمعا وإذا افترقا؟", "answer": "إذا اجتمعا في نصٍّ واحد فُسِّر الإسلام بالأعمال الظاهرة والإيمان بالأعمال الباطنة، وإذا افترقا شمل كلٌّ منهما الدين كله.", "explanation": "وهي قاعدة مشهورة: «إذا اجتمعا افترقا، وإذا افترقا اجتمعا»، ودليل الاجتماع حديث جبريل عليه السلام — رواه مسلم."},
+  {"id": "demo-quiz-1062", "documentation_status": "unsourced", "section": "الأنبياء", "category": "القصص", "level": "صعب", "question": "ما النبي الذي ذُكر اسمه صريحاً في القرآن أكثر من غيره؟", "answer": "موسى عليه السلام، ذُكر في أكثر من مئة وثلاثين موضعاً.", "explanation": "وتكرار قصته لتنوّع العبر فيها: في الدعوة والصبر على الأذى وقيادة الأمة وابتلاءات الطريق."},
+  {"id": "demo-quiz-1063", "documentation_status": "unsourced", "section": "الحديث", "category": "مصطلح", "level": "صعب", "question": "ما الحديث المعلَّق، وأين يكثر وروده؟", "answer": "ما حُذف من أول إسناده راوٍ فأكثر على التوالي، ويكثر في صحيح البخاري في التراجم والمتابعات.", "explanation": "وما جزم به البخاري بصيغة الجزم (قال، رَوى) فهو صحيح إلى من عُلِّق عنه، وما ذكره بصيغة التمريض (يُروى، يُذكر) ففيه نظر."},
+  {"id": "demo-quiz-1064", "documentation_status": "sourced", "section": "الأنبياء", "category": "الأمم السابقة", "level": "سهل", "question": "ما نوع العذاب الذي أُهلكت به عاد؟", "answer": "ريح صرصر عاتية سُخِّرت عليهم سبع ليالٍ وثمانية أيام حُسوماً.", "explanation": "﴿وَأَمَّا عَادٌ فَأُهْلِكُوا بِرِيحٍ صَرْصَرٍ عَاتِيَةٍ﴾ — الحاقة: 6، ويؤيده حديث «أُهلكت عادٌ بالدَّبور» متفق عليه.", "reference": "سورة الحاقة: 6-7"},
+  {"id": "demo-quiz-1065", "documentation_status": "sourced", "section": "الأنبياء", "category": "الأمم السابقة", "level": "متوسط", "question": "ما الآية التي طلبها ثمود فأعطاهم الله إياها، وما الشرط الذي نقضوه؟", "answer": "الناقة، وشرطُها قسمة الماء: ﴿لَّهَا شِرْبٌ وَلَكُمْ شِرْبُ يَوْمٍ مَّعْلُومٍ﴾، فعقروها.", "explanation": "نسب الله العقر إليهم جميعاً ﴿فَعَقَرُوهَا﴾ وإن باشره واحد، لأنهم رضوا وتمالؤوا.", "reference": "سورة الشعراء: 155-157"},
+  {"id": "demo-quiz-1066", "documentation_status": "sourced", "section": "الأنبياء", "category": "الأمم السابقة", "level": "متوسط", "question": "كم لبث نوح عليه السلام في قومه؟", "answer": "ألف سنة إلا خمسين عاماً.", "explanation": "﴿فَلَبِثَ فِيهِمْ أَلْفَ سَنَةٍ إِلَّا خَمْسِينَ عَامًا﴾ — العنكبوت: 14، واختلف المفسرون: أهي مدة الدعوة وحدها أم عمره كله؟", "reference": "سورة العنكبوت: 14"},
+  {"id": "demo-quiz-1067", "documentation_status": "sourced", "section": "الأنبياء", "category": "الأمم السابقة", "level": "صعب", "question": "ما الذنب الذي اشتُهر به أهل مدين قومُ شعيب بعد الشرك؟", "answer": "بخس المكيال والميزان وتطفيفه، وقطع السبيل والإفساد في الأرض.", "explanation": "﴿وَيَا قَوْمِ أَوْفُوا الْمِكْيَالَ وَالْمِيزَانَ بِالْقِسْطِ وَلَا تَبْخَسُوا النَّاسَ أَشْيَاءَهُمْ﴾ — هود: 85.", "reference": "سورة هود: 85"},
+  {"id": "demo-quiz-1068", "documentation_status": "sourced", "section": "الأنبياء", "category": "الأمم السابقة", "level": "صعب", "question": "من الفريق الذي نصّ القرآن على نجاته من أصحاب السبت؟", "answer": "الذين ينهون عن السوء: ﴿أَنجَيْنَا الَّذِينَ يَنْهَوْنَ عَنِ السُّوءِ وَأَخَذْنَا الَّذِينَ ظَلَمُوا بِعَذَابٍ بَئِيسٍ﴾.", "explanation": "وأما الفريق الساكت الذي قال ﴿لِمَ تَعِظُونَ قَوْمًا﴾ فقد اختُلف في مصيره بين المفسرين، ولم ينصّ القرآن عليه.", "reference": "سورة الأعراف: 165"},
+  {"id": "demo-quiz-1069", "documentation_status": "sourced", "section": "الأنبياء", "category": "الأمم السابقة", "level": "متوسط", "question": "بم أُهلك أصحاب الفيل؟", "answer": "بطيرٍ أبابيل ترميهم بحجارة من سجّيل فجعلهم كعصفٍ مأكول.", "explanation": "سورة الفيل كاملة، ويؤيدها قول النبي ﷺ يوم الحديبية: «حبسها حابس الفيل» — رواه البخاري.", "reference": "سورة الفيل: 3-5"},
+  {"id": "demo-quiz-1070", "documentation_status": "sourced", "section": "الأنبياء", "category": "الأمم السابقة", "level": "صعب", "question": "ما سبب زوال نعمة سبأ، وما العقوبة التي نزلت بهم؟", "answer": "الإعراض عن شكر النعمة، فأُرسل عليهم سيل العرم وبُدّلت جنّتاهم، وجعلهم الله أحاديث ومزّقهم كل ممزّق.", "explanation": "﴿فَأَعْرَضُوا فَأَرْسَلْنَا عَلَيْهِمْ سَيْلَ الْعَرِمِ﴾ — سبأ: 16. وقد أسلمت ملكتهم في زمن سليمان عليه السلام قبل ذلك.", "reference": "سورة سبأ: 15-19"},
+  {"id": "demo-quiz-1071", "documentation_status": "sourced", "section": "الأنبياء", "category": "الأمم السابقة", "level": "صعب", "question": "ما الحكم الشرعي في تحديد هوية أصحاب الرسّ؟", "answer": "لا يصح تعيينهم؛ ذكرهم القرآن مرتين في سياق المكذبين دون تفصيل، وأقوال المفسرين فيهم متعارضة لا يصح منها شيء مرفوع.", "explanation": "موضعا ذكرهم: الفرقان: 38، وق: 12. والموقف العلمي هو التوقف عند حدّ النص.", "reference": "سورة الفرقان: 38"},
+  {"id": "demo-quiz-1072", "documentation_status": "sourced", "section": "الأنبياء", "category": "الأمم السابقة", "level": "متوسط", "question": "من الذي بنى الردم الحابس ليأجوج ومأجوج، وماذا قال بعد إتمامه؟", "answer": "ذو القرنين، وقال: ﴿هَٰذَا رَحْمَةٌ مِّن رَّبِّي فَإِذَا جَاءَ وَعْدُ رَبِّي جَعَلَهُ دَكَّاءَ﴾.", "explanation": "ورفض المال الذي عُرض عليه وقال ﴿مَا مَكَّنِّي فِيهِ رَبِّي خَيْرٌ فَأَعِينُونِي بِقُوَّةٍ﴾ — طلب العمل لا الأجر.", "reference": "سورة الكهف: 95-98"},
+  {"id": "demo-quiz-1073", "documentation_status": "sourced", "section": "الأنبياء", "category": "الأمم السابقة", "level": "صعب", "question": "ما الذي عزم عليه أصحاب الجنة في سورة القلم، وما الذي أخطؤوا فيه في قسمهم؟", "answer": "عزموا على جذاذ بستانهم مبكراً ليمنعوا حق المساكين، وأقسموا على ذلك ولم يستثنوا فيقولوا «إن شاء الله».", "explanation": "﴿إِذْ أَقْسَمُوا لَيَصْرِمُنَّهَا مُصْبِحِينَ * وَلَا يَسْتَثْنُونَ﴾ — القلم: 17-18، ثم طاف عليها طائف من ربهم وهم نائمون.", "reference": "سورة القلم: 17-20"},
+  {"id": "demo-quiz-1074", "documentation_status": "sourced", "section": "الطب النبوي", "category": "قواعد", "level": "متوسط", "question": "ما القاعدة النبوية الجامعة في إثبات الأسباب العلاجية؟", "answer": "«ما أنزل الله داءً إلا أنزل له شفاءً» — فالتداوي أخذٌ بالسبب لا منافاة للتوكل.", "explanation": "رواه البخاري (5678) من حديث أبي هريرة رضي الله عنه، وفي رواية مسلم: «لكل داءٍ دواء، فإذا أُصيب دواءُ الداء برأ بإذن الله».", "reference": "صحيح البخاري 5678"},
+  {"id": "demo-quiz-1075", "documentation_status": "sourced", "section": "الطب النبوي", "category": "الرقية", "level": "صعب", "question": "ما شروط الرقية الشرعية التي تُخرجها عن الشرك؟", "answer": "أن تكون بكلام الله أو أسمائه وصفاته، وباللسان العربي المفهوم، وأن يعتقد أنها سبب لا مؤثرة بذاتها.", "explanation": "قال ﷺ: «لا بأس بالرُّقى ما لم تكن شركاً» — رواه مسلم (2200)، وهذه الشروط الثلاثة نقل السيوطي الإجماع عليها.", "reference": "صحيح مسلم 2200"},
+  {"id": "demo-quiz-1076", "documentation_status": "sourced", "section": "الطب النبوي", "category": "الوقاية", "level": "متوسط", "question": "ما التوجيه النبوي في الوقاية من انتقال الوباء؟", "answer": "«إذا سمعتم بالطاعون بأرضٍ فلا تقدموا عليها، وإذا وقع بأرضٍ وأنتم بها فلا تخرجوا فراراً منه».", "explanation": "متفق عليه من حديث عبدالرحمن بن عوف وأسامة بن زيد رضي الله عنهما؛ وهو أصلٌ نبوي في الحجر الصحي.", "reference": "متفق عليه"},
+  {"id": "demo-quiz-1077", "documentation_status": "sourced", "section": "الطب النبوي", "category": "أطعمة", "level": "سهل", "question": "بمَ وصف النبي ﷺ الحبة السوداء؟", "answer": "«في الحبة السوداء شفاءٌ من كل داء إلا السام» — والسام: الموت.", "explanation": "متفق عليه: البخاري (5688)، مسلم (2215) من حديث أبي هريرة رضي الله عنه.", "reference": "متفق عليه"},
+  {"id": "demo-quiz-1078", "documentation_status": "unsourced", "section": "اللغة العربية", "category": "النحو", "level": "متوسط", "question": "ما إعراب «كلَّ» في قولك: «قرأتُ الكتابَ كلَّه»؟", "answer": "توكيد معنوي منصوب، وهو تابعٌ للمؤكَّد في إعرابه.", "explanation": "التوكيد المعنوي يكون بألفاظ محددة: نفس، عين، كل، جميع، كلا، كلتا — ويجب اتصاله بضمير يعود على المؤكَّد."},
+  {"id": "demo-quiz-1079", "documentation_status": "unsourced", "section": "اللغة العربية", "category": "البلاغة", "level": "صعب", "question": "ما الفرق بين التشبيه البليغ والاستعارة؟", "answer": "البليغ حُذفت منه الأداة ووجه الشبه وبقي الطرفان، والاستعارة حُذف فيها أحد الطرفين.", "explanation": "«زيدٌ أسدٌ» تشبيه بليغ لبقاء المشبه والمشبه به، و«رأيت أسداً يخطب» استعارة تصريحية لحذف المشبه."},
+  {"id": "demo-quiz-1080", "documentation_status": "unsourced", "section": "اللغة العربية", "category": "الصرف", "level": "صعب", "question": "ما وزن «اطَّلع» وما أصله؟", "answer": "وزنه افتعل، وأصله «اطتلع» فأُبدلت تاء الافتعال طاءً وأُدغمت لوقوعها بعد الطاء.", "explanation": "من قواعد الإبدال: تاء الافتعال تُبدل طاءً بعد الصاد والضاد والطاء والظاء، ودالاً بعد الدال والذال والزاي."},
+  {"id": "demo-quiz-1081", "documentation_status": "unsourced", "section": "اللغة العربية", "category": "النحو", "level": "سهل", "question": "متى تُحذف نون الأفعال الخمسة؟", "answer": "عند النصب أو الجزم؛ ونونها علامة رفعها.", "explanation": "مثل: لن تذهبوا (نصب)، لم تذهبوا (جزم)، تذهبون (رفع بثبوت النون)."},
+  {"id": "demo-quiz-1082", "documentation_status": "unsourced", "section": "الأسماء الحسنى", "category": "الدلالة", "level": "صعب", "question": "ما الفرق بين «الرحمن» و«الرحيم»؟", "answer": "الرحمن: ذو الرحمة الواسعة الشاملة للخلق كلهم، والرحيم: الموصِل رحمتَه لمن شاء من عباده؛ فالأول وصف ذات والثاني وصف فعل.", "explanation": "وذكر ابن القيم أن «الرحمن» دالٌّ على الصفة القائمة به سبحانه، و«الرحيم» دالٌّ على تعلقها بالمرحوم."},
+  {"id": "demo-quiz-1083", "documentation_status": "sourced", "section": "الأسماء الحسنى", "category": "العقيدة", "level": "متوسط", "question": "هل ورد تعيين الأسماء التسعة والتسعين في حديث صحيح؟", "answer": "ثبت العدد في الصحيحين، وأما سردُها المعيَّن فجاء عند الترمذي وابن ماجه وضعّفه المحققون؛ فلا يُجزم بتعيينها.", "explanation": "قال ﷺ: «إن لله تسعة وتسعين اسماً، مئة إلا واحداً، من أحصاها دخل الجنة» — متفق عليه. وسرد الأسماء من إدراج بعض الرواة كما بيّن ابن حجر وابن كثير.", "reference": "متفق عليه"},
+  {"id": "demo-quiz-1084", "documentation_status": "unsourced", "section": "الأسماء الحسنى", "category": "الدلالة", "level": "صعب", "question": "ما الفرق بين «القدير» و«المقتدر»؟", "answer": "القدير: التام القدرة، والمقتدر: الذي تظهر آثار قدرته في خلقه قهراً ونفوذاً.", "explanation": "جاءا مقترنين في قوله تعالى: ﴿عِندَ مَلِيكٍ مُّقْتَدِرٍ﴾ — القمر: 55، وقوله: ﴿إِنَّ اللَّهَ عَلَىٰ كُلِّ شَيْءٍ قَدِيرٌ﴾ — البقرة: 20."},
+  {"id": "demo-quiz-1085", "documentation_status": "unsourced", "section": "العلماء والأئمة", "category": "المحدثون", "level": "صعب", "question": "من صاحب «الجرح والتعديل» ومن أبوه من أئمة العلل؟", "answer": "عبد الرحمن بن أبي حاتم الرازي، وأبوه أبو حاتم الرازي من كبار أئمة الجرح والتعديل.", "explanation": "وكتابه من أوسع كتب تراجم الرواة، ونقل فيه أقوال أبيه وأبي زرعة الرازي."},
+  {"id": "demo-quiz-1086", "documentation_status": "unsourced", "section": "العلماء والأئمة", "category": "الأصوليون", "level": "متوسط", "question": "من صاحب «المستصفى» في أصول الفقه؟", "answer": "أبو حامد الغزالي (ت 505 هـ).", "explanation": "وهو من أشهر كتب الأصول على طريقة المتكلمين، وعليه مدار كثير من المختصرات بعده."},
+  {"id": "demo-quiz-1087", "documentation_status": "unsourced", "section": "العلماء والأئمة", "category": "اللغويون", "level": "صعب", "question": "من مؤلف «الكتاب» أول كتاب جامع في النحو العربي؟", "answer": "سيبويه، عمرو بن عثمان (ت نحو 180 هـ).", "explanation": "سمّاه أهل العلم «قرآن النحو» لجمعه أصول العربية، وأخذه عن الخليل بن أحمد الفراهيدي."},
+  {"id": "demo-quiz-1088", "documentation_status": "unsourced", "section": "الصالحون", "category": "التابعون", "level": "متوسط", "question": "من فقهاء المدينة السبعة؟", "answer": "سعيد بن المسيب، وعروة بن الزبير، والقاسم بن محمد، وخارجة بن زيد، وأبو سلمة بن عبد الرحمن، وعبيد الله بن عبد الله، وسليمان بن يسار.", "explanation": "عليهم مدار فقه المدينة في عصر التابعين، وعنهم أخذ الزهري ومالك وغيرهما."},
+  {"id": "demo-quiz-1089", "documentation_status": "unsourced", "section": "الصالحون", "category": "العُبّاد", "level": "صعب", "question": "من الخليفة الذي قيل فيه: «خامس الخلفاء الراشدين»؟", "answer": "عمر بن عبد العزيز (ت 101 هـ).", "explanation": "لعدله وسيرته في خلافته التي لم تتجاوز سنتين ونصفاً، ورد المظالم وإحياء السنن."},
+  {"id": "demo-quiz-1090", "documentation_status": "unsourced", "section": "الفرائض والمواريث", "category": "أصول المسائل", "level": "صعب", "question": "ما أصول مسائل الفرائض السبعة؟", "answer": "2 و3 و4 و6 و8 و12 و24.", "explanation": "وتعول منها ثلاثة: الستة إلى عشرة، والاثنا عشر إلى سبعة عشر، والأربعة والعشرون إلى سبعة وعشرين."},
+  {"id": "demo-quiz-1091", "documentation_status": "sourced", "section": "الفرائض والمواريث", "category": "موانع الإرث", "level": "متوسط", "question": "ما موانع الإرث المتفق عليها؟", "answer": "ثلاثة: القتل، واختلاف الدين، والرقّ.", "explanation": "لقوله ﷺ: «ليس للقاتل شيء» — رواه أبو داود (4564)، وقوله: «لا يرث المسلم الكافر ولا الكافر المسلم» — متفق عليه.", "reference": "متفق عليه"},
+  {"id": "demo-quiz-1092", "documentation_status": "unsourced", "section": "الفرائض والمواريث", "category": "مسائل", "level": "صعب", "question": "ما المسألة المشهورة بـ«المشتركة» ولماذا سُمّيت «الحمارية»؟", "answer": "زوج وأمّ وإخوة لأمّ وإخوة أشقاء؛ سُمّيت حمارية لقول الأشقاء: هَبْ أن أبانا كان حماراً، أليست أمنا واحدة؟", "explanation": "قضى فيها عمر وعثمان رضي الله عنهما بالتشريك، وذهب علي رضي الله عنه إلى أن الأشقاء لا شيء لهم؛ وهي من مواضع الخلاف المعتبر."},
+  {"id": "demo-quiz-1093", "documentation_status": "unsourced", "section": "التجويد", "category": "صفات الحروف", "level": "صعب", "question": "ما حروف القلقلة وما ضابطها؟", "answer": "خمسة يجمعها «قطب جد»: القاف والطاء والباء والجيم والدال، وتُقلقل إذا سكنت.", "explanation": "والقلقلة اضطراب المخرج عند النطق بالحرف الساكن حتى يُسمع له نبرة قوية."},
+  {"id": "demo-quiz-1094", "documentation_status": "unsourced", "section": "التجويد", "category": "المدود", "level": "متوسط", "question": "ما مقدار المدّ المتصل وسبب وجوبه؟", "answer": "أربع أو خمس حركات وجوباً، وسببه اجتماع حرف المد مع الهمزة في كلمة واحدة.", "explanation": "مثاله ﴿جَاءَ﴾ و﴿السَّمَاءِ﴾؛ وسُمّي متصلاً لاتصال سببه بحرف المد في كلمة واحدة."},
+  {"id": "demo-quiz-1095", "documentation_status": "unsourced", "section": "التجويد", "category": "أحكام اللام", "level": "صعب", "question": "متى تُفخَّم لام لفظ الجلالة؟", "answer": "إذا سبقها فتحٌ أو ضمّ، وتُرقَّق إذا سبقها كسر.", "explanation": "مثل: قال اللهُ (تفخيم)، ونصرُ الله (تفخيم)، وبسم اللهِ (ترقيق)."},
+  {"id": "demo-quiz-1096", "documentation_status": "unsourced", "section": "الفتوحات الإسلامية", "category": "المعارك", "level": "صعب", "question": "ما معركة نهاوند ولماذا سُمّيت «فتح الفتوح»؟", "answer": "معركة سنة 21 هـ بقيادة النعمان بن مقرّن رضي الله عنه، سُمّيت بذلك لأنها حسمت أمر الدولة الفارسية نهائياً.", "explanation": "وبعدها تتابعت فتوح فارس بلا مقاومة منظمة تُذكر."},
+  {"id": "demo-quiz-1097", "documentation_status": "unsourced", "section": "الفتوحات الإسلامية", "category": "السياسة", "level": "متوسط", "question": "ما العهدة العمرية؟", "answer": "عهد الأمان الذي كتبه عمر بن الخطاب رضي الله عنه لأهل بيت المقدس عند فتحها، وأمّنهم فيه على أنفسهم وكنائسهم وصلبانهم.", "explanation": "وهو من أشهر وثائق التسامح في التاريخ، نقله الطبري في تاريخه."},
+  {"id": "demo-quiz-1098", "documentation_status": "sourced", "section": "الرقائق", "category": "محاسبة", "level": "متوسط", "question": "ما الأسئلة الأربعة التي لا تزول قدما العبد يوم القيامة حتى يُسأل عنها؟", "answer": "عن عمره فيم أفناه، وعن علمه فيم فعل فيه، وعن ماله من أين اكتسبه وفيم أنفقه، وعن جسمه فيم أبلاه.", "explanation": "رواه الترمذي (2417) من حديث أبي برزة الأسلمي رضي الله عنه وقال: حسن صحيح.", "reference": "سنن الترمذي 2417"},
+  {"id": "demo-quiz-1099", "documentation_status": "sourced", "section": "الرقائق", "category": "الزهد", "level": "صعب", "question": "بمَ وصف النبي ﷺ حال المؤمن في الدنيا؟", "answer": "«كن في الدنيا كأنك غريب أو عابر سبيل».", "explanation": "رواه البخاري (6416) من حديث ابن عمر رضي الله عنهما، وكان ابن عمر يقول: إذا أمسيت فلا تنتظر الصباح.", "reference": "صحيح البخاري 6416"},
+  {"id": "demo-quiz-1100", "documentation_status": "sourced", "section": "الآداب والأخلاق", "category": "أدب المجلس", "level": "متوسط", "question": "ما حكم إقامة الرجل من مجلسه ليجلس فيه غيره؟", "answer": "منهيٌّ عنه؛ قال ﷺ: «لا يُقيمنَّ أحدُكم رجلاً من مجلسه ثم يجلس فيه، ولكن تفسّحوا وتوسّعوا».", "explanation": "متفق عليه: البخاري (6270)، مسلم (2177) من حديث ابن عمر رضي الله عنهما.", "reference": "متفق عليه"}
 ];

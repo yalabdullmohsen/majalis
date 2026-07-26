@@ -261,7 +261,7 @@ scholars-data.ts، scholars-seo.json، library-catalog.ts/.json، library-author
 ## المرحلة 7 — حقول ناقصة
 
 **الفرع:** `cursor/content-fix-phase7-missing-fields-1f54`
-**PR:** (يُحدَّث)
+**PR:** https://github.com/yalabdullmohsen/majalis/pull/345
 
 ### miracles-seed.ts
 - أُضيف `slug` لكل عنصر من الـ60 (نقحرة لاتينية، فريد)
@@ -275,6 +275,35 @@ scholars-data.ts، scholars-seo.json، library-catalog.ts/.json، library-author
 
 ### ملحق المرحلة 6
 - إعادة وسم `_duplicate_summary` في curriculum-topics.json (فات الـcommit السابق)
+
+### حالة البناء
+نجاح
+
+---
+
+## المرحلة 8 — سياسة غير الموثّق (وسم ظاهر)
+
+**الفرع:** `cursor/content-fix-phase8-unsourced-policy-1f54`
+**PR:** (يُحدَّث)
+
+### الأعداد
+| المصدر | العدد |
+|---|---|
+| qa `evidence: null` | 155 |
+| qa `reference: null` | 142 |
+| quiz «مستند إلى مضمون الإجابة…» | 0 (كانت 0 في النسخة الحالية؛ اُستبدل النمط بـ null إن وُجد) |
+| asma مرجع حديث الـ99 فقط | 13 |
+| fawaid بلا author_name | 527 |
+
+### documentation_status
+- qa: sourced=218 / unsourced=142
+- quiz-seed: أُضيف للحقول
+- asma-husna: 99 سجلًا
+- fawaid: أُضيف حسب وجود source
+
+### الواجهة
+- `SHOW_UNSOURCED_BADGE=true`
+- مكوّن `UnsourcedBadge` في QaCard و FaidahCard و AsmaaHusnaPage
 
 ### حالة البناء
 (تُحدَّث)

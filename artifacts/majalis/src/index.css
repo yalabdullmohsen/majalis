@@ -8433,3 +8433,16 @@ html[data-theme="dark"] .skeleton-base {
   font-family: var(--font-ui) !important;
 }
 
+/* وسم ظاهر للسجلات بلا تخريج — المرحلة 8 */
+.unsourced-badge {
+  display: inline-block;
+  margin-inline-start: 0.35rem;
+  padding: 0.1rem 0.45rem;
+  font-size: 0.75rem;
+  line-height: 1.4;
+  color: #5c4a32;
+  background: #f3ead7;
+  border: 1px solid #d9c7a3;
+  border-radius: 0.25rem;
+}
+
