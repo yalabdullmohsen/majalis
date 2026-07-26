@@ -115,7 +115,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
 
   /* ── حديث ── */
   { text: "لا يؤمن أحدكم حتى يحب لأخيه ما يحب لنفسه.", category: "الحديث", source: "متفق عليه", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
-  { text: "رمضان يربّي على الصبر، والصبر من أعظم أخلاق الإيمان وثوابه عند الله عظيم.", category: "الحديث", source: "معنى مستفاد من آيات الصبر وفضائل رمضان الثابتة؛ اللفظ المشهور في خطبة سلمان منكر", author_name: null, status: "approved", verification_status: "needs_review" },
+  { text: "رمضان مدرسة للصبر؛ والصبر مأمور به في القرآن وثوابه عظيم. وأما خطبة سلمان المشهورة في فضائل رمضان فمنكرة فلا تُروى للاستدلال.", category: "الحديث", source: "آيات الصبر وفضائل رمضان الثابتة؛ خطبة سلمان منكرة عند المحدّثين", author_name: null, status: "approved", verification_status: "verified" },
   { text: "سبعة يظلهم الله في ظله يوم لا ظل إلا ظله: الإمام العادل، وشاب نشأ في عبادة الله، ورجل قلبه معلّق بالمساجد، ورجلان تحابّا في الله، ورجل دعته امرأة ذات منصب وجمال فقال إني أخاف الله، ورجل تصدّق فأخفى حتى لا تعلم شماله ما تنفق يمينه، ورجل ذكر الله خالياً ففاضت عيناه.", category: "الحديث", source: "متفق عليه", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
   { text: "كلمتان خفيفتان على اللسان ثقيلتان في الميزان حبيبتان إلى الرحمن: سبحان الله وبحمده سبحان الله العظيم.", category: "الحديث", source: "متفق عليه", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
   { text: "لا تحاسدوا ولا تناجشوا ولا تباغضوا ولا تدابروا وكونوا عباد الله إخواناً.", category: "الحديث", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
@@ -151,7 +151,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   /* ── طلب العلم ── */
   { text: "العلم النافع يرفع صاحبه ويثمر العمل؛ قال ﷺ: «من سلك طريقًا يلتمس فيه علمًا سهّل الله له به طريقًا إلى الجنة» — مسلم. وأما ألفاظ «العالم والمتعلم شريكان…» فضعيفة فلا يُستقل بها.", category: "طلب العلم", source: "مسلم ٢٦٩٩؛ ضعّف أهل التحقيق الألفاظ المشهورة الأخرى", author_name: null, status: "approved", verification_status: "verified" },
   { text: "قيدوا العلم بالكتاب؛ فالكتابة تصون الحفظ من النسيان.", category: "طلب العلم", source: "أثر موقوف — رواه الدارمي وابن أبي شيبة، وصححه الحاكم في المستدرك", author_name: "عمر بن الخطاب", status: "approved", verification_status: "verified" },
-  { text: "من أراد الدنيا فعليه بالعلم، ومن أراد الآخرة فعليه بالعلم.", category: "طلب العلم", source: "أثر يُنسب للإمام الشافعي", author_name: "الإمام الشافعي", status: "approved", verification_status: "needs_review" },
+  { text: "طلب العلم نافع للدنيا والآخرة؛ يُنسب للشافعي: «من أراد الدنيا فعليه بالعلم…» وهو قول مأثور بلا إسناد متصل يُعوَّل عليه، فيُذكر أدباً لا حديثاً.", category: "طلب العلم", source: "نسبة مشهورة للشافعي بلا إسناد متصل معتمد", author_name: "يُنسب للإمام الشافعي", status: "approved", verification_status: "verified" },
 
   /* ── الدعوة ── */
   { text: "فوالله لأن يهدي الله بك رجلاً واحداً خير لك من حمر النعم.", category: "الدعوة", source: "متفق عليه", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
@@ -162,7 +162,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   { text: "حق الولد على والده أن يحسن اسمه ويحسن تربيته.", category: "التربية", source: "رواه البيهقي", author_name: "شعب الإيمان", status: "approved", verification_status: "verified" },
 
   /* ── اللغة ── */
-  { text: "فهم العربية يعين على فهم ألفاظ القرآن ومعانيه، فالعناية بها خدمة للكتاب.", category: "اللغة", source: "معنى صحيح؛ اللفظ المرفوع «أعربوا القرآن...» ضعيف الإسناد", author_name: null, status: "approved", verification_status: "needs_review" },
+  { text: "العناية بالعربية خدمة لفهم ألفاظ القرآن؛ والمعنى مقرَّر عند أهل العلم. وأما المرفوع «أعربوا القرآن والتمسوا غرائبه» فضعيف فلا يُستقل به.", category: "اللغة", source: "معنى علمي مقرَّر؛ ضعّف المحدّثون لفظ «أعربوا القرآن»", author_name: null, status: "approved", verification_status: "verified" },
   { text: "العناية بالعربية تعين على فهم القرآن والسنة؛ ولا يُحتج في ذلك بحديث موضوع.", category: "اللغة", source: "حديث «أحبوا العرب لثلاث» موضوع باتفاق النقاد — لا يُروى", author_name: null, status: "approved", verification_status: "verified" },
 
   /* ── إضافات العقيدة ── */
@@ -231,14 +231,14 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
 
   /* ── إضافات السيرة ── */
   { text: "الفتح الأكبر كان بلا حرب؛ دخل النبي ﷺ مكة وعفا عن أهلها — قدوة في العفو والرحمة.", category: "السيرة", source: "صحيح البخاري — كتاب المغازي", author_name: "الإمام البخاري", status: "approved", verification_status: "verified" },
-  { text: "غزوة بدر نُصر فيها ثلاثمائة وثلاثة عشر على الألف؛ دليل أن النصر من عند الله.", category: "السيرة", source: "رواه الترمذي عن البراء بن عازب بلفظ العدد المحدد؛ وأصله في صحيح البخاري بلفظ عام «ثلاثمائة وبضعة عشر»", author_name: "سنن الترمذي", status: "approved", verification_status: "needs_review" },
+  { text: "غزوة بدر نُصر فيها المؤمنون وهم نحو ثلاثمائة وبضعة عشر على قريش — دليل أن النصر من عند الله. العدد «٣١٣» بتفصيله في الترمذي؛ والأصل العام في البخاري.", category: "السيرة", source: "البخاري (ثلاثمائة وبضعة عشر)؛ الترمذي عن البراء بالعدد المفصّل", author_name: "صحيح البخاري / سنن الترمذي", status: "approved", verification_status: "verified" },
 
   /* ── إضافات اللغة ── */
   { text: "اللغة العربية لغة القرآن؛ من أتقنها أعان فهمه لكتاب الله.", category: "اللغة", source: "فضل عربية القرآن — ابن تيمية: اقتضاء الصراط المستقيم", author_name: "ابن تيمية", status: "approved", verification_status: "verified" },
   { text: "إعراب الكلمة يكشف معناها؛ فمن أتقن الإعراب أمن اللحن في تلاوته.", category: "اللغة", source: "شرح ألفية ابن مالك — ابن عقيل", author_name: "ابن عقيل", status: "approved", verification_status: "verified" },
 
   /* ── إضافات طلب العلم ── */
-  { text: "العلم لا يُعطيك بعضه حتى تعطيه كلك.", category: "طلب العلم", source: "قولٌ مأثور يُنسب للإمام الشافعي (وبصيغة قريبة للجاحظ) — لم يثبت له إسناد لمالك بن أنس", author_name: "الإمام الشافعي (نسبة مشهورة، غير مؤكَّدة الإسناد)", status: "approved", verification_status: "needs_review" },
+  { text: "العلم يحتاج إلى تفرّغ؛ يُنسب: «العلم لا يعطيك بعضه حتى تعطيه كلك» — قول مأثور بلا إسناد متصل معتمد، فيُذكر أدباً لا مرفوعاً.", category: "طلب العلم", source: "نسبة مشهورة للشافعي/الجاحظ بلا إسناد متصل", author_name: "قول مأثور", status: "approved", verification_status: "verified" },
   { text: "أول العلم الصمت، ثم الاستماع، ثم الحفظ، ثم العمل، ثم النشر.", category: "طلب العلم", source: "قول مأثور عن الأصمعي (عبد الملك بن قريب)، لا عن الإمام الشافعي", author_name: "الأصمعي", status: "approved", verification_status: "verified" },
 
   /* ── إضافات الدعوة ── */
@@ -251,7 +251,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   { text: "أكبر الكبائر: الإشراك بالله، والأمن من مكر الله، والقنوط من رحمة الله، واليأس من روح الله.", category: "الرقائق", source: "أثر عن عبدالله بن مسعود — رواه عبدالرزاق والطبراني في الكبير وذكره ابن جرير، إسناده صحيح", author_name: "عبدالله بن مسعود", status: "approved", verification_status: "verified" },
 
   /* ── إضافات الأخلاق ── */
-  { text: "الإنسان كثير بأخلاقه؛ لا بماله ولا بجاهه.", category: "الأخلاق", source: "ديوان الإمام الشافعي", author_name: "الإمام الشافعي", status: "approved", verification_status: "needs_review" },
+  { text: "قيمة المرء بأخلاقه لا بماله ولا بجاهه — معنى أدبي يُنسب لشعر الشافعي؛ يُذكر أدباً لا حديثاً.", category: "الأخلاق", source: "يُنسب لديوان الشافعي — أدب لا مرفوع", author_name: "يُنسب للإمام الشافعي", status: "approved", verification_status: "verified" },
   { text: "من جمع بين حسن الخُلق والعلم فقد أوتي خير الدنيا والآخرة.", category: "الأخلاق", source: "أدب الدنيا والدين — الماوردي", author_name: "الماوردي", status: "approved", verification_status: "verified" },
   { text: "الكرم في النفس أعلى درجات الكرم؛ أن تجود بنفسك على الحق وإن شق.", category: "الأخلاق", source: "مدارج السالكين — ابن القيم", author_name: "ابن القيم الجوزية", status: "approved", verification_status: "verified" },
 
@@ -265,7 +265,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
 
   /* ── إضافات الأسرة ── */
   { text: "خيركم خيركم لأهله — الأسرة الصالحة أساس المجتمع المسلم الصالح.", category: "التربية", source: "الترمذي ٣٨٩٥ — صححه الألباني", author_name: "النبي محمد ﷺ", status: "approved", verification_status: "verified" },
-  { text: "البيت السعيد هو الذي تُعلَّم فيه الصلاة قبل القراءة والكتابة.", category: "التربية", source: "تربية الأولاد في الإسلام — عبد الله ناصح علوان", author_name: "عبد الله ناصح علوان", status: "approved", verification_status: "needs_review" },
+  { text: "تعليم الصلاة مقدَّم في تربية الأولاد؛ قال ﷺ: «مروا أولادكم بالصلاة لسبع» — أبو داود حسّنه الألباني. وأما صياغة «البيت السعيد…» فتعبير تربوي حديث لا مرفوع.", category: "التربية", source: "أبو داود ٤٩٥؛ صياغة البيت من كتب التربية المعاصرة (علوان) لا حديث", author_name: null, status: "approved", verification_status: "verified" },
 
   /* ── إضافات العقيدة ── */
   { text: "التوحيد أسُّ الدين وقمّته؛ فلا عمل يُقبل بلا توحيد، ولا توحيد يكتمل بلا إخلاص.", category: "العقيدة", source: "درء تعارض العقل والنقل — ابن تيمية", author_name: "ابن تيمية", status: "approved", verification_status: "verified" },
@@ -274,19 +274,19 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
 
   /* ── إضافات طلب العلم ── */
   { text: "لا تصلح الأُمة حتى يصلح علماؤها؛ وعلماء الأمة مصابيح الهداية في الظلمات.", category: "طلب العلم", source: "جامع بيان العلم — ابن عبد البر", author_name: "ابن عبد البر", status: "approved", verification_status: "verified" },
-  { text: "طالب العلم لا ينضجُ حتى يستوي عنده الثناء والذم سواء في طلبه.", category: "طلب العلم", source: "الجامع لأخلاق الراوي — الخطيب البغدادي", author_name: "الخطيب البغدادي", status: "approved", verification_status: "needs_review" },
+  { text: "من أدب طالب العلم أن لا يفتتن بمدح الناس ولا ينكسر بذمهم في طلبه — معنى مبثوث في كتب آداب الطلب كالجامع للخطيب؛ ليس حديثاً مرفوعاً.", category: "طلب العلم", source: "معنى من آداب الطلب (الجامع لأخلاق الراوي ونحوه) — أدب لا مرفوع", author_name: "الخطيب البغدادي (معنى)", status: "approved", verification_status: "verified" },
 
   /* ── إضافات القرآن ── */
   { text: "من أراد علم الأولين والآخرين فليتدبّر القرآن — فيه جواب كل سؤال وشفاء كل داء.", category: "القرآن", source: "أثر عن عبدالله بن مسعود — رواه أحمد في الزهد وابن أبي شيبة والطبراني في الكبير والبيهقي في شعب الإيمان، نقله ابن تيمية في مقدمة في أصول التفسير", author_name: "عبدالله بن مسعود", status: "approved", verification_status: "verified" },
   { text: "الحافظ للقرآن يُقال له يوم القيامة: اقرأ وارتقِ ورتّل — فمنزلته عند آخر آية يقرؤها.", category: "القرآن", source: "الترمذي ٢٩١٤ وأبو داود ١٤٦٤ — حسّنه الألباني", author_name: "النبي محمد ﷺ", status: "approved", verification_status: "verified" },
 
   /* ── إضافات التربية ── */
-  { text: "التربية الصحيحة تبدأ بتربية النفس قبل تربية الأبناء — المُربّي القدوة أبلغ من المُربّي الواعظ.", category: "التربية", source: "تربية الأولاد في الإسلام — عبد الله ناصح علوان", author_name: "عبد الله ناصح علوان", status: "approved", verification_status: "needs_review" },
+  { text: "القدوة أبلغ من الوعظ؛ والأصل: ﴿أَتَأْمُرُونَ النَّاسَ بِالْبِرِّ وَتَنسَوْنَ أَنفُسَكُمْ﴾. صياغة «التربية تبدأ بالنفس…» تعبير معاصر لا مرفوع.", category: "التربية", source: "البقرة: ٤٤؛ صياغة معاصرة في كتب التربية (علوان ونحوه)", author_name: null, status: "approved", verification_status: "verified" },
   { text: "لا تُكثر أمر ولدك بالنهي؛ فإن الإكثار يُفضي إلى الجرأة. علّمه بالترغيب قبل الترهيب.", category: "التربية", source: "أدب الدنيا والدين — الماوردي", author_name: "الماوردي", status: "approved", verification_status: "verified" },
 
   /* ── إضافات الحديث ── */
   { text: "صحيح البخاري أصح الكتب بعد كتاب الله؛ وقد استغرق البخاري ستة عشر عاماً في تصنيفه.", category: "الحديث", source: "هدي الساري مقدمة فتح الباري — ابن حجر العسقلاني", author_name: "ابن حجر العسقلاني", status: "approved", verification_status: "verified" },
-  { text: "الحديث الصحيح حجة بنفسه؛ لا يحتاج إلى إذن من مذهب ولا تزكية من فقيه — قاعدة أهل السنة.", category: "الحديث", source: "صفة صلاة النبي — ناصر الدين الألباني", author_name: "الإمام الألباني", status: "approved", verification_status: "needs_review" },
+  { text: "ما صحّ عن النبي ﷺ حجة بنفسه عند أهل السنة؛ والعمل به لا يتوقف على موافقة مذهب معيّن — تقرير أصولي معروف عند المحدّثين والفقهاء المحققين.", category: "الحديث", source: "تقرير أصولي عند أهل السنة (انظر كلام الألباني في صفة الصلاة ونحوه)", author_name: "أصول أهل السنة", status: "approved", verification_status: "verified" },
 
   /* ── إضافات الفقه ── */
   { text: "الفقه ليس حفظ المسائل فحسب؛ بل فهم المقاصد وتنزيلها على الوقائع. والفقيه من يُحسن ذلك.", category: "الفقه", source: "الموافقات — أبو إسحاق الشاطبي", author_name: "الشاطبي", status: "approved", verification_status: "verified" },
@@ -309,7 +309,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   /* ── الطب النبوي والصحة ── */
   { text: "عليكم بهذا العود الهندي فإن فيه سبعة أشفية.", category: "الحديث", source: "رواه البخاري ومسلم", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
   { text: "الشفاء في ثلاثة: شربة عسل، وحجامة (شرطة مِحجم)، وكية بالنار — ونهى النبي ﷺ أمته عن الكي.", category: "الحديث", source: "رواه البخاري (٥٦٨٠) عن ابن عباس", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
-  { text: "الاعتدال في الطعام وقاية؛ والإفراغ من الإسراف في المأكل أدب شرعي وطبي.", category: "الحديث", source: "معنى طبي مأثور يُنسب للحارث بن كلدة — ليس حديثاً نبويّاً ثابتاً", author_name: null, status: "approved", verification_status: "needs_review" },
+  { text: "الاعتدال في الطعام مشروع؛ قال ﷺ: «ما ملأ آدمي وعاء شراً من بطن…» — الترمذي ٢٣٨٠ حسّنه الألباني. وأما نسبته للحارث بن كلدة فأدب طبي لا مرفوع.", category: "الحديث", source: "الترمذي ٢٣٨٠ حسّنه الألباني؛ قول الحارث بن كلدة أدب طبي لا حديث", author_name: null, status: "approved", verification_status: "verified" },
   { text: "يصبح على كل سلامى من أحدكم صدقة: فكل تسبيحة صدقة، وكل تحميدة صدقة، وكل تهليلة صدقة، وكل تكبيرة صدقة، وأمر بالمعروف صدقة، ونهي عن المنكر صدقة، ويجزئ من ذلك ركعتان يركعهما من الضحى.", category: "الحديث", source: "رواه مسلم عن أبي ذر (٧٢٠)", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
 
   /* ── المعاملات والأخلاق التجارية ── */
