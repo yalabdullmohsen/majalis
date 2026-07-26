@@ -1,6 +1,6 @@
 import { arabicMatchAny } from "./arabic-search";
 
-/** تصنيفات الإعجاز العلمي — موثقة من القرآن مع تنبيه علمي حذر */
+/** تصنيفات إشارات كونية للتأمل — مع حجب ما لم يُحرَّر (needs_review) من العرض العام */
 export const MIRACLE_CATEGORIES = [
   "الكل",
   "الكون",
@@ -270,7 +270,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
   },
   {
     id: "miracle-plant-1",
-    title: "الإعجاز في ازدواجية النبات",
+    title: "أزواج النبات — إشارة للتأمل لا مطابقة اصطلاحية",
     category: "النبات",
     source_type: "قرآن",
     reference: "يس — 36",
@@ -284,7 +284,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 
 ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "تفسير ابن كثير — يس | في ظلال القرآن — سيد قطب",
-    verification_status: "verified",
+    verification_status: "needs_review",
     status: "approved",
   },
   {
@@ -676,7 +676,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 
 ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "تفسير القرطبي وابن كثير — القيامة 3-4 | Forensic Science International — Fingerprint Uniqueness | Galton F. (1892)",
-    verification_status: "verified",
+    verification_status: "needs_review",
     status: "approved",
   },
   {
@@ -743,7 +743,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 
 ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "تفسير الطبري — النور | دراسة William Hay في علم المحيطات | مجلة Nature في علم الأعماق | NOAA Ocean Exploration",
-    verification_status: "verified",
+    verification_status: "needs_review",
     status: "approved",
   },
   {
@@ -812,7 +812,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 
 ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "تفسير ابن كثير — الإسراء | كتاب The Hidden Life of Trees — Peter Wohlleben",
-    verification_status: "verified",
+    verification_status: "needs_review",
     status: "approved",
   },
   // ── إضافات: الزمن ──────────────────────────────────────────────
@@ -905,7 +905,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
   // ── إضافات: الفلك والكون ─────────────────────────────────────────
   {
     id: "miracle-astro-black-hole",
-    title: "الثقب الأسود ودقة الكون — وقوله تعالى: فلا أقسم بالخنّس",
+    title: "الخنّس الجوار الكنّس — تفسير لغوي بلا ربط بالثقب الأسود",
     category: "الفلك",
     source_type: "قرآن",
     reference: "سورة التكوير: 15-16",
@@ -981,7 +981,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
   },
   {
     id: "miracle-iron-cosmos-69",
-    title: "الحديد نزل من الفضاء — الإعجاز الكوني في آية الحديد",
+    title: "إنزال الحديد — معنى لغوي وتأمّل بلا جزم فلكي",
     category: "الحديد",
     source_type: "قرآن",
     reference: "سورة الحديد: 25",
@@ -1159,7 +1159,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
   },
   {
     id: "miracle-bee-communication-85",
-    title: "نظام التواصل لدى النحل — «أوحى ربك إلى النحل»",
+    title: "وحي النحل — دلالة قرآنية بلا إسقاط علمي متكلَّف",
     category: "الحيوان",
     source_type: "قرآن",
     reference: "النحل — 68-69",
@@ -1173,12 +1173,12 @@ ${SCIENTIFIC_DISCLAIMER}`,
 
 ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "Karl von Frisch (Nobel 1973), Waggle Dance | تفسير الشعراوي والطبري — النحل: 68",
-    verification_status: "verified",
+    verification_status: "needs_review",
     status: "approved",
   },
   {
     id: "miracle-ant-civilization-86",
-    title: "حضارة النمل ومجتمعاتها — «قالت نملة»",
+    title: "نملة سليمان — عبرة في النص لا «حضارة» معاصرة",
     category: "الحيوان",
     source_type: "قرآن",
     reference: "النمل — 18",
@@ -1190,7 +1190,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 
 ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "Myrmecology: Wilson & Hölldobler (Ants 1990, Pulitzer) | Wilson E.O., The Insect Societies (1971) | Journal of Experimental Biology — Ant Communication 2009 | تفسير القرطبي — النمل: 18",
-    verification_status: "verified",
+    verification_status: "needs_review",
     status: "approved",
   },
   {
@@ -1218,7 +1218,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
   },
   {
     id: "miracle-expanding-universe-89",
-    title: "توسّع الكون المستمر — «والسماء بنيناها بأيد»",
+    title: "بناء السماء بقوة — دون الجزم بنظرية التوسّع",
     category: "الكون",
     source_type: "قرآن",
     reference: "الذاريات — 47",
@@ -1237,7 +1237,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
   },
   {
     id: "miracle-soil-plants-chemistry-90",
-    title: "إخراج النبات من الأرض — التفاعل الكيميائي الحيوي",
+    title: "إخراج النبات بالماء — تفكّر دون ربط كيميائي قطعي",
     category: "النبات",
     source_type: "قرآن",
     reference: "طه — 53",
@@ -1249,7 +1249,7 @@ ${SCIENTIFIC_DISCLAIMER}`,
 
 ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "Camerarius, De Sexu Plantarum Epistola (1694) | Linnaeus Sexual System (1730s) | تفسير الرازي والقرطبي — طه: 53",
-    verification_status: "verified",
+    verification_status: "needs_review",
     status: "approved",
   },
 ];
@@ -1269,6 +1269,8 @@ export function searchMiraclesSeed(query: string) {
   const q = query.trim();
   if (!q) return [];
   return MIRACLES_SEED.filter((m) =>
+    m.status === "approved" &&
+    m.verification_status === "verified" &&
     arabicMatchAny(
       [m.title, m.body, m.reference, m.category, m.scholarly_source, m.verse],
       q,

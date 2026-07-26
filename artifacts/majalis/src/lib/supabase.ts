@@ -588,7 +588,8 @@ export async function getMiracles({ category, sourceType }: { category?: string;
   }
 
   try {
-    let q = supabase.from("scientific_miracles").select("*").eq("status", "approved");
+    // لا تُعرض موضوعات «قيد المراجعة» للعامة — منهج الموقع يحجب الربط العلمي غير المحرَّر.
+    let q = supabase.from("scientific_miracles").select("*").eq("status", "approved").eq("verification_status", "verified");
     if (category) q = q.eq("category", category);
     if (sourceType) q = q.eq("source_type", sourceType);
     const { data, error } = await q.order("created_at", { ascending: false });

@@ -99,3 +99,6 @@
 .mk-src--quran { --mk-border: #226A56; }
 .mk-src--sunna { --mk-border: #143F35; }
 
+
+.mk-hero__link { color: inherit; text-decoration: underline; text-underline-offset: 3px; font-weight: 700; }
+.mk-hero__link:hover { opacity: 0.9; }
