@@ -161,14 +161,14 @@ export default function AsmaaHusnaPage() {
     applyPageSeo({
       path: "/asma-husna",
       title: "الأسماء الحسنى، أسماء الله التسعة والتسعون | المجلس العلمي",
-      description: "أسماء الله الحسنى التسعة والتسعون، كل اسم بمعناه وآيته ومنفعته وذكره.",
-      keywords: ["أسماء الله الحسنى", "الله", "الرحمن", "الرحيم", "الأسماء الحسنى", "99 اسم"],
+      description: "أسماء الله الحسنى: أصل حديث الإحصاء في الصحيحين، مع بيان أن السرد التفصيلي في الترمذي ضعيف عند المحققين، وعرض الأسماء بمعانيها.",
+      keywords: ["أسماء الله الحسنى", "الله", "الرحمن", "الرحيم", "الأسماء الحسنى"],
       jsonLd: [
         {
           "@context": "https://schema.org",
           "@type": "ItemList",
           name: "أسماء الله الحسنى",
-          description: "التسعة والتسعون اسماً من أسماء الله الحسنى مع المعنى والمصدر",
+          description: "أسماء الله الحسنى مع المعنى والمصدر والتنبيه على ضعف السرد التفصيلي",
           numberOfItems: ASMAA.length,
           itemListElement: ASMAA.map((a, i) => ({
             "@type": "ListItem",
@@ -206,10 +206,10 @@ export default function AsmaaHusnaPage() {
         <h1 className="ah-hero__title">الأسماء الحسنى</h1>
         <p className="ah-hero__sub">
           قال ﷺ: «إِنَّ لِلَّهِ تِسْعَةً وَتِسْعِينَ اسْمًا مِائَةً إِلَّا وَاحِدًا مَنْ أَحْصَاهَا دَخَلَ الْجَنَّةَ»
-          <span className="ah-hero__source">متفق عليه</span>
+          <span className="ah-hero__source">متفق عليه — بلا سرد للأسماء</span>
         </p>
         <div className="ah-hero__stats">
-          <span>99 اسماً</span>
+          <span>قائمة تعليمية</span>
           <span className="ah-hero__dot">·</span>
           <span aria-live="polite" aria-atomic="true">{filtered.length} ظاهر</span>
           <span className="ah-hero__dot">·</span>
@@ -217,9 +217,15 @@ export default function AsmaaHusnaPage() {
         </div>
       </div>
 
+      <aside className="ah-method-note" role="note" aria-label="تنبيه منهجي">
+        <strong>تنبيه منهجي:</strong>{" "}
+        أصل حديث «لله تسعة وتسعون اسمًا… من أحصاها دخل الجنة» ثابت في الصحيحين بغير تعداد للأسماء.
+        أما السرد التفصيلي الوارد في بعض روايات الترمذي فضعيف عند المحققين؛ فلا يُجزم بأن كل اسم في القائمة الآتية اسم توقيفي حتى يُطابق آية أو حديثًا صحيحًا.
+        والإحصاء المطلوب: العلم بمعاني الأسماء الثابتة والتعبّد بمقتضاها، لا مجرّد عدّ ألفاظ.
+      </aside>
+
       {/* ═══ اسم اليوم ═══ */}
       <NameOfDayCard entry={todayName} onOpen={() => setSelected(todayName)} />
-
       {/* ═══ شريط تقدم المحفوظات ═══ */}
       {favs.size > 0 && (
         <div className="ah-progress-bar-wrap" aria-label={`حفظت ${favs.size} من 99 اسماً`}>
