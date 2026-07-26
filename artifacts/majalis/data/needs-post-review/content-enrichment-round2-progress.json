@@ -2,7 +2,7 @@
   "branch": "session/content-enrichment-round-2",
   "mode": "enrichment_and_audit",
   "started": "2026-07-26T07:20:00Z",
-  "updated": "2026-07-26T07:32:00Z",
+  "updated": "2026-07-26T07:33:10Z",
   "baseline_from_counts": {
     "quiz": 1097,
     "quiz_with_explanation": 328,
@@ -43,7 +43,8 @@
   "batches_done": [
     "stories_expand_14_add_8",
     "scholars_bios_expand_21_add_8_books_add_10_desc_expand",
-    "quiz_explanations_769_add_40_adhkar_add_6"
+    "quiz_explanations_769_add_40_adhkar_add_6",
+    "rulings_expand_14_lessons_enrich_802_prophets_22"
   ],
   "added_counts": {
     "stories_expanded": 14,
@@ -58,7 +59,10 @@
     "quiz_new": 40,
     "quiz_total_now": 1137,
     "adhkar_new": 6,
-    "adhkar_total_seed_now": 317
+    "adhkar_total_seed_now": 317,
+    "rulings_seed_expanded": 14,
+    "lesson_summaries_enriched": 802,
+    "prophets_bios_expanded": 22
   },
   "needs_post_review_notes": [
     "كتب JSON الجديدة verificationStatus=pending_review حتى مراجعة الطبعات والربط الكامل بـ authorId",
