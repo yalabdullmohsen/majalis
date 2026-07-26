@@ -20,6 +20,7 @@ import { loadMushafPage, prefetchMushafPage, type MushafPageLayout, type QpcWord
 import { MushafPageV2 } from "@/components/quran/MushafPageV2";
 import "@/styles/quran.css";
 import "@/styles/mushaf-v2.css";
+import "@/styles/pages/mushaf-reader.css";
 
 const TOTAL_PAGES = 604;
 

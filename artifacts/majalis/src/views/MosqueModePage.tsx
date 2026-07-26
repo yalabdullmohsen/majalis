@@ -4,6 +4,7 @@ import type { LucideIcon } from "lucide-react";
 import { Link } from "wouter";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 import { applyPageSeo } from "@/lib/seo";
+import "@/styles/pages/mosque-mode.css";
 
 function pad(n: number) {
   return String(n).padStart(2, "0");
