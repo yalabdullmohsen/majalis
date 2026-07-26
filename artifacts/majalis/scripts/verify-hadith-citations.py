@@ -250,10 +250,22 @@ BOOKS = {
     "madarij": {"id": "8370", "name": "مدارج السالكين بين منازل إياك نعبد وإياك نستعين لابن القيم",
                 "edition": "ت محمد المعتصم بالله البغدادي، دار الكتاب العربي ببيروت، ط٣ ١٤١٦هـ/١٩٩٦م",
                 "paged": True},
+    # الرحيق المختوم ط دار الفكر (ج-٢٥٦): **مجلَّد واحد** (٤٥٩ صفحة، «ترقيم الكتاب
+    # موافق للمطبوع»)، وعنوانُ صفحته «ص143 - كتاب الرحيق المختوم - …» بلا «ج»
+    # ⇒ موضعُه «صN» وحدها بنمط `PAGE_ONLY`. واختيرت هذه على «الرحيق المختوم مع
+    # زيادات» (ش٩٩٠٠) لأن تلك **زِيد عليها العبر والدروس والمصوَّرات بأقلامٍ أخرى**،
+    # فلا يصحّ أن يُنسب ما فيها إلى المباركفوري وحدَه.
+    # ⚠️ **ولا تُعلَّم بـ`parenfn`** بل بـ`guillefn`: علامةُ حاشيتها **بين علامتَي
+    # تنصيص لا بين قوسين** («أكتادنا «١» ، فقال») — والمسحُ (ص٧ و٥٢ و١٥٢ و٣٠٧
+    # و٤٢٧) أعطى **٠ قوسًا فيه رقم** وكتلةَ `hamesh` في صفحات المتن.
+    "rahiq": {"id": "9820", "name": "الرحيق المختوم للمباركفوري",
+              "edition": "دار الفكر، طبعة خاصة بدار ومكتبة الهلال ببيروت، ٢٠٠٢م (٤٥٩ صفحة)",
+              "paged": True, "guillefn": True},
 }
 
 PAGED_IDS = {info["id"] for info in BOOKS.values() if info.get("paged")}
 PARENFN_IDS = {info["id"] for info in BOOKS.values() if info.get("parenfn")}
+GUILLEFN_IDS = {info["id"] for info in BOOKS.values() if info.get("guillefn")}
 
 BASE = "https://shamela.ws"
 CACHE = os.environ.get("SHAMELA_CACHE", "/tmp/shamela-cache")
@@ -376,6 +388,12 @@ HAMESH = re.compile(r"<p[^>]*class=\"[^\"]*hamesh[^\"]*\".*?</p>", re.S)
 # وحدها، لئلّا تُمسّ أرقام مسلم المزدوجة «٥٢ - (٩٤٥)» وهي **رقم الحديث** لا حاشية.
 PAREN_FOOTNOTE = re.compile(r"\(\s*[٠-٩]{1,4}\s*\)")
 
+# علامة إحالة الحاشية **بين علامتَي تنصيص** في ط دار الفكر للرحيق المختوم: «أكتادنا
+# «١» ، فقال» — من صنع الناشر لا من المتن، و`strip_marks` تُسقط «» وتُبقي الرقم فيقطع
+# كلَّ مقابلةٍ حرفيّة تمرّ به. تُحذف في الكتب المُعلَّمة بـ`guillefn` وحدها، لئلّا
+# تُمسّ الأرقامُ بين «» فيما لها دلالةٌ في كتبٍ أخرى.
+GUILLE_FOOTNOTE = re.compile(r"«\s*[٠-٩]{1,4}\s*»")
+
 
 def page_text(book_id: str, page: int, with_hamesh: bool = False) -> str:
     html = _fetch("%s/book/%s/%d" % (BASE, book_id, page))
@@ -392,6 +410,8 @@ def page_text(book_id: str, page: int, with_hamesh: bool = False) -> str:
         seg = FOOTNOTE_MARK.sub("", seg)
     if book_id in PARENFN_IDS:
         seg = re.sub(r"\s+", " ", PAREN_FOOTNOTE.sub(" ", seg))
+    if book_id in GUILLEFN_IDS:
+        seg = re.sub(r"\s+", " ", GUILLE_FOOTNOTE.sub(" ", seg))
     return seg
 
 
@@ -485,6 +505,24 @@ def page_ref(book_id: str, page: int):
             return None, int(po.group(1)), chapter
         return None, None, chapter
     return int(jp.group(1)), int(jp.group(2)), chapter
+
+
+JUZ_LABEL = re.compile(r"^\s*ج(\D\S*)\s*-\s*ص\s*\d+\s*-")
+
+
+def juz_label(book_id: str, page: int):
+    """لبنةُ الجزء إن كانت **غير رقميّة** («جراشدون - ص119 - …») وإلّا None.
+
+    ⚠️ ج-٢٥٦: `page_ref` تُسقط اللبنةَ غيرَ الرقميّة وتُرجع «صN» وحدها على أنها
+    مجلَّدٌ واحد (وهو صوابٌ في الوابل الصيب)، لكنّ الشاملة تُسمّي بلبنةٍ كذلك
+    **مجلَّدًا واحدًا من كتابٍ متعدِّد الأجزاء** — كمجلَّد «سيرة الخلفاء الراشدين»
+    من سير أعلام النبلاء ط الرسالة («جراشدون - ص119») — فيلتبس موضعُه بصفحةٍ
+    برقمها نفسِه من مجلَّدٍ آخر. فمَن أحال إلى صفحةٍ من كتابٍ متعدِّد الأجزاء
+    فليَسأل هذه الدالّة، وليُثبت اللبنةَ في الإحالة إن رجعت بشيء.
+    """
+    m = TITLE.search(_fetch("%s/book/%s/%d" % (BASE, book_id, page)))
+    lab = JUZ_LABEL.search(m.group(1) if m else "")
+    return lab.group(1).strip() if lab else None
 
 
 def last_number_before(book_id: str, page: int, back: int = 3):
