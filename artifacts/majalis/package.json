@@ -75,7 +75,7 @@
     "smoke:production-loading": "node scripts/smoke-production-loading.mjs",
     "bootstrap:platform": "node scripts/run-platform-bootstrap.mjs",
     "bootstrap:platform:status": "node scripts/run-platform-bootstrap.mjs status",
-    "build": "pnpm run test:lesson-card-posters && pnpm run generate:counts && pnpm run test:fake-counts && pnpm run test:scholarly-ui-claims && pnpm run test:security-headers && pnpm run generate:seo && pnpm run test:known-routes && pnpm run generate:rulings && pnpm run generate:quran-pages && vite build --config vite.config.ts && node scripts/generate-version.mjs && node scripts/verify-deploy-cache-versioning.mjs && node scripts/prerender.mjs && node scripts/post-build-seo.mjs && node scripts/test-dynamic-404-safety.mjs && node scripts/test-no-homepage-leak.mjs && node scripts/crawl-internal-links.mjs && node scripts/test-dist-unique-titles.mjs && node scripts/test-no-regressions.mjs",
+    "build": "pnpm run test:lesson-card-posters && pnpm run generate:counts && pnpm run test:fake-counts && pnpm run test:scholarly-ui-claims && pnpm run test:security-headers && pnpm run test:lucide-star && pnpm run generate:seo && pnpm run test:known-routes && pnpm run generate:rulings && pnpm run generate:quran-pages && vite build --config vite.config.ts && node scripts/generate-version.mjs && node scripts/verify-deploy-cache-versioning.mjs && node scripts/prerender.mjs && node scripts/post-build-seo.mjs && node scripts/test-dynamic-404-safety.mjs && node scripts/test-no-homepage-leak.mjs && node scripts/crawl-internal-links.mjs && node scripts/test-dist-unique-titles.mjs && node scripts/test-no-regressions.mjs",
     "test:dist-titles": "node scripts/test-dist-unique-titles.mjs",
     "test:consecutive-deploys": "node scripts/test-consecutive-deploys.mjs",
     "build:next": "next build",
@@ -132,7 +132,8 @@
     "mobile:android": "npm run build && npx cap sync && npx cap open android",
     "mobile:ios": "npm run build && npx cap sync && npx cap open ios",
     "audit:theme-contrast": "node scripts/audit-theme-contrast.mjs",
-    "test:ticker-content": "npx tsx src/lib/__tests__/ticker-content.test.ts"
+    "test:ticker-content": "npx tsx src/lib/__tests__/ticker-content.test.ts",
+    "test:lucide-star": "node scripts/test-no-lucide-star-import.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

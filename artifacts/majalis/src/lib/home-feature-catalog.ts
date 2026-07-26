@@ -48,7 +48,7 @@ export const QUICK_LINKS: { href: string; Icon: LucideIcon; label: string; desc:
 /* ── المميزات البارزة (4 بطاقات كبيرة) ── */
 export const FEATURED: { href: string; Icon: LucideIcon; title: string; desc: string; cta: string }[] = [
   { href: "/lessons", Icon: GraduationCap, title: "الدروس العلمية",   desc: "دروس ومحاضرات مجدولة لهذا الأسبوع من علماء الكويت",       cta: "شاهد الدروس" },
-  { href: "/hadith",  Icon: Scroll,        title: "الأحاديث النبوية", desc: "أحاديث موثقة ومسندة مع الشرح والتخريج",                   cta: "تصفح الأحاديث" },
+  { href: "/hadith",  Icon: Scroll,        title: "الأحاديث النبوية", desc: "أحاديث مع الشرح والتخريج عند توفره",                   cta: "تصفح الأحاديث" },
   { href: "/library", Icon: BookOpen,      title: "المكتبة العلمية",  desc: "كتب شرعية ومتون علمية في الفقه والعقيدة والتفسير والحديث", cta: "استعرض الكتب" },
 ];
 

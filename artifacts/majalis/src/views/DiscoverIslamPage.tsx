@@ -1,6 +1,17 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
-import * as LucideIcons from "lucide-react";
+import {
+  BookOpen,
+  FlaskConical,
+  Globe,
+  Heart,
+  HelpCircle,
+  Landmark,
+  Scale,
+  Sparkles,
+  Star,
+  Users,
+} from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { PageHeader } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
@@ -9,8 +20,22 @@ import { LANG_META } from "@/lib/language-preference";
 import { getFeaturedQuestions, getFeaturedShubuhat, getDawahCategories, type DawahQuestion, type DawahShubha, type DawahCategory } from "@/lib/dawah-service";
 import "@/styles/discover-islam.css";
 
+/** قائمة محدودة — يُمنع import * من lucide-react لأنه يسحب المكتبة كاملة (~570KB). */
+const CATEGORY_ICONS: Record<string, LucideIcon> = {
+  Sparkles,
+  BookOpen,
+  Heart,
+  Scale,
+  Globe,
+  HelpCircle,
+  Star,
+  Users,
+  FlaskConical,
+  Landmark,
+};
+
 function CategoryIcon({ name }: { name: string | null }) {
-  const Icon = (name && (LucideIcons as unknown as Record<string, LucideIcon>)[name]) || LucideIcons.Sparkles;
+  const Icon = (name && CATEGORY_ICONS[name]) || Sparkles;
   return <Icon size={22} aria-hidden="true" />;
 }
 
@@ -26,7 +51,7 @@ const VISITOR_PATHS: VisitorPath[] = [
   { id: "believe-questions", label: "أؤمن بالله ولديّ أسئلة", desc: "أسئلة حول النبوة والعبادة والقرآن", href: "/discover-islam/questions?category=prophethood" },
   { id: "atheist", label: "لا أؤمن بوجود الله", desc: "أدلة عقلية على وجود الخالق", href: "/discover-islam/questions?category=god-existence" },
   { id: "other-religion", label: "أنتمي إلى ديانة أخرى", desc: "تصوّر الإسلام لله والنبوة والوحي", href: "/discover-islam/questions?category=prophethood" },
-  { id: "doubts", label: "لديّ شبهات", desc: "ردود موثّقة على أشهر الشبهات", href: "/discover-islam/doubts" },
+  { id: "doubts", label: "لديّ شبهات", desc: "ردود على أشهر الشبهات مع الإشارة إلى مصادرها", href: "/discover-islam/doubts" },
   { id: "considering", label: "أفكّر في الدخول", desc: "خطوات عملية وواضحة", href: "/discover-islam/how-to-convert" },
   { id: "new-muslim", label: "دخلت الإسلام حديثًا", desc: "مسار الثلاثين يومًا الأول", href: "/discover-islam/new-muslim" },
   { id: "contact", label: "أريد التحدث مع مختص", desc: "تواصل سري مع داعية أو داعية", href: "/discover-islam/contact" },

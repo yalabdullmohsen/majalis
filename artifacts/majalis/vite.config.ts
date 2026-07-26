@@ -79,12 +79,20 @@ export default defineConfig({
           if (id.includes("@supabase")) return "supabase";
           if (id.includes("html2canvas") || id.includes("html-to-image")) return "html2canvas";
           if (id.includes("date-fns")) return "date-fns";
-          if (id.includes("lucide-react")) return "icons";
+          // lucide-react يحتوي كلمة "react" — استثناؤه صراحةً حتى لا يدخل
+          // حزمة vendor ولا حزمة icons عملاقة. التقسيم التلقائي يبقي أيقونات
+          // الصفحات الكسولة داخل حزمها.
+          if (id.includes("lucide-react") || id.includes("lucide-react/")) return;
           if (id.includes("@radix-ui")) return "radix";
           if (id.includes("recharts") || id.includes("d3-") || id.includes("victory")) return "charts";
           if (id.includes("adhan")) return "adhan";
           if (id.includes("@tanstack")) return "query";
-          if (id.includes("react") || id.includes("wouter") || id.includes("scheduler")) return "vendor";
+          // مطابقة دقيقة لـ react/react-dom/scheduler/wouter فقط (لا lucide-react)
+          if (
+            /node_modules[/\\](react|react-dom|scheduler|wouter)([/\\]|$)/.test(id)
+          ) {
+            return "vendor";
+          }
           if (id.includes("zod") || id.includes("react-hook-form") || id.includes("@hookform")) return "forms";
           if (id.includes("framer-motion") || id.includes("motion")) return "animation";
           if (id.includes("cmdk") || id.includes("vaul") || id.includes("sonner")) return "ui-extra";

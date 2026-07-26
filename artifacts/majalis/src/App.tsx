@@ -12,7 +12,6 @@ import { BottomNavBar } from "@/components/BottomNavBar";
 import { TopSectionBar } from "@/components/TopSectionBar";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { GlobalBackButton } from "@/components/GlobalBackButton";
-import { AchievementToast } from "@/components/AchievementToast";
 import { useAchievementCheck } from "@/hooks/useAchievementCheck";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { usePageSeo } from "@/lib/seo";
@@ -32,6 +31,10 @@ import { setPrayerTimesCache } from "@/lib/lesson-time";
 const lazy = lazyWithRetry;
 /** 404 كسول — لا يُضمَّن في الحزمة الرئيسية */
 const NotFound = lazy(() => import("@/views/not-found"));
+/** توست الإنجازات نادر الظهور — أيقوناته لا يجب أن تُثقِل الحزمة الرئيسية */
+const AchievementToast = lazy(() =>
+  import("@/components/AchievementToast").then((m) => ({ default: m.AchievementToast })),
+);
 
 /**
  * تحميل كسول للمساعد الذكي العائم — مكوّن ثانوي (تفاعلي عند الطلب فقط)
@@ -821,7 +824,9 @@ function AppShell() {
         <GlobalBackButton />
         <BottomNavBar />
         {newBadges.length > 0 && (
-          <AchievementToast badges={newBadges} onDismiss={dismissBadges} />
+          <Suspense fallback={null}>
+            <AchievementToast badges={newBadges} onDismiss={dismissBadges} />
+          </Suspense>
         )}
         {searchOpen && (
           <Suspense fallback={null}>
