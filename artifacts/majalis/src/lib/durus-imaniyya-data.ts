@@ -1,6 +1,6 @@
 /** `summary`: سطر تعريفي موجز بمضمون الدرس — وصفي لا إفتائي. اختياري: الفهارس
  *  التي لم تُستكمل ملخصاتها بعد تظل تعمل كما هي بلا كسر. */
-export type DarsItem = { id: string; title: string; summary?: string };
+export type DarsItem = { id: string; title: string; summary?: string; body?: string };
 export type DarsSection = {
   id: string;
   num: string;
