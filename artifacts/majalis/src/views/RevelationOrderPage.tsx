@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { BookOpen, Info } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { fetchSurahIndexLocal, fetchRevelationTypes, type SurahIndexEntry } from "@/lib/surah-index";
+import "@/styles/pages/revelation-order.css";
 
 type RevelationFilter = "all" | "meccan" | "medinan";
 

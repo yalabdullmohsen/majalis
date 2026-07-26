@@ -14,6 +14,7 @@ import { useAyahPlayer } from "@/hooks/useAyahPlayer";
 import { usePageSwipe } from "@/hooks/usePageSwipe";
 import { toArabicDigits } from "@/lib/utils";
 import "@/styles/quran.css";
+import "@/styles/pages/mushaf-reader.css";
 
 /**
  * قارئ المصحف — إعادة بناء المرحلة 8 (2026-07-18): ترقيم مدينة 604 صفحة

@@ -17,81 +17,57 @@
 | مسائل فقهية | 642 |
 | أسئلة علمية | 459 |
 | أسئلة اللعبة | 1227 |
-| تطابقات عبارات مطلقة (مسح آلي للبذور) | 817 |
 
 ## ما أُصلح (ملخص تنفيذي)
 
-1. **SSOT للأرقام** + noscript متزامن + حارس `test:fake-counts`
-2. **تسربات مطوّر** + حارس `test:content-leaks`
-3. **ادّعاءات توثيق تسويقية** مخفَّفة + حارس `test:scholarly-ui-claims`
-4. **SEO/prerender:** عناوين صحيحة؛ لا استبدال prerender بـslug إنجليزي؛ `/fatwa/:id` → `/rulings/:id`
-5. **تنقل:** 12 قسم أولوية + 6 تبويبات سفلية + فصل اللعبة عن الأسئلة العلمية
-6. **أمان:** `upgrade-insecure-requests` في CSP + حارس رؤوس
-7. **أداء — quiz:** إخراج `quiz-seed` إلى `public/data/quiz-questions.json` (لا `quiz-seed-*.js`)
-8. **أداء — icons:** إزالة `import *` من lucide في DiscoverIslam؛ إلغاء حزمة `icons` العملاقة (~570KB)؛ استثناء lucide من قاعدة vendor الخاطئة؛ تحميل كسول لـ AchievementToast
-9. **HTTP 404 حقيقي:** `middleware.js` + `known-routes.json` (Vercel Edge)
-10. **زحف dist:** 0 روابط HTML مكسورة
-11. **حراس جديدة:** `test:known-routes`، `test:lucide-star`
-12. **Lighthouse حقيقي** على 5 صفحات — انظر الجدول
+1. SSOT للأرقام + حراس التسرّب/الادّعاءات/الأمان/الهوية
+2. SEO/prerender + تحويل `/fatwa` → `/rulings` + تنقل 12+6
+3. **أداء JS:** إخراج quiz-seed؛ إزالة حزمة icons (~570KB) ومنع `import *` من lucide
+4. **أداء CSS (هذه الجولة):** تخفيف المسار الحرج من **~768KB → ~722KB**
+   - نقل CSS صفحات (qibla / surah-index / revelation-order / mushaf-reader) من `elite-2026` إلى `styles/pages/*` مع الاستيراد الكسول
+   - نقل `highlighted-content.css` خارج `main.tsx` إلى مكوّنات القراءة
+   - حذف قوالب التعزية الميتة من `index.css` (~70KB خام)
+   - تقليم `geo-*` غير المستخدمة من `patterns.css`
+   - نقل وضع تركيز الأذكار من `modern-2026` إلى `pages/adhkar.css`
+5. HTTP 404 Edge عبر `middleware.js`
+6. حراس: `test:known-routes`، `test:lucide-star`، `test:critical-css`
 
-## أحجام الحزم (مسار التحميل الأولي تقريبًا)
+## أحجام المسار الحرج
 
-| قبل إصلاح icons | بعد |
-|---|---|
-| index ~952KB + icons ~570KB + vendor ~252KB ≈ **1.77MB** | index ~977KB + vendor ~191KB ≈ **1.17MB** |
+| | قبل التدقيق | بعد JS/icons | بعد CSS |
+|---|---|---|---|
+| JS أولي تقريبي | ~1.77MB | ~1.17MB | ~1.17MB |
+| CSS `index-*.css` | ~768KB | ~768KB | **~722KB** (gzip ~126KB) |
 
-وفّرنا نحو **600KB** من JS على المسار الحرج (إزالة أيقونات غير مستخدمة + منع دمج lucide في vendor/icons).
+## Lighthouse (mobile، محلي)
 
-## نتائج الاختبارات
-
-| اختبار | النتيجة |
-|---|---|
-| build كامل | نجاح |
-| fake-counts / scholarly-ui-claims / security-headers / known-routes / lucide-star | نجاح |
-| homepage-leak + dynamic-404-safety | نجاح |
-| crawl-internal-links | 0 مكسور |
-| test-dist-unique-titles | نجاح |
-| lighthouse:critical | نُفِّذ — Perf دون 90 |
-
-## Lighthouse (محلي، mobile، معاينة dist)
-
-المصدر: `reports/lighthouse-critical.json`
-
-| الصفحة | Performance | Accessibility | Best Practices | SEO |
+| الصفحة | Perf | A11y | BP | SEO |
 |---|---:|---:|---:|---:|
 | `/` | 55 | 100 | 100 | 100 |
-| `/quran-hub/` | 65 | 96 | 96 | 100 |
-| `/library/book-bukhari/` | 64 | 98 | 96 | 100 |
-| `/qa/` | 62 | 100 | 96 | 100 |
-| `/adhkar/` | 68 | 97 | 96 | 100 |
-| **الهدف** | **90** | **95** | **95** | **95** |
+| `/quran-hub/` | 69 | 96 | 96 | 100 |
+| `/library/book-bukhari/` | 65 | 98 | 96 | 100 |
+| `/qa/` | 61 | 100 | 96 | 100 |
+| `/adhkar/` | 67 | 97 | 96 | 100 |
 
-الأداء ما زال دون 90؛ العائق الأبرز المتبقي: CSS الرئيسي ~768KB وحجم JS المتبقي في index. a11y/BP/SEO عند الهدف أو فوقه.
+Perf دون هدف 90. العوائق المتبقية: JS الرئيسي ~978KB + طبقات CSS المتبقية (`elite`/`index`/`design-system`).
 
-## يحتاج مراجعًا شرعيًا بشريًا
-
-- 174 كتابًا كلها `pending_review`
-- 817 تطابقًا لعبارات مطلقة في البذور — ليست كلها أخطاء
-- موسوعة المسائل والـQA — انظر `scholarly-review-queue.md`
-
-## مخاطر متبقية (صريحة)
-
-1. Lighthouse Performance 55–68 — دون هدف 90
-2. CSS المجمّع ~768KB — لم يُقسَّم بعد
-3. 404 الحقيقي يعتمد على Vercel Edge Middleware
-4. تدقيق لغوي/شرعي بشري لكل السجلات لم يكتمل
-
-## التقييم القابل للقياس
+## التقييم
 
 | المحور | الدرجة |
 |---|---|
-| بيانات/أرقام/هوية | 9/10 |
-| SEO/prerender/عناوين | 8.5/10 |
-| تنقل/فصل سؤال وجواب | 8.5/10 |
-| أمان + 404 Edge | 8.5/10 |
-| أداء الحزمة / Lighthouse Perf | 6.5/10 |
+| بيانات/هوية | 9/10 |
+| SEO/prerender | 8.5/10 |
+| تنقل | 8.5/10 |
+| أمان + 404 | 8.5/10 |
+| أداء | 6.7/10 |
 | تدقيق شرعي بشري | 4/10 |
-| a11y (عيّنة LH) | 9/10 |
-| **الإجمالي المرحلي** | **~7.8/10** |
+| a11y | 9/10 |
+| **الإجمالي** | **~7.9/10** |
 
-**ليس 10/10.** جاهز لمراجعة بشرية ودمج عبر workflow النشر اليدوي فقط بعد قبول المالك.
+**ليس 10/10.** الدمج عبر workflow النشر اليدوي فقط بعد قبول المالك.
+
+## متبقٍ لاحقًا
+
+- مزيد من استخراج جزر `design-system` / بقايا `elite` عالية الحجم
+- مراجعة شرعية بشرية للكتب والعبارات المطلقة
+- التحقق من 404 على Vercel preview

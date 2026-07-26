@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useTasbeehCounter } from "@/hooks/useTasbeehCounter";
 import { TASBEEH_PRESETS, type TasbeehWird } from "@/lib/tasbeeh-storage";
+import "@/styles/highlighted-content.css";
 
 // ─── SVG Progress Ring ─────────────────────────────────────────────────────
 

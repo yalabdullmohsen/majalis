@@ -10,6 +10,7 @@ import {
   toggleFavoriteSurah,
   type SurahIndexEntry,
 } from "@/lib/surah-index";
+import "@/styles/pages/surah-index.css";
 
 type RevelationFilter = "all" | "meccan" | "medinan" | "favorites";
 /** ترتيب العرض: "mushaf" هو الافتراضي الدائم (رقم السورة في المصحف —

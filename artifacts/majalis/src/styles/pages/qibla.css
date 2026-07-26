@@ -4,3 +4,86 @@
 
 .qibla-aligned    { color: #16A34A; }
 
+/* ── نُقل من elite-2026.css (تخفيف المسار الحرج) ── */
+/* ══════════════════════════════════════════════
+   QiblaPage — وصلة القبلة التفاعلية
+   ══════════════════════════════════════════════ */
+.qibla-page { background: var(--elite-white, #FAFAF8) !important; }
+.qibla-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ds-space-5);
+  padding: 0.5rem 1rem 2rem;
+  --qibla-bg: #F0F7F4;
+}
+.qibla-svg {
+  width: min(280px, 90vw);
+  height: min(280px, 90vw);
+  filter: drop-shadow(0 4px 16px rgba(22,163,74,0.15));
+}
+.qibla-aligned-badge {
+  background: var(--elite-forest, #143F35) !important;
+  color: var(--elite-white, #FAFAF8) !important;
+  border-radius: var(--ds-radius-full);
+  padding: 0.45rem 1.25rem;
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: normal;
+  animation: qibla-pop 0.4s cubic-bezier(0.22,1,0.36,1);
+}
+@keyframes qibla-pop {
+  from { transform: scale(0.6); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+.qibla-info-row {
+  display: flex;
+  gap: var(--ds-space-3);
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.qibla-info-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  background: #fff;
+  border: 1px solid rgba(22,163,74,0.15);
+  border-radius: var(--ds-radius-lg);
+  padding: 0.6rem 1.1rem;
+  min-width: 90px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+.qibla-info-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--txt-muted, #5C5C56);
+  text-align: center;
+}
+.qibla-info-value {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--elite-forest, #143F35);
+}
+.qibla-permit-btn {
+  background: var(--elite-forest, #143F35) !important;
+  color: #fff !important;
+  border: none;
+  border-radius: 0.6rem;
+  padding: 0.55rem 1.25rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+.qibla-hint {
+  font-size: 0.8rem;
+  color: var(--txt-muted, #5C5C56);
+  text-align: center;
+  max-width: 260px;
+}
+.qibla-loading, .qibla-error {
+  font-size: 0.9rem;
+  color: var(--txt-muted, #5C5C56);
+  text-align: center;
+  padding: 2rem 1rem;
+}
