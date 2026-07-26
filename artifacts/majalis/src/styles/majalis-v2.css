@@ -1033,7 +1033,8 @@
   border-top: none !important;
   color: var(--mj-ivory-50, #F4F3EE) !important;
 }
-.site-footer-brand strong {
+.site-footer-brand strong,
+.site-footer-brand-name {
   color: #FFFFFF !important;
   font-family: var(--mj-font-display) !important;
 }

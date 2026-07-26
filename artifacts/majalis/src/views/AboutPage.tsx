@@ -11,8 +11,8 @@ export default function AboutPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/about",
-      title: "من نحن | المجلس العلمي",
-      description: "المجلس العلمي — منصة علمية عربية للدروس الشرعية والقرآن والأذكار والفقه والمكتبة، بمنهج أهل السنة مع أمانة علمية ووسم صريح لما يحتاج مراجعة.",
+      title: "عن التطبيق | المجلس العلمي",
+      description: "عن تطبيق المجلس العلمي: منصة علمية عربية للدروس الشرعية والقرآن والأذكار والفقه والمكتبة، بأمانة علمية ووسم صريح لما يحتاج مراجعة.",
       keywords: ["المجلس العلمي", "منصة إسلامية", "منصة شرعية", "الإسلام الرقمي"],
       jsonLd: [
         {
@@ -32,7 +32,7 @@ export default function AboutPage() {
   }, []);
 
   return (
-    <LegalPageLayout eyebrow="تعرف علينا" title="من نحن">
+    <LegalPageLayout eyebrow="عن التطبيق" title="عن التطبيق">
 
       <LegalSection title="المجلس العلمي">
         <p>
@@ -174,7 +174,7 @@ export default function AboutPage() {
       </LegalSection>
 
       <div className="twh-share">
-        <ShareButtons title="من نحن — المجلس العلمي" url="https://majlisilm.com/about" />
+        <ShareButtons title="عن التطبيق — المجلس العلمي" url="https://majlisilm.com/about" />
       </div>
       <SectionQuiz topic="عن المنصة" />
       <LegalBackLink />

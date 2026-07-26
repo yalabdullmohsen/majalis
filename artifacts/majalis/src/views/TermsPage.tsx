@@ -3,16 +3,22 @@ import { Link } from "wouter";
 import { LegalBackLink, LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
-import { CONTACT_EMAIL } from "@/lib/site-config";
+import { CONTACT_EMAIL, SITE_NAME, SITE_URL, absoluteUrl } from "@/lib/site-config";
 
 export default function TermsPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/terms",
-      title: "شروط الاستخدام | المجلس العلمي",
-      description: "شروط وأحكام استخدام منصة المجلس العلمي، اقرأها قبل استخدام الخدمات.",
-      keywords: ["شروط الاستخدام", "المجلس العلمي", "الاستخدام المقبول"],
-      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "شروط الاستخدام", url: "https://www.majlisilm.com/terms", about: { "@type": "Organization", name: "المجلس العلمي" } }],
+      title: `شروط الاستخدام | ${SITE_NAME}`,
+      description: `شروط وأحكام استخدام منصة ${SITE_NAME}، اقرأها قبل استخدام الخدمات.`,
+      keywords: ["شروط الاستخدام", SITE_NAME, "الاستخدام المقبول"],
+      jsonLd: [{
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        name: "شروط الاستخدام",
+        url: absoluteUrl("/terms"),
+        about: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
+      }],
     });
   }, []);
 
@@ -114,7 +120,7 @@ export default function TermsPage() {
       </LegalSection>
 
       <div className="twh-share">
-        <ShareButtons title="شروط الاستخدام — المجلس العلمي" url="https://www.majlisilm.com/terms" />
+        <ShareButtons title={`شروط الاستخدام — ${SITE_NAME}`} url={absoluteUrl("/terms")} />
       </div>
       <LegalBackLink />
     </LegalPageLayout>

@@ -3,15 +3,22 @@ import { Link } from "wouter";
 import { LegalBackLink, LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
 import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
+import { SITE_NAME, SITE_URL, absoluteUrl } from "@/lib/site-config";
 
 export default function PrivacyPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/privacy",
-      title: "سياسة الخصوصية | المجلس العلمي",
-      description: "سياسة خصوصية المجلس العلمي، كيف نجمع بياناتك ونحميها ونستخدمها.",
-      keywords: ["خصوصية", "سياسة خصوصية", "المجلس العلمي", "حماية البيانات"],
-      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "سياسة الخصوصية", url: "https://www.majlisilm.com/privacy", about: { "@type": "Organization", name: "المجلس العلمي" } }],
+      title: `سياسة الخصوصية | ${SITE_NAME}`,
+      description: `سياسة خصوصية ${SITE_NAME}: ما نجمعه وكيف نحميه ونستخدمه، وما لا نجمعه.`,
+      keywords: ["خصوصية", "سياسة خصوصية", SITE_NAME, "حماية البيانات"],
+      jsonLd: [{
+        "@context": "https://schema.org",
+        "@type": "WebPage",
+        name: "سياسة الخصوصية",
+        url: absoluteUrl("/privacy"),
+        about: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
+      }],
     });
   }, []);
 
@@ -77,7 +84,7 @@ export default function PrivacyPage() {
           </li>
           <li>
             <strong>لا يُسجَّل صوتك في ملف، ولا يُرفَع أو يُخزَّن على
-            خوادم مجالس مطلقًا</strong> — تجري المقارنة بين النص المتعرَّف
+            خوادم {SITE_NAME} مطلقًا</strong> — تجري المقارنة بين النص المتعرَّف
             عليه ونص الآية بالكامل على جهازك، ولا يُرسَل أي جزء منها إلى
             خوادمنا.
           </li>
@@ -153,7 +160,7 @@ export default function PrivacyPage() {
 
       <LegalSection title="التخزين والأمان">
         <p>
-          تُخزَّن البيانات عبر مزودي خدمة موثوقين مع تطبيق ضوابط أمنية صارمة تشمل:
+          تُخزَّن البيانات عبر مزودي خدمة متعاقد معهم مع تطبيق ضوابط أمنية تشمل:
         </p>
         <ul>
           <li>تشفير البيانات أثناء النقل باستخدام بروتوكول HTTPS.</li>
@@ -196,7 +203,7 @@ export default function PrivacyPage() {
       </LegalSection>
 
       <div className="twh-share">
-        <ShareButtons title="سياسة الخصوصية — المجلس العلمي" url="https://www.majlisilm.com/privacy" />
+        <ShareButtons title={`سياسة الخصوصية — ${SITE_NAME}`} url={absoluteUrl("/privacy")} />
       </div>
       <LegalBackLink />
     </LegalPageLayout>

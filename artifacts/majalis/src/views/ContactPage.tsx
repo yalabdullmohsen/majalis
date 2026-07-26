@@ -5,7 +5,7 @@ import { LegalBackLink, LegalPageLayout, LegalSection } from "@/components/Legal
 import { ShareButtons } from "@/components/ContentActions";
 import { InstagramAcademyLink } from "@/components/InstagramAcademyLink";
 import { applyPageSeo } from "@/lib/seo";
-import { CONTACT_EMAIL, mailtoWithSubject } from "@/lib/site-config";
+import { CONTACT_EMAIL, SITE_NAME, SITE_URL, absoluteUrl, mailtoWithSubject } from "@/lib/site-config";
 
 const FAQ = [
   {
@@ -26,7 +26,7 @@ const FAQ = [
   },
   {
     q: "هل تقبلون تمويلاً أو شراكات؟",
-    a: "نرحب بالشراكات مع مؤسسات علمية وهيئات شرعية موثوقة. تواصل معنا بتفاصيل الشراكة المقترحة وسنردّ في أقرب وقت.",
+    a: "نرحب بالشراكات مع مؤسسات علمية وهيئات شرعية معتبرة. تواصل معنا بتفاصيل الشراكة المقترحة وسنردّ في أقرب وقت.",
   },
 ];
 
@@ -42,10 +42,16 @@ export default function ContactPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/contact",
-      title: "تواصل معنا | المجلس العلمي",
-      description: "تواصل مع فريق المجلس العلمي، تقرير خطأ، اقتراح محتوى، شراكات مؤسسية، أو طلبات تقنية.",
-      keywords: ["تواصل", "المجلس العلمي", "الدعم", "اقتراح محتوى", "إبلاغ عن خطأ"],
-      jsonLd: [{ "@context": "https://schema.org", "@type": "ContactPage", name: "تواصل مع المجلس العلمي", url: "https://www.majlisilm.com/contact", about: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" } }],
+      title: `تواصل معنا | ${SITE_NAME}`,
+      description: `تواصل مع فريق ${SITE_NAME}: إبلاغ عن خطأ، اقتراح محتوى، شراكات، أو طلبات تقنية.`,
+      keywords: ["تواصل", SITE_NAME, "الدعم", "اقتراح محتوى", "إبلاغ عن خطأ"],
+      jsonLd: [{
+        "@context": "https://schema.org",
+        "@type": "ContactPage",
+        name: `تواصل مع ${SITE_NAME}`,
+        url: absoluteUrl("/contact"),
+        about: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
+      }],
     });
   }, []);
 
@@ -131,7 +137,7 @@ export default function ContactPage() {
       </LegalSection>
 
       <div className="twh-share">
-        <ShareButtons title="تواصل مع المجلس العلمي" url="https://www.majlisilm.com/contact" />
+        <ShareButtons title={`تواصل مع ${SITE_NAME}`} url={absoluteUrl("/contact")} />
       </div>
       <LegalBackLink />
     </LegalPageLayout>

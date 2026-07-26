@@ -79,7 +79,7 @@ export const FEATURE_REGISTRY: FeatureEntry[] = [
   { id: "learning-plan",label: "خطة التعلم",       path: "/learning-plan",group: "تعلم",          status: "active",       inSideNav: true,  inBottomNav: false },
 
   // ── التطبيق والقانونية ────────────────────────────────────────
-  { id: "about",        label: "من نحن",             path: "/about",        group: "تطبيق",         status: "active",       inSideNav: true,  inBottomNav: false },
+  { id: "about",        label: "عن التطبيق",         path: "/about",        group: "تطبيق",         status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "contact",      label: "تواصل معنا",          path: "/contact",      group: "تطبيق",         status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "privacy",      label: "سياسة الخصوصية",     path: "/privacy",      group: "تطبيق",         status: "active",       inSideNav: false, inBottomNav: false },
   { id: "terms",        label: "شروط الاستخدام",      path: "/terms",        group: "تطبيق",         status: "active",       inSideNav: false, inBottomNav: false },

@@ -34,7 +34,7 @@ export function HomeAboutSection() {
             <polygon points="10,4 12.5,8.5 17.5,8.5 13.5,12 15,17 10,14 5,17 6.5,12 2.5,8.5 7.5,8.5" fill="#143F35" opacity="0.5"/>
           </svg>
           <div>
-            <p className="home-about__eyebrow home-eyebrow">من نحن</p>
+            <p className="home-about__eyebrow home-eyebrow">عن التطبيق</p>
             <h2 id="about-home-heading" className="home-about__title">عن المجلس العلمي</h2>
           </div>
         </div>

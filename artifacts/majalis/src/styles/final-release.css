@@ -900,6 +900,23 @@ html[data-theme="dark"] .bottom-nav--v2 {
   font-size: 0.875rem;
 }
 
+.site-footer-brand-name {
+  display: block;
+  margin: 0 0 0.45rem;
+  font-family: var(--font-display, "IBM Plex Sans Arabic", sans-serif);
+  font-size: clamp(1.15rem, 2.4vw, 1.35rem);
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: normal;
+}
+.site-footer-copy__host {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+.site-footer-copy__host:hover {
+  color: #fff;
+}
 .site-footer-logo--calligraphy {
   display: block;
   width: min(100%, 9.5rem);
