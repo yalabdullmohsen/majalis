@@ -16,8 +16,8 @@ export default function SurahStoriesPage() {
     applyPageSeo({
       path: "/surah-stories",
       title: "قصص سور القرآن | المجلس العلمي",
-      description: "قصص وأسباب نزول سور القرآن الكريم، تعرّف على مناسبات النزول والقصص المرتبطة بكل سورة.",
-      keywords: ["قصص القرآن", "أسباب النزول", "سور القرآن", "قصص إسلامية", "تفسير قرآني"],
+      description: "سبب التسمية ومحاور السور وقصصها من القرآن والسنة الصحيحة — بلا إسرائيليات ولا روايات ضعيفة في الفضائل.",
+      keywords: ["قصص القرآن", "سور القرآن", "تفسير", "سبب التسمية"],
       jsonLd: [
         {
           "@context": "https://schema.org",
@@ -44,6 +44,11 @@ export default function SurahStoriesPage() {
         title="قصص القرآن"
         subtitle="سبب التسمية، زمان ومكان النزول، المحاور، والقصص القرآنية الموثقة: ١١٤ سورة."
       />
+
+      <aside className="ui-card quran-method-note" role="note" aria-label="تنبيه منهجي" style={{ maxWidth: 720, margin: "0 auto 1.25rem", padding: "0.9rem 1.1rem", lineHeight: 1.7 }}>
+        <strong>منهج القسم:</strong> نقتصر على ما ثبت في القرآن والسنة الصحيحة في القصص والفضائل.
+        لا نسرد إسرائيليات ولا نعيّن أسماء/أعدادًا لم يرد بها نص، وأسباب النزول تُذكر عند ثبوتها لا بالتشهي.
+      </aside>
 
       <nav className="quran-subnav" aria-label="أقسام القرآن">
         <Link href="/quran-hub" className="quran-subnav__link">مركز القرآن</Link>
