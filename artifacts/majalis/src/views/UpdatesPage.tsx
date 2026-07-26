@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
-import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
+import { PageHeader, SkeletonCardGrid, Empty, ErrorState } from "@/components/ui-common";
 import { getMergedPlatformUpdates } from "@/lib/auto-content-service";
 import { UPDATE_TYPES } from "@/lib/platform-types";
 import { usePageView } from "@/hooks/usePageView";
@@ -33,6 +33,8 @@ function formatDate(iso?: string) {
 export default function UpdatesPage() {
   const [items, setItems] = useState<MergedUpdateItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
+  const [retryTick, setRetryTick] = useState(0);
   const [filter, setFilter] = useState("الكل");
   const [search, setSearch] = useState("");
 
@@ -59,10 +61,15 @@ export default function UpdatesPage() {
 
   useEffect(() => {
     setLoading(true);
+    setLoadError(false);
     getMergedPlatformUpdates(100)
       .then(({ data }) => setItems(data))
+      .catch(() => {
+        setItems([]);
+        setLoadError(true);
+      })
       .finally(() => setLoading(false));
-  }, []);
+  }, [retryTick]);
 
   const filtered = useMemo(() => {
     let list = filter === "الكل" ? items : items.filter((i) => i.update_type === filter);
@@ -108,6 +115,8 @@ export default function UpdatesPage() {
 
       {loading ? (
         <SkeletonCardGrid />
+      ) : loadError ? (
+        <ErrorState text="تعذّر تحميل المستجدات. يرجى المحاولة مرة أخرى." onRetry={() => setRetryTick((n) => n + 1)} />
       ) : filtered.length === 0 ? (
         <Empty text="لا توجد مستجدات." />
       ) : (

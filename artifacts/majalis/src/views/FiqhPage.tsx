@@ -8,7 +8,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { getRulingsEncyclopedia } from "@/lib/rulings-service";
 import { RULINGS_CATEGORY_TREE } from "@/lib/rulings-categories";
-import { SkeletonCardGrid, Empty } from "@/components/ui-common";
+import { SkeletonCardGrid, Empty, ErrorState } from "@/components/ui-common";
 import { getQaQuestions } from "@/lib/supabase";
 import { SEED_QA, QA_CATEGORIES } from "@/lib/qa-seed";
 import { RequestManager } from "@/lib/request-manager";
@@ -90,6 +90,8 @@ export default function FiqhPage() {
   const [qaItems, setQaItems]     = useState<any[]>([]);
   const [loadingR, setLoadingR]   = useState(false);
   const [loadingQ, setLoadingQ]   = useState(false);
+  const [rulingsError, setRulingsError] = useState<string | null>(null);
+  const [rulingsRetry, setRulingsRetry] = useState(0);
 
   usePageView("fiqh", null);
 
@@ -116,12 +118,42 @@ export default function FiqhPage() {
   }, []);
 
   useEffect(() => {
-    if (activeTab === "rulings" && rulings.length === 0) {
-      setLoadingR(true);
-      getRulingsEncyclopedia({ page: 1, limit: 12, category: "الكل" })
-        .then(({ data }) => setRulings(data))
-        .finally(() => setLoadingR(false));
-    }
+    if (activeTab !== "rulings") return;
+    if (rulings.length > 0 && !rulingsError && rulingsRetry === 0) return;
+
+    let cancelled = false;
+    setLoadingR(true);
+    setRulingsError(null);
+    RequestManager.run(
+      "fiqh:rulings-preview",
+      () => getRulingsEncyclopedia({ page: 1, limit: 12, category: "الكل" }),
+      { timeoutMs: 15_000 },
+    )
+      .then((result) => {
+        if (cancelled) return;
+        if (result.dbError && result.dbError !== "empty" && !result.needsSeed) {
+          setRulings([]);
+          setRulingsError(result.dbError);
+          return;
+        }
+        setRulings(result.data);
+        setRulingsError(null);
+      })
+      .catch((err) => {
+        if (cancelled) return;
+        setRulings([]);
+        setRulingsError(String((err as Error)?.message || err));
+      })
+      .finally(() => {
+        if (!cancelled) setLoadingR(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [activeTab, rulingsRetry]);
+
+  useEffect(() => {
     if (activeTab === "qa" && qaItems.length === 0) {
       setLoadingQ(true);
       RequestManager.run("fiqh:qa-preview", () =>
@@ -219,6 +251,14 @@ export default function FiqhPage() {
 
             {loadingR ? (
               <SkeletonCardGrid count={6} />
+            ) : rulingsError ? (
+              <ErrorState
+                text="تعذّر تحميل الأحكام الشرعية حاليًا. يرجى المحاولة مرة أخرى."
+                onRetry={() => {
+                  setRulings([]);
+                  setRulingsRetry((n) => n + 1);
+                }}
+              />
             ) : rulings.length === 0 ? (
               <Empty text="لا توجد أحكام بعد" />
             ) : (
