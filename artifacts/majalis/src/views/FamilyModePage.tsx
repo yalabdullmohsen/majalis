@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Award, Baby, BookOpen, Bookmark, CheckCircle2, Lock, PartyPopper, User, Users } from "lucide-react";
 import { Link } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
-import { PageHeader } from "@/components/ui-common";
+import { PageHeader, PageStatusShell } from "@/components/ui-common";
 import { supabase } from "@/lib/supabase";
 import { applyPageSeo } from "@/lib/seo";
 
@@ -321,23 +321,23 @@ export default function FamilyModePage() {
 
   if (authLoading) {
     return (
-      <div className="page-shell narrow" dir="rtl">
-        <div className="profile-loading">
+      <PageStatusShell title="الوضع العائلي">
+        <div className="profile-loading" aria-busy="true">
           <span className="profile-loading__dot" /><span className="profile-loading__dot" /><span className="profile-loading__dot" />
         </div>
-      </div>
+      </PageStatusShell>
     );
   }
 
   if (!isLoggedIn) {
     return (
-      <div className="page-shell narrow fm-login-prompt" dir="rtl">
+      <PageStatusShell title="الوضع العائلي" className="page-shell narrow fm-login-prompt">
         <div className="fm-login-icon" aria-hidden="true"><Lock size={40} strokeWidth={1.3} /></div>
         <p className="fm-login-msg">
           سجّل الدخول للوصول إلى الوضع العائلي.
         </p>
         <Link href="/login?next=/family" className="ui-card-btn">تسجيل الدخول</Link>
-      </div>
+      </PageStatusShell>
     );
   }
 

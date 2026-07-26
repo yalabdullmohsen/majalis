@@ -57,9 +57,10 @@ export function SkeletonTable({ rows = 5, cols = 4 }: { rows?: number; cols?: nu
 }
 
 /** حالة تحميل صفحة تفصيلية — مقال أو محتوى مفرد */
-export function SkeletonPage() {
+export function SkeletonPage({ title }: { title?: string } = {}) {
   return (
     <div role="status" aria-live="polite">
+      {title ? <h1 className="page-status-shell__title">{title}</h1> : null}
       <span className="sr-only">جارٍ التحميل…</span>
       <div className="sk-page sk-page--article" aria-hidden="true">
         <div className="ds-skeleton sk-page__meta" />
@@ -120,11 +121,30 @@ export function Card({ children, className = "" }: { children: React.ReactNode; 
   return <div className={`ui-card ds-card ${className}`.trim()}>{children}</div>;
 }
 
-export function Loading({ label = "جارٍ التحميل…" }: { label?: string } = {}) {
+export function Loading({ label = "جارٍ التحميل…", title }: { label?: string; title?: string } = {}) {
   return (
     <div className="ds-empty ds-loading-wrap" role="status" aria-live="polite" aria-label={label}>
+      {title ? <h1 className="page-status-shell__title">{title}</h1> : null}
       <IslamicLoaderInline />
       <p className="ds-loading-label">{label}</p>
+    </div>
+  );
+}
+
+/** هيكل صفحة مبكر (تحميل / يطلب تسجيل دخول) مع h1 دلالي ثابت */
+export function PageStatusShell({
+  title,
+  children,
+  className = "page-shell narrow",
+}: {
+  title: string;
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <div className={className} dir="rtl">
+      <h1 className="page-status-shell__title">{title}</h1>
+      {children}
     </div>
   );
 }

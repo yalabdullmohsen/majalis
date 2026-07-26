@@ -137,7 +137,8 @@ export default function CarModePage() {
   if (loading) {
     return (
       <div className="car-mode car-mode--loading" dir="rtl">
-        <div className="profile-loading">
+        <h1 className="page-status-shell__title">وضع السيارة</h1>
+        <div className="profile-loading" aria-busy="true">
           <span className="profile-loading__dot" />
           <span className="profile-loading__dot" />
           <span className="profile-loading__dot" />
@@ -149,6 +150,7 @@ export default function CarModePage() {
   if (lessons.length === 0) {
     return (
       <div className="car-mode" dir="rtl">
+        <h1 className="page-status-shell__title">وضع السيارة</h1>
         <div className="car-mode__empty">
           <p>لا تتوفر دروس صوتية حالياً.</p>
           <Link href="/" className="car-mode__back-btn">العودة للرئيسية</Link>

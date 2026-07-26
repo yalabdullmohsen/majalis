@@ -82,7 +82,7 @@ export default function FiqhCouncilTopicIndexPage() {
                     <ul className="fiqh-topic-list">
                       {sec.issues.map((issue) => (
                         <li key={issue.id}>
-                          <Link href={fiqhIssueHref(issue.slug)}>{issue.title}</Link>
+                          <Link href={fiqhIssueHref(issue.slug)} className="fiqh-topic-list__link">{issue.title}</Link>
                         </li>
                       ))}
                     </ul>
@@ -95,7 +95,7 @@ export default function FiqhCouncilTopicIndexPage() {
                     <ul className="fiqh-topic-list">
                       {sec.items.slice(0, 12).map((item) => (
                         <li key={item.id}>
-                          <Link href={fiqhItemHref(item.slug)}>{item.title}</Link>
+                          <Link href={fiqhItemHref(item.slug)} className="fiqh-topic-list__link">{item.title}</Link>
                           <span className="fiqh-issue-item-meta">
                             {FIQH_ITEM_TYPE_LABELS[item.type]}
                           </span>
