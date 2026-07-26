@@ -341,7 +341,7 @@ export default function MiraclesPage({
         {filterPanel}
       </FilterBottomSheet>
       {isAdmin && <AdminQuickEdit section="miracles" />}
-      <RelatedKnowledge kind="book" query="الإعجاز العلمي" title="مواد ذات صلة بالإعجاز" limit={6} />
+      <RelatedKnowledge kind="book" query="علوم القرآن إعجاز بياني" title="مواد ذات صلة بعلوم القرآن" limit={6} />
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="aqeeda" title="اختبر معلوماتك في العقيدة والإعجاز" count={4} />
       </div>

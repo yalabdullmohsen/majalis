@@ -366,7 +366,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   },
   {
     id: "update-miracles-49",
-    title: "تحديث: الإعجاز العلمي يضم 49 معجزة",
+    title: "تحديث: قسم الإشارات الكونية — 49 موضوعًا",
     summary: "إضافة 3 معجزات علمية: مستقبلات الألم في الجلد، الحديد مُنزَّل من الكون، والماء أصل كل حياة.",
     update_type: "إعلان",
     source_url: "/miracles",
@@ -402,7 +402,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   },
   {
     id: "update-miracles-52",
-    title: "تحديث: الإعجاز العلمي — 52 معجزة موثّقة",
+    title: "تحديث: قسم الإشارات الكونية — 52 موضوعًا",
     summary: "إضافة 3 معجزات: بصمة الأصابع وفردانية الخلق، نظام التواصل لدى النحل، ودوران الليل والنهار آيةً في الأرض.",
     update_type: "إعلان",
     source_url: "/miracles",
@@ -474,7 +474,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   },
   {
     id: "update-miracles-55",
-    title: "تحديث: الإعجاز العلمي — 55 معجزة",
+    title: "تحديث: قسم الإشارات الكونية — 55 موضوعًا",
     summary: "إضافة 3 معجزات: تواصل النمل وظلمات البحار العميقة ودور النوم في تجديد الجسم (نظرية الـ Glymphatic).",
     update_type: "إعلان",
     source_url: "/miracles",
@@ -546,7 +546,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   },
   {
     id: "update-miracles-68",
-    title: "تحديث: الإعجاز العلمي — 3 معجزات جديدة",
+    title: "تحديث: إشارات كونية — 3 موضوعات",
     summary: "إضافة 3 معجزات: الثقب الأسود (الخنّس الكنّس)، الحاجز بين البحرين، وعلقة الجنين الجنينية.",
     update_type: "إعلان",
     source_url: "/miracles",
@@ -591,7 +591,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   },
   {
     id: "update-miracles-72",
-    title: "تحديث: الإعجاز العلمي — 4 معجزات جديدة",
+    title: "تحديث: إشارات كونية — 4 موضوعات",
     summary: "إضافة 4 معجزات: نزول الحديد من الفضاء، مستقبلات الألم في الجلد، النجوم علامات للملاحة، الماء أساس الحياة.",
     update_type: "إعلان",
     source_url: "/miracles",
@@ -609,7 +609,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   },
   {
     id: "update-miracles-77",
-    title: "تحديث: الإعجاز العلمي — 5 معجزات جديدة",
+    title: "تحديث: إشارات كونية — 5 موضوعات",
     summary: "إضافة 5 معجزات: إعجاز النحل والعسل، الناصية مركز القرار، الدخان وتكوّن الكون، الأزواج في كل شيء، بصمات الأصابع.",
     update_type: "إعلان",
     source_url: "/miracles",
