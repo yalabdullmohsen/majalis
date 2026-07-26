@@ -2,7 +2,7 @@
   "branch": "session/content-enrichment-round-3",
   "mode": "enrichment_and_audit",
   "started": "2026-07-26T08:18:00Z",
-  "updated": "2026-07-26T08:21:33Z",
+  "updated": "2026-07-26T08:22:57Z",
   "baseline_from_counts": {
     "quiz": 1137,
     "quiz_template_explanations": 769,
@@ -28,7 +28,8 @@
     ]
   },
   "batches_done": [
-    "stories6_scholars6_books8_author_link_rulings_prophets"
+    "stories6_scholars6_books8_author_link_rulings_prophets",
+    "quiz_improve_220_add30_qa19_fawaid20_adhkar4"
   ],
   "added_counts": {
     "stories_new": 6,
@@ -36,7 +37,16 @@
     "books_new": 8,
     "stories_total": 73,
     "scholars_total": 123,
-    "books_total": 164
+    "books_total": 164,
+    "quiz_explanations_improved": 220,
+    "quiz_new": 30,
+    "quiz_total": 1167,
+    "qa_new": 19,
+    "qa_total": 419,
+    "fawaid_new": 20,
+    "fawaid_total": 576,
+    "adhkar_new": 4,
+    "adhkar_total": 321
   },
   "needs_post_review_notes": [
     "كتب بلا authorId بعد الربط: تفسير الجلالين (مؤلفان) وdaawa-taarud — يُراجع يدويًا"
