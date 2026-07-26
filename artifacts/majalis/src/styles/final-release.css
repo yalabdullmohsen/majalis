@@ -1106,6 +1106,106 @@ a.twitter-timeline {
   .bottom-nav--v2 .bottom-nav__tab-label { font-size: 0.625rem; }
 }
 
+/* ══ عقد أسطح الصفحات + نماذج + جداول + تمرير أفقي (iPhone) ══ */
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+body {
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: none;
+}
+.app-shell {
+  overscroll-behavior-y: contain;
+}
+.page-shell {
+  width: 100%;
+  max-width: min(56rem, 100%);
+  margin-inline: auto;
+  padding-block: clamp(1rem, 3vw, 1.75rem) 1.25rem;
+  padding-inline: var(--page-gutter);
+  box-sizing: border-box;
+}
+.page-shell.narrow {
+  max-width: min(48rem, 100%);
+}
+.content-hub-page.page-shell,
+.page-shell.content-hub-page {
+  padding-block-end: 1.25rem;
+}
+.ds-page-header {
+  margin-block-end: clamp(1rem, 3vw, 1.5rem);
+}
+@media (max-width: 879px) {
+  input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="file"]),
+  select,
+  textarea,
+  .ds-input,
+  .adm-input,
+  .login-field input,
+  .login-field select,
+  .login-field textarea {
+    font-size: max(16px, 1rem);
+    min-height: 44px;
+    line-height: 1.4;
+  }
+  textarea,
+  .ds-input[rows],
+  .login-field textarea {
+    min-height: 6.5rem;
+  }
+  .ds-label,
+  .login-field label,
+  label.ds-label {
+    display: inline-block;
+    margin-block-end: 0.4rem;
+    color: var(--color-text);
+    font-weight: 600;
+  }
+}
+.table-scroll,
+.usr-table-wrap,
+.qa-table-wrap,
+.mir-table-wrap,
+.nb-table-scroll,
+.ucp-table-wrap,
+.content-detail-table-wrap,
+.fiqh-info-table-wrap,
+.admin-feature-status__table-wrap {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  scrollbar-width: thin;
+}
+.ar-tabs-bar,
+.qcp-filter-row,
+.ra-tabs-bar,
+.up-country-chips,
+.content-hub-chips,
+.ds-chip-row,
+.hpv4-chips,
+.filter-chips-row {
+  display: flex;
+  gap: 0.45rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-x: contain;
+  scrollbar-width: none;
+  scroll-padding-inline: 0.5rem;
+}
+.ar-tabs-bar::-webkit-scrollbar,
+.qcp-filter-row::-webkit-scrollbar,
+.ra-tabs-bar::-webkit-scrollbar,
+.up-country-chips::-webkit-scrollbar,
+.content-hub-chips::-webkit-scrollbar,
+.ds-chip-row::-webkit-scrollbar,
+.hpv4-chips::-webkit-scrollbar,
+.filter-chips-row::-webkit-scrollbar {
+  display: none;
+}
+
 /* ══ حالات موحّدة: فارغ / خطأ / تحميل / قوائم / أوراق سفلية ══ */
 .ds-empty,
 .adv-error-state {
