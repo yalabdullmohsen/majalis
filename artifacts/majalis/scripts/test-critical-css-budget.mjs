@@ -34,8 +34,8 @@ if (!indexCss) {
   process.exit(1);
 }
 
-// سقف مرن بعد التخفيف (كان ~768KB). ارفع فقط بمبرر.
-const BUDGET = 740_000;
+// سقف مرن بعد التخفيف (كان ~768KB ثم ~722KB). ارفع فقط بمبرر.
+const BUDGET = 720_000;
 if (indexCss.size > BUDGET) {
   console.error(
     `✗ CSS الحرج ${indexCss.name} = ${indexCss.size} بايت > الميزانية ${BUDGET}.`,

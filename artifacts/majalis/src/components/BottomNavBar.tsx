@@ -1,7 +1,11 @@
-import { useState } from "react";
+import { Suspense, lazy, useState } from "react";
 import { Link, useLocation } from "wouter";
 import { BookOpen, Clock, GraduationCap, HelpCircle, Home, LayoutGrid } from "lucide-react";
-import { MoreBottomSheet } from "./MoreBottomSheet";
+
+/** قائمة المزيد تُفتح نادرًا — لا تُضمَّن في الحزمة الرئيسية */
+const MoreBottomSheet = lazy(() =>
+  import("./MoreBottomSheet").then((m) => ({ default: m.MoreBottomSheet })),
+);
 
 type NavTab = {
   href: string;
@@ -75,7 +79,11 @@ export function BottomNavBar() {
         </button>
       </nav>
 
-      <MoreBottomSheet open={moreOpen} onClose={() => setMoreOpen(false)} />
+      {moreOpen && (
+        <Suspense fallback={null}>
+          <MoreBottomSheet open={moreOpen} onClose={() => setMoreOpen(false)} />
+        </Suspense>
+      )}
     </>
   );
 }

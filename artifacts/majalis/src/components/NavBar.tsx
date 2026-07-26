@@ -1,16 +1,23 @@
-import { useEffect, useRef, useState } from "react";
+import { Suspense, lazy, useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "wouter";
 import { Menu, Moon, Sun, User, X } from "lucide-react";
 import { useAuth } from "./AuthProvider";
 import { useLanguage } from "./LanguageProvider";
-import { HeaderTicker } from "./HeaderTicker";
-import { SideNavDrawer } from "./SideNavDrawer";
 import { useThemePreference } from "./ThemePreferenceProvider";
 
 import { useMobileNavState } from "@/hooks/useMobileNavState";
 import { PRIMARY_NAV_ITEMS } from "@/lib/navigation";
 import { fetchPrayerTimes, computePrayerCountdown, type PrayerCountdown } from "@/lib/prayer-times";
 import "@/styles/components/dark-emerald-menus.css";
+
+/** الشريط يسحب بذورًا ثقيلة (~0.5MB) — يُحمَّل بعد الرسم الأول فقط */
+const HeaderTicker = lazy(() =>
+  import("./HeaderTicker").then((m) => ({ default: m.HeaderTicker })),
+);
+/** الدرج يُفتح عند الطلب — لا يُثقِل الحزمة الرئيسية */
+const SideNavDrawer = lazy(() =>
+  import("./SideNavDrawer").then((m) => ({ default: m.SideNavDrawer })),
+);
 
 function PrayerChip() {
   const [cd, setCd] = useState<PrayerCountdown | null>(null);
@@ -156,7 +163,11 @@ export default function NavBar() {
               البحث الشامل) واختصار Ctrl/Cmd+K القائم أصلاً. على الجوال
               يشغل المساحة الوسطى الفارغة أصلاً؛ على سطح المكتب يحلّ محل
               مربع البحث المضمّن تحديدًا. */}
-          {isMobile && <HeaderTicker />}
+          {isMobile && (
+            <Suspense fallback={<div className="header-ticker header-ticker--empty" aria-hidden="true" />}>
+              <HeaderTicker />
+            </Suspense>
+          )}
 
           <div className="navbar-v3__end">
             {/* عداد الصلاة التالية — سطح المكتب فقط */}
@@ -180,7 +191,11 @@ export default function NavBar() {
                 /search وSearchSuggestions المستخدَم في صفحات أخرى — لا حذف
                 لأي وظيفة بحث فعلية، فقط زر الهيدر تحديدًا.
                 مكانه في سطح المكتب يشغله الآن الشريط المتحرك (HeaderTicker). */}
-            {!isMobile && <HeaderTicker />}
+            {!isMobile && (
+              <Suspense fallback={<div className="header-ticker header-ticker--empty" aria-hidden="true" />}>
+                <HeaderTicker />
+              </Suspense>
+            )}
             {!isMobile && desktopAuthLinks}
 
             {/* Mobile: زر دخول/حساب واضح دائمًا — لا يُترك مخفيًا داخل قائمة الهامبرغر فقط */}
@@ -199,11 +214,15 @@ export default function NavBar() {
         </div>
       </header>
 
-      <SideNavDrawer
-        open={isMenuOpen}
-        onClose={closeMenu}
-        onLogout={handleLogout}
-      />
+      {isMenuOpen && (
+        <Suspense fallback={null}>
+          <SideNavDrawer
+            open={isMenuOpen}
+            onClose={closeMenu}
+            onLogout={handleLogout}
+          />
+        </Suspense>
+      )}
     </>
   );
 }

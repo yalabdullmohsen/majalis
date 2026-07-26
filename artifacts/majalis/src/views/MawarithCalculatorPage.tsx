@@ -18,6 +18,7 @@ import {
   type InheritanceResult,
   type ShareBasis,
 } from "@/lib/inheritance/types";
+import "@/styles/pages/mawarith-calculator.css";
 
 type WizardStep = "heirs" | "estate" | "result";
 

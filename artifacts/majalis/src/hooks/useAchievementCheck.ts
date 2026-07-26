@@ -1,11 +1,7 @@
 import { useState, useCallback, useRef, useEffect } from "react";
 import { useAuth } from "@/components/AuthProvider";
-import {
-  getUserProfileStats,
-  checkAndAwardBadges,
-  type EarnedBadge,
-} from "@/lib/user-profile-service";
 import { BADGE_MAP } from "@/lib/user-badges";
+import type { EarnedBadge } from "@/lib/user-profile-service";
 
 const STORAGE_KEY = "majalis_notified_badges";
 
@@ -34,6 +30,10 @@ export function useAchievementCheck() {
   const runCheck = useCallback(async () => {
     if (!isLoggedIn || !user?.id) return;
     try {
+      // استيراد كسول — يمنع سحب supabase.ts + library-catalog إلى الحزمة الرئيسية
+      const { getUserProfileStats, checkAndAwardBadges } = await import(
+        "@/lib/user-profile-service"
+      );
       const stats = await getUserProfileStats(user.id);
       const newKeys = await checkAndAwardBadges(user.id, stats);
       if (newKeys.length === 0) return;
