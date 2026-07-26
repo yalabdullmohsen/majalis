@@ -69,6 +69,8 @@ function testConfigRoutes() {
   assert.ok(CONFIG.hubPaths.includes("/islamic-glossary"));
   assert.ok(!CONFIG.hubPaths.includes("/fatwa")); // يُحوَّل إلى /fiqh|/rulings
   assert.ok(CONFIG.evidenceRequiredPrefixes.includes("/rulings"));
+  assert.ok(CONFIG.hubRelatedPrefixes["/fiqh"].includes("/rulings"));
+  assert.ok(CONFIG.hubRelatedPrefixes["/quran-hub"].some((p) => p.startsWith("/quran")));
   assert.equal(SEVERITY.CRITICAL, "حرج");
 }
 
