@@ -162,11 +162,6 @@
   font-family: var(--font-quran, serif);
   line-height: 1.3;
 }
-.ah-card__trans {
-  font-size: 0.8rem;
-  color: #5A8070;
-  font-style: italic;
-}
 .ah-card__meaning {
   font-size: 0.8rem;
   color: #3A5A4A;
@@ -251,12 +246,6 @@
   font-family: var(--font-quran, serif);
   margin: 0;
   flex: 1;
-}
-.ah-modal__trans {
-  font-size: 0.8rem;
-  color: #6B9E8A;
-  font-style: italic;
-  white-space: nowrap;
 }
 .ah-modal__fav {
   background: none;
@@ -369,11 +358,6 @@
   font-family: var(--font-quran, serif);
   color: #FFFFFF;
   line-height: 1.2;
-}
-.ah-nod-trans {
-  font-size: 0.85rem;
-  color: rgba(255,255,255,0.78);
-  font-style: italic;
 }
 .ah-nod-meaning {
   font-size: var(--ds-text-sm);
