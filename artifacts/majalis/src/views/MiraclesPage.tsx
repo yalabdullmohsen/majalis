@@ -108,15 +108,15 @@ export default function MiraclesPage({
   useEffect(() => {
     applyPageSeo({
       path: "/miracles",
-      title: "الإعجاز العلمي في القرآن والسنة | المجلس العلمي",
-      description: "موضوعات الإعجاز العلمي في القرآن الكريم والسنة النبوية، إعجاز طبي وكوني وعددي وبيولوجي موثّق بالأدلة العلمية.",
-      keywords: ["إعجاز علمي", "إعجاز قرآني", "معجزات", "علم وإسلام"],
+      title: "إشارات كونية في الوحي | المجلس العلمي",
+      description: "موضوعات تُعرض بحذر للتأمل في دلائل الآيات الكونية عند ثبوت المعنى؛ المعتمد في منهج الموقع: الإعجاز البياني والغيبي والتشريعي — لا إعجاز عددي ولا ربط بنظريات قابلة للنقض.",
+      keywords: ["إشارات كونية", "تفكر في الخلق", "إعجاز بياني", "علوم القرآن"],
       jsonLd: [
         {
           "@context": "https://schema.org",
           "@type": "ItemList",
-          name: "أقسام الإعجاز العلمي",
-          description: "أقسام ومجالات الإعجاز العلمي في القرآن الكريم والسنة النبوية",
+          name: "إشارات كونية في الوحي",
+          description: "موضوعات للتأمل في آيات الخلق مع تنبيه منهجي على حدود الاستدلال",
           itemListElement: CATEGORIES.filter(c => c !== "الكل").map((cat, i) => ({
             "@type": "ListItem",
             position: i + 1,
@@ -163,14 +163,18 @@ export default function MiraclesPage({
       {/* ══ Hero ══ */}
       <header className="mk-hero">
         <div className="mk-hero__inner">
-          <p className="mk-hero__eyebrow">علم وإيمان</p>
-          <h1 className="mk-hero__title">الإعجاز العلمي</h1>
+          <p className="mk-hero__eyebrow">بحذر منهجي</p>
+          <h1 className="mk-hero__title">إشارات كونية في الوحي</h1>
           <p className="mk-hero__sub">
-            مقالات موثّقة تربط الاكتشافات العلمية بالآيات القرآنية والأحاديث النبوية
+            المعتمد في منهج الموقع: الإعجاز البياني والتشريعي والغيبي. ما يُعرض هنا إشارات للتأمل عند ثبوت المعنى — لا إعجاز عددي ولا ربط بنظريات قابلة للنقض.
           </p>
           <p className="mk-hero__note">
             <AlertTriangle size={16} strokeWidth={1.8} aria-hidden="true" />
-            <span>الملاحظات العلمية قد تتطور مع البحث، نعرضها للتفكر لا كحكم نهائي</span>
+            <span>
+              للتقرير المنهجي راجع{" "}
+              <a href="/ulum-quran" className="mk-hero__link">علوم القرآن</a>
+              ؛ ولا تُبنى عقيدة أو حكم على دعاوى علمية معاصرة. الموضوعات غير المحرَّرة محجوبة عن العرض.
+            </span>
           </p>
         </div>
       </header>
@@ -234,10 +238,10 @@ export default function MiraclesPage({
           <input
             type="search"
             className="ds-input prefix-search-input"
-            placeholder="ابحث في موضوعات الإعجاز..."
+            placeholder="ابحث في الإشارات الكونية..."
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            aria-label="بحث في الإعجاز العلمي"
+            aria-label="بحث في الإشارات الكونية"
           />
         </div>
       )}
@@ -304,7 +308,7 @@ export default function MiraclesPage({
                           className="mk-expand-btn"
                           onClick={() => setExpanded(isExpanded ? null : item.id)}
                         >
-                          {isExpanded ? "▲ طوِّ التفاصيل" : "▼ تفاصيل المعجزة"}
+                          {isExpanded ? "▲ طوِّ التفاصيل" : "▼ تفاصيل الموضوع"}
                         </button>
                       )}
                     </>
@@ -337,7 +341,7 @@ export default function MiraclesPage({
         {filterPanel}
       </FilterBottomSheet>
       {isAdmin && <AdminQuickEdit section="miracles" />}
-      <RelatedKnowledge kind="book" query="الإعجاز العلمي" title="مواد ذات صلة بالإعجاز" limit={6} />
+      <RelatedKnowledge kind="book" query="علوم القرآن إعجاز بياني" title="مواد ذات صلة بعلوم القرآن" limit={6} />
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="aqeeda" title="اختبر معلوماتك في العقيدة والإعجاز" count={4} />
       </div>

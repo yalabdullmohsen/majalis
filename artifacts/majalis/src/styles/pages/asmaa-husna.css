@@ -162,11 +162,6 @@
   font-family: var(--font-quran, serif);
   line-height: 1.3;
 }
-.ah-card__trans {
-  font-size: 0.8rem;
-  color: #5A8070;
-  font-style: italic;
-}
 .ah-card__meaning {
   font-size: 0.8rem;
   color: #3A5A4A;
@@ -251,12 +246,6 @@
   font-family: var(--font-quran, serif);
   margin: 0;
   flex: 1;
-}
-.ah-modal__trans {
-  font-size: 0.8rem;
-  color: #6B9E8A;
-  font-style: italic;
-  white-space: nowrap;
 }
 .ah-modal__fav {
   background: none;
@@ -370,11 +359,6 @@
   color: #FFFFFF;
   line-height: 1.2;
 }
-.ah-nod-trans {
-  font-size: 0.85rem;
-  color: rgba(255,255,255,0.78);
-  font-style: italic;
-}
 .ah-nod-meaning {
   font-size: var(--ds-text-sm);
   color: rgba(255,255,255,0.88);
@@ -453,6 +437,49 @@ html[data-theme="dark"] .ah-method-note {
 }
 html[data-theme="dark"] .ah-method-note strong {
   color: #8fd6bc;
+}
+
+.ah-card__status {
+  position: absolute;
+  top: 0.5rem;
+  left: 2.75rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 0.15rem 0.45rem;
+  border-radius: 999px;
+  line-height: 1.3;
+}
+.ah-card__status--thabit {
+  background: color-mix(in srgb, #226A56 14%, #fff);
+  color: #143F35;
+  border: 1px solid color-mix(in srgb, #226A56 35%, transparent);
+}
+.ah-card__status--mashhur {
+  background: color-mix(in srgb, #92620a 12%, #fff);
+  color: #6b4a08;
+  border: 1px solid color-mix(in srgb, #92620a 35%, transparent);
+}
+.ah-cat-chip--status { border-style: dashed; }
+.ah-modal__status {
+  font-size: 0.88rem;
+  font-weight: 600;
+  margin: 0 0 0.55rem;
+  padding: 0.45rem 0.7rem;
+  border-radius: 0.45rem;
+}
+.ah-modal__status--thabit {
+  background: color-mix(in srgb, #226A56 12%, #fff);
+  color: #143F35;
+}
+.ah-modal__status--mashhur {
+  background: color-mix(in srgb, #92620a 12%, #fff);
+  color: #6b4a08;
+}
+.ah-modal__caution {
+  margin: 0.55rem 0 0;
+  font-size: 0.82rem;
+  line-height: 1.7;
+  color: #6b4a08;
 }
 
 /* ── نهاية §218 ────────────────────────────────────────────── */

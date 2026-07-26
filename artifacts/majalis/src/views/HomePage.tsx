@@ -33,6 +33,7 @@ import {
   type HomepagePrefs,
 } from "@/lib/homepage-layout";
 import "@/styles/pages/home.css";
+import "@/styles/components/home/home-quick-access.css";
 
 // الودجتات الاختيارية لا تدخل حزمة الرئيسية للمستخدم الجديد. تُحمَّل فقط
 // إذا فعّلها المستخدم من شاشة التخصيص، مع بقاء الوظيفة والحالة المحفوظة.

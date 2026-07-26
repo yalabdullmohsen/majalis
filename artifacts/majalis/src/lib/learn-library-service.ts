@@ -5,6 +5,13 @@
  */
 import { supabase } from "@/lib/supabase";
 import { buildCategoryTree, rollUpCounts } from "@/lib/category-tree";
+import {
+  getSeedLessonById,
+  getSeedLessonsForSlug,
+  isAqeedahBatch3Slug,
+  seedLessonCountForSlug,
+  type AqeedahSeedLesson,
+} from "@/lib/learn-library-aqeedah-batch3-seed";
 
 export type CategoryRow = {
   id: string;
@@ -63,14 +70,78 @@ export async function fetchPublishedCategoryTree(): Promise<CategoryWithCounts[]
     directSeriesCounts.set(id, (directSeriesCounts.get(id) ?? 0) + 1);
   }
 
-  const withCounts = categories.map((c) => ({
-    ...c,
-    lessonCount: directLessonCounts.get(c.id) ?? 0,
-    seriesCount: directSeriesCounts.get(c.id) ?? 0,
-  }));
+  const withCounts = categories.map((c) => {
+    const dbCount = directLessonCounts.get(c.id) ?? 0;
+    // إن كان التصنيف من دفعة العقيدة الفارغة على الإنتاج: أظهر عدّ البذرة حتى يُطبَّق SQL.
+    const seedExtra =
+      isAqeedahBatch3Slug(c.slug) && dbCount === 0 ? seedLessonCountForSlug(c.slug) : 0;
+    return {
+      ...c,
+      lessonCount: dbCount + seedExtra,
+      seriesCount: directSeriesCounts.get(c.id) ?? 0,
+    };
+  });
   const roots = buildCategoryTree(withCounts) as CategoryWithCounts[];
   for (const r of roots) rollUpCounts(r);
   return roots;
+}
+
+function seedToSummary(seed: AqeedahSeedLesson, categoryId: string): LessonSummary {
+  return {
+    id: seed.id,
+    title: seed.title,
+    description: seed.description,
+    category_id: categoryId,
+    activity_type: seed.activity_type,
+    session_count: null,
+    sheikh_id: null,
+  };
+}
+
+function seedToLessonDetail(seed: AqeedahSeedLesson, category: CategoryRow | null): LessonDetail {
+  return {
+    lesson: {
+      ...seedToSummary(seed, category?.id ?? seed.categorySlug),
+      category,
+      status: "approved",
+    },
+    sections: seed.sections.map((s) => ({
+      id: s.id,
+      section_type: s.section_type,
+      title: s.title,
+      content: s.content,
+      sort_order: s.sort_order,
+    })),
+    citations: seed.citations.map((c) => ({
+      id: c.id,
+      source_type: c.source_type,
+      citation: c.citation,
+      url: c.url,
+    })),
+    scholars: [],
+    books: [],
+  };
+}
+
+/** فئة احتياطية محلية إن لم تُرجع قاعدة البيانات التصنيف (بيئة بلا بيانات). */
+function localCategoryForSlug(slug: string): CategoryRow | null {
+  const names: Record<string, string> = {
+    "iman-billah": "الإيمان بالله",
+    "aqsam-tawheed": "أقسام التوحيد الثلاثة",
+    "nawaqid-islam": "نواقض الإسلام",
+    "aqeedat-ahl-sunnah": "عقيدة أهل السنة والجماعة",
+  };
+  if (!isAqeedahBatch3Slug(slug) || !names[slug]) return null;
+  return {
+    id: `seed-cat-${slug}`,
+    parent_id: "seed-cat-aqeedah-tawheed",
+    slug,
+    name: names[slug],
+    description: "دروس معتمدة على منهج أهل السنة — بذرة واجهة حتى يُطبَّق SQL الإنتاجي",
+    icon: null,
+    sort_order: 0,
+    status: "published",
+  };
 }
 
 export type CategoryDetail = {
@@ -87,7 +158,29 @@ export async function fetchCategoryDetail(slug: string): Promise<CategoryDetail 
     .select("id, parent_id, slug, name, description, icon, sort_order, status")
     .eq("slug", slug)
     .maybeSingle();
-  if (!category) return null;
+
+  // احتياطي كامل للتصنيفات الأربعة إن غابت عن البيئة المحلية.
+  if (!category) {
+    const local = localCategoryForSlug(slug);
+    if (!local) return null;
+    const seedLessons = getSeedLessonsForSlug(slug).map((s) => seedToSummary(s, local.id));
+    return {
+      category: local,
+      breadcrumb: [{
+        id: "seed-cat-aqeedah-tawheed",
+        parent_id: null,
+        slug: "aqeedah-tawheed",
+        name: "العقيدة والتوحيد",
+        description: null,
+        icon: null,
+        sort_order: 0,
+        status: "published",
+      }],
+      children: [],
+      series: [],
+      lessons: seedLessons,
+    };
+  }
 
   const breadcrumb: CategoryRow[] = [];
   let cursor: CategoryRow | null = category as CategoryRow;
@@ -108,12 +201,23 @@ export async function fetchCategoryDetail(slug: string): Promise<CategoryDetail 
     supabase.from("lessons").select("id, title, description, category_id, activity_type, session_count, sheikh_id").eq("category_id", category.id).eq("status", "approved"),
   ]);
 
+  const dbLessons = (lessons ?? []) as LessonSummary[];
+  const existingTitles = new Set(dbLessons.map((l) => l.title));
+  const merged = [...dbLessons];
+  if (isAqeedahBatch3Slug(slug)) {
+    for (const seed of getSeedLessonsForSlug(slug)) {
+      if (!existingTitles.has(seed.title)) {
+        merged.push(seedToSummary(seed, (category as CategoryRow).id));
+      }
+    }
+  }
+
   return {
     category: category as CategoryRow,
     breadcrumb,
     children: (children ?? []) as CategoryRow[],
     series: (series ?? []) as SeriesSummary[],
-    lessons: (lessons ?? []) as LessonSummary[],
+    lessons: merged,
   };
 }
 
@@ -153,12 +257,29 @@ export type LessonDetail = {
 };
 
 export async function fetchLessonDetail(lessonId: string): Promise<LessonDetail | null> {
+  // دروس البذرة تُخدم مباشرة بلا استعلام DB (لا UUID إنتاجي).
+  if (lessonId.startsWith("seed-aqeedah-")) {
+    const seed = getSeedLessonById(lessonId);
+    if (!seed) return null;
+    const localCat = localCategoryForSlug(seed.categorySlug);
+    const { data: dbCat } = await supabase
+      .from("categories")
+      .select("id, parent_id, slug, name, description, icon, sort_order, status")
+      .eq("slug", seed.categorySlug)
+      .maybeSingle();
+    return seedToLessonDetail(seed, (dbCat as CategoryRow | null) ?? localCat);
+  }
+
   const { data: lesson } = await supabase
     .from("lessons")
     .select("id, title, description, category_id, activity_type, session_count, sheikh_id, status")
     .eq("id", lessonId)
     .maybeSingle();
-  if (!lesson) return null;
+  if (!lesson) {
+    const seed = getSeedLessonById(lessonId);
+    if (!seed) return null;
+    return seedToLessonDetail(seed, localCategoryForSlug(seed.categorySlug));
+  }
 
   const [{ data: category }, { data: sections }, { data: citations }, { data: scholars }, { data: books }] = await Promise.all([
     lesson.category_id

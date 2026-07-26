@@ -26,7 +26,6 @@ export function HomeAsmaCard() {
         <div className="hac__num-badge">{asma.num} / 99</div>
         <div className="hac__body">
           <p className="hac__arabic">{asma.arabic}</p>
-          <p className="hac__transliteration">{asma.transliteration}</p>
           <p className="hac__meaning">{asma.meaning}</p>
           <div className="hac__divider" />
           <div className="hac__benefit-row">
@@ -34,7 +33,7 @@ export function HomeAsmaCard() {
             <p className="hac__benefit">{asma.benefit}</p>
           </div>
         </div>
-        <span className="hac__category-badge">{asma.category}</span>
+        <span className="hac__category-badge">{asma.category} · {asma.status}</span>
       </div>
     </section>
   );

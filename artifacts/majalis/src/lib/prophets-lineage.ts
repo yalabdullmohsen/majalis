@@ -224,7 +224,7 @@ export const PROPHETS_LINEAGE: LineageNode = {
                               id: "yunus",
                               name: "يونس",
                               era: "صاحب الحوت",
-                              people: "نينوى (العراق)",
+                              people: "قرية قوم يونس — لم تُعيَّن في الوحي",
                               slug: "yunus",
                             },
                           ],
@@ -238,7 +238,7 @@ export const PROPHETS_LINEAGE: LineageNode = {
             {
               id: "lut",
               name: "لوط",
-              era: "نبي سدوم",
+              era: "نبي القرية الظالمة",
               people: "الأردن وفلسطين",
               slug: "lut",
               linkNote: "ابن أخي إبراهيم، معاصر له",

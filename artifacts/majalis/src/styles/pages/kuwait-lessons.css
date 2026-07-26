@@ -1,0 +1,6 @@
+/* ============================================================
+   93 — KuwaitLessonsPage  (sheikh-avatar additions)
+   ============================================================ */
+.sheikh-avatar--initials { background: var(--avatar-bg, #226A56); }
+.sheikh-avatar--hidden   { display: none; }
+

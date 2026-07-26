@@ -12,6 +12,8 @@ import { arabicMatchAny } from "@/lib/arabic-search";
 import { HijriMonthSelect } from "@/components/HijriMonthSelect";
 import { getHijriMonthName, isSacredMonth } from "@/lib/hijri-utils";
 import { applyPageSeo } from "@/lib/seo";
+import { RelatedKnowledge } from "@/components/RelatedKnowledge";
+import "@/styles/pages/occasions.css";
 
 function CountdownBadge({ days }: { days: number | null | undefined }) {
   if (days == null) return <span className="occasion-detail__countdown">موسمية</span>;
@@ -170,6 +172,7 @@ export default function OccasionsPage() {
         </div>
       )}
 
+      <RelatedKnowledge kind="lesson" query="المناسبات الإسلامية" title="دروس ومواد في المناسبات" limit={6} />
       <div className="twh-share">
         <ShareButtons title="المناسبات الإسلامية — المجلس العلمي" url="https://www.majlisilm.com/occasions" />
       </div>

@@ -183,9 +183,9 @@ export const MIND_MAPS: MindMap[] = [
           id: "eijaz",
           label: "الإعجاز القرآني",
           children: [
-            { id: "ei-1", label: "الإعجاز اللغوي" },
-            { id: "ei-2", label: "الإعجاز العلمي", href: "/miracles" },
-            { id: "ei-3", label: "الإعجاز العددي" },
+            { id: "ei-1", label: "الإعجاز البياني", href: "/ulum-quran" },
+            { id: "ei-2", label: "الإعجاز التشريعي", href: "/ulum-quran" },
+            { id: "ei-3", label: "الإعجاز الغيبي", href: "/ulum-quran" },
           ],
         },
         {
@@ -1263,11 +1263,13 @@ export const MIND_MAPS: MindMap[] = [
         {
           id: "kl-ahl-sunna",
           label: "أهل السنة والجماعة",
-          href: "/tawhid",
+          href: "/learn/aqeedat-ahl-sunnah",
           children: [
-            { id: "kl-as1", label: "الأشعرية — المنهج الكلامي" },
-            { id: "kl-as2", label: "الماتريدية — كلام ما وراء النهر" },
-            { id: "kl-as3", label: "أهل الحديث — السلفية" },
+            { id: "kl-as0", label: "معالم المنهج", href: "/learn/aqeedat-ahl-sunnah" },
+            { id: "kl-as1", label: "الأشعرية — المنهج الكلامي", href: "/islamic-sects#ashariyya" },
+            { id: "kl-as2", label: "الماتريدية — كلام ما وراء النهر", href: "/islamic-sects#maturidiyya" },
+            { id: "kl-as3", label: "أهل الحديث — السلفية", href: "/islamic-sects#ahl-al-sunna" },
+            { id: "kl-as4", label: "بوابة التوحيد", href: "/tawhid" },
           ],
         },
         {

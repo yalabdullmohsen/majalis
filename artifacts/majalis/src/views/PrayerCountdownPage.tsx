@@ -3,8 +3,10 @@ import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 import { GeometricPattern } from "@/components/design/GeometricPattern";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import type { PrayerSlot } from "@/lib/prayer-times";
 import { applyPageSeo } from "@/lib/seo";
+import "@/styles/pages/prayer-countdown.css";
 
 const PRAYER_AR: Record<string, string> = {
   Fajr: "الفجر",
@@ -108,6 +110,7 @@ export default function PrayerCountdownPage() {
         {data.city} · {data.source}
       </p>
 
+      <RelatedKnowledge kind="fatwa" query="مواقيت الصلاة" title="معرفة ذات صلة بالصلاة" limit={6} />
       <div className="twh-share">
         <ShareButtons title="العد التنازلي للصلاة — المجلس العلمي" url="https://www.majlisilm.com/prayer-countdown" />
       </div>

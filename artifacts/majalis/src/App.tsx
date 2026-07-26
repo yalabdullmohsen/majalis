@@ -141,6 +141,9 @@ const TarikhIslamiPage = lazy(() => import("@/views/TarikhIslamiPage"));
 const UsraMujtamaPage = lazy(() => import("@/views/UsraMujtamaPage"));
 const FikrWaqiaPage = lazy(() => import("@/views/FikrWaqiaPage"));
 const MawsuaatPage = lazy(() => import("@/views/MawsuaatPage"));
+const ArabicLanguagePage = lazy(() => import("@/views/ArabicLanguagePage"));
+const MaqasidShariaPage = lazy(() => import("@/views/MaqasidShariaPage"));
+const DalailNubuwwahPage = lazy(() => import("@/views/DalailNubuwwahPage"));
 const MasaratPage = lazy(() => import("@/views/MasaratPage"));
 const SettingsPage = lazy(() => import("@/views/SettingsPage"));
 const AccountDeletionPage = lazy(() => import("@/views/AccountDeletionPage"));
@@ -659,6 +662,9 @@ function Router() {
       <Route path="/usra-mujtama"><SafeLazyRoute component={UsraMujtamaPage} /></Route>
       <Route path="/fikr-waqia"><SafeLazyRoute component={FikrWaqiaPage} /></Route>
       <Route path="/mawsuaat"><SafeLazyRoute component={MawsuaatPage} /></Route>
+      <Route path="/arabic-language"><SafeLazyRoute component={ArabicLanguagePage} /></Route>
+      <Route path="/maqasid-sharia"><SafeLazyRoute component={MaqasidShariaPage} /></Route>
+      <Route path="/dalail-nubuwwah"><SafeLazyRoute component={DalailNubuwwahPage} /></Route>
       <Route path="/masarat"><SafeLazyRoute component={MasaratPage} /></Route>
       <Route path="/cards"><SafeLazyRoute component={CardsPage} /></Route>
       <Route path="/annual-courses/:id"><SafeLazyRoute component={AnnualCourseDetailPage} /></Route>

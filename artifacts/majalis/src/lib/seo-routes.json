@@ -312,13 +312,13 @@
     },
     {
       "path": "/miracles",
-      "title": "الإعجاز العلمي",
-      "description": "مقالات موثقة في الإعجاز العلمي ودلائل القدرة في القرآن والسنة.",
+      "title": "إشارات كونية في الوحي",
+      "description": "موضوعات للتأمل في آيات الخلق بحذر منهجي؛ المعتمد: الإعجاز البياني والغيبي والتشريعي.",
       "keywords": [
-        "الإعجاز العلمي",
-        "دلائل القدرة",
-        "القرآن والسنة",
-        "مقالات علمية"
+        "إشارات كونية",
+        "تفكر في الخلق",
+        "إعجاز بياني",
+        "علوم القرآن"
       ],
       "sitemap": true,
       "changefreq": "weekly",
@@ -2296,6 +2296,231 @@
       "sitemap": true,
       "changefreq": "monthly",
       "priority": 0.8
+    },
+    {
+      "path": "/durus-imaniyya",
+      "title": "دروس إيمانية",
+      "description": "أمراض القلوب وأعمالها وتزكية النفس بأسلوب تربوي موجز.",
+      "keywords": [
+        "دروس إيمانية",
+        "المجلس العلمي",
+        "طلب العلم"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.7
+    },
+    {
+      "path": "/durus-mutanawwia",
+      "title": "دروس متنوعة",
+      "description": "فهارس دراسية في أبواب العلم والعمل والواقع.",
+      "keywords": [
+        "دروس متنوعة",
+        "المجلس العلمي",
+        "طلب العلم"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.7
+    },
+    {
+      "path": "/iman-topics",
+      "title": "موضوعات إيمانية",
+      "description": "موضوعات مركّزة في الإيمان والعمل.",
+      "keywords": [
+        "موضوعات إيمانية",
+        "المجلس العلمي",
+        "طلب العلم"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.7
+    },
+    {
+      "path": "/quran-studies",
+      "title": "دراسات قرآنية",
+      "description": "قصص وأمثال ومحاور قرآنية بمتن موجز موثّق.",
+      "keywords": [
+        "دراسات قرآنية",
+        "المجلس العلمي",
+        "طلب العلم"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.7
+    },
+    {
+      "path": "/sunnah-studies",
+      "title": "دراسات سنية",
+      "description": "أبواب من السنة النبوية بمتن موجز.",
+      "keywords": [
+        "دراسات سنية",
+        "المجلس العلمي",
+        "طلب العلم"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.7
+    },
+    {
+      "path": "/tazkiya-topics",
+      "title": "موضوعات التزكية",
+      "description": "تزكية النفس والأخلاق العملية.",
+      "keywords": [
+        "موضوعات التزكية",
+        "المجلس العلمي",
+        "طلب العلم"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.7
+    },
+    {
+      "path": "/tarikh-islami",
+      "title": "التاريخ الإسلامي",
+      "description": "محطات تاريخية بعبرة منهجية.",
+      "keywords": [
+        "التاريخ الإسلامي",
+        "المجلس العلمي",
+        "طلب العلم"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.7
+    },
+    {
+      "path": "/usra-mujtama",
+      "title": "الأسرة والمجتمع",
+      "description": "بناء البيت المسلم والعلاقات الاجتماعية.",
+      "keywords": [
+        "الأسرة والمجتمع",
+        "المجلس العلمي",
+        "طلب العلم"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.7
+    },
+    {
+      "path": "/fikr-waqia",
+      "title": "الفكر والواقع",
+      "description": "معالجة قضايا الشباب والعمل والواقع المعاصر.",
+      "keywords": [
+        "الفكر والواقع",
+        "المجلس العلمي",
+        "طلب العلم"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.7
+    },
+    {
+      "path": "/mawsuaat",
+      "title": "فهارس الموسوعات",
+      "description": "فهارس دراسية موسوعية مختصرة.",
+      "keywords": [
+        "فهارس الموسوعات",
+        "المجلس العلمي",
+        "طلب العلم"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.7
+    },
+    {
+      "path": "/arabic-language",
+      "title": "اللغة العربية",
+      "description": "النحو والصرف والبلاغة لطالب العلم الشرعي.",
+      "keywords": [
+        "اللغة العربية",
+        "المجلس العلمي",
+        "طلب العلم"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.7
+    },
+    {
+      "path": "/maqasid-sharia",
+      "title": "مقاصد الشريعة",
+      "description": "مقاصد الشريعة الإسلامية وأثرها في فهم الأحكام.",
+      "keywords": [
+        "مقاصد الشريعة",
+        "المجلس العلمي",
+        "طلب العلم"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.7
+    },
+    {
+      "path": "/dalail-nubuwwah",
+      "title": "دلائل النبوة",
+      "description": "دلائل نبوة النبي ﷺ من القرآن والسنة الصحيحة.",
+      "keywords": [
+        "دلائل النبوة",
+        "المجلس العلمي",
+        "طلب العلم"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.7
+    },
+    {
+      "path": "/learn/aqeedat-ahl-sunnah",
+      "title": "عقيدة أهل السنة والجماعة",
+      "description": "معالم منهج أهل السنة: التلقي والإيمان والصفات والصحابة والقدر — دروس منظّمة.",
+      "keywords": [
+        "عقيدة أهل السنة والجماعة",
+        "أهل السنة",
+        "العقيدة",
+        "المجلس العلمي"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.75
+    },
+    {
+      "path": "/learn/aqsam-tawheed",
+      "title": "أقسام التوحيد الثلاثة",
+      "description": "توحيد الربوبية والألوهية والأسماء والصفات على منهج السلف.",
+      "keywords": [
+        "أقسام التوحيد الثلاثة",
+        "أهل السنة",
+        "العقيدة",
+        "المجلس العلمي"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.75
+    },
+    {
+      "path": "/learn/nawaqid-islam",
+      "title": "نواقض الإسلام",
+      "description": "مدخل منضبط لنواقض الإسلام مع ضوابط التكفير.",
+      "keywords": [
+        "نواقض الإسلام",
+        "أهل السنة",
+        "العقيدة",
+        "المجلس العلمي"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.75
+    },
+    {
+      "path": "/learn/iman-billah",
+      "title": "الإيمان بالله",
+      "description": "الركن الأول: الربوبية والألوهية والأسماء والصفات.",
+      "keywords": [
+        "الإيمان بالله",
+        "أهل السنة",
+        "العقيدة",
+        "المجلس العلمي"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.75
     }
   ]
 }

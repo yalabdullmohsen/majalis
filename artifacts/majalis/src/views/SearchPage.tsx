@@ -86,7 +86,7 @@ const KIND_LABELS: Record<string, string> = {
   fawaid: "فائدة",
   adhkar: "ذكر",
   library: "كتاب",
-  miracle: "إعجاز",    miracles: "إعجاز",
+  miracle: "إشارة كونية",    miracles: "إشارة كونية",
   course: "دورة",      courses: "دورة",
   update: "مستجد",     updates: "مستجد",
   fiqh_decision: "مجمع فقهي", fiqh_council: "مجمع فقهي",
@@ -105,7 +105,7 @@ const KIND_GROUP_LABELS: Record<string, string> = {
   fawaid: "الفوائد",
   adhkar: "الأذكار",
   library: "المكتبة",
-  miracle: "الإعجاز العلمي", miracles: "الإعجاز العلمي",
+  miracle: "إشارات كونية", miracles: "إشارات كونية",
   course: "الدورات العلمية", courses: "الدورات العلمية",
   update: "آخر المستجدات",  updates: "آخر المستجدات",
   fiqh_decision: "المجمع الفقهي", fiqh_council: "المجمع الفقهي",
@@ -550,7 +550,7 @@ export default function SearchPage() {
                 { href: "/rulings",      Icon: Scale,         label: "الأحكام الشرعية" },
                 { href: "/lessons",      Icon: GraduationCap, label: "الدروس" },
                 { href: "/library",      Icon: BookMarked,    label: "المكتبة" },
-                { href: "/miracles",     Icon: FlaskConical,  label: "الإعجاز العلمي" },
+                { href: "/ulum-quran",   Icon: FlaskConical,  label: "الإعجاز القرآني" },
                 { href: "/prayer-times", Icon: Clock,         label: "مواقيت الصلاة" },
               ] as const).map(({ href, Icon, label }) => (
                 <Link key={href} href={href} className="srch-quick-card">
@@ -693,7 +693,7 @@ export default function SearchPage() {
                       title={displayText(s.title)} meta={s.category || s.topic}
                     />
                   )} />
-                  <Group title="الإعجاز العلمي" items={results.miracles} render={(m) => (
+                  <Group title="إشارات كونية" items={results.miracles} render={(m) => (
                     <ResultRow key={m.id} href="/miracles" kind="miracle" query={q}
                       title={displayText(m.title)} meta={m.category}
                     />

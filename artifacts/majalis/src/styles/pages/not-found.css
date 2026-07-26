@@ -105,3 +105,11 @@ html[data-theme="dark"] .nf2-icon-wrap { background: rgba(23,61,53,.2); border-c
 html[data-theme="dark"] .nf2-sug-item { background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.1); color: #e8f5ee; }
 html[data-theme="dark"] .nf2-sug-item:hover { border-color: #226A56; background: rgba(23,61,53,.15); }
 
+
+/* ============================================================
+   67 — NotFoundPage  (nf-*)
+   ============================================================ */
+
+.nf-link--primary   { background: var(--majalis-emerald); color: var(--majalis-parchment); }
+.nf-link--secondary { border: 1px solid var(--majalis-line); color: var(--majalis-emerald-deep); background: var(--majalis-parchment); }
+

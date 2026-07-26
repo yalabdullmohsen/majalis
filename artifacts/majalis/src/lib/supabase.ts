@@ -583,15 +583,33 @@ export async function getMiracles({ category, sourceType }: { category?: string;
     return filterMiraclesSeed({ category, sourceType } as any);
   };
 
+  /** يحجب needs_review إن وُجد العمود؛ وإن غاب العمود يُمرَّر الصف كما هو. */
+  const onlyPublicRows = (rows: any[]) =>
+    rows.filter((r) => {
+      const vs = r?.verification_status;
+      if (vs == null || vs === "") return true;
+      return vs === "verified";
+    });
+
   if (!isConfigured) {
     return { data: await filterSeed(), error: null, usingSeed: true };
   }
 
   try {
-    let q = supabase.from("scientific_miracles").select("*").eq("status", "approved");
-    if (category) q = q.eq("category", category);
-    if (sourceType) q = q.eq("source_type", sourceType);
-    const { data, error } = await q.order("created_at", { ascending: false });
+    const build = (withVerification: boolean) => {
+      let q = supabase.from("scientific_miracles").select("*").eq("status", "approved");
+      if (withVerification) q = q.eq("verification_status", "verified");
+      if (category) q = q.eq("category", category);
+      if (sourceType) q = q.eq("source_type", sourceType);
+      return q.order("created_at", { ascending: false });
+    };
+
+    // الإنتاج قد لا يملك عمود verification_status بعد — نجرّب الفلتر ثم نتراجع.
+    let { data, error } = await build(true);
+    if (error && /verification_status|42703/i.test(`${error.message ?? ""} ${error.code ?? ""}`)) {
+      ({ data, error } = await build(false));
+      if (!error && data) data = onlyPublicRows(data);
+    }
     if (error) throw error;
     const rows = data || [];
     if (rows.length === 0) {

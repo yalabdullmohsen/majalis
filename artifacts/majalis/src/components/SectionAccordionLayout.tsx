@@ -22,16 +22,16 @@ export function SectionAccordionLayout({ eyebrow, title, sections, stat3Label, s
       <PageHeader
         eyebrow={eyebrow}
         title={title}
-        subtitle={`فهرس شامل — ${sections.length} بابًا · ${totalLessons}+ درسًا`}
+        subtitle={`فهرس دراسي — ${sections.length} بابًا · ${totalLessons} موضوعًا (ملخصات ومتون موجزة للتعلّم الذاتي)`}
       />
 
       <div className="max-w-3xl mx-auto px-4 mb-8">
         <div className="grid grid-cols-3 gap-3">
           <StatBox value={sections.length} label="باب" color="#16a34a" />
-          <StatBox value={totalLessons} label="درس" color="#0284c7" />
+          <StatBox value={totalLessons} label="موضوع" color="#0284c7" />
           <StatBox
             value={stat3Value ?? avg}
-            label={stat3Label ?? "درس/باب"}
+            label={stat3Label ?? "موضوع/باب"}
             color="#b45309"
           />
         </div>
@@ -94,7 +94,7 @@ function SectionCard({
           <h3 className="font-extrabold text-gray-900 dark:text-white text-base leading-tight">
             {section.title}
           </h3>
-          <span className="text-xs text-gray-400">{section.lessons.length} درسًا</span>
+          <span className="text-xs text-gray-400">{section.lessons.length} موضوعًا</span>
         </div>
         <span
           className="flex-shrink-0 text-lg transition-transform duration-200"
@@ -122,6 +122,11 @@ function SectionCard({
                     {lesson.summary && (
                       <span className="block mt-1 text-xs text-gray-500 dark:text-gray-400 leading-relaxed font-normal">
                         {lesson.summary}
+                      </span>
+                    )}
+                    {lesson.body && (
+                      <span className="block mt-1.5 text-xs text-gray-600 dark:text-gray-300 leading-relaxed font-normal border-r-2 pr-2" style={{ borderColor: section.color }}>
+                        {lesson.body}
                       </span>
                     )}
                   </span>

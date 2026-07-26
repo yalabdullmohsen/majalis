@@ -1,0 +1,10 @@
+/* ============================================================
+   74 — FamilyModePage  (fm-* additions)
+   ============================================================ */
+.fm-loading-wrap  { margin: 3rem auto; }
+.fm-login-prompt  { text-align: center; padding-top: 3rem; }
+.fm-login-icon    { font-size: 3rem; margin-bottom: 1rem; }
+.fm-login-msg     { color: var(--majalis-ink-soft, #5c564c); margin-bottom: 1rem; }
+.fm-joined__icon  { font-size: 3rem; }
+.fm-btn--back     { margin-top: 1.5rem; }
+

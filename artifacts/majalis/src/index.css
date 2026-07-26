@@ -15690,10 +15690,12 @@ body.has-assistant-fab .app-main {
 .univ-btn--ghost         { background: var(--majalis-parchment-deep); color: var(--majalis-ink-soft); }
 .univ-btn--compare-active { background: var(--majalis-emerald-soft, #EBF5F0); color: var(--majalis-emerald-deep, #143F35); }
 
-/* شريط المقارنة */
+/* شريط المقارنة — فوق شريط التنقل السفلي + Home Indicator */
 .compare-bar {
   position: fixed;
-  bottom: 0; right: 0; left: 0;
+  bottom: var(--bottom-nav-total, 0px);
+  right: 0;
+  left: 0;
   z-index: 30;
   background: transparent;
   border-top: 1px solid var(--majalis-line);

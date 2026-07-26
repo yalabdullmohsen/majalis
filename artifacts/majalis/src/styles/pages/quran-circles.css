@@ -37,3 +37,108 @@
 .qcp-empty__desc  { font-size: 0.85rem; }
 .qcp-clear-btn    { margin-top: 1rem; padding: 0.5rem 1.5rem; background: var(--majalis-sage); color: var(--majalis-emerald-deep); border: none; border-radius: var(--ds-radius); cursor: pointer; font-weight: 600; }
 
+
+/* ══════════════════════════════════════════════════════════════════
+   QC-EXT — QuranCircleCard extensions
+   ══════════════════════════════════════════════════════════════════ */
+.qc-card__footer--multi {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  padding: .75rem 1rem;
+  border-top: 1px solid var(--ds-line-color, #D5CBBF);
+  align-items: center;
+}
+.qc-card__reg-btn {
+  display: inline-flex; align-items: center; gap: .35rem;
+  padding: .42rem 1rem; border-radius: .5rem;
+  background: var(--ds-emerald, #226A56); color: #fff;
+  font-size: .82rem; font-weight: 700; text-decoration: none;
+  transition: background .15s;
+}
+.qc-card__reg-btn:hover { background: #226A56; }
+.qc-card__join-btn {
+  display: inline-flex; align-items: center; gap: .35rem;
+  padding: .42rem 1rem; border-radius: .5rem;
+  background: #1e40af; color: #fff;
+  font-size: .82rem; font-weight: 600; text-decoration: none;
+  transition: background .15s;
+}
+.qc-card__join-btn:hover { background: #1730a0; }
+.qc-card__site-btn {
+  display: inline-flex; align-items: center; gap: .35rem;
+  padding: .38rem .85rem; border-radius: .5rem;
+  border: 1.5px solid var(--ds-emerald, #226A56);
+  color: var(--ds-emerald, #226A56);
+  font-size: .8rem; font-weight: 600; text-decoration: none;
+  transition: background .15s;
+}
+.qc-card__site-btn:hover { background: rgba(23,61,53,.07); }
+.qc-card__contact-row {
+  display: flex; align-items: center; gap: .5rem; flex-wrap: wrap;
+}
+.qc-card__contact-link {
+  display: inline-flex; align-items: center; gap: .3rem;
+  font-size: .82rem; color: var(--ds-ink, #1C1C1C);
+  text-decoration: none; direction: ltr;
+}
+.qc-card__contact-link:hover { text-decoration: underline; }
+.qc-card__wa-link {
+  display: inline-block; padding: .18rem .6rem;
+  border-radius: var(--ds-radius-full); background: #15803D;
+  color: #fff; font-size: .72rem; font-weight: 700;
+  text-decoration: none;
+}
+.qc-badge--gov {
+  background: rgba(23,61,53,.10);
+  color: var(--ds-emerald, #226A56);
+  font-size: .8rem; border-radius: var(--ds-radius-full); padding: .15rem .55rem;
+  font-weight: 600;
+}
+.qc-badge--mode-inperson { background: #d1fae5; color: #065f46; }
+.qc-badge--mode-remote   { background: #dbeafe; color: #1e40af; }
+.qc-badge--mode-hybrid   { background: #ede9fe; color: #4f46e5; }
+
+/* dark */
+html[data-theme="dark"] .qc-card__contact-link { color: #C8D8D0; }
+html[data-theme="dark"] .qc-badge--gov { background: rgba(92,196,154,.15); color: #5cc49a; }
+
+/* ── نُقل إلى styles/components/section-quiz.css ── */
+/* ── نُقل إلى styles/pages/hadith-books.css ── */
+
+/* ── نُقل إلى styles/components/friday-banner.css ── */
+/* ── ads-perm → pages/adhan-settings.css ── */
+/* ── RelatedKnowledge/KRI → styles/components/related-knowledge.css ── */
+
+
+/* ── 183 — QuranCircleCard & FiqhCompletionBar ─────────────────────────── */
+.fiqh-completion-bar-fill { width: var(--fcb-pct, 0%); }
+
+.qc-card__meta { font-size: 0.78rem; color: var(--majalis-ink-soft); }
+.qc-card__desc {
+  font-size: 0.8rem; color: var(--majalis-ink-soft); line-height: 1.5;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+.qc-card__capacity-label { font-size: 0.7rem; color: var(--majalis-ink-soft); margin-bottom: 0.25rem; }
+.qc-card__capacity-bar {
+  width: var(--qcc-pct, 0%);
+  background: var(--qcc-bar-color, var(--majalis-emerald));
+}
+.qc-card__join-btn {
+  flex: 1; text-align: center; padding: var(--ds-space-2);
+  background: var(--majalis-emerald); color: #fff;
+  border-radius: 0.6rem; font-size: 0.8rem; font-weight: 700;
+  text-decoration: none; display: block;
+}
+.qc-card__contact {
+  flex: 1; font-size: 0.78rem; color: var(--majalis-ink-soft);
+  display: flex; align-items: center; gap: 0.3rem;
+}
+.qcl--mubtadi    { --qcl-bg: var(--majalis-emerald-soft, #EBF5F0); --qcl-color: var(--majalis-emerald-deep, #143F35); }
+.qcl--mutawassit { --qcl-bg: var(--majalis-emerald-muted, rgba(23,61,53,0.08)); --qcl-color: var(--majalis-emerald, #226A56); }
+.qcl--mutaqaddim { --qcl-bg: var(--majalis-danger-muted, rgba(155,28,28,0.08)); --qcl-color: var(--majalis-danger, #9B1C1C); }
+.qc-badge--level {
+  background: var(--qcl-bg, #f3f4f6);
+  color: var(--qcl-color, #5C5C56);
+}
+

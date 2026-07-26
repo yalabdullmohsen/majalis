@@ -2,6 +2,7 @@ import { useEffect, useState, type FormEvent } from "react";
 import { GraduationCap } from "lucide-react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
+import "@/styles/pages/submit-content.css";
 
 const CONTENT_TYPES = ["درس", "فائدة", "معلومة", "سؤال لعبة", "فكرة"] as const;
 type ContentType = (typeof CONTENT_TYPES)[number];

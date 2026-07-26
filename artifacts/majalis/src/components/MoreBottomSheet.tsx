@@ -10,6 +10,8 @@ import {
   Shield, Sparkles, Star, Stethoscope, Sun, Users, Waypoints, X, Zap,
 } from "lucide-react";
 import { useThemePreference } from "@/components/ThemePreferenceProvider";
+import "@/styles/components/more-bottom-sheet.css";
+import "@/styles/components/dark-emerald-menus.css";
 
 const SHEET_SECTIONS = [
   /* ── القرآن الكريم ── */
@@ -48,7 +50,7 @@ const SHEET_SECTIONS = [
     { href: "/janna-naar",  label: "الجنة والنار",         Icon: Sparkles },
     { href: "/alamat-saah", label: "علامات الساعة",        Icon: Clock },
     { href: "/malaika",     label: "الملائكة في الإسلام",  Icon: Sparkles },
-    { href: "/miracles",    label: "الإعجاز العلمي",       Icon: Lightbulb },
+    { href: "/ulum-quran",  label: "علوم القرآن والإعجاز", Icon: Lightbulb },
   ]},
 
   /* ── التعريف بالإسلام ── */

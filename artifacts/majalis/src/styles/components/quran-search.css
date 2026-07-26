@@ -1,0 +1,8 @@
+/* ── 170 — QuranSearch (qss-*) ─────────────────────────────────────────── */
+
+.qss-pill--popular {
+  background: var(--majalis-sage);
+  border-color: var(--majalis-emerald);
+  color: var(--majalis-emerald-deep);
+}
+

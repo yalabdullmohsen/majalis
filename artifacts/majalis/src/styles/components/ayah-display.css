@@ -1,0 +1,14 @@
+/* ── 167 — AyahDisplay NoteForm (ayd-*) ────────────────────────────────── */
+
+.ayd-inline-icon--bookmark { color: var(--majalis-emerald); }
+.ayd-inline-icon--note     { color: #226A56; }
+.qs-context-sheet__btn--explore {
+  background: var(--majalis-emerald-deep);
+  color: #fff;
+}
+.qs-context-sheet__btn--bookmarked {
+  color: var(--majalis-emerald-deep);
+  font-weight: 700;
+}
+.qs-context-sheet--safe { padding-bottom: env(safe-area-inset-bottom, 0px); }
+

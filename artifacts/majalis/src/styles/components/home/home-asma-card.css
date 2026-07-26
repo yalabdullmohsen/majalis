@@ -39,14 +39,6 @@
   margin: 0 0 0.15rem;
   letter-spacing: normal;
 }
-.hac__transliteration {
-  font-size: 0.72rem;
-  color: color-mix(in srgb, var(--hac-accent, #226A56) 55%, transparent);
-  font-style: italic;
-  margin: 0;
-  direction: ltr;
-  text-align: right;
-}
 .hac__meaning {
   font-size: 0.88rem;
   font-weight: 600;

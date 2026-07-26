@@ -57,10 +57,18 @@ const QURAN_SECTIONS: QuranSection[] = [
     tag: "١١٤ سورة",
   },
   {
+    href: "/quran/makki-madani",
+    title: "المكي والمدني",
+    desc: "ضوابط التمييز بين المكي والمدني وخصائص كل منهما مع فهرست السور",
+    Icon: History,
+    accent: "#143F35",
+    tag: "علوم",
+  },
+  {
     href: "/quran/revelation-order",
     title: "ترتيب نزول القرآن",
     desc: "خريطة زمنية للسور الـ١١٤ حسب تسلسل نزولها التاريخي الفعلي، لا حسب ترقيم المصحف",
-    Icon: History,
+    Icon: CalendarCheck,
     accent: "#143F35",
     tag: "١١٤ سورة",
   },
@@ -98,8 +106,8 @@ const QURAN_SECTIONS: QuranSection[] = [
   },
   {
     href: "/adhkar",
-    title: "أذكار القرآن",
-    desc: "أذكار وأدعية مستمدة من القرآن الكريم والسنة النبوية",
+    title: "الأذكار الشرعية",
+    desc: "أذكار الصباح والمساء والنوم وغيرها والتخريج من الصحيح",
     Icon: Sparkles,
     accent: "#143F35",
     tag: "أذكار",
@@ -107,7 +115,7 @@ const QURAN_SECTIONS: QuranSection[] = [
   {
     href: "/ulum-quran",
     title: "علوم القرآن",
-    desc: "النزول والجمع والتدوين والتفسير وطبقات المفسِّرين عبر القرون",
+    desc: "النزول والجمع والتفسير والإعجاز البياني والتشريعي والغيبي — بلا إعجاز عددي",
     Icon: Layers,
     accent: "#143F35",
     tag: "علم",
@@ -119,14 +127,6 @@ const QURAN_SECTIONS: QuranSection[] = [
     Icon: Star,
     accent: "#143F35",
     tag: "دعاء",
-  },
-  {
-    href: "/miracles",
-    title: "إعجاز القرآن ومعجزاته",
-    desc: "المعجزات النبوية والإعجاز العلمي والبياني في القرآن الكريم",
-    Icon: Heart,
-    accent: "#143F35",
-    tag: "إعجاز",
   },
 ];
 
