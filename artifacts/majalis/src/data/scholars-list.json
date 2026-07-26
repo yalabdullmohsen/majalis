@@ -107,7 +107,7 @@
   {
     "id": "fawzan",
     "name": "الشيخ صالح الفوزان",
-    "died": "—"
+    "died": "حيّ (معاصر)"
   },
   {
     "id": "al-suyuti",
@@ -493,5 +493,55 @@
     "id": "al-qurtubi",
     "name": "القرطبي",
     "died": "٦٧١ هـ"
+  },
+  {
+    "id": "abu-nuaym",
+    "name": "أبو نعيم الأصبهاني",
+    "died": "٤٣٠ هـ"
+  },
+  {
+    "id": "alusi",
+    "name": "الآلوسي",
+    "died": "١٢٧٠ هـ"
+  },
+  {
+    "id": "baghawi",
+    "name": "البغوي",
+    "died": "٥١٦ هـ"
+  },
+  {
+    "id": "sarakhsi",
+    "name": "السرخسي",
+    "died": "٤٨٣ هـ"
+  },
+  {
+    "id": "kasani",
+    "name": "الكاساني",
+    "died": "٥٨٧ هـ"
+  },
+  {
+    "id": "zamakhshari",
+    "name": "الزمخشري",
+    "died": "٥٣٨ هـ"
+  },
+  {
+    "id": "wahidi",
+    "name": "الواحدي",
+    "died": "٤٦٨ هـ"
+  },
+  {
+    "id": "ibn-atiyya",
+    "name": "ابن عطية",
+    "died": "٥٤٢ هـ"
+  },
+  {
+    "id": "baydawi",
+    "name": "البيضاوي",
+    "died": "٦٨٥ هـ"
+  },
+  {
+    "id": "munawi",
+    "name": "المناوي",
+    "died": "١٠٣١ هـ"
   }
 ]
