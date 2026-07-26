@@ -104,6 +104,25 @@ const SECTIONS = [
     ],
   },
   {
+    title: "فهارس دراسية",
+    emoji: "📚",
+    links: [
+      { href: "/durus-imaniyya",   label: "دروس إيمانية",        desc: "أمراض القلوب وأعمالها والتزكية" },
+      { href: "/durus-mutanawwia", label: "دروس متنوعة",         desc: "فهارس في العلم والعمل والواقع" },
+      { href: "/iman-topics",      label: "موضوعات إيمانية",     desc: "موضوعات مركّزة في الإيمان" },
+      { href: "/quran-studies",    label: "دراسات قرآنية",       desc: "قصص وأمثال ومحاور قرآنية" },
+      { href: "/sunnah-studies",   label: "دراسات سنية",         desc: "أبواب من السنة بمتن موجز" },
+      { href: "/tazkiya-topics",   label: "موضوعات التزكية",     desc: "تزكية النفس عملياً" },
+      { href: "/tarikh-islami",    label: "التاريخ الإسلامي",    desc: "محطات بعبرة منهجية" },
+      { href: "/usra-mujtama",     label: "الأسرة والمجتمع",     desc: "بناء البيت المسلم" },
+      { href: "/fikr-waqia",       label: "الفكر والواقع",       desc: "قضايا الشباب والعمل المعاصر" },
+      { href: "/mawsuaat",         label: "فهارس الموسوعات",     desc: "فهارس دراسية موسوعية" },
+      { href: "/arabic-language",  label: "اللغة العربية",       desc: "نحو وصرف وبلاغة لطالب العلم" },
+      { href: "/maqasid-sharia",   label: "مقاصد الشريعة",       desc: "مقاصد الشريعة وفهم الأحكام" },
+      { href: "/dalail-nubuwwah",  label: "دلائل النبوة",        desc: "دلائل النبوة من القرآن والسنة" },
+    ],
+  },
+  {
     title: "التعلّم والمكتبة",
     emoji: "🎓",
     links: [
