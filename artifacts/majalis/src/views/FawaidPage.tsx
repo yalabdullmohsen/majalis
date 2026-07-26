@@ -196,7 +196,7 @@ export default function FawaidPage({
       <PageHeader
         eyebrow="مختارات نافعة"
         title="الفوائد"
-        subtitle="فوائد شرعية موثقة ومنظمة."
+        subtitle="فوائد شرعية منتقاة ومنظّمة — مادة مرجعية أولية."
       />
 
       <div className="ds-section__head">

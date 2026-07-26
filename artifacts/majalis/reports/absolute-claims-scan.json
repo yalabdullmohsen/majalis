@@ -1,0 +1,1007 @@
+{
+  "generatedAt": "2026-07-26",
+  "totalHits": 817,
+  "note": "للتراجع البشري — لا يعني كل تطابق خطأً (قد يكون نقلًا عن عالم أو حديثًا ثابتًا).",
+  "sample": [
+    {
+      "file": "src/lib/adhkar-seed.ts",
+      "line": 181,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/adhkar-seed.ts",
+      "line": 236,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/adhkar-seed.ts",
+      "line": 536,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/adhkar-seed.ts",
+      "line": 736,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/adhkar-seed.ts",
+      "line": 747,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/adhkar-seed.ts",
+      "line": 1412,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/adhkar-seed.ts",
+      "line": 1469,
+      "snippet": "reference: \"حصن المسلم، الدعاء بالاسم الأعظم\","
+    },
+    {
+      "file": "src/lib/adhkar-seed.ts",
+      "line": 1470,
+      "snippet": "keywords: [\"اسم أعظم\", \"توحيد\", \"دعاء\"],"
+    },
+    {
+      "file": "src/lib/adhkar-seed.ts",
+      "line": 1844,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/adhkar-seed.ts",
+      "line": 1855,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/adhkar-seed.ts",
+      "line": 1866,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/adhkar-seed.ts",
+      "line": 2044,
+      "snippet": "source: \"متفق عليه (رواه البخاري ومسلم)\","
+    },
+    {
+      "file": "src/lib/adhkar-seed.ts",
+      "line": 2055,
+      "snippet": "source: \"متفق عليه (رواه البخاري ومسلم)\","
+    },
+    {
+      "file": "src/lib/adhkar-seed.ts",
+      "line": 3133,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/amr-bil-maruf-seed.ts",
+      "line": 69,
+      "snippet": "description: \"الإنكار باللسان هو المرتبة الوسطى، ويشمل التبيين والنصيحة والتحذير والأمر والنهي بالكلام. وهو فرض كفاية إذا أمكن دون مفسدة أعظم.\","
+    },
+    {
+      "file": "src/lib/amr-bil-maruf-seed.ts",
+      "line": 91,
+      "snippet": "text: \"النهي يتبع المصلحة: فإن كان الإنكار يجلب مفسدة أعظم سقط وجوبه\","
+    },
+    {
+      "file": "src/lib/amr-bil-maruf-seed.ts",
+      "line": 127,
+      "snippet": "who_can_do: \"أصحاب الولاية في دائرة ولايتهم فقط\","
+    },
+    {
+      "file": "src/lib/amr-bil-maruf-seed.ts",
+      "line": 175,
+      "snippet": "explanation: \"أعظم المنكرات وأشدها وجوباً للإنكار، وإنكاره واجب بكل المراتب على أصحاب الولاية.\","
+    },
+    {
+      "file": "src/lib/amr-bil-maruf-seed.ts",
+      "line": 183,
+      "snippet": "explanation: \"من أعظم المنكرات، وإنكاره باللسان والحكمة واجب على من يملك التأثير.\","
+    },
+    {
+      "file": "src/lib/amr-bil-maruf-seed.ts",
+      "line": 282,
+      "snippet": "explanation: \"الأمر بالتعلم والتعليم من أعظم المعروف، قال ﷺ: «طلب العلم فريضة على كل مسلم».\","
+    },
+    {
+      "file": "src/lib/amr-bil-maruf-seed.ts",
+      "line": 357,
+      "snippet": "saying: \"الأمر بالمعروف والنهي عن المنكر من أعظم القواعد الإسلامية، وبه تقوم أمور الدنيا والدين.\","
+    },
+    {
+      "file": "src/lib/amr-bil-maruf-seed.ts",
+      "line": 362,
+      "snippet": "saying: \"ترك الأمر بالمعروف والنهي عن المنكر من أعظم أسباب الهلاك والعذاب.\","
+    },
+    {
+      "file": "src/lib/annual-courses-seed.ts",
+      "line": 1567,
+      "snippet": "2. أصحاب الفروض من الذكور والإناث"
+    },
+    {
+      "file": "src/lib/arbaeen-love-service.ts",
+      "line": 21,
+      "snippet": "verified: \"موثّق (غير منشور بعد)\","
+    },
+    {
+      "file": "src/lib/arbaeen-love-service.ts",
+      "line": 68,
+      "snippet": "throw new Error('لا يمكن النشر إلا من حالة \"موثّق\" — راجع الحديث ودرجته وانقله إلى \"موثّق\" أولًا.');"
+    },
+    {
+      "file": "src/lib/arbaeen-nawawi-seed.ts",
+      "line": 19,
+      "snippet": "\"source\": \"متفق عليه — البخاري ومسلم\""
+    },
+    {
+      "file": "src/lib/arbaeen-nawawi-seed.ts",
+      "line": 35,
+      "snippet": "\"source\": \"متفق عليه — البخاري ومسلم\""
+    },
+    {
+      "file": "src/lib/arbaeen-nawawi-seed.ts",
+      "line": 43,
+      "snippet": "\"source\": \"متفق عليه — البخاري ومسلم\""
+    },
+    {
+      "file": "src/lib/arbaeen-nawawi-seed.ts",
+      "line": 51,
+      "snippet": "\"source\": \"متفق عليه — البخاري ومسلم\""
+    },
+    {
+      "file": "src/lib/arbaeen-nawawi-seed.ts",
+      "line": 59,
+      "snippet": "\"source\": \"متفق عليه — البخاري ومسلم\""
+    },
+    {
+      "file": "src/lib/arbaeen-nawawi-seed.ts",
+      "line": 75,
+      "snippet": "\"source\": \"متفق عليه — البخاري ومسلم\""
+    },
+    {
+      "file": "src/lib/arbaeen-nawawi-seed.ts",
+      "line": 83,
+      "snippet": "\"source\": \"متفق عليه — البخاري ومسلم\""
+    },
+    {
+      "file": "src/lib/arbaeen-nawawi-seed.ts",
+      "line": 115,
+      "snippet": "\"source\": \"متفق عليه — البخاري ومسلم\""
+    },
+    {
+      "file": "src/lib/arbaeen-nawawi-seed.ts",
+      "line": 123,
+      "snippet": "\"source\": \"متفق عليه — البخاري ومسلم\""
+    },
+    {
+      "file": "src/lib/arbaeen-nawawi-seed.ts",
+      "line": 131,
+      "snippet": "\"source\": \"متفق عليه — البخاري ومسلم\""
+    },
+    {
+      "file": "src/lib/arbaeen-nawawi-seed.ts",
+      "line": 201,
+      "snippet": "\"explanation\": \"هذا حديث قدسي عظيم من أطول أحاديث الأربعين، يُقرر تنزّه الله عن الظلم ثم تحريمه بين العباد، ثم يتوالى بعشر نداءات «يا عبادي» تُقرر أسس التوحيد و"
+    },
+    {
+      "file": "src/lib/arbaeen-nawawi-seed.ts",
+      "line": 202,
+      "snippet": "\"benefits\": \"لا تظلم أحداً في قول أو فعل أو مال أو عرض. واعلم أن المظلوم ليس بينه وبين الله حجاب. ردّ المظالم إلى أصحابها قبل أن يأتي يوم لا دينار فيه ولا درهم."
+    },
+    {
+      "file": "src/lib/arbaeen-nawawi-seed.ts",
+      "line": 219,
+      "snippet": "\"source\": \"متفق عليه — البخاري ومسلم\""
+    },
+    {
+      "file": "src/lib/arbaeen-nawawi-seed.ts",
+      "line": 233,
+      "snippet": "\"explanation\": \"خطبة وداع تجمع ثلاثة أوامر جوهرية: تقوى الله (الأصل)، والطاعة (التماسك الاجتماعي)، والتمسك بالسنة (الأمان من الانحراف). وقد أخبر النبي ﷺ أصحابه "
+    },
+    {
+      "file": "src/lib/arbaeen-nawawi-seed.ts",
+      "line": 297,
+      "snippet": "\"explanation\": \"مبدأ المقابلة: ما تصنعه للمسلمين يصنعه الله لك، نوعاً ونسبةً. تفريج الكربة يُقابَل بتفريج كربة القيامة وهي أعظم الكرب. والتيسير على المعسر والست"
+    },
+    {
+      "file": "src/lib/arbaeen-nawawi-seed.ts",
+      "line": 305,
+      "snippet": "\"explanation\": \"هذا الحديث من أعظم ما يُبيّن رحمة الله وكرمه. الهمّ بالحسنة وحده حسنة، وفعلها عشر. أما السيئة: فالهمّ بها الذي يُكافح النفس عنه حسنة، وفعلها سيئ"
+    },
+    {
+      "file": "src/lib/arbaeen-nawawi-seed.ts",
+      "line": 307,
+      "snippet": "\"source\": \"متفق عليه — البخاري ومسلم\""
+    },
+    {
+      "file": "src/lib/asma-husna-data.ts",
+      "line": 53,
+      "snippet": "{ num:38, arabic:\"الكبير\",    transliteration:\"Al-Kabir\",      meaning:\"الكبير في ذاته وصفاته، أعظم من كل عظيم\",                           reference:\"﴿عَالِمُ ا"
+    },
+    {
+      "file": "src/lib/content-import-bundle.json",
+      "line": 30,
+      "snippet": "\"summary\": \"أعظم سور القرآن، تُعدل ثلثه في المعنى.\","
+    },
+    {
+      "file": "src/lib/daily-content.ts",
+      "line": 62,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/daily-content.ts",
+      "line": 70,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/daily-content.ts",
+      "line": 78,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/daily-content.ts",
+      "line": 166,
+      "snippet": "meaning: \"الدعاء بزيادة العلم من أعظم الأدعية.\","
+    },
+    {
+      "file": "src/lib/daily-content.ts",
+      "line": 182,
+      "snippet": "meaning: \"في الكون آيات تدل أصحاب العقول على عظمة الخالق.\","
+    },
+    {
+      "file": "src/lib/daily-content.ts",
+      "line": 404,
+      "snippet": "text: \"حسن الخلق من أعظم ما يُقرب العبد إلى الله وإلى قلوب الناس.\","
+    },
+    {
+      "file": "src/lib/durus-imaniyya-data.ts",
+      "line": 116,
+      "snippet": "[\"الصحبة الصالحة وأثرها في الثبات\", \"«المرء على دين خليله» — أعظم معين بعد توفيق الله. محاور الدرس: بيان المعنى، وربطه بالعمل اليومي، وخلاصة عملية مختصرة، مع ال"
+    },
+    {
+      "file": "src/lib/durus-imaniyya-data.ts",
+      "line": 133,
+      "snippet": "[\"قيام الليل\", \"أفضل الصلاة بعد الفريضة، ودأب الصالحين قبلنا. محاور الدرس: بيان المعنى، وربطه بالعمل اليومي، وخلاصة عملية مختصرة، مع التذكير بأن المقصود التربية"
+    },
+    {
+      "file": "src/lib/durus-imaniyya-data.ts",
+      "line": 168,
+      "snippet": "[\"فضل ذكر الله\", \"به تحيا القلوب، وهو من أيسر العبادات وأعظمها أثراً في الطمأنينة. محاور الدرس: بيان المعنى، وربطه بالعمل اليومي، وخلاصة عملية مختصرة، مع التذكي"
+    },
+    {
+      "file": "src/lib/durus-imaniyya-data.ts",
+      "line": 178,
+      "snippet": "[\"أدعية القرآن والسنة\", \"أجمع الدعاء وأصحّه، وأولى مما اختُرع من الأدعية المصنوعة. محاور الدرس: بيان المعنى، وربطه بالعمل اليومي، وخلاصة عملية مختصرة، مع التذكي"
+    },
+    {
+      "file": "src/lib/durus-imaniyya-data.ts",
+      "line": 191,
+      "snippet": "[\"الحياء\", \"خُلق يبعث على ترك القبيح، و«الحياء لا يأتي إلا بخير» — متفق عليه. محاور الدرس: بيان المعنى، وربطه بالعمل اليومي، وخلاصة عملية مختصرة، مع التذكير بأن"
+    },
+    {
+      "file": "src/lib/durus-imaniyya-data.ts",
+      "line": 249,
+      "snippet": "[\"العزلة المحمودة والمخالطة النافعة\", \"لكل مقام حكمه، والمخالطة بالصبر أفضل عند أمن الفتنة. محاور الدرس: بيان المعنى، وربطه بالعمل اليومي، وخلاصة عملية مختصرة، "
+    },
+    {
+      "file": "src/lib/durus-imaniyya-data.ts",
+      "line": 270,
+      "snippet": "[\"الإصلاح بين الناس\", \"أفضل من درجة الصيام والصلاة والصدقة كما في الحديث. محاور الدرس: بيان المعنى، وربطه بالعمل اليومي، وخلاصة عملية مختصرة، مع التذكير بأن الم"
+    },
+    {
+      "file": "src/lib/durus-imaniyya-data.ts",
+      "line": 271,
+      "snippet": "[\"المسؤولية الاجتماعية للمسلم\", \"«كلكم راعٍ وكلكم مسؤول عن رعيته» — متفق عليه. محاور الدرس: بيان المعنى، وربطه بالعمل اليومي، وخلاصة عملية مختصرة، مع التذكير بأ"
+    },
+    {
+      "file": "src/lib/durus-imaniyya-data.ts",
+      "line": 283,
+      "snippet": "[\"كيف كان النبي ﷺ يعامل أصحابه؟\", \"يُقبل على محدّثه، ويشاورهم، ويعتذر لهم، ويُنزل الناس منازلهم. محاور الدرس: بيان المعنى، وربطه بالعمل اليومي، وخلاصة عملية مخت"
+    },
+    {
+      "file": "src/lib/durus-imaniyya-data.ts",
+      "line": 329,
+      "snippet": "[\"الصحبة وأثرها\", \"أعظم مؤثر بعد البيت في تشكيل السلوك والقناعات. محاور الدرس: بيان المعنى، وربطه بالعمل اليومي، وخلاصة عملية مختصرة، مع التذكير بأن المقصود الت"
+    },
+    {
+      "file": "src/lib/durus-imaniyya-data.ts",
+      "line": 348,
+      "snippet": "[\"لماذا القلب هو البداية؟\", \"«ألا وإن في الجسد مضغة إذا صلحت صلح الجسد كله» — متفق عليه. محاور الدرس: بيان المعنى، وربطه بالعمل اليومي، وخلاصة عملية مختصرة، مع "
+    },
+    {
+      "file": "src/lib/durus-imaniyya-data.ts",
+      "line": 353,
+      "snippet": "[\"أثر القرآن في القلب\", \"شفاء لما في الصدور، وأعظم دواء لقسوة القلب. محاور الدرس: بيان المعنى، وربطه بالعمل اليومي، وخلاصة عملية مختصرة، مع التذكير بأن المقصود "
+    },
+    {
+      "file": "src/lib/durus-mutanawwia-data.ts",
+      "line": 23,
+      "snippet": "[\"ما الذي يستحق أن تحزن عليه؟\", \"ترتيب الأحزان: ما نقص من دينك أعظم مما فات من دنياك. محاور الدرس: بيان المعنى، وربطه بالعمل اليومي، وخلاصة عملية مختصرة، مع الت"
+    },
+    {
+      "file": "src/lib/durus-mutanawwia-data.ts",
+      "line": 44,
+      "snippet": "[\"أصحاب الكهف والهروب بالدين\", \"الفرار بالدين حين تنعدم البيئة، وثمرته حفظ الله لهم. محاور الدرس: بيان المعنى، وربطه بالعمل اليومي، وخلاصة عملية مختصرة، مع التذ"
+    },
+    {
+      "file": "src/lib/durus-mutanawwia-data.ts",
+      "line": 52,
+      "snippet": "[\"أصحاب الأخدود والثبات على الدين\", \"الثبات حين يكون الثمن الحياة، وأن النصر ليس دائماً بالبقاء. محاور الدرس: بيان المعنى، وربطه بالعمل اليومي، وخلاصة عملية مخت"
+    },
+    {
+      "file": "src/lib/durus-mutanawwia-data.ts",
+      "line": 89,
+      "snippet": "[\"من حسن إسلام المرء تركه ما لا يعنيه\", \"أعظم موفّر للوقت والطاقة، وصون للعلاقات من الفضول. محاور الدرس: بيان المعنى، وربطه بالعمل اليومي، وخلاصة عملية مختصرة، "
+    },
+    {
+      "file": "src/lib/durus-mutanawwia-data.ts",
+      "line": 108,
+      "snippet": "[\"مشورته لأصحابه\", \"استشارهم في بدر والخندق والحديبية وهو المؤيَّد بالوحي. محاور الدرس: بيان المعنى، وربطه بالعمل اليومي، وخلاصة عملية مختصرة، مع التذكير بأن ال"
+    },
+    {
+      "file": "src/lib/durus-mutanawwia-data.ts",
+      "line": 212,
+      "snippet": "[\"احتقار أصحاب المعاصي\", \"بغض المعصية لا يستلزم احتقار العاصي، والخاتمة مجهولة. محاور الدرس: بيان المعنى، وربطه بالعمل اليومي، وخلاصة عملية مختصرة، مع التذكير ب"
+    },
+    {
+      "file": "src/lib/durus-mutanawwia-data.ts",
+      "line": 273,
+      "snippet": "[\"الشورى وصناعة القرار\", \"﴿وَأَمْرُهُمْ شُورَىٰ بَيْنَهُمْ﴾ — واستشارة النبي ﷺ لأصحابه وهو مؤيَّد بالوحي. محاور الدرس: بيان المعنى، وربطه بالعمل اليومي، وخلاصة "
+    },
+    {
+      "file": "src/lib/durus-mutanawwia-data.ts",
+      "line": 296,
+      "snippet": "[\"متى يكون الإنكار مشروعا؟\", \"في المنكر المتفق عليه، لا في مسائل الاجتهاد السائغ. محاور الدرس: بيان المعنى، وربطه بالعمل اليومي، وخلاصة عملية مختصرة، مع التذكير"
+    },
+    {
+      "file": "src/lib/durus-mutanawwia-data.ts",
+      "line": 311,
+      "snippet": "[\"الانضباط في حياة المسلم\", \"الصلوات الخمس أعظم مدرسة انضباط يومي في الوقت. محاور الدرس: بيان المعنى، وربطه بالعمل اليومي، وخلاصة عملية مختصرة، مع التذكير بأن ا"
+    },
+    {
+      "file": "src/lib/durus-mutanawwia-data.ts",
+      "line": 425,
+      "snippet": "[\"اترك ما لا يعنيك\", \"ترك الفضول أعظم موفّر للوقت والطاقة والعلاقات. محاور الدرس: بيان المعنى، وربطه بالعمل اليومي، وخلاصة عملية مختصرة، مع التذكير بأن المقصود "
+    },
+    {
+      "file": "src/lib/durus-mutanawwia-data.ts",
+      "line": 484,
+      "snippet": "[\"الصداقة وأثرها في مسيرتك\", \"أعظم مؤثر بعد البيت، ويظهر أثره بعد سنوات لا أيام. محاور الدرس: بيان المعنى، وربطه بالعمل اليومي، وخلاصة عملية مختصرة، مع التذكير "
+    },
+    {
+      "file": "src/lib/durus-mutanawwia-data.ts",
+      "line": 512,
+      "snippet": "[\"كيف تتعامل مع أسئلة الطفل الوجودية؟\", \"صدق وبساطة مع الطفل، و«لا أعلم» أفضل من جواب مرتجل. محاور الدرس: بيان المعنى، وربطه بالعمل اليومي، وخلاصة عملية مختصرة،"
+    },
+    {
+      "file": "src/lib/durus-mutanawwia-data.ts",
+      "line": 530,
+      "snippet": "[\"إكرام الضيف\", \"«من كان يؤمن بالله واليوم الآخر فليكرم ضيفه» — متفق عليه. محاور الدرس: بيان المعنى، وربطه بالعمل اليومي، وخلاصة عملية مختصرة، مع التذكير بأن ال"
+    },
+    {
+      "file": "src/lib/fawaid-curated-seed.ts",
+      "line": 43,
+      "snippet": "{ text: \"الأعمال بالنيات؛ فمن أخلص لله نفعته، ومن أشرك أبطلها.\", category: \"العقيدة\", source: \"متفق عليه: «إنما الأعمال بالنيات»\", author_name: \"صحيح البخاري\", "
+    },
+    {
+      "file": "src/lib/fawaid-curated-seed.ts",
+      "line": 47,
+      "snippet": "{ text: \"سورة الإخلاص تعدل ثلث القرآن في الأجر والثواب.\", category: \"القرآن\", source: \"«والذي نفسي بيده إنها لتعدل ثلث القرآن» — متفق عليه عن أبي سعيد الخدري\", "
+    },
+    {
+      "file": "src/lib/fawaid-curated-seed.ts",
+      "line": 48,
+      "snippet": "{ text: \"الصدق يهدي إلى البر، والبر يهدي إلى الجنة.\", category: \"الأخلاق\", source: \"متفق عليه\", author_name: \"صحيح البخاري\", status: \"approved\", verification_st"
+    },
+    {
+      "file": "src/lib/fawaid-curated-seed.ts",
+      "line": 52,
+      "snippet": "{ text: \"الوضوء شرط لصحة الصلاة عند الحدث؛ فلا تُقبل صلاة بلا طهارة مما أوجبها.\", category: \"الفقه\", source: \"متفق عليه: «لا تُقبل صلاة بغير طهور» — ومعناه مجمع"
+    },
+    {
+      "file": "src/lib/fawaid-curated-seed.ts",
+      "line": 53,
+      "snippet": "{ text: \"صلاة الجماعة أفضل من صلاة الفذ بسبع وعشرين درجة.\", category: \"الفقه\", source: \"متفق عليه\", author_name: \"صحيح البخاري\", status: \"approved\", verificatio"
+    },
+    {
+      "file": "src/lib/fawaid-curated-seed.ts",
+      "line": 60,
+      "snippet": "{ text: \"من كان يؤمن بالله واليوم الآخر فليقل خيراً أو ليصمت.\", category: \"الآداب\", source: \"متفق عليه\", author_name: \"صحيح البخاري\", status: \"approved\", verifi"
+    },
+    {
+      "file": "src/lib/fawaid-curated-seed.ts",
+      "line": 61,
+      "snippet": "{ text: \"من لا يرحم لا يرحم؛ فالرحمة سبب لنيل رحمة الله.\", category: \"الأخلاق\", source: \"متفق عليه\", author_name: \"صحيح البخاري\", status: \"approved\", verificati"
+    },
+    {
+      "file": "src/lib/fawaid-curated-seed.ts",
+      "line": 70,
+      "snippet": "{ text: \"الصوم جُنة؛ فإذا كان يوم صوم أحدكم فلا يرفث ولا يجهل.\", category: \"الحديث\", source: \"متفق عليه\", author_name: \"صحيح البخاري\", status: \"approved\", verif"
+    },
+    {
+      "file": "src/lib/fawaid-curated-seed.ts",
+      "line": 91,
+      "snippet": "{ text: \"الدعاء من أعظم أبواب العبادة والافتقار إلى الله، وهو مأمور به في الكتاب والسنة.\", category: \"الفقه\", source: \"قال تعالى: {ادْعُونِي أَسْتَجِبْ لَكُمْ} "
+    },
+    {
+      "file": "src/lib/fawaid-curated-seed.ts",
+      "line": 94,
+      "snippet": "{ text: \"الغنى غنى النفس؛ فمن استغنى بما آتاه الله كفاه.\", category: \"الآداب\", source: \"متفق عليه\", author_name: \"صحيح البخاري\", status: \"approved\", verificatio"
+    },
+    {
+      "file": "src/lib/fawaid-curated-seed.ts",
+      "line": 95,
+      "snippet": "{ text: \"اليد العليا خير من اليد السفلى.\", category: \"الأخلاق\", source: \"متفق عليه\", author_name: \"صحيح البخاري\", status: \"approved\", verification_status: \"veri"
+    },
+    {
+      "file": "src/lib/fawaid-curated-seed.ts",
+      "line": 100,
+      "snippet": "{ text: \"كل سلامى من الناس عليه صدقة كل يوم.\", category: \"الأخلاق\", source: \"متفق عليه\", author_name: \"صحيح البخاري\", status: \"approved\", verification_status: \""
+    },
+    {
+      "file": "src/lib/fawaid-curated-seed.ts",
+      "line": 104,
+      "snippet": "{ text: \"أفضل الأعمال بعد الإسلام الصلاة لوقتها، ثم بر الوالدين، ثم الجهاد في سبيل الله.\", category: \"العقيدة\", source: \"متفق عليه\", author_name: \"صحيح البخاري\""
+    },
+    {
+      "file": "src/lib/fawaid-curated-seed.ts",
+      "line": 108,
+      "snippet": "{ text: \"الإيمان بضع وسبعون شعبة؛ فأفضلها لا إله إلا الله، وأدناها إماطة الأذى عن الطريق.\", category: \"العقيدة\", source: \"رواه مسلم (35)\", author_name: \"صحيح مس"
+    },
+    {
+      "file": "src/lib/fawaid-curated-seed.ts",
+      "line": 117,
+      "snippet": "{ text: \"لا يؤمن أحدكم حتى يحب لأخيه ما يحب لنفسه.\", category: \"الحديث\", source: \"متفق عليه\", author_name: \"صحيح البخاري\", status: \"approved\", verification_stat"
+    },
+    {
+      "file": "src/lib/fawaid-curated-seed.ts",
+      "line": 118,
+      "snippet": "{ text: \"رمضان يربّي على الصبر، والصبر من أعظم أخلاق الإيمان وثوابه عند الله عظيم.\", category: \"الحديث\", source: \"معنى مستفاد من آيات الصبر وفضائل رمضان الثابتة"
+    },
+    {
+      "file": "src/lib/fawaid-curated-seed.ts",
+      "line": 119,
+      "snippet": "{ text: \"سبعة يظلهم الله في ظله يوم لا ظل إلا ظله: الإمام العادل، وشاب نشأ في عبادة الله، ورجل قلبه معلّق بالمساجد، ورجلان تحابّا في الله، ورجل دعته امرأة ذات م"
+    },
+    {
+      "file": "src/lib/fawaid-curated-seed.ts",
+      "line": 120,
+      "snippet": "{ text: \"كلمتان خفيفتان على اللسان ثقيلتان في الميزان حبيبتان إلى الرحمن: سبحان الله وبحمده سبحان الله العظيم.\", category: \"الحديث\", source: \"متفق عليه\", author"
+    },
+    {
+      "file": "src/lib/fawaid-curated-seed.ts",
+      "line": 126,
+      "snippet": "{ text: \"من أدرك ركعة من الصلاة مع الإمام فقد أدرك الصلاة.\", category: \"الفقه\", source: \"متفق عليه\", author_name: \"صحيح البخاري\", status: \"approved\", verificati"
+    },
+    {
+      "file": "src/lib/fawaid-curated-seed.ts",
+      "line": 132,
+      "snippet": "{ text: \"إن الذي يتعتع في القرآن وهو عليه شاق له أجران.\", category: \"القرآن\", source: \"متفق عليه\", author_name: \"صحيح البخاري\", status: \"approved\", verification"
+    },
+    {
+      "file": "src/lib/fawaid-curated-seed.ts",
+      "line": 142,
+      "snippet": "{ text: \"إياكم والجلوس على الطرقات إلا أن تؤدوا حقها.\", category: \"الآداب\", source: \"متفق عليه\", author_name: \"صحيح البخاري\", status: \"approved\", verification_s"
+    },
+    {
+      "file": "src/lib/fawaid-curated-seed.ts",
+      "line": 152,
+      "snippet": "{ text: \"العلم النافع يرفع صاحبه ويثمر العمل؛ وطلبه وبذله من أعظم القربات.\", category: \"طلب العلم\", source: \"معنى عام من فضائل العلم الثابتة؛ اللفظ المشهور «الع"
+    },
+    {
+      "file": "src/lib/fawaid-curated-seed.ts",
+      "line": 157,
+      "snippet": "{ text: \"فوالله لأن يهدي الله بك رجلاً واحداً خير لك من حمر النعم.\", category: \"الدعوة\", source: \"متفق عليه\", author_name: \"صحيح البخاري\", status: \"approved\", v"
+    },
+    {
+      "file": "src/lib/fawaid-curated-seed.ts",
+      "line": 169,
+      "snippet": "{ text: \"من أحبّ للمسلمين ما يُحب لنفسه فقد كمل إيمانه.\", category: \"العقيدة\", source: \"لا يؤمن أحدكم حتى يحب لأخيه ما يحب لنفسه — متفق عليه\", author_name: \"صحي"
+    },
+    {
+      "file": "src/lib/fawaid-curated-seed.ts",
+      "line": 170,
+      "snippet": "{ text: \"أفضل الإيمان أن تعلم أن الله معك أينما كنت.\", category: \"العقيدة\", source: \"رواه الطبراني — حسنه الألباني\", author_name: \"المعجم الكبير\", status: \"appr"
+    },
+    {
+      "file": "src/lib/fawaid-curated-seed.ts",
+      "line": 176,
+      "snippet": "{ text: \"المسلم من سلم المسلمون من لسانه ويده.\", category: \"الحديث\", source: \"متفق عليه\", author_name: \"صحيح البخاري\", status: \"approved\", verification_status: "
+    },
+    {
+      "file": "src/lib/fawaid-curated-seed.ts",
+      "line": 182,
+      "snippet": "{ text: \"آية الكرسي أعظم آية في القرآن لاشتمالها على صفات الله العليا.\", category: \"التفسير\", source: \"رواه مسلم — كتاب صلاة المسافرين\", author_name: \"صحيح مسلم"
+    },
+    {
+      "file": "src/lib/fawaid-curated-seed.ts",
+      "line": 205,
+      "snippet": "{ text: \"الولد يتشكّل على يد والديه؛ فكن القدوة قبل أن تكون الموجّه.\", category: \"التربية\", source: \"كل مولود يولد على الفطرة — متفق عليه\", author_name: \"صحيح ا"
+    },
+    {
+      "file": "src/lib/fawaid-curated-seed.ts",
+      "line": 209,
+      "snippet": "{ text: \"إياكم والظن فإن الظن أكذب الحديث.\", category: \"الآداب\", source: \"متفق عليه\", author_name: \"صحيح البخاري\", status: \"approved\", verification_status: \"ver"
+    },
+    {
+      "file": "src/lib/fawaid-curated-seed.ts",
+      "line": 224,
+      "snippet": "{ text: \"الحياء شعبة من شعب الإيمان؛ ومن قلّ حياؤه ضعف إيمانه.\", category: \"العقيدة\", source: \"الشطر الأول حديث متفق عليه: «الإيمان بضع وستون شعبة، والحياء شعبة"
+    },
+    {
+      "file": "src/lib/fawaid-curated-seed.ts",
+      "line": 288,
+      "snippet": "{ text: \"صحيح البخاري أصح الكتب بعد كتاب الله؛ وقد استغرق البخاري ستة عشر عاماً في تصنيفه.\", category: \"الحديث\", source: \"هدي الساري مقدمة فتح الباري — ابن حجر "
+    },
+    {
+      "file": "src/lib/fawaid-curated-seed.ts",
+      "line": 316,
+      "snippet": "{ text: \"البيّعان بالخيار ما لم يتفرّقا؛ فإن صدقا وبيّنا بورك لهما، وإن كتما وكذبا مُحقت بركة بيعهما.\", category: \"الفقه\", source: \"متفق عليه\", author_name: \"صح"
+    },
+    {
+      "file": "src/lib/fawaid-curated-seed.ts",
+      "line": 317,
+      "snippet": "{ text: \"المسلم أخو المسلم — لا يحل لمسلم أن يبيع على بيع أخيه.\", category: \"الفقه\", source: \"متفق عليه\", author_name: \"صحيح البخاري\", status: \"approved\", verif"
+    },
+    {
+      "file": "src/lib/fawaid-curated-seed.ts",
+      "line": 323,
+      "snippet": "{ text: \"ما يصيب المسلم من نصب ولا وصب، ولا هم ولا حزن، ولا أذى ولا غم، حتى الشوكة يُشاكها، إلا كفّر الله بها من خطاياه.\", category: \"العقيدة\", source: \"متفق عل"
+    },
+    {
+      "file": "src/lib/fawaid-curated-seed.ts",
+      "line": 341,
+      "snippet": "{ text: \"المجتمع المسلم كالجسد الواحد؛ إذا اشتكى منه عضو تداعى له سائر الجسد بالسهر والحمى.\", category: \"الحديث\", source: \"متفق عليه\", author_name: \"صحيح البخار"
+    },
+    {
+      "file": "src/lib/fawaid-curated-seed.ts",
+      "line": 359,
+      "snippet": "{ text: \"دعاء ذي النون في بطن الحوت: «لا إله إلا أنت سبحانك إني كنت من الظالمين» — استجاب الله له فنجّاه من الغمّ، وهي من أعظم أدعية الكرب.\", category: \"الذكر و"
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 33,
+      "snippet": "text: \"اقرؤوا القرآن فإنه يأتي يوم القيامة شفيعاً لأصحابه.\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 43,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 51,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 67,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 99,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 107,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 113,
+      "snippet": "text: \"قراءة القرآن من أعظم العبادات؛ أما لفظ «أفضل عبادة أمتي قراءة القرآن» فضعيف الإسناد.\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 129,
+      "snippet": "text: \"الفاتحة أعظم سورة في القرآن، وهي السبع المثاني والقرآن العظيم.\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 213,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 237,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 285,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 303,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 311,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 497,
+      "snippet": "source: \"الشطر الأول رواه أحمد (14727) عن جابر بن عبدالله، حسّنه الألباني في صحيح الترغيب (981)؛ الشطر الثاني متفق عليه من حديث سهل بن سعد الساعدي (البخاري 1896"
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 585,
+      "snippet": "text: \"صحبة الصالحين أعظم معين على الاستقامة، والمرء على دين خليله.\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 595,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 677,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 807,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 815,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 831,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 837,
+      "snippet": "text: \"حفظ اللسان والفرج من أعظم أسباب النجاة؛ من يضمن لي ما بين لحييه وما بين رجليه أضمن له الجنة.\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 847,
+      "snippet": "source: \"حديثان: «الحياء شعبة من الإيمان» متفق عليه عن أبي هريرة، و«إذا لم تستح فاصنع ما شئت» رواه البخاري عن أبي مسعود الأنصاري\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 879,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 887,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 901,
+      "snippet": "text: \"العفو عند المقدرة من أعظم خصال الكرماء، ومن عفا وأصلح فأجره على الله.\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 950,
+      "snippet": "text: \"الآية 255 من سورة البقرة (آية الكرسي) أعظمُ آية في كتاب الله.\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 974,
+      "snippet": "text: \"القرآن يشفع لأصحابه يوم القيامة.\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 982,
+      "snippet": "text: \"أفضل ما تُعلّمه الصبيان القرآن؛ لأنه حجة لهم.\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 1014,
+      "snippet": "text: \"كثرة التلاوة دون فهم خير من قلّتها، لكن التدبر مع القلة أعظم أجراً.\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 1046,
+      "snippet": "text: \"المعوّذتان من أعظم ما يُستعاذ به.\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 1080,
+      "snippet": "source: \"متفق عليه، البخاري (4664-4666) ومسلم (1963-1964) عن عبدالله بن عمرو بن العاص\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 1086,
+      "snippet": "text: \"الترتيل في القرآن أفضل من الإسراع في التلاوة.\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 1097,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 1105,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 1113,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 1119,
+      "snippet": "text: \"أفضل الصيام بعد رمضان شهر الله المحرم.\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 1145,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 1185,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 1201,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 1288,
+      "snippet": "text: \"الشرك أعظم الذنوب لأنه ظلم عظيم؛ ﴿إِنَّ الشِّرْكَ لَظُلْمٌ عَظِيمٌ﴾.\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 1394,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 1489,
+      "snippet": "text: \"أفضل الصلاة بعد الصلاة المكتوبة الصلاة في جوف الليل (قيام الليل).\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 1523,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 1690,
+      "snippet": "text: \"طاعة الوالدين من أفضل القربات بعد الصلاة.\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 1692,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 1722,
+      "snippet": "text: \"الزهد في الدنيا يُفرّغ القلب لما هو أعظم.\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 1773,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 1813,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 1902,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 1910,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 1950,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 1958,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 1966,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 1998,
+      "snippet": "source: \"متفق عليه — عن أبي موسى الأشعري\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 2014,
+      "snippet": "source: \"معنى مستفاد من حديث متفق عليه (مسلم 2588): وما تواضع أحد لله إلا رفعه الله\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 2030,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 2036,
+      "snippet": "text: \"إن من أعظم البر أن يصل الرجل أهل ودّ أبيه.\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 2054,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 2062,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 2102,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 2118,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 2214,
+      "snippet": "source: \"متفق عليه — البخاري ومسلم\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 2260,
+      "snippet": "text: \"من قال حين يصبح وحين يمسي: «سبحان الله وبحمده» مائة مرة لم يأتِ أحد يوم القيامة بأفضل مما جاء به.\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 2276,
+      "snippet": "text: \"أحب الأعمال إلى الله أدومها وإن قلّ — الاستمرار في العمل الصالح أفضل من الانقطاع بعد الكثير.\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 2278,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 2302,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 2310,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 2342,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 2372,
+      "snippet": "text: \"أفضل الأعمال أحبّها إلى الله وإن قلّ — المداومة على العمل الصالح القليل أحب إلى الله من الكثير المنقطع.\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 2374,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 2380,
+      "snippet": "text: \"سورة الكهف كنز قرآني: تجمع أربع قصص عظيمة — أصحاب الكهف، وصاحب الجنتين، وموسى والخضر، وذو القرنين.\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 2406,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 2422,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 2436,
+      "snippet": "text: \"ثلاثة إذا أحببتهم أحبك الله: من أحب الفقراء، ومن أحب أصحاب محمد ﷺ، ومن يصبر على البلاء.\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 2502,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 2510,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 2518,
+      "snippet": "source: \"متفق عليه\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 2540,
+      "snippet": "text: \"أعظم آية في القرآن آية الكرسي — قال ﷺ لأُبيّ بن كعب: «يا أبا المنذر أتدري أي آية من كتاب الله معك أعظم؟» قال: قلت: الله ورسوله أعلم. قال: «يا أبا المنذر "
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 2572,
+      "snippet": "text: \"قضاء حاجة المسلم من أعظم القربات — قال ﷺ: «من نفّس عن مؤمن كربةً من كُرَب الدنيا نفّس اللهُ عنه كربةً من كُرَب يوم القيامة».\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 2612,
+      "snippet": "text: \"القرآن شفيع لأهله يوم القيامة — قال ﷺ: «اقرأوا القرآن فإنه يأتي يوم القيامة شفيعاً لأصحابه». فالمداومة على التلاوة ولو آيات يسيرة كل يوم عمل عظيم.\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 2620,
+      "snippet": "text: \"من قرأ آية الكرسي دبر كل صلاة مكتوبة لم يحل بينه وبين الجنة إلا الموت — فهي من أعظم الأوراد التي أُوصي بالمداومة عليها بعد كل فريضة.\","
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 2716,
+      "snippet": "text: \"التوحيد أعظم واجب وأسعد طريق — قال شيخ الإسلام ابن تيمية: «العبادة اسم جامع لكل ما يحبه الله ويرضاه من الأقوال والأعمال الظاهرة والباطنة». فمن أخلص التوح"
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 2748,
+      "snippet": "text: \"أفضل ما يُتعلم بعد الفرائض هو تلاوة القرآن وتدبّره — قال عثمان بن عفان رضي الله عنه: «لو طهرت قلوبنا لما شبعت من كلام الله». فكيف نشبع من كلام الخلق وننق"
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 2828,
+      "snippet": "text: \"أعظم ما يُستعان به على طاعة الله هو صحبة الصالحين — قال الله تعالى: ﴿يَا أَيُّهَا الَّذِينَ آمَنُوا اتَّقُوا اللَّهَ وَكُونُوا مَعَ الصَّادِقِينَ﴾. فالبي"
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 2884,
+      "snippet": "text: \"فضل العلم الشرعي أنه يبقى بعد صاحبه — قال ﷺ: «من يُرِد الله به خيراً يُفقِّهه في الدين». وقال ابن القيم: «الفقه في الدين من أعظم نعم الله على عبده لأنه ط"
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 2972,
+      "snippet": "text: \"العبادة المركبة أعظم من العبادة المفردة — الصلاة جمعت النية والقراءة والذكر والقيام والركوع والسجود، فهي أعظم من كل عبادة منفردة. وكذلك الحج جمع السفر وا"
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 3028,
+      "snippet": "text: \"التوكل على الله لا يعني ترك الأسباب — قال ﷺ لمن سأله: «أُعقِلُها وأتوكّل؟» فأجاب: «اعقلها وتوكّل». فالتوكل حال القلب بعد استيفاء الأسباب الظاهرة، لا قبله"
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 3036,
+      "snippet": "text: \"الذكر حياة القلب — قال ابن القيم: مثل القلب الذي لا يذكر الله كمثل السمكة إذا أُخرجت من الماء. فالذكر لا يكفيه اللسان وحده، بل يجب أن يصاحبه حضور القلب و"
+    },
+    {
+      "file": "src/lib/fawaid-seed.ts",
+      "line": 3068,
+      "snippet": "text: \"فضل صلاة الجماعة في الفقه الإسلامي — تزيد صلاة الجماعة على صلاة الفذ بسبع وعشرين درجة كما ثبت في الصحيحين. وكان الفقهاء يختلفون في حكمها بين الفرض الكفائ"
+    }
+  ]
+}

@@ -1,0 +1,55 @@
+{
+  "issues": [],
+  "sample": [
+    {
+      "w": 390,
+      "route": "/",
+      "title": "المجلس العلمي، منصة العلوم الإسلامية",
+      "overflow": false,
+      "bottom": true
+    },
+    {
+      "w": 390,
+      "route": "/quran-hub/",
+      "title": "مركز القرآن الكريم | المجلس العلمي",
+      "overflow": false,
+      "bottom": true
+    },
+    {
+      "w": 390,
+      "route": "/qa/",
+      "title": "الأسئلة العلمية | المجلس العلمي",
+      "overflow": false,
+      "bottom": true
+    },
+    {
+      "w": 390,
+      "route": "/quiz/",
+      "title": "اختبر معلوماتك — لعبة سؤال وجواب | المجلس العلمي",
+      "overflow": false,
+      "bottom": true
+    },
+    {
+      "w": 390,
+      "route": "/prayer-times/",
+      "title": "مواقيت الصلاة، الكويت | المجلس العلمي",
+      "overflow": false,
+      "bottom": true
+    },
+    {
+      "w": 390,
+      "route": "/library/book-bukhari/",
+      "title": "صحيح البخاري | المكتبة العلمية، المجلس العلمي",
+      "overflow": false,
+      "bottom": true
+    },
+    {
+      "w": 390,
+      "route": "/scholars/ibn-taymiyya/",
+      "title": "ابن تيمية — سيرة العالم | المجلس العلمي",
+      "overflow": false,
+      "bottom": true
+    }
+  ],
+  "ok": true
+}

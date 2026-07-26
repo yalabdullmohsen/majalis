@@ -128,11 +128,12 @@ function routeForPath(path: string) {
   }
 
   if (normalized.startsWith("/library/")) {
-    const bookSlug = decodeURIComponent(normalized.slice("/library/".length)).replace(/^book-/, "").replace(/[-_]+/g, " ").trim();
+    // لا تُشتق العنوان من الـslug الإنجليزي (كان يظهر «bukhari | …» ويستبدل prerender).
+    // صفحة التفاصيل تضبط الاسم العربي بعد التحميل.
     return {
       ...requiredRoute("/library"),
       path: normalized,
-      title: bookSlug ? `${bookSlug} | المجلس العلمي` : "كتاب | المجلس العلمي",
+      title: requiredRoute("/library").title,
       description: "تفاصيل الكتاب — المؤلف، التصنيف، ملخص المحتوى، وروابط التحميل.",
       ogType: "book",
     };
@@ -319,10 +320,26 @@ function breadcrumbForPath(normalized: string) {
   return items.length > 1 ? breadcrumbJsonLd(items) : null;
 }
 
+/** مسارات تفصيل ديناميكية: العنوان يأتي من prerender أو من صفحة التفاصيل بعد التحميل. */
+const DYNAMIC_DETAIL_RE =
+  /^\/(library|scholars|lessons|rulings|prophets|nations|topics|annual-courses|universities|sins-and-rights|learning\/paths|quran\/surah-stories|fiqh-council\/(?:sessions|fatwas)|scientific-announcements)\//;
+
 export function usePageSeo(path: string) {
   useEffect(() => {
-    const route = routeForPath(path);
     const normalized = normalizePath(path);
+
+    // لا تستبدل عنوان/وصف prerender بقائمة القسم (مثل «المكتبة العلمية»)
+    // أثناء انتظار بيانات الكتاب/العالم — كان يُظهر slug إنجليزيًا أو عنوانًا عامًا.
+    if (DYNAMIC_DETAIL_RE.test(normalized)) {
+      upsertCanonical(absoluteUrl(normalized));
+      upsertMeta("property", "og:url", absoluteUrl(normalized));
+      upsertMeta("name", "twitter:url", absoluteUrl(normalized));
+      document.documentElement.lang = "ar";
+      document.documentElement.dir = "rtl";
+      return;
+    }
+
+    const route = routeForPath(path);
     const robots =
       route.path === "/404" && normalized !== "/404"
         ? "noindex, follow"

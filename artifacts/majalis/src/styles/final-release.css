@@ -73,6 +73,11 @@ body {
 :where(h3) { font-size: clamp(1.05rem, 1.7vw, 1.3rem); }
 :where(p) { text-wrap: pretty; }
 :where(a, button, input, select, textarea) { font: inherit; }
+/* استعادة حلقة التركيز حيث عطّلت صفحات قديمة outline بلا بديل */
+:where(button, a, input, select, textarea, [role="button"], [tabindex]:not([tabindex="-1"])):focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--color-accent) 72%, white);
+  outline-offset: 2px;
+}
 :where(a, button, input, select, textarea):focus-visible {
   outline: 3px solid color-mix(in srgb, var(--color-accent) 72%, white);
   outline-offset: 3px;

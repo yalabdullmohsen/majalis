@@ -16,6 +16,7 @@ const WATCHED = [
   "src/components/home/HomeAboutSection.tsx",
   "src/components/home/HomeQuizCard.tsx",
   "src/views/FeaturesInProgressPage.tsx",
+  "src/views/AboutPage.tsx",
 ];
 
 const CONTENT_UNITS =

@@ -14,16 +14,13 @@ import { ScrollToTop } from "@/components/ScrollToTop";
 import { GlobalBackButton } from "@/components/GlobalBackButton";
 import { AchievementToast } from "@/components/AchievementToast";
 import { useAchievementCheck } from "@/hooks/useAchievementCheck";
-import NotFound from "@/views/not-found";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { usePageSeo } from "@/lib/seo";
 import { lazyWithRetry } from "@/lib/lazy-with-retry";
 import { LazyRouteFallback } from "@/components/LazyRouteFallback";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
-import { startAdhanScheduler } from "@/lib/adhan-scheduler";
 import { AdhanNotificationBar } from "@/components/adhan/AdhanNotificationBar";
 import { PrayerRespectBanner } from "@/components/adhan/PrayerRespectBanner";
-import { startPrayerAlertScheduler, recheckPrayerAlertWindow } from "@/lib/prayer-alert-scheduler";
 import { PrayerCountdownBanner } from "@/components/prayer/PrayerCountdownBanner";
 import { loadNotifPrefs, scheduleIslamicReminder } from "@/lib/local-notifications";
 import { NavProgressBar } from "@/components/NavProgressBar";
@@ -33,6 +30,8 @@ import { UpdateAvailableBanner } from "@/components/UpdateAvailableBanner";
 import { setPrayerTimesCache } from "@/lib/lesson-time";
 
 const lazy = lazyWithRetry;
+/** 404 كسول — لا يُضمَّن في الحزمة الرئيسية */
+const NotFound = lazy(() => import("@/views/not-found"));
 
 /**
  * تحميل كسول للمساعد الذكي العائم — مكوّن ثانوي (تفاعلي عند الطلب فقط)
@@ -376,7 +375,16 @@ function AdhanSchedulerBootstrap() {
     setPrayerTimesCache(liveMinutes);
     if (started.current) return;
     started.current = true;
-    startAdhanScheduler(data).catch(() => {});
+    const boot = () => {
+      void import("@/lib/adhan-scheduler").then(({ startAdhanScheduler }) => {
+        startAdhanScheduler(data).catch(() => {});
+      });
+    };
+    if (typeof requestIdleCallback === "function") {
+      requestIdleCallback(boot, { timeout: 2500 });
+    } else {
+      setTimeout(boot, 400);
+    }
   }, [data]);
   return null;
 }
@@ -392,14 +400,24 @@ function PrayerAlertSchedulerBootstrap() {
   useEffect(() => {
     if (!data || started.current) return;
     started.current = true;
-    startPrayerAlertScheduler(data).catch(() => {});
+    const boot = () => {
+      void import("@/lib/prayer-alert-scheduler").then(({ startPrayerAlertScheduler }) => {
+        startPrayerAlertScheduler(data).catch(() => {});
+      });
+    };
+    if (typeof requestIdleCallback === "function") {
+      requestIdleCallback(boot, { timeout: 2500 });
+    } else {
+      setTimeout(boot, 400);
+    }
   }, [data]);
 
   useEffect(() => {
     const onVisible = () => {
-      if (document.visibilityState === "visible") {
+      if (document.visibilityState !== "visible") return;
+      void import("@/lib/prayer-alert-scheduler").then(({ recheckPrayerAlertWindow }) => {
         void recheckPrayerAlertWindow(data);
-      }
+      });
     };
     document.addEventListener("visibilitychange", onVisible);
     return () => document.removeEventListener("visibilitychange", onVisible);
@@ -720,7 +738,7 @@ function Router() {
       <Route path="/admin/users"><Redirect to="/admin?section=users" /></Route>
       <Route path="/admin/universities"><AdminLazyRoute component={UniversitiesAdminPage} /></Route>
       <Route path="/admin"><AdminLazyRoute component={AdminPage} /></Route>
-      <Route component={NotFound} />
+      <Route><SafeLazyRoute component={NotFound} /></Route>
     </Switch>
   );
 }
