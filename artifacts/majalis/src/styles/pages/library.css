@@ -247,6 +247,15 @@
   padding-top: 0.35rem;
 }
 
+.library-author-link {
+  color: var(--majalis-emerald, #143F35);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.library-author-link:hover {
+  color: var(--majalis-emerald-deep, #0f2f28);
+}
+
 /* ── الوضع الداكن ───────────────────────────────────────────── */
 @media (prefers-color-scheme: dark) {
   .lib-card {

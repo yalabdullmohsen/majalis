@@ -13,6 +13,7 @@ import { incrementTaskProgress } from "@/lib/daily-progress";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import "@/styles/pages/daily-wird.css";
 
 const QURAN_PAGES = 604;
 
