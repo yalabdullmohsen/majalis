@@ -6,6 +6,8 @@ import { ShareButtons } from "@/components/ContentActions";
 import { SCHOLARS, findScholarById } from "@/lib/scholars-data";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { ContentReportButton } from "@/components/ContentReportButton";
+import { resolveScholarWorkLink } from "@/lib/scholar-library-links";
+import "@/styles/pages/scholars.css";
 
 // ── تحويل أرقام عربية-هندية إلى رقم ─────────────────────────────────────
 const AR_DIGITS: Record<string, number> = {
@@ -252,9 +254,18 @@ export default function ScholarProfilePage() {
             <BookOpen size={16} aria-hidden="true" /> أبرز المؤلفات
           </h2>
           <ul className="sch-profile-works">
-            {scholar.key_works.map(w => (
-              <li key={w}>{w}</li>
-            ))}
+            {scholar.key_works.map((w) => {
+              const link = resolveScholarWorkLink(w);
+              return (
+                <li key={w}>
+                  {link.href ? (
+                    <Link href={link.href}>{link.label}</Link>
+                  ) : (
+                    <span className="sch-work--plain">{link.label}</span>
+                  )}
+                </li>
+              );
+            })}
           </ul>
         </section>
       )}
