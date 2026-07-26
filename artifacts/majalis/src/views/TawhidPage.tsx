@@ -51,7 +51,7 @@ const AQEEDA_SECTIONS: AqeedaSection[] = [
   },
   {
     emoji: "👼", title: "الملائكة في الإسلام",
-    desc: "أسماؤهم ومهامهم وصفاتهم",
+    desc: "الإيمان بوجودهم وصفاتهم وما ثبت من أسمائهم ومهامهم في الوحي",
     href: "/malaika", badge: "غيبيات", color: "#5B21B6",
   },
   {

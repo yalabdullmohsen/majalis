@@ -33,7 +33,7 @@ const DUAS: DuaEntry[] = [
     source: "صحيح مسلم",
     category: "الصباح والمساء",
     occasion: "عند الصباح",
-    virtue: "من قالها في الصباح فكأنما أعتق رقبة",
+    virtue: "من أذكار الصباح الجامعة لتوحيد الله وحمده",
   },
   {
     id: "sabah-2",
@@ -125,7 +125,7 @@ const DUAS: DuaEntry[] = [
     arabic: "الْحَمْدُ لِلَّهِ الَّذِي سَقَانَا عَذْبًا فُرَاتًا بِرَحْمَتِهِ وَلَمْ يَجْعَلْهُ مِلْحًا أُجَاجًا بِذُنُوبِنَا",
     transliteration: "Al-hamdu lillahil-ladhi saqana 'adhban furatan birahmatih...",
     meaning: "الحمد لله الذي سقانا عذباً فراتاً برحمته",
-    source: "حسنه الألباني",
+    source: "ورد في بعض كتب الأذكار، وفي ثبوته خلاف",
     category: "الأكل والشرب",
     occasion: "بعد شرب الماء",
   },
