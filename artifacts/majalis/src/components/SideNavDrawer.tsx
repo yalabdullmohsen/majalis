@@ -6,7 +6,7 @@ import {
   Bot, Calculator, Calendar, CalendarDays, CheckCircle2, ChevronDown, ChevronUp,
   Clock, Compass, CreditCard, FileText, GitBranch, GraduationCap,
   Heart, HelpCircle, Home, Landmark, Layers, Library, Lightbulb,
-  LogIn, Map, MapPin, Mic2, Moon, Network, Quote, RefreshCw, Repeat2,
+  LogIn, MapPin, Mic2, Moon, Network, Quote, RefreshCw, Repeat2,
   Rss, Scale, ScrollText, Search, Settings, Shield, Sparkles, Star, Stethoscope,
   Sun, Trophy, Users, UserPlus, Waypoints, X, Zap,
 } from "lucide-react";
