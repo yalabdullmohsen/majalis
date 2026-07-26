@@ -59,7 +59,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   { text: "مروا أولادكم بالصلاة لسبع.", category: "التربية", source: "رواه أبو داود — حسنه الألباني", author_name: "سنن أبي داود", status: "approved", verification_status: "verified" },
   { text: "من كان يؤمن بالله واليوم الآخر فليقل خيراً أو ليصمت.", category: "الآداب", source: "متفق عليه", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
   { text: "من لا يرحم لا يرحم؛ فالرحمة سبب لنيل رحمة الله.", category: "الأخلاق", source: "متفق عليه", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
-  { text: "ألا أنبئكم بخير أعمالكم؟ الذكر.", category: "الحديث", source: "رواه الترمذي — حسن", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
+  { text: "ألا أنبئكم بخير أعمالكم وأزكاها عند مليككم… ذكر الله.", category: "الحديث", source: "الترمذي ٣٣٧٧ — صححه الألباني في صحيح الترغيب", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
   { text: "من تعلم العلم ليباهي به العلماء ويجاري به السفهاء ويصرف به وجوه الناس إليه أدخله الله جهنم.", category: "طلب العلم", source: "رواه ابن ماجه (260) والترمذي (2654) — صححه الألباني", author_name: "سنن ابن ماجه", status: "approved", verification_status: "verified" },
   { text: "من أنفق نفقة في سبيل الله كُتبت له بسبعمائة ضعف.", category: "الفقه", source: "رواه الترمذي (1625) والنسائي (3186) عن خريم بن فاتك الأسدي — حسّنه الترمذي وصححه الألباني", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
   { text: "أفلا يتدبرون القرآن أم على قلوب أقفالها.", category: "القرآن", source: "محمد: 24", author_name: "القرآن الكريم", status: "approved", verification_status: "verified" },
@@ -69,7 +69,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   { text: "خذ من أموالهم صدقة تطهرهم وتزكيهم بها.", category: "الفقه", source: "التوبة: 103", author_name: "القرآن الكريم", status: "approved", verification_status: "verified" },
   { text: "الصوم جُنة؛ فإذا كان يوم صوم أحدكم فلا يرفث ولا يجهل.", category: "الحديث", source: "متفق عليه", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
   { text: "الحج مرة في العمر واجب على المستطيع.", category: "الفقه", source: "وجوب الحج من آل عمران: 97، وتحديد المرة الواحدة من حديث «الحج مرة، فمن زاد فهو تطوع» — رواه أبو داود (1721) وابن ماجه (2886)، صححه الألباني", author_name: "القرآن الكريم والحديث النبوي", status: "approved", verification_status: "verified" },
-  { text: "الصدقة تطفئ الخطيئة كما يطفئ الماء النار.", category: "الحديث", source: "رواه الترمذي — حسن", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
+  { text: "الصدقة تطفئ الخطيئة كما يطفئ الماء النار.", category: "الحديث", source: "الترمذي ٦١٤ — حسّنه الألباني", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
   { text: "إن الله رفيق يحب الرفق في الأمر كله.", category: "الدعوة", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
   { text: "تعاهدوا القرآن؛ فوالذي نفسي بيده لهو أشد تفلتاً من الإبل في عقلها.", category: "القرآن", source: "رواه البخاري ومسلم", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
   { text: "أتدرون ما الغيبة؟ ذكرك أخاك بما يكره.", category: "الآداب", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
@@ -85,12 +85,12 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   { text: "اقرأوا سورة البقرة فإن أخذها بركة وتركها حسرة ولا تستطيعها البطلة.", category: "القرآن", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
   { text: "التثاؤب من الشيطان فإذا تثاءب أحدكم فليكظم ما استطاع.", category: "الآداب", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
   { text: "الدنيا سجن المؤمن وجنة الكافر.", category: "العقيدة", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
-  { text: "كل بدعة ضلالة وكل ضلالة في النار.", category: "العقيدة", source: "رواه النسائي — صحيح", author_name: "سنن النسائي", status: "approved", verification_status: "verified" },
+  { text: "كل بدعة ضلالة وكل ضلالة في النار.", category: "العقيدة", source: "النسائي ١٥٧٨ — صححه الألباني", author_name: "سنن النسائي", status: "approved", verification_status: "verified" },
   { text: "خيركم من تعلّم القرآن وعلّمه.", category: "القرآن", source: "رواه البخاري", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
   { text: "إذا مات الإنسان انقطع عنه عمله إلا من ثلاثة: صدقة جارية أو علم ينتفع به أو ولد صالح يدعو له.", category: "الحديث", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
   { text: "الدعاء من أعظم أبواب العبادة والافتقار إلى الله، وهو مأمور به في الكتاب والسنة.", category: "الفقه", source: "قال تعالى: {ادْعُونِي أَسْتَجِبْ لَكُمْ} — غافر: 60", author_name: "القرآن الكريم", status: "approved", verification_status: "verified" },
   { text: "البر حسن الخلق والإثم ما حاك في صدرك وكرهت أن يطّلع عليه الناس.", category: "الأخلاق", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
-  { text: "أكمل المؤمنين إيماناً أحسنهم خلقاً.", category: "الأخلاق", source: "رواه أبو داود والترمذي — حسن", author_name: "سنن أبي داود", status: "approved", verification_status: "verified" },
+  { text: "أكمل المؤمنين إيماناً أحسنهم خلقاً.", category: "الأخلاق", source: "الترمذي ١١٦٢ وأبو داود — حسّنه الألباني", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
   { text: "الغنى غنى النفس؛ فمن استغنى بما آتاه الله كفاه.", category: "الآداب", source: "متفق عليه", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
   { text: "اليد العليا خير من اليد السفلى.", category: "الأخلاق", source: "متفق عليه", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
   { text: "ما نقصت صدقة من مال؛ فالبركة تعوّض الظاهر بالنقص.", category: "الفقه", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
@@ -122,26 +122,26 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
 
   /* ── فقه ── */
   { text: "تجب الزكاة في الذهب والفضة والحبوب والثمار والأنعام وعروض التجارة.", category: "الفقه", source: "فقه السنة — السيد سابق", author_name: "السيد سابق", status: "approved", verification_status: "verified" },
-  { text: "الطهارة شرط الصلاة ومفتاحها.", category: "الفقه", source: "رواه الترمذي — صحيح", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
+  { text: "مفتاح الصلاة الطهور، وتحريمها التكبير، وتحليلها التسليم.", category: "الفقه", source: "الترمذي ٣ — حسّنه الألباني", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
   { text: "من أدرك ركعة من الصلاة مع الإمام فقد أدرك الصلاة.", category: "الفقه", source: "متفق عليه", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
-  { text: "لا ضرر ولا ضرار — قاعدة فقهية جامعة في رفع المفسدة.", category: "الفقه", source: "رواه ابن ماجه — صحيح", author_name: "سنن ابن ماجه", status: "approved", verification_status: "verified" },
+  { text: "لا ضرر ولا ضرار — قاعدة فقهية جامعة في رفع المفسدة.", category: "الفقه", source: "ابن ماجه ٢٣٤١ — حسّنه الألباني بمجموع الطرق", author_name: "سنن ابن ماجه", status: "approved", verification_status: "verified" },
   { text: "المشقة تجلب التيسير — من أهم القواعد الفقهية الخمس الكبرى.", category: "الفقه", source: "الأشباه والنظائر — ابن نجيم", author_name: "ابن نجيم", status: "approved", verification_status: "verified" },
 
   /* ── القرآن ── */
   { text: "حافظ على قراءة القرآن في الصلاة وخارجها حتى يكون شفيعك يوم القيامة.", category: "القرآن", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
   { text: "إن الذي يتعتع في القرآن وهو عليه شاق له أجران.", category: "القرآن", source: "متفق عليه", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
-  { text: "من قرأ حرفاً من كتاب الله فله به حسنة والحسنة بعشر أمثالها.", category: "القرآن", source: "رواه الترمذي — صحيح", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
+  { text: "من قرأ حرفاً من كتاب الله فله به حسنة والحسنة بعشر أمثالها.", category: "القرآن", source: "الترمذي ٢٩١٠ — صححه الألباني", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
 
   /* ── السيرة ── */
   { text: "فتح مكة كان بلا قتال تقريباً — ودخل النبي ﷺ مكة وهو يقرأ: {إِنَّا فَتَحْنَا لَكَ فَتْحًا مُّبِينًا}.", category: "السيرة", source: "صحيح البخاري — كتاب فضائل القرآن، باب الترجيع", author_name: "الإمام البخاري", status: "approved", verification_status: "verified" },
   { text: "خالف الرماة أمر النبي ﷺ بلزوم الجبل في غزوة أحد فانكشف ظهر المسلمين وانقلبت دفة المعركة.", category: "السيرة", source: "صحيح البخاري، حديث 3039 — كتاب المغازي", author_name: "الإمام البخاري", status: "approved", verification_status: "verified" },
-  { text: "معاذ بن جبل أعلم الأمة بالحلال والحرام.", category: "السيرة", source: "رواه الترمذي — حسن", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
+  { text: "معاذ بن جبل أعلم الأمة بالحلال والحرام.", category: "السيرة", source: "الترمذي ٣٧٩٠ — حسّنه الألباني", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
 
   /* ── الآداب ── */
-  { text: "أقرب الناس من النبي ﷺ مجلساً يوم القيامة أحاسنهم خلقاً.", category: "الآداب", source: "رواه الترمذي عن جابر — حسن", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
+  { text: "أقرب الناس من النبي ﷺ مجلساً يوم القيامة أحاسنهم خلقاً.", category: "الآداب", source: "الترمذي ٢٠١٨ عن جابر — حسّنه الألباني", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
   { text: "إياكم والجلوس على الطرقات إلا أن تؤدوا حقها.", category: "الآداب", source: "متفق عليه", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
   { text: "زينوا القرآن بأصواتكم؛ وتحسين الصوت بالتلاوة مشروع.", category: "الآداب", source: "رواه أبو داود — صحيح الألباني", author_name: "سنن أبي داود", status: "approved", verification_status: "verified" },
-  { text: "لا يشكر الله من لا يشكر الناس.", category: "الآداب", source: "رواه أبو داود — صحيح", author_name: "سنن أبي داود", status: "approved", verification_status: "verified" },
+  { text: "لا يشكر الله من لا يشكر الناس.", category: "الآداب", source: "أبو داود ٤٨١١ — صححه الألباني", author_name: "سنن أبي داود", status: "approved", verification_status: "verified" },
 
   /* ── الأخلاق ── */
   { text: "إن الله يحب إذا عمل أحدكم عملاً أن يتقنه.", category: "الأخلاق", source: "رواه البيهقي — صحيح الألباني", author_name: "شعب الإيمان", status: "approved", verification_status: "verified" },
@@ -216,7 +216,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
 
   /* ── إضافات القرآن ── */
   { text: "تلاوة آية بتدبّر وفهم خير من ختمة بلا تفكّر.", category: "القرآن", source: "أثر سلفي — ابن القيم: مفتاح دار السعادة", author_name: "ابن القيم الجوزية", status: "approved", verification_status: "verified" },
-  { text: "من قرأ حرفاً من كتاب الله فله به حسنة والحسنة بعشر أمثالها.", category: "القرآن", source: "رواه الترمذي — صحيح", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
+  { text: "من قرأ حرفاً من كتاب الله فله به حسنة والحسنة بعشر أمثالها.", category: "القرآن", source: "الترمذي ٢٩١٠ — صححه الألباني", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
   { text: "أهل القرآن هم أهل الله وخاصته.", category: "القرآن", source: "رواه النسائي وابن ماجه — صحيح الألباني", author_name: "سنن ابن ماجه", status: "approved", verification_status: "verified" },
 
   /* ── إضافات العقيدة ── */
@@ -227,7 +227,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   /* ── إضافات الحديث ── */
   { text: "اتقوا الله وصلوا أرحامكم.", category: "الحديث", source: "رواه البيهقي في شعب الإيمان عن ابن مسعود — حسّنه الألباني في صحيح الجامع", author_name: "صحيح الجامع للألباني", status: "approved", verification_status: "verified" },
   { text: "إن الله يحب إذا عمل أحدكم عملاً أن يتقنه.", category: "الحديث", source: "رواه البيهقي — صحيح الألباني", author_name: "السلسلة الصحيحة", status: "approved", verification_status: "verified" },
-  { text: "من صمت نجا — السكوت أمان، والكلام مسؤولية.", category: "الحديث", source: "رواه الترمذي — حسن", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
+  { text: "من صمت نجا — السكوت أمان، والكلام مسؤولية.", category: "الحديث", source: "الترمذي ٢٥٠١ — حسّنه الألباني", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
 
   /* ── إضافات السيرة ── */
   { text: "الفتح الأكبر كان بلا حرب؛ دخل النبي ﷺ مكة وعفا عن أهلها — قدوة في العفو والرحمة.", category: "السيرة", source: "صحيح البخاري — كتاب المغازي", author_name: "الإمام البخاري", status: "approved", verification_status: "verified" },
@@ -264,7 +264,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   { text: "درء المفسدة مقدّم على جلب المصلحة؛ وهذا أصل عظيم في الاجتهاد الفقهي.", category: "الفقه", source: "الأشباه والنظائر — ابن نجيم", author_name: "ابن نجيم الحنفي", status: "approved", verification_status: "verified" },
 
   /* ── إضافات الأسرة ── */
-  { text: "خيركم خيركم لأهله — الأسرة الصالحة أساس المجتمع المسلم الصالح.", category: "التربية", source: "رواه الترمذي — صحيح", author_name: "النبي محمد ﷺ", status: "approved", verification_status: "verified" },
+  { text: "خيركم خيركم لأهله — الأسرة الصالحة أساس المجتمع المسلم الصالح.", category: "التربية", source: "الترمذي ٣٨٩٥ — صححه الألباني", author_name: "النبي محمد ﷺ", status: "approved", verification_status: "verified" },
   { text: "البيت السعيد هو الذي تُعلَّم فيه الصلاة قبل القراءة والكتابة.", category: "التربية", source: "تربية الأولاد في الإسلام — عبد الله ناصح علوان", author_name: "عبد الله ناصح علوان", status: "approved", verification_status: "needs_review" },
 
   /* ── إضافات العقيدة ── */
@@ -278,7 +278,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
 
   /* ── إضافات القرآن ── */
   { text: "من أراد علم الأولين والآخرين فليتدبّر القرآن — فيه جواب كل سؤال وشفاء كل داء.", category: "القرآن", source: "أثر عن عبدالله بن مسعود — رواه أحمد في الزهد وابن أبي شيبة والطبراني في الكبير والبيهقي في شعب الإيمان، نقله ابن تيمية في مقدمة في أصول التفسير", author_name: "عبدالله بن مسعود", status: "approved", verification_status: "verified" },
-  { text: "الحافظ للقرآن يُقال له يوم القيامة: اقرأ وارتقِ ورتّل — فمنزلته عند آخر آية يقرؤها.", category: "القرآن", source: "رواه الترمذي وأبو داود — حسن صحيح", author_name: "النبي محمد ﷺ", status: "approved", verification_status: "needs_review" },
+  { text: "الحافظ للقرآن يُقال له يوم القيامة: اقرأ وارتقِ ورتّل — فمنزلته عند آخر آية يقرؤها.", category: "القرآن", source: "الترمذي ٢٩١٤ وأبو داود ١٤٦٤ — حسّنه الألباني", author_name: "النبي محمد ﷺ", status: "approved", verification_status: "verified" },
 
   /* ── إضافات التربية ── */
   { text: "التربية الصحيحة تبدأ بتربية النفس قبل تربية الأبناء — المُربّي القدوة أبلغ من المُربّي الواعظ.", category: "التربية", source: "تربية الأولاد في الإسلام — عبد الله ناصح علوان", author_name: "عبد الله ناصح علوان", status: "approved", verification_status: "needs_review" },
@@ -315,13 +315,13 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   /* ── المعاملات والأخلاق التجارية ── */
   { text: "البيّعان بالخيار ما لم يتفرّقا؛ فإن صدقا وبيّنا بورك لهما، وإن كتما وكذبا مُحقت بركة بيعهما.", category: "الفقه", source: "متفق عليه", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
   { text: "المسلم أخو المسلم — لا يحل لمسلم أن يبيع على بيع أخيه.", category: "الفقه", source: "متفق عليه", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
-  { text: "إن التجار يُبعثون يوم القيامة فجاراً إلا من اتقى الله وبرّ وصدق.", category: "الأخلاق", source: "رواه الترمذي — حسن", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
+  { text: "إن التجار يُبعثون يوم القيامة فجاراً إلا من اتقى الله وبرّ وصدق.", category: "الأخلاق", source: "الترمذي ١٢١٠ — حسّنه الألباني", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
   { text: "ثلاثة لا يكلمهم الله يوم القيامة: المُسبل والمنّان والمنفّق سلعته بالحلف الكاذب.", category: "الفقه", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
 
   /* ── مواقف المؤمن من الابتلاء ── */
   { text: "عجباً لأمر المؤمن إن أمره كله خير؛ إن أصابته سراء شكر فكان خيراً له، وإن أصابته ضراء صبر فكان خيراً له.", category: "العقيدة", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
   { text: "ما يصيب المسلم من نصب ولا وصب، ولا هم ولا حزن، ولا أذى ولا غم، حتى الشوكة يُشاكها، إلا كفّر الله بها من خطاياه.", category: "العقيدة", source: "متفق عليه", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
-  { text: "إن الله إذا أحب قوماً ابتلاهم؛ فمن رضي فله الرضا، ومن سخط فله السخط.", category: "العقيدة", source: "رواه الترمذي — حسن", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
+  { text: "إن الله إذا أحب قوماً ابتلاهم؛ فمن رضي فله الرضا، ومن سخط فله السخط.", category: "العقيدة", source: "الترمذي ٢٣٩٦ — حسّنه الألباني", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
 
   /* ── العلم والإبداع من منظور إسلامي ── */
   { text: "العقل أكبر نعمة أنعمها الله على الإنسان؛ ومن لم يستعمله في خدمة الحق فقد أضاع أعز ما أُعطي.", category: "طلب العلم", source: "إحياء علوم الدين — الغزالي", author_name: "الإمام الغزالي", status: "approved", verification_status: "verified" },
