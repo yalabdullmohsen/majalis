@@ -119,7 +119,7 @@ function getPeriod(month: number, day: number, year: number): Period {
     title: `رَجَب الأصمّ ${year}هـ، شهر حرام`, kind: "emerald",
     reminders: [
       { Icon: Moon,    label: "الصيام",    body: "رجب من الأشهر الحُرُم، أكثر من صيام النوافل.", type: "fasting" },
-      { Icon: RotateCw, label: "الاستغفار", body: "اللهم بارك لنا في رجب وشعبان وبلّغنا رمضان.", type: "dhikr" },
+      { Icon: RotateCw, label: "الاستغفار", body: "أكثر من الاستغفار والعمل الصالح؛ وأما دعاء «بارك لنا في رجب وشعبان…» فضعيف عند المحققين فلا يُتّخذ ذكراً ثابتاً.", type: "dhikr" },
       { Icon: BookOpen, label: "القرآن",   body: "رجب بوابة رمضان، ابدأ مراجعة القرآن الآن.", type: "quran" },
       { Icon: Heart,   label: "الصدقة",   body: "الصدقة في الأشهر الحرم أعظم أجراً.", type: "charity" },
     ],
