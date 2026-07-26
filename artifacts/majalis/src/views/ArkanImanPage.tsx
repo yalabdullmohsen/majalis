@@ -315,11 +315,11 @@ export default function ArkanImanPage() {
         <h2 className="ai-related__title">استكشف أيضاً</h2>
         <div className="ai-related__grid">
           {[
-            { href: "/arkan",      label: "أركان الإسلام الخمسة" },
-            { href: "/tawhid",     label: "التوحيد" },
-            { href: "/akhlaq",     label: "الأخلاق الإسلامية" },
-            { href: "/asma-husna", label: "الأسماء الحسنى" },
-            { href: "/duas",       label: "الأدعية الشرعية" },
+            { href: "/tawhid",      label: "التوحيد" },
+            { href: "/asma-husna",  label: "الأسماء الحسنى" },
+            { href: "/janna-naar",  label: "الجنة والنار" },
+            { href: "/alamat-saah", label: "علامات الساعة" },
+            { href: "/malaika",     label: "الملائكة" },
           ].map((link) => (
             <Link key={link.href} href={link.href} className="ai-related__link">{link.label}</Link>
           ))}
