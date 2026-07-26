@@ -22,8 +22,12 @@ export const HIDDEN_FROM_NAV_PATHS = new Set<string>([
   "/masarat",
   "/islam-stats", // مُنزَّل من الاكتشاف (يبقى المسار حيًا)
   "/study-room",
-  "/vault", // تحت الحساب/الإعدادات لاحقًا
+  "/vault", // يُعرض من الإعدادات فقط
   "/cards",
+  "/universities", // مُنزَّل من المستوى الأول
+  "/mind-map", // تحت استكشف المعرفة
+  "/mushaf/page", // مدخل مصحف واحد: /mushaf
+  "/quran-circles", // قريبًا — يُبقى في مركز القرآن فقط بشارة
 ]);
 
 /** مسارات قديمة تُعاد كتابتها عند التسجيل في «الأخيرة» أو الروابط المحفوظة. */
@@ -32,6 +36,10 @@ export const MERGED_PATH_REDIRECTS: Record<string, string> = {
   "/learning-plan": "/learning/paths",
   "/masarat": "/learning/paths",
   "/family-mode": "/family",
+  "/mind-map": "/knowledge-graph",
+  "/learning/quiz": "/quiz",
+  "/mushaf-v2-preview": "/mushaf",
+  "/features-in-progress": "/updates",
 };
 
 export function resolveMergedPath(href: string): string {

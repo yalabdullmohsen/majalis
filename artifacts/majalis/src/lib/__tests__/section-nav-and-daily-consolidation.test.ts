@@ -35,20 +35,22 @@ function assert(condition: boolean, label: string) {
   else { console.error(`  ✗ FAIL: ${label}`); failed++; }
 }
 
-console.log("\n=== TopSectionBar — أقسام موسوعية بلا تكرار وبلا الرئيسية ===");
+console.log("\n=== TopSectionBar — 8 محاور موسوعية بلا تكرار ===");
 {
-  assert(SECTION_TABS.length === 19, `19 قسمًا بعد دمج الأدوات المكررة (الفعلي: ${SECTION_TABS.length})`);
+  assert(SECTION_TABS.length === 8, `8 أقسام فقط في الشريط العلوي (الفعلي: ${SECTION_TABS.length})`);
   const hrefs = SECTION_TABS.map((t) => t.href);
   assert(new Set(hrefs).size === hrefs.length, "لا تكرار في مسارات الأقسام (كل href فريد)");
   assert(!hrefs.includes("/"), "«الرئيسية» غير ظاهرة داخل الشريط (تبقى ضمن التنقل الرئيسي فقط)");
   assert(!hrefs.includes("/features-in-progress"), "«مميزات قيد التطوير» غير ظاهرة داخل الشريط");
   assert(!hrefs.includes("/flashcards"), "بطاقات المراجعة أُخرجت من الشريط العلوي");
   assert(!hrefs.includes("/islam-stats"), "إحصائيات الإسلام أُخرجت من الشريط العلوي");
+  assert(!hrefs.includes("/kids"), "الأطفال خارج الشريط العلوي (يبقى في المزيد بشارة قريبًا)");
+  assert(!hrefs.includes("/mushaf"), "المصحف عبر مركز القرآن لا كتبويب موازٍ");
   const priorityFirst5 = ["/tawhid", "/seerah", "/fiqh", "/hadith", "/quran-hub"];
   assert(hrefs.slice(0, 5).join(",") === priorityFirst5.join(","),
     `أول 5 أقسام هي أولوية العقيدة/السيرة/الفقه/الحديث/القرآن بالترتيب (الفعلي: ${hrefs.slice(0, 5).join(",")})`);
-  assert(hrefs.includes("/kids"), "قسم الأطفال ضمن الشريط (قريبًا)");
-  assert(hrefs.includes("/library") && hrefs.includes("/scholars"), "المكتبة والعلماء ضمن الشريط");
+  assert(hrefs.includes("/library") && hrefs.includes("/scholars") && hrefs.includes("/learn"),
+    "المكتبة والعلماء وتعلّم ضمن الشريط");
   for (const href of hrefs) {
     assert(href.startsWith("/") && href.length > 1, `مسار "${href}" يبدو مسارًا فعليًا (لا فارغ ولا وهمي)`);
   }
@@ -59,17 +61,16 @@ console.log("\n=== isTabActive — فتح القسم الصحيح من الشر�
   assert(isTabActive("/quran-hub", "/quran-hub") === true, "تبويب القرآن نشط في مساره تمامًا");
   assert(isTabActive("/quran-hub/tajweed", "/quran-hub") === true, "تبويب القرآن يبقى نشطًا في مسار فرعي (لا يشترط تطابقًا حرفيًا)");
   assert(isTabActive("/quran-hubx", "/quran-hub") === false, "لا التباس مع مسار مشابه بالاسم لكن مختلف فعليًا (quran-hubx)");
-  assert(isTabActive("/kids", "/kids") === true, "تبويب الأطفال نشط في مساره");
   assert(isTabActive("/kids", "/quran-hub") === false, "تبويب القرآن غير نشط وأنت في قسم الأطفال");
   assert(isTabActive("/learn/lesson-1", "/learn") === true, "تبويب تعلّم نشط في مسار درس فرعي");
-  assert(isTabActive("/mushaf/page/12", "/mushaf/page") === true, "تبويب المصحف بنظام الصفحات نشط في مسار فرعي مرقّم");
-  assert(isTabActive("/mushaf", "/mushaf/page") === false, "لا التباس بين /mushaf و/mushaf/page رغم اشتراك البادئة");
+  assert(isTabActive("/library/book-1", "/library") === true, "تبويب المكتبة نشط في مسار كتاب");
+  assert(isTabActive("/scholars/bukhari", "/scholars") === true, "تبويب العلماء نشط في ملف عالم");
 
   // لا قسمان نشطان معًا لنفس location — يمنع التباسًا بصريًا في الشريط.
   // (مسارا /mushaf و/mushaf/page مستثنيان هنا عمدًا: الشريط كلّه يختفي
   // فور دخول أي مسار يبدأ بـ/mushaf — قارئ المصحف الغامر له تنقّله
   // الخاص — فلا يُطرح سؤال "كم تبويبًا نشطًا" هناك أصلًا.)
-  const sampleLocations = ["/quran-hub", "/kids", "/kids/x", "/other-page", "/", "/quran/tajweed", "/updates"];
+  const sampleLocations = ["/quran-hub", "/kids", "/kids/x", "/other-page", "/", "/learn/fiqh", "/scholars"];
   for (const loc of sampleLocations) {
     const activeCount = SECTION_TABS.filter((t) => isTabActive(loc, t.href)).length;
     assert(activeCount <= 1, `المسار "${loc}" يُفعِّل تبويبًا واحدًا كحد أقصى (الفعلي: ${activeCount})`);
@@ -134,6 +135,10 @@ console.log("\n=== vercel.json — إعادة توجيه دائمة لمسار �
     ["/learning-plan", "/learning/paths"],
     ["/masarat", "/learning/paths"],
     ["/knowledge-map", "/knowledge-graph"],
+    ["/mind-map", "/knowledge-graph"],
+    ["/learning/quiz", "/quiz"],
+    ["/mushaf-v2-preview", "/mushaf"],
+    ["/features-in-progress", "/updates"],
   ];
   for (const [source, destination] of mergeRedirects) {
     const rule = redirects.find((r) => r.source === source);
@@ -158,28 +163,35 @@ console.log("\n=== seo-routes.json — /kids مسجَّل (noindex)، /scholarly
 
 console.log("\n=== nav-visibility — إخفاء/دمج/قريبًا ===");
 {
-  for (const p of ["/islam-stats", "/study-room", "/vault", "/cards", "/car-mode", "/mosque-mode", "/family"]) {
+  for (const p of [
+    "/islam-stats", "/study-room", "/vault", "/cards", "/car-mode", "/mosque-mode",
+    "/family", "/universities", "/mind-map", "/mushaf/page", "/quran-circles",
+  ]) {
     assert(HIDDEN_FROM_NAV_PATHS.has(p), `${p} ضمن المسارات المخفية من الاكتشاف`);
   }
   assert(isComingSoonPath("/kids") && isComingSoonPath("/quran-circles"), "الأطفال وحلقات التحفيظ قريبًا");
   assert(resolveMergedPath("/knowledge-map") === "/knowledge-graph", "knowledge-map → knowledge-graph");
+  assert(resolveMergedPath("/mind-map") === "/knowledge-graph", "mind-map → knowledge-graph");
   assert(resolveMergedPath("/learning-plan") === "/learning/paths", "learning-plan → learning/paths");
-  assert(resolveMergedPath("/masarat") === "/learning/paths", "masarat → learning/paths");
-  assert(Object.keys(MERGED_PATH_REDIRECTS).length >= 3, "جدول إعادة التوجيه غير فارغ");
+  assert(resolveMergedPath("/learning/quiz") === "/quiz", "learning/quiz → quiz");
+  assert(resolveMergedPath("/features-in-progress") === "/updates", "features-in-progress → updates");
+  assert(Object.keys(MERGED_PATH_REDIRECTS).length >= 6, "جدول إعادة التوجيه موسّع");
 
   const filtered = filterNavItems([
     { href: "/learn" },
     { href: "/islam-stats" },
     { href: "/kids" },
     { href: "/vault" },
+    { href: "/quran-circles" },
   ]);
   assert(filtered.map((i) => i.href).join(",") === "/learn,/kids",
-    `filterNavItems يُبقي الظاهر و«قريبًا» ويُسقط المخفي (الفعلي: ${filtered.map((i) => i.href).join(",")})`);
+    `filterNavItems يُبقي الظاهر و«قريبًا» للأطفال ويُسقط المخفي (الفعلي: ${filtered.map((i) => i.href).join(",")})`);
 
   const homeHrefs = FEATURE_CATS.flatMap((c) => c.items.map((i) => i.href));
   assert(!homeHrefs.includes("/car-mode") && !homeHrefs.includes("/mosque-mode"),
     "كتالوج الرئيسية لا يعرض أوضاع السيارة/المسجد");
-  assert(!homeHrefs.includes("/islam-stats"), "كتالوج الرئيسية لا يعرض إحصائيات الإسلام");
+  assert(!homeHrefs.includes("/islam-stats") && !homeHrefs.includes("/mind-map"),
+    "كتالوج الرئيسية لا يعرض الإحصاءات ولا الخرائط الذهنية المنفصلة");
 }
 
 console.log(`\n${"─".repeat(40)}`);

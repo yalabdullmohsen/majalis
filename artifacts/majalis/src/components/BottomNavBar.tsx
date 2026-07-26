@@ -15,7 +15,8 @@ const NAV_TABS: NavTab[] = [
   { href: "/",             label: "الرئيسية",    Icon: Home },
   { href: "/quran-hub",    label: "القرآن",      Icon: BookOpen },
   { href: "/prayer-times", label: "الصلاة",      Icon: Clock },
-  { href: "/lessons",      label: "تعلّم",       Icon: GraduationCap },
+  /* بوابة التعلّم الموحّدة — الدروس والمسارات والأدوات منها */
+  { href: "/learn",        label: "تعلّم",       Icon: GraduationCap },
 ];
 
 export function BottomNavBar() {
