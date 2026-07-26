@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Link } from "wouter";
 import { Baby, BookOpen, Home, Star } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
+import "@/styles/pages/kids.css";
 
 /**
  * ركن الأطفال — معروض كـ«قريبًا» حتى يكتمل محتوى مخصّص للأطفال

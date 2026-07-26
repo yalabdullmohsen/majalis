@@ -9,6 +9,7 @@ import {
 } from "@/lib/scientific-announcements";
 import { applyPageSeo } from "@/lib/seo";
 import { ContentDetailLayout } from "@/components/platform/ContentDetailLayout";
+import "@/styles/pages/scientific-announcements.css";
 
 function safeHref(url?: string): string | undefined {
   if (!url) return undefined;
