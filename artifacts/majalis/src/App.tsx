@@ -503,6 +503,7 @@ function Router() {
       <Route path="/fiqh-qawaid"><SafeLazyRoute component={FiqhQawaidPage} /></Route>
       <Route path="/shamael"><SafeLazyRoute component={ShimaelPage} /></Route>
       <Route path="/islam-stats"><SafeLazyRoute component={IslamStatsPage} /></Route>
+      <Route path="/glossary"><Redirect to="/islamic-glossary" /></Route>
       <Route path="/islamic-glossary"><SafeLazyRoute component={IslamicGlossaryPage} /></Route>
       <Route path="/adab-talab-ilm"><SafeLazyRoute component={AdabTalabIlmPage} /></Route>
       <Route path="/anbiya"><SafeLazyRoute component={AnbiyaPage} /></Route>

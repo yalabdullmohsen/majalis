@@ -27,7 +27,7 @@ const PACKAGE_ROOT = path.resolve(SCRIPT_DIR, "..");
 // ══════════════════════════════════════════════════════════════════
 
 const CONFIG = {
-  base: "https://www.majlisilm.com",
+  base: "https://majlisilm.com",
   maxPages: 400,
   concurrency: 5,
   delayMs: 120,
@@ -971,14 +971,22 @@ async function crawl(opts) {
           /\s*[|—–-]\s*المجلس العلمي\s*$/u,
           "",
         );
-        if (targetTitle && overlapRatio(l.text, targetTitle) < 0.4) {
-          report.add({
-            severity: SEVERITY.CRITICAL,
-            rule: "LINK_TEXT_MISMATCH",
-            label: "نص الرابط لا يطابق عنوان الصفحة الوجهة (احتمال ربط خاطئ)",
-            where: `${l.from} → ${n}`,
-            sample: `«${l.text}» ⟵ الوجهة: «${targetTitle}»`,
-          });
+        // تجاهل الحالات الآمنة: عنوان الوجهة جزء من نص الرابط (مثل «المغني لابن قدامة»→«المغني»)
+        // أو العكس، أو تداخل كافٍ بأي اتجاه.
+        if (targetTitle) {
+          const a = normalizeAr(l.text);
+          const b = normalizeAr(targetTitle);
+          const contained = (a.includes(b) || b.includes(a)) && Math.min(a.length, b.length) >= 3;
+          const score = Math.max(overlapRatio(l.text, targetTitle), overlapRatio(targetTitle, l.text));
+          if (!contained && score < 0.4) {
+            report.add({
+              severity: SEVERITY.CRITICAL,
+              rule: "LINK_TEXT_MISMATCH",
+              label: "نص الرابط لا يطابق عنوان الصفحة الوجهة (احتمال ربط خاطئ)",
+              where: `${l.from} → ${n}`,
+              sample: `«${l.text}» ⟵ الوجهة: «${targetTitle}»`,
+            });
+          }
         }
       }
     } else if (/^https?:/i.test(l.href)) {
@@ -1091,21 +1099,30 @@ async function domainLevelChecks(origin, report) {
     });
   }
 
-  const host = new URL(origin).host;
-  const alt = host.startsWith("www.")
-    ? origin.replace("://www.", "://")
-    : origin.replace("://", "://www.");
-  const altRes = await fetchPage(alt);
-  if (
-    altRes.status === 200 &&
-    normalizeUrl(altRes.finalUrl, alt) &&
-    new URL(altRes.finalUrl).host === new URL(alt).host
-  ) {
+  // ازدواج النطاق فقط إذا بقيت نسختا www وبدون-www على مضيفهما دون تحويل متبادل.
+  const apexOrigin = origin.replace("://www.", "://");
+  const wwwOrigin = apexOrigin.replace("://", "://www.");
+  const [apexRes, wwwRes] = await Promise.all([
+    fetchPage(apexOrigin + "/"),
+    fetchPage(wwwOrigin + "/"),
+  ]);
+  const hostOf = (res) => {
+    try {
+      return new URL(res.finalUrl || "").host;
+    } catch {
+      return "";
+    }
+  };
+  const apexStays =
+    apexRes.status === 200 && hostOf(apexRes) === new URL(apexOrigin).host;
+  const wwwStays =
+    wwwRes.status === 200 && hostOf(wwwRes) === new URL(wwwOrigin).host;
+  if (apexStays && wwwStays) {
     report.add({
       severity: SEVERITY.HIGH,
       rule: "WWW_NO_REDIRECT",
       label: "النسخة البديلة (www / بدون www) تُخدَّم بـ 200 بلا تحويل 301 — ازدواج نطاق",
-      where: alt,
+      where: `${apexOrigin} و ${wwwOrigin}`,
     });
   }
 

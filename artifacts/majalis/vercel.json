@@ -188,6 +188,11 @@
   ],
   "redirects": [
     {
+      "source": "/glossary",
+      "destination": "/islamic-glossary",
+      "permanent": true
+    },
+    {
       "source": "/scholarly-research",
       "destination": "/qa",
       "permanent": true
