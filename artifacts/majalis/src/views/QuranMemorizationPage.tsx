@@ -17,6 +17,7 @@ import {
   type AyahCard,
 } from "@/lib/quran-memorization";
 import { BookOpen, ChevronLeft, Mic, MicOff, RotateCcw } from "lucide-react";
+import { loadHeritageFonts } from "@/lib/load-heritage-fonts";
 
 const ALL_TEST_TYPES: TestType[] = [
   "complete-ayah",
@@ -272,6 +273,8 @@ function QuestionCard({
    الصفحة الرئيسية
 ═══════════════════════════════════════════════════ */
 export default function QuranMemorizationPage() {
+  useEffect(() => { void loadHeritageFonts(); }, []);
+
   const [surahList, setSurahList] = useState<SurahSummary[]>([]);
   const [selectedSurah, setSelectedSurah] = useState<number>(1);
   const [selectedType, setSelectedType] = useState<TestType>("complete-ayah");

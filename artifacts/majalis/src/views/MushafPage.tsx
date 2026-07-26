@@ -15,6 +15,7 @@ import { usePageSwipe } from "@/hooks/usePageSwipe";
 import { toArabicDigits } from "@/lib/utils";
 import "@/styles/quran.css";
 import "@/styles/pages/mushaf-reader.css";
+import { loadHeritageFonts } from "@/lib/load-heritage-fonts";
 
 /**
  * قارئ المصحف — إعادة بناء المرحلة 8 (2026-07-18): ترقيم مدينة 604 صفحة
@@ -46,6 +47,10 @@ type SidebarTab = "surah" | "juz" | "page";
 export default function MushafPage() {
   const params = useParams<{ surah?: string }>();
   const [, navigate] = useLocation();
+
+  useEffect(() => {
+    void loadHeritageFonts();
+  }, []);
 
   const [manifest, setManifest] = useState<PagesManifest | null>(null);
   const [currentPage, setCurrentPage] = useState<number | null>(null);

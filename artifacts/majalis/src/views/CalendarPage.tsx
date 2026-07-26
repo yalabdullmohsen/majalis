@@ -22,6 +22,7 @@ import { HijriSacredMonthBanner } from "@/components/HijriSacredMonthBanner";
 import { getHijriDateString, gregorianToHijri } from "@/lib/hijri-utils";
 import { applyPageSeo } from "@/lib/seo";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import "@/styles/pages/calendar.css";
 
 type ViewMode = "month" | "week" | "day";
 

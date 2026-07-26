@@ -4,6 +4,7 @@ import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { arabicMatchAny } from "@/lib/arabic-search";
+import "@/styles/pages/prayer-ranks.css";
 
 // ─── مراتب المصلين ───────────────────────────────────────────────────────
 

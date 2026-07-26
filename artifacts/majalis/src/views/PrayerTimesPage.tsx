@@ -12,6 +12,7 @@ import {
   setSelectedGovernorate,
   type PrayerSlot,
 } from "@/lib/prayer-times";
+import "@/styles/pages/prayer-times.css";
 
 const PRAYER_AR: Record<string, string> = {
   Fajr:    "الفجر",

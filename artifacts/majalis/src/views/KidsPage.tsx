@@ -6,6 +6,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
+import "@/styles/pages/kids.css";
 
 type KidsCard = { href: string; title: string; desc: string; Icon: LucideIcon };
 

@@ -57,10 +57,12 @@
          تطبيق iOS عبر Capacitor (WKWebView) قد يفتح بلا اتصال فوري، وأي تأخر/فشل هنا
          يعني ظهور القرآن بخط بديل غير مقروء ولو للحظة — راجع @font-face في quran.css. -->
     <link rel="preload" href="/fonts/amiri-quran/AmiriQuran-Regular.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
+    <!-- المسار الحرج: واجهة الاستخدام فقط (Alexandria + IBM احتياطي).
+         خطوط التراث/القراءة (Amiri / Scheherazade / Aref Ruqaa / Noto Naskh)
+         تُحمَّل كسولًا من الصفحات التي تحتاجها عبر loadHeritageFonts(). -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;500;600;700&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
     <noscript>
-      <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@400;600;700&family=Scheherazade+New:wght@400;700&family=Noto+Naskh+Arabic:wght@400;700&display=swap" rel="stylesheet" />
+      <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet" />
     </noscript>
 
     <script type="application/ld+json">

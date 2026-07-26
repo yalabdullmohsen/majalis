@@ -5,6 +5,7 @@ import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import "@/styles/pages/ulum-quran.css";
+import { loadHeritageFonts } from "@/lib/load-heritage-fonts";
 
 
 type UQTab = "nuzul" | "jam" | "tafsir" | "ijaz" | "ahkam" | "qiraat";
@@ -177,6 +178,8 @@ const NASKH_TYPES = [
 ];
 
 export default function UlumQuranPage() {
+  useEffect(() => { void loadHeritageFonts(); }, []);
+
   useEffect(() => {
     applyPageSeo({
       path: "/ulum-quran",

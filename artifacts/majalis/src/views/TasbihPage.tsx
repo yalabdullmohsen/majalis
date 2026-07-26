@@ -18,6 +18,7 @@ import {
   writeTasbeehAwrad,
   type TasbeehWird,
 } from "@/lib/tasbeeh-storage";
+import "@/styles/pages/tasbih.css";
 
 const MAX_CUSTOM_TARGET = 99999;
 

@@ -1,0 +1,348 @@
+/* مُستخرج لتأجيل التحميل مع الصفحة */
+/* ── Professional tasbih counter ─────────────────────────────────────────── */
+.tasbih-pro-page {
+  max-width: 66rem;
+}
+
+.tasbih-stats-grid,
+.prayer-stat-strip {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: var(--ds-space-3);
+  margin-bottom: 1rem;
+}
+
+.tasbih-stat {
+  padding: 0.9rem;
+}
+
+.tasbih-stat span,
+.prayer-status-card__label {
+  color: var(--msk-text-2, #5C5C56);
+  font-size: 0.78rem;
+}
+
+.tasbih-stat strong {
+  display: block;
+  color: var(--majalis-emerald-deep);
+  font-size: 1.45rem;
+}
+
+.tasbih-layout {
+  display: grid;
+  grid-template-columns: minmax(13rem, 0.8fr) minmax(0, 1.4fr);
+  gap: var(--ds-space-4);
+  align-items: start;
+}
+
+.tasbih-wird-list,
+.tasbih-pro-card,
+.tasbih-add-card,
+.tasbih-achievements {
+  padding: var(--ds-space-4);
+}
+
+.tasbih-wird-list {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.tasbih-wird-list::-webkit-scrollbar,
+.fiqh-mobile-category-deck::-webkit-scrollbar,
+.fiqh-chip-strip::-webkit-scrollbar {
+  display: none;
+}
+
+.tasbih-wird-list,
+.fiqh-mobile-category-deck,
+.fiqh-chip-strip {
+  scrollbar-width: none;
+}
+
+.tasbih-wird-tab {
+  border: 1px solid var(--msk-border, #E8E7E2);
+  border-radius: 0.85rem;
+  background: transparent;
+  color: var(--majalis-ink);
+  padding: var(--ds-space-3);
+  text-align: right;
+  display: grid;
+  gap: 0.2rem;
+  font-family: inherit;
+}
+
+.tasbih-wird-tab.is-active {
+  border-color: var(--majalis-emerald);
+  background: color-mix(in srgb, var(--majalis-sage) 65%, var(--majalis-panel));
+}
+
+.tasbih-wird-tab small,
+.tasbih-progress-label,
+.tasbih-saved,
+.tasbih-offline-note {
+  color: var(--msk-text-2, #5C5C56);
+  font-size: 0.82rem;
+}
+
+.tasbih-main-button {
+  width: min(100%, 19rem);
+  aspect-ratio: 1;
+  margin: 1rem auto;
+  border-radius: 999px;
+  border: 6px solid var(--majalis-sage);
+  background:
+    radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--majalis-brass) 35%, transparent), transparent 35%),
+    var(--majalis-emerald);
+  color: var(--majalis-parchment);
+  display: grid;
+  place-items: center;
+  align-content: center;
+  box-shadow: 0 1rem 2.5rem rgba(0, 0, 0, 0.16);
+}
+
+.tasbih-main-button span {
+  font-size: clamp(3rem, 12vw, 5rem);
+  font-weight: 900;
+  line-height: 1;
+}
+
+.tasbih-main-button small {
+  font-weight: 800;
+}
+
+.tasbih-pro-bar {
+  margin-top: 0.75rem;
+}
+
+.tasbih-actions-grid,
+.tasbih-add-row {
+  display: flex;
+  gap: 0.55rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 1rem;
+}
+
+.tasbih-target-field {
+  display: grid;
+  gap: 0.35rem;
+  margin-top: 1rem;
+  font-weight: 800;
+}
+
+.tasbih-target-field input,
+.tasbih-add-row input {
+  min-height: 44px;
+  border: 1px solid var(--msk-border, #E8E7E2);
+  border-radius: 0.65rem;
+  padding: 0 0.75rem;
+  background: transparent;
+  color: var(--majalis-ink);
+  font-family: inherit;
+}
+
+.tasbih-offline-note {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+/* ── نُقل من src/styles/design-system.css (موجة 2 — تخفيف المسار الحرج) ── */
+/* ═══════════════════════════════════════════════════════
+   Tasbih — SVG Progress Ring Counter
+   ═══════════════════════════════════════════════════════ */
+
+/* Ring button — the main tap target (size via clamp in responsive section below) */
+.tc-ring-btn {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  border-radius: 50%;
+  padding: 0;
+  margin: 1rem auto;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  transition: transform 0.12s ease;
+}
+
+.tc-ring-btn:active {
+  transform: scale(0.96);
+}
+
+@keyframes tc-ring-pulse {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.055); }
+  100% { transform: scale(1); }
+}
+
+.tc-ring-btn--pulse {
+  animation: tc-ring-pulse 0.18s ease-out;
+}
+
+/* SVG ring */
+.tc-ring-svg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.tc-ring-track {
+  fill: none;
+  stroke: var(--majalis-line);
+  stroke-width: 9;
+}
+
+.tc-ring-fill {
+  fill: none;
+  stroke: var(--majalis-emerald, #143F35);
+  stroke-width: 9;
+}
+
+.tc-ring-fill--done {
+  stroke: var(--majalis-emerald, #226A56);
+}
+
+/* Content inside ring */
+.tc-ring-inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.1rem;
+  pointer-events: none;
+  user-select: none;
+}
+
+.tc-ring-rounds {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--majalis-emerald, #226A56);
+  letter-spacing: normal;
+  line-height: 1;
+}
+
+.tc-ring-count {
+  font-size: clamp(2rem, 8vw, 3.2rem);
+  font-weight: 800;
+  color: var(--majalis-emerald-deep, #143F35);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.tc-ring-btn--done .tc-ring-count {
+  color: var(--majalis-emerald, #226A56);
+}
+
+.tc-ring-total {
+  font-size: 0.68rem;
+  color: var(--majalis-ink-soft);
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+}
+
+.tc-ring-hint {
+  font-size: 0.65rem;
+  color: var(--majalis-ink-soft);
+  margin-top: 0.15rem;
+  line-height: 1;
+}
+
+.tc-ring-btn--done .tc-ring-hint {
+  color: var(--majalis-emerald, #226A56);
+}
+
+/* Keyboard hint below counter */
+.tc-keyboard-hint {
+  font-size: 0.65rem;
+  color: var(--majalis-ink-soft);
+  text-align: center;
+  margin: 0.25rem 0 0.75rem;
+}
+
+@media (hover: none) {
+  .tc-keyboard-hint { display: none; }
+}
+
+/* ═══════════════════════════════════════════════════════
+   Tasbih — Horizontal Wird Pill Selector
+   ═══════════════════════════════════════════════════════ */
+
+.tasbih-wird-pills {
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding: 0.5rem 0 0.75rem;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  scroll-snap-type: x mandatory;
+}
+
+.tasbih-wird-pills::-webkit-scrollbar { display: none; }
+
+.tasbih-wird-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  flex-shrink: 0;
+  scroll-snap-align: start;
+  padding: 0.45rem 0.85rem;
+  border-radius: 99px;
+  border: 1.5px solid var(--majalis-line);
+  background: var(--majalis-panel);
+  font-family: inherit;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: var(--majalis-ink);
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s, color 0.15s;
+  white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.tasbih-wird-pill:hover {
+  border-color: var(--majalis-emerald, #143F35);
+  color: var(--majalis-emerald, #143F35);
+}
+
+.tasbih-wird-pill.is-active {
+  border-color: var(--majalis-emerald, #143F35);
+  background: var(--majalis-emerald, #143F35);
+  color: #fff;
+  font-weight: 700;
+}
+
+.tasbih-pill-phrase {
+  line-height: 1.3;
+}
+
+.tasbih-pill-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.3rem;
+  height: 1.3rem;
+  padding: 0 0.25rem;
+  border-radius: 99px;
+  font-size: 0.68rem;
+  font-weight: 700;
+  background: rgba(255,255,255,0.25);
+  color: inherit;
+  line-height: 1;
+}
+
+.tasbih-wird-pill:not(.is-active) .tasbih-pill-badge {
+  background: var(--majalis-parchment-deep);
+  color: var(--majalis-ink-soft);
+}
+

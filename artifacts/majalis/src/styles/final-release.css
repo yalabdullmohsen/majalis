@@ -195,87 +195,6 @@ html[data-theme="dark"] .top-section-bar {
   border-block-end-color: var(--border);
 }
 
-/* ══ قسم الأطفال — لمسات ألطف ضمن نفس الهوية الزمردية (لا ألوان دخيلة) ══ */
-.kids-hub-page {
-  max-width: 640px;
-  margin: 0 auto;
-  padding: 1rem 1rem 3rem;
-}
-.kids-hub-intro {
-  text-align: center;
-  padding: 1.75rem 1.25rem;
-  margin-bottom: 1.5rem;
-  border-radius: var(--r-xl, 1.5rem);
-  background: linear-gradient(160deg, var(--brand-soft) 0%, var(--bg) 100%);
-  border: 1px solid color-mix(in srgb, var(--brand-deep) 10%, transparent);
-}
-.kids-hub-intro__icon { color: var(--brand); margin-bottom: 0.5rem; }
-.kids-hub-intro__title {
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: var(--brand-deep);
-  margin: 0 0 0.4rem;
-}
-.kids-hub-intro__sub {
-  font-size: 0.9rem;
-  color: var(--text-2);
-  margin: 0;
-  line-height: 1.6;
-}
-.kids-hub-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.75rem;
-}
-@media (min-width: 480px) {
-  .kids-hub-grid { grid-template-columns: 1fr 1fr; }
-}
-.kids-hub-card {
-  display: flex;
-  align-items: center;
-  gap: 0.85rem;
-  padding: 1rem 1.1rem;
-  border-radius: var(--r-lg, 1.25rem);
-  text-decoration: none;
-  min-height: 44px;
-  transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease);
-}
-.kids-hub-card:hover { transform: translateY(-1px); }
-.kids-hub-card__icon {
-  flex-shrink: 0;
-  width: 44px;
-  height: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: var(--r-full);
-  background: var(--brand-soft);
-  color: var(--brand);
-}
-.kids-hub-card__body { flex: 1; min-width: 0; }
-.kids-hub-card__title {
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--brand-deep);
-  margin: 0 0 0.2rem;
-}
-.kids-hub-card__desc {
-  font-size: 0.8rem;
-  color: var(--text-2);
-  margin: 0;
-  line-height: 1.5;
-}
-.kids-hub-card__chevron { flex-shrink: 0; color: var(--text-muted); }
-
-html[data-theme="dark"] .kids-hub-intro {
-  background: linear-gradient(160deg, var(--surface-brand) 0%, var(--surface) 100%);
-  border-color: var(--border);
-}
-html[data-theme="dark"] .kids-hub-intro__title,
-html[data-theme="dark"] .kids-hub-card__title { color: var(--text); }
-html[data-theme="dark"] .kids-hub-intro__sub,
-html[data-theme="dark"] .kids-hub-card__desc { color: var(--text-2); }
-html[data-theme="dark"] .kids-hub-card__icon { background: var(--brand-soft); color: var(--text-brand); }
 .navbar-v3__inner {
   width: min(100%, var(--page-width));
   min-height: var(--header-height);
@@ -1501,3 +1420,5 @@ body {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
   .ds-skeleton { animation: none; }
 }
+
+/* ── موجة 2: نُقل kids-hub إلى pages/kids.css ── */

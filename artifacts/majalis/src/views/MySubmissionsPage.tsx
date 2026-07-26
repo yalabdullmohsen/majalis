@@ -83,7 +83,7 @@ function SubmissionRow({ sub }: { sub: UserSubmission }) {
         {/* Approved adhan notice */}
         {sub.status === "approved" && sub.type === "adhan" && (
           <div className="msr-card__notice">
-            <PartyPopper size={14} className="inline ml-1" />تهانينا! تسجيلك قُبِل وسيُضاف قريباً إلى مكتبة المؤذنين.
+            <PartyPopper size={14} className="inline ml-1" />تهانينا! تسجيلك قُبِل وسيُفعَّل ضمن إعدادات تنبيه الأذان عند النشر.
           </div>
         )}
 

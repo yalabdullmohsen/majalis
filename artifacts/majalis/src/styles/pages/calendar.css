@@ -1,0 +1,353 @@
+/* مُستخرج لتأجيل التحميل مع الصفحة */
+/* ── Calendar page ── */
+.calendar-page .cal-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--ds-space-4);
+  padding: var(--ds-space-4);
+  margin-bottom: 1rem;
+}
+
+.cal-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-3);
+}
+
+.cal-nav-btn {
+  border: 1px solid var(--msk-border, #E8E7E2);
+  background: transparent;
+  border-radius: var(--ds-radius);
+  width: 2rem;
+  height: 2rem;
+  cursor: pointer;
+  font-size: 1.1rem;
+}
+
+.cal-view-tabs {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.cal-view-tab {
+  border: 1px solid var(--msk-border, #E8E7E2);
+  background: transparent;
+  border-radius: var(--ds-radius);
+  padding: 0.4rem 0.75rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.cal-view-tab.is-active {
+  background: var(--majalis-emerald-deep);
+  color: var(--majalis-parchment);
+  border-color: var(--majalis-emerald-deep);
+}
+
+.cal-ics-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  border: 1px solid var(--msk-border, #E8E7E2);
+  background: transparent;
+  border-radius: var(--ds-radius);
+  padding: 0.4rem 0.75rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+  color: var(--majalis-emerald-deep);
+}
+.cal-ics-btn:hover {
+  background: var(--clr-primary, #143F35);
+  color: #fff;
+  border-color: var(--clr-primary, #143F35);
+}
+
+.cal-month {
+  padding: var(--ds-space-4);
+}
+
+.cal-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.35rem;
+  margin-bottom: 0.5rem;
+  font-size: var(--ds-text-xs);
+  font-weight: 700;
+  color: var(--msk-text-2, #5C5C56);
+  text-align: center;
+}
+
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 0.35rem;
+}
+
+.cal-cell {
+  aspect-ratio: 1;
+  border: 1px solid var(--msk-border, #E8E7E2);
+  border-radius: var(--ds-radius);
+  background: transparent;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ds-space-1);
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.cal-cell.is-selected {
+  border-color: var(--majalis-emerald);
+  background: var(--majalis-sage);
+}
+
+.cal-cell.is-outside {
+  opacity: 0.45;
+}
+
+.cal-cell-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--majalis-emerald);
+}
+
+.cal-week {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: var(--ds-space-2);
+  padding: var(--ds-space-4);
+  overflow-x: auto;
+}
+
+.cal-week-col {
+  min-width: 100px;
+}
+
+.cal-week-head {
+  width: 100%;
+  border: none;
+  background: var(--majalis-parchment-deep);
+  border-radius: var(--ds-radius);
+  padding: var(--ds-space-2);
+  font-weight: 700;
+  font-size: 0.78rem;
+  cursor: pointer;
+  font-family: inherit;
+  margin-bottom: 0.5rem;
+}
+
+.cal-week-head.is-selected {
+  background: var(--majalis-emerald-deep);
+  color: var(--majalis-parchment);
+}
+
+.cal-event-chip,
+.cal-day-item {
+  width: 100%;
+  text-align: right;
+  border: 1px solid var(--msk-border, #E8E7E2);
+  background: transparent;
+  border-radius: var(--ds-radius);
+  padding: var(--ds-space-2);
+  margin-bottom: 0.35rem;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.78rem;
+}
+
+.cal-day {
+  padding: var(--ds-space-4);
+}
+
+.cal-day-list {
+  display: grid;
+  gap: var(--ds-space-2);
+}
+
+.cal-day-item strong {
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.cal-empty {
+  color: var(--msk-text-2, #5C5C56);
+  font-size: 0.9rem;
+  padding: 1rem 0;
+}
+
+.cal-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 26, 26, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+  padding: var(--ds-space-4);
+}
+
+.cal-modal {
+  max-width: 28rem;
+  width: 100%;
+  padding: var(--ds-space-5);
+}
+
+.cal-modal-meta {
+  display: grid;
+  gap: 0.35rem;
+  margin: 1rem 0;
+  font-size: 0.9rem;
+}
+
+.cal-modal-meta dt {
+  font-weight: 700;
+  display: inline;
+}
+
+.cal-modal-meta dd {
+  display: inline;
+  margin-inline-start: 0.35rem;
+}
+
+.cal-modal-actions {
+  display: flex;
+  gap: var(--ds-space-2);
+  flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+  .cal-week {
+    grid-template-columns: 1fr;
+  }
+
+  .cal-grid {
+    gap: 0.2rem;
+  }
+}
+
+/* ── نُقل من src/styles/modern-2026.css (موجة 2 — تخفيف المسار الحرج) ── */
+/* ══ Calendar Improvements 2026 ══════════════════════════════════════════════ */
+/* خلايا التقويم — تخطيط مرن مع أحداث */
+.cal-cell {
+  aspect-ratio: unset !important;
+  min-height: 3.5rem !important;
+  align-items: flex-start !important;
+  justify-content: flex-start !important;
+  padding: 0.35rem 0.3rem !important;
+  flex-direction: column !important;
+  gap: 0.15rem !important;
+}
+.cal-cell.has-events { min-height: 5.5rem !important; }
+.cal-cell-head {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 0.15rem;
+  margin-bottom: 0.1rem;
+}
+.cal-cell-num {
+  font-size: 0.88rem !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  color: var(--txt-primary, #1A1A18) !important;
+}
+.cal-cell-hijri {
+  font-size: 0.62rem !important;
+  font-weight: 500 !important;
+  color: var(--m26-green-700, #15803D) !important;
+  opacity: 0.75;
+  line-height: 1 !important;
+}
+/* اليوم الحالي */
+.cal-cell.is-today { background: var(--m26-green-50, #F0FDF4) !important; border-color: var(--m26-green-400, #4ADE80) !important; }
+.cal-cell.is-today .cal-cell-num { color: var(--m26-green-700, #15803D) !important; }
+/* حدث داخل الخلية */
+.cal-cell-event {
+  display: block;
+  width: 100%;
+  font-size: 0.8rem !important;
+  font-weight: 600 !important;
+  background: var(--m26-green-100, #DCFCE7) !important;
+  color: var(--m26-green-800, #166534) !important;
+  border-radius: var(--ds-radius-xs);
+  padding: 0.08rem 0.25rem;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: right;
+  line-height: 1.4;
+}
+.cal-cell.is-selected .cal-cell-event,
+.cal-cell.is-today .cal-cell-event {
+  background: rgba(22,163,74,0.18) !important;
+  color: #14532D !important;
+}
+.cal-cell-more {
+  display: block;
+  font-size: 0.58rem !important;
+  font-weight: 700 !important;
+  color: var(--m26-green-600, #16A34A) !important;
+  text-align: right;
+  line-height: 1.2;
+}
+/* زر "اليوم" في التولبار */
+.cal-today-btn {
+  border: 1.5px solid var(--m26-green-600, #16A34A) !important;
+  color: var(--m26-green-700, #15803D) !important;
+  background: transparent !important;
+  border-radius: 999px !important;
+  font-size: 0.75rem !important;
+  font-weight: 700 !important;
+  padding: 0.2rem 0.7rem !important;
+  cursor: pointer !important;
+  transition: background 0.15s !important;
+  margin-right: 0.35rem !important;
+}
+.cal-today-btn:hover {
+  background: var(--m26-green-50, #F0FDF4) !important;
+}
+
+/* ── شريط تقدم القراءة ── */
+.reading-progress-bar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(to left, var(--color-primary, #226A56), #34d399);
+  width: var(--rpb-pct, 0%);
+  z-index: 9999;
+  transition: width 0.1s linear;
+  pointer-events: none;
+  border-radius: 0 0 2px 2px;
+}
+
+/* ── رأس صفحة التفاصيل ── */
+.content-detail-header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ds-space-2);
+  flex-wrap: wrap;
+}
+.content-detail-readtime {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ds-space-1);
+  font-size: var(--ds-text-xs);
+  color: var(--txt-secondary, #6b7280);
+  background: var(--surface-2, #f4f4f4);
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}

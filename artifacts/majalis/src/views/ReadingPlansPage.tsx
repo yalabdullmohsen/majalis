@@ -9,6 +9,7 @@ import {
   computePlanMetrics, estimatePlanFeasibility,
   type BookReadingPlan, type DayCode, type PaceLevel,
 } from "@/lib/book-reading-plan-service";
+import "@/styles/pages/reading-plans.css";
 
 const DAY_LABELS: Record<DayCode, string> = {
   sat: "سبت", sun: "أحد", mon: "اثنين", tue: "ثلاثاء", wed: "أربعاء", thu: "خميس", fri: "جمعة",

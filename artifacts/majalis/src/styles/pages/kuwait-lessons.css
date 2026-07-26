@@ -4,3 +4,90 @@
 .sheikh-avatar--initials { background: var(--avatar-bg, #226A56); }
 .sheikh-avatar--hidden   { display: none; }
 
+/* ── نُقل من src/index.css (موجة 2 — تخفيف المسار الحرج) ── */
+/* ── Kuwait Lessons Page ── */
+.kuwait-lessons-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--ds-space-4);
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+  padding-bottom: 1.25rem;
+  border-bottom: 1px solid var(--majalis-line);
+}
+.kuwait-lessons-eyebrow {
+  font-size: var(--ds-text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: normal;
+  color: var(--majalis-emerald-deep);
+  margin-bottom: 0.25rem;
+}
+.kuwait-lessons-title {
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+  font-weight: 800;
+  color: var(--majalis-ink);
+  margin: 0 0 0.4rem;
+}
+.kuwait-lessons-subtitle {
+  font-size: 0.88rem;
+  color: var(--msk-text-2, #5C5C56);
+  max-width: 42rem;
+}
+.kuwait-lessons-source-link {
+  color: var(--majalis-emerald-deep);
+  font-weight: 600;
+  text-decoration: none;
+}
+.kuwait-lessons-source-link:hover { text-decoration: underline; }
+.kuwait-lessons-live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--color-success-fg);
+  background: var(--color-success-bg);
+  padding: 0.3rem 0.7rem;
+  border-radius: 100px;
+  white-space: nowrap;
+  margin-top: 0.25rem;
+}
+.kuwait-lessons-section-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--majalis-ink);
+  margin: 0 0 0.35rem;
+}
+.kuwait-lessons-feed-note {
+  font-size: 0.8rem;
+  color: var(--msk-text-2, #5C5C56);
+  margin-bottom: 1rem;
+}
+.kuwait-lessons-feed-note a { color: var(--majalis-emerald-deep); }
+.kuwait-lessons-feed-section { margin-bottom: 2.5rem; }
+.kuwait-lessons-feed-wrap {
+  border-radius: var(--ds-radius-lg);
+  overflow: hidden;
+  border: 1px solid var(--msk-border, #E8E7E2);
+  min-height: 400px;
+}
+.kuwait-lessons-feed-wrap iframe { width: 100% !important; border: none !important; }
+.kuwait-lessons-attribution {
+  font-size: var(--ds-text-xs);
+  color: var(--msk-text-2, #5C5C56);
+  margin-top: 0.6rem;
+}
+.kuwait-lessons-attribution a { color: var(--majalis-emerald-deep); }
+.kuwait-lessons-sheikhs-section { margin-bottom: 2rem; }
+.kuwait-lessons-footer-note {
+  font-size: 0.78rem;
+  color: var(--msk-text-2, #5C5C56);
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--msk-border, #E8E7E2);
+  border-radius: var(--ds-radius);
+  background: transparent;
+  margin-top: 1rem;
+}
+.kuwait-lessons-footer-note a { color: var(--majalis-emerald-deep); }

@@ -20,6 +20,7 @@ import { loadMushafPage, prefetchMushafPage, type MushafPageLayout, type QpcWord
 import { MushafPageV2 } from "@/components/quran/MushafPageV2";
 import "@/styles/quran.css";
 import "@/styles/mushaf-v2.css";
+import { loadHeritageFonts } from "@/lib/load-heritage-fonts";
 
 const TOTAL_PAGES = 604;
 
@@ -76,6 +77,8 @@ const PAGE_MODE_OPTIONS: { id: QuranPageMode; label: string; hint: string }[] = 
 ];
 
 export default function MushafPageView() {
+  useEffect(() => { void loadHeritageFonts(); }, []);
+
   // مُثبَّت أيضًا على المسار القديم /mushaf/:surah (رقم سورة) — يُحوَّل
   // مباشرة لأول صفحته عبر SURAH_START_PAGES، دون مسار/مكوّن منفصل مكرَّر.
   const params = useParams<{ page?: string; surah?: string }>();

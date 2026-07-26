@@ -5,6 +5,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { lazyWithRetry } from "@/lib/lazy-with-retry";
 import { Loading } from "@/components/ui-common";
 import { AdminShell, type AdminSection } from "@/views/admin/AdminShell";
+import "@/styles/pages/admin-shell.css";
 
 // كانت جميع أقسام لوحة التحكم (42 قسمًا) تُستورد وتُنفَّذ دفعة واحدة عند
 // دخول /admin مهما كان القسم المعروض فعليًا — هذا هو السبب الجذري لـ"تعليق"
