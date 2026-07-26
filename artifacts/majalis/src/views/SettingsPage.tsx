@@ -13,6 +13,7 @@ import { useQuranPreferences, type QuranFontId } from "@/hooks/useQuranPreferenc
 import { PushPrompt } from "@/components/PushPrompt";
 import { useLanguage } from "@/components/LanguageProvider";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import "@/styles/pages/settings.css";
 
 function ToggleRow({
   label,
