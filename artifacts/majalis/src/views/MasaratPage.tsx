@@ -104,18 +104,8 @@ function MasarCard({ masar }: { masar: Masar }) {
       <div className="masar-card__footer">
         <Link
           href={masar.steps[0]?.href ?? "#"}
-          style={{
-            display: "block",
-            textAlign: "center",
-            fontSize: "0.85rem",
-            fontWeight: 800,
-            padding: "0.65rem 1rem",
-            borderRadius: "0.625rem",
-            color: "#fff",
-            background: masar.color,
-            textDecoration: "none",
-            transition: "opacity 0.15s ease",
-          }}
+          className="masar-card__cta"
+          style={{ background: masar.color }}
           onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.opacity = "0.9"; }}
           onMouseLeave={(e) => { (e.currentTarget as HTMLAnchorElement).style.opacity = "1"; }}
         >

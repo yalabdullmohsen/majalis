@@ -1048,13 +1048,26 @@ textarea {
   font: inherit;
   font-weight: 700;
 }
-.masar-card__step-link {
+.masar-card__step-link,
+.masar-card__footer a,
+.masar-card__cta,
+.upd-title-link {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   min-height: 44px;
   font-size: 0.85rem;
   line-height: 1.45;
   text-decoration: none;
+}
+.masar-card__cta {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  color: #fff;
+  font-weight: 800;
+  text-align: center;
+  transition: opacity var(--motion-fast);
 }
 .fiqh-stats-list a,
 .fiqh-stats-note a {
