@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { IslamicQuizGame } from "@/components/quiz-game/IslamicQuizGame";
 import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
+import "@/styles/components/islamic-quiz-game.css";
 
 export default function QuizPage() {
   useEffect(() => {

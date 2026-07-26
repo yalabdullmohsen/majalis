@@ -17,6 +17,7 @@ import {
 import { useAuth } from "@/components/AuthProvider";
 import { applyPageSeo } from "@/lib/seo";
 import { truncateAtWord } from "@/lib/utils";
+import "@/styles/pages/citation-public.css";
 
 export default function CitationPublicPage() {
   const [, params] = useRoute("/c/:slug");

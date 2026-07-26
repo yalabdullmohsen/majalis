@@ -1747,7 +1747,7 @@
 }
 @media (max-width: 640px) {
   .admin-quick-edit-fab {
-    bottom: 4.5rem;
+    bottom: calc(var(--bottom-nav-total, 4.5rem) + 0.25rem);
     inset-inline-end: 0.85rem;
     padding: 0.45rem 0.85rem 0.45rem 0.7rem;
     font-size: 0.78rem;

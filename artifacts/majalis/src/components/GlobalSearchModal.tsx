@@ -18,6 +18,7 @@ import {
   getTopSearchQueries,
 } from "@/lib/search-history";
 import { normalizeArabic } from "@/shared/arabic-normalize";
+import "@/styles/components/global-search-modal.css";
 
 // ── ثوابت ───────────────────────────────────────────────────────────────────
 
