@@ -8,7 +8,7 @@
 ## المرحلة 1 — دروس 404
 
 **الفرع:** `cursor/visual-fix-phase1-lesson-404s-1f54`  
-**PR:** (يُحدَّث)
+**PR:** https://github.com/yalabdullmohsen/majalis/pull/348
 
 ### التشخيص الجذري
 1. إعادة كتابة Vercel: `/lessons/:id` → `/api/lessons/:id` → `/api/index`.
@@ -44,3 +44,25 @@
 
 ### حالة البناء
 (تُحدَّث)
+
+### حالة البناء
+نجاح (5932a01d+)
+
+---
+
+## المرحلة 2 — صفحة 404 لائقة
+
+**الفرع:** `cursor/visual-fix-phase2-not-found-page-1f54`  
+**PR:** (يُحدَّث)
+
+### ما نُفّذ
+- وحدة مشتركة `lib/not-found-html.mjs`: title + meta description + `lang=ar` `dir=rtl` + H1 + شعار + ثلاثة روابط (الرئيسية، الدروس، البحث) + HTTP 404.
+- `api-dispatch`: عند عدم تطابق المسار وطلب HTML → صفحة 404 بدل JSON عارٍ.
+- `lesson-page`: نفس قالب HTML للدرس غير الموجود.
+- واجهة SPA `not-found.tsx`: هوية + روابط الخروج الثلاثة المطلوبة.
+
+### ملاحظة
+مسارات SPA العامة غير المعروفة ما زالت قد تُخدم بـ `index.html` وحالة 200 (سلوك catch-all في Vercel). مسار `/lessons/:id` المكسور كان مصدر الـ ~42 حرفاً JSON وهو ما أُصلح بـ HTTP 404 HTML.
+
+### حالة البناء
+نجاح
