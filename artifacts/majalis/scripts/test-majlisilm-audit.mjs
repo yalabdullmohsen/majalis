@@ -23,6 +23,14 @@ function testNormalize() {
 function testOverlap() {
   assert.ok(overlapRatio("الفقه الإسلامي", "الفقه الإسلامي المقارن") > 0.5);
   assert.ok(overlapRatio("الحديث", "الفقه") < 0.4);
+  // حالة آمنة شائعة: نص الرابط أطول من عنوان الوجهة
+  const link = "المغني لابن قدامة";
+  const title = "المغني";
+  assert.ok(normalizeAr(link).includes(normalizeAr(title)));
+  assert.ok(
+    Math.max(overlapRatio(link, title), overlapRatio(title, link)) >= 0.4 ||
+      normalizeAr(link).includes(normalizeAr(title)),
+  );
 }
 
 function testParseHtml() {
