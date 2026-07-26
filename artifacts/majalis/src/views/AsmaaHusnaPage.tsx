@@ -22,7 +22,6 @@ function NameOfDayCard({ entry, onOpen }: { entry: AsmaEntry; onOpen: () => void
       </div>
       <div className="ah-nod-num">{entry.num}</div>
       <div className="ah-nod-arabic">{entry.arabic}</div>
-      <div className="ah-nod-trans">{entry.transliteration}</div>
       <p className="ah-nod-meaning">{entry.meaning}</p>
       <span className="ah-nod-cta">اقرأ التفاصيل ←</span>
     </div>
@@ -78,7 +77,7 @@ export default function AsmaaHusnaPage() {
     return ASMAA.filter((a) => {
       const matchCat = category === "الكل" || a.category === category;
       const matchStatus = statusFilter === "الكل" || a.status === statusFilter;
-      const matchQ = arabicMatchAny([a.arabic, a.transliteration, a.meaning, a.status], search);
+      const matchQ = arabicMatchAny([a.arabic, a.meaning, a.status], search);
       return matchCat && matchStatus && matchQ;
     });
   }, [search, category, statusFilter]);
@@ -190,7 +189,6 @@ export default function AsmaaHusnaPage() {
               <span className="ah-card__num">{a.num}</span>
               <span className={`ah-card__status ah-card__status--${a.status === "ثابت" ? "thabit" : "mashhur"}`}>{a.status}</span>
               <span className="ah-card__name">{a.arabic}</span>
-              <span className="ah-card__trans">{a.transliteration}</span>
               <span className="ah-card__meaning">{a.meaning.slice(0, 35)}{a.meaning.length > 35 ? "…" : ""}</span>
               <button
                 type="button"
@@ -236,7 +234,6 @@ export default function AsmaaHusnaPage() {
             <div className="ah-modal__head">
               <span className="ah-modal__num">{selected.num}</span>
               <h2 id="ah-modal-name" className="ah-modal__name">{selected.arabic}</h2>
-              <span className="ah-modal__trans">{selected.transliteration}</span>
               <button
                 type="button"
                 className={`ah-modal__fav${favs.has(selected.num) ? " ah-modal__fav--active" : ""}`}
