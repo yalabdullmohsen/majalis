@@ -2,11 +2,11 @@ import { useEffect, useMemo, useState } from "react";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 import { loadAdhanPrefs } from "@/lib/adhan-preferences";
 import {
-import "@/styles/components/friday-banner.css";
   getFridayWindowStatus,
   isFridayBannerDismissed,
   dismissFridayBanner,
 } from "@/lib/friday-prayer";
+import "@/styles/components/friday-banner.css";
 
 export function FridayBanner() {
   const [enabled, setEnabled] = useState(() => loadAdhanPrefs().fridayBannerEnabled);
