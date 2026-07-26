@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
+import "@/styles/components/related-knowledge.css";
 import {
   GraduationCap, BookMarked, Lightbulb, HelpCircle, BookOpen,
   ChevronLeft, type LucideProps,
