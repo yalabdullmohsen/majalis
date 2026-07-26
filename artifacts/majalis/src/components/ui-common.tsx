@@ -187,8 +187,13 @@ export function ErrorState({ text, onRetry }: { text: string; onRetry?: () => vo
   );
 }
 
-export function Empty({ text }: { text: string }) {
-  return <p className="ds-empty">{text}</p>;
+export function Empty({ text, title }: { text: string; title?: string }) {
+  return (
+    <div className="ds-empty" role="status" aria-live="polite">
+      {title ? <h2>{title}</h2> : null}
+      <p className="ds-empty__text">{text}</p>
+    </div>
+  );
 }
 
 export function QaSkeleton({ count = 4 }: { count?: number }) {
