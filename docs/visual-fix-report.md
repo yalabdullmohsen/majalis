@@ -96,3 +96,19 @@ LearnHub، FiqhCouncilList، AnnualCourses، Vault، HadithPage catch→[] — �
 
 ### حالة البناء
 نجاح
+
+---
+
+## المرحلة 4 — مسارات مكررة (canonical)
+
+**الفرع:** `cursor/visual-fix-phase4-canonical-1f54`  
+**PR:** (يُحدَّث)
+
+### ما نُفّذ
+- `applyPageSeo`: يُطبّق `normalizePath` على canonical دائماً (بلا ?/#).
+- `canonicalPath` صريح لـ `/adhkar` و`/salah-guide` و`/lessons`.
+- JSON-LD لأقسام الأذكار يشير للمسار الأساسي `/adhkar` (لا نسخ ?cat=).
+- `sitemap.xml`: كان أصلاً بلا معاملات استعلام لهذه الصفحات — لا تغيير مطلوب.
+
+### حالة البناء
+نجاح

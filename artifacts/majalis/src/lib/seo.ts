@@ -251,7 +251,9 @@ function upsertJsonLd(data: Record<string, unknown> | Record<string, unknown>[])
 
 export function applyPageSeo(options: PageSeoOptions) {
   const normalized = normalizePath(options.path);
-  const canonical = absoluteUrl(options.canonicalPath || normalized);
+  // المسار الأساسي بلا ? أو # — يمنع تكرار /adhkar?cat= و/lessons?tab= في الفهرسة
+  const canonicalPath = normalizePath(options.canonicalPath || normalized);
+  const canonical = absoluteUrl(canonicalPath);
   const image = options.image || absoluteUrl(seoData.defaultImage);
   const keywords = [...new Set([...(options.keywords || []), ...seoData.defaultKeywords])].join(", ");
   const robots = options.robots || "index, follow";

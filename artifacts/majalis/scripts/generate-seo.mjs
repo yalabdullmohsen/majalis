@@ -583,7 +583,7 @@ const LIST_JSON_LD = {
   ),
   "/rulings": itemListJsonLdScript((PLATFORM_SEED.rulings || []).map((r) => ({ name: r.title, url: `/rulings/${r.id}` })), "الأحكام الشرعية"),
   "/lessons": itemListJsonLdScript(lessonRows.slice(0, 30).map((r) => ({ name: r.title, url: `/lessons/${r.id}` })), "الدروس الشرعية"),
-  "/adhkar": itemListJsonLdScript(ADHKAR_CATEGORIES.map((c) => ({ name: c.name, url: `/adhkar?cat=${c.id}` })), "أقسام الأذكار"),
+  "/adhkar": itemListJsonLdScript(ADHKAR_CATEGORIES.map((c) => ({ name: c.name, url: `/adhkar` })), "أقسام الأذكار"),
   "/prophets": itemListJsonLdScript(
     PROPHETS.map((p) => ({ name: `قصة نبي الله ${p.arabicName} عليه السلام`, url: `/prophets/${p.slug}` })),
     "قصص الأنبياء",
