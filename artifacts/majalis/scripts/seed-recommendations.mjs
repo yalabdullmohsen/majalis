@@ -51,7 +51,7 @@ const SEED_TAGS = [
   { tag_name: "family",       tag_name_ar: "الأسرة والتربية",    tag_type: "topic" },
   { tag_name: "tafsir",       tag_name_ar: "التفسير",            tag_type: "quran_theme" },
   { tag_name: "tajweed",      tag_name_ar: "التجويد والقراءات",  tag_type: "quran_theme" },
-  { tag_name: "miracles",     tag_name_ar: "الإعجاز العلمي",     tag_type: "topic" },
+  { tag_name: "miracles",     tag_name_ar: "إشارات كونية",       tag_type: "topic" },
   { tag_name: "contemporary", tag_name_ar: "النوازل المعاصرة",   tag_type: "ruling" },
   { tag_name: "beginner",     tag_name_ar: "للمبتدئين",          tag_type: "general" },
   { tag_name: "advanced",     tag_name_ar: "للمتقدمين",          tag_type: "general" },

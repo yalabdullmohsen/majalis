@@ -77,9 +77,9 @@ const SECTION_CATALOG: SectionCard[] = [
     affectsPublic: true,
   },
   {
-    key: "miracles", Icon: Sparkles, label: "الإعجاز العلمي", group: "المحتوى",
-    description: "إدارة محتوى الإعجاز العلمي في القرآن والسنة",
-    whatItDoes: "تتيح إضافة مقالات الإعجاز العلمي ومراجعتها قبل النشر.",
+    key: "miracles", Icon: Sparkles, label: "إشارات كونية", group: "المحتوى",
+    description: "إدارة موضوعات التأمل في آيات الخلق (مع حجب غير المحرَّر)",
+    whatItDoes: "تتيح إضافة موضوعات الإشارات الكونية ومراجعتها قبل النشر.",
     whenToUse: "لإضافة محتوى جديد أو تعديل مقالة موجودة أو إزالة محتوى غير دقيق.",
     dataManaged: "عنوان المقال، النص، المصادر، الصور، التصنيف",
     affectsPublic: true,

@@ -50,7 +50,7 @@ export function MiraclesSection() {
   return (
     <div>
       <div className="mir-header">
-        <h2 className="mir-title">الإعجاز العلمي ({items.length})</h2>
+        <h2 className="mir-title">إشارات كونية ({items.length})</h2>
         <div className="mir-btn-group">
           <BulkImport
             title="استيراد مقالات"

@@ -86,7 +86,7 @@ const KIND_LABELS: Record<string, string> = {
   fawaid: "فائدة",
   adhkar: "ذكر",
   library: "كتاب",
-  miracle: "إعجاز",    miracles: "إعجاز",
+  miracle: "إشارة كونية",    miracles: "إشارة كونية",
   course: "دورة",      courses: "دورة",
   update: "مستجد",     updates: "مستجد",
   fiqh_decision: "مجمع فقهي", fiqh_council: "مجمع فقهي",
@@ -105,7 +105,7 @@ const KIND_GROUP_LABELS: Record<string, string> = {
   fawaid: "الفوائد",
   adhkar: "الأذكار",
   library: "المكتبة",
-  miracle: "الإعجاز القرآني", miracles: "الإعجاز القرآني",
+  miracle: "إشارات كونية", miracles: "إشارات كونية",
   course: "الدورات العلمية", courses: "الدورات العلمية",
   update: "آخر المستجدات",  updates: "آخر المستجدات",
   fiqh_decision: "المجمع الفقهي", fiqh_council: "المجمع الفقهي",
@@ -693,7 +693,7 @@ export default function SearchPage() {
                       title={displayText(s.title)} meta={s.category || s.topic}
                     />
                   )} />
-                  <Group title="الإعجاز القرآني" items={results.miracles} render={(m) => (
+                  <Group title="إشارات كونية" items={results.miracles} render={(m) => (
                     <ResultRow key={m.id} href="/miracles" kind="miracle" query={q}
                       title={displayText(m.title)} meta={m.category}
                     />
