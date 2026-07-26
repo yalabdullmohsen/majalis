@@ -12,6 +12,7 @@ import {
   type SubmissionType,
   type SubmissionStats,
 } from "@/lib/user-submissions-service";
+import "@/styles/components/submissions-review.css";
 
 const STATUS_LABEL: Record<SubmissionStatus, string> = {
   pending:  "قيد المراجعة",

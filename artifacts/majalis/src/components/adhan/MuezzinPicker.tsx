@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { MUEZZINS, previewAdhan, stopAdhan, type Muezzin } from "@/lib/adhan-audio";
+import "@/styles/components/muezzin-picker.css";
 
 const STYLE_MOD: Record<string, string> = {
   "خاشع":    "mzp-style--emerald",

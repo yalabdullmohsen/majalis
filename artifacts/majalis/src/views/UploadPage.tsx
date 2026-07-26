@@ -2,6 +2,7 @@ import { useEffect, useState, useRef, type ChangeEvent, type DragEvent, type For
 import { AlertTriangle, CheckCircle2, FolderOpen, GraduationCap, Loader2, Mic2, ScrollText, Upload, XCircle } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { submitAdhan, submitLesson } from "@/lib/user-submissions-service";
+import "@/styles/pages/upload.css";
 
 type Tab = "adhan" | "lesson";
 type UploadState = "idle" | "uploading" | "success" | "error";

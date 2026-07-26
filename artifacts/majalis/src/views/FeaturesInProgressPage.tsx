@@ -5,6 +5,7 @@ import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { applyPageSeo } from "@/lib/seo";
 import COUNTS from "@/data/content-counts.json";
+import "@/styles/pages/features-in-progress.css";
 
 type FeatureStatus = "in-progress" | "planned" | "beta" | "released";
 

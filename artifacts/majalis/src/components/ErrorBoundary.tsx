@@ -1,6 +1,7 @@
 import { Component, type ErrorInfo, type ReactNode } from "react";
 import { buildErrorReport, copyErrorId, createErrorId, logClientError } from "@/lib/error-report";
 import { CONTACT_EMAIL } from "@/lib/site-config";
+import "@/styles/components/error-boundary.css";
 
 type Props = { children: ReactNode };
 type State = { error: Error | null; copied: boolean; errorId: string; componentStack: string | null };
