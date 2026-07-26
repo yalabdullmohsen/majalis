@@ -1,0 +1,9 @@
+/* ── 180 — HomeAdhanWidget ─────────────────────────────────────────────── */
+
+.had-notif-btn--on { background: rgba(255,255,255,0.18); border-color: rgba(255,255,255,0.5); }
+.had-notif-btn--toggling { opacity: 0.6; }
+
+.had-countdown__label--elapsed { opacity: 0.85; font-weight: 600; }
+
+.had-prayer-cell--next { background: rgba(255,255,255,0.22); border-color: rgba(255,255,255,0.4); }
+

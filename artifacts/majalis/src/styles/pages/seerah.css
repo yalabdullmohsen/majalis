@@ -494,3 +494,37 @@ html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --pane
   .seerah-related__grid { grid-template-columns: repeat(2, 1fr); }
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   214 — Seerah Page enhancements
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+.seerah-timeline {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 0 !important;
+  position: relative !important;
+}
+.seerah-timeline::before {
+  content: "" !important;
+  position: absolute !important;
+  right: 1.5rem !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  width: 2px !important;
+  background: linear-gradient(to bottom, var(--majalis-emerald), color-mix(in srgb, var(--majalis-emerald) 10%, transparent)) !important;
+  pointer-events: none !important;
+}
+.seerah-phase {
+  padding: 1.25rem 1.25rem 1.25rem 1.25rem !important;
+  border-radius: 12px !important;
+  border: 1px solid var(--v2-border, #D8D2C7) !important;
+  background: var(--v2-surface, #FAFAF8) !important;
+  margin-bottom: 1rem !important;
+  margin-right: 3rem !important;
+  position: relative !important;
+  transition: box-shadow 0.18s !important;
+}
+.seerah-phase:hover {
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08) !important;
+}
+

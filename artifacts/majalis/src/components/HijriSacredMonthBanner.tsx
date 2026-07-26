@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { BookOpen, Building2, Heart, Moon, RotateCw, Star, Sunset, Users2 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { getCurrentHijriInfo } from "@/lib/hijri-utils";
+import "@/styles/components/hijri-sacred-month.css";
 
 type ReminderType = "fasting" | "prayer" | "quran" | "dhikr" | "charity" | "hajj" | "general";
 

@@ -20,6 +20,7 @@ import {
 } from "@/lib/learning-plan-service";
 import { applyPageSeo } from "@/lib/seo";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import "@/styles/pages/learning-plan.css";
 
 const INTEREST_ICON_MAP: Record<string, LucideIcon> = {
   Landmark, ScrollText, Repeat2, BookOpen, Moon, Gem,

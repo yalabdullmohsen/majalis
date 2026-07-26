@@ -28,6 +28,7 @@ import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { Chip } from "@/components/ui-common";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { useAuth } from "@/components/AuthProvider";
+import "@/styles/pages/knowledge-graph.css";
 
 // ── Types ──────────────────────────────────────────────────────────────────
 

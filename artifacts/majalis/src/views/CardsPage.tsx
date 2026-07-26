@@ -3,7 +3,9 @@ import { Link } from "wouter";
 import html2canvas from "html2canvas";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { applyPageSeo } from "@/lib/seo";
+import "@/styles/pages/cards.css";
 
 type SizeKey = "square" | "story" | "wide";
 
@@ -242,6 +244,7 @@ export default function CardsPage() {
           </div>
         </div>
       </div>
+      <RelatedKnowledge kind="fawaid" query="فوائد دعوية" title="فوائد ومواد ذات صلة" limit={6} />
       <div className="twh-share">
         <ShareButtons title="البطاقات الدعوية — المجلس العلمي" url="https://www.majlisilm.com/cards" />
       </div>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "wouter";
 import { supabase } from "@/lib/supabase";
+import "@/styles/components/content-actions-rag.css";
 
 interface Props {
   contentType: string;

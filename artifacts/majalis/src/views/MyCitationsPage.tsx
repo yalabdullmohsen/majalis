@@ -15,6 +15,7 @@ import {
 } from "@/lib/citation-service";
 import { useAuth } from "@/components/AuthProvider";
 import { applyPageSeo } from "@/lib/seo";
+import "@/styles/pages/my-citations.css";
 
 const TABS = ["الكل", "المجلدات", "المفضلة", "الأكثر استخداماً"] as const;
 type Tab = (typeof TABS)[number];

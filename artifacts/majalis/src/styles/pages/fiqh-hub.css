@@ -84,3 +84,77 @@
   line-height: 1.4;
 }
 
+
+/* ══════════════════════════════════════════════
+   FQP. FiqhPage
+   ══════════════════════════════════════════════ */
+.fqp-root { min-height: 100svh; background: var(--majalis-parchment); direction: rtl; }
+.fqp-tab-content { padding: 1.25rem 0 3rem; }
+
+.fiqh-section-divider { border: none; border-top: 1px solid var(--majalis-line); margin: 1.5rem 0; }
+.fqp-tabs-nav {
+  background: none;
+  border-bottom: 1px solid var(--majalis-line);
+}
+.fqp-tabs-nav--bare { background: none !important; box-shadow: none !important; }
+.fqp-tabs-scroll {
+  display: flex;
+  /* !important ضروري: [role="tablist"]{gap:0 !important} (قاعدة إتاحة
+     عامة أدناه في هذا الملف) كانت تُلغي هذه الفجوة صامتًا فتتلاصق
+     التبويبات حرفيًا بلا أي مسافة (تحقّق حي عبر getBoundingClientRect:
+     0px بين كل تبويبين، 2026-07-22). */
+  gap: .25rem !important;
+  overflow-x: auto;
+  padding-bottom: .5rem;
+}
+.fqp-tab {
+  display: inline-flex; align-items: center; gap: .375rem;
+  padding: .875rem 1.25rem; font-size: .875rem; font-weight: 500;
+  white-space: nowrap; border-bottom: 2px solid transparent;
+  transition: color .15s, border-color .15s;
+  color: var(--majalis-ink-soft); background: none; border-top: none;
+  border-left: none; border-right: none; cursor: pointer;
+}
+.fqp-tab:hover { color: var(--majalis-ink); }
+.fqp-tab--active { border-bottom-color: var(--mn-border-active, var(--majalis-emerald)); color: var(--mn-text-active, var(--majalis-emerald-deep)); }
+.fqp-section-title { font-size: var(--ds-text-xl); font-weight: 700; color: var(--majalis-ink); display: flex; align-items: center; gap: .5rem; }
+.fqp-section-desc { font-size: .875rem; color: var(--majalis-ink-soft); }
+.fqp-see-all { font-size: .875rem; color: var(--majalis-emerald); text-decoration: none; cursor: pointer; }
+.fqp-see-all:hover { text-decoration: underline; }
+.fqp-card {
+  background: var(--majalis-panel); border: 1px solid var(--majalis-line);
+  border-radius: .75rem; padding: var(--ds-space-4);
+  transition: box-shadow .2s, border-color .2s; cursor: pointer;
+}
+.fqp-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,.08); }
+.fqp-card--hover-border:hover { border-color: var(--majalis-emerald); }
+.fqp-card--center { text-align: center; }
+.fqp-card__title { font-weight: 600; color: var(--majalis-ink); font-size: .875rem; line-height: 1.35; margin-bottom: .25rem; }
+.fqp-card__title--mb2 { margin-bottom: .5rem; }
+.fqp-card__icon { font-size: var(--ds-text-2xl); margin-bottom: .25rem; }
+.fqp-cat-badge {
+  display: inline-block; font-size: .75rem;
+  background: var(--majalis-emerald-muted, rgba(31,77,58,.1));
+  color: var(--majalis-emerald); padding: .125rem .5rem;
+  border-radius: 9999px;
+}
+.fqp-cat-chip {
+  display: inline-block; padding: .375rem .75rem; font-size: .75rem;
+  font-weight: 500; background: var(--majalis-emerald-muted, rgba(31,77,58,.1));
+  color: var(--majalis-emerald); border-radius: 9999px;
+  cursor: pointer; transition: opacity .15s;
+}
+.fqp-cat-chip:hover { opacity: .8; }
+.fqp-council-label { font-weight: 600; color: var(--majalis-ink); font-size: .875rem; }
+.fqp-council-desc { font-size: .75rem; color: var(--majalis-ink-soft); margin-top: .125rem; }
+.fqp-arrow { color: var(--majalis-ink-soft); opacity: .6; font-size: var(--ds-text-lg); flex-shrink: 0; }
+.fqp-cta-btn { background: var(--majalis-emerald); }
+.fqp-cta-btn:hover { background: var(--majalis-emerald-deep, #143F35); }
+
+
+/* ============================================================
+   80 — FiqhPage  (fqp-*) — القاعدة الوحيدة هنا مطابقة لـ.fqp-cta-btn
+   الأحدث (مع :hover) في ~قسم fqp لاحقًا في هذا الملف؛ أُزيلت هنا لمنع
+   التكرار الحرفي.
+   ============================================================ */
+

@@ -1,0 +1,8 @@
+/* ============================================================
+   85 — ResearcherProfilePage  (rpr-*)
+   ============================================================ */
+.rpr-login-prompt   { text-align: center; padding-top: 3rem; }
+.rpr-login-icon     { font-size: 3rem; margin-bottom: 1rem; }
+.rpr-login-msg      { color: var(--majalis-ink-soft); margin-bottom: 1rem; }
+.rpr-loading-center { margin: 3rem auto; }
+

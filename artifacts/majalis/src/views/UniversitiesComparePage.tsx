@@ -7,6 +7,8 @@ import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { applyPageSeo } from "@/lib/seo";
 import { ACCREDITATION_LABELS, ACCREDITATION_COLOR } from "@/lib/universities-service";
 import type { University, UniversityProgram } from "@/lib/universities-service";
+import "@/styles/pages/universities-compare.css";
+import "@/styles/pages/learning-path-dashboard.css";
 
 function lowestFee(programs: UniversityProgram[]): string {
   const fees = programs

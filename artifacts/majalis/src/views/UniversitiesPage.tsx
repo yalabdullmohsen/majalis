@@ -16,6 +16,9 @@ import {
   type University,
   type UniversityFilters,
 } from "@/lib/universities-service";
+import "@/styles/pages/universities.css";
+import "@/styles/pages/learning-path-dashboard.css";
+import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 
 const COUNTRIES = [
   "المملكة العربية السعودية", "مصر", "الأردن", "قطر",
@@ -227,6 +230,7 @@ function UniversitiesContent() {
       <div className="twh-share">
         <ShareButtons title="الجامعات الإسلامية — المجلس العلمي" url="https://www.majlisilm.com/universities" />
       </div>
+      <RelatedKnowledge kind="book" query="جامعات إسلامية" title="مواد ذات صلة" limit={6} />
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId={["tarikh", "fiqh"]} title="اختبر معلوماتك في التاريخ الإسلامي" count={4} />
       </div>
