@@ -1126,7 +1126,8 @@
       ],
       "sitemap": false,
       "changefreq": "monthly",
-      "priority": 0.72
+      "priority": 0.72,
+      "robots": "noindex, follow"
     },
     {
       "path": "/tawhid",
@@ -1827,7 +1828,8 @@
       ],
       "sitemap": false,
       "changefreq": "monthly",
-      "priority": 0.72
+      "priority": 0.72,
+      "robots": "noindex, follow"
     },
     {
       "path": "/hikam-salaf",

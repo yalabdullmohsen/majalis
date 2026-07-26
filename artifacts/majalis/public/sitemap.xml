@@ -131,11 +131,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/cards</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://majlisilm.com/about</loc>
     <changefreq>monthly</changefreq>
     <priority>0.65</priority>
@@ -251,11 +246,6 @@
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/learning-plan</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.72</priority>
-  </url>
-  <url>
     <loc>https://majlisilm.com/tawhid</loc>
     <changefreq>monthly</changefreq>
     <priority>0.82</priority>
@@ -266,17 +256,7 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/study-room</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://majlisilm.com/institutions</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.72</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/universities</loc>
     <changefreq>monthly</changefreq>
     <priority>0.72</priority>
   </url>
@@ -451,11 +431,6 @@
     <priority>0.72</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/knowledge-map</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.72</priority>
-  </url>
-  <url>
     <loc>https://majlisilm.com/hikam-salaf</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
@@ -479,11 +454,6 @@
     <loc>https://majlisilm.com/islamic-glossary</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/islam-stats</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.72</priority>
   </url>
   <url>
     <loc>https://majlisilm.com/learning/calendar</loc>
@@ -539,11 +509,6 @@
     <loc>https://majlisilm.com/tajweed</loc>
     <changefreq>monthly</changefreq>
     <priority>0.75</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/universities/compare</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.65</priority>
   </url>
   <url>
     <loc>https://majlisilm.com/anbiya</loc>

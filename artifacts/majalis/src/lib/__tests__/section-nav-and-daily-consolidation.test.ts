@@ -218,6 +218,34 @@ console.log("\n=== nav-visibility — إخفاء/دمج/قريبًا ===");
   assert(!homeHrefs.includes("/mind-map"), "كتالوج الأقسام لا يعرض mind-map كمدخل أول (يُفتح من بوابة المعرفة)");
 }
 
+console.log("\n=== sitemap + SEO لمسارات مدمجة/مخفية ===");
+{
+  const sitemap = readFileSync(resolve(appRoot, "public/sitemap.xml"), "utf-8");
+  for (const p of [
+    "/kids", "/quran-circles", "/cards", "/learning-plan", "/study-room",
+    "/universities", "/universities/compare", "/knowledge-map", "/islam-stats",
+  ]) {
+    assert(!sitemap.includes(`majlisilm.com${p}<`), `${p} خارج sitemap.xml`);
+  }
+  const seoConfig = JSON.parse(readFileSync(resolve(appRoot, "src/lib/seo-routes.json"), "utf-8"));
+  const routes = seoConfig.routes as Array<{ path: string; sitemap?: boolean; robots?: string }>;
+  for (const p of ["/learning-plan", "/knowledge-map"]) {
+    const route = routes.find((r) => r.path === p);
+    assert(route?.sitemap === false && route?.robots === "noindex, follow",
+      `${p} خارج sitemap وبـ noindex (مسار تحويل)`);
+  }
+}
+
+console.log("\n=== بلا تكرار /ulum-quran في المزيد والجانبية ===");
+{
+  const moreSrc = readFileSync(resolve(appRoot, "src/components/MoreBottomSheet.tsx"), "utf-8");
+  const sideSrc = readFileSync(resolve(appRoot, "src/components/SideNavDrawer.tsx"), "utf-8");
+  const moreHits = moreSrc.match(/href:\s*"\/ulum-quran"/g) ?? [];
+  const sideHits = sideSrc.match(/href:\s*"\/ulum-quran"/g) ?? [];
+  assert(moreHits.length === 1, `علوم القرآن مرة واحدة في المزيد (الفعلي: ${moreHits.length})`);
+  assert(sideHits.length === 1, `علوم القرآن مرة واحدة في الجانبية (الفعلي: ${sideHits.length})`);
+}
+
 console.log(`\n${"─".repeat(40)}`);
 console.log(`النتائج: ${passed} نجح، ${failed} فشل`);
 if (failed > 0) process.exit(1);

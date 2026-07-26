@@ -5,7 +5,7 @@ import {
   Activity, Baby, BarChart3, BookMarked, BookOpen, BookText, BookUser,
   Bot, Calculator, Calendar, CalendarDays, CheckCircle2, Clock, Compass, CreditCard,
   FileText, Gavel, GitBranch, GraduationCap, Heart, HelpCircle, Info, Landmark,
-  Layers, Library, Lightbulb, Map, Mic2, Moon, Network,
+  Layers, Library, Map, Mic2, Moon, Network,
   Quote, RefreshCw, Repeat2, Rss, Scale, ScrollText, Search, Settings,
   Shield, Sparkles, Star, Stethoscope, Sun, Users, Waypoints, X, Zap,
 } from "lucide-react";
@@ -52,7 +52,6 @@ const SHEET_SECTIONS_RAW: { group: string; items: SheetItem[] }[] = [
     { href: "/janna-naar",  label: "الجنة والنار",         Icon: Sparkles },
     { href: "/alamat-saah", label: "علامات الساعة",        Icon: Clock },
     { href: "/malaika",     label: "الملائكة في الإسلام",  Icon: Sparkles },
-    { href: "/ulum-quran",  label: "علوم القرآن والإعجاز", Icon: Lightbulb },
   ]},
 
   /* ── التعريف بالإسلام ── */

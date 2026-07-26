@@ -5,7 +5,7 @@ import {
   Activity, BarChart3, BookMarked, BookOpen, BookText, BookUser,
   Bot, Calculator, Calendar, CalendarDays, CheckCircle2, ChevronDown, ChevronUp,
   Clock, Compass, CreditCard, FileText, GitBranch, GraduationCap,
-  Heart, HelpCircle, Home, Landmark, Layers, Library, Lightbulb,
+  Heart, HelpCircle, Home, Landmark, Layers, Library,
   LogIn, MapPin, Mic2, Moon, Network, Quote, RefreshCw, Repeat2,
   Rss, Scale, ScrollText, Search, Settings, Shield, Sparkles, Star, Stethoscope,
   Sun, Trophy, Users, UserPlus, Waypoints, X, Zap,
@@ -153,7 +153,6 @@ const DRAWER_GROUPS: NavGroup[] = [
           { href: "/janna-naar",  label: "الجنة والنار",       Icon: Sparkles,  desc: "صفة الجنة والنار من النصوص" },
           { href: "/alamat-saah", label: "علامات الساعة",      Icon: Clock,     desc: "الصغرى والكبرى بالترتيب" },
           { href: "/malaika",     label: "الملائكة",           Icon: Sparkles,  desc: "أسماؤهم ومهامهم وصفاتهم" },
-          { href: "/ulum-quran",  label: "الإعجاز القرآني",    Icon: Lightbulb, desc: "بياني وتشريعي وغيبي — بلا عددي" },
         ],
       },
       {

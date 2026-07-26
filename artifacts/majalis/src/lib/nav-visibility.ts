@@ -58,12 +58,6 @@ export function isHiddenFromNav(href: string): boolean {
   return false;
 }
 
-export function withComingSoonLabel(label: string, href: string): string {
-  if (!isComingSoonPath(href)) return label;
-  if (label.includes("قريب")) return label;
-  return `${label} · قريبًا`;
-}
-
 export function filterNavItems<T extends { href: string }>(items: T[]): T[] {
   return items.filter((item) => !isHiddenFromNav(item.href));
 }

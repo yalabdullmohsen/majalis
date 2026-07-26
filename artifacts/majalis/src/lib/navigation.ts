@@ -18,9 +18,9 @@ export type NavLink = {
  *   - اختبار Playwright (00-public-routes.spec.ts) للتحقق من الوصول العام
  *   - القائمة الرئيسية (PRIMARY_NAV_ITEMS)
  *
- * ملاحظة (2026-07-18): القائمة الجانبية (SideNavDrawer) والورقة السفلية
- * (MoreBottomSheet) لهما بيانات روابط خاصة بهما مباشرة في ملفَي المكوّنين —
- * وليس عبر هذا الملف. راجع phase 3 في READY_FOR_MERGE.md لتفاصيل التوحيد.
+ * ملاحظة: القائمة الجانبية (SideNavDrawer) والورقة السفلية (MoreBottomSheet)
+ * لهما قوائم روابط محلية في ملفَي المكوّنين، وتُصفَّى عبر nav-visibility.
+ * توحيد مصدر واحد للقوائم يبقى قرار IA منفصل خارج نطاق دمج/إخفاء المسارات.
  */
 export const PUBLIC_NAV_ITEMS: NavLink[] = [
   // الصفحة الرئيسية
