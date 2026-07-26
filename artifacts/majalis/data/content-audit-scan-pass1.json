@@ -1,12 +1,12 @@
 {
-  "scannedAt": "2026-07-26T00:02:26.602Z",
+  "scannedAt": "2026-07-26T00:15:19.103Z",
   "byType": {
     "short-lesson-summary": 351,
-    "ellipsis": 84,
+    "ellipsis": 86,
     "incomplete-marker": 32,
-    "short-field": 184,
+    "short-field": 189,
     "placeholder": 46,
-    "dup-title": 7
+    "dup-title": 6
   },
   "issues": [
     {
@@ -2297,9 +2297,9 @@
       "file": "lib/prophetic-medicine-seed.ts",
       "line": 280,
       "type": "short-lesson-summary",
-      "len": 19,
-      "title": "اختيار التوقيت الأمثل للحجامة",
-      "sample": "مضاعفة فائدة العلاج"
+      "len": 28,
+      "title": "اتباع التوقيت الوارد في الأثر",
+      "sample": "تنظيم موعد العلاج عند الحاجة"
     },
     {
       "file": "lib/prophets-data.ts",
@@ -3731,6 +3731,18 @@
     },
     {
       "file": "views/IslamicGlossaryPage.tsx",
+      "line": 840,
+      "type": "ellipsis",
+      "sample": "detail: \"يختلف عن القرآن في: أن القرآن وحي متعبَّد بتلاوته، متواتر، لا يُقرأ في الصلاة إلا به. أما الحديث القدسي فروايته"
+    },
+    {
+      "file": "views/IslamicGlossaryPage.tsx",
+      "line": 977,
+      "type": "ellipsis",
+      "sample": "detail: \"الجرح: بيان ما يوجب ردّ رواية الراوي (الكذب، الفسق، الغلط...). التعديل: بيان عدالته وضبطه. له درجات: أعلاها للت"
+    },
+    {
+      "file": "views/IslamicGlossaryPage.tsx",
       "line": 1433,
       "type": "short-field",
       "field": "description",
@@ -4069,7 +4081,7 @@
     },
     {
       "file": "views/DuasPage.tsx",
-      "line": 368,
+      "line": 400,
       "type": "short-field",
       "field": "meaning",
       "len": 32,
@@ -4077,7 +4089,7 @@
     },
     {
       "file": "views/DuasPage.tsx",
-      "line": 492,
+      "line": 524,
       "type": "short-field",
       "field": "meaning",
       "len": 28,
@@ -4085,7 +4097,23 @@
     },
     {
       "file": "views/DuasPage.tsx",
-      "line": 583,
+      "line": 535,
+      "type": "short-field",
+      "field": "meaning",
+      "len": 28,
+      "sample": "اللهم لك صمت وعلى رزقك أفطرت"
+    },
+    {
+      "file": "views/DuasPage.tsx",
+      "line": 625,
+      "type": "short-field",
+      "field": "meaning",
+      "len": 37,
+      "sample": "أعوذ بكلمات الله التامات من شر ما خلق"
+    },
+    {
+      "file": "views/DuasPage.tsx",
+      "line": 637,
       "type": "short-field",
       "field": "meaning",
       "len": 32,
@@ -4093,39 +4121,23 @@
     },
     {
       "file": "views/DuasPage.tsx",
-      "line": 663,
+      "line": 659,
       "type": "short-field",
       "field": "meaning",
-      "len": 28,
-      "sample": "أعوذ بالله من الشيطان الرجيم"
+      "len": 32,
+      "sample": "آيبون تائبون عابدون لربنا حامدون"
     },
     {
       "file": "views/DuasPage.tsx",
-      "line": 686,
+      "line": 693,
       "type": "short-field",
       "field": "meaning",
       "len": 22,
-      "sample": "حسبنا الله ونعم الوكيل"
+      "sample": "رب اغفر لي، رب اغفر لي"
     },
     {
       "file": "views/DuasPage.tsx",
-      "line": 732,
-      "type": "short-field",
-      "field": "meaning",
-      "len": 33,
-      "sample": "راجعون تائبون عابدون لربنا حامدون"
-    },
-    {
-      "file": "views/DuasPage.tsx",
-      "line": 743,
-      "type": "short-field",
-      "field": "meaning",
-      "len": 31,
-      "sample": "أودعكم الله الذي لا تضيع ودائعه"
-    },
-    {
-      "file": "views/DuasPage.tsx",
-      "line": 849,
+      "line": 727,
       "type": "short-field",
       "field": "meaning",
       "len": 34,
@@ -4133,13 +4145,53 @@
     },
     {
       "file": "views/DuasPage.tsx",
-      "line": 1008,
+      "line": 750,
+      "type": "short-field",
+      "field": "meaning",
+      "len": 28,
+      "sample": "أعوذ بالله من الشيطان الرجيم"
+    },
+    {
+      "file": "views/DuasPage.tsx",
+      "line": 784,
+      "type": "short-field",
+      "field": "meaning",
+      "len": 36,
+      "sample": "يا مقلِّب القلوب ثبِّت قلبي على دينك"
+    },
+    {
+      "file": "views/DuasPage.tsx",
+      "line": 795,
+      "type": "short-field",
+      "field": "meaning",
+      "len": 22,
+      "sample": "حسبنا الله ونعم الوكيل"
+    },
+    {
+      "file": "views/DuasPage.tsx",
+      "line": 852,
+      "type": "short-field",
+      "field": "meaning",
+      "len": 33,
+      "sample": "راجعون تائبون عابدون لربنا حامدون"
+    },
+    {
+      "file": "views/DuasPage.tsx",
+      "line": 863,
+      "type": "short-field",
+      "field": "meaning",
+      "len": 31,
+      "sample": "أودعكم الله الذي لا تضيع ودائعه"
+    },
+    {
+      "file": "views/DuasPage.tsx",
+      "line": 1106,
       "type": "placeholder",
       "sample": "placeholder=\"ابحث في الأدعية...\""
     },
     {
       "file": "views/DuasPage.tsx",
-      "line": 1008,
+      "line": 1106,
       "type": "ellipsis",
       "sample": "placeholder=\"ابحث في الأدعية...\""
     },
@@ -4259,31 +4311,31 @@
     },
     {
       "file": "views/SunanYawmiyyaPage.tsx",
-      "line": 494,
+      "line": 504,
       "type": "ellipsis",
       "sample": "howTo: \"ردِّد ما يقوله المؤذن، ثم صلِّ على النبي، ثم ادعُ: (اللهم ربَّ هذه الدعوة التامة...).\","
     },
     {
       "file": "views/SunanYawmiyyaPage.tsx",
-      "line": 764,
+      "line": 680,
       "type": "ellipsis",
       "sample": "text: \"قال ﷺ: «يُصبح على كل سُلامى من أحدكم صدقة؛ فكل تسبيحة صدقة... ويُجزئ من ذلك ركعتان يركعهما من الضحى».\","
     },
     {
       "file": "views/SunanYawmiyyaPage.tsx",
-      "line": 926,
+      "line": 938,
       "type": "placeholder",
       "sample": "placeholder=\"ابحث في السنن...\""
     },
     {
       "file": "views/SunanYawmiyyaPage.tsx",
-      "line": 926,
+      "line": 938,
       "type": "ellipsis",
       "sample": "placeholder=\"ابحث في السنن...\""
     },
     {
       "file": "views/SunanYawmiyyaPage.tsx",
-      "line": 1017,
+      "line": 1029,
       "type": "short-lesson-summary",
       "len": 6,
       "title": "fiqh",
@@ -4297,13 +4349,13 @@
     },
     {
       "file": "views/WasayaNabawiyyaPage.tsx",
-      "line": 618,
+      "line": 652,
       "type": "placeholder",
       "sample": "placeholder=\"ابحث في الوصايا...\""
     },
     {
       "file": "views/WasayaNabawiyyaPage.tsx",
-      "line": 618,
+      "line": 652,
       "type": "ellipsis",
       "sample": "placeholder=\"ابحث في الوصايا...\""
     },
@@ -4321,7 +4373,7 @@
     },
     {
       "file": "views/HikamSalafPage.tsx",
-      "line": 839,
+      "line": 851,
       "type": "incomplete-marker",
       "sample": "text: \"يا ابن آدم، أنت مسافر إلى ربك وستجده قريباً، فانظر ما تُقدِّم من زاد.\","
     },
@@ -4347,45 +4399,39 @@
     },
     {
       "file": "views/FadailAamalPage.tsx",
-      "line": 758,
+      "line": 839,
       "type": "ellipsis",
       "sample": "text: \"«سبعة يظلهم الله في ظله يوم لا ظل إلا ظله... ورجل تصدَّق بصدقة فأخفاها حتى لا تعلم شماله ما تنفق يمينه»\","
     },
     {
       "file": "views/FadailAamalPage.tsx",
-      "line": 1087,
+      "line": 1091,
       "type": "placeholder",
       "sample": "placeholder=\"ابحث في الأحاديث...\""
     },
     {
       "file": "views/FadailAamalPage.tsx",
-      "line": 1087,
+      "line": 1091,
       "type": "ellipsis",
       "sample": "placeholder=\"ابحث في الأحاديث...\""
     },
     {
       "file": "views/FadailAamalPage.tsx",
-      "line": 1162,
+      "line": 1166,
       "type": "short-lesson-summary",
       "len": 6,
       "title": "hadith",
       "sample": "akhlaq"
     },
     {
-      "file": "views/FadailAamalPage.tsx",
-      "type": "dup-title",
-      "title": "غراس الجنة",
-      "count": 2
-    },
-    {
       "file": "views/JannaNaarPage.tsx",
-      "line": 259,
+      "line": 269,
       "type": "placeholder",
       "sample": "placeholder=\"ابحث في الأسباب...\" className=\"page-search-input jn-search-input\""
     },
     {
       "file": "views/JannaNaarPage.tsx",
-      "line": 283,
+      "line": 293,
       "type": "placeholder",
       "sample": "placeholder=\"ابحث في الأسباب...\" className=\"page-search-input jn-search-input\""
     },
