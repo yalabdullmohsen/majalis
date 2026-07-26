@@ -1,0 +1,47 @@
+{
+  "generatedAt": "2026-07-26T11:01:05.396Z",
+  "base": "http://127.0.0.1:24216",
+  "scores": [
+    {
+      "route": "/",
+      "performance": 55,
+      "accessibility": 100,
+      "bestPractices": 100,
+      "seo": 100
+    },
+    {
+      "route": "/quran-hub/",
+      "performance": 64,
+      "accessibility": 96,
+      "bestPractices": 96,
+      "seo": 100
+    },
+    {
+      "route": "/library/book-bukhari/",
+      "performance": 62,
+      "accessibility": 98,
+      "bestPractices": 96,
+      "seo": 100
+    },
+    {
+      "route": "/qa/",
+      "performance": 60,
+      "accessibility": 100,
+      "bestPractices": 96,
+      "seo": 100
+    },
+    {
+      "route": "/adhkar/",
+      "performance": 64,
+      "accessibility": 97,
+      "bestPractices": 96,
+      "seo": 100
+    }
+  ],
+  "targets": {
+    "performance": 90,
+    "accessibility": 95,
+    "bestPractices": 95,
+    "seo": 95
+  }
+}

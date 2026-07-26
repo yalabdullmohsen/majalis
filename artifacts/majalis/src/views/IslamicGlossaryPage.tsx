@@ -1470,7 +1470,7 @@ export default function IslamicGlossaryPage() {
           <div className="gl-hero__badge">القاموس الإسلامي</div>
           <h1 className="gl-hero__title">المصطلحات الإسلامية</h1>
           <p className="gl-hero__sub">
-            تعريفات دقيقة موثّقة لأهم المصطلحات في العلوم الشرعية، مرجع لطالب العلم في رحلته العلمية
+            تعريفات لأهم المصطلحات في العلوم الشرعية، مرجع أولي لطالب العلم يُراجع دوريًا
           </p>
           <div className="gl-hero__count">
             <BookOpen size={16} aria-hidden="true" />

@@ -12,8 +12,8 @@ const SUGGESTIONS = [
   { href: "/hadith",       label: "الأحاديث",          Icon: BookMarked },
   { href: "/fawaid",       label: "الفوائد",           Icon: MessageCircle },
   { href: "/prayer-times", label: "مواقيت الصلاة",     Icon: Clock      },
-  { href: "/quiz",         label: "المسابقات",         Icon: Compass    },
-  { href: "/rulings",      label: "الأحكام الشرعية",   Icon: Scale      },
+  { href: "/quiz",         label: "اختبر معلوماتك",    Icon: Compass    },
+  { href: "/rulings",      label: "الفقه والأحكام",    Icon: Scale      },
 ] as const;
 
 export default function NotFound() {

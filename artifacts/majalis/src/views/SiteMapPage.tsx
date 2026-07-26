@@ -125,7 +125,7 @@ const SECTIONS = [
       { href: "/start-here",       label: "ابدأ من هنا",          desc: "دليل طالب العلم المبتدئ" },
       { href: "/calendar",         label: "التقويم الهجري",      desc: "التقويم والمناسبات" },
       { href: "/hikam-salaf",      label: "حكم السلف الصالح",     desc: "أقوال الأئمة والصحابة" },
-      { href: "/fawaid",           label: "الفوائد العلمية",      desc: "فوائد ومنقولات موثقة" },
+      { href: "/fawaid",           label: "الفوائد العلمية",      desc: "فوائد ومنقولات علمية" },
       { href: "/islamic-glossary", label: "المصطلحات الإسلامية",  desc: "معجم المصطلحات" },
       { href: "/universities",     label: "دليل الجامعات",        desc: "الجامعات الإسلامية" },
       { href: "/academic-research",label: "البحث الأكاديمي",      desc: "موارد البحث العلمي الشرعي" },

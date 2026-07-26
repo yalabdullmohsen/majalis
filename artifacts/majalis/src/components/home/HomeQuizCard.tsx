@@ -6,7 +6,7 @@ import {
 } from "lucide-react";
 import { useAuth } from "@/components/AuthProvider";
 import { fetchHomeQuizStats, type HomeQuizStats } from "@/lib/quiz-performance-service";
-import { getDailyChallenge, totalQuestionBankSize, type DailyChallengeQuestion } from "@/lib/quiz-daily-challenge";
+import type { DailyChallengeQuestion } from "@/lib/quiz-daily-challenge";
 
 const CATS = [
   { name: "القرآن الكريم",    Icon: BookOpen   },
@@ -30,9 +30,18 @@ export function HomeQuizCard() {
   const [stats, setStats] = useState<HomeQuizStats | null>(null);
   const [statsLoading, setStatsLoading] = useState(true);
   const [challenge, setChallenge] = useState<DailyChallengeQuestion | null>(null);
+  const [totalQuestions, setTotalQuestions] = useState(0);
 
   useEffect(() => {
-    setChallenge(getDailyChallenge());
+    let cancelled = false;
+    void import("@/lib/quiz-daily-challenge").then((m) => {
+      if (cancelled) return;
+      setChallenge(m.getDailyChallenge());
+      setTotalQuestions(m.totalQuestionBankSize());
+    });
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   useEffect(() => {
@@ -44,10 +53,8 @@ export function HomeQuizCard() {
     return () => { cancelled = true; };
   }, [isLoggedIn]);
 
-  const totalQuestions = totalQuestionBankSize();
-
   return (
-    <section className="ds-quiz-home-card" dir="rtl" aria-label="لعبة سين جيم – أسئلة وأجوبة"
+    <section className="ds-quiz-home-card" dir="rtl" aria-label="اختبر معلوماتك — لعبة سؤال وجواب"
       style={{ position: "relative", overflow: "hidden" }}>
       {/* زخرفة هندسية خلفية */}
       <svg aria-hidden="true" style={{
@@ -63,10 +70,10 @@ export function HomeQuizCard() {
       <div className="ds-quiz-home-card__content">
         <div className="ds-quiz-home-card__text">
           <span className="ds-quiz-home-card__badge">تنافسي • جماعي</span>
-          <h2 className="ds-quiz-home-card__title">لعبة سين جيم – أسئلة وأجوبة</h2>
+          <h2 className="ds-quiz-home-card__title">اختبر معلوماتك — لعبة سؤال وجواب</h2>
           <p className="ds-quiz-home-card__desc">
-            اختبر معلوماتك الشرعية وتحدَّ نفسك في أسئلة متنوعة — {totalQuestions} سؤالاً
-            عبر {CATS.length} فئات: القرآن والحديث والسيرة والفقه والعقيدة والتاريخ والأخلاق
+            لعبة تعليمية متدرجة — {totalQuestions || "…"} سؤالًا عبر {CATS.length} فئات:
+            القرآن والحديث والسيرة والفقه والعقيدة والتاريخ والأخلاق (منفصلة عن الأسئلة العلمية)
           </p>
           <Link href="/quiz" className="ds-quiz-home-card__btn">ابدأ اللعبة</Link>
         </div>

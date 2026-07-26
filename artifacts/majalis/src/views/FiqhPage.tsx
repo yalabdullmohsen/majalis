@@ -37,7 +37,7 @@ const TABS: { key: Tab; label: string; Icon: LucideIcon }[] = [
 const COUNCIL_SECTIONS = [
   { href: "/fiqh-council",             label: "رئيسية المجمع",     desc: "القرارات والفتاوى والتوثيق" },
   { href: "/fiqh-council/issues",      label: "المسائل الفقهية",   desc: "المسائل المطروحة والمدروسة" },
-  { href: "/fiqh-council/resolutions", label: "القرارات",          desc: "قرارات هيئات الإفتاء المعتمدة" },
+  { href: "/fiqh-council/resolutions", label: "القرارات",          desc: "قرارات هيئات إفتاء سنية منشورة" },
   { href: "/fiqh-council/fatwas",      label: "فتاوى المجمع",      desc: "قرارات وتوصيات المجمع الفقهي" },
   { href: "/fiqh-council/live",        label: "البيانات الحية",    desc: "آخر الجلسات والنشاطات" },
   { href: "/fiqh-council/index",       label: "الفهرس الموضوعي",  desc: "تصفح حسب الأبواب" },
@@ -62,9 +62,9 @@ const FIQH_TOPICS: FiqhTopic[] = [
   { emoji: "⚖️", title: "المواريث",          desc: "حاسبة الفرائض والتركات",         href: "/mawarith",     color: "#DC2626" },
   { emoji: "📐", title: "القواعد الفقهية",   desc: "القواعد الخمس الكبرى وفروعها",   href: "/fiqh-qawaid",  color: "#143F35" },
   { emoji: "📚", title: "المذاهب الأربعة",   desc: "الحنفي والمالكي والشافعي والحنبلي", href: "/madhahib",  color: "#7C3AED" },
-  { emoji: "❓", title: "الأسئلة والأجوبة",  desc: "أسئلة شرعية موثقة",              href: "/qa",           color: "#0F766E" },
+  { emoji: "❓", title: "الأسئلة والأجوبة",  desc: "أسئلة شرعية منشورة",              href: "/qa",           color: "#0F766E" },
   { emoji: "🏛️", title: "المجمع الفقهي",    desc: "قرارات المجامع الفقهية",          href: "/fiqh-council", color: "#0F5132" },
-  { emoji: "📋", title: "الأحكام الشرعية",   desc: "أحكام شرعية موثقة بالأدلة",        href: "/rulings",      color: "#065F46" },
+  { emoji: "📋", title: "الأحكام الشرعية",   desc: "أحكام شرعية مع الإشارة إلى أدلتها",        href: "/rulings",      color: "#065F46" },
   { emoji: "💍", title: "النكاح والطلاق",   desc: "أحكام عقد الزواج والفراق",         href: `/rulings?category=${encodeURIComponent("الأسرة")}`, color: "#7C3AED" },
   { emoji: "🤝", title: "المعاملات",        desc: "البيع والإجارة والشركات",           href: `/rulings?category=${encodeURIComponent("المعاملات")}`, color: "#0F766E" },
   { emoji: "🥩", title: "الأطعمة",          desc: "الحلال والحرام والذبائح",           href: `/rulings?category=${encodeURIComponent("الأطعمة والأشربة")}`, color: "#DC2626" },
@@ -109,7 +109,7 @@ export default function FiqhPage() {
     applyPageSeo({
       path: "/fiqh",
       title: "الفقه الإسلامي، أحكام وأسئلة | المجلس العلمي",
-      description: "مرجع شامل في الفقه الإسلامي: أحكام شرعية موثقة، أسئلة وأجوبة، وقرارات المجمع الفقهي.",
+      description: "مرجع في الفقه الإسلامي: أحكام شرعية، أسئلة وأجوبة، وقرارات مجامع فقهية منشورة.",
       keywords: ["فقه إسلامي", "أحكام شرعية", "الفقه الحنفي", "أسئلة شرعية", "المجمع الفقهي"],
       ...(faqSchema ? { jsonLd: [faqSchema] } : {}),
     });
@@ -147,7 +147,7 @@ export default function FiqhPage() {
         <p className="fqh-hub-hero__eyebrow">الفقه الإسلامي الشامل</p>
         <h1 className="fqh-hub-hero__title">الفقه والأحكام</h1>
         <p className="fqh-hub-hero__sub">
-          مرجع موحّد للعبادات والأحكام وقرارات المجامع الفقهية، كل شيء من مصادر موثقة ومعتمدة
+          مرجع موحّد للعبادات والأحكام وقرارات المجامع الفقهية، مع الإشارة إلى مصادرها قدر الإمكان
         </p>
       </header>
 
@@ -299,7 +299,7 @@ export default function FiqhPage() {
             <div className="mb-6">
               <h2 className="fqp-section-title mb-2"><Landmark size={20} />المجمع الفقهي الإسلامي</h2>
               <p className="fqp-section-desc">
-                قرارات وبيانات وفتاوى المجامع الفقهية المعتمدة، موثقة بمصادرها
+                قرارات وبيانات وفتاوى مجامع فقهية سنية، مع ذكر مصادرها عند توفرها
               </p>
             </div>
 

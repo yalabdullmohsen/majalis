@@ -1,11 +1,9 @@
 /**
  * seed-loader.ts — محمّل بيانات seed الكسول
  *
- * يُحوّل static imports الثقيلة في supabase.ts إلى dynamic imports.
- * النتيجة: بيانات seed لا تُضمَّن في الحزمة الأولية — تُحمَّل فقط عند الحاجة
- * (وفي الإنتاج حيث Supabase مُهيَّأ، قد لا تُحمَّل أبداً في المسار السعيد).
- *
- * التخزين: يُخزَّن النتيجة في الذاكرة بعد أول تحميل فلا يوجد طلب شبكة مكرر.
+ * يُحوّل static imports الثقيلة في supabase.ts إلى dynamic imports / fetch.
+ * بنك الأسئلة الثقيل (quiz-seed) يُحمَّل من public/data/quiz-questions.json
+ * فلا يدخل حزمة JS بـ1MB+.
  */
 
 export type SeedBundle = {
@@ -28,18 +26,38 @@ export type SeedBundle = {
 let _cache: SeedBundle | null = null;
 let _loading: Promise<SeedBundle> | null = null;
 
+function quizJsonUrl(): string {
+  const base = (import.meta.env.BASE_URL || "/").replace(/\/?$/, "/");
+  return `${base}data/quiz-questions.json`;
+}
+
+async function loadQuizQuestions(): Promise<any[]> {
+  // عمدًا بلا import("./quiz-seed") — ذلك كان يُبقي حزمة 1.1MB في المخرجات.
+  // المصدر التشغيلي: public/data/quiz-questions.json (يُصدَّر في generate:counts).
+  try {
+    const res = await fetch(quizJsonUrl());
+    if (!res.ok) throw new Error(`quiz-questions.json HTTP ${res.status}`);
+    const payload = await res.json();
+    if (Array.isArray(payload?.questions)) return payload.questions;
+    if (Array.isArray(payload)) return payload;
+  } catch (err) {
+    console.warn("[seed-loader] تعذّر تحميل quiz-questions.json", err);
+  }
+  return [];
+}
+
 export function loadSeedData(): Promise<SeedBundle> {
   if (_cache) return Promise.resolve(_cache);
   if (_loading) return _loading;
 
   _loading = Promise.all([
-    import("./demo-content"),    // يسحب: qa-seed, fawaid-seed, lessons-seed, miracles-seed, sheikhs-seed, library-service
-    import("./quiz-seed"),       // مستقل وثقيل (130 kB مصدر)
-    import("./adhkar-seed"),     // مستقل وثقيل (162 kB مصدر)
-    import("./miracles-seed"),   // مستقل خفيف
-    import("./lessons-seed"),    // مستقل خفيف
-    import("./platform-search"), // مستقل خفيف
-  ]).then(([demo, quiz, adhkar, miracles, lessons, platform]) => {
+    import("./demo-content"),
+    loadQuizQuestions(),
+    import("./adhkar-seed"),
+    import("./miracles-seed"),
+    import("./lessons-seed"),
+    import("./platform-search"),
+  ]).then(([demo, quizQuestions, adhkar, miracles, lessons, platform]) => {
     _cache = {
       DEMO_FAWAID: demo.DEMO_FAWAID,
       DEMO_LESSONS: demo.DEMO_LESSONS,
@@ -51,7 +69,7 @@ export function loadSeedData(): Promise<SeedBundle> {
       searchMiraclesSeed: miracles.searchMiraclesSeed,
       LESSONS_SEED: lessons.LESSONS_SEED,
       findSeedLessonById: lessons.findSeedLessonById,
-      DEMO_QUIZ_QUESTIONS: quiz.DEMO_QUIZ_QUESTIONS,
+      DEMO_QUIZ_QUESTIONS: quizQuestions,
       ADHKAR_CATEGORIES: adhkar.ADHKAR_CATEGORIES,
       filterAdhkar: adhkar.filterAdhkar,
       searchPlatformSeed: platform.searchPlatformSeed,

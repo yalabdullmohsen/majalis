@@ -1,17 +1,17 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Brain, CheckCircle2, XCircle, RotateCcw } from "lucide-react";
-import { ALL_QUESTIONS } from "@/data/islamicQuizData";
 import type { QuizQuestion } from "@/data/islamicQuizData";
 import { recordQuizAttempt } from "@/lib/quiz-performance-service";
 import { hapticNotify } from "@/lib/capacitor-utils";
 import "@/styles/components/section-quiz.css";
 
 type TaggedQuizQuestion = QuizQuestion & { _catId: string };
+type QuestionsMap = Record<string, Partial<Record<200 | 400 | 600, QuizQuestion[]>>>;
 
-function gatherPool(catId: string | string[]): TaggedQuizQuestion[] {
+function gatherPool(all: QuestionsMap, catId: string | string[]): TaggedQuizQuestion[] {
   const ids = Array.isArray(catId) ? catId : [catId];
   return ids.flatMap((id) => {
-    const cat = ALL_QUESTIONS[id];
+    const cat = all[id];
     if (!cat) return [];
     return [...(cat[200] ?? []), ...(cat[400] ?? []), ...(cat[600] ?? [])].map((q) => ({ ...q, _catId: id }));
   });
@@ -27,9 +27,17 @@ function QuizBody({ questions, onRefresh }: QuizBodyProps) {
   const [scores, setScores] = useState<(boolean | null)[]>(() => questions.map(() => null));
 
   const reveal = (i: number) =>
-    setRevealed((prev) => { const n = [...prev]; n[i] = true; return n; });
+    setRevealed((prev) => {
+      const n = [...prev];
+      n[i] = true;
+      return n;
+    });
   const mark = (i: number, correct: boolean) => {
-    setScores((prev) => { const n = [...prev]; n[i] = correct; return n; });
+    setScores((prev) => {
+      const n = [...prev];
+      n[i] = correct;
+      return n;
+    });
     void recordQuizAttempt(questions[i]._catId, questions[i].id, correct, "section_quiz");
     void hapticNotify(correct ? "success" : "error");
   };
@@ -92,21 +100,42 @@ function QuizBody({ questions, onRefresh }: QuizBodyProps) {
 }
 
 interface SectionQuizProps {
-  categoryId: string | string[];
+  categoryId?: string | string[];
+  topic?: string;
   title?: string;
   count?: number;
 }
 
-export function SectionQuiz({ categoryId, title = "اختبر معلوماتك", count = 4 }: SectionQuizProps) {
-  const pool = useMemo(() => gatherPool(categoryId), [categoryId]);
+export function SectionQuiz({
+  categoryId,
+  topic,
+  title = "اختبر معلوماتك",
+  count = 4,
+}: SectionQuizProps) {
+  const resolvedCats = categoryId ?? (topic ? ["quran", "hadith", "fiqh", "aqeeda"] : "fiqh");
+  const [allQuestions, setAllQuestions] = useState<QuestionsMap | null>(null);
+  const [expanded, setExpanded] = useState(false);
   const [seed, setSeed] = useState(0);
+
+  useEffect(() => {
+    if (!expanded || allQuestions) return;
+    let cancelled = false;
+    void import("@/data/islamicQuizData").then((m) => {
+      if (!cancelled) setAllQuestions(m.ALL_QUESTIONS as QuestionsMap);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [expanded, allQuestions]);
+
+  const pool = useMemo(
+    () => (allQuestions ? gatherPool(allQuestions, resolvedCats) : []),
+    [allQuestions, resolvedCats],
+  );
   const questions = useMemo(
     () => [...pool].sort(() => Math.random() - 0.5).slice(0, Math.min(count, pool.length)),
     [pool, count, seed],
   );
-  const [expanded, setExpanded] = useState(false);
-
-  if (pool.length === 0) return null;
 
   const toggle = () =>
     setExpanded((e) => {
@@ -131,7 +160,13 @@ export function SectionQuiz({ categoryId, title = "اختبر معلوماتك",
         <span className="sq-toggle" aria-hidden="true">{expanded ? "▲" : "▼"}</span>
       </div>
 
-      {expanded && (
+      {expanded && !allQuestions && (
+        <p className="sq-loading" role="status">جاري تحميل الأسئلة…</p>
+      )}
+      {expanded && allQuestions && pool.length === 0 && (
+        <p className="sq-empty" role="status">لا أسئلة متاحة لهذا القسم حاليًا.</p>
+      )}
+      {expanded && allQuestions && pool.length > 0 && (
         <QuizBody
           key={seed}
           questions={questions}

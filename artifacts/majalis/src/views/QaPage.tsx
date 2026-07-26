@@ -295,7 +295,7 @@ export default function QaPage({
       <PageHeader
         eyebrow="المجلس العلمي"
         title="الأسئلة والأجوبة"
-        subtitle="أحدث الأسئلة والأجوبة الشرعية الموثقة."
+        subtitle="أحدث الأسئلة والأجوبة الشرعية المنشورة للمراجعة والاستفادة."
       />
 
       <FiqhHubStrip current="qa" />

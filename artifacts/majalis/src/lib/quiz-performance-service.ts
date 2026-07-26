@@ -1,5 +1,5 @@
 import { supabase } from "@/lib/supabase";
-import { GAME_CATEGORIES } from "@/data/islamicQuizData";
+import { GAME_CATEGORIES } from "@/data/quiz-categories";
 
 export type QuizAttemptSource = "section_quiz" | "team_game";
 

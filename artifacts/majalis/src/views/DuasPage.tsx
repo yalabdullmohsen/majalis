@@ -1039,13 +1039,13 @@ export default function DuasPage() {
     applyPageSeo({
       path: "/duas",
       title: "الأدعية الشرعية، أدعية من القرآن والسنة | المجلس العلمي",
-      description: "مكتبة الأدعية الشرعية الموثقة: أدعية الصباح والمساء والصلاة والسفر والكرب مع المعنى والمصدر.",
+      description: "مكتبة أدعية شرعية: أدعية الصباح والمساء والصلاة والسفر والكرب مع المعنى والمصدر عند توفره.",
       keywords: ["أدعية", "دعاء", "أذكار", "دعاء الكرب", "دعاء الصباح", "دعاء المساء"],
       jsonLd: [
         {
           "@context": "https://schema.org",
           "@type": "ItemList",
-          name: "الأدعية الشرعية الموثقة",
+          name: "مكتبة الأدعية الشرعية",
           description: "مكتبة الأدعية الشرعية من القرآن والسنة مع المعنى والمصدر",
           numberOfItems: DUAS.length,
           itemListElement: DUAS.slice(0, 20).map((d, i) => ({
@@ -1083,14 +1083,14 @@ export default function DuasPage() {
         <div className="duas-hero__bismillah">وَإِذَا سَأَلَكَ عِبَادِي عَنِّي فَإِنِّي قَرِيبٌ</div>
         <h1 className="duas-hero__title">الأدعية الشرعية</h1>
         <p className="duas-hero__sub">
-          أدعية موثقة من القرآن الكريم والسنة النبوية الصحيحة
+          أدعية من القرآن الكريم والسنة النبوية، مع ذكر المصدر عند توفره
         </p>
         <div className="duas-hero__stats">
           <span>{DUAS.length} دعاء</span>
           <span className="duas-dot">·</span>
           <span>{CATEGORIES.length - 1} تصنيفاً</span>
           <span className="duas-dot">·</span>
-          <span>مصادر موثقة</span>
+          <span>مصادر مذكورة</span>
         </div>
       </div>
 

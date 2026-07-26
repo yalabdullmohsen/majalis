@@ -120,7 +120,7 @@ export default function HadithIndexPage() {
         </span>
         <h2 className="hadith-index-card__title">الأربعون في محبة رب العالمين</h2>
         <p className="hadith-index-card__desc">
-          مجموعة قيد الاستكمال من الأحاديث الموثقة في محبة الله لعباده ومحبة العبد لربه.
+          مجموعة قيد الاستكمال من الأحاديث في محبة الله لعباده ومحبة العبد لربه.
         </p>
         <span className="hadith-index-card__go">
           تصفّح المجموعة <ArrowLeft size={16} aria-hidden="true" />

@@ -6,11 +6,8 @@ export interface QuizQuestion {
   pending?: boolean;
 }
 
-export interface GameCategory {
-  id: string;
-  name: string;
-  icon: string;
-}
+export type { GameCategory } from "./quiz-categories";
+export { GAME_CATEGORIES } from "./quiz-categories";
 
 export type PointValue = 200 | 400 | 600;
 
@@ -19,17 +16,6 @@ export interface CategoryQuestions {
   400: QuizQuestion[];
   600: QuizQuestion[];
 }
-
-export const GAME_CATEGORIES: GameCategory[] = [
-  { id: "quran",    name: "القرآن الكريم",     icon: "book-open" },
-  { id: "hadith",   name: "الحديث الشريف",     icon: "scroll-text" },
-  { id: "sira",     name: "السيرة النبوية",     icon: "moon" },
-  { id: "anbiya",   name: "قصص الأنبياء",      icon: "star" },
-  { id: "fiqh",     name: "الفقه",              icon: "scale" },
-  { id: "aqeeda",   name: "العقيدة",            icon: "building-2" },
-  { id: "tarikh",   name: "التاريخ الإسلامي",   icon: "landmark" },
-  { id: "akhlaq",   name: "الأخلاق والصحابة",  icon: "gem" },
-];
 
 export const ALL_QUESTIONS: Record<string, CategoryQuestions> = {
 
