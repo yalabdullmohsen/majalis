@@ -2,7 +2,6 @@ import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect, useState, useMemo } from "react";
 import { ChevronDown, ChevronUp, Heart, Star } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
-import "@/styles/elite-2026.css";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { arabicMatchAny } from "@/lib/arabic-search";

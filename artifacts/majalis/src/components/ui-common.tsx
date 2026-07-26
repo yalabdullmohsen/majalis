@@ -1,3 +1,4 @@
+import { AlertTriangle, RefreshCw } from "lucide-react";
 import { C } from "@/lib/theme";
 
 /* ── Skeleton primitives ── */
@@ -174,9 +175,11 @@ function star8Pts(cx: number, cy: number, r1: number, r2: number) {
 export function ErrorState({ text, onRetry }: { text: string; onRetry?: () => void }) {
   return (
     <div className="adv-error-state" role="alert" aria-live="assertive" dir="rtl">
+      <AlertTriangle size={28} strokeWidth={1.5} className="adv-error-state__icon" aria-hidden="true" />
       <p className="adv-error-state__msg">{text}</p>
       {onRetry && (
         <button type="button" className="adv-error-state__retry" onClick={onRetry} aria-label="إعادة المحاولة">
+          <RefreshCw size={14} aria-hidden="true" />
           إعادة المحاولة
         </button>
       )}
@@ -184,8 +187,13 @@ export function ErrorState({ text, onRetry }: { text: string; onRetry?: () => vo
   );
 }
 
-export function Empty({ text }: { text: string }) {
-  return <p className="ds-empty">{text}</p>;
+export function Empty({ text, title }: { text: string; title?: string }) {
+  return (
+    <div className="ds-empty" role="status" aria-live="polite">
+      {title ? <h2>{title}</h2> : null}
+      <p className="ds-empty__text">{text}</p>
+    </div>
+  );
 }
 
 export function QaSkeleton({ count = 4 }: { count?: number }) {

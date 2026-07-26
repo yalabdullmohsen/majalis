@@ -3,7 +3,6 @@ import { useEffect, useMemo, useState } from "react";
 import { BookOpen, ChevronDown, ChevronUp, Layers, Scale, Search, Sparkles } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { arabicMatchAny } from "@/lib/arabic-search";
-import "@/styles/elite-2026.css";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 

@@ -9,6 +9,7 @@ import {
   Quote, RefreshCw, Repeat2, Rss, Scale, ScrollText, Search, Settings,
   Shield, Sparkles, Star, Stethoscope, Sun, Users, Waypoints, X, Zap,
 } from "lucide-react";
+import { useThemePreference } from "@/components/ThemePreferenceProvider";
 
 const SHEET_SECTIONS = [
   /* ── القرآن الكريم ── */
@@ -152,6 +153,7 @@ interface Props {
 
 export function MoreBottomSheet({ open, onClose }: Props) {
   const [location] = useLocation();
+  const { resolvedTheme, toggleDark } = useThemePreference();
 
   useEffect(() => {
     if (!open) return;
@@ -191,6 +193,20 @@ export function MoreBottomSheet({ open, onClose }: Props) {
         </div>
 
         <div className="bottom-sheet__body">
+          <button
+            type="button"
+            className="more-sheet-theme-toggle"
+            onClick={toggleDark}
+            aria-label={resolvedTheme === "dark" ? "التحويل إلى الوضع النهاري" : "التحويل إلى الوضع الليلي"}
+          >
+            <span className="more-sheet-theme-toggle__meta">
+              {resolvedTheme === "dark"
+                ? <Sun size={18} strokeWidth={1.8} aria-hidden="true" />
+                : <Moon size={18} strokeWidth={1.8} aria-hidden="true" />}
+              <span>{resolvedTheme === "dark" ? "الوضع النهاري" : "الوضع الليلي"}</span>
+            </span>
+            <span aria-hidden="true">{resolvedTheme === "dark" ? "مفعّل ليلي" : "مفعّل نهاري"}</span>
+          </button>
           {SHEET_SECTIONS.map((section) => (
             <div key={section.group} className="bottom-sheet__section">
               <p className="bottom-sheet__section-label">
