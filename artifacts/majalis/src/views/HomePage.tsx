@@ -671,13 +671,8 @@ export default function HomePage() {
 
           {/* زر متابعة واحد — العنصر الثالث من البطاقة اليومية (ديناميكي: آخر صفحة
               زارها المستخدم، أو دعوة افتراضية لبدء الورد اليومي لزائر جديد) */}
-          <div style={{ display: "flex", justifyContent: "center" }}>
-            <Link href={continueHref} className="hpv4-hero__cta-primary" style={{
-              background: "#FAFAF8", color: "#143F35", padding: "0.7rem 1.6rem",
-              borderRadius: "0.65rem", fontWeight: 800, fontSize: "0.9rem",
-              textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.4rem",
-              boxShadow: "0 2px 10px rgba(0,0,0,0.25)",
-            }}>
+          <div className="hpv4-hero__cta-wrap">
+            <Link href={continueHref} className="hpv4-hero__cta-primary">
               <svg width="15" height="15" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M6 3l8 6-8 6V3z"/></svg>
               {continueLabel}
             </Link>

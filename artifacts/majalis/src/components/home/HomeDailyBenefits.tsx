@@ -69,7 +69,14 @@ function BenefitCard({ item }: { item: AutoImportedContent }) {
     <article className="dmb__card ui-card">
       {item.image_url && (
         <div className="dmb__card-media">
-          <img src={item.image_url} alt="" loading="lazy" decoding="async" />
+          <img
+            src={item.image_url}
+            alt=""
+            width={640}
+            height={360}
+            loading="lazy"
+            decoding="async"
+          />
           {item.media_type === "video" && (
             <span className="dmb__media-badge" aria-label="فيديو">
               <PlayCircle size={22} strokeWidth={1.6} aria-hidden="true" />
