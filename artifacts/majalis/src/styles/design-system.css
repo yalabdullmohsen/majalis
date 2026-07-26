@@ -4772,32 +4772,8 @@ h1, h2, h3 {
   animation: ds-shimmer 1.4s ease-in-out infinite;
 }
 
-/* ── 8. شريط التنقل السفلي — iOS premium ── */
+/* ── 8. شريط التنقل السفلي — الألوان فقط؛ الأبعاد في final-release.css ── */
 @media (max-width: 879px) {
-  .bottom-nav {
-    background: color-mix(in srgb, var(--majalis-panel) 92%, transparent);
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border-top: 1px solid color-mix(in srgb, var(--majalis-line) 60%, transparent);
-    box-shadow: 0 -1px 0 color-mix(in srgb, var(--majalis-line) 40%, transparent),
-                0 -8px 24px rgba(26,23,20,0.06);
-  }
-
-  .bottom-nav__tab-icon {
-    width: 46px;
-    height: 30px;
-    border-radius: 15px;
-    transition: background var(--ds-transition-fast), transform 100ms;
-  }
-
-  .bottom-nav__tab:active .bottom-nav__tab-icon {
-    transform: scale(0.9);
-  }
-
-  .bottom-nav__tab.is-active .bottom-nav__tab-icon {
-    background: color-mix(in srgb, var(--ds-emerald) 12%, transparent);
-  }
-
   .bottom-nav__tab.is-active {
     color: var(--ds-emerald-deep);
   }
