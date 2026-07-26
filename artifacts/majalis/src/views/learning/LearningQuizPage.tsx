@@ -206,12 +206,13 @@ export default function LearningQuizPage() {
   };
 
   // ── حالة التحميل ──
-  if (phase === "loading") return <SkeletonPage />;
+  if (phase === "loading") return <SkeletonPage title="اختبار المسار" />;
 
   // ── خطأ ──
   if (phase === "error" || !quiz || total === 0) {
     return (
       <div className="page-shell narrow lqp2-wrap" dir="rtl">
+        <h1 className="page-status-shell__title">اختبار المسار</h1>
         <div className="lqp2-empty">
           <GraduationCap size={48} strokeWidth={1.2} className="lqp2-empty__icon" aria-hidden="true" />
           <p className="lqp2-empty__msg">الاختبار غير متوفر لهذا المسار حالياً.</p>
@@ -227,6 +228,7 @@ export default function LearningQuizPage() {
   if (phase === "done" && result) {
     return (
       <div className="page-shell narrow lqp2-wrap" dir="rtl">
+        <h1 className="page-status-shell__title">نتيجة الاختبار</h1>
         <DoneScreen result={result} slug={slug} onRetry={loadQuiz} />
         <div className="twh-share">
           <ShareButtons title="اختبار المسار التعليمي — المجلس العلمي" url="https://www.majlisilm.com/learning/quiz" />
@@ -247,6 +249,7 @@ export default function LearningQuizPage() {
         <span>{(quiz.title as string) || "اختبار"}</span>
       </nav>
 
+      <h1 className="page-status-shell__title">{(quiz.title as string) || "اختبار المسار"}</h1>
       <QuizProgress current={index + 1} total={total} />
 
       {/* بطاقة السؤال */}

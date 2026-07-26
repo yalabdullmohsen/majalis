@@ -1025,6 +1025,68 @@ textarea {
 .lrn-hub-search__input {
   min-height: 44px;
 }
+.pt-page-title,
+.page-status-shell__title {
+  margin: 0 0 0.75rem;
+  padding-inline: var(--page-gutter, 1rem);
+  color: var(--color-text);
+  font-size: clamp(1.25rem, 3.5vw, 1.6rem);
+  font-weight: 800;
+  line-height: 1.35;
+  text-align: center;
+}
+.hb-header__source-link,
+.hb-notice__link,
+.kuwait-lessons-source-link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding-block: 0.35rem;
+}
+.mosque-mode__label {
+  margin: 0;
+  font: inherit;
+  font-weight: 700;
+}
+.masar-card__step-link,
+.masar-card__footer a,
+.masar-card__cta,
+.upd-title-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  text-decoration: none;
+}
+.masar-card__cta {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md);
+  color: #fff;
+  font-weight: 800;
+  text-align: center;
+  transition: opacity var(--motion-fast);
+}
+.fiqh-stats-list a,
+.fiqh-stats-note a,
+.fiqh-topic-list__link,
+.fiqh-topic-list a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding-block: 0.25rem;
+  box-sizing: border-box;
+}
+.kuwait-lessons-feed-note a,
+.kuwait-lessons-attribution a,
+a.twitter-timeline {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding-block: 0.35rem;
+}
 
 @media (max-width: 879px) {
   .ds-btn--sm {

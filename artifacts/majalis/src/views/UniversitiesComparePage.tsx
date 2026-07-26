@@ -66,7 +66,7 @@ function CompareContent() {
     return (
       <div dir="rtl" className="flex items-center justify-center min-h-[60vh] text-center px-4">
         <div>
-          <p className="text-5xl mb-4">⇔</p>
+          <h1 className="page-status-shell__title">مقارنة الجامعات</h1>
           <p className="ucp-empty-title">لا توجد جامعات للمقارنة</p>
           <p className="ucp-empty-desc">اختر جامعتين على الأقل من الدليل لتبدأ المقارنة.</p>
           <Link href="/universities"
