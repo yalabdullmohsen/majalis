@@ -7,7 +7,8 @@ import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { getVerifiedHadith } from "@/lib/supabase";
 import { RequestManager } from "@/lib/request-manager";
 import { arabicMatchAny } from "@/lib/arabic-search";
-import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
+import { PageHeader, SkeletonCardGrid, Empty, Chip } from "@/components/ui-common";
+import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
 import { RecommendationWidget } from "@/components/recommendations/RecommendationWidget";
 import { CitationActionBar } from "@/components/citation/CitationActionBar";
@@ -620,16 +621,15 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
       {/* Category chips (quick filter on desktop) */}
       <div className="hadith-quick-cats" role="tablist" aria-label="تصفية موضوع الحديث">
         {CATEGORIES.map((cat) => (
-          <button
+          <Chip
             key={cat.id}
             role="tab"
-            type="button"
-            className={`hadith-quick-cat ${activeCategory === cat.id ? "hadith-quick-cat--active" : ""}`}
+            active={activeCategory === cat.id}
+            className="hadith-quick-cat"
             onClick={() => setActiveCategory(cat.id)}
-            aria-selected={activeCategory === cat.id}
           >
             {cat.label}
-          </button>
+          </Chip>
         ))}
       </div>
 
@@ -679,6 +679,10 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
           layout="row"
           className="mt-8"
         />
+      )}
+
+      {!embedded && (
+        <RelatedKnowledge kind="hadith" title="مواد ذات صلة بالحديث" limit={6} />
       )}
     </>
   );
