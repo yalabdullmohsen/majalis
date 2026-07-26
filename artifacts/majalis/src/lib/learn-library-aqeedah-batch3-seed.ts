@@ -33,7 +33,8 @@ export type SeedCitation = {
 
 export type AqeedahSeedLesson = {
   id: string;
-  categorySlug: AqeedahSeedSlug;
+  /** slug تصنيف «تعلّم» — يشمل دفعات العقيدة ١ و٣ */
+  categorySlug: string;
   title: string;
   description: string;
   activity_type: string;

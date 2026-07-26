@@ -129,9 +129,18 @@ function pageTitle(route) {
   return `${name}${TITLE_SUFFIX}`;
 }
 
+/** يوحّد النقط المتكررة في نهاية الوصف (خلل شائع: ".." من قوالب سابقة). */
+function tidyDesc(text) {
+  return String(text || "")
+    .replace(/\.{2,}/g, ".")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 function padDesc(text, suffix) {
-  if (!text) return suffix;
-  return text.length >= 50 ? text : `${text}، ${suffix}`;
+  const t = tidyDesc(text);
+  if (!t) return suffix;
+  return t.length >= 50 ? t : `${t}، ${suffix}`;
 }
 
 function clamp(text, max = 300) {
@@ -571,7 +580,16 @@ const RICH_BODY_MAP = {
     "من الكتب المتاحة",
     LIBRARY_CATALOG.slice(0, 15).map((b) => ({ name: b.title, url: `/library/${b.id}`, note: b.author })),
   ),
-  "/adhkar": linkList("أقسام الأذكار", ADHKAR_CATEGORIES.map((c) => ({ name: c.name, url: `/adhkar?cat=${c.id}` }))),
+  "/adhkar": `${linkList(
+    "أقسام الأذكار",
+    ADHKAR_CATEGORIES.map((c) => ({ name: c.name, url: `/adhkar?cat=${c.id}` })),
+  )}
+<p>أذكار الصباح والمساء والنوم والصلاة والسفر وغيرها — نصوص مختارة مع بيان المصدر قدر الإمكان. يمكن أيضًا الانتقال إلى الأدعية الموثقة والتسبيح اليومي.</p>
+${linkList("روابط ذات صلة", [
+  { name: "الأدعية الشرعية", url: "/duas" },
+  { name: "السنن اليومية", url: "/sunan-yawmiyya" },
+  { name: "أدعية القرآن", url: "/duas-quran" },
+])}`,
   "/scholars": linkList(
     "من علماء المسلمين",
     SCHOLARS.slice(0, 30).map((s) => ({ name: s.name, url: `/scholars/${s.id}`, note: s.died })),
@@ -598,6 +616,867 @@ const RICH_BODY_MAP = {
     "المسائل الفقهية المعاصرة",
     PUBLIC_FIQH_ISSUES.slice(0, 25).map((i) => ({ name: i.title, url: `/fiqh-council/issues/${i.slug}` })),
   ),
+  "/fiqh": `<p>بوابة الفقه الإسلامي: أحكام العبادات والمعاملات، المذاهب الأربعة، القواعد الفقهية، وقرارات المجامع — مع إحالة المسائل المعاصرة إلى مصادرها المعتمدة.</p>
+${linkList("أقسام الفقه", [
+  { name: "الأحكام الشرعية", url: "/rulings", note: "مسائل موثّقة بالأدلة" },
+  { name: "المجمع الفقهي", url: "/fiqh-council", note: "قرارات وفتاوى مؤسسية" },
+  { name: "المسائل الفقهية", url: "/fiqh-council/issues" },
+  { name: "النوازل المعاصرة", url: "/fiqh-council/nawazil" },
+  { name: "القواعد الفقهية", url: "/fiqh-qawaid" },
+  { name: "المذاهب الأربعة", url: "/madhahib" },
+  { name: "الأسئلة الشرعية", url: "/qa" },
+  { name: "الطهارة", url: "/tahara" },
+  { name: "دليل الصلاة", url: "/salah-guide" },
+  { name: "الزكاة", url: "/zakat" },
+  { name: "الصيام", url: "/sawm" },
+  { name: "الحج والعمرة", url: "/hajj" },
+])}`,
+  "/quran-hub": `<p>مركز القرآن الكريم: المصحف الرقمي، فهرس السور، التجويد، القصص، علوم القرآن، والتحفيظ — مدخل موحّد لخدمات القراءة والتعلّم.</p>
+${linkList("خدمات القرآن", [
+  { name: "المصحف الرقمي", url: "/mushaf" },
+  { name: "فهرس السور", url: "/quran/surahs" },
+  { name: "أحكام التجويد", url: "/quran/tajweed" },
+  { name: "قصص السور", url: "/quran/surah-stories" },
+  { name: "مكّي ومدني", url: "/quran/makki-madani" },
+  { name: "ترتيب النزول", url: "/quran/revelation-order" },
+  { name: "خطط الحفظ", url: "/quran/memorization-plans" },
+  { name: "علوم القرآن", url: "/ulum-quran" },
+  { name: "دراسات قرآنية", url: "/quran-studies" },
+  { name: "أدعية القرآن", url: "/duas-quran" },
+  { name: "اختبار التلاوة", url: "/quran/recitation-test-ai" },
+])}`,
+  "/hadith-science": `<p>مدخل إلى مصطلح الحديث ودرجاته وكتب الرواية، مع روابط إلى مكتبات الأحاديث الصحيحة والضعيفة والموضوعة والأربعين النووية.</p>
+${linkList("علوم الحديث وروابطه", [
+  { name: "الأحاديث النبوية", url: "/hadith" },
+  { name: "الأحاديث الصحيحة", url: "/hadith/sahih" },
+  { name: "الأحاديث الضعيفة", url: "/hadith/daif" },
+  { name: "الأحاديث الموضوعة", url: "/hadith/mawdu" },
+  { name: "كتب الحديث", url: "/hadith/books" },
+  { name: "الأربعون النووية", url: "/arbaeen-nawawi" },
+  { name: "صحيح البخاري (المكتبة)", url: "/library/book-bukhari" },
+  { name: "صحيح مسلم (المكتبة)", url: "/library/book-muslim" },
+])}`,
+  "/islamic-glossary": `<p>معجم مبسّط لمصطلحات العلوم الشرعية: فقه، حديث، عقيدة، وأصول — لتعريف الطالب بالمفردات الشائعة قبل التوسّع في الأبواب.</p>
+${linkList("روابط ذات صلة", [
+  { name: "المواضيع الإسلامية", url: "/topics" },
+  { name: "القواعد الفقهية", url: "/fiqh-qawaid" },
+  { name: "المذاهب الأربعة", url: "/madhahib" },
+  { name: "علوم الحديث", url: "/hadith-science" },
+  { name: "التوحيد والعقيدة", url: "/tawhid" },
+  { name: "أدب طلب العلم", url: "/adab-talab-ilm" },
+])}`,
+  "/rulings": `<p>موسوعة الأحكام الشرعية: مسائل في العبادات والمعاملات والأسرة، مع ربط بالأدلة والمراجع المعتمدة قدر الإمكان.</p>
+${linkList(
+  "من الأحكام المتاحة",
+  (PLATFORM_SEED.rulings || []).slice(0, 20).map((r) => ({ name: r.title, url: `/rulings/${r.id}` })),
+)}
+${linkList("أقسام ذات صلة", [
+  { name: "بوابة الفقه", url: "/fiqh" },
+  { name: "المجمع الفقهي", url: "/fiqh-council" },
+  { name: "المسائل الفقهية", url: "/fiqh-council/issues" },
+  { name: "القواعد الفقهية", url: "/fiqh-qawaid" },
+  { name: "المذاهب الأربعة", url: "/madhahib" },
+  { name: "الأسئلة الشرعية", url: "/qa" },
+  { name: "الطهارة", url: "/tahara" },
+  { name: "دليل الصلاة", url: "/salah-guide" },
+  { name: "الزكاة", url: "/zakat" },
+  { name: "الصيام", url: "/sawm" },
+  { name: "الحج والعمرة", url: "/hajj" },
+])}`,
+  "/hadith": `<p>مكتبة الأحاديث النبوية: صحيح وضعيف وموضوع، مع مداخل إلى كتب الرواية والأربعين النووية وعلوم الحديث.</p>
+${linkList("أقسام الأحاديث", [
+  { name: "الأحاديث الصحيحة", url: "/hadith/sahih" },
+  { name: "الأحاديث الضعيفة", url: "/hadith/daif" },
+  { name: "الأحاديث الموضوعة", url: "/hadith/mawdu" },
+  { name: "كتب الحديث", url: "/hadith/books" },
+  { name: "كتب الحديث وأحكامها", url: "/hadith/books-and-rulings" },
+  { name: "الأربعون النووية", url: "/arbaeen-nawawi" },
+  { name: "أربعون في محبة الله", url: "/hadith/arbaeen-love-of-allah" },
+  { name: "علوم الحديث", url: "/hadith-science" },
+])}
+${linkList("من كتب الحديث في المكتبة", [
+  { name: "صحيح البخاري", url: "/library/book-bukhari" },
+  { name: "صحيح مسلم", url: "/library/book-muslim" },
+  { name: "رياض الصالحين", url: "/library/book-riyadh" },
+  { name: "الأربعون النووية (المكتبة)", url: "/library/book-nawawi40" },
+])}`,
+  "/fawaid": `<p>فوائد علمية مختصرة وموثّقة في القرآن والحديث والعقيدة والفقه والتربية والدعوة والآداب — للانتفاع السريع مع الإحالة إلى المصدر.</p>
+${linkList(
+  "تصنيفات الفوائد",
+  [
+    "فوائد قرآنية",
+    "فوائد حديثية",
+    "فوائد عقدية",
+    "فوائد فقهية",
+    "فوائد تربوية",
+    "فوائد دعوية",
+    "آداب وأخلاق",
+  ].map((c) => ({ name: c, url: `/fawaid?cat=${encodeURIComponent(c)}` })),
+)}
+${linkList("روابط ذات صلة", [
+  { name: "المواضيع الإسلامية", url: "/topics" },
+  { name: "الأذكار", url: "/adhkar" },
+  { name: "الأحاديث النبوية", url: "/hadith" },
+  { name: "الأحكام الشرعية", url: "/rulings" },
+  { name: "أدب طلب العلم", url: "/adab-talab-ilm" },
+])}`,
+  "/duas": `<p>أدعية شرعية مختارة من الكتاب والسنة: أدعية الصباح والمساء والصلاة والسفر والكرب والنوم، مع إحالة إلى الأذكار والسنن اليومية.</p>
+${linkList(
+  "من الأدعية",
+  DUAS_SEED.slice(0, 16).map((d) => ({ name: d.title, url: `/duas#${d.id}` })),
+)}
+${linkList("روابط ذات صلة", [
+  { name: "موسوعة الأذكار", url: "/adhkar" },
+  { name: "السنن اليومية", url: "/sunan-yawmiyya" },
+  { name: "أدعية القرآن", url: "/duas-quran" },
+  { name: "الورد اليومي", url: "/daily-wird" },
+  { name: "عداد التسبيح", url: "/tasbih" },
+])}`,
+  "/asma-husna": `<p>أسماء الله الحسنى ومعانيها — مدخل لتعظيم الله ومعرفة أسمائه وصفاته، مع نماذج من الأسماء ومعانيها.</p>
+${linkList(
+  "من الأسماء الحسنى",
+  ASMAA_HUSNA.map((a) => ({ name: `${a.arabic} — ${a.meaning}`, url: `/asma-husna#name-${a.num}` })),
+)}
+${linkList("روابط ذات صلة", [
+  { name: "التوحيد والعقيدة", url: "/tawhid" },
+  { name: "الأذكار", url: "/adhkar" },
+  { name: "الأدعية الشرعية", url: "/duas" },
+])}`,
+  "/annual-courses": `<p>الدورات العلمية السنوية والموسمية: برامج مرتّبة بمشايخ وجداول، مع روابط إلى الدروس والمسارات.</p>
+${linkList(
+  "من الدورات",
+  (PLATFORM_SEED.courses || []).slice(0, 12).map((c) => ({
+    name: c.title || c.name,
+    url: `/annual-courses/${c.id}`,
+  })),
+)}
+${linkList("روابط ذات صلة", [
+  { name: "الدروس الشرعية", url: "/lessons" },
+  { name: "المسارات العلمية", url: "/learning/paths" },
+  { name: "أدب طلب العلم", url: "/adab-talab-ilm" },
+])}`,
+  "/tahara": `<p>أحكام الطهارة: الوضوء والغسل والتيمم وإزالة النجاسة — مدخل عملي قبل أبواب الصلاة والعبادات.</p>
+${linkList("روابط ذات صلة", [
+  { name: "دليل الصلاة", url: "/salah-guide" },
+  { name: "الأحكام الشرعية", url: "/rulings" },
+  { name: "بوابة الفقه", url: "/fiqh" },
+  { name: "الزكاة", url: "/zakat" },
+  { name: "الصيام", url: "/sawm" },
+  { name: "الحج والعمرة", url: "/hajj" },
+  { name: "أحكام الجنائز", url: "/janaza" },
+])}`,
+  "/zakat": `<p>الزكاة: شروط الوجوب والأنصبة والمصارف، مع ربط بأحكام العبادات الأخرى والمسائل المعاصرة عند الحاجة.</p>
+${linkList("روابط ذات صلة", [
+  { name: "الطهارة", url: "/tahara" },
+  { name: "الصيام", url: "/sawm" },
+  { name: "الحج والعمرة", url: "/hajj" },
+  { name: "الأحكام الشرعية", url: "/rulings" },
+  { name: "بوابة الفقه", url: "/fiqh" },
+  { name: "المجمع الفقهي", url: "/fiqh-council" },
+])}`,
+  "/sawm": `<p>الصيام وأحكامه: رمضان والقضاء والكفارات والنوافل، مع إحالات إلى الأذكار والعبادات المرتبطة.</p>
+${linkList("روابط ذات صلة", [
+  { name: "الزكاة", url: "/zakat" },
+  { name: "الحج والعمرة", url: "/hajj" },
+  { name: "الأحكام الشرعية", url: "/rulings" },
+  { name: "الأذكار", url: "/adhkar" },
+  { name: "فضائل الأعمال", url: "/fadail-aamal" },
+  { name: "بوابة الفقه", url: "/fiqh" },
+])}`,
+  "/hajj": `<p>الحج والعمرة: الأركان والواجبات والسنن والمخالفات، مع روابط إلى الطهارة والأحكام ذات الصلة.</p>
+${linkList("روابط ذات صلة", [
+  { name: "الطهارة", url: "/tahara" },
+  { name: "الزكاة", url: "/zakat" },
+  { name: "الصيام", url: "/sawm" },
+  { name: "الأحكام الشرعية", url: "/rulings" },
+  { name: "بوابة الفقه", url: "/fiqh" },
+  { name: "المناسبات الإسلامية", url: "/occasions" },
+])}`,
+  "/tawhid": `<p>العقيدة والتوحيد: توحيد الربوبية والألوهية والأسماء والصفات، مع مداخل إلى الفرق والآداب العقدية.</p>
+${linkList("روابط ذات صلة", [
+  { name: "أسماء الله الحسنى", url: "/asma-husna" },
+  { name: "علامات الساعة", url: "/alamat-saah" },
+  { name: "صفة الجنة والنار", url: "/janna-naar" },
+  { name: "التوبة والاستغفار", url: "/tawba" },
+  { name: "المعجم الشرعي", url: "/islamic-glossary" },
+  { name: "المواضيع الإسلامية", url: "/topics" },
+])}`,
+  "/adab-talab-ilm": `<p>آداب طالب العلم: الإخلاص، التدرّج، احترام الشيوخ، ومنهجية الطلب — مدخل قبل المسارات والدروس.</p>
+${linkList("روابط ذات صلة", [
+  { name: "المسارات العلمية", url: "/learning/paths" },
+  { name: "الدروس الشرعية", url: "/lessons" },
+  { name: "المكتبة العلمية", url: "/library" },
+  { name: "أعلام العلماء", url: "/scholars" },
+  { name: "الفوائد", url: "/fawaid" },
+  { name: "مكارم الأخلاق", url: "/akhlaq" },
+])}`,
+  "/akhlaq": `<p>مكارم الأخلاق في الكتاب والسنة: الصدق والحياء والصبر وحسن الخلق، مع ربط بالرقائق والوصايا النبوية.</p>
+${linkList("روابط ذات صلة", [
+  { name: "الرقائق والزهد", url: "/raqaiq" },
+  { name: "الوصايا النبوية", url: "/wasaya-nabawiyya" },
+  { name: "فضائل الأعمال", url: "/fadail-aamal" },
+  { name: "التوبة والاستغفار", url: "/tawba" },
+  { name: "الفوائد", url: "/fawaid" },
+  { name: "أدب طلب العلم", url: "/adab-talab-ilm" },
+])}`,
+  "/arbaeen-nawawi": `<p>الأربعون النووية: أحاديث جامعة في أصول الدين والعمل، مع ربط بعلوم الحديث ومكتبة الأحاديث.</p>
+${linkList("روابط ذات صلة", [
+  { name: "الأحاديث النبوية", url: "/hadith" },
+  { name: "علوم الحديث", url: "/hadith-science" },
+  { name: "الأربعون في المكتبة", url: "/library/book-nawawi40" },
+  { name: "أربعون في محبة الله", url: "/hadith/arbaeen-love-of-allah" },
+  { name: "رياض الصالحين", url: "/library/book-riyadh" },
+])}`,
+  "/raqaiq": `<p>الرقائق والزهد: نصوص تُرقّق القلب وتذكّر بالآخرة، مع إحالات إلى الأخلاق والتوبة وفضائل الأعمال.</p>
+${linkList("روابط ذات صلة", [
+  { name: "مكارم الأخلاق", url: "/akhlaq" },
+  { name: "التوبة والاستغفار", url: "/tawba" },
+  { name: "فضائل الأعمال", url: "/fadail-aamal" },
+  { name: "الوصايا النبوية", url: "/wasaya-nabawiyya" },
+  { name: "الفوائد", url: "/fawaid" },
+])}`,
+  "/janaza": `<p>أحكام الجنائز: تغسيل الميت وتكفينه والصلاة عليه والدفن والتعزية — مرتبطة بباب الطهارة والفقه.</p>
+${linkList("روابط ذات صلة", [
+  { name: "الطهارة", url: "/tahara" },
+  { name: "الأحكام الشرعية", url: "/rulings" },
+  { name: "بوابة الفقه", url: "/fiqh" },
+  { name: "التوبة والاستغفار", url: "/tawba" },
+  { name: "صفة الجنة والنار", url: "/janna-naar" },
+])}`,
+  "/prophetic-medicine": `<p>الطب النبوي: هدي النبي ﷺ في الوقاية والعلاج والغذاء، مع تمييز ما ثبت وما يحتاج تحقيقًا.</p>
+${linkList("روابط ذات صلة", [
+  { name: "الأحاديث النبوية", url: "/hadith" },
+  { name: "السيرة والشمائل", url: "/shamael" },
+  { name: "فضائل الأعمال", url: "/fadail-aamal" },
+  { name: "السنن اليومية", url: "/sunan-yawmiyya" },
+])}`,
+  "/anbiya": `<p>الأنبياء والرسل: قصصهم ودعوتهم عبر القرآن، مع مدخل إلى شجرة الأنبياء وقصص السور.</p>
+${linkList("روابط ذات صلة", [
+  { name: "قصص الأنبياء", url: "/prophets" },
+  { name: "شجرة الأنبياء", url: "/prophets/tree" },
+  { name: "قصص السور", url: "/quran/surah-stories" },
+  { name: "مركز القرآن", url: "/quran-hub" },
+  { name: "علامات الساعة", url: "/alamat-saah" },
+])}`,
+  "/tajweed": `<p>علم التجويد: مخارج الحروف والصفات وأحكام النون والميم والمدود — لتجويد التلاوة مع خدمات القرآن.</p>
+${linkList("روابط ذات صلة", [
+  { name: "أحكام التجويد (قسم القرآن)", url: "/quran/tajweed" },
+  { name: "المصحف الرقمي", url: "/mushaf" },
+  { name: "فهرس السور", url: "/quran/surahs" },
+  { name: "مركز القرآن", url: "/quran-hub" },
+  { name: "اختبار التلاوة", url: "/quran/recitation-test-ai" },
+])}`,
+  "/fadail-aamal": `<p>فضائل الأعمال: ما ورد في فضل الصلاة والذكر والصدقة وطلب العلم، مع ربط بالأذكار والفوائد.</p>
+${linkList("روابط ذات صلة", [
+  { name: "الأذكار", url: "/adhkar" },
+  { name: "الفوائد", url: "/fawaid" },
+  { name: "السنن اليومية", url: "/sunan-yawmiyya" },
+  { name: "مكارم الأخلاق", url: "/akhlaq" },
+  { name: "الرقائق والزهد", url: "/raqaiq" },
+])}`,
+  "/wasaya-nabawiyya": `<p>الوصايا النبوية الجامعة: جوامع الكلم في الأدب والعمل والعقيدة، مع إحالات إلى الأحاديث والأخلاق.</p>
+${linkList("روابط ذات صلة", [
+  { name: "الأحاديث النبوية", url: "/hadith" },
+  { name: "الأربعون النووية", url: "/arbaeen-nawawi" },
+  { name: "مكارم الأخلاق", url: "/akhlaq" },
+  { name: "الرقائق والزهد", url: "/raqaiq" },
+])}`,
+  "/alamat-saah": `<p>علامات الساعة الصغرى والكبرى كما وردت في النصوص، مع ربط بباب العقيدة وقصص الأنبياء.</p>
+${linkList("روابط ذات صلة", [
+  { name: "التوحيد والعقيدة", url: "/tawhid" },
+  { name: "صفة الجنة والنار", url: "/janna-naar" },
+  { name: "الأنبياء والرسل", url: "/anbiya" },
+  { name: "الأحاديث النبوية", url: "/hadith" },
+])}`,
+  "/janna-naar": `<p>صفة الجنة والنار وما أعدّ الله لأهل كل دار، من نصوص الكتاب والسنة، ضمن أبواب العقيدة.</p>
+${linkList("روابط ذات صلة", [
+  { name: "التوحيد والعقيدة", url: "/tawhid" },
+  { name: "علامات الساعة", url: "/alamat-saah" },
+  { name: "التوبة والاستغفار", url: "/tawba" },
+  { name: "الرقائق والزهد", url: "/raqaiq" },
+])}`,
+  "/tawba": `<p>التوبة والاستغفار: شروط التوبة النصوح وفضائل الاستغفار، مع ربط بالأذكار والرقائق.</p>
+${linkList("روابط ذات صلة", [
+  { name: "الأذكار", url: "/adhkar" },
+  { name: "الأدعية الشرعية", url: "/duas" },
+  { name: "الرقائق والزهد", url: "/raqaiq" },
+  { name: "مكارم الأخلاق", url: "/akhlaq" },
+  { name: "التوحيد والعقيدة", url: "/tawhid" },
+])}`,
+  "/daily-wird": `<p>الورد اليومي: ترتيب عملي للذكر والتلاوة والأدعية على مدار اليوم، مع روابط الأذكار والقرآن.</p>
+${linkList("روابط ذات صلة", [
+  { name: "الأذكار", url: "/adhkar" },
+  { name: "الأدعية الشرعية", url: "/duas" },
+  { name: "السنن اليومية", url: "/sunan-yawmiyya" },
+  { name: "المصحف الرقمي", url: "/mushaf" },
+  { name: "مركز القرآن", url: "/quran-hub" },
+])}`,
+  "/occasions": `<p>المناسبات الإسلامية وما يُشرع فيها من عبادات وأذكار، مع ربط بالحج والصيام والمواضيع ذات الصلة.</p>
+${linkList("روابط ذات صلة", [
+  { name: "الحج والعمرة", url: "/hajj" },
+  { name: "الصيام", url: "/sawm" },
+  { name: "الأذكار", url: "/adhkar" },
+  { name: "فضائل الأعمال", url: "/fadail-aamal" },
+  { name: "المواضيع الإسلامية", url: "/topics" },
+])}`,
+  "/madhahib": `<p>المذاهب الأربعة: أصولها وأبرز أئمتها وكتبها، مدخل للمقارنة الفقهية قبل التوسع في المسائل.</p>
+${linkList("روابط ذات صلة", [
+  { name: "بوابة الفقه", url: "/fiqh" },
+  { name: "القواعد الفقهية", url: "/fiqh-qawaid" },
+  { name: "الأحكام الشرعية", url: "/rulings" },
+  { name: "أعلام العلماء", url: "/scholars" },
+  { name: "الفقه على المذاهب الأربعة (المكتبة)", url: "/library/book-al-fiqh-ala-madhahib-al-arba" },
+  { name: "المعجم الشرعي", url: "/islamic-glossary" },
+])}`,
+  "/fiqh-qawaid": `<p>القواعد الفقهية الكلية وما يتفرع عنها، لضبط الاستنباط وفهم الخلاف — مع ربط بالمذاهب والأحكام.</p>
+${linkList("روابط ذات صلة", [
+  { name: "المذاهب الأربعة", url: "/madhahib" },
+  { name: "بوابة الفقه", url: "/fiqh" },
+  { name: "الأحكام الشرعية", url: "/rulings" },
+  { name: "المجمع الفقهي", url: "/fiqh-council" },
+  { name: "المعجم الشرعي", url: "/islamic-glossary" },
+])}`,
+  "/fiqh-council": `<p>المجمع الفقهي الإسلامي: قرارات وفتاوى ومسائل معاصرة ونوازل، مع أدوات بحث ومقارنة وأرشيف.</p>
+${linkList(
+  "من القرارات",
+  (PLATFORM_SEED.fiqh_decisions || []).slice(0, 12).map((r) => ({
+    name: r.title,
+    url: `/fiqh-council/${r.slug || r.id}`,
+  })),
+)}
+${linkList("أقسام المجمع", [
+  { name: "المسائل الفقهية", url: "/fiqh-council/issues" },
+  { name: "النوازل المعاصرة", url: "/fiqh-council/nawazil" },
+  { name: "الفتاوى", url: "/fiqh-council/fatwas" },
+  { name: "القرارات/التوصيات", url: "/fiqh-council/resolutions" },
+  { name: "التصنيفات", url: "/fiqh-council/categories" },
+  { name: "الأرشيف", url: "/fiqh-council/archive" },
+  { name: "بوابة الفقه", url: "/fiqh" },
+])}`,
+  "/sunan-yawmiyya": `<p>السنن اليومية الثابتة عن النبي ﷺ في الطعام واللباس والنوم والدخول والخروج، مع ربط بالأذكار والأدعية.</p>
+${linkList("روابط ذات صلة", [
+  { name: "الأذكار", url: "/adhkar" },
+  { name: "الأدعية الشرعية", url: "/duas" },
+  { name: "الورد اليومي", url: "/daily-wird" },
+  { name: "فضائل الأعمال", url: "/fadail-aamal" },
+  { name: "الأحاديث النبوية", url: "/hadith" },
+])}`,
+  "/duas-quran": `<p>أدعية القرآن الكريم كما وردت في السور، للتعبّد والتدبّر، مع ربط بالمصحف ومركز القرآن.</p>
+${linkList("روابط ذات صلة", [
+  { name: "الأدعية الشرعية", url: "/duas" },
+  { name: "المصحف الرقمي", url: "/mushaf" },
+  { name: "مركز القرآن", url: "/quran-hub" },
+  { name: "الأذكار", url: "/adhkar" },
+  { name: "علوم القرآن", url: "/ulum-quran" },
+])}`,
+  "/ulum-quran": `<p>علوم القرآن: النزول والجمع والقراءات والمكي والمدني وأسباب النزول — مدخل قبل التفسير والدراسات.</p>
+${linkList("روابط ذات صلة", [
+  { name: "مركز القرآن", url: "/quran-hub" },
+  { name: "مكّي ومدني", url: "/quran/makki-madani" },
+  { name: "ترتيب النزول", url: "/quran/revelation-order" },
+  { name: "قصص السور", url: "/quran/surah-stories" },
+  { name: "دراسات قرآنية", url: "/quran-studies" },
+  { name: "فهرس السور", url: "/quran/surahs" },
+])}`,
+  "/salah-guide": `<p>دليل الصلاة الكامل: الشروط والأركان والواجبات والسنن وما يبطلها، مع ربط بالطهارة وأحكام الجنائز.</p>
+${linkList("روابط ذات صلة", [
+  { name: "الطهارة", url: "/tahara" },
+  { name: "مراتب الناس في الصلاة", url: "/prayer-ranks" },
+  { name: "الأحكام الشرعية", url: "/rulings" },
+  { name: "بوابة الفقه", url: "/fiqh" },
+  { name: "الأذكار", url: "/adhkar" },
+  { name: "أركان الإسلام", url: "/arkan" },
+])}`,
+  "/arkan": `<p>أركان الإسلام الخمسة: الشهادتان والصلاة والزكاة والصوم والحج — مدخل تأسيسي قبل التفصيل الفقهي.</p>
+${linkList("روابط ذات صلة", [
+  { name: "أركان الإيمان", url: "/arkan-iman" },
+  { name: "دليل الصلاة", url: "/salah-guide" },
+  { name: "الزكاة", url: "/zakat" },
+  { name: "الصيام", url: "/sawm" },
+  { name: "الحج والعمرة", url: "/hajj" },
+  { name: "التوحيد والعقيدة", url: "/tawhid" },
+  { name: "ابدأ من هنا", url: "/start-here" },
+])}`,
+  "/arkan-iman": `<p>أركان الإيمان الستة: الإيمان بالله وملائكته وكتبه ورسله واليوم الآخر والقدر — أساس باب العقيدة.</p>
+${linkList("روابط ذات صلة", [
+  { name: "التوحيد والعقيدة", url: "/tawhid" },
+  { name: "الملائكة", url: "/malaika" },
+  { name: "الأنبياء والرسل", url: "/anbiya" },
+  { name: "أركان الإسلام", url: "/arkan" },
+  { name: "علامات الساعة", url: "/alamat-saah" },
+  { name: "صفة الجنة والنار", url: "/janna-naar" },
+])}`,
+  "/malaika": `<p>الملائكة في الإسلام: صفاتهم ووظائفهم والإيمان بهم، ضمن أركان الإيمان والعقيدة.</p>
+${linkList("روابط ذات صلة", [
+  { name: "أركان الإيمان", url: "/arkan-iman" },
+  { name: "التوحيد والعقيدة", url: "/tawhid" },
+  { name: "الأنبياء والرسل", url: "/anbiya" },
+  { name: "المعجم الشرعي", url: "/islamic-glossary" },
+])}`,
+  "/shamael": `<p>شمائل النبي ﷺ: صفته الخَلقية والخُلقية وهديه في المعاش، مع ربط بالسيرة والأحاديث.</p>
+${linkList("روابط ذات صلة", [
+  { name: "السيرة النبوية", url: "/seerah" },
+  { name: "الأحاديث النبوية", url: "/hadith" },
+  { name: "الوصايا النبوية", url: "/wasaya-nabawiyya" },
+  { name: "الطب النبوي", url: "/prophetic-medicine" },
+  { name: "مكارم الأخلاق", url: "/akhlaq" },
+])}`,
+  "/seerah": `<p>السيرة النبوية الشريفة: من المولد إلى الوفاة، مراحل الدعوة والهجرة والغزوات، مع شمائل وقصص.</p>
+${linkList("روابط ذات صلة", [
+  { name: "الشمائل المحمدية", url: "/shamael" },
+  { name: "قصص الأنبياء", url: "/prophets" },
+  { name: "أعلام الصحابة", url: "/sahabah" },
+  { name: "القصص الإسلامية", url: "/stories" },
+  { name: "الأحاديث النبوية", url: "/hadith" },
+  { name: "ابدأ من هنا", url: "/start-here" },
+])}`,
+  "/sahabah": `<p>أعلام الصحابة الكرام: تراجم مختارة وسيرهم في نصرة الدين، مع ربط بالسيرة والعلماء.</p>
+${linkList("روابط ذات صلة", [
+  { name: "السيرة النبوية", url: "/seerah" },
+  { name: "أعلام العلماء", url: "/scholars" },
+  { name: "القصص الإسلامية", url: "/stories" },
+  { name: "حِكَم السلف", url: "/hikam-salaf" },
+  { name: "مكارم الأخلاق", url: "/akhlaq" },
+])}`,
+  "/hikam-salaf": `<p>حِكَم السلف الصالح وآثارهم في الزهد والأدب وطلب العلم — للانتفاع المختصر الموثّق.</p>
+${linkList("روابط ذات صلة", [
+  { name: "أعلام الصحابة", url: "/sahabah" },
+  { name: "أعلام العلماء", url: "/scholars" },
+  { name: "الرقائق والزهد", url: "/raqaiq" },
+  { name: "أدب طلب العلم", url: "/adab-talab-ilm" },
+  { name: "الفوائد", url: "/fawaid" },
+])}`,
+  "/islamic-sects": `<p>الفرق الإسلامية: تعريف منهجي بأبرز المقالات مع الحذر من التعميم، وربط بباب العقيدة والتوحيد.</p>
+${linkList("روابط ذات صلة", [
+  { name: "التوحيد والعقيدة", url: "/tawhid" },
+  { name: "المذاهب الأربعة", url: "/madhahib" },
+  { name: "المعجم الشرعي", url: "/islamic-glossary" },
+  { name: "منهجيتنا في التوثيق", url: "/methodology" },
+])}`,
+  "/mawarith": `<p>علم المواريث والفرائض: أصول قسمة التركات وأنصبة الورثة، ضمن أبواب الفقه والمعاملات.</p>
+${linkList("روابط ذات صلة", [
+  { name: "بوابة الفقه", url: "/fiqh" },
+  { name: "الأحكام الشرعية", url: "/rulings" },
+  { name: "القواعد الفقهية", url: "/fiqh-qawaid" },
+  { name: "المذاهب الأربعة", url: "/madhahib" },
+])}`,
+  "/mushaf": `<p>المصحف الشريف للقراءة الرقمية: تصفّح السور والآيات، مع خدمات التجويد والحفظ وعلوم القرآن.</p>
+${linkList("روابط ذات صلة", [
+  { name: "مركز القرآن", url: "/quran-hub" },
+  { name: "فهرس السور", url: "/quran/surahs" },
+  { name: "أحكام التجويد", url: "/quran/tajweed" },
+  { name: "خطط الحفظ", url: "/quran/memorization-plans" },
+  { name: "أدعية القرآن", url: "/duas-quran" },
+  { name: "علوم القرآن", url: "/ulum-quran" },
+])}`,
+  "/miracles": `<p>إشارات كونية في الوحي للتأمّل المنهجي في آيات الخلق؛ المعتمد في المنهج: الإعجاز البياني والغيبي والتشريعي دون تكلّف.</p>
+${linkList("روابط ذات صلة", [
+  { name: "مركز القرآن", url: "/quran-hub" },
+  { name: "علوم القرآن", url: "/ulum-quran" },
+  { name: "دراسات قرآنية", url: "/quran-studies" },
+  { name: "التوحيد والعقيدة", url: "/tawhid" },
+  { name: "منهجيتنا في التوثيق", url: "/methodology" },
+])}`,
+  "/stories": `<p>القصص الإسلامية: قصص الأنبياء والصحابة والعبر التربوية، مع مداخل إلى السيرة والأنبياء.</p>
+${linkList("روابط ذات صلة", [
+  { name: "قصص الأنبياء", url: "/prophets" },
+  { name: "السيرة النبوية", url: "/seerah" },
+  { name: "أعلام الصحابة", url: "/sahabah" },
+  { name: "قصص السور", url: "/quran/surah-stories" },
+  { name: "الرقائق والزهد", url: "/raqaiq" },
+])}`,
+  "/amr-bil-maruf": `<p>الأمر بالمعروف والنهي عن المنكر: ضوابطه وآدابه ومراتبه، مع ربط بالأخلاق والعقيدة.</p>
+${linkList("روابط ذات صلة", [
+  { name: "مكارم الأخلاق", url: "/akhlaq" },
+  { name: "التوحيد والعقيدة", url: "/tawhid" },
+  { name: "أدب طلب العلم", url: "/adab-talab-ilm" },
+  { name: "الفوائد", url: "/fawaid" },
+])}`,
+  "/mutashabihat": `<p>الآيات المتشابهات في القرآن: مواضع التشابه اللفظي لضبط الحفظ والتلاوة، ضمن خدمات القرآن.</p>
+${linkList("روابط ذات صلة", [
+  { name: "مركز القرآن", url: "/quran-hub" },
+  { name: "المصحف الرقمي", url: "/mushaf" },
+  { name: "خطط الحفظ", url: "/quran/memorization-plans" },
+  { name: "اختبارات الحفظ", url: "/quran-memorization" },
+  { name: "أحكام التجويد", url: "/quran/tajweed" },
+])}`,
+  "/islamic-landmarks": `<p>المشاهد الإسلامية والمساجد التاريخية: تعريف موجز بأماكن لها أثر في السيرة وحضارة المسلمين.</p>
+${linkList("روابط ذات صلة", [
+  { name: "السيرة النبوية", url: "/seerah" },
+  { name: "دليل المؤسسات", url: "/institutions" },
+  { name: "قصص الأنبياء", url: "/prophets" },
+  { name: "المواضيع الإسلامية", url: "/topics" },
+])}`,
+  "/prayer-ranks": `<p>مراتب الناس في الصلاة: من الإخلاص والخشوع إلى الغفلة، للتذكير والرقائق لا للتشهير.</p>
+${linkList("روابط ذات صلة", [
+  { name: "دليل الصلاة", url: "/salah-guide" },
+  { name: "الرقائق والزهد", url: "/raqaiq" },
+  { name: "فضائل الأعمال", url: "/fadail-aamal" },
+  { name: "الأذكار", url: "/adhkar" },
+])}`,
+  "/start-here": `<p>ابدأ من هنا: مسار تعريفي للمبتدئ — عقيدة، صلاة، سيرة، ثم توسّع في الفقه والحديث وفق منهج منضبط.</p>
+${linkList("خطوات مقترحة", [
+  { name: "التوحيد والعقيدة", url: "/tawhid" },
+  { name: "أركان الإسلام", url: "/arkan" },
+  { name: "دليل الصلاة", url: "/salah-guide" },
+  { name: "السيرة النبوية", url: "/seerah" },
+  { name: "المسارات العلمية", url: "/learning/paths" },
+  { name: "أدب طلب العلم", url: "/adab-talab-ilm" },
+  { name: "مركز القرآن", url: "/quran-hub" },
+])}`,
+  "/learning": `<p>المسارات العلمية المنظّمة من المبتدئ إلى المتقدم — هذا المدخل يوجّه إلى فهرس المسارات والدروس.</p>
+${linkList(
+  "المسارات المتاحة",
+  LEARNING_PATHS.slice(0, 12).map((p) => ({ name: p.title, url: `/learning/paths/${p.slug}` })),
+)}
+${linkList("روابط ذات صلة", [
+  { name: "فهرس المسارات", url: "/learning/paths" },
+  { name: "الدروس الشرعية", url: "/lessons" },
+  { name: "أدب طلب العلم", url: "/adab-talab-ilm" },
+  { name: "ابدأ من هنا", url: "/start-here" },
+])}`,
+  "/methodology": `<p>منهجيتنا في التوثيق: الاعتماد على مصادر معتبرة، وتمييز الثابت من الضعيف، وتجنّب القطع بما لم يثبت.</p>
+${linkList("روابط ذات صلة", [
+  { name: "من نحن", url: "/about" },
+  { name: "علوم الحديث", url: "/hadith-science" },
+  { name: "المجمع الفقهي", url: "/fiqh-council" },
+  { name: "المعجم الشرعي", url: "/islamic-glossary" },
+  { name: "تواصل معنا", url: "/contact" },
+])}`,
+  "/about": `<p>المجلس العلمي منصة شرعية كويتية تجمع دروسًا وكتبًا ومسارات وأدوات لطلب العلم بمنهج موثّق وواجهة عربية.</p>
+${linkList("تعرّف أكثر", [
+  { name: "منهجيتنا في التوثيق", url: "/methodology" },
+  { name: "ابدأ من هنا", url: "/start-here" },
+  { name: "المسارات العلمية", url: "/learning/paths" },
+  { name: "المكتبة العلمية", url: "/library" },
+  { name: "تواصل معنا", url: "/contact" },
+  { name: "سياسة الخصوصية", url: "/privacy" },
+])}`,
+  "/institutions": `<p>دليل المؤسسات الإسلامية والتعليم الشرعي — مداخل للتعرّف لا بديل عن التحقق المباشر من كل جهة.</p>
+${linkList("روابط ذات صلة", [
+  { name: "المسارات العلمية", url: "/learning/paths" },
+  { name: "الدروس الشرعية", url: "/lessons" },
+  { name: "المشاهد الإسلامية", url: "/islamic-landmarks" },
+  { name: "أعلام العلماء", url: "/scholars" },
+])}`,
+  "/quran-memorization": `<p>اختبارات الحفظ القرآني وخطط المراجعة — أدوات مساعدة مع المصحف وخطط الحفظ في مركز القرآن.</p>
+${linkList("روابط ذات صلة", [
+  { name: "خطط الحفظ", url: "/quran/memorization-plans" },
+  { name: "المصحف الرقمي", url: "/mushaf" },
+  { name: "الآيات المتشابهات", url: "/mutashabihat" },
+  { name: "مركز القرآن", url: "/quran-hub" },
+  { name: "اختبار التلاوة", url: "/quran/recitation-test-ai" },
+])}`,
+  "/updates": `<p>آخر مستجدات المنصة: إضافات الدروس والكتب والأدوات — للاطلاع السريع على ما يتجدّد.</p>
+${linkList("روابط ذات صلة", [
+  { name: "الدروس الشرعية", url: "/lessons" },
+  { name: "المكتبة العلمية", url: "/library" },
+  { name: "المسارات العلمية", url: "/learning/paths" },
+  { name: "من نحن", url: "/about" },
+])}`,
+  "/contact": `<p>تواصل مع فريق المجلس العلمي للاستفسارات والاقتراحات والإبلاغ عن ملاحظات على المحتوى أو التقنية.</p>
+${linkList("روابط ذات صلة", [
+  { name: "من نحن", url: "/about" },
+  { name: "منهجيتنا", url: "/methodology" },
+  { name: "سياسة الخصوصية", url: "/privacy" },
+  { name: "شروط الاستخدام", url: "/terms" },
+  { name: "الأسئلة الشرعية", url: "/qa" },
+])}`,
+  "/privacy": `<p>سياسة الخصوصية توضّح ما تُجمعه المنصة من بيانات، وكيف تُستخدم، وحقوق المستخدم في بيئة عربية لطلب العلم.</p>
+${linkList("روابط ذات صلة", [
+  { name: "شروط الاستخدام", url: "/terms" },
+  { name: "تواصل معنا", url: "/contact" },
+  { name: "من نحن", url: "/about" },
+  { name: "حذف الحساب", url: "/account-deletion" },
+])}`,
+  "/terms": `<p>شروط استخدام منصة المجلس العلمي: حدود المحتوى، مسؤولية المستخدم، وضوابط النشر والتفاعل.</p>
+${linkList("روابط ذات صلة", [
+  { name: "سياسة الخصوصية", url: "/privacy" },
+  { name: "تواصل معنا", url: "/contact" },
+  { name: "من نحن", url: "/about" },
+  { name: "منهجيتنا", url: "/methodology" },
+])}`,
+  "/prayer-times": `<p>مواقيت الصلاة حسب الموقع، مع عدّ تنازلي للصلاة القادمة وروابط لأدوات الأذان والقبلة.</p>
+${linkList("أدوات مرتبطة", [
+  { name: "عداد الصلاة القادمة", url: "/prayer-countdown" },
+  { name: "اتجاه القبلة", url: "/qibla" },
+  { name: "إعدادات الأذان", url: "/adhan-settings" },
+  { name: "السنن اليومية", url: "/sunan-yawmiyya" },
+  { name: "الأذكار", url: "/adhkar" },
+  { name: "دليل الصلاة", url: "/salah-guide" },
+])}`,
+  "/prayer-countdown": `<p>عدّاد تنازلي لوقت الصلاة القادمة — لمتابعة الأذان دون تشتيت، مع ربط بمواقيت الصلاة والقبلة.</p>
+${linkList("أدوات مرتبطة", [
+  { name: "مواقيت الصلاة", url: "/prayer-times" },
+  { name: "اتجاه القبلة", url: "/qibla" },
+  { name: "إعدادات الأذان", url: "/adhan-settings" },
+  { name: "الأذكار", url: "/adhkar" },
+  { name: "دليل الصلاة", url: "/salah-guide" },
+])}`,
+  "/qibla": `<p>اتجاه القبلة بحسب موقعك الجغرافي باستخدام البوصلة الرقمية، مع روابط لمواقيت الصلاة والأذكار.</p>
+${linkList("أدوات مرتبطة", [
+  { name: "مواقيت الصلاة", url: "/prayer-times" },
+  { name: "عداد الصلاة القادمة", url: "/prayer-countdown" },
+  { name: "دليل الصلاة", url: "/salah-guide" },
+  { name: "الحج والعمرة", url: "/hajj" },
+  { name: "الأذكار", url: "/adhkar" },
+])}`,
+  "/tasbih": `<p>مسبحة إلكترونية للتسبيح والتهليل والاستغفار مع حفظ الأوراد، وربط بموسوعة الأذكار والورد اليومي.</p>
+${linkList("روابط ذات صلة", [
+  { name: "موسوعة الأذكار", url: "/adhkar" },
+  { name: "الأدعية الشرعية", url: "/duas" },
+  { name: "الورد اليومي", url: "/daily-wird" },
+  { name: "السنن اليومية", url: "/sunan-yawmiyya" },
+  { name: "أسماء الله الحسنى", url: "/asma-husna" },
+])}`,
+  "/calendar": `<p>تقويم للدروس والدورات: مواعيد وأماكن، مع مداخل إلى قائمة الدروس والدورات السنوية.</p>
+${linkList("روابط ذات صلة", [
+  { name: "الدروس الشرعية", url: "/lessons" },
+  { name: "الدورات العلمية", url: "/annual-courses" },
+  { name: "المسارات العلمية", url: "/learning/paths" },
+  { name: "آخر المستجدات", url: "/updates" },
+])}`,
+  "/quiz": `<p>لعبة أسئلة وأجوبة شرعية متدرجة المستويات — للتثبيت والمراجعة، لا بديلًا عن الطلب المنهجي.</p>
+${linkList("روابط ذات صلة", [
+  { name: "البطاقات التعليمية", url: "/flashcards" },
+  { name: "الفوائد", url: "/fawaid" },
+  { name: "الأسئلة الشرعية", url: "/qa" },
+  { name: "ابدأ من هنا", url: "/start-here" },
+  { name: "المسارات العلمية", url: "/learning/paths" },
+])}`,
+  "/flashcards": `<p>بطاقات تعليمية تفاعلية لمراجعة المفاهيم الشرعية وتثبيتها، مع ربط بالمسارات والاختبارات.</p>
+${linkList("روابط ذات صلة", [
+  { name: "لعبة سين جيم", url: "/quiz" },
+  { name: "الفوائد", url: "/fawaid" },
+  { name: "المعجم الشرعي", url: "/islamic-glossary" },
+  { name: "المسارات العلمية", url: "/learning/paths" },
+  { name: "أدب طلب العلم", url: "/adab-talab-ilm" },
+])}`,
+  "/assistant": `<p>المساعد العلمي يرشدك داخل المنصة إلى الدروس والكتب والفوائد دون إفتاء مستقل — مع إحالة للأقسام الموثّقة.</p>
+${linkList("روابط ذات صلة", [
+  { name: "البحث", url: "/search" },
+  { name: "الدروس الشرعية", url: "/lessons" },
+  { name: "المكتبة العلمية", url: "/library" },
+  { name: "الأسئلة الشرعية", url: "/qa" },
+  { name: "خريطة كل الأقسام", url: "/sitemap" },
+  { name: "منهجيتنا", url: "/methodology" },
+])}`,
+  "/mind-map": `<p>خرائط ذهنية لربط مفاهيم العلوم الشرعية بصريًا — مدخل موازٍ لخريطة المعرفة والمسارات.</p>
+${linkList("روابط ذات صلة", [
+  { name: "خريطة المعرفة", url: "/knowledge-graph" },
+  { name: "المسارات العلمية", url: "/learning/paths" },
+  { name: "المعجم الشرعي", url: "/islamic-glossary" },
+  { name: "بوابة الفقه", url: "/fiqh" },
+  { name: "التوحيد والعقيدة", url: "/tawhid" },
+])}`,
+  "/sitemap": `<p>خريطة أقسام المجلس العلمي: مداخل سريعة لأهم المحاور والأدوات وصفحات التعريف.</p>
+${linkList("محاور أساسية", [
+  { name: "ابدأ من هنا", url: "/start-here" },
+  { name: "الدروس الشرعية", url: "/lessons" },
+  { name: "المكتبة العلمية", url: "/library" },
+  { name: "مركز القرآن", url: "/quran-hub" },
+  { name: "بوابة الفقه", url: "/fiqh" },
+  { name: "الأحاديث النبوية", url: "/hadith" },
+  { name: "أعلام العلماء", url: "/scholars" },
+  { name: "المسارات العلمية", url: "/learning/paths" },
+])}
+${linkList("أدوات", [
+  { name: "مواقيت الصلاة", url: "/prayer-times" },
+  { name: "اتجاه القبلة", url: "/qibla" },
+  { name: "عداد التسبيح", url: "/tasbih" },
+  { name: "المساعد العلمي", url: "/assistant" },
+  { name: "لعبة سين جيم", url: "/quiz" },
+  { name: "البطاقات التعليمية", url: "/flashcards" },
+])}`,
+  "/hadith/sahih": `<p>مجموعة مختارة من الأحاديث الصحيحة من مصادر معتمدة، مع مداخل إلى علوم الحديث وكتب الرواية.</p>
+${linkList("أقسام الحديث", [
+  { name: "الأحاديث النبوية", url: "/hadith" },
+  { name: "الأحاديث الضعيفة", url: "/hadith/daif" },
+  { name: "الأحاديث الموضوعة", url: "/hadith/mawdu" },
+  { name: "كتب الحديث", url: "/hadith/books" },
+  { name: "علوم الحديث", url: "/hadith-science" },
+  { name: "الأربعون النووية", url: "/arbaeen-nawawi" },
+  { name: "صحيح البخاري", url: "/library/book-bukhari" },
+  { name: "صحيح مسلم", url: "/library/book-muslim" },
+])}`,
+  "/hadith/daif": `<p>أحاديث ضعيفة يُنبَّه إليها لتجنّب الاحتجاج بها في الأحكام والعقائد، مع ربط بدرجات الحديث وعلومه.</p>
+${linkList("أقسام الحديث", [
+  { name: "الأحاديث النبوية", url: "/hadith" },
+  { name: "الأحاديث الصحيحة", url: "/hadith/sahih" },
+  { name: "الأحاديث الموضوعة", url: "/hadith/mawdu" },
+  { name: "علوم الحديث", url: "/hadith-science" },
+  { name: "كتب الحديث", url: "/hadith/books" },
+  { name: "منهجيتنا في التوثيق", url: "/methodology" },
+])}`,
+  "/hadith/mawdu": `<p>أحاديث موضوعة ومكذوبة يُحذَّر منها، مع تمييزها عن الصحيح والضعيف عبر علوم الحديث.</p>
+${linkList("أقسام الحديث", [
+  { name: "الأحاديث النبوية", url: "/hadith" },
+  { name: "الأحاديث الصحيحة", url: "/hadith/sahih" },
+  { name: "الأحاديث الضعيفة", url: "/hadith/daif" },
+  { name: "علوم الحديث", url: "/hadith-science" },
+  { name: "كتب الحديث", url: "/hadith/books" },
+  { name: "منهجيتنا في التوثيق", url: "/methodology" },
+])}`,
+  "/hadith/books": `<p>مداخل إلى كتب الحديث المعتمدة في المكتبة: الصحاح والسنن والجوامع، مع ربط بعلوم الحديث.</p>
+${linkList("من كتب الحديث", [
+  { name: "صحيح البخاري", url: "/library/book-bukhari" },
+  { name: "صحيح مسلم", url: "/library/book-muslim" },
+  { name: "سنن أبي داود", url: "/library/book-abudawud" },
+  { name: "سنن الترمذي", url: "/library/book-tirmidhi" },
+  { name: "رياض الصالحين", url: "/library/book-riyadh" },
+  { name: "الأربعون النووية", url: "/library/book-nawawi40" },
+])}
+${linkList("روابط ذات صلة", [
+  { name: "الأحاديث النبوية", url: "/hadith" },
+  { name: "علوم الحديث", url: "/hadith-science" },
+  { name: "المكتبة العلمية", url: "/library" },
+])}`,
+  "/quran/tajweed": `<p>أحكام التجويد: مخارج وصفات ومدود ونون وميم — لضبط التلاوة مع المصحف وخطط الحفظ.</p>
+${linkList("خدمات القرآن", [
+  { name: "مركز القرآن", url: "/quran-hub" },
+  { name: "علم التجويد (صفحة عامة)", url: "/tajweed" },
+  { name: "المصحف الرقمي", url: "/mushaf" },
+  { name: "خطط الحفظ", url: "/quran/memorization-plans" },
+  { name: "مكّي ومدني", url: "/quran/makki-madani" },
+  { name: "اختبار التلاوة", url: "/quran/recitation-test-ai" },
+])}`,
+  "/quran/makki-madani": `<p>تصنيف السور المكية والمدنية وأثره في التفسير وفهم السياق، ضمن علوم القرآن.</p>
+${linkList("خدمات القرآن", [
+  { name: "مركز القرآن", url: "/quran-hub" },
+  { name: "ترتيب النزول", url: "/quran/revelation-order" },
+  { name: "قصص السور", url: "/quran/surah-stories" },
+  { name: "علوم القرآن", url: "/ulum-quran" },
+  { name: "المصحف الرقمي", url: "/mushaf" },
+])}`,
+  "/quran/memorization-plans": `<p>خطط عملية للحفظ والمراجعة اليومية والأسبوعية، مع أدوات المتشابهات واختبارات الحفظ.</p>
+${linkList("خدمات القرآن", [
+  { name: "مركز القرآن", url: "/quran-hub" },
+  { name: "المصحف الرقمي", url: "/mushaf" },
+  { name: "اختبارات الحفظ", url: "/quran-memorization" },
+  { name: "الآيات المتشابهات", url: "/mutashabihat" },
+  { name: "أحكام التجويد", url: "/quran/tajweed" },
+  { name: "الورد اليومي", url: "/daily-wird" },
+])}`,
+  "/prophets/tree": `<p>شجرة أنساب الأنبياء عليهم السلام عرضًا تفاعليًا للعلاقات والنسب، مع ربط بقصص الأنبياء والسيرة.</p>
+${linkList("روابط ذات صلة", [
+  { name: "قصص الأنبياء", url: "/prophets" },
+  { name: "الأنبياء والرسل", url: "/anbiya" },
+  { name: "السيرة النبوية", url: "/seerah" },
+  { name: "قصص السور", url: "/quran/surah-stories" },
+  { name: "القصص الإسلامية", url: "/stories" },
+])}`,
+  "/learning/calendar": `<p>التقويم العلمي لمواعيد المسارات والدروس — لتنظيم الطلب مع فهرس المسارات والدورات.</p>
+${linkList("روابط ذات صلة", [
+  { name: "المسارات العلمية", url: "/learning/paths" },
+  { name: "تقويم الدروس", url: "/calendar" },
+  { name: "الدروس الشرعية", url: "/lessons" },
+  { name: "الدورات العلمية", url: "/annual-courses" },
+  { name: "اختبار المسارات", url: "/learning/quiz" },
+])}`,
+  "/learning/quiz": `<p>اختبارات مرتبطة بالمسارات العلمية لقياس التقدّم، مع إحالة إلى المسارات والدروس.</p>
+${linkList("روابط ذات صلة", [
+  { name: "المسارات العلمية", url: "/learning/paths" },
+  { name: "التقويم العلمي", url: "/learning/calendar" },
+  { name: "لعبة سين جيم", url: "/quiz" },
+  { name: "البطاقات التعليمية", url: "/flashcards" },
+  { name: "أدب طلب العلم", url: "/adab-talab-ilm" },
+])}`,
+  "/fiqh-council/fatwas": `<p>فتاوى جماعية صادرة عن المجمع الفقهي — للاطلاع المؤسسي مع ربط بالمسائل والقرارات.</p>
+${linkList("أقسام المجمع", [
+  { name: "المجمع الفقهي", url: "/fiqh-council" },
+  { name: "المسائل الفقهية", url: "/fiqh-council/issues" },
+  { name: "القرارات", url: "/fiqh-council/resolutions" },
+  { name: "النوازل", url: "/fiqh-council/nawazil" },
+  { name: "التوصيات", url: "/fiqh-council/recommendations" },
+  { name: "الأرشيف", url: "/fiqh-council/archive" },
+])}`,
+  "/fiqh-council/research": `<p>بحوث المجمع الفقهي والدراسات المصاحبة للقرارات — مدخل للباحث قبل المقارنة والأرشيف.</p>
+${linkList("أقسام المجمع", [
+  { name: "المجمع الفقهي", url: "/fiqh-council" },
+  { name: "مساعد الباحث", url: "/fiqh-council/research-assistant" },
+  { name: "المسائل الفقهية", url: "/fiqh-council/issues" },
+  { name: "مقارنة القرارات", url: "/fiqh-council/compare" },
+  { name: "الأرشيف", url: "/fiqh-council/archive" },
+])}`,
+  "/fiqh-council/archive": `<p>أرشيف مواد المجمع الفقهي للرجوع إلى القرارات والفتاوى والبحوث السابقة.</p>
+${linkList("أقسام المجمع", [
+  { name: "المجمع الفقهي", url: "/fiqh-council" },
+  { name: "الفتاوى", url: "/fiqh-council/fatwas" },
+  { name: "القرارات", url: "/fiqh-council/resolutions" },
+  { name: "البحوث", url: "/fiqh-council/research" },
+  { name: "التصنيفات", url: "/fiqh-council/categories" },
+])}`,
+  "/fiqh-council/categories": `<p>تصنيفات فقهية لتنظيم قرارات المجمع ومسائله حسب الأبواب والموضوعات.</p>
+${linkList("أقسام المجمع", [
+  { name: "المجمع الفقهي", url: "/fiqh-council" },
+  { name: "الفهرس الموضوعي", url: "/fiqh-council/index" },
+  { name: "المسائل الفقهية", url: "/fiqh-council/issues" },
+  { name: "النوازل", url: "/fiqh-council/nawazil" },
+  { name: "الأرشيف", url: "/fiqh-council/archive" },
+])}`,
+  "/fiqh-council/resolutions": `<p>قرارات المجمع الفقهي المعتمدة، مع مداخل إلى التوصيات والفتاوى والمقارنة.</p>
+${linkList("أقسام المجمع", [
+  { name: "المجمع الفقهي", url: "/fiqh-council" },
+  { name: "التوصيات", url: "/fiqh-council/recommendations" },
+  { name: "الفتاوى", url: "/fiqh-council/fatwas" },
+  { name: "مقارنة القرارات", url: "/fiqh-council/compare" },
+  { name: "المسائل الفقهية", url: "/fiqh-council/issues" },
+])}`,
+  "/fiqh-council/recommendations": `<p>توصيات المجمع الفقهي المصاحبة للقرارات والنوازل — للاطلاع المؤسسي المنهجي.</p>
+${linkList("أقسام المجمع", [
+  { name: "المجمع الفقهي", url: "/fiqh-council" },
+  { name: "القرارات", url: "/fiqh-council/resolutions" },
+  { name: "النوازل", url: "/fiqh-council/nawazil" },
+  { name: "الفتاوى", url: "/fiqh-council/fatwas" },
+  { name: "الأرشيف", url: "/fiqh-council/archive" },
+])}`,
+  "/fiqh-council/nawazil": `<p>فقه النوازل المعاصرة كما تُعالَج في إطار المجمع: مسائل مستجدة مع إحالة إلى القرارات والبحوث.</p>
+${linkList("أقسام المجمع", [
+  { name: "المجمع الفقهي", url: "/fiqh-council" },
+  { name: "المسائل الفقهية", url: "/fiqh-council/issues" },
+  { name: "القرارات", url: "/fiqh-council/resolutions" },
+  { name: "البحوث", url: "/fiqh-council/research" },
+  { name: "بوابة الفقه", url: "/fiqh" },
+])}`,
+  "/fiqh-council/index": `<p>فهرس موضوعي لمواد المجمع الفقهي يسهّل الوصول عبر التصنيفات والمسائل.</p>
+${linkList("أقسام المجمع", [
+  { name: "المجمع الفقهي", url: "/fiqh-council" },
+  { name: "التصنيفات", url: "/fiqh-council/categories" },
+  { name: "المسائل الفقهية", url: "/fiqh-council/issues" },
+  { name: "البحث المتقدم", url: "/fiqh-council/search" },
+  { name: "الإحصائيات", url: "/fiqh-council/stats" },
+])}`,
+  "/fiqh-council/stats": `<p>إحصائيات المجمع الفقهي: أعداد القرارات والفتاوى والبحوث وأكثر المواد تداولًا.</p>
+${linkList("أقسام المجمع", [
+  { name: "المجمع الفقهي", url: "/fiqh-council" },
+  { name: "البيانات الحية", url: "/fiqh-council/live" },
+  { name: "المسائل الفقهية", url: "/fiqh-council/issues" },
+  { name: "الأرشيف", url: "/fiqh-council/archive" },
+  { name: "الفهرس الموضوعي", url: "/fiqh-council/index" },
+])}`,
+  "/fiqh-council/compare": `<p>أداة لمقارنة قرارات فقهية متقاربة الموضوع — للبحث لا للإفتاء الفردي.</p>
+${linkList("أقسام المجمع", [
+  { name: "المجمع الفقهي", url: "/fiqh-council" },
+  { name: "القرارات", url: "/fiqh-council/resolutions" },
+  { name: "المسائل الفقهية", url: "/fiqh-council/issues" },
+  { name: "البحوث", url: "/fiqh-council/research" },
+  { name: "مساعد الباحث", url: "/fiqh-council/research-assistant" },
+])}`,
+  "/fiqh-council/research-assistant": `<p>مساعد للباحث الفقهي داخل مواد المجمع: توجيه إلى المسائل والقرارات والبحوث ذات الصلة.</p>
+${linkList("أقسام المجمع", [
+  { name: "المجمع الفقهي", url: "/fiqh-council" },
+  { name: "البحوث", url: "/fiqh-council/research" },
+  { name: "البحث المتقدم", url: "/fiqh-council/search" },
+  { name: "مقارنة القرارات", url: "/fiqh-council/compare" },
+  { name: "المساعد العلمي", url: "/assistant" },
+])}`,
+  "/fiqh-council/live": `<p>لوحة بيانات حية لنشاط المجمع الفقهي (إحصاءات وتحديثات) — للاطلاع لا للفتوى الفورية.</p>
+${linkList("أقسام المجمع", [
+  { name: "المجمع الفقهي", url: "/fiqh-council" },
+  { name: "الإحصائيات", url: "/fiqh-council/stats" },
+  { name: "المسائل الفقهية", url: "/fiqh-council/issues" },
+  { name: "آخر المستجدات", url: "/updates" },
+])}`,
   "/knowledge-graph": `<h2>ما خريطة المعرفة؟</h2>
 <p>عرض بصري تفاعلي يربط بين مفاهيم العلوم الشرعية (كالفقه والعقيدة والحديث والتفسير) ويُظهر علاقاتها ببعضها، ليساعد طالب العلم على فهم كيف يتصل كل علم بغيره بدل دراسته منعزلاً.</p>
 ${linkList("روابط ذات صلة", [
@@ -701,17 +1580,44 @@ for (const row of PLATFORM_SEED.courses || []) {
 }
 
 for (const row of LIBRARY_CATALOG) {
+  const related = LIBRARY_CATALOG.filter((b) => b.id !== row.id && b.category && b.category === row.category)
+    .slice(0, 6)
+    .map((b) => ({ name: b.title, url: `/library/${b.id}`, note: b.author }));
+  const desc = tidyDesc(row.description || row.title);
   addPage(
     {
       path: `/library/${row.id}`,
       title: row.title,
-      description: padDesc(row.description || row.title, `كتاب من المكتبة الشرعية في ${SITE_NAME}`),
+      description: padDesc(desc, `كتاب من المكتبة الشرعية في ${SITE_NAME}`),
       ogType: "book",
     },
     {
-      extraJsonLd: bookJsonLdScript(row),
+      extraJsonLd: bookJsonLdScript({ ...row, description: desc }),
       parents: [{ name: "المكتبة العلمية", path: "/library" }],
       priority: 0.7,
+      richBody: `<h2>عن الكتاب</h2>
+<p>${escapeHtml(desc)}</p>
+<ul>
+  ${row.author ? `<li>المؤلف: ${escapeHtml(row.author)}</li>` : ""}
+  ${row.category ? `<li>التصنيف: ${escapeHtml(row.category)}</li>` : ""}
+</ul>
+${linkList("كتب ذات صلة في نفس التصنيف", related)}
+${linkList("روابط ذات صلة", [
+  { name: "المكتبة العلمية", url: "/library" },
+  { name: "أعلام العلماء", url: "/scholars" },
+  ...(row.category === "حديث"
+    ? [
+        { name: "علوم الحديث", url: "/hadith-science" },
+        { name: "الأحاديث النبوية", url: "/hadith" },
+      ]
+    : []),
+  ...(row.category === "فقه" || /فقه/.test(row.category || "")
+    ? [{ name: "الفقه الإسلامي", url: "/fiqh" }]
+    : []),
+  ...(row.category === "تفسير" || /تفسير|قرآن/.test(row.category || "")
+    ? [{ name: "مركز القرآن", url: "/quran-hub" }]
+    : []),
+])}`,
     },
   );
 }

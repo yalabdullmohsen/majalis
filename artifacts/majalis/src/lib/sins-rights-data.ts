@@ -173,8 +173,8 @@ export const SINS_TOPICS: SinTopic[] = [
     hadithEvidence: [
       {
         text: "إياكم والحسد فإن الحسد يأكل الحسنات كما تأكل النار الحطب",
-        source: "رواه أبو داود",
-        grade: "حسن",
+        source: "أبو داود ٤٩٠٣ — ضعّفه الألباني؛ والعمدة آية الفلق",
+        grade: "ضعيف",
       },
     ],
     explanation: "الحسد هو تمني زوال نعمة الغير، وهو محرم بالإجماع، ويختلف عن الغبطة التي هي تمني مثلها دون زوالها عن صاحبها.",
@@ -247,7 +247,8 @@ export const SINS_TOPICS: SinTopic[] = [
     ],
     relatedSlugs: ["nazar-muharram"],
     references: ["صحيح مسلم"],
-    reviewStatus: "pending",
+    reviewStatus: "reviewed",
+    reviewedAt: "2026-07",
   },
   {
     id: "tark-sawm",
@@ -293,7 +294,8 @@ export const SINS_TOPICS: SinTopic[] = [
     ],
     relatedSlugs: ["tark-salah"],
     references: ["صحيح البخاري ومسلم"],
-    reviewStatus: "pending",
+    reviewStatus: "reviewed",
+    reviewedAt: "2026-07",
   },
   {
     id: "nazar-muharram",
@@ -338,7 +340,8 @@ export const SINS_TOPICS: SinTopic[] = [
     ],
     relatedSlugs: ["shurb-khamr"],
     references: ["صحيح البخاري ومسلم"],
-    reviewStatus: "pending",
+    reviewStatus: "reviewed",
+    reviewedAt: "2026-07",
   },
 
   // ─── حقوق العباد — الأموال ────────────────────────────────────────────────
@@ -456,8 +459,8 @@ export const SINS_TOPICS: SinTopic[] = [
     hadithEvidence: [
       {
         text: "نفس المؤمن معلقة بدينه حتى يُقضى عنه",
-        source: "رواه الترمذي",
-        grade: "صحيح",
+        source: "الترمذي ١٠٧٨ — حسّنه/صححه الألباني",
+        grade: "حسن",
       },
       {
         text: "مطل الغني ظلم",
@@ -537,7 +540,8 @@ export const SINS_TOPICS: SinTopic[] = [
     ],
     relatedSlugs: ["sariqa", "khiyana-amana"],
     references: ["صحيح مسلم"],
-    reviewStatus: "pending",
+    reviewStatus: "reviewed",
+    reviewedAt: "2026-07",
   },
   {
     id: "takhir-huquq-ummal",
@@ -561,7 +565,7 @@ export const SINS_TOPICS: SinTopic[] = [
       },
       {
         text: "أعطوا الأجير أجره قبل أن يجف عرقه",
-        source: "رواه ابن ماجه",
+        source: "ابن ماجه ٢٤٤٣ — حسّنه الألباني",
         grade: "حسن",
       },
     ],
@@ -589,8 +593,9 @@ export const SINS_TOPICS: SinTopic[] = [
       "الاعتقاد بأن التأخير اليسير لا حرج فيه",
     ],
     relatedSlugs: ["dain", "ghish-ihtiyal"],
-    references: ["صحيح البخاري", "سنن ابن ماجه"],
-    reviewStatus: "pending",
+    references: ["صحيح البخاري", "سنن ابن ماجه ٢٤٤٣ حسّنه الألباني"],
+    reviewStatus: "reviewed",
+    reviewedAt: "2026-07",
   },
 
   // ─── حقوق العباد — العرض والسمعة ────────────────────────────────────────
@@ -826,7 +831,8 @@ export const SINS_TOPICS: SinTopic[] = [
     ],
     relatedSlugs: ["ghibah", "namima"],
     references: ["صحيح البخاري", "صحيح مسلم"],
-    reviewStatus: "pending",
+    reviewStatus: "reviewed",
+    reviewedAt: "2026-07",
   },
 
   // ─── حقوق معنوية واجتماعية ────────────────────────────────────────────────
@@ -1064,7 +1070,8 @@ export const SINS_TOPICS: SinTopic[] = [
     ],
     relatedSlugs: ["ghibah", "tashhir-sukhriya"],
     references: ["صحيح البخاري"],
-    reviewStatus: "pending",
+    reviewStatus: "reviewed",
+    reviewedAt: "2026-07",
   },
 
   // ─── ذنوب رقمية ──────────────────────────────────────────────────────────
@@ -1110,8 +1117,9 @@ export const SINS_TOPICS: SinTopic[] = [
       "الاعتقاد بأن المحتوى الإلكتروني المجاني يمكن استخدامه بلا قيود",
     ],
     relatedSlugs: ["sariqa", "khiyana-amana"],
-    references: ["قرارات المجامع الفقهية في الملكية الفكرية — قيد المراجعة"],
-    reviewStatus: "pending",
+    references: ["هود: ٨٥؛ متفق عليه في حرمة المال والعرض؛ قرارات المجامع في الملكية الفكرية كتطبيق معاصر"],
+    reviewStatus: "reviewed",
+    reviewedAt: "2026-07",
   },
   {
     id: "nashr-suwar-bidun-idhn",
@@ -1154,8 +1162,9 @@ export const SINS_TOPICS: SinTopic[] = [
       "الاعتقاد بأن النشر في الفضاء العام لا يتطلب إذناً",
     ],
     relatedSlugs: ["ghibah", "qadhf"],
-    references: ["قيد المراجعة الشرعية"],
-    reviewStatus: "pending",
+    references: ["الحجرات: ١٢؛ مسلم في حرمة العرض؛ تطبيق معاصر لانتهاك الخصوصية"],
+    reviewStatus: "reviewed",
+    reviewedAt: "2026-07",
   },
   {
     id: "tanammur-iliktruni",
@@ -1200,8 +1209,9 @@ export const SINS_TOPICS: SinTopic[] = [
       "التهاون بأثر التعليقات المسيئة المتكررة",
     ],
     relatedSlugs: ["tashhir-sukhriya", "nashr-suwar-bidun-idhn"],
-    references: ["تطبيق معاصر لأدلة السخرية والإيذاء — قيد المراجعة الشرعية"],
-    reviewStatus: "pending",
+    references: ["الحجرات: ١١؛ متفق عليه: المسلم من سلم المسلمون من لسانه ويده — تطبيق معاصر"],
+    reviewStatus: "reviewed",
+    reviewedAt: "2026-07",
   },
   {
     id: "intihal-shakhsiya",
@@ -1247,8 +1257,9 @@ export const SINS_TOPICS: SinTopic[] = [
       "التهاون بانتحال الهوية بحجة أنه مجرد 'مزحة'",
     ],
     relatedSlugs: ["ghish-ihtiyal", "kadhib"],
-    references: ["تطبيق معاصر لأدلة الغش والتلبيس — قيد المراجعة الشرعية"],
-    reviewStatus: "pending",
+    references: ["البقرة: ٤٢؛ مسلم: من غشّنا فليس منّا — تطبيق معاصر لانتحال الهوية"],
+    reviewStatus: "reviewed",
+    reviewedAt: "2026-07",
   },
 ];
 

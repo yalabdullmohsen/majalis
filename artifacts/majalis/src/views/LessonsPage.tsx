@@ -23,6 +23,7 @@ import { getUnifiedLessonsSplit } from "@/lib/lessons-service";
 import { RequestManager } from "@/lib/request-manager";
 import { regionsForGovernorate } from "@/lib/kuwait-regions";
 import { fromKuwaitLesson } from "@/lib/unified-lesson-card";
+import "@/styles/pages/lessons.css";
 import { registerForLesson, unregisterFromLesson, getMyRegistrations } from "@/lib/supabase";
 import { applyPageSeo } from "@/lib/seo";
 

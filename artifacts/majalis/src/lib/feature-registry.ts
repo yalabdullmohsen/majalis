@@ -21,10 +21,10 @@ export type FeatureEntry = {
 export const FEATURE_REGISTRY: FeatureEntry[] = [
   // ── الصفحة الرئيسية ──────────────────────────────────────────
   { id: "home",         label: "الرئيسية",          path: "/",             group: "رئيسي",         status: "active",       inSideNav: true,  inBottomNav: true  },
-  { id: "kids",         label: "الأطفال",           path: "/kids",         group: "رئيسي",         status: "active",       inSideNav: true,  inBottomNav: false },
+  { id: "kids",         label: "الأطفال",           path: "/kids",         group: "رئيسي",         status: "coming-soon",  inSideNav: false, inBottomNav: false },
 
   // ── المحتوى التعليمي ─────────────────────────────────────────
-  { id: "lessons",      label: "الدروس",             path: "/lessons",      group: "تعليم",         status: "active",       inSideNav: true,  inBottomNav: true  },
+  { id: "lessons",      label: "الدروس",             path: "/lessons",      group: "تعليم",         status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "annual-courses",label:"الدورات العلمية",    path: "/annual-courses",group:"تعليم",         status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "library",      label: "المكتبة",            path: "/library",      group: "تعليم",         status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "fawaid",       label: "الفوائد",            path: "/fawaid",       group: "تعليم",         status: "active",       inSideNav: true,  inBottomNav: false },
@@ -54,7 +54,7 @@ export const FEATURE_REGISTRY: FeatureEntry[] = [
   // ── القرآن والأذكار ──────────────────────────────────────────
   { id: "mushaf",        label: "المصحف الشريف",   path: "/mushaf",       group: "قرآن",          status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "quran",        label: "القرآن الكريم",    path: "/quran-hub",    group: "قرآن",          status: "active",       inSideNav: true,  inBottomNav: false },
-  { id: "quran-circles",label:"حلقات التحفيظ",     path: "/quran-circles",group:"قرآن",           status: "coming-soon",  inSideNav: true,  inBottomNav: false },
+  { id: "quran-circles",label:"حلقات التحفيظ",     path: "/quran-circles",group:"قرآن",           status: "coming-soon",  inSideNav: false, inBottomNav: false },
 
   // ── الأدوات والتفاعل ─────────────────────────────────────────
   { id: "prayer-times", label: "مواقيت الصلاة",    path: "/prayer-times", group: "صلاة",          status: "active",       inSideNav: true,  inBottomNav: true  },
@@ -70,13 +70,13 @@ export const FEATURE_REGISTRY: FeatureEntry[] = [
      الكود (ScholarlyResearchPage.tsx وrag-service.ts) لم يُحذف عمدًا — بلا
      أي معتمِد آخر (تحقّقتُ)، فيمكن إعادة تفعيله لاحقًا دون إعادة بناء. */
   { id: "scholarly-research",label:"الباحث الشرعي",path: "/scholarly-research",group:"أدوات",    status: "disabled",     inSideNav: false, inBottomNav: false },
-  { id: "universities", label: "دليل الجامعات",    path: "/universities", group: "مؤسسات",        status: "active",       inSideNav: true,  inBottomNav: false },
+  { id: "universities", label: "دليل الجامعات",    path: "/universities", group: "مؤسسات",        status: "disabled",     inSideNav: false, inBottomNav: false },
 
   // ── التعلم ───────────────────────────────────────────────────
-  { id: "learn",         label: "أبواب العلم",       path: "/learn",        group: "تعلم",          status: "active",       inSideNav: true,  inBottomNav: false },
+  { id: "learn",         label: "أبواب العلم",       path: "/learn",        group: "تعلم",          status: "active",       inSideNav: true,  inBottomNav: true  },
   { id: "learning-paths",label: "المسارات العلمية", path: "/learning/paths",group: "تعلم",     status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "my-learning",  label: "لوحتي التعليمية",  path: "/my-learning",  group: "تعلم",          status: "requires-auth",inSideNav: true,  inBottomNav: false },
-  { id: "learning-plan",label: "خطة التعلم",       path: "/learning-plan",group: "تعلم",          status: "active",       inSideNav: true,  inBottomNav: false },
+  { id: "learning-plan",label: "خطة التعلم",       path: "/learning-plan",group: "تعلم",          status: "disabled",     inSideNav: false, inBottomNav: false },
 
   // ── التطبيق والقانونية ────────────────────────────────────────
   { id: "about",        label: "من نحن",             path: "/about",        group: "تطبيق",         status: "active",       inSideNav: true,  inBottomNav: false },
@@ -84,7 +84,7 @@ export const FEATURE_REGISTRY: FeatureEntry[] = [
   { id: "privacy",      label: "سياسة الخصوصية",     path: "/privacy",      group: "تطبيق",         status: "active",       inSideNav: false, inBottomNav: false },
   { id: "terms",        label: "شروط الاستخدام",      path: "/terms",        group: "تطبيق",         status: "active",       inSideNav: false, inBottomNav: false },
   { id: "submit",       label: "أضف محتوى",           path: "/submit",       group: "تطبيق",         status: "active",       inSideNav: true,  inBottomNav: false },
-  { id: "features-in-progress", label: "قيد التطوير", path: "/features-in-progress", group: "تطبيق", status: "active",     inSideNav: true,  inBottomNav: false },
+  { id: "features-in-progress", label: "قيد التطوير", path: "/features-in-progress", group: "تطبيق", status: "admin-only", inSideNav: false, inBottomNav: false },
   { id: "topics",       label: "الموضوعات",           path: "/topics",       group: "تعليم",         status: "active",       inSideNav: false, inBottomNav: false },
 
   // ── الإدارة ───────────────────────────────────────────────────

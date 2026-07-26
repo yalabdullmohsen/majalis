@@ -984,11 +984,11 @@ const HIKAM: Hikma[] = [
   /* ── التوبة والاستغفار، إضافي ── */
   {
     id: "taw5",
-    text: "التائب من الذنب كمن لا ذنب له، وأحب خلق الله إليه التوابون.",
-    scholar: "الإمام ابن ماجه",
-    died: "273ه",
+    text: "«التائب من الذنب كمن لا ذنب له» — وأما محبة الله للتوابين فثابتة بقوله تعالى: ﴿إِنَّ اللَّهَ يُحِبُّ التَّوَّابِينَ﴾ لا بزيادةٍ ملحقة بالحديث.",
+    scholar: "النبي ﷺ",
+    died: "11ه",
     category: "التوبة والاستغفار",
-    source: "سنن ابن ماجه",
+    source: "ابن ماجه ٤٢٥٠ — حسّنه الألباني؛ البقرة: ٢٢٢",
   },
   {
     id: "taw6",
@@ -1042,10 +1042,10 @@ const HIKAM: Hikma[] = [
   {
     id: "dun7",
     text: "لو كانت الدنيا تساوي عند الله جناح بعوضة ما سقى كافراً منها شربة ماء.",
-    scholar: "الترمذي",
-    died: "279ه",
+    scholar: "النبي ﷺ",
+    died: "مرفوع",
     category: "الدنيا والزهد",
-    source: "سنن الترمذي، حديث مرفوع",
+    source: "الترمذي: ٢٣٢٠، وصححه الألباني",
   },
   {
     id: "dun8",
@@ -1066,11 +1066,11 @@ const HIKAM: Hikma[] = [
   /* ── الموت والآخرة، إضافي ── */
   {
     id: "mwt5",
-    text: "أكثروا ذكر هاذم اللذات؛ فإنه ما ذكره أحد في ضيق إلا وسّعه عليه، ولا في سعة إلا ضيّقها.",
-    scholar: "الترمذي",
-    died: "279ه",
+    text: "أكثروا ذكر هاذم اللذات — الموت.",
+    scholar: "النبي ﷺ",
+    died: "مرفوع",
     category: "الموت والآخرة",
-    source: "سنن الترمذي، حديث مرفوع",
+    source: "الترمذي والنسائي، وصححه الألباني",
   },
   {
     id: "mwt6",
@@ -1354,10 +1354,16 @@ export default function HikamSalafPage() {
         <div className="hk-stats">
           <span>{HIKAM.length} حكمة</span>
           <span>·</span>
+          <span>{HIKAM.filter((h) => h.source).length} بمصدر مُسنَد</span>
+          <span>·</span>
           <span>{CATEGORIES.length - 1} أبواب</span>
           <span>·</span>
           <span>{favorites.size} محفوظ</span>
         </div>
+        <p className="hk-hero__note">
+          ما وُسم بـ«مشتهر عنه — بلا مصدر مُسنَد» يُعرض لشهرته عن قائله، ولم نقف له بعدُ
+          على مصدر مُسنَد؛ فلا يُنسب جزماً إليه ولا يُبنى عليه حكم.
+        </p>
       </section>
 
       {/* تحكم */}
@@ -1420,7 +1426,19 @@ export default function HikamSalafPage() {
                   <footer className="hk-card__footer">
                     <span className="hk-card__scholar">— {h.scholar}</span>
                     {h.died && <span className="hk-card__died">(ت{h.died})</span>}
-                    {h.source && <span className="hk-card__source">[{h.source}]</span>}
+                    {h.source ? (
+                      <span className="hk-card__source">[{h.source}]</span>
+                    ) : (
+                      /* لا نجزم بنسبة قولٍ بلا مصدر مسند: يُعرض القول لشهرته عن
+                         قائله مع تصريحٍ بأننا لم نقف له على مصدر مُسنَد. */
+                      <span
+                        className="hk-card__source"
+                        title="مشتهر عن قائله، ولم نقف له على مصدر مُسنَد بعد"
+                        style={{ opacity: 0.75 }}
+                      >
+                        [مشتهر عنه — بلا مصدر مُسنَد]
+                      </span>
+                    )}
                   </footer>
                 </blockquote>
                 <div className="hk-card__actions">

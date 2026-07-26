@@ -422,7 +422,7 @@ export function GlobalSearchModal({ onClose }: Props) {
                     { href: "/library",        label: "المكتبة",      Icon: BookOpen },
                     { href: "/qa",             label: "الأسئلة",      Icon: HelpCircle },
                     { href: "/hadith",         label: "الأحاديث",     Icon: Scroll },
-                    { href: "/mind-map",       label: "الخرائط",      Icon: Layers },
+                    { href: "/knowledge-graph", label: "المعرفة",     Icon: Layers },
                     { href: "/fawaid",         label: "الفوائد",      Icon: Lightbulb },
                     { href: "/topics",         label: "الموضوعات",    Icon: Tag },
                     { href: "/seerah",         label: "السيرة",       Icon: Star },

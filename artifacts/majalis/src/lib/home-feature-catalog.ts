@@ -4,7 +4,6 @@ import {
   BookOpen,
   Bot,
   CalendarDays,
-  Car,
   Check,
   Clock,
   Compass,
@@ -30,6 +29,7 @@ import {
   Users,
   Wrench,
 } from "lucide-react";
+import { filterNavItems } from "@/lib/nav-visibility";
 
 /* ── روابط الوصول السريع ── */
 /* إجراءات سريعة مختصرة — 4 عناصر فقط (إعادة هيكلة الرئيسية، الأولوية 3):
@@ -56,7 +56,7 @@ export const FEATURED: { href: string; Icon: LucideIcon; title: string; desc: st
 export type CatItem = { href: string; Icon: LucideIcon; title: string; desc: string };
 export type FeatureCat = { id: string; Icon: LucideIcon; label: string; items: CatItem[] };
 
-export const FEATURE_CATS: FeatureCat[] = [
+const FEATURE_CATS_RAW: FeatureCat[] = [
   {
     id: "seerah",
     Icon: Moon,
@@ -116,7 +116,6 @@ export const FEATURE_CATS: FeatureCat[] = [
       { href: "/adab-talab-ilm",   Icon: GraduationCap,  title: "آداب طالب العلم",      desc: "دليل طالب العلم من الفضل إلى الكتب المقررة" },
       { href: "/tawba",         Icon: RotateCw,    title: "التوبة والاستغفار",          desc: "شروط التوبة النصوح وأفضل صيغ الاستغفار" },
       { href: "/amr-bil-maruf", Icon: Scroll,      title: "الأمر بالمعروف والنهي عن المنكر", desc: "مراتبه الثلاث وشروطه وأحكامه الفقهية" },
-      { href: "/car-mode",    Icon: Car,         title: "وضع السيارة",          desc: "تلاوات أثناء القيادة" },
       { href: "/daily-wird",  Icon: BookOpen,    title: "الورد اليومي",         desc: "ختم يومي منتظم للقرآن" },
       { href: "/occasions",   Icon: CalendarDays, title: "المناسبات الإسلامية", desc: "أحداث دينية مع أعمالها" },
       { href: "/tasbih",      Icon: RotateCw,    title: "التسبيح والذكر",       desc: "عداد تسبيح إلكتروني" },
@@ -128,14 +127,11 @@ export const FEATURE_CATS: FeatureCat[] = [
     label: "أدوات التعلم",
     items: [
       { href: "/learning/paths",  Icon: Map,         title: "المسارات العلمية",  desc: "مسار من المبتدئ إلى المتقدم" },
-      { href: "/flashcards",      Icon: Layers,      title: "البطاقات الدعوية",   desc: "مراجعة ذكية" },
+      { href: "/flashcards",      Icon: Layers,      title: "بطاقات المراجعة",   desc: "مراجعة ذكية" },
       { href: "/quiz",            Icon: Target,      title: "لعبة سين جيم – أسئلة وأجوبة",   desc: "اختبر معلوماتك من خلال لعبة أسئلة وأجوبة ممتعة ومتدرجة" },
       { href: "/assistant",       Icon: Bot,         title: "المساعد العلمي",    desc: "إرشاد فوري بالذكاء الاصطناعي" },
       { href: "/calendar",        Icon: CalendarDays, title: "التقويم الهجري",   desc: "التواريخ والأيام المميزة" },
-      { href: "/knowledge-graph", Icon: Network,     title: "خارطة المعرفة التفاعلية",     desc: "علاقات المعرفة الإسلامية بالرسم البياني" },
-      { href: "/knowledge-map",   Icon: Map,         title: "الخريطة المعرفية 2.0",         desc: "حقول العلوم الشرعية مترابطة" },
-      { href: "/mind-map",        Icon: Layers,      title: "الخرائط الذهنية",             desc: "خرائط ذهنية تفاعلية للعلوم الشرعية" },
-      { href: "/islam-stats",     Icon: Star,        title: "إحصائيات الإسلام",             desc: "أرقام وحضارة وعلماء — في بيانات مرئية" },
+      { href: "/knowledge-graph", Icon: Network,     title: "استكشف المعرفة",              desc: "شبكة المعرفة الإسلامية وعلاقاتها" },
       { href: "/institutions",    Icon: Landmark,    title: "المؤسسات الإسلامية",            desc: "المجامع والجامعات والمراكز البحثية الكبرى" },
       { href: "/scholars",        Icon: Users,       title: "أعلام العلماء",                desc: "مئات العلماء عبر التاريخ بالتخصص والحقبة" },
     ],
@@ -146,11 +142,9 @@ export const FEATURE_CATS: FeatureCat[] = [
     label: "القرآن الكريم",
     items: [
       { href: "/quran-hub",            Icon: BookMarked, title: "مركز القرآن",       desc: "جميع أقسام القرآن في مكان واحد" },
-      { href: "/quran/recitation-test-ai", Icon: Bot,    title: "اختبار التسميع بالذكاء الاصطناعي", desc: "سمّع من حفظك واستمع لتلاوتك لحظيًا" },
       { href: "/quran/surah-stories",  Icon: Star,       title: "قصص القرآن",        desc: "أسباب النزول و١١٤ سورة" },
       { href: "/quran/tajweed",        Icon: Mic2,       title: "علم التجويد",        desc: "أحكام التجويد الشاملة" },
       { href: "/ulum-quran",           Icon: GraduationCap, title: "علوم القرآن",      desc: "النزول والجمع والإعجاز والتفسير" },
-      { href: "/quran-circles",        Icon: Layers,     title: "حلقات القرآن",       desc: "حلقات الحفظ والمراجعة" },
     ],
   },
   {
@@ -160,9 +154,14 @@ export const FEATURE_CATS: FeatureCat[] = [
     items: [
       { href: "/qibla",        Icon: Compass,     title: "اتجاه القبلة",    desc: "بوصلة لمعرفة اتجاه الكعبة" },
       { href: "/prayer-times", Icon: Clock,       title: "مواقيت الصلاة",   desc: "أوقات دقيقة للكويت" },
-      { href: "/mosque-mode",  Icon: Landmark,    title: "وضع المسجد",      desc: "عدّاد الصلاة مع تذكير بالصمت وإطفاء الصوت" },
       { href: "/submit",       Icon: Upload,      title: "أضف محتوى",       desc: "ساهم في إثراء المنصة" },
     ],
   },
 ];
+
+/** كتالوج الرئيسية بعد تطبيق سياسة الإخفاء/الدمج. */
+export const FEATURE_CATS: FeatureCat[] = FEATURE_CATS_RAW.map((cat) => ({
+  ...cat,
+  items: filterNavItems(cat.items),
+})).filter((cat) => cat.items.length > 0);
 

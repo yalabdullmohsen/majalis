@@ -32,9 +32,12 @@ export const MIND_MAPS: MindMap[] = [
           label: "التوحيد",
           href: "/tawhid",
           children: [
-            { id: "tw-1", label: "توحيد الربوبية" },
-            { id: "tw-2", label: "توحيد الألوهية" },
-            { id: "tw-3", label: "توحيد الأسماء والصفات" },
+            { id: "tw-0", label: "مدخل إلى العقيدة", href: "/learn/aqeedah-intro" },
+            { id: "tw-1", label: "توحيد الربوبية", href: "/learn/aqsam-tawheed" },
+            { id: "tw-2", label: "توحيد الألوهية", href: "/learn/aqsam-tawheed" },
+            { id: "tw-3", label: "توحيد الأسماء والصفات", href: "/asma-husna" },
+            { id: "tw-4", label: "الشرك وأنواعه", href: "/learn/shirk-anwauh" },
+            { id: "tw-5", label: "الولاء والبراء", href: "/learn/wala-bara" },
           ],
         },
         {
@@ -42,12 +45,12 @@ export const MIND_MAPS: MindMap[] = [
           label: "أركان الإيمان الستة",
           href: "/arkan-iman",
           children: [
-            { id: "ai-1", label: "الإيمان بالله" },
-            { id: "ai-2", label: "الإيمان بالملائكة" },
-            { id: "ai-3", label: "الإيمان بالكتب" },
-            { id: "ai-4", label: "الإيمان بالرسل" },
-            { id: "ai-5", label: "الإيمان باليوم الآخر" },
-            { id: "ai-6", label: "الإيمان بالقدر" },
+            { id: "ai-1", label: "الإيمان بالله", href: "/learn/iman-billah" },
+            { id: "ai-2", label: "الإيمان بالملائكة", href: "/malaika" },
+            { id: "ai-3", label: "الإيمان بالكتب", href: "/learn/iman-kutub" },
+            { id: "ai-4", label: "الإيمان بالرسل", href: "/learn/iman-rusul" },
+            { id: "ai-5", label: "الإيمان باليوم الآخر", href: "/janna-naar" },
+            { id: "ai-6", label: "الإيمان بالقدر", href: "/learn/iman-qadar" },
           ],
         },
         {
@@ -55,9 +58,9 @@ export const MIND_MAPS: MindMap[] = [
           label: "الأسماء الحسنى",
           href: "/asma-husna",
           children: [
-            { id: "as-1", label: "أسماء الذات" },
-            { id: "as-2", label: "أسماء الكمال" },
-            { id: "as-3", label: "أسماء الجمال والجلال" },
+            { id: "as-1", label: "أسماء الذات", href: "/asma-husna" },
+            { id: "as-2", label: "أسماء الكمال", href: "/asma-husna" },
+            { id: "as-3", label: "أسماء الجمال والجلال", href: "/asma-husna" },
           ],
         },
         {
@@ -67,7 +70,16 @@ export const MIND_MAPS: MindMap[] = [
             { id: "gb-1", label: "أشراط الساعة", href: "/alamat-saah" },
             { id: "gb-2", label: "الجنة والنار", href: "/janna-naar" },
             { id: "gb-3", label: "الملائكة", href: "/malaika" },
-            { id: "gb-4", label: "الأنبياء والرسل", href: "/anbiya" },
+            { id: "gb-4", label: "الأنبياء والرسل", href: "/prophets" },
+          ],
+        },
+        {
+          id: "ahl-sunnah",
+          label: "عقيدة أهل السنة",
+          href: "/learn/aqeedat-ahl-sunnah",
+          children: [
+            { id: "aswj-1", label: "معالم المنهج", href: "/learn/aqeedat-ahl-sunnah" },
+            { id: "aswj-2", label: "الفرق والمذاهب", href: "/islamic-sects" },
           ],
         },
       ],
@@ -405,7 +417,7 @@ export const MIND_MAPS: MindMap[] = [
           children: [
             { id: "tl-1", label: "المسابقة التعليمية", href: "/quiz" },
             { id: "tl-2", label: "بطاقات المراجعة", href: "/flashcards" },
-            { id: "tl-3", label: "خطة التعلم", href: "/learning-plan" },
+            { id: "tl-3", label: "المسارات العلمية", href: "/learning/paths" },
             { id: "tl-4", label: "المكتبة الشرعية", href: "/library" },
           ],
         },
@@ -530,8 +542,8 @@ export const MIND_MAPS: MindMap[] = [
           children: [
             { id: "tt-1", label: "التفسير بالمأثور (الأثر والنقل)" },
             { id: "tt-2", label: "التفسير بالرأي المحمود والمذموم" },
-            { id: "tt-3", label: "التفسير الإشاري (الصوفي)" },
-            { id: "tt-4", label: "التفسير العلمي" },
+            { id: "tt-3", label: "التفسير الموضوعي", href: "/ulum-quran" },
+            { id: "tt-4", label: "التفسير الفقهي (أحكام القرآن)", href: "/ulum-quran" },
           ],
         },
         {

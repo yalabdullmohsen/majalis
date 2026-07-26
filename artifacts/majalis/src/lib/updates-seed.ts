@@ -693,7 +693,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
     title: "تحسين: تقليل حجم حزمة خدمات المنصة",
     summary: "تقليل حجم حزمة خدمات المنصة (platform-services) من 103 كيلوبايت إلى 20 كيلوبايت بعد تحسين تقسيم الـ chunks، وتسريع التحميل الأولي.",
     update_type: "إعلان",
-    source_url: "/features-in-progress",
+    source_url: "/updates",
     published_at: "2026-07-11T15:00:00Z",
     status: "approved",
   },

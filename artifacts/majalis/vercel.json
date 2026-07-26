@@ -188,6 +188,11 @@
   ],
   "redirects": [
     {
+      "source": "/glossary",
+      "destination": "/islamic-glossary",
+      "permanent": true
+    },
+    {
       "source": "/scholarly-research",
       "destination": "/qa",
       "permanent": true
@@ -215,6 +220,36 @@
     {
       "source": "/learning-path",
       "destination": "/learning/paths",
+      "permanent": true
+    },
+    {
+      "source": "/learning-plan",
+      "destination": "/learning/paths",
+      "permanent": true
+    },
+    {
+      "source": "/masarat",
+      "destination": "/learning/paths",
+      "permanent": true
+    },
+    {
+      "source": "/knowledge-map",
+      "destination": "/knowledge-graph",
+      "permanent": true
+    },
+    {
+      "source": "/learning/quiz",
+      "destination": "/quiz",
+      "permanent": true
+    },
+    {
+      "source": "/mushaf-v2-preview",
+      "destination": "/mushaf",
+      "permanent": true
+    },
+    {
+      "source": "/features-in-progress",
+      "destination": "/updates",
       "permanent": true
     },
     {

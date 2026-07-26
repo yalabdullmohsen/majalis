@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { AlertTriangle, Pencil } from "lucide-react";
 import { useAuth } from "@/components/AuthProvider";
+import "@/styles/components/admin-inline-edit.css";
 
 // ── أنواع المحتوى المدعومة ──────────────────────────────────────────────────
 // ملاحظة (2026-07-18): أُزيل "fatwa" من هذا الاتحاد — لم يستدعِه أي مكوّن

@@ -8,6 +8,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import "@/styles/pages/fiqh-admin.css";
 
 export default function FiqhCouncilStatsPage() {
   const [stats, setStats] = useState<FiqhPublicStats | null>(null);

@@ -107,3 +107,26 @@ jobs:
           # دفع عادي بلا force — يفشل بأمان إن تحرك production من تحتنا
           # أثناء هذا التشغيل بدل الكتابة فوق أي شيء.
           git push origin production:production
+
+      - name: انتظار استقرار النشر والتحقق من الإنتاج
+        if: steps.diff.outputs.ahead != '0'
+        run: |
+          set -euo pipefail
+          echo "انتظار نشر Vercel/production…"
+          sleep 90
+          ok=0
+          for i in 1 2 3 4 5 6; do
+            code=$(curl -sS -o /tmp/majlisilm-health.html -w "%{http_code}" \
+              --max-time 30 -L "https://www.majlisilm.com/" || echo "000")
+            echo "محاولة $i: HTTP $code"
+            if [ "$code" = "200" ]; then
+              ok=1
+              break
+            fi
+            sleep 20
+          done
+          if [ "$ok" != "1" ]; then
+            echo "::error::majlisilm.com لم يُرجع 200 بعد النشر"
+            exit 1
+          fi
+          echo "✓ الإنتاج يستجيب 200"

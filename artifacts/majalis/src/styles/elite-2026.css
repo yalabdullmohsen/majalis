@@ -2422,67 +2422,11 @@ button.primary:hover {
 .mzp-star { font-size: 0.85rem; color: var(--majalis-line); }
 .mzp-star.is-active { color: var(--majalis-emerald, #226A56); }
 
-/* ── نُقل إلى styles/pages/knowledge-graph.css ── */
-/* ── نُقل إلى styles/pages/miracles.css (legacy) ── */
-/* ── نُقل إلى styles/pages/quran-radio.css ── */
-/* ── نُقل إلى styles/pages/my-submissions.css ── */
-/* ── نُقل إلى styles/pages/adhan-settings.css ── */
-/* ── نُقل إلى styles/pages/upload.css ── */
-/* ── نُقل إلى styles/pages/my-learning.css ── */
-/* ── نُقل إلى styles/pages/quran-circles.css ── */
-/* ── نُقل إلى styles/pages/prophetic-medicine.css ── */
-/* ── lpd stub → learning-path-detail.css ── */
-/* ── lqp → learning-quiz.css ── */
-/* ── نُقل إلى styles/pages/learning-paths.css ── */
-/* ── نُقل إلى styles/pages/submit-content.css ── */
-/* ── نُقل إلى styles/pages/certificate-verify.css ── */
-/* ── nf stub → not-found.css ── */
-/* ── نُقل إلى styles/pages/topic.css ── */
-/* ── twh leftovers → tawhid.css ── */
-/* ── نُقل إلى styles/pages/tawhid.css ── */
-/* ── نُقل إلى styles/pages/fiqh-hub.css ── */
-/* ── نُقل إلى styles/pages/user-stats.css ── */
-/* ── lcd → learning-quiz.css ── */
-/* ── flc → flashcards.css ── */
-/* ── نُقل إلى styles/pages/family-mode.css ── */
-/* ── نُقل إلى styles/pages/assistant.css ── */
-/* ── نُقل إلى styles/pages/learning-plan.css ── */
-/* ── نُقل إلى styles/pages/learning-path-dashboard.css ── */
-/* ── نُقل إلى styles/pages/cards.css ── */
-/* ── kng additions → knowledge-graph.css ── */
-/* ── fqp-cta → fiqh-hub.css ── */
-/* ── vault-login → vault.css ── */
-/* ── upd → updates.css ── */
-/* ── tip → topics-index.css ── */
-/* ── نُقل إلى styles/pages/prayer-countdown.css ── */
-/* ── نُقل إلى styles/pages/researcher-profile.css ── */
-/* ── cit → my-citations.css ── */
-/* ── نُقل إلى styles/pages/hadith-index.css ── */
-/* ── نُقل إلى styles/pages/notification-settings.css ── */
-/* ============================================================
-   89 — LearningPathSciencePage  (lps-*)
-   ============================================================ */
-
-/* ── udp stub → university-detail.css ── */
-/* ── ucp stub → universities-compare.css ── */
-/* ── نُقل إلى styles/pages/kuwait-lessons.css ── */
-/* ── نُقل إلى styles/pages/qibla.css ── */
-/* ── نُقل إلى styles/pages/occasions.css ── */
-/* ============================================================
-   96 — CitationPublicPage  (reuses cit-* from 86)
-   ============================================================ */
-/* No new rules needed — uses cit-type-bar and cit-type-badge from 86 */
-
-/* ── نُقل إلى styles/pages/annual-course-detail.css ── */
-/* ── نُقل إلى styles/pages/adhkar.css ── */
 /* ============================================================
    99 — shared: page-stats-row--flush
    ============================================================ */
 .page-stats-row--flush { margin-bottom: 0; }
 
-/* ── نُقل إلى styles/pages/learning-path.css ── */
-/* ── tp stub → transcribe.css ── */
-/* ── نُقل إلى styles/pages/study-room.css ── */
 /* ============================================================
    104 — AuthCallbackPage
    ============================================================ */
@@ -2622,16 +2566,10 @@ html[data-theme="dark"] .lesson-unified-card__btn--primary {
   background: #226A56 !important;
 }
 
-/* ── نُقل إلى styles/components/ayah-display.css ── */
 /* ── 168 — FiqhAdminSubnav overrides ───────────────────────────────────── */
 .fiqh-admin-subnav-link         { color: var(--majalis-ink-soft); font-weight: 400; }
 .fiqh-admin-subnav-link--active { color: var(--majalis-emerald-deep); font-weight: 700; }
 
-/* ── نُقل إلى styles/components/explore-ayah.css ── */
-/* ── نُقل إلى styles/components/quran-search.css ── */
-/* ── نُقل إلى styles/components/khatmah-bookmarks.css ── */
-/* ── نُقل إلى styles/components/related-content-widget.css ── */
-/* ── نُقل إلى styles/components/achievement-toast.css ── */
 /* ── 174 — LazyRouteFallback & AsyncDataView ─────────────────────────────── */
 .lrf-wrap {
   display: flex;
@@ -2666,10 +2604,6 @@ html[data-theme="dark"] .lesson-unified-card__btn--primary {
 
 .tasbeeh-counter__bar > span { display: block; height: 100%; border-radius: inherit; background: var(--majalis-emerald); transition: width 0.4s ease; width: var(--tc-pct, 0%); }
 
-/* ── نُقل إلى styles/components/home/home-adhan-widget.css ── */
-/* ── نُقل إلى styles/components/hadith-badge.css ── */
-/* ── نُقل إلى styles/components/home/home-learning-seasons.css ── */
-/* ── qc-card → quran-circles.css ── */
 /* ── 184 — ContentDetailLayout & misc link fixes ───────────────────────── */
 .platform-card-link { text-decoration: none; }
 
@@ -2767,7 +2701,6 @@ button, .btn {
 
 /* ── نُقل إلى styles/components/submissions-review.css ── */
 /* ── نُقل إلى styles/components/islamic-geometric.css ── */
-/* ── نُقل إلى styles/components/book-card.css ── */
 /* ══════════════════════════════════════════════
    201 — تحسينات شاملة للموقع (Site-wide Enhancements)
    ══════════════════════════════════════════════ */
@@ -3891,10 +3824,10 @@ img[loading="lazy"]:not([src=""]) {
    قسم)، فتحتاج نصًا أبيض لا زمرديًا داكنًا (كانت تُنتج نصًّا داكنًا فوق
    خلفية داكنة — غير مقروء تقريبًا، 2026-07-17). */
 .bg-white h1, .bg-white h2, .bg-white h3, .bg-white h4,
-[class*="card"] h1:not(.ds-section__title):not(.cards-page-title):not(.fiqh-council-section-title):not(.sq-title):not(.hnh__title):not(.ds-quiz-home-card__title):not(.home-library-card__title):not(.ikm-card__title),
-[class*="card"] h2:not(.ds-section__title):not(.cards-page-title):not(.fiqh-council-section-title):not(.sq-title):not(.hnh__title):not(.ds-quiz-home-card__title):not(.home-library-card__title):not(.ikm-card__title),
-[class*="card"] h3:not(.ds-section__title):not(.cards-page-title):not(.fiqh-council-section-title):not(.sq-title):not(.hnh__title):not(.ds-quiz-home-card__title):not(.home-library-card__title):not(.ikm-card__title),
-[class*="card"] h4:not(.ds-section__title):not(.cards-page-title):not(.fiqh-council-section-title):not(.sq-title):not(.hnh__title):not(.ds-quiz-home-card__title):not(.home-library-card__title):not(.ikm-card__title) {
+[class*="card"] h1:not(.ds-section__title):not(.cards-page-title):not(.fiqh-council-section-title):not(.sq-title):not(.hnh__title):not(.ds-quiz-home-card__title):not(.home-library-card__title),
+[class*="card"] h2:not(.ds-section__title):not(.cards-page-title):not(.fiqh-council-section-title):not(.sq-title):not(.hnh__title):not(.ds-quiz-home-card__title):not(.home-library-card__title),
+[class*="card"] h3:not(.ds-section__title):not(.cards-page-title):not(.fiqh-council-section-title):not(.sq-title):not(.hnh__title):not(.ds-quiz-home-card__title):not(.home-library-card__title),
+[class*="card"] h4:not(.ds-section__title):not(.cards-page-title):not(.fiqh-council-section-title):not(.sq-title):not(.hnh__title):not(.ds-quiz-home-card__title):not(.home-library-card__title) {
   color: var(--elite-forest, #052E16) !important;
 }
 /* استثناء .sq-title (عنوان SectionQuiz، h2 داخل .sq-header الداكن — «اختبر
@@ -3976,8 +3909,6 @@ img[loading="lazy"]:not([src=""]) {
 /* ── نُقل إلى styles/pages/ulum-quran.css ── */
 
 /* ── نُقل إلى styles/pages/mawarith.css ── */
-
-/* ── نُقل إلى styles/pages/duas-quran.css ── */
 
 /* ── نُقل إلى styles/pages/fiqh-qawaid.css ── */
 /* ── نُقل إلى styles/pages/shimael.css ── */
@@ -6604,11 +6535,6 @@ button.primary,
 .quran-hub-hero,
 .quran-hub-card__header,
 .quran-hub-closing,
-.ikm-hero,
-.ikm-card,
-.ikm-detail__left,
-.ikm-rel-dot,
-.ikm-conn-node,
 .sch-hero,
 .sch-filter-btn--active,
 .sch-card__avatar,
@@ -6806,9 +6732,7 @@ progress,
    أعلاه ينتج نصًّا شبه غير مرئي (تباين ~2:1-2.9:1)، مُشخَّص وتحقّق منه عبر
    تدقيق Playwright حي (2026-07-22).
    ملاحظة: .kng-source-btn استُهدفت هنا بحالتها is-active فقط (أسفل)، لا
-   الأساسية (خلفية شفافة سليمة). .ikm-conn-node أُصلحت من جذرها في
-   islamic-knowledge-map.css (متغيرات --ikm-domain-bg الناقصة لستة نطاقات)
-   لا هنا، لأن خلفيتها الحقيقية بيانات لكل نطاق لا --clr-primary. */
+   الأساسية (خلفية شفافة سليمة). */
 html[data-theme="dark"] .lsw-featured__now,
 html[data-theme="dark"] .lsw-featured__cta,
 html[data-theme="dark"] .ar-contribute-banner__btn,
@@ -6901,7 +6825,6 @@ html[data-theme="dark"] .hk-card__text,
 html[data-theme="dark"] .hs-card__cat,
 html[data-theme="dark"] .hs-card__term,
 html[data-theme="dark"] .hs-grade,
-html[data-theme="dark"] .ikm-conn-label,
 html[data-theme="dark"] .isp-stat-chip,
 html[data-theme="dark"] .lesson-unified-card__meta-label,
 html[data-theme="dark"] .lesson-unified-card__note,
@@ -7022,8 +6945,7 @@ html[data-theme="dark"] .fa-related__title,
 html[data-theme="dark"] .seerah-panel__title,
 html[data-theme="dark"] .seerah-panel__events-title,
 html[data-theme="dark"] .fq-ref__title,
-html[data-theme="dark"] .sh-step__title,
-html[data-theme="dark"] .ikm-card__title {
+html[data-theme="dark"] .sh-step__title {
   color: var(--clr-text-1, #E5F0EC) !important;
 }
 
@@ -7583,315 +7505,6 @@ html[data-theme="dark"] .ikm-card__title {
   line-height: 1.7;
   color: var(--majalis-ink-soft);
   margin: 0;
-}
-
-/* ============================================================
-   222 — قارئ المصحف الجديد (mushaf-v2-*) — المرحلة 8
-   ترقيم مدينة 604 صفحة، سحب أفقي، Bottom Sheet بدل الأزرار الدائمة،
-   وضع هادئ. خط النص القرآني var(--font-quran) حصرًا، والواجهة
-   var(--font-ui)/Alexandria لكل ما عداه.
-   ============================================================ */
-.quran-shell.mushaf-v2 {
-  /* قراءة غامرة كاملة الشاشة (NavBar/BottomNavBar/المساعد العائم مخفية
-     كليًا على /mushaf — راجع hiddenOnPage في NavBar.tsx/BottomNavBar.tsx/
-     AssistantFloatingWidget.tsx): لا حجز لارتفاع شريط علوي/سفلي عام بعد
-     الآن، فقط 100dvh كاملة؛ حواف الشاشة الآمنة (النوتش/شريط الإيماءات)
-     تُترَك لـpadding الهيدر/الصفحة نفسها (env(safe-area-inset-*) هناك). */
-  min-height: 100dvh;
-  display: flex;
-  flex-direction: column;
-  background: var(--majalis-panel);
-  overflow: hidden;
-}
-
-.mushaf-v2__header {
-  display: flex;
-  align-items: center;
-  gap: .6rem;
-  padding: .6rem .85rem;
-  padding-top: max(.6rem, env(safe-area-inset-top, 0px));
-  border-bottom: 1px solid var(--majalis-line);
-  background: var(--majalis-panel);
-  flex-shrink: 0;
-}
-.mushaf-v2__sidebar-btn,
-.mushaf-v2__pager-btn,
-.mushaf-v2__sidebar-close {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  border-radius: .6rem;
-  border: 1px solid var(--majalis-line);
-  background: var(--majalis-panel);
-  color: var(--majalis-emerald-deep);
-  flex-shrink: 0;
-  cursor: pointer;
-}
-.mushaf-v2__pager-btn:disabled {
-  opacity: .4;
-  cursor: not-allowed;
-}
-.mushaf-v2__header-info {
-  flex: 1;
-  min-width: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-}
-.mushaf-v2__header-surah {
-  font-family: var(--font-quran);
-  font-size: 1.05rem;
-  color: var(--majalis-emerald-deep);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  max-width: 100%;
-}
-.mushaf-v2__header-meta {
-  font-size: .72rem;
-  color: var(--majalis-ink-soft);
-}
-.mushaf-v2__header-spacer { width: 44px; flex-shrink: 0; }
-
-.mushaf-v2__page {
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
-  overflow-x: hidden;
-  touch-action: pan-y;
-  padding: 1.25rem 1rem;
-  padding-inline: max(1rem, env(safe-area-inset-left, 0px)) max(1rem, env(safe-area-inset-right, 0px));
-  cursor: pointer;
-}
-@media (prefers-reduced-motion: no-preference) {
-  .mushaf-v2__page { transition: transform .12s ease-out; }
-}
-
-.mushaf-v2--quiet .mushaf-v2__page {
-  padding-top: max(1.25rem, env(safe-area-inset-top, 0px));
-  padding-bottom: max(1.25rem, env(safe-area-inset-bottom, 0px));
-}
-
-.mushaf-v2__ayahs {
-  max-width: 640px;
-  margin: 0 auto;
-  cursor: default;
-  /* ⚠️ ممنوع text-align:justify هنا (2026-07-19، شكوى "مسافات مفرطة وأقواس
-     مشوهة"): التبرير في CSS يمدّد مسافات الكلمات آليًا (inter-word
-     justification) ليملأ كل سطر العرض الكامل، فينتج تباعدًا غير منتظم بين
-     الكلمات (شديد التفاوت بين سطر وآخر) ويُبعِد بادئة رقم الآية ﴿١﴾ عن
-     النص بمسافة مطّاطة متغيّرة تبدو "مشوَّهة". محاذاة يمين عادية (طبيعية
-     لـRTL) بلا أي تمديد آلي بين الكلمات — تطابق توجيه المهمة الصريح: لا
-     text-align:justify ولا letter-spacing يدوي على نص القرآن. */
-  text-align: right;
-}
-.mushaf-v2__ayah-wrap {
-  display: contents;
-}
-.mushaf-v2__surah-marker {
-  display: block;
-  text-align: center;
-  font-family: var(--font-quran);
-  font-size: 1.2rem;
-  color: var(--majalis-emerald-deep);
-  margin: 1.25rem 0 .5rem;
-}
-.mushaf-v2__bismillah {
-  display: block;
-  text-align: center;
-  font-family: var(--font-quran);
-  font-size: 1.35rem;
-  color: var(--majalis-emerald-deep);
-  margin: .25rem 0 .75rem;
-}
-.mushaf-v2__ayah {
-  font-family: var(--font-quran);
-  font-size: 1.6rem;
-  line-height: 2.35;
-  color: var(--majalis-ink);
-  cursor: pointer;
-  border-radius: .3rem;
-  padding: .1rem .15rem;
-  /* تمنع قائمة تحديد/نسخ النص الأصلية من iOS Safari من الظهور فوق ضغطتنا
-     المطوّلة المخصَّصة (فتح لوحة إجراءات الآية) — النسخ متاح من داخل تلك
-     اللوحة نفسها، لا حاجة لتحديد النص يدويًا. */
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  user-select: none;
-}
-.mushaf-v2__ayah:hover,
-.mushaf-v2__ayah:focus-visible {
-  background: color-mix(in srgb, var(--majalis-emerald-deep) 6%, transparent);
-  outline: none;
-}
-.mushaf-v2__ayah--playing {
-  background: color-mix(in srgb, var(--majalis-emerald-deep) 10%, transparent);
-}
-/* رقم الآية كعنصر ذرّي منعزل — طبق الحل التقني المحدَّد حرفيًا: عنصر واحد
-   (ayah-marker) لا ينكسر، لا ينعكس، لا يتأثر بالسياق الثنائي الاتجاه
-   المحيط به مهما كان (رقم آيات عربية أو لاتينية، خانة واحدة أو خانتين أو
-   ثلاث). unicode-bidi:isolate (لا plaintext) يبقي direction:rtl الموروث
-   من dir="rtl" على .quran-shell كأساس اتجاه هذا العنصر المعزول، بلا
-   استبدال بخوارزمية "أول حرف قوي" (وهو ما يفعله plaintext ولا نريده هنا:
-   محتوى هذا العنصر بالكامل أقواس زخرفية + أرقام، بلا حرف قوي واحد). */
-.mushaf-v2__ayah-num,
-.ayah-marker {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  white-space: nowrap;
-  unicode-bidi: isolate;
-  direction: rtl;
-  flex-shrink: 0;
-  font-size: 1.05rem;
-  color: var(--majalis-emerald-deep);
-  margin-inline-start: .2rem;
-  margin-inline-end: .35rem;
-}
-.mushaf-v2__sajda-mark {
-  display: inline-flex;
-  align-items: center;
-  font-family: var(--font-body);
-  font-size: .68rem;
-  font-weight: 700;
-  color: #7A5E14;
-  background: rgba(176,141,46,.14);
-  border: 1px solid rgba(176,141,46,.35);
-  border-radius: var(--ds-radius-full);
-  padding: .08rem .5rem;
-  margin-inline-start: .4rem;
-  vertical-align: middle;
-}
-html[data-theme="dark"] .mushaf-v2__sajda-mark {
-  color: #E8C97A;
-  background: rgba(232,201,122,.14);
-  border-color: rgba(232,201,122,.35);
-}
-
-.mushaf-v2__pager {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: var(--ds-space-4);
-  padding: .6rem .85rem;
-  padding-bottom: max(.6rem, env(safe-area-inset-bottom, 0px));
-  border-top: 1px solid var(--majalis-line);
-  background: var(--majalis-panel);
-  flex-shrink: 0;
-}
-.mushaf-v2__pager-count {
-  font-variant-numeric: tabular-nums;
-  font-size: .85rem;
-  font-weight: 700;
-  color: var(--majalis-ink);
-  min-width: 5rem;
-  text-align: center;
-}
-
-/* ── الفهرس (سورة/جزء/صفحة) ──
-   z-index مرتفع جدًا عمدًا (10000): .navbar-v3 يستخدم 9999 مُثبَّتة حرفيًا
-   (لا تتبع سلّم --z-* المُعرَّف في index.css) — رصدتُ هذا فعليًا حين فشل
-   Playwright بالنقر على تبويب "جزء" لأن الهيدر الثابت اعترض النقر رغم
-   ظهور الفهرس بصريًا فوقه. */
-.mushaf-v2__sidebar-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 10000;
-  background: rgba(0,0,0,.45);
-  display: flex;
-  justify-content: flex-end;
-}
-.mushaf-v2__sidebar {
-  width: min(360px, 88vw);
-  height: 100%;
-  background: var(--majalis-panel);
-  display: flex;
-  flex-direction: column;
-  padding-top: env(safe-area-inset-top, 0px);
-  padding-bottom: env(safe-area-inset-bottom, 0px);
-}
-.mushaf-v2__sidebar-head {
-  display: flex;
-  align-items: center;
-  gap: .5rem;
-  padding: .75rem;
-  border-bottom: 1px solid var(--majalis-line);
-}
-.mushaf-v2__sidebar-tabs {
-  flex: 1;
-  display: flex;
-  gap: .4rem;
-}
-.mushaf-v2__sidebar-tab {
-  flex: 1;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: .3rem;
-  min-height: 40px;
-  border-radius: .6rem;
-  border: 1px solid var(--majalis-line);
-  background: transparent;
-  color: var(--majalis-ink-soft);
-  font-size: .8rem;
-  font-weight: 700;
-  cursor: pointer;
-}
-.mushaf-v2__sidebar-tab.is-active {
-  background: var(--majalis-emerald-deep);
-  border-color: var(--majalis-emerald-deep);
-  color: #fff;
-}
-
-.mushaf-v2__juz-list {
-  overflow-y: auto;
-  padding: .5rem;
-  display: flex;
-  flex-direction: column;
-  gap: .4rem;
-}
-.mushaf-v2__juz-item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  min-height: 44px;
-  padding: 0 .9rem;
-  border-radius: .6rem;
-  border: 1px solid var(--majalis-line);
-  background: var(--majalis-panel);
-  color: var(--majalis-ink);
-  font-weight: 700;
-  font-size: .88rem;
-  cursor: pointer;
-}
-.mushaf-v2__juz-item.is-active {
-  border-color: var(--majalis-emerald-deep);
-  background: color-mix(in srgb, var(--majalis-emerald-deep) 8%, transparent);
-}
-.mushaf-v2__juz-item-page {
-  font-size: .75rem;
-  color: var(--majalis-ink-soft);
-  font-weight: 600;
-}
-
-.mushaf-v2__page-jump {
-  display: flex;
-  gap: .5rem;
-  padding: .75rem;
-}
-.mushaf-v2__page-jump-btn {
-  min-height: 44px;
-  padding: 0 1.1rem;
-  border-radius: .6rem;
-  border: none;
-  background: var(--majalis-emerald-deep);
-  color: #fff;
-  font-weight: 700;
-  font-size: .85rem;
-  cursor: pointer;
 }
 
 /* ── نُقل إلى styles/components/ayah-action-sheet.css ── */

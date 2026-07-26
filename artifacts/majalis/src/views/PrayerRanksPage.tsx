@@ -4,6 +4,7 @@ import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { arabicMatchAny } from "@/lib/arabic-search";
+import "@/styles/pages/prayer-ranks.css";
 
 // ─── مراتب المصلين ───────────────────────────────────────────────────────
 
@@ -51,14 +52,14 @@ const PRAYER_VIRTUES = [
   {
     title: "عمود الإسلام",
     text: "رأس الأمر الإسلام، وعموده الصلاة، وذروة سنامه الجهاد في سبيل الله.",
-    source: "الترمذي وغيره",
-    grade: "حسن/صحيح",
+    source: "الترمذي ٢٦١٦ — صححه الألباني",
+    grade: "صحيح",
     narrator: "معاذ بن جبل",
   },
   {
     title: "أول ما يُحاسب عليه",
     text: "أول ما يُحاسب به العبد يوم القيامة من عمله صلاته، فإن صلحت فقد أفلح وأنجح، وإن فسدت فقد خاب وخسر.",
-    source: "سنن الترمذي (٤١٣)",
+    source: "الترمذي ٤١٣ — صححه الألباني",
     grade: "صحيح",
     narrator: "أبو هريرة رضي الله عنه",
   },
@@ -93,7 +94,7 @@ const PRAYER_VIRTUES = [
   {
     title: "نور يوم القيامة",
     text: "بشِّر المشّائين في الظُّلَم إلى المساجد بالنور التام يوم القيامة.",
-    source: "سنن أبي داود (٥٦١)، سنن الترمذي (٢٢٣)",
+    source: "أبو داود ٥٦١ والترمذي ٢٢٣ — صححه الألباني",
     grade: "صحيح",
     narrator: "بريدة رضي الله عنه",
   },
@@ -107,7 +108,7 @@ const PRAYER_VIRTUES = [
   {
     title: "قرّة عين النبي ﷺ",
     text: "حُبِّبَ إليَّ من دنياكم: النساء والطيب، وجُعلت قرة عيني في الصلاة.",
-    source: "سنن النسائي (٣٩٤٠)",
+    source: "النسائي ٣٩٤٠ — صححه الألباني",
     grade: "صحيح",
     narrator: "أنس بن مالك رضي الله عنه",
   },

@@ -1,4 +1,5 @@
 import { Link } from "wouter";
+import "@/styles/pages/fiqh-admin.css";
 
 const LINKS = [
   { href: "/admin", label: "المجمع الفقهي" },

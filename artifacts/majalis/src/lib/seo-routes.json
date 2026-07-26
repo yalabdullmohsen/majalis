@@ -520,9 +520,10 @@
         "تصميم بطاقات",
         "فوائد دينية"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "weekly",
-      "priority": 0.7
+      "priority": 0.7,
+      "robots": "noindex, follow"
     },
     {
       "path": "/transcribe",
@@ -1123,9 +1124,10 @@
         "التعلم المنظم",
         "دراسة الشريعة"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "monthly",
-      "priority": 0.72
+      "priority": 0.72,
+      "robots": "noindex, follow"
     },
     {
       "path": "/tawhid",
@@ -1214,10 +1216,10 @@
         "مذاكرة",
         "طلب العلم"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "monthly",
       "priority": 0.7,
-      "robots": "index, follow"
+      "robots": "noindex, follow"
     },
     {
       "path": "/settings",
@@ -1291,9 +1293,10 @@
         "أكاديميات شرعية",
         "دراسة الشريعة"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "monthly",
-      "priority": 0.72
+      "priority": 0.72,
+      "robots": "noindex, follow"
     },
     {
       "path": "/methodology",
@@ -1789,17 +1792,17 @@
     },
     {
       "path": "/kids",
-      "title": "ركن الأطفال",
-      "description": "ركن آمن وبسيط للأطفال: تعلّم القرآن والسيرة والأذكار والأخلاق الإسلامية بأسلوب ميسَّر وجذاب.",
+      "title": "ركن الأطفال (قريبًا)",
+      "description": "ركن الأطفال في المجلس العلمي قيد التجهيز — محتوى تعليمي ميسّر وآمن قريبًا.",
       "keywords": [
         "الأطفال",
         "تعليم الأطفال",
-        "قصص الأنبياء للأطفال",
-        "تعليم القرآن للأطفال"
+        "قريبًا"
       ],
-      "sitemap": true,
-      "changefreq": "weekly",
-      "priority": 0.8
+      "sitemap": false,
+      "changefreq": "monthly",
+      "priority": 0.3,
+      "robots": "noindex, follow"
     },
     {
       "path": "/mind-map",
@@ -1812,7 +1815,7 @@
       ],
       "sitemap": true,
       "changefreq": "monthly",
-      "priority": 0.72
+      "priority": 0.65
     },
     {
       "path": "/knowledge-map",
@@ -1823,9 +1826,10 @@
         "خريطة العلوم",
         "تصفح المعرفة الإسلامية"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "monthly",
-      "priority": 0.72
+      "priority": 0.72,
+      "robots": "noindex, follow"
     },
     {
       "path": "/hikam-salaf",
@@ -1889,7 +1893,8 @@
         "خارطة الطريق",
         "مستجدات التطوير"
       ],
-      "sitemap": false
+      "sitemap": false,
+      "robots": "noindex, follow"
     },
     {
       "path": "/islamic-glossary",
@@ -1914,9 +1919,10 @@
         "انتشار الإسلام",
         "عدد المسلمين"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "monthly",
-      "priority": 0.72
+      "priority": 0.72,
+      "robots": "noindex, follow"
     },
     {
       "path": "/academic-research",
@@ -2076,18 +2082,17 @@
     },
     {
       "path": "/quran-circles",
-      "title": "حلقات التحفيظ",
-      "description": "انضم إلى حلقات القرآن الكريم المباشرة — حفظ وتجويد وتفسير مع مشايخ متخصصين.",
+      "title": "حلقات التحفيظ (قريبًا)",
+      "description": "دليل حلقات تحفيظ القرآن قيد التجهيز — أدوات الحفظ وخطط المراجعة متاحة الآن.",
       "keywords": [
         "حلقات القرآن",
         "حفظ القرآن",
-        "تجويد",
-        "حلق علمية",
-        "كويت"
+        "قريبًا"
       ],
-      "sitemap": true,
-      "changefreq": "weekly",
-      "priority": 0.8
+      "sitemap": false,
+      "changefreq": "monthly",
+      "priority": 0.3,
+      "robots": "noindex, follow"
     },
     {
       "path": "/quran-memorization",
@@ -2173,9 +2178,10 @@
         "جامعات شريعة",
         "دراسة الشريعة"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "monthly",
-      "priority": 0.65
+      "priority": 0.65,
+      "robots": "noindex, follow"
     },
     {
       "path": "/anbiya",

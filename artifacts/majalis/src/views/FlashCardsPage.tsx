@@ -194,7 +194,7 @@ function SessionComplete({
         >
           ↺ مراجعة مجدداً
         </button>
-        <Link href="/learning-plan" className="fc-complete__btn">خطتي العلمية</Link>
+        <Link href="/learning/paths" className="fc-complete__btn">المسارات العلمية</Link>
         <Link href="/my-learning"   className="fc-complete__btn">حسابي التعليمي</Link>
       </div>
     </div>
@@ -382,7 +382,7 @@ export default function FlashCardsPage() {
         <div className="fc-empty">
           <div className="flc-empty-icon"><CheckCircle2 size={48} strokeWidth={1.4} aria-hidden="true" /></div>
           <p>لا توجد بطاقات مستحقة الآن. تفقّد لاحقاً!</p>
-          <Link href="/learning-plan" className="lp-plan__action-btn lp-plan__action-btn--primary flc-empty-link">
+          <Link href="/learning/paths" className="lp-plan__action-btn lp-plan__action-btn--primary flc-empty-link">
             خطتي العلمية
           </Link>
         </div>

@@ -3,6 +3,7 @@ import { Mic2, Music2, Play, Pause, SkipBack, SkipForward } from "lucide-react";
 import { Link } from "wouter";
 import { supabase } from "@/lib/supabase";
 import { applyPageSeo } from "@/lib/seo";
+import "@/styles/pages/car-mode.css";
 
 type AudioLesson = {
   id: string;

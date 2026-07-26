@@ -202,7 +202,7 @@ if (normalized.startsWith("/quran/surah-stories/")) {
       shuayb: "شعيب", musa: "موسى", harun: "هارون", "dhul-kifl": "ذو الكفل",
       dawud: "داود", sulayman: "سليمان", ilyas: "إلياس", "al-yasa": "اليسع",
       yunus: "يونس", zakariyya: "زكريا", yahya: "يحيى", isa: "عيسى",
-      muhammad: "محمد صلى الله عليه وسلم",
+      muhammad: "محمد ﷺ",
     };
     const arabicName = PROPHET_NAMES[prophetSlug] || prophetSlug;
     return {
