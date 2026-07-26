@@ -316,7 +316,7 @@ scholars-data.ts، scholars-seo.json، library-catalog.ts/.json، library-author
 ## المرحلة 9 — توحيد أسماء المسارات من SEO
 
 **الفرع:** `cursor/content-fix-phase9-nav-seo-titles-1f54`  
-**PR:** (يُحدَّث برقم PR بعد الإنشاء)
+**PR:** https://github.com/yalabdullmohsen/majalis/pull/347
 
 ### ما نُفّذ
 - مصدر وحيد: `seo-routes.json` عبر `artifacts/majalis/src/lib/seo-nav-labels.ts` (`seoNavLabel` + `SEO_NAV_EXCEPTIONS`).
@@ -355,4 +355,4 @@ scholars-data.ts، scholars-seo.json، library-catalog.ts/.json، library-author
 | 6 حقول مكررة | وسم فقط | 33 `_duplicate_summary`؛ 1 `_duplicate_lesson_book` | نجاح | #344 |
 | 7 حقول ناقصة | 60 slug؛ 11 وصف؛ 527 مؤلف | `_needs_description` / `_needs_author` | نجاح | #345 |
 | 8 غير الموثّق | documentation_status + شارة | unsourced ظاهر بلا إخفاء | نجاح | #346 |
-| 9 أسماء المسارات | seoNavLabel في 4 ملفات + وحدة اشتقاق | استثناءان >25 حرفاً | نجاح | (phase9) |
+| 9 أسماء المسارات | seoNavLabel في 4 ملفات + وحدة اشتقاق | استثناءان >25 حرفاً | نجاح | #347 |
