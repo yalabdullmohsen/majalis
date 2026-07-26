@@ -2,17 +2,6 @@ import type { PlatformUpdate } from "./platform-types";
 
 export const UPDATES_SEED: PlatformUpdate[] = [
   {
-    id: "update-fiqh-crypto",
-    title: "قرار جديد: حكم التعامل بالعملات الرقمية",
-    summary: "صدر قرار المجمع الفقهي بشأن العملات الرقمية.",
-    update_type: "قرار",
-    source_type: "fiqh_decision",
-    source_id: "fiqh-crypto-2024",
-    source_url: "/fiqh-council/fiqh-crypto-2024",
-    published_at: "2024-03-15T10:00:00Z",
-    status: "approved",
-  },
-  {
     id: "update-course-ijazah",
     title: "فتح التسجيل: دورة الإجازة 1447هـ",
     summary: "بدء التسجيل في الدورة السنوية للإجازة.",
@@ -284,15 +273,6 @@ export const UPDATES_SEED: PlatformUpdate[] = [
     status: "approved",
   },
   {
-    id: "update-fiqh-sessions-expanded",
-    title: "تحديث: إضافة جلسات مجمع فقهي تاريخية",
-    summary: "إضافة 5 جلسات جديدة للمجمع الفقهي الإسلامي (14-17 و23) تغطي موضوعات الجائحة، التأمين، التمويل الإسلامي، والوصايا الرقمية.",
-    update_type: "إعلان",
-    source_url: "/fiqh-council",
-    published_at: "2026-07-08T16:00:00Z",
-    status: "approved",
-  },
-  {
     id: "update-fawaid-curated-14",
     title: "تحديث: 14 فائدة علمية جديدة",
     summary: "إضافة فوائد منتقاة في العقيدة، الحديث، السيرة، اللغة، طلب العلم، والدعوة من كتب الأئمة والمحدثين.",
@@ -380,15 +360,6 @@ export const UPDATES_SEED: PlatformUpdate[] = [
     update_type: "إعلان",
     source_url: "/stories",
     published_at: "2026-07-09T08:00:00Z",
-    status: "approved",
-  },
-  {
-    id: "update-fiqh-council-17",
-    title: "تحديث: قرارات المجمع الفقهي — 17 قراراً",
-    summary: "إضافة 5 قرارات: حكم تغيير الجنس، البيع بالتقسيط، التبرع بالدم وبيعه، صيام المناطق القطبية، شهادات الحلال.",
-    update_type: "قرار",
-    source_url: "/fiqh-council",
-    published_at: "2026-07-08T09:00:00Z",
     status: "approved",
   },
   {
@@ -524,15 +495,6 @@ export const UPDATES_SEED: PlatformUpdate[] = [
     update_type: "إعلان",
     source_url: "/library",
     published_at: "2026-07-11T11:00:00Z",
-    status: "approved",
-  },
-  {
-    id: "update-fiqh-council-37",
-    title: "تحديث: المجمع الفقهي — 37+ قرار ومبحث",
-    summary: "إضافة 4 قرارات: التجميل وزكاة الأسهم والذكاء الاصطناعي في الإفتاء والعمل في المصارف الربوية.",
-    update_type: "قرار",
-    source_url: "/fiqh-council",
-    published_at: "2026-07-11T12:00:00Z",
     status: "approved",
   },
   {
@@ -731,15 +693,6 @@ export const UPDATES_SEED: PlatformUpdate[] = [
     update_type: "إعلان",
     source_url: "/scholars",
     published_at: "2026-07-12T07:00:00Z",
-    status: "approved",
-  },
-  {
-    id: "update-fiqh-council-26",
-    title: "تحديث: قرارات المجمع الفقهي — 26+ قرار",
-    summary: "إضافة 3 قرارات: القتل الرحيم والإيثانازيا، الوصية الإلكترونية الرقمية، زكاة التطبيقات التلقائية.",
-    update_type: "قرار",
-    source_url: "/fiqh-council",
-    published_at: "2026-07-12T09:00:00Z",
     status: "approved",
   },
   {

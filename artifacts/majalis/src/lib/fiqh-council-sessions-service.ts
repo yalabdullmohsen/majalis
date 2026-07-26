@@ -114,7 +114,9 @@ export async function getFiqhSessionBySlug(slug: string) {
     const { data: items } = await supabase
       .from("fiqh_council_items")
       .select("*")
-      .eq("session_id", session.id)
+      // الجدول لا يحوي عمود session_id — الربط بين الجلسة وعناصرها هو session_number
+      // (وهو نفس مفتاح الربط المستخدم في المسار الاحتياطي من البذرة أدناه).
+      .eq("session_number", String(session.session_number ?? ""))
       .eq("status", "published");
 
     const sessionItems = (items || []) as FiqhCouncilItem[];
