@@ -12,6 +12,7 @@ import type { SinType } from "@/lib/sins-rights-types";
 import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
 import { Empty } from "@/components/ui-common";
 import { ContentDetailLayout, RelatedLinks } from "@/components/platform/ContentDetailLayout";
+import "@/styles/sins-rights.css";
 
 export default function SinsAndRightsDetailPage({ params }: { params: { slug: string } }) {
   const topic = getTopicBySlug(params.slug);
