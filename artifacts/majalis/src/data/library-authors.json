@@ -775,5 +775,47 @@
     "normalizedName": "جمال الدين الزيلعي",
     "verificationStatus": "pending_review",
     "sources": []
+  },
+  {
+    "id": "author-al-dardir",
+    "name": "الإمام أحمد الدردير",
+    "normalizedName": "احمد الدردير",
+    "verificationStatus": "pending_review",
+    "sources": []
+  },
+  {
+    "id": "author-al-dusuki",
+    "name": "الإمام محمد عرفة الدسوقي",
+    "normalizedName": "محمد عرفه الدسوقي",
+    "verificationStatus": "pending_review",
+    "sources": []
+  },
+  {
+    "id": "author-al-hattab",
+    "name": "الإمام الحطّاب الرعيني",
+    "normalizedName": "الحطاب الرعيني",
+    "verificationStatus": "pending_review",
+    "sources": []
+  },
+  {
+    "id": "author-al-kharashi",
+    "name": "الإمام محمد الخرشي",
+    "normalizedName": "محمد الخرشي",
+    "verificationStatus": "pending_review",
+    "sources": []
+  },
+  {
+    "id": "author-al-baqillani",
+    "name": "القاضي أبو بكر الباقلاني",
+    "normalizedName": "ابو بكر الباقلاني",
+    "verificationStatus": "pending_review",
+    "sources": []
+  },
+  {
+    "id": "author-al-sanusi",
+    "name": "الإمام محمد بن يوسف السنوسي",
+    "normalizedName": "محمد بن يوسف السنوسي",
+    "verificationStatus": "pending_review",
+    "sources": []
   }
 ]
