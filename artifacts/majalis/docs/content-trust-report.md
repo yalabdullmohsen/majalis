@@ -14,7 +14,7 @@
 
 | المرحلة | المنجز | الملفات |
 |---|---|---|
-| 0 | سياسة تحريرية | `docs/editorial-policy.md` |
+| 0 | سياسة تحريرية (ضمن #357) | `docs/editorial-policy.md` |
 | 1 | مخطط Citation + TrustLevel + توافق | `src/lib/citation-schema.ts` |
 | 2 | جرد دقيق | `docs/documentation-inventory.md` |
 | 3 | تدقيق نبوي + تأكيد عزل curriculum | `docs/hadith-audit.md` + حقول curriculum |
@@ -24,9 +24,13 @@
 | 7 | حقول مراجعة | `editorial_review_status` + `last_updated_at` (بلا أسماء مراجعين مخترعة) |
 | 8 | بوابة انحدار | `scripts/verify-citations.mjs` — **OK**؛ `package.json` مؤجّل |
 | 9 | نص المنهجية | `docs/methodology-page-content.md` |
-| 10 | PR واجهة مؤجّل | مكوّنات جديدة تحت `content-trust/` + تعليمات |
+| 10 | PR واجهة مؤجّل **#356** | مكوّنات جديدة تحت `content-trust/` + تعليمات |
 
-أرقام PR تُستكمل بعد فتح الـPR على GitHub.
+أرقام PR:
+
+- المحتوى (مراحل 0–9): https://github.com/yalabdullmohsen/majalis/pull/357
+- المؤجّل واجهة (مرحلة 10): https://github.com/yalabdullmohsen/majalis/pull/356 — **لا يُدمج الآن**
+
 
 ---
 
