@@ -1181,9 +1181,17 @@ a.twitter-timeline {
   color: var(--color-text);
   background: var(--color-surface);
 }
+/* الحالة النشطة: تعبئة داكنة + نص فاتح (متوافق مع pages/settings.css) —
+   لا تعتمد على قائمة elite البيضاء العامة. */
 .settings-choice.is-active {
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 18%, transparent);
+  border-color: var(--color-primary, #143F35);
+  background: var(--color-primary, #143F35);
+  color: #FAFAF8;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary, #143F35) 18%, transparent);
+}
+.settings-choice.is-active span,
+.settings-choice.is-active strong {
+  color: #FAFAF8;
 }
 .settings-choice span { color: var(--color-text-muted); }
 .home-main--v3 > section,

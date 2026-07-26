@@ -79,7 +79,6 @@ const darkMenus = existsSync(resolve(root, darkMenusPath)) ? read(darkMenusPath)
 // ── Toast: ممنوع [class*="toast"] مع نص أبيض إجباري ──
 {
   if (/\[class\*=["']toast["']\]\s*[,{]/.test(elite)) {
-    // اسمح فقط إن لم يكن في كتلة color/#fff أو background primary-deep مع color white
     const reBlocks = elite.matchAll(/\[class\*=["']toast["']\][\s\S]{0,400}?\{[\s\S]{0,400}?\}/g);
     for (const m of reBlocks) {
       const block = m[0];
@@ -89,9 +88,58 @@ const darkMenus = existsSync(resolve(root, darkMenusPath)) ? read(darkMenusPath)
       }
     }
   }
-  // القاعدة العامة .toast, [class*="toast"] { background deep; color #fff } يجب ألا تعود
   if (/\.toast\s*,\s*\[class\*=["']toast["']\]\s*\{[\s\S]{0,200}?color:\s*#fff/i.test(elite)) {
     fail("عادت قاعدة 77u العامة .toast,[class*=\"toast\"] بنص أبيض.");
+  }
+}
+
+// ── SideNav: ممنوع [class*="side-nav"] (يلطّخ كل أبناء الدرج) ──
+{
+  if (/\[class\*=["']side-nav["']\]/.test(elite)) {
+    fail('elite عاد لـ [class*="side-nav"] — يجب .side-nav-drawer / --v2 فقط.');
+  }
+}
+
+// ── قائمة mega البيضاء: سطوح فاتحة ممنوعة ──
+{
+  const tag = ".tag-new {\n  color: #FFFFFF !important;\n}";
+  const end = elite.indexOf(tag);
+  if (end === -1) {
+    fail("لم يُعثر على كتلة mega (.tag-new + color:#FFFFFF) — تغيّر الشكل؟");
+  } else {
+    // خذ حتى ~500 سطر قبل النهاية كنافذة القائمة
+    const from = Math.max(0, end - 18000);
+    const mega = elite.slice(from, end);
+    const banned = [
+      ".hit-card,",
+      ".hac__benefit-label,",
+      ".hac__category-badge,",
+      ".hnh__num,",
+      ".nf2-btn--outline,",
+      ".ftw-type-badge--fatwa,",
+      ".ads-perm--ok,",
+      ".lsw-option--active,",
+      ".hadith-index-card--books,",
+      ".sh-cta__btn--secondary,",
+      ".offline-banner--back,",
+      ".set-section--security,",
+      ".asp-notice,",
+      ".an-card,",
+      ".settings-choice.is-active,",
+      ".navbar-v3,",
+      ".bottom-sheet,",
+    ];
+    const megaLines = new Set(
+      mega
+        .split("\n")
+        .map((l) => l.trim())
+        .filter(Boolean),
+    );
+    for (const b of banned) {
+      if (megaLines.has(b)) {
+        fail(`قائمة mega البيضاء تضم السطح الفاتح ${b}`);
+      }
+    }
   }
 }
 
@@ -100,4 +148,4 @@ if (failed) {
   process.exit(1);
 }
 
-console.log("✓ حارس السمة: المزيد + NavBar + toast — لا نص أبيض على سطوح نهارية.");
+console.log("✓ حارس السمة: المزيد + NavBar + toast + side-nav + mega فاتحة.");
