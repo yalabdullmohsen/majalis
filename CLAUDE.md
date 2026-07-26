@@ -16,12 +16,12 @@
 2. تحقق عمليًا من النتيجة (الصفحة/الوظيفة المعدّلة، شاملًا RTL والجوال).
 3. إن نجح: commit برسالة عربية واضحة ثم push إلى فرع الجلسة فورًا، وانتقل للمهمة التالية.
 4. إن فشل: أصلح ضمن سقف 10 دورات؛ فإن استُنفدت، وثّق المشكلة وانتقل للمهمة التالية إن كانت مستقلة.
-5. يُمنع منعًا باتًا الدمج في main أو النشر من هذه الجلسة؛ ذلك حصريًا مسؤولية جلسة الدمج المخصصة.
-   **استثناء صريح (2026-07-22، بطلب مباشر من المالك):** `scripts/content-runner.sh` (نظام الضخ/التدقيق التلقائي عبر `claude -p` في حلقة launchd) مُعفى من بند 5 — يبقى يعمل على فرع `majalis-content-fill` مباشرة، ويدمج وينشر لـmain تلقائيًا كل دورة كما هو مصمَّم. لا تُطبّق قيد "بلا دمج/نشر" على دورات هذا النظام تحديدًا؛ يُطبَّق فقط على جلسات العمل التفاعلية العادية.
-   **استثناء إضافي (2026-07-24، مُحدَّث بطلب مباشر من المالك — يُلغي نسخة الدمج التلقائي السابقة):** فرعا `automation/content` و`automation/tasks` — نافذتا عمل تفاعليتان متزامنتان، كل واحدة في worktree مستقل خارج مجلد المشروع (`~/majalis-automation-content` و`~/majalis-automation-tasks`) — **ممنوعتان تمامًا من الدمج أو الـpush إلى main بأي شكل** (لا `git merge`، لا `git push` لـmain، لا سكربت auto-merge محلي). بعد إتمام مهمة ونجاح typecheck/الاختبارات الموجهة/build يدويًا كما في بند بوابة الإغلاق، الحد الأقصى المسموح هو:
-   `bash scripts/commit-and-push-branch.sh "رسالة commit عربية"`
-   وهو ينفّذ حصرًا: commit واحد → build كبوابة جودة → push إلى فرع النافذة نفسه فقط. لا قفل دمج ولا أي تفاعل مع main من هذا السكربت.
-   الدمج إلى main والنشر الفعلي أصبحا حصريًا عبر تشغيل يدوي (من واجهة GitHub، Actions → Run workflow) لـ`.github/workflows/release-majlisilm.yml` (workflow_dispatch فقط، بلا push/schedule trigger). يدمج الـworkflow الفرعين إلى main، يشغّل typecheck+build+test:regression مرة واحدة على النتيجة المجتمعة، ولا يدفع لـmain إلا بعد نجاحها بالكامل؛ أي تعارض دمج أو فشل فحص يُلغي التشغيل بالكامل بلا لمس main. `concurrency: release-majlisilm` يمنع تشغيلين متزامنين. بلا force push وبلا استدعاء vercel deploy يدوي في أي مكان من هذه الآلية؛ main يبقى فرع النشر الوحيد وVercel/auto-deploy.yml ينشران تلقائيًا من push الناتج.
+5. لا تدمج إلى main يدويًا من الجلسة (`git push` لـmain / `git merge` محلي). مسار الدمج والنشر التلقائي (2026-07-26، بطلب المالك):
+   - ادفع إلى فرع العمل (`cursor/**` · `session/**` · `claude/**` · `fix/**` · `feature/**` · `automation/**` عدا النافذتين أدناه) وافتح/حدّث PR إلى `main`.
+   - `.github/workflows/auto-merge-to-main.yml` يحوّل Draft→Ready، يفعّل Auto-merge (squash) بعد نجاح الفحوصات، ويحذف الفرع.
+   - `.github/workflows/auto-deploy.yml` ينشر من `main`→`production` بعد الدمج ويتحقق أن majlisilm.com يردّ 200.
+   **استثناء (content-runner):** `scripts/content-runner.sh` يبقى على مساره التصميمي.
+   **نافذتا automation/content وautomation/tasks:** ادفعا لفرعيهما فقط عبر `scripts/commit-and-push-branch.sh`؛ دمجهما معًا عبر `.github/workflows/release-majlisilm.yml` (workflow_dispatch) لتفادي سباق النافذتين — لا Auto-merge فردي لهذين الفرعين.
 
 ## صمامات الأمان وكفاءة الرصيد
 - إذا اقترب انتهاء الوقت: أكمل المهمة الجارية فقط وارفعها، ولا تبدأ مهمة جديدة.

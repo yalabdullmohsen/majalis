@@ -57,7 +57,10 @@ jobs:
           DISPATCH_PR: ${{ github.event.inputs.pr_number }}
         run: |
           set -euo pipefail
+          # فروع العمل المؤهّلة. نافذتا automation/content وautomation/tasks
+          # تُدمجان معًا فقط عبر release-majlisilm.yml لتفادي سباق النافذتين.
           ALLOW='^(cursor|session|claude|automation|fix|feature)/'
+          EXCLUDE_DUAL='^(automation/content|automation/tasks)$'
 
           nums=""
           if [ "$EVENT_NAME" = "pull_request" ]; then
@@ -96,11 +99,13 @@ jobs:
           echo "مرشّحون: ${nums:-∅}"
           echo "nums=${nums}" >> "$GITHUB_OUTPUT"
           echo "allow=${ALLOW}" >> "$GITHUB_OUTPUT"
+          echo "exclude_dual=${EXCLUDE_DUAL}" >> "$GITHUB_OUTPUT"
 
       - name: Ready + Auto-merge (squash) لكل PR مؤهّل
         if: steps.targets.outputs.nums != ''
         env:
           ALLOW: ${{ steps.targets.outputs.allow }}
+          EXCLUDE_DUAL: ${{ steps.targets.outputs.exclude_dual }}
           NUMS: ${{ steps.targets.outputs.nums }}
         run: |
           set -euo pipefail
@@ -139,6 +144,11 @@ jobs:
             fi
             if ! echo "$head" | grep -Eq "$ALLOW"; then
               echo "تخطي: الفرع $head خارج أنماط العمل المعتمدة"
+              echo "::endgroup::"
+              continue
+            fi
+            if echo "$head" | grep -Eq "$EXCLUDE_DUAL"; then
+              echo "تخطي: $head يُدمَج عبر release-majlisilm.yml (نافذتان متزامنتان)"
               echo "::endgroup::"
               continue
             fi
