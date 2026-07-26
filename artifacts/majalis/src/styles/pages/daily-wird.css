@@ -323,3 +323,8 @@ html[data-theme="dark"] .khatma-bar-fill {
   background: #5CC49A;
 }
 
+/* ============================================================
+   105 — DailyWirdPage  (dwd-*)
+   ============================================================ */
+.dwd-ring-fill { transition: stroke-dashoffset 0.4s ease; }
+

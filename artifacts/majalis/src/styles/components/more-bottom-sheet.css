@@ -1,0 +1,26 @@
+/* ── 175 — MoreBottomSheet & AppRoutes misc ─────────────────────────────── */
+.bottom-sheet__close-btn {
+  float: left;
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  cursor: pointer;
+  color: var(--majalis-ink-soft);
+  line-height: 1;
+}
+.bottom-sheet__body { padding: 0.75rem 1rem calc(2rem + var(--safe-bottom, 0px)); overflow-y: auto; }
+.bottom-sheet__section { margin-bottom: 1.25rem; }
+.bottom-sheet__section-label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--majalis-emerald);
+  letter-spacing: normal;
+  margin-bottom: 0.5rem;
+  text-transform: uppercase;
+}
+.more-sheet-item--active {
+  background: var(--majalis-sage);
+  border-color: var(--majalis-emerald);
+  color: var(--majalis-emerald-deep);
+}
+

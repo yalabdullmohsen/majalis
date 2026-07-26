@@ -1,6 +1,7 @@
 import { Library } from "lucide-react";
 import { Link } from "wouter";
 import type { RAGSource } from "@/lib/rag-service";
+import "@/styles/components/source-card.css";
 
 interface Props {
   source: RAGSource;

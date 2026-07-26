@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { ClipboardCopy, Printer, Quote, Star } from "lucide-react";
 import { CitationModal } from "./CitationModal";
 import { type CitationSource, type CitationContentType, citTypeClass } from "@/lib/citation-service";
+import "@/styles/components/islamic-geometric.css";
 
 interface Props {
   /** بيانات المصدر — يمكن تمريرها مباشرة إن كانت معلومة */

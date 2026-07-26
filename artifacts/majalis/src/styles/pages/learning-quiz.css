@@ -448,3 +448,21 @@ html[data-theme="dark"] .lcp2-event { background: rgba(255,255,255,.04); border-
 html[data-theme="dark"] .lcp2-event:hover { border-color: rgba(23,61,53,.4); }
 html[data-theme="dark"] .lcp2-event__title { color: #e8f5ee; }
 html[data-theme="dark"] .lcp2-event__date-box { background: rgba(23,61,53,.2); }
+
+/* ============================================================
+   72 — LearningCalendarPage  (lcd-*)
+   ============================================================ */
+
+
+/* ============================================================
+   63 — LearningQuizPage  (lqp-*)
+   ============================================================ */
+
+.lqp-score--pass { color: var(--emerald-deep); }
+.lqp-score--fail { color: #dc2626; }
+
+.lqp-mc-btn.is-selected {
+  border: 2px solid var(--emerald-deep);
+  background: var(--emerald-light, #d4e9dc);
+}
+

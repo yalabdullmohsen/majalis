@@ -11,6 +11,7 @@ import {
   getItemTitle,
   trackEvent,
 } from "@/lib/recommendation-service";
+import "@/styles/components/content-actions-rag.css";
 
 function rwTypeMod(ct: RecContentType | string): string {
   return `rw-type--${String(ct).replace(/_/g, "-")}`;

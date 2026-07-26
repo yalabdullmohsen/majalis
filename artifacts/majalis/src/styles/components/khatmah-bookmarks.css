@@ -1,0 +1,26 @@
+/* ── 171 — KhatmahPanel (kht-*) & QuranBookmarksPanel (qbp-*) shared ───── */
+
+.kht-plan-card--active { border: 1px solid var(--majalis-line); background: var(--majalis-panel); }
+.kht-plan-card--done   { border: 1px solid var(--majalis-emerald); background: #F0F7F4; }
+
+.kht-plan-name--done { color: var(--majalis-emerald-deep); }
+
+/* qbp tabs */
+
+.qbp-tab--active {
+  border-bottom-color: var(--majalis-emerald);
+  color: var(--majalis-emerald-deep);
+  font-weight: 700;
+}
+.qbp-list-chip--active {
+  border-color: var(--majalis-emerald);
+  background: var(--majalis-sage);
+  color: var(--majalis-emerald-deep);
+  font-weight: 700;
+}
+
+.qbp-hifz--not-started { --qbp-hifz-status-color: var(--majalis-ink-soft); }
+.qbp-hifz--memorizing  { --qbp-hifz-status-color: var(--majalis-emerald, #226A56); }
+.qbp-hifz--memorized   { --qbp-hifz-status-color: var(--majalis-emerald-deep, #143F35); }
+.qbp-hifz--reviewing   { --qbp-hifz-status-color: #1E40AF; }
+

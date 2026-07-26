@@ -3,6 +3,7 @@ import { AlertTriangle, BookOpen, Globe, Landmark, Library, RefreshCw, Scale, Us
 import type { LucideIcon } from "lucide-react";
 import type { ChatMessage } from "@/hooks/useAssistantChat";
 import { AssistantReply } from "./AssistantReply";
+import "@/styles/components/assistant-chat.css";
 
 type Props = {
   messages: ChatMessage[];

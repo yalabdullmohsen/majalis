@@ -1,0 +1,6 @@
+/* ============================================================
+   98 — AdhkarPage  (adhkar-* additions)
+   ============================================================ */
+.adhkar-ring-fill { transition: stroke-dashoffset 0.18s ease; }
+.adhkar-prog-fill { width: var(--adhkar-pct, 0%); }
+

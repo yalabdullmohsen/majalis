@@ -1,0 +1,24 @@
+/* ============================================================
+   68 — TopicPage  (tpc-*)
+   ============================================================ */
+.tpc-section-group { margin-bottom: 2rem; }
+.tpc-result-link   { text-decoration: none; }
+.tpc-breadcrumb    { margin-bottom: 1rem; font-size: var(--ds-text-sm); }
+.tpc-sep           { margin: 0 0.5rem; }
+.tpc-title-en      { margin-top: -0.5rem; }
+.tpc-related {
+  margin-top: 2rem;
+  padding: var(--ds-space-4);
+  border-radius: var(--ds-radius);
+  border: 1px solid var(--line, #e5e7eb);
+}
+.tpc-related__title { font-size: var(--ds-text-base); font-weight: 700; margin-bottom: 0.75rem; }
+.tpc-related__chips { display: flex; flex-wrap: wrap; gap: var(--ds-space-2); }
+.tpc-related__chip {
+  padding: 0.375rem 0.75rem;
+  border-radius: var(--ds-radius-full);
+  background: var(--panel-soft, #f3f4f6);
+  text-decoration: none;
+  font-size: var(--ds-text-sm);
+}
+

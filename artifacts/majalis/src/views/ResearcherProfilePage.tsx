@@ -13,6 +13,7 @@ import {
   type ResearcherProfile,
 } from "@/lib/researcher-profile-service";
 import { applyPageSeo } from "@/lib/seo";
+import "@/styles/pages/researcher-profile.css";
 
 // ─── Interest Tag Toggle ───────────────────────────────────────────────────────
 

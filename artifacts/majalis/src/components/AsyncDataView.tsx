@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import type { AsyncStatus } from "@/hooks/use-async-data";
 import { Empty, ErrorState, QaSkeleton, SearchSkeleton } from "@/components/ui-common";
+import "@/styles/components/async-data-error.css";
 
 type SkeletonVariant = "list" | "search" | "spinner";
 

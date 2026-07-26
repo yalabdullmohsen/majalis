@@ -1,0 +1,10 @@
+/* ============================================================
+   87 — HadithIndexPage  (hadith-index-card additions)
+   ============================================================ */
+.hadith-index-card { border-top-color: var(--hadith-accent); }
+.hadith-index-card__icon  { background: var(--hadith-accent); }
+.hadith-index-card__title { color: var(--hadith-accent); }
+.hadith-index-card--sahih { --hadith-accent: #226A56; }
+.hadith-index-card--daif  { --hadith-accent: #226A56; }
+.hadith-index-card--mawdu { --hadith-accent: #B91C1C; }
+
