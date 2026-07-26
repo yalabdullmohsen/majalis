@@ -1070,11 +1070,14 @@ textarea {
   transition: opacity var(--motion-fast);
 }
 .fiqh-stats-list a,
-.fiqh-stats-note a {
+.fiqh-stats-note a,
+.fiqh-topic-list__link,
+.fiqh-topic-list a {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
   padding-block: 0.25rem;
+  box-sizing: border-box;
 }
 .kuwait-lessons-feed-note a,
 .kuwait-lessons-attribution a,

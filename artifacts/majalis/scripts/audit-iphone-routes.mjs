@@ -89,6 +89,12 @@ async function auditPage(page, path, width, theme) {
     await page.waitForTimeout(900);
     // انتظر ظهور عنوان دلالي إن وُجد (صفحات async مثل مواقيت الصلاة)
     await page.waitForSelector("h1", { timeout: 4_000 }).catch(() => {});
+    // انتظر انتهاء هياكل التحميل الشائعة حتى لا يمرّ تدقيق المحتوى الفارغ زائفًا
+    await page.waitForFunction(() => {
+      const sk = document.querySelector(".skeleton-card, .ui-skeleton, [data-loading='true']");
+      return !sk;
+    }, { timeout: 5_000 }).catch(() => {});
+    await page.waitForTimeout(250);
   } catch (e) {
     return { issues: [{ code: "NAV_FAIL", detail: String(e.message || e).slice(0, 120) }], metrics: {} };
   }
