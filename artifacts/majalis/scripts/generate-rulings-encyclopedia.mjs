@@ -7,6 +7,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { createHash } from "node:crypto";
+import { CONTENT_CURRICULUM_ENABLED } from "../lib/content-flags.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
@@ -340,6 +341,9 @@ function fromFiqhCouncilSeed() {
 // ليست أحكامًا شرعية ولا يجوز تحويلها إلى سجلات في موسوعة الأحكام.
 
 function fromCurriculumRegistry() {
+  // عزل عاجل: لا تُدخَل سجلات المنهج في الموسوعة المعروضة ما دامت الراية false.
+  // الملف المصدر curriculum-topics.json يبقى في المستودع للمراجعة البشرية.
+  if (!CONTENT_CURRICULUM_ENABLED) return [];
   const regPath = path.resolve(ROOT, "data/rulings-encyclopedia/curriculum-topics.json");
   if (!fs.existsSync(regPath)) return [];
   const topics = JSON.parse(fs.readFileSync(regPath, "utf8"));

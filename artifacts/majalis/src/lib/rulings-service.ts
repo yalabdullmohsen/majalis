@@ -4,6 +4,7 @@
  */
 
 import type { CategoryStat, RulingListOptions, RulingListResult, ShariaRulingExtended } from "./rulings-types";
+import { CONTENT_CURRICULUM_ENABLED, isCurriculumRuling } from "./content-flags";
 import { supabase, isSupabaseConfigured } from "./supabase";
 import { logSupabaseError, formatSupabaseError } from "./supabase-config";
 
@@ -88,7 +89,10 @@ export async function getRulingsEncyclopedia(opts?: RulingListOptions): Promise<
 
     if (error) throw error;
     type RpcRow = ShariaRulingExtended & { total_count?: number };
-    const rows = (data || []) as RpcRow[];
+    let rows = (data || []) as RpcRow[];
+    if (!CONTENT_CURRICULUM_ENABLED) {
+      rows = rows.filter((r) => !isCurriculumRuling(r));
+    }
     const total = rows.length > 0 && rows[0].total_count != null ? Number(rows[0].total_count) : rows.length;
 
     return { data: rows, total: total || rows.length, page, limit, usingSeed: false };
@@ -111,7 +115,13 @@ export async function getRulingById(id: string): Promise<{ data: ShariaRulingExt
       .eq("id", id)
       .eq("status", "approved")
       .maybeSingle();
-    if (byId.data) return { data: byId.data as ShariaRulingExtended, usingSeed: false };
+    if (byId.data) {
+      const row = byId.data as ShariaRulingExtended;
+      if (!CONTENT_CURRICULUM_ENABLED && isCurriculumRuling(row)) {
+        return { data: null, usingSeed: false };
+      }
+      return { data: row, usingSeed: false };
+    }
 
     const byKey = await supabase
       .from("sharia_rulings")
@@ -119,7 +129,13 @@ export async function getRulingById(id: string): Promise<{ data: ShariaRulingExt
       .eq("external_key", id)
       .eq("status", "approved")
       .maybeSingle();
-    if (byKey.data) return { data: byKey.data as ShariaRulingExtended, usingSeed: false };
+    if (byKey.data) {
+      const row = byKey.data as ShariaRulingExtended;
+      if (!CONTENT_CURRICULUM_ENABLED && isCurriculumRuling(row)) {
+        return { data: null, usingSeed: false };
+      }
+      return { data: row, usingSeed: false };
+    }
 
     return { data: null, usingSeed: false };
   } catch (err) {
