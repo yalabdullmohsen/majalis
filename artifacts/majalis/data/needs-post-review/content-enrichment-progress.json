@@ -2,7 +2,7 @@
   "branch": "session/content-language-audit",
   "mode": "enrichment",
   "started": "2026-07-26T05:50:00Z",
-  "updated": "2026-07-26T06:02:15Z",
+  "updated": "2026-07-26T06:18:25Z",
   "baseline": {
     "P1_lessons": 1175,
     "quiz": 997,
@@ -30,16 +30,14 @@
   ],
   "added_counts": {
     "quiz_new": 100,
-    "quiz_explanations_total_fields": 328,
-    "quiz_explanations_backfill_approx": 100,
+    "quiz_explanations_backfill": 100,
     "fawaid_new": 60,
     "qa_new": 40,
-    "rulings_new": 10,
+    "rulings_seed_new": 10,
     "stories_new": 6,
     "library_new": 14,
     "scholars_new": 10,
     "adhkar_new": 10,
-    "P1_lessons_approx_now": 1308,
     "P1_lessons_new_approx": 133
   },
   "current": {
@@ -53,5 +51,24 @@
     "scholars": 109,
     "adhkar": 311,
     "lessons": 1308
+  },
+  "status": "merged_and_deployed",
+  "deploy": {
+    "auto_merge_run": 30190702110,
+    "auto_deploy_run": 30190780665,
+    "main_commit": "5ff7e3fc"
+  },
+  "final_counts": {
+    "quiz": 1097,
+    "fawaid": 556,
+    "qa": 400,
+    "rulings_seed": 83,
+    "rulings_encyclopedia": 583,
+    "stories": 59,
+    "library": 146,
+    "scholars": 109,
+    "adhkar": 311,
+    "lessons_approx": 1308,
+    "quiz_explanation_fields": 328
   }
 }
