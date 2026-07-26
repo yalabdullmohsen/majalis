@@ -14,6 +14,8 @@ import { SEED_QA, QA_CATEGORIES } from "@/lib/qa-seed";
 import { RequestManager } from "@/lib/request-manager";
 import type { ShariaRulingExtended } from "@/lib/rulings-types";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { RelatedKnowledge } from "@/components/RelatedKnowledge";
+import "@/styles/pages/fiqh-hub.css";
 
 type Tab = "rulings" | "qa" | "council";
 
@@ -325,6 +327,7 @@ export default function FiqhPage() {
           </div>
         )}
 
+      <RelatedKnowledge kind="fatwa" query="الفقه الإسلامي" title="معرفة ذات صلة بالفقه" limit={6} />
       <SectionQuiz
         categoryId="fiqh"
         title="اختبر معلوماتك في الفقه الإسلامي"

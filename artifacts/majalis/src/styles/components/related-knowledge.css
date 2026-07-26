@@ -184,3 +184,8 @@ html[data-theme="dark"] .kri-card:hover { background: rgba(23,61,53,.1); border-
 html[data-theme="dark"] .kri-card__name { color: #e8f5ee; }
 html[data-theme="dark"] .kri-card__icon-wrap { background: rgba(23,61,53,.2); }
 
+
+/* ── 199 — KnowledgeRelatedItems (kri-*) ────────────────────────────────────── */
+.kri-aside { margin-top: 2rem; direction: rtl; }
+.kri-title { font-size: 0.9375rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--majalis-emerald, #226A56); }
+.kri-grid  { display: grid; gap: var(--ds-space-2); }

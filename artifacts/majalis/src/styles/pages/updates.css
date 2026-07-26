@@ -378,3 +378,7 @@ html[data-theme="dark"] .global-back-btn {
 }
 .cvp-back-link:hover { background: var(--majalis-emerald-subtle, #F0F7F4); color: var(--majalis-emerald-deep, #166534); }
 
+
+.upd-search-wrap { padding: .5rem 0 .75rem; }
+.upd-search-input { width: 100%; }
+

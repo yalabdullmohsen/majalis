@@ -25,6 +25,8 @@ import {
 import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { Chip } from "@/components/ui-common";
+import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { useAuth } from "@/components/AuthProvider";
 
 // ── Types ──────────────────────────────────────────────────────────────────
@@ -350,11 +352,14 @@ export default function KnowledgeGraphPage() {
           {/* Filter chips */}
           <div className="kng-filter-chips">
             {(["all", ...allTypes]).map((t) => (
-              <button key={t} type="button" onClick={() => setFilterType(t)}
+              <Chip
+                key={t}
+                active={filterType === t}
+                onClick={() => setFilterType(t)}
                 className={`kng-filter-chip${t !== "all" ? " kng-filter-chip--typed" : ""}${filterType === t ? " is-active" : ""} kng-nt--${t}`}
               >
                 {t === "all" ? "الكل" : getTypeLabel(t)}
-              </button>
+              </Chip>
             ))}
           </div>
 
@@ -617,6 +622,7 @@ export default function KnowledgeGraphPage() {
       <div className="twh-share">
         <ShareButtons title="الرسم البياني المعرفي الإسلامي — المجلس العلمي" url="https://www.majlisilm.com/knowledge-graph" />
       </div>
+      <RelatedKnowledge kind="book" query="معرفة إسلامية" title="مواد ذات صلة بالرسم المعرفي" limit={6} />
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId={["aqeeda", "tarikh", "fiqh"]} title="اختبر معلوماتك في المعرفة الإسلامية" count={4} />
       </div>

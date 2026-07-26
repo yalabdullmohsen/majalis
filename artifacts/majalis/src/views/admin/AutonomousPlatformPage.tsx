@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { SkeletonCardGrid } from "@/components/ui-common";
 import { AdminShell, useAdminShell } from "@/views/admin/AdminShell";
+import "@/styles/pages/autonomous-platform.css";
 
 const API_BASE = "/api/admin/autonomous-platform";
 
