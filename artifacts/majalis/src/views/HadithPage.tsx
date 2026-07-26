@@ -15,6 +15,7 @@ import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { fetchAllHadiths, type CdnHadith } from "@/lib/hadith-cdn-service";
 import { useReadingScrollMemory } from "@/hooks/useReadingScrollMemory";
+import { resolveScholarWorkLink } from "@/lib/scholar-library-links";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -337,13 +338,24 @@ function HadithDetailModal({ h, onClose }: { h: HadithItem; onClose: () => void 
           {h.source_name && (
             <div className="hadith-modal__meta-item">
               <strong>المصدر</strong>
-              <span>{h.source_name}</span>
+              <span>
+                {(() => {
+                  const link = resolveScholarWorkLink(h.source_name);
+                  return link.href ? <Link href={link.href}>{h.source_name}</Link> : h.source_name;
+                })()}
+              </span>
             </div>
           )}
           {meta.takhrij && (
             <div className="hadith-modal__meta-item">
               <strong>التخريج</strong>
-              <span>{String(meta.takhrij)}</span>
+              <span>
+                {(() => {
+                  const raw = String(meta.takhrij);
+                  const link = resolveScholarWorkLink(raw);
+                  return link.href ? <Link href={link.href}>{raw}</Link> : raw;
+                })()}
+              </span>
             </div>
           )}
           <div className="hadith-modal__meta-item">

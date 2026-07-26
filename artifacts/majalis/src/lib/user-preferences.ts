@@ -4,6 +4,8 @@ export type UserPreferences = {
   direction: "rtl" | "ltr";
   readingTextSize: string;
   readingSpacing: "ضيق" | "متوسط" | "واسع";
+  /** عرض عمود النص في وضع القراءة (ch) */
+  readingWidth: "ضيق" | "متوسط" | "واسع";
   readingMode: boolean;
   imageQuality: "منخفض" | "متوسط" | "عالي";
   videoAutoplay: boolean;
@@ -29,6 +31,7 @@ export const DEFAULT_PREFERENCES: UserPreferences = {
   direction: "rtl",
   readingTextSize: "17",
   readingSpacing: "واسع",
+  readingWidth: "متوسط",
   readingMode: false,
   imageQuality: "متوسط",
   videoAutoplay: false,
@@ -75,7 +78,12 @@ export function applyPreferences(prefs: UserPreferences = readPreferences()) {
     "--reading-line-height",
     prefs.readingSpacing === "ضيق" ? "1.6" : prefs.readingSpacing === "متوسط" ? "1.85" : "2.1",
   );
+  root.style.setProperty(
+    "--reading-max-width",
+    prefs.readingWidth === "ضيق" ? "52ch" : prefs.readingWidth === "واسع" ? "78ch" : "68ch",
+  );
   root.dataset.readingMode = prefs.readingMode ? "quiet" : "normal";
+  root.dataset.readingWidth = prefs.readingWidth;
   root.dir = prefs.direction;
   root.dataset.imageQuality = prefs.imageQuality;
 }
