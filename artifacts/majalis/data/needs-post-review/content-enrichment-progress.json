@@ -2,7 +2,7 @@
   "branch": "session/content-language-audit",
   "mode": "enrichment",
   "started": "2026-07-26T05:50:00Z",
-  "updated": "2026-07-26T06:10:00Z",
+  "updated": "2026-07-26T06:02:15Z",
   "baseline": {
     "P1_lessons": 1175,
     "quiz": 997,
@@ -24,11 +24,34 @@
     "library_new": 10
   },
   "batches_done": [
-    "batch1-p1-quiz-fawaid"
+    "batch1-p1-quiz-fawaid",
+    "batch2-rulings-qa-stories-library",
+    "batch3-scholars-lessons-quiz-fawaid-qa-adhkar-explanations-library"
   ],
   "added_counts": {
-    "P1_lessons_new": 82,
-    "quiz_new": 50,
-    "fawaid_new": 30
+    "quiz_new": 100,
+    "quiz_explanations_total_fields": 328,
+    "quiz_explanations_backfill_approx": 100,
+    "fawaid_new": 60,
+    "qa_new": 40,
+    "rulings_new": 10,
+    "stories_new": 6,
+    "library_new": 14,
+    "scholars_new": 10,
+    "adhkar_new": 10,
+    "P1_lessons_approx_now": 1308,
+    "P1_lessons_new_approx": 133
+  },
+  "current": {
+    "quiz": 1097,
+    "quiz_expl": 328,
+    "fawaid": 556,
+    "qa": 400,
+    "rulings": 83,
+    "stories": 59,
+    "library": 146,
+    "scholars": 109,
+    "adhkar": 311,
+    "lessons": 1308
   }
 }
