@@ -127,12 +127,11 @@ const FEATURE_CATS_RAW: FeatureCat[] = [
     label: "أدوات التعلم",
     items: [
       { href: "/learning/paths",  Icon: Map,         title: "المسارات العلمية",  desc: "مسار من المبتدئ إلى المتقدم" },
-      { href: "/flashcards",      Icon: Layers,      title: "البطاقات الدعوية",   desc: "مراجعة ذكية" },
+      { href: "/flashcards",      Icon: Layers,      title: "بطاقات المراجعة",   desc: "مراجعة ذكية" },
       { href: "/quiz",            Icon: Target,      title: "لعبة سين جيم – أسئلة وأجوبة",   desc: "اختبر معلوماتك من خلال لعبة أسئلة وأجوبة ممتعة ومتدرجة" },
       { href: "/assistant",       Icon: Bot,         title: "المساعد العلمي",    desc: "إرشاد فوري بالذكاء الاصطناعي" },
       { href: "/calendar",        Icon: CalendarDays, title: "التقويم الهجري",   desc: "التواريخ والأيام المميزة" },
       { href: "/knowledge-graph", Icon: Network,     title: "استكشف المعرفة",              desc: "شبكة المعرفة الإسلامية وعلاقاتها" },
-      { href: "/mind-map",        Icon: Layers,      title: "الخرائط الذهنية",             desc: "خرائط ذهنية تفاعلية للعلوم الشرعية" },
       { href: "/institutions",    Icon: Landmark,    title: "المؤسسات الإسلامية",            desc: "المجامع والجامعات والمراكز البحثية الكبرى" },
       { href: "/scholars",        Icon: Users,       title: "أعلام العلماء",                desc: "مئات العلماء عبر التاريخ بالتخصص والحقبة" },
     ],
@@ -147,7 +146,6 @@ const FEATURE_CATS_RAW: FeatureCat[] = [
       { href: "/quran/surah-stories",  Icon: Star,       title: "قصص القرآن",        desc: "أسباب النزول و١١٤ سورة" },
       { href: "/quran/tajweed",        Icon: Mic2,       title: "علم التجويد",        desc: "أحكام التجويد الشاملة" },
       { href: "/ulum-quran",           Icon: GraduationCap, title: "علوم القرآن",      desc: "النزول والجمع والإعجاز والتفسير" },
-      { href: "/quran-circles",        Icon: Layers,     title: "حلقات القرآن",       desc: "قريبًا — دليل حلقات الحفظ" },
     ],
   },
   {

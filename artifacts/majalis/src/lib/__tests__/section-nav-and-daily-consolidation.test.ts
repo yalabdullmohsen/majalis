@@ -114,8 +114,12 @@ console.log("\n=== تعطيل الباحث الشرعي — سجل الميزا�
     "مدخل قسم الأطفال مسجَّل بحالة coming-soon ومسار /kids صحيح");
 
   const circlesEntry = FEATURE_REGISTRY.find((f) => f.id === "quran-circles");
-  assert(circlesEntry !== undefined && circlesEntry.status === "coming-soon",
-    "حلقات التحفيظ بحالة coming-soon");
+  assert(circlesEntry !== undefined && circlesEntry.status === "coming-soon" && circlesEntry.inSideNav === false,
+    "حلقات التحفيظ بحالة coming-soon وخارج القائمة الجانبية");
+
+  const uniEntry = FEATURE_REGISTRY.find((f) => f.id === "universities");
+  assert(uniEntry !== undefined && uniEntry.status === "disabled" && uniEntry.inSideNav === false,
+    "دليل الجامعات مُنزَّل من الاكتشاف");
 
   const planEntry = FEATURE_REGISTRY.find((f) => f.id === "learning-plan");
   assert(planEntry !== undefined && planEntry.status === "disabled" && planEntry.inSideNav === false,

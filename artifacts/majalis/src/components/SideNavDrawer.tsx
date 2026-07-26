@@ -3,7 +3,7 @@ import { useState, useMemo, useEffect, useRef } from "react";
 import { Link, useLocation } from "wouter";
 import {
   Activity, Baby, BarChart3, BookMarked, BookOpen, BookText, BookUser,
-  Bot, Building2, Calculator, Calendar, CalendarDays, CheckCircle2, ChevronDown, ChevronUp,
+  Bot, Calculator, Calendar, CalendarDays, CheckCircle2, ChevronDown, ChevronUp,
   Clock, Compass, CreditCard, FileText, GitBranch, GraduationCap,
   Heart, HelpCircle, Home, Landmark, Layers, Library, Lightbulb,
   LogIn, Map, MapPin, Mic2, Moon, Network, Quote, RefreshCw, Repeat2,
@@ -224,7 +224,6 @@ const DRAWER_GROUPS: NavGroup[] = [
       { href: "/ulum-quran",          label: "علوم القرآن",        Icon: GraduationCap, desc: "التفسير والناسخ والمنسوخ" },
       { href: "/quran/surah-stories", label: "قصص السور",          Icon: BookText,      desc: "أسباب النزول ومحاور السور" },
       { href: "/duas-quran",          label: "أدعية القرآن",       Icon: BookMarked,    desc: "الأدعية القرآنية المختارة" },
-      { href: "/quran-circles",       label: "حلقات التحفيظ",      Icon: Users,         desc: "دليل حلقات القرآن" },
       { href: "/quran-memorization",  label: "اختبارات الحفظ",     Icon: Zap,           desc: "12 نوعًا من اختبارات الحفظ" },
       { href: "/quran/memorization-plans", label: "خطط الحفظ",     Icon: CalendarDays,  desc: "خطط مرنة للحفظ والمراجعة والتثبيت" },
       { href: "/mutashabihat",        label: "الآيات المتشابهات",  Icon: GitBranch,     desc: "تمييز الآيات المتشابهة لفظًا" },
@@ -238,7 +237,6 @@ const DRAWER_GROUPS: NavGroup[] = [
       { href: "/search",              label: "البحث الشامل",        Icon: Search,    desc: "ابحث في كل محتوى التطبيق" },
       { href: "/academic-research",   label: "الأبحاث العلمية",    Icon: FileText,  desc: "أبحاث ودراسات شرعية" },
       { href: "/knowledge-graph",     label: "استكشف المعرفة",      Icon: Network,   desc: "شبكة المعرفة والخريطة المعرفية" },
-      { href: "/mind-map",            label: "الخرائط الذهنية",     Icon: Map,       desc: "تنظيم المعلومات مرئياً" },
       { href: "/islamic-glossary",    label: "المصطلحات الإسلامية", Icon: BookOpen,  desc: "معجم المصطلحات الفقهية" },
     ],
   },
@@ -249,7 +247,6 @@ const DRAWER_GROUPS: NavGroup[] = [
     items: [
       { href: "/library",       label: "المكتبة الشرعية",     Icon: Library,    desc: "كتب ومخطوطات إسلامية" },
       { href: "/scholars",      label: "أعلام الإسلام",       Icon: BookUser,   desc: "تراجم العلماء والمشايخ" },
-      { href: "/universities",  label: "دليل الجامعات",       Icon: Building2,  desc: "الجامعات الإسلامية حول العالم" },
       { href: "/institutions",       label: "المؤسسات الإسلامية",  Icon: Landmark,   desc: "مساجد · مكتبات · مراكز · جامعات" },
       { href: "/islamic-landmarks",  label: "المشاهد والمساجد",    Icon: MapPin,     desc: "خريطة المشاهد الإسلامية التاريخية" },
     ],

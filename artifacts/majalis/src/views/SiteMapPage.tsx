@@ -21,7 +21,6 @@ const SECTIONS = [
       { href: "/mutashabihat",       label: "المتشابهات القرآنية", desc: "الآيات المتشابهة لفظاً" },
       { href: "/duas-quran",         label: "أدعية القرآن",       desc: "الأدعية القرآنية المختارة" },
       { href: "/quran-memorization", label: "حفظ القرآن",         desc: "أدوات مساعدة على الحفظ" },
-      { href: "/quran-circles",      label: "حلقات التحفيظ",      desc: "دليل حلقات القرآن" },
     ],
   },
   {
@@ -140,7 +139,6 @@ const SECTIONS = [
       { href: "/assistant",        label: "المساعد الذكي",        desc: "استفسر عن أي مسألة" },
       { href: "/my-learning",      label: "لوحتي التعليمية",     desc: "إحصائياتك وتقدمك" },
       { href: "/knowledge-graph",  label: "استكشف المعرفة",      desc: "شبكة المعرفة والعلاقات بين المفاهيم" },
-      { href: "/mind-map",         label: "الخرائط الذهنية",      desc: "تنظيم المعلومات مرئياً" },
       { href: "/learning/paths",   label: "مسارات التعلم",        desc: "مسارات علمية منظمة بالمستويات" },
       { href: "/topics",           label: "الموضوعات الشرعية",    desc: "محتوى مجمّع حسب الموضوع" },
       { href: "/start-here",       label: "ابدأ من هنا",          desc: "دليل طالب العلم المبتدئ" },
@@ -148,7 +146,6 @@ const SECTIONS = [
       { href: "/hikam-salaf",      label: "حكم السلف الصالح",     desc: "أقوال الأئمة والصحابة" },
       { href: "/fawaid",           label: "الفوائد العلمية",      desc: "فوائد ومنقولات موثقة" },
       { href: "/islamic-glossary", label: "المصطلحات الإسلامية",  desc: "معجم المصطلحات" },
-      { href: "/universities",     label: "دليل الجامعات",        desc: "الجامعات الإسلامية" },
       { href: "/academic-research",label: "البحث الأكاديمي",      desc: "موارد البحث العلمي الشرعي" },
       { href: "/institutions",     label: "المؤسسات الإسلامية",   desc: "المراكز والمجامع العلمية" },
     ],
