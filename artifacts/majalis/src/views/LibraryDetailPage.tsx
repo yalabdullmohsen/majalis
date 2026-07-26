@@ -11,6 +11,7 @@ import { KnowledgeRelatedItems } from "@/components/knowledge/KnowledgeRelatedIt
 import { RecommendationWidget } from "@/components/recommendations/RecommendationWidget";
 import { ContentMindMap } from "@/components/ContentMindMap";
 import { ScholarlyTrustBadge, type TrustData } from "@/components/ScholarlyTrustBadge";
+import "@/styles/pages/library.css";
 
 export default function LibraryDetailPage({ params }: { params: { id: string } }) {
   const [item, setItem] = useState<LibraryItem | null>(null);

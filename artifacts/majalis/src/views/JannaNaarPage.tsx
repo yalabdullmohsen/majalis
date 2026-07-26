@@ -3,6 +3,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import "@/styles/pages/janna-naar.css";
 
 /* ══════════════════════════════════════════════════════════════════
    §245، صفة الجنة والنار  (.jn-*)
