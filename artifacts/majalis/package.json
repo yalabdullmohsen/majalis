@@ -45,7 +45,7 @@
     "lighthouse:reading-ux": "node scripts/lighthouse-reading-ux.mjs",
     "verify:production-complete": "node scripts/verify-production-complete.mjs --production",
     "test:assistant-suggested": "node scripts/test-assistant-suggested.mjs",
-    "test:sheikhs-dedup": "node scripts/test-sheikhs-dedup.mjs",
+    "test:sheikhs-dedup": "node scripts/test-sheikhs-dedup.mjs && npx tsx src/lib/__tests__/sheikhs-dedup.test.ts",
     "apply:activation-migrations": "node scripts/apply-activation-migrations.mjs",
     "apply:production-activation": "node scripts/apply-production-activation-tables.mjs",
     "promote:owner": "node scripts/promote-owner.mjs",
