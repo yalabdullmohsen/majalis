@@ -101,6 +101,11 @@ const LABEL_MAP: Record<string, string> = {
   "/arkan":                         "أركان الإسلام",
   "/arkan-iman":                    "أركان الإيمان",
   "/asma-husna":                    "الأسماء الحسنى",
+  "/learn/aqeedat-ahl-sunnah":      "عقيدة أهل السنة والجماعة",
+  "/learn/aqsam-tawheed":           "أقسام التوحيد",
+  "/learn/nawaqid-islam":           "نواقض الإسلام",
+  "/learn/iman-billah":             "الإيمان بالله",
+  "/islamic-sects":                 "الفرق والمذاهب",
   "/durus-imaniyya":                "دروس إيمانية",
   "/durus-mutanawwia":              "دروس متنوعة",
   "/iman-topics":                   "موضوعات إيمانية",
@@ -118,7 +123,6 @@ const LABEL_MAP: Record<string, string> = {
   "/janna-naar":                    "الجنة والنار",
   "/alamat-saah":                   "أشراط الساعة",
   "/tawba":                         "التوبة",
-  "/islamic-sects":                 "الفرق والمذاهب",
 
   // ─── السيرة والتاريخ ──────────────────────────────────────────────
   "/seerah":                        "السيرة النبوية",

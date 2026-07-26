@@ -1263,11 +1263,13 @@ export const MIND_MAPS: MindMap[] = [
         {
           id: "kl-ahl-sunna",
           label: "أهل السنة والجماعة",
-          href: "/tawhid",
+          href: "/learn/aqeedat-ahl-sunnah",
           children: [
-            { id: "kl-as1", label: "الأشعرية — المنهج الكلامي" },
-            { id: "kl-as2", label: "الماتريدية — كلام ما وراء النهر" },
-            { id: "kl-as3", label: "أهل الحديث — السلفية" },
+            { id: "kl-as0", label: "معالم المنهج", href: "/learn/aqeedat-ahl-sunnah" },
+            { id: "kl-as1", label: "الأشعرية — المنهج الكلامي", href: "/islamic-sects#ashariyya" },
+            { id: "kl-as2", label: "الماتريدية — كلام ما وراء النهر", href: "/islamic-sects#maturidiyya" },
+            { id: "kl-as3", label: "أهل الحديث — السلفية", href: "/islamic-sects#ahl-al-sunna" },
+            { id: "kl-as4", label: "بوابة التوحيد", href: "/tawhid" },
           ],
         },
         {

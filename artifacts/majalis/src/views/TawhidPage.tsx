@@ -6,7 +6,6 @@ import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import "@/styles/pages/tawhid.css";
-import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 
 // ─── أقسام العقيدة والتوحيد ──────────────────────────────────────────────────
 
@@ -60,6 +59,16 @@ const AQEEDA_SECTIONS: AqeedaSection[] = [
     emoji: "📖", title: "مسار تعلّم العقيدة",
     desc: "منهج متدرّج في أركان الإيمان والتوحيد من مصادر أهل السنة",
     href: "/learning/paths/aqeedah", badge: "مسار", color: "#065F46",
+  },
+  {
+    emoji: "🌟", title: "عقيدة أهل السنة والجماعة",
+    desc: "معالم المنهج: التلقي، الإيمان، الصفات، الصحابة، القدر، والوسطية",
+    href: "/learn/aqeedat-ahl-sunnah", badge: "١٠ دروس", color: "#0B3D2E",
+  },
+  {
+    emoji: "📚", title: "الفرق والمذاهب",
+    desc: "عرض تاريخي للفرق مع بيان موقف أهل السنة",
+    href: "/islamic-sects", badge: "موسوعة", color: "#1E3A5F",
   },
 ];
 
@@ -423,6 +432,8 @@ export default function TawhidPage() {
         <a href="#principles"     className="twh-jumpnav__btn">مسائل التوحيد</a>
         <a href="#asma-preview"   className="twh-jumpnav__btn">الأسماء الحسنى</a>
         <a href="#recommended"    className="twh-jumpnav__btn">كتب مقترحة</a>
+        <Link href="/learn/aqeedat-ahl-sunnah" className="twh-jumpnav__btn">دروس أهل السنة</Link>
+        <Link href="/islamic-sects#ahl-al-sunna" className="twh-jumpnav__btn">أهل السنة في الفرق</Link>
       </nav>
 
       <div className="twh-search-wrap">
@@ -533,6 +544,21 @@ export default function TawhidPage() {
               <p className="twh-book-desc">{b.desc}</p>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* ══ مسار أهل السنة ══ */}
+      <section aria-labelledby="aswj-heading" className="twh-section">
+        <SectionLabel emoji="🌟" label="أهل السنة والجماعة" />
+        <h2 id="aswj-heading" className="tawheed-principles-heading">أكمل دراسة منهج أهل السنة</h2>
+        <p className="twh-section-intro">
+          دروس منظّمة في معالم المنهج: مصدر التلقي، الإيمان، الأسماء والصفات، الصحابة، القدر، والوسطية بين الفرق — مع الإحالات إلى الواسطية والطحاوية.
+        </p>
+        <div className="twh-subsection-link" style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem" }}>
+          <Link href="/learn/aqeedat-ahl-sunnah" className="twh-goto-btn">دروس عقيدة أهل السنة ←</Link>
+          <Link href="/learn/aqsam-tawheed" className="twh-goto-btn">أقسام التوحيد ←</Link>
+          <Link href="/learn/nawaqid-islam" className="twh-goto-btn">نواقض الإسلام ←</Link>
+          <Link href="/islamic-sects#ahl-al-sunna" className="twh-goto-btn">صفحة الفرق — أهل السنة ←</Link>
         </div>
       </section>
 
