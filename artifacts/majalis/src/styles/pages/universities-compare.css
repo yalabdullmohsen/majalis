@@ -54,5 +54,3 @@
   grid-template-columns: repeat(var(--col-count, 1), minmax(0, 1fr));
   gap: var(--ds-space-3);
 }
-
-/* ── نُقل إلى styles/pages/features-in-progress.css ── */
