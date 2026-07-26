@@ -542,8 +542,8 @@ export const MIND_MAPS: MindMap[] = [
           children: [
             { id: "tt-1", label: "التفسير بالمأثور (الأثر والنقل)" },
             { id: "tt-2", label: "التفسير بالرأي المحمود والمذموم" },
-            { id: "tt-3", label: "التفسير الإشاري (الصوفي)" },
-            { id: "tt-4", label: "التفسير العلمي" },
+            { id: "tt-3", label: "التفسير الموضوعي", href: "/ulum-quran" },
+            { id: "tt-4", label: "التفسير الفقهي (أحكام القرآن)", href: "/ulum-quran" },
           ],
         },
         {
