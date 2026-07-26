@@ -11,7 +11,6 @@ import {
 } from "lucide-react";
 import { useThemePreference } from "@/components/ThemePreferenceProvider";
 import "@/styles/components/more-bottom-sheet.css";
-import "@/styles/components/dark-emerald-menus.css";
 
 const SHEET_SECTIONS = [
   /* ── القرآن الكريم ── */
