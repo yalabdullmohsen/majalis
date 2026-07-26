@@ -436,10 +436,17 @@ export async function getApprovedFawaid() {
     DEMO_FAWAID,
   );
   if (result.usingSeed) return result;
-  // دمج مع البذرة — راجع تعليق mergeRowsWithSeed: الجدول الحيّ فيه ٧ فوائد
+  // FaidahCard وFawaidPage يقرآن الحقل `source` (اسم حقل البذرة)، والجدول
+  // الحيّ يسمّيه `source_name` — فكل تخريج مخزَّن في الجدول كان لا يُعرَض
+  // إطلاقًا على البطاقة (تُقدَّم الفائدة بلا مصدر). التطبيع هنا لا في
+  // البطاقة لأن البذرة والجدول مصدران لنفس القائمة المدموجة.
+  const rows = (result.data as any[]).map((r) =>
+    r && r.source === undefined && r.source_name ? { ...r, source: r.source_name } : r,
+  );
+  // دمج مع البذرة — راجع تعليق mergeRowsWithSeed: الجدول الحيّ فيه ٥ فوائد
   // معتمدة فقط، وبدون الدمج تُحجب ٤٩٦ فائدة في البذرة.
   const merged = mergeRowsWithSeed<any>(
-    result.data as any[],
+    rows,
     DEMO_FAWAID as any[],
     (f) => String(f?.text ?? "").trim().slice(0, 120),
   );
@@ -966,6 +973,14 @@ export async function adminGetAllFawaid() {
 
 export async function adminUpsertFawaid(data: any) {
   const { id, ...rest } = data;
+  // AdminInlineEdit يرسل الحقل باسم `source` (اسم حقل البذرة)، ولا عمود
+  // بهذا الاسم في جدول fawaid — فكان كل حفظ لتحرير فائدة يفشل بخطأ
+  // PostgREST «Could not find the 'source' column». التحويل لاسم العمود
+  // الفعلي `source_name` هنا لا في نموذج التحرير (يخدم البذرة أيضًا).
+  if ("source" in rest) {
+    rest.source_name = rest.source || null;
+    delete rest.source;
+  }
   if (!rest.status) rest.status = "approved";
   if (id) return await supabase.from("fawaid").update(rest).eq("id", id);
   return await supabase.from("fawaid").insert(rest);

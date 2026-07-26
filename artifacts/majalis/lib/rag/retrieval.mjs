@@ -145,22 +145,25 @@ async function searchFawaid(admin, query, limit = 4) {
   const term = normalizeQuery(query).slice(0, 80);
   if (!term) return [];
 
+  // أعمدة جدول fawaid الفعلية: لا title ولا author ولا source فيه
+  // (author_name وsource_name)، وطلبها كان يُفشل الاستعلام كاملًا بخطأ
+  // 42703 فيعود البحث فارغًا دائمًا بلا أثر ظاهر (لا يُفحَص error هنا).
   const { data } = await admin
     .from("fawaid")
-    .select("id, title, text, author, source, category")
-    .or(`text.ilike.%${term}%,title.ilike.%${term}%`)
+    .select("id, text, author_name, source_name, category")
+    .ilike("text", `%${term}%`)
     .limit(limit);
 
   return (data || []).map((f) => ({
     id:              f.id,
     content_id:      String(f.id),
     content_type:    "benefit",
-    title:           f.title || String(f.text || "").slice(0, 80),
+    title:           String(f.text || "").slice(0, 80),
     excerpt:         excerpt(f.text),
-    source_ref:      f.author || f.source || "فائدة",
+    source_ref:      f.author_name || f.source_name || "فائدة",
     source_url:      "",
     authority_score: 60,
-    metadata:        { author: f.author, source: f.source, category: f.category },
+    metadata:        { author: f.author_name, source: f.source_name, category: f.category },
     relevance_score: 0.4,
   }));
 }
