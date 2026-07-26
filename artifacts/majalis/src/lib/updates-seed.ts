@@ -26,7 +26,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-lesson-tafsir",
     title: "درس جديد: تفسير سورة النحل",
-    summary: "انضم درس تفسير سورة النحل إلى جدول الدروس.",
+    summary: "انضم درس تفسير سورة النحل إلى جدول الدروس المتاحة في المنصة.",
     update_type: "درس",
     source_type: "lesson",
     source_id: "kw-othman-tafsir-nahl-0",
@@ -48,7 +48,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-announcement-ramadan",
     title: "إعلان: البرنامج العلمي الرمضاني 1447",
-    summary: "إعلان عن بدء البرنامج العلمي في شهر رمضان.",
+    summary: "إعلان عن بدء البرنامج العلمي المكثّف في شهر رمضان.",
     update_type: "إعلان",
     source_url: "/annual-courses/course-ramadan-intensive",
     published_at: "2025-11-15T07:00:00Z",
