@@ -19,6 +19,7 @@ import {
 import { useAuth } from "@/components/AuthProvider";
 import { applyPageSeo } from "@/lib/seo";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import "@/styles/pages/scholarly-research.css";
 
 type View = "search" | "library";
 

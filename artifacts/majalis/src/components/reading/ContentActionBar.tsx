@@ -1,7 +1,7 @@
 import { lazy, Suspense, useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
 import { FavoriteButton } from "@/components/FavoriteButton";
-import { readPreferences, writePreferences } from "@/lib/user-preferences";
+import { readPreferences, writePreferences, type UserPreferences } from "@/lib/user-preferences";
 import { AdminInlineEdit, type InlineEditContentType } from "@/components/AdminInlineEdit";
 import {
   isSavedOffline,
@@ -57,6 +57,10 @@ export function ContentActionBar({
   const [copied, setCopied] = useState(false);
   const [offlineSaved, setOfflineSaved] = useState(false);
   const [readingMode, setReadingMode] = useState(() => readPreferences().readingMode);
+  const [readingSize, setReadingSize] = useState(() => Number(readPreferences().readingTextSize) || 17);
+  const [readingWidth, setReadingWidth] = useState<UserPreferences["readingWidth"]>(
+    () => readPreferences().readingWidth,
+  );
   const copyTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => () => { if (copyTimerRef.current) clearTimeout(copyTimerRef.current); }, []);
@@ -79,6 +83,19 @@ export function ContentActionBar({
     setReadingMode(next);
     writePreferences({ readingMode: next });
   }, [readingMode]);
+
+  const bumpFont = useCallback((delta: number) => {
+    const next = Math.min(28, Math.max(16, readingSize + delta));
+    setReadingSize(next);
+    writePreferences({ readingTextSize: String(next) });
+  }, [readingSize]);
+
+  const cycleWidth = useCallback(() => {
+    const order: UserPreferences["readingWidth"][] = ["ضيق", "متوسط", "واسع"];
+    const next = order[(order.indexOf(readingWidth) + 1) % order.length];
+    setReadingWidth(next);
+    writePreferences({ readingWidth: next });
+  }, [readingWidth]);
 
   const toggleOffline = useCallback(() => {
     if (offlineSaved) {
@@ -142,6 +159,25 @@ export function ContentActionBar({
         >
           وضع القراءة
         </button>
+      )}
+      {showReadingMode && readingMode && (
+        <div className="content-action-bar__reading-tools" role="group" aria-label="ضبط القراءة">
+          <button type="button" className="content-action-bar__btn" onClick={() => bumpFont(-1)} aria-label="تصغير الخط">
+            أ−
+          </button>
+          <button type="button" className="content-action-bar__btn" onClick={() => bumpFont(1)} aria-label="تكبير الخط">
+            أ+
+          </button>
+          <button
+            type="button"
+            className="content-action-bar__btn"
+            onClick={cycleWidth}
+            aria-label={`عرض النص: ${readingWidth}`}
+            title={`عرض النص: ${readingWidth}`}
+          >
+            عرض
+          </button>
+        </div>
       )}
       {showImageCard && (
         <button

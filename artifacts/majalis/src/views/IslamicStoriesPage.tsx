@@ -11,6 +11,7 @@ import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { truncateAtWord } from "@/lib/utils";
+import { useReadingScrollMemory } from "@/hooks/useReadingScrollMemory";
 import "@/styles/pages/islamic-stories.css";
 
 const STORY_ICON_MAP: Record<string, LucideIcon> = {
@@ -161,6 +162,7 @@ function StoryDetail({ story, onBack }: { story: IslamicStory; onBack: () => voi
 
 // ─────────────────── Main Page ───────────────────────────────────────────────
 export default function IslamicStoriesPage() {
+  useReadingScrollMemory("stories");
   const [stories, setStories] = useState<IslamicStory[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);

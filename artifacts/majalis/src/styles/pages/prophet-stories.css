@@ -1,0 +1,320 @@
+/* ════════════════════════════════════════════════════════════
+   PR. ProphetStoriesPage
+   ════════════════════════════════════════════════════════════ */
+/* ── Page Shell ── */
+.prophets-lux-page {
+  min-height: 100vh;
+  background: var(--msk-canvas, #FAF8F5);
+  color: var(--msk-text, #1A1A18);
+  font-family: var(--font-body);
+  direction: rtl;
+}
+
+/* ── Light Content Section ── */
+.prophets-light-section {
+  background: var(--msk-canvas, #FAF8F5);
+}
+
+/* ── Hero ── */
+.prophets-lux-hero {
+  position: relative;
+  padding: 4rem 1.5rem 3rem;
+  text-align: center;
+  overflow: hidden;
+  background-color: var(--majalis-emerald);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cpath d='M50,4 L57.27,32.45 L82.53,17.47 L67.55,42.73 L96,50 L67.55,57.27 L82.53,82.53 L57.27,67.55 L50,96 L42.73,67.55 L17.47,82.53 L32.45,57.27 L4,50 L32.45,42.73 L17.47,17.47 L42.73,32.45 Z' fill='none' stroke='%23FFFFFF' stroke-opacity='0.055' stroke-width='1.1'/%3E%3Ccircle cx='50' cy='50' r='1.4' fill='%23FFFFFF' fill-opacity='0.08'/%3E%3C/svg%3E");
+  background-size: 100px 100px;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+.prophets-lux-hero__stars {
+  position: absolute; inset: 0;
+  pointer-events: none;
+}
+.prophets-lux-hero__star-wrap {
+  position: absolute;
+  top: var(--star-top);
+  left: var(--star-left);
+  animation: lux-pulse 4s ease-in-out infinite;
+  animation-delay: var(--star-delay, 0s);
+}
+@keyframes lux-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.7; }
+  50% { transform: scale(1.2); opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .prophets-lux-hero__star-wrap { animation: none; }
+}
+.prophets-lux-hero__content {
+  position: relative;
+  max-width: 700px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ds-space-3);
+}
+.prophets-lux-hero__title {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-family: var(--font-body);
+  color: #D6D5CE;
+  margin: 0;
+  text-shadow: 0 2px 20px #D6D5CE40;
+  line-height: 1.3;
+}
+.prophets-lux-hero__subtitle {
+  color: #c8c8b8;
+  font-size: clamp(0.9rem, 2.5vw, 1.1rem);
+  max-width: 500px;
+  line-height: 1.7;
+  margin: 0;
+}
+
+.prophets-lux-hero__stats {
+  display: flex;
+  gap: var(--ds-space-2);
+  align-items: center;
+  font-size: 0.82rem;
+  color: rgba(255,255,255,0.7);
+  margin: 0;
+}
+.prophets-lux-hero__note {
+  font-size: 0.76rem;
+  line-height: 1.75;
+  color: rgba(255,255,255,0.55);
+  max-width: 520px;
+  margin: 0.5rem 0 0;
+}
+
+/* ── Tabs ── */
+.prophets-lux-tabs {
+  display: flex;
+  gap: var(--ds-space-2);
+  padding: 0.85rem 1.25rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  border-bottom: 1px solid var(--msk-border, #e5e0d5);
+  background: var(--msk-canvas-1, #fff);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+.prophets-lux-tabs::-webkit-scrollbar { display: none; }
+.prophets-lux-tab {
+  padding: 0.45rem 1.1rem;
+  border-radius: 8px;
+  border: 1px solid #d4c9b5;
+  background: transparent;
+  color: var(--majalis-ink-soft);
+  font-family: var(--font-body);
+  font-size: var(--ds-text-sm);
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+.prophets-lux-tab:hover { border-color: #D6D5CE; color: var(--majalis-emerald); background: rgba(23,61,53,0.06); }
+.prophets-lux-tab--active {
+  background: #D6D5CE18;
+  border-color: #D6D5CE;
+  color: var(--majalis-emerald);
+  font-weight: 700;
+}
+
+/* ── Container ── */
+.prophets-lux-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--ds-space-6);
+}
+
+/* ── Disclaimer ── */
+
+/* ── Search ── */
+.prophets-lux-search-wrap {
+  position: relative;
+  margin-bottom: 1.25rem;
+}
+.prophets-lux-search {
+  width: 100%;
+  padding: 0.8rem 1.25rem;
+  border-radius: 12px;
+  border: 1px solid #d4c9b5;
+  background: #fff;
+  color: #1a1a1a;
+  font-size: var(--ds-text-base);
+  font-family: var(--font-body);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+}
+.prophets-lux-search:focus { border-color: #D6D5CE; box-shadow: 0 0 0 3px #D6D5CE18; }
+.prophets-lux-search::placeholder { color: #9ca3af; }
+.prophets-lux-search-clear {
+  position: absolute;
+  top: 50%; right: 1rem;
+  transform: translateY(-50%);
+  background: none; border: none;
+  color: #9ca3af; font-size: var(--ds-text-base);
+  cursor: pointer; padding: var(--ds-space-1);
+}
+.prophets-lux-count { color: #6b7280; font-size: var(--ds-text-sm); margin: 0 0 1rem; }
+
+/* ── Grid ── */
+.prophets-lux-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--ds-space-4);
+}
+@media (min-width: 640px) { .prophets-lux-grid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 1024px) { .prophets-lux-grid { grid-template-columns: repeat(4, 1fr); } }
+
+/* ── Prophet Card ── */
+.prophet-lux-card {
+  position: relative;
+  background: var(--msk-canvas-1, #fff);
+  border: 1px solid var(--msk-border, #e5e0d5);
+  border-radius: 16px;
+  padding: 1.25rem 1rem 1rem;
+  cursor: pointer;
+  transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+  overflow: hidden;
+  text-align: right;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+}
+.prophet-lux-card:hover,
+.prophet-lux-card:focus-visible {
+  transform: translateY(-3px);
+  border-color: var(--prophet-color, #D6D5CE)80;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  outline: none;
+}
+.prophet-lux-card__num {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  width: 24px; height: 24px;
+  background: var(--prophet-color, #D6D5CE)18;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.7rem;
+  color: var(--prophet-color, #D6D5CE);
+  font-weight: 700;
+}
+.prophet-lux-card__star {
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+}
+.prophet-lux-card__body { flex: 1; }
+.prophet-lux-card__name {
+  font-family: var(--font-body);
+  font-size: 1.2rem;
+  color: var(--majalis-ink);
+  margin: 0 0 0.25rem;
+  line-height: 1.3;
+}
+.prophet-lux-card__pbuh { font-size: var(--ds-text-xs); color: #6b7280; }
+.prophet-lux-card__quran {
+  font-family: "Amiri Quran", "Amiri", serif;
+  font-size: 0.8rem;
+  color: var(--msk-gold, #226A56);
+  margin-bottom: 0.25rem;
+  opacity: 0.85;
+}
+.prophet-lux-card__title { color: var(--prophet-color, #D6D5CE); font-size: 0.85rem; margin: 0 0 0.2rem; font-weight: 600; }
+.prophet-lux-card__place { color: #6b7280; font-size: 0.78rem; margin: 0 0 0.4rem; }
+.prophet-lux-card__bio { color: var(--majalis-ink-soft); font-size: 0.8rem; line-height: 1.6; margin: 0 0 0.75rem; }
+.prophet-lux-card__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: var(--ds-text-xs);
+}
+.prophet-lux-card__surahs { color: #9ca3af; }
+.prophet-lux-card__read { color: var(--prophet-color, #D6D5CE); font-weight: 600; }
+.prophet-lux-card__bookmark {
+  position: absolute;
+  top: 0.6rem; right: 0.6rem;
+  background: none; border: none;
+  font-size: var(--ds-text-base); cursor: pointer;
+  padding: 0.2rem;
+  z-index: 2;
+}
+.prophet-lux-card__border {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--prophet-color, #D6D5CE)60, transparent);
+}
+.prophet-lux-card--azm { border-color: var(--prophet-color, #D6D5CE)60; box-shadow: 0 2px 10px rgba(31,77,58,0.12); }
+.prophet-lux-card__azm-tag {
+  position: absolute; top: 0.4rem; right: 0.4rem;
+  font-size: 0.8rem; font-weight: 700; padding: 0.15rem 0.5rem;
+  border-radius: var(--ds-radius-full); background: var(--majalis-emerald); color: #FFFFFF;
+}
+.prophet-detail-lux__azm-badge {
+  display: inline-block; font-size: 0.72rem; font-weight: 700;
+  padding: 0.2rem 0.7rem; border-radius: var(--ds-radius-full);
+  background: rgba(255,255,255,0.2); color: #FFFFFF; border: 1px solid rgba(255,255,255,0.4);
+}
+.prophet-miracle-box {
+  display: flex; gap: 0.6rem; align-items: flex-start;
+  background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 0.8rem; padding: 0.9rem 1rem;
+}
+.prophet-miracle-box__icon { font-size: var(--ds-text-base); color: var(--prophet-color-on-dark, #D6D5CE); flex-shrink: 0; margin-top: 0.1rem; }
+.prophet-miracle-box__text { font-size: 0.9rem; color: #E8E7E2; line-height: 1.65; margin: 0; }
+.prophet-fact-card--wide { grid-column: 1 / -1; text-align: start; }
+
+/* ── Empty ── */
+.prophets-lux-empty {
+  text-align: center;
+  padding: var(--ds-space-12);
+  color: #6b7280;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--ds-space-4);
+}
+
+/* ── Back Button ── */
+.prophet-lux-back {
+  background: none;
+  border: 1px solid #D6D5CE40;
+  color: #E8E7E2;
+  padding: 0.5rem 1.25rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+.prophet-lux-back:hover { border-color: #D6D5CE; background: #D6D5CE15; }
+
+/* ── Detail View ── */
+.prophet-detail-lux {
+  min-height: 100vh;
+  background: linear-gradient(180deg, var(--msk-canvas-deep, #0A1628) 0%, color-mix(in srgb, var(--msk-canvas-deep, #0A1628) 60%, #0D1F3C) 50%, var(--msk-canvas-deep, #0A1628) 100%);
+  color: #F5F5F0;
+  direction: rtl;
+  /* --prophet-color (PROPHET_HUE في ProphetStoriesPage.tsx) مصمَّم كلون تمييزي على
+     خلفيات فاتحة (بطاقات القائمة البيضاء) — بعض قيمه داكنة جداً (مثل #143F35) ولا
+     تصلح نصاً على الخلفية الكحلية لهذه الصفحة. --prophet-color-on-dark نسخة مفتَّحة
+     بمزج نحو الأبيض تحافظ على ≥4.5:1 حتى مع أغمق قيم PROPHET_HUE. */
+  --prophet-color-on-dark: color-mix(in srgb, var(--prophet-color, #D6D5CE) 55%, white);
+}
+.prophet-detail-lux__topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #D6D5CE15;
+  gap: var(--ds-space-4);
+  flex-wrap: wrap;
+}
+.prophet-detail-lux__actions {
+  display: flex;
+  gap: var(--ds-space-2);
+  align-items: center;
+  flex-wrap: wrap;
+}

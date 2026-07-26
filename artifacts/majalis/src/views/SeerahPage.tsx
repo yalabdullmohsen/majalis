@@ -8,6 +8,7 @@ import { usePageView } from "@/hooks/usePageView";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { ShareButton } from "@/components/ShareButton";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import "@/styles/pages/seerah.css";
 
 const PHASES: { id: string; num: number; title: string; year: string; Icon: LucideIcon; color: string; desc: string; topics: string[]; keyEvents: string[] }[] = [
   {

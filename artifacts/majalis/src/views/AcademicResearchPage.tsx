@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import "@/styles/pages/academic-research.css";
 
 // ── أنواع ────────────────────────────────────────────────────────────────────
 

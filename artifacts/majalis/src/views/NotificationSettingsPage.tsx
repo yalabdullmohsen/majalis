@@ -23,6 +23,7 @@ import {
   type NotifRecord,
 } from "@/lib/notification-history";
 import { applyPageSeo } from "@/lib/seo";
+import "@/styles/pages/notifications.css";
 
 type Permission = ReturnType<typeof getPermissionStatus>;
 type HistoryTab = "inbox" | "archived";

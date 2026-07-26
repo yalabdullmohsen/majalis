@@ -11,6 +11,7 @@ import { KnowledgeRelatedItems } from "@/components/knowledge/KnowledgeRelatedIt
 import { RecommendationWidget } from "@/components/recommendations/RecommendationWidget";
 import { ContentMindMap } from "@/components/ContentMindMap";
 import { ScholarlyTrustBadge, type TrustData } from "@/components/ScholarlyTrustBadge";
+import { resolveAuthorScholarLink } from "@/lib/author-scholar-links";
 import "@/styles/pages/library.css";
 
 export default function LibraryDetailPage({ params }: { params: { id: string } }) {
@@ -101,6 +102,8 @@ export default function LibraryDetailPage({ params }: { params: { id: string } }
     isApproved:  item.status === "approved",
   };
 
+  const authorLink = resolveAuthorScholarLink(item.author);
+
   return (
     <ContentDetailLayout
       breadcrumbs={[
@@ -110,7 +113,15 @@ export default function LibraryDetailPage({ params }: { params: { id: string } }
         { label: item.title },
       ]}
       title={item.title}
-      subtitle={item.author}
+      subtitle={
+        authorLink.href ? (
+          <Link href={authorLink.href} className="library-author-link">
+            {authorLink.label}
+          </Link>
+        ) : (
+          item.author
+        )
+      }
       meta={metaParts.join(" · ")}
       tags={item.keywords}
       body={item.description}
