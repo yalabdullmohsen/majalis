@@ -1354,10 +1354,16 @@ export default function HikamSalafPage() {
         <div className="hk-stats">
           <span>{HIKAM.length} حكمة</span>
           <span>·</span>
+          <span>{HIKAM.filter((h) => h.source).length} بمصدر مُسنَد</span>
+          <span>·</span>
           <span>{CATEGORIES.length - 1} أبواب</span>
           <span>·</span>
           <span>{favorites.size} محفوظ</span>
         </div>
+        <p className="hk-hero__note">
+          ما وُسم بـ«مشتهر عنه — بلا مصدر مُسنَد» يُعرض لشهرته عن قائله، ولم نقف له بعدُ
+          على مصدر مُسنَد؛ فلا يُنسب جزماً إليه ولا يُبنى عليه حكم.
+        </p>
       </section>
 
       {/* تحكم */}
@@ -1420,7 +1426,19 @@ export default function HikamSalafPage() {
                   <footer className="hk-card__footer">
                     <span className="hk-card__scholar">— {h.scholar}</span>
                     {h.died && <span className="hk-card__died">(ت{h.died})</span>}
-                    {h.source && <span className="hk-card__source">[{h.source}]</span>}
+                    {h.source ? (
+                      <span className="hk-card__source">[{h.source}]</span>
+                    ) : (
+                      /* لا نجزم بنسبة قولٍ بلا مصدر مسند: يُعرض القول لشهرته عن
+                         قائله مع تصريحٍ بأننا لم نقف له على مصدر مُسنَد. */
+                      <span
+                        className="hk-card__source"
+                        title="مشتهر عن قائله، ولم نقف له على مصدر مُسنَد بعد"
+                        style={{ opacity: 0.75 }}
+                      >
+                        [مشتهر عنه — بلا مصدر مُسنَد]
+                      </span>
+                    )}
                   </footer>
                 </blockquote>
                 <div className="hk-card__actions">
