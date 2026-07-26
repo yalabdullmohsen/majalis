@@ -2,6 +2,7 @@ import { useState } from "react";
 import { ClipboardCopy, Library, Save, Scale } from "lucide-react";
 import { SourceCard } from "./SourceCard";
 import type { RAGResult, ContentType } from "@/lib/rag-service";
+import "@/styles/components/content-actions-rag.css";
 
 interface Props {
   result: RAGResult;

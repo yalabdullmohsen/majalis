@@ -382,3 +382,12 @@ html[data-theme="dark"] .global-back-btn {
 .upd-search-wrap { padding: .5rem 0 .75rem; }
 .upd-search-input { width: 100%; }
 
+
+/* ============================================================
+   82 — UpdatesPage  (upd-*)
+   ============================================================ */
+.updates-type-badge { background: var(--badge-color, #64748B); }
+.upd-auto-badge     { background: #0F766E; margin-inline-start: 0.35rem; }
+.upd-title-link     { text-decoration: none; }
+.upd-source-name    { font-size: 0.8125rem; opacity: 0.85; }
+

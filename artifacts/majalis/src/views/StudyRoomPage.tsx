@@ -13,6 +13,7 @@ import {
 } from "@/lib/study-session-service";
 import { applyPageSeo } from "@/lib/seo";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import "@/styles/pages/study-room.css";
 
 // ─── Pomodoro config ──────────────────────────────────────────────────────────
 

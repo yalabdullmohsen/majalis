@@ -5,6 +5,7 @@ import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { verifyCertificate } from "@/lib/learning-paths-service";
 import { applyPageSeo } from "@/lib/seo";
+import "@/styles/pages/certificate-verify.css";
 
 type CertResult = {
   valid: boolean;

@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import type { University } from "@/lib/universities-service";
 import { ACCREDITATION_LABELS } from "@/lib/universities-service";
 import { useCompare } from "./CompareContext";
+import "@/styles/components/university-card.css";
 
 interface Props {
   university: University;

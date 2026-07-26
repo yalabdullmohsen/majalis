@@ -6,6 +6,7 @@ import { getAnnualCourseById, getRelatedCourses } from "@/lib/platform-content-s
 import { applyPageSeo } from "@/lib/seo";
 import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
 import { usePageView } from "@/hooks/usePageView";
+import "@/styles/pages/annual-course-detail.css";
 
 function buildMapsEmbed(mapUrl?: string, venue?: string, city?: string) {
   if (mapUrl?.includes("google.com/maps") || mapUrl?.includes("maps.app")) {

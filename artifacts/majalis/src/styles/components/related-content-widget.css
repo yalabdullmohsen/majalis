@@ -1,0 +1,12 @@
+/* ── 172 — RelatedContentWidget (rcw-*) ─────────────────────────────────── */
+
+.rcw-nt--quran-ayah    { --rcw-color: #065f46; }
+.rcw-nt--hadith        { --rcw-color: #1d4ed8; }
+.rcw-nt--fatwa         { --rcw-color: #7c3aed; }
+.rcw-nt--scholar,
+.rcw-nt--book          { --rcw-color: #226A56; }
+.rcw-nt--lesson        { --rcw-color: #0369a1; }
+.rcw-nt--benefit       { --rcw-color: #047857; }
+.rcw-nt--prophet-story { --rcw-color: #dc2626; }
+.rcw-nt--term          { --rcw-color: #6b7280; }
+

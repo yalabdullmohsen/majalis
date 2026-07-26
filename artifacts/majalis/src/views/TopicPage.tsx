@@ -11,6 +11,8 @@ import {
   type TopicSection,
 } from "@/lib/scholarly-intelligence-service";
 import { applyPageSeo } from "@/lib/seo";
+import "@/styles/pages/topic.css";
+import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 
 function SectionGroup({
   title,
@@ -134,6 +136,7 @@ export default function TopicPage() {
       <div className="twh-share">
         <ShareButtons title="موضوعات المجلس العلمي" url="https://www.majlisilm.com/topics" />
       </div>
+      <RelatedKnowledge kind="lesson" query="موضوع علمي" title="دروس ومواد ذات صلة" limit={6} />
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId={["fiqh", "aqeeda", "hadith"]} title="اختبر معلوماتك في هذا الموضوع" count={4} />
       </div>

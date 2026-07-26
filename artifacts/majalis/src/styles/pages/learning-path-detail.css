@@ -309,3 +309,11 @@ html[data-theme="dark"] .lpd2-module {
 html[data-theme="dark"] .lpd2-module--done { background: rgba(23,61,53,.1); border-color: rgba(23,61,53,.25); }
 html[data-theme="dark"] .lpd2-module__title { color: #e8f5ee; }
 html[data-theme="dark"] .lpd2-module--done .lpd2-module__title { color: #5ecba1; }
+
+/* ══════════════════════════════════════════════════════
+   62  Learning Path Detail Page  (lpd-*)
+   ══════════════════════════════════════════════════════ */
+
+.lpd-badge--level    { background: var(--panel-soft); }
+.lpd-badge--progress { background: var(--emerald-light, #d4e9dc); }
+

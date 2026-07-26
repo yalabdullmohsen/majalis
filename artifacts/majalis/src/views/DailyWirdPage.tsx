@@ -13,6 +13,7 @@ import { incrementTaskProgress } from "@/lib/daily-progress";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import "@/styles/pages/daily-wird.css";
 
 const QURAN_PAGES = 604;
@@ -352,6 +353,7 @@ export default function DailyWirdPage() {
         </Link>
       </div>
 
+      <RelatedKnowledge kind="lesson" query="الورد اليومي القرآن" title="دروس ومواد في الورد القرآني" limit={6} />
       <div className="twh-share">
         <ShareButtons title="الورد اليومي — المجلس العلمي" url="https://www.majlisilm.com/daily-wird" />
       </div>

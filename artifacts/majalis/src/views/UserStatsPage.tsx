@@ -21,6 +21,7 @@ import {
   strongestCategories,
   type CategoryPerformance,
 } from "@/lib/quiz-performance-service";
+import "@/styles/pages/user-stats.css";
 
 const BADGE_ICON_MAP: Record<string, LucideIcon> = {
   Flame, Moon, Star, BookOpen, Library, GraduationCap, BookMarked, Repeat2, Sparkles,

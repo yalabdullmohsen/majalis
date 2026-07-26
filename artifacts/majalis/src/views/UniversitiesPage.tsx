@@ -17,6 +17,7 @@ import {
   type UniversityFilters,
 } from "@/lib/universities-service";
 import "@/styles/pages/universities.css";
+import "@/styles/pages/learning-path-dashboard.css";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 
 const COUNTRIES = [
