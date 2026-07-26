@@ -1,11 +1,20 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
-import { BookOpen, Layers, Search } from "lucide-react";
+import { BookOpen, CreditCard, GraduationCap, Layers, Map, Search, Waypoints, Zap } from "lucide-react";
 import { PageHeader, SkeletonCardGrid } from "@/components/ui-common";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { fetchPublishedCategoryTree, type CategoryWithCounts } from "@/lib/learn-library-service";
 import { applyPageSeo } from "@/lib/seo";
 import "@/styles/pages/library.css";
+
+const LEARN_GATEWAYS = [
+  { href: "/lessons", label: "الدروس", Icon: BookOpen },
+  { href: "/learning/paths", label: "المسارات", Icon: Map },
+  { href: "/start-here", label: "ابدأ من هنا", Icon: Waypoints },
+  { href: "/quiz", label: "المسابقة", Icon: Zap },
+  { href: "/flashcards", label: "البطاقات", Icon: CreditCard },
+  { href: "/my-learning", label: "لوحتي", Icon: GraduationCap },
+] as const;
 
 export default function LearnHubPage() {
   const [tree, setTree] = useState<CategoryWithCounts[]>([]);
@@ -49,6 +58,15 @@ export default function LearnHubPage() {
         title="أبواب العلم"
         subtitle="فهرس شامل للعلوم الشرعية بتصنيف واضح — دروس وسلاسل حقيقية معتمدة فقط، لا أبواب فارغة."
       />
+
+      <nav className="lrn-hub-gateways" aria-label="مداخل التعلّم">
+        {LEARN_GATEWAYS.map(({ href, label, Icon }) => (
+          <Link key={href} href={href} className="lrn-hub-gateway">
+            <Icon size={16} strokeWidth={1.8} aria-hidden="true" />
+            <span>{label}</span>
+          </Link>
+        ))}
+      </nav>
 
       <div className="lrn-hub-stats">
         <div className="lrn-hub-stat"><strong>{tree.length}</strong><span>بابًا علميًا منشورًا</span></div>

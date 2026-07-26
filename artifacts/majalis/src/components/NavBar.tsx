@@ -66,6 +66,17 @@ export default function NavBar() {
 
   const isActive = (href: string) => {
     const path = href.split("?")[0];
+    if (path === "/learn") {
+      return (
+        location === "/learn" ||
+        location.startsWith("/learn/") ||
+        location === "/lessons" ||
+        location.startsWith("/lessons/") ||
+        location.startsWith("/learning/") ||
+        location === "/my-learning" ||
+        location === "/start-here"
+      );
+    }
     return location === href || location === path || (path !== "/" && location.startsWith(path));
   };
 

@@ -90,6 +90,11 @@ export default function SettingsPage() {
             </Link>
           )}
         </div>
+        <nav className="settings-account-links" aria-label="أدوات الحساب">
+          <Link href="/vault" className="page-action-btn page-action-btn--secondary">مخزن المعرفة</Link>
+          <Link href="/my-learning" className="page-action-btn page-action-btn--secondary">لوحتي التعليمية</Link>
+          <Link href="/my-citations" className="page-action-btn page-action-btn--secondary">دفتر الفوائد</Link>
+        </nav>
       </LegalSection>
 
       <LegalSection title={t("settings_interface")}>

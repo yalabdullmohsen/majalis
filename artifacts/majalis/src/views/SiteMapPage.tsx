@@ -6,6 +6,7 @@ import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import "@/styles/pages/sitemap.css";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
+import { filterNavItems, isComingSoonPath } from "@/lib/nav-visibility";
 
 const SECTIONS = [
   {
@@ -20,7 +21,6 @@ const SECTIONS = [
       { href: "/mutashabihat",       label: "المتشابهات القرآنية", desc: "الآيات المتشابهة لفظاً" },
       { href: "/duas-quran",         label: "أدعية القرآن",       desc: "الأدعية القرآنية المختارة" },
       { href: "/quran-memorization", label: "حفظ القرآن",         desc: "أدوات مساعدة على الحفظ" },
-      { href: "/quran-circles",      label: "حلقات التحفيظ",      desc: "دليل حلقات القرآن" },
     ],
   },
   {
@@ -137,11 +137,8 @@ const SECTIONS = [
       { href: "/quiz",             label: "لعبة سين جيم – أسئلة وأجوبة",   desc: "اختبر معلوماتك من خلال لعبة أسئلة وأجوبة ممتعة ومتدرجة" },
       { href: "/flashcards",       label: "بطاقات المراجعة",      desc: "مراجعة ذكية" },
       { href: "/assistant",        label: "المساعد الذكي",        desc: "استفسر عن أي مسألة" },
-      { href: "/learning-plan",    label: "خطتي التعليمية",      desc: "خطة تعلم شخصية" },
       { href: "/my-learning",      label: "لوحتي التعليمية",     desc: "إحصائياتك وتقدمك" },
-      { href: "/knowledge-graph",  label: "شبكة المعرفة",        desc: "العلاقات بين المفاهيم" },
-      { href: "/knowledge-map",    label: "خريطة المعرفة",        desc: "تخطيط المعرفة الإسلامية" },
-      { href: "/mind-map",         label: "الخرائط الذهنية",      desc: "تنظيم المعلومات مرئياً" },
+      { href: "/knowledge-graph",  label: "استكشف المعرفة",      desc: "شبكة المعرفة والعلاقات بين المفاهيم" },
       { href: "/learning/paths",   label: "مسارات التعلم",        desc: "مسارات علمية منظمة بالمستويات" },
       { href: "/topics",           label: "الموضوعات الشرعية",    desc: "محتوى مجمّع حسب الموضوع" },
       { href: "/start-here",       label: "ابدأ من هنا",          desc: "دليل طالب العلم المبتدئ" },
@@ -149,10 +146,8 @@ const SECTIONS = [
       { href: "/hikam-salaf",      label: "حكم السلف الصالح",     desc: "أقوال الأئمة والصحابة" },
       { href: "/fawaid",           label: "الفوائد العلمية",      desc: "فوائد ومنقولات موثقة" },
       { href: "/islamic-glossary", label: "المصطلحات الإسلامية",  desc: "معجم المصطلحات" },
-      { href: "/universities",     label: "دليل الجامعات",        desc: "الجامعات الإسلامية" },
       { href: "/academic-research",label: "البحث الأكاديمي",      desc: "موارد البحث العلمي الشرعي" },
       { href: "/institutions",     label: "المؤسسات الإسلامية",   desc: "المراكز والمجامع العلمية" },
-      { href: "/islam-stats",      label: "إحصائيات الإسلام",     desc: "أرقام وحقائق عن الإسلام" },
     ],
   },
   {
@@ -160,14 +155,10 @@ const SECTIONS = [
     emoji: "⚙️",
     links: [
       { href: "/my-citations",       label: "اقتباساتي",           desc: "اقتباساتك المحفوظة" },
-      { href: "/vault",              label: "خزانتي",              desc: "المحفوظات الشخصية" },
-      { href: "/family",             label: "وضع العائلة",         desc: "متابعة تعلم أفراد الأسرة" },
       { href: "/my-submissions",     label: "مشاركاتي",            desc: "محتواك المُرسَل للمراجعة" },
       { href: "/submit",             label: "ارسل محتوى",          desc: "شارك معلومة أو فائدة" },
       { href: "/researcher-profile", label: "ملف الباحث",          desc: "ملفك الشخصي البحثي" },
-      { href: "/study-room",         label: "غرفة الدراسة",        desc: "بيئة مراجعة منظمة" },
       { href: "/transcribe",         label: "نسخ المحاضرات",       desc: "تحويل المحاضرات إلى نص" },
-      { href: "/cards",              label: "البطاقات الدعوية",    desc: "صانع البطاقات الإسلامية" },
       { href: "/stats",              label: "إحصائياتي",           desc: "إحصائيات نشاطك" },
       { href: "/settings",           label: "الإعدادات",           desc: "إعدادات الحساب والتطبيق" },
     ],
@@ -181,11 +172,16 @@ const SECTIONS = [
       { href: "/contact",  label: "تواصل معنا",      desc: "للملاحظات والاقتراحات" },
       { href: "/privacy",  label: "سياسة الخصوصية", desc: "كيف نحمي بياناتك" },
       { href: "/terms",    label: "الشروط والأحكام", desc: "شروط استخدام المنصة" },
-      { href: "/features-in-progress", label: "المميزات القادمة", desc: "خارطة الطريق" },
       { href: "/updates",  label: "آخر التحديثات",   desc: "مستجدات المنصة" },
+      { href: "/kids",     label: "ركن الأطفال",     desc: "محتوى تعليمي ميسّر — قريبًا" },
     ],
   },
 ];
+
+const VISIBLE_SECTIONS = SECTIONS.map((section) => ({
+  ...section,
+  links: filterNavItems(section.links),
+}));
 
 export default function SiteMapPage() {
   useEffect(() => {
@@ -207,7 +203,7 @@ export default function SiteMapPage() {
       </header>
 
       <main className="sm-content">
-        {SECTIONS.map(({ title, emoji, links }) => (
+        {VISIBLE_SECTIONS.map(({ title, emoji, links }) => (
           <section key={title} className="sm-section">
             <h2 className="sm-section__title">
               <span aria-hidden="true"><SectionIcon name={emoji} size={22} /></span>
@@ -215,8 +211,16 @@ export default function SiteMapPage() {
             </h2>
             <div className="sm-grid">
               {links.map(({ href, label, desc }) => (
-                <Link key={href} href={href} className="sm-card">
-                  <strong className="sm-card__label">{label}</strong>
+                <Link
+                  key={href}
+                  href={href}
+                  className={`sm-card${isComingSoonPath(href) ? " sm-card--soon" : ""}`}
+                  aria-label={isComingSoonPath(href) ? `${label}` : undefined}
+                >
+                  <strong className="sm-card__label">
+                    {label}
+                    {isComingSoonPath(href) ? <span className="nav-soon-badge">قريبًا</span> : null}
+                  </strong>
                   <span className="sm-card__desc">{desc}</span>
                 </Link>
               ))}
