@@ -864,10 +864,7 @@ html[data-theme="dark"] td {
   color: var(--txt-muted, #5C5C56) !important;
 }
 .empty-state h2,
-.empty-state h3,
-.empty-state h2,
 .empty-state h3 { color: var(--txt-primary, #1A1A18) !important; }
-.empty-state p,
 .empty-state p { color: var(--txt-muted, #5C5C56) !important; }
 
 /* ══ 23. Skeleton ════════════════════════════════════════════════════════════ */

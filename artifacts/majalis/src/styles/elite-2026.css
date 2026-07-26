@@ -859,10 +859,6 @@ html[data-theme="dark"] .rp-section-title {
 .ui-card,
 .ds-card,
 .card-v2,
-.page-card,
-.ui-card,
-.ds-card,
-.card-v2,
 .page-card {
   background: var(--elite-white, #FFFFFF) !important;
   border: 1px solid var(--elite-border, rgba(0,0,0,0.07)) !important;
@@ -873,9 +869,6 @@ html[data-theme="dark"] .rp-section-title {
               border-color var(--elite-base) var(--elite-ease) !important;
 }
 
-.ui-card:hover,
-.ds-card:hover,
-.page-card:hover,
 .ui-card:hover,
 .ds-card:hover,
 .page-card:hover {
@@ -4551,7 +4544,6 @@ html[data-theme="dark"] .khatma-bar-fill {
   padding: 1.25rem 1.5rem;
 }
 
-.isp-detail__section--content  { }
 .isp-detail__section--lessons  { background: rgba(21,128,61,0.05); border-color: rgba(21,128,61,0.15); }
 .isp-detail__section--figures  { background: #F5F3FF; border-color: rgba(109,40,217,0.15); }
 .isp-detail__section--sources  { background: #f0faf5; border-color: rgba(31,77,58,0.18); }
@@ -5077,7 +5069,7 @@ html[data-theme="dark"] .khatma-bar-fill {
 .kng-panel__rel-empty { color: var(--majalis-ink-soft); }
 .kng-note { margin-top: 1rem; font-size: var(--ds-text-xs); color: var(--majalis-ink-soft); }
 /* Explore */
-.kng-explore {}
+
 .kng-explore__search-section { margin-bottom: 1.5rem; }
 .kng-explore__title { font-size: 1.1rem; font-weight: 700; color: var(--majalis-ink); margin-bottom: 0.5rem; }
 .kng-explore__desc { font-size: var(--ds-text-sm); color: var(--majalis-ink-soft); margin-bottom: 1rem; }
@@ -5103,7 +5095,7 @@ html[data-theme="dark"] .khatma-bar-fill {
   cursor: pointer; font-family: inherit;
 }
 .kng-suggest-chip.is-active { background: var(--majalis-emerald); color: #fff; border-color: var(--majalis-emerald); }
-.kng-tag-results { }
+
 .kng-tag-results__title { font-size: 0.9rem; font-weight: 700; color: var(--majalis-ink); margin-bottom: 0.75rem; }
 .kng-tag-results__grid { display: grid; gap: var(--ds-space-2); grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
 .kng-result-link { text-decoration: none; }
@@ -5121,7 +5113,7 @@ html[data-theme="dark"] .khatma-bar-fill {
   -webkit-line-clamp: 2; -webkit-box-orient: vertical;
 }
 .kng-no-results { color: var(--majalis-ink-soft); font-size: var(--ds-text-sm); }
-.kng-type-browse {}
+
 .kng-type-browse__title { font-size: 0.9rem; font-weight: 700; color: var(--majalis-ink); margin-bottom: 0.75rem; }
 .kng-type-browse__chips { display: flex; gap: var(--ds-space-3); flex-wrap: wrap; }
 .kng-type-chip {
@@ -10957,15 +10949,6 @@ html[data-theme="dark"] .pcb-bar {
   transition: all 0.15s ease !important;
 }
 
-/* ── صفحة الرئيسية — تحسين الأقسام ────────────────────────────────────── */
-.home-section-title {
-  font-size: clamp(1.05rem, 2.2vw, 1.25rem) !important;
-  font-weight: 800 !important;
-  letter-spacing: -0.01em !important;
-  color: var(--majalis-ink) !important;
-  margin-bottom: 1.1rem !important;
-}
-
 /* ── العناوين الصفحية — تحسين البروز ──────────────────────────────────── */
 .page-header__title {
   font-size: clamp(1.4rem, 4vw, 2rem) !important;
@@ -11110,16 +11093,7 @@ a:focus-visible {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
-}.home-search input {
-  border-radius: 2rem 0 0 2rem !important;
-  border-inline-end: none !important;
-}.home-search button {
-  border-radius: 0 2rem 2rem 0 !important;
 }
-
-/* ── عنوان الفئات — توحيد ────────────────────────────────────────────── */
-
-/* ── قسم المميزات — مسافة ───────────────────────────────────────────── */
 
 /* ═══════════════════════════════════════════════════════════════════════
    203 — تحسينات صفحة الدروس (LessonsPage / KuwaitLessonsPage)
@@ -12297,23 +12271,6 @@ html[data-theme="dark"] .global-back-btn {
   white-space: nowrap !important;
 }
 
-.home-hero-cta--primary {
-  background: #ffffff !important;
-  color: var(--majalis-emerald-deep) !important;
-}
-.home-hero-cta--ghost {
-  background: rgba(255,255,255,0.15) !important;
-  border: 1.5px solid rgba(255,255,255,0.4) !important;
-  color: #ffffff !important;
-  backdrop-filter: blur(6px) !important;
-}
-
-/* Quick search chips */
-
-/* ─── شريط الإحصائيات المحسّن (Phase 5) ────────────────────────── */
-
-/* ─── Quick Nav (Phase 7) ─────────────────────────────────────── */
-
 /* ─── بطاقات الدروس الموحدة المحسّنة (Phase 3) ────────────────── */
 .lesson-unified-card.lesson-unified-card--compact {
   border: 1px solid rgba(0,0,0,0.08) !important;
@@ -12514,17 +12471,6 @@ html[data-theme="dark"] .global-back-btn {
 }
 
 /* ─── HP Features Cats (Phase 5 colors + Phase 7 spacing) ────── */
-
-/* ─── Responsive: mobile stats bar ────────────────────────────── */
-@media (max-width: 600px) {
-  
-
-  
-
-  
-
-  
-}
 
 /* ─── WCAG contrast fixes (Phase 5) ───────────────────────────── */
 .bottom-nav--v2 .bottom-nav__tab-label {
@@ -18655,7 +18601,6 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
 .gl-term__detail { margin-top: .75rem; }
 .gl-term__detail p { font-size: .88rem; color: #334155; line-height: 1.75; margin: 0; }
 
-.gl-term__related {}
 .gl-related-tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-top: .3rem; }
 .gl-related-tag {
   background: rgba(31,77,58,.08); border: 1px solid rgba(31,77,58,.2);
@@ -18959,7 +18904,6 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
 .jn-container { max-width: 900px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
 .jn-sections { display: flex; flex-direction: column; gap: var(--ds-space-8); }
 
-.jn-section {}
 .jn-section--janna       { --jn-section-color: #226A56; }
 .jn-section--naar        { --jn-section-color: #9B1C1C; }
 .jn-section--asbab-janna { --jn-section-color: #1a3a5c; }
@@ -26495,10 +26439,6 @@ html[data-theme="dark"] .page-search-input {
 /* ── Responsive table wrapper ── */
 
 /* ── Mobile safe area ── */
-@supports (padding-bottom: env(safe-area-inset-bottom)) {
-  
-}
-
 /* ── Reduced motion ── */
 @media (prefers-reduced-motion: reduce) {
   *,
