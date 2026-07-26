@@ -106,3 +106,14 @@
 ```bash
 node artifacts/majalis/scripts/verify-citations.mjs
 ```
+
+## إكمال لاحق (2026-07-26)
+
+طُبّق `trust_level` + `editorial_review_status` + `last_updated_at` على:
+
+- QA (360) · Quiz (1024) · Fawaid (616) · Stories (85) · Miracles (60)
+
+`verify-citations`: OK · `tsc --noEmit`: بلا أخطاء جديدة من هذه الحقول.
+
+فروع `content/*` مستثناة من workflow الدمج التلقائي — #356 يبقى غير مدمج كما هو مطلوب.
+

@@ -30,3 +30,17 @@
 - Quiz: مراجع دائرية متبقية **0**، شروح قالب **0**، بلا reference **927**
 - Asma: مرجع «الحديث: تسعة وتسعون اسماً» فقط → trust_level=unsourced: **13**
 - Curriculum watched (1/4/5/10): كلها `publication_gate=open` بعد التحقق أن المتن العربي بلا لاتيني؛ العزل السابق مؤكَّد
+
+## تحديث 2026-07-26 — تطبيق trust_level على بقية البذور
+
+| الملف | العدد | primary | scholarly | institutional | general | unsourced |
+|---|---:|---:|---:|---:|---:|---:|
+| qa-seed.ts | 360 | 18 | 93 | 0 | 107 | 142 |
+| quiz-seed.ts | 1024 | 36 | 22 | 0 | 92 | 874 |
+| fawaid-seed.ts | 616 | 65 | 60 | 0 | 466 | 25 |
+| islamic-stories-seed.ts | 85 | 0 | 0 | 0 | 85 | 0 |
+| miracles-seed.ts | 60 | 15 | 0 | 0 | 15 | 30 |
+| asma-husna-data.ts | 99 | 86 | 0 | 0 | 0 | 13 |
+| fiqh-issues-seed.ts | 64 | 0 | 4 | 8 | 49 | 3 |
+
+ملاحظة: القصص لها مصادر مسمّاة بلا جزء/صفحة → `general_reasoning` لا `scholarly_source`.
