@@ -27,10 +27,10 @@
 | mana-ibadah / shirk / kufr / wala | معانٍ ونواقض جزئية | batch1 | نعم |
 | sahaba-al-bayt … athar-iman | حزمة batch2 | batch2 | نعم |
 | asma-wa-sifat / nubuwat / wasitiyya | taxonomy requested | batch2 | نعم |
-| **iman-billah** | الإيمان بالله | **ناقص → batch3** | منشور بلا درس |
-| **aqsam-tawheed** | أقسام التوحيد | **ناقص → batch3** | منشور بلا درس |
-| **nawaqid-islam** | نواقض الإسلام | **ناقص → batch3** | منشور بلا درس |
-| **aqeedat-ahl-sunnah** | عقيدة أهل السنة | **ناقص → batch3** | منشور بلا درس |
+| **iman-billah** | الإيمان بالله | **مكتمل (بذرة واجهة + SQL batch3 موسّع)** | درس «الإيمان بالله» متاح عبر البذرة فورًا |
+| **aqsam-tawheed** | أقسام التوحيد | **مكتمل (بذرة واجهة + SQL batch3)** | |
+| **nawaqid-islam** | نواقض الإسلام | **مكتمل (بذرة واجهة + SQL batch3)** | |
+| **aqeedat-ahl-sunnah** | عقيدة أهل السنة | **مكتمل — ١٠ دروس** | بذرة `learn-library-aqeedah-batch3-seed.ts` + SQL موسّع |
 
 ## غير موجود كصفحة مستقلة (يُغطى جزئيًا داخل `/tawhid` أو دروس التعلّم)
 

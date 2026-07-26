@@ -2465,6 +2465,62 @@
       "sitemap": true,
       "changefreq": "weekly",
       "priority": 0.7
+    },
+    {
+      "path": "/learn/aqeedat-ahl-sunnah",
+      "title": "عقيدة أهل السنة والجماعة",
+      "description": "معالم منهج أهل السنة: التلقي والإيمان والصفات والصحابة والقدر — دروس منظّمة.",
+      "keywords": [
+        "عقيدة أهل السنة والجماعة",
+        "أهل السنة",
+        "العقيدة",
+        "المجلس العلمي"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.75
+    },
+    {
+      "path": "/learn/aqsam-tawheed",
+      "title": "أقسام التوحيد الثلاثة",
+      "description": "توحيد الربوبية والألوهية والأسماء والصفات على منهج السلف.",
+      "keywords": [
+        "أقسام التوحيد الثلاثة",
+        "أهل السنة",
+        "العقيدة",
+        "المجلس العلمي"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.75
+    },
+    {
+      "path": "/learn/nawaqid-islam",
+      "title": "نواقض الإسلام",
+      "description": "مدخل منضبط لنواقض الإسلام مع ضوابط التكفير.",
+      "keywords": [
+        "نواقض الإسلام",
+        "أهل السنة",
+        "العقيدة",
+        "المجلس العلمي"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.75
+    },
+    {
+      "path": "/learn/iman-billah",
+      "title": "الإيمان بالله",
+      "description": "الركن الأول: الربوبية والألوهية والأسماء والصفات.",
+      "keywords": [
+        "الإيمان بالله",
+        "أهل السنة",
+        "العقيدة",
+        "المجلس العلمي"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.75
     }
   ]
 }
