@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
-import { AlertTriangle, Bird, BookOpen, Castle, Compass, Flower2, Gem, Landmark, Leaf, Lightbulb, Map as MapIcon, Moon, Ruler, Sailboat, Scale, Search, Shield, Star, Sun, Sword, Users } from "lucide-react";
+import { AlertTriangle, Bird, BookOpen, Castle, Compass, Flower2, Gem, Landmark, Leaf, Lightbulb, Map as MapIcon, Moon, Ruler, Sailboat, Scale, Shield, Star, Sun, Sword, Users } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { supabase } from "@/lib/supabase";
 import { isSupabaseConfigured } from "@/lib/supabase-config";
-import { PageHeader, SkeletonCardGrid } from "@/components/ui-common";
+import { PageHeader, SkeletonCardGrid, Chip, Empty } from "@/components/ui-common";
 import { ISLAMIC_STORIES_SEED } from "@/lib/islamic-stories-seed";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
@@ -12,6 +12,7 @@ import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { truncateAtWord } from "@/lib/utils";
 import { useReadingScrollMemory } from "@/hooks/useReadingScrollMemory";
+import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import "@/styles/pages/islamic-stories.css";
 
 const STORY_ICON_MAP: Record<string, LucideIcon> = {
@@ -290,32 +291,22 @@ export default function IslamicStoriesPage() {
 
           <div className="isp-filter-group">
             <span className="isp-filter-label">التصنيف</span>
-            <div className="isp-filter-chips">
+            <div className="isp-filter-chips" role="group" aria-label="تصفية التصنيف">
               {CATEGORY_LABELS.map((cat) => (
-                <button
-                  key={cat}
-                  type="button"
-                  className={`isp-chip${category === cat ? " is-active" : ""}`}
-                  onClick={() => setCategory(cat)}
-                >
+                <Chip key={cat} active={category === cat} className="isp-chip" onClick={() => setCategory(cat)}>
                   {cat}
-                </button>
+                </Chip>
               ))}
             </div>
           </div>
 
           <div className="isp-filter-group">
             <span className="isp-filter-label">الحقبة الزمنية</span>
-            <div className="isp-filter-chips">
+            <div className="isp-filter-chips" role="group" aria-label="تصفية الحقبة">
               {ERA_LABELS.map((e) => (
-                <button
-                  key={e}
-                  type="button"
-                  className={`isp-chip${era === e ? " is-active" : ""}`}
-                  onClick={() => setEra(e)}
-                >
+                <Chip key={e} active={era === e} className="isp-chip" onClick={() => setEra(e)}>
                   {e}
-                </button>
+                </Chip>
               ))}
             </div>
           </div>
@@ -336,16 +327,9 @@ export default function IslamicStoriesPage() {
           <span>{error}</span>
         </div>
       ) : stories.length === 0 ? (
-        <div className="isp-empty">
-          <span className="isp-empty__icon">✦</span>
-          <p>لا توجد قصص معتمدة بعد.</p>
-          <p className="isp-empty__hint">يمكن اعتماد القصص من لوحة التحكم.</p>
-        </div>
+        <Empty title="لا توجد قصص معتمدة بعد" text="يمكن اعتماد القصص من لوحة التحكم." />
       ) : filtered.length === 0 ? (
-        <div className="isp-empty">
-          <span className="isp-empty__icon"><Search size={32} strokeWidth={1.4} aria-hidden="true" /></span>
-          <p>لا توجد نتائج للبحث أو الفلتر المحدد.</p>
-        </div>
+        <Empty text="لا توجد نتائج للبحث أو الفلتر المحدد." />
       ) : (
         <div className="isp-grid">
           {filtered.map((story) => (
@@ -359,11 +343,14 @@ export default function IslamicStoriesPage() {
       )}
 
       {!loading && (
-        <SectionQuiz
-          categoryId={["tarikh", "sira", "akhlaq"]}
-          title="اختبر معلوماتك في التاريخ الإسلامي"
-          count={4}
-        />
+        <>
+          <RelatedKnowledge kind="story" title="قصص ومعارف ذات صلة" limit={6} />
+          <SectionQuiz
+            categoryId={["tarikh", "sira", "akhlaq"]}
+            title="اختبر معلوماتك في التاريخ الإسلامي"
+            count={4}
+          />
+        </>
       )}
     </div>
   );

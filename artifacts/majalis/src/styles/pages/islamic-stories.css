@@ -402,3 +402,10 @@
   margin-top: 0.5rem;
 }
 
+/* توافق Chip الموحد مع مظهر شرائح القصص */
+.isp-filter-chips .isp-chip.ds-btn {
+  min-height: 44px;
+}
+.isp-filter-chips .isp-chip.ds-btn--ghost:not(.ds-btn--primary) {
+  /* يحتفظ بمظهر isp-chip إن وُجد */
+}

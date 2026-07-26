@@ -9,6 +9,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
 import { usePageView } from "@/hooks/usePageView";
 import { ScholarlyTrustBadge, type TrustData } from "@/components/ScholarlyTrustBadge";
+import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 
 export default function RulingDetailPage({ params }: { params: { id: string } }) {
   const [item, setItem] = useState<ShariaRulingExtended | null>(null);
@@ -130,6 +131,7 @@ export default function RulingDetailPage({ params }: { params: { id: string } })
     >
       <RulingDetailSections ruling={item} relations={relations} />
       <ScholarlyTrustBadge data={trustData} />
+      <RelatedKnowledge kind="fatwa" recordId={item.id} query={item.title} title="معرفة ذات صلة بالحكم" limit={6} />
     </ContentDetailLayout>
   );
 }

@@ -39,6 +39,7 @@ import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBotto
 import { usePersistedState } from "@/hooks/usePersistedState";
 import { DEMO_QA, DEMO_QA_CATEGORIES } from "@/lib/demo-content";
 import { useReadingScrollMemory } from "@/hooks/useReadingScrollMemory";
+import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { QaCard } from "@/components/qa/QaCard";
 import { useAuth } from "@/components/AuthProvider";
 import { QA_CANONICAL_CATEGORIES, resolveCategorySlug } from "@/lib/qa-categories";
@@ -350,6 +351,8 @@ export default function QaPage({
       <FilterBottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="بحث وتصفية">
         {filtersPanel}
       </FilterBottomSheet>
+      <RelatedKnowledge kind="question" title="أسئلة ومواد ذات صلة" limit={6} />
+
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في الفقه والأسئلة الشرعية" count={4} />
       </div>

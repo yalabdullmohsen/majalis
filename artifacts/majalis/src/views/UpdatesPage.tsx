@@ -9,6 +9,7 @@ import type { MergedUpdateItem } from "@/lib/auto-content/auto-content-utils";
 import { applyPageSeo } from "@/lib/seo";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import "@/styles/pages/updates.css";
 
 const TYPE_COLORS: Record<string, string> = {
   قرار: "#164E3C",

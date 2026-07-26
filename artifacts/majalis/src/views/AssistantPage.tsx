@@ -4,6 +4,7 @@ import { Link } from "wouter";
 import { useAssistantChat } from "@/hooks/useAssistantChat";
 import { AssistantChatView } from "@/components/assistant/AssistantChatView";
 import { applyPageSeo } from "@/lib/seo";
+import { useReadingScrollMemory } from "@/hooks/useReadingScrollMemory";
 
 export { ASSISTANT_FAILURE_MESSAGE as FAILURE_MESSAGE } from "@/hooks/useAssistantChat";
 
@@ -30,6 +31,7 @@ const RESEARCHER_LINKS = [
 ];
 
 export default function AssistantPage() {
+  useReadingScrollMemory("assistant");
   const chat = useAssistantChat();
 
   useEffect(() => {
