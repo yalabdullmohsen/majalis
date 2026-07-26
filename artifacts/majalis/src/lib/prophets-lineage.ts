@@ -44,9 +44,9 @@ export const PROPHETS_LINEAGE: LineageNode = {
       id: "idris",
       name: "إدريس",
       era: "قبل نوح",
-      people: "بابل",
+      people: "يُذكر في الأخبار (بابل) بلا ثبوت قطعي",
       generationsGap: 7,
-      linkNote: "ذرية آدم — عدة أجيال",
+      linkNote: "ذرية آدم — عدة أجيال؛ موضع قومه لم يُسمَّ في الوحي",
       slug: "idris",
       children: [
         {
@@ -63,7 +63,7 @@ export const PROPHETS_LINEAGE: LineageNode = {
               id: "ibrahim",
               name: "إبراهيم",
               era: "خليل الله",
-              people: "بابل وفلسطين والحجاز",
+              people: "العراق القديم ثم الشام والحجاز (موضع النشأة يُذكر بلا جزم باسم «بابل»)",
               isUlulAzm: true,
               generationsGap: 10,
               linkNote: "من ذرية سام بن نوح، عدة أجيال",
