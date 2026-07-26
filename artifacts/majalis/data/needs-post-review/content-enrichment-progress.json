@@ -1,0 +1,34 @@
+{
+  "branch": "session/content-language-audit",
+  "mode": "enrichment",
+  "started": "2026-07-26T05:50:00Z",
+  "updated": "2026-07-26T06:10:00Z",
+  "baseline": {
+    "P1_lessons": 1175,
+    "quiz": 997,
+    "fawaid": 496,
+    "qa": 360,
+    "rulings": 73,
+    "stories": 53,
+    "library": 132,
+    "scholars": 99
+  },
+  "targets": {
+    "quiz_new_with_explanations": 50,
+    "quiz_explanations_backfill": 100,
+    "fawaid_new": 30,
+    "qa_new": 20,
+    "rulings_new": 10,
+    "P1_lessons_new": 60,
+    "stories_new": 6,
+    "library_new": 10
+  },
+  "batches_done": [
+    "batch1-p1-quiz-fawaid"
+  ],
+  "added_counts": {
+    "P1_lessons_new": 82,
+    "quiz_new": 50,
+    "fawaid_new": 30
+  }
+}
