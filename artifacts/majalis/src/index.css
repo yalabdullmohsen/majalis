@@ -2320,7 +2320,7 @@ input, textarea, select { font-family: inherit; }
 .condolence-success {
   position: fixed;
   left: 50%;
-  bottom: 1.25rem;
+  bottom: calc(var(--bottom-nav-total, 4.5rem) + 0.75rem);
   z-index: 80;
   transform: translateX(-50%);
   width: min(calc(100% - 2rem), 28rem);
@@ -10706,7 +10706,7 @@ body.assistant-panel-open {
   position: fixed;
   z-index: 45;
   inset-inline-end: calc(1rem + env(safe-area-inset-right, 0px));
-  bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+  bottom: calc(var(--bottom-nav-total, 4.5rem) + 0.75rem);
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;

@@ -366,7 +366,10 @@ export default function ProphetsFamilyTreePage() {
       {/* بطاقة التفاصيل */}
       {selectedNode && !selectedNode.isAncestor && (
         <div style={{
-          position: "fixed", bottom: "1rem", right: "1rem", left: "1rem",
+          position: "fixed",
+          bottom: "calc(var(--bottom-nav-total, 4.5rem) + 0.75rem)",
+          right: "1rem",
+          left: "1rem",
           maxWidth: 420, margin: "0 auto",
           background: "#fff", borderRadius: "1rem",
           border: `2px solid ${EMERALD}`,
