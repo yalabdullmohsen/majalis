@@ -44,8 +44,8 @@ export function BottomNavBar() {
               className={`bottom-nav__tab${active ? " is-active" : ""}`}
               aria-current={active ? "page" : undefined}
             >
-              <span className="bottom-nav__tab-icon">
-                <Icon size={20} strokeWidth={active ? 2.4 : 1.6} aria-hidden={true} />
+              <span className="bottom-nav__tab-icon" aria-hidden="true">
+                <Icon size={20} strokeWidth={active ? 2.25 : 1.75} aria-hidden={true} />
               </span>
               <span className="bottom-nav__tab-label">{label}</span>
             </Link>
@@ -61,8 +61,8 @@ export function BottomNavBar() {
           aria-haspopup="dialog"
           aria-expanded={moreOpen}
         >
-          <span className="bottom-nav__tab-icon">
-            <LayoutGrid size={20} strokeWidth={moreOpen ? 2.4 : 1.6} aria-hidden={true} />
+          <span className="bottom-nav__tab-icon" aria-hidden="true">
+            <LayoutGrid size={20} strokeWidth={moreOpen ? 2.25 : 1.75} aria-hidden={true} />
           </span>
           <span className="bottom-nav__tab-label">المزيد</span>
         </button>
