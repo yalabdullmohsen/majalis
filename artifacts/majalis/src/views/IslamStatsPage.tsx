@@ -16,7 +16,7 @@ const TABS: { id: TabId; label: string; icon: typeof Globe }[] = [
   { id: "global",  label: "الإسلام في العالم",   icon: Globe },
   { id: "quran",   label: "القرآن الكريم",        icon: Star },
   { id: "history", label: "الحضارة الإسلامية",   icon: TrendingUp },
-  { id: "science", label: "الإعجاز العلمي",       icon: BarChart3 },
+  { id: "science", label: "الدلالات الكونية",       icon: BarChart3 },
 ];
 
 interface StatCard {
@@ -107,8 +107,8 @@ const QURAN_STATS: StatCard[] = [
 const HISTORY_TIMELINE: TimelineItem[] = [
   { year: "٦١٠ م", event: "بدء نزول الوحي على النبي محمد ﷺ في غار حراء" },
   { year: "٦٢٢ م", event: "الهجرة النبوية، بداية التقويم الهجري" },
-  { year: "٦٣٢ م", event: "وفاة النبي ﷺ وحفظ القرآن مكتوباً في عهد أبي بكر" },
-  { year: "٧٥٠ م", event: "امتداد الدولة الإسلامية من الصين حتى إسبانيا" },
+  { year: "٦٣٢ م", event: "وفاة النبي ﷺ وبدء جمع القرآن في مصحف في عهد أبي بكر" },
+  { year: "٧٥٠ م", event: "قيام الدولة العباسية وانتقال مركز الحضارة الإسلامية إلى بغداد" },
   { year: "٨٣٠ م", event: "تأسيس بيت الحكمة في بغداد، عصر الترجمة والعلم" },
   { year: "١٠٠٠ م", event: "ابن سينا يؤلف القانون في الطب، مرجع الطب لـ ٦٠٠ سنة" },
   { year: "١٢٥٨ م", event: "سقوط بغداد، وبقاء القرآن محفوظاً في الصدور" },
@@ -133,8 +133,8 @@ const HISTORY_TIMELINE: TimelineItem[] = [
 const HISTORY_ACHIEVEMENTS: StatCard[] = [
   { value: "٩٨٠–١٠٣٧ م", label: "ابن سينا — صاحب القانون", sub: "نُسبت إليه مئات المصنفات في الطب والفلسفة والفلك", color: "#143F35" },
   { value: "٦٠٠ سنة", label: "القانون مرجعاً طبياً", sub: "ظل يُدرَّس في جامعات أوروبا حتى القرن السابع عشر", color: "#312E81" },
-  { value: "٨٢٠ م", label: "جبر الخوارزمي", sub: "مؤسس علم الجبر، ومن اسمه اشتُقت كلمة Algorithm", color: "#065F46" },
-  { value: "مئات", label: "الألفاظ العربية في الإنجليزية", sub: "مثل: algebra, alcohol, coffee, sugar, cotton", color: "#226A56" },
+  { value: "٨٢٠ م", label: "جبر الخوارزمي", sub: "مؤسس علم الجبر، ومن اسمه اشتُقت كلمة الخوارزمية", color: "#065F46" },
+  { value: "مئات", label: "الألفاظ العربية في الإنجليزية", sub: "مثل: الجبر، الكحول، القهوة، السكر، القطن", color: "#226A56" },
   { value: "٨٠٥ م", label: "أول بيمارستان في بغداد", sub: "أُنشئ في عهد هارون الرشيد على نمط البيمارستانات المنظَّمة", color: "#1E3A5F" },
   { value: "١٠٥٨–١١١١ م", label: "الإمام الغزالي", sub: "صاحب «إحياء علوم الدين» — جمع بين الفقه والتزكية", color: "#143F35" },
   { value: "٨٢٨ م", label: "مرصد الشمّاسية ببغداد", sub: "من أوائل المراصد الفلكية المنظَّمة، في عهد المأمون", color: "#1a5a7a" },
@@ -182,10 +182,10 @@ const SCIENCE_CARDS: ScienceCard[] = [
     discoveryYear: "القرن العشرين",
   },
   {
-    topic: "تفرّد بصمات الأصابع",
+    topic: "دقة خلق البنان",
     ayah: "بَلَىٰ قَادِرِينَ عَلَىٰ أَن نُّسَوِّيَ بَنَانَهُ",
     ref: "سورة القيامة: ٤",
-    discovery: "تميز بصمات الأصابع واستخدامها في التعريف البشري",
+    discovery: "دقة تكوين أطراف الأصابع التي يعيدها الله يوم البعث",
     discoveryYear: "١٨٨٠ م",
   },
   {
@@ -210,13 +210,6 @@ const SCIENCE_CARDS: ScienceCard[] = [
     discoveryYear: "١٩٤٨ م",
   },
   {
-    topic: "الحاجز البيولوجي في الرحم",
-    ayah: "خَلَقَكُم مِّن نَّفْسٍ وَاحِدَةٍ ثُمَّ جَعَلَ مِنْهَا زَوْجَهَا",
-    ref: "سورة الزمر: ٦",
-    discovery: "المشيمة وآلية حماية الجنين، الحاجز المزدوج بين دم الأم ودم الجنين",
-    discoveryYear: "القرن العشرون",
-  },
-  {
     topic: "الأزواج في كل شيء",
     ayah: "وَمِن كُلِّ شَيْءٍ خَلَقْنَا زَوْجَيْنِ لَعَلَّكُمْ تَذَكَّرُونَ",
     ref: "سورة الذاريات: ٤٩",
@@ -224,10 +217,10 @@ const SCIENCE_CARDS: ScienceCard[] = [
     discoveryYear: "١٩٣٢ م",
   },
   {
-    topic: "الكواكب تسبح في فلك",
+    topic: "الأجرام تسبح في فلك",
     ayah: "كُلٌّ فِي فَلَكٍ يَسْبَحُونَ",
     ref: "سورة يس: ٤٠",
-    discovery: "اكتشاف المدارات الإهليلجية للكواكب ودورانها حول الشمس بشكل متسق",
+    discovery: "فهم انتظام حركة الأجرام السماوية في أفلاك ومسارات محسوبة",
     discoveryYear: "١٦٠٩ م (كبلر)",
   },
   {
@@ -259,17 +252,10 @@ const SCIENCE_CARDS: ScienceCard[] = [
     discoveryYear: "القرن العشرون",
   },
   {
-    topic: "الضوء والنور الكوني",
-    ayah: "اللَّهُ نُورُ السَّمَاوَاتِ وَالْأَرْضِ",
-    ref: "سورة النور: ٣٥",
-    discovery: "اكتشاف الفيزياء الحديثة أن الضوء هو الأساس المادي لكل تفاعل وحياة في الكون",
-    discoveryYear: "١٩٠٥ م (أينشتاين)",
-  },
-  {
-    topic: "الجنين يسمع في الظلمات الثلاث",
+    topic: "الجنين في الظلمات الثلاث",
     ayah: "يَخْلُقُكُمْ فِي بُطُونِ أُمَّهَاتِكُمْ خَلْقًا مِّن بَعْدِ خَلْقٍ فِي ظُلُمَاتٍ ثَلَاثٍ",
     ref: "سورة الزمر: ٦",
-    discovery: "أثبت علم الأجنة وجود ثلاث طبقات تُحيط الجنين: البطن وجدار الرحم والكيس الأمنيوسي",
+    discovery: "يذكر المفسرون الظلمات الثلاث في بطن الأم والرحم والمشيمة أو الأغشية المحيطة بالجنين",
     discoveryYear: "القرن العشرون",
   },
   {
@@ -322,7 +308,7 @@ export default function IslamStatsPage() {
     applyPageSeo({
       path: "/islam-stats",
       title: "الإسلام في أرقام | المجلس العلمي",
-      description: "إحصاءات وأرقام مثيرة عن الإسلام في العالم: المسلمون، القرآن، الحضارة الإسلامية، والإعجاز العلمي.",
+      description: "إحصاءات وأرقام مثيرة عن الإسلام في العالم: المسلمون، القرآن، الحضارة الإسلامية، والدلالات الكونية.",
       keywords: ["الإسلام في أرقام", "إحصاءات المسلمين", "الإعجاز القرآني", "الحضارة الإسلامية"],
       jsonLd: [
         {
@@ -356,7 +342,7 @@ export default function IslamStatsPage() {
             حقائق وإحصاءات موثقة عن الإسلام، من انتشاره في العالم إلى إعجاز القرآن وإسهامات الحضارة الإسلامية
           </p>
           <div className="is-hero__kpis">
-            <div className="is-kpi"><Users size={22} aria-hidden="true" /><span>١.٩ مليار مسلم</span></div>
+            <div className="is-kpi"><Users size={22} aria-hidden="true" /><span>٢ مليار مسلم</span></div>
             <div className="is-kpi"><Star size={22} aria-hidden="true" /><span>٦٢٣٦ آية قرآنية</span></div>
             <div className="is-kpi"><Heart size={22} aria-hidden="true" /><span>١٤٠٠+ سنة حضارة</span></div>
           </div>
@@ -407,7 +393,7 @@ export default function IslamStatsPage() {
             </div>
 
             <div className="is-note">
-              📊 المصدر: تقرير مركز بيو للأبحاث، «مستقبل الأديان العالمية ٢٠٢٣»
+              📊 المصدر: مركز بيو للأبحاث، بيانات المشهد الديني العالمي ٢٠٢٠م المنشورة في ٢٠٢٥م
             </div>
           </div>
         )}
@@ -478,23 +464,23 @@ export default function IslamStatsPage() {
           </div>
         )}
 
-        {/* ── الإعجاز العلمي ── */}
+        {/* ── الدلالات الكونية ── */}
         {activeTab === "science" && (
           <div className="is-section" role="tabpanel" id="is-panel-science" aria-labelledby="is-tab-science">
             <div className="is-science-intro">
               <BarChart3 size={20} aria-hidden="true" />
               <p>
-                الإعجاز العلمي في القرآن الكريم: آيات تحمل دلالات علمية اكتشفها العلم الحديث بعد قرون من نزول القرآن.
+                الدلالات الكونية في القرآن الكريم: آيات تحمل دلالات علمية اكتشفها العلم الحديث بعد قرون من نزول القرآن.
               </p>
             </div>
             <div className="is-search-wrap">
               <input
                 type="search"
                 className="ds-input is-search-input"
-                placeholder="ابحث في الإعجاز العلمي..."
+                placeholder="ابحث في الدلالات الكونية..."
                 value={search}
                 onChange={e => setSearch(e.target.value)}
-                aria-label="بحث في الإعجاز العلمي"
+                aria-label="بحث في الدلالات الكونية"
               />
             </div>
             <div className="is-science-grid">
@@ -514,7 +500,7 @@ export default function IslamStatsPage() {
               ))}
             </div>
             <div className="is-note">
-              ⚠️ تنبيه: الإعجاز العلمي يُقدَّم للاستدلال لا للتفسير، التفسير العلمي للقرآن يشترط شروطاً وضوابط علمية صارمة
+              ⚠️ تنبيه: الدلالات الكونية يُقدَّم للاستدلال لا للتفسير، التفسير العلمي للقرآن يشترط شروطاً وضوابط علمية صارمة
             </div>
           </div>
         )}

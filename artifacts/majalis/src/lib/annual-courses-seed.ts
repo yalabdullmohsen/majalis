@@ -43,7 +43,7 @@ export const ANNUAL_COURSES_SEED: AnnualCourse[] = [
     id: "course-ramadan-intensive",
     external_key: "course-ramadan-intensive",
     title: "البرنامج العلمي الرمضاني",
-    summary: "برنامج موسمي يومي في رمضان — تفسير وحديث وفقه.",
+    summary: "برنامج موسمي يومي طوال رمضان يجمع دروساً في التفسير والحديث والفقه.",
     body: `**البرنامج الرمضاني:**
 - تفسير جزء يومياً
 - درس حديث بعد العصر
@@ -512,7 +512,7 @@ export const ANNUAL_COURSES_SEED: AnnualCourse[] = [
     id: "course-muqadimat-tafsir-2026",
     external_key: "course-muqadimat-tafsir-2026",
     title: "مقدمة في أصول التفسير",
-    summary: "دورة تأسيسية في أصول علم التفسير ومناهج المفسرين.",
+    summary: "دورة تأسيسية في أصول علم التفسير ومناهج المفسرين وضوابط الفهم.",
     body: `**عن الدورة:**
 دراسة أصول علم التفسير من القرآن والسنة والأثر وأقوال الصحابة.
 
