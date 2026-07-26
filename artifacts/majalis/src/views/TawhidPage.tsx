@@ -5,6 +5,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import "@/styles/pages/tawhid.css";
 
 // ─── أقسام العقيدة والتوحيد ──────────────────────────────────────────────────
@@ -23,7 +24,12 @@ const AQEEDA_SECTIONS: AqeedaSection[] = [
   {
     emoji: "🕌", title: "التوحيد ومسائله",
     desc: "أنواع التوحيد، الشرك، البدعة، والمسائل العقدية",
-    href: "/tawhid", badge: "٨ مسائل", color: "#143F35", isCurrent: true,
+    href: "/tawhid", badge: "أنت هنا", color: "#143F35", isCurrent: true,
+  },
+  {
+    emoji: "📘", title: "مدخل إلى العقيدة",
+    desc: "تعريف العقيدة ومصدرها وأركانها الإجمالية على منهج السلف",
+    href: "/learn/aqeedah-intro", badge: "درس", color: "#0B3D2E",
   },
   {
     emoji: "🌟", title: "أركان الإسلام",
@@ -54,6 +60,11 @@ const AQEEDA_SECTIONS: AqeedaSection[] = [
     emoji: "👼", title: "الملائكة في الإسلام",
     desc: "الإيمان بوجودهم وصفاتهم وما ثبت من أسمائهم ومهامهم في الوحي",
     href: "/malaika", badge: "غيبيات", color: "#5B21B6",
+  },
+  {
+    emoji: "⚖️", title: "الولاء والبراء",
+    desc: "موالاة أهل الإيمان والبراءة من الشرك بضابط البر والعدل مع المسالمين",
+    href: "/learn/wala-bara", badge: "درس", color: "#92400E",
   },
   {
     emoji: "📖", title: "مسار تعلّم العقيدة",
@@ -144,8 +155,8 @@ const PRINCIPLES: Principle[] = [
     },
   },
   {
-    title: "البدعة في الدين",
-    body: "كل عبادة لم يشرعها الله ورسوله مردودة وإن حسنت نية صاحبها.",
+    title: "السنة والبدعة",
+    body: "السنة: ما ثبت عن النبي ﷺ من قول أو فعل أو تقرير في أمور الدين. والبدعة: الإحداث في الدين بما لم يشرعه الله ورسوله. قال ﷺ: «من أحدث في أمرنا هذا ما ليس منه فهو رد» (متفق عليه). وكل بدعة ضلالة؛ ولا يُقال «بدعة حسنة» في تقرير العبادات. والحسن ما حسّنه الشرع، والقبيح ما قبّحه.",
     hadith: {
       text: "كل بدعة ضلالة، وكل ضلالة في النار",
       source: "صحيح مسلم", number: "٨٦٧", grade: "صحيح", narrator: "جابر بن عبدالله",
@@ -187,7 +198,7 @@ const PRINCIPLES: Principle[] = [
   },
   {
     title: "الولاء والبراء",
-    body: "من مقتضيات التوحيد: محبة ما يحبه الله وبغض ما يبغضه، وموالاة أهل الإيمان ومعاداة الكفر والشرك. ﴿لَّا تَجِدُ قَوْمًا يُؤْمِنُونَ بِاللَّهِ وَالْيَوْمِ الْآخِرِ يُوَادُّونَ مَنْ حَادَّ اللَّهَ وَرَسُولَهُ﴾ [المجادلة: ٢٢].",
+    body: "من مقتضيات التوحيد: محبة أهل الإيمان وموالاتهم، والبراءة من الكفر والشرك اعتقاداً. ﴿لَّا تَجِدُ قَوْمًا يُؤْمِنُونَ بِاللَّهِ وَالْيَوْمِ الْآخِرِ يُوَادُّونَ مَنْ حَادَّ اللَّهَ وَرَسُولَهُ﴾ [المجادلة: ٢٢]. والضابط: البر والعدل مع من لم يقاتل المسلمين ولم يخرجهم من ديارهم، كما في الممتحنة: ٨. ليست البراءة ذريعة لظلم المسالمين أو الغدر.",
   },
   {
     title: "الطاغوت وأنواعه",
@@ -431,6 +442,7 @@ export default function TawhidPage() {
         <a href="#iman-pillars"   className="twh-jumpnav__btn">أركان الإيمان</a>
         <a href="#principles"     className="twh-jumpnav__btn">مسائل التوحيد</a>
         <a href="#asma-preview"   className="twh-jumpnav__btn">الأسماء الحسنى</a>
+        <a href="#sources"        className="twh-jumpnav__btn">مصادر القسم</a>
         <a href="#recommended"    className="twh-jumpnav__btn">كتب مقترحة</a>
         <Link href="/learn/aqeedat-ahl-sunnah" className="twh-jumpnav__btn">دروس أهل السنة</Link>
         <Link href="/islamic-sects#ahl-al-sunna" className="twh-jumpnav__btn">أهل السنة في الفرق</Link>
@@ -531,6 +543,26 @@ export default function TawhidPage() {
         </div>
       </section>
 
+      {/* ══ مصادر القسم ══ */}
+      <section id="sources" aria-labelledby="sources-heading" className="twh-section">
+        <SectionLabel emoji="📌" label="مصادر القسم" />
+        <h2 id="sources-heading" className="tawheed-principles-heading">مصادر قسم العقيدة والتوحيد</h2>
+        <p className="twh-section-intro">
+          يُعتمد في هذا القسم على كتب أئمة السلف وشروحهم المعتمدة، لا على الرأي أو الذوق. أبرز المراجع:
+        </p>
+        <ul className="twh-section-intro" style={{ listStyle: "disc", paddingInlineStart: "1.5rem", lineHeight: 1.9 }}>
+          <li>العقيدة الواسطية — ابن تيمية، وشرحها لابن عثيمين</li>
+          <li>العقيدة الطحاوية مع شرح ابن أبي العز</li>
+          <li>لمعة الاعتقاد — ابن قدامة</li>
+          <li>كتاب التوحيد وشروحه (فتح المجيد، القول المفيد)</li>
+          <li>معارج القبول — حافظ الحكمي</li>
+        </ul>
+        <div className="twh-subsection-link" style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem" }}>
+          <Link href="/methodology" className="twh-goto-btn">منهج الموقع ومصادره ←</Link>
+          <Link href="/learn/aqeedah-intro" className="twh-goto-btn">مدخل العقيدة ←</Link>
+        </div>
+      </section>
+
       {/* ══ كتب مقترحة ══ */}
       <section id="recommended" aria-labelledby="books-heading" className="twh-section">
         <SectionLabel emoji="📚" label="كتب مقترحة" />
@@ -556,11 +588,15 @@ export default function TawhidPage() {
         </p>
         <div className="twh-subsection-link" style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem" }}>
           <Link href="/learn/aqeedat-ahl-sunnah" className="twh-goto-btn">دروس عقيدة أهل السنة ←</Link>
+          <Link href="/learn/aqeedah-intro" className="twh-goto-btn">مدخل إلى العقيدة ←</Link>
           <Link href="/learn/aqsam-tawheed" className="twh-goto-btn">أقسام التوحيد ←</Link>
           <Link href="/learn/nawaqid-islam" className="twh-goto-btn">نواقض الإسلام ←</Link>
+          <Link href="/learn/wala-bara" className="twh-goto-btn">الولاء والبراء ←</Link>
           <Link href="/islamic-sects#ahl-al-sunna" className="twh-goto-btn">صفحة الفرق — أهل السنة ←</Link>
         </div>
       </section>
+
+      <RelatedKnowledge kind="lesson" query="عقيدة توحيد" title="دروس ومواد ذات صلة بالتوحيد" limit={6} />
 
       <SectionQuiz
         categoryId="aqeeda"

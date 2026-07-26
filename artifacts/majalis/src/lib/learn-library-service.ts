@@ -6,12 +6,39 @@
 import { supabase } from "@/lib/supabase";
 import { buildCategoryTree, rollUpCounts } from "@/lib/category-tree";
 import {
-  getSeedLessonById,
-  getSeedLessonsForSlug,
+  getSeedLessonById as getBatch3LessonById,
+  getSeedLessonsForSlug as getBatch3LessonsForSlug,
   isAqeedahBatch3Slug,
-  seedLessonCountForSlug,
+  seedLessonCountForSlug as batch3LessonCountForSlug,
   type AqeedahSeedLesson,
 } from "@/lib/learn-library-aqeedah-batch3-seed";
+import {
+  BATCH1_CATEGORY_NAMES,
+  batch1LessonCountForSlug,
+  getBatch1LessonById,
+  getBatch1LessonsForSlug,
+  isAqeedahBatch1Slug,
+} from "@/lib/learn-library-aqeedah-batch1-seed";
+
+function isAqeedahSeedSlug(slug: string): boolean {
+  return isAqeedahBatch3Slug(slug) || isAqeedahBatch1Slug(slug);
+}
+
+function getSeedLessonsForSlug(slug: string): AqeedahSeedLesson[] {
+  if (isAqeedahBatch3Slug(slug)) return getBatch3LessonsForSlug(slug);
+  if (isAqeedahBatch1Slug(slug)) return getBatch1LessonsForSlug(slug);
+  return [];
+}
+
+function getSeedLessonById(id: string): AqeedahSeedLesson | null {
+  return getBatch3LessonById(id) ?? getBatch1LessonById(id);
+}
+
+function seedLessonCountForSlug(slug: string): number {
+  if (isAqeedahBatch3Slug(slug)) return batch3LessonCountForSlug(slug);
+  if (isAqeedahBatch1Slug(slug)) return batch1LessonCountForSlug(slug);
+  return 0;
+}
 
 export type CategoryRow = {
   id: string;
@@ -74,7 +101,7 @@ export async function fetchPublishedCategoryTree(): Promise<CategoryWithCounts[]
     const dbCount = directLessonCounts.get(c.id) ?? 0;
     // إن كان التصنيف من دفعة العقيدة الفارغة على الإنتاج: أظهر عدّ البذرة حتى يُطبَّق SQL.
     const seedExtra =
-      isAqeedahBatch3Slug(c.slug) && dbCount === 0 ? seedLessonCountForSlug(c.slug) : 0;
+      isAqeedahSeedSlug(c.slug) && dbCount === 0 ? seedLessonCountForSlug(c.slug) : 0;
     return {
       ...c,
       lessonCount: dbCount + seedExtra,
@@ -130,8 +157,9 @@ function localCategoryForSlug(slug: string): CategoryRow | null {
     "aqsam-tawheed": "أقسام التوحيد الثلاثة",
     "nawaqid-islam": "نواقض الإسلام",
     "aqeedat-ahl-sunnah": "عقيدة أهل السنة والجماعة",
+    ...BATCH1_CATEGORY_NAMES,
   };
-  if (!isAqeedahBatch3Slug(slug) || !names[slug]) return null;
+  if (!isAqeedahSeedSlug(slug) || !names[slug]) return null;
   return {
     id: `seed-cat-${slug}`,
     parent_id: "seed-cat-aqeedah-tawheed",
@@ -204,7 +232,7 @@ export async function fetchCategoryDetail(slug: string): Promise<CategoryDetail 
   const dbLessons = (lessons ?? []) as LessonSummary[];
   const existingTitles = new Set(dbLessons.map((l) => l.title));
   const merged = [...dbLessons];
-  if (isAqeedahBatch3Slug(slug)) {
+  if (isAqeedahSeedSlug(slug)) {
     for (const seed of getSeedLessonsForSlug(slug)) {
       if (!existingTitles.has(seed.title)) {
         merged.push(seedToSummary(seed, (category as CategoryRow).id));
