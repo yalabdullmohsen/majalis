@@ -12770,20 +12770,6 @@ svg {
   object-position: center;
 }
 
-.home-kicker--v3 {
-  margin: 0;
-  text-align: center;
-}
-
-.home-hero-title--v3 {
-  font-size: 0;
-  line-height: 0;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  align-items: center;
-}
-
 .home-hero-lead--v3 {
   color: rgba(250, 245, 234, 0.9);
   font-size: clamp(0.9rem, 3.2vw, 1.05rem);
@@ -12791,18 +12777,6 @@ svg {
   max-width: 36rem;
   margin: 0;
   text-wrap: pretty;
-}
-
-.home-hero-assistant-link--v3 {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: var(--mobile-touch-min);
-  padding: 0 1rem;
-  margin-top: 0;
-  border-radius: var(--mobile-radius);
-  background: rgba(255, 255, 255, 0.12);
-  border: 1px solid rgba(250, 245, 234, 0.25);
 }
 
 .home-hero-grid--v3 {
@@ -13107,9 +13081,6 @@ svg {
     font-size: 0.72rem;
   }
 
-  .home-hero-title--v3 {
-    font-size: clamp(1.85rem, 7vw, 2.35rem);
-  }
 }
 
 /* 390px — iPhone 13/14/15 */
@@ -13147,10 +13118,6 @@ svg {
     max-width: 3.25rem;
     min-width: 2.5rem;
     font-size: 0.65rem;
-  }
-
-  .home-hero-title--v3 {
-    font-size: clamp(1.65rem, 8vw, 2rem);
   }
 
   .home-hero-lead--v3 {
@@ -13196,34 +13163,12 @@ svg {
 
 /* Desktop-only: preserve original hero title scale */
 @media (min-width: 880px) {
-  .home-hero-title--v3 {
-    font-size: clamp(1.85rem, 4.5vw, 2.5rem);
-    white-space: normal;
-    text-wrap: balance;
-  }
 
   .home-hero-copy--v3 {
     align-items: flex-start;
     text-align: start;
   }
 
-  .home-kicker--v3 {
-    text-align: start;
-  }
-
-  .home-search--v3 {
-    max-width: 36rem;
-    height: auto;
-    min-height: auto;
-    border-radius: var(--ds-radius-lg);
-  }
-
-  .home-hero-assistant-link--v3 {
-    background: transparent;
-    border: none;
-    padding: 0;
-    min-height: auto;
-  }
 }
 
 /* Production sprint — lesson detail + radio player */
@@ -14028,13 +13973,6 @@ body.has-assistant-fab .app-main {
 }
 
 /* Title size boost for v3 */
-.home-hero-title--v3 {
-  font-size: clamp(2.2rem, 7vw, 4rem);
-  font-weight: 800;
-  line-height: 1.1;
-  letter-spacing: -0.01em;
-  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.25);
-}
 
 /* ─── Phase 2: Quick Links Grid (currently missing CSS!) ──── */
 .home-quick-grid {
@@ -14245,12 +14183,7 @@ body.has-assistant-fab .app-main {
 
 /* ─── Phase 4: Responsiveness ─────────────────────────────── */
 @media (max-width: 680px) {
-  .home-hero--v3 {
-    padding-block: 2.25rem 3.5rem;
-  }
-  .home-hero-title--v3 {
-    font-size: clamp(1.85rem, 8vw, 2.6rem);
-  }
+
   .home-quick-grid {
     grid-template-columns: repeat(auto-fill, minmax(min(100%, 7rem), 1fr));
     gap: 0.6rem;
@@ -14275,9 +14208,7 @@ body.has-assistant-fab .app-main {
   .home-quick-grid {
     grid-template-columns: repeat(auto-fill, minmax(min(100%, 8.5rem), 1fr));
   }
-  .home-hero-title--v3 {
-    font-size: clamp(2.2rem, 5vw, 3rem);
-  }
+
 }
 
 @media (min-width: 880px) {

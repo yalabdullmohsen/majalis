@@ -6,11 +6,11 @@
    ═══════════════════════════════════════════════════════════════════════════ */
 
 /* ══════════════════════════════════════════════
-   §1. خطوط — من index.html فقط (لا @import لـGoogle Fonts هنا)
+   1. خطوط — من index.html فقط (لا @import لـGoogle Fonts هنا)
    ══════════════════════════════════════════════ */
 
 /* ══════════════════════════════════════════════
-   §2. متغيرات التصميم العليا (Elite Tokens)
+   2. متغيرات التصميم العليا (Elite Tokens)
    ══════════════════════════════════════════════ */
 :root {
   /* ── الأخضر الداكن الرمادي — إعادة تصميم الهوية v3 (2026-07-19) ── */
@@ -81,7 +81,7 @@
 }
 
 /* ══════════════════════════════════════════════
-   §2b. تفضيل الخط — data-font overrides (كلا الخيارين يُصيَّران لنفس
+   2b. تفضيل الخط — data-font overrides (كلا الخيارين يُصيَّران لنفس
    الخط الموحَّد؛ الآلية أُبقيت سليمة تقنيًا فقط)
    ══════════════════════════════════════════════ */
 :root[data-font="default"],
@@ -92,7 +92,7 @@
 }
 
 /* ══════════════════════════════════════════════
-   §3. الجسم الأساسي
+   3. الجسم الأساسي
    ══════════════════════════════════════════════ */
 body {
   background: var(--elite-cream, #FAFAF9) !important;
@@ -110,7 +110,7 @@ body {
 }
 
 /* ══════════════════════════════════════════════
-   §4. Navbar — Glass Premium 2026
+   4. Navbar — Glass Premium 2026
    ══════════════════════════════════════════════ */
 .navbar-v3 {
   background: rgba(255,255,255,0.88) !important;
@@ -236,7 +236,7 @@ html[data-theme="dark"] .navbar-mobile-login {
 }
 
 /* ══════════════════════════════════════════════
-   §4b. PageHeader — تعديل cascade التباين
+   4b. PageHeader — تعديل cascade التباين
    يُلغي design-system.css (2nd) الذي يُطبِّق ألواناً داكنة
    على خلفية داكنة → نسبة تباين 1.14:1 / 1.27:1 (غير مرئي)
    ══════════════════════════════════════════════ */
@@ -267,7 +267,7 @@ html[data-theme="dark"] .navbar-mobile-login {
 }
 
 /* ══════════════════════════════════════════════
-   §4c. عناوين الأقسام — أبيض على شريط غابات (جميع الصفحات)
+   4c. عناوين الأقسام — أبيض على شريط غابات (جميع الصفحات)
    specificity: 0-2-0 = 20 يتغلب على .page-shell h2 (0-1-1 = 11)
    ══════════════════════════════════════════════ */
 .page-shell .ds-section__title,
@@ -306,7 +306,7 @@ html[data-theme="dark"] .navbar-mobile-login {
   margin-bottom: 0.75rem !important;
 }
 
-/* §4c-dark — في الوضع الليلي يتحوّل --elite-forest من أخضر داكن جدًا
+/* 4c-dark — في الوضع الليلي يتحوّل --elite-forest من أخضر داكن جدًا
    (#143F35) إلى نعناعي فاتح نسبيًا (#3BAD8A، انظر html[data-theme="dark"]
    أعلى الملف)؛ نص أبيض ثابت (color:#fff أعلاه) فوق هذه الخلفية الأفتح
    ينتج تباينًا 2.39:1 فقط (يلزم 3:1 على الأقل) — نفس نمط عطل [class$="-hero"]:
@@ -361,19 +361,19 @@ html[data-theme="dark"] .rp-section-title {
 /* الزخرفة الإسلامية في Hero */
 
 /* ══════════════════════════════════════════════
-   §6. Feature Strip — شريط الميزات الفاخر
+   6. Feature Strip — شريط الميزات الفاخر
    ══════════════════════════════════════════════ */
 
 /* ══════════════════════════════════════════════
-   §7. قسم الإحصائيات (جديد)
+   7. قسم الإحصائيات (جديد)
    ══════════════════════════════════════════════ */
 
 /* ══════════════════════════════════════════════
-   §8. قسم المميزات (Features Showcase)
+   8. قسم المميزات (Features Showcase)
    ══════════════════════════════════════════════ */
 
 /* ══════════════════════════════════════════════
-   §9. رؤوس الصفحات (جميع الصفحات)
+   9. رؤوس الصفحات (جميع الصفحات)
    ══════════════════════════════════════════════ */
 .page-header {
   margin-bottom: 2rem !important;
@@ -395,10 +395,10 @@ html[data-theme="dark"] .rp-section-title {
 }
 
 /* ══════════════════════════════════════════════
-   §10. Home Sections — عناوين المقاطع
+   10. Home Sections — عناوين المقاطع
    ══════════════════════════════════════════════ */
 
-/* ── §10a — HomeMajlisToday ──────────────────────────────────────────── */
+/* ── 10a — HomeMajlisToday ──────────────────────────────────────────── */
 .myt-card {
   background: linear-gradient(140deg, #143F35 0%, #226A56 60%, #143F35 100%);
   border-radius: var(--ds-radius-2xl);
@@ -483,7 +483,7 @@ html[data-theme="dark"] .rp-section-title {
 .myt-block__link:hover { color: rgba(255,255,255,.9); }
 
 /* ══════════════════════════════════════════════
-   §10b. الصفحة الرئيسية — جميع البطاقات داكنة/أبيض
+   10b. الصفحة الرئيسية — جميع البطاقات داكنة/أبيض
    ══════════════════════════════════════════════ */
 .home-main--v3 .ui-card,
 .home-main--v3 .ds-card,
@@ -495,7 +495,7 @@ html[data-theme="dark"] .rp-section-title {
 }
 
 /* ══════════════════════════════════════════════
-   §DARK-BG-TEXT — نصوص بيضاء على كل خلفية خضراء داكنة
+   DARK-BG-TEXT — نصوص بيضاء على كل خلفية خضراء داكنة
    النهج: تجاوز متغيرات CSS + القيم المشفرة
    ══════════════════════════════════════════════ */
 
@@ -814,7 +814,7 @@ html[data-theme="dark"] .rp-section-title {
 }
 
 /* :not(.ds-section__title) وبقية شارات "عناوين الأقسام" ضروري هنا: أي عنوان
-   شارة (نص أبيض/خلفية خضراء داكنة، القاعدة أدناه §4c) يقع أيضًا داخل حاوية
+   شارة (نص أبيض/خلفية خضراء داكنة، القاعدة أدناه 4c) يقع أيضًا داخل حاوية
    .home-section (كما في HomeFeaturedLibrary — "المكتبة العلمية") يطابق
    `.home-section h2` بتخصيص (0,1,1) أعلى من التخصيص الفعلي (0,1,0) لقاعدة
    الشارة عند غياب سلف .page-shell، فيهزم لون الشارة الأبيض المقصود ويترك نصًا
@@ -858,15 +858,15 @@ html[data-theme="dark"] .rp-section-title {
 }
 
 /* ══════════════════════════════════════════════
-   §11. Quick Links — شبكة الروابط السريعة
+   11. Quick Links — شبكة الروابط السريعة
    ══════════════════════════════════════════════ */
 
 /* ══════════════════════════════════════════════
-   §12. Story Cards — بطاقات القصص
+   12. Story Cards — بطاقات القصص
    ══════════════════════════════════════════════ */
 
 /* ══════════════════════════════════════════════
-   §13. بطاقات شاملة (Cards — كل الصفحات)
+   13. بطاقات شاملة (Cards — كل الصفحات)
    ══════════════════════════════════════════════ */
 .ui-card,
 .ds-card,
@@ -897,7 +897,7 @@ html[data-theme="dark"] .rp-section-title {
 }
 
 /* ══════════════════════════════════════════════
-   §14. Lesson Cards — بطاقات الدروس
+   14. Lesson Cards — بطاقات الدروس
    ══════════════════════════════════════════════ */
 .lesson-unified-card {
   background: var(--elite-white, #FFFFFF) !important;
@@ -933,7 +933,7 @@ html[data-theme="dark"] .rp-section-title {
 }
 
 /* ══════════════════════════════════════════════
-   §15. أزرار (CTA Buttons)
+   15. أزرار (CTA Buttons)
    ══════════════════════════════════════════════ */
 .ds-btn--primary,
 .btn-v2--primary {
@@ -963,15 +963,15 @@ html[data-theme="dark"] .rp-section-title {
 }
 
 /* ══════════════════════════════════════════════
-   §16. Learning Path Card
+   16. Learning Path Card
    ══════════════════════════════════════════════ */
 
 /* ══════════════════════════════════════════════
-   §17. Quiz Card
+   17. Quiz Card
    ══════════════════════════════════════════════ */
 
 /* ══════════════════════════════════════════════
-   §18. Bottom Navigation
+   18. Bottom Navigation
    ══════════════════════════════════════════════ */
 .bottom-nav {
   background: rgba(255,255,255,0.96) !important;
@@ -1003,11 +1003,11 @@ html[data-theme="dark"] .rp-section-title {
 }
 
 /* ══════════════════════════════════════════════
-   §19. Side Drawer — CSS في index.css فقط (لا تبديل هنا)
+   19. Side Drawer — CSS في index.css فقط (لا تبديل هنا)
    ══════════════════════════════════════════════ */
 
 /* ══════════════════════════════════════════════
-   §20. Prayer Times Page
+   20. Prayer Times Page
    ══════════════════════════════════════════════ */
 .pt-hero {
   /* لا تستخدم --elite-forest هنا: أي محدِّد ينتهي بـ"-hero" (ومنه .pt-hero
@@ -1064,7 +1064,7 @@ html[data-theme="dark"] .rp-section-title {
 }
 
 /* ══════════════════════════════════════════════
-   §21. Banners — رؤوس الصفحات الداخلية
+   21. Banners — رؤوس الصفحات الداخلية
    ══════════════════════════════════════════════ */
 
 /* Hero للصفحات الداخلية — [class$="-hero"] (ينتهي بـ) لا [class*="-hero"]
@@ -1089,7 +1089,7 @@ html[data-theme="dark"] .rp-section-title {
 }
 
 /* ══════════════════════════════════════════════
-   §22. Page Shell — جميع الصفحات
+   22. Page Shell — جميع الصفحات
    ══════════════════════════════════════════════ */
 .page-shell,
 .ds-page,
@@ -1104,7 +1104,7 @@ body > #root > div {
 }
 
 /* ══════════════════════════════════════════════
-   §23. Dividers — الفواصل الإسلامية
+   23. Dividers — الفواصل الإسلامية
    ══════════════════════════════════════════════ */
 .islamic-divider {
   border: none !important;
@@ -1114,11 +1114,11 @@ body > #root > div {
 }
 
 /* ══════════════════════════════════════════════
-   §24. Daily Content Cards
+   24. Daily Content Cards
    ══════════════════════════════════════════════ */
 
 /* ══════════════════════════════════════════════
-   §24.5 «فوائد منتقاة» — بطاقات الفوائد المستوردة من مصادر Instagram
+   24.5 «فوائد منتقاة» — بطاقات الفوائد المستوردة من مصادر Instagram
    المعتمدة، بعد اعتماد بشري فقط. مطابقة لهوية بطاقات الرئيسية القائمة
    (ui-card/page-tag)، بلا هوية بصرية جديدة.
    ══════════════════════════════════════════════ */
@@ -1199,7 +1199,7 @@ body > #root > div {
 .dmb__source-btn:hover { text-decoration: underline; }
 
 /* ══════════════════════════════════════════════
-   §24.6 «فعاليات وإعلانات علمية» — لقاءات ومستجدات من مصادر Instagram
+   24.6 «فعاليات وإعلانات علمية» — لقاءات ومستجدات من مصادر Instagram
    المعتمدة بعد اعتماد بشري فقط.
    ══════════════════════════════════════════════ */
 .hue__list {
@@ -1257,7 +1257,7 @@ html[data-theme="dark"] .hue__row-badge--announcement { color: #E8C97A; backgrou
 .hue__row-link:hover { text-decoration: underline; }
 
 /* ══════════════════════════════════════════════
-   §25. Forms — نماذج الإدخال
+   25. Forms — نماذج الإدخال
    ══════════════════════════════════════════════ */
 .page-search-input {
   background: var(--elite-white) !important;
@@ -1277,7 +1277,7 @@ html[data-theme="dark"] .hue__row-badge--announcement { color: #E8C97A; backgrou
 }
 
 /* ══════════════════════════════════════════════
-   §26. Content Hub Chips
+   26. Content Hub Chips
    ══════════════════════════════════════════════ */
 .content-hub-chip {
   padding: 0.4rem 1rem !important;
@@ -1303,7 +1303,7 @@ html[data-theme="dark"] .hue__row-badge--announcement { color: #E8C97A; backgrou
 }
 
 /* ══════════════════════════════════════════════
-   §27. Loading States — Skeleton
+   27. Loading States — Skeleton
    ══════════════════════════════════════════════ */
 @keyframes elite-shimmer {
   0%   { background-position: -200% 0; }
@@ -1311,7 +1311,7 @@ html[data-theme="dark"] .hue__row-badge--announcement { color: #E8C97A; backgrou
 }
 
 /* ══════════════════════════════════════════════
-   §28. Scrollbar (Webkit)
+   28. Scrollbar (Webkit)
    ══════════════════════════════════════════════ */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: var(--elite-off-white, #F5F5F4); }
@@ -1322,11 +1322,11 @@ html[data-theme="dark"] .hue__row-badge--announcement { color: #E8C97A; backgrou
 ::-webkit-scrollbar-thumb:hover { background: rgba(0,0,0,0.26); }
 
 /* ══════════════════════════════════════════════
-   §29. Home Stories Grid
+   29. Home Stories Grid
    ══════════════════════════════════════════════ */
 
 /* ══════════════════════════════════════════════
-   §30. Maintenance Banner
+   30. Maintenance Banner
    ══════════════════════════════════════════════ */
 .home-maintenance-banner {
   background: var(--elite-sage-2, #F4F4F1) !important;
@@ -1341,7 +1341,7 @@ html[data-theme="dark"] .hue__row-badge--announcement { color: #E8C97A; backgrou
 }
 
 /* ══════════════════════════════════════════════
-   §31. Container Widths
+   31. Container Widths
    ══════════════════════════════════════════════ */
 .home-container {
   max-width: 960px !important;
@@ -1354,21 +1354,11 @@ html[data-theme="dark"] .hue__row-badge--announcement { color: #E8C97A; backgrou
 }
 
 /* ══════════════════════════════════════════════
-   §32. Responsive Adjustments
+   32. Responsive Adjustments
    ══════════════════════════════════════════════ */
-@media (max-width: 480px) {
-  .home-hero--v3 {
-    min-height: 360px !important;
-    padding: 2.5rem 1rem 3rem !important;
-  }
-
-  
-
-  
-}
 
 /* ══════════════════════════════════════════════
-   §33. Focus Accessibility
+   33. Focus Accessibility
    ══════════════════════════════════════════════ */
 :focus-visible {
   outline: 2px solid var(--elite-green, #166534) !important;
@@ -1377,7 +1367,7 @@ html[data-theme="dark"] .hue__row-badge--announcement { color: #E8C97A; backgrou
 }
 
 /* ══════════════════════════════════════════════
-   §34. Arabic Typography تحسينات
+   34. Arabic Typography تحسينات
    ══════════════════════════════════════════════ */
 p, h1, h2, h3, h4, h5, h6, span, a, button, label, li {
   word-break: normal !important;
@@ -1389,7 +1379,7 @@ p, h1, h2, h3, h4, h5, h6, span, a, button, label, li {
 /* منع التفاف الأسماء والمصطلحات الإسلامية */
 
 /* ══════════════════════════════════════════════
-   §35. متغيرات الخلفية الأساسية (Inner Pages)
+   35. متغيرات الخلفية الأساسية (Inner Pages)
    ══════════════════════════════════════════════ */
 html {
   --majalis-parchment:        var(--elite-cream, #FAFAF9) !important;
@@ -1403,7 +1393,7 @@ html {
 }
 
 /* ══════════════════════════════════════════════
-   §36. صفحات داخلية — خلفيات Tailwind
+   36. صفحات داخلية — خلفيات Tailwind
    ══════════════════════════════════════════════ */
 .min-h-screen {
   background-color: var(--elite-white, #FAFAF8) !important;
@@ -1432,7 +1422,7 @@ html {
 }
 
 /* ══════════════════════════════════════════════
-   §37. Banner للنصوص المضمنة داخل Hero خضراء
+   37. Banner للنصوص المضمنة داخل Hero خضراء
    ══════════════════════════════════════════════ */
 
 /* ضمان أبيض على خلفية داكنة */
@@ -1447,7 +1437,7 @@ html {
 /* إصلاح text-teal-100 على خلفية خضراء */
 
 /* ══════════════════════════════════════════════
-   §38. Hadith Page تحسينات
+   38. Hadith Page تحسينات
    ══════════════════════════════════════════════ */
 .hadith-card {
   background: var(--elite-white) !important;
@@ -1511,7 +1501,7 @@ html {
 .hadith-modal-btn { background: var(--elite-forest, #143F35) !important; color: #fff !important; }
 
 /* ══════════════════════════════════════════════
-   §39. Adhkar Page تحسينات
+   39. Adhkar Page تحسينات
    ══════════════════════════════════════════════ */
 .dhikr-card {
   background: var(--elite-white) !important;
@@ -1527,11 +1517,11 @@ html {
 }
 
 /* ══════════════════════════════════════════════
-   §40. Library Page تحسينات
+   40. Library Page تحسينات
    ══════════════════════════════════════════════ */
 
 /* ══════════════════════════════════════════════
-   §41. QA / Fatwa Cards
+   41. QA / Fatwa Cards
    ══════════════════════════════════════════════ */
 .qa-card,
 .fatwa-card,
@@ -1586,11 +1576,11 @@ html {
 .qa-publish-btn--published { background: var(--majalis-emerald); color: var(--majalis-parchment); }
 
 /* ══════════════════════════════════════════════
-   §42. Muezzins تحسينات
+   42. Muezzins تحسينات
    ══════════════════════════════════════════════ */
 
 /* ══════════════════════════════════════════════
-   §43. Flashcards
+   43. Flashcards
    ══════════════════════════════════════════════ */
 .flashcard {
   background: var(--elite-white) !important;
@@ -1605,7 +1595,7 @@ html {
 .chart-legend-dot { background-color: var(--chart-dot-color, currentColor); }
 
 /* ══════════════════════════════════════════════
-   §44. Badges / Tags
+   44. Badges / Tags
    ══════════════════════════════════════════════ */
 .badge-v2--green {
   background: var(--elite-sage, #D4E9DC) !important;
@@ -1618,7 +1608,7 @@ html {
 }
 
 /* ══════════════════════════════════════════════
-   §45. Modal / Dialog
+   45. Modal / Dialog
    ══════════════════════════════════════════════ */
 [role="dialog"] {
   background: var(--elite-white) !important;
@@ -1627,7 +1617,7 @@ html {
 }
 
 /* ══════════════════════════════════════════════
-   §46. Tables
+   46. Tables
    ══════════════════════════════════════════════ */
 table {
   border-collapse: collapse !important;
@@ -1656,7 +1646,7 @@ tr:last-child td {
 }
 
 /* ══════════════════════════════════════════════
-   §47. Tabs (All Pages)
+   47. Tabs (All Pages)
    ══════════════════════════════════════════════ */
 .border-b-2.border-\[var\(--mn-border-active\)\] {
   border-color: var(--elite-green, #166534) !important;
@@ -1664,7 +1654,7 @@ tr:last-child td {
 }
 
 /* ══════════════════════════════════════════════
-   §49. صفحات القصص والسيرة والأنبياء والموسوعات
+   49. صفحات القصص والسيرة والأنبياء والموسوعات
    ══════════════════════════════════════════════ */
 
 /* رأس صفحات القصص — نقش النجمة لا تدرّج */
@@ -1713,7 +1703,7 @@ tr:last-child td {
 }
 
 /* ══════════════════════════════════════════════
-   §50. شريط التنقل السفلي — أيقونات Emerald
+   50. شريط التنقل السفلي — أيقونات Emerald
    ══════════════════════════════════════════════ */
 .bottom-nav__item--active .bottom-nav__icon,
 .bottom-nav .active .bottom-nav__icon {
@@ -1725,7 +1715,7 @@ tr:last-child td {
 }
 
 /* ══════════════════════════════════════════════
-   §51. تحييد Amber/Gold — إحلال Emerald محله
+   51. تحييد Amber/Gold — إحلال Emerald محله
    ══════════════════════════════════════════════ */
 /* إشعارات المعلومات — من الأمبر إلى الزمردي */
 [class*="amber-50"] {
@@ -1741,7 +1731,7 @@ tr:last-child td {
 }
 
 /* ══════════════════════════════════════════════
-   §48. Print Media
+   48. Print Media
    ══════════════════════════════════════════════ */
 @media print {
   .navbar-v3, .bottom-nav, .side-nav-drawer--v2 { display: none !important; }
@@ -1749,7 +1739,7 @@ tr:last-child td {
 }
 
 /* ══════════════════════════════════════════════
-   §53. Fiqh Hub Navigation Strip
+   53. Fiqh Hub Navigation Strip
    ══════════════════════════════════════════════ */
 .fiqh-hub-strip {
   display: flex !important;
@@ -1809,7 +1799,7 @@ tr:last-child td {
 }
 
 /* ══════════════════════════════════════════════
-   §52. Prayer Cell — تفاعل النقر (عداد الوقت)
+   52. Prayer Cell — تفاعل النقر (عداد الوقت)
    ══════════════════════════════════════════════ */
 button.hcp-prayer-cell {
   cursor: pointer !important;
@@ -1836,7 +1826,7 @@ button.hcp-prayer-cell:focus-visible {
 }
 
 /* ══════════════════════════════════════════════
-   §53. Grace-period pill — مضى على الأذان
+   53. Grace-period pill — مضى على الأذان
    ══════════════════════════════════════════════ */
 .hcp-since-pill {
   position: relative;
@@ -1884,7 +1874,7 @@ button.hcp-prayer-cell:focus-visible {
 }
 
 /* ══════════════════════════════════════════════
-   §54. Lesson Detail Hero — خلفية خضراء داكنة
+   54. Lesson Detail Hero — خلفية خضراء داكنة
    ══════════════════════════════════════════════ */
 
 /* إزالة padding البطاقة لجعل الـ hero ملاصقاً للحواف */
@@ -1955,7 +1945,7 @@ button.hcp-prayer-cell:focus-visible {
 }
 
 /* ══════════════════════════════════════════════
-   §55. رابط "التفاصيل" في شريط مواقيت الصلاة
+   55. رابط "التفاصيل" في شريط مواقيت الصلاة
    ══════════════════════════════════════════════ */
 .hcp-strip__link {
   color: var(--elite-forest, #143F35) !important;
@@ -1963,7 +1953,7 @@ button.hcp-prayer-cell:focus-visible {
 }
 
 /* ══════════════════════════════════════════════
-   §56. رأس بطاقة الدرس — أخضر داكن + نجوم
+   56. رأس بطاقة الدرس — أخضر داكن + نجوم
    ══════════════════════════════════════════════ */
 .lesson-unified-card__header {
   background-color: var(--elite-forest, #143F35) !important;
@@ -1999,7 +1989,7 @@ button.hcp-prayer-cell:focus-visible {
 }
 
 /* ══════════════════════════════════════════════
-   §57. بطاقات الإعلانات التسويقية — الرئيسية
+   57. بطاقات الإعلانات التسويقية — الرئيسية
    ══════════════════════════════════════════════ */
 
 .home-announce-head .home-eyebrow {
@@ -2019,7 +2009,7 @@ button.hcp-prayer-cell:focus-visible {
   line-height: 1.2 !important;
 }
 
-/* §58 — صفحة التوحيد: ID selector (specificity 1-0-X) يتغلب على أي كمية !important بالـ classes */
+/* 58 — صفحة التوحيد: ID selector (specificity 1-0-X) يتغلب على أي كمية !important بالـ classes */
 #tawhid-header h1,
 #tawhid-header h2,
 #tawhid-header h3,
@@ -2035,7 +2025,7 @@ button.hcp-prayer-cell:focus-visible {
 
 #tawhid-header cite { color: rgba(255,255,255,0.82) !important; }
 
-/* §59 — عناوين أقسام الدروس: نص أبيض على خلفية غابة داكنة
+/* 59 — عناوين أقسام الدروس: نص أبيض على خلفية غابة داكنة
    specificity 0-3-0 يتغلب على majalis-v2.css (0-1-0) */
 .page-shell.lessons-page-v2 .lessons-v2-section__title,
 .page-shell.lessons-page-v2 .lessons-past-section__title,
@@ -2050,7 +2040,7 @@ button.hcp-prayer-cell:focus-visible {
 }
 
 /* ══════════════════════════════════════════════
-   §60. تبويبات الدروس (kuwait-tab) — سمة فاتحة
+   60. تبويبات الدروس (kuwait-tab) — سمة فاتحة
    ══════════════════════════════════════════════ */
 .kuwait-tabs {
   background: var(--msk-canvas-1, #F4F6F5) !important;
@@ -2090,7 +2080,7 @@ button.hcp-prayer-cell:focus-visible {
 }
 
 /* ══════════════════════════════════════════════
-   §61. أزرار التصفية وحقول الإدخال العامة
+   61. أزرار التصفية وحقول الإدخال العامة
    ══════════════════════════════════════════════ */
 .lessons-v2-filter-toggle {
   background: #fff !important;
@@ -2558,7 +2548,7 @@ html[data-theme="dark"] .notif-row__label {
 }
 
 /* ══════════════════════════════════════════════════════════════════════
-   §40 — صفحة الأبحاث العلمية الأكاديمية (ar-*)
+   40 — صفحة الأبحاث العلمية الأكاديمية (ar-*)
    ══════════════════════════════════════════════════════════════════════ */
 
 .ar-page {
@@ -3068,7 +3058,7 @@ html[data-theme="dark"] .notif-row__label {
 }
 
 /* ══════════════════════════════════════════════════════════════════════
-   §41 — الصفحة الرئيسية — تصميم تسويقي (hp-*)
+   41 — الصفحة الرئيسية — تصميم تسويقي (hp-*)
    ══════════════════════════════════════════════════════════════════════ */
 
 /* ── درسان في صف على الصفحة الرئيسية ── */
@@ -3090,10 +3080,10 @@ html[data-theme="dark"] .notif-row__label {
 
 /* ── بطاقة ثانوية ── */
 
-/* تصغير لوحة الإشعارات — مدموج في §NotificationBell أعلاه */
+/* تصغير لوحة الإشعارات — مدموج في NotificationBell أعلاه */
 
 /* ══════════════════════════════════════════════
-   §QiblaPage — وصلة القبلة التفاعلية
+   QiblaPage — وصلة القبلة التفاعلية
    ══════════════════════════════════════════════ */
 .qibla-page { background: var(--elite-white, #FAFAF8) !important; }
 .qibla-wrap {
@@ -3176,7 +3166,7 @@ html[data-theme="dark"] .notif-row__label {
 }
 
 /* ══════════════════════════════════════════════
-   §44. Daily Wird Page — الورد اليومي
+   44. Daily Wird Page — الورد اليومي
    ══════════════════════════════════════════════ */
 .wird-page {
   display: flex;
@@ -3501,7 +3491,7 @@ html[data-theme="dark"] .khatma-bar-fill {
 }
 
 /* ══════════════════════════════════════════════
-   §45. Occasions Page — المناسبات الإسلامية
+   45. Occasions Page — المناسبات الإسلامية
    ══════════════════════════════════════════════ */
 .occasions-filter {
   display: flex;
@@ -3632,7 +3622,7 @@ html[data-theme="dark"] .khatma-bar-fill {
 }
 
 /* ══════════════════════════════════════════════
-   §46. Search Page — البحث العلمي
+   46. Search Page — البحث العلمي
    ══════════════════════════════════════════════ */
 .search-page-form {
   display: flex;
@@ -4024,7 +4014,7 @@ html[data-theme="dark"] .khatma-bar-fill {
 .search-kind-badge--updates     { background: #F1F5F9; color: #475569; border-color: rgba(71,85,105,0.2); }
 
 /* ══════════════════════════════════════════════
-   §47. Settings Page — صفحة الإعدادات
+   47. Settings Page — صفحة الإعدادات
    ══════════════════════════════════════════════ */
 
 /* حاوية قسم الإعداد */
@@ -4252,7 +4242,7 @@ html[data-theme="dark"] .khatma-bar-fill {
 }
 
 /* ══════════════════════════════════════════════
-   §48. Lesson Detail — sheikh row fix
+   48. Lesson Detail — sheikh row fix
    ══════════════════════════════════════════════ */
 .lesson-detail-sheikh-row {
   display: flex;
@@ -4266,7 +4256,7 @@ html[data-theme="dark"] .khatma-bar-fill {
 }
 
 /* ══════════════════════════════════════════════
-   §49. Islamic Stories Page — القصص الإسلامية
+   49. Islamic Stories Page — القصص الإسلامية
    ══════════════════════════════════════════════ */
 
 /* إحصائيات التصنيفات */
@@ -4671,7 +4661,7 @@ html[data-theme="dark"] .khatma-bar-fill {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   §50  Muezzin Detail  (mzd-*)
+   50  Muezzin Detail  (mzd-*)
    ═══════════════════════════════════════════════════════════════ */
 .mzd-page {
   direction: rtl;
@@ -4872,7 +4862,7 @@ html[data-theme="dark"] .khatma-bar-fill {
 .mzd-related-card__rating { font-size: 0.8rem; color: var(--majalis-emerald, #226A56); font-weight: 600; }
 
 /* ═══════════════════════════════════════════════════════════════
-   §51  Muezzins Library  (mzp-*)
+   51  Muezzins Library  (mzp-*)
    ═══════════════════════════════════════════════════════════════ */
 .mzp-page { direction: rtl; max-width: 640px; margin: 0 auto; padding: 1.25rem 1rem 5rem; }
 .mzp-header { margin-bottom: 1.25rem; }
@@ -5037,7 +5027,7 @@ html[data-theme="dark"] .khatma-bar-fill {
 .mzp-settings-link { font-size: 0.82rem; color: var(--majalis-emerald); font-weight: 600; text-decoration: underline; cursor: pointer; }
 
 /* ═══════════════════════════════════════════════════════════════
-   §52  Knowledge Graph  (kng-*)
+   52  Knowledge Graph  (kng-*)
    ═══════════════════════════════════════════════════════════════ */
 .kng-page { padding: var(--ds-space-5); max-width: 1000px; margin: 0 auto; }
 
@@ -5170,7 +5160,7 @@ html[data-theme="dark"] .khatma-bar-fill {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   §53  Miracles Page  (miracle-item + miracles-*)
+   53  Miracles Page  (miracle-item + miracles-*)
    ═══════════════════════════════════════════════════════════════ */
 
 .miracle-item {
@@ -5271,7 +5261,7 @@ html[data-theme="dark"] .khatma-bar-fill {
 .mk-src--sunna { --mk-border: #143F35; }
 
 /* ═══════════════════════════════════════════════════════════════
-   §54  Quran Radio Page  (qrp-*)
+   54  Quran Radio Page  (qrp-*)
    ═══════════════════════════════════════════════════════════════ */
 .qrp-content { padding: 1.5rem 1rem 8rem; max-width: 860px; margin: 0 auto; }
 .qrp-section-head { margin-bottom: 1rem; }
@@ -5293,7 +5283,7 @@ html[data-theme="dark"] .khatma-bar-fill {
 .qrp-video { width: 100%; border-radius: 0.4rem; max-height: 200px; background: #000; }
 
 /* ══════════════════════════════════════════════════════
-   §55  My Submissions Page  (msp-* / msr-*)
+   55  My Submissions Page  (msp-* / msr-*)
    ══════════════════════════════════════════════════════ */
 
 /* ─ Page shell ─ */
@@ -5370,7 +5360,7 @@ html[data-theme="dark"] .khatma-bar-fill {
 .msr-card__resubmit-link { font-size: 0.78rem; color: var(--majalis-emerald); font-weight: 600; text-decoration: underline; cursor: pointer; }
 
 /* ══════════════════════════════════════════════════════
-   §56  Adhan Settings Page  (ads-*)
+   56  Adhan Settings Page  (ads-*)
    ══════════════════════════════════════════════════════ */
 
 /* ─ Page ─ */
@@ -5467,7 +5457,7 @@ html[data-theme="dark"] .ads-diagnostics-toggle { color: var(--clr-text-1, #E5F0
 .pasc-explainer__actions { display: flex; gap: var(--ds-space-2); }
 
 /* ══════════════════════════════════════════════════════
-   §57  Upload Page  (ulp-*)
+   57  Upload Page  (ulp-*)
    ══════════════════════════════════════════════════════ */
 
 /* ─ Page ─ */
@@ -5535,7 +5525,7 @@ html[data-theme="dark"] .ads-diagnostics-toggle { color: var(--clr-text-1, #E5F0
 .ulp-submit-btn__spinner { animation: spin 1s linear infinite; display: inline-block; }
 
 /* ══════════════════════════════════════════════════════
-   §58  Muezzin Favorites Page  (mzf-*)
+   58  Muezzin Favorites Page  (mzf-*)
    ══════════════════════════════════════════════════════ */
 
 .mzf-page { direction: rtl; max-width: 600px; margin: 0 auto; padding: 1.25rem 1rem 5rem; }
@@ -5588,11 +5578,11 @@ html[data-theme="dark"] .ads-diagnostics-toggle { color: var(--clr-text-1, #E5F0
 .mzf-set-default__btn { padding: 0.25rem 0.65rem; border-radius: 0.4rem; border: none; background: #143F35; color: #fff; font-size: 0.72rem; font-weight: 600; cursor: pointer; font-family: inherit; }
 
 /* ══════════════════════════════════════════════════════
-   §59  My Learning Page  (myl-*)
+   59  My Learning Page  (myl-*)
    ══════════════════════════════════════════════════════ */
 
 /* ══════════════════════════════════════════════════════
-   §60  Quran Circles Page  (qcp-*)
+   60  Quran Circles Page  (qcp-*)
    ══════════════════════════════════════════════════════ */
 
 /* ─ Header ─ */
@@ -5631,7 +5621,7 @@ html[data-theme="dark"] .ads-diagnostics-toggle { color: var(--clr-text-1, #E5F0
 .qcp-clear-btn    { margin-top: 1rem; padding: 0.5rem 1.5rem; background: var(--majalis-sage); color: var(--majalis-emerald-deep); border: none; border-radius: var(--ds-radius); cursor: pointer; font-weight: 600; }
 
 /* ══════════════════════════════════════════════════════
-   §61  Prophetic Medicine Page  (pmp-*)
+   61  Prophetic Medicine Page  (pmp-*)
    ══════════════════════════════════════════════════════ */
 
 /* ─ Hero ─ */
@@ -5685,14 +5675,14 @@ html[data-theme="dark"] .ads-diagnostics-toggle { color: var(--clr-text-1, #E5F0
 .pmp-toggle-btn { color: var(--msk-gold); background: none; border: none; cursor: pointer; font-size: 0.82rem; font-weight: 600; padding: 0.2rem 0; align-self: flex-start; font-family: inherit; }
 
 /* ══════════════════════════════════════════════════════
-   §62  Learning Path Detail Page  (lpd-*)
+   62  Learning Path Detail Page  (lpd-*)
    ══════════════════════════════════════════════════════ */
 
 .lpd-badge--level    { background: var(--panel-soft); }
 .lpd-badge--progress { background: var(--emerald-light, #d4e9dc); }
 
 /* ============================================================
-   §63 — LearningQuizPage  (lqp-*)
+   63 — LearningQuizPage  (lqp-*)
    ============================================================ */
 
 .lqp-score--pass { color: var(--emerald-deep); }
@@ -5704,7 +5694,7 @@ html[data-theme="dark"] .ads-diagnostics-toggle { color: var(--clr-text-1, #E5F0
 }
 
 /* ============================================================
-   §64 — LearningPathsPage  (lpp-*)
+   64 — LearningPathsPage  (lpp-*)
    ============================================================ */
 .lpp-nav-links { display: flex; gap: var(--ds-space-4); margin-bottom: 1.5rem; flex-wrap: wrap; }
 .lpp-nav-link { padding: 0.5rem 1rem; border-radius: var(--ds-radius-sm); text-decoration: none; font-size: var(--ds-text-sm); font-weight: 500; }
@@ -5826,7 +5816,7 @@ html[data-theme="dark"] .ads-diagnostics-toggle { color: var(--clr-text-1, #E5F0
 .lpp-how-step p  { font-size: .8rem; color: var(--majalis-ink-soft); line-height: 1.55; margin: 0; }
 
 /* ============================================================
-   §65 — SubmitContentPage  (scp-*)
+   65 — SubmitContentPage  (scp-*)
    ============================================================ */
 .scp-page {
   max-width: 600px;
@@ -5912,7 +5902,7 @@ html[data-theme="dark"] .ads-diagnostics-toggle { color: var(--clr-text-1, #E5F0
 .scp-submit-btn.is-loading { background: #9ca3af; cursor: not-allowed; }
 
 /* ============================================================
-   §66 — CertificateVerifyPage  (cvp-*)
+   66 — CertificateVerifyPage  (cvp-*)
    ============================================================ */
 .cvp-shell { text-align: center; padding-top: 3rem; }
 .cvp-title { font-size: var(--ds-text-2xl); font-weight: 700; margin-bottom: 1.5rem; }
@@ -5926,14 +5916,14 @@ html[data-theme="dark"] .ads-diagnostics-toggle { color: var(--clr-text-1, #E5F0
 .cvp-back-link    { display: inline-block; margin-top: 2rem; }
 
 /* ============================================================
-   §67 — NotFoundPage  (nf-*)
+   67 — NotFoundPage  (nf-*)
    ============================================================ */
 
 .nf-link--primary   { background: var(--majalis-emerald); color: var(--majalis-parchment); }
 .nf-link--secondary { border: 1px solid var(--majalis-line); color: var(--majalis-emerald-deep); background: var(--majalis-parchment); }
 
 /* ============================================================
-   §68 — TopicPage  (tpc-*)
+   68 — TopicPage  (tpc-*)
    ============================================================ */
 .tpc-section-group { margin-bottom: 2rem; }
 .tpc-result-link   { text-decoration: none; }
@@ -5957,7 +5947,7 @@ html[data-theme="dark"] .ads-diagnostics-toggle { color: var(--clr-text-1, #E5F0
 }
 
 /* ============================================================
-   §69 — TawhidPage  (twh-*)
+   69 — TawhidPage  (twh-*)
    ============================================================ */
 .twh-section { margin-bottom: 2rem; }
 .twh-section--mb3 { margin-bottom: 3rem; }
@@ -5991,7 +5981,7 @@ html[data-theme="dark"] .ads-diagnostics-toggle { color: var(--clr-text-1, #E5F0
 .tawheed-hadith-badge--daif  { --grade-color: var(--majalis-danger, #9B1C1C); }
 .tawheed-hadith-badge--mawdu { --grade-color: var(--majalis-danger, #9B1C1C); }
 
-/* § أركان الإيمان */
+/*  أركان الإيمان */
 .twh-section-intro {
   font-family: var(--font-body);
   font-size: 0.95rem;
@@ -6058,7 +6048,7 @@ html[data-theme="dark"] .ads-diagnostics-toggle { color: var(--clr-text-1, #E5F0
   margin: 0;
 }
 
-/* § الأسماء الحسنى */
+/*  الأسماء الحسنى */
 .twh-asma-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -6094,7 +6084,7 @@ html[data-theme="dark"] .ads-diagnostics-toggle { color: var(--clr-text-1, #E5F0
   margin: 0;
 }
 
-/* § كتب مقترحة */
+/*  كتب مقترحة */
 .twh-share { padding: 1rem 0; margin: 1.5rem 0; border-top: 1px solid var(--majalis-line); display: flex; justify-content: center; }
 .twh-books-grid {
   display: grid;
@@ -6131,7 +6121,7 @@ html[data-theme="dark"] .ads-diagnostics-toggle { color: var(--clr-text-1, #E5F0
   margin: 0;
 }
 
-/* §69b — TawhidPage Hub & Flow Layout */
+/* 69b — TawhidPage Hub & Flow Layout */
 .twh-hub-hero {
   background: linear-gradient(135deg, #226A56 0%, #143F35 100%);
   border-radius: var(--ds-radius-2xl);
@@ -6322,7 +6312,7 @@ html[data-theme="dark"] .twh-hub-card__current-tag {
    الوضع الليلي بينما نصها #226A56 يبقى داكنًا — نفس تصادم .sw-badge--wajib. */
 html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 
-/* §69c — FiqhPage Hub (fqh-hub-*) */
+/* 69c — FiqhPage Hub (fqh-hub-*) */
 .fqh-hub-hero {
   background: linear-gradient(135deg, #143F35 0%, #226A56 60%, #143F35 100%);
   border-radius: var(--ds-radius-2xl);
@@ -6409,7 +6399,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 }
 
 /* ============================================================
-   §70 — DeveloperPage  (dvp-*)
+   70 — DeveloperPage  (dvp-*)
    ============================================================ */
 .dvp-page {
   max-width: 900px;
@@ -6574,7 +6564,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .dvp-cta .dvp-btn--secondary { background: transparent; color: #fff; border-color: rgba(255,255,255,.5); }
 
 /* ============================================================
-   §71 — UserStatsPage  (usp-*)  — dynamic via --level-color, --level-pct, --resume-pct
+   71 — UserStatsPage  (usp-*)  — dynamic via --level-color, --level-pct, --resume-pct
    ============================================================ */
 .usp-login-prompt { text-align: center; padding-top: 3rem; }
 .usp-login-icon   { font-size: 3rem; margin-bottom: 1rem; }
@@ -6586,11 +6576,11 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .profile-resume__fill { width: var(--resume-pct, 0%); }
 
 /* ============================================================
-   §72 — LearningCalendarPage  (lcd-*)
+   72 — LearningCalendarPage  (lcd-*)
    ============================================================ */
 
 /* ============================================================
-   §73 — FlashCardsPage  (flc-*)
+   73 — FlashCardsPage  (flc-*)
    ============================================================ */
 .flc-login-prompt { text-align: center; padding-top: 3rem; }
 .flc-login-icon   { font-size: 3rem; margin-bottom: 1rem; }
@@ -6604,7 +6594,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .fc-quality__btn  { border-color: var(--fc-btn-color); color: var(--fc-btn-color); }
 
 /* ============================================================
-   §74 — FamilyModePage  (fm-* additions)
+   74 — FamilyModePage  (fm-* additions)
    ============================================================ */
 .fm-loading-wrap  { margin: 3rem auto; }
 .fm-login-prompt  { text-align: center; padding-top: 3rem; }
@@ -6614,7 +6604,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .fm-btn--back     { margin-top: 1.5rem; }
 
 /* ============================================================
-   §75 — AssistantPage  (asp-*)
+   75 — AssistantPage  (asp-*)
    ============================================================ */
 .asp-researcher-links {
   display: flex;
@@ -6671,7 +6661,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 }
 
 /* ============================================================
-   §76 — LearningPlanPage  (lpn-*)
+   76 — LearningPlanPage  (lpn-*)
    ============================================================ */
 .lpn-login-prompt  { text-align: center; padding-top: 3rem; }
 .lpn-login-icon    { font-size: 3rem; margin-bottom: 1rem; }
@@ -6681,7 +6671,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .lp-plan__progress-fill { width: var(--plan-pct, 0%); }
 
 /* ============================================================
-   §77 — LearningPathDashboardPage  (ldb-*)
+   77 — LearningPathDashboardPage  (ldb-*)
    ============================================================ */
 
 .ldb-hero { background: linear-gradient(to left, var(--majalis-emerald-deep), var(--majalis-emerald)); color: #fff; padding: 2.5rem 1rem; }
@@ -6692,7 +6682,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .ldb-stat--achieve    { --stat-bg: #faf5ff; --stat-color: #6b21a8; }
 
 /* ============================================================
-   §78 — CardsPage  (cards-* additions)
+   78 — CardsPage  (cards-* additions)
    ============================================================ */
 .cards-template-swatch { background: var(--swatch-bg, #0f0f0f); }
 .cards-preview-frame   { width: var(--cpf-w); height: var(--cpf-h); }
@@ -6718,7 +6708,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 }
 
 /* ============================================================
-   §79 — KnowledgeGraphPage  (kng-* additions)
+   79 — KnowledgeGraphPage  (kng-* additions)
    ============================================================ */
 /* Node-type color tokens — set --kng-nc on the element */
 .kng-nt--quran_ayah    { --kng-nc: #065f46; }
@@ -6756,13 +6746,13 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 }
 
 /* ============================================================
-   §80 — FiqhPage  (fqp-*) — القاعدة الوحيدة هنا مطابقة لـ.fqp-cta-btn
-   الأحدث (مع :hover) في §~قسم fqp لاحقًا في هذا الملف؛ أُزيلت هنا لمنع
+   80 — FiqhPage  (fqp-*) — القاعدة الوحيدة هنا مطابقة لـ.fqp-cta-btn
+   الأحدث (مع :hover) في ~قسم fqp لاحقًا في هذا الملف؛ أُزيلت هنا لمنع
    التكرار الحرفي.
    ============================================================ */
 
 /* ============================================================
-   §81 — VaultPage additions  (vault-login-*)
+   81 — VaultPage additions  (vault-login-*)
    ============================================================ */
 .vault-login-prompt  { text-align: center; padding-top: 3rem; }
 .vault-login-icon    { font-size: 3rem; margin-bottom: 1rem; }
@@ -6770,7 +6760,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .vault-loading-wrap  { margin: 3rem auto; }
 
 /* ============================================================
-   §82 — UpdatesPage  (upd-*)
+   82 — UpdatesPage  (upd-*)
    ============================================================ */
 .updates-type-badge { background: var(--badge-color, #64748B); }
 .upd-auto-badge     { background: #0F766E; margin-inline-start: 0.35rem; }
@@ -6778,7 +6768,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .upd-source-name    { font-size: 0.8125rem; opacity: 0.85; }
 
 /* ============================================================
-   §83 — TopicsIndexPage  (tip-*)
+   83 — TopicsIndexPage  (tip-*)
    ============================================================ */
 .tip-section       { margin-bottom: 2rem; }
 .tip-section-title { font-size: var(--ds-text-lg); font-weight: 700; margin-bottom: 0.75rem; }
@@ -6799,7 +6789,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 }
 
 /* ============================================================
-   §84 — PrayerCountdownPage  (pcp-*)
+   84 — PrayerCountdownPage  (pcp-*)
    ============================================================ */
 .pcp-loading-msg        { color: var(--majalis-ink-soft); }
 .pcp-error-msg          { color: var(--msk-red, #C1595A); }
@@ -6808,7 +6798,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .pcp-city-label         { margin-top: 1.5rem; font-size: 0.8rem; color: var(--majalis-ink-soft); text-align: center; }
 
 /* ============================================================
-   §85 — ResearcherProfilePage  (rpr-*)
+   85 — ResearcherProfilePage  (rpr-*)
    ============================================================ */
 .rpr-login-prompt   { text-align: center; padding-top: 3rem; }
 .rpr-login-icon     { font-size: 3rem; margin-bottom: 1rem; }
@@ -6816,7 +6806,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .rpr-loading-center { margin: 3rem auto; }
 
 /* ============================================================
-   §86 — MyCitationsPage  (cit-*)
+   86 — MyCitationsPage  (cit-*)
    ============================================================ */
 .cit-color-swatch { background: var(--swatch-bg); }
 .cit-folder-dot   { background: var(--folder-dot-bg); }
@@ -6836,7 +6826,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .cit-type-badge   { background: var(--cit-type-color, #065f46); }
 
 /* ============================================================
-   §87 — HadithIndexPage  (hadith-index-card additions)
+   87 — HadithIndexPage  (hadith-index-card additions)
    ============================================================ */
 .hadith-index-card { border-top-color: var(--hadith-accent); }
 .hadith-index-card__icon  { background: var(--hadith-accent); }
@@ -6846,24 +6836,24 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .hadith-index-card--mawdu { --hadith-accent: #B91C1C; }
 
 /* ============================================================
-   §88 — NotificationSettingsPage  (nsp-*)
+   88 — NotificationSettingsPage  (nsp-*)
    ============================================================ */
 .nsp-confirm-row   { display: flex; gap: 0.4rem; align-items: center; }
 .nsp-confirm-label { font-size: var(--ds-text-xs); color: var(--msk-red, #C1595A); }
 .nsp-quick-links   { margin-top: 2rem; }
 
 /* ============================================================
-   §89 — LearningPathSciencePage  (lps-*)
+   89 — LearningPathSciencePage  (lps-*)
    ============================================================ */
 
 /* ============================================================
-   §90 — UniversityDetailPage  (udp-*)
+   90 — UniversityDetailPage  (udp-*)
    ============================================================ */
 .udp-step-num  { background: var(--majalis-emerald); }
 .udp-acc-badge { background: var(--acc-color, #065f46); }
 
 /* ============================================================
-   §91 — UniversitiesComparePage  (ucp-*)
+   91 — UniversitiesComparePage  (ucp-*)
    ============================================================ */
 .ucp-acc-badge   { background: var(--acc-color, #065f46); }
 .ucp-apply-grid  {
@@ -6873,7 +6863,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 }
 
 /* ============================================================
-   §92 — FeaturesInProgressPage  (fip-*)
+   92 — FeaturesInProgressPage  (fip-*)
    ============================================================ */
 .fip-page      { max-width: 900px; margin: 0 auto; padding: 1.5rem 1rem 3rem; }
 .fip-head      { text-align: center; padding: 2rem 1rem 1.5rem; }
@@ -6930,30 +6920,30 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .fip-back-wrap { text-align: center; margin-top: 2rem; }
 
 /* ============================================================
-   §93 — KuwaitLessonsPage  (sheikh-avatar additions)
+   93 — KuwaitLessonsPage  (sheikh-avatar additions)
    ============================================================ */
 .sheikh-avatar--initials { background: var(--avatar-bg, #226A56); }
 .sheikh-avatar--hidden   { display: none; }
 
 /* ============================================================
-   §94 — QiblaPage  (qibla-* additions)
+   94 — QiblaPage  (qibla-* additions)
    ============================================================ */
 
 .qibla-aligned    { color: #16A34A; }
 
 /* ============================================================
-   §95 — OccasionsPage  (ocp-*)
+   95 — OccasionsPage  (ocp-*)
    ============================================================ */
 .ocp-month-filter                   { max-width: 16rem; }
 .occasions-filter__count--empty     { padding: 1rem 0; }
 
 /* ============================================================
-   §96 — CitationPublicPage  (reuses cit-* from §86)
+   96 — CitationPublicPage  (reuses cit-* from 86)
    ============================================================ */
-/* No new rules needed — uses cit-type-bar and cit-type-badge from §86 */
+/* No new rules needed — uses cit-type-bar and cit-type-badge from 86 */
 
 /* ============================================================
-   §97 — AnnualCourseDetailPage  (acd-*)
+   97 — AnnualCourseDetailPage  (acd-*)
    ============================================================ */
 .acd-map-iframe {
   width: 100%;
@@ -6973,22 +6963,22 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 }
 
 /* ============================================================
-   §98 — AdhkarPage  (adhkar-* additions)
+   98 — AdhkarPage  (adhkar-* additions)
    ============================================================ */
 .adhkar-ring-fill { transition: stroke-dashoffset 0.18s ease; }
 .adhkar-prog-fill { width: var(--adhkar-pct, 0%); }
 
 /* ============================================================
-   §99 — shared: page-stats-row--flush
+   99 — shared: page-stats-row--flush
    ============================================================ */
 .page-stats-row--flush { margin-bottom: 0; }
 
 /* ============================================================
-   §100 — LearningPathPage  (lpth-*)
+   100 — LearningPathPage  (lpth-*)
    ============================================================ */
 
 /* ============================================================
-   §101 — LearningPathBookPage  (lpb-*)
+   101 — LearningPathBookPage  (lpb-*)
    ============================================================ */
 
 .lpb-link-btn--audio { border-color: var(--majalis-emerald); color: var(--majalis-emerald); }
@@ -6998,44 +6988,44 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .lpb-status--pending     { background: var(--majalis-parchment-deep); color: var(--majalis-ink-soft); }
 
 /* ============================================================
-   §102 — TranscribePage  (tp-*)
+   102 — TranscribePage  (tp-*)
    ============================================================ */
 
 /* ============================================================
-   §103 — StudyRoomPage  (stp-*)
+   103 — StudyRoomPage  (stp-*)
    ============================================================ */
 .stp-loading-center { margin: 2rem auto; }
 
 /* ============================================================
-   §104 — AuthCallbackPage
+   104 — AuthCallbackPage
    ============================================================ */
 .auth-callback-loading { display: flex; justify-content: center; align-items: center; min-height: 60vh; }
 
 /* ============================================================
-   §105 — DailyWirdPage  (dwd-*)
+   105 — DailyWirdPage  (dwd-*)
    ============================================================ */
 .dwd-ring-fill { transition: stroke-dashoffset 0.4s ease; }
 
 /* ============================================================
-   §106 — AutoContentDetailPage  (acd-*)
+   106 — AutoContentDetailPage  (acd-*)
    ============================================================ */
 .acd-detail-hint { font-size: var(--ds-text-sm); }
 
 /* ============================================================
-   §107 — FiqhCouncilIssuesPage  (fci-*)
+   107 — FiqhCouncilIssuesPage  (fci-*)
    ============================================================ */
 .fci-chips-row { margin-bottom: 1rem; }
 
 /* ============================================================
-   §108 — FatwaPage  (ftp-*)
+   108 — FatwaPage  (ftp-*)
    ============================================================ */
 
 /* ============================================================
-   §109 — FatwaDetailPage  (ftd-*)
+   109 — FatwaDetailPage  (ftd-*)
    ============================================================ */
 
 /* ============================================================
-   §110 — Admin shared input/select/textarea (adm-*)
+   110 — Admin shared input/select/textarea (adm-*)
    Replaces exported inputSt / selectSt / textareaSt objects
    ============================================================ */
 .adm-input,
@@ -7056,7 +7046,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .adm-textarea { min-height: 5rem; resize: vertical; }
 
 /* ============================================================
-   §111 — Admin shared utility: text colours & layout helpers
+   111 — Admin shared utility: text colours & layout helpers
    ============================================================ */
 .adm-empty-msg  { color: var(--majalis-ink-soft); }
 .text-approved  { color: #16a34a; }
@@ -7069,7 +7059,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .fsp-result-pre { overflow: auto; max-height: 20rem; font-size: var(--ds-text-xs); }
 
 /* ============================================================
-   §112 — AdminSectionToolbar (ast-*)
+   112 — AdminSectionToolbar (ast-*)
    ============================================================ */
 .ast-wrap           { margin-bottom: 1.25rem; }
 .ast-header         { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: var(--ds-space-3); }
@@ -7080,7 +7070,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .ast-search         { max-width: 20rem; flex: 1 1 12rem; }
 
 /* ============================================================
-   §113 — Admin CRUD card pattern (shared across sections)
+   113 — Admin CRUD card pattern (shared across sections)
    ============================================================ */
 .adm-section-hdr  { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; }
 .adm-section-h2   { margin: 0; color: var(--majalis-emerald-deep); }
@@ -7093,7 +7083,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .adm-block-title  { display: block; margin-top: 0.5rem; }
 
 /* ============================================================
-   §114 — ReportsSection (rpt-*)
+   114 — ReportsSection (rpt-*)
    ============================================================ */
 .rpt-link-btn     { padding: 0.5rem 1rem; border-radius: var(--ds-radius-sm); border: 1px solid var(--majalis-line); background: var(--majalis-panel); color: var(--majalis-emerald-deep); text-decoration: none; font-size: 0.8125rem; font-weight: 600; }
 .rpt-export-btn   { padding: 0.5rem 1rem; border-radius: var(--ds-radius-sm); border: none; background: var(--majalis-emerald); color: var(--majalis-parchment); cursor: pointer; font-family: inherit; font-size: 0.8125rem; font-weight: 600; }
@@ -7107,11 +7097,11 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .rpt-summary-p    { margin: 0; color: var(--majalis-ink-soft); font-size: var(--ds-text-sm); line-height: 1.8; }
 
 /* ============================================================
-   §115 — DigitalLearningSection (dls-*)
+   115 — DigitalLearningSection (dls-*)
    ============================================================ */
 
 /* ============================================================
-   §116 — InstagramManualAssistPanel (igp-*)
+   116 — InstagramManualAssistPanel (igp-*)
    ============================================================ */
 
 .igp-panel        { margin-top: 0.5rem; padding-top: 0.5rem; border-top: 1px dashed var(--majalis-line); }
@@ -7127,7 +7117,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .igp-result       { margin: 0; font-size: var(--ds-text-xs); }
 
 /* ============================================================
-   §117 — ImageImportSection (iis-*) + .hidden utility
+   117 — ImageImportSection (iis-*) + .hidden utility
    ============================================================ */
 .hidden         { display: none; }
 .iis-label      { display: block; font-size: 0.68rem; font-weight: 700; color: var(--majalis-emerald-deep); margin-bottom: 0.2rem; letter-spacing: normal; }
@@ -7143,7 +7133,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .iis-section-mt { margin-top: 1rem; }
 
 /* ============================================================
-   §118 — AdminModal (adm-modal__* / adm-field*)
+   118 — AdminModal (adm-modal__* / adm-field*)
    ============================================================ */
 .adm-field              { margin-bottom: 0.875rem; }
 .adm-field__label       { display: block; font-size: 0.8125rem; font-weight: 600; color: var(--majalis-emerald-deep); margin-bottom: 0.3rem; }
@@ -7160,7 +7150,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .adm-modal__cancel      { padding: 0.5rem 1.25rem; border-radius: var(--ds-radius-sm); border: 1px solid var(--majalis-line); background: var(--majalis-panel); color: var(--majalis-ink-soft); cursor: pointer; font-family: inherit; font-size: var(--ds-text-sm); }
 
 /* ============================================================
-   §119 — SearchAnalyticsSection (sas-*)
+   119 — SearchAnalyticsSection (sas-*)
    ============================================================ */
 .sas-header      { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
 .sas-header h2   { margin: 0; }
@@ -7177,7 +7167,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .sas-list__li    { margin-bottom: 0.25rem; }
 
 /* ============================================================
-   §120 — LessonImportUrlPage (liu-*)
+   120 — LessonImportUrlPage (liu-*)
    ============================================================ */
 .liu-header        { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: var(--ds-space-3); margin-bottom: 1rem; }
 .liu-title         { margin: 0 0 0.35rem; color: var(--majalis-emerald-deep); }
@@ -7193,7 +7183,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .liu-loading-wrap  { margin-top: 1rem; }
 
 /* ============================================================
-   §121 — MiraclesSection (mir-*)
+   121 — MiraclesSection (mir-*)
    ============================================================ */
 .mir-header     { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: var(--ds-space-3); }
 .mir-title      { margin: 0; font-size: var(--ds-text-lg); font-weight: 700; color: var(--majalis-emerald-deep); }
@@ -7210,7 +7200,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .mir-edit-btn   { margin-inline-end: 0.5rem; }
 
 /* ============================================================
-   §122 — AdhkarSection (adh-*)
+   122 — AdhkarSection (adh-*)
    ============================================================ */
 .adh-add-btn       { padding: 0.5rem 1.25rem; border-radius: var(--ds-radius-xs); background: var(--majalis-emerald); color: var(--majalis-parchment); border: none; cursor: pointer; font-family: inherit; font-size: var(--ds-text-xs); font-weight: 600; }
 .adh-cat-select    { width: auto; flex: 0 1 200px; }
@@ -7234,7 +7224,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .adh-preview-meta  { font-size: 0.8125rem; color: var(--majalis-ink-soft); margin: 0; }
 
 /* ============================================================
-   §123 — InstagramIntegrationPage (igst-*)
+   123 — InstagramIntegrationPage (igst-*)
    ============================================================ */
 .igst-header        { display: flex; justify-content: space-between; flex-wrap: wrap; gap: var(--ds-space-3); margin-bottom: 1rem; }
 .igst-title         { margin: 0 0 0.35rem; color: var(--majalis-emerald-deep); }
@@ -7259,7 +7249,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .igst-badge--err    { background: #FEF2F2; color: #991B1B; }
 
 /* ============================================================
-   §124 — RulingsSection (rls-*)
+   124 — RulingsSection (rls-*)
    ============================================================ */
 .rls-header         { display: flex; justify-content: space-between; margin-bottom: 1rem; flex-wrap: wrap; gap: var(--ds-space-2); }
 .rls-title          { margin: 0; color: var(--majalis-emerald-deep); }
@@ -7282,7 +7272,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .rls-approve-btn    { font-size: var(--ds-text-xs); color: var(--majalis-emerald); }
 
 /* ============================================================
-   §125 — SubmissionsSection (sub-*)
+   125 — SubmissionsSection (sub-*)
    ============================================================ */
 .sub-header           { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.25rem; }
 .sub-title            { font-size: var(--ds-text-xl); font-weight: 700; margin: 0; }
@@ -7308,7 +7298,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .sub-divider          { border-top: 2px solid #f3f4f6; margin-top: 2rem; padding-top: 0.5rem; }
 
 /* ============================================================
-   §126 — AutomationDashboardPage (adp-*)
+   126 — AutomationDashboardPage (adp-*)
    ============================================================ */
 .adp-stat         { background: var(--majalis-panel); border: 1px solid var(--majalis-line); border-radius: var(--ds-radius); padding: var(--ds-space-4); min-width: 120px; }
 .adp-stat__value  { font-size: var(--ds-text-2xl); font-weight: 700; color: var(--adp-val-color, var(--majalis-emerald-deep)); }
@@ -7327,7 +7317,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .adp-step         { font-size: var(--ds-text-xs); padding: 0.35rem 0.5rem; background: var(--majalis-parchment-deep); border-radius: var(--ds-radius-xs); }
 
 /* ============================================================
-   §127 — GlobalReferenceSection (grs-*)
+   127 — GlobalReferenceSection (grs-*)
    ============================================================ */
 .grs-header       { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: var(--ds-space-3); }
 .grs-stats-grid   { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: var(--ds-space-4); margin-bottom: 2rem; }
@@ -7351,7 +7341,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .iis-drop-icon  { font-size: 3rem; }
 
 /* ============================================================
-   §128 — AutonomousAiSection (aai-*)
+   128 — AutonomousAiSection (aai-*)
    ============================================================ */
 .aai-header           { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: var(--ds-space-3); }
 .aai-header h2        { margin: 0; }
@@ -7375,7 +7365,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .aai-footer-note      { margin-top: 1.5rem; font-size: var(--ds-text-xs); color: var(--ink-soft, var(--majalis-ink-soft)); }
 
 /* ============================================================
-   §129 — BulkImport (blk-*)
+   129 — BulkImport (blk-*)
    ============================================================ */
 .blk-trigger-btn      { padding: 0.5rem 1.1rem; border-radius: var(--ds-radius-sm); border: 1px solid var(--majalis-emerald); background: var(--majalis-panel); color: var(--majalis-emerald-deep); cursor: pointer; font-family: inherit; font-size: var(--ds-text-sm); font-weight: 600; }
 .blk-dialog           { width: 100%; max-width: 44rem; background: var(--majalis-parchment); border-radius: var(--ds-radius); border: 1px solid var(--majalis-line); max-height: 92vh; display: flex; flex-direction: column; box-shadow: 0 8px 32px rgba(0,0,0,0.2); }
@@ -7406,7 +7396,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .blk-cancel-btn:disabled { cursor: default; }
 
 /* ============================================================
-   §130 — GovernanceSection (gov-*)
+   130 — GovernanceSection (gov-*)
    ============================================================ */
 .gov-header           { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: var(--ds-space-3); }
 .gov-header h2        { margin: 0; }
@@ -7428,7 +7418,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .gov-schedule-ul      { margin: 0.5rem 0 0; padding-inline-start: 1.25rem; font-size: 0.8125rem; }
 
 /* ============================================================
-   §131 — Phase2TrialImport (p2t-*)
+   131 — Phase2TrialImport (p2t-*)
    ============================================================ */
 .p2t-btn              { padding: 0.5rem 1.1rem; border-radius: var(--ds-radius-sm); border: 1px solid var(--majalis-emerald-deep); background: var(--majalis-emerald-deep); color: var(--majalis-parchment); cursor: pointer; font-family: inherit; font-size: var(--ds-text-sm); font-weight: 600; }
 .p2t-btn:disabled     { opacity: 0.6; cursor: not-allowed; }
@@ -7455,7 +7445,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .p2t-verify__a        { color: var(--majalis-emerald-deep); }
 
 /* ============================================================
-   §132 — UsersSection (usr-*)
+   132 — UsersSection (usr-*)
    ============================================================ */
 .usr-header           { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: var(--ds-space-3); }
 .usr-title            { margin: 0; font-size: var(--ds-text-lg); font-weight: 700; color: var(--majalis-emerald-deep); }
@@ -7483,7 +7473,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .usr-empty            { text-align: center; color: var(--majalis-ink-soft); padding: var(--ds-space-8); }
 
 /* ============================================================
-   §133 — ContentFileImport (cfi-*)
+   133 — ContentFileImport (cfi-*)
    ============================================================ */
 .cfi-trigger-btn    { padding: 0.5rem 1.1rem; border-radius: var(--ds-radius-sm); border: 1px solid var(--majalis-emerald); background: var(--majalis-panel); color: var(--majalis-emerald-deep); cursor: pointer; font-family: inherit; font-size: var(--ds-text-sm); font-weight: 600; }
 .cfi-dialog         { width: 100%; max-width: 32rem; background: var(--majalis-parchment); border-radius: var(--ds-radius); border: 1px solid var(--majalis-line); padding: var(--ds-space-5); box-shadow: 0 8px 32px rgba(0,0,0,0.2); }
@@ -7508,7 +7498,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .cfi-report__err    { margin: 0.25rem 0 0; color: #226A56; font-size: 0.8125rem; }
 
 /* ============================================================
-   §134 — FawaidSection (faw-*)
+   134 — FawaidSection (faw-*)
    ============================================================ */
 .faw-header         { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: var(--ds-space-3); }
 .faw-title          { margin: 0; font-size: var(--ds-text-lg); font-weight: 700; color: var(--majalis-emerald-deep); display: flex; align-items: center; gap: var(--ds-space-2); }
@@ -7536,7 +7526,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .faw-textarea--tall { min-height: 7rem; }
 
 /* ============================================================
-   §135 — AggregatorSection (agg-*)
+   135 — AggregatorSection (agg-*)
    ============================================================ */
 .agg-stats-grid     { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: var(--ds-space-3); margin-bottom: 1.5rem; }
 .agg-stat           { background: var(--majalis-panel); border: 1px solid var(--majalis-line); border-radius: 0.625rem; padding: var(--ds-space-4); text-align: center; }
@@ -7557,7 +7547,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .agg-panel-ul       { margin: 0; padding-inline-start: 1.1rem; font-size: 0.8125rem; line-height: 1.9; }
 
 /* ============================================================
-   §136 — SettingsSection (set-*)
+   136 — SettingsSection (set-*)
    ============================================================ */
 .set-save-btn       { padding: 0.5rem 1.25rem; border-radius: var(--ds-radius-sm); border: none; background: var(--majalis-emerald); color: var(--majalis-parchment); cursor: pointer; font-family: inherit; font-size: var(--ds-text-sm); font-weight: 600; }
 .set-grid           { display: grid; gap: var(--ds-space-5); }
@@ -7578,7 +7568,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .set-security-ul    { margin: 0; padding-inline-start: 1.25rem; font-size: var(--ds-text-sm); color: var(--majalis-emerald-deep); line-height: 1.9; }
 
 /* ============================================================
-   §137 — AutomationCenterPage (acc-*)
+   137 — AutomationCenterPage (acc-*)
    ============================================================ */
 .acc-header         { display: flex; justify-content: space-between; flex-wrap: wrap; gap: var(--ds-space-3); margin-bottom: 1rem; }
 .acc-title          { margin: 0 0 0.35rem; color: var(--majalis-emerald-deep); }
@@ -7602,7 +7592,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .acc-extraction-item { font-size: var(--ds-text-xs); padding: 0.35rem 0.5rem; background: var(--majalis-panel); border: 1px solid var(--majalis-line); border-radius: var(--ds-radius-xs); }
 
 /* ============================================================
-   §138 — KnowledgeEngineSection (ken-*)
+   138 — KnowledgeEngineSection (ken-*)
    ============================================================ */
 .ken-header         { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.25rem; flex-wrap: wrap; gap: var(--ds-space-3); }
 .ken-title          { margin: 0; font-size: var(--ds-text-lg); font-weight: 700; color: var(--majalis-emerald-deep); }
@@ -7629,7 +7619,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .ken-policy-note strong { color: var(--majalis-emerald-deep); }
 
 /* ============================================================
-   §139 — SheikhsSection (skh-*)
+   139 — SheikhsSection (skh-*)
    ============================================================ */
 .skh-header         { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.875rem; flex-wrap: wrap; gap: var(--ds-space-3); }
 .skh-title          { margin: 0; font-size: var(--ds-text-lg); font-weight: 700; color: var(--majalis-emerald-deep); }
@@ -7658,7 +7648,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .skh-checkbox-text  { color: var(--majalis-ink-soft); font-size: var(--ds-text-sm); }
 
 /* ============================================================
-   §140 — QuizSection (qzs-*)
+   140 — QuizSection (qzs-*)
    ============================================================ */
 .qzs-header         { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; flex-wrap: wrap; gap: var(--ds-space-3); }
 .qzs-title          { margin: 0; font-size: var(--ds-text-lg); font-weight: 700; color: var(--majalis-emerald-deep); }
@@ -7701,7 +7691,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .qzs-empty          { padding: var(--ds-space-10); text-align: center; color: var(--majalis-ink-soft); background: var(--majalis-panel); border-radius: var(--ds-radius); border: 1px solid var(--majalis-line); }
 
 /* ============================================================
-   §141 — LessonsSection (les-*)
+   141 — LessonsSection (les-*)
    ============================================================ */
 .les-header         { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.875rem; flex-wrap: wrap; gap: var(--ds-space-3); }
 .les-title          { margin: 0; font-size: var(--ds-text-lg); font-weight: 700; color: var(--majalis-emerald-deep); }
@@ -7740,7 +7730,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .les-time-note      { display: block; margin-top: 0.3rem; font-size: 0.72rem; color: #6b6460; }
 
 /* ============================================================
-   §142 — IslamicIntelligenceSection (ii-*)
+   142 — IslamicIntelligenceSection (ii-*)
    ============================================================ */
 .ii-header          { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: var(--ds-space-3); }
 .ii-title           { margin: 0; }
@@ -7774,7 +7764,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .ii-principle       { font-size: var(--ds-text-xs); color: var(--ink-soft, var(--majalis-ink-soft)); }
 
 /* ============================================================
-   §143 — OpenPlatformSection (ops-*) — shares ii-stat/ii-panel
+   143 — OpenPlatformSection (ops-*) — shares ii-stat/ii-panel
    ============================================================ */
 .ops-header         { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap; gap: var(--ds-space-3); }
 .ops-title          { margin: 0; }
@@ -7795,7 +7785,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .ops-release-ul     { margin: 0.5rem 0 0; padding-inline-start: 1.25rem; font-size: 0.8125rem; }
 
 /* ============================================================
-   §144 — KnowledgeReasoningSection (krs-*)
+   144 — KnowledgeReasoningSection (krs-*)
    ============================================================ */
 .krs-header         { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; gap: var(--ds-space-4); flex-wrap: wrap; }
 .krs-title          { margin: 0; color: var(--majalis-emerald-deep); }
@@ -7821,7 +7811,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .krs-test-result    { padding: var(--ds-space-4); border-radius: var(--ds-radius); border: 1px solid var(--majalis-line); background: var(--majalis-panel); font-size: var(--ds-text-sm); white-space: pre-wrap; }
 
 /* ============================================================
-   §147 — ScholarlyVerificationSection (svs-*)
+   147 — ScholarlyVerificationSection (svs-*)
    ============================================================ */
 .svs-header         { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1rem; gap: var(--ds-space-4); flex-wrap: wrap; }
 .svs-title          { margin: 0; color: var(--majalis-emerald-deep); font-size: var(--ds-text-xl); font-weight: 700; }
@@ -7853,7 +7843,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .svs-priorities-ul  { margin: 0; padding-inline-start: 1.25rem; color: var(--majalis-ink-soft); font-size: var(--ds-text-sm); }
 
 /* ============================================================
-   §148 — AutomationSourcesPage (asp-*)
+   148 — AutomationSourcesPage (asp-*)
    ============================================================ */
 .asp-header         { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: var(--ds-space-3); margin-bottom: 1rem; }
 .asp-title          { margin: 0 0 0.35rem; color: var(--majalis-emerald-deep); font-size: var(--ds-text-lg); font-weight: 700; }
@@ -7889,7 +7879,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .asp-small-btn--accent { color: var(--majalis-emerald-deep); font-weight: 600; }
 
 /* ============================================================
-   §149 — ContentProductionDashboardPage (cpd-*)
+   149 — ContentProductionDashboardPage (cpd-*)
    ============================================================ */
 .cpd-header         { display: flex; justify-content: space-between; flex-wrap: wrap; gap: var(--ds-space-3); margin-bottom: 1rem; }
 .cpd-title          { margin: 0 0 0.35rem; color: var(--majalis-emerald-deep); font-size: var(--ds-text-lg); font-weight: 700; }
@@ -7919,7 +7909,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .cpd-source-item    { font-size: 0.8125rem; }
 
 /* ============================================================
-   §150 — AutomationReviewPage (arp-*)
+   150 — AutomationReviewPage (arp-*)
    ============================================================ */
 .arp-header           { display: flex; justify-content: space-between; flex-wrap: wrap; gap: var(--ds-space-3); margin-bottom: 1rem; }
 .arp-title            { margin: 0 0 0.35rem; color: var(--majalis-emerald-deep); font-size: var(--ds-text-lg); font-weight: 700; }
@@ -7959,7 +7949,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .arp-audit-url        { font-size: var(--ds-text-xs); word-break: break-all; }
 
 /* ============================================================
-   §151 — MajlisKnowledgeEnginePage (mke-*)
+   151 — MajlisKnowledgeEnginePage (mke-*)
    ============================================================ */
 .mke-header          { display: flex; justify-content: space-between; flex-wrap: wrap; gap: var(--ds-space-3); margin-bottom: 1rem; }
 .mke-title           { margin: 0 0 0.35rem; color: var(--majalis-emerald-deep); font-size: var(--ds-text-lg); font-weight: 700; }
@@ -7988,7 +7978,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .mke-pipeline-text--spaced { line-height: 1.6; }
 
 /* ============================================================
-   §152 — AutoContentPage (acp-*)
+   152 — AutoContentPage (acp-*)
    ============================================================ */
 .acp-back-link       { display: inline-block; margin-bottom: 1rem; font-size: 0.8125rem; color: var(--majalis-brass-deep); text-decoration: none; }
 .acp-header          { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1.25rem; flex-wrap: wrap; gap: var(--ds-space-3); }
@@ -8040,7 +8030,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .acp-log-err         { margin: 0.25rem 0 0; font-size: var(--ds-text-2xs); white-space: pre-wrap; color: #991B1B; }
 
 /* ============================================================
-   §153 — VerifiedKnowledgeSection (vks-*) — reuses svs-*
+   153 — VerifiedKnowledgeSection (vks-*) — reuses svs-*
    ============================================================ */
 .vks-recs            { margin-bottom: 1.5rem; padding: 0.75rem 1rem; border-radius: var(--ds-radius); background: rgba(31,77,58,0.08); border: 1px solid rgba(24,54,42,0.4); }
 .vks-recs-title      { margin: 0; font-weight: 600; color: #226A56; }
@@ -8049,7 +8039,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .vks-td--active      { color: var(--vks-src-color, var(--majalis-ink-soft)); }
 
 /* ============================================================
-   §154 — LessonImportShared (lis-*)
+   154 — LessonImportShared (lis-*)
    ============================================================ */
 .lis-input, .lis-select  { width: 100%; padding: var(--ds-space-2); border-radius: var(--ds-radius-sm); border: 1px solid var(--majalis-line); font-family: inherit; font-size: var(--ds-text-sm); box-sizing: border-box; background: #fff; }
 .lis-textarea            { width: 100%; padding: var(--ds-space-2); border-radius: var(--ds-radius-sm); border: 1px solid var(--majalis-line); font-family: inherit; font-size: var(--ds-text-sm); box-sizing: border-box; min-height: 5rem; resize: vertical; }
@@ -8117,7 +8107,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .lis-reject-btn:disabled { opacity: 0.7; cursor: not-allowed; }
 
 /* ============================================================
-   §155 — SmartCmsSection (scm-*) — dark/glass UI
+   155 — SmartCmsSection (scm-*) — dark/glass UI
    ============================================================ */
 .scm-wrapper          { direction: rtl; max-width: 860px; margin: 0 auto; }
 .scm-header           { margin-bottom: 1.5rem; }
@@ -8182,7 +8172,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .scm-draft-reject-btn  { font-size: var(--ds-text-xs); padding: 0.25rem 0.65rem; background: rgba(193,89,90,0.12); color: #C1595A; border: none; border-radius: var(--ds-radius-sm); cursor: pointer; font-family: inherit; }
 .scm-draft-reject-btn:disabled { cursor: not-allowed; }
 
-/* ── §156 — LessonImportImagePage (lip-*) ────────────────────────────────── */
+/* ── 156 — LessonImportImagePage (lip-*) ────────────────────────────────── */
 .lip-page-header   { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: var(--ds-space-3); margin-bottom: 1rem; }
 .lip-page-title    { margin: 0 0 0.35rem; color: var(--majalis-emerald-deep); font-size: 1.1rem; font-weight: 700; }
 .lip-page-sub      { margin: 0; color: var(--majalis-ink-soft); font-size: var(--ds-text-sm); }
@@ -8223,7 +8213,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .lip-day-repeat    { font-size: var(--ds-text-xs); color: var(--majalis-ink-soft); margin-top: 0.25rem; }
 .lip-checkbox-row  { display: flex; align-items: center; gap: var(--ds-space-2); }
 
-/* ── §157 — AutonomousPlatformPage (aup-*) ────────────────────────────────── */
+/* ── 157 — AutonomousPlatformPage (aup-*) ────────────────────────────────── */
 .aup-wrapper        { max-width: 1100px; }
 .aup-header         { display: flex; justify-content: space-between; flex-wrap: wrap; gap: var(--ds-space-3); margin-bottom: 1.25rem; align-items: flex-start; }
 .aup-title          { margin: 0 0 0.3rem; color: var(--majalis-emerald-deep); font-size: 1.1rem; font-weight: 700; }
@@ -8314,7 +8304,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .aup-ok             { font-size: 0.8rem; color: #143F35; }
 .aup-grid-gap       { display: grid; gap: var(--ds-space-2); }
 
-/* ── §158 — TelegramSection (tgm-*) ──────────────────────────────────────── */
+/* ── 158 — TelegramSection (tgm-*) ──────────────────────────────────────── */
 .tgm-title          { font-size: var(--ds-text-xl); font-weight: 700; margin: 0 0 1rem; }
 .tgm-tabs           { display: flex; gap: var(--ds-space-1-5); margin-bottom: 1.25rem; border-bottom: 2px solid var(--majalis-line); padding-bottom: 0; }
 .tgm-tab            { padding: 0.5rem 1rem; border: none; background: none; cursor: pointer; font-weight: 400; font-size: var(--ds-text-sm); color: var(--majalis-ink-soft); border-bottom: 3px solid transparent; margin-bottom: -2px; transition: all 0.15s; font-family: inherit; }
@@ -8399,7 +8389,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .tgm-sheikh-empty   { color: var(--majalis-ink-soft); font-size: 0.8rem; }
 .tgm-tr             { border-bottom: 1px solid var(--majalis-line); }
 
-/* ── §159 — FiqhCouncilSection (fcs-*) ───────────────────────────────────── */
+/* ── 159 — FiqhCouncilSection (fcs-*) ───────────────────────────────────── */
 .fcs-header         { display: flex; justify-content: space-between; margin-bottom: 1rem; flex-wrap: wrap; gap: var(--ds-space-3); align-items: center; }
 .fcs-title          { margin: 0; color: var(--majalis-emerald-deep); font-size: var(--ds-text-base); font-weight: 700; }
 .fcs-header-actions { display: flex; gap: var(--ds-space-2); flex-wrap: wrap; align-items: center; }
@@ -8449,7 +8439,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .fcs-stats-sec    { margin-top: 1rem; }
 .fcs-sel-sm       { font-size: var(--ds-text-xs); min-width: 12rem; }
 
-/* ── §160 — Admin Back Button & Main Header ──────────────────────────────── */
+/* ── 160 — Admin Back Button & Main Header ──────────────────────────────── */
 .admin-main-header {
   display: flex;
   align-items: center;
@@ -8492,7 +8482,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
   white-space: nowrap;
 }
 
-/* ── §161 — HaramainLessonsSection (hrm-*) ───────────────────────────────── */
+/* ── 161 — HaramainLessonsSection (hrm-*) ───────────────────────────────── */
 
 .hrm-result--ok    { background: #D4E9DC; border-color: #6EE7B7; }
 .hrm-result--fail  { background: #FEE2E2; border-color: #FCA5A5; }
@@ -8544,9 +8534,6 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 /* الركن اليومي */
 
 /* تحسين Hero */
-.home-hero-title--v3 {
-  color: var(--majalis-emerald-deep);
-}
 
 /* شريط الرجوع في الإدارة */
 .admin-main-header {
@@ -8564,7 +8551,7 @@ body {
   border-top: none;
 }
 
-/* ── §163 — GlobalSearchModal (gsm-*) ───────────────────────────────────── */
+/* ── 163 — GlobalSearchModal (gsm-*) ───────────────────────────────────── */
 .gsm-overlay {
   position: fixed;
   top: 0;
@@ -8860,7 +8847,7 @@ body {
   padding: 0 0.5rem;
 }
 
-/* ── §164 — NavBar tab links (nav-tab-*) ─────────────────────────────────── */
+/* ── 164 — NavBar tab links (nav-tab-*) ─────────────────────────────────── */
 .nav-tab {
   font-size: var(--ds-text-sm);
   padding: 0.375rem 0.875rem;
@@ -8885,7 +8872,7 @@ body {
   border-radius: 0;
 }
 
-/* ── §165 — ErrorBoundary & AdminRouteGuard (eb-*) ───────────────────────── */
+/* ── 165 — ErrorBoundary & AdminRouteGuard (eb-*) ───────────────────────── */
 .error-boundary-page {
   max-width: 40rem;
   margin: 3rem auto;
@@ -8949,7 +8936,7 @@ body {
   text-align: center;
 }
 
-/* ── §166 — ui-common loading & legal page ─────────────────────────────── */
+/* ── 166 — ui-common loading & legal page ─────────────────────────────── */
 .ds-loading-wrap {
   display: flex;
   flex-direction: column;
@@ -9036,7 +9023,7 @@ html[data-theme="dark"] .lesson-unified-card__btn--primary {
   background: #226A56 !important;
 }
 
-/* ── §167 — AyahDisplay NoteForm (ayd-*) ────────────────────────────────── */
+/* ── 167 — AyahDisplay NoteForm (ayd-*) ────────────────────────────────── */
 
 .ayd-inline-icon--bookmark { color: var(--majalis-emerald); }
 .ayd-inline-icon--note     { color: #226A56; }
@@ -9050,11 +9037,11 @@ html[data-theme="dark"] .lesson-unified-card__btn--primary {
 }
 .qs-context-sheet--safe { padding-bottom: env(safe-area-inset-bottom, 0px); }
 
-/* ── §168 — FiqhAdminSubnav overrides ───────────────────────────────────── */
+/* ── 168 — FiqhAdminSubnav overrides ───────────────────────────────────── */
 .fiqh-admin-subnav-link         { color: var(--majalis-ink-soft); font-weight: 400; }
 .fiqh-admin-subnav-link--active { color: var(--majalis-emerald-deep); font-weight: 700; }
 
-/* ── §169 — ExploreAyahPanel (eap-*) ────────────────────────────────────── */
+/* ── 169 — ExploreAyahPanel (eap-*) ────────────────────────────────────── */
 .eap-backdrop {
   position: fixed;
   top: 0;
@@ -9209,7 +9196,7 @@ html[data-theme="dark"] .lesson-unified-card__btn--primary {
 .eap-skel__line1 { height: 0.85rem; background: #E8E7E2; border-radius: 4px; margin-bottom: 0.3rem; width: var(--eap-w1, 70%); }
 .eap-skel__line2 { height: 0.7rem; background: #f0ede8; border-radius: 4px; width: var(--eap-w2, 50%); }
 
-/* ── §170 — QuranSearch (qss-*) ─────────────────────────────────────────── */
+/* ── 170 — QuranSearch (qss-*) ─────────────────────────────────────────── */
 
 .qss-pill--popular {
   background: var(--majalis-sage);
@@ -9217,7 +9204,7 @@ html[data-theme="dark"] .lesson-unified-card__btn--primary {
   color: var(--majalis-emerald-deep);
 }
 
-/* ── §171 — KhatmahPanel (kht-*) & QuranBookmarksPanel (qbp-*) shared ───── */
+/* ── 171 — KhatmahPanel (kht-*) & QuranBookmarksPanel (qbp-*) shared ───── */
 
 .kht-plan-card--active { border: 1px solid var(--majalis-line); background: var(--majalis-panel); }
 .kht-plan-card--done   { border: 1px solid var(--majalis-emerald); background: #F0F7F4; }
@@ -9243,7 +9230,7 @@ html[data-theme="dark"] .lesson-unified-card__btn--primary {
 .qbp-hifz--memorized   { --qbp-hifz-status-color: var(--majalis-emerald-deep, #143F35); }
 .qbp-hifz--reviewing   { --qbp-hifz-status-color: #1E40AF; }
 
-/* ── §172 — RelatedContentWidget (rcw-*) ─────────────────────────────────── */
+/* ── 172 — RelatedContentWidget (rcw-*) ─────────────────────────────────── */
 
 .rcw-nt--quran-ayah    { --rcw-color: #065f46; }
 .rcw-nt--hadith        { --rcw-color: #1d4ed8; }
@@ -9255,7 +9242,7 @@ html[data-theme="dark"] .lesson-unified-card__btn--primary {
 .rcw-nt--prophet-story { --rcw-color: #dc2626; }
 .rcw-nt--term          { --rcw-color: #6b7280; }
 
-/* ── §173 — AchievementToast (at-*) ──────────────────────────────────────── */
+/* ── 173 — AchievementToast (at-*) ──────────────────────────────────────── */
 .at-toast {
   position: fixed;
   bottom: 1.5rem;
@@ -9303,7 +9290,7 @@ html[data-theme="dark"] .lesson-unified-card__btn--primary {
   flex-shrink: 0;
 }
 
-/* ── §174 — LazyRouteFallback & AsyncDataView ─────────────────────────────── */
+/* ── 174 — LazyRouteFallback & AsyncDataView ─────────────────────────────── */
 .lrf-wrap {
   display: flex;
   flex-direction: column;
@@ -9318,7 +9305,7 @@ html[data-theme="dark"] .lesson-unified-card__btn--primary {
 .adv-skel-line2 { width: 100%; max-width: 20rem; height: 0.75rem; margin: 0 auto 0.5rem; }
 .adv-skel-line3 { width: 100%; max-width: 24rem; height: 0.75rem; margin: 0 auto; }
 
-/* ── §175 — MoreBottomSheet & AppRoutes misc ─────────────────────────────── */
+/* ── 175 — MoreBottomSheet & AppRoutes misc ─────────────────────────────── */
 .bottom-sheet__close-btn {
   float: left;
   background: none;
@@ -9344,12 +9331,12 @@ html[data-theme="dark"] .lesson-unified-card__btn--primary {
   color: var(--majalis-emerald-deep);
 }
 
-/* ── §176 — AppShell, SiteFooter, RelatedKnowledge ──────────────────────── */
+/* ── 176 — AppShell, SiteFooter, RelatedKnowledge ──────────────────────── */
 .app-shell { min-height: 100vh; direction: var(--app-dir, rtl); }
 .navbar-v3-placeholder { min-height: 4rem; }
 .footer-star { opacity: 0.4; }
 
-/* ── §177 — UnderConstruction & HijriSacredMonthBanner ──────────────────── */
+/* ── 177 — UnderConstruction & HijriSacredMonthBanner ──────────────────── */
 .uc-progress__fill { width: var(--uc-pct, 0%); }
 
 /* hmb = HijriSacredMonthBanner — تصميم 2026 */
@@ -9589,7 +9576,7 @@ html[data-theme="dark"] .lesson-unified-card__btn--primary {
   .hmb-nav-arrows { display: none; }
 }
 
-/* ── §177b — HomeAsmaCard ────────────────────────────────────────────────── */
+/* ── 177b — HomeAsmaCard ────────────────────────────────────────────────── */
 .hac { margin: 0; }
 .hac__eyebrow {
   display: flex;
@@ -9684,7 +9671,7 @@ html[data-theme="dark"] .lesson-unified-card__btn--primary {
   padding: 0.1rem 0.4rem;
 }
 
-/* ── §177c — HomeWeekStreak ──────────────────────────────────────────────── */
+/* ── 177c — HomeWeekStreak ──────────────────────────────────────────────── */
 .hws { margin: 0; }
 .hws__head {
   display: flex;
@@ -9764,7 +9751,7 @@ html[data-theme="dark"] .lesson-unified-card__btn--primary {
   font-weight: 700;
 }
 
-/* ── §178b — ArbaeenNawawiPage (.an-*) ────────────────────────────────────── */
+/* ── 178b — ArbaeenNawawiPage (.an-*) ────────────────────────────────────── */
 .an-page { padding-bottom: 3rem; }
 
 /* Hero */
@@ -9839,17 +9826,17 @@ html[data-theme="dark"] .lesson-unified-card__btn--primary {
 .an-expand-btn { font-size: var(--ds-text-xs); padding: 0.25rem 0.65rem; border-radius: var(--ds-radius-full); border: 1px solid #d1d5db; background: transparent; color: #6b7280; cursor: pointer; transition: background 0.15s; }
 .an-expand-btn:hover { background: #f3f4f6; }
 
-/* ── §178 — CitationActionBar, progress bars ─────────────────────────────── */
+/* ── 178 — CitationActionBar, progress bars ─────────────────────────────── */
 .cab-type-bar { background: var(--cab-type-color, var(--majalis-emerald-deep)); }
 .home-progress-card__bar > span { width: var(--hdp-pct, 0%); display: block; height: 100%; border-radius: inherit; background: var(--majalis-emerald); transition: width 0.4s ease; }
 
-/* ── §179 — TasbeehCounter & progress bars (dynamic width via CSS var) ───── */
+/* ── 179 — TasbeehCounter & progress bars (dynamic width via CSS var) ───── */
 .tc-ring-fill { transition: stroke-dashoffset 0.3s ease, stroke 0.35s ease; }
 .tc-btn-wrap { touch-action: manipulation; user-select: none; }
 
 .tasbeeh-counter__bar > span { display: block; height: 100%; border-radius: inherit; background: var(--majalis-emerald); transition: width 0.4s ease; width: var(--tc-pct, 0%); }
 
-/* ── §180 — HomeAdhanWidget ─────────────────────────────────────────────── */
+/* ── 180 — HomeAdhanWidget ─────────────────────────────────────────────── */
 
 .had-notif-btn--on { background: rgba(255,255,255,0.18); border-color: rgba(255,255,255,0.5); }
 .had-notif-btn--toggling { opacity: 0.6; }
@@ -9858,7 +9845,7 @@ html[data-theme="dark"] .lesson-unified-card__btn--primary {
 
 .had-prayer-cell--next { background: rgba(255,255,255,0.22); border-color: rgba(255,255,255,0.4); }
 
-/* ── §181 — HomeTawheed HadithBadge ─────────────────────────────────────── */
+/* ── 181 — HomeTawheed HadithBadge ─────────────────────────────────────── */
 .hadith-badge {
   display: inline-flex; align-items: center; gap: 0.3rem;
   margin-top: 0.45rem; font-size: 0.8rem; line-height: 1.4;
@@ -9873,7 +9860,7 @@ html[data-theme="dark"] .lesson-unified-card__btn--primary {
 .hadith-badge--daif  { --hdb-color: var(--majalis-danger, #9B1C1C); }
 .hadith-badge--mawdu { --hdb-color: var(--majalis-danger, #9B1C1C); }
 
-/* ── §182 — HomeRecommendations & HomeLearningSeasonsWidget ─────────────── */
+/* ── 182 — HomeRecommendations & HomeLearningSeasonsWidget ─────────────── */
 
 .ds-skeleton--card { height: 6rem; border-radius: var(--ds-radius-lg); }
 
@@ -9888,7 +9875,7 @@ html[data-theme="dark"] .lesson-unified-card__btn--primary {
 .lsw-featured__cta { background: var(--lsw-color, var(--majalis-emerald)); }
 .lsw-mini-item__dot { background: var(--lsw-dot-color, var(--majalis-emerald)); }
 
-/* ── §183 — QuranCircleCard & FiqhCompletionBar ─────────────────────────── */
+/* ── 183 — QuranCircleCard & FiqhCompletionBar ─────────────────────────── */
 .fiqh-completion-bar-fill { width: var(--fcb-pct, 0%); }
 
 .qc-card__meta { font-size: 0.78rem; color: var(--majalis-ink-soft); }
@@ -9919,10 +9906,10 @@ html[data-theme="dark"] .lesson-unified-card__btn--primary {
   color: var(--qcl-color, #5C5C56);
 }
 
-/* ── §184 — ContentDetailLayout & misc link fixes ───────────────────────── */
+/* ── 184 — ContentDetailLayout & misc link fixes ───────────────────────── */
 .platform-card-link { text-decoration: none; }
 
-/* ── §185 — AssistantChatView CitationCard ──────────────────────────────── */
+/* ── 185 — AssistantChatView CitationCard ──────────────────────────────── */
 .acv-cite-card {
   display: flex; align-items: center; gap: var(--ds-space-2);
   padding: 0.4rem 0.75rem; border-radius: var(--ds-radius-sm);
@@ -9938,7 +9925,7 @@ html[data-theme="dark"] .lesson-unified-card__btn--primary {
 .acv-cite-card__score { font-size: 0.7rem; color: #059669; font-weight: 700; }
 .acv-cite-card__arrow { font-size: var(--ds-text-xs); color: var(--majalis-ink-soft); }
 
-/* ── §186 — CitationModal ────────────────────────────────────────────────── */
+/* ── 186 — CitationModal ────────────────────────────────────────────────── */
 .cm-modal { background: var(--majalis-panel); color: var(--majalis-ink); }
 .cm-header { border-bottom: 1px solid var(--majalis-line); }
 .cm-type-badge { background: var(--cm-type-color, var(--majalis-emerald-deep)); }
@@ -9962,7 +9949,7 @@ html[data-theme="dark"] .lesson-unified-card__btn--primary {
 .cm-status { color: var(--mn-text-active, var(--majalis-emerald-deep)); }
 .cm-qr-btn { color: var(--mn-text-active, var(--majalis-emerald-deep)); }
 
-/* ── §187 — HomePage Quick Access & Quick Search ─────────────────────────── */
+/* ── 187 — HomePage Quick Access & Quick Search ─────────────────────────── */
 
 /* ══ Recently Visited Bar ══ */
 .hp-recent-bar {
@@ -10014,7 +10001,7 @@ html[data-theme="dark"] .lesson-unified-card__btn--primary {
 
 /* Quick Nav bar */
 
-/* ── §188 — General Design Improvements 2026 ────────────────────────────── */
+/* ── 188 — General Design Improvements 2026 ────────────────────────────── */
 
 /* Smooth scroll and better focus indicators */
 :root {
@@ -10054,10 +10041,6 @@ button, .btn {
 }
 
 /* Improved scrollbar */
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--majalis-line); border-radius: var(--ds-radius-full); }
-::-webkit-scrollbar-thumb:hover { background: var(--majalis-ink-muted); }
 
 /* Text selection */
 ::selection {
@@ -10091,7 +10074,7 @@ button, .btn {
 
 /* Improved home hero */
 
-/* ── §189 — AutonomousPlatformPage misc fixes ───────────────────────────── */
+/* ── 189 — AutonomousPlatformPage misc fixes ───────────────────────────── */
 .aup-db-connected { color: #143F35; }
 .aup-db-error     { color: #991B1B; }
 .aup-pipeline-pct { font-size: 0.65rem; margin-top: 0.2rem; color: var(--aup-pc-color, var(--majalis-ink-soft)); }
@@ -10102,7 +10085,7 @@ button, .btn {
 .aup-item-actions { display: flex; gap: 0.4rem; }
 .aup-error-label { color: #991B1B; }
 
-/* ── §190 — AssistantChatView category suggestions + safety badges ───────── */
+/* ── 190 — AssistantChatView category suggestions + safety badges ───────── */
 .acv-suggestions { margin-bottom: 1rem; }
 .acv-cat { margin-bottom: 0.75rem; }
 .acv-cat__head {
@@ -10172,7 +10155,7 @@ button, .btn {
   padding-top: 0.375rem;
 }
 
-/* ── §191 — MuezzinPicker bottom-sheet ─────────────────────────────────────── */
+/* ── 191 — MuezzinPicker bottom-sheet ─────────────────────────────────────── */
 .mzp-overlay {
   position: fixed;
   top: 0;
@@ -10264,7 +10247,7 @@ button, .btn {
 }
 .mzp-preview-btn--playing { background: var(--msk-red, #C1595A); }
 
-/* ── §192 — UniversityCard helpers ─────────────────────────────────────────── */
+/* ── 192 — UniversityCard helpers ─────────────────────────────────────────── */
 .univ-card__logo     { background: rgba(255,255,255,0.9); }
 .univ-card__location { color: var(--majalis-ink-soft); }
 .univ-card__meta     { color: var(--majalis-ink-soft); }
@@ -10274,7 +10257,7 @@ button, .btn {
 .univ-acc--unverified  { --acc-color: #6b7280; --univ-acc: #6b7280; }
 .univ-acc--unknown     { --acc-color: #9ca3af; --univ-acc: #9ca3af; }
 .univ-card__acc-dot  { background: var(--univ-acc, var(--majalis-line)); }
-/* ── §193 — AdhanNotificationBar ───────────────────────────────────────────── */
+/* ── 193 — AdhanNotificationBar ───────────────────────────────────────────── */
 .anb-stack {
   position: fixed;
   bottom: 5rem;           /* فوق شريط التنقل السفلي */
@@ -10422,7 +10405,7 @@ button, .btn {
   font-weight: 600;
 }
 
-/* ── §193b — PrayerCountdownBanner (pcb-*) ──────────────────────────────────
+/* ── 193b — PrayerCountdownBanner (pcb-*) ──────────────────────────────────
    شريط دائم (تدفّق مستند عادي، لا fixed) يظهر أسفل شريط التنقّل مباشرة في
    آخر ١٥ دقيقة قبل أي صلاة — لا يغطي العنوان ولا الأزرار مطلقاً لأنه يدفع
    المحتوى لأسفل بدل التراكب فوقه. */
@@ -10478,7 +10461,7 @@ html[data-theme="dark"] .pcb-bar {
   background: linear-gradient(90deg, #143F35 0%, #143F35 100%);
 }
 
-/* ── §194 — SourceCard color helpers ───────────────────────────────────────── */
+/* ── 194 — SourceCard color helpers ───────────────────────────────────────── */
 .src-type--quran-verse   { --sc-color: #226A56; }
 .src-type--hadith        { --sc-color: #856404; }
 .src-type--tafsir,
@@ -10495,7 +10478,7 @@ html[data-theme="dark"] .pcb-bar {
 .sc-color-bar { background: var(--sc-color, #5C5C56); }
 .sc-color-bg  { background: var(--sc-color, #5C5C56); }
 
-/* ── §195 — IslamicQuizGame (qzg-*) ─────────────────────────────────────────── */
+/* ── 195 — IslamicQuizGame (qzg-*) ─────────────────────────────────────────── */
 .qzg-timer { margin: 0 0 0.875rem; }
 .qzg-timer__head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.3rem; }
 .qzg-timer__label { font-size: var(--ds-text-xs); color: var(--majalis-ink-soft); font-weight: 600; }
@@ -10812,14 +10795,14 @@ html[data-theme="dark"] .pcb-bar {
 .streak-label--active { font-size: .75rem; color: var(--majalis-emerald); margin-top: .25rem; }
 .streak-label { font-size: .75rem; color: var(--majalis-ink-soft); margin-top: .25rem; }
 
-/* ── §199 — KnowledgeRelatedItems (kri-*) ────────────────────────────────────── */
+/* ── 199 — KnowledgeRelatedItems (kri-*) ────────────────────────────────────── */
 .kri-aside { margin-top: 2rem; direction: rtl; }
 .kri-title { font-size: 0.9375rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--majalis-emerald, #226A56); }
 .kri-grid  { display: grid; gap: var(--ds-space-2); }
 
-/* ── §200 — QuizModal (qzm-*) ────────────────────────────────────────────────── */
+/* ── 200 — QuizModal (qzm-*) ────────────────────────────────────────────────── */
 
-/* ── §198 — SubmissionsReviewPanel (srp-*) ────────────────────────────────────── */
+/* ── 198 — SubmissionsReviewPanel (srp-*) ────────────────────────────────────── */
 .srp-root  { direction: rtl; padding: 1.5rem 0; }
 .srp-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; flex-wrap: wrap; gap: var(--ds-space-2); }
 .srp-header-title   { font-size: 1.1rem; font-weight: 800; color: var(--majalis-ink); margin: 0 0 0.2rem; }
@@ -10932,7 +10915,7 @@ html[data-theme="dark"] .pcb-bar {
 .srp-action-btn--approve { background: #143F35; }
 .srp-action-btn--reject  { background: #dc2626; }
 
-/* ── §197 — IslamicGeometric (igd-*) ─────────────────────────────────────────── */
+/* ── 197 — IslamicGeometric (igd-*) ─────────────────────────────────────────── */
 
 .islamic-divider { color: var(--igd-divider-color, currentColor); }
 .geo-pattern { opacity: var(--geo-opacity, 0.07); }
@@ -10954,7 +10937,7 @@ html[data-theme="dark"] .pcb-bar {
   font-size: var(--ds-text-xs);
 }
 
-/* ── §196 — BookCard (bc-*) ─────────────────────────────────────────────────── */
+/* ── 196 — BookCard (bc-*) ─────────────────────────────────────────────────── */
 
 .bc-cover--gradient {
   background: linear-gradient(135deg, color-mix(in srgb, var(--bc-color, #059669) 13%, transparent), color-mix(in srgb, var(--bc-color, #059669) 27%, transparent));
@@ -10973,7 +10956,7 @@ html[data-theme="dark"] .pcb-bar {
 }
 
 /* ══════════════════════════════════════════════
-   §201 — تحسينات شاملة للموقع (Site-wide Enhancements)
+   201 — تحسينات شاملة للموقع (Site-wide Enhancements)
    ══════════════════════════════════════════════ */
 
 /* ── بطاقات المحتوى — تحسين الظل والتحويم ───────────────────────────────── */
@@ -11168,7 +11151,7 @@ a:focus-visible {
 /* ── قسم المميزات — مسافة ───────────────────────────────────────────── */
 
 /* ═══════════════════════════════════════════════════════════════════════
-   §203 — تحسينات صفحة الدروس (LessonsPage / KuwaitLessonsPage)
+   203 — تحسينات صفحة الدروس (LessonsPage / KuwaitLessonsPage)
    ═══════════════════════════════════════════════════════════════════════ */
 
 /* بطاقة الدرس — تأثير hover أنيق */
@@ -11191,7 +11174,7 @@ a:focus-visible {
 /* زر الاستيراد/التسجيل */
 
 /* ═══════════════════════════════════════════════════════════════════════
-   §204 — تحسينات صفحة الشيوخ (SheikhsPage / SheikhDetailPage)
+   204 — تحسينات صفحة الشيوخ (SheikhsPage / SheikhDetailPage)
    ═══════════════════════════════════════════════════════════════════════ */
 
 /* صورة الشيخ المدورة */
@@ -11201,7 +11184,7 @@ a:focus-visible {
 /* شارة التخصص */
 
 /* ═══════════════════════════════════════════════════════════════════════
-   §205 — تحسينات صفحة المكتبة (LibraryPage)
+   205 — تحسينات صفحة المكتبة (LibraryPage)
    ═══════════════════════════════════════════════════════════════════════ */
 
 /* بطاقة الكتاب */
@@ -11222,7 +11205,7 @@ a:focus-visible {
 /* تقييم الكتاب — نجوم */
 
 /* ═══════════════════════════════════════════════════════════════════════
-   §206 — تحسينات صفحة الفوائد (FawaidPage)
+   206 — تحسينات صفحة الفوائد (FawaidPage)
    ═══════════════════════════════════════════════════════════════════════ */
 
 /* بطاقة الفائدة */
@@ -11234,7 +11217,7 @@ a:focus-visible {
 /* زر نسخ الفائدة */
 
 /* ═══════════════════════════════════════════════════════════════════════
-   §207 — تحسينات صفحة المعجزات (MiraclesPage)
+   207 — تحسينات صفحة المعجزات (MiraclesPage)
    ═══════════════════════════════════════════════════════════════════════ */
 
 /* بطاقة المعجزة */
@@ -11263,7 +11246,7 @@ a:focus-visible {
 /* شارة التصنيف */
 
 /* ═══════════════════════════════════════════════════════════════════════
-   §208 — تحسينات صفحة الأذكار والأدعية
+   208 — تحسينات صفحة الأذكار والأدعية
    ═══════════════════════════════════════════════════════════════════════ */
 
 /* بطاقة الذكر */
@@ -11273,7 +11256,7 @@ a:focus-visible {
 /* عداد الذكر */
 
 /* ═══════════════════════════════════════════════════════════════════════
-   §209 — تحسينات عامة للموقع (Animation & Micro-interactions)
+   209 — تحسينات عامة للموقع (Animation & Micro-interactions)
    ═══════════════════════════════════════════════════════════════════════ */
 
 /* ظهور تدريجي للبطاقات عند التحميل */
@@ -11355,7 +11338,7 @@ a:focus-visible {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════
-   §210 — تحسينات لوحة التحكم (Admin Dashboard)
+   210 — تحسينات لوحة التحكم (Admin Dashboard)
    ═══════════════════════════════════════════════════════════════════════ */
 
 /* بطاقة الإحصاء */
@@ -11377,7 +11360,7 @@ a:focus-visible {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   §211 — Islamic Stories Page (isp-*)
+   211 — Islamic Stories Page (isp-*)
    ═══════════════════════════════════════════════════════════════════════════ */
 
 .isp-page {
@@ -11742,7 +11725,7 @@ a:focus-visible {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   §212 — Vault Page (vault-*)
+   212 — Vault Page (vault-*)
    ═══════════════════════════════════════════════════════════════════════════ */
 
 .vault-modal-backdrop {
@@ -11811,7 +11794,7 @@ a:focus-visible {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   §213 — Quiz Page enhancements
+   213 — Quiz Page enhancements
    ═══════════════════════════════════════════════════════════════════════════ */
 
 .quiz-level-badge--easy {
@@ -11828,7 +11811,7 @@ a:focus-visible {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   §214 — Seerah Page enhancements
+   214 — Seerah Page enhancements
    ═══════════════════════════════════════════════════════════════════════════ */
 
 .seerah-timeline {
@@ -11862,14 +11845,14 @@ a:focus-visible {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   §215 — Updates Page + General Cards
+   215 — Updates Page + General Cards
    ═══════════════════════════════════════════════════════════════════════════ */
 
 /* بطاقة خاصية جديدة */
 
-/* §216 HP Stats Bar */
+/* 216 HP Stats Bar */
 
-/* §217 Scroll to Top */
+/* 217 Scroll to Top */
 .global-back-btn {
   position: fixed;
   bottom: calc(4.5rem + env(safe-area-inset-bottom, 0px));
@@ -11952,7 +11935,7 @@ html[data-theme="dark"] .global-back-btn {
 }
 
 /* ============================================================
-   §218 — ContactPage  (contact-*)
+   218 — ContactPage  (contact-*)
    ============================================================ */
 .contact-channels {
   display: grid;
@@ -12012,7 +11995,7 @@ html[data-theme="dark"] .global-back-btn {
 .contact-faq__a { font-size: .88rem; color: var(--majalis-ink-soft); line-height: 1.65; margin: 0; }
 
 /* ============================================================
-   §219 — TopicsIndexPage expanded  (tip-*)
+   219 — TopicsIndexPage expanded  (tip-*)
    ============================================================ */
 .tip-page { padding-bottom: 3rem; }
 
@@ -12088,7 +12071,7 @@ html[data-theme="dark"] .global-back-btn {
 .tip-footer-link:hover { text-decoration: underline; }
 
 /* ============================================================
-   §220 — CertificateVerifyPage expanded  (cvp-*)
+   220 — CertificateVerifyPage expanded  (cvp-*)
    ============================================================ */
 .cvp-shell { padding-top: 2rem; padding-bottom: 3rem; }
 
@@ -12242,7 +12225,7 @@ html[data-theme="dark"] .global-back-btn {
 .cvp-back-link:hover { background: var(--majalis-emerald-subtle, #F0F7F4); color: var(--majalis-emerald-deep, #166534); }
 
 /* ══════════════════════════════════════════════════════════════════
-   §REDESIGN-2026 — الإعادة التصميمية الشاملة للصفحة الرئيسية
+   REDESIGN-2026 — الإعادة التصميمية الشاملة للصفحة الرئيسية
    Phase 1-8 | Color System · Bottom Nav · Lesson Cards · Hero
    ══════════════════════════════════════════════════════════════════ */
 
@@ -12341,13 +12324,6 @@ html[data-theme="dark"] .global-back-btn {
   font-weight: 600 !important;
   line-height: 1 !important;
   white-space: nowrap !important;
-}
-
-.home-hero-title--v3 {
-  color: var(--rd-white) !important;
-  font-size: clamp(1.6rem, 5vw, 2.4rem) !important;
-  font-weight: 800 !important;
-  text-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
 }
 
 .home-hero-cta--primary {
@@ -12576,10 +12552,6 @@ html[data-theme="dark"] .global-back-btn {
 
   
 
-  .home-hero-title--v3 {
-    font-size: 1.5rem !important;
-  }
-
   
 }
 
@@ -12602,10 +12574,10 @@ html[data-theme="dark"] .global-back-btn {
   padding-bottom: calc(var(--rd-margin-v) + 80px) !important;
 }
 
-/* ── نهاية §REDESIGN-2026 ──────────────────────────────────────── */
+/* ── نهاية REDESIGN-2026 ──────────────────────────────────────── */
 
 /* ══════════════════════════════════════════════════════════════════
-   §PERF-UX-2026 — Skeleton Screens + Performance + Icons + A11y
+   PERF-UX-2026 — Skeleton Screens + Performance + Icons + A11y
    ══════════════════════════════════════════════════════════════════ */
 
 /* ─── Skeleton Loading (Phase 2) ──────────────────────────────── */
@@ -12703,7 +12675,7 @@ img[loading="lazy"]:not([src=""]) {
 /* ─── CTA Arrow RTL fix ─────────────────────────────────────── */
 
 /* ══════════════════════════════════════════════════════════════════
-   §UI-REFRESH-2026 — تحسينات اللون والأيقونات وبادج الصلاة
+   UI-REFRESH-2026 — تحسينات اللون والأيقونات وبادج الصلاة
    ══════════════════════════════════════════════════════════════════ */
 
 /* ─── لون العلامة الأساسي: أخضر رمادي داكن هادئ (إعادة تصميم الهوية v3) ─── */
@@ -12769,7 +12741,7 @@ img[loading="lazy"]:not([src=""]) {
 }
 
 /* ══════════════════════════════════════════════════════════════════
-   §TOAST-REDESIGN — إشعارات زمردية عصرية
+   TOAST-REDESIGN — إشعارات زمردية عصرية
    ══════════════════════════════════════════════════════════════════ */
 
 @keyframes msk-toast-in {
@@ -12959,10 +12931,10 @@ img[loading="lazy"]:not([src=""]) {
   }
 }
 
-/* ── نهاية §TOAST-REDESIGN ───────────────────────────────────────── */
+/* ── نهاية TOAST-REDESIGN ───────────────────────────────────────── */
 
 /* ══════════════════════════════════════════════════════════════════
-   §NAV-PROGRESS — شريط تقدم التنقل
+   NAV-PROGRESS — شريط تقدم التنقل
    ══════════════════════════════════════════════════════════════════ */
 
 .nav-progress-track {
@@ -12990,10 +12962,10 @@ img[loading="lazy"]:not([src=""]) {
   box-shadow: 0 0 8px var(--majalis-emerald, #226A56) !important;
 }
 
-/* ── نهاية §NAV-PROGRESS ─────────────────────────────────────────── */
+/* ── نهاية NAV-PROGRESS ─────────────────────────────────────────── */
 
 /* ══════════════════════════════════════════════════════════════════════
-   §MOBILE-LESSON-FIX — إصلاح شامل لبطاقات الدروس في الجوال
+   MOBILE-LESSON-FIX — إصلاح شامل لبطاقات الدروس في الجوال
    ══════════════════════════════════════════════════════════════════════ */
 
 /* ضمان RTL واتجاه النص الصحيح داخل كل بطاقة */
@@ -13049,12 +13021,12 @@ img[loading="lazy"]:not([src=""]) {
   overflow-wrap: normal !important;
 }
 
-/* ── نهاية §MOBILE-LESSON-FIX ─────────────────────────────────── */
+/* ── نهاية MOBILE-LESSON-FIX ─────────────────────────────────── */
 
-/* ── نهاية §UI-REFRESH-2026 ─────────────────────────────────────── */
+/* ── نهاية UI-REFRESH-2026 ─────────────────────────────────────── */
 
 /* ══════════════════════════════════════════════════════════════════
-   §DARK-EMERALD-MENUS — قوائم زمردية داكنة مع زخارف إسلامية
+   DARK-EMERALD-MENUS — قوائم زمردية داكنة مع زخارف إسلامية
    ══════════════════════════════════════════════════════════════════ */
 
 /* ── MoreBottomSheet — الخلفية الزمردية الداكنة ── */
@@ -13321,10 +13293,10 @@ html[data-theme="dark"] .tj-cat-badge { color: #8BABA3 !important; }
 }
 .tj-related-link:hover { background: rgba(255,255,255,0.18); }
 
-/* ── نهاية §PERF-UX-2026 ─────────────────────────────────────── */
+/* ── نهاية PERF-UX-2026 ─────────────────────────────────────── */
 
 /* ══════════════════════════════════════════════
-   §54. Quran Hub Page — مركز القرآن الكريم
+   54. Quran Hub Page — مركز القرآن الكريم
    ══════════════════════════════════════════════ */
 .quran-hub-page {
   min-height: 100vh;
@@ -13569,7 +13541,7 @@ html[data-theme="dark"] .tj-cat-badge { color: #8BABA3 !important; }
 }
 
 /* ══════════════════════════════════════════════
-   §55. إصلاح تباين النص على الخلفيات البيضاء
+   55. إصلاح تباين النص على الخلفيات البيضاء
    ══════════════════════════════════════════════ */
 
 /* أي بطاقة ذات خلفية بيضاء/فاتحة — النص الرئيسي أسود */
@@ -13645,10 +13617,10 @@ html[data-theme="dark"] .tj-cat-badge { color: #8BABA3 !important; }
   color: var(--elite-forest, #052E16) !important;
 }
 
-/* ── نهاية §55 ───────────────────────────────────────────── */
+/* ── نهاية 55 ───────────────────────────────────────────── */
 
 /* ══════════════════════════════════════════════
-   §57. Quran Live Page — البث المباشر
+   57. Quran Live Page — البث المباشر
    ══════════════════════════════════════════════ */
 .qlive-page {
   min-height: 100vh;
@@ -13935,10 +13907,10 @@ html[data-theme="dark"] .qlive-player {
   text-decoration: none;
 }
 
-/* ── نهاية §57 ───────────────────────────────────────────── */
+/* ── نهاية 57 ───────────────────────────────────────────── */
 
 /* ══════════════════════════════════════════════
-   §58. Islamic Scholars Page — أعلام الإسلام
+   58. Islamic Scholars Page — أعلام الإسلام
    ══════════════════════════════════════════════ */
 .sch-page {
   min-height: 100vh;
@@ -14248,10 +14220,10 @@ html[data-theme="dark"] .qlive-player {
   text-decoration: none;
 }
 
-/* ── نهاية §58 ───────────────────────────────────────────── */
+/* ── نهاية 58 ───────────────────────────────────────────── */
 
 /* ─────────────────────────────────────────────────────────── */
-/* §219 — صفحة الأخلاق الإسلامية (.akl-*)                    */
+/* 219 — صفحة الأخلاق الإسلامية (.akl-*)                    */
 /* ─────────────────────────────────────────────────────────── */
 
 .akl-hero {
@@ -14536,10 +14508,10 @@ html[data-theme="dark"] .qlive-player {
   .akl-related__grid { grid-template-columns: repeat(2, 1fr); }
 }
 
-/* ── نهاية §219 ─────────────────────────────────────────── */
+/* ── نهاية 219 ─────────────────────────────────────────── */
 
 /* ─────────────────────────────────────────────────────────── */
-/* §220 — صفحة الأدعية الشرعية (.duas-*, .dua-*)             */
+/* 220 — صفحة الأدعية الشرعية (.duas-*, .dua-*)             */
 /* ─────────────────────────────────────────────────────────── */
 
 .duas-hero {
@@ -14848,10 +14820,10 @@ html[data-theme="dark"] .qlive-player {
   .dua-of-day__arabic { font-size: var(--ds-text-base); }
 }
 
-/* ── نهاية §220 ─────────────────────────────────────────── */
+/* ── نهاية 220 ─────────────────────────────────────────── */
 
 /* ─────────────────────────────────────────────────────────── */
-/* §221 — صفحة أركان الإسلام (.arkan-*)                      */
+/* 221 — صفحة أركان الإسلام (.arkan-*)                      */
 /* ─────────────────────────────────────────────────────────── */
 
 .arkan-hero {
@@ -15095,10 +15067,10 @@ html[data-theme="dark"] .qlive-player {
   .arkan-related__grid { grid-template-columns: repeat(2, 1fr); }
 }
 
-/* ── نهاية §221 ─────────────────────────────────────────── */
+/* ── نهاية 221 ─────────────────────────────────────────── */
 
 /* ══════════════════════════════════════════════════════════
-   §222 — صفحة أركان الإيمان الستة (.ai-*)
+   222 — صفحة أركان الإيمان الستة (.ai-*)
    ══════════════════════════════════════════════════════════ */
 
 /* الصفحة العامة */
@@ -15264,10 +15236,10 @@ html[data-theme="dark"] .qlive-player {
   .ai-related__grid { grid-template-columns: repeat(2, 1fr); }
 }
 
-/* ── نهاية §222 ─────────────────────────────────────────── */
+/* ── نهاية 222 ─────────────────────────────────────────── */
 
 /* ══════════════════════════════════════════════════════════
-   §223 — صفحة مصطلح الحديث (.hs-*)
+   223 — صفحة مصطلح الحديث (.hs-*)
    ══════════════════════════════════════════════════════════ */
 
 .hs-page { max-width: 860px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
@@ -15458,10 +15430,10 @@ html[data-theme="dark"] .qlive-player {
   .hs-related__grid { grid-template-columns: repeat(2, 1fr); }
 }
 
-/* ── نهاية §223 ─────────────────────────────────────────── */
+/* ── نهاية 223 ─────────────────────────────────────────── */
 
 /* ══════════════════════════════════════════════════════════
-   §224 — صفحة المذاهب الفقهية الأربعة (.mdb-*)
+   224 — صفحة المذاهب الفقهية الأربعة (.mdb-*)
    ══════════════════════════════════════════════════════════ */
 
 .mdb-page { max-width: 820px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
@@ -15654,10 +15626,10 @@ html[data-theme="dark"] .qlive-player {
   .mdb-related__grid { grid-template-columns: repeat(2, 1fr); }
 }
 
-/* ── نهاية §224 ─────────────────────────────────────────── */
+/* ── نهاية 224 ─────────────────────────────────────────── */
 
 /* ══════════════════════════════════════════════════════════
-   §225 — صفحة السنن النبوية اليومية (.sy-*)
+   225 — صفحة السنن النبوية اليومية (.sy-*)
    ══════════════════════════════════════════════════════════ */
 
 .sy-page { max-width: 820px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
@@ -15849,10 +15821,10 @@ html[data-theme="dark"] .qlive-player {
 
 .sod-card__apply[aria-pressed="true"] { background: rgba(255,255,255,0.28); border-color: rgba(255,255,255,0.8); }
 
-/* ── نهاية §225 ─────────────────────────────────────────── */
+/* ── نهاية 225 ─────────────────────────────────────────── */
 
 /* ══════════════════════════════════════════════════════════
-   §226 — صفحة حكم السلف الصالح (.hk-*)
+   226 — صفحة حكم السلف الصالح (.hk-*)
    ══════════════════════════════════════════════════════════ */
 
 .hk-page { max-width: 820px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
@@ -16019,10 +15991,10 @@ html[data-theme="dark"] .qlive-player {
   .hk-related__grid { grid-template-columns: repeat(2, 1fr); }
 }
 
-/* ── نهاية §226 ─────────────────────────────────────────── */
+/* ── نهاية 226 ─────────────────────────────────────────── */
 
 /* ══════════════════════════════════════════════════════════
-   §227 — صفحة الزكاة وأحكامها (.zk-*)
+   227 — صفحة الزكاة وأحكامها (.zk-*)
    ══════════════════════════════════════════════════════════ */
 
 .zk-page { max-width: 820px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
@@ -16256,10 +16228,10 @@ html[data-theme="dark"] .qlive-player {
   .zk-related__grid { grid-template-columns: repeat(2, 1fr); }
 }
 
-/* ── نهاية §227 ─────────────────────────────────────────── */
+/* ── نهاية 227 ─────────────────────────────────────────── */
 
 /* ══════════════════════════════════════════════════════════
-   §228 · SawmPage · /sawm
+   228 · SawmPage · /sawm
    ══════════════════════════════════════════════════════════ */
 
 /* page */
@@ -16269,7 +16241,7 @@ html[data-theme="dark"] .qlive-player {
 .sw-hero {
   /* ألوان حرفية لا متغيّرات (بخلاف بقية أخوات هذا القسم .hj-hero/.th-hero/
      .jnz-hero التي استخدمت hex ثابتة أصلًا) — [class$="-hero"] في هذا
-     الملف (§"② الحاويات الداكنة") يُعيد تعريف --majalis-emerald-deep إلى
+     الملف ("② الحاويات الداكنة") يُعيد تعريف --majalis-emerald-deep إلى
      var(--text-on-primary) (أبيض) عمدًا لتحييد ألوان العناوين الداخلية،
      لكن هذا العنصر بالذات كان يستهلك نفس المتغيّر لبناء تدرّج خلفيته هو،
      فينقلب أول لون في التدرّج إلى أبيض في الوضع الليلي (تحقّق حي: تدرّج
@@ -16541,10 +16513,10 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
   .sw-tab__label { font-size: 0.8rem; }
 }
 
-/* ── نهاية §228 ─────────────────────────────────────────── */
+/* ── نهاية 228 ─────────────────────────────────────────── */
 
 /* ══════════════════════════════════════════════════════════
-   §230 · TaharaPage · /tahara
+   230 · TaharaPage · /tahara
    ══════════════════════════════════════════════════════════ */
 
 .th-page { min-height: 100vh; background: #F9FAFB; padding-bottom: 4rem; }
@@ -16864,10 +16836,10 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
   .th-related__grid { grid-template-columns: repeat(2, 1fr); }
 }
 
-/* ── نهاية §230 ─────────────────────────────────────────── */
+/* ── نهاية 230 ─────────────────────────────────────────── */
 
 /* ══════════════════════════════════════════════════════════
-   §231 · FadailAamalPage · /fadail-aamal
+   231 · FadailAamalPage · /fadail-aamal
    ══════════════════════════════════════════════════════════ */
 
 .fa-page { min-height: 100vh; background: #F9FAFB; padding-bottom: 4rem; }
@@ -17022,10 +16994,10 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
   .fa-related__grid { grid-template-columns: repeat(2, 1fr); }
 }
 
-/* ── نهاية §231 ─────────────────────────────────────────── */
+/* ── نهاية 231 ─────────────────────────────────────────── */
 
 /* ══════════════════════════════════════════════════════════
-   §232 · JanazaPage · /janaza
+   232 · JanazaPage · /janaza
    ══════════════════════════════════════════════════════════ */
 
 .jnz-page { min-height: 100vh; background: #F9FAFB; padding-bottom: 4rem; }
@@ -17280,10 +17252,10 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
   .jnz-tab__label { font-size: 0.8rem; }
 }
 
-/* ── نهاية §232 ─────────────────────────────────────────── */
+/* ── نهاية 232 ─────────────────────────────────────────── */
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   §233 — SahabahPage (.sb-*)
+   233 — SahabahPage (.sb-*)
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 .sb-page { max-width: 780px; margin: 0 auto; padding: 0 0 6rem; }
 
@@ -17484,10 +17456,10 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
   .sb-hero__title { font-size: 1.35rem; }
 }
 
-/* ── نهاية §233 ─────────────────────────────────────────── */
+/* ── نهاية 233 ─────────────────────────────────────────── */
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   §235 — UlumQuranPage (.uq-*)
+   235 — UlumQuranPage (.uq-*)
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 .uq-page { max-width: 780px; margin: 0 auto; padding: 0 0 6rem; }
 
@@ -17678,10 +17650,10 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
   .uq-tab { min-width: 5rem; }
 }
 
-/* ── نهاية §235 ─────────────────────────────────────────── */
+/* ── نهاية 235 ─────────────────────────────────────────── */
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   §236 — MawarithPage (.mw-*)
+   236 — MawarithPage (.mw-*)
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 .mw-page { max-width: 780px; margin: 0 auto; padding: 0 0 6rem; }
 
@@ -17897,10 +17869,10 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
   .mw-tab { min-width: 5rem; }
 }
 
-/* ── نهاية §236 ─────────────────────────────────────────── */
+/* ── نهاية 236 ─────────────────────────────────────────── */
 
 /* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-   §238 — DuasQuranPage (.dq-*)
+   238 — DuasQuranPage (.dq-*)
    ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
 .dq-page { max-width: 780px; margin: 0 auto; padding: 0 0 6rem; }
 
@@ -18029,10 +18001,10 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
   .dq-arabic { font-size: var(--ds-text-base); }
 }
 
-/* ── نهاية §238 ─────────────────────────────────────────── */
+/* ── نهاية 238 ─────────────────────────────────────────── */
 
 /* ══════════════════════════════════════════════════════════════════════
-   §239 — القواعد الفقهية الكبرى  (.fq-*)
+   239 — القواعد الفقهية الكبرى  (.fq-*)
    ══════════════════════════════════════════════════════════════════════ */
 
 /* hero */
@@ -18249,7 +18221,7 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
 }
 
 /* ══════════════════════════════════════════════════════════════════════
-   §240 — الشمائل المحمدية  (.sh-*)
+   240 — الشمائل المحمدية  (.sh-*)
    ══════════════════════════════════════════════════════════════════════ */
 
 .sh-page { background: #FAFAF8; min-height: 100vh; }
@@ -18416,7 +18388,7 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
 }
 
 /* ══════════════════════════════════════════════════════════════════════
-   §241 — الإسلام في أرقام  (.is-*)
+   241 — الإسلام في أرقام  (.is-*)
    ══════════════════════════════════════════════════════════════════════ */
 
 .is-page { background: #F0F4F8; min-height: 100vh; }
@@ -18580,7 +18552,7 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
 }
 
 /* ══════════════════════════════════════════════════════════════════
-   §242 — IslamicGlossaryPage  (.gl-*)
+   242 — IslamicGlossaryPage  (.gl-*)
    ══════════════════════════════════════════════════════════════════ */
 .gl-page { min-height: 100vh; background: #F8FAFC; }
 
@@ -18738,7 +18710,7 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
 }
 
 /* ══════════════════════════════════════════════════════════════════
-   §243 — AdabTalabIlmPage  (.atl-*)
+   243 — AdabTalabIlmPage  (.atl-*)
    ══════════════════════════════════════════════════════════════════ */
 .atl-page { min-height: 100vh; background: #F8FAFC; }
 
@@ -18893,7 +18865,7 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
 }
 
 /* ══════════════════════════════════════════════════════════════════
-   §244 — AnbiyaPage  (.nb-*)
+   244 — AnbiyaPage  (.nb-*)
    ══════════════════════════════════════════════════════════════════ */
 
 /* Hero */
@@ -18982,7 +18954,7 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
 }
 
 /* ══════════════════════════════════════════════════════════════════
-   §245 — JannaNaarPage  (.jn-*)
+   245 — JannaNaarPage  (.jn-*)
    ══════════════════════════════════════════════════════════════════ */
 .jn-page { min-height: 100vh; background: #F8FAFC; }
 
@@ -19085,7 +19057,7 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
 }
 
 /* ══════════════════════════════════════════════════════════════════
-   §246 — علامات الساعة  (.as-*)
+   246 — علامات الساعة  (.as-*)
    ══════════════════════════════════════════════════════════════════ */
 
 .as-page { min-height: 100vh; background: var(--clr-bg); }
@@ -19239,7 +19211,7 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
 }
 
 /* ══════════════════════════════════════════════════════════════════
-   §247 — الملائكة في الإسلام  (.mk-*)
+   247 — الملائكة في الإسلام  (.mk-*)
    ══════════════════════════════════════════════════════════════════ */
 
 .mk-page { min-height: 100vh; background: var(--clr-bg); }
@@ -19379,7 +19351,7 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
 }
 
 /* ══════════════════════════════════════════════════════════════════
-   §248 — الوصايا النبوية  (.wn-*)
+   248 — الوصايا النبوية  (.wn-*)
    ══════════════════════════════════════════════════════════════════ */
 
 .wn-page { min-height: 100vh; background: var(--clr-bg); }
@@ -19576,7 +19548,7 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
 }
 
 /* ══════════════════════════════════════════════════════════════════
-   §249 — الرقائق والزهد  (.rq-*)
+   249 — الرقائق والزهد  (.rq-*)
    ══════════════════════════════════════════════════════════════════ */
 
 .rq-page { min-height: 100vh; background: var(--clr-bg); }
@@ -19718,7 +19690,7 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
 }
 
 /* ══════════════════════════════════════════════════════════════════
-   §250 — تذكير صيام الاثنين والخميس  (.sawm-reminder)
+   250 — تذكير صيام الاثنين والخميس  (.sawm-reminder)
    ══════════════════════════════════════════════════════════════════ */
 
 .sawm-reminder {
@@ -19768,7 +19740,7 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
 }
 
 /* ══════════════════════════════════════════════
-   §CPP. صفحة الاقتباس العام (CitationPublicPage)
+   CPP. صفحة الاقتباس العام (CitationPublicPage)
    ══════════════════════════════════════════════ */
 .cpp-root {
   min-height: 100svh;
@@ -19961,7 +19933,7 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
 }
 
 /* ══════════════════════════════════════════════
-   §CAB-EXT. Citation Action Bar — tooltip btns
+   CAB-EXT. Citation Action Bar — tooltip btns
    ══════════════════════════════════════════════ */
 .cab-tooltip-btn {
   display: inline-flex;
@@ -19979,7 +19951,7 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
 }
 
 /* ══════════════════════════════════════════════
-   §CM-EXT. Citation Modal — QR img + hints
+   CM-EXT. Citation Modal — QR img + hints
    ══════════════════════════════════════════════ */
 .cm-qr-img {
   width: 10rem; height: 10rem;
@@ -19994,7 +19966,7 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
 .cm-hint--center { text-align: center; padding: 1rem 0; }
 
 /* ══════════════════════════════════════════════
-   §CA. ContentActions — تقييم، حفظ، إبلاغ
+   CA. ContentActions — تقييم، حفظ، إبلاغ
    ══════════════════════════════════════════════ */
 .ca-root {
   display: flex;
@@ -20119,7 +20091,7 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
 .ca-report-submit:disabled { opacity: .5; cursor: default; }
 
 /* ══════════════════════════════════════════════
-   §CA-SHARE. Share Buttons — واتساب، تيليجرام، نسخ
+   CA-SHARE. Share Buttons — واتساب، تيليجرام، نسخ
    ══════════════════════════════════════════════ */
 .share-btns {
   display: flex;
@@ -20169,7 +20141,7 @@ html[data-theme="dark"] .share-btn--copy { background: #143F35 !important; }
 }
 
 /* ══════════════════════════════════════════════
-   §SRC. SourceCard component
+   SRC. SourceCard component
    ══════════════════════════════════════════════ */
 .src-card {
   position: relative;
@@ -20189,7 +20161,7 @@ html[data-theme="dark"] .share-btn--copy { background: #143F35 !important; }
 .src-ref { font-size:.75rem; color:var(--majalis-ink-soft); opacity:.7; }
 
 /* ══════════════════════════════════════════════
-   §RW. RecommendationWidget component
+   RW. RecommendationWidget component
    ══════════════════════════════════════════════ */
 .rw-card {
   position: relative;
@@ -20225,7 +20197,7 @@ html[data-theme="dark"] .share-btn--copy { background: #143F35 !important; }
 .rw-list-item:hover .rw-list-item__title { color:var(--majalis-emerald); }
 
 /* ══════════════════════════════════════════════
-   §RA. ResearchAnswer component
+   RA. ResearchAnswer component
    ══════════════════════════════════════════════ */
 .ra-meta-row { display:flex; align-items:center; gap:.5rem; flex-wrap:wrap; }
 .ra-source-count { font-size:.75rem; color:var(--majalis-ink-soft); opacity:.7; }
@@ -20257,7 +20229,7 @@ html[data-theme="dark"] .share-btn--copy { background: #143F35 !important; }
 .ra-badge--dim { background:var(--majalis-parchment-deep,#f0ece4); color:var(--majalis-ink-soft); }
 
 /* ══════════════════════════════════════════════
-   §ICON-UTIL. أيقونات — كلاسات لونية مشتركة
+   ICON-UTIL. أيقونات — كلاسات لونية مشتركة
    ══════════════════════════════════════════════ */
 .icon-emerald   { color: var(--majalis-emerald); }
 .icon-ink-soft  { color: var(--majalis-ink-soft); }
@@ -20266,11 +20238,11 @@ html[data-theme="dark"] .share-btn--copy { background: #143F35 !important; }
 .icon-star--filled   { color: var(--majalis-emerald); fill: var(--majalis-emerald); }
 
 /* ══════════════════════════════════════════════
-   §LP-EXT2. LearningPathPage extras
+   LP-EXT2. LearningPathPage extras
    ══════════════════════════════════════════════ */
 
 /* ══════════════════════════════════════════════
-   §TRP. TranscribePage
+   TRP. TranscribePage
    ══════════════════════════════════════════════ */
 .trp-login-notice {
   margin-bottom: 1.5rem;
@@ -20426,7 +20398,7 @@ html[data-theme="dark"] .share-btn--copy { background: #143F35 !important; }
 }
 
 /* ══════════════════════════════════════════════
-   §FQP. FiqhPage
+   FQP. FiqhPage
    ══════════════════════════════════════════════ */
 .fqp-root { min-height: 100svh; background: var(--majalis-parchment); direction: rtl; }
 .fqp-tab-content { padding: 1.25rem 0 3rem; }
@@ -20492,7 +20464,7 @@ html[data-theme="dark"] .share-btn--copy { background: #143F35 !important; }
 .fqp-cta-btn:hover { background: var(--majalis-emerald-deep, #143F35); }
 
 /* ══════════════════════════════════════════════
-   §UP. UniversitiesPage
+   UP. UniversitiesPage
    ══════════════════════════════════════════════ */
 .up-root { min-height: 100svh; background: var(--majalis-parchment); padding-bottom: 1.25rem; direction: rtl; }
 .up-alert {
@@ -20532,7 +20504,7 @@ html[data-theme="dark"] .share-btn--copy { background: #143F35 !important; }
 .up-search-input { color: var(--majalis-ink); }
 
 /* ══════════════════════════════════════════════
-   §UCP. UniversitiesComparePage
+   UCP. UniversitiesComparePage
    ══════════════════════════════════════════════ */
 .ucp-root { min-height: 100svh; background: var(--majalis-parchment); padding-bottom: 1.25rem; direction: rtl; }
 
@@ -20578,7 +20550,7 @@ html[data-theme="dark"] .share-btn--copy { background: #143F35 !important; }
 .ucp-apply-grid { display: grid; gap: .75rem; grid-template-columns: repeat(var(--col-count, 1), 1fr); }
 
 /* ══════════════════════════════════════════════
-   §SRP. ScholarlyResearchPage
+   SRP. ScholarlyResearchPage
    ══════════════════════════════════════════════ */
 .srp-root { min-height: 100svh; background: var(--majalis-parchment); direction: rtl; }
 .srp-subnav {
@@ -20658,7 +20630,7 @@ html[data-theme="dark"] .share-btn--copy { background: #143F35 !important; }
 .srp-lib-search-btn:hover { text-decoration: underline; }
 
 /* ══════════════════════════════════════════════
-   §MCP. MyCitationsPage
+   MCP. MyCitationsPage
    ══════════════════════════════════════════════ */
 .mcp-root { min-height: 100svh; background: var(--majalis-parchment); direction: rtl; }
 .mcp-header {
@@ -20768,7 +20740,7 @@ html[data-theme="dark"] .share-btn--copy { background: #143F35 !important; }
 .mcp-swatch--active { border-color: var(--majalis-ink); }
 
 /* ══════════════════════════════════════════════
-   §UDP. UniversityDetailPage
+   UDP. UniversityDetailPage
    ══════════════════════════════════════════════ */
 .udp-root { min-height: 100svh; background: var(--majalis-parchment); padding-bottom: 1.25rem; direction: rtl; }
 .udp-update-bar {
@@ -20860,7 +20832,7 @@ html[data-theme="dark"] .share-btn--copy { background: #143F35 !important; }
 .udp-compare-active-btn { color: var(--majalis-emerald); font-weight: 600; }
 
 /* ══════════════════════════════════════════════
-   §UAP. UniversitiesAdminPage
+   UAP. UniversitiesAdminPage
    ══════════════════════════════════════════════ */
 .uap-label { display: block; font-size: .75rem; font-weight: 500; color: var(--majalis-ink-soft); margin-bottom: .25rem; }
 .uap-input {
@@ -20939,7 +20911,7 @@ html[data-theme="dark"] .share-btn--copy { background: #143F35 !important; }
 .uap-reminder-link:hover { text-decoration: underline; }
 
 /* ══════════════════════════════════════════════
-   §SR. SeerahPage
+   SR. SeerahPage
    ══════════════════════════════════════════════ */
 .seerah-page {
   min-height: 100vh;
@@ -21418,7 +21390,7 @@ html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --pane
 }
 
 /* ════════════════════════════════════════════════════════════
-   §PR. ProphetStoriesPage
+   PR. ProphetStoriesPage
    ════════════════════════════════════════════════════════════ */
 /* ── Page Shell ── */
 .prophets-lux-page {
@@ -22275,7 +22247,7 @@ html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --pane
 .prophets-seerah-link { text-decoration: none; display: block; margin-top: 1.5rem; }
 
 /* ════════════════════════════════════════════════════════════
-   §IS-ADMIN. IslamicStoriesSection (Admin)
+   IS-ADMIN. IslamicStoriesSection (Admin)
    ════════════════════════════════════════════════════════════ */
 .is-wrap { direction: rtl; font-family: inherit; }
 .is-header { margin-bottom: 1.5rem; }
@@ -22324,7 +22296,7 @@ html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --pane
 .is-source { font-size: 0.8rem; color: #475569; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: var(--ds-radius-sm); padding: 0.3rem 0.6rem; }
 
 /* ════════════════════════════════════════════════════════════
-   §PS-ADMIN. ProphetStoriesSection (Admin)
+   PS-ADMIN. ProphetStoriesSection (Admin)
    ════════════════════════════════════════════════════════════ */
 .ps-wrap { direction: rtl; font-family: inherit; }
 .ps-header { margin-bottom: 1.5rem; }
@@ -22480,7 +22452,7 @@ html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --pane
 .ps-edit-hint { font-size: var(--ds-text-xs); color: #94a3b8; }
 
 /* ════════════════════════════════════════════════════════════
-   §KF. Global @keyframes (مُحوَّلة من <style> مضمَّن)
+   KF. Global @keyframes (مُحوَّلة من <style> مضمَّن)
    ════════════════════════════════════════════════════════════ */
 @keyframes spin { to { transform: rotate(360deg); } }
 @keyframes ui-common-rotate { to { transform: rotate(360deg); } }
@@ -22496,7 +22468,7 @@ html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --pane
 }
 
 /* ════════════════════════════════════════════════════════════
-   §HP-HIT — HomeInterestingTopics (مواضيع مشوقة)
+   HP-HIT — HomeInterestingTopics (مواضيع مشوقة)
    ════════════════════════════════════════════════════════════ */
 .hit-section { margin-block: 2rem; }
 
@@ -22554,7 +22526,7 @@ html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --pane
 }
 
 /* ════════════════════════════════════════════════════════════
-   §HP-HMM — HomeMindMapSection (الخرائط الذهنية)
+   HP-HMM — HomeMindMapSection (الخرائط الذهنية)
    ════════════════════════════════════════════════════════════ */
 .hmm-section { margin-block: 2rem; }
 
@@ -22634,7 +22606,7 @@ html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --pane
 }
 
 /* ════════════════════════════════════════════════════════════
-   §MK2 — MiraclesPage v2 (إعجاز علمي محسَّن)
+   MK2 — MiraclesPage v2 (إعجاز علمي محسَّن)
    ════════════════════════════════════════════════════════════ */
 .mk-page { --mk-emerald: #226A56; --mk-emerald-light: rgba(31,77,58,0.08); }
 
@@ -22850,7 +22822,7 @@ html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --pane
 }
 
 /* ════════════════════════════════════════════════════════════
-   §SM — SiteMapPage (كل الأقسام)
+   SM — SiteMapPage (كل الأقسام)
    ════════════════════════════════════════════════════════════ */
 .sm-page { --sm-emerald: #226A56; }
 
@@ -22942,7 +22914,7 @@ html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --pane
 }
 .hp-quick-link--all .hp-quick-link__label { color: var(--majalis-emerald-deep, #226A56); font-weight: 700; }
 
-/* ── §200 — StartHerePage (sh-*) ────────────────────────────────────────── */
+/* ── 200 — StartHerePage (sh-*) ────────────────────────────────────────── */
 .sh-page { max-width: 720px; margin: 0 auto; padding: 0 1rem 3rem; direction: rtl; }
 .sh-hero {
   background: linear-gradient(140deg, #143F35 0%, #226A56 65%, #143F35 100%);
@@ -23208,7 +23180,7 @@ html[data-theme="dark"] .mobile-nav-backdrop {
 }
 
 /* ══════════════════════════════════════════════════════════════════
-   §QCP-EXT — QuranCirclesPage additions
+   QCP-EXT — QuranCirclesPage additions
    ══════════════════════════════════════════════════════════════════ */
 .qcp-stats-row {
   display: flex; flex-wrap: wrap; gap: var(--ds-space-4); justify-content: center;
@@ -23255,7 +23227,7 @@ html[data-theme="dark"] .qcp-section-header__title { color: #E8DED4; }
 html[data-theme="dark"] .qcp-stat { background: rgba(92,196,154,.10); }
 
 /* ══════════════════════════════════════════════════════════════════
-   §QC-EXT — QuranCircleCard extensions
+   QC-EXT — QuranCircleCard extensions
    ══════════════════════════════════════════════════════════════════ */
 .qc-card__footer--multi {
   display: flex;
@@ -23320,7 +23292,7 @@ html[data-theme="dark"] .qc-card__contact-link { color: #C8D8D0; }
 html[data-theme="dark"] .qc-badge--gov { background: rgba(92,196,154,.15); color: #5cc49a; }
 
 /* ══════════════════════════════════════════════════════════════════
-   §SQ — SectionQuiz — اختبار نهاية القسم
+   SQ — SectionQuiz — اختبار نهاية القسم
    ══════════════════════════════════════════════════════════════════ */
 .sq-section {
   margin-top: 2.5rem;
@@ -23429,7 +23401,7 @@ html[data-theme="dark"] .sq-answer-text { color: #C8D8D0; }
 html[data-theme="dark"] .sq-hint { color: #8AA89E; }
 
 /* ══════════════════════════════════════════════
-   §HB — HadithBooksPage — الكتب الحديثية الكاملة
+   HB — HadithBooksPage — الكتب الحديثية الكاملة
    ══════════════════════════════════════════════ */
 
 /* صفحة كاملة */
@@ -23645,7 +23617,7 @@ html[data-theme="dark"] .hadith-books-banner {
 .hb-mutafaq-info p { margin: .35rem 0 0; }
 html[data-theme="dark"] .hb-mutafaq-info { background: rgba(23,61,53,.09); border-color: rgba(23,61,53,.22); }
 
-/* ── §FRB — FridayBanner (تذكير يوم الجمعة) ────────────────────────────── */
+/* ── FRB — FridayBanner (تذكير يوم الجمعة) ────────────────────────────── */
 .frb-wrap {
   position: relative;
   background: linear-gradient(145deg, #143F35 0%, #143F35 55%, #143F35 100%);
@@ -23756,7 +23728,7 @@ html[data-theme="dark"] .frb-wrap {
 .ads-perm--warn { background: rgba(23,61,53,.08); color: #226A56; border: 1px solid rgba(23,61,53,.2); }
 .ads-perm--muted{ background: rgba(0,0,0,.04); color: #6b7280; border: 1px solid rgba(0,0,0,.08); }
 
-/* ── §UQ-Qiraat — القراءات السبع (UlumQuranPage) ───────────────────────── */
+/* ── UQ-Qiraat — القراءات السبع (UlumQuranPage) ───────────────────────── */
 .uq-qiraat-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
@@ -23874,7 +23846,7 @@ html[data-theme="dark"] .uq-qiraat-card {
 html[data-theme="dark"] .uq-usul-card { background: rgba(23,61,53,.07); }
 
 /* ══════════════════════════════════════════════════════════════════════════
-   §60  My Learning Dashboard v2  (myl2-*)
+   60  My Learning Dashboard v2  (myl2-*)
    ══════════════════════════════════════════════════════════════════════════ */
 
 .myl2-page {
@@ -24234,7 +24206,7 @@ html[data-theme="dark"] .myl2-note-item { border-color: rgba(255,255,255,.06); c
 }
 
 /* ══════════════════════════════════════════════════════════════════════════
-   §61  Home Personal Dashboard  (hpd-*)
+   61  Home Personal Dashboard  (hpd-*)
    ══════════════════════════════════════════════════════════════════════════ */
 
 .hpd-wrap {
@@ -24343,7 +24315,7 @@ html[data-theme="dark"] .hpd-item__title { color: #e8f5ee; }
 html[data-theme="dark"] .hpd-item__bar { background: rgba(255,255,255,.1); }
 
 /* ═══════════════════════════════════════════════════════════════════
-   §62  SearchPage — Recent History + Quick Sections
+   62  SearchPage — Recent History + Quick Sections
    ═══════════════════════════════════════════════════════════════════ */
 
 /* ── Recent Searches ── */
@@ -24441,7 +24413,7 @@ html[data-theme="dark"] .hpd-item__bar { background: rgba(255,255,255,.1); }
   transform: translateY(-1px);
 }
 
-/* Dark mode §62 */
+/* Dark mode 62 */
 html[data-theme="dark"] .srch-history-wrap {
   background: rgba(23,61,53,.1);
   border-color: rgba(23,61,53,.25);
@@ -24462,7 +24434,7 @@ html[data-theme="dark"] .srch-quick-card:hover {
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   §63  FlashCardsPage — Ring + Keyboard + SM2 preview
+   63  FlashCardsPage — Ring + Keyboard + SM2 preview
    ═══════════════════════════════════════════════════════════════════ */
 
 /* ── Session top row ── */
@@ -24562,7 +24534,7 @@ html[data-theme="dark"] .srch-quick-card:hover {
   margin-bottom: 0.15rem;
 }
 
-/* Dark mode §63 */
+/* Dark mode 63 */
 html[data-theme="dark"] .fc-ring__track { stroke: rgba(23,61,53,.22); }
 html[data-theme="dark"] .fc-ring__label { color: #5ecba1; }
 html[data-theme="dark"] .fc-ring__fill  { stroke: #5ecba1; }
@@ -24578,7 +24550,7 @@ html[data-theme="dark"] .fc-kbd {
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   §64  LearningPathDetailPage v2 — Hero + Ring + Modules
+   64  LearningPathDetailPage v2 — Hero + Ring + Modules
    ═══════════════════════════════════════════════════════════════════ */
 
 /* ── Hero ── */
@@ -24879,7 +24851,7 @@ html[data-theme="dark"] .fc-kbd {
 
 /* ── AI Insights ── */
 
-/* Dark mode §64 */
+/* Dark mode 64 */
 
 html[data-theme="dark"] .lpd2-module {
   background: rgba(255,255,255,.03);
@@ -24890,7 +24862,7 @@ html[data-theme="dark"] .lpd2-module__title { color: #e8f5ee; }
 html[data-theme="dark"] .lpd2-module--done .lpd2-module__title { color: #5ecba1; }
 
 /* ═══════════════════════════════════════════════════════════════════
-   §65  ScholarlyResearchPage — Hero + History + Intent filter + Library
+   65  ScholarlyResearchPage — Hero + History + Intent filter + Library
    ═══════════════════════════════════════════════════════════════════ */
 
 /* ── Hero ── */
@@ -25248,7 +25220,7 @@ html[data-theme="dark"] .lpd2-module--done .lpd2-module__title { color: #5ecba1;
   text-align: center;
 }
 
-/* Dark mode §65 */
+/* Dark mode 65 */
 html[data-theme="dark"] .srp-textarea {
   background: rgba(255,255,255,.04);
   border-color: rgba(255,255,255,.1);
@@ -25264,7 +25236,7 @@ html[data-theme="dark"] .srp-result-box { background: rgba(255,255,255,.03); bor
 html[data-theme="dark"] .srp-action-btn { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.12); color: #c4d6cc; }
 
 /* ═══════════════════════════════════════════════════════════════════
-   §66  RelatedKnowledge — Card grid with type icons
+   66  RelatedKnowledge — Card grid with type icons
    ═══════════════════════════════════════════════════════════════════ */
 
 .rk-aside { margin: 1.75rem 0; }
@@ -25362,7 +25334,7 @@ html[data-theme="dark"] .srp-action-btn { background: rgba(255,255,255,.06); bor
 }
 .rk-card__arrow { color: var(--clr-ink-soft, #6b7280); flex-shrink: 0; }
 
-/* Dark mode §66 */
+/* Dark mode 66 */
 html[data-theme="dark"] .rk-card {
   background: rgba(255,255,255,.03);
   border-color: rgba(255,255,255,.1);
@@ -25371,7 +25343,7 @@ html[data-theme="dark"] .rk-card:hover { background: rgba(23,61,53,.1); border-c
 html[data-theme="dark"] .rk-card__title { color: #e8f5ee; }
 
 /* ═══════════════════════════════════════════════════════════════════
-   §67  KnowledgeRelatedItems — Knowledge graph card design
+   67  KnowledgeRelatedItems — Knowledge graph card design
    ═══════════════════════════════════════════════════════════════════ */
 
 .kri-aside { margin: 1.75rem 0; }
@@ -25435,7 +25407,7 @@ html[data-theme="dark"] .rk-card__title { color: #e8f5ee; }
 }
 .kri-card__arrow { color: var(--clr-ink-soft, #6b7280); flex-shrink: 0; }
 
-/* Dark mode §67 */
+/* Dark mode 67 */
 html[data-theme="dark"] .kri-card {
   background: rgba(255,255,255,.03);
   border-color: rgba(255,255,255,.1);
@@ -25445,7 +25417,7 @@ html[data-theme="dark"] .kri-card__name { color: #e8f5ee; }
 html[data-theme="dark"] .kri-card__icon-wrap { background: rgba(23,61,53,.2); }
 
 /* ═══════════════════════════════════════════════════════════════════
-   §68  WCAG Global Accessibility — focus-visible, skip-link, sr-only
+   68  WCAG Global Accessibility — focus-visible, skip-link, sr-only
    ═══════════════════════════════════════════════════════════════════ */
 
 /* ── Visually-hidden utility (screen readers only) ── */
@@ -25517,7 +25489,7 @@ html[data-theme="dark"] .kri-card__icon-wrap { background: rgba(23,61,53,.2); }
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   §69  LanguageSwitcher + OfflineBanner enhanced
+   69  LanguageSwitcher + OfflineBanner enhanced
    ═══════════════════════════════════════════════════════════════════ */
 
 /* ── Settings field with language switcher ── */
@@ -25628,7 +25600,7 @@ html[data-theme="dark"] .kri-card__icon-wrap { background: rgba(23,61,53,.2); }
   to   { transform: none; opacity: 1; }
 }
 
-/* Dark mode §69 */
+/* Dark mode 69 */
 html[data-theme="dark"] .lsw-trigger {
   background: rgba(255,255,255,.05);
   border-color: rgba(255,255,255,.12);
@@ -25642,7 +25614,7 @@ html[data-theme="dark"] .lsw-option { color: #e8f5ee; }
 html[data-theme="dark"] .lsw-option:hover { background: rgba(23,61,53,.15); }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   §70  LEARNING QUIZ PAGE V2  (lqp2-*)
+   70  LEARNING QUIZ PAGE V2  (lqp2-*)
    ═══════════════════════════════════════════════════════════════════════════ */
 
 .lqp2-wrap { padding-block: 1.5rem 3rem; }
@@ -25958,7 +25930,7 @@ html[data-theme="dark"] .lsw-option:hover { background: rgba(23,61,53,.15); }
 .lqp2-empty__icon { color: rgba(23,61,53,.35); }
 .lqp2-empty__msg { font-size: 0.9rem; color: var(--clr-ink-soft, #6b7280); margin: 0; }
 
-/* Dark mode §70 */
+/* Dark mode 70 */
 html[data-theme="dark"] .lqp2-question-card {
   background: rgba(255,255,255,.04);
   border-color: rgba(255,255,255,.1);
@@ -25973,7 +25945,7 @@ html[data-theme="dark"] .lqp2-done__hero { background: rgba(255,255,255,.04); bo
 html[data-theme="dark"] .lqp2-error-card { background: rgba(255,255,255,.04); border-color: rgba(220,38,38,.2); }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   §71  LEARNING CALENDAR PAGE V2  (lcp2-*)
+   71  LEARNING CALENDAR PAGE V2  (lcp2-*)
    ═══════════════════════════════════════════════════════════════════════════ */
 
 .lcp2-grid {
@@ -26084,14 +26056,14 @@ html[data-theme="dark"] .lqp2-error-card { background: rgba(255,255,255,.04); bo
 .lcp2-footer-link a { color: #226A56; font-weight: 600; text-decoration: none; }
 .lcp2-footer-link a:hover { text-decoration: underline; }
 
-/* Dark mode §71 */
+/* Dark mode 71 */
 html[data-theme="dark"] .lcp2-event { background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.1); }
 html[data-theme="dark"] .lcp2-event:hover { border-color: rgba(23,61,53,.4); }
 html[data-theme="dark"] .lcp2-event__title { color: #e8f5ee; }
 html[data-theme="dark"] .lcp2-event__date-box { background: rgba(23,61,53,.2); }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   §72  NOT-FOUND PAGE V2  (nf2-*)
+   72  NOT-FOUND PAGE V2  (nf2-*)
    ═══════════════════════════════════════════════════════════════════════════ */
 
 .nf2-page {
@@ -26192,13 +26164,13 @@ html[data-theme="dark"] .lcp2-event__date-box { background: rgba(23,61,53,.2); }
 
 .nf2-quiz-wrap { width: 100%; }
 
-/* Dark mode §72 */
+/* Dark mode 72 */
 html[data-theme="dark"] .nf2-icon-wrap { background: rgba(23,61,53,.2); border-color: rgba(23,61,53,.3); }
 html[data-theme="dark"] .nf2-sug-item { background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.1); color: #e8f5ee; }
 html[data-theme="dark"] .nf2-sug-item:hover { border-color: #226A56; background: rgba(23,61,53,.15); }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   §73  SCHOLARLY TRUST & SAFETY LAYER  (stb-* scw-* adv-error-*)
+   73  SCHOLARLY TRUST & SAFETY LAYER  (stb-* scw-* adv-error-*)
    ═══════════════════════════════════════════════════════════════════════════ */
 
 /* ── AsyncDataView Error State ── */
@@ -26453,7 +26425,7 @@ select:focus-visible {
 html[data-theme="dark"] .ai-disclaimer-bar { background: rgba(23,61,53,.1); }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   §74  GLOBAL DESIGN CONSISTENCY & UX POLISH
+   74  GLOBAL DESIGN CONSISTENCY & UX POLISH
    ═══════════════════════════════════════════════════════════════════════════ */
 
 /* ── Loading skeleton shimmer enhancement ── */
@@ -26597,7 +26569,7 @@ html[data-theme="dark"] .page-search-input {
 html[data-theme="dark"] .crb-btn { border-color: rgba(255,255,255,.1); color: rgba(232,245,238,.5); }
 
 /* ══════════════════════════════════════════════════════════════════════════════
-   §76 — Search Highlight (srch-hl) + Lesson Attendance (lat-*)
+   76 — Search Highlight (srch-hl) + Lesson Attendance (lat-*)
    ══════════════════════════════════════════════════════════════════════════════ */
 
 /* تمييز مصطلح البحث */
@@ -26637,11 +26609,11 @@ html[data-theme="dark"] mark.srch-hl {
 /* درس قادم قريباً */
 
 /* ══════════════════════════════════════════════════════════════════════════════
-   §77 — نظام التصميم المتكامل 2026 Pro
+   77 — نظام التصميم المتكامل 2026 Pro
    Design System Foundation · Typography · Components · Shell · Dark Mode
    ══════════════════════════════════════════════════════════════════════════════ */
 
-/* ── تحديث §2 Elite Tokens ليعكس النظام الجديد ── */
+/* ── تحديث 2 Elite Tokens ليعكس النظام الجديد ── */
 :root {
   --elite-forest:      var(--emerald-deep, #143F35);
   --elite-forest-2:    var(--emerald-600, #226A56);
@@ -26693,7 +26665,7 @@ html[data-theme="dark"] mark.srch-hl {
 }
 
 /* ════════════════════════════════════
-   §77a — Body & Global Element Reset
+   77a — Body & Global Element Reset
    ════════════════════════════════════ */
 html {
   font-size: 16px;
@@ -26754,7 +26726,7 @@ a {
 a:hover { color: var(--clr-primary-hov, #226A56); }
 
 /* ════════════════════════════════════
-   §77b — نظام الألوان الموحّد
+   77b — نظام الألوان الموحّد
    ════════════════════════════════════ */
 :root {
   /* semantic aliases — واضحة ومستخدَمة في المكونات */
@@ -26786,7 +26758,7 @@ a:hover { color: var(--clr-primary-hov, #226A56); }
 }
 
 /* ════════════════════════════════════════════════════════════
-   §77b-contrast — إصلاح جذري لتباين النص فوق الخلفيات الداكنة
+   77b-contrast — إصلاح جذري لتباين النص فوق الخلفيات الداكنة
    السبب الجذري: القاعدتان العامتان `h1..h6` و`p` تفرضان
    `color: var(--clr-text-1) !important` (وهو داكن في الوضع الفاتح)،
    فتُغطّي النص الأبيض الذي تضبطه البطاقات/الأبطال على خلفياتها الداكنة.
@@ -26844,7 +26816,7 @@ a:hover { color: var(--clr-primary-hov, #226A56); }
 }
 
 /* ════════════════════════════════════
-   §77c — نظام الأزرار المتكامل
+   77c — نظام الأزرار المتكامل
    ════════════════════════════════════ */
 
 /* Primary Button */
@@ -26919,7 +26891,7 @@ a:hover { color: var(--clr-primary-hov, #226A56); }
 .btn--pill { border-radius: var(--elite-r-pill) !important; }
 
 /* ════════════════════════════════════
-   §77d — نظام البطاقات الموحّد
+   77d — نظام البطاقات الموحّد
    ════════════════════════════════════ */
 .ui-card, .card-v2, .ds-card {
   background: var(--color-surface, #FFFFFF) !important;
@@ -26948,7 +26920,7 @@ a:hover { color: var(--clr-primary-hov, #226A56); }
 }
 
 /* ════════════════════════════════════
-   §77e — نظام الإدخال الموحّد
+   77e — نظام الإدخال الموحّد
    ════════════════════════════════════ */
 input[type="text"], input[type="email"], input[type="password"],
 input[type="search"], input[type="number"], input[type="tel"],
@@ -26993,7 +26965,7 @@ label {
 }
 
 /* ════════════════════════════════════
-   §77f — Navbar محسَّن 2026
+   77f — Navbar محسَّن 2026
    ════════════════════════════════════ */
 .navbar-v3 {
   background: rgba(248,247,243,0.92) !important;
@@ -27017,7 +26989,7 @@ label {
 }
 
 /* ════════════════════════════════════
-   §77g — Bottom Navigation محسَّن
+   77g — Bottom Navigation محسَّن
    ════════════════════════════════════ */
 .bottom-nav, .bottom-nav--v2 {
   background: rgba(248,247,243,0.95) !important;
@@ -27047,7 +27019,7 @@ label {
 }
 
 /* ════════════════════════════════════
-   §77h — Page Header / Hero محسَّن
+   77h — Page Header / Hero محسَّن
    ════════════════════════════════════ */
 .ds-page-header {
   background: var(--color-primary-deep, #143F35) !important;
@@ -27093,7 +27065,7 @@ label {
 }
 
 /* ════════════════════════════════════
-   §77i — نظام الشارات والـ Chips
+   77i — نظام الشارات والـ Chips
    ════════════════════════════════════ */
 .page-tag, .sch-tag {
   background: var(--color-primary-soft, #E8F2EE) !important;
@@ -27121,7 +27093,7 @@ label {
 }
 
 /* ════════════════════════════════════
-   §77j — Skeleton Loading محسَّن
+   77j — Skeleton Loading محسَّن
    ════════════════════════════════════ */
 @keyframes ds-shimmer-2026 {
   0%   { background-position: 200% 0; }
@@ -27140,7 +27112,7 @@ label {
 }
 
 /* ════════════════════════════════════
-   §77k — Empty State محسَّن
+   77k — Empty State محسَّن
    ════════════════════════════════════ */
 .empty-state, .ds-empty, [class*="empty-state"] {
   display: flex;
@@ -27164,7 +27136,7 @@ label {
 }
 
 /* ════════════════════════════════════
-   §77l — Dark Mode احترافي 2026
+   77l — Dark Mode احترافي 2026
    ════════════════════════════════════ */
 html[data-theme="dark"] {
   --clr-bg:           #111714;
@@ -27205,7 +27177,7 @@ html[data-theme="dark"] {
   --msk-text-2:       #8BABA3;
   --msk-text-3:       #5E7870;
   /* --msk-gold-* هنا زمردي فعليًا لا ذهبي — انظر ملاحظة src/index.css
-     وREADY_FOR_MERGE.md §15/16 لتفاصيل هذا الاسم التاريخي المتبقّي. */
+     وREADY_FOR_MERGE.md 15/16 لتفاصيل هذا الاسم التاريخي المتبقّي. */
   --msk-gold:         #5CC49A;
   --msk-gold-deep:    #226A56;
   --msk-border:       rgba(255,255,255,.07);
@@ -27393,7 +27365,7 @@ html[data-theme="dark"] [class*="-related__link"] {
 html[data-theme="dark"] a:hover:not(.fiqh-hub-strip__tab--active):not(.hpv4-hero__cta-primary):not(.skip-link):not(.bottom-nav__tab) { color: #4DC09A !important; }
 
 /* ════════════════════════════════════
-   §77m — نظام التنسيق والتباعد
+   77m — نظام التنسيق والتباعد
    ════════════════════════════════════ */
 
 /* Page shell موحَّد */
@@ -27431,7 +27403,7 @@ html[data-theme="dark"] a:hover:not(.fiqh-hub-strip__tab--active):not(.hpv4-hero
 }
 
 /* ════════════════════════════════════
-   §77n — نظام Focus الوصولي
+   77n — نظام Focus الوصولي
    ════════════════════════════════════ */
 :focus-visible {
   outline: 2px solid var(--color-primary, #226A56) !important;
@@ -27443,7 +27415,7 @@ html[data-theme="dark"] a:hover:not(.fiqh-hub-strip__tab--active):not(.hpv4-hero
 }
 
 /* ════════════════════════════════════
-   §77o — Responsive Refinements
+   77o — Responsive Refinements
    ════════════════════════════════════ */
 @media (max-width: 640px) {
   h1 { font-size: 1.5rem !important; }
@@ -27473,7 +27445,7 @@ html[data-theme="dark"] a:hover:not(.fiqh-hub-strip__tab--active):not(.hpv4-hero
 }
 
 /* ════════════════════════════════════
-   §77p — Reduced Motion
+   77p — Reduced Motion
    ════════════════════════════════════ */
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {
@@ -27484,7 +27456,7 @@ html[data-theme="dark"] a:hover:not(.fiqh-hub-strip__tab--active):not(.hpv4-hero
 }
 
 /* ════════════════════════════════════
-   §77q — Breadcrumb موحَّد
+   77q — Breadcrumb موحَّد
    ════════════════════════════════════ */
 .breadcrumb-nav, [class*="breadcrumb"] nav,
 .lesson-detail-breadcrumb, .sch-profile-breadcrumb,
@@ -27508,7 +27480,7 @@ html[data-theme="dark"] a:hover:not(.fiqh-hub-strip__tab--active):not(.hpv4-hero
 }
 
 /* ════════════════════════════════════
-   §77r — SiteFooter محسَّن
+   77r — SiteFooter محسَّن
    ════════════════════════════════════ */
 .site-footer, footer[class*="footer"] {
   background: var(--color-primary-deep, #143F35) !important;
@@ -27527,7 +27499,7 @@ html[data-theme="dark"] .site-footer {
 }
 
 /* ════════════════════════════════════
-   §77s — SideNavDrawer محسَّن
+   77s — SideNavDrawer محسَّن
    ════════════════════════════════════ */
 .side-nav-drawer, [class*="side-nav"] {
   background: var(--color-surface, #fff) !important;
@@ -27539,7 +27511,7 @@ html[data-theme="dark"] .side-nav-drawer {
 }
 
 /* ════════════════════════════════════
-   §77t — Separator / Divider
+   77t — Separator / Divider
    ════════════════════════════════════ */
 hr, .divider {
   border: none !important;
@@ -27549,7 +27521,7 @@ hr, .divider {
 html[data-theme="dark"] hr { border-top-color: rgba(255,255,255,.07) !important; }
 
 /* ════════════════════════════════════
-   §77u — Tooltip & Toast
+   77u — Tooltip & Toast
    ════════════════════════════════════ */
 .toast, [class*="toast"] {
   background: var(--color-primary-deep, #143F35) !important;
@@ -27564,7 +27536,7 @@ html[data-theme="dark"] hr { border-top-color: rgba(255,255,255,.07) !important;
 }
 
 /* ════════════════════════════════════
-   §77v — Print Styles
+   77v — Print Styles
    ════════════════════════════════════ */
 @media print {
   body { background: #fff !important; color: #000 !important; font-size: 12pt !important; }
@@ -27574,7 +27546,7 @@ html[data-theme="dark"] hr { border-top-color: rgba(255,255,255,.07) !important;
 }
 
 /* ══════════════════════════════════════════════════════════════════════════════
-   §77w — تحديث ألوان المكونات الأساسية إلى نظام 2026
+   77w — تحديث ألوان المكونات الأساسية إلى نظام 2026
    (يتجاوز القيم الصلبة القديمة #226A56 / #052E16 / #143F35)
    ══════════════════════════════════════════════════════════════════════════════ */
 
@@ -27729,15 +27701,10 @@ progress,
 }
 
 /* Scrollbar RTL */
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: rgba(23,61,53,.20); border-radius: 9999px; }
-::-webkit-scrollbar-thumb:hover { background: rgba(23,61,53,.35); }
 
-/* ═══ Dark Mode overrides لمكونات §77w ═══ */
+/* ═══ Dark Mode overrides لمكونات 77w ═══ */
 html[data-theme="dark"] .lesson-unified-card__header,
-html[data-theme="dark"] .home-learning-path-card,
-html[data-theme="dark"] .home-hero,
+html[data-theme="dark"] html[data-theme="dark"] .home-hero,
 html[data-theme="dark"] .lessons-page-header,
 html[data-theme="dark"] .scholars-page-header,
 html[data-theme="dark"] .courses-page-header,
@@ -27772,7 +27739,7 @@ html[data-theme="dark"] ::-webkit-scrollbar-thumb {
 }
 
 /* ══════════════════════════════════════════════════════════════════════════════
-   §77x — Phase 6+7: Responsive & Accessibility Polish
+   77x — Phase 6+7: Responsive & Accessibility Polish
    ══════════════════════════════════════════════════════════════════════════════ */
 
 /* ── تحسين RTL/Arabic خاص بالمنصة ── */
@@ -28000,7 +27967,7 @@ html[data-theme="dark"] [role="tab"]:hover {
 }
 
 /* ══════════════════════════════════════════════════════════════════════════════
-   §77y — Phase 8: Performance Optimization
+   77y — Phase 8: Performance Optimization
    ══════════════════════════════════════════════════════════════════════════════ */
 
 /* ── Contain paint لحاويات الشبكة ── */
@@ -28058,7 +28025,7 @@ svg:not([class*="pattern"]):not([class*="geo"]):not([class*="star"]) {
 /* ── تحديد content-visibility للمقاطع التي خارج الشاشة ── */
 
 /* ══════════════════════════════════════════════════════════════════════════════
-   §77z — Phase 9 QA: Final Polish & Edge Cases
+   77z — Phase 9 QA: Final Polish & Edge Cases
    ══════════════════════════════════════════════════════════════════════════════ */
 
 /* ── صفحات فارغة ── */
@@ -28098,7 +28065,7 @@ img:not([src]) {
    -num/-wrap/-ayahs عرَضًا (كلها تحتوي "ayah")، فيفرض عليها بخط "Noto
    Naskh Arabic" بدل var(--font-quran) (Amiri Quran — الخط الوحيد المُصرَّح
    له بالنص القرآني في هذه المنصة)، و line-height:2 بدل 2.35 المصمَّم في
-   §222، و font-size:1.2em بدل 1.6rem — تحقّقتُ فعليًا عبر Playwright
+   222، و font-size:1.2em بدل 1.6rem — تحقّقتُ فعليًا عبر Playwright
    (getComputedStyle) أن fontFamily الفعلي على .mushaf-v2__ayah كان
    "Noto Naskh Arabic" حرفيًا رغم style inline صريح بـvar(--font-quran)،
    لأن !important في هذه القاعدة الخارجية يهزم inline عاديًا دومًا. هذا
@@ -28197,7 +28164,7 @@ html[data-theme="dark"] tr:hover td {
 }
 
 /* ══════════════════════════════════════════════════════════════════════════════
-   §78 — نص أبيض على جميع الخلفيات الداكنة (بدون استثناء)
+   78 — نص أبيض على جميع الخلفيات الداكنة (بدون استثناء)
    ══════════════════════════════════════════════════════════════════════════════ */
 
 /*
@@ -28208,7 +28175,7 @@ html[data-theme="dark"] tr:hover td {
 .lesson-unified-card__header *,
 .ds-page-header *,
 .home-hero *,
-.home-learning-path-card *,
+.ome-learning-path-card *,
 .lessons-page-header *,
 .scholars-page-header *,
 .courses-page-header *,
@@ -28286,7 +28253,7 @@ footer *,
 }
 
 /* استثناء زر الرجوع داخل ds-page-header — له خلفية فاتحة فيحتاج نصاً داكناً
-   §79 تُجبر جميع أبناء .ds-page-header على #fff فيصبح النص أبيض على خلفية الزر البيضاء */
+   79 تُجبر جميع أبناء .ds-page-header على #fff فيصبح النص أبيض على خلفية الزر البيضاء */
 .ds-page-header .ds-page-back-btn {
   color: #143F35 !important;
   background: rgba(255,255,255,0.92) !important;
@@ -28297,7 +28264,7 @@ footer *,
 }
 
 /* استثناء خانة بحث الصفحة الرئيسية داخل .hpv4-hero — خلفيتها بيضاء تقريبًا
-   (rgba(255,255,255,.97)) بينما §78 (.hpv4-hero *) تُجبر كل نص داخل البطل
+   (rgba(255,255,255,.97)) بينما 78 (.hpv4-hero *) تُجبر كل نص داخل البطل
    على color:#FFFFFF، فيصبح النص المكتوب أبيض على خلفية بيضاء تقريبًا —
    غير مرئي تمامًا أثناء الكتابة (بلاغ مستخدم 2026-07-16). */
 .hpv4-hero input.hpv4-hero__search-input {
@@ -28308,7 +28275,7 @@ footer *,
 }
 
 /* استثناء Prayer Chip داخل NavBar — خلفيته شفافة-فاتحة على navbar أبيض
-   §79 تُجبره على color:#fff فيصبح النص غير مرئي على خلفية شبه-شفافة */
+   79 تُجبره على color:#fff فيصبح النص غير مرئي على خلفية شبه-شفافة */
 .navbar-v3 .navbar-prayer-chip,
 .navbar-v3 .navbar-prayer-chip * {
   color: var(--majalis-emerald, #226A56) !important;
@@ -28319,21 +28286,21 @@ footer *,
 }
 
 /* استثناء أيقونة زر القائمة — الزر له خلفية فاتحة (#F5F5F4) داخل navbar الداكن
-   §16434 يُجبر .navbar-v3 .navbar-menu-btn على color:white فترث الأيقونة الأبيض */
+   16434 يُجبر .navbar-v3 .navbar-menu-btn على color:white فترث الأيقونة الأبيض */
 .navbar-v3 .navbar-menu-btn svg,
 .navbar-v3 .navbar-menu-btn .navbar-menu-btn__icon {
   color: var(--elite-ink, #1A1A1A) !important;
 }
 
 /* استثناء .set-section--security — خلفية خضراء-فاتحة (#E8F5E9)
-   القائمة الكبيرة §74b تُجبره على color:#fff مما يُفقد النص التباين */
+   القائمة الكبيرة 74b تُجبره على color:#fff مما يُفقد النص التباين */
 .set-section.set-section--security,
 .set-section.set-section--security * {
   color: var(--majalis-emerald-deep, #143F35) !important;
 }
 
 /* استثناء .asp-notice — خلفية نعناعية-فاتحة (#ECFDF5) مع نص داكن
-   القائمة الكبيرة §74b تُجبره على color:#fff (محددية 0,1,0)
+   القائمة الكبيرة 74b تُجبره على color:#fff (محددية 0,1,0)
    نستخدم body .asp-notice (0,1,1) لنتغلب عليها */
 body .asp-notice,
 body .asp-notice * {
@@ -28341,7 +28308,7 @@ body .asp-notice * {
 }
 
 /* استثناء بطاقات الأربعين النووية (an-card) — خلفية بيضاء (#fff)
-   القائمة الكبيرة §74b تُجبرها على color:#fff = نص أبيض على بطاقة بيضاء! */
+   القائمة الكبيرة 74b تُجبرها على color:#fff = نص أبيض على بطاقة بيضاء! */
 body .an-card,
 body .an-card *:not(.an-cat--active):not(.an-cat--active *) {
   color: var(--majalis-ink, #1A1A1A) !important;
@@ -28352,7 +28319,7 @@ body .an-card--read * {
 }
 
 /* استثناء شارات جودة الإجابة (ra-badge) — خلفيات فاتحة
-   القائمة الكبيرة §74b تُجبرها على color:#fff */
+   القائمة الكبيرة 74b تُجبرها على color:#fff */
 body .ra-badge--full {
   color: var(--mn-text-active, #143F35) !important;
 }
@@ -28362,7 +28329,7 @@ body .ra-badge--partial {
 
 /* ══════════════════════════════════════════════════════════════════
    استثناءات العناصر ذات الخلفية الفاتحة (rgba شفاف منخفض الكثافة)
-   هذه عناصر أُضيفت للقائمة الكبيرة §74b خطأً — خلفياتها شبه-شفافة فاتحة
+   هذه عناصر أُضيفت للقائمة الكبيرة 74b خطأً — خلفياتها شبه-شفافة فاتحة
    ══════════════════════════════════════════════════════════════════ */
 
 /* .sh-intro-box — rgba(23,61,53,.06) شبه-شفاف فاتح, color:#143F35 مكتوب في الأصل */
@@ -28562,7 +28529,7 @@ body .kng-type-badge {
 .hpv4-hero svg,
 .lesson-unified-card__header svg,
 .ds-page-header svg,
-.home-learning-path-card svg,
+.ome-learning-path-card svg,
 .lessons-page-header svg,
 .scholars-page-header svg,
 .courses-page-header svg,
@@ -28576,7 +28543,7 @@ footer svg {
 
 /* روابط ضمن الخلفيات الداكنة */
 .hpv4-hero a:not(.hpv4-hero__cta-primary),
-.home-learning-path-card a,
+.ome-learning-path-card a,
 .ds-page-header a,
 .lessons-page-header a,
 .scholars-page-header a,
@@ -28585,7 +28552,7 @@ footer a {
   color: rgba(255,255,255,0.85) !important;
 }
 .hpv4-hero a:hover:not(.hpv4-hero__cta-primary),
-.home-learning-path-card a:hover,
+.ome-learning-path-card a:hover,
 .site-footer a:hover,
 footer a:hover {
   color: #FFFFFF !important;
@@ -28599,14 +28566,14 @@ footer a:hover {
 /* أزرار داخل الخلفيات الداكنة */
 .hpv4-hero .btn--primary,
 .hpv4-hero .ds-btn--primary,
-.home-learning-path-card .btn--primary,
-.home-learning-path-card .ds-btn--primary {
+.ome-learning-path-card .btn--primary,
+.ome-learning-path-card .ds-btn--primary {
   background: rgba(255,255,255,0.15) !important;
   border-color: rgba(255,255,255,0.30) !important;
   color: #FFFFFF !important;
 }
 .hpv4-hero .btn--primary:hover,
-.home-learning-path-card .btn--primary:hover {
+.ome-learning-path-card .btn--primary:hover {
   background: rgba(255,255,255,0.25) !important;
   border-color: rgba(255,255,255,0.50) !important;
 }
@@ -28614,7 +28581,7 @@ footer a:hover {
 /* نص شبه شفاف على الخلفيات الداكنة (مساعد) */
 .hpv4-hero p,
 .ds-page-header p,
-.home-learning-path-card p,
+.ome-learning-path-card p,
 .lessons-page-header p,
 .scholars-page-header p {
   color: rgba(255,255,255,0.80) !important;
@@ -28631,9 +28598,7 @@ html[data-theme="dark"] .hpv4-hero,
 html[data-theme="dark"] .hpv4-hero *,
 html[data-theme="dark"] .lesson-unified-card__header,
 html[data-theme="dark"] .lesson-unified-card__header *,
-html[data-theme="dark"] .home-learning-path-card,
-html[data-theme="dark"] .home-learning-path-card *,
-html[data-theme="dark"] .site-footer,
+html[data-theme="dark"] html[data-theme="dark"] .site-footer,
 html[data-theme="dark"] .site-footer * {
   color: #FFFFFF !important;
 }
@@ -28674,15 +28639,13 @@ html[data-theme="dark"] .hpv4-hero a.hpv4-hero__cta-primary * {
 .admin-section-title,
 .fm-section-title,
 .rp-section-title,
-.home-feature-strip-card:hover .home-feature-strip-icon,
-.elite-stats-section,
-.myt-card,
+.ome-feature-strip-card:hover .myt-card,
 .lesson-unified-card__header,
 .ds-btn--primary,
 .btn-v2--primary,
 .ds-btn--primary:hover,
 .btn-v2--primary:hover,
-.home-learning-path-card,
+.ome-learning-path-card,
 .pt-hero,
 .hdc__tab.active,
 .hdc__progress-fill,
@@ -29068,7 +29031,7 @@ progress,
   color: #FFFFFF !important;
 }
 
-/* استثناء من §79: هذه المحدِّدات خلفيتها الفعلية ثابتة في الوضع الداكن وهي
+/* استثناء من 79: هذه المحدِّدات خلفيتها الفعلية ثابتة في الوضع الداكن وهي
    --clr-primary الفاتح (#5CC49A تقريبًا) لا أخضر داكن فعليًا، ففرض الأبيض
    أعلاه ينتج نصًّا شبه غير مرئي (تباين ~2:1-2.9:1)، مُشخَّص وتحقّق منه عبر
    تدقيق Playwright حي (2026-07-22).
@@ -29089,7 +29052,7 @@ html[data-theme="dark"] .lpp-cat-btn {
   color: var(--text-on-primary, #143F35) !important;
 }
 
-/* .kng-source-btn.is-active: نفس علّة §79، لكن محدِّدها الفعلي بحالة
+/* .kng-source-btn.is-active: نفس علّة 79، لكن محدِّدها الفعلي بحالة
    is-active تحديدًا (الحالة الافتراضية بخلفية شفافة سليمة، لا تُمس). */
 html[data-theme="dark"] .kng-source-btn.is-active {
   color: var(--text-on-primary, #143F35) !important;
@@ -29104,7 +29067,7 @@ html[data-theme="dark"] .ar-thesis-badge--phd {
 }
 
 /* ═══════════════════════════════════════════════════════════════════
-   §80 — Library Page 2026 — بطاقات المكتبة مع الغلاف والترتيب
+   80 — Library Page 2026 — بطاقات المكتبة مع الغلاف والترتيب
    ═══════════════════════════════════════════════════════════════════ */
 
 /* ── شريط الأدوات (ترتيب + عرض) ─────────────────────────────── */
@@ -29377,7 +29340,7 @@ html[data-theme="dark"] .ar-thesis-badge--phd {
 }
 
 /* ============================================================
-   §81 — أبواب العلم (مكتبة "تعلّم")  (lrn-*)
+   81 — أبواب العلم (مكتبة "تعلّم")  (lrn-*)
    ============================================================ */
 .lrn-hub-stats {
   display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: var(--ds-space-4);
@@ -29691,7 +29654,7 @@ html[data-theme="dark"] .ikm-card__title {
 }
 
 /* ============================================================
-   §219 — رابط أكاديمية ورثة الأنبياء على انستغرام (instagram-academy-link-*)
+   219 — رابط أكاديمية ورثة الأنبياء على انستغرام (instagram-academy-link-*)
    يعتمد على متغيّرات الهوية الحالية فقط (--majalis-*) — لا ألوان يدوية.
    ============================================================ */
 .instagram-academy-link {
@@ -29783,7 +29746,7 @@ html[data-theme="dark"] .ikm-card__title {
 }
 
 /* ============================================================
-   §220 — غلاف الودجت الموحّد (widget-shell-*) — المرحلة 7
+   220 — غلاف الودجت الموحّد (widget-shell-*) — المرحلة 7
    حالات: تحميل/فارغ/تسجيل دخول مطلوب/جاهز. يعتمد على متغيّرات
    الهوية الحالية (--majalis-*) فقط — لا ألوان يدوية جديدة.
    ============================================================ */
@@ -29849,7 +29812,7 @@ html[data-theme="dark"] .ikm-card__title {
 }
 
 /* ============================================================
-   §221 — فهرس السور (surah-index-*) — المرحلة 9
+   221 — فهرس السور (surah-index-*) — المرحلة 9
    ============================================================ */
 .surah-index-page {
   max-width: 640px;
@@ -30051,7 +30014,7 @@ html[data-theme="dark"] .ikm-card__title {
 }
 
 /* ============================================================
-   §221ب — خريطة ترتيب نزول السور (revord-*) — المرحلة 9
+   221ب — خريطة ترتيب نزول السور (revord-*) — المرحلة 9
    خط زمني رأسي RTL. أخضر داكن (#143F35) = مكية، أخضر أفتح (#226A56) =
    مدنية — نفس زوج الألوان المستخدَم فعلاً لهذا الغرض التمييزي في
    .fiqh-timeline (src/index.css) لا اختراع جديد.
@@ -30249,7 +30212,7 @@ html[data-theme="dark"] .ikm-card__title {
 }
 
 /* ============================================================
-   §222 — قارئ المصحف الجديد (mushaf-v2-*) — المرحلة 8
+   222 — قارئ المصحف الجديد (mushaf-v2-*) — المرحلة 8
    ترقيم مدينة 604 صفحة، سحب أفقي، Bottom Sheet بدل الأزرار الدائمة،
    وضع هادئ. خط النص القرآني var(--font-quran) حصرًا، والواجهة
    var(--font-ui)/Alexandria لكل ما عداه.
@@ -30786,7 +30749,7 @@ html[data-theme="dark"] .mushaf-v2__sajda-mark {
 }
 
 /* ============================================================
-   §223 — أسماء الصلوات: خط الموقع الموحَّد (2026-07-24)
+   223 — أسماء الصلوات: خط الموقع الموحَّد (2026-07-24)
    خُطّ "Aref Ruqaa" الزخرفي (مُطبَّق سابقًا 2026-07-18) أُلغي بطلب مباشر
    من المالك — أسماء الصلوات تستخدم الآن Alexandria (var(--font-body))
    كباقي الموقع، بلا استثناء. !important يبقى لازمًا لتجاوز
@@ -30811,7 +30774,7 @@ html[data-theme="dark"] .mushaf-v2__sajda-mark {
 }
 
 /* ════════════════════════════════════
-   §78 — تصغير شعار الهيدر ومحاذاته رأسياً (2026-07-18)
+   78 — تصغير شعار الهيدر ومحاذاته رأسياً (2026-07-18)
    ════════════════════════════════════
    السبب الجذري (تحقّق فعلي عبر Playwright، لا افتراضًا):
    header.navbar-v3 هو display:block، بينما .navbar-v3__inner بداخله
@@ -30843,7 +30806,7 @@ header.navbar-v3 {
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
-   §224 — شريط "يتوفر تحديث جديد" (update-available-banner-*) — 2026-07-19
+   224 — شريط "يتوفر تحديث جديد" (update-available-banner-*) — 2026-07-19
    ═══════════════════════════════════════════════════════════════════════════
    يظهر فقط عند اكتشاف useVersionCheck (src/hooks/useVersionCheck.ts) نشرًا
    حيًّا أحدث من الذي حُمِّلت به الجلسة (مقارنة commit مع /version.json).
