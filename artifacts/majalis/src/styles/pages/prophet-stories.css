@@ -318,3 +318,56 @@
   align-items: center;
   flex-wrap: wrap;
 }
+
+/* ── منقول من الطبقة الحرجة: prophets-seerah-bridge ── */
+/* ══ بطاقة الانتقال: قصص الأنبياء → السيرة النبوية ══════════════════════ */
+.prophets-seerah-bridge {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-4);
+  padding: 1.25rem 1.5rem;
+  border-radius: var(--ds-radius-xl);
+  background: linear-gradient(135deg, rgba(23,61,53,0.08) 0%, rgba(46,139,103,0.08) 100%);
+  border: 1.5px solid rgba(23,61,53,0.30);
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s, transform 0.2s;
+  direction: rtl;
+}
+.prophets-seerah-bridge:hover {
+  border-color: rgba(23,61,53,0.60);
+  background: linear-gradient(135deg, rgba(23,61,53,0.14) 0%, rgba(46,139,103,0.12) 100%);
+  transform: translateY(-2px);
+}
+.prophets-seerah-bridge__ornament { flex-shrink: 0; }
+/* .prophets-seerah-bridge__body مطابقة حرفيًا لتعريفها في elite-2026.css
+   (يحمَّل لاحقًا فيفوز بالـcascade أصلًا) — أُزيل التكرار هنا. */
+.prophets-seerah-bridge__eyebrow {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: normal;
+  color: var(--majalis-brass, #226A56);
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+}
+.prophets-seerah-bridge__title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  color: var(--majalis-ink, #EDE9DD);
+  margin: 0 0 0.35rem;
+  font-family: var(--font-body);
+}
+.prophets-seerah-bridge__desc {
+  font-size: 0.82rem;
+  color: var(--majalis-ink-soft, #C9C5B8);
+  line-height: 1.6;
+  margin: 0;
+}
+.prophets-seerah-bridge__arrow {
+  font-size: var(--ds-text-xl);
+  color: var(--majalis-brass, #226A56);
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+/* .prophets-seerah-bridge:hover .prophets-seerah-bridge__arrow مطابقة
+   حرفيًا لتعريفها في elite-2026.css — أُزيل التكرار هنا. */
+

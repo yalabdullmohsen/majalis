@@ -24,6 +24,7 @@ import {
   fiqhItemHref,
   type FiqhCouncilItem,
 } from "@/lib/fiqh-council-types";
+import "@/styles/pages/fiqh-admin.css";
 
 const QUEUE_LABELS: Record<FiqhReviewQueueKind, string> = {
   needs_review: "بانتظار المراجعة",

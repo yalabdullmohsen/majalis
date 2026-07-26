@@ -4,6 +4,7 @@ import { AlertTriangle, Trash2, ShieldOff, CheckCircle } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { useAuth } from "@/components/AuthProvider";
 import { supabase } from "@/lib/supabase";
+import "@/styles/pages/account-deletion.css";
 
 export default function AccountDeletionPage() {
   const { user, isLoggedIn, logout } = useAuth();

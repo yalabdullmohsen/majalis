@@ -9,6 +9,7 @@ import {
   adminTriggerFiqhLinkCheck,
 } from "@/lib/fiqh-council-supabase";
 import type { FiqhQualityStats, FiqhReviewLog } from "@/lib/fiqh-council-types";
+import "@/styles/pages/fiqh-admin.css";
 
 function StatCard({ label, value, tone }: { label: string; value: number | string; tone?: string }) {
   return (
