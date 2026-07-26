@@ -38,7 +38,7 @@ export const AQEEDAH_BATCH1_LESSONS: AqeedahSeedLesson[] = [
     id: "seed-aqeedah-intro-1",
     categorySlug: "aqeedah-intro",
     title: "مدخل إلى العقيدة",
-    description: "تعريف العقيدة الإسلامية وأركانها الإجمالية ومصدرها الوحيد المعصوم",
+    description: "تعريف العقيدة الإسلامية وأركانها الإجمالية ومصدرها الوحيد المعصوم مع تطبيقات تُظهر أثر العقيدة في السلوك.",
     activity_type: "درس",
     sections: [
       sec("s-intro-1", "terms", "تعريف العقيدة",
@@ -56,7 +56,7 @@ export const AQEEDAH_BATCH1_LESSONS: AqeedahSeedLesson[] = [
     id: "seed-aqeedah-malaika-1",
     categorySlug: "iman-malaika",
     title: "الإيمان بالملائكة",
-    description: "الركن الثاني: حقيقة الملائكة وصفاتهم وما يجب اعتقاده فيهم",
+    description: "الركن الثاني: حقيقة الملائكة وصفاتهم وما يجب اعتقاده فيهم مع ربط المسألة بأدلتها من الكتاب والسنة ويُقرأ ضمن مسار العقيدة للمبتدئ ثم المتوسط.",
     activity_type: "درس",
     sections: [
       sec("s-mal-1", "body", "حقيقتهم وصفاتهم",
@@ -72,7 +72,7 @@ export const AQEEDAH_BATCH1_LESSONS: AqeedahSeedLesson[] = [
     id: "seed-aqeedah-kutub-1",
     categorySlug: "iman-kutub",
     title: "الإيمان بالكتب",
-    description: "الركن الثالث: التصديق بما أنزل الله من كتب على رسله",
+    description: "الركن الثالث: التصديق بما أنزل الله من كتب على رسله مع تطبيقات تُظهر أثر العقيدة في السلوك مع ربط المسألة بأدلتها من الكتاب والسنة.",
     activity_type: "درس",
     sections: [
       sec("s-kut-1", "body", "تعريفه ومقتضاه",
@@ -88,7 +88,7 @@ export const AQEEDAH_BATCH1_LESSONS: AqeedahSeedLesson[] = [
     id: "seed-aqeedah-rusul-1",
     categorySlug: "iman-rusul",
     title: "الإيمان بالرسل",
-    description: "الركن الرابع: التصديق برسالات الرسل جميعاً ومحمد ﷺ خاتمهم",
+    description: "الركن الرابع: التصديق برسالات الرسل جميعاً ومحمد ﷺ خاتمهم ويُقرأ ضمن مسار العقيدة للمبتدئ ثم المتوسط.",
     activity_type: "درس",
     sections: [
       sec("s-rus-1", "body", "تعريفه",
@@ -104,7 +104,7 @@ export const AQEEDAH_BATCH1_LESSONS: AqeedahSeedLesson[] = [
     id: "seed-aqeedah-yawm-1",
     categorySlug: "iman-yawm-akhir",
     title: "الإيمان باليوم الآخر",
-    description: "الركن الخامس: التصديق بالبعث والحساب والجزاء",
+    description: "الركن الخامس: التصديق بالبعث والحساب والجزاء مع تطبيقات تُظهر أثر العقيدة في السلوك مع ربط المسألة بأدلتها من الكتاب والسنة.",
     activity_type: "درس",
     sections: [
       sec("s-yawm-1", "body", "تعريفه وما يشمله",
@@ -120,7 +120,7 @@ export const AQEEDAH_BATCH1_LESSONS: AqeedahSeedLesson[] = [
     id: "seed-aqeedah-qadar-1",
     categorySlug: "iman-qadar",
     title: "الإيمان بالقدر",
-    description: "الركن السادس: التصديق بأن كل شيء بقضاء الله وقدره",
+    description: "الركن السادس: التصديق بأن كل شيء بقضاء الله وقدره مع تطبيقات تُظهر أثر العقيدة في السلوك مع ربط المسألة بأدلتها من الكتاب والسنة.",
     activity_type: "درس",
     sections: [
       sec("s-qad-1", "body", "تعريفه ومراتبه",
@@ -136,7 +136,7 @@ export const AQEEDAH_BATCH1_LESSONS: AqeedahSeedLesson[] = [
     id: "seed-aqeedah-ibadah-1",
     categorySlug: "mana-ibadah",
     title: "معنى العبادة",
-    description: "تعريف العبادة الشرعي وشمولها لكل ما يحبه الله ويرضاه",
+    description: "تعريف العبادة الشرعي وشمولها لكل ما يحبه الله ويرضاه مع ربط المسألة بأدلتها من الكتاب والسنة ويُقرأ ضمن مسار العقيدة للمبتدئ ثم المتوسط.",
     activity_type: "درس",
     sections: [
       sec("s-ibd-1", "terms", "تعريفها",
@@ -152,7 +152,7 @@ export const AQEEDAH_BATCH1_LESSONS: AqeedahSeedLesson[] = [
     id: "seed-aqeedah-shirk-1",
     categorySlug: "shirk-anwauh",
     title: "الشرك وأنواعه",
-    description: "تعريف الشرك بالله وأقسامه الأكبر والأصغر",
+    description: "تعريف الشرك بالله وأقسامه الأكبر والأصغر ويُقرأ ضمن مسار العقيدة للمبتدئ ثم المتوسط والعمدة فيه تقرير أهل السنة بلا غلو ولا تفريط.",
     activity_type: "درس",
     sections: [
       sec("s-shk-1", "body", "تعريفه وخطورته",
@@ -168,7 +168,7 @@ export const AQEEDAH_BATCH1_LESSONS: AqeedahSeedLesson[] = [
     id: "seed-aqeedah-kufr-1",
     categorySlug: "kufr-nifaq",
     title: "الكفر والنفاق",
-    description: "التفريق بين الكفر الصريح والنفاق الاعتقادي وصفات المنافقين",
+    description: "التفريق بين الكفر الصريح والنفاق الاعتقادي وصفات المنافقين ويُقرأ ضمن مسار العقيدة للمبتدئ ثم المتوسط.",
     activity_type: "درس",
     sections: [
       sec("s-kfr-1", "body", "تعريف الكفر والنفاق",
@@ -184,7 +184,7 @@ export const AQEEDAH_BATCH1_LESSONS: AqeedahSeedLesson[] = [
     id: "seed-aqeedah-wala-1",
     categorySlug: "wala-bara",
     title: "الولاء والبراء",
-    description: "محبة أهل الإيمان وموالاتهم، والبراءة من الكفر والشرك بضوابط الشرع",
+    description: "محبة أهل الإيمان وموالاتهم، والبراءة من الكفر والشرك بضوابط الشرع والعمدة فيه تقرير أهل السنة بلا غلو ولا تفريط.",
     activity_type: "درس",
     sections: [
       sec("s-wala-1", "body", "تعريفه",
