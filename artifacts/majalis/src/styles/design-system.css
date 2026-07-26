@@ -385,97 +385,10 @@ article {
   --ds-transition-slow: 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ── Home compact ── */
-.home-page--v3 .home-hero--v3 {
-  padding: var(--ds-space-4) 0 var(--ds-space-5);
-}
-
-.home-page--v3 .home-hero-title--v3 {
-  font-size: clamp(1.35rem, 4vw, 1.75rem);
-}
-
-.home-page--v3 .home-hero-lead--v3 {
-  font-size: var(--ds-text-sm);
-  max-width: 28rem;
-}
-
-.home-page--v3 .home-hero-logo {
-  width: 64px;
-  height: 64px;
-}
-
-.home-page--v3 .home-section {
-  margin-bottom: var(--ds-space-5);
-}
-
-.home-page--v3 .home-section-title {
-  font-size: var(--ds-text-md);
-}
-
-.home-page--v3 .home-section-kicker,
-.home-page--v3 .home-section-subtitle {
-  display: none;
-}
-
-.home-page--v3 .home-content-card {
-  padding: var(--ds-space-3);
-  border-radius: var(--ds-radius-lg);
-  border: 1px solid var(--ds-line-color);
-  box-shadow: var(--ds-shadow-sm);
-}
-
-.home-page--v3 .home-content-card strong {
-  font-size: var(--ds-text-sm);
-}
-
-.home-page--v3 .home-content-card p {
-  font-size: var(--ds-text-xs);
-  color: var(--ds-ink-soft);
-  margin-top: var(--ds-space-1);
-}
-
-.home-quick-grid {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--ds-space-2);
-}
-
 @media (min-width: 640px) {
   .home-quick-grid {
     grid-template-columns: repeat(4, minmax(0, 1fr));
   }
-}
-
-.home-quick-link {
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
-  padding: var(--ds-space-3);
-  border-radius: var(--ds-radius-lg);
-  border: 1px solid var(--ds-line-color);
-  background: var(--majalis-panel, #fff);
-  text-decoration: none;
-  color: inherit;
-  font-size: var(--ds-text-sm);
-  font-weight: 700;
-  transition: border-color 0.15s, box-shadow 0.15s;
-}
-
-.home-quick-link span {
-  font-size: var(--ds-text-xs);
-  font-weight: 600;
-  color: var(--ds-ink-soft);
-}
-
-.home-quick-link:hover {
-  border-color: rgba(26, 107, 82, 0.3);
-  box-shadow: var(--ds-shadow-sm);
-}
-
-.home-daily-row {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--ds-space-3);
 }
 
 @media (min-width: 768px) {
@@ -543,7 +456,6 @@ article {
 }
 
 /* ── Remove decorative clutter ── */
-.home-page--v3 hr,
 .page-shell hr.decorative {
   display: none;
 }
@@ -1336,7 +1248,6 @@ p, li {
   --ds-transition-slow: 350ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-
 body {
   background: var(--msk-canvas, var(--ds-parchment));
   color: var(--msk-text, var(--ds-ink));
@@ -1416,32 +1327,6 @@ hr.decorative,
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
   gap: var(--ds-space-3);
-}
-
-.home-quick-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(min(100%, 7rem), 1fr));
-  gap: var(--ds-space-2);
-}
-
-.home-quick-link {
-  display: flex;
-  flex-direction: column;
-  gap: 0.1rem;
-  padding: var(--ds-space-3);
-  font-size: var(--ds-text-sm);
-  font-weight: 700;
-  text-decoration: none;
-  color: var(--ds-emerald-deep);
-  background: var(--majalis-panel, #fff);
-  border: 1px solid var(--ds-line-color);
-  border-radius: var(--ds-radius);
-}
-
-.home-quick-link span {
-  font-size: var(--ds-text-xs);
-  font-weight: 500;
-  color: var(--ds-ink-soft);
 }
 
 .search-results-group-title {
@@ -1582,7 +1467,6 @@ hr.decorative,
   opacity: 0.6;
   cursor: not-allowed;
 }
-
 
 /* ══════════════════════════════════════════════════════════════
    Home Polish Additions (home/full-polish)
@@ -1932,7 +1816,6 @@ hr.decorative,
   stroke: var(--majalis-emerald, #226A56);
 }
 
-
 /* Content inside ring */
 .tc-ring-inner {
   position: relative;
@@ -1983,7 +1866,6 @@ hr.decorative,
 .tc-ring-btn--done .tc-ring-hint {
   color: var(--majalis-emerald, #226A56);
 }
-
 
 /* Keyboard hint below counter */
 .tc-keyboard-hint {
@@ -2070,7 +1952,6 @@ hr.decorative,
   color: var(--majalis-ink-soft);
 }
 
-
 /* ═══════════════════════════════════════════════════════
    Push Notification Prompt
    ═══════════════════════════════════════════════════════ */
@@ -2121,22 +2002,17 @@ hr.decorative,
 
 /* شريط الصلاة المدمج */
 
-
-
-
 /* بطاقات عامة */
 
 /* نماذج إدخال */
 
 /* أزرار ثانوية */
 
-
 /* الحلقة */
 
 /* إشعارات Push */
 
 /* صفحة تسجيل الدخول */
-
 
 /* إحصاء التسبيح */
 
@@ -2197,8 +2073,6 @@ hr.decorative,
   color: var(--ds-emerald);
   text-decoration: none;
 }
-
-
 
 /* Streak stat cell */
 .tasbih-stat--streak strong {
@@ -5037,17 +4911,6 @@ h1, h2, h3 {
   font-weight: 800;
 }
 
-.home-quick-link {
-  border-radius: var(--ds-radius-lg);
-  transition: border-color var(--ds-transition-fast), box-shadow var(--ds-transition-fast), transform var(--ds-transition-fast);
-}
-
-.home-quick-link:hover {
-  border-color: color-mix(in srgb, var(--ds-emerald) 35%, var(--ds-line-color));
-  box-shadow: var(--ds-shadow-sm);
-  transform: translateY(-1px);
-}
-
 /* ── 15. النتائج والمحتوى ── */
 .search-result-row:hover {
   border-color: color-mix(in srgb, var(--ds-emerald) 25%, var(--ds-line-color));
@@ -5073,9 +4936,6 @@ h1, h2, h3 {
 
 /* ── 17. الوضع الداكن — Premium layer overrides ── */
 
-
-
-
 /* ── 18. تحسين الانتقالات العامة ── */
 @media (prefers-reduced-motion: no-preference) {
   .ui-card,
@@ -5100,14 +4960,6 @@ h1, h2, h3 {
 }
 
 /* ── 19. الروابط السريعة في الصفحة الرئيسية ── */
-.home-quick-link {
-  color: var(--ds-ink) !important;
-  border-radius: var(--ds-radius-lg);
-}
-
-.home-quick-link span {
-  color: var(--ds-ink-soft) !important;
-}
 
 /* ── 20. بطاقة الدرس ── */
 .lesson-card__title,
