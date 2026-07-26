@@ -733,5 +733,47 @@
     "normalizedName": "ابو بكر عثمان بن محمد شطا الدمياطي",
     "verificationStatus": "pending_review",
     "sources": []
+  },
+  {
+    "id": "author-al-khiraqi",
+    "name": "الإمام عمر بن الحسين الخرقي",
+    "normalizedName": "عمر بن الحسين الخرقي",
+    "verificationStatus": "pending_review",
+    "sources": []
+  },
+  {
+    "id": "author-ibn-humam",
+    "name": "الإمام كمال الدين ابن الهمام",
+    "normalizedName": "كمال الدين ابن الهمام",
+    "verificationStatus": "pending_review",
+    "sources": []
+  },
+  {
+    "id": "author-khalil-ibn-ishaq",
+    "name": "الإمام خليل بن إسحاق الجندي",
+    "normalizedName": "خليل بن اسحاق الجندي",
+    "verificationStatus": "pending_review",
+    "sources": []
+  },
+  {
+    "id": "author-ibn-abi-hatim",
+    "name": "الإمام ابن أبي حاتم الرازي",
+    "normalizedName": "ابن ابي حاتم الرازي",
+    "verificationStatus": "pending_review",
+    "sources": []
+  },
+  {
+    "id": "author-al-qastallani",
+    "name": "الإمام شهاب الدين القسطلاني",
+    "normalizedName": "شهاب الدين القسطلاني",
+    "verificationStatus": "pending_review",
+    "sources": []
+  },
+  {
+    "id": "author-al-zaylai",
+    "name": "الإمام جمال الدين الزيلعي",
+    "normalizedName": "جمال الدين الزيلعي",
+    "verificationStatus": "pending_review",
+    "sources": []
   }
 ]
