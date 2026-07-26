@@ -9,6 +9,8 @@ import { useUserPreferences } from "@/components/UserPreferencesProvider";
 import { THEME_OPTIONS, type ThemePreference } from "@/lib/theme-preference";
 import { clearQuranCache } from "@/lib/quran-api";
 import { DEFAULT_PREFERENCES, type UserPreferences } from "@/lib/user-preferences";
+import { clearLocalBookmarks } from "@/lib/local-bookmarks";
+import { clearOfflineReading } from "@/lib/offline-reading-pack";
 import { useQuranPreferences, type QuranFontId } from "@/hooks/useQuranPreferences";
 import { PushPrompt } from "@/components/PushPrompt";
 import { useLanguage } from "@/components/LanguageProvider";
@@ -234,7 +236,20 @@ export default function SettingsPage() {
           }}>
             {t("settings_download_data")}
           </button>
-          <button type="button" className="settings-danger-btn" onClick={() => updatePreferences(DEFAULT_PREFERENCES)}>
+          <button
+            type="button"
+            className="settings-danger-btn"
+            onClick={() => {
+              updatePreferences(DEFAULT_PREFERENCES);
+              clearLocalBookmarks();
+              void clearOfflineReading();
+              try {
+                localStorage.removeItem("majalis-reading-progress-v1");
+              } catch {
+                /* ignore */
+              }
+            }}
+          >
             {t("settings_clear_local")}
           </button>
         </div>
