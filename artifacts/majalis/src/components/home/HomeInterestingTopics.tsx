@@ -1,5 +1,6 @@
 import { Link } from "wouter";
 import { Widget } from "@/components/widgets/Widget";
+import "@/styles/components/home/home-interesting-topics.css";
 
 const s = (path: string, extra = "") =>
   `<svg width="22" height="22" viewBox="0 0 22 22" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" ${extra}>${path}</svg>`;

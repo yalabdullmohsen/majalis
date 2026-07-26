@@ -1,6 +1,7 @@
 import { Link } from "wouter";
 import { Map, Network } from "lucide-react";
 import { Widget } from "@/components/widgets/Widget";
+import "@/styles/components/home/home-mindmap.css";
 
 const MAPS = [
   {

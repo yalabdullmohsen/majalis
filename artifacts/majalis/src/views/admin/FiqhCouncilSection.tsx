@@ -56,6 +56,7 @@ import { SkeletonCardGrid } from "@/components/ui-common";
 import { AdminModal, Field } from "./AdminModal";
 import { useAdminShell } from "./AdminShell";
 import { FiqhCompletionBarFromItem } from "@/components/fiqh-council/FiqhCompletionBar";
+import "@/styles/pages/fiqh-council-section.css";
 
 type AdminTab = "stats" | "items" | "review" | "duplicates" | "relations" | "research" | "sessions" | "sync";
 

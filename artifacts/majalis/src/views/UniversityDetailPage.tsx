@@ -15,6 +15,7 @@ import { CompareProvider } from "@/components/universities/CompareContext";
 import { useCompare } from "@/components/universities/CompareContext";
 import { CompareBar } from "@/components/universities/CompareBar";
 import { applyPageSeo } from "@/lib/seo";
+import "@/styles/pages/university-detail.css";
 
 function ProgramCard({ program: p }: { program: UniversityProgram }) {
   const [open, setOpen] = useState(false);
