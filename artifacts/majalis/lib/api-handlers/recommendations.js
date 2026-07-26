@@ -305,7 +305,9 @@ async function fetchContentMeta(admin, type, ids) {
       return (data || []).map((r) => ({ ...r, title: r.question?.slice(0, 80) }));
     }
     if (type === "benefit") {
-      const { data } = await admin.from("fawaid").select("id, text, category, topic, status").in("id", ids).eq("status", "approved");
+      // لا عمود topic في جدول fawaid — طلبه كان يُفشل الاستعلام (42703)
+      // فتعود توصيات الفوائد فارغة دائمًا.
+      const { data } = await admin.from("fawaid").select("id, text, category, status").in("id", ids).eq("status", "approved");
       return (data || []).map((r) => ({ ...r, title: r.text?.slice(0, 80) }));
     }
     if (type === "book") {
