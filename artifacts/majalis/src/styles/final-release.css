@@ -711,6 +711,21 @@ html[data-theme="dark"] .bottom-nav--v2 {
   padding-block: 1.25rem;
   min-height: 0;
 }
+
+/* جسر أسماء الحالات القديمة → نفس عقد اللون/المسافة (بلا فرض خلفية/حدود جديدة) */
+.lessons-empty-state,
+.lrn-empty-state,
+.search-empty-state,
+.up-empty-state,
+.msp-empty-state__msg,
+.empty-msg {
+  color: var(--color-text-muted);
+}
+.skeleton-base,
+.skeleton-block {
+  border-radius: var(--radius-md, var(--r-md));
+}
+
 .error-boundary-page {
   display: flex;
   flex-direction: column;
