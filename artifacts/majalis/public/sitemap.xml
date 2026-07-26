@@ -446,11 +446,6 @@
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/kids</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://majlisilm.com/mind-map</loc>
     <changefreq>monthly</changefreq>
     <priority>0.72</priority>
@@ -519,11 +514,6 @@
     <loc>https://majlisilm.com/start-here</loc>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/quran-circles</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://majlisilm.com/quran-memorization</loc>

@@ -111,8 +111,8 @@ console.log("\n=== تعطيل الباحث الشرعي — سجل الميزا�
   assert(entry?.inBottomNav === false, "لا يظهر في التنقل السفلي");
 
   const kidsEntry = FEATURE_REGISTRY.find((f) => f.id === "kids");
-  assert(kidsEntry !== undefined && kidsEntry.status === "coming-soon" && kidsEntry.path === "/kids",
-    "مدخل قسم الأطفال مسجَّل بحالة coming-soon ومسار /kids صحيح");
+  assert(kidsEntry !== undefined && kidsEntry.status === "coming-soon" && kidsEntry.path === "/kids" && kidsEntry.inSideNav === false,
+    "مدخل قسم الأطفال coming-soon وخارج القائمة الجانبية (يبقى في المزيد)");
 
   const circlesEntry = FEATURE_REGISTRY.find((f) => f.id === "quran-circles");
   assert(circlesEntry !== undefined && circlesEntry.status === "coming-soon" && circlesEntry.inSideNav === false,
@@ -154,13 +154,14 @@ console.log("\n=== vercel.json — إعادة توجيه دائمة لمسار �
 console.log("\n=== seo-routes.json — /kids مسجَّل (noindex)، /scholarly-research أُزيل ===");
 {
   const seoConfig = JSON.parse(readFileSync(resolve(appRoot, "src/lib/seo-routes.json"), "utf-8"));
-  const routes = seoConfig.routes as Array<{ path: string; sitemap?: boolean }>;
+  const routes = seoConfig.routes as Array<{ path: string; sitemap?: boolean; robots?: string }>;
   const kidsRoute = routes.find((r) => r.path === "/kids");
   assert(kidsRoute !== undefined, "/kids مسجَّل في seo-routes.json");
-  assert(kidsRoute?.sitemap === false, "/kids خارج sitemap أثناء حالة قريبًا");
+  assert(kidsRoute?.sitemap === false && kidsRoute?.robots === "noindex, follow",
+    "/kids خارج sitemap وبـ noindex أثناء حالة قريبًا");
   const circlesRoute = routes.find((r) => r.path === "/quran-circles");
-  assert(circlesRoute !== undefined && circlesRoute.sitemap === false,
-    "/quran-circles خارج sitemap أثناء حالة قريبًا");
+  assert(circlesRoute !== undefined && circlesRoute.sitemap === false && circlesRoute.robots === "noindex, follow",
+    "/quran-circles خارج sitemap وبـ noindex أثناء حالة قريبًا");
   for (const p of ["/universities", "/universities/compare"]) {
     const route = routes.find((r) => r.path === p);
     assert(route !== undefined && route.sitemap === false, `${p} خارج sitemap بعد التنزيل`);
@@ -187,6 +188,7 @@ console.log("\n=== nav-visibility — إخفاء/دمج/قريبًا ===");
   for (const p of [
     "/islam-stats", "/study-room", "/vault", "/cards", "/car-mode", "/mosque-mode",
     "/family", "/universities", "/mind-map", "/mushaf/page", "/quran-circles",
+    "/quran/recitation-test-ai",
   ]) {
     assert(HIDDEN_FROM_NAV_PATHS.has(p), `${p} ضمن المسارات المخفية من الاكتشاف`);
   }

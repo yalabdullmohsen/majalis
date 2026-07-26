@@ -21,7 +21,7 @@ export type FeatureEntry = {
 export const FEATURE_REGISTRY: FeatureEntry[] = [
   // ── الصفحة الرئيسية ──────────────────────────────────────────
   { id: "home",         label: "الرئيسية",          path: "/",             group: "رئيسي",         status: "active",       inSideNav: true,  inBottomNav: true  },
-  { id: "kids",         label: "الأطفال",           path: "/kids",         group: "رئيسي",         status: "coming-soon",  inSideNav: true,  inBottomNav: false },
+  { id: "kids",         label: "الأطفال",           path: "/kids",         group: "رئيسي",         status: "coming-soon",  inSideNav: false, inBottomNav: false },
 
   // ── المحتوى التعليمي ─────────────────────────────────────────
   { id: "lessons",      label: "الدروس",             path: "/lessons",      group: "تعليم",         status: "active",       inSideNav: true,  inBottomNav: false },

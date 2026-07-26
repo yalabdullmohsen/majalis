@@ -2,7 +2,7 @@ import { createPortal } from "react-dom";
 import { useState, useMemo, useEffect, useRef } from "react";
 import { Link, useLocation } from "wouter";
 import {
-  Activity, Baby, BarChart3, BookMarked, BookOpen, BookText, BookUser,
+  Activity, BarChart3, BookMarked, BookOpen, BookText, BookUser,
   Bot, Calculator, Calendar, CalendarDays, CheckCircle2, ChevronDown, ChevronUp,
   Clock, Compass, CreditCard, FileText, GitBranch, GraduationCap,
   Heart, HelpCircle, Home, Landmark, Layers, Library, Lightbulb,
@@ -91,7 +91,6 @@ const DRAWER_GROUPS: NavGroup[] = [
     icon: <IcoHome />,
     items: [
       { href: "/",        label: "الصفحة الرئيسية",    Icon: Home },
-      { href: "/kids",    label: "الأطفال",             Icon: Baby,      desc: "ركن الأطفال — قيد التجهيز" },
       { href: "/updates", label: "آخر المستجدات",       Icon: Rss },
       { href: "/calendar", label: "التقويم الهجري",     Icon: Calendar,  desc: "التقويم والمناسبات الإسلامية" },
       { href: "/occasions", label: "المناسبات الإسلامية", Icon: Star,     desc: "أذكار المناسبات والأعياد" },
@@ -218,7 +217,6 @@ const DRAWER_GROUPS: NavGroup[] = [
       { href: "/quran-hub",           label: "مركز القرآن",        Icon: Layers,        desc: "بوابة كل ما يتعلق بالقرآن" },
       { href: "/mushaf",              label: "المصحف الشريف",      Icon: BookOpen,      desc: "اقرأ القرآن الكريم كاملاً" },
       { href: "/quran/surahs",        label: "فهرس السور",         Icon: BookText,      desc: "دليل 114 سورة بالبحث والفلاتر" },
-      { href: "/quran/recitation-test-ai", label: "اختبار التسميع بالذكاء الاصطناعي", Icon: Bot, desc: "سمّع من حفظك ويكشف المصحف الآيات فور نطقها" },
       { href: "/daily-wird",          label: "الورد اليومي",       Icon: Sun,           desc: "ختمة متجددة يومياً" },
       { href: "/quran/tajweed",       label: "علم التجويد",        Icon: Mic2,          desc: "أحكام التجويد بالأمثلة" },
       { href: "/ulum-quran",          label: "علوم القرآن",        Icon: GraduationCap, desc: "التفسير والناسخ والمنسوخ" },
