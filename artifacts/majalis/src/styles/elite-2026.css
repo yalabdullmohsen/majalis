@@ -830,8 +830,7 @@ html[data-theme="dark"] .rp-section-title {
 /* ══════════════════════════════════════════════
    15. أزرار (CTA Buttons)
    ══════════════════════════════════════════════ */
-.ds-btn--primary,
-.btn-v2--primary {
+.ds-btn--primary {
   background: var(--elite-forest, #052E16) !important;
   color: #FFFFFF !important;
   border-color: transparent !important;
@@ -840,8 +839,7 @@ html[data-theme="dark"] .rp-section-title {
   letter-spacing: normal !important;
 }
 
-.ds-btn--primary:hover,
-.btn-v2--primary:hover {
+.ds-btn--primary:hover {
   background: var(--elite-green, #166534) !important;
   box-shadow: 0 4px 20px rgba(5,46,22,0.35) !important;
   transform: translateY(-1px) !important;
@@ -1327,85 +1325,9 @@ html {
 
 /* إصلاح text-teal-100 على خلفية خضراء */
 
-/* ══════════════════════════════════════════════
-   38. Hadith Page تحسينات
-   ══════════════════════════════════════════════ */
-.hadith-card {
-  background: var(--elite-white) !important;
-  border: 1px solid var(--elite-border) !important;
-  border-radius: var(--elite-r-lg) !important;
-  box-shadow: var(--elite-shadow-sm) !important;
-}
+/* ── نُقل إلى styles/pages/hadith.css — قسم 38 Hadith ── */
 
-.hadith-text {
-  font-family: var(--font-serif) !important;
-  color: var(--elite-ink, #1A1A18) !important;
-  font-size: clamp(1rem, 2.5vw, 1.125rem) !important;
-  line-height: 2.0 !important;
-}
-
-/* رأس القسم المضمّن — خلفية خضراء + نص أبيض (مثل بطاقات الدروس) */
-.hadith-section-header {
-  background-color: var(--elite-forest, #143F35) !important;
-  background-image: url("/star-pattern.svg") !important;
-  background-size: 100px 100px !important;
-  border-radius: var(--elite-r-lg, 16px) !important;
-  padding: 1rem 1.25rem !important;
-  margin-bottom: 0.5rem !important;
-  gap: 0.3rem !important;
-}
-.hadith-section-eyebrow {
-  color: rgba(255,255,255,0.72) !important;
-  opacity: 1 !important;
-}
-/* إلغاء شارة الخلفية عن العنوان داخل رأس القسم (الخلفية الداكنة تكفي) —
-   ولون أبيض صريح: بلا هذا، يفوز لون عنوان داكن (مخصَّص لخلفيات فاتحة) عبر
-   محدِّدات أعلى أسبقية (.page-shell h2 وغيرها)، فينتج عنوانًا شبه معدوم
-   التباين فوق الخلفية الخضراء الداكنة لهذا الرأس (2026-07-16). */
-.hadith-section-header .hadith-section-title,
-.hadith-section-header h2.hadith-section-title {
-  background: transparent !important;
-  padding: 0 !important;
-  border-radius: 0 !important;
-  display: block !important;
-  font-size: 1.25rem !important;
-  margin-bottom: 0 !important;
-  color: #FFFFFF !important;
-}
-.hadith-section-subtitle {
-  color: rgba(255,255,255,0.80) !important;
-}
-
-/* إصلاح شامل: ألوان نصوص الإحصائيات والفلاتر */
-.hadith-stat { color: var(--elite-ink-soft, #4A4A4A) !important; }
-.hadith-stat strong { color: var(--elite-forest, #143F35) !important; }
-.hadith-quick-cat { color: var(--elite-ink-soft, #4A4A4A) !important; }
-.hadith-quick-cat:hover { color: var(--elite-forest, #143F35) !important; border-color: var(--elite-forest, #143F35) !important; }
-.hadith-quick-cat--active { background: var(--elite-forest, #143F35) !important; border-color: var(--elite-forest, #143F35) !important; color: #fff !important; }
-.hadith-filter-label { color: var(--elite-ink-soft, #4A4A4A) !important; }
-.hadith-meta-label { color: var(--elite-forest, #143F35) !important; }
-.hadith-meta-item { color: var(--elite-ink-soft, #4A4A4A) !important; }
-.hadith-keyword { color: var(--elite-ink-soft, #4A4A4A) !important; }
-.hadith-action-btn { color: var(--elite-ink-soft, #4A4A4A) !important; }
-.hadith-card__text { border-inline-start-color: var(--elite-forest, #143F35) !important; }
-.hadith-modal__text { border-inline-start-color: var(--elite-forest, #143F35) !important; }
-.hadith-modal-btn { background: var(--elite-forest, #143F35) !important; color: #fff !important; }
-
-/* ══════════════════════════════════════════════
-   39. Adhkar Page تحسينات
-   ══════════════════════════════════════════════ */
-.dhikr-card {
-  background: var(--elite-white) !important;
-  border: 1px solid var(--elite-border) !important;
-  border-radius: var(--elite-r-lg) !important;
-  box-shadow: var(--elite-shadow-sm) !important;
-  transition: all var(--elite-base) var(--elite-ease) !important;
-}
-
-.dhikr-card:hover {
-  box-shadow: var(--elite-shadow-md) !important;
-  border-color: var(--elite-border-green) !important;
-}
+/* ── حُذف .dhikr-card غير المستخدم ── */
 
 /* ══════════════════════════════════════════════
    40. Library Page تحسينات
@@ -1485,18 +1407,7 @@ html {
 .mn-sub-icon { width: var(--mn-icon-size, 1rem); height: var(--mn-icon-size, 1rem); }
 .chart-legend-dot { background-color: var(--chart-dot-color, currentColor); }
 
-/* ══════════════════════════════════════════════
-   44. Badges / Tags
-   ══════════════════════════════════════════════ */
-.badge-v2--green {
-  background: var(--elite-sage, #D4E9DC) !important;
-  color: var(--elite-forest, #052E16) !important;
-}
-
-.badge-v2--gold {
-  background: var(--elite-gold-pale, #F4F4F1) !important;
-  color: var(--elite-gold-deep, #143F35) !important;
-}
+/* ── حُذف .badge-v2 غير المستخدم ── */
 
 /* ══════════════════════════════════════════════
    45. Modal / Dialog
@@ -1629,65 +1540,7 @@ tr:last-child td {
   body { background: white !important; color: black !important; }
 }
 
-/* ══════════════════════════════════════════════
-   53. Fiqh Hub Navigation Strip
-   ══════════════════════════════════════════════ */
-.fiqh-hub-strip {
-  display: flex !important;
-  align-items: center !important;
-  gap: 0.3rem !important;
-  flex-wrap: nowrap !important;
-  padding: 0.55rem 1rem !important;
-  background: rgba(24, 54, 42, 0.04) !important;
-  border: 1px solid rgba(24, 54, 42, 0.1) !important;
-  border-radius: 0.75rem !important;
-  margin-bottom: 1.25rem !important;
-  overflow-x: auto !important;
-  scrollbar-width: none !important;
-  -webkit-overflow-scrolling: touch !important;
-}
-.fiqh-hub-strip::-webkit-scrollbar { display: none; }
-.fiqh-hub-strip__brand {
-  font-size: 0.78rem !important;
-  font-weight: 700 !important;
-  color: var(--elite-forest, #143F35) !important;
-  text-decoration: none !important;
-  white-space: nowrap !important;
-  flex-shrink: 0 !important;
-  padding: 0.15rem 0 !important;
-}
-.fiqh-hub-strip__brand:hover { text-decoration: underline !important; }
-.fiqh-hub-strip__sep {
-  color: rgba(24, 54, 42, 0.3) !important;
-  font-size: 0.72rem !important;
-  flex-shrink: 0 !important;
-  padding: 0 0.15rem !important;
-}
-.fiqh-hub-strip__tab {
-  font-size: 0.75rem !important;
-  font-weight: 500 !important;
-  color: rgba(24, 54, 42, 0.6) !important;
-  text-decoration: none !important;
-  padding: 0.18rem 0.6rem !important;
-  border-radius: 2rem !important;
-  white-space: nowrap !important;
-  transition: background 0.15s, color 0.15s !important;
-  border: 1px solid transparent !important;
-}
-.fiqh-hub-strip__tab:hover {
-  background: rgba(24, 54, 42, 0.08) !important;
-  color: var(--elite-forest, #143F35) !important;
-  text-decoration: none !important;
-}
-.fiqh-hub-strip__tab--active {
-  background: var(--elite-forest, #143F35) !important;
-  color: #FAFAF8 !important;
-  font-weight: 700 !important;
-}
-.fiqh-hub-strip__tab--active:hover {
-  background: var(--elite-forest, #143F35) !important;
-  color: #FAFAF8 !important;
-}
+/* ── نُقل إلى styles/pages/fiqh-hub.css — fiqh-hub-strip ── */
 
 /* ══════════════════════════════════════════════
    52. Prayer Cell — تفاعل النقر (عداد الوقت)
@@ -2153,220 +2006,10 @@ button.primary:hover {
 
 /* تصغير لوحة الإشعارات — مدموج في NotificationBell أعلاه */
 
-/* ══════════════════════════════════════════════
-   QiblaPage — وصلة القبلة التفاعلية
-   ══════════════════════════════════════════════ */
-.qibla-page { background: var(--elite-white, #FAFAF8) !important; }
-.qibla-wrap {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--ds-space-5);
-  padding: 0.5rem 1rem 2rem;
-  --qibla-bg: #F0F7F4;
-}
-.qibla-svg {
-  width: min(280px, 90vw);
-  height: min(280px, 90vw);
-  filter: drop-shadow(0 4px 16px rgba(22,163,74,0.15));
-}
-.qibla-aligned-badge {
-  background: var(--elite-forest, #143F35) !important;
-  color: var(--elite-white, #FAFAF8) !important;
-  border-radius: var(--ds-radius-full);
-  padding: 0.45rem 1.25rem;
-  font-size: 0.88rem;
-  font-weight: 700;
-  letter-spacing: normal;
-  animation: qibla-pop 0.4s cubic-bezier(0.22,1,0.36,1);
-}
-@keyframes qibla-pop {
-  from { transform: scale(0.6); opacity: 0; }
-  to   { transform: scale(1);   opacity: 1; }
-}
-.qibla-info-row {
-  display: flex;
-  gap: var(--ds-space-3);
-  flex-wrap: wrap;
-  justify-content: center;
-}
-.qibla-info-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.15rem;
-  background: #fff;
-  border: 1px solid rgba(22,163,74,0.15);
-  border-radius: var(--ds-radius-lg);
-  padding: 0.6rem 1.1rem;
-  min-width: 90px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
-}
-.qibla-info-label {
-  font-size: 0.68rem;
-  font-weight: 600;
-  color: var(--txt-muted, #5C5C56);
-  text-align: center;
-}
-.qibla-info-value {
-  font-size: 1.05rem;
-  font-weight: 800;
-  color: var(--elite-forest, #143F35);
-}
-.qibla-permit-btn {
-  background: var(--elite-forest, #143F35) !important;
-  color: #fff !important;
-  border: none;
-  border-radius: 0.6rem;
-  padding: 0.55rem 1.25rem;
-  font-size: 0.85rem;
-  font-weight: 700;
-  cursor: pointer;
-}
-.qibla-hint {
-  font-size: 0.8rem;
-  color: var(--txt-muted, #5C5C56);
-  text-align: center;
-  max-width: 260px;
-}
-.qibla-loading, .qibla-error {
-  font-size: 0.9rem;
-  color: var(--txt-muted, #5C5C56);
-  text-align: center;
-  padding: 2rem 1rem;
-}
+/* ── نُقل إلى styles/pages/qibla.css ── */
 
 /* ── نُقل إلى styles/pages/daily-wird.css ── */
-/* ══════════════════════════════════════════════
-   45. Occasions Page — المناسبات الإسلامية
-   ══════════════════════════════════════════════ */
-.occasions-filter {
-  display: flex;
-  align-items: center;
-  gap: var(--ds-space-2);
-  flex-wrap: wrap;
-  margin-bottom: 1rem;
-}
-
-.occasions-filter__label {
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: var(--elite-ink-soft, #5D726A);
-}
-
-.occasions-filter__count {
-  font-size: 0.8rem;
-  color: var(--elite-ink-muted, #5C5C56);
-}
-
-.occasions-filter__sacred-note {
-  font-size: 0.8rem;
-  color: var(--elite-forest, #143F35);
-  font-weight: 600;
-}
-
-.occasions-list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--ds-space-4);
-}
-
-.occasion-detail {
-  padding: 1.25rem !important;
-  display: flex;
-  flex-direction: column;
-  gap: var(--ds-space-3);
-}
-
-.occasion-detail__head {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--ds-space-3);
-  flex-wrap: wrap;
-}
-
-.occasion-detail__head h2 {
-  margin: 0 !important;
-  font-size: 1rem !important;
-  font-weight: 700 !important;
-  color: var(--elite-ink, #143F35) !important;
-  line-height: 1.4 !important;
-}
-
-.occasion-detail__month-badge {
-  font-size: 0.8rem;
-  font-weight: 600;
-  color: var(--elite-forest, #143F35);
-  background: var(--elite-sage-2, #F0F7F4);
-  border: 1px solid rgba(24,54,42,0.15);
-  border-radius: var(--ds-radius-full);
-  padding: 0.15rem 0.55rem;
-  white-space: nowrap;
-  margin-inline-start: 0.35rem;
-  display: inline-block;
-}
-
-.occasion-detail__countdown {
-  font-size: 0.78rem;
-  font-weight: 600;
-  color: var(--elite-ink-muted, #5C5C56);
-  white-space: nowrap;
-  background: var(--elite-cream, #F4F4F1);
-  border-radius: var(--ds-radius-full);
-  padding: 0.25rem 0.65rem;
-  flex-shrink: 0;
-}
-
-.occasion-detail__countdown--soon {
-  color: #C0392B;
-  background: rgba(192,57,43,0.08);
-}
-
-.occasion-detail__date {
-  font-size: 0.78rem;
-  color: var(--elite-ink-soft, #5D726A);
-  margin: 0;
-}
-
-.occasion-detail p {
-  font-size: var(--ds-text-sm);
-  color: var(--elite-ink-soft, #5D726A);
-  line-height: 1.7;
-  margin: 0;
-}
-
-.occasion-detail h3 {
-  font-size: 0.82rem !important;
-  font-weight: 700 !important;
-  color: var(--elite-forest, #143F35) !important;
-  margin: 0 !important;
-  text-transform: uppercase;
-  letter-spacing: normal;
-}
-
-.occasion-detail ul {
-  margin: 0;
-  padding-inline-start: 1.25rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-}
-
-.occasion-detail ul li {
-  font-size: 0.86rem;
-  color: var(--elite-ink, #143F35);
-  line-height: 1.6;
-}
-
-.occasion-evidence {
-  font-size: 0.8rem;
-  color: var(--elite-ink-soft, #5D726A);
-  border-inline-start: 2.5px solid var(--elite-forest, #143F35);
-  padding-inline-start: 0.65rem;
-  margin: 0;
-  line-height: 1.6;
-}
+/* ── نُقل إلى styles/pages/occasions.css ── */
 
 /* ══════════════════════════════════════════════
    46–47. Search / Settings — نُقلت إلى styles/pages/{search,settings}.css
@@ -2388,39 +2031,7 @@ button.primary:hover {
 
 /* ── نُقل إلى styles/pages/islamic-stories.css ── */
 
-/* ═══════════════════════════════════════════════════════════════
-   51  Muezzins Library  (mzp-*)
-   ═══════════════════════════════════════════════════════════════ */
-.mzp-header { margin-bottom: 1.25rem; }
-.mzp-header__top { display: flex; align-items: flex-start; justify-content: space-between; }
-.mzp-eyebrow { font-size: var(--ds-text-xs); color: var(--majalis-emerald); font-weight: 600; text-transform: uppercase; letter-spacing: normal; margin: 0 0 0.25rem; }
-.mzp-title { font-size: 1.4rem; font-weight: 800; color: var(--majalis-ink); margin: 0 0 0.35rem; }
-.mzp-subtitle { font-size: 0.82rem; color: var(--txt-subdued, #5C5C56); margin: 0; }
-.mzp-style-badge {
-  padding: 0.2rem 0.55rem; border-radius: var(--ds-radius-full);
-  font-size: 0.68rem; font-weight: 600;
-}
-.mzp-style-badge--khashi   { background: var(--majalis-emerald-muted); color: var(--majalis-emerald); }
-.mzp-style-badge--rasmi    { background: var(--majalis-parchment-deep); color: var(--majalis-ink); }
-.mzp-style-badge--taqlidi  { background: var(--majalis-parchment-deep); color: var(--majalis-ink-soft); }
-.mzp-style-badge--kilasiki { background: var(--majalis-emerald-muted); color: var(--majalis-emerald); }
-.mzp-card__category { font-size: 0.8rem; color: var(--txt-muted, #5C5C56); }
-.mzp-card__rating-row { display: flex; align-items: center; gap: 0.4rem; }
-.mzp-card__rating-num { font-size: 0.78rem; font-weight: 600; color: var(--majalis-ink-soft); }
-.mzp-card__rating-count { font-size: 0.8rem; color: var(--txt-muted, #5C5C56); }
-.mzp-card__followers { font-size: var(--ds-text-xs); color: var(--txt-subdued, #5C5C56); }
-.mzp-card__btns { display: flex; gap: var(--ds-space-2); margin-top: 0.25rem; }
-.mzp-card__preview-btn, .mzp-card__detail-btn {
-  flex: 1; padding: 0.45rem 0; border-radius: var(--ds-radius);
-  font-size: 0.8rem; font-weight: 600; cursor: pointer; font-family: inherit;
-}
-.mzp-card__preview-btn { border: none; background: #143F35; color: #fff; }
-.mzp-card__preview-btn.is-playing { background: #ef4444; }
-.mzp-card__detail-btn { border: 1.5px solid #143F35; background: transparent; color: var(--majalis-emerald); }
-/* Stars */
-.mzp-stars { display: inline-flex; align-items: center; gap: 0.15rem; font-size: 0.8rem; }
-.mzp-star { font-size: 0.85rem; color: var(--majalis-line); }
-.mzp-star.is-active { color: var(--majalis-emerald, #226A56); }
+/* ── حُذف mzp-card مكتبة المؤذنين غير المستخدمة؛ الـpicker له CSS خاص ── */
 
 /* ============================================================
    99 — shared: page-stats-row--flush
@@ -2944,32 +2555,7 @@ a:focus-visible {
 
 /* زر نسخ الفائدة */
 
-/* ═══════════════════════════════════════════════════════════════════════
-   207 — تحسينات صفحة المعجزات (MiraclesPage)
-   ═══════════════════════════════════════════════════════════════════════ */
-
-/* بطاقة المعجزة */
-.miracle-card {
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease !important;
-}
-.miracle-card:hover {
-  transform: translateY(-2px) !important;
-  box-shadow: 0 10px 26px rgba(0,0,0,0.11) !important;
-}
-
-/* لون الخلفية حسب التصنيف */
-.miracle-card--cosmos { border-top: 3px solid #7c3aed; }
-.miracle-card--astronomy { border-top: 3px solid #1d4ed8; }
-.miracle-card--sea { border-top: 3px solid #0ea5e9; }
-.miracle-card--plant { border-top: 3px solid #16a34a; }
-.miracle-card--animal { border-top: 3px solid #226A56; }
-.miracle-card--embryo { border-top: 3px solid #db2777; }
-.miracle-card--medicine { border-top: 3px solid #dc2626; }
-.miracle-card--water { border-top: 3px solid #0284c7; }
-.miracle-card--insect { border-top: 3px solid #226A56; }
-.miracle-card--iron { border-top: 3px solid #64748b; }
-.miracle-card--wind { border-top: 3px solid #06b6d4; }
-.miracle-card--cloud { border-top: 3px solid #8b5cf6; }
+/* ── نُقل إلى styles/pages/miracles.css — miracle-card ── */
 
 /* شارة التصنيف */
 
@@ -5292,7 +4878,6 @@ html[data-theme="dark"] hr { border-top-color: rgba(255,255,255,.07) !important;
 
 /* زر أساسي من النظام القديم */
 .ds-btn--primary,
-.btn-v2--primary,
 .btn-primary,
 [class*="btn"][class*="primary"] {
   background: var(--color-primary, #226A56) !important;
@@ -5301,7 +4886,6 @@ html[data-theme="dark"] hr { border-top-color: rgba(255,255,255,.07) !important;
   box-shadow: 0 1px 3px rgba(23,61,53,.20), 0 3px 10px rgba(23,61,53,.10) !important;
 }
 .ds-btn--primary:hover,
-.btn-v2--primary:hover,
 .btn-primary:hover {
   background: var(--color-primary-hover, #226A56) !important;
   border-color: var(--color-primary-hover, #226A56) !important;
@@ -6357,9 +5941,7 @@ html[data-theme="dark"] .hpv4-hero a.hpv4-hero__cta-primary * {
 .rp-section-title,
 .lesson-unified-card__header,
 .ds-btn--primary,
-.btn-v2--primary,
 .ds-btn--primary:hover,
-.btn-v2--primary:hover,
 .pt-hero,
 .hdc__tab.active,
 .hdc__progress-fill,
