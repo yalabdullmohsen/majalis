@@ -2,7 +2,7 @@
   "branch": "session/content-language-audit",
   "pr": 268,
   "created": "2026-07-26T04:40:00Z",
-  "updated": "2026-07-26T05:35:00Z",
+  "updated": "2026-07-26T05:45:00Z",
   "conventions": {
     "numbers": "أرقام عربية-هندية في المحتوى العربي عند الإمكان؛ السنوات الهجرية بصيغة ن هـ والميلادية بصيغة ن م",
     "dates": "اليوم ثم الشهر ثم السنة عند الحاجة",
@@ -14,7 +14,7 @@
     "quiz": 997,
     "rulings": 73,
     "adhkar_items_approx": 301,
-    "needs_post_review_lines": 49
+    "needs_post_review_lines": 52
   },
   "sections": [
     {
@@ -56,18 +56,20 @@
     {
       "id": "P5",
       "name": "علماء مكتبة قصص طب أمم",
-      "status": "in_progress",
+      "status": "pass1_done",
       "items": 0,
-      "pass1_batches_done": 0,
-      "pass2_batches_done": 0
+      "pass1_batches_done": 1,
+      "pass2_batches_done": 0,
+      "notes": "تخفيف إعجاز جازم، طب نبوي، أسماء، علماء، قصص، مكتبة، أمم (نوع غير مفصل)"
     },
     {
       "id": "P6",
       "name": "مرور ثاني + فحوصات نهائية",
-      "status": "pending",
+      "status": "in_progress",
       "items": 0,
       "pass1_batches_done": 0,
-      "pass2_batches_done": 0
+      "pass2_batches_done": 0,
+      "notes": "بدء الجولة الثانية والفحوصات النهائية"
     }
   ]
 }

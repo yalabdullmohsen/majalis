@@ -35,6 +35,7 @@ const MAP: Record<PunishmentType, typeof CloudRain> = {
   "طير أبابيل": Bird,
   "تفريق وسيل العرم": Split,
   "النجاة والإيمان": ShieldCheck,
+  "غير مفصل": HelpCircle,
   "لم يقع بعد": Clock,
 };
 
