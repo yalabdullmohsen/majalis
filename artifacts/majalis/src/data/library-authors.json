@@ -693,30 +693,9 @@
     "sources": []
   },
   {
-    "id": "author-al-bahuti",
-    "name": "الإمام منصور البهوتي",
-    "normalizedName": "منصور البهوتي",
-    "verificationStatus": "pending_review",
-    "sources": []
-  },
-  {
     "id": "author-al-mardawi",
     "name": "الإمام علاء الدين المرداوي",
     "normalizedName": "علاء الدين المرداوي",
-    "verificationStatus": "pending_review",
-    "sources": []
-  },
-  {
-    "id": "author-ibn-rajab-hanbali",
-    "name": "الإمام ابن رجب الحنبلي",
-    "normalizedName": "ابن رجب الحنبلي",
-    "verificationStatus": "pending_review",
-    "sources": []
-  },
-  {
-    "id": "author-ibn-rajab",
-    "name": "الإمام ابن رجب الحنبلي",
-    "normalizedName": "ابن رجب الحنبلي",
     "verificationStatus": "pending_review",
     "sources": []
   },

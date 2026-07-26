@@ -4607,3 +4607,19 @@ export const SEED_FAWAID = [
     source: "مقررات أهل العلم المعتمدة",
   }
 ];
+
+export function searchFawaid(query: string) {
+  const q = query.trim();
+  if (!q) return SEED_FAWAID;
+  return SEED_FAWAID.filter(
+    (f) =>
+      arabicMatchAny([f.text, f.category, f.source ?? "", f.author_name ?? ""], q),
+  );
+}
+
+/** @deprecated use searchFawaid */
+export const filterSeedFawaid = searchFawaid;
+
+export function getFawaidByCategory(category: string) {
+  return SEED_FAWAID.filter((f) => f.category === category);
+}
