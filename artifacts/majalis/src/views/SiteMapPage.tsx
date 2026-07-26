@@ -46,7 +46,7 @@ const SECTIONS = [
       { href: "/janna-naar",  label: "الجنة والنار",       desc: "صفة الجنة والنار من النصوص" },
       { href: "/alamat-saah", label: "علامات الساعة",      desc: "الصغرى والكبرى" },
       { href: "/malaika",     label: "الملائكة",           desc: "أسماؤهم ومهامهم" },
-      { href: "/miracles",    label: "الإعجاز العلمي",     desc: "علوم القرآن والإعجاز" },
+      { href: "/ulum-quran",  label: "الإعجاز القرآني",    desc: "بياني وتشريعي وغيبي — بلا عددي" },
     ],
   },
   {

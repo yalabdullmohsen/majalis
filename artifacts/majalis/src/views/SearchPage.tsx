@@ -550,7 +550,7 @@ export default function SearchPage() {
                 { href: "/rulings",      Icon: Scale,         label: "الأحكام الشرعية" },
                 { href: "/lessons",      Icon: GraduationCap, label: "الدروس" },
                 { href: "/library",      Icon: BookMarked,    label: "المكتبة" },
-                { href: "/miracles",     Icon: FlaskConical,  label: "الإعجاز القرآني" },
+                { href: "/ulum-quran",   Icon: FlaskConical,  label: "الإعجاز القرآني" },
                 { href: "/prayer-times", Icon: Clock,         label: "مواقيت الصلاة" },
               ] as const).map(({ href, Icon, label }) => (
                 <Link key={href} href={href} className="srch-quick-card">
