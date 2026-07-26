@@ -110,7 +110,15 @@ export async function fetchPublishedCategoryTree(): Promise<CategoryWithCounts[]
   });
   const roots = buildCategoryTree(withCounts) as CategoryWithCounts[];
   for (const r of roots) rollUpCounts(r);
-  return roots;
+
+  /** إخفاء الأبواب الخالية (لا دروس ولا سلاسل ولا فروع ذات محتوى) حتى لا تُربط صفحات فارغة. */
+  function hasContent(c: CategoryWithCounts): boolean {
+    if (c.lessonCount > 0 || c.seriesCount > 0) return true;
+    return c.children.some(hasContent);
+  }
+  return roots
+    .map((r) => ({ ...r, children: r.children.filter(hasContent) }))
+    .filter(hasContent);
 }
 
 function seedToSummary(seed: AqeedahSeedLesson, categoryId: string): LessonSummary {
