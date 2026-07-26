@@ -2422,67 +2422,11 @@ button.primary:hover {
 .mzp-star { font-size: 0.85rem; color: var(--majalis-line); }
 .mzp-star.is-active { color: var(--majalis-emerald, #226A56); }
 
-/* ── نُقل إلى styles/pages/knowledge-graph.css ── */
-/* ── نُقل إلى styles/pages/miracles.css (legacy) ── */
-/* ── نُقل إلى styles/pages/quran-radio.css ── */
-/* ── نُقل إلى styles/pages/my-submissions.css ── */
-/* ── نُقل إلى styles/pages/adhan-settings.css ── */
-/* ── نُقل إلى styles/pages/upload.css ── */
-/* ── نُقل إلى styles/pages/my-learning.css ── */
-/* ── نُقل إلى styles/pages/quran-circles.css ── */
-/* ── نُقل إلى styles/pages/prophetic-medicine.css ── */
-/* ── lpd stub → learning-path-detail.css ── */
-/* ── lqp → learning-quiz.css ── */
-/* ── نُقل إلى styles/pages/learning-paths.css ── */
-/* ── نُقل إلى styles/pages/submit-content.css ── */
-/* ── نُقل إلى styles/pages/certificate-verify.css ── */
-/* ── nf stub → not-found.css ── */
-/* ── نُقل إلى styles/pages/topic.css ── */
-/* ── twh leftovers → tawhid.css ── */
-/* ── نُقل إلى styles/pages/tawhid.css ── */
-/* ── نُقل إلى styles/pages/fiqh-hub.css ── */
-/* ── نُقل إلى styles/pages/user-stats.css ── */
-/* ── lcd → learning-quiz.css ── */
-/* ── flc → flashcards.css ── */
-/* ── نُقل إلى styles/pages/family-mode.css ── */
-/* ── نُقل إلى styles/pages/assistant.css ── */
-/* ── نُقل إلى styles/pages/learning-plan.css ── */
-/* ── نُقل إلى styles/pages/learning-path-dashboard.css ── */
-/* ── نُقل إلى styles/pages/cards.css ── */
-/* ── kng additions → knowledge-graph.css ── */
-/* ── fqp-cta → fiqh-hub.css ── */
-/* ── vault-login → vault.css ── */
-/* ── upd → updates.css ── */
-/* ── tip → topics-index.css ── */
-/* ── نُقل إلى styles/pages/prayer-countdown.css ── */
-/* ── نُقل إلى styles/pages/researcher-profile.css ── */
-/* ── cit → my-citations.css ── */
-/* ── نُقل إلى styles/pages/hadith-index.css ── */
-/* ── نُقل إلى styles/pages/notification-settings.css ── */
-/* ============================================================
-   89 — LearningPathSciencePage  (lps-*)
-   ============================================================ */
-
-/* ── udp stub → university-detail.css ── */
-/* ── ucp stub → universities-compare.css ── */
-/* ── نُقل إلى styles/pages/kuwait-lessons.css ── */
-/* ── نُقل إلى styles/pages/qibla.css ── */
-/* ── نُقل إلى styles/pages/occasions.css ── */
-/* ============================================================
-   96 — CitationPublicPage  (reuses cit-* from 86)
-   ============================================================ */
-/* No new rules needed — uses cit-type-bar and cit-type-badge from 86 */
-
-/* ── نُقل إلى styles/pages/annual-course-detail.css ── */
-/* ── نُقل إلى styles/pages/adhkar.css ── */
 /* ============================================================
    99 — shared: page-stats-row--flush
    ============================================================ */
 .page-stats-row--flush { margin-bottom: 0; }
 
-/* ── نُقل إلى styles/pages/learning-path.css ── */
-/* ── tp stub → transcribe.css ── */
-/* ── نُقل إلى styles/pages/study-room.css ── */
 /* ============================================================
    104 — AuthCallbackPage
    ============================================================ */
@@ -2622,16 +2566,10 @@ html[data-theme="dark"] .lesson-unified-card__btn--primary {
   background: #226A56 !important;
 }
 
-/* ── نُقل إلى styles/components/ayah-display.css ── */
 /* ── 168 — FiqhAdminSubnav overrides ───────────────────────────────────── */
 .fiqh-admin-subnav-link         { color: var(--majalis-ink-soft); font-weight: 400; }
 .fiqh-admin-subnav-link--active { color: var(--majalis-emerald-deep); font-weight: 700; }
 
-/* ── نُقل إلى styles/components/explore-ayah.css ── */
-/* ── نُقل إلى styles/components/quran-search.css ── */
-/* ── نُقل إلى styles/components/khatmah-bookmarks.css ── */
-/* ── نُقل إلى styles/components/related-content-widget.css ── */
-/* ── نُقل إلى styles/components/achievement-toast.css ── */
 /* ── 174 — LazyRouteFallback & AsyncDataView ─────────────────────────────── */
 .lrf-wrap {
   display: flex;
@@ -2666,10 +2604,6 @@ html[data-theme="dark"] .lesson-unified-card__btn--primary {
 
 .tasbeeh-counter__bar > span { display: block; height: 100%; border-radius: inherit; background: var(--majalis-emerald); transition: width 0.4s ease; width: var(--tc-pct, 0%); }
 
-/* ── نُقل إلى styles/components/home/home-adhan-widget.css ── */
-/* ── نُقل إلى styles/components/hadith-badge.css ── */
-/* ── نُقل إلى styles/components/home/home-learning-seasons.css ── */
-/* ── qc-card → quran-circles.css ── */
 /* ── 184 — ContentDetailLayout & misc link fixes ───────────────────────── */
 .platform-card-link { text-decoration: none; }
 
@@ -2767,7 +2701,6 @@ button, .btn {
 
 /* ── نُقل إلى styles/components/submissions-review.css ── */
 /* ── نُقل إلى styles/components/islamic-geometric.css ── */
-/* ── نُقل إلى styles/components/book-card.css ── */
 /* ══════════════════════════════════════════════
    201 — تحسينات شاملة للموقع (Site-wide Enhancements)
    ══════════════════════════════════════════════ */
@@ -3891,10 +3824,10 @@ img[loading="lazy"]:not([src=""]) {
    قسم)، فتحتاج نصًا أبيض لا زمرديًا داكنًا (كانت تُنتج نصًّا داكنًا فوق
    خلفية داكنة — غير مقروء تقريبًا، 2026-07-17). */
 .bg-white h1, .bg-white h2, .bg-white h3, .bg-white h4,
-[class*="card"] h1:not(.ds-section__title):not(.cards-page-title):not(.fiqh-council-section-title):not(.sq-title):not(.hnh__title):not(.ds-quiz-home-card__title):not(.home-library-card__title):not(.ikm-card__title),
-[class*="card"] h2:not(.ds-section__title):not(.cards-page-title):not(.fiqh-council-section-title):not(.sq-title):not(.hnh__title):not(.ds-quiz-home-card__title):not(.home-library-card__title):not(.ikm-card__title),
-[class*="card"] h3:not(.ds-section__title):not(.cards-page-title):not(.fiqh-council-section-title):not(.sq-title):not(.hnh__title):not(.ds-quiz-home-card__title):not(.home-library-card__title):not(.ikm-card__title),
-[class*="card"] h4:not(.ds-section__title):not(.cards-page-title):not(.fiqh-council-section-title):not(.sq-title):not(.hnh__title):not(.ds-quiz-home-card__title):not(.home-library-card__title):not(.ikm-card__title) {
+[class*="card"] h1:not(.ds-section__title):not(.cards-page-title):not(.fiqh-council-section-title):not(.sq-title):not(.hnh__title):not(.ds-quiz-home-card__title):not(.home-library-card__title),
+[class*="card"] h2:not(.ds-section__title):not(.cards-page-title):not(.fiqh-council-section-title):not(.sq-title):not(.hnh__title):not(.ds-quiz-home-card__title):not(.home-library-card__title),
+[class*="card"] h3:not(.ds-section__title):not(.cards-page-title):not(.fiqh-council-section-title):not(.sq-title):not(.hnh__title):not(.ds-quiz-home-card__title):not(.home-library-card__title),
+[class*="card"] h4:not(.ds-section__title):not(.cards-page-title):not(.fiqh-council-section-title):not(.sq-title):not(.hnh__title):not(.ds-quiz-home-card__title):not(.home-library-card__title) {
   color: var(--elite-forest, #052E16) !important;
 }
 /* استثناء .sq-title (عنوان SectionQuiz، h2 داخل .sq-header الداكن — «اختبر
@@ -3976,8 +3909,6 @@ img[loading="lazy"]:not([src=""]) {
 /* ── نُقل إلى styles/pages/ulum-quran.css ── */
 
 /* ── نُقل إلى styles/pages/mawarith.css ── */
-
-/* ── نُقل إلى styles/pages/duas-quran.css ── */
 
 /* ── نُقل إلى styles/pages/fiqh-qawaid.css ── */
 /* ── نُقل إلى styles/pages/shimael.css ── */
@@ -6604,11 +6535,6 @@ button.primary,
 .quran-hub-hero,
 .quran-hub-card__header,
 .quran-hub-closing,
-.ikm-hero,
-.ikm-card,
-.ikm-detail__left,
-.ikm-rel-dot,
-.ikm-conn-node,
 .sch-hero,
 .sch-filter-btn--active,
 .sch-card__avatar,
@@ -6806,9 +6732,7 @@ progress,
    أعلاه ينتج نصًّا شبه غير مرئي (تباين ~2:1-2.9:1)، مُشخَّص وتحقّق منه عبر
    تدقيق Playwright حي (2026-07-22).
    ملاحظة: .kng-source-btn استُهدفت هنا بحالتها is-active فقط (أسفل)، لا
-   الأساسية (خلفية شفافة سليمة). .ikm-conn-node أُصلحت من جذرها في
-   islamic-knowledge-map.css (متغيرات --ikm-domain-bg الناقصة لستة نطاقات)
-   لا هنا، لأن خلفيتها الحقيقية بيانات لكل نطاق لا --clr-primary. */
+   الأساسية (خلفية شفافة سليمة). */
 html[data-theme="dark"] .lsw-featured__now,
 html[data-theme="dark"] .lsw-featured__cta,
 html[data-theme="dark"] .ar-contribute-banner__btn,
@@ -6901,7 +6825,6 @@ html[data-theme="dark"] .hk-card__text,
 html[data-theme="dark"] .hs-card__cat,
 html[data-theme="dark"] .hs-card__term,
 html[data-theme="dark"] .hs-grade,
-html[data-theme="dark"] .ikm-conn-label,
 html[data-theme="dark"] .isp-stat-chip,
 html[data-theme="dark"] .lesson-unified-card__meta-label,
 html[data-theme="dark"] .lesson-unified-card__note,
@@ -7022,8 +6945,7 @@ html[data-theme="dark"] .fa-related__title,
 html[data-theme="dark"] .seerah-panel__title,
 html[data-theme="dark"] .seerah-panel__events-title,
 html[data-theme="dark"] .fq-ref__title,
-html[data-theme="dark"] .sh-step__title,
-html[data-theme="dark"] .ikm-card__title {
+html[data-theme="dark"] .sh-step__title {
   color: var(--clr-text-1, #E5F0EC) !important;
 }
 

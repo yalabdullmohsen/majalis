@@ -1186,7 +1186,7 @@ textarea {
 :is(
   .sw-page, .th-page, .fa-page, .jnz-page, .lp-page, .fc-page, .sr-page,
   .fm-page, .vault-page, .rp-page, .inst-page, .hj-page, .nations-page,
-  .ikm-page, .legal-page
+  .legal-page
 ) {
   padding-bottom: 1.25rem;
 }

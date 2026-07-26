@@ -4,6 +4,7 @@ import { ContentActionBar } from "@/components/reading/ContentActionBar";
 import { markReadingProgress, type ReadingSection } from "@/lib/reading-progress";
 import { readPreferences } from "@/lib/user-preferences";
 import type { InlineEditContentType } from "@/components/AdminInlineEdit";
+import "@/styles/highlighted-content.css";
 
 export type ContentMetaItem = {
   label: string;

@@ -18,7 +18,6 @@ import "./styles/brand-v4.css";
 import "./index.css";
 import "./styles/design-system.css";
 import "./styles/patterns.css";
-import "./styles/highlighted-content.css";
 import "./styles/majalis-v2.css";
 import "./styles/modern-2026.css";
 import "./styles/elite-2026.css";

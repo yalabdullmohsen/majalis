@@ -1367,8 +1367,6 @@ a.admin-info-panel__item-title:hover { color: var(--majalis-emerald-deep); }
   white-space: nowrap;
 }
 
-/* ── نُقل إلى styles/pages/haramain-lessons.css ── */
-
 /* ============================================================
    110 — Admin shared input/select/textarea (adm-*)
    Replaces exported inputSt / selectSt / textareaSt objects
