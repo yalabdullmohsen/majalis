@@ -1,0 +1,52 @@
+{
+  "branch": "session/content-enrichment-round-2",
+  "mode": "enrichment_and_audit",
+  "started": "2026-07-26T07:20:00Z",
+  "updated": "2026-07-26T07:26:19Z",
+  "baseline_from_counts": {
+    "quiz": 1097,
+    "quiz_with_explanation": 328,
+    "fawaid": 556,
+    "qa": 400,
+    "rulings_seed": 83,
+    "rulings_encyclopedia": 583,
+    "stories": 59,
+    "library": 146,
+    "scholars": 109,
+    "adhkar": 311,
+    "lessons_approx": 1308
+  },
+  "gap_analysis": {
+    "stories_short_lt_800": 14,
+    "scholars_bio_lt_200": 21,
+    "scholars_pending_review": 3,
+    "library_desc_lt_120": 93,
+    "quiz_without_explanation": 769,
+    "prophets_bio_lt_180": 22,
+    "rulings_seed_body_lt_400": 21,
+    "thin_lesson_files": [
+      "durus-mutanawwia-data.ts",
+      "durus-imaniyya-data.ts",
+      "arabic-language-data.ts",
+      "tazkiya-topics-data.ts",
+      "usra-mujtama-data.ts"
+    ]
+  },
+  "priorities": [
+    "expand_short_stories_and_add_unique",
+    "expand_scholars_bios_and_add_unique_books",
+    "quiz_explanations_backfill_and_new",
+    "adhkar_unique_authenticated",
+    "rulings_and_thin_lessons",
+    "prophets_enrichment"
+  ],
+  "batches_done": [
+    "stories_expand_14_add_8"
+  ],
+  "added_counts": {
+    "stories_expanded": 14,
+    "stories_new": 8,
+    "stories_total_now": 67
+  },
+  "needs_post_review_notes": []
+}
