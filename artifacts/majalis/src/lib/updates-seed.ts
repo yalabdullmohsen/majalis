@@ -4,7 +4,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-fiqh-crypto",
     title: "قرار جديد: حكم التعامل بالعملات الرقمية",
-    summary: "صدر قرار المجمع الفقهي في حكم التعامل بالعملات الرقمية وضوابطه.",
+    summary: "صدر قرار المجمع الفقهي في حكم التعامل بالعملات الرقمية وضوابطه مع بيان نوع التحديث ومصدره المعتمد في المنصة.",
     update_type: "قرار",
     source_type: "fiqh_decision",
     source_id: "fiqh-crypto-2024",
@@ -15,7 +15,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-course-ijazah",
     title: "فتح التسجيل: دورة الإجازة 1447هـ",
-    summary: "فُتح باب التسجيل في الدورة السنوية لنيل الإجازة العلمية لعام 1447هـ.",
+    summary: "فُتح باب التسجيل في الدورة السنوية لنيل الإجازة العلمية لعام 1447هـ للعِلم والمتابعة لا بديلاً عن الرجوع للأصل.",
     update_type: "دورة",
     source_type: "annual_course",
     source_id: "course-ijazah-tahrir-2026",
@@ -26,7 +26,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-lesson-tafsir",
     title: "درس جديد: تفسير سورة النحل",
-    summary: "انضم درس تفسير سورة النحل إلى جدول الدروس المتاحة في المنصة.",
+    summary: "انضم درس تفسير سورة النحل إلى جدول الدروس المتاحة في المنصة مع بيان نوع التحديث ومصدره المعتمد في المنصة.",
     update_type: "درس",
     source_type: "lesson",
     source_id: "kw-othman-tafsir-nahl-0",
@@ -37,7 +37,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-library-book",
     title: "كتاب جديد: رياض الصالحين",
-    summary: "إضافة كتاب رياض الصالحين للإمام النووي إلى المكتبة العلمية.",
+    summary: "إضافة كتاب رياض الصالحين للإمام النووي إلى المكتبة العلمية ويُراجع عبر الرابط المصدر للتفاصيل الكاملة.",
     update_type: "كتاب",
     source_type: "library",
     source_id: "book-riyadh",
@@ -48,7 +48,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-announcement-ramadan",
     title: "إعلان: البرنامج العلمي الرمضاني 1447",
-    summary: "إعلان عن بدء البرنامج العلمي المكثّف في شهر رمضان.",
+    summary: "إعلان عن بدء البرنامج العلمي المكثّف في شهر رمضان مع بيان نوع التحديث ومصدره المعتمد في المنصة للعِلم والمتابعة لا بديلاً عن الرجوع للأصل.",
     update_type: "إعلان",
     source_url: "/annual-courses/course-ramadan-intensive",
     published_at: "2025-11-15T07:00:00Z",
@@ -57,7 +57,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-news-conference",
     title: "خبر علمي: مؤتمر الفقه المعاصر",
-    summary: "انعقد مؤتمر الفقه المعاصر ونُشرت أبحاثه في منصة المجمع الفقهي.",
+    summary: "انعقد مؤتمر الفقه المعاصر ونُشرت أبحاثه في منصة المجمع الفقهي مع بيان نوع التحديث ومصدره المعتمد في المنصة.",
     update_type: "خبر علمي",
     source_url: "/fiqh-council",
     published_at: "2025-10-01T05:00:00Z",
@@ -66,7 +66,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-decision-zakat-crypto",
     title: "قرار جديد: زكاة العملات الرقمية",
-    summary: "إصدار قرار فقهي بوجوب الزكاة على العملات الرقمية وكيفية احتسابها.",
+    summary: "إصدار قرار فقهي بوجوب الزكاة على العملات الرقمية وكيفية احتسابها مع بيان نوع التحديث ومصدره المعتمد في المنصة.",
     update_type: "قرار",
     source_type: "fiqh_decision",
     source_url: "/fiqh-council/issues/zakat-crypto",
@@ -88,7 +88,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-fatwa-general-anesthesia",
     title: "فتوى جديدة: حكم التخدير الكلي في الجراحة",
-    summary: "بيان جواز التخدير الكلي عند الضرورة الطبية.",
+    summary: "بيان جواز التخدير الكلي عند الضرورة الطبية مع بيان نوع التحديث ومصدره المعتمد في المنصة للعِلم والمتابعة لا بديلاً عن الرجوع للأصل.",
     update_type: "فتوى",
     source_type: "fatwa",
     source_url: "/fiqh-council/issues/general-anesthesia",
@@ -98,7 +98,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-decision-human-cloning",
     title: "قرار جديد: تحريم الاستنساخ البشري التكاثري",
-    summary: "قرار فقهي بتحريم الاستنساخ البشري التكاثري وبيان ضوابط الاستنساخ العلاجي.",
+    summary: "قرار فقهي بتحريم الاستنساخ البشري التكاثري وبيان ضوابط الاستنساخ العلاجي ويُراجع عبر الرابط المصدر للتفاصيل الكاملة.",
     update_type: "قرار",
     source_type: "fiqh_decision",
     source_url: "/fiqh-council/issues/human-cloning",
@@ -109,7 +109,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
     id: "update-lesson-bulugh-maram",
     title: "درس جديد: شرح زوائد بلوغ المرام (روضة الأفهام)",
     summary:
-      "إضافة درس «روضة الأفهام في شرح زوائد المحرر على بلوغ المرام» إلى جدول الدروس.",
+      "إضافة درس «روضة الأفهام في شرح زوائد المحرر على بلوغ المرام» إلى جدول الدروس ويُراجع عبر الرابط المصدر للتفاصيل الكاملة.",
     update_type: "درس",
     source_type: "lesson",
     source_id: "sci-rawdat-alafham-muwaiziri",
@@ -120,7 +120,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-fatwa-misyar-marriage",
     title: "فتوى جديدة: حكم زواج المسيار",
-    summary: "بيان أحكام وضوابط زواج المسيار وأثره على الحقوق الزوجية.",
+    summary: "بيان أحكام وضوابط زواج المسيار وأثره على الحقوق الزوجية مع بيان نوع التحديث ومصدره المعتمد في المنصة.",
     update_type: "فتوى",
     source_type: "fatwa",
     source_url: "/fiqh-council/issues/misyar-marriage",
@@ -130,7 +130,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-fatwa-electronic-divorce",
     title: "فتوى جديدة: الطلاق الإلكتروني",
-    summary: "بيان وقوع الطلاق عبر الرسائل الإلكترونية ووسائل التواصل.",
+    summary: "بيان وقوع الطلاق عبر الرسائل الإلكترونية ووسائل التواصل ويُراجع عبر الرابط المصدر للتفاصيل الكاملة مع بيان نوع التحديث ومصدره المعتمد في المنصة.",
     update_type: "فتوى",
     source_type: "fatwa",
     source_url: "/fiqh-council/issues/electronic-divorce",
@@ -141,7 +141,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
     id: "update-lesson-tajweed",
     title: "درس جديد: أحكام التجويد العملي",
     summary:
-      "إضافة حلقة «أحكام التجويد — المخارج والصفات والتطبيق العملي» إلى جدول الدروس.",
+      "إضافة حلقة «أحكام التجويد — المخارج والصفات والتطبيق العملي» إلى جدول الدروس للعِلم والمتابعة لا بديلاً عن الرجوع للأصل.",
     update_type: "درس",
     source_type: "lesson",
     source_id: "sci-tajweed-mushaf-recitation",
@@ -152,7 +152,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-decision-health-insurance",
     title: "قرار جديد: حكم التأمين الصحي",
-    summary: "قرار فقهي في جواز التأمين الصحي التعاوني وضوابط التأمين التجاري.",
+    summary: "قرار فقهي في جواز التأمين الصحي التعاوني وضوابط التأمين التجاري ويُراجع عبر الرابط المصدر للتفاصيل الكاملة.",
     update_type: "قرار",
     source_type: "fiqh_decision",
     source_url: "/fiqh-council/issues/health-insurance-ruling",
@@ -162,7 +162,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-book-arbaeen-nawawi",
     title: "كتاب جديد: شرح الأربعين النووية",
-    summary: "إضافة شرح الأربعين النووية للإمام ابن دقيق العيد إلى المكتبة.",
+    summary: "إضافة شرح الأربعين النووية للإمام ابن دقيق العيد إلى المكتبة ويُراجع عبر الرابط المصدر للتفاصيل الكاملة.",
     update_type: "كتاب",
     source_type: "library",
     source_id: "book-sharh-arbaeen-ibn-daqiq",
@@ -173,7 +173,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-fatwa-astronaut-prayer",
     title: "فتوى جديدة: صلاة رواد الفضاء",
-    summary: "بيان أوقات الصلاة واتجاه القبلة لرواد الفضاء في المدار الأرضي.",
+    summary: "بيان أوقات الصلاة واتجاه القبلة لرواد الفضاء في المدار الأرضي ويُراجع عبر الرابط المصدر للتفاصيل الكاملة.",
     update_type: "فتوى",
     source_type: "fatwa",
     source_url: "/fiqh-council/issues/astronaut-prayer",
@@ -184,7 +184,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
     id: "update-lesson-seerah",
     title: "درس جديد: السيرة النبوية الشاملة",
     summary:
-      "إضافة سلسلة «السيرة النبوية الشاملة — من المهد إلى اللحد» إلى جدول الدروس.",
+      "إضافة سلسلة «السيرة النبوية الشاملة — من المهد إلى اللحد» إلى جدول الدروس مع بيان نوع التحديث ومصدره المعتمد في المنصة.",
     update_type: "درس",
     source_type: "lesson",
     source_id: "sci-seerah-series-online",
@@ -195,7 +195,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-quiz-new-sections",
     title: "تحديث المسابقات: إضافة أسئلة جديدة",
-    summary: "إضافة 25 سؤالاً جديداً في الأخلاق وعلوم القرآن والحديث والألغاز الشرعية.",
+    summary: "إضافة 25 سؤالاً جديداً في الأخلاق وعلوم القرآن والحديث والألغاز الشرعية ويُراجع عبر الرابط المصدر للتفاصيل الكاملة.",
     update_type: "خبر علمي",
     source_url: "/quiz",
     published_at: "2026-07-08T10:00:00Z",
@@ -204,7 +204,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-decision-waqf-digital",
     title: "قرار جديد: الوقف الرقمي",
-    summary: "قرار فقهي بإقرار الوقف الرقمي كنوع مستجد من أنواع الوقف المشروع.",
+    summary: "قرار فقهي بإقرار الوقف الرقمي كنوع مستجد من أنواع الوقف المشروع مع بيان نوع التحديث ومصدره المعتمد في المنصة.",
     update_type: "قرار",
     source_type: "fiqh_decision",
     source_url: "/fiqh-council/issues/digital-waqf",
@@ -214,7 +214,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-announcement-quran-memorize",
     title: "إعلان: برنامج حفظ القرآن الصيفي 1448هـ",
-    summary: "انطلاق برنامج الحفظ الصيفي للقرآن الكريم للناشئة والكبار.",
+    summary: "انطلاق برنامج الحفظ الصيفي للقرآن الكريم للناشئة والكبار ويُراجع عبر الرابط المصدر للتفاصيل الكاملة.",
     update_type: "إعلان",
     source_url: "/scientific-announcements/sci-quran-memorization-program",
     published_at: "2026-07-01T06:00:00Z",
@@ -223,7 +223,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-miracles-new-categories",
     title: "تحديث: إضافة فئات جديدة للإعجاز العلمي",
-    summary: "إضافة 5 فئات جديدة من الإعجاز القرآني: الضوء، الجلد، العظام، النجوم، والدم.",
+    summary: "إضافة 5 فئات جديدة من الإعجاز القرآني: الضوء، الجلد، العظام، النجوم، والدم ويُراجع عبر الرابط المصدر للتفاصيل الكاملة.",
     update_type: "إعلان",
     source_url: "/miracles",
     published_at: "2026-07-08T10:00:00Z",
@@ -232,7 +232,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-scholars-expanded",
     title: "تحديث: توسعة قاعدة بيانات العلماء",
-    summary: "إضافة 6 علماء جدد من كبار أئمة الإسلام: ابن تيمية، النووي، ابن كثير، الشنقيطي، وآخرين.",
+    summary: "إضافة 6 علماء جدد من كبار أئمة الإسلام: ابن تيمية، النووي، ابن كثير، الشنقيطي، وآخرين للعِلم والمتابعة لا بديلاً عن الرجوع للأصل.",
     update_type: "إعلان",
     source_url: "/scholars",
     published_at: "2026-07-08T09:00:00Z",
@@ -241,7 +241,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-adhkar-enriched",
     title: "تحديث: إثراء قسم الأذكار",
-    summary: "إضافة 10 أذكار جديدة في فئات الخروج من المنزل، السوق، اللباس، وركوب السيارة.",
+    summary: "إضافة 10 أذكار جديدة في فئات الخروج من المنزل، السوق، اللباس، وركوب السيارة للعِلم والمتابعة لا بديلاً عن الرجوع للأصل.",
     update_type: "إعلان",
     source_url: "/adhkar",
     published_at: "2026-07-08T08:00:00Z",
@@ -250,7 +250,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-occasions-expanded",
     title: "تحديث: إضافة مناسبات إسلامية جديدة",
-    summary: "إضافة عشر ذي الحجة، عيد الأضحى، عيد الفطر، وليلة النصف من شعبان في تقويم المناسبات.",
+    summary: "إضافة عشر ذي الحجة، عيد الأضحى، عيد الفطر، وليلة النصف من شعبان في تقويم المناسبات ويُراجع عبر الرابط المصدر للتفاصيل الكاملة.",
     update_type: "إعلان",
     source_url: "/occasions",
     published_at: "2026-07-08T07:00:00Z",
@@ -268,7 +268,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-sharia-rulings-expanded",
     title: "تحديث: توسعة موسوعة الأحكام الشرعية",
-    summary: "إضافة 5 أحكام شرعية جديدة: موجبات الغسل، التيمم، أركان الحج، أنواع الطلاق، وشروط البيع.",
+    summary: "إضافة 5 أحكام شرعية جديدة: موجبات الغسل، التيمم، أركان الحج، أنواع الطلاق، وشروط البيع للعِلم والمتابعة لا بديلاً عن الرجوع للأصل.",
     update_type: "إعلان",
     source_url: "/rulings",
     published_at: "2026-07-08T11:00:00Z",
@@ -277,7 +277,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-prophetic-medicine-expanded",
     title: "تحديث: إثراء الطب النبوي",
-    summary: "إضافة 4 مواد جديدة في قسم الطب النبوي: الخل، العدس، النوم على الجنب الأيمن، والسواك.",
+    summary: "إضافة 4 مواد جديدة في قسم الطب النبوي: الخل، العدس، النوم على الجنب الأيمن، والسواك مع بيان نوع التحديث ومصدره المعتمد في المنصة.",
     update_type: "إعلان",
     source_url: "/prophetic-medicine",
     published_at: "2026-07-08T06:00:00Z",
@@ -295,7 +295,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-fawaid-curated-14",
     title: "تحديث: 14 فائدة علمية جديدة",
-    summary: "إضافة فوائد منتقاة في العقيدة، الحديث، السيرة، اللغة، طلب العلم، والدعوة من كتب الأئمة والمحدثين.",
+    summary: "إضافة فوائد منتقاة في العقيدة، الحديث، السيرة، اللغة، طلب العلم، والدعوة من كتب الأئمة والمحدثين مع بيان نوع التحديث ومصدره المعتمد في المنصة.",
     update_type: "إعلان",
     source_url: "/fawaid",
     published_at: "2026-07-08T17:00:00Z",
@@ -349,7 +349,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-quiz-660",
     title: "تحديث: بنك الأسئلة يتجاوز 660 سؤالاً",
-    summary: "إضافة 15 سؤالاً جديداً (646-660) في الفقه والعقيدة والسيرة والقرآن والتاريخ الإسلامي.",
+    summary: "إضافة 15 سؤالاً جديداً (646-660) في الفقه والعقيدة والسيرة والقرآن والتاريخ الإسلامي مع بيان نوع التحديث ومصدره المعتمد في المنصة.",
     update_type: "إعلان",
     source_url: "/quiz",
     published_at: "2026-07-08T22:00:00Z",
@@ -358,7 +358,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-rulings-43",
     title: "تحديث: الأحكام الشرعية تبلغ 43 حكماً",
-    summary: "إضافة 4 أحكام: صلاة الجماعة، حكم الغيبة والنميمة، قضاء الصلاة الفائتة، شروط الاستطاعة في الحج.",
+    summary: "إضافة 4 أحكام: صلاة الجماعة، حكم الغيبة والنميمة، قضاء الصلاة الفائتة، شروط الاستطاعة في الحج ويُراجع عبر الرابط المصدر للتفاصيل الكاملة.",
     update_type: "إعلان",
     source_url: "/rulings",
     published_at: "2026-07-09T06:00:00Z",
@@ -367,7 +367,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-miracles-49",
     title: "تحديث: قسم الإشارات الكونية — 49 موضوعًا",
-    summary: "إضافة 3 معجزات علمية: مستقبلات الألم في الجلد، الحديد مُنزَّل من الكون، والماء أصل كل حياة.",
+    summary: "إضافة 3 معجزات علمية: مستقبلات الألم في الجلد، الحديد مُنزَّل من الكون، والماء أصل كل حياة ويُراجع عبر الرابط المصدر للتفاصيل الكاملة.",
     update_type: "إعلان",
     source_url: "/miracles",
     published_at: "2026-07-09T07:00:00Z",
@@ -376,7 +376,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-stories-16",
     title: "تحديث: القصص الإسلامية — 16 قصة",
-    summary: "إضافة 3 قصص: خالد بن الوليد سيف الله، فتح القدس وعدالة الفاروق، ابن بطوطة جوّال الإسلام الأعظم.",
+    summary: "إضافة 3 قصص: خالد بن الوليد سيف الله، فتح القدس وعدالة الفاروق، ابن بطوطة جوّال الإسلام الأعظم ويُراجع عبر الرابط المصدر للتفاصيل الكاملة.",
     update_type: "إعلان",
     source_url: "/stories",
     published_at: "2026-07-09T08:00:00Z",
@@ -385,7 +385,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-qa-303",
     title: "تحديث: الأسئلة والأجوبة تبلغ 303 مسألة",
-    summary: "إضافة 10 مسائل في الأذكار والأنبياء والآداب والقرآن والحديث والطهارة.",
+    summary: "إضافة 10 مسائل في الأذكار والأنبياء والآداب والقرآن والحديث والطهارة ويُراجع عبر الرابط المصدر للتفاصيل الكاملة.",
     update_type: "إعلان",
     source_url: "/qa",
     published_at: "2026-07-08T10:00:00Z",
@@ -421,7 +421,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-quiz-670",
     title: "تحديث: بنك الأسئلة يتجاوز 670 سؤالاً",
-    summary: "إضافة 10 أسئلة (661-670) في العقيدة والفقه والقرآن والسيرة والحديث والتاريخ والرقائق.",
+    summary: "إضافة 10 أسئلة (661-670) في العقيدة والفقه والقرآن والسيرة والحديث والتاريخ والرقائق مع بيان نوع التحديث ومصدره المعتمد في المنصة.",
     update_type: "إعلان",
     source_url: "/quiz",
     published_at: "2026-07-08T14:00:00Z",
@@ -439,7 +439,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-qa-313",
     title: "تحديث: الأسئلة الفقهية تبلغ 313 مسألة",
-    summary: "إضافة 10 مسائل جديدة (304-313) في الصلاة والزكاة والحج والأذكار والأنبياء والصيام والعقيدة.",
+    summary: "إضافة 10 مسائل جديدة (304-313) في الصلاة والزكاة والحج والأذكار والأنبياء والصيام والعقيدة للعِلم والمتابعة لا بديلاً عن الرجوع للأصل.",
     update_type: "إعلان",
     source_url: "/qa",
     published_at: "2026-07-08T16:00:00Z",
@@ -448,7 +448,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-sheikhs-76",
     title: "تحديث: قاعدة العلماء تضم 76 عالماً",
-    summary: "إضافة 5 علماء: البخاري ومسلم وابن تيمية وابن القيم والنووي إلى قائمة أئمة الأمة الكبار.",
+    summary: "إضافة 5 علماء: البخاري ومسلم وابن تيمية وابن القيم والنووي إلى قائمة أئمة الأمة الكبار مع بيان نوع التحديث ومصدره المعتمد في المنصة.",
     update_type: "إعلان",
     source_url: "/scholars",
     published_at: "2026-07-08T17:00:00Z",
@@ -457,7 +457,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-prophetic-medicine-46",
     title: "تحديث: الطب النبوي — 46 مادة طبية",
-    summary: "إضافة 6 مداخل: زيت الزيتون والتمر والحجامة والقرآن شفاء والصيام ونظرية الـ Autophagy.",
+    summary: "إضافة 6 مداخل: زيت الزيتون والتمر والحجامة والقرآن شفاء والصيام ونظرية الـ Autophagy ويُراجع عبر الرابط المصدر للتفاصيل الكاملة.",
     update_type: "إعلان",
     source_url: "/prophetic-medicine",
     published_at: "2026-07-08T18:00:00Z",
@@ -466,7 +466,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-courses-49",
     title: "تحديث: الدورات العلمية — 49 دورة",
-    summary: "إضافة 5 دورات: شرح الطحاوية والبلاغة القرآنية وفقه المعاملات المالية والأذكار والنحو العربي.",
+    summary: "إضافة 5 دورات: شرح الطحاوية والبلاغة القرآنية وفقه المعاملات المالية والأذكار والنحو العربي ويُراجع عبر الرابط المصدر للتفاصيل الكاملة.",
     update_type: "دورة",
     source_url: "/annual-courses",
     published_at: "2026-07-08T19:00:00Z",
@@ -475,7 +475,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-miracles-55",
     title: "تحديث: قسم الإشارات الكونية — 55 موضوعًا",
-    summary: "إضافة 3 معجزات: تواصل النمل وظلمات البحار العميقة ودور النوم في تجديد الجسم (نظرية الـ Glymphatic).",
+    summary: "إضافة 3 معجزات: تواصل النمل وظلمات البحار العميقة ودور النوم في تجديد الجسم (نظرية الـ Glymphatic) للعِلم والمتابعة لا بديلاً عن الرجوع للأصل.",
     update_type: "إعلان",
     source_url: "/miracles",
     published_at: "2026-07-08T20:00:00Z",
@@ -484,7 +484,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-stories-21",
     title: "تحديث: القصص الإسلامية — 21 قصة",
-    summary: "إضافة قصتين: طارق بن زياد فاتح الأندلس وجبل طارق، وابن بطوطة الرحّالة الأكبر في التاريخ الوسيط.",
+    summary: "إضافة قصتين: طارق بن زياد فاتح الأندلس وجبل طارق، وابن بطوطة الرحّالة الأكبر في التاريخ الوسيط ويُراجع عبر الرابط المصدر للتفاصيل الكاملة.",
     update_type: "إعلان",
     source_url: "/stories",
     published_at: "2026-07-08T21:00:00Z",
@@ -493,7 +493,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-fawaid-330",
     title: "تحديث: الفوائد العلمية — 330 فائدة",
-    summary: "إضافة 10 فوائد جديدة في الأخلاق والزهد والفقه والأذكار والقرآن والصبر والرحمة.",
+    summary: "إضافة 10 فوائد جديدة في الأخلاق والزهد والفقه والأذكار والقرآن والصبر والرحمة ويُراجع عبر الرابط المصدر للتفاصيل الكاملة.",
     update_type: "إعلان",
     source_url: "/fawaid",
     published_at: "2026-07-08T22:00:00Z",
@@ -511,7 +511,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-library-148",
     title: "تحديث: المكتبة الإسلامية — 6 كتب جديدة",
-    summary: "إضافة 6 كتب: فتح الباري وإعلام الموقعين والأذكار النووية والمبسوط والأم والتحرير والتنوير.",
+    summary: "إضافة 6 كتب: فتح الباري وإعلام الموقعين والأذكار النووية والمبسوط والأم والتحرير والتنوير مع بيان نوع التحديث ومصدره المعتمد في المنصة.",
     update_type: "إعلان",
     source_url: "/library",
     published_at: "2026-07-11T11:00:00Z",
@@ -520,7 +520,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-courses-55",
     title: "تحديث: الدورات العلمية — 55+ دورة",
-    summary: "إضافة 3 دورات: أحكام الحج والعمرة، والألفية للمتقدمين، والعقيدة أمام الشبهات المعاصرة.",
+    summary: "إضافة 3 دورات: أحكام الحج والعمرة، والألفية للمتقدمين، والعقيدة أمام الشبهات المعاصرة مع بيان نوع التحديث ومصدره المعتمد في المنصة.",
     update_type: "دورة",
     source_url: "/annual-courses",
     published_at: "2026-07-11T13:00:00Z",
@@ -529,7 +529,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-fiqh-issues-53",
     title: "تحديث: المسائل الفقهية — 53 مسألة",
-    summary: "إضافة 5 مسائل معاصرة: NFT والوقف الرقمي والجمعة للعامل عن بُعد وDNA وحكم منصات الترفيه.",
+    summary: "إضافة 5 مسائل معاصرة: NFT والوقف الرقمي والجمعة للعامل عن بُعد وDNA وحكم منصات الترفيه ويُراجع عبر الرابط المصدر للتفاصيل الكاملة.",
     update_type: "إعلان",
     source_url: "/fiqh-council/issues",
     published_at: "2026-07-11T14:00:00Z",
@@ -538,7 +538,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-rulings-55",
     title: "تحديث: الأحكام الشرعية — 55 حكماً",
-    summary: "إضافة 3 أحكام: التأمين الصحي والتجاري، والأعياد الوطنية، والاقتداء عبر البث المباشر.",
+    summary: "إضافة 3 أحكام: التأمين الصحي والتجاري، والأعياد الوطنية، والاقتداء عبر البث المباشر للعِلم والمتابعة لا بديلاً عن الرجوع للأصل.",
     update_type: "إعلان",
     source_url: "/rulings",
     published_at: "2026-07-11T15:00:00Z",
@@ -547,7 +547,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-miracles-68",
     title: "تحديث: إشارات كونية — 3 موضوعات",
-    summary: "إضافة 3 معجزات: الثقب الأسود (الخنّس الكنّس)، الحاجز بين البحرين، وعلقة الجنين الجنينية.",
+    summary: "إضافة 3 معجزات: الثقب الأسود (الخنّس الكنّس)، الحاجز بين البحرين، وعلقة الجنين الجنينية ويُراجع عبر الرابط المصدر للتفاصيل الكاملة.",
     update_type: "إعلان",
     source_url: "/miracles",
     published_at: "2026-07-11T16:00:00Z",
@@ -565,7 +565,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-prophetic-medicine-72",
     title: "تحديث: الطب النبوي — 4 موضوعات جديدة",
-    summary: "إضافة 4 موضوعات: ماء زمزم والتلبينة والسواك واليانسون.",
+    summary: "إضافة 4 موضوعات: ماء زمزم والتلبينة والسواك واليانسون ويُراجع عبر الرابط المصدر للتفاصيل الكاملة مع بيان نوع التحديث ومصدره المعتمد في المنصة.",
     update_type: "إعلان",
     source_url: "/prophetic-medicine",
     published_at: "2026-07-11T19:00:00Z",
@@ -583,7 +583,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-rulings-58",
     title: "تحديث: الأحكام الشرعية — 58 حكماً",
-    summary: "إضافة 3 أحكام: حكم الحج على المديون، وصيام مريض السكري، وميراث المفقود.",
+    summary: "إضافة 3 أحكام: حكم الحج على المديون، وصيام مريض السكري، وميراث المفقود مع بيان نوع التحديث ومصدره المعتمد في المنصة.",
     update_type: "فتوى",
     source_url: "/rulings",
     published_at: "2026-07-11T21:00:00Z",
@@ -601,7 +601,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-sheikhs-86",
     title: "تحديث: قاعدة العلماء — 86 عالماً",
-    summary: "إضافة 4 علماء: الإمام الذهبي، الإمام السيوطي، ابن حجر العسقلاني، الشوكاني.",
+    summary: "إضافة 4 علماء: الإمام الذهبي، الإمام السيوطي، ابن حجر العسقلاني، الشوكاني مع بيان نوع التحديث ومصدره المعتمد في المنصة.",
     update_type: "إعلان",
     source_url: "/scholars",
     published_at: "2026-07-11T23:00:00Z",
@@ -619,7 +619,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-prophetic-medicine-80",
     title: "تحديث: الطب النبوي — إضافة الرمان",
-    summary: "إضافة موضوع الرمان وفوائده الغذائية ووروده في القرآن الكريم إلى مواد الطب النبوي.",
+    summary: "إضافة موضوع الرمان وفوائده الغذائية ووروده في القرآن الكريم إلى مواد الطب النبوي ويُراجع عبر الرابط المصدر للتفاصيل الكاملة.",
     update_type: "إعلان",
     source_url: "/prophetic-medicine",
     published_at: "2026-07-12T00:00:00Z",
@@ -637,7 +637,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-sheikhs-91",
     title: "تحديث: قاعدة العلماء — 91 عالماً",
-    summary: "إضافة 4 علماء معاصرين: ابن باز، ابن عثيمين، الألباني، ابن جبرين.",
+    summary: "إضافة 4 علماء معاصرين: ابن باز، ابن عثيمين، الألباني، ابن جبرين للعِلم والمتابعة لا بديلاً عن الرجوع للأصل.",
     update_type: "إعلان",
     source_url: "/scholars",
     published_at: "2026-07-12T02:00:00Z",
@@ -646,7 +646,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-stories-52",
     title: "تحديث: القصص الإسلامية — 52 قصة",
-    summary: "إضافة قصتين: خالد بن الوليد (سيف الله المسلول)، وعمر بن الخطاب (الفاروق).",
+    summary: "إضافة قصتين: خالد بن الوليد (سيف الله المسلول)، وعمر بن الخطاب (الفاروق) مع بيان نوع التحديث ومصدره المعتمد في المنصة.",
     update_type: "إعلان",
     source_url: "/stories",
     published_at: "2026-07-12T04:00:00Z",
@@ -673,7 +673,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-courses-61",
     title: "تحديث: الدورات العلمية — 61+ دورة",
-    summary: "إضافة 3 دورات: علم الفرائض والمواريث، البلاغة القرآنية والإعجاز البياني، شرح العقيدة الواسطية.",
+    summary: "إضافة 3 دورات: علم الفرائض والمواريث، البلاغة القرآنية والإعجاز البياني، شرح العقيدة الواسطية مع بيان نوع التحديث ومصدره المعتمد في المنصة.",
     update_type: "دورة",
     source_url: "/annual-courses",
     published_at: "2026-07-12T08:00:00Z",
@@ -682,7 +682,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-adhkar-332",
     title: "تحديث: توسعة قسم الأذكار",
-    summary: "إضافة 10 أذكار في: الصلاة الإبراهيمية، أذكار الوضوء، أذكار النوم، الصباح، الاستغفار.",
+    summary: "إضافة 10 أذكار في: الصلاة الإبراهيمية، أذكار الوضوء، أذكار النوم، الصباح، الاستغفار للعِلم والمتابعة لا بديلاً عن الرجوع للأصل.",
     update_type: "إعلان",
     source_url: "/adhkar",
     published_at: "2026-07-12T07:30:00Z",
@@ -709,7 +709,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-sheikhs-101",
     title: "تحديث: قاعدة العلماء — إضافة 7 علماء",
-    summary: "إضافة 7 علماء: القرضاوي، الزرقا، الزحيلي، الفوزان، الطنطاوي، بكر أبو زيد، ومحمد الغزالي.",
+    summary: "إضافة 7 علماء: القرضاوي، الزرقا، الزحيلي، الفوزان، الطنطاوي، بكر أبو زيد، ومحمد الغزالي للعِلم والمتابعة لا بديلاً عن الرجوع للأصل.",
     update_type: "إعلان",
     source_url: "/scholars",
     published_at: "2026-07-12T07:00:00Z",
@@ -763,7 +763,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-prophetic-medicine-89",
     title: "تحديث: الطب النبوي — إضافة 5 عناصر",
-    summary: "إضافة 5 عناصر: العجوة، الحبة السوداء، الحجامة، الصيام الطوعي وفوائده العلمية، ماء زمزم.",
+    summary: "إضافة 5 عناصر: العجوة، الحبة السوداء، الحجامة، الصيام الطوعي وفوائده العلمية، ماء زمزم للعِلم والمتابعة لا بديلاً عن الرجوع للأصل.",
     update_type: "إعلان",
     source_url: "/prophetic-medicine",
     published_at: "2026-07-11T07:00:00Z",
@@ -772,7 +772,7 @@ export const UPDATES_SEED: PlatformUpdate[] = [
   {
     id: "update-quiz-872",
     title: "تحديث: بنك الأسئلة يبلغ 872 سؤالاً",
-    summary: "إضافة 16 سؤالاً تاريخياً وجغرافياً في فئات الأندلس (5 أسئلة)، الخلفاء، العلماء، المعارك، والفتوحات.",
+    summary: "إضافة 16 سؤالاً تاريخياً وجغرافياً في فئات الأندلس (5 أسئلة)، الخلفاء، العلماء، المعارك، والفتوحات مع بيان نوع التحديث ومصدره المعتمد في المنصة.",
     update_type: "إعلان",
     source_url: "/quiz",
     published_at: "2026-07-11T12:00:00Z",
