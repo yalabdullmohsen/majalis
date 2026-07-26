@@ -19,6 +19,10 @@ export type IslamicStorySeed = {
   sources: string[];
   tags: string[];
   is_approved: boolean;
+  /** درجة التوثيق الصادقة — لا تُرفع فوق ما تدعمه sources */
+  trust_level?: "primary_text" | "scholarly_source" | "institutional_ruling" | "general_reasoning" | "unsourced";
+  editorial_review_status?: "unreviewed" | "reviewed" | "needs_rereview";
+  last_updated_at?: string;
 };
 
 export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
@@ -58,6 +62,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     ],
     tags: ["خلفاء راشدون", "صحابة", "هجرة", "جمع القرآن"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 4,
@@ -98,6 +105,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     ],
     tags: ["القدس", "فتوحات", "عهد", "تسامح"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 10,
@@ -133,6 +143,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     sources: ["صحيح البخاري", "صحيح مسلم", "البداية والنهاية — ابن كثير"],
     tags: ["خلفاء راشدون", "صحابة", "أهل البيت", "العلم والشجاعة"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 11,
@@ -165,6 +178,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     sources: ["صحيح البخاري", "أسد الغابة — ابن الأثير", "سير أعلام النبلاء — الذهبي"],
     tags: ["صحابة", "أذان", "صبر", "تحرر من العبودية"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 12,
@@ -200,6 +216,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     sources: ["فتوح مصر والمغرب — ابن عبد الحكم", "نفح الطيب — المقري", "البداية والنهاية — ابن كثير"],
     tags: ["فتوحات", "أندلس", "أموي", "طارق بن زياد", "خطب"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   // ─── قصص جديدة — فتوحات وتاريخ (IDs 22-25) ─────────────────────
   {
@@ -242,6 +261,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     sources: ["فتوح مصر والمغرب — ابن عبد الحكم", "البداية والنهاية — ابن كثير"],
     tags: ["مصر", "فتح", "روم", "أفريقيا", "الفسطاط", "صحابة"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 24,
@@ -280,6 +302,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     sources: ["سير أعلام النبلاء — الذهبي", "البداية والنهاية — ابن كثير"],
     tags: ["اليرموك", "الشام", "روم", "فتوحات", "راشدي", "سيف الله"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 25,
@@ -318,6 +343,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     sources: ["البداية والنهاية — ابن كثير", "تاريخ الطبري"],
     tags: ["بحر", "أسطول", "قبرص", "أموي", "فتوحات", "روم"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 13,
@@ -358,6 +386,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     ],
     tags: ["أمهات المؤمنين", "صحابيات", "حديث", "علماء", "فقيهات"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 14,
@@ -393,6 +424,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     sources: ["الطبقات الكبرى — ابن سعد", "سير أعلام النبلاء — الذهبي", "البداية والنهاية — ابن كثير"],
     tags: ["صحابة", "دعوة", "سفير", "أُحُد", "مدينة", "شهداء"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 15,
@@ -428,6 +462,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     sources: ["البداية والنهاية — ابن كثير", "تاريخ الطبري", "فتوح البلدان — البلاذري"],
     tags: ["فتوحات", "القدس", "عمر بن الخطاب", "العهدة العمرية", "بيت المقدس"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 17,
@@ -467,6 +504,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     sources: ["حلية الأولياء — أبو نعيم الأصبهاني", "سير أعلام النبلاء — الذهبي", "البداية والنهاية — ابن كثير"],
     tags: ["تابعون", "زهد", "علماء", "أموي", "بصرة", "فتن"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 19,
@@ -502,6 +542,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     sources: ["تاريخ العلوم عند العرب — زيدان", "The House of Wisdom — Jim Al-Khalili"],
     tags: ["خوارزمي", "جبر", "رياضيات", "عباسي", "بيت الحكمة", "حضارة إسلامية"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 21,
@@ -539,6 +582,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     sources: ["تحفة النظار — ابن بطوطة", "رحلة ابن بطوطة — دراسة هاملتون جيب"],
     tags: ["ابن بطوطة", "رحلة", "جغرافيا", "مملوكي", "مغرب", "هند", "صين"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   // ── إضافات: صحابة ─────────────────────────────────────────────────
   {
@@ -572,6 +618,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     sources: ["سنن الترمذي", "طبقات ابن سعد", "الإصابة — ابن حجر"],
     tags: ["صحابة", "أنصار", "فقه", "يمن", "اجتهاد", "علم"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 27,
@@ -612,6 +661,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     ],
     tags: ["صحابة", "فتح الشام", "طاعون عمواس", "عشرة مبشرون", "قيادة"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 28,
@@ -652,6 +704,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     ],
     tags: ["صحابة", "عشرة مبشرون", "جهاد", "بدر", "أحد", "حواري"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 29,
@@ -692,6 +747,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     ],
     tags: ["صحابة", "أنصار", "خادم النبي", "حديث", "دعاء", "بركة"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 30,
@@ -732,6 +790,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     ],
     tags: ["صحابة", "عشرة مبشرون", "تجارة", "مهاجرون", "كرم", "إنفاق"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   // ── إضافات: فتوحات ────────────────────────────────────────────────
   {
@@ -765,6 +826,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     sources: ["تاريخ الطبري", "البداية والنهاية — ابن كثير", "فتوح البلدان — البلاذري"],
     tags: ["فتوحات", "فارس", "المدائن", "سعد بن أبي وقاص", "القادسية", "دجلة"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 32,
@@ -800,6 +864,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     sources: ["تاريخ الدولة العثمانية — يلماظ أوزتونا", "البداية والنهاية — ابن كثير", "مسند أحمد"],
     tags: ["فتوحات", "عثماني", "القسطنطينية", "محمد الفاتح", "بيزنطة", "بشارة نبوية"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 33,
@@ -835,6 +902,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     sources: ["تاريخ الطبري", "فتوح البلدان — البلاذري", "تاريخ اليعقوبي"],
     tags: ["فتوحات", "السند", "الهند", "أموي", "محمد بن القاسم", "كراتشي"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 34,
@@ -868,6 +938,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     sources: ["تاريخ الطبري", "فتوح البلدان — البلاذري", "البداية والنهاية — ابن كثير"],
     tags: ["فتوحات", "فارس", "العراق", "راشدي", "سعد بن أبي وقاص", "القادسية"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   // ── إضافات: تاريخ ─────────────────────────────────────────────────
   {
@@ -901,6 +974,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     sources: ["سيرة عمر بن عبد العزيز — ابن الجوزي", "تاريخ الطبري", "البداية والنهاية — ابن كثير"],
     tags: ["تاريخ", "أموي", "عدل", "زهد", "إصلاح", "خلافة"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 36,
@@ -936,6 +1012,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     sources: ["مقدمة ابن خلدون", "التعريف بابن خلدون (سيرته الذاتية)", "دراسات توينبي"],
     tags: ["تاريخ", "مملوكي", "مغرب", "اجتماع", "فلسفة", "مقدمة", "حضارة"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 37,
@@ -968,6 +1047,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     sources: ["إحياء علوم الدين — الغزالي", "المنقذ من الضلال — الغزالي", "طبقات الشافعية الكبرى"],
     tags: ["تاريخ", "سلجوقي", "فقه", "تصوف", "فلسفة", "إحياء", "إيران"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 38,
@@ -1008,6 +1090,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     ],
     tags: ["تاريخ", "عباسي", "بغداد", "حضارة", "بيت الحكمة", "علم", "هارون الرشيد"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 39,
@@ -1039,6 +1124,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     sources: ["صحيح البخاري", "فتوح البلدان — البلاذري", "الإصابة في تمييز الصحابة — ابن حجر"],
     tags: ["صحابة", "فتوحات", "فارس", "القادسية", "المدائن", "عشرة مبشرون"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 40,
@@ -1070,6 +1158,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     sources: ["صحيح مسلم", "المستدرك على الصحيحين — الحاكم", "حلية الأولياء — أبو نعيم"],
     tags: ["صحابة", "فارس", "رحلة", "الخندق", "مدائن", "إيمان", "بحث عن الحق"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 41,
@@ -1100,6 +1191,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     sources: ["مناقب الإمام أحمد — ابن الجوزي", "سير أعلام النبلاء — الذهبي", "طبقات الحنابلة — ابن أبي يعلى"],
     tags: ["تاريخ", "عباسي", "عقيدة", "أهل السنة", "محنة", "علماء", "حديث", "فقه"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 42,
@@ -1134,6 +1228,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     sources: ["سير أعلام النبلاء — الذهبي", "هدي الساري مقدمة فتح الباري — ابن حجر", "تذكرة الحفاظ — الذهبي"],
     tags: ["تاريخ", "عباسي", "حديث", "علماء", "بخارى", "صحيح البخاري", "رحلة"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 43,
@@ -1165,6 +1262,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     sources: ["صحيح البخاري", "حلية الأولياء — أبو نعيم", "الإصابة في تمييز الصحابة — ابن حجر"],
     tags: ["صحابة", "زهد", "ربذة", "فقر", "صراحة", "إسلام مبكر", "غفار"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 44,
@@ -1199,6 +1299,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     sources: ["الوافي بالوفيات — الصفدي", "ابن تيمية — محمد أبو زهرة", "سير أعلام النبلاء — الذهبي"],
     tags: ["تاريخ", "مملوكي", "دمشق", "علماء", "عقيدة", "تتار", "إصلاح", "فقه حنبلي"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 45,
@@ -1230,6 +1333,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     sources: ["البداية والنهاية — ابن كثير", "الطبقات الكبرى — ابن سعد", "صحيح البخاري"],
     tags: ["صحابة", "هجرة", "حبشة", "خطابة", "شهداء", "مؤتة", "دعوة"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 46,
@@ -1265,6 +1371,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     sources: ["صحيح البخاري", "صحيح مسلم", "سير أعلام النبلاء — الذهبي"],
     tags: ["أمهات المؤمنين", "صحابيات", "حكمة", "الحديبية", "هجرة", "علماء"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 47,
@@ -1303,6 +1412,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     sources: ["الكامل في التاريخ — ابن الأثير", "سير أعلام النبلاء — الذهبي", "تاريخ ابن خلدون"],
     tags: ["تاريخ", "صليبيون", "شام", "حلب", "دمشق", "زنكي", "جهاد", "مدارس"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 48,
@@ -1338,6 +1450,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     sources: ["تاريخ القيروانيين في المغرب", "موسوعة التاريخ الإسلامي", "يونسكو — التراث الجامعي"],
     tags: ["تاريخ", "تعليم", "مغرب", "فاس", "جامعة", "وقف", "نساء مسلمات", "أموي"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 49,
@@ -1373,6 +1488,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     sources: ["تاريخ الدولة العثمانية — يلماظ أوزتونا", "الكامل في التاريخ — ابن الأثير", "سليمان القانوني — إنالجق"],
     tags: ["تاريخ", "عثماني", "إسطنبول", "فتوحات", "أوروبا", "تشريع", "عمارة"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 50,
@@ -1410,6 +1528,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     sources: ["طبقات الشافعية — السبكي", "سير أعلام النبلاء — الذهبي", "تهذيب الأسماء — النووي نفسه"],
     tags: ["تاريخ", "مملوكي", "شام", "دمشق", "فقه شافعي", "حديث", "زهد", "علماء"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 51,
@@ -1449,6 +1570,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     sources: ["الطبقات الكبرى — ابن سعد", "تاريخ الطبري", "سير أعلام النبلاء — الذهبي"],
     tags: ["صحابة", "فتوحات", "نبوي", "راشدي", "قيادة", "يرموك", "العراق", "الشام"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 52,
@@ -1484,6 +1608,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     sources: ["الطبقات الكبرى — ابن سعد", "تاريخ الطبري", "الكامل في التاريخ — ابن الأثير", "سيرة عمر — ابن الجوزي"],
     tags: ["صحابة", "راشدي", "عدل", "فتوحات", "إدارة", "خليفة", "شهادة"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 53,
@@ -1523,6 +1650,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     sources: ["النوادر السلطانية — بهاء الدين ابن شداد", "الكامل في التاريخ — ابن الأثير", "البداية والنهاية — ابن كثير", "حياة صلاح الدين — ستانلي لين بول"],
     tags: ["فتوحات", "القدس", "حطّين", "أيوبي", "صليبيون", "مروءة"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 54,
@@ -1558,6 +1688,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     sources: ["صحيح البخاري — كتاب بدء الوحي", "السيرة النبوية — ابن هشام", "طبقات ابن سعد", "الروض الأنف — السهيلي"],
     tags: ["صحابة", "نبوي", "أم المؤمنين", "إسلام", "وفاء", "تجارة"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 55,
@@ -1596,6 +1729,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     sources: ["فتح الأندلس — ابن القوطية", "أخبار مجموعة في فتح الأندلس", "البيان المغرب — ابن عذاري", "تاريخ الطبري"],
     tags: ["فتوحات", "أندلس", "أموي", "طارق", "إسبانيا", "خطبة"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 56,
@@ -1634,6 +1770,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     sources: ["ترتيب المدارك — القاضي عياض", "سير أعلام النبلاء — الذهبي", "تذكرة الحفاظ — الذهبي", "الانتقاء — ابن عبدالبر"],
     tags: ["تاريخ", "عباسي", "فقه", "حديث", "موطأ", "مالكي"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 57,
@@ -1672,6 +1811,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     sources: ["السيرة النبوية — ابن هشام", "المغازي — الواقدي", "البداية والنهاية — ابن كثير", "زاد المعاد — ابن القيم"],
     tags: ["فتوحات", "نبوي", "بدر", "غزوة", "نصر", "معركة"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 58,
@@ -1710,6 +1852,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     sources: ["سيرة عمر بن عبدالعزيز — ابن الجوزي", "البداية والنهاية — ابن كثير", "الخلفاء الراشدون — خالد الخراز"],
     tags: ["تاريخ", "أموي", "عدل", "خلافة", "إصلاح", "زهد"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 59,
@@ -1748,6 +1893,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     sources: ["الاستيعاب في معرفة الأصحاب — ابن عبدالبر", "البداية والنهاية — ابن كثير", "سير أعلام النبلاء — الذهبي"],
     tags: ["صحابة", "نبوي", "حياء", "كرم", "خلافة", "جمع القرآن"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 60,
@@ -1780,6 +1928,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     sources: ["صحيح البخاري ومسلم", "السيرة النبوية — ابن هشام", "سير أعلام النبلاء — الذهبي"],
     tags: ["صحابة", "نساء الإسلام", "آل البيت", "نبوي", "زهد", "صبر"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 61,
@@ -1812,6 +1963,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     sources: ["فتوح الشام — الأزدي", "الكامل في التاريخ — ابن الأثير", "البداية والنهاية — ابن كثير"],
     tags: ["فتوحات", "الشام", "إسلامي", "معارك", "بيزنطة"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 62,
@@ -1844,6 +1998,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     sources: ["سير أعلام النبلاء — الذهبي", "مناقب الشافعي — الرازي", "توالي التأسيس — ابن حجر"],
     tags: ["تاريخ", "عباسيون", "أئمة", "فقه", "أصول", "علماء"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 63,
@@ -1876,6 +2033,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     sources: ["سير أعلام النبلاء — الذهبي", "وفيات الأعيان — ابن خلكان", "تاريخ الحكماء — القفطي"],
     tags: ["تاريخ", "عباسيون", "علماء", "طب", "فلسفة", "حضارة إسلامية"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 64,
@@ -1908,6 +2068,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     sources: ["صحيح البخاري — كتاب فضائل القرآن", "المصاحف — ابن أبي داود", "سير أعلام النبلاء — الذهبي"],
     tags: ["صحابة", "القرآن الكريم", "نبوي", "جمع القرآن", "وحي"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 65,
@@ -1948,6 +2111,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     ],
     tags: ["صحابة", "قرآن", "قراءة", "كوفة", "نبوي"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 66,
@@ -1988,6 +2154,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     ],
     tags: ["صحابة", "حديث", "حفظ", "نبوي"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 67,
@@ -2028,6 +2197,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     ],
     tags: ["صحابة", "شهداء", "أحد", "بدر", "نبوي"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 68,
@@ -2068,6 +2240,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     ],
     tags: ["مغازي", "أحد", "فتوحات", "نبوي", "رماة"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 69,
@@ -2108,6 +2283,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     ],
     tags: ["حديبية", "صلح", "فتح", "مغازي", "نبوي"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 70,
@@ -2148,6 +2326,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     ],
     tags: ["علماء", "فقه", "حنفية", "كوفة", "عباسي"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
 {
     id: 71,
@@ -2188,6 +2369,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     ],
     tags: ["صحابة", "سنة", "ورع", "فتن", "مدينة"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 72,
@@ -2228,6 +2412,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     ],
     tags: ["فتح مكة", "مغازي", "عفو", "توحيد", "نبوي"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 73,
@@ -2268,6 +2455,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     ],
     tags: ["حنين", "مغازي", "توكل", "غنائم", "نبوي"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 74,
@@ -2308,6 +2498,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     ],
     tags: ["هجرة", "مدينة", "مؤاخاة", "مسجد", "نبوي"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 75,
@@ -2348,6 +2541,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     ],
     tags: ["تابعون", "تفسير", "ثبات", "كوفة", "أموي"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 76,
@@ -2388,6 +2584,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     ],
     tags: ["أخدود", "فتنة", "صبر", "توحيد", "تفسير"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 77,
@@ -2428,6 +2627,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     ],
     tags: ["مؤتة", "مغازي", "شهادة", "خالد", "نبوي"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 78,
@@ -2468,6 +2670,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     ],
     tags: ["صحابيات", "هجرة", "تربية", "أسامة", "نبوي"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
 {
     id: 79,
@@ -2502,6 +2707,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     ],
     tags: ["خندق", "أحزاب", "شورى", "مغازي", "نبوي"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 80,
@@ -2536,6 +2744,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     ],
     tags: ["ردة", "أبو بكر", "زكاة", "يمامة", "راشدي"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 81,
@@ -2570,6 +2781,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     ],
     tags: ["كهف", "فتية", "توحيد", "فتنة", "تفسير"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 82,
@@ -2604,6 +2818,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     ],
     tags: ["جعفر", "حبشة", "مؤتة", "صحابة", "شهادة"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 83,
@@ -2638,6 +2855,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     ],
     tags: ["صحابيات", "أحد", "نصرة", "أنصار", "نبوي"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 84,
@@ -2672,6 +2892,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     ],
     tags: ["سبأ", "سليمان", "ملكة سبأ", "دعوة", "توحيد"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 85,
@@ -2703,6 +2926,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     ],
     tags: ["تبوك", "عسرة", "مغازي", "نفاق", "نفقة"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 86,
@@ -2733,6 +2959,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     ],
     tags: ["عقبة", "أنصار", "بيعة", "هجرة", "نصرة"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 87,
@@ -2764,6 +2993,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     ],
     tags: ["خيبر", "راية", "علي", "فتح", "مغازي"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 88,
@@ -2795,6 +3027,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     ],
     tags: ["فيل", "كعبة", "أبرهة", "سورة الفيل", "مكة"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 89,
@@ -2825,6 +3060,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     ],
     tags: ["عين جالوت", "مغول", "قطز", "بيبرس", "مماليك"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 90,
@@ -2855,6 +3093,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     ],
     tags: ["عقبة", "قيروان", "إفريقية", "فتح", "أموي"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 91,
@@ -2881,6 +3122,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     sources: ["سيرة ابن هشام", "صحيح البخاري", "طبقات ابن سعد", "الاستيعاب"],
     tags: ["أم سلمة", "حديبية", "أمهات المؤمنين", "فقه", "صحابة"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 92,
@@ -2907,6 +3151,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     sources: ["سيرة ابن هشام", "طبقات ابن سعد", "الإصابة — ابن حجر"],
     tags: ["سمية", "شهادة", "آل ياسر", "مكة", "صحابة"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 93,
@@ -2933,6 +3180,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     sources: ["سيرة ابن هشام", "صحيح البخاري", "طبقات ابن سعد", "الاستيعاب"],
     tags: ["أبو أيوب", "هجرة", "أنصار", "قسطنطينية", "صحابة"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 94,
@@ -2959,6 +3209,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     sources: ["صحيح البخاري", "سورة الأحزاب", "سيرة ابن هشام", "طبقات ابن سعد"],
     tags: ["زيد", "مؤتة", "مولى", "أحزاب", "صحابة"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 95,
@@ -2985,6 +3238,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     sources: ["سيرة ابن هشام", "صحيح البخاري", "سورة النحل: 106", "طبقات ابن سعد"],
     tags: ["عمار", "تعذيب", "سابقون", "فتنة", "صحابة"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: 96,
@@ -3011,6 +3267,9 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     sources: ["صحيح البخاري", "صحيح مسلم", "سيرة ابن هشام", "طبقات ابن سعد"],
     tags: ["سعد بن معاذ", "أوس", "قريظة", "خندق", "صحابة"],
     is_approved: true,
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
 ];
 

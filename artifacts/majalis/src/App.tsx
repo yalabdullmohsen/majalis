@@ -819,21 +819,24 @@ function DeferredAssistantWidget() {
       done = true;
       setReady(true);
     };
-    // `"requestIdleCallback" in window` حارسُ نوعٍ يضيّق window إلى never في الفرع
-    // السالب (لأن الخاصية مُعلَنة في lib.dom دائمًا)، فينكسر window.setTimeout عليه.
-    // وفحصُ typeof يبقى فحصًا زمنَ التشغيل بلا تضييق، فيصحّ الفرعان معًا.
-    const hasIdleCallback = typeof window.requestIdleCallback === "function";
-    const idleId = hasIdleCallback
-      ? window.requestIdleCallback(arm, { timeout: 5000 })
-      : window.setTimeout(arm, 3000);
+    // فصل المسارين يتجنّب تضييق TypeScript الخاطئ لـ setTimeout إلى `never`
+    // عند استخدام `"requestIdleCallback" in window` كشرط ثلاثي.
+    let idleHandle: number | undefined;
+    let timeoutHandle: number | undefined;
+    if (typeof window.requestIdleCallback === "function") {
+      idleHandle = window.requestIdleCallback(arm, { timeout: 5000 });
+    } else {
+      timeoutHandle = window.setTimeout(arm, 3000);
+    }
     const onInteract = () => arm();
     window.addEventListener("pointerdown", onInteract, { once: true, passive: true });
     window.addEventListener("keydown", onInteract, { once: true });
     return () => {
-      if (hasIdleCallback) {
-        window.cancelIdleCallback(idleId);
-      } else {
-        window.clearTimeout(idleId);
+      if (idleHandle != null && typeof window.cancelIdleCallback === "function") {
+        window.cancelIdleCallback(idleHandle);
+      }
+      if (timeoutHandle != null) {
+        window.clearTimeout(timeoutHandle);
       }
       window.removeEventListener("pointerdown", onInteract);
       window.removeEventListener("keydown", onInteract);
