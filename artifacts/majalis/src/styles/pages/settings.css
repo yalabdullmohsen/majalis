@@ -227,3 +227,34 @@
   box-shadow: 0 0 0 3px rgba(24,54,42,0.2) !important;
 }
 
+/* ── الوضع الليلي: رموز نصية من السمة لا حبر نهاري ثابت ── */
+html[data-theme="dark"] .settings-field {
+  color: var(--color-text-muted, #8BABA3) !important;
+}
+html[data-theme="dark"] .settings-field input[type="text"],
+html[data-theme="dark"] .settings-field input[type="range"],
+html[data-theme="dark"] .settings-field select {
+  color: var(--color-text, #E5F0EC) !important;
+  background: var(--color-surface-sec, #1F2926) !important;
+  border-color: rgba(255, 255, 255, 0.14) !important;
+}
+html[data-theme="dark"] .settings-field strong {
+  color: var(--color-text, #E5F0EC) !important;
+}
+html[data-theme="dark"] .settings-toggle-row {
+  border-bottom-color: rgba(255, 255, 255, 0.08) !important;
+}
+html[data-theme="dark"] .settings-toggle-row span {
+  color: var(--color-text, #E5F0EC) !important;
+}
+html[data-theme="dark"] .settings-note {
+  color: var(--color-text-muted, #8BABA3) !important;
+}
+html[data-theme="dark"] .settings-choice.is-active {
+  border-color: var(--color-primary, #5CC49A) !important;
+  background: color-mix(in srgb, var(--color-primary, #5CC49A) 22%, var(--color-surface, #1A2120)) !important;
+}
+html[data-theme="dark"] .settings-choice.is-active strong,
+html[data-theme="dark"] .settings-choice.is-active span {
+  color: var(--color-text, #E5F0EC) !important;
+}

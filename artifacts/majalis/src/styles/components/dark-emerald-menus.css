@@ -1,57 +1,8 @@
 /* ══════════════════════════════════════════════════════════════════
-   DARK-EMERALD-MENUS — أنماط NavBar فقط
-   ورقة «المزيد» نُقلت بالكامل إلى more-bottom-sheet.css (واعية بالسمة)
-   حتى لا يعود نص أبيض على سطح نهاري فاتح.
+   DARK-EMERALD-MENUS — مُفرَّغ عمدًا (2026-07-26)
+   كانت تفرض شريطًا زمرديًا داكنًا + نصًا أبيضًا في كل السمات، فتعارضت مع
+   شريط final-release الزجاجي الفاتح في الوضع النهاري (نفس نمط عطل قائمة المزيد).
+   أنماط NavBar النهارية/الليلية تُدار في final-release.css + elite
+   (html[data-theme="dark"] .navbar-v3). ورقة المزيد → more-bottom-sheet.css.
+   يُبقى الملف فارغًا مؤقتًا حتى يُزال الاستيراد من NavBar بأمان عبر الحارس.
    ══════════════════════════════════════════════════════════════════ */
-
-/* ── NavBar — زمردي داكن ── */
-.navbar-v3 {
-  background: linear-gradient(135deg, #143F35 0%, #226A56 100%) !important;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
-  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3) !important;
-  backdrop-filter: none !important;
-  -webkit-backdrop-filter: none !important;
-  position: relative;
-}
-.navbar-v3::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(to right, transparent 0%, rgba(200,240,220,0.3) 30%, rgba(200,240,220,0.5) 50%, rgba(200,240,220,0.3) 70%, transparent 100%);
-  pointer-events: none;
-}
-
-/* نص الـ NavBar — أبيض نقي */
-.navbar-v3 .navbar-brand,
-.navbar-v3 .navbar-menu-btn,
-.navbar-v3 .navbar-logout,
-.navbar-v3 .navbar-login,
-.navbar-v3 .navbar-admin-link,
-.navbar-v3 .navbar-auth {
-  color: rgba(255, 255, 255, 0.92) !important;
-}
-.navbar-v3 .navbar-menu-btn:hover {
-  background: rgba(255, 255, 255, 0.1) !important;
-  color: #FFFFFF !important;
-}
-.navbar-v3 .navbar-login {
-  border-color: rgba(255, 255, 255, 0.4) !important;
-  color: #FFFFFF !important;
-}
-.navbar-v3 .navbar-login:hover {
-  background: rgba(255, 255, 255, 0.12) !important;
-}
-
-/* ── موضع الشعار على الخلفية الداكنة ── */
-.navbar-v3 .footer-star polygon,
-.navbar-v3 .footer-star circle {
-  stroke: rgba(255, 255, 255, 0.5) !important;
-  fill: rgba(255, 255, 255, 0.1) !important;
-}
-
-/* ── نُقل إلى styles/pages/tajweed.css ── */
-
-/* ── نُقل إلى styles/pages/quran-hub.css ── */

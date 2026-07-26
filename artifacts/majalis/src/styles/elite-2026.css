@@ -4996,17 +4996,16 @@ hr, .divider {
 html[data-theme="dark"] hr { border-top-color: rgba(255,255,255,.07) !important; }
 
 /* ════════════════════════════════════
-   77u — Tooltip & Toast
+   77u — Toast الداكنة فقط (لا [class*="toast"] — يضرب msk/reminder الفاتحة)
    ════════════════════════════════════ */
-.toast, [class*="toast"] {
+.at-toast,
+.flash-toast,
+.anb-toast--adhan {
   background: var(--color-primary-deep, #143F35) !important;
   color: #fff !important;
   border-radius: var(--elite-r-md) !important;
   box-shadow: var(--elite-shadow-lg) !important;
   font-family: var(--font-body) !important;
-  font-size: 0.875rem !important;
-  font-weight: 500 !important;
-  padding: 0.75rem 1.1rem !important;
   direction: rtl !important;
 }
 
@@ -6160,7 +6159,6 @@ button.primary,
 .search-topic-chip:hover,
 .search-kind-badge--story,
 .settings-avatar,
-.settings-choice.is-active,
 .settings-toggle-row input[type="checkbox"]:checked,
 .isp-chip.is-active,
 .isp-card,
@@ -6224,7 +6222,6 @@ button.primary,
 .hnh__num,
 .hnh__benefit-label,
 .an-cat--active,
-.an-card,
 .lsw-featured__now,
 .lsw-featured__cta,
 .lsw-mini-item__dot,
@@ -6233,7 +6230,6 @@ button.primary,
 ::selection,
 .mzp-preview-btn,
 .anb-toast--adhan,
-.anb-toast--reminder .anb-btn,
 .qzg-btn-primary,
 .qzg-btn-gold,
 .sc-card__glow,
@@ -6268,7 +6264,6 @@ button.primary,
 .cvp-result-badge,
 .cvp-back-link:hover,
 .skip-link,
-.navbar-v3,
 .tj-hero,
 .tj-related,
 .quran-hub-hero,
@@ -6442,8 +6437,9 @@ html[data-theme="dark"] .rk-card:hover,
 .btn-primary:hover,
 .site-footer,
 footer[class*="footer"],
-.toast,
-[class*="toast"],
+.at-toast,
+.flash-toast,
+.anb-toast--adhan,
 [class*="btn"][class*="primary"],
 .lesson-unified-card--today .lesson-unified-card__header,
 .lesson-unified-card--featured .lesson-unified-card__header,

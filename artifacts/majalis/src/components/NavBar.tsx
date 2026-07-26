@@ -8,8 +8,6 @@ import { useThemePreference } from "./ThemePreferenceProvider";
 import { useMobileNavState } from "@/hooks/useMobileNavState";
 import { PRIMARY_NAV_ITEMS } from "@/lib/navigation";
 import { fetchPrayerTimes, computePrayerCountdown, type PrayerCountdown } from "@/lib/prayer-times";
-import "@/styles/components/dark-emerald-menus.css";
-
 /** الشريط يسحب بذورًا ثقيلة (~0.5MB) — يُحمَّل بعد الرسم الأول فقط */
 const HeaderTicker = lazy(() =>
   import("./HeaderTicker").then((m) => ({ default: m.HeaderTicker })),

@@ -64,13 +64,20 @@
   pointer-events: none;
 }
 
-/* ── Reminder Toast — تذكير ── */
+/* ── Reminder Toast — تذكير (سطح فاتح؛ !important يمنع نصًا أبيض من elite) ── */
 .anb-toast--reminder {
-  background: rgba(255,255,255,0.97);
-  border: 1.5px solid rgba(23,61,53,.18);
-  color: #143F35;
-  box-shadow: 0 4px 24px rgba(0,0,0,.14), 0 1px 4px rgba(0,0,0,.08),
-              0 0 0 1px rgba(23,61,53,.06);
+  background: rgba(255, 255, 255, 0.97) !important;
+  border: 1.5px solid rgba(23, 61, 53, 0.18) !important;
+  color: #143F35 !important;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.14), 0 1px 4px rgba(0, 0, 0, 0.08),
+    0 0 0 1px rgba(23, 61, 53, 0.06) !important;
+}
+.anb-toast--reminder .anb-toast__title {
+  color: #226A56 !important;
+}
+.anb-toast--reminder .anb-toast__sub {
+  color: #143F35 !important;
+  opacity: 0.8;
 }
 
 /* ── emoji badge ── */
@@ -91,7 +98,6 @@
   margin: 0 0 .2rem;
   letter-spacing: -.01em;
 }
-.anb-toast--reminder .anb-toast__title { color: #226A56; }
 .anb-toast__sub {
   font-size: .78rem;
   opacity: .8;
@@ -135,8 +141,13 @@
 .anb-btn:active { transform: scale(.9); }
 .anb-toast--adhan  .anb-btn { background: rgba(255,255,255,.12); color: #fff; }
 .anb-toast--adhan  .anb-btn:hover { background: rgba(255,255,255,.24); }
-.anb-toast--reminder .anb-btn { background: rgba(23,61,53,.09); color: #226A56; }
-.anb-toast--reminder .anb-btn:hover { background: rgba(23,61,53,.18); }
+.anb-toast--reminder .anb-btn {
+  background: rgba(23, 61, 53, 0.09) !important;
+  color: #226A56 !important;
+}
+.anb-toast--reminder .anb-btn:hover {
+  background: rgba(23, 61, 53, 0.18) !important;
+}
 .anb-muted-tag {
   font-size: .65rem;
   padding: .15rem .45rem;
