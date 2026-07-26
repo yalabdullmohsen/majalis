@@ -88,7 +88,7 @@ function CompareContent() {
           <Link href="/universities" className="text-white/70 text-sm hover:text-white mb-3 block w-fit">
             → دليل الجامعات
           </Link>
-          <h1 className="text-xl font-bold">⇔ مقارنة الجامعات ({compareList.length})</h1>
+          <h2 className="text-xl font-bold">⇔ مقارنة الجامعات ({compareList.length})</h2>
         </div>
       </div>
 

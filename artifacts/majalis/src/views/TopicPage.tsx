@@ -101,7 +101,7 @@ export default function TopicPage() {
         <span>{topic.title}</span>
       </nav>
 
-      <h1 className="search-page-title">{topic.title}</h1>
+      <h2 className="search-page-title">{topic.title}</h2>
       {topic.title_en && (
         <p className="search-page-hint tpc-title-en">
           {topic.title_en}
