@@ -162,7 +162,7 @@
 ## المرحلة 3 — الأرقام والتقاويم
 
 **الفرع:** `cursor/content-fix-phase3-numbers-calendars-1f54`
-**PR:** (يُحدَّث)
+**PR:** https://github.com/yalabdullmohsen/majalis/pull/341
 
 ### التعديلات
 | موضع | التغيير |
@@ -179,6 +179,34 @@
 - لم يُوحَّد 88 مع 91
 - لم يُوحَّد 7397 مع 7563
 - لم يُحسم 570 مقابل 571 بترجيح واحد
+
+### حالة البناء
+نجاح
+
+---
+
+## المرحلة 4 — نصوص مبتورة وإملاء
+
+**الفرع:** `cursor/content-fix-phase4-truncation-spelling-1f54`
+**PR:** (يُحدَّث)
+
+### من المولّد
+- `scripts/generate-rulings-encyclopedia.mjs`: دالة `summarizeText` تقتطع عند حدود كلمة + «…»
+- أُعيد توليد `rulings-encyclopedia-seed.generated.ts` والـ chunks
+
+### إملاء وصياغة
+| موضع | التغيير |
+|---|---|
+| qa-seed «256ه.» | → «256هـ.» |
+| islamic-stories-seed:32 | «سيرة أبي بكر» |
+| islamic-occasions-seed:50–51 | «الأرجح ليلة السابع والعشرين، ولم تُعيَّن بيقين» مع بقاء hijriDay: 27 |
+| scholars-data + scholars-seo (fawzan) | `died: "حي (معاصر)"` |
+| qa «تضيققاً» | غائبة في النسخة الحالية — لا تعديل |
+| quiz explanation مبتور | غائب في النسخة الحالية — لا تعديل |
+
+### المسح الشامل
+- كيانات HTML / ترميز تالف: لا شيء
+- مواضع لاتينية في نص عربي: رُصدت في `docs/curriculum-review-queue.md` بلا تعديل نصّي
 
 ### حالة البناء
 (تُحدَّث)
