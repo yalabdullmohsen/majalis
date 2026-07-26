@@ -244,21 +244,10 @@
 /* زر البحث المُحسَّن */
 .navbar-search-hint { font-size: 0.8rem; }
 
-/* ── 7. تحسينات BottomNavBar (CSS فقط) ── */
-
-/* ── Bottom Nav v2 ── */
+/* ── 7. BottomNavBar — ألوان التبويب النشط فقط؛ التخطيط في final-release ── */
 @media (max-width: 879px) {
-  .bottom-nav {
-    background: rgba(255,255,255,0.94) !important;
-    backdrop-filter: blur(20px) saturate(180%);
-    -webkit-backdrop-filter: blur(20px) saturate(180%);
-    border-top: 1px solid var(--v2-border-soft);
-    box-shadow: 0 -4px 24px rgba(43,38,33,0.08);
-  }
-  .bottom-nav__tab.is-active .bottom-nav__tab-icon {
-    background: var(--v2-green-soft);
-    border-radius: 12px;
-    color: var(--v2-green);
+  .bottom-nav__tab.is-active {
+    color: var(--v2-green, #226A56);
   }
   .bottom-nav__center-btn {
     background: linear-gradient(135deg, var(--v2-green) 0%, var(--v2-green-deep) 100%) !important;
@@ -923,15 +912,9 @@
 
 /* ══ تنسيق ذهبي شامل للقوائم ══════════════════════════════════════════════ */
 
-/* Bottom nav — تسميات ذهبية لكل التابات */
-.bottom-nav__tab {
-  color: #B8922E !important;
-}
+/* Bottom nav — لون التبويب النشط فقط (الأبعاد/التسميات في final-release) */
 .bottom-nav__tab.is-active {
   color: #226A56 !important;
-}
-.bottom-nav__tab.is-active .bottom-nav__tab-icon {
-  background: rgba(217,174,92,0.12) !important;
 }
 
 /* Navbar — نص القائمة والبحث ذهبي */
@@ -958,12 +941,7 @@
   color: #226A56 !important;
 }
 
-/* dark mode */
-.bottom-nav__tab:last-child:hover,
-.bottom-nav__tab:last-child.is-active {
-  border-color: #226A56 !important;
-  box-shadow: 0 0 12px rgba(217,174,92,0.35) !important;
-}
+/* last-child border/glow أُلغي مع توحيد الشريط — لا حدود خاصة لـ«المزيد» */
 
 /* ── شعار الخط العربي في Hero الرئيسية ── */
 .home-hero-calligraphy {

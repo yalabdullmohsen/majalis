@@ -22,10 +22,12 @@
   --color-warning: var(--warn-fg);
   --color-error: var(--danger-fg);
   --shadow-soft: var(--e-2);
-  /* أبعاد الهيكل الموحّدة (متزامنة مع --header-h / --bottom-nav-h في brand-v4) */
+  /* أبعاد الهيكل الموحّدة (متزامنة مع --header-h / --bottom-nav-h في brand-v4)
+     --bottom-nav-height = كروم التبويبات فقط؛ --bottom-nav-total يشمل Home Indicator مرة واحدة. */
   --header-height: var(--header-h, 3.25rem);
-  --bottom-nav-height: var(--bottom-nav-h, 3.25rem);
+  --bottom-nav-height: var(--bottom-nav-h, 2.75rem);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
+  --bottom-nav-total: calc(var(--bottom-nav-height) + var(--safe-bottom));
   --page-gutter: clamp(1rem, 3vw, 2rem);
   --page-width: var(--content-max, 76rem);
   --motion-fast: var(--dur-fast, 140ms);
@@ -54,7 +56,8 @@ body {
 .app-shell { min-height: 100dvh; background: transparent; color: var(--color-text); }
 .app-main {
   min-height: calc(100dvh - var(--header-height));
-  padding-block-end: calc(var(--bottom-nav-height) + var(--safe-bottom) + 0.75rem);
+  /* خلوص المحتوى = ارتفاع الشريط الفعلي فقط (+ هامش تنفّس صغير)، بلا safe-area مكرّر */
+  padding-block-end: calc(var(--bottom-nav-total) + 0.35rem);
 }
 
 :where(h1, h2, h3, h4) {
@@ -471,29 +474,32 @@ html[data-theme="dark"] .kids-hub-card__icon { background: var(--brand-soft); co
 .lesson-unified-card__btn { min-height: 44px; border-radius: var(--radius-md); }
 .lesson-unified-card__btn--primary { background: var(--color-primary); color: var(--color-primary-foreground); }
 
-/* Bottom navigation — مصدر واحد (iOS/PWA/Capacitor): fixed flush to screen edge,
-   safe-area counted once in height + padding-block-end only. */
+/* Bottom navigation — مصدر واحد (iOS/PWA/Capacitor / Safari / WebView):
+   - fixed flush إلى أسفل الشاشة (bottom/left/right = 0)
+   - safe-area مرة واحدة فقط عبر padding-bottom
+   - ارتفاع كروم التبويبات في --bottom-nav-height (بلا Home Indicator داخله)
+   - !important هنا يهزم تجاوزات elite/majalis-v2 التخطيطية دون margin سالب أو overflow:hidden */
 .bottom-nav,
 .bottom-nav--v2 {
   display: none;
 }
 .bottom-nav--v2 .bottom-nav__tab {
-  flex: 1;
+  flex: 1 1 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.15rem;
-  min-width: 44px;
+  gap: 0.1rem;
+  min-width: 0;
   min-height: 44px;
-  padding: 0.2rem 0.25rem;
+  padding: 0.15rem 0.1rem;
   border: 0;
-  border-radius: var(--radius-md);
+  border-radius: 0.5rem;
   background: transparent;
   color: var(--color-text-muted);
   font-size: 0.6875rem;
   font-weight: 600;
-  line-height: 1;
+  line-height: 1.1;
   text-decoration: none;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
@@ -504,23 +510,28 @@ html[data-theme="dark"] .kids-hub-card__icon { background: var(--brand-soft); co
 }
 .bottom-nav--v2 .bottom-nav__tab.is-active {
   color: var(--color-primary);
-  background: var(--color-surface-muted);
+  background: color-mix(in srgb, var(--color-primary) 10%, transparent);
 }
 .bottom-nav--v2 .bottom-nav__tab-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 1.35rem;
-  height: 1.35rem;
+  flex-shrink: 0;
+  width: 1.25rem;
+  height: 1.25rem;
   background: transparent;
+  border-radius: 0;
 }
 .bottom-nav--v2 .bottom-nav__tab-label {
+  display: block;
   font-size: 0.6875rem;
   font-weight: 600;
+  line-height: 1.15;
   max-width: 100%;
-  overflow: hidden;
-  text-overflow: ellipsis;
   white-space: nowrap;
+  overflow: visible;
+  text-overflow: clip;
+  letter-spacing: 0;
 }
 .bottom-nav--v2 .bottom-nav__tab:focus-visible {
   outline: 3px solid color-mix(in srgb, var(--color-accent) 72%, white);
@@ -544,39 +555,124 @@ html[data-theme="dark"] .kids-hub-card__icon { background: var(--brand-soft); co
 }
 
 @media (max-width: 879px) {
-  :root { --header-height: 3rem; }
+  :root {
+    --header-height: 3rem;
+    --bottom-nav-h: 2.75rem;
+    --bottom-nav-height: 2.75rem;
+  }
 
   .bottom-nav,
   .bottom-nav--v2 {
-    display: flex;
-    position: fixed;
-    inset-inline: 0;
-    bottom: 0;
-    z-index: var(--z-nav, 200);
-    box-sizing: border-box;
-    align-items: stretch;
-    justify-content: space-around;
-    min-height: var(--bottom-nav-height);
-    height: calc(var(--bottom-nav-height) + var(--safe-bottom));
-    padding-block: 0.2rem var(--safe-bottom);
-    padding-inline: max(0.35rem, env(safe-area-inset-left)) max(0.35rem, env(safe-area-inset-right));
-    background: color-mix(in srgb, var(--color-surface) 94%, transparent);
-    border-block-start: 1px solid var(--color-border);
-    box-shadow: 0 -8px 28px rgb(23 61 53 / 7%);
-    backdrop-filter: blur(18px) saturate(1.15);
-    -webkit-backdrop-filter: blur(18px) saturate(1.15);
+    display: flex !important;
+    position: fixed !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    width: 100% !important;
+    inset-inline: 0 !important;
+    z-index: var(--z-nav, 200) !important;
+    box-sizing: border-box !important;
+    align-items: stretch !important;
+    justify-content: space-around !important;
+    gap: 0 !important;
+    /* ارتفاع تلقائي من محتوى التبويب؛ Home Indicator مرة واحدة في padding-bottom فقط */
+    height: auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+    padding-top: 0 !important;
+    padding-bottom: env(safe-area-inset-bottom, 0px) !important;
+    padding-inline: max(0.2rem, env(safe-area-inset-left, 0px)) max(0.2rem, env(safe-area-inset-right, 0px)) !important;
+    margin: 0 !important;
+    background: color-mix(in srgb, var(--color-surface) 94%, transparent) !important;
+    border-block-start: 1px solid var(--color-border) !important;
+    border-top: 1px solid var(--color-border) !important;
+    box-shadow: 0 -6px 20px rgb(23 61 53 / 6%) !important;
+    backdrop-filter: blur(18px) saturate(1.15) !important;
+    -webkit-backdrop-filter: blur(18px) saturate(1.15) !important;
+    /* لا overflow:hidden — يمنع قص التسميات؛ القص كان عَرَضًا لارتفاع مضغوط خاطئ */
+    overflow: visible !important;
+  }
+
+  .bottom-nav--v2 .bottom-nav__tab,
+  .bottom-nav .bottom-nav__tab {
+    flex: 1 1 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 0.1rem !important;
+    min-width: 0 !important;
+    min-height: 44px !important;
+    height: var(--bottom-nav-height) !important;
+    max-height: var(--bottom-nav-height) !important;
+    padding: 0.15rem 0.1rem !important;
+    border: 0 !important;
+    border-radius: 0.5rem !important;
+    box-shadow: none !important;
+    background: transparent !important;
+    color: var(--color-text-muted) !important;
+    font-size: 0.6875rem !important;
+    font-weight: 600 !important;
+    line-height: 1.1 !important;
+    letter-spacing: 0 !important;
+  }
+
+  .bottom-nav--v2 .bottom-nav__tab.is-active,
+  .bottom-nav .bottom-nav__tab.is-active {
+    color: var(--color-primary) !important;
+    background: color-mix(in srgb, var(--color-primary) 10%, transparent) !important;
+    font-weight: 700 !important;
+  }
+
+  .bottom-nav--v2 .bottom-nav__tab-icon,
+  .bottom-nav .bottom-nav__tab-icon {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-shrink: 0 !important;
+    width: 1.25rem !important;
+    height: 1.25rem !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+  }
+
+  .bottom-nav--v2 .bottom-nav__tab.is-active .bottom-nav__tab-icon,
+  .bottom-nav .bottom-nav__tab.is-active .bottom-nav__tab-icon {
+    background: transparent !important;
+    border-radius: 0 !important;
+    transform: none !important;
+  }
+
+  .bottom-nav--v2 .bottom-nav__tab-label,
+  .bottom-nav .bottom-nav__tab-label {
+    display: block !important;
+    font-size: 0.6875rem !important;
+    font-weight: inherit !important;
+    line-height: 1.15 !important;
+    max-width: 100% !important;
+    white-space: nowrap !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    color: inherit !important;
+  }
+
+  /* ألغِ تمييز «المزيد» بحد يوسّع التبويب ويقصّ المحتوى على الشاشات الضيقة */
+  .bottom-nav--v2 .bottom-nav__tab:last-child,
+  .bottom-nav .bottom-nav__tab:last-child {
+    border: 0 !important;
+    box-shadow: none !important;
   }
 
   .app-main {
-    padding-block-end: calc(var(--bottom-nav-height) + var(--safe-bottom) + 0.75rem);
+    padding-block-end: calc(var(--bottom-nav-total) + 0.35rem) !important;
   }
 
   body.has-assistant-fab .app-main {
-    padding-block-end: calc(var(--bottom-nav-height) + var(--safe-bottom) + 0.75rem);
+    padding-block-end: calc(var(--bottom-nav-total) + 0.35rem) !important;
   }
 
   .site-footer-inner--v3 {
-    padding-block-end: calc(var(--bottom-nav-height) + var(--safe-bottom) + 1.25rem);
+    padding-block-end: calc(var(--bottom-nav-total) + 0.75rem);
   }
 
   .site-footer--v3 .site-footer-link {
@@ -622,14 +718,14 @@ html[data-theme="dark"] .kids-hub-card__icon { background: var(--brand-soft); co
 
   .scroll-to-top {
     inset-inline-end: max(1rem, env(safe-area-inset-right));
-    bottom: calc(var(--bottom-nav-height) + var(--safe-bottom) + 0.75rem);
+    bottom: calc(var(--bottom-nav-total) + 0.5rem);
     min-width: 44px;
     min-height: 44px;
   }
 
   .global-back-btn {
     inset-inline-start: max(1rem, env(safe-area-inset-left));
-    bottom: calc(var(--bottom-nav-height) + var(--safe-bottom) + 0.75rem);
+    bottom: calc(var(--bottom-nav-total) + 0.5rem);
     min-width: 44px;
     min-height: 44px;
   }
@@ -643,9 +739,21 @@ html[data-theme="dark"] .kids-hub-card__icon { background: var(--brand-soft); co
 
 html[data-theme="dark"] .bottom-nav,
 html[data-theme="dark"] .bottom-nav--v2 {
-  background: color-mix(in srgb, var(--color-surface) 92%, transparent);
-  border-block-start-color: var(--color-border);
-  box-shadow: 0 -8px 28px rgb(0 0 0 / 22%);
+  background: color-mix(in srgb, var(--color-surface) 92%, transparent) !important;
+  border-block-start-color: var(--color-border) !important;
+  border-top-color: var(--color-border) !important;
+  box-shadow: 0 -6px 20px rgb(0 0 0 / 22%) !important;
+}
+@media (max-width: 879px) {
+  html[data-theme="dark"] .bottom-nav--v2 .bottom-nav__tab,
+  html[data-theme="dark"] .bottom-nav .bottom-nav__tab {
+    color: var(--color-text-muted) !important;
+  }
+  html[data-theme="dark"] .bottom-nav--v2 .bottom-nav__tab.is-active,
+  html[data-theme="dark"] .bottom-nav .bottom-nav__tab.is-active {
+    color: var(--color-primary) !important;
+    background: color-mix(in srgb, var(--color-primary) 16%, transparent) !important;
+  }
 }
 
 /* ── حالات التحميل/الخطأ/الفراغ الموحَّدة ── */
@@ -1169,7 +1277,9 @@ a.twitter-timeline {
   .navbar-v3__inner { gap: .35rem; padding-inline: .65rem; }
   .navbar-brand__copy strong { font-size: .76rem; }
   .navbar-menu-btn, .navbar-mobile-login { min-width: 44px; min-height: 44px; width: 44px; }
-  .bottom-nav--v2 .bottom-nav__tab-label { font-size: 0.625rem; }
+  /* على أضيق عرض: صغّر الخط قليلًا مع الإبقاء على nowrap — بلا ellipsis */
+  .bottom-nav--v2 .bottom-nav__tab-label,
+  .bottom-nav .bottom-nav__tab-label { font-size: 0.625rem !important; }
 }
 
 /* ══ عقد أسطح الصفحات + نماذج + جداول + تمرير أفقي (iPhone) ══ */
