@@ -1,229 +1,549 @@
-/* Settings Page — مستخرج من elite-2026 §47 للتحميل حسب المسار فقط */
 /* ══════════════════════════════════════════════
-   47. Settings Page — صفحة الإعدادات
+   Settings — iOS Settings style (SSOT, theme-aware)
    ══════════════════════════════════════════════ */
 
-/* حاوية قسم الإعداد */
-.settings-account-card {
-  display: flex !important;
-  align-items: center !important;
-  gap: 1rem !important;
-  padding: 1rem !important;
-  background: var(--elite-sage-2, #F4F4F1) !important;
-  border-radius: var(--elite-r-md, 12px) !important;
-  margin-bottom: 0.75rem !important;
+.ios-settings {
+  --ios-set-bg: #f2f2f7;
+  --ios-set-card: #ffffff;
+  --ios-set-sep: rgba(60, 60, 67, 0.14);
+  --ios-set-title: #1a1a18;
+  --ios-set-desc: #6b6b66;
+  --ios-set-value: #8e8e93;
+  --ios-set-accent: var(--elite-forest, #143f35);
+  --ios-set-switch-off: #e5e5ea;
+  --ios-set-danger: #c0392b;
+  --ios-set-search-bg: rgba(118, 118, 128, 0.12);
+  --ios-set-header-bg: rgba(242, 242, 247, 0.92);
+  min-height: 100dvh;
+  background: var(--ios-set-bg);
+  color: var(--ios-set-title);
+  padding:
+    max(0.5rem, env(safe-area-inset-top, 0px))
+    max(0.75rem, env(safe-area-inset-inline-end, 0px))
+    calc(5.5rem + env(safe-area-inset-bottom, 0px))
+    max(0.75rem, env(safe-area-inset-inline-start, 0px));
+  font-family: inherit;
+  animation: ios-set-fade 0.28s var(--elite-ease, cubic-bezier(0.16, 1, 0.3, 1));
 }
 
-.settings-avatar {
-  width: 48px !important;
-  height: 48px !important;
-  display: flex !important;
-  align-items: center !important;
-  justify-content: center !important;
-  background: var(--elite-forest, #143F35) !important;
-  color: #FAFAF8 !important;
-  border-radius: 50% !important;
-  font-size: 1.25rem !important;
-  font-weight: 700 !important;
-  flex-shrink: 0 !important;
+html[data-theme="dark"] .ios-settings,
+html.dark .ios-settings {
+  --ios-set-bg: #000000;
+  --ios-set-card: #1c1c1e;
+  --ios-set-sep: rgba(84, 84, 88, 0.55);
+  --ios-set-title: #f5f5f0;
+  --ios-set-desc: #a1a19a;
+  --ios-set-value: #8e8e93;
+  --ios-set-accent: #3bad8a;
+  --ios-set-switch-off: #39393d;
+  --ios-set-danger: #ff6b6b;
+  --ios-set-search-bg: rgba(118, 118, 128, 0.24);
+  --ios-set-header-bg: rgba(0, 0, 0, 0.88);
 }
 
-.settings-account-card p {
-  margin: 0 !important;
-  font-size: 0.85rem !important;
-  color: var(--elite-ink, #143F35) !important;
-  line-height: 1.6 !important;
+@keyframes ios-set-fade {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: none; }
 }
 
-/* أزرار الإجراءات */
-.settings-actions {
-  display: flex !important;
-  flex-wrap: wrap !important;
-  gap: 0.5rem !important;
-  margin-top: 0.5rem !important;
+@media (prefers-reduced-motion: reduce),
+html[data-reduce-motion="true"] {
+  .ios-settings,
+  .ios-set-panel,
+  .ios-set-switch__thumb,
+  .ios-set-segment__btn {
+    animation: none !important;
+    transition: none !important;
+  }
 }
 
-.settings-danger-btn {
-  padding: 0.5rem 1rem !important;
-  background: transparent !important;
-  border: 1.5px solid rgba(192,57,43,0.3) !important;
-  border-radius: var(--elite-r-md, 12px) !important;
-  color: #C0392B !important;
-  font-size: 0.825rem !important;
-  font-weight: 600 !important;
-  font-family: inherit !important;
-  cursor: pointer !important;
-  transition: all 0.15s !important;
+.ios-set-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  margin: 0 -0.75rem;
+  padding: 0.55rem 0.75rem 0.65rem;
+  background: var(--ios-set-header-bg);
+  backdrop-filter: saturate(180%) blur(16px);
+  -webkit-backdrop-filter: saturate(180%) blur(16px);
+  border-bottom: 0.5px solid var(--ios-set-sep);
 }
 
-.settings-danger-btn:hover:not(:disabled) {
-  background: rgba(192,57,43,0.07) !important;
-  border-color: rgba(192,57,43,0.5) !important;
+.ios-set-header__bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2rem;
+  margin-bottom: 0.55rem;
 }
 
-.settings-danger-btn:disabled {
-  opacity: 0.4 !important;
-  cursor: not-allowed !important;
+.ios-set-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+  border: 0;
+  background: transparent;
+  color: var(--ios-set-accent);
+  font: inherit;
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 0.25rem 0.15rem;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.settings-danger-btn--link {
-  display: inline-block !important;
-  text-decoration: none !important;
-  text-align: center !important;
+.ios-set-header__title {
+  flex: 1;
+  margin: 0;
+  text-align: center;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--ios-set-title);
 }
 
-.settings-legal-links {
-  display: flex !important;
-  flex-wrap: wrap !important;
-  gap: 0.5rem !important;
-  margin-bottom: 1rem !important;
+.ios-set-header__spacer {
+  width: 3.5rem;
+  flex-shrink: 0;
 }
 
-.settings-legal-link {
-  display: inline-block !important;
-  padding: 0.35rem 0.75rem !important;
-  border: 1px solid rgba(23,61,53,0.25) !important;
-  border-radius: var(--elite-r-sm, 8px) !important;
-  color: var(--clr-primary, #226A56) !important;
-  font-size: 0.8rem !important;
-  font-weight: 600 !important;
-  text-decoration: none !important;
-  transition: background 0.15s !important;
+.ios-set-search {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.55rem 0.75rem;
+  border-radius: 10px;
+  background: var(--ios-set-search-bg);
+  color: var(--ios-set-value);
 }
 
-.settings-legal-link:hover {
-  background: rgba(23,61,53,0.07) !important;
+.ios-set-search input {
+  flex: 1;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: var(--ios-set-title);
+  font: inherit;
+  font-size: 0.95rem;
+  min-width: 0;
 }
 
-.settings-legal-link--danger {
-  border-color: rgba(192,57,43,0.25) !important;
-  color: #C0392B !important;
+.ios-set-search input::placeholder {
+  color: var(--ios-set-value);
 }
 
-.settings-legal-link--danger:hover {
-  background: rgba(192,57,43,0.07) !important;
+.ios-set-panel {
+  animation: ios-set-slide 0.26s var(--elite-ease, cubic-bezier(0.16, 1, 0.3, 1));
 }
 
-/* حقل الإعداد (label + input/select) */
-.settings-field {
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 0.35rem !important;
-  font-size: 0.82rem !important;
-  font-weight: 600 !important;
-  color: var(--elite-ink-soft, #5D726A) !important;
+@keyframes ios-set-slide {
+  from { opacity: 0; transform: translateX(-10px); }
+  to { opacity: 1; transform: none; }
 }
 
-.settings-field input[type="text"],
-.settings-field input[type="range"],
-.settings-field select {
-  font-family: inherit !important;
-  font-size: 0.875rem !important;
-  color: var(--elite-ink, #143F35) !important;
+.ios-set-group {
+  margin-top: 1.35rem;
 }
 
-.settings-field input[type="text"],
-.settings-field select {
-  padding: 0.5rem 0.75rem !important;
-  border: 1.5px solid var(--elite-border-2, rgba(24,54,42,0.15)) !important;
-  border-radius: var(--elite-r-sm, 8px) !important;
-  background: var(--elite-white, #FAFAF8) !important;
-  transition: border-color 0.15s !important;
+.ios-set-group__title {
+  margin: 0 1rem 0.4rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--ios-set-desc);
+  text-transform: none;
 }
 
-.settings-field input[type="text"]:focus,
-.settings-field select:focus {
-  outline: none !important;
-  border-color: var(--elite-forest, #143F35) !important;
-  box-shadow: 0 0 0 3px rgba(24,54,42,0.08) !important;
+.ios-set-group__footer {
+  margin: 0.45rem 1rem 0;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: var(--ios-set-desc);
 }
 
-.settings-field strong {
-  font-size: 0.8rem !important;
-  color: var(--elite-forest, #143F35) !important;
+.ios-set-card {
+  background: var(--ios-set-card);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 0.5px 0 rgba(0, 0, 0, 0.04);
 }
 
-/* شبكة خيارات الخط */
-
-.settings-choice.is-active {
-  border-color: var(--elite-forest, #143F35) !important;
-  background: var(--elite-forest, #143F35) !important;
+.ios-set-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  min-height: 48px;
+  padding: 0.7rem 0.9rem;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: start;
+  text-decoration: none;
+  cursor: pointer;
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.settings-choice.is-active strong,
-.settings-choice.is-active span {
-  color: #FAFAF8 !important;
+.ios-set-row + .ios-set-row::before,
+.ios-set-card > a.ios-set-row + .ios-set-row::before,
+.ios-set-card > button.ios-set-row + .ios-set-row::before,
+.ios-set-card > label.ios-set-row + .ios-set-row::before,
+.ios-set-card > div.ios-set-row + .ios-set-row::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0.9rem;
+  inset-inline-end: 0;
+  top: 0;
+  height: 0.5px;
+  background: var(--ios-set-sep);
 }
 
-/* ملاحظة نصية */
-.settings-note {
-  font-size: 0.78rem !important;
-  color: var(--elite-ink-muted, #5C5C56) !important;
-  line-height: 1.6 !important;
-  margin: 0.25rem 0 0 !important;
+.ios-set-row--nav:active {
+  background: rgba(118, 118, 128, 0.12);
 }
 
-/* ══ مفتاح التبديل (Toggle Switch) ══ */
-.settings-toggle-row {
-  display: flex !important;
-  align-items: center !important;
-  justify-content: space-between !important;
-  gap: 1rem !important;
-  min-height: 44px !important;
-  padding: 0.55rem 0 !important;
-  border-bottom: 1px solid var(--elite-border, rgba(0,0,0,0.06)) !important;
-  cursor: pointer !important;
+.ios-set-row--stack {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.55rem;
+  padding-block: 0.8rem;
 }
 
-.settings-toggle-row:last-of-type {
-  border-bottom: none !important;
+.ios-set-row__text {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
 }
 
-.settings-toggle-row span {
-  font-size: 0.875rem !important;
-  font-weight: 500 !important;
-  color: var(--elite-ink, #143F35) !important;
-  line-height: 1.4 !important;
+.ios-set-row__text--split {
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
 }
 
-/* التبديل الإلكتروني - iOS style */
-.settings-toggle-row input[type="checkbox"] {
-  -webkit-appearance: none !important;
-  appearance: none !important;
-  width: 2.8rem !important;
-  height: 1.55rem !important;
-  background: rgba(24,54,42,0.18) !important;
-  border-radius: 999px !important;
-  position: relative !important;
-  cursor: pointer !important;
-  flex-shrink: 0 !important;
-  transition: background 0.2s !important;
-  border: none !important;
-  outline: none !important;
+.ios-set-row__title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
 }
 
-.settings-toggle-row input[type="checkbox"]:checked {
-  background: var(--elite-forest, #143F35) !important;
+.ios-set-row__title {
+  font-size: 0.98rem;
+  font-weight: 500;
+  color: var(--ios-set-title);
+  line-height: 1.3;
 }
 
-.settings-toggle-row input[type="checkbox"]::after {
-  content: "" !important;
-  position: absolute !important;
-  width: 1.15rem !important;
-  height: 1.15rem !important;
-  background: #fff !important;
-  border-radius: 50% !important;
-  top: 0.2rem !important;
-  right: 0.2rem !important;
-  transition: right 0.2s !important;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.22) !important;
+.ios-set-row__title.is-danger {
+  color: var(--ios-set-danger);
 }
 
-.settings-toggle-row input[type="checkbox"]:checked::after {
-  right: calc(2.8rem - 1.15rem - 0.2rem) !important;
+.ios-set-row__desc {
+  font-size: 0.78rem;
+  line-height: 1.4;
+  color: var(--ios-set-desc);
 }
 
-.settings-toggle-row input[type="checkbox"]:focus-visible {
-  box-shadow: 0 0 0 3px rgba(24,54,42,0.2) !important;
+.ios-set-row__value {
+  flex-shrink: 0;
+  font-size: 0.9rem;
+  color: var(--ios-set-value);
+  max-width: 42%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
+.ios-set-chevron {
+  flex-shrink: 0;
+  color: #c7c7cc;
+  transform: scaleX(-1);
+}
+
+html[dir="ltr"] .ios-set-chevron {
+  transform: none;
+}
+
+.ios-set-icon {
+  width: 30px;
+  height: 30px;
+  border-radius: 7px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #fff;
+  background: var(--ios-set-accent);
+}
+
+.ios-set-icon svg {
+  width: 17px;
+  height: 17px;
+}
+
+.ios-set-icon--account { background: #5b7cfa; }
+.ios-set-icon--appearance { background: #8e8e93; }
+.ios-set-icon--quran { background: #143f35; }
+.ios-set-icon--prayer { background: #2f6fed; }
+.ios-set-icon--adhkar { background: #d35400; }
+.ios-set-icon--learning { background: #1f8a70; }
+.ios-set-icon--library { background: #8e44ad; }
+.ios-set-icon--quizzes { background: #c0392b; }
+.ios-set-icon--notifications { background: #e67e22; }
+.ios-set-icon--privacy { background: #2c3e50; }
+.ios-set-icon--accessibility { background: #2980b9; }
+.ios-set-icon--storage { background: #16a085; }
+.ios-set-icon--ai { background: #6c5ce7; }
+.ios-set-icon--about { background: #7f8c8d; }
+.ios-set-icon--fav { background: #f1c40f; color: #1a1a18; }
+.ios-set-icon--recent { background: #95a5a6; }
+
+.ios-set-switch {
+  position: relative;
+  width: 51px;
+  height: 31px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--ios-set-switch-off);
+  padding: 0;
+  flex-shrink: 0;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.ios-set-switch.is-on {
+  background: #34c759;
+}
+
+.ios-set-switch__thumb {
+  position: absolute;
+  top: 2px;
+  inset-inline-start: 2px;
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  transition: transform 0.22s var(--elite-ease, cubic-bezier(0.16, 1, 0.3, 1));
+}
+
+.ios-set-switch.is-on .ios-set-switch__thumb {
+  transform: translateX(-20px);
+}
+
+html[dir="ltr"] .ios-set-switch.is-on .ios-set-switch__thumb {
+  transform: translateX(20px);
+}
+
+.ios-set-select {
+  max-width: 48%;
+  min-width: 6.5rem;
+  border: 0;
+  background: transparent;
+  color: var(--ios-set-value);
+  font: inherit;
+  font-size: 0.9rem;
+  text-align: end;
+  direction: inherit;
+  cursor: pointer;
+  outline: none;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.ios-set-segment {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  gap: 3px;
+  padding: 3px;
+  border-radius: 9px;
+  background: var(--ios-set-search-bg);
+}
+
+.ios-set-segment__btn {
+  border: 0;
+  border-radius: 7px;
+  background: transparent;
+  color: var(--ios-set-title);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  padding: 0.45rem 0.35rem;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.ios-set-segment__btn.is-active {
+  background: var(--ios-set-card);
+  color: var(--ios-set-accent);
+  box-shadow: 0 0.5px 1px rgba(0, 0, 0, 0.12);
+}
+
+html[data-theme="dark"] .ios-set-segment__btn.is-active,
+html.dark .ios-set-segment__btn.is-active {
+  background: #2c2c2e;
+}
+
+.ios-set-slider {
+  width: 100%;
+  accent-color: var(--ios-set-accent);
+  cursor: pointer;
+}
+
+.ios-set-fav {
+  border: 0;
+  background: transparent;
+  color: var(--ios-set-value);
+  padding: 0.1rem;
+  display: inline-flex;
+  cursor: pointer;
+}
+
+.ios-set-fav.is-on {
+  color: #f1c40f;
+}
+
+.ios-set-profile {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  padding: 0.95rem 1rem;
+}
+
+.ios-set-avatar {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(145deg, #226a56, #143f35);
+  color: #fafaf8;
+  font-size: 1.45rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.ios-set-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.ios-set-profile__meta {
+  min-width: 0;
+}
+
+.ios-set-profile__name {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--ios-set-title);
+}
+
+.ios-set-profile__email {
+  margin: 0.15rem 0 0;
+  font-size: 0.85rem;
+  color: var(--ios-set-desc);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.ios-set-swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  padding: 0.85rem 1rem 1rem;
+}
+
+.ios-set-swatch {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+}
+
+.ios-set-swatch.is-active {
+  border-color: var(--ios-set-accent);
+  outline: 2px solid color-mix(in srgb, var(--ios-set-accent) 35%, transparent);
+  outline-offset: 2px;
+}
+
+.ios-set-empty {
+  margin: 2rem 1rem;
+  text-align: center;
+  color: var(--ios-set-desc);
+  font-size: 0.92rem;
+}
+
+.ios-set-note {
+  margin: 0.75rem 1rem 0;
+  font-size: 0.78rem;
+  color: var(--ios-set-desc);
+  line-height: 1.45;
+}
+
+/* كثافة الواجهة */
+html[data-ui-density="compact"] .ios-set-row {
+  min-height: 42px;
+  padding-block: 0.5rem;
+}
+
+html[data-ui-density="spacious"] .ios-set-row {
+  min-height: 56px;
+  padding-block: 0.9rem;
+}
+
+html[data-a11y-large-buttons="true"] .ios-set-switch {
+  width: 58px;
+  height: 36px;
+}
+
+html[data-a11y-large-buttons="true"] .ios-set-switch__thumb {
+  width: 32px;
+  height: 32px;
+}
+
+html[data-a11y-large-buttons="true"] .ios-set-switch.is-on .ios-set-switch__thumb {
+  transform: translateX(-22px);
+}
+
+html[dir="ltr"][data-a11y-large-buttons="true"] .ios-set-switch.is-on .ios-set-switch__thumb {
+  transform: translateX(22px);
+}
+
+html[data-a11y-contrast="true"] .ios-settings {
+  --ios-set-title: #000;
+  --ios-set-desc: #222;
+  --ios-set-sep: rgba(0, 0, 0, 0.35);
+}
+
+html[data-theme="dark"][data-a11y-contrast="true"] .ios-settings,
+html.dark[data-a11y-contrast="true"] .ios-settings {
+  --ios-set-title: #fff;
+  --ios-set-desc: #eee;
+  --ios-set-sep: rgba(255, 255, 255, 0.4);
+}
+
+/* إخفاء الزخارف عند تعطيلها من الإعدادات */
+html[data-ornaments="off"] .islamic-ornament,
+html[data-ornaments="off"] [data-islamic-ornament] {
+  display: none !important;
+}
+
+@media (min-width: 768px) {
+  .ios-settings {
+    max-width: 640px;
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
+}

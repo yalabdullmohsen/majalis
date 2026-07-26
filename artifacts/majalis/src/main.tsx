@@ -3,6 +3,7 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import App from "./App";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import { applyFontPreference, readFontPreference } from "./lib/font-preference";
+import { applyAppSettings, readAppSettings } from "./lib/app-settings";
 import { readThemePreference, resolveTheme } from "./lib/theme-preference";
 import { initClientErrorReporting } from "./lib/error-report";
 import { resetMobileNavBodyLock } from "./lib/mobile-nav-body-lock";
@@ -35,6 +36,7 @@ const queryClient = createAppQueryClient();
 
 resetMobileNavBodyLock();
 applyFontPreference(readFontPreference());
+applyAppSettings(readAppSettings());
 initClientErrorReporting();
 
 async function mount() {

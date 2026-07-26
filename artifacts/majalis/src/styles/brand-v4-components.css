@@ -242,3 +242,26 @@ select:focus-visible,
 [class^="adm-table"] {
   border-radius: var(--r-xs);
 }
+
+/* إعدادات المظهر: إخفاء الزخارف الإسلامية عند تعطيلها */
+html[data-ornaments="off"] .islamic-ornament-strip,
+html[data-ornaments="off"] .islamic-divider__ornament,
+html[data-ornaments="off"] .geo-corner-ornament,
+html[data-ornaments="off"] .quran-hub-hero__ornament,
+html[data-ornaments="off"] [data-islamic-ornament] {
+  display: none !important;
+}
+
+/* لون الهوية الرسمي — بدائل محدودة من إعدادات المظهر */
+html[data-brand-accent="forest"] {
+  --elite-forest: #1b4d3e;
+  --elite-green: #1b4d3e;
+}
+html[data-brand-accent="olive"] {
+  --elite-forest: #3d4f2f;
+  --elite-green: #3d4f2f;
+}
+html[data-brand-accent="teal"] {
+  --elite-forest: #1f5c55;
+  --elite-green: #1f5c55;
+}
