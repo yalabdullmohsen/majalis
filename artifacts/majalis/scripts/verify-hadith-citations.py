@@ -24,7 +24,13 @@
 الاستعمال:
   python3 scripts/verify-hadith-citations.py --phrase "غسل يوم الجمعة واجب" --book bukhari
   python3 scripts/verify-hadith-citations.py --batch rows.json        # [{"id":..,"phrase":..,"book":..}]
+  python3 scripts/verify-hadith-citations.py --phrase "اقضوا الله" --absent-in muslim
   python3 scripts/verify-hadith-citations.py --self-test
+
+⚠️ قبل الحكم بأن لفظًا **ليس** في كتاب (وهو أساس ردّ دعوى «متفق عليه»): لا يكفي
+NOT_FOUND، بل يلزم `--absent-in` — فبحث العبارة الحرفية في الشاملة يخفق لأسباب
+مطبعيّة لا لغويّة (سقوط مسافة في الطبعة، أو انقسام العبارة على صفحتين، أو نقص
+كلمة في وسطها)، وقد أوقع ذلك في خطأين فعليّين وُثِّقا في `absent_check`.
 
 الشبكة: طلبات الشاملة تُخزَّن في ذاكرة مؤقّتة على القرص (SHAMELA_CACHE، افتراضيًّا
 /tmp/shamela-cache) فإعادة التشغيل لا تُعيد تحميل ما حُمِّل.
@@ -73,6 +79,11 @@ def normalize(s: str) -> str:
     s = s.replace("ة", "ه")  # ة → ه
     s = re.sub(r"[ؤئء]", "", s)  # الهمزات المفردة
     return re.sub(r"\s+", " ", s).strip()
+
+
+def normalize_nospace(s: str) -> str:
+    """التطبيع مع إسقاط المسافات — لتجاوز سقوط المسافة في الطبعة («لايرحم»)."""
+    return normalize(s).replace(" ", "")
 
 
 ARABIC_DIGITS = str.maketrans("٠١٢٣٤٥٦٧٨٩", "0123456789")
@@ -313,6 +324,47 @@ def report(phrase: str, book: str, verbose: bool = False):
     }
 
 
+# ── التحقّق السالب: هل اللفظ غائب فعلًا عن الكتاب؟ ──────────────────────────
+def rarest_words(phrase: str, count: int = 2):
+    """أطول كلمات العبارة — أقربها إلى أن تكون نادرة في الكتاب فأقلّها نتائج."""
+    words = sorted({w for w in normalize(phrase).split() if len(w) >= 4}, key=len, reverse=True)
+    return words[:count] or normalize(phrase).split()[:count]
+
+
+def absent_check(phrase: str, book: str, max_pages: int = 30, verbose: bool = False):
+    """تحقّق سالب موثوق قبل الحكم بأن لفظًا لا وجود له في كتاب.
+
+    ⚠️ خلوّ بحث العبارة الحرفية من نتائج **ليس دليل غياب**، وقد أخطأ هذا الحكم فعلًا
+    في ج-٢٢٩ مرّتين لسببين مطبعيّين لا لغويّين:
+      * سقوط المسافة في الطبعة: مسلم ٢٣١٨ مطبوع «إنه من لايرحم لا يرحم» فلم يجده
+        بحث «من لا يرحم لا يرحم» أصلًا مع أنه فيه.
+      * انقسام العبارة على صفحتين، أو زيادة/نقص كلمة في وسطها (مسلم ٢٤٧٧ «اللهم!
+        فقهه» بلا «في الدين»، فأخفق بحث «فقهه في الدين» وهو موجود بلفظ أقصر).
+    فلا يُحكم بالغياب إلا بعد بحث **أندر كلمة** في العبارة وحدها، وقراءة كل صفحة
+    تطابقها بمقابلة **مُسقِطة للمسافات** — وما وُجد يُعاد رقمه ونصّه للمدقِّق.
+    """
+    book_id = BOOKS[book]["id"]
+    target = normalize_nospace(phrase)
+    hits, scanned = [], 0
+    for word in rarest_words(phrase):
+        for page in sorted(search_in_book(word, book_id, exact=True))[:max_pages]:
+            scanned += 1
+            for num, text in hadiths_on_page(book_id, page):
+                if not normalize_nospace(text):
+                    continue
+                if target and target in normalize_nospace(text):
+                    real_num, real_page = num, page
+                    if num is None:
+                        real_num, real_page = last_number_before(book_id, page)
+                    hits.append({"number": real_num, "page": page, "num_page": real_page,
+                                 "text": text.strip()})
+            if verbose:
+                print("   … فحص ص%s بكلمة «%s»" % (page, word), file=sys.stderr)
+    return {"absent": not hits, "phrase": phrase, "book": BOOKS[book]["name"],
+            "edition": BOOKS[book]["edition"], "words_used": rarest_words(phrase),
+            "pages_scanned": scanned, "hits": hits}
+
+
 # ── الاختبار الذاتي ─────────────────────────────────────────────────────────
 SELF_TESTS = [
     # (المقتبس، الكتاب، رقم الحديث المتوقَّع أو None إن وجب ألّا يوجد، الدرجة الدنيا المقبولة)
@@ -333,6 +385,18 @@ SELF_TESTS = [
 ]
 
 
+# اختبارات التحقّق السالب (`absent_check`) — (اللفظ، الكتاب، هل يجب الحكم بالغياب؟)
+ABSENT_TESTS = [
+    # ضبطان موجَبان: لفظان أخفق فيهما بحث العبارة الحرفية وهما موجودان فعلًا،
+    # فيجب أن يكشفهما التحقّق السالب ويردّ دعوى الغياب (مسلم ٢٣١٨ و٢٤٧٧).
+    ("من لا يرحم لا يرحم", "muslim", False, 2318),
+    ("اللهم فقهه", "muslim", False, 2477),
+    # وضبط سالب حقيقي: لفظ البخاري في نذر الحج عن الميت لا وجود له في مسلم،
+    # وإنما فيه نظيره في قضاء الصوم بلفظ «فدين الله أحق بالقضاء» (مسلم ١١٤٨).
+    ("اقضوا الله فالله أحق بالوفاء", "muslim", True, None),
+]
+
+
 def self_test() -> int:
     order = {"OK": 4, "OK_NORMALIZED": 3, "OK_GAPPED": 2, "PARTIAL": 1, "NOT_FOUND": 0}
     failed = 0
@@ -350,7 +414,18 @@ def self_test() -> int:
             failed += 1
         print("%s [%s] %s → %s ح%s (المنتظر: %s ح%s)" % (
             status, book, phrase[:45], r["grade"], r["number"], min_grade, expect_num))
-    print("\n%d/%d نجحت" % (len(SELF_TESTS) - failed, len(SELF_TESTS)))
+    for phrase, book, expect_absent, expect_num in ABSENT_TESTS:
+        r = absent_check(phrase, book)
+        nums = sorted({h["number"] for h in r["hits"] if h["number"] is not None})
+        ok = r["absent"] == expect_absent and (expect_num is None or expect_num in nums)
+        if not ok:
+            failed += 1
+        print("%s [%s|سالب] %s → %s ح%s (المنتظر: %s ح%s)" % (
+            "✔" if ok else "✘", book, phrase[:38],
+            "غائب" if r["absent"] else "موجود", nums[:3],
+            "غائب" if expect_absent else "موجود", expect_num))
+    total = len(SELF_TESTS) + len(ABSENT_TESTS)
+    print("\n%d/%d نجحت" % (total - failed, total))
     return 1 if failed else 0
 
 
@@ -360,11 +435,20 @@ def main() -> int:
     ap.add_argument("--book", choices=sorted(BOOKS), default="bukhari")
     ap.add_argument("--batch", help="ملف JSON: [{id, phrase, book}]")
     ap.add_argument("--self-test", action="store_true")
+    ap.add_argument("--absent-in", choices=sorted(BOOKS),
+                    help="تحقّق سالب: هل --phrase غائب فعلًا عن هذا الكتاب؟ (لا يُحكم بالغياب بغيره)")
     ap.add_argument("--verbose", action="store_true")
     args = ap.parse_args()
 
     if args.self_test:
         return self_test()
+
+    if args.absent_in:
+        if not args.phrase:
+            ap.error("--absent-in يحتاج --phrase")
+        print(json.dumps(absent_check(args.phrase, args.absent_in, verbose=args.verbose),
+                         ensure_ascii=False, indent=1))
+        return 0
 
     if args.batch:
         rows = json.load(open(args.batch, encoding="utf-8"))
