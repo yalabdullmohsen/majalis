@@ -22,7 +22,7 @@ export function SectionAccordionLayout({ eyebrow, title, sections, stat3Label, s
       <PageHeader
         eyebrow={eyebrow}
         title={title}
-        subtitle={`فهرس عناوين دراسية — ${sections.length} بابًا · ${totalLessons} موضوعًا (ملخصات موجزة؛ يُستكمل المحتوى التفصيلي تدريجيًا)`}
+        subtitle={`فهرس دراسي — ${sections.length} بابًا · ${totalLessons} موضوعًا (ملخصات ومتون موجزة للتعلّم الذاتي)`}
       />
 
       <div className="max-w-3xl mx-auto px-4 mb-8">
