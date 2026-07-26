@@ -1,12 +1,58 @@
 import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { getSupabaseAdmin } from "../supabase-admin.mjs";
+import {
+  canonicalizeLessonPublicId,
+  lessonExternalKeyCandidates,
+} from "../lesson-id-aliases.mjs";
 
 // dist/index.html هو نفس صدفة SPA النهائية التي بنتها Vite (بمراجع الأصول
 // المُوسَّمة بهاش صحيحة) — نستبدل وسوم SEO الافتراضية (الرئيسية) فيها بوسوم
 // الدرس الفعلي، دون المساس بأي script/link آخر، فيبقى إقلاع التطبيق سليمًا
 // تمامًا كصفحات prerender الثابتة القائمة (نفس النمط، وقت الطلب لا البناء).
 const DIST_INDEX_PATH = fileURLToPath(new URL("../../dist/index.html", import.meta.url));
+const SEED_SNAPSHOT_PATH = fileURLToPath(
+  new URL("../../scripts/lessons-seed.snapshot.json", import.meta.url),
+);
+
+let seedSnapshotCache = null;
+
+async function loadSeedSnapshot() {
+  if (seedSnapshotCache) return seedSnapshotCache;
+  try {
+    const raw = await readFile(SEED_SNAPSHOT_PATH, "utf8");
+    seedSnapshotCache = JSON.parse(raw);
+  } catch {
+    seedSnapshotCache = [];
+  }
+  return seedSnapshotCache;
+}
+
+function findInSeedSnapshot(idParam) {
+  const wanted = new Set(lessonExternalKeyCandidates(idParam));
+  wanted.add(canonicalizeLessonPublicId(idParam));
+  return (seedSnapshotCache || []).find(
+    (row) => wanted.has(row.id) || wanted.has(row.external_key),
+  ) || null;
+}
+
+/** يستخرج معرّف الدرس من req.url أو من ترويسة المسار الأصلي بعد إعادة الكتابة. */
+function extractLessonIdParam(req) {
+  const candidates = [
+    req?.url,
+    req?.headers?.["x-vercel-original-path"],
+    req?.headers?.["x-invoke-path"],
+    req?.headers?.["x-forwarded-uri"],
+  ]
+    .filter(Boolean)
+    .map((s) => String(s).split(/[?#]/)[0]);
+
+  for (const path of candidates) {
+    const m = path.match(/^\/(?:api\/)?lessons\/([^/]+)\/?$/);
+    if (m?.[1]) return decodeURIComponent(m[1]);
+  }
+  return "";
+}
 
 const SITE_NAME = "المجلس العلمي";
 const SITE_URL = "https://majlisilm.com";
@@ -35,32 +81,41 @@ function lessonDescription(row) {
 }
 
 async function findLesson(idParam) {
+  const canonical = canonicalizeLessonPublicId(idParam);
+  const lookupIds = [...new Set([idParam, canonical].filter(Boolean))];
+
   const admin = getSupabaseAdmin();
-  // لا نُطابِق هذا بحالة "الدرس غير موجود" — عميل إداري غائب (بيئة مُهيَّأة
-  // خطأً) لا يعني أن الدرس نفسه غير موجود، وإلا سيرى الزوّار 404 كاذبة لكل
-  // درس حيّ فعليًا. نرميه ليُمسَك في catch الأعلى ويُقدَّم صدفة SPA بدلاً
-  // من ذلك (نفس مسار فشل استعلام Supabase الفعلي أدناه).
-  if (!admin) throw new Error("lesson-page: Supabase admin client unavailable");
+  if (admin) {
+    for (const lookId of lookupIds) {
+      const byId = await admin
+        .from("lessons")
+        .select(`*, ${SHEIKH_EMBED}`)
+        .eq("id", lookId)
+        .eq("status", "approved")
+        .maybeSingle();
+      if (byId.error) throw byId.error;
+      if (byId.data) return byId.data;
 
-  const byId = await admin
-    .from("lessons")
-    .select(`*, ${SHEIKH_EMBED}`)
-    .eq("id", idParam)
-    .eq("status", "approved")
-    .maybeSingle();
-  if (byId.error) throw byId.error;
-  if (byId.data) return byId.data;
+      const keys = lessonExternalKeyCandidates(lookId);
+      const orFilter = keys.map((k) => `external_key.eq.${k}`).join(",");
+      const byExternalKey = await admin
+        .from("lessons")
+        .select(`*, ${SHEIKH_EMBED}`)
+        .or(orFilter)
+        .eq("status", "approved")
+        .maybeSingle();
+      if (byExternalKey.error) throw byExternalKey.error;
+      if (byExternalKey.data) return byExternalKey.data;
+    }
+  }
 
-  // external_key قد يُخزَّن بـ":" لكن معرّف الرابط يستخدم "-" (بعد التطهير).
-  const colonId = idParam.replace(/-/g, ":");
-  const byExternalKey = await admin
-    .from("lessons")
-    .select(`*, ${SHEIKH_EMBED}`)
-    .or(`external_key.eq.${idParam},external_key.eq.${colonId}`)
-    .eq("status", "approved")
-    .maybeSingle();
-  if (byExternalKey.error) throw byExternalKey.error;
-  return byExternalKey.data || null;
+  // احتياطي البذرة المعتمدة — نفس مصدر بطاقات الواجهة (لا اختراع محتوى).
+  await loadSeedSnapshot();
+  for (const lookId of lookupIds) {
+    const seed = findInSeedSnapshot(lookId);
+    if (seed && (!seed.status || seed.status === "approved")) return seed;
+  }
+  return null;
 }
 
 function buildLessonHead(row, id) {
@@ -121,11 +176,9 @@ export default async function handler(req, res) {
     return;
   }
 
-  // req.url هنا هو /api/lessons/<id> (بعد إعادة الكتابة في vercel.json من
-  // /lessons/:id العام) — نفس نمط /sitemap.xml → /api/sitemap.
-  const idParam = decodeURIComponent(String(req.url || "").replace(/^\/api\/lessons\//, "").split(/[?#]/)[0]);
+  const idParam = extractLessonIdParam(req);
 
-  if (!idParam) {
+  if (!idParam || idParam === "lessons" || idParam.includes("/")) {
     res.statusCode = 404;
     res.setHeader("Content-Type", "text/html; charset=utf-8");
     res.end(notFoundHtml());
@@ -137,6 +190,15 @@ export default async function handler(req, res) {
   if (idParam === "current") {
     res.statusCode = 302;
     res.setHeader("Location", "/lessons");
+    res.end();
+    return;
+  }
+
+  // بصمات kuwait-lessons-* → المعرّف الكانوني (301) حتى لا تبقى روابط يتيمة.
+  const canonical = canonicalizeLessonPublicId(idParam);
+  if (canonical && canonical !== idParam) {
+    res.statusCode = 301;
+    res.setHeader("Location", `/lessons/${encodeURIComponent(canonical)}`);
     res.end();
     return;
   }

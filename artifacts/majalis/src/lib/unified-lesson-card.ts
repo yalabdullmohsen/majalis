@@ -10,7 +10,12 @@ import {
   formatShortLessonTime,
 } from "./lesson-time";
 import type { ActivityType, KuwaitLessonRecord } from "./kuwait-lessons";
-import { getRelativeStatusLabel } from "./kuwait-lessons";
+import { getRelativeStatusLabel, isLessonComplete } from "./kuwait-lessons";
+import {
+  canonicalizeLessonPublicId,
+  isOrphanKuwaitLessonHashId,
+} from "./lesson-id-aliases";
+import { findSeedLessonById } from "./lessons-seed";
 
 export type UnifiedLesson = {
   id: string;
@@ -27,6 +32,7 @@ export type UnifiedLesson = {
   sortKey: number;
   nextOccurrenceMs: number;
   statusLabel: string;
+  /** فارغ إن لم يكن السجل قابلاً للعرض كصفحة تفاصيل منشورة */
   detailsHref: string;
   note?: string;
   description?: string;
@@ -45,9 +51,22 @@ export type UnifiedLesson = {
   keywords?: string[];
 };
 
+/** حاجز دائم: لا رابط تفاصيل إلا لمعرّف موجود (بذرة أو مكتمل) وغير يتيم. */
+export function resolveLessonDetailsHref(lesson: Pick<KuwaitLessonRecord, "id"> & Partial<KuwaitLessonRecord>): string {
+  const canonical = canonicalizeLessonPublicId(lesson.id);
+  if (!canonical || isOrphanKuwaitLessonHashId(canonical) || isOrphanKuwaitLessonHashId(lesson.id)) {
+    return "";
+  }
+  const inSeed = Boolean(findSeedLessonById(canonical) || findSeedLessonById(lesson.id));
+  const complete = isLessonComplete(lesson as KuwaitLessonRecord);
+  if (!inSeed && !complete) return "";
+  return `/lessons/${canonical}`;
+}
+
 export function fromKuwaitLesson(lesson: KuwaitLessonRecord, archived = false): UnifiedLesson {
+  const canonicalId = canonicalizeLessonPublicId(lesson.id) || lesson.id;
   return {
-    id: lesson.id,
+    id: canonicalId,
     title: cleanDisplayText(lesson.title),
     sheikhName: formatSheikhName(lesson.sheikhName.replace(/^الشيخ(?:ة)?:\s*/u, "")) || cleanDisplayText(lesson.sheikhName),
     sheikhImage: lesson.sheikhImage,
@@ -61,7 +80,7 @@ export function fromKuwaitLesson(lesson: KuwaitLessonRecord, archived = false): 
     sortKey: lesson.nextOccurrenceMs,
     nextOccurrenceMs: lesson.nextOccurrenceMs,
     statusLabel: getRelativeStatusLabel(lesson, archived),
-    detailsHref: `/lessons/${lesson.id}`,
+    detailsHref: resolveLessonDetailsHref({ ...lesson, id: canonicalId }),
     note: lesson.note ? cleanDisplayText(lesson.note) : undefined,
     description: lesson.description ? cleanDisplayText(lesson.description) : undefined,
     archived,
@@ -115,8 +134,9 @@ export function fromDbLesson(lesson: {
   const nextMs = computeNextOccurrenceMs(day, time);
   const nextDate = new Date(nextMs);
 
+  const publicId = canonicalizeLessonPublicId(lesson.external_key || lesson.id) || lesson.id;
   return {
-    id: lesson.id,
+    id: publicId,
     title: cleanDisplayText(lesson.title),
     sheikhName: formatSheikhName(sheikhName),
     category: cleanDisplayText(lesson.category) || "أخرى",
@@ -128,7 +148,13 @@ export function fromDbLesson(lesson: {
     sortKey: lesson.sortKey ?? nextMs,
     nextOccurrenceMs: nextMs,
     statusLabel: formatRelativeTime(nextMs),
-    detailsHref: `/lessons/${lesson.id}`,
+    detailsHref: resolveLessonDetailsHref({
+      id: publicId,
+      title: lesson.title,
+      sheikhName,
+      day,
+      time,
+    }),
     note: lesson.description ? cleanDisplayText(lesson.description) : undefined,
     description: lesson.description ? cleanDisplayText(lesson.description) : undefined,
     gregorianDate: day ? formatGregorianDate(nextDate) : undefined,

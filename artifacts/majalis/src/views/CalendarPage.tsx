@@ -18,6 +18,7 @@ import {
 import { arSA } from "date-fns/locale";
 import { getUnifiedActiveLessons } from "@/lib/lessons-service";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
+import { resolveLessonDetailsHref } from "@/lib/unified-lesson-card";
 import { PageHeader, SkeletonCardGrid } from "@/components/ui-common";
 import { HijriSacredMonthBanner } from "@/components/HijriSacredMonthBanner";
 import { getHijriDateString, gregorianToHijri } from "@/lib/hijri-utils";
@@ -59,7 +60,7 @@ function eventsFromLessons(lessons: KuwaitLessonRecord[]): CalendarEvent[] {
     day: l.day,
     date: l.startDate || undefined,
     description: l.note,
-    href: `/lessons/${l.id}`,
+    href: resolveLessonDetailsHref(l) || "/lessons",
     recurring: l.recurring !== false && !l.startDate,
   }));
 }

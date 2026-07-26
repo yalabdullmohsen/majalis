@@ -16,6 +16,7 @@ import {
   splitKuwaitLessons,
 } from "@/lib/kuwait-lessons";
 import { rankLessonsBySearch, buildLessonSearchMeta } from "@/lib/lesson-search";
+import { canonicalizeLessonPublicId } from "@/lib/lesson-id-aliases";
 
 export type LessonsSource = "supabase" | "seed" | "merged";
 
@@ -88,11 +89,12 @@ export async function fetchLessonById(id: string): Promise<{
   lesson: KuwaitLessonRecord | null;
   source: LessonsSource;
 }> {
+  const canonical = canonicalizeLessonPublicId(id) || id;
   const { lessons, source } = await fetchLessons();
-  const found = lessons.find((l) => l.id === id);
+  const found = lessons.find((l) => l.id === id || l.id === canonical);
   if (found) return { lesson: found, source };
 
-  const seedRow = findSeedLessonById(id);
+  const seedRow = findSeedLessonById(canonical) || findSeedLessonById(id);
   if (seedRow) return { lesson: mapLessonRow(seedRow), source: "seed" };
 
   return { lesson: null, source };

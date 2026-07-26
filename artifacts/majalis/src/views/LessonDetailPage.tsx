@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { AdminInlineEdit } from "@/components/AdminInlineEdit";
 import { ReadingProgressBar } from "@/components/ReadingProgressBar";
 import { getLessonById, getSheikhs } from "@/lib/supabase";
@@ -39,6 +39,7 @@ import { ScholarFollowButton } from "@/components/ScholarFollowButton";
 import { RecommendationWidget } from "@/components/recommendations/RecommendationWidget";
 import { ContentMindMap } from "@/components/ContentMindMap";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { canonicalizeLessonPublicId } from "@/lib/lesson-id-aliases";
 
 function buildMapsEmbed(url?: string, mosque?: string, region?: string) {
   if (url?.includes("google.com/maps") || url?.includes("goo.gl/maps") || url?.includes("maps.app")) {
@@ -116,7 +117,17 @@ export default function LessonDetailPage({
   params: { id: string };
   initialLesson?: KuwaitLessonRecord | null;
 }) {
+  const [, setLocation] = useLocation();
   const [lesson, setLesson] = useState<any>(null);
+
+  // أسماء بديلة تاريخية (kuwait-lessons-HASH) → المعرّف الكانوني kw-*
+  useEffect(() => {
+    if (!params.id) return;
+    const canonical = canonicalizeLessonPublicId(params.id);
+    if (canonical && canonical !== params.id) {
+      setLocation(`/lessons/${canonical}`, { replace: true });
+    }
+  }, [params.id, setLocation]);
 
   // كانت هنا فعليًا ثلاث آليات SEO متنافسة على نفس الصفحة: (1) placeholder
   // عام بعنوان/مسار خاطئين تمامًا (`path: "/lessons"` — صفحة الفهرس لا
