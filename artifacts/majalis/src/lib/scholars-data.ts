@@ -21,7 +21,6 @@ export type Scholar = {
 };
 
 export const SCHOLARS: Scholar[] = [
-  // الأئمة الأربعة
   {
     id: "abu-hanifa",
     name: "أبو حنيفة النعمان",
@@ -37,7 +36,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["سير أعلام النبلاء — الذهبي", "تاريخ بغداد — الخطيب البغدادي"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "malik",
     name: "الإمام مالك",
     fullName: "مالك بن أنس الأصبحي",
@@ -52,7 +51,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["سير أعلام النبلاء — الذهبي", "وفيات الأعيان — ابن خلكان"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "shafi",
     name: "الإمام الشافعي",
     fullName: "محمد بن إدريس الشافعي",
@@ -67,7 +66,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["سير أعلام النبلاء — الذهبي", "وفيات الأعيان — ابن خلكان"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "ahmad",
     name: "الإمام أحمد",
     fullName: "أحمد بن محمد بن حنبل الشيباني",
@@ -82,8 +81,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["سير أعلام النبلاء — الذهبي", "تاريخ بغداد — الخطيب البغدادي"],
     verificationStatus: "reviewed",
   },
-  // علماء الحديث
-  {
+{
     id: "bukhari",
     name: "الإمام البخاري",
     fullName: "محمد بن إسماعيل البخاري",
@@ -97,7 +95,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["سير أعلام النبلاء — الذهبي", "الأعلام — خير الدين الزركلي"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "muslim",
     name: "الإمام مسلم",
     fullName: "مسلم بن الحجاج القشيري النيسابوري",
@@ -112,8 +110,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["سير أعلام النبلاء — الذهبي", "الأعلام — خير الدين الزركلي"],
     verificationStatus: "reviewed",
   },
-  // علماء العقيدة والتفسير
-  {
+{
     id: "ibn-taymiyya",
     name: "ابن تيمية",
     fullName: "أحمد بن عبد الحليم بن تيمية الحراني",
@@ -127,7 +124,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["ذيل طبقات الحنابلة — ابن رجب الحنبلي", "الدرر الكامنة — ابن حجر العسقلاني"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "ibn-qayyim",
     name: "ابن القيم",
     fullName: "محمد بن أبي بكر بن قيم الجوزية",
@@ -141,7 +138,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["ذيل طبقات الحنابلة — ابن رجب الحنبلي", "الدرر الكامنة — ابن حجر العسقلاني"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "nawawi",
     name: "الإمام النووي",
     fullName: "أبو زكريا يحيى بن شرف النووي الدمشقي",
@@ -163,7 +160,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["طبقات الشافعية الكبرى — تاج الدين السبكي", "تهذيب الأسماء واللغات — الإمام النووي (سيرة ذاتية جزئية)"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "ibn-hajar",
     name: "ابن حجر العسقلاني",
     fullName: "أحمد بن علي بن حجر العسقلاني",
@@ -176,7 +173,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["الجواهر والدرر في ترجمة شيخ الإسلام ابن حجر — شمس الدين السخاوي", "شذرات الذهب في أخبار من ذهب — ابن العماد الحنبلي"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "shawkani",
     name: "الشوكاني",
     fullName: "محمد بن علي بن محمد الشوكاني",
@@ -190,8 +187,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["الأعلام — خير الدين الزركلي", "معجم المؤلفين — عمر رضا كحالة"],
     verificationStatus: "reviewed",
   },
-  // العلماء المعاصرون
-  {
+{
     id: "ibn-baz",
     name: "الشيخ ابن باز",
     fullName: "عبد العزيز بن عبد الله بن باز",
@@ -205,7 +201,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["الموقع الرسمي للشيخ ابن باز (binbaz.org.sa) — السيرة الذاتية", "الدرر السنية — dorar.net"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "ibn-uthaymeen",
     name: "الشيخ ابن عثيمين",
     fullName: "محمد بن صالح بن محمد العثيمين",
@@ -219,7 +215,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["الموقع الرسمي للشيخ ابن عثيمين (binothaimeen.net) — السيرة الذاتية", "الموسوعة الحديثية — دُرر السنية (dorar.net/hadith/mhd/1421)"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "albani",
     name: "الشيخ الألباني",
     fullName: "محمد ناصر الدين الألباني",
@@ -233,7 +229,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["دُرر السنية — الإيجاز في بعض ما اختلف فيه الألباني وابن عثيمين وابن باز", "طريق الإسلام — islamway.net"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "qaradawi",
     name: "الشيخ القرضاوي",
     fullName: "يوسف بن عبد الله القرضاوي",
@@ -247,8 +243,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["الموقع الرسمي للشيخ يوسف القرضاوي (al-qaradawi.net) — السيرة الذاتية", "ويكيبيديا العربية — تحقُّق تاريخ الوفاة: 30 صفر 1444هـ / 26 سبتمبر 2022م (تحقَّق عبر WebFetch 2026-07-19)"],
     verificationStatus: "reviewed",
   },
-  // محدثون بارزون
-  {
+{
     id: "tirmidhi",
     name: "الإمام الترمذي",
     fullName: "محمد بن عيسى بن سَوْرة الترمذي",
@@ -263,7 +258,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["سير أعلام النبلاء — الذهبي", "تهذيب الكمال في أسماء الرجال — المزي"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "ibn-majah",
     name: "ابن ماجه",
     fullName: "محمد بن يزيد القزويني",
@@ -277,7 +272,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["سير أعلام النبلاء — الذهبي", "الأعلام — خير الدين الزركلي"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "ghazali",
     name: "الإمام الغزالي",
     fullName: "محمد بن محمد الغزالي الطوسي",
@@ -292,7 +287,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["سير أعلام النبلاء — الذهبي", "وفيات الأعيان — ابن خلكان"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "ibn-kathir",
     name: "ابن كثير",
     fullName: "إسماعيل بن عمر بن كثير الدمشقي",
@@ -307,7 +302,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["الدرر الكامنة — ابن حجر العسقلاني", "الأعلام — خير الدين الزركلي"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "ibn-khaldun",
     name: "ابن خلدون",
     fullName: "عبد الرحمن بن محمد بن خلدون",
@@ -322,7 +317,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["الأعلام — خير الدين الزركلي", "الإحاطة في أخبار غرناطة — لسان الدين بن الخطيب"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "ibn-ashur",
     name: "ابن عاشور",
     fullName: "محمد الطاهر بن محمد ابن عاشور",
@@ -337,7 +332,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["موسوعة أعلام تونس — الرابطة المحمدية للعلماء", "الأعلام — خير الدين الزركلي"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "fawzan",
     name: "الشيخ صالح الفوزان",
     fullName: "صالح بن فوزان بن عبد الله الفوزان",
@@ -351,7 +346,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["الموقع الرسمي للشيخ صالح الفوزان (dralfawzann.com) — السيرة الذاتية", "الدرر السنية — dorar.net"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "al-suyuti",
     name: "الإمام السيوطي",
     fullName: "جلال الدين عبد الرحمن السيوطي",
@@ -366,7 +361,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["الضوء اللامع لأهل القرن التاسع — شمس الدين السخاوي", "الأعلام — خير الدين الزركلي"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "abu-dawud",
     name: "أبو داود السجستاني",
     fullName: "سليمان بن الأشعث السجستاني",
@@ -381,7 +376,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["سير أعلام النبلاء — الذهبي", "تهذيب الكمال في أسماء الرجال — المزي"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "nasai",
     name: "الإمام النسائي",
     fullName: "أحمد بن شعيب بن علي النسائي",
@@ -395,7 +390,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["سير أعلام النبلاء — الذهبي", "تهذيب الكمال في أسماء الرجال — المزي"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "daraqutni",
     name: "الإمام الدارقطني",
     fullName: "علي بن عمر الدارقطني البغدادي",
@@ -410,7 +405,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["سير أعلام النبلاء — الذهبي", "تاريخ بغداد — الخطيب البغدادي"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "bayhaki",
     name: "الإمام البيهقي",
     fullName: "أبو بكر أحمد بن الحسين بن علي البيهقي الخراساني",
@@ -431,7 +426,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["سير أعلام النبلاء — الذهبي", "وفيات الأعيان — ابن خلكان"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "ibn-juzayy",
     name: "ابن جزي الكلبي",
     fullName: "أبو القاسم محمد بن أحمد بن محمد بن جزي الكلبي الغرناطي",
@@ -451,7 +446,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["ويكيبيديا العربية — مقالة ابن جزي الكلبي الغرناطي (شيوخه ووفاته)", "الأعلام — خير الدين الزركلي"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "shatbi",
     name: "الإمام الشاطبي",
     fullName: "إبراهيم بن موسى اللخمي الغرناطي الشاطبي",
@@ -466,7 +461,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["الإحاطة في أخبار غرناطة — لسان الدين ابن الخطيب", "الأعلام — خير الدين الزركلي"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "shanqiti",
     name: "الشنقيطي",
     fullName: "محمد الأمين بن محمد المختار الشنقيطي",
@@ -480,7 +475,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["الموقع الرسمي (saaid.org) — نبذة عن سيرة الشيخ محمد الأمين الشنقيطي", "الأعلام — خير الدين الزركلي"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "bint-al-shati",
     name: "بنت الشاطئ",
     fullName: "عائشة عبد الرحمن المعروفة ببنت الشاطئ",
@@ -494,7 +489,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["ويكيبيديا العربية — مقالة عائشة عبد الرحمن (بنت الشاطئ)", "islamonline.net — عائشة عبد الرحمن (بنت الشاطئ)"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "zuhayli",
     name: "الشيخ وهبة الزحيلي",
     fullName: "وهبة مصطفى الزحيلي",
@@ -509,7 +504,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["رابطة العلماء السوريين — تراجم علماء معاصرين", "المكتبة الشاملة — ترجمة المؤلف وهبة الزحيلي"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "abu-zayd",
     name: "الشيخ بكر أبو زيد",
     fullName: "بكر بن عبد الله أبو زيد",
@@ -523,7 +518,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["ويكيبيديا العربية — مقالة بكر أبو زيد (شيوخه ووفاته ومناصبه العلمية)"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "muhammad-ghazali",
     name: "الشيخ محمد الغزالي",
     fullName: "محمد الغزالي السقا",
@@ -538,7 +533,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["موسوعة أعلام القرن العشرين — islamstory.com"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "mubarakfuri",
     name: "المباركفوري",
     fullName: "أبو العلا محمد عبد الرحمن بن عبد الرحيم المباركفوري",
@@ -553,7 +548,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["الأعلام — خير الدين الزركلي", "نزهة الخواطر وبهجة المسامع والنواظر — عبد الحي الحسني (موسوعة أعيان علماء الهند)"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "tabari",
     name: "الطبري",
     fullName: "محمد بن جرير الطبري",
@@ -568,7 +563,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["سير أعلام النبلاء — الذهبي", "تاريخ بغداد — الخطيب البغدادي"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "ibn-jawzi",
     name: "ابن الجوزي",
     fullName: "عبد الرحمن بن علي بن الجوزي",
@@ -583,7 +578,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["سير أعلام النبلاء — الذهبي", "وفيات الأعيان — ابن خلكان"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "ibn-rajab",
     name: "ابن رجب الحنبلي",
     fullName: "عبد الرحمن بن أحمد بن رجب الحنبلي",
@@ -598,7 +593,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["الدرر الكامنة — ابن حجر العسقلاني", "الأعلام — خير الدين الزركلي"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "ibn-abd-al-barr",
     name: "ابن عبد البر",
     fullName: "يوسف بن عبد الله بن عبد البر النمري القرطبي",
@@ -613,7 +608,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["سير أعلام النبلاء — الذهبي", "وفيات الأعيان — ابن خلكان"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "dhahabi",
     name: "الإمام الذهبي",
     fullName: "محمد بن أحمد بن عثمان الذهبي",
@@ -628,7 +623,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["الدرر الكامنة — ابن حجر العسقلاني", "الأعلام — خير الدين الزركلي"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "izz-ibn-abd-al-salam",
     name: "العز بن عبد السلام",
     fullName: "أبو محمد عز الدين عبد العزيز بن عبد السلام السلمي الدمشقي",
@@ -648,7 +643,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["ويكيبيديا العربية — مقالة العز بن عبد السلام (شيوخه وتلاميذه ووفاته)", "وفيات الأعيان — ابن خلكان"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "ibn-abd-al-wahhab",
     name: "الشيخ محمد بن عبد الوهاب",
     fullName: "محمد بن عبد الوهاب بن سليمان التميمي النجدي",
@@ -663,7 +658,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["عنوان المجد في تاريخ نجد — عثمان بن بشر", "الأعلام — خير الدين الزركلي"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "ibn-abidin",
     name: "ابن عابدين",
     fullName: "محمد أمين بن عمر بن عبد العزيز ابن عابدين الشامي",
@@ -678,7 +673,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["الأعلام — خير الدين الزركلي", "معجم المؤلفين — عمر رضا كحالة"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "rashid-rida",
     name: "رشيد رضا",
     fullName: "محمد رشيد بن علي رضا القلموني",
@@ -693,7 +688,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["الأعلام — خير الدين الزركلي", "معجم المؤلفين — عمر رضا كحالة"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "muhammad-abdu",
     name: "الشيخ محمد عبده",
     fullName: "محمد بن عبده بن حسن خيرالله",
@@ -708,7 +703,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["الأعلام — خير الدين الزركلي", "معجم المؤلفين — عمر رضا كحالة"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "ibn-badis",
     name: "عبد الحميد بن باديس",
     fullName: "عبد الحميد بن محمد المصطفى بن مكي بن باديس",
@@ -723,8 +718,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["ويكيبيديا العربية — مقالة عبد الحميد بن باديس (شيوخه ووفاته)", "الأعلام — خير الدين الزركلي"],
     verificationStatus: "reviewed",
   },
-  // ── علماء مضافون من IslamicScholarsPage ──
-  {
+{
     id: "abu-yusuf",
     name: "الإمام أبو يوسف",
     fullName: "يعقوب بن إبراهيم بن حبيب الأنصاري",
@@ -739,7 +733,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["سير أعلام النبلاء — الذهبي", "تاريخ بغداد — الخطيب البغدادي"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "shaybani",
     name: "الإمام محمد الشيباني",
     fullName: "محمد بن الحسن بن فرقد الشيباني",
@@ -754,7 +748,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["سير أعلام النبلاء — الذهبي", "الأعلام — خير الدين الزركلي"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "muzani",
     name: "الإمام المزني",
     fullName: "إسماعيل بن يحيى المزني",
@@ -769,7 +763,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["سير أعلام النبلاء — الذهبي", "وفيات الأعيان — ابن خلكان"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "ibn-hibban",
     name: "الإمام ابن حبان",
     fullName: "محمد بن حبان بن أحمد التميمي البُستي",
@@ -784,7 +778,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["سير أعلام النبلاء — الذهبي", "وفيات الأعيان — ابن خلكان"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "ibn-khuzayma",
     name: "الإمام ابن خزيمة",
     fullName: "محمد بن إسحاق بن خزيمة النيسابوري",
@@ -799,7 +793,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["سير أعلام النبلاء — الذهبي", "الأعلام — خير الدين الزركلي"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "hakim",
     name: "الإمام الحاكم",
     fullName: "محمد بن عبد الله بن محمد النيسابوري",
@@ -814,7 +808,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["سير أعلام النبلاء — الذهبي", "الأعلام — خير الدين الزركلي"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "ibn-mubarak",
     name: "الإمام عبد الله بن المبارك",
     fullName: "أبو عبد الرحمن عبد الله بن المبارك المروزي",
@@ -829,7 +823,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["سير أعلام النبلاء — الذهبي", "حلية الأولياء وطبقات الأصفياء — أبو نعيم الأصفهاني"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "sufyan-thawri",
     name: "الإمام سفيان الثوري",
     fullName: "سفيان بن سعيد بن مسروق الثوري الكوفي",
@@ -844,7 +838,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["سير أعلام النبلاء — الذهبي", "حلية الأولياء وطبقات الأصفياء — أبو نعيم الأصفهاني"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "awzai",
     name: "الإمام الأوزاعي",
     fullName: "عبد الرحمن بن عمرو الأوزاعي",
@@ -859,7 +853,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["سير أعلام النبلاء — الذهبي", "الأعلام — خير الدين الزركلي"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "laith-ibn-sad",
     name: "الإمام الليث بن سعد",
     fullName: "الليث بن سعد بن عبد الرحمن الفهمي",
@@ -874,7 +868,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["ويكيبيديا العربية — مقالة الليث بن سعد (شيوخه وتلاميذه ووفاته)", "وفيات الأعيان — ابن خلكان"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "ibn-al-mundhir",
     name: "الإمام ابن المنذر",
     fullName: "محمد بن إبراهيم بن المنذر النيسابوري",
@@ -889,7 +883,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["ويكيبيديا العربية — مقالة ابن المنذر النيسابوري (شيوخه وتلاميذه ووفاته). تحقُّق مباشر عبر WebFetch (2026-07-19): المقالة تذكر قولين فقط، 318هـ (صندوق المعلومات) و319هـ (الذهبي في سير أعلام النبلاء 14/490-491) — لا ذكر لسنة 320هـ إطلاقًا في أي مصدر. اعتُمد 319هـ لتسميته المصدر (الذهبي) صراحةً.", "الأعلام — خير الدين الزركلي"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "khattabi",
     name: "الإمام الخطابي",
     fullName: "حمد بن محمد بن إبراهيم الخطابي البُستي",
@@ -904,7 +898,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["ويكيبيديا العربية — مقالة أبو سليمان الخطابي (شيوخه وتلاميذه ووفاته)", "الأعلام — خير الدين الزركلي"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "ibn-hajar-haytami",
     name: "ابن حجر الهيتمي",
     fullName: "أبو العباس أحمد بن محمد بن علي بن حجر الهيتمي",
@@ -924,7 +918,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["ويكيبيديا العربية — مقالة ابن حجر الهيتمي (شيوخه وتلاميذه ووفاته)", "الأعلام — خير الدين الزركلي"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "ali-tantawi",
     name: "الشيخ علي الطنطاوي",
     fullName: "علي بن مصطفى بن أحمد الطنطاوي",
@@ -939,7 +933,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["ويكيبيديا العربية — مقالة علي الطنطاوي (أساتذته ووفاته)"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "shaarawi",
     name: "الشيخ الشعراوي",
     fullName: "محمد متولي الشعراوي",
@@ -954,7 +948,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["موسوعة أعلام القرن العشرين — aljazeera.net"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "ibn-ghudiyan",
     name: "الشيخ عبد الله بن غديان",
     fullName: "عبد الله بن عبد الرحمن بن عبد الرزاق بن قاسم آل غديان",
@@ -969,7 +963,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["الموقع الرسمي — mimham.net، سيرة الشيخ عبد الله بن غديان", "ويكيبيديا العربية — تحقُّق مباشر عبر WebFetch (2026-07-19): تاريخ الوفاة كان مسجَّلاً خطأً \"١٤٣٤ هـ\" فصُحِّح إلى \"١٤٣١ هـ\" (1 يونيو 2010م، مطابقاً لصندوق المعلومات)، والنسب صُحِّح من \"...بن غديان الغامدي\" إلى \"...بن عبد الرزاق بن قاسم آل غديان\" (لا ذكر لنسبة \"الغامدي\" في المصدر)"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "afifi",
     name: "الشيخ عبد الرزاق عفيفي",
     fullName: "عبد الرزاق بن عفيفي بن عطية بن عبد البر بن شرف الدين النوبي",
@@ -984,7 +978,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["جريدة الرياض — سيرة عبد الرزاق عفيفي", "ويكيبيديا العربية — تحقُّق سلسلة النسب عبر WebFetch (2026-07-19): كانت مسجَّلة \"...بن عطية بن سالم\" فصُحِّحت إلى \"...بن عطية بن عبد البر بن شرف الدين النوبي\" مطابقةً لصندوق المعلومات الحرفي"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "sufyan-uyayna",
     name: "الإمام سفيان بن عيينة",
     fullName: "سفيان بن عيينة بن أبي عمران الهلالي",
@@ -999,7 +993,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["ويكيبيديا العربية — مقالة سفيان بن عيينة (شيوخه وتلاميذه ووفاته)", "حلية الأولياء وطبقات الأصفياء — أبو نعيم الأصفهاني"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "muqbil",
     name: "الشيخ مقبل بن هادي الوادعي",
     fullName: "مقبل بن هادي بن مقبل الوادعي الحمداني",
@@ -1014,7 +1008,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["الموقع الرسمي — mimham.net، سيرة الشيخ مقبل بن هادي الوادعي", "شبكة الدين القيم — ترجمة مختصرة للشيخ مقبل الوادعي"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "ibn-muflih",
     name: "الإمام ابن مفلح",
     fullName: "محمد بن مفلح بن محمد المقدسي",
@@ -1029,7 +1023,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["ويكيبيديا العربية — مقالة محمد بن مفلح المقدسي (شيوخه ووفاته)", "الدرر الكامنة — ابن حجر العسقلاني"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "ibn-rushd",
     name: "ابن رشد",
     fullName: "محمد بن أحمد بن محمد بن رشد القرطبي",
@@ -1044,7 +1038,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["سير أعلام النبلاء — الذهبي", "وفيات الأعيان — ابن خلكان"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "ibn-hazm",
     name: "ابن حزم الأندلسي",
     fullName: "علي بن أحمد بن سعيد بن حزم القرطبي",
@@ -1059,7 +1053,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["سير أعلام النبلاء — الذهبي", "وفيات الأعيان — ابن خلكان"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "ibn-asakir",
     name: "ابن عساكر",
     fullName: "علي بن الحسن بن هبة الله بن عساكر",
@@ -1074,7 +1068,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["ويكيبيديا العربية — مقالة ابن عساكر (شيوخه وتلاميذه ووفاته)", "وفيات الأعيان — ابن خلكان"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "ibn-nujaym",
     name: "ابن نجيم",
     fullName: "زين الدين بن إبراهيم بن محمد بن نجيم المصري",
@@ -1089,7 +1083,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["ويكيبيديا العربية — مقالة زين الدين بن نجيم (شيوخه وتلاميذه ووفاته)", "الأعلام — خير الدين الزركلي"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "khatib-baghdadi",
     name: "الخطيب البغدادي",
     fullName: "أبو بكر أحمد بن علي بن ثابت الخطيب البغدادي",
@@ -1104,7 +1098,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["سير أعلام النبلاء — الذهبي", "الأعلام — خير الدين الزركلي"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "al-amir-al-sanani",
     name: "الأمير الصنعاني",
     fullName: "محمد بن إسماعيل بن صلاح الأمير الصنعاني",
@@ -1119,7 +1113,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["ويكيبيديا العربية — مقالة محمد بن إسماعيل الأمير الصنعاني (شيوخه ووفاته)", "الأعلام — خير الدين الزركلي"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "kawakibi",
     name: "عبد الرحمن الكواكبي",
     fullName: "عبد الرحمن بن أحمد بن مسعود الكواكبي",
@@ -1134,7 +1128,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["الأعلام — خير الدين الزركلي", "طبائع الاستبداد — الكواكبي"],
     verificationStatus: "pending_review",
   },
-  {
+{
     id: "khayr-al-din",
     name: "خير الدين التونسي",
     fullName: "خير الدين بن مصطفى التونسي",
@@ -1149,7 +1143,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["الأعلام — خير الدين الزركلي", "أقوم المسالك — خير الدين التونسي"],
     verificationStatus: "pending_review",
   },
-  {
+{
     id: "mustafa-zarqa",
     name: "مصطفى أحمد الزرقا",
     fullName: "مصطفى أحمد بن محمد أبو سنة الزرقا",
@@ -1164,7 +1158,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["المدخل الفقهي العام — مصطفى الزرقا", "الأعلام — الزركلي (تتمة المعاصرين)"],
     verificationStatus: "pending_review",
   },
-  {
+{
     id: "ibn-faris",
     name: "ابن فارس",
     fullName: "أحمد بن فارس بن زكريا القزويني الرازي",
@@ -1179,7 +1173,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["ويكيبيديا العربية — مقالة ابن فارس اللغوي (شيوخه وتلاميذه ووفاته)", "الأعلام — خير الدين الزركلي"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "zarkashi",
     name: "الزركشي",
     fullName: "بدر الدين محمد بن عبد الله الزركشي",
@@ -1194,7 +1188,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["ويكيبيديا العربية — مقالة بدر الدين الزركشي (شيوخه وتلاميذه ووفاته)", "الدرر الكامنة — ابن حجر العسقلاني"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "ibn-jibreen",
     name: "الشيخ ابن جبرين",
     fullName: "عبد الله بن عبد الرحمن بن جبرين",
@@ -1209,7 +1203,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["الموقع الرسمي للشيخ ابن جبرين (ibn-jebreen.com) — السيرة الذاتية"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "syed-saabiq",
     name: "الشيخ سيد سابق",
     fullName: "سيد سابق محمد التهامي",
@@ -1224,7 +1218,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["ويكيبيديا العربية — مقالة سيد سابق (وفاته ومؤلفاته)", "الدرر السنية — وفاة الشيخ سيد سابق"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "abd-al-karim-al-khudair",
     name: "الشيخ عبد الكريم الخضير",
     fullName: "عبد الكريم بن عبد الله بن عبد الرحمن الخضير",
@@ -1239,7 +1233,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["ويكيبيديا العربية — مقالة عبد الكريم الخضير (شيوخه ومناصبه العلمية)", "الموقع الرسمي — shkhudheir.com"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "ibn-qudama",
     name: "ابن قدامة المقدسي",
     fullName: "أبو محمد موفق الدين عبد الله بن قدامة المقدسي",
@@ -1254,7 +1248,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["سير أعلام النبلاء — الذهبي", "وفيات الأعيان — ابن خلكان"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "juwayny",
     name: "إمام الحرمين الجويني",
     fullName: "أبو المعالي عبد الملك بن عبد الله الجويني",
@@ -1269,7 +1263,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["سير أعلام النبلاء — الذهبي", "طبقات الشافعية الكبرى — تاج الدين السبكي"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "ibn-salah",
     name: "ابن الصلاح",
     fullName: "أبو عمرو عثمان بن عبد الرحمن ابن الصلاح الشهرزوري",
@@ -1284,7 +1278,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["سير أعلام النبلاء — الذهبي", "وفيات الأعيان — ابن خلكان"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "al-qarafi",
     name: "الإمام القرافي",
     fullName: "أبو العباس شهاب الدين أحمد بن إدريس القرافي",
@@ -1299,7 +1293,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["ويكيبيديا العربية — مقالة شهاب الدين القرافي (شيوخه وتلاميذه ووفاته)", "الأعلام — خير الدين الزركلي"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "fakhr-razi",
     name: "الفخر الرازي",
     fullName: "أبو عبد الله محمد بن عمر فخر الدين الرازي",
@@ -1314,7 +1308,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["ويكيبيديا العربية — مقالة فخر الدين الرازي (شيوخه وتلاميذه ووفاته)", "وفيات الأعيان — ابن خلكان"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "al-mizzi",
     name: "الإمام المزي",
     fullName: "أبو الحجاج جمال الدين يوسف بن عبد الرحمن المزي",
@@ -1329,7 +1323,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["سير أعلام النبلاء — الذهبي", "الدرر الكامنة — ابن حجر العسقلاني"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "al-saadi",
     name: "الشيخ عبد الرحمن السعدي",
     fullName: "عبد الرحمن بن ناصر بن عبد الله السعدي",
@@ -1344,7 +1338,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["الموقع الرسمي للشيخ عبد الرحمن السعدي (ibn-saadi.com) — سيرة الشيخ", "الأعلام — خير الدين الزركلي"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "ibn-aqil",
     name: "ابن عقيل الحنبلي",
     fullName: "أبو الوفاء علي بن عقيل البغدادي",
@@ -1359,7 +1353,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["ويكيبيديا العربية — مقالة أبو الوفاء بن عقيل (شيوخه وتلاميذه ووفاته)", "وفيات الأعيان — ابن خلكان"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "ahmad-shakir",
     name: "الشيخ أحمد محمد شاكر",
     fullName: "أحمد محمد شاكر العرابي",
@@ -1374,7 +1368,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["ويكيبيديا العربية — مقالة أحمد محمد شاكر (شيوخه ووفاته)", "الأعلام — خير الدين الزركلي"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "al-mundhiri",
     name: "الحافظ المنذري",
     fullName: "أبو محمد زكي الدين عبد العظيم المنذري",
@@ -1389,7 +1383,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["ويكيبيديا العربية — مقالة عبد العظيم المنذري (وفاته ومؤلفاته)", "وفيات الأعيان — ابن خلكان"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "ibn-daqiq",
     name: "ابن دقيق العيد",
     fullName: "أبو الفتح تقي الدين محمد بن علي ابن دقيق العيد",
@@ -1404,8 +1398,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["ويكيبيديا العربية — مقالة ابن دقيق العيد (شيوخه وتلاميذه ووفاته)", "الدرر الكامنة — ابن حجر العسقلاني"],
     verificationStatus: "reviewed",
   },
-  
-  {
+{
     id: "ibn-battuta",
     name: "ابن بطوطة",
     fullName: "أبو عبد الله محمد بن عبد الله اللواتي الطنجي ابن بطوطة",
@@ -1420,7 +1413,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["ويكيبيديا العربية — مقالة ابن بطوطة (وفاته ومؤلفاته)", "الأعلام — خير الدين الزركلي"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "al-mawardi",
     name: "الماوردي",
     fullName: "أبو الحسن علي بن محمد بن حبيب البصري الماوردي",
@@ -1435,7 +1428,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["ويكيبيديا العربية — مقالة الماوردي (شيوخه ووفاته)", "وفيات الأعيان — ابن خلكان"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "ibn-ata-allah-al-sakandari",
     name: "ابن عطاء الله السكندري",
     fullName: "أحمد بن محمد بن عبد الكريم ابن عطاء الله الشاذلي الإسكندري",
@@ -1450,10 +1443,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["ويكيبيديا العربية — مقالة ابن عطاء الله السكندري (شيوخه وتلاميذه ووفاته)", "الدرر الكامنة — ابن حجر العسقلاني"],
     verificationStatus: "reviewed",
   },
-  
-  
-  
-  {
+{
     id: "al-sakhawi",
     name: "السخاوي",
     fullName: "أبو الخير محمد بن عبد الرحمن بن محمد السخاوي",
@@ -1468,12 +1458,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["ويكيبيديا العربية — مقالة شمس الدين السخاوي (شيوخه وتلاميذه ووفاته)", "الأعلام — خير الدين الزركلي"],
     verificationStatus: "reviewed",
   },
-  
-  
-  
-  
-  
-  {
+{
     id: "al-ajurri",
     name: "الآجري",
     fullName: "أبو بكر محمد بن الحسين الآجري البغدادي",
@@ -1488,7 +1473,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["ويكيبيديا العربية — مقالة الآجري (شيوخه وتلاميذه ووفاته)", "الأعلام — خير الدين الزركلي"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "ibn-al-wazir",
     name: "ابن الوزير",
     fullName: "أبو عبدالله محمد بن إبراهيم بن علي بن المرتضى ابن الوزير اليماني",
@@ -1503,7 +1488,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["ويكيبيديا العربية — مقالة محمد بن إبراهيم الوزير اليماني (شيوخه ووفاته)", "الضوء اللامع لأهل القرن التاسع — شمس الدين السخاوي"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "ibn-abi-shaybah",
     name: "ابن أبي شيبة",
     fullName: "أبو بكر عبد الله بن محمد بن إبراهيم ابن أبي شيبة العبسي الكوفي",
@@ -1518,7 +1503,7 @@ export const SCHOLARS: Scholar[] = [
     sources: ["ويكيبيديا العربية — مقالة ابن أبي شيبة (شيوخه وتلاميذه ووفاته)", "تهذيب الكمال في أسماء الرجال — المزي"],
     verificationStatus: "reviewed",
   },
-  {
+{
     id: "al-qurtubi",
     name: "القرطبي",
     fullName: "أبو عبد الله محمد بن أحمد بن أبي بكر الأنصاري القرطبي",
@@ -1533,13 +1518,147 @@ export const SCHOLARS: Scholar[] = [
     sources: ["سير أعلام النبلاء — الذهبي", "الأعلام — خير الدين الزركلي"],
     verificationStatus: "reviewed",
   },
-  
-  
-  
-  
-  
-  
-  
+{
+    id: "abu-nuaym",
+    name: "أبو نعيم الأصبهاني",
+    fullName: "أحمد بن عبد الله بن أحمد أبو نعيم الأصبهاني",
+    era: "المحدثون",
+    specialty: ["حديث", "تراجم", "تصوف سني"],
+    bio: "حافظ أصبهاني، صاحب حلية الأولياء ومعرفة الصحابة والمستخرج على الصحيحين. عُرف بسعة الحفظ وكثرة التصنيف في الفضائل والتراجم.",
+    key_works: ["حلية الأولياء", "معرفة الصحابة", "المستخرج على صحيح البخاري", "دلائل النبوة"],
+    died: "٤٣٠ هـ",
+    region: "أصبهان",
+    madhhab: "شافعي",
+    sources: ["سير أعلام النبلاء — الذهبي", "تذكرة الحفاظ — الذهبي"],
+    verificationStatus: "reviewed",
+  },
+{
+    id: "alusi",
+    name: "الآلوسي",
+    fullName: "محمود بن عبد الله الحسيني الآلوسي",
+    era: "المجددون",
+    specialty: ["تفسير", "لغة", "عقيدة"],
+    bio: "مفسّر بغدادي شافعي، صاحب روح المعاني. جمع بين المأثور والرأي واللغة، وولي إفتاء بغداد زمناً.",
+    key_works: ["روح المعاني", "الأجوبة العراقية", "غرائب الأوابد"],
+    died: "١٢٧٠ هـ",
+    region: "بغداد",
+    madhhab: "شافعي",
+    sources: ["الأعلام — الزركلي", "هدية العارفين — إسماعيل باشا"],
+    verificationStatus: "reviewed",
+  },
+{
+    id: "baghawi",
+    name: "البغوي",
+    fullName: "الحسين بن مسعود البغوي",
+    era: "المحدثون",
+    specialty: ["تفسير", "حديث", "فقه"],
+    bio: "مفسّر محدّث شافعي، صاحب معالم التنزيل وشرح السنة ومصابيح السنة. عُرف باعتدال النقل وتحرّي الرواية في التفسير والحديث.",
+    key_works: ["معالم التنزيل", "شرح السنة", "مصابيح السنة"],
+    died: "٥١٦ هـ",
+    region: "بغشور / خراسان",
+    madhhab: "شافعي",
+    sources: ["سير أعلام النبلاء — الذهبي", "طبقات الشافعية — السبكي"],
+    verificationStatus: "reviewed",
+  },
+  {
+    id: "sarakhsi",
+    name: "السرخسي",
+    fullName: "محمد بن أحمد بن أبي سهل شمس الأئمة السرخسي",
+    era: "العلماء الكبار",
+    specialty: ["فقه", "أصول"],
+    bio: "فقيه حنفي أصولي، صاحب المبسوط وأصول السرخسي. أملى كثيراً من علمه وهو محبوس في جبّ، وصار عمدة في المذهب الحنفي.",
+    key_works: ["المبسوط", "أصول السرخسي"],
+    died: "٤٨٣ هـ",
+    region: "سمرقند / خراسان",
+    madhhab: "حنفي",
+    sources: ["الجواهر المضية — القرشي", "الأعلام — الزركلي"],
+    verificationStatus: "reviewed",
+  },
+  {
+    id: "kasani",
+    name: "الكاساني",
+    fullName: "أبو بكر بن مسعود بن أحمد الكاساني",
+    era: "العلماء الكبار",
+    specialty: ["فقه", "أصول"],
+    bio: "فقيه حنفي لُقّب بملك العلماء، صاحب بدائع الصنائع في ترتيب الشرائع، وهو من أوسع كتب الفقه الحنفي ترتيباً وتعليلاً.",
+    key_works: ["بدائع الصنائع في ترتيب الشرائع"],
+    died: "٥٨٧ هـ",
+    region: "حلب",
+    madhhab: "حنفي",
+    sources: ["الجواهر المضية — القرشي", "الأعلام — الزركلي"],
+    verificationStatus: "reviewed",
+  },
+  {
+    id: "zamakhshari",
+    name: "الزمخشري",
+    fullName: "محمود بن عمر جار الله الزمخشري",
+    era: "العلماء الكبار",
+    specialty: ["تفسير", "لغة"],
+    bio: "مفسّر ولغوي المعلّق على اعتزال، صاحب الكشاف وأساس البلاغة. برع في البيان، ويُتحرّز من اعتزالياته في التفسير.",
+    key_works: ["الكشاف", "أساس البلاغة", "المفصّل في صنعة الإعراب"],
+    died: "٥٣٨ هـ",
+    region: "خوارزم / مكة",
+    madhhab: "حنفي",
+    sources: ["سير أعلام النبلاء — الذهبي", "الأعلام — الزركلي"],
+    verificationStatus: "reviewed",
+  },
+  {
+    id: "wahidi",
+    name: "الواحدي",
+    fullName: "علي بن أحمد الواحدي النيسابوري",
+    era: "المحدثون",
+    specialty: ["تفسير", "لغة"],
+    bio: "مفسّر نيسابوري، صاحب أسباب النزول والوسيط والوجيز والبسيط. عُني بنقل أسباب النزول وتحرير وجوه التفسير.",
+    key_works: ["أسباب نزول القرآن", "الوسيط", "الوجيز", "البسيط"],
+    died: "٤٦٨ هـ",
+    region: "نيسابور",
+    madhhab: "شافعي",
+    sources: ["سير أعلام النبلاء — الذهبي", "طبقات الشافعية — السبكي"],
+    verificationStatus: "reviewed",
+  },
+  {
+    id: "ibn-atiyya",
+    name: "ابن عطية",
+    fullName: "عبد الحق بن غالب بن عطية الأندلسي",
+    era: "العلماء الكبار",
+    specialty: ["تفسير", "لغة", "فقه"],
+    bio: "مفسّر أندلسي مالكي، صاحب المحرر الوجيز، جمع بين النقل والتحليل اللغوي مع اعتدال في الرأي.",
+    key_works: ["المحرر الوجيز في تفسير الكتاب العزيز"],
+    died: "٥٤٢ هـ",
+    region: "الأندلس",
+    madhhab: "مالكي",
+    sources: ["الصلة — ابن بشكوال", "الأعلام — الزركلي"],
+    verificationStatus: "reviewed",
+  },
+  {
+    id: "baydawi",
+    name: "البيضاوي",
+    fullName: "عبد الله بن عمر البيضاوي",
+    era: "العلماء الكبار",
+    specialty: ["تفسير", "أصول", "فقه"],
+    bio: "قاضٍ شافعي ومفسّر، اشتهر بأنوار التنزيل وأسرار التأويل، وعليه حواشٍ كثيرة في المدارس العلمية.",
+    key_works: ["أنوار التنزيل وأسرار التأويل", "منهاج الوصول"],
+    died: "٦٨٥ هـ",
+    region: "شيراز / تبريز",
+    madhhab: "شافعي",
+    sources: ["طبقات الشافعية — السبكي", "الأعلام — الزركلي"],
+    verificationStatus: "reviewed",
+  },
+  {
+    id: "munawi",
+    name: "المناوي",
+    fullName: "عبد الرؤوف بن تاج العارفين المناوي",
+    era: "العلماء الكبار",
+    specialty: ["حديث", "فقه"],
+    bio: "عالم مصري شافعي، اشتهر بفيض القدير شرح الجامع الصغير، وجمع بين الحديث والفقه والرقائق.",
+    key_works: ["فيض القدير", "التيسير بشرح الجامع الصغير"],
+    died: "١٠٣١ هـ",
+    region: "القاهرة",
+    madhhab: "شافعي",
+    sources: ["خلاصة الأثر — المحبي", "الأعلام — الزركلي"],
+    verificationStatus: "reviewed",
+  }
+
 ];
 
 export const SCHOLAR_ERAS = ["الكل", "الأئمة الأربعة", "المحدثون", "العلماء الكبار", "المجددون", "المعاصرون"];
