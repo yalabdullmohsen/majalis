@@ -19,6 +19,15 @@
 }
 .as-hero__title { font-size: 2.1rem; font-weight: 800; margin: 0 0 .6rem; }
 .as-hero__sub { font-size: var(--ds-text-base); opacity: .82; margin: 0 0 1.2rem; line-height: 1.7; }
+.as-hero__method {
+  font-size: .88rem; line-height: 1.75; opacity: .9;
+  max-width: 36rem; margin: 0 auto 1.1rem;
+  padding: .75rem 1rem;
+  border: 1px solid rgba(255,255,255,.22);
+  border-radius: .5rem;
+  background: rgba(0,0,0,.12);
+  text-align: right;
+}
 .as-hero__ayah {
   font-size: .97rem; font-style: normal; opacity: .75;
   border-top: 1px solid rgba(255,255,255,.15); padding-top: .9rem;
