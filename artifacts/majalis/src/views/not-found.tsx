@@ -28,8 +28,13 @@ export default function NotFound() {
   }, []);
 
   return (
-    <div className="nf2-page" dir="rtl">
+    <div className="nf2-page" dir="rtl" lang="ar">
       <section className="nf2-card">
+        <div className="nf2-brand">
+          <img src="/favicon.png" width={40} height={40} alt="" className="nf2-brand__logo" />
+          <span className="nf2-brand__name">المجلس العلمي</span>
+        </div>
+
         {/* أيقونة زمردية */}
         <div className="nf2-icon-wrap" aria-hidden="true">
           <Compass size={40} strokeWidth={1.4} className="nf2-compass" />
@@ -43,8 +48,9 @@ export default function NotFound() {
         </p>
 
         <div className="nf2-actions">
-          <Link href="/" className="nf2-btn nf2-btn--primary">العودة للرئيسية</Link>
-          <Link href="/search" className="nf2-btn nf2-btn--outline">البحث الشامل</Link>
+          <Link href="/" className="nf2-btn nf2-btn--primary">الرئيسية</Link>
+          <Link href="/lessons" className="nf2-btn nf2-btn--outline">الدروس</Link>
+          <Link href="/search" className="nf2-btn nf2-btn--outline">البحث</Link>
         </div>
 
         <div className="nf2-suggestions">

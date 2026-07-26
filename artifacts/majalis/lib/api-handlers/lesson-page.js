@@ -5,6 +5,7 @@ import {
   canonicalizeLessonPublicId,
   lessonExternalKeyCandidates,
 } from "../lesson-id-aliases.mjs";
+import { buildNotFoundHtml } from "../not-found-html.mjs";
 
 // dist/index.html هو نفس صدفة SPA النهائية التي بنتها Vite (بمراجع الأصول
 // المُوسَّمة بهاش صحيحة) — نستبدل وسوم SEO الافتراضية (الرئيسية) فيها بوسوم
@@ -157,16 +158,12 @@ function injectLessonHead(html, head) {
 }
 
 function notFoundHtml() {
-  return `<!DOCTYPE html>
-<html lang="ar" dir="rtl"><head><meta charset="UTF-8" />
-<title>الدرس غير موجود | ${SITE_NAME}</title>
-<meta name="robots" content="noindex" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-</head><body style="font-family:system-ui;text-align:center;padding:4rem 1rem">
-<h1>هذا الدرس غير متاح</h1>
-<p>ربما أُزيل أو انتهى، أو أن الرابط غير صحيح.</p>
-<a href="/lessons">تصفّح الدروس</a>
-</body></html>`;
+  return buildNotFoundHtml({
+    title: `الدرس غير موجود | ${SITE_NAME}`,
+    description: "هذا الدرس غير متاح. ربما أُزيل أو انتهى، أو أن الرابط غير صحيح.",
+    heading: "هذا الدرس غير متاح",
+    detail: "ربما أُزيل أو انتهى، أو أن الرابط غير صحيح. يمكنك تصفّح الدروس أو البحث.",
+  });
 }
 
 export default async function handler(req, res) {

@@ -361,6 +361,12 @@ async function invokeHandler(handler, req, res, routePrefix, routeOpts = {}) {
 export async function dispatchApiRequest(req, res) {
   const route = matchApiRoute(req);
   if (!route) {
+    // متصفح/فحص بصري يتوقع صفحة 404 لا JSON عارياً من 40 حرفاً
+    const { wantsHtml, sendNotFoundHtml } = await import("./not-found-html.mjs");
+    if (req.method === "GET" && wantsHtml(req)) {
+      sendNotFoundHtml(res);
+      return;
+    }
     sendJson(res, 404, { ok: false, message: "المسار غير موجود." });
     return;
   }
