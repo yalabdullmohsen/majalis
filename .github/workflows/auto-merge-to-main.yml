@@ -1,73 +1,164 @@
-name: Auto-merge claude branches to main
+name: Auto-ready and merge PRs to main
 
-# اختبار عملي 2026-07-22: تعليق غير مؤثر للتحقق من نجاح دورة الدمج التلقائي كاملة.
-# نطاق مُضيَّق عمدًا (2026-07-22، بطلب صريح من المالك بعد تنبيه حول الخطر):
-# يعمل فقط على فرع الاختبار المحدَّد بالاسم صراحةً، لا على أنماط عامة مثل
-# claude/** أو fix/** — هذه الأنماط تطابق عشرات الفروع الحيّة الفعلية
-# (كل جلسة تفاعلية تُلزَم بالدفع إلى فرع بهذه التسمية بعد كل مهمة)، ودمجها
-# التلقائي بلا مراجعة كان سيدفع مباشرة لـmain ثم production (auto-deploy.yml
-# ينشر تلقائيًا فور push على main). توسيع النطاق يتطلب قرارًا صريحًا لاحقًا.
+# دورة تلقائية بلا تدخل يدوي (2026-07-26، بطلب صريح من المالك):
+# أي PR من فروع العمل المعتمدة يستهدف main → Ready → انتظار الفحوصات →
+# Auto-merge (squash) → حذف الفرع. النشر عبر auto-deploy.yml بعد وصول main.
+#
+# يستبدل الدمج المباشر على push (الذي تجاوز مراجعة PR وفحوصاته).
 
 on:
-  push:
-    branches:
-      - 'claude/**'
-      - 'session/**'
-      - 'automation/**'
+  pull_request:
+    types: [opened, reopened, synchronize, ready_for_review, converted_to_draft]
+    branches: [main]
+  # إعادة المحاولة بعد اكتمال CI (مهم بعد undraft أو فشل سابق)
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
+  # معالجة جماعية لـ PRs المفتوحة (تشغيل يدوي أو بعد نشر هذا الـworkflow)
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: "رقم PR محدد (فارغ = كل المؤهلة)"
+        required: false
+        type: string
 
 concurrency:
-  group: auto-merge-main
-  cancel-in-progress: false
+  group: auto-merge-pr-${{ github.event.pull_request.number || github.event.workflow_run.id || github.event.inputs.pr_number || 'batch' }}
+  cancel-in-progress: true
 
 permissions:
   contents: write
+  pull-requests: write
+  actions: read
+  checks: read
+
+env:
+  # PAT المالك: دمج عبره يُطلق workflows على main (GITHUB_TOKEN لا يفعل).
+  # إن غاب السرّ نستخدم GITHUB_TOKEN مع تحذير — الدمج قد ينجح بلا تشغيل auto-deploy.
+  GH_TOKEN: ${{ secrets.PROD_DEPLOY_TOKEN || secrets.GITHUB_TOKEN }}
 
 jobs:
-  merge:
+  auto-merge:
+    if: github.repository == 'yalabdullmohsen/majalis'
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+
     steps:
-      - name: Checkout main
-        # PROD_DEPLOY_TOKEN لا GITHUB_TOKEN الافتراضي: GitHub يمنع عمدًا أي
-        # push بـGITHUB_TOKEN من تشغيل workflows أخرى (حماية من حلقات لا
-        # نهائية) — فبلا هذا التوكن كان push هذه الخطوة لن يُطلق auto-deploy.yml
-        # إطلاقًا رغم نجاح الدمج نفسه (مؤكَّد: التشغيل التجريبي الأول 663a53b7
-        # وصل main فعليًا ولم يُطلق أي نشر). نفس التوكن المستخدَم بالفعل في
-        # auto-deploy.yml لنفس السبب تمامًا.
-        uses: actions/checkout@v4
-        with:
-          ref: main
-          fetch-depth: 0
-          token: ${{ secrets.PROD_DEPLOY_TOKEN }}
-
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 24
-          cache: pnpm
-
-      - name: Merge branch into main
+      - name: تحديد قائمة الـ PRs المستهدفة
+        id: targets
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name }}
+          PR_BASE_REF: ${{ github.event.pull_request.base.ref }}
+          WORKFLOW_CONCLUSION: ${{ github.event.workflow_run.conclusion }}
+          WORKFLOW_HEAD_BRANCH: ${{ github.event.workflow_run.head_branch }}
+          WORKFLOW_HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+          DISPATCH_PR: ${{ github.event.inputs.pr_number }}
         run: |
-          git config user.name "auto-merge-bot"
-          git config user.email "bot@users.noreply.github.com"
-          git merge origin/${{ github.ref_name }} --no-ff -m "دمج تلقائي: ${{ github.ref_name }}"
+          set -euo pipefail
+          ALLOW='^(cursor|session|claude|automation|fix|feature)/'
 
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+          nums=""
+          if [ "$EVENT_NAME" = "pull_request" ]; then
+            if [ "$PR_BASE_REF" != "main" ]; then
+              echo "تخطي: القاعدة ليست main ($PR_BASE_REF)"
+              echo "nums=" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            if [ "$PR_HEAD_REPO" != "$GITHUB_REPOSITORY" ]; then
+              echo "تخطي: PR من مستودع خارجي غير موثوق ($PR_HEAD_REPO)"
+              echo "nums=" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            nums="$PR_NUMBER"
+          elif [ "$EVENT_NAME" = "workflow_run" ]; then
+            if [ "${WORKFLOW_CONCLUSION}" != "success" ]; then
+              echo "تخطي: CI لم ينجح (${WORKFLOW_CONCLUSION})"
+              echo "nums=" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
+            # اربط تشغيل CI بـ PR واحد أو أكثر على نفس الـ SHA
+            nums=$(gh api "repos/${GITHUB_REPOSITORY}/commits/${WORKFLOW_HEAD_SHA}/pulls" \
+              --jq '[.[] | select(.base.ref=="main" and .head.repo.full_name=="'"${GITHUB_REPOSITORY}"'") | .number] | join(" ")' || true)
+            if [ -z "${nums}" ]; then
+              # احتياطي: فرع الرأس
+              nums=$(gh pr list --base main --state open --head "${GITHUB_REPOSITORY_OWNER}:${WORKFLOW_HEAD_BRANCH}" --json number --jq '.[].number' | tr '\n' ' ')
+            fi
+          elif [ "$EVENT_NAME" = "workflow_dispatch" ]; then
+            if [ -n "${DISPATCH_PR}" ]; then
+              nums="${DISPATCH_PR}"
+            else
+              nums=$(gh pr list --base main --state open --limit 50 --json number --jq '.[].number' | tr '\n' ' ')
+            fi
+          fi
 
-      - name: Install Playwright browser (لبوابة تباين الألوان ضمن test:regression)
-        run: pnpm --filter @workspace/majalis exec playwright install --with-deps chromium
+          echo "مرشّحون: ${nums:-∅}"
+          echo "nums=${nums}" >> "$GITHUB_OUTPUT"
+          echo "allow=${ALLOW}" >> "$GITHUB_OUTPUT"
 
-      - name: Type check
-        run: pnpm --filter @workspace/majalis run typecheck
+      - name: Ready + Auto-merge (squash) لكل PR مؤهّل
+        if: steps.targets.outputs.nums != ''
+        env:
+          ALLOW: ${{ steps.targets.outputs.allow }}
+          NUMS: ${{ steps.targets.outputs.nums }}
+        run: |
+          set -euo pipefail
+          if [ -z "${GH_TOKEN:-}" ]; then
+            echo "::error::لا يوجد رمز مصادقة لـ gh"
+            exit 1
+          fi
 
-      - name: Build and test merged result
-        run: pnpm --filter @workspace/majalis run build
+          for n in $NUMS; do
+            echo "::group::PR #$n"
+            meta=$(gh pr view "$n" --json number,state,isDraft,baseRefName,headRefName,headRepository,isCrossRepository,mergeable,mergeStateStatus,url \
+              --jq '{state,isDraft,base:.baseRefName,head:.headRefName,cross:.isCrossRepository,mergeable,mergeStateStatus,url}')
+            echo "$meta"
 
-      - name: Regression tests
-        run: pnpm --filter @workspace/majalis run test:regression
+            state=$(echo "$meta" | jq -r .state)
+            base=$(echo "$meta" | jq -r .base)
+            head=$(echo "$meta" | jq -r .head)
+            cross=$(echo "$meta" | jq -r .cross)
+            mergeable=$(echo "$meta" | jq -r .mergeable)
+            draft=$(echo "$meta" | jq -r .isDraft)
 
-      - name: Push to main
-        run: git push origin main
+            if [ "$state" != "OPEN" ]; then
+              echo "تخطي: ليس مفتوحًا ($state)"
+              echo "::endgroup::"
+              continue
+            fi
+            if [ "$base" != "main" ]; then
+              echo "تخطي: القاعدة ليست main"
+              echo "::endgroup::"
+              continue
+            fi
+            if [ "$cross" = "true" ]; then
+              echo "تخطي: PR من fork خارجي"
+              echo "::endgroup::"
+              continue
+            fi
+            if ! echo "$head" | grep -Eq "$ALLOW"; then
+              echo "تخطي: الفرع $head خارج أنماط العمل المعتمدة"
+              echo "::endgroup::"
+              continue
+            fi
+            if [ "$mergeable" = "CONFLICTING" ]; then
+              echo "::warning::PR #$n فيه تعارضات — لا دمج"
+              echo "::endgroup::"
+              continue
+            fi
+
+            if [ "$draft" = "true" ]; then
+              echo "تحويل Draft → Ready…"
+              gh pr ready "$n"
+            fi
+
+            # لا تتجاوز الفحوصات: --auto ينتظر نجاح الفحوصات المطلوبة
+            echo "تفعيل Auto-merge (squash) + حذف الفرع…"
+            if gh pr merge "$n" --auto --squash --delete-branch; then
+              echo "✓ Auto-merge مفعّل أو الدمج تم لـ #$n"
+            else
+              echo "::warning::تعذّر تفعيل auto-merge لـ #$n (فحوصات معلّقة/فاشلة أو قيود مستودع)"
+            fi
+            echo "::endgroup::"
+          done
