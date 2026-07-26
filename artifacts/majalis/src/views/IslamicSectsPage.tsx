@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
@@ -37,20 +38,26 @@ const SECTS: Sect[] = [
     keyBeliefs: [
       "القرآن الكريم كلام الله غير مخلوق",
       "الإيمان قول وعمل واعتقاد، يزيد وينقص",
-      "الصحابة عدول لا يُطعن في أحد منهم",
+      "إثبات الأسماء والصفات بلا تحريف ولا تعطيل ولا تكييف ولا تمثيل",
+      "الصحابة عدول لا يُطعن في أحد منهم، والكفّ عما شجر بينهم",
+      "محبة آل البيت بلا غلوّ يرفعهم فوق منزلتهم",
       "رؤية الله في الآخرة حق ثابت بالكتاب والسنة",
       "كرامات الأولياء حق لا تبلغ درجة معجزات الأنبياء",
-      "القدر خيره وشره من الله تعالى",
+      "القدر خيره وشره من الله تعالى — علمًا وكتابةً ومشيئةً وخلقًا",
+      "الوسطية بين الخوارج والمرجئة في باب الأسماء والأحكام",
+      "اتباع السنة وترك البدع في الدين",
     ],
     keyBooks: [
-      "العقيدة الطحاوية — الطحاوي",
+      "العقيدة الواسطية — ابن تيمية",
+      "العقيدة الطحاوية — الطحاوي (مع شرح ابن أبي العز)",
       "لمعة الاعتقاد — ابن قدامة",
-      "شرح العقيدة الواسطية — ابن تيمية",
+      "شرح أصول اعتقاد أهل السنة — اللالكائي",
+      "أصول السنة — الإمام أحمد",
     ],
-    keyScholars: ["الإمام أحمد بن حنبل", "الطحاوي", "ابن تيمية", "ابن القيم"],
+    keyScholars: ["الإمام أحمد بن حنبل", "الطحاوي", "ابن تيمية", "ابن القيم", "ابن أبي العز", "اللالكائي"],
     status: "قائمة",
     spread: "الغالبية العظمى من المسلمين في العالم (نحو 85-90%)",
-    quote: "افترقت اليهود على إحدى وسبعين فرقة... وستفترق أمتي على ثلاث وسبعين فرقة كلها في النار إلا واحدة... قالوا: ومَن هي؟ قال: الجماعة — أبو داود والترمذي",
+    quote: "«عليكم بسنتي وسنة الخلفاء الراشدين المهديين من بعدي، عَضّوا عليها بالنواجذ» — رواه أبو داود والترمذي، وحسّنه الترمذي وصححه جمع من أهل العلم. وأما حديث افتراق الأمة فله طرق يتكلم فيها أهل الحديث؛ والعمدة لزوم الجماعة على الحق لا مجرد العدد.",
   },
   {
     id: "ashariyya",
@@ -1139,6 +1146,43 @@ export default function IslamicSectsPage() {
                     >
                       {sect.quote}
                     </blockquote>
+                  )}
+
+                  {sect.id === "ahl-al-sunna" && (
+                    <div style={{ marginTop: "1rem", display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                      <Link
+                        href="/learn/aqeedat-ahl-sunnah"
+                        onClick={(e) => e.stopPropagation()}
+                        style={{
+                          display: "inline-block",
+                          background: "#143F35",
+                          color: "#fff",
+                          padding: "0.55rem 0.9rem",
+                          borderRadius: "0.6rem",
+                          fontWeight: 700,
+                          fontSize: "0.85rem",
+                          textAlign: "center",
+                        }}
+                      >
+                        دروس عقيدة أهل السنة والجماعة ←
+                      </Link>
+                      <Link
+                        href="/tawhid"
+                        onClick={(e) => e.stopPropagation()}
+                        style={{
+                          display: "inline-block",
+                          border: "1px solid #143F35",
+                          color: "#143F35",
+                          padding: "0.5rem 0.9rem",
+                          borderRadius: "0.6rem",
+                          fontWeight: 600,
+                          fontSize: "0.85rem",
+                          textAlign: "center",
+                        }}
+                      >
+                        بوابة العقيدة والتوحيد ←
+                      </Link>
+                    </div>
                   )}
                 </div>
               </div>
