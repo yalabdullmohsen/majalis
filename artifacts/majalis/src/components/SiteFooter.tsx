@@ -52,8 +52,8 @@ export function SiteFooter() {
               className="site-footer-logo site-footer-logo--calligraphy"
               loading="lazy"
               decoding="async"
-              width="2044"
-              height="788"
+              width={152}
+              height={59}
             />
             <p>نبني منظومة الإسلام الرقمي؛ علمٌ موثوق وتقنية تقرّب القرآن والمعرفة والعبادة للجميع.</p>
             <p className="site-footer-email">

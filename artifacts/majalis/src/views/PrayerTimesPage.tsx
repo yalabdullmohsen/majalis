@@ -130,6 +130,7 @@ export default function PrayerTimesPage() {
   if (loading) {
     return (
       <div className="pt-wrap" dir="rtl">
+        <h1 className="pt-page-title">مواقيت الصلاة</h1>
         <div className="pt-skeleton" aria-busy="true">
           <div className="pt-skeleton__label">جارٍ تحميل المواقيت…</div>
         </div>
@@ -140,6 +141,7 @@ export default function PrayerTimesPage() {
   if (!countdown?.next) {
     return (
       <div className="pt-wrap" dir="rtl">
+        <h1 className="pt-page-title">مواقيت الصلاة</h1>
         <p className="pt-error">تعذّر تحميل مواقيت الصلاة، تحقق من الاتصال.</p>
       </div>
     );

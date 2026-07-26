@@ -656,44 +656,24 @@
     <priority>0.72</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/fiqh-council/fiqh-crypto-2024</loc>
+    <loc>https://majlisilm.com/fiqh-council/items-encrypted-digital-currencies</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/fiqh-council/fiqh-organ-donation</loc>
+    <loc>https://majlisilm.com/fiqh-council/items-smart-contracts</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/fiqh-council/fiqh-minorities-rights</loc>
+    <loc>https://majlisilm.com/fiqh-council/items-cultured-meat</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/fiqh-council/fiqh-marriage-contract</loc>
+    <loc>https://majlisilm.com/fiqh-council/items-gmo-animal-foods</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/fiqh-council/fiqh-zakat-stocks</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/fiqh-council/fiqh-collective-fatwa-hajj</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/fiqh-council/sessions/session-24-2024</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.69</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/fiqh-council/sessions/session-22-2023</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.69</priority>
   </url>
   <url>
     <loc>https://majlisilm.com/rulings/ruling-wudu-nullifiers</loc>

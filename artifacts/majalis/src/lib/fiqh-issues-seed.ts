@@ -1249,43 +1249,19 @@ export const FIQH_ISSUES_PUBLISHED_SEED: FiqhCouncilIssue[] = [
   },
 ];
 
-/** ربط المسائل بعناصر البذور عبر slug */
+/**
+ * ربط المسائل بعناصر البذور عبر slug.
+ * تدقيق (٢٠٢٦-٠٧-٢٦): أُعيد بناؤها بعد أن تبيَّن أن كل مداخلها السابقة (٣٥ مدخلاً)
+ * تشير إلى slugs لا وجود لها: أكثر من عشرين منها لم يوجد في البذرة ولا في الجدول
+ * أصلاً (fiqh-general-anesthesia، fiqh-human-cloning، fiqh-misyar-marriage…)،
+ * والبقية أشارت إلى العناصر التي حُذفت لانعدام مستند نسبتها. لا يُدرَج هنا إلا
+ * ربطٌ إلى عنصر موجود فعلاً في fiqh-council-seed.ts.
+ */
 export const FIQH_ISSUE_ITEM_LINKS: Record<string, string[]> = {
-  "crypto-currency": ["fiqh-crypto-2024"],
-  "organ-donation": ["fiqh-organ-donation"],
-  "muslim-minorities-rights": ["fiqh-minorities-rights"],
-  "zakat-stocks": ["fiqh-zakat-stocks"],
-  "hajj-delay": ["fiqh-collective-fatwa-hajj"],
-  "general-anesthesia": ["fiqh-general-anesthesia"],
-  "artificial-organ-transplant": ["fiqh-artificial-organ-transplant"],
-  "human-cloning": ["fiqh-human-cloning"],
-  "abortion-rape-cases": ["fiqh-abortion-rape-cases"],
-  "misyar-marriage": ["fiqh-misyar-marriage"],
-  "electronic-divorce": ["fiqh-electronic-divorce"],
-  "artificial-breastfeeding": ["fiqh-artificial-breastfeeding"],
-  "fasting-elderly-disabled": ["fiqh-fasting-elderly-disabled"],
-  "astronaut-prayer": ["fiqh-astronaut-prayer"],
-  "zakat-crypto": ["fiqh-zakat-crypto"],
-  "health-insurance-ruling": ["fiqh-health-insurance-ruling"],
-  "stock-market-trading": ["fiqh-stock-market-trading"],
-  "organ-donation-will": ["fiqh-organ-donation-will"],
-  "milk-bank-breastfeeding": ["fiqh-milk-bank-breastfeeding"],
-  "minorities-kitabiyya-marriage": ["fiqh-minorities-kitabiyya-marriage"],
-  "ai-generated-fatwa-ruling": ["fiqh-social-media-dawah", "fiqh-ai-fatwa-tools"],
-  "stem-cell-therapy": ["fiqh-surrogacy", "fiqh-genetic-testing"],
-  "digital-waqf": ["update-decision-waqf-digital", "fiqh-waqf-stocks"],
-  "zakat-real-estate": ["fatwa-zakat-debt"],
-  "gender-reassignment-surgery": [],
-  "surrogacy-mother": ["fiqh-surrogacy"],
-  "euthanasia-mercy-killing": [],
-  "covid-vaccine-ruling": [],
-  "nft-metaverse-transactions": ["fiqh-crypto-2024"],
-  "social-media-dawah": ["fiqh-social-media-dawah", "fiqh-ai-fatwa-tools"],
-  "hair-transplant-cosmetic": [],
-  "crowdfunding-investment": [],
-  "polar-regions-fasting": [],
-  "deception-marriage-annulment": [],
-  "medicinal-cannabis-cbd": [],
+  "encrypted-digital-currencies": ["items-encrypted-digital-currencies"],
+  "smart-contracts": ["items-smart-contracts"],
+  "cultured-meat": ["items-cultured-meat"],
+  "gmo-animal-foods": ["items-gmo-animal-foods"],
 };
 
 export const FIQH_ISSUE_TIMELINE_SEED: Record<string, Omit<FiqhTimelineEvent, "id" | "issue_id">[]> = {

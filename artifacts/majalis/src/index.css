@@ -12354,7 +12354,13 @@ body.assistant-panel-open {
   gap: 0.35rem;
 }
 
-.fiqh-topic-list a {
+.fiqh-topic-list a,
+.fiqh-topic-list__link {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding-block: 0.25rem;
+  box-sizing: border-box;
   color: var(--emerald-deep, #143F35);
   text-decoration: none;
   font-weight: 600;
@@ -15552,132 +15558,6 @@ body.has-assistant-fab .app-main {
 }
 
 /* ================================================================
-   Bottom Navigation Bar — mobile native-like tab bar
-   Follows iOS HIG + Material Design 3 principles
-   ================================================================ */
-
-:root {
-  /* مصدر واحد فعلي: يُطابِق --bottom-nav-height (final-release.css) دومًا،
-     بدل قيمة ثابتة منفصلة كانت تنحرف عنها وتُنتج padding-bottom أكبر من
-     ارتفاع الشريط الحقيقي (فراغ زائف أعلى الشريط) — إصلاح جذري 2026-07-25. */
-  --bottom-nav-h: var(--bottom-nav-height, 48px);
-}
-
-.bottom-nav {
-  display: none; /* hidden on desktop */
-}
-
-@media (max-width: 879px) {
-  /* ── Bottom Nav Shell ── */
-  .bottom-nav {
-    display: flex;
-    position: fixed;
-    bottom: 0;
-    inset-inline: 0;
-    z-index: 200;
-    height: calc(var(--bottom-nav-h) + env(safe-area-inset-bottom, 0px));
-    padding-bottom: env(safe-area-inset-bottom, 0px);
-    background: var(--msk-canvas-glass);
-    backdrop-filter: blur(20px) saturate(1.6);
-    -webkit-backdrop-filter: blur(20px) saturate(1.6);
-    border-top: 1px solid rgba(31,77,58,0.10);
-    box-shadow: 0 -4px 24px rgba(31,77,58,0.08), 0 -1px 4px rgba(31,77,58,0.05);
-  }
-
-  /* ── Tab item ── */
-  .bottom-nav__tab {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 3px;
-    padding: 6px 4px 4px;
-    text-decoration: none;
-    color: var(--majalis-ink-soft, #5c564c);
-    font-size: 10px;
-    font-weight: 600;
-    font-family: inherit;
-    border: none;
-    background: none;
-    cursor: pointer;
-    -webkit-tap-highlight-color: transparent;
-    transition: color 0.12s;
-  }
-
-  .bottom-nav__tab-icon {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 44px;
-    height: 28px;
-    border-radius: 14px;
-    transition: background 0.18s ease, transform 0.18s ease;
-  }
-
-  .bottom-nav__tab.is-active .bottom-nav__tab-icon {
-    transform: translateY(-1px);
-  }
-
-  .bottom-nav__tab-label {
-    line-height: 1;
-  }
-
-  /* ── Prayer tab: icon container needs relative for badge ── */
-  .bottom-nav__tab-icon--prayer {
-    position: relative;
-  }
-
-  /* ── Prayer time badge فوق أيقونة الصلاة ── */
-  .bottom-nav__prayer-badge {
-    position: absolute;
-    top: -5px;
-    inset-inline-end: -2px;
-    background: var(--msk-gold);
-    color: var(--msk-canvas);
-    font-size: 7.5px;
-    font-weight: 700;
-    border-radius: 999px;
-    padding: 1px 4px;
-    line-height: 1.5;
-    white-space: nowrap;
-    pointer-events: none;
-  }
-
-  /* ── Active state — pill indicator (iOS/MD3 style) ── */
-  .bottom-nav__tab.is-active {
-    color: var(--msk-gold);
-  }
-
-  .bottom-nav__tab.is-active .bottom-nav__tab-icon {
-    background: var(--msk-gold-dim);
-  }
-
-  .bottom-nav__tab:focus-visible {
-    outline: 2px solid var(--msk-gold);
-    outline-offset: -2px;
-    border-radius: var(--ds-radius);
-  }
-
-  /* ── Push main content above the bar ──
-     ‎+1rem: فسحة تصميمية مقصودة كي لا تلتصق آخر بطاقة بالشريط مباشرة —
-     ليست فراغًا زائدًا، فارتفاع الشريط نفسه (--bottom-nav-h) محسوب بدقة
-     الآن ليطابق ارتفاعه الفعلي المُصيَّر (راجع التعليق أعلى --bottom-nav-h). */
-  .app-main {
-    padding-bottom: calc(var(--bottom-nav-h) + env(safe-area-inset-bottom, 0px) + 1rem) !important;
-  }
-
-  body.has-assistant-fab .app-main {
-    padding-bottom: calc(var(--bottom-nav-h) + env(safe-area-inset-bottom, 0px) + 1rem) !important;
-  }
-
-  /* ── Hide floating assistant button (it's in bottom nav now) ── */
-  .assistant-fab {
-    display: none !important;
-  }
-}
-
-/* ================================================================
    Compact Search Strip — replaces the large Hero section
    ================================================================ */
 
@@ -18534,15 +18414,8 @@ body.has-assistant-fab .app-main {
   -webkit-backdrop-filter: blur(4px);
 }
 
-/* ── NavBar: خلفية العاجي الدافئ على النهار ── */
-html:not([data-theme="dark"]) .navbar-v3 {
-  background: rgba(247,244,237,0.96) !important;
-}
-
-/* ── تذييل التنقل السفلي: خلفية عاجية دافئة على النهار ── */
-html:not([data-theme="dark"]) .bottom-nav {
-  background: rgba(247,244,237,0.97) !important;
-}
+/* NavBar / bottom-nav backgrounds: مصدر واحد في final-release.css
+   (أُزيلت هنا !important التي كانت تُلغي عقد الهوية النهائي). */
 
 /* ── فواصل أقسام دقيقة بين عناصر الصفحة الرئيسية ── */
 .home-main > *:not(:last-child) {

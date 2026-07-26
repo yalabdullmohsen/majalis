@@ -117,7 +117,9 @@ async function searchFiqhDirect(admin, query, limit = 5) {
 
   const { data } = await admin
     .from("fiqh_council_items")
-    .select("id, title, slug, ruling_text, summary, source_name, source_url, category, type, session_date, decision_number, confidence_level")
+    // لا عمود decision_number ولا confidence_level في الجدول — طلبهما كان يُفشل
+    // الاستعلام كاملاً (42703) فيعود بحث الفقه في RAG فارغاً دائماً.
+    .select("id, title, slug, ruling_text, summary, source_name, source_url, category, type, session_number, session_date")
     .eq("status", "published")
     .or(`title.ilike.%${term}%,ruling_text.ilike.%${term}%,summary.ilike.%${term}%`)
     .limit(limit);
@@ -130,9 +132,9 @@ async function searchFiqhDirect(admin, query, limit = 5) {
     excerpt:         excerpt(f.ruling_text || f.summary),
     source_ref:      f.source_name || "مجمع فقهي",
     source_url:      f.source_url || `/fiqh-council/${f.slug}`,
-    authority_score: f.confidence_level === "source_verified" ? 88 : 72,
+    authority_score: f.source_url?.startsWith("http") ? 88 : 72,
     metadata:        { category: f.category, type: f.type, slug: f.slug,
-                       session_date: f.session_date, decision_number: f.decision_number },
+                       session_date: f.session_date, session_number: f.session_number },
     relevance_score: 0.6,
   }));
 }
@@ -145,22 +147,25 @@ async function searchFawaid(admin, query, limit = 4) {
   const term = normalizeQuery(query).slice(0, 80);
   if (!term) return [];
 
+  // أعمدة جدول fawaid الفعلية: لا title ولا author ولا source فيه
+  // (author_name وsource_name)، وطلبها كان يُفشل الاستعلام كاملًا بخطأ
+  // 42703 فيعود البحث فارغًا دائمًا بلا أثر ظاهر (لا يُفحَص error هنا).
   const { data } = await admin
     .from("fawaid")
-    .select("id, title, text, author, source, category")
-    .or(`text.ilike.%${term}%,title.ilike.%${term}%`)
+    .select("id, text, author_name, source_name, category")
+    .ilike("text", `%${term}%`)
     .limit(limit);
 
   return (data || []).map((f) => ({
     id:              f.id,
     content_id:      String(f.id),
     content_type:    "benefit",
-    title:           f.title || String(f.text || "").slice(0, 80),
+    title:           String(f.text || "").slice(0, 80),
     excerpt:         excerpt(f.text),
-    source_ref:      f.author || f.source || "فائدة",
+    source_ref:      f.author_name || f.source_name || "فائدة",
     source_url:      "",
     authority_score: 60,
-    metadata:        { author: f.author, source: f.source, category: f.category },
+    metadata:        { author: f.author_name, source: f.source_name, category: f.category },
     relevance_score: 0.4,
   }));
 }
