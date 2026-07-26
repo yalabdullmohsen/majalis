@@ -8,6 +8,7 @@ import { usePageView } from "@/hooks/usePageView";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { ShareButton } from "@/components/ShareButton";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import "@/styles/pages/seerah.css";
 
 const PHASES: { id: string; num: number; title: string; year: string; Icon: LucideIcon; color: string; desc: string; topics: string[]; keyEvents: string[] }[] = [
@@ -465,6 +466,7 @@ export default function SeerahPage() {
       </div>
 
       <div className="page-shell narrow">
+        <RelatedKnowledge kind="lesson" query="السيرة النبوية" title="دروس ومواد في السيرة" limit={6} />
         <SectionQuiz
           categoryId="sira"
           title="اختبر معلوماتك في السيرة النبوية"

@@ -536,6 +536,8 @@ export default function TawhidPage() {
         </div>
       </section>
 
+      <RelatedKnowledge kind="lesson" query="العقيدة والتوحيد" title="دروس ومواد في العقيدة" limit={6} />
+
       <SectionQuiz
         categoryId="aqeeda"
         title="اختبر معلوماتك في العقيدة والتوحيد"

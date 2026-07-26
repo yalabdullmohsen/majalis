@@ -26,7 +26,6 @@ import {
   Landmark,
   Layers,
   Library,
-  Lightbulb,
   Map as MapIcon,
   Mic2,
   Moon,
@@ -98,7 +97,6 @@ export const MORE_SHEET_SECTIONS: MoreSheetSection[] = [
     { href: "/janna-naar",  label: "الجنة والنار",         Icon: Sparkles },
     { href: "/alamat-saah", label: "علامات الساعة",        Icon: Clock },
     { href: "/malaika",     label: "الملائكة في الإسلام",  Icon: Sparkles },
-    { href: "/ulum-quran",  label: "علوم القرآن والإعجاز", Icon: Lightbulb },
   ]},
 
   /* ── التعريف بالإسلام ── */

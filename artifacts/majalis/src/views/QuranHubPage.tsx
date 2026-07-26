@@ -9,6 +9,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { useEffect } from "react";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import "@/styles/pages/quran-hub.css";
 
 type QuranSection = { href: string; title: string; desc: string; Icon: LucideIcon; accent: string; tag: string; featured?: boolean };
@@ -242,6 +243,8 @@ export default function QuranHubPage() {
         </p>
         <span className="quran-hub-closing__ref">الإسراء: ٩</span>
       </section>
+
+      <RelatedKnowledge kind="lesson" query="القرآن الكريم" title="دروس ومواد قرآنية ذات صلة" limit={6} />
 
       <SectionQuiz
         categoryId="quran"

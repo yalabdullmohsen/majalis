@@ -4,6 +4,7 @@ import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import "@/styles/pages/ulum-quran.css";
 
 
@@ -528,6 +529,7 @@ export default function UlumQuranPage() {
           </div>
         </nav>
       </div>
+      <RelatedKnowledge kind="lesson" query="علوم القرآن" title="مواد ذات صلة بعلوم القرآن" limit={6} />
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="quran" title="اختبر معلوماتك في علوم القرآن" count={4} />
       </div>

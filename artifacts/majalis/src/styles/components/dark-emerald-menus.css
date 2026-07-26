@@ -4,7 +4,7 @@
 
 /* ── MoreBottomSheet — الخلفية الزمردية الداكنة ── */
 .bottom-sheet {
-  background: #143F35 !important;
+  background: var(--majalis-emerald-deep, #143F35) !important;
   border-radius: 1.75rem 1.75rem 0 0 !important;
   border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
@@ -86,7 +86,7 @@
 
 /* ── NavBar — زمردي داكن ── */
 .navbar-v3 {
-  background: linear-gradient(135deg, #143F35 0%, #226A56 100%) !important;
+  background: linear-gradient(135deg, var(--majalis-emerald-deep, #143F35) 0%, var(--majalis-emerald, #226A56) 100%) !important;
   border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
   box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3) !important;
   backdrop-filter: none !important;

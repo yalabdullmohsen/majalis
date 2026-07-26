@@ -2388,43 +2388,11 @@ button.primary:hover {
 
 /* ── نُقل إلى styles/pages/islamic-stories.css ── */
 
-/* ═══════════════════════════════════════════════════════════════
-   51  Muezzins Library  (mzp-*)
-   ═══════════════════════════════════════════════════════════════ */
-.mzp-header { margin-bottom: 1.25rem; }
-.mzp-header__top { display: flex; align-items: flex-start; justify-content: space-between; }
-.mzp-eyebrow { font-size: var(--ds-text-xs); color: var(--majalis-emerald); font-weight: 600; text-transform: uppercase; letter-spacing: normal; margin: 0 0 0.25rem; }
-.mzp-title { font-size: 1.4rem; font-weight: 800; color: var(--majalis-ink); margin: 0 0 0.35rem; }
-.mzp-subtitle { font-size: 0.82rem; color: var(--txt-subdued, #5C5C56); margin: 0; }
-.mzp-style-badge {
-  padding: 0.2rem 0.55rem; border-radius: var(--ds-radius-full);
-  font-size: 0.68rem; font-weight: 600;
-}
-.mzp-style-badge--khashi   { background: var(--majalis-emerald-muted); color: var(--majalis-emerald); }
-.mzp-style-badge--rasmi    { background: var(--majalis-parchment-deep); color: var(--majalis-ink); }
-.mzp-style-badge--taqlidi  { background: var(--majalis-parchment-deep); color: var(--majalis-ink-soft); }
-.mzp-style-badge--kilasiki { background: var(--majalis-emerald-muted); color: var(--majalis-emerald); }
-.mzp-card__category { font-size: 0.8rem; color: var(--txt-muted, #5C5C56); }
-.mzp-card__rating-row { display: flex; align-items: center; gap: 0.4rem; }
-.mzp-card__rating-num { font-size: 0.78rem; font-weight: 600; color: var(--majalis-ink-soft); }
-.mzp-card__rating-count { font-size: 0.8rem; color: var(--txt-muted, #5C5C56); }
-.mzp-card__followers { font-size: var(--ds-text-xs); color: var(--txt-subdued, #5C5C56); }
-.mzp-card__btns { display: flex; gap: var(--ds-space-2); margin-top: 0.25rem; }
-.mzp-card__preview-btn, .mzp-card__detail-btn {
-  flex: 1; padding: 0.45rem 0; border-radius: var(--ds-radius);
-  font-size: 0.8rem; font-weight: 600; cursor: pointer; font-family: inherit;
-}
-.mzp-card__preview-btn { border: none; background: #143F35; color: #fff; }
-.mzp-card__preview-btn.is-playing { background: #ef4444; }
-.mzp-card__detail-btn { border: 1.5px solid #143F35; background: transparent; color: var(--majalis-emerald); }
-/* Stars */
-.mzp-stars { display: inline-flex; align-items: center; gap: 0.15rem; font-size: 0.8rem; }
-.mzp-star { font-size: 0.85rem; color: var(--majalis-line); }
-.mzp-star.is-active { color: var(--majalis-emerald, #226A56); }
+/* ── مكتبة المؤذنين القديمة (mzp-card*) حُذفت — الواجهة الحيّة: muezzin-picker.css ── */
 
 /* ── نُقل إلى styles/pages/knowledge-graph.css ── */
 /* ── نُقل إلى styles/pages/miracles.css (legacy) ── */
-/* ── نُقل إلى styles/pages/quran-radio.css ── */
+/* ── quran-radio: أُزيل (يتيم بلا مستهلك) ── */
 /* ── نُقل إلى styles/pages/my-submissions.css ── */
 /* ── نُقل إلى styles/pages/adhan-settings.css ── */
 /* ── نُقل إلى styles/pages/upload.css ── */
@@ -2480,7 +2448,7 @@ button.primary:hover {
    ============================================================ */
 .page-stats-row--flush { margin-bottom: 0; }
 
-/* ── نُقل إلى styles/pages/learning-path.css ── */
+/* ── learning-path stub: أُزيل (يتيم بلا مستهلك) ── */
 /* ── tp stub → transcribe.css ── */
 /* ── نُقل إلى styles/pages/study-room.css ── */
 /* ============================================================
@@ -2622,15 +2590,15 @@ html[data-theme="dark"] .lesson-unified-card__btn--primary {
   background: #226A56 !important;
 }
 
-/* ── نُقل إلى styles/components/ayah-display.css ── */
+/* ── ayah-display stub: أُزيل (يتيم بلا مستهلك) ── */
 /* ── 168 — FiqhAdminSubnav overrides ───────────────────────────────────── */
 .fiqh-admin-subnav-link         { color: var(--majalis-ink-soft); font-weight: 400; }
 .fiqh-admin-subnav-link--active { color: var(--majalis-emerald-deep); font-weight: 700; }
 
 /* ── نُقل إلى styles/components/explore-ayah.css ── */
-/* ── نُقل إلى styles/components/quran-search.css ── */
-/* ── نُقل إلى styles/components/khatmah-bookmarks.css ── */
-/* ── نُقل إلى styles/components/related-content-widget.css ── */
+/* ── quran-search stub: أُزيل (يتيم بلا مستهلك) ── */
+/* ── khatmah-bookmarks stub: أُزيل (يتيم بلا مستهلك) ── */
+/* ── related-content-widget stub: أُزيل (يتيم بلا مستهلك) ── */
 /* ── نُقل إلى styles/components/achievement-toast.css ── */
 /* ── 174 — LazyRouteFallback & AsyncDataView ─────────────────────────────── */
 .lrf-wrap {
@@ -2666,7 +2634,7 @@ html[data-theme="dark"] .lesson-unified-card__btn--primary {
 
 .tasbeeh-counter__bar > span { display: block; height: 100%; border-radius: inherit; background: var(--majalis-emerald); transition: width 0.4s ease; width: var(--tc-pct, 0%); }
 
-/* ── نُقل إلى styles/components/home/home-adhan-widget.css ── */
+/* ── home-adhan-widget stub: أُزيل (يتيم بلا مستهلك) ── */
 /* ── نُقل إلى styles/components/hadith-badge.css ── */
 /* ── نُقل إلى styles/components/home/home-learning-seasons.css ── */
 /* ── qc-card → quran-circles.css ── */
@@ -2767,7 +2735,7 @@ button, .btn {
 
 /* ── نُقل إلى styles/components/submissions-review.css ── */
 /* ── نُقل إلى styles/components/islamic-geometric.css ── */
-/* ── نُقل إلى styles/components/book-card.css ── */
+/* ── book-card stub: أُزيل؛ قواعد .book-card العامة أدناه ── */
 /* ══════════════════════════════════════════════
    201 — تحسينات شاملة للموقع (Site-wide Enhancements)
    ══════════════════════════════════════════════ */

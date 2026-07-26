@@ -24,7 +24,17 @@ export function BottomNavBar() {
 
   const isActive = (href: string) => {
     if (href === "/") return location === "/";
-    return location === href || location.startsWith(href + "/");
+    // «تعلّم» يغطي دروس/مسارات/أبواب العلم بلا التباس مع مسارات أخرى.
+    if (href === "/lessons") {
+      return (
+        location === "/lessons" || location.startsWith("/lessons/")
+        || location === "/learn" || location.startsWith("/learn/")
+        || location === "/learning" || location.startsWith("/learning/")
+        || location === "/learning-plan" || location.startsWith("/learning-plan/")
+        || location === "/my-learning" || location.startsWith("/my-learning/")
+      );
+    }
+    return location === href || location.startsWith(`${href}/`);
   };
 
   // قارئ المصحف /mushaf غامر مخصَّص بتنقّله الخاص (pager/سحب صفحات) —

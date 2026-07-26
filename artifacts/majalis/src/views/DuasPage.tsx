@@ -1192,6 +1192,8 @@ export default function DuasPage() {
         </div>
       )}
 
+      <RelatedKnowledge kind="hadith" query="الأدعية الشرعية" title="أحاديث ومواد في الدعاء" limit={6} />
+
       <SectionQuiz
         categoryId="hadith"
         title="اختبر معلوماتك في الحديث الشريف"

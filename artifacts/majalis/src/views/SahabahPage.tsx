@@ -3,6 +3,7 @@ import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { SectionIcon } from "@/components/ui/SectionIcon";
 import "@/styles/pages/sahabah.css";
 
@@ -1360,6 +1361,8 @@ export default function SahabahPage() {
             <p>لا توجد نتائج مطابقة</p>
           </div>
         )}
+
+        <RelatedKnowledge kind="lesson" query="الصحابة الكرام" title="دروس ومواد عن الصحابة" limit={6} />
 
         <SectionQuiz
           categoryId={["sira", "akhlaq"]}

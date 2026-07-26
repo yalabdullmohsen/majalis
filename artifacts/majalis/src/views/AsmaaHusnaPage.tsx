@@ -5,6 +5,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 
 /* ─── بيانات الأسماء الحسنى ─── */
 type AsmaaEntry = {
@@ -298,6 +299,8 @@ export default function AsmaaHusnaPage() {
           ))}
         </div>
       )}
+
+      <RelatedKnowledge kind="lesson" query="الأسماء الحسنى" title="دروس ومواد في الأسماء الحسنى" limit={6} />
 
       <SectionQuiz
         categoryId="aqeeda"
