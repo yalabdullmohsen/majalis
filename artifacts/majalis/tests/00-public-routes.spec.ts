@@ -14,6 +14,7 @@ import { test, expect } from "@playwright/test";
 // يجب أن تتطابق مع src/lib/navigation.ts > PUBLIC_NAV_ITEMS
 const PUBLIC_ROUTES: Array<{ href: string; label: string }> = [
   { href: "/",               label: "الرئيسية" },
+  { href: "/learn",          label: "أبواب العلم" },
   { href: "/lessons",        label: "الدروس" },
   { href: "/annual-courses", label: "الدورات العلمية" },
   { href: "/library",        label: "المكتبة" },
@@ -24,13 +25,13 @@ const PUBLIC_ROUTES: Array<{ href: string; label: string }> = [
   { href: "/qa",             label: "الأسئلة" },
   { href: "/arbaeen-nawawi", label: "الأربعون النووية" },
   { href: "/updates",        label: "المستجدات" },
-  { href: "/fiqh",                 label: "الفقه الإسلامي" },
-  { href: "/fiqh-council",        label: "المجمع الفقهي" },
-  { href: "/rulings",             label: "الأحكام الشرعية" },
-  { href: "/seerah",              label: "السيرة النبوية" },
-  { href: "/scholarly-research",  label: "الباحث الشرعي" },
-  { href: "/universities",        label: "دليل الجامعات" },
-  { href: "/learning-path",       label: "خارطة طالب العلم" },
+  { href: "/fiqh",           label: "الفقه الإسلامي" },
+  { href: "/fiqh-council",   label: "المجمع الفقهي" },
+  { href: "/rulings",        label: "الأحكام الشرعية" },
+  { href: "/seerah",         label: "السيرة النبوية" },
+  { href: "/scholars",       label: "أعلام الإسلام" },
+  { href: "/knowledge-graph",label: "استكشف المعرفة" },
+  { href: "/mind-map",       label: "الخرائط الذهنية" },
   { href: "/quran-hub",      label: "القرآن" },
   { href: "/mushaf",         label: "المصحف" },
   { href: "/quran/memorization-plans", label: "خطط حفظ القرآن" },
@@ -49,8 +50,12 @@ const PUBLIC_ROUTES: Array<{ href: string; label: string }> = [
 
 // مسارات الاختصار التي يجب أن تُعيد التوجيه بدلاً من الفشل
 const REDIRECT_ROUTES: Array<{ href: string; redirectsTo: string }> = [
-  { href: "/quran",    redirectsTo: "/quran-hub" }, // قارئ المصحف صفحة-بصفحة حُذف (2026-07-14)
-  { href: "/research", redirectsTo: "/fiqh-council/research" },
+  { href: "/quran",                 redirectsTo: "/quran-hub" },
+  { href: "/research",              redirectsTo: "/fiqh-council/research" },
+  { href: "/scholarly-research",    redirectsTo: "/qa" },
+  { href: "/learning-path",         redirectsTo: "/learning/paths" },
+  { href: "/knowledge-map",         redirectsTo: "/knowledge-graph" },
+  { href: "/features-in-progress",  redirectsTo: "/updates" },
 ];
 
 // نصوص تدل على حظر الوصول

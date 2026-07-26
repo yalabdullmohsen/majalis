@@ -69,7 +69,7 @@ function getSeasons(): Season[] {
       endDate: new Date("2027-03-29"),
       description: "شهر رمضان المبارك 1448هـ",
       suggestion: "خطة تعلّم رمضانية مكثّفة",
-      href: "/learning-plan",
+      href: "/learning/paths",
       color: "var(--majalis-emerald-deep, #143F35)",
     },
     {

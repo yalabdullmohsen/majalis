@@ -9,6 +9,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { useEffect } from "react";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { isComingSoonPath } from "@/lib/nav-visibility";
 import "@/styles/pages/quran-hub.css";
 
 type QuranSection = { href: string; title: string; desc: string; Icon: LucideIcon; accent: string; tag: string; featured?: boolean };
@@ -35,18 +36,10 @@ const QURAN_SECTIONS: QuranSection[] = [
   {
     href: "/mushaf",
     title: "المصحف الشريف",
-    desc: "اقرأ القرآن الكريم كاملاً سورة سورة، مع الاستماع لكل آية ومشاركتها",
+    desc: "صفحات مصحف حقيقية مطابقة لتقسيم مصحف المدينة، مع الاستماع والإشارات المرجعية والملاحظات",
     Icon: BookOpen,
     accent: "#143F35",
     tag: "٦٠٤ صفحة",
-  },
-  {
-    href: "/mushaf/page",
-    title: "المصحف بنظام الصفحات",
-    desc: "صفحات مصحف حقيقية مطابقة لتقسيم مصحف المدينة، مع إطارات وأوضاع قراءة وإشارات مرجعية وملاحظات",
-    Icon: Layers,
-    accent: "#176B57",
-    tag: "جديد",
   },
   {
     href: "/quran/surahs",
@@ -91,10 +84,10 @@ const QURAN_SECTIONS: QuranSection[] = [
   {
     href: "/quran-circles",
     title: "حلقات القرآن",
-    desc: "انضم لحلقات الحفظ والمراجعة وتلاوة القرآن الكريم",
+    desc: "دليل حلقات الحفظ والمراجعة — قيد التجهيز",
     Icon: Circle,
     accent: "#143F35",
-    tag: "مجتمع",
+    tag: "قريبًا",
   },
   {
     href: "/daily-wird",
@@ -204,21 +197,32 @@ export default function QuranHubPage() {
       <section className="quran-hub-sections">
         <h2 className="quran-hub-sections__title">أقسام القرآن</h2>
         <div className="quran-hub-grid">
-          {QURAN_SECTIONS.map(s => (
-            <Link key={s.href} href={s.href} className={`quran-hub-card ${s.featured ? "quran-hub-card--featured" : ""}`}>
-              <div className={`quran-hub-card__header ${qhcAccentMod(s.accent)}`}>
-                <s.Icon size={28} className="quran-hub-card__icon" />
-                <span className="quran-hub-card__tag">{s.tag}</span>
-              </div>
-              <div className="quran-hub-card__body">
-                <h3 className="quran-hub-card__title">{s.title}</h3>
-                <p className="quran-hub-card__desc">{s.desc}</p>
-                <span className="quran-hub-card__link">
-                  استكشف <ChevronLeft size={14} />
-                </span>
-              </div>
-            </Link>
-          ))}
+          {QURAN_SECTIONS.map(s => {
+            const soon = isComingSoonPath(s.href);
+            return (
+              <Link
+                key={s.href}
+                href={s.href}
+                className={`quran-hub-card${s.featured ? " quran-hub-card--featured" : ""}${soon ? " quran-hub-card--soon" : ""}`}
+                aria-label={soon ? `${s.title} — قريبًا` : undefined}
+              >
+                <div className={`quran-hub-card__header ${qhcAccentMod(s.accent)}`}>
+                  <s.Icon size={28} className="quran-hub-card__icon" />
+                  <span className="quran-hub-card__tag">{soon ? "قريبًا" : s.tag}</span>
+                </div>
+                <div className="quran-hub-card__body">
+                  <h3 className="quran-hub-card__title">
+                    {s.title}
+                    {soon ? <span className="nav-soon-badge">قريبًا</span> : null}
+                  </h3>
+                  <p className="quran-hub-card__desc">{s.desc}</p>
+                  <span className="quran-hub-card__link">
+                    {soon ? "معاينة" : "استكشف"} <ChevronLeft size={14} />
+                  </span>
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </section>
 

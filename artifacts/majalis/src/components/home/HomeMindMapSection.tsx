@@ -5,20 +5,20 @@ import "@/styles/components/home/home-mindmap.css";
 
 const MAPS = [
   {
+    href: "/knowledge-graph",
+    Icon: Network,
+    title: "استكشف المعرفة",
+    desc: "شبكة دلالية تربط العلوم والمفاهيم والعلماء والكتب",
+    tag: "بوابة",
+  },
+  {
     href: "/mind-map",
     Icon: Map,
     title: "الخرائط الذهنية",
-    desc: "نظّم معلوماتك الإسلامية مرئياً، ابنِ خرائط للعقيدة والفقه والحديث",
+    desc: "خرائط تفاعلية للعقيدة والفقه والحديث وسائر العلوم",
     tag: "تفاعلي",
   },
-  {
-    href: "/knowledge-graph",
-    Icon: Network,
-    title: "شبكة المعرفة",
-    desc: "استكشف العلاقات والروابط بين المفاهيم الإسلامية برسم بياني",
-    tag: "مرئي",
-  },
-];
+] as const;
 
 export function HomeMindMapSection() {
   return (
@@ -26,9 +26,9 @@ export function HomeMindMapSection() {
       id="mind-map"
       className="hmm-section"
       eyebrow="التعلم المرئي"
-      title="الخرائط الذهنية"
-      moreHref="/mind-map"
-      moreLabel="افتح الخرائط"
+      title="استكشف المعرفة"
+      moreHref="/knowledge-graph"
+      moreLabel="افتح الشبكة"
       state="ready"
     >
       <div className="hmm-grid">

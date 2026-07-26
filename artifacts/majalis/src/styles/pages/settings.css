@@ -43,6 +43,13 @@
   margin-top: 0.5rem !important;
 }
 
+.settings-account-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.85rem;
+}
+
 .settings-danger-btn {
   padding: 0.5rem 1rem !important;
   background: transparent !important;

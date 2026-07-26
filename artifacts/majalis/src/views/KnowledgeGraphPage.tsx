@@ -4,7 +4,7 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "wouter";
-import { GitBranch, Network, Waypoints } from "lucide-react";
+import { GitBranch, Map as MapIcon, Network, Waypoints } from "lucide-react";
 import {
   fetchKnNodes,
   fetchKnSubgraph,
@@ -319,6 +319,10 @@ export default function KnowledgeGraphPage() {
             <span className="sh-stat"><GitBranch size={13} strokeWidth={2.5} />{edgeCount} علاقة</span>
           </div>
         )}
+        <Link href="/mind-map" className="kng-mindmap-link">
+          <MapIcon size={16} strokeWidth={1.8} aria-hidden="true" />
+          <span>الخرائط الذهنية للعلوم الشرعية</span>
+        </Link>
       </header>
 
       {/* Tabs */}
