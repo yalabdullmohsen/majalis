@@ -22,61 +22,59 @@ export type SheikhSeedItem = {
   photo_url?: string;
 };
 
+/**
+ * تطبيع النص العربي لمقارنة التكرار: إزالة التطويل والتشكيل والمسافات الزائدة
+ * وتوحيد الهمزات، لتحييد الاختلافات الشكلية غير المؤثرة عند المقارنة.
+ */
+function normalizeArabicName(value: string): string {
+  return (value || "")
+    .normalize("NFKC")
+    .replace(/ـ/g, "") // التطويل (ـ)
+    .replace(/[ً-ٰٟ]/g, "") // التشكيل
+    .replace(/[إأآا]/g, "ا") // توحيد الألف/الهمزات
+    .replace(/[ىي]/g, "ي")
+    .replace(/ة/g, "ه")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+/**
+ * صمّام أمان ضد التكرار: يُزيل أي شيخ مكرّر بمعرّفه (id) أو باسمه المُطبّع،
+ * فلا يظهر الشيخ نفسه مرتين في القوائم ونتائج البحث. الإصلاح الجذري يبقى في
+ * هذا الملف نفسه (حذف السجلات المكررة من المصدر)، وهذه الدالة حارسٌ إضافي.
+ * تعيش هنا لا في demo-content.ts لأنها حارس هذا المصدر، وعليها يعتمد اختبار
+ * سلامة البيانات `src/lib/__tests__/sheikhs-dedup.test.ts`.
+ */
+export function dedupeSheikhs<T extends { id?: string; name?: string }>(items: readonly T[]): T[] {
+  const seenIds = new Set<string>();
+  const seenNames = new Set<string>();
+  const result: T[] = [];
+  for (const item of items) {
+    const idKey = (item.id || "").trim();
+    const nameKey = normalizeArabicName(item.name || "");
+    if (!idKey && !nameKey) continue;
+    if (idKey && seenIds.has(idKey)) continue;
+    if (nameKey && seenNames.has(nameKey)) continue;
+    if (idKey) seenIds.add(idKey);
+    if (nameKey) seenNames.add(nameKey);
+    result.push(item);
+  }
+  return result;
+}
+
 export const SHEIKHS_SEED: SheikhSeedItem[] = [
-  {
-    id: "sheikh-001",
-    name: "الشيخ عبدالله بن عبدالعزيز بن باز",
-    ijazah: "إجازة في العقيدة والحديث",
-    city: "الرياض",
-    years_experience: 40,
-    is_verified: false,
-    sources: [],
-    specialties: ["عقيدة", "حديث", "فتاوى"],
-    bio: "من كبار علماء المملكة؛ تخصص في العقيدة والحديث؛ له فتاوى ودروس كثيرة.",
-  },
   {
     id: "sheikh-005",
     name: "الشيخ عبد العزيز بن عبد الله آل الشيخ",
-    ijazah: "مفتي عام المملكة (سابقاً)",
-    city: "الرياض",
-    years_experience: 25,
+    ijazah: "المفتي العام للمملكة العربية السعودية (1420—1447هـ)",
+    city: "الرياض — المملكة العربية السعودية",
+    years_experience: 60,
     is_verified: false,
-    sources: [],
-    specialties: ["فتوى", "عقيدة"],
-    bio: "عضو هيئة كبار العلماء؛ له فتاوى ودروس في العقيدة والفقه.",
-  },
-  {
-    id: "sheikh-006",
-    name: "الإمام أحمد بن حنبل",
-    ijazah: "إمام أهل السنة",
-    city: "بغداد",
-    years_experience: 40,
-    is_verified: false,
-    sources: [],
-    specialties: ["حديث", "فقه"],
-    bio: "صاحب المذهب الحنبلي؛ جمع المسند؛ من أئمة الحديث.",
-  },
-  {
-    id: "sheikh-007",
-    name: "الإمام الشافعي",
-    ijazah: "إمام المذهب الشافعي",
-    city: "مصر",
-    years_experience: 35,
-    is_verified: false,
-    sources: [],
-    specialties: ["فقه", "أصول"],
-    bio: "صاحب الرسالة؛ جمع بين الفقه والحديث والأصول.",
-  },
-  {
-    id: "sheikh-008",
-    name: "الإمام مالك بن أنس",
-    ijazah: "إمام دار الهجرة",
-    city: "المدينة",
-    years_experience: 40,
-    is_verified: false,
-    sources: [],
-    specialties: ["فقه", "حديث"],
-    bio: "صاحب الموطأ؛ إمام أهل المدينة في الفقه والحديث.",
+    sources: [
+      "https://aawsat.com/العالم-العربي/الخليج/5189477-رحيل-الشيخ-عبد-العزيز-آل-الشيخ-ثالث-مفتٍ-في-تاريخ-السعودية",
+    ],
+    specialties: ["فتوى", "عقيدة", "فقه حنبلي"],
+    bio: "ثالث مفتٍ عام للمملكة العربية السعودية ورئيس هيئة كبار العلماء؛ تولّى الإفتاء في 29 محرم 1420هـ بعد وفاة الشيخ ابن باز، وبقي فيه حتى وفاته. (توفي 1 ربيع الآخر 1447هـ / 23 سبتمبر 2025م)",
   },
   // ── مشايخ كويتيون ──────────────────────────────────────────────
   {
@@ -205,17 +203,6 @@ export const SHEIKHS_SEED: SheikhSeedItem[] = [
     bio: "داعية كويتي بارز؛ له سلسلة «من روائع حضارتنا» وبرامج في التاريخ الإسلامي؛ يُقدّم محاضرات في الحضارة والأخلاق الإسلامية.",
   },
   {
-    id: "khaled-al-rashid-kuwait",
-    name: "الشيخ خالد بن عبدالرحمن الراشد",
-    ijazah: "داعية — خطيب",
-    city: "الجهراء",
-    years_experience: 25,
-    is_verified: false,
-    sources: [],
-    specialties: ["وعظ", "رقائق", "خطبة"],
-    bio: "داعية كويتي معروف بخطبه الجمعة ودروسه في الرقائق والتزكية؛ من أكثر الخطباء الكويتيين تأثيراً في الوجدان.",
-  },
-  {
     id: "tariq-suwaidan",
     name: "د. طارق محمد سويدان",
     ijazah: "دكتوراه في الهندسة — داعية",
@@ -229,13 +216,13 @@ export const SHEIKHS_SEED: SheikhSeedItem[] = [
   {
     id: "hamed-al-ali-kuwait",
     name: "د. حامد بن عبدالله العلي",
-    ijazah: "أستاذ الشريعة — كلية الشريعة بالكويت",
+    ijazah: "ماجستير التفسير وعلوم القرآن — أستاذ الثقافة الإسلامية بكلية التربية الأساسية بالكويت",
     city: "الكويت",
     years_experience: 28,
     is_verified: false,
-    sources: [],
-    specialties: ["فقه", "عقيدة", "سياسة شرعية"],
-    bio: "عالم وأستاذ شريعة كويتي؛ له فتاوى وبحوث في الفقه المعاصر والسياسة الشرعية.",
+    sources: ["https://ar.wikipedia.org/wiki/حامد_بن_عبد_الله_العلي"],
+    specialties: ["تفسير", "علوم القرآن", "ثقافة إسلامية", "فقه"],
+    bio: "داعية وأكاديمي كويتي؛ طلب العلوم الشرعية في الجامعة الإسلامية بالمدينة المنورة (1401—1410هـ) ونال الماجستير في التفسير وعلوم القرآن؛ أستاذ الثقافة الإسلامية بكلية التربية الأساسية في الكويت؛ له كتابات وبحوث ومحاضرات.",
   },
   {
     id: "ali-al-rubaai-kuwait",
@@ -258,17 +245,6 @@ export const SHEIKHS_SEED: SheikhSeedItem[] = [
     sources: [],
     specialties: ["تزكية", "تربية", "دعوة"],
     bio: "داعية كويتي من الفروانية؛ يُعنى بالتربية الروحية وتزكية النفس؛ له دورات في تأهيل الشباب على القيم الإسلامية.",
-  },
-  {
-    id: "muhammad-al-duwaish-kuwait",
-    name: "الشيخ محمد بن إبراهيم الدويش",
-    ijazah: "داعية — مستشار تربوي",
-    city: "الأحمدي",
-    years_experience: 20,
-    is_verified: false,
-    sources: [],
-    specialties: ["تربية", "شباب", "دعوة"],
-    bio: "داعية كويتي من الأحمدي؛ متخصص في شؤون الشباب والتربية؛ له كتابات ودراسات في الفقه الدعوي.",
   },
   {
     id: "mansour-al-muhandis-kuwait",
@@ -308,13 +284,15 @@ export const SHEIKHS_SEED: SheikhSeedItem[] = [
   {
     id: "saleh-al-maghamsi",
     name: "الشيخ صالح بن عواد المغامسي",
-    ijazah: "إمام وخطيب — مسجد قباء",
+    ijazah: "إمام المسجد النبوي",
     city: "المدينة المنورة",
     years_experience: 30,
     is_verified: false,
-    sources: [],
+    sources: [
+      "https://aawsat.com/العالم-العربي/الخليج/5243330-السعودية-صالح-المغامسي-إماماً-بالمسجد-النبوي",
+    ],
     specialties: ["تفسير", "قرآن", "سيرة"],
-    bio: "إمام وخطيب مسجد قباء بالمدينة المنورة؛ له سلسلة تفسيرية مطولة وكتب في علوم القرآن والسيرة.",
+    bio: "عالم سعودي؛ صدر أمر سامٍ بتعيينه إماماً في المسجد النبوي في 5 رمضان 1447هـ / 21 فبراير 2026م، وكان قبلها إماماً وخطيباً لمسجد قباء بالمدينة المنورة؛ له سلسلة تفسيرية مطولة وكتب في علوم القرآن والسيرة.",
   },
   {
     id: "suleiman-al-ruhayly",
@@ -328,7 +306,7 @@ export const SHEIKHS_SEED: SheikhSeedItem[] = [
     bio: "أستاذ في قسم السنة بالجامعة الإسلامية بالمدينة؛ له شروح في كتب الحديث والعقيدة؛ يُدرّس في المسجد النبوي.",
   },
   {
-    id: "awad-al-qarni",
+    id: "aid-al-qarni",
     name: "د. عائض بن عبدالله القرني",
     ijazah: "دكتوراه في الحديث",
     city: "أبها",
