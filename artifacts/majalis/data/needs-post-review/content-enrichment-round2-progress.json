@@ -2,7 +2,7 @@
   "branch": "session/content-enrichment-round-2",
   "mode": "enrichment_and_audit",
   "started": "2026-07-26T07:20:00Z",
-  "updated": "2026-07-26T07:33:10Z",
+  "updated": "2026-07-26T07:34:52Z",
   "baseline_from_counts": {
     "quiz": 1097,
     "quiz_with_explanation": 328,
@@ -44,7 +44,8 @@
     "stories_expand_14_add_8",
     "scholars_bios_expand_21_add_8_books_add_10_desc_expand",
     "quiz_explanations_769_add_40_adhkar_add_6",
-    "rulings_expand_14_lessons_enrich_802_prophets_22"
+    "rulings_expand_14_lessons_enrich_802_prophets_22",
+    "quiz_dedupe_final"
   ],
   "added_counts": {
     "stories_expanded": 14,
@@ -68,5 +69,36 @@
     "كتب JSON الجديدة verificationStatus=pending_review حتى مراجعة الطبعات والربط الكامل بـ authorId",
     "adh-345 (حفظني بالإسلام): حسن بطرق، يُراجع تحرير المعاصرين للسند",
     "adh-346 (لا سهل إلا ما جعلته سهلا): حسن عند ابن حبان، يُراجع الخلاف في التصحيح"
-  ]
+  ],
+  "status": "gates_passed_awaiting_auto_merge",
+  "final_counts": {
+    "$comment": "مُولَّد آليًا من السجلات — لا تحرّره يدويًا. أعِد التوليد: npx tsx scripts/generate-content-counts.ts",
+    "generatedAt": "2026-07-26",
+    "books": 156,
+    "scholars": 117,
+    "fawaid": 556,
+    "quizQuestions": 1137,
+    "mindMaps": 23,
+    "rulings": 583,
+    "courses": 63,
+    "miracles": 60,
+    "adhkar": 317,
+    "qa": 400,
+    "nations": 17,
+    "stories": 67,
+    "quiz_with_explanation": 1137
+  },
+  "gates": {
+    "typecheck": "pass",
+    "lint": "pass",
+    "vite_build": "pass",
+    "quiz_integrity": "pass",
+    "scholarly_content_guard": "pass",
+    "nations": "pass",
+    "library_integrity": "pass",
+    "scholars_integrity": "pass",
+    "counts": "pass",
+    "identity": "pass",
+    "data_quality": "pass_0_issues"
+  }
 }
