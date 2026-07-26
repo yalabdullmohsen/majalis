@@ -1,13 +1,12 @@
 {
-  "scannedAt": "2026-07-25T23:33:20.804Z",
+  "scannedAt": "2026-07-26T00:02:26.602Z",
   "byType": {
-    "short-lesson-summary": 353,
-    "short-field": 234,
-    "ellipsis": 90,
-    "incomplete-marker": 31,
-    "latin-in-arabic": 1,
+    "short-lesson-summary": 351,
+    "ellipsis": 84,
+    "incomplete-marker": 32,
+    "short-field": 184,
     "placeholder": 46,
-    "dup-title": 6
+    "dup-title": 7
   },
   "issues": [
     {
@@ -113,14 +112,6 @@
       "len": 38,
       "title": "هل أنت اليوم أقرب إلى الله من العام الماضي؟",
       "sample": "مقياس النمو الحقيقي: الحركة لا الثبات."
-    },
-    {
-      "file": "lib/durus-mutanawwia-data.ts",
-      "line": 340,
-      "type": "short-lesson-summary",
-      "len": 29,
-      "title": "ماذا قدمت لدينك؟",
-      "sample": "سؤال عن الأثر لا عن الانتماء."
     },
     {
       "file": "lib/durus-mutanawwia-data.ts",
@@ -276,14 +267,6 @@
     },
     {
       "file": "lib/arabic-language-data.ts",
-      "line": 84,
-      "type": "short-lesson-summary",
-      "len": 25,
-      "title": "الفعل الصحيح وأقسامه",
-      "sample": "السالم والمهموز والمضعّف."
-    },
-    {
-      "file": "lib/arabic-language-data.ts",
       "line": 85,
       "type": "short-lesson-summary",
       "len": 36,
@@ -356,54 +339,6 @@
     },
     {
       "file": "lib/rulings-seed.ts",
-      "line": 58,
-      "type": "short-field",
-      "field": "summary",
-      "len": 36,
-      "sample": "الشروط التي تجب بها الزكاة في المال."
-    },
-    {
-      "file": "lib/rulings-seed.ts",
-      "line": 458,
-      "type": "short-field",
-      "field": "summary",
-      "len": 39,
-      "sample": "أحكام زكاة الفطر ومقدارها ووقت إخراجها."
-    },
-    {
-      "file": "lib/rulings-seed.ts",
-      "line": 484,
-      "type": "short-field",
-      "field": "summary",
-      "len": 38,
-      "sample": "مقادير الزكاة الواجبة في الإبل والبقر."
-    },
-    {
-      "file": "lib/rulings-seed.ts",
-      "line": 620,
-      "type": "short-field",
-      "field": "summary",
-      "len": 36,
-      "sample": "وجوب بر الوالدين وطاعتهما وحدود ذلك."
-    },
-    {
-      "file": "lib/rulings-seed.ts",
-      "line": 684,
-      "type": "short-field",
-      "field": "summary",
-      "len": 36,
-      "sample": "حكم الربا وأقسامه في الفقه الإسلامي."
-    },
-    {
-      "file": "lib/rulings-seed.ts",
-      "line": 711,
-      "type": "short-field",
-      "field": "summary",
-      "len": 38,
-      "sample": "تعريف الإجارة وشروطها وما يترتب عليها."
-    },
-    {
-      "file": "lib/rulings-seed.ts",
       "line": 1034,
       "type": "ellipsis",
       "sample": "1. **العصبة بالنفس:** الذكور من الورثة المنتسبين للميت بلا واسطة أنثى (الابن، الأخ الشقيق، العم...)."
@@ -421,100 +356,12 @@
       "sample": "text: \"حُرِّمَتْ عَلَيْكُمُ الْمَيْتَةُ وَالدَّمُ وَلَحْمُ الْخِنزِيرِ ... إِلَّا مَا ذَكَّيْتُمْ\","
     },
     {
-      "file": "lib/rulings-seed.ts",
-      "line": 1900,
-      "type": "short-field",
-      "field": "summary",
-      "len": 39,
-      "sample": "حكم إنزال الثوب أو الإزار أسفل الكعبين."
-    },
-    {
-      "file": "lib/rulings-seed.ts",
-      "line": 1935,
-      "type": "short-field",
-      "field": "summary",
-      "len": 38,
-      "sample": "عقوبة السرقة في الشريعة وشروط تطبيقها."
-    },
-    {
-      "file": "lib/adhkar-seed.ts",
-      "line": 24,
-      "type": "short-field",
-      "field": "description",
-      "len": 33,
-      "sample": "أذكار ما بعد الفجر إلى طلوع الشمس"
-    },
-    {
-      "file": "lib/adhkar-seed.ts",
-      "line": 25,
-      "type": "short-field",
-      "field": "description",
-      "len": 29,
-      "sample": "أذكار ما بعد العصر إلى المغرب"
-    },
-    {
-      "file": "lib/adhkar-seed.ts",
-      "line": 30,
-      "type": "short-field",
-      "field": "description",
-      "len": 29,
-      "sample": "أذكار دخول المسجد والخروج منه"
-    },
-    {
-      "file": "lib/adhkar-seed.ts",
-      "line": 31,
-      "type": "short-field",
-      "field": "description",
-      "len": 22,
-      "sample": "أذكار قبل الطعام وبعده"
-    },
-    {
-      "file": "lib/adhkar-seed.ts",
-      "line": 32,
-      "type": "short-field",
-      "field": "description",
-      "len": 19,
-      "sample": "أذكار السفر والركوب"
-    },
-    {
-      "file": "lib/adhkar-seed.ts",
-      "line": 33,
-      "type": "short-field",
-      "field": "description",
-      "len": 32,
-      "sample": "ما يُقال عند الوضوء وعند انتهائه"
-    },
-    {
       "file": "lib/adhkar-seed.ts",
       "line": 36,
       "type": "short-field",
       "field": "description",
       "len": 32,
       "sample": "أدعية الكرب والهم والغم من السنة"
-    },
-    {
-      "file": "lib/adhkar-seed.ts",
-      "line": 44,
-      "type": "short-field",
-      "field": "description",
-      "len": 30,
-      "sample": "صيغ الصلاة والسلام على النبي ﷺ"
-    },
-    {
-      "file": "lib/adhkar-seed.ts",
-      "line": 45,
-      "type": "short-field",
-      "field": "description",
-      "len": 34,
-      "sample": "ما يُقال عند نزول المطر وعند رؤيته"
-    },
-    {
-      "file": "lib/adhkar-seed.ts",
-      "line": 46,
-      "type": "short-field",
-      "field": "description",
-      "len": 31,
-      "sample": "ما يُقال عند هبوب الريح الشديدة"
     },
     {
       "file": "lib/adhkar-seed.ts",
@@ -932,24 +779,9 @@
     },
     {
       "file": "lib/quiz-seed.ts",
-      "line": 6921,
-      "type": "latin-in-arabic",
-      "sample": "لـsira",
-      "ctx": "// كانت أرقّ فئة \"صعب\" لم تُستهدَف من قبل (8 فقط، خلافاً لـsira/anbiya"
-    },
-    {
-      "file": "lib/quiz-seed.ts",
       "line": 7022,
       "type": "incomplete-marker",
       "sample": "{\"id\": \"demo-quiz-1046\", \"section\": \"الفتوحات الإسلامية\", \"category\": \"القادة\", \"level\": \"صعب\", \"question\": \"من القائد ا"
-    },
-    {
-      "file": "lib/islamic-occasions-seed.ts",
-      "line": 234,
-      "type": "short-field",
-      "field": "summary",
-      "len": 38,
-      "sample": "أفضل الصيام بعد رمضان شهر الله المحرم."
     },
     {
       "file": "lib/islamic-occasions-seed.ts",
@@ -1426,22 +1258,6 @@
       "sample": "د. محمد الشنقيطي"
     },
     {
-      "file": "lib/updates-seed.ts",
-      "line": 18,
-      "type": "short-field",
-      "field": "summary",
-      "len": 38,
-      "sample": "بدء التسجيل في الدورة السنوية للإجازة."
-    },
-    {
-      "file": "lib/updates-seed.ts",
-      "line": 59,
-      "type": "short-field",
-      "field": "summary",
-      "len": 39,
-      "sample": "انعقاد مؤتمر الفقه المعاصر ونشر أبحاثه."
-    },
-    {
       "file": "lib/scholars-data.ts",
       "line": 106,
       "type": "ellipsis",
@@ -1467,7 +1283,7 @@
     },
     {
       "file": "lib/scholars-data.ts",
-      "line": 1413,
+      "line": 1416,
       "type": "incomplete-marker",
       "sample": "died: \"٧٧٠ هـ تقريباً\","
     },
@@ -2105,7 +1921,15 @@
     },
     {
       "file": "lib/scholars-data.ts",
-      "line": 1141,
+      "line": 1134,
+      "type": "short-lesson-summary",
+      "len": 26,
+      "title": "الأعلام — خير الدين الزركلي",
+      "sample": "طبائع الاستبداد — الكواكبي"
+    },
+    {
+      "file": "lib/scholars-data.ts",
+      "line": 1142,
       "type": "short-lesson-summary",
       "len": 3,
       "title": "أصول",
@@ -2113,7 +1937,7 @@
     },
     {
       "file": "lib/scholars-data.ts",
-      "line": 1143,
+      "line": 1144,
       "type": "short-lesson-summary",
       "len": 11,
       "title": "أقوم المسالك في معرفة أحوال الممالك",
@@ -2121,7 +1945,15 @@
     },
     {
       "file": "lib/scholars-data.ts",
-      "line": 1155,
+      "line": 1149,
+      "type": "short-lesson-summary",
+      "len": 32,
+      "title": "الأعلام — خير الدين الزركلي",
+      "sample": "أقوم المسالك — خير الدين التونسي"
+    },
+    {
+      "file": "lib/scholars-data.ts",
+      "line": 1157,
       "type": "short-lesson-summary",
       "len": 4,
       "title": "فقه",
@@ -2129,7 +1961,15 @@
     },
     {
       "file": "lib/scholars-data.ts",
-      "line": 1169,
+      "line": 1164,
+      "type": "short-lesson-summary",
+      "len": 34,
+      "title": "المدخل الفقهي العام — مصطفى الزرقا",
+      "sample": "الأعلام — الزركلي (تتمة المعاصرين)"
+    },
+    {
+      "file": "lib/scholars-data.ts",
+      "line": 1172,
       "type": "short-lesson-summary",
       "len": 3,
       "title": "لغة",
@@ -2137,7 +1977,7 @@
     },
     {
       "file": "lib/scholars-data.ts",
-      "line": 1176,
+      "line": 1179,
       "type": "short-lesson-summary",
       "len": 27,
       "title": "ويكيبيديا العربية — مقالة ابن فارس اللغوي (شيوخه وتلاميذه ووفاته)",
@@ -2145,7 +1985,7 @@
     },
     {
       "file": "lib/scholars-data.ts",
-      "line": 1191,
+      "line": 1194,
       "type": "short-lesson-summary",
       "len": 33,
       "title": "ويكيبيديا العربية — مقالة بدر الدين الزركشي (شيوخه وتلاميذه ووفاته)",
@@ -2153,7 +1993,7 @@
     },
     {
       "file": "lib/scholars-data.ts",
-      "line": 1201,
+      "line": 1204,
       "type": "short-lesson-summary",
       "len": 29,
       "title": "فتح القريب المجيب شرح كتاب التقريب",
@@ -2161,7 +2001,7 @@
     },
     {
       "file": "lib/scholars-data.ts",
-      "line": 1214,
+      "line": 1217,
       "type": "short-lesson-summary",
       "len": 4,
       "title": "فقه",
@@ -2169,7 +2009,7 @@
     },
     {
       "file": "lib/scholars-data.ts",
-      "line": 1216,
+      "line": 1219,
       "type": "short-lesson-summary",
       "len": 17,
       "title": "فقه السنة (3 مجلدات)",
@@ -2177,7 +2017,7 @@
     },
     {
       "file": "lib/scholars-data.ts",
-      "line": 1221,
+      "line": 1224,
       "type": "short-lesson-summary",
       "len": 34,
       "title": "ويكيبيديا العربية — مقالة سيد سابق (وفاته ومؤلفاته)",
@@ -2185,7 +2025,7 @@
     },
     {
       "file": "lib/scholars-data.ts",
-      "line": 1236,
+      "line": 1239,
       "type": "short-lesson-summary",
       "len": 30,
       "title": "ويكيبيديا العربية — مقالة عبد الكريم الخضير (شيوخه ومناصبه العلمية)",
@@ -2193,7 +2033,7 @@
     },
     {
       "file": "lib/scholars-data.ts",
-      "line": 1251,
+      "line": 1254,
       "type": "short-lesson-summary",
       "len": 25,
       "title": "سير أعلام النبلاء — الذهبي",
@@ -2201,7 +2041,7 @@
     },
     {
       "file": "lib/scholars-data.ts",
-      "line": 1274,
+      "line": 1277,
       "type": "short-lesson-summary",
       "len": 3,
       "title": "حديث",
@@ -2209,7 +2049,7 @@
     },
     {
       "file": "lib/scholars-data.ts",
-      "line": 1281,
+      "line": 1284,
       "type": "short-lesson-summary",
       "len": 25,
       "title": "سير أعلام النبلاء — الذهبي",
@@ -2217,7 +2057,7 @@
     },
     {
       "file": "lib/scholars-data.ts",
-      "line": 1296,
+      "line": 1299,
       "type": "short-lesson-summary",
       "len": 27,
       "title": "ويكيبيديا العربية — مقالة شهاب الدين القرافي (شيوخه وتلاميذه ووفاته)",
@@ -2225,7 +2065,7 @@
     },
     {
       "file": "lib/scholars-data.ts",
-      "line": 1311,
+      "line": 1314,
       "type": "short-lesson-summary",
       "len": 25,
       "title": "ويكيبيديا العربية — مقالة فخر الدين الرازي (شيوخه وتلاميذه ووفاته)",
@@ -2233,7 +2073,7 @@
     },
     {
       "file": "lib/scholars-data.ts",
-      "line": 1319,
+      "line": 1322,
       "type": "short-lesson-summary",
       "len": 4,
       "title": "حديث",
@@ -2241,7 +2081,7 @@
     },
     {
       "file": "lib/scholars-data.ts",
-      "line": 1321,
+      "line": 1324,
       "type": "short-lesson-summary",
       "len": 27,
       "title": "تهذيب الكمال في أسماء الرجال (35 مجلداً)",
@@ -2249,7 +2089,7 @@
     },
     {
       "file": "lib/scholars-data.ts",
-      "line": 1326,
+      "line": 1329,
       "type": "short-lesson-summary",
       "len": 33,
       "title": "سير أعلام النبلاء — الذهبي",
@@ -2257,7 +2097,7 @@
     },
     {
       "file": "lib/scholars-data.ts",
-      "line": 1341,
+      "line": 1344,
       "type": "short-lesson-summary",
       "len": 27,
       "title": "الموقع الرسمي للشيخ عبد الرحمن السعدي (ibn-saadi.com) — سيرة الشيخ",
@@ -2265,7 +2105,7 @@
     },
     {
       "file": "lib/scholars-data.ts",
-      "line": 1356,
+      "line": 1359,
       "type": "short-lesson-summary",
       "len": 25,
       "title": "ويكيبيديا العربية — مقالة أبو الوفاء بن عقيل (شيوخه وتلاميذه ووفاته)",
@@ -2273,7 +2113,7 @@
     },
     {
       "file": "lib/scholars-data.ts",
-      "line": 1371,
+      "line": 1374,
       "type": "short-lesson-summary",
       "len": 27,
       "title": "ويكيبيديا العربية — مقالة أحمد محمد شاكر (شيوخه ووفاته)",
@@ -2281,7 +2121,7 @@
     },
     {
       "file": "lib/scholars-data.ts",
-      "line": 1379,
+      "line": 1382,
       "type": "short-lesson-summary",
       "len": 3,
       "title": "حديث",
@@ -2289,7 +2129,7 @@
     },
     {
       "file": "lib/scholars-data.ts",
-      "line": 1386,
+      "line": 1389,
       "type": "short-lesson-summary",
       "len": 25,
       "title": "ويكيبيديا العربية — مقالة عبد العظيم المنذري (وفاته ومؤلفاته)",
@@ -2297,7 +2137,7 @@
     },
     {
       "file": "lib/scholars-data.ts",
-      "line": 1401,
+      "line": 1404,
       "type": "short-lesson-summary",
       "len": 33,
       "title": "ويكيبيديا العربية — مقالة ابن دقيق العيد (شيوخه وتلاميذه ووفاته)",
@@ -2305,7 +2145,7 @@
     },
     {
       "file": "lib/scholars-data.ts",
-      "line": 1410,
+      "line": 1413,
       "type": "short-lesson-summary",
       "len": 5,
       "title": "سيرة",
@@ -2313,7 +2153,7 @@
     },
     {
       "file": "lib/scholars-data.ts",
-      "line": 1417,
+      "line": 1420,
       "type": "short-lesson-summary",
       "len": 27,
       "title": "ويكيبيديا العربية — مقالة ابن بطوطة (وفاته ومؤلفاته)",
@@ -2321,7 +2161,7 @@
     },
     {
       "file": "lib/scholars-data.ts",
-      "line": 1432,
+      "line": 1435,
       "type": "short-lesson-summary",
       "len": 25,
       "title": "ويكيبيديا العربية — مقالة الماوردي (شيوخه ووفاته)",
@@ -2329,7 +2169,7 @@
     },
     {
       "file": "lib/scholars-data.ts",
-      "line": 1447,
+      "line": 1450,
       "type": "short-lesson-summary",
       "len": 33,
       "title": "ويكيبيديا العربية — مقالة ابن عطاء الله السكندري (شيوخه وتلاميذه ووفاته)",
@@ -2337,7 +2177,7 @@
     },
     {
       "file": "lib/scholars-data.ts",
-      "line": 1465,
+      "line": 1468,
       "type": "short-lesson-summary",
       "len": 27,
       "title": "ويكيبيديا العربية — مقالة شمس الدين السخاوي (شيوخه وتلاميذه ووفاته)",
@@ -2345,7 +2185,7 @@
     },
     {
       "file": "lib/scholars-data.ts",
-      "line": 1485,
+      "line": 1488,
       "type": "short-lesson-summary",
       "len": 27,
       "title": "ويكيبيديا العربية — مقالة الآجري (شيوخه وتلاميذه ووفاته)",
@@ -2353,7 +2193,7 @@
     },
     {
       "file": "lib/scholars-data.ts",
-      "line": 1508,
+      "line": 1511,
       "type": "short-lesson-summary",
       "len": 3,
       "title": "حديث",
@@ -2361,7 +2201,7 @@
     },
     {
       "file": "lib/scholars-data.ts",
-      "line": 1515,
+      "line": 1518,
       "type": "short-lesson-summary",
       "len": 36,
       "title": "ويكيبيديا العربية — مقالة ابن أبي شيبة (شيوخه وتلاميذه ووفاته)",
@@ -2369,7 +2209,7 @@
     },
     {
       "file": "lib/scholars-data.ts",
-      "line": 1530,
+      "line": 1533,
       "type": "short-lesson-summary",
       "len": 27,
       "title": "سير أعلام النبلاء — الذهبي",
@@ -2579,43 +2419,27 @@
     },
     {
       "file": "lib/asma-husna-data.ts",
-      "line": 13,
-      "type": "short-field",
-      "field": "meaning",
-      "len": 23,
-      "sample": "واسع الرحمة لجميع الخلق"
-    },
-    {
-      "file": "lib/asma-husna-data.ts",
       "line": 14,
       "type": "short-field",
       "field": "meaning",
-      "len": 21,
-      "sample": "خاصّ الرحمة بالمؤمنين"
+      "len": 39,
+      "sample": "خاصّ الرحمة بالمؤمنين في الدنيا والآخرة"
     },
     {
       "file": "lib/asma-husna-data.ts",
       "line": 15,
       "type": "short-field",
       "field": "meaning",
-      "len": 22,
-      "sample": "المالك الحقيقي لكل شيء"
+      "len": 38,
+      "sample": "المالك الحقيقي لكل شيء تصرّفاً ومُلكاً"
     },
     {
       "file": "lib/asma-husna-data.ts",
       "line": 16,
       "type": "short-field",
       "field": "meaning",
-      "len": 22,
-      "sample": "المنزّه عن كل عيب ونقص"
-    },
-    {
-      "file": "lib/asma-husna-data.ts",
-      "line": 17,
-      "type": "short-field",
-      "field": "meaning",
-      "len": 20,
-      "sample": "ذو السلامة من كل نقص"
+      "len": 37,
+      "sample": "المنزّه عن كل عيب ونقص في ذاته وصفاته"
     },
     {
       "file": "lib/asma-husna-data.ts",
@@ -2630,24 +2454,16 @@
       "line": 19,
       "type": "short-field",
       "field": "meaning",
-      "len": 24,
-      "sample": "الرقيب الشاهد على كل شيء"
+      "len": 39,
+      "sample": "الرقيب الشاهد على كل شيء علماً واطلاعاً"
     },
     {
       "file": "lib/asma-husna-data.ts",
       "line": 20,
       "type": "short-field",
       "field": "meaning",
-      "len": 20,
-      "sample": "الغالب الذي لا يُغلب"
-    },
-    {
-      "file": "lib/asma-husna-data.ts",
-      "line": 21,
-      "type": "short-field",
-      "field": "meaning",
-      "len": 22,
-      "sample": "القاهر الذي يجبر الكسر"
+      "len": 38,
+      "sample": "الغالب الذي لا يُغلب، ذو العزة الكاملة"
     },
     {
       "file": "lib/asma-husna-data.ts",
@@ -2659,35 +2475,11 @@
     },
     {
       "file": "lib/asma-husna-data.ts",
-      "line": 23,
-      "type": "short-field",
-      "field": "meaning",
-      "len": 23,
-      "sample": "المُبدع الموجد من العدم"
-    },
-    {
-      "file": "lib/asma-husna-data.ts",
-      "line": 24,
-      "type": "short-field",
-      "field": "meaning",
-      "len": 24,
-      "sample": "الخالق المميّز بين الخلق"
-    },
-    {
-      "file": "lib/asma-husna-data.ts",
-      "line": 25,
-      "type": "short-field",
-      "field": "meaning",
-      "len": 19,
-      "sample": "واهب الصور والأشكال"
-    },
-    {
-      "file": "lib/asma-husna-data.ts",
       "line": 26,
       "type": "short-field",
       "field": "meaning",
-      "len": 19,
-      "sample": "كثير المغفرة والعفو"
+      "len": 33,
+      "sample": "كثير المغفرة والعفو لمن تاب وأناب"
     },
     {
       "file": "lib/asma-husna-data.ts",
@@ -2702,96 +2494,72 @@
       "line": 28,
       "type": "short-field",
       "field": "meaning",
-      "len": 20,
-      "sample": "كثير العطاء بلا منّة"
+      "len": 39,
+      "sample": "كثير العطاء بلا منّة ولا حساب على عباده"
     },
     {
       "file": "lib/asma-husna-data.ts",
       "line": 29,
       "type": "short-field",
       "field": "meaning",
-      "len": 24,
-      "sample": "الضامن لأرزاق جميع الخلق"
-    },
-    {
-      "file": "lib/asma-husna-data.ts",
-      "line": 30,
-      "type": "short-field",
-      "field": "meaning",
-      "len": 24,
-      "sample": "فاتح أبواب الخير والرحمة"
+      "len": 37,
+      "sample": "الضامن لأرزاق جميع الخلق إنسهم وجنّهم"
     },
     {
       "file": "lib/asma-husna-data.ts",
       "line": 31,
       "type": "short-field",
       "field": "meaning",
-      "len": 19,
-      "sample": "المحيط علمه بكل شيء"
+      "len": 34,
+      "sample": "المحيط علمه بكل شيء ظاهراً وباطناً"
     },
     {
       "file": "lib/asma-husna-data.ts",
       "line": 32,
       "type": "short-field",
       "field": "meaning",
-      "len": 20,
-      "sample": "القابض الأرزاق بحكمة"
-    },
-    {
-      "file": "lib/asma-husna-data.ts",
-      "line": 33,
-      "type": "short-field",
-      "field": "meaning",
-      "len": 24,
-      "sample": "الموسّع للأرزاق والخيرات"
+      "len": 39,
+      "sample": "القابض الأرزاق بحكمة لا يظلم فيها أحداً"
     },
     {
       "file": "lib/asma-husna-data.ts",
       "line": 34,
       "type": "short-field",
       "field": "meaning",
-      "len": 24,
-      "sample": "الخافض للمتجبرين والطغاة"
-    },
-    {
-      "file": "lib/asma-husna-data.ts",
-      "line": 35,
-      "type": "short-field",
-      "field": "meaning",
-      "len": 19,
-      "sample": "رافع درجات المؤمنين"
+      "len": 35,
+      "sample": "الخافض للمتجبرين والطغاة بعد عتوّهم"
     },
     {
       "file": "lib/asma-husna-data.ts",
       "line": 36,
       "type": "short-field",
       "field": "meaning",
-      "len": 19,
-      "sample": "معطي العزة لمن يشاء"
+      "len": 37,
+      "sample": "معطي العزة لمن يشاء من عباده المؤمنين"
     },
     {
       "file": "lib/asma-husna-data.ts",
       "line": 37,
       "type": "short-field",
       "field": "meaning",
-      "len": 21,
-      "sample": "مذلّ الجبابرة والطغاة"
+      "len": 38,
+      "sample": "مذلّ الجبابرة والطغاة وردّ كيدهم عليهم"
     },
     {
       "file": "lib/asma-husna-data.ts",
       "line": 38,
       "type": "short-field",
       "field": "meaning",
-      "len": 23,
-      "sample": "المحيط سمعه بكل ما يقال"
+      "len": 35,
+      "sample": "المحيط سمعه بكل ما يقال سراً وجهراً"
     },
     {
       "file": "lib/asma-husna-data.ts",
       "line": 39,
       "type": "short-field",
       "field": "meaning",
-      "len": 23,
-      "sample": "المحيط بصره بكل ما يُرى"
+      "len": 34,
+      "sample": "المحيط بصره بكل ما يُرى دقّ أو جلّ"
     },
     {
       "file": "lib/asma-husna-data.ts",
@@ -2803,27 +2571,11 @@
     },
     {
       "file": "lib/asma-husna-data.ts",
-      "line": 41,
-      "type": "short-field",
-      "field": "meaning",
-      "len": 23,
-      "sample": "العادل في أحكامه وقضائه"
-    },
-    {
-      "file": "lib/asma-husna-data.ts",
       "line": 42,
       "type": "short-field",
       "field": "meaning",
-      "len": 20,
-      "sample": "الخبير ببواطن الأمور"
-    },
-    {
-      "file": "lib/asma-husna-data.ts",
-      "line": 43,
-      "type": "short-field",
-      "field": "meaning",
-      "len": 20,
-      "sample": "العالم بدقائق الأمور"
+      "len": 36,
+      "sample": "اللطيف الخبير ببواطن الأمور ودقائقها"
     },
     {
       "file": "lib/asma-husna-data.ts",
@@ -2832,22 +2584,6 @@
       "field": "meaning",
       "len": 27,
       "sample": "الصابر المتأني الذي لا يعجل"
-    },
-    {
-      "file": "lib/asma-husna-data.ts",
-      "line": 45,
-      "type": "short-field",
-      "field": "meaning",
-      "len": 17,
-      "sample": "ذو العظمة الكاملة"
-    },
-    {
-      "file": "lib/asma-husna-data.ts",
-      "line": 46,
-      "type": "short-field",
-      "field": "meaning",
-      "len": 24,
-      "sample": "الساتر للذنوب الغافر لها"
     },
     {
       "file": "lib/asma-husna-data.ts",
@@ -2862,32 +2598,32 @@
       "line": 48,
       "type": "short-field",
       "field": "meaning",
-      "len": 19,
-      "sample": "المتعالي فوق كل شيء"
+      "len": 32,
+      "sample": "المتعالي فوق كل شيء بذاته وصفاته"
     },
     {
       "file": "lib/asma-husna-data.ts",
       "line": 49,
       "type": "short-field",
       "field": "meaning",
-      "len": 21,
-      "sample": "الكبير في ذاته وصفاته"
+      "len": 38,
+      "sample": "الكبير في ذاته وصفاته، أعظم من كل عظيم"
     },
     {
       "file": "lib/asma-husna-data.ts",
       "line": 50,
       "type": "short-field",
       "field": "meaning",
-      "len": 24,
-      "sample": "الحافظ لكل شيء من الضياع"
+      "len": 37,
+      "sample": "الحافظ لكل شيء من الضياع والتلف بقدره"
     },
     {
       "file": "lib/asma-husna-data.ts",
       "line": 51,
       "type": "short-field",
       "field": "meaning",
-      "len": 22,
-      "sample": "المقتدر الحافظ المقوّت"
+      "len": 35,
+      "sample": "المقتدر الذي يحفظ ويرزق ويقوت عباده"
     },
     {
       "file": "lib/asma-husna-data.ts",
@@ -2902,8 +2638,8 @@
       "line": 53,
       "type": "short-field",
       "field": "meaning",
-      "len": 17,
-      "sample": "ذو الجلال والعظمة"
+      "len": 33,
+      "sample": "ذو الجلال والعظمة المستحق للتعظيم"
     },
     {
       "file": "lib/asma-husna-data.ts",
@@ -2915,27 +2651,19 @@
     },
     {
       "file": "lib/asma-husna-data.ts",
-      "line": 55,
-      "type": "short-field",
-      "field": "meaning",
-      "len": 17,
-      "sample": "المطلع على كل شيء"
-    },
-    {
-      "file": "lib/asma-husna-data.ts",
       "line": 56,
       "type": "short-field",
       "field": "meaning",
-      "len": 18,
-      "sample": "المجيب لدعاء عباده"
+      "len": 34,
+      "sample": "المجيب لدعاء عباده إذا دعوه موقنين"
     },
     {
       "file": "lib/asma-husna-data.ts",
       "line": 57,
       "type": "short-field",
       "field": "meaning",
-      "len": 23,
-      "sample": "الواسع في العلم والرحمة"
+      "len": 38,
+      "sample": "الواسع في العلم والرحمة والعطاء والفضل"
     },
     {
       "file": "lib/asma-husna-data.ts",
@@ -2950,32 +2678,32 @@
       "line": 59,
       "type": "short-field",
       "field": "meaning",
-      "len": 21,
-      "sample": "المحب لعباده المؤمنين"
+      "len": 32,
+      "sample": "المحب لعباده المؤمنين المحبين له"
     },
     {
       "file": "lib/asma-husna-data.ts",
       "line": 60,
       "type": "short-field",
       "field": "meaning",
-      "len": 22,
-      "sample": "ذو المجد والشرف العظيم"
+      "len": 37,
+      "sample": "ذو المجد والشرف العظيم الذي لا يُدانى"
     },
     {
       "file": "lib/asma-husna-data.ts",
       "line": 61,
       "type": "short-field",
       "field": "meaning",
-      "len": 24,
-      "sample": "الباعث للخلق يوم القيامة"
+      "len": 34,
+      "sample": "الباعث للخلق من قبورهم يوم القيامة"
     },
     {
       "file": "lib/asma-husna-data.ts",
       "line": 62,
       "type": "short-field",
       "field": "meaning",
-      "len": 17,
-      "sample": "الشاهد على كل شيء"
+      "len": 31,
+      "sample": "الشاهد على كل شيء علماً وحضوراً"
     },
     {
       "file": "lib/asma-husna-data.ts",
@@ -2990,8 +2718,8 @@
       "line": 64,
       "type": "short-field",
       "field": "meaning",
-      "len": 18,
-      "sample": "المتولي أمور عباده"
+      "len": 34,
+      "sample": "المتولي أمور عباده بالكفاية والحفظ"
     },
     {
       "file": "lib/asma-husna-data.ts",
@@ -3006,8 +2734,8 @@
       "line": 66,
       "type": "short-field",
       "field": "meaning",
-      "len": 19,
-      "sample": "الشديد القوة الراسخ"
+      "len": 33,
+      "sample": "الشديد القوة الراسخ الذي لا يُغلب"
     },
     {
       "file": "lib/asma-husna-data.ts",
@@ -3022,8 +2750,8 @@
       "line": 68,
       "type": "short-field",
       "field": "meaning",
-      "len": 21,
-      "sample": "المستحق للحمد والثناء"
+      "len": 31,
+      "sample": "المستحق للحمد والثناء في كل حال"
     },
     {
       "file": "lib/asma-husna-data.ts",
@@ -3046,24 +2774,16 @@
       "line": 71,
       "type": "short-field",
       "field": "meaning",
-      "len": 22,
-      "sample": "المعيد للخلق بعد فنائه"
-    },
-    {
-      "file": "lib/asma-husna-data.ts",
-      "line": 72,
-      "type": "short-field",
-      "field": "meaning",
-      "len": 18,
-      "sample": "واهب الحياة لكل حي"
+      "len": 32,
+      "sample": "المعيد للخلق بعد فنائه يوم البعث"
     },
     {
       "file": "lib/asma-husna-data.ts",
       "line": 73,
       "type": "short-field",
       "field": "meaning",
-      "len": 18,
-      "sample": "خالق الموت ومسبّبه"
+      "len": 32,
+      "sample": "خالق الموت ومسبّبه بقدرته وحكمته"
     },
     {
       "file": "lib/asma-husna-data.ts",
@@ -3230,24 +2950,16 @@
       "line": 94,
       "type": "short-field",
       "field": "meaning",
-      "len": 24,
-      "sample": "العافي عن عباده المذنبين"
-    },
-    {
-      "file": "lib/asma-husna-data.ts",
-      "line": 95,
-      "type": "short-field",
-      "field": "meaning",
-      "len": 19,
-      "sample": "بالغ الرأفة والرحمة"
+      "len": 39,
+      "sample": "العافي عن عباده المذنبين بمحو أثر الذنب"
     },
     {
       "file": "lib/asma-husna-data.ts",
       "line": 96,
       "type": "short-field",
       "field": "meaning",
-      "len": 18,
-      "sample": "مالك الملك الحقيقي"
+      "len": 37,
+      "sample": "مالك الملك الحقيقي يعطي الملك من يشاء"
     },
     {
       "file": "lib/asma-husna-data.ts",
@@ -3262,24 +2974,24 @@
       "line": 98,
       "type": "short-field",
       "field": "meaning",
-      "len": 15,
-      "sample": "العادل في قضائه"
+      "len": 32,
+      "sample": "العادل في قضائه بين خلقه بلا ميل"
     },
     {
       "file": "lib/asma-husna-data.ts",
       "line": 99,
       "type": "short-field",
       "field": "meaning",
-      "len": 24,
-      "sample": "الجامع للخلق يوم القيامة"
+      "len": 39,
+      "sample": "الجامع للخلق يوم القيامة للحساب والجزاء"
     },
     {
       "file": "lib/asma-husna-data.ts",
       "line": 100,
       "type": "short-field",
       "field": "meaning",
-      "len": 18,
-      "sample": "الغني عن جميع خلقه"
+      "len": 35,
+      "sample": "الغني عن جميع خلقه وهم الفقراء إليه"
     },
     {
       "file": "lib/asma-husna-data.ts",
@@ -4019,18 +3731,6 @@
     },
     {
       "file": "views/IslamicGlossaryPage.tsx",
-      "line": 840,
-      "type": "ellipsis",
-      "sample": "detail: \"يختلف عن القرآن في: أن القرآن وحي متعبَّد بتلاوته، متواتر، لا يُقرأ في الصلاة إلا به. أما الحديث القدسي فروايته"
-    },
-    {
-      "file": "views/IslamicGlossaryPage.tsx",
-      "line": 977,
-      "type": "ellipsis",
-      "sample": "detail: \"الجرح: بيان ما يوجب ردّ رواية الراوي (الكذب، الفسق، الغلط...). التعديل: بيان عدالته وضبطه. له درجات: أعلاها للت"
-    },
-    {
-      "file": "views/IslamicGlossaryPage.tsx",
       "line": 1433,
       "type": "short-field",
       "field": "description",
@@ -4045,31 +3745,31 @@
     },
     {
       "file": "views/AkhlaqPage.tsx",
-      "line": 838,
+      "line": 796,
       "type": "ellipsis",
       "sample": "hadith: \"«احرص على ما ينفعك، واستعن بالله ولا تعجز، وإن أصابك شيء فلا تقل: لو أني فعلت لكان كذا...».\","
     },
     {
       "file": "views/AkhlaqPage.tsx",
-      "line": 852,
+      "line": 810,
       "type": "ellipsis",
       "sample": "hadith: \"«ثلاث من كن فيه وجد بهن حلاوة الإيمان: أن يكون الله ورسوله أحب إليه مما سواهما...».\","
     },
     {
       "file": "views/AkhlaqPage.tsx",
-      "line": 1084,
+      "line": 1042,
       "type": "placeholder",
       "sample": "placeholder=\"ابحث في الأخلاق...\""
     },
     {
       "file": "views/AkhlaqPage.tsx",
-      "line": 1084,
+      "line": 1042,
       "type": "ellipsis",
       "sample": "placeholder=\"ابحث في الأخلاق...\""
     },
     {
       "file": "views/AkhlaqPage.tsx",
-      "line": 1189,
+      "line": 1147,
       "type": "short-field",
       "field": "desc",
       "len": 12,
@@ -4077,7 +3777,7 @@
     },
     {
       "file": "views/AkhlaqPage.tsx",
-      "line": 1190,
+      "line": 1148,
       "type": "short-field",
       "field": "desc",
       "len": 17,
@@ -4085,7 +3785,7 @@
     },
     {
       "file": "views/AkhlaqPage.tsx",
-      "line": 1191,
+      "line": 1149,
       "type": "short-field",
       "field": "desc",
       "len": 13,
@@ -4093,7 +3793,7 @@
     },
     {
       "file": "views/AkhlaqPage.tsx",
-      "line": 1192,
+      "line": 1150,
       "type": "short-field",
       "field": "desc",
       "len": 11,
@@ -4101,7 +3801,7 @@
     },
     {
       "file": "views/AkhlaqPage.tsx",
-      "line": 1193,
+      "line": 1151,
       "type": "short-field",
       "field": "desc",
       "len": 13,
@@ -4109,7 +3809,7 @@
     },
     {
       "file": "views/AkhlaqPage.tsx",
-      "line": 1194,
+      "line": 1152,
       "type": "short-field",
       "field": "desc",
       "len": 13,
@@ -4117,7 +3817,7 @@
     },
     {
       "file": "views/SahabahPage.tsx",
-      "line": 1236,
+      "line": 1219,
       "type": "short-field",
       "field": "description",
       "len": 33,
@@ -4125,13 +3825,13 @@
     },
     {
       "file": "views/SahabahPage.tsx",
-      "line": 1283,
+      "line": 1266,
       "type": "placeholder",
       "sample": "aria-label=\"ابحث بالاسم\" placeholder=\"ابحث بالاسم...\""
     },
     {
       "file": "views/SahabahPage.tsx",
-      "line": 1283,
+      "line": 1266,
       "type": "ellipsis",
       "sample": "aria-label=\"ابحث بالاسم\" placeholder=\"ابحث بالاسم...\""
     },
@@ -4201,23 +3901,7 @@
     },
     {
       "file": "views/SahabahPage.tsx",
-      "line": 382,
-      "type": "short-lesson-summary",
-      "len": 8,
-      "title": "العشرة",
-      "sample": "الفاتحون"
-    },
-    {
-      "file": "views/SahabahPage.tsx",
-      "line": 438,
-      "type": "short-lesson-summary",
-      "len": 6,
-      "title": "الفاتحون",
-      "sample": "العشرة"
-    },
-    {
-      "file": "views/SahabahPage.tsx",
-      "line": 794,
+      "line": 777,
       "type": "short-lesson-summary",
       "len": 7,
       "title": "النساء",
@@ -4225,7 +3909,7 @@
     },
     {
       "file": "views/SahabahPage.tsx",
-      "line": 813,
+      "line": 796,
       "type": "short-lesson-summary",
       "len": 8,
       "title": "النساء",
@@ -4233,7 +3917,7 @@
     },
     {
       "file": "views/SahabahPage.tsx",
-      "line": 832,
+      "line": 815,
       "type": "short-lesson-summary",
       "len": 7,
       "title": "الفاتحون",
@@ -4241,7 +3925,7 @@
     },
     {
       "file": "views/SahabahPage.tsx",
-      "line": 905,
+      "line": 888,
       "type": "short-lesson-summary",
       "len": 8,
       "title": "العلماء",
@@ -4249,7 +3933,7 @@
     },
     {
       "file": "views/SahabahPage.tsx",
-      "line": 923,
+      "line": 906,
       "type": "short-lesson-summary",
       "len": 7,
       "title": "الفاتحون",
@@ -4257,7 +3941,7 @@
     },
     {
       "file": "views/SahabahPage.tsx",
-      "line": 996,
+      "line": 979,
       "type": "short-lesson-summary",
       "len": 8,
       "title": "العلماء",
@@ -4265,7 +3949,7 @@
     },
     {
       "file": "views/SahabahPage.tsx",
-      "line": 1053,
+      "line": 1036,
       "type": "short-lesson-summary",
       "len": 8,
       "title": "العلماء",
@@ -4273,7 +3957,7 @@
     },
     {
       "file": "views/SahabahPage.tsx",
-      "line": 1091,
+      "line": 1074,
       "type": "short-lesson-summary",
       "len": 8,
       "title": "العلماء",
@@ -4281,7 +3965,7 @@
     },
     {
       "file": "views/SahabahPage.tsx",
-      "line": 1381,
+      "line": 1364,
       "type": "short-lesson-summary",
       "len": 6,
       "title": "sira",
@@ -4385,7 +4069,7 @@
     },
     {
       "file": "views/DuasPage.tsx",
-      "line": 400,
+      "line": 368,
       "type": "short-field",
       "field": "meaning",
       "len": 32,
@@ -4393,7 +4077,7 @@
     },
     {
       "file": "views/DuasPage.tsx",
-      "line": 524,
+      "line": 492,
       "type": "short-field",
       "field": "meaning",
       "len": 28,
@@ -4401,23 +4085,7 @@
     },
     {
       "file": "views/DuasPage.tsx",
-      "line": 535,
-      "type": "short-field",
-      "field": "meaning",
-      "len": 28,
-      "sample": "اللهم لك صمت وعلى رزقك أفطرت"
-    },
-    {
-      "file": "views/DuasPage.tsx",
-      "line": 625,
-      "type": "short-field",
-      "field": "meaning",
-      "len": 37,
-      "sample": "أعوذ بكلمات الله التامات من شر ما خلق"
-    },
-    {
-      "file": "views/DuasPage.tsx",
-      "line": 637,
+      "line": 583,
       "type": "short-field",
       "field": "meaning",
       "len": 32,
@@ -4425,31 +4093,7 @@
     },
     {
       "file": "views/DuasPage.tsx",
-      "line": 659,
-      "type": "short-field",
-      "field": "meaning",
-      "len": 32,
-      "sample": "آيبون تائبون عابدون لربنا حامدون"
-    },
-    {
-      "file": "views/DuasPage.tsx",
-      "line": 693,
-      "type": "short-field",
-      "field": "meaning",
-      "len": 22,
-      "sample": "رب اغفر لي، رب اغفر لي"
-    },
-    {
-      "file": "views/DuasPage.tsx",
-      "line": 727,
-      "type": "short-field",
-      "field": "meaning",
-      "len": 34,
-      "sample": "الحمد لله الذي بنعمته تتم الصالحات"
-    },
-    {
-      "file": "views/DuasPage.tsx",
-      "line": 750,
+      "line": 663,
       "type": "short-field",
       "field": "meaning",
       "len": 28,
@@ -4457,15 +4101,7 @@
     },
     {
       "file": "views/DuasPage.tsx",
-      "line": 784,
-      "type": "short-field",
-      "field": "meaning",
-      "len": 36,
-      "sample": "يا مقلِّب القلوب ثبِّت قلبي على دينك"
-    },
-    {
-      "file": "views/DuasPage.tsx",
-      "line": 795,
+      "line": 686,
       "type": "short-field",
       "field": "meaning",
       "len": 22,
@@ -4473,7 +4109,7 @@
     },
     {
       "file": "views/DuasPage.tsx",
-      "line": 852,
+      "line": 732,
       "type": "short-field",
       "field": "meaning",
       "len": 33,
@@ -4481,7 +4117,7 @@
     },
     {
       "file": "views/DuasPage.tsx",
-      "line": 863,
+      "line": 743,
       "type": "short-field",
       "field": "meaning",
       "len": 31,
@@ -4489,13 +4125,21 @@
     },
     {
       "file": "views/DuasPage.tsx",
-      "line": 1106,
+      "line": 849,
+      "type": "short-field",
+      "field": "meaning",
+      "len": 34,
+      "sample": "الحمد لله الذي بنعمته تتم الصالحات"
+    },
+    {
+      "file": "views/DuasPage.tsx",
+      "line": 1008,
       "type": "placeholder",
       "sample": "placeholder=\"ابحث في الأدعية...\""
     },
     {
       "file": "views/DuasPage.tsx",
-      "line": 1106,
+      "line": 1008,
       "type": "ellipsis",
       "sample": "placeholder=\"ابحث في الأدعية...\""
     },
@@ -4559,9 +4203,9 @@
       "file": "views/IslamicSectsPage.tsx",
       "line": 176,
       "type": "short-lesson-summary",
-      "len": 26,
-      "title": "الحاكم النيسابوري (نسبياً)",
-      "sample": "الملك المؤيد بالله الفاطمي"
+      "len": 19,
+      "title": "القاضي النعمان",
+      "sample": "حميد الدين الكرماني"
     },
     {
       "file": "views/IslamicSectsPage.tsx",
@@ -4615,31 +4259,31 @@
     },
     {
       "file": "views/SunanYawmiyyaPage.tsx",
-      "line": 504,
+      "line": 494,
       "type": "ellipsis",
       "sample": "howTo: \"ردِّد ما يقوله المؤذن، ثم صلِّ على النبي، ثم ادعُ: (اللهم ربَّ هذه الدعوة التامة...).\","
     },
     {
       "file": "views/SunanYawmiyyaPage.tsx",
-      "line": 680,
+      "line": 764,
       "type": "ellipsis",
       "sample": "text: \"قال ﷺ: «يُصبح على كل سُلامى من أحدكم صدقة؛ فكل تسبيحة صدقة... ويُجزئ من ذلك ركعتان يركعهما من الضحى».\","
     },
     {
       "file": "views/SunanYawmiyyaPage.tsx",
-      "line": 938,
+      "line": 926,
       "type": "placeholder",
       "sample": "placeholder=\"ابحث في السنن...\""
     },
     {
       "file": "views/SunanYawmiyyaPage.tsx",
-      "line": 938,
+      "line": 926,
       "type": "ellipsis",
       "sample": "placeholder=\"ابحث في السنن...\""
     },
     {
       "file": "views/SunanYawmiyyaPage.tsx",
-      "line": 1029,
+      "line": 1017,
       "type": "short-lesson-summary",
       "len": 6,
       "title": "fiqh",
@@ -4647,37 +4291,37 @@
     },
     {
       "file": "views/WasayaNabawiyyaPage.tsx",
-      "line": 316,
+      "line": 308,
       "type": "ellipsis",
       "sample": "text: \"«السبعة الذين يُظلُّهم الله في ظله يوم لا ظل إلا ظله... ورجل تصدّق بصدقة فأخفاها حتى لا تعلم شماله ما تنفق يمينه»"
     },
     {
       "file": "views/WasayaNabawiyyaPage.tsx",
-      "line": 660,
+      "line": 618,
       "type": "placeholder",
       "sample": "placeholder=\"ابحث في الوصايا...\""
     },
     {
       "file": "views/WasayaNabawiyyaPage.tsx",
-      "line": 660,
+      "line": 618,
       "type": "ellipsis",
       "sample": "placeholder=\"ابحث في الوصايا...\""
     },
     {
       "file": "views/RaqaiqPage.tsx",
-      "line": 490,
+      "line": 487,
       "type": "placeholder",
       "sample": "placeholder=\"ابحث في الرقائق...\""
     },
     {
       "file": "views/RaqaiqPage.tsx",
-      "line": 490,
+      "line": 487,
       "type": "ellipsis",
       "sample": "placeholder=\"ابحث في الرقائق...\""
     },
     {
       "file": "views/HikamSalafPage.tsx",
-      "line": 851,
+      "line": 839,
       "type": "incomplete-marker",
       "sample": "text: \"يا ابن آدم، أنت مسافر إلى ربك وستجده قريباً، فانظر ما تُقدِّم من زاد.\","
     },
@@ -4703,39 +4347,45 @@
     },
     {
       "file": "views/FadailAamalPage.tsx",
-      "line": 839,
+      "line": 758,
       "type": "ellipsis",
       "sample": "text: \"«سبعة يظلهم الله في ظله يوم لا ظل إلا ظله... ورجل تصدَّق بصدقة فأخفاها حتى لا تعلم شماله ما تنفق يمينه»\","
     },
     {
       "file": "views/FadailAamalPage.tsx",
-      "line": 1091,
+      "line": 1087,
       "type": "placeholder",
       "sample": "placeholder=\"ابحث في الأحاديث...\""
     },
     {
       "file": "views/FadailAamalPage.tsx",
-      "line": 1091,
+      "line": 1087,
       "type": "ellipsis",
       "sample": "placeholder=\"ابحث في الأحاديث...\""
     },
     {
       "file": "views/FadailAamalPage.tsx",
-      "line": 1166,
+      "line": 1162,
       "type": "short-lesson-summary",
       "len": 6,
       "title": "hadith",
       "sample": "akhlaq"
     },
     {
+      "file": "views/FadailAamalPage.tsx",
+      "type": "dup-title",
+      "title": "غراس الجنة",
+      "count": 2
+    },
+    {
       "file": "views/JannaNaarPage.tsx",
-      "line": 269,
+      "line": 259,
       "type": "placeholder",
       "sample": "placeholder=\"ابحث في الأسباب...\" className=\"page-search-input jn-search-input\""
     },
     {
       "file": "views/JannaNaarPage.tsx",
-      "line": 293,
+      "line": 283,
       "type": "placeholder",
       "sample": "placeholder=\"ابحث في الأسباب...\" className=\"page-search-input jn-search-input\""
     },
@@ -4753,7 +4403,7 @@
     },
     {
       "file": "views/MalaikaPage.tsx",
-      "line": 368,
+      "line": 365,
       "type": "placeholder",
       "sample": "placeholder=\"ابحث في الملائكة...\" className=\"page-search-input mk-search-input\""
     },
@@ -4800,14 +4450,6 @@
       "field": "desc",
       "len": 38,
       "sample": "العلامات الصغرى والكبرى مرتبةً بالأدلة"
-    },
-    {
-      "file": "views/TawhidPage.tsx",
-      "line": 54,
-      "type": "short-field",
-      "field": "desc",
-      "len": 23,
-      "sample": "أسماؤهم ومهامهم وصفاتهم"
     },
     {
       "file": "views/TawhidPage.tsx",
@@ -5014,56 +4656,32 @@
       "line": 194,
       "type": "short-field",
       "field": "desc",
-      "len": 16,
-      "sample": "الرفع والطمأنينة"
+      "len": 35,
+      "sample": "الرفع حتى يستوي قائماً مع الطمأنينة"
     },
     {
       "file": "views/SalahGuidePage.tsx",
       "line": 196,
       "type": "short-field",
       "field": "desc",
-      "len": 20,
-      "sample": "والجلوس بين السجدتين"
-    },
-    {
-      "file": "views/SalahGuidePage.tsx",
-      "line": 197,
-      "type": "short-field",
-      "field": "desc",
-      "len": 10,
-      "sample": "مثل الأولى"
+      "len": 32,
+      "sample": "الجلوس بين السجدتين مع الطمأنينة"
     },
     {
       "file": "views/SalahGuidePage.tsx",
       "line": 198,
       "type": "short-field",
       "field": "desc",
-      "len": 28,
-      "sample": "في كل ركن، الهدوء والاستقرار"
-    },
-    {
-      "file": "views/SalahGuidePage.tsx",
-      "line": 199,
-      "type": "short-field",
-      "field": "desc",
-      "len": 11,
-      "sample": "بين الأركان"
+      "len": 38,
+      "sample": "استقرار الأعضاء في كل ركن زمناً يسيراً"
     },
     {
       "file": "views/SalahGuidePage.tsx",
       "line": 200,
       "type": "short-field",
       "field": "desc",
-      "len": 10,
-      "sample": "والجلوس له"
-    },
-    {
-      "file": "views/SalahGuidePage.tsx",
-      "line": 201,
-      "type": "short-field",
-      "field": "desc",
-      "len": 16,
-      "sample": "في التشهد الأخير"
+      "len": 27,
+      "sample": "الجلوس له وقراءة التشهد فيه"
     },
     {
       "file": "views/SalahGuidePage.tsx",
@@ -5177,12 +4795,6 @@
     },
     {
       "file": "views/HajjPage.tsx",
-      "line": 99,
-      "type": "ellipsis",
-      "sample": "\"يُستحب الدعاء بين الركن اليماني والحجر الأسود: ﴿رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً...﴾\","
-    },
-    {
-      "file": "views/HajjPage.tsx",
       "line": 341,
       "type": "short-field",
       "field": "description",
@@ -5212,12 +4824,6 @@
       "type": "dup-title",
       "title": "الحلق أو التقصير",
       "count": 2
-    },
-    {
-      "file": "views/ZakatPage.tsx",
-      "line": 84,
-      "type": "ellipsis",
-      "sample": "detail: \"الإبل: من 5 شياه حتى 25 ففيها بنت مخاض... البقر: من 30 تبيع حتى 60 مسنة... الغنم: من 40 واحدة حتى 120 شاة... وت"
     },
     {
       "file": "views/ZakatPage.tsx",
@@ -5277,30 +4883,6 @@
     },
     {
       "file": "views/TaharaPage.tsx",
-      "line": 43,
-      "type": "short-field",
-      "field": "desc",
-      "len": 25,
-      "sample": "من الدبر صوتاً أو بلا صوت"
-    },
-    {
-      "file": "views/TaharaPage.tsx",
-      "line": 44,
-      "type": "short-field",
-      "field": "desc",
-      "len": 17,
-      "sample": "من القبل أو الدبر"
-    },
-    {
-      "file": "views/TaharaPage.tsx",
-      "line": 46,
-      "type": "short-field",
-      "field": "desc",
-      "len": 26,
-      "sample": "الإغماء أو الجنون أو السكر"
-    },
-    {
-      "file": "views/TaharaPage.tsx",
       "line": 58,
       "type": "short-field",
       "field": "desc",
@@ -5330,22 +4912,6 @@
       "field": "desc",
       "len": 31,
       "sample": "نية رفع الجنابة أو الحدث الأكبر"
-    },
-    {
-      "file": "views/TaharaPage.tsx",
-      "line": 93,
-      "type": "short-field",
-      "field": "desc",
-      "len": 26,
-      "sample": "نية التيمم لاستباحة الصلاة"
-    },
-    {
-      "file": "views/TaharaPage.tsx",
-      "line": 94,
-      "type": "short-field",
-      "field": "desc",
-      "len": 12,
-      "sample": "قول بسم الله"
     },
     {
       "file": "views/TaharaPage.tsx",
@@ -5525,31 +5091,31 @@
     },
     {
       "file": "views/IslamStatsPage.tsx",
-      "line": 446,
+      "line": 432,
       "type": "placeholder",
       "sample": "placeholder=\"ابحث في الحضارة الإسلامية...\""
     },
     {
       "file": "views/IslamStatsPage.tsx",
-      "line": 446,
+      "line": 432,
       "type": "ellipsis",
       "sample": "placeholder=\"ابحث في الحضارة الإسلامية...\""
     },
     {
       "file": "views/IslamStatsPage.tsx",
-      "line": 494,
+      "line": 480,
       "type": "placeholder",
-      "sample": "placeholder=\"ابحث في الإعجاز العلمي...\""
+      "sample": "placeholder=\"ابحث في الدلالات الكونية...\""
     },
     {
       "file": "views/IslamStatsPage.tsx",
-      "line": 494,
+      "line": 480,
       "type": "ellipsis",
-      "sample": "placeholder=\"ابحث في الإعجاز العلمي...\""
+      "sample": "placeholder=\"ابحث في الدلالات الكونية...\""
     },
     {
       "file": "views/IslamStatsPage.tsx",
-      "line": 527,
+      "line": 513,
       "type": "short-lesson-summary",
       "len": 6,
       "title": "tarikh",
@@ -5583,12 +5149,6 @@
     },
     {
       "file": "views/TawbaPage.tsx",
-      "line": 207,
-      "type": "ellipsis",
-      "sample": "{ icon: \"🌟\", title: \"فرحة الله بتوبة العبد\", desc: \"«لله أشد فرحاً بتوبة عبده من رجل...»، مثل ضربه النبي ﷺ لشدة فرح الل"
-    },
-    {
-      "file": "views/TawbaPage.tsx",
       "line": 319,
       "type": "placeholder",
       "sample": "placeholder=\"ابحث في شروط التوبة...\" className=\"page-search-input tw-search-input\""
@@ -5616,6 +5176,12 @@
       "sample": "placeholder=\"ابحث في الموانع...\" className=\"page-search-input tw-search-input\""
     },
     {
+      "file": "views/SujoodSahwPage.tsx",
+      "line": 41,
+      "type": "incomplete-marker",
+      "sample": "description: \"إذا سلّم المصلي قبل إتمام الصلاة ظاناً أنها تمت، ثم نُبِّه أو تذكّر قريباً.\","
+    },
+    {
       "file": "views/PrayerRanksPage.tsx",
       "line": 194,
       "type": "placeholder",
@@ -5629,25 +5195,19 @@
     },
     {
       "file": "views/AlamatSaahPage.tsx",
-      "line": 103,
-      "type": "ellipsis",
-      "sample": "desc: \"قال ﷺ: «... وأطاع الرجل امرأته وعقَّ أمه». فانقلاب الأولويات من علامات اضطراب الفطرة.\","
-    },
-    {
-      "file": "views/AlamatSaahPage.tsx",
-      "line": 471,
+      "line": 426,
       "type": "placeholder",
       "sample": "placeholder=\"ابحث في علامات الساعة...\""
     },
     {
       "file": "views/AlamatSaahPage.tsx",
-      "line": 471,
+      "line": 426,
       "type": "ellipsis",
       "sample": "placeholder=\"ابحث في علامات الساعة...\""
     },
     {
       "file": "views/AlamatSaahPage.tsx",
-      "line": 581,
+      "line": 536,
       "type": "short-lesson-summary",
       "len": 6,
       "title": "aqeeda",
@@ -5655,13 +5215,13 @@
     },
     {
       "file": "views/DuasQuranPage.tsx",
-      "line": 388,
+      "line": 341,
       "type": "placeholder",
       "sample": "aria-label=\"ابحث بالاسم أو الآية\" placeholder=\"ابحث بالاسم أو الآية...\""
     },
     {
       "file": "views/DuasQuranPage.tsx",
-      "line": 388,
+      "line": 341,
       "type": "ellipsis",
       "sample": "aria-label=\"ابحث بالاسم أو الآية\" placeholder=\"ابحث بالاسم أو الآية...\""
     },
@@ -5683,7 +5243,7 @@
     },
     {
       "file": "views/DuasQuranPage.tsx",
-      "line": 116,
+      "line": 96,
       "type": "short-lesson-summary",
       "len": 7,
       "title": "الكل",
@@ -5691,15 +5251,7 @@
     },
     {
       "file": "views/DuasQuranPage.tsx",
-      "line": 143,
-      "type": "short-lesson-summary",
-      "len": 14,
-      "title": "الكل",
-      "sample": "الرزق والهداية"
-    },
-    {
-      "file": "views/DuasQuranPage.tsx",
-      "line": 201,
+      "line": 163,
       "type": "short-lesson-summary",
       "len": 6,
       "title": "الكل",
@@ -5707,7 +5259,7 @@
     },
     {
       "file": "views/DuasQuranPage.tsx",
-      "line": 220,
+      "line": 182,
       "type": "short-lesson-summary",
       "len": 12,
       "title": "الكل",
@@ -5715,7 +5267,7 @@
     },
     {
       "file": "views/DuasQuranPage.tsx",
-      "line": 238,
+      "line": 200,
       "type": "short-lesson-summary",
       "len": 14,
       "title": "الكل",
@@ -5723,7 +5275,7 @@
     },
     {
       "file": "views/DuasQuranPage.tsx",
-      "line": 247,
+      "line": 209,
       "type": "short-lesson-summary",
       "len": 12,
       "title": "الكل",
@@ -5731,7 +5283,7 @@
     },
     {
       "file": "views/DuasQuranPage.tsx",
-      "line": 304,
+      "line": 266,
       "type": "short-lesson-summary",
       "len": 14,
       "title": "الكل",
@@ -5739,7 +5291,7 @@
     },
     {
       "file": "views/DuasQuranPage.tsx",
-      "line": 313,
+      "line": 275,
       "type": "short-lesson-summary",
       "len": 14,
       "title": "الكل",
