@@ -665,6 +665,61 @@ ${linkList("روابط ذات صلة", [
   { name: "التوحيد والعقيدة", url: "/tawhid" },
   { name: "أدب طلب العلم", url: "/adab-talab-ilm" },
 ])}`,
+  "/rulings": `<p>موسوعة الأحكام الشرعية: مسائل في العبادات والمعاملات والأسرة، مع ربط بالأدلة والمراجع المعتمدة قدر الإمكان.</p>
+${linkList(
+  "من الأحكام المتاحة",
+  (PLATFORM_SEED.rulings || []).slice(0, 20).map((r) => ({ name: r.title, url: `/rulings/${r.id}` })),
+)}
+${linkList("أقسام ذات صلة", [
+  { name: "بوابة الفقه", url: "/fiqh" },
+  { name: "المجمع الفقهي", url: "/fiqh-council" },
+  { name: "المسائل الفقهية", url: "/fiqh-council/issues" },
+  { name: "القواعد الفقهية", url: "/fiqh-qawaid" },
+  { name: "المذاهب الأربعة", url: "/madhahib" },
+  { name: "الأسئلة الشرعية", url: "/qa" },
+  { name: "الطهارة", url: "/tahara" },
+  { name: "دليل الصلاة", url: "/salah-guide" },
+  { name: "الزكاة", url: "/zakat" },
+  { name: "الصيام", url: "/sawm" },
+  { name: "الحج والعمرة", url: "/hajj" },
+])}`,
+  "/hadith": `<p>مكتبة الأحاديث النبوية: صحيح وضعيف وموضوع، مع مداخل إلى كتب الرواية والأربعين النووية وعلوم الحديث.</p>
+${linkList("أقسام الأحاديث", [
+  { name: "الأحاديث الصحيحة", url: "/hadith/sahih" },
+  { name: "الأحاديث الضعيفة", url: "/hadith/daif" },
+  { name: "الأحاديث الموضوعة", url: "/hadith/mawdu" },
+  { name: "كتب الحديث", url: "/hadith/books" },
+  { name: "كتب الحديث وأحكامها", url: "/hadith/books-and-rulings" },
+  { name: "الأربعون النووية", url: "/arbaeen-nawawi" },
+  { name: "أربعون في محبة الله", url: "/hadith/arbaeen-love-of-allah" },
+  { name: "علوم الحديث", url: "/hadith-science" },
+])}
+${linkList("من كتب الحديث في المكتبة", [
+  { name: "صحيح البخاري", url: "/library/book-bukhari" },
+  { name: "صحيح مسلم", url: "/library/book-muslim" },
+  { name: "رياض الصالحين", url: "/library/book-riyadh" },
+  { name: "الأربعون النووية (المكتبة)", url: "/library/book-nawawi40" },
+])}`,
+  "/fawaid": `<p>فوائد علمية مختصرة وموثّقة في القرآن والحديث والعقيدة والفقه والتربية والدعوة والآداب — للانتفاع السريع مع الإحالة إلى المصدر.</p>
+${linkList(
+  "تصنيفات الفوائد",
+  [
+    "فوائد قرآنية",
+    "فوائد حديثية",
+    "فوائد عقدية",
+    "فوائد فقهية",
+    "فوائد تربوية",
+    "فوائد دعوية",
+    "آداب وأخلاق",
+  ].map((c) => ({ name: c, url: `/fawaid?cat=${encodeURIComponent(c)}` })),
+)}
+${linkList("روابط ذات صلة", [
+  { name: "المواضيع الإسلامية", url: "/topics" },
+  { name: "الأذكار", url: "/adhkar" },
+  { name: "الأحاديث النبوية", url: "/hadith" },
+  { name: "الأحكام الشرعية", url: "/rulings" },
+  { name: "أدب طلب العلم", url: "/adab-talab-ilm" },
+])}`,
   "/knowledge-graph": `<h2>ما خريطة المعرفة؟</h2>
 <p>عرض بصري تفاعلي يربط بين مفاهيم العلوم الشرعية (كالفقه والعقيدة والحديث والتفسير) ويُظهر علاقاتها ببعضها، ليساعد طالب العلم على فهم كيف يتصل كل علم بغيره بدل دراسته منعزلاً.</p>
 ${linkList("روابط ذات صلة", [
