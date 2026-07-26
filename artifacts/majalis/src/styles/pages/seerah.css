@@ -477,3 +477,20 @@ html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --pane
   background: color-mix(in srgb, var(--panel-color, var(--majalis-emerald)) 6%, transparent);
 }
 
+.seerah-related {
+  max-width: 960px; margin: 2rem auto 0; padding: 1.5rem 1.25rem 0;
+  border-top: 1.5px solid var(--clr-border, #E8F2EE);
+}
+.seerah-related__title { font-size: var(--ds-text-base); font-weight: 700; margin: 0 0 .85rem; color: var(--clr-text-1, #052E16); }
+.seerah-related__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: .5rem; }
+.seerah-related__link {
+  display: block; text-align: center; padding: .65rem .5rem;
+  border: 1px solid var(--clr-border, #E8F2EE); border-radius: .55rem;
+  background: #fff; color: var(--clr-text-1, #052E16);
+  font-size: .88rem; font-weight: 600; text-decoration: none;
+}
+.seerah-related__link:hover { border-color: var(--majalis-emerald, #226A56); color: var(--majalis-emerald, #226A56); }
+@media (max-width: 640px) {
+  .seerah-related__grid { grid-template-columns: repeat(2, 1fr); }
+}
+
