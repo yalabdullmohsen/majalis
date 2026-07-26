@@ -98,7 +98,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   { text: "من أسرّ سريرة ألبسه الله رداءها — خيراً كانت أم شراً.", category: "العقيدة", source: "رواه أحمد — حسنه الألباني", author_name: "مسند أحمد", status: "approved", verification_status: "verified" },
   { text: "ليس منا من لم يرحم صغيرنا ويوقّر كبيرنا.", category: "الآداب", source: "رواه الترمذي (1919) — صححه الألباني في السلسلة الصحيحة (2196) بمجموع طرقه", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
   { text: "كل سلامى من الناس عليه صدقة كل يوم.", category: "الأخلاق", source: "متفق عليه", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
-  { text: "ينبغي قبول الحكمة النافعة ممن جاء بها إذا وافقت الحق، دون نظر إلى قائلها.", category: "طلب العلم", source: "معنى متداول عند أهل العلم؛ اللفظ المرفوع ضعيف عند المحدّثين", author_name: null, status: "approved", verification_status: "needs_review" },
+  { text: "يُقبل الحق ممن جاء به إذا وافق الدليل؛ وأما اللفظ المرفوع «الحكمة ضالة المؤمن» فضعيف عند المحدّثين فلا يُستقل به.", category: "طلب العلم", source: "معنى مقرَّر عند أهل العلم؛ ضعّف الألباني اللفظ المشهور", author_name: null, status: "approved", verification_status: "verified" },
 
   /* ── عقيدة ── */
   { text: "أفضل الأعمال بعد الإسلام الصلاة لوقتها، ثم بر الوالدين، ثم الجهاد في سبيل الله.", category: "العقيدة", source: "متفق عليه", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
@@ -149,7 +149,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   { text: "الحزن على الماضي مضيعة للحاضر.", category: "الأخلاق", source: "قاعدة نبوية — ابن القيم: مدارج السالكين", author_name: "ابن القيم الجوزية", status: "approved", verification_status: "verified" },
 
   /* ── طلب العلم ── */
-  { text: "العلم النافع يرفع صاحبه ويثمر العمل؛ وطلبه وبذله من أعظم القربات.", category: "طلب العلم", source: "معنى عام من فضائل العلم الثابتة؛ اللفظ المشهور «العالم والمتعلم...» ضعيف الإسناد", author_name: null, status: "approved", verification_status: "needs_review" },
+  { text: "العلم النافع يرفع صاحبه ويثمر العمل؛ قال ﷺ: «من سلك طريقًا يلتمس فيه علمًا سهّل الله له به طريقًا إلى الجنة» — مسلم. وأما ألفاظ «العالم والمتعلم شريكان…» فضعيفة فلا يُستقل بها.", category: "طلب العلم", source: "مسلم ٢٦٩٩؛ ضعّف أهل التحقيق الألفاظ المشهورة الأخرى", author_name: null, status: "approved", verification_status: "verified" },
   { text: "قيدوا العلم بالكتاب؛ فالكتابة تصون الحفظ من النسيان.", category: "طلب العلم", source: "أثر موقوف — رواه الدارمي وابن أبي شيبة، وصححه الحاكم في المستدرك", author_name: "عمر بن الخطاب", status: "approved", verification_status: "verified" },
   { text: "من أراد الدنيا فعليه بالعلم، ومن أراد الآخرة فعليه بالعلم.", category: "طلب العلم", source: "أثر يُنسب للإمام الشافعي", author_name: "الإمام الشافعي", status: "approved", verification_status: "needs_review" },
 
@@ -158,7 +158,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   { text: "بلّغوا عني ولو آية؛ فالعلم يزكو بالتبليغ ولو قلّ.", category: "الدعوة", source: "رواه البخاري", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
 
   /* ── التربية ── */
-  { text: "لأن يؤدب أحدكم ولده خير من أن يتصدق بصاع.", category: "التربية", source: "رواه الترمذي عن جابر بن سمرة — ضعيف (قال الترمذي: غريب، وفي سنده ناصح أبو عبدالله ضعيف)", author_name: "سنن الترمذي", status: "approved", verification_status: "needs_review" },
+  { text: "تأديب الولد وتعليمه من أعظم الحقوق؛ قال ﷺ: «مروا أولادكم بالصلاة لسبع» — أبو داود، حسّنه الألباني. وأما لفظ «لأن يؤدب أحدكم ولده خير من أن يتصدق بصاع» فضعيف فلا يُستقل به.", category: "التربية", source: "أبو داود ٤٩٥ حسّنه الألباني؛ ضعّف الترمذي وغيره لفظ «خير من أن يتصدق بصاع»", author_name: null, status: "approved", verification_status: "verified" },
   { text: "حق الولد على والده أن يحسن اسمه ويحسن تربيته.", category: "التربية", source: "رواه البيهقي", author_name: "شعب الإيمان", status: "approved", verification_status: "verified" },
 
   /* ── اللغة ── */
@@ -220,7 +220,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   { text: "أهل القرآن هم أهل الله وخاصته.", category: "القرآن", source: "رواه النسائي وابن ماجه — صحيح الألباني", author_name: "سنن ابن ماجه", status: "approved", verification_status: "verified" },
 
   /* ── إضافات العقيدة ── */
-  { text: "التفكر في النفس والخلق يدل على عظمة الخالق؛ أما لفظ «من عرف نفسه عرف ربه» فليس بحديث مرفوع.", category: "العقيدة", source: "أنكره النووي وابن تيمية كحديث؛ يُنسب أحياناً إلى يحيى بن معاذ بلا إسناد ثابت", author_name: null, status: "approved", verification_status: "needs_review" },
+  { text: "التفكر في النفس والخلق يدل على عظمة الخالق؛ قال تعالى: ﴿وَفِي أَنفُسِكُمْ أَفَلَا تُبْصِرُونَ﴾. وأما لفظ «من عرف نفسه عرف ربه» فليس بحديث مرفوع.", category: "العقيدة", source: "الذاريات: ٢١؛ أنكره النووي وابن تيمية كحديث مرفوع", author_name: null, status: "approved", verification_status: "verified" },
   { text: "الحياء شعبة من شعب الإيمان؛ ومن قلّ حياؤه ضعف إيمانه.", category: "العقيدة", source: "الشطر الأول حديث متفق عليه: «الإيمان بضع وستون شعبة، والحياء شعبة من الإيمان»؛ الشطر الثاني تعليق تفسيري وليس من نص الحديث", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
   { text: "الدجال يخرج من المشرق؛ وعلامة قربه ظهور الفتن وكثرة الكذب.", category: "العقيدة", source: "رواه البخاري ومسلم — أشراط الساعة", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
 
