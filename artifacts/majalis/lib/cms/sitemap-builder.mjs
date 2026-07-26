@@ -62,14 +62,18 @@ export async function fetchDynamicUrls() {
   if (!admin) return urls;
 
   const [
-    lessons, sheikhs, library, qa, fawaid, updates, learningPaths,
+    lessons, sheikhs, library, qa, updates, learningPaths,
     rulings, universities, fiqhIssues, fiqhItems, annualCourses,
   ] = await Promise.all([
     admin.from("lessons").select("id, updated_at, slug").eq("status", "approved").limit(2000),
     admin.from("sheikhs").select("id, updated_at").eq("is_verified", true).limit(500),
     admin.from("library_items").select("id, updated_at").eq("status", "approved").limit(500),
     admin.from("qa_questions").select("id, updated_at").eq("status", "published").limit(500),
-    admin.from("fawaid").select("id, updated_at").eq("status", "approved").limit(500),
+    // ملاحظة (2026-07-26، تدقيق جدول fawaid): استعلام fawaid أُزيل من هنا
+    // لسببين معًا — (١) لا مسار `/fawaid/:id` في src/App.tsx إطلاقًا (المسار
+    // الوحيد هو `/fawaid` صفحة القائمة)، فكل رابط كان سيُولَّد هنا هو 404
+    // لمحركات البحث؛ نفس قرار إزالة fatwas أعلاه. (٢) لا عمود updated_at في
+    // جدول fawaid أصلًا، فالاستعلام كان يفشل صامتًا (42703) ولا يُنتج شيئًا.
     // ملاحظة: استعلام fatwas أُزيل هنا (2026-07-18) — قسم الفتوى حُذف من
     // التطبيق بالكامل في جلسة سابقة، و/fatwa و/fatwa/:id في src/App.tsx
     // كليهما مجرد Redirect (لـ/fiqh و/rulings على التوالي) لا صفحة حقيقية،
@@ -112,9 +116,6 @@ export async function fetchDynamicUrls() {
   }
   for (const row of qa.data || []) {
     urls.push({ loc: `/qa/${row.id}`, lastmod: row.updated_at, priority: 0.72 });
-  }
-  for (const row of fawaid.data || []) {
-    urls.push({ loc: `/fawaid/${row.id}`, lastmod: row.updated_at, priority: 0.68 });
   }
   for (const row of updates.data || []) {
     urls.push({ loc: `/updates/${row.id}`, lastmod: row.updated_at, priority: 0.65 });

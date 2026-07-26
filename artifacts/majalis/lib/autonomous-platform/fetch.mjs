@@ -162,7 +162,9 @@ async function fetchInternalFawaid(source, limit = 30) {
   const offset = Number(source.metadata?.offset || 0);
   const { data } = await admin
     .from("fawaid")
-    .select("id, text, author_name, category, source")
+    // العمود الفعلي source_name لا source — طلب الثاني كان يُفشل
+    // الاستعلام كاملًا (42703) فيعود المصدر الداخلي فارغًا دائمًا.
+    .select("id, text, author_name, category, source_name")
     .eq("status", "approved")
     .order("created_at", { ascending: true })
     .range(offset, offset + limit - 1);
@@ -170,7 +172,7 @@ async function fetchInternalFawaid(source, limit = 30) {
     text: row.text,
     author_name: row.author_name,
     category: row.category,
-    source_name: row.source || source.name,
+    source_name: row.source_name || source.name,
     source_url: `fawaid:${row.id}`,
     external_key: row.id,
   }));
