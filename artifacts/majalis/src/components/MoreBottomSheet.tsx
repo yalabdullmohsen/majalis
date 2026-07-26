@@ -19,10 +19,10 @@ type SheetItem = { href: string; label: string; Icon: typeof BookOpen };
 const SHEET_SECTIONS_RAW: { group: string; items: SheetItem[] }[] = [
   /* ── القرآن الكريم ── */
   { group: "القرآن الكريم", items: [
+    { href: "/quran-hub",           label: "مركز القرآن",        Icon: Layers },
     { href: "/mushaf",              label: "المصحف الشريف",      Icon: BookOpen },
     { href: "/quran/surahs",        label: "فهرس السور",         Icon: BookText },
     { href: "/quran/makki-madani",  label: "المكي والمدني",      Icon: Map },
-    { href: "/quran-hub",           label: "مركز القرآن",        Icon: Layers },
     { href: "/daily-wird",          label: "الورد اليومي",       Icon: Sun },
     { href: "/quran/tajweed",       label: "علم التجويد",        Icon: Mic2 },
     { href: "/ulum-quran",          label: "علوم القرآن",        Icon: GraduationCap },

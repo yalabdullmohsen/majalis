@@ -24,7 +24,7 @@ export const FEATURE_REGISTRY: FeatureEntry[] = [
   { id: "kids",         label: "الأطفال",           path: "/kids",         group: "رئيسي",         status: "coming-soon",  inSideNav: true,  inBottomNav: false },
 
   // ── المحتوى التعليمي ─────────────────────────────────────────
-  { id: "lessons",      label: "الدروس",             path: "/lessons",      group: "تعليم",         status: "active",       inSideNav: true,  inBottomNav: true  },
+  { id: "lessons",      label: "الدروس",             path: "/lessons",      group: "تعليم",         status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "annual-courses",label:"الدورات العلمية",    path: "/annual-courses",group:"تعليم",         status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "library",      label: "المكتبة",            path: "/library",      group: "تعليم",         status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "fawaid",       label: "الفوائد",            path: "/fawaid",       group: "تعليم",         status: "active",       inSideNav: true,  inBottomNav: false },
@@ -73,7 +73,7 @@ export const FEATURE_REGISTRY: FeatureEntry[] = [
   { id: "universities", label: "دليل الجامعات",    path: "/universities", group: "مؤسسات",        status: "disabled",     inSideNav: false, inBottomNav: false },
 
   // ── التعلم ───────────────────────────────────────────────────
-  { id: "learn",         label: "أبواب العلم",       path: "/learn",        group: "تعلم",          status: "active",       inSideNav: true,  inBottomNav: false },
+  { id: "learn",         label: "أبواب العلم",       path: "/learn",        group: "تعلم",          status: "active",       inSideNav: true,  inBottomNav: true  },
   { id: "learning-paths",label: "المسارات العلمية", path: "/learning/paths",group: "تعلم",     status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "my-learning",  label: "لوحتي التعليمية",  path: "/my-learning",  group: "تعلم",          status: "requires-auth",inSideNav: true,  inBottomNav: false },
   { id: "learning-plan",label: "خطة التعلم",       path: "/learning-plan",group: "تعلم",          status: "disabled",     inSideNav: false, inBottomNav: false },

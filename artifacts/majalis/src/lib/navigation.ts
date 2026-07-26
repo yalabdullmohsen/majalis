@@ -26,6 +26,7 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
   // الصفحة الرئيسية
   { href: "/",              label: "الرئيسية" },
   // المحتوى العلمي
+  { href: "/learn",         label: "أبواب العلم" },
   { href: "/lessons",       label: "الدروس" },
   { href: "/annual-courses",label: "الدورات العلمية" },
   { href: "/library",       label: "المكتبة" },
@@ -101,7 +102,7 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
  */
 export const PRIMARY_NAV_ITEMS: NavLink[] = [
   { href: "/",          label: "الرئيسية" },
-  { href: "/lessons",   label: "تعلّم",    description: "حديث · عقيدة · فقه · سيرة" },
+  { href: "/learn",     label: "تعلّم",    description: "أبواب · دروس · مسارات" },
   { href: "/quran-hub", label: "القرآن",   description: "مصحف · تجويد · قراء" },
   { href: "/library",   label: "المكتبة",  description: "كتب · مخطوطات · مؤسسات" },
   { href: "/scholars",  label: "العلماء",  description: "تراجم العلماء والمشايخ" },

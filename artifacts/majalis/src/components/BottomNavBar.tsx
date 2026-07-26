@@ -25,6 +25,19 @@ export function BottomNavBar() {
 
   const isActive = (href: string) => {
     if (href === "/") return location === "/";
+    if (href === "/learn") {
+      return (
+        location === "/learn" ||
+        location.startsWith("/learn/") ||
+        location === "/lessons" ||
+        location.startsWith("/lessons/") ||
+        location.startsWith("/learning/") ||
+        location === "/my-learning" ||
+        location === "/start-here" ||
+        location === "/flashcards" ||
+        location === "/quiz"
+      );
+    }
     return location === href || location.startsWith(href + "/");
   };
 

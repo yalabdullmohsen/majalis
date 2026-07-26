@@ -24,6 +24,7 @@ import {
   resolveMergedPath,
 } from "../nav-visibility";
 import { FEATURE_CATS } from "../home-feature-catalog";
+import { PRIMARY_NAV_ITEMS } from "../navigation";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const appRoot = resolve(__dirname, "../../..");
@@ -161,8 +162,22 @@ console.log("\n=== seo-routes.json — /kids مسجَّل (noindex)، /scholarly
   const circlesRoute = routes.find((r) => r.path === "/quran-circles");
   assert(circlesRoute !== undefined && circlesRoute.sitemap === false,
     "/quran-circles خارج sitemap أثناء حالة قريبًا");
+  for (const p of ["/mind-map", "/universities", "/universities/compare"]) {
+    const route = routes.find((r) => r.path === p);
+    assert(route !== undefined && route.sitemap === false, `${p} خارج sitemap بعد الدمج/التنزيل`);
+  }
   assert(routes.find((r) => r.path === "/scholarly-research") === undefined,
     "/scholarly-research لم يعد في seo-routes.json (لن يظهر في sitemap.xml القادم)");
+}
+
+console.log("\n=== PRIMARY_NAV — تعلّم موحّد مع الشريط السفلي ===");
+{
+  const learn = PRIMARY_NAV_ITEMS.find((i) => i.label === "تعلّم");
+  assert(learn?.href === "/learn", `تبويب تعلّم في الهيدر يشير إلى /learn (الفعلي: ${learn?.href})`);
+  const learnReg = FEATURE_REGISTRY.find((f) => f.id === "learn");
+  const lessonsReg = FEATURE_REGISTRY.find((f) => f.id === "lessons");
+  assert(learnReg?.inBottomNav === true, "learn في التنقل السفلي");
+  assert(lessonsReg?.inBottomNav === false, "lessons خارج التنقل السفلي (تحت بوابة /learn)");
 }
 
 console.log("\n=== nav-visibility — إخفاء/دمج/قريبًا ===");

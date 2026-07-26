@@ -1292,9 +1292,10 @@
         "أكاديميات شرعية",
         "دراسة الشريعة"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "monthly",
-      "priority": 0.72
+      "priority": 0.72,
+      "robots": "noindex, follow"
     },
     {
       "path": "/methodology",
@@ -1810,9 +1811,10 @@
         "خريطة العلوم الإسلامية",
         "تصور المعرفة الشرعية"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "monthly",
-      "priority": 0.72
+      "priority": 0.72,
+      "robots": "noindex, follow"
     },
     {
       "path": "/knowledge-map",
@@ -2173,9 +2175,10 @@
         "جامعات شريعة",
         "دراسة الشريعة"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "monthly",
-      "priority": 0.65
+      "priority": 0.65,
+      "robots": "noindex, follow"
     },
     {
       "path": "/anbiya",
