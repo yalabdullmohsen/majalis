@@ -9,19 +9,19 @@ export default function QuizPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/quiz",
-      title: "لعبة سين جيم – أسئلة وأجوبة | المجلس العلمي",
-      description: "اختبر معلوماتك من خلال لعبة أسئلة وأجوبة ممتعة ومتدرجة.",
-      keywords: ["سين جيم", "مسابقة إسلامية", "اختبار معلومات", "أسئلة إسلامية", "تحدي قرآني", "مسابقة فقهية"],
+      title: "اختبر معلوماتك — لعبة سؤال وجواب | المجلس العلمي",
+      description: "لعبة تعليمية متدرجة لاختبار المعلومات في السيرة والفقه والعقيدة والقرآن — منفصلة عن الأسئلة العلمية.",
+      keywords: ["اختبر معلوماتك", "لعبة سؤال وجواب", "مسابقة إسلامية", "اختبار معلومات", "أسئلة إسلامية"],
       jsonLd: [
         {
           "@context": "https://schema.org",
           "@type": "Quiz",
-          name: "لعبة سين جيم – أسئلة وأجوبة",
-          url: "https://www.majlisilm.com/quiz",
-          description: "اختبر معلوماتك من خلال لعبة أسئلة وأجوبة ممتعة ومتدرجة",
+          name: "اختبر معلوماتك — لعبة سؤال وجواب",
+          url: "https://majlisilm.com/quiz",
+          description: "لعبة تعليمية متدرجة لاختبار المعلومات الشرعية",
           educationalLevel: "متعدد المستويات",
           inLanguage: "ar",
-          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
+          provider: { "@type": "Organization", name: "المجلس العلمي", url: "https://majlisilm.com" },
         },
       ],
     });
@@ -31,7 +31,7 @@ export default function QuizPage() {
     <>
       <IslamicQuizGame />
       <div className="twh-share">
-        <ShareButtons title="لعبة سين جيم – أسئلة وأجوبة — المجلس العلمي" url="https://www.majlisilm.com/quiz" />
+        <ShareButtons title="اختبر معلوماتك — لعبة سؤال وجواب — المجلس العلمي" url="https://majlisilm.com/quiz" />
       </div>
     </>
   );

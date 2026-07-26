@@ -224,7 +224,7 @@
     },
     {
       "source": "/fatwa/:id",
-      "destination": "/rulings",
+      "destination": "/rulings/:id",
       "permanent": true
     },
     {

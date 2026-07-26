@@ -38,7 +38,7 @@ const COUNCIL_SECTIONS = [
   { href: "/fiqh-council",             label: "رئيسية المجمع",     desc: "القرارات والفتاوى والتوثيق" },
   { href: "/fiqh-council/issues",      label: "المسائل الفقهية",   desc: "المسائل المطروحة والمدروسة" },
   { href: "/fiqh-council/resolutions", label: "القرارات",          desc: "قرارات هيئات الإفتاء المعتمدة" },
-  { href: "/fiqh-council/fatwas",      label: "فتاوى المجمع",      desc: "فتاوى موثقة بأسانيدها" },
+  { href: "/fiqh-council/fatwas",      label: "فتاوى المجمع",      desc: "قرارات وتوصيات المجمع الفقهي" },
   { href: "/fiqh-council/live",        label: "البيانات الحية",    desc: "آخر الجلسات والنشاطات" },
   { href: "/fiqh-council/index",       label: "الفهرس الموضوعي",  desc: "تصفح حسب الأبواب" },
   { href: "/fiqh-council/nawazil",     label: "النوازل المعاصرة",  desc: "مسائل العصر ومستجداته" },

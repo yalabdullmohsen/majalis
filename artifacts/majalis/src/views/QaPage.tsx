@@ -123,9 +123,9 @@ export default function QaPage({
       : undefined;
     applyPageSeo({
       path: "/qa",
-      title: "الأسئلة والأجوبة الشرعية | المجلس العلمي",
-      description: "أسئلة وأجوبة شرعية في الفقه والعقيدة والعبادات والمعاملات، موثقة من العلماء والمراجع الموثوقة.",
-      keywords: ["أسئلة شرعية", "أجوبة شرعية", "فتاوى", "فقه إسلامي", "سؤال وجواب"],
+      title: "الأسئلة العلمية | المجلس العلمي",
+      description: "أسئلة وأجوبة علمية في الفقه والعقيدة والعبادات والمعاملات — قسم مستقل عن لعبة الاختبار. النوازل الشخصية تُحال إلى العلماء والجهات الرسمية.",
+      keywords: ["أسئلة علمية", "أجوبة شرعية", "فقه إسلامي", "عقيدة", "سؤال وجواب"],
       ...(faqSchema ? { jsonLd: [faqSchema] } : {}),
     });
   }, []);
@@ -345,7 +345,7 @@ export default function QaPage({
       </aside>
 
       <div className="twh-share">
-        <ShareButtons title="الأسئلة والأجوبة الشرعية — المجلس العلمي" url="https://www.majlisilm.com/qa" />
+        <ShareButtons title="الأسئلة العلمية — المجلس العلمي" url="https://majlisilm.com/qa" />
       </div>
 
       <FilterBottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="بحث وتصفية">

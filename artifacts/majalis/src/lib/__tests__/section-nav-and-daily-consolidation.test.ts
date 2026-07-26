@@ -103,11 +103,18 @@ console.log("\n=== تعطيل الباحث الشرعي — سجل الميزا�
 console.log("\n=== vercel.json — إعادة توجيه دائمة لمسار الباحث الشرعي ===");
 {
   const vercelConfig = JSON.parse(readFileSync(resolve(appRoot, "vercel.json"), "utf-8"));
-  const redirect = (vercelConfig.redirects as Array<{ source: string; destination: string; permanent: boolean }>)
-    .find((r) => r.source === "/scholarly-research");
+  const redirects = vercelConfig.redirects as Array<{ source: string; destination: string; permanent: boolean }>;
+  const redirect = redirects.find((r) => r.source === "/scholarly-research");
   assert(redirect !== undefined, "قاعدة توجيه على مستوى الخادم موجودة لـ /scholarly-research");
   assert(redirect?.destination === "/qa", `الوجهة /qa صحيحة (الفعلية: ${redirect?.destination})`);
   assert(redirect?.permanent === true, "التوجيه دائم (301) لا مؤقت — صحيح لمحركات البحث");
+
+  const fatwaId = redirects.find((r) => r.source === "/fatwa/:id");
+  assert(fatwaId !== undefined, "قاعدة توجيه /fatwa/:id موجودة");
+  assert(fatwaId?.destination === "/rulings/:id", `الحفاظ على المعرّف: /rulings/:id (الفعلي: ${fatwaId?.destination})`);
+  assert(fatwaId?.permanent === true, "/fatwa/:id توجيه دائم");
+  const fatwaRoot = redirects.find((r) => r.source === "/fatwa");
+  assert(fatwaRoot?.destination === "/fiqh" && fatwaRoot.permanent === true, "/fatwa → /fiqh دائمًا");
 }
 
 console.log("\n=== seo-routes.json — /kids مسجَّل، /scholarly-research أُزيل ===");

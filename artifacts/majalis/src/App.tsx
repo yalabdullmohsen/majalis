@@ -408,6 +408,12 @@ function PrayerAlertSchedulerBootstrap() {
   return null;
 }
 
+/** تحويل 301 على مستوى العميل لمسارات /fatwa/:id القديمة مع الحفاظ على المعرّف. */
+function FatwaIdRedirect() {
+  const { id } = useParams<{ id: string }>();
+  return <Redirect to={id ? `/rulings/${id}` : "/rulings"} />;
+}
+
 function SafeLazyRoute({ component: Component }: { component: ComponentType<any> }) {
   // useParams يُعيد params المسار الحالي (مثل { id } أو { slug })
   // ويُمرَّر كـ prop "params" لجميع صفحات التفاصيل
@@ -681,7 +687,7 @@ function Router() {
       <Route path="/fiqh-council/archive"><SafeLazyRoute component={FiqhCouncilArchivePage} /></Route>
       <Route path="/fiqh-council/:slug"><SafeLazyRoute component={FiqhCouncilItemDetailPage} /></Route>
       <Route path="/fiqh-council"><SafeLazyRoute component={FiqhCouncilPage} /></Route>
-      <Route path="/fatwa/:id"><Redirect to="/rulings" /></Route>
+      <Route path="/fatwa/:id"><FatwaIdRedirect /></Route>
       <Route path="/fatwa"><Redirect to="/fiqh" /></Route>
       <Route path="/rulings/:id"><SafeLazyRoute component={RulingDetailPage} /></Route>
       <Route path="/rulings"><SafeLazyRoute component={RulingsPage} /></Route>
