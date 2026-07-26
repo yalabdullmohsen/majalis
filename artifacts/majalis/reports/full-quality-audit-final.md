@@ -2,7 +2,7 @@
 
 - **الفرع:** `cursor/full-quality-audit-4f26`
 - **نقطة الاستعادة:** `restore/full-quality-audit-baseline` @ `2c5d6a81`
-- **آخر commit:** `de95cc15` (`de95cc1575349d3927aa2dc6c77fb04c4669605f`)
+- **آخر commit:** `bd766bee` (`bd766bee` — توثيق؛ العمل الرئيسي `de95cc15`)
 - **PR:** https://github.com/yalabdullmohsen/majalis/pull/277
 - **لا دمج إلى main / لا نشر production من هذه الجلسة**
 
