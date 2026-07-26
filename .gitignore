@@ -19,6 +19,10 @@ supabase/.temp/
 .vercel
 .env*
 
+# فاحص الموقع الشامل — تقارير مولَّدة محلياً
+artifacts/majalis/reports/majlisilm-audit-report.md
+artifacts/majalis/reports/majlisilm-audit-report.json
+
 # content-runner: ملفات حالة تشغيلية محلية، ليست مصدرًا
 scripts/content-runner.log
 scripts/content-runner.cycle-count
