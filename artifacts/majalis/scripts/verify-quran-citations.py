@@ -10,9 +10,16 @@
 `docs/quran-data-source.md`)، وسلامته محقَّقة ببصمات SHA-256 في
 `manifest.json` عبر `scripts/verify-quran-integrity.mjs`.
 
-المقابلة تُطبّع التشكيل وتُوحّد الألف والياء والتاء المربوطة وتُسقط حروف العلّة
-والهمزات وتطوي الحرف المكرَّر، ليتساوى الرسم العثماني (يكتب الألف المحذوفة
-ألفًا خنجرية: ٱلطَّلَٰقُ) بالرسم الإملائي المعاصر (الطَّلَاقُ) — وهما نصّ واحد.
+المقابلة على ثلاث طبقات متدرِّجة، وحالة كل استشهاد هي أعلى طبقة تطابق فيها:
+  OK                — مطابقة حرفيّة للرسم العثماني بعد إزالة التشكيل.
+  OK_IMLAI          — تطابق بعد إسقاط الألف والهمزة وحدهما (`rasm`)، أي نفس
+                      النصّ مكتوبًا بالرسم الإملائي المعاصر: أَمْوَٰلِهِمْ =
+                      أَمْوَالِهِمْ، ءَايَٰتٍ = آيَاتٍ. فرق رسم لا فرق نصّ.
+  OK_SKELETON_ONLY  — لم يتطابق إلا الهيكل الصامت (`skel`) الذي يُسقط حروف
+                      العلّة كلها ⇒ **يجب قراءته يدويًّا**: هنا تختبئ الفروق في
+                      واو أو ياء، ككلمة «وَإِذَا» مكان «إِذَا» (واو مقحَمة لا
+                      وجود لها في الآية) — وهي خطأ نصّ حقيقيّ يعميه الهيكل.
+  MISMATCH          — لا تطابق أصلًا: خطأ في النصّ أو في الموضع.
 والحذف من وسط المقتبس يُعلَن بـ«...» أو «…» فيُقابَل كل جزء على حِدة.
 
 الاستعمال:
@@ -51,6 +58,17 @@ def norm(s: str) -> str:
     s = s.replace('ى', 'ي').replace('ی', 'ي').replace('ة', 'ه')
     s = re.sub(r'[^ء-ي\s]', ' ', s)
     return re.sub(r'\s+', ' ', s).strip()
+
+
+def rasm(s: str) -> str:
+    """طبقة وسطى بين المطابقة الحرفيّة والهيكل الصامت.
+
+    تُسقط الألف والهمزة فقط (فيتساوى الرسم العثماني الذي يكتب الألف المحذوفة
+    ألفًا خنجرية: أَمْوَٰلِهِمْ = أَمْوَالِهِمْ، وءَايَٰتٍ = آيَاتٍ) وتُبقي الواو
+    والياء. فأيّ فرق في واو أو ياء — كواو مقحَمة في أول المقتبس — يظهر هنا،
+    وهو ما يعميه الهيكل الصامت لأنه يُسقط حروف العلّة كلها.
+    """
+    return re.sub(r'[\sاء]', '', norm(s))
 
 
 def skel(s: str) -> str:
@@ -128,10 +146,16 @@ def check(text: str):
         raw = ' '.join(filter(None, (ayah_text(snum, a) for a in nums)))
         parts = [p for p in re.split(r'\.\.\.|…', quote) if norm(p)]
         miss_exact = [p for p in parts if norm(p) not in norm(raw)]
+        miss_rasm = [p for p in parts if rasm(p) not in rasm(raw)]
         miss_skel = [p for p in parts if skel(p) not in skel(raw)]
         if not miss_skel:
-            # OK = مطابقة حرفيّة للرسم العثماني، OK_IMLAI = نفس النصّ بالرسم الإملائي
-            res['status'] = 'OK' if not miss_exact else 'OK_IMLAI'
+            # OK = مطابقة حرفيّة للرسم العثماني، OK_IMLAI = نفس النصّ بالرسم
+            # الإملائي، OK_SKELETON_ONLY = لم يتطابق إلا الهيكل الصامت ⇒ **يجب**
+            # قراءته يدويًّا: هنا يختبئ الفرق في واو أو ياء (واو مقحَمة مثلًا).
+            res['status'] = ('OK' if not miss_exact else
+                             'OK_IMLAI' if not miss_rasm else 'OK_SKELETON_ONLY')
+            if miss_rasm and miss_exact:
+                res['needs_read'] = [norm(p) for p in miss_rasm]
         else:
             res['status'] = 'MISMATCH'
             res['missing'] = [norm(p) for p in miss_skel]
@@ -149,8 +173,39 @@ def bump_ayah_numbers(text: str) -> str:
     return re.sub(r'(?<=[:،]\s)[٠-٩]+(?=\s*\])', b, text or '')
 
 
+SELF_TEST = [
+    # (نصّ الاستشهاد، الحالة المتوقَّعة، وصف الحالة المختبَرة)
+    ('﴿إِنَّا كُلَّ شَىْءٍ خَلَقْنَٰهُ بِقَدَرٍۢ﴾ [القمر: ٤٩]', 'OK',
+     'مطابقة حرفيّة للرسم العثماني'),
+    ('﴿خُذْ مِنْ أَمْوَالِهِمْ صَدَقَةً تُطَهِّرُهُمْ﴾ [التوبة: ١٠٣]', 'OK_IMLAI',
+     'الرسم الإملائي: أَمْوَالِهِمْ = أَمْوَٰلِهِمْ — فرق رسم لا نصّ'),
+    ('﴿وَإِذَا طَلَّقْتُمُ النِّسَاءَ فَطَلِّقُوهُنَّ لِعِدَّتِهِنَّ﴾ [الطلاق: ١]',
+     'OK_SKELETON_ONLY',
+     'واو مقحَمة لا وجود لها في الآية — يعميها الهيكل الصامت ويكشفها rasm()'),
+    ('﴿إِذَا طَلَّقْتُمُ النِّسَاءَ فَطَلِّقُوهُنَّ لِعِدَّتِهِنَّ﴾ [الطلاق: ١]', 'OK',
+     'المقتبس نفسه بعد حذف الواو ⇒ يصعد من الهيكل إلى المطابقة الحرفيّة'),
+    ('﴿إِنَّا كُلَّ شَىْءٍ خَلَقْنَٰهُ بِقَدَرٍۢ﴾ [القمر: ٥٠]', 'MISMATCH',
+     'نصّ صحيح وموضع خاطئ'),
+    ('﴿الحمد لله رب العالمين أجمعين﴾ [الفاتحة: ٢]', 'MISMATCH',
+     'زيادة كلمة ليست في الآية'),
+]
+
+
+def self_test() -> int:
+    bad = 0
+    for text, want, desc in SELF_TEST:
+        got = check(text)[0]['status']
+        ok = got == want
+        bad += not ok
+        print(f"{'✔' if ok else '✘'} {desc}\n    المتوقَّع={want} الناتج={got}")
+    print(f"\n=== اختبار ذاتي: {len(SELF_TEST) - bad}/{len(SELF_TEST)} نجح")
+    return 1 if bad else 0
+
+
 def main():
     ap = argparse.ArgumentParser(description='تحقُّق من استشهادات القرآن في محتوى مخزَّن')
+    if '--self-test' in sys.argv:
+        return self_test()
     ap.add_argument('rows', help='ملف JSON يحوي مصفوفة صفوف (أو - للقراءة من stdin)')
     ap.add_argument('--field', default='evidence', help='الحقل الحامل للاستشهاد (افتراضيًّا evidence)')
     ap.add_argument('--id-field', default='id')
@@ -169,12 +224,13 @@ def main():
         if not rs:
             no_quote += 1
         flags = [r for r in rs if not r['status'].startswith('OK')]
+        reads = [r for r in rs if r['status'] == 'OK_SKELETON_ONLY']
         for r in rs:
             counts[r['status']] = counts.get(r['status'], 0) + 1
         rid = str(x.get(a.id_field, ''))[:8]
         label = str(x.get(a.label_field, ''))[:60]
-        if flags or not a.quiet:
-            mark = '✔' if rs and not flags else ('∅' if not rs else '✘')
+        if flags or reads or not a.quiet:
+            mark = ('✘' if flags else '⚠' if reads else '✔') if rs else '∅'
             locs = ' '.join(f"{r.get('surah')}:{r.get('ayahs')}={r['status']}" for r in rs)
             print(f"{mark} [{rid}] {label} || {locs}")
         for r in flags:
@@ -185,8 +241,14 @@ def main():
                 print(f"    غير موجود في الآية={r['missing']}")
             if r.get('found_at'):
                 print(f"    وُجد في={r['found_at']}")
+        for r in reads:
+            print(f"    ⚠ تطابق هيكليّ فقط — اقرأه كلمةً كلمةً: {r.get('surah')}:{r.get('ayahs')}")
+            print(f"      المقتبس={r['quote'][:160]}")
+            print(f"      الجزء المشتبه={r.get('needs_read')}")
 
-    print(f"\n=== صفوف={len(rows)} بلا استشهاد قرآني={no_quote} خلل={bad} | {counts}")
+    n_read = counts.get('OK_SKELETON_ONLY', 0)
+    print(f"\n=== صفوف={len(rows)} بلا استشهاد قرآني={no_quote} خلل={bad}"
+          f" يحتاج قراءة يدوية={n_read} | {counts}")
     if a.negative_control:
         ok = sum(v for k, v in counts.items() if k.startswith('OK'))
         print(f"=== ضبط سالب: {ok} استشهادًا نجح رغم إزاحة رقم الآية (المرغوب: 0)")
