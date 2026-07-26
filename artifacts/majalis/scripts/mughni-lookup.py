@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
-"""بحثٌ وقراءةُ صفحاتٍ في «المغني لابن قدامة» على الشاملة عبر أداة ج-٢٣٣.
+"""بحثٌ وقراءةُ صفحاتٍ في كتابٍ **موضعُه بالجزء والصفحة** على الشاملة عبر أداة ج-٢٣٣.
+
+أُنشئت للمغني (ج-٢٣٨) ثم عُمِّمت (ج-٢٤١) على كل مفتاح `paged` في `BOOKS` بلا نسخِ
+أداةٍ ثانية: `--book` اختياريّ، وافتراضُه `mughni` فلا تتغيّر الاستعمالات السابقة.
 
 استعمال:
   python3 mughni-lookup.py find "عبارة حرفيّة"      ⇒ صفحات المطابقة بمواضعها
   python3 mughni-lookup.py page 500 [600 ...]      ⇒ نصّ الصفحة كاملًا بموضعها
   python3 mughni-lookup.py quote 500 "بداية" "نهاية" ⇒ قصّ المقتبس بحروفه وتشكيله
+  python3 mughni-lookup.py --book kashaf find "…"   ⇒ الأمر نفسه في كشاف القناع
 """
 import importlib.util
 import os
@@ -63,10 +67,24 @@ def cut(page: int, start: str, end: str) -> str:
     b = norm.find(e, a)
     if b < 0:
         return "!! النهاية غير موجودة"
-    return txt[idx[a]: idx[b + len(e) - 1] + 1]
+    # آخرُ حرفٍ في المقتبس تتلوه حركتُه في الأصل («كِفَايَةٍ» ⇒ ة ثم ٍ)، والتطبيع يُسقطها
+    # فيقف الفهرس عند الحرف وحدَه ⇒ يُمَدُّ الطرف إلى آخر ما بعده من تشكيل (ج-٢٤١).
+    end = idx[b + len(e) - 1] + 1
+    while end < len(txt) and (V.TASHKEEL.match(txt[end]) or V.HONORIFIC.match(txt[end])):
+        end += 1
+    return txt[idx[a]: end]
 
 
 def main() -> int:
+    global BOOK
+    argv = sys.argv[1:]
+    if argv and argv[0] == "--book":
+        key = argv[1]
+        if not V.BOOKS[key].get("paged"):
+            raise SystemExit("«%s» كتابٌ مُرقَّم بالحديث لا بالصفحة" % key)
+        BOOK = V.BOOKS[key]["id"]
+        argv = argv[2:]
+    sys.argv = [sys.argv[0]] + argv
     cmd = sys.argv[1]
     if cmd == "find":
         term = sys.argv[2]
