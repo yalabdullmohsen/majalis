@@ -85,14 +85,16 @@ jobs:
             nums=$(gh api "repos/${GITHUB_REPOSITORY}/commits/${WORKFLOW_HEAD_SHA}/pulls" \
               --jq '[.[] | select(.base.ref=="main" and .head.repo.full_name=="'"${GITHUB_REPOSITORY}"'") | .number] | join(" ")' || true)
             if [ -z "${nums}" ]; then
-              # احتياطي: فرع الرأس
-              nums=$(gh pr list --base main --state open --head "${GITHUB_REPOSITORY_OWNER}:${WORKFLOW_HEAD_BRANCH}" --json number --jq '.[].number' | tr '\n' ' ')
+              nums=$(gh -R "$GITHUB_REPOSITORY" pr list --base main --state open \
+                --head "${GITHUB_REPOSITORY_OWNER}:${WORKFLOW_HEAD_BRANCH}" \
+                --json number --jq '.[].number' | tr '\n' ' ' || true)
             fi
           elif [ "$EVENT_NAME" = "workflow_dispatch" ]; then
             if [ -n "${DISPATCH_PR}" ]; then
               nums="${DISPATCH_PR}"
             else
-              nums=$(gh pr list --base main --state open --limit 50 --json number --jq '.[].number' | tr '\n' ' ')
+              nums=$(gh -R "$GITHUB_REPOSITORY" pr list --base main --state open --limit 50 \
+                --json number --jq '.[].number' | tr '\n' ' ' || true)
             fi
           fi
 
@@ -107,17 +109,24 @@ jobs:
           ALLOW: ${{ steps.targets.outputs.allow }}
           EXCLUDE_DUAL: ${{ steps.targets.outputs.exclude_dual }}
           NUMS: ${{ steps.targets.outputs.nums }}
+        # يجب أن ينجح هذا الـjob دائمًا حتى لا يصبح فحصًا حاجزًا يمنع الدمج.
+        continue-on-error: true
         run: |
-          set -euo pipefail
+          set -u
+          REPO_FLAG=(-R "$GITHUB_REPOSITORY")
           if [ -z "${GH_TOKEN:-}" ]; then
             echo "::error::لا يوجد رمز مصادقة لـ gh"
-            exit 1
+            exit 0
           fi
 
           for n in $NUMS; do
             echo "::group::PR #$n"
-            meta=$(gh pr view "$n" --json number,state,isDraft,baseRefName,headRefName,headRepository,isCrossRepository,mergeable,mergeStateStatus,url \
-              --jq '{state,isDraft,base:.baseRefName,head:.headRefName,cross:.isCrossRepository,mergeable,mergeStateStatus,url}')
+            if ! meta=$(gh "${REPO_FLAG[@]}" pr view "$n" --json number,state,isDraft,baseRefName,headRefName,isCrossRepository,mergeable,mergeStateStatus,url \
+              --jq '{state,isDraft,base:.baseRefName,head:.headRefName,cross:.isCrossRepository,mergeable,mergeStateStatus,url}'); then
+              echo "::warning::تعذّر قراءة PR #$n"
+              echo "::endgroup::"
+              continue
+            fi
             echo "$meta"
 
             state=$(echo "$meta" | jq -r .state)
@@ -160,15 +169,16 @@ jobs:
 
             if [ "$draft" = "true" ]; then
               echo "تحويل Draft → Ready…"
-              gh pr ready "$n"
+              gh "${REPO_FLAG[@]}" pr ready "$n" || echo "::warning::تعذّر undraft لـ #$n"
             fi
 
-            # لا تتجاوز الفحوصات: --auto ينتظر نجاح الفحوصات المطلوبة
+            # لا تتجاوز الفحوصات: --auto ينتظر نجاح الفحوصات المطلوبة (مثل Verify build)
             echo "تفعيل Auto-merge (squash) + حذف الفرع…"
-            if gh pr merge "$n" --auto --squash --delete-branch; then
+            if gh "${REPO_FLAG[@]}" pr merge "$n" --auto --squash --delete-branch; then
               echo "✓ Auto-merge مفعّل أو الدمج تم لـ #$n"
             else
               echo "::warning::تعذّر تفعيل auto-merge لـ #$n (فحوصات معلّقة/فاشلة أو قيود مستودع)"
             fi
             echo "::endgroup::"
           done
+          exit 0
