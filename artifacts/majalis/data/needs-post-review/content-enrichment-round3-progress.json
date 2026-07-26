@@ -60,5 +60,5 @@
   "needs_post_review_notes": [
     "كتب بلا authorId بعد الربط: تفسير الجلالين (مؤلفان) وdaawa-taarud — يُراجع يدويًا"
   ],
-  "status": "gates_green_pending_push"
+  "status": "gates_green_pushed"
 }
