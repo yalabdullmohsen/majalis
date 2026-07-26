@@ -73,9 +73,9 @@ export default function PrayerCountdownPage() {
           ) : (
             <>
               <p className="prayer-countdown__next-label">الصلاة القادمة</p>
-              <h2 className="prayer-countdown__next-name font-display">
+              <h1 className="prayer-countdown__next-name font-display">
                 {PRAYER_AR[countdown.next.key] ?? countdown.next.key}
-              </h2>
+              </h1>
               <div className="prayer-countdown__timer" dir="ltr">
                 {countdown.remainingHms ?? "--:--:--"}
               </div>

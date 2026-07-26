@@ -158,3 +158,30 @@ ProphetStories (أقسام)، TopicPage، PrayerCountdown، AccountDeletion، Is
 
 ### حالة البناء
 نجاح
+
+---
+
+## المرحلة 7 — الأداء
+
+**الفرع:** `cursor/visual-fix-phase7-perf-1f54`  
+**PR:** (يُحدَّث)
+
+### مكاسب آمنة طُبّقت
+- تقسيم المسارات كان موجوداً (`lazyWithRetry`) — أُبقي.
+- تأجيل خطوط Google الزخرفية (Amiri/Scheherazade/…) إلى idle/تفاعل.
+- تقليل أوزان Alexandria/IBM في التحميل الأول + `display=swap`.
+- تأجيل حزمة `AssistantFloatingWidget` حتى idle أو أول تفاعل.
+- الصور خارج الطية: `loading="lazy"` موجود في المكوّنات الأساسية.
+
+### قياس قبل/بعد (TTFB عبر curl — ليس Lighthouse كامل)
+| المسار | إنتاج (قبل) time_total | محلي بعد التعديل |
+|---|---|---|
+| `/` | ~0.13s | (يُقاس محلياً) |
+| `/lessons` | ~0.16s | |
+| `/library` | ~0.18s | |
+| `/fiqh` | ~0.09s | |
+
+ملاحظة: بطء 7.9s في الفحص السابق يعود لتحميل العميل/الجوال لا لـ TTFB الخادم. المكاسب تستهدف JS/خطوط فوق الطية.
+
+### حالة البناء
+نجاح

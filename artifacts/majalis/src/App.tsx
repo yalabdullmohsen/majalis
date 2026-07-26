@@ -787,9 +787,7 @@ function AppShell() {
           <Router />
         </main>
         <SiteFooter />
-        <Suspense fallback={null}>
-          <AssistantFloatingWidget />
-        </Suspense>
+        <DeferredAssistantWidget />
         {isAdmin && (
           <Suspense fallback={null}>
             <AdminSiteEditBar />
@@ -808,6 +806,41 @@ function AppShell() {
         )}
       </div>
     </WouterRouter>
+  );
+}
+
+/** يؤجّل تحميل حزمة المساعد حتى الخمول أو أول تفاعل — لا يحجب العرض الأول. */
+function DeferredAssistantWidget() {
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    let done = false;
+    const arm = () => {
+      if (done) return;
+      done = true;
+      setReady(true);
+    };
+    const idleId =
+      "requestIdleCallback" in window
+        ? window.requestIdleCallback(arm, { timeout: 5000 })
+        : window.setTimeout(arm, 3000);
+    const onInteract = () => arm();
+    window.addEventListener("pointerdown", onInteract, { once: true, passive: true });
+    window.addEventListener("keydown", onInteract, { once: true });
+    return () => {
+      if ("cancelIdleCallback" in window && typeof idleId === "number") {
+        window.cancelIdleCallback(idleId as number);
+      } else {
+        window.clearTimeout(idleId as number);
+      }
+      window.removeEventListener("pointerdown", onInteract);
+      window.removeEventListener("keydown", onInteract);
+    };
+  }, []);
+  if (!ready) return null;
+  return (
+    <Suspense fallback={null}>
+      <AssistantFloatingWidget />
+    </Suspense>
   );
 }
 

@@ -57,8 +57,30 @@
          تطبيق iOS عبر Capacitor (WKWebView) قد يفتح بلا اتصال فوري، وأي تأخر/فشل هنا
          يعني ظهور القرآن بخط بديل غير مقروء ولو للحظة — راجع @font-face في quran.css. -->
     <link rel="preload" href="/fonts/amiri-quran/AmiriQuran-Regular.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alexandria:wght@300;400;500;600;700;800&family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=Noto+Naskh+Arabic:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'" />
+    <!-- أوزان الواجهة الأساسية فقط أولاً (display=swap) — تقلّل بايتات الخطوط فوق الطية -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;600;700&family=IBM+Plex+Sans+Arabic:wght@400;600;700&display=swap" media="print" onload="this.media='all'" />
+    <!-- خطوط العرض القرآني/الزخرفي مؤجّلة إلى ما بعد أول تفاعل أو خمول المتصفح -->
+    <script>
+      (function () {
+        var href = "https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=Noto+Naskh+Arabic:wght@400;700&display=swap";
+        function loadDecorFonts() {
+          if (document.getElementById("majalis-decor-fonts")) return;
+          var l = document.createElement("link");
+          l.id = "majalis-decor-fonts";
+          l.rel = "stylesheet";
+          l.href = href;
+          document.head.appendChild(l);
+        }
+        if ("requestIdleCallback" in window) {
+          requestIdleCallback(loadDecorFonts, { timeout: 4000 });
+        } else {
+          window.addEventListener("load", function () { setTimeout(loadDecorFonts, 1); }, { once: true });
+        }
+        ["pointerdown", "keydown", "scroll", "touchstart"].forEach(function (evt) {
+          window.addEventListener(evt, loadDecorFonts, { once: true, passive: true });
+        });
+      })();
+    </script>
     <noscript>
       <link href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;700&family=IBM+Plex+Sans+Arabic:wght@400;600;700&family=Scheherazade+New:wght@400;700&family=Noto+Naskh+Arabic:wght@400;700&display=swap" rel="stylesheet" />
     </noscript>
