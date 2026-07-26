@@ -124,6 +124,11 @@ function SectionCard({
                         {lesson.summary}
                       </span>
                     )}
+                    {lesson.body && (
+                      <span className="block mt-1.5 text-xs text-gray-600 dark:text-gray-300 leading-relaxed font-normal border-r-2 pr-2" style={{ borderColor: section.color }}>
+                        {lesson.body}
+                      </span>
+                    )}
                   </span>
                 </div>
               </li>

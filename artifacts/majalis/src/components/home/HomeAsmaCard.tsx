@@ -34,7 +34,7 @@ export function HomeAsmaCard() {
             <p className="hac__benefit">{asma.benefit}</p>
           </div>
         </div>
-        <span className="hac__category-badge">{asma.category}</span>
+        <span className="hac__category-badge">{asma.category} · {asma.status}</span>
       </div>
     </section>
   );
