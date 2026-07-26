@@ -57,7 +57,13 @@ BOOKS = {
     "abudawud": {"id": "1726", "name": "سنن أبي داود", "edition": "ت محمد محيي الدين عبد الحميد"},
     "tirmidhi": {"id": "1435", "name": "سنن الترمذي", "edition": "ت أحمد محمد شاكر وآخرين"},
     "ibnmajah": {"id": "1198", "name": "سنن ابن ماجه", "edition": "ت محمد فؤاد عبد الباقي"},
+    # كتابٌ غير حديثيّ: لا تُرقَّم فيه الأحاديث، فموضعُه **الجزء والصفحة** لا رقم الحديث
+    # (`paged`)، ويُنتزَعان من عنوان صفحة الشاملة («ج1 - ص109 - كتاب سيرة ابن هشام…»).
+    "sira": {"id": "23833", "name": "السيرة النبوية لابن هشام",
+             "edition": "ت السقا والأبياري والشلبي", "paged": True},
 }
+
+PAGED_IDS = {info["id"] for info in BOOKS.values() if info.get("paged")}
 
 BASE = "https://shamela.ws"
 CACHE = os.environ.get("SHAMELA_CACHE", "/tmp/shamela-cache")
@@ -187,6 +193,10 @@ def hadiths_on_page(book_id: str, page: int):
         ما بعده من طرق الحديث نفسه إذا لم يُصرَّح فيها برقم جديد.
     """
     txt = page_text(book_id, page)
+    if book_id in PAGED_IDS:
+        # كتابٌ بلا ترقيم أحاديث: الصفحة كلّها وحدة واحدة، ولو التُقط فيها «رقم -»
+        # لكان رقم حاشيةٍ أو فقرةٍ لا رقم حديث ⇒ لا يُنسب إليه شيء.
+        return [(None, txt)]
     marks = list(NUM_AT_START.finditer(txt))
     out = []
     if marks and marks[0].start() > 0:
@@ -207,6 +217,27 @@ def hadiths_on_page(book_id: str, page: int):
     if not marks:
         out.append((None, txt))
     return out
+
+
+TITLE = re.compile(r"<title>\s*(.*?)\s*</title>", re.S)
+JUZ_PAGE = re.compile(r"ج\s*(\d+)\s*-\s*ص\s*(\d+)")
+
+
+def page_ref(book_id: str, page: int):
+    """(الجزء، الصفحة المطبوعة، عنوان الفصل) لصفحةٍ في كتابٍ موضعُه بالصفحة لا بالرقم.
+
+    عنوان صفحة الشاملة يحمل الثلاثة: «ج1 - ص109 - كتاب سيرة ابن هشام ت السقا ورفاقه
+    - عددهم وأمهاتهم - المكتبة الشاملة» — ورقم الصفحة المطبوع يخالف رقم الصفحة في
+    مسار الرابط (ص109 ⇒ /132)، فلا يصحّ الاستشهاد بالثاني.
+    """
+    m = TITLE.search(_fetch("%s/book/%s/%d" % (BASE, book_id, page)))
+    title = m.group(1) if m else ""
+    jp = JUZ_PAGE.search(title)
+    parts = [p.strip() for p in title.split(" - ")]
+    chapter = parts[-2] if len(parts) >= 3 else ""
+    if not jp:
+        return None, None, chapter
+    return int(jp.group(1)), int(jp.group(2)), chapter
 
 
 def last_number_before(book_id: str, page: int, back: int = 3):
@@ -294,7 +325,7 @@ def locate(phrase: str, book: str, max_pages: int = 40, verbose: bool = False):
             if ORDER[g] == 0:
                 continue
             real_num, real_page = num, page
-            if num is None:
+            if num is None and book_id not in PAGED_IDS:
                 real_num, real_page = last_number_before(book_id, page)
             found.append({"grade": g, "number": real_num, "page": page,
                           "num_page": real_page, "text": text.strip(), "missing": miss})
@@ -318,7 +349,7 @@ def report(phrase: str, book: str, verbose: bool = False):
                 "number": None, "page": None, "url": None, "text": "", "phrase": phrase,
                 "other_numbers": []}
     others = sorted({f["number"] for f in allm if f["number"] not in (None, best["number"])})
-    return {
+    out = {
         "grade": best["grade"],
         "book": info["name"],
         "edition": info["edition"],
@@ -330,6 +361,11 @@ def report(phrase: str, book: str, verbose: bool = False):
         "other_numbers": others,
         "phrase": phrase,
     }
+    if info.get("paged"):
+        juz, printed, chapter = page_ref(info["id"], best["page"])
+        out.update({"juz": juz, "printed_page": printed, "chapter": chapter,
+                    "ref": "ج%s/ص%s" % (juz, printed) if juz else None})
+    return out
 
 
 # ── التحقّق السالب: هل اللفظ غائب فعلًا عن الكتاب؟ ──────────────────────────
@@ -398,6 +434,15 @@ SELF_TESTS = [
     ("الماء طهور لا ينجسه أحد", "abudawud", None, "NOT_FOUND"),
 ]
 
+# ── ضبط الكتاب المُرقَّم بالصفحة (ج-٢٣٣): (اللفظ، الكتاب، «جX/صY» المنتظر، الدرجة الدنيا) ──
+# رقم الصفحة المطبوع لا رقم الصفحة في مسار الرابط — وهذا هو الفرق الذي تحرسه `page_ref`.
+PAGED_TESTS = [
+    ("لو خرجتم إلى أرض الحبشة فإن بها ملكا لا يظلم عنده أحد", "sira", "ج1/ص321", "OK"),
+    ("فجميع من شهد العقبة من الأوس والخزرج ثلاثة وسبعون رجلا وامرأتان", "sira", "ج1/ص466", "OK"),
+    # ضبط سالب: لفظ مختلَق بصياغة قريبة يجب ألّا يُقبَل مطابقةً
+    ("لو خرجتم إلى أرض الشام فإن بها ملكا لا يظلم عنده أحد", "sira", None, "NOT_FOUND"),
+]
+
 
 # اختبارات التحقّق السالب (`absent_check`) — (اللفظ، الكتاب، هل يجب الحكم بالغياب؟)
 ABSENT_TESTS = [
@@ -433,6 +478,17 @@ def self_test() -> int:
             failed += 1
         print("%s [%s] %s → %s ح%s (المنتظر: %s ح%s)" % (
             status, book, phrase[:45], r["grade"], r["number"], min_grade, expect_num))
+    for phrase, book, expect_ref, min_grade in PAGED_TESTS:
+        r = report(phrase, book)
+        if expect_ref is None:
+            ok = order[r["grade"]] <= order["PARTIAL"]
+        else:
+            ok = order[r["grade"]] >= order[min_grade] and r.get("ref") == expect_ref
+        if not ok:
+            failed += 1
+        print("%s [%s|صفحة] %s → %s %s (المنتظر: %s %s)" % (
+            "✔" if ok else "✘", book, phrase[:38], r["grade"], r.get("ref"),
+            min_grade, expect_ref))
     for phrase, book, expect_absent, expect_num in ABSENT_TESTS:
         r = absent_check(phrase, book)
         nums = sorted({h["number"] for h in r["hits"] if h["number"] is not None})
@@ -443,7 +499,7 @@ def self_test() -> int:
             "✔" if ok else "✘", book, phrase[:38],
             "غائب" if r["absent"] else "موجود", nums[:3],
             "غائب" if expect_absent else "موجود", expect_num))
-    total = len(SELF_TESTS) + len(ABSENT_TESTS)
+    total = len(SELF_TESTS) + len(PAGED_TESTS) + len(ABSENT_TESTS)
     print("\n%d/%d نجحت" % (total - failed, total))
     return 1 if failed else 0
 
