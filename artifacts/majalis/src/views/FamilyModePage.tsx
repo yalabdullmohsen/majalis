@@ -5,6 +5,7 @@ import { useAuth } from "@/components/AuthProvider";
 import { PageHeader, PageStatusShell } from "@/components/ui-common";
 import { supabase } from "@/lib/supabase";
 import { applyPageSeo } from "@/lib/seo";
+import "@/styles/pages/family-mode.css";
 
 // ─── Types ─────────────────────────────────────────────────────────────────────
 

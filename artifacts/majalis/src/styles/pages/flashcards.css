@@ -114,3 +114,18 @@ html[data-theme="dark"] .fc-kbd {
   color: #e8f5ee;
 }
 
+
+/* ============================================================
+   73 — FlashCardsPage  (flc-*)
+   ============================================================ */
+.flc-login-prompt { text-align: center; padding-top: 3rem; }
+.flc-login-icon   { font-size: 3rem; margin-bottom: 1rem; }
+.flc-login-msg    { color: var(--majalis-ink-soft, #5c564c); margin-bottom: 1rem; }
+.flc-empty-icon   { font-size: 3rem; margin-bottom: 1rem; }
+.flc-empty-link   { margin-top: 1.5rem; display: inline-block; }
+.fc-q--0 { --fc-btn-color: #dc2626; }
+.fc-q--2 { --fc-btn-color: #226A56; }
+.fc-q--4 { --fc-btn-color: #16a34a; }
+.fc-q--5 { --fc-btn-color: #0284c7; }
+.fc-quality__btn  { border-color: var(--fc-btn-color); color: var(--fc-btn-color); }
+

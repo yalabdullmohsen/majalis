@@ -1,0 +1,12 @@
+/* ============================================================
+   71 — UserStatsPage  (usp-*)  — dynamic via --level-color, --level-pct, --resume-pct
+   ============================================================ */
+.usp-login-prompt { text-align: center; padding-top: 3rem; }
+.usp-login-icon   { font-size: 3rem; margin-bottom: 1rem; }
+.usp-login-msg    { color: var(--majalis-ink-soft); margin-bottom: 1rem; }
+.profile-level-bar__title  { color: var(--level-color, var(--majalis-emerald)); }
+.profile-level-bar__fill   { width: var(--level-pct, 0%); background: var(--level-color, var(--majalis-emerald)); }
+.profile-identity__avatar      { background: var(--level-color, var(--majalis-emerald)); }
+.profile-identity__level-badge { color: var(--level-color, var(--majalis-emerald)); border-color: var(--level-color, var(--majalis-emerald)); }
+.profile-resume__fill { width: var(--resume-pct, 0%); }
+

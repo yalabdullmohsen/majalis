@@ -1,5 +1,6 @@
 import { Lightbulb } from "lucide-react";
 import { Link } from "wouter";
+import "@/styles/components/home/home-learning-seasons.css";
 
 // Approximate Gregorian dates for Islamic seasons (1448 هـ)
 type Season = {

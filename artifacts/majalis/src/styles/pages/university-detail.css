@@ -108,3 +108,10 @@
 .is-sources { display: flex; flex-direction: column; gap: 0.3rem; margin-bottom: 0.9rem; }
 .is-source { font-size: 0.8rem; color: #475569; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: var(--ds-radius-sm); padding: 0.3rem 0.6rem; }
 
+
+/* ============================================================
+   90 — UniversityDetailPage  (udp-*)
+   ============================================================ */
+.udp-step-num  { background: var(--majalis-emerald); }
+.udp-acc-badge { background: var(--acc-color, #065f46); }
+

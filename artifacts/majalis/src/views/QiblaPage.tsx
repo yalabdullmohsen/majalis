@@ -4,6 +4,8 @@ import { PageHeader } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { RelatedKnowledge } from "@/components/RelatedKnowledge";
+import "@/styles/pages/qibla.css";
 
 const MECCA_LAT = 21.4225;
 const MECCA_LON = 39.8262;
@@ -313,6 +315,7 @@ export default function QiblaPage() {
         )}
       </div>
 
+      <RelatedKnowledge kind="fatwa" query="القبلة والصلاة" title="معرفة ذات صلة بالقبلة" limit={6} />
       <div className="twh-share">
         <ShareButtons title="اتجاه القبلة — المجلس العلمي" url="https://www.majlisilm.com/qibla" />
       </div>

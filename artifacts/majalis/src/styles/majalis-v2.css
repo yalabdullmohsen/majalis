@@ -1714,7 +1714,7 @@
 .admin-quick-edit-fab {
   position: fixed;
   inset-inline-end: 1.25rem;
-  bottom: 5rem;
+  bottom: calc(var(--bottom-nav-total, 5rem) + 0.35rem);
   z-index: 999;
   display: inline-flex;
   align-items: center;

@@ -16,6 +16,7 @@ import {
   getShareUrl,
   saveCitationToLibrary,
 } from "@/lib/citation-service";
+import "@/styles/components/citation-modal.css";
 
 interface Props {
   source: CitationSource;

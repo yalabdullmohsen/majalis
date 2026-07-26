@@ -3,6 +3,7 @@ import { KUWAIT_SHEIKHS } from "@/lib/kuwait-sheikhs";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import "@/styles/pages/kuwait-lessons.css";
 
 declare global {
   interface Window { twttr?: { widgets?: { load: (el?: HTMLElement) => void } } }

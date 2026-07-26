@@ -10,6 +10,8 @@ import { estimateWeeksRange } from "@/lib/learning-paths/engine";
 import { useAuth } from "@/components/AuthProvider";
 import { supabase } from "@/lib/supabase";
 import { applyPageSeo } from "@/lib/seo";
+import "@/styles/pages/learning-paths.css";
+import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 
 const CATEGORY_META: Record<string, { label: string; Icon: LucideIcon }> = {
   aqeedah:  { label: "العقيدة",  Icon: Moon       },
@@ -238,6 +240,7 @@ export default function LearningPathsPage() {
       <div className="twh-share">
         <ShareButtons title="المسارات التعليمية الشرعية — المجلس العلمي" url="https://www.majlisilm.com/learning/paths" />
       </div>
+      <RelatedKnowledge kind="lesson" query="مسارات التعلم" title="دروس ومسارات ذات صلة" limit={6} />
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId={["fiqh", "aqeeda", "akhlaq"]} title="اختبر معلوماتك في العلوم الإسلامية" count={4} />
       </div>
