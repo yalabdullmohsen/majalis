@@ -60,6 +60,35 @@ const LIMITS = [
   "نُخطئ ونُصحِّح: زر «الإبلاغ عن خطأ» أسفل كل مادة، وما يثبت خطؤه يُصحَّح أو يُسحب.",
 ];
 
+/** درجات التوثيق الخمس — من docs/methodology-page-content.md */
+const TRUST_GRADES = [
+  {
+    name: "نص أصلي",
+    code: "primary_text",
+    meaning: "آية بسورة ورقم، أو حديث بمصنَّف ورقم، مع حكم وحاكم عند الحديث.",
+  },
+  {
+    name: "مصدر علمي",
+    code: "scholarly_source",
+    meaning: "نقل عن عالم أو كتاب مسمّى بموضع يمكن الرجوع إليه (جزء/صفحة أو ما يعادلهما).",
+  },
+  {
+    name: "قرار مؤسسي",
+    code: "institutional_ruling",
+    meaning: "قرار مجمع أو هيئة برقم وتاريخ.",
+  },
+  {
+    name: "استدلال عام",
+    code: "general_reasoning",
+    meaning: "قاعدة فقهية أو مقصد عام بلا نص مسمّى. هذا ليس دليلاً مكتملاً.",
+  },
+  {
+    name: "بلا مصدر",
+    code: "unsourced",
+    meaning: "لا يوجد ما يمكن التحقق منه بعد. نعلّمه صراحةً ولا نعرضه كموثَّق.",
+  },
+];
+
 export default function MethodologyPage() {
   useEffect(() => {
     applyPageSeo({
@@ -127,6 +156,36 @@ export default function MethodologyPage() {
         <p className="mtd-section__body">
           نعرض المحتوى قيد المراجعة ولا نُخفيه، لكننا لا ندّعي فيه ما ليس فيه. والفرق بين الحالتين
           ظاهرٌ في شارة أسفل كل مادة.
+        </p>
+      </section>
+
+      {/* درجات التوثيق الخمس */}
+      <section className="mtd-section mtd-section--highlight">
+        <h2 className="mtd-section__title">درجات توثيق المحتوى</h2>
+        <p className="mtd-section__body">
+          نفضّل الحقل الفارغ الصادق على مرجع يوهم بتحقّق لم يحدث.{" "}
+          <strong>لا نرفع درجة أي سجل</strong>؛ عند الشك نخفّض إلى الحقيقة.
+        </p>
+        <ul className="mtd-guarantees">
+          {TRUST_GRADES.map((g) => (
+            <li key={g.code}>
+              <strong>{g.name}</strong>
+              {" — "}
+              {g.meaning}
+            </li>
+          ))}
+        </ul>
+        <p className="mtd-section__body" style={{ marginTop: "0.85rem" }}>
+          القاعدة الفقهية العامة وحدها ليست مصدراً. والإحالة إلى «مضمون الإجابة نفسها»
+          ليست مرجعاً. والمتن المشبوه أو الحديث الضعيف/الموضوع إن عُرض استدلالاً يُوقف
+          عن النشر حتى مراجعة بشرية.
+        </p>
+        <p className="mtd-section__body">
+          واقع التوثيق يتغيّر مع دفعات المراجعة: كثير من أسئلة الاختبار بلا مرجع منفصل،
+          وجزء من المسائل الفقهية استدلال عام موسوم كذلك دون إخفاء المسألة من العرض.
+          للإبلاغ عن خطأ:{" "}
+          <Link href="/contact">صفحة التواصل</Link>
+          {" "}مع ذكر رابط الصفحة والمصدر المقترح.
         </p>
       </section>
 
