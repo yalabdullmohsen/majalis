@@ -57,7 +57,7 @@
   --elite-gold-light:   #C9AD79;
   --elite-gold-pale:    #FAF3E0;
 
-  /* الانحناءات */
+  /* الانحناءات — تبقى رقمية هنا (سُلَّم elite التاريخي ≠ --r-* في brand-v4) */
   --elite-r-xs:   4px;
   --elite-r-sm:   8px;
   --elite-r-md:   12px;
@@ -66,11 +66,11 @@
   --elite-r-2xl:  32px;
   --elite-r-pill: 9999px;
 
-  /* الحركة */
-  --elite-ease:   cubic-bezier(0.16, 1, 0.3, 1);
+  /* الحركة — نفس قيم brand-v4 (--dur* / --ease-out) بلا تغيير زمني */
+  --elite-ease:   var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1));
   --elite-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
-  --elite-fast:   140ms;
-  --elite-base:   220ms;
+  --elite-fast:   var(--dur-fast, 140ms);
+  --elite-base:   var(--dur, 220ms);
   --elite-slow:   380ms;
 
   /* الخطوط — Alexandria خط المنصة الموحَّد (2026-07-18) */
