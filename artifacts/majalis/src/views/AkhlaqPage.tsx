@@ -64,7 +64,7 @@ const AKHLAQ: AkhlaqEntry[] = [
     ayah: "إِنَّ اللَّهَ يَأْمُرُكُمْ أَن تُؤَدُّوا الْأَمَانَاتِ إِلَىٰ أَهْلِهَا",
     ayahRef: "النساء: 58",
     hadith: "لا إيمان لمن لا أمانة له، ولا دين لمن لا عهد له.",
-    hadithSource: "رواه أحمد",
+    hadithSource: "أحمد ١٢٣٨٣ — حسّنه الألباني",
     scholarQuote: "الأمانة عماد الإيمان وقوام الاجتماع، وبها يثق الناس ببعضهم.",
     scholarName: "الإمام الشافعي",
     practices: ["أدِّ الأمانة لأصحابها", "احفظ أسرار الناس", "لا تخن من ائتمنك", "كن أميناً في عملك وعلمك"],
@@ -1023,7 +1023,7 @@ export default function AkhlaqPage() {
         <h1 className="akl-hero__title">مكارم الأخلاق</h1>
         <p className="akl-hero__sub">
           «إِنَّمَا بُعِثْتُ لِأُتَمِّمَ مَكَارِمَ الْأَخْلَاقِ»
-          <span className="akl-hero__source">رواه أحمد، النبي محمد ﷺ</span>
+          <span className="akl-hero__source">أحمد ٨٩٣٩ — حسّنه الألباني</span>
         </p>
         <div className="akl-hero__badges">
           <span><Heart size={13} /> {AKHLAQ.length} خلقاً</span>
