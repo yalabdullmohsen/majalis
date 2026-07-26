@@ -29,6 +29,7 @@ import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { applyPageSeo } from "@/lib/seo";
 import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
 import { LIBRARY_CATALOG } from "@/lib/library-catalog";
+import "@/styles/pages/learning-path-detail.css";
 import {
   BookOpen, FileQuestion, BookMarked, CheckSquare,
   CheckCircle2, ChevronRight, ChevronDown, Clock, Lock,

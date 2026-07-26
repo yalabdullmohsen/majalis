@@ -222,13 +222,27 @@ export function SearchSkeleton() {
   );
 }
 
-export function Chip({ active, children, onClick }: { active?: boolean; children: React.ReactNode; onClick?: () => void }) {
+export function Chip({
+  active,
+  children,
+  onClick,
+  className = "",
+  role,
+}: {
+  active?: boolean;
+  children: React.ReactNode;
+  onClick?: () => void;
+  className?: string;
+  role?: "tab" | "button";
+}) {
   return (
     <button
       type="button"
+      role={role}
       onClick={onClick}
-      className={`ds-btn ds-btn--sm ${active ? "ds-btn--primary" : "ds-btn--ghost"}`}
+      className={`ds-btn ds-btn--sm ${active ? "ds-btn--primary" : "ds-btn--ghost"} ${className}`.trim()}
       aria-pressed={active}
+      aria-selected={role === "tab" ? Boolean(active) : undefined}
     >
       {children}
     </button>

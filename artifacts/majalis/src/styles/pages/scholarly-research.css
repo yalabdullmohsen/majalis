@@ -371,29 +371,3 @@ html[data-theme="dark"] .srp-lib-item { background: rgba(255,255,255,.03); borde
 html[data-theme="dark"] .srp-lib-title { color: #e8f5ee; }
 html[data-theme="dark"] .srp-result-box { background: rgba(255,255,255,.03); border-color: rgba(255,255,255,.1); }
 html[data-theme="dark"] .srp-action-btn { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.12); color: #c4d6cc; }
-
-/* ═══════════════════════════════════════════════════════════════════
-   66  RelatedKnowledge — Card grid with type icons
-   ═══════════════════════════════════════════════════════════════════ */
-
-.rk-aside { margin: 1.75rem 0; }
-.rk-head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 0.75rem;
-}
-.rk-title {
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--clr-ink, #1a1a1a);
-}
-.rk-algo-badge {
-  font-size: 0.65rem;
-  font-weight: 600;
-  color: #226A56;
-  background: rgba(23,61,53,.1);
-  border: 1px solid rgba(23,61,53,.2);
-  border-radius: var(--ds-radius-full);
-  padding: 0.15rem 0.5rem;
-}

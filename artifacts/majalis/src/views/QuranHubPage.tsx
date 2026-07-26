@@ -9,6 +9,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { useEffect } from "react";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import "@/styles/pages/quran-hub.css";
 
 type QuranSection = { href: string; title: string; desc: string; Icon: LucideIcon; accent: string; tag: string; featured?: boolean };
 

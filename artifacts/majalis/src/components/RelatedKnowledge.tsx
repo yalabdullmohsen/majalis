@@ -5,6 +5,7 @@ import {
   CheckCircle2, ChevronLeft,
 } from "lucide-react";
 import { fetchContentRelations, type IntelligentSearchResult } from "@/lib/scholarly-intelligence-service";
+import "@/styles/components/related-knowledge.css";
 
 type Props = {
   kind?: string;
