@@ -3,6 +3,7 @@
  * يُعرض عند اكتشاف مسائل تحتاج إلى إفتاء متخصص.
  */
 import { AlertTriangle, ExternalLink } from "lucide-react";
+import "@/styles/components/sensitive-content.css";
 
 const SENSITIVE_KEYWORDS = [
   "طلاق", "طلقة", "خلع", "فراق", "فسخ",

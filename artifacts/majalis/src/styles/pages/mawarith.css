@@ -216,3 +216,17 @@
 }
 
 /* ── نهاية 236 ─────────────────────────────────────────── */
+
+/* Mawarith educational disclaimer */
+.maw-disclaimer {
+  background: rgba(23,61,53,.06);
+  border: 1.5px solid rgba(23,61,53,.18);
+  border-radius: var(--ds-radius-lg);
+  padding: 0.85rem 1rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.81rem;
+  color: var(--clr-ink-soft, #6b7280);
+  line-height: 1.65;
+  direction: rtl;
+}
+.maw-disclaimer strong { color: #226A56; }

@@ -7,6 +7,8 @@ import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { truncateAtWord } from "@/lib/utils";
+import "@/styles/pages/arbaeen-nawawi.css";
+import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 
 /* ══════════════════════════════════════════════════════════════════
    §178b، الأربعون النووية (.an-*)
@@ -275,6 +277,7 @@ export default function ArbaeenNawawiPage() {
       <div className="twh-share">
         <ShareButtons title="الأربعون النووية — المجلس العلمي" url="https://www.majlisilm.com/arbaeen-nawawi" />
       </div>
+      <RelatedKnowledge kind="hadith" query="الأربعون النووية" title="أحاديث ذات صلة" limit={6} />
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="hadith" title="اختبر معلوماتك في الحديث النبوي" count={4} />
       </div>

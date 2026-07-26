@@ -5,6 +5,8 @@ import { ChevronDown, ChevronUp, Star } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import "@/styles/pages/arkan-islam.css";
+import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 
 /* ─── بيانات أركان الإسلام ─── */
 type Rukn = {
@@ -301,6 +303,7 @@ export default function ArkanIslamPage() {
       <div className="zk-share">
         <ShareButtons title="أركان الإسلام الخمسة — المجلس العلمي" url="https://www.majlisilm.com/arkan-islam" />
       </div>
+      <RelatedKnowledge kind="lesson" query="أركان الإسلام" title="دروس ومواد ذات صلة" limit={6} />
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId={["fiqh", "aqeeda"]} title="اختبر معلوماتك في أركان الإسلام" count={4} />
       </div>

@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { toPng } from "html-to-image";
+import "@/styles/components/faida-image-card.css";
 
 type Props = {
   text: string;
