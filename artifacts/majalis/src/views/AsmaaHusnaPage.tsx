@@ -32,7 +32,8 @@ function NameOfDayCard({ entry, onOpen }: { entry: AsmaEntry; onOpen: () => void
 export default function AsmaaHusnaPage() {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("الكل");
-  const [statusFilter, setStatusFilter] = useState<"الكل" | AsmaStatus>("الكل");
+  /** العرض الافتراضي على «ثابت»؛ الأسماء المشهورة من سرد الترمذي تُطلب صراحةً. */
+  const [statusFilter, setStatusFilter] = useState<"الكل" | AsmaStatus>("ثابت");
   const [selected, setSelected] = useState<AsmaEntry | null>(null);
   const todayName = useMemo(() => getTodayAsma(), []);
   const [favs, setFavs] = useState<Set<number>>(() => {
