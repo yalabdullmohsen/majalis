@@ -1288,6 +1288,195 @@ ${linkList("أدوات", [
   { name: "لعبة سين جيم", url: "/quiz" },
   { name: "البطاقات التعليمية", url: "/flashcards" },
 ])}`,
+  "/hadith/sahih": `<p>مجموعة مختارة من الأحاديث الصحيحة من مصادر معتمدة، مع مداخل إلى علوم الحديث وكتب الرواية.</p>
+${linkList("أقسام الحديث", [
+  { name: "الأحاديث النبوية", url: "/hadith" },
+  { name: "الأحاديث الضعيفة", url: "/hadith/daif" },
+  { name: "الأحاديث الموضوعة", url: "/hadith/mawdu" },
+  { name: "كتب الحديث", url: "/hadith/books" },
+  { name: "علوم الحديث", url: "/hadith-science" },
+  { name: "الأربعون النووية", url: "/arbaeen-nawawi" },
+  { name: "صحيح البخاري", url: "/library/book-bukhari" },
+  { name: "صحيح مسلم", url: "/library/book-muslim" },
+])}`,
+  "/hadith/daif": `<p>أحاديث ضعيفة يُنبَّه إليها لتجنّب الاحتجاج بها في الأحكام والعقائد، مع ربط بدرجات الحديث وعلومه.</p>
+${linkList("أقسام الحديث", [
+  { name: "الأحاديث النبوية", url: "/hadith" },
+  { name: "الأحاديث الصحيحة", url: "/hadith/sahih" },
+  { name: "الأحاديث الموضوعة", url: "/hadith/mawdu" },
+  { name: "علوم الحديث", url: "/hadith-science" },
+  { name: "كتب الحديث", url: "/hadith/books" },
+  { name: "منهجيتنا في التوثيق", url: "/methodology" },
+])}`,
+  "/hadith/mawdu": `<p>أحاديث موضوعة ومكذوبة يُحذَّر منها، مع تمييزها عن الصحيح والضعيف عبر علوم الحديث.</p>
+${linkList("أقسام الحديث", [
+  { name: "الأحاديث النبوية", url: "/hadith" },
+  { name: "الأحاديث الصحيحة", url: "/hadith/sahih" },
+  { name: "الأحاديث الضعيفة", url: "/hadith/daif" },
+  { name: "علوم الحديث", url: "/hadith-science" },
+  { name: "كتب الحديث", url: "/hadith/books" },
+  { name: "منهجيتنا في التوثيق", url: "/methodology" },
+])}`,
+  "/hadith/books": `<p>مداخل إلى كتب الحديث المعتمدة في المكتبة: الصحاح والسنن والجوامع، مع ربط بعلوم الحديث.</p>
+${linkList("من كتب الحديث", [
+  { name: "صحيح البخاري", url: "/library/book-bukhari" },
+  { name: "صحيح مسلم", url: "/library/book-muslim" },
+  { name: "سنن أبي داود", url: "/library/book-abudawud" },
+  { name: "سنن الترمذي", url: "/library/book-tirmidhi" },
+  { name: "رياض الصالحين", url: "/library/book-riyadh" },
+  { name: "الأربعون النووية", url: "/library/book-nawawi40" },
+])}
+${linkList("روابط ذات صلة", [
+  { name: "الأحاديث النبوية", url: "/hadith" },
+  { name: "علوم الحديث", url: "/hadith-science" },
+  { name: "المكتبة العلمية", url: "/library" },
+])}`,
+  "/quran/tajweed": `<p>أحكام التجويد: مخارج وصفات ومدود ونون وميم — لضبط التلاوة مع المصحف وخطط الحفظ.</p>
+${linkList("خدمات القرآن", [
+  { name: "مركز القرآن", url: "/quran-hub" },
+  { name: "علم التجويد (صفحة عامة)", url: "/tajweed" },
+  { name: "المصحف الرقمي", url: "/mushaf" },
+  { name: "خطط الحفظ", url: "/quran/memorization-plans" },
+  { name: "مكّي ومدني", url: "/quran/makki-madani" },
+  { name: "اختبار التلاوة", url: "/quran/recitation-test-ai" },
+])}`,
+  "/quran/makki-madani": `<p>تصنيف السور المكية والمدنية وأثره في التفسير وفهم السياق، ضمن علوم القرآن.</p>
+${linkList("خدمات القرآن", [
+  { name: "مركز القرآن", url: "/quran-hub" },
+  { name: "ترتيب النزول", url: "/quran/revelation-order" },
+  { name: "قصص السور", url: "/quran/surah-stories" },
+  { name: "علوم القرآن", url: "/ulum-quran" },
+  { name: "المصحف الرقمي", url: "/mushaf" },
+])}`,
+  "/quran/memorization-plans": `<p>خطط عملية للحفظ والمراجعة اليومية والأسبوعية، مع أدوات المتشابهات واختبارات الحفظ.</p>
+${linkList("خدمات القرآن", [
+  { name: "مركز القرآن", url: "/quran-hub" },
+  { name: "المصحف الرقمي", url: "/mushaf" },
+  { name: "اختبارات الحفظ", url: "/quran-memorization" },
+  { name: "الآيات المتشابهات", url: "/mutashabihat" },
+  { name: "أحكام التجويد", url: "/quran/tajweed" },
+  { name: "الورد اليومي", url: "/daily-wird" },
+])}`,
+  "/prophets/tree": `<p>شجرة أنساب الأنبياء عليهم السلام عرضًا تفاعليًا للعلاقات والنسب، مع ربط بقصص الأنبياء والسيرة.</p>
+${linkList("روابط ذات صلة", [
+  { name: "قصص الأنبياء", url: "/prophets" },
+  { name: "الأنبياء والرسل", url: "/anbiya" },
+  { name: "السيرة النبوية", url: "/seerah" },
+  { name: "قصص السور", url: "/quran/surah-stories" },
+  { name: "القصص الإسلامية", url: "/stories" },
+])}`,
+  "/learning/calendar": `<p>التقويم العلمي لمواعيد المسارات والدروس — لتنظيم الطلب مع فهرس المسارات والدورات.</p>
+${linkList("روابط ذات صلة", [
+  { name: "المسارات العلمية", url: "/learning/paths" },
+  { name: "تقويم الدروس", url: "/calendar" },
+  { name: "الدروس الشرعية", url: "/lessons" },
+  { name: "الدورات العلمية", url: "/annual-courses" },
+  { name: "اختبار المسارات", url: "/learning/quiz" },
+])}`,
+  "/learning/quiz": `<p>اختبارات مرتبطة بالمسارات العلمية لقياس التقدّم، مع إحالة إلى المسارات والدروس.</p>
+${linkList("روابط ذات صلة", [
+  { name: "المسارات العلمية", url: "/learning/paths" },
+  { name: "التقويم العلمي", url: "/learning/calendar" },
+  { name: "لعبة سين جيم", url: "/quiz" },
+  { name: "البطاقات التعليمية", url: "/flashcards" },
+  { name: "أدب طلب العلم", url: "/adab-talab-ilm" },
+])}`,
+  "/fiqh-council/fatwas": `<p>فتاوى جماعية صادرة عن المجمع الفقهي — للاطلاع المؤسسي مع ربط بالمسائل والقرارات.</p>
+${linkList("أقسام المجمع", [
+  { name: "المجمع الفقهي", url: "/fiqh-council" },
+  { name: "المسائل الفقهية", url: "/fiqh-council/issues" },
+  { name: "القرارات", url: "/fiqh-council/resolutions" },
+  { name: "النوازل", url: "/fiqh-council/nawazil" },
+  { name: "التوصيات", url: "/fiqh-council/recommendations" },
+  { name: "الأرشيف", url: "/fiqh-council/archive" },
+])}`,
+  "/fiqh-council/research": `<p>بحوث المجمع الفقهي والدراسات المصاحبة للقرارات — مدخل للباحث قبل المقارنة والأرشيف.</p>
+${linkList("أقسام المجمع", [
+  { name: "المجمع الفقهي", url: "/fiqh-council" },
+  { name: "مساعد الباحث", url: "/fiqh-council/research-assistant" },
+  { name: "المسائل الفقهية", url: "/fiqh-council/issues" },
+  { name: "مقارنة القرارات", url: "/fiqh-council/compare" },
+  { name: "الأرشيف", url: "/fiqh-council/archive" },
+])}`,
+  "/fiqh-council/archive": `<p>أرشيف مواد المجمع الفقهي للرجوع إلى القرارات والفتاوى والبحوث السابقة.</p>
+${linkList("أقسام المجمع", [
+  { name: "المجمع الفقهي", url: "/fiqh-council" },
+  { name: "الفتاوى", url: "/fiqh-council/fatwas" },
+  { name: "القرارات", url: "/fiqh-council/resolutions" },
+  { name: "البحوث", url: "/fiqh-council/research" },
+  { name: "التصنيفات", url: "/fiqh-council/categories" },
+])}`,
+  "/fiqh-council/categories": `<p>تصنيفات فقهية لتنظيم قرارات المجمع ومسائله حسب الأبواب والموضوعات.</p>
+${linkList("أقسام المجمع", [
+  { name: "المجمع الفقهي", url: "/fiqh-council" },
+  { name: "الفهرس الموضوعي", url: "/fiqh-council/index" },
+  { name: "المسائل الفقهية", url: "/fiqh-council/issues" },
+  { name: "النوازل", url: "/fiqh-council/nawazil" },
+  { name: "الأرشيف", url: "/fiqh-council/archive" },
+])}`,
+  "/fiqh-council/resolutions": `<p>قرارات المجمع الفقهي المعتمدة، مع مداخل إلى التوصيات والفتاوى والمقارنة.</p>
+${linkList("أقسام المجمع", [
+  { name: "المجمع الفقهي", url: "/fiqh-council" },
+  { name: "التوصيات", url: "/fiqh-council/recommendations" },
+  { name: "الفتاوى", url: "/fiqh-council/fatwas" },
+  { name: "مقارنة القرارات", url: "/fiqh-council/compare" },
+  { name: "المسائل الفقهية", url: "/fiqh-council/issues" },
+])}`,
+  "/fiqh-council/recommendations": `<p>توصيات المجمع الفقهي المصاحبة للقرارات والنوازل — للاطلاع المؤسسي المنهجي.</p>
+${linkList("أقسام المجمع", [
+  { name: "المجمع الفقهي", url: "/fiqh-council" },
+  { name: "القرارات", url: "/fiqh-council/resolutions" },
+  { name: "النوازل", url: "/fiqh-council/nawazil" },
+  { name: "الفتاوى", url: "/fiqh-council/fatwas" },
+  { name: "الأرشيف", url: "/fiqh-council/archive" },
+])}`,
+  "/fiqh-council/nawazil": `<p>فقه النوازل المعاصرة كما تُعالَج في إطار المجمع: مسائل مستجدة مع إحالة إلى القرارات والبحوث.</p>
+${linkList("أقسام المجمع", [
+  { name: "المجمع الفقهي", url: "/fiqh-council" },
+  { name: "المسائل الفقهية", url: "/fiqh-council/issues" },
+  { name: "القرارات", url: "/fiqh-council/resolutions" },
+  { name: "البحوث", url: "/fiqh-council/research" },
+  { name: "بوابة الفقه", url: "/fiqh" },
+])}`,
+  "/fiqh-council/index": `<p>فهرس موضوعي لمواد المجمع الفقهي يسهّل الوصول عبر التصنيفات والمسائل.</p>
+${linkList("أقسام المجمع", [
+  { name: "المجمع الفقهي", url: "/fiqh-council" },
+  { name: "التصنيفات", url: "/fiqh-council/categories" },
+  { name: "المسائل الفقهية", url: "/fiqh-council/issues" },
+  { name: "البحث المتقدم", url: "/fiqh-council/search" },
+  { name: "الإحصائيات", url: "/fiqh-council/stats" },
+])}`,
+  "/fiqh-council/stats": `<p>إحصائيات المجمع الفقهي: أعداد القرارات والفتاوى والبحوث وأكثر المواد تداولًا.</p>
+${linkList("أقسام المجمع", [
+  { name: "المجمع الفقهي", url: "/fiqh-council" },
+  { name: "البيانات الحية", url: "/fiqh-council/live" },
+  { name: "المسائل الفقهية", url: "/fiqh-council/issues" },
+  { name: "الأرشيف", url: "/fiqh-council/archive" },
+  { name: "الفهرس الموضوعي", url: "/fiqh-council/index" },
+])}`,
+  "/fiqh-council/compare": `<p>أداة لمقارنة قرارات فقهية متقاربة الموضوع — للبحث لا للإفتاء الفردي.</p>
+${linkList("أقسام المجمع", [
+  { name: "المجمع الفقهي", url: "/fiqh-council" },
+  { name: "القرارات", url: "/fiqh-council/resolutions" },
+  { name: "المسائل الفقهية", url: "/fiqh-council/issues" },
+  { name: "البحوث", url: "/fiqh-council/research" },
+  { name: "مساعد الباحث", url: "/fiqh-council/research-assistant" },
+])}`,
+  "/fiqh-council/research-assistant": `<p>مساعد للباحث الفقهي داخل مواد المجمع: توجيه إلى المسائل والقرارات والبحوث ذات الصلة.</p>
+${linkList("أقسام المجمع", [
+  { name: "المجمع الفقهي", url: "/fiqh-council" },
+  { name: "البحوث", url: "/fiqh-council/research" },
+  { name: "البحث المتقدم", url: "/fiqh-council/search" },
+  { name: "مقارنة القرارات", url: "/fiqh-council/compare" },
+  { name: "المساعد العلمي", url: "/assistant" },
+])}`,
+  "/fiqh-council/live": `<p>لوحة بيانات حية لنشاط المجمع الفقهي (إحصاءات وتحديثات) — للاطلاع لا للفتوى الفورية.</p>
+${linkList("أقسام المجمع", [
+  { name: "المجمع الفقهي", url: "/fiqh-council" },
+  { name: "الإحصائيات", url: "/fiqh-council/stats" },
+  { name: "المسائل الفقهية", url: "/fiqh-council/issues" },
+  { name: "آخر المستجدات", url: "/updates" },
+])}`,
   "/knowledge-graph": `<h2>ما خريطة المعرفة؟</h2>
 <p>عرض بصري تفاعلي يربط بين مفاهيم العلوم الشرعية (كالفقه والعقيدة والحديث والتفسير) ويُظهر علاقاتها ببعضها، ليساعد طالب العلم على فهم كيف يتصل كل علم بغيره بدل دراسته منعزلاً.</p>
 ${linkList("روابط ذات صلة", [
