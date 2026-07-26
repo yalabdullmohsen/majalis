@@ -6,6 +6,8 @@ import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { SCHOLARS } from "@/lib/scholars-data";
+import { resolveScholarWorkLink } from "@/lib/scholar-library-links";
+import "@/styles/pages/scholars.css";
 
 const ERAS = ["الكل", "الأئمة الأربعة", "المحدثون", "العلماء الكبار", "المجددون", "المعاصرون"];
 const SPECIALTIES = ["الكل", "فقه", "حديث", "عقيدة", "تفسير", "أصول", "مقاصد", "لغة", "سيرة", "رجال"];
@@ -159,9 +161,18 @@ export default function IslamicScholarsPage() {
                       <BookOpen size={14} /> أبرز المؤلفات
                     </h3>
                     <ul className="sch-card__works-list">
-                      {s.key_works.map(w => (
-                        <li key={w}>{w}</li>
-                      ))}
+                      {s.key_works.map((w) => {
+                        const link = resolveScholarWorkLink(w);
+                        return (
+                          <li key={w}>
+                            {link.href ? (
+                              <Link href={link.href}>{link.label}</Link>
+                            ) : (
+                              <span className="sch-work--plain">{link.label}</span>
+                            )}
+                          </li>
+                        );
+                      })}
                     </ul>
                   </div>
                   <p className="sch-card__region">📍 {s.region}</p>

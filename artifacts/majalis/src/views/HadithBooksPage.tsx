@@ -12,6 +12,7 @@ import {
 } from "@/lib/hadith-cdn-service";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { truncateAtWord } from "@/lib/utils";
+import "@/styles/pages/hadith-books.css";
 
 // ─── Chapter index built from hadith data ─────────────────────────────────────
 

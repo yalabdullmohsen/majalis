@@ -167,7 +167,7 @@ export function HighlightedContentCard({
 
           <ContentActionBar
             text={sharePayload}
-            title={shareTitle || title || tags[0] || "محتوى"}
+            title={shareTitle || title || tags[0] || primaryText.slice(0, 64) || "محتوى"}
             contentType={contentType}
             contentId={contentId}
             showSave={showSave}

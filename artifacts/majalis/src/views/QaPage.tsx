@@ -38,6 +38,7 @@ import { PageLoadingGuard } from "@/components/PageLoadingGuard";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
 import { usePersistedState } from "@/hooks/usePersistedState";
 import { DEMO_QA, DEMO_QA_CATEGORIES } from "@/lib/demo-content";
+import { useReadingScrollMemory } from "@/hooks/useReadingScrollMemory";
 import { QaCard } from "@/components/qa/QaCard";
 import { useAuth } from "@/components/AuthProvider";
 import { QA_CANONICAL_CATEGORIES, resolveCategorySlug } from "@/lib/qa-categories";
@@ -75,6 +76,7 @@ export default function QaPage({
   initialCategories?: any[];
   initialQuestions?: any[];
 } = {}) {
+  useReadingScrollMemory("qa");
   const { isAdmin } = useAuth();
   const [rawItems, setRawItems] = useState<any[]>(initialQuestions ?? []);
   const [categories, setCategories] = useState<any[]>(initialCategories ?? []);
