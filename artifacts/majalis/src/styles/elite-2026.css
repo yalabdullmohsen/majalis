@@ -337,18 +337,6 @@ html[data-theme="dark"] .rp-section-title {
 }
 
 /* محتوى Hero */
-.home-hero-grid--v3 {
-  position: relative !important;
-  z-index: 2 !important;
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  text-align: center !important;
-  gap: clamp(0.75rem, 3vw, 1.25rem) !important;
-  width: 100% !important;
-  max-width: 700px !important;
-  margin-inline: auto !important;
-}
 
 /* شارة أعلى Hero */
 
@@ -1991,23 +1979,6 @@ button.hcp-prayer-cell:focus-visible {
 /* ══════════════════════════════════════════════
    57. بطاقات الإعلانات التسويقية — الرئيسية
    ══════════════════════════════════════════════ */
-
-.home-announce-head .home-eyebrow {
-  color: rgba(250,248,242,0.70) !important;
-  font-size: 0.78rem !important;
-  letter-spacing: normal !important;
-  text-transform: uppercase !important;
-  margin-bottom: 0.3rem !important;
-}
-
-/* عنوان الرئيسية — نص بدلاً من الصورة الخطية */
-.home-hero-title.home-hero-title--v3 {
-  font-size: clamp(1.6rem, 5vw, 2.4rem) !important;
-  font-weight: 800 !important;
-  color: var(--elite-white, #FAFAF8) !important;
-  letter-spacing: -0.01em !important;
-  line-height: 1.2 !important;
-}
 
 /* 58 — صفحة التوحيد: ID selector (specificity 1-0-X) يتغلب على أي كمية !important بالـ classes */
 #tawhid-header h1,
@@ -12565,9 +12536,6 @@ html[data-theme="dark"] .global-back-btn {
 }
 
 /* ─── Page background consistency (Phase 8) ───────────────────── */
-.home-page--v3 {
-  background: var(--rd-ivory) !important;
-}
 
 .home-main--v3 {
   padding-top: var(--rd-margin-v) !important;
@@ -28175,7 +28143,6 @@ html[data-theme="dark"] tr:hover td {
 .lesson-unified-card__header *,
 .ds-page-header *,
 .home-hero *,
-.ome-learning-path-card *,
 .lessons-page-header *,
 .scholars-page-header *,
 .courses-page-header *,
@@ -28529,7 +28496,6 @@ body .kng-type-badge {
 .hpv4-hero svg,
 .lesson-unified-card__header svg,
 .ds-page-header svg,
-.ome-learning-path-card svg,
 .lessons-page-header svg,
 .scholars-page-header svg,
 .courses-page-header svg,
@@ -28543,7 +28509,6 @@ footer svg {
 
 /* روابط ضمن الخلفيات الداكنة */
 .hpv4-hero a:not(.hpv4-hero__cta-primary),
-.ome-learning-path-card a,
 .ds-page-header a,
 .lessons-page-header a,
 .scholars-page-header a,
@@ -28552,7 +28517,6 @@ footer a {
   color: rgba(255,255,255,0.85) !important;
 }
 .hpv4-hero a:hover:not(.hpv4-hero__cta-primary),
-.ome-learning-path-card a:hover,
 .site-footer a:hover,
 footer a:hover {
   color: #FFFFFF !important;
@@ -28565,15 +28529,12 @@ footer a:hover {
 
 /* أزرار داخل الخلفيات الداكنة */
 .hpv4-hero .btn--primary,
-.hpv4-hero .ds-btn--primary,
-.ome-learning-path-card .btn--primary,
-.ome-learning-path-card .ds-btn--primary {
+.hpv4-hero .ds-btn--primary {
   background: rgba(255,255,255,0.15) !important;
   border-color: rgba(255,255,255,0.30) !important;
   color: #FFFFFF !important;
 }
-.hpv4-hero .btn--primary:hover,
-.ome-learning-path-card .btn--primary:hover {
+.hpv4-hero .btn--primary:hover {
   background: rgba(255,255,255,0.25) !important;
   border-color: rgba(255,255,255,0.50) !important;
 }
@@ -28581,7 +28542,6 @@ footer a:hover {
 /* نص شبه شفاف على الخلفيات الداكنة (مساعد) */
 .hpv4-hero p,
 .ds-page-header p,
-.ome-learning-path-card p,
 .lessons-page-header p,
 .scholars-page-header p {
   color: rgba(255,255,255,0.80) !important;
@@ -28639,13 +28599,11 @@ html[data-theme="dark"] .hpv4-hero a.hpv4-hero__cta-primary * {
 .admin-section-title,
 .fm-section-title,
 .rp-section-title,
-.ome-feature-strip-card:hover .myt-card,
 .lesson-unified-card__header,
 .ds-btn--primary,
 .btn-v2--primary,
 .ds-btn--primary:hover,
 .btn-v2--primary:hover,
-.ome-learning-path-card,
 .pt-hero,
 .hdc__tab.active,
 .hdc__progress-fill,
@@ -28669,8 +28627,6 @@ html[data-theme="dark"] .hpv4-hero a.hpv4-hero__cta-primary * {
 .fiqh-hub-strip__tab--active:hover,
 .lesson-detail-hero,
 .lesson-unified-card__btn--primary,
-.home-announce-head,
-.home-announce-section .home-story-card__icon,
 .page-shell.lessons-page-v2 .lessons-v2-section__title,
 .page-shell.lessons-page-v2 .lessons-past-section__title,
 .page-shell .lessons-v2-section .lessons-v2-section__title,
