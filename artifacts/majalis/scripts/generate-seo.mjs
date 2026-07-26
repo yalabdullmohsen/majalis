@@ -571,7 +571,16 @@ const RICH_BODY_MAP = {
     "من الكتب المتاحة",
     LIBRARY_CATALOG.slice(0, 15).map((b) => ({ name: b.title, url: `/library/${b.id}`, note: b.author })),
   ),
-  "/adhkar": linkList("أقسام الأذكار", ADHKAR_CATEGORIES.map((c) => ({ name: c.name, url: `/adhkar?cat=${c.id}` }))),
+  "/adhkar": `${linkList(
+    "أقسام الأذكار",
+    ADHKAR_CATEGORIES.map((c) => ({ name: c.name, url: `/adhkar?cat=${c.id}` })),
+  )}
+<p>أذكار الصباح والمساء والنوم والصلاة والسفر وغيرها — نصوص مختارة مع بيان المصدر قدر الإمكان. يمكن أيضًا الانتقال إلى الأدعية الموثقة والتسبيح اليومي.</p>
+${linkList("روابط ذات صلة", [
+  { name: "الأدعية الشرعية", url: "/duas" },
+  { name: "السنن اليومية", url: "/sunan-yawmiyya" },
+  { name: "أدعية القرآن", url: "/duas-quran" },
+])}`,
   "/scholars": linkList(
     "من علماء المسلمين",
     SCHOLARS.slice(0, 30).map((s) => ({ name: s.name, url: `/scholars/${s.id}`, note: s.died })),
@@ -598,6 +607,55 @@ const RICH_BODY_MAP = {
     "المسائل الفقهية المعاصرة",
     PUBLIC_FIQH_ISSUES.slice(0, 25).map((i) => ({ name: i.title, url: `/fiqh-council/issues/${i.slug}` })),
   ),
+  "/fiqh": `<p>بوابة الفقه الإسلامي: أحكام العبادات والمعاملات، المذاهب الأربعة، القواعد الفقهية، وقرارات المجامع — مع إحالة المسائل المعاصرة إلى مصادرها المعتمدة.</p>
+${linkList("أقسام الفقه", [
+  { name: "الأحكام الشرعية", url: "/rulings", note: "مسائل موثّقة بالأدلة" },
+  { name: "المجمع الفقهي", url: "/fiqh-council", note: "قرارات وفتاوى مؤسسية" },
+  { name: "المسائل الفقهية", url: "/fiqh-council/issues" },
+  { name: "النوازل المعاصرة", url: "/fiqh-council/nawazil" },
+  { name: "القواعد الفقهية", url: "/fiqh-qawaid" },
+  { name: "المذاهب الأربعة", url: "/madhahib" },
+  { name: "الأسئلة الشرعية", url: "/qa" },
+  { name: "الطهارة", url: "/tahara" },
+  { name: "دليل الصلاة", url: "/salah-guide" },
+  { name: "الزكاة", url: "/zakat" },
+  { name: "الصيام", url: "/sawm" },
+  { name: "الحج والعمرة", url: "/hajj" },
+])}`,
+  "/quran-hub": `<p>مركز القرآن الكريم: المصحف الرقمي، فهرس السور، التجويد، القصص، علوم القرآن، والتحفيظ — مدخل موحّد لخدمات القراءة والتعلّم.</p>
+${linkList("خدمات القرآن", [
+  { name: "المصحف الرقمي", url: "/mushaf" },
+  { name: "فهرس السور", url: "/quran/surahs" },
+  { name: "أحكام التجويد", url: "/quran/tajweed" },
+  { name: "قصص السور", url: "/quran/surah-stories" },
+  { name: "مكّي ومدني", url: "/quran/makki-madani" },
+  { name: "ترتيب النزول", url: "/quran/revelation-order" },
+  { name: "خطط الحفظ", url: "/quran/memorization-plans" },
+  { name: "علوم القرآن", url: "/ulum-quran" },
+  { name: "دراسات قرآنية", url: "/quran-studies" },
+  { name: "أدعية القرآن", url: "/duas-quran" },
+  { name: "اختبار التلاوة", url: "/quran/recitation-test-ai" },
+])}`,
+  "/hadith-science": `<p>مدخل إلى مصطلح الحديث ودرجاته وكتب الرواية، مع روابط إلى مكتبات الأحاديث الصحيحة والضعيفة والموضوعة والأربعين النووية.</p>
+${linkList("علوم الحديث وروابطه", [
+  { name: "الأحاديث النبوية", url: "/hadith" },
+  { name: "الأحاديث الصحيحة", url: "/hadith/sahih" },
+  { name: "الأحاديث الضعيفة", url: "/hadith/daif" },
+  { name: "الأحاديث الموضوعة", url: "/hadith/mawdu" },
+  { name: "كتب الحديث", url: "/hadith/books" },
+  { name: "الأربعون النووية", url: "/arbaeen-nawawi" },
+  { name: "صحيح البخاري (المكتبة)", url: "/library/book-bukhari" },
+  { name: "صحيح مسلم (المكتبة)", url: "/library/book-muslim" },
+])}`,
+  "/islamic-glossary": `<p>معجم مبسّط لمصطلحات العلوم الشرعية: فقه، حديث، عقيدة، وأصول — لتعريف الطالب بالمفردات الشائعة قبل التوسّع في الأبواب.</p>
+${linkList("روابط ذات صلة", [
+  { name: "المواضيع الإسلامية", url: "/topics" },
+  { name: "القواعد الفقهية", url: "/fiqh-qawaid" },
+  { name: "المذاهب الأربعة", url: "/madhahib" },
+  { name: "علوم الحديث", url: "/hadith-science" },
+  { name: "التوحيد والعقيدة", url: "/tawhid" },
+  { name: "أدب طلب العلم", url: "/adab-talab-ilm" },
+])}`,
   "/knowledge-graph": `<h2>ما خريطة المعرفة؟</h2>
 <p>عرض بصري تفاعلي يربط بين مفاهيم العلوم الشرعية (كالفقه والعقيدة والحديث والتفسير) ويُظهر علاقاتها ببعضها، ليساعد طالب العلم على فهم كيف يتصل كل علم بغيره بدل دراسته منعزلاً.</p>
 ${linkList("روابط ذات صلة", [

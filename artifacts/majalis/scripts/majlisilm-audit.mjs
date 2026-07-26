@@ -52,6 +52,20 @@ const CONFIG = {
     "/qa",
     "/hadith",
   ],
+  // بادئات روابط تُحسب «محتوىً فرعيًا» للمحور (لأن بعض المحاور تشير لأقسام شقيقة لا لمسارات تحتها فقط)
+  hubRelatedPrefixes: {
+    "/fiqh": ["/fiqh/", "/fiqh-", "/rulings", "/madhahib", "/qa", "/tahara", "/salah", "/zakat", "/sawm", "/hajj"],
+    "/quran-hub": ["/quran/", "/mushaf", "/quran-", "/ulum-quran", "/duas-quran", "/daily-wird"],
+    "/adhkar": ["/adhkar", "/duas", "/sunan-yawmiyya", "/duas-quran"],
+    "/hadith-science": ["/hadith", "/arbaeen-nawawi", "/library/book-bukhari", "/library/book-muslim"],
+    "/islamic-glossary": ["/islamic-glossary", "/topics", "/fiqh-qawaid", "/madhahib", "/hadith-science", "/tawhid", "/adab-talab-ilm"],
+    "/library": ["/library/"],
+    "/lessons": ["/lessons/"],
+    "/scholars": ["/scholars/"],
+    "/rulings": ["/rulings/"],
+    "/qa": ["/qa"],
+    "/hadith": ["/hadith/"],
+  },
 
   // الأقسام التي يجب أن يظهر فيها دليل أو تخريج
   evidenceRequiredPrefixes: [
@@ -637,9 +651,20 @@ async function crawl(opts) {
     }
 
     if (CONFIG.hubPaths.includes(pathName)) {
+      const prefixes = CONFIG.hubRelatedPrefixes[pathName] || [pathName + "/"];
       const contentLinks = p.links.filter((l) => {
         const n = normalizeUrl(l.href, origin);
-        return n && n.startsWith(origin + pathName + "/");
+        if (!n || !n.startsWith(origin)) return false;
+        let path;
+        try {
+          path = new URL(n).pathname + (new URL(n).search || "");
+        } catch {
+          return false;
+        }
+        if (path === pathName || path === pathName + "/") return false;
+        return prefixes.some(
+          (pre) => path === pre || path.startsWith(pre.endsWith("/") ? pre : pre + "/") || path.startsWith(pre + "?"),
+        );
       });
       if (contentLinks.length < CONFIG.hubMinContentLinks) {
         report.add({
