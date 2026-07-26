@@ -8,7 +8,7 @@
 ## المرحلة 1 — عزل عاجل (curriculum)
 
 **الفرع:** `cursor/content-fix-phase1-isolate-curriculum-1f54`  
-**PR:** (يُحدَّث بعد الإنشاء)
+**PR:** https://github.com/yalabdullmohsen/majalis/pull/339
 
 ### ما نُفّذ
 - راية `CONTENT_CURRICULUM_ENABLED=false` في:
