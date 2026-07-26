@@ -9,6 +9,7 @@ import { SearchSkeleton, PageHeader } from "@/components/ui-common";
 import { SearchSuggestions } from "@/components/SearchSuggestions";
 import { SheikhAvatar } from "@/components/lessons/SheikhAvatar";
 import "@/styles/pages/search.css";
+import "@/styles/components/entity-connections.css";
 
 /* ── تمييز مصطلح البحث في النصوص ── */
 const ARABIC_DIACRITICS_RE = /[ؐ-ًؚ-ٰٟٓ-ٕ]/;
@@ -61,6 +62,7 @@ import {
   type IntelligentSearchResult,
 } from "@/lib/scholarly-intelligence-service";
 import { normalizeArabic } from "@/shared/arabic-normalize";
+import { prefetchHref, searchEntityGraph } from "@/lib/entity-graph";
 
 const EMPTY: SearchResults = {
   lessons: [],
@@ -378,6 +380,9 @@ export default function SearchPage() {
     : { occasions: [], nawawi: [], quran: [], adhkar: [], surahStories: [], islamicStories: [], nations: [] };
   const hasActiveFilter = Object.values(filters).some(Boolean);
 
+  const graphHits = q.trim() ? searchEntityGraph(q, 16) : [];
+  const graphNeighborHits = graphHits.filter((h) => h.reason === "neighbor");
+
   const intelligentTotal = intelligentResults.length;
   const legacyTotal =
     fiqhResults.length +
@@ -390,14 +395,14 @@ export default function SearchPage() {
     localExtra.adhkar.length + localExtra.surahStories.length + localExtra.islamicStories.length +
     localExtra.nations.length;
 
-  const total = intelligentTotal > 0 ? intelligentTotal : legacyTotal;
+  const total = Math.max(intelligentTotal > 0 ? intelligentTotal : legacyTotal, graphHits.length);
 
   return (
     <div className="page-shell narrow search-page ds-page">
       <PageHeader
         eyebrow="الاستكشاف"
         title="البحث العلمي"
-        subtitle="يفهم المعنى ويربط الآيات والأحاديث والفتاوى والدروس."
+        subtitle="يفهم المعنى ويربط الآيات والأحاديث والفتاوى والدروس والكيانات المرتبطة."
       />
 
       <form
@@ -485,6 +490,33 @@ export default function SearchPage() {
             </button>
           )}
         </div>
+      )}
+
+      {q.trim() && graphHits.length > 0 && (
+        <section className="ek-rail ek-search-related" aria-label="نتائج مترابطة من الرسم المعرفي">
+          <h2 className="ek-section__title">كيانات ومواضيع مرتبطة</h2>
+          <div className="ek-grid">
+            {graphHits.slice(0, 10).map((hit) => (
+              <Link
+                key={hit.id}
+                href={hit.href}
+                className="ek-card"
+                onMouseEnter={() => prefetchHref(hit.href)}
+              >
+                <span className="ek-card__kind">
+                  {hit.reason === "neighbor" ? "مرتبط" : hit.kind}
+                </span>
+                <span className="ek-card__title">{hit.title}</span>
+                {hit.subtitle ? <span className="ek-card__sub">{hit.subtitle}</span> : null}
+              </Link>
+            ))}
+          </div>
+          {graphNeighborHits.length > 0 && (
+            <p className="search-response-ms" style={{ marginTop: "0.5rem" }}>
+              يشمل نتائج العلاقات المعرفية وليس المطابقة النصية فقط
+            </p>
+          )}
+        </section>
       )}
 
       {/* الحالات */}

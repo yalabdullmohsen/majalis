@@ -1,11 +1,15 @@
-import { useState, type ReactNode } from "react";
-import { Link } from "wouter";
+import { useMemo, useState, type ReactNode } from "react";
+import { Link, useLocation } from "wouter";
 import { Breadcrumbs } from "./Breadcrumbs";
 import { AdminInlineEdit, type InlineEditContentType } from "@/components/AdminInlineEdit";
 import { ReadingProgressBar } from "@/components/ReadingProgressBar";
 import { Clock, Copy } from "lucide-react";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { resolveRouteEntity } from "@/lib/entity-graph";
+import { EntityConnections } from "@/components/entity-graph/EntityConnections";
+import { PrevNextNav } from "@/components/entity-graph/PrevNextNav";
+import "@/styles/components/entity-connections.css";
 
 function estimateReadMinutes(text?: string): number | null {
   if (!text || text.length < 200) return null;
@@ -89,10 +93,26 @@ export function ContentDetailLayout({
   shareUrl,
   adminEdit,
 }: Props) {
+  const [location] = useLocation();
+  const routeCtx = useMemo(() => {
+    try {
+      return resolveRouteEntity(location);
+    } catch {
+      return null;
+    }
+  }, [location]);
+
+  const crumbs = breadcrumbs.length > 1 ? breadcrumbs : routeCtx?.breadcrumbs || breadcrumbs;
+  const graphRelated =
+    !related && routeCtx?.sections.length
+      ? routeCtx.sections.filter((s) => s.id === "related" || s.id === "also_read")
+      : [];
+
   return (
     <div className="page-shell narrow content-detail-page">
       <ReadingProgressBar />
-      <Breadcrumbs items={breadcrumbs} />
+      <Breadcrumbs items={crumbs} />
+      {routeCtx ? <PrevNextNav prev={routeCtx.prev} next={routeCtx.next} /> : null}
 
       <header className="content-detail-header">
         <div className="content-detail-header-top">
@@ -154,6 +174,12 @@ export function ContentDetailLayout({
           {related}
         </section>
       )}
+
+      {!related && graphRelated.length > 0 ? (
+        <div className="ek-rail" style={{ marginTop: "1rem" }}>
+          <EntityConnections sections={graphRelated} />
+        </div>
+      ) : null}
 
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId={["fiqh", "aqeeda", "hadith"]} title="اختبر معلوماتك في العلوم الشرعية" count={4} />

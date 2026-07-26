@@ -1,0 +1,168 @@
+/* شريط المعرفة المترابطة — يُحقَن تلقائيًا أسفل الصفحات */
+
+.ek-rail {
+  --ek-bg: var(--elite-sage-2, #f4f4f1);
+  --ek-card: #fff;
+  --ek-ink: var(--elite-ink, #1a1a18);
+  --ek-muted: var(--elite-ink-soft, #5c5c56);
+  --ek-accent: var(--elite-forest, #143f35);
+  --ek-line: rgba(20, 63, 53, 0.12);
+  margin: 1.5rem auto 0;
+  padding: 0 0.85rem calc(0.5rem + env(safe-area-inset-bottom, 0px));
+  max-width: 920px;
+}
+
+html[data-theme="dark"] .ek-rail,
+html.dark .ek-rail {
+  --ek-bg: transparent;
+  --ek-card: #1c1c1e;
+  --ek-ink: #f2f2ed;
+  --ek-muted: #a1a19a;
+  --ek-accent: #3bad8a;
+  --ek-line: rgba(255, 255, 255, 0.1);
+}
+
+.ek-crumbs {
+  margin: 0.35rem 0 0.85rem;
+}
+
+.ek-crumbs .breadcrumbs-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 0.35rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  font-size: 0.8rem;
+  color: var(--ek-muted);
+}
+
+.ek-crumbs .breadcrumbs-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.ek-crumbs a {
+  color: var(--ek-accent);
+  text-decoration: none;
+}
+
+.ek-crumbs a:hover {
+  text-decoration: underline;
+}
+
+.ek-prevnext {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.55rem;
+  margin-bottom: 1rem;
+}
+
+.ek-prevnext__link {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.7rem 0.85rem;
+  border-radius: 12px;
+  background: var(--ek-card);
+  border: 1px solid var(--ek-line);
+  color: inherit;
+  text-decoration: none;
+  min-height: 64px;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.ek-prevnext__link:hover {
+  border-color: color-mix(in srgb, var(--ek-accent) 45%, transparent);
+}
+
+.ek-prevnext__link--next {
+  text-align: end;
+  align-items: flex-end;
+}
+
+.ek-prevnext__label {
+  font-size: 0.72rem;
+  color: var(--ek-muted);
+}
+
+.ek-prevnext__title {
+  font-size: 0.92rem;
+  font-weight: 650;
+  color: var(--ek-ink);
+}
+
+.ek-section {
+  margin-bottom: 1.1rem;
+}
+
+.ek-section__title {
+  margin: 0 0 0.5rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--ek-ink);
+}
+
+.ek-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 0.5rem;
+}
+
+.ek-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.7rem 0.75rem;
+  border-radius: 12px;
+  background: var(--ek-card);
+  border: 1px solid var(--ek-line);
+  color: inherit;
+  text-decoration: none;
+  min-height: 72px;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.ek-card:hover {
+  border-color: color-mix(in srgb, var(--ek-accent) 40%, transparent);
+}
+
+.ek-card__kind {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--ek-accent);
+}
+
+.ek-card__title {
+  font-size: 0.86rem;
+  font-weight: 650;
+  color: var(--ek-ink);
+  line-height: 1.35;
+}
+
+.ek-card__sub {
+  font-size: 0.72rem;
+  color: var(--ek-muted);
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.ek-search-related {
+  margin-top: 1.25rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--ek-line);
+}
+
+@media (max-width: 480px) {
+  .ek-prevnext {
+    grid-template-columns: 1fr;
+  }
+  .ek-prevnext__link--next {
+    text-align: start;
+    align-items: flex-start;
+  }
+}

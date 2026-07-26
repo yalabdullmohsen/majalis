@@ -5,6 +5,7 @@ import {
   CheckCircle2, ChevronLeft,
 } from "lucide-react";
 import { fetchContentRelations, type IntelligentSearchResult } from "@/lib/scholarly-intelligence-service";
+import { findEntityByHref, getNeighbors, searchEntityGraph } from "@/lib/entity-graph";
 import "@/styles/components/related-knowledge.css";
 
 type Props = {
@@ -50,11 +51,67 @@ export function RelatedKnowledge({
   useEffect(() => {
     let cancelled = false;
     setLoading(true);
+
+    const graphSeed: IntelligentSearchResult[] = [];
+    try {
+      const q = query || topicSlug || "";
+      if (q) {
+        for (const hit of searchEntityGraph(q, limit)) {
+          graphSeed.push({
+            id: hit.id,
+            kind: hit.kind,
+            title: hit.title,
+            href: hit.href,
+            kind_label: hit.kind,
+            source_name: hit.subtitle || (hit.reason === "neighbor" ? "مرتبط معرفيًا" : "الرسم المعرفي"),
+            verification_status: "verified",
+          });
+        }
+      }
+      if (recordId && kind) {
+        const entity =
+          findEntityByHref(`/${kind}/${recordId}`) ||
+          findEntityByHref(`/library/${recordId}`) ||
+          findEntityByHref(`/scholars/${recordId}`) ||
+          findEntityByHref(`/prophets/${recordId}`) ||
+          findEntityByHref(`/nations/${recordId}`);
+        if (entity) {
+          for (const nb of getNeighbors(entity.id, limit)) {
+            graphSeed.push({
+              id: nb.id,
+              kind: nb.kind,
+              title: nb.title,
+              href: nb.href,
+              kind_label: nb.kind,
+              source_name: nb.subtitle || "علاقة معرفية",
+              verification_status: "verified",
+            });
+          }
+        }
+      }
+    } catch {
+      /* الرسم المحلي اختياري */
+    }
+
     fetchContentRelations({ kind, recordId, topicSlug, query, limit })
       .then((res) => {
+        if (cancelled) return;
+        const merged: IntelligentSearchResult[] = [];
+        const seen = new Set<string>();
+        for (const item of [...graphSeed, ...(res.items || [])]) {
+          const key = item.href || item.id || item.title;
+          if (!key || seen.has(key)) continue;
+          seen.add(key);
+          merged.push(item);
+          if (merged.length >= limit) break;
+        }
+        setItems(merged);
+        setAlgorithm(graphSeed.length ? "entity-graph+relations" : res.algorithm);
+      })
+      .catch(() => {
         if (!cancelled) {
-          setItems(res.items || []);
-          setAlgorithm(res.algorithm);
+          setItems(graphSeed.slice(0, limit));
+          setAlgorithm(graphSeed.length ? "entity-graph" : "none");
         }
       })
       .finally(() => {

@@ -13,6 +13,7 @@
     "generate:counts": "tsx scripts/generate-content-counts.ts",
     "check:data-freshness": "tsx scripts/check-data-freshness.ts",
     "test:nations": "npx tsx scripts/test-nations-integrity.mjs",
+    "test:entity-graph": "npx tsx scripts/test-entity-graph.mjs",
     "build:curriculum": "node scripts/build-curriculum-topics.mjs",
     "generate:rulings": "node scripts/build-curriculum-topics.mjs && node scripts/generate-rulings-encyclopedia.mjs",
     "verify:seo": "node scripts/verify-seo.mjs",

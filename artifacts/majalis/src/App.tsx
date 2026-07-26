@@ -44,6 +44,14 @@ const AssistantFloatingWidget = lazyWithRetry(
   () => import("@/components/assistant/AssistantFloatingWidget").then((m) => ({ default: m.AssistantFloatingWidget })),
   "AssistantFloatingWidget",
 );
+
+const SiteKnowledgeRail = lazyWithRetry(
+  () =>
+    import("@/components/entity-graph/SiteKnowledgeRail").then((m) => ({
+      default: m.SiteKnowledgeRail,
+    })),
+  "SiteKnowledgeRail",
+);
 const AdminSiteEditBar = lazyWithRetry(
   () => import("@/components/AdminSiteEditBar").then((m) => ({ default: m.AdminSiteEditBar })),
   "AdminSiteEditBar",
@@ -789,6 +797,9 @@ function AppShell() {
         <PrayerRespectBanner />
         <main id="main-content" className="app-main" tabIndex={-1}>
           <Router />
+          <Suspense fallback={null}>
+            <SiteKnowledgeRail />
+          </Suspense>
         </main>
         <SiteFooter />
         <Suspense fallback={null}>
