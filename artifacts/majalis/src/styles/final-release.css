@@ -524,14 +524,17 @@ html[data-theme="dark"] .kids-hub-card__icon { background: var(--brand-soft); co
 }
 .bottom-nav--v2 .bottom-nav__tab-label {
   display: block;
-  font-size: 0.6875rem;
+  font-size: 0.625rem;
   font-weight: 600;
   line-height: 1.15;
   max-width: 100%;
   white-space: nowrap;
-  overflow: visible;
-  text-overflow: clip;
+  overflow: hidden;
+  text-overflow: ellipsis;
   letter-spacing: 0;
+}
+@media (min-width: 390px) {
+  .bottom-nav--v2 .bottom-nav__tab-label { font-size: 0.6875rem; }
 }
 .bottom-nav--v2 .bottom-nav__tab:focus-visible {
   outline: 3px solid color-mix(in srgb, var(--color-accent) 72%, white);

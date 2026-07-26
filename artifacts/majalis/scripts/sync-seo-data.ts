@@ -42,24 +42,39 @@ function writeOrCheck(relPath: string, nextContent: string, label: string) {
   }
 }
 
-// حدّ آمن لطول وصف الميتا
-function clampDesc(s: string, max = 158): string {
-  const t = s.replace(/\s+/g, " ").trim();
-  if (t.length <= max) return t;
-  return t.slice(0, max - 1).replace(/[،,\s]+\S*$/, "") + "…";
+// ── 1) فهرس المكتبة الغني — لا يُستبدل بنسخة مختزلة ───────────────────────
+// المصدر الحي: library-catalog.ts. المرآة الغنية (verificationStatus/sources/…)
+// يُعيد توليدها: npx tsx scripts/regen-library-catalog-json.mjs
+// هنا نحدّث فقط الحقول المشتركة إن تغيّرت، بلا حذف إثراء سابق.
+{
+  const catalogPath = "src/data/library-catalog.json";
+  const current = readJson(catalogPath) as Array<Record<string, unknown>>;
+  const byId = new Map(current.map((b) => [String(b.id), b]));
+  const liveIds = new Set(LIBRARY_CATALOG.map((b) => b.id));
+  const missing = LIBRARY_CATALOG.filter((b) => !byId.has(b.id)).map((b) => b.id);
+  const orphaned = current.filter((b) => !liveIds.has(String(b.id))).map((b) => String(b.id));
+  if (missing.length || orphaned.length) {
+    console.error(
+      `✗ انحراف فهرس المكتبة (ناقص: ${missing.length} · يتيم: ${orphaned.length}). شغّل: npx tsx scripts/regen-library-catalog-json.mjs`,
+    );
+    if (CHECK) process.exit(1);
+    throw new Error("library-catalog.json غير متزامن مع library-catalog.ts");
+  }
+  const next = current.map((row) => {
+    const live = LIBRARY_CATALOG.find((b) => b.id === row.id);
+    if (!live) return row;
+    return {
+      ...row,
+      title: live.title,
+      author: live.author,
+      category: live.category,
+      description: live.description,
+      canonicalTitle: live.title,
+      slug: live.id,
+    };
+  });
+  writeOrCheck(catalogPath, serialize(next), "فهرس المكتبة (حقول مشتركة فقط)");
 }
-
-// ── 1) مرآة فهرس المكتبة (كل الكتب) ───────────────────────────────────────
-const libraryJson = [...LIBRARY_CATALOG]
-  .sort((a, b) => (a.sort_order ?? 0) - (b.sort_order ?? 0))
-  .map((b) => ({
-    id: b.id,
-    title: b.title,
-    author: b.author,
-    category: b.category,
-    description: b.description,
-  }));
-writeOrCheck("src/data/library-catalog.json", serialize(libraryJson), "مرآة فهرس المكتبة");
 
 // ── 2) مرآة قائمة العلماء (كل العلماء) ────────────────────────────────────
 const scholarsList = SCHOLARS.map((s) => ({ id: s.id, name: s.name, died: s.died }));
@@ -79,43 +94,17 @@ const scholarsSeo = SCHOLARS.map((s) => ({
 }));
 writeOrCheck("src/data/scholars-seo.json", serialize(scholarsSeo), "بيانات Person للعلماء");
 
-// ── 3) مسارات فهرسة العلماء داخل seo-routes.json (وصف فريد لكل عالِم) ──────
-const seoRoutes = readJson("src/lib/seo-routes.json");
-const nonScholarRoutes = seoRoutes.routes.filter(
-  (r: any) => !/^\/scholars\/[^/]+$/.test(r.path),
-);
-// موضع إدراج مسارات العلماء: مباشرة بعد فهرس /scholars إن وُجد، وإلا في النهاية
-const idxAfter = nonScholarRoutes.findIndex((r: any) => r.path === "/scholars");
-const scholarRoutes = SCHOLARS.map((s) => {
-  const works = (s.key_works || []).slice(0, 3);
-  const worksText = works.length ? ` من مؤلفاته: ${works.join("، ")}.` : "";
-  const description = clampDesc(`${s.bio}${worksText}`);
-  const keywords = [
-    s.name,
-    ...(s.specialty || []),
-    ...(s.madhhab ? [`المذهب ${s.madhhab}`] : []),
-    "المجلس العلمي",
-  ].slice(0, 6);
-  return {
-    path: `/scholars/${s.id}`,
-    title: `${s.name} — سيرته ومؤلفاته | المجلس العلمي`,
-    description,
-    keywords,
-    sitemap: true,
-    changefreq: "monthly",
-    priority: 0.75,
-  };
-});
-const nextRoutes =
-  idxAfter >= 0
-    ? [
-        ...nonScholarRoutes.slice(0, idxAfter + 1),
-        ...scholarRoutes,
-        ...nonScholarRoutes.slice(idxAfter + 1),
-      ]
-    : [...nonScholarRoutes, ...scholarRoutes];
-seoRoutes.routes = nextRoutes;
-writeOrCheck("src/lib/seo-routes.json", serialize(seoRoutes), "مسارات فهرسة العلماء");
+// ── 3) لا تُحقَن مسارات /scholars/:id في seo-routes.json ─────────────────
+// generate-seo.mjs يولّدها من SCHOLARS مباشرةً؛ حقنها هنا يكرّر المسار ويفشل البناء.
+// إن وُجدت بقايا قديمة من حقن سابق، أزلها للحفاظ على مصدر واحد.
+{
+  const seoRoutes = readJson("src/lib/seo-routes.json");
+  const cleaned = seoRoutes.routes.filter((r: { path: string }) => !/^\/scholars\/[^/]+$/.test(r.path));
+  if (cleaned.length !== seoRoutes.routes.length) {
+    seoRoutes.routes = cleaned;
+    writeOrCheck("src/lib/seo-routes.json", serialize(seoRoutes), "إزالة مسارات علماء مكررة من seo-routes");
+  }
+}
 
 if (CHECK && drift > 0) {
   console.error(`\n✗ ${drift} مرآة غير متزامنة — شغّل: pnpm run sync:seo-data`);
@@ -124,5 +113,5 @@ if (CHECK && drift > 0) {
 console.log(
   CHECK
     ? "✓ جميع مرايا SEO متزامنة"
-    : `✓ تمت المزامنة — ${libraryJson.length} كتابًا، ${scholarsList.length} عالِمًا (${scholarRoutes.length} مسارًا)`,
+    : `✓ تمت المزامنة — ${LIBRARY_CATALOG.length} كتابًا، ${scholarsList.length} عالِمًا (Person SEO) — مسارات العلماء من generate-seo فقط`,
 );

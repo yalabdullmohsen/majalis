@@ -82,9 +82,11 @@ function routeForPath(path: string) {
   }
 
   if (normalized.startsWith("/lessons/")) {
+    const lessonSlug = decodeURIComponent(normalized.slice("/lessons/".length)).replace(/[-_]+/g, " ").trim();
     return {
       ...requiredRoute("/lessons"),
-      title: "تفاصيل الدرس | المجلس العلمي",
+      path: normalized,
+      title: lessonSlug ? `${lessonSlug} | المجلس العلمي` : "درس شرعي | المجلس العلمي",
       description: "تفاصيل الدرس الشرعي — الشيخ، المكان، الجدول، والوصف داخل المجلس العلمي.",
     };
   }
@@ -106,25 +108,31 @@ function routeForPath(path: string) {
   }
 
   if (normalized.startsWith("/rulings/")) {
+    const rulingSlug = decodeURIComponent(normalized.slice("/rulings/".length)).replace(/[-_]+/g, " ").trim();
     return {
       ...requiredRoute("/rulings"),
-      title: "حكم شرعي | المجلس العلمي",
-      description: "تفاصيل حكم شرعي مع الأدلة والمراجع.",
+      path: normalized,
+      title: rulingSlug ? `${rulingSlug} | المجلس العلمي` : "مسألة فقهية | المجلس العلمي",
+      description: "تفاصيل مسألة فقهية مع الأدلة والمراجع.",
     };
   }
 
   if (normalized.startsWith("/annual-courses/")) {
+    const courseSlug = decodeURIComponent(normalized.slice("/annual-courses/".length)).replace(/[-_]+/g, " ").trim();
     return {
       ...requiredRoute("/annual-courses"),
-      title: "دورة علمية | المجلس العلمي",
+      path: normalized,
+      title: courseSlug ? `${courseSlug} | المجلس العلمي` : "دورة علمية | المجلس العلمي",
       description: "تفاصيل دورة علمية — الجدول والمشايخ والتسجيل.",
     };
   }
 
   if (normalized.startsWith("/library/")) {
+    const bookSlug = decodeURIComponent(normalized.slice("/library/".length)).replace(/^book-/, "").replace(/[-_]+/g, " ").trim();
     return {
       ...requiredRoute("/library"),
-      title: "كتاب شرعي | المجلس العلمي",
+      path: normalized,
+      title: bookSlug ? `${bookSlug} | المجلس العلمي` : "كتاب | المجلس العلمي",
       description: "تفاصيل الكتاب — المؤلف، التصنيف، ملخص المحتوى، وروابط التحميل.",
       ogType: "book",
     };

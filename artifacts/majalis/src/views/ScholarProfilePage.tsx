@@ -170,7 +170,7 @@ export default function ScholarProfilePage() {
         alternateName: scholar.name,
         description: scholar.bio,
         knowsAbout: scholar.specialty,
-        url: `https://www.majlisilm.com/scholars/${scholar.id}`,
+        url: `https://majlisilm.com/scholars/${scholar.id}`,
       }],
     });
   }, [scholar, id]);

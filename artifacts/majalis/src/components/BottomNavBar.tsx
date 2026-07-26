@@ -1,30 +1,36 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
-import { BookOpen, Clock, GraduationCap, Home, LayoutGrid } from "lucide-react";
+import { BookOpen, Clock, GraduationCap, HelpCircle, Home, LayoutGrid } from "lucide-react";
 import { MoreBottomSheet } from "./MoreBottomSheet";
 
 type NavTab = {
   href: string;
   label: string;
   Icon: React.ComponentType<{ size?: number; strokeWidth?: number; "aria-hidden"?: boolean }>;
+  /** مسارات إضافية تُفعِّل التبويب (أطول بادئة تفوز عبر ترتيب الاستدعاء). */
+  matchPrefixes?: string[];
 };
 
-/* خمس وجهات ثابتة فقط على الهاتف. "سؤال وجواب" انتقل إلى "المزيد" لإفساح
-   مكان لعنصر الصلاة المخصَّص (استخدام يومي متكرر يستحق وصولاً مباشرًا). */
+/* ست وجهات ثابتة على الهاتف وفق هيكل المنتج المعتمد:
+   الرئيسية · القرآن · سؤال وجواب · تعلّم · الصلاة · المزيد */
 const NAV_TABS: NavTab[] = [
-  { href: "/",             label: "الرئيسية",    Icon: Home },
-  { href: "/quran-hub",    label: "القرآن",      Icon: BookOpen },
-  { href: "/prayer-times", label: "الصلاة",      Icon: Clock },
-  { href: "/lessons",      label: "تعلّم",       Icon: GraduationCap },
+  { href: "/",             label: "الرئيسية",     Icon: Home },
+  { href: "/quran-hub",    label: "القرآن",       Icon: BookOpen, matchPrefixes: ["/quran-hub", "/mushaf", "/quran"] },
+  { href: "/qa",           label: "سؤال وجواب",   Icon: HelpCircle, matchPrefixes: ["/qa", "/quiz"] },
+  { href: "/lessons",      label: "تعلّم",        Icon: GraduationCap, matchPrefixes: ["/lessons", "/learn", "/learning", "/learning-plan", "/my-learning"] },
+  { href: "/prayer-times", label: "الصلاة",       Icon: Clock, matchPrefixes: ["/prayer-times", "/adhkar", "/salah"] },
 ];
 
 export function BottomNavBar() {
   const [location] = useLocation();
   const [moreOpen, setMoreOpen] = useState(false);
 
-  const isActive = (href: string) => {
-    if (href === "/") return location === "/";
-    return location === href || location.startsWith(href + "/");
+  const isActive = (tab: NavTab) => {
+    if (tab.href === "/") return location === "/";
+    const prefixes = tab.matchPrefixes ?? [tab.href];
+    return prefixes.some(
+      (p) => location === p || location.startsWith(p + "/"),
+    );
   };
 
   // قارئ المصحف /mushaf غامر مخصَّص بتنقّله الخاص (pager/سحب صفحات) —
@@ -35,8 +41,9 @@ export function BottomNavBar() {
   return (
     <>
       <nav className="bottom-nav bottom-nav--v2" aria-label="التنقل السفلي">
-        {NAV_TABS.map(({ href, label, Icon }) => {
-          const active = isActive(href);
+        {NAV_TABS.map((tab) => {
+          const { href, label, Icon } = tab;
+          const active = isActive(tab);
           return (
             <Link
               key={href}

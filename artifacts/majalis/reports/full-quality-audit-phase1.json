@@ -1,0 +1,1074 @@
+{
+  "baseline_commit": "2c5d6a8107b693986f17d83946ce86a0790b6111",
+  "branch": "cursor/full-quality-audit-4f26",
+  "restore_tag": "restore/full-quality-audit-baseline",
+  "routes_from_App": [
+    "/",
+    "/about",
+    "/academic-research",
+    "/account-deletion",
+    "/adab-talab-ilm",
+    "/adhan-settings",
+    "/adhkar",
+    "/admin",
+    "/admin/auto-content",
+    "/admin/automation",
+    "/admin/automation/center",
+    "/admin/automation/content-production",
+    "/admin/automation/dashboard",
+    "/admin/automation/platform",
+    "/admin/automation/review",
+    "/admin/automation/sources",
+    "/admin/autonomous-platform",
+    "/admin/content",
+    "/admin/content-import/image",
+    "/admin/content-import/url",
+    "/admin/content-production",
+    "/admin/dashboard",
+    "/admin/feature-status",
+    "/admin/fiqh-quality",
+    "/admin/fiqh-review",
+    "/admin/import",
+    "/admin/integrations/instagram",
+    "/admin/review-center",
+    "/admin/sources",
+    "/admin/universities",
+    "/admin/users",
+    "/akhlaq",
+    "/alamat-saah",
+    "/amr-bil-maruf",
+    "/amrad-qalbiyya",
+    "/anbiya",
+    "/announcements",
+    "/annual-courses",
+    "/annual-courses/:id",
+    "/arbaeen-nawawi",
+    "/arbaeen-nawawi/:id",
+    "/arkan",
+    "/arkan-iman",
+    "/asma-husna",
+    "/assistant",
+    "/auth/callback",
+    "/auth/register",
+    "/c/:slug",
+    "/calendar",
+    "/car-mode",
+    "/cards",
+    "/condolences",
+    "/contact",
+    "/courses",
+    "/daily-wird",
+    "/discover-islam",
+    "/discover-islam/articles/:slug",
+    "/discover-islam/contact",
+    "/discover-islam/doubts",
+    "/discover-islam/doubts/:slug",
+    "/discover-islam/how-to-convert",
+    "/discover-islam/new-muslim",
+    "/discover-islam/new-muslim/:day",
+    "/discover-islam/questions",
+    "/discover-islam/questions/:slug",
+    "/duas",
+    "/duas-quran",
+    "/durus-imaniyya",
+    "/durus-mutanawwia",
+    "/fadail-aamal",
+    "/family",
+    "/family-mode",
+    "/fatwa",
+    "/fatwa/:id",
+    "/fawaid",
+    "/features-in-progress",
+    "/fikr-waqia",
+    "/fiqh",
+    "/fiqh-council",
+    "/fiqh-council/:slug",
+    "/fiqh-council/archive",
+    "/fiqh-council/categories",
+    "/fiqh-council/compare",
+    "/fiqh-council/fatwas",
+    "/fiqh-council/index",
+    "/fiqh-council/issues",
+    "/fiqh-council/issues/:slug",
+    "/fiqh-council/live",
+    "/fiqh-council/nawazil",
+    "/fiqh-council/recommendations",
+    "/fiqh-council/research",
+    "/fiqh-council/research-assistant",
+    "/fiqh-council/resolutions",
+    "/fiqh-council/search",
+    "/fiqh-council/sessions/:slug",
+    "/fiqh-council/stats",
+    "/fiqh-qawaid",
+    "/flashcards",
+    "/hadith",
+    "/hadith-science",
+    "/hadith/arbaeen-love-of-allah",
+    "/hadith/books",
+    "/hadith/books-and-rulings",
+    "/hadith/daif",
+    "/hadith/mawdu",
+    "/hadith/sahih",
+    "/hajj",
+    "/hikam-salaf",
+    "/iman-topics",
+    "/institutions",
+    "/islam-stats",
+    "/islamic-glossary",
+    "/islamic-landmarks",
+    "/islamic-sects",
+    "/islamic-stories",
+    "/janaza",
+    "/janna-naar",
+    "/kids",
+    "/knowledge-graph",
+    "/knowledge-map",
+    "/kuwait-lessons",
+    "/learn",
+    "/learn/:slug",
+    "/learn/lesson/:id",
+    "/learn/series/:slug",
+    "/learning",
+    "/learning-path",
+    "/learning-path/:scienceSlug",
+    "/learning-path/book/:bookId",
+    "/learning-path/dashboard",
+    "/learning-plan",
+    "/learning/calendar",
+    "/learning/certificates",
+    "/learning/certificates/:code",
+    "/learning/paths",
+    "/learning/paths/:slug",
+    "/learning/quiz",
+    "/learning/quiz/:slug",
+    "/lessons",
+    "/lessons/:id",
+    "/lessons/current",
+    "/library",
+    "/library/:id",
+    "/login",
+    "/madhahib",
+    "/malaika",
+    "/masarat",
+    "/mawarith",
+    "/mawarith/calculator",
+    "/mawsuaat",
+    "/methodology",
+    "/mind-map",
+    "/miracles",
+    "/mosque-mode",
+    "/mushaf",
+    "/mushaf-v2-preview",
+    "/mushaf/:surah",
+    "/mushaf/about-edition",
+    "/mushaf/page",
+    "/mushaf/page/:page",
+    "/mutashabihat",
+    "/my-citations",
+    "/my-learning",
+    "/my-submissions",
+    "/nations",
+    "/nations/:slug",
+    "/notification-settings",
+    "/occasions",
+    "/prayer-countdown",
+    "/prayer-ranks",
+    "/prayer-times",
+    "/privacy",
+    "/privacy-policy",
+    "/profile",
+    "/prophet-stories",
+    "/prophet-stories/:slug",
+    "/prophetic-medicine",
+    "/prophets",
+    "/prophets/:slug",
+    "/prophets/tree",
+    "/qa",
+    "/qibla",
+    "/quiz",
+    "/quran",
+    "/quran-circles",
+    "/quran-hub",
+    "/quran-memorization",
+    "/quran-studies",
+    "/quran/makki-madani",
+    "/quran/memorization-plans",
+    "/quran/recitation-test-ai",
+    "/quran/revelation-order",
+    "/quran/surah-stories",
+    "/quran/surah-stories/:number",
+    "/quran/surahs",
+    "/quran/tajweed",
+    "/raqaiq",
+    "/reading-plans",
+    "/register",
+    "/research",
+    "/researcher",
+    "/researcher-profile",
+    "/rulings",
+    "/rulings/:id",
+    "/sahabah",
+    "/salah-guide",
+    "/sawm",
+    "/scholarly-research",
+    "/scholars",
+    "/scholars/:id",
+    "/scientific-announcements/:id",
+    "/search",
+    "/search/:q",
+    "/seerah",
+    "/settings",
+    "/shamael",
+    "/sheikhs",
+    "/sheikhs/:id",
+    "/sins-and-rights",
+    "/sins-and-rights/:slug",
+    "/sitemap",
+    "/start-here",
+    "/stats",
+    "/stories",
+    "/study-room",
+    "/submit",
+    "/sujood-sahw",
+    "/sunan-yawmiyya",
+    "/sunnah-studies",
+    "/surah-stories",
+    "/tahara",
+    "/tajweed",
+    "/tarikh-islami",
+    "/tasbih",
+    "/tawba",
+    "/tawhid",
+    "/tazkiya-topics",
+    "/terms",
+    "/topics",
+    "/topics/:slug",
+    "/transcribe",
+    "/ulum-quran",
+    "/universities",
+    "/universities/:slug",
+    "/universities/compare",
+    "/updates",
+    "/updates/auto/:slug",
+    "/upload",
+    "/usra-mujtama",
+    "/vault",
+    "/wasaya-nabawiyya",
+    "/zakat"
+  ],
+  "routes_count": 252,
+  "seo_routes_count": 175,
+  "seo_sample": [
+    "/",
+    "/lessons",
+    "/calendar",
+    "/kuwait-lessons",
+    "/adhkar",
+    "/quran/tajweed",
+    "/quran/surah-stories",
+    "/quran/makki-madani",
+    "/prayer-ranks",
+    "/prayer-times",
+    "/qibla",
+    "/tasbih",
+    "/daily-wird",
+    "/occasions",
+    "/arbaeen-nawawi",
+    "/learning/paths",
+    "/my-learning",
+    "/announcements",
+    "/lessons/current",
+    "/courses",
+    "/library",
+    "/miracles",
+    "/fawaid",
+    "/hadith",
+    "/hadith/sahih",
+    "/hadith/daif",
+    "/hadith/books",
+    "/hadith/mawdu",
+    "/prophets/tree",
+    "/prophets"
+  ],
+  "redirects_count": 59,
+  "redirects_sample": [
+    {
+      "source": "/scholarly-research",
+      "destination": "/qa",
+      "permanent": true
+    },
+    {
+      "source": "/islamic-stories",
+      "destination": "/stories",
+      "permanent": true
+    },
+    {
+      "source": "/learning-path/dashboard",
+      "destination": "/my-learning",
+      "permanent": true
+    },
+    {
+      "source": "/learning-path/book/:bookId",
+      "destination": "/learning/paths",
+      "permanent": true
+    },
+    {
+      "source": "/learning-path/:scienceSlug",
+      "destination": "/learning/paths",
+      "permanent": true
+    },
+    {
+      "source": "/learning-path",
+      "destination": "/learning/paths",
+      "permanent": true
+    },
+    {
+      "source": "/quran",
+      "destination": "/quran-hub",
+      "permanent": true
+    },
+    {
+      "source": "/fatwa/:id",
+      "destination": "/rulings",
+      "permanent": true
+    },
+    {
+      "source": "/fatwa",
+      "destination": "/fiqh",
+      "permanent": true
+    },
+    {
+      "source": "/surah-stories",
+      "destination": "/quran/surah-stories",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/amir-al-san'ani",
+      "destination": "/scholars/amir-al-sanani",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/amir-al-san%27ani",
+      "destination": "/scholars/amir-al-sanani",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/ibn-al-qayyim-alt",
+      "destination": "/scholars/al-sakhawi",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/ibn-uthaymin-ext",
+      "destination": "/scholars/ibn-jibreen",
+      "permanent": true
+    },
+    {
+      "source": "/scholars/ibn-uthaymeen-older",
+      "destination": "/scholars/abdulkarim-alkhudair",
+      "permanent": true
+    },
+    {
+      "source": "/library/book-madaarij",
+      "destination": "/library/book-madarij",
+      "permanent": true
+    },
+    {
+      "source": "/library/book-saadi",
+      "destination": "/library/book-tafsir-saadi",
+      "permanent": true
+    },
+    {
+      "source": "/library/book-tafsir-al-saadi",
+      "destination": "/library/book-tafsir-saadi",
+      "permanent": true
+    },
+    {
+      "source": "/library/book-tabari-tafsir",
+      "destination": "/library/book-tafsir-tabari",
+      "permanent": true
+    },
+    {
+      "source": "/library/book-baghawi-tafsir",
+      "destination": "/library/book-tafsir-al-baghawi",
+      "permanent": true
+    }
+  ],
+  "emails_found": {
+    "admin@example.com": [
+      "src/lib/push-notifications.ts"
+    ]
+  },
+  "email_unique_count": 1,
+  "leak_hits_count": 355,
+  "leak_hits_sample": [
+    {
+      "file": "src/data/islamicQuizData.ts",
+      "line": 211,
+      "match": "لاحقاً",
+      "pat": "لاحقاً|لاحقًا"
+    },
+    {
+      "file": "src/data/islamicQuizData.ts",
+      "line": 493,
+      "match": "لاحقاً",
+      "pat": "لاحقاً|لاحقًا"
+    },
+    {
+      "file": "src/data/islamicQuizData.ts",
+      "line": 510,
+      "match": "لاحقاً",
+      "pat": "لاحقاً|لاحقًا"
+    },
+    {
+      "file": "src/data/islamicQuizData.ts",
+      "line": 512,
+      "match": "لاحقاً",
+      "pat": "لاحقاً|لاحقًا"
+    },
+    {
+      "file": "src/data/islamicQuizData.ts",
+      "line": 514,
+      "match": "لاحقاً",
+      "pat": "لاحقاً|لاحقًا"
+    },
+    {
+      "file": "src/hooks/useAssistantChat.ts",
+      "line": 17,
+      "match": "لاحقًا",
+      "pat": "لاحقاً|لاحقًا"
+    },
+    {
+      "file": "src/lib/assistant-api.ts",
+      "line": 62,
+      "match": "لاحقًا",
+      "pat": "لاحقاً|لاحقًا"
+    },
+    {
+      "file": "src/lib/content-quality.ts",
+      "line": 1,
+      "match": "placeholder",
+      "pat": "\\bplaceholder\\b"
+    },
+    {
+      "file": "src/lib/dalail-nubuwwah-data.ts",
+      "line": 14,
+      "match": "لاحقاً",
+      "pat": "لاحقاً|لاحقًا"
+    },
+    {
+      "file": "src/lib/demo-content.ts",
+      "line": 20,
+      "match": "لاحقاً",
+      "pat": "لاحقاً|لاحقًا"
+    },
+    {
+      "file": "src/lib/durus-imaniyya-data.ts",
+      "line": 334,
+      "match": "تُملأ",
+      "pat": "تُملأ"
+    },
+    {
+      "file": "src/lib/feature-registry.ts",
+      "line": 71,
+      "match": "لاحقًا",
+      "pat": "لاحقاً|لاحقًا"
+    },
+    {
+      "file": "src/lib/fikr-waqia-data.ts",
+      "line": 27,
+      "match": "تُملأ",
+      "pat": "تُملأ"
+    },
+    {
+      "file": "src/lib/fiqh-council-seed.ts",
+      "line": 153,
+      "match": "placeholder",
+      "pat": "\\bplaceholder\\b"
+    },
+    {
+      "file": "src/lib/fiqh-council-seed.ts",
+      "line": 155,
+      "match": "placeholder",
+      "pat": "\\bplaceholder\\b"
+    },
+    {
+      "file": "src/lib/fiqh-council-seed.ts",
+      "line": 168,
+      "match": "placeholder",
+      "pat": "\\bplaceholder\\b"
+    },
+    {
+      "file": "src/lib/fiqh-council-seed.ts",
+      "line": 170,
+      "match": "placeholder",
+      "pat": "\\bplaceholder\\b"
+    },
+    {
+      "file": "src/lib/fiqh-council-service.ts",
+      "line": 534,
+      "match": "تُملأ",
+      "pat": "تُملأ"
+    },
+    {
+      "file": "src/lib/islamic-stories-seed.ts",
+      "line": 531,
+      "match": "لاحقاً",
+      "pat": "لاحقاً|لاحقًا"
+    },
+    {
+      "file": "src/lib/islamic-stories-seed.ts",
+      "line": 1620,
+      "match": "لاحقاً",
+      "pat": "لاحقاً|لاحقًا"
+    },
+    {
+      "file": "src/lib/islamic-stories-seed.ts",
+      "line": 1935,
+      "match": "لاحقًا",
+      "pat": "لاحقاً|لاحقًا"
+    },
+    {
+      "file": "src/lib/islamic-stories-seed.ts",
+      "line": 2055,
+      "match": "لاحقًا",
+      "pat": "لاحقاً|لاحقًا"
+    },
+    {
+      "file": "src/lib/islamic-stories-seed.ts",
+      "line": 2249,
+      "match": "لاحقًا",
+      "pat": "لاحقاً|لاحقًا"
+    },
+    {
+      "file": "src/lib/islamic-stories-seed.ts",
+      "line": 2295,
+      "match": "لاحقًا",
+      "pat": "لاحقاً|لاحقًا"
+    },
+    {
+      "file": "src/lib/islamic-stories-seed.ts",
+      "line": 2412,
+      "match": "لاحقًا",
+      "pat": "لاحقاً|لاحقًا"
+    },
+    {
+      "file": "src/lib/islamic-stories-seed.ts",
+      "line": 2622,
+      "match": "لاحقًا",
+      "pat": "لاحقاً|لاحقًا"
+    },
+    {
+      "file": "src/lib/language-preference.ts",
+      "line": 8,
+      "match": "لاحقًا",
+      "pat": "لاحقاً|لاحقًا"
+    },
+    {
+      "file": "src/lib/lesson-image.ts",
+      "line": 5,
+      "match": "placeholder",
+      "pat": "\\bplaceholder\\b"
+    },
+    {
+      "file": "src/lib/lesson-import-api.ts",
+      "line": 46,
+      "match": "لاحقاً",
+      "pat": "لاحقاً|لاحقًا"
+    },
+    {
+      "file": "src/lib/lesson-import-api.ts",
+      "line": 48,
+      "match": "لاحقاً",
+      "pat": "لاحقاً|لاحقًا"
+    },
+    {
+      "file": "src/lib/lessons-service.ts",
+      "line": 50,
+      "match": "Placeholder",
+      "pat": "\\bplaceholder\\b"
+    },
+    {
+      "file": "src/lib/library-catalog.ts",
+      "line": 1563,
+      "match": "لاحقاً",
+      "pat": "لاحقاً|لاحقًا"
+    },
+    {
+      "file": "src/lib/miracles-seed.ts",
+      "line": 997,
+      "match": "لاحقاً",
+      "pat": "لاحقاً|لاحقًا"
+    },
+    {
+      "file": "src/lib/miracles-seed.ts",
+      "line": 1248,
+      "match": "لاحقًا",
+      "pat": "لاحقاً|لاحقًا"
+    },
+    {
+      "file": "src/lib/quran-api.ts",
+      "line": 291,
+      "match": "لاحقًا",
+      "pat": "لاحقاً|لاحقًا"
+    },
+    {
+      "file": "src/lib/quran-pages.ts",
+      "line": 5,
+      "match": "موجود مسبق",
+      "pat": "موجود مسبق"
+    },
+    {
+      "file": "src/lib/quran-pages.ts",
+      "line": 53,
+      "match": "لاحقًا",
+      "pat": "لاحقاً|لاحقًا"
+    },
+    {
+      "file": "src/lib/scholars-data.ts",
+      "line": 957,
+      "match": "يربط شبكة",
+      "pat": "يربط شبكة"
+    },
+    {
+      "file": "src/lib/scholars-data.ts",
+      "line": 617,
+      "match": "لاحقاً",
+      "pat": "لاحقاً|لاحقًا"
+    },
+    {
+      "file": "src/lib/scholars-data.ts",
+      "line": 1047,
+      "match": "لاحقاً",
+      "pat": "لاحقاً|لاحقًا"
+    },
+    {
+      "file": "src/lib/scholars-data.ts",
+      "line": 1272,
+      "match": "لاحقاً",
+      "pat": "لاحقاً|لاحقًا"
+    },
+    {
+      "file": "src/lib/scientific-announcements-seed.ts",
+      "line": 606,
+      "match": "لاحقاً",
+      "pat": "لاحقاً|لاحقًا"
+    },
+    {
+      "file": "src/lib/scientific-announcements-seed.ts",
+      "line": 711,
+      "match": "لاحقاً",
+      "pat": "لاحقاً|لاحقًا"
+    },
+    {
+      "file": "src/lib/supabase-bootstrap.ts",
+      "line": 25,
+      "match": "placeholder",
+      "pat": "\\bplaceholder\\b"
+    },
+    {
+      "file": "src/lib/supabase-bootstrap.ts",
+      "line": 25,
+      "match": "placeholder",
+      "pat": "\\bplaceholder\\b"
+    },
+    {
+      "file": "src/lib/supabase-bootstrap.ts",
+      "line": 100,
+      "match": "placeholder",
+      "pat": "\\bplaceholder\\b"
+    },
+    {
+      "file": "src/lib/supabase-bootstrap.ts",
+      "line": 114,
+      "match": "placeholder",
+      "pat": "\\bplaceholder\\b"
+    },
+    {
+      "file": "src/lib/supabase-bootstrap.ts",
+      "line": 115,
+      "match": "placeholder",
+      "pat": "\\bplaceholder\\b"
+    },
+    {
+      "file": "src/lib/supabase-bootstrap.ts",
+      "line": 115,
+      "match": "placeholder",
+      "pat": "\\bplaceholder\\b"
+    },
+    {
+      "file": "src/lib/supabase-bootstrap.ts",
+      "line": 115,
+      "match": "placeholder",
+      "pat": "\\bplaceholder\\b"
+    },
+    {
+      "file": "src/lib/supabase-config.ts",
+      "line": 47,
+      "match": "placeholder",
+      "pat": "\\bplaceholder\\b"
+    },
+    {
+      "file": "src/lib/supabase-config.ts",
+      "line": 47,
+      "match": "placeholder",
+      "pat": "\\bplaceholder\\b"
+    },
+    {
+      "file": "src/lib/surah-stories.ts",
+      "line": 55,
+      "match": "لاحقاً",
+      "pat": "لاحقاً|لاحقًا"
+    },
+    {
+      "file": "src/lib/i18n/index.ts",
+      "line": 24,
+      "match": "placeholder",
+      "pat": "\\bplaceholder\\b"
+    },
+    {
+      "file": "src/lib/i18n/index.ts",
+      "line": 39,
+      "match": "placeholder",
+      "pat": "\\bplaceholder\\b"
+    },
+    {
+      "file": "src/lib/i18n/index.ts",
+      "line": 53,
+      "match": "placeholder",
+      "pat": "\\bplaceholder\\b"
+    },
+    {
+      "file": "src/lib/inheritance/case-storage.ts",
+      "line": 2,
+      "match": "لاحقًا",
+      "pat": "لاحقاً|لاحقًا"
+    },
+    {
+      "file": "src/lib/inheritance/engine.ts",
+      "line": 185,
+      "match": "لاحقًا",
+      "pat": "لاحقاً|لاحقًا"
+    },
+    {
+      "file": "src/lib/inheritance/engine.ts",
+      "line": 304,
+      "match": "لاحقًا",
+      "pat": "لاحقاً|لاحقًا"
+    },
+    {
+      "file": "src/lib/recitation-ai/mutashabihat.ts",
+      "line": 26,
+      "match": "لاحقًا",
+      "pat": "لاحقاً|لاحقًا"
+    },
+    {
+      "file": "src/lib/recitation-ai/providers/on-device-provider.ts",
+      "line": 63,
+      "match": "لاحقًا",
+      "pat": "لاحقاً|لاحقًا"
+    },
+    {
+      "file": "src/lib/recitation-ai/providers/server-provider.ts",
+      "line": 108,
+      "match": "لاحقًا",
+      "pat": "لاحقاً|لاحقًا"
+    },
+    {
+      "file": "src/lib/recitation-ai/providers/web-speech-provider.ts",
+      "line": 124,
+      "match": "لاحقًا",
+      "pat": "لاحقاً|لاحقًا"
+    },
+    {
+      "file": "src/App.tsx",
+      "line": 300,
+      "match": "لاحقًا",
+      "pat": "لاحقاً|لاحقًا"
+    },
+    {
+      "file": "src/components/ContentActions.tsx",
+      "line": 168,
+      "match": "placeholder",
+      "pat": "\\bplaceholder\\b"
+    },
+    {
+      "file": "src/components/GlobalSearchModal.tsx",
+      "line": 308,
+      "match": "placeholder",
+      "pat": "\\bplaceholder\\b"
+    },
+    {
+      "file": "src/components/LanguageProvider.tsx",
+      "line": 20,
+      "match": "لاحقًا",
+      "pat": "لاحقاً|لاحقًا"
+    },
+    {
+      "file": "src/components/SearchSuggestions.tsx",
+      "line": 16,
+      "match": "placeholder",
+      "pat": "\\bplaceholder\\b"
+    },
+    {
+      "file": "src/components/SearchSuggestions.tsx",
+      "line": 25,
+      "match": "placeholder",
+      "pat": "\\bplaceholder\\b"
+    },
+    {
+      "file": "src/components/SearchSuggestions.tsx",
+      "line": 132,
+      "match": "placeholder",
+      "pat": "\\bplaceholder\\b"
+    },
+    {
+      "file": "src/components/SearchSuggestions.tsx",
+      "line": 132,
+      "match": "placeholder",
+      "pat": "\\bplaceholder\\b"
+    },
+    {
+      "file": "src/components/SectionAccordionLayout.tsx",
+      "line": 25,
+      "match": "يُستكمل",
+      "pat": "يُستكمل"
+    },
+    {
+      "file": "src/views/AcademicResearchPage.tsx",
+      "line": 526,
+      "match": "placeholder",
+      "pat": "\\bplaceholder\\b"
+    },
+    {
+      "file": "src/views/AcademicResearchPage.tsx",
+      "line": 605,
+      "match": "placeholder",
+      "pat": "\\bplaceholder\\b"
+    },
+    {
+      "file": "src/views/AccountDeletionPage.tsx",
+      "line": 129,
+      "match": "placeholder",
+      "pat": "\\bplaceholder\\b"
+    },
+    {
+      "file": "src/views/AdabTalabIlmPage.tsx",
+      "line": 547,
+      "match": "placeholder",
+      "pat": "\\bplaceholder\\b"
+    },
+    {
+      "file": "src/views/AkhlaqPage.tsx",
+      "line": 1043,
+      "match": "placeholder",
+      "pat": "\\bplaceholder\\b"
+    },
+    {
+      "file": "src/views/AlamatSaahPage.tsx",
+      "line": 412,
+      "match": "placeholder",
+      "pat": "\\bplaceholder\\b"
+    },
+    {
+      "file": "src/views/AnnualCoursesPage.tsx",
+      "line": 102,
+      "match": "placeholder",
+      "pat": "\\bplaceholder\\b"
+    },
+    {
+      "file": "src/views/ArbaeenNawawiPage.tsx",
+      "line": 180,
+      "match": "placeholder",
+      "pat": "\\bplaceholder\\b"
+    }
+  ],
+  "generic_book_title_files": [
+    "src/lib/seo.ts"
+  ],
+  "stat_hits_sample": [
+    {
+      "file": "src/data/content-counts.json",
+      "match": "content-counts"
+    },
+    {
+      "file": "src/data/external-data-sources.json",
+      "match": "320+ عالم"
+    },
+    {
+      "file": "src/data/external-data-sources.json",
+      "match": "1000+ كتاب"
+    },
+    {
+      "file": "src/data/external-data-sources.json",
+      "match": "content-counts"
+    },
+    {
+      "file": "src/data/external-data-sources.json",
+      "match": "content-counts"
+    },
+    {
+      "file": "src/data/external-data-sources.json",
+      "match": "content-counts"
+    },
+    {
+      "file": "src/data/external-data-sources.json",
+      "match": "content-counts"
+    },
+    {
+      "file": "src/data/islamicQuizData.ts",
+      "match": "أكثر من 5374"
+    },
+    {
+      "file": "src/data/islamicQuizData.ts",
+      "match": "أكثر من 1400"
+    },
+    {
+      "file": "src/data/scholars-seo.json",
+      "match": "أكثر من 7831"
+    },
+    {
+      "file": "src/hooks/useMushafPageFont.ts",
+      "match": "أكثر من 12"
+    },
+    {
+      "file": "src/lib/fiqh-issues-seed.ts",
+      "match": "أكثر من 18"
+    },
+    {
+      "file": "src/lib/islamic-stories-seed.ts",
+      "match": "أكثر من 100"
+    },
+    {
+      "file": "src/lib/miracles-seed.ts",
+      "match": "أكثر من 80"
+    },
+    {
+      "file": "src/lib/navigation.ts",
+      "match": "content-counts"
+    },
+    {
+      "file": "src/lib/prophetic-medicine-seed.ts",
+      "match": "أكثر من 130"
+    },
+    {
+      "file": "src/lib/prophetic-medicine-seed.ts",
+      "match": "أكثر من 3000"
+    },
+    {
+      "file": "src/lib/scholars-data.ts",
+      "match": "أكثر من 7831"
+    },
+    {
+      "file": "src/lib/supabase.ts",
+      "match": "content-counts"
+    },
+    {
+      "file": "src/lib/updates-seed.ts",
+      "match": "55+ دورة"
+    },
+    {
+      "file": "src/lib/updates-seed.ts",
+      "match": "822+ سؤال"
+    },
+    {
+      "file": "src/lib/updates-seed.ts",
+      "match": "61+ دورة"
+    },
+    {
+      "file": "src/lib/updates-seed.ts",
+      "match": "50+ كتاب"
+    },
+    {
+      "file": "src/lib/updates-seed.ts",
+      "match": "330+ سؤال"
+    },
+    {
+      "file": "src/views/AboutPage.tsx",
+      "match": "أكثر من 76"
+    },
+    {
+      "file": "src/views/AboutPage.tsx",
+      "match": "أكثر من 53"
+    },
+    {
+      "file": "src/views/AboutPage.tsx",
+      "match": "أكثر من 780"
+    },
+    {
+      "file": "src/views/AboutPage.tsx",
+      "match": "أكثر من 49"
+    },
+    {
+      "file": "src/views/FeaturesInProgressPage.tsx",
+      "match": "content-counts"
+    },
+    {
+      "file": "src/views/FiqhQawaidPage.tsx",
+      "match": "أكثر من ٢٢"
+    },
+    {
+      "file": "src/views/HadithSciencePage.tsx",
+      "match": "أكثر من 27000"
+    },
+    {
+      "file": "src/views/HomePage.tsx",
+      "match": "content-counts"
+    },
+    {
+      "file": "src/views/IslamicGlossaryPage.tsx",
+      "match": "أكثر من ٤٠"
+    },
+    {
+      "file": "src/views/IslamicLandmarksPage.tsx",
+      "match": "أكثر من 19"
+    },
+    {
+      "file": "src/views/IslamicSectsPage.tsx",
+      "match": "أكثر من 150"
+    },
+    {
+      "file": "src/views/MethodologyPage.tsx",
+      "match": "أكثر من ٧٠"
+    },
+    {
+      "file": "src/views/SahabahPage.tsx",
+      "match": "أكثر من 2200"
+    },
+    {
+      "file": "src/views/SahabahPage.tsx",
+      "match": "أكثر من 100"
+    },
+    {
+      "file": "src/lib/inheritance/__tests__/engine.test.ts",
+      "match": "أكثر من 4"
+    }
+  ],
+  "stat_hits_count": 39,
+  "scholars_probe": {
+    "file": "src/lib/scholars-data.ts",
+    "slug_like": 0,
+    "id_like": 137
+  },
+  "library_probe": {
+    "file": "src/lib/library-catalog.ts",
+    "slug_like": 0,
+    "id_like": 175
+  },
+  "content_counts_json": {
+    "$comment": "مُولَّد آليًا من السجلات — لا تحرّره يدويًا. أعِد التوليد: npx tsx scripts/generate-content-counts.ts",
+    "generatedAt": "2026-07-26",
+    "books": 174,
+    "scholars": 135,
+    "fawaid": 616,
+    "quizQuestions": 1227,
+    "mindMaps": 23,
+    "rulings": 622,
+    "courses": 63,
+    "miracles": 60,
+    "adhkar": 329,
+    "qa": 459,
+    "nations": 17
+  },
+  "bottom_nav_has_qa": true,
+  "bottom_nav_snippet": "NAV_TABS: NavTab[] = [\n  { href: \"/\",             label: \"الرئيسية\",    Icon: Home },\n  { href: \"/quran-hub\",    label: \"القرآن\",      Icon: BookOpen },\n  { href: \"/prayer-times\", label: \"الصلاة\",      Icon: Clock },\n  { href: \"/lessons\",      label: \"تعلّم\",       Icon: GraduationCap },\n];\n\nexport function BottomNavBar() {\n  const [location] = useLocation();\n  const [moreOpen, setMoreOpen] = useState(false);\n\n  const isActive = (href: string) => {\n    if (href === \"/\") return location === \"/\";\n"
+}

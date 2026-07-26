@@ -27,17 +27,19 @@ function assert(condition: boolean, label: string) {
   else { console.error(`  ✗ FAIL: ${label}`); failed++; }
 }
 
-console.log("\n=== TopSectionBar — 22 قسمًا فعليًا بلا تكرار وبلا الرئيسية ===");
+console.log("\n=== TopSectionBar — أقسام أولوية بلا تكرار وبلا الرئيسية ===");
 {
-  assert(SECTION_TABS.length === 22, `22 قسمًا بالضبط (الفعلي: ${SECTION_TABS.length})`);
+  assert(SECTION_TABS.length === 12, `12 قسم أولوية (الفعلي: ${SECTION_TABS.length})`);
   const hrefs = SECTION_TABS.map((t) => t.href);
   assert(new Set(hrefs).size === hrefs.length, "لا تكرار في مسارات الأقسام (كل href فريد)");
   assert(!hrefs.includes("/"), "«الرئيسية» غير ظاهرة داخل الشريط (تبقى ضمن التنقل الرئيسي فقط)");
   assert(!hrefs.includes("/features-in-progress"), "«مميزات قيد التطوير» غير ظاهرة داخل الشريط");
-  const priorityFirst5 = ["/tawhid", "/seerah", "/fiqh", "/hadith", "/quran-hub"];
+  const priorityFirst5 = ["/tawhid", "/quran-hub", "/hadith", "/fiqh", "/seerah"];
   assert(hrefs.slice(0, 5).join(",") === priorityFirst5.join(","),
-    `أول 5 أقسام هي أولوية العقيدة/السيرة/الفقه/الحديث/القرآن بالترتيب (الفعلي: ${hrefs.slice(0, 5).join(",")})`);
-  assert(hrefs.includes("/kids"), "قسم الأطفال ضمن الشريط");
+    `أول 5 أقسام: عقيدة/قرآن/حديث/فقه/سيرة (الفعلي: ${hrefs.slice(0, 5).join(",")})`);
+  assert(hrefs.includes("/prophets"), "قصص الأنبياء ضمن الشريط");
+  assert(hrefs.includes("/scholars") && hrefs.includes("/library"), "العلماء والكتب ضمن الشريط");
+  assert(!hrefs.includes("/kids"), "قسم الأطفال خارج الشريط (في المزيد)");
   for (const href of hrefs) {
     assert(href.startsWith("/") && href.length > 1, `مسار "${href}" يبدو مسارًا فعليًا (لا فارغ ولا وهمي)`);
   }
@@ -46,19 +48,15 @@ console.log("\n=== TopSectionBar — 22 قسمًا فعليًا بلا تكرا�
 console.log("\n=== isTabActive — فتح القسم الصحيح من الشريط ===");
 {
   assert(isTabActive("/quran-hub", "/quran-hub") === true, "تبويب القرآن نشط في مساره تمامًا");
-  assert(isTabActive("/quran-hub/tajweed", "/quran-hub") === true, "تبويب القرآن يبقى نشطًا في مسار فرعي (لا يشترط تطابقًا حرفيًا)");
-  assert(isTabActive("/quran-hubx", "/quran-hub") === false, "لا التباس مع مسار مشابه بالاسم لكن مختلف فعليًا (quran-hubx)");
-  assert(isTabActive("/kids", "/kids") === true, "تبويب الأطفال نشط في مساره");
-  assert(isTabActive("/kids", "/quran-hub") === false, "تبويب القرآن غير نشط وأنت في قسم الأطفال");
-  assert(isTabActive("/learn/lesson-1", "/learn") === true, "تبويب تعلّم نشط في مسار درس فرعي");
-  assert(isTabActive("/mushaf/page/12", "/mushaf/page") === true, "تبويب المصحف بنظام الصفحات نشط في مسار فرعي مرقّم");
-  assert(isTabActive("/mushaf", "/mushaf/page") === false, "لا التباس بين /mushaf و/mushaf/page رغم اشتراك البادئة");
+  assert(isTabActive("/quran-hub/tajweed", "/quran-hub") === true, "تبويب القرآن يبقى نشطًا في مسار فرعي");
+  assert(isTabActive("/quran/tajweed", "/quran-hub") === true, "تبويب القرآن نشط لمسارات /quran/*");
+  assert(isTabActive("/ulum-quran", "/quran-hub") === true, "تبويب القرآن نشط لعلوم القرآن");
+  assert(isTabActive("/quran-hubx", "/quran-hub") === false, "لا التباس مع مسار مشابه بالاسم");
+  assert(isTabActive("/kids", "/quran-hub") === false, "تبويب القرآن غير نشط في قسم الأطفال");
+  assert(isTabActive("/learn/lesson-1", "/learn") === true, "تبويب الأدوات نشط في مسار فرعي");
+  assert(isTabActive("/scholars/ibn-taymiyya", "/scholars") === true, "تبويب العلماء نشط في ملف عالم");
 
-  // لا قسمان نشطان معًا لنفس location — يمنع التباسًا بصريًا في الشريط.
-  // (مسارا /mushaf و/mushaf/page مستثنيان هنا عمدًا: الشريط كلّه يختفي
-  // فور دخول أي مسار يبدأ بـ/mushaf — قارئ المصحف الغامر له تنقّله
-  // الخاص — فلا يُطرح سؤال "كم تبويبًا نشطًا" هناك أصلًا.)
-  const sampleLocations = ["/quran-hub", "/kids", "/kids/x", "/other-page", "/", "/quran/tajweed", "/updates"];
+  const sampleLocations = ["/quran-hub", "/kids", "/other-page", "/", "/quran/tajweed", "/updates", "/fiqh", "/library"];
   for (const loc of sampleLocations) {
     const activeCount = SECTION_TABS.filter((t) => isTabActive(loc, t.href)).length;
     assert(activeCount <= 1, `المسار "${loc}" يُفعِّل تبويبًا واحدًا كحد أقصى (الفعلي: ${activeCount})`);

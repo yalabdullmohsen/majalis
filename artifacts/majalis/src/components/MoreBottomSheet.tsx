@@ -65,7 +65,7 @@ const SHEET_SECTIONS = [
   /* ── الفقه والأحكام ── */
   { group: "الفقه والأحكام", items: [
     { href: "/fiqh",               label: "الفقه الإسلامي",     Icon: BookText },
-    { href: "/qa",                 label: "الأسئلة والأجوبة",   Icon: HelpCircle },
+    { href: "/qa",                 label: "الأسئلة العلمية",   Icon: HelpCircle },
     { href: "/rulings",            label: "الأحكام الشرعية",    Icon: Gavel },
     { href: "/fiqh-council",       label: "المجمع الفقهي",      Icon: Users },
     { href: "/madhahib",           label: "المذاهب الأربعة",    Icon: Scale },
@@ -128,7 +128,7 @@ const SHEET_SECTIONS = [
   { group: "التعلّم والأدوات", items: [
     { href: "/learn",                label: "أبواب العلم",         Icon: Layers },
     { href: "/start-here",           label: "ابدأ من هنا",         Icon: Waypoints },
-    { href: "/quiz",                 label: "المسابقة التعليمية",  Icon: Zap },
+    { href: "/quiz",                 label: "اختبر معلوماتك — لعبة سؤال وجواب",  Icon: Zap },
     { href: "/flashcards",           label: "بطاقات المراجعة",     Icon: CreditCard },
     { href: "/assistant",            label: "المساعد الذكي",       Icon: Bot },
     { href: "/mind-map",             label: "الخرائط الذهنية",    Icon: Map },
