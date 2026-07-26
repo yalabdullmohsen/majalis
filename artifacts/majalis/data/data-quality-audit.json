@@ -1,5 +1,5 @@
 {
-  "at": "2026-07-26T07:34:33.008Z",
+  "at": "2026-07-26T07:34:40.255Z",
   "counts": {
     "qa": 400,
     "lessons": 0,
@@ -12,18 +12,11 @@
     "qa": [],
     "lessons": [],
     "sheikhs": [],
-    "quiz": [
-      {
-        "type": "duplicate_quiz_question",
-        "id": "demo-quiz-1184",
-        "otherId": "demo-quiz-888",
-        "key": "ما الحديث الموضوع؟"
-      }
-    ],
+    "quiz": [],
     "fawaid": [],
     "adhkar": []
   },
   "summary": {
-    "totalIssues": 1
+    "totalIssues": 0
   }
 }
