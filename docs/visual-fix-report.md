@@ -112,3 +112,27 @@ LearnHub، FiqhCouncilList، AnnualCourses، Vault، HadithPage catch→[] — �
 
 ### حالة البناء
 نجاح
+
+---
+
+## المرحلة 5 — صفحات شبه فارغة
+
+**الفرع:** `cursor/visual-fix-phase5-thin-pages-1f54`  
+**PR:** (يُحدَّث)
+
+### طبيعية — لم تُعدَّل
+`/qibla`، `/tasbih`، `/login`، `/search`، `/prayer-countdown`، `/adhan-settings`، `/prayer-times`
+
+### تقنية — عُولجت
+- إثراء `RICH_BODY` في `generate-seo.mjs` لـ `/quiz`، `/raqaiq`، `/daily-wird`، `/learning/paths` بنصوص موجودة أصلاً في الصفحات (لا اختراع).
+- `/learning/paths`: ErrorState + retry عند فشل الجلب.
+
+### قانونية — يحتاج كتابة بشرية (لم تُؤلَّف)
+| المسار | ملاحظة |
+|---|---|
+| `/privacy` | يوجد نص حالي؛ مراجعة بشرية للتغطية القانونية الكاملة |
+| `/terms` | كذلك |
+| `/contact` | كذلك |
+
+### حالة البناء
+(تُحدَّث)
