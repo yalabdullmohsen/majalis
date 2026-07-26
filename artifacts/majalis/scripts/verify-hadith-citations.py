@@ -82,9 +82,20 @@ BOOKS = {
     "itqan": {"id": "11728", "name": "الإتقان في علوم القرآن للسيوطي",
               "edition": "ت محمد أبو الفضل إبراهيم، الهيئة المصرية العامة للكتاب، ١٣٩٤هـ/١٩٧٤م",
               "paged": True},
+    # كتاب قواعد فقهيّة (ج-٢٣٧): **مجلَّد واحد** لا أجزاء ⇒ عنوان صفحته «ص57 - كتاب…»
+    # بلا «ج»، فموضعُه «صN» وحدها (تحرسه `page_ref` بنمط `PAGE_ONLY`).
+    "ashbah": {"id": "21719", "name": "الأشباه والنظائر للسيوطي",
+               "edition": "دار الكتب العلمية، ط١ ١٤٠٣هـ/١٩٨٣م", "paged": True},
+    # مسند أحمد (ج-٢٣٧): **حديثيّ مُرقَّم** لا `paged` — وترقيم ط الرسالة هو المتعارَف
+    # عليه في الاستشهاد بالمسند. ويُعلَّم بـ`parenfn` لأن هذه الطبعة تُدرج علامة إحالة
+    # الحاشية **بين قوسين داخل المتن** («فَاجْمَعْهُ (٢) .») فتقطع كل مقابلة حرفيّة تمرّ بها.
+    "musnad": {"id": "25794", "name": "مسند أحمد",
+               "edition": "ت شعيب الأرنؤوط وعادل مرشد وآخرين، مؤسسة الرسالة، ط١ ١٤٢١هـ/٢٠٠١م",
+               "parenfn": True},
 }
 
 PAGED_IDS = {info["id"] for info in BOOKS.values() if info.get("paged")}
+PARENFN_IDS = {info["id"] for info in BOOKS.values() if info.get("parenfn")}
 
 BASE = "https://shamela.ws"
 CACHE = os.environ.get("SHAMELA_CACHE", "/tmp/shamela-cache")
@@ -196,11 +207,24 @@ NUM_AT_START = re.compile(r"(?<![٠-٩\d])([٠-٩]{1,5})\s*-\s")
 # الحاشية هناك مسبوقٌ بفراغ، فلا تمسّه هذه القاعدة.
 FOOTNOTE_MARK = re.compile(r"(?<=[ء-ٟ])[٠-٩]+")
 
+# 🔑 كتلة حاشية المحقِّق في صفحة الشاملة: `<p class="hamesh">` بعد `<hr>` في آخر نصّ
+# الصفحة، وفيها تخريجُه وتعليقُه ونقولُه عن كتب أخرى. وهي **ليست من الكتاب**، فلا
+# يصحّ أن تُقابَل بها المقتبسات ولا أن يُنسب لفظُها إلى المصنِّف — وهو المزلق نفسه
+# المقيَّد في ج-٢٣٤ (ترتيب الحاشية) وج-٢٣٣ (اسم مطبوع في الحاشية لا في المتن).
+HAMESH = re.compile(r"<p[^>]*class=\"[^\"]*hamesh[^\"]*\".*?</p>", re.S)
 
-def page_text(book_id: str, page: int) -> str:
+# علامة إحالة الحاشية **بين قوسين** في ط الرسالة للمسند: «فَاجْمَعْهُ (٢) .» — من صنع
+# المحقِّق لا من المتن، وتقطع المقابلة الحرفيّة. تُحذف في الكتب المُعلَّمة بـ`parenfn`
+# وحدها، لئلّا تُمسّ أرقام مسلم المزدوجة «٥٢ - (٩٤٥)» وهي **رقم الحديث** لا حاشية.
+PAREN_FOOTNOTE = re.compile(r"\(\s*[٠-٩]{1,4}\s*\)")
+
+
+def page_text(book_id: str, page: int, with_hamesh: bool = False) -> str:
     html = _fetch("%s/book/%s/%d" % (BASE, book_id, page))
     m = PAGE_NASS.search(html)
     seg = m.group(1) if m else ""
+    if not with_hamesh:
+        seg = HAMESH.sub(" ", seg)
     seg = re.sub(r"<span class=\"hadith-num\">", " ", seg)
     seg = re.sub(r"<[^>]+>", " ", seg)
     seg = seg.replace("&nbsp;", " ")
@@ -208,7 +232,31 @@ def page_text(book_id: str, page: int) -> str:
     if book_id in PAGED_IDS:
         # لا يُطبَّق على الكتب المُرقَّمة بالحديث: أرقامها فيها **دلالة** لا زخرفة.
         seg = FOOTNOTE_MARK.sub("", seg)
+    if book_id in PARENFN_IDS:
+        seg = re.sub(r"\s+", " ", PAREN_FOOTNOTE.sub(" ", seg))
     return seg
+
+
+def page_footnotes(book_id: str, page: int):
+    """حواشي المحقِّق في الصفحة مرقَّمةً: {رقم الحاشية: نصّها}.
+
+    تُقرأ **منفصلةً عن المتن** لا مختلطةً به: فحكم المحقِّق على الإسناد («إسناده
+    ضعيف لضعف ابن لهيعة») قولُه هو، يُنسب إليه بلفظه ولا يُنسب إلى الكتاب؛ ورقمُها
+    هو رقم العلامة الملتصقة بموضعها من المتن بالترتيب.
+    """
+    html = _fetch("%s/book/%s/%d" % (BASE, book_id, page))
+    m = PAGE_NASS.search(html)
+    if not m:
+        return {}
+    out = {}
+    for block in HAMESH.findall(m.group(1)):
+        txt = re.sub(r"<br\s*/?>", " ", block)
+        txt = re.sub(r"<[^>]+>", " ", txt).replace("&nbsp;", " ")
+        txt = re.sub(r"\s+", " ", txt).strip()
+        parts = re.split(r"\(\s*([٠-٩]{1,3})\s*\)\s", " " + txt)
+        for i in range(1, len(parts) - 1, 2):
+            out[to_int(parts[i])] = parts[i + 1].strip()
+    return out
 
 
 PAREN_NUM = re.compile(r"^\s*\(([٠-٩]{1,5})\)")
@@ -253,6 +301,8 @@ def hadiths_on_page(book_id: str, page: int):
 
 TITLE = re.compile(r"<title>\s*(.*?)\s*</title>", re.S)
 JUZ_PAGE = re.compile(r"ج\s*(\d+)\s*-\s*ص\s*(\d+)")
+# كتابٌ في **مجلَّد واحد**: عنوان صفحته «ص57 - كتاب الأشباه والنظائر…» بلا «ج».
+PAGE_ONLY = re.compile(r"^\s*ص\s*(\d+)\s*-")
 
 
 def page_ref(book_id: str, page: int):
@@ -268,6 +318,9 @@ def page_ref(book_id: str, page: int):
     parts = [p.strip() for p in title.split(" - ")]
     chapter = parts[-2] if len(parts) >= 3 else ""
     if not jp:
+        po = PAGE_ONLY.search(title)
+        if po:  # مجلَّد واحد: لا جزء، والموضع «صN» وحدها
+            return None, int(po.group(1)), chapter
         return None, None, chapter
     return int(jp.group(1)), int(jp.group(2)), chapter
 
@@ -395,8 +448,13 @@ def report(phrase: str, book: str, verbose: bool = False):
     }
     if info.get("paged"):
         juz, printed, chapter = page_ref(info["id"], best["page"])
-        out.update({"juz": juz, "printed_page": printed, "chapter": chapter,
-                    "ref": "ج%s/ص%s" % (juz, printed) if juz else None})
+        if juz:
+            ref = "ج%s/ص%s" % (juz, printed)
+        elif printed:
+            ref = "ص%s" % printed  # كتاب مجلَّد واحد
+        else:
+            ref = None
+        out.update({"juz": juz, "printed_page": printed, "chapter": chapter, "ref": ref})
     return out
 
 
@@ -464,6 +522,15 @@ SELF_TESTS = [
     ("طلب العلم فريضة على كل مسلم", "ibnmajah", 224, "OK"),
     # وضبط سالب لهذه الطبعات: لفظ مختلَق بصياغة قريبة يجب ألّا يُقبَل
     ("الماء طهور لا ينجسه أحد", "abudawud", None, "NOT_FOUND"),
+    # ── مسند أحمد ط الرسالة (ج-٢٣٧): يجب أن تُرجع أرقامها المتعارَف عليها ──
+    ("لا طاعة لمخلوق في معصية الله عز وجل", "musnad", 1095, "OK"),
+    ("إن الله يحب أن تؤتى رخصه كما يكره أن تؤتى معصيته", "musnad", 5866, "OK"),
+    # لفظُ حديث المرأة كما في المسند لا كما اشتهر («دخلت من أي أبواب الجنة شاءت»)
+    ("إذا صلت المرأة خمسها، وصامت شهرها، وحفظت فرجها، وأطاعت زوجها قيل لها: ادخلي الجنة من أي أبواب الجنة شئت",
+     "musnad", 1661, "OK"),
+    # 🔑 ضبط سالب يحرس **فصل حاشية المحقِّق عن المتن**: «إسناد ضعيف لضعف ابن لهيعة»
+    # قولُ الأرنؤوط في هامش ص١٢٠٤ لا لفظٌ في المسند، فلا يجوز أن تُطابقه المقابلة.
+    ("وهذا إسناد ضعيف لضعف ابن لهيعة، وباقي رجاله ثقات رجال الصحيح", "musnad", None, "NOT_FOUND"),
 ]
 
 # ── ضبط الكتاب المُرقَّم بالصفحة (ج-٢٣٣): (اللفظ، الكتاب، «جX/صY» المنتظر، الدرجة الدنيا) ──
@@ -497,6 +564,12 @@ PAGED_TESTS = [
     # 🔑 ضبط سالب يحرس عيب هذه الدورة: «تدرّج تحريم الخمر» ليس من النسخ عند السيوطي —
     # ولا ذكر للخمر ولا للميسر ولا للسكارى في النوع السابع والأربعين كلِّه (ج٣/ص٦٦-٨٢).
     ("ومن المائدة قوله تعالى إنما الخمر والميسر منسوخة بآية التحريم", "itqan", None, "NOT_FOUND"),
+    # ── الأشباه والنظائر (ج-٢٣٧): كتابٌ في **مجلَّد واحد** ⇒ الموضع «صN» بلا جزء ──
+    ("وضم بعض الفضلاء إلى هذه قاعدة خامسة وهي الأمور بمقاصدها", "ashbah", "ص8", "OK"),
+    ("القاعدة الأولى الاجتهاد لا ينقض بالاجتهاد الأصل في ذلك إجماع الصحابة", "ashbah", "ص101", "OK"),
+    ("قاعدة الأصل براءة الذمة ولذلك لم يقبل في شغل الذمة شاهد واحد", "ashbah", "ص53", "OK"),
+    # ضبط سالب: «قاعدة سادسة» لفظٌ مختلَق يجب ألّا يُقبَل مطابقةً
+    ("وضم بعض الفضلاء إلى هذه قاعدة سادسة وهي الأمور بمقاصدها", "ashbah", None, "NOT_FOUND"),
 ]
 
 
@@ -514,6 +587,9 @@ ABSENT_TESTS = [
     ("لعن الله الراشي والمرتشي", "abudawud", True, None),
     # وضبط موجَب في الطبعات الجديدة: لفظ موجود فعلًا يجب ألّا يُحكم بغيابه.
     ("أعطوا الأجير أجره قبل أن يجف عرقه", "ibnmajah", False, 2443),
+    # ج-٢٣٧: «لا طاعة لمخلوق في معصية الخالق» لفظٌ شائع لا وجود له في المسند؛
+    # ولفظه فيه «لَا طَاعَةَ لِمَخْلُوقٍ فِي مَعْصِيَةِ اللهِ عَزَّ وَجَلَّ» (١٠٩٥).
+    ("لا طاعة لمخلوق في معصية الخالق", "musnad", True, None),
 ]
 
 
