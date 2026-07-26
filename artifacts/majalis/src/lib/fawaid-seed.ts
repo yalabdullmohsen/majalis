@@ -2451,7 +2451,7 @@ export const SEED_FAWAID = [
     id: "seed-fawaid-323",
     text: "من لم يشكر الناس لم يشكر الله — الشكر درجات: شكر القلب، وشكر اللسان، وشكر الجوارح بالعمل.",
     category: "الأخلاق",
-    source: "رواه أحمد والترمذي — صحيح",
+    source: "أبو داود ٤٨١١ وأحمد والترمذي — صححه الألباني",
     author_name: null,
     status: "approved",
   },
