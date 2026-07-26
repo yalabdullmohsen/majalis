@@ -6,6 +6,7 @@ import {
   isFridayBannerDismissed,
   dismissFridayBanner,
 } from "@/lib/friday-prayer";
+import "@/styles/components/friday-banner.css";
 
 export function FridayBanner() {
   const [enabled, setEnabled] = useState(() => loadAdhanPrefs().fridayBannerEnabled);

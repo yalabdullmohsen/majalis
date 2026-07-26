@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Wifi, WifiOff } from "lucide-react";
+import "@/styles/components/language-offline.css";
 
 type Status = "online" | "offline" | "back-online";
 

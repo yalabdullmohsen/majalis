@@ -8,6 +8,7 @@ import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { fetchLearningCalendar, subscribeLearningEvent } from "@/lib/digital-learning-service";
 import { applyPageSeo } from "@/lib/seo";
+import "@/styles/pages/learning-quiz.css";
 
 type CalendarEvent = {
   id: string;
