@@ -18408,8 +18408,8 @@ body.has-assistant-fab .app-main {
   text-shadow: 0 2px 20px rgba(0,0,0,0.25) !important;
 }
 
-/* ── أزرار الرئيسية — تحسين الأزرار الثانوية الشفافة ── */
-.hpv4-hero a[style*="rgba(255,255,255,0.12)"] {
+/* ── أزرار الرئيسية — تحسين الشريحة الشفافة (بعد استخراج الأنماط المضمّنة) ── */
+.hpv4-hero a.hpv4-prayer-chip {
   backdrop-filter: blur(4px);
   -webkit-backdrop-filter: blur(4px);
 }

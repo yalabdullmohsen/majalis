@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useState } from "react";
+import { lazy, Suspense, useEffect, useState, type CSSProperties } from "react";
 import contentCounts from "@/data/content-counts.json";
 import { applyPageSeo } from "@/lib/seo";
 import { Link } from "wouter";
@@ -35,6 +35,7 @@ import {
   RotateCw, Scale, Scroll, Sparkles, Star, Target, Upload, Users, Wrench,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import "@/styles/pages/home.css";
 
 // الودجتات الاختيارية لا تدخل حزمة الرئيسية للمستخدم الجديد. تُحمَّل فقط
 // إذا فعّلها المستخدم من شاشة التخصيص، مع بقاء الوظيفة والحالة المحفوظة.
@@ -190,7 +191,7 @@ const FEATURE_CATS: FeatureCat[] = [
 function SafeHomeSection({ name, children }: { name: string; children: React.ReactNode }) {
   return (
     <SectionErrorBoundary name={name}>
-      <Suspense fallback={<div className="skeleton-base" style={{ minHeight: 96 }} aria-label={`تحميل ${name}`} />}>
+      <Suspense fallback={<div className="skeleton-base hp-skel" aria-label={`تحميل ${name}`} />}>
         {children}
       </Suspense>
     </SectionErrorBoundary>
@@ -298,49 +299,28 @@ function StartHereSection() {
 
 function ExplorePlatformSection() {
   return (
-    <section aria-labelledby="features-heading" style={{ marginTop: "2rem" }}>
-      <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", marginBottom: "1.1rem" }}>
-        {/* أيقونة هندسية للعنوان */}
+    <section aria-labelledby="features-heading" className="hp-explore">
+      <div className="hp-explore__head">
         <svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true">
           <polygon points="11,1 13.5,8 21,8 15,13 17.5,20 11,16 4.5,20 7,13 1,8 8.5,8" fill="none" stroke="#143F35" strokeWidth="1.2"/>
           <circle cx="11" cy="11" r="3.5" fill="none" stroke="#143F35" strokeWidth="0.8"/>
         </svg>
-        <h2 id="features-heading" style={{ fontSize: "1.1rem", fontWeight: 800, color: "#1a1a1a", margin: 0 }}>
+        <h2 id="features-heading" className="hp-explore__title">
           استكشف المنصة
         </h2>
       </div>
 
-      {/* بطاقات بارزة */}
-      <div style={{
-        display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))", gap: "0.8rem",
-        marginBottom: "2.25rem",
-      }}>
+      <div className="hp-explore__featured">
         {FEATURED.map(({ href, Icon, title, desc, cta }) => (
-          <Link key={href} href={href} aria-label={title} style={{
-            display: "flex", flexDirection: "column", gap: "0.65rem",
-            padding: "1.2rem 1.1rem", borderRadius: "1.1rem", textDecoration: "none",
-            background: "linear-gradient(145deg, #112a1e 0%, #1a3d2b 40%, #143F35 80%, #143F35 100%)",
-            color: "#fff",
-            boxShadow: "0 4px 16px rgba(15,50,30,0.28), inset 0 1px 0 rgba(255,255,255,0.1)",
-            border: "1px solid rgba(255,255,255,0.12)",
-            position: "relative", overflow: "hidden",
-          }}>
-            {/* زخرفة هندسية في الخلفية */}
-            <svg aria-hidden="true" style={{
-              position: "absolute", top: "-10px", left: "-10px", opacity: 0.07, pointerEvents: "none",
-            }} width="80" height="80" viewBox="0 0 80 80">
+          <Link key={href} href={href} aria-label={title} className="hp-featured-card">
+            <svg aria-hidden="true" className="hp-featured-card__deco" width="80" height="80" viewBox="0 0 80 80">
               <polygon points="40,5 55,25 75,20 65,40 75,60 55,55 40,75 25,55 5,60 15,40 5,20 25,25" fill="none" stroke="white" strokeWidth="1"/>
               <circle cx="40" cy="40" r="15" fill="none" stroke="white" strokeWidth="0.6"/>
             </svg>
-            <Icon size={22} strokeWidth={1.5} style={{ opacity: 0.92, position: "relative" }} />
-            <strong style={{ fontSize: "0.97rem", fontWeight: 800, position: "relative", lineHeight: 1.3 }}>{title}</strong>
-            <p style={{ fontSize: "0.79rem", opacity: 0.75, lineHeight: 1.6, margin: 0, position: "relative" }}>{desc}</p>
-            <span style={{
-              fontSize: "0.76rem", fontWeight: 700, marginTop: "auto",
-              display: "inline-flex", alignItems: "center", gap: "0.3rem",
-              color: "rgba(210,240,225,0.95)", position: "relative",
-              borderTop: "1px solid rgba(255,255,255,0.1)", paddingTop: "0.5rem",
-            }}>{cta} ←</span>
+            <Icon size={22} strokeWidth={1.5} className="hp-featured-card__icon" />
+            <strong className="hp-featured-card__title">{title}</strong>
+            <p className="hp-featured-card__desc">{desc}</p>
+            <span className="hp-featured-card__cta">{cta} ←</span>
           </Link>
         ))}
       </div>
@@ -353,61 +333,30 @@ function ExplorePlatformSection() {
         const preview = cat.items.slice(0, PREVIEW_COUNT);
         const remaining = cat.items.length - preview.length;
         return (
-          <div key={cat.id} style={{ marginBottom: "2rem" }}>
-            <div style={{
-              display: "flex", alignItems: "center", gap: "0.6rem",
-              marginBottom: "0.85rem", paddingBottom: "0.7rem",
-              borderBottom: "1.5px solid #ddeee5",
-            }}>
-              {/* زخرفة هندسية بدل المربع */}
-              <svg aria-hidden="true" width="28" height="28" viewBox="0 0 28 28" style={{ flexShrink: 0 }}>
+          <div key={cat.id} className="hp-explore-cat">
+            <div className="hp-explore-cat__head">
+              <svg aria-hidden="true" width="28" height="28" viewBox="0 0 28 28" className="hp-explore-cat__ornament">
                 <polygon points="14,2 20,9 27,9 22,16 25,24 14,20 3,24 6,16 1,9 8,9" fill="#143F35"/>
                 <polygon points="14,6 18,11 23,11 19,15.5 21,21 14,18 7,21 9,15.5 5,11 10,11" fill="#143F35" opacity="0.6"/>
                 <circle cx="14" cy="14" r="3" fill="#FAFAF8"/>
               </svg>
-              <h3 style={{ fontSize: "0.98rem", fontWeight: 800, color: "#143F35", margin: 0 }}>{cat.label}</h3>
-              <span style={{
-                marginRight: "auto", fontSize: "0.68rem", color: "#143F35", fontWeight: 700,
-                background: "#e8f4ed", padding: "0.15rem 0.6rem", borderRadius: "999px",
-                border: "1px solid #c8e6d5",
-              }}>{cat.items.length} قسم</span>
+              <h3 className="hp-explore-cat__title">{cat.label}</h3>
+              <span className="hp-explore-cat__count">{cat.items.length} قسم</span>
             </div>
-            <div style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fill, minmax(165px, 1fr))",
-              gap: "0.5rem",
-            }}>
+            <div className="hp-explore-cat__grid">
               {preview.map(({ href, Icon: ItemIcon, title, desc }) => (
-                <Link key={href} href={href} style={{
-                  display: "flex", alignItems: "flex-start", gap: "0.6rem",
-                  padding: "0.75rem 0.8rem", borderRadius: "0.8rem",
-                  textDecoration: "none", background: "#fafcfb",
-                  border: "1px solid #e2ede8",
-                  boxShadow: "0 1px 3px rgba(0,0,0,0.04)",
-                }}>
-                  <span style={{
-                    background: "linear-gradient(135deg,#143F35,#143F35)", color: "#FAFAF8",
-                    padding: "0.38rem", borderRadius: "0.4rem",
-                    display: "flex", flexShrink: 0, marginTop: "0.05rem",
-                    boxShadow: "0 1px 3px rgba(15,50,30,0.2)",
-                  }}>
+                <Link key={href} href={href} className="hp-explore-item">
+                  <span className="hp-explore-item__icon">
                     <ItemIcon size={14} strokeWidth={2} />
                   </span>
-                  <div style={{ minWidth: 0 }}>
-                    <strong style={{ display: "block", fontSize: "0.81rem", fontWeight: 700, color: "#1a1a1a", lineHeight: 1.35 }}>{title}</strong>
-                    <span style={{ fontSize: "0.7rem", color: "#666", lineHeight: 1.45, display: "block", marginTop: "0.1rem" }}>{desc}</span>
+                  <div className="hp-explore-item__body">
+                    <strong className="hp-explore-item__title">{title}</strong>
+                    <span className="hp-explore-item__desc">{desc}</span>
                   </div>
                 </Link>
               ))}
               {remaining > 0 && (
-                <Link href="/sitemap" style={{
-                  display: "flex", alignItems: "center", justifyContent: "center", gap: "0.4rem",
-                  padding: "0.75rem 0.8rem", borderRadius: "0.8rem",
-                  textDecoration: "none", background: "#eef6f2",
-                  border: "1.5px dashed #b9dbcb",
-                  color: "#143F35", fontSize: "0.78rem", fontWeight: 700,
-                  textAlign: "center",
-                }}>
+                <Link href="/sitemap" className="hp-explore-more">
                   +{remaining} أقسام أخرى ←
                 </Link>
               )}
@@ -416,14 +365,8 @@ function ExplorePlatformSection() {
         );
       })}
 
-      {/* رابط ختامي واحد لدليل الأقسام الكامل (أشمل من القائمة أعلاه) */}
-      <div style={{ textAlign: "center", marginTop: "0.5rem" }}>
-        <Link href="/sitemap" style={{
-          display: "inline-flex", alignItems: "center", gap: "0.4rem",
-          padding: "0.6rem 1.4rem", borderRadius: "0.7rem",
-          textDecoration: "none", background: "#143F35", color: "#FAFAF8",
-          fontSize: "0.83rem", fontWeight: 800,
-        }}>
+      <div className="hp-explore__footer">
+        <Link href="/sitemap" className="hp-explore__sitemap">
           تصفّح كل أقسام المنصة ←
         </Link>
       </div>
@@ -529,30 +472,12 @@ export default function HomePage() {
       )}
 
       {/* ══════════════════ Hero الموحّد ══════════════════ */}
-      <section
-        className="hpv4-hero"
-        aria-label="الصفحة الرئيسية"
-        style={{
-          /* تدرّج هادئ محدود بدرجتين فقط من لوحة الهوية v3 (لا تدرّج قوي متعدد المراحل) */
-          background: "linear-gradient(135deg, #143F35 0%, #226A56 100%)",
-          padding: "clamp(1.5rem,4vw,2rem) 1rem clamp(1.25rem,3vw,1.75rem)",
-          position: "relative",
-          overflow: "hidden",
-        }}
-      >
-        {/* خط عاجي علوي مُتدرّج */}
-        <div aria-hidden="true" style={{
-          position: "absolute", top: 0, left: 0, right: 0, height: "2px",
-          background: "linear-gradient(90deg, transparent 0%, rgba(250,248,242,0.15) 15%, rgba(250,248,242,0.65) 50%, rgba(250,248,242,0.15) 85%, transparent 100%)",
-        }} />
+      <section className="hpv4-hero" aria-label="الصفحة الرئيسية">
+        <div aria-hidden="true" className="hpv4-hero__edge-line" />
 
-        {/* نمط هندسي إسلامي — نجمة 12 رأساً */}
-        <div className="home-hero-pattern" aria-hidden="true" style={{ pointerEvents: "none" }} />
+        <div className="home-hero-pattern" aria-hidden="true" />
 
-        {/* زخرفة الزاوية اليمنى — نجمة 8 أطراف */}
-        <svg aria-hidden="true" width="90" height="90" viewBox="0 0 90 90" style={{
-          position: "absolute", top: 0, right: 0, opacity: 0.18, pointerEvents: "none",
-        }}>
+        <svg aria-hidden="true" width="90" height="90" viewBox="0 0 90 90" className="hpv4-hero__corner hpv4-hero__corner--end">
           <g transform="translate(0,0)">
             <polygon points="45,5 55,25 75,15 65,35 85,45 65,55 75,75 55,65 45,85 35,65 15,75 25,55 5,45 25,35 15,15 35,25" fill="none" stroke="white" strokeWidth="0.8"/>
             <polygon points="45,20 52,35 67,30 57,42 68,55 52,50 45,65 38,50 22,55 33,42 23,30 38,35" fill="none" stroke="white" strokeWidth="0.5"/>
@@ -560,11 +485,7 @@ export default function HomePage() {
           </g>
         </svg>
 
-        {/* زخرفة الزاوية اليسرى — نجمة 6 أطراف */}
-        <svg aria-hidden="true" width="90" height="90" viewBox="0 0 90 90" style={{
-          position: "absolute", top: 0, left: 0, opacity: 0.18, pointerEvents: "none",
-          transform: "scaleX(-1)",
-        }}>
+        <svg aria-hidden="true" width="90" height="90" viewBox="0 0 90 90" className="hpv4-hero__corner hpv4-hero__corner--start">
           <g transform="translate(0,0)">
             <polygon points="45,5 55,25 75,15 65,35 85,45 65,55 75,75 55,65 45,85 35,65 15,75 25,55 5,45 25,35 15,15 35,25" fill="none" stroke="white" strokeWidth="0.8"/>
             <polygon points="45,20 52,35 67,30 57,42 68,55 52,50 45,65 38,50 22,55 33,42 23,30 38,35" fill="none" stroke="white" strokeWidth="0.5"/>
@@ -572,83 +493,38 @@ export default function HomePage() {
           </g>
         </svg>
 
-        <div style={{ maxWidth: 640, margin: "0 auto", position: "relative", textAlign: "center" }}>
+        <div className="hpv4-hero__inner">
 
           <h1 className="hpv4-vision-title">ريادة المعرفة الإسلامية الرقمية</h1>
 
-          {/* ── التحية اليومية الديناميكية ── */}
-          <div style={{ marginBottom: "1.1rem" }}>
-            <p style={{
-              color: "rgba(250,248,242,0.92)",
-              fontSize: "clamp(0.88rem, 2.4vw, 1.05rem)",
-              fontWeight: 700,
-              letterSpacing: "normal",
-              lineHeight: 1.5,
-              margin: "0 0 0.35rem",
-            }}>
+          <div className="hpv4-hero__greet">
+            <p className="hpv4-hero__greet-main">
               {dailyCtx.greeting}
             </p>
             {dailyCtx.subGreeting && (
-              <p style={{
-                color: "rgba(250,248,242,0.55)",
-                fontSize: "clamp(0.72rem, 1.9vw, 0.82rem)",
-                margin: 0,
-              }}>
+              <p className="hpv4-hero__greet-sub">
                 {dailyCtx.subGreeting}
               </p>
             )}
             {dailyCtx.event && (
-              <div style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "0.4rem",
-                marginTop: "0.5rem",
-                background: `${dailyCtx.accentColor}33`,
-                border: `1px solid ${dailyCtx.accentColor}66`,
-                color: "#FAFAF8",
-                padding: "0.22rem 0.9rem",
-                borderRadius: "999px",
-                fontSize: "0.75rem",
-                fontWeight: 700,
-              }}>
+              <div
+                className="hpv4-event-chip"
+                style={{ "--hp-event-accent": dailyCtx.accentColor } as CSSProperties}
+              >
                 ✦ {dailyCtx.event}
               </div>
             )}
             {/* شريط التاريخ والصلاة القادمة — بديل الشعار الكبير واسم التطبيق
                 (يبقى الشعار في شاشة البداية وصفحة "عن التطبيق" والأيقونة فقط) */}
-            <div style={{
-              display: "flex", flexWrap: "wrap", alignItems: "center", justifyContent: "center",
-              gap: "0.4rem", marginTop: "0.45rem",
-            }}>
-              <span style={{
-                display: "inline-flex", alignItems: "center", gap: "0.35rem",
-                background: "rgba(255,255,255,0.1)",
-                border: "1px solid rgba(255,255,255,0.22)",
-                color: "rgba(250,248,242,0.75)",
-                padding: "0.18rem 0.75rem",
-                borderRadius: "999px",
-                fontSize: "0.8rem",
-                fontWeight: 600,
-                letterSpacing: "normal",
-              }}>
+            <div className="hpv4-meta-row">
+              <span className="hpv4-meta-chip">
                 <svg width="11" height="11" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
                   <circle cx="9" cy="9" r="7"/><path d="M9 2C6.5 4 5 6.3 5 9s1.5 5 4 7"/><path d="M9 2c2.5 2 4 4.3 4 7s-1.5 5-4 7"/><path d="M2 9h14"/>
                 </svg>
                 {getHijriDateString()}
               </span>
               {heroCountdown && (
-                <Link href="/prayer-times" style={{
-                  display: "inline-flex", alignItems: "center", gap: "0.35rem",
-                  background: "rgba(255,255,255,0.16)",
-                  border: "1px solid rgba(255,255,255,0.3)",
-                  color: "#FAFAF8",
-                  padding: "0.5rem 0.75rem",
-                  borderRadius: "999px",
-                  fontSize: "0.8rem",
-                  fontWeight: 700,
-                  letterSpacing: "normal",
-                  textDecoration: "none",
-                }}>
+                <Link href="/prayer-times" className="hpv4-prayer-chip">
                   <svg width="11" height="11" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <circle cx="9" cy="9" r="7.5"/><path d="M9 5v4l3 2"/>
                   </svg>
@@ -658,8 +534,7 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* فاصل هندسي مُحسَّن — ماسة وخطوط */}
-          <div aria-hidden="true" style={{ display: "flex", justifyContent: "center", marginBottom: "1rem", opacity: 0.45 }}>
+          <div aria-hidden="true" className="hpv4-divider">
             <svg width="280" height="20" viewBox="0 0 280 20">
               <line x1="0" y1="10" x2="118" y2="10" stroke="rgba(255,255,255,0.8)" strokeWidth="0.7"/>
               <polygon points="130,4 140,10 130,16 120,10" fill="rgba(255,255,255,0.9)"/>
@@ -678,26 +553,18 @@ export default function HomePage() {
             </Link>
           </div>
 
-          {/* إحصائيات المنصة — للمشرف فقط */}
           {isAdmin && (
-            <div style={{
-              display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: "0.45rem",
-              marginTop: "1.5rem", paddingTop: "1.2rem",
-              borderTop: "1px solid rgba(255,255,255,0.1)",
-            }}>
+            <div className="hpv4-admin-stats">
               {[
                 { num: toArabicDigits(contentCounts.scholars),      label: "عالم مرجعي",   icon: "👤" },
                 { num: toArabicDigits(contentCounts.quizQuestions), label: "سؤال اختباري", icon: "🧠" },
                 { num: toArabicDigits(contentCounts.fawaid),        label: "فائدة علمية",  icon: "💡" },
                 { num: toArabicDigits(contentCounts.books),         label: "كتاب علمي",    icon: "📚" },
               ].map(({ num, label, icon }) => (
-                <div key={label} style={{
-                  background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)",
-                  borderRadius: "0.65rem", padding: "0.65rem 0.4rem", textAlign: "center",
-                }}>
-                  <div style={{ fontSize: "1rem", marginBottom: "0.15rem", lineHeight: 1 }}>{icon}</div>
-                  <div style={{ color: "#FAFAF8", fontSize: "1.1rem", fontWeight: 800, lineHeight: 1.1 }}>{num}</div>
-                  <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.62rem", marginTop: "0.18rem", lineHeight: 1.3 }}>{label}</div>
+                <div key={label} className="hpv4-admin-stat">
+                  <div className="hpv4-admin-stat__icon">{icon}</div>
+                  <div className="hpv4-admin-stat__num">{num}</div>
+                  <div className="hpv4-admin-stat__label">{label}</div>
                 </div>
               ))}
             </div>
@@ -706,7 +573,7 @@ export default function HomePage() {
       </section>
 
       {/* ══ مجلس اليوم ══ */}
-      <div style={{ maxWidth: 760, margin: "1rem auto 0", padding: "0 1rem" }}>
+      <div className="hp-section-wrap">
         <SectionErrorBoundary name="مجلس اليوم">
           <HomeMajlisToday />
         </SectionErrorBoundary>
@@ -734,43 +601,22 @@ export default function HomePage() {
           وظيفة، فقط إزالة ازدواج بصري (إعادة هيكلة الرئيسية، الأولوية 1). */}
 
       {/* ══ وصول سريع ══ */}
-      <nav aria-label="وصول سريع" style={{ maxWidth: 760, margin: "2rem auto 0", padding: "0 1rem" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.7rem" }}>
+      <nav aria-label="وصول سريع" className="hp-quick-nav">
+        <div className="hp-quick-nav__head">
           <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18">
             <polygon points="9,1 12,7 18,7 13,11 15,17 9,13 3,17 5,11 0,7 6,7" fill="currentColor" opacity="0.85"/>
           </svg>
-          <p style={{ color: "var(--text)", fontSize: "0.82rem", fontWeight: 800, margin: 0, letterSpacing: "normal" }}>وصول سريع</p>
+          <p className="hp-quick-nav__title">وصول سريع</p>
         </div>
-        <div style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
-          gap: "0.45rem",
-        }}>
+        <div className="hp-quick-nav__grid">
           {QUICK_LINKS.map(({ href, Icon: Ico, label, desc }) => (
-            <Link key={label + href} href={href} aria-label={label} style={{
-              display: "flex", alignItems: "center", gap: "0.5rem",
-              padding: "0.6rem 0.65rem",
-              background: "#fff",
-              border: "1px solid #e5efea",
-              borderRadius: "0.75rem",
-              textDecoration: "none",
-              boxShadow: "0 1px 4px rgba(0,0,0,0.05)",
-            }}>
-              <span style={{
-                background: "linear-gradient(135deg,#edf6f1,#daf0e8)",
-                color: "#143F35", padding: "0.38rem", borderRadius: "0.4rem",
-                display: "flex", flexShrink: 0,
-              }}>
+            <Link key={label + href} href={href} aria-label={label} className="hp-quick-card">
+              <span className="hp-quick-card__icon">
                 <Ico size={14} strokeWidth={2} />
               </span>
-              <div style={{ minWidth: 0 }}>
-                {/* لون ثابت (#1A1A18/#9ca3af) لا يتكيّف مع السمة الليلية — بطاقة
-                    "وصول سريع" تتحول خلفيتها للداكن في الوضع الليلي (قاعدة
-                    CSS منفصلة) بينما بقي النص هنا داكنًا ثابتًا = شبه غير
-                    مقروء (تباين ~1:1، شُخِّص 2026-07-19). متغيّرات CSS تعمل
-                    داخل style inline في React وتتكيّف تلقائيًا مع السمة. */}
-                <div style={{ color: "var(--majalis-ink, #1A1A18)", fontSize: "0.85rem", fontWeight: 700, lineHeight: 1.25 }}>{label}</div>
-                <div style={{ color: "var(--majalis-ink-soft, #9ca3af)", fontSize: "0.78rem", lineHeight: 1.3, marginTop: 1 }}>{desc}</div>
+              <div className="hp-quick-card__body">
+                <div className="hp-quick-card__label">{label}</div>
+                <div className="hp-quick-card__desc">{desc}</div>
               </div>
             </Link>
           ))}
@@ -781,10 +627,7 @@ export default function HomePage() {
           إشعارات الأذان والصلوات. بانرا التذكير بالصيام والشهر الهجري
           أُزيلا من الرئيسية (2026-07-22)؛ شهر الهجري يستمر بالعمل في
           صفحة التقويم كما هو. ══ */}
-      <div style={{
-        maxWidth: 760, margin: "2rem auto 0", padding: "0 1rem",
-        display: "flex", flexDirection: "column", gap: "0.75rem",
-      }}>
+      <div className="hp-section-wrap hp-section-wrap--banners">
         <SafeHomeSection name="FridayBanner">
           <FridayBanner />
         </SafeHomeSection>
@@ -793,7 +636,7 @@ export default function HomePage() {
       {/* ══ ابدأ من هنا ══ */}
       <StartHereSection />
 
-      <div style={{ maxWidth: 760, margin: "0.5rem auto 0", padding: "0 1rem", textAlign: "center" }}>
+      <div className="hp-section-wrap hp-section-wrap--customize">
         <button type="button" className="hpv4-customize-trigger" onClick={() => setCustomizeOpen(true)}>
           <Wrench size={13} strokeWidth={2} aria-hidden="true" /> تخصيص الصفحة الرئيسية
         </button>
