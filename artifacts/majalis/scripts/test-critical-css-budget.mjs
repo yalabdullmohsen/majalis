@@ -34,10 +34,10 @@ if (!indexCss) {
   process.exit(1);
 }
 
-// سقف بعد موجة ~508KB (2026-07-26): تأجيل كتل صفحات من majalis-v2/design-system
-// + حذف lad-* وبدائيات btn/badge/text-v2 غير المستخدمة + aie/institutions/fiqh-admin.
-// الهدف التالي: نحو 480–500KB عبر تنظيف تكرار elite-2026 مع طبقات brand/final.
-const BUDGET = 520_000;
+// سقف بعد موجة ~495–500KB (2026-07-26): نقل hadith/qibla/occasions/miracles/fiqh-hub-strip
+// من elite-2026 إلى CSS الصفحات + حذف btn-v2/badge-v2/dhikr-card/mzp-card الميتة.
+// الهدف التالي: نحو 480KB عبر تأجيل ودجات الرئيسية / تنظيف تكرار brand/final.
+const BUDGET = 505_000;
 if (indexCss.size > BUDGET) {
   console.error(
     `✗ CSS الحرج ${indexCss.name} = ${indexCss.size} بايت > الميزانية ${BUDGET}.`,
