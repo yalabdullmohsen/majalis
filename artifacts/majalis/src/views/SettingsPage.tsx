@@ -167,6 +167,17 @@ function isSectionId(value: string | null): value is SectionId {
   return !!value && SECTIONS.some((s) => s.id === value);
 }
 
+/** مطابقة بحث عربية تتجنّب الإيجابيات الخاطئة للكلمات القصيرة (مثل «خط» داخل «خطة»). */
+function textMatches(haystack: string, needle: string): boolean {
+  const h = haystack.toLocaleLowerCase("ar");
+  const n = needle.toLocaleLowerCase("ar").trim();
+  if (!n) return true;
+  if (h === n || h.includes(n) && n.length >= 3) return true;
+  const tokens = h.split(/[\s،,/|_-]+/).map((part) => part.replace(/^ال/, ""));
+  if (n.length <= 2) return tokens.some((part) => part === n);
+  return tokens.some((part) => part === n || part.startsWith(n));
+}
+
 function SectionFallback() {
   return <p className="ios-set-empty">جاري التحميل…</p>;
 }
@@ -236,32 +247,28 @@ export default function SettingsPage() {
   const filteredSections = useMemo(() => {
     const q = query.trim();
     if (!q) return SECTIONS;
-    const needle = q.toLocaleLowerCase("ar");
     const hitIds = new Set(
       SEARCH_INDEX.filter(
-        (h) =>
-          h.title.toLocaleLowerCase("ar").includes(needle) ||
-          (h.description || "").toLocaleLowerCase("ar").includes(needle),
+        (h) => textMatches(h.title, q) || textMatches(h.description || "", q),
       ).map((h) => h.section),
     );
     return SECTIONS.filter(
       (s) =>
         hitIds.has(s.id) ||
-        s.title.includes(q) ||
-        s.subtitle.includes(q) ||
-        s.keywords.some((k) => k.includes(q)),
+        textMatches(s.title, q) ||
+        textMatches(s.subtitle, q) ||
+        s.keywords.some((k) => textMatches(k, q)),
     );
   }, [query]);
 
   const searchHits = useMemo(() => {
     const q = query.trim();
     if (!q) return [] as SearchHit[];
-    const needle = q.toLocaleLowerCase("ar");
     return SEARCH_INDEX.filter(
       (h) =>
-        h.title.toLocaleLowerCase("ar").includes(needle) ||
-        (h.description || "").toLocaleLowerCase("ar").includes(needle) ||
-        h.key.includes(needle),
+        textMatches(h.title, q) ||
+        textMatches(h.description || "", q) ||
+        textMatches(h.key, q),
     ).slice(0, 12);
   }, [query]);
 
