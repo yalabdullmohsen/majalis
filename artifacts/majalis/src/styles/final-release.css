@@ -1087,6 +1087,45 @@ a.twitter-timeline {
   padding-block: 0.35rem;
 }
 
+/* زر متابعة الورد في Hero — بلا أنماط مضمّنة تكسر هدف اللمس */
+.hpv4-hero__cta-wrap {
+  display: flex;
+  justify-content: center;
+}
+.hpv4-hero__cta-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  min-height: 44px;
+  padding: 0.7rem 1.6rem;
+  border-radius: var(--radius-md, var(--r-md));
+  background: var(--color-surface, #FAFAF8);
+  color: var(--brand-deep, #143F35);
+  font-weight: 800;
+  font-size: 0.9rem;
+  text-decoration: none;
+  box-shadow: 0 2px 10px rgb(0 0 0 / 25%);
+}
+.settings-choice {
+  min-height: 44px;
+  border-color: var(--color-border);
+  border-radius: var(--radius-md, var(--r-md));
+  color: var(--color-text);
+  background: var(--color-surface);
+}
+.settings-choice.is-active {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 18%, transparent);
+}
+.settings-choice span { color: var(--color-text-muted); }
+.home-main--v3 > section,
+.home-main--v3 > .home-section,
+.widget-grid > * {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 280px;
+}
+
 @media (max-width: 879px) {
   /* تقليل القفز البصري عند التنقل على Safari iOS */
   .page-shell { animation: none; }
