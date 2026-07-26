@@ -4,6 +4,7 @@ import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { SectionIcon } from "@/components/ui/SectionIcon";
+import "@/styles/pages/tahara.css";
 
 
 type TaharaTab = "wudu" | "ghusl" | "tayammum" | "najasat";

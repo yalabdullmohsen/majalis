@@ -7,6 +7,7 @@ import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { toWesternDigits } from "@/shared/arabic-normalize";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import "@/styles/pages/zakat.css";
 
 /* ─── بيانات الأصناف ─── */
 type ZakatKind = {

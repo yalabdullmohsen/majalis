@@ -14,6 +14,7 @@ import { ContentHubLayout } from "@/components/layout/ContentHubLayout";
 import { usePersistedState } from "@/hooks/usePersistedState";
 import { applyPageSeo } from "@/lib/seo";
 import { BookOpen, SortAsc, SortDesc, LayoutGrid, List } from "lucide-react";
+import "@/styles/pages/library.css";
 
 type SortKey = "title" | "author" | "newest";
 type ViewMode = "grid" | "list";
