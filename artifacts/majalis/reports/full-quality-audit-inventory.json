@@ -1,0 +1,35 @@
+{
+  "generatedAt": "2026-07-26T10:40:28.411Z",
+  "counts": {
+    "$comment": "مُولَّد آليًا من السجلات — لا تحرّره يدويًا. أعِد التوليد: npx tsx scripts/generate-content-counts.ts",
+    "generatedAt": "2026-07-26",
+    "books": 174,
+    "scholars": 135,
+    "fawaid": 616,
+    "quizQuestions": 1227,
+    "mindMaps": 23,
+    "rulings": 642,
+    "courses": 63,
+    "miracles": 60,
+    "adhkar": 329,
+    "qa": 459,
+    "nations": 17
+  },
+  "appRoutePaths": 252,
+  "seoStaticRoutes": 175,
+  "vercelRedirects": 59,
+  "scholarsBios": {
+    "total": 135,
+    "empty": 0,
+    "shortUnder80": 0
+  },
+  "library": {
+    "total": 174,
+    "emptyOrShortDesc": 0,
+    "pendingReview": 174
+  },
+  "notes": [
+    "مسارات الكتب/العلماء الديناميكية تُولَّد في generate-seo خارج seo-routes",
+    "الكتب ذات pending_review تحتاج مراجعة بشرية قبل وسم التوثيق"
+  ]
+}
