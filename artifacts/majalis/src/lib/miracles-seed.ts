@@ -38,6 +38,9 @@ export type MiracleSeedItem = {
   scholarly_source?: string;
   verification_status: "verified" | "needs_review";
   status: "approved";
+  trust_level?: "primary_text" | "scholarly_source" | "institutional_ruling" | "general_reasoning" | "unsourced";
+  editorial_review_status?: "unreviewed" | "reviewed" | "needs_rereview";
+  last_updated_at?: string;
 };
 
 const SCIENTIFIC_DISCLAIMER =
@@ -62,6 +65,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "تفسير ابن كثير — آل عمران — مع مراجعة الموضع في المصدر عند الاستشهاد.",
     verification_status: "verified",
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-astro-1",
@@ -81,6 +87,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "تفسير السعدي — يونس — مع مراجعة الموضع في المصدر عند الاستشهاد.",
     verification_status: "verified",
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-mountains-1",
@@ -100,6 +109,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "تفسير ابن كثير — النبأ — مع مراجعة الموضع في المصدر عند الاستشهاد.",
     verification_status: "verified",
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-embryo-1",
@@ -119,6 +131,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "تفسير ابن كثير — المؤمنون — مع مراجعة الموضع في المصدر عند الاستشهاد.",
     verification_status: "verified",
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-plants-1",
@@ -138,6 +153,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "تفسير السعدي — يس ويُرجع إليه للتفصيل لا للاختزال.",
     verification_status: "verified",
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-animals-1",
@@ -157,6 +175,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "تفسير ابن كثير — النور ويُرجع إليه للتفصيل لا للاختزال.",
     verification_status: "verified",
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-medicine-1",
@@ -176,6 +197,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "تفسير ابن كثير — يونس — مع مراجعة الموضع في المصدر عند الاستشهاد.",
     verification_status: "verified",
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-water-1",
@@ -195,6 +219,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "تفسير السعدي — الفرقان ويُرجع إليه للتفصيل لا للاختزال.",
     verification_status: "verified",
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-wind-1",
@@ -214,6 +241,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "تفسير السعدي — الأعراف ويُرجع إليه للتفصيل لا للاختزال.",
     verification_status: "verified",
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-cloud-1",
@@ -231,6 +261,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "تفسير ابن كثير — فاطر ويُرجع إليه للتفصيل لا للاختزال.",
     verification_status: "verified",
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-earth-1",
@@ -248,6 +281,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "تفسير ابن كثير — الذاريات — مع مراجعة الموضع في المصدر عند الاستشهاد.",
     verification_status: "verified",
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-time-1",
@@ -267,6 +303,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "تفسير ابن كثير — الحج — مع مراجعة الموضع في المصدر عند الاستشهاد.",
     verification_status: "verified",
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-plant-1",
@@ -284,6 +323,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "تفسير ابن كثير — يس | في ظلال القرآن — سيد قطب ويُرجع إليه للتفصيل لا للاختزال.",
     verification_status: "verified",
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-animal-1",
@@ -303,6 +345,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "تفسير ابن كثير — النور ويُرجع إليه للتفصيل لا للاختزال.",
     verification_status: "verified",
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-wind-2",
@@ -322,6 +367,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "تفسير الطبري — الحجر — مع مراجعة الموضع في المصدر عند الاستشهاد.",
     verification_status: "verified",
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-cloud-2",
@@ -341,6 +389,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "تفسير ابن كثير — النور — مع مراجعة الموضع في المصدر عند الاستشهاد.",
     verification_status: "verified",
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-astronomy-2",
@@ -360,6 +411,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "تفسير القرطبي — يس — مع مراجعة الموضع في المصدر عند الاستشهاد.",
     verification_status: "verified",
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-medicine-2",
@@ -377,6 +431,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "الطب في القرآن والسنة بين تشخيص الداء ومعرفة الدواء — محمد محمود عبد الله",
     verification_status: "verified",
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-earth-2",
@@ -396,6 +453,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "تفسير ابن كثير — النبأ — مع مراجعة الموضع في المصدر عند الاستشهاد.",
     verification_status: "verified",
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-time-2",
@@ -415,6 +475,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "تفسير الطبري — آل عمران — مع مراجعة الموضع في المصدر عند الاستشهاد.",
     verification_status: "verified",
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-earth-3",
@@ -434,6 +497,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "تفسير القرطبي — الزلزلة — مع مراجعة الموضع في المصدر عند الاستشهاد.",
     verification_status: "verified",
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-light-1",
@@ -451,6 +517,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "تفسير ابن القيم — مفتاح دار السعادة ويُرجع إليه للتفصيل لا للاختزال.",
     verification_status: "verified",
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-bones-1",
@@ -468,6 +537,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "تفسير الطبري — يس — مع مراجعة الموضع في المصدر عند الاستشهاد.",
     verification_status: "verified",
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-stars-1",
@@ -485,6 +557,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "تفسير ابن كثير — الملك ويُرجع إليه للتفصيل لا للاختزال.",
     verification_status: "verified",
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-blood-1",
@@ -504,6 +579,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "تفسير القرطبي — الأنعام ويُرجع إليه للتفصيل لا للاختزال.",
     verification_status: "verified",
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-light-3",
@@ -523,6 +601,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "تفسير ابن كثير — نوح ويُرجع إليه للتفصيل لا للاختزال.",
     verification_status: "verified",
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-skin-3",
@@ -542,6 +623,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "صحيح البخاري (5729) — صحيح مسلم (2219) ويُرجع إليه للتفصيل لا للاختزال.",
     verification_status: "verified",
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   // ─── العظام (2) ──────────────────────────────────────
   {
@@ -562,6 +646,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "تفسير ابن كثير — يس | علم وظائف الأعضاء الحديث ويُرجع إليه للتفصيل لا للاختزال.",
     verification_status: "verified",
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-bones-3",
@@ -581,6 +668,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "تفسير الطبري — مريم | مجلة طب الشيخوخة الأمريكية — مع مراجعة الموضع في المصدر عند الاستشهاد.",
     verification_status: "verified",
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   // ─── النجوم (2) ──────────────────────────────────────
   {
@@ -599,6 +689,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "تفسير ابن عاشور — النحل | تاريخ الفلك الإسلامي ويُرجع إليه للتفصيل لا للاختزال.",
     verification_status: "verified",
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-stars-3",
@@ -618,6 +711,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "تفسير القرطبي — الواقعة | الفيزياء الفلكية الحديثة",
     verification_status: "verified",
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   // ─── الدم (2) ─────────────────────────────────────────
   {
@@ -644,6 +740,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "تفسير ابن كثير والقرطبي — النساء 56 | Textbook of Medical Physiology — Guyton | Sherrington C.S. (1906)",
     verification_status: "verified",
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-fingerprint",
@@ -661,6 +760,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "تفسير القرطبي وابن كثير — القيامة 3-4 | Forensic Science International — Fingerprint Uniqueness | Galton F. (1892)",
     verification_status: "verified",
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-earth-rotation",
@@ -678,6 +780,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "تفسير ابن كثير — الزمر 5 | NASA Earth Observation — Day-Night Boundary",
     verification_status: "verified",
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-blood-3",
@@ -700,6 +805,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "صحيح البخاري (5696) — صحيح مسلم (1577) عن أنس بن مالك | مجلة الطب التكميلي والتكاملي",
     verification_status: "verified",
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-deep-ocean-darkness",
@@ -717,6 +825,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "تفسير الطبري — النور | دراسة William Hay في علم المحيطات | مجلة Nature في علم الأعماق | NOAA Ocean Exploration",
     verification_status: "verified",
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-sleep-restoration",
@@ -739,6 +850,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "أبحاث Matthew Walker (Why We Sleep) | مجلة Science في نظام الغلمفاوي 2013",
     verification_status: "verified",
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   // ── إضافات: الإنسان ──────────────────────────────────────────────
   {
@@ -762,6 +876,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "تفسير الطبري — العلق | أبحاث الفص الجبهي — American Journal of Neuroscience | Damasio A., Descartes' Error (1994)",
     verification_status: "verified",
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-plants-photosynthesis",
@@ -779,6 +896,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "تفسير ابن كثير — الإسراء | كتاب The Hidden Life of Trees — Peter Wohlleben",
     verification_status: "verified",
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   // ── إضافات: الزمن ──────────────────────────────────────────────
   {
@@ -797,6 +917,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "تفسير القرطبي — الحج | نظرية النسبية — Einstein 1905",
     verification_status: "verified",
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-time-day-fifty-thousand",
@@ -814,6 +937,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "تفسير الطبري — المعارج | Hawking: A Brief History of Time",
     verification_status: "verified",
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   // ── إضافات: الفلك ──────────────────────────────────────────────
   // ── إضافات: الطب ──────────────────────────────────────────────
@@ -837,6 +963,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "تفسير ابن كثير — النحل | WHO Guidelines on Wound Care | Journal of Wound Care 2011",
     verification_status: "verified",
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-medicine-fasting",
@@ -862,6 +991,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "جائزة نوبل في الطب 2016 — أوسومي | USC Stem Cell Research 2014 | تفسير ابن كثير — البقرة",
     verification_status: "verified",
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   // ── إضافات: الفلك والكون ─────────────────────────────────────────
   {
@@ -880,6 +1012,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "تفسير الطبري وابن كثير والقرطبي — التكوير (التفسير التقليدي: الكواكب والنجوم، لا الثقوب السوداء)",
     verification_status: "verified",
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-quran-universe-barrier-seas",
@@ -910,6 +1045,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "Oceanography — Halocline Phenomena | تفسير ابن كثير والقرطبي — الرحمن",
     verification_status: "verified",
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-quran-embryo-leeches",
@@ -927,6 +1065,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "Keith Moore — The Developing Human (1982) | Journal of Embryology — Embryo Stage Nomenclature | تفسير ابن كثير — المؤمنون",
     verification_status: "verified",
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-iron-cosmos-69",
@@ -944,6 +1085,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "Nature Geoscience — Extraterrestrial Origin of Earth's Iron (2011) | NASA Astrophysics — Supernova Element Synthesis | تفسير الطبري — الحديد",
     verification_status: "verified",
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-water-life-72",
@@ -974,6 +1118,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "Cell Biology (Alberts et al.) — Water as Biochemical Solvent | NASA Astrobiology — Water as Life Prerequisite | تفسير ابن كثير — الأنبياء",
     verification_status: "verified",
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-smoke-atmosphere-75",
@@ -991,6 +1138,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "Cosmic Gas & Dust Origin — NASA Origins Program | تفسير ابن كثير وابن عاشور — فصلت",
     verification_status: "verified",
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-pairs-everything-76",
@@ -1008,6 +1158,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "Particle Physics: Matter-Antimatter Symmetry | تفسير الطبري والزمخشري — الذاريات: 49",
     verification_status: "verified",
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-wind-pollination-78",
@@ -1025,6 +1178,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "Botany: Wind Pollination (Anemophily) | تفسير الطبري والقرطبي — الحجر: 22",
     verification_status: "verified",
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-sleep-rest-soul-80",
@@ -1042,6 +1198,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "Sleep Research: Glymphatic System (Maiken Nedergaard 2013) | تفسير ابن كثير — الزمر: 42",
     verification_status: "verified",
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-copper-iron-resources-81",
@@ -1059,6 +1218,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "Geochemistry: Metallic Ore Formation | تفسير القرطبي والطبري — الكهف: 96، الحديد: 25",
     verification_status: "verified",
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-quran-memory-hearts-82",
@@ -1076,6 +1238,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "Neuroscience: Long-term Memory Encoding | تفسير ابن جرير والماوردي — الحجر: 9",
     verification_status: "verified",
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-rain-cycle-detailed-83",
@@ -1093,6 +1258,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "Hydrology: Water Cycle (UNESCO) | تفسير الطبري والزمخشري — الزمر: 21",
     verification_status: "verified",
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-bee-communication-85",
@@ -1110,6 +1278,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "Karl von Frisch (Nobel 1973), Waggle Dance | تفسير الشعراوي والطبري — النحل: 68",
     verification_status: "verified",
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-ant-civilization-86",
@@ -1127,6 +1298,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "Myrmecology: Wilson & Hölldobler (Ants 1990, Pulitzer) | Wilson E.O., The Insect Societies (1971) | Journal of Experimental Biology — Ant Communication 2009 | تفسير القرطبي — النمل: 18",
     verification_status: "verified",
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-human-embryo-chewing-88",
@@ -1144,6 +1318,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "Keith Moore, The Developing Human (8th ed.) | تفسير الطبري وابن كثير — الحج: 5",
     verification_status: "verified",
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-expanding-universe-89",
@@ -1161,6 +1338,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "Hubble (1929), Nobel Prize 2011 (Perlmutter, Schmidt, Riess) | تفسير ابن عاشور والزمخشري — الذاريات: 47",
     verification_status: "verified",
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "miracle-soil-plants-chemistry-90",
@@ -1178,6 +1358,9 @@ ${SCIENTIFIC_DISCLAIMER}`,
     scholarly_source: "Camerarius, De Sexu Plantarum Epistola (1694) | Linnaeus Sexual System (1730s) | تفسير الرازي والقرطبي — طه: 53",
     verification_status: "verified",
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
 ];
 

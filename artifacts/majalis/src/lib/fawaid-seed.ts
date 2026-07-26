@@ -19,6 +19,9 @@ export const SEED_FAWAID = [
     source: "رواه الترمذي وصحح الألباني",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-2",
@@ -27,6 +30,9 @@ export const SEED_FAWAID = [
     source: "رواه البخاري",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-3",
@@ -35,6 +41,9 @@ export const SEED_FAWAID = [
     source: "رواه مسلم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-4",
@@ -43,6 +52,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-5",
@@ -51,6 +63,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-6",
@@ -59,6 +74,9 @@ export const SEED_FAWAID = [
     source: "رواه النسائي وصحح الألباني",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-8",
@@ -67,6 +85,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-9",
@@ -75,6 +96,9 @@ export const SEED_FAWAID = [
     source: "الرعد: ٢٨؛ البخاري ٦٤٠٧ ومسلم ٧٧٩",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-10",
@@ -83,6 +107,9 @@ export const SEED_FAWAID = [
     source: "رواه ابن ماجه وصحح الألباني",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-11",
@@ -91,6 +118,9 @@ export const SEED_FAWAID = [
     source: "رواه أبو داود والترمذي وصحح الألباني",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-12",
@@ -99,6 +129,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-13",
@@ -107,6 +140,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-14",
@@ -115,6 +151,9 @@ export const SEED_FAWAID = [
     source: "رواه البيهقي — ضعّفه الألباني في ضعيف الجامع والسلسلة الضعيفة",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-15",
@@ -123,6 +162,9 @@ export const SEED_FAWAID = [
     source: "ابن القيم في مدارج السالكين",
     author_name: "ابن القيم الجوزية",
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-17",
@@ -131,6 +173,9 @@ export const SEED_FAWAID = [
     source: "رواه البخاري",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-18",
@@ -139,6 +184,9 @@ export const SEED_FAWAID = [
     source: "رواه الدارمي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-19",
@@ -147,6 +195,9 @@ export const SEED_FAWAID = [
     source: "رواه الدارمي وصححه الألباني",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-20",
@@ -155,6 +206,9 @@ export const SEED_FAWAID = [
     source: "رواه الترمذي وصحح الألباني",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
 
   // ──────────────────── فوائد حديثية ────────────────────
@@ -165,6 +219,9 @@ export const SEED_FAWAID = [
     source: "رواه مسلم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-24",
@@ -173,6 +230,9 @@ export const SEED_FAWAID = [
     source: "رواه أبو داود وصحح الألباني",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-25",
@@ -181,6 +241,9 @@ export const SEED_FAWAID = [
     source: "رواه مسلم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-26",
@@ -189,6 +252,9 @@ export const SEED_FAWAID = [
     source: "رواه الترمذي وصحح الألباني",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-27",
@@ -197,6 +263,9 @@ export const SEED_FAWAID = [
     source: "رواه أبو داود وصحح الألباني",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-28",
@@ -205,6 +274,9 @@ export const SEED_FAWAID = [
     source: "رواه الطبراني وحسنه الألباني",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-29",
@@ -213,6 +285,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-30",
@@ -221,6 +296,9 @@ export const SEED_FAWAID = [
     source: "رواه البيهقي وصحح الألباني",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-31",
@@ -229,6 +307,9 @@ export const SEED_FAWAID = [
     source: "رواه مسلم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-34",
@@ -237,6 +318,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-35",
@@ -245,6 +329,9 @@ export const SEED_FAWAID = [
     source: "رواه مسلم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-37",
@@ -253,6 +340,9 @@ export const SEED_FAWAID = [
     source: "رواه الترمذي وصحح الألباني",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-38",
@@ -261,6 +351,9 @@ export const SEED_FAWAID = [
     source: "رواه الترمذي وقال: حسن",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-39",
@@ -269,6 +362,9 @@ export const SEED_FAWAID = [
     source: "رواه مسلم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-40",
@@ -277,6 +373,9 @@ export const SEED_FAWAID = [
     source: "رواه مسلم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-41",
@@ -285,6 +384,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-42",
@@ -293,6 +395,9 @@ export const SEED_FAWAID = [
     source: "رواه مسلم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
 
   // ──────────────────── فوائد عقدية ────────────────────
@@ -303,6 +408,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-44",
@@ -311,6 +419,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-45",
@@ -319,6 +430,9 @@ export const SEED_FAWAID = [
     source: "رواه مسلم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-46",
@@ -327,6 +441,9 @@ export const SEED_FAWAID = [
     source: "من أصول العقيدة الإسلامية",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-47",
@@ -335,6 +452,9 @@ export const SEED_FAWAID = [
     source: "ابن القيم في شفاء العليل",
     author_name: "ابن القيم الجوزية",
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-48",
@@ -343,6 +463,9 @@ export const SEED_FAWAID = [
     source: "ابن القيم في مدارج السالكين",
     author_name: "ابن القيم الجوزية",
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-49",
@@ -351,6 +474,9 @@ export const SEED_FAWAID = [
     source: "ابن تيمية في العقيدة الواسطية",
     author_name: "شيخ الإسلام ابن تيمية",
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-50",
@@ -359,6 +485,9 @@ export const SEED_FAWAID = [
     source: "رواه أبو داود وصحح الألباني",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-51",
@@ -367,6 +496,9 @@ export const SEED_FAWAID = [
     source: "سورة النساء: 48",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-52",
@@ -375,6 +507,9 @@ export const SEED_FAWAID = [
     source: "ابن تيمية في مجموع الفتاوى",
     author_name: "شيخ الإسلام ابن تيمية",
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-53",
@@ -383,6 +518,9 @@ export const SEED_FAWAID = [
     source: "سورة الرعد: 28",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-54",
@@ -391,6 +529,9 @@ export const SEED_FAWAID = [
     source: "سورة الجن: 18",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-55",
@@ -399,6 +540,9 @@ export const SEED_FAWAID = [
     source: "ابن القيم في طريق الهجرتين",
     author_name: "ابن القيم الجوزية",
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-56",
@@ -407,6 +551,9 @@ export const SEED_FAWAID = [
     source: "سورة النساء: 18",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-57",
@@ -415,6 +562,9 @@ export const SEED_FAWAID = [
     source: "رواه أبو داود والنسائي وصحح الألباني",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
 
   // ──────────────────── فوائد فقهية ────────────────────
@@ -425,6 +575,9 @@ export const SEED_FAWAID = [
     source: "القواعد الفقهية الكبرى",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-59",
@@ -433,6 +586,9 @@ export const SEED_FAWAID = [
     source: "القواعد الفقهية الكبرى",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-60",
@@ -441,6 +597,9 @@ export const SEED_FAWAID = [
     source: "رواه ابن ماجه وصحح الألباني",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-61",
@@ -449,6 +608,9 @@ export const SEED_FAWAID = [
     source: "القواعد الفقهية الكبرى",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-62",
@@ -457,6 +619,9 @@ export const SEED_FAWAID = [
     source: "القواعد الفقهية الكبرى",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-63",
@@ -465,6 +630,9 @@ export const SEED_FAWAID = [
     source: "ابن تيمية في مجموع الفتاوى",
     author_name: "شيخ الإسلام ابن تيمية",
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-64",
@@ -473,6 +641,9 @@ export const SEED_FAWAID = [
     source: "ابن رجب الحنبلي في جامع العلوم والحكم",
     author_name: "ابن رجب الحنبلي",
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-65",
@@ -481,6 +652,9 @@ export const SEED_FAWAID = [
     source: "رواه الترمذي (2616) عن معاذ بن جبل، وصححه الألباني في صحيح الترمذي",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-66",
@@ -489,6 +663,9 @@ export const SEED_FAWAID = [
     source: "سورة التوبة: 103؛ سورة المعارج: 24-25؛ سورة الذاريات: 19",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-67",
@@ -497,6 +674,9 @@ export const SEED_FAWAID = [
     source: "الشطر الأول رواه أحمد (14727) عن جابر بن عبدالله، حسّنه الألباني في صحيح الترغيب (981)؛ الشطر الثاني متفق عليه من حديث سهل بن سعد الساعدي (البخاري 1896)",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-68",
@@ -505,6 +685,9 @@ export const SEED_FAWAID = [
     source: "قاعدة فقهية مستنبطة من الأدلة",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-69",
@@ -513,6 +696,9 @@ export const SEED_FAWAID = [
     source: "من أصول الفقه الإسلامي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-70",
@@ -521,6 +707,9 @@ export const SEED_FAWAID = [
     source: "الغزالي في المستصفى",
     author_name: "الإمام الغزالي",
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-71",
@@ -529,6 +718,9 @@ export const SEED_FAWAID = [
     source: "الشافعي في الرسالة",
     author_name: "الإمام الشافعي",
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-72",
@@ -537,6 +729,9 @@ export const SEED_FAWAID = [
     source: "القواعد الفقهية",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
 
   // ──────────────────── فوائد تربوية ────────────────────
@@ -547,6 +742,9 @@ export const SEED_FAWAID = [
     source: "من هدي النبي ﷺ في التربية",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-74",
@@ -555,6 +753,9 @@ export const SEED_FAWAID = [
     source: "من أصول التربية الإسلامية",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-75",
@@ -563,6 +764,9 @@ export const SEED_FAWAID = [
     source: "من هديه ﷺ في التعليم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-76",
@@ -571,6 +775,9 @@ export const SEED_FAWAID = [
     source: "من أقوال السلف",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-77",
@@ -579,6 +786,9 @@ export const SEED_FAWAID = [
     source: "من هدي النبي ﷺ: أحب الأعمال إلى الله أدومها وإن قل",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-78",
@@ -587,6 +797,9 @@ export const SEED_FAWAID = [
     source: "رواه أبو داود والترمذي وحسنه الألباني",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-79",
@@ -595,6 +808,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-80",
@@ -603,6 +819,9 @@ export const SEED_FAWAID = [
     source: "من هدي النبي ﷺ في التشجيع",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-81",
@@ -611,6 +830,9 @@ export const SEED_FAWAID = [
     source: "من سيرة السلف في تربية الأطفال",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-82",
@@ -619,6 +841,9 @@ export const SEED_FAWAID = [
     source: "من مقاصد التشريع الإسلامي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-83",
@@ -627,6 +852,9 @@ export const SEED_FAWAID = [
     source: "رواه البخاري ومسلم من حديث النعمان بن بشير",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-84",
@@ -635,6 +863,9 @@ export const SEED_FAWAID = [
     source: "رواه الترمذي وحسنه الألباني",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-85",
@@ -643,6 +874,9 @@ export const SEED_FAWAID = [
     source: "من مبادئ التربية الإسلامية المستنبطة من السيرة",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-86",
@@ -651,6 +885,9 @@ export const SEED_FAWAID = [
     source: "من حكم السلف",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-87",
@@ -659,6 +896,9 @@ export const SEED_FAWAID = [
     source: "من حكم السلف",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
 
   // ──────────────────── فوائد دعوية ────────────────────
@@ -669,6 +909,9 @@ export const SEED_FAWAID = [
     source: "سورة فصلت: 33",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-89",
@@ -677,6 +920,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-90",
@@ -685,6 +931,9 @@ export const SEED_FAWAID = [
     source: "من هدي النبي ﷺ في الدعوة",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-91",
@@ -693,6 +942,9 @@ export const SEED_FAWAID = [
     source: "من كلام السلف",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-92",
@@ -701,6 +953,9 @@ export const SEED_FAWAID = [
     source: "رواه أبو داود وصحح الألباني",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-93",
@@ -709,6 +964,9 @@ export const SEED_FAWAID = [
     source: "من فقه الواقع في الدعوة المعاصرة",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-94",
@@ -717,6 +975,9 @@ export const SEED_FAWAID = [
     source: "من سيرة الأنبياء في الدعوة",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-95",
@@ -725,6 +986,9 @@ export const SEED_FAWAID = [
     source: "سورة الشعراء: 214",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-96",
@@ -733,6 +997,9 @@ export const SEED_FAWAID = [
     source: "من أساليب الدعوة النبوية",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-97",
@@ -741,6 +1008,9 @@ export const SEED_FAWAID = [
     source: "من منهج العلماء في الرد على الشبهات",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-98",
@@ -749,6 +1019,9 @@ export const SEED_FAWAID = [
     source: "سورة القصص: 56",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-99",
@@ -757,6 +1030,9 @@ export const SEED_FAWAID = [
     source: "رواه مسلم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-100",
@@ -765,6 +1041,9 @@ export const SEED_FAWAID = [
     source: "من نصوص الاستقامة في القرآن",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-101",
@@ -773,6 +1052,9 @@ export const SEED_FAWAID = [
     source: "من منهج معاذ بن جبل في دعوة أهل اليمن",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-102",
@@ -781,6 +1063,9 @@ export const SEED_FAWAID = [
     source: "من أصول الدعوة الإسلامية",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
 
   // ──────────────────── آداب وأخلاق ────────────────────
@@ -791,6 +1076,9 @@ export const SEED_FAWAID = [
     source: "رواه الترمذي وصحح الألباني",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-104",
@@ -799,6 +1087,9 @@ export const SEED_FAWAID = [
     source: "النور: ٣٠",
     author_name: null,
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-105",
@@ -807,6 +1098,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-106",
@@ -815,6 +1109,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-107",
@@ -823,6 +1120,9 @@ export const SEED_FAWAID = [
     source: "رواه مسلم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-108",
@@ -831,6 +1131,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-109",
@@ -839,6 +1142,9 @@ export const SEED_FAWAID = [
     source: "رواه البخاري",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-110",
@@ -847,6 +1153,9 @@ export const SEED_FAWAID = [
     source: "حديثان: «الحياء شعبة من الإيمان» متفق عليه عن أبي هريرة، و«إذا لم تستح فاصنع ما شئت» رواه البخاري عن أبي مسعود الأنصاري",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-111",
@@ -855,6 +1164,9 @@ export const SEED_FAWAID = [
     source: "رواه الترمذي وصحح الألباني",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-112",
@@ -863,6 +1175,9 @@ export const SEED_FAWAID = [
     source: "رواه أبو داود والترمذي وصحح الألباني",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-113",
@@ -871,6 +1186,9 @@ export const SEED_FAWAID = [
     source: "سورة الصف: 3",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-114",
@@ -879,6 +1197,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-115",
@@ -887,6 +1208,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-116",
@@ -895,6 +1219,9 @@ export const SEED_FAWAID = [
     source: "سورة الحشر: 9",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-117",
@@ -903,6 +1230,9 @@ export const SEED_FAWAID = [
     source: "سورة الشورى: 40",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-118",
@@ -911,6 +1241,9 @@ export const SEED_FAWAID = [
     source: "من أقوال السلف في أدب العلم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-119",
@@ -919,6 +1252,9 @@ export const SEED_FAWAID = [
     source: "سورة الحجرات: 12",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-120",
@@ -927,6 +1263,9 @@ export const SEED_FAWAID = [
     source: "سورة إبراهيم: 7",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   // ──────────────────── فوائد قرآنية (121-140) ────────────────────
   {
@@ -936,6 +1275,9 @@ export const SEED_FAWAID = [
     source: "سورة الفاتحة",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-122",
@@ -944,6 +1286,9 @@ export const SEED_FAWAID = [
     source: "رواه الحاكم وصحح الألباني",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-123",
@@ -952,6 +1297,9 @@ export const SEED_FAWAID = [
     source: "رواه مسلم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-124",
@@ -960,6 +1308,9 @@ export const SEED_FAWAID = [
     source: "رواه أحمد وصحح الألباني",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-125",
@@ -968,6 +1319,9 @@ export const SEED_FAWAID = [
     source: "رواه أحمد والنسائي وصححه الحاكم ووافقه الذهبي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-126",
@@ -976,6 +1330,9 @@ export const SEED_FAWAID = [
     source: "رواه مسلم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-127",
@@ -984,6 +1341,9 @@ export const SEED_FAWAID = [
     source: "البخاري: ٥٠٢٧",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-128",
@@ -992,6 +1352,9 @@ export const SEED_FAWAID = [
     source: "ابن تيمية",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-129",
@@ -1000,6 +1363,9 @@ export const SEED_FAWAID = [
     source: "سورة النساء: 82",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-130",
@@ -1008,6 +1374,9 @@ export const SEED_FAWAID = [
     source: "البخاري: ٥٠٢٧",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-131",
@@ -1016,6 +1385,9 @@ export const SEED_FAWAID = [
     source: "ابن القيم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-132",
@@ -1024,6 +1396,9 @@ export const SEED_FAWAID = [
     source: "معنى عام مستفاد من عمومات الشرع، منها قوله تعالى ﴿وَإِذَا تُلِيَتْ عَلَيْهِمْ آيَاتُهُ زَادَتْهُمْ إِيمَانًا﴾ (الأنفال: 2)؛ لا يثبت بلفظه حديث مرفوع محدد عن الإمام أحمد",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-133",
@@ -1032,6 +1407,9 @@ export const SEED_FAWAID = [
     source: "سورة الحجر: 9",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-134",
@@ -1040,6 +1418,9 @@ export const SEED_FAWAID = [
     source: "ضعّف الألباني ما ورد في «قلب القرآن» والقراءة على الأموات — ضعيف الجامع وضعيف أبي داود",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-135",
@@ -1048,6 +1429,9 @@ export const SEED_FAWAID = [
     source: "صحيح مسلم",
     author_name: null,
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-136",
@@ -1056,6 +1440,9 @@ export const SEED_FAWAID = [
     source: "ابن كثير",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-137",
@@ -1064,6 +1451,9 @@ export const SEED_FAWAID = [
     source: "قول الجمهور",
     author_name: null,
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-138",
@@ -1072,6 +1462,9 @@ export const SEED_FAWAID = [
     source: "علماء التجويد",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-139",
@@ -1080,6 +1473,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه، البخاري (4664-4666) ومسلم (1963-1964) عن عبدالله بن عمرو بن العاص",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-140",
@@ -1088,6 +1484,9 @@ export const SEED_FAWAID = [
     source: "مستفاد من قوله تعالى ﴿وَرَتِّلِ الْقُرْآنَ تَرْتِيلًا﴾ (المزمل: 4) وأقوال السلف، منهم ابن مسعود وابن عباس رضي الله عنهما",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   // ──────────────────── فوائد حديثية (141-165) ────────────────────
   {
@@ -1097,6 +1496,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-142",
@@ -1105,6 +1507,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-143",
@@ -1113,6 +1518,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-145",
@@ -1121,6 +1529,9 @@ export const SEED_FAWAID = [
     source: "رواه مسلم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-146",
@@ -1129,6 +1540,9 @@ export const SEED_FAWAID = [
     source: "أبو داود — حسّنه الألباني",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-147",
@@ -1137,6 +1551,9 @@ export const SEED_FAWAID = [
     source: "رواه البخاري",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-148",
@@ -1145,6 +1562,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-149",
@@ -1153,6 +1573,9 @@ export const SEED_FAWAID = [
     source: "رواه مسلم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-150",
@@ -1161,6 +1584,9 @@ export const SEED_FAWAID = [
     source: "رواه الطبراني وأبو يعلى، وصححه الألباني في صحيح الجامع والسلسلة الصحيحة",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-151",
@@ -1169,6 +1595,9 @@ export const SEED_FAWAID = [
     source: "الترمذي — صححه الألباني",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-152",
@@ -1177,6 +1606,9 @@ export const SEED_FAWAID = [
     source: "أبو داود — صححه الألباني",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-153",
@@ -1185,6 +1617,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-155",
@@ -1193,6 +1628,9 @@ export const SEED_FAWAID = [
     source: "رواه الترمذي وحسّنه",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-156",
@@ -1201,6 +1639,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-157",
@@ -1209,6 +1650,9 @@ export const SEED_FAWAID = [
     source: "رواه الطبراني وصحح الألباني",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-158",
@@ -1217,6 +1661,9 @@ export const SEED_FAWAID = [
     source: "رواه الطبراني",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-159",
@@ -1225,6 +1672,9 @@ export const SEED_FAWAID = [
     source: "الترمذي — حسّنه الألباني",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-160",
@@ -1233,6 +1683,9 @@ export const SEED_FAWAID = [
     source: "رواه مسلم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-161",
@@ -1241,6 +1694,9 @@ export const SEED_FAWAID = [
     source: "رواه ابن حبان والطبراني، وحسّنه الألباني في صحيح الترغيب",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-163",
@@ -1249,6 +1705,9 @@ export const SEED_FAWAID = [
     source: "نوح: ١٠–١٢",
     author_name: null,
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-164",
@@ -1257,6 +1716,9 @@ export const SEED_FAWAID = [
     source: "رواه مسلم (1052)، كتاب الزكاة، باب تخوف ما يخرج من زهرة الدنيا، عن أبي سعيد الخدري",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   // ──────────────────── فوائد عقدية (166-185) ────────────────────
   {
@@ -1266,6 +1728,9 @@ export const SEED_FAWAID = [
     source: "العقيدة الطحاوية",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-168",
@@ -1274,6 +1739,9 @@ export const SEED_FAWAID = [
     source: "سورة البقرة: 165",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-169",
@@ -1282,6 +1750,9 @@ export const SEED_FAWAID = [
     source: "ابن القيم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-170",
@@ -1290,6 +1761,9 @@ export const SEED_FAWAID = [
     source: "سورة لقمان: 13",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-171",
@@ -1298,6 +1772,9 @@ export const SEED_FAWAID = [
     source: "سورة الممتحنة: 4",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-172",
@@ -1306,6 +1783,9 @@ export const SEED_FAWAID = [
     source: "رواه البخاري",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-173",
@@ -1314,6 +1794,9 @@ export const SEED_FAWAID = [
     source: "العقيدة الأشعرية والماتريدية",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-174",
@@ -1322,6 +1805,9 @@ export const SEED_FAWAID = [
     source: "مذهب أهل السنة",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-175",
@@ -1330,6 +1816,9 @@ export const SEED_FAWAID = [
     source: "سورة طه: 5",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-176",
@@ -1338,6 +1827,9 @@ export const SEED_FAWAID = [
     source: "الطحاوية",
     author_name: null,
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-177",
@@ -1346,6 +1838,9 @@ export const SEED_FAWAID = [
     source: "ابن تيمية في الفتاوى",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-178",
@@ -1354,6 +1849,9 @@ export const SEED_FAWAID = [
     source: "مذهب أهل السنة",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-179",
@@ -1362,6 +1860,9 @@ export const SEED_FAWAID = [
     source: "الطحاوية",
     author_name: null,
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-180",
@@ -1370,6 +1871,9 @@ export const SEED_FAWAID = [
     source: "ابن القيم في طريق الهجرتين",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-181",
@@ -1378,6 +1882,9 @@ export const SEED_FAWAID = [
     source: "ابن تيمية",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-182",
@@ -1386,6 +1893,9 @@ export const SEED_FAWAID = [
     source: "ابن القيم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-183",
@@ -1394,6 +1904,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-184",
@@ -1402,6 +1915,9 @@ export const SEED_FAWAID = [
     source: "سورة آل عمران: 31",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-185",
@@ -1410,6 +1926,9 @@ export const SEED_FAWAID = [
     source: "منهاج السنة لابن تيمية",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   // ──────────────────── فوائد فقهية (186-210) ────────────────────
   {
@@ -1419,6 +1938,9 @@ export const SEED_FAWAID = [
     source: "قاعدة فقهية",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-187",
@@ -1427,6 +1949,9 @@ export const SEED_FAWAID = [
     source: "قاعدة أصولية",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-188",
@@ -1435,6 +1960,9 @@ export const SEED_FAWAID = [
     source: "قاعدة فقهية كبرى",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-189",
@@ -1443,6 +1971,9 @@ export const SEED_FAWAID = [
     source: "قاعدة فقهية",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-191",
@@ -1451,6 +1982,9 @@ export const SEED_FAWAID = [
     source: "أصول الفقه",
     author_name: null,
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-192",
@@ -1459,6 +1993,9 @@ export const SEED_FAWAID = [
     source: "قاعدة فقهية",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-193",
@@ -1467,6 +2004,9 @@ export const SEED_FAWAID = [
     source: "قاعدة فقهية",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-194",
@@ -1475,6 +2015,9 @@ export const SEED_FAWAID = [
     source: "قول الجمهور",
     author_name: null,
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-195",
@@ -1483,6 +2026,9 @@ export const SEED_FAWAID = [
     source: "قاعدة فقهية",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-196",
@@ -1491,6 +2037,9 @@ export const SEED_FAWAID = [
     source: "رواه مسلم (1163) عن أبي هريرة",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-197",
@@ -1499,6 +2048,9 @@ export const SEED_FAWAID = [
     source: "السنن والمسند",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-198",
@@ -1507,6 +2059,9 @@ export const SEED_FAWAID = [
     source: "البخاري ٥٠٦٥ ومسلم ١٤٠٠",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-199",
@@ -1515,6 +2070,9 @@ export const SEED_FAWAID = [
     source: "الفقه الحنبلي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-201",
@@ -1523,6 +2081,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-202",
@@ -1531,6 +2092,9 @@ export const SEED_FAWAID = [
     source: "فقه الحنابلة",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-203",
@@ -1539,6 +2103,9 @@ export const SEED_FAWAID = [
     source: "صحيح البخاري",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-204",
@@ -1547,6 +2114,9 @@ export const SEED_FAWAID = [
     source: "فقه الحنابلة",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-205",
@@ -1555,6 +2125,9 @@ export const SEED_FAWAID = [
     source: "صحيح مسلم",
     author_name: null,
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-206",
@@ -1563,6 +2136,9 @@ export const SEED_FAWAID = [
     source: "الجمهور",
     author_name: null,
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-207",
@@ -1571,6 +2147,9 @@ export const SEED_FAWAID = [
     source: "صحيح البخاري",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-208",
@@ -1579,6 +2158,9 @@ export const SEED_FAWAID = [
     source: "علوم القرآن",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-209",
@@ -1587,6 +2169,9 @@ export const SEED_FAWAID = [
     source: "الفقه المقارن",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-210",
@@ -1595,6 +2180,9 @@ export const SEED_FAWAID = [
     source: "قول جمهور الفقهاء",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   // ──────────────────── فوائد تربوية (211-230) ────────────────────
   {
@@ -1604,6 +2192,9 @@ export const SEED_FAWAID = [
     source: "من الحكمة التربوية",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-212",
@@ -1612,6 +2203,9 @@ export const SEED_FAWAID = [
     source: "أحمد والترمذي — حسّنه الألباني",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-213",
@@ -1620,6 +2214,9 @@ export const SEED_FAWAID = [
     source: "سورة النحل: 125",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-214",
@@ -1628,6 +2225,9 @@ export const SEED_FAWAID = [
     source: "التربية النبوية",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-215",
@@ -1636,6 +2236,9 @@ export const SEED_FAWAID = [
     source: "قال علي بن أبي طالب",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-216",
@@ -1644,6 +2247,9 @@ export const SEED_FAWAID = [
     source: "ابن القيم في مدارج السالكين",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-217",
@@ -1652,6 +2258,9 @@ export const SEED_FAWAID = [
     source: "سورة المائدة: 2",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-218",
@@ -1660,6 +2269,9 @@ export const SEED_FAWAID = [
     source: "ابن القيم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-219",
@@ -1668,6 +2280,9 @@ export const SEED_FAWAID = [
     source: "من الحكمة النبوية",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-220",
@@ -1676,6 +2291,9 @@ export const SEED_FAWAID = [
     source: "قال ابن حزم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-221",
@@ -1684,6 +2302,9 @@ export const SEED_FAWAID = [
     source: "رواه مسلم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-222",
@@ -1692,6 +2313,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-223",
@@ -1700,6 +2324,9 @@ export const SEED_FAWAID = [
     source: "رواه مسلم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-224",
@@ -1708,6 +2335,9 @@ export const SEED_FAWAID = [
     source: "سورة إبراهيم: 7",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-225",
@@ -1716,6 +2346,9 @@ export const SEED_FAWAID = [
     source: "سورة الزمر: 10",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-226",
@@ -1724,6 +2357,9 @@ export const SEED_FAWAID = [
     source: "ابن القيم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-227",
@@ -1732,6 +2368,9 @@ export const SEED_FAWAID = [
     source: "سورة الفرقان: 70",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-228",
@@ -1740,6 +2379,9 @@ export const SEED_FAWAID = [
     source: "ابن تيمية",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-229",
@@ -1748,6 +2390,9 @@ export const SEED_FAWAID = [
     source: "ابن القيم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-230",
@@ -1756,6 +2401,9 @@ export const SEED_FAWAID = [
     source: "قول أبي علي الدقّاق، نقله القشيري في الرسالة القشيرية",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   // ──────────────────── فوائد دعوية (231-245) ────────────────────
   {
@@ -1765,6 +2413,9 @@ export const SEED_FAWAID = [
     source: "سيرة النبي ﷺ",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-232",
@@ -1773,6 +2424,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-233",
@@ -1781,6 +2435,9 @@ export const SEED_FAWAID = [
     source: "رواه مسلم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-234",
@@ -1789,6 +2446,9 @@ export const SEED_FAWAID = [
     source: "من الحكمة الدعوية",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-235",
@@ -1797,6 +2457,9 @@ export const SEED_FAWAID = [
     source: "سورة لقمان: 17",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-236",
@@ -1805,6 +2468,9 @@ export const SEED_FAWAID = [
     source: "منهج العلماء",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-237",
@@ -1813,6 +2479,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-238",
@@ -1821,6 +2490,9 @@ export const SEED_FAWAID = [
     source: "سورة الشعراء: 214",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-239",
@@ -1829,6 +2501,9 @@ export const SEED_FAWAID = [
     source: "ابن القيم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-240",
@@ -1837,6 +2512,9 @@ export const SEED_FAWAID = [
     source: "سورة فصلت: 33",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-241",
@@ -1845,6 +2523,9 @@ export const SEED_FAWAID = [
     source: "حكمة دعوية",
     author_name: null,
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-242",
@@ -1853,6 +2534,9 @@ export const SEED_FAWAID = [
     source: "قال ابن عثيمين",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-243",
@@ -1861,6 +2545,9 @@ export const SEED_FAWAID = [
     source: "من أصول الدعوة",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-244",
@@ -1869,6 +2556,9 @@ export const SEED_FAWAID = [
     source: "منهج السلف",
     author_name: null,
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-245",
@@ -1877,6 +2567,9 @@ export const SEED_FAWAID = [
     source: "من فقه الدعوة",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   // ──────────────────── آداب وأخلاق (246-270) ────────────────────
   {
@@ -1886,6 +2579,9 @@ export const SEED_FAWAID = [
     source: "رواه مسلم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-248",
@@ -1894,6 +2590,9 @@ export const SEED_FAWAID = [
     source: "رواه الترمذي وصحح الألباني",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-249",
@@ -1902,6 +2601,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-252",
@@ -1910,6 +2612,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-253",
@@ -1918,6 +2623,9 @@ export const SEED_FAWAID = [
     source: "مسلم: ٢٥٦٣؛ الفلق: ٥",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-254",
@@ -1926,6 +2634,9 @@ export const SEED_FAWAID = [
     source: "سورة النور: 30",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-256",
@@ -1934,6 +2645,9 @@ export const SEED_FAWAID = [
     source: "الحجرات: ١٢؛ مسلم ٢٥٨٩",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-257",
@@ -1942,6 +2656,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه؛ الأحزاب: ٥٨",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-258",
@@ -1950,6 +2667,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-260",
@@ -1958,6 +2678,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-261",
@@ -1966,6 +2689,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-262",
@@ -1974,6 +2700,9 @@ export const SEED_FAWAID = [
     source: "رواه الترمذي (2616) عن معاذ بن جبل — حسنه الترمذي",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-263",
@@ -1982,6 +2711,9 @@ export const SEED_FAWAID = [
     source: "رواه الدارمي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-264",
@@ -1990,6 +2722,9 @@ export const SEED_FAWAID = [
     source: "رواه الترمذي (1900) وابن ماجه (3663) عن أبي الدرداء — صححه الترمذي",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-265",
@@ -1998,6 +2733,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه — عن أبي موسى الأشعري",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-266",
@@ -2006,6 +2744,9 @@ export const SEED_FAWAID = [
     source: "قال ابن القيم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-267",
@@ -2014,6 +2755,9 @@ export const SEED_FAWAID = [
     source: "معنى مستفاد من حديث متفق عليه (مسلم 2588): وما تواضع أحد لله إلا رفعه الله",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-268",
@@ -2022,6 +2766,9 @@ export const SEED_FAWAID = [
     source: "أبو داود (٤٧٨٤) — حسّنه الألباني",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-269",
@@ -2030,6 +2777,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-270",
@@ -2038,6 +2788,9 @@ export const SEED_FAWAID = [
     source: "رواه مسلم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-271",
@@ -2046,6 +2799,9 @@ export const SEED_FAWAID = [
     source: "رواه مسلم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-272",
@@ -2054,6 +2810,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-273",
@@ -2062,6 +2821,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-274",
@@ -2070,6 +2832,9 @@ export const SEED_FAWAID = [
     source: "رواه مسلم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-275",
@@ -2078,6 +2843,9 @@ export const SEED_FAWAID = [
     source: "أثر مشهور عند الصوفية والحكماء — نُسب لبعض السلف",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-276",
@@ -2086,6 +2854,9 @@ export const SEED_FAWAID = [
     source: "سورة يونس — 62-64",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-277",
@@ -2094,6 +2865,9 @@ export const SEED_FAWAID = [
     source: "مقولة مشهورة متداولة على الألسنة، لا تصح حديثاً ولا نسبة موثَّقة لها",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-278",
@@ -2102,6 +2876,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-279",
@@ -2110,6 +2887,9 @@ export const SEED_FAWAID = [
     source: "رواه مسلم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-280",
@@ -2118,6 +2898,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-281",
@@ -2126,6 +2909,9 @@ export const SEED_FAWAID = [
     source: "رواه مسلم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-282",
@@ -2134,6 +2920,9 @@ export const SEED_FAWAID = [
     source: "رواه الطبراني — حسن بشواهده",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-283",
@@ -2142,6 +2931,9 @@ export const SEED_FAWAID = [
     source: "الترمذي ٢٣٨٠ — صححه الألباني",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-284",
@@ -2150,6 +2942,9 @@ export const SEED_FAWAID = [
     source: "الشطر الأول قول ابن مسعود (مسند الدارمي)، والثاني مرسل الأعمش (هداية الرواة لابن حجر) — لا يصح عن الإمام الشافعي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-285",
@@ -2158,6 +2953,9 @@ export const SEED_FAWAID = [
     source: "رواه مسلم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-286",
@@ -2166,6 +2964,9 @@ export const SEED_FAWAID = [
     source: "رواه ابن ماجه — حسنه الألباني",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-287",
@@ -2174,6 +2975,9 @@ export const SEED_FAWAID = [
     source: "الترمذي ٢١٣٩ — حسّنه الألباني؛ ومعناه أن الدعاء من أسباب دفع البلاء المقدَّر المشروط لا نقض القدر المكتوب",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-288",
@@ -2182,6 +2986,9 @@ export const SEED_FAWAID = [
     source: "رواه مسلم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-290",
@@ -2190,6 +2997,9 @@ export const SEED_FAWAID = [
     source: "رواه البخاري",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-291",
@@ -2198,6 +3008,9 @@ export const SEED_FAWAID = [
     source: "الترمذي ٢٩٦٩ — صحيح؛ ضعّف الألباني لفظ «مخ العبادة»",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-292",
@@ -2206,6 +3019,9 @@ export const SEED_FAWAID = [
     source: "النور بين الجمعتين: رواه الحاكم والبيهقي، صححه الألباني لغيره (صحيح الترغيب)؛ العصمة من الدجال: رواه مسلم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-293",
@@ -2214,6 +3030,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه — البخاري ومسلم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-294",
@@ -2222,6 +3041,9 @@ export const SEED_FAWAID = [
     source: "سورة نوح: 10-11",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-295",
@@ -2230,6 +3052,9 @@ export const SEED_FAWAID = [
     source: "رواه أبو داود والترمذي — صحيح",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-296",
@@ -2238,6 +3063,9 @@ export const SEED_FAWAID = [
     source: "رواه أبو داود وابن ماجه — صحيح",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-297",
@@ -2246,6 +3074,9 @@ export const SEED_FAWAID = [
     source: "مدارج السالكين — ابن القيم",
     author_name: "ابن القيم الجوزية",
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-298",
@@ -2254,6 +3085,9 @@ export const SEED_FAWAID = [
     source: "رواه مسلم (597) عن أبي هريرة",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-299",
@@ -2262,6 +3096,9 @@ export const SEED_FAWAID = [
     source: "رواه مسلم (2692)",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-300",
@@ -2270,6 +3107,9 @@ export const SEED_FAWAID = [
     source: "رواه الترمذي وصحّحه الألباني",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-301",
@@ -2278,6 +3118,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-302",
@@ -2286,6 +3129,9 @@ export const SEED_FAWAID = [
     source: "رواه البخاري ومسلم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-303",
@@ -2294,6 +3140,9 @@ export const SEED_FAWAID = [
     source: "الزهد — ابن المبارك",
     author_name: "ابن المبارك",
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-304",
@@ -2302,6 +3151,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-305",
@@ -2310,6 +3162,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-306",
@@ -2318,6 +3173,9 @@ export const SEED_FAWAID = [
     source: "رواه مسلم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-307",
@@ -2326,6 +3184,9 @@ export const SEED_FAWAID = [
     source: "رواه ابن ماجه والطبراني بسند صحيح (وأصل الحديث دون لفظ الجماعة رواه مسلم)",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-308",
@@ -2334,6 +3195,9 @@ export const SEED_FAWAID = [
     source: "رواه ابن ماجه — صحّحه الألباني",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-309",
@@ -2342,6 +3206,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-310",
@@ -2350,6 +3217,9 @@ export const SEED_FAWAID = [
     source: "الترمذي ٢٣٤٦ — حسّنه الألباني",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-311",
@@ -2358,6 +3228,9 @@ export const SEED_FAWAID = [
     source: "رواه مسلم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-312",
@@ -2366,6 +3239,9 @@ export const SEED_FAWAID = [
     source: "مسلم: ٢٢٣",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-313",
@@ -2374,6 +3250,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-314",
@@ -2382,6 +3261,9 @@ export const SEED_FAWAID = [
     source: "تفسير ابن كثير — سورة الكهف",
     author_name: "ابن كثير الدمشقي",
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-315",
@@ -2390,6 +3272,9 @@ export const SEED_FAWAID = [
     source: "تفسير ابن كثير — مقدمة",
     author_name: "ابن كثير الدمشقي",
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-316",
@@ -2398,6 +3283,9 @@ export const SEED_FAWAID = [
     source: "رواه مسلم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-317",
@@ -2406,6 +3294,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-318",
@@ -2414,6 +3305,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه — البخاري ومسلم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-319",
@@ -2422,6 +3316,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-320",
@@ -2430,6 +3327,9 @@ export const SEED_FAWAID = [
     source: "جامع بيان العلم — ابن عبد البر",
     author_name: "ابن عبد البر",
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-321",
@@ -2438,6 +3338,9 @@ export const SEED_FAWAID = [
     source: "أثر يُنسب لكتاب الزهد للإمام أحمد بن حنبل — لم يُعثر على تخريج مباشر مؤكَّد لهذا اللفظ بعينه، يُنقل كمعنى عام عن السلف",
     author_name: "منسوب إلى الإمام أحمد",
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-322",
@@ -2446,6 +3349,9 @@ export const SEED_FAWAID = [
     source: "إحياء علوم الدين — الغزالي",
     author_name: "الإمام الغزالي",
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-323",
@@ -2454,6 +3360,9 @@ export const SEED_FAWAID = [
     source: "أبو داود ٤٨١١ وأحمد والترمذي — صححه الألباني",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-324",
@@ -2462,6 +3371,9 @@ export const SEED_FAWAID = [
     source: "غافر: ٦٠؛ الترمذي ٢٩٦٩ — صحيح",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-325",
@@ -2470,6 +3382,9 @@ export const SEED_FAWAID = [
     source: "منهاج التعلم عند السلف",
     author_name: "ابن خلدون",
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-326",
@@ -2478,6 +3393,9 @@ export const SEED_FAWAID = [
     source: "المقاصد الشرعية — ابن عاشور",
     author_name: "ابن عاشور",
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-327",
@@ -2486,6 +3404,9 @@ export const SEED_FAWAID = [
     source: "رياض الصالحين — النووي",
     author_name: "الإمام النووي",
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-328",
@@ -2494,6 +3415,9 @@ export const SEED_FAWAID = [
     source: "سورة الرعد: 11",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-329",
@@ -2502,6 +3426,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-330",
@@ -2510,6 +3437,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-331",
@@ -2518,6 +3448,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-332",
@@ -2526,6 +3459,9 @@ export const SEED_FAWAID = [
     source: "الفتاوى الكبرى — ابن تيمية",
     author_name: "ابن تيمية",
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-333",
@@ -2534,6 +3470,9 @@ export const SEED_FAWAID = [
     source: "سورة نوح: 10-11",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-334",
@@ -2542,6 +3481,9 @@ export const SEED_FAWAID = [
     source: "صحيح مسلم",
     author_name: null,
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-335",
@@ -2550,6 +3492,9 @@ export const SEED_FAWAID = [
     source: "صحيح مسلم",
     author_name: null,
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-337",
@@ -2558,6 +3503,9 @@ export const SEED_FAWAID = [
     source: "سنن الترمذي — صحيح",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-338",
@@ -2566,6 +3514,9 @@ export const SEED_FAWAID = [
     source: "سنن الترمذي",
     author_name: null,
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-339",
@@ -2574,6 +3525,9 @@ export const SEED_FAWAID = [
     source: "صحيح مسلم",
     author_name: null,
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-340",
@@ -2582,6 +3536,9 @@ export const SEED_FAWAID = [
     source: "سنن الترمذي — صحيح",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-341",
@@ -2590,6 +3547,9 @@ export const SEED_FAWAID = [
     source: "صحيح مسلم — 720",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-342",
@@ -2598,6 +3558,9 @@ export const SEED_FAWAID = [
     source: "صحيح البخاري — 6405، صحيح مسلم — 2691",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-343",
@@ -2606,6 +3569,9 @@ export const SEED_FAWAID = [
     source: "الحجرات: ١٢؛ مسلم ٢٥٨٩",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-344",
@@ -2614,6 +3580,9 @@ export const SEED_FAWAID = [
     source: "صحيح مسلم — 804",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-345",
@@ -2622,6 +3591,9 @@ export const SEED_FAWAID = [
     source: "النسائي في الكبرى — صحيح",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-346",
@@ -2630,6 +3602,9 @@ export const SEED_FAWAID = [
     source: "صحيح البخاري — 5986",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-347",
@@ -2638,6 +3613,9 @@ export const SEED_FAWAID = [
     source: "سنن أبي داود — صحيح",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-348",
@@ -2646,6 +3624,9 @@ export const SEED_FAWAID = [
     source: "صحيح البخاري — 887، صحيح مسلم — 252",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-349",
@@ -2654,6 +3635,9 @@ export const SEED_FAWAID = [
     source: "سورة الفرقان — 70",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-350",
@@ -2662,6 +3646,9 @@ export const SEED_FAWAID = [
     source: "صحيح البخاري — 1952، صحيح مسلم — 1147",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-351",
@@ -2670,6 +3657,9 @@ export const SEED_FAWAID = [
     source: "الوابل الصيب من الكلم الطيب — ابن القيم",
     author_name: "ابن القيم الجوزية",
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-352",
@@ -2678,6 +3668,9 @@ export const SEED_FAWAID = [
     source: "سنن الترمذي — 2320، صحيح",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-353",
@@ -2686,6 +3679,9 @@ export const SEED_FAWAID = [
     source: "صحيح مسلم — 728",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-354",
@@ -2694,6 +3690,9 @@ export const SEED_FAWAID = [
     source: "صحيح مسلم — 2017، أبو داود — 3767",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-355",
@@ -2702,6 +3701,9 @@ export const SEED_FAWAID = [
     source: "سنن النسائي — 2358، صحيح",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-356",
@@ -2710,6 +3712,9 @@ export const SEED_FAWAID = [
     source: "صحيح مسلم — 1164",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-357",
@@ -2718,6 +3723,9 @@ export const SEED_FAWAID = [
     source: "العبودية — ابن تيمية",
     author_name: "ابن تيمية",
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-358",
@@ -2726,6 +3734,9 @@ export const SEED_FAWAID = [
     source: "شرح الطحاوية — ابن أبي العز",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-359",
@@ -2734,6 +3745,9 @@ export const SEED_FAWAID = [
     source: "سنن أبي داود — 4699، صحيح",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-360",
@@ -2742,6 +3756,9 @@ export const SEED_FAWAID = [
     source: "المستدرك للحاكم — صحيح",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-361",
@@ -2750,6 +3767,9 @@ export const SEED_FAWAID = [
     source: "المصاحف — ابن أبي داود",
     author_name: "عثمان بن عفان رضي الله عنه",
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-362",
@@ -2758,6 +3778,9 @@ export const SEED_FAWAID = [
     source: "سنن أبي داود — 1464، سنن الترمذي — 2914، صحيح",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-363",
@@ -2766,6 +3789,9 @@ export const SEED_FAWAID = [
     source: "الزمر — 10",
     author_name: null,
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-364",
@@ -2774,6 +3800,9 @@ export const SEED_FAWAID = [
     source: "صحيح مسلم — 2733",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-365",
@@ -2782,6 +3811,9 @@ export const SEED_FAWAID = [
     source: "مناقب الشافعي — البيهقي",
     author_name: "الإمام الشافعي",
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-366",
@@ -2790,6 +3822,9 @@ export const SEED_FAWAID = [
     source: "مفتاح دار السعادة — ابن القيم",
     author_name: "ابن القيم الجوزية",
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-367",
@@ -2798,6 +3833,9 @@ export const SEED_FAWAID = [
     source: "صحيح مسلم — 2588",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-368",
@@ -2806,6 +3844,9 @@ export const SEED_FAWAID = [
     source: "الأنعام — 160، صحيح البخاري — 6491",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-369",
@@ -2814,6 +3855,9 @@ export const SEED_FAWAID = [
     source: "مناقب الإمام أحمد — ابن الجوزي",
     author_name: "الإمام أحمد بن حنبل",
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-370",
@@ -2822,6 +3866,9 @@ export const SEED_FAWAID = [
     source: "سنن أبي داود — 4941، سنن الترمذي — 1924، صحيح",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-371",
@@ -2830,6 +3877,9 @@ export const SEED_FAWAID = [
     source: "التوبة — 119",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-372",
@@ -2838,6 +3888,9 @@ export const SEED_FAWAID = [
     source: "ترتيب المدارك — القاضي عياض",
     author_name: "الإمام مالك بن أنس",
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-373",
@@ -2846,6 +3899,9 @@ export const SEED_FAWAID = [
     source: "القدر — 3، صحيح البخاري — 1901",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-374",
@@ -2854,6 +3910,9 @@ export const SEED_FAWAID = [
     source: "هود — 52",
     author_name: null,
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-375",
@@ -2862,6 +3921,9 @@ export const SEED_FAWAID = [
     source: "سنن أبي داود — 4811، سنن الترمذي — 1954، صحيح",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-376",
@@ -2870,6 +3932,9 @@ export const SEED_FAWAID = [
     source: "صيد الخاطر — ابن الجوزي",
     author_name: "ابن الجوزي",
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-377",
@@ -2878,6 +3943,9 @@ export const SEED_FAWAID = [
     source: "صحيح البخاري — 10، صحيح مسلم — 40",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-378",
@@ -2886,6 +3954,9 @@ export const SEED_FAWAID = [
     source: "البخاري — 71، مدارج السالكين",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-379",
@@ -2894,6 +3965,9 @@ export const SEED_FAWAID = [
     source: "غافر — 60، الترمذي — 2969",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-380",
@@ -2902,6 +3976,9 @@ export const SEED_FAWAID = [
     source: "البقرة — 279، أحكام القرآن لابن العربي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-381",
@@ -2910,6 +3987,9 @@ export const SEED_FAWAID = [
     source: "لطائف المعارف — ابن رجب",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-382",
@@ -2918,6 +3998,9 @@ export const SEED_FAWAID = [
     source: "آل عمران — 104، الترمذي — 2169",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-383",
@@ -2926,6 +4009,9 @@ export const SEED_FAWAID = [
     source: "مجموع الفتاوى — ابن تيمية",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-384",
@@ -2934,6 +4020,9 @@ export const SEED_FAWAID = [
     source: "رياض الصالحين — النووي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-385",
@@ -2942,6 +4031,9 @@ export const SEED_FAWAID = [
     source: "الكهف — 110، صحيح مسلم — 2985",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-386",
@@ -2950,6 +4042,9 @@ export const SEED_FAWAID = [
     source: "مدارج السالكين — ابن القيم الجوزية",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-387",
@@ -2958,6 +4053,9 @@ export const SEED_FAWAID = [
     source: "صحيح مسلم — 1631",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-388",
@@ -2966,6 +4064,9 @@ export const SEED_FAWAID = [
     source: "عدة الصابرين — ابن القيم الجوزية",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-389",
@@ -2974,6 +4075,9 @@ export const SEED_FAWAID = [
     source: "زاد المعاد — ابن القيم الجوزية",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-390",
@@ -2982,6 +4086,9 @@ export const SEED_FAWAID = [
     source: "سنن الترمذي — 1212، السنن الكبرى للبيهقي",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-391",
@@ -2990,6 +4097,9 @@ export const SEED_FAWAID = [
     source: "صحيح البخاري — 5641",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-392",
@@ -2998,6 +4108,9 @@ export const SEED_FAWAID = [
     source: "مدارج السالكين — ابن القيم، صحيح مسلم — 2581",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-393",
@@ -3006,6 +4119,9 @@ export const SEED_FAWAID = [
     source: "سورة الحديد — 20، مدارج السالكين — ابن القيم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-394",
@@ -3014,6 +4130,9 @@ export const SEED_FAWAID = [
     source: "صحيح البخاري — 1، مدارج السالكين — ابن القيم",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-395",
@@ -3022,6 +4141,9 @@ export const SEED_FAWAID = [
     source: "صحيح البخاري — 7405، مدارج السالكين — ابن القيم",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-396",
@@ -3030,6 +4152,9 @@ export const SEED_FAWAID = [
     source: "سنن الترمذي — 2517، صحيح بإسناد ابن حبان",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-397",
@@ -3038,6 +4163,9 @@ export const SEED_FAWAID = [
     source: "الوابل الصيب — ابن القيم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-398",
@@ -3046,6 +4174,9 @@ export const SEED_FAWAID = [
     source: "صحيح البخاري — 2446، صحيح مسلم — 2586",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-399",
@@ -3054,6 +4185,9 @@ export const SEED_FAWAID = [
     source: "جامع العلوم والحكم — ابن رجب الحنبلي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-400",
@@ -3062,6 +4196,9 @@ export const SEED_FAWAID = [
     source: "صحيح البخاري — 15، سورة آل عمران — 31",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-401",
@@ -3070,6 +4207,9 @@ export const SEED_FAWAID = [
     source: "صحيح البخاري — 645، المغني — ابن قدامة",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-402",
@@ -3078,6 +4218,9 @@ export const SEED_FAWAID = [
     source: "صحيح مسلم — 725، جامع الترمذي — 414",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-403",
@@ -3086,6 +4229,9 @@ export const SEED_FAWAID = [
     source: "درء تعارض العقل والنقل — ابن تيمية، الإنصاف — الباقلاني",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-404",
@@ -3094,6 +4240,9 @@ export const SEED_FAWAID = [
     source: "نهج البلاغة — من وصية علي بن أبي طالب رضي الله عنه لكميل بن زياد",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-405",
@@ -3102,6 +4251,9 @@ export const SEED_FAWAID = [
     source: "جامع بيان العلم — ابن عبد البر، مناقب الشافعي — البيهقي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-406",
@@ -3110,6 +4262,9 @@ export const SEED_FAWAID = [
     source: "التوسل والوسيلة — ابن تيمية",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-407",
@@ -3118,6 +4273,9 @@ export const SEED_FAWAID = [
     source: "صحيح مسلم — مقدمة الإمام مسلم، الكفاية في علم الرواية — الخطيب البغدادي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-408",
@@ -3126,6 +4284,9 @@ export const SEED_FAWAID = [
     source: "سور البقرة والنساء والمائدة — تسلسل آيات تحريم الخمر",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-409",
@@ -3134,6 +4295,9 @@ export const SEED_FAWAID = [
     source: "الإصابة في تمييز الصحابة — ابن حجر، سير أعلام النبلاء — الذهبي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-410",
@@ -3142,6 +4306,9 @@ export const SEED_FAWAID = [
     source: "مدارج السالكين — ابن القيم، الفقه الإسلامي وأدلته — الزحيلي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-411",
@@ -3150,6 +4317,9 @@ export const SEED_FAWAID = [
     source: "السيرة النبوية لابن هشام، فقه السيرة — الغزالي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-412",
@@ -3158,6 +4328,9 @@ export const SEED_FAWAID = [
     source: "الأشباه والنظائر — السيوطي وابن نجيم، شرح الكوكب المنير",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-413",
@@ -3166,6 +4339,9 @@ export const SEED_FAWAID = [
     source: "تذكرة الحفاظ — الذهبي، الإصابة — ابن حجر",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-414",
@@ -3174,6 +4350,9 @@ export const SEED_FAWAID = [
     source: "التبيان في آداب حملة القرآن — النووي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-415",
@@ -3182,6 +4361,9 @@ export const SEED_FAWAID = [
     source: "المقدمة في علوم القرآن — ابن الجزري",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-416",
@@ -3190,6 +4372,9 @@ export const SEED_FAWAID = [
     source: "تاريخ الأدب العربي — بروكلمان، مصادر الفكر الإسلامي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-417",
@@ -3198,6 +4383,9 @@ export const SEED_FAWAID = [
     source: "مدارج السالكين — ابن القيم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-418",
@@ -3206,6 +4394,9 @@ export const SEED_FAWAID = [
     source: "البرهان في علوم القرآن — الزركشي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-419",
@@ -3214,6 +4405,9 @@ export const SEED_FAWAID = [
     source: "مدارج السالكين — ابن القيم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-420",
@@ -3222,6 +4416,9 @@ export const SEED_FAWAID = [
     source: "الأحكام السلطانية — الماوردي، فقه السيرة",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-421",
@@ -3230,6 +4427,9 @@ export const SEED_FAWAID = [
     source: "مدارج السالكين — ابن القيم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-422",
@@ -3238,6 +4438,9 @@ export const SEED_FAWAID = [
     source: "دلائل الإعجاز — الجرجاني، الإتقان — السيوطي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-423",
@@ -3246,6 +4449,9 @@ export const SEED_FAWAID = [
     source: "أسرار الصلاة — ابن قيم الجوزية",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-424",
@@ -3254,6 +4460,9 @@ export const SEED_FAWAID = [
     source: "شأن الدعاء — الخطابي، الأسماء والصفات — البيهقي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-425",
@@ -3262,6 +4471,9 @@ export const SEED_FAWAID = [
     source: "جامع العلوم والحكم — ابن رجب، شروح الأربعين النووية",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-426",
@@ -3270,6 +4482,9 @@ export const SEED_FAWAID = [
     source: "البرهان في علوم القرآن — الزركشي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-427",
@@ -3278,6 +4493,9 @@ export const SEED_FAWAID = [
     source: "بداية المجتهد ونهاية المقتصد — ابن رشد",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-428",
@@ -3286,6 +4504,9 @@ export const SEED_FAWAID = [
     source: "مفتاح دار السعادة — ابن القيم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-429",
@@ -3294,6 +4515,9 @@ export const SEED_FAWAID = [
     source: "الموافقات — الشاطبي، مقاصد الشريعة — ابن عاشور",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-430",
@@ -3302,6 +4526,9 @@ export const SEED_FAWAID = [
     source: "درء التعارض — ابن تيمية، موقظة المؤمنين — ابن رجب",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-431",
@@ -3310,6 +4537,9 @@ export const SEED_FAWAID = [
     source: "مقدمة ابن الصلاح، معرفة أنواع علوم الحديث",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-432",
@@ -3318,6 +4548,9 @@ export const SEED_FAWAID = [
     source: "مدارج السالكين — ابن القيم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-433",
@@ -3326,6 +4559,9 @@ export const SEED_FAWAID = [
     source: "مجموع الفتاوى — ابن تيمية",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-434",
@@ -3334,6 +4570,9 @@ export const SEED_FAWAID = [
     source: "الرسالة — الشافعي، إعراب القرآن — النحاس",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-435",
@@ -3342,6 +4581,9 @@ export const SEED_FAWAID = [
     source: "مناقب الإمام أحمد — ابن الجوزي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-436",
@@ -3350,6 +4592,9 @@ export const SEED_FAWAID = [
     source: "المغني — ابن قدامة، الشرح الكبير — المرداوي",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-437",
@@ -3358,6 +4603,9 @@ export const SEED_FAWAID = [
     source: "الإتقان في علوم القرآن — السيوطي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-438",
@@ -3366,6 +4614,9 @@ export const SEED_FAWAID = [
     source: "مقدمة ابن خلدون",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-439",
@@ -3374,6 +4625,9 @@ export const SEED_FAWAID = [
     source: "عدة الصابرين — ابن القيم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-440",
@@ -3382,6 +4636,9 @@ export const SEED_FAWAID = [
     source: "إعلام الموقعين — ابن القيم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-441",
@@ -3390,6 +4647,9 @@ export const SEED_FAWAID = [
     source: "تاريخ الإسلام في آسيا — أرنولد توماس",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-442",
@@ -3398,6 +4658,9 @@ export const SEED_FAWAID = [
     source: "الانتقاء في فضائل الأئمة الثلاثة — ابن عبد البر",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-443",
@@ -3406,6 +4669,9 @@ export const SEED_FAWAID = [
     source: "حديث جبريل في صحيح مسلم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-444",
@@ -3414,6 +4680,9 @@ export const SEED_FAWAID = [
     source: "لسان العرب — ابن منظور، مفردات القرآن — الراغب الأصفهاني",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-445",
@@ -3422,6 +4691,9 @@ export const SEED_FAWAID = [
     source: "الرسالة — الشافعي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-446",
@@ -3430,6 +4702,9 @@ export const SEED_FAWAID = [
     source: "عدة الصابرين وذخيرة الشاكرين — ابن القيم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-447",
@@ -3438,6 +4713,9 @@ export const SEED_FAWAID = [
     source: "نوح: ١٠–١٢",
     author_name: null,
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-448",
@@ -3446,6 +4724,9 @@ export const SEED_FAWAID = [
     source: "القواعد الفقهية",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-449",
@@ -3454,6 +4735,9 @@ export const SEED_FAWAID = [
     source: "الكامل في التاريخ — ابن الأثير",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-450",
@@ -3462,6 +4746,9 @@ export const SEED_FAWAID = [
     source: "الخشوع في الصلاة — ابن رجب الحنبلي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-451",
@@ -3470,6 +4757,9 @@ export const SEED_FAWAID = [
     source: "درء تعارض العقل والنقل — ابن تيمية",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-452",
@@ -3478,6 +4768,9 @@ export const SEED_FAWAID = [
     source: "الموقظة — الذهبي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-453",
@@ -3486,6 +4779,9 @@ export const SEED_FAWAID = [
     source: "البرهان في علوم القرآن — الزركشي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-454",
@@ -3494,6 +4790,9 @@ export const SEED_FAWAID = [
     source: "إعجاز القرآن — الباقلاني",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-455",
@@ -3502,6 +4801,9 @@ export const SEED_FAWAID = [
     source: "مدارج السالكين — ابن القيم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-456",
@@ -3510,6 +4812,9 @@ export const SEED_FAWAID = [
     source: "شرح نخبة الفكر — ابن حجر العسقلاني",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-457",
@@ -3518,6 +4823,9 @@ export const SEED_FAWAID = [
     source: "الموافقات — الشاطبي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-458",
@@ -3526,6 +4834,9 @@ export const SEED_FAWAID = [
     source: "تاريخ التراث العربي — فؤاد سزكين",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-459",
@@ -3534,6 +4845,9 @@ export const SEED_FAWAID = [
     source: "رواه أبو داود (4833) وحسّنه الترمذي (2378)؛ شرحه المناوي في فيض القدير",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-460",
@@ -3542,6 +4856,9 @@ export const SEED_FAWAID = [
     source: "شفاء العليل — ابن القيم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-461",
@@ -3550,6 +4867,9 @@ export const SEED_FAWAID = [
     source: "قواعد التعامل مع الإعجاز القرآني — مناهج البحث الشرعي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-462",
@@ -3558,6 +4878,9 @@ export const SEED_FAWAID = [
     source: "دلائل الإعجاز — الجرجاني",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-463",
@@ -3566,6 +4889,9 @@ export const SEED_FAWAID = [
     source: "اقتضاء العلم العمل — الخطيب البغدادي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-464",
@@ -3574,6 +4900,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه (البخاري ومسلم)؛ والقاعدة الفقهية مستخرجة في الأشباه والنظائر — السيوطي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-465",
@@ -3582,6 +4911,9 @@ export const SEED_FAWAID = [
     source: "مقدمة ابن الصلاح في علوم الحديث",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-466",
@@ -3590,6 +4922,9 @@ export const SEED_FAWAID = [
     source: "التبيان في آداب حملة القرآن — النووي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-467",
@@ -3598,6 +4933,9 @@ export const SEED_FAWAID = [
     source: "شرح الطحاوية — ابن أبي العز",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-468",
@@ -3606,6 +4944,9 @@ export const SEED_FAWAID = [
     source: "صحيح البخاري: ٤٩٨٦",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-469",
@@ -3614,6 +4955,9 @@ export const SEED_FAWAID = [
     source: "شرح ابن عقيل على ألفية ابن مالك",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-470",
@@ -3622,6 +4966,9 @@ export const SEED_FAWAID = [
     source: "الفقه الإسلامي وأدلته — الزحيلي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-471",
@@ -3630,6 +4977,9 @@ export const SEED_FAWAID = [
     source: "الموافقات في أصول الشريعة — الشاطبي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-472",
@@ -3638,6 +4988,9 @@ export const SEED_FAWAID = [
     source: "تفسير ابن كثير، تفسير السعدي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-473",
@@ -3646,6 +4999,9 @@ export const SEED_FAWAID = [
     source: "صحيح مسلم: ٣٥، رياض الصالحين — النووي",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-474",
@@ -3654,6 +5010,9 @@ export const SEED_FAWAID = [
     source: "بيت الحكمة: كيف غيّر العرب الحضارة الغربية — جوناثان ليونز",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-475",
@@ -3662,6 +5021,9 @@ export const SEED_FAWAID = [
     source: "التدمرية — ابن تيمية",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-476",
@@ -3670,6 +5032,9 @@ export const SEED_FAWAID = [
     source: "الصحاح للجوهري، التعريفات للجرجاني",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-477",
@@ -3678,6 +5043,9 @@ export const SEED_FAWAID = [
     source: "لسان العرب لابن منظور، المفردات في غريب القرآن للراغب",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-478",
@@ -3686,6 +5054,9 @@ export const SEED_FAWAID = [
     source: "زاد المعاد — ابن القيم",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-479",
@@ -3694,6 +5065,9 @@ export const SEED_FAWAID = [
     source: "صحيح البخاري: ٤٢٨٠ (تحطيم الأصنام)؛ السيرة لابن هشام (عبارة الطلقاء، إسناد معضل)",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-480",
@@ -3702,6 +5076,9 @@ export const SEED_FAWAID = [
     source: "دراسات في الحديث النبوي وتاريخ تدوينه — محمد مصطفى الأعظمي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-481",
@@ -3710,6 +5087,9 @@ export const SEED_FAWAID = [
     source: "الكامل في التاريخ — ابن الأثير",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-482",
@@ -3718,6 +5098,9 @@ export const SEED_FAWAID = [
     source: "الرسالة القشيرية، إحياء علوم الدين للغزالي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-483",
@@ -3726,6 +5109,9 @@ export const SEED_FAWAID = [
     source: "الموافقات — الشاطبي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-484",
@@ -3734,6 +5120,9 @@ export const SEED_FAWAID = [
     source: "أبو داود: ٤٨٣٣، فيض القدير للمناوي",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-485",
@@ -3742,6 +5131,9 @@ export const SEED_FAWAID = [
     source: "البخاري: ٦١١٦، إحياء علوم الدين للغزالي",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   /* ───────── فوائد علمية (486-490) ───────── */
   {
@@ -3751,6 +5143,9 @@ export const SEED_FAWAID = [
     source: "مدارج السالكين لابن القيم، إعلام الموقعين",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-487",
@@ -3759,6 +5154,9 @@ export const SEED_FAWAID = [
     source: "مقدمة صحيح مسلم، شرح النووي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-488",
@@ -3767,6 +5165,9 @@ export const SEED_FAWAID = [
     source: "المجموع للنووي، أدب المفتي والمستفتي لابن الصلاح",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-489",
@@ -3775,6 +5176,9 @@ export const SEED_FAWAID = [
     source: "المنهج الحديثي بين النظرية والتطبيق، تدريب الراوي للسيوطي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-490",
@@ -3783,6 +5187,9 @@ export const SEED_FAWAID = [
     source: "الإتقان للسيوطي، تفسير ابن كثير",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   /* ───────── فوائد دعوية (491-495) ───────── */
   {
@@ -3792,6 +5199,9 @@ export const SEED_FAWAID = [
     source: "النحل: ١٢٥، مدارج السالكين لابن القيم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-492",
@@ -3800,6 +5210,9 @@ export const SEED_FAWAID = [
     source: "الأخلاق والسير لابن حزم، مناهج الدعوة",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-493",
@@ -3808,6 +5221,9 @@ export const SEED_FAWAID = [
     source: "السيرة النبوية، مجموع فتاوى ابن تيمية",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-494",
@@ -3816,6 +5232,9 @@ export const SEED_FAWAID = [
     source: "حلية الأولياء لأبي نعيم، السيرة الحلبية",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-495",
@@ -3824,6 +5243,9 @@ export const SEED_FAWAID = [
     source: "البخاري: ١٣٩٥، مسلم: ١٩",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   /* ───────── فوائد تاريخية (496-500) ───────── */
   {
@@ -3833,6 +5255,9 @@ export const SEED_FAWAID = [
     source: "أبو داود: ٤٩٨، ابن هشام في السيرة النبوية",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-497",
@@ -3841,6 +5266,9 @@ export const SEED_FAWAID = [
     source: "سورة آل عمران: 123، غزوة بدر، سيرة ابن هشام، التاريخ الطبري",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-498",
@@ -3849,6 +5277,9 @@ export const SEED_FAWAID = [
     source: "صحيح البخاري: ٣٩٠٥، السيرة النبوية لابن هشام",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-499",
@@ -3857,6 +5288,9 @@ export const SEED_FAWAID = [
     source: "موسوعة غينيس للأرقام القياسية، تاريخ التعليم الإسلامي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-500",
@@ -3865,6 +5299,9 @@ export const SEED_FAWAID = [
     source: "ابن الأثير في الكامل في التاريخ، المصادر الغربية الصليبية",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   /* ───────── فوائد لغوية (501-505) ───────── */
   {
@@ -3874,6 +5311,9 @@ export const SEED_FAWAID = [
     source: "البيان والتبيين للجاحظ، البرهان للزركشي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-502",
@@ -3882,6 +5322,9 @@ export const SEED_FAWAID = [
     source: "اللغة العربية معناها ومبناها لتمام حسان، مجمع اللغة العربية",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-503",
@@ -3890,6 +5333,9 @@ export const SEED_FAWAID = [
     source: "شرح ابن عقيل على ألفية ابن مالك، النحو الوافي لعباس حسن",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-504",
@@ -3898,6 +5344,9 @@ export const SEED_FAWAID = [
     source: "سر الفصاحة لابن سنان الخفاجي، الخصائص لابن جني",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-505",
@@ -3906,6 +5355,9 @@ export const SEED_FAWAID = [
     source: "البرهان في علوم القرآن للزركشي، التحرير والتنوير لابن عاشور",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   /* ───────── فوائد سلوكية (506-510) ───────── */
   {
@@ -3915,6 +5367,9 @@ export const SEED_FAWAID = [
     source: "متفق عليه، فتح الباري لابن حجر",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-507",
@@ -3923,6 +5378,9 @@ export const SEED_FAWAID = [
     source: "مدارج السالكين لابن القيم، إحياء علوم الدين للغزالي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-508",
@@ -3931,6 +5389,9 @@ export const SEED_FAWAID = [
     source: "رياض الصالحين للنووي، اللطائف في الوقت الفاضل",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-509",
@@ -3939,6 +5400,9 @@ export const SEED_FAWAID = [
     source: "أبو داود: ٤٨٣٣، مدارج السالكين لابن القيم",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-510",
@@ -3947,6 +5411,9 @@ export const SEED_FAWAID = [
     source: "زاد المعاد لابن القيم، البخاري: ٦٧٦",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   // ──────────────────── فوائد فقهية (511-513): آيات الأحكام ────────────────────
   {
@@ -3956,6 +5423,9 @@ export const SEED_FAWAID = [
     source: "سورة المائدة: 6",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-512",
@@ -3964,6 +5434,9 @@ export const SEED_FAWAID = [
     source: "سورة النساء: 103",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-513",
@@ -3972,6 +5445,9 @@ export const SEED_FAWAID = [
     source: "سورة البقرة: 275",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   // ──────────────────── فوائد عقدية + فقهية (514-517): أقسام التوحيد وآية الزكاة ────────────────────
   {
@@ -3981,6 +5457,9 @@ export const SEED_FAWAID = [
     source: "سورة الفاتحة: 2",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-515",
@@ -3989,6 +5468,9 @@ export const SEED_FAWAID = [
     source: "سورة النحل: 36",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-516",
@@ -3997,6 +5479,9 @@ export const SEED_FAWAID = [
     source: "سورة الأعراف: 180",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-517",
@@ -4005,6 +5490,9 @@ export const SEED_FAWAID = [
     source: "سورة التوبة: 103",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-518",
@@ -4013,6 +5501,9 @@ export const SEED_FAWAID = [
     source: "الموافقات — الشاطبي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-519",
@@ -4021,6 +5512,9 @@ export const SEED_FAWAID = [
     source: "الأشباه والنظائر — السيوطي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-520",
@@ -4029,6 +5523,9 @@ export const SEED_FAWAID = [
     source: "الرسالة — الشافعي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-521",
@@ -4037,6 +5534,9 @@ export const SEED_FAWAID = [
     source: "المستصفى — الغزالي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-522",
@@ -4045,6 +5545,9 @@ export const SEED_FAWAID = [
     source: "ابن الصلاح — علوم الحديث",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-523",
@@ -4053,6 +5556,9 @@ export const SEED_FAWAID = [
     source: "ابن حجر — نخبة الفكر",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-524",
@@ -4061,6 +5567,9 @@ export const SEED_FAWAID = [
     source: "ابن حجر — نخبة الفكر",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-525",
@@ -4069,6 +5578,9 @@ export const SEED_FAWAID = [
     source: "مقدمة في أصول التفسير — ابن تيمية",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-526",
@@ -4077,6 +5589,9 @@ export const SEED_FAWAID = [
     source: "الرسالة — الشافعي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-527",
@@ -4085,6 +5600,9 @@ export const SEED_FAWAID = [
     source: "صحيح البخاري — كتاب فضائل القرآن",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-528",
@@ -4093,6 +5611,9 @@ export const SEED_FAWAID = [
     source: "العقيدة الواسطية — ابن تيمية",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-529",
@@ -4101,6 +5622,9 @@ export const SEED_FAWAID = [
     source: "سورة الشورى: 11",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-530",
@@ -4109,6 +5633,9 @@ export const SEED_FAWAID = [
     source: "العقيدة الواسطية — ابن تيمية",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-531",
@@ -4117,6 +5644,9 @@ export const SEED_FAWAID = [
     source: "سورة الفتح، وابن هشام",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-532",
@@ -4125,6 +5655,9 @@ export const SEED_FAWAID = [
     source: "صحيح مسلم",
     author_name: null,
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-533",
@@ -4133,6 +5666,9 @@ export const SEED_FAWAID = [
     source: "رياض الصالحين — النووي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-534",
@@ -4141,6 +5677,9 @@ export const SEED_FAWAID = [
     source: "صحيح مسلم",
     author_name: null,
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-535",
@@ -4149,6 +5688,9 @@ export const SEED_FAWAID = [
     source: "صحيح البخاري ومسلم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-536",
@@ -4157,6 +5699,9 @@ export const SEED_FAWAID = [
     source: "سنن أبي داود",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-537",
@@ -4165,6 +5710,9 @@ export const SEED_FAWAID = [
     source: "ألفية ابن مالك",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-538",
@@ -4173,6 +5721,9 @@ export const SEED_FAWAID = [
     source: "الإيضاح — القزويني",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-539",
@@ -4181,6 +5732,9 @@ export const SEED_FAWAID = [
     source: "صحيح البخاري",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-540",
@@ -4189,6 +5743,9 @@ export const SEED_FAWAID = [
     source: "الأشباه والنظائر — السيوطي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-541",
@@ -4197,6 +5754,9 @@ export const SEED_FAWAID = [
     source: "الأشباه والنظائر — السيوطي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-542",
@@ -4205,6 +5765,9 @@ export const SEED_FAWAID = [
     source: "الأشباه والنظائر — ابن نجيم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-543",
@@ -4213,6 +5776,9 @@ export const SEED_FAWAID = [
     source: "الأشباه والنظائر — السيوطي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-544",
@@ -4221,6 +5787,9 @@ export const SEED_FAWAID = [
     source: "صحيح البخاري: 1395",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-545",
@@ -4229,6 +5798,9 @@ export const SEED_FAWAID = [
     source: "صحيح البخاري ومسلم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-546",
@@ -4237,6 +5809,9 @@ export const SEED_FAWAID = [
     source: "ابن كثير — البداية والنهاية",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-547",
@@ -4245,6 +5820,9 @@ export const SEED_FAWAID = [
     source: "المغني — ابن قدامة",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-548",
@@ -4253,6 +5831,9 @@ export const SEED_FAWAID = [
     source: "سورة ص: 29",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-549",
@@ -4261,6 +5842,9 @@ export const SEED_FAWAID = [
     source: "السيوطي — الإتقان",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-550",
@@ -4269,6 +5853,9 @@ export const SEED_FAWAID = [
     source: "صحيح مسلم",
     author_name: null,
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-551",
@@ -4277,6 +5864,9 @@ export const SEED_FAWAID = [
     source: "صحيح البخاري ومسلم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-552",
@@ -4285,6 +5875,9 @@ export const SEED_FAWAID = [
     source: "الأشباه والنظائر — السيوطي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-553",
@@ -4293,6 +5886,9 @@ export const SEED_FAWAID = [
     source: "الموافقات — الشاطبي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-554",
@@ -4301,6 +5897,9 @@ export const SEED_FAWAID = [
     source: "العقيدة الواسطية",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-555",
@@ -4309,6 +5908,9 @@ export const SEED_FAWAID = [
     source: "سورة آل عمران: 31",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-556",
@@ -4317,6 +5919,9 @@ export const SEED_FAWAID = [
     source: "صحيح مسلم",
     author_name: null,
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-557",
@@ -4325,6 +5930,9 @@ export const SEED_FAWAID = [
     source: "سنن أبي داود",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-558",
@@ -4333,6 +5941,9 @@ export const SEED_FAWAID = [
     source: "صحيح البخاري ومسلم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-559",
@@ -4341,6 +5952,9 @@ export const SEED_FAWAID = [
     source: "ابن هشام — السيرة",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-560",
@@ -4349,6 +5963,9 @@ export const SEED_FAWAID = [
     source: "صحيح البخاري",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-561",
@@ -4357,6 +5974,9 @@ export const SEED_FAWAID = [
     source: "صحيح البخاري ومسلم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-562",
@@ -4365,6 +5985,9 @@ export const SEED_FAWAID = [
     source: "الخطيب — الرحلة في طلب الحديث",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-563",
@@ -4373,6 +5996,9 @@ export const SEED_FAWAID = [
     source: "سنن الدارمي",
     author_name: null,
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-564",
@@ -4381,6 +6007,9 @@ export const SEED_FAWAID = [
     source: "ابن النديم — الفهرست",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-565",
@@ -4389,6 +6018,9 @@ export const SEED_FAWAID = [
     source: "المغني — ابن قدامة",
     author_name: null,
     status: "approved",
+    trust_level: "scholarly_source",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-566",
@@ -4397,6 +6029,9 @@ export const SEED_FAWAID = [
     source: "ابن جني — الخصائص",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-567",
@@ -4405,6 +6040,9 @@ export const SEED_FAWAID = [
     source: "ابن الأثير — النهاية",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-568",
@@ -4413,6 +6051,9 @@ export const SEED_FAWAID = [
     source: "ابن القيم — مدارج السالكين",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-569",
@@ -4421,6 +6062,9 @@ export const SEED_FAWAID = [
     source: "موطأ مالك / الترمذي",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-570",
@@ -4429,6 +6073,9 @@ export const SEED_FAWAID = [
     source: "صحيح البخاري ومسلم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-571",
@@ -4437,6 +6084,9 @@ export const SEED_FAWAID = [
     source: "صحيح البخاري — صلاة الاستخارة",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-572",
@@ -4445,6 +6095,9 @@ export const SEED_FAWAID = [
     source: "إعلام الموقعين — ابن القيم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-573",
@@ -4453,6 +6106,9 @@ export const SEED_FAWAID = [
     source: "سورة هود: 120",
     author_name: null,
     status: "approved",
+    trust_level: "primary_text",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-574",
@@ -4461,6 +6117,9 @@ export const SEED_FAWAID = [
     source: "صحيح البخاري ومسلم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-575",
@@ -4469,6 +6128,9 @@ export const SEED_FAWAID = [
     source: "شرح الطحاوية",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-576",
@@ -4477,6 +6139,9 @@ export const SEED_FAWAID = [
     source: "صحيح البخاري ومسلم",
     author_name: null,
     status: "approved",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-577",
@@ -4485,366 +6150,549 @@ export const SEED_FAWAID = [
     source: "صحيح مسلم",
     author_name: null,
     status: "approved",
+    trust_level: "unsourced",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-578",
     text: "حفر الخندق بمشورة سلمان يدل على أن الحكمة ضالة المؤمن؛ يستفيد الإمام من الرأي السديد ولو جاء من غير العرب.",
     category: "فوائد حديثية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-579",
     text: "زكاة الفطر طهرة للصائم وطعمة للمساكين؛ تُخرج قبل صلاة العيد من قوت البلد عند الجمهور.",
     category: "فوائد فقهية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-580",
     text: "لا إله إلا الله نفي وإثبات: نفي استحقاق العبادة عن غير الله، وإثباتها لله وحده.",
     category: "فوائد عقدية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-581",
     text: "قصة أصحاب الكهف تربي الشباب على أن الثبات على التوحيد أحب من مجالسة أهل الشرك.",
     category: "فوائد تربوية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-582",
     text: "قول ملكة سبأ كما في سورة النمل ﴿وَأَسْلَمْتُ مَعَ سُلَيْمَانَ لِلَّهِ﴾ — واسم «بلقيس» لم يثبت في الوحي — يعلّم أن الرجوع إلى الحق بعد ظهور البرهان سيادة لا هزيمة.",
     category: "فوائد قرآنية",
     source: "سورة النمل؛ منهج الاقتصار على ما ثبت في الوحي",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-583",
     text: "بر الوالدين يُقرن بالتوحيد؛ والتأفف أول درجات العقوق فكيف بما فوقه.",
     category: "آداب وأخلاق",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-584",
     text: "«من غش فليس منا» أصل في تحريم الغش في المعاملات والديانة.",
     category: "فوائد حديثية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-585",
     text: "الطمأنينة في الصلاة ركن عند الجمهور؛ والعجلة المخلّة تبطلها كما في حديث المسيء صلاته.",
     category: "فوائد فقهية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-586",
     text: "خطبة جعفر عند النجاشي نموذج للدعوة بالبيان الحسن قبل الصدام.",
     category: "فوائد دعوية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-587",
     text: "نسيبة أم عمارة تُظهر أن صدق النصرة يظهر عند الخوف لا في الرخاء فقط.",
     category: "فوائد تربوية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-588",
     text: "الاحتجاج بالقدر على المعصية باطل؛ القدر يُسلّم له بعد المصيبة ولا يُبرَّر به الذنب.",
     category: "فوائد عقدية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-589",
     text: "من أصبح جنبًا وهو صائم صح صومه؛ والسنة والاغتسال للصلاة لا للصوم وحده.",
     category: "فوائد فقهية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-590",
     text: "ليلة القدر خير من ألف شهر؛ والعمل في العشر مبني على الطلب لا على الجزم بتاريخ يقطع الاحتياط.",
     category: "فوائد قرآنية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-591",
     text: "طلب العلم للرياء من المهلكات؛ الإخلاص شرط قبول العمل.",
     category: "آداب وأخلاق",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-592",
     text: "المتواتر يفيد العلم؛ والآحاد الصحيح يوجب العمل عند أهل السنة في الأحكام.",
     category: "فوائد حديثية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-593",
     text: "بيع العينة حيلة على الربا؛ العبرة بالمقاصد لا بصور العقود فحسب.",
     category: "فوائد فقهية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-594",
     text: "كثرة الذنوب تورث الران؛ وعلاجها التوبة وكثرة الذكر والاستغفار.",
     category: "فوائد تربوية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-595",
     text: "أبو بكر في الردة علّم الأمة أن حفظ الأركان أولى من مداراة القبائل.",
     category: "فوائد دعوية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-596",
     text: "أصحاب الكهف علّمونا أن العبرة بالهداية لا بعدد الفتية واسم كلبهم.",
     category: "فوائد قرآنية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-597",
     text: "قاعدة العادة محكمة تضبط الأعراف في المعاملات ما لم تصادم نصًا.",
     category: "فوائد فقهية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-598",
     text: "تبوك علّمت الأمة أن الصدق يظهر عند العسرة لا في الرخاء.",
     category: "فوائد دعوية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-599",
     text: "بيعتا العقبة بنيتا على السمع والطاعة في المنشط والمكره.",
     category: "فوائد تاريخية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-600",
     text: "أصحاب الفيل برهان أن حماية البيت بيد الله لا بحلف البشر وحدهم.",
     category: "فوائد قرآنية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-601",
     text: "عين جالوت تُظهر أن ثبات الأمة بعد المحنة يعيد ميزان القوة.",
     category: "فوائد تاريخية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-602",
     text: "عقبة بن نافع جمع بين الفتح وبناء قاعدة علم في القيروان.",
     category: "فوائد دعوية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-603",
     text: "مختصر الخرقي أصل متون الحنابلة؛ والمغني شرح عليه لا بديل عن تحريره.",
     category: "فوائد فقهية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-604",
     text: "ابن الهمام في فتح القدير يحرّر الدليل مع المذهب فلا يُغفل عند الخلاف الحنفي.",
     category: "فوائد فقهية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-605",
     text: "مختصر خليل عمدة المالكية المتأخرين؛ يحتاج طالبُه إلى شروح محقّقة.",
     category: "فوائد فقهية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-606",
     text: "الجرح والتعديل صيانة للدين؛ بلا نقد الرواة تختلط السنة بالوضع.",
     category: "فوائد حديثية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-607",
     text: "نصب الراية يعلّم الفقيه التخريج قبل الاحتجاج بحديث المتن.",
     category: "فوائد حديثية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-608",
     text: "النجش خيانة للسوق؛ النهي عنه يحفظ الثقة في المعاملات.",
     category: "فوائد فقهية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-609",
     text: "زيادة الإيمان ونقصه ميزان عملي: الطاعة ترفعه والمعصية تخفضه.",
     category: "فوائد عقدية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-610",
     text: "الإقلاب مثال على دقة التجويد في حفظ أداء الوحي.",
     category: "فوائد قرآنية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-611",
     text: "حق الطريق عبادة اجتماعية: كف الأذى جزء من الإيمان.",
     category: "آداب وأخلاق",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-612",
     text: "حفظ النسل مقصد كلي؛ الزنا يهدمه والقذف يجرحه.",
     category: "فوائد فقهية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-613",
     text: "الذكر طمأنينة؛ والغفلة قسوة ولو كثرت العلوم الظاهرة.",
     category: "الرقائق",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-614",
     text: "خيبر علّمت أن النصر مع محبة الله ورسوله لا مع الدعوى المجردة.",
     category: "فوائد تاريخية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-615",
     text: "زكاة مال الصبي تربية على حق المال قبل البلوغ.",
     category: "فوائد تربوية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-616",
     text: "الكبر حجاب العلم؛ والتواضع مفتاحه.",
     category: "آداب وأخلاق",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-617",
     text: "القسطلاني قرّب البخاري للمتأخرين؛ والرجوع للصحيح أصلٌ فوق الشرح.",
     category: "فوائد حديثية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-618",
     text: "أم سلمة علّمت أن الرأي السديد قد يأتي من غير مجلس الشورى الرسمي إذا وافق الحكمة.",
     category: "فوائد تاريخية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-619",
     text: "سمية أثبتت أن سبق الشهادة ليس للرجال وحدهم.",
     category: "فوائد دعوية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-620",
     text: "بيت أبي أيوب نموذج الإيثار: المنزل يُقدَّم للنبوة قبل الراحة.",
     category: "آداب وأخلاق",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-621",
     text: "زيد بن حارثة يعلّم أن الولاء للإيمان أعلى من نسب الجاهلية.",
     category: "فوائد تربوية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-622",
     text: "عمار صبر على العذاب ثم ثبت في المشاهد؛ الابتلاء مدرسة إيمان.",
     category: "فوائد دعوية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-623",
     text: "سعد بن معاذ جمع السيادة مع الانقياد لحكم الله لا لهواه.",
     category: "فوائد عقدية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-624",
     text: "الدردير قرّب خليل للفتوى؛ والمتن بلا تحقيق خطر.",
     category: "فوائد فقهية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-625",
     text: "حاشية الدسوقي تُظهر أن الفقه المتأخر طبقات شروح لا استغناء عن الأصول.",
     category: "فوائد فقهية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-626",
     text: "مواهب الجليل مثال سعة النقل المالكي مع الحاجة لتمييز الراجح.",
     category: "فوائد فقهية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-627",
     text: "الباقلاني دافع عن النبوة بالعقل والنقل؛ الرد على الشبه عبادة علم.",
     category: "فوائد عقدية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-628",
     text: "أم البراهين متن موجز؛ الإيجاز لا يغني عن دليل الكتاب والسنة.",
     category: "فوائد عقدية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-629",
     text: "التأمين بعد الفاتحة سنّة عملية تجمع المصلين على التأمين الجماعي.",
     category: "فوائد فقهية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-630",
     text: "تلقي الركبان نهيٌ عن استغلال جهل الجالب؛ السوق عدل.",
     category: "فوائد فقهية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-631",
     text: "الشرك الأصغر باب خفي؛ محاسبة النية حصن التوحيد.",
     category: "فوائد عقدية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-632",
     text: "المعلّق في البخاري يُفهم في ضوء شرطه ووصل الحفاظ لا الإسقاط.",
     category: "فوائد حديثية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-633",
     text: "الإظهار الحلقي يحفظ مخارج الحروف كما أُنزلت.",
     category: "فوائد قرآنية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-634",
     text: "إماطة الأذى عبادة يومية رخيصة الأجر عظيمة.",
     category: "آداب وأخلاق",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-635",
     text: "حفظ المال مقصد؛ الإسراف والتبذير يناقضانه كما السرقة.",
     category: "فوائد فقهية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-636",
     text: "برّ الأم مقدَّم في الخدمة غالبًا؛ والنصوص صرّحت بالتكرار في حقها.",
     category: "فوائد تربوية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
   {
     id: "seed-fawaid-637",
     text: "شرح الخرشي يُظهر أن مختصر خليل لا يُفتَى منه بلا واسطة شرح.",
     category: "فوائد فقهية",
     source: "مقررات أهل العلم المعتمدة",
+    trust_level: "general_reasoning",
+    editorial_review_status: "unreviewed",
+    last_updated_at: "2026-07-26T00:00:00.000Z"
   },
 ];
 
