@@ -239,7 +239,7 @@ scholars-data.ts، scholars-seo.json، library-catalog.ts/.json، library-author
 ## المرحلة 6 — حقول مكررة (وسم فقط)
 
 **الفرع:** `cursor/content-fix-phase6-duplicate-fields-1f54`
-**PR:** (يُحدَّث)
+**PR:** https://github.com/yalabdullmohsen/majalis/pull/344
 
 ### curriculum-topics.json
 - وُسم `_duplicate_summary: true` لـ **33**/36 سجلًا (summary===body)
@@ -252,6 +252,29 @@ scholars-data.ts، scholars-seo.json، library-catalog.ts/.json، library-author
 ### scientific-announcements-seed.ts
 - `sci-rawdat-alafham-muwaiziri`: lessonTitle ← «شرح » + bookTitle
 - `sci-tawheed-saltaweel`: lessonTitle كان يبدأ بـ«شرح» ومطابقاً لـ bookTitle → وُسم `_duplicate_lesson_book: true`
+
+### حالة البناء
+نجاح (مع إلحاق curriculum في المرحلة 7 إن نقص من commit المرحلة 6)
+
+---
+
+## المرحلة 7 — حقول ناقصة
+
+**الفرع:** `cursor/content-fix-phase7-missing-fields-1f54`
+**PR:** (يُحدَّث)
+
+### miracles-seed.ts
+- أُضيف `slug` لكل عنصر من الـ60 (نقحرة لاتينية، فريد)
+
+### fiqh-issues-seed.ts
+- 11 سجلًا بلا description ← `description: ""` + `_needs_description: true`
+
+### fawaid-seed.ts
+- `author_name: null` بقي null
+- وُسم `_needs_author: true` لـ **527** سجلًا
+
+### ملحق المرحلة 6
+- إعادة وسم `_duplicate_summary` في curriculum-topics.json (فات الـcommit السابق)
 
 ### حالة البناء
 (تُحدَّث)

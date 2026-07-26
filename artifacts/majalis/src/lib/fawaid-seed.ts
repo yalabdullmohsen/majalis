@@ -18,6 +18,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "رواه الترمذي وصحح الألباني",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -26,6 +27,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "رواه البخاري",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -34,6 +36,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "رواه مسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -42,6 +45,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "متفق عليه",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -50,6 +54,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "متفق عليه",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -58,6 +63,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "رواه النسائي وصحح الألباني",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -66,6 +72,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "متفق عليه",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -74,6 +81,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "الرعد: ٢٨؛ البخاري ٦٤٠٧ ومسلم ٧٧٩",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -82,6 +90,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "رواه ابن ماجه وصحح الألباني",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -90,6 +99,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "رواه أبو داود والترمذي وصحح الألباني",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -98,6 +108,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "متفق عليه",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -106,6 +117,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "متفق عليه",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -114,6 +126,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "رواه البيهقي — ضعّفه الألباني في ضعيف الجامع والسلسلة الضعيفة",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -130,6 +143,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "رواه البخاري",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -138,6 +152,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "رواه الدارمي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -146,6 +161,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "رواه الدارمي وصححه الألباني",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -154,6 +170,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "رواه الترمذي وصحح الألباني",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
 
@@ -164,6 +181,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "رواه مسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -172,6 +190,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "رواه أبو داود وصحح الألباني",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -180,6 +199,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "رواه مسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -188,6 +208,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "رواه الترمذي وصحح الألباني",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -196,6 +217,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "رواه أبو داود وصحح الألباني",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -204,6 +226,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "رواه الطبراني وحسنه الألباني",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -212,6 +235,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "متفق عليه",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -220,6 +244,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "رواه البيهقي وصحح الألباني",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -228,6 +253,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "رواه مسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -236,6 +262,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "متفق عليه",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -244,6 +271,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "رواه مسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -252,6 +280,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "رواه الترمذي وصحح الألباني",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -260,6 +289,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "رواه الترمذي وقال: حسن",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -268,6 +298,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "رواه مسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -276,6 +307,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "رواه مسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -284,6 +316,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "متفق عليه",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -292,6 +325,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "رواه مسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
 
@@ -302,6 +336,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "متفق عليه",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -310,6 +345,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "متفق عليه",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -318,6 +354,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "رواه مسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -326,6 +363,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "من أصول العقيدة الإسلامية",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -358,6 +396,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "رواه أبو داود وصحح الألباني",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -366,6 +405,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "سورة النساء: 48",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -382,6 +422,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "سورة الرعد: 28",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -390,6 +431,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "سورة الجن: 18",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -406,6 +448,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "سورة النساء: 18",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -414,6 +457,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "رواه أبو داود والنسائي وصحح الألباني",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
 
@@ -424,6 +468,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "القواعد الفقهية الكبرى",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -432,6 +477,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "القواعد الفقهية الكبرى",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -440,6 +486,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "رواه ابن ماجه وصحح الألباني",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -448,6 +495,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "القواعد الفقهية الكبرى",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -456,6 +504,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "القواعد الفقهية الكبرى",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -480,6 +529,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "رواه الترمذي (2616) عن معاذ بن جبل، وصححه الألباني في صحيح الترمذي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -488,6 +538,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "سورة التوبة: 103؛ سورة المعارج: 24-25؛ سورة الذاريات: 19",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -496,6 +547,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "الشطر الأول رواه أحمد (14727) عن جابر بن عبدالله، حسّنه الألباني في صحيح الترغيب (981)؛ الشطر الثاني متفق عليه من حديث سهل بن سعد الساعدي (البخاري 1896)",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -504,6 +556,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "قاعدة فقهية مستنبطة من الأدلة",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -512,6 +565,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "من أصول الفقه الإسلامي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -536,6 +590,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "القواعد الفقهية",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
 
@@ -546,6 +601,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "من هدي النبي ﷺ في التربية",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -554,6 +610,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "من أصول التربية الإسلامية",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -562,6 +619,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "من هديه ﷺ في التعليم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -570,6 +628,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "من أقوال السلف",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -578,6 +637,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "من هدي النبي ﷺ: أحب الأعمال إلى الله أدومها وإن قل",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -586,6 +646,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "رواه أبو داود والترمذي وحسنه الألباني",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -594,6 +655,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "متفق عليه",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -602,6 +664,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "من هدي النبي ﷺ في التشجيع",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -610,6 +673,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "من سيرة السلف في تربية الأطفال",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -618,6 +682,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "من مقاصد التشريع الإسلامي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -626,6 +691,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "رواه البخاري ومسلم من حديث النعمان بن بشير",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -634,6 +700,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "رواه الترمذي وحسنه الألباني",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -642,6 +709,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "من مبادئ التربية الإسلامية المستنبطة من السيرة",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -650,6 +718,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "من حكم السلف",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -658,6 +727,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "من حكم السلف",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
 
@@ -668,6 +738,7 @@ export const SEED_FAWAID = [
     category: "فوائد دعوية",
     source: "سورة فصلت: 33",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -676,6 +747,7 @@ export const SEED_FAWAID = [
     category: "فوائد دعوية",
     source: "متفق عليه",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -684,6 +756,7 @@ export const SEED_FAWAID = [
     category: "فوائد دعوية",
     source: "من هدي النبي ﷺ في الدعوة",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -692,6 +765,7 @@ export const SEED_FAWAID = [
     category: "فوائد دعوية",
     source: "من كلام السلف",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -700,6 +774,7 @@ export const SEED_FAWAID = [
     category: "فوائد دعوية",
     source: "رواه أبو داود وصحح الألباني",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -708,6 +783,7 @@ export const SEED_FAWAID = [
     category: "فوائد دعوية",
     source: "من فقه الواقع في الدعوة المعاصرة",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -716,6 +792,7 @@ export const SEED_FAWAID = [
     category: "فوائد دعوية",
     source: "من سيرة الأنبياء في الدعوة",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -724,6 +801,7 @@ export const SEED_FAWAID = [
     category: "فوائد دعوية",
     source: "سورة الشعراء: 214",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -732,6 +810,7 @@ export const SEED_FAWAID = [
     category: "فوائد دعوية",
     source: "من أساليب الدعوة النبوية",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -740,6 +819,7 @@ export const SEED_FAWAID = [
     category: "فوائد دعوية",
     source: "من منهج العلماء في الرد على الشبهات",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -748,6 +828,7 @@ export const SEED_FAWAID = [
     category: "فوائد دعوية",
     source: "سورة القصص: 56",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -756,6 +837,7 @@ export const SEED_FAWAID = [
     category: "فوائد دعوية",
     source: "رواه مسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -764,6 +846,7 @@ export const SEED_FAWAID = [
     category: "فوائد دعوية",
     source: "من نصوص الاستقامة في القرآن",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -772,6 +855,7 @@ export const SEED_FAWAID = [
     category: "فوائد دعوية",
     source: "من منهج معاذ بن جبل في دعوة أهل اليمن",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -780,6 +864,7 @@ export const SEED_FAWAID = [
     category: "فوائد دعوية",
     source: "من أصول الدعوة الإسلامية",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
 
@@ -790,6 +875,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "رواه الترمذي وصحح الألباني",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -798,6 +884,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "النور: ٣٠",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -806,6 +893,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "متفق عليه",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -814,6 +902,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "متفق عليه",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -822,6 +911,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "رواه مسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -830,6 +920,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "متفق عليه",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -838,6 +929,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "رواه البخاري",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -846,6 +938,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "حديثان: «الحياء شعبة من الإيمان» متفق عليه عن أبي هريرة، و«إذا لم تستح فاصنع ما شئت» رواه البخاري عن أبي مسعود الأنصاري",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -854,6 +947,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "رواه الترمذي وصحح الألباني",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -862,6 +956,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "رواه أبو داود والترمذي وصحح الألباني",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -870,6 +965,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "سورة الصف: 3",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -878,6 +974,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "متفق عليه",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -886,6 +983,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "متفق عليه",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -894,6 +992,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "سورة الحشر: 9",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -902,6 +1001,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "سورة الشورى: 40",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -910,6 +1010,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "من أقوال السلف في أدب العلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -918,6 +1019,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "سورة الحجرات: 12",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -926,6 +1028,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "سورة إبراهيم: 7",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   // ──────────────────── فوائد قرآنية (121-140) ────────────────────
@@ -935,6 +1038,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "سورة الفاتحة",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -943,6 +1047,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "رواه الحاكم وصحح الألباني",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -951,6 +1056,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "رواه مسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -959,6 +1065,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "رواه أحمد وصحح الألباني",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -967,6 +1074,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "رواه أحمد والنسائي وصححه الحاكم ووافقه الذهبي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -975,6 +1083,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "رواه مسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -983,6 +1092,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "البخاري: ٥٠٢٧",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -991,6 +1101,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "ابن تيمية",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -999,6 +1110,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "سورة النساء: 82",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1007,6 +1119,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "البخاري: ٥٠٢٧",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1015,6 +1128,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "ابن القيم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1023,6 +1137,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "معنى عام مستفاد من عمومات الشرع، منها قوله تعالى ﴿وَإِذَا تُلِيَتْ عَلَيْهِمْ آيَاتُهُ زَادَتْهُمْ إِيمَانًا﴾ (الأنفال: 2)؛ لا يثبت بلفظه حديث مرفوع محدد عن الإمام أحمد",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1031,6 +1146,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "سورة الحجر: 9",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1039,6 +1155,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "ضعّف الألباني ما ورد في «قلب القرآن» والقراءة على الأموات — ضعيف الجامع وضعيف أبي داود",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1047,6 +1164,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "صحيح مسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1055,6 +1173,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "ابن كثير",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1063,6 +1182,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "قول الجمهور",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1071,6 +1191,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "علماء التجويد",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1079,6 +1200,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "متفق عليه، البخاري (4664-4666) ومسلم (1963-1964) عن عبدالله بن عمرو بن العاص",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1087,6 +1209,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "مستفاد من قوله تعالى ﴿وَرَتِّلِ الْقُرْآنَ تَرْتِيلًا﴾ (المزمل: 4) وأقوال السلف، منهم ابن مسعود وابن عباس رضي الله عنهما",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   // ──────────────────── فوائد حديثية (141-165) ────────────────────
@@ -1096,6 +1219,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "متفق عليه",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1104,6 +1228,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "متفق عليه",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1112,6 +1237,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "متفق عليه",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1120,6 +1246,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "رواه مسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1128,6 +1255,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "أبو داود — حسّنه الألباني",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1136,6 +1264,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "رواه البخاري",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1144,6 +1273,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "متفق عليه",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1152,6 +1282,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "رواه مسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1160,6 +1291,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "رواه الطبراني وأبو يعلى، وصححه الألباني في صحيح الجامع والسلسلة الصحيحة",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1168,6 +1300,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "الترمذي — صححه الألباني",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1176,6 +1309,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "أبو داود — صححه الألباني",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1184,6 +1318,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "متفق عليه",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1192,6 +1327,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "رواه الترمذي وحسّنه",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1200,6 +1336,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "متفق عليه",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1208,6 +1345,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "رواه الطبراني وصحح الألباني",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1216,6 +1354,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "رواه الطبراني",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1224,6 +1363,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "الترمذي — حسّنه الألباني",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1232,6 +1372,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "رواه مسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1240,6 +1381,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "رواه ابن حبان والطبراني، وحسّنه الألباني في صحيح الترغيب",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1248,6 +1390,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "نوح: ١٠–١٢",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1256,6 +1399,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "رواه مسلم (1052)، كتاب الزكاة، باب تخوف ما يخرج من زهرة الدنيا، عن أبي سعيد الخدري",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   // ──────────────────── فوائد عقدية (166-185) ────────────────────
@@ -1265,6 +1409,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "العقيدة الطحاوية",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1273,6 +1418,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "سورة البقرة: 165",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1281,6 +1427,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "ابن القيم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1289,6 +1436,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "سورة لقمان: 13",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1297,6 +1445,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "سورة الممتحنة: 4",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1305,6 +1454,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "رواه البخاري",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1313,6 +1463,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "العقيدة الأشعرية والماتريدية",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1321,6 +1472,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "مذهب أهل السنة",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1329,6 +1481,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "سورة طه: 5",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1337,6 +1490,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "الطحاوية",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1345,6 +1499,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "ابن تيمية في الفتاوى",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1353,6 +1508,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "مذهب أهل السنة",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1361,6 +1517,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "الطحاوية",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1369,6 +1526,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "ابن القيم في طريق الهجرتين",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1377,6 +1535,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "ابن تيمية",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1385,6 +1544,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "ابن القيم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1393,6 +1553,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "متفق عليه",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1401,6 +1562,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "سورة آل عمران: 31",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1409,6 +1571,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "منهاج السنة لابن تيمية",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   // ──────────────────── فوائد فقهية (186-210) ────────────────────
@@ -1418,6 +1581,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "قاعدة فقهية",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1426,6 +1590,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "قاعدة أصولية",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1434,6 +1599,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "قاعدة فقهية كبرى",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1442,6 +1608,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "قاعدة فقهية",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1450,6 +1617,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "أصول الفقه",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1458,6 +1626,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "قاعدة فقهية",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1466,6 +1635,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "قاعدة فقهية",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1474,6 +1644,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "قول الجمهور",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1482,6 +1653,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "قاعدة فقهية",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1490,6 +1662,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "رواه مسلم (1163) عن أبي هريرة",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1498,6 +1671,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "السنن والمسند",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1506,6 +1680,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "البخاري ٥٠٦٥ ومسلم ١٤٠٠",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1514,6 +1689,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "الفقه الحنبلي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1522,6 +1698,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "متفق عليه",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1530,6 +1707,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "فقه الحنابلة",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1538,6 +1716,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "صحيح البخاري",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1546,6 +1725,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "فقه الحنابلة",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1554,6 +1734,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "صحيح مسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1562,6 +1743,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "الجمهور",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1570,6 +1752,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "صحيح البخاري",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1578,6 +1761,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "علوم القرآن",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1586,6 +1770,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "الفقه المقارن",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1594,6 +1779,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "قول جمهور الفقهاء",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   // ──────────────────── فوائد تربوية (211-230) ────────────────────
@@ -1603,6 +1789,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "من الحكمة التربوية",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1611,6 +1798,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "أحمد والترمذي — حسّنه الألباني",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1619,6 +1807,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "سورة النحل: 125",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1627,6 +1816,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "التربية النبوية",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1635,6 +1825,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "قال علي بن أبي طالب",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1643,6 +1834,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "ابن القيم في مدارج السالكين",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1651,6 +1843,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "سورة المائدة: 2",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1659,6 +1852,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "ابن القيم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1667,6 +1861,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "من الحكمة النبوية",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1675,6 +1870,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "قال ابن حزم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1683,6 +1879,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "رواه مسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1691,6 +1888,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "متفق عليه",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1699,6 +1897,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "رواه مسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1707,6 +1906,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "سورة إبراهيم: 7",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1715,6 +1915,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "سورة الزمر: 10",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1723,6 +1924,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "ابن القيم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1731,6 +1933,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "سورة الفرقان: 70",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1739,6 +1942,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "ابن تيمية",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1747,6 +1951,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "ابن القيم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1755,6 +1960,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "قول أبي علي الدقّاق، نقله القشيري في الرسالة القشيرية",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   // ──────────────────── فوائد دعوية (231-245) ────────────────────
@@ -1764,6 +1970,7 @@ export const SEED_FAWAID = [
     category: "فوائد دعوية",
     source: "سيرة النبي ﷺ",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1772,6 +1979,7 @@ export const SEED_FAWAID = [
     category: "فوائد دعوية",
     source: "متفق عليه",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1780,6 +1988,7 @@ export const SEED_FAWAID = [
     category: "فوائد دعوية",
     source: "رواه مسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1788,6 +1997,7 @@ export const SEED_FAWAID = [
     category: "فوائد دعوية",
     source: "من الحكمة الدعوية",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1796,6 +2006,7 @@ export const SEED_FAWAID = [
     category: "فوائد دعوية",
     source: "سورة لقمان: 17",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1804,6 +2015,7 @@ export const SEED_FAWAID = [
     category: "فوائد دعوية",
     source: "منهج العلماء",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1812,6 +2024,7 @@ export const SEED_FAWAID = [
     category: "فوائد دعوية",
     source: "متفق عليه",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1820,6 +2033,7 @@ export const SEED_FAWAID = [
     category: "فوائد دعوية",
     source: "سورة الشعراء: 214",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1828,6 +2042,7 @@ export const SEED_FAWAID = [
     category: "فوائد دعوية",
     source: "ابن القيم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1836,6 +2051,7 @@ export const SEED_FAWAID = [
     category: "فوائد دعوية",
     source: "سورة فصلت: 33",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1844,6 +2060,7 @@ export const SEED_FAWAID = [
     category: "فوائد دعوية",
     source: "حكمة دعوية",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1852,6 +2069,7 @@ export const SEED_FAWAID = [
     category: "فوائد دعوية",
     source: "قال ابن عثيمين",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1860,6 +2078,7 @@ export const SEED_FAWAID = [
     category: "فوائد دعوية",
     source: "من أصول الدعوة",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1868,6 +2087,7 @@ export const SEED_FAWAID = [
     category: "فوائد دعوية",
     source: "منهج السلف",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1876,6 +2096,7 @@ export const SEED_FAWAID = [
     category: "فوائد دعوية",
     source: "من فقه الدعوة",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   // ──────────────────── آداب وأخلاق (246-270) ────────────────────
@@ -1885,6 +2106,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "رواه مسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1893,6 +2115,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "رواه الترمذي وصحح الألباني",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1901,6 +2124,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "متفق عليه",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1909,6 +2133,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "متفق عليه",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1917,6 +2142,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "مسلم: ٢٥٦٣؛ الفلق: ٥",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1925,6 +2151,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "سورة النور: 30",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1933,6 +2160,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "الحجرات: ١٢؛ مسلم ٢٥٨٩",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1941,6 +2169,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "متفق عليه؛ الأحزاب: ٥٨",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1949,6 +2178,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "متفق عليه",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1957,6 +2187,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "متفق عليه",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1965,6 +2196,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "متفق عليه",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1973,6 +2205,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "رواه الترمذي (2616) عن معاذ بن جبل — حسنه الترمذي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1981,6 +2214,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "رواه الدارمي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1989,6 +2223,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "رواه الترمذي (1900) وابن ماجه (3663) عن أبي الدرداء — صححه الترمذي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -1997,6 +2232,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "متفق عليه — عن أبي موسى الأشعري",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2005,6 +2241,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "قال ابن القيم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2013,6 +2250,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "معنى مستفاد من حديث متفق عليه (مسلم 2588): وما تواضع أحد لله إلا رفعه الله",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2021,6 +2259,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "أبو داود (٤٧٨٤) — حسّنه الألباني",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2029,6 +2268,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "متفق عليه",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2037,6 +2277,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "رواه مسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2045,6 +2286,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "رواه مسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2053,6 +2295,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "متفق عليه",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2061,6 +2304,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "متفق عليه",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2069,6 +2313,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "رواه مسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2077,6 +2322,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "أثر مشهور عند الصوفية والحكماء — نُسب لبعض السلف",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2085,6 +2331,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "سورة يونس — 62-64",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2093,6 +2340,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "مقولة مشهورة متداولة على الألسنة، لا تصح حديثاً ولا نسبة موثَّقة لها",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2101,6 +2349,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "متفق عليه",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2109,6 +2358,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "رواه مسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2117,6 +2367,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "متفق عليه",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2125,6 +2376,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "رواه مسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2133,6 +2385,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "رواه الطبراني — حسن بشواهده",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2141,6 +2394,7 @@ export const SEED_FAWAID = [
     category: "طلب العلم",
     source: "الترمذي ٢٣٨٠ — صححه الألباني",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2149,6 +2403,7 @@ export const SEED_FAWAID = [
     category: "طلب العلم",
     source: "الشطر الأول قول ابن مسعود (مسند الدارمي)، والثاني مرسل الأعمش (هداية الرواة لابن حجر) — لا يصح عن الإمام الشافعي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2157,6 +2412,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "رواه مسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2165,6 +2421,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "رواه ابن ماجه — حسنه الألباني",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2173,6 +2430,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "الترمذي ٢١٣٩ — حسّنه الألباني؛ ومعناه أن الدعاء من أسباب دفع البلاء المقدَّر المشروط لا نقض القدر المكتوب",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2181,6 +2439,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "رواه مسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2189,6 +2448,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "رواه البخاري",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2197,6 +2457,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "الترمذي ٢٩٦٩ — صحيح؛ ضعّف الألباني لفظ «مخ العبادة»",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2205,6 +2466,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "النور بين الجمعتين: رواه الحاكم والبيهقي، صححه الألباني لغيره (صحيح الترغيب)؛ العصمة من الدجال: رواه مسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2213,6 +2475,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "متفق عليه — البخاري ومسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2221,6 +2484,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "سورة نوح: 10-11",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2229,6 +2493,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "رواه أبو داود والترمذي — صحيح",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2237,6 +2502,7 @@ export const SEED_FAWAID = [
     category: "طلب العلم",
     source: "رواه أبو داود وابن ماجه — صحيح",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2253,6 +2519,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "رواه مسلم (597) عن أبي هريرة",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2261,6 +2528,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "رواه مسلم (2692)",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2269,6 +2537,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "رواه الترمذي وصحّحه الألباني",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2277,6 +2546,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "متفق عليه",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2285,6 +2555,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "رواه البخاري ومسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2301,6 +2572,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "متفق عليه",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2309,6 +2581,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "متفق عليه",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2317,6 +2590,7 @@ export const SEED_FAWAID = [
     category: "طلب العلم",
     source: "رواه مسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2325,6 +2599,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "رواه ابن ماجه والطبراني بسند صحيح (وأصل الحديث دون لفظ الجماعة رواه مسلم)",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2333,6 +2608,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "رواه ابن ماجه — صحّحه الألباني",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2341,6 +2617,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "متفق عليه",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2349,6 +2626,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "الترمذي ٢٣٤٦ — حسّنه الألباني",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2357,6 +2635,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "رواه مسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2365,6 +2644,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "مسلم: ٢٢٣",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2373,6 +2653,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "متفق عليه",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2397,6 +2678,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "رواه مسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2405,6 +2687,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "متفق عليه",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2413,6 +2696,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "متفق عليه — البخاري ومسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2421,6 +2705,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "متفق عليه",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2453,6 +2738,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "أبو داود ٤٨١١ وأحمد والترمذي — صححه الألباني",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2461,6 +2747,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "غافر: ٦٠؛ الترمذي ٢٩٦٩ — صحيح",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2493,6 +2780,7 @@ export const SEED_FAWAID = [
     category: "العقيدة",
     source: "سورة الرعد: 11",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2501,6 +2789,7 @@ export const SEED_FAWAID = [
     category: "طلب العلم",
     source: "متفق عليه",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2509,6 +2798,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "متفق عليه",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2517,6 +2807,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "متفق عليه",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2533,6 +2824,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "سورة نوح: 10-11",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2541,6 +2833,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "صحيح مسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2549,6 +2842,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "صحيح مسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2557,6 +2851,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "سنن الترمذي — صحيح",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2565,6 +2860,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "سنن الترمذي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2573,6 +2869,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "صحيح مسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2581,6 +2878,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "سنن الترمذي — صحيح",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2589,6 +2887,7 @@ export const SEED_FAWAID = [
     category: "الفقه",
     source: "صحيح مسلم — 720",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2597,6 +2896,7 @@ export const SEED_FAWAID = [
     category: "الذكر والدعاء",
     source: "صحيح البخاري — 6405، صحيح مسلم — 2691",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2605,6 +2905,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "الحجرات: ١٢؛ مسلم ٢٥٨٩",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2613,6 +2914,7 @@ export const SEED_FAWAID = [
     category: "القرآن",
     source: "صحيح مسلم — 804",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2621,6 +2923,7 @@ export const SEED_FAWAID = [
     category: "الفقه",
     source: "النسائي في الكبرى — صحيح",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2629,6 +2932,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "صحيح البخاري — 5986",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2637,6 +2941,7 @@ export const SEED_FAWAID = [
     category: "الذكر والدعاء",
     source: "سنن أبي داود — صحيح",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2645,6 +2950,7 @@ export const SEED_FAWAID = [
     category: "الآداب",
     source: "صحيح البخاري — 887، صحيح مسلم — 252",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2653,6 +2959,7 @@ export const SEED_FAWAID = [
     category: "الرقائق",
     source: "سورة الفرقان — 70",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2661,6 +2968,7 @@ export const SEED_FAWAID = [
     category: "الفقه",
     source: "صحيح البخاري — 1952، صحيح مسلم — 1147",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2677,6 +2985,7 @@ export const SEED_FAWAID = [
     category: "الرقائق",
     source: "سنن الترمذي — 2320، صحيح",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2685,6 +2994,7 @@ export const SEED_FAWAID = [
     category: "الآداب",
     source: "صحيح مسلم — 728",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2693,6 +3003,7 @@ export const SEED_FAWAID = [
     category: "الآداب",
     source: "صحيح مسلم — 2017، أبو داود — 3767",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2701,6 +3012,7 @@ export const SEED_FAWAID = [
     category: "الفقه",
     source: "سنن النسائي — 2358، صحيح",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2709,6 +3021,7 @@ export const SEED_FAWAID = [
     category: "الفقه",
     source: "صحيح مسلم — 1164",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2725,6 +3038,7 @@ export const SEED_FAWAID = [
     category: "العقيدة",
     source: "شرح الطحاوية — ابن أبي العز",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2733,6 +3047,7 @@ export const SEED_FAWAID = [
     category: "العقيدة",
     source: "سنن أبي داود — 4699، صحيح",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2741,6 +3056,7 @@ export const SEED_FAWAID = [
     category: "القرآن",
     source: "المستدرك للحاكم — صحيح",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2757,6 +3073,7 @@ export const SEED_FAWAID = [
     category: "القرآن",
     source: "سنن أبي داود — 1464، سنن الترمذي — 2914، صحيح",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2765,6 +3082,7 @@ export const SEED_FAWAID = [
     category: "الرقائق",
     source: "الزمر — 10",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2773,6 +3091,7 @@ export const SEED_FAWAID = [
     category: "الذكر والدعاء",
     source: "صحيح مسلم — 2733",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2797,6 +3116,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "صحيح مسلم — 2588",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2805,6 +3125,7 @@ export const SEED_FAWAID = [
     category: "الفقه",
     source: "الأنعام — 160، صحيح البخاري — 6491",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2821,6 +3142,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "سنن أبي داود — 4941، سنن الترمذي — 1924، صحيح",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2829,6 +3151,7 @@ export const SEED_FAWAID = [
     category: "الرقائق",
     source: "التوبة — 119",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2845,6 +3168,7 @@ export const SEED_FAWAID = [
     category: "الفقه",
     source: "القدر — 3، صحيح البخاري — 1901",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2853,6 +3177,7 @@ export const SEED_FAWAID = [
     category: "الذكر والدعاء",
     source: "هود — 52",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2861,6 +3186,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "سنن أبي داود — 4811، سنن الترمذي — 1954، صحيح",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2877,6 +3203,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "صحيح البخاري — 10، صحيح مسلم — 40",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2885,6 +3212,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "البخاري — 71، مدارج السالكين",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2893,6 +3221,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "غافر — 60، الترمذي — 2969",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2901,6 +3230,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "البقرة — 279، أحكام القرآن لابن العربي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2909,6 +3239,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "لطائف المعارف — ابن رجب",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2917,6 +3248,7 @@ export const SEED_FAWAID = [
     category: "فوائد دعوية",
     source: "آل عمران — 104، الترمذي — 2169",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2925,6 +3257,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "مجموع الفتاوى — ابن تيمية",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2933,6 +3266,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "رياض الصالحين — النووي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2941,6 +3275,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "الكهف — 110، صحيح مسلم — 2985",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2949,6 +3284,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "مدارج السالكين — ابن قيم الجوزية",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2957,6 +3293,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "صحيح مسلم — 1631",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2965,6 +3302,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "عدة الصابرين — ابن قيم الجوزية",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2973,6 +3311,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "زاد المعاد — ابن قيم الجوزية",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2981,6 +3320,7 @@ export const SEED_FAWAID = [
     category: "طلب العلم",
     source: "سنن الترمذي — 1212، السنن الكبرى للبيهقي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2989,6 +3329,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "صحيح البخاري — 5641",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -2997,6 +3338,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "مدارج السالكين — ابن القيم، صحيح مسلم — 2581",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3005,6 +3347,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "سورة الحديد — 20، مدارج السالكين — ابن القيم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3013,6 +3356,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "صحيح البخاري — 1، مدارج السالكين — ابن القيم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3021,6 +3365,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "صحيح البخاري — 7405، مدارج السالكين — ابن القيم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3029,6 +3374,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "سنن الترمذي — 2517، صحيح بإسناد ابن حبان",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3037,6 +3383,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "الوابل الصيب — ابن القيم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3045,6 +3392,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "صحيح البخاري — 2446، صحيح مسلم — 2586",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3053,6 +3401,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "جامع العلوم والحكم — ابن رجب الحنبلي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3061,6 +3410,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "صحيح البخاري — 15، سورة آل عمران — 31",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3069,6 +3419,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "صحيح البخاري — 645، المغني — ابن قدامة",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3077,6 +3428,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "صحيح مسلم — 725، جامع الترمذي — 414",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3085,6 +3437,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "درء تعارض العقل والنقل — ابن تيمية، الإنصاف — الباقلاني",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3093,6 +3446,7 @@ export const SEED_FAWAID = [
     category: "طلب العلم",
     source: "نهج البلاغة — من وصية علي بن أبي طالب رضي الله عنه لكميل بن زياد",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3101,6 +3455,7 @@ export const SEED_FAWAID = [
     category: "طلب العلم",
     source: "جامع بيان العلم — ابن عبد البر، مناقب الشافعي — البيهقي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3109,6 +3464,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "التوسل والوسيلة — ابن تيمية",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3117,6 +3473,7 @@ export const SEED_FAWAID = [
     category: "طلب العلم",
     source: "صحيح مسلم — مقدمة الإمام مسلم، الكفاية في علم الرواية — الخطيب البغدادي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3125,6 +3482,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "سور البقرة والنساء والمائدة — تسلسل آيات تحريم الخمر",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3133,6 +3491,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "الإصابة في تمييز الصحابة — ابن حجر، سير أعلام النبلاء — الذهبي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3141,6 +3500,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "مدارج السالكين — ابن القيم، الفقه الإسلامي وأدلته — الزحيلي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3149,6 +3509,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "السيرة النبوية لابن هشام، فقه السيرة — الغزالي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3157,6 +3518,7 @@ export const SEED_FAWAID = [
     category: "طلب العلم",
     source: "الأشباه والنظائر — السيوطي وابن نجيم، شرح الكوكب المنير",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3165,6 +3527,7 @@ export const SEED_FAWAID = [
     category: "طلب العلم",
     source: "تذكرة الحفاظ — الذهبي، الإصابة — ابن حجر",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3173,6 +3536,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "التبيان في آداب حملة القرآن — النووي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3181,6 +3545,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "المقدمة في علوم القرآن — ابن الجزري",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3189,6 +3554,7 @@ export const SEED_FAWAID = [
     category: "فوائد تاريخية",
     source: "تاريخ الأدب العربي — بروكلمان، مصادر الفكر الإسلامي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3197,6 +3563,7 @@ export const SEED_FAWAID = [
     category: "فوائد سلوكية",
     source: "مدارج السالكين — ابن القيم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3205,6 +3572,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "البرهان في علوم القرآن — الزركشي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3213,6 +3581,7 @@ export const SEED_FAWAID = [
     category: "فوائد سلوكية",
     source: "مدارج السالكين — ابن القيم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3221,6 +3590,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "الأحكام السلطانية — الماوردي، فقه السيرة",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3229,6 +3599,7 @@ export const SEED_FAWAID = [
     category: "فوائد سلوكية",
     source: "مدارج السالكين — ابن القيم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3237,6 +3608,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "دلائل الإعجاز — الجرجاني، الإتقان — السيوطي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3245,6 +3617,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "أسرار الصلاة — ابن قيم الجوزية",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3253,6 +3626,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "شأن الدعاء — الخطابي، الأسماء والصفات — البيهقي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3261,6 +3635,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "جامع العلوم والحكم — ابن رجب، شروح الأربعين النووية",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3269,6 +3644,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "البرهان في علوم القرآن — الزركشي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3277,6 +3653,7 @@ export const SEED_FAWAID = [
     category: "طلب العلم",
     source: "بداية المجتهد ونهاية المقتصد — ابن رشد",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3285,6 +3662,7 @@ export const SEED_FAWAID = [
     category: "فوائد سلوكية",
     source: "مفتاح دار السعادة — ابن القيم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3293,6 +3671,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "الموافقات — الشاطبي، مقاصد الشريعة — ابن عاشور",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3301,6 +3680,7 @@ export const SEED_FAWAID = [
     category: "فوائد تاريخية",
     source: "درء التعارض — ابن تيمية، موقظة المؤمنين — ابن رجب",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3309,6 +3689,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "مقدمة ابن الصلاح، معرفة أنواع علوم الحديث",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3317,6 +3698,7 @@ export const SEED_FAWAID = [
     category: "فوائد سلوكية",
     source: "مدارج السالكين — ابن القيم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3325,6 +3707,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "مجموع الفتاوى — ابن تيمية",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3333,6 +3716,7 @@ export const SEED_FAWAID = [
     category: "اللغة",
     source: "الرسالة — الشافعي، إعراب القرآن — النحاس",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3341,6 +3725,7 @@ export const SEED_FAWAID = [
     category: "فوائد تاريخية",
     source: "مناقب الإمام أحمد — ابن الجوزي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3349,6 +3734,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "المغني — ابن قدامة، الشرح الكبير — المرداوي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3357,6 +3743,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "الإتقان في علوم القرآن — السيوطي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3365,6 +3752,7 @@ export const SEED_FAWAID = [
     category: "طلب العلم",
     source: "مقدمة ابن خلدون",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3373,6 +3761,7 @@ export const SEED_FAWAID = [
     category: "فوائد سلوكية",
     source: "عدة الصابرين — ابن القيم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3381,6 +3770,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "إعلام الموقعين — ابن القيم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3389,6 +3779,7 @@ export const SEED_FAWAID = [
     category: "فوائد تاريخية",
     source: "تاريخ الإسلام في آسيا — أرنولد توماس",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3397,6 +3788,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "الانتقاء في فضائل الأئمة الثلاثة — ابن عبد البر",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3405,6 +3797,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "حديث جبريل في صحيح مسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3413,6 +3806,7 @@ export const SEED_FAWAID = [
     category: "اللغة",
     source: "لسان العرب — ابن منظور، مفردات القرآن — الراغب الأصفهاني",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3421,6 +3815,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "الرسالة — الشافعي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3429,6 +3824,7 @@ export const SEED_FAWAID = [
     category: "اللغة",
     source: "عدة الصابرين وذخيرة الشاكرين — ابن القيم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3437,6 +3833,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "نوح: ١٠–١٢",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3445,6 +3842,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "القواعد الفقهية",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3453,6 +3851,7 @@ export const SEED_FAWAID = [
     category: "فوائد تاريخية",
     source: "الكامل في التاريخ — ابن الأثير",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3461,6 +3860,7 @@ export const SEED_FAWAID = [
     category: "فوائد سلوكية",
     source: "الخشوع في الصلاة — ابن رجب الحنبلي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3469,6 +3869,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "درء تعارض العقل والنقل — ابن تيمية",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3477,6 +3878,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "الموقظة — الذهبي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3485,6 +3887,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "البرهان في علوم القرآن — الزركشي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3493,6 +3896,7 @@ export const SEED_FAWAID = [
     category: "اللغة",
     source: "إعجاز القرآن — الباقلاني",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3501,6 +3905,7 @@ export const SEED_FAWAID = [
     category: "فوائد سلوكية",
     source: "مدارج السالكين — ابن القيم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3509,6 +3914,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "شرح نخبة الفكر — ابن حجر العسقلاني",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3517,6 +3923,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "الموافقات — الشاطبي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3525,6 +3932,7 @@ export const SEED_FAWAID = [
     category: "فوائد تاريخية",
     source: "تاريخ التراث العربي — فؤاد سزكين",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3533,6 +3941,7 @@ export const SEED_FAWAID = [
     category: "فوائد سلوكية",
     source: "رواه أبو داود (4833) وحسّنه الترمذي (2378)؛ شرحه المناوي في فيض القدير",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3541,6 +3950,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "شفاء العليل — ابن القيم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3549,6 +3959,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "قواعد التعامل مع الإعجاز القرآني — مناهج البحث الشرعي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3557,6 +3968,7 @@ export const SEED_FAWAID = [
     category: "اللغة",
     source: "دلائل الإعجاز — الجرجاني",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3565,6 +3977,7 @@ export const SEED_FAWAID = [
     category: "فوائد سلوكية",
     source: "اقتضاء العلم العمل — الخطيب البغدادي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3573,6 +3986,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "متفق عليه (البخاري ومسلم)؛ والقاعدة الفقهية مستخرجة في الأشباه والنظائر — السيوطي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3581,6 +3995,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "مقدمة ابن الصلاح في علوم الحديث",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3589,6 +4004,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "التبيان في آداب حملة القرآن — النووي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3597,6 +4013,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "شرح الطحاوية — ابن أبي العز",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3605,6 +4022,7 @@ export const SEED_FAWAID = [
     category: "فوائد تاريخية",
     source: "صحيح البخاري: ٤٩٨٦",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3613,6 +4031,7 @@ export const SEED_FAWAID = [
     category: "اللغة",
     source: "شرح ابن عقيل على ألفية ابن مالك",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3621,6 +4040,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "الفقه الإسلامي وأدلته — الزحيلي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3629,6 +4049,7 @@ export const SEED_FAWAID = [
     category: "الفقه",
     source: "الموافقات في أصول الشريعة — الشاطبي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3637,6 +4058,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "تفسير ابن كثير، تفسير السعدي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3645,6 +4067,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "صحيح مسلم: ٣٥، رياض الصالحين — النووي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3653,6 +4076,7 @@ export const SEED_FAWAID = [
     category: "فوائد تاريخية",
     source: "بيت الحكمة: كيف غيّر العرب الحضارة الغربية — جوناثان ليونز",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3661,6 +4085,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "التدمرية — ابن تيمية",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3669,6 +4094,7 @@ export const SEED_FAWAID = [
     category: "اللغة",
     source: "الصحاح للجوهري، التعريفات للجرجاني",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3677,6 +4103,7 @@ export const SEED_FAWAID = [
     category: "اللغة",
     source: "لسان العرب لابن منظور، المفردات في غريب القرآن للراغب",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3685,6 +4112,7 @@ export const SEED_FAWAID = [
     category: "اللغة",
     source: "زاد المعاد — ابن القيم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3693,6 +4121,7 @@ export const SEED_FAWAID = [
     category: "فوائد تاريخية",
     source: "صحيح البخاري: ٤٢٨٠ (تحطيم الأصنام)؛ السيرة لابن هشام (عبارة الطلقاء، إسناد معضل)",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3701,6 +4130,7 @@ export const SEED_FAWAID = [
     category: "فوائد تاريخية",
     source: "دراسات في الحديث النبوي وتاريخ تدوينه — محمد مصطفى الأعظمي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3709,6 +4139,7 @@ export const SEED_FAWAID = [
     category: "فوائد تاريخية",
     source: "الكامل في التاريخ — ابن الأثير",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3717,6 +4148,7 @@ export const SEED_FAWAID = [
     category: "فوائد سلوكية",
     source: "الرسالة القشيرية، إحياء علوم الدين للغزالي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3725,6 +4157,7 @@ export const SEED_FAWAID = [
     category: "فوائد سلوكية",
     source: "الموافقات — الشاطبي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3733,6 +4166,7 @@ export const SEED_FAWAID = [
     category: "فوائد سلوكية",
     source: "أبو داود: ٤٨٣٣، فيض القدير للمناوي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3741,6 +4175,7 @@ export const SEED_FAWAID = [
     category: "فوائد سلوكية",
     source: "البخاري: ٦١١٦، إحياء علوم الدين للغزالي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   /* ───────── فوائد علمية (486-490) ───────── */
@@ -3750,6 +4185,7 @@ export const SEED_FAWAID = [
     category: "طلب العلم",
     source: "مدارج السالكين لابن القيم، إعلام الموقعين",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3758,6 +4194,7 @@ export const SEED_FAWAID = [
     category: "طلب العلم",
     source: "مقدمة صحيح مسلم، شرح النووي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3766,6 +4203,7 @@ export const SEED_FAWAID = [
     category: "طلب العلم",
     source: "المجموع للنووي، أدب المفتي والمستفتي لابن الصلاح",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3774,6 +4212,7 @@ export const SEED_FAWAID = [
     category: "طلب العلم",
     source: "المنهج الحديثي بين النظرية والتطبيق، تدريب الراوي للسيوطي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3782,6 +4221,7 @@ export const SEED_FAWAID = [
     category: "طلب العلم",
     source: "الإتقان للسيوطي، تفسير ابن كثير",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   /* ───────── فوائد دعوية (491-495) ───────── */
@@ -3791,6 +4231,7 @@ export const SEED_FAWAID = [
     category: "فوائد دعوية",
     source: "النحل: ١٢٥، مدارج السالكين لابن القيم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3799,6 +4240,7 @@ export const SEED_FAWAID = [
     category: "فوائد دعوية",
     source: "الأخلاق والسير لابن حزم، مناهج الدعوة",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3807,6 +4249,7 @@ export const SEED_FAWAID = [
     category: "فوائد دعوية",
     source: "السيرة النبوية، مجموع فتاوى ابن تيمية",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3815,6 +4258,7 @@ export const SEED_FAWAID = [
     category: "فوائد دعوية",
     source: "حلية الأولياء لأبي نعيم، السيرة الحلبية",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3823,6 +4267,7 @@ export const SEED_FAWAID = [
     category: "فوائد دعوية",
     source: "البخاري: ١٣٩٥، مسلم: ١٩",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   /* ───────── فوائد تاريخية (496-500) ───────── */
@@ -3832,6 +4277,7 @@ export const SEED_FAWAID = [
     category: "فوائد تاريخية",
     source: "أبو داود: ٤٩٨، ابن هشام في السيرة النبوية",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3840,6 +4286,7 @@ export const SEED_FAWAID = [
     category: "فوائد تاريخية",
     source: "سورة آل عمران: 123، غزوة بدر، سيرة ابن هشام، التاريخ الطبري",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3848,6 +4295,7 @@ export const SEED_FAWAID = [
     category: "فوائد تاريخية",
     source: "صحيح البخاري: ٣٩٠٥، السيرة النبوية لابن هشام",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3856,6 +4304,7 @@ export const SEED_FAWAID = [
     category: "فوائد تاريخية",
     source: "موسوعة غينيس للأرقام القياسية، تاريخ التعليم الإسلامي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3864,6 +4313,7 @@ export const SEED_FAWAID = [
     category: "فوائد تاريخية",
     source: "ابن الأثير في الكامل في التاريخ، المصادر الغربية الصليبية",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   /* ───────── فوائد لغوية (501-505) ───────── */
@@ -3873,6 +4323,7 @@ export const SEED_FAWAID = [
     category: "اللغة",
     source: "البيان والتبيين للجاحظ، البرهان للزركشي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3881,6 +4332,7 @@ export const SEED_FAWAID = [
     category: "اللغة",
     source: "اللغة العربية معناها ومبناها لتمام حسان، مجمع اللغة العربية",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3889,6 +4341,7 @@ export const SEED_FAWAID = [
     category: "اللغة",
     source: "شرح ابن عقيل على ألفية ابن مالك، النحو الوافي لعباس حسن",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3897,6 +4350,7 @@ export const SEED_FAWAID = [
     category: "اللغة",
     source: "سر الفصاحة لابن سنان الخفاجي، الخصائص لابن جني",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3905,6 +4359,7 @@ export const SEED_FAWAID = [
     category: "اللغة",
     source: "البرهان في علوم القرآن للزركشي، التحرير والتنوير لابن عاشور",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   /* ───────── فوائد سلوكية (506-510) ───────── */
@@ -3914,6 +4369,7 @@ export const SEED_FAWAID = [
     category: "فوائد سلوكية",
     source: "متفق عليه، فتح الباري لابن حجر",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3922,6 +4378,7 @@ export const SEED_FAWAID = [
     category: "فوائد سلوكية",
     source: "مدارج السالكين لابن القيم، إحياء علوم الدين للغزالي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3930,6 +4387,7 @@ export const SEED_FAWAID = [
     category: "فوائد سلوكية",
     source: "رياض الصالحين للنووي، اللطائف في الوقت الفاضل",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3938,6 +4396,7 @@ export const SEED_FAWAID = [
     category: "فوائد سلوكية",
     source: "أبو داود: ٤٨٣٣، مدارج السالكين لابن القيم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3946,6 +4405,7 @@ export const SEED_FAWAID = [
     category: "فوائد سلوكية",
     source: "زاد المعاد لابن القيم، البخاري: ٦٧٦",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   // ──────────────────── فوائد فقهية (511-513): آيات الأحكام ────────────────────
@@ -3955,6 +4415,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "سورة المائدة: 6",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3963,6 +4424,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "سورة النساء: 103",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3971,6 +4433,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "سورة البقرة: 275",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   // ──────────────────── فوائد عقدية + فقهية (514-517): أقسام التوحيد وآية الزكاة ────────────────────
@@ -3980,6 +4443,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "سورة الفاتحة: 2",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3988,6 +4452,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "سورة النحل: 36",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -3996,6 +4461,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "سورة الأعراف: 180",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4004,6 +4470,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "سورة التوبة: 103",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4012,6 +4479,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "الموافقات — الشاطبي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4020,6 +4488,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "الأشباه والنظائر — السيوطي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4028,6 +4497,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "الرسالة — الشافعي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4036,6 +4506,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "المستصفى — الغزالي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4044,6 +4515,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "ابن الصلاح — علوم الحديث",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4052,6 +4524,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "ابن حجر — نخبة الفكر",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4060,6 +4533,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "ابن حجر — نخبة الفكر",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4068,6 +4542,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "مقدمة في أصول التفسير — ابن تيمية",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4076,6 +4551,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "الرسالة — الشافعي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4084,6 +4560,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "صحيح البخاري — كتاب فضائل القرآن",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4092,6 +4569,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "العقيدة الواسطية — ابن تيمية",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4100,6 +4578,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "سورة الشورى: 11",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4108,6 +4587,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "العقيدة الواسطية — ابن تيمية",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4116,6 +4596,7 @@ export const SEED_FAWAID = [
     category: "فوائد تاريخية",
     source: "سورة الفتح، وابن هشام",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4124,6 +4605,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "صحيح مسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4132,6 +4614,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "رياض الصالحين — النووي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4140,6 +4623,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "صحيح مسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4148,6 +4632,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "صحيح البخاري ومسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4156,6 +4641,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "سنن أبي داود",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4164,6 +4650,7 @@ export const SEED_FAWAID = [
     category: "فوائد لغوية",
     source: "ألفية ابن مالك",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4172,6 +4659,7 @@ export const SEED_FAWAID = [
     category: "فوائد لغوية",
     source: "الإيضاح — القزويني",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4180,6 +4668,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "صحيح البخاري",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4188,6 +4677,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "الأشباه والنظائر — السيوطي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4196,6 +4686,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "الأشباه والنظائر — السيوطي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4204,6 +4695,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "الأشباه والنظائر — ابن نجيم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4212,6 +4704,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "الأشباه والنظائر — السيوطي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4220,6 +4713,7 @@ export const SEED_FAWAID = [
     category: "فوائد دعوية",
     source: "صحيح البخاري: 1395",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4228,6 +4722,7 @@ export const SEED_FAWAID = [
     category: "فوائد دعوية",
     source: "صحيح البخاري ومسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4236,6 +4731,7 @@ export const SEED_FAWAID = [
     category: "فوائد تاريخية",
     source: "ابن كثير — البداية والنهاية",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4244,6 +4740,7 @@ export const SEED_FAWAID = [
     category: "فوائد تاريخية",
     source: "المغني — ابن قدامة",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4252,6 +4749,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "سورة ص: 29",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4260,6 +4758,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "السيوطي — الإتقان",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4268,6 +4767,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "صحيح مسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4276,6 +4776,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "صحيح البخاري ومسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4284,6 +4785,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "الأشباه والنظائر — السيوطي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4292,6 +4794,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "الموافقات — الشاطبي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4300,6 +4803,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "العقيدة الواسطية",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4308,6 +4812,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "سورة آل عمران: 31",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4316,6 +4821,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "صحيح مسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4324,6 +4830,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "سنن أبي داود",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4332,6 +4839,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "صحيح البخاري ومسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4340,6 +4848,7 @@ export const SEED_FAWAID = [
     category: "الأخلاق",
     source: "ابن هشام — السيرة",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4348,6 +4857,7 @@ export const SEED_FAWAID = [
     category: "فوائد دعوية",
     source: "صحيح البخاري",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4356,6 +4866,7 @@ export const SEED_FAWAID = [
     category: "فوائد دعوية",
     source: "صحيح البخاري ومسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4364,6 +4875,7 @@ export const SEED_FAWAID = [
     category: "طلب العلم",
     source: "الخطيب — الرحلة في طلب الحديث",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4372,6 +4884,7 @@ export const SEED_FAWAID = [
     category: "طلب العلم",
     source: "سنن الدارمي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4380,6 +4893,7 @@ export const SEED_FAWAID = [
     category: "فوائد تاريخية",
     source: "ابن النديم — الفهرست",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4388,6 +4902,7 @@ export const SEED_FAWAID = [
     category: "فوائد تاريخية",
     source: "المغني — ابن قدامة",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4396,6 +4911,7 @@ export const SEED_FAWAID = [
     category: "اللغة",
     source: "ابن جني — الخصائص",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4404,6 +4920,7 @@ export const SEED_FAWAID = [
     category: "فوائد لغوية",
     source: "ابن الأثير — النهاية",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4412,6 +4929,7 @@ export const SEED_FAWAID = [
     category: "الرقائق",
     source: "ابن القيم — مدارج السالكين",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4420,6 +4938,7 @@ export const SEED_FAWAID = [
     category: "الذكر والدعاء",
     source: "موطأ مالك / الترمذي",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4428,6 +4947,7 @@ export const SEED_FAWAID = [
     category: "فوائد سلوكية",
     source: "صحيح البخاري ومسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4436,6 +4956,7 @@ export const SEED_FAWAID = [
     category: "فوائد سلوكية",
     source: "صحيح البخاري — صلاة الاستخارة",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4444,6 +4965,7 @@ export const SEED_FAWAID = [
     category: "فوائد فقهية",
     source: "إعلام الموقعين — ابن القيم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4452,6 +4974,7 @@ export const SEED_FAWAID = [
     category: "فوائد قرآنية",
     source: "سورة هود: 120",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4460,6 +4983,7 @@ export const SEED_FAWAID = [
     category: "فوائد حديثية",
     source: "صحيح البخاري ومسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4468,6 +4992,7 @@ export const SEED_FAWAID = [
     category: "فوائد عقدية",
     source: "شرح الطحاوية",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4476,6 +5001,7 @@ export const SEED_FAWAID = [
     category: "فوائد تربوية",
     source: "صحيح البخاري ومسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {
@@ -4484,6 +5010,7 @@ export const SEED_FAWAID = [
     category: "الآداب",
     source: "صحيح مسلم",
     author_name: null,
+    _needs_author: true,
     status: "approved",
   },
   {

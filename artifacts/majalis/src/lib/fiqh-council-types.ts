@@ -238,6 +238,7 @@ export type FiqhCouncilIssue = {
   title: string;
   summary?: string;
   description?: string;
+  _needs_description?: boolean;
   category: string;
   subcategory?: string;
   ruling_summary?: string;
