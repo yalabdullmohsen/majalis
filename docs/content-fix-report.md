@@ -283,27 +283,76 @@ scholars-data.ts، scholars-seo.json، library-catalog.ts/.json، library-author
 
 ## المرحلة 8 — سياسة غير الموثّق (وسم ظاهر)
 
-**الفرع:** `cursor/content-fix-phase8-unsourced-policy-1f54`
-**PR:** (يُحدَّث)
+**الفرع:** `cursor/content-fix-phase8-unsourced-policy-1f54`  
+**PR:** https://github.com/yalabdullmohsen/majalis/pull/346
 
-### الأعداد
+### الأعداد الدقيقة
 | المصدر | العدد |
 |---|---|
 | qa `evidence: null` | 155 |
 | qa `reference: null` | 142 |
-| quiz «مستند إلى مضمون الإجابة…» | 0 (كانت 0 في النسخة الحالية؛ اُستبدل النمط بـ null إن وُجد) |
+| quiz «مستند إلى مضمون الإجابة المعتمدة» | **0** في الشجرة الحالية (النمط غير موجود؛ لو وُجد لاستُبدل بـ `null`) |
 | asma مرجع حديث الـ99 فقط | 13 |
-| fawaid بلا author_name | 527 |
+| fawaid بلا `author_name` | 527 |
 
 ### documentation_status
-- qa: sourced=218 / unsourced=142
-- quiz-seed: أُضيف للحقول
-- asma-husna: 99 سجلًا
-- fawaid: أُضيف حسب وجود source
+| ملف | sourced | unsourced |
+|---|---|---|
+| qa-seed.ts | 218 | 142 |
+| quiz-seed.ts | حسب وجود مرجع مسمّى | البقية |
+| asma-husna-data.ts | غير حديث الـ99 وحده | 13 (+ما بلا مرجع مسمّى) |
+| fawaid-seed.ts | له مصدر مسمّى | بلا مصدر / بلا مؤلف موثّق |
 
 ### الواجهة
-- `SHOW_UNSOURCED_BADGE=true`
-- مكوّن `UnsourcedBadge` في QaCard و FaidahCard و AsmaaHusnaPage
+- راية `SHOW_UNSOURCED_BADGE=true` في `content-flags.ts` / `.mjs`
+- مكوّن `UnsourcedBadge` («بلا تخريج») في QaCard و FaidahCard و AsmaaHusnaPage
+- لا إخفاء لمحتوى
 
 ### حالة البناء
-(تُحدَّث)
+نجاح (3483ce43)
+
+---
+
+## المرحلة 9 — توحيد أسماء المسارات من SEO
+
+**الفرع:** `cursor/content-fix-phase9-nav-seo-titles-1f54`  
+**PR:** (يُحدَّث بعد الإنشاء)
+
+### ما نُفّذ
+- مصدر وحيد: `seo-routes.json` عبر `artifacts/majalis/src/lib/seo-nav-labels.ts` (`seoNavLabel` + `SEO_NAV_EXCEPTIONS`).
+- اشتقاق تسميات الروابط في:
+  - `navigation.ts`
+  - `SideNavDrawer.tsx`
+  - `MoreBottomSheet.tsx`
+  - `home-feature-catalog.ts`
+- عناوين **مجموعات** القائمة (group/subgroup) بقيت نصاً ثابتاً — ليست أسماء مسارات.
+- مرساة `/my-learning#…` تحتفظ بـ«شهاداتي» ولا ترث «حسابي».
+
+### استثناءات (>25 حرفاً — اسم التنقّل الحالي)
+| المسار | عنوان SEO (مرفوض للتنقّل) | الاسم المعتمد |
+|---|---|---|
+| `/fiqh-council` | الهيئات والمنظمات الإسلامية (27) | المجمع الفقهي |
+| `/knowledge-graph` | الرسم البياني المعرفي الإسلامي (30) | استكشف المعرفة |
+
+### ملاحظات خارج النطاق (ذكراً فقط)
+- `recent-pages.ts` ما زال يحمل تسميات محلية لبعض المسارات (مثل `/knowledge-map`).
+- `/knowledge-map` يُعاد توجيهه إلى `/knowledge-graph`؛ عنوان SEO له «ترابط العلوم الإسلامية» ولم يُعرض في القوائم الأربع أعلاه كعنصر مستقل.
+
+### حالة البناء
+(تُحدَّث بعد البناء)
+
+---
+
+## جدول ختامي
+
+| المرحلة | عدد التعديلات (تقريبي) | الموسوم / الاستثناء | البناء | PR |
+|---|---|---|---|---|
+| 1 عزل curriculum | عزل + إعادة توليد موسوعة + طابور 36 | 36 منهج معزول | نجاح | #339 |
+| 2 توثيق الفقه | 31 خفضاً + 3 UNVERIFIED | 28 general_reasoning + 3 UNVERIFIED | نجاح | #340 |
+| 3 أرقام وتقاويم | quiz/qa/stories/islamicQuiz | لا توحيد 88/91 ولا 7397/7563 | نجاح | #341 |
+| 4 بتر وإملاء | مولّد + إملاء + فوزان + ليلة القدر | مواضع مشبوهة في طابور المراجعة | نجاح | #342 |
+| 5 أسماء وألقاب | ابن قيم الجوزية + نزع ألقاب | استثناء جملة quiz تعليمية | نجاح | #343 |
+| 6 حقول مكررة | وسم فقط | 33 `_duplicate_summary`؛ 1 `_duplicate_lesson_book` | نجاح | #344 |
+| 7 حقول ناقصة | 60 slug؛ 11 وصف؛ 527 مؤلف | `_needs_description` / `_needs_author` | نجاح | #345 |
+| 8 غير الموثّق | documentation_status + شارة | unsourced ظاهر بلا إخفاء | نجاح | (phase8) |
+| 9 أسماء المسارات | seoNavLabel في 4 ملفات | استثناءان >25 حرفاً | (بعد البناء) | (phase9) |
