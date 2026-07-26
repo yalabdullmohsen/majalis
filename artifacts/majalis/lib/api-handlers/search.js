@@ -188,7 +188,9 @@ async function searchFiqh(supabase, normQuery, limit) {
     .from("fiqh_council_items")
     .select("slug, title, summary, category, type")
     .eq("status", "published")
-    .ilike("search_text", `%${normQuery}%`)
+    // الجدول لا يحوي عمود search_text — الفلترة عليه كانت تُفشل الاستعلام كاملاً
+    // (42703) فتعود النتيجة فارغة دائماً وكأن لا قرارات مطابقة.
+    .or(`title.ilike.%${normQuery}%,summary.ilike.%${normQuery}%,ruling_text.ilike.%${normQuery}%`)
     .limit(limit);
   return (data || []).map((r) => ({
     id: r.slug,
