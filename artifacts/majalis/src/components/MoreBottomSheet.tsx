@@ -48,7 +48,7 @@ const SHEET_SECTIONS = [
     { href: "/janna-naar",  label: "الجنة والنار",         Icon: Sparkles },
     { href: "/alamat-saah", label: "علامات الساعة",        Icon: Clock },
     { href: "/malaika",     label: "الملائكة في الإسلام",  Icon: Sparkles },
-    { href: "/miracles",    label: "الإعجاز العلمي",       Icon: Lightbulb },
+    { href: "/ulum-quran",  label: "علوم القرآن والإعجاز", Icon: Lightbulb },
   ]},
 
   /* ── التعريف بالإسلام ── */

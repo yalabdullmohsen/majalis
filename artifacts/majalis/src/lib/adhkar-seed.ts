@@ -3727,7 +3727,20 @@ export const ADHKAR_ITEMS: AdhkarItem[] = [
   },
 ];
 
+function isWeakAdhkarGrade(grade?: string): boolean {
+  const g = (grade || "").trim();
+  return !!g && /ضعيف|موضوع|منكر|واه/.test(g);
+}
+
+/** للعامة: يستبعد الأذكار المصرَّح بضعفها. */
 export function getAllAdhkarItems(): AdhkarItem[] {
+  const imported = ((importBundle as { adhkar?: AdhkarItem[] }).adhkar || []) as AdhkarItem[];
+  const ids = new Set(ADHKAR_ITEMS.map((i) => i.id));
+  return [...ADHKAR_ITEMS, ...imported.filter((i) => !ids.has(i.id))].filter((i) => !isWeakAdhkarGrade(i.grade));
+}
+
+/** للإدارة فقط: يشمل الضعيف. */
+export function getAllAdhkarItemsIncludingWeak(): AdhkarItem[] {
   const imported = ((importBundle as { adhkar?: AdhkarItem[] }).adhkar || []) as AdhkarItem[];
   const ids = new Set(ADHKAR_ITEMS.map((i) => i.id));
   return [...ADHKAR_ITEMS, ...imported.filter((i) => !ids.has(i.id))];

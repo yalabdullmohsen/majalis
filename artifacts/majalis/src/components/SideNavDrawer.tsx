@@ -156,7 +156,7 @@ const DRAWER_GROUPS: NavGroup[] = [
           { href: "/janna-naar",  label: "الجنة والنار",       Icon: Sparkles,  desc: "صفة الجنة والنار من النصوص" },
           { href: "/alamat-saah", label: "علامات الساعة",      Icon: Clock,     desc: "الصغرى والكبرى بالترتيب" },
           { href: "/malaika",     label: "الملائكة",           Icon: Sparkles,  desc: "أسماؤهم ومهامهم وصفاتهم" },
-          { href: "/miracles",    label: "الإعجاز العلمي",     Icon: Lightbulb, desc: "إعجاز القرآن والكون" },
+          { href: "/miracles",    label: "الإعجاز العلمي",     Icon: Lightbulb, desc: "علوم القرآن والإعجاز" },
         ],
       },
       {

@@ -161,14 +161,14 @@ export default function MiraclesPage({
       {/* ══ Hero ══ */}
       <header className="mk-hero">
         <div className="mk-hero__inner">
-          <p className="mk-hero__eyebrow">علم وإيمان</p>
-          <h1 className="mk-hero__title">الإعجاز العلمي</h1>
+          <p className="mk-hero__eyebrow">بحذر منهجي</p>
+          <h1 className="mk-hero__title">إشارات كونية في الوحي</h1>
           <p className="mk-hero__sub">
-            مقالات موثّقة تربط الاكتشافات العلمية بالآيات القرآنية والأحاديث النبوية
+            المعتمد في منهج الموقع: الإعجاز البياني والتشريعي والغيبي. ما يُعرض هنا إشارات للتأمل عند ثبوت المعنى — لا إعجاز عددي ولا ربط بنظريات قابلة للنقض.
           </p>
           <p className="mk-hero__note">
             <AlertTriangle size={16} strokeWidth={1.8} aria-hidden="true" />
-            <span>الملاحظات العلمية قد تتطور مع البحث، نعرضها للتفكر لا كحكم نهائي</span>
+            <span>للتقرير المنهجي راجع صفحة علوم القرآن؛ ولا تُبنى عقيدة أو حكم على دعاوى علمية معاصرة</span>
           </p>
         </div>
       </header>

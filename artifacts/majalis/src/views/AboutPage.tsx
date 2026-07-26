@@ -136,7 +136,7 @@ export default function AboutPage() {
           <li><strong>53</strong> حكماً شرعياً موثّقاً</li>
           <li><strong>780+</strong> سؤال في لعبة سين جيم</li>
           <li><strong>49+</strong> دورة علمية مجدولة</li>
-          <li><strong>64+</strong> موضوع في الإعجاز العلمي</li>
+          <li><strong>علوم القرآن</strong> مع وجوه الإعجاز البياني والتشريعي والغيبي</li>
           <li><strong>350+</strong> فائدة علمية منتقاة</li>
           <li><strong>320+</strong> سؤال وجواب فقهي</li>
           <li><strong>59+</strong> موضوع في الطب النبوي</li>
