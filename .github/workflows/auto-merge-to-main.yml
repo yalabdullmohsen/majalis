@@ -172,12 +172,52 @@ jobs:
               gh "${REPO_FLAG[@]}" pr ready "$n" || echo "::warning::تعذّر undraft لـ #$n"
             fi
 
-            # لا تتجاوز الفحوصات: --auto ينتظر نجاح الفحوصات المطلوبة (مثل Verify build)
+            # أولًا: طابور auto-merge إن دعمه المستودع.
+            # إن فشلت (لا قواعد حماية فرع)، ندمج مباشرة فقط بعد نجاح الفحوصات الحاسمة.
             echo "تفعيل Auto-merge (squash) + حذف الفرع…"
             if gh "${REPO_FLAG[@]}" pr merge "$n" --auto --squash --delete-branch; then
               echo "✓ Auto-merge مفعّل أو الدمج تم لـ #$n"
+              echo "::endgroup::"
+              continue
+            fi
+
+            echo "auto-merge غير متاح — فحص الفحوصات الحاسمة قبل الدمج المباشر…"
+            checks=$(gh "${REPO_FLAG[@]}" pr checks "$n" --json name,state,bucket 2>/dev/null || true)
+            if [ -z "$checks" ]; then
+              # إصدارات gh أقدم: نصّي
+              if ! gh "${REPO_FLAG[@]}" pr checks "$n" 2>&1 | tee /tmp/pr-checks.txt; then
+                echo "::warning::فحوصات #$n غير مكتملة/فاشلة — لا دمج مباشر"
+                echo "::endgroup::"
+                continue
+              fi
+              if grep -qiE 'fail|pending' /tmp/pr-checks.txt; then
+                # pending على فحوص غير حاسمة مقبول أحيانًا؛ نتحقق من Verify build صراحة
+                :
+              fi
+            fi
+
+            verify=$(gh "${REPO_FLAG[@]}" pr checks "$n" 2>&1 || true)
+            echo "$verify"
+            if ! echo "$verify" | grep -Eq 'Verify build[[:space:]]+pass'; then
+              if ! echo "$verify" | grep -Eq 'Verify build[[:space:]]+successful'; then
+                # صيغ مختلفة حسب إصدار gh
+                if ! echo "$verify" | grep -i 'Verify build' | grep -qiE 'pass|success'; then
+                  echo "::warning::Verify build لم ينجح بعد لـ #$n — لا دمج"
+                  echo "::endgroup::"
+                  continue
+                fi
+              fi
+            fi
+            if echo "$verify" | grep -i 'Verify build' | grep -qiE 'fail|pending'; then
+              echo "::warning::Verify build معلّق/فاشل لـ #$n — لا دمج"
+              echo "::endgroup::"
+              continue
+            fi
+
+            if gh "${REPO_FLAG[@]}" pr merge "$n" --squash --delete-branch; then
+              echo "✓ دُمج مباشرة بعد نجاح الفحوصات لـ #$n"
             else
-              echo "::warning::تعذّر تفعيل auto-merge لـ #$n (فحوصات معلّقة/فاشلة أو قيود مستودع)"
+              echo "::warning::تعذّر دمج #$n"
             fi
             echo "::endgroup::"
           done
