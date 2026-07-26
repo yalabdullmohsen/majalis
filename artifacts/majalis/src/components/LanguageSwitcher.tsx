@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { Globe, Check, ChevronDown } from "lucide-react";
 import { useLanguage } from "@/components/LanguageProvider";
 import { LANG_META, type Lang } from "@/lib/language-preference";
+import "@/styles/components/language-offline.css";
 
 export function LanguageSwitcher() {
   const { lang, setLang, dir } = useLanguage();

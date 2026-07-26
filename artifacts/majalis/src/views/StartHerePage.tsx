@@ -18,6 +18,7 @@ import {
   Target,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import "@/styles/pages/start-here.css";
 
 type Step = {
   num: number;

@@ -22,6 +22,7 @@ import {
   type CardState,
 } from "@/lib/spaced-repetition";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import "@/styles/pages/flashcards.css";
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 
