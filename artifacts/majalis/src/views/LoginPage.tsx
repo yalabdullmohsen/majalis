@@ -9,6 +9,7 @@ import { signInWithGoogle, GOOGLE_OAUTH_ENABLED } from "@/lib/supabase";
 import { preloadRoute } from "@/lib/lazy-with-retry";
 import { Loading } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
+import "@/styles/pages/auth.css";
 
 function canAccessAdminUser(current: Awaited<ReturnType<typeof import("@/lib/supabase").getCurrentUser>>) {
   if (!current) return false;

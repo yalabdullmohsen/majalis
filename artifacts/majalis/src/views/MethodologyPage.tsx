@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import { ArrowRight, Bot, CheckCircle2, Shield, Users, BookOpen, AlertTriangle, Globe } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import "@/styles/pages/methodology.css";
 
 const SOURCES = [
   { name: "dorar.net", desc: "موسوعة الدرر السنية للأحاديث والآثار" },

@@ -7,6 +7,7 @@ import { bootstrapSupabaseFromServer } from "@/lib/supabase-bootstrap";
 import { supabase, signInWithGoogle, GOOGLE_OAUTH_ENABLED } from "@/lib/supabase";
 import { Loading } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
+import "@/styles/pages/auth.css";
 
 export default function RegisterPage() {
   const { register, user, loading: authLoading } = useAuth();

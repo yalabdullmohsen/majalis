@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "wouter";
 import { Download } from "lucide-react";
 import { ShareButtons } from "@/components/ContentActions";
+import "@/styles/pages/calendar.css";
 import {
   addMonths,
   eachDayOfInterval,

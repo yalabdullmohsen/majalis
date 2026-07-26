@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { Link } from "wouter";
 import { BookOpen, CalendarDays, Home, Users, Zap } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
+import "@/styles/pages/kids.css";
 
 /**
  * حلقات التحفيظ — «قريبًا» حتى يكتمل دليل محدّث وموثّق.
