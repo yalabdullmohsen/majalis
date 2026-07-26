@@ -17,6 +17,7 @@ import {
   isOccurrencePast,
   parseTimeToMinutes,
 } from "@/lib/lesson-time";
+import { canonicalizeLessonPublicId } from "@/lib/lesson-id-aliases";
 
 export type ActivityType = "درس" | "دورة";
 
@@ -203,8 +204,10 @@ export function mapLessonRow(row: any): KuwaitLessonRecord {
     tags.some((t: string) => /بث|مباشر|live/i.test(t)) ||
     /بث|مباشر|live/i.test(delivery);
 
-  // Colons in URL path segments break Vercel routing; replace with dashes
-  const id = String(row.external_key || row.id || "").replace(/:/g, "-");
+  // Colons in URL path segments break Vercel routing; replace with dashes.
+  // بصمات kuwait-lessons التاريخية تُحوَّل للمعرّف الكانوني kw-* إن وُجد.
+  const rawId = String(row.external_key || row.id || "").replace(/:/g, "-");
+  const id = canonicalizeLessonPublicId(rawId);
 
   const partialLesson = enrichScheduleFields({
     id,

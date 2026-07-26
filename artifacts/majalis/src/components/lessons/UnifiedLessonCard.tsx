@@ -130,9 +130,11 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
         )}
 
         <div className="lesson-unified-card__actions">
-          <Link href={lesson.detailsHref} className="lesson-unified-card__btn lesson-unified-card__btn--primary">
-            التفاصيل
-          </Link>
+          {lesson.detailsHref ? (
+            <Link href={lesson.detailsHref} className="lesson-unified-card__btn lesson-unified-card__btn--primary">
+              التفاصيل
+            </Link>
+          ) : null}
           {!compact && (
             <>
               <AdminInlineEdit

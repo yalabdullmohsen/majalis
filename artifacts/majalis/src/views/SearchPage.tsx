@@ -8,6 +8,8 @@ import { displayText } from "@/lib/display-text";
 import { SearchSkeleton, PageHeader } from "@/components/ui-common";
 import { SearchSuggestions } from "@/components/SearchSuggestions";
 import { SheikhAvatar } from "@/components/lessons/SheikhAvatar";
+import { canonicalizeLessonPublicId } from "@/lib/lesson-id-aliases";
+import { findSeedLessonById } from "@/lib/lessons-seed";
 import "@/styles/pages/search.css";
 
 /* ── تمييز مصطلح البحث في النصوص ── */
@@ -613,14 +615,20 @@ export default function SearchPage() {
                       render={(row: FiqhGlobalSearchRow) => <FiqhResultRow key={row.id} row={row} />}
                     />
                   )}
-                  <Group title="الدروس" items={results.lessons} render={(l) => (
-                    <ResultRow key={l.id} href={`/lessons/${l.id}`} kind="lesson" query={q}
+                  <Group title="الدروس" items={results.lessons.filter((l) => {
+                    const id = canonicalizeLessonPublicId(l.external_key || l.id) || l.id;
+                    return Boolean(id && (findSeedLessonById(id) || l.status === "approved"));
+                  })} render={(l) => {
+                    const id = canonicalizeLessonPublicId(l.external_key || l.id) || l.id;
+                    return (
+                    <ResultRow key={l.id} href={`/lessons/${id}`} kind="lesson" query={q}
                       title={displayText(l.title)}
                       meta={l.searchMeta || l.speaker_name || l.sheikhs?.name || l.category}
                       avatarSrc={resolveLessonSheikhImage(l)}
                       avatarName={l.speaker_name || l.sheikhs?.name || "شيخ"}
                     />
-                  )} />
+                    );
+                  }} />
                   <Group title="الفوائد" items={results.fawaid} render={(f) => (
                     <ResultRow key={f.id} href="/fawaid" kind="fawaid" query={q} title={displayText(f.text)} meta={f.author_name} />
                   )} />

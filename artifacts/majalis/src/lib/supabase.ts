@@ -335,20 +335,24 @@ export async function getLessonById(id: string) {
     if (byId.error) throw byId.error;
     if (byId.data) return { lesson: byId.data, error: null, usingSeed: false };
 
-    // external_key may have been stored with ":" but ID in URLs uses "-" (sanitized)
-    const colonId = id.replace(/-/g, ":");
+    // external_key قد يُخزَّن بـ ":" (kuwait-lessons:HASH) بينما الرابط يستخدم "-"
+    const { canonicalizeLessonPublicId, lessonExternalKeyCandidates } = await import("@/lib/lesson-id-aliases");
+    const canonical = canonicalizeLessonPublicId(id) || id;
+    const keys = lessonExternalKeyCandidates(canonical);
+    const orFilter = keys.map((k) => `external_key.eq.${k}`).join(",");
     const byExternalKey = await supabase
       .from("lessons")
       .select(`*, ${SHEIKH_EMBED}`)
-      .or(`external_key.eq.${id},external_key.eq.${colonId}`)
+      .or(orFilter)
       .eq("status", "approved")
       .maybeSingle();
 
     if (byExternalKey.error) throw byExternalKey.error;
+    const seedFallback = findSeedLessonById(canonical) || fallback;
     return {
-      lesson: byExternalKey.data || fallback,
+      lesson: byExternalKey.data || seedFallback,
       error: null,
-      usingSeed: !byExternalKey.data && !!fallback,
+      usingSeed: !byExternalKey.data && !!seedFallback,
     };
   } catch (err) {
     logSupabaseError("getLessonById", err, { id });
