@@ -94,7 +94,7 @@ export interface UniversityFilters {
 
 export const DEGREE_LEVELS: DegreeLevel[] = ["دبلوم", "بكالوريوس", "ماجستير", "دكتوراه", "دبلوم_عالي"];
 export const STUDY_MODES:   StudyMode[]   = ["حضوري", "عن_بعد", "هجين"];
-export const LANGUAGES = ["العربية", "الإنجليزية", "الفرنسية", "الماليزية", "الأردية"];
+export const LANGUAGES = ["العربية", "الإنجليزية", "الفرنسية", "الماليزية", "الأردية", "التركية", "الإندونيسية"];
 
 export const ACCREDITATION_LABELS: Record<AccreditationStatus, string> = {
   accredited:   "معتمدة رسمياً",

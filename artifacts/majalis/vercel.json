@@ -13,7 +13,7 @@
   "functions": {
     "api/index.js": {
       "maxDuration": 60,
-      "includeFiles": "{lib/**,supabase/**,data/**,public/data/rulings-encyclopedia/**,dist/index.html}"
+      "includeFiles": "{lib/**,supabase/**,data/**,src/data/universities-catalog.json,public/data/rulings-encyclopedia/**,dist/index.html}"
     }
   },
   "crons": [

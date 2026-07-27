@@ -19,6 +19,11 @@
 
 import { sendJson } from "../api/_http.mjs";
 import { getSupabaseAdmin, isMissingTableError } from "../../lib/supabase-admin.mjs";
+import {
+  filterCatalog,
+  getCatalogBySlug,
+  getCatalogUniversities,
+} from "../universities-catalog.mjs";
 
 // ── مساعدات ───────────────────────────────────────────────────────────────
 
@@ -87,12 +92,18 @@ function buildUniversitiesQuery(admin, q) {
 
 async function handleList(req, res) {
   const admin = getSupabaseAdmin();
-  if (!admin) return serverErr(res, "no supabase admin");
+  if (!admin) {
+    const catalog = filterCatalog(req.query || {});
+    return ok(res, { ...catalog, seed_needed: true });
+  }
 
   try {
     const { data, error, count } = await buildUniversitiesQuery(admin, req.query);
     if (error) {
-      if (isMissingTableError(error)) return ok(res, { items: [], total: 0, seed_needed: true });
+      if (isMissingTableError(error)) {
+        const catalog = filterCatalog(req.query || {});
+        return ok(res, { ...catalog, seed_needed: true });
+      }
       return serverErr(res, error);
     }
 
@@ -113,6 +124,12 @@ async function handleList(req, res) {
       items = items.filter((u) => u.university_programs.length > 0);
     }
 
+    // إن كانت الجداول موجودة لكن فارغة، اعرض الكتالوج الموثّق فورًا
+    if ((!items || items.length === 0) && !(count > 0) && getCatalogUniversities().length > 0) {
+      const catalog = filterCatalog(req.query || {});
+      return ok(res, { ...catalog, seed_needed: true });
+    }
+
     ok(res, { items, total: count || items.length });
   } catch (e) {
     serverErr(res, e);
@@ -121,7 +138,11 @@ async function handleList(req, res) {
 
 async function handleDetail(req, res, slug) {
   const admin = getSupabaseAdmin();
-  if (!admin) return serverErr(res, "no supabase admin");
+  if (!admin) {
+    const uni = getCatalogBySlug(slug);
+    if (!uni) return notFound(res);
+    return ok(res, { university: uni, from_catalog: true });
+  }
 
   try {
     const { data, error } = await admin
@@ -138,7 +159,11 @@ async function handleDetail(req, res, slug) {
       .eq("is_published", true)
       .single();
 
-    if (error || !data) return notFound(res);
+    if (error || !data) {
+      const uni = getCatalogBySlug(slug);
+      if (uni) return ok(res, { university: uni, from_catalog: true });
+      return notFound(res);
+    }
 
     // ترتيب الأسئلة الشائعة
     if (data.university_faqs) {
@@ -152,12 +177,15 @@ async function handleDetail(req, res, slug) {
 }
 
 async function handleCompare(req, res) {
-  const admin = getSupabaseAdmin();
-  if (!admin) return serverErr(res, "no supabase admin");
-
   const { slugs } = safeBody(req);
   if (!Array.isArray(slugs) || slugs.length < 2 || slugs.length > 4) {
     return bad(res, "slugs must be array of 2-4 items");
+  }
+
+  const admin = getSupabaseAdmin();
+  if (!admin) {
+    const universities = slugs.map((s) => getCatalogBySlug(s)).filter(Boolean);
+    return ok(res, { universities, from_catalog: true });
   }
 
   try {
@@ -173,8 +201,25 @@ async function handleCompare(req, res) {
       .in("slug", slugs)
       .eq("is_published", true);
 
-    if (error) return serverErr(res, error);
-    ok(res, { universities: data || [] });
+    if (error) {
+      if (isMissingTableError(error)) {
+        const universities = slugs.map((s) => getCatalogBySlug(s)).filter(Boolean);
+        return ok(res, { universities, from_catalog: true });
+      }
+      return serverErr(res, error);
+    }
+
+    let universities = data || [];
+    if (universities.length < slugs.length) {
+      const have = new Set(universities.map((u) => u.slug));
+      for (const s of slugs) {
+        if (!have.has(s)) {
+          const c = getCatalogBySlug(s);
+          if (c) universities.push(c);
+        }
+      }
+    }
+    ok(res, { universities });
   } catch (e) {
     serverErr(res, e);
   }
