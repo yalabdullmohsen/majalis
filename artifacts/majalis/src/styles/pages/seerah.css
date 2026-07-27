@@ -105,6 +105,22 @@
 }
 .seerah-timeline::-webkit-scrollbar { width: 4px; }
 .seerah-timeline::-webkit-scrollbar-thumb { background: var(--majalis-line); border-radius: 2px; }
+.seerah-timeline__empty {
+  margin: 0.75rem 0.5rem 0.5rem;
+  padding: 0.65rem 0.75rem;
+  font-size: 0.8rem;
+  line-height: 1.65;
+  color: var(--majalis-muted, #5c6b64);
+  background: var(--majalis-parchment);
+  border-radius: 10px;
+  border: 1px dashed var(--majalis-line);
+}
+.seerah-sources__note {
+  margin: 0.75rem 0 0;
+  font-size: 0.8rem;
+  line-height: 1.7;
+  color: var(--majalis-muted, #5c6b64);
+}
 @media (max-width: 720px) {
   .seerah-timeline {
     position: static;
@@ -117,6 +133,10 @@
     padding: var(--ds-space-2);
     gap: 0.4rem;
     scrollbar-width: none;
+  }
+  .seerah-timeline__empty {
+    min-width: 16rem;
+    margin: 0.35rem 0.25rem;
   }
   .seerah-timeline::-webkit-scrollbar { display: none; }
 }
