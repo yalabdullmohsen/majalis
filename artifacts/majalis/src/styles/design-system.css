@@ -1729,12 +1729,12 @@ hr.decorative,
 
 /* ── Footer email link ───────────────────────────────────── */
 .site-footer-email {
-  margin: 0.25rem 0 0;
-  font-size: 0.75rem;
+  margin: 0 0 0.75rem;
+  font-size: 0.85rem;
 }
 
 .site-footer-email a {
-  color: rgba(255,255,255,0.6);
+  color: var(--msk-text-2, #5C5C56);
   text-decoration: none;
   transition: color 0.2s;
 }
