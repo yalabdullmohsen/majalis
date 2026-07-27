@@ -27,6 +27,7 @@ const SHEET_SECTIONS_RAW: { group: string; items: SheetItem[] }[] = [
     { href: "/daily-wird",          label: seoNavLabel("/daily-wird", "الورد اليومي"),       Icon: Sun },
     { href: "/quran/tajweed",       label: seoNavLabel("/quran/tajweed", "علم التجويد"),        Icon: Mic2 },
     { href: "/ulum-quran",          label: seoNavLabel("/ulum-quran", "علوم القرآن الكريم"),        Icon: GraduationCap },
+    { href: "/tafsir",              label: seoNavLabel("/tafsir", "علم التفسير"),           Icon: BookOpen },
     { href: "/quran/surah-stories", label: seoNavLabel("/quran/surah-stories", "قصص السور"),          Icon: BookText },
     { href: "/duas-quran",          label: seoNavLabel("/duas-quran", "أدعية القرآن"),       Icon: BookMarked },
     { href: "/quran-memorization",  label: seoNavLabel("/quran-memorization", "اختبارات الحفظ"),     Icon: Zap },

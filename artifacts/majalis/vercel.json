@@ -279,6 +279,11 @@
       "permanent": true
     },
     {
+      "source": "/quran/tafsir",
+      "destination": "/tafsir",
+      "permanent": true
+    },
+    {
       "source": "/anbiya",
       "destination": "/prophets",
       "permanent": true

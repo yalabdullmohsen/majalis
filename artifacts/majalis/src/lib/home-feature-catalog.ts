@@ -141,6 +141,7 @@ const FEATURE_CATS_RAW: FeatureCat[] = [
       { href: "/quran/surah-stories",  Icon: Star,       title: seoNavLabel("/quran/surah-stories", "قصص القرآن"),        desc: "أسباب النزول و١١٤ سورة" },
       { href: "/quran/tajweed",        Icon: Mic2,       title: seoNavLabel("/quran/tajweed", "علم التجويد"),        desc: "أحكام التجويد الشاملة" },
       { href: "/ulum-quran",           Icon: GraduationCap, title: seoNavLabel("/ulum-quran", "علوم القرآن الكريم"),      desc: "النزول والجمع والإعجاز والتفسير" },
+      { href: "/tafsir",               Icon: BookOpen,      title: seoNavLabel("/tafsir", "علم التفسير"),            desc: "أنواع التفسير وأصوله وأشهر كتب المفسرين" },
     ],
   },
   {
