@@ -201,7 +201,7 @@
 .sg-info-box {
   display: flex; gap: .65rem; align-items: flex-start;
   background: #EEF2FF; border: 1px solid #C7D2FE; border-radius: .7rem;
-  padding: .85rem 1rem; font-size: .83rem; color: #312E81; line-height: 1.6;
+  padding: .85rem 1rem; font-size: .83rem; color: #143F35; line-height: 1.6;
 }
 .sg-info-box p { margin: 0; }
 

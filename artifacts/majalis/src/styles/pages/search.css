@@ -371,23 +371,23 @@
   border: 1px solid rgba(24,54,42,0.15);
 }
 
-.search-kind-badge--lesson      { background: #EFF6FF; color: #1D4ED8; border-color: rgba(29,78,216,0.2); }
+.search-kind-badge--lesson      { background: #F0F7F4; color: #226A56; border-color: rgba(34,106,86,0.2); }
 .search-kind-badge--fatwa       { background: rgba(23,61,53,.10); color: #226A56; border-color: rgba(23,61,53,.2); }
 .search-kind-badge--ruling      { background: rgba(23,61,53,.10); color: #226A56; border-color: rgba(23,61,53,.2); }
-.search-kind-badge--qa          { background: #F5F3FF; color: #6D28D9; border-color: rgba(109,40,217,0.2); }
+.search-kind-badge--qa          { background: #FAF3E0; color: #8F7230; border-color: rgba(184,150,63,0.28); }
 .search-kind-badge--fawaid      { background: #e8f5f0; color: #226A56; border-color: rgba(31,77,58,0.2); }
 .search-kind-badge--adhkar      { background: #F0F7F4; color: #15803D; border-color: rgba(21,128,61,0.2); }
-.search-kind-badge--library     { background: #FDF4FF; color: #7E22CE; border-color: rgba(126,34,206,0.2); }
+.search-kind-badge--library     { background: #FAF3E0; color: #6B5524; border-color: rgba(143,114,48,0.25); }
 .search-kind-badge--hadith      { background: #FFF1F2; color: #BE123C; border-color: rgba(190,18,60,0.2); }
 .search-kind-badge--quran       { background: #F0F7F4; color: #15803D; border-color: rgba(21,128,61,0.2); }
 .search-kind-badge--story,
 .search-kind-badge--stories     { background: rgba(23,61,53,.10); color: #226A56; border-color: rgba(23,61,53,.2); }
 .search-kind-badge--fiqh-council,
-.search-kind-badge--fiqh-decision { background: #EFF6FF; color: #1D4ED8; border-color: rgba(29,78,216,0.2); }
+.search-kind-badge--fiqh-decision { background: #F0F7F4; color: #143F35; border-color: rgba(20,63,53,0.2); }
 .search-kind-badge--miracle,
 .search-kind-badge--miracles    { background: #F0FDFA; color: #0F766E; border-color: rgba(15,118,110,0.2); }
 .search-kind-badge--course,
-.search-kind-badge--courses     { background: #EFF6FF; color: #1D4ED8; border-color: rgba(29,78,216,0.2); }
+.search-kind-badge--courses     { background: #F0F7F4; color: #226A56; border-color: rgba(34,106,86,0.2); }
 .search-kind-badge--update,
 .search-kind-badge--updates     { background: #F1F5F9; color: #475569; border-color: rgba(71,85,105,0.2); }
 

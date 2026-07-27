@@ -3647,6 +3647,18 @@ html[data-theme="dark"] .side-nav-link--v2.is-active {
   background: rgba(92,196,154,.08) !important;
   color: #5CC49A !important;
 }
+html[data-theme="dark"] .side-nav-drawer__brand,
+html[data-theme="dark"] .side-nav-drawer__brand strong,
+html[data-theme="dark"] .side-nav-group__title {
+  color: #FAFAF8 !important;
+}
+html[data-theme="dark"] .side-nav-close {
+  color: #A8BDB6 !important;
+}
+html[data-theme="dark"] .side-nav-close:hover {
+  background: rgba(92,196,154,.1) !important;
+  color: #5CC49A !important;
+}
 
 /* Cards dark — استثناء .twh-hub-card__current-tag: شارة صغيرة "أنت هنا"
    اسم صنفها يحوي السلسلة الفرعية "-card" مصادفةً (twh-HUB-CARD__current-tag)
@@ -5538,7 +5550,7 @@ footer *,
   color: var(--color-primary, #226A56) !important;
 }
 .sch-profile-hero .sch-tag--madhhab {
-  color: #5b21b6 !important;
+  color: #8F7230 !important;
 }
 
 /* استثناء .dvp-hero (رأس صفحة المطوّرين /developers) — نفس الخلل: لا خلفية

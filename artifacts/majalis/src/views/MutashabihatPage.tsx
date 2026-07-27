@@ -182,7 +182,7 @@ function MutashabihatCard({ pair }: { pair: MutashabihatPair }) {
                     background: "rgba(91,33,182,0.06)",
                     border: "1px solid rgba(91,33,182,0.15)",
                     fontSize: "0.85rem",
-                    color: "#5B21B6",
+                    color: "#8F7230",
                     lineHeight: 1.6,
                   }}
                 >

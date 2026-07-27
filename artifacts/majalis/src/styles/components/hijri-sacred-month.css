@@ -4,7 +4,7 @@
 /* hmb = HijriSacredMonthBanner — تصميم 2026 */
 
 /* ألوان الفترات */
-.hmb-period--ramadan  { --hmb-accent: #6D28D9; --hmb-accent-dark: #4C1D95; --hmb-bg: #F5F0FF; }
+.hmb-period--ramadan  { --hmb-accent: #226A56; --hmb-accent-dark: #143F35; --hmb-bg: #F0F7F4; }
 .hmb-period--muharram { --hmb-accent: #1D4ED8; --hmb-accent-dark: #1E3A8A; --hmb-bg: #EEF2FF; }
 .hmb-period--shaban   { --hmb-accent: #226A56; --hmb-accent-dark: #143F35; --hmb-bg: #F0F7F4; }
 .hmb-period--emerald  { --hmb-accent: #226A56; --hmb-accent-dark: #143F35; --hmb-bg: #ECFAF3; }

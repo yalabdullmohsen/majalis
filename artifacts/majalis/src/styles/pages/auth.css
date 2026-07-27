@@ -313,16 +313,16 @@
 }
 .login-card__subtitle { color: var(--txt-muted, #5C5C56) !important; }
 .login-submit {
-  background: var(--m26-green-800, #166534) !important;
+  background: var(--em-600, #226A56) !important;
   color: #FFFFFF !important;
   border: none !important;
   border-radius: var(--m26-r-md) !important;
   font-weight: var(--fw-bold) !important;
   width: 100% !important;
-  box-shadow: 0 2px 8px rgba(22,101,52,0.25) !important;
+  box-shadow: 0 2px 8px rgba(20, 63, 53, 0.22) !important;
 }
 .login-submit:hover {
-  background: var(--m26-green-950, #052E16) !important;
+  background: var(--em-800, #143F35) !important;
 }
 .login-oauth__btn {
   background: #FFFFFF !important;

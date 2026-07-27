@@ -157,7 +157,7 @@ const TABS: { id: Tab; label: string; color: string }[] = [
   { id: "naar",        label: "صفة النار",        color: "#9B1C1C" },
   { id: "asbab-janna", label: "أسباب الجنة",      color: "#1a3a5c" },
   { id: "asbab-naar",  label: "أسباب النار",      color: "#7F1D1D" },
-  { id: "duas",        label: "أدعية الآخرة",     color: "#312E81" },
+  { id: "duas",        label: "أدعية الآخرة",     color: "#143F35" },
 ];
 
 export default function JannaNaarPage() {

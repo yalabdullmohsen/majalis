@@ -1207,8 +1207,8 @@ p { line-height: var(--lh-normal, 1.65); }
 
 /* ─── تباين نص الجداول والقوائم ─── */
 .site-footer * { color: inherit; }
-.site-footer-link { color: rgba(255,255,255,0.75); }
-.site-footer-link:hover { color: #FFFFFF; }
+.site-footer-link { color: var(--n-600, #5C5C56); }
+.site-footer-link:hover { color: var(--em-600, #226A56); }
 
 /* ─── ضمان قابلية قراءة النص المعطّل فقط للعناصر disabled ─── */
 [disabled], [aria-disabled="true"] { opacity: 0.5; }

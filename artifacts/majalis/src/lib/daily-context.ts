@@ -108,7 +108,7 @@ const TIME_COLORS: Record<TimeOfDay, string> = {
   zuhr:    "#0F766E",
   asr:     "#226A56",
   maghrib: "#B45309",
-  isha:    "#5B21B6",
+  isha:    "#143F35",
   layl:    "#1F2937",
 };
 

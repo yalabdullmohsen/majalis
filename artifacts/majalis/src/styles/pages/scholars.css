@@ -167,9 +167,9 @@
   border: 1px solid rgba(23,61,53,0.12);
 }
 .sch-tag--madhhab {
-  background: rgba(100,50,200,0.08);
-  color: #5b21b6;
-  border-color: rgba(100,50,200,0.12);
+  background: rgba(184,150,63,0.12);
+  color: #8F7230;
+  border-color: rgba(184,150,63,0.22);
 }
 .sch-card__right {
   display: flex;

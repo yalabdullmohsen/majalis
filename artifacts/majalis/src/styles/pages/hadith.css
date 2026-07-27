@@ -117,9 +117,9 @@
   border: 1px solid #bfdbfe;
 }
 .hadith-badge--mutafaq {
-  background: #fdf4ff;
-  color: #7e22ce;
-  border: 1px solid #e9d5ff;
+  background: #FAF3E0;
+  color: #8F7230;
+  border: 1px solid #E3CB8C;
 }
 .hadith-badge--bukhari {
   background: var(--majalis-emerald-soft, #EBF5F0);

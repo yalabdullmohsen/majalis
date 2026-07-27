@@ -551,3 +551,28 @@ html[data-theme="dark"] .navbar-v3 .navbar-menu-btn .navbar-menu-btn__label {
 .breadcrumbs-item a:hover {
   color: var(--em-800, #143F35);
 }
+
+
+/* تذييل: روابط مرئية على الخلفية الفاتحة (يلغي modern-2026 الأبيض) */
+.site-footer .site-footer-link,
+.site-footer-link.site-footer-link {
+  color: var(--n-600, #5C5C56) !important;
+}
+.site-footer .site-footer-link:hover {
+  color: var(--em-600, #226A56) !important;
+}
+.site-footer-group__title {
+  color: var(--em-800, #143F35) !important;
+}
+
+/* شريط سفلي: لون نشط موحّد بالهوية */
+@media (max-width: 879px) {
+  .bottom-nav--v2 .bottom-nav__tab.is-active,
+  .bottom-nav .bottom-nav__tab.is-active {
+    color: var(--em-600, #226A56) !important;
+  }
+  html[data-theme="dark"] .bottom-nav--v2 .bottom-nav__tab.is-active,
+  html[data-theme="dark"] .bottom-nav .bottom-nav__tab.is-active {
+    color: var(--text-brand, #5CC49A) !important;
+  }
+}

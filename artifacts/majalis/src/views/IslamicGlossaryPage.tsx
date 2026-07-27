@@ -27,7 +27,7 @@ const CATEGORIES: { id: Category; label: string; color: string }[] = [
   { id: "all",     label: "الكل",            color: "#143F35" },
   { id: "aqeedah", label: "العقيدة",         color: "#1a5a7a" },
   { id: "fiqh",    label: "الفقه",           color: "#226A56" },
-  { id: "hadith",  label: "علم الحديث",      color: "#312E81" },
+  { id: "hadith",  label: "علم الحديث",      color: "#143F35" },
   { id: "quran",   label: "علوم القرآن",     color: "#065F46" },
   { id: "seerah",  label: "السيرة والتاريخ", color: "#9B1C1C" },
   { id: "tazkiya", label: "التزكية والأخلاق",color: "#143F35" },
