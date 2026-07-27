@@ -1,16 +1,15 @@
 /**
- * اختبار Regression — إلغاء «محتوى اليوم» المتفرق (2026-07-24):
- * - لا يبقى أي مكوّن/منطق "Xod-card" أو "todaysX()" محلي متفرق داخل أي
- *   صفحة قسم (كانت موزّعة على 30+ صفحة: عالم/حكمة/سنة/فضيلة/أدب/مصطلح
- *   /علامة/ملَك/وصية/رقيقة/مرحلة سيرة/معجزة/موضوع طب/مسألة توحيد اليوم...).
- * - «مجلس اليوم» (HomeMajlisToday) يبقى المكوّن الموحّد الوحيد، ويظهر في
- *   الصفحة الرئيسية فقط — لا تكرار في أي قسم آخر.
+ * اختبار Regression — إلغاء بطاقات «X اليوم» (2026-07-27):
+ * - لا يبقى أي مكوّن/منطق "Xod-card" أو "todaysX()" أو «دعاء/اسم/واجب اليوم»
+ *   داخل صفحات الأقسام أو الرئيسية.
+ * - «مجلس اليوم» وودجت «اسم الله اليومي» أُلغيا بالكامل من الرئيسية.
  * - المحتوى العلمي الأصلي (بيانات السور/الأحاديث/الحكم نفسها) لم يُحذف —
  *   الاختبار يتحقق من حذف "طريقة العرض اليومية" فقط، لا البيانات.
+ * - daily-content.ts يبقى لشريط الإعلان العلوي (ticker) فقط.
  *
  * تُشغَّل عبر: npx tsx src/lib/__tests__/daily-content-consolidation.test.ts
  */
-import { readFileSync } from "node:fs";
+import { readFileSync, existsSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, resolve } from "node:path";
 import { getDailyDhikr, getDailyHadith, getDailyFaida } from "../daily-content";
@@ -31,10 +30,9 @@ function readSrc(relPath: string): string {
 
 console.log("\n=== لا منطق تدوير يومي متفرق متبقٍّ في صفحات الأقسام ===");
 {
-  // استثناءان مقصودان (ليسا خطأً): ArbaeenNawawiPage.tsx يُبقي getDayOfYear()
-  // فقط لتمييز "isToday" داخل قائمة الـ40 حديثًا الكاملة الظاهرة أصلاً (لا
-  // بطاقة منفصلة حصرية) — وMawarithPage.tsx يُبقي className="mwod-card" على
-  // رابط دائم لحاسبة المواريث (إعادة استخدام تصميم البطاقة، لا محتوى يومي).
+  // MawarithPage.tsx يُبقي className="mwod-card" على رابط دائم لحاسبة المواريث
+  // (إعادة استخدام تصميم البطاقة، لا محتوى يومي).
+  // ArbaeenNawawiPage يُبقي getDayOfYear() لشارة "اليوم" داخل القائمة الكاملة فقط.
   const pagesWithFormerDailyWidgets = [
     "src/views/IslamicScholarsPage.tsx",
     "src/views/HikamSalafPage.tsx",
@@ -68,15 +66,18 @@ console.log("\n=== لا منطق تدوير يومي متفرق متبقٍّ ف�
     "src/views/ProphetStoriesPage.tsx",
     "src/views/PropheticMedicinePage.tsx",
     "src/views/TawhidPage.tsx",
+    "src/views/SalahGuidePage.tsx",
+    "src/views/TawbaPage.tsx",
+    "src/views/HajjPage.tsx",
+    "src/views/DuasPage.tsx",
+    "src/views/AsmaaHusnaPage.tsx",
   ];
-  const dailyPattern = /function\s+todays[A-Z]\w*\s*\(|getDayOfYear\(\)\s*%|className="[a-z]+od-card"/;
+  const dailyPattern = /function\s+todays[A-Z]\w*\s*\(|getDayOfYear\(\)\s*%|className="[a-z]+od-card"|واجب الصلاة اليوم|ذكر التوبة اليوم|ركن الحج اليوم|دعاء اليوم|اسم اليوم|حديث اليوم|فائدة اليوم/;
   for (const rel of pagesWithFormerDailyWidgets) {
     const src = readSrc(rel);
     assert(!dailyPattern.test(src), `${rel.split("/").pop()} خالٍ من منطق "X اليوم" المتفرق`);
   }
 
-  // الاستثناءان: تحقّق من أن ما تبقّى هو فقط الاستخدام المشروع الموثَّق أعلاه،
-  // لا بطاقة "حديث اليوم"/"مسألة الميراث اليوم" منفصلة عادت خطأً.
   const arbaeenSrc = readSrc("src/views/ArbaeenNawawiPage.tsx");
   assert(!arbaeenSrc.includes("an-today"), "ArbaeenNawawiPage: قسم بطاقة \"حديث اليوم\" المنفصل لم يعُد");
   assert(!arbaeenSrc.includes("حديث اليوم"), "ArbaeenNawawiPage: لا نص \"حديث اليوم\" متبقٍّ كعنوان قسم");
@@ -87,50 +88,47 @@ console.log("\n=== لا منطق تدوير يومي متفرق متبقٍّ ف�
   assert(!mawarithSrc.includes("مسألة الميراث اليوم"), "MawarithPage: لا نص \"مسألة الميراث اليوم\" متبقٍّ");
 }
 
+console.log("\n=== الرئيسية بلا مجلس اليوم / اسم الله اليومي ===");
+{
+  const homePageSrc = readSrc("src/views/HomePage.tsx");
+  assert(!homePageSrc.includes("HomeMajlisToday"), "HomePage لا يستورد مجلس اليوم");
+  assert(!homePageSrc.includes("HomeAsmaCard"), "HomePage لا يستورد اسم الله اليومي");
+  assert(!homePageSrc.includes("حديث اليوم"), "HomePage بلا نص حديث اليوم");
+  assert(!/مجلس اليوم/.test(homePageSrc), "HomePage بلا عنوان مجلس اليوم");
+
+  const layoutSrc = readSrc("src/lib/homepage-layout.ts");
+  assert(!layoutSrc.includes('id: "asma"'), "homepage-layout أزال ودجت asma");
+  assert(!layoutSrc.includes("اسم الله اليومي"), "homepage-layout بلا تسمية اسم الله اليومي");
+  assert(!existsSync(resolve(appRoot, "src/components/home/HomeMajlisToday.tsx")),
+    "ملف HomeMajlisToday.tsx حُذف");
+  assert(!existsSync(resolve(appRoot, "src/components/home/HomeAsmaCard.tsx")),
+    "ملف HomeAsmaCard.tsx حُذف");
+}
+
 console.log("\n=== لا مكوّنات يتيمة متبقية من الميزة المُلغاة ===");
 {
-  const navBarLikeFiles = ["src/views/HomePage.tsx"];
-  for (const rel of navBarLikeFiles) {
-    const src = readSrc(rel);
-    assert(!src.includes("HomeDailyQuestion"), `${rel} لا يستورد HomeDailyQuestion (مكوّن مُحذوف)`);
-  }
+  const homePageSrc = readSrc("src/views/HomePage.tsx");
+  assert(!homePageSrc.includes("HomeDailyQuestion"), "HomePage لا يستورد HomeDailyQuestion (مكوّن مُحذوف)");
   const dailyContentSrc = readSrc("src/lib/daily-content.ts");
   assert(!dailyContentSrc.includes("getDailyQa"), "getDailyQa (خاص بسؤال اليوم المُلغى) أُزيل من daily-content.ts");
 }
 
-console.log("\n=== «مجلس اليوم» — مكوّن موحّد وحيد، الصفحة الرئيسية فقط ===");
-{
-  const homePageSrc = readSrc("src/views/HomePage.tsx");
-  const homeMajlisTodaySrc = readSrc("src/components/home/HomeMajlisToday.tsx");
-  assert(homePageSrc.includes("HomeMajlisToday"), "الصفحة الرئيسية تستورد/تستخدم HomeMajlisToday");
-  assert(homeMajlisTodaySrc.length > 0, "مكوّن مجلس اليوم موجود وله محتوى فعلي");
-
-  // لا صفحة قسم أخرى (من القائمة أعلاه) تستورد HomeMajlisToday — التفرّد مضمون
-  const pagesToCheck = [
-    "src/views/HikamSalafPage.tsx",
-    "src/views/SahabahPage.tsx",
-    "src/views/ArbaeenNawawiPage.tsx",
-  ];
-  for (const rel of pagesToCheck) {
-    assert(!readSrc(rel).includes("HomeMajlisToday"), `${rel} لا يستورد HomeMajlisToday (لا تكرار خارج الرئيسية)`);
-  }
-}
-
 console.log("\n=== المحتوى العلمي الأصلي لم يُحذف — فقط طريقة عرضه اليومية ===");
 {
-  // البيانات (المصفوفات نفسها) يجب أن تبقى مستخدَمة في القوائم الكاملة
   const hikamSrc = readSrc("src/views/HikamSalafPage.tsx");
   assert(hikamSrc.includes("HIKAM"), "بيانات حكم السلف (HIKAM) ما زالت موجودة ومستخدَمة في القائمة الكاملة");
   const sahabahSrc = readSrc("src/views/SahabahPage.tsx");
   assert(sahabahSrc.includes("SAHABAH"), "بيانات الصحابة (SAHABAH) ما زالت موجودة ومستخدَمة في القائمة الكاملة");
   const arbaeenSrc = readSrc("src/views/ArbaeenNawawiPage.tsx");
   assert(arbaeenSrc.includes("ARBAEEN_NAWAWI"), "بيانات الأربعين النووية ما زالت موجودة ومستخدَمة في القائمة الكاملة");
+  const salahSrc = readSrc("src/views/SalahGuidePage.tsx");
+  assert(salahSrc.includes("WAJIBAAT"), "واجبات الصلاة ما زالت في التبويب الكامل");
 }
 
-console.log("\n=== دوال daily-content.ts المتبقية (لمجلس اليوم فقط) تعمل بلا كسر ===");
+console.log("\n=== دوال daily-content.ts المتبقية (للشريط العلوي) تعمل بلا كسر ===");
 {
   const dhikr = getDailyDhikr();
-  assert(!!dhikr.text, "getDailyDhikr() ما زالت تعمل (تخدم مجلس اليوم فقط الآن)");
+  assert(!!dhikr.text, "getDailyDhikr() ما زالت تعمل (تخدم الشريط العلوي)");
   const hadith = getDailyHadith();
   assert(!!hadith.text, "getDailyHadith() ما زالت تعمل");
   const faida = getDailyFaida();

@@ -1,33 +1,16 @@
 import "@/styles/pages/asmaa-husna.css";
 import { useEffect, useMemo, useState } from "react";
-import { Search, Star, BookOpen, Heart, Sparkles } from "lucide-react";
+import { Search, Star, BookOpen, Heart } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
-import { ASMAA, ASMA_CATEGORIES, getTodayAsma, type AsmaEntry, type AsmaStatus } from "@/lib/asma-husna-data";
+import { ASMAA, ASMA_CATEGORIES, type AsmaEntry, type AsmaStatus } from "@/lib/asma-husna-data";
 import { UnsourcedBadge } from "@/components/UnsourcedBadge";
 
 const CATEGORIES = [...ASMA_CATEGORIES];
 const STATUS_FILTERS: Array<"الكل" | AsmaStatus> = ["الكل", "ثابت", "مشهور"];
-
-/* ─── اسم اليوم ─── */
-function NameOfDayCard({ entry, onOpen }: { entry: AsmaEntry; onOpen: () => void }) {
-  return (
-    <div className="ah-name-of-day" onClick={onOpen} role="button" tabIndex={0}
-      onKeyDown={(e) => (e.key === "Enter" || e.key === "") && onOpen()}>
-      <div className="ah-nod-badge">
-        <Sparkles size={13} aria-hidden="true" />
-        اسم اليوم
-      </div>
-      <div className="ah-nod-num">{entry.num}</div>
-      <div className="ah-nod-arabic">{entry.arabic}</div>
-      <p className="ah-nod-meaning">{entry.meaning}</p>
-      <span className="ah-nod-cta">اقرأ التفاصيل ←</span>
-    </div>
-  );
-}
 
 /* ─── الصفحة ─── */
 export default function AsmaaHusnaPage() {
@@ -36,7 +19,6 @@ export default function AsmaaHusnaPage() {
   /** العرض الافتراضي على «ثابت»؛ الأسماء المشهورة من سرد الترمذي تُطلب صراحةً. */
   const [statusFilter, setStatusFilter] = useState<"الكل" | AsmaStatus>("ثابت");
   const [selected, setSelected] = useState<AsmaEntry | null>(null);
-  const todayName = useMemo(() => getTodayAsma(), []);
   const [favs, setFavs] = useState<Set<number>>(() => {
     try { return new Set(JSON.parse(localStorage.getItem("ah-favs") || "[]")); }
     catch { return new Set(); }
@@ -130,8 +112,6 @@ export default function AsmaaHusnaPage() {
         والإحصاء المطلوب: العلم بمعاني الأسماء الثابتة والتعبّد بمقتضاها، لا مجرّد عدّ ألفاظ.
       </aside>
 
-      {/* ═══ اسم اليوم ═══ */}
-      <NameOfDayCard entry={todayName} onOpen={() => setSelected(todayName)} />
       {/* ═══ شريط تقدم المحفوظات ═══ */}
       {favs.size > 0 && (
         <div className="ah-progress-bar-wrap" aria-label={`حفظت ${favs.size} من 99 اسماً`}>
