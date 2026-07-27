@@ -435,6 +435,7 @@ const LATIN_FIXES = [
   [/اقtص/g, "اقتص"],
   [/للمباhaة/g, "للمباهاة"],
   [/تawan/g, "توان"],
+  [/وyُ/g, "ويُ"],
 ];
 
 const CONTENT_SCAN_DIRS = [
