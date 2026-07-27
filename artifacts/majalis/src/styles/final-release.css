@@ -1420,3 +1420,20 @@ body {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
   .ds-skeleton { animation: none; }
 }
+
+/* ══ هوية v4 — لمسات إغلاق (أزرار + تذييل) ══ */
+.ds-btn-primary:hover,
+.login-submit:hover {
+  background: var(--em-800, #143F35);
+  color: #fff;
+}
+.site-footer--v3 {
+  background: linear-gradient(180deg, var(--n-100, #F4F4F1) 0%, var(--n-50, #FAFAF8) 100%);
+}
+.site-footer-group__title {
+  color: var(--em-800, #143F35);
+  font-family: var(--font-display, var(--font-body));
+}
+.site-footer-link:hover {
+  color: var(--em-600, #226A56) !important;
+}
