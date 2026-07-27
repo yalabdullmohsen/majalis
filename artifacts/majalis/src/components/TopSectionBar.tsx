@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { Link, useLocation } from "wouter";
 import {
-  Shield, BookUser, Scale, ScrollText, BookMarked, GraduationCap, Library,
+  Shield, BookUser, Scale, ScrollText, BookMarked, Library,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
@@ -13,8 +13,8 @@ type SectionTab = {
 };
 
 /**
- * شريط الأقسام — 8 محاور موسوعية أساسية فقط.
- * بقية الأقسام (أذكار، مصحف، تقويم، أطفال قريبًا، …) عبر المزيد / مركز القرآن.
+ * شريط الأقسام — محاور موسوعية أساسية.
+ * بقية الأقسام عبر المزيد / مركز القرآن.
  */
 export const SECTION_TABS: SectionTab[] = [
   { href: "/tawhid",   label: "العقيدة والتوحيد", Icon: Shield,        prefetch: () => import("@/views/TawhidPage") },
@@ -24,7 +24,6 @@ export const SECTION_TABS: SectionTab[] = [
   { href: "/quran-hub",label: "القرآن",           Icon: BookMarked,    prefetch: () => import("@/views/QuranHubPage") },
   { href: "/library",  label: "المكتبة",          Icon: Library,       prefetch: () => import("@/views/LibraryPage") },
   { href: "/scholars", label: "العلماء",          Icon: BookUser,      prefetch: () => import("@/views/IslamicScholarsPage") },
-  { href: "/learn",    label: "تعلّم",            Icon: GraduationCap, prefetch: () => import("@/views/learn/LearnHubPage") },
 ];
 
 export function isTabActive(location: string, href: string): boolean {
@@ -37,9 +36,6 @@ export function isTabActive(location: string, href: string): boolean {
       location === "/nations" ||
       location.startsWith("/nations/")
     );
-  }
-  if (href === "/learn") {
-    return location === "/learn" || location.startsWith("/learn/");
   }
   return location === href || location.startsWith(href + "/");
 }

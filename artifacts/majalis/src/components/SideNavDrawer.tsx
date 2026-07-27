@@ -56,13 +56,6 @@ const IcoQuran = () => (
     <line x1="9" y1="4" x2="9" y2="15"/>
   </svg>
 );
-const IcoGradCap = () => (
-  <svg width="17" height="17" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <path d="M9 3 1 7l8 4 8-4-8-4z"/>
-    <path d="M5 9.5v3.5a4 4 0 0 0 8 0V9.5"/>
-    <line x1="16" y1="7" x2="16" y2="12"/>
-  </svg>
-);
 const IcoUser = () => (
   <svg width="17" height="17" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
     <circle cx="9" cy="6" r="4"/>
@@ -96,18 +89,6 @@ const DRAWER_GROUPS: NavGroup[] = [
       { href: "/calendar", label: seoNavLabel("/calendar", "تقويم الدروس"),     Icon: Calendar,  desc: "التقويم والمناسبات الإسلامية" },
       { href: "/occasions", label: seoNavLabel("/occasions", "المناسبات الإسلامية"), Icon: Star,     desc: "أذكار المناسبات والأعياد" },
       { href: "/about",   label: seoNavLabel("/about", "من نحن"),           Icon: HelpCircle, desc: "تعرّف على المجلس العلمي" },
-    ],
-  },
-  {
-    id: "learn",
-    title: "تعلّم",
-    icon: <IcoGradCap />,
-    items: [
-      { href: "/fiqh",     label: seoNavLabel("/fiqh", "الفقه والأحكام"),     Icon: Scale,     desc: "مداخل الفقه وموسوعة الأحكام الشرعية" },
-      { href: "/seerah",   label: seoNavLabel("/seerah", "السيرة النبوية"),     Icon: BookUser,  desc: "سيرة النبي ﷺ من المولد إلى الوفاة" },
-      { href: "/tawhid",   label: seoNavLabel("/tawhid", "العقيدة"),           Icon: Shield,    desc: "التوحيد ومسائل العقيدة الصحيحة" },
-      { href: "/prophets", label: seoNavLabel("/prophets", "قصص الأنبياء"),    Icon: Star,      desc: "قصص الأنبياء المذكورين في القرآن" },
-      { href: "/nations",  label: seoNavLabel("/nations", "الأمم السابقة"),   Icon: Landmark,  desc: "أخبار الأمم في القرآن والسنة الصحيحة" },
     ],
   },
   {
