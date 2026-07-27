@@ -834,7 +834,7 @@ export default function ProphetStoriesPage() {
           ))}
         </div>
 
-        {/* Xط الزمني */}
+        {/* خط الزمني */}
         {view === "timeline" && (
           <div role="tabpanel" id="pst-panel-timeline" aria-labelledby="pst-tab-timeline" className="prophets-lux-container">
             <TimelineView onSelect={setSelectedSlug} />
