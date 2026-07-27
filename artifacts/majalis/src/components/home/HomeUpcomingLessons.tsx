@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { PageLoadingGuard } from "@/components/PageLoadingGuard";
 import { RequestManager } from "@/lib/request-manager";
 import { UnifiedLessonCard } from "@/components/lessons/UnifiedLessonCard";
@@ -37,31 +37,50 @@ export function HomeUpcomingLessons({
     initialLessons ? initialLessons.filter((l) => !isCourse(l)) : [],
   );
   const [loading, setLoading] = useState(!initialLessons);
+  const [loadError, setLoadError] = useState<string | null>(null);
+  const mountedRef = useRef(true);
 
   useEffect(() => {
-    if (initialLessons) return;
+    mountedRef.current = true;
+    return () => {
+      mountedRef.current = false;
+    };
+  }, []);
+
+  const loadLessons = useCallback(() => {
+    setLoading(true);
+    setLoadError(null);
     void RequestManager.run("home:upcoming-lessons", () => getUnifiedActiveLessons())
       .then(({ lessons: items }) => {
+        if (!mountedRef.current) return;
         const safeItems = Array.isArray(items) ? items : [];
         setAllLessons(safeItems.filter((l) => !isCourse(l)));
       })
-      .catch(() => setAllLessons([]))
-      .finally(() => setLoading(false));
-  }, [initialLessons]);
+      .catch(() => {
+        if (!mountedRef.current) return;
+        setAllLessons([]);
+        setLoadError("تعذّر تحميل دروس اليوم. حاول مجددًا.");
+      })
+      .finally(() => {
+        if (mountedRef.current) setLoading(false);
+      });
+  }, []);
+
+  useEffect(() => {
+    if (initialLessons) return;
+    loadLessons();
+  }, [initialLessons, loadLessons]);
 
   const clock = getKuwaitClock();
   const todayArabic = ARABIC_WEEKDAY[clock.weekday] ?? "";
 
-  // الوقت الحالي بالمللي ثانية (توقيت الكويت)
   const nowMs = clock.dayStartMs + (clock.hour * 60 + clock.minute) * 60_000;
   const TWO_HOURS_MS = 2 * 3_600_000;
 
-  // دروس اليوم: يُعرض الدرس فقط إذا لم يمرّ على بدايته أكثر من ساعتين
   const todayLessons = allLessons
     .filter(l => isLessonThisDay(l.day))
     .map(l => {
       const freshMs = computeNextOccurrenceMs(l.day, l.time);
-      // إذا انتقل الحساب للأسبوع القادم (مرّ الوقت)، أعِد وقت اليوم نفسه
       const todayMs = freshMs > clock.dayStartMs + 24 * 3_600_000
         ? freshMs - 7 * 24 * 3_600_000
         : freshMs;
@@ -83,8 +102,10 @@ export function HomeUpcomingLessons({
     >
       <PageLoadingGuard
         loading={loading}
-        empty={!loading && todayLessons.length === 0}
+        error={loadError}
+        empty={!loading && !loadError && todayLessons.length === 0}
         emptyText="لا توجد دروس مجدولة اليوم"
+        onRetry={loadLessons}
       >
         <div className="home-kuwait-grid lesson-unified-grid">
           {todayLessons.map((lesson) => (

@@ -77,7 +77,7 @@ export default defineConfig({
           if (!id.includes("node_modules")) return;
 
           if (id.includes("@supabase")) return "supabase";
-          if (id.includes("html2canvas") || id.includes("html-to-image")) return "html2canvas";
+          if (id.includes("html-to-image")) return "html-export";
           if (id.includes("date-fns")) return "date-fns";
           if (id.includes("lucide-react")) return "icons";
           if (id.includes("@radix-ui")) return "radix";
