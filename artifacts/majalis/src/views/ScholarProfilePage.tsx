@@ -6,6 +6,8 @@ import { ShareButtons } from "@/components/ContentActions";
 import { SCHOLARS, findScholarById } from "@/lib/scholars-data";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { ContentReportButton } from "@/components/ContentReportButton";
+import { KnowledgeRelatedItems } from "@/components/knowledge/KnowledgeRelatedItems";
+import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import { resolveScholarWorkLink } from "@/lib/scholar-library-links";
 import "@/styles/pages/scholars.css";
 
@@ -279,6 +281,19 @@ export default function ScholarProfilePage() {
         />
         <ContentReportButton contentType="scholar" contentId={scholar.id} title={scholar.name} />
       </div>
+
+      <KnowledgeRelatedItems sourceType="scholar" sourceId={String(scholar.id)} />
+
+      <ExploreAlsoNav
+        title="مواضع ذات صلة في المنصة"
+        links={[
+          { href: "/library", label: "المكتبة الشرعية" },
+          { href: "/lessons", label: "الدروس العلمية" },
+          { href: "/madhahib", label: "المذاهب الأربعة" },
+          { href: "/learning/paths", label: "المسارات العلمية" },
+          { href: "/knowledge-graph", label: "الرسم المعرفي" },
+        ]}
+      />
 
       {/* Prev / Next */}
       <nav className="sch-profile-pager" aria-label="التنقل بين العلماء">
