@@ -70,7 +70,7 @@ export const FEATURE_REGISTRY: FeatureEntry[] = [
      الكود (ScholarlyResearchPage.tsx وrag-service.ts) لم يُحذف عمدًا — بلا
      أي معتمِد آخر (تحقّقتُ)، فيمكن إعادة تفعيله لاحقًا دون إعادة بناء. */
   { id: "scholarly-research",label:"الباحث الشرعي",path: "/scholarly-research",group:"أدوات",    status: "disabled",     inSideNav: false, inBottomNav: false },
-  { id: "universities", label: "دليل الجامعات",    path: "/universities", group: "مؤسسات",        status: "disabled",     inSideNav: false, inBottomNav: false },
+  { id: "universities", label: "دليل الجامعات",    path: "/universities", group: "مؤسسات",        status: "active",       inSideNav: true,  inBottomNav: false },
 
   // ── التعلم ───────────────────────────────────────────────────
   { id: "learn",         label: "أبواب العلم",       path: "/learn",        group: "تعلم",          status: "active",       inSideNav: true,  inBottomNav: true  },

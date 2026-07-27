@@ -69,6 +69,13 @@ export const MIGRATION_FILES = [
   "majlis_knowledge_engine_v2.sql",
   "autonomous_platform_v1.sql",
   "content_production_v1.sql",
+  "universities_v1.sql",
+  "universities_expand_v1.sql",
+  "universities_expand_v2.sql",
+  "universities_verify_original7_v1.sql",
+  "universities_expand_v3.sql",
+  "universities_verify_refresh_2026_07.sql",
+  "universities_programs_enrich_v1.sql",
 ];
 
 export function resolveMigrationsDir() {

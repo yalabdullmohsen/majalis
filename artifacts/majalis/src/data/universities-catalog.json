@@ -314,7 +314,30 @@
     "website_url": "https://www.wise.edu.jo",
     "accreditation_status": "accredited",
     "is_verified": true,
-    "programs": [],
+    "programs": [
+      {
+        "program_name": "بكالوريوس الشريعة",
+        "faculty_department": "كلية الشريعة",
+        "specialization": "الفقه وأصوله",
+        "degree_level": "بكالوريوس",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "4 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      },
+      {
+        "program_name": "ماجستير الدراسات الإسلامية",
+        "faculty_department": "كلية الدراسات الإسلامية",
+        "specialization": "التفسير والحديث والعقيدة",
+        "degree_level": "ماجستير",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "2 سنتان",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      }
+    ],
     "faqs": []
   },
   {
@@ -327,7 +350,30 @@
     "website_url": "https://oiu.edu.sd",
     "accreditation_status": "accredited",
     "is_verified": true,
-    "programs": [],
+    "programs": [
+      {
+        "program_name": "بكالوريوس الشريعة والقانون",
+        "faculty_department": "كلية الشريعة والقانون",
+        "specialization": "الفقه والقانون",
+        "degree_level": "بكالوريوس",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "4 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      },
+      {
+        "program_name": "بكالوريوس الدراسات الإسلامية",
+        "faculty_department": "كلية الدراسات الإسلامية",
+        "specialization": "أصول الدين",
+        "degree_level": "بكالوريوس",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "4 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      }
+    ],
     "faqs": []
   },
   {
@@ -403,7 +449,30 @@
     "website_url": "http://darelom.cu.edu.eg",
     "accreditation_status": "accredited",
     "is_verified": true,
-    "programs": [],
+    "programs": [
+      {
+        "program_name": "بكالوريوس اللغة العربية والدراسات الإسلامية",
+        "faculty_department": "كلية دار العلوم",
+        "specialization": "اللغة العربية والشريعة",
+        "degree_level": "بكالوريوس",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "4 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      },
+      {
+        "program_name": "ماجستير الدراسات الإسلامية",
+        "faculty_department": "كلية دار العلوم",
+        "specialization": "العلوم الإسلامية",
+        "degree_level": "ماجستير",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "2 سنتان",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      }
+    ],
     "faqs": []
   },
   {
@@ -452,7 +521,30 @@
     "website_url": "https://isth.rnu.tn",
     "accreditation_status": "accredited",
     "is_verified": true,
-    "programs": [],
+    "programs": [
+      {
+        "program_name": "إجازة في أصول الدين",
+        "faculty_department": "المعهد العالي لأصول الدين",
+        "specialization": "العقيدة والتفسير",
+        "degree_level": "بكالوريوس",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "3 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      },
+      {
+        "program_name": "ماجستير في العلوم الإسلامية",
+        "faculty_department": "المعهد العالي لأصول الدين",
+        "specialization": "الدراسات الإسلامية العليا",
+        "degree_level": "ماجستير",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "2 سنتان",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      }
+    ],
     "faqs": []
   },
   {
@@ -512,7 +604,30 @@
     "website_url": "https://uinjkt.ac.id",
     "accreditation_status": "accredited",
     "is_verified": true,
-    "programs": [],
+    "programs": [
+      {
+        "program_name": "بكالوريوس الشريعة",
+        "faculty_department": "كلية الشريعة والقانون",
+        "specialization": "الفقه الإسلامي",
+        "degree_level": "بكالوريوس",
+        "study_language": "الإندونيسية",
+        "study_mode": "حضوري",
+        "duration": "4 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      },
+      {
+        "program_name": "بكالوريوس أصول الدين",
+        "faculty_department": "كلية أصول الدين",
+        "specialization": "العقيدة والفلسفة الإسلامية",
+        "degree_level": "بكالوريوس",
+        "study_language": "الإندونيسية",
+        "study_mode": "حضوري",
+        "duration": "4 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      }
+    ],
     "faqs": []
   },
   {
@@ -525,7 +640,30 @@
     "website_url": "https://www.edhh.ma",
     "accreditation_status": "accredited",
     "is_verified": true,
-    "programs": [],
+    "programs": [
+      {
+        "program_name": "تكوين عالٍ في الدراسات الإسلامية",
+        "faculty_department": "دار الحديث الحسنية",
+        "specialization": "علوم الحديث والدراسات الإسلامية",
+        "degree_level": "ماجستير",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "وفق نظام المؤسسة",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      },
+      {
+        "program_name": "دكتوراه في الدراسات الإسلامية",
+        "faculty_department": "دار الحديث الحسنية",
+        "specialization": "البحث الشرعي المتقدم",
+        "degree_level": "دكتوراه",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "وفق نظام المؤسسة",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      }
+    ],
     "faqs": []
   },
   {
@@ -538,7 +676,30 @@
     "website_url": "https://ilahiyat.marmara.edu.tr/en",
     "accreditation_status": "accredited",
     "is_verified": true,
-    "programs": [],
+    "programs": [
+      {
+        "program_name": "بكالوريوس الإلهيات",
+        "faculty_department": "كلية الإلهيات",
+        "specialization": "العلوم الإسلامية",
+        "degree_level": "بكالوريوس",
+        "study_language": "التركية",
+        "study_mode": "حضوري",
+        "duration": "4 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      },
+      {
+        "program_name": "ماجستير الإلهيات",
+        "faculty_department": "كلية الإلهيات",
+        "specialization": "التفسير والحديث والفقه",
+        "degree_level": "ماجستير",
+        "study_language": "التركية",
+        "study_mode": "حضوري",
+        "duration": "2 سنتان",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      }
+    ],
     "faqs": []
   },
   {
@@ -551,7 +712,30 @@
     "website_url": "https://darululoom-deoband.com",
     "accreditation_status": "accredited",
     "is_verified": true,
-    "programs": [],
+    "programs": [
+      {
+        "program_name": "الدورة النظامية (عالمية)",
+        "faculty_department": "دار العلوم ديوبند",
+        "specialization": "الدرس النظامي",
+        "degree_level": "بكالوريوس",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "وفق المنهج المعتمد",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      },
+      {
+        "program_name": "تخصص في الحديث والفقه",
+        "faculty_department": "دار العلوم ديوبند",
+        "specialization": "الحديث والفقه الحنفي",
+        "degree_level": "دبلوم_عالي",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "وفق المنهج المعتمد",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      }
+    ],
     "faqs": []
   },
   {
@@ -564,7 +748,30 @@
     "website_url": "https://www.iugaza.edu.ps",
     "accreditation_status": "accredited",
     "is_verified": true,
-    "programs": [],
+    "programs": [
+      {
+        "program_name": "بكالوريوس الشريعة والقانون",
+        "faculty_department": "كلية الشريعة والقانون",
+        "specialization": "الفقه والقانون",
+        "degree_level": "بكالوريوس",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "4 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      },
+      {
+        "program_name": "ماجستير الدراسات الإسلامية",
+        "faculty_department": "كلية أصول الدين",
+        "specialization": "التفسير والحديث",
+        "degree_level": "ماجستير",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "2 سنتان",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      }
+    ],
     "faqs": []
   },
   {
@@ -577,7 +784,41 @@
     "website_url": "https://www.sharjah.ac.ae",
     "accreditation_status": "accredited",
     "is_verified": true,
-    "programs": [],
+    "programs": [
+      {
+        "program_name": "بكالوريوس الشريعة والدراسات الإسلامية",
+        "faculty_department": "كلية الشريعة والدراسات الإسلامية",
+        "specialization": "الفقه وأصوله",
+        "degree_level": "بكالوريوس",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "4 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      },
+      {
+        "program_name": "ماجستير الفقه وأصوله",
+        "faculty_department": "كلية الشريعة والدراسات الإسلامية",
+        "specialization": "الفقه وأصوله",
+        "degree_level": "ماجستير",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "2 سنتان",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      },
+      {
+        "program_name": "دكتوراه الدراسات الإسلامية",
+        "faculty_department": "كلية الشريعة والدراسات الإسلامية",
+        "specialization": "التفسير والحديث وأصول الدين",
+        "degree_level": "دكتوراه",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "وفق لوائح الجامعة",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      }
+    ],
     "faqs": []
   },
   {
@@ -590,7 +831,30 @@
     "website_url": "https://www.iua.edu.sd",
     "accreditation_status": "accredited",
     "is_verified": true,
-    "programs": [],
+    "programs": [
+      {
+        "program_name": "بكالوريوس الدراسات الإسلامية",
+        "faculty_department": "كلية الدراسات الإسلامية",
+        "specialization": "الشريعة وأصول الدين",
+        "degree_level": "بكالوريوس",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "4 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      },
+      {
+        "program_name": "ماجستير الدراسات الإسلامية",
+        "faculty_department": "كلية الدراسات الإسلامية",
+        "specialization": "العلوم الشرعية",
+        "degree_level": "ماجستير",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "2 سنتان",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      }
+    ],
     "faqs": []
   },
   {

@@ -811,3 +811,212 @@ WHERE u.slug = 'istanbul-ilahiyat'
     SELECT 1 FROM university_programs p
     WHERE p.university_id = u.id AND p.program_name = 'MA in Islamic Studies'
   );
+
+-- برامج إضافية للجامعات التي كانت بلا برامج في الكتالوج (2026-07-27)
+INSERT INTO university_programs (university_id, program_name, faculty_department, specialization, degree_level, study_language, study_mode, duration, has_scholarship, scholarship_details, currency)
+SELECT u.id, 'بكالوريوس الشريعة', 'كلية الشريعة', 'الفقه وأصوله', 'بكالوريوس', 'العربية', 'حضوري', '4 سنوات', false, '', 'SAR'
+FROM universities u
+WHERE u.slug = 'jordan-islamic-sciences'
+  AND NOT EXISTS (
+    SELECT 1 FROM university_programs p
+    WHERE p.university_id = u.id AND p.program_name = 'بكالوريوس الشريعة'
+  );
+
+INSERT INTO university_programs (university_id, program_name, faculty_department, specialization, degree_level, study_language, study_mode, duration, has_scholarship, scholarship_details, currency)
+SELECT u.id, 'ماجستير الدراسات الإسلامية', 'كلية الدراسات الإسلامية', 'التفسير والحديث والعقيدة', 'ماجستير', 'العربية', 'حضوري', '2 سنتان', false, '', 'SAR'
+FROM universities u
+WHERE u.slug = 'jordan-islamic-sciences'
+  AND NOT EXISTS (
+    SELECT 1 FROM university_programs p
+    WHERE p.university_id = u.id AND p.program_name = 'ماجستير الدراسات الإسلامية'
+  );
+
+INSERT INTO university_programs (university_id, program_name, faculty_department, specialization, degree_level, study_language, study_mode, duration, has_scholarship, scholarship_details, currency)
+SELECT u.id, 'بكالوريوس الشريعة والقانون', 'كلية الشريعة والقانون', 'الفقه والقانون', 'بكالوريوس', 'العربية', 'حضوري', '4 سنوات', false, '', 'SAR'
+FROM universities u
+WHERE u.slug = 'sudan-university-islamic'
+  AND NOT EXISTS (
+    SELECT 1 FROM university_programs p
+    WHERE p.university_id = u.id AND p.program_name = 'بكالوريوس الشريعة والقانون'
+  );
+
+INSERT INTO university_programs (university_id, program_name, faculty_department, specialization, degree_level, study_language, study_mode, duration, has_scholarship, scholarship_details, currency)
+SELECT u.id, 'بكالوريوس الدراسات الإسلامية', 'كلية الدراسات الإسلامية', 'أصول الدين', 'بكالوريوس', 'العربية', 'حضوري', '4 سنوات', false, '', 'SAR'
+FROM universities u
+WHERE u.slug = 'sudan-university-islamic'
+  AND NOT EXISTS (
+    SELECT 1 FROM university_programs p
+    WHERE p.university_id = u.id AND p.program_name = 'بكالوريوس الدراسات الإسلامية'
+  );
+
+INSERT INTO university_programs (university_id, program_name, faculty_department, specialization, degree_level, study_language, study_mode, duration, has_scholarship, scholarship_details, currency)
+SELECT u.id, 'بكالوريوس اللغة العربية والدراسات الإسلامية', 'كلية دار العلوم', 'اللغة العربية والشريعة', 'بكالوريوس', 'العربية', 'حضوري', '4 سنوات', false, '', 'SAR'
+FROM universities u
+WHERE u.slug = 'dar-al-uloom-cairo'
+  AND NOT EXISTS (
+    SELECT 1 FROM university_programs p
+    WHERE p.university_id = u.id AND p.program_name = 'بكالوريوس اللغة العربية والدراسات الإسلامية'
+  );
+
+INSERT INTO university_programs (university_id, program_name, faculty_department, specialization, degree_level, study_language, study_mode, duration, has_scholarship, scholarship_details, currency)
+SELECT u.id, 'ماجستير الدراسات الإسلامية', 'كلية دار العلوم', 'العلوم الإسلامية', 'ماجستير', 'العربية', 'حضوري', '2 سنتان', false, '', 'SAR'
+FROM universities u
+WHERE u.slug = 'dar-al-uloom-cairo'
+  AND NOT EXISTS (
+    SELECT 1 FROM university_programs p
+    WHERE p.university_id = u.id AND p.program_name = 'ماجستير الدراسات الإسلامية'
+  );
+
+INSERT INTO university_programs (university_id, program_name, faculty_department, specialization, degree_level, study_language, study_mode, duration, has_scholarship, scholarship_details, currency)
+SELECT u.id, 'إجازة في أصول الدين', 'المعهد العالي لأصول الدين', 'العقيدة والتفسير', 'بكالوريوس', 'العربية', 'حضوري', '3 سنوات', false, '', 'SAR'
+FROM universities u
+WHERE u.slug = 'zaytouna-usul-aldin-tunisia'
+  AND NOT EXISTS (
+    SELECT 1 FROM university_programs p
+    WHERE p.university_id = u.id AND p.program_name = 'إجازة في أصول الدين'
+  );
+
+INSERT INTO university_programs (university_id, program_name, faculty_department, specialization, degree_level, study_language, study_mode, duration, has_scholarship, scholarship_details, currency)
+SELECT u.id, 'ماجستير في العلوم الإسلامية', 'المعهد العالي لأصول الدين', 'الدراسات الإسلامية العليا', 'ماجستير', 'العربية', 'حضوري', '2 سنتان', false, '', 'SAR'
+FROM universities u
+WHERE u.slug = 'zaytouna-usul-aldin-tunisia'
+  AND NOT EXISTS (
+    SELECT 1 FROM university_programs p
+    WHERE p.university_id = u.id AND p.program_name = 'ماجستير في العلوم الإسلامية'
+  );
+
+INSERT INTO university_programs (university_id, program_name, faculty_department, specialization, degree_level, study_language, study_mode, duration, has_scholarship, scholarship_details, currency)
+SELECT u.id, 'بكالوريوس الشريعة', 'كلية الشريعة والقانون', 'الفقه الإسلامي', 'بكالوريوس', 'الإندونيسية', 'حضوري', '4 سنوات', false, '', 'SAR'
+FROM universities u
+WHERE u.slug = 'uin-jakarta'
+  AND NOT EXISTS (
+    SELECT 1 FROM university_programs p
+    WHERE p.university_id = u.id AND p.program_name = 'بكالوريوس الشريعة'
+  );
+
+INSERT INTO university_programs (university_id, program_name, faculty_department, specialization, degree_level, study_language, study_mode, duration, has_scholarship, scholarship_details, currency)
+SELECT u.id, 'بكالوريوس أصول الدين', 'كلية أصول الدين', 'العقيدة والفلسفة الإسلامية', 'بكالوريوس', 'الإندونيسية', 'حضوري', '4 سنوات', false, '', 'SAR'
+FROM universities u
+WHERE u.slug = 'uin-jakarta'
+  AND NOT EXISTS (
+    SELECT 1 FROM university_programs p
+    WHERE p.university_id = u.id AND p.program_name = 'بكالوريوس أصول الدين'
+  );
+
+INSERT INTO university_programs (university_id, program_name, faculty_department, specialization, degree_level, study_language, study_mode, duration, has_scholarship, scholarship_details, currency)
+SELECT u.id, 'تكوين عالٍ في الدراسات الإسلامية', 'دار الحديث الحسنية', 'علوم الحديث والدراسات الإسلامية', 'ماجستير', 'العربية', 'حضوري', 'وفق نظام المؤسسة', false, '', 'SAR'
+FROM universities u
+WHERE u.slug = 'dar-al-hadith-al-hassania'
+  AND NOT EXISTS (
+    SELECT 1 FROM university_programs p
+    WHERE p.university_id = u.id AND p.program_name = 'تكوين عالٍ في الدراسات الإسلامية'
+  );
+
+INSERT INTO university_programs (university_id, program_name, faculty_department, specialization, degree_level, study_language, study_mode, duration, has_scholarship, scholarship_details, currency)
+SELECT u.id, 'دكتوراه في الدراسات الإسلامية', 'دار الحديث الحسنية', 'البحث الشرعي المتقدم', 'دكتوراه', 'العربية', 'حضوري', 'وفق نظام المؤسسة', false, '', 'SAR'
+FROM universities u
+WHERE u.slug = 'dar-al-hadith-al-hassania'
+  AND NOT EXISTS (
+    SELECT 1 FROM university_programs p
+    WHERE p.university_id = u.id AND p.program_name = 'دكتوراه في الدراسات الإسلامية'
+  );
+
+INSERT INTO university_programs (university_id, program_name, faculty_department, specialization, degree_level, study_language, study_mode, duration, has_scholarship, scholarship_details, currency)
+SELECT u.id, 'بكالوريوس الإلهيات', 'كلية الإلهيات', 'العلوم الإسلامية', 'بكالوريوس', 'التركية', 'حضوري', '4 سنوات', false, '', 'SAR'
+FROM universities u
+WHERE u.slug = 'marmara-ilahiyat'
+  AND NOT EXISTS (
+    SELECT 1 FROM university_programs p
+    WHERE p.university_id = u.id AND p.program_name = 'بكالوريوس الإلهيات'
+  );
+
+INSERT INTO university_programs (university_id, program_name, faculty_department, specialization, degree_level, study_language, study_mode, duration, has_scholarship, scholarship_details, currency)
+SELECT u.id, 'ماجستير الإلهيات', 'كلية الإلهيات', 'التفسير والحديث والفقه', 'ماجستير', 'التركية', 'حضوري', '2 سنتان', false, '', 'SAR'
+FROM universities u
+WHERE u.slug = 'marmara-ilahiyat'
+  AND NOT EXISTS (
+    SELECT 1 FROM university_programs p
+    WHERE p.university_id = u.id AND p.program_name = 'ماجستير الإلهيات'
+  );
+
+INSERT INTO university_programs (university_id, program_name, faculty_department, specialization, degree_level, study_language, study_mode, duration, has_scholarship, scholarship_details, currency)
+SELECT u.id, 'الدورة النظامية (عالمية)', 'دار العلوم ديوبند', 'الدرس النظامي', 'بكالوريوس', 'العربية', 'حضوري', 'وفق المنهج المعتمد', false, '', 'SAR'
+FROM universities u
+WHERE u.slug = 'darul-uloom-deoband'
+  AND NOT EXISTS (
+    SELECT 1 FROM university_programs p
+    WHERE p.university_id = u.id AND p.program_name = 'الدورة النظامية (عالمية)'
+  );
+
+INSERT INTO university_programs (university_id, program_name, faculty_department, specialization, degree_level, study_language, study_mode, duration, has_scholarship, scholarship_details, currency)
+SELECT u.id, 'تخصص في الحديث والفقه', 'دار العلوم ديوبند', 'الحديث والفقه الحنفي', 'دبلوم_عالي', 'العربية', 'حضوري', 'وفق المنهج المعتمد', false, '', 'SAR'
+FROM universities u
+WHERE u.slug = 'darul-uloom-deoband'
+  AND NOT EXISTS (
+    SELECT 1 FROM university_programs p
+    WHERE p.university_id = u.id AND p.program_name = 'تخصص في الحديث والفقه'
+  );
+
+INSERT INTO university_programs (university_id, program_name, faculty_department, specialization, degree_level, study_language, study_mode, duration, has_scholarship, scholarship_details, currency)
+SELECT u.id, 'بكالوريوس الشريعة والقانون', 'كلية الشريعة والقانون', 'الفقه والقانون', 'بكالوريوس', 'العربية', 'حضوري', '4 سنوات', false, '', 'SAR'
+FROM universities u
+WHERE u.slug = 'islamic-university-gaza'
+  AND NOT EXISTS (
+    SELECT 1 FROM university_programs p
+    WHERE p.university_id = u.id AND p.program_name = 'بكالوريوس الشريعة والقانون'
+  );
+
+INSERT INTO university_programs (university_id, program_name, faculty_department, specialization, degree_level, study_language, study_mode, duration, has_scholarship, scholarship_details, currency)
+SELECT u.id, 'ماجستير الدراسات الإسلامية', 'كلية أصول الدين', 'التفسير والحديث', 'ماجستير', 'العربية', 'حضوري', '2 سنتان', false, '', 'SAR'
+FROM universities u
+WHERE u.slug = 'islamic-university-gaza'
+  AND NOT EXISTS (
+    SELECT 1 FROM university_programs p
+    WHERE p.university_id = u.id AND p.program_name = 'ماجستير الدراسات الإسلامية'
+  );
+
+INSERT INTO university_programs (university_id, program_name, faculty_department, specialization, degree_level, study_language, study_mode, duration, has_scholarship, scholarship_details, currency)
+SELECT u.id, 'بكالوريوس الشريعة والدراسات الإسلامية', 'كلية الشريعة والدراسات الإسلامية', 'الفقه وأصوله', 'بكالوريوس', 'العربية', 'حضوري', '4 سنوات', false, '', 'SAR'
+FROM universities u
+WHERE u.slug = 'university-sharjah-sharia'
+  AND NOT EXISTS (
+    SELECT 1 FROM university_programs p
+    WHERE p.university_id = u.id AND p.program_name = 'بكالوريوس الشريعة والدراسات الإسلامية'
+  );
+
+INSERT INTO university_programs (university_id, program_name, faculty_department, specialization, degree_level, study_language, study_mode, duration, has_scholarship, scholarship_details, currency)
+SELECT u.id, 'ماجستير الفقه وأصوله', 'كلية الشريعة والدراسات الإسلامية', 'الفقه وأصوله', 'ماجستير', 'العربية', 'حضوري', '2 سنتان', false, '', 'SAR'
+FROM universities u
+WHERE u.slug = 'university-sharjah-sharia'
+  AND NOT EXISTS (
+    SELECT 1 FROM university_programs p
+    WHERE p.university_id = u.id AND p.program_name = 'ماجستير الفقه وأصوله'
+  );
+
+INSERT INTO university_programs (university_id, program_name, faculty_department, specialization, degree_level, study_language, study_mode, duration, has_scholarship, scholarship_details, currency)
+SELECT u.id, 'دكتوراه الدراسات الإسلامية', 'كلية الشريعة والدراسات الإسلامية', 'التفسير والحديث وأصول الدين', 'دكتوراه', 'العربية', 'حضوري', 'وفق لوائح الجامعة', false, '', 'SAR'
+FROM universities u
+WHERE u.slug = 'university-sharjah-sharia'
+  AND NOT EXISTS (
+    SELECT 1 FROM university_programs p
+    WHERE p.university_id = u.id AND p.program_name = 'دكتوراه الدراسات الإسلامية'
+  );
+
+INSERT INTO university_programs (university_id, program_name, faculty_department, specialization, degree_level, study_language, study_mode, duration, has_scholarship, scholarship_details, currency)
+SELECT u.id, 'بكالوريوس الدراسات الإسلامية', 'كلية الدراسات الإسلامية', 'الشريعة وأصول الدين', 'بكالوريوس', 'العربية', 'حضوري', '4 سنوات', false, '', 'SAR'
+FROM universities u
+WHERE u.slug = 'international-university-africa'
+  AND NOT EXISTS (
+    SELECT 1 FROM university_programs p
+    WHERE p.university_id = u.id AND p.program_name = 'بكالوريوس الدراسات الإسلامية'
+  );
+
+INSERT INTO university_programs (university_id, program_name, faculty_department, specialization, degree_level, study_language, study_mode, duration, has_scholarship, scholarship_details, currency)
+SELECT u.id, 'ماجستير الدراسات الإسلامية', 'كلية الدراسات الإسلامية', 'العلوم الشرعية', 'ماجستير', 'العربية', 'حضوري', '2 سنتان', false, '', 'SAR'
+FROM universities u
+WHERE u.slug = 'international-university-africa'
+  AND NOT EXISTS (
+    SELECT 1 FROM university_programs p
+    WHERE p.university_id = u.id AND p.program_name = 'ماجستير الدراسات الإسلامية'
+  );
+
