@@ -1,20 +1,20 @@
 name: Resolve PR conflicts from main
 
-# عند تعارض PR يستهدف main: يدمج origin/main في فرع الـ PR.
-# إن نجح الدمج بلا تعارض يُدفع الفرع وتُعاد الفحوصات.
+# عند تعارض أو تأخّر PR يستهدف main: يدمج origin/main في فرع الـ PR.
+# إن نجح الدمج بلا تعارض يُدفع الفرع وتُعاد الفحوصات (Verify build) ثم Auto-merge.
 # إن بقي تعارض يُعلَّق تعليقًا واضحًا دون دفع قسري.
 
 on:
   schedule:
-    - cron: "*/20 * * * *"
+    - cron: "*/15 * * * *"
   workflow_dispatch:
     inputs:
       pr_number:
-        description: "رقم PR محدد (فارغ = كل المتعارضة مع main)"
+        description: "رقم PR محدد (فارغ = كل المتعارضة/المتأخرة عن main)"
         required: false
         type: string
   pull_request:
-    types: [synchronize]
+    types: [synchronize, opened, reopened]
     branches: [main]
 
 concurrency:
@@ -51,8 +51,9 @@ jobs:
             nums="$DISPATCH_PR"
           else
             nums=$(gh -R "$GITHUB_REPOSITORY" pr list --base main --state open --limit 50 \
-              --json number,mergeable,headRefName --jq \
-              '.[] | select(.mergeable=="CONFLICTING") | .number' | tr '\n' ' ' || true)
+              --json number,mergeable,mergeStateStatus,headRefName --jq \
+              '.[] | select(.mergeable=="CONFLICTING" or .mergeStateStatus=="BEHIND" or .mergeStateStatus=="DIRTY") | .number' \
+              | tr '\n' ' ' || true)
           fi
           echo "nums=${nums}" >> "$GITHUB_OUTPUT"
           echo "allow=${ALLOW}" >> "$GITHUB_OUTPUT"
@@ -78,12 +79,13 @@ jobs:
           git fetch origin main
           for n in $NUMS; do
             echo "::group::PR #$n"
-            meta=$(gh -R "$GITHUB_REPOSITORY" pr view "$n" --json state,baseRefName,headRefName,mergeable,isDraft \
-              --jq '{state,base:.baseRefName,head:.headRefName,mergeable,isDraft}')
+            meta=$(gh -R "$GITHUB_REPOSITORY" pr view "$n" --json state,baseRefName,headRefName,mergeable,mergeStateStatus,isDraft \
+              --jq '{state,base:.baseRefName,head:.headRefName,mergeable,mergeStateStatus,isDraft}')
             state=$(echo "$meta" | jq -r .state)
             base=$(echo "$meta" | jq -r .base)
             head=$(echo "$meta" | jq -r .head)
             mergeable=$(echo "$meta" | jq -r .mergeable)
+            mstatus=$(echo "$meta" | jq -r .mergeStateStatus)
             if [ "$state" != "OPEN" ] || [ "$base" != "main" ]; then
               echo "تخطي"; echo "::endgroup::"; continue
             fi
@@ -93,18 +95,22 @@ jobs:
             if echo "$head" | grep -Eq "$EXCLUDE_DUAL"; then
               echo "تخطي dual"; echo "::endgroup::"; continue
             fi
-            if [ "$mergeable" != "CONFLICTING" ] && [ "${{ github.event_name }}" != "workflow_dispatch" ]; then
-              echo "لا تعارض حاليًا"; echo "::endgroup::"; continue
+            needs_update=0
+            if [ "$mergeable" = "CONFLICTING" ] || [ "$mstatus" = "BEHIND" ] || [ "$mstatus" = "DIRTY" ]; then
+              needs_update=1
+            fi
+            if [ "$needs_update" != "1" ] && [ "${{ github.event_name }}" != "workflow_dispatch" ]; then
+              echo "الفرع محدّث ولا تعارض"; echo "::endgroup::"; continue
             fi
             git fetch origin "$head" || { echo "تعذّر fetch"; echo "::endgroup::"; continue; }
             git checkout -B "pr-$n" "origin/$head"
             if git merge --no-edit origin/main; then
               git push origin "HEAD:$head"
-              gh -R "$GITHUB_REPOSITORY" pr comment "$n" --body "✅ دُمج \`main\` في الفرع تلقائيًا لإزالة التعارض. تُعاد الفحوصات ثم Auto-merge." || true
+              gh -R "$GITHUB_REPOSITORY" pr comment "$n" --body "✅ حُدّث الفرع من \`main\` تلقائيًا. تُعاد الفحوصات (Verify build) ثم Auto-merge (squash)." || true
               echo "✓ دُفع $head"
             else
               git merge --abort || true
-              gh -R "$GITHUB_REPOSITORY" pr comment "$n" --body "⚠️ تعذّر الدمج التلقائي من \`main\` لوجود تعارض يحتاج حلًا يدويًا مع الحفاظ على تعديلات الفرع. حدّث الفرع محليًا ثم ادفع." || true
+              gh -R "$GITHUB_REPOSITORY" pr comment "$n" --body "⚠️ تعذّر التحديث التلقائي من \`main\` لوجود تعارض يحتاج حلًا يدويًا مع الحفاظ على تعديلات الفرع." || true
               echo "::warning::تعارض غير قابل للحل التلقائي في #$n"
             fi
             echo "::endgroup::"
