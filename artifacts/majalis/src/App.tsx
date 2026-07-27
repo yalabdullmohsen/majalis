@@ -163,9 +163,11 @@ const FiqhCouncilStatsPage = lazy(() => import("@/views/FiqhCouncilStatsPage"));
 const FiqhCouncilPage = lazy(() => import("@/views/FiqhCouncilPage"));
 const FiqhCouncilItemDetailPage = lazy(() => import("@/views/FiqhCouncilItemDetailPage"));
 const FiqhPage = lazy(() => import("@/views/FiqhPage"));
+const FiqhTopicPage = lazy(() => import("@/views/FiqhTopicPage"));
 const SeerahPage = lazy(() => import("@/views/SeerahPage"));
 const RulingsPage = lazy(() => import("@/views/RulingsPage"));
 const RulingDetailPage = lazy(() => import("@/views/RulingDetailPage"));
+const QaPage = lazy(() => import("@/views/QaPage"));
 const UpdatesPage = lazy(() => import("@/views/UpdatesPage"));
 const AutoContentDetailPage = lazy(() => import("@/views/AutoContentDetailPage"));
 const KnowledgeGraphPage = lazy(() => import("@/views/KnowledgeGraphPage"));
@@ -487,7 +489,7 @@ function Router() {
       <Route path="/prophets"><SafeLazyRoute component={ProphetStoriesPage} /></Route>
       <Route path="/islamic-stories"><Redirect to="/stories" /></Route>
       <Route path="/adhkar"><SafeLazyRoute component={AdhkarPage} /></Route>
-      <Route path="/qa"><Redirect to="/quiz" /></Route>
+      <Route path="/qa"><SafeLazyRoute component={QaPage} /></Route>
       <Route path="/quiz"><SafeLazyRoute component={QuizPage} /></Route>
       <Route path="/knowledge-graph"><SafeLazyRoute component={KnowledgeGraphPage} /></Route>
       <Route path="/knowledge-map"><Redirect to="/knowledge-graph" /></Route>
@@ -640,6 +642,7 @@ function Router() {
       <Route path="/discover-islam/new-muslim"><SafeLazyRoute component={NewMuslimPathPage} /></Route>
       <Route path="/discover-islam/new-muslim/:day"><SafeLazyRoute component={NewMuslimDayDetailPage} /></Route>
       <Route path="/discover-islam/contact"><SafeLazyRoute component={DiscoverIslamContactPage} /></Route>
+      <Route path="/fiqh/topics/:topicId"><SafeLazyRoute component={FiqhTopicPage} /></Route>
       <Route path="/fiqh"><SafeLazyRoute component={FiqhPage} /></Route>
       <Route path="/seerah"><SafeLazyRoute component={SeerahPage} /></Route>
       <Route path="/quran/surah-stories/:number"><SafeLazyRoute component={SurahStoryDetailRoute} /></Route>
@@ -694,7 +697,9 @@ function Router() {
       <Route path="/fiqh-council/archive"><SafeLazyRoute component={FiqhCouncilArchivePage} /></Route>
       <Route path="/fiqh-council/:slug"><SafeLazyRoute component={FiqhCouncilItemDetailPage} /></Route>
       <Route path="/fiqh-council"><SafeLazyRoute component={FiqhCouncilPage} /></Route>
-      <Route path="/fatwa/:id"><Redirect to="/rulings" /></Route>
+      <Route path="/fatwa/:id">
+        {(params) => <Redirect to={`/rulings/${params.id}`} />}
+      </Route>
       <Route path="/fatwa"><Redirect to="/fiqh" /></Route>
       <Route path="/rulings/:id"><SafeLazyRoute component={RulingDetailPage} /></Route>
       <Route path="/rulings"><SafeLazyRoute component={RulingsPage} /></Route>

@@ -14,7 +14,6 @@ import { useThemePreference } from "@/components/ThemePreferenceProvider";
 import { filterNavItems, isComingSoonPath } from "@/lib/nav-visibility";
 import { isNavHrefActive } from "@/lib/nav-active";
 import "@/styles/components/more-bottom-sheet.css";
-import "@/styles/components/dark-emerald-menus.css";
 
 type SheetItem = { href: string; label: string; Icon: typeof BookOpen };
 

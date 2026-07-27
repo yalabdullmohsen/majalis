@@ -74,8 +74,8 @@
   min-height: 8rem;
   height: auto;
   border-radius: 12px;
-  border: 1.5px solid rgba(0,0,0,0.07);
-  background: #FFFFFF;
+  border: 1.5px solid var(--border);
+  background: var(--cardBackground, var(--surface));
   text-decoration: none;
   color: inherit;
   text-align: start;
@@ -86,24 +86,24 @@
   box-sizing: border-box;
 }
 .fqh-hub-card:hover {
-  border-color: var(--fqh-clr, #143F35);
-  box-shadow: 0 4px 14px rgba(0,0,0,0.09);
+  border-color: var(--fqh-clr, var(--brand));
+  box-shadow: var(--e-2);
   transform: none;
 }
 .fqh-hub-card__emoji { font-size: 1.6rem; line-height: 1; }
 .fqh-hub-card__title {
   font-size: clamp(1.05rem, 3.6vw, 1.25rem);
   font-weight: 700;
-  color: var(--majalis-ink, #143F35);
+  color: var(--textPrimary, var(--majalis-ink, var(--text)));
   margin: 0;
   line-height: 1.4;
   letter-spacing: 0;
   overflow-wrap: anywhere;
 }
-.fqh-hub-card:hover .fqh-hub-card__title { color: var(--fqh-clr, #143F35); }
+.fqh-hub-card:hover .fqh-hub-card__title { color: var(--fqh-clr, var(--text-brand)); }
 .fqh-hub-card__desc {
   font-size: clamp(0.875rem, 3vw, 1rem);
-  color: #4A5C55;
+  color: var(--textSecondary, var(--text-2));
   margin: 0;
   line-height: 1.9;
   letter-spacing: 0;
@@ -114,7 +114,9 @@
   -webkit-line-clamp: 3;
   line-clamp: 3;
 }
-html[data-theme="dark"] .fqh-hub-card__desc { color: #A8BDB6; }
+html[data-theme="dark"] .fqh-hub-card__desc {
+  color: var(--textSecondary, var(--text-2));
+}
 
 
 /* ══════════════════════════════════════════════

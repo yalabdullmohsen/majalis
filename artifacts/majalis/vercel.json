@@ -194,13 +194,13 @@
       "permanent": true
     },
     {
-      "source": "/qa",
-      "destination": "/quiz",
+      "source": "/fatwa/:id",
+      "destination": "/rulings/:id",
       "permanent": true
     },
     {
-      "source": "/qa/:path*",
-      "destination": "/quiz",
+      "source": "/fatwa",
+      "destination": "/fiqh",
       "permanent": true
     },
     {
@@ -271,16 +271,6 @@
     {
       "source": "/quran",
       "destination": "/quran-hub",
-      "permanent": true
-    },
-    {
-      "source": "/fatwa/:id",
-      "destination": "/rulings",
-      "permanent": true
-    },
-    {
-      "source": "/fatwa",
-      "destination": "/fiqh",
       "permanent": true
     },
     {

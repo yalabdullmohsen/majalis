@@ -65,11 +65,11 @@ export const CONTENT_TYPE_LABEL: Record<RecContentType, string> = {
 export const CONTENT_TYPE_HREF: Record<RecContentType, (id: string) => string> = {
   lesson:     (_id) => `/lessons`,
   hadith:     (_id) => `/hadith`,
-  fatwa:      (_id) => `/rulings`,
+  fatwa:      (id) => (id ? `/rulings/${id}` : `/rulings`),
   benefit:    (_id) => `/fawaid`,
   book:       (_id) => `/library`,
   scholar:    (_id) => `/lessons`,
-  qa:         (_id) => `/qa`,
+  qa:         (id)  => (id ? `/qa?id=${encodeURIComponent(id)}` : `/qa`),
   ruling:     (id)  => `/rulings/${id}`,
   story:      (_id) => `/stories`,
   miracle:    (_id) => `/miracles`,

@@ -3417,19 +3417,8 @@ img[loading="lazy"]:not([src=""]) {
   color: #5C5C56 !important;
 }
 
-/* بطاقات المحتوى — أي نص على خلفية #FFFFFF أو #FAFAF8 */
-.elite-card,
-.ui-card,
-[class*="elite-card"],
-.lesson-card,
-.hadith-card,
-.story-card,
-.prophet-card {
-  color: var(--elite-ink, #1A1A18) !important;
-}
-.elite-card p, .ui-card p, .lesson-card p, .hadith-card p {
-  color: #5C5C56 !important;
-}
+.elite-card,.ui-card,[class*="elite-card"],.lesson-card,.hadith-card,.story-card,.prophet-card{color:var(--text)!important}
+.elite-card p,.ui-card p,.lesson-card p,.hadith-card p{color:var(--text-2)!important}
 
 /* إصلاح أي نص أبيض على خلفية فاتحة (خطأ شائع) */
 .bg-white .text-white,
@@ -6052,7 +6041,6 @@ button.primary,
 .cvp-result-badge,
 .cvp-back-link:hover,
 .skip-link,
-.bottom-sheet,
 .navbar-v3,
 .tj-hero,
 .tj-related,
