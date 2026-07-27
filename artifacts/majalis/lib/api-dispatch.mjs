@@ -234,6 +234,8 @@ export const API_ROUTES = [
   { prefix: "/api/transcribe", module: "./api-handlers/transcribe.js", rateLimit: transcribeRateLimit },
   { prefix: "/api/recitation-transcribe", module: "./api-handlers/recitation-transcribe.js", rateLimit: recitationTranscribeRateLimit, allowGet: true, exact: true, corsPreflightOrigins: NATIVE_APP_ORIGINS },
   { prefix: "/api/submissions", module: "./api-handlers/submissions.js", exact: true, rateLimit: submissionsRateLimit },
+  { prefix: "/api/researches/submit", module: "./api-handlers/researches-submit.js", exact: true, rateLimit: submissionsRateLimit },
+  { prefix: "/api/cron/researches-daily-import", module: "./api-handlers/cron/researches-daily-import.js", allowGet: true, exact: true },
   { prefix: "/api/admin/submissions", module: "./api-handlers/admin/submissions.js", allowGet: true },
   { prefix: "/api/account/delete", module: "./api-handlers/account/delete.js", exact: true, rateLimit: accountDeleteRateLimit },
   // ── الباحث الشرعي (RAG) ────────────────────────────────────────────────────

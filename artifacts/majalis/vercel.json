@@ -180,9 +180,23 @@
     {
       "path": "/api/cron/universities-review",
       "schedule": "0 2 * * 1"
+    },
+    {
+      "path": "/api/cron/researches-daily-import",
+      "schedule": "20 5 * * *"
     }
   ],
   "redirects": [
+    {
+      "source": "/researches",
+      "destination": "/academic-research",
+      "permanent": true
+    },
+    {
+      "source": "/sharia-research",
+      "destination": "/academic-research",
+      "permanent": true
+    },
     {
       "source": "/muezzins",
       "destination": "/adhan-settings",

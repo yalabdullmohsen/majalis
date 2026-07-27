@@ -132,7 +132,7 @@ const SECTIONS = [
       { href: "/hikam-salaf",      label: "حكم السلف الصالح",     desc: "أقوال الأئمة والصحابة" },
       { href: "/fawaid",           label: "الفوائد العلمية",      desc: "فوائد ومنقولات موثقة" },
       { href: "/islamic-glossary", label: "المصطلحات الإسلامية",  desc: "معجم المصطلحات" },
-      { href: "/academic-research",label: "البحث الأكاديمي",      desc: "موارد البحث العلمي الشرعي" },
+      { href: "/academic-research",label: "الأبحاث الشرعية",      desc: "مكتبة أبحاث ودراسات شرعية موثّقة" },
       { href: "/institutions",     label: "المؤسسات الإسلامية",   desc: "المراكز والمجامع العلمية" },
     ],
   },

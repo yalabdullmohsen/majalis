@@ -2059,16 +2059,37 @@
     },
     {
       "path": "/academic-research",
-      "title": "الأبحاث العلمية",
-      "description": "أدوات البحث الأكاديمي في العلوم الإسلامية — البحث في المصادر الشرعية والمراجع العلمية.",
+      "title": "الأبحاث الشرعية",
+      "description": "مكتبة أكاديمية متخصصة في جمع وتنظيم الأبحاث والدراسات الشرعية الموثقة، مع حفظ حقوق الباحثين والجهات العلمية.",
       "keywords": [
-        "البحث الأكاديمي الإسلامي",
-        "أدوات البحث الشرعي",
-        "المصادر الإسلامية"
+        "الأبحاث الشرعية",
+        "رسائل ماجستير",
+        "أطروحات دكتوراه",
+        "دراسات إسلامية",
+        "مكتبة أكاديمية"
       ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.8
+    },
+    {
+      "path": "/academic-research/submit",
+      "title": "أضف بحثًا",
+      "description": "تقديم بحث شرعي للمراجعة — لا يُنشر مباشرة.",
+      "keywords": ["إضافة بحث", "أبحاث شرعية"],
+      "sitemap": false,
+      "changefreq": "yearly",
+      "priority": 0.3,
+      "robots": "noindex, follow"
+    },
+    {
+      "path": "/academic-research/assistant",
+      "title": "مساعدة الباحث",
+      "description": "أدوات مساعدة للبحث الشرعي دون كتابة البحث نيابة عن الطالب.",
+      "keywords": ["مساعدة بحث", "خطة بحث"],
       "sitemap": false,
       "changefreq": "monthly",
-      "priority": 0.7,
+      "priority": 0.4,
       "robots": "noindex, follow"
     },
     {

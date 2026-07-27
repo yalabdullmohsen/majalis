@@ -27,6 +27,7 @@ export const FEATURE_REGISTRY: FeatureEntry[] = [
   { id: "lessons",      label: "الدروس",             path: "/lessons",      group: "تعليم",         status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "annual-courses",label:"الدورات العلمية",    path: "/annual-courses",group:"تعليم",         status: "disabled",     inSideNav: false, inBottomNav: false },
   { id: "library",      label: "المكتبة",            path: "/library",      group: "تعليم",         status: "active",       inSideNav: true,  inBottomNav: false },
+  { id: "researches",   label: "الأبحاث الشرعية",   path: "/academic-research", group: "تعليم",  status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "fawaid",       label: "الفوائد",            path: "/fawaid",       group: "تعليم",         status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "hadith-index", label: "الأحاديث النبوية",   path: "/hadith",       group: "حديث",          status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "hadith-sahih", label: "الأحاديث الصحيحة",  path: "/hadith/sahih", group: "حديث",          status: "active",       inSideNav: false, inBottomNav: false },
