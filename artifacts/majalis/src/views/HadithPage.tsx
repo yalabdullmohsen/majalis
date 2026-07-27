@@ -617,7 +617,7 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
             </button>
           )}
         </div>
-        <FilterToggle onClick={() => setFiltersOpen(true)} label="بحث وتصفية" />
+        <FilterToggle expanded={filtersOpen} onClick={() => setFiltersOpen(true)} label="بحث وتصفية" />
       </div>
 
       {/* Category chips (quick filter on desktop) */}

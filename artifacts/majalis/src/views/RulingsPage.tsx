@@ -260,7 +260,7 @@ export default function RulingsPage() {
             <span>{stats.length} تصنيف</span>
           </div>
         )}
-        <FilterToggle onClick={() => setFiltersOpen(true)} label="بحث وتصفية" />
+        <FilterToggle expanded={filtersOpen} onClick={() => setFiltersOpen(true)} label="بحث وتصفية" />
       </div>
 
       {loading ? (

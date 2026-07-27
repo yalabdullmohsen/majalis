@@ -63,10 +63,10 @@
   background: var(--bg-card, #fff);
   display: flex;
   flex-direction: column;
-  height: calc(100dvh - 120px);
+  height: calc(100dvh - var(--sticky-below-chrome, 7rem));
   overflow: hidden;
   position: sticky;
-  top: 60px;
+  top: var(--sticky-below-chrome, 7rem);
 }
 @media (max-width: 860px) {
   .qs-sidebar {
@@ -2182,7 +2182,7 @@ body.has-immersive-mushaf { overflow: hidden; }
 .mpv-settings-sheet {
   position: fixed;
   inset: 0;
-  z-index: 50;
+  z-index: 220;
   background: rgba(0,0,0,0.45);
   display: flex;
   align-items: flex-end;
@@ -2242,7 +2242,7 @@ body.has-immersive-mushaf { overflow: hidden; }
 .quran-shell--high-contrast .rdm-progress__fill { background: #555 !important; }
 
 /* ── ورقة إجراءات الآية ── */
-.aas-sheet { position: fixed; inset: 0; z-index: 55; background: rgba(0,0,0,0.45); display: flex; align-items: flex-end; }
+.aas-sheet { position: fixed; inset: 0; z-index: 220; background: rgba(0,0,0,0.45); display: flex; align-items: flex-end; }
 .aas-panel {
   width: 100%;
   max-height: 78dvh;

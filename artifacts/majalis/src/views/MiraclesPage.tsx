@@ -1,3 +1,4 @@
+import { Link } from "wouter";
 import { useEffect, useMemo, useState } from "react";
 import {
   AlertTriangle, Bone, BookOpen, Bug, Clock, Cloud, Cog, Dna,
@@ -172,7 +173,7 @@ export default function MiraclesPage({
             <AlertTriangle size={16} strokeWidth={1.8} aria-hidden="true" />
             <span>
               للتقرير المنهجي راجع{" "}
-              <a href="/ulum-quran" className="mk-hero__link">علوم القرآن</a>
+              <Link href="/ulum-quran" className="mk-hero__link">علوم القرآن</Link>
               ؛ ولا تُبنى عقيدة أو حكم على دعاوى علمية معاصرة. الموضوعات غير المحرَّرة محجوبة عن العرض.
             </span>
           </p>
@@ -229,7 +230,7 @@ export default function MiraclesPage({
           {!loading && status === "success" && (
             <span className="mk-count">{displayed.length} موضوع</span>
           )}
-          <FilterToggle onClick={() => setFiltersOpen(true)} label="فلاتر" />
+          <FilterToggle expanded={filtersOpen} onClick={() => setFiltersOpen(true)} label="فلاتر" />
         </div>
       </div>
 

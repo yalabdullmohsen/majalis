@@ -1,5 +1,5 @@
 import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useSearch } from "wouter";
+import { Link, useSearch } from "wouter";
 import { Pause, Play, Square, ChevronLeft, RotateCcw } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { useAuth } from "@/components/AuthProvider";
@@ -1101,7 +1101,7 @@ function RecitationTestPageInner() {
           )}
 
           <p className="rai-report__disclaimer">
-            التفاصيل الكاملة في <a href="/privacy" style={{ color: "var(--rai-emerald)" }}>سياسة الخصوصية</a>.
+            التفاصيل الكاملة في <Link href="/privacy" style={{ color: "var(--rai-emerald)" }}>سياسة الخصوصية</Link>.
           </p>
 
           <button
@@ -1426,7 +1426,7 @@ function RecitationTestPageInner() {
             سيُطلَب إذن الميكروفون قبل بدء الاستماع، ويُستخدَم فقط أثناء الجلسة — لا يُحفَظ التسجيل افتراضيًا،
             ولا يُرسَل أي جزء منه لخوادم مجالس. قد يعالج نظام تشغيلك/متصفحك التعرّف الصوتي خارج الجهاز حين لا
             يتوفر تعرّف كامل محليًا (راجع{" "}
-            <a href="/privacy" style={{ color: "var(--rai-emerald)" }}>سياسة الخصوصية</a>).
+            <Link href="/privacy" style={{ color: "var(--rai-emerald)" }}>سياسة الخصوصية</Link>).
           </p>
         </div>
       </div>

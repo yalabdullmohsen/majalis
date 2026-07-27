@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { Sparkles, X } from "lucide-react";
 
 type Props = {
@@ -7,6 +8,27 @@ type Props = {
 };
 
 export function ComingSoonDialog({ open, title, onClose }: Props) {
+  const closeRef = useRef<HTMLButtonElement>(null);
+  const previouslyFocused = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    if (!open) return;
+    previouslyFocused.current = document.activeElement as HTMLElement | null;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const t = window.setTimeout(() => closeRef.current?.focus(), 40);
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    document.addEventListener("keydown", onKey);
+    return () => {
+      window.clearTimeout(t);
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prevOverflow;
+      previouslyFocused.current?.focus?.();
+    };
+  }, [open, onClose]);
+
   if (!open) return null;
 
   return (
@@ -23,6 +45,7 @@ export function ComingSoonDialog({ open, title, onClose }: Props) {
         <div className="bottom-sheet__head">
           <span>قريبًا</span>
           <button
+            ref={closeRef}
             type="button"
             onClick={onClose}
             className="bottom-sheet__close-btn"

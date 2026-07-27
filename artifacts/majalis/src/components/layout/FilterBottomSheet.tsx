@@ -22,7 +22,12 @@ export function FilterBottomSheet({ open, onClose, title = "تصفية وبحث"
   useEffect(() => {
     if (!open) return;
     document.body.classList.add("filter-sheet-open");
-    return () => document.body.classList.remove("filter-sheet-open");
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.classList.remove("filter-sheet-open");
+      document.body.style.overflow = prevOverflow;
+    };
   }, [open]);
 
   if (!open) return null;
@@ -38,6 +43,7 @@ export function FilterBottomSheet({ open, onClose, title = "تصفية وبحث"
         role="dialog"
         aria-modal="true"
         aria-label={title}
+        id="filter-bottom-sheet"
       >
         <div className="ds-sheet__head">
           <h2>{title}</h2>
@@ -51,9 +57,24 @@ export function FilterBottomSheet({ open, onClose, title = "تصفية وبحث"
   );
 }
 
-export function FilterToggle({ onClick, label = "تصفية" }: { onClick: () => void; label?: string }) {
+export function FilterToggle({
+  onClick,
+  label = "تصفية",
+  expanded = false,
+}: {
+  onClick: () => void;
+  label?: string;
+  expanded?: boolean;
+}) {
   return (
-    <button type="button" className="ds-filter-toggle" onClick={onClick}>
+    <button
+      type="button"
+      className="ds-filter-toggle"
+      onClick={onClick}
+      aria-expanded={expanded}
+      aria-haspopup="dialog"
+      aria-controls="filter-bottom-sheet"
+    >
       {label}
     </button>
   );

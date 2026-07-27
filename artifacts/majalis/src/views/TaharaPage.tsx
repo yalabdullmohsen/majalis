@@ -1,5 +1,6 @@
 import { useEffect, useState, useMemo } from "react";
 import { applyPageSeo } from "../lib/seo";
+import "@/styles/pages/tahara.css";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";

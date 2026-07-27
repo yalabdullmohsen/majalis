@@ -176,7 +176,7 @@ function UniversitiesContent() {
               >{c}</button>
             ))}
           </div>
-          <FilterToggle onClick={() => setFiltersOpen(true)} label={`تصفية متقدمة${activeFilterCount ? ` (${activeFilterCount})` : ""}`} />
+          <FilterToggle expanded={filtersOpen} onClick={() => setFiltersOpen(true)} label={`تصفية متقدمة${activeFilterCount ? ` (${activeFilterCount})` : ""}`} />
         </div>
 
         {/* إحصائية */}

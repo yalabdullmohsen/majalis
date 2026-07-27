@@ -254,12 +254,12 @@ export function SmartCmsSection() {
               </button>
             </div>
             <div className="scm-url-links">
-              <a href="/admin/automation/sources" className="scm-url-link scm-url-link--automation">
+              <Link href="/admin/automation/sources" className="scm-url-link scm-url-link--automation">
                 مصادر المراقبة التلقائية
-              </a>
-              <a href="/admin/content-import/url" className="scm-url-link scm-url-link--advanced">
+              </Link>
+              <Link href="/admin/content-import/url" className="scm-url-link scm-url-link--advanced">
                 واجهة الاستيراد المتقدمة
-              </a>
+              </Link>
             </div>
           </div>
         )}
