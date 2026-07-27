@@ -23,7 +23,7 @@ function CatIcon({ name }: { name?: string }) {
 
 const FIQH_HUB_TABS = [
   { key: "rulings", label: "الأحكام الشرعية", href: "/rulings" },
-  { key: "qa",      label: "الأسئلة الشرعية", href: "/qa" },
+  { key: "qa",      label: "الأسئلة والأجوبة", href: "/qa" },
   { key: "council", label: "المجمع الفقهي",   href: "/fiqh-council" },
 ] as const;
 type FiqhTab = (typeof FIQH_HUB_TABS)[number]["key"];

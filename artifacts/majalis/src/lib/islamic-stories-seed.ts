@@ -9,7 +9,7 @@ export type IslamicStorySeed = {
   id: number;
   slug: string;
   title: string;
-  category: "صحابة" | "فتوحات" | "تاريخ";
+  category: "أنبياء" | "تابعون" | "تاريخ" | "حكمة" | "سلف" | "سيرة" | "صحابة" | "صحابيات" | "علم" | "علماء" | "فتوحات" | "قرآن" | "نساء صالحات";
   era: string;
   icon: string;
   summary: string;
@@ -25,7 +25,7 @@ export type IslamicStorySeed = {
   last_updated_at?: string;
 };
 
-export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
+export const ISLAMIC_STORIES_SEED = [
   {
     id: 1,
     slug: "abu-bakr-siddiq",
@@ -5201,6 +5201,7 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     title: "سعد بن معاذ — حكم بني قريظة",
     category: "صحابة",
     era: "مدني",
+    icon: "📖",
     summary: "قصة سعد بن معاذ رضي الله عنه وحكمه في بني قريظة، والعبرة فيها أن العدل في الحكم من صفات المؤمنين، مع الاقتصار على الثابت في السيرة.",
     full_content: `سعد بن معاذ — سيد الأوس، صحابي جليل، واشتهرت قصته في حكم بني قريظة.
 
@@ -14453,7 +14454,7 @@ export const ISLAMIC_STORIES_SEED: IslamicStorySeed[] = [
     "last_updated_at": "2026-07-27T00:00:00.000Z"
   }
 
-];
+] as IslamicStorySeed[];
 
 export function filterIslamicStoriesSeed(opts?: {
   category?: string;

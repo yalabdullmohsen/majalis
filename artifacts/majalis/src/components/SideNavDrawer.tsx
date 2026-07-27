@@ -160,7 +160,7 @@ const DRAWER_GROUPS: NavGroup[] = [
         id: "learn-fiqh",
         title: "الفقه والأحكام",
         items: [
-          { href: "/fiqh",          label: seoNavLabel("/fiqh", "مدخل الفقه"),        Icon: BookText,   desc: "بوابة الفقه والفتاوى والأحكام" },
+          { href: "/fiqh",          label: seoNavLabel("/fiqh", "مدخل الفقه"),        Icon: BookText,   desc: "بوابة الفقه والأحكام الشرعية" },
           { href: "/fiqh-qawaid",   label: seoNavLabel("/fiqh-qawaid", "القواعد الفقهية"),   Icon: Scale,      desc: "القواعد الخمس الكبرى وفروعها" },
           { href: "/madhahib",      label: seoNavLabel("/madhahib", "المذاهب الأربعة"),   Icon: BookOpen,   desc: "الحنفي والمالكي والشافعي والحنبلي" },
           { href: "/tahara",        label: seoNavLabel("/tahara", "الطهارة"),            Icon: Repeat2,    desc: "الوضوء والغسل والتيمم" },

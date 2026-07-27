@@ -158,10 +158,11 @@ export default function ScholarProfilePage() {
       });
       return;
     }
+    const metaDesc = scholar.bio.length > 160 ? scholar.bio.slice(0, 157) + "…" : scholar.bio;
     applyPageSeo({
       path: `/scholars/${scholar.id}`,
       title: `${scholar.name} — سيرة العالم | المجلس العلمي`,
-      description: scholar.bio,
+      description: metaDesc,
       keywords: [scholar.name, scholar.fullName, scholar.era, ...scholar.specialty],
       jsonLd: [{
         "@context": "https://schema.org",
