@@ -27,7 +27,7 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
   // الصفحة الرئيسية
   { href: "/",              label: seoNavLabel("/", "الرئيسية") },
   // المحتوى العلمي
-  { href: "/learn",         label: seoNavLabel("/learn", "أبواب العلم") },
+  { href: "/learn",         label: seoNavLabel("/learn", "تعلّم") },
   { href: "/lessons",       label: seoNavLabel("/lessons", "الدروس") },
   { href: "/annual-courses",label: seoNavLabel("/annual-courses", "الدورات العلمية") },
   { href: "/library",       label: seoNavLabel("/library", "المكتبة العلمية") },
@@ -102,7 +102,7 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
  */
 export const PRIMARY_NAV_ITEMS: NavLink[] = [
   { href: "/",          label: seoNavLabel("/", "الرئيسية") },
-  { href: "/learn",     label: seoNavLabel("/learn", "تعلّم"),    description: "أبواب · دروس · مسارات" },
+  { href: "/learn",     label: seoNavLabel("/learn", "تعلّم"),    description: "فقه · سيرة · عقيدة · أنبياء · أمم" },
   { href: "/quran-hub", label: seoNavLabel("/quran-hub", "القرآن"),   description: "مصحف · تجويد · قراء" },
   { href: "/library",   label: seoNavLabel("/library", "المكتبة العلمية"),  description: "كتب · مخطوطات · مؤسسات" },
   { href: "/scholars",  label: seoNavLabel("/scholars", "أعلام الإسلام"),  description: "تراجم العلماء والمشايخ" },
