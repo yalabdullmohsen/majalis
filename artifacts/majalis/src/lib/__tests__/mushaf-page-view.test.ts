@@ -12,8 +12,9 @@
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { deriveHizbRub } from "../quran-api";
+import { deriveHizbRub, JUZ_START_PAGES } from "../quran-api";
 import { stripArabicDiacritics } from "../share-ayah";
+import { findPageForAyah } from "../recitation-ai/page-juz-lookup";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "../../..");
@@ -56,6 +57,32 @@ console.log("═══ سلامة page-juz-index.json (المصدر الحقيق
     }
   }
   assert(allSegmentsValid, "كل مقاطع كل الصفحات: سورة صالحة (1–114) و ayahFrom <= ayahTo");
+}
+
+console.log("═══ JUZ_START_PAGES + findPageForAyah ═══");
+{
+  assert(JUZ_START_PAGES.length === 30, "30 جزءًا في JUZ_START_PAGES");
+  assert(JUZ_START_PAGES[0] === 1 && JUZ_START_PAGES[29] === 582, "حدود الجزء 1 والجزء 30 صحيحة");
+
+  const idx = JSON.parse(readFileSync(path.join(ROOT, "public/data/quran/page-juz-index.json"), "utf8"));
+  assert(findPageForAyah(idx, 1, 1) === 1, "الفاتحة:1 ← صفحة 1");
+  assert(findPageForAyah(idx, 2, 142) === 22, "البقرة:142 ← صفحة 22 (أول الجزء 2)");
+  assert(findPageForAyah(idx, 114, 6) === 604, "الناس:6 ← صفحة 604");
+}
+
+console.log("═══ MushafPageView — بلا transform:scale، تمييز mf2، فهرس موسّع ═══");
+{
+  const viewSrc = readFileSync(path.join(ROOT, "src/views/MushafPageView.tsx"), "utf8");
+  assert(!viewSrc.includes("transform: `scale("), "أُزيل تكبير transform:scale من قارئ المصحف");
+  assert(viewSrc.includes("--qs-font-scale"), "تكبير الخط عبر متغير CSS قابل للتمرير");
+  assert(viewSrc.includes("qs-mushaf-body--hl-"), "نمط التمييز يُمرَّر لحاوية الصفحة");
+  assert(viewSrc.includes("onSelectPage"), "فهرس المصحف يدعم الانتقال لصفحة/إشارة");
+
+  const listSrc = readFileSync(path.join(ROOT, "src/components/quran/SurahList.tsx"), "utf8");
+  assert(listSrc.includes('"juz"') && listSrc.includes('"bookmarks"'), "فهرس يتضمن تبويبي الأجزاء والإشارات");
+
+  const swSrc = readFileSync(path.join(ROOT, "public/sw.js"), "utf8");
+  assert(swSrc.includes("/data/quran-v2/"), "Service Worker يخزّن بيانات quran-v2");
 }
 
 console.log(`\n${passed} نجح، ${failed} فشل`);

@@ -58,6 +58,12 @@ console.log("\n=== NavBar.tsx / App.tsx — نقطة دخول البحث موح�
 
   const sideNavSrc = readFileSync(resolve(appRoot, "src/components/SideNavDrawer.tsx"), "utf-8");
   assert(sideNavSrc.includes('href: "/search"'), "مسار البحث الشامل ما زال متاحًا من القائمة الجانبية");
+
+  const cssSrc = readFileSync(resolve(appRoot, "src/styles/final-release.css"), "utf-8");
+  assert(
+    cssSrc.includes(".navbar-theme-toggle.navbar-search-toggle") && cssSrc.includes("display: inline-flex"),
+    "زر البحث يبقى ظاهرًا على الجوال رغم إخفاء زر الوضع الليلي",
+  );
 }
 
 console.log(`\n${"─".repeat(40)}`);

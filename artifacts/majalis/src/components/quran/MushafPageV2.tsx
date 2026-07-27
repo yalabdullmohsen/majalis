@@ -135,7 +135,9 @@ export function MushafPageV2({ layout, activeAyahKey, onAyahPress, sharedFontFam
   }, [fontReady, layout]);
 
   if (!layout) {
-    return <MushafPageSkeleton />;
+    return bare
+      ? <div dir="rtl" style={{ height: "100%" }}><MushafPageSkeleton /></div>
+      : <MushafPageSkeleton />;
   }
 
   const lines = (

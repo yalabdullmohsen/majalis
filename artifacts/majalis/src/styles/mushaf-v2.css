@@ -218,6 +218,21 @@ html[data-theme="dark"] .mf2-surah-header__name { color: #5EC49A; }
   background-size: 200% 100%;
   animation: mf2-skeleton-pulse 1.6s ease-in-out infinite;
 }
+html[data-theme="dark"] .mf2-skeleton--overlay,
+.quran-shell--night .mf2-skeleton--overlay {
+  background: #153025;
+}
+html[data-theme="dark"] .mf2-skeleton__line,
+.quran-shell--night .mf2-skeleton__line {
+  background: linear-gradient(90deg, rgba(94,196,154,.08), rgba(94,196,154,.18), rgba(94,196,154,.08));
+  background-size: 200% 100%;
+}
+.quran-shell--warm .mf2-skeleton--overlay { background: #fdf3e3; }
+.quran-shell--high-contrast .mf2-skeleton--overlay { background: #fff; }
+.quran-shell--high-contrast .mf2-skeleton__line {
+  background: linear-gradient(90deg, rgba(0,0,0,.06), rgba(0,0,0,.14), rgba(0,0,0,.06));
+  background-size: 200% 100%;
+}
 @keyframes mf2-skeleton-pulse {
   0% { background-position: 200% 0; }
   100% { background-position: -200% 0; }
