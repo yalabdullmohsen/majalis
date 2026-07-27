@@ -10253,4 +10253,4 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
   }
 ] as unknown as ShariaRulingExtended[];
 
-export const RULINGS_ENCYCLOPEDIA_TOTAL = 1582;
+export const RULINGS_ENCYCLOPEDIA_TOTAL = 1622;
