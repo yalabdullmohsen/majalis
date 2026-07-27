@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { AlertTriangle, Bird, BookOpen, Castle, Compass, Flower2, Gem, Landmark, Leaf, Lightbulb, Map as MapIcon, Moon, Ruler, Sailboat, Scale, Shield, Star, Sun, Sword, Users } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
@@ -13,6 +13,7 @@ import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { truncateAtWord } from "@/lib/utils";
 import { useReadingScrollMemory } from "@/hooks/useReadingScrollMemory";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
+import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import "@/styles/pages/islamic-stories.css";
 
 const STORY_ICON_MAP: Record<string, LucideIcon> = {
@@ -155,7 +156,7 @@ function StoryDetail({ story, onBack }: { story: IslamicStory; onBack: () => voi
         </div>
       )}
       <div className="isp-detail__share">
-        <ShareButtons title={story.title} url={`https://www.majlisilm.com/stories`} />
+        <ShareButtons title={story.title} url={`https://www.majlisilm.com/stories?slug=${encodeURIComponent(story.slug)}`} />
       </div>
     </div>
   );
@@ -172,14 +173,32 @@ export default function IslamicStoriesPage() {
   const [era, setEra] = useState<Era>("الكل");
   const [search, setSearch] = useState("");
 
-  // رابط `?cat=...` في JSON-LD أسفل هذه الصفحة نفسها كان يُتجاهَل كليًا:
-  // `category` تُهيَّأ دائماً بـ"الكل" بلا قراءة أي شيء من الرابط الفعلي —
-  // عطل صامت من نفس عائلة TYPE_HREF.scholar، اكتُشف بالفحص المباشر
-  // 2026-07-18.
+  const syncSlugToUrl = useCallback((slug: string | null) => {
+    const url = new URL(window.location.href);
+    if (slug) url.searchParams.set("slug", slug);
+    else url.searchParams.delete("slug");
+    const next = `${url.pathname}${url.search}${url.hash}`;
+    window.history.replaceState(null, "", next);
+  }, []);
+
+  const openStory = useCallback((slug: string) => {
+    setSelectedSlug(slug);
+    syncSlugToUrl(slug);
+  }, [syncSlugToUrl]);
+
+  const closeStory = useCallback(() => {
+    setSelectedSlug(null);
+    syncSlugToUrl(null);
+  }, [syncSlugToUrl]);
+
+  // رابط `?cat=...` و`?slug=...` للمشاركة العميقة
   useEffect(() => {
-    const cat = new URLSearchParams(window.location.search).get("cat");
+    const params = new URLSearchParams(window.location.search);
+    const cat = params.get("cat");
+    const slug = params.get("slug");
     const valid: Category[] = ["الكل", "صحابة", "فتوحات", "تاريخ"];
     if (cat && (valid as string[]).includes(cat)) setCategory(cat as Category);
+    if (slug) setSelectedSlug(slug);
   }, []);
 
   useEffect(() => {
@@ -255,7 +274,16 @@ export default function IslamicStoriesPage() {
   if (selectedStory) {
     return (
       <div className="page-shell narrow isp-page">
-        <StoryDetail story={selectedStory} onBack={() => setSelectedSlug(null)} />
+        <StoryDetail story={selectedStory} onBack={closeStory} />
+        <ExploreAlsoNav
+          title="استكشف أيضًا"
+          links={[
+            { href: "/quran/surah-stories", label: "قصص سور القرآن" },
+            { href: "/nations", label: "الأمم السابقة" },
+            { href: "/seerah", label: "السيرة النبوية" },
+            { href: "/learning/paths", label: "مسارات التعلم" },
+          ]}
+        />
       </div>
     );
   }
@@ -336,7 +364,7 @@ export default function IslamicStoriesPage() {
             <StoryCard
               key={story.slug}
               story={story}
-              onSelect={() => setSelectedSlug(story.slug)}
+              onSelect={() => openStory(story.slug)}
             />
           ))}
         </div>
@@ -345,6 +373,15 @@ export default function IslamicStoriesPage() {
       {!loading && (
         <>
           <RelatedKnowledge kind="story" title="قصص ومعارف ذات صلة" limit={6} />
+          <ExploreAlsoNav
+            title="استكشف أيضًا"
+            links={[
+              { href: "/quran/surah-stories", label: "قصص سور القرآن" },
+              { href: "/nations", label: "الأمم السابقة" },
+              { href: "/seerah", label: "السيرة النبوية" },
+              { href: "/learning/paths", label: "مسارات التعلم" },
+            ]}
+          />
           <SectionQuiz
             categoryId={["tarikh", "sira", "akhlaq"]}
             title="اختبر معلوماتك في التاريخ الإسلامي"

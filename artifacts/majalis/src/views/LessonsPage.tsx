@@ -27,6 +27,7 @@ import { fromKuwaitLesson } from "@/lib/unified-lesson-card";
 import "@/styles/pages/lessons.css";
 import { registerForLesson, unregisterFromLesson, getMyRegistrations } from "@/lib/supabase";
 import { applyPageSeo } from "@/lib/seo";
+import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 
 type TabId = "all" | "men" | "women" | "courses" | "makkah" | "madinah";
 
@@ -703,6 +704,16 @@ export default function LessonsPage({
       <div className="twh-share">
         <ShareButtons aria-label="الدروس العلمية — المجلس العلمي" url="https://www.majlisilm.com/lessons" />
       </div>
+      <ExploreAlsoNav
+        title="استكشف أيضًا"
+        links={[
+          { href: "/learning/paths", label: "مسارات التعلم" },
+          { href: "/scholars", label: "العلماء" },
+          { href: "/library", label: "المكتبة" },
+          { href: "/hadith", label: "الأحاديث" },
+          { href: "/fiqh", label: "بوابة الفقه" },
+        ]}
+      />
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId={["hadith", "fiqh"]} aria-label="اختبر معلوماتك في الدروس الشرعية" count={4} />
       </div>

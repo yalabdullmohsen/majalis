@@ -64,16 +64,16 @@ export const CONTENT_TYPE_LABEL: Record<RecContentType, string> = {
 
 export const CONTENT_TYPE_HREF: Record<RecContentType, (id: string) => string> = {
   lesson:     (id) => (id ? `/lessons/${id}` : `/lessons`),
-  hadith:     (_id) => `/hadith`,
+  hadith:     (id) => (id ? `/hadith#${encodeURIComponent(id)}` : `/hadith`),
   fatwa:      (id) => (id ? `/rulings/${id}` : `/rulings`),
   benefit:    (id) => (id ? `/fawaid#${encodeURIComponent(id)}` : `/fawaid`),
   book:       (id) => (id ? `/library/${id}` : `/library`),
   scholar:    (id) => (id ? `/scholars/${id}` : `/scholars`),
   qa:         (id)  => (id ? `/qa?id=${encodeURIComponent(id)}` : `/qa`),
   ruling:     (id)  => (id ? `/rulings/${id}` : `/rulings`),
-  story:      (_id) => `/stories`,
-  miracle:    (_id) => `/miracles`,
-  dhikr:      (_id) => `/adhkar`,
+  story:      (id) => (id ? `/stories?slug=${encodeURIComponent(id)}` : `/stories`),
+  miracle:    (id) => (id ? `/miracles#${encodeURIComponent(id)}` : `/miracles`),
+  dhikr:      (id) => (id ? `/adhkar?cat=${encodeURIComponent(id)}` : `/adhkar`),
   quran_ayah: (_id) => `/quran-hub`,
 };
 

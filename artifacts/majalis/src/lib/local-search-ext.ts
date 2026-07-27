@@ -43,7 +43,9 @@ export function searchLocalExtensions(query: string) {
       id: a.id,
       title: a.text.slice(0, 80) + (a.text.length > 80 ? "..." : ""),
       meta: a.source || a.categoryId,
-      href: "/adhkar",
+      href: a.categoryId
+        ? `/adhkar?cat=${encodeURIComponent(a.categoryId)}`
+        : "/adhkar",
     }));
 
   const surahStories = searchSurahStories(q)
@@ -52,7 +54,7 @@ export function searchLocalExtensions(query: string) {
       id: String(s.number),
       title: `قصة سورة ${s.name}`,
       meta: s.namingReason.slice(0, 60) + "...",
-      href: `/surah-stories/${s.number}`,
+      href: `/quran/surah-stories/${s.number}`,
     }));
 
   const islamicStories = filterIslamicStoriesSeed({ search: q })
@@ -61,7 +63,7 @@ export function searchLocalExtensions(query: string) {
       id: String(s.id),
       title: s.title,
       meta: `${s.era} · ${s.category}`,
-      href: `/stories/${s.slug}`,
+      href: `/stories?slug=${encodeURIComponent(s.slug)}`,
     }));
 
   const nations = searchNations(q)

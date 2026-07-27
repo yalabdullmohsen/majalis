@@ -552,7 +552,10 @@ export default function SearchPage() {
                 { href: "/rulings",      Icon: Scale,         label: "الأحكام الشرعية" },
                 { href: "/lessons",      Icon: GraduationCap, label: "الدروس" },
                 { href: "/library",      Icon: BookMarked,    label: "المكتبة" },
-                { href: "/ulum-quran",   Icon: FlaskConical,  label: "الإعجاز القرآني" },
+                { href: "/ulum-quran",   Icon: FlaskConical,  label: "علوم القرآن" },
+                { href: "/miracles",     Icon: FlaskConical,  label: "الإشارات الكونية" },
+                { href: "/stories",      Icon: BookOpen,      label: "القصص الإسلامية" },
+                { href: "/quran/surah-stories", Icon: BookOpen, label: "قصص السور" },
                 { href: "/prayer-times", Icon: Clock,         label: "مواقيت الصلاة" },
               ] as const).map(({ href, Icon, label }) => (
                 <Link key={href} href={href} className="srch-quick-card">
@@ -630,7 +633,7 @@ export default function SearchPage() {
                     );
                   }} />
                   <Group title="الفوائد" items={results.fawaid} render={(f) => (
-                    <ResultRow key={f.id} href="/fawaid" kind="fawaid" query={q} title={displayText(f.text)} meta={f.author_name} />
+                    <ResultRow key={f.id} href={`/fawaid#${encodeURIComponent(f.id)}`} kind="fawaid" query={q} title={displayText(f.text)} meta={f.author_name} />
                   )} />
                   <Group title="المكتبة" items={results.library} render={(book) => (
                     <ResultRow key={book.id} href={`/library/${book.id}`} kind="library" query={q}
@@ -639,10 +642,17 @@ export default function SearchPage() {
                     />
                   )} />
                   <Group title="الأسئلة والأجوبة" items={results.qa} render={(x) => (
-                    <ResultRow key={x.id} href="/qa" kind="qa" query={q} title={displayText(x.question)} meta={x.qa_categories?.name} />
+                    <ResultRow key={x.id} href={`/qa?id=${encodeURIComponent(x.id)}`} kind="qa" query={q} title={displayText(x.question)} meta={x.qa_categories?.name} />
                   )} />
                   <Group title="الأذكار" id="adhkar" items={results.adhkar} render={(a) => (
-                    <ResultRow key={a.id} href="/adhkar" kind="adhkar" query={q} title={displayText(a.text)} meta={a.category || a.source} />
+                    <ResultRow
+                      key={a.id}
+                      href={a.category ? `/adhkar?cat=${encodeURIComponent(a.category)}` : "/adhkar"}
+                      kind="adhkar"
+                      query={q}
+                      title={displayText(a.text)}
+                      meta={a.category || a.source}
+                    />
                   )} />
                   {results.adhkar.length === 0 && localExtra.adhkar.length > 0 && (
                     <Group title="الأذكار" items={localExtra.adhkar} render={(a) => (
@@ -692,17 +702,22 @@ export default function SearchPage() {
                     />
                   )} />
                   <Group title="الأحاديث الصحيحة" items={results.hadith || []} render={(h) => (
-                    <ResultRow key={h.id} href="/hadith" kind="hadith" query={q}
+                    <ResultRow key={h.id} href={`/hadith#${encodeURIComponent(h.id)}`} kind="hadith" query={q}
                       title={displayText(h.title || h.text)} meta={h.narrator || h.collection}
                     />
                   )} />
                   <Group title="القصص الإسلامية" items={results.stories || []} render={(s) => (
-                    <ResultRow key={s.id} href="/stories" kind="story" query={q}
-                      title={displayText(s.title)} meta={s.category || s.topic}
+                    <ResultRow
+                      key={s.id}
+                      href={s.slug ? `/stories?slug=${encodeURIComponent(s.slug)}` : "/stories"}
+                      kind="story"
+                      query={q}
+                      title={displayText(s.title)}
+                      meta={s.category || s.topic}
                     />
                   )} />
                   <Group title="إشارات كونية" items={results.miracles} render={(m) => (
-                    <ResultRow key={m.id} href="/miracles" kind="miracle" query={q}
+                    <ResultRow key={m.id} href={`/miracles#${encodeURIComponent(m.id)}`} kind="miracle" query={q}
                       title={displayText(m.title)} meta={m.category}
                     />
                   )} />
