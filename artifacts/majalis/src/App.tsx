@@ -306,7 +306,7 @@ function SeoManager() {
 /* وجهات شريط الأقسام العلوي (TopSectionBar) — التبديل بينها يُعامَل معاملة
    "الرجوع" (استعادة آخر موضع تمرير)، لا "تنقّل للأمام" (تمرير للأعلى)،
    لأن المستخدم يُنهي غالبًا جولة في قسم ثم يعود إليه لاحقًا عبر تبويبه. */
-const SECTION_BAR_PATHS = new Set(["/", "/learn", "/quran-hub", "/tawhid", "/seerah", "/fiqh", "/hadith", "/library", "/scholars"]);
+const SECTION_BAR_PATHS = new Set(["/", "/quran-hub", "/tawhid", "/seerah", "/fiqh", "/hadith", "/library", "/scholars"]);
 
 /**
  * كان يفرض scrollTo(0,0) على كل تغيير مسار بلا استثناء، فيُفقِد موضع

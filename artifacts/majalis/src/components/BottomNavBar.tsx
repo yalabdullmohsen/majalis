@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
-import { BookOpen, Clock, GraduationCap, Home, LayoutGrid } from "lucide-react";
+import { BookOpen, Clock, Home, LayoutGrid } from "lucide-react";
 import { MoreBottomSheet } from "./MoreBottomSheet";
 
 type NavTab = {
@@ -15,8 +15,6 @@ const NAV_TABS: NavTab[] = [
   { href: "/",             label: "الرئيسية",    Icon: Home },
   { href: "/quran-hub",    label: "القرآن",      Icon: BookOpen },
   { href: "/prayer-times", label: "الصلاة",      Icon: Clock },
-  /* بوابة التعلّم الموحّدة — الدروس والمسارات والأدوات منها */
-  { href: "/learn",        label: "تعلّم",       Icon: GraduationCap },
 ];
 
 export function BottomNavBar() {
@@ -25,24 +23,6 @@ export function BottomNavBar() {
 
   const isActive = (href: string) => {
     if (href === "/") return location === "/";
-    if (href === "/learn") {
-      return (
-        location === "/learn" ||
-        location.startsWith("/learn/") ||
-        location === "/fiqh" ||
-        location.startsWith("/fiqh/") ||
-        location === "/rulings" ||
-        location.startsWith("/rulings/") ||
-        location === "/seerah" ||
-        location.startsWith("/seerah/") ||
-        location === "/tawhid" ||
-        location.startsWith("/tawhid/") ||
-        location === "/prophets" ||
-        location.startsWith("/prophets/") ||
-        location === "/nations" ||
-        location.startsWith("/nations/")
-      );
-    }
     return location === href || location.startsWith(href + "/");
   };
 
