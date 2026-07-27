@@ -182,7 +182,10 @@ export const API_ROUTES = [
   { prefix: "/api/feed", module: "./api-handlers/feed.js", allowGet: true, exact: true },
   // SSR وقت الطلب لدروس Supabase الحيّة (لا مصدر ثابت لها وقت البناء، بخلاف
   // /scholars و/library). راجع /lessons/:id في vercel.json rewrites.
+  // نُسجّل أيضاً البادئة العامة /lessons لأن x-vercel-original-path يبقى
+  // /lessons/:id بعد إعادة الكتابة إلى /api/index.
   { prefix: "/api/lessons", module: "./api-handlers/lesson-page.js", allowGet: true },
+  { prefix: "/lessons", module: "./api-handlers/lesson-page.js", allowGet: true },
   { prefix: "/api/admin/smart-cms", module: "./api-handlers/admin/smart-cms.js" },
   { prefix: "/api/admin/lesson-from-image", module: "./api-handlers/admin/lesson-from-image.js", rateLimit: lessonFromImageRateLimit },
   { prefix: "/api/admin/lesson-from-url", module: "./api-handlers/admin/lesson-from-url.js", rateLimit: lessonFromUrlRateLimit },
@@ -276,14 +279,26 @@ export function resolveRequestPath(req) {
   return String(raw).split("?")[0];
 }
 
-export function matchApiRoute(urlOrReq) {
-  const path =
-    typeof urlOrReq === "string"
-      ? urlOrReq.split("?")[0]
-      : resolveRequestPath(urlOrReq);
+function findApiRouteForPath(path) {
   return API_ROUTES.find((route) =>
     route.exact ? path === route.prefix : path === route.prefix || path.startsWith(`${route.prefix}/`) || path.startsWith(`${route.prefix}?`),
   );
+}
+
+export function matchApiRoute(urlOrReq) {
+  if (typeof urlOrReq === "string") {
+    return findApiRouteForPath(urlOrReq.split("?")[0]);
+  }
+
+  // بعد إعادة كتابة Vercel (/lessons/:id → /api/lessons/:id → /api/index)
+  // قد يكون req.url = /api/index بينما x-vercel-original-path = /lessons/:id.
+  // نتجاهل /api/index عند المطابقة ونفضّل المسار ذي المعنى.
+  const rewritten = String(urlOrReq.url || "").split("?")[0];
+  if (rewritten && rewritten !== "/api/index" && rewritten !== "/api") {
+    const byRewritten = findApiRouteForPath(rewritten);
+    if (byRewritten) return byRewritten;
+  }
+  return findApiRouteForPath(resolveRequestPath(urlOrReq));
 }
 
 async function readJsonBody(req) {
@@ -346,6 +361,12 @@ async function invokeHandler(handler, req, res, routePrefix, routeOpts = {}) {
 export async function dispatchApiRequest(req, res) {
   const route = matchApiRoute(req);
   if (!route) {
+    // متصفح/فحص بصري يتوقع صفحة 404 لا JSON عارياً من 40 حرفاً
+    const { wantsHtml, sendNotFoundHtml } = await import("./not-found-html.mjs");
+    if (req.method === "GET" && wantsHtml(req)) {
+      sendNotFoundHtml(res);
+      return;
+    }
     sendJson(res, 404, { ok: false, message: "المسار غير موجود." });
     return;
   }

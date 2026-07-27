@@ -73,3 +73,26 @@ git add src/index.css   # يذهب لجذر المستودع وليس artifacts/
   `@types/react` versions coexisting in the lockfile (19.1.17 pulled by Expo/React-Native deps and
   19.2.14 from the catalog). This is independent of Node version and does **not** affect the Vite
   dev server or `vite build` (neither runs `tsc`). Do not "fix" it by editing those components.
+
+### أتمتة الدمج والنشر (إلزامي للوكلاء)
+
+المستودع مضبوط على **دمج تلقائي بلا تدخل يدوي**:
+
+| آلية | الملف / الإعداد | السلوك |
+|---|---|---|
+| حماية `main` | Branch protection (يدوي من المالك) | **Verify build** فحص إلزامي؛ لا دمج بدونه |
+| CI على كل PR → main | `.github/workflows/ci.yml` | typecheck + lint + build (= Verify build) + اختبارات المحتوى |
+| Ready + Auto-merge (squash) | `.github/workflows/auto-merge-to-main.yml` | تحديث من main إن لزم → Draft→Ready → auto-merge squash فقط بعد نجاح Verify build؛ مسح كل 15 دقيقة |
+| إلغاء الدمج عند فشل CI | نفس الملف (`cancel-on-ci-failure`) | `--disable-auto` + تعليق على الـ PR |
+| إغلاق المكدّسات القديمة | نفس الملف (`close-stale-non-main-prs`) | يغلق PRs المفتوحة التي قاعدتها ليست `main` |
+| تحديث/حل تعارض من main | `.github/workflows/resolve-pr-conflicts.yml` | دمج `main` عند CONFLICTING أو BEHIND |
+| نشر الإنتاج | Vercel على `main` (`deploymentEnabled.main=true`) + `.github/workflows/auto-deploy.yml` | بعد كل push ناجح لـ main |
+| إعدادات المستودع | `allow_auto_merge=true`, `delete_branch_on_merge=true` | مفعّلة على مستوى المستودع |
+
+**قواعد الوكلاء (لا تُخالف):**
+
+1. **PR واحد لكل مهمة.** يُمنع فتح سلسلة PRs متتابعة (phase2→phase3→…) للمهمة الواحدة. إن احتاجت المهمة مراحل، أبقِ العمل على فرع واحد وحدّث نفس الـ PR، أو ادمج التعديلات في الفرع الحالي قبل أي طلب جديد.
+2. القاعدة دائمًا `main` (ما عدا `automation/content` و`automation/tasks` اللتين تُدمجان عبر `release-majlisilm.yml`).
+3. بعد انتهاء المهمة: ادفع الفرع وافتح/حدّث PR واحدًا (Ready وليس Draft). لا تطلب من المستخدم دمجًا يدويًا؛ الأتمتة تتولى Ready + Auto-merge + النشر.
+4. لا تترك PRs مفتوحة/Draft بعد اكتمال العمل. إن بقي PR قديم متسلسل، أغلقه لصالح PR واحد يستهدف `main`.
+5. استثناء نافذتَي `automation/content` و`automation/tasks` يبقى عبر `release-majlisilm.yml` فقط.

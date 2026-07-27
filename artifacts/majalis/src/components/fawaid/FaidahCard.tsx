@@ -1,6 +1,7 @@
 import { displayText } from "@/lib/display-text";
 import { isDemoId } from "@/lib/demo-id";
 import { HighlightedContentCard } from "@/components/reading/HighlightedContentCard";
+import { UnsourcedBadge } from "@/components/UnsourcedBadge";
 
 type FaidahLike = {
   id: string;
@@ -8,6 +9,7 @@ type FaidahLike = {
   category?: string;
   source?: string;
   author_name?: string;
+  documentation_status?: string | null;
 };
 
 type Props = {
@@ -27,6 +29,7 @@ export function FaidahCard({ item }: Props) {
       section="fawaid"
       primaryText={cleaned}
       tags={item.category ? [item.category] : []}
+      badges={<UnsourcedBadge status={item.documentation_status} />}
       meta={meta}
       contentType="benefit"
       contentId={item.id}

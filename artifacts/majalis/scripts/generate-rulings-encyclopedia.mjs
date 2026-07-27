@@ -7,6 +7,7 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { createHash } from "node:crypto";
+import { CONTENT_CURRICULUM_ENABLED } from "../lib/content-flags.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
@@ -139,6 +140,17 @@ function resolveReviewState(partial) {
   };
 }
 
+
+/** اقتطاع ملخص عند حدود كلمة عربية/مسافة — يمنع بتر منتصف كلمة */
+function summarizeText(text, max = 160) {
+  const s = String(text || "").trim();
+  if (s.length <= max) return s;
+  const slice = s.slice(0, max);
+  const breakAt = Math.max(slice.lastIndexOf(" "), slice.lastIndexOf("،"), slice.lastIndexOf("؛"), slice.lastIndexOf("."));
+  if (breakAt >= Math.floor(max * 0.6)) return slice.slice(0, breakAt).trimEnd() + "…";
+  return slice.trimEnd() + "…";
+}
+
 function makeRuling(partial) {
   const category = partial.category;
   const refs = partial.references || [];
@@ -154,7 +166,7 @@ function makeRuling(partial) {
     id,
     external_key: id,
     title: partial.title,
-    summary: partial.summary || partial.body.slice(0, 160),
+    summary: partial.summary || summarizeText(partial.body, 160),
     body: partial.body,
     category,
     subcategory: partial.subcategory,
@@ -216,7 +228,7 @@ function fromQaSeed() {
       return makeRuling({
         external_key: `qa-ruling-${q.id}`,
         title: question.replace(/^ما |^هل |^من /, "").replace(/\?$/, ""),
-        summary: answer.slice(0, 160),
+        summary: summarizeText(answer, 160),
         body: `**السؤال:** ${question}\n\n**الجواب:** ${answer}`,
         category: catInfo.category,
         subcategory: catInfo.subcategory,
@@ -273,7 +285,7 @@ function fromFawaidSeed() {
         makeRuling({
           external_key: `fawaid-ruling-${slugify(unesc(title))}`,
           title: unesc(title),
-          summary: unesc(body).slice(0, 160),
+          summary: summarizeText(unesc(body), 160),
           body: unesc(body),
           category: "طلب العلم والدعوة",
           subcategory: "طلب العلم",
@@ -322,7 +334,7 @@ function fromFiqhCouncilSeed() {
       makeRuling({
         external_key: `fiqh-ruling-${id}`,
         title,
-        summary: rulingText.slice(0, 160),
+        summary: summarizeText(rulingText, 160),
         body: rulingText,
         category: cat.category,
         subcategory: cat.subcategory,
@@ -340,6 +352,9 @@ function fromFiqhCouncilSeed() {
 // ليست أحكامًا شرعية ولا يجوز تحويلها إلى سجلات في موسوعة الأحكام.
 
 function fromCurriculumRegistry() {
+  // عزل عاجل: لا تُدخَل سجلات المنهج في الموسوعة المعروضة ما دامت الراية false.
+  // الملف المصدر curriculum-topics.json يبقى في المستودع للمراجعة البشرية.
+  if (!CONTENT_CURRICULUM_ENABLED) return [];
   const regPath = path.resolve(ROOT, "data/rulings-encyclopedia/curriculum-topics.json");
   if (!fs.existsSync(regPath)) return [];
   const topics = JSON.parse(fs.readFileSync(regPath, "utf8"));

@@ -1208,7 +1208,7 @@ export const LIBRARY_CATALOG: LibraryBook[] = [
   {
     id: "book-qawa-id-fawaed",
     title: "الفوائد",
-    author: "الإمام ابن القيم الجوزية",
+    author: "الإمام ابن قيم الجوزية",
     type: "كتاب",
     category: "رقائق",
     description: "كتاب في المواعظ والفوائد القلبية والسلوكية، يُعدّ من أجمل ما كتبه ابن القيم في التزكية والمحبة والتوكل والخشية.",
@@ -1277,7 +1277,7 @@ export const LIBRARY_CATALOG: LibraryBook[] = [
   {
     id: "book-ilam-al-muwaqiin",
     title: "إعلام الموقعين عن رب العالمين",
-    author: "الإمام ابن القيم الجوزية",
+    author: "الإمام ابن قيم الجوزية",
     type: "كتاب",
     category: "أصول الفقه",
     description: "كتاب عظيم في أصول الفقه والفتوى يُبيّن منزلة التوقيع عن الله وشرف الإفتاء ومسؤوليته؛ يعرض تطور الفقه والاجتهاد من عهد الصحابة إلى زمن المؤلف.",
@@ -1645,7 +1645,7 @@ export const LIBRARY_CATALOG: LibraryBook[] = [
   {
     id: "book-uddat-sabireen",
     title: "عدة الصابرين وذخيرة الشاكرين",
-    author: "الإمام ابن القيم الجوزية",
+    author: "الإمام ابن قيم الجوزية",
     type: "كتاب",
     category: "رقائق",
     description: "كتاب في مقامات الصبر والشكر، يجمع النصوص والآثار مع تحليل ابن القيم لأحوال القلب في البلاء والنعمة.",
@@ -1656,7 +1656,7 @@ export const LIBRARY_CATALOG: LibraryBook[] = [
   {
     id: "book-wabil-sayyib",
     title: "الوابل الصيب من الكلم الطيب",
-    author: "الإمام ابن القيم الجوزية",
+    author: "الإمام ابن قيم الجوزية",
     type: "كتاب",
     category: "رقائق",
     description: "رسالة نافعة في فضل الذكر وأنواعه وآدابه وآثاره على القلب والعمل، مستمدة من الكتاب والسنة.",
@@ -1667,7 +1667,7 @@ export const LIBRARY_CATALOG: LibraryBook[] = [
   {
     id: "book-ighathat-lahfan",
     title: "إغاثة اللهفان من مصايد الشيطان",
-    author: "الإمام ابن القيم الجوزية",
+    author: "الإمام ابن قيم الجوزية",
     type: "كتاب",
     category: "رقائق",
     description: "يكشف مداخل الشيطان على القلوب والأعمال، ويعالج أمراض القلب بالحجج الشرعية مع استقراء واسع للنصوص.",

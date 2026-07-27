@@ -1,4 +1,5 @@
 import "@/styles/rulings-encyclopedia.css";
+import "@/styles/pages/fiqh-hub.css";
 import { useCallback, useEffect, useState } from "react";
 import { useReadingScrollMemory } from "@/hooks/useReadingScrollMemory";
 import { Banknote, BookOpen, Droplets, FileSignature, Flame, FlaskConical, GraduationCap, Handshake, Heart, Landmark, MapPin, Moon, Scale, ScrollText, Shield, Shirt, Users, Utensils } from "lucide-react";

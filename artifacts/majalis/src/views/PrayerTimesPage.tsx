@@ -202,12 +202,12 @@ export default function PrayerTimesPage() {
               ? "الوقت منذ أذان"
               : "الصلاة القادمة"}
         </div>
-        <h1 className="pt-hero__name" key={displayKey}>
+        <h2 className="pt-hero__name" key={displayKey}>
           <span className="pt-hero__icon" aria-hidden="true">
             {(() => { const I = PRAYER_ICON[displayKey] ?? Sunset; return <I size={36} strokeWidth={1.5} />; })()}
           </span>
           {displayName}
-        </h1>
+        </h2>
         <div className="pt-hero__time">{displayTime}</div>
         <div
           className="pt-hero__countdown"

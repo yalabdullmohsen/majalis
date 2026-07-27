@@ -19,6 +19,24 @@
   gap: 0;
 }
 
+.nf2-brand {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  margin-bottom: 1.1rem;
+}
+.nf2-brand__logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+}
+.nf2-brand__name {
+  font-weight: 800;
+  color: #226A56;
+  font-size: 1.05rem;
+}
+
 /* أيقونة Compass */
 .nf2-icon-wrap {
   width: 80px;

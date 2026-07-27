@@ -7,6 +7,7 @@ import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 import { ASMAA, ASMA_CATEGORIES, getTodayAsma, type AsmaEntry, type AsmaStatus } from "@/lib/asma-husna-data";
+import { UnsourcedBadge } from "@/components/UnsourcedBadge";
 
 const CATEGORIES = [...ASMA_CATEGORIES];
 const STATUS_FILTERS: Array<"الكل" | AsmaStatus> = ["الكل", "ثابت", "مشهور"];
@@ -258,6 +259,7 @@ export default function AsmaaHusnaPage() {
                   : "مشهور — من سرد الترمذي الضعيف؛ لا يُجزم بتوقيفيته حتى يثبت بدليل مستقل"}
               </p>
               <p className="ah-modal__text ah-modal__text--quran">{selected.reference}</p>
+              <UnsourcedBadge status={selected.documentation_status} />
             </div>
 
             <div className="ah-modal__section">

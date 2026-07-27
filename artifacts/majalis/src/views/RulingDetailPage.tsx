@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { SkeletonPage, Empty } from "@/components/ui-common";
+import { SkeletonPage, Empty, ErrorState } from "@/components/ui-common";
 import { ContentDetailLayout, RelatedLinks } from "@/components/platform/ContentDetailLayout";
 import { RulingDetailSections } from "@/components/rulings/RulingDetailSections";
 import { getRulingById, getRelatedRulingsEncyclopedia } from "@/lib/rulings-service";
@@ -15,19 +15,31 @@ export default function RulingDetailPage({ params }: { params: { id: string } })
   const [item, setItem] = useState<ShariaRulingExtended | null>(null);
   const [related, setRelated] = useState<ShariaRulingExtended[]>([]);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState<string | null>(null);
+  const [retryTick, setRetryTick] = useState(0);
 
   useEffect(() => {
     setLoading(true);
+    setLoadError(null);
     getRulingById(params.id)
-      .then(({ data }) => {
+      .then(({ data, dbError }) => {
+        if (dbError && !data) {
+          setItem(null);
+          setLoadError(dbError);
+          return undefined;
+        }
         setItem(data);
         if (data) {
           return getRelatedRulingsEncyclopedia(data.id, data.category, data.subcategory).then(setRelated);
         }
         return undefined;
       })
+      .catch((err) => {
+        setItem(null);
+        setLoadError(String((err as Error)?.message || err));
+      })
       .finally(() => setLoading(false));
-  }, [params.id]);
+  }, [params.id, retryTick]);
 
   usePageView("rulings", params.id);
 
@@ -75,6 +87,14 @@ export default function RulingDetailPage({ params }: { params: { id: string } })
   }, [item, loading, params.id]);
 
   if (loading) return <SkeletonPage />;
+  if (loadError) {
+    return (
+      <ErrorState
+        text="تعذّر تحميل الحكم الشرعي. يرجى المحاولة مرة أخرى."
+        onRetry={() => setRetryTick((n) => n + 1)}
+      />
+    );
+  }
   if (!item) return <Empty text="الحكم غير موجود." />;
 
   const copyText = [item.title, item.summary, item.body].filter(Boolean).join("\n\n");
