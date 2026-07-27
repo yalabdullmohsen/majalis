@@ -6,7 +6,15 @@
  *
  * لا صوت يُخزَّن — المقطع يُعالَج ويُهمَل.
  */
-import type { ASRSession, AudioChunk, FinalResult, PartialResult, QuranASRProvider, RecitationConfig } from "../asr-provider";
+import type {
+  ASRSession,
+  AudioChunk,
+  FinalResult,
+  PartialResult,
+  QuranASRProvider,
+  RecitationConfig,
+  TimedWordResult,
+} from "../asr-provider";
 import { ASRProviderUnavailableError } from "../asr-provider";
 import { isNative } from "../../capacitor-utils";
 import { SITE_URL } from "../../site-config";
@@ -21,11 +29,16 @@ const WINDOW_SLICES = 2;
  * كي لا نجزِم بخطأ عند التباس عام؛ فوق unclear حتى لا نُعلِّق كل كلمة. */
 const WHISPER_ESTIMATED_CONFIDENCE = 72;
 
+type ApiTimedWord = { word?: string; start?: number | null; end?: number | null };
+
 type Active = {
   stream: MediaStream;
   recorder: MediaRecorder | null;
   mimeType: string;
   words: string[];
+  timedWords: TimedWordResult[];
+  /** إزاحة زمنية تقريبية لبداية النافذة الحالية (ث) — لدمج طوابع Whisper النسبية. */
+  windowOffsetSec: number;
   lastEmittedNorms: string[];
   listeners: Set<(word: string, atMs: number, confidence?: number) => void>;
   levelListeners: Set<(level01: number) => void>;
@@ -36,6 +49,7 @@ type Active = {
   analyser: AnalyserNode | null;
   audioCtx: AudioContext | null;
   levelTimer: ReturnType<typeof setInterval> | null;
+  sessionStartedAt: number;
 };
 
 function pickSupportedMimeType(): string {
@@ -82,7 +96,8 @@ export function dedupeOverlappingWords(previousNorms: string[], nextRaw: string[
 export class ServerQuranASRProvider implements QuranASRProvider {
   readonly id = "server";
   readonly supportsStreaming = true;
-  readonly supportsTajweed = false;
+  /** ملاحظات تجويد زمنية من طوابع Whisper — ليس تحليلًا فونيميًا. */
+  readonly supportsTajweed = true;
   readonly worksOffline = false;
   readonly capturesAudioInternally = true;
 
@@ -137,6 +152,8 @@ export class ServerQuranASRProvider implements QuranASRProvider {
       recorder: null,
       mimeType: pickSupportedMimeType(),
       words: [],
+      timedWords: [],
+      windowOffsetSec: 0,
       lastEmittedNorms: [],
       listeners: new Set(),
       levelListeners: new Set(),
@@ -147,6 +164,7 @@ export class ServerQuranASRProvider implements QuranASRProvider {
       analyser,
       audioCtx,
       levelTimer: null,
+      sessionStartedAt: Date.now(),
     };
     this.sessions.set(id, active);
 
@@ -235,6 +253,7 @@ export class ServerQuranASRProvider implements QuranASRProvider {
 
   private async sendSegment(active: Active, blob: Blob): Promise<void> {
     const audioBase64 = await blobToBase64(blob);
+    const windowStartedAt = Date.now();
     const res = await fetch(ENDPOINT, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -243,16 +262,34 @@ export class ServerQuranASRProvider implements QuranASRProvider {
     if (!res.ok) return;
     const data = await res.json();
     const text = typeof data?.text === "string" ? data.text : "";
-    const words = text.split(/\s+/).filter(Boolean);
+    const apiWords: ApiTimedWord[] = Array.isArray(data?.words) ? data.words : [];
+    const wordsFromApi = apiWords
+      .map((w) => (typeof w?.word === "string" ? w.word.trim() : ""))
+      .filter(Boolean);
+    const words = wordsFromApi.length > 0 ? wordsFromApi : text.split(/\s+/).filter(Boolean);
     if (words.length === 0) return;
 
     const { fresh, nextNormsTail } = dedupeOverlappingWords(active.lastEmittedNorms, words);
     active.lastEmittedNorms = nextNormsTail;
     if (fresh.length === 0) return;
 
+    const skip = words.length - fresh.length;
+    const baseOffsetSec = Math.max(0, (windowStartedAt - active.sessionStartedAt) / 1000 - (SLICE_MS * WINDOW_SLICES) / 1000);
+    active.windowOffsetSec = baseOffsetSec;
+
     active.words.push(...fresh);
     const now = Date.now();
-    for (const w of fresh) {
+    for (let i = 0; i < fresh.length; i++) {
+      const w = fresh[i];
+      const meta = apiWords[skip + i];
+      const hasTs =
+        typeof meta?.start === "number" &&
+        typeof meta?.end === "number" &&
+        Number.isFinite(meta.start) &&
+        Number.isFinite(meta.end);
+      const startSec = hasTs ? baseOffsetSec + (meta!.start as number) : null;
+      const endSec = hasTs ? baseOffsetSec + (meta!.end as number) : null;
+      active.timedWords.push({ word: w, startSec, endSec });
       for (const cb of active.listeners) cb(w, now, WHISPER_ESTIMATED_CONFIDENCE);
     }
   }
@@ -290,6 +327,10 @@ export class ServerQuranASRProvider implements QuranASRProvider {
     try { await active.audioCtx?.close(); } catch { /* ignore */ }
 
     await Promise.all(active.pendingSegments).catch(() => {});
-    return { fullText: active.words.join(" "), words: active.words };
+    return {
+      fullText: active.words.join(" "),
+      words: active.words,
+      timedWords: active.timedWords,
+    };
   }
 }

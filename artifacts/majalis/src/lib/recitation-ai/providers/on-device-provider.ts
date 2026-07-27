@@ -1,25 +1,7 @@
 /**
  * on-device-provider.ts
- * يُغلّف الجسر الأصلي **القائم فعلاً** لـ"اختبر تلاوتك"
- * (ios/App/App/MajlisSpeechRecognitionPlugin.swift +
- * android/.../MajlisSpeechRecognitionPlugin.kt عبر
- * src/lib/plugins/speech-recognition.ts) كتنفيذ حقيقي لـQuranASRProvider
- * — هذا ليس Stub: يستدعي فعليًا SFSpeechRecognizer (iOS) أو
- * android.speech.SpeechRecognizer (أندرويد)، المُتحقَّق منهما ببناء
- * Xcode حقيقي (iOS) سابقًا هذه الجلسة (أندرويد بلا SDK للتحقق، موثَّق).
- *
- * القيود الصادقة لهذا المزوّد (تُحدِّد سلوك الواجهة، لا تُخفى):
- *   - `supportsTajweed = false` دومًا: SFSpeechRecognizer/SpeechRecognizer
- *     يُخرجان نصًا فقط، لا تحليلاً فونيميًا — لا قدرة تجويد أصلاً.
- *   - `capturesAudioInternally = true`: الصوت يُلتقَط ويُعالَج داخل
- *     الجسر الأصلي مباشرة (لا وصول لمقاطع PCM من جافاسكربت) — طبقة
- *     AudioCaptureService في المواصفة غير قابلة للتطبيق فعليًا على هذا
- *     المسار تحديدًا؛ `transcribeChunk` غير فعّالة هنا (موثَّق في asr-provider.ts).
- *   - النتائج نهائية فقط عند اكتمال الجملة (الجسر الحالي لا يُصدر كل
- *     كلمة منفردة فور استقرارها، بل يُصدر التفريغ الجزئي الكامل المتراكم
- *     في كل partialResults event) — onPartialWord هنا يُحوّل هذا لتدفّق
- *     "الفرق الجديد فقط" (الكلمات المُضافة منذ آخر تحديث) ليتوافق مع عقد
- *     "كلمة واحدة في كل مرة" المطلوب من VerseAlignmentEngine.feedWord.
+ * يُغلّف الجسر الأصلي (SFSpeech / Android SpeechRecognizer) كـQuranASRProvider.
+ * يمرّر ثقة كل كلمة من segments / EXTRA_CONFIDENCE_SCORES عند توفرها.
  */
 import { getSpeechRecognitionPlugin } from "@/lib/plugins/speech-recognition";
 import type { ASRSession, AudioChunk, FinalResult, PartialResult, QuranASRProvider, RecitationConfig } from "../asr-provider";
@@ -58,10 +40,6 @@ export class OnDeviceQuranASRProvider implements QuranASRProvider {
     const id = `on-device-${Date.now()}`;
     this.lastEmittedWordCount.set(id, 0);
 
-    // start() لا يُحسَم (resolve) إلا عند stop() أو انتهاء التعرّف طبيعيًا
-    // (راجع MajlisSpeechRecognitionPlugin.swift: finishPendingCall) — نُخزّن
-    // الوعد هنا لتنتظره endSession() لاحقًا بدل استدعاء stop() وتوقّع
-    // نتيجة منه مباشرة (stop() تُعيد void فقط، تُحسم فقط الوعد المعلَّق).
     const startPromise = plugin.start({ language: config.language, partialResults: true, popup: false, maxResults: 1 });
     this.pendingStart.set(id, startPromise);
 
@@ -69,20 +47,9 @@ export class OnDeviceQuranASRProvider implements QuranASRProvider {
   }
 
   async transcribeChunk(_session: ASRSession, _chunk: AudioChunk): Promise<PartialResult | null> {
-    return null; // capturesAudioInternally=true — راجع تعليق الملف أعلاه
+    return null;
   }
 
-  // ⚠️ ثغرة معروفة غير مُعالَجة: الجسر الأصلي الحالي
-  // (MajlisSpeechRecognitionPlugin.swift/.kt) يُصدر {matches: [string]}
-  // فقط — بلا أي حقل ثقة (confidence) على الإطلاق، خلافًا لـWeb Speech
-  // API. لذا `callback` هنا يُستدعى دومًا بـconfidence=undefined، فتصنيف
-  // "غير واضح" (VerseAlignmentEngine) يبقى معطَّلاً بأمان لمستخدمي تطبيق
-  // iOS/Android (يستمر السلوك بالجزم بالخطأ كما كان قبل هذه الميزة، لا
-  // كسر ولا تراجع). إصلاح فعلي يتطلب تعديل الجسر الأصلي نفسه
-  // (SFSpeechRecognizer على iOS يُوفّر confidence لكل segment فعليًا عبر
-  // transcription.segments[].confidence؛ Android SpeechRecognizer يُوفّره
-  // عبر EXTRA_CONFIDENCE_SCORES) — يحتاج بناء Xcode/cap sync للتحقق، وهو
-  // مُقيَّد حاليًا في هذه الجلسة (راجع القيد القائم أعلى الجلسة).
   onPartialWord(session: ASRSession, callback: (word: string, atMs: number, confidence?: number) => void): () => void {
     const plugin = getSpeechRecognitionPlugin();
     if (!plugin) return () => {};
@@ -93,13 +60,22 @@ export class OnDeviceQuranASRProvider implements QuranASRProvider {
     plugin
       .addListener("partialResults", (data) => {
         if (removed) return;
-        const text = data.matches?.[0] ?? "";
-        const words = text.split(/\s+/).filter(Boolean);
+        const segmentWords = Array.isArray(data.words) && data.words.length > 0
+          ? data.words
+          : (data.matches?.[0] ?? "").split(/\s+/).filter(Boolean);
+        const confidences = Array.isArray(data.confidences) ? data.confidences : [];
         const already = this.lastEmittedWordCount.get(session.id) ?? 0;
-        const newWords = words.slice(already);
-        this.lastEmittedWordCount.set(session.id, words.length);
+        const newWords = segmentWords.slice(already);
+        this.lastEmittedWordCount.set(session.id, segmentWords.length);
         const now = Date.now();
-        for (const w of newWords) callback(w, now, undefined);
+        for (let i = 0; i < newWords.length; i++) {
+          const absIdx = already + i;
+          const confRaw = confidences[absIdx];
+          const confidence = typeof confRaw === "number" && Number.isFinite(confRaw)
+            ? Math.max(0, Math.min(100, confRaw))
+            : undefined;
+          callback(newWords[i], now, confidence);
+        }
       })
       .then((h) => {
         if (removed) h.remove();
@@ -119,7 +95,7 @@ export class OnDeviceQuranASRProvider implements QuranASRProvider {
     this.pendingStart.delete(session.id);
     if (!plugin) return { fullText: "", words: [] };
 
-    await plugin.stop(); // يُحسم وعد start() المعلَّق أعلاه
+    await plugin.stop();
     const result = pending ? await pending : { matches: [] as string[] };
     const fullText = result.matches?.[0] ?? "";
     return { fullText, words: fullText.split(/\s+/).filter(Boolean) };

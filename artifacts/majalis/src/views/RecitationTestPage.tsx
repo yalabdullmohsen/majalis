@@ -22,8 +22,35 @@ import { FreeformStartDetector, loadPositionIndex } from "@/lib/recitation-ai/fr
 import { loadPageJuzIndex, getSegmentsForPage, getSegmentsForJuz, getSegmentsForHizb, getSegmentsForRub } from "@/lib/recitation-ai/page-juz-lookup";
 import { normalizeQuranWord } from "@/lib/recitation-ai/quran-normalize";
 import { applyAlertPolicy } from "@/lib/recitation-ai/session-event-policy";
-import type { AlertLevel, AlignmentEvent, PrecisionLevel, RecitationMode, ReferenceWord } from "@/lib/recitation-ai/types";
+import { analyzeTajweedTimings } from "@/lib/recitation-ai/tajweed-timing";
+import { pairCorrectEventsWithTimedWords } from "@/lib/recitation-ai/pair-timed-refs";
+import { getAyahAudioUrl, loadReciterId } from "@/lib/quran-audio";
+import type { AlertLevel, AlignmentEvent, PrecisionLevel, RecitationMode, ReferenceWord, TajweedNote } from "@/lib/recitation-ai/types";
 import "@/styles/recitation-ai.css";
+
+/** يشغّل آية واحدة من everyayah ثم يحلّ عند الانتهاء (لوضع استماع ثم تكرار). */
+function playAyahOnce(surah: number, ayah: number, signal?: { cancelled: boolean }): Promise<void> {
+  const url = getAyahAudioUrl(surah, ayah, loadReciterId());
+  const audio = new Audio(url);
+  return new Promise((resolve, reject) => {
+    const cleanup = () => {
+      audio.onended = null;
+      audio.onerror = null;
+      try { audio.pause(); } catch { /* ignore */ }
+    };
+    audio.onended = () => { cleanup(); resolve(); };
+    audio.onerror = () => { cleanup(); reject(new Error("تعذّر تشغيل صوت القارئ")); };
+    void audio.play().then(() => {
+      if (signal?.cancelled) {
+        cleanup();
+        resolve();
+      }
+    }).catch((err) => {
+      cleanup();
+      reject(err);
+    });
+  });
+}
 
 type Phase = "setup" | "loading" | "detecting" | "session" | "report" | "error";
 
@@ -110,6 +137,10 @@ function RecitationTestPageInner() {
   const unclearNoticeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [audioLevel, setAudioLevel] = useState(0);
   const wakeLockRef = useRef<{ release: () => Promise<void> } | null>(null);
+  /** وضع استماع ثم تكرار: يعرض شريط «استمع للقارئ» قبل فتح الميكروفون. */
+  const [listenModelPlaying, setListenModelPlaying] = useState(false);
+  const [tajweedNotes, setTajweedNotes] = useState<TajweedNote[]>([]);
+  const listenCancelRef = useRef<{ cancelled: boolean }>({ cancelled: false });
 
   const [paused, setPaused] = useState(false);
 
@@ -293,12 +324,8 @@ function RecitationTestPageInner() {
       try {
         const provider = (await selectBestProvider(navigator.onLine)).provider;
         if (cancelled) return;
-        if (provider) {
-          const result = await checkTajweedAvailability(provider);
-          if (!cancelled) setTajweedAvailable(result);
-        } else {
-          setTajweedAvailable({ available: false, reason: "لا يتوفر محرك تعرّف صوتي بعد" });
-        }
+        const result = await checkTajweedAvailability(provider);
+        if (!cancelled) setTajweedAvailable(result);
       } catch (err) {
         console.error("recitation-ai: فشل اكتشاف مزوّد التعرّف الصوتي", err);
         if (!cancelled) setTajweedAvailable({ available: false, reason: "تعذّر التحقق من محرك التعرّف الصوتي — أعد تحميل الصفحة" });
@@ -351,6 +378,7 @@ function RecitationTestPageInner() {
     setPhase("loading");
     setErrorMsg(null);
     setErrorCode(null);
+    setTajweedNotes([]);
     try {
       // "اختبار المعلّم" (القسم 2، الوضع 5): يبدأ من آية عشوائية داخل
       // النطاق المُختار بدل أوله دومًا — يقيس قدرة الاسترجاع الفعلية لا
@@ -388,9 +416,16 @@ function RecitationTestPageInner() {
       recallStartAtRef.current = mode === "teacher_test" ? Date.now() : null;
       setRecallMs(null);
 
-      const selection = await selectBestProvider(navigator.onLine);
+      const selection = await selectBestProvider(navigator.onLine, {
+        preferTajweed: precisionLevel === "tajweed",
+      });
       if (!selection.provider) {
         setErrorMsg("لا يتوفر محرك تعرّف صوتي على هذا الجهاز/المتصفح حاليًا. جرّب من تطبيق الجوال، أو تحقّق من إذن الميكروفون.");
+        setPhase("error");
+        return;
+      }
+      if (precisionLevel === "tajweed" && !selection.provider.supportsTajweed) {
+        setErrorMsg("إتقان التجويد يتطلب المزوّد الخادمي (اتصال + GROQ). جرّب لاحقًا أو اختر مستوى الحفظ فقط.");
         setPhase("error");
         return;
       }
@@ -400,17 +435,37 @@ function RecitationTestPageInner() {
       engineRef.current = engine;
       sessionStartRef.current = Date.now();
 
+      // استماع ثم تكرار: تشغيل أول آية من القارئ قبل فتح الميكروفون.
+      if (mode === "listen_repeat" && words.length > 0) {
+        setPhase("session");
+        setListening(false);
+        setListenModelPlaying(true);
+        listenCancelRef.current = { cancelled: false };
+        try {
+          await playAyahOnce(words[0].surah, words[0].ayah, listenCancelRef.current);
+        } catch {
+          // إن فشل الصوت نكمل بالتسميع مباشرة — لا نُفشل الجلسة كلها.
+        }
+        if (listenCancelRef.current.cancelled) {
+          setListenModelPlaying(false);
+          setPhase("setup");
+          return;
+        }
+        setListenModelPlaying(false);
+      }
+
       await attachAsrSession(selection.provider, engine);
 
       setListening(true);
       setPhase("session");
     } catch (e) {
+      setListenModelPlaying(false);
       const { message, code } = describeAsrError(e);
       setErrorMsg(message);
       setErrorCode(code);
       setPhase("error");
     }
-  }, [alertLevel, attachAsrSession, mode]);
+  }, [alertLevel, attachAsrSession, mode, precisionLevel]);
 
   const startSession = useCallback(async () => {
     if (user?.id) {
@@ -484,7 +539,10 @@ function RecitationTestPageInner() {
     setErrorMsg(null);
     setErrorCode(null);
     try {
-      const [selection, positionIndex] = await Promise.all([selectBestProvider(navigator.onLine), loadPositionIndex()]);
+      const [selection, positionIndex] = await Promise.all([
+        selectBestProvider(navigator.onLine, { preferTajweed: precisionLevel === "tajweed" }),
+        loadPositionIndex(),
+      ]);
       if (!selection.provider) {
         setErrorMsg("لا يتوفر محرك تعرّف صوتي على هذا الجهاز/المتصفح حاليًا. جرّب من تطبيق الجوال، أو تحقّق من إذن الميكروفون.");
         setPhase("error");
@@ -786,6 +844,8 @@ function RecitationTestPageInner() {
   const finishSession = useCallback(async () => {
     setListening(false);
     setAudioLevel(0);
+    setListenModelPlaying(false);
+    listenCancelRef.current.cancelled = true;
     try { await wakeLockRef.current?.release(); } catch { /* ignore */ }
     wakeLockRef.current = null;
     unsubRef.current?.();
@@ -795,18 +855,29 @@ function RecitationTestPageInner() {
     const provider = providerRef.current;
     const asrSession = asrSessionRef.current;
     if (engine) applyEvents(engine.finalize());
+
+    let timedWords: { word: string; startSec: number | null; endSec: number | null }[] = [];
     if (provider && asrSession) {
-      try { await provider.endSession(asrSession); } catch { /* تجاهل */ }
+      try {
+        const final = await provider.endSession(asrSession);
+        timedWords = final.timedWords ?? [];
+      } catch { /* تجاهل */ }
     }
 
     setLiveEvents((finalEvents) => {
       const processed = postProcessAlignmentEvents(finalEvents);
       void persistSession(processed);
+      if (precisionLevel === "tajweed" && timedWords.length > 0) {
+        const pairs = pairCorrectEventsWithTimedWords(processed, timedWords);
+        setTajweedNotes(analyzeTajweedTimings(pairs));
+      } else {
+        setTajweedNotes([]);
+      }
       return processed;
     });
 
     setPhase("report");
-  }, [applyEvents]);
+  }, [applyEvents, precisionLevel]);
 
   const persistSession = useCallback(
     async (events: AlignmentEvent[]) => {
@@ -835,8 +906,7 @@ function RecitationTestPageInner() {
         user.id,
         {
           range,
-          // listen_repeat غير موجود بعد في قيد DB — يُحفَظ كـword_follow حتى توسعة القيد
-          mode: mode === "listen_repeat" ? "word_follow" : mode,
+          mode,
           precisionLevel,
           providerId: providerRef.current?.id ?? "unknown",
           alertLevel,
@@ -1295,7 +1365,12 @@ function RecitationTestPageInner() {
             </div>
             {!tajweedAvailable?.available && (
               <p className="rai-tajweed-disabled-note">
-                {tajweedAvailable?.reason ?? "إتقان التجويد يتطلب اتصالًا بالمحرك المتخصص"}
+                {tajweedAvailable?.reason ?? "إتقان التجويد يتطلب اتصالًا بالمزوّد الخادمي"}
+              </p>
+            )}
+            {tajweedAvailable?.available && (
+              <p className="rai-tajweed-disabled-note">
+                التجويد هنا = ملاحظات على مدة المد من طوابع زمنية (ثقة أقل من 85٪ تُعرض بصيغة «قد») — ليس تحليلًا فونيميًا كاملًا.
               </p>
             )}
           </div>
@@ -1310,6 +1385,12 @@ function RecitationTestPageInner() {
               ))}
             </div>
           </div>
+
+          {mode === "listen_repeat" && (
+            <p className="rai-tajweed-disabled-note">
+              سنشغّل أول آية من القارئ المعتمد لديك، ثم نفتح الميكروفون لتكرارها ومقارنتها.
+            </p>
+          )}
 
           {mode === "interactive_mushaf" && (
             <div className="rai-setup__group">
@@ -1369,11 +1450,19 @@ function RecitationTestPageInner() {
         <div className="rai-session">
           <div className="rai-session__topbar">
             <div className="rai-listen-indicator">
-              {listening && (
+              {listening && !listenModelPlaying && (
                 <span className="rai-listen-wave" aria-hidden="true"><span /><span /><span /></span>
               )}
-              <span style={{ fontFamily: "var(--font-body)", fontSize: ".85rem" }}>{listening ? "يستمع الآن…" : paused ? "متوقّف مؤقتًا" : "جارٍ الاتصال…"}</span>
-              {listening && (
+              <span style={{ fontFamily: "var(--font-body)", fontSize: ".85rem" }}>
+                {listenModelPlaying
+                  ? "استمع للقارئ… ثم سمّع"
+                  : listening
+                    ? "يستمع الآن…"
+                    : paused
+                      ? "متوقّف مؤقتًا"
+                      : "جارٍ الاتصال…"}
+              </span>
+              {listening && !listenModelPlaying && (
                 <span
                   className="rai-audio-level"
                   role="meter"
@@ -1559,6 +1648,22 @@ function RecitationTestPageInner() {
           <p className="rai-report__disclaimer">
             أكثر موضع تكرر فيه الخطأ: آية {mostRepeatedAyah.surah}:{mostRepeatedAyah.ayah} ({mostRepeatedAyah.errors.length} ملاحظات)
           </p>
+        )}
+
+        {tajweedNotes.length > 0 && (
+          <div className="rai-report__errors-list" style={{ marginBottom: "1rem" }}>
+            <strong>ملاحظات تجويد (مدّ زمني — غير جازمة)</strong>
+            <ul style={{ margin: ".35rem 0", paddingInlineStart: "1.2rem" }}>
+              {tajweedNotes.map((n, i) => (
+                <li key={i}>
+                  {n.confidencePct < 85 ? "قد توجد ملاحظة: " : ""}
+                  {n.message}
+                  {n.ref ? ` — «${n.ref.raw}» (${n.ref.surah}:${n.ref.ayah})` : ""}
+                  {" "}(ثقة {n.confidencePct}%)
+                </li>
+              ))}
+            </ul>
+          </div>
         )}
 
         {ayahGroups.length > 0 && (

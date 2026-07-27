@@ -50,8 +50,10 @@ async function main() {
   console.log("═══ checkTajweedAvailability — قاعدة عدم المحاكاة ═══");
   {
     const server = new ServerQuranASRProvider();
+    assert(server.supportsTajweed === true, "المزوّد الخادمي يعلن supportsTajweed (طوابع زمنية)");
     const result = await checkTajweedAvailability(server);
-    assert(result.available === false, "التجويد غير متاح — whisper-large-v3 عام (supportsTajweed=false) لا محرك تجويد متخصص");
+    // في Node بلا GROQ_API_KEY: isAvailable=false ⇒ غير متاح بصدق رغم الدعم المعلَن
+    assert(result.available === false, "التجويد غير متاح دون خادم مُهيَّأ (لا محاكاة)");
 
     const mock = new MockQuranASRProvider(); // supportsTajweed=false تصميميًا
     const result2 = await checkTajweedAvailability(mock);

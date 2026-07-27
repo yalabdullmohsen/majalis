@@ -36,7 +36,20 @@ export type ASRSession = {
 };
 
 export type PartialResult = { text: string; isFinal: boolean; atMs: number };
-export type FinalResult = { fullText: string; words: string[] };
+
+/** كلمة مع طابع زمني اختياري (من Whisper verbose_json أو ما يعادله). */
+export type TimedWordResult = {
+  word: string;
+  startSec: number | null;
+  endSec: number | null;
+};
+
+export type FinalResult = {
+  fullText: string;
+  words: string[];
+  /** إن وُجدت — أساس ملاحظات التجويد الزمنية (مدة المد). */
+  timedWords?: TimedWordResult[];
+};
 
 export type ASRProviderError = { code: "NOT_CONFIGURED" | "UNAVAILABLE" | "PERMISSION_DENIED" | "NETWORK" | "UNKNOWN"; message: string };
 
