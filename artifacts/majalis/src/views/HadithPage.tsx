@@ -16,6 +16,7 @@ import { CitationActionBar } from "@/components/citation/CitationActionBar";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { fetchAllHadiths, type CdnHadith } from "@/lib/hadith-cdn-service";
+import { fetchSahihaynLocal } from "@/lib/sahihayn-local";
 import { getLocalVerifiedHadith } from "@/lib/verified-hadith-local-seed";
 import { useReadingScrollMemory } from "@/hooks/useReadingScrollMemory";
 import { resolveScholarWorkLink } from "@/lib/scholar-library-links";
@@ -65,22 +66,27 @@ function mergeHadithRows(remote: HadithItem[], authenticityClass: HadithClass): 
   return Array.from(byId.values());
 }
 
-function cdnToHadithItems(hadiths: CdnHadith[], collection: string, sourceName: string): HadithItem[] {
+function cdnToHadithItems(
+  hadiths: CdnHadith[],
+  collection: string,
+  sourceName: string,
+  opts?: { grade?: string | null },
+): HadithItem[] {
   return hadiths.map((h) => ({
     id: `cdn-${collection}-${h.hadithnumber}`,
     title: null,
     text: h.text,
     narrator: null,
     source_name: sourceName,
-    // لا درجة من الـCDN: كان يُلصق "صحيح" بكل حديث بلا سند من المصدر.
-    // الدرجة تُعرض فقط إذا جاءت من المصدر نفسه.
-    grade: null,
+    // الصحيحان: الصحة بعضوية الكتاب لا بدرجة ملفّقة لكل سند من الـCDN.
+    // نعرض تسمية الكتاب؛ الدرجة النصية تبقى null ما لم يُمرَّر خيار صريح.
+    grade: opts?.grade ?? null,
     collection,
-    chapter: (h as any).chapter ?? null,
+    chapter: (h as { chapter?: string }).chapter ?? null,
     explanation: null,
     keywords: null,
     hadith_number: String(h.hadithnumber),
-    metadata: null,
+    metadata: { authenticity: "sahih-by-collection" },
     created_at: new Date().toISOString(),
   }));
 }
@@ -467,11 +473,11 @@ export const HADITH_CLASS_META: Record<HadithClass, {
   eyebrow: string; title: string; subtitle: string; empty: string; countUnit: string;
 }> = {
   sahih: {
-    eyebrow: "السنة النبوية الشريفة",
+    eyebrow: "مرجع الصحيحين",
     title: "الأحاديث الصحيحة",
-    subtitle: "أحاديث نبوية صحيحة وحسنة من مصادر موثوقة ومحققة، الأربعون النووية وغيرها.",
+    subtitle: "مرجع صحيح البخاري وصحيح مسلم كاملاً (الصحة بعضوية الصحيحين)، مع بطاقات منسّقة ذات تخريج وشرح حيث توفّرت.",
     empty: "لا توجد أحاديث في هذا التصنيف.",
-    countUnit: "حديث صحيح",
+    countUnit: "حديث",
   },
   daif: {
     eyebrow: "التمييز والتحذير",
@@ -498,27 +504,53 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
   const [activeCollection, setActiveCollection] = useState("الكل");
   const [expandedHadith, setExpandedHadith] = useState<HadithItem | null>(null);
   const [filtersOpen, setFiltersOpen] = useState(false);
+  const [page, setPage] = useState(1);
   const debouncedSearch = useDebouncedValue(search);
+  const PAGE_SIZE = authenticityClass === "sahih" ? 40 : 200;
+
+  useEffect(() => {
+    setPage(1);
+  }, [authenticityClass, activeCollection, activeCategory, debouncedSearch]);
 
   useEffect(() => {
     setLoading(true);
     RequestManager.run(`hadith:list:${authenticityClass}`, () => getVerifiedHadith({ limit: 500, authenticityClass }))
       .then(async ({ data }) => {
-        const rows = mergeHadithRows((data as HadithItem[]) ?? [], authenticityClass);
-        if (rows.length > 0) { setItems(rows); return; }
+        const curated = mergeHadithRows((data as HadithItem[]) ?? [], authenticityClass);
+
         if (authenticityClass === "sahih") {
-          // Fallback: الأربعون النووية + القدسية من CDN عند فراغ القاعدة والبذرة
-          const [nawawi, qudsi] = await Promise.all([
-            fetchAllHadiths("nawawi"),
-            fetchAllHadiths("qudsi"),
-          ]);
-          setItems([
-            ...cdnToHadithItems(nawawi, "nawawi40", "الأربعون النووية"),
-            ...cdnToHadithItems(qudsi, "qudsi", "الأحاديث القدسية"),
-          ]);
-        } else {
-          setItems([]);
+          // مرجع الصحيحين الكامل (محلي أولاً) + البطاقات المنسّقة ذات الشرح
+          let bukhari: CdnHadith[] = [];
+          let muslim: CdnHadith[] = [];
+          try {
+            const local = await fetchSahihaynLocal("both");
+            bukhari = local.bukhari;
+            muslim = local.muslim;
+          } catch {
+            const [b, m] = await Promise.all([
+              fetchAllHadiths("ara-bukhari"),
+              fetchAllHadiths("ara-muslim"),
+            ]);
+            bukhari = b;
+            muslim = m;
+          }
+          const corpus = [
+            ...cdnToHadithItems(bukhari, "bukhari", "صحيح البخاري", { grade: "صحيح" }),
+            ...cdnToHadithItems(muslim, "muslim", "صحيح مسلم", { grade: "صحيح" }),
+          ];
+          // المنسّق أولاً (شروح)، ثم المرجع الكامل دون إسقاطه عند وجود صفوف القاعدة
+          const byId = new Map<string, HadithItem>();
+          for (const row of corpus) byId.set(row.id, row);
+          for (const row of curated) byId.set(row.id, row);
+          setItems(Array.from(byId.values()));
+          return;
         }
+
+        if (curated.length > 0) {
+          setItems(curated);
+          return;
+        }
+        setItems([]);
       })
       .catch(() => setItems([]))
       .finally(() => setLoading(false));
@@ -558,6 +590,13 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
     }
     return list;
   }, [items, activeCollection, activeCategory, debouncedSearch]);
+
+  const totalPages = Math.max(1, Math.ceil(displayItems.length / PAGE_SIZE));
+  const safePage = Math.min(page, totalPages);
+  const pagedItems = useMemo(
+    () => displayItems.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE),
+    [displayItems, safePage, PAGE_SIZE],
+  );
 
   const filtersPanel = (
     <div className="hadith-filters-panel">
@@ -666,11 +705,43 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
           }
         />
       ) : (
-        <div className="hadith-grid">
-          {displayItems.map((h) => (
-            <HadithCard key={h.id} h={h} onExpand={setExpandedHadith} />
-          ))}
-        </div>
+        <>
+          {authenticityClass === "sahih" && (
+            <p className="hadith-source-note" role="note">
+              المرجع: صحيح البخاري وصحيح مسلم كاملاً بعد تصفية النصوص الفارغة —
+              الصحة بعضوية الصحيحين (مصدر: fawazahmed0/hadith-api).{" "}
+              <Link href="/hadith/books">تصفح بالأبواب</Link>
+            </p>
+          )}
+          <div className="hadith-grid">
+            {pagedItems.map((h) => (
+              <HadithCard key={h.id} h={h} onExpand={setExpandedHadith} />
+            ))}
+          </div>
+          {totalPages > 1 && (
+            <div className="hadith-pagination" role="navigation" aria-label="صفحات الأحاديث">
+              <button
+                type="button"
+                className="hadith-pagination__btn"
+                disabled={safePage <= 1}
+                onClick={() => setPage((p) => Math.max(1, p - 1))}
+              >
+                السابق
+              </button>
+              <span className="hadith-pagination__info">
+                صفحة {safePage.toLocaleString("ar-EG")} من {totalPages.toLocaleString("ar-EG")}
+              </span>
+              <button
+                type="button"
+                className="hadith-pagination__btn"
+                disabled={safePage >= totalPages}
+                onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+              >
+                التالي
+              </button>
+            </div>
+          )}
+        </>
       )}
 
       {!embedded && (

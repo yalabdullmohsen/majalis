@@ -2917,7 +2917,7 @@ export const LOCAL_VERIFIED_HADITHS: LocalVerifiedHadith[] = [
     "created_at": "2026-07-27T12:00:00.000Z"
   },
   {
-    "id": "daif-032",
+    "id": "sahih-extra-073",
     "collection": "various",
     "hadith_number": null,
     "title": "من سرّه أن يُبسط له في رزقه فليصل رحمه",
@@ -2939,7 +2939,7 @@ export const LOCAL_VERIFIED_HADITHS: LocalVerifiedHadith[] = [
     "created_at": "2026-07-27T12:00:00.000Z"
   },
   {
-    "id": "daif-033",
+    "id": "mawdu-068",
     "collection": "various",
     "hadith_number": null,
     "title": "علماء أمتي كأنبياء بني إسرائيل",
@@ -3004,7 +3004,7 @@ export const LOCAL_VERIFIED_HADITHS: LocalVerifiedHadith[] = [
     "created_at": "2026-07-27T12:00:00.000Z"
   },
   {
-    "id": "daif-036",
+    "id": "sahih-extra-074",
     "collection": "various",
     "hadith_number": null,
     "title": "أحب أسمائكم إلى الله عبد الله وعبد الرحمن",
@@ -3112,7 +3112,7 @@ export const LOCAL_VERIFIED_HADITHS: LocalVerifiedHadith[] = [
     "created_at": "2026-07-27T12:00:00.000Z"
   },
   {
-    "id": "daif-041",
+    "id": "sahih-extra-075",
     "collection": "various",
     "hadith_number": null,
     "title": "إن الله طيب لا يقبل إلا طيباً",
@@ -3800,7 +3800,7 @@ export const LOCAL_VERIFIED_HADITHS: LocalVerifiedHadith[] = [
     "created_at": "2026-07-27T12:00:00.000Z"
   },
   {
-    "id": "mawdu-063",
+    "id": "daif-063",
     "collection": "various",
     "hadith_number": null,
     "title": "حديث من مات يوم الجمعة وُقي فتنة القبر",
