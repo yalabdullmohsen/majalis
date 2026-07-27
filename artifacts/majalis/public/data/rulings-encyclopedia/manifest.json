@@ -1,27 +1,27 @@
 {
   "version": 1,
   "generated_at": "2026-07-25T00:00:00.000Z",
-  "total": 1102,
+  "total": 1142,
   "chunks": [
     {
       "category": "الطهارة",
       "file": "chunks/الطهارة.json",
-      "count": 121
+      "count": 128
     },
     {
       "category": "الصلاة",
       "file": "chunks/الصلاة.json",
-      "count": 118
+      "count": 121
     },
     {
       "category": "الزكاة",
       "file": "chunks/الزكاة.json",
-      "count": 47
+      "count": 48
     },
     {
       "category": "الحج والعمرة",
       "file": "chunks/الحج-والعمرة.json",
-      "count": 56
+      "count": 58
     },
     {
       "category": "المعاملات",
@@ -36,7 +36,7 @@
     {
       "category": "الصيام",
       "file": "chunks/الصيام.json",
-      "count": 65
+      "count": 67
     },
     {
       "category": "الأسرة",
@@ -81,12 +81,12 @@
     {
       "category": "طلب العلم والدعوة",
       "file": "chunks/طلب-العلم-والدعوة.json",
-      "count": 361
+      "count": 380
     },
     {
       "category": "العقيدة",
       "file": "chunks/العقيدة.json",
-      "count": 103
+      "count": 109
     },
     {
       "category": "القرآن والحديث",
