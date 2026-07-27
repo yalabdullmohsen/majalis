@@ -363,26 +363,6 @@ export const HADITH_FILL_MAWDU_B2: LocalVerifiedHadith[] = [
     "created_at": "2026-07-27T23:00:00.000Z"
   },
   {
-    "id": "mawdu-b2-016",
-    "collection": "various",
-    "hadith_number": null,
-    "title": "لا تسبّوا الدهر",
-    "text": "لا تسبوا الدهر فأنا الدهر — أصل صحيح؛ بطاقة موضوعة منفصلة REMOVE.",
-    "keywords": [
-      "موضوع",
-      null,
-      "تسبوا",
-      "الدهر"
-    ],
-    "explanation": "undefined. التخريج/النقد المرجعي: undefined. يُعرض للتحذير والتمييز لا للاحتجاج.",
-    "authenticity_class": "mawdu",
-    "metadata": {
-      "batch": "fill-2026-07-b2",
-      "muhaddith": "كتب التخريج والنقد"
-    },
-    "created_at": "2026-07-27T23:00:00.000Z"
-  },
-  {
     "id": "mawdu-b2-100",
     "collection": "various",
     "hadith_number": null,
