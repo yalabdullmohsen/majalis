@@ -3,6 +3,16 @@
  * المصدر: supabase seeds v1–v5 + مرجع الصحيحين المنفصل في public/data/hadith.
  * القاعدة: لا درجة بلا تخريج منسوب؛ الموضوع يُعرض للتحذير فقط لا للاحتجاج.
  */
+import { HADITH_FILL_DAIF } from "./verified-hadith-fill-daif";
+import { HADITH_FILL_MAWDU } from "./verified-hadith-fill-mawdu";
+import { HADITH_FILL_SAHIH } from "./verified-hadith-fill-sahih";
+import { HADITH_FILL_DAIF_B2 } from "./verified-hadith-fill-daif-b2";
+import { HADITH_FILL_MAWDU_B2 } from "./verified-hadith-fill-mawdu-b2";
+import { HADITH_FILL_SAHIH_B2 } from "./verified-hadith-fill-sahih-b2";
+import { HADITH_FILL_DAIF_B3 } from "./verified-hadith-fill-daif-b3";
+import { HADITH_FILL_MAWDU_B3 } from "./verified-hadith-fill-mawdu-b3";
+import { HADITH_FILL_SAHIH_B3 } from "./verified-hadith-fill-sahih-b3";
+
 export type LocalHadithClass = "sahih" | "daif" | "mawdu";
 
 export type LocalVerifiedHadith = {
@@ -4782,7 +4792,29 @@ export const LOCAL_VERIFIED_HADITHS: LocalVerifiedHadith[] = [
   }
 ];
 
+const FILL_BATCHES: LocalVerifiedHadith[] = [
+  ...HADITH_FILL_DAIF,
+  ...HADITH_FILL_MAWDU,
+  ...HADITH_FILL_SAHIH,
+  ...HADITH_FILL_DAIF_B2,
+  ...HADITH_FILL_MAWDU_B2,
+  ...HADITH_FILL_SAHIH_B2,
+  ...HADITH_FILL_DAIF_B3,
+  ...HADITH_FILL_MAWDU_B3,
+  ...HADITH_FILL_SAHIH_B3,
+];
+
+function mergeHadithFills(base: LocalVerifiedHadith[]): LocalVerifiedHadith[] {
+  const byId = new Map<string, LocalVerifiedHadith>();
+  for (const h of base) byId.set(h.id, h);
+  for (const h of FILL_BATCHES) {
+    if (!byId.has(h.id)) byId.set(h.id, h);
+  }
+  return Array.from(byId.values());
+}
+
 export function getLocalVerifiedHadith(authenticityClass?: LocalHadithClass): LocalVerifiedHadith[] {
-  if (!authenticityClass) return LOCAL_VERIFIED_HADITHS;
-  return LOCAL_VERIFIED_HADITHS.filter((h) => h.authenticity_class === authenticityClass);
+  const all = mergeHadithFills(LOCAL_VERIFIED_HADITHS);
+  if (!authenticityClass) return all;
+  return all.filter((h) => h.authenticity_class === authenticityClass);
 }

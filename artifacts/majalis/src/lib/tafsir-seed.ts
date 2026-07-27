@@ -4,6 +4,22 @@
  * والزركشي في البرهان) مع ربط بكتب المكتبة دون اختراع فتاوى أو أحكام.
  */
 
+import {
+  MUFASSIRUN_FILL,
+  TAFSIR_TERMS_FILL,
+  TAFSIR_PRINCIPLES_FILL,
+} from "./tafsir-fill";
+import {
+  MUFASSIRUN_FILL_B2,
+  TAFSIR_TERMS_FILL_B2,
+  TAFSIR_PRINCIPLES_FILL_B2,
+} from "./tafsir-fill-b2";
+import {
+  MUFASSIRUN_FILL_B3,
+  TAFSIR_TERMS_FILL_B3,
+  TAFSIR_PRINCIPLES_FILL_B3,
+} from "./tafsir-fill-b3";
+
 export type TafsirType = {
   id: string;
   title: string;
@@ -247,6 +263,9 @@ export const TAFSIR_PRINCIPLES: TafsirPrinciple[] = [
     body: "يُفسَّر القرآن على وفق عقيدة أهل السنة في التوحيد والأسماء والصفات والقدر؛ ويُجتنب ليّ النصوص لنصرة مقالة مبتدعة.",
     source: "منهج أهل السنة",
   },
+  ...TAFSIR_PRINCIPLES_FILL,
+  ...TAFSIR_PRINCIPLES_FILL_B2,
+  ...TAFSIR_PRINCIPLES_FILL_B3,
 ];
 
 export const MUFASSIR_CONDITIONS: TafsirCondition[] = [
@@ -297,9 +316,12 @@ export const TAFSIR_TERMS: TafsirTerm[] = [
   { id: "israiliyyat", term: "الإسرائيليات", definition: "أخبار نُقلت عن أهل الكتاب في التفسير؛ تُعرض على ميزان الشرع." },
   { id: "wajh", term: "وجه التفسير", definition: "أحد المعاني المحتملة للآية؛ يُرجَّح بالأدلة ولا يُجزم بلا برهان." },
   { id: "tarjih", term: "الترجيح", definition: "تقديم أحد الأقوال بدليل من نقل أو لغة أو سياق عند التعارض." },
+  ...TAFSIR_TERMS_FILL,
+  ...TAFSIR_TERMS_FILL_B2,
+  ...TAFSIR_TERMS_FILL_B3,
 ];
 
-export const MUFASSIRUN: MufassirEntry[] = [
+export const _MUFASSIRUN_RAW: MufassirEntry[] = [
   /* ── طبقات السلف والمسانيد ── */
   { id: "ibn-abbas", name: "عبد الله بن عباس", kitab: "مرويّاته في التفسير (متفرّقة في المجاميع)", era: "ت 68هـ", school: "صحابي", note: "ترجمان القرآن؛ أعمدة مدرسة مكة. لا يوجد «تفسير ابن عباس» مسند كامل ثابت النسبة إليه في مصنَّف مستقل صحيح." },
   { id: "mujahid", name: "مجاهد بن جبر", kitab: "تفسير مجاهد (رواية)", era: "ت 104هـ", school: "تابعي — مكة", note: "من أخصّ أصحاب ابن عباس؛ مرجع مبكر في معاني الألفاظ." },
@@ -333,7 +355,21 @@ export const MUFASSIRUN: MufassirEntry[] = [
   { id: "sabuni", name: "محمد علي الصابوني", kitab: "صفوة التفاسير", era: "معاصر", school: "مختصر معاصر", note: "تلخيص شائع لطلاب المعاهد؛ لا يغني عن التفاسير الأصول." },
   { id: "muyassar", name: "نخبة من علماء مجمع الملك فهد", kitab: "التفسير الميسّر", era: "معاصر", school: "ميسر رسمي", note: "تفسير موجز معتمد للترجمة والفهم الأولي؛ متاح آيةً آية في المصحف الرقمي." },
   { id: "waseet", name: "محمد سيد طنطاوي", kitab: "التفسير الوسيط", era: "ت 1431هـ", school: "ميسر معاصر", note: "تفسير متوسط الطول بأسلوب واضح؛ متاح في واجهة المصحف." },
+  ...MUFASSIRUN_FILL,
+  ...MUFASSIRUN_FILL_B2,
+  ...MUFASSIRUN_FILL_B3,
 ];
+
+/** دمج بدون تكرار المعرّف */
+function dedupeById<T extends { id: string }>(items: T[]): T[] {
+  const map = new Map<string, T>();
+  for (const item of items) {
+    if (!map.has(item.id)) map.set(item.id, item);
+  }
+  return [...map.values()];
+}
+
+export const MUFASSIRUN: MufassirEntry[] = dedupeById(_MUFASSIRUN_RAW);
 
 /** تفاسير الآية المتاحة عبر AlQuran Cloud في قارئ المصحف — كامل القرآن */
 export type MushafTafsirEdition = {

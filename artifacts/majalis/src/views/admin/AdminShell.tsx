@@ -54,6 +54,7 @@ export type AdminSection =
   | "categories"
   | "week-day-facts"
   | "arbaeen-love"
+  | "researches"
 ;
 
 type NavItem = { key: AdminSection; label: string; Icon: LucideIcon };
@@ -88,6 +89,7 @@ const NAV_GROUPS: Array<{ title?: string; items: NavItem[] }> = [
       { key: "learning-paths", label: "المسارات العلمية", Icon: Route },
       { key: "week-day-facts", label: "أيام الأسبوع",     Icon: CalendarClock },
       { key: "arbaeen-love",   label: "الأربعون في محبة رب العالمين", Icon: Heart },
+      { key: "researches",     label: "الأبحاث الشرعية", Icon: BookOpen },
     ],
   },
   {

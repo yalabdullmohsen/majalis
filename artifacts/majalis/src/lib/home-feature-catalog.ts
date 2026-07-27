@@ -94,7 +94,7 @@ const FEATURE_CATS_RAW: FeatureCat[] = [
       { href: "/mawarith",            Icon: Scale,        title: seoNavLabel("/mawarith", "المواريث والفرائض"),      desc: "حصص الورثة والعَصَبة والحجب والعَوْل والردّ" },
       { href: "/salah-guide",         Icon: Scroll,       title: seoNavLabel("/salah-guide", "دليل الصلاة الكامل"),     desc: "الشروط والأركان والخشوع والمبطلات وفضائل الصلاة" },
       { href: "/fiqh-qawaid",         Icon: Scale,        title: seoNavLabel("/fiqh-qawaid", "القواعد الفقهية الكبرى"), desc: "القواعد الخمس الكبرى وفروعها وضوابطها وتطبيقاتها المعاصرة" },
-      { href: "/academic-research",  Icon: GraduationCap, title: seoNavLabel("/academic-research", "الأبحاث العلمية"), desc: "رسائل وأبحاث أكاديمية" },
+      { href: "/academic-research",  Icon: GraduationCap, title: seoNavLabel("/academic-research", "الأبحاث الشرعية"), desc: "مكتبة أكاديمية للأبحاث والدراسات الشرعية" },
     ],
   },
   {

@@ -3927,18 +3927,21 @@ html[data-theme="dark"] .search-suggestions-panel {
   gap: var(--ds-space-3);
 }
 
-.site-footer-logo {
-  flex-shrink: 0;
+.site-footer-email {
+  margin: 0 0 0.75rem;
+  color: var(--msk-text-2, #5C5C56);
+  font-size: var(--ds-text-sm);
+  line-height: 1.7;
 }
 
-.site-footer-logo--calligraphy {
-  height: 48px;
-  max-height: 48px;
-  width: auto;
-  max-width: 200px;
-  object-fit: contain;
-  object-position: center;
-  border-radius: 8px;
+.site-footer-email a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.site-footer-email a:hover {
+  color: var(--majalis-emerald-deep);
+  text-decoration: underline;
 }
 
 .site-footer-brand strong,
@@ -7156,16 +7159,10 @@ body.has-assistant-fab .app-main {
   padding-block: 2.5rem 1.25rem;
 }
 
-.site-footer-brand {
-  align-items: center;
-  padding-bottom: 1.25rem;
-  margin-bottom: 0.5rem;
+.site-footer-email {
+  padding-bottom: 1rem;
+  margin-bottom: 0.75rem;
   border-bottom: 1px solid rgba(224, 215, 196, 0.5);
-}
-
-.site-footer-brand strong {
-  font-size: 1.1rem;
-  letter-spacing: normal;
 }
 
 .site-footer-groups {
