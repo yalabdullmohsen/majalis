@@ -56,7 +56,7 @@ const TYPE_HREF: Record<KnowledgeSourceType, (id: string) => string> = {
   lesson:   (id) => `/lessons/${id}`,
   book:     (id) => `/library/${id}`,
   fawaid:   (id) => `/fawaid#${id}`,
-  question: ()   => `/qa`,
+  question: (id) => (id ? `/qa?id=${encodeURIComponent(id)}` : `/qa`),
 };
 
 const REL_LABEL: Record<string, string> = {

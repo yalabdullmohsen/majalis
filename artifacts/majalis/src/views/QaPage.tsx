@@ -99,8 +99,16 @@ export default function QaPage({
     const params = new URLSearchParams(urlSearch);
     const cat = params.get("cat");
     const q = params.get("q") || params.get("search");
+    const focusId = params.get("id");
     if (cat) setCategorySlug(cat);
     if (q) setSearch(q);
+    if (focusId) {
+      // تمييز السؤال المقصود عند القدوم من روابط الفقه/التوصيات
+      setRandomId(focusId);
+      requestAnimationFrame(() => {
+        document.getElementById(focusId)?.scrollIntoView({ behavior: "smooth", block: "center" });
+      });
+    }
   }, [urlSearch]);
 
   useEffect(() => {

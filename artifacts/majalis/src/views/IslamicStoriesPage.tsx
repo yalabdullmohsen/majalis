@@ -193,7 +193,7 @@ export default function IslamicStoriesPage() {
           "@context": "https://schema.org",
           "@type": "ItemList",
           name: "أقسام القصص الإسلامية",
-          description: "قصص الصحابة والفتوحات والتاريخ الإسلامي عبر العصور؛ محتوى معتمد في منهج مجالس العلم",
+          description: "قصص الصحابة والفتوحات والتاريخ الإسلامي عبر العصور؛ محتوى معتمد في منهج المجلس العلمي",
           itemListElement: CATEGORY_LABELS.filter(c => c !== "الكل").map((cat, i) => ({
             "@type": "ListItem",
             position: i + 1,

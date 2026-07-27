@@ -210,7 +210,7 @@
     },
     {
       "source": "/scholarly-research",
-      "destination": "/quiz",
+      "destination": "/qa",
       "permanent": true
     },
     {

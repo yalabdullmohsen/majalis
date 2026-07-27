@@ -69,7 +69,9 @@ function expandTemplates() {
     out.push({
       external_key: `curriculum-${idx}`,
       title: t.title,
-      summary: t.body.slice(0, 160),
+      // الملخص = كامل النص المختصر للقالب (لا slice أعمى؛ كان يقطع وسط الكلمة
+      // مثل «الرجلي» / «ويُ» فيفشل verify:citations). القوالب أصلاً فقرة قصيرة.
+      summary: t.body,
       body: t.body,
       category: t.cat,
       subcategory: t.sub,

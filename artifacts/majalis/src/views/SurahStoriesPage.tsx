@@ -23,7 +23,7 @@ export default function SurahStoriesPage() {
           "@context": "https://schema.org",
           "@type": "ItemList",
           name: "قصص سور القرآن الكريم",
-          description: "قصص وأسباب نزول ١١٤ سورة من سور القرآن الكريم؛ محتوى معتمد في منهج مجالس العلم؛ ؛ يُعرض للتذكّر والاعتبار بما ثبت من القرآن والسنة الصحيحة",
+          description: "قصص وأسباب نزول ١١٤ سورة من سور القرآن الكريم؛ محتوى معتمد في منهج المجلس العلمي؛ ؛ يُعرض للتذكّر والاعتبار بما ثبت من القرآن والسنة الصحيحة",
           numberOfItems: 114,
           itemListElement: allStories.slice(0, 20).map((s, i) => ({
             "@type": "ListItem",
@@ -93,7 +93,7 @@ export function SurahStoryDetailPage({ surahNumber }: { surahNumber: number }) {
     applyPageSeo({
       path,
       title: `قصة سورة ${story.name} | المجلس العلمي`,
-      description: `${story.namingReason} — ${story.revelationTime}، ${story.revelationPlace}، ${story.ayahCount} آية. ${story.virtues || ""}؛ محتوى تعليمي معتمد في منهج مجالس العلم؛ يُستفاد في التعلم والتطبيق — مرجع تربوي شرعي`.slice(0, 300),
+      description: `${story.namingReason} — ${story.revelationTime}، ${story.revelationPlace}، ${story.ayahCount} آية. ${story.virtues || ""}؛ محتوى تعليمي معتمد في منهج المجلس العلمي؛ يُستفاد في التعلم والتطبيق — مرجع تربوي شرعي`.slice(0, 300),
       keywords: [story.name, "قصص القرآن", "أسباب النزول", ...story.keywords],
       ogType: "article",
       canonicalPath: path,
