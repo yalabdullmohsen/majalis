@@ -5,6 +5,7 @@
 import type { ResearchRecord } from "./types";
 import { RESEARCH_PUBLISHED_FILL } from "./published-seed-fill";
 import { RESEARCH_PUBLISHED_FILL_B2 } from "./published-seed-fill-b2";
+import { RESEARCH_PUBLISHED_FILL_B3 } from "./published-seed-fill-b3";
 
 export const RESEARCH_DEMO_SEED: ResearchRecord[] = [
   {
@@ -101,4 +102,5 @@ export const RESEARCH_DEMO_SEED: ResearchRecord[] = [
 export const RESEARCH_PUBLISHED_SEED: ResearchRecord[] = [
   ...RESEARCH_PUBLISHED_FILL,
   ...RESEARCH_PUBLISHED_FILL_B2,
+  ...RESEARCH_PUBLISHED_FILL_B3,
 ];
