@@ -25,6 +25,7 @@ export type HadithNarrationParts = {
 
 const RLM = "\u200f";
 const TASHKEEL_RE = /[\u064B-\u065F\u0670\u06D6-\u06ED]/g;
+const INVISIBLE_RE = /[\u200e\u200f\u202a-\u202e\u2066-\u2069]/g;
 
 function foldLetter(ch: string): ArabicIndexLetter | null {
   if (!ch) return null;
@@ -48,7 +49,7 @@ function cleanMatn(s: string): string {
     .trim();
 }
 
-/** نص بلا تشكيل + طيّ همزات شائعة + خريطة فهرس→الأصل. */
+/** نص بلا تشكيل ولا علامات اتجاه + طيّ همزات شائعة + خريطة فهرس→الأصل. */
 function stripTashkeelMapped(raw: string): { plain: string; toRaw: number[] } {
   const toRaw: number[] = [];
   let plain = "";
@@ -58,10 +59,13 @@ function stripTashkeelMapped(raw: string): { plain: string; toRaw: number[] } {
       TASHKEEL_RE.lastIndex = 0;
       continue;
     }
+    if (INVISIBLE_RE.test(ch)) {
+      INVISIBLE_RE.lastIndex = 0;
+      continue;
+    }
     toRaw.push(i);
     if ("أإآٱ".includes(ch)) plain += "ا";
     else if (ch === "ة") plain += "ه";
-    else if (ch === "ى") plain += "ي";
     else plain += ch;
   }
   toRaw.push(raw.length);
@@ -130,7 +134,7 @@ export function splitHadithNarration(fullText: string | null | undefined): Hadit
 
   // 2) بعد صيغة البلاغ النبوي الصريحة (يقول/قال بعد ذكر النبي) — أول مطابقة بعد السند
   const speechRe =
-    /(?:رسول\s+الل[هھ]|النبي)\s*(?:صلى\s*الل[هھ]\s*عليه\s*وسلم|صل[ىي]\s*الل[هھ]\s*عليه\s*وسلم|ﷺ)?\s*[,،]?\s*(?:يقول|قال|قالت)\s*[:：]?\s*/gi;
+    /(?:رسول\s+الل[هھ]|النبي)\s*(?:صل[ىي]\s*الل[هھ]\s*عليه\s*وسلم|ﷺ)?\s*[,،]?\s*(?:يقول|قال|قالت)\s*[:：]?\s*/gi;
   const speechMatch = speechRe.exec(plain);
   if (speechMatch && speechMatch.index != null) {
     const afterPlain = speechMatch.index + speechMatch[0].length;
@@ -155,12 +159,27 @@ export function splitHadithNarration(fullText: string | null | undefined): Hadit
       re: /عن\s+[^،.\n]{2,80}،\s*(?=(?<![\u0621-\u064A])[اأإآ]نّ?\s+)/gi,
       matnFrom: "after",
     },
+    // عن النبي ﷺ أنه/كان/إذا …
+    {
+      re: /عن\s+النبي\s*(?:صل[ىي]\s*الل[هھ]\s*عليه\s*وسلم|ﷺ)?\s+(?=(?:انه|انّه|ان|كان|اذا))/gi,
+      matnFrom: "after",
+    },
+    // عن أبيه/فلان، شهدت|رأيت …
+    {
+      re: /عن\s+[^،.\n]{2,60}،\s*(?=شهدت|رايت|سمعت\s+[^\n]{4,})/gi,
+      matnFrom: "after",
+    },
     {
       re: /(?<![\u0621-\u064A])[اأإآ]نّ?\s+(?:النبي|رسول\s+الل)/gi,
       matnFrom: "match",
     },
     {
       re: /(?<![\u0621-\u064A])[اأإآ]نّ?\s+(?:رجلا|رجل|امراه|امراة|ابا|ام)(?:\s|،|$)/gi,
+      matnFrom: "match",
+    },
+    // أنّ فلانًا أخبره / أنه سمع …
+    {
+      re: /(?<![\u0621-\u064A])[اأإآ]نّ?\s+[^،.\n]{2,70}،\s*(?:اخبره|اخبرها|انه|انها)(?:\s|،|$)/gi,
       matnFrom: "match",
     },
   ];
@@ -181,6 +200,16 @@ export function splitHadithNarration(fullText: string | null | undefined): Hadit
   }
   if (best) return best;
 
+  // 3b) إحالات مختصرة: «… بذلك / نحوه / مثله / بهذا الإسناد»
+  if (looksLikeIsnad(raw) && raw.length < 320) {
+    const refRe = /((?:بذلك|نحوه(?:\s+بهذا)?|مثله(?:\s+سواء)?|بهذا\s+الاسناد|بمثل\s+(?:حديث|هذا)|مختصرا?)\s*\.?)$/i;
+    const rm = plain.match(refRe);
+    if (rm && rm.index != null && rm.index > 24) {
+      const packed = packParts(raw, mapIdx(rm.index), cleanMatn(raw.slice(mapIdx(rm.index))));
+      if (packed) return packed;
+    }
+  }
+
   // 4) أول «قال/يقول/قالت» غير المتبوع بتحديث بعد سلسلة إسناد
   if (looksLikeIsnad(raw)) {
     const qalaRe = /(?:يقول|قال|قالت)\s*[:：]?\s+/gi;
@@ -190,6 +219,18 @@ export function splitHadithNarration(fullText: string | null | undefined): Hadit
       if (looksLikeTransmissionTail(afterPlain)) continue;
       const packed = packParts(raw, mapIdx(qm.index + qm[0].length));
       if (packed && packed.matn.length >= 12) return packed;
+    }
+  }
+
+  // 5) عن النبي ﷺ … بلا متن منفصل (طرق مختصرة)
+  if (looksLikeIsnad(raw)) {
+    const endProphet = /عن\s+النبي\s*(?:صل[ىي]\s*الل[هھ]\s*عليه\s*وسلم|ﷺ)?\s*\.?$/i.exec(plain);
+    if (endProphet && endProphet.index != null && endProphet.index > 24) {
+      return {
+        matn: cleanMatn(raw.slice(mapIdx(endProphet.index))),
+        isnad: cleanMatn(raw.slice(0, mapIdx(endProphet.index))),
+        hasIsnad: true,
+      };
     }
   }
 
