@@ -8,6 +8,7 @@ import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
 import { ASMAA, ASMA_CATEGORIES, type AsmaEntry, type AsmaStatus } from "@/lib/asma-husna-data";
 import { UnsourcedBadge } from "@/components/UnsourcedBadge";
+import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 
 const CATEGORIES = [...ASMA_CATEGORIES];
 const STATUS_FILTERS: Array<"الكل" | AsmaStatus> = ["الكل", "ثابت", "مشهور"];
@@ -273,6 +274,17 @@ export default function AsmaaHusnaPage() {
           </div>
         </div>
       )}
+
+      <ExploreAlsoNav
+        title="مواضيع عقدية مرتبطة"
+        links={[
+          { href: "/tawhid", label: "التوحيد" },
+          { href: "/arkan", label: "أركان الإسلام والإيمان" },
+          { href: "/iman-topics", label: "موضوعات الإيمان" },
+          { href: "/adhkar", label: "الأذكار" },
+          { href: "/quran-hub", label: "مركز القرآن" },
+        ]}
+      />
     </div>
   );
 }

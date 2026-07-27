@@ -7,6 +7,13 @@ export default function UsraMujtamaPage() {
       eyebrow="الأسرة والمجتمع"
       title="العلاقات والأسرة والمسؤولية"
       sections={USRA_MUJTAMA}
+      relatedLinks={[
+        { href: "/fiqh/topics/muamalat", label: "فقه المعاملات" },
+        { href: "/mawarith", label: "حاسبة المواريث" },
+        { href: "/akhlaq", label: "الأخلاق" },
+        { href: "/rulings?category=" + encodeURIComponent("الأسرة"), label: "أحكام الأسرة" },
+        { href: "/fiqh", label: "بوابة الفقه" },
+      ]}
     />
   );
 }

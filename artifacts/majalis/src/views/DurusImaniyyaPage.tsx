@@ -9,6 +9,13 @@ export default function DurusImaniyyaPage() {
       sections={DURUS_IMANIYYA}
       stat3Label="سلاسل"
       stat3Value={5}
+      relatedLinks={[
+        { href: "/tawhid", label: "التوحيد" },
+        { href: "/iman-topics", label: "موضوعات الإيمان" },
+        { href: "/kids", label: "قسم الأطفال" },
+        { href: "/lessons", label: "الدروس العلمية" },
+        { href: "/learning/paths", label: "المسارات العلمية" },
+      ]}
     />
   );
 }
