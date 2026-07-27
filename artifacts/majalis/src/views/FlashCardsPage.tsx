@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useRef } from "react";
 import {
   BookOpen, CheckCircle2, Lock, PartyPopper, RotateCw,
   Layers, Trophy, CalendarCheck,
@@ -144,18 +144,27 @@ function QualityBar({
   card: FlashCard;
   onRate: (q: ReviewQuality) => void;
 }) {
+  const firstBtnRef = useRef<HTMLButtonElement | null>(null);
+
+  useEffect(() => {
+    firstBtnRef.current?.focus();
+  }, [card.id]);
+
   return (
-    <div className="fc-quality">
+    <div className="fc-quality" role="group" aria-label="تقييم التذكّر">
       <p className="fc-quality__label">كيف كان مستوى تذكّرك؟</p>
       <div className="fc-quality__buttons">
-        {QUALITY_OPTIONS.map((opt) => {
+        {QUALITY_OPTIONS.map((opt, i) => {
           const days = previewDays(card, opt.value);
           return (
             <button
               key={opt.value}
+              ref={i === 0 ? firstBtnRef : undefined}
               type="button"
               className={`fc-quality__btn ${FC_Q_MOD[opt.value] ?? ""}`}
               onClick={() => onRate(opt.value)}
+              aria-keyshortcuts={KEY_LABELS[opt.value]}
+              title={`مفتاح ${KEY_LABELS[opt.value]}`}
             >
               <span className="fc-q__main">{opt.label}</span>
               <span className="fc-q__meta">
@@ -273,21 +282,42 @@ export default function FlashCardsPage() {
     }
   }, [user?.id, cards, currentIdx]);
 
-  // اختصارات لوحة المفاتيح
+  // اختصارات لوحة المفاتيح — Space/Enter للقلب، 1–4 (ولوحة الأرقام) للتقييم
   useEffect(() => {
+    const rateByCode = (code: string): ReviewQuality | null => {
+      if (code === "Digit1" || code === "Numpad1") return 0;
+      if (code === "Digit2" || code === "Numpad2") return 2;
+      if (code === "Digit3" || code === "Numpad3") return 4;
+      if (code === "Digit4" || code === "Numpad4") return 5;
+      return null;
+    };
+
     const handler = (e: KeyboardEvent) => {
       if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return;
       if (sessionDone || loading) return;
-      if ((e.code === "Space" || e.key === " ") && !flipped) {
+
+      if (!flipped && (e.code === "Space" || e.key === " " || e.key === "Enter")) {
         e.preventDefault();
         setFlipped(true);
         return;
       }
+
       if (flipped) {
-        if (e.key === "1") handleRate(0);
-        if (e.key === "2") handleRate(2);
-        if (e.key === "3") handleRate(4);
-        if (e.key === "4") handleRate(5);
+        if (e.key === "Escape") {
+          e.preventDefault();
+          setFlipped(false);
+          return;
+        }
+        if (e.code === "Space" || e.key === " ") {
+          // بعد الكشف: المسافة لا تعيد القلب — تُترك للتقييم بالأرقام
+          e.preventDefault();
+          return;
+        }
+        const quality = rateByCode(e.code);
+        if (quality !== null) {
+          e.preventDefault();
+          void handleRate(quality);
+        }
       }
     };
     window.addEventListener("keydown", handler);
@@ -363,7 +393,10 @@ export default function FlashCardsPage() {
           <div className="fc-session__top">
             <RingProgress current={currentIdx + 1} total={cards.length} />
             <p className="fc-kbd-hint">
-              <kbd className="fc-kbd">Space</kbd> قلب · <kbd className="fc-kbd">1</kbd>–<kbd className="fc-kbd">4</kbd> تقييم
+              <kbd className="fc-kbd">Space</kbd>/<kbd className="fc-kbd">Enter</kbd> كشف ·{" "}
+              <kbd className="fc-kbd">1</kbd>–<kbd className="fc-kbd">4</kbd> تقييم ·{" "}
+              <kbd className="fc-kbd">Esc</kbd> إخفاء ·{" "}
+              <kbd className="fc-kbd">Ctrl+Shift+R</kbd> فتح المراجعة
             </p>
           </div>
 
