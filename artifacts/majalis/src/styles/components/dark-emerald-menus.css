@@ -106,16 +106,27 @@
 
 /* نص الـ NavBar — أبيض نقي */
 .navbar-v3 .navbar-brand,
-.navbar-v3 .navbar-menu-btn,
 .navbar-v3 .navbar-logout,
 .navbar-v3 .navbar-login,
 .navbar-v3 .navbar-admin-link,
 .navbar-v3 .navbar-auth {
   color: rgba(255, 255, 255, 0.92) !important;
 }
-.navbar-v3 .navbar-menu-btn:hover {
+/* زر القائمة: شفّاف على الشريط الداكن — التفاصيل النهائية في contrast-fixes */
+.navbar-v3 .navbar-menu-btn {
   background: rgba(255, 255, 255, 0.1) !important;
+  border: 1px solid rgba(255, 255, 255, 0.28) !important;
+  color: rgba(255, 255, 255, 0.96) !important;
+  box-shadow: none !important;
+}
+.navbar-v3 .navbar-menu-btn:hover {
+  background: rgba(255, 255, 255, 0.18) !important;
   color: #FFFFFF !important;
+}
+.navbar-v3 .navbar-menu-btn svg,
+.navbar-v3 .navbar-menu-btn .navbar-menu-btn__icon {
+  color: inherit !important;
+  stroke: currentColor;
 }
 .navbar-v3 .navbar-login {
   border-color: rgba(255, 255, 255, 0.4) !important;

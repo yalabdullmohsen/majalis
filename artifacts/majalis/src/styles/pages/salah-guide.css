@@ -42,7 +42,7 @@
 .sg-chip--fajr    { --sg-chip-color: #1e3a5f; }
 .sg-chip--dhuhr   { --sg-chip-color: #226A56; }
 .sg-chip--asr     { --sg-chip-color: #143F35; }
-.sg-chip--maghrib { --sg-chip-color: #7c3aed; }
+.sg-chip--maghrib { --sg-chip-color: #B8963F; }
 .sg-chip--isha    { --sg-chip-color: #1e3a5f; }
 .sg-salah-chip {
   border-radius: .6rem; padding: .4rem .7rem; min-width: 3.5rem;

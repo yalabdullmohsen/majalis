@@ -41,7 +41,7 @@ export const MASARAT: Masar[] = [
     title: "مسار إصلاح القلب",
     subtitle: "رحلة علمية وعملية لتزكية النفس",
     icon: "💚",
-    color: "#7c3aed",
+    color: "#B8963F",
     level: "متوسط",
     duration: "6 أشهر",
     steps: [

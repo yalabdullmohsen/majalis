@@ -157,7 +157,7 @@
 /* Node-type color tokens — set --kng-nc on the element */
 .kng-nt--quran_ayah    { --kng-nc: #065f46; }
 .kng-nt--hadith        { --kng-nc: #1d4ed8; }
-.kng-nt--fatwa         { --kng-nc: #7c3aed; }
+.kng-nt--fatwa         { --kng-nc: #226A56; }
 .kng-nt--scholar       { --kng-nc: #226A56; }
 .kng-nt--book          { --kng-nc: #226A56; }
 .kng-nt--lesson        { --kng-nc: #0369a1; }

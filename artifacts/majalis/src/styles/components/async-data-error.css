@@ -65,7 +65,7 @@ select:focus-visible {
 .ftw-type-badge--fatwa   { background: rgba(23,61,53,.1); color: #226A56; }
 .ftw-type-badge--article { background: rgba(59,130,246,.1); color: #2563eb; }
 .ftw-type-badge--general { background: rgba(107,114,128,.1); color: #6b7280; }
-.ftw-type-badge--scholar { background: rgba(139,92,246,.1); color: #7c3aed; }
+.ftw-type-badge--scholar { background: rgba(184,150,63,.12); color: #8F7230; }
 
 /* AI disclaimer bar in research pages */
 .ai-disclaimer-bar {

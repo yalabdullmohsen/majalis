@@ -83,7 +83,7 @@ export const CONTENT_TYPE_COLOR: Record<RecContentType, string> = {
   fatwa:      "var(--majalis-emerald, #143F35)",
   benefit:    "var(--majalis-emerald-deep, #143F35)",
   book:       "var(--majalis-emerald, #143F35)",
-  scholar:    "#7c3aed",
+  scholar:    "#B8963F",
   qa:         "#0369a1",
   ruling:     "var(--majalis-ink-soft, #4A4A4A)",
   story:      "var(--majalis-danger, #9B1C1C)",

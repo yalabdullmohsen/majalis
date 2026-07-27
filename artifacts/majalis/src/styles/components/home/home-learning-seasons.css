@@ -4,7 +4,7 @@
 
 /* lsw — Learning Seasons Widget — per-season color tokens */
 .lsw--rajab-1448      { --lsw-color: #1e4d8a; --lsw-dot-color: #1e4d8a; }
-.lsw--shaban-1448     { --lsw-color: #7c3aed; --lsw-dot-color: #7c3aed; }
+.lsw--shaban-1448     { --lsw-color: #B8963F; --lsw-dot-color: #B8963F; }
 .lsw--ramadan-1448    { --lsw-color: var(--majalis-emerald-deep, #143F35); --lsw-dot-color: var(--majalis-emerald-deep, #143F35); }
 .lsw--dhul-hijja-1448 { --lsw-color: var(--majalis-emerald, #226A56);     --lsw-dot-color: var(--majalis-emerald, #226A56); }
 .lsw-featured { border-color: var(--lsw-color, var(--majalis-emerald)); }

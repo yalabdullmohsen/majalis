@@ -118,8 +118,8 @@
 }
 
 /* لون الخلفية حسب التصنيف */
-.miracle-card--cosmos { border-top: 3px solid #7c3aed; }
-.miracle-card--astronomy { border-top: 3px solid #1d4ed8; }
+.miracle-card--cosmos { border-top: 3px solid #B8963F; }
+.miracle-card--astronomy { border-top: 3px solid #1B5E8A; }
 .miracle-card--sea { border-top: 3px solid #0ea5e9; }
 .miracle-card--plant { border-top: 3px solid #16a34a; }
 .miracle-card--animal { border-top: 3px solid #226A56; }
@@ -129,4 +129,4 @@
 .miracle-card--insect { border-top: 3px solid #226A56; }
 .miracle-card--iron { border-top: 3px solid #64748b; }
 .miracle-card--wind { border-top: 3px solid #06b6d4; }
-.miracle-card--cloud { border-top: 3px solid #8b5cf6; }
+.miracle-card--cloud { border-top: 3px solid #57A189; }

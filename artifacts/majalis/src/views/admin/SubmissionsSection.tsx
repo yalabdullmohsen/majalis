@@ -19,7 +19,7 @@ const TYPE_COLORS: Record<ContentType, { bg: string; color: string }> = {
   "درس":       { bg: "#dbeafe", color: "#1d4ed8" },
   "فائدة":     { bg: "#d1fae5", color: "#065f46" },
   "معلومة":    { bg: "#E6EDE9", color: "#143F35" },
-  "سؤال لعبة": { bg: "#f3e8ff", color: "#7c3aed" },
+  "سؤال لعبة": { bg: "#FAF3E0", color: "#8F7230" },
   "فكرة":      { bg: "#ffe4e6", color: "#9f1239" },
 };
 

@@ -173,10 +173,8 @@ html[data-theme="dark"] .sch-filter-group span {
   color: var(--text-2) !important;
 }
 
-/* زر «القائمة» في الوضع الفاتح ورث نصًا أبيض من نمط هيدر داكن قديم. */
-html:not([data-theme="dark"]) .navbar-menu-btn.navbar-menu-btn {
-  color: var(--text) !important;
-}
+/* زر «القائمة»: الشريط الزمردي الداكن دائمًا — اللون الأبيض من قسم (ز) أدناه.
+   أُزيل فرض النص الداكن السابق الذي كان يخفي التسمية على الخلفية الداكنة. */
 
 /* نقطة الخط الزمني: خلفيتها تختلف بين حالتين (نعناعية للمرحلة النشطة،
    داكنة لغيرها) فيتعذّر اختيار لون نص يصلح للحالتين. الحل تثبيت الخلفية
@@ -433,4 +431,123 @@ html[data-theme="dark"] .ruling-pagination button {
    4.03:1 ← نحو 8:1 بلون العلامة الفاتح. الوضع الفاتح غير مُمسوس. */
 html[data-theme="dark"] .hadith-grade--sahih {
   color: var(--text-brand) !important;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   ز) هوية الشريط الداكن — زر القائمة مرئي (2026-07-27)
+   ──────────────────────────────────────────────────────────────
+   التعارض: elite يفرض خلفية فاتحة + أيقونة سوداء، بينما dark-emerald
+   يفرض نصًا أبيض، وcontrast-fixes يفرض لون نص داكن على الشريط الداكن.
+   النتيجة: تسمية شبه غير مرئية / أيقونة بلا اتساق. الحل الجذري:
+   زر شفّاف على الشريط الزمردي مع currentColor أبيض للأيقونة والنص.
+   ══════════════════════════════════════════════════════════════ */
+.navbar-v3 .navbar-menu-btn.navbar-menu-btn {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.28) !important;
+  color: rgba(255, 255, 255, 0.96) !important;
+  box-shadow: none !important;
+}
+html .navbar-v3 .navbar-menu-btn.navbar-menu-btn,
+html:not([data-theme="dark"]) .navbar-v3 .navbar-menu-btn.navbar-menu-btn {
+  color: rgba(255, 255, 255, 0.96) !important;
+}
+.navbar-v3 .navbar-menu-btn.navbar-menu-btn:hover {
+  background: rgba(255, 255, 255, 0.18) !important;
+  border-color: rgba(255, 255, 255, 0.4) !important;
+  color: #fff !important;
+}
+.navbar-v3 .navbar-menu-btn svg,
+.navbar-v3 .navbar-menu-btn .navbar-menu-btn__icon,
+.navbar-v3 .navbar-menu-btn .navbar-menu-btn__label {
+  color: inherit !important;
+  stroke: currentColor;
+}
+html[data-theme="dark"] .navbar-v3 .navbar-menu-btn .navbar-menu-btn__label {
+  color: inherit !important;
+}
+
+/* أزرار الشريط الأخرى على الخلفية الزمردية */
+.navbar-v3 .navbar-theme-toggle {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.28) !important;
+  color: rgba(255, 255, 255, 0.92) !important;
+}
+.navbar-v3 .navbar-theme-toggle:hover {
+  background: rgba(255, 255, 255, 0.2) !important;
+  border-color: rgba(255, 255, 255, 0.45) !important;
+  color: #fff !important;
+}
+.navbar-v3 .navbar-mobile-login {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border-color: rgba(255, 255, 255, 0.35) !important;
+  color: #fff !important;
+}
+.navbar-v3 .navbar-mobile-login:hover,
+.navbar-v3 .navbar-mobile-login--active {
+  background: rgba(255, 255, 255, 0.2) !important;
+  color: #fff !important;
+}
+.navbar-v3 .navbar-v3__tabs .nav-tab {
+  color: rgba(255, 255, 255, 0.78) !important;
+  background: transparent !important;
+}
+.navbar-v3 .navbar-v3__tabs .nav-tab:hover {
+  color: #fff !important;
+  background: rgba(255, 255, 255, 0.1) !important;
+}
+.navbar-v3 .navbar-v3__tabs .nav-tab--active {
+  color: #fff !important;
+  background: rgba(255, 255, 255, 0.16) !important;
+}
+.navbar-v3 .navbar-logout {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.28) !important;
+  color: rgba(255, 255, 255, 0.95) !important;
+}
+
+/* شريحة الصلاة وشريط الأخبار على الخلفية الداكنة */
+.navbar-v3 .navbar-prayer-chip {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border-color: rgba(255, 255, 255, 0.28) !important;
+}
+.navbar-v3 .navbar-prayer-chip,
+.navbar-v3 .navbar-prayer-chip * {
+  color: rgba(255, 255, 255, 0.95) !important;
+}
+.navbar-v3 .header-ticker {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border-color: rgba(255, 255, 255, 0.22) !important;
+}
+.navbar-v3 .header-ticker__icon,
+.navbar-v3 .header-ticker__label {
+  color: rgba(255, 255, 255, 0.95) !important;
+}
+
+/* توحيد PageHeader: خط العرض + زر رجوع متسق مع الهوية */
+.ds-page-header .ds-page-header__title {
+  font-family: var(--font-display, var(--font-body)) !important;
+  letter-spacing: -0.01em;
+}
+.ds-page-header .ds-page-back-btn {
+  font-family: var(--font-body) !important;
+  font-weight: 700 !important;
+  border-color: transparent !important;
+  box-shadow: 0 1px 4px rgba(8, 26, 22, 0.12);
+}
+.ds-page-header .ds-page-back-btn:hover {
+  background: #fff !important;
+  color: var(--em-800, #143F35) !important;
+}
+
+/* فتات التنقل — زمرد الهوية بدل حبر قديم */
+.breadcrumbs-list {
+  font-family: var(--font-body);
+  color: var(--n-600, #5C5C56);
+}
+.breadcrumbs-item a {
+  color: var(--em-600, #226A56);
+  font-weight: 600;
+}
+.breadcrumbs-item a:hover {
+  color: var(--em-800, #143F35);
 }

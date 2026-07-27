@@ -68,10 +68,10 @@ interface HijriEvent {
 
 const HIJRI_EVENTS: HijriEvent[] = [
   { day: 1,  month: 1,  label: "رأس السنة الهجرية",        color: "#226A56" },
-  { day: 10, month: 1,  label: "يوم عاشوراء",              color: "#5B21B6" },
+  { day: 10, month: 1,  label: "يوم عاشوراء",              color: "#143F35" },
   { day: 12, month: 3,  label: "ذكرى المولد النبوي الشريف", color: "#0F766E" },
-  { day: 27, month: 7,  label: "ليلة الإسراء والمعراج",    color: "#4338CA" },
-  { day: 15, month: 8,  label: "ليلة النصف من شعبان",      color: "#7C3AED" },
+  { day: 27, month: 7,  label: "ليلة الإسراء والمعراج",    color: "#1B5E8A" },
+  { day: 15, month: 8,  label: "ليلة النصف من شعبان",      color: "#B8963F" },
   { day: 1,  month: 9,  label: "بداية شهر رمضان المبارك",  color: "#059669" },
   { day: 27, month: 9,  label: "ليلة القدر المرتقبة",      color: "#DC2626" },
   { day: 1,  month: 10, label: "عيد الفطر المبارك",         color: "#D97706" },

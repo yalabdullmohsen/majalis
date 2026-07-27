@@ -59,7 +59,7 @@ function getSeasons(): Season[] {
       description: "شهر شعبان، تُرفع فيه الأعمال",
       suggestion: "استعد لرمضان بمراجعة القرآن",
       href: "/quran-hub",
-      color: "#7c3aed",
+      color: "#B8963F",
     },
     {
       id: "ramadan-1448",

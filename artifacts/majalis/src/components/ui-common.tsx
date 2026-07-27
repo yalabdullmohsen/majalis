@@ -108,7 +108,7 @@ export function PageHeader({
           }
           aria-label="رجوع"
         >
-          ← رجوع
+          → رجوع
         </button>
       )}
       {eyebrow && <p className="ds-page-header__eyebrow">{eyebrow}</p>}
