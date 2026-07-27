@@ -398,7 +398,7 @@ export const MIND_MAPS: MindMap[] = [
             { id: "im-1", label: "حفظ الأربعين النووية", href: "/arbaeen-nawawi" },
             { id: "im-2", label: "تعلم التجويد", href: "/quran/tajweed" },
             { id: "im-3", label: "دراسة العقيدة", href: "/tawhid" },
-            { id: "im-4", label: "أصول الفقه والقواعد", href: "/fiqh-qawaid" },
+            { id: "im-4", label: "أصول الفقه والقواعد", href: "/learning/paths/usool-fiqh" },
           ],
         },
         {

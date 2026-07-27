@@ -6,7 +6,10 @@ import { ShareButtons } from "@/components/ContentActions";
 import { SCHOLARS, findScholarById } from "@/lib/scholars-data";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { ContentReportButton } from "@/components/ContentReportButton";
+import { KnowledgeRelatedItems } from "@/components/knowledge/KnowledgeRelatedItems";
+import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import { resolveScholarWorkLink } from "@/lib/scholar-library-links";
+import { PAGE_EXPLORE_LINKS } from "@/lib/explore-links";
 import "@/styles/pages/scholars.css";
 
 // ── تحويل أرقام عربية-هندية إلى رقم ─────────────────────────────────────
@@ -279,6 +282,13 @@ export default function ScholarProfilePage() {
         />
         <ContentReportButton contentType="scholar" contentId={scholar.id} title={scholar.name} />
       </div>
+
+      <KnowledgeRelatedItems sourceType="scholar" sourceId={String(scholar.id)} />
+
+      <ExploreAlsoNav
+        title="مواضع ذات صلة في المنصة"
+        links={[...PAGE_EXPLORE_LINKS.scholar]}
+      />
 
       {/* Prev / Next */}
       <nav className="sch-profile-pager" aria-label="التنقل بين العلماء">

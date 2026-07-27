@@ -10,6 +10,7 @@ import { RequestManager } from "@/lib/request-manager";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { PageHeader, SkeletonCardGrid, Empty, Chip } from "@/components/ui-common";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
+import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
 import { RecommendationWidget } from "@/components/recommendations/RecommendationWidget";
 import { CitationActionBar } from "@/components/citation/CitationActionBar";
@@ -180,6 +181,7 @@ function HadithCard({ h, onExpand }: { h: HadithItem; onExpand: (h: HadithItem) 
 
   return (
     <div
+      id={h.id}
       className="hadith-card ui-card"
       onClick={() => onExpand(h)}
       onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && onExpand(h)}
@@ -556,6 +558,19 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
       .finally(() => setLoading(false));
   }, [authenticityClass]);
 
+  // روابط عميقة عبر #id من البحث/التوصيات
+  useEffect(() => {
+    if (loading) return;
+    const hashId = decodeURIComponent(window.location.hash.replace(/^#/, ""));
+    if (!hashId) return;
+    const match = items.find((h) => h.id === hashId);
+    if (match) setExpandedHadith(match);
+    const timer = window.setTimeout(() => {
+      document.getElementById(hashId)?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 100);
+    return () => window.clearTimeout(timer);
+  }, [loading, items]);
+
   const collections = useMemo(() => {
     const set = new Set<string>();
     items.forEach((h) => { if (h.collection) set.add(h.collection); });
@@ -848,6 +863,15 @@ export default function HadithPage() {
           تصفّح الكتب ←
         </Link>
       </div>
+      <ExploreAlsoNav
+        title="استكشف أيضًا"
+        links={[
+          { href: "/hadith/books", label: "كتب الحديث الكاملة" },
+          { href: "/arbaeen-nawawi", label: "الأربعون النووية" },
+          { href: "/lessons", label: "الدروس العلمية" },
+          { href: "/scholars", label: "العلماء" },
+        ]}
+      />
 
       <div className="px-4 pb-6">
         <SectionQuiz

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useLocation } from "wouter";
 import {
-  AlertTriangle, Bell, BookMarked, BookOpen, Clock, FileText, Flame,
+  AlertTriangle, Bell, BookMarked, BookOpen, Clock, CreditCard, FileText, Flame,
   GraduationCap, HelpCircle, Layers, Lightbulb,
   Newspaper, RotateCw, Scale, Scroll, Search, Star, Tag, User,
 } from "lucide-react";
@@ -421,6 +421,7 @@ export function GlobalSearchModal({ onClose }: Props) {
                 <p className="gsm-section__label">تصفح</p>
                 <div className="gsm-quicklinks">
                   {[
+                    { href: "/flashcards",    label: "المراجعة",     Icon: CreditCard },
                     { href: "/quran-hub",     label: "القرآن",       Icon: BookMarked },
                     { href: "/adhkar",         label: "الأذكار",      Icon: RotateCw },
                     { href: "/lessons",        label: "الدروس",       Icon: GraduationCap },
@@ -496,7 +497,7 @@ export function GlobalSearchModal({ onClose }: Props) {
         {/* ── ذيل ─────────────────────────────────────────────────────── */}
         <div className="gsm-footer">
           {!isMobile
-            ? <span className="gsm-footer__hint">⌘K للفتح · Esc للإغلاق · Enter للبحث الكامل</span>
+            ? <span className="gsm-footer__hint">⌘K بحث · ⌘⇧R مراجعة · Esc إغلاق · Enter بحث كامل</span>
             : <span />
           }
           {query.trim() && (

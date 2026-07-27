@@ -121,9 +121,9 @@ const SHEET_SECTIONS_RAW: { group: string; items: SheetItem[] }[] = [
 
   /* ── أدوات ومزيد ── */
   { group: "أدوات ومزيد", items: [
+    { href: "/flashcards",           label: seoNavLabel("/flashcards", "بطاقات المراجعة"),     Icon: CreditCard },
     { href: "/learning/paths",       label: seoNavLabel("/learning/paths", "المسارات العلمية"),    Icon: GraduationCap },
     { href: "/quiz",                 label: seoNavLabel("/quiz", "لعبة سين جيم"),  Icon: Zap },
-    { href: "/flashcards",           label: seoNavLabel("/flashcards", "بطاقات المراجعة"),     Icon: CreditCard },
     { href: "/assistant",            label: seoNavLabel("/assistant", "المساعد العلمي"),       Icon: Bot },
     { href: "/knowledge-graph",      label: seoNavLabel("/knowledge-graph", "استكشف المعرفة"),     Icon: Network },
     { href: "/my-learning",          label: seoNavLabel("/my-learning", "حسابي"),    Icon: BarChart3 },

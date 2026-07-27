@@ -3,7 +3,9 @@ import { BookOpen, ChevronDown, ChevronUp, GraduationCap, Lightbulb, Scale, Star
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import { arabicMatchAny } from "@/lib/arabic-search";
+import { PAGE_EXPLORE_LINKS } from "@/lib/explore-links";
 import "@/styles/pages/adab-talab-ilm.css";
 
 /* ══════════════════════════════════════════════════════════════════
@@ -744,6 +746,14 @@ export default function AdabTalabIlmPage() {
       <div className="twh-share">
         <ShareButtons title="آداب طالب العلم — المجلس العلمي" url="https://www.majlisilm.com/adab-talab-ilm" />
       </div>
+
+      <div className="px-4 mt-4">
+        <ExploreAlsoNav
+          title="أكمل رحلتك في طلب العلم"
+          links={[...PAGE_EXPLORE_LINKS.adabTalabIlm]}
+        />
+      </div>
+
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="akhlaq" title="اختبر معلوماتك في الأخلاق والآداب" count={4} />
       </div>

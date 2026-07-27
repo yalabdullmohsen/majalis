@@ -49,18 +49,18 @@ export function resolveContentUrl(item) {
       return id ? `/lessons/${id}` : "/lessons";
     case "library":
     case "book":
-      return "/library";
+      return id ? `/library/${id}` : "/library";
     case "fatwa":
     case "fatwas":
-      return "/rulings";
+      return id ? `/rulings/${id}` : "/rulings";
     case "ruling":
     case "rulings":
       return id ? `/rulings/${id}` : "/rulings";
     case "qa":
-      return "/qa";
+      return id ? `/qa?id=${encodeURIComponent(id)}` : "/qa";
     case "fawaid":
     case "fawaid_item":
-      return "/fawaid";
+      return id ? `/fawaid#${encodeURIComponent(id)}` : "/fawaid";
     case "adhkar":
       return "/adhkar";
     case "miracle":
@@ -77,11 +77,11 @@ export function resolveContentUrl(item) {
       return id ? `/fiqh-council/${item.slug || id}` : "/fiqh-council";
     case "sheikh":
     case "sheikhs":
-      return "/lessons";
+      return id ? `/scholars/${id}` : "/scholars";
     case "quran":
       return "/quran-hub";
     case "hadith":
-      return "/arbaeen-nawawi";
+      return "/hadith";
     case "article":
       return item.slug ? `/updates/auto/${item.slug}` : "/updates";
     case "knowledge":

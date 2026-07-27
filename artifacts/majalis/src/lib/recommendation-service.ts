@@ -1,5 +1,7 @@
 // خدمة التوصيات الذكية — مجالس
 
+import { CONTENT_TYPE_HREF as SHARED_CONTENT_TYPE_HREF } from "@/lib/content-href";
+
 const BASE = "/api/recommendations";
 
 // ── أنواع ────────────────────────────────────────────────────────────────────
@@ -62,20 +64,8 @@ export const CONTENT_TYPE_LABEL: Record<RecContentType, string> = {
   quran_ayah: "آية",
 };
 
-export const CONTENT_TYPE_HREF: Record<RecContentType, (id: string) => string> = {
-  lesson:     (_id) => `/lessons`,
-  hadith:     (_id) => `/hadith`,
-  fatwa:      (id) => (id ? `/rulings/${id}` : `/rulings`),
-  benefit:    (_id) => `/fawaid`,
-  book:       (_id) => `/library`,
-  scholar:    (_id) => `/lessons`,
-  qa:         (id)  => (id ? `/qa?id=${encodeURIComponent(id)}` : `/qa`),
-  ruling:     (id)  => `/rulings/${id}`,
-  story:      (_id) => `/stories`,
-  miracle:    (_id) => `/miracles`,
-  dhikr:      (_id) => `/adhkar`,
-  quran_ayah: (_id) => `/quran`,
-};
+/** يُعاد تصديره من المصدر الموحّد — لا تُكرَّر الخريطة هنا. */
+export const CONTENT_TYPE_HREF = SHARED_CONTENT_TYPE_HREF;
 
 export const CONTENT_TYPE_COLOR: Record<RecContentType, string> = {
   lesson:     "var(--majalis-emerald, #143F35)",

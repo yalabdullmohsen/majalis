@@ -4,6 +4,7 @@
  */
 
 import { requestFetch } from "@/lib/request-manager";
+import { hrefKnowledgeNode } from "@/lib/content-href";
 
 // ── Types ─────────────────────────────────────────────────────────────────
 
@@ -103,21 +104,9 @@ export const REL_TYPE_LABEL: Record<KnRelType, string> = {
   prerequisite:     "مقدمة لفهم",
 };
 
-/** رابط التنقل لكل نوع عقدة */
+/** رابط التنقل لكل نوع عقدة — من المصدر الموحّد content-href. */
 export function getNodeHref(node: KnNode): string {
-  const ref = node.reference_id;
-  switch (node.node_type) {
-    case "quran_ayah":    return "/quran-hub";
-    case "hadith":        return "/hadith";
-    case "fatwa":         return ref ? `/rulings/${ref}` : "/rulings";
-    case "scholar":       return "/scholars";
-    case "book":          return ref ? `/library/${ref}` : "/library";
-    case "lesson":        return ref ? `/lessons/${ref}` : "/lessons";
-    case "benefit":       return "/fawaid";
-    case "prophet_story": return "/prophets";
-    case "term":          return `/search/${encodeURIComponent(node.title)}`;
-    default:              return "/knowledge-graph";
-  }
+  return hrefKnowledgeNode(node.node_type, node.reference_id, node.title);
 }
 
 // ── API calls ─────────────────────────────────────────────────────────────

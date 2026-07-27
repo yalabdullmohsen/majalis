@@ -62,12 +62,18 @@ console.log("\n=== فقه — لا إسقاط للدروس على /rulings با�
   }
 
   // الحالات التي كانت مكتوبة كـ /rulings?category=… سابقًا
-  for (const id of ["muamalat", "atima", "medical", "islamic-finance", "hudud", "patients", "financing"]) {
+  for (const id of ["muamalat", "atima", "medical", "islamic-finance", "hudud", "patients", "financing", "minorities", "tech-fiqh", "usul-fiqh"]) {
     const t = getFiqhHubTopic(id);
     assert(Boolean(t), `الموضوع ${id} موجود`);
     assert(t!.href === `/fiqh/topics/${id}`, `${id} يفتح صفحته لا الموسوعة`);
     assert(!t!.href.includes("/rulings"), `${id} لا يحتوي /rulings في رابط البطاقة`);
   }
+
+  const usul = getFiqhHubTopic("usul-fiqh");
+  assert(Boolean(usul?.relatedGuides?.some((g) => g.href === "/learning/paths/usool-fiqh")),
+    "أصول الفقه يرتبط بمسار usool-fiqh");
+  assert(Boolean(usul?.relatedGuides?.some((g) => g.href === "/fiqh-qawaid")),
+    "أصول الفقه يرتبط بالقواعد الفقهية");
 }
 
 console.log("\n=== فقه — تطابق رابط البطاقة مع بيانات الدرس في FiqhPage ===");
