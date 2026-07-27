@@ -246,6 +246,79 @@ assert(
   liveSources.map((r) => r.from).join(", ")
 );
 
+console.log("\n=== ٩ب) تحويلات /scholars/ في vercel.json — الملف المُنفَّذ فعلاً على الإنتاج ===");
+
+// اكتُشف 2026-07-27 بضرب الموقع الحيّ (نظير ما وقع في /library/ بـج-٢٧٧):
+// كانت في vercel.json كتلةُ تحويلاتٍ قديمة تسبق الكتلة الصحيحة، وفيرسل
+// يُنفِّذ أوّل قاعدة مطابقة — فكان /scholars/amir-al-san'ani و
+// /scholars/ibn-uthaymeen-older يحوّلان إلى amir-al-sanani و
+// abdulkarim-alkhudair وهما معرّفان غير موجودين ⇒ 404 على الإنتاج،
+// بينما القاعدتان الصحيحتان (al-amir-al-sanani و abd-al-karim-al-khudair)
+// أبعدُ في الملف فلا تُنفَّذان أبداً. فحصُ redirects.scholars.json وحده
+// لا يكشف هذا لأنه لا يقرأ vercel.json.
+const vercelJson: { redirects?: Array<{ source: string; destination: string }> } = JSON.parse(
+  readFileSync(new URL("../../../vercel.json", import.meta.url), "utf8")
+);
+/** فيرسل يطابق المسار بعد فكّ الترميز، فـ%27 و(') قاعدة واحدة */
+const decodePath = (p: string) => {
+  try {
+    return decodeURIComponent(p);
+  } catch {
+    return p;
+  }
+};
+const scholarRules = (vercelJson.redirects ?? [])
+  .filter((r) => String(r.source).startsWith("/scholars/"))
+  .map((r) => ({ from: decodePath(String(r.source)), to: decodePath(String(r.destination)) }));
+
+const vercelDeadTargets = scholarRules.filter((r) => !idSet.has(r.to.replace("/scholars/", "")));
+assert(
+  vercelDeadTargets.length === 0,
+  `كل هدف تحويل في vercel.json (${scholarRules.length}) سجلٌّ موجود`,
+  vercelDeadTargets.map((r) => `${r.from} ⇐ ${r.to}`).join(", ")
+);
+
+const vercelLiveSources = scholarRules.filter((r) => idSet.has(r.from.replace("/scholars/", "")));
+assert(
+  vercelLiveSources.length === 0,
+  "لا قاعدة في vercel.json تحوّل معرّفًا ما زال حيًّا (ستبتلع صفحة صالحة)",
+  vercelLiveSources.map((r) => r.from).join(", ")
+);
+
+/** أوّل قاعدة مطابقة هي المُنفَّذة — وما بعدها لا أثر له */
+const firstMatch = new Map<string, string>();
+const shadowed: string[] = [];
+for (const rule of scholarRules) {
+  const previous = firstMatch.get(rule.from);
+  if (previous === undefined) firstMatch.set(rule.from, rule.to);
+  else if (previous !== rule.to) shadowed.push(`${rule.from}: يُنفَّذ ${previous} ويُهمَل ${rule.to}`);
+}
+assert(shadowed.length === 0, "لا قاعدتين متعارضتين لنفس المصدر في vercel.json", shadowed.join(" | "));
+
+const loops = [...firstMatch].filter(([from, to]) => firstMatch.get(to) === from);
+assert(
+  loops.length === 0,
+  "لا حلقة تحويل في vercel.json",
+  loops.map(([from, to]) => `${from} ⇄ ${to}`).join(", ")
+);
+
+/** التطابق مع المصدر المعتمد: ما يُنفَّذ فعلاً = ما يقوله redirects.scholars.json */
+const canonical = new Map(redirects.map((r) => [decodePath(r.from), r.to]));
+const drift: string[] = [];
+for (const [from, to] of canonical) {
+  const live = firstMatch.get(from);
+  if (live === undefined) drift.push(`${from}: في redirects.scholars.json وغائب عن vercel.json`);
+  else if (live !== to) drift.push(`${from}: المعتمد ${to} والمُنفَّذ ${live}`);
+}
+for (const [from] of firstMatch) {
+  if (!canonical.has(from)) drift.push(`${from}: في vercel.json وغائب عن redirects.scholars.json`);
+}
+assert(
+  drift.length === 0,
+  `vercel.json يطابق redirects.scholars.json (${canonical.size} قاعدة)`,
+  drift.join(" | ")
+);
+
 console.log("\n=== ١٠) scholars-list.json (يغذّي /api/sitemap و/api/feed الحيّين) لا ينجرف عن المصدر ===");
 
 // اكتُشف 2026-07-18: src/data/scholars-list.json كان مجمَّداً عند 78 عالماً

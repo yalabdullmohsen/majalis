@@ -309,31 +309,6 @@
       "permanent": true
     },
     {
-      "source": "/scholars/amir-al-san'ani",
-      "destination": "/scholars/amir-al-sanani",
-      "permanent": true
-    },
-    {
-      "source": "/scholars/amir-al-san%27ani",
-      "destination": "/scholars/amir-al-sanani",
-      "permanent": true
-    },
-    {
-      "source": "/scholars/ibn-al-qayyim-alt",
-      "destination": "/scholars/al-sakhawi",
-      "permanent": true
-    },
-    {
-      "source": "/scholars/ibn-uthaymin-ext",
-      "destination": "/scholars/ibn-jibreen",
-      "permanent": true
-    },
-    {
-      "source": "/scholars/ibn-uthaymeen-older",
-      "destination": "/scholars/abdulkarim-alkhudair",
-      "permanent": true
-    },
-    {
       "source": "/search/%7Bsearch_term_string%7D",
       "destination": "/search",
       "permanent": false
