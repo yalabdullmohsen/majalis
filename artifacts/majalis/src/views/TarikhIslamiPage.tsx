@@ -1,6 +1,7 @@
 import { Link } from "wouter";
 import { SectionAccordionLayout } from "@/components/SectionAccordionLayout";
 import { TARIKH_ISLAMI } from "@/lib/tarikh-islami-data";
+import { accordionExploreLinks } from "@/lib/explore-links";
 
 export default function TarikhIslamiPage() {
   return (
@@ -28,13 +29,7 @@ export default function TarikhIslamiPage() {
         title="التاريخ الإسلامي والحضارة"
         sections={TARIKH_ISLAMI}
         stat3Label="موضوع/باب"
-        relatedLinks={[
-          { href: "/seerah", label: "السيرة النبوية" },
-          { href: "/scholars", label: "أعلام الإسلام" },
-          { href: "/prophets", label: "قصص الأنبياء" },
-          { href: "/islamic-landmarks", label: "معالم إسلامية" },
-          { href: "/nations", label: "الأمم السابقة" },
-        ]}
+        relatedLinks={accordionExploreLinks("tarikh")}
       />
     </>
   );

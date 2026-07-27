@@ -5,6 +5,7 @@ import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import { arabicMatchAny } from "@/lib/arabic-search";
+import { PAGE_EXPLORE_LINKS } from "@/lib/explore-links";
 import "@/styles/pages/adab-talab-ilm.css";
 
 /* ══════════════════════════════════════════════════════════════════
@@ -749,14 +750,7 @@ export default function AdabTalabIlmPage() {
       <div className="px-4 mt-4">
         <ExploreAlsoNav
           title="أكمل رحلتك في طلب العلم"
-          links={[
-            { href: "/learning/paths", label: "المسارات العلمية" },
-            { href: "/tawhid", label: "التوحيد" },
-            { href: "/fiqh", label: "بوابة الفقه" },
-            { href: "/library", label: "المكتبة الشرعية" },
-            { href: "/lessons", label: "الدروس العلمية" },
-            { href: "/fiqh/topics/usul-fiqh", label: "أصول الفقه" },
-          ]}
+          links={[...PAGE_EXPLORE_LINKS.adabTalabIlm]}
         />
       </div>
 

@@ -1,6 +1,5 @@
 /**
- * حارس الربط الداخلي: الروابط العميقة لا تسقط المعرّف، والصفحات الميتة السابقة
- * تحمل شبكة «استكشف أيضًا».
+ * حارس الربط الداخلي والتنظيف: مصدر روابط موحّد + صفحات مربوطة.
  * التشغيل: npx tsx src/lib/__tests__/site-interlink.test.ts
  */
 import { readFileSync } from "node:fs";
@@ -8,6 +7,15 @@ import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { CONTENT_TYPE_HREF } from "../recommendation-service";
 import { getNodeHref, type KnNode } from "../knowledge-graph-service";
+import {
+  hrefLessons,
+  hrefScholars,
+  hrefFawaid,
+  hrefQa,
+  hrefRulingsFilter,
+  KNOWLEDGE_RELATED_HREF,
+} from "../content-href";
+import { ACCORDION_EXPLORE_LINKS, PAGE_EXPLORE_LINKS } from "../explore-links";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const srcRoot = resolve(__dirname, "../..");
@@ -24,7 +32,20 @@ function assert(condition: boolean, label: string) {
   }
 }
 
-console.log("\n=== روابط التوصيات تحتفظ بالمعرّف ===");
+console.log("\n=== content-href الموحّد ===");
+{
+  assert(hrefLessons("abc") === "/lessons/abc", "hrefLessons");
+  assert(hrefScholars("s1") === "/scholars/s1", "hrefScholars");
+  assert(hrefFawaid("f1") === "/fawaid#f1", "hrefFawaid");
+  assert(hrefQa("q1") === "/qa?id=q1", "hrefQa");
+  assert(
+    hrefRulingsFilter("الأسرة") === `/rulings?category=${encodeURIComponent("الأسرة")}`,
+    "hrefRulingsFilter",
+  );
+  assert(KNOWLEDGE_RELATED_HREF.question("q") === "/qa?id=q", "KNOWLEDGE_RELATED_HREF.question");
+}
+
+console.log("\n=== روابط التوصيات تحتفظ بالمعرّف (إعادة تصدير) ===");
 {
   assert(CONTENT_TYPE_HREF.lesson("abc") === "/lessons/abc", "lesson → /lessons/:id");
   assert(CONTENT_TYPE_HREF.book("b1") === "/library/b1", "book → /library/:id");
@@ -53,14 +74,24 @@ console.log("\n=== روابط الرسم المعرفي تحتفظ بالمعر�
   );
 }
 
+console.log("\n=== explore-links المركزي ===");
+{
+  assert(ACCORDION_EXPLORE_LINKS.maqasid.length >= 4, "مقاصد: روابط كافية");
+  assert(PAGE_EXPLORE_LINKS.scholar.length >= 4, "عالِم: روابط كافية");
+  assert(PAGE_EXPLORE_LINKS.adabTalabIlm.some((l) => l.href === "/fiqh/topics/usul-fiqh"),
+    "آداب طالب العلم ترتبط بأصول الفقه");
+}
+
 console.log("\n=== صفحات كانت ميتة تحمل ExploreAlso / Related ===");
 {
   const scholar = readFileSync(resolve(srcRoot, "views/ScholarProfilePage.tsx"), "utf8");
   assert(scholar.includes("KnowledgeRelatedItems"), "ملف العالِم يركّب KnowledgeRelatedItems");
-  assert(scholar.includes("ExploreAlsoNav"), "ملف العالِم يركّب ExploreAlsoNav");
+  assert(scholar.includes("PAGE_EXPLORE_LINKS"), "ملف العالِم يستورد PAGE_EXPLORE_LINKS");
 
   const topic = readFileSync(resolve(srcRoot, "views/FiqhTopicPage.tsx"), "utf8");
   assert(topic.includes("RelatedKnowledge"), "صفحة باب الفقه تركّب RelatedKnowledge");
+  assert(topic.includes("hrefRulingsFilter"), "صفحة الباب تستخدم hrefRulingsFilter");
+  assert(!topic.includes("style={{ marginTop"), "لا هوامش مضمنة في صفحة الباب");
 
   const home = readFileSync(resolve(srcRoot, "components/home/HomeStartHereSection.tsx"), "utf8");
   assert(home.includes('href: "/adab-talab-ilm"'), "ابدأ من هنا → دليل طالب العلم");
@@ -69,7 +100,11 @@ console.log("\n=== صفحات كانت ميتة تحمل ExploreAlso / Related =
   assert(accordion.includes("relatedLinks"), "التخطيط الأكورديوني يدعم relatedLinks");
 
   const maqasid = readFileSync(resolve(srcRoot, "views/MaqasidShariaPage.tsx"), "utf8");
-  assert(maqasid.includes("relatedLinks"), "مقاصد الشريعة مربوطة بصفحات أخرى");
+  assert(maqasid.includes("accordionExploreLinks"), "مقاصد تستورد الروابط المركزية");
+
+  const kri = readFileSync(resolve(srcRoot, "components/knowledge/KnowledgeRelatedItems.tsx"), "utf8");
+  assert(kri.includes("KNOWLEDGE_RELATED_HREF"), "KnowledgeRelatedItems من content-href");
+  assert(!kri.includes("كان سيُنتج صفحة نتائج فارغة"), "أُزيلت تعليقات TYPE_HREF المطوّلة");
 
   const stories = readFileSync(resolve(srcRoot, "views/IslamicStoriesPage.tsx"), "utf8");
   assert(stories.includes("?slug="), "القصص الإسلامية تدعم ?slug= للمشاركة");
