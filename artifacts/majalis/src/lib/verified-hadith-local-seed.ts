@@ -1,6 +1,6 @@
 /**
  * بذرة محلية لأحاديث الصحيح/الضعيف/الموضوع — احتياط عند فراغ Supabase ودمج مع الحي.
- * المصدر: supabase/verified_hadith_daif_mawdu_seed_v1+v2 + banks_seed_v3+v4 (2026-07-27).
+ * المصدر: supabase seeds v1–v5 + مرجع الصحيحين المنفصل في public/data/hadith.
  * القاعدة: لا درجة بلا تخريج منسوب؛ الموضوع يُعرض للتحذير فقط لا للاحتجاج.
  */
 export type LocalHadithClass = "sahih" | "daif" | "mawdu";
@@ -3947,6 +3947,838 @@ export const LOCAL_VERIFIED_HADITHS: LocalVerifiedHadith[] = [
       "muhaddith": "نقاد"
     },
     "created_at": "2026-07-27T12:00:00.000Z"
+  },
+  {
+    "id": "mawdu-069",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "من مات محباً لآل محمد مات شهيداً",
+    "text": "من مات على حب آل محمد مات شهيداً.",
+    "narrator": "لا يثبت",
+    "source_name": "ابن الجوزي",
+    "grade": "موضوع",
+    "chapter": "موضوعات",
+    "keywords": [
+      "موضوع",
+      "مكذوب"
+    ],
+    "explanation": "من موضوعات الغلو في الفضائل؛ فضائل الآل الثابتة تغني عن المكذوب.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "muhaddith": "ابن الجوزي"
+    },
+    "created_at": "2026-07-27T18:00:00.000Z"
+  },
+  {
+    "id": "mawdu-070",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "أنا مدينة الجنة وعلي بابها",
+    "text": "أنا مدينة الجنة وعلي بابها؛ فمن أراد الجنة فليأتها من بابها.",
+    "narrator": "لا يثبت",
+    "source_name": "ابن الجوزي",
+    "grade": "موضوع",
+    "chapter": "موضوعات",
+    "keywords": [
+      "موضوع",
+      "مكذوب"
+    ],
+    "explanation": "مكذوب من جنس «أنا مدينة العلم»؛ فضائل علي في الصحيح تغني عنه.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "muhaddith": "ابن الجوزي"
+    },
+    "created_at": "2026-07-27T18:00:00.000Z"
+  },
+  {
+    "id": "mawdu-071",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "حديث الهريسة يوم خيبر",
+    "text": "نزل جبريل بهريسة من الجنة يوم خيبر.",
+    "narrator": "لا يثبت",
+    "source_name": "ابن الجوزي",
+    "grade": "موضوع",
+    "chapter": "موضوعات",
+    "keywords": [
+      "موضوع",
+      "مكذوب"
+    ],
+    "explanation": "من موضوعات فضائل الأطعمة في ابن الجوزي.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "muhaddith": "ابن الجوزي"
+    },
+    "created_at": "2026-07-27T18:00:00.000Z"
+  },
+  {
+    "id": "mawdu-072",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "فضل الباقلاء",
+    "text": "عليكم بالباقلاء فإنه يشدّ العصب.",
+    "narrator": "لا يثبت",
+    "source_name": "ابن الجوزي",
+    "grade": "موضوع",
+    "chapter": "موضوعات",
+    "keywords": [
+      "موضوع",
+      "مكذوب"
+    ],
+    "explanation": "من موضوعات الأطعمة.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "muhaddith": "ابن الجوزي"
+    },
+    "created_at": "2026-07-27T18:00:00.000Z"
+  },
+  {
+    "id": "mawdu-073",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "فضل الجوز",
+    "text": "الجوز شفاء من سبعين داء.",
+    "narrator": "لا يثبت",
+    "source_name": "نقاد الفضائل",
+    "grade": "موضوع",
+    "chapter": "موضوعات",
+    "keywords": [
+      "موضوع",
+      "مكذوب"
+    ],
+    "explanation": "موضوعات قصصية في فضائل المأكولات.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "muhaddith": "نقاد الفضائل"
+    },
+    "created_at": "2026-07-27T18:00:00.000Z"
+  },
+  {
+    "id": "mawdu-074",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "النظر إلى علي عبادة",
+    "text": "النظر إلى وجه علي عبادة.",
+    "narrator": "لا يثبت",
+    "source_name": "ابن الجوزي",
+    "grade": "موضوع",
+    "chapter": "موضوعات",
+    "keywords": [
+      "موضوع",
+      "مكذوب"
+    ],
+    "explanation": "موضوع باتفاق نقاد الغلو.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "muhaddith": "ابن الجوزي"
+    },
+    "created_at": "2026-07-27T18:00:00.000Z"
+  },
+  {
+    "id": "mawdu-075",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "حديث ردّ الشمس لعلي",
+    "text": "رُدّت الشمس على علي.",
+    "narrator": "لا يثبت",
+    "source_name": "ابن تيمية؛ ابن الجوزي",
+    "grade": "موضوع / واهٍ جداً",
+    "chapter": "موضوعات",
+    "keywords": [
+      "موضوع",
+      "مكذوب"
+    ],
+    "explanation": "أنكره أئمة النقد بطرقه المشتهرة؛ لا يثبت.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "muhaddith": "ابن تيمية؛ ابن الجوزي"
+    },
+    "created_at": "2026-07-27T18:00:00.000Z"
+  },
+  {
+    "id": "mawdu-076",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "كنت أنا وعلي نوراً",
+    "text": "كنت أنا وعلي نوراً بين يدي الله.",
+    "narrator": "لا يثبت",
+    "source_name": "ابن الجوزي",
+    "grade": "موضوع",
+    "chapter": "موضوعات",
+    "keywords": [
+      "موضوع",
+      "مكذوب"
+    ],
+    "explanation": "من موضوعات الغلو في النور.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "muhaddith": "ابن الجوزي"
+    },
+    "created_at": "2026-07-27T18:00:00.000Z"
+  },
+  {
+    "id": "mawdu-077",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "زيادات غالية على حديث الثقلين",
+    "text": "صيغ محرّفة تزيد على الثابت في مسلم بألفاظ غلو.",
+    "narrator": "لا يثبت",
+    "source_name": "نقاد",
+    "grade": "ما زيد على الثابت موضوع",
+    "chapter": "موضوعات",
+    "keywords": [
+      "موضوع",
+      "مكذوب"
+    ],
+    "explanation": "أصل الثقلين في مسلم ثابت؛ الزيادات الغالية موضوعة.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "muhaddith": "نقاد"
+    },
+    "created_at": "2026-07-27T18:00:00.000Z"
+  },
+  {
+    "id": "mawdu-078",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "وعيد مكذوب في الزنا بالحائض",
+    "text": "وعيد مفصّل مكذوب في الزنا بالحائض.",
+    "narrator": "لا يثبت",
+    "source_name": "ابن الجوزي",
+    "grade": "موضوع",
+    "chapter": "موضوعات",
+    "keywords": [
+      "موضوع",
+      "مكذوب"
+    ],
+    "explanation": "من موضوعات الوعيد المفصّل.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "muhaddith": "ابن الجوزي"
+    },
+    "created_at": "2026-07-27T18:00:00.000Z"
+  },
+  {
+    "id": "mawdu-080",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "من صلى عليّ يوم الجمعة ألف مرة",
+    "text": "من صلى عليّ يوم الجمعة ألف مرة لم يمت حتى يرى مقعده من الجنة.",
+    "narrator": "لا يثبت",
+    "source_name": "الشوكاني",
+    "grade": "موضوع",
+    "chapter": "موضوعات",
+    "keywords": [
+      "موضوع",
+      "مكذوب"
+    ],
+    "explanation": "صيغة مكذوبة؛ الصلاة على النبي ثابتة بلا هذه المكاذيب.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "muhaddith": "الشوكاني"
+    },
+    "created_at": "2026-07-27T18:00:00.000Z"
+  },
+  {
+    "id": "mawdu-082",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "صلاة ليلة الرغائب",
+    "text": "صلوا ليلة الرغائب اثنتي عشرة ركعة.",
+    "narrator": "لا يثبت",
+    "source_name": "ابن الجوزي؛ النووي",
+    "grade": "موضوع",
+    "chapter": "موضوعات",
+    "keywords": [
+      "موضوع",
+      "مكذوب"
+    ],
+    "explanation": "صلاة الرغائب موضوعة مشهورة.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "muhaddith": "ابن الجوزي؛ النووي"
+    },
+    "created_at": "2026-07-27T18:00:00.000Z"
+  },
+  {
+    "id": "mawdu-083",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "إذا زلزلت تعدل نصف القرآن",
+    "text": "من قرأ سورة إذا زلزلت عدلت نصف القرآن.",
+    "narrator": "لا يثبت",
+    "source_name": "الألباني",
+    "grade": "ضعيف جداً / لا يصح",
+    "chapter": "موضوعات",
+    "keywords": [
+      "موضوع",
+      "مكذوب"
+    ],
+    "explanation": "لا يثبت بهذا اللفظ عند جمهور النقاد.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "muhaddith": "الألباني"
+    },
+    "created_at": "2026-07-27T18:00:00.000Z"
+  },
+  {
+    "id": "mawdu-084",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "يس شفاء من كل داء",
+    "text": "يس شفاء من كل داء.",
+    "narrator": "لا يثبت",
+    "source_name": "نقاد الفضائل",
+    "grade": "موضوع / لا يصح",
+    "chapter": "موضوعات",
+    "keywords": [
+      "موضوع",
+      "مكذوب"
+    ],
+    "explanation": "المبالغات الشافية المطلقة باطلة.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "muhaddith": "نقاد الفضائل"
+    },
+    "created_at": "2026-07-27T18:00:00.000Z"
+  },
+  {
+    "id": "mawdu-085",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "من حفظ البخاري دخل الجنة",
+    "text": "من حفظ صحيح البخاري دخل الجنة.",
+    "narrator": "لا يثبت",
+    "source_name": "العجلوني",
+    "grade": "لا أصل له",
+    "chapter": "موضوعات",
+    "keywords": [
+      "موضوع",
+      "مكذوب"
+    ],
+    "explanation": "هذا اللفظ لا أصل له.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "muhaddith": "العجلوني"
+    },
+    "created_at": "2026-07-27T18:00:00.000Z"
+  },
+  {
+    "id": "mawdu-086",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "أول ما خلق الله العقل — صيغة أخرى",
+    "text": "لما خلق الله العقل قال له أقبل.",
+    "narrator": "لا يثبت",
+    "source_name": "ابن تيمية",
+    "grade": "موضوع",
+    "chapter": "موضوعات",
+    "keywords": [
+      "موضوع",
+      "مكذوب"
+    ],
+    "explanation": "موضوعات العقل متكاثرة الصيغ؛ كلها باطلة.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "muhaddith": "ابن تيمية"
+    },
+    "created_at": "2026-07-27T18:00:00.000Z"
+  },
+  {
+    "id": "mawdu-087",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "الدنيا حرام على أهل الآخرة",
+    "text": "الدنيا حرام على أهل الآخرة والآخرة حرام على أهل الدنيا.",
+    "narrator": "لا يثبت",
+    "source_name": "العجلوني",
+    "grade": "موضوع / لا يصح",
+    "chapter": "موضوعات",
+    "keywords": [
+      "موضوع",
+      "مكذوب"
+    ],
+    "explanation": "لا يثبت.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "muhaddith": "العجلوني"
+    },
+    "created_at": "2026-07-27T18:00:00.000Z"
+  },
+  {
+    "id": "mawdu-088",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "من لم تنهه صلاته عن الفحشاء",
+    "text": "من لم تنهه صلاته عن الفحشاء والمنكر لم يزدد من الله إلا بعداً.",
+    "narrator": "لا يثبت",
+    "source_name": "الألباني",
+    "grade": "لا يصح مرفوعاً بهذا",
+    "chapter": "موضوعات",
+    "keywords": [
+      "موضوع",
+      "مكذوب"
+    ],
+    "explanation": "يُروى من كلام بعض السلف؛ رفعه لا يصح.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "muhaddith": "الألباني"
+    },
+    "created_at": "2026-07-27T18:00:00.000Z"
+  },
+  {
+    "id": "mawdu-089",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "فضل الزعفران",
+    "text": "الزعفران سيد الرياحين في الدنيا والآخرة.",
+    "narrator": "لا يثبت",
+    "source_name": "ابن الجوزي",
+    "grade": "موضوع",
+    "chapter": "موضوعات",
+    "keywords": [
+      "موضوع",
+      "مكذوب"
+    ],
+    "explanation": "من موضوعات الرياحين.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "muhaddith": "ابن الجوزي"
+    },
+    "created_at": "2026-07-27T18:00:00.000Z"
+  },
+  {
+    "id": "mawdu-091",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "ولائم الجنة المكذوبة",
+    "text": "قصص ولائم في الجنة بأسماء مأكولات مكذوبة.",
+    "narrator": "لا يثبت",
+    "source_name": "ابن الجوزي",
+    "grade": "موضوع",
+    "chapter": "موضوعات",
+    "keywords": [
+      "موضوع",
+      "مكذوب"
+    ],
+    "explanation": "ما ثبت في نعيم الجنة في الصحيح يكفي.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "muhaddith": "ابن الجوزي"
+    },
+    "created_at": "2026-07-27T18:00:00.000Z"
+  },
+  {
+    "id": "mawdu-092",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "من أراد سماع الموتى",
+    "text": "من أراد أن يسمع كلام الموتى فليقرأ عند القبر.",
+    "narrator": "لا يثبت",
+    "source_name": "نقاد البدع",
+    "grade": "موضوع",
+    "chapter": "موضوعات",
+    "keywords": [
+      "موضوع",
+      "مكذوب"
+    ],
+    "explanation": "من خرافات القبور.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "muhaddith": "نقاد البدع"
+    },
+    "created_at": "2026-07-27T18:00:00.000Z"
+  },
+  {
+    "id": "mawdu-094",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "قصائد منسوبة للنبي كذباً",
+    "text": "نسب أبيات للبردة وأشباهها للنبي كذباً.",
+    "narrator": "لا يثبت",
+    "source_name": "نقاد",
+    "grade": "موضوع",
+    "chapter": "موضوعات",
+    "keywords": [
+      "موضوع",
+      "مكذوب"
+    ],
+    "explanation": "لا أصل لها حديثاً.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "muhaddith": "نقاد"
+    },
+    "created_at": "2026-07-27T18:00:00.000Z"
+  },
+  {
+    "id": "mawdu-095",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "من زارني ماشياً",
+    "text": "من زارني ماشياً كتبت له كذا حجة.",
+    "narrator": "لا يثبت",
+    "source_name": "ابن الجوزي",
+    "grade": "موضوع",
+    "chapter": "موضوعات",
+    "keywords": [
+      "موضوع",
+      "مكذوب"
+    ],
+    "explanation": "من موضوعات الزيارة المكذوبة.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "muhaddith": "ابن الجوزي"
+    },
+    "created_at": "2026-07-27T18:00:00.000Z"
+  },
+  {
+    "id": "mawdu-096",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "علي يوزن يوم القيامة",
+    "text": "علي يوزن يوم القيامة.",
+    "narrator": "لا يثبت",
+    "source_name": "ابن الجوزي",
+    "grade": "موضوع",
+    "chapter": "موضوعات",
+    "keywords": [
+      "موضوع",
+      "مكذوب"
+    ],
+    "explanation": "غلو مكشوف.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "muhaddith": "ابن الجوزي"
+    },
+    "created_at": "2026-07-27T18:00:00.000Z"
+  },
+  {
+    "id": "mawdu-098",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "من لبس نعلاً صفراء",
+    "text": "من لبس نعلاً صفراء لم يزل في سرور.",
+    "narrator": "لا يثبت",
+    "source_name": "ابن الجوزي",
+    "grade": "موضوع",
+    "chapter": "موضوعات",
+    "keywords": [
+      "موضوع",
+      "مكذوب"
+    ],
+    "explanation": "من موضوعات الألوان والملابس.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "muhaddith": "ابن الجوزي"
+    },
+    "created_at": "2026-07-27T18:00:00.000Z"
+  },
+  {
+    "id": "mawdu-099",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "لا تسبّوا الديك",
+    "text": "لا تسبّوا الديك فإنه صديقي.",
+    "narrator": "لا يثبت",
+    "source_name": "ابن الجوزي",
+    "grade": "موضوع",
+    "chapter": "موضوعات",
+    "keywords": [
+      "موضوع",
+      "مكذوب"
+    ],
+    "explanation": "صيغ متعددة واهية/موضوعة.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "muhaddith": "ابن الجوزي"
+    },
+    "created_at": "2026-07-27T18:00:00.000Z"
+  },
+  {
+    "id": "mawdu-100",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "من قال أنا مؤمن إن شاء الله فليس بمؤمن",
+    "text": "من قال أنا مؤمن إن شاء الله فليس بمؤمن.",
+    "narrator": "لا يثبت",
+    "source_name": "نقاد",
+    "grade": "موضوع / باطل",
+    "chapter": "موضوعات",
+    "keywords": [
+      "موضوع",
+      "مكذوب"
+    ],
+    "explanation": "هذا الوعيد المكذوب باطل.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "muhaddith": "نقاد"
+    },
+    "created_at": "2026-07-27T18:00:00.000Z"
+  },
+  {
+    "id": "mawdu-101",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "الباذنجان شفاء من كل داء",
+    "text": "الباذنجان شفاء من كل داء.",
+    "narrator": "لا يثبت",
+    "source_name": "ابن الجوزي",
+    "grade": "موضوع",
+    "chapter": "موضوعات",
+    "keywords": [
+      "موضوع",
+      "مكذوب"
+    ],
+    "explanation": "من موضوعات الباذنجان.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "muhaddith": "ابن الجوزي"
+    },
+    "created_at": "2026-07-27T18:00:00.000Z"
+  },
+  {
+    "id": "mawdu-102",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "حديث الطير المشوي لعلي",
+    "text": "اللهم ائتني بأحب خلقك إليك يأكل معي من هذا الطير.",
+    "narrator": "لا يثبت",
+    "source_name": "ابن الجوزي؛ الذهبي",
+    "grade": "ضعيف جداً / واهٍ اشتهر بالوضع",
+    "chapter": "موضوعات",
+    "keywords": [
+      "موضوع",
+      "مكذوب"
+    ],
+    "explanation": "أنكره جماعة وعدّه قوم موضوعاً.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "muhaddith": "ابن الجوزي؛ الذهبي"
+    },
+    "created_at": "2026-07-27T18:00:00.000Z"
+  },
+  {
+    "id": "mawdu-103",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "من ولد له فسماه أحمد أو محمداً",
+    "text": "من ولد له مولود فسماه محمداً كان هو ومولوده في الجنة.",
+    "narrator": "لا يثبت",
+    "source_name": "ابن الجوزي",
+    "grade": "موضوع",
+    "chapter": "موضوعات",
+    "keywords": [
+      "موضوع",
+      "مكذوب"
+    ],
+    "explanation": "من موضوعات التسمية.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "muhaddith": "ابن الجوزي"
+    },
+    "created_at": "2026-07-27T18:00:00.000Z"
+  },
+  {
+    "id": "mawdu-104",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "حديث جبل قاف المحيط",
+    "text": "جبل قاف محيط بالدنيا من زبرجد.",
+    "narrator": "لا يثبت",
+    "source_name": "ابن كثير",
+    "grade": "باطل / إسرائيليات",
+    "chapter": "موضوعات",
+    "keywords": [
+      "موضوع",
+      "مكذوب"
+    ],
+    "explanation": "خرافة إسرائيلية لا حديث.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "muhaddith": "ابن كثير"
+    },
+    "created_at": "2026-07-27T18:00:00.000Z"
+  },
+  {
+    "id": "mawdu-105",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "عوج بن عنق",
+    "text": "كان عوج بن عنق يأخذ الحوت من قعر البحر.",
+    "narrator": "لا يثبت",
+    "source_name": "ابن كثير",
+    "grade": "باطل",
+    "chapter": "موضوعات",
+    "keywords": [
+      "موضوع",
+      "مكذوب"
+    ],
+    "explanation": "قصة باطلة.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "muhaddith": "ابن كثير"
+    },
+    "created_at": "2026-07-27T18:00:00.000Z"
+  },
+  {
+    "id": "daif-064",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "العلم علمان علم الأديان وعلم الأبدان",
+    "text": "العلم علمان: علم الأديان وعلم الأبدان.",
+    "narrator": "لا يثبت",
+    "source_name": "العجلوني",
+    "grade": "لا يصح مرفوعاً",
+    "chapter": "الضعيف المشهور",
+    "keywords": [
+      "ضعيف"
+    ],
+    "explanation": "يُنسب لغير النبي؛ ليس بحديث ثابت.",
+    "authenticity_class": "daif",
+    "metadata": {
+      "muhaddith": "العجلوني"
+    },
+    "created_at": "2026-07-27T18:00:00.000Z"
+  },
+  {
+    "id": "daif-066",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "إن الله يحب العبد الفقير المتعفف",
+    "text": "إن الله يحب العبد الفقير المتعفف أبا العيال.",
+    "narrator": "لا يثبت",
+    "source_name": "ابن ماجه مع نقد",
+    "grade": "ضعيف",
+    "chapter": "الضعيف المشهور",
+    "keywords": [
+      "ضعيف"
+    ],
+    "explanation": "في إسناده مقال.",
+    "authenticity_class": "daif",
+    "metadata": {
+      "muhaddith": "ابن ماجه مع نقد"
+    },
+    "created_at": "2026-07-27T18:00:00.000Z"
+  },
+  {
+    "id": "daif-069",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "من لم يسأل الله يغضب عليه",
+    "text": "من لم يسأل الله يغضب عليه.",
+    "narrator": "لا يثبت",
+    "source_name": "الترمذي",
+    "grade": "ضعيف عند قوم / حسّنه آخرون",
+    "chapter": "الضعيف المشهور",
+    "keywords": [
+      "ضعيف"
+    ],
+    "explanation": "خلاف؛ يُعرض للتنبيه.",
+    "authenticity_class": "daif",
+    "metadata": {
+      "muhaddith": "الترمذي"
+    },
+    "created_at": "2026-07-27T18:00:00.000Z"
+  },
+  {
+    "id": "daif-070",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "الدال على الخير كفاعله — اللفظ الضعيف",
+    "text": "الدال على الخير كفاعله.",
+    "narrator": "لا يثبت",
+    "source_name": "نقاد",
+    "grade": "ضعيف بهذا اللفظ",
+    "chapter": "الضعيف المشهور",
+    "keywords": [
+      "ضعيف"
+    ],
+    "explanation": "يُستبدل بلفظ مسلم الصحيح.",
+    "authenticity_class": "daif",
+    "metadata": {
+      "muhaddith": "نقاد"
+    },
+    "created_at": "2026-07-27T18:00:00.000Z"
+  },
+  {
+    "id": "daif-071",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "تهادوا تحابوا",
+    "text": "تهادوا تحابوا.",
+    "narrator": "لا يثبت",
+    "source_name": "نقاد",
+    "grade": "ضعيف مرفوعاً عند جمهور",
+    "chapter": "الضعيف المشهور",
+    "keywords": [
+      "ضعيف"
+    ],
+    "explanation": "في الأدب المفرد وغيره بأسانيد معلولة.",
+    "authenticity_class": "daif",
+    "metadata": {
+      "muhaddith": "نقاد"
+    },
+    "created_at": "2026-07-27T18:00:00.000Z"
+  },
+  {
+    "id": "daif-072",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "المعدة بيت الداء — مقولة",
+    "text": "المعدة بيت الداء والحمية رأس الدواء.",
+    "narrator": "لا يثبت",
+    "source_name": "العجلوني",
+    "grade": "لا أصل له مرفوعاً",
+    "chapter": "الضعيف المشهور",
+    "keywords": [
+      "ضعيف"
+    ],
+    "explanation": "مقولة طبية لا حديث.",
+    "authenticity_class": "daif",
+    "metadata": {
+      "muhaddith": "العجلوني"
+    },
+    "created_at": "2026-07-27T18:00:00.000Z"
+  },
+  {
+    "id": "sahih-extra-076",
+    "collection": "mutafaq",
+    "hadith_number": null,
+    "title": "السفر قطعة من العذاب",
+    "text": "السفر قطعة من العذاب؛ يمنع أحدكم نومه وطعامه وشرابه فإذا قضى نهمته فليعجّل إلى أهله.",
+    "narrator": "أبو هريرة رضي الله عنه",
+    "source_name": "صحيح البخاري (1804) وصحيح مسلم (1927)",
+    "grade": "صحيح",
+    "chapter": "الصحيح",
+    "keywords": [
+      "صحيح"
+    ],
+    "explanation": "متفق عليه؛ بطاقة تمييز عن ألفاظ واهية في السفر.",
+    "authenticity_class": "sahih",
+    "metadata": {
+      "muhaddith": "البخاري ومسلم"
+    },
+    "created_at": "2026-07-27T18:00:00.000Z"
+  },
+  {
+    "id": "sahih-extra-077",
+    "collection": "muslim",
+    "hadith_number": null,
+    "title": "المؤمن القوي خير وأحب إلى الله",
+    "text": "المؤمن القوي خير وأحب إلى الله من المؤمن الضعيف وفي كل خير.",
+    "narrator": "أبو هريرة رضي الله عنه",
+    "source_name": "صحيح مسلم (2664)",
+    "grade": "صحيح",
+    "chapter": "الصحيح",
+    "keywords": [
+      "صحيح"
+    ],
+    "explanation": "صحيح مسلم.",
+    "authenticity_class": "sahih",
+    "metadata": {
+      "muhaddith": "مسلم"
+    },
+    "created_at": "2026-07-27T18:00:00.000Z"
   }
 ];
 
