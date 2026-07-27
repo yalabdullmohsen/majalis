@@ -111,6 +111,14 @@
   margin: 0 0 0.55rem;
   font-style: normal;
 }
+.hk-card__explain {
+  font-size: 0.84rem;
+  color: #3D5C50;
+  line-height: 1.75;
+  margin: 0 0 0.55rem;
+  padding-top: 0.45rem;
+  border-top: 1px dashed #C8DDD2;
+}
 .hk-card__footer { display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem; }
 .hk-card__scholar { font-size: 0.8rem; font-weight: 700; color: #226A56; }
 .hk-card__died { font-size: 0.8rem; color: #6B9E86; }
