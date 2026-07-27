@@ -136,7 +136,9 @@
     "test:section-hub-visual": "npx tsx src/lib/__tests__/section-hub-visual-regression.test.ts",
     "audit:duplicate-descs": "node scripts/strip-enrichment-boilerplate.mjs --report",
     "test:safe-reload": "node scripts/test-safe-reload.mjs",
-    "verify:seo-prerender": "node scripts/verify-seo-prerender-coverage.mjs"
+    "verify:seo-prerender": "node scripts/verify-seo-prerender-coverage.mjs",
+    "fetch:hadith-sahihayn": "node scripts/fetch-hadith-sahihayn.mjs",
+    "verify:hadith-sahihayn": "node scripts/verify-hadith-sahihayn.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
