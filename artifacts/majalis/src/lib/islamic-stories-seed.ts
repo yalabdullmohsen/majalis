@@ -3590,8 +3590,7 @@ export const ISLAMIC_STORIES_SEED = [
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
   /* ───────── جولة ٤٦: قصص (104-106) ───────── */
   {
     id: 104,
@@ -3697,9 +3696,8 @@ export const ISLAMIC_STORIES_SEED = [
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-27T00:00:00.000Z"
-  }
-,
-  /* ────────── جولة ٤٨: استبدال قصص 107-111 المكررة ────────── */,
+  },
+  /* ────────── جولة ٤٨: استبدال قصص 107-111 المكررة ────────── */
   {
     id: 107,
     slug: "umm-salama-hadith-legacy-r48",
@@ -4167,9 +4165,7 @@ export const ISLAMIC_STORIES_SEED = [
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-27T00:00:00.000Z"
-  }
-
-,
+  },
 /* ───────── جولة ٥٠: قصص (120-124) ───────── */
   {
     id: 120,
@@ -4351,7 +4347,6 @@ export const ISLAMIC_STORIES_SEED = [
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-27T00:00:00.000Z"
   },
-,
 /* ───────── جولة ٥١: قصص (125-129) ───────── */
   {
     id: 125,
@@ -4532,8 +4527,7 @@ export const ISLAMIC_STORIES_SEED = [
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
 /* ───────── جولة ٥٢: قصص (130-134) ───────── */
   {
     id: 130,
@@ -4714,8 +4708,7 @@ export const ISLAMIC_STORIES_SEED = [
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
 /* ───────── جولة ٥٣: قصص (135-139) ───────── */
   {
     id: 135,
@@ -4896,8 +4889,7 @@ export const ISLAMIC_STORIES_SEED = [
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
 /* ───────── جولة ٥٤: قصص (140-144) ───────── */
   {
     id: 140,
@@ -5078,8 +5070,7 @@ export const ISLAMIC_STORIES_SEED = [
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
 /* ───────── جولة ٥٥: قصص (145-149) ───────── */
   {
     id: 145,
@@ -5266,8 +5257,7 @@ export const ISLAMIC_STORIES_SEED = [
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
 /* ───────── جولة ٥٦: قصص (150-154) ───────── */
   {
     id: 150,
@@ -5448,8 +5438,7 @@ export const ISLAMIC_STORIES_SEED = [
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
 /* ───────── جولة ٥٧: قصص (155-159) ───────── */
   {
     id: 155,
@@ -5630,8 +5619,7 @@ export const ISLAMIC_STORIES_SEED = [
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
 /* ───────── جولة ٥٨: قصص (160-164) ───────── */
   {
     id: 160,
@@ -5812,8 +5800,7 @@ export const ISLAMIC_STORIES_SEED = [
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
 /* ───────── جولة ٥٩: قصص (165-169) ───────── */
   {
     id: 165,
@@ -5994,8 +5981,7 @@ export const ISLAMIC_STORIES_SEED = [
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
 /* ───────── جولة ٦٠: قصص (170-174) ───────── */
   {
     id: 170,
@@ -6176,8 +6162,7 @@ export const ISLAMIC_STORIES_SEED = [
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
 /* ───────── جولة ٦١: قصص (175-179) ───────── */
   {
     id: 175,
@@ -6358,8 +6343,7 @@ export const ISLAMIC_STORIES_SEED = [
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
 /* ───────── جولة ٦٢: قصص (180-184) ───────── */
   {
     id: 180,
@@ -6540,8 +6524,7 @@ export const ISLAMIC_STORIES_SEED = [
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
 /* ───────── جولة ٦٣: قصص (185-189) ───────── */
   {
     id: 185,
@@ -6722,8 +6705,7 @@ export const ISLAMIC_STORIES_SEED = [
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
 /* ───────── جولة ٦٤: قصص (190-194) ───────── */
   {
     id: 190,
@@ -6904,8 +6886,7 @@ export const ISLAMIC_STORIES_SEED = [
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
 /* ───────── جولة ٦٥: قصص (195-199) ───────── */
   {
     id: 195,
@@ -7086,8 +7067,7 @@ export const ISLAMIC_STORIES_SEED = [
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
 /* ───────── جولة ٦٦: قصص (200-204) ───────── */
   {
     id: 200,
@@ -7268,8 +7248,7 @@ export const ISLAMIC_STORIES_SEED = [
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
 /* ───────── جولة ٦٧: قصص (205-209) ───────── */
   {
     id: 205,
@@ -7450,8 +7429,7 @@ export const ISLAMIC_STORIES_SEED = [
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
 /* ───────── جولة ٦٨: قصص (210-214) ───────── */
   {
     id: 210,
@@ -7632,8 +7610,7 @@ export const ISLAMIC_STORIES_SEED = [
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
 /* ───────── جولة ٦٩: قصص (215-219) ───────── */
   {
     id: 215,
@@ -7814,8 +7791,7 @@ export const ISLAMIC_STORIES_SEED = [
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
 /* ───────── جولة ٧٠: قصص (220-224) ───────── */
   {
     id: 220,
@@ -7996,8 +7972,7 @@ export const ISLAMIC_STORIES_SEED = [
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
 /* ───────── جولة ٧١: قصص (225-229) ───────── */
   {
     id: 225,
@@ -8178,8 +8153,7 @@ export const ISLAMIC_STORIES_SEED = [
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
 /* ────────── جولة ٧٢: قصص (230-234) ────────── */
   {
     id: 230,
@@ -8360,8 +8334,7 @@ export const ISLAMIC_STORIES_SEED = [
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
 /* ────────── جولة ٧٣: قصص (235-239) ────────── */
   {
     id: 235,
@@ -8545,8 +8518,7 @@ export const ISLAMIC_STORIES_SEED = [
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
 /* ────────── جولة ٧٤: قصص (240-244) ────────── */
   {
     id: 240,
@@ -8727,8 +8699,7 @@ export const ISLAMIC_STORIES_SEED = [
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
 /* ────────── جولة ٧٥: قصص (245-249) ────────── */
   {
     id: 245,
@@ -8909,8 +8880,7 @@ export const ISLAMIC_STORIES_SEED = [
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
 /* ────────── جولة ٧٦: قصص (250-254) ────────── */
   {
     id: 250,
@@ -9091,8 +9061,7 @@ export const ISLAMIC_STORIES_SEED = [
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
 /* ────────── جولة ٧٧: قصص (255-259) ────────── */
   {
     id: 255,
@@ -9273,8 +9242,7 @@ export const ISLAMIC_STORIES_SEED = [
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
 /* ────────── جولة ٧٨: قصص (260-263) ────────── */
   {
     id: 260,
@@ -9419,8 +9387,7 @@ export const ISLAMIC_STORIES_SEED = [
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
 /* ────────── جولة ٧٩: قصص أصلية (264-268) ────────── */
   {
     id: 264,
@@ -9569,8 +9536,7 @@ export const ISLAMIC_STORIES_SEED = [
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
 /* ────────── جولة ٨٠: قصص أصلية (269-273) ────────── */
   {
     id: 269,
@@ -9716,8 +9682,7 @@ export const ISLAMIC_STORIES_SEED = [
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
   /* ────────── جولة ٨١: قصص أصلية (274-278) ────────── */
   {
     "id": 274,
@@ -9898,8 +9863,7 @@ export const ISLAMIC_STORIES_SEED = [
     "trust_level": "primary_text",
     "editorial_review_status": "unreviewed",
     "last_updated_at": "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
   /* ────────── جولة ٨٢: قصص أصلية (279-283) ────────── */
   {
     "id": 279,
@@ -10080,8 +10044,7 @@ export const ISLAMIC_STORIES_SEED = [
     "trust_level": "scholarly_source",
     "editorial_review_status": "unreviewed",
     "last_updated_at": "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
   /* ────────── جولة ٨٣: قصص أصلية (284-288) ────────── */
   {
     "id": 284,
@@ -10262,8 +10225,7 @@ export const ISLAMIC_STORIES_SEED = [
     "trust_level": "scholarly_source",
     "editorial_review_status": "unreviewed",
     "last_updated_at": "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
   /* ────────── جولة ٨٤: قصص أصلية (289-293) ────────── */
   {
     "id": 289,
@@ -10444,8 +10406,7 @@ export const ISLAMIC_STORIES_SEED = [
     "trust_level": "scholarly_source",
     "editorial_review_status": "unreviewed",
     "last_updated_at": "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
   /* ────────── جولة ٨٥: قصص أصلية (294-298) ────────── */
   {
     "id": 294,
@@ -10626,8 +10587,7 @@ export const ISLAMIC_STORIES_SEED = [
     "trust_level": "scholarly_source",
     "editorial_review_status": "unreviewed",
     "last_updated_at": "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
   /* ────────── جولة ٨٦: قصص أصلية (299-303) ────────── */
   {
     "id": 299,
@@ -10808,8 +10768,7 @@ export const ISLAMIC_STORIES_SEED = [
     "trust_level": "scholarly_source",
     "editorial_review_status": "unreviewed",
     "last_updated_at": "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
   /* ────────── جولة ٨٧: قصص أصلية (304-308) ────────── */
   {
     "id": 304,
@@ -10990,8 +10949,7 @@ export const ISLAMIC_STORIES_SEED = [
     "trust_level": "scholarly_source",
     "editorial_review_status": "unreviewed",
     "last_updated_at": "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
   /* ────────── جولة ٨٨: قصص أصلية (309-313) ────────── */
   {
     "id": 309,
@@ -11172,8 +11130,7 @@ export const ISLAMIC_STORIES_SEED = [
     "trust_level": "scholarly_source",
     "editorial_review_status": "unreviewed",
     "last_updated_at": "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
   /* ────────── جولة ٨٩: قصص أصلية (314-318) ────────── */
   {
     "id": 314,
@@ -11354,8 +11311,7 @@ export const ISLAMIC_STORIES_SEED = [
     "trust_level": "scholarly_source",
     "editorial_review_status": "unreviewed",
     "last_updated_at": "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
   /* ────────── جولة ٩٠: قصص أصلية (319-323) ────────── */
   {
     "id": 319,
@@ -11536,8 +11492,7 @@ export const ISLAMIC_STORIES_SEED = [
     "trust_level": "scholarly_source",
     "editorial_review_status": "unreviewed",
     "last_updated_at": "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
   /* ────────── جولة ٩١: قصص أصلية (324-328) ────────── */
   {
     "id": 324,
@@ -11718,8 +11673,7 @@ export const ISLAMIC_STORIES_SEED = [
     "trust_level": "scholarly_source",
     "editorial_review_status": "unreviewed",
     "last_updated_at": "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
   /* ────────── جولة ٩٢: قصص أصلية (329-333) ────────── */
   {
     "id": 329,
@@ -11900,8 +11854,7 @@ export const ISLAMIC_STORIES_SEED = [
     "trust_level": "scholarly_source",
     "editorial_review_status": "unreviewed",
     "last_updated_at": "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
   /* ────────── جولة ٩٣: قصص أصلية (334-338) ────────── */
   {
     "id": 334,
@@ -12082,8 +12035,7 @@ export const ISLAMIC_STORIES_SEED = [
     "trust_level": "primary_text",
     "editorial_review_status": "unreviewed",
     "last_updated_at": "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
   /* ────────── جولة ٩٤: قصص أصلية (339-343) ────────── */
   {
     "id": 339,
@@ -12265,8 +12217,7 @@ export const ISLAMIC_STORIES_SEED = [
     "trust_level": "primary_text",
     "editorial_review_status": "unreviewed",
     "last_updated_at": "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
   /* ────────── جولة ٩٥: قصص أصلية (344-348) ────────── */
   {
     "id": 344,
@@ -12447,8 +12398,7 @@ export const ISLAMIC_STORIES_SEED = [
     "trust_level": "primary_text",
     "editorial_review_status": "unreviewed",
     "last_updated_at": "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
   /* ────────── جولة ٩٦: قصص أصلية (349-353) ────────── */
   {
     "id": 349,
@@ -12629,8 +12579,7 @@ export const ISLAMIC_STORIES_SEED = [
     "trust_level": "primary_text",
     "editorial_review_status": "unreviewed",
     "last_updated_at": "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
   /* ────────── جولة ٩٧: قصص أصلية (354-358) ────────── */
   {
     "id": 354,
@@ -12811,8 +12760,7 @@ export const ISLAMIC_STORIES_SEED = [
     "trust_level": "primary_text",
     "editorial_review_status": "unreviewed",
     "last_updated_at": "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
   /* ────────── جولة ٩٨: قصص أصلية (359-363) ────────── */
   {
     "id": 359,
@@ -12993,8 +12941,7 @@ export const ISLAMIC_STORIES_SEED = [
     "trust_level": "scholarly_source",
     "editorial_review_status": "unreviewed",
     "last_updated_at": "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
   /* ────────── جولة ٩٩: قصص أصلية (364-368) ────────── */
   {
     "id": 364,
@@ -13175,8 +13122,7 @@ export const ISLAMIC_STORIES_SEED = [
     "trust_level": "primary_text",
     "editorial_review_status": "unreviewed",
     "last_updated_at": "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
   /* ────────── جولة ١٠٠: قصص أصلية (369-373) ────────── */
   {
     "id": 369,
@@ -13357,8 +13303,7 @@ export const ISLAMIC_STORIES_SEED = [
     "trust_level": "scholarly_source",
     "editorial_review_status": "unreviewed",
     "last_updated_at": "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
   /* ────────── جولة ١٠١: قصص أصلية (374-378) ────────── */
   {
     "id": 374,
@@ -13541,8 +13486,7 @@ export const ISLAMIC_STORIES_SEED = [
     "trust_level": "primary_text",
     "editorial_review_status": "unreviewed",
     "last_updated_at": "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
   /* ────────── جولة ١٠٢: قصص أصلية (379-383) ────────── */
   {
     "id": 379,
@@ -13723,8 +13667,7 @@ export const ISLAMIC_STORIES_SEED = [
     "trust_level": "scholarly_source",
     "editorial_review_status": "unreviewed",
     "last_updated_at": "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
   /* ────────── جولة ١٠٣: قصص أصلية (384-388) ────────── */
   {
     "id": 384,
@@ -13906,8 +13849,7 @@ export const ISLAMIC_STORIES_SEED = [
     "trust_level": "scholarly_source",
     "editorial_review_status": "unreviewed",
     "last_updated_at": "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
   /* ────────── جولة ١٠٤: قصص أصلية (389-393) ────────── */
   {
     "id": 389,
@@ -14088,8 +14030,7 @@ export const ISLAMIC_STORIES_SEED = [
     "trust_level": "scholarly_source",
     "editorial_review_status": "unreviewed",
     "last_updated_at": "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
   /* ────────── جولة ١٠٥: قصص أصلية (394-398) ────────── */
   {
     "id": 394,
@@ -14270,8 +14211,7 @@ export const ISLAMIC_STORIES_SEED = [
     "trust_level": "scholarly_source",
     "editorial_review_status": "unreviewed",
     "last_updated_at": "2026-07-27T00:00:00.000Z"
-  }
-,
+  },
   /* ────────── جولة ١٠٦: قصص أصلية (399-403) ────────── */
   {
     "id": 399,
