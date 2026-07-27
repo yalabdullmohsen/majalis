@@ -10,6 +10,7 @@ export function ComingSoonDialog({ open, title, onClose }: Props) {
   if (!open) return null;
 
   return (
+    /* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions */
     <div className="bottom-sheet-overlay" role="presentation" onClick={onClose}>
       <div
         className="bottom-sheet coming-soon-dialog"
