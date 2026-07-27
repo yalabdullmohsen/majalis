@@ -146,6 +146,22 @@
   flex-shrink: 0; transition: background .15s; }
 .hb-hadith-row__copy:hover { background: rgba(23,61,53,.15); }
 
+.hb-hadith-row__isnad {
+  margin: 0.35rem 0 0.15rem;
+  font-size: 0.8rem;
+  color: var(--elite-ink-soft);
+}
+.hb-hadith-row__isnad summary {
+  cursor: pointer;
+  font-weight: 700;
+  color: var(--ds-emerald, #226A56);
+}
+.hb-hadith-row__isnad p {
+  margin: 0.4rem 0 0;
+  line-height: 1.7;
+  color: var(--elite-ink-muted);
+}
+
 /* الترقيم */
 .hb-pagination { display: flex; align-items: center; justify-content: center;
   gap: .75rem; margin-top: 1.25rem; direction: rtl; }
