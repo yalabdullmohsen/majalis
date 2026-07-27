@@ -126,6 +126,10 @@
 }
 
 /* ── موضع الشعار على الخلفية الداكنة ── */
+.navbar-v3 .navbar-brand img.navbar-logo--calligraphy {
+  filter: brightness(0) invert(1);
+  opacity: 0.96;
+}
 .navbar-v3 .footer-star polygon,
 .navbar-v3 .footer-star circle {
   stroke: rgba(255, 255, 255, 0.5) !important;

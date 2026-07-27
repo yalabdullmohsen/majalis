@@ -380,11 +380,20 @@ html.dark .nav-soon-badge {
   box-shadow: none !important;
 }
 .hpv4-vision-title {
-  margin: 0 0 .65rem;
+  margin: 0 0 .35rem;
   color: #faf8f2;
-  font-size: clamp(1.35rem, 5vw, 2.15rem);
+  font-size: clamp(1.55rem, 5.5vw, 2.45rem);
   font-weight: 800;
-  line-height: 1.45;
+  line-height: 1.35;
+  text-wrap: balance;
+  letter-spacing: 0.01em;
+}
+.hpv4-vision-slogan {
+  margin: 0 0 .85rem;
+  color: rgba(250, 248, 242, 0.88);
+  font-size: clamp(0.92rem, 2.4vw, 1.15rem);
+  font-weight: 600;
+  line-height: 1.55;
   text-wrap: balance;
 }
 .home-start-here {

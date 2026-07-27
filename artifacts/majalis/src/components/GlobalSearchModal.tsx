@@ -32,20 +32,20 @@ const KIND_META: Record<string, { label: string; Icon: LucideIcon; color: string
   lesson:        { label: "درس",       Icon: GraduationCap, color: "var(--majalis-emerald, #143F35)" },
   hadith:        { label: "حديث",      Icon: Scroll,        color: "#1E40AF" },
   library:       { label: "كتاب",      Icon: BookOpen,      color: "var(--majalis-emerald, #143F35)" },
-  fatwa:         { label: "فتوى",      Icon: Scale,         color: "#5B21B6" },
+  fatwa:         { label: "فتوى",      Icon: Scale,         color: "#226A56" },
   fiqh:          { label: "فقه",       Icon: Scale,         color: "var(--majalis-emerald, #143F35)" },
   fiqh_decision: { label: "قرار فقهي", Icon: Scale,         color: "var(--majalis-emerald, #143F35)" },
   ruling:        { label: "حكم",       Icon: FileText,      color: "#1E40AF" },
   fawaid:        { label: "فائدة",     Icon: Lightbulb,     color: "var(--majalis-emerald, #143F35)" },
-  qa:            { label: "سؤال",      Icon: HelpCircle,    color: "#5B21B6" },
+  qa:            { label: "سؤال",      Icon: HelpCircle,    color: "#226A56" },
   quran:         { label: "قرآن",      Icon: BookMarked,    color: "var(--majalis-emerald, #143F35)" },
   course:        { label: "دورة",      Icon: GraduationCap, color: "#1E40AF" },
   miracle:       { label: "إعجاز",     Icon: Star,          color: "var(--majalis-emerald, #143F35)" },
-  article:       { label: "مقال",      Icon: Newspaper,     color: "#5B21B6" },
+  article:       { label: "مقال",      Icon: Newspaper,     color: "#226A56" },
   update:        { label: "مستجد",     Icon: Bell,          color: "var(--majalis-emerald, #143F35)" },
   topic:         { label: "موضوع",     Icon: Tag,           color: "#1E40AF" },
   knowledge:     { label: "معرفة",     Icon: Layers,        color: "var(--majalis-emerald, #143F35)" },
-  sheikh:        { label: "شيخ",       Icon: User,          color: "#5B21B6" },
+  sheikh:        { label: "شيخ",       Icon: User,          color: "#226A56" },
   adhkar:        { label: "ذكر",       Icon: RotateCw,      color: "var(--majalis-emerald, #143F35)" },
 };
 
@@ -114,7 +114,7 @@ function ResultCard({
   query: string;
   onSelect: (r: IntelligentSearchResult) => void;
 }) {
-  const meta = KIND_META[result.kind] ?? { label: result.kind, Icon: FileText, color: "#5B21B6" };
+  const meta = KIND_META[result.kind] ?? { label: result.kind, Icon: FileText, color: "#226A56" };
   return (
     <button
       type="button"

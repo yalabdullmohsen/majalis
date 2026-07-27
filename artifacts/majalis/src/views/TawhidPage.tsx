@@ -39,7 +39,7 @@ const AQEEDA_SECTIONS: AqeedaSection[] = [
   {
     emoji: "✨", title: "أركان الإيمان",
     desc: "الإيمان بالله وملائكته وكتبه ورسله واليوم الآخر والقدر",
-    href: "/arkan-iman", badge: "٦ أركان", color: "#7C3AED",
+    href: "/arkan-iman", badge: "٦ أركان", color: "#226A56",
   },
   {
     emoji: "💎", title: "الأسماء الحسنى",
@@ -59,7 +59,7 @@ const AQEEDA_SECTIONS: AqeedaSection[] = [
   {
     emoji: "👼", title: "الملائكة في الإسلام",
     desc: "الإيمان بوجودهم وصفاتهم وما ثبت من أسمائهم ومهامهم في الوحي",
-    href: "/malaika", badge: "غيبيات", color: "#5B21B6",
+    href: "/malaika", badge: "غيبيات", color: "#0F766E",
   },
   {
     emoji: "⚖️", title: "الولاء والبراء",
@@ -102,7 +102,7 @@ const TAWHEED_TYPES = [
     num: "٣", title: "توحيد الأسماء والصفات", subtitle: "توحيد الإثبات والتنزيه",
     desc: "الإيمان بما أثبته الله لنفسه وأثبته له رسوله ﷺ من الأسماء الحسنى والصفات العليا، على وجه يليق بجلاله سبحانه، بلا تحريف ولا تعطيل ولا تكييف ولا تمثيل.",
     ayah: "لَيْسَ كَمِثْلِهِ شَيْءٌ وَهُوَ السَّمِيعُ الْبَصِيرُ",
-    ref: "الشورى: ١١", variant: "purple",
+    ref: "الشورى: ١١", variant: "gold",
   },
 ];
 
@@ -465,7 +465,7 @@ export default function TawhidPage() {
         <h2 id="types-heading" className="tawheed-principles-heading">أنواع التوحيد الثلاثة</h2>
         <div className="tawheed-types-grid">
           {TAWHEED_TYPES.map((t, idx) => (
-            <div key={t.num} className={`tawheed-type-card tawheed-type-card--${idx === 2 ? "purple" : "emerald"}`}>
+            <div key={t.num} className={`tawheed-type-card tawheed-type-card--${idx === 2 ? "gold" : "emerald"}`}>
               <div className="tawheed-type-card__num">{t.num}</div>
               <p className="tawheed-type-card__title">{t.title}</p>
               <p className="tawheed-type-card__subtitle">{t.subtitle}</p>

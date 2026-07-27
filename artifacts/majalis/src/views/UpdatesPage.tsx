@@ -13,12 +13,12 @@ import "@/styles/pages/updates.css";
 
 const TYPE_COLORS: Record<string, string> = {
   قرار: "#164E3C",
-  فتوى: "#2563EB",
-  درس: "#7C3AED",
+  فتوى: "#226A56",
+  درس: "#143F35",
   دورة: "#1E4A37",
   كتاب: "#059669",
-  إعلان: "#DC2626",
-  "خبر علمي": "#0891B2",
+  إعلان: "#B8963F",
+  "خبر علمي": "#0F766E",
 };
 
 function formatDate(iso?: string) {

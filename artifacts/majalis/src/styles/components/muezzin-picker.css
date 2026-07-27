@@ -72,7 +72,7 @@
 }
 .mzp-style--emerald { --mzp-style-color: var(--majalis-emerald, #226A56); }
 .mzp-style--blue    { --mzp-style-color: #60A5FA; }
-.mzp-style--purple  { --mzp-style-color: #A78BFA; }
+.mzp-style--purple  { --mzp-style-color: #B8963F; }
 .mzp-preview-btn {
   flex-shrink: 0;
   width: 34px;

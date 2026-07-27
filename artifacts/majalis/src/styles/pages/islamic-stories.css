@@ -339,7 +339,7 @@
 }
 
 .isp-detail__section-title--green  { color: #15803D !important; }
-.isp-detail__section-title--purple { color: #6D28D9 !important; }
+.isp-detail__section-title--brand { color: #226A56 !important; }
 .isp-detail__section-title--gold   { color: var(--majalis-emerald,#226A56) !important; }
 
 .isp-detail__body {

@@ -1215,7 +1215,7 @@ input, textarea, select { font-family: inherit; }
   width: 14rem;
   height: 14rem;
   border-radius: 999px;
-  background: rgba(31, 110, 84, 0.12);
+  background: color-mix(in srgb, var(--em-600, #226A56) 10%, transparent);
 }
 
 .home-card-row {
@@ -6942,19 +6942,26 @@ body.has-assistant-fab .app-main {
 .ds-btn-lg  { min-height: 52px; padding: 0.75rem 1.75rem; font-size: var(--ds-text-base); }
 
 .ds-btn-primary {
-  background: var(--ds-gold-grad);
-  color: var(--msk-canvas);
-  box-shadow: 0 4px 18px var(--msk-gold-glow);
+  background: var(--em-600, #226A56);
+  color: #fff;
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--em-800, #143F35) 18%, transparent);
   font-weight: 700;
 }
-.ds-btn-primary:hover { box-shadow: 0 8px 28px var(--msk-gold-glow); }
+.ds-btn-primary:hover {
+  background: var(--em-800, #143F35);
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--em-800, #143F35) 22%, transparent);
+}
 
 .ds-btn-gold {
-  background: var(--ds-gold-grad);
-  color: var(--msk-canvas);
-  box-shadow: 0 4px 18px var(--msk-gold-glow);
+  background: var(--gold-500, #B8963F);
+  color: #1a1a18;
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--gold-600, #8F7230) 20%, transparent);
 }
-.ds-btn-gold:hover { box-shadow: 0 8px 28px var(--msk-gold-glow); }
+.ds-btn-gold:hover {
+  background: var(--gold-600, #8F7230);
+  color: #fff;
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--gold-700, #6B5524) 22%, transparent);
+}
 
 .ds-btn-ghost {
   background: transparent;

@@ -184,7 +184,7 @@ html[data-theme="dark"] .twh-hub-card__current-tag {
 }
 .twh-book-level--beginner { background: #D1FAE5; color: #065F46; }
 .twh-book-level--mid      { background: rgba(23,61,53,.12); color: #226A56; }
-.twh-book-level--adv      { background: #EDE9FE; color: #5B21B6; }
+.twh-book-level--adv      { background: #FAF3E0; color: #6B5524; }
 /* --mid وحدها خلفيتها شفافة (تتلوّن بلون البطاقة المحيطة) فتصبح داكنة في
    الوضع الليلي بينما نصها #226A56 يبقى داكنًا — نفس تصادم .sw-badge--wajib. */
 html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
@@ -211,7 +211,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
   background: var(--card-color, var(--majalis-emerald));
 }
 .tawheed-type-card--emerald { --card-color: var(--majalis-emerald, #226A56); }
-.tawheed-type-card--purple  { --card-color: #7C3AED; }
+.tawheed-type-card--gold  { --card-color: #B8963F; }
 .tawheed-hadith-badge {
   border-right-color: var(--grade-color, #15803d);
 }

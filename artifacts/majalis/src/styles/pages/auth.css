@@ -98,7 +98,7 @@
   padding: 0.7rem;
   border: none;
   border-radius: var(--ds-radius);
-  background: var(--majalis-emerald);
+  background: var(--em-600, var(--majalis-emerald, #226A56));
   color: var(--majalis-parchment);
   font-size: var(--ds-text-sm);
   font-weight: 700;

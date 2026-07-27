@@ -33,7 +33,7 @@
 }
 .nf2-brand__name {
   font-weight: 800;
-  color: #226A56;
+  color: var(--em-600, #226A56);
   font-size: 1.05rem;
 }
 
@@ -42,19 +42,19 @@
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  background: rgba(23,61,53,.1);
+  background: rgba(20,63,53,.1);
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 1.25rem;
-  border: 1.5px solid rgba(23,61,53,.18);
+  border: 1.5px solid rgba(20,63,53,.18);
 }
-.nf2-compass { color: #226A56; }
+.nf2-compass { color: var(--em-600, #226A56); }
 
 .nf2-code {
   font-size: 2.8rem;
   font-weight: 800;
-  color: #226A56;
+  color: var(--em-600, #226A56);
   letter-spacing: normal;
   margin: 0 0 0.4rem;
   font-variant-numeric: tabular-nums;
@@ -76,10 +76,10 @@
   border: 1.5px solid transparent;
   transition: background .15s, color .15s;
 }
-.nf2-btn--primary { background: #226A56; color: #fff; border-color: #226A56; }
-.nf2-btn--primary:hover { background: #143F35; border-color: #143F35; }
-.nf2-btn--outline { background: transparent; color: #226A56; border-color: #226A56; }
-.nf2-btn--outline:hover { background: rgba(23,61,53,.08); }
+.nf2-btn--primary { background: var(--em-600, #226A56); color: #fff; border-color: var(--em-600, #226A56); }
+.nf2-btn--primary:hover { background: var(--em-800, #143F35); border-color: var(--em-800, #143F35); }
+.nf2-btn--outline { background: transparent; color: var(--em-600, #226A56); border-color: var(--em-600, #226A56); }
+.nf2-btn--outline:hover { background: rgba(20,63,53,.08); }
 
 /* أقسام مقترحة */
 .nf2-suggestions { width: 100%; margin-bottom: 1.75rem; }
@@ -113,15 +113,15 @@
   background: var(--clr-surface, #fff);
   transition: border-color .15s, background .15s;
 }
-.nf2-sug-item:hover { border-color: #226A56; background: rgba(23,61,53,.05); color: #226A56; }
-.nf2-sug-item__icon { color: #226A56; }
+.nf2-sug-item:hover { border-color: var(--em-600, #226A56); background: rgba(20,63,53,.05); color: var(--em-600, #226A56); }
+.nf2-sug-item__icon { color: var(--em-600, #226A56); }
 
 .nf2-quiz-wrap { width: 100%; }
 
 /* Dark mode 72 */
-html[data-theme="dark"] .nf2-icon-wrap { background: rgba(23,61,53,.2); border-color: rgba(23,61,53,.3); }
+html[data-theme="dark"] .nf2-icon-wrap { background: rgba(20,63,53,.2); border-color: rgba(20,63,53,.3); }
 html[data-theme="dark"] .nf2-sug-item { background: rgba(255,255,255,.04); border-color: rgba(255,255,255,.1); color: #e8f5ee; }
-html[data-theme="dark"] .nf2-sug-item:hover { border-color: #226A56; background: rgba(23,61,53,.15); }
+html[data-theme="dark"] .nf2-sug-item:hover { border-color: var(--em-600, #226A56); background: rgba(20,63,53,.15); }
 
 
 /* ============================================================

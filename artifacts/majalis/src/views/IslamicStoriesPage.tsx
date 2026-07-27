@@ -126,7 +126,7 @@ function StoryDetail({ story, onBack }: { story: IslamicStory; onBack: () => voi
       <div className="isp-detail__grid">
         {story.related_figures.length > 0 && (
           <section className="isp-detail__section isp-detail__section--figures">
-            <h2 className="isp-detail__section-title isp-detail__section-title--purple"><Users size={18} strokeWidth={1.8} aria-hidden="true" /> الشخصيات</h2>
+            <h2 className="isp-detail__section-title isp-detail__section-title--brand"><Users size={18} strokeWidth={1.8} aria-hidden="true" /> الشخصيات</h2>
             <div className="isp-detail__list">
               {story.related_figures.map((fig, i) => (
                 <span key={i} className="isp-detail__list-item">• {fig}</span>

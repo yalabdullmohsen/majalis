@@ -144,6 +144,16 @@ export default function NavBar() {
               }
               <span className="navbar-menu-btn__label">{isMenuOpen ? t("nav_close") : t("nav_menu")}</span>
             </button>
+            <Link href="/" className="navbar-brand" aria-label="المجلس العلمي — الصفحة الرئيسية">
+              <img
+                src="/logo-calligraphy.png"
+                alt=""
+                className="navbar-logo navbar-logo--calligraphy"
+                width={160}
+                height={40}
+                decoding="async"
+              />
+            </Link>
           </div>
 
           {/* Desktop tabs */}
