@@ -759,8 +759,7 @@ html.dark .nav-soon-badge {
   }
   .navbar-menu-btn__label, .navbar-mobile-login__label { display: none; }
   .hpv4-hero { border-radius: var(--radius-lg); }
-  .site-footer--v3 .site-footer-groups { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .site-footer--v3 .site-footer-brand { margin-block-end: 1.25rem; }
+  .site-footer--v3 .site-footer-groups { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--ds-space-6); }
 
   .lrf-wrap {
     min-height: min(42vh, 18rem);
@@ -1023,15 +1022,6 @@ html[data-theme="dark"] .global-back-btn {
 .lrf-label {
   color: var(--color-text-muted);
   font-size: 0.875rem;
-}
-
-.site-footer-logo--calligraphy {
-  display: block;
-  width: min(100%, 9.5rem);
-  height: auto;
-  max-height: 3.25rem;
-  object-fit: contain;
-  object-position: start center;
 }
 
 /* ══ مكوّنات مشتركة: أزرار، رجوع، شرائح، drawer، بانرات ══ */
