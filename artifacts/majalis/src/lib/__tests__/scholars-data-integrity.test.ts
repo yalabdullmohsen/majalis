@@ -340,6 +340,71 @@ assert(
   `غائب: ${missingFromList.join(", ") || "—"} | يتيم: ${orphanedInList.join(", ") || "—"} — شغّل: npx tsx scripts/regen-scholars-list-json.mjs`
 );
 
+console.log("\n=== ١١) ربط مؤلّفي المكتبة بصفحات العلماء (ما يصل الزائر لا ما في البيانات) ===");
+
+// اكتُشف 2026-07-27: صفحة الكتاب تربط اسم المؤلف بصفحة العالم عبر
+// resolveAuthorScholarLink، وكان 112 من 173 كتاباً بلا رابط — لا لغياب
+// صفحة العالم بل لاختلاف صيغة الاسم بين الملفَّين («الإمام النووي» في
+// scholars-data.ts مقابل «الإمام يحيى بن شرف النووي» في فهرس المكتبة)،
+// مع عتبة تشابهٍ (>=8 حرفاً) لا تبلغها نسبةٌ قصيرة كـ«النووي». والفحص
+// هنا يحرس الطرفين معاً: أن الروابط الصحيحة لا تسقط، وأن خفض الشرط لا
+// يُنتج نسبةً خاطئة — والنسبة الخاطئة أسوأ من غياب الرابط.
+const { resolveAuthorScholarLink } = await import("../author-scholar-links");
+const { LIBRARY_CATALOG } = await import("../library-catalog");
+
+const MUST_LINK: Array<[string, string]> = [
+  ["الإمام يحيى بن شرف النووي", "nawawi"],
+  ["الإمام محمد بن إدريس الشافعي", "shafi"],
+  ["الإمام أبو محمد الحسين بن مسعود البغوي", "baghawi"],
+  ["الإمام ابن رشد القرطبي", "ibn-rushd"], // لا القرطبي المفسِّر
+  ["الإمام ابن أبي حاتم الرازي", "ibn-abi-hatim"], // «ابن أبي…» أصلُ الاسم لا كنية
+  ["الإمام شهاب الدين القرافي المالكي", "al-qarafi"], // نسبةُ المذهب من حقل madhhab
+];
+const wrongLinks = MUST_LINK.filter(([author, id]) => resolveAuthorScholarLink(author).scholarId !== id).map(
+  ([author, id]) => `«${author}» ⇐ المتوقَّع ${id} والواقع ${resolveAuthorScholarLink(author).scholarId ?? "لا رابط"}`
+);
+assert(wrongLinks.length === 0, `${MUST_LINK.length} صيغةَ اسمٍ تُربط بصاحبها`, wrongLinks.join(" | "));
+
+const MUST_NOT_LINK: Array<[string, string]> = [
+  ["أبو القاسم القشيري", "لا يُنسب لمسلم بن الحجاج القشيري"],
+  ["محمد بن أبي بكر الرازي", "صاحب مختار الصحاح لا الفخر الرازي"],
+  ["الإمامان جلال الدين المحلي وجلال الدين السيوطي", "مؤلِّفان لا واحد"],
+  ["الإمام أبو حامد الغزالي", "ملتبس بين الغزاليَّين ⇒ يبقى بلا رابط"],
+];
+const falseLinks = MUST_NOT_LINK.filter(([author]) => resolveAuthorScholarLink(author).href).map(
+  ([author, why]) => `«${author}» رُبط بـ${resolveAuthorScholarLink(author).scholarId} — ${why}`
+);
+assert(falseLinks.length === 0, `${MUST_NOT_LINK.length} صيغةً ملتبسةً تبقى بلا رابط`, falseLinks.join(" | "));
+
+// كل رابطٍ يصدر فعلاً يجب أن يشترك مع اسم العالم المعروض في جزءٍ مميّز
+const authorNorm = (v: string) =>
+  v
+    .replace(/[أإآٱ]/g, "ا")
+    .replace(/ة/g, "ه")
+    .replace(/ى/g, "ي")
+    .replace(/[^؀-ۿa-zA-Z0-9\s]/g, "")
+    .split(/\s+/)
+    .filter((t) => t.length >= 3 && t !== "ابن" && t !== "الامام");
+const byIdForLinks = new Map(SCHOLARS.map((s) => [s.id, s]));
+const unshared: string[] = [];
+let linkedBooks = 0;
+for (const book of LIBRARY_CATALOG) {
+  const link = resolveAuthorScholarLink(book.author);
+  if (!link.scholarId) continue;
+  linkedBooks += 1;
+  const scholar = byIdForLinks.get(link.scholarId);
+  const scholarTokens = new Set(authorNorm(scholar?.name || ""));
+  if (!authorNorm(book.author).some((t) => scholarTokens.has(t))) {
+    unshared.push(`${book.id}: «${book.author}» ⇐ ${scholar?.name}`);
+  }
+}
+assert(unshared.length === 0, "لا رابط مؤلِّفٍ بلا جزءٍ مشترك مع اسم العالم المعروض", unshared.join(" | "));
+assert(
+  linkedBooks >= 121,
+  `تغطية الربط لا ترتدّ (${linkedBooks}/${LIBRARY_CATALOG.length} كتاباً مربوطاً، الحدّ 121)`,
+  "انخفضت التغطية — راجع تغييرك في author-scholar-links.ts"
+);
+
 console.log(`\n${"─".repeat(48)}`);
 console.log(`النتائج: ${passed} نجح، ${failed} فشل`);
 if (failed > 0) process.exit(1);
