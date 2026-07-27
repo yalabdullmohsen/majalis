@@ -15,17 +15,20 @@ type Citation = { surah: string; ayahs: string; note: string };
 
 // ── Palette & Helpers ────────────────────────────────────────────────────────
 
+/* لوحة زمردية موحَّدة: درجات خضراء مقروءة على البطاقات الفاتحة،
+   وأولو العزم (ومنهم محمد ﷺ) على زمرد المنصة #143F35 — التمييز على
+   الخلفية الداكنة يُعالَج عبر --prophet-color-on-dark في CSS. */
 const PROPHET_HUE: Record<string, string> = {
-  adam: "#5D726A", idris: "#4A6B6B", nuh: "#3D6560", hud: "#5A7066",
-  salih: "#5B6B60", ibrahim: "#143F35", lut: "#3A6A4A", ismail: "#2A5E42",
-  "is-haq": "#3D6050", yaqub: "#356055", yusuf: "#2D5545", ayyub: "#4A6055",
-  shuayb: "#25504A", musa: "#143F35", harun: "#1E4A38", "dhul-kifl": "#354A42",
-  dawud: "#2A3E35", sulayman: "#143F35", ilyas: "#3A5548", "al-yasa": "#266050",
-  yunus: "#1A5555", zakariyya: "#2A503C", yahya: "#205540", isa: "#1E3F50",
+  adam: "#4F6B5F", idris: "#3F6A6A", nuh: "#1F6B56", hud: "#4A6B58",
+  salih: "#4A6454", ibrahim: "#143F35", lut: "#2F6A45", ismail: "#1F6B48",
+  "is-haq": "#356050", yaqub: "#2C5C50", yusuf: "#246048", ayyub: "#3F5C50",
+  shuayb: "#1F5A52", musa: "#143F35", harun: "#1A5C45", "dhul-kifl": "#2E4A42",
+  dawud: "#2A4A3A", sulayman: "#143F35", ilyas: "#345548", "al-yasa": "#1F6450",
+  yunus: "#176060", zakariyya: "#1F5A40", yahya: "#1A5840", isa: "#1A4A58",
   muhammad: "#143F35",
 };
 
-const IVORY = "#D6D5CE";
+const IVORY = "#FAFAF8";
 
 /* بيانات تكميلية: عدد الذكر، المعجزة، الكتاب، المواضع القرآنية */
 type Supplement = { mentioned: number; miracle?: string; book?: string; quranRef?: string };
