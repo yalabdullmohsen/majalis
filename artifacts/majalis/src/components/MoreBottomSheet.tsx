@@ -126,16 +126,6 @@ const SHEET_SECTIONS_RAW: { group: string; items: SheetItem[] }[] = [
     { href: "/institutions",     label: seoNavLabel("/institutions", "المؤسسات الإسلامية"),   Icon: Landmark },
   ]},
 
-  /* ── تعلّم ── */
-  { group: "تعلّم", items: [
-    { href: "/learn",    label: seoNavLabel("/learn", "بوابة التعلّم"),     Icon: GraduationCap },
-    { href: "/fiqh",     label: seoNavLabel("/fiqh", "الفقه والأحكام"),   Icon: Scale },
-    { href: "/seerah",   label: seoNavLabel("/seerah", "السيرة النبوية"),   Icon: BookUser },
-    { href: "/tawhid",   label: seoNavLabel("/tawhid", "العقيدة"),         Icon: Shield },
-    { href: "/prophets", label: seoNavLabel("/prophets", "قصص الأنبياء"),  Icon: Star },
-    { href: "/nations",  label: seoNavLabel("/nations", "الأمم السابقة"), Icon: Landmark },
-  ]},
-
   /* ── أدوات ومزيد ── */
   { group: "أدوات ومزيد", items: [
     { href: "/learning/paths",       label: seoNavLabel("/learning/paths", "المسارات العلمية"),    Icon: GraduationCap },
