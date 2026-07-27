@@ -94,5 +94,23 @@
     "to": "/scholars/ibn-juzayy",
     "status": 301,
     "reason": "تكرار — ابن جزي الكلبي (ت ٧٤١هـ) بسجلين"
+  },
+  {
+    "from": "/scholars/ibn-al-salah",
+    "to": "/scholars/ibn-salah",
+    "status": 301,
+    "reason": "اختلاف تهجئة في المعرّف مع وجود سجل مطابق — كان مستعملًا في فهرس /scholars بلا صفحة تفصيل (صُحِّح في 0d7849033)"
+  },
+  {
+    "from": "/scholars/ibn-abi-shayba",
+    "to": "/scholars/ibn-abi-shaybah",
+    "status": 301,
+    "reason": "اختلاف تهجئة في المعرّف مع وجود سجل مطابق — كان مستعملًا في فهرس /scholars بلا صفحة تفصيل (صُحِّح في 0d7849033)"
+  },
+  {
+    "from": "/scholars/fakhr-al-razi",
+    "to": "/scholars/fakhr-razi",
+    "status": 301,
+    "reason": "اختلاف تهجئة في المعرّف مع وجود سجل مطابق — كان مستعملًا في فهرس /scholars بلا صفحة تفصيل (صُحِّح في 0d7849033)"
   }
 ]
