@@ -7167,7 +7167,7 @@ body.has-assistant-fab .app-main {
   align-items: center;
   padding-bottom: 1.25rem;
   margin-bottom: 0.5rem;
-  border-bottom: 1px solid rgba(224, 215, 196, 0.5);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .site-footer-brand strong {

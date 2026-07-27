@@ -517,6 +517,8 @@ html[data-theme="dark"] .navbar-v3 .navbar-menu-btn .navbar-menu-btn__label {
 .navbar-v3 .header-ticker {
   background: rgba(255, 255, 255, 0.12) !important;
   border-color: rgba(255, 255, 255, 0.22) !important;
+  overflow: hidden !important;
+  isolation: isolate;
 }
 .navbar-v3 .header-ticker__icon,
 .navbar-v3 .header-ticker__label {

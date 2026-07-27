@@ -320,7 +320,28 @@ html.dark .nav-soon-badge {
 .header-ticker__icon { color: var(--color-primary); flex-shrink: 0; }
 .header-ticker__label { color: var(--color-primary); font-weight: 700; }
 @media (min-width: 880px) {
-  .header-ticker { width: clamp(200px, 22vw, 340px); }
+  /* يمنع تمدّد الشريط فوق تبويبات التنقل في العمود الأوسط */
+  .navbar-v3__end {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-width: 0;
+    max-width: min(42vw, 400px);
+    overflow: hidden;
+  }
+  .navbar-v3 .header-ticker,
+  .header-ticker {
+    width: clamp(120px, 14vw, 220px);
+    max-width: 220px;
+    flex: 0 1 auto;
+    min-width: 0;
+  }
+  .navbar-v3__tabs {
+    min-width: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .navbar-v3__tabs::-webkit-scrollbar { display: none; }
 }
 @media (prefers-reduced-motion: reduce) {
   .header-ticker__track { animation: none; }
