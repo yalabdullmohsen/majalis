@@ -51,13 +51,29 @@ console.log("\n=== NavBar.tsx / App.tsx — نقطة دخول البحث موح�
   assert(navBarSrc.includes("HeaderTicker"), "الشريط المتحرك مُدرَج فعليًا في الهيدر");
 
   const appSrc = readFileSync(resolve(appRoot, "src/App.tsx"), "utf-8");
-  assert(appSrc.includes('e.key === "k"'), "اختصار Ctrl/Cmd+K لفتح البحث الشامل ما زال مسجَّلاً في App.tsx");
+  assert(
+    appSrc.includes('e.key.toLowerCase() === "k"') || appSrc.includes('e.key === "k"'),
+    "اختصار Ctrl/Cmd+K لفتح البحث الشامل ما زال مسجَّلاً في App.tsx",
+  );
   assert(appSrc.includes("global-search-open"), "مستمع حدث فتح البحث الشامل ما زال مسجَّلاً في App.tsx (قناة بديلة متاحة لأي مُطلِق مستقبلي)");
+  assert(
+    appSrc.includes('e.key.toLowerCase() === "r"') && appSrc.includes("/flashcards"),
+    "اختصار Ctrl/Cmd+Shift+R يفتح بطاقات المراجعة",
+  );
   assert(!appSrc.includes("pullTouchRef"), "أزيل منطق pull-to-search بالكامل من App.tsx");
   assert(!appSrc.includes("onTouchStart={onTouchStart}"), "سحب الصفحة لا يفتح البحث من جذر التطبيق");
 
   const sideNavSrc = readFileSync(resolve(appRoot, "src/components/SideNavDrawer.tsx"), "utf-8");
   assert(sideNavSrc.includes('href: "/search"'), "مسار البحث الشامل ما زال متاحًا من القائمة الجانبية");
+  assert(sideNavSrc.includes('href: "/flashcards"'), "بطاقات المراجعة متاحة من القائمة الجانبية");
+
+  const gsmSrc = readFileSync(resolve(appRoot, "src/components/GlobalSearchModal.tsx"), "utf-8");
+  assert(gsmSrc.includes('href: "/flashcards"'), "رابط سريع للمراجعة داخل البحث الشامل");
+
+  const flashSrc = readFileSync(resolve(appRoot, "src/views/FlashCardsPage.tsx"), "utf-8");
+  assert(flashSrc.includes("Numpad1"), "جلسة المراجعة تدعم لوحة الأرقام للتقييم");
+  assert(flashSrc.includes('e.key === "Enter"'), "Enter يكشف البطاقة");
+  assert(flashSrc.includes('e.key === "Escape"'), "Escape يخفي الإجابة");
 
   const cssSrc = readFileSync(resolve(appRoot, "src/styles/final-release.css"), "utf-8");
   assert(
