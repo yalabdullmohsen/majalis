@@ -42,7 +42,7 @@
   display: flex; overflow-x: auto; gap: .4rem; padding: .8rem 1rem;
   background: #fff; border-bottom: 1px solid #E2E8F0;
   scrollbar-width: none;
-  position: sticky; top: 0; z-index: 10;
+  position: sticky; top: var(--sticky-below-chrome, 7rem); z-index: 10;
 }
 .atl-tabs-bar::-webkit-scrollbar { display: none; }
 .atl-tab {

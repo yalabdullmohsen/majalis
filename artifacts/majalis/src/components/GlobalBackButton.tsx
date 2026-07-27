@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ArrowLeft } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { useLocation } from "wouter";
 import { goBackOrFallback } from "@/lib/navigation-back";
 
@@ -49,7 +49,8 @@ export function GlobalBackButton() {
       aria-label="رجوع"
       title="رجوع"
     >
-      <ArrowLeft size={18} strokeWidth={2.2} aria-hidden="true" />
+      {/* RTL: الرجوع يشير نحو البداية (يمين) — نفس اتّجاه PageHeader */}
+      <ArrowRight size={18} strokeWidth={2.2} aria-hidden="true" />
     </button>
   );
 }

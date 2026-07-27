@@ -28,6 +28,11 @@
   --bottom-nav-height: var(--bottom-nav-h, 2.75rem);
   --safe-bottom: env(safe-area-inset-bottom, 0px);
   --bottom-nav-total: calc(var(--bottom-nav-height) + var(--safe-bottom));
+  /* شريط الأقسام (~min 44px + حشو) — لإلصاق تبويبات الصفحات أسفل الكروم */
+  --top-section-bar-h: 3.5rem;
+  --sticky-below-chrome: calc(
+    env(safe-area-inset-top, 0px) + var(--header-height) + var(--top-section-bar-h)
+  );
   --page-gutter: clamp(1rem, 3vw, 2rem);
   --page-width: var(--content-max, 76rem);
   --motion-fast: var(--dur-fast, 140ms);
@@ -781,19 +786,14 @@ html.dark .nav-soon-badge {
     min-height: 44px;
   }
 
-  .scroll-to-top {
-    inset-inline-end: max(1rem, env(safe-area-inset-right));
-    bottom: calc(var(--bottom-nav-total) + 0.5rem);
-    min-width: 44px;
-    min-height: 44px;
-  }
-
+  .scroll-to-top,
   .global-back-btn {
-    inset-inline-start: max(1rem, env(safe-area-inset-left));
     bottom: calc(var(--bottom-nav-total) + 0.5rem);
     min-width: 44px;
     min-height: 44px;
   }
+  .scroll-to-top { inset-inline-end: max(1rem, env(safe-area-inset-right)); }
+  .global-back-btn { inset-inline-start: max(1rem, env(safe-area-inset-left)); }
 
   /* المساعد الذكي متاح عبر «المزيد» — إخفاء الزر العائم على الجوال يمنع
      تداخله مع بطاقات المحتوى فوق الشريط السفلي (تحقّق smoke-mobile). */
@@ -819,6 +819,69 @@ html[data-theme="dark"] .bottom-nav--v2 {
     color: var(--color-primary) !important;
     background: color-mix(in srgb, var(--color-primary) 16%, transparent) !important;
   }
+}
+
+/* أزرار رجوع/أعلى العامة (App.tsx) — كانت محصورة بـupdates.css الكسول */
+.global-back-btn,
+.scroll-to-top {
+  position: fixed;
+  bottom: calc(var(--bottom-nav-total, 4.5rem) + 0.25rem);
+  z-index: 185;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: opacity .2s, transform .2s, background .15s;
+  opacity: .9;
+  box-shadow: 0 4px 14px rgba(0,0,0,.16);
+}
+.global-back-btn {
+  inset-inline-start: 1rem;
+  background: var(--majalis-panel, #fff);
+  color: var(--majalis-ink, #1A1A18);
+  border: 1px solid var(--majalis-line, rgba(0,0,0,.1));
+}
+.scroll-to-top {
+  inset-inline-end: 1rem;
+  z-index: 190;
+  background: var(--color-primary, #226A56);
+  color: var(--text-on-primary, #fff);
+  opacity: .88;
+  box-shadow: 0 4px 14px rgba(0,0,0,.22);
+}
+.global-back-btn:hover,
+.scroll-to-top:hover { opacity: 1; transform: translateY(-2px); }
+.scroll-to-top:hover { background: var(--majalis-emerald-deep, #143F35); }
+.global-back-btn:active,
+.scroll-to-top:active { transform: scale(.93); }
+body.filter-sheet-open .global-back-btn { display: none; }
+.global-back-btn--hidden {
+  opacity: 0;
+  transform: translateY(10px);
+  pointer-events: none;
+}
+html[data-theme="dark"] .global-back-btn {
+  background: var(--clr-surface, #1A2120) !important;
+  color: var(--clr-text-1, #E5F0EC) !important;
+  border-color: var(--clr-border, rgba(255,255,255,.08)) !important;
+}
+.stt-ring {
+  position: absolute;
+  top: -4px; left: -4px;
+  width: calc(100% + 8px);
+  height: calc(100% + 8px);
+  pointer-events: none;
+  overflow: visible;
+}
+.stt-ring circle:last-child { transition: stroke-dashoffset 0.35s ease; }
+.stt-icon { position: relative; z-index: 1; flex-shrink: 0; }
+@media (min-width: 880px) {
+  .global-back-btn,
+  .scroll-to-top { bottom: 1.5rem; }
 }
 
 /* ── حالات التحميل/الخطأ/الفراغ الموحَّدة ── */

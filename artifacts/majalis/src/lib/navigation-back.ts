@@ -49,5 +49,9 @@ export function goBackOrFallback(currentPath: string, fallbackHref = "/") {
     window.history.back();
     return;
   }
-  window.location.href = fallbackHref;
+  // تنقّل SPA بلا إعادة تحميل — نفس نمط Universal Links في main.tsx
+  if (fallbackHref !== currentPath) {
+    window.history.pushState({}, "", fallbackHref);
+    window.dispatchEvent(new PopStateEvent("popstate"));
+  }
 }

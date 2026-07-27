@@ -29,7 +29,7 @@
   display: flex; flex-wrap: wrap; gap: .5rem;
   padding: 1rem 1.25rem; border-bottom: 1px solid var(--clr-border);
   background: var(--clr-surface);
-  position: sticky; top: 0; z-index: 10;
+  position: sticky; top: var(--sticky-below-chrome, 7rem); z-index: 10;
 }
 .mk-tab {
   padding: .45rem 1.1rem; border-radius: var(--ds-radius-full);

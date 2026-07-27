@@ -229,7 +229,7 @@ export default function MiraclesPage({
           {!loading && status === "success" && (
             <span className="mk-count">{displayed.length} موضوع</span>
           )}
-          <FilterToggle onClick={() => setFiltersOpen(true)} label="فلاتر" />
+          <FilterToggle expanded={filtersOpen} onClick={() => setFiltersOpen(true)} label="فلاتر" />
         </div>
       </div>
 

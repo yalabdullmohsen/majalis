@@ -121,7 +121,7 @@ body {
 }
 
 .navbar-v3__inner {
-  height: 60px !important;
+  min-height: var(--header-height, 3.25rem);
 }
 
 /* Brand */
@@ -386,7 +386,6 @@ html[data-theme="dark"] .rp-section-title {
    10. Home Sections — عناوين المقاطع
    ══════════════════════════════════════════════ */
 
-/* ── نُقل إلى styles/components/home/home-majlis-today.css ── */
 /* ══════════════════════════════════════════════
    10b. الصفحة الرئيسية — جميع البطاقات داكنة/أبيض
    ══════════════════════════════════════════════ */
@@ -1325,9 +1324,7 @@ html {
 
 /* إصلاح text-teal-100 على خلفية خضراء */
 
-/* ── نُقل إلى styles/pages/hadith.css — قسم 38 Hadith ── */
 
-/* ── حُذف .dhikr-card غير المستخدم ── */
 
 /* ══════════════════════════════════════════════
    40. Library Page تحسينات
@@ -1407,7 +1404,6 @@ html {
 .mn-sub-icon { width: var(--mn-icon-size, 1rem); height: var(--mn-icon-size, 1rem); }
 .chart-legend-dot { background-color: var(--chart-dot-color, currentColor); }
 
-/* ── حُذف .badge-v2 غير المستخدم ── */
 
 /* ══════════════════════════════════════════════
    45. Modal / Dialog
@@ -1540,7 +1536,6 @@ tr:last-child td {
   body { background: white !important; color: black !important; }
 }
 
-/* ── نُقل إلى styles/pages/fiqh-hub.css — fiqh-hub-strip ── */
 
 /* ══════════════════════════════════════════════
    52. Prayer Cell — تفاعل النقر (عداد الوقت)
@@ -1979,8 +1974,6 @@ button.primary:hover {
   font-size: 0.8rem !important;
 }
 
-/* ── نُقل إلى styles/pages/notifications.css ── */
-/* ── نُقل إلى styles/pages/academic-research.css ── */
 /* ══════════════════════════════════════════════════════════════════════
    41 — الصفحة الرئيسية — تصميم تسويقي (hp-*)
    ══════════════════════════════════════════════════════════════════════ */
@@ -2006,10 +1999,7 @@ button.primary:hover {
 
 /* تصغير لوحة الإشعارات — مدموج في NotificationBell أعلاه */
 
-/* ── نُقل إلى styles/pages/qibla.css ── */
 
-/* ── نُقل إلى styles/pages/daily-wird.css ── */
-/* ── نُقل إلى styles/pages/occasions.css ── */
 
 /* ══════════════════════════════════════════════
    46–47. Search / Settings — نُقلت إلى styles/pages/{search,settings}.css
@@ -2029,9 +2019,7 @@ button.primary:hover {
   margin: 0;
 }
 
-/* ── نُقل إلى styles/pages/islamic-stories.css ── */
 
-/* ── حُذف mzp-card مكتبة المؤذنين غير المستخدمة؛ الـpicker له CSS خاص ── */
 
 /* ============================================================
    99 — shared: page-stats-row--flush
@@ -2089,7 +2077,6 @@ button.primary:hover {
   border-radius: 0;
 }
 
-/* ── نُقل إلى styles/components/error-boundary.css ── */
 /* ── 166 — ui-common loading & legal page ─────────────────────────────── */
 .ds-loading-wrap {
   display: flex;
@@ -2196,15 +2183,11 @@ html[data-theme="dark"] .lesson-unified-card__btn--primary {
 .adv-skel-line2 { width: 100%; max-width: 20rem; height: 0.75rem; margin: 0 auto 0.5rem; }
 .adv-skel-line3 { width: 100%; max-width: 24rem; height: 0.75rem; margin: 0 auto; }
 
-/* ── نُقل إلى styles/components/more-bottom-sheet.css ── */
 /* ── 176 — AppShell, SiteFooter, RelatedKnowledge ──────────────────────── */
 .app-shell { min-height: 100vh; direction: var(--app-dir, rtl); }
 .navbar-v3-placeholder { min-height: 4rem; }
 .footer-star { opacity: 0.4; }
 
-/* ── نُقل إلى styles/components/hijri-sacred-month.css ── */
-/* ── نُقل إلى styles/components/home/home-asma-card.css ── */
-/* ── نُقل إلى styles/components/home/home-week-streak.css ── */
 /* ── 178 — CitationActionBar, progress bars ─────────────────────────────── */
 .cab-type-bar { background: var(--cab-type-color, var(--majalis-emerald-deep)); }
 .home-progress-card__bar > span { width: var(--hdp-pct, 0%); display: block; height: 100%; border-radius: inherit; background: var(--majalis-emerald); transition: width 0.4s ease; }
@@ -2218,9 +2201,6 @@ html[data-theme="dark"] .lesson-unified-card__btn--primary {
 /* ── 184 — ContentDetailLayout & misc link fixes ───────────────────────── */
 .platform-card-link { text-decoration: none; }
 
-/* ── نُقل إلى styles/components/assistant-chat.css ── */
-/* ── نُقل إلى styles/components/citation-modal.css ── */
-/* ── نُقل إلى styles/components/home/home-quick-access.css ── */
 /* ── 188 — General Design Improvements 2026 ────────────────────────────── */
 
 /* Smooth scroll and better focus indicators */
@@ -2306,12 +2286,8 @@ button, .btn {
 .aup-error-label { color: #991B1B; }
 
 /* ── assistant badges → assistant-chat.css ── */
-/* ── نُقل إلى styles/components/university-card.css ── */
-/* ── نُقل إلى styles/components/source-card.css ── */
 /* ── 200 — QuizModal (qzm-*) ────────────────────────────────────────────────── */
 
-/* ── نُقل إلى styles/components/submissions-review.css ── */
-/* ── نُقل إلى styles/components/islamic-geometric.css ── */
 /* ══════════════════════════════════════════════
    201 — تحسينات شاملة للموقع (Site-wide Enhancements)
    ══════════════════════════════════════════════ */
@@ -2555,7 +2531,6 @@ a:focus-visible {
 
 /* زر نسخ الفائدة */
 
-/* ── نُقل إلى styles/pages/miracles.css — miracle-card ── */
 
 /* شارة التصنيف */
 
@@ -2674,10 +2649,7 @@ a:focus-visible {
 }
 
 /* ── 211 isp-* مكرّر؛ النسخة الحيّة في styles/pages/islamic-stories.css ── */
-/* ── نُقل إلى styles/pages/vault.css ── */
-/* ── نُقل إلى styles/pages/quiz.css ── */
 /* ── Seerah enhancements → pages/seerah.css ── */
-/* ── نُقل إلى styles/pages/updates.css ── */
 /* ══════════════════════════════════════════════════════════════════
    REDESIGN-2026 — الإعادة التصميمية الشاملة للصفحة الرئيسية
    Phase 1-8 | Color System · Bottom Nav · Lesson Cards · Hero
@@ -3389,7 +3361,6 @@ img[loading="lazy"]:not([src=""]) {
 
 /* ── نهاية UI-REFRESH-2026 ─────────────────────────────────────── */
 
-/* ── نُقل إلى styles/components/dark-emerald-menus.css ── */
 /* ══════════════════════════════════════════════
    55. إصلاح تباين النص على الخلفيات البيضاء
    ══════════════════════════════════════════════ */
@@ -3475,41 +3446,18 @@ img[loading="lazy"]:not([src=""]) {
 
 
 
-/* ── نُقل إلى styles/pages/akhlaq.css (مكرّر حُذف) ── */
 
-/* ── نُقل إلى styles/pages/duas.css ── */
 
-/* ── نُقل إلى styles/pages/arkan-islam.css ── */
-/* ── نُقل إلى styles/pages/arkan-iman.css ── */
-/* ── نُقل إلى styles/pages/hadith-mustalah.css ── */
-/* ── نُقل إلى styles/pages/madhahib.css ── */
-/* ── نُقل إلى styles/pages/sunan-yawmiyya.css ── */
-/* ── نُقل إلى styles/pages/hikam-salaf.css ── */
-/* ── نُقل إلى styles/pages/fadail-aamal.css ── */
 
 /* ── 232 نُقل إلى styles/pages/janaza.css ── */
 
 
 /* ── 233 نُقل إلى styles/pages/sahabah.css ── */
 
-/* ── نُقل إلى styles/pages/ulum-quran.css ── */
 
-/* ── نُقل إلى styles/pages/mawarith.css ── */
 
-/* ── نُقل إلى styles/pages/fiqh-qawaid.css ── */
-/* ── نُقل إلى styles/pages/shimael.css ── */
 
-/* ── نُقل إلى styles/pages/islam-stats.css ── */
 
-/* ── نُقل إلى styles/pages/glossary.css ── */
-/* ── نُقل إلى styles/pages/adab-talab-ilm.css ── */
-/* ── نُقل إلى styles/pages/anbiya.css ── */
-/* ── نُقل إلى styles/pages/janna-naar.css ── */
-/* ── نُقل إلى styles/pages/alamat-saah.css ── */
-/* ── نُقل إلى styles/pages/malaika.css ── */
-/* ── نُقل إلى styles/pages/wasaya.css ── */
-/* ── نُقل إلى styles/pages/raqaiq.css ── */
-/* ── نُقل إلى styles/pages/citation-public.css ── */
 /* ══════════════════════════════════════════════
    CAB-EXT. Citation Action Bar — tooltip btns
    ══════════════════════════════════════════════ */
@@ -3543,15 +3491,8 @@ img[loading="lazy"]:not([src=""]) {
 }
 .cm-hint--center { text-align: center; padding: 1rem 0; }
 
-/* ── نُقل إلى styles/components/content-actions-rag.css ── */
-/* ── نُقل إلى styles/pages/transcribe.css ── */
 /* ── FiqhPage fqp → pages/fiqh-hub.css ── */
-/* ── نُقل إلى styles/pages/universities.css ── */
-/* ── نُقل إلى styles/pages/universities-compare.css ── */
 /* ── srp-root additions → pages/scholarly-research.css ── */
-/* ── نُقل إلى styles/pages/my-citations.css ── */
-/* ── نُقل إلى styles/pages/university-detail.css ── */
-/* ── نُقل إلى styles/pages/prophet-stories-admin.css ── */
 /* ════════════════════════════════════════════════════════════
    KF. Global @keyframes (مُحوَّلة من <style> مضمَّن)
    ════════════════════════════════════════════════════════════ */
@@ -3568,12 +3509,7 @@ img[loading="lazy"]:not([src=""]) {
   
 }
 
-/* ── نُقل إلى styles/components/home/home-interesting-topics.css ── */
-/* ── نُقل إلى styles/components/home/home-mindmap.css ── */
 /* ── MK2 → pages/miracles.css ── */
-/* ── نُقل إلى styles/pages/sitemap.css ── */
-/* ── نُقل إلى styles/pages/start-here.css ── */
-/* ── نُقل إلى styles/components/faida-image-card.css ── */
 /* ── upd-search → pages/updates.css ؛ tip-search → pages/topics-index.css ── */
 
 /* ══ الوضع الليلي — elite-2026 dark overrides ══ */
@@ -3763,11 +3699,7 @@ html[data-theme="dark"] .mobile-nav-backdrop {
   .lpd2-hero, .srp-hero, .myl2-hero { background: ButtonFace; }
 }
 
-/* ── نُقل إلى styles/components/language-offline.css ── */
-/* ── نُقل إلى styles/pages/learning-quiz.css (lcp2-event) ── */
 
-/* ── نُقل إلى styles/pages/not-found.css ── */
-/* ── نُقل إلى styles/components/async-data-error.css ── */
 /* ═══════════════════════════════════════════════════════════════════════════
    74  GLOBAL DESIGN CONSISTENCY & UX POLISH
    ═══════════════════════════════════════════════════════════════════════════ */
@@ -4313,7 +4245,9 @@ label {
   -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
   border-bottom: 1px solid var(--color-border, #E8E7E2) !important;
   box-shadow: 0 1px 0 rgba(23,61,53,.04), 0 2px 12px rgba(18,32,25,.04) !important;
-  height: 60px !important;
+  /* الارتفاع من --header-height + safe-area في final-release — لا height ثابت
+     يطمس sticky TopSectionBar (~8–12px تداخل سابقًا مع 60px !important). */
+  min-height: var(--header-height, 3.25rem) !important;
   position: sticky !important;
   top: 0 !important;
   z-index: var(--z-nav, 200) !important;
@@ -6350,7 +6284,6 @@ html[data-theme="dark"] .ar-thesis-badge--phd {
   color: #0B2119 !important;
 }
 
-/* ── نُقل إلى styles/pages/library.css ── */
 
 /* ── إصلاح جماعي: نصوص فاتحة اللون داخل الوضع الليلي (2026-07-17) ──────────
    هذه الفئات كانت تستخدم ألوان حبر داكنة صريحة (#111/#0F172A إلخ) بلا أي
@@ -7097,21 +7030,7 @@ html[data-theme="dark"] .sh-step__title {
   margin: 0;
 }
 
-/* ── نُقل إلى styles/components/ayah-action-sheet.css ── */
-/* ════════════════════════════════════
-   78 — تصغير شعار الهيدر ومحاذاته رأسياً (2026-07-18)
-   ════════════════════════════════════
-   السبب الجذري (تحقّق فعلي عبر Playwright، لا افتراضًا):
-   header.navbar-v3 هو display:block، بينما .navbar-v3__inner بداخله
-   ارتفاعه الفعلي 52px فقط (قاعدة @media (max-width:879px) في index.css)
-   ضمن هيدر ارتفاعه 60px — فيلتصق المحتوى بأعلى الهيدر (top:0) ويبقى
-   فراغ 8px كامل أسفله فقط، فيظهر الشعار (والقائمة بجانبه) أعلى من مركز
-   الشريط فعليًا بدل توسّطه. القيم المتفرّقة لـ.navbar-logo/.navbar-logo--
-   calligraphy عبر index.css (4+ تعريفات) جعلت الشعار أيضًا أعرض بصريًا من
-   زر القائمة المجاور له (69–88px عرضاً مقابل 57–62px للقائمة على الجوال).
-   الإصلاح هنا: جعل الهيدر نفسه flex ليتوسّط .navbar-v3__inner داخله فعلاً
-   (بدل الالتصاق العلوي)، وتصغير الشعار درجة واحدة على سلّم 4pt (32px
-   جوال / 40px سطح مكتب) ليتناسب مع بقية عناصر الهيدر ولا يطغى عليها. */
+/* 78 — محاذاة شعار الهيدر عمودياً وتصغيره (flex على header.navbar-v3) */
 header.navbar-v3 {
   display: flex !important;
   align-items: center !important;
