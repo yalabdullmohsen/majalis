@@ -737,6 +737,40 @@ function Router() {
   );
 }
 
+function GlobalAppShortcuts({ onToggleSearch }: { onToggleSearch: () => void }) {
+  const [, navigate] = useLocation();
+
+  useEffect(() => {
+    const keyHandler = (e: KeyboardEvent) => {
+      const target = e.target as HTMLElement | null;
+      const tag = target?.tagName;
+      const typing =
+        tag === "INPUT" ||
+        tag === "TEXTAREA" ||
+        tag === "SELECT" ||
+        target?.isContentEditable;
+
+      // Ctrl/Cmd+K — البحث الشامل
+      if ((e.metaKey || e.ctrlKey) && !e.shiftKey && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        onToggleSearch();
+        return;
+      }
+
+      // Ctrl/Cmd+Shift+R — بطاقات المراجعة (لا يتعارض مع تحديث الصفحة Ctrl+R)
+      if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.key.toLowerCase() === "r") {
+        if (typing) return;
+        e.preventDefault();
+        navigate("/flashcards");
+      }
+    };
+    window.addEventListener("keydown", keyHandler);
+    return () => window.removeEventListener("keydown", keyHandler);
+  }, [navigate, onToggleSearch]);
+
+  return null;
+}
+
 function AppShell() {
   const { dir, t } = useLanguage();
   const { isAdmin } = useAuth();
@@ -746,23 +780,15 @@ function AppShell() {
   const [comingSoonOpen, setComingSoonOpen] = useState(false);
 
   useEffect(() => {
-    const keyHandler = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key === "k") {
-        e.preventDefault();
-        setSearchOpen((v) => !v);
-      }
-    };
     const evtHandler = () => setSearchOpen(true);
     const soonHandler = (e: Event) => {
       const detail = (e as CustomEvent<{ title?: string }>).detail;
       setComingSoonTitle(detail?.title || "هذا القسم");
       setComingSoonOpen(true);
     };
-    window.addEventListener("keydown", keyHandler);
     window.addEventListener("global-search-open", evtHandler);
     window.addEventListener("global-coming-soon-open", soonHandler as EventListener);
     return () => {
-      window.removeEventListener("keydown", keyHandler);
       window.removeEventListener("global-search-open", evtHandler);
       window.removeEventListener("global-coming-soon-open", soonHandler as EventListener);
     };
@@ -774,6 +800,7 @@ function AppShell() {
         className="app-shell"
         style={{ "--app-dir": dir } as React.CSSProperties}
       >
+        <GlobalAppShortcuts onToggleSearch={() => setSearchOpen((v) => !v)} />
         <a href="#main-content" className="skip-link">{t("skip_to_content")}</a>
         <OfflineBanner />
         <UpdateAvailableBanner />
