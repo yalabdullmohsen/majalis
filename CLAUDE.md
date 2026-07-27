@@ -17,12 +17,14 @@
 2. تحقق عمليًا من النتيجة (الصفحة/الوظيفة المعدّلة، شاملًا RTL والجوال).
 3. إن نجح: commit برسالة عربية واضحة ثم push إلى فرع الجلسة فورًا، وانتقل للمهمة التالية.
 4. إن فشل: أصلح ضمن سقف 10 دورات؛ فإن استُنفدت، وثّق المشكلة وانتقل للمهمة التالية إن كانت مستقلة.
-5. لا تدمج إلى main يدويًا من الجلسة (`git push` لـmain / `git merge` محلي). مسار الدمج والنشر التلقائي (2026-07-26، بطلب المالك):
-   - ادفع إلى فرع العمل (`cursor/**` · `session/**` · `claude/**` · `fix/**` · `feature/**` · `automation/**` عدا النافذتين أدناه) وافتح/حدّث PR إلى `main`.
-   - `.github/workflows/auto-merge-to-main.yml` يحوّل Draft→Ready، يفعّل Auto-merge (squash) بعد نجاح الفحوصات، ويحذف الفرع.
-   - `.github/workflows/auto-deploy.yml` ينشر من `main`→`production` بعد الدمج ويتحقق أن majlisilm.com يردّ 200.
+5. لا تدمج إلى main يدويًا من الجلسة (`git push` لـmain / `git merge` محلي) ولا تطلب دمجًا يدويًا من المستخدم. مسار الدمج والنشر التلقائي (مُحدَّث 2026-07-27):
+   - ادفع إلى فرع العمل وافتح **PR واحد Ready** إلى `main` (ليس سلسلة مراحل).
+   - حماية `main` تفرض **Verify build** إلزاميًا — لا دمج بدونه.
+   - `.github/workflows/auto-merge-to-main.yml` يحدّث الفرع من `main` إن لزم، يفعّل Auto-merge (squash) بعد نجاح Verify build، يلغي Auto-merge عند فشل CI، ويغلق المكدّسات التي لا تستهدف `main`.
+   - `.github/workflows/resolve-pr-conflicts.yml` يحدّث الفرع عند CONFLICTING/BEHIND.
+   - النشر من `main` عبر Vercel + بوابة `.github/workflows/auto-deploy.yml`.
    **استثناء (content-runner):** `scripts/content-runner.sh` يبقى على مساره التصميمي.
-   **نافذتا automation/content وautomation/tasks:** ادفعا لفرعيهما فقط عبر `scripts/commit-and-push-branch.sh`؛ دمجهما معًا عبر `.github/workflows/release-majlisilm.yml` (workflow_dispatch) لتفادي سباق النافذتين — لا Auto-merge فردي لهذين الفرعين.
+   **نافذتا automation/content وautomation/tasks:** ادفعا لفرعيهما فقط عبر `scripts/commit-and-push-branch.sh`؛ دمجهما عبر `.github/workflows/release-majlisilm.yml` فقط.
 
 ## صمامات الأمان وكفاءة الرصيد
 - إذا اقترب انتهاء الوقت: أكمل المهمة الجارية فقط وارفعها، ولا تبدأ مهمة جديدة.
