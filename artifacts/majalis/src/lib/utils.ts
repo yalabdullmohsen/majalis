@@ -16,11 +16,5 @@ export function truncateAtWord(text: string, max: number): string {
   return `${lastSpace > 0 ? cut.slice(0, lastSpace) : cut}…`
 }
 
-const ARABIC_DIGITS = ["٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"]
-
-/** يحوّل رقمًا إلى أرقام هندية عربية (١٢٣...) — تُستخدَم في السياقات
- * القرآنية/الدينية (أرقام الآيات، الصفحات) حيث الأرقام اللاتينية الغربية
- * تكسر أصالة العرض وتُشعر المستخدم بأنه في موقع ويب عام لا تطبيق مصحف. */
-export function toArabicDigits(n: number | string): string {
-  return String(n).replace(/[0-9]/g, (d) => ARABIC_DIGITS[Number(d)])
-}
+/** Alias لـ toArabicIndicDigits — مصدر الحقيقة في numerals.ts */
+export { toArabicIndicDigits as toArabicDigits } from "@/lib/numerals"

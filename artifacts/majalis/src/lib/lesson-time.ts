@@ -5,6 +5,8 @@
  * لا يُعتمد على الوقت وحده، ولا على القيم المُخزّنة مسبقاً
  */
 
+import { toLatinDigits } from "@/lib/numerals";
+
 export const KUWAIT_TZ = "Asia/Kuwait";
 
 /** Kuwait offset in minutes: +3h = +180 min */
@@ -153,7 +155,7 @@ const PRAYER_ROOT_KEYS: Array<[RegExp, string]> = [
 
 /** تحويل الأرقام العربية-الهندية (٠-٩) إلى لاتينية. */
 function normalizeArabicDigits(s: string): string {
-  return s.replace(/[٠-٩]/g, (d) => String("٠١٢٣٤٥٦٧٨٩".indexOf(d)));
+  return toLatinDigits(s);
 }
 
 /**

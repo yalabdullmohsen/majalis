@@ -1,6 +1,7 @@
 import { Component, type ErrorInfo, type ReactNode } from "react";
 import { buildErrorReport, copyErrorId, createErrorId, logClientError } from "@/lib/error-report";
 import { CONTACT_EMAIL } from "@/lib/site-config";
+import { safeLocationReload } from "@/lib/safe-reload";
 import "@/styles/components/error-boundary.css";
 
 type Props = { children: ReactNode };
@@ -60,7 +61,7 @@ export class ErrorBoundary extends Component<Props, State> {
     );
 
     if (isChunkLoadError(error) && shouldAutoReloadForChunkError()) {
-      window.location.reload();
+      safeLocationReload();
     }
   }
 

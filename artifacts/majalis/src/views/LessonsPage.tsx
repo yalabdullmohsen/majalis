@@ -10,6 +10,7 @@ import { useAuth } from "@/components/AuthProvider";
 import { UnifiedLessonCard } from "@/components/lessons/UnifiedLessonCard";
 import { computeNextOccurrenceMs, isLessonInProgress } from "@/lib/lesson-time";
 import { supabase } from "@/lib/supabase";
+import { safeLocationReload } from "@/lib/safe-reload";
 import {
   DEFAULT_KUWAIT_FILTERS,
   buildSearchSuggestions,
@@ -587,7 +588,7 @@ export default function LessonsPage({
             error={loadError}
             empty={!loading && !loadError && activeLessons.length === 0 && archivedLessons.length === 0}
             emptyText="لا توجد دروس مطابقة للفلاتر الحالية. أعد ضبط المنطقة أو التصنيف لعرض المزيد."
-            onRetry={() => window.location.reload()}
+            onRetry={() => safeLocationReload()}
           >
             <>
               {!filters.search && filters.governorate === "كل المحافظات" && (

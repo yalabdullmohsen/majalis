@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { Link } from "wouter";
 import { searchFiqhCouncil, getFiqhSearchSuggestions } from "@/lib/fiqh-council-service";
 import {
@@ -7,14 +8,6 @@ import {
   type FiqhCouncilItem,
 } from "@/lib/fiqh-council-types";
 
-function useDebouncedValue<T>(value: T, delayMs = 300): T {
-  const [debounced, setDebounced] = useState(value);
-  useEffect(() => {
-    const id = window.setTimeout(() => setDebounced(value), delayMs);
-    return () => window.clearTimeout(id);
-  }, [value, delayMs]);
-  return debounced;
-}
 
 type Props = {
   placeholder?: string;

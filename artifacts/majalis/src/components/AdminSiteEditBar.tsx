@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Pencil, X, Check, ChevronDown, RefreshCw } from "lucide-react";
 import { useAuth } from "@/components/AuthProvider";
+import { safeLocationReload } from "@/lib/safe-reload";
 
 /* ── localStorage helpers ── */
 const LS_PREFIX = "site_edit:";
@@ -187,7 +188,7 @@ export function AdminSiteEditBar() {
   const clearAll = useCallback(() => {
     clearOverrides(path);
     setEditCount(0);
-    window.location.reload();
+    safeLocationReload();
   }, [path]);
 
   if (!isAdmin) return null;

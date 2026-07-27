@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { Link, useSearch } from "wouter";
 import { useAuth } from "@/components/AuthProvider";
 import { ShareButtons } from "@/components/ContentActions";
@@ -19,14 +20,6 @@ import {
   type FiqhItemType,
 } from "@/lib/fiqh-council-types";
 
-function useDebouncedValue<T>(value: T, delayMs = 350): T {
-  const [debounced, setDebounced] = useState(value);
-  useEffect(() => {
-    const id = window.setTimeout(() => setDebounced(value), delayMs);
-    return () => window.clearTimeout(id);
-  }, [value, delayMs]);
-  return debounced;
-}
 
 export default function FiqhCouncilAdvancedSearchPage() {
   const { isAdmin } = useAuth();

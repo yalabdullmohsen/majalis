@@ -9,7 +9,7 @@ const OUT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../data/
 const files = [
   "lib/durus-mutanawwia-data.ts", "lib/durus-imaniyya-data.ts", "lib/iman-topics-data.ts",
   "lib/maqasid-sharia-data.ts", "lib/dalail-nubuwwah-data.ts", "lib/arabic-language-data.ts",
-  "lib/fikr-waqia-data.ts", "lib/quran-studies-data.ts", "lib/sunnah-studies-data.ts",
+  "lib/fikr-waqia-data.ts", "lib/sunnah-studies-data.ts",
   "lib/tarikh-islami-data.ts", "lib/tazkiya-topics-data.ts", "lib/usra-mujtama-data.ts",
   "lib/mawsuaat-data.ts", "lib/rulings-seed.ts", "lib/adhkar-seed.ts", "lib/fawaid-seed.ts",
   "lib/fawaid-curated-seed.ts", "lib/qa-seed.ts", "lib/quiz-seed.ts", "lib/islamic-occasions-seed.ts",

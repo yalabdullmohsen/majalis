@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { getApprovedFawaid, submitFawaid } from "@/lib/supabase";
 import { applyPageSeo } from "@/lib/seo";
 import { RequestManager } from "@/lib/request-manager";
@@ -40,14 +41,6 @@ const LEGACY_CATEGORIES = [
 
 const DISPLAY_CATEGORIES = ["الكل", ...FAWAID_CATEGORIES, ...LEGACY_CATEGORIES.filter((c) => !FAWAID_CATEGORIES.includes(c as never))] as const;
 
-function useDebouncedValue<T>(value: T, delayMs = 350): T {
-  const [debounced, setDebounced] = useState(value);
-  useEffect(() => {
-    const id = window.setTimeout(() => setDebounced(value), delayMs);
-    return () => window.clearTimeout(id);
-  }, [value, delayMs]);
-  return debounced;
-}
 
 export default function FawaidPage({
   initialFawaid,
