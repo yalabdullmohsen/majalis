@@ -10,7 +10,7 @@ import "@/styles/pages/fiqh-hub.css";
 
 const FIQH_HUB_TABS = [
   { key: "rulings", label: "الأحكام الشرعية", href: "/rulings" },
-  { key: "qa",      label: "الأسئلة الشرعية", href: "/qa" },
+  { key: "qa",      label: "الأسئلة والأجوبة", href: "/qa" },
   { key: "council", label: "المجمع الفقهي",   href: "/fiqh-council" },
 ] as const;
 type FiqhTab = (typeof FIQH_HUB_TABS)[number]["key"];
@@ -127,7 +127,7 @@ export default function QaPage({
       path: "/qa",
       title: "الأسئلة والأجوبة الشرعية | المجلس العلمي",
       description: "أسئلة وأجوبة شرعية في الفقه والعقيدة والعبادات والمعاملات، موثقة من العلماء والمراجع الموثوقة.",
-      keywords: ["أسئلة شرعية", "أجوبة شرعية", "فتاوى", "فقه إسلامي", "سؤال وجواب"],
+      keywords: ["أسئلة وأجوبة", "أجوبة شرعية", "فقه إسلامي", "سؤال وجواب", "معلومات إسلامية"],
       ...(faqSchema ? { jsonLd: [faqSchema] } : {}),
     });
   }, []);
@@ -356,7 +356,7 @@ export default function QaPage({
       <RelatedKnowledge kind="question" title="أسئلة ومواد ذات صلة" limit={6} />
 
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في الفقه والأسئلة الشرعية" count={4} />
+        <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في الفقه والأحكام" count={4} />
       </div>
     </div>
   );
