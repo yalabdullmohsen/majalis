@@ -33,7 +33,7 @@ export function extractMatnHint(title: string | null | undefined, text: string |
   if (tTitle) return tTitle;
 
   const raw = String(text || "");
-  const quoted = raw.match(/[«"\"]\s*([^«»"\"]{4,})/);
+  const quoted = raw.match(/[«"]\s*([^«»"]{4,})/);
   if (quoted?.[1]) return normalizeArabic(quoted[1]).trim();
 
   const norm = normalizeArabic(raw);
