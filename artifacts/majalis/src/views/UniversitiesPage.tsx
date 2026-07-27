@@ -120,7 +120,7 @@ function UniversitiesContent() {
           "@context": "https://schema.org",
           "@type": "ItemList",
           name: "دليل الجامعات الإسلامية حول العالم",
-          description: "جامعات ومعاهد إسلامية في عشرات الدول العربية والإسلامية؛ محتوى معتمد في منهج مجالس العلم",
+          description: "جامعات ومعاهد إسلامية في عشرات الدول العربية والإسلامية؛ محتوى معتمد في منهج المجلس العلمي",
           numberOfItems: COUNTRIES.length,
           itemListElement: COUNTRIES.map((country, i) => ({
             "@type": "ListItem",

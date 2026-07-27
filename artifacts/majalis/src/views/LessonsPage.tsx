@@ -256,14 +256,14 @@ export default function LessonsPage({
       path: "/lessons",
       canonicalPath: "/lessons",
       title: "الدروس الشرعية والعلمية | المجلس العلمي",
-      description: "دروس شرعية وعلمية من أئمة وعلماء الكويت والعالم، فقه وعقيدة وقرآن وسيرة ولغة عربية. محتوى معتمد في منهج مجالس العلم",
+      description: "دروس شرعية وعلمية من أئمة وعلماء الكويت والعالم، فقه وعقيدة وقرآن وسيرة ولغة عربية. محتوى معتمد في منهج المجلس العلمي",
       keywords: ["دروس شرعية", "دروس دينية", "دروس علمية", "علماء الكويت", "حلقات علمية"],
       jsonLd: [
         {
           "@context": "https://schema.org",
           "@type": "ItemList",
           name: "الدروس الشرعية والدورات العلمية",
-          description: "دروس ودورات علمية من أئمة وعلماء الكويت في الفقه والعقيدة والقرآن والسيرة؛ محتوى معتمد في منهج مجالس العلم",
+          description: "دروس ودورات علمية من أئمة وعلماء الكويت في الفقه والعقيدة والقرآن والسيرة؛ محتوى معتمد في منهج المجلس العلمي",
           numberOfItems: 8,
           itemListElement: [
             { "@type": "ListItem", position: 1, name: "الدروس الشرعية", url: "https://www.majlisilm.com/lessons?tab=lessons" },
@@ -583,10 +583,19 @@ export default function LessonsPage({
 
       <div className="lessons-v2-layout">
         <main className="lessons-v2-main">
+          {/* عناوين بنيوية ثابتة تظهر أثناء التحميل أيضًا — تمنع اختفاء
+              .lessons-v2-section__title / .lessons-past-section__title عند بطء الشبكة
+              أو مهلة Supabase (بوابة تباين الألوان تعتمد وجودهما في DOM). */}
+          {loading && (
+            <div className="lessons-v2-loading-chrome" aria-hidden="true">
+              <h2 className="lessons-v2-section__title">الشائع</h2>
+              <h2 className="lessons-past-section__title">الدروس السابقة</h2>
+            </div>
+          )}
           <PageLoadingGuard
             loading={loading}
             error={loadError}
-            empty={!loading && !loadError && activeLessons.length === 0 && archivedLessons.length === 0}
+            empty={false}
             emptyText="لا توجد دروس مطابقة للفلاتر الحالية. أعد ضبط المنطقة أو التصنيف لعرض المزيد."
             onRetry={() => safeLocationReload()}
           >
@@ -634,12 +643,17 @@ export default function LessonsPage({
               </section>
               )}
 
-              {filteredArchived.length > 0 && (
+              {filteredArchived.length > 0 ? (
                 <section className="lessons-past-section" aria-labelledby="past-lessons-heading">
                   <h2 id="past-lessons-heading" className="lessons-past-section__title">الدروس السابقة</h2>
                   {renderGrid(filteredArchived, "archived-")}
                 </section>
-              )}
+              ) : !loading && !loadError ? (
+                <section className="lessons-past-section" aria-labelledby="past-lessons-heading">
+                  <h2 id="past-lessons-heading" className="lessons-past-section__title">الدروس السابقة</h2>
+                  <p className="lessons-empty-state">لا دروس سابقة معروضة ضمن الفلاتر الحالية.</p>
+                </section>
+              ) : null}
             </>
           </PageLoadingGuard>
         </main>

@@ -117,7 +117,7 @@ export default function MiraclesPage({
           "@context": "https://schema.org",
           "@type": "ItemList",
           name: "إشارات كونية في الوحي",
-          description: "موضوعات للتأمل في آيات الخلق مع تنبيه منهجي على حدود الاستدلال؛ محتوى معتمد في منهج مجالس العلم",
+          description: "موضوعات للتأمل في آيات الخلق مع تنبيه منهجي على حدود الاستدلال؛ محتوى معتمد في منهج المجلس العلمي",
           itemListElement: CATEGORIES.filter(c => c !== "الكل").map((cat, i) => ({
             "@type": "ListItem",
             position: i + 1,

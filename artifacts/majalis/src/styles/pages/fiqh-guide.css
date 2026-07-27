@@ -44,14 +44,14 @@
 }
 
 .fg-method {
-  background: #f4faf7;
-  border: 1px solid #d4e3db;
-  border-right: 3px solid #226a56;
+  background: var(--surface-brand, var(--brand-soft));
+  border: 1px solid var(--border-brand, var(--border));
+  border-right: 3px solid var(--brand);
   border-radius: 0.85rem;
   padding: 0.85rem 1rem;
   margin-bottom: 1.25rem;
   font-size: 0.86rem;
-  color: #143f35;
+  color: var(--textPrimary, var(--text));
   line-height: 1.7;
 }
 
@@ -60,16 +60,16 @@
 }
 .fg-search__input {
   width: 100%;
-  border: 1.5px solid #d4e3db;
+  border: 1.5px solid var(--border);
   border-radius: 0.85rem;
   padding: 0.7rem 0.95rem;
   font-size: 0.92rem;
-  background: #fff;
-  color: #052e16;
+  background: var(--cardBackground, var(--surface));
+  color: var(--textPrimary, var(--text));
 }
 .fg-search__input:focus {
-  outline: 2px solid rgba(34, 106, 86, 0.35);
-  border-color: #226a56;
+  outline: 2px solid color-mix(in srgb, var(--brand) 35%, transparent);
+  border-color: var(--brand);
 }
 
 .fg-tabs {
@@ -79,9 +79,9 @@
   margin-bottom: 1.15rem;
 }
 .fg-tab {
-  border: 1.5px solid #d4e3db;
-  background: #fff;
-  color: #143f35;
+  border: 1.5px solid var(--border);
+  background: var(--cardBackground, var(--surface));
+  color: var(--textPrimary, var(--text));
   border-radius: 999px;
   padding: 0.42rem 0.9rem;
   font-size: 0.84rem;
@@ -89,14 +89,14 @@
   cursor: pointer;
 }
 .fg-tab--active {
-  background: #143f35;
-  border-color: #143f35;
-  color: #fff;
+  background: var(--brand-deep, var(--brand));
+  border-color: var(--brand-deep, var(--brand));
+  color: var(--text-on-brand);
 }
 
 .fg-intro {
   font-size: 0.9rem;
-  color: #3f5a4f;
+  color: var(--textSecondary, var(--text-2));
   line-height: 1.75;
   margin: 0 0 1rem;
 }
@@ -106,8 +106,8 @@
   gap: 0.85rem;
 }
 .fg-card {
-  background: #fff;
-  border: 1.5px solid #dce8e2;
+  background: var(--cardBackground, var(--surface));
+  border: 1.5px solid var(--border);
   border-radius: 1rem;
   padding: 1rem 1.05rem;
 }
@@ -115,46 +115,46 @@
   margin: 0 0 0.45rem;
   font-size: 1.02rem;
   font-weight: 800;
-  color: #052e16;
+  color: var(--textPrimary, var(--text));
 }
 .fg-card__summary {
   margin: 0;
   font-size: 0.9rem;
-  color: #2f4a40;
+  color: var(--textSecondary, var(--text-2));
   line-height: 1.75;
 }
 .fg-card__points {
   margin: 0.7rem 0 0;
   padding-right: 1.1rem;
-  color: #143f35;
+  color: var(--textSecondary, var(--text-2));
   font-size: 0.88rem;
   line-height: 1.7;
 }
 .fg-card__evidence {
   margin-top: 0.75rem;
-  background: rgba(20, 63, 53, 0.05);
+  background: var(--surface-brand, var(--brand-soft));
   border-radius: 0.7rem;
   padding: 0.7rem 0.85rem;
   font-size: 0.86rem;
-  color: #143f35;
+  color: var(--textSecondary, var(--text-2));
   line-height: 1.7;
 }
 .fg-card__evidence strong {
   display: block;
   margin-bottom: 0.2rem;
   font-size: 0.78rem;
-  color: #226a56;
+  color: var(--text-brand, var(--brand));
 }
 .fg-card__note {
   margin: 0.65rem 0 0;
   font-size: 0.82rem;
-  color: #5c6b64;
+  color: var(--textMuted, var(--text-muted));
   line-height: 1.65;
 }
 
 .fg-empty {
   text-align: center;
-  color: #5c6b64;
+  color: var(--textMuted, var(--text-muted));
   padding: 1.5rem 0.5rem;
   font-size: 0.9rem;
 }
@@ -162,13 +162,13 @@
 .fg-related {
   margin-top: 2rem;
   padding-top: 1.25rem;
-  border-top: 1px solid #dce8e2;
+  border-top: 1px solid var(--border);
 }
 .fg-related__title {
   margin: 0 0 0.75rem;
   font-size: 1rem;
   font-weight: 800;
-  color: #052e16;
+  color: var(--textPrimary, var(--text));
 }
 .fg-related__grid {
   display: flex;
@@ -178,9 +178,9 @@
 .fg-related__link {
   display: inline-flex;
   align-items: center;
-  border: 1.5px solid #d4e3db;
-  background: #f8fbf9;
-  color: #143f35;
+  border: 1.5px solid var(--border);
+  background: var(--surface-2, var(--surface));
+  color: var(--textPrimary, var(--text));
   border-radius: 999px;
   padding: 0.4rem 0.9rem;
   font-size: 0.84rem;
@@ -188,9 +188,12 @@
   text-decoration: none;
 }
 .fg-related__link:hover {
-  background: #143f35;
-  border-color: #143f35;
-  color: #fff;
+  background: var(--selectedBackground, var(--brand));
+  border-color: var(--brand);
+  color: var(--selectedText, var(--text-on-brand));
+}
+html[data-theme="dark"] .fg-related__link:hover {
+  color: var(--text-on-brand);
 }
 
 @media (max-width: 640px) {

@@ -8925,7 +8925,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "id": "qa-ruling-seed-qa-283",
     "external_key": "qa-ruling-seed-qa-283",
     "title": "حكم الاستئذان قبل الدخول؟",
-    "summary": "الاستئذان واجب قبل الدخول على بيوت الآخرين. قال تعالى: ﴿يَا أَيُّهَا الَّذِينَ آمَنُوا لَا تَدْخُلُوا بُيُوتًا غَيْرَ بُيُوتِكُمْ حَتَّىٰ تَسْتَأْنِسُوا…",
+    "summary": "الاستئذان واجب قبل الدخول على بيوت الآخرين. قال تعالى: ﴿يَا أَيُّهَا الَّذِينَ آمَنُوا لَا تَدْخُلُوا بُيُوتًا غَيْرَ بُيُوتِكُمْ حَتَّىٰ تَسْتَأْنِسُوا وَتُسَلِّمُوا﴾…",
     "body": "**السؤال:** ما حكم الاستئذان قبل الدخول؟\n\n**الجواب:** الاستئذان واجب قبل الدخول على بيوت الآخرين. قال تعالى: ﴿يَا أَيُّهَا الَّذِينَ آمَنُوا لَا تَدْخُلُوا بُيُوتًا غَيْرَ بُيُوتِكُمْ حَتَّىٰ تَسْتَأْنِسُوا وَتُسَلِّمُوا﴾.",
     "category": "الأخلاق والآداب",
     "subcategory": "الآداب",
@@ -10199,4 +10199,4 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
   }
 ] as unknown as ShariaRulingExtended[];
 
-export const RULINGS_ENCYCLOPEDIA_TOTAL = 3572;
+export const RULINGS_ENCYCLOPEDIA_TOTAL = 3692;

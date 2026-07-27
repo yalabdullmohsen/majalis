@@ -33,7 +33,7 @@ export default function DiscoverIslamQuestionsPage() {
     applyPageSeo({
       path: "/discover-islam/questions",
       title: "أسئلة وأجوبة عن الإسلام | التعريف بالإسلام",
-      description: "إجابات موثّقة عن أهم الأسئلة حول الإسلام: الله، النبوة، القرآن، العبادات، وأكثر. محتوى معتمد في منهج مجالس العلم",
+      description: "إجابات موثّقة عن أهم الأسئلة حول الإسلام: الله، النبوة، القرآن، العبادات، وأكثر. محتوى معتمد في منهج المجلس العلمي",
     });
     getDawahCategories().then(setCategories);
   }, []);

@@ -43,14 +43,14 @@ export default function PropheticMedicinePage() {
     applyPageSeo({
       path: "/prophetic-medicine",
       title: "الطب النبوي | المجلس العلمي",
-      description: "موسوعة الطب النبوي، هدي النبي ﷺ في الصحة والتداوي بالأغذية والأعشاب والرقية الشرعية. محتوى معتمد في منهج مجالس العلم",
+      description: "موسوعة الطب النبوي، هدي النبي ﷺ في الصحة والتداوي بالأغذية والأعشاب والرقية الشرعية. محتوى معتمد في منهج المجلس العلمي",
       keywords: ["طب نبوي", "هدي النبي", "تداوي", "أعشاب إسلامية", "رقية شرعية"],
       jsonLd: [
         {
           "@context": "https://schema.org",
           "@type": "ItemList",
           name: "موسوعة الطب النبوي",
-          description: "هدي النبي ﷺ في الصحة والتداوي من الأغذية والأعشاب والرقية الشرعية؛ محتوى معتمد في منهج مجالس العلم",
+          description: "هدي النبي ﷺ في الصحة والتداوي من الأغذية والأعشاب والرقية الشرعية؛ محتوى معتمد في منهج المجلس العلمي",
           numberOfItems: PROPHETIC_MEDICINE_ITEMS.length,
           itemListElement: PROPHETIC_MEDICINE_ITEMS.slice(0, 20).map((item: { id: string; name: string }, i: number) => ({
             "@type": "ListItem",

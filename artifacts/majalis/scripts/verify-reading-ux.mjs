@@ -24,8 +24,10 @@ test(existsSync(join(root, "src/lib/tasbeeh-storage.ts")), "tasbeeh-storage lib 
 test(existsSync(join(root, "src/styles/highlighted-content.css")), "highlighted-content.css exists");
 
 const adhkar = readFileSync(join(root, "src/views/AdhkarPage.tsx"), "utf8");
-test(adhkar.includes("adhkar-page--v2"), "AdhkarPage v2 layout");
-test(adhkar.includes("getReadingProgress"), "AdhkarPage reading progress");
+// الواجهة الحالية: وضع التركيز (adhkar-page--focus) مع ذاكرة تمرير القراءة
+// عبر useReadingScrollMemory — لا تخطيط v2 القديم ولا استيراد getReadingProgress المباشر.
+test(/adhkar-page--focus/.test(adhkar), "AdhkarPage focus layout");
+test(/useReadingScrollMemory\s*\(\s*["']adhkar["']\s*\)/.test(adhkar), "AdhkarPage reading progress memory");
 
 const tasbih = readFileSync(join(root, "src/lib/tasbeeh-storage.ts"), "utf8");
 test(tasbih.includes("TASBEEH_PRESETS"), "Tasbeeh presets defined");
