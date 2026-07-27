@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
 import { BookOpen, Clock, Home, LayoutGrid } from "lucide-react";
+import { isNavHrefActive } from "@/lib/nav-active";
 import { MoreBottomSheet } from "./MoreBottomSheet";
 
 type NavTab = {
@@ -21,10 +22,8 @@ export function BottomNavBar() {
   const [location] = useLocation();
   const [moreOpen, setMoreOpen] = useState(false);
 
-  const isActive = (href: string) => {
-    if (href === "/") return location === "/";
-    return location === href || location.startsWith(href + "/");
-  };
+  const onPrimaryTab = NAV_TABS.some(({ href }) => isNavHrefActive(location, href));
+  const moreActive = moreOpen || !onPrimaryTab;
 
   // قارئ المصحف /mushaf غامر مخصَّص بتنقّله الخاص (pager/سحب صفحات) —
   // شريط تنقّل سفلي عام فوقه يجعله يبدو صفحة ويب لا تطبيق قراءة، ويحجز
@@ -35,7 +34,7 @@ export function BottomNavBar() {
     <>
       <nav className="bottom-nav bottom-nav--v2" aria-label="التنقل السفلي">
         {NAV_TABS.map(({ href, label, Icon }) => {
-          const active = isActive(href);
+          const active = isNavHrefActive(location, href);
           return (
             <Link
               key={href}
@@ -54,14 +53,14 @@ export function BottomNavBar() {
         {/* تبويب المزيد */}
         <button
           type="button"
-          className={`bottom-nav__tab${moreOpen ? " is-active" : ""}`}
+          className={`bottom-nav__tab${moreActive ? " is-active" : ""}`}
           onClick={() => setMoreOpen(true)}
           aria-label="قائمة التطبيق"
           aria-haspopup="dialog"
           aria-expanded={moreOpen}
         >
           <span className="bottom-nav__tab-icon" aria-hidden="true">
-            <LayoutGrid size={20} strokeWidth={moreOpen ? 2.25 : 1.75} aria-hidden={true} />
+            <LayoutGrid size={20} strokeWidth={moreActive ? 2.25 : 1.75} aria-hidden={true} />
           </span>
           <span className="bottom-nav__tab-label">المزيد</span>
         </button>

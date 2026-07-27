@@ -7641,46 +7641,70 @@ body.has-assistant-fab .app-main {
    Design System v5 — MoreBottomSheet + BottomNavBar
    ══════════════════════════════════════════════════════════════ */
 
-/* Overlay: glass effect */
+/* Overlay: ثابت ملء الشاشة — بلا position:fixed كانت الورقة تُرسم خارج الرؤية */
 .bottom-sheet-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-modal, 400);
+  display: flex;
+  align-items: flex-end;
   background: rgba(11, 20, 15, 0.55);
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
 }
 
-/* Sheet: sharper shadow */
+@keyframes sheet-in {
+  from { transform: translateY(100%); opacity: 0.6; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Sheet: ظل + أبعاد أساسية */
 .bottom-sheet {
+  width: 100%;
+  max-height: min(88dvh, calc(100dvh - var(--header-height, 3rem) - var(--safe-bottom, 0px)));
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  animation: sheet-in 0.35s forwards;
   box-shadow:
     0 -8px 40px rgba(11, 40, 32, 0.16),
     0 -2px 8px rgba(11, 40, 32, 0.08);
 }
 
-/* Handle: thicker, more visible */
+/* Handle */
 .bottom-sheet__handle {
   width: 2.75rem;
   height: 4px;
   background: var(--majalis-line-strong, #D8D0C4);
 }
 
-/* Item cards: spring hover */
+.bottom-sheet__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(5.5rem, 1fr));
+  gap: 0.75rem;
+}
+
+/* Item cards */
 .more-sheet-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.85rem 0.5rem;
+  text-decoration: none;
+  text-align: center;
   border-radius: 0.875rem;
-  transition: background 200ms cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 200ms ease,
-              transform 200ms cubic-bezier(0.34, 1.56, 0.64, 1),
-              box-shadow 200ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition: background 0.2s, border-color 0.2s, transform 0.2s, box-shadow 0.2s;
 }
 
 .more-sheet-item:hover {
   background: var(--majalis-emerald-soft, #EAF5EE);
   border-color: rgba(22, 96, 72, 0.25);
-  transform: translateY(-3px) scale(1.02);
+  transform: translateY(-2px);
   box-shadow: 0 6px 16px rgba(22, 96, 72, 0.12);
 }
 
 .more-sheet-item:active {
-  transform: translateY(0) scale(0.97);
-  transition-duration: 80ms;
+  transform: none;
 }
 
 /* Icon container */
