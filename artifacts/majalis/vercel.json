@@ -254,6 +254,11 @@
       "permanent": true
     },
     {
+      "source": "/quran/tafsir",
+      "destination": "/tafsir",
+      "permanent": true
+    },
+    {
       "source": "/fatwa/:id",
       "destination": "/rulings",
       "permanent": true

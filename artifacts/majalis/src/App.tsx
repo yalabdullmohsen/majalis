@@ -213,6 +213,7 @@ const SinsAndRightsPage = lazy(() => import("@/views/SinsAndRightsPage"));
 const SinsAndRightsDetailPage = lazy(() => import("@/views/SinsAndRightsDetailPage"));
 const AmrBilMarufPage = lazy(() => import("@/views/AmrBilMarufPage"));
 const UlumQuranPage = lazy(() => import("@/views/UlumQuranPage"));
+const TafsirPage = lazy(() => import("@/views/TafsirPage"));
 const MawarithPage = lazy(() => import("@/views/MawarithPage"));
 const MawarithCalculatorPage = lazy(() => import("@/views/MawarithCalculatorPage"));
 const SalahGuidePage = lazy(() => import("@/views/SalahGuidePage"));
@@ -537,6 +538,8 @@ function Router() {
       <Route path="/sins-and-rights/:slug"><SafeLazyRoute component={SinsAndRightsDetailPage} /></Route>
       <Route path="/amr-bil-maruf"><SafeLazyRoute component={AmrBilMarufPage} /></Route>
       <Route path="/ulum-quran"><SafeLazyRoute component={UlumQuranPage} /></Route>
+      <Route path="/tafsir"><SafeLazyRoute component={TafsirPage} /></Route>
+      <Route path="/quran/tafsir"><Redirect to="/tafsir" /></Route>
       <Route path="/mawarith"><SafeLazyRoute component={MawarithPage} /></Route>
       <Route path="/mawarith/calculator"><SafeLazyRoute component={MawarithCalculatorPage} /></Route>
       <Route path="/salah-guide"><SafeLazyRoute component={SalahGuidePage} /></Route>

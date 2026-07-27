@@ -54,6 +54,7 @@ export const FEATURE_REGISTRY: FeatureEntry[] = [
   // ── القرآن والأذكار ──────────────────────────────────────────
   { id: "mushaf",        label: "المصحف الشريف",   path: "/mushaf",       group: "قرآن",          status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "quran",        label: "القرآن الكريم",    path: "/quran-hub",    group: "قرآن",          status: "active",       inSideNav: true,  inBottomNav: false },
+  { id: "tafsir",       label: "علم التفسير",      path: "/tafsir",       group: "قرآن",          status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "quran-circles",label:"حلقات التحفيظ",     path: "/quran-circles",group:"قرآن",           status: "coming-soon",  inSideNav: false, inBottomNav: false },
 
   // ── الأدوات والتفاعل ─────────────────────────────────────────
