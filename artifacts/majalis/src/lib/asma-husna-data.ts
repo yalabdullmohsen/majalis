@@ -116,9 +116,3 @@ export const ASMAA: AsmaEntry[] = [
 
 export const ASMA_CATEGORIES = ["الكل", "الجلال", "الجمال", "الرحمة", "القدرة", "العلم", "الخلق", "العدل"] as const;
 
-export function getTodayAsma(): AsmaEntry {
-  const start = new Date(new Date().getFullYear(), 0, 0);
-  const diff = +new Date() - +start;
-  const dayOfYear = Math.floor(diff / 86400000);
-  return ASMAA[(dayOfYear - 1) % 99];
-}
