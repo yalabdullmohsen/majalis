@@ -140,6 +140,8 @@ body {
   overscroll-behavior-x: contain;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
+  scroll-snap-type: x proximity;
+  direction: rtl;
   /* الحشوة الجانبية تحترم قصّة الشاشة (الوضع الأفقي على iPhone يزيح
      المحتوى تحت الحافة المنحنية)، وتضمن ظهور أول وآخر تبويب كاملين
      بدل التصاقهما بالحافة. */
@@ -158,6 +160,7 @@ body {
 .top-section-bar__scroll > .top-section-bar__tab {
   flex: 0 0 auto;
   white-space: nowrap;
+  scroll-snap-align: start;
 }
 .top-section-bar__scroll::-webkit-scrollbar { display: none; }
 .top-section-bar__tab {

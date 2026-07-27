@@ -27,86 +27,136 @@
   margin: 0 0 0.4rem;
 }
 .fqh-hub-hero__title {
-  font-size: clamp(1.5rem, 4vw, 2.25rem);
+  font-size: clamp(1.5rem, 5vw, 2rem);
   font-weight: 900;
   color: #FFFFFF;
   margin: 0 0 0.5rem;
   font-family: var(--font-display, serif);
+  line-height: 1.4;
+  letter-spacing: 0;
 }
 .fqh-hub-hero__sub {
-  font-size: 0.925rem;
+  font-size: clamp(0.875rem, 3vw, 1rem);
   color: rgba(255,255,255,0.82);
   margin: 0;
   max-width: 55ch;
-  line-height: 1.65;
+  line-height: 1.9;
+  letter-spacing: 0;
 }
 
 /* Fiqh topic hub grid */
 .fqh-hub-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-  gap: var(--ds-space-3);
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.85rem;
   margin-bottom: 1.75rem;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+@media (min-width: 400px) {
+  .fqh-hub-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+}
+@media (min-width: 720px) {
+  .fqh-hub-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
 }
 .fqh-hub-card {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   gap: 0.45rem;
-  padding: 1rem 0.75rem;
-  border-radius: 0.875rem;
+  padding: 1rem 1.1rem;
+  min-height: 8rem;
+  height: auto;
+  border-radius: 12px;
   border: 1.5px solid rgba(0,0,0,0.07);
   background: #FFFFFF;
   text-decoration: none;
   color: inherit;
-  text-align: center;
-  transition: all 0.17s ease;
+  text-align: start;
+  transition: border-color 0.17s ease, box-shadow 0.17s ease;
   cursor: pointer;
+  overflow: hidden;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 .fqh-hub-card:hover {
   border-color: var(--fqh-clr, #143F35);
   box-shadow: 0 4px 14px rgba(0,0,0,0.09);
-  transform: translateY(-2px);
+  transform: none;
 }
 .fqh-hub-card__emoji { font-size: 1.6rem; line-height: 1; }
 .fqh-hub-card__title {
-  font-size: 0.8125rem;
+  font-size: clamp(1.05rem, 3.6vw, 1.25rem);
   font-weight: 700;
   color: var(--majalis-ink, #143F35);
   margin: 0;
-  line-height: 1.3;
+  line-height: 1.4;
+  letter-spacing: 0;
+  overflow-wrap: anywhere;
 }
 .fqh-hub-card:hover .fqh-hub-card__title { color: var(--fqh-clr, #143F35); }
 .fqh-hub-card__desc {
-  font-size: 0.8rem;
-  color: var(--majalis-ink-soft, #5D726A);
+  font-size: clamp(0.875rem, 3vw, 1rem);
+  color: #4A5C55;
   margin: 0;
-  line-height: 1.4;
+  line-height: 1.9;
+  letter-spacing: 0;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
 }
+html[data-theme="dark"] .fqh-hub-card__desc { color: #A8BDB6; }
 
 
 /* ══════════════════════════════════════════════
    FQP. FiqhPage
    ══════════════════════════════════════════════ */
-.fqp-root { min-height: 100svh; background: var(--majalis-parchment); direction: rtl; }
-.fqp-tab-content { padding: 1.25rem 0 3rem; }
+.fqp-root { min-height: 100svh; background: var(--majalis-parchment); direction: rtl; overflow-x: hidden; max-width: 100%; box-sizing: border-box; }
+.fqp-tab-content { padding: 1.25rem 0 3rem; max-width: 100%; box-sizing: border-box; }
 
-.fiqh-section-divider { border: none; border-top: 1px solid var(--majalis-line); margin: 1.5rem 0; }
+.fiqh-section-divider {
+  border: none;
+  height: 0;
+  margin: 1.5rem 0;
+  padding: 0;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  background: transparent;
+  border-top: 1px dashed var(--majalis-line);
+}
 .fqp-tabs-nav {
   background: none;
   border-bottom: 1px solid var(--majalis-line);
+  max-width: 100%;
+  overflow: hidden;
 }
 .fqp-tabs-nav--bare { background: none !important; box-shadow: none !important; }
 .fqp-tabs-scroll {
   display: flex;
-  /* !important ضروري: [role="tablist"]{gap:0 !important} (قاعدة إتاحة
-     عامة أدناه في هذا الملف) كانت تُلغي هذه الفجوة صامتًا فتتلاصق
-     التبويبات حرفيًا بلا أي مسافة (تحقّق حي عبر getBoundingClientRect:
-     0px بين كل تبويبين، 2026-07-22). */
   gap: .25rem !important;
   overflow-x: auto;
-  padding-bottom: .5rem;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  scroll-snap-type: x proximity;
+  scroll-padding-inline: 0.75rem;
+  padding-block: .5rem;
+  padding-inline: max(0.75rem, env(safe-area-inset-inline-start, 0px)) max(0.75rem, env(safe-area-inset-inline-end, 0px));
+  max-width: 100%;
+  box-sizing: border-box;
+  direction: rtl;
 }
+.fqp-tabs-scroll::-webkit-scrollbar { display: none; }
 .fqp-tab {
   display: inline-flex; align-items: center; gap: .375rem;
   padding: .875rem 1.25rem; font-size: .875rem; font-weight: 500;
@@ -114,6 +164,8 @@
   transition: color .15s, border-color .15s;
   color: var(--majalis-ink-soft); background: none; border-top: none;
   border-left: none; border-right: none; cursor: pointer;
+  flex: 0 0 auto;
+  scroll-snap-align: start;
 }
 .fqp-tab:hover { color: var(--majalis-ink); }
 .fqp-tab--active { border-bottom-color: var(--mn-border-active, var(--majalis-emerald)); color: var(--mn-text-active, var(--majalis-emerald-deep)); }
