@@ -1,0 +1,30 @@
+{
+  "source": "fawazahmed0/hadith-api@1",
+  "authenticity": "sahih-by-collection",
+  "generatedAt": "2026-07-27T16:07:42.438Z",
+  "totalHadiths": 14940,
+  "files": [
+    {
+      "file": "bukhari.json",
+      "collection": "bukhari",
+      "edition": "ara-bukhari",
+      "label": "صحيح البخاري",
+      "count": 7580,
+      "skippedEmpty": 9,
+      "skippedDup": 0,
+      "bytes": 8880944,
+      "sha256": "d18f8598dd725bf8cc8619b6b86bba6024fa1018bacab4fb69dcec0880dcd173"
+    },
+    {
+      "file": "muslim.json",
+      "collection": "muslim",
+      "edition": "ara-muslim",
+      "label": "صحيح مسلم",
+      "count": 7360,
+      "skippedEmpty": 203,
+      "skippedDup": 0,
+      "bytes": 7857938,
+      "sha256": "4987f3ba0fdd10ea026169ef8f48f8759909751336561d37ac0a9cd53e40ccd0"
+    }
+  ]
+}
