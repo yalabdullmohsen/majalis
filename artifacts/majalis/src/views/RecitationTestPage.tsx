@@ -21,18 +21,20 @@ import { loadMutashabihatIndex, getSimilarAyahs, type MutashabihMatch } from "@/
 import { FreeformStartDetector, loadPositionIndex } from "@/lib/recitation-ai/freeform-start-detector";
 import { loadPageJuzIndex, getSegmentsForPage, getSegmentsForJuz, getSegmentsForHizb, getSegmentsForRub } from "@/lib/recitation-ai/page-juz-lookup";
 import { normalizeQuranWord } from "@/lib/recitation-ai/quran-normalize";
+import { applyAlertPolicy } from "@/lib/recitation-ai/session-event-policy";
 import type { AlertLevel, AlignmentEvent, PrecisionLevel, RecitationMode, ReferenceWord } from "@/lib/recitation-ai/types";
 import "@/styles/recitation-ai.css";
 
 type Phase = "setup" | "loading" | "detecting" | "session" | "report" | "error";
 
 const MODE_LABELS: Record<RecitationMode, { label: string; hint: string }> = {
-  full_hide: { label: "التسميع الكامل", hint: "النص مخفٍ تمامًا" },
-  assisted: { label: "التسميع بالمساعدة", hint: "تلميح متدرج عند التوقف" },
-  word_follow: { label: "المتابعة كلمة بكلمة", hint: "الصفحة ظاهرة، تُظلَّل الكلمات الصحيحة" },
-  interactive_mushaf: { label: "المصحف التفاعلي", hint: "الكلمات مموَّهة وتنكشف بتلاوتك" },
+  full_hide: { label: "وضع الاختبار", hint: "النص مخفٍ تمامًا" },
+  assisted: { label: "وضع التلقين", hint: "تلميح متدرج عند التوقف" },
+  word_follow: { label: "وضع القراءة", hint: "النص ظاهر مع متابعة الكلمات" },
+  interactive_mushaf: { label: "وضع الحفظ", hint: "الكلمات مموَّهة وتنكشف بتلاوتك" },
   teacher_test: { label: "اختبار المعلّم", hint: "يبدأ من موضع عشوائي" },
   freeform: { label: "التسميع الحر", hint: "ابدأ التلاوة مباشرة — نكتشف السورة تلقائيًا" },
+  listen_repeat: { label: "استماع ثم تكرار", hint: "استمع للقارئ ثم سمّع للمقارنة" },
 };
 
 const ALERT_LABELS: Record<AlertLevel, string> = { gentle: "لطيف", medium: "متوسط", immediate: "فوري", teacher: "معلّم حقيقي" };
@@ -106,6 +108,8 @@ function RecitationTestPageInner() {
   // setWordStates (نفس درس سباق hintLevel أعلاه).
   const [unclearNotice, setUnclearNotice] = useState<string | null>(null);
   const unclearNoticeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [audioLevel, setAudioLevel] = useState(0);
+  const wakeLockRef = useRef<{ release: () => Promise<void> } | null>(null);
 
   const [paused, setPaused] = useState(false);
 
@@ -307,6 +311,18 @@ function RecitationTestPageInner() {
   const attachAsrSession = useCallback(async (provider: QuranASRProvider, engine: VerseAlignmentEngine) => {
     const asrSession = await provider.startSession({ language: "ar-SA", precisionLevel });
     asrSessionRef.current = asrSession;
+
+    // منع إطفاء الشاشة أثناء التسميع (يُحرَّر عند الإنهاء/الإيقاف)
+    try {
+      const nav = navigator as Navigator & { wakeLock?: { request: (t: "screen") => Promise<{ release: () => Promise<void> }> } };
+      if (nav.wakeLock?.request) {
+        wakeLockRef.current = await nav.wakeLock.request("screen");
+      }
+    } catch { /* غير مدعوم أو مرفوض — تجاهل */ }
+
+    if (provider.onAudioLevel) {
+      provider.onAudioLevel(asrSession, (level) => setAudioLevel(level));
+    }
 
     if (provider.onPartialWord) {
       unsubRef.current = provider.onPartialWord(asrSession, (word, atMs, confidence) => {
@@ -712,10 +728,12 @@ function RecitationTestPageInner() {
 
   const applyEvents = useCallback((events: AlignmentEvent[]) => {
     if (events.length === 0) return;
-    setLiveEvents((prev) => [...prev, ...events]);
+    const policy = applyAlertPolicy(events, alertLevelRef.current);
+    const mapped = policy.events;
+    setLiveEvents((prev) => [...prev, ...mapped]);
     setWordStates((prev) => {
       const next = new Map(prev);
-      for (const e of events) {
+      for (const e of mapped) {
         if (e.kind === "correct") {
           next.set(`${e.ref.surah}:${e.ref.ayah}:${e.ref.wordIndex}`, "revealed");
         } else if (e.kind === "error" && e.ref) {
@@ -732,35 +750,32 @@ function RecitationTestPageInner() {
       return next;
     });
 
-    // إشعار "غير واضح" العابر — يُحسَب من آخر حدث unclear في هذه الدفعة
-    // فقط، بلا أي علاقة بمُحدِّث setWordStates أعلاه (استدعاء setState
-    // منفصل تمامًا، خارج أي دالة تحديث أخرى).
-    const lastUnclear = [...events].reverse().find((e) => e.kind === "unclear");
-    if (lastUnclear && lastUnclear.kind === "unclear") {
-      setUnclearNotice(lastUnclear.heardWord);
+    if (policy.softPrompt) {
+      setUnclearNotice(policy.softPrompt);
       if (unclearNoticeTimerRef.current) clearTimeout(unclearNoticeTimerRef.current);
       unclearNoticeTimerRef.current = setTimeout(() => setUnclearNotice(null), 3000);
+    } else {
+      const lastUnclear = [...mapped].reverse().find((e) => e.kind === "unclear");
+      if (lastUnclear && lastUnclear.kind === "unclear") {
+        setUnclearNotice(lastUnclear.heardWord);
+        if (unclearNoticeTimerRef.current) clearTimeout(unclearNoticeTimerRef.current);
+        unclearNoticeTimerRef.current = setTimeout(() => setUnclearNotice(null), 3000);
+      }
     }
 
-    // بطاقة التصحيح الحي + Haptics + وضع المعلّم الحقيقي — تُحسَب من آخر
-    // حدث "error" في هذه الدفعة، بلا أي علاقة بمُحدِّث setWordStates
-    // أعلاه (نفس نمط unclearNotice قبله تمامًا: استدعاء setState منفصل).
-    const lastError = [...events].reverse().find((e) => e.kind === "error");
+    const lastError = [...mapped].reverse().find((e) => e.kind === "error");
+    const lastNeeds = [...mapped].reverse().find((e) => e.kind === "needs_repeat");
     if (lastError && lastError.kind === "error" && lastError.ref && lastError.heardWord) {
-      setCorrectionCard({ ref: lastError.ref, heardWord: lastError.heardWord });
+      if (policy.showCorrection) setCorrectionCard({ ref: lastError.ref, heardWord: lastError.heardWord });
       if (alertLevelRef.current === "immediate" || alertLevelRef.current === "teacher") {
         void hapticNotify("error");
       }
-      if (alertLevelRef.current === "teacher") {
-        setTeacherHold(true);
-      }
+      if (policy.holdSession) setTeacherHold(true);
+    } else if (lastNeeds && lastNeeds.kind === "needs_repeat" && policy.showCorrection) {
+      setCorrectionCard({ ref: lastNeeds.ref, heardWord: lastNeeds.heardWord });
     }
 
-    // زمن الاسترجاع لوضع "اختبار المعلّم" — يُسجَّل مرة واحدة فقط، عند
-    // أول كلمة صحيحة بعد بدء الجلسة من الموضع العشوائي. بلا أي استدعاء
-    // setState متسابق (خارج مُحدِّث setWordStates تمامًا، درسٌ من خلل
-    // hintLevel السابق أعلاه).
-    if (recallStartAtRef.current !== null && events.some((e) => e.kind === "correct")) {
+    if (recallStartAtRef.current !== null && mapped.some((e) => e.kind === "correct")) {
       setRecallMs(Date.now() - recallStartAtRef.current);
       recallStartAtRef.current = null;
     }
@@ -770,6 +785,9 @@ function RecitationTestPageInner() {
 
   const finishSession = useCallback(async () => {
     setListening(false);
+    setAudioLevel(0);
+    try { await wakeLockRef.current?.release(); } catch { /* ignore */ }
+    wakeLockRef.current = null;
     unsubRef.current?.();
     unsubRef.current = null;
 
@@ -817,7 +835,8 @@ function RecitationTestPageInner() {
         user.id,
         {
           range,
-          mode,
+          // listen_repeat غير موجود بعد في قيد DB — يُحفَظ كـword_follow حتى توسعة القيد
+          mode: mode === "listen_repeat" ? "word_follow" : mode,
           precisionLevel,
           providerId: providerRef.current?.id ?? "unknown",
           alertLevel,
@@ -1354,6 +1373,19 @@ function RecitationTestPageInner() {
                 <span className="rai-listen-wave" aria-hidden="true"><span /><span /><span /></span>
               )}
               <span style={{ fontFamily: "var(--font-body)", fontSize: ".85rem" }}>{listening ? "يستمع الآن…" : paused ? "متوقّف مؤقتًا" : "جارٍ الاتصال…"}</span>
+              {listening && (
+                <span
+                  className="rai-audio-level"
+                  role="meter"
+                  aria-label="مستوى الصوت"
+                  aria-valuemin={0}
+                  aria-valuemax={100}
+                  aria-valuenow={Math.round(audioLevel * 100)}
+                  title="مستوى الميكروفون"
+                >
+                  <span className="rai-audio-level__fill" style={{ transform: `scaleX(${Math.max(0.05, audioLevel)})` }} />
+                </span>
+              )}
             </div>
             <span className="rai-error-count">{errorEvents.length} ملاحظة</span>
             <div className="rai-session__actions">

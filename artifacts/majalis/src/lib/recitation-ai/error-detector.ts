@@ -22,6 +22,7 @@ function normLoose(s: string): string {
 
 export function postProcessAlignmentEvents(events: AlignmentEvent[]): AlignmentEvent[] {
   let result = detectOutOfOrder(events);
+  result = detectWrongAyahJump(result);
   result = detectWrongStart(result);
   return result;
 }
@@ -84,4 +85,45 @@ function detectWrongStart(events: AlignmentEvent[]): AlignmentEvent[] {
 
   const rest = events.slice(0, firstCorrectIdx).filter((e: AlignmentEvent) => !(leadingErrors as AlignmentEvent[]).includes(e));
   return [merged, ...rest, ...events.slice(firstCorrectIdx)];
+}
+
+/**
+ * قفز لآية خاطئة: سلسلة wrong_word متتالية (≥3) بلا correct بينها،
+ * ثم عودة لصحيح — تُعاد صياغتها كـ wrong_ayah_jump واحد بدل عدّة أخطاء
+ * استبدال (إشارة إلى انتقال لمتشابه/موضع آخر ثم العودة أو التصحيح).
+ */
+function detectWrongAyahJump(events: AlignmentEvent[]): AlignmentEvent[] {
+  const JUMP_MIN = 3;
+  const out: AlignmentEvent[] = [];
+  let i = 0;
+  while (i < events.length) {
+    const e = events[i];
+    if (e.kind === "error" && e.errorType === "wrong_word") {
+      let j = i;
+      const streak: Extract<AlignmentEvent, { kind: "error" }>[] = [];
+      while (
+        j < events.length &&
+        events[j].kind === "error" &&
+        (events[j] as Extract<AlignmentEvent, { kind: "error" }>).errorType === "wrong_word"
+      ) {
+        streak.push(events[j] as Extract<AlignmentEvent, { kind: "error" }>);
+        j += 1;
+      }
+      if (streak.length >= JUMP_MIN) {
+        out.push({
+          kind: "error",
+          errorType: "wrong_ayah_jump",
+          ref: streak[0].ref,
+          heardWord: streak.map((s) => s.heardWord).filter(Boolean).join(" "),
+          confidence: Math.min(...streak.map((s) => s.confidence)),
+          note: `انتقال محتمل لموضع/آية مختلفة (${streak.length} كلمات متتالية لا تطابق السياق)`,
+        });
+        i = j;
+        continue;
+      }
+    }
+    out.push(e);
+    i += 1;
+  }
+  return out;
 }

@@ -68,5 +68,7 @@ export interface QuranASRProvider {
    * undefined فيتعطَّل هذا التصنيف بأمان (سلوك المستوى السابق دون كسر).
    */
   onPartialWord?(session: ASRSession, callback: (word: string, atMs: number, confidence?: number) => void): () => void;
+  /** مؤشر مستوى صوت حي اختياري (0–1) — للواجهة فقط. */
+  onAudioLevel?(session: ASRSession, callback: (level01: number) => void): () => void;
   endSession(session: ASRSession): Promise<FinalResult>;
 }

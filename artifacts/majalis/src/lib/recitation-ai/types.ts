@@ -8,7 +8,8 @@ export type RecitationMode =
   | "word_follow"
   | "interactive_mushaf"
   | "teacher_test"
-  | "freeform";
+  | "freeform"
+  | "listen_repeat";
 
 /**
  * "teacher": وضع المعلّم الحقيقي — عند خطأ مؤكَّد (لا "غير واضح"/"يحتاج
