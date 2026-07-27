@@ -7003,7 +7003,7 @@ export const SEED_QA = [
     "category_id": "seed-cat-tahara",
     "ruling_type": "جائز",
     "evidence": "",
-    "reference": "صحيح مسلم 272؛ فقه السنة — السيد سابق",
+    "reference": "صحيح مسلم 272؛ فقه السنة — سيد سابق",
     "status": "published",
     "review_status": "approved",
     "created_at": "2024-05-12T13:10:00.000Z",
