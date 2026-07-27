@@ -1943,6 +1943,12 @@ html[data-theme="dark"] .rtp-transcript {
   gap: 0.45rem;
   padding: 0.75rem;
   overflow: auto;
+  flex: 1;
+}
+.qs-bookmark-list {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
 }
 .qs-juz-chip {
   display: flex;
