@@ -1,0 +1,30 @@
+[
+ {
+  "archived_at": null,
+  "bio": "سجل تجريبي لاختبار استيراد المشايخ — المرحلة الثانية.",
+  "biography": null,
+  "city": "العاصمة",
+  "created_at": "2026-07-23 12:01:34.606745+00",
+  "external_key": null,
+  "id": "d7e51560-612b-4254-b5d3-04b58f8fb97c",
+  "ijazah": null,
+  "instagram_url": null,
+  "is_verified": true,
+  "name": "الشيخ التجريبي Phase2",
+  "needs_verification": false,
+  "official_website": null,
+  "photo_url": null,
+  "profile_id": null,
+  "qualifications": null,
+  "slug": null,
+  "specialties": [
+   "فقه",
+   "حديث"
+  ],
+  "status": "approved",
+  "title": null,
+  "twitter_url": null,
+  "years_experience": null,
+  "youtube_url": null
+ }
+]
