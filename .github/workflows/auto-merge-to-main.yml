@@ -1,20 +1,18 @@
 name: Auto-ready and merge PRs to main
 
-# دورة تلقائية بلا تدخل يدوي (2026-07-26، بطلب صريح من المالك):
-# أي PR من فروع العمل المعتمدة يستهدف main → Ready → انتظار الفحوصات →
-# Auto-merge (squash) → حذف الفرع. النشر عبر auto-deploy.yml بعد وصول main.
-#
-# يستبدل الدمج المباشر على push (الذي تجاوز مراجعة PR وفحوصاته).
+# دورة تلقائية بلا تدخل يدوي (طلب المالك 2026-07-26، مُحدَّث 2026-07-27):
+# أي PR من فروع العمل المعتمدة يستهدف main → Ready → Auto-merge (squash)
+# → حذف الفرع بعد الدمج. عند فشل CI يُلغى Auto-merge. عند التعارض يحاول
+# rebase/merge من main تلقائيًا (workflow منفصل). النشر عبر Vercel من main
+# + بوابة auto-deploy.yml.
 
 on:
   pull_request:
     types: [opened, reopened, synchronize, ready_for_review, converted_to_draft]
     branches: [main]
-  # إعادة المحاولة بعد اكتمال CI (مهم بعد undraft أو فشل سابق)
   workflow_run:
     workflows: ["CI"]
     types: [completed]
-  # معالجة جماعية لـ PRs المفتوحة (تشغيل يدوي أو بعد نشر هذا الـworkflow)
   workflow_dispatch:
     inputs:
       pr_number:
@@ -33,16 +31,37 @@ permissions:
   checks: read
 
 env:
-  # PAT المالك: دمج عبره يُطلق workflows على main (GITHUB_TOKEN لا يفعل).
-  # إن غاب السرّ نستخدم GITHUB_TOKEN مع تحذير — الدمج قد ينجح بلا تشغيل auto-deploy.
   GH_TOKEN: ${{ secrets.PROD_DEPLOY_TOKEN || secrets.GITHUB_TOKEN }}
 
 jobs:
+  cancel-on-ci-failure:
+    if: github.repository == 'yalabdullmohsen/majalis' && github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'failure'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: إلغاء Auto-merge عند فشل CI
+        env:
+          WORKFLOW_HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+          WORKFLOW_HEAD_BRANCH: ${{ github.event.workflow_run.head_branch }}
+        run: |
+          set -euo pipefail
+          nums=$(gh api "repos/${GITHUB_REPOSITORY}/commits/${WORKFLOW_HEAD_SHA}/pulls" \
+            --jq '[.[] | select(.base.ref=="main") | .number] | join(" ")' || true)
+          if [ -z "${nums}" ]; then
+            nums=$(gh -R "$GITHUB_REPOSITORY" pr list --base main --state open \
+              --head "${GITHUB_REPOSITORY_OWNER}:${WORKFLOW_HEAD_BRANCH}" \
+              --json number --jq '.[].number' | tr '\n' ' ' || true)
+          fi
+          for n in $nums; do
+            echo "إلغاء Auto-merge لـ #$n بسبب فشل CI"
+            gh -R "$GITHUB_REPOSITORY" pr merge "$n" --disable-auto || true
+            gh -R "$GITHUB_REPOSITORY" pr comment "$n" --body "⛔ أُلغي Auto-merge لأن فحص CI فشل. أصلِح الفشل وسيُعاد تفعيل الدمج تلقائيًا بعد نجاح الفحوصات." || true
+          done
+
   auto-merge:
-    if: github.repository == 'yalabdullmohsen/majalis'
+    if: github.repository == 'yalabdullmohsen/majalis' && (github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success')
     runs-on: ubuntu-latest
     timeout-minutes: 15
-
     steps:
       - name: تحديد قائمة الـ PRs المستهدفة
         id: targets
@@ -57,11 +76,8 @@ jobs:
           DISPATCH_PR: ${{ github.event.inputs.pr_number }}
         run: |
           set -euo pipefail
-          # فروع العمل المؤهّلة. نافذتا automation/content وautomation/tasks
-          # تُدمجان معًا فقط عبر release-majlisilm.yml لتفادي سباق النافذتين.
           ALLOW='^(cursor|session|claude|automation|fix|feature)/'
           EXCLUDE_DUAL='^(automation/content|automation/tasks)$'
-
           nums=""
           if [ "$EVENT_NAME" = "pull_request" ]; then
             if [ "$PR_BASE_REF" != "main" ]; then
@@ -70,18 +86,12 @@ jobs:
               exit 0
             fi
             if [ "$PR_HEAD_REPO" != "$GITHUB_REPOSITORY" ]; then
-              echo "تخطي: PR من مستودع خارجي غير موثوق ($PR_HEAD_REPO)"
+              echo "تخطي: PR من مستودع خارجي"
               echo "nums=" >> "$GITHUB_OUTPUT"
               exit 0
             fi
             nums="$PR_NUMBER"
           elif [ "$EVENT_NAME" = "workflow_run" ]; then
-            if [ "${WORKFLOW_CONCLUSION}" != "success" ]; then
-              echo "تخطي: CI لم ينجح (${WORKFLOW_CONCLUSION})"
-              echo "nums=" >> "$GITHUB_OUTPUT"
-              exit 0
-            fi
-            # اربط تشغيل CI بـ PR واحد أو أكثر على نفس الـ SHA
             nums=$(gh api "repos/${GITHUB_REPOSITORY}/commits/${WORKFLOW_HEAD_SHA}/pulls" \
               --jq '[.[] | select(.base.ref=="main" and .head.repo.full_name=="'"${GITHUB_REPOSITORY}"'") | .number] | join(" ")' || true)
             if [ -z "${nums}" ]; then
@@ -97,7 +107,6 @@ jobs:
                 --json number --jq '.[].number' | tr '\n' ' ' || true)
             fi
           fi
-
           echo "مرشّحون: ${nums:-∅}"
           echo "nums=${nums}" >> "$GITHUB_OUTPUT"
           echo "allow=${ALLOW}" >> "$GITHUB_OUTPUT"
@@ -109,16 +118,10 @@ jobs:
           ALLOW: ${{ steps.targets.outputs.allow }}
           EXCLUDE_DUAL: ${{ steps.targets.outputs.exclude_dual }}
           NUMS: ${{ steps.targets.outputs.nums }}
-        # يجب أن ينجح هذا الـjob دائمًا حتى لا يصبح فحصًا حاجزًا يمنع الدمج.
         continue-on-error: true
         run: |
           set -u
           REPO_FLAG=(-R "$GITHUB_REPOSITORY")
-          if [ -z "${GH_TOKEN:-}" ]; then
-            echo "::error::لا يوجد رمز مصادقة لـ gh"
-            exit 0
-          fi
-
           for n in $NUMS; do
             echo "::group::PR #$n"
             if ! meta=$(gh "${REPO_FLAG[@]}" pr view "$n" --json number,state,isDraft,baseRefName,headRefName,isCrossRepository,mergeable,mergeStateStatus,url \
@@ -128,7 +131,6 @@ jobs:
               continue
             fi
             echo "$meta"
-
             state=$(echo "$meta" | jq -r .state)
             base=$(echo "$meta" | jq -r .base)
             head=$(echo "$meta" | jq -r .head)
@@ -136,86 +138,50 @@ jobs:
             mergeable=$(echo "$meta" | jq -r .mergeable)
             draft=$(echo "$meta" | jq -r .isDraft)
 
-            if [ "$state" != "OPEN" ]; then
-              echo "تخطي: ليس مفتوحًا ($state)"
-              echo "::endgroup::"
-              continue
-            fi
-            if [ "$base" != "main" ]; then
-              echo "تخطي: القاعدة ليست main"
-              echo "::endgroup::"
-              continue
-            fi
-            if [ "$cross" = "true" ]; then
-              echo "تخطي: PR من fork خارجي"
+            if [ "$state" != "OPEN" ] || [ "$base" != "main" ] || [ "$cross" = "true" ]; then
+              echo "تخطي: غير مؤهّل"
               echo "::endgroup::"
               continue
             fi
             if ! echo "$head" | grep -Eq "$ALLOW"; then
-              echo "تخطي: الفرع $head خارج أنماط العمل المعتمدة"
+              echo "تخطي: الفرع $head خارج الأنماط"
               echo "::endgroup::"
               continue
             fi
             if echo "$head" | grep -Eq "$EXCLUDE_DUAL"; then
-              echo "تخطي: $head يُدمَج عبر release-majlisilm.yml (نافذتان متزامنتان)"
+              echo "تخطي: $head عبر release-majlisilm.yml"
               echo "::endgroup::"
               continue
             fi
             if [ "$mergeable" = "CONFLICTING" ]; then
-              echo "::warning::PR #$n فيه تعارضات — لا دمج"
+              echo "::warning::تعارضات — يُعالَج عبر resolve-pr-conflicts.yml"
               echo "::endgroup::"
               continue
             fi
-
             if [ "$draft" = "true" ]; then
-              echo "تحويل Draft → Ready…"
-              gh "${REPO_FLAG[@]}" pr ready "$n" || echo "::warning::تعذّر undraft لـ #$n"
+              echo "Draft → Ready…"
+              gh "${REPO_FLAG[@]}" pr ready "$n" || echo "::warning::تعذّر undraft"
             fi
-
-            # أولًا: طابور auto-merge إن دعمه المستودع.
-            # إن فشلت (لا قواعد حماية فرع)، ندمج مباشرة فقط بعد نجاح الفحوصات الحاسمة.
             echo "تفعيل Auto-merge (squash) + حذف الفرع…"
             if gh "${REPO_FLAG[@]}" pr merge "$n" --auto --squash --delete-branch; then
-              echo "✓ Auto-merge مفعّل أو الدمج تم لـ #$n"
+              echo "✓ Auto-merge مفعّل/تم لـ #$n"
               echo "::endgroup::"
               continue
             fi
-
-            echo "auto-merge غير متاح — فحص الفحوصات الحاسمة قبل الدمج المباشر…"
-            checks=$(gh "${REPO_FLAG[@]}" pr checks "$n" --json name,state,bucket 2>/dev/null || true)
-            if [ -z "$checks" ]; then
-              # إصدارات gh أقدم: نصّي
-              if ! gh "${REPO_FLAG[@]}" pr checks "$n" 2>&1 | tee /tmp/pr-checks.txt; then
-                echo "::warning::فحوصات #$n غير مكتملة/فاشلة — لا دمج مباشر"
-                echo "::endgroup::"
-                continue
-              fi
-              if grep -qiE 'fail|pending' /tmp/pr-checks.txt; then
-                # pending على فحوص غير حاسمة مقبول أحيانًا؛ نتحقق من Verify build صراحة
-                :
-              fi
-            fi
-
             verify=$(gh "${REPO_FLAG[@]}" pr checks "$n" 2>&1 || true)
             echo "$verify"
-            if ! echo "$verify" | grep -Eq 'Verify build[[:space:]]+pass'; then
-              if ! echo "$verify" | grep -Eq 'Verify build[[:space:]]+successful'; then
-                # صيغ مختلفة حسب إصدار gh
-                if ! echo "$verify" | grep -i 'Verify build' | grep -qiE 'pass|success'; then
-                  echo "::warning::Verify build لم ينجح بعد لـ #$n — لا دمج"
-                  echo "::endgroup::"
-                  continue
-                fi
-              fi
-            fi
-            if echo "$verify" | grep -i 'Verify build' | grep -qiE 'fail|pending'; then
-              echo "::warning::Verify build معلّق/فاشل لـ #$n — لا دمج"
+            if ! echo "$verify" | grep -i 'Verify build' | grep -qiE 'pass|success'; then
+              echo "::warning::Verify build لم ينجح — لا دمج مباشر"
               echo "::endgroup::"
               continue
             fi
-
+            if echo "$verify" | grep -i 'Verify build' | grep -qiE 'fail|pending'; then
+              echo "::warning::Verify build معلّق/فاشل"
+              echo "::endgroup::"
+              continue
+            fi
             if gh "${REPO_FLAG[@]}" pr merge "$n" --squash --delete-branch; then
-              echo "✓ دُمج مباشرة بعد نجاح الفحوصات لـ #$n"
+              echo "✓ دُمج مباشرة بعد نجاح الفحوصات"
             else
               echo "::warning::تعذّر دمج #$n"
             fi

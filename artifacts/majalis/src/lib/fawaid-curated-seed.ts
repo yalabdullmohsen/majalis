@@ -113,7 +113,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   /* ── تفسير ── */
   { text: "الفاتحة أم القرآن وأم الكتاب والسبع المثاني.", category: "التفسير", source: "رواه البخاري", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
   { text: "{وَعَسَىٰ أَن تَكْرَهُوا شَيْئًا وَهُوَ خَيْرٌ لَّكُمْ} — وراء كل قدر حكمة لا تراها.", category: "التفسير", source: "البقرة: 216", author_name: "القرآن الكريم", status: "approved", verification_status: "verified" },
-  { text: "الصبر والشكر مطيتان للإيمان لا يُحمل إلا عليهما.", category: "التفسير", source: "مدارج السالكين — فصل منزلة الصبر", author_name: "ابن القيم الجوزية", status: "approved", verification_status: "verified" },
+  { text: "الصبر والشكر مطيتان للإيمان لا يُحمل إلا عليهما.", category: "التفسير", source: "مدارج السالكين — فصل منزلة الصبر", author_name: "ابن قيم الجوزية", status: "approved", verification_status: "verified" },
   { text: "{إِنَّ مَعَ الْعُسْرِ يُسْرًا} — تكررت مرتين إشارة إلى أن العسر واحد واليسر اثنان.", category: "التفسير", source: "الشرح: 5-6 — تفسير ابن كثير", author_name: "ابن كثير", status: "approved", verification_status: "verified" },
 
   /* ── حديث ── */
@@ -149,7 +149,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   /* ── الأخلاق ── */
   { text: "إن الله يحب إذا عمل أحدكم عملاً أن يتقنه.", category: "الأخلاق", source: "رواه البيهقي — صحيح الألباني", author_name: "شعب الإيمان", status: "approved", verification_status: "verified" },
   { text: "إنما بُعثت لأتمم مكارم الأخلاق.", category: "الأخلاق", source: "رواه البيهقي — صحيح الألباني", author_name: "شعب الإيمان", status: "approved", verification_status: "verified" },
-  { text: "الحزن على الماضي مضيعة للحاضر.", category: "الأخلاق", source: "قاعدة نبوية — ابن القيم: مدارج السالكين", author_name: "ابن القيم الجوزية", status: "approved", verification_status: "verified" },
+  { text: "الحزن على الماضي مضيعة للحاضر.", category: "الأخلاق", source: "قاعدة نبوية — ابن القيم: مدارج السالكين", author_name: "ابن قيم الجوزية", status: "approved", verification_status: "verified" },
 
   /* ── طلب العلم ── */
   { text: "العلم النافع يرفع صاحبه ويثمر العمل؛ قال ﷺ: «من سلك طريقًا يلتمس فيه علمًا سهّل الله له به طريقًا إلى الجنة» — مسلم. وأما ألفاظ «العالم والمتعلم شريكان…» فضعيفة فلا يُستقل بها.", category: "طلب العلم", source: "مسلم ٢٦٩٩؛ ضعّف أهل التحقيق الألفاظ المشهورة الأخرى", author_name: null, status: "approved", verification_status: "verified" },
@@ -204,7 +204,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   { text: "الرفق ما وُضع في شيء إلا زانه، وما نُزع من شيء إلا شانه.", category: "الدعوة", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
 
   /* ── إضافات التربية ── */
-  { text: "اتقِ الله في أهلك وولدك كما تتقيه في مالك.", category: "التربية", source: "أثر السلف — مدارج السالكين", author_name: "ابن القيم الجوزية", status: "approved", verification_status: "verified" },
+  { text: "اتقِ الله في أهلك وولدك كما تتقيه في مالك.", category: "التربية", source: "أثر السلف — مدارج السالكين", author_name: "ابن قيم الجوزية", status: "approved", verification_status: "verified" },
   { text: "الولد يتشكّل على يد والديه؛ فكن القدوة قبل أن تكون الموجّه.", category: "التربية", source: "كل مولود يولد على الفطرة — متفق عليه", author_name: "صحيح البخاري", status: "approved", verification_status: "verified" },
 
   /* ── إضافات الآداب ── */
@@ -218,7 +218,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   { text: "الغيبة ذكرك أخاك بما يكره — فيها إثم عظيم وإن كان المقول فيه كذلك.", category: "الأخلاق", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
 
   /* ── إضافات القرآن ── */
-  { text: "تلاوة آية بتدبّر وفهم خير من ختمة بلا تفكّر.", category: "القرآن", source: "أثر سلفي — ابن القيم: مفتاح دار السعادة", author_name: "ابن القيم الجوزية", status: "approved", verification_status: "verified" },
+  { text: "تلاوة آية بتدبّر وفهم خير من ختمة بلا تفكّر.", category: "القرآن", source: "أثر سلفي — ابن القيم: مفتاح دار السعادة", author_name: "ابن قيم الجوزية", status: "approved", verification_status: "verified" },
   { text: "من قرأ حرفاً من كتاب الله فله به حسنة والحسنة بعشر أمثالها.", category: "القرآن", source: "الترمذي ٢٩١٠ — صححه الألباني", author_name: "سنن الترمذي", status: "approved", verification_status: "verified" },
   { text: "أهل القرآن هم أهل الله وخاصته.", category: "القرآن", source: "رواه النسائي وابن ماجه — صحيح الألباني", author_name: "سنن ابن ماجه", status: "approved", verification_status: "verified" },
 
@@ -249,14 +249,14 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   { text: "الحكمة في الدعوة لا تعني التنازل عن الحق؛ بل حسن اختيار الوقت والأسلوب.", category: "الدعوة", source: "تفسير ابن سعدي — النحل: 125", author_name: "ابن سعدي", status: "approved", verification_status: "verified" },
 
   /* ── إضافات الزهد والرقائق ── */
-  { text: "الزهد في الدنيا ليس ترك أسبابها؛ بل ألا تستعبدك ولا تملأ قلبك.", category: "الرقائق", source: "مدارج السالكين — ابن القيم", author_name: "ابن القيم الجوزية", status: "approved", verification_status: "verified" },
-  { text: "ما أُفرغ في جوف ابن آدم أشد من الحب والغضب؛ فداوِهما بالصبر والاستعاذة.", category: "الرقائق", source: "إغاثة اللهفان — ابن القيم", author_name: "ابن القيم الجوزية", status: "approved", verification_status: "verified" },
+  { text: "الزهد في الدنيا ليس ترك أسبابها؛ بل ألا تستعبدك ولا تملأ قلبك.", category: "الرقائق", source: "مدارج السالكين — ابن القيم", author_name: "ابن قيم الجوزية", status: "approved", verification_status: "verified" },
+  { text: "ما أُفرغ في جوف ابن آدم أشد من الحب والغضب؛ فداوِهما بالصبر والاستعاذة.", category: "الرقائق", source: "إغاثة اللهفان — ابن القيم", author_name: "ابن قيم الجوزية", status: "approved", verification_status: "verified" },
   { text: "أكبر الكبائر: الإشراك بالله، والأمن من مكر الله، والقنوط من رحمة الله، واليأس من روح الله.", category: "الرقائق", source: "أثر عن عبدالله بن مسعود — رواه عبدالرزاق والطبراني في الكبير وذكره ابن جرير، إسناده صحيح", author_name: "عبدالله بن مسعود", status: "approved", verification_status: "verified" },
 
   /* ── إضافات الأخلاق ── */
   { text: "قيمة المرء بأخلاقه لا بماله ولا بجاهه — معنى أدبي يُنسب لشعر الشافعي؛ يُذكر أدباً لا حديثاً.", category: "الأخلاق", source: "يُنسب لديوان الشافعي — أدب لا مرفوع", author_name: "يُنسب للإمام الشافعي", status: "approved", verification_status: "verified" },
   { text: "من جمع بين حسن الخُلق والعلم فقد أوتي خير الدنيا والآخرة.", category: "الأخلاق", source: "أدب الدنيا والدين — الماوردي", author_name: "الماوردي", status: "approved", verification_status: "verified" },
-  { text: "الكرم في النفس أعلى درجات الكرم؛ أن تجود بنفسك على الحق وإن شق.", category: "الأخلاق", source: "مدارج السالكين — ابن القيم", author_name: "ابن القيم الجوزية", status: "approved", verification_status: "verified" },
+  { text: "الكرم في النفس أعلى درجات الكرم؛ أن تجود بنفسك على الحق وإن شق.", category: "الأخلاق", source: "مدارج السالكين — ابن القيم", author_name: "ابن قيم الجوزية", status: "approved", verification_status: "verified" },
 
   /* ── إضافات التفسير ── */
   { text: "التفسير بالرأي المجرد دون علم محرّم؛ وتفسير القرآن بالقرآن هو أعلى درجات البيان.", category: "التفسير", source: "مقدمة في أصول التفسير — ابن تيمية", author_name: "ابن تيمية", status: "approved", verification_status: "verified" },
@@ -272,7 +272,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
 
   /* ── إضافات العقيدة ── */
   { text: "التوحيد أسُّ الدين وقمّته؛ فلا عمل يُقبل بلا توحيد، ولا توحيد يكتمل بلا إخلاص.", category: "العقيدة", source: "درء تعارض العقل والنقل — ابن تيمية", author_name: "ابن تيمية", status: "approved", verification_status: "verified" },
-  { text: "اليقين هو الركن الركين في بنيان الإيمان؛ من رُزق اليقين هانت عليه الدنيا وعظمت عنده الآخرة.", category: "العقيدة", source: "مدارج السالكين — ابن القيم", author_name: "ابن القيم الجوزية", status: "approved", verification_status: "verified" },
+  { text: "اليقين هو الركن الركين في بنيان الإيمان؛ من رُزق اليقين هانت عليه الدنيا وعظمت عنده الآخرة.", category: "العقيدة", source: "مدارج السالكين — ابن القيم", author_name: "ابن قيم الجوزية", status: "approved", verification_status: "verified" },
   { text: "الإيمان قول وعمل ونية — لا يصح بعضها دون بعض في منظومة الاعتقاد الصحيح.", category: "العقيدة", source: "شرح السنة — الإمام البغوي", author_name: "الإمام البغوي", status: "approved", verification_status: "verified" },
 
   /* ── إضافات طلب العلم ── */
@@ -300,10 +300,10 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
 
   /* ── إضافات الزهد والتقوى ── */
   { text: "الزهد ليس فراراً من الدنيا؛ بل ألّا تُسكن الدنيا قلبك وهي في يدك. فاعملها واتركها في يدك لا في قلبك.", category: "الرقائق", source: "إحياء علوم الدين — الغزالي", author_name: "الإمام الغزالي", status: "approved", verification_status: "verified" },
-  { text: "قيمة الوقت عند المؤمن من قيمة نفسه؛ فكل ساعة تمر بلا طاعة أو نفع هي خسارة لا تُعوَّض.", category: "الرقائق", source: "الفوائد — ابن القيم", author_name: "ابن القيم الجوزية", status: "approved", verification_status: "verified" },
+  { text: "قيمة الوقت عند المؤمن من قيمة نفسه؛ فكل ساعة تمر بلا طاعة أو نفع هي خسارة لا تُعوَّض.", category: "الرقائق", source: "الفوائد — ابن القيم", author_name: "ابن قيم الجوزية", status: "approved", verification_status: "verified" },
 
   /* ── إضافات الصبر والتوكل ── */
-  { text: "التوكل على الله لا يعني ترك الأسباب؛ بل أن تأخذ بالأسباب وقلبك معلق بالمسبب لا بالسبب.", category: "العقيدة", source: "مدارج السالكين — ابن القيم", author_name: "ابن القيم الجوزية", status: "approved", verification_status: "verified" },
+  { text: "التوكل على الله لا يعني ترك الأسباب؛ بل أن تأخذ بالأسباب وقلبك معلق بالمسبب لا بالسبب.", category: "العقيدة", source: "مدارج السالكين — ابن القيم", author_name: "ابن قيم الجوزية", status: "approved", verification_status: "verified" },
 
   /* ── إضافات اللغة العربية ── */
   { text: "من أتقن العربية فتح له باب الفهم على الكتاب والسنة؛ ولغة القرآن ليست وسيلة فحسب بل هي من شريعته.", category: "اللغة", source: "اقتضاء الصراط المستقيم — ابن تيمية", author_name: "ابن تيمية", status: "approved", verification_status: "verified" },
@@ -337,7 +337,7 @@ const curated: Omit<FawaidCuratedItem, "id">[] = [
   { text: "أقرب ما يكون العبد من ربه وهو ساجد؛ فأكثروا فيه الدعاء.", category: "الفقه", source: "رواه مسلم", author_name: "صحيح مسلم", status: "approved", verification_status: "verified" },
 
   /* ── الصبر والثبات ── */
-  { text: "الصبر ثلاثة أنواع: صبر على الطاعة، وصبر عن المعصية، وصبر على المصيبة.", category: "الأخلاق", source: "عدة الصابرين — ابن القيم", author_name: "ابن القيم الجوزية", status: "approved", verification_status: "verified" },
+  { text: "الصبر ثلاثة أنواع: صبر على الطاعة، وصبر عن المعصية، وصبر على المصيبة.", category: "الأخلاق", source: "عدة الصابرين — ابن القيم", author_name: "ابن قيم الجوزية", status: "approved", verification_status: "verified" },
   { text: "إن الله مع الصابرين — هذه المعية تعني النصر والتأييد والحفظ والتوفيق.", category: "العقيدة", source: "البقرة: 153، وتفسير ابن سعدي", author_name: "الإمام ابن سعدي", status: "approved", verification_status: "verified" },
 
   /* ── الأسرة والمجتمع ── */

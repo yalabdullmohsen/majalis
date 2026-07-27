@@ -275,3 +275,20 @@
 - لاتيني/أعجمي في النص: لا
 - منسوب للقرآن: لا · منسوب للحديث: نعم
 - مقتطف summary: كل محدثة في الدين بدعة، وكل بدعة ضلالة؛ فلا يُتقرب إلى الله إلا بما شرع في الكتاب والسنة بفهم السلف.
+
+## مواضع مشبوهة من مسح المرحلة 4 (رصد بلا تعديل نصّي)
+
+مسح البذور: كيانات HTML وترميز تالف = لا شيء للإصلاح الآلي.
+
+### حروف لاتينية داخل متن عربي (محتوى — بلا تعديل)
+- `artifacts/majalis/src/lib/islamic-stories-seed.ts:183` — Strait of Gibraltar
+- `artifacts/majalis/src/lib/islamic-stories-seed.ts:485` — Algebra
+- `artifacts/majalis/src/lib/islamic-stories-seed.ts:488` — Algoritmi / Algorithm
+- `artifacts/majalis/src/lib/islamic-stories-seed.ts:745` — Ctesiphon
+- `artifacts/majalis/src/lib/islamic-stories-seed.ts:1576` — Strait of Gibraltar
+- `artifacts/majalis/src/lib/islamic-stories-seed.ts:1582` — Guadalquivir
+
+### بتر / مواضع ذُكرت في المهمة
+- summary الموسوعة «وذهب آخ»: عولج عبر المولّد (`summarizeText`) وإعادة التوليد.
+- `qa-seed.ts` «تضيققاً»: غير موجودة حالياً.
+- `quiz-seed.ts` explanation مبتور لحطين: الحقل غير موجود حالياً لهذا السجل.

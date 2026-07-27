@@ -21,16 +21,16 @@ export type QuizQuestion = {
   status?: string;
   explanation?: string;
   reference?: string;
-  trust_level?: "primary_text" | "scholarly_source" | "institutional_ruling" | "general_reasoning" | "unsourced";
-  editorial_review_status?: "unreviewed" | "reviewed" | "needs_rereview";
+  documentation_status?: "sourced" | "unsourced";
+  trust_level?: string;
+  editorial_review_status?: string;
   last_updated_at?: string;
-  /** علامة أن الشرح قالب آلي */
-  _templated_explanation?: boolean;
 };
 
 export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   {
     "id": "demo-quiz-1",
+    "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -42,6 +42,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-2",
+    "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -53,6 +54,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-3",
+    "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -64,6 +66,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-4",
+    "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -75,6 +78,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-5",
+    "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -86,6 +90,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-6",
+    "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -97,6 +102,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-7",
+    "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -108,6 +114,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-8",
+    "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -119,6 +126,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-10",
+    "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -130,6 +138,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-11",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "الخلفاء",
     "level": "متوسط",
@@ -141,6 +150,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-12",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "الخلفاء",
     "level": "متوسط",
@@ -152,6 +162,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-13",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "الخلفاء",
     "level": "متوسط",
@@ -163,6 +174,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-14",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "الخلفاء",
     "level": "متوسط",
@@ -174,6 +186,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-15",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "الألقاب",
     "level": "متوسط",
@@ -185,6 +198,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-16",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "الألقاب",
     "level": "متوسط",
@@ -196,6 +210,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-18",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "السيرة",
     "level": "متوسط",
@@ -207,6 +222,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-19",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "السيرة",
     "level": "متوسط",
@@ -218,6 +234,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-20",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "أمهات المؤمنين",
     "level": "متوسط",
@@ -229,6 +246,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-21",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الدعوة",
     "level": "متوسط",
@@ -240,6 +258,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-22",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الدعوة",
     "level": "متوسط",
@@ -251,6 +270,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-23",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الهجرة",
     "level": "متوسط",
@@ -262,6 +282,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-24",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الهجرة",
     "level": "متوسط",
@@ -273,6 +294,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-25",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "المساجد",
     "level": "متوسط",
@@ -284,6 +306,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-26",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الغزوات",
     "level": "متوسط",
@@ -295,6 +318,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-27",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الغزوات",
     "level": "متوسط",
@@ -306,6 +330,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-28",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الغزوات",
     "level": "متوسط",
@@ -317,6 +342,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-29",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الصلح",
     "level": "متوسط",
@@ -328,6 +354,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-30",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الفتح",
     "level": "متوسط",
@@ -339,6 +366,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-31",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصلاة",
     "level": "متوسط",
@@ -350,6 +378,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-32",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصلاة",
     "level": "متوسط",
@@ -361,6 +390,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-33",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصلاة",
     "level": "متوسط",
@@ -372,6 +402,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-34",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الطهارة",
     "level": "متوسط",
@@ -383,6 +414,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-35",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الطهارة",
     "level": "متوسط",
@@ -394,6 +426,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-36",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصيام",
     "level": "متوسط",
@@ -405,6 +438,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-37",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصيام",
     "level": "متوسط",
@@ -416,6 +450,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-38",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الزكاة",
     "level": "متوسط",
@@ -427,6 +462,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-39",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الحج",
     "level": "متوسط",
@@ -438,6 +474,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-40",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الحج",
     "level": "متوسط",
@@ -449,6 +486,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-41",
+    "documentation_status": "unsourced",
     "section": "الصالحون",
     "category": "العلماء",
     "level": "متوسط",
@@ -460,6 +498,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-42",
+    "documentation_status": "unsourced",
     "section": "الصالحون",
     "category": "العلماء",
     "level": "متوسط",
@@ -471,6 +510,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-43",
+    "documentation_status": "unsourced",
     "section": "الصالحون",
     "category": "العلماء",
     "level": "متوسط",
@@ -482,6 +522,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-44",
+    "documentation_status": "unsourced",
     "section": "الصالحون",
     "category": "العلماء",
     "level": "متوسط",
@@ -493,6 +534,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-45",
+    "documentation_status": "unsourced",
     "section": "الصالحون",
     "category": "الحديث",
     "level": "متوسط",
@@ -504,6 +546,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-46",
+    "documentation_status": "unsourced",
     "section": "الصالحون",
     "category": "الحديث",
     "level": "متوسط",
@@ -515,6 +558,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-47",
+    "documentation_status": "unsourced",
     "section": "الصالحون",
     "category": "الفقه",
     "level": "متوسط",
@@ -526,6 +570,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-48",
+    "documentation_status": "unsourced",
     "section": "الصالحون",
     "category": "التفسير",
     "level": "متوسط",
@@ -537,6 +582,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-49",
+    "documentation_status": "unsourced",
     "section": "الصالحون",
     "category": "الزهد",
     "level": "متوسط",
@@ -548,6 +594,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-50",
+    "documentation_status": "unsourced",
     "section": "الصالحون",
     "category": "العلماء",
     "level": "متوسط",
@@ -559,6 +606,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-51",
+    "documentation_status": "unsourced",
     "section": "الألغاز الشرعية",
     "category": "عام",
     "level": "متوسط",
@@ -570,6 +618,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-52",
+    "documentation_status": "unsourced",
     "section": "الألغاز الشرعية",
     "category": "عام",
     "level": "متوسط",
@@ -581,6 +630,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-53",
+    "documentation_status": "unsourced",
     "section": "الألغاز الشرعية",
     "category": "عام",
     "level": "متوسط",
@@ -592,6 +642,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-54",
+    "documentation_status": "unsourced",
     "section": "الألغاز الشرعية",
     "category": "عام",
     "level": "متوسط",
@@ -603,6 +654,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-55",
+    "documentation_status": "unsourced",
     "section": "الألغاز الشرعية",
     "category": "عام",
     "level": "متوسط",
@@ -615,6 +667,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   // ── القرآن الكريم ──────────────────────────────────────────
   {
     "id": "demo-quiz-56",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور",
     "level": "سهل",
@@ -626,6 +679,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-59",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور",
     "level": "متوسط",
@@ -637,6 +691,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-62",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "الآيات",
     "level": "متوسط",
@@ -648,6 +703,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-63",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور",
     "level": "متوسط",
@@ -659,6 +715,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-64",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور",
     "level": "صعب",
@@ -670,6 +727,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-66",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "النزول",
     "level": "متوسط",
@@ -681,6 +739,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-67",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "الجمع",
     "level": "متوسط",
@@ -692,6 +751,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-68",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "الجمع",
     "level": "متوسط",
@@ -703,6 +763,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-69",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور",
     "level": "متوسط",
@@ -714,6 +775,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-70",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور",
     "level": "متوسط",
@@ -725,6 +787,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-71",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "الآيات",
     "level": "صعب",
@@ -736,6 +799,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-73",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور",
     "level": "صعب",
@@ -747,6 +811,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-74",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور",
     "level": "متوسط",
@@ -758,6 +823,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-75",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور",
     "level": "متوسط",
@@ -770,6 +836,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   // ── الأحاديث النبوية ──────────────────────────────────────
   {
     "id": "demo-quiz-76",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "المصطلح",
     "level": "سهل",
@@ -781,6 +848,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-78",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "الكتب",
     "level": "سهل",
@@ -792,6 +860,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-79",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "الكتب",
     "level": "متوسط",
@@ -803,6 +872,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-80",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "الكتب",
     "level": "متوسط",
@@ -814,6 +884,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-81",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "الكتب",
     "level": "متوسط",
@@ -825,6 +896,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-82",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "المصطلح",
     "level": "متوسط",
@@ -836,6 +908,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-85",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "الرواة",
     "level": "متوسط",
@@ -847,6 +920,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-86",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "الرواة",
     "level": "متوسط",
@@ -858,6 +932,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-87",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "الأحاديث الجامعة",
     "level": "متوسط",
@@ -869,6 +944,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-88",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "الأحاديث الجامعة",
     "level": "متوسط",
@@ -880,6 +956,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-89",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "الأحاديث الجامعة",
     "level": "سهل",
@@ -891,6 +968,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-90",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "الأربعون النووية",
     "level": "متوسط",
@@ -903,6 +981,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   // ── التاريخ الإسلامي ──────────────────────────────────────
   {
     "id": "demo-quiz-91",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الفتوحات",
     "level": "متوسط",
@@ -914,6 +993,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-92",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الفتوحات",
     "level": "متوسط",
@@ -925,6 +1005,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-93",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الفتوحات",
     "level": "متوسط",
@@ -936,6 +1017,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-94",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الفتوحات",
     "level": "متوسط",
@@ -947,6 +1029,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-95",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدول",
     "level": "متوسط",
@@ -958,6 +1041,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-96",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدول",
     "level": "متوسط",
@@ -969,6 +1053,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-97",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدول",
     "level": "متوسط",
@@ -980,6 +1065,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-98",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدول",
     "level": "متوسط",
@@ -991,6 +1077,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-100",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "المعارك",
     "level": "متوسط",
@@ -1002,6 +1089,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-101",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "المعارك",
     "level": "متوسط",
@@ -1013,6 +1101,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-102",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الفتوحات",
     "level": "متوسط",
@@ -1024,6 +1113,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-103",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الفتوحات",
     "level": "متوسط",
@@ -1035,6 +1125,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-104",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدول",
     "level": "متوسط",
@@ -1046,6 +1137,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-105",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدول",
     "level": "صعب",
@@ -1057,6 +1149,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-106",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "المعارك",
     "level": "متوسط",
@@ -1068,6 +1161,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-107",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الفتوحات",
     "level": "متوسط",
@@ -1079,6 +1173,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-108",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "المعارك",
     "level": "صعب",
@@ -1090,6 +1185,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-109",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدول",
     "level": "صعب",
@@ -1101,6 +1197,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-110",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدول",
     "level": "صعب",
@@ -1113,6 +1210,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   // ── العقيدة ───────────────────────────────────────────────
   {
     "id": "demo-quiz-111",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "أركان الإيمان",
     "level": "سهل",
@@ -1124,6 +1222,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-113",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "أركان الإسلام",
     "level": "سهل",
@@ -1135,6 +1234,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-114",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "التوحيد",
     "level": "متوسط",
@@ -1146,6 +1246,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-116",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "التوحيد",
     "level": "سهل",
@@ -1157,6 +1258,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-117",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "أسماء الله",
     "level": "سهل",
@@ -1168,6 +1270,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-119",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "اليوم الآخر",
     "level": "متوسط",
@@ -1179,6 +1282,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-120",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "اليوم الآخر",
     "level": "متوسط",
@@ -1190,6 +1294,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-121",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "الملائكة",
     "level": "سهل",
@@ -1201,6 +1306,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-123",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "الملائكة",
     "level": "متوسط",
@@ -1212,6 +1318,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-125",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "القدر",
     "level": "متوسط",
@@ -1224,6 +1331,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   // ── الأنبياء (إضافة) ──────────────────────────────────────
   {
     "id": "demo-quiz-127",
+    "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -1235,6 +1343,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-128",
+    "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "المعجزات",
     "level": "متوسط",
@@ -1246,6 +1355,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-129",
+    "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "المعجزات",
     "level": "متوسط",
@@ -1257,6 +1367,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-130",
+    "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -1268,6 +1379,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-131",
+    "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -1279,6 +1391,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-132",
+    "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -1290,6 +1403,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-133",
+    "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -1301,6 +1415,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-134",
+    "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "سهل",
@@ -1312,6 +1427,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-135",
+    "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "سهل",
@@ -1323,6 +1439,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-136",
+    "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "سهل",
@@ -1334,6 +1451,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-137",
+    "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -1345,6 +1463,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-138",
+    "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "صعب",
@@ -1356,6 +1475,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-139",
+    "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -1367,6 +1487,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-140",
+    "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -1379,6 +1500,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   // ── الصحابة (إضافة) ──────────────────────────────────────
   {
     "id": "demo-quiz-141",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "الألقاب",
     "level": "متوسط",
@@ -1390,6 +1512,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-142",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "الألقاب",
     "level": "متوسط",
@@ -1401,6 +1524,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-143",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "الألقاب",
     "level": "متوسط",
@@ -1412,6 +1536,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-144",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "الشهداء",
     "level": "متوسط",
@@ -1423,6 +1548,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-145",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "السيرة",
     "level": "سهل",
@@ -1434,6 +1560,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-146",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "أمهات المؤمنين",
     "level": "متوسط",
@@ -1445,6 +1572,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-147",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "أمهات المؤمنين",
     "level": "سهل",
@@ -1456,6 +1584,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-148",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "أمهات المؤمنين",
     "level": "متوسط",
@@ -1467,6 +1596,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-150",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "الحديث",
     "level": "متوسط",
@@ -1478,6 +1608,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-151",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "الشعراء",
     "level": "متوسط",
@@ -1489,6 +1620,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-152",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "السيرة",
     "level": "متوسط",
@@ -1500,6 +1632,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-153",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "الكتّاب",
     "level": "متوسط",
@@ -1511,6 +1644,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-154",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "الألقاب",
     "level": "متوسط",
@@ -1522,6 +1656,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-155",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "السيرة",
     "level": "متوسط",
@@ -1534,6 +1669,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   // ── السيرة النبوية (إضافة) ────────────────────────────────
   {
     "id": "demo-quiz-156",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "المولد",
     "level": "سهل",
@@ -1545,6 +1681,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-157",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "المولد",
     "level": "متوسط",
@@ -1556,6 +1693,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-158",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الدعوة",
     "level": "سهل",
@@ -1567,6 +1705,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-160",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الوفاة",
     "level": "متوسط",
@@ -1578,6 +1717,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-161",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الوفاة",
     "level": "متوسط",
@@ -1589,6 +1729,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-162",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الغزوات",
     "level": "صعب",
@@ -1600,6 +1741,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-163",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الغزوات",
     "level": "متوسط",
@@ -1611,6 +1753,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-164",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الغزوات",
     "level": "متوسط",
@@ -1622,6 +1765,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-165",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الصلح",
     "level": "متوسط",
@@ -1633,6 +1777,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-167",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الدعوة",
     "level": "متوسط",
@@ -1644,6 +1789,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-168",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الإسراء والمعراج",
     "level": "سهل",
@@ -1655,6 +1801,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-169",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الإسراء والمعراج",
     "level": "متوسط",
@@ -1666,6 +1813,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-170",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الدعوة",
     "level": "متوسط",
@@ -1678,6 +1826,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   // ── الأحكام الشرعية (إضافة) ──────────────────────────────
   {
     "id": "demo-quiz-171",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصلاة",
     "level": "سهل",
@@ -1689,6 +1838,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-172",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصلاة",
     "level": "سهل",
@@ -1700,6 +1850,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-173",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصلاة",
     "level": "سهل",
@@ -1711,6 +1862,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-174",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصلاة",
     "level": "سهل",
@@ -1722,6 +1874,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-175",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الطهارة",
     "level": "سهل",
@@ -1733,6 +1886,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-176",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الطهارة",
     "level": "متوسط",
@@ -1744,6 +1898,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-177",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الزكاة",
     "level": "متوسط",
@@ -1755,6 +1910,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-179",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصيام",
     "level": "متوسط",
@@ -1766,6 +1922,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-180",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصيام",
     "level": "متوسط",
@@ -1777,6 +1934,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-182",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الحج",
     "level": "متوسط",
@@ -1788,6 +1946,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-183",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الحج",
     "level": "متوسط",
@@ -1799,6 +1958,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-184",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الحلال والحرام",
     "level": "سهل",
@@ -1810,6 +1970,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-185",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الحلال والحرام",
     "level": "متوسط",
@@ -1821,6 +1982,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-186",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "النكاح",
     "level": "متوسط",
@@ -1832,6 +1994,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-187",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "النكاح",
     "level": "متوسط",
@@ -1843,6 +2006,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-188",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "المواريث",
     "level": "صعب",
@@ -1854,6 +2018,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-189",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "المواريث",
     "level": "صعب",
@@ -1865,6 +2030,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-190",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصلاة",
     "level": "متوسط",
@@ -1877,6 +2043,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   // ── الصالحون (إضافة) ──────────────────────────────────────
   {
     "id": "demo-quiz-191",
+    "documentation_status": "unsourced",
     "section": "الصالحون",
     "category": "العلماء",
     "level": "متوسط",
@@ -1888,6 +2055,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-192",
+    "documentation_status": "unsourced",
     "section": "الصالحون",
     "category": "العلماء",
     "level": "متوسط",
@@ -1899,17 +2067,19 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-193",
+    "documentation_status": "unsourced",
     "section": "الصالحون",
     "category": "العلماء",
     "level": "متوسط",
     "question": "من صاحب كتاب زاد المعاد ومدارج السالكين؟",
-    "answer": "محمد بن أبي بكر الزُّرَعي ثم الدمشقي، المعروف بابن قيِّم الجوزية (٦٩١-٧٥١هـ)، تلميذ ابن تيمية. ونسبته إلى أن أباه كان قيِّمًا على المدرسة الجوزية بدمشق، فالصواب في اسمه «ابن قيِّم الجوزية» لا «ابن القيم الجوزية»",
+    "answer": "محمد بن أبي بكر الزُّرَعي ثم الدمشقي، المعروف بابن قيِّم الجوزية (٦٩١-٧٥١هـ)، تلميذ ابن تيمية. ونسبته إلى أن أباه كان قيِّمًا على المدرسة الجوزية بدمشق، فالصواب في اسمه «ابن قيِّم الجوزية» لا «ابن قيم الجوزية»",
     "trust_level": "unsourced",
     "editorial_review_status": "unreviewed",
     "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "demo-quiz-194",
+    "documentation_status": "unsourced",
     "section": "الصالحون",
     "category": "التفسير",
     "level": "متوسط",
@@ -1921,6 +2091,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-195",
+    "documentation_status": "unsourced",
     "section": "الصالحون",
     "category": "التفسير",
     "level": "متوسط",
@@ -1932,6 +2103,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-196",
+    "documentation_status": "unsourced",
     "section": "الصالحون",
     "category": "الفقه",
     "level": "متوسط",
@@ -1943,6 +2115,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-197",
+    "documentation_status": "unsourced",
     "section": "الصالحون",
     "category": "الحديث",
     "level": "صعب",
@@ -1954,6 +2127,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-198",
+    "documentation_status": "unsourced",
     "section": "الصالحون",
     "category": "العلماء",
     "level": "صعب",
@@ -1965,6 +2139,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-199",
+    "documentation_status": "unsourced",
     "section": "الصالحون",
     "category": "العلماء",
     "level": "متوسط",
@@ -1976,6 +2151,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-200",
+    "documentation_status": "unsourced",
     "section": "الصالحون",
     "category": "العلماء",
     "level": "صعب",
@@ -1988,6 +2164,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   // ── الألغاز الشرعية (إضافة) ──────────────────────────────
   {
     "id": "demo-quiz-201",
+    "documentation_status": "unsourced",
     "section": "الألغاز الشرعية",
     "category": "عام",
     "level": "متوسط",
@@ -1999,6 +2176,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-202",
+    "documentation_status": "unsourced",
     "section": "الألغاز الشرعية",
     "category": "عام",
     "level": "متوسط",
@@ -2010,6 +2188,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-203",
+    "documentation_status": "unsourced",
     "section": "الألغاز الشرعية",
     "category": "عام",
     "level": "متوسط",
@@ -2021,6 +2200,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-204",
+    "documentation_status": "unsourced",
     "section": "الألغاز الشرعية",
     "category": "عام",
     "level": "صعب",
@@ -2032,6 +2212,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-205",
+    "documentation_status": "unsourced",
     "section": "الألغاز الشرعية",
     "category": "عام",
     "level": "متوسط",
@@ -2043,6 +2224,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-206",
+    "documentation_status": "unsourced",
     "section": "الألغاز الشرعية",
     "category": "عام",
     "level": "متوسط",
@@ -2054,6 +2236,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-207",
+    "documentation_status": "unsourced",
     "section": "الألغاز الشرعية",
     "category": "عام",
     "level": "متوسط",
@@ -2065,6 +2248,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-208",
+    "documentation_status": "unsourced",
     "section": "الألغاز الشرعية",
     "category": "عام",
     "level": "سهل",
@@ -2076,6 +2260,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-209",
+    "documentation_status": "unsourced",
     "section": "الألغاز الشرعية",
     "category": "عام",
     "level": "متوسط",
@@ -2087,6 +2272,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-210",
+    "documentation_status": "unsourced",
     "section": "الألغاز الشرعية",
     "category": "عام",
     "level": "صعب",
@@ -2099,6 +2285,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   // ── الأخلاق الإسلامية ─────────────────────────────────────
   {
     "id": "demo-quiz-211",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "الأخلاق العامة",
     "level": "سهل",
@@ -2110,6 +2297,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-212",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "الأخلاق العامة",
     "level": "سهل",
@@ -2121,6 +2309,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-213",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "الأخلاق العامة",
     "level": "متوسط",
@@ -2132,6 +2321,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-215",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "بر الوالدين",
     "level": "سهل",
@@ -2143,6 +2333,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-216",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "بر الوالدين",
     "level": "متوسط",
@@ -2154,6 +2345,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-217",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "الصدق والأمانة",
     "level": "سهل",
@@ -2165,6 +2357,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-218",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "الصدق والأمانة",
     "level": "متوسط",
@@ -2176,6 +2369,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-219",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور والآيات",
     "level": "سهل",
@@ -2187,6 +2381,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-220",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور والآيات",
     "level": "سهل",
@@ -2198,6 +2393,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-221",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "نزول القرآن",
     "level": "متوسط",
@@ -2209,6 +2405,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-222",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "نزول القرآن",
     "level": "متوسط",
@@ -2220,6 +2417,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-223",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "نزول القرآن",
     "level": "متوسط",
@@ -2231,6 +2429,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-224",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور والآيات",
     "level": "متوسط",
@@ -2242,6 +2441,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-225",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور والآيات",
     "level": "متوسط",
@@ -2253,6 +2453,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-226",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور والآيات",
     "level": "سهل",
@@ -2264,6 +2465,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-227",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور والآيات",
     "level": "متوسط",
@@ -2275,6 +2477,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-228",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "الأنبياء في القرآن",
     "level": "متوسط",
@@ -2286,6 +2489,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-229",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور والآيات",
     "level": "متوسط",
@@ -2297,6 +2501,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-230",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور والآيات",
     "level": "سهل",
@@ -2308,6 +2513,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-231",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور والآيات",
     "level": "صعب",
@@ -2319,6 +2525,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-233",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "فضائل السور",
     "level": "متوسط",
@@ -2330,6 +2537,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-234",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "علوم القرآن",
     "level": "صعب",
@@ -2341,6 +2549,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-235",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "علوم القرآن",
     "level": "متوسط",
@@ -2352,6 +2561,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-236",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "علوم القرآن",
     "level": "صعب",
@@ -2363,6 +2573,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-237",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور والآيات",
     "level": "صعب",
@@ -2374,6 +2585,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-238",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "علوم القرآن",
     "level": "صعب",
@@ -2385,6 +2597,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-239",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الفتوحات",
     "level": "متوسط",
@@ -2396,6 +2609,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-240",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "المؤسسات الإسلامية",
     "level": "متوسط",
@@ -2411,13 +2625,13 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "category": "الأيوبيون",
     "level": "سهل",
     "question": "من قاد المسلمين في معركة حطين وفتح بيت المقدس عام 1187م؟",
-    "answer": "السلطان صلاح الدين يوسف بن أيوب (532-589هـ)؛ كانت حطين في ربيع الآخر سنة 583هـ/تموز 1187م قرب طبرية، وانكسر بها جيش الصليبيين، فتتابعت له فتوح الساحل حتى استُرِدَّ بيت المقدس في رجب من السنة نفسها/تشرين الأول 1187م، بعد نحو 88 سنة من احتلاله سنة 492هـ/1099م",
+    "answer": "السلطان صلاح الدين يوسف بن أيوب (532-589هـ)؛ كانت حطين في ربيع الآخر سنة 583هـ/تموز 1187م قرب طبرية، وانكسر بها جيش الصليبيين، فتتابعت له فتوح الساحل حتى استُرِدَّ بيت المقدس في رجب من السنة نفسها/تشرين الأول 1187م، بعد نحو 88 سنة ميلادية (91 سنة هجرية) من احتلاله سنة 492هـ/1099م",
     "trust_level": "unsourced",
     "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-07-26T00:00:00.000Z"
-  },
+    "last_updated_at": "2026-07-26T00:00:00.000Z"  },
   {
     "id": "demo-quiz-242",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدول الإسلامية",
     "level": "متوسط",
@@ -2429,6 +2643,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-243",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدول الإسلامية",
     "level": "متوسط",
@@ -2440,6 +2655,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-244",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الفتوحات",
     "level": "سهل",
@@ -2451,6 +2667,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-245",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "المعارك",
     "level": "متوسط",
@@ -2462,6 +2679,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-246",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الخلفاء",
     "level": "متوسط",
@@ -2473,6 +2691,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-247",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "المعارك",
     "level": "سهل",
@@ -2484,6 +2703,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-248",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدولة الإسلامية",
     "level": "متوسط",
@@ -2495,6 +2715,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-249",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الفتوحات",
     "level": "متوسط",
@@ -2506,6 +2727,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-250",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "المعارك",
     "level": "صعب",
@@ -2517,6 +2739,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-251",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الخلفاء",
     "level": "متوسط",
@@ -2528,6 +2751,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-252",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدول الإسلامية",
     "level": "صعب",
@@ -2539,6 +2763,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-254",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "السيرة النبوية",
     "level": "متوسط",
@@ -2550,6 +2775,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-255",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدول الإسلامية",
     "level": "صعب",
@@ -2561,6 +2787,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-256",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدول الإسلامية",
     "level": "متوسط",
@@ -2572,6 +2799,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-257",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "إسلام الصحابة",
     "level": "متوسط",
@@ -2583,6 +2811,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-258",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "فضائل الصحابة",
     "level": "متوسط",
@@ -2594,6 +2823,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-259",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "حفظة القرآن",
     "level": "متوسط",
@@ -2605,6 +2835,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-260",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "فضائل الصحابة",
     "level": "صعب",
@@ -2616,6 +2847,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-261",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "فضائل الصحابة",
     "level": "صعب",
@@ -2627,6 +2859,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-262",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "الأذان",
     "level": "متوسط",
@@ -2638,6 +2871,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-263",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "خدمة النبي",
     "level": "سهل",
@@ -2649,6 +2883,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-264",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "أزواج النبي",
     "level": "متوسط",
@@ -2660,6 +2895,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-265",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "أزواج النبي",
     "level": "صعب",
@@ -2671,6 +2907,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-266",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "فضائل الصحابة",
     "level": "سهل",
@@ -2693,6 +2930,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-268",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "المعارك",
     "level": "متوسط",
@@ -2704,6 +2942,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-269",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "فضائل الصحابة",
     "level": "صعب",
@@ -2715,6 +2954,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-270",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "فضائل الصحابة",
     "level": "متوسط",
@@ -2726,6 +2966,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-271",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "إسلام الصحابة",
     "level": "سهل",
@@ -2737,6 +2978,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-272",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "فضائل الصحابة",
     "level": "صعب",
@@ -2748,6 +2990,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-273",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "خاتم النبيين",
     "level": "سهل",
@@ -2759,6 +3002,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-274",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "فضائل الصحابة",
     "level": "صعب",
@@ -2770,6 +3014,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-275",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "فضائل الصحابة",
     "level": "متوسط",
@@ -2781,6 +3026,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-276",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "فضائل الصحابة",
     "level": "متوسط",
@@ -2792,6 +3038,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-277",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "أركان الإيمان",
     "level": "سهل",
@@ -2803,6 +3050,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-278",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "الكبائر",
     "level": "متوسط",
@@ -2814,6 +3062,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-279",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "أركان الإيمان",
     "level": "سهل",
@@ -2825,6 +3074,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-280",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "الشرك",
     "level": "متوسط",
@@ -2836,6 +3086,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-281",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "أخلاق مذمومة",
     "level": "متوسط",
@@ -2847,6 +3098,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-282",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "أخلاق مذمومة",
     "level": "متوسط",
@@ -2858,6 +3110,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-283",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "أخلاق محمودة",
     "level": "متوسط",
@@ -2869,6 +3122,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-284",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "أخلاق محمودة",
     "level": "متوسط",
@@ -2880,6 +3134,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-285",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "أخلاق محمودة",
     "level": "سهل",
@@ -2891,6 +3146,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-286",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "أخلاق محمودة",
     "level": "سهل",
@@ -2902,6 +3158,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-287",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "أخلاق محمودة",
     "level": "متوسط",
@@ -2913,6 +3170,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-289",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "الزهد",
     "level": "متوسط",
@@ -2924,6 +3182,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-290",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "الابتلاء",
     "level": "متوسط",
@@ -2935,6 +3194,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-291",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "أهل السنة",
     "level": "متوسط",
@@ -2946,6 +3206,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-292",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "عقيدة الأنبياء",
     "level": "متوسط",
@@ -2957,6 +3218,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-293",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "أصول الفقه",
     "level": "متوسط",
@@ -2968,6 +3230,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-294",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "أصول الفقه",
     "level": "متوسط",
@@ -2979,6 +3242,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-295",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "حسن الخاتمة",
     "level": "متوسط",
@@ -2990,6 +3254,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-296",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "أخلاق محمودة",
     "level": "سهل",
@@ -3001,6 +3266,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-297",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "أركان الإسلام",
     "level": "سهل",
@@ -3012,6 +3278,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-299",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "التوحيد",
     "level": "سهل",
@@ -3023,6 +3290,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-300",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "التوحيد",
     "level": "سهل",
@@ -3034,6 +3302,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-303",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "التوحيد",
     "level": "متوسط",
@@ -3045,6 +3314,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-304",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "الإيمان",
     "level": "سهل",
@@ -3056,6 +3326,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-305",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "الإيمان",
     "level": "متوسط",
@@ -3067,6 +3338,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-306",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "الإيمان",
     "level": "صعب",
@@ -3078,6 +3350,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-307",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "الملائكة",
     "level": "سهل",
@@ -3089,6 +3362,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-308",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "الملائكة",
     "level": "متوسط",
@@ -3100,6 +3374,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-310",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "اليوم الآخر",
     "level": "سهل",
@@ -3111,6 +3386,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-311",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "اليوم الآخر",
     "level": "متوسط",
@@ -3122,6 +3398,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-312",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "اليوم الآخر",
     "level": "متوسط",
@@ -3133,6 +3410,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-313",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "القضاء والقدر",
     "level": "سهل",
@@ -3144,6 +3422,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-315",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "القضاء والقدر",
     "level": "صعب",
@@ -3155,6 +3434,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-316",
+    "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "سهل",
@@ -3166,6 +3446,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-317",
+    "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "سهل",
@@ -3177,6 +3458,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-318",
+    "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -3188,6 +3470,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-319",
+    "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -3199,6 +3482,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-320",
+    "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -3210,6 +3494,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-322",
+    "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -3221,6 +3506,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-323",
+    "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -3232,6 +3518,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-324",
+    "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "صعب",
@@ -3243,6 +3530,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-325",
+    "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -3254,6 +3542,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-326",
+    "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -3265,6 +3554,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-327",
+    "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "سهل",
@@ -3276,6 +3566,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-328",
+    "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -3287,6 +3578,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-329",
+    "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -3298,6 +3590,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-331",
+    "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -3309,6 +3602,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-333",
+    "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -3320,6 +3614,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-334",
+    "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -3331,6 +3626,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-335",
+    "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "صعب",
@@ -3342,6 +3638,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-336",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "المولد والنشأة",
     "level": "سهل",
@@ -3353,6 +3650,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-337",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "المولد والنشأة",
     "level": "سهل",
@@ -3364,6 +3662,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-338",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "المولد والنشأة",
     "level": "سهل",
@@ -3375,6 +3674,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-339",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "المولد والنشأة",
     "level": "متوسط",
@@ -3386,6 +3686,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-340",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "المولد والنشأة",
     "level": "متوسط",
@@ -3397,6 +3698,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-341",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "البعثة",
     "level": "سهل",
@@ -3408,6 +3710,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-342",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "البعثة",
     "level": "سهل",
@@ -3419,6 +3722,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-343",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "البعثة",
     "level": "متوسط",
@@ -3430,6 +3734,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-344",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الهجرة",
     "level": "سهل",
@@ -3441,6 +3746,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-345",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الهجرة",
     "level": "متوسط",
@@ -3452,6 +3758,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-348",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الغزوات",
     "level": "متوسط",
@@ -3463,6 +3770,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-349",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الغزوات",
     "level": "صعب",
@@ -3474,6 +3782,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-350",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الغزوات",
     "level": "متوسط",
@@ -3485,6 +3794,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-351",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الوفاة",
     "level": "سهل",
@@ -3496,6 +3806,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-352",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الوفاة",
     "level": "متوسط",
@@ -3507,6 +3818,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-353",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الوفاة",
     "level": "متوسط",
@@ -3518,6 +3830,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-354",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الشمائل",
     "level": "سهل",
@@ -3529,6 +3842,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-355",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الشمائل",
     "level": "متوسط",
@@ -3540,6 +3854,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-356",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الطهارة",
     "level": "سهل",
@@ -3551,6 +3866,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-357",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الطهارة",
     "level": "متوسط",
@@ -3562,6 +3878,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-358",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الطهارة",
     "level": "متوسط",
@@ -3573,6 +3890,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-359",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصلاة",
     "level": "سهل",
@@ -3584,6 +3902,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-360",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصلاة",
     "level": "سهل",
@@ -3595,6 +3914,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-361",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصلاة",
     "level": "سهل",
@@ -3606,6 +3926,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-362",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصلاة",
     "level": "متوسط",
@@ -3617,6 +3938,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-363",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الزكاة",
     "level": "سهل",
@@ -3628,6 +3950,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-365",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الزكاة",
     "level": "متوسط",
@@ -3639,6 +3962,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-366",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصيام",
     "level": "سهل",
@@ -3650,6 +3974,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-367",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصيام",
     "level": "متوسط",
@@ -3661,6 +3986,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-369",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الحج",
     "level": "متوسط",
@@ -3672,6 +3998,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-370",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الحج",
     "level": "صعب",
@@ -3683,6 +4010,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-371",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "المعاملات",
     "level": "متوسط",
@@ -3694,6 +4022,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-372",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "المعاملات",
     "level": "متوسط",
@@ -3705,6 +4034,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-373",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "النكاح",
     "level": "سهل",
@@ -3716,6 +4046,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-374",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "النكاح",
     "level": "متوسط",
@@ -3727,6 +4058,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-375",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الجنائز",
     "level": "سهل",
@@ -3738,6 +4070,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-376",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الجنائز",
     "level": "متوسط",
@@ -3749,6 +4082,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-377",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الأيمان",
     "level": "متوسط",
@@ -3760,6 +4094,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-378",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الأطعمة",
     "level": "سهل",
@@ -3771,6 +4106,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-379",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الأطعمة",
     "level": "متوسط",
@@ -3782,6 +4118,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-380",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الفرائض",
     "level": "صعب",
@@ -3793,6 +4130,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-381",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور",
     "level": "سهل",
@@ -3804,6 +4142,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-382",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور",
     "level": "سهل",
@@ -3815,6 +4154,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-383",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور",
     "level": "متوسط",
@@ -3826,6 +4166,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-384",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور",
     "level": "متوسط",
@@ -3837,6 +4178,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-385",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور",
     "level": "متوسط",
@@ -3848,6 +4190,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-386",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "الآيات",
     "level": "سهل",
@@ -3859,6 +4202,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-387",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "الآيات",
     "level": "متوسط",
@@ -3870,6 +4214,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-388",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "الآيات",
     "level": "متوسط",
@@ -3881,6 +4226,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-389",
+    "documentation_status": "unsourced",
     "section": "التجويد",
     "category": "المخارج",
     "level": "سهل",
@@ -3892,6 +4238,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-390",
+    "documentation_status": "unsourced",
     "section": "التجويد",
     "category": "المخارج",
     "level": "متوسط",
@@ -3903,6 +4250,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-391",
+    "documentation_status": "unsourced",
     "section": "التجويد",
     "category": "الأحكام",
     "level": "سهل",
@@ -3914,6 +4262,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-392",
+    "documentation_status": "unsourced",
     "section": "التجويد",
     "category": "الأحكام",
     "level": "متوسط",
@@ -3925,6 +4274,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-394",
+    "documentation_status": "unsourced",
     "section": "التجويد",
     "category": "الأحكام",
     "level": "صعب",
@@ -3936,6 +4286,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-395",
+    "documentation_status": "unsourced",
     "section": "التجويد",
     "category": "الأحكام",
     "level": "صعب",
@@ -3947,6 +4298,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-396",
+    "documentation_status": "unsourced",
     "section": "التجويد",
     "category": "الأحكام",
     "level": "متوسط",
@@ -3958,6 +4310,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-397",
+    "documentation_status": "unsourced",
     "section": "التجويد",
     "category": "الأحكام",
     "level": "سهل",
@@ -3969,6 +4322,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-398",
+    "documentation_status": "unsourced",
     "section": "التجويد",
     "category": "الأحكام",
     "level": "متوسط",
@@ -3980,6 +4334,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-399",
+    "documentation_status": "unsourced",
     "section": "التجويد",
     "category": "الأحكام",
     "level": "صعب",
@@ -3991,6 +4346,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-400",
+    "documentation_status": "unsourced",
     "section": "التجويد",
     "category": "الأحكام",
     "level": "متوسط",
@@ -4002,6 +4358,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-402",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "الصحاح",
     "level": "متوسط",
@@ -4013,6 +4370,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-404",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "المصطلح",
     "level": "متوسط",
@@ -4024,6 +4382,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-405",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "المصطلح",
     "level": "صعب",
@@ -4035,6 +4394,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-406",
+    "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "الصباح والمساء",
     "level": "سهل",
@@ -4046,6 +4406,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-407",
+    "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "الصباح والمساء",
     "level": "متوسط",
@@ -4057,6 +4418,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-408",
+    "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "الصلاة",
     "level": "سهل",
@@ -4068,6 +4430,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-409",
+    "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "الصلاة",
     "level": "سهل",
@@ -4079,6 +4442,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-410",
+    "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "بعد الصلاة",
     "level": "متوسط",
@@ -4090,6 +4454,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-411",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "آداب الطعام",
     "level": "سهل",
@@ -4101,6 +4466,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-412",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "آداب الطعام",
     "level": "سهل",
@@ -4112,6 +4478,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-413",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "آداب الطعام",
     "level": "متوسط",
@@ -4123,6 +4490,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-414",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "آداب السلام",
     "level": "سهل",
@@ -4134,6 +4502,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-415",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "آداب المجلس",
     "level": "سهل",
@@ -4145,6 +4514,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-416",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "بر الوالدين",
     "level": "سهل",
@@ -4156,6 +4526,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-417",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "بر الوالدين",
     "level": "متوسط",
@@ -4167,6 +4538,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-418",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "صلة الرحم",
     "level": "سهل",
@@ -4178,6 +4550,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-419",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "الجوار",
     "level": "متوسط",
@@ -4189,6 +4562,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-420",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "أخلاق المسلم",
     "level": "سهل",
@@ -4200,6 +4574,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-422",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "الخلفاء الراشدون",
     "level": "متوسط",
@@ -4211,6 +4586,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-423",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "الخلفاء الراشدون",
     "level": "متوسط",
@@ -4222,6 +4598,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-425",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "الصحابيات",
     "level": "سهل",
@@ -4233,6 +4610,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-427",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "المهاجرون",
     "level": "متوسط",
@@ -4244,6 +4622,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-428",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "الأنصار",
     "level": "متوسط",
@@ -4255,6 +4634,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-429",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "الصحابة المحدّثون",
     "level": "صعب",
@@ -4266,6 +4646,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-430",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "الصحابة المحدّثون",
     "level": "متوسط",
@@ -4277,6 +4658,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-431",
+    "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "دعاء الكرب",
     "level": "سهل",
@@ -4288,6 +4670,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-432",
+    "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "دعاء الكرب",
     "level": "متوسط",
@@ -4299,6 +4682,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-433",
+    "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "الاستغفار",
     "level": "سهل",
@@ -4310,6 +4694,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-434",
+    "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "الاستغفار",
     "level": "متوسط",
@@ -4321,6 +4706,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-435",
+    "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "الصلاة على النبي",
     "level": "سهل",
@@ -4332,6 +4718,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-436",
+    "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "الصلاة على النبي",
     "level": "متوسط",
@@ -4343,6 +4730,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-437",
+    "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "التسبيح",
     "level": "سهل",
@@ -4354,6 +4742,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-438",
+    "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "التسبيح",
     "level": "متوسط",
@@ -4387,6 +4776,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-441",
+    "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "الدعاء",
     "level": "متوسط",
@@ -4398,6 +4788,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-442",
+    "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "الحوقلة",
     "level": "سهل",
@@ -4409,6 +4800,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-443",
+    "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "الحوقلة",
     "level": "متوسط",
@@ -4420,6 +4812,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-444",
+    "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "التوبة",
     "level": "سهل",
@@ -4431,6 +4824,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-445",
+    "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "التوبة",
     "level": "متوسط",
@@ -4442,6 +4836,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-446",
+    "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "الشكر",
     "level": "سهل",
@@ -4453,6 +4848,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-447",
+    "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "الشكر",
     "level": "متوسط",
@@ -4464,6 +4860,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-448",
+    "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "العوذ",
     "level": "سهل",
@@ -4475,6 +4872,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-449",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "المصطلح",
     "level": "متوسط",
@@ -4486,6 +4884,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-450",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "المصطلح",
     "level": "متوسط",
@@ -4497,6 +4896,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-454",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "المصطلح",
     "level": "سهل",
@@ -4508,6 +4908,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-455",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "المصطلح",
     "level": "سهل",
@@ -4519,6 +4920,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-456",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "المصطلح",
     "level": "متوسط",
@@ -4530,6 +4932,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-457",
+    "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "الحج",
     "level": "سهل",
@@ -4541,6 +4944,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-459",
+    "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "الحج",
     "level": "متوسط",
@@ -4552,6 +4956,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-460",
+    "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "الحج",
     "level": "متوسط",
@@ -4563,6 +4968,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-461",
+    "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "الحج",
     "level": "متوسط",
@@ -4574,6 +4980,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-462",
+    "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "الحج",
     "level": "سهل",
@@ -4585,6 +4992,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-463",
+    "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "الحج",
     "level": "صعب",
@@ -4596,6 +5004,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-464",
+    "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "الحج",
     "level": "متوسط",
@@ -4607,6 +5016,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-465",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "التوحيد",
     "level": "سهل",
@@ -4618,6 +5028,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-466",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "التوحيد",
     "level": "سهل",
@@ -4629,6 +5040,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-467",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "التوحيد",
     "level": "سهل",
@@ -4640,6 +5052,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-468",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "التوحيد",
     "level": "متوسط",
@@ -4651,6 +5064,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-470",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "التوحيد",
     "level": "متوسط",
@@ -4662,6 +5076,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-472",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "التوحيد",
     "level": "صعب",
@@ -4673,6 +5088,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-473",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "المعارك",
     "level": "سهل",
@@ -4684,6 +5100,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-475",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "المعارك",
     "level": "متوسط",
@@ -4695,6 +5112,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-476",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "المعارك",
     "level": "متوسط",
@@ -4706,6 +5124,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-478",
+    "documentation_status": "unsourced",
     "section": "الفتوحات الإسلامية",
     "category": "المعارك",
     "level": "متوسط",
@@ -4717,6 +5136,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-479",
+    "documentation_status": "unsourced",
     "section": "الفتوحات الإسلامية",
     "category": "المعارك",
     "level": "متوسط",
@@ -4732,13 +5152,13 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "category": "المعارك",
     "level": "صعب",
     "question": "ما معركة حطين وما أهميتها؟",
-    "answer": "معركة فاصلة في ربيع الآخر سنة 583هـ قادها صلاح الدين الأيوبي وهزم فيها الصليبيين هزيمة حطّمت قوّتهم في الشام، فاستُردّ بعدها بيت المقدس في رجب من السنة نفسها بعد نحو إحدى وتسعين سنة من احتلاله (وقع في أيديهم سنة 492هـ)",
+    "answer": "معركة فاصلة في ربيع الآخر سنة 583هـ قادها صلاح الدين الأيوبي وهزم فيها الصليبيين هزيمة حطّمت قوّتهم في الشام، فاستُردّ بعدها بيت المقدس في رجب من السنة نفسها بعد نحو إحدى وتسعين سنة هجرية (88 سنة ميلادية) من احتلاله (وقع في أيديهم سنة 492هـ)",
     "trust_level": "unsourced",
     "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-07-26T00:00:00.000Z"
-  },
+    "last_updated_at": "2026-07-26T00:00:00.000Z"  },
   {
     "id": "demo-quiz-483",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدول",
     "level": "متوسط",
@@ -4750,6 +5170,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-484",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدول",
     "level": "متوسط",
@@ -4761,6 +5182,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-485",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدول",
     "level": "متوسط",
@@ -4772,6 +5194,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-486",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدول",
     "level": "متوسط",
@@ -4783,6 +5206,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-487",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدول",
     "level": "صعب",
@@ -4794,6 +5218,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-488",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدول",
     "level": "متوسط",
@@ -4805,6 +5230,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-489",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدول",
     "level": "صعب",
@@ -4816,6 +5242,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-490",
+    "documentation_status": "unsourced",
     "section": "التجويد",
     "category": "أحكام النون الساكنة والتنوين",
     "level": "سهل",
@@ -4827,6 +5254,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-491",
+    "documentation_status": "unsourced",
     "section": "التجويد",
     "category": "أحكام النون الساكنة والتنوين",
     "level": "سهل",
@@ -4838,6 +5266,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-492",
+    "documentation_status": "unsourced",
     "section": "التجويد",
     "category": "أحكام النون الساكنة والتنوين",
     "level": "سهل",
@@ -4849,6 +5278,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-493",
+    "documentation_status": "unsourced",
     "section": "التجويد",
     "category": "أحكام الميم الساكنة",
     "level": "سهل",
@@ -4860,6 +5290,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-494",
+    "documentation_status": "unsourced",
     "section": "التجويد",
     "category": "المدود",
     "level": "سهل",
@@ -4871,6 +5302,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-495",
+    "documentation_status": "unsourced",
     "section": "التجويد",
     "category": "القلقلة",
     "level": "سهل",
@@ -4882,6 +5314,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-496",
+    "documentation_status": "unsourced",
     "section": "التجويد",
     "category": "الغنة",
     "level": "سهل",
@@ -4893,6 +5326,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-497",
+    "documentation_status": "unsourced",
     "section": "التجويد",
     "category": "المدود",
     "level": "متوسط",
@@ -4904,6 +5338,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-498",
+    "documentation_status": "unsourced",
     "section": "التجويد",
     "category": "صفات الحروف",
     "level": "متوسط",
@@ -4915,6 +5350,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-499",
+    "documentation_status": "unsourced",
     "section": "التجويد",
     "category": "أحكام النون الساكنة والتنوين",
     "level": "سهل",
@@ -4926,6 +5362,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-500",
+    "documentation_status": "unsourced",
     "section": "التجويد",
     "category": "أحكام النون الساكنة والتنوين",
     "level": "سهل",
@@ -4937,6 +5374,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-501",
+    "documentation_status": "unsourced",
     "section": "التجويد",
     "category": "أحكام النون الساكنة والتنوين",
     "level": "متوسط",
@@ -4948,6 +5386,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-502",
+    "documentation_status": "unsourced",
     "section": "الفتوحات الإسلامية",
     "category": "الفتوحات الإسلامية",
     "level": "سهل",
@@ -4959,6 +5398,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-503",
+    "documentation_status": "unsourced",
     "section": "الفتوحات الإسلامية",
     "category": "الفتوحات الإسلامية",
     "level": "متوسط",
@@ -4970,6 +5410,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-504",
+    "documentation_status": "unsourced",
     "section": "الفتوحات الإسلامية",
     "category": "الفتوحات الإسلامية",
     "level": "متوسط",
@@ -4981,6 +5422,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-505",
+    "documentation_status": "unsourced",
     "section": "الفتوحات الإسلامية",
     "category": "الفتوحات الإسلامية",
     "level": "متوسط",
@@ -4992,6 +5434,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-506",
+    "documentation_status": "unsourced",
     "section": "الفتوحات الإسلامية",
     "category": "الفتوحات الإسلامية",
     "level": "متوسط",
@@ -5003,6 +5446,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-507",
+    "documentation_status": "unsourced",
     "section": "الفتوحات الإسلامية",
     "category": "الغزوات",
     "level": "سهل",
@@ -5014,6 +5458,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-508",
+    "documentation_status": "unsourced",
     "section": "الفتوحات الإسلامية",
     "category": "الغزوات",
     "level": "سهل",
@@ -5025,6 +5470,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-509",
+    "documentation_status": "unsourced",
     "section": "الفتوحات الإسلامية",
     "category": "الغزوات",
     "level": "متوسط",
@@ -5036,6 +5482,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-510",
+    "documentation_status": "unsourced",
     "section": "الفتوحات الإسلامية",
     "category": "الفتوحات الإسلامية",
     "level": "متوسط",
@@ -5047,6 +5494,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-511",
+    "documentation_status": "unsourced",
     "section": "الفتوحات الإسلامية",
     "category": "الغزوات",
     "level": "صعب",
@@ -5058,6 +5506,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-513",
+    "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "المكي والمدني",
     "level": "سهل",
@@ -5069,6 +5518,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-514",
+    "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "السبع المثاني",
     "level": "سهل",
@@ -5080,6 +5530,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-515",
+    "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "جمع القرآن",
     "level": "متوسط",
@@ -5091,6 +5542,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-516",
+    "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "جمع القرآن",
     "level": "متوسط",
@@ -5102,6 +5554,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-517",
+    "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "أسباب النزول",
     "level": "متوسط",
@@ -5113,6 +5566,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-520",
+    "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "إحصاءات القرآن",
     "level": "سهل",
@@ -5124,6 +5578,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-521",
+    "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "المحكم والمتشابه",
     "level": "صعب",
@@ -5135,6 +5590,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-522",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "آداب الطعام",
     "level": "سهل",
@@ -5146,6 +5602,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-523",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "صفات المؤمن",
     "level": "سهل",
@@ -5157,6 +5614,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-524",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "الصدق",
     "level": "سهل",
@@ -5168,6 +5626,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-525",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "الأمانة",
     "level": "سهل",
@@ -5179,6 +5638,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-526",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "آداب النوم",
     "level": "سهل",
@@ -5190,6 +5650,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-527",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "صفات المؤمن",
     "level": "سهل",
@@ -5201,6 +5662,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-528",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "المحرمات الأخلاقية",
     "level": "متوسط",
@@ -5212,6 +5674,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-529",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "المحرمات الأخلاقية",
     "level": "متوسط",
@@ -5223,6 +5686,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-530",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "النفاق",
     "level": "سهل",
@@ -5234,6 +5698,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-531",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "الكبر والتواضع",
     "level": "متوسط",
@@ -5245,6 +5710,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-532",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "الكبر والتواضع",
     "level": "سهل",
@@ -5256,6 +5722,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-533",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "الزهد",
     "level": "متوسط",
@@ -5267,6 +5734,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-534",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "مصطلح الحديث",
     "level": "متوسط",
@@ -5278,6 +5746,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-535",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "مصطلح الحديث",
     "level": "متوسط",
@@ -5289,6 +5758,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-536",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "مصطلح الحديث",
     "level": "متوسط",
@@ -5300,6 +5770,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-538",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "مصطلح الحديث",
     "level": "متوسط",
@@ -5311,6 +5782,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-539",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "مصطلح الحديث",
     "level": "صعب",
@@ -5322,6 +5794,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-541",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "مصطلح الحديث",
     "level": "صعب",
@@ -5333,6 +5806,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-542",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "آداب الاستئذان",
     "level": "سهل",
@@ -5344,6 +5818,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-543",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "آداب الضيافة",
     "level": "متوسط",
@@ -5355,6 +5830,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-544",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "آداب الكلام",
     "level": "سهل",
@@ -5366,6 +5842,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-545",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "آداب السفر",
     "level": "متوسط",
@@ -5377,6 +5854,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-546",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "آداب المسجد",
     "level": "سهل",
@@ -5388,6 +5866,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-547",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "آداب تلاوة القرآن",
     "level": "سهل",
@@ -5399,6 +5878,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-548",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "آداب العطاس",
     "level": "سهل",
@@ -5410,6 +5890,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-549",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "آداب السلام",
     "level": "سهل",
@@ -5421,6 +5902,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-550",
+    "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "أركان الحج",
     "level": "سهل",
@@ -5432,6 +5914,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-551",
+    "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "مناسك الحج",
     "level": "متوسط",
@@ -5443,6 +5926,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-553",
+    "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "مناسك الحج",
     "level": "سهل",
@@ -5454,6 +5938,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-554",
+    "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "مناسك الحج",
     "level": "صعب",
@@ -5465,6 +5950,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-555",
+    "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "رمي الجمرات",
     "level": "متوسط",
@@ -5476,6 +5962,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-556",
+    "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "مواقيت الحج",
     "level": "صعب",
@@ -5487,6 +5974,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-557",
+    "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "السعي",
     "level": "سهل",
@@ -5498,6 +5986,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-558",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "أسماء القرآن",
     "level": "متوسط",
@@ -5509,6 +5998,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-560",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "إحصاءات القرآن",
     "level": "سهل",
@@ -5520,6 +6010,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-564",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "مكي ومدني",
     "level": "متوسط",
@@ -5531,6 +6022,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-565",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الخلفاء الراشدون",
     "level": "سهل",
@@ -5542,6 +6034,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-566",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الفتوحات",
     "level": "متوسط",
@@ -5553,6 +6046,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-567",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدولة الأموية",
     "level": "متوسط",
@@ -5564,6 +6058,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-568",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدولة العباسية",
     "level": "متوسط",
@@ -5575,6 +6070,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-569",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "فتح الأندلس",
     "level": "متوسط",
@@ -5586,6 +6082,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-570",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "فتح القسطنطينية",
     "level": "متوسط",
@@ -5597,6 +6094,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-571",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "حروب الردة",
     "level": "صعب",
@@ -5608,6 +6106,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-572",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "حادثة الفيل",
     "level": "سهل",
@@ -5619,6 +6118,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-573",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "مكارم الأخلاق",
     "level": "سهل",
@@ -5630,6 +6130,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-574",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "الأخلاق الذميمة",
     "level": "سهل",
@@ -5641,6 +6142,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-575",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "الاجتماعيات",
     "level": "سهل",
@@ -5652,6 +6154,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-576",
+    "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "التفسير",
     "level": "متوسط",
@@ -5663,6 +6166,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-577",
+    "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "النسخ",
     "level": "صعب",
@@ -5674,6 +6178,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-578",
+    "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "الإعجاز",
     "level": "متوسط",
@@ -5685,6 +6190,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-579",
+    "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "أسباب النزول",
     "level": "متوسط",
@@ -5696,6 +6202,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-580",
+    "documentation_status": "unsourced",
     "section": "الفتوحات الإسلامية",
     "category": "فتح مكة",
     "level": "سهل",
@@ -5707,6 +6214,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-581",
+    "documentation_status": "unsourced",
     "section": "الفتوحات الإسلامية",
     "category": "الفتوحات الشامية",
     "level": "متوسط",
@@ -5718,6 +6226,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-582",
+    "documentation_status": "unsourced",
     "section": "الفتوحات الإسلامية",
     "category": "الفتوحات الفارسية",
     "level": "متوسط",
@@ -5729,6 +6238,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-583",
+    "documentation_status": "unsourced",
     "section": "الفتوحات الإسلامية",
     "category": "فتح مصر",
     "level": "متوسط",
@@ -5740,6 +6250,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-584",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "حديث جبريل",
     "level": "متوسط",
@@ -5751,6 +6262,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-585",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "الأحاديث الجامعة",
     "level": "سهل",
@@ -5762,6 +6274,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-586",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "صحيح البخاري",
     "level": "سهل",
@@ -5773,6 +6286,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-587",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "الصدق",
     "level": "سهل",
@@ -5784,6 +6298,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-588",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "الصبر",
     "level": "سهل",
@@ -5795,6 +6310,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-589",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "حسن الظن",
     "level": "متوسط",
@@ -5806,6 +6322,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-590",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "التواضع",
     "level": "سهل",
@@ -5817,6 +6334,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-591",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "الصدق",
     "level": "سهل",
@@ -5828,6 +6346,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-592",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "الحلم",
     "level": "متوسط",
@@ -5839,6 +6358,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-593",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "العفو",
     "level": "سهل",
@@ -5850,6 +6370,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-594",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "الأمانة",
     "level": "متوسط",
@@ -5861,6 +6382,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-595",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "الكرم",
     "level": "سهل",
@@ -5872,6 +6394,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-596",
+    "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "الناسخ والمنسوخ",
     "level": "صعب",
@@ -5883,6 +6406,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-597",
+    "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "المحكم والمتشابه",
     "level": "متوسط",
@@ -5894,6 +6418,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-598",
+    "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "الإعجاز",
     "level": "متوسط",
@@ -5905,6 +6430,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-599",
+    "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "التفسير",
     "level": "متوسط",
@@ -5916,6 +6442,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-600",
+    "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "القراءات",
     "level": "صعب",
@@ -5927,6 +6454,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-601",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "آداب الطعام",
     "level": "سهل",
@@ -5938,6 +6466,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-602",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "آداب المجلس",
     "level": "سهل",
@@ -5949,6 +6478,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-603",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "آداب النوم",
     "level": "سهل",
@@ -5960,6 +6490,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-604",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "آداب السفر",
     "level": "متوسط",
@@ -5971,6 +6502,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-605",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "مصطلح الحديث",
     "level": "متوسط",
@@ -5982,6 +6514,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-606",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "مصطلح الحديث",
     "level": "متوسط",
@@ -5993,6 +6526,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-607",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "علم الرجال",
     "level": "صعب",
@@ -6004,6 +6538,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-608",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "كتب السنة",
     "level": "سهل",
@@ -6015,6 +6550,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-609",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "السنة النبوية",
     "level": "متوسط",
@@ -6026,6 +6562,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-610",
+    "documentation_status": "unsourced",
     "section": "الألغاز الشرعية",
     "category": "ألغاز الطهارة",
     "level": "صعب",
@@ -6037,6 +6574,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-611",
+    "documentation_status": "unsourced",
     "section": "الألغاز الشرعية",
     "category": "ألغاز الصلاة",
     "level": "صعب",
@@ -6048,6 +6586,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-612",
+    "documentation_status": "unsourced",
     "section": "الألغاز الشرعية",
     "category": "ألغاز الصيام",
     "level": "متوسط",
@@ -6059,6 +6598,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-613",
+    "documentation_status": "unsourced",
     "section": "الألغاز الشرعية",
     "category": "ألغاز الزكاة",
     "level": "صعب",
@@ -6070,6 +6610,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-614",
+    "documentation_status": "unsourced",
     "section": "الألغاز الشرعية",
     "category": "ألغاز متنوعة",
     "level": "صعب",
@@ -6081,6 +6622,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-615",
+    "documentation_status": "unsourced",
     "section": "الألغاز الشرعية",
     "category": "ألغاز متنوعة",
     "level": "متوسط",
@@ -6092,6 +6634,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-616",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الغزوات",
     "level": "سهل",
@@ -6103,6 +6646,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-617",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الغزوات",
     "level": "متوسط",
@@ -6114,6 +6658,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-618",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الأحكام",
     "level": "متوسط",
@@ -6125,6 +6670,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-620",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "اليوم الآخر",
     "level": "سهل",
@@ -6136,6 +6682,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-621",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الفتوحات",
     "level": "متوسط",
@@ -6147,6 +6694,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-622",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الفتوحات",
     "level": "متوسط",
@@ -6158,6 +6706,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-624",
+    "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "السور",
     "level": "سهل",
@@ -6169,6 +6718,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-625",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "الأربعون النووية",
     "level": "متوسط",
@@ -6180,6 +6730,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-626",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "الأربعون النووية",
     "level": "متوسط",
@@ -6191,6 +6742,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-627",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الطهارة",
     "level": "متوسط",
@@ -6202,6 +6754,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-628",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "الملائكة",
     "level": "سهل",
@@ -6213,6 +6766,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-629",
+    "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "أخلاق المسلم",
     "level": "سهل",
@@ -6224,6 +6778,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-630",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الصحابة",
     "level": "متوسط",
@@ -6235,6 +6790,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-631",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الزكاة",
     "level": "متوسط",
@@ -6246,6 +6802,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-632",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الزكاة",
     "level": "سهل",
@@ -6257,6 +6814,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-633",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "اليوم الآخر",
     "level": "متوسط",
@@ -6268,6 +6826,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-634",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "اليوم الآخر",
     "level": "سهل",
@@ -6279,6 +6838,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-635",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "الملائكة",
     "level": "سهل",
@@ -6290,6 +6850,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-636",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "الملائكة",
     "level": "متوسط",
@@ -6301,6 +6862,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-637",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الأذان",
     "level": "سهل",
@@ -6312,6 +6874,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-638",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الأذان",
     "level": "متوسط",
@@ -6323,6 +6886,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-639",
+    "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "آداب الكلام",
     "level": "سهل",
@@ -6334,6 +6898,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-640",
+    "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "آداب المسجد",
     "level": "سهل",
@@ -6345,6 +6910,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-641",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "الأنبياء في القرآن",
     "level": "سهل",
@@ -6356,6 +6922,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-643",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "مصطلح الحديث",
     "level": "متوسط",
@@ -6367,6 +6934,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-644",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الطهارة",
     "level": "سهل",
@@ -6378,6 +6946,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-645",
+    "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "الأخلاق الذميمة",
     "level": "متوسط",
@@ -6389,6 +6958,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-646",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصيام",
     "level": "سهل",
@@ -6400,6 +6970,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-647",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "القضاء والقدر",
     "level": "متوسط",
@@ -6422,6 +6993,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-649",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور",
     "level": "متوسط",
@@ -6433,6 +7005,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-650",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الزكاة",
     "level": "متوسط",
@@ -6444,6 +7017,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-652",
+    "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "الدعاء",
     "level": "سهل",
@@ -6455,6 +7029,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-653",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الفتوحات",
     "level": "متوسط",
@@ -6466,6 +7041,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-654",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصلاة",
     "level": "متوسط",
@@ -6488,6 +7064,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-656",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الغزوات",
     "level": "متوسط",
@@ -6499,6 +7076,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-657",
+    "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "الذكر والدعاء",
     "level": "سهل",
@@ -6510,6 +7088,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-658",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "آيات الأحكام",
     "level": "صعب",
@@ -6521,6 +7100,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-659",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الحج",
     "level": "متوسط",
@@ -6532,6 +7112,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-660",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الخلفاء الراشدون",
     "level": "سهل",
@@ -6543,6 +7124,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-661",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "أسماء الله وصفاته",
     "level": "سهل",
@@ -6554,6 +7136,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-662",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الطهارة",
     "level": "متوسط",
@@ -6565,6 +7148,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-663",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور والآيات",
     "level": "سهل",
@@ -6576,6 +7160,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-664",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الصحابة",
     "level": "متوسط",
@@ -6587,6 +7172,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-665",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "مصطلح الحديث",
     "level": "صعب",
@@ -6598,6 +7184,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-666",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الفتوحات",
     "level": "متوسط",
@@ -6609,6 +7196,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-667",
+    "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "التوبة والاستغفار",
     "level": "سهل",
@@ -6620,6 +7208,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-669",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الزكاة",
     "level": "متوسط",
@@ -6631,6 +7220,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-671",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "مصطلح الحديث",
     "level": "متوسط",
@@ -6642,6 +7232,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-672",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصلاة",
     "level": "سهل",
@@ -6653,6 +7244,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-673",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "غزوات النبي",
     "level": "متوسط",
@@ -6664,6 +7256,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-674",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "علوم القرآن",
     "level": "متوسط",
@@ -6675,6 +7268,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-675",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "الإيمان",
     "level": "سهل",
@@ -6686,6 +7280,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-676",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الخلافة الإسلامية",
     "level": "متوسط",
@@ -6697,6 +7292,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-677",
+    "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "التوبة والاستغفار",
     "level": "سهل",
@@ -6708,6 +7304,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-678",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصيام",
     "level": "متوسط",
@@ -6719,6 +7316,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-679",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الصحابة",
     "level": "سهل",
@@ -6730,6 +7328,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-680",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "أسماء الله وصفاته",
     "level": "متوسط",
@@ -6741,6 +7340,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-681",
+    "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "التزكية",
     "level": "سهل",
@@ -6752,6 +7352,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-682",
+    "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "الزهد",
     "level": "متوسط",
@@ -6763,6 +7364,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-683",
+    "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "أمراض القلوب",
     "level": "متوسط",
@@ -6774,6 +7376,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-684",
+    "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "التوبة",
     "level": "سهل",
@@ -6785,6 +7388,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-685",
+    "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "اليقين",
     "level": "صعب",
@@ -6796,6 +7400,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-686",
+    "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "التفكر",
     "level": "سهل",
@@ -6807,6 +7412,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-687",
+    "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "ذكر الموت",
     "level": "متوسط",
@@ -6818,6 +7424,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-688",
+    "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "الخوف والرجاء",
     "level": "متوسط",
@@ -6829,6 +7436,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-689",
+    "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "المحبة والشوق",
     "level": "سهل",
@@ -6840,6 +7448,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-690",
+    "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "العبودية",
     "level": "صعب",
@@ -6851,6 +7460,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-691",
+    "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "المكي والمدني",
     "level": "متوسط",
@@ -6862,6 +7472,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-692",
+    "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "الناسخ والمنسوخ",
     "level": "صعب",
@@ -6873,6 +7484,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-693",
+    "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "القراءات",
     "level": "متوسط",
@@ -6884,6 +7496,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-694",
+    "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "الإعجاز",
     "level": "متوسط",
@@ -6895,6 +7508,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-695",
+    "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "الجمع والتدوين",
     "level": "متوسط",
@@ -6906,6 +7520,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-696",
+    "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "الأحرف السبعة",
     "level": "صعب",
@@ -6917,6 +7532,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-697",
+    "documentation_status": "unsourced",
     "section": "الفرائض والمواريث",
     "category": "المواريث",
     "level": "متوسط",
@@ -6928,6 +7544,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-698",
+    "documentation_status": "unsourced",
     "section": "الفرائض والمواريث",
     "category": "الفروض",
     "level": "صعب",
@@ -6939,6 +7556,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-699",
+    "documentation_status": "unsourced",
     "section": "الفرائض والمواريث",
     "category": "الحجب",
     "level": "صعب",
@@ -6950,6 +7568,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-700",
+    "documentation_status": "unsourced",
     "section": "الفرائض والمواريث",
     "category": "أصحاب الفروض",
     "level": "متوسط",
@@ -6961,6 +7580,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-701",
+    "documentation_status": "unsourced",
     "section": "الفرائض والمواريث",
     "category": "الوصية",
     "level": "متوسط",
@@ -6972,6 +7592,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-702",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدولة الأموية",
     "level": "متوسط",
@@ -6983,6 +7604,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-703",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدولة العباسية",
     "level": "متوسط",
@@ -6994,6 +7616,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-704",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الحضارة",
     "level": "متوسط",
@@ -7005,6 +7628,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-705",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "المغول",
     "level": "متوسط",
@@ -7016,6 +7640,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-706",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الأندلس",
     "level": "متوسط",
@@ -7031,13 +7656,13 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "category": "الأيوبيون",
     "level": "سهل",
     "question": "من صلاح الدين الأيوبي ولماذا اشتُهر في التاريخ؟",
-    "answer": "يوسف بن أيوب (532-589هـ)، مؤسس الدولة الأيوبية. اشتُهر بتحرير بيت المقدس من الصليبيين في معركة حطين عام 583هـ (1187م) بعد احتلال 91 سنة، واشتُهر بالعدل والكرم.",
+    "answer": "يوسف بن أيوب (532-589هـ)، مؤسس الدولة الأيوبية. اشتُهر بتحرير بيت المقدس من الصليبيين في معركة حطين عام 583هـ (1187م) بعد احتلال 91 سنة هجرية (88 سنة ميلادية)، واشتُهر بالعدل والكرم.",
     "trust_level": "unsourced",
     "editorial_review_status": "unreviewed",
-    "last_updated_at": "2026-07-26T00:00:00.000Z"
-  },
+    "last_updated_at": "2026-07-26T00:00:00.000Z"  },
   {
     "id": "demo-quiz-708",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "العثمانيون",
     "level": "متوسط",
@@ -7049,6 +7674,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-709",
+    "documentation_status": "unsourced",
     "section": "الفتوحات الإسلامية",
     "category": "فتوح الشام",
     "level": "متوسط",
@@ -7060,6 +7686,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-710",
+    "documentation_status": "unsourced",
     "section": "الفتوحات الإسلامية",
     "category": "فتوح العراق",
     "level": "متوسط",
@@ -7071,6 +7698,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-711",
+    "documentation_status": "unsourced",
     "section": "الفتوحات الإسلامية",
     "category": "فتوح مصر",
     "level": "متوسط",
@@ -7082,6 +7710,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-712",
+    "documentation_status": "unsourced",
     "section": "الفتوحات الإسلامية",
     "category": "فتوح فارس",
     "level": "متوسط",
@@ -7093,6 +7722,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-713",
+    "documentation_status": "unsourced",
     "section": "الفتوحات الإسلامية",
     "category": "فتوح المغرب",
     "level": "متوسط",
@@ -7104,6 +7734,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-714",
+    "documentation_status": "unsourced",
     "section": "الفتوحات الإسلامية",
     "category": "فتح مكة",
     "level": "سهل",
@@ -7115,6 +7746,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-715",
+    "documentation_status": "unsourced",
     "section": "الفتوحات الإسلامية",
     "category": "فتح فلسطين",
     "level": "متوسط",
@@ -7126,6 +7758,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-716",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور والآيات",
     "level": "سهل",
@@ -7137,6 +7770,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-717",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور والآيات",
     "level": "سهل",
@@ -7148,6 +7782,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-718",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "أسماء القرآن",
     "level": "متوسط",
@@ -7159,6 +7794,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-719",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "فضل التلاوة",
     "level": "سهل",
@@ -7170,6 +7806,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-720",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "الحفظ",
     "level": "متوسط",
@@ -7181,6 +7818,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-721",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "غزوات النبي",
     "level": "متوسط",
@@ -7192,6 +7830,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-722",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "معارك النبي",
     "level": "سهل",
@@ -7203,6 +7842,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-723",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الهجرة",
     "level": "متوسط",
@@ -7214,6 +7854,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-724",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "شمائل النبي",
     "level": "سهل",
@@ -7225,6 +7866,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-725",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "وفاة النبي",
     "level": "متوسط",
@@ -7236,6 +7878,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-726",
+    "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "فريضة الحج",
     "level": "سهل",
@@ -7247,6 +7890,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-727",
+    "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "مناسك الحج",
     "level": "متوسط",
@@ -7258,6 +7902,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-728",
+    "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "أركان الحج",
     "level": "متوسط",
@@ -7269,6 +7914,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-729",
+    "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "الميقات",
     "level": "متوسط",
@@ -7280,6 +7926,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-730",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "الصدق",
     "level": "سهل",
@@ -7291,6 +7938,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-731",
+    "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "المكي والمدني",
     "level": "متوسط",
@@ -7302,6 +7950,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-732",
+    "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "أقسام السور",
     "level": "صعب",
@@ -7313,6 +7962,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-733",
+    "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "أسباب النزول",
     "level": "متوسط",
@@ -7324,6 +7974,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-734",
+    "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "الناسخ والمنسوخ",
     "level": "صعب",
@@ -7335,6 +7986,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-735",
+    "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "تقسيم المصحف",
     "level": "سهل",
@@ -7346,6 +7998,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-737",
+    "documentation_status": "unsourced",
     "section": "الأسماء الحسنى",
     "category": "شرح الأسماء",
     "level": "متوسط",
@@ -7357,6 +8010,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-738",
+    "documentation_status": "unsourced",
     "section": "الأسماء الحسنى",
     "category": "شرح الأسماء",
     "level": "سهل",
@@ -7368,6 +8022,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-739",
+    "documentation_status": "unsourced",
     "section": "الأسماء الحسنى",
     "category": "شرح الأسماء",
     "level": "متوسط",
@@ -7379,6 +8034,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-740",
+    "documentation_status": "unsourced",
     "section": "الأسماء الحسنى",
     "category": "الأسماء الحسنى عموماً",
     "level": "سهل",
@@ -7390,6 +8046,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-741",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "مصطلح الحديث",
     "level": "متوسط",
@@ -7401,6 +8058,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-742",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "رجال الحديث",
     "level": "متوسط",
@@ -7412,6 +8070,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-743",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "كتب الحديث",
     "level": "سهل",
@@ -7423,6 +8082,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-744",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "مصطلح الحديث",
     "level": "صعب",
@@ -7434,6 +8094,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-745",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "أحاديث مشهورة",
     "level": "سهل",
@@ -7445,6 +8106,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-746",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الجمع والقصر",
     "level": "متوسط",
@@ -7456,6 +8118,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-747",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "صلاة الجمعة",
     "level": "سهل",
@@ -7467,6 +8130,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-748",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "النكاح",
     "level": "متوسط",
@@ -7478,6 +8142,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-749",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الطلاق",
     "level": "متوسط",
@@ -7489,6 +8154,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-750",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "القضاء",
     "level": "صعب",
@@ -7500,6 +8166,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-751",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الفتوحات",
     "level": "متوسط",
@@ -7511,6 +8178,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-752",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "جمع القرآن",
     "level": "متوسط",
@@ -7522,6 +8190,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-753",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "جمع القرآن",
     "level": "متوسط",
@@ -7533,6 +8202,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-754",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الحضارة الإسلامية",
     "level": "صعب",
@@ -7544,6 +8214,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-755",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الخلافة الراشدة",
     "level": "سهل",
@@ -7555,6 +8226,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-756",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "أحكام الجنائز",
     "level": "متوسط",
@@ -7566,6 +8238,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-757",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "أحكام الجنائز",
     "level": "متوسط",
@@ -7577,6 +8250,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-758",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "أحكام الجنائز",
     "level": "سهل",
@@ -7588,6 +8262,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-759",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "أحكام الجنائز",
     "level": "صعب",
@@ -7599,6 +8274,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-760",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "أحكام الجنائز",
     "level": "صعب",
@@ -7610,6 +8286,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-761",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "علوم القرآن",
     "level": "سهل",
@@ -7621,6 +8298,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-762",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "علوم القرآن",
     "level": "متوسط",
@@ -7632,6 +8310,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-763",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "علوم القرآن",
     "level": "صعب",
@@ -7643,6 +8322,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-764",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "علوم القرآن",
     "level": "سهل",
@@ -7654,6 +8334,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-765",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور والآيات",
     "level": "متوسط",
@@ -7665,6 +8346,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-766",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "التفسير",
     "level": "سهل",
@@ -7676,6 +8358,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-767",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "التفسير",
     "level": "متوسط",
@@ -7687,6 +8370,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-768",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "التفسير",
     "level": "صعب",
@@ -7698,6 +8382,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-769",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور والآيات",
     "level": "سهل",
@@ -7709,6 +8394,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-770",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور والآيات",
     "level": "متوسط",
@@ -7720,6 +8406,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-771",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "علوم الحديث",
     "level": "متوسط",
@@ -7731,6 +8418,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-772",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "علوم الحديث",
     "level": "سهل",
@@ -7742,6 +8430,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-773",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "أركان الإسلام",
     "level": "سهل",
@@ -7753,6 +8442,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-774",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصيام",
     "level": "متوسط",
@@ -7764,6 +8454,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-775",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "التوحيد",
     "level": "متوسط",
@@ -7775,6 +8466,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-776",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "الإيمان",
     "level": "سهل",
@@ -7786,6 +8478,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-777",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "غزوات وأحداث",
     "level": "متوسط",
@@ -7797,6 +8490,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-778",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الصحابة الكرام",
     "level": "سهل",
@@ -7808,6 +8502,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-779",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "آداب المسلم",
     "level": "سهل",
@@ -7819,6 +8514,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-780",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "الزهد والرقائق",
     "level": "متوسط",
@@ -7830,6 +8526,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-781",
+    "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "التوبة والاستغفار",
     "level": "سهل",
@@ -7841,6 +8538,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-782",
+    "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "الورع والتقوى",
     "level": "متوسط",
@@ -7852,6 +8550,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-783",
+    "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "المراقبة والمحاسبة",
     "level": "متوسط",
@@ -7863,6 +8562,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-784",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "أركان الإيمان",
     "level": "سهل",
@@ -7874,6 +8574,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-785",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "صفات الله",
     "level": "متوسط",
@@ -7885,6 +8586,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-786",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "الشرك وأنواعه",
     "level": "متوسط",
@@ -7896,6 +8598,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-787",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "مقاصد الشريعة",
     "level": "متوسط",
@@ -7907,6 +8610,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-788",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "أصول الفقه",
     "level": "متوسط",
@@ -7918,6 +8622,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-789",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الفقه الميسر",
     "level": "سهل",
@@ -7929,6 +8634,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-790",
+    "documentation_status": "unsourced",
     "section": "الأسماء الحسنى",
     "category": "الأسماء الحسنى",
     "level": "سهل",
@@ -7940,6 +8646,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-791",
+    "documentation_status": "unsourced",
     "section": "الأسماء الحسنى",
     "category": "الأسماء الحسنى",
     "level": "متوسط",
@@ -7951,6 +8658,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-792",
+    "documentation_status": "unsourced",
     "section": "الفرائض والمواريث",
     "category": "الميراث",
     "level": "متوسط",
@@ -7962,6 +8670,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-793",
+    "documentation_status": "unsourced",
     "section": "الفرائض والمواريث",
     "category": "الميراث",
     "level": "متوسط",
@@ -7973,6 +8682,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-794",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "آداب الحديث والكلام",
     "level": "سهل",
@@ -7984,6 +8694,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-795",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "آداب الصداقة والإخاء",
     "level": "متوسط",
@@ -7995,6 +8706,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-796",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "الحِلم والأناة",
     "level": "متوسط",
@@ -8006,6 +8718,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-797",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "علم مصطلح الحديث",
     "level": "متوسط",
@@ -8017,6 +8730,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-798",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "علم الرجال",
     "level": "متوسط",
@@ -8028,6 +8742,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-799",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "مصطلح الحديث",
     "level": "سهل",
@@ -8039,6 +8754,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-800",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "مراحل البعثة",
     "level": "متوسط",
@@ -8050,6 +8766,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-801",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الهجرة",
     "level": "متوسط",
@@ -8061,6 +8778,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-802",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "وفاة النبي",
     "level": "سهل",
@@ -8072,6 +8790,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-803",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "فضائل الصحابة",
     "level": "سهل",
@@ -8083,6 +8802,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-804",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "الألقاب",
     "level": "متوسط",
@@ -8094,6 +8814,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-805",
+    "documentation_status": "unsourced",
     "section": "العلماء والأئمة",
     "category": "العلماء",
     "level": "متوسط",
@@ -8105,6 +8826,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-806",
+    "documentation_status": "unsourced",
     "section": "العلماء والأئمة",
     "category": "العلماء",
     "level": "صعب",
@@ -8116,6 +8838,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-807",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدول",
     "level": "متوسط",
@@ -8127,6 +8850,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-808",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الفتوحات الإسلامية",
     "level": "متوسط",
@@ -8138,6 +8862,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-809",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصلاة",
     "level": "سهل",
@@ -8149,6 +8874,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-810",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الزكاة",
     "level": "متوسط",
@@ -8160,6 +8886,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-811",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "السور والآيات",
     "level": "سهل",
@@ -8171,6 +8898,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-812",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "علوم القرآن",
     "level": "صعب",
@@ -8182,6 +8910,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-813",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "اليوم الآخر",
     "level": "متوسط",
@@ -8193,6 +8922,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-814",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "الملائكة",
     "level": "سهل",
@@ -8204,6 +8934,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-815",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "أخلاق محمودة",
     "level": "سهل",
@@ -8215,6 +8946,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-816",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "عام",
     "level": "سهل",
@@ -8226,6 +8958,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-817",
+    "documentation_status": "unsourced",
     "section": "الفتوحات الإسلامية",
     "category": "المعارك",
     "level": "متوسط",
@@ -8237,6 +8970,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-818",
+    "documentation_status": "unsourced",
     "section": "الفتوحات الإسلامية",
     "category": "المعارك",
     "level": "متوسط",
@@ -8248,6 +8982,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-819",
+    "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -8259,6 +8994,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-820",
+    "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "سهل",
@@ -8270,6 +9006,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-821",
+    "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "عام",
     "level": "سهل",
@@ -8281,6 +9018,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-822",
+    "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "عام",
     "level": "متوسط",
@@ -8292,6 +9030,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-823",
+    "documentation_status": "unsourced",
     "section": "العلماء والأئمة",
     "category": "العلماء",
     "level": "متوسط",
@@ -8303,6 +9042,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-824",
+    "documentation_status": "unsourced",
     "section": "العلماء والأئمة",
     "category": "العلماء",
     "level": "صعب",
@@ -8314,6 +9054,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-825",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "عام",
     "level": "سهل",
@@ -8325,6 +9066,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-826",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الطهارة",
     "level": "سهل",
@@ -8336,6 +9078,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-827",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الخلفاء",
     "level": "متوسط",
@@ -8347,6 +9090,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-828",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الدول",
     "level": "متوسط",
@@ -8358,6 +9102,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-829",
+    "documentation_status": "unsourced",
     "section": "الأنبياء",
     "category": "الرسل",
     "level": "متوسط",
@@ -8369,6 +9114,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-830",
+    "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "الحج",
     "level": "سهل",
@@ -8380,6 +9126,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-831",
+    "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "الحج",
     "level": "متوسط",
@@ -8391,6 +9138,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-832",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "التفسير",
     "level": "متوسط",
@@ -8402,6 +9150,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-833",
+    "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "علوم القرآن",
     "level": "صعب",
@@ -8413,6 +9162,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-834",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "فضائل الصحابة",
     "level": "متوسط",
@@ -8424,6 +9174,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-835",
+    "documentation_status": "unsourced",
     "section": "الصحابة",
     "category": "فضائل الصحابة",
     "level": "سهل",
@@ -8435,6 +9186,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-836",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "التوحيد",
     "level": "متوسط",
@@ -8446,6 +9198,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-837",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "مصطلح الحديث",
     "level": "صعب",
@@ -8457,6 +9210,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-838",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الأمر بالمعروف والنهي عن المنكر",
     "level": "متوسط",
@@ -8468,6 +9222,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-839",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الأمر بالمعروف والنهي عن المنكر",
     "level": "صعب",
@@ -8479,6 +9234,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-840",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الفتاوى المعاصرة",
     "level": "متوسط",
@@ -8490,6 +9246,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-841",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الطهارة",
     "level": "سهل",
@@ -8501,6 +9258,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-842",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الغزوات",
     "level": "متوسط",
@@ -8512,6 +9270,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-843",
+    "documentation_status": "unsourced",
     "section": "القرآن الكريم",
     "category": "علوم القرآن",
     "level": "متوسط",
@@ -8523,6 +9282,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-844",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "الأخلاق",
     "level": "سهل",
@@ -8534,6 +9294,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-845",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الحضارة الإسلامية",
     "level": "متوسط",
@@ -8545,6 +9306,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-846",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "التوحيد",
     "level": "سهل",
@@ -8556,6 +9318,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-847",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الزكاة",
     "level": "متوسط",
@@ -8567,6 +9330,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-848",
+    "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "القراءات",
     "level": "متوسط",
@@ -8578,6 +9342,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-849",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "علوم الحديث",
     "level": "متوسط",
@@ -8589,6 +9354,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-850",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصلاة",
     "level": "سهل",
@@ -8600,6 +9366,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-851",
+    "documentation_status": "unsourced",
     "section": "السيرة",
     "category": "الهجرة",
     "level": "متوسط",
@@ -8611,6 +9378,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-852",
+    "documentation_status": "unsourced",
     "section": "العقيدة",
     "category": "الأسماء والصفات",
     "level": "متوسط",
@@ -8622,6 +9390,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-853",
+    "documentation_status": "unsourced",
     "section": "الآداب والأخلاق",
     "category": "السيرة والآداب",
     "level": "سهل",
@@ -8633,6 +9402,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-854",
+    "documentation_status": "unsourced",
     "section": "الفقه",
     "category": "الصيام",
     "level": "متوسط",
@@ -8644,6 +9414,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-855",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الفتوحات",
     "level": "متوسط",
@@ -8655,6 +9426,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-856",
+    "documentation_status": "unsourced",
     "section": "علوم القرآن",
     "category": "التفسير",
     "level": "صعب",
@@ -8666,6 +9438,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-857",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الأندلس",
     "level": "سهل",
@@ -8677,6 +9450,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-858",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الأندلس",
     "level": "متوسط",
@@ -8688,6 +9462,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-859",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الأندلس",
     "level": "متوسط",
@@ -8699,6 +9474,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-860",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الأندلس",
     "level": "صعب",
@@ -8710,6 +9486,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-861",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الأندلس",
     "level": "سهل",
@@ -8721,6 +9498,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-862",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الخلفاء",
     "level": "متوسط",
@@ -8732,6 +9510,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-863",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الخلفاء",
     "level": "متوسط",
@@ -8743,6 +9522,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-864",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الخلفاء",
     "level": "سهل",
@@ -8754,6 +9534,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-865",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الخلفاء",
     "level": "متوسط",
@@ -8765,6 +9546,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-866",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "العلماء",
     "level": "سهل",
@@ -8776,6 +9558,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-867",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "العلماء",
     "level": "سهل",
@@ -8787,6 +9570,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-868",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "العلماء",
     "level": "متوسط",
@@ -8798,6 +9582,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-869",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "المعارك",
     "level": "سهل",
@@ -8809,6 +9594,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-870",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "المعارك",
     "level": "سهل",
@@ -8820,6 +9606,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-871",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الفتوحات",
     "level": "سهل",
@@ -8831,6 +9618,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-872",
+    "documentation_status": "unsourced",
     "section": "التاريخ الإسلامي",
     "category": "الفتوحات",
     "level": "متوسط",
@@ -8842,6 +9630,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-873",
+    "documentation_status": "unsourced",
     "section": "العلماء والأئمة",
     "category": "العلماء والأئمة",
     "level": "سهل",
@@ -8853,6 +9642,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-875",
+    "documentation_status": "unsourced",
     "section": "العلماء والأئمة",
     "category": "العلماء والأئمة",
     "level": "متوسط",
@@ -8864,17 +9654,19 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-876",
+    "documentation_status": "unsourced",
     "section": "العلماء والأئمة",
     "category": "العلماء والأئمة",
     "level": "متوسط",
     "question": "من هو ابن تيمية وأين وُلد وتوفي؟",
-    "answer": "هو أحمد بن عبد الحليم ابن تيمية الحراني (661-728هـ). وُلد في حران (جنوب تركيا) وتوفي في سجن دمشق. عالم حنبلي موسوعي في الفقه والعقيدة والتفسير. أشهر طلابه ابن القيم الجوزية، وأشهر كتبه الفتاوى الكبرى ومنهاج السنة.",
+    "answer": "هو أحمد بن عبد الحليم ابن تيمية الحراني (661-728هـ). وُلد في حران (جنوب تركيا) وتوفي في سجن دمشق. عالم حنبلي موسوعي في الفقه والعقيدة والتفسير. أشهر طلابه ابن قيم الجوزية، وأشهر كتبه الفتاوى الكبرى ومنهاج السنة.",
     "trust_level": "unsourced",
     "editorial_review_status": "unreviewed",
     "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
   {
     "id": "demo-quiz-877",
+    "documentation_status": "unsourced",
     "section": "العلماء والأئمة",
     "category": "العلماء والأئمة",
     "level": "متوسط",
@@ -8886,6 +9678,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-878",
+    "documentation_status": "unsourced",
     "section": "العلماء والأئمة",
     "category": "العلماء والأئمة",
     "level": "صعب",
@@ -8897,6 +9690,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-879",
+    "documentation_status": "unsourced",
     "section": "العلماء والأئمة",
     "category": "العلماء والأئمة",
     "level": "صعب",
@@ -8908,10 +9702,11 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-880",
+    "documentation_status": "unsourced",
     "section": "العلماء والأئمة",
     "category": "العلماء والأئمة",
     "level": "صعب",
-    "question": "من هو ابن القيم الجوزية وما علاقته بابن تيمية؟",
+    "question": "من هو ابن قيم الجوزية وما علاقته بابن تيمية؟",
     "answer": "هو محمد بن أبي بكر ابن قيّم الجوزية (691-751هـ)، من دمشق. لازم شيخه ابن تيمية نحو 17 عاماً وسجن معه في قلعة دمشق. أشهر كتبه: زاد المعاد، إغاثة اللهفان، مدارج السالكين. أتم كثيراً مما بدأه ابن تيمية.",
     "trust_level": "unsourced",
     "editorial_review_status": "unreviewed",
@@ -8919,6 +9714,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-881",
+    "documentation_status": "unsourced",
     "section": "الأسماء الحسنى",
     "category": "الأسماء الحسنى",
     "level": "سهل",
@@ -8930,6 +9726,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-882",
+    "documentation_status": "unsourced",
     "section": "الأسماء الحسنى",
     "category": "الأسماء الحسنى",
     "level": "سهل",
@@ -8941,6 +9738,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-883",
+    "documentation_status": "unsourced",
     "section": "الأسماء الحسنى",
     "category": "الأسماء الحسنى",
     "level": "متوسط",
@@ -8952,6 +9750,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-884",
+    "documentation_status": "unsourced",
     "section": "الأسماء الحسنى",
     "category": "الأسماء الحسنى",
     "level": "متوسط",
@@ -8963,6 +9762,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-885",
+    "documentation_status": "unsourced",
     "section": "الأسماء الحسنى",
     "category": "الأسماء الحسنى",
     "level": "صعب",
@@ -8974,6 +9774,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-886",
+    "documentation_status": "unsourced",
     "section": "الأسماء الحسنى",
     "category": "الأسماء الحسنى",
     "level": "صعب",
@@ -8985,6 +9786,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-887",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "المصطلح",
     "level": "سهل",
@@ -8996,6 +9798,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-888",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "المصطلح",
     "level": "سهل",
@@ -9007,6 +9810,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-889",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "المصطلح",
     "level": "متوسط",
@@ -9018,6 +9822,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-890",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "الصحاح",
     "level": "متوسط",
@@ -9029,6 +9834,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-891",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "الصحاح",
     "level": "متوسط",
@@ -9040,6 +9846,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-892",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "علم الرجال",
     "level": "متوسط",
@@ -9051,6 +9858,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-893",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "علم الرجال",
     "level": "صعب",
@@ -9062,6 +9870,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-894",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "المصطلح",
     "level": "صعب",
@@ -9073,6 +9882,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-895",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "الصحاح",
     "level": "صعب",
@@ -9084,6 +9894,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-896",
+    "documentation_status": "unsourced",
     "section": "الحديث",
     "category": "الكتب",
     "level": "سهل",
@@ -9095,6 +9906,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-897",
+    "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "الصباح والمساء",
     "level": "سهل",
@@ -9106,6 +9918,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-898",
+    "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "أذكار النوم",
     "level": "سهل",
@@ -9117,6 +9930,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-899",
+    "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "التسبيح",
     "level": "سهل",
@@ -9128,6 +9942,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-900",
+    "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "الاستغفار",
     "level": "متوسط",
@@ -9139,6 +9954,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-901",
+    "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "الذكر العام",
     "level": "متوسط",
@@ -9150,6 +9966,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-902",
+    "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "الدعاء",
     "level": "متوسط",
@@ -9161,6 +9978,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-903",
+    "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "التعوذات",
     "level": "متوسط",
@@ -9172,6 +9990,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-904",
+    "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "الأدعية النبوية",
     "level": "صعب",
@@ -9183,6 +10002,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-905",
+    "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "الصلاة على النبي",
     "level": "سهل",
@@ -9194,6 +10014,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-906",
+    "documentation_status": "unsourced",
     "section": "الأذكار والأدعية",
     "category": "الأوقات الفاضلة",
     "level": "صعب",
@@ -9205,6 +10026,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-907",
+    "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "الزهد",
     "level": "سهل",
@@ -9216,6 +10038,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-908",
+    "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "الموت والآخرة",
     "level": "سهل",
@@ -9227,6 +10050,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-909",
+    "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "محاسبة النفس",
     "level": "متوسط",
@@ -9238,6 +10062,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-911",
+    "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "الموت والآخرة",
     "level": "متوسط",
@@ -9249,6 +10074,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-912",
+    "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "الإخلاص",
     "level": "متوسط",
@@ -9260,6 +10086,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-913",
+    "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "القلب",
     "level": "صعب",
@@ -9271,6 +10098,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-914",
+    "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "الورع",
     "level": "صعب",
@@ -9282,6 +10110,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-915",
+    "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "التوكل",
     "level": "متوسط",
@@ -9293,6 +10122,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-916",
+    "documentation_status": "unsourced",
     "section": "الرقائق",
     "category": "الصبر",
     "level": "سهل",
@@ -9304,6 +10134,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-917",
+    "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "الفرائض",
     "level": "سهل",
@@ -9315,6 +10146,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-918",
+    "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "العمرة",
     "level": "سهل",
@@ -9326,6 +10158,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-919",
+    "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "المحظورات",
     "level": "متوسط",
@@ -9337,6 +10170,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-920",
+    "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "المناسك",
     "level": "متوسط",
@@ -9348,6 +10182,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-921",
+    "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "المشاعر",
     "level": "متوسط",
@@ -9359,6 +10194,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-922",
+    "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "أنواع الحج",
     "level": "متوسط",
@@ -9370,6 +10206,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-923",
+    "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "الهدي",
     "level": "متوسط",
@@ -9381,6 +10218,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-924",
+    "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "الوقوف بعرفة",
     "level": "صعب",
@@ -9392,6 +10230,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-925",
+    "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "التاريخ",
     "level": "صعب",
@@ -9403,6 +10242,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
   },
   {
     "id": "demo-quiz-926",
+    "documentation_status": "unsourced",
     "section": "الحج والعمرة",
     "category": "الكفارات",
     "level": "صعب",
@@ -9512,7 +10352,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "editorial_review_status": "unreviewed",
     "last_updated_at": "2026-07-26T00:00:00.000Z"
   },
-  { "id": "demo-quiz-949", "section": "العلماء والأئمة", "category": "المجددون", "level": "صعب", "question": "من العالم الذي جدَّد الإسلام على رأس المئة الثامنة وأُثني عليه بأنه مجدد عصره؟", "answer": "شيخ الإسلام ابن تيمية الحراني (661 - 728 هـ)، وتلميذه ابن القيم الجوزية (691 - 751 هـ)",
+  { "id": "demo-quiz-949", "section": "العلماء والأئمة", "category": "المجددون", "level": "صعب", "question": "من العالم الذي جدَّد الإسلام على رأس المئة الثامنة وأُثني عليه بأنه مجدد عصره؟", "answer": "شيخ الإسلام ابن تيمية الحراني (661 - 728 هـ)، وتلميذه ابن قيم الجوزية (691 - 751 هـ)",
     "trust_level": "unsourced",
     "editorial_review_status": "unreviewed",
     "last_updated_at": "2026-07-26T00:00:00.000Z"

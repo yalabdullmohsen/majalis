@@ -671,7 +671,7 @@ export default function FiqhQawaidPage() {
               { title: "الوجيز في إيضاح قواعد الفقه الكلية", author: "محمد صدقي البورنو" },
               { title: "القواعد الفقهية بين الأصالة والتوجيه", author: "علي الندوي" },
               { title: "المجلة العثمانية (الأحكام العدلية)", author: "لجنة العلماء العثمانية" },
-              { title: "إعلام الموقعين عن رب العالمين", author: "ابن القيم الجوزية" },
+              { title: "إعلام الموقعين عن رب العالمين", author: "ابن قيم الجوزية" },
             ].map((b, i) => (
               <div key={i} className="fq-ref__book">
                 <BookOpen size={16} aria-hidden="true" />
