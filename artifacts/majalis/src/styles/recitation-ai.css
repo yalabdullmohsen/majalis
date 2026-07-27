@@ -200,6 +200,23 @@ html[data-theme="dark"] .rai-surah-select, html[data-theme="dark"] .rai-range-in
 html[data-theme="dark"] .rai-session__topbar { background: rgba(17,23,20,.85); }
 
 .rai-listen-indicator { display: inline-flex; align-items: center; gap: .4rem; }
+.rai-audio-level {
+  display: inline-block;
+  width: 48px;
+  height: 8px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--rai-emerald) 18%, transparent);
+  overflow: hidden;
+  vertical-align: middle;
+}
+.rai-audio-level__fill {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform-origin: right center;
+  background: var(--rai-emerald);
+  transition: transform .1s linear;
+}
 .rai-listen-wave { display: inline-flex; gap: 2px; align-items: flex-end; height: 16px; }
 .rai-listen-wave span {
   width: 3px; background: var(--rai-emerald); border-radius: 2px;

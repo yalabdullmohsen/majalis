@@ -239,11 +239,18 @@ export class VerseAlignmentEngine {
           const heard = this.buffer[op.heardIndex!];
           if (typeof heard.confidence === "number" && heard.confidence < UNCLEAR_CONFIDENCE_THRESHOLD) {
             events.push({ kind: "unclear", ref, heardWord: heard.raw, confidence: heard.confidence });
-          } else if (typeof heard.confidence === "number" && heard.confidence < NEEDS_REPEAT_CONFIDENCE_THRESHOLD) {
-            events.push({ kind: "needs_repeat", ref, heardWord: heard.raw, confidence: heard.confidence });
-          } else {
-            events.push({ kind: "error", errorType: "wrong_word", ref, heardWord: heard.raw, confidence: 75 });
+            consumedHeard += 1;
+            // علّق المؤشر: لا تُحسَم بقية عمليات هذه الدفعة (فهارسها تفترض تقدّم المرجع)
+            this.pushAyahCompleteIfNeeded(events, lastAyahKey, consumedRef);
+            return { consumedHeard, consumedRef };
           }
+          if (typeof heard.confidence === "number" && heard.confidence < NEEDS_REPEAT_CONFIDENCE_THRESHOLD) {
+            events.push({ kind: "needs_repeat", ref, heardWord: heard.raw, confidence: heard.confidence });
+            consumedHeard += 1;
+            this.pushAyahCompleteIfNeeded(events, lastAyahKey, consumedRef);
+            return { consumedHeard, consumedRef };
+          }
+          events.push({ kind: "error", errorType: "wrong_word", ref, heardWord: heard.raw, confidence: 75 });
           consumedHeard += 1;
           consumedRef += 1;
           break;
@@ -263,20 +270,22 @@ export class VerseAlignmentEngine {
       }
     }
 
-    if (lastAyahKey && lastAyahKey !== this.lastAyahAnnounced) {
-      const isLastWordOfAyah =
-        consumedRef > 0 &&
-        this.cursor + consumedRef < this.ref.length &&
-        this.currentAyahKey(this.ref[this.cursor + consumedRef]) !== lastAyahKey;
-      const reachedEnd = this.cursor + consumedRef >= this.ref.length;
-      if (isLastWordOfAyah || reachedEnd) {
-        const [surah, ayah] = lastAyahKey.split(":").map(Number);
-        events.push({ kind: "ayah_complete", surah, ayah });
-        this.lastAyahAnnounced = lastAyahKey;
-      }
-    }
-
+    this.pushAyahCompleteIfNeeded(events, lastAyahKey, consumedRef);
     return { consumedHeard, consumedRef };
+  }
+
+  private pushAyahCompleteIfNeeded(events: AlignmentEvent[], lastAyahKey: string | null, consumedRef: number) {
+    if (!lastAyahKey || lastAyahKey === this.lastAyahAnnounced) return;
+    const isLastWordOfAyah =
+      consumedRef > 0 &&
+      this.cursor + consumedRef < this.ref.length &&
+      this.currentAyahKey(this.ref[this.cursor + consumedRef]) !== lastAyahKey;
+    const reachedEnd = this.cursor + consumedRef >= this.ref.length;
+    if (isLastWordOfAyah || reachedEnd) {
+      const [surah, ayah] = lastAyahKey.split(":").map(Number);
+      events.push({ kind: "ayah_complete", surah, ayah });
+      this.lastAyahAnnounced = lastAyahKey;
+    }
   }
 
   private detectRepetition(): string[] | null {
