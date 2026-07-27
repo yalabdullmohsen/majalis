@@ -12,6 +12,7 @@ import {
 } from "@/lib/hadith-cdn-service";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { truncateAtWord } from "@/lib/utils";
+import { extractDisplayMatn, splitHadithNarration } from "@/lib/hadith-access";
 import "@/styles/pages/hadith-books.css";
 
 // ─── Chapter index built from hadith data ─────────────────────────────────────
@@ -93,11 +94,13 @@ function HadithRow({ h, index }: { h: CdnHadith; index: number }) {
 
   useEffect(() => () => { if (timerRef.current) clearTimeout(timerRef.current); }, []);
 
-  const chapter: string = (h as any).chapter ?? "";
+  const chapter: string = h.chapter ?? "";
+  const matn = extractDisplayMatn(null, h.text);
+  const { isnad, hasIsnad } = splitHadithNarration(h.text);
 
   function handleCopy(e: React.MouseEvent) {
     e.stopPropagation();
-    navigator.clipboard.writeText(h.text).then(() => {
+    navigator.clipboard.writeText(matn).then(() => {
       if (timerRef.current) clearTimeout(timerRef.current);
       setCopied(true);
       timerRef.current = setTimeout(() => setCopied(false), 1800);
@@ -117,7 +120,7 @@ function HadithRow({ h, index }: { h: CdnHadith; index: number }) {
       <div className="hb-hadith-row__head">
         <span className="hb-hadith-row__num">{index}</span>
         <p className="hb-hadith-row__preview">
-          {expanded ? h.text : truncateAtWord(h.text, 140)}
+          {expanded ? matn : truncateAtWord(matn, 140)}
         </p>
         <ChevronRight
           size={14}
@@ -132,18 +135,24 @@ function HadithRow({ h, index }: { h: CdnHadith; index: number }) {
         <div className="hb-hadith-row__detail" onClick={(e) => e.stopPropagation()}>
           <div className="hb-hadith-row__meta">
             {chapter && <span className="hb-hadith-row__chapter">{chapter}</span>}
-            {(h as any)._source && (
-              <span className="hb-hadith-row__chapter">{(h as any)._source}</span>
+            {(h as { _source?: string })._source && (
+              <span className="hb-hadith-row__chapter">{(h as { _source?: string })._source}</span>
             )}
             <span className="hb-hadith-row__badge">حديث {h.hadithnumber > 100000 ? h.hadithnumber - 100000 : h.hadithnumber}</span>
           </div>
+          {hasIsnad && isnad && (
+            <details className="hb-hadith-row__isnad">
+              <summary>السند</summary>
+              <p>{isnad}</p>
+            </details>
+          )}
           <button
             type="button"
             className="hb-hadith-row__copy"
             onClick={handleCopy}
-            aria-label="نسخ نص الحديث"
+            aria-label="نسخ متن الحديث"
           >
-            {copied ? "✓ تم النسخ" : "⎘ نسخ"}
+            {copied ? "✓ تم النسخ" : "⎘ نسخ المتن"}
           </button>
         </div>
       )}
@@ -165,7 +174,10 @@ function HadithViewer({
   const filtered = useMemo(() => {
     const q = searchQuery.trim();
     if (!q) return hadiths;
-    return hadiths.filter((h) => h.text.includes(q));
+    return hadiths.filter((h) => {
+      const matn = extractDisplayMatn(null, h.text);
+      return matn.includes(q) || h.text.includes(q) || String(h.hadithnumber).includes(q);
+    });
   }, [hadiths, searchQuery]);
 
   useEffect(() => { setPage(1); }, [filtered]);
