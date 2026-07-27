@@ -103,6 +103,7 @@ const DRAWER_GROUPS: NavGroup[] = [
       { href: "/daily-wird",          label: seoNavLabel("/daily-wird", "الورد اليومي"),       Icon: Sun,           desc: "ختمة متجددة يومياً" },
       { href: "/quran/tajweed",       label: seoNavLabel("/quran/tajweed", "علم التجويد"),        Icon: Mic2,          desc: "أحكام التجويد بالأمثلة" },
       { href: "/ulum-quran",          label: seoNavLabel("/ulum-quran", "علوم القرآن الكريم"),        Icon: GraduationCap, desc: "التفسير والناسخ والمنسوخ" },
+      { href: "/tafsir",              label: seoNavLabel("/tafsir", "علم التفسير"),           Icon: BookOpen,      desc: "أنواع التفسير وأصوله وكتب المفسرين" },
       { href: "/quran/surah-stories", label: seoNavLabel("/quran/surah-stories", "قصص السور"),          Icon: BookText,      desc: "أسباب النزول ومحاور السور" },
       { href: "/duas-quran",          label: seoNavLabel("/duas-quran", "أدعية القرآن"),       Icon: BookMarked,    desc: "الأدعية القرآنية المختارة" },
       { href: "/quran-memorization",  label: seoNavLabel("/quran-memorization", "اختبارات الحفظ"),     Icon: Zap,           desc: "12 نوعًا من اختبارات الحفظ" },

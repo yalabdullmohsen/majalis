@@ -127,6 +127,11 @@ function TickerEntry({ item }: { item: TickerItem }) {
       <item.Icon size={13} strokeWidth={1.8} className="header-ticker__icon" aria-hidden="true" />
       <span className="header-ticker__label">{item.label}:</span>
       <span className="header-ticker__text">{item.text}</span>
+      {item.source ? (
+        <span className="header-ticker__source" aria-label={`المصدر: ${item.source}`}>
+          — {item.source}
+        </span>
+      ) : null}
     </Link>
   );
 }
@@ -197,7 +202,11 @@ export function HeaderTicker() {
 
   // مسار مزدوج لحلقة سلسة بلا قفزة (0 → 50%).
   const loop = [...items, ...items];
-  const durationSec = marqueeDurationSec(items.length);
+  const totalChars = items.reduce(
+    (sum, it) => sum + it.text.length + (it.source?.length ?? 0) + it.label.length,
+    0,
+  );
+  const durationSec = marqueeDurationSec(items.length, totalChars);
 
   return (
     <div
