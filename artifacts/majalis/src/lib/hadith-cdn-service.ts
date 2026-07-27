@@ -56,9 +56,10 @@ export interface CdnCollectionMeta {
 }
 
 export const HADITH_COLLECTIONS: CdnCollectionMeta[] = [
-  { id: "mutafaq",      name: "المتفق عليه",        arabicName: "ما رواه البخاري ومسلم معاً",      authenticityClass: "sahih", totalHadiths: 10596 },
-  { id: "ara-bukhari",  name: "صحيح البخاري",       arabicName: "الإمام محمد بن إسماعيل البخاري", authenticityClass: "sahih", totalHadiths: 7563 },
-  { id: "ara-muslim",   name: "صحيح مسلم",          arabicName: "الإمام مسلم بن الحجاج",          authenticityClass: "sahih", totalHadiths: 3033 },
+  // الأعداد من المرآة المحلية 2026-07-27 بعد حذف النصوص الفارغة (رؤوس أبواب).
+  { id: "mutafaq",      name: "الصحيحان",           arabicName: "صحيح البخاري + صحيح مسلم",      authenticityClass: "sahih", totalHadiths: 14940 },
+  { id: "ara-bukhari",  name: "صحيح البخاري",       arabicName: "الإمام محمد بن إسماعيل البخاري", authenticityClass: "sahih", totalHadiths: 7580 },
+  { id: "ara-muslim",   name: "صحيح مسلم",          arabicName: "الإمام مسلم بن الحجاج",          authenticityClass: "sahih", totalHadiths: 7360 },
   { id: "nawawi",       name: "الأربعون النووية",   arabicName: "الإمام يحيى بن شرف النووي",      authenticityClass: "sahih", totalHadiths: 42   },
   { id: "qudsi",        name: "الأحاديث القدسية",   arabicName: "أحاديث عن الله تعالى",           authenticityClass: "sahih", totalHadiths: 40   },
   { id: "ara-abudawud", name: "سنن أبي داود",       arabicName: "الإمام أبو داود السجستاني",      authenticityClass: "hasan", totalHadiths: 5274 },
@@ -180,11 +181,31 @@ export async function fetchChapters(collection: HadithCollection): Promise<CdnCh
   } catch { return []; }
 }
 
-/** جلب جميع الأحاديث دفعة واحدة (للمجموعات الصغيرة كالنووية والقدسية) */
+/** جلب جميع الأحاديث دفعة واحدة — الصحيحان من المرآة المحلية أولاً ثم CDN. */
 export async function fetchAllHadiths(collection: HadithCollection): Promise<CdnHadith[]> {
   const key = cacheKey(collection);
   const cached = readCache<CdnHadith[]>(key);
   if (cached) return cached;
+
+  // الصحيحان: مرآة public/data/hadith قبل الشبكة
+  if (collection === "ara-bukhari" || collection === "ara-muslim") {
+    try {
+      const { fetchSahihaynLocal } = await import("@/lib/sahihayn-local");
+      const which = collection === "ara-bukhari" ? "bukhari" : "muslim";
+      const local = await fetchSahihaynLocal(which);
+      const hadiths = which === "bukhari" ? local.bukhari : local.muslim;
+      if (hadiths.length > 0) {
+        writeCache(key, hadiths);
+        return hadiths;
+      }
+    } catch {
+      /* السقوط إلى CDN */
+    }
+  }
+
+  if (collection === "mutafaq") {
+    return fetchMutafaqAlayhHadiths();
+  }
 
   const url = `${CDN_BASE}/${cdnEditionSlug(collection)}.min.json`;
   try {

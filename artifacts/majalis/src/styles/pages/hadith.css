@@ -722,3 +722,47 @@
 .hadith-card__text { border-inline-start-color: var(--elite-forest, #143F35) !important; }
 .hadith-modal__text { border-inline-start-color: var(--elite-forest, #143F35) !important; }
 .hadith-modal-btn { background: var(--elite-forest, #143F35) !important; color: #fff !important; }
+
+/* مرجع الصحيحين — ملاحظة المصدر + ترقيم الصفحات */
+.hadith-source-note {
+  margin: 0 0 var(--ds-space-3, 0.75rem);
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-md, 0.65rem);
+  border: 1px solid var(--color-border, #E8E7E2);
+  background: var(--color-surface-muted, #F4F4F1);
+  color: var(--msk-text-2, #5C5C56);
+  font-size: var(--ds-text-sm, 0.875rem);
+  line-height: 1.6;
+}
+.hadith-source-note a {
+  color: var(--majalis-emerald, #166048);
+  font-weight: 700;
+  text-decoration: underline;
+}
+.hadith-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-block: 1.25rem 0.5rem;
+  flex-wrap: wrap;
+}
+.hadith-pagination__btn {
+  min-height: 44px;
+  min-width: 5.5rem;
+  padding: 0.4rem 1rem;
+  border-radius: var(--radius-md, 0.65rem);
+  border: 1px solid var(--color-border, #E8E7E2);
+  background: var(--color-surface, #fff);
+  color: var(--color-text, #1A1A18);
+  font-weight: 700;
+  cursor: pointer;
+}
+.hadith-pagination__btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.hadith-pagination__info {
+  font-size: var(--ds-text-sm, 0.875rem);
+  color: var(--msk-text-2, #5C5C56);
+}
