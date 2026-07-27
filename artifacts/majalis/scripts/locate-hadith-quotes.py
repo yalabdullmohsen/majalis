@@ -55,8 +55,16 @@ def _load_verifier():
 
 EN2AR = str.maketrans('0123456789', '٠١٢٣٤٥٦٧٨٩')
 
-# الاقتباس نفسُه
-QUOTE_RE = re.compile(r'«([^»]{3,})»')
+# الاقتباسُ نفسُه — ورسمُه يختلف باختلاف الجدول: `sharia_rulings` تستعمل «…»،
+# و`dawah_questions` لا أثرَ فيها لـ«…» البتّة بل العلامةُ المستقيمة "…" (٣٦
+# علامةً في ١٨ صفًّا، كلُّها مستقيمة)، وأُضيفت “…” احتياطًا لمحرِّرٍ يُذكّي العلامات.
+# ⚠️ والعلامةُ المستقيمة لا يتميّز فيها الفاتحُ من الغالق، فحُدَّ الاقتباسُ بألّا
+# تتخلّله علامةٌ أخرى ([^"]) لئلّا يبتلعَ زوجٌ واحدٌ فقرةً بأسرها.
+QUOTE_RE = re.compile(r'«([^»]{3,})»|"([^"]{3,})"|“([^”]{3,})”')
+# فاتحةُ الاقتباس التالي — بها تُحَدّ نافذةُ البحث عن التخريج. ⚠️ ولا يصحّ قصرُها
+# على «…» بعد اتّساع الرسم، وإلّا التقطت النافذةُ تخريجَ اقتباسٍ لاحقٍ فحُسب
+# للسابق خطأً.
+OPEN_QUOTE_RE = re.compile(r'[«"“]')
 
 # إسنادٌ صريحٌ إلى النبي ﷺ يسبق الاقتباس مباشرةً (يُفحَص آخرُ ٦٠ حرفًا قبله).
 # ملحوظة: «قال ﷺ» و«لقوله ﷺ» و«الحديث:» وما جرى مجراها؛ ولا يكفي ورودُ ﷺ
@@ -77,6 +85,23 @@ DIGIT_RE = re.compile(r'[0-9٠-٩]')
 # الصحيحان وحدَهما — بترتيب الاستشهاد المتعارَف
 SAHIHAYN = (('bukhari', 'البخاري'), ('muslim', 'مسلم'))
 ACCEPTED = ('OK', 'OK_NORMALIZED', 'OK_GAPPED')
+
+# ما وراء الصحيحين (ج-٢٧٠): ثبوتُ اللفظِ في السنن **لا يُغني** عن الحكم على
+# الإسناد، فلا يُخرَّج منها إلا ما اقترن بـ**تصريحٍ بالدرجة من مصدرٍ مسمًّى**.
+# ومن السنن المُعرَّفة في `verify-hadith-citations.py` (أبو داود والترمذي وابن
+# ماجه) **سننُ الترمذي وحدَها** يحمل متنُها المطبوعُ نفسُه حكمَ مصنِّفه عقب
+# الحديث: «قال أبو عيسى: هذا حديث حسن صحيح» ⇒ فالدرجةُ **منقولةٌ بحرفها من
+# مصدرٍ مسمًّى** لا مستنبَطةً ولا مأخوذةً من الذاكرة. وأبو داود وابن ماجه لا
+# حكمَ في متنهما المطبوع ⇒ يبقيان خارج التخريج الآليّ ويُسجَّل ما فيهما.
+SUNAN = (('tirmidhi', 'الترمذي'),)
+
+# صيغةُ حكم الترمذيّ بعد التطبيع (تُسقَط الحركات فتصير «هذا حديث حسن صحيح»).
+DECLARED_GRADE_RE = re.compile(r'هذا\s+حديث\s+((?:حسن|صحيح|غريب|مشهور)'
+                               r'(?:\s+(?:حسن|صحيح|غريب|مشهور))*)')
+# ⚠️ «غريب» وحدَها ليست تصحيحًا، فلا يُقبَل الحكمُ ما لم يُصرَّح فيه بحسنٍ أو
+# صحّة؛ وما فيه تضعيفٌ مردودٌ من أصله.
+GRADE_ACCEPT_RE = re.compile(r'حسن|صحيح')
+GRADE_REJECT_RE = re.compile(r'ضعيف|منكر|متروك|لا\s+يصح')
 
 # ⚠️ حارسا الموضع: لا تكفي مطابقةُ اللفظِ في صفحةٍ من الصحيح ليصحّ أن يُقال
 # «رواه البخاري (كذا)» — فقد يقع اللفظُ في **ترجمة الباب** لا في المسنَد،
@@ -116,6 +141,25 @@ def check_position(quote: str, text: str, vh):
     return True, None
 
 
+def declared_grade(quote: str, text: str, vh):
+    """حكمُ المصنِّف المصرَّحُ به عقب هذا الحديث نفسِه، أو None إن لم يُصرَّح.
+
+    ⚠️ حارسان: (١) لا يُقبَل حكمٌ **قبل** موضعِ المتن في الكتلة — فقد يقع في
+    كتلةٍ حكمُ حديثٍ سابقٍ في الصفحة نفسها فيُنسَب لغيره؛ (٢) لا يُقبَل ما لم
+    يُصرَّح فيه بحسنٍ أو صحّة («غريب» وحدَها ليست تصحيحًا)، ويُردّ ما فيه تضعيف.
+    """
+    n = vh.normalize(text or '')
+    parts = [p for p in GAP_RE.split(quote) if vh.normalize_nospace(p)]
+    for m in DECLARED_GRADE_RE.finditer(n):
+        verdict = m.group(0)
+        if GRADE_REJECT_RE.search(verdict) or not GRADE_ACCEPT_RE.search(verdict):
+            continue
+        before = vh.normalize_nospace(n[:m.start()])
+        if all(vh.normalize_nospace(p) in before for p in parts):
+            return re.sub(r'\s+', ' ', verdict).strip()
+    return None
+
+
 def scan(text: str):
     """يرجع قائمةَ الاقتباسات المرفوعة في نصٍّ واحد مع حالةِ تخريجِ كلٍّ منها.
 
@@ -131,14 +175,15 @@ def scan(text: str):
         if not ATTR_RE.search(before):
             continue
         after = text[m.end():m.end() + 120]
-        nxt = after.find('«')
-        window = after[:nxt] if nxt >= 0 else after
+        nxt = OPEN_QUOTE_RE.search(after)
+        window = after[:nxt.start()] if nxt else after
         if TAKHRIJ_RE.search(window):
             status = 'ALREADY_TAKHRIJ' if DIGIT_RE.search(window) else 'PARTIAL_TAKHRIJ'
         else:
             status = 'NEEDS_TAKHRIJ'
+        quote = next(g for g in m.groups() if g is not None)
         out.append({'start': m.start(), 'end': m.end(),
-                    'quote': m.group(1).strip(), 'status': status})
+                    'quote': quote.strip(), 'status': status})
     return out
 
 
@@ -163,10 +208,32 @@ def takhrij_for(quote: str, vh, verbose: bool = False):
                 detail[key]['rejected'] = why
                 continue
             found.append((name, r['number']))
-    if not found:
-        return None, detail
-    body = ' و'.join('%s (%s)' % (n, str(num).translate(EN2AR)) for n, num in found)
-    return 'رواه ' + body, detail
+    if found:
+        body = ' و'.join('%s (%s)' % (n, str(num).translate(EN2AR)) for n, num in found)
+        return 'رواه ' + body, detail
+    # ما لم يوجد في الصحيحين يُنظَر في السنن — ولا يُثبَت منها موضعٌ إلا بحكمٍ
+    # مصرَّحٍ به في متنِ الكتاب نفسِه، ويُنقَل الحكمُ بلفظه لا بمعناه.
+    for key, name in SUNAN:
+        try:
+            r = vh.report(quote, key, verbose=verbose)
+        except Exception as exc:
+            detail[key] = {'grade': 'ERROR', 'error': str(exc)}
+            continue
+        detail[key] = {'grade': r['grade'], 'number': r.get('number'), 'url': r.get('url')}
+        if r['grade'] not in ACCEPTED or not r.get('number'):
+            continue
+        ok, why = check_position(quote, r.get('text') or '', vh)
+        if not ok:
+            detail[key]['rejected'] = why
+            continue
+        verdict = declared_grade(quote, r.get('text') or '', vh)
+        if not verdict:
+            detail[key]['rejected'] = 'NO_DECLARED_GRADE'
+            continue
+        detail[key]['declared'] = verdict
+        return ('رواه %s (%s) وقال: %s'
+                % (name, str(r['number']).translate(EN2AR), verdict)), detail
+    return None, detail
 
 
 def process(text: str, vh, limit_ids=None, verbose: bool = False):
@@ -187,7 +254,7 @@ def process(text: str, vh, limit_ids=None, verbose: bool = False):
             rec['status'] = 'TAKHRIJ_ADDED'
             rec['tag'] = tag
         else:
-            rec['status'] = 'NOT_IN_SAHIHAYN'
+            rec['status'] = 'NOT_ESTABLISHED'
         log.append(rec)
     out.append(text[pos:])
     return ''.join(out), log
@@ -207,6 +274,17 @@ _TALIQ = ('بَابُ شَرَابِ الْحَلْوَاءِ وَالْعَسَ
           'حَدَّثَنَا عَلِيٌّ: عَنْ عَائِشَةَ ﵂ قَالَتْ: كَانَ النَّبِيُّ ﷺ يُحِبُّ الْحَلْوَاءَ')
 # نصٌّ لا ذِكرَ فيه للنبي ﷺ أصلًا: أثرٌ موقوف
 _MAWQUF = ('وَقَالَ عُمَرُ ﵁: تَفَقَّهُوا قَبْلَ أَنْ تُسَوَّدُوا')
+# ── السنن (ج-٢٧٠): متنُ الترمذيّ يحمل حكمَ مصنِّفه عقب الحديث ────────────────
+_TIRMIDHI_GRADED = ('حَدَّثَنَا قُتَيْبَةُ: حَدَّثَنَا اللَّيْثُ، قَالَ رَسُولُ اللهِ ﷺ: '
+                    '«لَا وُضُوءَ لِمَنْ لَمْ يَذْكُرِ اسْمَ اللهِ عَلَيْهِ». '
+                    'قَالَ أَبُو عِيسَى: هَذَا حَدِيثٌ حَسَنٌ صَحِيحٌ.')
+# حكمٌ بالغرابة وحدَها: ليس تصحيحًا ⇒ لا يُخرَّج به
+_TIRMIDHI_GHARIB = ('حَدَّثَنَا هَنَّادٌ: حَدَّثَنَا وَكِيعٌ، قَالَ النَّبِيُّ ﷺ: '
+                    '«مَنْ حَسُنَ إِسْلَامُ الْمَرْءِ تَرَكَهُ مَا لَا يَعْنِيهِ». '
+                    'قَالَ أَبُو عِيسَى: هَذَا حَدِيثٌ غَرِيبٌ.')
+# كتلةٌ فيها حكمُ حديثٍ **سابقٍ** قبل متنِنا: لا يُنسَب إليه
+_TIRMIDHI_PRIOR = ('قَالَ أَبُو عِيسَى: هَذَا حَدِيثٌ حَسَنٌ صَحِيحٌ. حَدَّثَنَا مَحْمُودٌ، '
+                   'قَالَ رَسُولُ اللهِ ﷺ: «لَا تُقَدِّمُوا رَمَضَانَ بِصَوْمِ يَوْمٍ».')
 
 
 class _FakeVH:
@@ -217,7 +295,14 @@ class _FakeVH:
         'إنما الأعمال بالنيات': {'bukhari': ('OK', 1, _NIYYA),
                                  'muslim': ('NOT_FOUND', None, '')},
         'من حسن إسلام المرء تركه ما لا يعنيه': {'bukhari': ('NOT_FOUND', None, ''),
-                                                'muslim': ('NOT_FOUND', None, '')},
+                                                'muslim': ('NOT_FOUND', None, ''),
+                                                'tirmidhi': ('OK', 2317, _TIRMIDHI_GHARIB)},
+        'لا وضوء لمن لم يذكر اسم الله عليه': {'bukhari': ('NOT_FOUND', None, ''),
+                                              'muslim': ('NOT_FOUND', None, ''),
+                                              'tirmidhi': ('OK', 25, _TIRMIDHI_GRADED)},
+        'لا تقدموا رمضان بصوم يوم': {'bukhari': ('NOT_FOUND', None, ''),
+                                     'muslim': ('NOT_FOUND', None, ''),
+                                     'tirmidhi': ('OK', 684, _TIRMIDHI_PRIOR)},
         'الطهور شطر الإيمان': {'bukhari': ('NOT_FOUND', None, ''),
                                'muslim': ('PARTIAL', 223, '')},
         'إن الله لم يجعل شفاءكم فيما حرم عليكم': {'bukhari': ('OK', 5613, _TALIQ),
@@ -243,10 +328,11 @@ SELF_TEST = [
      'لقوله ﷺ: «إنما الأعمال بالنيات» (رواه البخاري (١)).',
      ['TAKHRIJ_ADDED'], 'ثابتٌ في أحدهما ⇒ يُخرَّج به وحدَه بلا دعوى اتفاق'),
     ('قال ﷺ: «من حسن إسلام المرء تركه ما لا يعنيه».',
-     None, ['NOT_IN_SAHIHAYN'],
-     'لم يوجد في الصحيحين ⇒ لا يُخترَع له تخريجٌ ولا يُمَسّ نصُّه'),
+     None, ['NOT_ESTABLISHED'],
+     'لم يوجد في الصحيحين، وحكمُ الترمذيّ عليه «غريب» وحدَها — وليست تصحيحًا '
+     '⇒ لا يُخرَّج ولا يُمَسّ نصُّه'),
     ('قال ﷺ: «الطهور شطر الإيمان».',
-     None, ['NOT_IN_SAHIHAYN'],
+     None, ['NOT_ESTABLISHED'],
      'PARTIAL — لفظُه ليس لفظَ الكتاب ⇒ لا يُنسَب إليه برقمه'),
     ('قال ﷺ: «تسحروا فإن في السحور بركة» رواه البخاري (١٩٢٣).',
      None, ['ALREADY_TAKHRIJ'], 'المخرَّجُ برقمٍ لا يُمَسّ'),
@@ -259,12 +345,39 @@ SELF_TEST = [
     ('كان النبي ﷺ يخصف نعله، وقال أنس: «خدمته عشر سنين».',
      None, [], 'ورودُ ﷺ بعيدًا عن الاقتباس وصفٌ لا إسناد ⇒ لا يُدرَج'),
     ('والحديث: «إن الله لم يجعل شفاءكم فيما حرم عليكم».',
-     None, ['NOT_IN_SAHIHAYN'],
+     None, ['NOT_ESTABLISHED'],
      '⚠️ اللفظُ في **ترجمة الباب** معلَّقًا موقوفًا لا في المسنَد ⇒ يُردّ ولا '
      'يُنسَب برقم الحديث الذي بعده'),
     ('قال ﷺ: «تفقهوا قبل أن تسودوا».',
-     None, ['NOT_IN_SAHIHAYN'],
+     None, ['NOT_ESTABLISHED'],
      '⚠️ النصُّ المطابَقُ لا ذِكرَ فيه للنبي ﷺ (أثرٌ موقوف) ⇒ لا يُخرَّج مرفوعًا'),
+    # ── ضبطُ اتّساعِ رسمِ الاقتباس (ج-٢٧٠): "…" و“…” ─────────────────────────
+    ('قال ﷺ: "تسحروا فإن في السحور بركة".',
+     'قال ﷺ: "تسحروا فإن في السحور بركة" (رواه البخاري (١٩٢٣) ومسلم (١٠٩٥)).',
+     ['TAKHRIJ_ADDED'], 'العلامةُ المستقيمة "…" تُلتقَط كـ«…» سواءً بسواء'),
+    ('لقوله ﷺ: “إنما الأعمال بالنيات”.',
+     'لقوله ﷺ: “إنما الأعمال بالنيات” (رواه البخاري (١)).',
+     ['TAKHRIJ_ADDED'], 'والعلامةُ المُذكّاة “…” كذلك'),
+    ('يُعرَف هذا الجيل بـ"السلف الصالح"، وهو الأقربُ زمنًا للنبي ﷺ.',
+     None, [],
+     '⚠️ اقتباسٌ اصطلاحيٌّ لا مرفوع (وهو شكلُ كلِّ اقتباسات dawah_questions '
+     'الـ٣٦) ⇒ لا يُدرَج ولو وردت ﷺ بعده'),
+    ('قال ﷺ: "إنما الأعمال بالنيات". وقال ابن حجر: "الحديث رواه البخاري (١)".',
+     'قال ﷺ: "إنما الأعمال بالنيات" (رواه البخاري (١)). وقال ابن حجر: '
+     '"الحديث رواه البخاري (١)".',
+     ['TAKHRIJ_ADDED'],
+     '⚠️ تخريجٌ داخلَ اقتباسٍ لاحقٍ لا يُحسَب للسابق ⇒ تُحَدُّ النافذةُ بفاتحةِ '
+     'الاقتباس التالي أيًّا كان رسمُها'),
+    # ── ضبطُ السنن بشرط التصريح بالدرجة (ج-٢٧٠) ──────────────────────────────
+    ('قال ﷺ: «لا وضوء لمن لم يذكر اسم الله عليه».',
+     'قال ﷺ: «لا وضوء لمن لم يذكر اسم الله عليه» (رواه الترمذي (٢٥) وقال: '
+     'هذا حديث حسن صحيح).',
+     ['TAKHRIJ_ADDED'],
+     'ليس في الصحيحين، وحكمُ مصنِّفه مصرَّحٌ به عقبَه ⇒ يُخرَّج بموضعه **وبنقل '
+     'حكمه بلفظه**'),
+    ('قال ﷺ: «لا تقدموا رمضان بصوم يوم».',
+     None, ['NOT_ESTABLISHED'],
+     '⚠️ الحكمُ في الكتلة سابقٌ للمتن (حكمُ حديثٍ قبلَه) ⇒ لا يُنسَب إليه'),
 ]
 
 
@@ -316,7 +429,7 @@ def main() -> int:
         interesting = [r for r in log if r['status'] != 'ALREADY_TAKHRIJ']
         if not interesting:
             continue
-        stuck = [r for r in interesting if r['status'] == 'NOT_IN_SAHIHAYN']
+        stuck = [r for r in interesting if r['status'] == 'NOT_ESTABLISHED']
         if new != text:
             changed.append((x, new, log))
             mark = '✔' if not stuck else '~'
@@ -326,7 +439,7 @@ def main() -> int:
         print(f"{mark} {str(x.get(a.label_field, ''))[:64]}")
         for r in interesting:
             print(f"    {r['status']:<18} {r.get('tag') or ''}")
-            if r['status'] == 'NOT_IN_SAHIHAYN':
+            if r['status'] == 'NOT_ESTABLISHED':
                 print(f"      اللفظ={r['quote'][:110]}")
                 print(f"      المقابلة={json.dumps(r.get('detail', {}), ensure_ascii=False)}")
 
