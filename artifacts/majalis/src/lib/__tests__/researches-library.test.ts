@@ -39,9 +39,21 @@ assert(RESEARCH_CATEGORIES.length >= 30, `عدد التصنيفات >= 30 (فع�
 assert(THESIS_KINDS.includes("masters_thesis") && THESIS_KINDS.includes("phd_dissertation"), "أنواع الرسائل معرّفة");
 
 console.log("\n=== بيانات الإنتاج بلا وهم ===");
-assert(RESEARCH_PUBLISHED_SEED.length === 0, "بذرة الإنتاج فارغة عمدًا");
+assert(RESEARCH_PUBLISHED_SEED.length >= 50, `بذرة الإنتاج مفهرسة وصفياً (>=50؛ فعلياً ${RESEARCH_PUBLISHED_SEED.length})`);
+assert(
+  RESEARCH_PUBLISHED_SEED.every((r) => r.isDemo !== true),
+  "بذرة الإنتاج ليست تجريبية",
+);
+assert(
+  RESEARCH_PUBLISHED_SEED.every((r) => r.accessType === "metadata_only" || r.accessType === "abstract_only"),
+  "الإنتاج بلا ادّعاء نص كامل بلا إذن",
+);
+assert(
+  RESEARCH_PUBLISHED_SEED.every((r) => r.reviewStatus === "published"),
+  "كل سجل إنتاجي منشور للمراجعة الوصفية",
+);
 const prodStats = computeResearchStats(RESEARCH_PUBLISHED_SEED);
-assert(prodStats.published === 0, "إحصاءات الإنتاج صفر بلا بيانات");
+assert(prodStats.published === RESEARCH_PUBLISHED_SEED.length, "إحصاءات الإنتاج تطابق البذرة الوصفية");
 assert(RESEARCH_DEMO_SEED.every((r) => r.isDemo === true), "كل عيّنات التطوير معلَّمة isDemo");
 assert(RESEARCH_DEMO_SEED.every((r) => r.title.includes("تجريبي") || r.title.includes("DEMO")), "عناوين العيّنات توضّح أنها تجريبية");
 

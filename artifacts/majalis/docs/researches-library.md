@@ -27,7 +27,7 @@
 
 `src/lib/researches/*` — أنواع، تصنيفات، بحث عربي، توثيق، تكرار، مساعدة، خدمة تخزين محلي للطلبات في التطوير.
 
-- `RESEARCH_PUBLISHED_SEED` فارغ في الإنتاج.
+- `RESEARCH_PUBLISHED_SEED` فهرس وصفي (`metadata_only`/`abstract_only`) لأعمال معروفة — بلا نص كامل وبلا إحصاءات وهمية.
 - `RESEARCH_DEMO_SEED` فقط في `import.meta.env.DEV` أو `VITE_RESEARCH_DEMO=1`.
 
 ## لوحة الإدارة

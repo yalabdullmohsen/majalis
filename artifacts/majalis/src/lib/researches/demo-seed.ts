@@ -3,6 +3,8 @@
  * لا تُحمَّل في الإنتاج إلا إذا وُضع VITE_RESEARCH_DEMO=1 صراحةً.
  */
 import type { ResearchRecord } from "./types";
+import { RESEARCH_PUBLISHED_FILL } from "./published-seed-fill";
+import { RESEARCH_PUBLISHED_FILL_B2 } from "./published-seed-fill-b2";
 
 export const RESEARCH_DEMO_SEED: ResearchRecord[] = [
   {
@@ -95,5 +97,8 @@ export const RESEARCH_DEMO_SEED: ResearchRecord[] = [
   },
 ];
 
-/** كتالوج منشور للإنتاج — فارغ عمدًا حتى تُضاف أبحاث موثّقة حقيقية. */
-export const RESEARCH_PUBLISHED_SEED: ResearchRecord[] = [];
+/** كتالوج منشور — بيانات وصفية لأعمال معروفة (بلا نص كامل، بلا isDemo). */
+export const RESEARCH_PUBLISHED_SEED: ResearchRecord[] = [
+  ...RESEARCH_PUBLISHED_FILL,
+  ...RESEARCH_PUBLISHED_FILL_B2,
+];
