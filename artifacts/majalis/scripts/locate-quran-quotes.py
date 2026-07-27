@@ -163,6 +163,19 @@ SELF_TEST = [
      'الموسومُ سلفًا لا يُمَسّ'),
 ]
 
+# ضبطُ الانتقاءِ بالمقتبس لا بالصفّ: نصٌّ فيه مقتبسانِ فأكثر، يُقابَل ناتجُه كلُّه
+MIXED_SELF_TEST = [
+    ('الأوّل ﴿ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِينَ﴾ والثاني ﴿وَأَحَلَّ ٱللَّهُ ٱلْبَيْعَ وَحَرَّمَ ٱلرِّبَوٰا۟﴾',
+     'الأوّل ﴿ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِينَ﴾ والثاني ﴿وَأَحَلَّ ٱللَّهُ ٱلْبَيْعَ وَحَرَّمَ ٱلرِّبَوٰا۟﴾ [البقرة: ٢٧٥]',
+     'مبهَمٌ يجاورُه ثابتٌ ⇒ يُوسَم الثابتُ وحدَه ولا يُخترَع للمبهَم ترجيح'),
+    ('﴿الحمد لله رب العالمين أجمعين﴾ ثم ﴿وَٱصْنَعِ ٱلْفُلْكَ بِأَعْيُنِنَا وَوَحْيِنَا﴾',
+     '﴿الحمد لله رب العالمين أجمعين﴾ ثم ﴿وَٱصْنَعِ ٱلْفُلْكَ بِأَعْيُنِنَا وَوَحْيِنَا﴾ [هود: ٣٧]',
+     'ما لا يوجد في المصحف يجاورُه ثابتٌ ⇒ لا يمنع توسيمَ جاره'),
+    ('﴿ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِينَ﴾ و﴿فَبِأَىِّ ءَالَآءِ رَبِّكُمَا تُكَذِّبَانِ﴾',
+     '﴿ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِينَ﴾ و﴿فَبِأَىِّ ءَالَآءِ رَبِّكُمَا تُكَذِّبَانِ﴾',
+     'مبهَمانِ لا ثالثَ لهما ⇒ لا يتغيّر النصُّ حرفًا'),
+]
+
 
 def self_test() -> int:
     bad = 0
@@ -174,7 +187,14 @@ def self_test() -> int:
         bad += not ok
         print(f"{'✔' if ok else '✘'} {desc}\n    المتوقَّع={want_status}/{want_tag}"
               f" الناتج={got_status}/{got_tag}")
-    print(f"\n=== اختبار ذاتي: {len(SELF_TEST) - bad}/{len(SELF_TEST)} نجح")
+    for text, want_new, desc in MIXED_SELF_TEST:
+        new, _ = process(text)
+        ok = new == want_new
+        bad += not ok
+        print(f"{'✔' if ok else '✘'} {desc}"
+              + ('' if ok else f"\n    المتوقَّع={want_new}\n    الناتج={new}"))
+    total = len(SELF_TEST) + len(MIXED_SELF_TEST)
+    print(f"\n=== اختبار ذاتي: {total - bad}/{total} نجح")
     return 1 if bad else 0
 
 
@@ -206,19 +226,22 @@ def main() -> int:
         if not untagged:
             continue
         stuck = [r for r in untagged if 'tag' not in r]
-        if new != text and not stuck and (a.limit is None or len(changed) < a.limit):
+        # الانتقاءُ بالمقتبس لا بالصفّ: كلُّ موضعٍ ثبت بمقابلةِ المصحف يُوسَم
+        # ولو جاوره في الصفِّ نفسِه مقتبسٌ مبهَم — فإبهامُ أحدِهما لا يقدح في
+        # ثبوتِ الآخر. والصفُّ يبقى مؤجَّلًا ما دام فيه مبهَمٌ لم يُحسَم.
+        if new != text and (a.limit is None or len(changed) < a.limit):
             changed.append((x, new, log))
-            mark = '✔'
-        else:
+        if stuck:
             pending.append((x, log))
-            mark = '✘' if stuck else '·'
+        mark = '✘' if stuck else ('✔' if new != text else '·')
         print(f"{mark} {str(x.get(a.label_field, ''))[:64]}")
         for r in untagged:
             print(f"    {r['status']:<18} {r.get('tag') or r.get('hits') or ''}")
             if 'tag' not in r:
                 print(f"      المقتبس={r['quote'][:120]}")
 
-    print(f"\n=== صفوف={len(rows)} مُوسَّمة={len(changed)} مؤجَّلة={len(pending)} | {counts}")
+    print(f"\n=== صفوف={len(rows)} مُوسَّمة={len(changed)} فيها مبهَمٌ باقٍ={len(pending)}"
+          f" | {counts}")
     if a.sql and changed:
         with open(a.sql, 'w', encoding='utf8') as f:
             f.write('-- توسيمُ مواضعِ الاقتباسات القرآنية في المحتوى المنشور.\n'
