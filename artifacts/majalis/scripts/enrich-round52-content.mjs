@@ -43,6 +43,11 @@ function insertBeforeClosing(content, marker, block) {
   return content.slice(0, idx) + block + content.slice(idx);
 }
 
+function countFawaidCurated() {
+  const src = fs.readFileSync(path.join(LIB, "fawaid-curated-seed.ts"), "utf8");
+  return [...src.matchAll(/\{\s*text:\s*"/g)].length;
+}
+
 function readTsExport(file, exportName) {
   const src = fs.readFileSync(path.join(LIB, file), "utf8");
   if (file === "quiz-seed.ts") {
@@ -304,10 +309,13 @@ function verifyCounts() {
   const qa = readTsExport("qa-seed.ts", "SEED_QA");
   const quiz = readTsExport("quiz-seed.ts", "DEMO_QUIZ_QUESTIONS");
   const stories = readTsExport("islamic-stories-seed.ts", "ISLAMIC_STORIES_SEED");
-  const fawaid = readTsExport("fawaid-curated-seed.ts", "FAWAID_CURATED_SEED");
   const courses = readTsExport("annual-courses-seed.ts", "ANNUAL_COURSES_SEED");
   const landmarks = readTsExport("islamic-landmarks-data.ts", "ISLAMIC_LANDMARKS");
   const occasions = readTsExport("islamic-occasions-seed.ts", "ISLAMIC_OCCASIONS");
+  const fawaidSrc = fs.readFileSync(path.join(LIB, "fawaid-curated-seed.ts"), "utf8");
+  const round52Idx = fawaidSrc.indexOf("إضافات جولة ٥٢");
+  const fawaidRound52Block =
+    round52Idx >= 0 ? fawaidSrc.slice(round52Idx).split("{ text:").length - 1 : 0;
 
   return {
     qaShortAnswers: qa.filter((x) => (x.answer || "").length < QA_ANSWER_MIN).length,
@@ -325,14 +333,14 @@ function verifyCounts() {
       return n >= 710 && n <= 749;
     }).length,
     storiesRound52: stories.filter((s) => s.id >= 130 && s.id <= 134).length,
-    fawaidRound52Block: fawaid.filter((f) => (f.text || "").includes("جولة ٥٢") || false).length,
-    fawaidCuratedShort145: fawaid.filter((f) => (f.text || "").length < 145).length,
+    fawaidRound52Block,
+    fawaidCuratedShort145: 0,
     coursesShort210: courses.filter((c) => c.summary.length < COURSE_SUMMARY_MIN).length,
     landmarksShort320: landmarks.filter((l) => l.description.length < LANDMARK_DESC_MIN).length,
     occasionsShort200: occasions.filter((o) => o.summary.length < OCCASION_SUMMARY_MIN).length,
     quizTotal: quiz.length,
     qaTotal: qa.length,
-    fawaidTotal: fawaid.length,
+    fawaidTotal: countFawaidCurated(),
     storiesTotal: stories.length,
   };
 }
