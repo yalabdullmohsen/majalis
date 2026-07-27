@@ -63,18 +63,18 @@ export const CONTENT_TYPE_LABEL: Record<RecContentType, string> = {
 };
 
 export const CONTENT_TYPE_HREF: Record<RecContentType, (id: string) => string> = {
-  lesson:     (_id) => `/lessons`,
+  lesson:     (id) => (id ? `/lessons/${id}` : `/lessons`),
   hadith:     (_id) => `/hadith`,
   fatwa:      (id) => (id ? `/rulings/${id}` : `/rulings`),
-  benefit:    (_id) => `/fawaid`,
-  book:       (_id) => `/library`,
-  scholar:    (_id) => `/lessons`,
+  benefit:    (id) => (id ? `/fawaid#${encodeURIComponent(id)}` : `/fawaid`),
+  book:       (id) => (id ? `/library/${id}` : `/library`),
+  scholar:    (id) => (id ? `/scholars/${id}` : `/scholars`),
   qa:         (id)  => (id ? `/qa?id=${encodeURIComponent(id)}` : `/qa`),
-  ruling:     (id)  => `/rulings/${id}`,
+  ruling:     (id)  => (id ? `/rulings/${id}` : `/rulings`),
   story:      (_id) => `/stories`,
   miracle:    (_id) => `/miracles`,
   dhikr:      (_id) => `/adhkar`,
-  quran_ayah: (_id) => `/quran`,
+  quran_ayah: (_id) => `/quran-hub`,
 };
 
 export const CONTENT_TYPE_COLOR: Record<RecContentType, string> = {

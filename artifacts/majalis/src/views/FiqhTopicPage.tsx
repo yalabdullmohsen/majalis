@@ -11,6 +11,8 @@ import type { ShariaRulingExtended } from "@/lib/rulings-types";
 import { RequestManager } from "@/lib/request-manager";
 import { SkeletonCardGrid, Empty, ErrorState } from "@/components/ui-common";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { RelatedKnowledge } from "@/components/RelatedKnowledge";
+import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import "@/styles/pages/fiqh-hub.css";
 import "@/styles/pages/fiqh-guide.css";
 
@@ -136,16 +138,11 @@ export default function FiqhTopicPage() {
       </header>
 
       {topic.relatedGuides && topic.relatedGuides.length > 0 && (
-        <nav className="fg-related" aria-label="أدلة ومسارات ذات صلة">
-          <h2 className="fg-related__title">أدلة ومسارات مرتبطة</h2>
-          <div className="fg-related__grid">
-            {topic.relatedGuides.map((g) => (
-              <Link key={g.href} href={g.href} className="fg-related__link">
-                {g.label}
-              </Link>
-            ))}
-          </div>
-        </nav>
+        <ExploreAlsoNav
+          title="أدلة ومسارات مرتبطة"
+          ariaLabel="أدلة ومسارات ذات صلة"
+          links={topic.relatedGuides}
+        />
       )}
 
       <section aria-labelledby="fiqh-topic-rulings-heading" className="fqh-topic-rulings">
@@ -194,6 +191,15 @@ export default function FiqhTopicPage() {
           </div>
         )}
       </section>
+
+      <div style={{ marginTop: "1.75rem" }}>
+        <RelatedKnowledge
+          kind="fatwa"
+          query={topic.title}
+          title={`معرفة ذات صلة بـ${topic.title}`}
+          limit={6}
+        />
+      </div>
 
       <div style={{ marginTop: "1.75rem" }}>
         <SectionQuiz categoryId="fiqh" title={`اختبر معلوماتك في ${topic.title}`} count={4} />

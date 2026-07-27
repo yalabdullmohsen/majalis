@@ -28,6 +28,13 @@ export default function TarikhIslamiPage() {
         title="التاريخ الإسلامي والحضارة"
         sections={TARIKH_ISLAMI}
         stat3Label="موضوع/باب"
+        relatedLinks={[
+          { href: "/seerah", label: "السيرة النبوية" },
+          { href: "/scholars", label: "أعلام الإسلام" },
+          { href: "/prophets", label: "قصص الأنبياء" },
+          { href: "/islamic-landmarks", label: "معالم إسلامية" },
+          { href: "/nations", label: "الأمم السابقة" },
+        ]}
       />
     </>
   );

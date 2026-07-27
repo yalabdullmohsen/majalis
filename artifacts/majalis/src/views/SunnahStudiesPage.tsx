@@ -28,6 +28,13 @@ export default function SunnahStudiesPage() {
         title="جوامع الكلم والسنن اليومية"
         sections={SUNNAH_STUDIES}
         stat3Label="موضوع/باب"
+        relatedLinks={[
+          { href: "/hadith", label: "الأحاديث" },
+          { href: "/hadith-science", label: "مصطلح الحديث" },
+          { href: "/arbaeen-nawawi", label: "الأربعون النووية" },
+          { href: "/sunan-yawmiyya", label: "السنن اليومية" },
+          { href: "/wasaya-nabawiyya", label: "الوصايا النبوية" },
+        ]}
       />
     </>
   );
