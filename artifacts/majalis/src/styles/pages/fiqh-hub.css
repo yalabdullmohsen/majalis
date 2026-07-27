@@ -272,3 +272,8 @@ html[data-theme="dark"] .fqh-hub-card__desc {
   background: var(--elite-forest, #143F35) !important;
   color: #FAFAF8 !important;
 }
+
+/* صفحة باب فقهي مستقل */
+.fqh-topic-page__block {
+  margin-top: 1.75rem;
+}

@@ -10,6 +10,7 @@ import {
   type KnowledgeRelationship,
   type KnowledgeSourceType,
 } from "@/lib/supabase";
+import { KNOWLEDGE_RELATED_HREF } from "@/lib/content-href";
 
 type LucideIcon = React.ComponentType<Omit<LucideProps, "ref">>;
 
@@ -29,35 +30,8 @@ const TYPE_LABEL: Record<KnowledgeSourceType, string> = {
   question: "سؤال",
 };
 
-// ملاحظة: "fatwa" أُزيل من هذه الخرائط (2026-07-18) مع إزالته من
-// KnowledgeSourceType — كان رابطه هنا يشير لمسار /fatwa/:id المحذوف
-// بالكامل من التطبيق (يُحوَّل الآن إلى /rulings)، وصفر صف في
-// knowledge_relationships استخدم هذا النوع أصلاً فلم يكن ليُعرَض أبداً.
-//
-// ملاحظة ثانية (2026-07-18): TYPE_HREF.scholar كان يشير إلى
-// `/lessons?sheikh=${id}` — لكن صفحة /lessons تفلتر عبر `sheikhName`
-// (اسم عربي نصّي من بيانات الدروس الفعلية)، بينما `id` هنا هو مُعرِّف
-// scholars-data.ts الإنجليزي (مثل "ibn-baz")، فلا يتطابقان أبداً؛ الرابط
-// كان سيُنتج صفحة نتائج فارغة دوماً لا 404 ظاهرة — عطل صامت مطابق تماماً
-// لعطل "fatwa" أعلاه، اكتُشف أثناء تعبئة knowledge_relationships لأول
-// مرة (كان الجدول فارغاً كلياً 0 صف قبل هذه الجلسة فلم يُختبَر قط).
-// المسار الصحيح هو صفحة الملف الشخصي `/scholars/:id` التي تستهلك نفس
-// مُعرِّف scholars-data.ts مباشرة (ScholarProfilePage.tsx عبر findScholarById).
-// ملاحظة ثالثة (2026-07-18): TYPE_HREF.fawaid كان يتجاهل `id` كلياً
-// ويعيد `/fawaid` العامة دوماً — نفس عائلة عطل fatwa/scholar أعلاه (رابط
-// يُبنى لكن لا يوصل للعنصر المحدَّد). اكتُشف أثناء إضافة أول علاقات
-// fawaid↔book لـknowledge_relationships. الإصلاح: `FaidahCard.tsx` يضع
-// `id={item.id}` على جذر كل بطاقة فعلياً (تحقَّقتُ مباشرة)، ولا حدّ/تقسيم
-// صفحات يمنع عرض كل العناصر دفعة واحدة في الحالة الافتراضية (بلا فلترة) —
-// فرابط hash قياسي (`#seed-fawaid-N`) يعمل عبر تمرير المتصفح الطبيعي
-// بلا حاجة لمنطق JS إضافي، بنفس نمط إصلاح ArbaeenNawawiPage سابقاً.
-const TYPE_HREF: Record<KnowledgeSourceType, (id: string) => string> = {
-  scholar:  (id) => `/scholars/${id}`,
-  lesson:   (id) => `/lessons/${id}`,
-  book:     (id) => `/library/${id}`,
-  fawaid:   (id) => `/fawaid#${id}`,
-  question: (id) => (id ? `/qa?id=${encodeURIComponent(id)}` : `/qa`),
-};
+/** الروابط من content-href الموحّد (scholar/lesson/book/fawaid/question). */
+const TYPE_HREF = KNOWLEDGE_RELATED_HREF;
 
 const REL_LABEL: Record<string, string> = {
   "شيخ_تلميذ":   "شيخ ← تلميذ",

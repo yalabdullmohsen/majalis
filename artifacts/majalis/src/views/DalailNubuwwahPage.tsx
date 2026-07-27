@@ -1,5 +1,6 @@
 import { SectionAccordionLayout } from "@/components/SectionAccordionLayout";
 import { DALAIL_NUBUWWAH } from "@/lib/dalail-nubuwwah-data";
+import { accordionExploreLinks } from "@/lib/explore-links";
 
 export default function DalailNubuwwahPage() {
   return (
@@ -7,13 +8,7 @@ export default function DalailNubuwwahPage() {
       eyebrow="السيرة والتاريخ"
       title="دلائل النبوة"
       sections={DALAIL_NUBUWWAH}
-      relatedLinks={[
-        { href: "/seerah", label: "السيرة النبوية" },
-        { href: "/prophets", label: "قصص الأنبياء" },
-        { href: "/miracles", label: "المعجزات" },
-        { href: "/tawhid", label: "التوحيد" },
-        { href: "/hadith", label: "الحديث" },
-      ]}
+      relatedLinks={accordionExploreLinks("dalail")}
     />
   );
 }

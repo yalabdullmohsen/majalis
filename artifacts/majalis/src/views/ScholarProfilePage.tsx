@@ -9,6 +9,7 @@ import { ContentReportButton } from "@/components/ContentReportButton";
 import { KnowledgeRelatedItems } from "@/components/knowledge/KnowledgeRelatedItems";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import { resolveScholarWorkLink } from "@/lib/scholar-library-links";
+import { PAGE_EXPLORE_LINKS } from "@/lib/explore-links";
 import "@/styles/pages/scholars.css";
 
 // ── تحويل أرقام عربية-هندية إلى رقم ─────────────────────────────────────
@@ -286,13 +287,7 @@ export default function ScholarProfilePage() {
 
       <ExploreAlsoNav
         title="مواضع ذات صلة في المنصة"
-        links={[
-          { href: "/library", label: "المكتبة الشرعية" },
-          { href: "/lessons", label: "الدروس العلمية" },
-          { href: "/madhahib", label: "المذاهب الأربعة" },
-          { href: "/learning/paths", label: "المسارات العلمية" },
-          { href: "/knowledge-graph", label: "الرسم المعرفي" },
-        ]}
+        links={[...PAGE_EXPLORE_LINKS.scholar]}
       />
 
       {/* Prev / Next */}
