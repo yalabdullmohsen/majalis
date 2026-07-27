@@ -80,11 +80,13 @@ git add src/index.css   # يذهب لجذر المستودع وليس artifacts/
 
 | آلية | الملف / الإعداد | السلوك |
 |---|---|---|
-| CI على كل PR → main | `.github/workflows/ci.yml` | typecheck + lint + build + اختبارات المحتوى |
-| Ready + Auto-merge (squash) | `.github/workflows/auto-merge-to-main.yml` | Draft→Ready، تفعيل auto-merge، دمج بعد نجاح الفحوصات، حذف الفرع |
+| حماية `main` | Branch protection (يدوي من المالك) | **Verify build** فحص إلزامي؛ لا دمج بدونه |
+| CI على كل PR → main | `.github/workflows/ci.yml` | typecheck + lint + build (= Verify build) + اختبارات المحتوى |
+| Ready + Auto-merge (squash) | `.github/workflows/auto-merge-to-main.yml` | تحديث من main إن لزم → Draft→Ready → auto-merge squash فقط بعد نجاح Verify build؛ مسح كل 15 دقيقة |
 | إلغاء الدمج عند فشل CI | نفس الملف (`cancel-on-ci-failure`) | `--disable-auto` + تعليق على الـ PR |
-| حل تعارض من main | `.github/workflows/resolve-pr-conflicts.yml` | دمج `main` في فرع الـ PR عند CONFLICTING |
-| نشر الإنتاج | Vercel على `main` (`artifacts/majalis/vercel.json` → `deploymentEnabled.main=true`) + بوابة `.github/workflows/auto-deploy.yml` | بعد كل push لـ main |
+| إغلاق المكدّسات القديمة | نفس الملف (`close-stale-non-main-prs`) | يغلق PRs المفتوحة التي قاعدتها ليست `main` |
+| تحديث/حل تعارض من main | `.github/workflows/resolve-pr-conflicts.yml` | دمج `main` عند CONFLICTING أو BEHIND |
+| نشر الإنتاج | Vercel على `main` (`deploymentEnabled.main=true`) + `.github/workflows/auto-deploy.yml` | بعد كل push ناجح لـ main |
 | إعدادات المستودع | `allow_auto_merge=true`, `delete_branch_on_merge=true` | مفعّلة على مستوى المستودع |
 
 **قواعد الوكلاء (لا تُخالف):**
