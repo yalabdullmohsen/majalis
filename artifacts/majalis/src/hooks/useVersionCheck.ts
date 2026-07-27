@@ -5,6 +5,7 @@ import {
   getLoadedCommit,
   isNewVersionAvailable,
 } from "@/lib/version-check";
+import { safeLocationReload } from "@/lib/safe-reload";
 
 /**
  * يفحص دوريًا (كل بضع دقائق + فور رجوع التبويب من الخلفية) هل صار هناك
@@ -26,7 +27,7 @@ export function useVersionCheck() {
       window.clearTimeout(reloadTimerRef.current);
       reloadTimerRef.current = null;
     }
-    window.location.reload();
+    safeLocationReload();
   }, []);
 
   const check = useCallback(async () => {

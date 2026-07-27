@@ -3,6 +3,7 @@ import type { SurahSummary } from "@/lib/quran-api";
 import { JUZ_START_PAGES } from "@/lib/quran-api";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { getBookmarks, type QuranBookmark } from "@/lib/quran-personal";
+import { toArabicDigits } from "@/lib/utils";
 
 type SidebarTab = "surahs" | "juz" | "bookmarks";
 
@@ -14,11 +15,6 @@ type Props = {
   /** الانتقال لصفحة مباشرة (أجزاء / إشارات مرجعية). */
   onSelectPage?: (page: number, opts?: { surah?: number; ayah?: number }) => void;
 };
-
-function toArabicDigits(n: number): string {
-  const digits = ["٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"];
-  return String(n).replace(/[0-9]/g, (d) => digits[Number(d)]);
-}
 
 export function SurahList({ surahs, currentSurah, onSelect, onClose, onSelectPage }: Props) {
   const [q, setQ] = useState("");

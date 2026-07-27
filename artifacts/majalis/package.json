@@ -70,7 +70,6 @@
     "bootstrap:platform:status": "node scripts/run-platform-bootstrap.mjs status",
     "build": "pnpm run test:lesson-card-posters && pnpm run generate:counts && pnpm run generate:seo && pnpm run generate:rulings && pnpm run generate:quran-pages && vite build --config vite.config.ts && node scripts/test-critical-css-budget.mjs && node scripts/generate-version.mjs && node scripts/verify-deploy-cache-versioning.mjs && node scripts/prerender.mjs && node scripts/post-build-seo.mjs && node scripts/test-dynamic-404-safety.mjs && node scripts/test-no-regressions.mjs",
     "test:consecutive-deploys": "node scripts/test-consecutive-deploys.mjs",
-    "build:next": "next build",
     "preview": "vite preview --config vite.config.ts --host 0.0.0.0",
     "start": "vite preview --config vite.config.ts --host 0.0.0.0 --port ${PORT:-24216}",
     "serve": "vite preview --config vite.config.ts --host 0.0.0.0 --port ${PORT:-24216}",
@@ -124,7 +123,7 @@
     "audit:site": "node scripts/majlisilm-audit.mjs crawl",
     "audit:content": "node scripts/majlisilm-audit.mjs lint ./data --ext .json,.jsonl",
     "test:majlisilm-audit": "node scripts/test-majlisilm-audit.mjs",
-    "test:regression": "pnpm run test:seo && pnpm run test:identity && pnpm run test:guardrails && node lib/__tests__/assistant-safety.test.mjs && pnpm run test:search-normalize && pnpm run test:scholars-integrity && pnpm run test:governance && pnpm run test:counts && pnpm run test:library-integrity && pnpm run test:assistant-suggested && pnpm run test:sheikhs-dedup && pnpm run test:inheritance-engine && pnpm run test:learning-paths-engine && pnpm run test:learning-assessment-grading && pnpm run test:category-tree && pnpm run test:quiz-game-integrity && pnpm run test:section-nav-daily && pnpm run test:quiz-game-reducer && pnpm run test:header-ticker && pnpm run test:ticker-content && pnpm run test:daily-content-consolidation && pnpm run test:scholarly-content-guard && pnpm run test:recitation-normalize && pnpm run test:recitation-ref-words && pnpm run test:recitation-alignment && pnpm run test:recitation-engine && pnpm run test:recitation-error-detector && pnpm run test:recitation-confidence && pnpm run test:recitation-providers && pnpm run test:recitation-mutashabihat && pnpm run test:recitation-freeform-start && pnpm run test:recitation-page-juz && pnpm run test:recitation-session-rebuild && pnpm run test:recitation-wer-tajweed && pnpm run test:evidence-purity && pnpm run test:section-hub-visual && pnpm run test:recitation-diff && pnpm run test:mushaf-page-view && pnpm run test:no-mock-asr-guard && pnpm run verify:no-mock-asr && pnpm run verify:quran-data && pnpm run verify:quran-pages && pnpm run test:quran-integrity-guard && pnpm run test:color-contrast-gate && pnpm run test:nations && pnpm run test:quran-quotes && pnpm run test:hadith-takhrij",
+    "test:regression": "pnpm run test:safe-reload && pnpm run test:seo && pnpm run test:identity && pnpm run test:guardrails && node lib/__tests__/assistant-safety.test.mjs && pnpm run test:search-normalize && pnpm run test:scholars-integrity && pnpm run test:governance && pnpm run test:counts && pnpm run test:library-integrity && pnpm run test:assistant-suggested && pnpm run test:sheikhs-dedup && pnpm run test:inheritance-engine && pnpm run test:learning-paths-engine && pnpm run test:learning-assessment-grading && pnpm run test:category-tree && pnpm run test:quiz-game-integrity && pnpm run test:section-nav-daily && pnpm run test:quiz-game-reducer && pnpm run test:header-ticker && pnpm run test:ticker-content && pnpm run test:daily-content-consolidation && pnpm run test:scholarly-content-guard && pnpm run test:recitation-normalize && pnpm run test:recitation-ref-words && pnpm run test:recitation-alignment && pnpm run test:recitation-engine && pnpm run test:recitation-error-detector && pnpm run test:recitation-confidence && pnpm run test:recitation-providers && pnpm run test:recitation-mutashabihat && pnpm run test:recitation-freeform-start && pnpm run test:recitation-page-juz && pnpm run test:recitation-session-rebuild && pnpm run test:recitation-wer-tajweed && pnpm run test:evidence-purity && pnpm run test:section-hub-visual && pnpm run test:recitation-diff && pnpm run test:mushaf-page-view && pnpm run test:no-mock-asr-guard && pnpm run verify:no-mock-asr && pnpm run verify:quran-data && pnpm run verify:quran-pages && pnpm run test:quran-integrity-guard && pnpm run test:color-contrast-gate && pnpm run test:nations && pnpm run test:quran-quotes && pnpm run test:hadith-takhrij",
     "generate:version": "node scripts/generate-version.mjs",
     "mobile:sync": "npm run build && npx cap sync",
     "mobile:android": "npm run build && npx cap sync android",
@@ -134,7 +133,8 @@
     "test:ticker-content": "npx tsx src/lib/__tests__/ticker-content.test.ts",
     "test:evidence-purity": "npx tsx src/lib/__tests__/evidence-text-purity.test.ts",
     "test:section-hub-visual": "npx tsx src/lib/__tests__/section-hub-visual-regression.test.ts",
-    "audit:duplicate-descs": "node scripts/strip-enrichment-boilerplate.mjs --report"
+    "audit:duplicate-descs": "node scripts/strip-enrichment-boilerplate.mjs --report",
+    "test:safe-reload": "node scripts/test-safe-reload.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
@@ -188,7 +188,6 @@
     "embla-carousel-react": "^8.6.0",
     "eslint": "^10.5.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
-    "framer-motion": "catalog:",
     "globals": "^17.7.0",
     "input-otp": "^1.4.2",
     "lightningcss-darwin-arm64": "^1.32.0",
@@ -209,7 +208,8 @@
     "typescript-eslint": "^8.62.0",
     "vaul": "^1.1.2",
     "vite": "catalog:",
-    "zod": "catalog:"
+    "zod": "catalog:",
+    "@types/leaflet": "^1.9.21"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.105.0",
@@ -224,9 +224,7 @@
     "@capacitor/local-notifications": "^8.2.0",
     "@capacitor/splash-screen": "^8.0.1",
     "@capacitor/status-bar": "^8.0.2",
-    "@supabase/ssr": "^0.6.1",
     "@supabase/supabase-js": "^2.108.2",
-    "@types/leaflet": "^1.9.21",
     "@upstash/ratelimit": "^2.0.8",
     "@upstash/redis": "^1.38.0",
     "@vercel/functions": "^2.0.0",
@@ -236,14 +234,11 @@
     "express": "^5.2.1",
     "hls.js": "^1.6.16",
     "html-to-image": "^1.11.13",
-    "html2canvas": "^1.4.1",
     "leaflet": "^1.9.4",
-    "next": "^15.1.0",
     "pg": "^8.16.0",
     "qrcode": "^1.5.4",
     "react": "catalog:",
     "react-dom": "catalog:",
-    "react-leaflet": "^5.0.0",
     "wouter": "^3.3.5"
   }
 }

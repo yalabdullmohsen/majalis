@@ -87,6 +87,7 @@ export default function LibraryPage({
   const { isAdmin } = useAuth();
   const [items, setItems] = useState<any[]>(initialItems ?? []);
   const [loading, setLoading] = useState(!initialItems);
+  const [loadError, setLoadError] = useState<string | null>(null);
   const [category, setCategory] = usePersistedState("filters:/library:category", "الكل");
   const [search, setSearch] = usePersistedState("filters:/library:search", "");
   const [filtersOpen, setFiltersOpen] = useState(false);
@@ -108,6 +109,7 @@ export default function LibraryPage({
 
   const loadLibrary = async () => {
     setLoading(true);
+    setLoadError(null);
     try {
       const { data } = await RequestManager.run("library:list", () =>
         getLibrary({ category: category === "الكل" ? undefined : category }),
@@ -115,6 +117,7 @@ export default function LibraryPage({
       setItems(data);
     } catch {
       setItems([]);
+      setLoadError("تعذّر تحميل المكتبة. تحقق من الاتصال وحاول مجددًا.");
     } finally {
       setLoading(false);
     }
@@ -254,7 +257,8 @@ export default function LibraryPage({
 
       <PageLoadingGuard
         loading={loading}
-        empty={!loading && filtered.length === 0}
+        error={loadError}
+        empty={!loading && !loadError && filtered.length === 0}
         emptyText={items.length === 0 ? "لا توجد كتب حالياً" : "لا توجد نتائج مطابقة."}
         onRetry={loadLibrary}
       >
