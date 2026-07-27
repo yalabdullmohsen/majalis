@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { ShareButtons } from "@/components/ContentActions";
 import { Link, useLocation } from "wouter";
@@ -63,14 +64,6 @@ export function FiqhCouncilSubnav() {
   );
 }
 
-function useDebouncedValue<T>(value: T, delayMs = 350): T {
-  const [debounced, setDebounced] = useState(value);
-  useEffect(() => {
-    const id = window.setTimeout(() => setDebounced(value), delayMs);
-    return () => window.clearTimeout(id);
-  }, [value, delayMs]);
-  return debounced;
-}
 
 type FilterProps = {
   search: string;

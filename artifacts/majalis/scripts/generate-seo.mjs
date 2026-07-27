@@ -109,7 +109,6 @@ const TOPICS = await extractSlugTitlePairs("src/views/TopicsIndexPage.tsx", "STA
 const { DURUS_IMANIYYA } = await importSrc("src/lib/durus-imaniyya-data.ts");
 const { DURUS_MUTANAWWIA } = await importSrc("src/lib/durus-mutanawwia-data.ts");
 const { IMAN_TOPICS } = await importSrc("src/lib/iman-topics-data.ts");
-const { QURAN_STUDIES } = await importSrc("src/lib/quran-studies-data.ts");
 const { SUNNAH_STUDIES } = await importSrc("src/lib/sunnah-studies-data.ts");
 const { TAZKIYA_TOPICS } = await importSrc("src/lib/tazkiya-topics-data.ts");
 const { TARIKH_ISLAMI } = await importSrc("src/lib/tarikh-islami-data.ts");
@@ -1593,18 +1592,14 @@ ${linkList("محاور دروس موسّعة", [
       { name: "أسماء الله الحسنى", url: "/asma-husna" },
     ],
   ),
-  "/quran-studies": darsHubBody(
-    "دراسات قرآنية: قصص وأمثال ومقاصد سور وتدبّر كلمات ومداخل علوم القرآن — مع ربط بمركز القرآن والمصحف.",
-    "/quran-studies",
-    QURAN_STUDIES,
-    [
-      { name: "مركز القرآن", url: "/quran-hub" },
-      { name: "علوم القرآن", url: "/ulum-quran" },
-      { name: "المصحف الرقمي", url: "/mushaf" },
-      { name: "قصص السور", url: "/quran/surah-stories" },
-      { name: "أدعية القرآن", url: "/duas-quran" },
-    ],
-  ),
+  "/quran-studies": `<p>نُقل محتوى الدراسات القرآنية إلى <a href="/ulum-quran">علوم القرآن الكريم</a> — النزول والجمع والتفسير والإعجاز.</p>
+${linkList("روابط ذات صلة", [
+  { name: "علوم القرآن", url: "/ulum-quran" },
+  { name: "مركز القرآن", url: "/quran-hub" },
+  { name: "المصحف الرقمي", url: "/mushaf" },
+  { name: "قصص السور", url: "/quran/surah-stories" },
+  { name: "أدعية القرآن", url: "/duas-quran" },
+])}`,
   "/sunnah-studies": darsHubBody(
     "دراسات في السنّة: جوامع الكلم والسنن اليومية والعبادة اليومية ومداخل الكتب الستة — مع ربط بعلوم الحديث.",
     "/sunnah-studies",

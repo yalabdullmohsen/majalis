@@ -1,6 +1,7 @@
 import "@/styles/rulings-encyclopedia.css";
 import "@/styles/pages/fiqh-hub.css";
 import { useCallback, useEffect, useState } from "react";
+import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { useReadingScrollMemory } from "@/hooks/useReadingScrollMemory";
 import { Banknote, BookOpen, Droplets, FileSignature, Flame, FlaskConical, GraduationCap, Handshake, Heart, Landmark, MapPin, Moon, Scale, ScrollText, Shield, Shirt, Users, Utensils } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
@@ -61,14 +62,6 @@ import { usePersistedState } from "@/hooks/usePersistedState";
 import { RequestManager } from "@/lib/request-manager";
 import { RULINGS_CATEGORY_TREE } from "@/lib/rulings-categories";
 
-function useDebouncedValue<T>(value: T, delayMs = 350): T {
-  const [debounced, setDebounced] = useState(value);
-  useEffect(() => {
-    const id = window.setTimeout(() => setDebounced(value), delayMs);
-    return () => window.clearTimeout(id);
-  }, [value, delayMs]);
-  return debounced;
-}
 
 const PAGE_SIZE = 24;
 

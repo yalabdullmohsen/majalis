@@ -7,6 +7,7 @@
  */
 
 const ARABIC_INDIC_DIGITS = ["٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"];
+const PERSIAN_INDIC_DIGITS = ["۰", "۱", "۲", "۳", "۴", "۵", "۶", "۷", "۸", "۹"];
 
 export type NumeralSystem = "عربي" | "إنجليزي";
 
@@ -15,9 +16,11 @@ export function toArabicIndicDigits(input: string | number): string {
   return String(input).replace(/[0-9]/g, (d) => ARABIC_INDIC_DIGITS[Number(d)]);
 }
 
-/** يحوّل أي أرقام عربية-هندية داخل نص إلى إنجليزية (لاتينية). */
+/** يحوّل أي أرقام عربية-هندية (وممتدّة فارسية) داخل نص إلى إنجليزية (لاتينية). */
 export function toLatinDigits(input: string | number): string {
-  return String(input).replace(/[٠-٩]/g, (d) => String(ARABIC_INDIC_DIGITS.indexOf(d)));
+  return String(input ?? "")
+    .replace(/[٠-٩]/g, (d) => String(ARABIC_INDIC_DIGITS.indexOf(d)))
+    .replace(/[۰-۹]/g, (d) => String(PERSIAN_INDIC_DIGITS.indexOf(d)));
 }
 
 /**

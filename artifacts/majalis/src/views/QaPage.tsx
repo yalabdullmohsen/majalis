@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { Scale } from "lucide-react";
 import { Link, useSearch } from "wouter";
 import { getQaCategories, getQaQuestions } from "@/lib/supabase";
@@ -63,14 +64,6 @@ function Disclaimer() {
   );
 }
 
-function useDebouncedValue<T>(value: T, delayMs = 350): T {
-  const [debounced, setDebounced] = useState(value);
-  useEffect(() => {
-    const id = window.setTimeout(() => setDebounced(value), delayMs);
-    return () => window.clearTimeout(id);
-  }, [value, delayMs]);
-  return debounced;
-}
 
 export default function QaPage({
   initialCategories,

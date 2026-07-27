@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useDebouncedValue } from "@/hooks/useDebouncedValue";
 import { AlertTriangle, BookOpen, Star } from "lucide-react";
 import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
@@ -60,14 +61,6 @@ function cdnToHadithItems(hadiths: CdnHadith[], collection: string, sourceName: 
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
-function useDebouncedValue<T>(value: T, delayMs = 300): T {
-  const [debounced, setDebounced] = useState(value);
-  useEffect(() => {
-    const id = window.setTimeout(() => setDebounced(value), delayMs);
-    return () => window.clearTimeout(id);
-  }, [value, delayMs]);
-  return debounced;
-}
 
 const COLLECTION_LABELS: Record<string, string> = {
   mutafaq:  "متفق عليه",

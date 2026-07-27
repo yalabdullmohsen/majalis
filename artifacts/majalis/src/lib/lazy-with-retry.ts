@@ -1,5 +1,6 @@
 import { lazy, type ComponentType, type LazyExoticComponent } from "react";
 import { PAGE_LOAD_TIMEOUT_MS } from "@/lib/request-manager";
+import { safeLocationReload } from "@/lib/safe-reload";
 
 const RELOAD_KEY = "majalis-chunk-reload";
 
@@ -33,7 +34,7 @@ export function lazyWithRetry<T extends ComponentType<unknown>>(
         const reloaded = sessionStorage.getItem(RELOAD_KEY);
         if (!reloaded) {
           sessionStorage.setItem(RELOAD_KEY, label || "1");
-          window.location.reload();
+          safeLocationReload();
           await new Promise<void>((resolve) => {
             window.setTimeout(resolve, PAGE_LOAD_TIMEOUT_MS);
           });
