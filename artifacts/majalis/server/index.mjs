@@ -287,8 +287,8 @@ app.get("/api/healthz", (_req, res) => {
   res.json({ ok: true, service: "majalis-web" });
 });
 
-function prerenderPath(urlPath) {
-  if (urlPath === "/") {
+function resolveStaticHtml(urlPath) {
+  if (urlPath === "/" || urlPath === "") {
     const rootSeo = path.join(seoPrerenderDir, "index.html");
     if (existsSync(rootSeo)) return rootSeo;
     const distRootSeo = path.join(distDir, "index.seo.html");
@@ -297,14 +297,22 @@ function prerenderPath(urlPath) {
   }
 
   const normalized = urlPath.replace(/\/+$/, "") || "/";
-  if (normalized.startsWith("/lessons/") && normalized !== "/lessons") {
-    const lessonSeo = path.join(seoPrerenderDir, normalized.slice(1), "index.html");
-    if (existsSync(lessonSeo)) return lessonSeo;
-  }
-
+  const distSeo = path.join(distDir, normalized.slice(1), "index.html");
+  if (existsSync(distSeo)) return distSeo;
   const nestedSeo = path.join(seoPrerenderDir, normalized.slice(1), "index.html");
   if (existsSync(nestedSeo)) return nestedSeo;
-  return path.join(distDir, "index.html");
+  return null;
+}
+
+const SPA_PREFIXES = [
+  "/search", "/topics", "/mushaf", "/learning", "/learn", "/universities",
+  "/discover-islam", "/quran", "/nations", "/prophets", "/prophet-stories",
+  "/sins-and-rights", "/arbaeen-nawawi", "/annual-courses",
+  "/scientific-announcements", "/c", "/hadith",
+];
+
+function needsSpaShell(urlPath) {
+  return SPA_PREFIXES.some((p) => urlPath === p || urlPath.startsWith(`${p}/`));
 }
 
 app.use(
@@ -326,9 +334,18 @@ app.use((req, res, next) => {
   if (req.path.startsWith("/api/")) {
     return next();
   }
-  const ua = req.headers["user-agent"] || "";
-  const isBot = /googlebot|bingbot|yandex|baiduspider|duckduckbot|slurp|facebookexternalhit|twitterbot|linkedinbot|whatsapp|telegrambot/i.test(ua);
-  res.sendFile(isBot ? prerenderPath(req.path) : path.join(distDir, "index.html"));
+
+  const notFoundHtml = path.join(distDir, "404.html");
+  const html = resolveStaticHtml(req.path);
+  if (html) return res.sendFile(html);
+  if (needsSpaShell(req.path)) {
+    return res.sendFile(path.join(distDir, "index.html"));
+  }
+  res.status(404);
+  if (existsSync(notFoundHtml)) return res.sendFile(notFoundHtml);
+  return res
+    .type("html")
+    .send("<!doctype html><html lang=ar dir=rtl><title>غير موجود</title><h1>الصفحة غير موجودة</h1></html>");
 });
 
 app.use("/api", (_req, res) => {

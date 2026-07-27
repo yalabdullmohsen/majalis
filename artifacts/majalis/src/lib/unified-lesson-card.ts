@@ -21,6 +21,7 @@ export type UnifiedLesson = {
   id: string;
   title: string;
   sheikhName: string;
+  organizerName?: string;
   sheikhImage?: string;
   lessonImage?: string;
   category: string;
@@ -69,6 +70,7 @@ export function fromKuwaitLesson(lesson: KuwaitLessonRecord, archived = false): 
     id: canonicalId,
     title: cleanDisplayText(lesson.title),
     sheikhName: formatSheikhName(lesson.sheikhName.replace(/^الشيخ(?:ة)?:\s*/u, "")) || cleanDisplayText(lesson.sheikhName),
+    organizerName: lesson.organizerName ? cleanDisplayText(lesson.organizerName) : undefined,
     sheikhImage: lesson.sheikhImage,
     lessonImage: resolveLessonPosterUrl(lesson.lessonImage),
     category: cleanDisplayText(lesson.category) || "أخرى",

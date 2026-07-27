@@ -70,7 +70,7 @@ function padToNeed(original, need, suffixes) {
     if (candidate.length >= need) return candidate;
     out = candidate;
   }
-  while (out.length < need) out += ".";
+  if (out.length < need) throw new Error("content-padding banned: do not pad with dots");
   return out;
 }
 

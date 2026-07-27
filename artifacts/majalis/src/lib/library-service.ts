@@ -38,7 +38,9 @@ export function getLibraryBookById(id: string): LibraryItem | null {
 }
 
 export function getFeaturedLibraryBooks(limit = 6): LibraryItem[] {
-  return getLibraryCatalog().slice(0, limit);
+  return getLibraryCatalog()
+    .filter((book) => !book.caution)
+    .slice(0, limit);
 }
 
 export function filterLibraryCatalog({

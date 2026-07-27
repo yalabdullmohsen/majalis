@@ -16,7 +16,10 @@ export type LessonAdCategory = "weekly" | "program" | "course";
 export type LessonAd = {
   id: string;
   provider: string;
+  /** المحاضر الأساسي — اسم بلا لقب (يُركَّب اللقب في العرض). */
   teacher: string;
+  /** منظّم الدورة إن اختلف عن المحاضر (اسم بلا لقب). */
+  organizer?: string;
   teacherImage: string;
   posterImage?: string;
   title: string;
@@ -39,7 +42,7 @@ export const lessonAds: LessonAd[] = [
   {
     id: "othman-tafsir-nahl",
     provider: "الموقع الرسمي للشيخ عثمان الخميس",
-    teacher: "د. عثمان بن محمد الخميس",
+    teacher: "عثمان بن محمد الخميس",
     teacherImage: "/sheikhs/othman-alkhamees.jpg",
     posterImage: "/images/posters/othman-tafsir-nahl.svg",
     title: "تفسير سورة النحل",
@@ -67,7 +70,7 @@ export const lessonAds: LessonAd[] = [
   {
     id: "othman-sahih-muslim",
     provider: "الموقع الرسمي للشيخ عثمان الخميس",
-    teacher: "د. عثمان بن محمد الخميس",
+    teacher: "عثمان بن محمد الخميس",
     teacherImage: "/sheikhs/othman-alkhamees.jpg",
     posterImage: "/images/posters/othman-sahih-muslim.svg",
     title: "قراءة كتاب صحيح مسلم",
@@ -96,7 +99,7 @@ export const lessonAds: LessonAd[] = [
   {
     id: "othman-talkhis-mukhtasar-almuqni",
     provider: "الموقع الرسمي للشيخ عثمان الخميس",
-    teacher: "د. عثمان بن محمد الخميس",
+    teacher: "عثمان بن محمد الخميس",
     teacherImage: "/sheikhs/othman-alkhamees.jpg",
     posterImage: "/images/posters/othman-talkhis-almuqni.svg",
     title: "شرح كتاب تلخيص مختصر المقنع",
@@ -126,7 +129,7 @@ export const lessonAds: LessonAd[] = [
   {
     id: "rashed-fundamental-course",
     provider: "إدارة مساجد الجهراء – المراقبة الثقافية",
-    teacher: "د. راشد صليهم فهد الصليهم",
+    teacher: "راشد صليهم فهد الصليهم",
     teacherImage: "/sheikhs/rashed-alsulayyim.svg",
     posterImage: "/images/posters/rashed-fundamental-course.svg",
     title: "الدورة العلمية التأصيلية",
@@ -168,7 +171,7 @@ export const lessonAds: LessonAd[] = [
   {
     id: "mansour-altafsir-alwadih",
     provider: "دروس الكويت",
-    teacher: "د. منصور بن ناصر الخالدي",
+    teacher: "منصور بن ناصر الخالدي",
     teacherImage: "/sheikhs/mansour-alkhalidi.jpg",
     posterImage: "/images/posters/mansour-friday-reading.svg",
     title: "قراءة كتب متنوعة والتفسير الواضح",
@@ -194,7 +197,7 @@ export const lessonAds: LessonAd[] = [
   {
     id: "osama-shatti-prayer-book",
     provider: "منصة الأندلس التعليمية",
-    teacher: "الشيخ أسامة الشطي",
+    teacher: "أسامة الشطي",
     teacherImage: "/sheikhs/osama-alshatti.svg",
     posterImage: "/images/posters/osama-shatti-prayer-book.svg",
     title: "شرح كتاب الصلاة من إعانة الطالب",
@@ -312,7 +315,7 @@ export const lessonAds: LessonAd[] = [
   {
     id: "mutlaq-aljasr-talaeea-elm",
     provider: "دورة طلائع العلم",
-    teacher: "د. مطلق جاسر مطلق الجاسر",
+    teacher: "مطلق جاسر مطلق الجاسر",
     teacherImage: "/sheikhs/mutlaq-aljasr.jpg",
     title: "دورة طلائع العلم لطلاب العلم المبتدئين",
     shortDescription: "دورة إلكترونية متكاملة لتأهيل طلاب العلم المبتدئين على منهج علمي أصيل.",
@@ -331,7 +334,7 @@ export const lessonAds: LessonAd[] = [
   {
     id: "jury-aldahi-sharia-program-4",
     provider: "أكاديمية جوري الضاحي",
-    teacher: "د. لولوة الوهيب وأخريات",
+    teacher: "لولوة الوهيب وأخريات",
     teacherImage: "",
     title: "برنامج شرعي مبسط — المستوى الرابع",
     shortDescription: "برنامج شرعي لفتيات المرحلة المتوسطة والثانوية — حضوري في كيفان. مواد البرنامج: العقيدة، الفقه، التفسير، الحديث، محاسن الدين، السيرة النبوية. يشمل ورش وأنشطة مهارية.",
@@ -354,7 +357,8 @@ export const lessonAds: LessonAd[] = [
   {
     id: "ajraa-murtaqa-course-3",
     provider: "جمعية مرتقى العلمية — مساجد حولي",
-    teacher: "الشيخ محمد سليمان الأجراح",
+    teacher: "نخبة من المشايخ",
+    organizer: "محمد سليمان الأجراح",
     teacherImage: "",
     title: "دورة الشيخ الأجراح العلمية — الثالثة",
     shortDescription: "دورة علمية مكثفة تضم نخبة من المشايخ، من الأحد إلى الأربعاء بعد صلاة العصر. يوجد مكان للنساء. المحاضرة الافتتاحية للشيخ د.عثمان الخميس.",
@@ -362,7 +366,7 @@ export const lessonAds: LessonAd[] = [
     tags: ["دورة علمية", "حضوري", "عقيدة", "فقه", "نحو", "بث مباشر"],
     hasWomenSection: true,
     startDate: "2026-07-05",
-    detailIntro: "للتسجيل: 51104812 أو @murtaqaa_kw. الفترة: 5–29 يوليو 2026. سيتم توزيع المتون.",
+    detailIntro: "للتسجيل: 51104812 أو @murtaqaa_kw. الفترة: 5–29 يوليو 2026. سيتم توزيع المتون. تنظيم: محمد سليمان الأجراح.",
     sessions: [
       {
         label: "شرح كتاب التوحيد — د.مطلق الجاسر (7/5–7/8)",
@@ -398,7 +402,7 @@ export const lessonAds: LessonAd[] = [
   {
     id: "murtaqa-madarij-altalab",
     provider: "معهد مرتقى للعلوم الشرعية",
-    teacher: "د. مطلق الجاسر وآخرون",
+    teacher: "مطلق الجاسر وآخرون",
     teacherImage: "",
     title: "دورة مدارج الطلب",
     shortDescription: "دورة شرعية لتأصيل العلم الشرعي — على منصة معهد مرتقى المسار الانتقائي. مجانية للرجال والنساء. مدة ثلاثة أشهر. 24 درساً مسجلة ومتاحة 24 ساعة.",
@@ -422,7 +426,7 @@ export const lessonAds: LessonAd[] = [
   {
     id: "nabil-alawadhi-seerah-weekly",
     provider: "دروس الشيخ نبيل العوضي",
-    teacher: "الشيخ نبيل بن علي العوضي",
+    teacher: "نبيل بن علي العوضي",
     teacherImage: "/sheikhs/nabil-alawadhi.jpg",
     title: "قراءة في السيرة النبوية",
     shortDescription:
@@ -445,7 +449,7 @@ export const lessonAds: LessonAd[] = [
   {
     id: "abdulaziz-alfawzan-fiqh-weekly",
     provider: "دروس الشيخ عبدالعزيز الفوزان",
-    teacher: "د. عبدالعزيز بن فوزان الفوزان",
+    teacher: "عبدالعزيز بن فوزان الفوزان",
     teacherImage: "",
     title: "شرح زاد المستقنع في الفقه الحنبلي",
     shortDescription:
@@ -468,7 +472,7 @@ export const lessonAds: LessonAd[] = [
   {
     id: "khalid-almushlih-usool-program",
     provider: "مركز التأصيل العلمي",
-    teacher: "د. خالد بن علي المشيقح",
+    teacher: "خالد بن علي المشيقح",
     teacherImage: "",
     title: "برنامج أصول الفقه للمبتدئين",
     shortDescription:
@@ -493,7 +497,7 @@ export const lessonAds: LessonAd[] = [
   {
     id: "tafsir-juzama-weekly",
     provider: "جامع الأمير فيصل",
-    teacher: "الشيخ فهد بن سليمان العجلان",
+    teacher: "فهد بن سليمان العجلان",
     teacherImage: "",
     title: "تفسير جزء عم",
     shortDescription:
@@ -516,7 +520,7 @@ export const lessonAds: LessonAd[] = [
   {
     id: "hadith-riyad-salihin-weekly",
     provider: "مسجد البر والإحسان",
-    teacher: "الشيخ حسن بن علي الحسيني",
+    teacher: "حسن بن علي الحسيني",
     teacherImage: "",
     title: "شرح رياض الصالحين",
     shortDescription:
@@ -539,7 +543,7 @@ export const lessonAds: LessonAd[] = [
   {
     id: "aqeedah-wasitiyya-advanced-weekly",
     provider: "مركز الدراسات الشرعية",
-    teacher: "د. عبدالله بن فهد المطلق",
+    teacher: "عبدالله بن فهد المطلق",
     teacherImage: "",
     title: "شرح العقيدة الواسطية",
     shortDescription:
@@ -563,7 +567,7 @@ export const lessonAds: LessonAd[] = [
   {
     id: "fiqh-ibadaat-course",
     provider: "مركز الفقه الكويتي",
-    teacher: "د. يوسف بن أحمد القاسم",
+    teacher: "يوسف بن أحمد القاسم",
     teacherImage: "",
     title: "دورة الفقه العملي للعبادات",
     shortDescription:
@@ -594,7 +598,7 @@ export const lessonAds: LessonAd[] = [
   {
     id: "seerah-ghazawaat-weekly",
     provider: "جمعية إحياء التراث الإسلامي",
-    teacher: "الشيخ عبدالرحمن بن ناصر البراك (تلاوةً من دروسه)",
+    teacher: "عبدالرحمن بن ناصر البراك (تلاوةً من دروسه)",
     teacherImage: "",
     title: "غزوات النبي ﷺ",
     shortDescription:
@@ -618,7 +622,7 @@ export const lessonAds: LessonAd[] = [
   {
     id: "aqeeda-tahawiyya-weekly",
     provider: "دار ابن رجب العلمية",
-    teacher: "الشيخ عبدالله بن سالم الجهني",
+    teacher: "عبدالله بن سالم الجهني",
     teacherImage: "",
     title: "شرح العقيدة الطحاوية",
     shortDescription: "شرح متن العقيدة الطحاوية للإمام أبي جعفر الطحاوي — مرجع السنة في مسائل الاعتقاد.",
@@ -639,7 +643,7 @@ export const lessonAds: LessonAd[] = [
   {
     id: "arabic-nahw-beginner-course",
     provider: "معهد اللغة العربية للجميع",
-    teacher: "الشيخ أحمد بن عبدالله القحطاني",
+    teacher: "أحمد بن عبدالله القحطاني",
     teacherImage: "",
     title: "دورة النحو للمبتدئين",
     shortDescription: "دورة علمية مكثفة في أساسيات النحو العربي — الإعراب والجمل والتراكيب لطالب العلم المبتدئ.",
@@ -660,7 +664,7 @@ export const lessonAds: LessonAd[] = [
   {
     id: "fiqh-purification-program",
     provider: "منتدى العلوم الشرعية",
-    teacher: "الشيخ فيصل بن محمد المشعل",
+    teacher: "فيصل بن محمد المشعل",
     teacherImage: "",
     title: "أحكام الطهارة من أوّلها إلى آخرها",
     shortDescription: "برنامج شامل في أحكام الطهارة من المياه والحدث والنجاسة — مع التطبيق العملي.",
@@ -681,7 +685,7 @@ export const lessonAds: LessonAd[] = [
   {
     id: "tazkiya-nafs-weekly",
     provider: "مجلس التزكية",
-    teacher: "الشيخ حامد بن عبدالرحمن الهاشمي",
+    teacher: "حامد بن عبدالرحمن الهاشمي",
     teacherImage: "",
     title: "تزكية النفس وإصلاح القلب",
     shortDescription: "درس أسبوعي في الرقائق والزهد وتصفية النفس من الأمراض القلبية — العجب والكبر والغفلة.",
@@ -702,7 +706,7 @@ export const lessonAds: LessonAd[] = [
   {
     id: "hadith-sahih-bukhari-read",
     provider: "مؤسسة السنة",
-    teacher: "الشيخ خالد بن عبدالله البسام",
+    teacher: "خالد بن عبدالله البسام",
     teacherImage: "",
     title: "قراءة صحيح البخاري",
     shortDescription: "جلسة علمية منتظمة لقراءة صحيح البخاري بالمتن مع الفوائد المنتقاة من شراح الكتاب.",
@@ -723,7 +727,7 @@ export const lessonAds: LessonAd[] = [
   {
     id: "tafsir-tabari-weekly",
     provider: "حلقات التفسير الأسبوعية",
-    teacher: "د. سالم الطويل",
+    teacher: "سالم الطويل",
     teacherImage: "/sheikhs/default-sheikh.svg",
     title: "تفسير جامع البيان — الطبري",
     shortDescription: "درس أسبوعي في تفسير القرآن من خلال جامع البيان للإمام الطبري.",
@@ -744,7 +748,7 @@ export const lessonAds: LessonAd[] = [
   {
     id: "aqeedah-wasitiyya-course",
     provider: "دروس العقيدة السلفية",
-    teacher: "د. عبد الرزاق البدر",
+    teacher: "عبد الرزاق البدر",
     teacherImage: "/sheikhs/default-sheikh.svg",
     title: "دورة شرح العقيدة الواسطية",
     shortDescription: "دورة متكاملة في شرح العقيدة الواسطية لشيخ الإسلام ابن تيمية.",
@@ -766,7 +770,7 @@ export const lessonAds: LessonAd[] = [
   {
     id: "seerah-nabawiyya-weekly",
     provider: "حلقات السيرة النبوية",
-    teacher: "د. راغب السرجاني",
+    teacher: "راغب السرجاني",
     teacherImage: "/sheikhs/default-sheikh.svg",
     title: "السيرة النبوية المفصّلة",
     shortDescription: "درس أسبوعي في السيرة النبوية من المهد إلى اللحد مع استخلاص الدروس والعِبَر.",
@@ -787,7 +791,7 @@ export const lessonAds: LessonAd[] = [
   {
     id: "fiqh-maliki-risala-program",
     provider: "برامج الفقه الإسلامي",
-    teacher: "د. محمد الأمين الشنقيطي",
+    teacher: "محمد الأمين الشنقيطي",
     teacherImage: "/sheikhs/default-sheikh.svg",
     title: "برنامج شرح رسالة ابن أبي زيد القيرواني",
     shortDescription: "برنامج في شرح الرسالة الفقهية المشهورة لابن أبي زيد القيرواني وفق المذهب المالكي.",
@@ -837,7 +841,7 @@ export const lessonAds: LessonAd[] = [
   {
     id: "asima-umdat-ahkam-sarra-2026",
     provider: "إدارة مساجد محافظة العاصمة (وزارة الأوقاف والشؤون الإسلامية)",
-    teacher: "الشيخ د. محمد هشام طاهري",
+    teacher: "محمد هشام طاهري",
     teacherImage: "/sheikhs/default-sheikh.svg",
     title: "دورة عمدة الأحكام — للإمام عبدالغني المقدسي",
     shortDescription: "18 مجلساً يومياً (الأحد إلى الخميس) بعد العصر في مسجد محمد عبدالرحمن البحر بالسرة — مع إجازة بالإسناد المتصل.",
@@ -861,7 +865,7 @@ export const lessonAds: LessonAd[] = [
   {
     id: "mahboula-dosari-umdat-tawhid-2026",
     provider: "الدعوة العامة",
-    teacher: "الشيخ فهد بن سعود الدوسري",
+    teacher: "فهد بن سعود الدوسري",
     teacherImage: "/sheikhs/default-sheikh.svg",
     title: "دورة عمدة الأحكام وكتاب التوحيد — المهبولة",
     shortDescription: "9 أيام — شرح عمدة الأحكام (الطهارة) بعد العصر، وشرح كتاب التوحيد بعد المغرب — مسجد الشيخ خليفة الصباح بالمهبولة.",
@@ -893,7 +897,7 @@ export const lessonAds: LessonAd[] = [
   {
     id: "ahmadi-zad-muslim-ulum-quran-2026",
     provider: "إدارة مساجد محافظة الأحمدي — وزارة الأوقاف والشؤون الإسلامية",
-    teacher: "الشيخ لافي عايض العازمي",
+    teacher: "لافي عايض العازمي",
     teacherImage: "/sheikhs/default-sheikh.svg",
     title: "الميسر في علوم القرآن — دورة زاد المسلم العلمية الأولى",
     shortDescription: "شرح كتاب الميسر في علوم القرآن — 5–7 يوليو 2026 — بمسجد فروة بن عمرو الأنصاري بفهد الأحمد — مع بث مباشر ومكان للنساء.",
@@ -948,7 +952,7 @@ export const lessonAds: LessonAd[] = [
   {
     id: "ahmadi-zad-muslim-usool-athlatha-2026",
     provider: "إدارة مساجد محافظة الأحمدي — وزارة الأوقاف والشؤون الإسلامية",
-    teacher: "الشيخ د. محمد عبدالله العتيبي",
+    teacher: "محمد عبدالله العتيبي",
     teacherImage: "/sheikhs/default-sheikh.svg",
     title: "ثلاثة الأصول والقواعد الأربع — دورة زاد المسلم العلمية الأولى",
     shortDescription: "8–9 يوليو 2026 — أربعة مجالس في العقيدة: خارطة طريق لطالب العلم، القواعد الأربعة، الأصول الثلاثة — مع بث مباشر ومكان للنساء.",
@@ -988,7 +992,7 @@ export const lessonAds: LessonAd[] = [
   {
     id: "zad-aldawee-13-fitna-hadiths-2026",
     provider: "مشروع زاد المسلم الدعوي",
-    teacher: "الشيخ د. محمد عبدالله العتيبي",
+    teacher: "محمد عبدالله العتيبي",
     teacherImage: "/sheikhs/default-sheikh.svg",
     title: "أحاديث في الفتن والحوادث — المجلس الثالث عشر",
     shortDescription: "شرح تصنيف الإمام محمد بن عبدالوهاب «أحاديث في الفتن والحوادث» — الأربعاء 8 يوليو 2026 الساعة 9:15 مساءً.",
@@ -1012,7 +1016,7 @@ export const lessonAds: LessonAd[] = [
   {
     id: "ahmadi-umdat-ahkam-sabah-abu-khashaba-2026",
     provider: "بالتعاون مع إدارة مساجد الأحمدي",
-    teacher: "د. دهام أبو خشبة",
+    teacher: "دهام أبو خشبة",
     teacherImage: "/sheikhs/default-sheikh.svg",
     title: "شرح عمدة الأحكام — مسجد أبو طاهر السلفي",
     shortDescription: "درس أسبوعي ثابت في شرح عمدة الأحكام — كل ثلاثاء بعد العصر — مسجد أبو طاهر السلفي، صباح الأحمد.",

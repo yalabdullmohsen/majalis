@@ -184,13 +184,33 @@
   ],
   "redirects": [
     {
+      "source": "/muezzins",
+      "destination": "/adhan-settings",
+      "permanent": true
+    },
+    {
+      "source": "/muezzins/:path*",
+      "destination": "/adhan-settings",
+      "permanent": true
+    },
+    {
+      "source": "/qa",
+      "destination": "/quiz",
+      "permanent": true
+    },
+    {
+      "source": "/qa/:path*",
+      "destination": "/quiz",
+      "permanent": true
+    },
+    {
       "source": "/glossary",
       "destination": "/islamic-glossary",
       "permanent": true
     },
     {
       "source": "/scholarly-research",
-      "destination": "/qa",
+      "destination": "/quiz",
       "permanent": true
     },
     {
@@ -567,7 +587,71 @@
       "destination": "/favicon.png"
     },
     {
-      "source": "/((?!api/|assets/|feed.xml|sitemap.xml|favicon.ico|favicon.png|robots.txt|version.json|scholars/|library/|\\.well-known/).*)",
+      "source": "/search/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/topics/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/mushaf/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learning/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/learn/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/universities/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/discover-islam/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/quran/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/nations/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/prophets/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/prophet-stories/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/sins-and-rights/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/arbaeen-nawawi/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/annual-courses/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/scientific-announcements/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/c/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/hadith/:path*",
       "destination": "/index.html"
     }
   ],
