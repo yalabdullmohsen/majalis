@@ -1,5 +1,5 @@
 import { useState, useCallback, useEffect, useRef } from "react";
-import { CalendarDays, Heart, HelpCircle, LayoutList } from "lucide-react";
+import { CalendarDays, ChevronLeft, ChevronRight, Heart, HelpCircle, LayoutList, Sparkles } from "lucide-react";
 import { Link } from "wouter";
 import { PROPHETS, getProphet, searchProphets, type ProphetRecord } from "@/lib/prophets-data";
 import { applyPageSeo } from "@/lib/seo";
@@ -15,20 +15,71 @@ type Citation = { surah: string; ayahs: string; note: string };
 
 // ── Palette & Helpers ────────────────────────────────────────────────────────
 
-/* لوحة زمردية موحَّدة: درجات خضراء مقروءة على البطاقات الفاتحة،
-   وأولو العزم (ومنهم محمد ﷺ) على زمرد المنصة #143F35 — التمييز على
-   الخلفية الداكنة يُعالَج عبر --prophet-color-on-dark في CSS. */
+/* تنوّع ضمن هوية المنصة فقط: زمرد / فيروز / زيتوني / بحري-زمردي.
+   أولو العزم يبقون على #143F35 مع لمسة نحاسية (--prophet-accent) للتميّز. */
 const PROPHET_HUE: Record<string, string> = {
-  adam: "#4F6B5F", idris: "#3F6A6A", nuh: "#1F6B56", hud: "#4A6B58",
-  salih: "#4A6454", ibrahim: "#143F35", lut: "#2F6A45", ismail: "#1F6B48",
-  "is-haq": "#356050", yaqub: "#2C5C50", yusuf: "#246048", ayyub: "#3F5C50",
-  shuayb: "#1F5A52", musa: "#143F35", harun: "#1A5C45", "dhul-kifl": "#2E4A42",
-  dawud: "#2A4A3A", sulayman: "#143F35", ilyas: "#345548", "al-yasa": "#1F6450",
-  yunus: "#176060", zakariyya: "#1F5A40", yahya: "#1A5840", isa: "#1A4A58",
+  adam: "#3D6B52",
+  idris: "#2A6B68",
+  nuh: "#0E6B58",
+  hud: "#4A6B3A",
+  salih: "#3A6450",
+  ibrahim: "#143F35",
+  lut: "#1E6A48",
+  ismail: "#1A6B40",
+  "is-haq": "#2E6058",
+  yaqub: "#245C55",
+  yusuf: "#1B6B4A",
+  ayyub: "#3A5C48",
+  shuayb: "#17605A",
+  musa: "#143F35",
+  harun: "#1A5C4A",
+  "dhul-kifl": "#2C5044",
+  dawud: "#254A3C",
+  sulayman: "#143F35",
+  ilyas: "#2E5542",
+  "al-yasa": "#186650",
+  yunus: "#0F5C60",
+  zakariyya: "#1A5A42",
+  yahya: "#165840",
+  isa: "#164A58",
   muhammad: "#143F35",
 };
 
+/** لمسة ثانوية (نحاسي أو فيروزي فاتح) — ضمن هوية المنصة */
+const PROPHET_ACCENT: Record<string, string> = {
+  adam: "#6B8F72",
+  idris: "#4A9A92",
+  nuh: "#2A9A80",
+  hud: "#7A9A4A",
+  salih: "#6A8A68",
+  ibrahim: "#B8963F",
+  lut: "#3A9A68",
+  ismail: "#3A9A58",
+  "is-haq": "#4A8A80",
+  yaqub: "#3A8880",
+  yusuf: "#2A9A68",
+  ayyub: "#6A8A60",
+  shuayb: "#2A8A82",
+  musa: "#B8963F",
+  harun: "#3A8A70",
+  "dhul-kifl": "#5A7A68",
+  dawud: "#B8963F",
+  sulayman: "#C4A24A",
+  ilyas: "#5A8A58",
+  "al-yasa": "#2A9A70",
+  yunus: "#2A8A90",
+  zakariyya: "#3A8A58",
+  yahya: "#2A8050",
+  isa: "#3A7A90",
+  muhammad: "#B8963F",
+};
+
 const IVORY = "#FAFAF8";
+const MAX_MENTIONS = 136; /* موسى — أعلى ذِكر في اللوحة */
+
+function prophetAccent(slug: string) {
+  return PROPHET_ACCENT[slug] || "#B8963F";
+}
 
 /* بيانات تكميلية: عدد الذكر، المعجزة، الكتاب، المواضع القرآنية */
 type Supplement = { mentioned: number; miracle?: string; book?: string; quranRef?: string };
@@ -63,22 +114,22 @@ const SUPPLEMENT: Record<string, Supplement> = {
 const ULUL_AZM_SLUGS = ["nuh", "ibrahim", "musa", "isa", "muhammad"];
 
 const MIRACLES_LIST = [
-  { nabi: "محمد ﷺ",   miracle: "القرآن الكريم، المعجزة الخالدة",                ayah: "البقرة: ٢٣" },
-  { nabi: "موسى ﷺ",   miracle: "انفلاق البحر لبني إسرائيل",                      ayah: "الشعراء: ٦٣" },
-  { nabi: "عيسى ﷺ",   miracle: "إحياء الموتى وإبراء الأكمه والأبرص",             ayah: "آل عمران: ٤٩" },
-  { nabi: "إبراهيم ﷺ", miracle: "النار لم تحرقه، ﴿كُونِي بَرْدًا وَسَلَامًا﴾", ayah: "الأنبياء: ٦٩" },
-  { nabi: "صالح ﷺ",   miracle: "ناقة الله آية لثمود",                            ayah: "الأعراف: ٧٣" },
-  { nabi: "سليمان ﷺ", miracle: "تسخير الجن والريح وفهم لغة الطير",               ayah: "الأنبياء: ٨١" },
-  { nabi: "يونس ﷺ",   miracle: "الحياة في بطن الحوت ثم النجاة",                  ayah: "الأنبياء: ٨٧" },
-  { nabi: "داود ﷺ",   miracle: "تليين الحديد بيديه والزبور",                      ayah: "سبأ: ١٠" },
-  { nabi: "زكريا ﷺ",  miracle: "الولد من زوجة عاقر على كبر السن",                ayah: "مريم: ٨" },
-  { nabi: "يعقوب ﷺ",  miracle: "عودة البصر من قميص يوسف",                        ayah: "يوسف: ٩٦" },
-  { nabi: "نوح ﷺ",    miracle: "السفينة والطوفان، نجاة المؤمنين",               ayah: "هود: ٤٠" },
-  { nabi: "آدم ﷺ",    miracle: "خُلق من طين وعُلِّم الأسماء كلها",               ayah: "البقرة: ٣١" },
-  { nabi: "يوسف ﷺ",  miracle: "تأويل الأحلام بإذن الله",                         ayah: "يوسف: ٤٣-٤٩" },
-  { nabi: "لوط ﷺ",   miracle: "النجاة من العذاب مع أهله إلا زوجته",             ayah: "هود: ٨١" },
-  { nabi: "شعيب ﷺ",  miracle: "نجاته مع المؤمنين من الصيحة",                    ayah: "هود: ٩٤" },
-  { nabi: "إلياس ﷺ", miracle: "دعا قومه إلى توحيد الله وترك عبادة البعل",      ayah: "الصافات: ١٢٣-١٢٥" },
+  { slug: "muhammad", nabi: "محمد ﷺ",   miracle: "القرآن الكريم، المعجزة الخالدة",                ayah: "البقرة: ٢٣" },
+  { slug: "musa",     nabi: "موسى ﷺ",   miracle: "انفلاق البحر لبني إسرائيل",                      ayah: "الشعراء: ٦٣" },
+  { slug: "isa",      nabi: "عيسى ﷺ",   miracle: "إحياء الموتى وإبراء الأكمه والأبرص",             ayah: "آل عمران: ٤٩" },
+  { slug: "ibrahim",  nabi: "إبراهيم ﷺ", miracle: "النار لم تحرقه، ﴿كُونِي بَرْدًا وَسَلَامًا﴾", ayah: "الأنبياء: ٦٩" },
+  { slug: "salih",    nabi: "صالح ﷺ",   miracle: "ناقة الله آية لثمود",                            ayah: "الأعراف: ٧٣" },
+  { slug: "sulayman", nabi: "سليمان ﷺ", miracle: "تسخير الجن والريح وفهم لغة الطير",               ayah: "الأنبياء: ٨١" },
+  { slug: "yunus",    nabi: "يونس ﷺ",   miracle: "الحياة في بطن الحوت ثم النجاة",                  ayah: "الأنبياء: ٨٧" },
+  { slug: "dawud",    nabi: "داود ﷺ",   miracle: "تليين الحديد بيديه والزبور",                      ayah: "سبأ: ١٠" },
+  { slug: "zakariyya",nabi: "زكريا ﷺ",  miracle: "الولد من زوجة عاقر على كبر السن",                ayah: "مريم: ٨" },
+  { slug: "yaqub",    nabi: "يعقوب ﷺ",  miracle: "عودة البصر من قميص يوسف",                        ayah: "يوسف: ٩٦" },
+  { slug: "nuh",      nabi: "نوح ﷺ",    miracle: "السفينة والطوفان، نجاة المؤمنين",               ayah: "هود: ٤٠" },
+  { slug: "adam",     nabi: "آدم ﷺ",    miracle: "خُلق من طين وعُلِّم الأسماء كلها",               ayah: "البقرة: ٣١" },
+  { slug: "yusuf",    nabi: "يوسف ﷺ",  miracle: "تأويل الأحلام بإذن الله",                         ayah: "يوسف: ٤٣-٤٩" },
+  { slug: "lut",      nabi: "لوط ﷺ",   miracle: "النجاة من العذاب مع أهله إلا زوجته",             ayah: "هود: ٨١" },
+  { slug: "shuayb",   nabi: "شعيب ﷺ",  miracle: "نجاته مع المؤمنين من الصيحة",                    ayah: "هود: ٩٤" },
+  { slug: "ilyas",    nabi: "إلياس ﷺ", miracle: "دعا قومه إلى توحيد الله وترك عبادة البعل",      ayah: "الصافات: ١٢٣-١٢٥" },
 ];
 
 function prophetColor(slug: string) { return PROPHET_HUE[slug] || IVORY; }
@@ -149,36 +200,39 @@ function ProphetCard({
   onSelect,
   isBookmarked,
   onBookmark,
+  index = 0,
 }: {
   prophet: ProphetRecord;
   onSelect: () => void;
   isBookmarked: boolean;
   onBookmark: (e: React.MouseEvent) => void;
+  index?: number;
 }) {
   const color = prophetColor(prophet.slug);
+  const accent = prophetAccent(prophet.slug);
   const sup = SUPPLEMENT[prophet.slug];
-  const [hovered, setHovered] = useState(false);
   const isUlulAzm = ULUL_AZM_SLUGS.includes(prophet.slug);
+  const mentionPct = Math.min(100, Math.round(((sup?.mentioned ?? 0) / MAX_MENTIONS) * 100));
 
   return (
     <div
       className={`prophet-lux-card${isUlulAzm ? " prophet-lux-card--azm" : ""}`}
       style={{
         "--prophet-color": color,
-        "--prophet-color-light": color + "30",
+        "--prophet-accent": accent,
+        "--card-i": index,
       } as React.CSSProperties}
       onClick={onSelect}
       onKeyDown={e => (e.key === "Enter" || e.key === " ") && onSelect()}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
       tabIndex={0}
       role="button"
       aria-label={`عرض قصة ${prophet.arabicName} عليه السلام`}
     >
+      <div className="prophet-lux-card__glow" aria-hidden="true" />
       <div className="prophet-lux-card__num">{prophet.id}</div>
 
       <div className="prophet-lux-card__star">
-        <IslamicStar size={36} color={color} opacity={hovered ? 1 : 0.7} />
+        <IslamicStar size={36} color={color} opacity={0.85} />
       </div>
 
       <div className="prophet-lux-card__body">
@@ -193,6 +247,15 @@ function ProphetCard({
         <p className="prophet-lux-card__place">{prophet.peopleOrPlace}</p>
         <p className="prophet-lux-card__bio">{truncateAtWord(prophet.briefBio, 100)}</p>
 
+        {sup && (
+          <div className="prophet-lux-card__meter" aria-hidden="true">
+            <div className="prophet-lux-card__meter-track">
+              <div className="prophet-lux-card__meter-fill" style={{ width: `${mentionPct}%` }} />
+            </div>
+            <span className="prophet-lux-card__meter-label">ذِكر قرآني</span>
+          </div>
+        )}
+
         <div className="prophet-lux-card__footer">
           {sup && (
             <span className="prophet-lux-card__surahs">
@@ -200,7 +263,9 @@ function ProphetCard({
               {sup.book && ` · ${sup.book}`}
             </span>
           )}
-          <span className="prophet-lux-card__read">اقرأ القصة ←</span>
+          <span className="prophet-lux-card__read">
+            اقرأ القصة <ChevronLeft size={14} aria-hidden="true" />
+          </span>
         </div>
       </div>
 
@@ -223,6 +288,8 @@ function ProphetCard({
 
 // ── ProphetDetailView ────────────────────────────────────────────────────────
 
+type DetailSection = { id: string; label: string };
+
 function ProphetDetailView({
   slug,
   onBack,
@@ -241,8 +308,21 @@ function ProphetDetailView({
   const [fontSize, setFontSize] = useState(16);
   const [dbStory, setDbStory] = useState<{ content: string; citations: Citation[] } | null>(null);
   const [dbLoading, setDbLoading] = useState(true);
+  const [readPct, setReadPct] = useState(0);
+  const [activeSection, setActiveSection] = useState("bio");
+  const articleRef = useRef<HTMLElement>(null);
   const prevProphet = p && p.id > 1 ? PROPHETS[p.id - 2] : null;
   const nextProphet = p && p.id < PROPHETS.length ? PROPHETS[p.id] : null;
+
+  const sections: DetailSection[] = [
+    { id: "bio", label: "نبذة" },
+    ...(sup?.miracle ? [{ id: "miracle", label: "المعجزة" }] : []),
+    { id: "surahs", label: "السور" },
+    { id: "attrs", label: "الصفات" },
+    { id: "lessons", label: "العبر" },
+    ...(!dbLoading && dbStory?.content ? [{ id: "story", label: "القصة" }] : []),
+    ...(!dbLoading && dbStory?.citations?.length ? [{ id: "citations", label: "الاستشهادات" }] : []),
+  ];
 
   useEffect(() => { window.scrollTo({ top: 0, behavior: "smooth" }); }, [slug]);
 
@@ -282,6 +362,64 @@ function ProphetDetailView({
       });
   }, [slug]);
 
+  useEffect(() => {
+    const onScroll = () => {
+      const el = document.documentElement;
+      const max = el.scrollHeight - el.clientHeight;
+      setReadPct(max > 0 ? Math.min(100, Math.round((el.scrollTop / max) * 100)) : 0);
+    };
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [slug]);
+
+  useEffect(() => {
+    const nodes = articleRef.current?.querySelectorAll<HTMLElement>("[data-ps-section]");
+    if (!nodes?.length) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter(e => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        if (visible[0]?.target) {
+          const id = (visible[0].target as HTMLElement).dataset.psSection;
+          if (id) setActiveSection(id);
+        }
+        entries.forEach(e => {
+          if (e.isIntersecting) e.target.classList.add("is-inview");
+        });
+      },
+      { rootMargin: "-18% 0px -55% 0px", threshold: [0.15, 0.4, 0.7] },
+    );
+    nodes.forEach(n => io.observe(n));
+    return () => io.disconnect();
+  }, [slug, dbLoading, dbStory]);
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      const tag = (e.target as HTMLElement)?.tagName;
+      if (tag === "INPUT" || tag === "TEXTAREA" || (e.target as HTMLElement)?.isContentEditable) return;
+      if (e.key === "ArrowRight" && prevProphet) {
+        e.preventDefault();
+        onNavigate(prevProphet.slug);
+      } else if (e.key === "ArrowLeft" && nextProphet) {
+        e.preventDefault();
+        onNavigate(nextProphet.slug);
+      } else if (e.key === "Escape") {
+        e.preventDefault();
+        onBack();
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [prevProphet, nextProphet, onNavigate, onBack]);
+
+  const scrollToSection = useCallback((id: string) => {
+    const el = articleRef.current?.querySelector(`[data-ps-section="${id}"]`);
+    el?.scrollIntoView({ behavior: "smooth", block: "start" });
+    setActiveSection(id);
+  }, []);
+
   if (!p) {
     return (
       <div className="prophet-not-found">
@@ -292,19 +430,33 @@ function ProphetDetailView({
   }
 
   const color = prophetColor(p.slug);
+  const accent = prophetAccent(p.slug);
   const isUlulAzm = ULUL_AZM_SLUGS.includes(p.slug);
-
+  const mentionPct = Math.min(100, Math.round(((sup?.mentioned ?? 0) / MAX_MENTIONS) * 100));
 
   return (
-    <div className="prophet-detail-lux" style={{ "--prophet-color": color } as React.CSSProperties}>
+    <div
+      className="prophet-detail-lux"
+      style={{
+        "--prophet-color": color,
+        "--prophet-accent": accent,
+      } as React.CSSProperties}
+    >
+      <div
+        className="prophet-detail-lux__progress"
+        role="progressbar"
+        aria-valuenow={readPct}
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-label="تقدّم القراءة"
+      >
+        <div className="prophet-detail-lux__progress-fill" style={{ width: `${readPct}%` }} />
+      </div>
+
       <div className="prophet-detail-lux__topbar">
         <button type="button" className="prophet-lux-back" onClick={onBack}>← قائمة الأنبياء</button>
         <div className="prophet-detail-lux__actions">
-          <button
-            type="button"
-            className="prophet-action-btn"
-            onClick={onBookmark}
-          >
+          <button type="button" className="prophet-action-btn" onClick={onBookmark}>
             {isBookmarked
               ? <><Heart size={13} className="inline icon-danger--filled ml-1" />محفوظ</>
               : <><Heart size={13} className="inline ml-1" />احفظ</>}
@@ -323,7 +475,7 @@ function ProphetDetailView({
           ))}
         </div>
         <div className="prophet-detail-lux__hero-content">
-          <div className="prophet-detail-lux__hero-star">
+          <div className="prophet-detail-lux__hero-star prophet-detail-lux__hero-star--pulse">
             <IslamicStar size={60} color="var(--prophet-color-on-dark)" />
           </div>
           <span className="prophet-detail-lux__num-badge">النبي {p.id} من {PROPHETS.length}</span>
@@ -335,46 +487,60 @@ function ProphetDetailView({
           )}
           <p className="prophet-detail-lux__hero-title">{p.title}</p>
           <GeometricBorder color="var(--prophet-color-on-dark)" size={20} />
+          <p className="prophet-detail-lux__keys-hint">اختصارات: ← التالي · → السابق · Esc للقائمة</p>
         </div>
       </div>
 
-      {/* بطاقات حقائق سريعة */}
       <div className="prophet-facts-grid">
-        <div className="prophet-fact-card">
+        <div className="prophet-fact-card prophet-fact-card--interactive">
           <span className="prophet-fact-card__label">القوم / البلد</span>
           <span className="prophet-fact-card__value">{p.peopleOrPlace}</span>
         </div>
-        <div className="prophet-fact-card">
+        <div className="prophet-fact-card prophet-fact-card--interactive">
           <span className="prophet-fact-card__label">الحقبة</span>
           <span className="prophet-fact-card__value">{p.era}</span>
         </div>
         {sup && (
-          <div className="prophet-fact-card">
+          <div className="prophet-fact-card prophet-fact-card--interactive prophet-fact-card--meter">
             <span className="prophet-fact-card__label">الذِّكر في القرآن</span>
             <span className="prophet-fact-card__value">{sup.mentioned} مرة</span>
+            <div className="prophet-fact-card__ring" style={{ "--meter": `${mentionPct}%` } as React.CSSProperties} aria-hidden="true" />
           </div>
         )}
-        <div className="prophet-fact-card">
+        <div className="prophet-fact-card prophet-fact-card--interactive">
           <span className="prophet-fact-card__label">أبرز سورة</span>
           <span className="prophet-fact-card__value">{p.mainSurahs[0] || "—"}</span>
         </div>
         {sup?.book && (
-          <div className="prophet-fact-card">
+          <div className="prophet-fact-card prophet-fact-card--interactive">
             <span className="prophet-fact-card__label">الكتاب المنزَّل</span>
             <span className="prophet-fact-card__value">{sup.book}</span>
           </div>
         )}
         {sup?.quranRef && (
-          <div className="prophet-fact-card prophet-fact-card--wide">
+          <div className="prophet-fact-card prophet-fact-card--wide prophet-fact-card--interactive">
             <span className="prophet-fact-card__label">مواضع في القرآن</span>
             <span className="prophet-fact-card__value">{sup.quranRef}</span>
           </div>
         )}
       </div>
 
-      <article className="prophet-story-lux" style={{ "--pstory-fs": `${fontSize}px` } as React.CSSProperties}>
+      <nav className="prophet-detail-toc" aria-label="أقسام القصة">
+        {sections.map(s => (
+          <button
+            key={s.id}
+            type="button"
+            className={`prophet-detail-toc__btn${activeSection === s.id ? " prophet-detail-toc__btn--active" : ""}`}
+            onClick={() => scrollToSection(s.id)}
+          >
+            {s.label}
+          </button>
+        ))}
+      </nav>
 
-        <section className="prophet-section-lux">
+      <article ref={articleRef} className="prophet-story-lux" style={{ "--pstory-fs": `${fontSize}px` } as React.CSSProperties}>
+
+        <section className="prophet-section-lux prophet-section-lux--reveal" data-ps-section="bio">
           <div className="prophet-section-lux__header">
             <IslamicStar size={22} color="var(--prophet-color-on-dark)" />
             <h2 className="prophet-section-lux__title">نبذة تعريفية</h2>
@@ -388,9 +554,9 @@ function ProphetDetailView({
         />
 
         {sup?.miracle && (
-          <section className="prophet-section-lux">
+          <section className="prophet-section-lux prophet-section-lux--reveal" data-ps-section="miracle">
             <div className="prophet-section-lux__header">
-              <IslamicStar size={22} color="var(--prophet-color-on-dark)" />
+              <Sparkles size={20} color="var(--prophet-accent, var(--prophet-color-on-dark))" aria-hidden="true" />
               <h2 className="prophet-section-lux__title">المعجزة الكبرى</h2>
             </div>
             <div className="prophet-miracle-box">
@@ -400,26 +566,34 @@ function ProphetDetailView({
           </section>
         )}
 
-        <section className="prophet-section-lux">
+        <section className="prophet-section-lux prophet-section-lux--reveal" data-ps-section="surahs">
           <div className="prophet-section-lux__header">
             <IslamicStar size={22} color="var(--prophet-color-on-dark)" />
             <h2 className="prophet-section-lux__title">أبرز السور القرآنية</h2>
           </div>
           <div className="prophet-chips-lux">
             {p.mainSurahs.map(s => (
-              <span key={s} className="prophet-chip-lux">سورة {s}</span>
+              <button
+                key={s}
+                type="button"
+                className="prophet-chip-lux prophet-chip-lux--interactive"
+                onClick={() => scrollToSection("citations")}
+                title="الانتقال إلى الاستشهادات إن وُجدت"
+              >
+                سورة {s}
+              </button>
             ))}
           </div>
         </section>
 
-        <section className="prophet-section-lux">
+        <section className="prophet-section-lux prophet-section-lux--reveal" data-ps-section="attrs">
           <div className="prophet-section-lux__header">
             <IslamicStar size={22} color="var(--prophet-color-on-dark)" />
             <h2 className="prophet-section-lux__title">أبرز الصفات والمعجزات</h2>
           </div>
           <ul className="prophet-attrs-list">
             {p.keyAttributes.map((a, i) => (
-              <li key={i} className="prophet-attrs-list__item">
+              <li key={i} className="prophet-attrs-list__item" style={{ "--i": i } as React.CSSProperties}>
                 <span className="prophet-attrs-list__bullet">✦</span>
                 {a}
               </li>
@@ -427,14 +601,14 @@ function ProphetDetailView({
           </ul>
         </section>
 
-        <section className="prophet-section-lux">
+        <section className="prophet-section-lux prophet-section-lux--reveal" data-ps-section="lessons">
           <div className="prophet-section-lux__header">
             <IslamicStar size={22} color="var(--prophet-color-on-dark)" />
             <h2 className="prophet-section-lux__title">الدروس والعبر</h2>
           </div>
           <div className="prophet-lessons-grid">
             {p.lessons.map((l, i) => (
-              <div key={i} className="prophet-lesson-card">
+              <div key={i} className="prophet-lesson-card prophet-lesson-card--interactive" style={{ "--i": i } as React.CSSProperties}>
                 <span className="prophet-lesson-card__num">{i + 1}</span>
                 <p className="prophet-lesson-card__text">{l}</p>
               </div>
@@ -443,7 +617,7 @@ function ProphetDetailView({
         </section>
 
         {!dbLoading && dbStory?.content && (
-          <section className="prophet-section-lux">
+          <section className="prophet-section-lux prophet-section-lux--reveal" data-ps-section="story">
             <div className="prophet-section-lux__header">
               <IslamicStar size={22} color="var(--prophet-color-on-dark)" />
               <h2 className="prophet-section-lux__title">القصة بالتفصيل</h2>
@@ -457,14 +631,14 @@ function ProphetDetailView({
         )}
 
         {!dbLoading && dbStory?.citations && dbStory.citations.length > 0 && (
-          <section className="prophet-section-lux">
+          <section className="prophet-section-lux prophet-section-lux--reveal" data-ps-section="citations">
             <div className="prophet-section-lux__header">
               <IslamicStar size={22} color="var(--prophet-color-on-dark)" />
               <h2 className="prophet-section-lux__title">الاستشهادات القرآنية</h2>
             </div>
             <div className="prophet-citations">
               {dbStory.citations.map((c, i) => (
-                <div key={i} className="prophet-citation-card">
+                <div key={i} className="prophet-citation-card prophet-citation-card--interactive">
                   <span className="prophet-citation-card__surah">سورة {c.surah}</span>
                   {c.ayahs && <span className="prophet-citation-card__ayahs">الآيات: {c.ayahs}</span>}
                   {c.note && <p className="prophet-citation-card__note">{c.note}</p>}
@@ -484,13 +658,13 @@ function ProphetDetailView({
       <div className="prophet-nav-lux">
         {prevProphet ? (
           <button type="button" className="prophet-nav-lux__btn" onClick={() => onNavigate(prevProphet.slug)}>
-            <span className="prophet-nav-lux__dir">← السابق</span>
+            <span className="prophet-nav-lux__dir"><ChevronRight size={14} aria-hidden="true" /> السابق</span>
             <span className="prophet-nav-lux__pname">{prevProphet.arabicName}</span>
           </button>
         ) : <span />}
         {nextProphet ? (
           <button type="button" className="prophet-nav-lux__btn prophet-nav-lux__btn--next" onClick={() => onNavigate(nextProphet.slug)}>
-            <span className="prophet-nav-lux__dir">التالي →</span>
+            <span className="prophet-nav-lux__dir">التالي <ChevronLeft size={14} aria-hidden="true" /></span>
             <span className="prophet-nav-lux__pname">{nextProphet.arabicName}</span>
           </button>
         ) : <span />}
@@ -507,9 +681,14 @@ function TimelineView({ onSelect }: { onSelect: (slug: string) => void }) {
       <div className="prophet-timeline__line" aria-hidden="true" />
       {PROPHETS.map((p, idx) => {
         const color = prophetColor(p.slug);
+        const accent = prophetAccent(p.slug);
         const side = idx % 2 === 0 ? "right" : "left";
         return (
-          <div key={p.slug} className={`prophet-timeline__item prophet-timeline__item--${side}`} style={{ "--item-color": color } as React.CSSProperties}>
+          <div
+            key={p.slug}
+            className={`prophet-timeline__item prophet-timeline__item--${side}`}
+            style={{ "--item-color": color, "--prophet-accent": accent, "--card-i": idx } as React.CSSProperties}
+          >
             <button
               type="button"
               className="prophet-timeline__dot"
@@ -549,11 +728,17 @@ function UlulAzmView({ onSelect }: { onSelect: (slug: string) => void }) {
       <div className="nb-azm-grid">
         {prophets.map((p, i) => {
           const sup = SUPPLEMENT[p.slug];
+          const color = prophetColor(p.slug);
+          const accent = prophetAccent(p.slug);
           return (
             <div
               key={p.slug}
               className="nb-azm-card"
-              style={{ "--prophet-color": prophetColor(p.slug) } as React.CSSProperties}
+              style={{
+                "--prophet-color": color,
+                "--prophet-accent": accent,
+                "--card-i": i,
+              } as React.CSSProperties}
               onClick={() => onSelect(p.slug)}
               role="button"
               tabIndex={0}
@@ -561,7 +746,7 @@ function UlulAzmView({ onSelect }: { onSelect: (slug: string) => void }) {
               aria-label={`قصة ${p.arabicName}`}
             >
               <div className="nb-azm-rank">{i + 1}</div>
-              <div className="nb-azm-star"><IslamicStar size={32} color={prophetColor(p.slug)} /></div>
+              <div className="nb-azm-star"><IslamicStar size={32} color={color} /></div>
               <h3 className="nb-azm-name">{p.arabicName} ﷺ</h3>
               <div className="nb-azm-book">{sup?.book ? `كتابه: ${sup.book}` : "لا كتاب مستقل"}</div>
               <p className="nb-azm-story">{truncateAtWord(p.briefBio, 140)}</p>
@@ -573,6 +758,7 @@ function UlulAzmView({ onSelect }: { onSelect: (slug: string) => void }) {
               {sup && (
                 <div className="nb-azm-mentions">ذُكر في القرآن {sup.mentioned} مرة</div>
               )}
+              <span className="nb-azm-cta">اقرأ القصة <ChevronLeft size={14} aria-hidden="true" /></span>
             </div>
           );
         })}
@@ -583,19 +769,31 @@ function UlulAzmView({ onSelect }: { onSelect: (slug: string) => void }) {
 
 // ── MiraclesView ─────────────────────────────────────────────────────────────
 
-function MiraclesView() {
+function MiraclesView({ onSelect }: { onSelect: (slug: string) => void }) {
   return (
     <div>
       <div className="nb-intro-box">
-        <p>المعجزة: أمر خارق للعادة يُجريه الله على يد النبي تحدياً للمكذِّبين وتأييداً للداعية. وأعظم المعجزات وأخلدها القرآن الكريم.</p>
+        <p>المعجزة: أمر خارق للعادة يُجريه الله على يد النبي تحدياً للمكذِّبين وتأييداً للداعية. وأعظم المعجزات وأخلدها القرآن الكريم. اضغط على البطاقة لقراءة قصة النبي.</p>
       </div>
       <div className="nb-miracles-grid">
         {MIRACLES_LIST.map((m, i) => (
-          <div key={i} className="nb-miracle-card">
+          <button
+            key={m.slug + m.ayah}
+            type="button"
+            className="nb-miracle-card"
+            style={{
+              "--prophet-color": prophetColor(m.slug),
+              "--prophet-accent": prophetAccent(m.slug),
+              "--card-i": i,
+            } as React.CSSProperties}
+            onClick={() => onSelect(m.slug)}
+            aria-label={`قصة ${m.nabi} — ${m.miracle}`}
+          >
             <div className="nb-miracle-nabi">{m.nabi}</div>
             <p className="nb-miracle-text">{m.miracle}</p>
             <div className="nb-miracle-ref">{m.ayah}</div>
-          </div>
+            <span className="nb-miracle-cta">عرض القصة <ChevronLeft size={13} aria-hidden="true" /></span>
+          </button>
         ))}
       </div>
     </div>
@@ -630,7 +828,15 @@ function CompareView({ onSelect }: { onSelect: (slug: string) => void }) {
                 <tr
                   key={p.slug}
                   className={`${isAzm ? "nb-table__row--azm" : ""} nb-table__row--clickable`}
+                  style={{
+                    "--prophet-color": prophetColor(p.slug),
+                    "--prophet-accent": prophetAccent(p.slug),
+                  } as React.CSSProperties}
                   onClick={() => onSelect(p.slug)}
+                  onKeyDown={e => (e.key === "Enter" || e.key === " ") && onSelect(p.slug)}
+                  tabIndex={0}
+                  role="link"
+                  aria-label={`قصة ${p.arabicName}`}
                 >
                   <td>{p.id}</td>
                   <td className="nb-table__name">
@@ -854,7 +1060,7 @@ export default function ProphetStoriesPage() {
         {/* المعجزات */}
         {view === "miracles" && (
           <div role="tabpanel" id="pst-panel-miracles" aria-labelledby="pst-tab-miracles" className="prophets-lux-container nb-container">
-            <MiraclesView />
+            <MiraclesView onSelect={setSelectedSlug} />
           </div>
         )}
 
@@ -894,10 +1100,11 @@ export default function ProphetStoriesPage() {
             ) : (
               <>
                 <div className="prophets-lux-grid">
-                  {results.map(p => (
+                  {results.map((p, i) => (
                     <ProphetCard
                       key={p.slug}
                       prophet={p}
+                      index={i}
                       onSelect={() => setSelectedSlug(p.slug)}
                       isBookmarked={isBookmarked(p.slug)}
                       onBookmark={e => { e.stopPropagation(); toggleBookmark(p.slug); }}
