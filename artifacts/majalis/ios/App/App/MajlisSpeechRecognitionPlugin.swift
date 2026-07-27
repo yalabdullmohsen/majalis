@@ -100,7 +100,22 @@ public class MajlisSpeechRecognitionPlugin: CAPPlugin, CAPBridgedPlugin {
             guard let self = self else { return }
             if let result = result {
                 self.lastTranscript = result.bestTranscription.formattedString
-                self.notifyListeners("partialResults", data: ["matches": [self.lastTranscript]])
+                // ثقة لكل مقطع/كلمة من SFSpeechTranscription.segments — تمكّن
+                // تصنيف "غير واضح / يحتاج إعادة" بدل الجزم الخاطئ بالخطأ.
+                var words: [String] = []
+                var confidences: [Double] = []
+                for segment in result.bestTranscription.segments {
+                    let w = segment.substring.trimmingCharacters(in: .whitespacesAndNewlines)
+                    if w.isEmpty { continue }
+                    words.append(w)
+                    confidences.append(Double(segment.confidence) * 100.0)
+                }
+                var payload: [String: Any] = ["matches": [self.lastTranscript]]
+                if !words.isEmpty {
+                    payload["words"] = words
+                    payload["confidences"] = confidences
+                }
+                self.notifyListeners("partialResults", data: payload)
                 if result.isFinal {
                     self.finishPendingCall(withMatches: [self.lastTranscript])
                 }

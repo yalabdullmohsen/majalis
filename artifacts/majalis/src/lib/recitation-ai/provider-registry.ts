@@ -11,6 +11,9 @@
  * الخادمي تكون الميزة معطَّلة كليًا لزوار Safari عبر المتصفح لا التطبيق
  * المُثبَّت) ← لا شيء (تُعرض حالة "غير متاح" صادقة، لا Mock أبدًا خارج
  * الاختبارات — MockQuranASRProvider غير مُدرَج هنا عمدًا).
+ *
+ * استثناء: عند `preferTajweed=true` يُفضَّل المزوّد الخادمي إن كان متاحًا
+ * لأنه الوحيد الذي يوفّر طوابع زمنية للكلمات (ملاحظات مدّ قابلة للقياس).
  */
 import type { QuranASRProvider } from "./asr-provider";
 import { OnDeviceQuranASRProvider } from "./providers/on-device-provider";
@@ -19,10 +22,28 @@ import { WebSpeechQuranASRProvider } from "./providers/web-speech-provider";
 
 export type ProviderSelection = { provider: QuranASRProvider; reason: string } | { provider: null; reason: string };
 
-export async function selectBestProvider(isOnline: boolean): Promise<ProviderSelection> {
+export type SelectProviderOptions = {
+  /** يطلب مزوّدًا يدعم ملاحظات تجويد زمنية (الخادم حاليًا). */
+  preferTajweed?: boolean;
+};
+
+export async function selectBestProvider(
+  isOnline: boolean,
+  options: SelectProviderOptions = {},
+): Promise<ProviderSelection> {
   const onDevice = new OnDeviceQuranASRProvider();
   const webSpeech = new WebSpeechQuranASRProvider();
   const server = new ServerQuranASRProvider();
+
+  if (options.preferTajweed && isOnline) {
+    const serverOk = await server.isAvailable();
+    if (serverOk) {
+      return {
+        provider: server,
+        reason: "مستوى إتقان التجويد — استخدام المزوّد الخادمي لطوابع زمنية قابلة للقياس (مدة المد)",
+      };
+    }
+  }
 
   const onDeviceOk = await onDevice.isAvailable();
   if (onDeviceOk) {

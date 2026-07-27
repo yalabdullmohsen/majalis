@@ -2,15 +2,7 @@
  * واجهة JS للتعرف الصوتي الأصلي — iOS عبر إطار Speech من آبل
  * (ios/App/App/MajlisSpeechRecognitionPlugin.swift)، وأندرويد عبر
  * android.speech.SpeechRecognizer
- * (android/app/src/main/java/com/majlisilm/app/MajlisSpeechRecognitionPlugin.kt)
- * — بلا أي حزمة npm خارجية (الحزم المجتمعية المتاحة تعتمد CocoaPods فقط على
- * iOS، وهذا المشروع يستخدم Swift Package Manager حصرًا؛ راجع CapApp-SPM)،
- * بنفس نمط prayer-live-activity.ts الأصلي. كلا الجانبين ينفّذان نفس الواجهة
- * أدناه بالضبط.
- *
- * تنبيه: جانب أندرويد كُتب بلا Android SDK متاح للبناء/الاختبار في بيئة
- * التطوير التي أُنشئ فيها — يحتاج تحققًا فعليًا (gradle build + جهاز/محاكي)
- * قبل الوثوق به إنتاجيًا، خلافًا لجانب iOS المُتحقَّق منه ببناء Xcode حقيقي.
+ * (android/app/src/main/java/com/majlisilm/app/MajlisSpeechRecognitionPlugin.kt).
  */
 import { registerPlugin } from "@capacitor/core";
 import { isAndroid, isIOS, isNative } from "@/lib/capacitor-utils";
@@ -22,6 +14,14 @@ export interface SpeechRecognitionStartOptions {
   popup?: boolean;
 }
 
+export type SpeechPartialPayload = {
+  matches: string[];
+  /** كلمات المقطع الحالي إن وفّرها المحرك الأصلي */
+  words?: string[];
+  /** ثقة 0–100 لكل كلمة في words (نفس الترتيب) */
+  confidences?: number[];
+};
+
 export interface MajlisSpeechRecognitionPlugin {
   available(): Promise<{ available: boolean }>;
   requestPermissions(): Promise<{ speechRecognition: "granted" | "denied" | "prompt" }>;
@@ -29,7 +29,7 @@ export interface MajlisSpeechRecognitionPlugin {
   stop(): Promise<void>;
   addListener(
     eventName: "partialResults",
-    listener: (data: { matches: string[] }) => void,
+    listener: (data: SpeechPartialPayload) => void,
   ): Promise<{ remove: () => void }>;
 }
 

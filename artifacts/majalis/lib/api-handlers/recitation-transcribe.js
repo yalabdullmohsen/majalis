@@ -112,10 +112,10 @@ export default async function handler(req, res) {
     form.append("file", new Blob([audioBuffer], { type: mimeType }), "chunk.webm");
     form.append("model", GROQ_MODEL);
     form.append("language", "ar");
-    form.append("response_format", "json");
-    // بلا prompt نصي بالنص القرآني — لا نطلب من النموذج "تخمين" نص قرآني
-    // بذاته؛ هو يُفرِّغ ما سُمع حرفيًا فقط، والمطابقة مع النص المعتمد تتم
-    // بالكامل لاحقًا داخل VerseAlignmentEngine على جهاز المستخدم.
+    // verbose_json يوفّر طوابع زمنية للكلمات — أساس محاذاة أدق وملاحظات
+    // تجويد قابلة للقياس (مدة المد) بلا ادعاء فونيمي غير مدعوم.
+    form.append("response_format", "verbose_json");
+    form.append("timestamp_granularities[]", "word");
 
     const groqRes = await fetch(GROQ_TRANSCRIBE_URL, {
       method: "POST",
@@ -133,7 +133,17 @@ export default async function handler(req, res) {
 
     const data = await groqRes.json();
     const text = typeof data?.text === "string" ? data.text.trim() : "";
-    sendJson(res, 200, { text });
+    const words = Array.isArray(data?.words)
+      ? data.words
+          .filter((w) => w && typeof w.word === "string")
+          .map((w) => ({
+            word: String(w.word).trim(),
+            start: typeof w.start === "number" ? w.start : null,
+            end: typeof w.end === "number" ? w.end : null,
+          }))
+          .filter((w) => w.word.length > 0)
+      : [];
+    sendJson(res, 200, { text, words });
   } catch (err) {
     console.error("recitation-transcribe: فشل الاستدعاء", err);
     sendJson(res, 502, { error: "تعذّر الاتصال بمحرك التعرّف الصوتي." });

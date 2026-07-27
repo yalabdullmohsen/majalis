@@ -119,13 +119,6 @@ class MajlisSpeechRecognitionPlugin : Plugin() {
                     finishPendingCall(lastTranscript)
                 }
 
-                override fun onResults(results: Bundle?) {
-                    val matches = results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
-                    val best = matches?.firstOrNull() ?: lastTranscript
-                    lastTranscript = best
-                    finishPendingCall(best)
-                }
-
                 override fun onPartialResults(partialResults: Bundle?) {
                     val matches = partialResults?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
                     val best = matches?.firstOrNull()
@@ -135,8 +128,48 @@ class MajlisSpeechRecognitionPlugin : Plugin() {
                         val arr = JSArray()
                         arr.put(best)
                         data.put("matches", arr)
+                        // EXTRA_CONFIDENCE_SCORES يتوفر غالبًا مع النتائج النهائية؛
+                        // إن وُجد مع الجزئية نُمرِّره (0–1 → 0–100).
+                        val scores = partialResults.getFloatArray(SpeechRecognizer.EXTRA_CONFIDENCE_SCORES)
+                        if (scores != null && scores.isNotEmpty()) {
+                            val wordsArr = JSArray()
+                            val confArr = JSArray()
+                            val parts = best.trim().split(Regex("\\s+")).filter { it.isNotEmpty() }
+                            for ((idx, part) in parts.withIndex()) {
+                                wordsArr.put(part)
+                                val c = if (idx < scores.size) scores[idx].toDouble() * 100.0 else scores[0].toDouble() * 100.0
+                                confArr.put(c)
+                            }
+                            data.put("words", wordsArr)
+                            data.put("confidences", confArr)
+                        }
                         notifyListeners("partialResults", data)
                     }
+                }
+
+                override fun onResults(results: Bundle?) {
+                    val matches = results?.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION)
+                    val best = matches?.firstOrNull() ?: lastTranscript
+                    lastTranscript = best
+                    val scores = results?.getFloatArray(SpeechRecognizer.EXTRA_CONFIDENCE_SCORES)
+                    if (scores != null && best.isNotEmpty()) {
+                        val data = JSObject()
+                        val arr = JSArray()
+                        arr.put(best)
+                        data.put("matches", arr)
+                        val wordsArr = JSArray()
+                        val confArr = JSArray()
+                        val parts = best.trim().split(Regex("\\s+")).filter { it.isNotEmpty() }
+                        for ((idx, part) in parts.withIndex()) {
+                            wordsArr.put(part)
+                            val c = if (idx < scores.size) scores[idx].toDouble() * 100.0 else scores[0].toDouble() * 100.0
+                            confArr.put(c)
+                        }
+                        data.put("words", wordsArr)
+                        data.put("confidences", confArr)
+                        notifyListeners("partialResults", data)
+                    }
+                    finishPendingCall(best)
                 }
 
                 override fun onEvent(eventType: Int, params: Bundle?) {}
