@@ -177,6 +177,10 @@ const WeekDayFactsSection = lazyWithRetry(
   () => import("@/views/admin/WeekDayFactsSection").then((m) => ({ default: m.WeekDayFactsSection })),
   "WeekDayFactsSection",
 );
+const ReligiousCalendarReviewSection = lazyWithRetry(
+  () => import("@/views/admin/ReligiousCalendarReviewSection").then((m) => ({ default: m.ReligiousCalendarReviewSection })),
+  "ReligiousCalendarReviewSection",
+);
 const ArbaeenLoveSection = lazyWithRetry(
   () => import("@/views/admin/ArbaeenLoveSection").then((m) => ({ default: m.ArbaeenLoveSection })),
   "ArbaeenLoveSection",
@@ -264,6 +268,7 @@ export default function AdminPage() {
       {section === "dawah" && <DawahSection />}
       {section === "learning-paths" && <LearningPathsSection />}
       {section === "week-day-facts" && <WeekDayFactsSection />}
+      {section === "religious-calendar-review" && <ReligiousCalendarReviewSection />}
       {section === "arbaeen-love" && <ArbaeenLoveSection />}
       {section === "categories" && <CategoriesSection />}
       {section === "researches" && <ResearchesSection />}

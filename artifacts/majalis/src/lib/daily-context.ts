@@ -67,7 +67,7 @@ interface HijriEvent {
 }
 
 const HIJRI_EVENTS: HijriEvent[] = [
-  { day: 1,  month: 1,  label: "رأس السنة الهجرية",        color: "#226A56" },
+  { day: 1,  month: 1,  label: "بداية السنة الهجرية",       color: "#226A56" },
   { day: 10, month: 1,  label: "يوم عاشوراء",              color: "#5B21B6" },
   { day: 12, month: 3,  label: "ذكرى المولد النبوي الشريف", color: "#0F766E" },
   { day: 27, month: 7,  label: "ليلة الإسراء والمعراج",    color: "#4338CA" },
