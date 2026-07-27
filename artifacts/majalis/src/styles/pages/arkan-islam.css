@@ -149,18 +149,21 @@
   border-right: 3px solid #052E16;
 }
 .arkan-dalil__text {
-  font-family: var(--font-quran, serif);
-  font-size: 0.95rem;
+  font-family: var(--font-quran, "Amiri Quran", serif);
+  font-size: clamp(1rem, 3.4vw, 1.15rem);
   color: #143F35;
   line-height: 1.9;
+  letter-spacing: 0;
   margin: 0 0 0.25rem;
+  overflow-wrap: anywhere;
 }
 .arkan-dalil--hadith .arkan-dalil__text {
-  font-family: inherit;
-  font-size: 0.85rem;
+  font-family: var(--font-body, inherit);
+  font-size: clamp(0.875rem, 3vw, 1rem);
   font-style: normal;
   color: #143F35;
-  line-height: 1.7;
+  line-height: 1.9;
+  letter-spacing: 0;
 }
 .arkan-dalil__ref {
   font-size: 0.8rem;

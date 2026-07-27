@@ -109,7 +109,16 @@
 }
 .ai-dalil__quote { margin: 0 0 0.6rem; padding: 0; border: none; }
 .ai-dalil__quote:last-child { margin-bottom: 0; }
-.ai-dalil__text { font-size: 0.92rem; color: #052E16; line-height: 1.7; font-weight: 600; margin: 0 0 0.2rem; }
+.ai-dalil__text {
+  font-size: clamp(1rem, 3.4vw, 1.15rem);
+  color: #052E16;
+  line-height: 1.9;
+  letter-spacing: 0;
+  font-weight: 600;
+  margin: 0 0 0.2rem;
+  font-family: var(--font-quran, "Amiri Quran", serif);
+  overflow-wrap: anywhere;
+}
 .ai-dalil__ref { font-size: 0.78rem; color: #226A56; font-style: normal; }
 
 /* تفاصيل عقدية */

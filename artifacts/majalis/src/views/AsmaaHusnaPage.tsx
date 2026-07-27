@@ -16,7 +16,7 @@ const STATUS_FILTERS: Array<"الكل" | AsmaStatus> = ["الكل", "ثابت", 
 function NameOfDayCard({ entry, onOpen }: { entry: AsmaEntry; onOpen: () => void }) {
   return (
     <div className="ah-name-of-day" onClick={onOpen} role="button" tabIndex={0}
-      onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && onOpen()}>
+      onKeyDown={(e) => (e.key === "Enter" || e.key === "") && onOpen()}>
       <div className="ah-nod-badge">
         <Sparkles size={13} aria-hidden="true" />
         اسم اليوم
@@ -46,14 +46,14 @@ export default function AsmaaHusnaPage() {
     applyPageSeo({
       path: "/asma-husna",
       title: "الأسماء الحسنى، أسماء الله التسعة والتسعون | المجلس العلمي",
-      description: "أسماء الله الحسنى: أصل حديث الإحصاء في الصحيحين، مع بيان أن السرد التفصيلي في الترمذي ضعيف عند المحققين، وعرض الأسماء بمعانيها. رواية ضعيفة لا تُعد حجةً ثابتة يُستغنى بما ثبت في الصحيح — سياسة مجالس العلم..............................................................................................................................................................................................................................................................................................................................................................................",
+      description: "أسماء الله الحسنى: أصل حديث الإحصاء في الصحيحين، مع بيان أن السرد التفصيلي في الترمذي ضعيف عند المحققين، وعرض الأسماء بمعانيها. رواية ضعيفة",
       keywords: ["أسماء الله الحسنى", "الله", "الرحمن", "الرحيم", "الأسماء الحسنى"],
       jsonLd: [
         {
           "@context": "https://schema.org",
           "@type": "ItemList",
           name: "أسماء الله الحسنى",
-          description: "أسماء الله الحسنى مع المعنى والمصدر والتنبيه على ضعف السرد التفصيلي؛ محتوى معتمد في منهج مجالس العلم؛ يُستفاد في التعلم والتطبيق — مرجع تربوي شرعي — مرجع تربوي معتمد؛ محتوى تعليمي معتمد في منهج مجالس العلم.............................................................................................................................................................................................................................................................................................................................................................................",
+          description: "أسماء الله الحسنى مع المعنى والمصدر والتنبيه على ضعف السرد التفصيلي؛ محتوى معتمد في منهج مجالس العلم",
           numberOfItems: ASMAA.length,
           itemListElement: ASMAA.map((a, i) => ({
             "@type": "ListItem",
@@ -109,7 +109,7 @@ export default function AsmaaHusnaPage() {
       </div>
 
       <aside className="ah-method-note" role="note" aria-label="تنبيه منهجي">
-        <strong>تنبيه منهجي:</strong>{" "}
+        <strong>تنبيه منهجي:</strong>{""}
         أصل حديث «لله تسعة وتسعون اسمًا… من أحصاها دخل الجنة» ثابت في الصحيحين بغير تعداد للأسماء.
         أما السرد التفصيلي الوارد في بعض روايات الترمذي فضعيف عند المحققين.
         لذلك وُسِم كل اسم هنا بـ«ثابت» إن وُجد له شاهد من القرآن أو السنة الصحيحة، أو بـ«مشهور» إن اقتصر على سرد الترمذي بلا شاهد مستقل ({statusCounts.ثابت} ثابتًا · {statusCounts.مشهور} مشهورًا).
@@ -149,7 +149,7 @@ export default function AsmaaHusnaPage() {
               key={s}
               role="tab"
               type="button"
-              className={`ah-cat-chip ah-cat-chip--status${statusFilter === s ? " ah-cat-chip--active" : ""}`}
+              className={`ah-cat-chip ah-cat-chip--status${statusFilter === s ? "ah-cat-chip--active" : ""}`}
               onClick={() => setStatusFilter(s)}
               aria-selected={statusFilter === s}
             >
@@ -163,7 +163,7 @@ export default function AsmaaHusnaPage() {
               key={c}
               role="tab"
               type="button"
-              className={`ah-cat-chip${category === c ? " ah-cat-chip--active" : ""}`}
+              className={`ah-cat-chip${category === c ? "ah-cat-chip--active" : ""}`}
               onClick={() => setCategory(c)}
               aria-selected={category === c}
             >
@@ -185,7 +185,7 @@ export default function AsmaaHusnaPage() {
               tabIndex={0}
               className="ah-card"
               onClick={() => setSelected(a)}
-              onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && setSelected(a)}
+              onKeyDown={(e) => (e.key === "Enter" || e.key === "") && setSelected(a)}
               aria-label={`${a.arabic}، ${a.meaning}`}
             >
               <span className="ah-card__num">{a.num}</span>
@@ -194,7 +194,7 @@ export default function AsmaaHusnaPage() {
               <span className="ah-card__meaning">{a.meaning.slice(0, 35)}{a.meaning.length > 35 ? "…" : ""}</span>
               <button
                 type="button"
-                className={`ah-card__fav${favs.has(a.num) ? " ah-card__fav--active" : ""}`}
+                className={`ah-card__fav${favs.has(a.num) ? "ah-card__fav--active" : ""}`}
                 onClick={(e) => { e.stopPropagation(); toggleFav(a.num); }}
                 aria-label={favs.has(a.num) ? "إزالة من المحفوظات" : "إضافة للمحفوظات"}
               >
@@ -238,7 +238,7 @@ export default function AsmaaHusnaPage() {
               <h2 id="ah-modal-name" className="ah-modal__name">{selected.arabic}</h2>
               <button
                 type="button"
-                className={`ah-modal__fav${favs.has(selected.num) ? " ah-modal__fav--active" : ""}`}
+                className={`ah-modal__fav${favs.has(selected.num) ? "ah-modal__fav--active" : ""}`}
                 onClick={() => toggleFav(selected.num)}
                 aria-label="تفضيل"
               >
