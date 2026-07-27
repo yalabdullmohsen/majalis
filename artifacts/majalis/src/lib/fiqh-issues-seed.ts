@@ -2,8 +2,7 @@ import type { FiqhCouncilIssue, FiqhTimelineEvent } from "./fiqh-council-types";
 import type { CitationTrustFields } from "./citation-schema";
 
 export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustFields> = [
-  {
-    id: "seed-issue-crypto",
+  { id: "seed-issue-crypto",
     slug: "crypto-currency",
     title: "التعامل بالعملات الرقمية (المشفّرة)",
     summary: "مسألة فقهية تجمع قرارات وبحوث المجمع حول العملات الرقمية والمعاملات المالية المعاصرة وتُعرض بأدلتها وضوابطها دون اختزال مخلّ.",
@@ -14,7 +13,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
     ruling_summary:
       "لا تُعدّ العملات الرقمية غير المُغطّاة بأصول حقيقية نقوداً شرعية؛ والتداول المضاربي فيها فيه غرر وجهالة ويُفرَّق بين الحكم الكلي وتنزيله على الواقعة.",
     evidence_summary: "الاستدلال من نهي أكل المال بالباطل، وأحكام البيع والغرر في المعاملات مع مراعاة الخلاف المعتبر وأقوال المجامع عند الحاجة.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-25T00:00:00.000Z",
@@ -24,8 +23,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
     updated_at: "2024-03-15T10:00:00Z",
     created_at: "2024-03-15T10:00:00Z",
   },
-  {
-    id: "seed-issue-organ-donation",
+  { id: "seed-issue-organ-donation",
     slug: "organ-donation",
     title: "التبرع بالأعضاء بعد الوفاة",
     summary: "مسألة فقهية حول جواز التبرع بالأعضاء لإنقاذ حياة المرضى وفق ضوابط شرعية وطبية مع مراعاة الخلاف المعتبر وأقوال المجامع عند الحاجة.",
@@ -33,7 +31,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
     subcategory: "الطب",
     ruling_summary: "يجوز التبرع بالأعضاء بعد الوفاة عند تحقق الشروط الشرعية والطبية وتُعرض بأدلتها وضوابطها دون اختزال مخلّ مع مراعاة الخلاف المعتبر وأقوال المجامع عند الحاجة.",
     evidence_summary: "الاستدلال بمقصد إحياء النفس وحفظ الكرامة الإنسانية ويُفرَّق بين الحكم الكلي وتنزيله على الواقعة وتُعرض بأدلتها وضوابطها دون اختزال مخلّ.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-25T00:00:00.000Z",
@@ -43,14 +41,13 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
     updated_at: "2023-11-08T09:00:00Z",
     created_at: "2023-11-08T09:00:00Z",
   },
-  {
-    id: "seed-issue-minorities",
+  { id: "seed-issue-minorities",
     slug: "muslim-minorities-rights",
     title: "حقوق الأقليات المسلمة",
     summary: "مسألة فقهية حول حقوق المسلمين في البلدان غير الإسلامية وممارسة شعائرهم وتُعرض بأدلتها وضوابطها دون اختزال مخلّ.",
     category: "الأقليات المسلمة",
     ruling_summary: "للمسلمين حق ممارسة العبادات مع الالتزام بعقودهم وعهودهم مع الدول التي يقيمون فيها ويُفرَّق بين الحكم الكلي وتنزيله على الواقعة.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     trust_level: "unsourced",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-25T00:00:00.000Z",
@@ -60,14 +57,13 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
     updated_at: "2023-06-20T08:00:00Z",
     created_at: "2023-06-20T08:00:00Z",
   },
-  {
-    id: "seed-issue-zakat-stocks",
+  { id: "seed-issue-zakat-stocks",
     slug: "zakat-stocks",
     title: "زكاة الأسهم والصناديق الاستثمارية",
     summary: "مسألة فقهية في كيفية إخراج زكاة الأسهم والصناديق الاستثمارية ويُفرَّق بين الحكم الكلي وتنزيله على الواقعة وتُعرض بأدلتها وضوابطها دون اختزال مخلّ.",
     category: "الزكاة والوقف",
     ruling_summary: "تُزكّى الأسهم التجارية بقيمتها السوقية؛ والاستثمارية أرباحها عند بلوغ النصاب وتُعرض بأدلتها وضوابطها دون اختزال مخلّ ويُراجع عند تغيّر صورة المسألة المعاصرة.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     trust_level: "unsourced",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-25T00:00:00.000Z",
@@ -77,14 +73,13 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
     updated_at: "2022-12-05T06:00:00Z",
     created_at: "2022-12-05T06:00:00Z",
   },
-  {
-    id: "seed-issue-hajj",
+  { id: "seed-issue-hajj",
     slug: "hajj-delay",
     title: "تأخير الحج لمن استطاع مادياً",
     summary: "مسألة فقهية في وجوب الحج على الفور لمن توفرت شروطه ويُفرَّق بين الحكم الكلي وتنزيله على الواقعة وتُعرض بأدلتها وضوابطها دون اختزال مخلّ.",
     category: "الحج والعمرة",
     ruling_summary: "الحج واجب على الفور لمن استطاع إليه سبيلاً بلا عذر شرعي مع مراعاة الخلاف المعتبر وأقوال المجامع عند الحاجة والعمدة فيها الدليل والمصلحة الشرعية المنضبطة.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     trust_level: "unsourced",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-25T00:00:00.000Z",
@@ -94,8 +89,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
     updated_at: "2022-08-01T05:00:00Z",
     created_at: "2022-08-01T05:00:00Z",
   },
-  {
-    id: "seed-issue-general-anesthesia",
+  { id: "seed-issue-general-anesthesia",
     slug: "general-anesthesia",
     title: "التخدير الكلي في العمليات الجراحية",
     summary: "مسألة فقهية حول حكم استخدام التخدير الكلي الذي يُفقد الوعي أثناء العمليات الجراحية والعمدة فيها الدليل والمصلحة الشرعية المنضبطة.",
@@ -106,7 +100,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
     ruling_summary:
       "يجوز التخدير الكلي عند الضرورة الطبية، ولا يُعدّ ناقضاً للإيمان لانعدام القصد والاختيار والعمدة فيها الدليل والمصلحة الشرعية المنضبطة.",
     evidence_summary: "الاستدلال بقاعدة الضرورات تبيح المحظورات، وعدم التكليف مع رفع الحرج والعمدة فيها الدليل والمصلحة الشرعية المنضبطة.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-25T00:00:00.000Z",
@@ -116,8 +110,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
     updated_at: "2025-01-10T08:00:00Z",
     created_at: "2025-01-10T08:00:00Z",
   },
-  {
-    id: "seed-issue-artificial-organ-transplant",
+  { id: "seed-issue-artificial-organ-transplant",
     slug: "artificial-organ-transplant",
     title: "زراعة الأعضاء الاصطناعية",
     summary: "مسألة فقهية حول جواز استبدال الأعضاء البشرية بأعضاء اصطناعية مصنوعة من مواد غير عضوية وتُعرض بأدلتها وضوابطها دون اختزال مخلّ.",
@@ -127,7 +120,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
     subcategory: "الطب",
     ruling_summary: "يجوز زراعة الأعضاء الاصطناعية بقصد العلاج وإعادة وظائف الجسم الحيوية وتُعرض بأدلتها وضوابطها دون اختزال مخلّ مع مراعاة الخلاف المعتبر وأقوال المجامع عند الحاجة.",
     evidence_summary: "قاعدة درء المفسدة وجلب المصلحة، والاستدلال بمشروعية التداوي وتُعرض بأدلتها وضوابطها دون اختزال مخلّ مع مراعاة الخلاف المعتبر وأقوال المجامع عند الحاجة.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-25T00:00:00.000Z",
@@ -137,8 +130,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
     updated_at: "2025-02-20T09:00:00Z",
     created_at: "2025-02-20T09:00:00Z",
   },
-  {
-    id: "seed-issue-human-cloning",
+  { id: "seed-issue-human-cloning",
     slug: "human-cloning",
     title: "الاستنساخ البشري",
     summary: "مسألة فقهية حول حكم الاستنساخ البشري التكاثري والعلاجي في ضوء المقاصد الشرعية مع مراعاة الخلاف المعتبر وأقوال المجامع عند الحاجة.",
@@ -150,7 +142,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
       "يحرم الاستنساخ البشري التكاثري؛ ويُجيز بعض العلماء الاستنساخ العلاجي بضوابط صارمة مع مراعاة الخلاف المعتبر وأقوال المجامع عند الحاجة.",
     evidence_summary:
       "مقصد حفظ النسل، وتحريم الاختلاط في الأنساب، وحرمة الكيان الإنساني وتُعرض بأدلتها وضوابطها دون اختزال مخلّ مع مراعاة الخلاف المعتبر وأقوال المجامع عند الحاجة.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-25T00:00:00.000Z",
@@ -160,8 +152,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
     updated_at: "2025-03-05T10:00:00Z",
     created_at: "2025-03-05T10:00:00Z",
   },
-  {
-    id: "seed-issue-abortion-rape-cases",
+  { id: "seed-issue-abortion-rape-cases",
     slug: "abortion-rape-cases",
     title: "الإجهاض في حالات الاغتصاب",
     summary: "مسألة فقهية معاصرة حول حكم إسقاط الحمل الناتج عن اغتصاب في المراحل الأولى وتُعرض بأدلتها وضوابطها دون اختزال مخلّ.",
@@ -173,7 +164,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
       "أجاز جمهور الفقهاء المعاصرين الإسقاط قبل نفخ الروح للضرورة القصوى في حالات الاغتصاب ويُفرَّق بين الحكم الكلي وتنزيله على الواقعة.",
     evidence_summary:
       "قاعدة الضرورات، وأحكام الجنين قبل نفخ الروح، ومقصد حفظ العقل والكرامة الإنسانية وتُعرض بأدلتها وضوابطها دون اختزال مخلّ.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-25T00:00:00.000Z",
@@ -183,8 +174,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
     updated_at: "2025-04-12T08:00:00Z",
     created_at: "2025-04-12T08:00:00Z",
   },
-  {
-    id: "seed-issue-misyar-marriage",
+  { id: "seed-issue-misyar-marriage",
     slug: "misyar-marriage",
     title: "زواج المسيار",
     summary: "مسألة فقهية حول زواج المسيار وشروطه وما يترتب عليه من حقوق وواجبات ويُفرَّق بين الحكم الكلي وتنزيله على الواقعة.",
@@ -195,7 +185,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
     ruling_summary:
       "يجيزه جمع من العلماء المعاصرين بتوافر أركان الزواج وشروطه مع استيفاء الولي والشهود والعمدة فيها الدليل والمصلحة الشرعية المنضبطة.",
     evidence_summary: "أحكام شروط الزواج، وأن التنازل عن الحق الشخصي لصاحبه جائز ويُفرَّق بين الحكم الكلي وتنزيله على الواقعة وتُعرض بأدلتها وضوابطها دون اختزال مخلّ.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-25T00:00:00.000Z",
@@ -228,8 +218,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
     updated_at: "2024-10-05T09:00:00Z",
     created_at: "2024-10-05T09:00:00Z",
   },
-  {
-    id: "seed-issue-artificial-breastfeeding",
+  { id: "seed-issue-artificial-breastfeeding",
     slug: "artificial-breastfeeding",
     title: "الرضاعة الاصطناعية وعلاقة المحرمية",
     summary: "مسألة فقهية حول مدى ثبوت المحرمية من الرضاعة بطريق غير مباشر كالحليب المستخرج في قارورة ويُفرَّق بين الحكم الكلي وتنزيله على الواقعة.",
@@ -241,7 +230,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
       "تثبت المحرمية بوصول اللبن إلى الرضيع بأي طريقة وفق الراجح عند جمهور العلماء المعاصرين مع مراعاة الخلاف المعتبر وأقوال المجامع عند الحاجة.",
     evidence_summary:
       "الاستدلال بعلة تغذية الجسم بلبن المرأة وإنبات اللحم وإنشاز العظم وتُعرض بأدلتها وضوابطها دون اختزال مخلّ مع مراعاة الخلاف المعتبر وأقوال المجامع عند الحاجة.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-25T00:00:00.000Z",
@@ -272,8 +261,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
     updated_at: "2024-12-01T07:00:00Z",
     created_at: "2024-12-01T07:00:00Z",
   },
-  {
-    id: "seed-issue-astronaut-prayer",
+  { id: "seed-issue-astronaut-prayer",
     slug: "astronaut-prayer",
     title: "صلاة رواد الفضاء",
     summary: "مسألة فقهية متعلقة بأوقات الصلاة واتجاه القبلة لرواد الفضاء في المدار الأرضي مع مراعاة الخلاف المعتبر وأقوال المجامع عند الحاجة.",
@@ -285,7 +273,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
       "يصلي رائد الفضاء بحسب توقيت أقرب بلد أُقلع منه أو توقيت مكة المكرمة، ويتوجه نحو الكعبة تقريباً ويُفرَّق بين الحكم الكلي وتنزيله على الواقعة.",
     evidence_summary:
       "مبدأ اليسر ورفع الحرج، وأحكام القبلة للعاجز عن التحقق منها والعمدة فيها الدليل والمصلحة الشرعية المنضبطة ويُفرَّق بين الحكم الكلي وتنزيله على الواقعة.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-25T00:00:00.000Z",
@@ -295,8 +283,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
     updated_at: "2025-05-15T10:00:00Z",
     created_at: "2025-05-15T10:00:00Z",
   },
-  {
-    id: "seed-issue-zakat-crypto",
+  { id: "seed-issue-zakat-crypto",
     slug: "zakat-crypto",
     title: "زكاة العملات الرقمية",
     summary: "مسألة فقهية حول وجوب الزكاة على ما يمتلكه الشخص من عملات رقمية وكيفية حسابها ويُفرَّق بين الحكم الكلي وتنزيله على الواقعة.",
@@ -308,7 +295,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
       "تجب الزكاة على العملات الرقمية بنسبة ربع العشر (2.5%) بعد حولان الحول وبلوغ النصاب بقيمتها السوقية ويُفرَّق بين الحكم الكلي وتنزيله على الواقعة.",
     evidence_summary:
       "القياس على زكاة النقدين وعروض التجارة، وعموم النصوص الواردة في وجوب الزكاة في المال مع مراعاة الخلاف المعتبر وأقوال المجامع عند الحاجة.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-25T00:00:00.000Z",
@@ -318,8 +305,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
     updated_at: "2025-06-01T08:00:00Z",
     created_at: "2025-06-01T08:00:00Z",
   },
-  {
-    id: "seed-issue-health-insurance-ruling",
+  { id: "seed-issue-health-insurance-ruling",
     slug: "health-insurance-ruling",
     title: "حكم التأمين الصحي",
     summary: "مسألة فقهية حول جواز الاشتراك في التأمين الصحي التجاري والتعاوني ويُفرَّق بين الحكم الكلي وتنزيله على الواقعة.",
@@ -331,7 +317,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
       "يجيز أكثر العلماء التأمين الصحي التعاوني، ورخّص كثيرون في التجاري للضرورة ورفع الحرج ويُفرَّق بين الحكم الكلي وتنزيله على الواقعة.",
     evidence_summary:
       "مبدأ التعاون على البر، وقاعدة الضرورة، وتفريق الفقهاء بين صور التأمين ويُفرَّق بين الحكم الكلي وتنزيله على الواقعة.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-25T00:00:00.000Z",
@@ -364,8 +350,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
     updated_at: "2025-08-05T09:00:00Z",
     created_at: "2025-08-05T09:00:00Z",
   },
-  {
-    id: "seed-issue-organ-donation-will",
+  { id: "seed-issue-organ-donation-will",
     slug: "organ-donation-will",
     title: "وصايا التبرع بالأعضاء بعد الوفاة",
     summary: "مسألة فقهية حول مدى صحة الوصية بالتبرع بالأعضاء وأثرها الشرعي ويُفرَّق بين الحكم الكلي وتنزيله على الواقعة وتُعرض بأدلتها وضوابطها دون اختزال مخلّ.",
@@ -377,7 +362,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
       "تصح الوصية بالتبرع بالأعضاء عند جمهور المعاصرين، ويُستحسن تنفيذها احتراماً لرغبة الميت والعمدة فيها الدليل والمصلحة الشرعية المنضبطة.",
     evidence_summary:
       "أحكام الوصية في الفقه الإسلامي، وقاعدة إحياء النفس، وفتاوى المجامع الفقهية ويُفرَّق بين الحكم الكلي وتنزيله على الواقعة.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-25T00:00:00.000Z",
@@ -387,8 +372,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
     updated_at: "2025-09-12T08:00:00Z",
     created_at: "2025-09-12T08:00:00Z",
   },
-  {
-    id: "seed-issue-milk-bank-breastfeeding",
+  { id: "seed-issue-milk-bank-breastfeeding",
     slug: "milk-bank-breastfeeding",
     title: "الإرضاع من بنك الحليب",
     summary: "مسألة فقهية حول ثبوت المحرمية بالرضاعة من بنك الحليب حيث يختلط حليب نساء متعددات ويُفرَّق بين الحكم الكلي وتنزيله على الواقعة.",
@@ -400,7 +384,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
       "يحذر أكثر الفقهاء المعاصرين من استخدام بنوك الحليب المختلط لما قد يُفضي إليه من الخلط في المحرمية والعمدة فيها الدليل والمصلحة الشرعية المنضبطة.",
     evidence_summary:
       "أحكام الرضاعة المحرِّمة، وقاعدة سد الذرائع، والاحتياط في باب الأنساب وتُعرض بأدلتها وضوابطها دون اختزال مخلّ مع مراعاة الخلاف المعتبر وأقوال المجامع عند الحاجة.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-25T00:00:00.000Z",
@@ -433,8 +417,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
     updated_at: "2025-11-08T09:00:00Z",
     created_at: "2025-11-08T09:00:00Z",
   },
-  {
-    id: "seed-issue-stem-cells",
+  { id: "seed-issue-stem-cells",
     slug: "stem-cell-therapy",
     title: "حكم العلاج بخلايا الجذع",
     summary: "مسألة فقهية في الحكم الشرعي لاستخدام خلايا الجذع الجنينية والبالغة في العلاج الطبي مع مراعاة الخلاف المعتبر وأقوال المجامع عند الحاجة.",
@@ -446,7 +429,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
       "يجوز العلاج بخلايا الجذع البالغة المأخوذة من الشخص نفسه أو من متبرع بإذنه. أما الخلايا الجنينية المأخوذة من أجنة مُجهضة عمداً فمحرمة، ومن أجنة فائضة من التلقيح الصناعي محلّ خلاف معتبر.",
     evidence_summary:
       "أصل إباحة التداوي، وقاعدة الضرورة والحاجة، وحرمة الأجنة البشرية مع مراعاة الخلاف المعتبر وأقوال المجامع عند الحاجة.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-25T00:00:00.000Z",
@@ -456,8 +439,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
     updated_at: "2024-09-10T09:00:00Z",
     created_at: "2024-09-10T09:00:00Z",
   },
-  {
-    id: "seed-issue-digital-waqf",
+  { id: "seed-issue-digital-waqf",
     slug: "digital-waqf",
     title: "الوقف الرقمي وصكوك الوقف الإلكترونية",
     summary: "مسألة فقهية في مشروعية الوقف على المحتوى الرقمي والبنية التحتية الإلكترونية، وصكوك الوقف الرقمية وتُعرض بأدلتها وضوابطها دون اختزال مخلّ.",
@@ -469,7 +451,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
       "يصح الوقف على المحتوى الرقمي النافع إذا توفرت شروط الوقف من ديمومة المنفعة وتعيين الجهة. وصكوك الوقف الرقمية حكمها حكم الوقف عموماً بشرط الشفافية والضمان.",
     evidence_summary:
       "أصل جواز الوقف على كل ما فيه منفعة مستمرة مباحة، وعموم الأدلة على الصدقة الجارية ويُفرَّق بين الحكم الكلي وتنزيله على الواقعة.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-25T00:00:00.000Z",
@@ -479,8 +461,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
     updated_at: "2025-03-20T09:30:00Z",
     created_at: "2025-03-20T09:30:00Z",
   },
-  {
-    id: "seed-issue-zakat-real-estate",
+  { id: "seed-issue-zakat-real-estate",
     slug: "zakat-real-estate",
     title: "زكاة العقارات التجارية وعروض الاستثمار العقاري",
     summary: "مسألة فقهية في كيفية إخراج زكاة العقارات المُعدّة للبيع أو الاستثمار والإيجار مع مراعاة الخلاف المعتبر وأقوال المجامع عند الحاجة.",
@@ -492,7 +473,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
       "العقار المعدّ للبيع تجب فيه زكاة عروض التجارة بقيمته السوقية. أما المعدّ للإيجار فتجب فيه زكاة الدخل (الغلة) إن بلغت نصاباً وحال عليها الحول.",
     evidence_summary:
       "أصل مشروعية الزكاة في السائمة والماشية، وأصل الزكاة في عروض التجارة، وقاعدة الزكاة في المال النامي والعمدة فيها الدليل والمصلحة الشرعية المنضبطة.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-25T00:00:00.000Z",
@@ -502,8 +483,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
     updated_at: "2024-06-01T09:00:00Z",
     created_at: "2024-06-01T09:00:00Z",
   },
-  {
-    id: "seed-issue-gender-reassignment",
+  { id: "seed-issue-gender-reassignment",
     slug: "gender-reassignment-surgery",
     title: "حكم عمليات تغيير الجنس",
     summary: "مسألة فقهية في الحكم الشرعي للعمليات الجراحية الهادفة لتغيير الجنس أو تصحيحه ويُفرَّق بين الحكم الكلي وتنزيله على الواقعة.",
@@ -515,7 +495,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
       "يجوز جراحياً تصحيح حالة الخنثى المشكل للغلبة الطبية وفق رأي الأطباء. أما تغيير جنس الشخص السليم تشريحياً رغبةً نفسية فمحرّم شرعاً ولا يُرتّب عليه أحكام الجنس الجديد.",
     evidence_summary:
       "النهي عن تغيير خلق الله، وقاعدة حرمة الإضرار بالجسم، وأحاديث لعن المتشبهين من الرجال بالنساء والعكس ويُفرَّق بين الحكم الكلي وتنزيله على الواقعة.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-25T00:00:00.000Z",
@@ -526,8 +506,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
     created_at: "2023-11-08T09:00:00Z",
   },
   // ─── مسائل فقهية جديدة ────────────────────────────────────────────
-  {
-    id: "seed-issue-surrogacy",
+  { id: "seed-issue-surrogacy",
     slug: "surrogacy-mother",
     title: "حكم الأمومة البديلة (الرحم المستعارة)",
     summary: "مسألة فقهية في حكم الاستعانة برحم امرأة أخرى لحمل الجنين لزوجين عاجزين عن الإنجاب ويُفرَّق بين الحكم الكلي وتنزيله على الواقعة.",
@@ -539,7 +518,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
       "تحرم الأمومة البديلة في جميع صورها وفق قرار مجمع الفقه الإسلامي؛ لما فيها من اختلاط الأنساب والإشكال في تحديد الأم الشرعية.",
     evidence_summary:
       "أحكام النسب في الإسلام، وقاعدة سد الذرائع، والنهي عن كل ما يُفضي إلى اختلاط الأنساب ويُفرَّق بين الحكم الكلي وتنزيله على الواقعة.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-25T00:00:00.000Z",
@@ -549,8 +528,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
     updated_at: "2024-02-10T09:00:00Z",
     created_at: "2024-02-10T09:00:00Z",
   },
-  {
-    id: "seed-issue-euthanasia",
+  { id: "seed-issue-euthanasia",
     slug: "euthanasia-mercy-killing",
     title: "حكم القتل الرحيم (الموت الرحيم)",
     summary: "مسألة فقهية في حكم إنهاء حياة المريض الميؤوس من شفائه أو إيقاف العلاج عنه ويُفرَّق بين الحكم الكلي وتنزيله على الواقعة.",
@@ -562,7 +540,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
       "يحرم القتل الرحيم الإيجابي إجماعاً. أما إيقاف الأجهزة عن الميت دماغياً فقد أجازه بعض العلماء بضوابط طبية وشرعية دقيقة مع اجتناب التعميم خارج محلّ الدليل.",
     evidence_summary:
       "حرمة الدم الإنساني، وقاعدة لا ضرر ولا ضرار، وفقه الضرورة الطبية والعمدة فيها الدليل والمصلحة الشرعية المنضبطة.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-25T00:00:00.000Z",
@@ -572,8 +550,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
     updated_at: "2024-04-05T09:00:00Z",
     created_at: "2024-04-05T09:00:00Z",
   },
-  {
-    id: "seed-issue-covid-vaccine",
+  { id: "seed-issue-covid-vaccine",
     slug: "covid-vaccine-ruling",
     title: "حكم التطعيم الإجباري ضد الأوبئة",
     summary: "مسألة فقهية في حكم إجبار الدولة للمواطنين على التطعيم ضد الأوبئة وتُعرض بأدلتها وضوابطها دون اختزال مخلّ مع مراعاة الخلاف المعتبر وأقوال المجامع عند الحاجة.",
@@ -585,7 +562,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
       "يجوز للدولة تشجيع التطعيم إلزاماً لدرء الضرر العام. أما اللقاحات المأمونة فيُستحسن أخذها تطبيقاً لقاعدة درء الضرر ويُراجع عند تغيّر صورة المسألة المعاصرة.",
     evidence_summary:
       "قاعدة المصلحة العامة تُقدَّم على المصلحة الخاصة، وأحكام الحجر الصحي في السنة النبوية وتُعرض بأدلتها وضوابطها دون اختزال مخلّ.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-25T00:00:00.000Z",
@@ -595,8 +572,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
     updated_at: "2021-03-15T09:00:00Z",
     created_at: "2021-03-15T09:00:00Z",
   },
-  {
-    id: "seed-issue-nft-metaverse",
+  { id: "seed-issue-nft-metaverse",
     slug: "nft-metaverse-transactions",
     title: "أحكام NFT والميتافيرس الرقمي",
     summary: "مسألة فقهية مستحدثة في حكم التعامل بالرموز غير القابلة للاستبدال (NFT) وعقود الفضاء الافتراضي ويُفرَّق بين الحكم الكلي وتنزيله على الواقعة.",
@@ -608,7 +584,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
       "قد تصح NFT المرتبطة بأصول حقيقية ومنافع مشروعة وفق ضوابط الشرع. أما ما كان منها مجرد مضاربة على الشهرة دون قيمة حقيقية ففيه غرر.",
     evidence_summary:
       "أحكام البيع والملكية في الفقه الإسلامي، ومنع الغرر والجهالة في المعاملات مع مراعاة الخلاف المعتبر وأقوال المجامع عند الحاجة.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-25T00:00:00.000Z",
@@ -641,8 +617,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
     updated_at: "2025-01-15T09:00:00Z",
     created_at: "2025-01-15T09:00:00Z",
   },
-  {
-    id: "seed-issue-hair-transplant",
+  { id: "seed-issue-hair-transplant",
     slug: "hair-transplant-cosmetic",
     title: "زراعة الشعر والعمليات التجميلية",
     summary: "مسألة فقهية في حكم زراعة الشعر وعمليات التجميل العلاجية والتحسينية ويُفرَّق بين الحكم الكلي وتنزيله على الواقعة.",
@@ -654,7 +629,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
       "زراعة الشعر جائزة إذا كانت من شعر الشخص نفسه أو مما يباح بطبيعته، وإزالة العيوب الخِلقية جائزة، أما التجميل التحسيني المحض فيه خلاف.",
     evidence_summary:
       "أحكام التداوي وتغيير خلق الله والقواعد الفقهية في الضرورة والحاجة والعمدة فيها الدليل والمصلحة الشرعية المنضبطة.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-25T00:00:00.000Z",
@@ -664,8 +639,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
     updated_at: "2025-02-10T10:00:00Z",
     created_at: "2025-02-10T10:00:00Z",
   },
-  {
-    id: "seed-issue-crowdfunding",
+  { id: "seed-issue-crowdfunding",
     slug: "crowdfunding-investment",
     title: "التمويل الجماعي وضوابطه الشرعية",
     summary: "مسألة فقهية في حكم منصات التمويل الجماعي (Crowdfunding) للمشاريع التجارية والخيرية والعمدة فيها الدليل والمصلحة الشرعية المنضبطة.",
@@ -677,7 +651,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
       "التمويل الجماعي بصيغة المشاركة بالأرباح جائز، وبصيغة القرض بفائدة محرم ربا، وبصيغة التبرع جائز ومستحب ويُفرَّق بين الحكم الكلي وتنزيله على الواقعة.",
     evidence_summary:
       "أحكام الشركة والقرض والربا والهبة في الفقه الإسلامي والعمدة فيها الدليل والمصلحة الشرعية المنضبطة ويُفرَّق بين الحكم الكلي وتنزيله على الواقعة.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-25T00:00:00.000Z",
@@ -710,8 +684,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
     updated_at: "2025-04-05T08:00:00Z",
     created_at: "2025-04-05T08:00:00Z",
   },
-  {
-    id: "seed-issue-deception-marriage-annulment",
+  { id: "seed-issue-deception-marriage-annulment",
     slug: "deception-marriage-annulment",
     title: "فسخ النكاح بسبب الغش والتدليس",
     summary: "مسألة فقهية في أثر اكتشاف الغش أو إخفاء عيوب جوهرية قبل الزواج على صحة عقد النكاح ويُفرَّق بين الحكم الكلي وتنزيله على الواقعة.",
@@ -723,7 +696,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
       "إذا وقع التدليس في صفة جوهرية يُؤثّر على الرضا فللمغرور حق فسخ النكاح، مع ثبوت المهر لحصول الدخول والعمدة فيها الدليل والمصلحة الشرعية المنضبطة.",
     evidence_summary:
       "أحكام الخيار في العقود وشروط الرضا وعيوب النكاح في المذاهب الأربعة والعمدة فيها الدليل والمصلحة الشرعية المنضبطة.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-25T00:00:00.000Z",
@@ -896,8 +869,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
     created_at: "2025-07-10T09:00:00Z",
   },
   // ── الصيام والعبادات ──────────────────────────────────────────────
-  {
-    id: "seed-issue-quran-phone-prayer",
+  { id: "seed-issue-quran-phone-prayer",
     slug: "quran-phone-in-prayer",
     title: "قراءة القرآن من الهاتف في الصلاة",
     summary: "مسألة فقهية في حكم الإمام أو المصلي الذي يقرأ القرآن من شاشة الهاتف أو اللوحي في الصلاة وتُعرض بأدلتها وضوابطها دون اختزال مخلّ.",
@@ -909,7 +881,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
       "تجوز قراءة القرآن من الهاتف في الصلاة عند الحاجة — كالإمام الذي يخشى الانقطاع — كما تجوز التلاوة من المصحف الورقي. غير أن المسّ المستمر للشاشة يُفسد الصلاة عند بعض الفقهاء لما فيه من عمل كثير. والراجح أن مسّة واحدة للانتقال بين الصفحات لا تُفسد، وكثير من العلماء المعاصرين يأخذون بهذا.",
     evidence_summary:
       "قياس استخدام المصحف في الصلاة، وضوابط العمل الكثير في الصلاة عند الأئمة الأربعة والعمدة فيها الدليل والمصلحة الشرعية المنضبطة.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-25T00:00:00.000Z",
@@ -943,8 +915,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
     created_at: "2025-07-14T09:00:00Z",
   },
   // ── الدعوة والإعلام ──────────────────────────────────────────────
-  {
-    id: "seed-issue-online-lectures-women",
+  { id: "seed-issue-online-lectures-women",
     slug: "online-lectures-women-scholars",
     title: "تدريس المرأة عبر الإنترنت والتلفاز",
     summary: "مسألة فقهية في حكم المرأة المتخصصة في العلم الشرعي وتقديمها الدروس والمحاضرات عبر الفضاء الإلكتروني وتُعرض بأدلتها وضوابطها دون اختزال مخلّ.",
@@ -956,7 +927,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
       "يجوز للمرأة المتخصصة في العلم الشرعي أن تُدرّس وتُحاضر ببرامج إلكترونية بضوابط: أن يكون الصوت بلا فتنة، وأن لا تخضع لأجنبي بالقول. وتعليم النساء أولى وأوجب.",
     evidence_summary:
       "سنة السيدة عائشة وأمهات المؤمنين في تعليم الصحابة والتابعين، وقاعدة تيسير الوصول إلى العلم الشرعي ويُفرَّق بين الحكم الكلي وتنزيله على الواقعة.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-25T00:00:00.000Z",
@@ -1245,8 +1216,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
     updated_at: "2025-11-01T09:00:00Z",
     created_at: "2025-11-01T09:00:00Z",
   },
-  {
-    id: "seed-issue-metaverse-prayer",
+  { id: "seed-issue-metaverse-prayer",
     slug: "metaverse-prayer-virtual",
     title: "حكم الصلاة الجماعية في الميتافيرس",
     summary: "مسألة معاصرة في حكم إقامة الصلاة الجماعية عبر بيئات الواقع الافتراضي (Metaverse) وتُعرض بأدلتها وضوابطها دون اختزال مخلّ.",
@@ -1258,7 +1228,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
       "لا تصح الصلاة الجماعية في الميتافيرس، إذ تشترط الشريعة التقاء الأجساد الحقيقية في مكان واحد أو تواصل الصفوف. المأموم يشترط فيه إمكانية المتابعة الحقيقية لا الافتراضية.",
     evidence_summary:
       "اشتراط اتصال الصفوف وإمكانية المتابعة للإمام في فقه الجماعة، وقياس المسألة على الصلاة عبر البث المرئي التي لا يراها الجمهور مجزئة عن الجماعة الحاضرة.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-25T00:00:00.000Z",
@@ -1268,8 +1238,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
     updated_at: "2025-12-01T09:00:00Z",
     created_at: "2025-12-01T09:00:00Z",
   },
-  {
-    id: "seed-issue-biometric-auth-banking",
+  { id: "seed-issue-biometric-auth-banking",
     slug: "biometric-authentication-banking",
     title: "البصمة البيولوجية في العقود المصرفية الإسلامية",
     summary: "حكم توقيع العقود المصرفية وعقود البيع بالبصمة الإلكترونية (بصمة الإصبع أو الوجه) مع مراعاة الخلاف المعتبر وأقوال المجامع عند الحاجة.",
@@ -1281,7 +1250,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
       "تصح العقود الموثقة بالبصمة البيولوجية وهي في حكم التوقيع الرسمي لأنها أكثر دقة وتحقيقاً للهوية من التوقيع اليدوي. والعبرة في العقود بالمقاصد والمعاني.",
     evidence_summary:
       "قاعدة «العبرة في العقود بالمقاصد والمعاني لا بالألفاظ والمباني»، وأن كل ما يحقق التعريف الكامل ويمنع الجحود معتبَر شرعاً.",
-    documentation_level: "official_verified",
+    documentation_level: "general_reasoning",
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
     last_updated_at: "2026-07-25T00:00:00.000Z",

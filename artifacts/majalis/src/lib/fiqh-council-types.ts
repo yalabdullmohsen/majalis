@@ -69,7 +69,7 @@ export type FiqhCouncilItem = {
   rejection_reason?: string;
   nawazil_topic?: string;
   session_id?: string;
-  documentation_level?: "official_verified" | "imported_needs_review" | "admin_summary" | "rejected" | "archived";
+  documentation_level?: "official_verified" | "general_reasoning" | "imported_needs_review" | "admin_summary" | "rejected" | "archived";
   completion_score?: number;
   link_status?: "ok" | "redirect" | "broken" | "timeout" | "unchecked";
   link_checked_at?: string;
@@ -242,7 +242,7 @@ export type FiqhCouncilIssue = {
   subcategory?: string;
   ruling_summary?: string;
   evidence_summary?: string;
-  documentation_level?: "official_verified" | "imported_needs_review" | "admin_summary" | "rejected" | "archived";
+  documentation_level?: "official_verified" | "general_reasoning" | "imported_needs_review" | "admin_summary" | "rejected" | "archived";
   /**
    * درجة توثيق الأدلة الصادقة (citation-schema).
    * منفصلة عن documentation_level (بوابة العرض) وعن trust_level لمصادر الاستيراد.

@@ -39,6 +39,8 @@ export type ScientificAnnouncement = {
   /** Weekly recurrence — day name in Arabic */
   recurrenceDay?: string;
   broadcastLinks?: BroadcastLink[];
+  /** وسم: lessonTitle كان مطابقاً لـ bookTitle */
+  _duplicate_lesson_book?: boolean;
 };
 
 export const SCIENTIFIC_ANNOUNCEMENTS: ScientificAnnouncement[] = [
@@ -46,6 +48,7 @@ export const SCIENTIFIC_ANNOUNCEMENTS: ScientificAnnouncement[] = [
     id: "sci-tawheed-saltaweel",
     announcementTitle: "تذكير بدرس الليلة",
     lessonTitle: "شرح كتاب التوحيد من صحيح البخاري",
+    _duplicate_lesson_book: true,
     sheikh: "سالم بن سعد الطويل",
     bookTitle: "شرح كتاب التوحيد من صحيح البخاري",
     bookAuthor: "محمد بن صالح العثيمين (رحمه الله)",
@@ -75,7 +78,7 @@ export const SCIENTIFIC_ANNOUNCEMENTS: ScientificAnnouncement[] = [
   {
     id: "sci-rawdat-alafham-muwaiziri",
     announcementTitle: "درس جديد",
-    lessonTitle: "روضة الأفهام في شرح زوائد المحرر على بلوغ المرام",
+    lessonTitle: "شرح روضة الأفهام في شرح زوائد المحرر على بلوغ المرام",
     sheikh: "الشيخ حسين بن مبارك المويزري",
     bookTitle: "روضة الأفهام في شرح زوائد المحرر على بلوغ المرام",
     bookAuthor: "تأليف عبد الله بن صالح الفوزان",

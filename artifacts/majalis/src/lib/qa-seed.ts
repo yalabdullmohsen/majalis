@@ -98,6 +98,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-2",
+    "documentation_status": "unsourced",
     "question": "من ثاني الخلفاء الراشدين؟",
     "answer": "الجواب: عمر بن الخطاب.",
     "category_id": "seed-cat-sahabah",
@@ -117,6 +118,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-3",
+    "documentation_status": "unsourced",
     "question": "من ثالث الخلفاء الراشدين؟",
     "answer": "الجواب: عثمان بن عفان.",
     "category_id": "seed-cat-sahabah",
@@ -136,6 +138,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-4",
+    "documentation_status": "unsourced",
     "question": "من رابع الخلفاء الراشدين؟",
     "answer": "الجواب: علي بن أبي طالب.",
     "category_id": "seed-cat-sahabah",
@@ -155,6 +158,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-5",
+    "documentation_status": "unsourced",
     "question": "من الصحابي الملقب بذي النورين؟",
     "answer": "الجواب: عثمان بن عفان.",
     "category_id": "seed-cat-sahabah",
@@ -174,6 +178,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-6",
+    "documentation_status": "unsourced",
     "question": "من الصحابي الملقب بالفاروق؟",
     "answer": "الجواب: عمر بن الخطاب.",
     "category_id": "seed-cat-sahabah",
@@ -193,6 +198,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-7",
+    "documentation_status": "unsourced",
     "question": "من أكثر الصحابة رواية للحديث؟",
     "answer": "الجواب: أبو هريرة.",
     "category_id": "seed-cat-sahabah",
@@ -212,6 +218,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-8",
+    "documentation_status": "unsourced",
     "question": "من أول الرجال إسلاماً؟",
     "answer": "الجواب: أبو بكر الصديق.",
     "category_id": "seed-cat-aqeedah",
@@ -231,6 +238,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-9",
+    "documentation_status": "unsourced",
     "question": "من أول الصبيان إسلاماً؟",
     "answer": "الجواب: علي بن أبي طالب.",
     "category_id": "seed-cat-aqeedah",
@@ -250,6 +258,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-10",
+    "documentation_status": "unsourced",
     "question": "من أم المؤمنين ابنة أبي بكر؟",
     "answer": "الجواب: عائشة رضي الله عنها.",
     "category_id": "seed-cat-aqeedah",
@@ -269,6 +278,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-11",
+    "documentation_status": "unsourced",
     "question": "في أي غار نزل الوحي أول مرة؟",
     "answer": "الجواب: غار حراء.",
     "category_id": "seed-cat-aqeedah",
@@ -288,6 +298,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-12",
+    "documentation_status": "unsourced",
     "question": "من أول من آمن من النساء؟",
     "answer": "الجواب: خديجة بنت خويلد.",
     "category_id": "seed-cat-aqeedah",
@@ -307,6 +318,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-13",
+    "documentation_status": "unsourced",
     "question": "إلى أي مدينة هاجر النبي ﷺ؟",
     "answer": "الجواب: المدينة المنورة.",
     "category_id": "seed-cat-aqeedah",
@@ -326,6 +338,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-14",
+    "documentation_status": "unsourced",
     "question": "من أول الرسل إلى أهل الأرض بعد آدم؟",
     "answer": "الجواب: نوح عليه السلام.",
     "category_id": "seed-cat-anbiya",
@@ -345,6 +358,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-15",
+    "documentation_status": "unsourced",
     "question": "من النبي الذي اتخذه الله خليلاً؟",
     "answer": "الجواب: إبراهيم عليه السلام.",
     "category_id": "seed-cat-anbiya",
@@ -364,6 +378,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-16",
+    "documentation_status": "unsourced",
     "question": "من النبي الذي كلمه الله تكليماً؟",
     "answer": "الجواب: موسى عليه السلام.",
     "category_id": "seed-cat-anbiya",
@@ -383,6 +398,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-17",
+    "documentation_status": "unsourced",
     "question": "من النبي الذي أرسل إلى قوم عاد؟",
     "answer": "الجواب: هود عليه السلام.",
     "category_id": "seed-cat-anbiya",
@@ -402,6 +418,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-18",
+    "documentation_status": "unsourced",
     "question": "من النبي الذي أرسل إلى قوم ثمود؟",
     "answer": "الجواب: صالح عليه السلام.",
     "category_id": "seed-cat-anbiya",
@@ -421,6 +438,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-19",
+    "documentation_status": "unsourced",
     "question": "من النبي الذي ابتلعه الحوت؟",
     "answer": "الجواب: يونس عليه السلام.",
     "category_id": "seed-cat-anbiya",
@@ -440,6 +458,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-20",
+    "documentation_status": "unsourced",
     "question": "من النبي الذي رفعه الله إليه؟",
     "answer": "الجواب: عيسى عليه السلام.",
     "category_id": "seed-cat-anbiya",
@@ -459,6 +478,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-21",
+    "documentation_status": "unsourced",
     "question": "من والد إسماعيل عليه السلام؟",
     "answer": "الجواب: إبراهيم عليه السلام.",
     "category_id": "seed-cat-anbiya",
@@ -478,6 +498,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-22",
+    "documentation_status": "unsourced",
     "question": "من النبي الذي سخر الله له الريح؟",
     "answer": "الجواب: سليمان عليه السلام.",
     "category_id": "seed-cat-anbiya",
@@ -497,6 +518,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-23",
+    "documentation_status": "unsourced",
     "question": "من النبي الذي اشتهر بالصبر على البلاء؟",
     "answer": "الجواب: أيوب عليه السلام.",
     "category_id": "seed-cat-anbiya",
@@ -516,6 +538,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-40",
+    "documentation_status": "unsourced",
     "question": "بماذا يتطهر المسلم عند عدم وجود الماء؟",
     "answer": "الجواب: التيمم.",
     "category_id": "seed-cat-tahara",
@@ -535,6 +558,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-41",
+    "documentation_status": "unsourced",
     "question": "ما الطهارة المطلوبة قبل الصلاة؟",
     "answer": "الجواب: الوضوء.",
     "category_id": "seed-cat-tahara",
@@ -554,6 +578,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-42",
+    "documentation_status": "sourced",
     "question": "ما حكم من نسي مسح رأسه في الوضوء؟",
     "answer": "الجواب: لا يصح وضوؤه؛ فمسح الرأس ركنٌ من أركان الوضوء باتفاق المذاهب الأربعة، ومن نسيه وجب عليه إعادة الوضوء.",
     "category_id": "seed-cat-tahara",
@@ -573,6 +598,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-43",
+    "documentation_status": "sourced",
     "question": "هل يجوز الوضوء بماء مغلوب عليه؟",
     "answer": "الجواب: نعم؛ ما لم يتغير اسمه أو صفته.",
     "category_id": "seed-cat-tahara",
@@ -592,6 +618,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-44",
+    "documentation_status": "sourced",
     "question": "ما حكم ترك غسل جزء من الوجه في الوضوء؟",
     "answer": "الجواب: لا يصح الوضوء حتى يُغسل الجزء.",
     "category_id": "seed-cat-tahara",
@@ -611,6 +638,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-45",
+    "documentation_status": "sourced",
     "question": "هل يجوز التيمم قبل وقت الصلاة؟",
     "answer": "الجواب: نعم عند فقد الماء أو العجز عن استعماله.",
     "category_id": "seed-cat-tahara",
@@ -630,6 +658,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-46",
+    "documentation_status": "sourced",
     "question": "ما حكم من شك في عدد غسلات الوضوء؟",
     "answer": "الجواب: يبني على اليقين؛ وهو الأقل.",
     "category_id": "seed-cat-tahara",
@@ -649,6 +678,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-53",
+    "documentation_status": "unsourced",
     "question": "ما أول ما يحاسب عليه العبد من عمله؟",
     "answer": "الجواب: الصلاة.",
     "category_id": "seed-cat-salah",
@@ -668,6 +698,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-54",
+    "documentation_status": "unsourced",
     "question": "كم عدد الصلوات المفروضة في اليوم والليلة؟",
     "answer": "الجواب: خمس صلوات.",
     "category_id": "seed-cat-salah",
@@ -687,6 +718,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-55",
+    "documentation_status": "unsourced",
     "question": "ما القبلة التي يتجه إليها المسلمون في الصلاة؟",
     "answer": "الجواب: الكعبة.",
     "category_id": "seed-cat-salah",
@@ -706,6 +738,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-66",
+    "documentation_status": "unsourced",
     "question": "ما العبادة المالية الواجبة على المال بشروطها؟",
     "answer": "الجواب: الزكاة.",
     "category_id": "seed-cat-zakat",
@@ -725,6 +758,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-79",
+    "documentation_status": "unsourced",
     "question": "في أي شهر يصوم المسلمون؟",
     "answer": "الجواب: رمضان.",
     "category_id": "seed-cat-sawm",
@@ -744,6 +778,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-80",
+    "documentation_status": "sourced",
     "question": "ما الوجبة التي تكون قبل الفجر للصائم؟",
     "answer": "الجواب: السحور، وهو سنة مؤكدة لقوله ﷺ: (تسحّروا فإن في السحور بركة) — متفق عليه.",
     "category_id": "seed-cat-sawm",
@@ -763,6 +798,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-92",
+    "documentation_status": "sourced",
     "question": "ما الركن الأعظم في الحج؟",
     "answer": "الجواب: الوقوف بعرفة، لقوله ﷺ: (الحج عرفة) — وهو ركن لا يصح الحج بدونه.",
     "category_id": "seed-cat-hajj",
@@ -783,6 +819,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-93",
+    "documentation_status": "unsourced",
     "question": "ما البيت الذي يقصده المسلمون في الحج؟",
     "answer": "الجواب: الكعبة.",
     "category_id": "seed-cat-hajj",
@@ -802,6 +839,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-108",
+    "documentation_status": "unsourced",
     "question": "من صاحب النبي ﷺ في الهجرة؟",
     "answer": "الجواب: أبو بكر الصديق.",
     "category_id": "seed-cat-seerah",
@@ -821,6 +859,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-109",
+    "documentation_status": "unsourced",
     "question": "ما أول مسجد أسسه النبي ﷺ بعد الهجرة؟",
     "answer": "الجواب: مسجد قباء.",
     "category_id": "seed-cat-seerah",
@@ -840,6 +879,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-110",
+    "documentation_status": "unsourced",
     "question": "ما أول غزوة كبرى في الإسلام؟",
     "answer": "الجواب: غزوة بدر.",
     "category_id": "seed-cat-seerah",
@@ -859,6 +899,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-111",
+    "documentation_status": "unsourced",
     "question": "في أي غزوة وقع حفر الخندق؟",
     "answer": "الجواب: غزوة الخندق.",
     "category_id": "seed-cat-seerah",
@@ -878,6 +919,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-112",
+    "documentation_status": "unsourced",
     "question": "ما الغزوة التي وقعت في السنة الثالثة للهجرة؟",
     "answer": "الجواب: غزوة أحد.",
     "category_id": "seed-cat-seerah",
@@ -897,6 +939,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-113",
+    "documentation_status": "unsourced",
     "question": "ما اسم الصلح الذي عقده النبي ﷺ مع قريش؟",
     "answer": "الجواب: صلح الحديبية.",
     "category_id": "seed-cat-seerah",
@@ -916,6 +959,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-114",
+    "documentation_status": "unsourced",
     "question": "ما الحدث الذي دخل فيه النبي ﷺ مكة فاتحاً؟",
     "answer": "الجواب: فتح مكة.",
     "category_id": "seed-cat-seerah",
@@ -935,6 +979,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-131",
+    "documentation_status": "unsourced",
     "question": "من مؤسس المذهب الحنفي؟",
     "answer": "الجواب: أبو حنيفة النعمان.",
     "category_id": "seed-cat-hadith",
@@ -954,6 +999,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-132",
+    "documentation_status": "unsourced",
     "question": "من مؤسس المذهب المالكي؟",
     "answer": "الجواب: مالك بن أنس.",
     "category_id": "seed-cat-hadith",
@@ -973,6 +1019,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-133",
+    "documentation_status": "unsourced",
     "question": "من مؤسس المذهب الشافعي؟",
     "answer": "الجواب: محمد بن إدريس الشافعي.",
     "category_id": "seed-cat-hadith",
@@ -992,6 +1039,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-134",
+    "documentation_status": "unsourced",
     "question": "من مؤسس المذهب الحنبلي؟",
     "answer": "الجواب: أحمد بن حنبل.",
     "category_id": "seed-cat-hadith",
@@ -1011,6 +1059,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-135",
+    "documentation_status": "unsourced",
     "question": "من صاحب صحيح البخاري؟",
     "answer": "الجواب: محمد بن إسماعيل البخاري.",
     "category_id": "seed-cat-hadith",
@@ -1030,6 +1079,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-136",
+    "documentation_status": "unsourced",
     "question": "من صاحب صحيح مسلم؟",
     "answer": "الجواب: مسلم بن الحجاج.",
     "category_id": "seed-cat-hadith",
@@ -1049,6 +1099,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-137",
+    "documentation_status": "unsourced",
     "question": "من الإمام المعروف بإمام دار الهجرة؟",
     "answer": "الجواب: مالك بن أنس.",
     "category_id": "seed-cat-hadith",
@@ -1068,6 +1119,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-138",
+    "documentation_status": "unsourced",
     "question": "من الإمام صاحب كتاب الموطأ؟",
     "answer": "الجواب: مالك بن أنس.",
     "category_id": "seed-cat-hadith",
@@ -1087,6 +1139,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-144",
+    "documentation_status": "sourced",
     "question": "ما حكم قول «سبحان الله» بعد الصلاة؟",
     "answer": "الجواب: سنة مؤكدة؛ ثلاثاً وثلاثين.",
     "category_id": "seed-cat-adhkar",
@@ -1106,6 +1159,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-145",
+    "documentation_status": "sourced",
     "question": "ما أفضل ذكر بعد الفجر؟",
     "answer": "الجواب: قراءة آية الكرسي والمعوذات.",
     "category_id": "seed-cat-adhkar",
@@ -1125,6 +1179,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-146",
+    "documentation_status": "sourced",
     "question": "هل يجوز الجهر بالأذكار بعد الصلاة؟",
     "answer": "الجواب: جائز، والجهر ثابت بالسنة كما في حديث ابن عباس: (كان رفع الصوت بالذكر حين ينصرف الناس من المكتوبة على عهد النبي ﷺ) — متفق عليه، والسر جائز أيضاً.",
     "category_id": "seed-cat-adhkar",
@@ -1144,6 +1199,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-147",
+    "documentation_status": "sourced",
     "question": "ما حكم من ترك أذكار الصباح والمساء؟",
     "answer": "الجواب: فاته خير كثير؛ وليس كبيرة إذا لم يُهمل عمداً.",
     "category_id": "seed-cat-adhkar",
@@ -1163,6 +1219,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-148",
+    "documentation_status": "sourced",
     "question": "ما فائدة الاستغفار في الأذكار؟",
     "answer": "الجواب: مغفرة الذنوب وفرج الهم.",
     "category_id": "seed-cat-adhkar",
@@ -1182,6 +1239,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-170",
+    "documentation_status": "unsourced",
     "question": "ما معنى التوحيد؟",
     "answer": "الجواب: إفراد الله بالخلق والأمر والعبادة، وهو ثلاثة أنواع: توحيد الربوبية وتوحيد الألوهية وتوحيد الأسماء والصفات.",
     "category_id": "seed-cat-aqeedah",
@@ -1201,6 +1259,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-171",
+    "documentation_status": "unsourced",
     "question": "ما الدليل على أن الله موجود؟",
     "answer": "الجواب: الأدلة الفطرية والعقلية؛ كوجود المخلوقات التي تستلزم خالقاً، وقال تعالى: ﴿أَمْ خُلِقُوا مِنْ غَيْرِ شَيْءٍ أَمْ هُمُ الْخَالِقُونَ﴾.",
     "category_id": "seed-cat-aqeedah",
@@ -1220,6 +1279,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-172",
+    "documentation_status": "unsourced",
     "question": "ما أنواع التوحيد الثلاثة؟",
     "answer": "الجواب: توحيد الربوبية (الإقرار بأن الله الخالق الرازق المدبر)، وتوحيد الألوهية (إفراد الله بالعبادة)، وتوحيد الأسماء والصفات (الإيمان بما أثبته الله لنفسه).",
     "category_id": "seed-cat-aqeedah",
@@ -1239,6 +1299,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-173",
+    "documentation_status": "unsourced",
     "question": "ما أركان الإيمان الستة؟",
     "answer": "الجواب: الإيمان بالله وملائكته وكتبه ورسله واليوم الآخر والقدر خيره وشره، كما في حديث جبريل في صحيح مسلم.",
     "category_id": "seed-cat-aqeedah",
@@ -1258,6 +1319,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-174",
+    "documentation_status": "unsourced",
     "question": "ما الكبيرة التي لا يغفرها الله إلا بالتوبة؟",
     "answer": "الجواب: الشرك بالله؛ قال تعالى: ﴿إِنَّ اللَّهَ لَا يَغْفِرُ أَن يُشْرَكَ بِهِ وَيَغْفِرُ مَا دُونَ ذَٰلِكَ لِمَن يَشَاءُ﴾.",
     "category_id": "seed-cat-aqeedah",
@@ -1277,6 +1339,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-175",
+    "documentation_status": "unsourced",
     "question": "ما معنى الإحسان في حديث جبريل؟",
     "answer": "الجواب: أن تعبد الله كأنك تراه، فإن لم تكن تراه فإنه يراك.",
     "category_id": "seed-cat-aqeedah",
@@ -1296,6 +1359,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-176",
+    "documentation_status": "unsourced",
     "question": "هل الإيمان يزيد وينقص؟",
     "answer": "الجواب: نعم، الإيمان يزيد بالطاعة وينقص بالمعصية، وهذا قول أهل السنة والجماعة.",
     "category_id": "seed-cat-aqeedah",
@@ -1315,6 +1379,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-177",
+    "documentation_status": "unsourced",
     "question": "ما الفرق بين الخوف والرجاء في العبادة؟",
     "answer": "الجواب: الخوف هو الباعث على ترك المعاصي، والرجاء هو الباعث على الطاعة. وينبغي أن يتوازنا في قلب المؤمن.",
     "category_id": "seed-cat-aqeedah",
@@ -1334,6 +1399,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-178",
+    "documentation_status": "unsourced",
     "question": "ما المقصود بالقدر الخير والشر؟",
     "answer": "الجواب: الإيمان بأن الله قدّر كل شيء سلفاً وكتبه، والخير والشر كلاهما بعلم الله وإرادته، لكن الشر لا يُنسب إليه إلا خلقاً لا أمراً ولا رضاً.",
     "category_id": "seed-cat-aqeedah",
@@ -1353,6 +1419,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-179",
+    "documentation_status": "sourced",
     "question": "ما معنى التوكل على الله؟",
     "answer": "الجواب: صرف القلب إلى الله اعتماداً عليه مع الأخذ بالأسباب الشرعية، قال ﷺ لمن سأله: أُطلق ناقتي وأتوكل أم أعقلها وأتوكل؟ «اعقلها وتوكّل» — رواه الترمذي (2517) وحسّنه الألباني.",
     "category_id": "seed-cat-aqeedah",
@@ -1372,6 +1439,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-180",
+    "documentation_status": "unsourced",
     "question": "ما دليل اليوم الآخر؟",
     "answer": "الجواب: قوله تعالى: ﴿يَوْمَ تَجِدُ كُلُّ نَفْسٍ مَّا عَمِلَتْ مِنْ خَيْرٍ مُّحْضَرًا﴾، والأحاديث المتواترة عن أهوال يوم القيامة.",
     "category_id": "seed-cat-aqeedah",
@@ -1391,6 +1459,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-181",
+    "documentation_status": "unsourced",
     "question": "ما معنى الولاء والبراء؟",
     "answer": "الجواب: محبة المؤمنين ونصرتهم (الولاء)، وبغض الشرك وأهله وترك موالاتهم على حساب الدين (البراء). وهو أصل من أصول العقيدة.",
     "category_id": "seed-cat-aqeedah",
@@ -1410,6 +1479,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-182",
+    "documentation_status": "unsourced",
     "question": "من الملائكة وما صفاتهم؟",
     "answer": "الجواب: عباد الله المكرمون خُلقوا من نور، ﴿لَّا يَعْصُونَ اللَّهَ مَا أَمَرَهُمْ وَيَفْعَلُونَ مَا يُؤْمَرُونَ﴾.",
     "category_id": "seed-cat-aqeedah",
@@ -1429,6 +1499,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-183",
+    "documentation_status": "unsourced",
     "question": "ما الكتب السماوية المذكورة في القرآن؟",
     "answer": "الجواب: التوراة (موسى)، والإنجيل (عيسى)، والزبور (داود)، والقرآن الكريم (محمد ﷺ)، وصحف إبراهيم وموسى.",
     "category_id": "seed-cat-aqeedah",
@@ -1448,6 +1519,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-184",
+    "documentation_status": "unsourced",
     "question": "ما الفرق بين النبي والرسول؟",
     "answer": "الجواب: الرسول مَن أُرسل بشريعة جديدة إلى قوم، والنبي مَن أُوحي إليه ليدعو بشريعة من قبله. وكل رسول نبي وليس كل نبي رسولاً.",
     "category_id": "seed-cat-aqeedah",
@@ -1467,6 +1539,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-185",
+    "documentation_status": "unsourced",
     "question": "هل إبليس من الجن أم من الملائكة؟",
     "answer": "الجواب: من الجن؛ قال تعالى: ﴿كَانَ مِنَ الْجِنِّ فَفَسَقَ عَنْ أَمْرِ رَبِّهِ﴾.",
     "category_id": "seed-cat-aqeedah",
@@ -1486,6 +1559,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-186",
+    "documentation_status": "unsourced",
     "question": "من هو أبو البشر؟",
     "answer": "الجواب: آدم عليه السلام، خلقه الله من تراب وعلّمه الأسماء كلها.",
     "category_id": "seed-cat-anbiya",
@@ -1505,6 +1579,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-187",
+    "documentation_status": "unsourced",
     "question": "من النبي الذي بُشّر بلقب «كليم الله»؟",
     "answer": "الجواب: موسى عليه السلام، كلّمه الله تكليماً بلا واسطة.",
     "category_id": "seed-cat-anbiya",
@@ -1524,6 +1599,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-188",
+    "documentation_status": "unsourced",
     "question": "كم عدد الأنبياء والمرسلين المذكورين في القرآن؟",
     "answer": "الجواب: ذُكر في القرآن الكريم خمسة وعشرون نبياً ورسولاً.",
     "category_id": "seed-cat-anbiya",
@@ -1543,6 +1619,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-189",
+    "documentation_status": "unsourced",
     "question": "من النبي الذي ابتُلي بالدود وصبر؟",
     "answer": "الجواب: أيوب عليه السلام، ابتلاه الله في ماله وولده وجسده فصبر فكشف الله ضره.",
     "category_id": "seed-cat-anbiya",
@@ -1562,6 +1639,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-190",
+    "documentation_status": "unsourced",
     "question": "من النبي الذي رُفع إلى السماء قبل الموت؟",
     "answer": "الجواب: عيسى عليه السلام؛ ﴿بَل رَّفَعَهُ اللَّهُ إِلَيْهِ﴾، وسينزل آخر الزمان.",
     "category_id": "seed-cat-anbiya",
@@ -1581,6 +1659,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-191",
+    "documentation_status": "unsourced",
     "question": "ما معجزة نبي الله إبراهيم الكبرى؟",
     "answer": "الجواب: إلقاؤه في النار فجعلها الله عليه برداً وسلاماً.",
     "category_id": "seed-cat-anbiya",
@@ -1600,6 +1679,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-192",
+    "documentation_status": "unsourced",
     "question": "من النبي الذي أُعطي ملكاً لا ينبغي لأحد من بعده؟",
     "answer": "الجواب: سليمان عليه السلام؛ أُعطي تسخير الريح والجن والطير.",
     "category_id": "seed-cat-anbiya",
@@ -1619,8 +1699,9 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-193",
+    "documentation_status": "unsourced",
     "question": "في أي بلد وُلد النبي ﷺ؟",
-    "answer": "الجواب: في مكة المكرمة، في عام الفيل (570م تقريباً).",
+    "answer": "الجواب: في مكة المكرمة، في عام الفيل، نحو 570–571م.",
     "category_id": "seed-cat-anbiya",
     "ruling_type": null,
     "evidence": null,
@@ -1638,6 +1719,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-194",
+    "documentation_status": "unsourced",
     "question": "من هو جد النبي ﷺ الذي كفله بعد وفاة والدته؟",
     "answer": "الجواب: عبد المطلب بن هاشم، ثم توفي عبد المطلب فكفله عمه أبو طالب.",
     "category_id": "seed-cat-anbiya",
@@ -1657,6 +1739,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-195",
+    "documentation_status": "unsourced",
     "question": "ما المعجزة الخالدة للنبي ﷺ؟",
     "answer": "الجواب: القرآن الكريم؛ وهو المعجزة الباقية على مر الزمان.",
     "category_id": "seed-cat-anbiya",
@@ -1676,6 +1759,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-196",
+    "documentation_status": "unsourced",
     "question": "من هو صاحب النبي ﷺ في الغار؟",
     "answer": "الجواب: أبو بكر الصديق رضي الله عنه؛ قال تعالى: ﴿إِذْ يَقُولُ لِصَاحِبِهِ لَا تَحْزَنْ إِنَّ اللَّهَ مَعَنَا﴾.",
     "category_id": "seed-cat-sahabah",
@@ -1695,6 +1779,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-197",
+    "documentation_status": "unsourced",
     "question": "من لقب بـ«حواري النبي»؟",
     "answer": "الجواب: الزبير بن العوام رضي الله عنه.",
     "category_id": "seed-cat-sahabah",
@@ -1714,6 +1799,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-198",
+    "documentation_status": "unsourced",
     "question": "من أول شهيدة في الإسلام؟",
     "answer": "الجواب: سمية بنت خياط، والدة عمار بن ياسر رضي الله عنهما.",
     "category_id": "seed-cat-sahabah",
@@ -1733,6 +1819,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-199",
+    "documentation_status": "unsourced",
     "question": "من الصحابي الذي قال عنه النبي ﷺ «مَن أراد أن ينظر إلى شهيد يمشي على وجه الأرض فلينظر إلى طلحة»؟",
     "answer": "الجواب: طلحة بن عبيدالله رضي الله عنه.",
     "category_id": "seed-cat-sahabah",
@@ -1752,6 +1839,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-200",
+    "documentation_status": "unsourced",
     "question": "من أول من أسلم من الرجال البالغين؟",
     "answer": "الجواب: أبو بكر الصديق رضي الله عنه في قول الجمهور.",
     "category_id": "seed-cat-sahabah",
@@ -1771,6 +1859,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-201",
+    "documentation_status": "unsourced",
     "question": "من أول من أسلم من الغلمان؟",
     "answer": "الجواب: علي بن أبي طالب رضي الله عنه.",
     "category_id": "seed-cat-sahabah",
@@ -1790,6 +1879,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-202",
+    "documentation_status": "unsourced",
     "question": "من أول من أسلم من النساء؟",
     "answer": "الجواب: خديجة بنت خويلد رضي الله عنها.",
     "category_id": "seed-cat-sahabah",
@@ -1809,6 +1899,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-203",
+    "documentation_status": "unsourced",
     "question": "من صحابي الرسول الملقب بـ«سيف الله المسلول»؟",
     "answer": "الجواب: خالد بن الوليد رضي الله عنه.",
     "category_id": "seed-cat-sahabah",
@@ -1828,6 +1919,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-204",
+    "documentation_status": "unsourced",
     "question": "من الصحابي الذي جمع القرآن في عهد النبي ﷺ؟",
     "answer": "الجواب: أربعة من الأنصار: معاذ بن جبل وأُبيّ بن كعب وزيد بن ثابت وأبو زيد.",
     "category_id": "seed-cat-sahabah",
@@ -1847,6 +1939,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-205",
+    "documentation_status": "unsourced",
     "question": "لمن قال النبي ﷺ «أنت مني وأنا منك»؟",
     "answer": "الجواب: قالها لعلي بن أبي طالب رضي الله عنه يوم عمرة القضاء حين اختصم هو وجعفر وزيد في ابنة حمزة، فقال ﷺ لعلي: «أنت مني وأنا منك» — رواه البخاري (2699). وقالها أيضاً لجعفر رضي الله عنه في الموضع نفسه: «أشبهتَ خَلقي وخُلقي».",
     "category_id": "seed-cat-sahabah",
@@ -1866,6 +1959,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-206",
+    "documentation_status": "unsourced",
     "question": "ما فرائض الوضوء الأربعة؟",
     "answer": "الجواب: غسل الوجه، وغسل اليدين إلى المرفقين، ومسح الرأس، وغسل الرجلين إلى الكعبين.",
     "category_id": "seed-cat-tahara",
@@ -1885,6 +1979,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-207",
+    "documentation_status": "unsourced",
     "question": "ما الذي ينقض الوضوء؟",
     "answer": "الجواب: الخارج من السبيلين، والنوم المستغرق، وأكل لحم الإبل، وزوال العقل، ومس الذكر في المذهب الراجح.",
     "category_id": "seed-cat-tahara",
@@ -1904,6 +1999,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-208",
+    "documentation_status": "unsourced",
     "question": "هل الغسل واجب على المرأة بعد الحيض؟",
     "answer": "الجواب: نعم، غسل الجنابة واجب بعد انقطاع الحيض أو النفاس.",
     "category_id": "seed-cat-tahara",
@@ -1923,6 +2019,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-209",
+    "documentation_status": "unsourced",
     "question": "ما الطهارة في الإسلام؟",
     "answer": "الجواب: رفع الحدث والخبث بالماء أو ما يقوم مقامه؛ وهي شرط لصحة الصلاة والطواف ومس المصحف.",
     "category_id": "seed-cat-tahara",
@@ -1942,6 +2039,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-210",
+    "documentation_status": "unsourced",
     "question": "هل يجوز التيمم عند وجود الماء؟",
     "answer": "الجواب: لا يجوز إلا عند العجز عن استعمال الماء لمرض أو خوف أو فقد الماء.",
     "category_id": "seed-cat-tahara",
@@ -1961,6 +2059,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-211",
+    "documentation_status": "unsourced",
     "question": "كم ركناً للصلاة؟",
     "answer": "الجواب: أركان الصلاة أربعة عشر: النية، وتكبيرة الإحرام، والقيام مع القدرة، وقراءة الفاتحة، والركوع، والرفع منه، والسجود، والرفع منه، والجلسة بين السجدتين، والجلسة الأخيرة، والتشهد، والصلاة على النبي، والتسليمتان، والترتيب.",
     "category_id": "seed-cat-salah",
@@ -1980,6 +2079,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-212",
+    "documentation_status": "unsourced",
     "question": "ما وقت صلاة الفجر؟",
     "answer": "الجواب: من طلوع الفجر الصادق إلى طلوع الشمس.",
     "category_id": "seed-cat-salah",
@@ -1999,6 +2099,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-213",
+    "documentation_status": "unsourced",
     "question": "هل تصح صلاة الجماعة بشخصين؟",
     "answer": "الجواب: نعم، تصح صلاة الجماعة بإمام ومأموم واحد.",
     "category_id": "seed-cat-salah",
@@ -2018,6 +2119,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-214",
+    "documentation_status": "unsourced",
     "question": "ما حكم صلاة الجمعة؟",
     "answer": "الجواب: فرض عين على كل مسلم ذكر مقيم مكلف لا عذر له.",
     "category_id": "seed-cat-salah",
@@ -2037,6 +2139,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-215",
+    "documentation_status": "unsourced",
     "question": "هل يجوز الجمع بين الصلاتين في السفر؟",
     "answer": "الجواب: نعم، يجوز جمع الظهر والعصر والمغرب والعشاء في السفر.",
     "category_id": "seed-cat-salah",
@@ -2056,6 +2159,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-216",
+    "documentation_status": "unsourced",
     "question": "ما فضل صلاة الجماعة؟",
     "answer": "الجواب: تفضل صلاة المنفرد بسبع وعشرين درجة؛ رواه البخاري.",
     "category_id": "seed-cat-salah",
@@ -2075,6 +2179,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-217",
+    "documentation_status": "unsourced",
     "question": "ما حكم السترة في الصلاة؟",
     "answer": "الجواب: سنة مؤكدة للمصلي، ويحرم المرور بين المصلي وسترته.",
     "category_id": "seed-cat-salah",
@@ -2094,6 +2199,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-218",
+    "documentation_status": "unsourced",
     "question": "ما حكم رفع اليدين في الصلاة؟",
     "answer": "الجواب: سنة عند تكبيرة الإحرام والركوع والرفع منه وعند القيام من التشهد الأول.",
     "category_id": "seed-cat-salah",
@@ -2113,6 +2219,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-219",
+    "documentation_status": "unsourced",
     "question": "ما القدر الواجب من الفاتحة في الصلاة؟",
     "answer": "الجواب: الفاتحة كاملة ركن في كل ركعة لحديث «لا صلاة لمن لم يقرأ بفاتحة الكتاب».",
     "category_id": "seed-cat-salah",
@@ -2132,6 +2239,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-220",
+    "documentation_status": "unsourced",
     "question": "هل للمرأة صلاة في المنزل أفضل من المسجد؟",
     "answer": "الجواب: الأفضل للمرأة الصلاة في بيتها، لحديث «وبيوتهن خير لهن».",
     "category_id": "seed-cat-salah",
@@ -2151,6 +2259,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-221",
+    "documentation_status": "unsourced",
     "question": "ما الأيام المنهي عن صيامها؟",
     "answer": "الجواب: يوم العيدين، وأيام التشريق الثلاثة (11-13 ذو الحجة) إلا في الحج للمتمتع العاجز.",
     "category_id": "seed-cat-sawm",
@@ -2170,6 +2279,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-222",
+    "documentation_status": "unsourced",
     "question": "ما مفسدات الصيام؟",
     "answer": "الجواب: الأكل والشرب والجماع والاستمناء والحيض والنفاس والحقنة بالأوردة.",
     "category_id": "seed-cat-sawm",
@@ -2189,6 +2299,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-223",
+    "documentation_status": "unsourced",
     "question": "هل الحقنة الطبية تُفطّر؟",
     "answer": "الجواب: الحقنة في الوريد تُفطّر في الراجح، أما الحقنة في العضل فلا.",
     "category_id": "seed-cat-sawm",
@@ -2208,6 +2319,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-224",
+    "documentation_status": "unsourced",
     "question": "متى يجب قضاء الصيام؟",
     "answer": "الجواب: يجب القضاء على من أفطر بعذر شرعي (مرض أو سفر أو حيض)، ويكون قبل رمضان التالي.",
     "category_id": "seed-cat-sawm",
@@ -2227,6 +2339,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-225",
+    "documentation_status": "sourced",
     "question": "ما فضل صيام الاثنين والخميس؟",
     "answer": "الجواب: تُعرض الأعمال يوم الاثنين والخميس على الله، وقال ﷺ: «تُعرض الأعمال يوم الاثنين والخميس، فأحب أن يُعرض عملي وأنا صائم».",
     "category_id": "seed-cat-sawm",
@@ -2246,6 +2359,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-226",
+    "documentation_status": "unsourced",
     "question": "ما حكم الإمساك في رمضان لمن نسي وأكل؟",
     "answer": "الجواب: من أكل أو شرب ناسياً فليتم صومه فإن الله أطعمه وسقاه.",
     "category_id": "seed-cat-sawm",
@@ -2265,6 +2379,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-227",
+    "documentation_status": "unsourced",
     "question": "ما حكم صيام يوم عاشوراء؟",
     "answer": "الجواب: سنة مؤكدة؛ يُكفّر السنة الماضية، ويستحب أن يُصام معه يوم قبله أو بعده مخالفة لليهود.",
     "category_id": "seed-cat-sawm",
@@ -2284,6 +2399,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-228",
+    "documentation_status": "unsourced",
     "question": "هل السواك يُفطّر؟",
     "answer": "الجواب: لا يُفطّر السواك في رمضان سواء قبل الزوال أو بعده في أصح الأقوال.",
     "category_id": "seed-cat-sawm",
@@ -2303,6 +2419,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-229",
+    "documentation_status": "unsourced",
     "question": "من تجب عليهم الزكاة؟",
     "answer": "الجواب: تجب على كل مسلم حر مالك لنصاب مضى عليه حول هجري.",
     "category_id": "seed-cat-zakat",
@@ -2322,6 +2439,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-230",
+    "documentation_status": "unsourced",
     "question": "ما نصاب الذهب؟",
     "answer": "الجواب: عشرون مثقالاً وهي تعادل 85 غراماً من الذهب الخالص تقريباً.",
     "category_id": "seed-cat-zakat",
@@ -2341,6 +2459,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-231",
+    "documentation_status": "unsourced",
     "question": "من أصناف المستحقين للزكاة؟",
     "answer": "الجواب: ثمانية أصناف؛ الفقراء والمساكين والعاملون عليها والمؤلفة قلوبهم وفي الرقاب والغارمون وفي سبيل الله وابن السبيل.",
     "category_id": "seed-cat-zakat",
@@ -2360,6 +2479,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-232",
+    "documentation_status": "unsourced",
     "question": "ما أركان الحج؟",
     "answer": "الجواب: الإحرام، والوقوف بعرفة، وطواف الإفاضة، والسعي بين الصفا والمروة.",
     "category_id": "seed-cat-hajj",
@@ -2379,6 +2499,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-233",
+    "documentation_status": "unsourced",
     "question": "ما الإحصار في الحج؟",
     "answer": "الجواب: منع المحرم من إتمام الحج أو العمرة بعدو أو مرض؛ وله التحلل بذبح هدي.",
     "category_id": "seed-cat-hajj",
@@ -2398,6 +2519,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-234",
+    "documentation_status": "unsourced",
     "question": "هل يجب الحج في العمر مرة واحدة؟",
     "answer": "الجواب: نعم، الحج فرض مرة واحدة لمن استطاع، وما زاد فهو تطوع.",
     "category_id": "seed-cat-hajj",
@@ -2417,6 +2539,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-235",
+    "documentation_status": "sourced",
     "question": "ما فضل الحج المبرور؟",
     "answer": "الجواب: قال ﷺ: «الحج المبرور ليس له جزاء إلا الجنة».",
     "category_id": "seed-cat-hajj",
@@ -2436,6 +2559,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-236",
+    "documentation_status": "unsourced",
     "question": "ما زكاة الفطر؟",
     "answer": "الجواب: صاع من طعام البلد (قمح أو تمر أو شعير) يُخرجه المسلم عن نفسه وعمن يعول قبيل صلاة العيد.",
     "category_id": "seed-cat-zakat",
@@ -2455,6 +2579,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-237",
+    "documentation_status": "unsourced",
     "question": "ما المحرمات في الإحرام؟",
     "answer": "الجواب: الجماع ومقدماته، وإزالة الشعر والظفر، والصيد، وتغطية الرأس للرجل، ولبس المخيط للرجل.",
     "category_id": "seed-cat-hajj",
@@ -2474,6 +2599,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-238",
+    "documentation_status": "unsourced",
     "question": "هل تجب زكاة العروض التجارية؟",
     "answer": "الجواب: نعم، تجب زكاة عروض التجارة بلوغ النصاب ومرور الحول.",
     "category_id": "seed-cat-zakat",
@@ -2493,6 +2619,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-239",
+    "documentation_status": "unsourced",
     "question": "ما ميقات أهل الكويت للحج؟",
     "answer": "الجواب: قرن المنازل (السيل الكبير) لمن مر به من طريق الطائف، أو يُحرم في الطائرة عند محاذاته.",
     "category_id": "seed-cat-hajj",
@@ -2512,6 +2639,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-240",
+    "documentation_status": "unsourced",
     "question": "ما الفرق بين الحج والعمرة؟",
     "answer": "الجواب: العمرة إحرام وطواف وسعي وتقصير، والحج يزيد عليها الوقوف بعرفة ورمي الجمرات والمبيت بمنى.",
     "category_id": "seed-cat-hajj",
@@ -2531,6 +2659,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-241",
+    "documentation_status": "unsourced",
     "question": "كم عدد سور القرآن الكريم؟",
     "answer": "الجواب: مئة وأربع عشرة سورة.",
     "category_id": "seed-cat-quran",
@@ -2550,6 +2679,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-242",
+    "documentation_status": "unsourced",
     "question": "ما السورة التي تعدل ثلث القرآن؟",
     "answer": "الجواب: سورة الإخلاص (قل هو الله أحد)؛ رواه البخاري.",
     "category_id": "seed-cat-quran",
@@ -2569,6 +2699,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-243",
+    "documentation_status": "unsourced",
     "question": "ما أطول سورة في القرآن؟",
     "answer": "الجواب: سورة البقرة بمئتين وست وثمانين آية.",
     "category_id": "seed-cat-quran",
@@ -2588,6 +2719,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-244",
+    "documentation_status": "unsourced",
     "question": "ما أقصر سورة في القرآن؟",
     "answer": "الجواب: سورة الكوثر بثلاث آيات.",
     "category_id": "seed-cat-quran",
@@ -2607,6 +2739,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-245",
+    "documentation_status": "unsourced",
     "question": "ما الفرق بين المكي والمدني من السور؟",
     "answer": "الجواب: المكي ما نزل قبل الهجرة ويتضمن العقيدة والتوحيد، والمدني ما نزل بعدها ويتضمن التشريع والأحكام.",
     "category_id": "seed-cat-quran",
@@ -2626,6 +2759,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-246",
+    "documentation_status": "unsourced",
     "question": "من جمع القرآن في مصحف واحد في عهد أبي بكر؟",
     "answer": "الجواب: زيد بن ثابت رضي الله عنه بأمر من أبي بكر الصديق.",
     "category_id": "seed-cat-quran",
@@ -2645,6 +2779,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-247",
+    "documentation_status": "unsourced",
     "question": "ما الحديث القدسي؟",
     "answer": "الجواب: ما رواه النبي ﷺ عن الله بألفاظه هو، بخلاف القرآن الذي هو لفظ الله المنزّل.",
     "category_id": "seed-cat-hadith",
@@ -2664,8 +2799,9 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-248",
+    "documentation_status": "unsourced",
     "question": "ما صحيح البخاري؟",
-    "answer": "الجواب: أصح كتاب بعد القرآن الكريم؛ ألّفه الإمام محمد بن إسماعيل البخاري وانتقى فيه 7563 حديثاً.",
+    "answer": "الجواب: أصح كتاب بعد القرآن الكريم؛ ألّفه الإمام محمد بن إسماعيل البخاري وانتقى فيه 7563 حديثاً بترقيم فؤاد عبد الباقي شاملاً المعلقات والمتابعات.",
     "category_id": "seed-cat-hadith",
     "ruling_type": null,
     "evidence": null,
@@ -2683,6 +2819,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-249",
+    "documentation_status": "unsourced",
     "question": "من مؤلف كتاب رياض الصالحين؟",
     "answer": "الجواب: الإمام يحيى بن شرف النووي (676هـ).",
     "category_id": "seed-cat-hadith",
@@ -2702,6 +2839,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-250",
+    "documentation_status": "unsourced",
     "question": "ما المتواتر من الأحاديث؟",
     "answer": "الجواب: ما رواه عدد كبير من الصحابة لا يُتصور تواطؤهم على الكذب وينتهي إلى أمر محسوس.",
     "category_id": "seed-cat-hadith",
@@ -2721,6 +2859,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-251",
+    "documentation_status": "unsourced",
     "question": "ما الحديث الضعيف؟",
     "answer": "الجواب: ما لم تجتمع فيه شروط الصحة ولا شروط الحسن؛ ولا يُحتج به في العقائد والأحكام.",
     "category_id": "seed-cat-hadith",
@@ -2740,6 +2879,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-252",
+    "documentation_status": "unsourced",
     "question": "من ألّف الأربعين النووية؟",
     "answer": "الجواب: الإمام يحيى بن شرف النووي الدمشقي رحمه الله.",
     "category_id": "seed-cat-hadith",
@@ -2759,6 +2899,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-253",
+    "documentation_status": "unsourced",
     "question": "ما الحديث المرسل؟",
     "answer": "الجواب: ما أسقط منه الصحابي ورواه التابعي مباشرة عن النبي ﷺ.",
     "category_id": "seed-cat-hadith",
@@ -2778,6 +2919,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-254",
+    "documentation_status": "unsourced",
     "question": "ما المسند من كتب الحديث؟",
     "answer": "الجواب: الكتاب الذي يُرتّب فيه الأحاديث حسب مسانيد الصحابة؛ كمسند أحمد.",
     "category_id": "seed-cat-hadith",
@@ -2797,6 +2939,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-255",
+    "documentation_status": "unsourced",
     "question": "ما أوضح دليل على تحريف التوراة والإنجيل؟",
     "answer": "الجواب: قوله تعالى: ﴿يُحَرِّفُونَ الْكَلِمَ عَن مَّوَاضِعِهِ﴾، وخلو الكتب الحالية من نبوءات النبي ﷺ.",
     "category_id": "seed-cat-quran",
@@ -2816,6 +2959,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-256",
+    "documentation_status": "unsourced",
     "question": "ما أفضل الذكر؟",
     "answer": "الجواب: أفضل الذكر «لا إله إلا الله»؛ قال ﷺ: «أفضل الذكر لا إله إلا الله» — الترمذي ٣٣٨٣، وصححه الألباني. ويشهد له عموم فضل كلمة التوحيد في الكتاب والسنة.",
     "category_id": "seed-cat-adhkar",
@@ -2835,6 +2979,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-257",
+    "documentation_status": "unsourced",
     "question": "ما فضل قول «سبحان الله وبحمده سبحان الله العظيم»؟",
     "answer": "الجواب: «كلمتان خفيفتان على اللسان ثقيلتان في الميزان»؛ متفق عليه.",
     "category_id": "seed-cat-adhkar",
@@ -2854,6 +2999,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-258",
+    "documentation_status": "unsourced",
     "question": "ما دعاء الاستخارة؟",
     "answer": "الجواب: «اللهم إني أستخيرك بعلمك وأستقدرك بقدرتك...» يقوله المسلم إذا تردّد في أمر من أمور الدنيا.",
     "category_id": "seed-cat-adhkar",
@@ -2873,6 +3019,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-259",
+    "documentation_status": "unsourced",
     "question": "ما الذكر بعد الصلاة المفروضة؟",
     "answer": "الجواب: يقول ثلاثاً: «أستغفر الله»، ثم: «اللهم أنت السلام ومنك السلام تباركت يا ذا الجلال والإكرام»، ثم يسبح ويحمد ويكبر ثلاثاً وثلاثين.",
     "category_id": "seed-cat-adhkar",
@@ -2892,6 +3039,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-260",
+    "documentation_status": "unsourced",
     "question": "ما دعاء الكرب؟",
     "answer": "الجواب: «لا إله إلا الله العظيم الحليم، لا إله إلا الله رب العرش العظيم»؛ متفق عليه.",
     "category_id": "seed-cat-adhkar",
@@ -2911,6 +3059,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-261",
+    "documentation_status": "unsourced",
     "question": "ما حكم الغيبة؟",
     "answer": "الجواب: حرام؛ وهي ذكرك أخاك بما يكره وإن كان فيه.",
     "category_id": "seed-cat-adab",
@@ -2930,6 +3079,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-264",
+    "documentation_status": "unsourced",
     "question": "ما آداب العطاس؟",
     "answer": "الجواب: العاطس يقول: «الحمد لله»، ومن يسمعه يقول: «يرحمك الله»، فيرد: «يهديكم الله ويصلح بالكم».",
     "category_id": "seed-cat-adab",
@@ -2949,6 +3099,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-265",
+    "documentation_status": "unsourced",
     "question": "ما حكم قول «إن شاء الله» عند الوعد؟",
     "answer": "الجواب: مستحب ومأمور به؛ ﴿وَلَا تَقُولَنَّ لِشَيْءٍ إِنِّي فَاعِلٌ ذَٰلِكَ غَدًا * إِلَّا أَن يَشَاءَ اللَّهُ﴾.",
     "category_id": "seed-cat-adab",
@@ -2968,6 +3119,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-266",
+    "documentation_status": "unsourced",
     "question": "ما أفضل دعاء يوم عرفة؟",
     "answer": "الجواب: «لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير».",
     "category_id": "seed-cat-adhkar",
@@ -2987,6 +3139,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-267",
+    "documentation_status": "unsourced",
     "question": "ما سيد الاستغفار؟",
     "answer": "الجواب: «اللهم أنت ربي لا إله إلا أنت، خلقتني وأنا عبدك، وأنا على عهدك ووعدك ما استطعت...»؛ رواه البخاري.",
     "category_id": "seed-cat-adhkar",
@@ -3006,6 +3159,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-268",
+    "documentation_status": "unsourced",
     "question": "ما أدعية النوم؟",
     "answer": "الجواب: «بسمك اللهم أموت وأحيا» وقراءة آية الكرسي والمعوذتين والإخلاص.",
     "category_id": "seed-cat-adhkar",
@@ -3025,6 +3179,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-269",
+    "documentation_status": "unsourced",
     "question": "ما دعاء دخول الخلاء؟",
     "answer": "الجواب: «بسم الله، اللهم إني أعوذ بك من الخبث والخبائث».",
     "category_id": "seed-cat-adhkar",
@@ -3044,6 +3199,7 @@ export const SEED_QA = [
   },
   {
     "id": "seed-qa-270",
+    "documentation_status": "unsourced",
     "question": "ما ذكر الصباح الأعظم أجراً؟",
     "answer": "الجواب: سيد الاستغفار وآية الكرسي وقل هو الله أحد والمعوذتين والصلاة على النبي.",
     "category_id": "seed-cat-adhkar",
@@ -3064,7 +3220,7 @@ export const SEED_QA = [
   {
     "id": "seed-qa-271",
     "question": "أين وُلد النبي ﷺ وما تاريخ ولادته؟",
-    "answer": "الجواب: وُلد النبي ﷺ بمكة المكرمة في عام الفيل، يوم الاثنين 12 ربيع الأول، الموافق 571م تقريباً.",
+    "answer": "الجواب: وُلد النبي ﷺ بمكة المكرمة في عام الفيل، يوم الاثنين 12 ربيع الأول، الموافق عام الفيل، نحو 570–571م.",
     "category_id": "seed-cat-seerah",
     "ruling_type": null,
     "evidence": "ثابت في الصحيحين",
@@ -4969,7 +5125,7 @@ export const SEED_QA = [
   {
     "id": "seed-qa-391",
     "question": "متى وُلد النبي ﷺ وفي أي شهر وسنة؟",
-    "answer": "الجواب: وُلد النبي ﷺ في مكة المكرمة عام الفيل، الموافق لعام ٥٧١م تقريباً. والراجح عند المحققين أن مولده كان في شهر ربيع الأول، وأكثر الروايات تُشير إلى اليوم الثاني عشر منه، وقد ذكر ابن عبد البر في الاستيعاب قولاً بأنه لليلتين خلتا من ربيع الأول. أما القول بأنه في رمضان أو المحرم فهي روايات ضعيفة. وكان ﷺ يوم وُلد قد مات أبوه عبدالله قبل مولده أو بعده بفترة وجيزة.",
+    "answer": "الجواب: وُلد النبي ﷺ في مكة المكرمة عام الفيل، الموافق لعام الفيل، نحو 570–571م. والراجح عند المحققين أن مولده كان في شهر ربيع الأول، وأكثر الروايات تُشير إلى اليوم الثاني عشر منه، وقد ذكر ابن عبد البر في الاستيعاب قولاً بأنه لليلتين خلتا من ربيع الأول. أما القول بأنه في رمضان أو المحرم فهي روايات ضعيفة. وكان ﷺ يوم وُلد قد مات أبوه عبدالله قبل مولده أو بعده بفترة وجيزة.",
     "category_id": "seed-cat-seerah",
     "ruling_type": "تاريخي",
     "evidence": "",
@@ -5970,7 +6126,7 @@ export const SEED_QA = [
   {
     "id": "seed-qa-453",
     "question": "ما هو صحيح البخاري وما مكانته بين كتب الحديث؟",
-    "answer": "الجواب: صحيح البخاري (الجامع المسند الصحيح المختصر) ألّفه الإمام محمد بن إسماعيل البخاري المتوفى 256ه. وهو أصح كتاب بعد كتاب الله عند جمهور العلماء. انتقى البخاري أحاديثه من ستمائة ألف حديث، فبلغت 7563 حديثاً مع المكررات ونحو 2602 بدونها. وقد اشترط فيه أعلى درجات الاتصال (اللقاء والسماع). وترتيبه على الأبواب الفقهية يجعله مرجعاً استنباطياً نفيساً.",
+    "answer": "الجواب: صحيح البخاري (الجامع المسند الصحيح المختصر) ألّفه الإمام محمد بن إسماعيل البخاري المتوفى 256هـ. وهو أصح كتاب بعد كتاب الله عند جمهور العلماء. انتقى البخاري أحاديثه من ستمائة ألف حديث، فبلغت 7563 حديثاً مع المكررات ونحو 2602 بدونها. وقد اشترط فيه أعلى درجات الاتصال (اللقاء والسماع). وترتيبه على الأبواب الفقهية يجعله مرجعاً استنباطياً نفيساً.",
     "category_id": "seed-cat-hadith",
     "ruling_type": "تعليمي",
     "evidence": "",
