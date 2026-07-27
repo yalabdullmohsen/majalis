@@ -1889,7 +1889,7 @@ export const PROPHETIC_MEDICINE_ITEMS: PropheticMedicineItem[] = [
     arabicName: "الكافور — تطهير وتكريم",
     category: "الأعشاب والعلاج",
     icon: "Sparkles",
-    hadith: "«غسّلوه بماء وسidr وكافور»",
+    hadith: "«غسّلوه بماء وسدر وكافور»",
     hadithSource: "متفق عليه — صحيح",
     benefits: [
       "من الأغذية المذكورة في السنة — مع الاعتدال والرجوع للطبيب عند الحاجة؛ وهذا من باب الوقاية لا بديلاً عن العلاج الطبي المعتمد",
@@ -1907,7 +1907,7 @@ export const PROPHETIC_MEDICINE_ITEMS: PropheticMedicineItem[] = [
     arabicName: "ورق السدر — تطهير",
     category: "الأعشاب والعلاج",
     icon: "Leaf",
-    hadith: "«غسّلوه بماء وسidr وكافور»",
+    hadith: "«غسّلوه بماء وسدر وكافور»",
     hadithSource: "متفق عليه — صحيح",
     benefits: [
       "من الأغذية المذكورة في السنة — مع الاعتدال والرجوع للطبيب عند الحاجة؛ وهذا من باب الوقاية لا بديلاً عن العلاج الطبي المعتمد",
