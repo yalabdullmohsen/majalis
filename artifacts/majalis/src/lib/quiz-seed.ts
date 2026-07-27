@@ -13685,7 +13685,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "question": "ما حكم «الحمل» في الميراث؟",
     "answer": "الحمل يرث إن ولد حياً — يُحجز له نصيبه ويُقسم بعد الولادة — وإن ولد ميتاً رجع نصيبه للورثة.",
     "explanation": "اتفاق الفقهاء. ويُستثنى في بعض المسائل المعقدة.",
-    "reference": "المواريض — السيد سابق؛ الرحبية",
+    "reference": "المواريث — سيد سابق؛ الرحبية",
     "trust_level": "scholarly_source",
     "editorial_review_status": "unreviewed",
     "last_updated_at": "2026-07-27T00:00:00.000Z"
@@ -14011,7 +14011,7 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "question": "ما حكم «الحمل» في الميراث؟",
     "answer": "الحمل يرث إن ولد حياً — يُحجز له نصيبه ويُقسم بعد الولادة — وإن ولد ميتاً رجع نصيبه للورثة.",
     "explanation": "اتفاق الفقهاء. ويُستثنى في بعض المسائل المعقدة.",
-    "reference": "المواريض — السيد سابق؛ الرحبية",
+    "reference": "المواريث — سيد سابق؛ الرحبية",
     "trust_level": "scholarly_source",
     "editorial_review_status": "unreviewed",
     "last_updated_at": "2026-07-27T00:00:00.000Z"

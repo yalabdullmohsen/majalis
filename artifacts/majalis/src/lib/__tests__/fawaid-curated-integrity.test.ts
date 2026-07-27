@@ -173,6 +173,72 @@ assert(
 const emptyText = FAWAID_CURATED_SEED.filter((f) => !f.text || !f.text.trim());
 assert(emptyText.length === 0, "لا نصَّ فائدةٍ فارغًا", emptyText.map((f) => f.id).join(", "));
 
+// ─────────────── ٧) لا مسافةَ مضاعفةً في النصِّ المعروض ───────────────
+
+/**
+ * ٢١ فائدةً مختارةً (ج-٢٨٥) كانت تحملُ مسافتَينِ متتاليتَينِ قبلَ شرطةِ
+ * ذيلِ الوعظِ («…وتطبيقها.  — فليُلزم…») — أثرُ مولِّدٍ لصَقَ الذيلَ على نصٍّ
+ * منتهٍ بمسافةٍ زائدة. و**المسافةُ المضاعفةُ تُطبع كما هي** في البطاقة، فهي
+ * ليست ضجيجَ مصدرٍ بل فجوةٌ يقرؤها الزائر. صفرٌ في الشقيقِ يومَ الإصلاح.
+ */
+const doubleSpace = FAWAID_CURATED_SEED.filter((f) => /\s{2,}/.test(f.text));
+assert(
+  doubleSpace.length === 0,
+  "لا فائدةَ مختارةً بمسافةٍ مضاعفةٍ في نصِّها المعروض",
+  doubleSpace.map((f) => f.id).join(", ")
+);
+
+const doubleSpaceSeed = SEED_FAWAID.filter((f) => /\s{2,}/.test(f.text));
+assert(
+  doubleSpaceSeed.length === 0,
+  "لا فائدةَ في `fawaid-seed.ts` بمسافةٍ مضاعفةٍ في نصِّها",
+  `${doubleSpaceSeed.length} فائدة`
+);
+
+// ─────────────── ٨) لا دعوى «الكتاب والسنة» مرّتين في السجل الواحد ───────────────
+
+/**
+ * `fawaid-curated-050` كان يقولُ «وهو مأمورٌ به في الكتاب والسنة» ثمَّ يُلحقُ
+ * بالجملةِ نفسِها «كما دلّ عليه الكتاب والسنة.» — الدعوى عينُها مرَّتين في
+ * سجلٍّ واحد، من عائلةِ «الذيلِ المكرَّر» في الفحصِ ١ لكن على جملةِ الاستدلال.
+ */
+const doubledClaim = [...FAWAID_CURATED_SEED, ...SEED_FAWAID].filter(
+  (f) => (f.text.match(/الكتاب والسنة/g) ?? []).length > 1
+);
+assert(
+  doubledClaim.length === 0,
+  "لا سجلَّ يُكرِّر دعوى «الكتاب والسنة» مرَّتين في نصِّه",
+  doubledClaim.map((f) => f.id).join(", ")
+);
+
+// ─────────────── ٩) لا تحريفَ في اسمِ «سيد سابق» ───────────────
+
+/**
+ * خمسةُ سجلّاتٍ مختارةٍ (و`qa-seed.ts` و`quiz-seed.ts` معها) كانت تَعزو
+ * «فقه السنة» إلى **«السيد سابق»** — والتعريفُ يُحوِّل اسمَه الأوَّلَ «سيد»
+ * إلى لقبِ «السيد»، فيُقرأ «سابق» علَمًا له. والصورةُ المعتمدةُ في المستودعِ
+ * نفسِه موثَّقةٌ بمصادرَ مسمّاةٍ في `scholars-data.ts`: «الشيخ سيد سابق»،
+ * واسمُه التامُّ «سيد سابق محمد التهامي» — فالخللُ تعارضٌ داخليٌّ لا رأي.
+ */
+const distortedName = [...FAWAID_CURATED_SEED, ...SEED_FAWAID].filter((f) =>
+  /السيد سابق/.test(`${f.source ?? ""} ${f.author_name ?? ""}`)
+);
+assert(
+  distortedName.length === 0,
+  "لا سجلَّ يَعزو إلى «السيد سابق» بدلَ «سيد سابق»",
+  distortedName.map((f) => f.id).join(", ")
+);
+
+/**
+ * والتحريفُ عينُه ظهر في `qa-seed.ts` (موضعٌ) و`quiz-seed.ts` (موضعان) —
+ * وهما خارجَ هذه الحزمةِ المستوردة، فيُقرآن نصًّا خامًا حتى لا يرتدَّ الخللُ
+ * من بابٍ آخرَ بعد سدِّه في الفوائد.
+ */
+for (const file of ["qa-seed.ts", "quiz-seed.ts"] as const) {
+  const raw = readFileSync(new URL(`../${file}`, import.meta.url), "utf8");
+  assert(!/السيد سابق/.test(raw), `لا «السيد سابق» في \`${file}\``);
+}
+
 console.log(`\n${"─".repeat(48)}`);
 console.log(`النتائج: ${passed} نجح، ${failed} فشل`);
 if (failed > 0) process.exit(1);
