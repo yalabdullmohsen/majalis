@@ -22,6 +22,7 @@ import {
   CAUTIONS,
   MUFASSIR_CONDITIONS,
   MUFASSIRUN,
+  MUSHAF_TAFSIR_EDITIONS,
   STUDY_PATH,
   TAFSIR_CATEGORIES,
   TAFSIR_DEFINITION,
@@ -111,7 +112,7 @@ export default function TafsirPage() {
       path: "/tafsir",
       title: "علم التفسير",
       description:
-        "موسوعة تعليمية في علم التفسير: نشأته، أنواعه، أصوله، شروط المفسّر، المصطلحات، أشهر المفسرين وكتبهم، ومسار دراسة عملي مع روابط للمصحف والمكتبة.",
+        "موسوعة علم التفسير: طبقات المفسرين وكتبهم، وأصول التفسير، وتفسير كامل للقرآن آيةً آية في المصحف عبر الميسّر والجلالين والبغوي والقرطبي والوسيط.",
       keywords: [
         "تفسير",
         "علم التفسير",
@@ -122,6 +123,9 @@ export default function TafsirPage() {
         "ابن كثير",
         "الطبري",
         "السعدي",
+        "تفسير الميسّر",
+        "تفسير القرطبي",
+        "تفسير البغوي",
       ],
       jsonLd: [
         {
@@ -129,7 +133,7 @@ export default function TafsirPage() {
           "@type": "WebPage",
           name: "علم التفسير",
           description:
-            "موسوعة تعليمية في علم التفسير على منهج أهل السنة: أنواع، أصول، شروط، مفسرون، ومسار تعلّم.",
+            "موسوعة علم التفسير على منهج أهل السنة مع طبقات المفسرين وتفسير كامل للآيات في المصحف.",
           url: "https://www.majlisilm.com/tafsir",
           inLanguage: "ar",
           isPartOf: { "@type": "WebSite", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
@@ -235,6 +239,33 @@ export default function TafsirPage() {
           <span>بوابة أقسام القرآن</span>
         </Link>
       </nav>
+
+      <section className="tf-section tf-mushaf-section" aria-labelledby="tf-mushaf-title">
+        <div className="tf-section-head">
+          <BookMarked size={18} aria-hidden />
+          <h2 id="tf-mushaf-title" className="tf-section__title">
+            التفسير الكامل في المصحف
+          </h2>
+        </div>
+        <p className="tf-section-lead">
+          افتح أي آية في المصحف واختر أحد التفاسير التالية — نصوص كاملة للقرآن عبر مصدر موثوق، مع التنبيه عند الحاجة.
+          في القسم تجد أيضاً طبقات المفسرين ({toArabicDigits(MUFASSIRUN.length)} علماً) وكتب المكتبة.
+        </p>
+        <div className="tf-editions-grid">
+          {MUSHAF_TAFSIR_EDITIONS.map((ed) => (
+            <article key={ed.id} className="tf-edition-card">
+              <div className="tf-edition-card__level">{ed.level}</div>
+              <h3>{ed.label}</h3>
+              <p className="tf-edition-card__author">{ed.author}</p>
+              {ed.caution ? <p className="tf-edition-card__caution">{ed.caution}</p> : null}
+              <Link href="/mushaf" className="tf-inline-link">
+                افتح في المصحف
+                <ChevronLeft size={14} aria-hidden />
+              </Link>
+            </article>
+          ))}
+        </div>
+      </section>
 
       <section className="tf-section tf-timeline-section" aria-labelledby="tf-history-title">
         <div className="tf-section-head">
