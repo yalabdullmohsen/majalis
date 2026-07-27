@@ -612,10 +612,7 @@ function Router() {
           (Switch يُصيّر أول تطابق فقط)، مطابق تمامًا لتحذير wouter العام
           بترتيب المسارات الحرفية قبل الديناميكية على نفس البادئة. */}
       <Route path="/mushaf/about-edition"><SafeLazyRoute component={MushafEditionInfoPage} /></Route>
-      {/* /mushaf و/mushaf/:surah أصبحا يستخدمان MushafPageView (تخطيط
-          سطري حقيقي مطابق لمصحف المدينة، وضعا عرض خفيف/دقة مطبعية) بدل
-          MushafPage.tsx القديم (نص مستمر) — الملف القديم لم يُحذف، فقط
-          استُبدل ترويجه بمكوّن أكمل يحقق كل ميزاته وأكثر. */}
+      {/* /mushaf و/mushaf/:surah يستخدمان MushafPageView (تخطيط سطري مطابق لمصحف المدينة). */}
       <Route path="/mushaf/:surah"><SafeLazyRoute component={MushafPageView} /></Route>
       <Route path="/mushaf"><SafeLazyRoute component={MushafPageView} /></Route>
       <Route path="/mushaf-v2-preview"><Redirect to="/mushaf" /></Route>

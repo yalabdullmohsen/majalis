@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
 import { AlertTriangle, Pencil } from "lucide-react";
 import { useAuth } from "@/components/AuthProvider";
+import { safeLocationReload } from "@/lib/safe-reload";
 import "@/styles/components/admin-inline-edit.css";
 
 // ── أنواع المحتوى المدعومة ──────────────────────────────────────────────────
@@ -221,7 +222,7 @@ function AdminEditModal({ contentType, contentId, initialData = {}, onClose, onS
         onClose();
         onSaved?.();
         // إعادة تحميل الصفحة لتطبيق التعديلات
-        window.location.reload();
+        safeLocationReload();
       }, 800);
     }
   };

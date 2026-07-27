@@ -1,9 +1,0 @@
-/* ============================================================
-   84 — PrayerCountdownPage  (pcp-*)
-   ============================================================ */
-.pcp-loading-msg        { color: var(--majalis-ink-soft); }
-.pcp-error-msg          { color: var(--msk-red, #C1595A); }
-.pcp-expired            { opacity: 0.5; }
-.prayer-slot-chip--prev { opacity: 0.55; }
-.pcp-city-label         { margin-top: 1.5rem; font-size: 0.8rem; color: var(--majalis-ink-soft); text-align: center; }
-
