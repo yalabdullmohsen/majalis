@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { goBackOrFallback } from "@/lib/navigation-back";
 
 type Props = {
   eyebrow: string;
@@ -7,11 +8,8 @@ type Props = {
 };
 
 function goBack() {
-  if (window.history.length > 1) {
-    window.history.back();
-  } else {
-    window.location.href = "/";
-  }
+  const currentPath = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+  goBackOrFallback(currentPath, "/");
 }
 
 export function LegalPageLayout({ eyebrow, title, children }: Props) {
@@ -20,7 +18,7 @@ export function LegalPageLayout({ eyebrow, title, children }: Props) {
       <div className="legal-page-hero">
         <div className="legal-page-inner">
           <button type="button" className="legal-back-btn" onClick={goBack} aria-label="رجوع">
-            ← رجوع
+            → رجوع
           </button>
           <p className="legal-page-eyebrow">{eyebrow}</p>
           <h1>{title}</h1>
@@ -44,7 +42,7 @@ export function LegalBackLink() {
   return (
     <p className="legal-back">
       <button type="button" className="legal-back-btn" onClick={goBack}>
-        ← رجوع
+        → رجوع
       </button>
     </p>
   );

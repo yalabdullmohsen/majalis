@@ -286,44 +286,41 @@ html.dark .nav-soon-badge {
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
   background: var(--color-surface);
-  mask-image: linear-gradient(to left, transparent, #000 5%, #000 95%, transparent);
+  padding-inline: .55rem;
 }
 .header-ticker--empty { visibility: hidden; }
-.header-ticker__track {
+.header-ticker--static { padding-inline: .7rem; }
+.header-ticker--paused { cursor: pause; }
+.header-ticker__single-item {
+  width: 100%;
+  min-width: 0;
+}
+.header-ticker__single-item--animate {
+  animation: ticker-item-fade 240ms ease;
+}
+@keyframes ticker-item-fade {
+  from { opacity: 0; transform: translateY(2px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.header-ticker__item {
   display: flex;
   align-items: center;
-  width: max-content;
-  animation: header-ticker-scroll 32s linear infinite;
-}
-.header-ticker:hover .header-ticker__track,
-.header-ticker:active .header-ticker__track { animation-play-state: paused; }
-/* الاتجاه موجب لأن الصفحة RTL: عناصر flex تُرصّ من اليمين لليسار، فيمتد
-   المسار كله يسار النافذة المرئية. تحريكه بـ-50% (كما كان) يدفع المحتوى
-   بعيدًا عن النافذة فيظهر الشريط فارغًا بعد أول ثوانٍ — وهو ما كان يحدث
-   فعلًا. التحريك بـ+50% يسحب النسخة الثانية إلى موضع الأولى فتكتمل
-   الحلقة بلا قفزة. */
-@keyframes header-ticker-scroll {
-  from { transform: translateX(0); }
-  to { transform: translateX(50%); }
-}
-.header-ticker--static { padding-inline: .7rem; }
-.header-ticker__item {
-  display: inline-flex;
-  align-items: center;
   gap: .4rem;
-  padding-inline: .9rem;
-  white-space: nowrap;
+  width: 100%;
   text-decoration: none;
   color: var(--color-text);
   font-size: .82rem;
+  min-width: 0;
 }
 .header-ticker__icon { color: var(--color-primary); flex-shrink: 0; }
 .header-ticker__label { color: var(--color-primary); font-weight: 700; }
-@media (min-width: 880px) {
-  .header-ticker { width: clamp(200px, 22vw, 340px); }
+.header-ticker__text {
+  min-width: 0;
+  white-space: normal;
+  line-height: 1.45;
 }
-@media (prefers-reduced-motion: reduce) {
-  .header-ticker__track { animation: none; }
+@media (min-width: 880px) {
+  .header-ticker { width: clamp(160px, 18vw, 240px); }
 }
 
 /* Shared page rhythm and cards */
@@ -401,13 +398,78 @@ html.dark .nav-soon-badge {
 /* Lesson cards intentionally have no media slot. */
 .lesson-unified-card { padding: 0; overflow: hidden; }
 .lesson-unified-card__header { padding: .8rem 1rem; background: var(--color-surface-muted); border-block-end: 1px solid var(--color-border); }
-.lesson-unified-card__body { padding: var(--ds-space-4); }
-.lesson-unified-card__title { color: var(--color-text); font-size: 1.05rem; line-height: 1.55; }
+.lesson-unified-card__body { padding: .8rem .9rem; gap: .5rem; }
+.lesson-unified-card__title { color: var(--color-text); font-size: 1rem; line-height: 1.45; }
 .lesson-unified-card__sheikh, .lesson-unified-card__meta-label { color: var(--color-text-muted); }
 .lesson-unified-card__meta { gap: .5rem; }
 .lesson-unified-card__meta-cell { min-height: 0; padding: .65rem; border: 1px solid var(--color-border); border-radius: var(--radius-sm); background: transparent; }
 .lesson-unified-card__btn { min-height: 44px; border-radius: var(--radius-md); }
 .lesson-unified-card__btn--primary { background: var(--color-primary); color: var(--color-primary-foreground); }
+.lesson-unified-card__compact-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+}
+.lesson-unified-card__compact-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: .28rem;
+  min-height: 32px;
+  max-width: 100%;
+  padding: .22rem .55rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-primary) 8%, var(--color-surface));
+  color: var(--color-text-muted);
+  font-size: .76rem;
+  line-height: 1.2;
+}
+.lesson-unified-card__compact-chip span:last-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.lesson-unified-card__meta--compact { display: none; }
+.lesson-unified-card__actions--compact {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  gap: .45rem;
+  align-items: stretch;
+}
+.lesson-unified-card--compact .lesson-unified-card__btn {
+  min-height: 44px;
+  padding-inline: .8rem;
+}
+.lesson-unified-card--compact .lesson-unified-card__header {
+  padding: .55rem .8rem;
+}
+.lesson-unified-card--compact .lesson-unified-card__title {
+  font-size: .95rem;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.lesson-unified-card--compact .lesson-unified-card__sheikh {
+  font-size: .82rem;
+}
+.coming-soon-dialog__body {
+  display: grid;
+  justify-items: center;
+  gap: .7rem;
+  text-align: center;
+  padding: .75rem 0 1rem;
+}
+.coming-soon-dialog__title {
+  margin: 0;
+  font-size: 1.05rem;
+  color: var(--color-text);
+}
+.coming-soon-dialog__text {
+  margin: 0;
+  color: var(--color-text-muted);
+  line-height: 1.8;
+}
 
 /* Bottom navigation — مصدر واحد (iOS/PWA/Capacitor / Safari / WebView):
    - fixed flush إلى أسفل الشاشة (bottom/left/right = 0)

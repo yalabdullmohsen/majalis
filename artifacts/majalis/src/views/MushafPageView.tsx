@@ -18,6 +18,7 @@ import { PageAyahActionSheet } from "@/components/quran/PageAyahActionSheet";
 import { ReciterDownloadManager } from "@/components/quran/ReciterDownloadManager";
 import { loadMushafPage, prefetchMushafPage, type MushafPageLayout, type QpcWord } from "@/lib/mushaf-v2-data";
 import { MushafPageV2 } from "@/components/quran/MushafPageV2";
+import { goBackOrFallback } from "@/lib/navigation-back";
 import "@/styles/quran.css";
 import "@/styles/mushaf-v2.css";
 import "@/styles/pages/mushaf-reader.css";
@@ -217,9 +218,8 @@ export default function MushafPageView() {
   // لأنه يتراكب فعليًا فوق شريط التنقّل السفلي الثابت بعرض الشاشة هنا،
   // اكتُشف حيًّا أثناء تحقّق Playwright (زر "السابقة" تعذّر النقر عليه).
   const goBack = useCallback(() => {
-    if (window.history.length > 1) window.history.back();
-    else navigate("/quran-hub");
-  }, [navigate]);
+    goBackOrFallback(`/mushaf/page/${page}`, "/quran-hub");
+  }, [page]);
 
   // ── سحب أفقي RTL صحيح الاتجاه: تحريك الإصبع لليسار = الصفحة التالية (تقدّم في القراءة) ──
   const onTouchStart = (e: React.TouchEvent) => { touchStartX.current = e.touches[0].clientX; };

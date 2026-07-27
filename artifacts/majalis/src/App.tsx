@@ -12,6 +12,7 @@ import { BottomNavBar } from "@/components/BottomNavBar";
 import { TopSectionBar } from "@/components/TopSectionBar";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { GlobalBackButton } from "@/components/GlobalBackButton";
+import { ComingSoonDialog } from "@/components/ComingSoonDialog";
 import { AchievementToast } from "@/components/AchievementToast";
 import { useAchievementCheck } from "@/hooks/useAchievementCheck";
 import NotFound from "@/views/not-found";
@@ -31,6 +32,7 @@ import { recordRecentPage } from "@/lib/recent-pages";
 import { OfflineBanner } from "@/components/OfflineBanner";
 import { UpdateAvailableBanner } from "@/components/UpdateAvailableBanner";
 import { setPrayerTimesCache } from "@/lib/lesson-time";
+import { recordNavigationVisit } from "@/lib/navigation-back";
 
 const lazy = lazyWithRetry;
 
@@ -319,6 +321,7 @@ function ScrollResetOnNav() {
 
   useEffect(() => {
     const leavingLocation = lastLocationRef.current;
+    recordNavigationVisit(location, isPopRef.current ? "pop" : "push");
     if (leavingLocation !== location) {
       try {
         sessionStorage.setItem(`scroll-pos:${leavingLocation}`, String(window.scrollY));
@@ -726,7 +729,8 @@ function AppShell() {
   const { isAdmin } = useAuth();
   const { newBadges, dismissBadges } = useAchievementCheck();
   const [searchOpen, setSearchOpen] = useState(false);
-  const pullTouchRef = useRef<{ y: number; triggered: boolean } | null>(null);
+  const [comingSoonTitle, setComingSoonTitle] = useState("");
+  const [comingSoonOpen, setComingSoonOpen] = useState(false);
 
   useEffect(() => {
     const keyHandler = (e: KeyboardEvent) => {
@@ -736,38 +740,26 @@ function AppShell() {
       }
     };
     const evtHandler = () => setSearchOpen(true);
+    const soonHandler = (e: Event) => {
+      const detail = (e as CustomEvent<{ title?: string }>).detail;
+      setComingSoonTitle(detail?.title || "هذا القسم");
+      setComingSoonOpen(true);
+    };
     window.addEventListener("keydown", keyHandler);
     window.addEventListener("global-search-open", evtHandler);
+    window.addEventListener("global-coming-soon-open", soonHandler as EventListener);
     return () => {
       window.removeEventListener("keydown", keyHandler);
       window.removeEventListener("global-search-open", evtHandler);
+      window.removeEventListener("global-coming-soon-open", soonHandler as EventListener);
     };
   }, []);
-
-  /* سحب للأسفل لفتح البحث (موبايل) */
-  const onTouchStart = (e: React.TouchEvent) => {
-    if (window.scrollY === 0 && e.touches[0]) {
-      pullTouchRef.current = { y: e.touches[0].clientY, triggered: false };
-    }
-  };
-  const onTouchMove = (e: React.TouchEvent) => {
-    if (!pullTouchRef.current || pullTouchRef.current.triggered) return;
-    const dy = e.touches[0].clientY - pullTouchRef.current.y;
-    if (dy > 72 && window.scrollY === 0) {
-      pullTouchRef.current.triggered = true;
-      setSearchOpen(true);
-    }
-  };
-  const onTouchEnd = () => { pullTouchRef.current = null; };
 
   return (
     <WouterRouter base={(import.meta.env.BASE_URL || "/").replace(/\/$/, "")}>
       <div
         className="app-shell"
         style={{ "--app-dir": dir } as React.CSSProperties}
-        onTouchStart={onTouchStart}
-        onTouchMove={onTouchMove}
-        onTouchEnd={onTouchEnd}
       >
         <a href="#main-content" className="skip-link">{t("skip_to_content")}</a>
         <OfflineBanner />
@@ -804,6 +796,11 @@ function AppShell() {
             <GlobalSearchModal onClose={() => setSearchOpen(false)} />
           </Suspense>
         )}
+        <ComingSoonDialog
+          open={comingSoonOpen}
+          title={comingSoonTitle}
+          onClose={() => setComingSoonOpen(false)}
+        />
       </div>
     </WouterRouter>
   );

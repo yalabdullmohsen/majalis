@@ -23,6 +23,8 @@ type TickerItem = {
   href: string;
 };
 
+const MAX_TICKER_TEXT_LENGTH = 72;
+
 /* عدّاد الصلاة القادمة — نفس منطق PrayerChip في NavBar.tsx حرفيًا (فترة
    السماح 30 دقيقة بعد الأذان)، بتحديث كل دقيقة بدل كل ثانية (كافٍ لشريط
    نصي متحرك، ويتجنّب عرض ثوانٍ متجمّدة بين كل تحديث). */
@@ -152,50 +154,63 @@ export function HeaderTicker() {
   const prayerItem = usePrayerTickerItem();
   const contentItems = useRotatingContent();
   const reducedMotion = useReducedMotion();
-  const [staticIndex, setStaticIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
 
   const items = useMemo<TickerItem[]>(() => {
-    const mapped: TickerItem[] = contentItems.map((c) => ({
+    const rejected: string[] = [];
+    const mapped: TickerItem[] = contentItems.flatMap((c) => {
+      if (!c.text?.trim() || c.text.length > MAX_TICKER_TEXT_LENGTH) {
+        rejected.push(c.id);
+        return [];
+      }
+      return [{
       key: c.id,
       Icon: KIND_ICON[c.kind] ?? Sparkles,
       label: c.label,
       text: c.text,
       source: c.source,
       href: c.href,
-    }));
+      }];
+    });
+    if (rejected.length > 0 && typeof window !== "undefined") {
+      console.warn("[majalis:ticker:review]", {
+        reason: "excluded-long-or-empty",
+        ids: rejected,
+      });
+    }
     return prayerItem ? [prayerItem, ...mapped] : mapped;
   }, [prayerItem, contentItems]);
 
   useEffect(() => {
-    if (!reducedMotion || items.length === 0) return;
-    const t = setInterval(() => setStaticIndex((i) => (i + 1) % items.length), 6000);
+    if (items.length === 0 || paused) return;
+    const t = setInterval(() => setActiveIndex((i) => (i + 1) % items.length), reducedMotion ? 6000 : 8000);
     return () => clearInterval(t);
-  }, [reducedMotion, items.length]);
+  }, [reducedMotion, items.length, paused]);
+
+  useEffect(() => {
+    if (activeIndex >= items.length) setActiveIndex(0);
+  }, [activeIndex, items.length]);
 
   if (items.length === 0) {
     return <div className="header-ticker header-ticker--empty" aria-hidden="true" />;
   }
 
-  if (reducedMotion) {
-    return (
-      <div className="header-ticker header-ticker--static" role="status" aria-live="polite">
-        <TickerEntry item={items[staticIndex % items.length]} />
-      </div>
-    );
-  }
-
-  /* نسختان متطابقتان بالضبط: الحركة تُزيح المسار بمقدار 50% من عرضه، فتحلّ
-     النسخة الثانية محل الأولى تمامًا عند نهاية الدورة — حلقة بلا فراغ ولا
-     قفزة مرئية. أي عدد غير مزدوج من النسخ يكسر هذا التطابق.
-     مفتاح المسار مشتق من معرّفات الدفعة: عند التدوير يُعاد بناء المسار
-     فتبدأ الحركة من نقطة متسقة بدل أن تقفز في منتصفها. */
-  const trackKey = items.map((i) => i.key).join("|");
+  const activeItem = items[activeIndex % items.length];
   return (
-    <div className="header-ticker" role="status" aria-label="شريط معلومات متحرك">
-      <div className="header-ticker__track" key={trackKey}>
-        {[...items, ...items].map((item, i) => (
-          <TickerEntry key={`${item.key}-${i}`} item={item} />
-        ))}
+    <div
+      className={`header-ticker${reducedMotion ? " header-ticker--static" : " header-ticker--single"}${paused ? " header-ticker--paused" : ""}`}
+      role="status"
+      aria-live="polite"
+      aria-label="شريط معلومات متحرك"
+      onPointerDown={() => setPaused(true)}
+      onPointerUp={() => setPaused(false)}
+      onPointerCancel={() => setPaused(false)}
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      <div className={`header-ticker__single-item${reducedMotion ? "" : " header-ticker__single-item--animate"}`} key={activeItem.key}>
+        <TickerEntry item={activeItem} />
       </div>
     </div>
   );

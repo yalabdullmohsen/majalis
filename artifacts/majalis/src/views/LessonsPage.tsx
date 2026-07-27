@@ -449,6 +449,7 @@ export default function LessonsPage({
         <div key={`${prefix}${lesson.id}`} className={isAdmin ? "lesson-card-admin-wrap" : ""}>
           <UnifiedLessonCard
             lesson={fromKuwaitLesson(lesson, prefix.startsWith("archived"))}
+            compact
             showRegister={isLoggedIn && !lesson.id.startsWith("kw-")}
             registered={myReg.includes(lesson.id)}
             onToggleRegister={() => toggleReg(lesson.id)}

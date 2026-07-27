@@ -1,5 +1,6 @@
 import { AlertTriangle, RefreshCw } from "lucide-react";
 import { C } from "@/lib/theme";
+import { goBackOrFallback } from "@/lib/navigation-back";
 
 /* ── Skeleton primitives ── */
 
@@ -95,20 +96,17 @@ export function PageHeader({
   subtitle?: string;
   showBack?: boolean;
 }) {
+  const currentPath = `${window.location.pathname}${window.location.search}${window.location.hash}`;
   return (
     <header className="ds-page-header" dir="rtl">
       {showBack && (
         <button
           type="button"
           className="ds-page-back-btn"
-          onClick={() =>
-            window.history.length > 1
-              ? window.history.back()
-              : (window.location.href = "/")
-          }
+          onClick={() => goBackOrFallback(currentPath, "/")}
           aria-label="رجوع"
         >
-          ← رجوع
+          → رجوع
         </button>
       )}
       {eyebrow && <p className="ds-page-header__eyebrow">{eyebrow}</p>}
