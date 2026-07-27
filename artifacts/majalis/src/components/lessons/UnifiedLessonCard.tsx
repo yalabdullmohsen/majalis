@@ -1,5 +1,6 @@
 import { memo, useCallback, useEffect, useState } from "react";
 import { Link } from "wouter";
+import { BookOpen, Clock3, MapPin, Radio } from "lucide-react";
 import { AdminInlineEdit } from "@/components/AdminInlineEdit";
 import {
   buildLessonCopyText,
@@ -81,6 +82,12 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
     lesson.hasRecording ? "تسجيل متاح" : "",
     lesson.sessionCount ? `${lesson.sessionCount} لقاءات` : "",
   ].filter(Boolean);
+  const compactMeta = [
+    lesson.activityType || lesson.category,
+    lesson.time,
+    lesson.sessionCount ? `${lesson.sessionCount} لقاءات` : (lesson.hasLiveStream ? "بث مباشر" : ""),
+    lesson.region || lesson.mosque,
+  ].filter(Boolean).slice(0, 4);
 
   return (
     <article
@@ -103,7 +110,7 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
           <p className="lesson-unified-card__sheikh">{lesson.sheikhName}</p>
         )}
 
-        {flags.length > 0 && (
+        {flags.length > 0 && !compact && (
           <div className="lesson-unified-card__flags">
             {flags.map((flag) => (
               <span key={flag} className="lesson-unified-card__flag">{flag}</span>
@@ -111,14 +118,28 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
           </div>
         )}
 
-        <div className="lesson-unified-card__meta">
+        {compact && (
+          <div className="lesson-unified-card__compact-meta" aria-label="ملخص الدرس">
+            {compactMeta.map((item, index) => {
+              const Icon = index === 0 ? BookOpen : index === 1 ? Clock3 : index === 2 ? Radio : MapPin;
+              return (
+                <span key={`${lesson.id}-${item}-${index}`} className="lesson-unified-card__compact-chip">
+                  <Icon size={13} strokeWidth={1.8} aria-hidden="true" />
+                  <span>{item}</span>
+                </span>
+              );
+            })}
+          </div>
+        )}
+
+        <div className={`lesson-unified-card__meta${compact ? " lesson-unified-card__meta--compact" : ""}`}>
           {!compact && <MetaCell label="نوع النشاط" value={lesson.activityType} />}
-          <MetaCell label="اليوم" value={lesson.day} />
+          {!compact && <MetaCell label="اليوم" value={lesson.day} />}
           {!compact && <MetaCell label="التاريخ" value={lesson.gregorianDate} />}
           {!compact && <MetaCell label="التاريخ الهجري" value={lesson.hijriDate} />}
-          <MetaCell label="الوقت" value={lesson.time} />
-          <MetaCell label="المكان" value={lesson.mosque} />
-          <MetaCell label="المنطقة" value={lesson.region} />
+          {!compact && <MetaCell label="الوقت" value={lesson.time} />}
+          {!compact && <MetaCell label="المكان" value={lesson.mosque} />}
+          {!compact && <MetaCell label="المنطقة" value={lesson.region} />}
           {!compact && <MetaCell label="المحافظة" value={lesson.governorate} />}
           {!compact && lesson.linkedLessons && lesson.linkedLessons.length > 0 && (
             <MetaCell label="الجلسات" value={lesson.linkedLessons.join(" · ")} />
@@ -129,12 +150,26 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
           <p className="lesson-unified-card__note">{lesson.note}</p>
         )}
 
-        <div className="lesson-unified-card__actions">
+        <div className={`lesson-unified-card__actions${compact ? " lesson-unified-card__actions--compact" : ""}`}>
           {lesson.detailsHref ? (
             <Link href={lesson.detailsHref} className="lesson-unified-card__btn lesson-unified-card__btn--primary">
               التفاصيل
             </Link>
           ) : null}
+          {compact && (
+            <>
+              <FavoriteButton contentType="lesson" contentId={lesson.id} compact className="lesson-unified-card__btn lesson-unified-card__btn--ghost" />
+              {showRegister && onToggleRegister && (
+                <button
+                  type="button"
+                  className="lesson-unified-card__btn lesson-unified-card__btn--ghost"
+                  onClick={onToggleRegister}
+                >
+                  {registered ? "مسجل" : "حضور"}
+                </button>
+              )}
+            </>
+          )}
           {!compact && (
             <>
               <AdminInlineEdit
@@ -169,7 +204,7 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
               )}
             </>
           )}
-          {showRegister && onToggleRegister && (
+          {!compact && showRegister && onToggleRegister && (
             <button
               type="button"
               className="lesson-unified-card__btn lesson-unified-card__btn--ghost"

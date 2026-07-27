@@ -173,6 +173,11 @@ export function MoreBottomSheet({ open, onClose }: Props) {
 
   if (!open || typeof document === "undefined") return null;
 
+  const onSoonClick = (label: string) => {
+    onClose();
+    window.dispatchEvent(new CustomEvent("global-coming-soon-open", { detail: { title: label } }));
+  };
+
   return createPortal(
     // نقر الخلفية للإغلاق مصحوب بمعالج Escape فعلي (أعلاه) وزر إغلاق ظاهر
     // داخل الورقة — مسارا وصول بديلان كاملان بلوحة المفاتيح.
@@ -224,7 +229,7 @@ export function MoreBottomSheet({ open, onClose }: Props) {
                     <Link
                       key={href}
                       href={href}
-                      onClick={onClose}
+                      onClick={soon ? (e) => { e.preventDefault(); onSoonClick(label); } : onClose}
                       className={`more-sheet-item${active ? " more-sheet-item--active" : ""}${soon ? " more-sheet-item--soon" : ""}`}
                       aria-current={active ? "page" : undefined}
                       aria-label={soon ? `${label} — قريبًا` : label}

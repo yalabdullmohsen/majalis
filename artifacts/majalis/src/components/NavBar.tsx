@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "wouter";
-import { Menu, Moon, Sun, User, X } from "lucide-react";
+import { Menu, Moon, Search, Sun, User, X } from "lucide-react";
 import { useAuth } from "./AuthProvider";
 import { useLanguage } from "./LanguageProvider";
 import { HeaderTicker } from "./HeaderTicker";
@@ -91,6 +91,11 @@ export default function NavBar() {
     closeAll();
     await logout();
     navigate("/login");
+  };
+
+  const openSearch = () => {
+    closeAll();
+    window.location.href = "/search";
   };
 
   // Desktop only: full auth bar
@@ -185,12 +190,15 @@ export default function NavBar() {
                 : <Moon size={17} strokeWidth={1.6} aria-hidden="true" />
               }
             </button>
-            {/* زر البحث أُزيل من الهيدر (طلب مباشر من المالك، تنحيف الهيدر) —
-                البحث يبقى متاحًا كاملًا عبر اختصار Ctrl/Cmd+K (مُدار في
-                App.tsx عبر مستمع keydown مستقل تمامًا عن هذا الزر) وصفحة
-                /search وSearchSuggestions المستخدَم في صفحات أخرى — لا حذف
-                لأي وظيفة بحث فعلية، فقط زر الهيدر تحديدًا.
-                مكانه في سطح المكتب يشغله الآن الشريط المتحرك (HeaderTicker). */}
+            <button
+              type="button"
+              onClick={openSearch}
+              aria-label="فتح البحث الشامل"
+              title="البحث الشامل"
+              className="navbar-theme-toggle navbar-search-toggle"
+            >
+              <Search size={17} strokeWidth={1.8} aria-hidden="true" />
+            </button>
             {!isMobile && <HeaderTicker />}
             {!isMobile && desktopAuthLinks}
 

@@ -43,16 +43,18 @@ console.log("\n=== محتوى معتمد بمصدر — نفس مصدر مجلس
   assert(dhikr.id === dhikr2.id, "نفس اليوم يُعيد نفس العنصر بالضبط (حتمي لا عشوائي)");
 }
 
-console.log("\n=== NavBar.tsx — زر البحث القديم أُزيل، البدائل باقية ===");
+console.log("\n=== NavBar.tsx / App.tsx — نقطة دخول البحث موحّدة بلا سحب للأسفل ===");
 {
   const navBarSrc = readFileSync(resolve(appRoot, "src/components/NavBar.tsx"), "utf-8");
-  assert(!navBarSrc.includes("navbar-search-cmd"), "لا زر بحث أيقوني قديم متبقٍّ في مصدر الهيدر");
+  assert(navBarSrc.includes("navbar-search-toggle"), "زر بحث واضح موجود في الهيدر");
   assert(!navBarSrc.includes("SearchBox"), "لا مربع بحث مضمّن قديم متبقٍّ في مصدر الهيدر");
   assert(navBarSrc.includes("HeaderTicker"), "الشريط المتحرك مُدرَج فعليًا في الهيدر");
 
   const appSrc = readFileSync(resolve(appRoot, "src/App.tsx"), "utf-8");
   assert(appSrc.includes('e.key === "k"'), "اختصار Ctrl/Cmd+K لفتح البحث الشامل ما زال مسجَّلاً في App.tsx");
   assert(appSrc.includes("global-search-open"), "مستمع حدث فتح البحث الشامل ما زال مسجَّلاً في App.tsx (قناة بديلة متاحة لأي مُطلِق مستقبلي)");
+  assert(!appSrc.includes("pullTouchRef"), "أزيل منطق pull-to-search بالكامل من App.tsx");
+  assert(!appSrc.includes("onTouchStart={onTouchStart}"), "سحب الصفحة لا يفتح البحث من جذر التطبيق");
 
   const sideNavSrc = readFileSync(resolve(appRoot, "src/components/SideNavDrawer.tsx"), "utf-8");
   assert(sideNavSrc.includes('href: "/search"'), "مسار البحث الشامل ما زال متاحًا من القائمة الجانبية");

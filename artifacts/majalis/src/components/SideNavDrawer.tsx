@@ -287,11 +287,13 @@ function SubGroupSection({
   isActive,
   onClose,
   defaultOpen,
+  onSoonClick,
 }: {
   subGroup: SubGroup;
   isActive: (href: string) => boolean;
   onClose: () => void;
   defaultOpen: boolean;
+  onSoonClick: (label: string) => void;
 }) {
   const [open, setOpen] = useState(defaultOpen);
   return (
@@ -313,7 +315,7 @@ function SubGroupSection({
             <Link
               key={href}
               href={href}
-              onClick={onClose}
+              onClick={isComingSoonPath(href) ? (e) => { e.preventDefault(); onSoonClick(label); } : onClose}
               className={`side-nav-link side-nav-link--v2${isActive(href) ? " is-active" : ""}`}
               aria-label={isComingSoonPath(href) ? `${label} — قريبًا` : label}
             >
@@ -380,6 +382,11 @@ export function SideNavDrawer({ open, onClose, onLogout }: DrawerProps) {
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/";
     return pathname === href || pathname.startsWith(`${href}/`) || pathname.startsWith(`${href}?`);
+  };
+
+  const onSoonClick = (label: string) => {
+    onClose();
+    window.dispatchEvent(new CustomEvent("global-coming-soon-open", { detail: { title: label } }));
   };
 
   const drawer = (
@@ -452,7 +459,7 @@ export function SideNavDrawer({ open, onClose, onLogout }: DrawerProps) {
                           <Link
                             key={href}
                             href={href}
-                            onClick={onClose}
+                            onClick={isComingSoonPath(href) ? (e) => { e.preventDefault(); onSoonClick(label); } : onClose}
                             className={`side-nav-link side-nav-link--v2${isActive(href) ? " is-active" : ""}`}
                             aria-label={isComingSoonPath(href) ? `${label} — قريبًا` : label}
                           >
@@ -478,6 +485,7 @@ export function SideNavDrawer({ open, onClose, onLogout }: DrawerProps) {
                             isActive={isActive}
                             onClose={onClose}
                             defaultOpen={sg.items.some(i => isActive(i.href))}
+                            onSoonClick={onSoonClick}
                           />
                         ))}
                       </div>

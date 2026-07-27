@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import { useLocation } from "wouter";
+import { goBackOrFallback } from "@/lib/navigation-back";
 
 /**
  * زر رجوع عام يظهر في كل شاشة غير الرئيسية، بصرف النظر عن امتلاك الصفحة
@@ -37,8 +38,7 @@ export function GlobalBackButton() {
   if (location.startsWith("/mushaf/page")) return null;
 
   const goBack = () => {
-    if (window.history.length > 1) window.history.back();
-    else window.location.href = "/";
+    goBackOrFallback(location, "/");
   };
 
   return (
