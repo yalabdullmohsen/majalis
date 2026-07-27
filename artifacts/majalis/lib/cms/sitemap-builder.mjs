@@ -106,17 +106,14 @@ export async function fetchDynamicUrls() {
   ]);
 
   for (const row of lessons.data || []) {
-    urls.push({ loc: `/lessons/${row.slug || row.id}`, lastmod: row.updated_at, priority: 0.85 });
+    const lessonId = row.external_key || row.slug || row.id;
+    urls.push({ loc: `/lessons/${lessonId}`, lastmod: row.updated_at, priority: 0.85 });
   }
-  for (const row of sheikhs.data || []) {
-    urls.push({ loc: `/sheikhs/${row.id}`, lastmod: row.updated_at, priority: 0.75 });
-  }
+  // /sheikhs أُلغيت لصالح /lessons — لا تُدرَج في الخريطة
   for (const row of library.data || []) {
     urls.push({ loc: `/library/${row.id}`, lastmod: row.updated_at, priority: 0.72 });
   }
-  for (const row of qa.data || []) {
-    urls.push({ loc: `/qa/${row.id}`, lastmod: row.updated_at, priority: 0.72 });
-  }
+  // /qa دُمجت في /quiz — لا تُدرَج مسارات أسئلة منفردة
   for (const row of updates.data || []) {
     urls.push({ loc: `/updates/${row.id}`, lastmod: row.updated_at, priority: 0.65 });
   }

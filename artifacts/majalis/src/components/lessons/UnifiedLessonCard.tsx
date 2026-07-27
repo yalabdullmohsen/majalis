@@ -107,7 +107,14 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
       <div className="lesson-unified-card__body">
         <h3 className="lesson-unified-card__title">{lesson.title}</h3>
         {lesson.sheikhName && (
-          <p className="lesson-unified-card__sheikh">{lesson.sheikhName}</p>
+          <p className="lesson-unified-card__sheikh">
+            المحاضر: {lesson.sheikhName.replace(/^الشيخ(?:ة)?:\s*/u, "")}
+          </p>
+        )}
+        {lesson.organizerName &&
+          lesson.organizerName.replace(/^الشيخ(?:ة)?:\s*/u, "") !==
+            lesson.sheikhName.replace(/^الشيخ(?:ة)?:\s*/u, "") && (
+          <p className="lesson-unified-card__organizer">تنظيم: {lesson.organizerName}</p>
         )}
 
         {flags.length > 0 && !compact && (

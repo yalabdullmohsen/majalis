@@ -3,6 +3,7 @@ import { lessonAds, type LessonAd } from "@/lib/lesson-ads";
 import { buildCatalogLessonRows } from "@/lib/lessons-catalog";
 import { resolveGovernorateForUi, resolveRegion } from "@/lib/kuwait-regions";
 import { cleanTimeText } from "@/lib/lesson-time";
+import { stripSheikhHonorifics } from "@/lib/sheikh-name";
 import type { LessonSeedRow } from "@/lib/lessons-types";
 
 export type { LessonSeedRow } from "@/lib/lessons-types";
@@ -29,6 +30,13 @@ function activityTypeForAd(ad: LessonAd): LessonSeedRow["activity_type"] {
   return "درس";
 }
 
+/** يستخرج اسم المحاضر من تسمية الجلسة إن وُجد بعد الشرطة. */
+function lecturerFromSessionLabel(label: string, fallback: string): string {
+  const m = label.match(/—\s*([^—(]+?)(?:\s*\(|$)/u);
+  if (m?.[1]) return stripSheikhHonorifics(m[1]);
+  return stripSheikhHonorifics(fallback);
+}
+
 function rowFromAdSession(ad: LessonAd, sessionIndex: number): LessonSeedRow {
   const session = ad.sessions[sessionIndex];
   if (!session) {
@@ -41,12 +49,15 @@ function rowFromAdSession(ad: LessonAd, sessionIndex: number): LessonSeedRow {
   const title = genericLabel ? ad.title : `${ad.title} — ${session.label}`;
   const externalKey = `kw-${ad.id}-${sessionIndex}`;
   const isCourse = ad.category === "course";
+  const lecturer = lecturerFromSessionLabel(session.label, ad.teacher);
+  const organizer = ad.organizer ? stripSheikhHonorifics(ad.organizer) : undefined;
 
   return {
     id: externalKey,
     external_key: externalKey,
     title,
-    speaker_name: ad.teacher,
+    speaker_name: lecturer,
+    organizer_name: organizer,
     sheikh_image_url: ad.teacherImage,
     poster_image_url: ad.posterImage,
     category: categoryForAd(ad),
@@ -73,7 +84,7 @@ function rowFromAdSession(ad: LessonAd, sessionIndex: number): LessonSeedRow {
     session_count: ad.sessions.length > 1 ? ad.sessions.length : undefined,
     linked_titles:
       ad.sessions.length > 1 ? ad.sessions.map((s) => s.label).filter(Boolean) : undefined,
-    sheikhs: { name: ad.teacher },
+    sheikhs: { name: lecturer },
   };
 }
 

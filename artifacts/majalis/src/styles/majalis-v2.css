@@ -1711,6 +1711,26 @@ html[data-theme="dark"] .page-shell li {
 }
 
 /* بطاقات المكتبة والمحتوى — خلفية شفافة */
+.library-detail-caution {
+  margin: 0 0 1rem;
+  padding: 0.85rem 1rem;
+  border-radius: 0.75rem;
+  border: 1.5px solid #F0D9C4;
+  background: #FFF8F2;
+  color: #5C4030;
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+.library-detail-caution strong {
+  color: #7A3B12;
+  margin-left: 0.35rem;
+}
+.lesson-unified-card__organizer,
+.lesson-card-pro__organizer {
+  margin: 0.15rem 0 0;
+  font-size: 0.82rem;
+  color: var(--majalis-ink-muted, #5A7A6C);
+}
 .library-detail-read a,
 .library-read-btn {
   color: #fff !important;

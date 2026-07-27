@@ -44,7 +44,7 @@ function padToNeed(original, need, suffixes) {
     out = candidate;
   }
   const filler = " — مرجع معتمد في مجالس العلم.";
-  while (out.length < need) out += filler.slice(0, need - out.length + 1);
+  if (out.length < need) throw new Error("content-padding banned");
   return out;
 }
 

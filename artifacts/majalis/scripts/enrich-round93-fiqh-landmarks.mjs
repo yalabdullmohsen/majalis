@@ -22,7 +22,7 @@ function pad(original, need) {
   if (out.length>=need) return out;
   const sep=/[.»،]$/.test(out)?" ":"؛ ";
   for (const c of CLAUSES){ if(out.includes(c)) continue; out=out+sep+c; if(out.length>=need) return out; }
-  while(out.length<need) out+=".";
+  if (out.length < need) throw new Error("content-padding banned: do not pad with dots");
   return out;
 }
 function raiseQuoted(file, field, min){
