@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * تطبيق migration دليل الجامعات الشرعية
+ * تطبيق migrations دليل الجامعات الشرعية بالترتيب.
  * Usage: node scripts/apply-universities-migrations.mjs
  * DATABASE_URL تُقرأ من ملف .env تلقائياً عبر dotenv
  */
@@ -33,18 +33,28 @@ function buildConfig(url) {
 const __dir = dirname(fileURLToPath(import.meta.url));
 const client = new Client(buildConfig(DB_URL));
 
+const FILES = [
+  "universities_v1.sql",
+  "universities_expand_v1.sql",
+  "universities_expand_v2.sql",
+  "universities_verify_original7_v1.sql",
+  "universities_expand_v3.sql",
+  "universities_verify_refresh_2026_07.sql",
+  "universities_programs_enrich_v1.sql",
+];
+
 async function main() {
   await client.connect();
   console.log("✅ متصل بقاعدة البيانات\n");
 
-  const sqlFile = join(__dir, "../supabase/universities_v1.sql");
-  const sql     = readFileSync(sqlFile, "utf8");
+  for (const name of FILES) {
+    const sqlFile = join(__dir, "../supabase", name);
+    const sql = readFileSync(sqlFile, "utf8");
+    console.log(`📌 تطبيق ${name} ...`);
+    await client.query(sql);
+    console.log("   ✅ تم بنجاح");
+  }
 
-  console.log("📌 تطبيق universities_v1.sql ...");
-  await client.query(sql);
-  console.log("   ✅ تم بنجاح");
-
-  // إحصائيات
   const { rows } = await client.query(`
     SELECT
       (SELECT COUNT(*) FROM universities)           AS universities,
@@ -58,7 +68,7 @@ async function main() {
   console.log(`   برامج: ${s.programs}`);
   console.log(`   شروط قبول: ${s.requirements}`);
   console.log(`   أسئلة شائعة: ${s.faqs}`);
-  console.log("\n✅ اكتمل تطبيق migration الجامعات");
+  console.log("\n✅ اكتمل تطبيق migrations الجامعات");
 }
 
 main()

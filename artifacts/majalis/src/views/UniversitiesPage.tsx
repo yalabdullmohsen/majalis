@@ -21,8 +21,43 @@ import "@/styles/pages/learning-path-dashboard.css";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 
 const COUNTRIES = [
-  "المملكة العربية السعودية", "مصر", "الأردن", "قطر",
-  "ماليزيا", "السودان", "إندونيسيا", "المغرب", "الإمارات", "الكويت",
+  "المملكة العربية السعودية",
+  "مصر",
+  "الأردن",
+  "قطر",
+  "الكويت",
+  "الإمارات العربية المتحدة",
+  "البحرين",
+  "عُمان",
+  "اليمن",
+  "العراق",
+  "سوريا",
+  "لبنان",
+  "فلسطين",
+  "المغرب",
+  "الجزائر",
+  "تونس",
+  "ليبيا",
+  "موريتانيا",
+  "السودان",
+  "النيجر",
+  "نيجيريا",
+  "السنغال",
+  "تركيا",
+  "إيران",
+  "باكستان",
+  "الهند",
+  "بنغلاديش",
+  "أفغانستان",
+  "ماليزيا",
+  "إندونيسيا",
+  "بروناي",
+  "المملكة المتحدة",
+  "الولايات المتحدة الأمريكية",
+  "كندا",
+  "فرنسا",
+  "ألمانيا",
+  "أستراليا",
 ];
 
 function FilterSelect({
@@ -153,12 +188,21 @@ function UniversitiesContent() {
       </div>
 
       <div className="max-w-5xl mx-auto px-4 py-6 space-y-6">
-        {/* تنبيه البيانات التجريبية */}
+        {/* تنبيه موثوقية البيانات */}
         <div className="up-alert" role="note">
           <AlertTriangle size={14} aria-hidden="true" className="inline ml-1" />
-          <strong>تنبيه:</strong> البيانات المعروضة تجريبية وتحتاج تحقق بشري. تأكد دائماً من الموقع
-          الرسمي للجامعة قبل اتخاذ أي قرار.
+          <strong>تنبيه:</strong> راجع دائمًا الموقع الرسمي للجامعة قبل التقديم. الرسوم ومواعيد القبول
+          تتغيّر، ولا نثبت أرقامًا غير مؤكدة في هذا الدليل.
         </div>
+
+        {seedNeeded && universities.length > 0 && (
+          <div className="up-alert" role="status">
+            <Landmark size={14} aria-hidden="true" className="inline ml-1" />
+            يُعرض الآن الكتالوج الموثّق المضمَّن. لمزامنة قاعدة البيانات شغّل:
+            {" "}
+            <code className="up-code">node scripts/apply-universities-migrations.mjs</code>
+          </div>
+        )}
 
         {/* رقائق الدولة السريعة + زر التصفية المتقدمة */}
         <div className="up-quick-filters">
@@ -195,7 +239,7 @@ function UniversitiesContent() {
         </div>
 
         {/* Grid */}
-        {seedNeeded && (
+        {seedNeeded && !loading && universities.length === 0 && (
           <div className="up-empty-state">
             <Landmark size={40} strokeWidth={1.3} className="mx-auto mb-3" aria-hidden="true" />
             <p>جداول الجامعات لم تُطبَّق بعد على قاعدة البيانات.</p>
@@ -203,7 +247,7 @@ function UniversitiesContent() {
           </div>
         )}
 
-        {!seedNeeded && loading && (
+        {loading && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {[1,2,3,4,5,6].map((i) => (
               <div key={i} className="up-skeleton" />
@@ -211,14 +255,14 @@ function UniversitiesContent() {
           </div>
         )}
 
-        {!seedNeeded && !loading && universities.length === 0 && (
+        {!loading && universities.length === 0 && !seedNeeded && (
           <div className="up-empty-state up-empty-state--py12">
             <Search size={40} strokeWidth={1.3} className="mx-auto mb-3" aria-hidden="true" />
             <p>لا توجد نتائج مطابقة للبحث الحالي.</p>
           </div>
         )}
 
-        {!seedNeeded && !loading && universities.length > 0 && (
+        {!loading && universities.length > 0 && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {universities.map((u) => (
               <UniversityCard key={u.id} university={u} />
