@@ -1,14 +1,15 @@
 name: Phase 2 Trial Import
 
+# ⚠️ ج-٢٥٨ (٢٠٢٦-٠٧-٢٧): أُلغي التشغيل التلقائي على `push` وبقي `workflow_dispatch`
+# وحدَه. قوالبُ `data/imports/trial/*.phase2.json` **سجلّاتُ اختبارٍ صريحة**
+# («هل يجوز الجمع بين الصلاتين للمسافر في Phase2؟»، «كتاب تجريبي Phase2»،
+# «الشيخ التجريبي Phase2»)، وهذه الوظيفة تكتبها في **الجداول الحيّة** فتظهر
+# للقارئ؛ وقد حُذفت ثلاثَ مرّات (ج-٢٢٥ وج-٢٢٨ وج-٢٥١) وعادت كلَّ مرّة. وأكبرُ
+# مصادر عودتها كانت جدولةَ `/api/cron/import-phase2-trial` كلَّ ست ساعات في
+# `vercel.json` (حُذفت في ج-٢٥٨)، وهذا ثاني المصدرين. فبقي التشغيلُ اليدويّ
+# عند الحاجة إلى تجربة محرِّك الاستيراد، ولا يعمل من تلقاء نفسه.
 on:
   workflow_dispatch:
-  push:
-    branches: [main]
-    paths:
-      - "artifacts/majalis/data/imports/trial/**"
-      - "artifacts/majalis/lib/content-import/**"
-      - "artifacts/majalis/supabase/kuwait_lessons_extend.sql"
-      - ".github/workflows/phase2-trial-import.yml"
 
 jobs:
   import:
