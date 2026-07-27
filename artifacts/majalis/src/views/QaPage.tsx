@@ -356,7 +356,7 @@ export default function QaPage({
       <RelatedKnowledge kind="question" title="أسئلة ومواد ذات صلة" limit={6} />
 
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في الفقه والأسئلة الشرعية" count={4} />
+        <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في الفقه والأحكام" count={4} />
       </div>
     </div>
   );
