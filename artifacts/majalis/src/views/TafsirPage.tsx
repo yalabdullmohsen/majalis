@@ -1,6 +1,16 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
-import { BookOpen, Search, X } from "lucide-react";
+import {
+  AlertTriangle,
+  BookMarked,
+  BookOpen,
+  ChevronLeft,
+  GraduationCap,
+  History,
+  Search,
+  ShieldCheck,
+  X,
+} from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
@@ -8,10 +18,17 @@ import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { LIBRARY_CATALOG } from "@/lib/library-catalog";
 import {
+  BOOK_SPOTLIGHTS,
+  CAUTIONS,
+  MUFASSIR_CONDITIONS,
   MUFASSIRUN,
+  STUDY_PATH,
   TAFSIR_CATEGORIES,
   TAFSIR_DEFINITION,
+  TAFSIR_INTRO_PARAS,
   TAFSIR_PRINCIPLES,
+  TAFSIR_STAGES,
+  TAFSIR_TERMS,
   TAFSIR_TYPES,
   type TafsirCategory,
 } from "@/lib/tafsir-seed";
@@ -27,37 +44,62 @@ type CardItem = {
   note?: string;
   libraryId?: string;
   meta?: string;
+  rank?: string;
+  source?: string;
 };
 
 function buildCards(): CardItem[] {
+  const history: CardItem[] = TAFSIR_STAGES.map((s) => ({
+    id: `stage-${s.id}`,
+    category: "تاريخ التفسير",
+    title: s.title,
+    body: s.body,
+    meta: s.era,
+  }));
   const types: CardItem[] = TAFSIR_TYPES.map((t) => ({
     id: `type-${t.id}`,
     category: "أنواع التفسير",
     title: t.title,
     body: t.desc,
     example: t.example,
+    rank: t.rank,
+    meta: t.rank,
   }));
   const principles: CardItem[] = TAFSIR_PRINCIPLES.map((p) => ({
     id: `principle-${p.id}`,
     category: "أصول التفسير",
     title: p.title,
     body: p.body,
+    source: p.source,
+    note: p.source ? `المصدر: ${p.source}` : undefined,
+  }));
+  const conditions: CardItem[] = MUFASSIR_CONDITIONS.map((c) => ({
+    id: `cond-${c.id}`,
+    category: "شروط المفسّر",
+    title: c.title,
+    body: c.body,
+  }));
+  const terms: CardItem[] = TAFSIR_TERMS.map((t) => ({
+    id: `term-${t.id}`,
+    category: "مصطلحات",
+    title: t.term,
+    body: t.definition,
+    note: t.note,
   }));
   const mufassirun: CardItem[] = MUFASSIRUN.map((m) => ({
     id: `muf-${m.id}`,
     category: "المفسرون",
     title: m.name,
     body: m.kitab,
-    note: m.note,
+    note: [m.school, m.note].filter(Boolean).join(" — "),
     libraryId: m.libraryId,
     meta: m.era,
   }));
-  return [...types, ...principles, ...mufassirun];
+  return [...history, ...types, ...principles, ...conditions, ...terms, ...mufassirun];
 }
 
 const ALL_CARDS = buildCards();
-
-const TAFSIR_BOOKS = LIBRARY_CATALOG.filter((b) => b.category === "تفسير").slice(0, 12);
+const TAFSIR_BOOKS = LIBRARY_CATALOG.filter((b) => b.category === "تفسير");
 
 export default function TafsirPage() {
   const [query, setQuery] = useState("");
@@ -69,15 +111,25 @@ export default function TafsirPage() {
       path: "/tafsir",
       title: "علم التفسير",
       description:
-        "مقدمة في علم التفسير — أنواعه وأصوله وأشهر كتب المفسرين، مع روابط للمكتبة والمصحف.",
-      keywords: ["تفسير", "علم التفسير", "أصول التفسير", "كتب التفسير", "المفسرون"],
+        "موسوعة تعليمية في علم التفسير: نشأته، أنواعه، أصوله، شروط المفسّر، المصطلحات، أشهر المفسرين وكتبهم، ومسار دراسة عملي مع روابط للمصحف والمكتبة.",
+      keywords: [
+        "تفسير",
+        "علم التفسير",
+        "أصول التفسير",
+        "كتب التفسير",
+        "المفسرون",
+        "التفسير بالمأثور",
+        "ابن كثير",
+        "الطبري",
+        "السعدي",
+      ],
       jsonLd: [
         {
           "@context": "https://schema.org",
           "@type": "WebPage",
           name: "علم التفسير",
           description:
-            "مقدمة في علم التفسير وأنواعه وأصوله وأشهر كتب المفسرين في المجلس العلمي.",
+            "موسوعة تعليمية في علم التفسير على منهج أهل السنة: أنواع، أصول، شروط، مفسرون، ومسار تعلّم.",
           url: "https://www.majlisilm.com/tafsir",
           inLanguage: "ar",
           isPartOf: { "@type": "WebSite", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
@@ -91,21 +143,37 @@ export default function TafsirPage() {
       if (category !== "الكل" && card.category !== category) return false;
       if (!query.trim()) return true;
       return arabicMatchAny(
-        [card.title, card.body, card.example, card.note, card.meta].filter(Boolean) as string[],
+        [card.title, card.body, card.example, card.note, card.meta, card.rank, card.source].filter(
+          Boolean,
+        ) as string[],
         query,
       );
     });
   }, [category, query]);
 
+  const categoryCounts = useMemo(() => {
+    const counts: Record<string, number> = { الكل: ALL_CARDS.length };
+    for (const cat of TAFSIR_CATEGORIES) {
+      if (cat === "الكل") continue;
+      counts[cat] = ALL_CARDS.filter((c) => c.category === cat).length;
+    }
+    return counts;
+  }, []);
+
   return (
     <main className="tf-page" dir="rtl">
       <section className="tf-hero">
-        <span className="tf-hero__badge">القرآن الكريم</span>
+        <span className="tf-hero__badge">القرآن الكريم · أشرف العلوم موضوعًا</span>
         <h1 className="tf-hero__title">علم التفسير</h1>
         <p className="tf-hero__sub">
-          بيان معاني كلام الله على منهج أهل السنة: بالمأثور ثم بالرأي المنضبط، مع أشهر كتب المفسرين وروابط المكتبة والمصحف.
+          بيان معاني كلام الله على منهج أهل السنة: بالمأثور ثم بالرأي المنضبط، مع تاريخ العلم،
+          شروط المفسّر، المصطلحات، أشهر الكتب، ومسار دراسة مرتّب.
         </p>
         <div className="tf-stats">
+          <div className="tf-stat">
+            <strong>{toArabicDigits(TAFSIR_STAGES.length)}</strong>
+            <span>مراحل تاريخ</span>
+          </div>
           <div className="tf-stat">
             <strong>{toArabicDigits(TAFSIR_TYPES.length)}</strong>
             <span>أنواع</span>
@@ -119,22 +187,36 @@ export default function TafsirPage() {
             <span>مفسّرًا</span>
           </div>
           <div className="tf-stat">
+            <strong>{toArabicDigits(TAFSIR_TERMS.length)}</strong>
+            <span>مصطلحًا</span>
+          </div>
+          <div className="tf-stat">
             <strong>{toArabicDigits(TAFSIR_BOOKS.length)}</strong>
             <span>كتابًا</span>
           </div>
         </div>
       </section>
 
-      <p className="tf-intro">{TAFSIR_DEFINITION}</p>
+      <section className="tf-intro-block" aria-labelledby="tf-def-title">
+        <h2 id="tf-def-title" className="tf-section__title">
+          ما هو علم التفسير؟
+        </h2>
+        <p className="tf-intro">{TAFSIR_DEFINITION}</p>
+        <div className="tf-intro-paras">
+          {TAFSIR_INTRO_PARAS.map((para) => (
+            <p key={para.slice(0, 32)}>{para}</p>
+          ))}
+        </div>
+      </section>
 
       <nav className="tf-cta" aria-label="مداخل سريعة">
         <Link href="/mushaf" className="tf-cta__link">
           <strong>المصحف الشريف</strong>
-          <span>اقرأ مع التفسير الميسّر للآيات</span>
+          <span>اقرأ مع أدوات الاستكشاف</span>
         </Link>
         <Link href="/library?cat=تفسير" className="tf-cta__link">
           <strong>كتب التفسير</strong>
-          <span>مكتبة التفاسير المرجعية</span>
+          <span>{toArabicDigits(TAFSIR_BOOKS.length)} كتابًا في المكتبة</span>
         </Link>
         <Link href="/ulum-quran" className="tf-cta__link">
           <strong>علوم القرآن</strong>
@@ -142,9 +224,70 @@ export default function TafsirPage() {
         </Link>
         <Link href="/learning/paths/tafseer" className="tf-cta__link">
           <strong>مسار التفسير</strong>
-          <span>تعلّم منظّم في علم التفسير</span>
+          <span>تعلّم منظّم مرحلي</span>
+        </Link>
+        <Link href="/hadith-science" className="tf-cta__link">
+          <strong>علوم الحديث</strong>
+          <span>لتمييز الرواية في التفسير</span>
+        </Link>
+        <Link href="/quran-hub" className="tf-cta__link">
+          <strong>مركز القرآن</strong>
+          <span>بوابة أقسام القرآن</span>
         </Link>
       </nav>
+
+      <section className="tf-section tf-timeline-section" aria-labelledby="tf-history-title">
+        <div className="tf-section-head">
+          <History size={18} aria-hidden />
+          <h2 id="tf-history-title" className="tf-section__title">
+            نشأة التفسير ومراحله
+          </h2>
+        </div>
+        <p className="tf-section-lead">
+          من بيان النبي ﷺ إلى مدارس الصحابة والتابعين فالتدوين فالعصر الحديث — مراحل موجّهة للدارس.
+        </p>
+        <ol className="tf-timeline">
+          {TAFSIR_STAGES.map((stage, index) => (
+            <li key={stage.id} className="tf-timeline__item">
+              <span className="tf-timeline__num" aria-hidden>
+                {toArabicDigits(index + 1)}
+              </span>
+              <div className="tf-timeline__body">
+                <div className="tf-timeline__meta">{stage.era}</div>
+                <h3>{stage.title}</h3>
+                <p>{stage.body}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      <section className="tf-section tf-path-section" aria-labelledby="tf-path-title">
+        <div className="tf-section-head">
+          <GraduationCap size={18} aria-hidden />
+          <h2 id="tf-path-title" className="tf-section__title">
+            مسار دراسة مقترح
+          </h2>
+        </div>
+        <p className="tf-section-lead">
+          ترتيب عملي من التلاوة إلى التعمّق — يكمّل مسار «التفسير» في مسارات التعلم.
+        </p>
+        <div className="tf-path-grid">
+          {STUDY_PATH.map((step) => (
+            <article key={step.id} className="tf-path-card">
+              <span className="tf-path-card__num">{toArabicDigits(step.step)}</span>
+              <h3>{step.title}</h3>
+              <p>{step.body}</p>
+              {step.href && step.hrefLabel ? (
+                <Link href={step.href} className="tf-inline-link">
+                  {step.hrefLabel}
+                  <ChevronLeft size={14} aria-hidden />
+                </Link>
+              ) : null}
+            </article>
+          ))}
+        </div>
+      </section>
 
       <div className="tf-controls">
         <div className="tf-search-wrap">
@@ -152,13 +295,18 @@ export default function TafsirPage() {
           <input
             className="tf-search"
             type="search"
-            placeholder="ابحث في أنواع التفسير والأصول والمفسرين..."
+            placeholder="ابحث في التاريخ والأنواع والأصول والمصطلحات والمفسرين…"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             aria-label="بحث في علم التفسير"
           />
           {query ? (
-            <button type="button" className="tf-search-clear" onClick={() => setQuery("")} aria-label="مسح البحث">
+            <button
+              type="button"
+              className="tf-search-clear"
+              onClick={() => setQuery("")}
+              aria-label="مسح البحث"
+            >
               <X size={14} />
             </button>
           ) : null}
@@ -174,6 +322,7 @@ export default function TafsirPage() {
               aria-selected={category === cat}
             >
               {cat}
+              <span className="tf-cat-chip__count">{toArabicDigits(categoryCounts[cat] ?? 0)}</span>
             </button>
           ))}
         </div>
@@ -186,6 +335,12 @@ export default function TafsirPage() {
         </div>
       ) : (
         <section className="tf-section" aria-label="مواد علم التفسير">
+          <div className="tf-section-head tf-section-head--between">
+            <h2 className="tf-section__title">أبواب العلم</h2>
+            <span className="tf-results-count">
+              {toArabicDigits(filtered.length)} نتيجة
+            </span>
+          </div>
           <div className="tf-grid">
             {filtered.map((card) => {
               const isOpen = openId === card.id;
@@ -208,7 +363,7 @@ export default function TafsirPage() {
                       <p className="tf-card__def">{card.body}</p>
                       {card.example ? (
                         <div className="tf-card__example">
-                          <span className="tf-card__example-label">مثال:</span>
+                          <span className="tf-card__example-label">أمثلة:</span>
                           {card.example}
                         </div>
                       ) : null}
@@ -227,8 +382,36 @@ export default function TafsirPage() {
         </section>
       )}
 
+      <section className="tf-section" aria-labelledby="tf-spotlight-title">
+        <div className="tf-section-head">
+          <BookMarked size={18} aria-hidden />
+          <h2 id="tf-spotlight-title" className="tf-section__title">
+            كتب تفسير بارزة — لماذا تبدأ بها؟
+          </h2>
+        </div>
+        <p className="tf-section-lead">
+          مختارات مرتبطة مباشرة بالمكتبة، مع مستوى مقترح وسبب الاختيار.
+        </p>
+        <div className="tf-spotlight-grid">
+          {BOOK_SPOTLIGHTS.map((book) => (
+            <article key={book.id} className="tf-spotlight-card">
+              <span className="tf-spotlight-card__level">{book.level}</span>
+              <h3>{book.title}</h3>
+              <p className="tf-spotlight-card__author">{book.author}</p>
+              <p className="tf-spotlight-card__why">{book.why}</p>
+              <Link href={`/library/${book.libraryId}`} className="tf-inline-link">
+                افتح في المكتبة
+                <ChevronLeft size={14} aria-hidden />
+              </Link>
+            </article>
+          ))}
+        </div>
+      </section>
+
       <section className="tf-section" aria-labelledby="tf-books-title">
-        <h2 id="tf-books-title" className="tf-section__title">من كتب التفسير في المكتبة</h2>
+        <h2 id="tf-books-title" className="tf-section__title">
+          كل كتب التفسير في المكتبة ({toArabicDigits(TAFSIR_BOOKS.length)})
+        </h2>
         <div className="tf-books">
           {TAFSIR_BOOKS.map((book) => (
             <Link key={book.id} href={`/library/${book.id}`} className="tf-book">
@@ -237,6 +420,27 @@ export default function TafsirPage() {
             </Link>
           ))}
         </div>
+        <Link href="/library?cat=تفسير" className="tf-inline-link tf-inline-link--block">
+          تصفح تصنيف التفسير في المكتبة
+          <ChevronLeft size={14} aria-hidden />
+        </Link>
+      </section>
+
+      <section className="tf-section tf-caution-section" aria-labelledby="tf-caution-title">
+        <div className="tf-section-head">
+          <AlertTriangle size={18} aria-hidden />
+          <h2 id="tf-caution-title" className="tf-section__title">
+            تنبيهات منهجية
+          </h2>
+        </div>
+        <ul className="tf-caution-list">
+          {CAUTIONS.map((item) => (
+            <li key={item.id}>
+              <strong>{item.title}</strong>
+              <span>{item.body}</span>
+            </li>
+          ))}
+        </ul>
       </section>
 
       <div className="twh-share">
@@ -244,7 +448,10 @@ export default function TafsirPage() {
       </div>
 
       <section className="tf-related">
-        <h2 className="tf-related__title">استكشف أيضاً</h2>
+        <div className="tf-section-head">
+          <ShieldCheck size={18} aria-hidden />
+          <h2 className="tf-related__title">أكمل رحلتك</h2>
+        </div>
         <div className="tf-related__grid">
           {[
             { href: "/quran-hub", label: "مركز القرآن" },
@@ -253,6 +460,8 @@ export default function TafsirPage() {
             { href: "/quran/tajweed", label: "علم التجويد" },
             { href: "/quran/surah-stories", label: "قصص السور" },
             { href: "/duas-quran", label: "أدعية القرآن" },
+            { href: "/hadith-science", label: "علوم الحديث" },
+            { href: "/learning/paths/tafseer", label: "مسار التفسير" },
             { href: "/library?cat=تفسير", label: "مكتبة التفسير" },
           ].map(({ href, label }) => (
             <Link key={href} href={href} className="tf-related__link">
@@ -264,7 +473,7 @@ export default function TafsirPage() {
 
       <RelatedKnowledge kind="quran" query="تفسير" title="مواد ذات صلة بالتفسير" limit={6} />
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId="quran" title="اختبر معلوماتك في علوم القرآن" count={4} />
+        <SectionQuiz categoryId="quran" title="اختبر معلوماتك في التفسير وعلوم القرآن" count={5} />
       </div>
     </main>
   );
