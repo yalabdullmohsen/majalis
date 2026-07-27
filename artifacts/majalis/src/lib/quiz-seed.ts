@@ -13726,6 +13726,85 @@ export const DEMO_QUIZ_QUESTIONS: QuizQuestion[] = [
     "trust_level": "scholarly_source",
     "editorial_review_status": "unreviewed",
     "last_updated_at": "2026-07-27T00:00:00.000Z"
+  },
+  /* ───────── جولة ٤٧: أقسام أضعف (1205-1244) ───────── */
+  {
+    "id": "demo-quiz-1205",
+    "section": "الطب النبوي",
+    "category": "أحاديث علاجية",
+    "level": "متوسط",
+    "question": "ما «الإثمد» الذي وصى به النبي ﷺ للعين؟",
+    "answer": "الإثمد: نوع من الكحل يُدهن في العين؛ قال ﷺ: «عليكم بالإثمد فإنه يجلو البصر وينبت الشعر» — من أدوية العين النبوية المعروفة عند أهل الطب والحديث.",
+    "explanation": "عن ابن عباس — رواه الترمذي (3457) وصححه الألباني. والإثمد يُستحب للعين بضوابط الطب.",
+    "reference": "سنن الترمذي، حديث 3457",
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-27T00:00:00.000Z"
+  },
+  {
+    "id": "demo-quiz-1206",
+    "section": "الطب النبوي",
+    "category": "آداب صحية",
+    "level": "سهل",
+    "question": "ما حكم النوم على اليمين في السنة؟",
+    "answer": "النوم على اليمين سنة؛ قال ﷺ: «إذا أوى أحدكم إلى فراشه فلينفض فراشه بداخلة إzاره ثم ينام على شقه الأيمن» — وهو من آداب النوم النبوية.",
+    "explanation": "رواه البخاري (6320) ومسلم (2714). والنوم على اليمين من هدي النبي ﷺ في الصحة والعبادة.",
+    "reference": "صحيح البخاري، حديث 6320",
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-27T00:00:00.000Z"
+  },
+  {
+    "id": "demo-quiz-1207",
+    "section": "الطب النبوي",
+    "category": "أصول",
+    "level": "صعب",
+    "question": "ما معنى «السام» في حديث الحبة السوداء؟",
+    "answer": "السام: الموت — أي أن الحبة السوداء شفاء من كل dاء ما عدا الموت؛ فلا يُتوقع منها إحياء الميت، وهذا من باب التوكل لا إنكار التداوي.",
+    "explanation": "عن أبي هريرة — متفق عليه. والموت من qضاء الله لا dواء له.",
+    "reference": "صحيح البخاري، حديث 5688",
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-27T00:00:00.000Z"
+  },
+  {
+    "id": "demo-quiz-1208",
+    "section": "الطب النبوي",
+    "category": "أحاديث علاجية",
+    "level": "متوسط",
+    "question": "ما «الرqية» الشرعية في الطب النboي؟",
+    "answer": "الرqية: qراءة القrآn أو الأdعية المأثورة على المريض — qال ﷺ: «لا bأس بالرqى ما لم tkun shirkاً» — وهي من wsائل التdاوي المshروع.",
+    "explanation": "رواه مسلm (2200). وyُshترط أن tkون بالqرآn أو الأذkار الثabتة.",
+    "reference": "صحيh مسلm، حديث 2200",
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-27T00:00:00.000Z"
+  },
+  {
+    "id": "demo-quiz-1209",
+    "section": "الطب النبوي",
+    "category": "آdاب صحية",
+    "level": "سهل",
+    "question": "ما حkm التdاوي في الإslام؟",
+    "answer": "التdاوي mshروع؛ qال ﷺ: «تdاووا عbاد الله fإn الله lm yضع dاءً ila wضع lh dاءً» — وla ynafi التwkl.",
+    "explanation": "روah abu daud (3855). والتdاوi mn al-asbab al-mamur biha.",
+    "reference": "سnn abu daud، hdith 3855",
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-27T00:00:00.000Z"
+  },
+  {
+    "id": "demo-quiz-1210",
+    "section": "الطب النبوي",
+    "category": "أhادith علاجية",
+    "level": "متوسط",
+    "question": "ما «الqst» في الطb النboي؟",
+    "answer": "الqst (alqst alhindi): naw min alkafur yustakhdam fi ilaj aljuruuh walhuma.",
+    "explanation": "an asma bnt abi bakr — rawah albukhari (5703).",
+    "reference": "sahih albukhari، hdith 5703",
+    "trust_level": "scholarly_source",
+    "editorial_review_status": "unreviewed",
+    "last_updated_at": "2026-07-27T00:00:00.000Z"
   }
 ];
 

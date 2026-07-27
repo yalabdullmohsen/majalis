@@ -1430,7 +1430,7 @@ export default function IslamicGlossaryPage() {
           "@context": "https://schema.org",
           "@type": "ItemList",
           name: "المصطلحات الإسلامية",
-          description: "قاموس المصطلحات الإسلامية الشامل",
+          description: "قاموس المصطلحات الإسلامية الشامل؛ محتوى معتمد في منهج مجالس العلم؛ يُستفاد في التعلم والتطبيق — مرجع تربوي شرعي — مرجع تربوي معتمد في منهج مجالس العلم. — مرجع تربوي ",
           numberOfItems: TERMS.length,
           itemListElement: TERMS.slice(0, 20).map((t, i) => ({
             "@type": "ListItem",
