@@ -34,3 +34,8 @@ for(const f of files){
 console.log(`نصوص فيها إسناد صريح للنبي ﷺ: ${total} | بلا تخريج: ${issues.length}\n`);
 issues.slice(0,400).forEach(i=>console.log("✗ "+i));
 if(issues.length>400)console.log(`… و${issues.length-30} أخرى`);
+if(issues.length){
+  console.error(`\n✗ حارس التخريج: ${issues.length} موضعًا بلا تخريج`);
+  process.exit(1);
+}
+console.log("✓ حارس التخريج: كل إسناد نبوي صريح معه تخريج أو بيان حال");
