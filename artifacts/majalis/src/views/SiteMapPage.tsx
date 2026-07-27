@@ -58,6 +58,8 @@ const SECTIONS = [
     emoji: "⚖️",
     links: [
       { href: "/fiqh",        label: "مدخل الفقه",          desc: "بوابة الفقه والفتاوى" },
+      { href: "/qa",          label: "الأسئلة والأجوبة",     desc: "أسئلة وأجوبة شرعية" },
+      { href: "/rulings",     label: "الأحكام الشرعية",      desc: "موسوعة الأحكام" },
       { href: "/tahara",      label: "الطهارة",              desc: "الوضوء والغسل والتيمم" },
       { href: "/salah-guide", label: "الصلاة",               desc: "دليل الصلاة كاملاً" },
       { href: "/zakat",       label: "الزكاة",               desc: "أحكام الزكاة وحسابها" },
@@ -75,8 +77,6 @@ const SECTIONS = [
       { href: "/mawarith",    label: "المواريث",             desc: "حاسبة الفرائض" },
       { href: "/fiqh-qawaid", label: "القواعد الفقهية",      desc: "القواعد الخمس الكبرى" },
       { href: "/madhahib",       label: "المذاهب الأربعة",      desc: "الحنفي والمالكي والشافعي والحنبلي" },
-      { href: "/qa",          label: "الأسئلة والأجوبة",     desc: "أسئلة وأجوبة شرعية" },
-      { href: "/rulings",     label: "الأحكام الشرعية",      desc: "موسوعة الأحكام" },
       { href: "/fiqh-council", label: "المجمع الفقهي",       desc: "قرارات المجامع الفقهية" },
     ],
   },
@@ -84,14 +84,11 @@ const SECTIONS = [
     title: "العبادة والأذكار",
     emoji: "🤲",
     links: [
-      { href: "/adhkar",            label: "الأذكار",              desc: "الصباح والمساء والنوم" },
-      { href: "/duas",              label: "الأدعية الشرعية",      desc: "أدعية مصنفة" },
+      { href: "/adhkar",            label: "الأذكار والأدعية",    desc: "الصباح والمساء والنوم والأدعية المأثورة" },
       { href: "/tasbih",            label: "التسبيح",              desc: "عداد التسبيح الرقمي" },
       { href: "/sunan-yawmiyya",    label: "السنن اليومية",        desc: "السنن مع تتبع إتمامها" },
-      { href: "/prayer-ranks",      label: "فضائل الصلاة",         desc: "أحاديث وآيات فضل الصلاة" },
       { href: "/fadail-aamal",      label: "فضائل الأعمال",        desc: "أحاديث في الفضائل" },
       { href: "/prayer-times",      label: "مواقيت الصلاة",        desc: "أوقات الصلاة بموقعك" },
-      { href: "/prayer-countdown",  label: "عداد الصلاة",          desc: "الوقت المتبقي حتى الصلاة التالية" },
       { href: "/qibla",             label: "اتجاه القبلة",         desc: "البوصلة نحو مكة" },
       { href: "/tawba",             label: "التوبة والاستغفار",    desc: "فضل التوبة وأدعيتها" },
       { href: "/amr-bil-maruf",     label: "الأمر بالمعروف",       desc: "شروطه ومراتبه ومعرفة المعروف والمنكر" },
@@ -109,28 +106,9 @@ const SECTIONS = [
       { href: "/seerah",           label: "السيرة النبوية",       desc: "من المولد حتى الوفاة ﷺ" },
       { href: "/sahabah",          label: "الصحابة الكرام",       desc: "سِيَر الصحابة وفضائلهم" },
       { href: "/prophets",         label: "الأنبياء والرسل",      desc: "٢٥ نبياً مذكورًا بالاسم في القرآن، بقصصهم" },
-      { href: "/anbiya",           label: "قصص الأنبياء",         desc: "عرض تفاعلي بقصص وعبر" },
-      { href: "/islamic-landmarks", label: "المعالم الإسلامية",   desc: "معالم ومواقع تاريخية إسلامية" },
       { href: "/stories",          label: "القصص الإسلامية",      desc: "قصص الصحابة والفتوحات والتاريخ الإسلامي" },
-    ],
-  },
-  {
-    title: "فهارس دراسية",
-    emoji: "📚",
-    links: [
-      { href: "/durus-imaniyya",   label: "دروس إيمانية",        desc: "أمراض القلوب وأعمالها والتزكية" },
-      { href: "/durus-mutanawwia", label: "دروس متنوعة",         desc: "فهارس في العلم والعمل والواقع" },
-      { href: "/iman-topics",      label: "موضوعات إيمانية",     desc: "موضوعات مركّزة في الإيمان" },
-      { href: "/quran-studies",    label: "دراسات قرآنية",       desc: "قصص وأمثال ومحاور قرآنية" },
-      { href: "/sunnah-studies",   label: "دراسات سنية",         desc: "أبواب من السنة بمتن موجز" },
-      { href: "/tazkiya-topics",   label: "موضوعات التزكية",     desc: "تزكية النفس عملياً" },
-      { href: "/tarikh-islami",    label: "التاريخ الإسلامي",    desc: "محطات بعبرة منهجية" },
-      { href: "/usra-mujtama",     label: "الأسرة والمجتمع",     desc: "بناء البيت المسلم" },
-      { href: "/fikr-waqia",       label: "الفكر والواقع",       desc: "قضايا الشباب والعمل المعاصر" },
-      { href: "/mawsuaat",         label: "فهارس الموسوعات",     desc: "فهارس دراسية موسوعية" },
-      { href: "/arabic-language",  label: "اللغة العربية",       desc: "نحو وصرف وبلاغة لطالب العلم" },
-      { href: "/maqasid-sharia",   label: "مقاصد الشريعة",       desc: "مقاصد الشريعة وفهم الأحكام" },
-      { href: "/dalail-nubuwwah",  label: "دلائل النبوة",        desc: "دلائل النبوة من القرآن والسنة" },
+      { href: "/nations",          label: "الأمم السابقة",        desc: "أخبار الأقوام في القرآن والسنة" },
+      { href: "/islamic-landmarks", label: "المعالم الإسلامية",   desc: "معالم ومواقع تاريخية إسلامية" },
     ],
   },
   {
@@ -138,8 +116,8 @@ const SECTIONS = [
     emoji: "🎓",
     links: [
       { href: "/lessons",          label: "الدروس والمحاضرات",    desc: "دروس صوتية ومرئية" },
+      { href: "/lessons?tab=courses", label: "الدورات العلمية",   desc: "برامج وكورسات ضمن جدول الدروس" },
       { href: "/kuwait-lessons",   label: "دروس الكويت",          desc: "دليل الدروس بالمساجد الكويتية" },
-      { href: "/annual-courses",   label: "الدورات العلمية",      desc: "برامج وكورسات منظمة" },
       { href: "/library",          label: "المكتبة الشرعية",      desc: "كتب ومخطوطات إسلامية" },
       { href: "/scholars",         label: "أعلام الإسلام",        desc: "تراجم العلماء" },
       { href: "/quiz",             label: "لعبة سين جيم – أسئلة وأجوبة",   desc: "اختبر معلوماتك من خلال لعبة أسئلة وأجوبة ممتعة ومتدرجة" },
@@ -149,7 +127,6 @@ const SECTIONS = [
       { href: "/knowledge-graph",  label: "استكشف المعرفة",      desc: "شبكة المعرفة والعلاقات بين المفاهيم" },
       { href: "/learning/paths",   label: "مسارات التعلم",        desc: "مسارات علمية منظمة بالمستويات" },
       { href: "/topics",           label: "الموضوعات الشرعية",    desc: "محتوى مجمّع حسب الموضوع" },
-      { href: "/start-here",       label: "ابدأ من هنا",          desc: "دليل طالب العلم المبتدئ" },
       { href: "/calendar",         label: "التقويم الهجري",      desc: "التقويم والمناسبات" },
       { href: "/hikam-salaf",      label: "حكم السلف الصالح",     desc: "أقوال الأئمة والصحابة" },
       { href: "/fawaid",           label: "الفوائد العلمية",      desc: "فوائد ومنقولات موثقة" },
@@ -189,7 +166,7 @@ const SECTIONS = [
 const VISIBLE_SECTIONS = SECTIONS.map((section) => ({
   ...section,
   links: filterNavItems(section.links),
-}));
+})).filter((section) => section.links.length > 0);
 
 export default function SiteMapPage() {
   useEffect(() => {

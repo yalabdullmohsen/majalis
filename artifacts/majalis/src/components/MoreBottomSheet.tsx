@@ -3,12 +3,12 @@ import { Link, useLocation } from "wouter";
 import { useEffect } from "react";
 import { seoNavLabel } from "@/lib/seo-nav-labels";
 import {
-  Activity, Baby, BarChart3, BookMarked, BookOpen, BookText, BookUser,
+  Baby, BarChart3, BookMarked, BookOpen, BookText, BookUser,
   Bot, Calculator, Calendar, CalendarDays, CheckCircle2, Clock, Compass, CreditCard,
-  FileText, Gavel, GitBranch, GraduationCap, Heart, HelpCircle, Info, Landmark,
+  FileText, GitBranch, GraduationCap, Heart, HelpCircle, Info, Landmark,
   Layers, Library, Map, Mic2, Moon, Network,
   Quote, RefreshCw, Repeat2, Rss, Scale, ScrollText, Search, Settings,
-  Shield, Sparkles, Star, Stethoscope, Sun, Users, Waypoints, X, Zap,
+  Shield, Sparkles, Star, Stethoscope, Sun, Users, X, Zap,
 } from "lucide-react";
 import { useThemePreference } from "@/components/ThemePreferenceProvider";
 import { filterNavItems, isComingSoonPath } from "@/lib/nav-visibility";
@@ -67,8 +67,6 @@ const SHEET_SECTIONS_RAW: { group: string; items: SheetItem[] }[] = [
   /* ── الفقه والأحكام ── */
   { group: "الفقه والأحكام", items: [
     { href: "/fiqh",               label: seoNavLabel("/fiqh", "الفقه الإسلامي"),     Icon: BookText },
-    { href: "/qa",                 label: seoNavLabel("/qa", "الأسئلة والأجوبة"),   Icon: HelpCircle },
-    { href: "/rulings",            label: seoNavLabel("/rulings", "الأحكام الشرعية"),    Icon: Gavel },
     { href: "/fiqh-council",       label: seoNavLabel("/fiqh-council", "المجمع الفقهي"),      Icon: Users },
     { href: "/madhahib",           label: seoNavLabel("/madhahib", "المذاهب الأربعة"),    Icon: Scale },
     { href: "/islamic-sects",      label: seoNavLabel("/islamic-sects", "الفرق الإسلامية"),    Icon: Scale },
@@ -87,13 +85,10 @@ const SHEET_SECTIONS_RAW: { group: string; items: SheetItem[] }[] = [
 
   /* ── العبادة والأذكار ── */
   { group: "العبادة والأذكار", items: [
-    { href: "/adhkar",            label: seoNavLabel("/adhkar", "الأذكار"),              Icon: Repeat2 },
-    { href: "/duas",              label: seoNavLabel("/duas", "الأدعية الشرعية"),     Icon: BookMarked },
+    { href: "/adhkar",            label: seoNavLabel("/adhkar", "الأذكار والأدعية"),   Icon: Repeat2 },
     { href: "/tasbih",            label: seoNavLabel("/tasbih", "التسبيح"),              Icon: Repeat2 },
     { href: "/sunan-yawmiyya",    label: seoNavLabel("/sunan-yawmiyya", "السنن اليومية"),        Icon: CheckCircle2 },
-    { href: "/prayer-ranks",      label: seoNavLabel("/prayer-ranks", "فضائل الصلاة"),        Icon: Shield },
     { href: "/prayer-times",      label: seoNavLabel("/prayer-times", "مواقيت الصلاة"),       Icon: Clock },
-    { href: "/prayer-countdown",  label: seoNavLabel("/prayer-countdown", "عداد الصلاة"),         Icon: Activity },
     { href: "/qibla",             label: seoNavLabel("/qibla", "القبلة"),               Icon: Compass },
     { href: "/occasions",         label: seoNavLabel("/occasions", "المناسبات الإسلامية"),  Icon: Calendar },
     { href: "/tawba",             label: seoNavLabel("/tawba", "التوبة والاستغفار"),   Icon: RefreshCw },
@@ -105,15 +100,13 @@ const SHEET_SECTIONS_RAW: { group: string; items: SheetItem[] }[] = [
     { href: "/seerah",          label: seoNavLabel("/seerah", "السيرة النبوية"),         Icon: BookUser },
     { href: "/sahabah",         label: seoNavLabel("/sahabah", "الصحابة الكرام"),         Icon: Users },
     { href: "/prophets",        label: seoNavLabel("/prophets", "الأنبياء والرسل"),         Icon: Star },
-    { href: "/nations",         label: seoNavLabel("/nations", "الأمم السابقة"),         Icon: Landmark },
-    { href: "/stories",            label: seoNavLabel("/stories", "القصص الإسلامية"),     Icon: BookOpen },
     { href: "/islamic-landmarks",  label: seoNavLabel("/islamic-landmarks", "المشاهد والمساجد"),    Icon: Landmark },
   ]},
 
   /* ── الدروس والمكتبة ── */
   { group: "الدروس والمكتبة", items: [
     { href: "/lessons",          label: seoNavLabel("/lessons", "الدروس"),    Icon: GraduationCap },
-    { href: "/annual-courses",   label: seoNavLabel("/annual-courses", "الدورات العلمية"),      Icon: BookMarked },
+    { href: "/lessons?tab=courses", label: seoNavLabel("/lessons?tab=courses", "الدورات العلمية"), Icon: BookMarked },
     { href: "/library",          label: seoNavLabel("/library", "المكتبة العلمية"),      Icon: Library },
     { href: "/scholars",         label: seoNavLabel("/scholars", "أعلام الإسلام"),        Icon: BookUser },
     { href: "/fawaid",           label: seoNavLabel("/fawaid", "الفوائد العلمية"),      Icon: Heart },
@@ -129,7 +122,6 @@ const SHEET_SECTIONS_RAW: { group: string; items: SheetItem[] }[] = [
   /* ── أدوات ومزيد ── */
   { group: "أدوات ومزيد", items: [
     { href: "/learning/paths",       label: seoNavLabel("/learning/paths", "المسارات العلمية"),    Icon: GraduationCap },
-    { href: "/start-here",           label: seoNavLabel("/start-here", "ابدأ من هنا"),         Icon: Waypoints },
     { href: "/quiz",                 label: seoNavLabel("/quiz", "لعبة سين جيم"),  Icon: Zap },
     { href: "/flashcards",           label: seoNavLabel("/flashcards", "بطاقات المراجعة"),     Icon: CreditCard },
     { href: "/assistant",            label: seoNavLabel("/assistant", "المساعد العلمي"),       Icon: Bot },

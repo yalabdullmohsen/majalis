@@ -226,11 +226,6 @@
     <priority>0.87</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/annual-courses</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.86</priority>
-  </url>
-  <url>
     <loc>https://majlisilm.com/updates</loc>
     <changefreq>daily</changefreq>
     <priority>0.85</priority>
@@ -329,6 +324,46 @@
     <loc>https://majlisilm.com/zakat</loc>
     <changefreq>monthly</changefreq>
     <priority>0.83</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/jumuah</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/riba</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.84</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/nikah</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.83</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/talaq</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/udhiya</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/ruqya</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.82</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/waqf</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.81</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/sadaqa</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.81</priority>
   </url>
   <url>
     <loc>https://majlisilm.com/sawm</loc>
@@ -456,19 +491,9 @@
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/learning/calendar</loc>
-    <changefreq>daily</changefreq>
-    <priority>0.75</priority>
-  </url>
-  <url>
     <loc>https://majlisilm.com/learning/quiz</loc>
     <changefreq>weekly</changefreq>
     <priority>0.72</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/prayer-countdown</loc>
-    <changefreq>always</changefreq>
-    <priority>0.7</priority>
   </url>
   <url>
     <loc>https://majlisilm.com/prophetic-medicine</loc>
@@ -479,11 +504,6 @@
     <loc>https://majlisilm.com/islamic-sects</loc>
     <changefreq>monthly</changefreq>
     <priority>0.72</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/start-here</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
   </url>
   <url>
     <loc>https://majlisilm.com/quran-memorization</loc>
@@ -511,11 +531,6 @@
     <priority>0.75</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/anbiya</loc>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://majlisilm.com/learning</loc>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
@@ -537,11 +552,6 @@
   </url>
   <url>
     <loc>https://majlisilm.com/iman-topics</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/quran-studies</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
@@ -609,6 +619,21 @@
     <loc>https://majlisilm.com/learn/iman-billah</loc>
     <changefreq>weekly</changefreq>
     <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/recitation-test-ai</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/surahs</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/quran/revelation-order</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
   </url>
   <url>
     <loc>https://majlisilm.com/lessons/kw-othman-tafsir-nahl-0</loc>

@@ -1039,9 +1039,10 @@
         "برامج علمية",
         "طلب العلم"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "weekly",
-      "priority": 0.86
+      "priority": 0.86,
+      "robots": "noindex, follow"
     },
     {
       "path": "/updates",
@@ -2059,10 +2060,10 @@
         "مواعيد علمية",
         "أحداث شرعية"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "daily",
       "priority": 0.75,
-      "robots": "index, follow"
+      "robots": "noindex, follow"
     },
     {
       "path": "/learning/quiz",
@@ -2087,9 +2088,10 @@
         "مواقيت الصلاة الكويت",
         "أذان"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "always",
-      "priority": 0.7
+      "priority": 0.7,
+      "robots": "noindex, follow"
     },
     {
       "path": "/prophetic-medicine",
@@ -2143,9 +2145,10 @@
         "مسار إسلامي",
         "المجلس العلمي"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "monthly",
-      "priority": 0.85
+      "priority": 0.85,
+      "robots": "noindex, follow"
     },
     {
       "path": "/adhan-settings",
@@ -2305,10 +2308,10 @@
         "سيرة الأنبياء",
         "المجلس العلمي"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "monthly",
       "priority": "0.7",
-      "robots": "index, follow"
+      "robots": "noindex, follow"
     },
     {
       "path": "/auth/callback",
@@ -2462,9 +2465,10 @@
         "المجلس العلمي",
         "طلب العلم"
       ],
-      "sitemap": true,
+      "sitemap": false,
       "changefreq": "weekly",
-      "priority": 0.7
+      "priority": 0.7,
+      "robots": "noindex, follow"
     },
     {
       "path": "/sunnah-studies",

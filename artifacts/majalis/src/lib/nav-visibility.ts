@@ -29,6 +29,30 @@ export const HIDDEN_FROM_NAV_PATHS = new Set<string>([
   "/mushaf/page", // مدخل مصحف واحد: /mushaf
   "/quran-circles", // قريبًا — يُبقى في مركز القرآن فقط بشارة
   "/quran/recitation-test-ai", // تجريبي — من مركز القرآن/المصحف فقط
+
+  // ── دمج هيكل المعلومات (2026-07-27) — مسارات مُعاد توجيهها أو مُنزَّلة من الاكتشاف
+  "/quran-studies", // → /ulum-quran
+  "/anbiya", // → /prophets
+  "/start-here", // → /learning/paths
+  "/learning/calendar", // → /calendar
+  "/prayer-countdown", // → /prayer-times
+  "/annual-courses", // القائمة → /lessons?tab=courses (التفاصيل تبقى)
+  "/duas", // اكتشاف الأدعية عبر /adhkar (الصفحة تبقى للروابط العميقة)
+  "/prayer-ranks", // يُفتح من دليل الصلاة
+  "/sujood-sahw", // يُفتح من دليل الصلاة
+  // فهارس موضوعات ثانوية — الاكتشاف عبر المسارات/الدروس/الفقه
+  "/sunnah-studies",
+  "/tazkiya-topics",
+  "/tarikh-islami",
+  "/usra-mujtama",
+  "/fikr-waqia",
+  "/mawsuaat",
+  "/durus-imaniyya",
+  "/durus-mutanawwia",
+  "/iman-topics",
+  "/arabic-language",
+  "/maqasid-sharia",
+  "/dalail-nubuwwah",
 ]);
 
 /** مسارات قديمة تُعاد كتابتها عند التسجيل في «الأخيرة» أو الروابط المحفوظة. */
@@ -40,6 +64,12 @@ export const MERGED_PATH_REDIRECTS: Record<string, string> = {
   "/learning/quiz": "/quiz",
   "/mushaf-v2-preview": "/mushaf",
   "/features-in-progress": "/updates",
+  "/quran-studies": "/ulum-quran",
+  "/anbiya": "/prophets",
+  "/start-here": "/learning/paths",
+  "/learning/calendar": "/calendar",
+  "/prayer-countdown": "/prayer-times",
+  "/annual-courses": "/lessons?tab=courses",
 };
 
 export function resolveMergedPath(href: string): string {
