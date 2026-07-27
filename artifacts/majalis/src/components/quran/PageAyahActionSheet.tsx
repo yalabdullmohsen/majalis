@@ -3,8 +3,19 @@ import { X, Copy, Check, Bookmark, StickyNote, Play, Pause, ChevronRight, Chevro
 import { copyAyahText, copyAyahTextPlain } from "@/lib/share-ayah";
 import { addBookmark, removeBookmark, isBookmarked, getNote, saveNote } from "@/lib/quran-personal";
 import { fetchTafsirAyahs } from "@/lib/quran-api";
+import { MUSHAF_TAFSIR_EDITIONS } from "@/lib/tafsir-seed";
 import { RECITERS } from "@/lib/quran-audio";
 import { CONTACT_EMAIL } from "@/lib/site-config";
+
+const TAFSIR_EDITION_KEY = "majalis-mushaf-tafsir-edition-v1";
+
+function getStoredTafsirEdition(): string {
+  try {
+    const v = localStorage.getItem(TAFSIR_EDITION_KEY);
+    if (v && MUSHAF_TAFSIR_EDITIONS.some((e) => e.id === v)) return v;
+  } catch { /* ignore */ }
+  return "ar.muyassar";
+}
 
 /**
  * ورقة إجراءات الآية — القسم "ز. التفاعل مع الآية" من مواصفة نواة المصحف
@@ -50,6 +61,7 @@ export function PageAyahActionSheet({ surahNum, surahName, ayahNum, ayahText, is
   const [tafsirText, setTafsirText] = useState<string | null>(null);
   const [tafsirLoading, setTafsirLoading] = useState(false);
   const [tafsirError, setTafsirError] = useState(false);
+  const [tafsirEdition, setTafsirEdition] = useState(getStoredTafsirEdition);
 
   useEffect(() => {
     setBookmarked(isBookmarked(surahNum, ayahNum));
@@ -62,24 +74,37 @@ export function PageAyahActionSheet({ surahNum, surahName, ayahNum, ayahText, is
     setTafsirError(false);
   }, [surahNum, ayahNum]);
 
+  const loadTafsir = async (edition: string) => {
+    setTafsirLoading(true);
+    setTafsirError(false);
+    setTafsirText(null);
+    try {
+      const ayahs = await fetchTafsirAyahs(surahNum, edition);
+      const found = ayahs.find((a) => a.numberInSurah === ayahNum);
+      setTafsirText(found?.text ?? null);
+      if (!found) setTafsirError(true);
+    } catch {
+      setTafsirError(true);
+    } finally {
+      setTafsirLoading(false);
+    }
+  };
+
   const handleToggleTafsir = async () => {
     const next = !tafsirOpen;
     setTafsirOpen(next);
     if (next && tafsirText === null && !tafsirLoading) {
-      setTafsirLoading(true);
-      setTafsirError(false);
-      try {
-        const ayahs = await fetchTafsirAyahs(surahNum, "ar.muyassar");
-        const found = ayahs.find((a) => a.numberInSurah === ayahNum);
-        setTafsirText(found?.text ?? null);
-        if (!found) setTafsirError(true);
-      } catch {
-        setTafsirError(true);
-      } finally {
-        setTafsirLoading(false);
-      }
+      await loadTafsir(tafsirEdition);
     }
   };
+
+  const handleSelectEdition = async (id: string) => {
+    setTafsirEdition(id);
+    try { localStorage.setItem(TAFSIR_EDITION_KEY, id); } catch { /* ignore */ }
+    if (tafsirOpen) await loadTafsir(id);
+  };
+
+  const currentEditionMeta = MUSHAF_TAFSIR_EDITIONS.find((e) => e.id === tafsirEdition);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
@@ -185,17 +210,39 @@ export function PageAyahActionSheet({ surahNum, surahName, ayahNum, ayahText, is
 
         <button type="button" className="ayah-sheet__tafsir-toggle" onClick={handleToggleTafsir} aria-expanded={tafsirOpen}>
           <BookOpen size={14} aria-hidden="true" />
-          <span>تفسير الآية (الميسّر)</span>
+          <span>تفسير الآية</span>
           <ChevronDown size={14} aria-hidden="true" className={tafsirOpen ? "is-open" : ""} />
         </button>
         {tafsirOpen && (
           <div className="ayah-sheet__tafsir-body">
+            <div className="ayah-sheet__tafsir-editions" role="tablist" aria-label="اختر التفسير">
+              {MUSHAF_TAFSIR_EDITIONS.map((ed) => (
+                <button
+                  key={ed.id}
+                  type="button"
+                  role="tab"
+                  className={`ayah-sheet__tafsir-ed${tafsirEdition === ed.id ? " is-active" : ""}`}
+                  aria-selected={tafsirEdition === ed.id}
+                  onClick={() => handleSelectEdition(ed.id)}
+                >
+                  {ed.label}
+                </button>
+              ))}
+            </div>
+            {currentEditionMeta?.caution && (
+              <p className="ayah-sheet__tafsir-caution">{currentEditionMeta.caution}</p>
+            )}
             {tafsirLoading ? (
-              <p className="ayah-sheet__tafsir-status">جارٍ التحميل...</p>
+              <p className="ayah-sheet__tafsir-status">جارٍ تحميل {currentEditionMeta?.label ?? "التفسير"}...</p>
             ) : tafsirError || !tafsirText ? (
               <p className="ayah-sheet__tafsir-status">تعذّر تحميل التفسير. تحقّق من اتصالك.</p>
             ) : (
-              <p className="ayah-sheet__tafsir-text">{tafsirText}</p>
+              <>
+                <p className="ayah-sheet__tafsir-meta">
+                  {currentEditionMeta?.label} — {currentEditionMeta?.author}
+                </p>
+                <p className="ayah-sheet__tafsir-text">{tafsirText}</p>
+              </>
             )}
           </div>
         )}

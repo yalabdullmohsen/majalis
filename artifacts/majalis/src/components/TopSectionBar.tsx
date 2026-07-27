@@ -41,6 +41,19 @@ export function isTabActive(location: string, href: string): boolean {
       location.startsWith("/sahabah/")
     );
   }
+  if (href === "/quran-hub") {
+    return (
+      location === "/quran-hub" ||
+      location.startsWith("/quran-hub/") ||
+      location === "/tafsir" ||
+      location.startsWith("/tafsir/") ||
+      location === "/ulum-quran" ||
+      location.startsWith("/ulum-quran/") ||
+      location === "/mushaf" ||
+      location.startsWith("/mushaf/") ||
+      location.startsWith("/quran/")
+    );
+  }
   return location === href || location.startsWith(href + "/");
 }
 

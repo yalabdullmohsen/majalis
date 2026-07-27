@@ -251,3 +251,42 @@
   color: var(--majalis-ink-soft, inherit);
 }
 
+
+.ayah-sheet__tafsir-editions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-bottom: 0.55rem;
+}
+.ayah-sheet__tafsir-ed {
+  min-height: 34px;
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  border: 1px solid var(--majalis-line);
+  background: transparent;
+  color: var(--majalis-ink-soft);
+  font-size: 0.72rem;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+}
+.ayah-sheet__tafsir-ed.is-active {
+  background: color-mix(in srgb, var(--majalis-emerald-deep) 12%, transparent);
+  border-color: var(--majalis-emerald);
+  color: var(--majalis-emerald-deep);
+}
+.ayah-sheet__tafsir-caution {
+  font-size: 0.75rem;
+  line-height: 1.65;
+  color: #9A5B1A;
+  background: rgba(184, 148, 63, 0.12);
+  border-radius: 8px;
+  padding: 0.45rem 0.6rem;
+  margin: 0 0 0.5rem;
+}
+.ayah-sheet__tafsir-meta {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--majalis-emerald);
+  margin: 0 0 0.35rem;
+}
