@@ -1936,11 +1936,6 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/library/book-maalem-tanzil</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
     <loc>https://majlisilm.com/library/book-badai-sanae</loc>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
