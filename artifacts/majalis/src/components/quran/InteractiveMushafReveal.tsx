@@ -1,5 +1,6 @@
 import { Fragment, useMemo } from "react";
 import type { ReferenceWord } from "@/lib/recitation-ai/types";
+import { toArabicDigits } from "@/lib/utils";
 
 export type RevealState = "hidden" | "revealed" | "error" | "unclear" | "needs_repeat";
 
@@ -127,9 +128,4 @@ export function InteractiveMushafReveal({ words, revealGranularity, justComplete
       })}
     </div>
   );
-}
-
-function toArabicDigits(n: number): string {
-  const digits = ["٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"];
-  return String(n).replace(/[0-9]/g, (d) => digits[Number(d)]);
 }

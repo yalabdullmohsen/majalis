@@ -5,6 +5,7 @@ import {
   Menu, Settings, X, ChevronRight, ChevronLeft, RotateCcw, ArrowRight,
 } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
+import { toArabicDigits } from "@/lib/utils";
 import {
   fetchSurahDetail, getSurahList, getSurahMeta, getSurahForPage, SURAH_START_PAGES,
   savePagePosition, loadPagePosition, deriveHizbRub,
@@ -26,11 +27,6 @@ import "@/styles/pages/mushaf-reader.css";
 const TOTAL_PAGES = 604;
 
 type SegmentAyahs = { segment: QuranSegment; ayahs: Ayah[] };
-
-function toArabicDigits(n: number): string {
-  const digits = ["٠", "١", "٢", "٣", "٤", "٥", "٦", "٧", "٨", "٩"];
-  return String(n).replace(/[0-9]/g, (d) => digits[Number(d)]);
-}
 
 function clampPage(n: number): number {
   return Math.min(TOTAL_PAGES, Math.max(1, n));

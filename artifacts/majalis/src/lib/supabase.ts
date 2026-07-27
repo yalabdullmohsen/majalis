@@ -460,9 +460,9 @@ export async function getApprovedFawaid() {
 export async function getVerifiedHadith(options: { limit?: number; collection?: string; chapter?: string; authenticityClass?: "sahih" | "daif" | "mawdu" } = {}) {
   // مفتاح فريد يشمل كل معاملات الفلترة: RequestManager يُوحِّد (dedupe) الطلبات
   // المتزامنة بنفس المفتاح — نطاق ثابت هنا كان يجعل نداءات getVerifiedHadith
-  // المتزامنة بفلاتر مختلفة (كما في HadithIndexPage: sahih/daif/mawdu معًا عبر
-  // Promise.all) تتشارك نتيجة أول نداء فقط، فتعرض صفحة فهرس الأحاديث نفس
-  // العدد (والنتائج) للأقسام الثلاثة كلها (عطل حقيقي، 2026-07-17).
+  // المتزامنة بفلاتر مختلفة (مثل نداءات sahih/daif/mawdu معًا عبر
+  // Promise.all) تتشارك نتيجة أول نداء فقط، فتعرض نفس النتائج للأقسام
+  // الثلاثة كلها (عطل حقيقي، 2026-07-17).
   const scope = `getVerifiedHadith:${options.authenticityClass ?? "any"}:${options.collection ?? ""}:${options.chapter ?? ""}:${options.limit ?? 500}`;
   return safeSupabaseQuery(
     scope,
