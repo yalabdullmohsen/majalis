@@ -279,7 +279,7 @@ export default function FiqhPage() {
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {qaItems.map((item: any) => (
-                  <Link key={item.id} href={`/qa/${item.id}`}>
+                  <Link key={item.id} href={`/qa?id=${encodeURIComponent(item.id)}`}>
                     <div className="fqp-card h-full">
                       <p className="fqp-card__title fqp-card__title--mb2 line-clamp-2 leading-snug">
                         {item.question}

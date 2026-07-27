@@ -22,14 +22,14 @@ type VisitorPath = {
 };
 
 const VISITOR_PATHS: VisitorPath[] = [
-  { id: "first-time", label: "أتعرّف لأول مرة", desc: "مدخل عام مبسّط للإسلام؛ محتوى معتمد في منهج مجالس العلم", href: "/discover-islam/articles/what-is-islam" },
-  { id: "believe-questions", label: "أؤمن بالله ولديّ أسئلة", desc: "أسئلة حول النبوة والعبادة والقرآن؛ محتوى معتمد في منهج مجالس العلم", href: "/discover-islam/questions?category=prophethood" },
-  { id: "atheist", label: "لا أؤمن بوجود الله", desc: "أدلة عقلية على وجود الخالق؛ محتوى معتمد في منهج مجالس العلم", href: "/discover-islam/questions?category=god-existence" },
-  { id: "other-religion", label: "أنتمي إلى ديانة أخرى", desc: "تصوّر الإسلام لله والنبوة والوحي؛ محتوى معتمد في منهج مجالس العلم", href: "/discover-islam/questions?category=prophethood" },
-  { id: "doubts", label: "لديّ شبهات", desc: "ردود موثّقة على أشهر الشبهات؛ محتوى معتمد في منهج مجالس العلم", href: "/discover-islam/doubts" },
-  { id: "considering", label: "أفكّر في الدخول", desc: "خطوات عملية وواضحة؛ محتوى معتمد في منهج مجالس العلم", href: "/discover-islam/how-to-convert" },
-  { id: "new-muslim", label: "دخلت الإسلام حديثًا", desc: "مسار الثلاثين يومًا الأول؛ محتوى معتمد في منهج مجالس العلم", href: "/discover-islam/new-muslim" },
-  { id: "contact", label: "أريد التحدث مع مختص", desc: "تواصل سري مع داعية أو داعية؛ محتوى معتمد في منهج مجالس العلم", href: "/discover-islam/contact" },
+  { id: "first-time", label: "أتعرّف لأول مرة", desc: "مدخل عام مبسّط للإسلام؛ محتوى معتمد في منهج المجلس العلمي", href: "/discover-islam/articles/what-is-islam" },
+  { id: "believe-questions", label: "أؤمن بالله ولديّ أسئلة", desc: "أسئلة حول النبوة والعبادة والقرآن؛ محتوى معتمد في منهج المجلس العلمي", href: "/discover-islam/questions?category=prophethood" },
+  { id: "atheist", label: "لا أؤمن بوجود الله", desc: "أدلة عقلية على وجود الخالق؛ محتوى معتمد في منهج المجلس العلمي", href: "/discover-islam/questions?category=god-existence" },
+  { id: "other-religion", label: "أنتمي إلى ديانة أخرى", desc: "تصوّر الإسلام لله والنبوة والوحي؛ محتوى معتمد في منهج المجلس العلمي", href: "/discover-islam/questions?category=prophethood" },
+  { id: "doubts", label: "لديّ شبهات", desc: "ردود موثّقة على أشهر الشبهات؛ محتوى معتمد في منهج المجلس العلمي", href: "/discover-islam/doubts" },
+  { id: "considering", label: "أفكّر في الدخول", desc: "خطوات عملية وواضحة؛ محتوى معتمد في منهج المجلس العلمي", href: "/discover-islam/how-to-convert" },
+  { id: "new-muslim", label: "دخلت الإسلام حديثًا", desc: "مسار الثلاثين يومًا الأول؛ محتوى معتمد في منهج المجلس العلمي", href: "/discover-islam/new-muslim" },
+  { id: "contact", label: "أريد التحدث مع مختص", desc: "تواصل سري مع داعية أو داعية؛ محتوى معتمد في منهج المجلس العلمي", href: "/discover-islam/contact" },
 ];
 
 const JOURNEY_STEPS = [

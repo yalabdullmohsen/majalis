@@ -184,8 +184,10 @@ export const API_ROUTES = [
   // /scholars و/library). راجع /lessons/:id في vercel.json rewrites.
   // نُسجّل أيضاً البادئة العامة /lessons لأن x-vercel-original-path يبقى
   // /lessons/:id بعد إعادة الكتابة إلى /api/index.
-  { prefix: "/api/lessons", module: "./api-handlers/lesson-page.js", allowGet: true },
-  { prefix: "/lessons", module: "./api-handlers/lesson-page.js", allowGet: true },
+  // requireSubpath: قائمة /lessons (و/api/lessons بلا معرّف) تبقى لـ SPA —
+  // مطابقة البادئة وحدها كانت تُعيد HTML «هذا الدرس غير متاح» للقائمة.
+  { prefix: "/api/lessons", module: "./api-handlers/lesson-page.js", allowGet: true, requireSubpath: true },
+  { prefix: "/lessons", module: "./api-handlers/lesson-page.js", allowGet: true, requireSubpath: true },
   { prefix: "/api/admin/smart-cms", module: "./api-handlers/admin/smart-cms.js" },
   { prefix: "/api/admin/lesson-from-image", module: "./api-handlers/admin/lesson-from-image.js", rateLimit: lessonFromImageRateLimit },
   { prefix: "/api/admin/lesson-from-url", module: "./api-handlers/admin/lesson-from-url.js", rateLimit: lessonFromUrlRateLimit },
@@ -280,9 +282,16 @@ export function resolveRequestPath(req) {
 }
 
 function findApiRouteForPath(path) {
-  return API_ROUTES.find((route) =>
-    route.exact ? path === route.prefix : path === route.prefix || path.startsWith(`${route.prefix}/`) || path.startsWith(`${route.prefix}?`),
-  );
+  return API_ROUTES.find((route) => {
+    if (route.exact) return path === route.prefix;
+    // مسارات تحتاج مقطعاً بعد البادئة (مثل /lessons/:id) — لا تطابق القائمة الجذرية.
+    if (route.requireSubpath) {
+      if (!path.startsWith(`${route.prefix}/`)) return false;
+      const rest = path.slice(route.prefix.length + 1).replace(/\/+$/, "");
+      return rest.length > 0 && !rest.includes("/");
+    }
+    return path === route.prefix || path.startsWith(`${route.prefix}/`) || path.startsWith(`${route.prefix}?`);
+  });
 }
 
 export function matchApiRoute(urlOrReq) {

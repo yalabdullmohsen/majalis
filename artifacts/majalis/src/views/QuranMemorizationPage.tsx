@@ -295,7 +295,7 @@ export default function QuranMemorizationPage() {
         "@context": "https://schema.org",
         "@type": "LearningResource",
         name: "اختبارات الحفظ القرآني",
-        description: "12 نوعًا من اختبارات حفظ القرآن الكريم مع نظام المراجعة المتباعدة. محتوى معتمد في منهج مجالس العلم",
+        description: "12 نوعًا من اختبارات حفظ القرآن الكريم مع نظام المراجعة المتباعدة. محتوى معتمد في منهج المجلس العلمي",
         url: "https://www.majlisilm.com/quran-memorization",
         inLanguage: "ar",
         educationalLevel: "Beginner",

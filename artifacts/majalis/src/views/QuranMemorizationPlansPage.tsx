@@ -11,14 +11,14 @@ const STORAGE_KEY = "majalis-quran-memorization-plan-v1";
 type Plan = { id: string; title: string; description: string; sessions: number; kind: "memorization" | "review" };
 
 const PLANS: Plan[] = [
-  { id: "review-30", title: "مراجعة مكثفة، 30 يومًا", description: "للحافظ الذي يريد المرور على المصحف كاملًا؛ ليست وعدًا بحفظ جديد في شهر. محتوى معتمد في منهج مجالس العلم", sessions: 30, kind: "review" },
-  { id: "year-1", title: "خطة سنة", description: "ستة أيام أسبوعيًا ويوم مرن للمراجعة أو التعويض. محتوى معتمد في منهج مجالس العلم", sessions: 312, kind: "memorization" },
-  { id: "year-2", title: "خطة سنتين", description: "وتيرة متوازنة تناسب طالب العلم ومن لديه وقت يومي ثابت. محتوى معتمد في منهج مجالس العلم", sessions: 624, kind: "memorization" },
-  { id: "year-3", title: "خطة 3 سنوات", description: "مقدار صغير مع مساحة أوسع للتكرار والتثبيت. محتوى معتمد في منهج مجالس العلم", sessions: 936, kind: "memorization" },
-  { id: "year-5", title: "خطة 5 سنوات", description: "وتيرة هادئة للكبار والموظفين، بلا ضغط عند الانقطاع. محتوى معتمد في منهج مجالس العلم", sessions: 1560, kind: "memorization" },
-  { id: "children", title: "خطة الأطفال", description: "نصف صفحة في الجلسة مع التلقين والمراجعة بإشراف المعلّم. محتوى معتمد في منهج مجالس العلم", sessions: 1208, kind: "memorization" },
-  { id: "employee", title: "خطة الموظف", description: "صفحة في الجلسة وخمسة أيام أسبوعيًا، مع يومين مرنين. محتوى معتمد في منهج مجالس العلم", sessions: 604, kind: "memorization" },
-  { id: "student", title: "خطة طالب العلم", description: "صفحتان تقريبًا في الجلسة مع اختبار أسبوعي وربط بالتسميع. محتوى معتمد في منهج مجالس العلم", sessions: 312, kind: "memorization" },
+  { id: "review-30", title: "مراجعة مكثفة، 30 يومًا", description: "للحافظ الذي يريد المرور على المصحف كاملًا؛ ليست وعدًا بحفظ جديد في شهر. محتوى معتمد في منهج المجلس العلمي", sessions: 30, kind: "review" },
+  { id: "year-1", title: "خطة سنة", description: "ستة أيام أسبوعيًا ويوم مرن للمراجعة أو التعويض. محتوى معتمد في منهج المجلس العلمي", sessions: 312, kind: "memorization" },
+  { id: "year-2", title: "خطة سنتين", description: "وتيرة متوازنة تناسب طالب العلم ومن لديه وقت يومي ثابت. محتوى معتمد في منهج المجلس العلمي", sessions: 624, kind: "memorization" },
+  { id: "year-3", title: "خطة 3 سنوات", description: "مقدار صغير مع مساحة أوسع للتكرار والتثبيت. محتوى معتمد في منهج المجلس العلمي", sessions: 936, kind: "memorization" },
+  { id: "year-5", title: "خطة 5 سنوات", description: "وتيرة هادئة للكبار والموظفين، بلا ضغط عند الانقطاع. محتوى معتمد في منهج المجلس العلمي", sessions: 1560, kind: "memorization" },
+  { id: "children", title: "خطة الأطفال", description: "نصف صفحة في الجلسة مع التلقين والمراجعة بإشراف المعلّم. محتوى معتمد في منهج المجلس العلمي", sessions: 1208, kind: "memorization" },
+  { id: "employee", title: "خطة الموظف", description: "صفحة في الجلسة وخمسة أيام أسبوعيًا، مع يومين مرنين. محتوى معتمد في منهج المجلس العلمي", sessions: 604, kind: "memorization" },
+  { id: "student", title: "خطة طالب العلم", description: "صفحتان تقريبًا في الجلسة مع اختبار أسبوعي وربط بالتسميع. محتوى معتمد في منهج المجلس العلمي", sessions: 312, kind: "memorization" },
   { id: "stabilize", title: "خطة التثبيت", description: "للحافظ: دورة مراجعة من 120 جلسة مع اختبار أسبوعي للمواضع الضعيفة. رواية ضعيفة لا تُعد حجةً ثابتة يُستغنى بما ثبت في الصحيح — سياسة مجالس", sessions: 120, kind: "review" },
 ];
 
@@ -40,7 +40,7 @@ export default function QuranMemorizationPlansPage() {
     applyPageSeo({
       path: "/quran/memorization-plans",
       title: "خطط حفظ القرآن ومراجعته | المجلس العلمي",
-      description: "خطط مرنة لحفظ القرآن ومراجعته حسب الوقت والعمر، مع متابعة محلية وأيام تعويض واختبار تسميع. محتوى معتمد في منهج مجالس العلم",
+      description: "خطط مرنة لحفظ القرآن ومراجعته حسب الوقت والعمر، مع متابعة محلية وأيام تعويض واختبار تسميع. محتوى معتمد في منهج المجلس العلمي",
       keywords: ["خطة حفظ القرآن", "مراجعة القرآن", "تثبيت الحفظ", "مصحف المدينة"],
     });
   }, []);

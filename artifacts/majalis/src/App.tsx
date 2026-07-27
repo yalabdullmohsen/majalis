@@ -458,8 +458,8 @@ function Router() {
       <Route path="/topics"><SafeLazyRoute component={TopicsIndexPage} /></Route>
       <Route path="/scientific-announcements/:id"><SafeLazyRoute component={ScientificAnnouncementDetailPage} /></Route>
       <Route path="/lessons/current"><Redirect to="/lessons" /></Route>
-      <Route path="/lessons/:id"><SafeLazyRoute component={LessonDetailPage} /></Route>
       <Route path="/lessons"><SafeLazyRoute component={LessonsPage} /></Route>
+      <Route path="/lessons/:id"><SafeLazyRoute component={LessonDetailPage} /></Route>
       <Route path="/calendar"><SafeLazyRoute component={CalendarPage} /></Route>
       <Route path="/kuwait-lessons"><SafeLazyRoute component={KuwaitLessonsPage} /></Route>
       <Route path="/announcements"><Redirect to="/lessons" /></Route>
@@ -587,7 +587,7 @@ function Router() {
       </Route>
       {/* عُطِّلت 2026-07-23: توجيه دائم إلى الأسئلة والأجوبة، وvercel.json يوجّه
           الطلبات المباشرة على مستوى الخادم بنفس الوجهة. */}
-      <Route path="/scholarly-research"><Redirect to="/quiz" /></Route>
+      <Route path="/scholarly-research"><Redirect to="/qa" /></Route>
       <Route path="/academic-research"><SafeLazyRoute component={AcademicResearchPage} /></Route>
       <Route path="/learning-path/dashboard"><Redirect to="/my-learning" /></Route>
       <Route path="/learning-path/book/:bookId"><Redirect to="/learning/paths" /></Route>
