@@ -565,6 +565,7 @@ export default function UlumQuranPage() {
             {[
               { href: "/quran-hub", label: "مركز القرآن" },
               { href: "/mushaf", label: "المصحف" },
+              { href: "/tafsir", label: "علم التفسير" },
               { href: "/quran/makki-madani", label: "المكي والمدني" },
               { href: "/quran/tajweed", label: "علم التجويد" },
               { href: "/duas-quran", label: "أدعية القرآن" },
