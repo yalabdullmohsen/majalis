@@ -352,6 +352,7 @@
   direction: rtl;
   /* لون التمييز على الداكن: يُفتَّح بقوة حتى يبقى مقروءاً مع أغمق قيم PROPHET_HUE */
   --prophet-color-on-dark: color-mix(in srgb, var(--prophet-color, #1F6B56) 28%, #F4F7F5);
+  --prophet-accent-on-dark: color-mix(in srgb, var(--prophet-accent, #B8963F) 55%, #FAFAF8);
   --ps-detail-muted: #B8C2BE;
   --ps-detail-soft: #D5DDD9;
   --ps-detail-border: rgba(243, 245, 244, 0.14);
@@ -507,7 +508,7 @@
   font-weight: 600;
 }
 .prophet-detail-lux__hero-title {
-  color: var(--prophet-color-on-dark);
+  color: var(--prophet-accent-on-dark, var(--prophet-color-on-dark));
   font-size: 1.1rem;
   font-weight: 600;
   margin: 0;
@@ -1265,4 +1266,378 @@
 @media (max-width: 640px) {
   .nb-azm-grid { grid-template-columns: 1fr; }
   .nb-miracles-grid { grid-template-columns: 1fr; }
+}
+
+/* ════════════════════════════════════════════════════════════
+   تفاعل حديث — حركة، تقدّم قراءة، فهرس، بطاقات حيّة
+   ════════════════════════════════════════════════════════════ */
+
+@keyframes ps-rise {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes ps-pulse-soft {
+  0%, 100% { transform: scale(1); opacity: 0.9; }
+  50% { transform: scale(1.06); opacity: 1; }
+}
+@keyframes ps-shimmer {
+  0% { background-position: 100% 0; }
+  100% { background-position: -100% 0; }
+}
+
+.prophet-lux-card {
+  animation: ps-rise 0.45s ease both;
+  animation-delay: calc(min(var(--card-i, 0), 12) * 40ms);
+}
+.prophet-lux-card__glow {
+  position: absolute;
+  inset: -40% -20% auto;
+  height: 70%;
+  background: radial-gradient(
+    ellipse at top,
+    color-mix(in srgb, var(--prophet-accent, var(--prophet-color)) 22%, transparent),
+    transparent 70%
+  );
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.prophet-lux-card:hover .prophet-lux-card__glow,
+.prophet-lux-card:focus-visible .prophet-lux-card__glow {
+  opacity: 1;
+}
+.prophet-lux-card:hover .prophet-lux-card__star svg,
+.prophet-lux-card:focus-visible .prophet-lux-card__star svg {
+  transform: scale(1.08);
+  transition: transform 0.25s ease;
+}
+.prophet-lux-card__star svg { transition: transform 0.25s ease; }
+.prophet-lux-card__meter {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0 0 0.65rem;
+}
+.prophet-lux-card__meter-track {
+  flex: 1;
+  height: 4px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--prophet-color) 12%, #E8E7E2);
+  overflow: hidden;
+}
+.prophet-lux-card__meter-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(
+    90deg,
+    var(--prophet-color),
+    var(--prophet-accent, var(--prophet-color))
+  );
+  transition: width 0.5s ease;
+}
+.prophet-lux-card__meter-label {
+  font-size: 0.65rem;
+  color: #7A8480;
+  white-space: nowrap;
+}
+.prophet-lux-card__read {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+  transition: transform 0.2s ease, color 0.2s ease;
+}
+.prophet-lux-card:hover .prophet-lux-card__read {
+  transform: translateX(-3px);
+  color: var(--prophet-accent, var(--prophet-color));
+}
+.prophet-lux-card__border {
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--prophet-color) 35%,
+    var(--prophet-accent, var(--prophet-color)) 65%,
+    transparent
+  );
+}
+.prophet-lux-card--azm {
+  border-color: color-mix(in srgb, var(--prophet-accent, var(--prophet-color)) 40%, var(--ps-line));
+}
+
+/* شريط تقدّم القراءة */
+.prophet-detail-lux__progress {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  height: 3px;
+  background: rgba(255, 255, 255, 0.08);
+}
+.prophet-detail-lux__progress-fill {
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    var(--prophet-color, #143F35),
+    var(--prophet-accent, #B8963F)
+  );
+  transition: width 0.12s linear;
+  box-shadow: 0 0 12px color-mix(in srgb, var(--prophet-accent, #B8963F) 45%, transparent);
+}
+
+.prophet-detail-lux__hero-star--pulse {
+  animation: ps-pulse-soft 3.6s ease-in-out infinite;
+}
+.prophet-detail-lux__keys-hint {
+  margin: 0.75rem 0 0;
+  font-size: 0.72rem;
+  color: rgba(250, 250, 248, 0.55);
+  letter-spacing: 0.01em;
+}
+.prophet-detail-lux__azm-badge {
+  background: color-mix(in srgb, var(--prophet-accent, #B8963F) 78%, #143F35);
+  border-color: color-mix(in srgb, var(--prophet-accent, #B8963F) 55%, transparent);
+}
+
+/* فهرس أقسام لاصق */
+.prophet-detail-toc {
+  position: sticky;
+  top: 3px;
+  z-index: 30;
+  display: flex;
+  gap: 0.4rem;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding: 0.65rem 1.25rem;
+  background: color-mix(in srgb, #0B1A2E 88%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--ps-detail-border, rgba(243, 245, 244, 0.14));
+}
+.prophet-detail-toc::-webkit-scrollbar { display: none; }
+.prophet-detail-toc__btn {
+  flex-shrink: 0;
+  border: 1px solid var(--ps-detail-border, rgba(243, 245, 244, 0.14));
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--ps-detail-soft, #D5DDD9);
+  border-radius: 999px;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.78rem;
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.15s;
+}
+.prophet-detail-toc__btn:hover {
+  border-color: var(--prophet-color-on-dark);
+  color: #FAFAF8;
+  transform: translateY(-1px);
+}
+.prophet-detail-toc__btn--active {
+  background: color-mix(in srgb, var(--prophet-color, #143F35) 55%, rgba(255, 255, 255, 0.12));
+  border-color: var(--prophet-accent, var(--prophet-color-on-dark));
+  color: #FAFAF8;
+  font-weight: 700;
+}
+
+/* ظهور الأقسام عند التمرير */
+.prophet-section-lux--reveal {
+  opacity: 0.45;
+  transform: translateY(12px);
+  transition: opacity 0.45s ease, transform 0.45s ease;
+}
+.prophet-section-lux--reveal.is-inview {
+  opacity: 1;
+  transform: none;
+}
+
+.prophet-fact-card--interactive {
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+.prophet-fact-card--interactive:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--prophet-accent, var(--prophet-color-on-dark)) 45%, transparent);
+  background: rgba(255, 255, 255, 0.09);
+}
+.prophet-fact-card--meter {
+  position: relative;
+  overflow: hidden;
+}
+.prophet-fact-card__ring {
+  position: absolute;
+  inset-inline-start: 0;
+  bottom: 0;
+  height: 3px;
+  width: var(--meter, 0%);
+  background: linear-gradient(90deg, var(--prophet-color-on-dark), var(--prophet-accent, #B8963F));
+  border-radius: 0 2px 0 0;
+  transition: width 0.6s ease;
+}
+
+.prophet-chip-lux--interactive {
+  cursor: pointer;
+  font: inherit;
+  transition: transform 0.15s ease, border-color 0.15s ease, background 0.15s ease;
+}
+.prophet-chip-lux--interactive:hover {
+  transform: translateY(-1px);
+  border-color: var(--prophet-accent, var(--prophet-color-on-dark));
+  background: color-mix(in srgb, var(--prophet-color) 28%, rgba(255, 255, 255, 0.08));
+}
+
+.prophet-attrs-list__item {
+  transition: transform 0.2s ease, background 0.2s ease;
+  border-radius: 8px;
+  padding: 0.25rem 0.35rem;
+}
+.prophet-attrs-list__item:hover {
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateX(-2px);
+}
+.prophet-section-lux--reveal.is-inview .prophet-attrs-list__item {
+  animation: ps-rise 0.4s ease both;
+  animation-delay: calc(var(--i, 0) * 50ms);
+}
+
+.prophet-lesson-card--interactive {
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.prophet-lesson-card--interactive:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--prophet-accent, var(--prophet-color-on-dark)) 40%, transparent);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.22);
+}
+.prophet-section-lux--reveal.is-inview .prophet-lesson-card--interactive {
+  animation: ps-rise 0.4s ease both;
+  animation-delay: calc(var(--i, 0) * 55ms);
+}
+
+.prophet-citation-card--interactive {
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+.prophet-citation-card--interactive:hover {
+  transform: translateX(-3px);
+  border-color: color-mix(in srgb, var(--prophet-accent, var(--prophet-color-on-dark)) 50%, transparent);
+}
+
+.prophet-miracle-box {
+  position: relative;
+  overflow: hidden;
+}
+.prophet-miracle-box::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    110deg,
+    transparent 30%,
+    color-mix(in srgb, var(--prophet-accent, #B8963F) 18%, transparent) 50%,
+    transparent 70%
+  );
+  background-size: 220% 100%;
+  animation: ps-shimmer 4.5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.prophet-nav-lux__btn {
+  min-width: 140px;
+}
+.prophet-nav-lux__dir {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+/* أولو العزم + المعجزات التفاعلية */
+.nb-azm-card {
+  animation: ps-rise 0.45s ease both;
+  animation-delay: calc(var(--card-i, 0) * 60ms);
+  position: relative;
+  overflow: hidden;
+}
+.nb-azm-card::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto auto 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--prophet-color), var(--prophet-accent, var(--prophet-color)));
+}
+.nb-azm-card { border-top: none; }
+.nb-azm-cta {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--prophet-color);
+  opacity: 0.85;
+  transition: opacity 0.2s, transform 0.2s;
+}
+.nb-azm-card:hover .nb-azm-cta {
+  opacity: 1;
+  transform: translateX(-3px);
+  color: var(--prophet-accent, var(--prophet-color));
+}
+
+.nb-miracle-card {
+  text-align: right;
+  cursor: pointer;
+  font: inherit;
+  width: 100%;
+  animation: ps-rise 0.4s ease both;
+  animation-delay: calc(min(var(--card-i, 0), 10) * 40ms);
+  border-inline-start: 3px solid var(--prophet-color, var(--ps-emerald));
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.nb-miracle-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 22px rgba(20, 63, 53, 0.14);
+  border-color: var(--prophet-accent, var(--prophet-color));
+}
+.nb-miracle-nabi { color: var(--prophet-color, var(--ps-emerald)); }
+.nb-miracle-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.15rem;
+  margin-top: 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--prophet-accent, var(--prophet-color));
+}
+
+.prophet-timeline__item {
+  animation: ps-rise 0.4s ease both;
+  animation-delay: calc(min(var(--card-i, 0), 16) * 35ms);
+}
+.prophet-timeline__card:hover {
+  border-color: var(--prophet-accent, var(--item-color));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .prophet-lux-card,
+  .nb-azm-card,
+  .nb-miracle-card,
+  .prophet-timeline__item,
+  .prophet-section-lux--reveal.is-inview .prophet-attrs-list__item,
+  .prophet-section-lux--reveal.is-inview .prophet-lesson-card--interactive,
+  .prophet-detail-lux__hero-star--pulse,
+  .prophet-miracle-box::after {
+    animation: none !important;
+  }
+  .prophet-section-lux--reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.nb-table__row--clickable:focus-visible {
+  outline: 2px solid var(--prophet-accent, var(--ps-emerald));
+  outline-offset: -2px;
+}
+.nb-table__row--clickable:hover td {
+  background: color-mix(in srgb, var(--prophet-color, var(--ps-emerald)) 7%, #F8FAFC);
+}
+.nb-table__row--clickable .nb-table__name {
+  color: var(--prophet-color, var(--ps-ink));
+}
+.nb-table__row--clickable .nb-table__count {
+  color: var(--prophet-accent, var(--ps-emerald));
 }
