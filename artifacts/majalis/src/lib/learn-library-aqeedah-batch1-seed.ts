@@ -38,7 +38,7 @@ export const AQEEDAH_BATCH1_LESSONS: AqeedahSeedLesson[] = [
     id: "seed-aqeedah-intro-1",
     categorySlug: "aqeedah-intro",
     title: "مدخل إلى العقيدة",
-    description: "تعريف العقيدة الإسلامية وأركانها الإجمالية ومصدرها الوحيد المعصوم مع تطبيقات تُظهر أثر العقيدة في السلوك.",
+    description: "تعريف العقيدة الإسلامية وأركانها الإجمالية ومصدرها الوحيد المعصوم مع تطبيقات تُظهر أثر العقيدة في السلوك، مع التدرّج في الفهم والعمل.",
     activity_type: "درس",
     sections: [
       sec("s-intro-1", "terms", "تعريف العقيدة",
@@ -88,7 +88,7 @@ export const AQEEDAH_BATCH1_LESSONS: AqeedahSeedLesson[] = [
     id: "seed-aqeedah-rusul-1",
     categorySlug: "iman-rusul",
     title: "الإيمان بالرسل",
-    description: "الركن الرابع: التصديق برسالات الرسل جميعاً ومحمد ﷺ خاتمهم ويُقرأ ضمن مسار العقيدة للمبتدئ ثم المتوسط.",
+    description: "الركن الرابع: التصديق برسالات الرسل جميعاً ومحمد ﷺ خاتمهم ويُقرأ ضمن مسار العقيدة للمبتدئ ثم المتوسط، مع التدرّج في الفهم والعمل.",
     activity_type: "درس",
     sections: [
       sec("s-rus-1", "body", "تعريفه",
@@ -168,7 +168,7 @@ export const AQEEDAH_BATCH1_LESSONS: AqeedahSeedLesson[] = [
     id: "seed-aqeedah-kufr-1",
     categorySlug: "kufr-nifaq",
     title: "الكفر والنفاق",
-    description: "التفريق بين الكفر الصريح والنفاق الاعتقادي وصفات المنافقين ويُقرأ ضمن مسار العقيدة للمبتدئ ثم المتوسط.",
+    description: "التفريق بين الكفر الصريح والنفاق الاعتقادي وصفات المنافقين ويُقرأ ضمن مسار العقيدة للمبتدئ ثم المتوسط، مع التدرّج في الفهم والعمل.",
     activity_type: "درس",
     sections: [
       sec("s-kfr-1", "body", "تعريف الكفر والنفاق",
@@ -184,7 +184,7 @@ export const AQEEDAH_BATCH1_LESSONS: AqeedahSeedLesson[] = [
     id: "seed-aqeedah-wala-1",
     categorySlug: "wala-bara",
     title: "الولاء والبراء",
-    description: "محبة أهل الإيمان وموالاتهم، والبراءة من الكفر والشرك بضوابط الشرع والعمدة فيه تقرير أهل السنة بلا غلو ولا تفريط.",
+    description: "محبة أهل الإيمان وموالاتهم، والبراءة من الكفر والشرك بضوابط الشرع والعمدة فيه تقرير أهل السنة بلا غلو ولا تفريط، مع التدرّج في الفهم والعمل.",
     activity_type: "درس",
     sections: [
       sec("s-wala-1", "body", "تعريفه",
