@@ -32,7 +32,7 @@ import { LIBRARY_CATALOG } from "@/lib/library-catalog";
 import "@/styles/pages/learning-path-detail.css";
 import {
   BookOpen, FileQuestion, BookMarked, CheckSquare,
-  CheckCircle2, ChevronRight, ChevronDown, Clock, Lock,
+  CheckCircle2, ChevronLeft, ChevronDown, Clock, Lock,
   BarChart3, UserPlus, Award, type LucideProps,
 } from "lucide-react";
 
@@ -324,7 +324,7 @@ export default function LearningPathDetailPage() {
       <div className="lpd2-hero">
         <nav className="lpd2-breadcrumb" aria-label="مسار التنقل">
           <Link href="/learning/paths">المسارات</Link>
-          <ChevronRight size={13} aria-hidden="true" />
+          <ChevronLeft size={13} aria-hidden="true" />
           <span>{path.title}</span>
         </nav>
 

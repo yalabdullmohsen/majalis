@@ -95,7 +95,7 @@
   border-bottom: 1px solid var(--msk-border, #e5e0d5);
   background: var(--msk-canvas-1, #fff);
   position: sticky;
-  top: 0;
+  top: var(--sticky-below-chrome, 7rem);
   z-index: 10;
   box-shadow: 0 1px 4px rgba(0,0,0,0.06);
 }

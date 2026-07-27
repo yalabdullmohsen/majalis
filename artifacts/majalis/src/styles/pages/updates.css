@@ -6,87 +6,8 @@
 
 /* 216 HP Stats Bar */
 
-/* 217 Scroll to Top */
-.global-back-btn {
-  position: fixed;
-  bottom: calc(var(--bottom-nav-total, 4.5rem) + 0.25rem);
-  inset-inline-start: 1rem;
-  z-index: 185;
-  /* px بدل rem عمدًا: عند تكبير حجم الخط الجذري (Dynamic Type/تكبير
-     المتصفح) لا يكبر هذا الزر معه إلى حجم يُغطّي محتوى البطاقات تحته —
-     يبقى هدفًا ثابتًا مناسبًا للمس (٤٤px، حد Apple HIG الأدنى). */
-  width: 44px;
-  height: 44px;
-  flex-shrink: 0;
-  border-radius: 50%;
-  border: none;
-  background: var(--majalis-panel, #fff);
-  color: var(--majalis-ink, #1A1A18);
-  border: 1px solid var(--majalis-line, rgba(0,0,0,.1));
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 14px rgba(0,0,0,.16);
-  cursor: pointer;
-  transition: opacity .2s, transform .2s, background .15s;
-  opacity: .9;
-}
-.global-back-btn:hover { opacity: 1; transform: translateY(-2px); }
-.global-back-btn:active { transform: scale(.93); }
-/* يتراكب فعليًا مع محتوى ورقة الفلاتر (FilterBottomSheet) رغم z-index أدنى
-   اسميًا — راجع التعليق في FilterBottomSheet.tsx. */
-body.filter-sheet-open .global-back-btn { display: none; }
-/* يظهر فقط بعد تمرير طفيف (راجع تعليق GlobalBackButton.tsx للسبب
-   الجذري): يمنع تراكبه مع محتوى الصفحة الحقيقي عند وضع التمرير صفر،
-   ويبقى قابلاً للنقر فقط حين ظاهر فعليًا (pointer-events). */
-.global-back-btn--hidden {
-  opacity: 0;
-  transform: translateY(10px);
-  pointer-events: none;
-}
-html[data-theme="dark"] .global-back-btn {
-  background: var(--clr-surface, #1A2120) !important;
-  color: var(--clr-text-1, #E5F0EC) !important;
-  border-color: var(--clr-border, rgba(255,255,255,.08)) !important;
-}
-@media (min-width: 880px) {
-  .global-back-btn { bottom: 1.5rem; }
-}
-
-.scroll-to-top {
-  position: fixed;
-  bottom: calc(var(--bottom-nav-total, 4.5rem) + 0.25rem);
-  inset-inline-end: 1rem;
-  z-index: 190;
-  width: 2.6rem;
-  height: 2.6rem;
-  border-radius: 50%;
-  border: none;
-  background: var(--color-primary, #226A56);
-  color: var(--text-on-primary, #fff);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  box-shadow: 0 4px 14px rgba(0,0,0,.22);
-  cursor: pointer;
-  transition: opacity .2s, transform .2s, background .15s;
-  opacity: .88;
-}
-.scroll-to-top:hover { opacity: 1; background: var(--majalis-emerald-deep, #143F35); transform: translateY(-2px); }
-.scroll-to-top:active { transform: scale(.93); }
-.stt-ring {
-  position: absolute;
-  top: -4px; left: -4px;
-  width: calc(100% + 8px);
-  height: calc(100% + 8px);
-  pointer-events: none;
-  overflow: visible;
-}
-.stt-ring circle:last-child { transition: stroke-dashoffset 0.35s ease; }
-.stt-icon { position: relative; z-index: 1; flex-shrink: 0; }
-@media (min-width: 880px) {
-  .scroll-to-top { bottom: 1.5rem; }
-}
+/* 217 Scroll to Top / Global back — نُقلت القواعد الأساسية إلى final-release.css
+   (App.tsx يركّبهما عالميًا؛ updates.css كسول ولا يصل لكل الصفحات). */
 
 /* ============================================================
    218 — ContactPage  (contact-*)

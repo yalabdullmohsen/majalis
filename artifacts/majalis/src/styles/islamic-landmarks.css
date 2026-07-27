@@ -82,7 +82,7 @@
   background: var(--ds-surface, #fff);
   border-bottom: 1px solid var(--ds-border, #e5e7eb);
   position: sticky;
-  top: 0;
+  top: var(--sticky-below-chrome, 7rem);
   z-index: 10;
   box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 }

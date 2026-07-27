@@ -311,7 +311,7 @@ export default function QaPage({
             <span>{categoryGrid.length} تصنيف</span>
           </div>
         )}
-        <FilterToggle onClick={() => setFiltersOpen(true)} label="بحث وتصفية" />
+        <FilterToggle expanded={filtersOpen} onClick={() => setFiltersOpen(true)} label="بحث وتصفية" />
       </div>
 
       {randomItem && (

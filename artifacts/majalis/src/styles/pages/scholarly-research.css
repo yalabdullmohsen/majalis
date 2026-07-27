@@ -378,7 +378,7 @@ html[data-theme="dark"] .srp-action-btn { background: rgba(255,255,255,.06); bor
 .srp-root { min-height: 100svh; background: var(--majalis-parchment); direction: rtl; }
 .srp-subnav {
   background: var(--majalis-panel); border-bottom: 1px solid var(--majalis-line);
-  position: sticky; top: 0; z-index: 20;
+  position: sticky; top: var(--sticky-below-chrome, 7rem); z-index: 20;
 }
 .srp-tab {
   padding: .75rem 1.25rem; font-size: .875rem; font-weight: 500;

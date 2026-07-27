@@ -1,6 +1,6 @@
 import { useEffect, useState, useMemo } from "react";
 import { applyPageSeo } from "@/lib/seo";
-import "@/styles/elite-2026.css";
+import "@/styles/pages/janna-naar.css";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";

@@ -95,7 +95,7 @@ export default function NavBar() {
 
   const openSearch = () => {
     closeAll();
-    window.location.href = "/search";
+    window.dispatchEvent(new CustomEvent("global-search-open"));
   };
 
   // Desktop only: full auth bar

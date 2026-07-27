@@ -198,6 +198,14 @@ export function GlobalSearchModal({ onClose }: Props) {
     return () => { document.body.style.overflow = prev; };
   }, []);
 
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [onClose]);
+
   const doSearch = useCallback(
     async (q: string, filter: string) => {
       if (!q.trim()) {
@@ -268,9 +276,7 @@ export function GlobalSearchModal({ onClose }: Props) {
   const hasResults = results.length > 0;
 
   return (
-    // نقر الخلفية للإغلاق (بلا مكافئ لوحة مفاتيح مباشر) مصحوب بمعالج Escape
-    // فعلي (انظر أعلاه) وزر إغلاق ظاهر داخل البطاقة — الوصول الكامل بلوحة
-    // المفاتيح مكفول عبر هذين المسارين البديلين، فلا حظر فعلي للوصول.
+    // نقر الخلفية للإغلاق؛ Escape على document (أعلاه) وزر إغلاق ظاهر.
     // eslint-disable-next-line jsx-a11y/click-events-have-key-events
     <div
       className={`gsm-overlay${isMobile ? " gsm-overlay--mobile" : ""}`}
@@ -294,7 +300,7 @@ export function GlobalSearchModal({ onClose }: Props) {
             aria-label="إغلاق البحث"
             className="gsm-close-btn"
           >
-            {isMobile ? "←" : "✕"}
+            {isMobile ? "→" : "✕"}
           </button>
 
           <input
@@ -495,7 +501,7 @@ export function GlobalSearchModal({ onClose }: Props) {
           }
           {query.trim() && (
             <button type="button" onClick={handleSubmitSearch} className="gsm-footer__all-btn">
-              عرض كل النتائج ←
+              عرض كل النتائج →
             </button>
           )}
         </div>

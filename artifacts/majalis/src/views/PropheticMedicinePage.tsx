@@ -118,7 +118,7 @@ export default function PropheticMedicinePage() {
       {/* شريط الفلتر */}
       <div className="ds-section__head">
         <p className="ds-section__title pmp-count">{items.length} موضوع</p>
-        <FilterToggle onClick={() => setFiltersOpen(true)} label="تصفية" />
+        <FilterToggle expanded={filtersOpen} onClick={() => setFiltersOpen(true)} label="تصفية" />
       </div>
 
       {/* الفلاتر، سطح المكتب */}

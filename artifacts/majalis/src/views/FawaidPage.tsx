@@ -206,7 +206,7 @@ export default function FawaidPage({
             <span>{FAWAID_CATEGORIES.length} تصنيف</span>
           </div>
         )}
-        <FilterToggle onClick={() => setFiltersOpen(true)} label="بحث وتصفية" />
+        <FilterToggle expanded={filtersOpen} onClick={() => setFiltersOpen(true)} label="بحث وتصفية" />
       </div>
 
       {loading ? (
