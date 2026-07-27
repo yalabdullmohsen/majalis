@@ -13,7 +13,7 @@ const UpdatesIcon = () => (
 );
 
 const TYPE_LABELS: Record<string, string> = {
-  fatwa: "فتوى",
+  fatwa: "حكم شرعي",
   decision: "قرار",
   article: "مقال",
   news: "خبر",

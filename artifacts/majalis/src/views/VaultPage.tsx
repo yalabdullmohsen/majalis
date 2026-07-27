@@ -47,7 +47,7 @@ const SECTION_HREF: Record<ReadingSection, string> = {
 
 const SECTION_LABEL: Record<ReadingSection, string> = {
   adhkar: "الأذكار",
-  qa: "الأسئلة الشرعية",
+  qa: "الأسئلة والأجوبة",
   fawaid: "الفوائد",
   hadith: "الحديث",
   rulings: "الأحكام",

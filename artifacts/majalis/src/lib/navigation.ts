@@ -171,7 +171,7 @@ export const HOME_MORE_SECTIONS = [
   { href: "/seerah", title: seoNavLabel("/seerah", "السيرة النبوية"), description: "حياة النبي محمد ﷺ من المولد إلى الوفاة" },
   { href: "/prophetic-medicine", title: seoNavLabel("/prophetic-medicine", "الطب النبوي"), description: "ما ثبت في السنة من التداوي والوقاية" },
   { href: "/annual-courses", title: seoNavLabel("/annual-courses", "الدورات العلمية"), description: "برامج ودورات سنوية" },
-  { href: "/updates", title: seoNavLabel("/updates", "آخر المستجدات"), description: "قرارات وفتاوى ودروس جديدة" },
+  { href: "/updates", title: seoNavLabel("/updates", "آخر المستجدات"), description: "قرارات وأحكام ودروس جديدة" },
   { href: "/assistant", title: seoNavLabel("/assistant", "المساعد العلمي"), description: "إرشاد داخل التطبيق" },
   { href: "/library", title: seoNavLabel("/library", "المكتبة العلمية"), description: "كتب ومتون" },
   { href: "/learning/paths", title: seoNavLabel("/learning/paths", "المسارات العلمية"), description: "تعلم منظم من المبتدئ للمتقدم" },
