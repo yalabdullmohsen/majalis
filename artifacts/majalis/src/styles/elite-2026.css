@@ -110,14 +110,14 @@ body {
 }
 
 /* ══════════════════════════════════════════════
-   4. Navbar — Glass Premium 2026
+   4. Navbar — زمردي داكن (هوية v4)
    ══════════════════════════════════════════════ */
 .navbar-v3 {
-  background: rgba(255,255,255,0.88) !important;
-  backdrop-filter: blur(24px) saturate(200%) !important;
-  -webkit-backdrop-filter: blur(24px) saturate(200%) !important;
-  border-bottom: 1px solid rgba(0,0,0,0.06) !important;
-  box-shadow: 0 1px 0 rgba(0,0,0,0.04), 0 2px 16px rgba(0,0,0,0.04) !important;
+  background: linear-gradient(135deg, #143F35 0%, #226A56 100%) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-bottom: 1px solid rgba(255,255,255,0.08) !important;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.3) !important;
 }
 
 .navbar-v3__inner {
@@ -378,7 +378,7 @@ html[data-theme="dark"] .rp-section-title {
   font-weight: 700 !important;
   letter-spacing: normal !important;
   text-transform: uppercase !important;
-  color: var(--elite-green, #166534) !important;
+  color: var(--elite-green, #226A56) !important;
   margin-bottom: 0.625rem !important;
 }
 
@@ -737,7 +737,7 @@ html[data-theme="dark"] .rp-section-title {
   font-weight: 700 !important;
   letter-spacing: normal !important;
   text-transform: uppercase !important;
-  color: var(--elite-green, #166534) !important;
+  color: var(--elite-green, #226A56) !important;
   margin-bottom: 0.25rem !important;
 }
 
@@ -745,7 +745,7 @@ html[data-theme="dark"] .rp-section-title {
 .ds-section__link {
   font-size: 0.8125rem !important;
   font-weight: 600 !important;
-  color: var(--elite-green, #166534) !important;
+  color: var(--elite-green, #226A56) !important;
   text-decoration: none !important;
   white-space: nowrap !important;
   display: inline-flex !important;
@@ -756,7 +756,7 @@ html[data-theme="dark"] .rp-section-title {
 
 .home-section-link:hover,
 .ds-section__link:hover {
-  color: var(--elite-forest, #052E16) !important;
+  color: var(--elite-forest, #143F35) !important;
 }
 
 /* ══════════════════════════════════════════════
@@ -831,7 +831,7 @@ html[data-theme="dark"] .rp-section-title {
    15. أزرار (CTA Buttons)
    ══════════════════════════════════════════════ */
 .ds-btn--primary {
-  background: var(--elite-forest, #052E16) !important;
+  background: var(--elite-forest, #143F35) !important;
   color: #FFFFFF !important;
   border-color: transparent !important;
   box-shadow: 0 1px 3px rgba(5,46,22,0.30), 0 4px 12px rgba(5,46,22,0.15) !important;
@@ -840,15 +840,15 @@ html[data-theme="dark"] .rp-section-title {
 }
 
 .ds-btn--primary:hover {
-  background: var(--elite-green, #166534) !important;
+  background: var(--elite-green, #226A56) !important;
   box-shadow: 0 4px 20px rgba(5,46,22,0.35) !important;
   transform: translateY(-1px) !important;
 }
 
 .ds-btn--secondary {
   background: transparent !important;
-  color: var(--elite-forest, #052E16) !important;
-  border: 1.5px solid var(--elite-green, #166534) !important;
+  color: var(--elite-forest, #143F35) !important;
+  border: 1.5px solid var(--elite-green, #226A56) !important;
 }
 
 .ds-btn--secondary:hover {
@@ -886,7 +886,7 @@ html[data-theme="dark"] .rp-section-title {
 .bottom-nav__tab.is-active,
 .bottom-nav__item--active,
 .bottom-nav__tab.is-active {
-  color: var(--elite-green, #166534) !important;
+  color: var(--elite-green, #226A56) !important;
 }
 
 /* تمييز تبويب «المزيد» بحد أُلغي — كان يوسّع التبويب ويقصّ التسمية على iPhone */
@@ -944,7 +944,7 @@ html[data-theme="dark"] .rp-section-title {
 
 .pt-prayer--next {
   background: var(--elite-sage-2) !important;
-  border-color: var(--elite-green, #166534) !important;
+  border-color: var(--elite-green, #226A56) !important;
 }
 
 .pt-prayer__name {
@@ -1160,7 +1160,7 @@ html[data-theme="dark"] .hue__row-badge--announcement { color: #E8C97A; backgrou
 }
 
 .page-search-input:focus {
-  border-color: var(--elite-green, #166534) !important;
+  border-color: var(--elite-green, #226A56) !important;
   box-shadow: 0 0 0 3px rgba(22,101,52,0.10) !important;
   outline: none !important;
 }
@@ -1182,11 +1182,11 @@ html[data-theme="dark"] .hue__row-badge--announcement { color: #E8C97A; backgrou
 
 .content-hub-chip:hover {
   border-color: var(--elite-border-green) !important;
-  color: var(--elite-green, #166534) !important;
+  color: var(--elite-green, #226A56) !important;
 }
 
 .content-hub-chip--active {
-  background: var(--elite-forest, #052E16) !important;
+  background: var(--elite-forest, #143F35) !important;
   color: #FFFFFF !important;
   border-color: transparent !important;
 }
@@ -1250,7 +1250,7 @@ html[data-theme="dark"] .hue__row-badge--announcement { color: #E8C97A; backgrou
    33. Focus Accessibility
    ══════════════════════════════════════════════ */
 :focus-visible {
-  outline: 2px solid var(--elite-green, #166534) !important;
+  outline: 2px solid var(--elite-green, #226A56) !important;
   outline-offset: 2px !important;
   border-radius: 2px !important;
 }
@@ -1451,8 +1451,8 @@ tr:last-child td {
    47. Tabs (All Pages)
    ══════════════════════════════════════════════ */
 .border-b-2.border-\[var\(--mn-border-active\)\] {
-  border-color: var(--elite-green, #166534) !important;
-  color: var(--elite-forest, #052E16) !important;
+  border-color: var(--elite-green, #226A56) !important;
+  color: var(--elite-forest, #143F35) !important;
 }
 
 /* ══════════════════════════════════════════════
@@ -2853,11 +2853,11 @@ a:focus-visible {
   transform: scale(1.02) !important;
 }
 
-/* ─── تحسينات عامة الـ Header (Phase 1) ───────────────────────── */
+/* ─── تحسينات عامة الـ Header (Phase 1) — زمردي داكن ─── */
 .navbar-v3 {
-  background: var(--rd-white) !important;
-  border-bottom-color: rgba(0,0,0,0.07) !important;
-  box-shadow: 0 1px 8px rgba(0,0,0,0.05) !important;
+  background: linear-gradient(135deg, #143F35 0%, #226A56 100%) !important;
+  border-bottom-color: rgba(255,255,255,0.08) !important;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.3) !important;
 }
 
 .navbar-brand strong.site-brand-logotype__main {
@@ -3080,7 +3080,7 @@ img[loading="lazy"]:not([src=""]) {
 }
 
 .bottom-nav--v2 .bottom-nav__tab:hover {
-  color: #047857 !important;
+  color: #226A56 !important;
 }
 
 /* ─── أيقونات الوصول السريع: لون أعمق ──────────────────────────── */
@@ -3088,15 +3088,15 @@ img[loading="lazy"]:not([src=""]) {
 /* ─── badge تصنيف بطاقة الدرس ───────────────────────────────────── */
 .lesson-unified-card.lesson-unified-card--compact .lesson-unified-card__category {
   background: rgba(5,150,105,0.12) !important;
-  color: #047857 !important;
+  color: #226A56 !important;
 }
 
 .lesson-unified-card.lesson-unified-card--compact .lesson-unified-card__category::before {
-  background: #047857 !important;
+  background: #226A56 !important;
 }
 
 .lesson-unified-card.lesson-unified-card--compact .lesson-unified-card__sheikh {
-  color: #047857 !important;
+  color: #226A56 !important;
 }
 
 /* ─── focus-visible: لون أعمق ───────────────────────────────────── */
@@ -3414,7 +3414,7 @@ img[loading="lazy"]:not([src=""]) {
 [class*="card"] h2:not(.ds-section__title):not(.cards-page-title):not(.fiqh-council-section-title):not(.sq-title):not(.hnh__title):not(.ds-quiz-home-card__title):not(.home-library-card__title),
 [class*="card"] h3:not(.ds-section__title):not(.cards-page-title):not(.fiqh-council-section-title):not(.sq-title):not(.hnh__title):not(.ds-quiz-home-card__title):not(.home-library-card__title),
 [class*="card"] h4:not(.ds-section__title):not(.cards-page-title):not(.fiqh-council-section-title):not(.sq-title):not(.hnh__title):not(.ds-quiz-home-card__title):not(.home-library-card__title) {
-  color: var(--elite-forest, #052E16) !important;
+  color: var(--elite-forest, #143F35) !important;
 }
 /* استثناء .sq-title (عنوان SectionQuiz، h2 داخل .sq-header الداكن — «اختبر
    معلوماتك...») — تدقيق تباين آلي حي (2026-07-19) وجد هذه القاعدة العامة
@@ -3464,7 +3464,7 @@ img[loading="lazy"]:not([src=""]) {
 .bg-white .text-white,
 .bg-gray-50 .text-white,
 .bg-gray-100 .text-white {
-  color: var(--elite-forest, #052E16) !important;
+  color: var(--elite-forest, #143F35) !important;
 }
 
 /* ── نهاية 55 ───────────────────────────────────────────── */
@@ -3611,12 +3611,12 @@ html[data-theme="dark"] {
   --elite-shadow-green: 0 4px 20px rgba(92,196,154,.12);
 }
 
-/* Navbar dark backdrop */
+/* Navbar dark — نفس الهوية الزمردية */
 html[data-theme="dark"] .navbar-v3 {
-  background: rgba(13,26,20,.96) !important;
+  background: linear-gradient(135deg, #0F2F28 0%, #143F35 100%) !important;
   border-color: rgba(92,196,154,.10) !important;
-  -webkit-backdrop-filter: blur(12px);
-  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
 }
 html[data-theme="dark"] .navbar-prayer-chip {
   background: rgba(92,196,154,.08) !important;
@@ -4317,14 +4317,14 @@ label {
 }
 
 /* ════════════════════════════════════
-   77f — Navbar محسَّن 2026
+   77f — Navbar زمردي داكن 2026 (هوية v4)
    ════════════════════════════════════ */
 .navbar-v3 {
-  background: rgba(248,247,243,0.92) !important;
-  backdrop-filter: blur(20px) saturate(180%) !important;
-  -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
-  border-bottom: 1px solid var(--color-border, #E8E7E2) !important;
-  box-shadow: 0 1px 0 rgba(23,61,53,.04), 0 2px 12px rgba(18,32,25,.04) !important;
+  background: linear-gradient(135deg, #143F35 0%, #226A56 100%) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3) !important;
   height: 60px !important;
   position: sticky !important;
   top: 0 !important;
@@ -4585,7 +4585,7 @@ html[data-theme="dark"] .card-v2:hover {
   border-color: rgba(92,196,154,.22) !important;
 }
 html[data-theme="dark"] .navbar-v3 {
-  background: rgba(17,23,20,0.94) !important;
+  background: linear-gradient(135deg, #0F2F28 0%, #143F35 100%) !important;
   border-bottom-color: rgba(255,255,255,.07) !important;
 }
 html[data-theme="dark"] .bottom-nav,
@@ -4880,7 +4880,7 @@ html[data-theme="dark"] hr { border-top-color: rgba(255,255,255,.07) !important;
 
 /* ══════════════════════════════════════════════════════════════════════════════
    77w — تحديث ألوان المكونات الأساسية إلى نظام 2026
-   (يتجاوز القيم الصلبة القديمة #226A56 / #052E16 / #143F35)
+   (يتجاوز القيم الصلبة القديمة #226A56 / #143F35 / #143F35)
    ══════════════════════════════════════════════════════════════════════════════ */
 
 /* بطاقة الدرس الرئيسية */
@@ -5793,7 +5793,7 @@ body .igst-badge--ok {
 
 /* .tgm-badge--ok — خلفية #dcfce7 فاتحة */
 body .tgm-badge--ok {
-  color: #166534 !important;
+  color: #226A56 !important;
 }
 
 /* .ads-perm--ok و .ads-perm--warn — rgba فاتح */

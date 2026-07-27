@@ -553,16 +553,17 @@ html[data-theme="dark"] .navbar-v3 .navbar-menu-btn .navbar-menu-btn__label {
 }
 
 
-/* تذييل: روابط مرئية على الخلفية الفاتحة (يلغي modern-2026 الأبيض) */
+/* تذييل زمردي داكن: روابط فاتحة مقروءة */
 .site-footer .site-footer-link,
 .site-footer-link.site-footer-link {
-  color: var(--n-600, #5C5C56) !important;
+  color: rgba(255, 255, 255, 0.82) !important;
 }
 .site-footer .site-footer-link:hover {
-  color: var(--em-600, #226A56) !important;
+  color: #fff !important;
 }
 .site-footer-group__title {
-  color: var(--em-800, #143F35) !important;
+  color: #fff !important;
+  border-bottom-color: rgba(255, 255, 255, 0.15) !important;
 }
 
 /* شريط سفلي: لون نشط موحّد بالهوية */

@@ -7138,11 +7138,11 @@ body.has-assistant-fab .app-main {
   margin-bottom: clamp(2rem, 5vw, 3.5rem);
 }
 
-/* ─── Phase 2: Footer visual upgrade ─────────────────────── */
+/* ─── Phase 2: Footer — زمردي داكن موحّد ──────────────────── */
 .site-footer--v3 {
   position: relative;
-  background: linear-gradient(180deg, var(--majalis-parchment-deep) 0%, var(--majalis-parchment) 100%);
-  border-top: 1px solid var(--majalis-line);
+  background: linear-gradient(135deg, #143F35 0%, #226A56 100%);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 /* Gold-to-emerald top accent line */
@@ -7153,7 +7153,7 @@ body.has-assistant-fab .app-main {
   background: linear-gradient(90deg,
     transparent 0%,
     var(--majalis-brass) 20%,
-    var(--majalis-emerald) 50%,
+    rgba(255,255,255,0.5) 50%,
     var(--majalis-brass) 80%,
     transparent 100%
   );
@@ -7182,35 +7182,37 @@ body.has-assistant-fab .app-main {
 .site-footer-group p,
 .site-footer-group__title {
   padding-bottom: 0.5rem;
-  border-bottom: 1px solid rgba(224, 215, 196, 0.4);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
   margin-bottom: 0.5rem !important;
+  color: #fff !important;
 }
 
 .site-footer-link {
-  color: var(--majalis-ink-soft) !important;
+  color: rgba(255, 255, 255, 0.78) !important;
   font-size: 0.85rem !important;
   font-weight: 600 !important;
   min-height: unset !important;
   padding: 0.4rem 0 !important;
   transition: color var(--ds-t-fast);
 }
-.site-footer-link:hover { color: var(--majalis-emerald) !important; }
+.site-footer-link:hover { color: #fff !important; }
 
 .site-footer-copy {
   padding-top: 1.25rem;
   margin-top: 1.25rem !important;
-  border-top: 1px solid var(--majalis-line);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
   font-size: 0.8rem !important;
   text-align: center;
+  color: rgba(255, 255, 255, 0.65) !important;
 }
 
-/* ─── Phase 2: Navbar polish ──────────────────────────────── */
+/* ─── Phase 2: Navbar — زمردي داكن ─────────────────────────── */
 .navbar-v3 {
-  background: var(--msk-canvas-glass) !important;
-  backdrop-filter: blur(20px) saturate(1.5) !important;
-  -webkit-backdrop-filter: blur(20px) saturate(1.5) !important;
-  border-bottom: 1px solid rgba(31,77,58,0.10) !important;
-  box-shadow: 0 1px 16px rgba(31,77,58,0.07) !important;
+  background: linear-gradient(135deg, #143F35 0%, #226A56 100%) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08) !important;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3) !important;
 }
 
 /* ─── Phase 3: Islamic Decorative Elements ─────────────────── */
