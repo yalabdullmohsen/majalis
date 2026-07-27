@@ -8,6 +8,13 @@ import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { getVerifiedHadith } from "@/lib/supabase";
 import { RequestManager } from "@/lib/request-manager";
 import { arabicMatchAny } from "@/lib/arabic-search";
+import {
+  ARABIC_LETTER_INDEX,
+  compareHadithAccess,
+  hadithMatchesLetter,
+  hadithNumberMatches,
+  type HadithSortMode,
+} from "@/lib/hadith-access";
 import { PageHeader, SkeletonCardGrid, Empty, Chip } from "@/components/ui-common";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
@@ -489,7 +496,7 @@ export const HADITH_CLASS_META: Record<HadithClass, {
   mawdu: {
     eyebrow: "التحذير والبيان",
     title: "الأحاديث الموضوعة والمكذوبة",
-    subtitle: "أحاديث موضوعة ومكذوبة على النبي ﷺ، يُحذَّر منها ولا تجوز نسبتها إليه.",
+    subtitle: "أشهر الموضوعات والمكذوبات على النبي ﷺ مع بيان من حكم بالوضع — للتحذير لا للاحتجاج. يمكن التصفية بالحرف والبحث والموضوع.",
     empty: "لا يُذكر الموضوع إلا مقروناً ببيان وضعه ومَن حكم عليه من الأئمة. والقاعدة: «من حدّث عني بحديث يُرى أنه كذب فهو أحد الكاذبين» — رواه مسلم.",
     countUnit: "حديث موضوع",
   },
@@ -505,12 +512,24 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
   const [expandedHadith, setExpandedHadith] = useState<HadithItem | null>(null);
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [page, setPage] = useState(1);
+  const [activeLetter, setActiveLetter] = useState<string>("الكل");
+  const [numberQuery, setNumberQuery] = useState("");
+  const [sortMode, setSortMode] = useState<HadithSortMode>(
+    authenticityClass === "sahih" ? "number" : "letter",
+  );
   const debouncedSearch = useDebouncedValue(search);
-  const PAGE_SIZE = authenticityClass === "sahih" ? 40 : 200;
+  const debouncedNumber = useDebouncedValue(numberQuery);
+  const PAGE_SIZE = authenticityClass === "sahih" ? 40 : 80;
 
   useEffect(() => {
     setPage(1);
-  }, [authenticityClass, activeCollection, activeCategory, debouncedSearch]);
+  }, [authenticityClass, activeCollection, activeCategory, debouncedSearch, activeLetter, debouncedNumber, sortMode]);
+
+  useEffect(() => {
+    setActiveLetter("الكل");
+    setNumberQuery("");
+    setSortMode(authenticityClass === "sahih" ? "number" : "letter");
+  }, [authenticityClass]);
 
   useEffect(() => {
     setLoading(true);
@@ -582,14 +601,23 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
         );
       }
     }
+    if (activeLetter !== "الكل") {
+      list = list.filter((h) => hadithMatchesLetter(h.title, h.text, activeLetter));
+    }
+    if (debouncedNumber.trim()) {
+      list = list.filter((h) => hadithNumberMatches(h.hadith_number, debouncedNumber));
+    }
     if (debouncedSearch.trim()) {
       const q = debouncedSearch.trim();
       list = list.filter((h) =>
-        arabicMatchAny([h.text, h.title, h.narrator, h.source_name, h.explanation, h.chapter, ...(h.keywords ?? [])], q)
+        arabicMatchAny([h.text, h.title, h.narrator, h.source_name, h.explanation, h.chapter, h.hadith_number, ...(h.keywords ?? [])], q)
       );
     }
+    if (sortMode !== "default") {
+      list = [...list].sort((a, b) => compareHadithAccess(a, b, sortMode));
+    }
     return list;
-  }, [items, activeCollection, activeCategory, debouncedSearch]);
+  }, [items, activeCollection, activeCategory, activeLetter, debouncedNumber, debouncedSearch, sortMode]);
 
   const totalPages = Math.max(1, Math.ceil(displayItems.length / PAGE_SIZE));
   const safePage = Math.min(page, totalPages);
@@ -603,10 +631,42 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
       <input
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        placeholder="ابحث في الأحاديث..."
+        placeholder="ابحث بالنص أو الراوي أو المصدر..."
         className="page-search-input full content-hub-search"
-        aria-label="بحث في الأحاديث"
+        aria-label="بحث نصي في الأحاديث"
       />
+
+      <div className="hadith-filter-section">
+        <p className="hadith-filter-label">رقم الحديث</p>
+        <input
+          value={numberQuery}
+          onChange={(e) => setNumberQuery(e.target.value)}
+          inputMode="numeric"
+          placeholder="مثال: 1 أو ١٢٣"
+          className="page-search-input full content-hub-search"
+          aria-label="الانتقال برقم الحديث"
+        />
+      </div>
+
+      <div className="hadith-filter-section">
+        <p className="hadith-filter-label">الترتيب</p>
+        <div className="content-hub-chips" role="group" aria-label="ترتيب الأحاديث">
+          {([
+            ["number", "حسب الرقم"],
+            ["letter", "حسب الحرف"],
+            ["default", "افتراضي"],
+          ] as const).map(([id, label]) => (
+            <button
+              key={id}
+              type="button"
+              onClick={() => setSortMode(id)}
+              className={sortMode === id ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+      </div>
 
       <div className="hadith-filter-section">
         <p className="hadith-filter-label">المجموعة</p>
@@ -666,17 +726,70 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
               <strong>{collections.length - 1}</strong> مجموعة
             </span>
           )}
-          {debouncedSearch && (
+          {(debouncedSearch || debouncedNumber || activeLetter !== "الكل") && (
             <button
               type="button"
               className="hadith-clear-search"
-              onClick={() => setSearch("")}
+              onClick={() => {
+                setSearch("");
+                setNumberQuery("");
+                setActiveLetter("الكل");
+              }}
             >
-              مسح البحث ✕
+              مسح الفلاتر ✕
             </button>
           )}
         </div>
         <FilterToggle expanded={filtersOpen} onClick={() => setFiltersOpen(true)} label="بحث وتصفية" />
+      </div>
+
+      <nav className="hadith-class-switch" aria-label="أقسام الحديث">
+        <Link href="/hadith/sahih" className={`hadith-class-switch__link${authenticityClass === "sahih" ? " is-active" : ""}`}>الصحيح</Link>
+        <Link href="/hadith/daif" className={`hadith-class-switch__link${authenticityClass === "daif" ? " is-active" : ""}`}>الضعيف</Link>
+        <Link href="/hadith/mawdu" className={`hadith-class-switch__link${authenticityClass === "mawdu" ? " is-active" : ""}`}>الموضوع</Link>
+        <Link href="/hadith/books" className="hadith-class-switch__link">الكتب كاملة</Link>
+      </nav>
+
+      <div className="hadith-access-bar" aria-label="طرق الوصول للأحاديث">
+        <div className="hadith-access-bar__row">
+          <label className="hadith-access-bar__label" htmlFor={`hadith-num-${authenticityClass}`}>رقم</label>
+          <input
+            id={`hadith-num-${authenticityClass}`}
+            value={numberQuery}
+            onChange={(e) => setNumberQuery(e.target.value)}
+            inputMode="numeric"
+            placeholder="رقم الحديث…"
+            className="hadith-access-bar__num"
+            aria-label="تصفية برقم الحديث"
+          />
+          <div className="hadith-access-bar__sort" role="group" aria-label="الترتيب">
+            <button type="button" className={sortMode === "number" ? "is-active" : ""} onClick={() => setSortMode("number")}>رقم</button>
+            <button type="button" className={sortMode === "letter" ? "is-active" : ""} onClick={() => setSortMode("letter")}>حرف</button>
+          </div>
+        </div>
+        <div className="hadith-letter-index" role="tablist" aria-label="فهرس الحروف">
+          <button
+            type="button"
+            role="tab"
+            aria-selected={activeLetter === "الكل"}
+            className={activeLetter === "الكل" ? "is-active" : ""}
+            onClick={() => setActiveLetter("الكل")}
+          >
+            الكل
+          </button>
+          {ARABIC_LETTER_INDEX.map((letter) => (
+            <button
+              key={letter}
+              type="button"
+              role="tab"
+              aria-selected={activeLetter === letter}
+              className={activeLetter === letter ? "is-active" : ""}
+              onClick={() => setActiveLetter(letter)}
+            >
+              {letter}
+            </button>
+          ))}
+        </div>
       </div>
 
       {/* Category chips (quick filter on desktop) */}
