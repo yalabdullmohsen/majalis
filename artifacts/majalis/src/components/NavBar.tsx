@@ -8,6 +8,7 @@ import { SideNavDrawer } from "./SideNavDrawer";
 import { useThemePreference } from "./ThemePreferenceProvider";
 
 import { useMobileNavState } from "@/hooks/useMobileNavState";
+import { isNavHrefActive } from "@/lib/nav-active";
 import { PRIMARY_NAV_ITEMS } from "@/lib/navigation";
 import { fetchPrayerTimes, computePrayerCountdown, type PrayerCountdown } from "@/lib/prayer-times";
 import "@/styles/components/dark-emerald-menus.css";
@@ -65,7 +66,7 @@ export default function NavBar() {
   const { isMenuOpen, toggleMenu, openMenu, closeMenu, closeAll } = useMobileNavState();
 
   const isActive = (href: string) => {
-    const path = href.split("?")[0];
+    const path = href.split("?")[0] || href;
     if (path === "/learn") {
       return (
         location === "/learn" ||
@@ -77,7 +78,7 @@ export default function NavBar() {
         location === "/start-here"
       );
     }
-    return location === href || location === path || (path !== "/" && location.startsWith(path));
+    return isNavHrefActive(location, href);
   };
 
   // Bottom nav dispatches "sidenav-open" to open the drawer from outside

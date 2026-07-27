@@ -12,6 +12,7 @@ import {
 } from "lucide-react";
 import { useThemePreference } from "@/components/ThemePreferenceProvider";
 import { filterNavItems, isComingSoonPath } from "@/lib/nav-visibility";
+import { isNavHrefActive } from "@/lib/nav-active";
 import "@/styles/components/more-bottom-sheet.css";
 import "@/styles/components/dark-emerald-menus.css";
 
@@ -215,7 +216,7 @@ export function MoreBottomSheet({ open, onClose }: Props) {
               </p>
               <div className="bottom-sheet__grid">
                 {section.items.map(({ href, label, Icon }) => {
-                  const active = location === href || (href !== "/" && location.startsWith(href));
+                  const active = isNavHrefActive(location, href);
                   const soon = isComingSoonPath(href);
                   return (
                     <Link
