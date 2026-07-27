@@ -80,7 +80,7 @@ const SHEET_SECTIONS_RAW: { group: string; items: SheetItem[] }[] = [
     { href: "/janaza",             label: seoNavLabel("/janaza", "أحكام الجنائز"),      Icon: ScrollText },
     { href: "/mawarith",           label: seoNavLabel("/mawarith", "المواريث والفرائض"),  Icon: Scale },
     { href: "/mawarith/calculator", label: seoNavLabel("/mawarith/calculator", "حاسبة المواريث"),    Icon: Calculator },
-    { href: "/academic-research",  label: seoNavLabel("/academic-research", "الأبحاث العلمية"),   Icon: FileText },
+    { href: "/academic-research",  label: seoNavLabel("/academic-research", "الأبحاث الشرعية"),   Icon: FileText },
     { href: "/amr-bil-maruf",      label: seoNavLabel("/amr-bil-maruf", "الأمر بالمعروف"),     Icon: Shield },
   ]},
 

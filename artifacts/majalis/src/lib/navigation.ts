@@ -68,6 +68,7 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
   { href: "/tawba",             label: seoNavLabel("/tawba", "التوبة والاستغفار") },
   { href: "/ulum-quran",        label: seoNavLabel("/ulum-quran", "علوم القرآن الكريم") },
   { href: "/tafsir",            label: seoNavLabel("/tafsir", "علم التفسير") },
+  { href: "/academic-research", label: seoNavLabel("/academic-research", "الأبحاث الشرعية") },
   { href: "/mawarith",          label: seoNavLabel("/mawarith", "المواريث والفرائض") },
   { href: "/salah-guide",       label: seoNavLabel("/salah-guide", "دليل الصلاة الكامل") },
   { href: "/fiqh-qawaid",      label: seoNavLabel("/fiqh-qawaid", "القواعد الفقهية الكبرى") },

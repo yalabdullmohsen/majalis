@@ -134,6 +134,7 @@
     "mobile:ios": "bash scripts/prepare-ios.sh && npx cap open ios",
     "audit:theme-contrast": "node scripts/audit-theme-contrast.mjs",
     "test:ticker-content": "npx tsx src/lib/__tests__/ticker-content.test.ts",
+    "test:researches-library": "npx tsx src/lib/__tests__/researches-library.test.ts",
     "test:evidence-purity": "npx tsx src/lib/__tests__/evidence-text-purity.test.ts",
     "test:section-hub-visual": "npx tsx src/lib/__tests__/section-hub-visual-regression.test.ts",
     "audit:duplicate-descs": "node scripts/strip-enrichment-boilerplate.mjs --report",

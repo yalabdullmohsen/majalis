@@ -90,6 +90,10 @@ const UpdatesSection = lazyWithRetry(
   () => import("@/views/admin/UpdatesSection").then((m) => ({ default: m.UpdatesSection })),
   "UpdatesSection",
 );
+const ResearchesSection = lazyWithRetry(
+  () => import("@/views/admin/ResearchesSection").then((m) => ({ default: m.ResearchesSection })),
+  "ResearchesSection",
+);
 const KnowledgeEngineSection = lazyWithRetry(
   () => import("@/views/admin/KnowledgeEngineSection").then((m) => ({ default: m.KnowledgeEngineSection })),
   "KnowledgeEngineSection",
@@ -262,6 +266,7 @@ export default function AdminPage() {
       {section === "week-day-facts" && <WeekDayFactsSection />}
       {section === "arbaeen-love" && <ArbaeenLoveSection />}
       {section === "categories" && <CategoriesSection />}
+      {section === "researches" && <ResearchesSection />}
       {section === "updates" && <UpdatesSection />}
       </Suspense>
     </AdminShell>
