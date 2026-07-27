@@ -1,0 +1,1363 @@
+[
+  {
+    "slug": "islamic-university-madinah",
+    "name_ar": "الجامعة الإسلامية بالمدينة المنورة",
+    "name_en": "Islamic University of Madinah",
+    "country": "المملكة العربية السعودية",
+    "city": "المدينة المنورة",
+    "about": "جامعة حكومية سعودية في المدينة المنورة، تُعنى بالتعليم الشرعي واللغة العربية وتخدم طلاباً من داخل المملكة وخارجها. تضم كليات الشريعة، والقرآن الكريم والدراسات الإسلامية، والحديث الشريف والدراسات الإسلامية، والدعوة وأصول الدين، واللغة العربية والعلوم الإنسانية، مع برامج تأهيلية للناطقين بغير العربية.",
+    "website_url": "https://iu.edu.sa",
+    "accreditation_status": "accredited",
+    "is_verified": true,
+    "programs": [
+      {
+        "program_name": "بكالوريوس الشريعة",
+        "faculty_department": "كلية الشريعة",
+        "specialization": "الفقه وأصوله",
+        "degree_level": "بكالوريوس",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "4 سنوات",
+        "has_scholarship": true,
+        "scholarship_details": "تُعلن الجامعة منحاً ومزايا للطلاب غير السعوديين المقبولين وفق لوائحها الرسمية."
+      },
+      {
+        "program_name": "بكالوريوس القرآن الكريم والدراسات الإسلامية",
+        "faculty_department": "كلية القرآن الكريم والدراسات الإسلامية",
+        "specialization": "القراءات والتفسير",
+        "degree_level": "بكالوريوس",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "4 سنوات",
+        "has_scholarship": true,
+        "scholarship_details": "تخضع المنح وشروطها لما تنشره الجامعة في بوابة القبول الرسمية."
+      },
+      {
+        "program_name": "ماجستير الحديث الشريف",
+        "faculty_department": "كلية الحديث الشريف والدراسات الإسلامية",
+        "specialization": "علوم الحديث",
+        "degree_level": "ماجستير",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "سنتان",
+        "has_scholarship": true,
+        "scholarship_details": "قد تتاح منح أو مقاعد للطلاب الدوليين وفق إعلان الجامعة."
+      },
+      {
+        "program_name": "بكالوريوس الدعوة وأصول الدين",
+        "faculty_department": "كلية الدعوة وأصول الدين",
+        "specialization": "العقيدة والدعوة",
+        "degree_level": "بكالوريوس",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "4 سنوات",
+        "has_scholarship": true,
+        "scholarship_details": "المنح مرتبطة بالقبول الرسمي وباللوائح المنشورة."
+      }
+    ],
+    "faqs": [
+      {
+        "question": "هل تقبل الجامعة طلاباً من خارج السعودية؟",
+        "answer": "نعم، تُعرف الجامعة بقبول طلاب مسلمين من دول متعددة، لكن تفاصيل القبول والمنح تُراجع من بوابة الجامعة الرسمية في كل دورة.",
+        "order_index": 1
+      },
+      {
+        "question": "ما لغة الدراسة في الكليات الشرعية؟",
+        "answer": "الأصل في الكليات الشرعية أن الدراسة بالعربية، مع وجود مسارات أو معاهد تأهيلية للطلاب غير الناطقين بها بحسب إعلان الجامعة.",
+        "order_index": 2
+      },
+      {
+        "question": "هل توجد كلية متخصصة للقرآن والحديث؟",
+        "answer": "نعم، تضم الجامعة كلية للقرآن الكريم والدراسات الإسلامية وكلية للحديث الشريف والدراسات الإسلامية ضمن كلياتها الرسمية.",
+        "order_index": 3
+      }
+    ]
+  },
+  {
+    "slug": "al-azhar-university",
+    "name_ar": "جامعة الأزهر",
+    "name_en": "Al-Azhar University",
+    "country": "مصر",
+    "city": "القاهرة",
+    "about": "جامعة الأزهر مؤسسة جامعية مصرية عريقة تابعة للأزهر الشريف، وتضم شبكة واسعة من الكليات في القاهرة والأقاليم. في المجال الشرعي واللغوي تبرز كليات أصول الدين، والشريعة والقانون، واللغة العربية، والدراسات الإسلامية والعربية، مع برامج للبنين والبنات حسب اللوائح الرسمية.",
+    "website_url": "https://www.azhar.edu.eg",
+    "accreditation_status": "accredited",
+    "is_verified": true,
+    "programs": [
+      {
+        "program_name": "بكالوريوس أصول الدين",
+        "faculty_department": "كلية أصول الدين",
+        "specialization": "العقيدة والتفسير والحديث",
+        "degree_level": "بكالوريوس",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "4 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      },
+      {
+        "program_name": "بكالوريوس الشريعة والقانون",
+        "faculty_department": "كلية الشريعة والقانون",
+        "specialization": "الفقه والقانون",
+        "degree_level": "بكالوريوس",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "4 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      },
+      {
+        "program_name": "بكالوريوس اللغة العربية",
+        "faculty_department": "كلية اللغة العربية",
+        "specialization": "النحو والبلاغة والأدب",
+        "degree_level": "بكالوريوس",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "4 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      },
+      {
+        "program_name": "ماجستير الدراسات الإسلامية",
+        "faculty_department": "كليات الدراسات الإسلامية والعربية",
+        "specialization": "دراسات إسلامية متخصصة",
+        "degree_level": "ماجستير",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "سنتان",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      }
+    ],
+    "faqs": [
+      {
+        "question": "هل توجد كليات شرعية متعددة في الأزهر؟",
+        "answer": "نعم، تشمل الكليات الشرعية واللغوية أصول الدين والشريعة والقانون واللغة العربية والدراسات الإسلامية والعربية، وتختلف الفروع بحسب المحافظة.",
+        "order_index": 1
+      },
+      {
+        "question": "هل تُنشر رسوم أو مواعيد ثابتة هنا؟",
+        "answer": "لا؛ لأن الرسوم والمواعيد تتغير، ويجب الرجوع إلى بوابة جامعة الأزهر أو مكتب تنسيق الوافدين عند التقديم.",
+        "order_index": 2
+      },
+      {
+        "question": "هل الدراسة في الكليات الشرعية بالعربية؟",
+        "answer": "الأصل أن الدراسة في الكليات الشرعية واللغوية بالعربية، مع اختلاف التفاصيل حسب الكلية والبرنامج.",
+        "order_index": 3
+      }
+    ]
+  },
+  {
+    "slug": "umm-al-qura-university",
+    "name_ar": "جامعة أم القرى",
+    "name_en": "Umm Al-Qura University",
+    "country": "المملكة العربية السعودية",
+    "city": "مكة المكرمة",
+    "about": "جامعة حكومية سعودية في مكة المكرمة، تطورت من كلية الشريعة إلى جامعة متعددة التخصصات. تضم برامج شرعية ولغوية في الشريعة والدراسات الإسلامية والدعوة وأصول الدين واللغة العربية، إلى جانب كليات علمية وتطبيقية.",
+    "website_url": "https://uqu.edu.sa",
+    "accreditation_status": "accredited",
+    "is_verified": true,
+    "programs": [
+      {
+        "program_name": "بكالوريوس الشريعة",
+        "faculty_department": "كلية الشريعة والدراسات الإسلامية",
+        "specialization": "الشريعة",
+        "degree_level": "بكالوريوس",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "4 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      },
+      {
+        "program_name": "بكالوريوس الدعوة وأصول الدين",
+        "faculty_department": "كلية الدعوة وأصول الدين",
+        "specialization": "الدعوة والعقيدة",
+        "degree_level": "بكالوريوس",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "4 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      },
+      {
+        "program_name": "بكالوريوس اللغة العربية",
+        "faculty_department": "كلية اللغة العربية وآدابها",
+        "specialization": "اللغة العربية وآدابها",
+        "degree_level": "بكالوريوس",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "4 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      }
+    ],
+    "faqs": []
+  },
+  {
+    "slug": "imam-university",
+    "name_ar": "جامعة الإمام محمد بن سعود الإسلامية",
+    "name_en": "Imam Mohammad Ibn Saud Islamic University",
+    "country": "المملكة العربية السعودية",
+    "city": "الرياض",
+    "about": "جامعة حكومية سعودية في الرياض ذات جذور علمية في الشريعة واللغة العربية، وتضم كليات للشريعة وأصول الدين واللغة العربية والدعوة والإعلام، مع برامج أكاديمية وبحثية في العلوم الإسلامية والإنسانية.",
+    "website_url": "https://www.imamu.edu.sa",
+    "accreditation_status": "accredited",
+    "is_verified": true,
+    "programs": [
+      {
+        "program_name": "بكالوريوس الشريعة",
+        "faculty_department": "كلية الشريعة",
+        "specialization": "الفقه وأصوله",
+        "degree_level": "بكالوريوس",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "4 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      },
+      {
+        "program_name": "بكالوريوس أصول الدين",
+        "faculty_department": "كلية أصول الدين",
+        "specialization": "العقيدة والقرآن والسنة",
+        "degree_level": "بكالوريوس",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "4 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      },
+      {
+        "program_name": "ماجستير السياسة الشرعية",
+        "faculty_department": "المعهد العالي للقضاء",
+        "specialization": "القضاء والسياسة الشرعية",
+        "degree_level": "ماجستير",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "سنتان",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      }
+    ],
+    "faqs": []
+  },
+  {
+    "slug": "iium-malaysia",
+    "name_ar": "الجامعة الإسلامية العالمية بماليزيا",
+    "name_en": "International Islamic University Malaysia (IIUM)",
+    "country": "ماليزيا",
+    "city": "كوالالمبور/غومباك",
+    "about": "جامعة ماليزية دولية تأسست عام 1983، تجمع بين المعرفة الإسلامية والعلوم الحديثة عبر كليات متعددة. تذكر تغطيات QS للموضوعات لعام 2026 أن IIUM جاءت ضمن نحو أفضل 25 عالمياً في Theology, Divinity and Religious Studies؛ وتُعرض هذه الإشارة بوصفها تغطية تصنيفية قابلة للتحديث لا حكماً ثابتاً.",
+    "website_url": "https://www.iium.edu.my",
+    "accreditation_status": "accredited",
+    "is_verified": true,
+    "programs": [
+      {
+        "program_name": "Bachelor of Islamic Revealed Knowledge and Heritage",
+        "faculty_department": "AbdulHamid AbuSulayman Kulliyyah of Islamic Revealed Knowledge and Human Sciences",
+        "specialization": "Islamic Revealed Knowledge",
+        "degree_level": "بكالوريوس",
+        "study_language": "الإنجليزية",
+        "study_mode": "حضوري",
+        "duration": "4 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      },
+      {
+        "program_name": "Bachelor of Laws (Shariah)",
+        "faculty_department": "Ahmad Ibrahim Kulliyyah of Laws",
+        "specialization": "الشريعة والقانون",
+        "degree_level": "بكالوريوس",
+        "study_language": "الإنجليزية",
+        "study_mode": "حضوري",
+        "duration": "4 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      },
+      {
+        "program_name": "Master of Islamic Revealed Knowledge and Heritage",
+        "faculty_department": "Kulliyyah of Islamic Revealed Knowledge and Human Sciences",
+        "specialization": "الدراسات الإسلامية",
+        "degree_level": "ماجستير",
+        "study_language": "الإنجليزية",
+        "study_mode": "حضوري",
+        "duration": "سنة إلى سنتين",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      }
+    ],
+    "faqs": [
+      {
+        "question": "هل تعتمد IIUM العربية لغة رئيسية؟",
+        "answer": "تستخدم الجامعة الإنجليزية على نطاق واسع، وتوجد مقررات ومكونات عربية في التخصصات الإسلامية بحسب البرنامج والكلية.",
+        "order_index": 1
+      },
+      {
+        "question": "كيف تُعرض إشارة QS 2026؟",
+        "answer": "تُذكر بحذر كخبر أو تغطية تصنيفية في مجال Theology, Divinity and Religious Studies، ولا تُستخدم وحدها بديلاً عن مراجعة البرنامج الرسمي.",
+        "order_index": 2
+      },
+      {
+        "question": "هل تقدم الجامعة تخصصات شرعية وقانونية؟",
+        "answer": "نعم، توجد مسارات في المعرفة الإسلامية والتراث، إضافة إلى برامج في الشريعة والقانون ضمن كليات الجامعة.",
+        "order_index": 3
+      }
+    ]
+  },
+  {
+    "slug": "jordan-islamic-sciences",
+    "name_ar": "جامعة العلوم الإسلامية العالمية",
+    "name_en": "World Islamic Sciences and Education University (WISE)",
+    "country": "الأردن",
+    "city": "عمّان",
+    "about": "جامعة أردنية خاصة غير ربحية ذات صلة بمؤسسة آل البيت الملكية للفكر الإسلامي، تُعنى بالعلوم الإسلامية والإنسانية والتربوية. جرى تصحيح هذا الصف ليمثل WISE في عمّان لا جامعة آل البيت في المفرق.",
+    "website_url": "https://www.wise.edu.jo",
+    "accreditation_status": "accredited",
+    "is_verified": true,
+    "programs": [],
+    "faqs": []
+  },
+  {
+    "slug": "sudan-university-islamic",
+    "name_ar": "جامعة أم درمان الإسلامية",
+    "name_en": "Omdurman Islamic University",
+    "country": "السودان",
+    "city": "أم درمان",
+    "about": "جامعة سودانية عريقة في التعليم الإسلامي والعربي، تضم كليات ومعاهد في الشريعة والقانون وأصول الدين واللغة العربية والدراسات الإسلامية، وتعرض بوابتها الرسمية معلومات الجامعة وخدماتها الأكاديمية.",
+    "website_url": "https://oiu.edu.sd",
+    "accreditation_status": "accredited",
+    "is_verified": true,
+    "programs": [],
+    "faqs": []
+  },
+  {
+    "slug": "qatar-faculty-shariah",
+    "name_ar": "كلية الشريعة والدراسات الإسلامية — جامعة قطر",
+    "name_en": "College of Sharia and Islamic Studies, Qatar University",
+    "country": "قطر",
+    "city": "الدوحة",
+    "about": "كلية تابعة لجامعة قطر تقدم برامج جامعية وعليا في الشريعة والدراسات الإسلامية. تذكر صفحات جامعة قطر أن الكلية تضم أقساماً وبرامج في القرآن والسنة، والعقيدة والدعوة، والفقه وأصوله، والدراسات الإسلامية، مع برامج ماجستير مثل الفقه وأصوله وعلوم القرآن والتفسير.",
+    "website_url": "https://www.qu.edu.qa/en-us/Colleges/sharia/Pages/default.aspx",
+    "accreditation_status": "accredited",
+    "is_verified": true,
+    "programs": [
+      {
+        "program_name": "بكالوريوس الفقه وأصوله",
+        "faculty_department": "كلية الشريعة والدراسات الإسلامية",
+        "specialization": "الفقه وأصوله",
+        "degree_level": "بكالوريوس",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "4 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      },
+      {
+        "program_name": "بكالوريوس القرآن والسنة",
+        "faculty_department": "كلية الشريعة والدراسات الإسلامية",
+        "specialization": "القرآن والسنة",
+        "degree_level": "بكالوريوس",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "4 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      },
+      {
+        "program_name": "ماجستير الفقه وأصوله",
+        "faculty_department": "كلية الشريعة والدراسات الإسلامية",
+        "specialization": "الفقه وأصوله",
+        "degree_level": "ماجستير",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "سنتان",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      }
+    ],
+    "faqs": [
+      {
+        "question": "ما الرابط الرسمي للكلية؟",
+        "answer": "الرابط المدرج هو صفحة كلية الشريعة والدراسات الإسلامية ضمن موقع جامعة قطر، وقد يتغير مسار الصفحات الداخلية مع تحديثات الموقع.",
+        "order_index": 1
+      },
+      {
+        "question": "ما أبرز البرامج المتاحة؟",
+        "answer": "تذكر جامعة قطر برامج في الفقه وأصوله، والقرآن والسنة، والعقيدة والدعوة، والدراسات الإسلامية، إضافة إلى برامج ماجستير ذات صلة.",
+        "order_index": 2
+      },
+      {
+        "question": "هل توجد مواعيد تقديم ثابتة؟",
+        "answer": "لا تُثبت المواعيد هنا؛ يجب الرجوع إلى تقويم القبول في جامعة قطر لأنه يتغير حسب الفصل والبرنامج.",
+        "order_index": 3
+      }
+    ]
+  },
+  {
+    "slug": "dar-al-uloom-cairo",
+    "name_ar": "كلية دار العلوم — جامعة القاهرة",
+    "name_en": "Faculty of Dar al-Uloom, Cairo University",
+    "country": "مصر",
+    "city": "الجيزة",
+    "about": "كلية عريقة بجامعة القاهرة متخصصة في اللغة العربية والعلوم الإسلامية، وتجمع بين علوم العربية وآدابها والدراسات الشرعية والتاريخ والحضارة الإسلامية ضمن إطار جامعي مصري رسمي.",
+    "website_url": "http://darelom.cu.edu.eg",
+    "accreditation_status": "accredited",
+    "is_verified": true,
+    "programs": [],
+    "faqs": []
+  },
+  {
+    "slug": "zaytuna-college",
+    "name_ar": "كلية الزيتونة",
+    "name_en": "Zaytuna College",
+    "country": "الولايات المتحدة الأمريكية",
+    "city": "بيركلي، كاليفورنيا",
+    "about": "كلية أمريكية إسلامية للفنون الحرة في بيركلي، معتمدة إقليمياً، وتقدم برامج تجمع بين العلوم الإسلامية واللغة العربية والفلسفة والعلوم الإنسانية ضمن بيئة جامعية صغيرة.",
+    "website_url": "https://zaytuna.edu",
+    "accreditation_status": "accredited",
+    "is_verified": true,
+    "programs": [
+      {
+        "program_name": "BA in Liberal Arts and Islamic Studies",
+        "faculty_department": "Liberal Arts and Islamic Studies",
+        "specialization": "الدراسات الإسلامية والآداب الحرة",
+        "degree_level": "بكالوريوس",
+        "study_language": "الإنجليزية",
+        "study_mode": "حضوري",
+        "duration": "4 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      },
+      {
+        "program_name": "MA in Islamic Texts",
+        "faculty_department": "Graduate Studies",
+        "specialization": "النصوص الإسلامية",
+        "degree_level": "ماجستير",
+        "study_language": "الإنجليزية والعربية",
+        "study_mode": "حضوري",
+        "duration": "سنتان",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      }
+    ],
+    "faqs": []
+  },
+  {
+    "slug": "zaytouna-usul-aldin-tunisia",
+    "name_ar": "المعهد العالي لأصول الدين — جامعة الزيتونة",
+    "name_en": "Higher Institute of Theology, University of Ez-Zitouna",
+    "country": "تونس",
+    "city": "تونس",
+    "about": "مؤسسة جامعية ضمن جامعة الزيتونة التونسية تُعنى بأصول الدين والدراسات الإسلامية، وتستند إلى امتداد علمي مرتبط بجامع الزيتونة مع تنظيم جامعي حديث.",
+    "website_url": "https://isth.rnu.tn",
+    "accreditation_status": "accredited",
+    "is_verified": true,
+    "programs": [],
+    "faqs": []
+  },
+  {
+    "slug": "iiu-islamabad",
+    "name_ar": "الجامعة الإسلامية العالمية بإسلام آباد",
+    "name_en": "International Islamic University Islamabad",
+    "country": "باكستان",
+    "city": "إسلام آباد",
+    "about": "جامعة باكستانية عامة ذات طابع دولي تأسست في إسلام آباد، وتضم كليات ومعاهد في الشريعة والقانون، وأصول الدين، واللغة العربية، والاقتصاد الإسلامي، إلى جانب تخصصات حديثة.",
+    "website_url": "https://www.iiu.edu.pk",
+    "accreditation_status": "accredited",
+    "is_verified": true,
+    "programs": [
+      {
+        "program_name": "BS Shariah and Law",
+        "faculty_department": "Faculty of Shariah and Law",
+        "specialization": "الشريعة والقانون",
+        "degree_level": "بكالوريوس",
+        "study_language": "الإنجليزية والعربية",
+        "study_mode": "حضوري",
+        "duration": "4 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      },
+      {
+        "program_name": "BS Usuluddin",
+        "faculty_department": "Faculty of Usuluddin",
+        "specialization": "أصول الدين",
+        "degree_level": "بكالوريوس",
+        "study_language": "العربية والإنجليزية",
+        "study_mode": "حضوري",
+        "duration": "4 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      },
+      {
+        "program_name": "MS Islamic Banking and Finance",
+        "faculty_department": "International Institute of Islamic Economics",
+        "specialization": "الاقتصاد والتمويل الإسلامي",
+        "degree_level": "ماجستير",
+        "study_language": "الإنجليزية",
+        "study_mode": "حضوري",
+        "duration": "سنتان",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      }
+    ],
+    "faqs": []
+  },
+  {
+    "slug": "uin-jakarta",
+    "name_ar": "جامعة شريف هداية الله الإسلامية الحكومية جاكرتا",
+    "name_en": "UIN Syarif Hidayatullah Jakarta",
+    "country": "إندونيسيا",
+    "city": "جاكرتا (سيبوتات)",
+    "about": "جامعة إسلامية حكومية إندونيسية في جاكرتا، تجمع بين كليات الدراسات الإسلامية والشريعة والدعوة والتربية والعلوم الحديثة، وتعد من أبرز جامعات UIN في إندونيسيا.",
+    "website_url": "https://uinjkt.ac.id",
+    "accreditation_status": "accredited",
+    "is_verified": true,
+    "programs": [],
+    "faqs": []
+  },
+  {
+    "slug": "dar-al-hadith-al-hassania",
+    "name_ar": "مؤسسة دار الحديث الحسنية",
+    "name_en": "Dar al-Hadith al-Hassania Institution",
+    "country": "المغرب",
+    "city": "الرباط",
+    "about": "مؤسسة مغربية للتعليم العالي والبحث العلمي متخصصة في الدراسات الإسلامية العليا وعلوم الحديث، وتتبع وزارة الأوقاف والشؤون الإسلامية بالمغرب.",
+    "website_url": "https://www.edhh.ma",
+    "accreditation_status": "accredited",
+    "is_verified": true,
+    "programs": [],
+    "faqs": []
+  },
+  {
+    "slug": "marmara-ilahiyat",
+    "name_ar": "كلية الإلهيات — جامعة مرمرة",
+    "name_en": "Faculty of Theology, Marmara University",
+    "country": "تركيا",
+    "city": "إسطنبول",
+    "about": "كلية إلهيات حكومية في جامعة مرمرة بإسطنبول، تُعد من الكليات التركية المعروفة في العلوم الإسلامية والتربية الدينية واللغة العربية والدراسات الدينية.",
+    "website_url": "https://ilahiyat.marmara.edu.tr/en",
+    "accreditation_status": "accredited",
+    "is_verified": true,
+    "programs": [],
+    "faqs": []
+  },
+  {
+    "slug": "darul-uloom-deoband",
+    "name_ar": "دار العلوم ديوبند",
+    "name_en": "Darul Uloom Deoband",
+    "country": "الهند",
+    "city": "ديوبند",
+    "about": "مؤسسة تعليمية إسلامية هندية عريقة تأسست في القرن التاسع عشر، معروفة بمنهج الدرس النظامي والعلوم الشرعية واللغة العربية والحديث. تُدرج هنا بوصفها مؤسسة علمية لا جامعة حكومية حديثة.",
+    "website_url": "https://darululoom-deoband.com",
+    "accreditation_status": "accredited",
+    "is_verified": true,
+    "programs": [],
+    "faqs": []
+  },
+  {
+    "slug": "islamic-university-gaza",
+    "name_ar": "الجامعة الإسلامية بغزة",
+    "name_en": "Islamic University of Gaza",
+    "country": "فلسطين",
+    "city": "غزة",
+    "about": "مؤسسة تعليم عال فلسطينية في غزة، تضم كليات متعددة من بينها الشريعة والقانون والدراسات الإسلامية. يجب التحقق من حالة التشغيل والقبول من الموقع الرسمي بسبب الظروف المحلية المتغيرة.",
+    "website_url": "https://www.iugaza.edu.ps",
+    "accreditation_status": "accredited",
+    "is_verified": true,
+    "programs": [],
+    "faqs": []
+  },
+  {
+    "slug": "university-sharjah-sharia",
+    "name_ar": "جامعة الشارقة — كلية الشريعة والدراسات الإسلامية",
+    "name_en": "University of Sharjah - College of Sharia and Islamic Studies",
+    "country": "الإمارات العربية المتحدة",
+    "city": "الشارقة",
+    "about": "كلية تابعة لجامعة الشارقة تقدم برامج في الشريعة والدراسات الإسلامية، منها الفقه وأصوله والتفسير والحديث والعقيدة، ضمن جامعة إماراتية معتمدة.",
+    "website_url": "https://www.sharjah.ac.ae",
+    "accreditation_status": "accredited",
+    "is_verified": true,
+    "programs": [],
+    "faqs": []
+  },
+  {
+    "slug": "international-university-africa",
+    "name_ar": "جامعة أفريقيا العالمية",
+    "name_en": "International University of Africa",
+    "country": "السودان",
+    "city": "الخرطوم",
+    "about": "جامعة سودانية ذات طابع دولي، نشأت من مشروع تعليمي إسلامي أفريقي وتضم كليات للعلوم الإسلامية والعربية إلى جانب كليات مهنية. ينبغي مراجعة موقعها الرسمي لحالة القبول والتشغيل.",
+    "website_url": "https://www.iua.edu.sd",
+    "accreditation_status": "accredited",
+    "is_verified": true,
+    "programs": [],
+    "faqs": []
+  },
+  {
+    "slug": "al-qarawiyyin",
+    "name_ar": "جامعة القرويين",
+    "name_en": "University of al-Qarawiyyin",
+    "country": "المغرب",
+    "city": "فاس",
+    "about": "جامعة مغربية عريقة في فاس، تُذكر في مراجع مثل اليونسكو وموسوعة غينيس بوصفها من أقدم المؤسسات التعليمية المستمرة في منح الدرجات. يعرض موقعها الرسمي مسارات في الشريعة واللغة العربية والتاريخ والحضارة الإسلامية ضمن منظومة التعليم العالي المغربي.",
+    "website_url": "https://uaq.ma",
+    "accreditation_status": "accredited",
+    "is_verified": true,
+    "programs": [
+      {
+        "program_name": "الإجازة في الشريعة",
+        "faculty_department": "كلية الشريعة",
+        "specialization": "الشريعة والفقه",
+        "degree_level": "بكالوريوس",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "3 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      },
+      {
+        "program_name": "الإجازة في اللغة العربية",
+        "faculty_department": "كلية اللغة العربية",
+        "specialization": "اللغة العربية وآدابها",
+        "degree_level": "بكالوريوس",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "3 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      },
+      {
+        "program_name": "ماجستير التاريخ والحضارة الإسلامية",
+        "faculty_department": "الكليات الشرعية واللغوية",
+        "specialization": "التاريخ والحضارة الإسلامية",
+        "degree_level": "ماجستير",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "سنتان",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      }
+    ],
+    "faqs": [
+      {
+        "question": "لماذا تُعد القرويين اسماً مهماً؟",
+        "answer": "تُذكر القرويين في مراجع دولية بوصفها من أقدم مؤسسات التعليم المستمر، لكن تفاصيل البرامج الحالية تُؤخذ من موقع الجامعة ولوائحها المغربية.",
+        "order_index": 1
+      },
+      {
+        "question": "ما أبرز مجالات الدراسة فيها؟",
+        "answer": "تدور مجالاتها المتصلة بالمنصة حول الشريعة واللغة العربية والتاريخ والحضارة الإسلامية.",
+        "order_index": 2
+      },
+      {
+        "question": "هل توجد رسوم أو مواعيد محددة هنا؟",
+        "answer": "لا، لم تُدرج رسوم أو مواعيد ثابتة لأن الإعلان الرسمي يتغير حسب السنة والمسلك.",
+        "order_index": 3
+      }
+    ]
+  },
+  {
+    "slug": "usim-malaysia",
+    "name_ar": "جامعة العلوم الإسلامية الماليزية",
+    "name_en": "Universiti Sains Islam Malaysia (USIM)",
+    "country": "ماليزيا",
+    "city": "نِيلاي",
+    "about": "جامعة ماليزية عامة ذات توجه في دمج العلوم الإسلامية والمعرفة الحديثة. تضم كلية الشريعة والقانون FSU التي تعرض برامج في الشريعة والقانون والأنظمة القانونية، إضافة إلى كليات للقرآن والسنة والدعوة والإدارة.",
+    "website_url": "https://www.usim.edu.my",
+    "accreditation_status": "accredited",
+    "is_verified": true,
+    "programs": [
+      {
+        "program_name": "Bachelor of Laws and Shariah with Honours",
+        "faculty_department": "Faculty of Syariah and Law (FSU)",
+        "specialization": "الشريعة والقانون",
+        "degree_level": "بكالوريوس",
+        "study_language": "الإنجليزية والماليزية",
+        "study_mode": "حضوري",
+        "duration": "4 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      },
+      {
+        "program_name": "Bachelor of Fiqh and Fatwa with Honours",
+        "faculty_department": "Faculty of Syariah and Law (FSU)",
+        "specialization": "الفقه والفتوى",
+        "degree_level": "بكالوريوس",
+        "study_language": "الماليزية والعربية",
+        "study_mode": "حضوري",
+        "duration": "4 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      },
+      {
+        "program_name": "Master of Shariah",
+        "faculty_department": "Faculty of Syariah and Law (FSU)",
+        "specialization": "الشريعة",
+        "degree_level": "ماجستير",
+        "study_language": "الإنجليزية والماليزية",
+        "study_mode": "حضوري",
+        "duration": "سنة إلى سنتين",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      }
+    ],
+    "faqs": []
+  },
+  {
+    "slug": "mediu-malaysia",
+    "name_ar": "جامعة المدينة العالمية",
+    "name_en": "Al-Madinah International University (MEDIU)",
+    "country": "ماليزيا",
+    "city": "شاه علم",
+    "about": "جامعة خاصة في ماليزيا تقدم برامج أكاديمية في العلوم الإسلامية واللغة العربية والتربية والإدارة، وتُعرف بإتاحة مسارات حضورية وعن بعد بحسب البرنامج واللوائح الرسمية.",
+    "website_url": "https://www.mediu.edu.my",
+    "accreditation_status": "accredited",
+    "is_verified": true,
+    "programs": [
+      {
+        "program_name": "Bachelor of Islamic Sciences",
+        "faculty_department": "Faculty of Islamic Sciences",
+        "specialization": "علوم إسلامية",
+        "degree_level": "بكالوريوس",
+        "study_language": "العربية",
+        "study_mode": "عن_بعد",
+        "duration": "4 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      },
+      {
+        "program_name": "Bachelor of Arabic Language",
+        "faculty_department": "Faculty of Languages",
+        "specialization": "اللغة العربية",
+        "degree_level": "بكالوريوس",
+        "study_language": "العربية",
+        "study_mode": "عن_بعد",
+        "duration": "4 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      },
+      {
+        "program_name": "Master in Fiqh and Usul al-Fiqh",
+        "faculty_department": "Faculty of Islamic Sciences",
+        "specialization": "الفقه وأصوله",
+        "degree_level": "ماجستير",
+        "study_language": "العربية",
+        "study_mode": "عن_بعد",
+        "duration": "سنتان",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      }
+    ],
+    "faqs": []
+  },
+  {
+    "slug": "uin-sunan-kalijaga",
+    "name_ar": "جامعة سونان كاليجاغا الإسلامية الحكومية",
+    "name_en": "UIN Sunan Kalijaga Yogyakarta",
+    "country": "إندونيسيا",
+    "city": "يوجياكارتا",
+    "about": "جامعة إسلامية حكومية في يوجياكارتا تُعد من أقدم جامعات UIN في إندونيسيا، وتضم كليات في الشريعة والقانون، وأصول الدين والفكر الإسلامي، والتربية. تُذكر بعض تغطيات SCImago 2026 للدراسات الدينية بحذر ولا تُعد بديلاً عن الاعتماد الرسمي.",
+    "website_url": "https://uin-suka.ac.id",
+    "accreditation_status": "accredited",
+    "is_verified": true,
+    "programs": [
+      {
+        "program_name": "Sarjana Hukum Keluarga Islam",
+        "faculty_department": "Fakultas Syari’ah dan Hukum",
+        "specialization": "الأحوال الشخصية الإسلامية",
+        "degree_level": "بكالوريوس",
+        "study_language": "الإندونيسية",
+        "study_mode": "حضوري",
+        "duration": "4 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      },
+      {
+        "program_name": "Sarjana Ilmu Al-Quran dan Tafsir",
+        "faculty_department": "Fakultas Ushuluddin dan Pemikiran Islam",
+        "specialization": "علوم القرآن والتفسير",
+        "degree_level": "بكالوريوس",
+        "study_language": "الإندونيسية والعربية",
+        "study_mode": "حضوري",
+        "duration": "4 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      }
+    ],
+    "faqs": []
+  },
+  {
+    "slug": "kuwait-sharia",
+    "name_ar": "كلية الشريعة والدراسات الإسلامية — جامعة الكويت",
+    "name_en": "College of Sharia and Islamic Studies, Kuwait University",
+    "country": "الكويت",
+    "city": "مدينة الكويت",
+    "about": "كلية الشريعة والدراسات الإسلامية بجامعة الكويت، تأسست عام 1982، وتقدم برامج جامعية في الفقه وأصوله والتفسير والحديث والعقيدة والدعوة، ضمن الجامعة الحكومية الرئيسة في الكويت.",
+    "website_url": "https://shi.ku.edu.kw",
+    "accreditation_status": "accredited",
+    "is_verified": true,
+    "programs": [
+      {
+        "program_name": "بكالوريوس الشريعة",
+        "faculty_department": "كلية الشريعة والدراسات الإسلامية",
+        "specialization": "الفقه وأصوله",
+        "degree_level": "بكالوريوس",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "4 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      },
+      {
+        "program_name": "بكالوريوس التفسير والحديث",
+        "faculty_department": "كلية الشريعة والدراسات الإسلامية",
+        "specialization": "التفسير والحديث",
+        "degree_level": "بكالوريوس",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "4 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      },
+      {
+        "program_name": "ماجستير الفقه المقارن وأصول الفقه",
+        "faculty_department": "كلية الدراسات العليا/كلية الشريعة",
+        "specialization": "الفقه وأصوله",
+        "degree_level": "ماجستير",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "سنتان",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      }
+    ],
+    "faqs": [
+      {
+        "question": "هل الكلية تابعة لجامعة الكويت؟",
+        "answer": "نعم، هي كلية ضمن جامعة الكويت، ويجب متابعة شروط القبول عبر قنوات الجامعة الرسمية.",
+        "order_index": 1
+      },
+      {
+        "question": "هل توجد سنة تأسيس موثقة؟",
+        "answer": "تُذكر سنة 1982 بوصفها سنة تأسيس الكلية في التعريفات المنشورة عنها.",
+        "order_index": 2
+      },
+      {
+        "question": "هل أدرجت رسوم الدراسة؟",
+        "answer": "لا؛ تُترك الرسوم والمنح للوائح جامعة الكويت لأن الأرقام تتغير حسب الفئة والبرنامج.",
+        "order_index": 3
+      }
+    ]
+  },
+  {
+    "slug": "hbku-cis",
+    "name_ar": "كلية الدراسات الإسلامية — جامعة حمد بن خليفة",
+    "name_en": "College of Islamic Studies, HBKU",
+    "country": "قطر",
+    "city": "الدوحة",
+    "about": "كلية الدراسات الإسلامية في جامعة حمد بن خليفة تقدم برامج دراسات عليا وبحثاً في قضايا إسلامية معاصرة، منها الفقه والمجتمع، التمويل الإسلامي، الفن والعمارة الإسلامية، والأخلاق التطبيقية.",
+    "website_url": "https://www.hbku.edu.qa/en/cis",
+    "accreditation_status": "accredited",
+    "is_verified": true,
+    "programs": [
+      {
+        "program_name": "MA in Applied Islamic Ethics",
+        "faculty_department": "College of Islamic Studies",
+        "specialization": "الأخلاق الإسلامية التطبيقية",
+        "degree_level": "ماجستير",
+        "study_language": "الإنجليزية",
+        "study_mode": "حضوري",
+        "duration": "سنتان",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      },
+      {
+        "program_name": "MA in Islam and Global Affairs",
+        "faculty_department": "College of Islamic Studies",
+        "specialization": "الإسلام والشؤون العالمية",
+        "degree_level": "ماجستير",
+        "study_language": "الإنجليزية",
+        "study_mode": "حضوري",
+        "duration": "سنتان",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      },
+      {
+        "program_name": "PhD in Islamic Finance and Economy",
+        "faculty_department": "College of Islamic Studies",
+        "specialization": "التمويل والاقتصاد الإسلامي",
+        "degree_level": "دكتوراه",
+        "study_language": "الإنجليزية",
+        "study_mode": "حضوري",
+        "duration": "3 إلى 4 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      }
+    ],
+    "faqs": [
+      {
+        "question": "هل تقدم الكلية بكالوريوس؟",
+        "answer": "تتركز برامج كلية الدراسات الإسلامية في HBKU غالباً في الدراسات العليا، لذلك يجب مراجعة صفحة البرامج الرسمية قبل التقديم.",
+        "order_index": 1
+      },
+      {
+        "question": "ما طبيعة الدراسة فيها؟",
+        "answer": "تميل البرامج إلى معالجة قضايا إسلامية معاصرة وبحثية مثل الأخلاق التطبيقية والاقتصاد الإسلامي والشؤون العالمية.",
+        "order_index": 2
+      },
+      {
+        "question": "ما لغة البرامج؟",
+        "answer": "تعرض برامج كثيرة بالإنجليزية مع حضور لمصادر عربية وإسلامية بحسب المساق والمجال.",
+        "order_index": 3
+      }
+    ]
+  },
+  {
+    "slug": "mbzuh",
+    "name_ar": "جامعة محمد بن زايد للعلوم الإنسانية",
+    "name_en": "Mohamed Bin Zayed University for Humanities",
+    "country": "الإمارات العربية المتحدة",
+    "city": "أبوظبي",
+    "about": "جامعة إماراتية متخصصة في العلوم الإنسانية والدراسات الإسلامية واللغة العربية، وتعرض برامج في الفقه والفتوى، والقرآن والحديث، والخطاب الديني، بما يخدم التأهيل الشرعي والإنساني المعاصر.",
+    "website_url": "https://www.mbzuh.ac.ae",
+    "accreditation_status": "accredited",
+    "is_verified": true,
+    "programs": [
+      {
+        "program_name": "بكالوريوس الفقه والفتوى",
+        "faculty_department": "كلية الدراسات الإسلامية",
+        "specialization": "الفقه والفتوى",
+        "degree_level": "بكالوريوس",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "4 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      },
+      {
+        "program_name": "بكالوريوس القرآن والحديث",
+        "faculty_department": "كلية الدراسات الإسلامية",
+        "specialization": "القرآن والحديث",
+        "degree_level": "بكالوريوس",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "4 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      }
+    ],
+    "faqs": []
+  },
+  {
+    "slug": "emir-abdelkader-constantine",
+    "name_ar": "جامعة الأمير عبد القادر للعلوم الإسلامية",
+    "name_en": "Emir Abdelkader University of Islamic Sciences",
+    "country": "الجزائر",
+    "city": "قسنطينة",
+    "about": "جامعة جزائرية متخصصة في العلوم الإسلامية بقسنطينة، تأسست في صورتها الجامعية الحديثة في ثمانينيات القرن العشرين، وتضم تكويناً في الشريعة وأصول الدين والحضارة الإسلامية واللغة العربية.",
+    "website_url": "https://www.univ-emir-constantine.edu.dz",
+    "accreditation_status": "accredited",
+    "is_verified": true,
+    "programs": [
+      {
+        "program_name": "ليسانس الشريعة",
+        "faculty_department": "كلية الشريعة والاقتصاد",
+        "specialization": "الشريعة",
+        "degree_level": "بكالوريوس",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "3 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      },
+      {
+        "program_name": "ليسانس أصول الدين",
+        "faculty_department": "كلية أصول الدين",
+        "specialization": "العقيدة والدعوة",
+        "degree_level": "بكالوريوس",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "3 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      }
+    ],
+    "faqs": []
+  },
+  {
+    "slug": "cambridge-muslim-college",
+    "name_ar": "كلية كامبريدج للمسلمين",
+    "name_en": "Cambridge Muslim College",
+    "country": "المملكة المتحدة",
+    "city": "كامبريدج",
+    "about": "كلية مستقلة في كامبريدج تقدم برنامج BA (Hons) in Islamic Studies معتمد التحقق من The Open University بوصفها الجهة المانحة، وتعلن قبول دفعة 2026 عبر موقعها. تجمع الدراسة بين العلوم الإسلامية التقليدية والمعرفة المعاصرة.",
+    "website_url": "https://www.cambridgemuslimcollege.ac.uk",
+    "accreditation_status": "accredited",
+    "is_verified": true,
+    "programs": [
+      {
+        "program_name": "BA (Hons) in Islamic Studies",
+        "faculty_department": "Cambridge Muslim College",
+        "specialization": "الدراسات الإسلامية",
+        "degree_level": "بكالوريوس",
+        "study_language": "الإنجليزية والعربية",
+        "study_mode": "حضوري",
+        "duration": "3 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      },
+      {
+        "program_name": "Classical Arabic Programme",
+        "faculty_department": "Cambridge Muslim College",
+        "specialization": "العربية الكلاسيكية",
+        "degree_level": "دبلوم",
+        "study_language": "الإنجليزية والعربية",
+        "study_mode": "حضوري",
+        "duration": "سنة واحدة",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      }
+    ],
+    "faqs": [
+      {
+        "question": "من يمنح درجة BA؟",
+        "answer": "توضح الكلية أن BA (Hons) in Islamic Studies validated by The Open University، أي أن الجامعة المفتوحة هي الجهة المانحة للدرجة.",
+        "order_index": 1
+      },
+      {
+        "question": "هل القبول لعام 2026 مفتوح؟",
+        "answer": "نشر موقع الكلية إعلاناً عن قبول دفعة 2026، لكن حالة القبول النهائية والمواعيد تُراجع من صفحة البرنامج الرسمية.",
+        "order_index": 2
+      },
+      {
+        "question": "ما مدة BA؟",
+        "answer": "تذكر صفحة البرنامج أنه برنامج حضوري بدوام كامل مدته ثلاث سنوات.",
+        "order_index": 3
+      }
+    ]
+  },
+  {
+    "slug": "soas-islamic-studies",
+    "name_ar": "كلية الدراسات الشرقية والأفريقية — جامعة لندن",
+    "name_en": "SOAS University of London",
+    "country": "المملكة المتحدة",
+    "city": "لندن",
+    "about": "جامعة لندن SOAS مؤسسة أكاديمية متخصصة في آسيا وأفريقيا والشرق الأوسط، وتقدم دراسة أكاديمية للإسلام وأديان الشرق الأوسط ضمن سياقات التاريخ واللغة والسياسة والمجتمع.",
+    "website_url": "https://www.soas.ac.uk",
+    "accreditation_status": "accredited",
+    "is_verified": true,
+    "programs": [
+      {
+        "program_name": "BA Religions and Philosophies",
+        "faculty_department": "School of History, Religions and Philosophies",
+        "specialization": "الأديان والفلسفات مع مسارات إسلامية",
+        "degree_level": "بكالوريوس",
+        "study_language": "الإنجليزية",
+        "study_mode": "حضوري",
+        "duration": "3 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      },
+      {
+        "program_name": "MA Islamic Studies",
+        "faculty_department": "School of History, Religions and Philosophies",
+        "specialization": "الدراسات الإسلامية الأكاديمية",
+        "degree_level": "ماجستير",
+        "study_language": "الإنجليزية",
+        "study_mode": "حضوري",
+        "duration": "سنة واحدة غالباً",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      }
+    ],
+    "faqs": []
+  },
+  {
+    "slug": "edinburgh-imes",
+    "name_ar": "الدراسات الإسلامية والشرق أوسطية — جامعة إدنبرة",
+    "name_en": "University of Edinburgh Islamic and Middle Eastern Studies",
+    "country": "المملكة المتحدة",
+    "city": "إدنبرة",
+    "about": "قسم الدراسات الإسلامية والشرق أوسطية في جامعة إدنبرة يقدم برامج أكاديمية في الإسلام والشرق الأوسط واللغة العربية والفارسية والتركية ضمن كلية الآداب والعلوم الإنسانية والاجتماعية.",
+    "website_url": "https://www.ed.ac.uk",
+    "accreditation_status": "accredited",
+    "is_verified": true,
+    "programs": [
+      {
+        "program_name": "MA Islamic Studies and Middle Eastern Studies",
+        "faculty_department": "Islamic and Middle Eastern Studies",
+        "specialization": "الدراسات الإسلامية والشرق أوسطية",
+        "degree_level": "بكالوريوس",
+        "study_language": "الإنجليزية",
+        "study_mode": "حضوري",
+        "duration": "4 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      },
+      {
+        "program_name": "MSc Islamic and Middle Eastern Studies",
+        "faculty_department": "Islamic and Middle Eastern Studies",
+        "specialization": "دراسات إسلامية وشرق أوسطية",
+        "degree_level": "ماجستير",
+        "study_language": "الإنجليزية",
+        "study_mode": "حضوري",
+        "duration": "سنة واحدة غالباً",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      }
+    ],
+    "faqs": []
+  },
+  {
+    "slug": "ankara-ilahiyat",
+    "name_ar": "كلية الإلهيات — جامعة أنقرة",
+    "name_en": "Ankara University Faculty of Theology",
+    "country": "تركيا",
+    "city": "أنقرة",
+    "about": "كلية الإلهيات بجامعة أنقرة من أقدم كليات الإلهيات الحديثة في تركيا، وتقدم تعليماً أكاديمياً في العلوم الإسلامية الأساسية والفلسفة والدراسات الدينية والتربية الدينية.",
+    "website_url": "https://www.divinity.ankara.edu.tr",
+    "accreditation_status": "accredited",
+    "is_verified": true,
+    "programs": [
+      {
+        "program_name": "İlahiyat Lisans Programı",
+        "faculty_department": "Faculty of Theology",
+        "specialization": "الإلهيات",
+        "degree_level": "بكالوريوس",
+        "study_language": "التركية والعربية",
+        "study_mode": "حضوري",
+        "duration": "4 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      },
+      {
+        "program_name": "MA in Basic Islamic Sciences",
+        "faculty_department": "Faculty of Theology",
+        "specialization": "العلوم الإسلامية الأساسية",
+        "degree_level": "ماجستير",
+        "study_language": "التركية",
+        "study_mode": "حضوري",
+        "duration": "سنتان",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      }
+    ],
+    "faqs": []
+  },
+  {
+    "slug": "islamic-university-niger",
+    "name_ar": "الجامعة الإسلامية بالنيجر",
+    "name_en": "Islamic University of Niger",
+    "country": "النيجر",
+    "city": "نيامي/ساي",
+    "about": "جامعة إسلامية في النيجر مرتبطة بمنظمة التعاون الإسلامي، وتقدم برامج في الشريعة والقانون واللغة العربية والدراسات الإسلامية لخدمة غرب أفريقيا والساحل.",
+    "website_url": "https://www.uin-ne.org",
+    "accreditation_status": "accredited",
+    "is_verified": true,
+    "programs": [
+      {
+        "program_name": "بكالوريوس الشريعة والقانون",
+        "faculty_department": "كلية الشريعة والقانون",
+        "specialization": "الشريعة والقانون",
+        "degree_level": "بكالوريوس",
+        "study_language": "العربية والفرنسية",
+        "study_mode": "حضوري",
+        "duration": "4 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      },
+      {
+        "program_name": "بكالوريوس اللغة العربية والدراسات الإسلامية",
+        "faculty_department": "كلية الآداب والعلوم الإسلامية",
+        "specialization": "العربية والدراسات الإسلامية",
+        "degree_level": "بكالوريوس",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "4 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      }
+    ],
+    "faqs": []
+  },
+  {
+    "slug": "king-saud-islamic-studies",
+    "name_ar": "جامعة الملك سعود — برامج الشريعة والدراسات الإسلامية",
+    "name_en": "King Saud University - Islamic Studies and Sharia Programmes",
+    "country": "المملكة العربية السعودية",
+    "city": "الرياض",
+    "about": "جامعة الملك سعود جامعة حكومية سعودية في الرياض، وتضم ضمن كلياتها وأقسامها برامج في الثقافة الإسلامية والدراسات الإسلامية والشريعة ذات صلة بالتأهيل الشرعي والبحث الإنساني، دون افتراض اسم كلية غير مؤكد في هذا الكتالوج.",
+    "website_url": "https://www.ksu.edu.sa",
+    "accreditation_status": "accredited",
+    "is_verified": true,
+    "programs": [
+      {
+        "program_name": "بكالوريوس الدراسات الإسلامية",
+        "faculty_department": "برامج الدراسات الإسلامية ضمن الجامعة",
+        "specialization": "الدراسات الإسلامية",
+        "degree_level": "بكالوريوس",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "4 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      },
+      {
+        "program_name": "ماجستير الثقافة الإسلامية",
+        "faculty_department": "الأقسام الشرعية والإنسانية ذات الصلة",
+        "specialization": "الثقافة الإسلامية",
+        "degree_level": "ماجستير",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "سنتان",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      }
+    ],
+    "faqs": []
+  },
+  {
+    "slug": "al-bayt-university-sharia",
+    "name_ar": "جامعة آل البيت — كلية الشريعة",
+    "name_en": "Al al-Bayt University Faculty of Sharia",
+    "country": "الأردن",
+    "city": "المفرق",
+    "about": "جامعة آل البيت جامعة أردنية في المفرق، وهي مؤسسة مختلفة عن جامعة العلوم الإسلامية العالمية WISE. تضم كلية شريعة تقدم برامج في الفقه وأصوله وأصول الدين والدراسات الإسلامية حسب خطط الجامعة.",
+    "website_url": "https://www.aabu.edu.jo",
+    "accreditation_status": "accredited",
+    "is_verified": true,
+    "programs": [
+      {
+        "program_name": "بكالوريوس الفقه وأصوله",
+        "faculty_department": "كلية الشريعة",
+        "specialization": "الفقه وأصوله",
+        "degree_level": "بكالوريوس",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "4 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      },
+      {
+        "program_name": "بكالوريوس أصول الدين",
+        "faculty_department": "كلية الشريعة",
+        "specialization": "أصول الدين",
+        "degree_level": "بكالوريوس",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "4 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      }
+    ],
+    "faqs": []
+  },
+  {
+    "slug": "mustansiriya-quran",
+    "name_ar": "الجامعة المستنصرية — قسم علوم القرآن والتربية الإسلامية",
+    "name_en": "Mustansiriyah University - Department of Quran Sciences and Islamic Education",
+    "country": "العراق",
+    "city": "بغداد",
+    "about": "الجامعة المستنصرية جامعة عراقية حكومية في بغداد. يدرج هذا الصف قسم علوم القرآن الكريم والتربية الإسلامية بوصفه مساراً أكاديمياً مرتبطاً بالقرآن والتربية الإسلامية داخل الجامعة.",
+    "website_url": "https://www.uomustansiriyah.edu.iq",
+    "accreditation_status": "accredited",
+    "is_verified": true,
+    "programs": [
+      {
+        "program_name": "بكالوريوس علوم القرآن والتربية الإسلامية",
+        "faculty_department": "قسم علوم القرآن الكريم والتربية الإسلامية",
+        "specialization": "علوم القرآن والتربية الإسلامية",
+        "degree_level": "بكالوريوس",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "4 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      },
+      {
+        "program_name": "ماجستير علوم القرآن",
+        "faculty_department": "قسم علوم القرآن الكريم والتربية الإسلامية",
+        "specialization": "علوم القرآن",
+        "degree_level": "ماجستير",
+        "study_language": "العربية",
+        "study_mode": "حضوري",
+        "duration": "سنتان",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      }
+    ],
+    "faqs": []
+  },
+  {
+    "slug": "amu-islamic-studies",
+    "name_ar": "جامعة عليكرة الإسلامية — قسم الدراسات الإسلامية",
+    "name_en": "Aligarh Muslim University - Department of Islamic Studies",
+    "country": "الهند",
+    "city": "عليكرة",
+    "about": "جامعة عليكرة الإسلامية جامعة مركزية هندية عريقة، ويقدم قسم الدراسات الإسلامية فيها برامج أكاديمية في تاريخ الفكر الإسلامي والحضارة الإسلامية والقرآن والحديث والدراسات المعاصرة.",
+    "website_url": "https://www.amu.ac.in",
+    "accreditation_status": "accredited",
+    "is_verified": true,
+    "programs": [
+      {
+        "program_name": "BA Islamic Studies",
+        "faculty_department": "Department of Islamic Studies",
+        "specialization": "الدراسات الإسلامية",
+        "degree_level": "بكالوريوس",
+        "study_language": "الإنجليزية والأردية",
+        "study_mode": "حضوري",
+        "duration": "3 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      },
+      {
+        "program_name": "MA Islamic Studies",
+        "faculty_department": "Department of Islamic Studies",
+        "specialization": "الدراسات الإسلامية",
+        "degree_level": "ماجستير",
+        "study_language": "الإنجليزية والأردية",
+        "study_mode": "حضوري",
+        "duration": "سنتان",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      }
+    ],
+    "faqs": []
+  },
+  {
+    "slug": "istanbul-ilahiyat",
+    "name_ar": "كلية الإلهيات — جامعة إسطنبول",
+    "name_en": "Istanbul University Faculty of Theology",
+    "country": "تركيا",
+    "city": "إسطنبول",
+    "about": "كلية الإلهيات في جامعة إسطنبول تقدم برامج أكاديمية في العلوم الإسلامية الأساسية والفلسفة والدراسات الدينية والتاريخ الإسلامي، ويُستخدم رابط الكلية الرسمي عند توفره.",
+    "website_url": "https://ilahiyat.istanbul.edu.tr",
+    "accreditation_status": "accredited",
+    "is_verified": true,
+    "programs": [
+      {
+        "program_name": "İlahiyat Lisans Programı",
+        "faculty_department": "Faculty of Theology",
+        "specialization": "الإلهيات",
+        "degree_level": "بكالوريوس",
+        "study_language": "التركية والعربية",
+        "study_mode": "حضوري",
+        "duration": "4 سنوات",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      },
+      {
+        "program_name": "MA in Islamic Studies",
+        "faculty_department": "Faculty of Theology",
+        "specialization": "العلوم الإسلامية",
+        "degree_level": "ماجستير",
+        "study_language": "التركية",
+        "study_mode": "حضوري",
+        "duration": "سنتان",
+        "has_scholarship": false,
+        "scholarship_details": ""
+      }
+    ],
+    "faqs": []
+  }
+]
