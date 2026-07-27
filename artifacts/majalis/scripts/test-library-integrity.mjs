@@ -423,6 +423,27 @@ async function main() {
           `${id} — مضمون caution مكرَّر داخل description (تتابع ${sharedWordRun(description, caution)} كلمات مشترك) ⇒ يقرؤه الزائر مرّتين؛ موضعه حقل caution وحده.`
         );
       }
+      /* 8) parts_label لا بدّ أن يحمل كمّاً معدوداً -------------------- */
+      // اكتُشف 2026-07-27: LibraryPage تطبع parts_label شارةً على غلاف
+      // البطاقة بجوار شارات مثل «4 أجزاء»، فيقرؤها الزائر عدداً. وكانت
+      // ثلاثة سجلات تضع فيها كلمةً بلا عدد: «عدة مجلدات» (وعدٌ بجمعٍ لا
+      // يقول كم)، و«مسند»/«أبواب» (اسم فنٍّ لا كمّ). فتُقاس القيمة
+      // بمعناها — أتحمل عدداً؟ — لا بلفظٍ ممنوعٍ بعينه.
+      const partsLabel = (body.match(/\n\s{4}parts_label:\s*"([^"]*)"/) || [])[1];
+      if (partsLabel !== undefined) {
+        const normalized = normalizeArabic(partsLabel);
+        const hasDigit = /[0-9٠-٩]/.test(normalized);
+        const hasSpelledCount =
+          /(واحد|واحدة|جزءان|جزءين|جزان|جزين|مجلدان|مجلدين|كتابان|كتابين|اثنان|اثنين|ثلاث|اربع|خمس|ست|سبع|ثمان|تسع|عشر)/.test(
+            normalized
+          );
+        if (!hasDigit && !hasSpelledCount) {
+          fail(
+            "PARTS_LABEL_WITHOUT_COUNT",
+            `${id} — parts_label «${partsLabel}» لا يحمل عدداً، وهو يُعرض شارةَ كمٍّ على غلاف البطاقة ⇒ يقرؤه الزائر عدد أجزاء وليس كذلك. إمّا عددٌ صريح وإمّا حذف الحقل.`
+          );
+        }
+      }
     }
   } catch (error) {
     if (error.code !== "ENOENT") throw error;
