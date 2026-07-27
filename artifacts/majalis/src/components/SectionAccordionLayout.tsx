@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { PageHeader } from "@/components/ui-common";
+import { ExploreAlsoNav, type ExploreAlsoLink } from "@/components/ExploreAlsoNav";
 import type { DarsSection } from "@/lib/durus-imaniyya-data";
 
 type Props = {
@@ -10,9 +11,20 @@ type Props = {
   sections: DarsSection[];
   stat3Label?: string;
   stat3Value?: number;
+  /** روابط تربط الصفحة ببقية المنصة — تمنع نهاية مسدودة */
+  relatedLinks?: ExploreAlsoLink[];
+  relatedTitle?: string;
 };
 
-export function SectionAccordionLayout({ eyebrow, title, sections, stat3Label, stat3Value }: Props) {
+export function SectionAccordionLayout({
+  eyebrow,
+  title,
+  sections,
+  stat3Label,
+  stat3Value,
+  relatedLinks,
+  relatedTitle,
+}: Props) {
   const [openId, setOpenId] = useState<string | null>(null);
   const totalLessons = sections.reduce((s, sec) => s + sec.lessons.length, 0);
   const avg = Math.round(totalLessons / sections.length);
@@ -37,7 +49,7 @@ export function SectionAccordionLayout({ eyebrow, title, sections, stat3Label, s
         </div>
       </div>
 
-      <div className="max-w-3xl mx-auto px-4 pb-20 space-y-3">
+      <div className="max-w-3xl mx-auto px-4 pb-8 space-y-3">
         {sections.map((sec) => (
           <SectionCard
             key={sec.id}
@@ -47,6 +59,12 @@ export function SectionAccordionLayout({ eyebrow, title, sections, stat3Label, s
           />
         ))}
       </div>
+
+      {relatedLinks && relatedLinks.length > 0 && (
+        <div className="max-w-3xl mx-auto px-4 pb-20">
+          <ExploreAlsoNav title={relatedTitle ?? "استكشف أيضًا"} links={relatedLinks} />
+        </div>
+      )}
     </div>
   );
 }

@@ -7,6 +7,13 @@ export default function ArabicLanguagePage() {
       eyebrow="اللغة العربية"
       title="النحو والصرف والبلاغة لطالب العلم"
       sections={ARABIC_LANGUAGE}
+      relatedLinks={[
+        { href: "/ulum-quran", label: "علوم القرآن" },
+        { href: "/adab-talab-ilm", label: "آداب طالب العلم" },
+        { href: "/library", label: "المكتبة الشرعية" },
+        { href: "/learning/paths", label: "المسارات العلمية" },
+        { href: "/islamic-glossary", label: "المصطلحات الشرعية" },
+      ]}
     />
   );
 }

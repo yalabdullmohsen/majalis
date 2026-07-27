@@ -7,6 +7,13 @@ export default function FikrWaqiaPage() {
       eyebrow="الفكر والواقع"
       title="الشباب والعمل والتقنية والقرارات"
       sections={FIKR_WAQIA}
+      relatedLinks={[
+        { href: "/fiqh/topics/tech-fiqh", label: "فقه التقنية" },
+        { href: "/fiqh-council/nawazil", label: "النوازل المعاصرة" },
+        { href: "/fiqh/topics/minorities", label: "فقه الأقليات" },
+        { href: "/qa", label: "الأسئلة والأجوبة" },
+        { href: "/discover-islam", label: "تعرّف على الإسلام" },
+      ]}
     />
   );
 }
