@@ -4,7 +4,7 @@ import { normalizeActivityType } from "@/lib/activity-label";
 import { arabicIncludes, arabicMatchAny, normalizeArabic } from "@/lib/arabic-search";
 import { resolveLessonSheikhImage } from "@/lib/sheikh-image";
 import { resolveGovernorateForUi, resolveRegion, displayGovernorate } from "@/lib/kuwait-regions";
-import { formatSheikhName, sheikhNameKey } from "@/lib/sheikh-name";
+import { formatSheikhName, sheikhNameKey, stripSheikhHonorifics } from "@/lib/sheikh-name";
 import {
   cleanTimeText,
   computeNextOccurrenceMs,
@@ -25,6 +25,8 @@ export type KuwaitLessonRecord = {
   id: string;
   title: string;
   sheikhName: string;
+  /** منظّم الدورة — يُعرض منفصلاً عن المحاضر */
+  organizerName?: string;
   sheikhImage?: string;
   lessonImage?: string;
   governorate: string;
@@ -212,7 +214,8 @@ export function mapLessonRow(row: any): KuwaitLessonRecord {
   const partialLesson = enrichScheduleFields({
     id,
     title: row.title,
-    sheikhName: rawSheikh,
+    sheikhName: stripSheikhHonorifics(rawSheikh) || rawSheikh,
+    organizerName: row.organizer_name ? stripSheikhHonorifics(row.organizer_name) : undefined,
     sheikhImage: row.sheikh_image_url || resolveLessonSheikhImage(row),
     lessonImage: resolveLessonPosterUrl(row.poster_image_url),
     governorate,

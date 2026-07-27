@@ -111,7 +111,6 @@ const NewMuslimPathPage = lazy(() => import("@/views/NewMuslimPathPage"));
 const NewMuslimDayDetailPage = lazy(() => import("@/views/NewMuslimDayDetailPage"));
 const DiscoverIslamContactPage = lazy(() => import("@/views/DiscoverIslamContactPage"));
 const AdhkarPage = lazy(() => import("@/views/AdhkarPage"));
-const QaPage = lazy(() => import("@/views/QaPage"));
 const QuizPage = lazy(() => import("@/views/QuizPage"));
 const SubmitContentPage = lazy(() => import("@/views/SubmitContentPage"));
 const LoginPage = lazyWithRetry(() => import("@/views/LoginPage"), "LoginPage");
@@ -488,7 +487,7 @@ function Router() {
       <Route path="/prophets"><SafeLazyRoute component={ProphetStoriesPage} /></Route>
       <Route path="/islamic-stories"><Redirect to="/stories" /></Route>
       <Route path="/adhkar"><SafeLazyRoute component={AdhkarPage} /></Route>
-      <Route path="/qa"><SafeLazyRoute component={QaPage} /></Route>
+      <Route path="/qa"><Redirect to="/quiz" /></Route>
       <Route path="/quiz"><SafeLazyRoute component={QuizPage} /></Route>
       <Route path="/knowledge-graph"><SafeLazyRoute component={KnowledgeGraphPage} /></Route>
       <Route path="/knowledge-map"><Redirect to="/knowledge-graph" /></Route>
@@ -586,7 +585,7 @@ function Router() {
       </Route>
       {/* عُطِّلت 2026-07-23: توجيه دائم إلى الأسئلة والأجوبة، وvercel.json يوجّه
           الطلبات المباشرة على مستوى الخادم بنفس الوجهة. */}
-      <Route path="/scholarly-research"><Redirect to="/qa" /></Route>
+      <Route path="/scholarly-research"><Redirect to="/quiz" /></Route>
       <Route path="/academic-research"><SafeLazyRoute component={AcademicResearchPage} /></Route>
       <Route path="/learning-path/dashboard"><Redirect to="/my-learning" /></Route>
       <Route path="/learning-path/book/:bookId"><Redirect to="/learning/paths" /></Route>
@@ -648,6 +647,8 @@ function Router() {
       <Route path="/prayer-times"><SafeLazyRoute component={PrayerTimesPage} /></Route>
       <Route path="/prayer-countdown"><Redirect to="/prayer-times" /></Route>
       <Route path="/prayer-ranks"><SafeLazyRoute component={PrayerRanksPage} /></Route>
+      <Route path="/muezzins/:rest"><Redirect to="/adhan-settings" /></Route>
+      <Route path="/muezzins"><Redirect to="/adhan-settings" /></Route>
       <Route path="/adhan-settings"><SafeLazyRoute component={AdhanSettingsPage} /></Route>
       <Route path="/qibla"><SafeLazyRoute component={QiblaPage} /></Route>
       <Route path="/tasbih"><SafeLazyRoute component={TasbihPage} /></Route>

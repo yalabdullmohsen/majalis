@@ -32,7 +32,7 @@ import { usePageView } from "@/hooks/usePageView";
 import { fetchLessonEngagementStats, type LessonEngagementStats } from "@/lib/lesson-stats";
 import { normalizeActivityLabel } from "@/lib/activity-label";
 import { resolveLessonPosterUrl } from "@/lib/lesson-image";
-import { sheikhNameKey } from "@/lib/sheikh-name";
+import { sheikhNameKey, stripSheikhHonorifics } from "@/lib/sheikh-name";
 import { SectionErrorBoundary } from "@/components/ErrorBoundary";
 import { KnowledgeRelatedItems } from "@/components/knowledge/KnowledgeRelatedItems";
 import { ScholarFollowButton } from "@/components/ScholarFollowButton";
@@ -306,11 +306,18 @@ export default function LessonDetailPage({
           <div className="lesson-detail-hero__copy">
             {hasValue(sheikhName) && (
               <div className="lesson-detail-sheikh-row">
-                <p className="lesson-card-pro__sheikh">{sheikhName}</p>
+                <p className="lesson-card-pro__sheikh">
+                  المحاضر: {stripSheikhHonorifics(sheikhName) || sheikhName}
+                </p>
                 {lesson?.sheikhs?.id && (
                   <ScholarFollowButton sheikhId={lesson.sheikhs.id} compact />
                 )}
               </div>
+            )}
+            {hasValue(kuwaitLesson?.organizerName) &&
+              stripSheikhHonorifics(kuwaitLesson?.organizerName || "") !==
+                stripSheikhHonorifics(sheikhName || "") && (
+              <p className="lesson-card-pro__organizer">تنظيم: {kuwaitLesson?.organizerName}</p>
             )}
             <h1 className="lesson-detail-title">{unified.title}</h1>
             <div className="lesson-detail-tags">

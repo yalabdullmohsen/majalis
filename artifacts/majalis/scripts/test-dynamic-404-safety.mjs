@@ -1,15 +1,12 @@
 #!/usr/bin/env node
 /**
- * يحمي 404 الحقيقية لـ/scholars/:id و/library/:id من التحول إلى تعطيل صفحات صحيحة.
+ * يحمي 404 الحقيقية لـ/scholars/:id و/library/:id وللمسارات المجهولة.
  *
- * السياق: vercel.json يستثني scholars/ وlibrary/ من rewrite الالتقاط العام حتى تسقط
- * الـslugs غير الموجودة على 404.html حقيقية بدل SPA fallback. هذا آمن فقط إذا كان
- * كل سجل حي له ملف prerender مطابق تمامًا — فجوة واحدة تعني صفحة صحيحة تُصبح 404 حقيقية.
- *
- * يفشل إذا:
- *  1. أي سجل في scholars-data.ts أو library-catalog.ts بلا dist/<type>/<id>/index.html.
- *  2. vercel.json لم يعد يستثني scholars/ أو library/ من rewrite الالتقاط العام.
- *  3. dist/404.html غير موجود.
+ * السياسة (تقرير المراجعة الموحّد):
+ *  - لا catch-all يعيد /index.html لأي مسار مجهول (كان يحوّل الأخطاء إلى «نجاح» ظاهري).
+ *  - مسارات SPA الديناميكية المعروفة فقط تُعاد كتابتها إلى /index.html.
+ *  - scholars/ وlibrary/ بلا rewrite → slug مفقود = 404.html حقيقية.
+ *  - كل سجل حي يجب أن يملك ملف prerender مطابق.
  *
  * التشغيل بعد pnpm run build: node scripts/test-dynamic-404-safety.mjs
  */
@@ -40,10 +37,36 @@ for (const b of LIBRARY_CATALOG) {
   if (!existsSync(p)) failures.push(`كتاب بلا prerender: ${b.id} (سيرجع 404 حقيقية خطأً)`);
 }
 
-const vercelConfig = readFileSync(resolve(appRoot, "vercel.json"), "utf8");
-const catchAll = JSON.parse(vercelConfig).rewrites?.find((r) => r.destination === "/index.html");
-if (!catchAll || !catchAll.source.includes("scholars/") || !catchAll.source.includes("library/")) {
-  failures.push("vercel.json: rewrite الالتقاط العام لم يعد يستثني scholars/ أو library/ — الـ404 الحقيقية معطّلة.");
+const vercel = JSON.parse(readFileSync(resolve(appRoot, "vercel.json"), "utf8"));
+const rewrites = vercel.rewrites || [];
+
+const catchAll = rewrites.find(
+  (r) =>
+    typeof r.source === "string" &&
+    r.destination === "/index.html" &&
+    (r.source.includes("(?!") || r.source === "/:path*" || r.source === "/(.*)"),
+);
+if (catchAll) {
+  failures.push(
+    `vercel.json: ما زالت قاعدة catch-all → /index.html (${catchAll.source}) — تُخفي المسارات المجهولة خلف 200.`,
+  );
+}
+
+const spaRewrites = rewrites.filter((r) => r.destination === "/index.html");
+const forbiddenSpa = spaRewrites.filter(
+  (r) =>
+    typeof r.source === "string" &&
+    (r.source.startsWith("/scholars") || r.source.startsWith("/library")),
+);
+if (forbiddenSpa.length) {
+  failures.push("vercel.json: scholars/ أو library/ يجب ألا تُعاد كتابتها إلى /index.html");
+}
+
+const muezzinsRedirect = (vercel.redirects || []).some(
+  (r) => typeof r.source === "string" && r.source.startsWith("/muezzins"),
+);
+if (!muezzinsRedirect) {
+  failures.push("vercel.json: مفقود تحويل /muezzins إلى /adhan-settings");
 }
 
 if (!existsSync(resolve(distDir, "404.html"))) {
@@ -51,6 +74,7 @@ if (!existsSync(resolve(distDir, "404.html"))) {
 }
 
 console.log(`فُحص: ${SCHOLARS.length} عالِمًا و${LIBRARY_CATALOG.length} كتابًا.`);
+console.log(`rewrites إلى /index.html (SPA فقط): ${spaRewrites.length}`);
 
 if (failures.length) {
   console.error(`\n❌ فشل فحص أمان 404 الديناميكية (${failures.length}):`);
@@ -58,4 +82,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log("✓ كل سجل حي (عالِم/كتاب) له prerender مطابق — 404 الحقيقية آمنة.");
+console.log("✓ كل سجل حي (عالِم/كتاب) له prerender مطابق — ولا catch-all يُخفي 404.");

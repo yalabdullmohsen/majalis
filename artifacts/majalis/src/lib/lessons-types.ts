@@ -4,6 +4,8 @@ export type LessonSeedRow = {
   external_key: string;
   title: string;
   speaker_name: string;
+  /** منظّم الدورة إن اختلف عن المحاضر */
+  organizer_name?: string;
   sheikh_image_url?: string;
   poster_image_url?: string;
   category: string;

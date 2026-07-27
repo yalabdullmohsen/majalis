@@ -125,7 +125,7 @@ export default function LibraryDetailPage({ params }: { params: { id: string } }
       meta={metaParts.join(" · ")}
       tags={item.keywords}
       body={item.description}
-      copyText={[item.title, item.author, item.description].filter(Boolean).join("\n\n")}
+      copyText={[item.title, item.author, item.description, item.caution].filter(Boolean).join("\n\n")}
       adminEdit={{ contentType: "library", contentId: item.id, initialData: { title: item.title, author: item.author, category: item.category, description: item.description } }}
       related={
         related.length > 0 ? (
@@ -139,6 +139,11 @@ export default function LibraryDetailPage({ params }: { params: { id: string } }
         ) : undefined
       }
     >
+      {item.caution ? (
+        <div className="library-detail-caution" role="note">
+          <strong>تنبيه علمي:</strong> {item.caution}
+        </div>
+      ) : null}
       {readUrl && (
         <div className="library-detail-read">
           <a href={readUrl} target="_blank" rel="noreferrer" className="library-read-btn">

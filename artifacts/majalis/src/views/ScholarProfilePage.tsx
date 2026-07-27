@@ -158,7 +158,7 @@ export default function ScholarProfilePage() {
       });
       return;
     }
-    const metaDesc = scholar.bio.length > 160 ? scholar.bio.slice(0, 157) + "…" : scholar.bio;
+    const metaDesc = scholar.bio.length > 155 ? scholar.bio.slice(0, 152).replace(/\s+\S*$/, "") + "…" : scholar.bio;
     applyPageSeo({
       path: `/scholars/${scholar.id}`,
       title: `${scholar.name} — سيرة العالم | المجلس العلمي`,
@@ -210,14 +210,14 @@ export default function ScholarProfilePage() {
           <h1 className="sch-profile-hero__name">{scholar.name}</h1>
           <p className="sch-profile-hero__fullname">{scholar.fullName}</p>
           <div className="sch-profile-hero__meta">
-            <span className="sch-tag">{scholar.era}</span>
+            <span className="sch-tag" title="تصنيف ضمن طبقات العرض">التصنيف: {scholar.era}</span>
             {scholar.madhhab && <span className="sch-tag sch-tag--madhhab">{scholar.madhhab}</span>}
             {scholar.specialty.map(sp => (
               <span key={sp} className="sch-tag">{sp}</span>
             ))}
           </div>
           <p className="sch-profile-hero__died">
-            <MapPin size={13} aria-hidden="true" /> {scholar.region} · ت {scholar.died}
+            <MapPin size={13} aria-hidden="true" /> {scholar.region} · الوفاة: {scholar.died}
           </p>
         </div>
       </header>

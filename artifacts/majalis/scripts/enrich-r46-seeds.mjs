@@ -35,7 +35,7 @@ function padToNeed(original, need, suffixes) {
     if (out.length >= need) break;
     out += filler.slice(0, Math.max(1, need - out.length));
   }
-  while (out.length < need) out += ".";
+  if (out.length < need) throw new Error("content-padding banned: do not pad with dots");
   return out;
 }
 

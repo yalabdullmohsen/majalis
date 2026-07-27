@@ -29,7 +29,7 @@ function padToNeed(original, need, suffix) {
     out = candidate;
   }
   const filler = " — من مراجع مجالس العلم المعتمدة.";
-  while (out.length < need) out += filler.slice(0, need - out.length);
+  if (out.length < need) throw new Error("content-padding banned");
   return out.slice(0, Math.max(need, original.length + 10));
 }
 
