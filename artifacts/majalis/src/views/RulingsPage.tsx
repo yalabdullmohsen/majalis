@@ -12,6 +12,7 @@ import { useAuth } from "@/components/AuthProvider";
 import { PageHeader, SkeletonCardGrid, Empty, ErrorState } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 
 const RULINGS_ICON_MAP: Record<string, LucideIcon> = {
   Landmark, Droplets, Banknote, Moon, MapPin, Handshake, Utensils, Shirt, Users,
@@ -273,8 +274,10 @@ export default function RulingsPage() {
         <Empty
           text={
             dbState.needsSeed
-              ? "قاعدة البيانات جاهزة لكن لم تُستورد الأحكام بعد. شغّل Production Activation من لوحة الإدارة."
-              : "لا توجد أحكام مطابقة."
+              ? isAdmin
+                ? "قاعدة البيانات جاهزة لكن لم تُستورد الأحكام بعد. شغّل Production Activation من لوحة الإدارة."
+                : "موسوعة الأحكام قيد التجهيز. يمكنك تصفح الأسئلة والأجوبة أو بوابة الفقه في الأثناء."
+              : "لا توجد أحكام مطابقة لبحثك أو الفلتر الحالي. جرّب تصنيفاً آخر أو امسح البحث."
           }
         />
       ) : (
@@ -319,6 +322,15 @@ export default function RulingsPage() {
       <div className="twh-share">
         <ShareButtons title="الأحكام الشرعية — المجلس العلمي" url="https://www.majlisilm.com/rulings" />
       </div>
+      <ExploreAlsoNav
+        title="استكشف أيضًا"
+        links={[
+          { href: "/qa", label: "الأسئلة والأجوبة" },
+          { href: "/fiqh", label: "بوابة الفقه" },
+          { href: "/fiqh-council", label: "المجمع الفقهي" },
+          { href: "/lessons", label: "الدروس العلمية" },
+        ]}
+      />
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في الأحكام الشرعية" count={4} />
       </div>

@@ -53,6 +53,10 @@ console.log("\n=== روابط التوصيات تحتفظ بالمعرّف (إع
   assert(CONTENT_TYPE_HREF.benefit("f1") === "/fawaid#f1", "benefit → /fawaid#id");
   assert(CONTENT_TYPE_HREF.qa("q1") === "/qa?id=q1", "qa → /qa?id=");
   assert(CONTENT_TYPE_HREF.scholar("") === "/scholars", "scholar بلا id → القائمة");
+  assert(CONTENT_TYPE_HREF.story("omar") === "/stories?slug=omar", "story → /stories?slug=");
+  assert(CONTENT_TYPE_HREF.miracle("m1") === "/miracles#m1", "miracle → /miracles#id");
+  assert(CONTENT_TYPE_HREF.hadith("h1") === "/hadith#h1", "hadith → /hadith#id");
+  assert(CONTENT_TYPE_HREF.dhikr("adh-morning") === "/adhkar?cat=adh-morning", "dhikr → /adhkar?cat=");
 }
 
 console.log("\n=== روابط الرسم المعرفي تحتفظ بالمعرّف ===");
@@ -101,6 +105,23 @@ console.log("\n=== صفحات كانت ميتة تحمل ExploreAlso / Related =
   const kri = readFileSync(resolve(srcRoot, "components/knowledge/KnowledgeRelatedItems.tsx"), "utf8");
   assert(kri.includes("KNOWLEDGE_RELATED_HREF"), "KnowledgeRelatedItems من content-href");
   assert(!kri.includes("كان سيُنتج صفحة نتائج فارغة"), "أُزيلت تعليقات TYPE_HREF المطوّلة");
+
+  const stories = readFileSync(resolve(srcRoot, "views/IslamicStoriesPage.tsx"), "utf8");
+  assert(stories.includes("?slug="), "القصص الإسلامية تدعم ?slug= للمشاركة");
+  assert(stories.includes("ExploreAlsoNav"), "صفحة القصص تركّب ExploreAlsoNav");
+
+  const surah = readFileSync(resolve(srcRoot, "views/SurahStoriesPage.tsx"), "utf8");
+  assert(surah.includes("ExploreAlsoNav"), "قصص السور تركّب ExploreAlsoNav");
+  assert(surah.includes("path: \"/quran/surah-stories\""), "SEO قصص السور على المسار الصحيح");
+
+  const search = readFileSync(resolve(srcRoot, "views/SearchPage.tsx"), "utf8");
+  assert(search.includes("/qa?id="), "نتائج البحث تربط الأسئلة بـ ?id=");
+  assert(search.includes("/fawaid#"), "نتائج البحث تربط الفوائد بـ #id");
+  assert(search.includes("علوم القرآن"), "تسمية علوم القرآن صحيحة في البحث");
+
+  const localSearch = readFileSync(resolve(srcRoot, "lib/local-search-ext.ts"), "utf8");
+  assert(localSearch.includes("/quran/surah-stories/"), "البحث المحلي لقصص السور على المسار الصحيح");
+  assert(localSearch.includes("/stories?slug="), "البحث المحلي للقصص عبر ?slug=");
 }
 
 console.log(`\n=== النتيجة: ${passed} نجاح، ${failed} فشل ===`);

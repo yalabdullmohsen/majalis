@@ -39,20 +39,24 @@ export function hrefFawaid(id?: string | null): string {
   return t ? `/fawaid#${encodeURIComponent(t)}` : "/fawaid";
 }
 
-export function hrefHadith(): string {
-  return "/hadith";
+export function hrefHadith(id?: string | null): string {
+  const t = idOrEmpty(id);
+  return t ? `/hadith#${encodeURIComponent(t)}` : "/hadith";
 }
 
-export function hrefStories(): string {
-  return "/stories";
+export function hrefStories(slug?: string | null): string {
+  const t = idOrEmpty(slug);
+  return t ? `/stories?slug=${encodeURIComponent(t)}` : "/stories";
 }
 
-export function hrefMiracles(): string {
-  return "/miracles";
+export function hrefMiracles(id?: string | null): string {
+  const t = idOrEmpty(id);
+  return t ? `/miracles#${encodeURIComponent(t)}` : "/miracles";
 }
 
-export function hrefAdhkar(): string {
-  return "/adhkar";
+export function hrefAdhkar(cat?: string | null): string {
+  const t = idOrEmpty(cat);
+  return t ? `/adhkar?cat=${encodeURIComponent(t)}` : "/adhkar";
 }
 
 export function hrefQuranHub(): string {
@@ -84,16 +88,16 @@ export type ContentHrefType =
 
 export const CONTENT_TYPE_HREF: Record<ContentHrefType, (id: string) => string> = {
   lesson: (id) => hrefLessons(id),
-  hadith: () => hrefHadith(),
+  hadith: (id) => hrefHadith(id),
   fatwa: (id) => hrefRulings(id),
   benefit: (id) => hrefFawaid(id),
   book: (id) => hrefLibrary(id),
   scholar: (id) => hrefScholars(id),
   qa: (id) => hrefQa(id),
   ruling: (id) => hrefRulings(id),
-  story: () => hrefStories(),
-  miracle: () => hrefMiracles(),
-  dhikr: () => hrefAdhkar(),
+  story: (id) => hrefStories(id),
+  miracle: (id) => hrefMiracles(id),
+  dhikr: (id) => hrefAdhkar(id),
   quran_ayah: () => hrefQuranHub(),
 };
 
@@ -130,7 +134,7 @@ export function hrefKnowledgeNode(
     case "quran_ayah":
       return hrefQuranHub();
     case "hadith":
-      return hrefHadith();
+      return hrefHadith(ref || null);
     case "fatwa":
       return hrefRulings(ref || null);
     case "scholar":

@@ -43,6 +43,7 @@ import { usePersistedState } from "@/hooks/usePersistedState";
 import { DEMO_QA, DEMO_QA_CATEGORIES } from "@/lib/demo-content";
 import { useReadingScrollMemory } from "@/hooks/useReadingScrollMemory";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
+import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import { QaCard } from "@/components/qa/QaCard";
 import { useAuth } from "@/components/AuthProvider";
 import { QA_CANONICAL_CATEGORIES, resolveCategorySlug } from "@/lib/qa-categories";
@@ -105,9 +106,6 @@ export default function QaPage({
     if (focusId) {
       // تمييز السؤال المقصود عند القدوم من روابط الفقه/التوصيات
       setRandomId(focusId);
-      requestAnimationFrame(() => {
-        document.getElementById(focusId)?.scrollIntoView({ behavior: "smooth", block: "center" });
-      });
     }
   }, [urlSearch]);
 
@@ -215,6 +213,15 @@ export default function QaPage({
     () => sortQaItems(filteredItems, sortMode === "random" ? "default" : sortMode),
     [filteredItems, sortMode],
   );
+
+  // التمرير بعد اكتمال التحميل — وإلا يفشل getElementById قبل رسم البطاقات
+  useEffect(() => {
+    if (loading || !randomId) return;
+    const timer = window.setTimeout(() => {
+      document.getElementById(randomId)?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 80);
+    return () => window.clearTimeout(timer);
+  }, [loading, randomId, sortedItems.length]);
 
   const randomItem = useMemo(() => {
     if (!randomId) return null;
@@ -355,6 +362,15 @@ export default function QaPage({
         {filtersPanel}
       </FilterBottomSheet>
       <RelatedKnowledge kind="question" title="أسئلة ومواد ذات صلة" limit={6} />
+      <ExploreAlsoNav
+        title="استكشف أيضًا"
+        links={[
+          { href: "/rulings", label: "موسوعة الأحكام" },
+          { href: "/fiqh", label: "بوابة الفقه" },
+          { href: "/fiqh-council", label: "المجمع الفقهي" },
+          { href: "/lessons", label: "الدروس العلمية" },
+        ]}
+      />
 
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في الفقه والأحكام" count={4} />

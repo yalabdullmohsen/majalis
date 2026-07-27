@@ -22,6 +22,7 @@ import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { ShareButtons } from "@/components/ContentActions";
 import "@/styles/pages/miracles.css";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
+import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 
 const CATEGORIES = MIRACLE_CATEGORIES;
 const SOURCE_TYPES = ["الكل", "قرآن", "سنة"];
@@ -140,6 +141,18 @@ export default function MiraclesPage({
       { label: `miracles:${category}:${sourceType}:${reloadKey}` },
     );
   }, [category, sourceType, initialItems, reloadKey]);
+
+  // روابط عميقة عبر #id من البحث/التوصيات
+  useEffect(() => {
+    if (loading) return;
+    const hashId = decodeURIComponent(window.location.hash.replace(/^#/, ""));
+    if (!hashId) return;
+    setExpanded(hashId);
+    const timer = window.setTimeout(() => {
+      document.getElementById(hashId)?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 100);
+    return () => window.clearTimeout(timer);
+  }, [loading, items]);
 
   const status = loading ? "loading" : error ? "error" : items.length === 0 ? "empty" : "success";
 
@@ -265,7 +278,7 @@ export default function MiraclesPage({
             const bodyText: string = item.body ?? "";
             const preview = bodyText.slice(0, 240);
             return (
-              <article key={item.id} className={`miracle-item mk-card ${catMod} ${srcMod}`}>
+              <article id={item.id} key={item.id} className={`miracle-item mk-card ${catMod} ${srcMod}`}>
                 {/* رأس */}
                 <div className="miracle-item__head mk-card__head">
                   <GeometricPattern pattern={pattern} color={catAccent} opacity={0.13} />
@@ -323,7 +336,7 @@ export default function MiraclesPage({
                 <div className="mk-card__actions">
                   <ShareButtons
                     title={item.title}
-                    url={`https://www.majlisilm.com/miracles`}
+                    url={`https://www.majlisilm.com/miracles#${encodeURIComponent(item.id)}`}
                   />
                 </div>
                 {isAdmin && <AdminQuickEdit section="miracles" searchTerm={item.title} />}
@@ -343,6 +356,15 @@ export default function MiraclesPage({
       </FilterBottomSheet>
       {isAdmin && <AdminQuickEdit section="miracles" />}
       <RelatedKnowledge kind="book" query="علوم القرآن إعجاز بياني" title="مواد ذات صلة بعلوم القرآن" limit={6} />
+      <ExploreAlsoNav
+        title="استكشف أيضًا"
+        links={[
+          { href: "/ulum-quran", label: "علوم القرآن" },
+          { href: "/quran-hub", label: "مركز القرآن" },
+          { href: "/tawhid", label: "التوحيد" },
+          { href: "/quran/surah-stories", label: "قصص السور" },
+        ]}
+      />
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="aqeeda" title="اختبر معلوماتك في العقيدة والإعجاز" count={4} />
       </div>

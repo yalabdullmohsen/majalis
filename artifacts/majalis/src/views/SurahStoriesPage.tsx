@@ -7,6 +7,7 @@ import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { getAllSurahStories, getSurahStory, searchSurahStories } from "@/lib/surah-stories";
 import { SectionErrorBoundary } from "@/components/ErrorBoundary";
 import { truncateAtWord } from "@/lib/utils";
+import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 
 export default function SurahStoriesPage() {
   const [search, setSearch] = useState("");
@@ -14,7 +15,7 @@ export default function SurahStoriesPage() {
   useEffect(() => {
     const allStories = getAllSurahStories();
     applyPageSeo({
-      path: "/surah-stories",
+      path: "/quran/surah-stories",
       title: "قصص سور القرآن | المجلس العلمي",
       description: "سبب التسمية ومحاور السور وقصصها من القرآن والسنة الصحيحة — بلا إسرائيليات ولا روايات ضعيفة في الفضائل. يُستغنى بما ثبت في الصحيح — سياسة",
       keywords: ["قصص القرآن", "سور القرآن", "تفسير", "سبب التسمية"],
@@ -74,20 +75,25 @@ export default function SurahStoriesPage() {
           </Link>
         ))}
       </div>
+
+      <ExploreAlsoNav
+        title="استكشف أيضًا"
+        links={[
+          { href: "/quran-hub", label: "مركز القرآن" },
+          { href: "/mushaf", label: "المصحف" },
+          { href: "/stories", label: "القصص الإسلامية" },
+          { href: "/ulum-quran", label: "علوم القرآن" },
+        ]}
+      />
     </div>
   );
 }
 
 export function SurahStoryDetailPage({ surahNumber }: { surahNumber: number }) {
   const story = getSurahStory(surahNumber >= 1 && surahNumber <= 114 ? surahNumber : 1);
+  const prev = story.number > 1 ? getSurahStory(story.number - 1) : null;
+  const next = story.number < 114 ? getSurahStory(story.number + 1) : null;
 
-  // اكتُشف 2026-07-18: هذه الصفحة (114 صفحة فردية، محتوى حقيقي ومختلف
-  // تماماً لكل سورة — سبب التسمية، زمان النزول، المحاور، القصص) لم تكن
-  // تستدعي applyPageSeo إطلاقاً، فكانت تعتمد بالكامل على fallback عام
-  // موحَّد من usePageSeo(location) في App.tsx ("قصة سورة | المجلس العلمي"
-  // حرفياً لكل الـ114 صفحة دون استثناء) — نفس عائلة بق LearningPathDetailPage
-  // المُصلَح سابقاً، لكن هنا البيانات متوفرة مزامنةً (getSurahStory محلية
-  // لا async) فلا حاجة لانتظار تحميل، الإصلاح مباشر وبلا مخاطرة تزامن.
   useEffect(() => {
     const path = `/quran/surah-stories/${story.number}`;
     applyPageSeo({
@@ -113,6 +119,20 @@ export function SurahStoryDetailPage({ surahNumber }: { surahNumber: number }) {
   return (
     <div className="page-shell surah-story-detail">
       <PageHeader eyebrow={`سورة ${story.number}`} title={story.name} subtitle={story.revelationPlace} />
+
+      <nav className="quran-subnav" aria-label="تنقّل قصص السور">
+        <Link href="/quran/surah-stories" className="quran-subnav__link">← كل القصص</Link>
+        {prev && (
+          <Link href={`/quran/surah-stories/${prev.number}`} className="quran-subnav__link">
+            السابقة: {prev.name}
+          </Link>
+        )}
+        {next && (
+          <Link href={`/quran/surah-stories/${next.number}`} className="quran-subnav__link">
+            التالية: {next.name}
+          </Link>
+        )}
+      </nav>
 
       <article className="ui-card surah-story-article">
         <SectionErrorBoundary name="سبب التسمية">
@@ -173,6 +193,16 @@ export function SurahStoryDetailPage({ surahNumber }: { surahNumber: number }) {
           <SectionQuiz categoryId="quran" title="اختبر معلوماتك في القرآن الكريم" count={4} />
         </div>
       </article>
+
+      <ExploreAlsoNav
+        title="استكشف أيضًا"
+        links={[
+          { href: `/mushaf/${story.number}`, label: `قراءة سورة ${story.name}` },
+          { href: "/quran/surah-stories", label: "كل قصص السور" },
+          { href: "/stories", label: "القصص الإسلامية" },
+          { href: "/ulum-quran", label: "علوم القرآن" },
+        ]}
+      />
     </div>
   );
 }
