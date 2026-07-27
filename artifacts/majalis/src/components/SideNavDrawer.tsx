@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { useAuth } from "./AuthProvider";
 import { usePageSwipe } from "@/hooks/usePageSwipe";
+import { isNavHrefActive } from "@/lib/nav-active";
 import { filterNavItems, isComingSoonPath } from "@/lib/nav-visibility";
 
 type DrawerProps = {
@@ -261,10 +262,7 @@ export function SideNavDrawer({ open, onClose, onLogout }: DrawerProps) {
 
   if (!open || typeof document === "undefined") return null;
 
-  const isActive = (href: string) => {
-    if (href === "/") return pathname === "/";
-    return pathname === href || pathname.startsWith(`${href}/`) || pathname.startsWith(`${href}?`);
-  };
+  const isActive = (href: string) => isNavHrefActive(pathname, href);
 
   const onSoonClick = (label: string) => {
     onClose();

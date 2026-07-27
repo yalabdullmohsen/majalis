@@ -767,10 +767,6 @@ html.dark .nav-soon-badge {
     padding-block: clamp(1.5rem, 6vw, 2.5rem);
   }
 
-  .bottom-sheet-overlay { z-index: var(--z-modal, 400); }
-  .bottom-sheet {
-    max-height: min(88dvh, calc(100dvh - var(--header-height) - var(--safe-bottom)));
-  }
   .bottom-sheet__body {
     padding-block-end: calc(1rem + var(--safe-bottom));
   }
