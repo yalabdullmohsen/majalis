@@ -306,7 +306,10 @@ export default function SeerahPage() {
           <p className="seerah-prophets-banner__text">
             <strong>السيرة النبوية</strong> خاتمة قصص الأنبياء الكرام وامتدادها الطبيعي، فهي بعثة خاتم الأنبياء والمرسلين محمد ﷺ التي أتمّ الله بها الدين وأكمل النعمة.
           </p>
-          <Link href="/prophets" className="seerah-prophets-banner__link">قصص الأنبياء ←</Link>
+          <Link href="/prophets/muhammad" className="seerah-prophets-banner__link">
+            خاتم الأنبياء محمد ﷺ
+            <span aria-hidden="true"> ←</span>
+          </Link>
         </div>
 
         {/* Hero */}
@@ -316,6 +319,14 @@ export default function SeerahPage() {
           <p className="seerah-hero__sub">
             امتداداً لرسالة الأنبياء، حياة خاتمهم محمد ﷺ من المولد إلى الوفاة في 12 مرحلة
           </p>
+          <Link
+            href="/prophets/muhammad"
+            className="seerah-full-cta"
+            aria-label="الاطلاع على السيرة النبوية بالكامل في قصص الأنبياء، خاتم الأنبياء محمد ﷺ"
+          >
+            <span className="seerah-full-cta__label">الاطلاع على السيرة النبوية بالكامل</span>
+            <span className="seerah-full-cta__arrow" aria-hidden="true">←</span>
+          </Link>
         </div>
 
         {/* Notice */}
@@ -435,6 +446,7 @@ export default function SeerahPage() {
           <h2 className="seerah-related__title">موضوعات ذات صلة</h2>
           <div className="seerah-related__grid">
             {[
+              { href: "/prophets/muhammad", label: "خاتم الأنبياء محمد ﷺ" },
               { href: "/prophets", label: "قصص الأنبياء" },
               { href: "/shamael", label: "الشمائل المحمدية" },
               { href: "/wasaya-nabawiyya", label: "الوصايا النبوية" },
