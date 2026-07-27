@@ -72,8 +72,23 @@ def repair(summary: str, body: str):
 
 # حدُّ الجملة: نقطةٌ أو استفهامٌ أو تعجُّبٌ يتلوه فراغٌ أو نهايةُ النصّ
 SENT_END_RE = re.compile(r'[.؟!](?=\s|$)')
+# علامةُ نهايةٍ في آخرِ الملخَّص: ما دلَّ على أنّ الجملةَ انغلقت لا بُترت
+TERMINAL_RE = re.compile(r'[.؟!»)"…]\s*$')
 TRUNC_LEN = 160          # الطولُ الذي قُطع عنده الملخَّصُ في المصدر
 MAX_EXTEND = 200         # أقصى ما يُمَدُّ به الملخَّصُ بحثًا عن حدِّ الجملة
+
+
+def is_truncated(summary: str, trunc_len: int | None = TRUNC_LEN) -> bool:
+    """هل الملخَّصُ مبتور؟ `trunc_len=None` ⇒ المِلاكُ غيابُ علامةِ النهاية لا الطول.
+
+    (وُسِّع في ج-٢٧١: البترُ ليس محصورًا في ١٦٠ حرفًا كما افترضت الدفعاتُ
+    السابقة، فبقيت صفوفٌ مبتورةٌ بأطوالٍ أخرى خارجَ المُنتقي.)
+    """
+    if summary.rstrip().endswith(ELLIPSIS):
+        return False
+    if trunc_len is None:
+        return not TERMINAL_RE.search(summary)
+    return len(summary) == trunc_len
 
 
 def _close_quote(rest: str, end: int):
@@ -86,10 +101,10 @@ def _close_quote(rest: str, end: int):
     return end + tag.end() if tag else end
 
 
-def repair_prose(summary: str, body: str, trunc_len: int = TRUNC_LEN,
+def repair_prose(summary: str, body: str, trunc_len: int | None = TRUNC_LEN,
                  max_extend: int = MAX_EXTEND):
-    """يمدُّ ملخَّصًا نثريًّا مقطوعًا عند `trunc_len` إلى أقربِ حدِّ جملةٍ من `body`."""
-    if len(summary) != trunc_len or summary.rstrip().endswith(ELLIPSIS):
+    """يمدُّ ملخَّصًا نثريًّا مبتورًا إلى أقربِ حدِّ جملةٍ من `body`."""
+    if not is_truncated(summary, trunc_len):
         return summary, 'NO_CHANGE'
     idx = body.find(summary)
     if idx < 0:
@@ -171,6 +186,17 @@ PROSE_TESTS = [
     ('قال زيد وحفر', 'نصٌّ آخر تمامًا', 12, 200, 'قال زيد وحفر', 'NOT_IN_BODY'),
     # الملخَّصُ هو آخرُ المتن ⇒ غيرُ مبتورٍ أصلًا
     ('قال زيد وحفر', 'قال زيد وحفر', 12, 200, 'قال زيد وحفر', 'AT_END'),
+    # === مُنتقي ج-٢٧١: trunc_len=None ⇒ العبرةُ بغياب علامةِ النهاية لا بالطول ===
+    # مبتورٌ بطولٍ لا يوافق ١٦٠ ⇒ كان يُفلَت قبلُ، وصار يُصلَح
+    ('قال زيد وحفر', 'قال زيد وحفر البئر. وزاد غيره.', None, 200,
+     'قال زيد وحفر البئر…', 'PROSE_REPAIRED'),
+    # منغلقٌ بنقطة ⇒ ليس مبتورًا فلا يُمَسّ
+    ('قال زيد.', 'قال زيد. وزاد غيره.', None, 200, 'قال زيد.', 'NO_CHANGE'),
+    # منغلقٌ بغلقِ اقتباسٍ « » ⇒ ليس مبتورًا
+    ('قال «الصبرُ ضياء»', 'قال «الصبرُ ضياء» ثم زاد.', None, 200,
+     'قال «الصبرُ ضياء»', 'NO_CHANGE'),
+    # جوابٌ قصيرٌ تامٌّ هو آخرُ المتن ⇒ AT_END لا مدَّ له (عشرةُ صفوفٍ منه في ج-٢٧١)
+    ('الزكاة', '**الجواب:** الزكاة', None, 200, 'الزكاة', 'AT_END'),
 ]
 
 
@@ -208,7 +234,8 @@ def main() -> int:
     ap.add_argument('--sql')
     ap.add_argument('--mode', choices=('quran', 'prose'), default='quran',
                     help='quran: بترٌ داخل ﴿…﴾ | prose: نثرٌ مقطوعٌ عند حدِّ الطول')
-    ap.add_argument('--trunc-len', type=int, default=TRUNC_LEN)
+    ap.add_argument('--trunc-len', default=str(TRUNC_LEN),
+                    help="طولُ القطع، أو any ⇒ كلُّ ملخَّصٍ لا ينتهي بعلامةِ نهاية")
     ap.add_argument('--max-extend', type=int, default=MAX_EXTEND)
     ap.add_argument('--self-test', action='store_true')
     a = ap.parse_args()
@@ -217,6 +244,7 @@ def main() -> int:
     if not a.rows:
         ap.error('يلزم ملفُ الصفوف أو --self-test')
 
+    trunc_len = None if str(a.trunc_len).lower() == 'any' else int(a.trunc_len)
     rows = json.load(sys.stdin if a.rows == '-' else open(a.rows, encoding='utf-8'))
     done = ('REPAIRED',) if a.mode == 'quran' else ('PROSE_REPAIRED', 'WORD_REPAIRED')
     skip = ('NO_CHANGE',) if a.mode == 'quran' else ('NO_CHANGE', 'AT_END')
@@ -226,7 +254,7 @@ def main() -> int:
         if a.mode == 'quran':
             out, st = repair(summary, body)
         else:
-            out, st = repair_prose(summary, body, a.trunc_len, a.max_extend)
+            out, st = repair_prose(summary, body, trunc_len, a.max_extend)
         stats[st] = stats.get(st, 0) + 1
         mark = '✔' if st in done else ('·' if st in skip else '✘')
         if st not in skip:
