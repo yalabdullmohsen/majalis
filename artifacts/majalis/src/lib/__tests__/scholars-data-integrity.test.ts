@@ -405,6 +405,45 @@ assert(
   "انخفضت التغطية — راجع تغييرك في author-scholar-links.ts"
 );
 
+console.log("\n=== ١٢) شارات «أبرز المؤلفات» تحمل عناوين لا أوصافَ حجم ===");
+
+// اكتُشف 2026-07-27: key_works للسنوسي كانت ["أم البراهين", "العقيدة الوسطى",
+// "الكبرى"] — والثالثة ليست عنواناً بل وصفُ حجمٍ اختُصر اتّكاءً على أختها
+// المجاورة. والواجهة تطبع كل عنصر شارةً مستقلّة، فيقرأ الزائر «الكبرى» وحدها
+// بلا مضاف. والقاعدة هنا بالمعنى لا باللفظ: تسقط الشارةُ إذا كانت وصفَ حجمٍ
+// مفرداً *وفي السجل نفسه* أختٌ تنتهي بوصف حجمٍ من العائلة نفسها (أي أنّ
+// الاختصار وقع اتّكاءً عليها) — فلا تُمسّ عناوينُ صحيحةٌ كـ«الوسيط» و«الوجيز»
+// للواحدي، إذ لا أختَ لها من هذا النمط.
+const SIZE_WORDS = new Set(["الكبرى", "الصغرى", "الوسطى", "الكبير", "الصغير", "الوسيط", "الأوسط"]);
+const ellipticalWorks: string[] = [];
+for (const s of SCHOLARS) {
+  const works = (s.key_works ?? []).map((w) => w.trim()).filter(Boolean);
+  const hasSizeSibling = works.some((w) => {
+    const parts = w.split(/\s+/);
+    return parts.length > 1 && SIZE_WORDS.has(parts[parts.length - 1]);
+  });
+  if (!hasSizeSibling) continue;
+  for (const w of works) {
+    if (w.split(/\s+/).length === 1 && SIZE_WORDS.has(w)) {
+      ellipticalWorks.push(`${s.id}: «${w}»`);
+    }
+  }
+}
+assert(
+  ellipticalWorks.length === 0,
+  "لا شارةَ مؤلَّفٍ مختصرةً إلى وصف حجمٍ اتّكاءً على أختها",
+  ellipticalWorks.join(" | ")
+);
+
+const emptyWorks = SCHOLARS.filter((s) => (s.key_works ?? []).some((w) => !w || !w.trim()));
+assert(emptyWorks.length === 0, "لا شارةَ مؤلَّفٍ فارغة", emptyWorks.map((s) => s.id).join(", "));
+
+const dupWorks = SCHOLARS.filter((s) => {
+  const works = (s.key_works ?? []).map((w) => w.trim());
+  return new Set(works).size !== works.length;
+});
+assert(dupWorks.length === 0, "لا شارةَ مؤلَّفٍ مكرَّرة داخل السجل نفسه", dupWorks.map((s) => s.id).join(", "));
+
 console.log(`\n${"─".repeat(48)}`);
 console.log(`النتائج: ${passed} نجح، ${failed} فشل`);
 if (failed > 0) process.exit(1);
