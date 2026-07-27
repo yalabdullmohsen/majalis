@@ -47,6 +47,9 @@ function leanToCdn(h: LeanHadith): CdnHadith {
     text: h.t,
     grades: [],
     chapter: h.b != null ? `الكتاب ${h.b}` : undefined,
+    book: h.b,
+    inBook: h.h,
+    arabicNumber: h.a,
   };
 }
 
