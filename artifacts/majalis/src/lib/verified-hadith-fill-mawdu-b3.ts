@@ -1,0 +1,1109 @@
+import type { LocalVerifiedHadith } from "./verified-hadith-local-seed";
+
+/** دفعة ب3 — موضوع/لا أصل للتحذير. */
+export const HADITH_FILL_MAWDU_B3: LocalVerifiedHadith[] = [
+  {
+    "id": "mawdu-b3-400",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "لا وضوء لمن لم يذكر اسم الله",
+    "text": "لا وضوء لمن لم يذكر اسم الله عليه.",
+    "narrator": null,
+    "source_name": "الضعيفة/أبو داود",
+    "grade": "ضعيف/مختلف فيه عند قوم؛ أشهر طرقه ضعيفة",
+    "chapter": "طهارة",
+    "keywords": [
+      "موضوع",
+      "طهارة",
+      "تحذير"
+    ],
+    "explanation": "ضعيف/مختلف فيه عند قوم؛ أشهر طرقه ضعيفة. المرجع النقدي: الضعيفة/أبو داود. للتحذير والتمييز لا للاحتجاج.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "batch": "fill-2026-07-b3",
+      "muhaddith": "كتب التخريج والنقد"
+    },
+    "created_at": "2026-07-27T23:50:00.000Z"
+  },
+  {
+    "id": "mawdu-b3-401",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "من قصّ أظفاره يوم الخميس",
+    "text": "من قص أظفاره يوم الخميس خرج منه الداء.",
+    "narrator": null,
+    "source_name": "الموضوعات",
+    "grade": "لا أصل",
+    "chapter": "خرافات",
+    "keywords": [
+      "موضوع",
+      "خرافات",
+      "تحذير"
+    ],
+    "explanation": "لا أصل. المرجع النقدي: الموضوعات. للتحذير والتمييز لا للاحتجاج.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "batch": "fill-2026-07-b3",
+      "muhaddith": "كتب التخريج والنقد"
+    },
+    "created_at": "2026-07-27T23:50:00.000Z"
+  },
+  {
+    "id": "mawdu-b3-402",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "من قلم أظفاره يوم السبت",
+    "text": "من قلم أظفاره يوم السبت أخرج الله منه الداء.",
+    "narrator": null,
+    "source_name": "الموضوعات",
+    "grade": "لا أصل",
+    "chapter": "خرافات",
+    "keywords": [
+      "موضوع",
+      "خرافات",
+      "تحذير"
+    ],
+    "explanation": "لا أصل. المرجع النقدي: الموضوعات. للتحذير والتمييز لا للاحتجاج.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "batch": "fill-2026-07-b3",
+      "muhaddith": "كتب التخريج والنقد"
+    },
+    "created_at": "2026-07-27T23:50:00.000Z"
+  },
+  {
+    "id": "mawdu-b3-403",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "أكل الطين حرام",
+    "text": "أكل الطين حرام على أمتي.",
+    "narrator": null,
+    "source_name": "الواهيات",
+    "grade": "واهٍ",
+    "chapter": "طعام",
+    "keywords": [
+      "موضوع",
+      "طعام",
+      "تحذير"
+    ],
+    "explanation": "واهٍ. المرجع النقدي: الواهيات. للتحذير والتمييز لا للاحتجاج.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "batch": "fill-2026-07-b3",
+      "muhaddith": "كتب التخريج والنقد"
+    },
+    "created_at": "2026-07-27T23:50:00.000Z"
+  },
+  {
+    "id": "mawdu-b3-404",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "فضل الباذنجان",
+    "text": "عليكم بالباذنجان فإنه مما أنبت الله لداود.",
+    "narrator": null,
+    "source_name": "الموضوعات",
+    "grade": "موضوع",
+    "chapter": "خرافات",
+    "keywords": [
+      "موضوع",
+      "خرافات",
+      "تحذير"
+    ],
+    "explanation": "موضوع. المرجع النقدي: الموضوعات. للتحذير والتمييز لا للاحتجاج.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "batch": "fill-2026-07-b3",
+      "muhaddith": "كتب التخريج والنقد"
+    },
+    "created_at": "2026-07-27T23:50:00.000Z"
+  },
+  {
+    "id": "mawdu-b3-405",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "الجبن والجوز",
+    "text": "الجبن والجوز كفر بالنعم.",
+    "narrator": null,
+    "source_name": "الموضوعات",
+    "grade": "موضوع",
+    "chapter": "خرافات",
+    "keywords": [
+      "موضوع",
+      "خرافات",
+      "تحذير"
+    ],
+    "explanation": "موضوع. المرجع النقدي: الموضوعات. للتحذير والتمييز لا للاحتجاج.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "batch": "fill-2026-07-b3",
+      "muhaddith": "كتب التخريج والنقد"
+    },
+    "created_at": "2026-07-27T23:50:00.000Z"
+  },
+  {
+    "id": "mawdu-b3-406",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "من أكل مع ذي عاهة",
+    "text": "من أكل مع ذي عاهة عوفي.",
+    "narrator": null,
+    "source_name": "الواهيات",
+    "grade": "واهٍ",
+    "chapter": "طب",
+    "keywords": [
+      "موضوع",
+      "طب",
+      "تحذير"
+    ],
+    "explanation": "واهٍ. المرجع النقدي: الواهيات. للتحذير والتمييز لا للاحتجاج.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "batch": "fill-2026-07-b3",
+      "muhaddith": "كتب التخريج والنقد"
+    },
+    "created_at": "2026-07-27T23:50:00.000Z"
+  },
+  {
+    "id": "mawdu-b3-407",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "فضل يوم النيروز",
+    "text": "من أحيا ليلة النيروز أحيا الله قلبه.",
+    "narrator": null,
+    "source_name": "الموضوعات",
+    "grade": "موضوع",
+    "chapter": "بدع",
+    "keywords": [
+      "موضوع",
+      "بدع",
+      "تحذير"
+    ],
+    "explanation": "موضوع. المرجع النقدي: الموضوعات. للتحذير والتمييز لا للاحتجاج.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "batch": "fill-2026-07-b3",
+      "muhaddith": "كتب التخريج والنقد"
+    },
+    "created_at": "2026-07-27T23:50:00.000Z"
+  },
+  {
+    "id": "mawdu-b3-408",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "فضل يوم المهرجان",
+    "text": "يوم المهرجان يوم عظيم.",
+    "narrator": null,
+    "source_name": "الموضوعات",
+    "grade": "موضوع",
+    "chapter": "بدع",
+    "keywords": [
+      "موضوع",
+      "بدع",
+      "تحذير"
+    ],
+    "explanation": "موضوع. المرجع النقدي: الموضوعات. للتحذير والتمييز لا للاحتجاج.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "batch": "fill-2026-07-b3",
+      "muhaddith": "كتب التخريج والنقد"
+    },
+    "created_at": "2026-07-27T23:50:00.000Z"
+  },
+  {
+    "id": "mawdu-b3-409",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "صلاة التسبيح بهذا الإسناد الواهي",
+    "text": "صلاة التسبيح ركعات مخصوصة بهذا اللفظ الواهي.",
+    "narrator": null,
+    "source_name": "تمييز",
+    "grade": "طرق واهية مشهورة؛ حسّنها قوم وضعّفها آخرون — ندرج الواهي للتحذير",
+    "chapter": "نوافل",
+    "keywords": [
+      "موضوع",
+      "نوافل",
+      "تحذير"
+    ],
+    "explanation": "طرق واهية مشهورة؛ حسّنها قوم وضعّفها آخرون — ندرج الواهي للتحذير. المرجع النقدي: تمييز. للتحذير والتمييز لا للاحتجاج.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "batch": "fill-2026-07-b3",
+      "muhaddith": "كتب التخريج والنقد"
+    },
+    "created_at": "2026-07-27T23:50:00.000Z"
+  },
+  {
+    "id": "mawdu-b3-410",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "حديث المعراج المطوّل الموضوع",
+    "text": "نسخة مطوّلة موضوعة في المعراج بتفصيلات منكرة.",
+    "narrator": null,
+    "source_name": "الموضوعات",
+    "grade": "موضوعات دائرة",
+    "chapter": "إسراء",
+    "keywords": [
+      "موضوع",
+      "إسراء",
+      "تحذير"
+    ],
+    "explanation": "موضوعات دائرة. المرجع النقدي: الموضوعات. للتحذير والتمييز لا للاحتجاج.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "batch": "fill-2026-07-b3",
+      "muhaddith": "كتب التخريج والنقد"
+    },
+    "created_at": "2026-07-27T23:50:00.000Z"
+  },
+  {
+    "id": "mawdu-b3-411",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "وصية النبي لعلي في الغدير الموضوعة",
+    "text": "من كنت مولاه فعلي مولاه — زيادات غلو موضوعة بعد الجملة الثابتة.",
+    "narrator": null,
+    "source_name": "تحذير زيادات",
+    "grade": "أصل الولاية له طرق؛ زيادات الغلو موضوعة",
+    "chapter": "مناقب",
+    "keywords": [
+      "موضوع",
+      "مناقب",
+      "تحذير"
+    ],
+    "explanation": "أصل الولاية له طرق؛ زيادات الغلو موضوعة. المرجع النقدي: تحذير زيادات. للتحذير والتمييز لا للاحتجاج.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "batch": "fill-2026-07-b3",
+      "muhaddith": "كتب التخريج والنقد"
+    },
+    "created_at": "2026-07-27T23:50:00.000Z"
+  },
+  {
+    "id": "mawdu-b3-412",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "حديث جابر في الغدير المطوّل",
+    "text": "نسخة مطوّلة موضوعة في خطبة الغدير.",
+    "narrator": null,
+    "source_name": "الموضوعات",
+    "grade": "موضوع",
+    "chapter": "مناقب",
+    "keywords": [
+      "موضوع",
+      "مناقب",
+      "تحذير"
+    ],
+    "explanation": "موضوع. المرجع النقدي: الموضوعات. للتحذير والتمييز لا للاحتجاج.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "batch": "fill-2026-07-b3",
+      "muhaddith": "كتب التخريج والنقد"
+    },
+    "created_at": "2026-07-27T23:50:00.000Z"
+  },
+  {
+    "id": "mawdu-b3-413",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "إن الله خلق الأرواح قبل الأجساد بألفي عام",
+    "text": "إن الله خلق الأرواح قبل الأجساد بألفي عام.",
+    "narrator": null,
+    "source_name": "واهيات",
+    "grade": "لا يصح بهذا اللفظ",
+    "chapter": "قدر",
+    "keywords": [
+      "موضوع",
+      "قدر",
+      "تحذير"
+    ],
+    "explanation": "لا يصح بهذا اللفظ. المرجع النقدي: واهيات. للتحذير والتمييز لا للاحتجاج.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "batch": "fill-2026-07-b3",
+      "muhaddith": "كتب التخريج والنقد"
+    },
+    "created_at": "2026-07-27T23:50:00.000Z"
+  },
+  {
+    "id": "mawdu-b3-414",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "كنت كنزاً مخفياً",
+    "text": "كنت كنزا مخفيا فأحببت أن أعرف.",
+    "narrator": null,
+    "source_name": "الموضوعات",
+    "grade": "موضوع/لا أصل",
+    "chapter": "خرافات",
+    "keywords": [
+      "موضوع",
+      "خرافات",
+      "تحذير"
+    ],
+    "explanation": "موضوع/لا أصل. المرجع النقدي: الموضوعات. للتحذير والتمييز لا للاحتجاج.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "batch": "fill-2026-07-b3",
+      "muhaddith": "كتب التخريج والنقد"
+    },
+    "created_at": "2026-07-27T23:50:00.000Z"
+  },
+  {
+    "id": "mawdu-b3-415",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "من عرفني عرف ربه",
+    "text": "من عرفني فقد عرف ربه.",
+    "narrator": null,
+    "source_name": "الموضوعات",
+    "grade": "لا أصل",
+    "chapter": "خرافات",
+    "keywords": [
+      "موضوع",
+      "خرافات",
+      "تحذير"
+    ],
+    "explanation": "لا أصل. المرجع النقدي: الموضوعات. للتحذير والتمييز لا للاحتجاج.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "batch": "fill-2026-07-b3",
+      "muhaddith": "كتب التخريج والنقد"
+    },
+    "created_at": "2026-07-27T23:50:00.000Z"
+  },
+  {
+    "id": "mawdu-b3-416",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "حبك للشيء يعمي — رفع باطل",
+    "text": "حبك الشيء يعمي ويصم مرفوعاً بهذا التمام الباطل في بعض الطرق.",
+    "narrator": null,
+    "source_name": "أبو داود فيه كلام",
+    "grade": "ضعيف/مرفوع باطل في بعض الطرق",
+    "chapter": "رقائق",
+    "keywords": [
+      "موضوع",
+      "رقائق",
+      "تحذير"
+    ],
+    "explanation": "ضعيف/مرفوع باطل في بعض الطرق. المرجع النقدي: أبو داود فيه كلام. للتحذير والتمييز لا للاحتجاج.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "batch": "fill-2026-07-b3",
+      "muhaddith": "كتب التخريج والنقد"
+    },
+    "created_at": "2026-07-27T23:50:00.000Z"
+  },
+  {
+    "id": "mawdu-b3-417",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "الدنيا جيفة وطلابها كلاب",
+    "text": "الدنيا جيفة وطلابها كلاب.",
+    "narrator": null,
+    "source_name": "آثار",
+    "grade": "لا يصح حديثاً",
+    "chapter": "رقائق",
+    "keywords": [
+      "موضوع",
+      "رقائق",
+      "تحذير"
+    ],
+    "explanation": "لا يصح حديثاً. المرجع النقدي: آثار. للتحذير والتمييز لا للاحتجاج.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "batch": "fill-2026-07-b3",
+      "muhaddith": "كتب التخريج والنقد"
+    },
+    "created_at": "2026-07-27T23:50:00.000Z"
+  },
+  {
+    "id": "mawdu-b3-418",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "من استوى يوماه فهو مغبون",
+    "text": "من استوى يوماه فهو مغبون.",
+    "narrator": null,
+    "source_name": "آثار",
+    "grade": "لا يصح مرفوعاً",
+    "chapter": "رقائق",
+    "keywords": [
+      "موضوع",
+      "رقائق",
+      "تحذير"
+    ],
+    "explanation": "لا يصح مرفوعاً. المرجع النقدي: آثار. للتحذير والتمييز لا للاحتجاج.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "batch": "fill-2026-07-b3",
+      "muhaddith": "كتب التخريج والنقد"
+    },
+    "created_at": "2026-07-27T23:50:00.000Z"
+  },
+  {
+    "id": "mawdu-b3-419",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "الصلاة على النبي أفضل من عتق الرقاب",
+    "text": "الصلاة علي أفضل من عتق الرقاب.",
+    "narrator": null,
+    "source_name": "الواهيات",
+    "grade": "واهٍ",
+    "chapter": "صلاة على النبي",
+    "keywords": [
+      "موضوع",
+      "صلاة على النبي",
+      "تحذير"
+    ],
+    "explanation": "واهٍ. المرجع النقدي: الواهيات. للتحذير والتمييز لا للاحتجاج.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "batch": "fill-2026-07-b3",
+      "muhaddith": "كتب التخريج والنقد"
+    },
+    "created_at": "2026-07-27T23:50:00.000Z"
+  },
+  {
+    "id": "mawdu-b3-420",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "من صلى علي في كتاب لم تزل الملائكة",
+    "text": "من صلى علي في كتاب لم تزل الملائكة تصلي عليه.",
+    "narrator": null,
+    "source_name": "الضعيفة",
+    "grade": "ضعيف/موضوع",
+    "chapter": "صلاة على النبي",
+    "keywords": [
+      "موضوع",
+      "صلاة على النبي",
+      "تحذير"
+    ],
+    "explanation": "ضعيف/موضوع. المرجع النقدي: الضعيفة. للتحذير والتمييز لا للاحتجاج.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "batch": "fill-2026-07-b3",
+      "muhaddith": "كتب التخريج والنقد"
+    },
+    "created_at": "2026-07-27T23:50:00.000Z"
+  },
+  {
+    "id": "mawdu-b3-421",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "اللهم صل على محمد بعدد من صلى عليه",
+    "text": "ألفاظ محدثة في الصلاة على النبي بلا أصل ثابت.",
+    "narrator": null,
+    "source_name": "نقد",
+    "grade": "لا أصل بهذه القيود",
+    "chapter": "صلاة على النبي",
+    "keywords": [
+      "موضوع",
+      "صلاة على النبي",
+      "تحذير"
+    ],
+    "explanation": "لا أصل بهذه القيود. المرجع النقدي: نقد. للتحذير والتمييز لا للاحتجاج.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "batch": "fill-2026-07-b3",
+      "muhaddith": "كتب التخريج والنقد"
+    },
+    "created_at": "2026-07-27T23:50:00.000Z"
+  },
+  {
+    "id": "mawdu-b3-422",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "التوسّل بجاه الأنبياء",
+    "text": "إذا سألتم الله فاسألوه بجاهي.",
+    "narrator": null,
+    "source_name": "الموضوعات",
+    "grade": "لا أصل",
+    "chapter": "بدع",
+    "keywords": [
+      "موضوع",
+      "بدع",
+      "تحذير"
+    ],
+    "explanation": "لا أصل. المرجع النقدي: الموضوعات. للتحذير والتمييز لا للاحتجاج.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "batch": "fill-2026-07-b3",
+      "muhaddith": "كتب التخريج والنقد"
+    },
+    "created_at": "2026-07-27T23:50:00.000Z"
+  },
+  {
+    "id": "mawdu-b3-423",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "زر قبر والديك كل جمعة",
+    "text": "زر قبر والديك كل جمعة.",
+    "narrator": null,
+    "source_name": "الواهيات",
+    "grade": "واهٍ",
+    "chapter": "قبور",
+    "keywords": [
+      "موضوع",
+      "قبور",
+      "تحذير"
+    ],
+    "explanation": "واهٍ. المرجع النقدي: الواهيات. للتحذير والتمييز لا للاحتجاج.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "batch": "fill-2026-07-b3",
+      "muhaddith": "كتب التخريج والنقد"
+    },
+    "created_at": "2026-07-27T23:50:00.000Z"
+  },
+  {
+    "id": "mawdu-b3-424",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "من زار قبر والديه كل جمعة",
+    "text": "من زار قبر والديه أو أحدهما كل جمعة غفر له.",
+    "narrator": null,
+    "source_name": "الضعيفة",
+    "grade": "ضعيف جداً",
+    "chapter": "قبور",
+    "keywords": [
+      "موضوع",
+      "قبور",
+      "تحذير"
+    ],
+    "explanation": "ضعيف جداً. المرجع النقدي: الضعيفة. للتحذير والتمييز لا للاحتجاج.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "batch": "fill-2026-07-b3",
+      "muhaddith": "كتب التخريج والنقد"
+    },
+    "created_at": "2026-07-27T23:50:00.000Z"
+  },
+  {
+    "id": "mawdu-b3-425",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "من حج عن والديه",
+    "text": "من حج عن والديه كتب له حجة.",
+    "narrator": null,
+    "source_name": "الضعيفة",
+    "grade": "ضعيف بهذا التمام",
+    "chapter": "حج",
+    "keywords": [
+      "موضوع",
+      "حج",
+      "تحذير"
+    ],
+    "explanation": "ضعيف بهذا التمام. المرجع النقدي: الضعيفة. للتحذير والتمييز لا للاحتجاج.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "batch": "fill-2026-07-b3",
+      "muhaddith": "كتب التخريج والنقد"
+    },
+    "created_at": "2026-07-27T23:50:00.000Z"
+  },
+  {
+    "id": "mawdu-b3-426",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "الحج قبل الزواج",
+    "text": "الحج قبل الزواج.",
+    "narrator": null,
+    "source_name": "الموضوعات",
+    "grade": "لا أصل",
+    "chapter": "حج",
+    "keywords": [
+      "موضوع",
+      "حج",
+      "تحذير"
+    ],
+    "explanation": "لا أصل. المرجع النقدي: الموضوعات. للتحذير والتمييز لا للاحتجاج.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "batch": "fill-2026-07-b3",
+      "muhaddith": "كتب التخريج والنقد"
+    },
+    "created_at": "2026-07-27T23:50:00.000Z"
+  },
+  {
+    "id": "mawdu-b3-427",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "من مات وعليه حج فليحج عنه وليّه — زيادة منكرة",
+    "text": "زيادات منكرة في النيابة عن الميت في الحج.",
+    "narrator": null,
+    "source_name": "تمييز",
+    "grade": "ثابت منه ما في السنن؛ الزيادات تُحذَّر",
+    "chapter": "حج",
+    "keywords": [
+      "موضوع",
+      "حج",
+      "تحذير"
+    ],
+    "explanation": "ثابت منه ما في السنن؛ الزيادات تُحذَّر. المرجع النقدي: تمييز. للتحذير والتمييز لا للاحتجاج.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "batch": "fill-2026-07-b3",
+      "muhaddith": "كتب التخريج والنقد"
+    },
+    "created_at": "2026-07-27T23:50:00.000Z"
+  },
+  {
+    "id": "mawdu-b3-428",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "ذبيحة الله يوم عرفة",
+    "text": "ذبيحة الله يوم عرفة إسماعيل.",
+    "narrator": null,
+    "source_name": "الموضوعات",
+    "grade": "موضوع",
+    "chapter": "مناسك",
+    "keywords": [
+      "موضوع",
+      "مناسك",
+      "تحذير"
+    ],
+    "explanation": "موضوع. المرجع النقدي: الموضوعات. للتحذير والتمييز لا للاحتجاج.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "batch": "fill-2026-07-b3",
+      "muhaddith": "كتب التخريج والنقد"
+    },
+    "created_at": "2026-07-27T23:50:00.000Z"
+  },
+  {
+    "id": "mawdu-b3-429",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "الركن اليماني على عهد الرحمن",
+    "text": "الركن اليماني على عهد الرحمن.",
+    "narrator": null,
+    "source_name": "الضعيفة",
+    "grade": "ضعيف",
+    "chapter": "مناسك",
+    "keywords": [
+      "موضوع",
+      "مناسك",
+      "تحذير"
+    ],
+    "explanation": "ضعيف. المرجع النقدي: الضعيفة. للتحذير والتمييز لا للاحتجاج.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "batch": "fill-2026-07-b3",
+      "muhaddith": "كتب التخريج والنقد"
+    },
+    "created_at": "2026-07-27T23:50:00.000Z"
+  },
+  {
+    "id": "mawdu-b3-430",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "الطواف بالبيت صلاة",
+    "text": "الطواف بالبيت صلاة إلا أن الله أحل فيه الكلام.",
+    "narrator": null,
+    "source_name": "الترمذي",
+    "grade": "حسن/ضعيف مختلف",
+    "chapter": "مناسك",
+    "keywords": [
+      "موضوع",
+      "مناسك",
+      "تحذير"
+    ],
+    "explanation": "حسن/ضعيف مختلف. المرجع النقدي: الترمذي. للتحذير والتمييز لا للاحتجاج.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "batch": "fill-2026-07-b3",
+      "muhaddith": "كتب التخريج والنقد"
+    },
+    "created_at": "2026-07-27T23:50:00.000Z"
+  },
+  {
+    "id": "mawdu-b3-431",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "من طاف بالبيت سبعاً",
+    "text": "من طاف بالبيت أسبوعا كان كعتق رقبة.",
+    "narrator": null,
+    "source_name": "الضعيفة",
+    "grade": "ضعيف",
+    "chapter": "مناسك",
+    "keywords": [
+      "موضوع",
+      "مناسك",
+      "تحذير"
+    ],
+    "explanation": "ضعيف. المرجع النقدي: الضعيفة. للتحذير والتمييز لا للاحتجاج.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "batch": "fill-2026-07-b3",
+      "muhaddith": "كتب التخريج والنقد"
+    },
+    "created_at": "2026-07-27T23:50:00.000Z"
+  },
+  {
+    "id": "mawdu-b3-432",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "ماء زمزم لما شرب له",
+    "text": "ماء زمزم لما شرب له.",
+    "narrator": null,
+    "source_name": "ابن ماجه",
+    "grade": "حسن/صحيح بشواهد عند قوم",
+    "chapter": "مناسك",
+    "keywords": [
+      "موضوع",
+      "مناسك",
+      "تحذير"
+    ],
+    "explanation": "حسن/صحيح بشواهد عند قوم. المرجع النقدي: ابن ماجه. للتحذير والتمييز لا للاحتجاج.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "batch": "fill-2026-07-b3",
+      "muhaddith": "كتب التخريج والنقد"
+    },
+    "created_at": "2026-07-27T23:50:00.000Z"
+  },
+  {
+    "id": "mawdu-b3-433",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "التضلع من زمزم",
+    "text": "آية ما بيننا وبين المنافقين أنهم لا يتضلعون من زمزم.",
+    "narrator": null,
+    "source_name": "ابن ماجه",
+    "grade": "ضعيف",
+    "chapter": "مناسك",
+    "keywords": [
+      "موضوع",
+      "مناسك",
+      "تحذير"
+    ],
+    "explanation": "ضعيف. المرجع النقدي: ابن ماجه. للتحذير والتمييز لا للاحتجاج.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "batch": "fill-2026-07-b3",
+      "muhaddith": "كتب التخريج والنقد"
+    },
+    "created_at": "2026-07-27T23:50:00.000Z"
+  },
+  {
+    "id": "mawdu-b3-434",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "من وقع في أمري شيئاً فكفارته",
+    "text": "من وقع في أمرنا هذا بشيء فكفارته الوضوء.",
+    "narrator": null,
+    "source_name": "الموضوعات",
+    "grade": "موضوع",
+    "chapter": "بدع",
+    "keywords": [
+      "موضوع",
+      "بدع",
+      "تحذير"
+    ],
+    "explanation": "موضوع. المرجع النقدي: الموضوعات. للتحذير والتمييز لا للاحتجاج.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "batch": "fill-2026-07-b3",
+      "muhaddith": "كتب التخريج والنقد"
+    },
+    "created_at": "2026-07-27T23:50:00.000Z"
+  },
+  {
+    "id": "mawdu-b3-500",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "من ولد في يوم الجمعة",
+    "text": "من ولد يوم الجمعة بريء من النار.",
+    "narrator": null,
+    "source_name": "الموضوعات",
+    "grade": "موضوع",
+    "chapter": "خرافات",
+    "keywords": [
+      "موضوع",
+      "خرافات",
+      "تحذير"
+    ],
+    "explanation": "موضوع. المرجع النقدي: الموضوعات. للتحذير والتمييز لا للاحتجاج.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "batch": "fill-2026-07-b3",
+      "muhaddith": "كتب التخريج والنقد"
+    },
+    "created_at": "2026-07-27T23:55:00.000Z"
+  },
+  {
+    "id": "mawdu-b3-501",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "من قرأ قل هو الله أحد عشر مرات",
+    "text": "من قرأ قل هو الله أحد عشر مرات بني له قصر.",
+    "narrator": null,
+    "source_name": "الواهيات",
+    "grade": "واهٍ زائد",
+    "chapter": "قرآن",
+    "keywords": [
+      "موضوع",
+      "قرآن",
+      "تحذير"
+    ],
+    "explanation": "واهٍ زائد. المرجع النقدي: الواهيات. للتحذير والتمييز لا للاحتجاج.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "batch": "fill-2026-07-b3",
+      "muhaddith": "كتب التخريج والنقد"
+    },
+    "created_at": "2026-07-27T23:55:00.000Z"
+  },
+  {
+    "id": "mawdu-b3-502",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "أسماء الله في حديث موضوع مطوّل",
+    "text": "تعداد أسماء موضوعة زائدة على الأسماء الحسنى الثابتة.",
+    "narrator": null,
+    "source_name": "الموضوعات",
+    "grade": "موضوعات في الأسماء",
+    "chapter": "عقيدة",
+    "keywords": [
+      "موضوع",
+      "عقيدة",
+      "تحذير"
+    ],
+    "explanation": "موضوعات في الأسماء. المرجع النقدي: الموضوعات. للتحذير والتمييز لا للاحتجاج.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "batch": "fill-2026-07-b3",
+      "muhaddith": "كتب التخريج والنقد"
+    },
+    "created_at": "2026-07-27T23:55:00.000Z"
+  },
+  {
+    "id": "mawdu-b3-503",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "صلاة قضاء العمر",
+    "text": "صلاة قضاء العمر أربع ركعات.",
+    "narrator": null,
+    "source_name": "نقد البدع",
+    "grade": "موضوعة",
+    "chapter": "بدع",
+    "keywords": [
+      "موضوع",
+      "بدع",
+      "تحذير"
+    ],
+    "explanation": "موضوعة. المرجع النقدي: نقد البدع. للتحذير والتمييز لا للاحتجاج.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "batch": "fill-2026-07-b3",
+      "muhaddith": "كتب التخريج والنقد"
+    },
+    "created_at": "2026-07-27T23:55:00.000Z"
+  },
+  {
+    "id": "mawdu-b3-504",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "صلاة الحاجة الموضوعة",
+    "text": "صلاة الحاجة بهذا العدد المروي الواهي.",
+    "narrator": null,
+    "source_name": "نقد",
+    "grade": "طرق واهية",
+    "chapter": "نوافل",
+    "keywords": [
+      "موضوع",
+      "نوافل",
+      "تحذير"
+    ],
+    "explanation": "طرق واهية. المرجع النقدي: نقد. للتحذير والتمييز لا للاحتجاج.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "batch": "fill-2026-07-b3",
+      "muhaddith": "كتب التخريج والنقد"
+    },
+    "created_at": "2026-07-27T23:55:00.000Z"
+  },
+  {
+    "id": "mawdu-b3-505",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "صلاة حفظ الإيمان",
+    "text": "صلاة لحفظ الإيمان في رجب.",
+    "narrator": null,
+    "source_name": "نقد البدع",
+    "grade": "موضوعة",
+    "chapter": "بدع",
+    "keywords": [
+      "موضوع",
+      "بدع",
+      "تحذير"
+    ],
+    "explanation": "موضوعة. المرجع النقدي: نقد البدع. للتحذير والتمييز لا للاحتجاج.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "batch": "fill-2026-07-b3",
+      "muhaddith": "كتب التخريج والنقد"
+    },
+    "created_at": "2026-07-27T23:55:00.000Z"
+  },
+  {
+    "id": "mawdu-b3-506",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "حديث جسّاسة المطوّل الزائد",
+    "text": "زيادات منكرة على أصل الدجال في بعض النسخ.",
+    "narrator": null,
+    "source_name": "تمييز",
+    "grade": "أصل عند مسلم؛ الزيادات تُحذَّر",
+    "chapter": "فتن",
+    "keywords": [
+      "موضوع",
+      "فتن",
+      "تحذير"
+    ],
+    "explanation": "أصل عند مسلم؛ الزيادات تُحذَّر. المرجع النقدي: تمييز. للتحذير والتمييز لا للاحتجاج.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "batch": "fill-2026-07-b3",
+      "muhaddith": "كتب التخريج والنقد"
+    },
+    "created_at": "2026-07-27T23:55:00.000Z"
+  },
+  {
+    "id": "mawdu-b3-507",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "المهدي من ولد العباس",
+    "text": "المهدي من ولد العباس.",
+    "narrator": null,
+    "source_name": "الموضوعات",
+    "grade": "موضوع",
+    "chapter": "فتن",
+    "keywords": [
+      "موضوع",
+      "فتن",
+      "تحذير"
+    ],
+    "explanation": "موضوع. المرجع النقدي: الموضوعات. للتحذير والتمييز لا للاحتجاج.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "batch": "fill-2026-07-b3",
+      "muhaddith": "كتب التخريج والنقد"
+    },
+    "created_at": "2026-07-27T23:55:00.000Z"
+  },
+  {
+    "id": "mawdu-b3-508",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "المهدي اسمه أحمد",
+    "text": "اسم المهدي أحمد واسم أبيه عبد الله — ألفاظ واهية دائرة.",
+    "narrator": null,
+    "source_name": "تمييز",
+    "grade": "ثابت منه أوصاف في السنن؛ تفاصيل الأسماء فيها كلام",
+    "chapter": "فتن",
+    "keywords": [
+      "موضوع",
+      "فتن",
+      "تحذير"
+    ],
+    "explanation": "ثابت منه أوصاف في السنن؛ تفاصيل الأسماء فيها كلام. المرجع النقدي: تمييز. للتحذير والتمييز لا للاحتجاج.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "batch": "fill-2026-07-b3",
+      "muhaddith": "كتب التخريج والنقد"
+    },
+    "created_at": "2026-07-27T23:55:00.000Z"
+  },
+  {
+    "id": "mawdu-b3-509",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "عيسى يدفن مع النبي",
+    "text": "يدفن عيسى مع النبي في الحجرة.",
+    "narrator": null,
+    "source_name": "واهيات",
+    "grade": "لا أصل ثابت",
+    "chapter": "فتن",
+    "keywords": [
+      "موضوع",
+      "فتن",
+      "تحذير"
+    ],
+    "explanation": "لا أصل ثابت. المرجع النقدي: واهيات. للتحذير والتمييز لا للاحتجاج.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "batch": "fill-2026-07-b3",
+      "muhaddith": "كتب التخريج والنقد"
+    },
+    "created_at": "2026-07-27T23:55:00.000Z"
+  },
+  {
+    "id": "mawdu-b3-510",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "يأجوج ومأجوج يأكلون الناس",
+    "text": "تفصيلات موضوعة في يأجوج ومأجوج.",
+    "narrator": null,
+    "source_name": "تمييز",
+    "grade": "ثابت أصلهم في الصحيح؛ التفاصيل الموضوعة تُحذَّر",
+    "chapter": "فتن",
+    "keywords": [
+      "موضوع",
+      "فتن",
+      "تحذير"
+    ],
+    "explanation": "ثابت أصلهم في الصحيح؛ التفاصيل الموضوعة تُحذَّر. المرجع النقدي: تمييز. للتحذير والتمييز لا للاحتجاج.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "batch": "fill-2026-07-b3",
+      "muhaddith": "كتب التخريج والنقد"
+    },
+    "created_at": "2026-07-27T23:55:00.000Z"
+  },
+  {
+    "id": "mawdu-b3-511",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "طلوع الشمس من مغربها — زيادات",
+    "text": "زيادات منكرة في أشراط الساعة.",
+    "narrator": null,
+    "source_name": "تمييز",
+    "grade": "أصل الطلوع ثابت؛ الزيادات تُميَّز",
+    "chapter": "فتن",
+    "keywords": [
+      "موضوع",
+      "فتن",
+      "تحذير"
+    ],
+    "explanation": "أصل الطلوع ثابت؛ الزيادات تُميَّز. المرجع النقدي: تمييز. للتحذير والتمييز لا للاحتجاج.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "batch": "fill-2026-07-b3",
+      "muhaddith": "كتب التخريج والنقد"
+    },
+    "created_at": "2026-07-27T23:55:00.000Z"
+  },
+  {
+    "id": "mawdu-b3-512",
+    "collection": "various",
+    "hadith_number": null,
+    "title": "الدابة تكتب بين عيني المؤمن",
+    "text": "تفصيلات واهية في دابة الأرض.",
+    "narrator": null,
+    "source_name": "تمييز",
+    "grade": "أصل في القرآن؛ التفاصيل الحديثية الواهية تُحذَّر",
+    "chapter": "فتن",
+    "keywords": [
+      "موضوع",
+      "فتن",
+      "تحذير"
+    ],
+    "explanation": "أصل في القرآن؛ التفاصيل الحديثية الواهية تُحذَّر. المرجع النقدي: تمييز. للتحذير والتمييز لا للاحتجاج.",
+    "authenticity_class": "mawdu",
+    "metadata": {
+      "batch": "fill-2026-07-b3",
+      "muhaddith": "كتب التخريج والنقد"
+    },
+    "created_at": "2026-07-27T23:55:00.000Z"
+  }
+];

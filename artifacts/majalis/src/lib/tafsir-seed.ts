@@ -14,6 +14,11 @@ import {
   TAFSIR_TERMS_FILL_B2,
   TAFSIR_PRINCIPLES_FILL_B2,
 } from "./tafsir-fill-b2";
+import {
+  MUFASSIRUN_FILL_B3,
+  TAFSIR_TERMS_FILL_B3,
+  TAFSIR_PRINCIPLES_FILL_B3,
+} from "./tafsir-fill-b3";
 
 export type TafsirType = {
   id: string;
@@ -260,6 +265,7 @@ export const TAFSIR_PRINCIPLES: TafsirPrinciple[] = [
   },
   ...TAFSIR_PRINCIPLES_FILL,
   ...TAFSIR_PRINCIPLES_FILL_B2,
+  ...TAFSIR_PRINCIPLES_FILL_B3,
 ];
 
 export const MUFASSIR_CONDITIONS: TafsirCondition[] = [
@@ -312,6 +318,7 @@ export const TAFSIR_TERMS: TafsirTerm[] = [
   { id: "tarjih", term: "الترجيح", definition: "تقديم أحد الأقوال بدليل من نقل أو لغة أو سياق عند التعارض." },
   ...TAFSIR_TERMS_FILL,
   ...TAFSIR_TERMS_FILL_B2,
+  ...TAFSIR_TERMS_FILL_B3,
 ];
 
 export const _MUFASSIRUN_RAW: MufassirEntry[] = [
@@ -350,6 +357,7 @@ export const _MUFASSIRUN_RAW: MufassirEntry[] = [
   { id: "waseet", name: "محمد سيد طنطاوي", kitab: "التفسير الوسيط", era: "ت 1431هـ", school: "ميسر معاصر", note: "تفسير متوسط الطول بأسلوب واضح؛ متاح في واجهة المصحف." },
   ...MUFASSIRUN_FILL,
   ...MUFASSIRUN_FILL_B2,
+  ...MUFASSIRUN_FILL_B3,
 ];
 
 /** دمج بدون تكرار المعرّف */
