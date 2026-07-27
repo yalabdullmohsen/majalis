@@ -38,15 +38,37 @@ const ALTS = [
   "والعبرة بالاتباع والعمل لا بالانبهار بالألفاظ",
   "ويُستأنس بكلام المحققين في الضبط دون غلو",
   "وهذا باب من أبواب النصح لطالب العلم بالرفق",
+  "ويُقدَّم الثابت على المشهور الواهي عند التعارض",
+  "فلا يُحمل النص ما لا يحتمله من المعاني",
+  "ويُراعى حال المخاطب عند البيان بلا تكلّف",
+  "والعلم النافع ما ظهر أثره في الخلق والعمل",
+  "ويُحذر من الغلو في فهم ما لم يُحرَّر دليله",
 ];
 
-function countPhrase(phrase) {
+function loadTrackedPhrases() {
+  const enrichPath = path.join(__dirname, "enrich-r143-lesson-bodies.mjs");
+  const src = fs.readFileSync(enrichPath, "utf8");
+  const start = src.indexOf("const R53_BRIDGE_POOL = [");
+  const end = src.indexOf("];", start);
+  if (start === -1 || end === -1) throw new Error("Cannot load R53_BRIDGE_POOL");
+  const poolSrc = src.slice(start, end + 2);
+  const uniq = [...poolSrc.matchAll(/"((?:[^"\\]|\\.)*)"/g)].map((m) => JSON.parse(`"${m[1]}"`));
+  // Drop proper prefixes of longer phrases to avoid collision counts
+  return [...new Set(uniq)].filter((p) => !uniq.some((q) => q !== p && q.startsWith(p)));
+}
+
+function countPhraseNonOverlap(phrase, text) {
   let n = 0;
-  for (const f of FILES) {
-    const s = fs.readFileSync(path.join(LIB, f), "utf8");
-    n += s.split(phrase).length - 1;
+  let idx = 0;
+  while ((idx = text.indexOf(phrase, idx)) !== -1) {
+    n++;
+    idx += phrase.length;
   }
   return n;
+}
+
+function combinedText() {
+  return FILES.map((f) => fs.readFileSync(path.join(LIB, f), "utf8")).join("\n");
 }
 
 function rebalance(phrase) {
@@ -78,25 +100,18 @@ function rebalance(phrase) {
   return replaced;
 }
 
-// Detect top phrases from enrich script TRACKED list by scanning common known bridges
-const CANDIDATES = [
-  "ويُستحضر أن كل باب يُسأل عنه يوم القيامة",
-  "فلا يُطلب من النص ما لم يُفتح له باب",
-  "والمقصد يُستقرأ من جملة الشريعة لا من الرأي المنفرد",
-  "وفقه المقاصد أداة فهم وتنزيل لا بديلاً عن النص القطعي",
-  "والدليل النبوي يُعرض بأدب وتوثيق لا بادّعاء بلا سند",
-  "واللغة العربية وعاء الوحي فتُفهم بقواعدها لا بالاجتهاد الشخصي",
-];
-
-const ranked = CANDIDATES.map((p) => ({ p, n: countPhrase(p) }))
+const CANDIDATES = loadTrackedPhrases();
+const text = combinedText();
+const ranked = CANDIDATES.map((p) => ({ p, n: countPhraseNonOverlap(p, text) }))
   .filter((x) => x.n > MAX)
-  .sort((a, b) => b.n - a.n);
+  .sort((a, b) => b.p.length - a.p.length || b.n - a.n);
 
-console.log("over-limit:", ranked);
+console.log("over-limit:", ranked.slice(0, 20));
 let totalRep = 0;
 for (const { p, n } of ranked) {
   const r = rebalance(p);
   totalRep += r;
-  console.log(`rebalanced "${p.slice(0, 40)}…" ${n}→${countPhrase(p)} (replaced ${r})`);
+  const after = countPhraseNonOverlap(p, combinedText());
+  console.log(`rebalanced "${p.slice(0, 40)}…" ${n}→${after} (replaced ${r})`);
 }
-console.log(JSON.stringify({ max: MAX, overBefore: ranked.length, totalRep }));
+console.log(JSON.stringify({ max: MAX, overBefore: ranked.length, totalRep, tracked: CANDIDATES.length }));
