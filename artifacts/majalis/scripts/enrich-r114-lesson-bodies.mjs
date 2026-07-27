@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Round 113 — raise ALL live/scientific lesson bodies to ≥790.
+ * Round 114 — raise ALL live/scientific lesson bodies to ≥810.
  * Meaningful scholarly expansion; bridge max frequency ≤35; no latin corruption.
  * Usage: node scripts/enrich-r78-lesson-bodies.mjs [--apply] [--verify]
  */
@@ -30,8 +30,8 @@ const LIVE_FILES = [
   "quran-studies-data.ts",
 ];
 
-const SCI_MIN = 790;
-const LIVE_MIN = 790;
+const SCI_MIN = 810;
+const LIVE_MIN = 810;
 const MAX_BRIDGE_FREQ = 40;
 
 const FILE_MIN = Object.fromEntries([
