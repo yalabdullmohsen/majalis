@@ -16,6 +16,7 @@ import { CitationActionBar } from "@/components/citation/CitationActionBar";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { fetchAllHadiths, type CdnHadith } from "@/lib/hadith-cdn-service";
+import { getLocalVerifiedHadith } from "@/lib/verified-hadith-local-seed";
 import { useReadingScrollMemory } from "@/hooks/useReadingScrollMemory";
 import { resolveScholarWorkLink } from "@/lib/scholar-library-links";
 import "@/styles/components/hadith-badge.css";
@@ -38,6 +39,31 @@ type HadithItem = {
   metadata: Record<string, string | number | boolean | null> | null;
   created_at: string;
 };
+
+export type HadithClass = "sahih" | "daif" | "mawdu";
+
+/** دمج صفوف القاعدة مع البذرة المحلية (الحي يفوز عند تعارض المعرّف). */
+function mergeHadithRows(remote: HadithItem[], authenticityClass: HadithClass): HadithItem[] {
+  const local = getLocalVerifiedHadith(authenticityClass).map((h) => ({
+    id: h.id,
+    title: h.title,
+    text: h.text,
+    narrator: h.narrator,
+    source_name: h.source_name,
+    grade: h.grade,
+    collection: h.collection,
+    chapter: h.chapter,
+    explanation: h.explanation,
+    keywords: h.keywords,
+    hadith_number: h.hadith_number,
+    metadata: h.metadata,
+    created_at: h.created_at,
+  }));
+  const byId = new Map<string, HadithItem>();
+  for (const row of local) byId.set(row.id, row);
+  for (const row of remote) byId.set(row.id, row);
+  return Array.from(byId.values());
+}
 
 function cdnToHadithItems(hadiths: CdnHadith[], collection: string, sourceName: string): HadithItem[] {
   return hadiths.map((h) => ({
@@ -75,12 +101,15 @@ const COLLECTION_LABELS: Record<string, string> = {
   riyadh:   "رياض الصالحين",
   jawami:   "صحيح الجامع",
   silsila:  "السلسلة الصحيحة",
+  qudsi:    "أحاديث قدسية",
+  various:  "متفرقات مشهورة",
 };
 
 const COLLECTION_ORDER: Record<string, number> = {
   mutafaq: 0, bukhari: 1, muslim: 2, nawawi40: 3,
   tirmidhi: 4, abudawud: 5, nasai: 6, ibnmajah: 7,
   muwatta: 8, riyadh: 9, jawami: 10, silsila: 11,
+  qudsi: 12, various: 13,
 };
 
 function collectionLabel(key: string | null): string {
@@ -434,8 +463,6 @@ const CATEGORIES = [
   { id: "الأخوة والاجتماع", label: "الأخوة", keys: ["أخوة","مسلم","اجتماع","هجران","وحدة"] },
 ];
 
-export type HadithClass = "sahih" | "daif" | "mawdu";
-
 export const HADITH_CLASS_META: Record<HadithClass, {
   eyebrow: string; title: string; subtitle: string; empty: string; countUnit: string;
 }> = {
@@ -450,14 +477,14 @@ export const HADITH_CLASS_META: Record<HadithClass, {
     eyebrow: "التمييز والتحذير",
     title: "الأحاديث الضعيفة",
     subtitle: "أحاديث ضعيفة الإسناد، تُذكر لبيان درجتها والتحذير من الاحتجاج بها.",
-    empty: "لا تُدرَج في هذا القسم رواية إلا بتخريج منسوب إلى إمام معتمد في التضعيف، ولم تُعتمد بعدُ روايات مستوفية لهذا الشرط. حتى ذلك الحين، الأسلم الاقتصار على قسم الأحاديث الصحيحة، وعدم نشر ما لا تُعرف درجته.",
+    empty: "لا تُدرَج في هذا القسم رواية إلا بتخريج منسوب إلى إمام معتمد في التضعيف.",
     countUnit: "حديث ضعيف",
   },
   mawdu: {
     eyebrow: "التحذير والبيان",
     title: "الأحاديث الموضوعة والمكذوبة",
     subtitle: "أحاديث موضوعة ومكذوبة على النبي ﷺ، يُحذَّر منها ولا تجوز نسبتها إليه.",
-    empty: "لا يُذكر الموضوع إلا مقروناً ببيان وضعه ومَن حكم عليه من الأئمة، ولم تُعتمد بعدُ روايات مستوفية لهذا الشرط. والقاعدة: «من حدّث عني بحديث يُرى أنه كذب فهو أحد الكاذبين» — رواه مسلم.",
+    empty: "لا يُذكر الموضوع إلا مقروناً ببيان وضعه ومَن حكم عليه من الأئمة. والقاعدة: «من حدّث عني بحديث يُرى أنه كذب فهو أحد الكاذبين» — رواه مسلم.",
     countUnit: "حديث موضوع",
   },
 };
@@ -477,10 +504,10 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
     setLoading(true);
     RequestManager.run(`hadith:list:${authenticityClass}`, () => getVerifiedHadith({ limit: 500, authenticityClass }))
       .then(async ({ data }) => {
-        const rows = (data as HadithItem[]) ?? [];
+        const rows = mergeHadithRows((data as HadithItem[]) ?? [], authenticityClass);
         if (rows.length > 0) { setItems(rows); return; }
         if (authenticityClass === "sahih") {
-          // Fallback: الأربعون النووية + القدسية من CDN عند فراغ قاعدة البيانات
+          // Fallback: الأربعون النووية + القدسية من CDN عند فراغ القاعدة والبذرة
           const [nawawi, qudsi] = await Promise.all([
             fetchAllHadiths("nawawi"),
             fetchAllHadiths("qudsi"),
