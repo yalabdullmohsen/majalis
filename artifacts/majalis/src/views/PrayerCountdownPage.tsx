@@ -67,7 +67,8 @@ export default function PrayerCountdownPage() {
                 {PRAYER_AR[countdown.next.key] ?? countdown.next.key}
               </h1>
               <div className="prayer-countdown__elapsed" aria-live="polite">
-                مضى على الأذان {Math.floor(countdown.sinceSeconds / 60)} دقيقة
+                مضى على الأذان{" "}
+                <span dir="ltr">{countdown.sinceHms ?? "00:00"}</span>
               </div>
             </>
           ) : (
@@ -79,6 +80,7 @@ export default function PrayerCountdownPage() {
               <div className="prayer-countdown__timer" dir="ltr">
                 {countdown.remainingHms ?? "--:--:--"}
               </div>
+              <p className="prayer-countdown__next-label">الوقت المتبقي</p>
             </>
           )}
         </>

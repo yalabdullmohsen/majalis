@@ -151,11 +151,9 @@ export default function PrayerTimesPage() {
   const prayers: PrayerSlot[] = (data?.prayers ?? []).filter((p) => p.time);
   const nowInfo = kuwaitNowSeconds();
 
-  // نافذة السماح (PRAYER_GRACE_MINUTES = 35 دقيقة): عدّاد تصاعدي منذ أذان
-  // الصلاة التي رنّت للتو (لا قفز فوري لعدّ الصلاة القادمة). بعد انتهاء
-  // الـ35 دقيقة يعود sinceSeconds تلقائيًا null من computePrayerCountdown،
-  // فيسقط العرض للحالة العادية (عدّ تنازلي للصلاة القادمة الفعلية).
-  const inGrace = !pinnedKey && countdown.sinceSeconds != null;
+  // نافذة الـ35 دقيقة بعد الأذان: عدّاد تصاعدي «مضى على الأذان» (MM:SS).
+  // بعد انتهاء النافذة ينتقل تلقائيًا للصلاة التالية بعدّاد «الوقت المتبقي».
+  const inGrace = !pinnedKey && (countdown.displayMode === "elapsed" || countdown.sinceSeconds != null);
   const ranKey = countdown.next.key;
 
   const displayKey  = pinnedKey ?? (inGrace ? ranKey : countdown.next.key);
@@ -174,6 +172,10 @@ export default function PrayerTimesPage() {
   } else {
     displayHms = countdown.remainingHms ?? "--:--:--";
   }
+
+  const counterLabel = pinnedKey && pinnedKey !== countdown.next.key
+    ? "الوقت المتبقي"
+    : (countdown.displayLabel ?? (inGrace ? "مضى على الأذان" : "الوقت المتبقي"));
 
   const isNext   = (key: string) => key === countdown.next?.key;
   const isPinned = (key: string) => key === displayKey;
@@ -194,12 +196,12 @@ export default function PrayerTimesPage() {
       </div>
 
       {/* ── العداد الرئيسي ── */}
-      <section className="pt-hero" aria-label="العداد التنازلي">
+      <section className="pt-hero" aria-label="عداد الصلاة">
         <div className="pt-hero__label">
           {pinnedKey && pinnedKey !== countdown.next.key
             ? "الوقت المتبقي لـ"
             : inGrace
-              ? "الوقت منذ أذان"
+              ? "مضى على أذان"
               : "الصلاة القادمة"}
         </div>
         <h2 className="pt-hero__name" key={displayKey}>
@@ -214,7 +216,7 @@ export default function PrayerTimesPage() {
           dir="ltr"
           aria-live="polite"
           aria-atomic="true"
-          aria-label={`الوقت المتبقي: ${displayHms}`}
+          aria-label={`${counterLabel}: ${displayHms}`}
           key={displayHms}
         >
           {displayHms}
@@ -227,7 +229,7 @@ export default function PrayerTimesPage() {
                 العودة للصلاة القادمة
               </button>
             </span>
-          ) : "الوقت المتبقي"}
+          ) : counterLabel}
         </div>
       </section>
 

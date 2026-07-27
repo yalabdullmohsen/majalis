@@ -567,12 +567,29 @@ html.dark .nav-soon-badge {
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
   transition: color var(--motion-fast), background var(--motion-fast);
+  /* يمنع sticky :focus/:active المرئية بعد اللمس على Safari/WebView */
+  outline: none;
+  -webkit-touch-callout: none;
+  touch-action: manipulation;
+}
+@media (hover: hover) and (pointer: fine) {
+  .bottom-nav--v2 .bottom-nav__tab:hover:not(.is-active) {
+    color: var(--color-primary);
+  }
 }
 .bottom-nav--v2 .bottom-nav__tab:active:not(.is-active) {
   background: color-mix(in srgb, var(--color-primary) 8%, transparent);
 }
 .bottom-nav--v2 .bottom-nav__tab.is-active {
   color: var(--color-primary);
+  background: color-mix(in srgb, var(--color-primary) 10%, transparent);
+}
+/* لا تُبقِ :focus ظاهرًا بعد اللمس — فقط لوحة المفاتيح (مع الإبقاء على :active أثناء الضغط) */
+.bottom-nav--v2 .bottom-nav__tab:focus:not(:focus-visible):not(:active) {
+  outline: none;
+  background: transparent;
+}
+.bottom-nav--v2 .bottom-nav__tab.is-active:focus:not(:focus-visible) {
   background: color-mix(in srgb, var(--color-primary) 10%, transparent);
 }
 .bottom-nav--v2 .bottom-nav__tab-icon {

@@ -42,7 +42,7 @@ function getRemainingForPrayer(prayerMinutes: number): string {
   return fmtHms(Math.max(0, rem));
 }
 
-const GRACE_MINUTES = 30;
+const GRACE_MINUTES = 35;
 
 function getActualNextPrayer(obligatory: PrayerSlot[], currentKey: string | null): PrayerSlot | null {
   if (!currentKey) return null;
@@ -56,6 +56,7 @@ function useCompactPrayer() {
   const [nextKey, setNextKey] = useState<string | null>(null);
   const [countdown, setCountdown] = useState("");
   const [sinceSeconds, setSinceSeconds] = useState<number | null>(null);
+  const [sinceHms, setSinceHms] = useState<string | null>(null);
   const [graceNextHms, setGraceNextHms] = useState<string | null>(null);
 
   useEffect(() => {
@@ -65,22 +66,30 @@ function useCompactPrayer() {
   useEffect(() => {
     if (!data?.prayers?.length) return;
     const tick = () => {
-      const cd = computePrayerCountdown(data.prayers);
+      const cd = computePrayerCountdown(data.prayers, new Date());
       setNextKey(cd.next?.key ?? null);
       setCountdown(cd.remainingHms ?? "");
       setSinceSeconds(cd.sinceSeconds);
+      setSinceHms(cd.sinceHms ?? null);
       setGraceNextHms(cd.graceNextHms ?? null);
     };
     tick();
     const t = setInterval(tick, 1000);
-    return () => clearInterval(t);
+    const onVis = () => {
+      if (document.visibilityState === "visible") tick();
+    };
+    document.addEventListener("visibilitychange", onVis);
+    return () => {
+      clearInterval(t);
+      document.removeEventListener("visibilitychange", onVis);
+    };
   }, [data]);
 
-  return { data, nextKey, countdown, sinceSeconds, graceNextHms };
+  return { data, nextKey, countdown, sinceSeconds, sinceHms, graceNextHms };
 }
 
 export function HomeCompactPrayer() {
-  const { data, nextKey, countdown, sinceSeconds, graceNextHms } = useCompactPrayer();
+  const { data, nextKey, countdown, sinceSeconds, sinceHms, graceNextHms } = useCompactPrayer();
   const fmt = useNumerals();
   const [selectedKey, setSelectedKey] = useState<string | null>(null);
   const [selectedCountdown, setSelectedCountdown] = useState<string>("");
@@ -107,14 +116,13 @@ export function HomeCompactPrayer() {
     (p: PrayerSlot) => p.obligatory || p.key === "Sunrise"
   );
 
-  // الصلاة التي أذّنت للتو (خلال نافذة 30 دقيقة)
+  // الصلاة التي أذّنت للتو (خلال نافذة 35 دقيقة)
   const justRangPrayer = sinceSeconds != null ? obligatory.find((p) => p.key === nextKey) : null;
   // الصلاة التالية الفعلية (التي لم تأتِ بعد)
   const actualNextPrayer = sinceSeconds != null
     ? getActualNextPrayer(obligatory, nextKey)
     : obligatory.find((p) => p.key === nextKey);
   const selectedPrayer = selectedKey ? obligatory.find((p) => p.key === selectedKey) : null;
-  const sinceMinutes = sinceSeconds != null ? Math.floor(sinceSeconds / 60) : 0;
   const graceProgress = sinceSeconds != null ? Math.min(100, (sinceSeconds / (GRACE_MINUTES * 60)) * 100) : 0;
 
   return (
@@ -136,8 +144,8 @@ export function HomeCompactPrayer() {
             <span className="hcp-strip__countdown hcp-strip__countdown--elapsed" aria-live="polite">
               <span className="hcp-since-pill">
                 <span className="hcp-since-pill__text">
-                  مضى على أذان {justRangPrayer.name}:{" "}
-                  <span dir="ltr">{sinceMinutes} دقيقة</span>
+                  مضى على الأذان {justRangPrayer.name}:{" "}
+                  <span dir="ltr">{fmt(sinceHms ?? `${Math.floor(sinceSeconds / 60)}:00`)}</span>
                 </span>
                 <span
                   className="hcp-since-pill__bar"
@@ -148,7 +156,7 @@ export function HomeCompactPrayer() {
               {actualNextPrayer && graceNextHms && (
                 <span className="hcp-next-hint">
                   {actualNextPrayer.name} بعد{" "}
-                  <span dir="ltr">{graceNextHms}</span>
+                  <span dir="ltr">{fmt(graceNextHms)}</span>
                 </span>
               )}
             </span>
@@ -156,7 +164,7 @@ export function HomeCompactPrayer() {
             actualNextPrayer && countdown && (
               <span className="hcp-strip__countdown" aria-live="off">
                 متبقٍّ على {actualNextPrayer.name}:{" "}
-                <span className="hcp-strip__countdown-time" dir="ltr">{countdown}</span>
+                <span className="hcp-strip__countdown-time" dir="ltr">{fmt(countdown)}</span>
               </span>
             )
           )}

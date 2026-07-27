@@ -18,24 +18,41 @@ function PrayerChip() {
 
   useEffect(() => {
     let prayers: Parameters<typeof computePrayerCountdown>[0] = [];
+    let intervalId: ReturnType<typeof setInterval> | null = null;
+
+    const tick = () => setCd(computePrayerCountdown(prayers, new Date()));
+
     fetchPrayerTimes()
       .then((payload) => {
         prayers = payload.prayers;
-        setCd(computePrayerCountdown(prayers));
-        intervalRef.current = setInterval(() => setCd(computePrayerCountdown(prayers)), 1000);
+        tick();
+        intervalId = setInterval(tick, 1000);
+        intervalRef.current = intervalId;
       })
       .catch(() => {});
-    return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
+
+    const onVis = () => {
+      if (document.visibilityState === "visible" && prayers.length) tick();
+    };
+    document.addEventListener("visibilitychange", onVis);
+
+    return () => {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+      document.removeEventListener("visibilitychange", onVis);
+    };
   }, []);
 
   if (!cd?.next) return null;
-  // خلال فترة السماح (٣٥ دقيقة بعد الأذان) نعرض عدّادًا تصاعديًا منذ أذان
-  // الصلاة التي رنّت للتو — نفس منطق PrayerTimesPage وTopTicker.
-  const inGrace = cd.sinceSeconds != null;
+  // خلال فترة السماح (٣٥ دقيقة بعد الأذان) نعرض عدّادًا تصاعديًا MM:SS منذ الأذان.
+  const inGrace = cd.displayMode === "elapsed" || cd.sinceSeconds != null;
   const displayName = cd.next.name;
   const displayHms = inGrace && cd.sinceHms ? cd.sinceHms : cd.remainingHms;
   return (
-    <Link href="/prayer-times" className="navbar-prayer-chip" aria-label={`الصلاة القادمة: ${displayName}`}>
+    <Link
+      href="/prayer-times"
+      className="navbar-prayer-chip"
+      aria-label={inGrace ? `مضى على الأذان ${displayName}: ${displayHms}` : `الوقت المتبقي لـ${displayName}: ${displayHms}`}
+    >
       <span className="navbar-prayer-chip__name">{displayName}</span>
       <span className="navbar-prayer-chip__hms" aria-live="off">{displayHms}</span>
     </Link>

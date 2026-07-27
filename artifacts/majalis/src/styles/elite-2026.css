@@ -2690,8 +2690,11 @@ a:focus-visible {
   color: #4B5563 !important;
 }
 
-.bottom-nav--v2 .bottom-nav__tab:hover {
-  color: var(--rd-emerald-deep) !important;
+/* hover فقط لأجهزة المؤشر الدقيق — يمنع بقاء :hover على اللمس/iOS */
+@media (hover: hover) and (pointer: fine) {
+  .bottom-nav--v2 .bottom-nav__tab:hover {
+    color: var(--rd-emerald-deep) !important;
+  }
 }
 
 .bottom-nav--v2 .bottom-nav__tab.is-active {
@@ -3051,8 +3054,10 @@ img[loading="lazy"]:not([src=""]) {
   color: #226A56 !important;
 }
 
-.bottom-nav--v2 .bottom-nav__tab:hover {
-  color: #047857 !important;
+@media (hover: hover) and (pointer: fine) {
+  .bottom-nav--v2 .bottom-nav__tab:hover {
+    color: #047857 !important;
+  }
 }
 
 /* ─── أيقونات الوصول السريع: لون أعمق ──────────────────────────── */

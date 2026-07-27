@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "wouter";
 import { BookOpen, Clock, GraduationCap, Home, LayoutGrid } from "lucide-react";
 import { MoreBottomSheet } from "./MoreBottomSheet";
@@ -19,10 +19,56 @@ const NAV_TABS: NavTab[] = [
   { href: "/learn",        label: "تعلّم",       Icon: GraduationCap },
 ];
 
+/** مسارات التبويبات الأساسية الأربعة — أي مسار غيرها يتبع «المزيد». */
+function isPrimaryTabPath(location: string): boolean {
+  for (const { href } of NAV_TABS) {
+    if (href === "/") {
+      if (location === "/") return true;
+      continue;
+    }
+    if (href === "/learn") {
+      if (
+        location === "/learn" ||
+        location.startsWith("/learn/") ||
+        location === "/fiqh" ||
+        location.startsWith("/fiqh/") ||
+        location === "/rulings" ||
+        location.startsWith("/rulings/") ||
+        location === "/seerah" ||
+        location.startsWith("/seerah/") ||
+        location === "/tawhid" ||
+        location.startsWith("/tawhid/") ||
+        location === "/prophets" ||
+        location.startsWith("/prophets/") ||
+        location === "/nations" ||
+        location.startsWith("/nations/")
+      ) {
+        return true;
+      }
+      continue;
+    }
+    if (location === href || location.startsWith(href + "/")) return true;
+  }
+  return false;
+}
+
+function clearStickyFocus(el: HTMLElement | null) {
+  if (!el) return;
+  try {
+    el.blur();
+  } catch {
+    /* ignore */
+  }
+}
+
 export function BottomNavBar() {
   const [location] = useLocation();
   const [moreOpen, setMoreOpen] = useState(false);
+  const moreBtnRef = useRef<HTMLButtonElement>(null);
+  const navLockRef = useRef(false);
+  const navLockTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
+  // التحديد من المسار فقط — لا يعتمد على آخر زر ضُغط.
   const isActive = (href: string) => {
     if (href === "/") return location === "/";
     if (href === "/learn") {
@@ -46,6 +92,53 @@ export function BottomNavBar() {
     return location === href || location.startsWith(href + "/");
   };
 
+  // «المزيد» محدد فقط: الورقة مفتوحة، أو المسار خارج التبويبات الأربعة.
+  const moreSelected = moreOpen || !isPrimaryTabPath(location);
+
+  // عند تغيّر المسار: أغلق الورقة وأزل أي حالة ضغط/تركيز معلّقة على الزر.
+  useEffect(() => {
+    setMoreOpen(false);
+    clearStickyFocus(moreBtnRef.current);
+    navLockRef.current = false;
+    if (navLockTimerRef.current) {
+      clearTimeout(navLockTimerRef.current);
+      navLockTimerRef.current = null;
+    }
+  }, [location]);
+
+  useEffect(() => {
+    return () => {
+      if (navLockTimerRef.current) clearTimeout(navLockTimerRef.current);
+    };
+  }, []);
+
+  const withNavLock = (fn: () => void) => {
+    if (navLockRef.current) return;
+    navLockRef.current = true;
+    try {
+      fn();
+    } finally {
+      if (navLockTimerRef.current) clearTimeout(navLockTimerRef.current);
+      navLockTimerRef.current = setTimeout(() => {
+        navLockRef.current = false;
+        navLockTimerRef.current = null;
+      }, 280);
+    }
+  };
+
+  const closeMore = () => {
+    setMoreOpen(false);
+    clearStickyFocus(moreBtnRef.current);
+  };
+
+  const openMore = () => {
+    withNavLock(() => {
+      setMoreOpen(true);
+      // إزالة :focus/:active المرئية على اللمس بعد الفتح
+      requestAnimationFrame(() => clearStickyFocus(moreBtnRef.current));
+    });
+  };
+
   // قارئ المصحف /mushaf غامر مخصَّص بتنقّله الخاص (pager/سحب صفحات) —
   // شريط تنقّل سفلي عام فوقه يجعله يبدو صفحة ويب لا تطبيق قراءة، ويحجز
   // مساحة (--bottom-nav-h) كانت ستبقى محسوبة في تخطيط المصحف بلا داعٍ.
@@ -62,6 +155,16 @@ export function BottomNavBar() {
               href={href}
               className={`bottom-nav__tab${active ? " is-active" : ""}`}
               aria-current={active ? "page" : undefined}
+              onClick={(e) => {
+                if (navLockRef.current) {
+                  e.preventDefault();
+                  return;
+                }
+                withNavLock(() => {
+                  closeMore();
+                  clearStickyFocus(e.currentTarget);
+                });
+              }}
             >
               <span className="bottom-nav__tab-icon" aria-hidden="true">
                 <Icon size={20} strokeWidth={active ? 2.25 : 1.75} aria-hidden={true} />
@@ -71,23 +174,31 @@ export function BottomNavBar() {
           );
         })}
 
-        {/* تبويب المزيد */}
+        {/* تبويب المزيد — التحديد من المسار/حالة الورقة فقط، لا من ضغط سابق */}
         <button
+          ref={moreBtnRef}
           type="button"
-          className={`bottom-nav__tab${moreOpen ? " is-active" : ""}`}
-          onClick={() => setMoreOpen(true)}
+          className={`bottom-nav__tab${moreSelected ? " is-active" : ""}`}
+          onClick={() => {
+            if (moreOpen) {
+              closeMore();
+              return;
+            }
+            openMore();
+          }}
           aria-label="قائمة التطبيق"
           aria-haspopup="dialog"
           aria-expanded={moreOpen}
+          aria-current={moreSelected && !moreOpen ? "page" : undefined}
         >
           <span className="bottom-nav__tab-icon" aria-hidden="true">
-            <LayoutGrid size={20} strokeWidth={moreOpen ? 2.25 : 1.75} aria-hidden={true} />
+            <LayoutGrid size={20} strokeWidth={moreSelected ? 2.25 : 1.75} aria-hidden={true} />
           </span>
           <span className="bottom-nav__tab-label">المزيد</span>
         </button>
       </nav>
 
-      <MoreBottomSheet open={moreOpen} onClose={() => setMoreOpen(false)} />
+      <MoreBottomSheet open={moreOpen} onClose={closeMore} />
     </>
   );
 }

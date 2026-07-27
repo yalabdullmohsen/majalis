@@ -1,4 +1,16 @@
 import { requestFetch } from "@/lib/request-manager";
+import {
+  computePrayerDisplayState,
+  formatRemainingHms,
+} from "./prayer-display-state";
+
+export {
+  computePrayerDisplayState,
+  formatElapsedMmSs,
+  formatRemainingHms,
+  PRAYER_ELAPSED_WINDOW_MINUTES as PRAYER_GRACE_MINUTES,
+  type PrayerDisplayState,
+} from "./prayer-display-state";
 
 // ─── Kuwait Governorates ────────────────────────────────────────────────────
 
@@ -245,19 +257,6 @@ async function fetchAlAdhanDirect(
   return buildPayload(json.data.timings, json.data.meta, json.data.date, cityName);
 }
 
-function kuwaitNowMinutes(): number {
-  const parts = new Intl.DateTimeFormat("en-GB", {
-    timeZone: "Asia/Kuwait",
-    hour: "2-digit",
-    minute: "2-digit",
-    hour12: false,
-  }).formatToParts(new Date());
-
-  const hour = Number(parts.find((p) => p.type === "hour")?.value || 0);
-  const minute = Number(parts.find((p) => p.type === "minute")?.value || 0);
-  return hour * 60 + minute;
-}
-
 function formatRemaining(ms: number): string {
   const totalSeconds = Math.max(0, Math.floor(ms / 1000));
   const hours = Math.floor(totalSeconds / 3600);
@@ -275,9 +274,9 @@ function formatRemaining(ms: number): string {
 
 export type PrayerCountdown = PrayerStatus & {
   remainingHms: string;
-  /** ثواني مضت منذ الأذان الأخير (خلال نافذة السماح PRAYER_GRACE_MINUTES)، وإلا null */
+  /** ثواني مضت منذ الأذان الأخير (خلال نافذة السماح)، وإلا null */
   sinceSeconds: number | null;
-  /** HH:MM:SS تصاعدي منذ الأذان الأخير (نفس sinceSeconds مُنسَّقًا)، وإلا null */
+  /** MM:SS تصاعدي منذ الأذان الأخير أثناء نافذة الـ35 دقيقة، وإلا null */
   sinceHms: string | null;
   /** ثواني متبقية للصلاة التالية الفعلية أثناء فترة السماح، وإلا null */
   graceNextSeconds: number | null;
@@ -285,136 +284,97 @@ export type PrayerCountdown = PrayerStatus & {
   graceNextHms: string | null;
   /** الصلاة الفعلية التالية (بعد التي أذّنت للتو) أثناء فترة السماح، وإلا null */
   graceNextSlot: PrayerSlot | null;
+  /** وضع العرض: elapsed = مضى على الأذان، remaining = الوقت المتبقي */
+  displayMode: "elapsed" | "remaining";
+  /** نص التلميح المعروض في البطاقة */
+  displayLabel: "مضى على الأذان" | "الوقت المتبقي";
 };
 
-function kuwaitNowParts(): { minutes: number; seconds: number } {
-  const parts = new Intl.DateTimeFormat("en-GB", {
-    timeZone: "Asia/Kuwait",
-    hour: "2-digit",
-    minute: "2-digit",
-    second: "2-digit",
-    hour12: false,
-  }).formatToParts(new Date());
-
-  const hour = Number(parts.find((p) => p.type === "hour")?.value || 0);
-  const minute = Number(parts.find((p) => p.type === "minute")?.value || 0);
-  const second = Number(parts.find((p) => p.type === "second")?.value || 0);
-  return { minutes: hour * 60 + minute, seconds: second };
-}
-
 function formatHms(totalSeconds: number): string {
-  const safe = Math.max(0, totalSeconds);
+  const safe = Math.max(0, Math.floor(totalSeconds));
   const hours = Math.floor(safe / 3600);
   const minutes = Math.floor((safe % 3600) / 60);
   const seconds = safe % 60;
   return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
 }
 
-const PRAYER_GRACE_MINUTES = 35;
+/**
+ * عدّاد الصلاة بمرحلتين — يُشتق بالكامل من الوقت الحقيقي عبر computePrayerDisplayState.
+ * يمكن تمرير `now` للاختبارات.
+ */
+export function computePrayerCountdown(
+  prayers: PrayerSlot[],
+  now: Date = new Date(),
+  timeZone = "Asia/Kuwait",
+): PrayerCountdown {
+  const state = computePrayerDisplayState(prayers, now, timeZone);
+  const obligatory = prayers.filter((p) => OBLIGATORY_KEYS.has(p.key) && p.minutes != null);
 
-export function computePrayerCountdown(prayers: PrayerSlot[]): PrayerCountdown {
-  const status = computePrayerStatus(prayers);
-  const now = kuwaitNowParts();
-  let remainingSeconds = 0;
-  let sinceSeconds: number | null = null;
-
-  if (status.next?.minutes != null) {
-    if (status.next.minutes > now.minutes) {
-      remainingSeconds = (status.next.minutes - now.minutes) * 60 - now.seconds;
-    } else if (now.minutes - status.next.minutes < PRAYER_GRACE_MINUTES) {
-      // فترة السماح: احسب كم مضى من الدقائق منذ الأذان
-      sinceSeconds = (now.minutes - status.next.minutes) * 60 + now.seconds;
-      remainingSeconds = 0;
-    } else {
-      remainingSeconds = ((24 * 60 - now.minutes) + status.next.minutes) * 60 - now.seconds;
-    }
+  if (!state) {
+    const fallbackNext = obligatory[0] ?? null;
+    return {
+      current: null,
+      next: fallbackNext,
+      previous: obligatory.length > 1 ? obligatory[obligatory.length - 1] : null,
+      remainingMs: 0,
+      remainingLabel: formatRemaining(0),
+      remainingHms: formatHms(0),
+      sinceSeconds: null,
+      sinceHms: null,
+      graceNextSeconds: null,
+      graceNextHms: null,
+      graceNextSlot: null,
+      displayMode: "remaining",
+      displayLabel: "الوقت المتبقي",
+    };
   }
 
-  // أثناء فترة السماح: احسب الوقت المتبقي للصلاة التالية الفعلية (بعد التي أذّنت)
-  let graceNextSeconds: number | null = null;
-  let graceNextSlot: PrayerSlot | null = null;
-  if (sinceSeconds != null && status.next?.minutes != null) {
-    const obligatorySlots = prayers.filter((p) => OBLIGATORY_KEYS.has(p.key) && p.minutes != null);
-    const ranIdx = obligatorySlots.findIndex((p) => p.key === status.next!.key);
-    if (ranIdx >= 0) {
-      const actualNext = obligatorySlots[(ranIdx + 1) % obligatorySlots.length];
-      if (actualNext?.minutes != null) {
-        graceNextSlot = actualNext;
-        const pm = actualNext.minutes;
-        if (pm > now.minutes) {
-          graceNextSeconds = (pm - now.minutes) * 60 - now.seconds;
-        } else {
-          graceNextSeconds = ((24 * 60 - now.minutes) + pm) * 60 - now.seconds;
-        }
-      }
-    }
-  }
+  const inElapsed = state.mode === "elapsed";
+  // توافق الواجهات: أثناء elapsed يكون `next` = الصلاة التي أذّنت (المعروضة)
+  const displayed = state.displayedPrayer;
+  const previous =
+    obligatory.find((p) => p.key === state.currentPrayer.key) ?? state.currentPrayer;
+
+  const remainingMs = inElapsed ? 0 : state.counterMs;
+  const sinceSeconds = inElapsed && state.elapsedSinceAdhanMs != null
+    ? Math.floor(state.elapsedSinceAdhanMs / 1000)
+    : null;
+
+  const graceNextSeconds = inElapsed && state.remainingUntilNextPrayerMs != null
+    ? Math.floor(state.remainingUntilNextPrayerMs / 1000)
+    : null;
 
   return {
-    ...status,
-    remainingMs: remainingSeconds * 1000,
-    remainingLabel: formatHms(remainingSeconds),
-    remainingHms: formatHms(remainingSeconds),
+    current: state.currentPrayer,
+    next: displayed,
+    previous,
+    remainingMs,
+    remainingLabel: formatRemaining(inElapsed ? (state.remainingUntilNextPrayerMs ?? 0) : remainingMs),
+    remainingHms: inElapsed
+      ? formatHms(0)
+      : (state.counterText || formatRemainingHms(remainingMs)),
     sinceSeconds,
-    sinceHms: sinceSeconds != null ? formatHms(sinceSeconds) : null,
+    sinceHms: inElapsed ? state.counterText : null,
     graceNextSeconds,
     graceNextHms: graceNextSeconds != null ? formatHms(graceNextSeconds) : null,
-    graceNextSlot,
+    graceNextSlot: inElapsed ? state.nextPrayer : null,
+    displayMode: state.mode,
+    displayLabel: state.label,
   };
 }
 
-export function computePrayerStatus(prayers: PrayerSlot[]): PrayerStatus {
-  const nowMinutes = kuwaitNowMinutes();
-  const obligatory = prayers.filter((p) => OBLIGATORY_KEYS.has(p.key) && p.minutes != null);
-
-  let previous: PrayerSlot | null = null;
-  let current: PrayerSlot | null = null;
-  let next: PrayerSlot | null = null;
-
-  for (const prayer of obligatory) {
-    const elapsed = nowMinutes - prayer.minutes!;
-    if (elapsed >= PRAYER_GRACE_MINUTES) {
-      // مضى عليها 30 دقيقة أو أكثر — انتهى وقتها
-      previous = prayer;
-      current = prayer;
-    } else if (elapsed >= 0) {
-      // بدأت منذ أقل من 30 دقيقة — فترة السماح: العداد يبقى عليها
-      next = prayer;
-      break;
-    } else {
-      // لم تحن بعد
-      next = prayer;
-      break;
-    }
-  }
-
-  if (!next && obligatory.length > 0) {
-    next = obligatory[0];
-    previous = obligatory[obligatory.length - 1];
-    current = previous;
-  }
-
-  if (!previous && obligatory.length > 0) {
-    previous = obligatory[obligatory.length - 1];
-  }
-
-  let remainingMs = 0;
-  if (next?.minutes != null) {
-    if (next.minutes > nowMinutes) {
-      remainingMs = (next.minutes - nowMinutes) * 60_000;
-    } else if (nowMinutes - next.minutes < PRAYER_GRACE_MINUTES) {
-      remainingMs = 0;
-    } else {
-      remainingMs = ((24 * 60 - nowMinutes) + next.minutes) * 60_000;
-    }
-  }
-
+export function computePrayerStatus(
+  prayers: PrayerSlot[],
+  now: Date = new Date(),
+  timeZone = "Asia/Kuwait",
+): PrayerStatus {
+  const cd = computePrayerCountdown(prayers, now, timeZone);
   return {
-    current,
-    next,
-    previous,
-    remainingMs,
-    remainingLabel: formatRemaining(remainingMs),
+    current: cd.current,
+    next: cd.next,
+    previous: cd.previous,
+    remainingMs: cd.remainingMs,
+    remainingLabel: cd.remainingLabel,
   };
 }
 

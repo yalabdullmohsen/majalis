@@ -44,10 +44,22 @@ export function usePrayerCountdown(governorateId?: string) {
       return;
     }
 
-    const tick = () => setCountdown(computePrayerCountdown(data.prayers));
+    const tick = () => setCountdown(computePrayerCountdown(data.prayers, new Date()));
     tick();
     const timer = window.setInterval(tick, 1000);
-    return () => window.clearInterval(timer);
+
+    // عند الرجوع من الخلفية: أعد الحساب فورًا وفق الوقت الحقيقي
+    const onVisibility = () => {
+      if (document.visibilityState === "visible") tick();
+    };
+    document.addEventListener("visibilitychange", onVisibility);
+    window.addEventListener("focus", onVisibility);
+
+    return () => {
+      window.clearInterval(timer);
+      document.removeEventListener("visibilitychange", onVisibility);
+      window.removeEventListener("focus", onVisibility);
+    };
   }, [data]);
 
   return { data, countdown, loading };
