@@ -1,12 +1,12 @@
 {
   "version": 1,
   "generated_at": "2026-07-25T00:00:00.000Z",
-  "total": 1782,
+  "total": 1812,
   "chunks": [
     {
       "category": "الطهارة",
       "file": "chunks/الطهارة.json",
-      "count": 240
+      "count": 247
     },
     {
       "category": "الصلاة",
@@ -81,12 +81,12 @@
     {
       "category": "طلب العلم والدعوة",
       "file": "chunks/طلب-العلم-والدعوة.json",
-      "count": 684
+      "count": 701
     },
     {
       "category": "العقيدة",
       "file": "chunks/العقيدة.json",
-      "count": 205
+      "count": 211
     },
     {
       "category": "القرآن والحديث",
