@@ -271,26 +271,60 @@ html.dark .nav-soon-badge {
   border-color: color-mix(in srgb, var(--color-primary) 28%, var(--color-border));
 }
 
-/* الشريط المتحرك أعلى التطبيق (HeaderTicker) — يحلّ محل زر/مربع البحث في
-   الهيدر (تكليف 2026-07-24). CSS Marquee بلا مكتبات: تكرار العناصر مرتين
-   وتحريك 0%→-50% يعطي حلقة سلسة بلا قفزة. يتوقف عند hover/لمس، ويتحول
-   لتناوب ثابت بلا حركة عند prefers-reduced-motion (مطابق فعليًا في JS
-   وCSS كطبقة حماية إضافية). ألوان/خط الهوية الحالية (--color-primary
-   #143F35 وAlexandria الموحَّد) لا #0E6E52/Almarai القديمين. */
+/* الشريط المتحرك أعلى التطبيق (HeaderTicker) — شريط إعلان مستمر (marquee)
+   يمرّر أحاديثًا وأذكارًا ونبذ أقسام/مميزات. تكرار المسار مرتين + تحريك
+   0%→50% (RTL) يعطي حلقة سلسة. يتوقف عند hover/لمس/تركيز، ويتحول لتناوب
+   ثابت عند prefers-reduced-motion. */
 .header-ticker {
   overflow: hidden;
   min-width: 0;
+  flex: 1 1 auto;
   min-height: 44px;
   display: flex;
   align-items: center;
-  border: 1px solid var(--color-border);
+  border: 1px solid color-mix(in srgb, var(--color-primary) 22%, var(--color-border));
   border-radius: var(--radius-md);
-  background: var(--color-surface);
-  padding-inline: .55rem;
+  background:
+    linear-gradient(
+      105deg,
+      color-mix(in srgb, var(--color-primary) 8%, var(--color-surface)) 0%,
+      var(--color-surface) 45%,
+      color-mix(in srgb, var(--color-primary) 6%, var(--color-surface)) 100%
+    );
+  padding-inline: .35rem;
 }
-.header-ticker--empty { visibility: hidden; }
+.header-ticker--empty { visibility: hidden; flex: 0 0 8rem; }
 .header-ticker--static { padding-inline: .7rem; }
 .header-ticker--paused { cursor: pause; }
+.header-ticker--paused .header-ticker__track { animation-play-state: paused; }
+
+.header-ticker__viewport {
+  overflow: hidden;
+  width: 100%;
+  mask-image: linear-gradient(to left, transparent, #000 6%, #000 94%, transparent);
+  -webkit-mask-image: linear-gradient(to left, transparent, #000 6%, #000 94%, transparent);
+}
+
+.header-ticker__track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  gap: 0;
+  animation-name: header-ticker-marquee;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+
+@keyframes header-ticker-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(50%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header-ticker__track { animation: none !important; }
+}
+
 .header-ticker__single-item {
   width: 100%;
   min-width: 0;
@@ -303,24 +337,48 @@ html.dark .nav-soon-badge {
   to { opacity: 1; transform: translateY(0); }
 }
 .header-ticker__item {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: .4rem;
-  width: 100%;
+  flex: 0 0 auto;
+  max-width: min(72vw, 28rem);
   text-decoration: none;
   color: var(--color-text);
   font-size: .82rem;
   min-width: 0;
+  padding-inline: .85rem;
+  position: relative;
+}
+.header-ticker__item + .header-ticker__item::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  top: 50%;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--color-primary) 55%, transparent);
+  transform: translateY(-50%);
 }
 .header-ticker__icon { color: var(--color-primary); flex-shrink: 0; }
-.header-ticker__label { color: var(--color-primary); font-weight: 700; }
+.header-ticker__label {
+  color: var(--color-primary);
+  font-weight: 700;
+  flex-shrink: 0;
+}
 .header-ticker__text {
   min-width: 0;
-  white-space: normal;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   line-height: 1.45;
 }
 @media (min-width: 880px) {
-  .header-ticker { width: clamp(160px, 18vw, 240px); }
+  .header-ticker {
+    flex: 1 1 0;
+    width: auto;
+    max-width: min(56vw, 640px);
+  }
 }
 
 /* Shared page rhythm and cards */

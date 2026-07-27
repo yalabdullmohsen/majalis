@@ -36,6 +36,9 @@ assert(new Set(pool.map((p) => p.id)).size === pool.length, "كل المعرّف
 assert(pool.every((p) => p.text.trim().length > 0), "لا عنصر بنص فارغ");
 assert(pool.every((p) => p.href.startsWith("/")), "كل عنصر له رابط داخلي صالح");
 assert(new Set(pool.map((p) => p.kind)).size >= 4, "المجمّع يغطي أربعة أنواع محتوى على الأقل");
+assert(pool.some((p) => p.kind === "promo"), "يشمل نبذ أقسام/مميزات (promo)");
+assert(pool.some((p) => p.kind === "hadith"), "يشمل أحاديث");
+assert(pool.some((p) => p.kind === "dhikr"), "يشمل أذكارًا");
 
 console.log("\n=== سلامة النص (بلا قصّ، بلا تكرار) ===");
 assert(!pool.some((p) => p.text.trim().endsWith("…")), "لا عنصر واحد ينتهي بعلامة حذف (لا قصّ للنص)");
@@ -96,8 +99,8 @@ console.log("\n=== فاصل التدوير ===");
 {
   const lo = nextRotationDelayMs(() => 0);
   const hi = nextRotationDelayMs(() => 0.999999);
-  assert(lo === 45_000, `الحد الأدنى 45 ثانية (${lo}ms)`);
-  assert(hi <= 90_000 && hi >= 89_000, `الحد الأعلى 90 ثانية (${hi}ms)`);
+  assert(lo === 50_000, `الحد الأدنى 50 ثانية (${lo}ms)`);
+  assert(hi <= 80_000 && hi >= 79_000, `الحد الأعلى 80 ثانية (${hi}ms)`);
 }
 
 console.log("\n=== التخزين المحلي ===");
