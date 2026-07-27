@@ -10,7 +10,7 @@ import { supabase } from "@/lib/supabase";
 
 export type HomeWidgetId =
   | "lessons" | "prayer" | "continue" | "daily-progress" | "week-streak"
-  | "asma" | "sunnah-time" | "explore" | "learning-seasons"
+  | "sunnah-time" | "explore" | "learning-seasons"
   | "occasions" | "latest-updates" | "library" | "quiz"
   | "prayer-ranks" | "interesting-topics" | "mind-map" | "daily-benefits" | "upcoming-events";
 
@@ -25,7 +25,6 @@ export const HOME_WIDGET_DEFS: { id: HomeWidgetId; label: string }[] = [
   { id: "continue", label: "استمر من حيث توقفت" },
   { id: "lessons", label: "الدروس والدورات" },
   { id: "learning-seasons", label: "مواسم التعلم" },
-  { id: "asma", label: "اسم الله اليومي" },
   { id: "daily-benefits", label: "فوائد منتقاة" },
   { id: "upcoming-events", label: "فعاليات وإعلانات علمية" },
   { id: "library", label: "المكتبة العلمية" },
@@ -61,22 +60,13 @@ export type HomepagePrefs = {
    - prayer: أصبح مكرَّرًا بعد إعادة الهيكلة — البطاقة اليومية أعلى الصفحة
      تعرض الصلاة القادمة والعد التنازلي فعلاً، وتبويب "الصلاة" الجديد في
      الشريط السفلي يفتح التفاصيل الكاملة مباشرة (2026-07-19).
-   تحديث 2026-07-23 (توحيد الأقسام اليومية): ودجتا "حديث اليوم" (hadith)
-   و"الركن اليومي" (daily-corner) أُزيلا نهائيًا من HOME_WIDGET_DEFS نفسها
-   (لا مجرد إخفاء) — محتواهما صار جزءًا من «مجلس اليوم» الموحّد
-   (HomeMajlisToday). أي تفضيل محلي محفوظ يحوي هذين المعرّفين يُفلتَر
-   تلقائيًا عبر VALID_IDS أدناه.
-   تحديث 2026-07-25 (إلغاء ميزة "محتوى اليوم" جذريًا وكاملًا بطلب مباشر):
-   HomeMajlisToday نفسه حُذف بالكامل من الصفحة الرئيسية (كان أصلاً ثابتًا
-   غير قابل للتخصيص، خارج نظام HOME_WIDGET_DEFS هذا كليًا — لا تعديل هنا
-   لازم). حُذف معه daily-content.ts وHomeDailyQuestion (سؤال اليوم، كان
-   يستورد منه ولم يكن مستخدَمًا في أي صفحة أصلاً) وعنصرا حديث/ذكر اليوم
-   الدوّاران في TopTicker. "فوائد منتقاة" (daily-benefits) لم تُمَس — تغذية
-   آلية حية من محتوى منشور فعلي، لا تكرار محتوى نصي ثابت، مؤكَّد باختبار
-   قائم مسبقًا. */
+   تحديث 2026-07-23/25/27: أُلغيت بطاقات «X اليوم» من الأقسام والرئيسية
+   (حديث/واجب/اسم/دعاء…) مع ودجت asma. أي تفضيل محفوظ يحوي معرّفات محذوفة
+   (hadith/daily-corner/asma) يُفلتَر عبر VALID_IDS. daily-benefits بقيت —
+   تغذية آلية من محتوى منشور، لا بطاقة تدوير يومي ثابتة. */
 const DEFAULT_HIDDEN: HomeWidgetId[] = [
   "occasions", "prayer-ranks", "interesting-topics", "latest-updates", "prayer",
-  "asma", "sunnah-time", "explore", "week-streak", "mind-map",
+  "sunnah-time", "explore", "week-streak", "mind-map",
   "daily-benefits", "upcoming-events", "quiz", "library",
 ];
 const DEFAULT_PREFS: HomepagePrefs = { order: DEFAULT_ORDER, hidden: DEFAULT_HIDDEN };

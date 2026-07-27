@@ -13,7 +13,6 @@ import { HomeDailyProgress } from "@/components/home/HomeDailyProgress";
 import { HomeContinueWidget } from "@/components/home/HomeContinueWidget";
 import { HomeLearningSeasonsWidget } from "@/components/home/HomeLearningSeasonsWidget";
 import { HomeUpcomingCourses } from "@/components/home/HomeUpcomingCourses";
-import { HomeMajlisToday } from "@/components/home/HomeMajlisToday";
 import { FridayBanner } from "@/components/FridayBanner";
 import { getHijriDateString } from "@/lib/hijri-utils";
 import { fetchPrayerTimes, computePrayerCountdown, type PrayerTimesPayload } from "@/lib/prayer-times";
@@ -46,7 +45,6 @@ const HomeLatestUpdates = lazy(() => import("@/components/home/HomeLatestUpdates
 const HomePrayerRanks = lazy(() => import("@/components/home/HomePrayerRanks").then((m) => ({ default: m.HomePrayerRanks })));
 const HomeFeaturedLibrary = lazy(() => import("@/components/home/HomeFeaturedLibrary").then((m) => ({ default: m.HomeFeaturedLibrary })));
 const HomeQuizCard = lazy(() => import("@/components/home/HomeQuizCard").then((m) => ({ default: m.HomeQuizCard })));
-const HomeAsmaCard = lazy(() => import("@/components/home/HomeAsmaCard").then((m) => ({ default: m.HomeAsmaCard })));
 const HomeWeekStreak = lazy(() => import("@/components/home/HomeWeekStreak").then((m) => ({ default: m.HomeWeekStreak })));
 const HomeInterestingTopics = lazy(() => import("@/components/home/HomeInterestingTopics").then((m) => ({ default: m.HomeInterestingTopics })));
 const HomeMindMapSection = lazy(() => import("@/components/home/HomeMindMapSection").then((m) => ({ default: m.HomeMindMapSection })));
@@ -69,7 +67,6 @@ const WIDGET_RENDERERS: Record<string, () => React.ReactNode> = {
   "continue": () => <HomeContinueWidget />,
   "daily-progress": () => <HomeDailyProgress />,
   "week-streak": () => <HomeWeekStreak />,
-  "asma": () => <HomeAsmaCard />,
   "sunnah-time": () => <HomeSunnahByTime />,
   "explore": () => <HomeExplorePlatform />,
   "learning-seasons": () => <HomeLearningSeasonsWidget />,
@@ -113,7 +110,7 @@ export default function HomePage() {
     });
   }, [user?.id]);
 
-  // "دروس اليوم" (lessons) رُفعت لتصبح ثابتة مباشرة تحت «مجلس اليوم» (طلب
+  // "دروس اليوم" (lessons) رُفعت لتصبح ثابتة مباشرة تحت البطل (طلب
   // مباشر)، فتُستثنى من حلقة الودجات القابلة لإعادة الترتيب العادية —
   // مع إبقاء احترام تفضيل الإخفاء الشخصي (visibleWidgetOrder نفسها).
   const visibleWidgets = visibleWidgetOrder(homePrefs);
@@ -284,19 +281,8 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ══ مجلس اليوم ══ */}
-      <div className="hp-section-wrap">
-        <SectionErrorBoundary name="مجلس اليوم">
-          <HomeMajlisToday />
-        </SectionErrorBoundary>
-      </div>
-
-      {/* ══ دروس اليوم ══ — رُفعت لتصبح مباشرة تحت «مجلس اليوم» (طلب مباشر
-          2026-07-25، كانت ضمن حلقة الودجات القابلة لإعادة الترتيب أدناه
-          فتظهر بعد «زرتَ مؤخرًا» و«وصول سريع» بمسافة). استُثنيت من الحلقة
-          (restWidgetOrder) لتفادي التكرار، مع الإبقاء على احترام تفضيل
-          إخفائها إن أخفاها المستخدم من ورقة تخصيص الرئيسية — فقط ترتيبها
-          النسبي بين بقية الودجات صار ثابتًا، لا الإخفاء. */}
+      {/* ══ دروس اليوم ══ — ثابتة مباشرة تحت البطل. استُثنيت من حلقة
+          الودجات (restWidgetOrder) لتفادي التكرار، مع احترام تفضيل الإخفاء. */}
       {showLessonsWidget && (
         <SafeHomeSection name={WIDGET_LABEL["lessons"] ?? "lessons"}>
           {WIDGET_RENDERERS["lessons"]?.()}
