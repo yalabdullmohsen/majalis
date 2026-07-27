@@ -264,6 +264,36 @@
       "permanent": true
     },
     {
+      "source": "/quran-studies",
+      "destination": "/ulum-quran",
+      "permanent": true
+    },
+    {
+      "source": "/anbiya",
+      "destination": "/prophets",
+      "permanent": true
+    },
+    {
+      "source": "/start-here",
+      "destination": "/learning/paths",
+      "permanent": true
+    },
+    {
+      "source": "/learning/calendar",
+      "destination": "/calendar",
+      "permanent": true
+    },
+    {
+      "source": "/prayer-countdown",
+      "destination": "/prayer-times",
+      "permanent": true
+    },
+    {
+      "source": "/annual-courses",
+      "destination": "/lessons?tab=courses",
+      "permanent": true
+    },
+    {
       "source": "/surah-stories",
       "destination": "/quran/surah-stories",
       "permanent": true

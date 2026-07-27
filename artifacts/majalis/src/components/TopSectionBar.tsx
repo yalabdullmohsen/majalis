@@ -34,7 +34,11 @@ export function isTabActive(location: string, href: string): boolean {
       location === "/prophets" ||
       location.startsWith("/prophets/") ||
       location === "/nations" ||
-      location.startsWith("/nations/")
+      location.startsWith("/nations/") ||
+      location === "/stories" ||
+      location.startsWith("/stories/") ||
+      location === "/sahabah" ||
+      location.startsWith("/sahabah/")
     );
   }
   return location === href || location.startsWith(href + "/");

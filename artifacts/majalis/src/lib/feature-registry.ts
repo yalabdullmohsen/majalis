@@ -25,7 +25,7 @@ export const FEATURE_REGISTRY: FeatureEntry[] = [
 
   // ── المحتوى التعليمي ─────────────────────────────────────────
   { id: "lessons",      label: "الدروس",             path: "/lessons",      group: "تعليم",         status: "active",       inSideNav: true,  inBottomNav: false },
-  { id: "annual-courses",label:"الدورات العلمية",    path: "/annual-courses",group:"تعليم",         status: "active",       inSideNav: true,  inBottomNav: false },
+  { id: "annual-courses",label:"الدورات العلمية",    path: "/annual-courses",group:"تعليم",         status: "disabled",     inSideNav: false, inBottomNav: false },
   { id: "library",      label: "المكتبة",            path: "/library",      group: "تعليم",         status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "fawaid",       label: "الفوائد",            path: "/fawaid",       group: "تعليم",         status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "hadith-index", label: "الأحاديث النبوية",   path: "/hadith",       group: "حديث",          status: "active",       inSideNav: true,  inBottomNav: false },
@@ -37,18 +37,18 @@ export const FEATURE_REGISTRY: FeatureEntry[] = [
   { id: "arbaeen",      label: "الأربعون النووية",   path: "/arbaeen-nawawi",group:"حديث",          status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "daily-wird",   label: "الورد اليومي",       path: "/daily-wird",   group: "عبادات",        status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "tasbih",       label: "التسبيح",            path: "/tasbih",       group: "عبادات",        status: "active",       inSideNav: true,  inBottomNav: false },
-  { id: "qa",           label: "الأسئلة والأجوبة",  path: "/qa",           group: "تعليم",         status: "active",       inSideNav: true,  inBottomNav: false },
+  { id: "qa",           label: "الأسئلة والأجوبة",  path: "/qa",           group: "تعليم",         status: "active",       inSideNav: false, inBottomNav: false },
   { id: "quiz",         label: "لعبة سين جيم – أسئلة وأجوبة", path: "/quiz",   group: "تفاعلي",        status: "active",       inSideNav: true,  inBottomNav: false },
-  { id: "stories",      label: "القصص الإسلامية",   path: "/stories",      group: "قصص",           status: "active",       inSideNav: true,  inBottomNav: false },
+  { id: "stories",      label: "القصص الإسلامية",   path: "/stories",      group: "قصص",           status: "active",       inSideNav: false, inBottomNav: false },
   { id: "prophets",     label: "قصص الأنبياء",      path: "/prophets",     group: "قصص",           status: "active",       inSideNav: true,  inBottomNav: false },
-  { id: "nations",      label: "الأمم السابقة",     path: "/nations",      group: "قصص",           status: "active",       inSideNav: true,  inBottomNav: false },
+  { id: "nations",      label: "الأمم السابقة",     path: "/nations",      group: "قصص",           status: "active",       inSideNav: false, inBottomNav: false },
   { id: "updates",      label: "آخر المستجدات",     path: "/updates",      group: "أخبار",         status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "miracles",     label: "الإعجاز العلمي",    path: "/miracles",     group: "علم",           status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "seerah",       label: "السيرة النبوية",    path: "/seerah",       group: "سيرة",          status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "fiqh",         label: "الفقه الإسلامي",   path: "/fiqh",         group: "فقه",           status: "active",       inSideNav: false, inBottomNav: false },
 
   // ── الأحكام والفقه ───────────────────────────────────────────
-  { id: "rulings",      label: "الأحكام الشرعية",  path: "/rulings",      group: "فقه",           status: "active",       inSideNav: true,  inBottomNav: false },
+  { id: "rulings",      label: "الأحكام الشرعية",  path: "/rulings",      group: "فقه",           status: "active",       inSideNav: false, inBottomNav: false },
   { id: "fiqh-council", label: "المجمع الفقهي",    path: "/fiqh-council", group: "فقه",           status: "active",       inSideNav: true,  inBottomNav: false },
 
   // ── القرآن والأذكار ──────────────────────────────────────────
@@ -70,7 +70,7 @@ export const FEATURE_REGISTRY: FeatureEntry[] = [
      الكود (ScholarlyResearchPage.tsx وrag-service.ts) لم يُحذف عمدًا — بلا
      أي معتمِد آخر (تحقّقتُ)، فيمكن إعادة تفعيله لاحقًا دون إعادة بناء. */
   { id: "scholarly-research",label:"الباحث الشرعي",path: "/scholarly-research",group:"أدوات",    status: "disabled",     inSideNav: false, inBottomNav: false },
-  { id: "universities", label: "دليل الجامعات",    path: "/universities", group: "مؤسسات",        status: "active",       inSideNav: true,  inBottomNav: false },
+  { id: "universities", label: "دليل الجامعات",    path: "/universities", group: "مؤسسات",        status: "disabled",     inSideNav: false, inBottomNav: false },
 
   // ── التعلم — بوابة إلى الفقه والأحكام والسيرة والعقيدة وقصص الأنبياء والأمم
   { id: "learn",         label: "تعلّم",             path: "/learn",        group: "تعلم",          status: "disabled",     inSideNav: false, inBottomNav: false },
