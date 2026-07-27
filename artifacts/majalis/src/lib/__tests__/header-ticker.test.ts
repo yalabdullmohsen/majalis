@@ -82,10 +82,19 @@ console.log("\n=== NavBar.tsx / App.tsx — نقطة دخول البحث موح�
   );
   assert(cssSrc.includes("header-ticker-marquee"), "حركة الماركي المستمرّة معرَّفة في CSS");
   assert(cssSrc.includes(".header-ticker--marquee") || cssSrc.includes("header-ticker__track"), "مسار الشريط المتحرّك موجود");
+  assert(
+    !/\.header-ticker__text\s*\{[^}]*text-overflow:\s*ellipsis/s.test(cssSrc),
+    "نص الشريط لا يُقصّ بـ ellipsis — يُعرض كاملًا",
+  );
+  assert(
+    !/\.header-ticker__item\s*\{[^}]*max-width:\s*min\(72vw/s.test(cssSrc),
+    "عنصر الشريط بلا max-width يقصّ الحديث الطويل",
+  );
 
   const tickerSrc = readFileSync(resolve(appRoot, "src/components/HeaderTicker.tsx"), "utf-8");
   assert(tickerSrc.includes("header-ticker--marquee"), "المكوّن يستخدم وضع الماركي المتحرّك");
   assert(tickerSrc.includes("Megaphone") || tickerSrc.includes("promo"), "يدعم عناصر ترويج الأقسام/المميزات");
+  assert(tickerSrc.includes("header-ticker__source") && tickerSrc.includes("item.source"), "يعرض مصدر الحديث/الذكر مع النص");
 }
 
 console.log(`\n${"─".repeat(40)}`);
