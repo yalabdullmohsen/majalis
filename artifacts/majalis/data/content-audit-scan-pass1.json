@@ -1,8 +1,8 @@
 {
-  "scannedAt": "2026-07-27T02:16:52.384Z",
+  "scannedAt": "2026-07-27T02:21:54.933Z",
   "byType": {
     "incomplete-marker": 31,
-    "ellipsis": 73,
+    "ellipsis": 76,
     "short-lesson-summary": 379,
     "placeholder": 46,
     "dup-title": 5
@@ -273,6 +273,18 @@
       "sample": "تسمية"
     },
     {
+      "file": "lib/fawaid-seed.ts",
+      "line": 5949,
+      "type": "ellipsis",
+      "sample": "text: \"العفو عند المقدرة من صفات الكرام، وقد عفا النبي ﷺ عن أهل مكة يوم الفتح وهذا مما يستحق من المسلم أن يتأمله ويأخذ ب"
+    },
+    {
+      "file": "lib/fawaid-seed.ts",
+      "line": 6048,
+      "type": "ellipsis",
+      "sample": "text: \"القلب يصدأ بالغفلة، وجلاؤه الاستغفار وقراءة القرآن كما بيّن أهل الرقائق وهذا مما يستحق من المسلم أن يتأمله ويأخذ "
+    },
+    {
       "file": "lib/fawaid-curated-seed.ts",
       "line": 139,
       "type": "incomplete-marker",
@@ -481,6 +493,12 @@
       "line": 11710,
       "type": "incomplete-marker",
       "sample": "\"answer\": \"محمد بن القاسم الثقفي، فتح السند سنة 92 هـ تقريباً — أول فاتح مسلم للسند في التاريخ الإسلامي.\","
+    },
+    {
+      "file": "lib/quiz-seed.ts",
+      "line": 16201,
+      "type": "ellipsis",
+      "sample": "\"answer\": \"«إنّا لله وإنّا إليه راجعون، اللهمّ أْجُرني في مصيبتي، وأَخْلِفْ لي خيرًا منها»؛ قال ﷺ: «ما من مسلم تصيبه مصي"
     },
     {
       "file": "lib/annual-courses-seed.ts",
