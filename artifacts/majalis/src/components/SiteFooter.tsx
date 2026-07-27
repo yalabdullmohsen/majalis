@@ -21,7 +21,6 @@ const FOOTER_GROUPS = [
     title: "استكشف",
     links: [
       { href: "/quran-hub", label: "القرآن الكريم" },
-      { href: "/learn", label: "تعلّم" },
       { href: "/lessons", label: "الدروس والدورات" },
       { href: "/library", label: "المكتبة العلمية" },
       { href: "/sitemap", label: "جميع الأقسام" },
