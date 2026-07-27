@@ -10,7 +10,7 @@ import {
   savePagePosition, loadPagePosition, deriveHizbRub,
   type Ayah, type SurahSummary,
 } from "@/lib/quran-api";
-import { loadPageJuzIndex, getSegmentsForPage, type QuranSegment } from "@/lib/recitation-ai/page-juz-lookup";
+import { loadPageJuzIndex, getSegmentsForPage, findPageForAyah, type QuranSegment } from "@/lib/recitation-ai/page-juz-lookup";
 import { useQuranPreferences, type QuranReadingTheme, type QuranFrameStyle, type QuranHighlightStyle, type QuranPageMode } from "@/hooks/useQuranPreferences";
 import { useAyahPlayer } from "@/hooks/useAyahPlayer";
 import { SurahList } from "@/components/quran/SurahList";
@@ -99,6 +99,8 @@ export default function MushafPageView() {
   const [selectedAyah, setSelectedAyah] = useState<{ surah: number; ayah: number } | null>(null);
   const [pageInput, setPageInput] = useState(String(page));
   const [resumeBanner, setResumeBanner] = useState<number | null>(null);
+  const [jumpSurah, setJumpSurah] = useState(1);
+  const [jumpAyah, setJumpAyah] = useState(1);
   /* تجربة قراءة غامرة بنمط "آية"/"ترتيل": نقرة واحدة على جسم الصفحة (لا
      على آية — onClick على .mf2-ayah-group يوقف الانتشار propagation)
      تُبدِّل ظهور الشريطين العلوي/السفلي، مستقلة عن chromeVisible الخاصة
@@ -210,6 +212,31 @@ export default function MushafPageView() {
     navigate(`/mushaf/page/${clamped}`, { replace: true });
   }, [navigate]);
 
+  const goToPageOrAyah = useCallback(async (pageNum: number, opts?: { surah?: number; ayah?: number }) => {
+    if (opts?.surah && opts?.ayah) {
+      try {
+        const idx = await loadPageJuzIndex();
+        const found = findPageForAyah(idx, opts.surah, opts.ayah);
+        if (found) {
+          const clamped = clampPage(found);
+          setPageState(clamped);
+          setSelectedAyah({ surah: opts.surah, ayah: opts.ayah });
+          setResumeBanner(null);
+          navigate(`/mushaf/page/${clamped}`, { replace: true });
+          return;
+        }
+      } catch {
+        /* فهرس غير متاح — نسقط لأول صفحة السورة إن أمكن */
+        if (opts.surah >= 1 && opts.surah <= 114) {
+          goToPage(SURAH_START_PAGES[opts.surah - 1]);
+          setSelectedAyah({ surah: opts.surah, ayah: opts.ayah });
+          return;
+        }
+      }
+    }
+    goToPage(pageNum);
+  }, [goToPage, navigate]);
+
   const nextPage = useCallback(() => goToPage(page + 1), [goToPage, page]);
   const prevPage = useCallback(() => goToPage(page - 1), [goToPage, page]);
 
@@ -310,9 +337,7 @@ export default function MushafPageView() {
               </div>
             )}
 
-            {loading ? (
-              <p className="ds-empty">جاري تحميل الصفحة...</p>
-            ) : error || !segAyahs ? (
+            {error && !loading ? (
               <p className="ds-empty">تعذّر تحميل هذه الصفحة. تحقّق من اتصالك وحاول مجددًا.</p>
             ) : (
               <div className={`qs-mushaf-frame ${frameClass}`}>
@@ -326,9 +351,17 @@ export default function MushafPageView() {
                   <span>الجزء {toArabicDigits(juz)} · الحزب {toArabicDigits(hizb)} · الربع {toArabicDigits(rubInHizb)}</span>
                 </div>
 
-                <div className={`qs-mushaf-body ${prefs.highlightStyle === "spotlight" && selectedAyah ? "qs-mushaf-body--spotlight" : ""}`} style={{ ["--qs-font-size" as string]: `${prefs.fontScale}px` }}>
-                  <div className="qs-mushaf-body-inner" style={{ transform: `scale(${prefs.fontScale / 26})`, transformOrigin: "top center" }}>
-                    {prefs.pageMode === "precision" ? (
+                <div
+                  className={`qs-mushaf-body qs-mushaf-body--hl-${prefs.highlightStyle} ${prefs.highlightStyle === "spotlight" && selectedAyah ? "qs-mushaf-body--spotlight" : ""}`}
+                  style={{
+                    ["--qs-font-size" as string]: `${prefs.fontScale}px`,
+                    ["--qs-font-scale" as string]: String(prefs.fontScale / 26),
+                  }}
+                >
+                  <div className="qs-mushaf-body-inner">
+                    {loading || !segAyahs ? (
+                      <MushafPageV2 layout={null} bare />
+                    ) : prefs.pageMode === "precision" ? (
                       <MushafPageV2 layout={v2Layout} activeAyahKey={v2ActiveKey} onAyahPress={handleV2AyahPress} bare />
                     ) : (
                       <MushafPageV2
@@ -384,7 +417,7 @@ export default function MushafPageView() {
           {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
           <div className="mpv-settings-panel" onClick={(e) => e.stopPropagation()} style={{ height: "70vh", display: "flex", flexDirection: "column" }}>
             <div className="mpv-settings-panel__head">
-              <h2 className="mpv-settings-panel__title">فهرس السور</h2>
+              <h2 className="mpv-settings-panel__title">فهرس المصحف</h2>
               <button type="button" onClick={() => setSidebarOpen(false)} aria-label="إغلاق" style={{ background: "none", border: "none", cursor: "pointer" }}>
                 <X size={18} aria-hidden="true" />
               </button>
@@ -394,6 +427,7 @@ export default function MushafPageView() {
                 surahs={surahs}
                 currentSurah={primarySurahMeta.number}
                 onSelect={(n) => { goToPage(SURAH_START_PAGES[n - 1]); setSidebarOpen(false); }}
+                onSelectPage={(p, opts) => { void goToPageOrAyah(p, opts); setSidebarOpen(false); }}
                 onClose={() => setSidebarOpen(false)}
               />
             </div>
@@ -421,6 +455,46 @@ export default function MushafPageView() {
                 <button type="button" className="mpv-chip" onClick={() => setPref("fontScale", Math.max(18, prefs.fontScale - 2))}>أصغر −</button>
                 <span className="mpv-chip is-active">{prefs.fontScale}px</span>
                 <button type="button" className="mpv-chip" onClick={() => setPref("fontScale", Math.min(42, prefs.fontScale + 2))}>أكبر +</button>
+              </div>
+              <small style={{ display: "block", opacity: .7, marginTop: ".35rem" }}>
+                يكبّر الصفحة مع تمرير داخل الإطار — بلا قصّ بـtransform.
+              </small>
+            </div>
+
+            <div className="mpv-settings-group">
+              <span className="mpv-settings-group__label">انتقال سريع لآية</span>
+              <div className="mpv-settings-group__grid" style={{ gridTemplateColumns: "1fr 1fr auto" }}>
+                <input
+                  type="number"
+                  className="mpv-navbar__page-input"
+                  min={1}
+                  max={114}
+                  placeholder="سورة"
+                  aria-label="رقم السورة"
+                  value={jumpSurah}
+                  onChange={(e) => setJumpSurah(Number(e.target.value) || 1)}
+                />
+                <input
+                  type="number"
+                  className="mpv-navbar__page-input"
+                  min={1}
+                  placeholder="آية"
+                  aria-label="رقم الآية"
+                  value={jumpAyah}
+                  onChange={(e) => setJumpAyah(Number(e.target.value) || 1)}
+                />
+                <button
+                  type="button"
+                  className="mpv-chip is-active"
+                  onClick={() => {
+                    if (jumpSurah >= 1 && jumpSurah <= 114 && jumpAyah >= 1) {
+                      void goToPageOrAyah(1, { surah: jumpSurah, ayah: jumpAyah });
+                      setSettingsOpen(false);
+                    }
+                  }}
+                >
+                  انتقل
+                </button>
               </div>
             </div>
 

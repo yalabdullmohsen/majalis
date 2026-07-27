@@ -427,6 +427,13 @@ export const SURAH_START_PAGES: readonly number[] = [
   603, 604, 604, 604,
 ] as const;
 
+/** أول صفحة لكل جزء (1–30) — ترقيم مصحف المدينة برواية حفص. */
+export const JUZ_START_PAGES: readonly number[] = [
+  1, 22, 42, 62, 82, 102, 121, 142, 162, 182,
+  201, 222, 242, 262, 282, 302, 322, 342, 362, 382,
+  402, 422, 442, 462, 482, 502, 522, 542, 562, 582,
+] as const;
+
 export function getSurahForPage(page: number): StaticSurahMeta {
   const p = Math.max(1, Math.min(604, page));
   let idx = 0;

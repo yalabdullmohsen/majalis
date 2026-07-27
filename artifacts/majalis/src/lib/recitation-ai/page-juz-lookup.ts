@@ -52,3 +52,14 @@ export function getSegmentsForHizb(index: PageJuzIndexRaw, hizb: number): QuranS
 export function getSegmentsForRub(index: PageJuzIndexRaw, rub: number): QuranSegment[] {
   return index.byRub[String(rub)] ?? [];
 }
+
+/** صفحة المصحف (1–604) التي تقع فيها آية معيَّنة — أو null إن لم تُوجد. */
+export function findPageForAyah(index: PageJuzIndexRaw, surah: number, ayah: number): number | null {
+  for (let p = 1; p <= 604; p++) {
+    const segs = index.byPage[String(p)] ?? [];
+    if (segs.some((s) => s.surah === surah && ayah >= s.ayahFrom && ayah <= s.ayahTo)) {
+      return p;
+    }
+  }
+  return null;
+}

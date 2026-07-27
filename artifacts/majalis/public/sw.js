@@ -179,6 +179,17 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
+  // بيانات المصحف QPC v2 (صفحات JSON + فهارس) — ثابتة ونادرة التغيّر،
+  // cache-first يسرّع تقليب الصفحات ويُتيح قراءة محدودة دون شبكة.
+  if (
+    url.pathname.startsWith("/data/quran-v2/") ||
+    url.pathname === "/data/quran/page-juz-index.json" ||
+    url.pathname.startsWith("/fonts/quran/")
+  ) {
+    event.respondWith(cacheFirst(req, DATA_CACHE));
+    return;
+  }
+
   // HTML/navigation → network-first, never cache the response or fall back to
   // a previous build's document. Only the build-neutral offline page is cached.
   if (req.mode === "navigate") {

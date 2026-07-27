@@ -683,7 +683,14 @@ html.dark .nav-soon-badge {
      minmax(0,1fr) كي ينكمش الشريط بدل أن يدفع الزر خارج الصف. */
   .navbar-v3__inner { grid-template-columns: auto minmax(0, 1fr) auto; }
   .navbar-v3__end { justify-self: end; }
+  /* الوضع الليلي يبقى داخل القائمة على الجوال لتوفير المساحة، أما زر البحث
+     فيبقى ظاهرًا دائمًا — نقطة الدخول الثابتة بعد إلغاء السحب للبحث. */
   .navbar-theme-toggle { display: none; }
+  .navbar-theme-toggle.navbar-search-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
   .navbar-menu-btn__label, .navbar-mobile-login__label { display: none; }
   .hpv4-hero { border-radius: var(--radius-lg); }
   .site-footer--v3 .site-footer-groups { grid-template-columns: repeat(2, minmax(0, 1fr)); }
