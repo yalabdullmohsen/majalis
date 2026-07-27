@@ -106,7 +106,10 @@ jobs:
           DISPATCH_PR: ${{ github.event.inputs.pr_number }}
         run: |
           set -euo pipefail
-          ALLOW='^(cursor|session|claude|automation|fix|feature)/'
+          # ⚠️ ج-٢٥٩: فرعُ نافذة التدقيق/الضخّ `majalis-content-fill` **بلا بادئةٍ
+          # بشرطة مائلة**، فكان يسقط من هذا النمط فتتخطّاه الأتمتةُ صامتةً («تخطي:
+          # الفرع … خارج الأنماط») ويبقى الـPR مفتوحًا وإن نجح Verify build.
+          ALLOW='^((cursor|session|claude|automation|fix|feature)/|majalis-content-fill$)'
           EXCLUDE_DUAL='^(automation/content|automation/tasks)$'
           nums=""
           if [ "$EVENT_NAME" = "pull_request" ]; then
