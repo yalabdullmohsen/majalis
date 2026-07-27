@@ -167,10 +167,25 @@ def check(text: str):
 
 
 def bump_ayah_numbers(text: str) -> str:
-    """ضبط سالب: إزاحة رقم كل آية في وسوم المواضع بواحد."""
-    def b(m):
-        return str(int(m.group(0).translate(AR_DIGITS)) + 1).translate(EN_DIGITS)
-    return re.sub(r'(?<=[:،]\s)[٠-٩]+(?=\s*\])', b, text or '')
+    """ضبط سالب: إزاحة رقم كل آية في وسوم المواضع بواحد.
+
+    وتُزاح أرقام المدى كلها («٢٣-٢٤» ⇐ «٢٤-٢٥») والأرقام اللاتينية كما
+    العربية: فلو استُثني طرفا المدى أو الرقم اللاتيني لنجا الاستشهاد من
+    الضبط لا لصحّته بل لعجز الإزاحة عنه، فيصير الضبط شهادةَ زورٍ لنفسه.
+    """
+    def bump_digits(m):
+        d = m.group(0)
+        v = str(int(d.translate(AR_DIGITS)) + 1)
+        return v.translate(EN_DIGITS) if d[0] in '٠١٢٣٤٥٦٧٨٩' else v
+
+    def fix_tag(m):
+        inner = m.group(1)
+        head, sep, nums = inner.partition(':') if ':' in inner else inner.partition('،')
+        if not sep:
+            return m.group(0)
+        return '[' + head + sep + re.sub(r'[\d٠-٩]+', bump_digits, nums) + ']'
+
+    return re.sub(r'\[([^\]]+)\]', fix_tag, text or '')
 
 
 SELF_TEST = [
@@ -191,6 +206,16 @@ SELF_TEST = [
 ]
 
 
+# ضبطُ الضبطِ السالب نفسِه: كلُّ رقمِ آيةٍ يجب أن يُزاح مهما كان شكلُه، وإلا
+# نجا الاستشهادُ من الضبط لعجزِ الإزاحة عنه لا لصحّته.
+BUMP_TEST = [
+    ('﴿كذا﴾ [البقرة: ٢٧٥]', '﴿كذا﴾ [البقرة: ٢٧٦]', 'رقمٌ عربيّ مفرد'),
+    ('﴿كذا﴾ [البقرة: 275]', '﴿كذا﴾ [البقرة: 276]', 'رقمٌ لاتينيّ لا يُستثنى'),
+    ('﴿كذا﴾ [الكهف: ٢٣-٢٤]', '﴿كذا﴾ [الكهف: ٢٤-٢٥]', 'طرفا المدى معًا'),
+    ('﴿كذا﴾ [ال عمران]', '﴿كذا﴾ [ال عمران]', 'وسمٌ بلا رقم يُترك كما هو'),
+]
+
+
 def self_test() -> int:
     bad = 0
     for text, want, desc in SELF_TEST:
@@ -198,7 +223,13 @@ def self_test() -> int:
         ok = got == want
         bad += not ok
         print(f"{'✔' if ok else '✘'} {desc}\n    المتوقَّع={want} الناتج={got}")
-    print(f"\n=== اختبار ذاتي: {len(SELF_TEST) - bad}/{len(SELF_TEST)} نجح")
+    for text, want, desc in BUMP_TEST:
+        got = bump_ayah_numbers(text)
+        ok = got == want
+        bad += not ok
+        print(f"{'✔' if ok else '✘'} ضبط سالب: {desc}\n    المتوقَّع={want} الناتج={got}")
+    n = len(SELF_TEST) + len(BUMP_TEST)
+    print(f"\n=== اختبار ذاتي: {n - bad}/{n} نجح")
     return 1 if bad else 0
 
 
