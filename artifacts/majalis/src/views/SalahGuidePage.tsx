@@ -702,6 +702,7 @@ export default function SalahGuidePage() {
             {[
               { href: "/prayer-times", label: "مواقيت الصلاة" },
               { href: "/prayer-ranks", label: "فضائل الصلاة" },
+              { href: "/sujood-sahw", label: "سجود السهو" },
               { href: "/tahara", label: "الطهارة وأحكامها" },
               { href: "/adhkar", label: "الأذكار اليومية" },
               { href: "/sunan-yawmiyya", label: "السنن اليومية" },
