@@ -7601,6 +7601,370 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "updated_at": "2026-07-25T00:00:00.000Z"
   },
   {
+    "id": "qa-ruling-seed-qa-108",
+    "external_key": "qa-ruling-seed-qa-108",
+    "title": "صاحب النبي ﷺ في الهجرة؟",
+    "summary": "أبو بكر الصديق رضي الله عنه؛ دلّ القرآن على صحبته في الغار، وتفصّلها روايات الهجرة في الصحيح والسيرة.",
+    "body": "**السؤال:** من صاحب النبي ﷺ في الهجرة؟\n\n**الجواب:** أبو بكر الصديق رضي الله عنه؛ دلّ القرآن على صحبته في الغار، وتفصّلها روايات الهجرة في الصحيح والسيرة.",
+    "category": "طلب العلم والدعوة",
+    "subcategory": "طلب العلم",
+    "subcategories": [
+      "طلب العلم"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "دليل",
+        "text": "التوبة: ٤٠",
+        "source": "صحيح البخاري — كتاب مناقب الأنصار، سيرة ابن هشام"
+      }
+    ],
+    "references": [
+      {
+        "text": "صحيح البخاري — كتاب مناقب الأنصار، سيرة ابن هشام",
+        "source": "صحيح البخاري — كتاب مناقب الأنصار، سيرة ابن هشام"
+      }
+    ],
+    "keywords": [
+      "طلب العلم",
+      "seerah",
+      "السيرة"
+    ],
+    "benefits": [],
+    "importance_score": 70,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "qa-seed",
+    "linked_qa_ids": [
+      "seed-qa-108"
+    ],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
+  },
+  {
+    "id": "qa-ruling-seed-qa-109",
+    "external_key": "qa-ruling-seed-qa-109",
+    "title": "أول مسجد أسسه النبي ﷺ بعد الهجرة؟",
+    "summary": "مسجد قباء؛ وهو المشهور في خبر مقدمه ﷺ إلى قباء قبل دخوله المدينة.",
+    "body": "**السؤال:** ما أول مسجد أسسه النبي ﷺ بعد الهجرة؟\n\n**الجواب:** مسجد قباء؛ وهو المشهور في خبر مقدمه ﷺ إلى قباء قبل دخوله المدينة.",
+    "category": "طلب العلم والدعوة",
+    "subcategory": "طلب العلم",
+    "subcategories": [
+      "طلب العلم"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "دليل",
+        "text": "التوبة: ١٠٨",
+        "source": "صحيح البخاري — كتاب مناقب الأنصار، سيرة ابن هشام"
+      }
+    ],
+    "references": [
+      {
+        "text": "صحيح البخاري — كتاب مناقب الأنصار، سيرة ابن هشام",
+        "source": "صحيح البخاري — كتاب مناقب الأنصار، سيرة ابن هشام"
+      }
+    ],
+    "keywords": [
+      "طلب العلم",
+      "seerah",
+      "السيرة"
+    ],
+    "benefits": [],
+    "importance_score": 70,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "qa-seed",
+    "linked_qa_ids": [
+      "seed-qa-109"
+    ],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
+  },
+  {
+    "id": "qa-ruling-seed-qa-110",
+    "external_key": "qa-ruling-seed-qa-110",
+    "title": "أول غزوة كبرى في الإسلام؟",
+    "summary": "غزوة بدر الكبرى؛ وهي أول مواجهة كبرى فاصلة بين المسلمين وقريش في السنة الثانية للهجرة.",
+    "body": "**السؤال:** ما أول غزوة كبرى في الإسلام؟\n\n**الجواب:** غزوة بدر الكبرى؛ وهي أول مواجهة كبرى فاصلة بين المسلمين وقريش في السنة الثانية للهجرة.",
+    "category": "طلب العلم والدعوة",
+    "subcategory": "طلب العلم",
+    "subcategories": [
+      "طلب العلم"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "دليل",
+        "text": "آل عمران: ١٢٣، والأنفال في خبر بدر",
+        "source": "صحيح البخاري — كتاب المغازي، سيرة ابن هشام"
+      }
+    ],
+    "references": [
+      {
+        "text": "صحيح البخاري — كتاب المغازي، سيرة ابن هشام",
+        "source": "صحيح البخاري — كتاب المغازي، سيرة ابن هشام"
+      }
+    ],
+    "keywords": [
+      "طلب العلم",
+      "seerah",
+      "السيرة"
+    ],
+    "benefits": [],
+    "importance_score": 70,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "qa-seed",
+    "linked_qa_ids": [
+      "seed-qa-110"
+    ],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
+  },
+  {
+    "id": "qa-ruling-seed-qa-111",
+    "external_key": "qa-ruling-seed-qa-111",
+    "title": "في أي غزوة وقع حفر الخندق؟",
+    "summary": "غزوة الخندق، وتسمى أيضاً غزوة الأحزاب؛ وحفر الخندق من مشهور أخبارها في كتب المغازي.",
+    "body": "**السؤال:** في أي غزوة وقع حفر الخندق؟\n\n**الجواب:** غزوة الخندق، وتسمى أيضاً غزوة الأحزاب؛ وحفر الخندق من مشهور أخبارها في كتب المغازي.",
+    "category": "طلب العلم والدعوة",
+    "subcategory": "طلب العلم",
+    "subcategories": [
+      "طلب العلم"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "دليل",
+        "text": "الأحزاب: ٩-٢٧",
+        "source": "صحيح البخاري — كتاب المغازي، سيرة ابن هشام"
+      }
+    ],
+    "references": [
+      {
+        "text": "صحيح البخاري — كتاب المغازي، سيرة ابن هشام",
+        "source": "صحيح البخاري — كتاب المغازي، سيرة ابن هشام"
+      }
+    ],
+    "keywords": [
+      "طلب العلم",
+      "seerah",
+      "السيرة"
+    ],
+    "benefits": [],
+    "importance_score": 70,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "qa-seed",
+    "linked_qa_ids": [
+      "seed-qa-111"
+    ],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
+  },
+  {
+    "id": "qa-ruling-seed-qa-112",
+    "external_key": "qa-ruling-seed-qa-112",
+    "title": "الغزوة التي وقعت في السنة الثالثة للهجرة؟",
+    "summary": "غزوة أحد؛ وقعت في السنة الثالثة للهجرة، وتفصّل كتب المغازي أحداثها ودروسها.",
+    "body": "**السؤال:** ما الغزوة التي وقعت في السنة الثالثة للهجرة؟\n\n**الجواب:** غزوة أحد؛ وقعت في السنة الثالثة للهجرة، وتفصّل كتب المغازي أحداثها ودروسها.",
+    "category": "طلب العلم والدعوة",
+    "subcategory": "طلب العلم",
+    "subcategories": [
+      "طلب العلم"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "دليل",
+        "text": "آل عمران: ١٢١-١٧٩",
+        "source": "صحيح البخاري — كتاب المغازي، سيرة ابن هشام"
+      }
+    ],
+    "references": [
+      {
+        "text": "صحيح البخاري — كتاب المغازي، سيرة ابن هشام",
+        "source": "صحيح البخاري — كتاب المغازي، سيرة ابن هشام"
+      }
+    ],
+    "keywords": [
+      "طلب العلم",
+      "seerah",
+      "السيرة"
+    ],
+    "benefits": [],
+    "importance_score": 70,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "qa-seed",
+    "linked_qa_ids": [
+      "seed-qa-112"
+    ],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
+  },
+  {
+    "id": "qa-ruling-seed-qa-113",
+    "external_key": "qa-ruling-seed-qa-113",
+    "title": "اسم الصلح الذي عقده النبي ﷺ مع قريش؟",
+    "summary": "صلح الحديبية؛ عقده النبي ﷺ مع قريش في السنة السادسة للهجرة، وسمّاه القرآن فتحاً مبيناً.",
+    "body": "**السؤال:** ما اسم الصلح الذي عقده النبي ﷺ مع قريش؟\n\n**الجواب:** صلح الحديبية؛ عقده النبي ﷺ مع قريش في السنة السادسة للهجرة، وسمّاه القرآن فتحاً مبيناً.",
+    "category": "طلب العلم والدعوة",
+    "subcategory": "طلب العلم",
+    "subcategories": [
+      "طلب العلم"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "دليل",
+        "text": "الفتح: ١",
+        "source": "صحيح البخاري — كتاب الشروط، زاد المعاد لابن القيم"
+      }
+    ],
+    "references": [
+      {
+        "text": "صحيح البخاري — كتاب الشروط، زاد المعاد لابن القيم",
+        "source": "صحيح البخاري — كتاب الشروط، زاد المعاد لابن القيم"
+      }
+    ],
+    "keywords": [
+      "طلب العلم",
+      "seerah",
+      "السيرة"
+    ],
+    "benefits": [],
+    "importance_score": 70,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "qa-seed",
+    "linked_qa_ids": [
+      "seed-qa-113"
+    ],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
+  },
+  {
+    "id": "qa-ruling-seed-qa-114",
+    "external_key": "qa-ruling-seed-qa-114",
+    "title": "الحدث الذي دخل فيه النبي ﷺ مكة فاتحاً؟",
+    "summary": "فتح مكة؛ وكان في السنة الثامنة للهجرة بعد نقض قريش وحلفائها للعهد.",
+    "body": "**السؤال:** ما الحدث الذي دخل فيه النبي ﷺ مكة فاتحاً؟\n\n**الجواب:** فتح مكة؛ وكان في السنة الثامنة للهجرة بعد نقض قريش وحلفائها للعهد.",
+    "category": "طلب العلم والدعوة",
+    "subcategory": "طلب العلم",
+    "subcategories": [
+      "طلب العلم"
+    ],
+    "quran_evidence": [],
+    "sunnah_evidence": [],
+    "scholar_opinions": [],
+    "evidence": [
+      {
+        "type": "دليل",
+        "text": "النصر: ١، والفتح: ٢٤",
+        "source": "صحيح البخاري — كتاب المغازي، سيرة ابن هشام"
+      }
+    ],
+    "references": [
+      {
+        "text": "صحيح البخاري — كتاب المغازي، سيرة ابن هشام",
+        "source": "صحيح البخاري — كتاب المغازي، سيرة ابن هشام"
+      }
+    ],
+    "keywords": [
+      "طلب العلم",
+      "seerah",
+      "السيرة"
+    ],
+    "benefits": [],
+    "importance_score": 70,
+    "popularity_score": 0,
+    "view_count": 0,
+    "search_count": 0,
+    "status": "pending_review",
+    "verification_status": "pending_review",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "provenance": "seed_transform",
+    "source_origin": "qa-seed",
+    "linked_qa_ids": [
+      "seed-qa-114"
+    ],
+    "linked_fatwa_ids": [],
+    "linked_fiqh_ids": [],
+    "published_at": "2026-07-25T00:00:00.000Z",
+    "created_at": "2026-07-25T00:00:00.000Z",
+    "updated_at": "2026-07-25T00:00:00.000Z"
+  },
+  {
     "id": "qa-ruling-seed-qa-144",
     "external_key": "qa-ruling-seed-qa-144",
     "title": "حكم قول «سبحان الله» بعد الصلاة؟",
@@ -8048,8 +8412,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "id": "qa-ruling-seed-qa-271",
     "external_key": "qa-ruling-seed-qa-271",
     "title": "أين وُلد النبي ﷺ وما تاريخ ولادته؟",
-    "summary": "وُلد النبي ﷺ بمكة المكرمة في عام الفيل، يوم الاثنين 12 ربيع الأول، الموافق عام الفيل، نحو 570–571م.",
-    "body": "**السؤال:** أين وُلد النبي ﷺ وما تاريخ ولادته؟\n\n**الجواب:** وُلد النبي ﷺ بمكة المكرمة في عام الفيل، يوم الاثنين 12 ربيع الأول، الموافق عام الفيل، نحو 570–571م.",
+    "summary": "وُلد النبي ﷺ بمكة المكرمة في عام الفيل، وكان مولده يوم الاثنين؛ وأشهر الأقوال أنه في ربيع الأول، أما تعيين اليوم ففيه خلاف بين أهل السيرة، ويُقَدَّر ذلك بنحو…",
+    "body": "**السؤال:** أين وُلد النبي ﷺ وما تاريخ ولادته؟\n\n**الجواب:** وُلد النبي ﷺ بمكة المكرمة في عام الفيل، وكان مولده يوم الاثنين؛ وأشهر الأقوال أنه في ربيع الأول، أما تعيين اليوم ففيه خلاف بين أهل السيرة، ويُقَدَّر ذلك بنحو 570–571م.",
     "category": "طلب العلم والدعوة",
     "subcategory": "طلب العلم",
     "subcategories": [
@@ -8061,14 +8425,14 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "evidence": [
       {
         "type": "دليل",
-        "text": "ثابت في الصحيحين",
-        "source": "السيرة النبوية لابن هشام"
+        "text": "ثبت يوم الاثنين في صحيح مسلم، وتعيين التاريخ من مباحث السيرة",
+        "source": "صحيح مسلم — كتاب الصيام، السيرة النبوية لابن هشام، زاد المعاد لابن القيم"
       }
     ],
     "references": [
       {
-        "text": "السيرة النبوية لابن هشام",
-        "source": "السيرة النبوية لابن هشام"
+        "text": "صحيح مسلم — كتاب الصيام، السيرة النبوية لابن هشام، زاد المعاد لابن القيم",
+        "source": "صحيح مسلم — كتاب الصيام، السيرة النبوية لابن هشام، زاد المعاد لابن القيم"
       }
     ],
     "keywords": [
@@ -8100,8 +8464,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "id": "qa-ruling-seed-qa-272",
     "external_key": "qa-ruling-seed-qa-272",
     "title": "كم عمر النبي ﷺ حين بُعث؟",
-    "summary": "كان عمره ﷺ أربعين سنة حين نزل عليه الوحي الأول في غار حراء؛ لُقّب بالفاروق لفرقه بين الحق والباطل رضي الله عنه.",
-    "body": "**السؤال:** كم عمر النبي ﷺ حين بُعث؟\n\n**الجواب:** كان عمره ﷺ أربعين سنة حين نزل عليه الوحي الأول في غار حراء؛ لُقّب بالفاروق لفرقه بين الحق والباطل رضي الله عنه.",
+    "summary": "كان عمره ﷺ أربعين سنة حين نزل عليه الوحي الأول في غار حراء.",
+    "body": "**السؤال:** كم عمر النبي ﷺ حين بُعث؟\n\n**الجواب:** كان عمره ﷺ أربعين سنة حين نزل عليه الوحي الأول في غار حراء.",
     "category": "طلب العلم والدعوة",
     "subcategory": "طلب العلم",
     "subcategories": [
@@ -8158,33 +8522,27 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "id": "qa-ruling-seed-qa-275",
     "external_key": "qa-ruling-seed-qa-275",
     "title": "في أي سنة هجرية توفي النبي ﷺ؟",
-    "summary": "توفي النبي ﷺ في ربيع الأول من السنة الحادية عشرة من الهجرة، يوم الاثنين؛ وهذا ثابت في القرآن الكريم وفي كتب القصص والأنبياء المعتمدة.",
-    "body": "**السؤال:** في أي سنة هجرية توفي النبي ﷺ؟\n\n**الجواب:** توفي النبي ﷺ في ربيع الأول من السنة الحادية عشرة من الهجرة، يوم الاثنين؛ وهذا ثابت في القرآن الكريم وفي كتب القصص والأنبياء المعتمدة.",
+    "summary": "توفي النبي ﷺ في ربيع الأول من السنة الحادية عشرة للهجرة، يوم الاثنين؛ وأما تعيين يوم الشهر ففيه خلاف بين أهل السيرة.",
+    "body": "**السؤال:** في أي سنة هجرية توفي النبي ﷺ؟\n\n**الجواب:** توفي النبي ﷺ في ربيع الأول من السنة الحادية عشرة للهجرة، يوم الاثنين؛ وأما تعيين يوم الشهر ففيه خلاف بين أهل السيرة.",
     "category": "طلب العلم والدعوة",
     "subcategory": "طلب العلم",
     "subcategories": [
       "طلب العلم"
     ],
     "quran_evidence": [],
-    "sunnah_evidence": [
-      {
-        "type": "حديث",
-        "text": "رواه البخاري",
-        "source": "صحيح البخاري"
-      }
-    ],
+    "sunnah_evidence": [],
     "scholar_opinions": [],
     "evidence": [
       {
-        "type": "حديث",
-        "text": "رواه البخاري",
-        "source": "صحيح البخاري"
+        "type": "دليل",
+        "text": "ثبوت يوم الاثنين في أخبار الوفاة، وتعيين اليوم من مباحث السيرة",
+        "source": "صحيح البخاري — كتاب المغازي، سيرة ابن هشام، زاد المعاد لابن القيم"
       }
     ],
     "references": [
       {
-        "text": "صحيح البخاري",
-        "source": "صحيح البخاري"
+        "text": "صحيح البخاري — كتاب المغازي، سيرة ابن هشام، زاد المعاد لابن القيم",
+        "source": "صحيح البخاري — كتاب المغازي، سيرة ابن هشام، زاد المعاد لابن القيم"
       }
     ],
     "keywords": [
@@ -8216,8 +8574,8 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "id": "qa-ruling-seed-qa-276",
     "external_key": "qa-ruling-seed-qa-276",
     "title": "معجزة انشقاق القمر؟",
-    "summary": "انشق القمر فلقتين في مكة قبل الهجرة آية للنبي ﷺ، وقد ثبتت بالقرآن في قوله: ﴿اقتربت الساعة وانشق القمر﴾.",
-    "body": "**السؤال:** ما معجزة انشقاق القمر؟\n\n**الجواب:** انشق القمر فلقتين في مكة قبل الهجرة آية للنبي ﷺ، وقد ثبتت بالقرآن في قوله: ﴿اقتربت الساعة وانشق القمر﴾.",
+    "summary": "انشقاق القمر آية ذُكرت في القرآن في قوله تعالى: ﴿اقتربت الساعة وانشق القمر﴾، ورويت أخبارها في الصحيح.",
+    "body": "**السؤال:** ما معجزة انشقاق القمر؟\n\n**الجواب:** انشقاق القمر آية ذُكرت في القرآن في قوله تعالى: ﴿اقتربت الساعة وانشق القمر﴾، ورويت أخبارها في الصحيح.",
     "category": "طلب العلم والدعوة",
     "subcategory": "طلب العلم",
     "subcategories": [
@@ -9838,419 +10196,7 @@ export const RULINGS_ENCYCLOPEDIA_SEED: ShariaRulingExtended[] = [
     "published_at": "2026-07-25T00:00:00.000Z",
     "created_at": "2026-07-25T00:00:00.000Z",
     "updated_at": "2026-07-25T00:00:00.000Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-311",
-    "external_key": "qa-ruling-seed-qa-311",
-    "title": "الحكمة من استقبال القبلة في الصلاة؟",
-    "summary": "استقبال القبلة شرط صحة الصلاة. والحِكم فيه: 1- توحيد المسلمين نحو جهة واحدة. 2- التذكير بإبراهيم الخليل وبيته العتيق. 3- رمز الوحدة الإسلامية. 4- التمييز بين…",
-    "body": "**السؤال:** ما الحكمة من استقبال القبلة في الصلاة؟\n\n**الجواب:** استقبال القبلة شرط صحة الصلاة. والحِكم فيه: 1- توحيد المسلمين نحو جهة واحدة. 2- التذكير بإبراهيم الخليل وبيته العتيق. 3- رمز الوحدة الإسلامية. 4- التمييز بين صلاتنا وصلاة غيرنا. وقد كان المسلمون يصلون نحو بيت المقدس ثم نُسخ إلى الكعبة.",
-    "category": "الصلاة",
-    "subcategory": "أحكام الصلاة",
-    "subcategories": [
-      "أحكام الصلاة"
-    ],
-    "quran_evidence": [
-      {
-        "type": "قرآن",
-        "text": "سورة البقرة: 144",
-        "source": "أسرار الصلاة لابن القيم"
-      }
-    ],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "evidence": [
-      {
-        "type": "قرآن",
-        "text": "سورة البقرة: 144",
-        "source": "أسرار الصلاة لابن القيم"
-      }
-    ],
-    "references": [
-      {
-        "text": "أسرار الصلاة لابن القيم",
-        "source": "أسرار الصلاة لابن القيم"
-      }
-    ],
-    "keywords": [
-      "أحكام الصلاة",
-      "salah",
-      "الصلاة"
-    ],
-    "benefits": [],
-    "importance_score": 70,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "pending_review",
-    "verification_status": "pending_review",
-    "reviewed_by": null,
-    "reviewed_at": null,
-    "provenance": "seed_transform",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-311"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-25T00:00:00.000Z",
-    "created_at": "2026-07-25T00:00:00.000Z",
-    "updated_at": "2026-07-25T00:00:00.000Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-312",
-    "external_key": "qa-ruling-seed-qa-312",
-    "title": "حكم الاحتفال بالمولد النبوي الشريف؟",
-    "summary": "اختلف العلماء المعاصرون؛ فذهب كثير من العلماء إلى عدم مشروعيته لأنه بدعة لم يفعلها النبي ﷺ ولا الصحابة والتابعون، وهو قول ابن باز وابن عثيمين والألباني. وذهب…",
-    "body": "**السؤال:** ما حكم الاحتفال بالمولد النبوي الشريف؟\n\n**الجواب:** اختلف العلماء المعاصرون؛ فذهب كثير من العلماء إلى عدم مشروعيته لأنه بدعة لم يفعلها النبي ﷺ ولا الصحابة والتابعون، وهو قول ابن باز وابن عثيمين والألباني. وذهب آخرون إلى جوازه إن خلا من المنكرات قياساً على شكر يوم الاثنين. والأحوط تركه.",
-    "category": "العقيدة",
-    "subcategory": "الإيمان",
-    "subcategories": [
-      "الإيمان"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [
-      {
-        "type": "حديث",
-        "text": "«كل بدعة ضلالة» — رواه مسلم",
-        "source": "الإبداع في مضار الابتداع لعلي محفوظ"
-      }
-    ],
-    "scholar_opinions": [],
-    "prevailing_view": "خلاف",
-    "evidence": [
-      {
-        "type": "حديث",
-        "text": "«كل بدعة ضلالة» — رواه مسلم",
-        "source": "الإبداع في مضار الابتداع لعلي محفوظ"
-      }
-    ],
-    "references": [
-      {
-        "text": "الإبداع في مضار الابتداع لعلي محفوظ",
-        "source": "الإبداع في مضار الابتداع لعلي محفوظ"
-      }
-    ],
-    "keywords": [
-      "الإيمان",
-      "aqeedah",
-      "العقيدة"
-    ],
-    "benefits": [],
-    "importance_score": 70,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "pending_review",
-    "verification_status": "pending_review",
-    "reviewed_by": null,
-    "reviewed_at": null,
-    "provenance": "seed_transform",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-312"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-25T00:00:00.000Z",
-    "created_at": "2026-07-25T00:00:00.000Z",
-    "updated_at": "2026-07-25T00:00:00.000Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-313",
-    "external_key": "qa-ruling-seed-qa-313",
-    "title": "هي السنن الرواتب وعددها؟",
-    "summary": "السنن الرواتب اثنتا عشرة ركعة: 4 قبل الظهر وركعتان بعده، وركعتان بعد المغرب، وركعتان بعد العشاء، وركعتان قبل الفجر. قال النبي ﷺ: «من صلى اثنتي عشرة ركعة في يوم…",
-    "body": "**السؤال:** ما هي السنن الرواتب وعددها؟\n\n**الجواب:** السنن الرواتب اثنتا عشرة ركعة: 4 قبل الظهر وركعتان بعده، وركعتان بعد المغرب، وركعتان بعد العشاء، وركعتان قبل الفجر. قال النبي ﷺ: «من صلى اثنتي عشرة ركعة في يوم وليلة بُني له بيت في الجنة» — رواه مسلم.",
-    "category": "الصلاة",
-    "subcategory": "أحكام الصلاة",
-    "subcategories": [
-      "أحكام الصلاة"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [
-      {
-        "type": "حديث",
-        "text": "رواه مسلم (728)",
-        "source": "الشرح الممتع لابن عثيمين"
-      }
-    ],
-    "scholar_opinions": [],
-    "prevailing_view": "استحباب",
-    "evidence": [
-      {
-        "type": "حديث",
-        "text": "رواه مسلم (728)",
-        "source": "الشرح الممتع لابن عثيمين"
-      }
-    ],
-    "references": [
-      {
-        "text": "الشرح الممتع لابن عثيمين",
-        "source": "الشرح الممتع لابن عثيمين"
-      }
-    ],
-    "keywords": [
-      "أحكام الصلاة",
-      "salah",
-      "الصلاة"
-    ],
-    "benefits": [],
-    "importance_score": 70,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "pending_review",
-    "verification_status": "pending_review",
-    "reviewed_by": null,
-    "reviewed_at": null,
-    "provenance": "seed_transform",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-313"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-25T00:00:00.000Z",
-    "created_at": "2026-07-25T00:00:00.000Z",
-    "updated_at": "2026-07-25T00:00:00.000Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-314",
-    "external_key": "qa-ruling-seed-qa-314",
-    "title": "يجوز قراءة القرآن الكريم بدون وضوء؟",
-    "summary": "يجوز قراءة القرآن من الذاكرة بدون وضوء بالنسبة للمحدث حدثاً أصغر عند جمهور العلماء. أما لمس المصحف فيشترط له الطهارة من الحدث الأصغر عند جمهور الفقهاء، وهو قول…",
-    "body": "**السؤال:** هل يجوز قراءة القرآن الكريم بدون وضوء؟\n\n**الجواب:** يجوز قراءة القرآن من الذاكرة بدون وضوء بالنسبة للمحدث حدثاً أصغر عند جمهور العلماء. أما لمس المصحف فيشترط له الطهارة من الحدث الأصغر عند جمهور الفقهاء، وهو قول مالك والشافعي وأحمد. أما الجنب فيمنع من القراءة حتى يغتسل عند جمهور العلماء؛ لحديث عليّ رضي الله عنه: «كان رسول الله ﷺ يُقرئنا القرآن ما لم يكن جُنُباً».",
-    "category": "القرآن والحديث",
-    "subcategory": "أحكام القرآن",
-    "subcategories": [
-      "أحكام القرآن"
-    ],
-    "quran_evidence": [
-      {
-        "type": "قرآن",
-        "text": "حديث عليّ: «كان رسول الله ﷺ يُقرئنا القرآن ما لم يكن جُنُباً» — رواه أبو داود (229) والترمذي (146) وقال: حسن صحيح، والنسائي وابن ماجه",
-        "source": "المغني لابن قدامة، المجموع للنووي، سنن الترمذي (146)"
-      }
-    ],
-    "sunnah_evidence": [
-      {
-        "type": "قرآن",
-        "text": "حديث عليّ: «كان رسول الله ﷺ يُقرئنا القرآن ما لم يكن جُنُباً» — رواه أبو داود (229) والترمذي (146) وقال: حسن صحيح، والنسائي وابن ماجه",
-        "source": "المغني لابن قدامة، المجموع للنووي، سنن الترمذي (146)"
-      }
-    ],
-    "scholar_opinions": [],
-    "prevailing_view": "جواز بشرط",
-    "evidence": [
-      {
-        "type": "قرآن",
-        "text": "حديث عليّ: «كان رسول الله ﷺ يُقرئنا القرآن ما لم يكن جُنُباً» — رواه أبو داود (229) والترمذي (146) وقال: حسن صحيح، والنسائي وابن ماجه",
-        "source": "المغني لابن قدامة، المجموع للنووي، سنن الترمذي (146)"
-      }
-    ],
-    "references": [
-      {
-        "text": "المغني لابن قدامة، المجموع للنووي، سنن الترمذي (146)",
-        "source": "المغني لابن قدامة، المجموع للنووي، سنن الترمذي (146)"
-      }
-    ],
-    "keywords": [
-      "أحكام القرآن",
-      "quran",
-      "القرآن الكريم"
-    ],
-    "benefits": [],
-    "importance_score": 70,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "pending_review",
-    "verification_status": "pending_review",
-    "reviewed_by": null,
-    "reviewed_at": null,
-    "provenance": "seed_transform",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-314"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-25T00:00:00.000Z",
-    "created_at": "2026-07-25T00:00:00.000Z",
-    "updated_at": "2026-07-25T00:00:00.000Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-315",
-    "external_key": "qa-ruling-seed-qa-315",
-    "title": "حكم إخراج زكاة الفطر نقداً بدلاً من الطعام؟",
-    "summary": "مسألة خلافية بين العلماء. الجمهور (المالكية والشافعية والحنابلة): يشترطون إخراجها طعاماً لا نقداً، لأن الحديث حدّد أجناساً معينة كالتمر والشعير. الحنفية:…",
-    "body": "**السؤال:** ما حكم إخراج زكاة الفطر نقداً بدلاً من الطعام؟\n\n**الجواب:** مسألة خلافية بين العلماء. الجمهور (المالكية والشافعية والحنابلة): يشترطون إخراجها طعاماً لا نقداً، لأن الحديث حدّد أجناساً معينة كالتمر والشعير. الحنفية: يجيزون إخراجها قيمةً نقدية، وهو اختيار بعض المعاصرين. الأحوط إخراجها طعاماً — صاعاً من قوت البلد، يساوي نحو 2.5 كيلوغرام — وإن أُعطيت نقداً لمن يتولى شراءه فلا بأس.",
-    "category": "الزكاة",
-    "subcategory": "زكاة المال",
-    "subcategories": [
-      "زكاة المال"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [
-      {
-        "type": "حديث",
-        "text": "رواه البخاري (1503) ومسلم (984)",
-        "source": "الموسوعة الفقهية الكويتية"
-      }
-    ],
-    "scholar_opinions": [],
-    "prevailing_view": "خلافية",
-    "evidence": [
-      {
-        "type": "حديث",
-        "text": "رواه البخاري (1503) ومسلم (984)",
-        "source": "الموسوعة الفقهية الكويتية"
-      }
-    ],
-    "references": [
-      {
-        "text": "الموسوعة الفقهية الكويتية",
-        "source": "الموسوعة الفقهية الكويتية"
-      }
-    ],
-    "keywords": [
-      "زكاة المال",
-      "zakat",
-      "الزكاة"
-    ],
-    "benefits": [],
-    "importance_score": 70,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "pending_review",
-    "verification_status": "pending_review",
-    "reviewed_by": null,
-    "reviewed_at": null,
-    "provenance": "seed_transform",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-315"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-25T00:00:00.000Z",
-    "created_at": "2026-07-25T00:00:00.000Z",
-    "updated_at": "2026-07-25T00:00:00.000Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-316",
-    "external_key": "qa-ruling-seed-qa-316",
-    "title": "حكم الاستماع إلى الأغاني والموسيقى؟",
-    "summary": "ذهب جمهور العلماء (الحنفية والمالكية والشافعية والحنابلة) إلى تحريم الأغاني المصحوبة بالمعازف (آلات اللهو)، مستدلّين بحديث «ليكوننّ من أمتي أقوام يستحلّون…",
-    "body": "**السؤال:** ما حكم الاستماع إلى الأغاني والموسيقى؟\n\n**الجواب:** ذهب جمهور العلماء (الحنفية والمالكية والشافعية والحنابلة) إلى تحريم الأغاني المصحوبة بالمعازف (آلات اللهو)، مستدلّين بحديث «ليكوننّ من أمتي أقوام يستحلّون الحِرَ والحرير والخمر والمعازف» (البخاري). وأجاز بعض العلماء الدفّ في الأعراس والأفراح. وأجاز كثير من المعاصرين ما خلا من الفحش والدعوة للفسق. والأحوط: الابتعاد عن كل ما يُلهي عن الواجبات أو يُثير الشهوات.",
-    "category": "الأخلاق والآداب",
-    "subcategory": "الآداب",
-    "subcategories": [
-      "الآداب"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [],
-    "scholar_opinions": [],
-    "prevailing_view": "خلافية",
-    "evidence": [
-      {
-        "type": "دليل",
-        "text": "صحيح البخاري — تعليقاً (5590)",
-        "source": "إغاثة اللهفان لابن القيم، الحلال والحرام للقرضاوي"
-      }
-    ],
-    "references": [
-      {
-        "text": "إغاثة اللهفان لابن القيم، الحلال والحرام للقرضاوي",
-        "source": "إغاثة اللهفان لابن القيم، الحلال والحرام للقرضاوي"
-      }
-    ],
-    "keywords": [
-      "الآداب",
-      "adab",
-      "الآداب والأخلاق"
-    ],
-    "benefits": [],
-    "importance_score": 70,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "pending_review",
-    "verification_status": "pending_review",
-    "reviewed_by": null,
-    "reviewed_at": null,
-    "provenance": "seed_transform",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-316"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-25T00:00:00.000Z",
-    "created_at": "2026-07-25T00:00:00.000Z",
-    "updated_at": "2026-07-25T00:00:00.000Z"
-  },
-  {
-    "id": "qa-ruling-seed-qa-317",
-    "external_key": "qa-ruling-seed-qa-317",
-    "title": "يجب على المرأة إذن الزوج لصيام التطوع؟",
-    "summary": "نعم، يشترط إذن الزوج لصيام التطوع عند وجوده في البيت؛ لحديث: «لا تصوم المرأة وبعلها شاهد إلا بإذنه» — رواه البخاري (5195) ومسلم (1026). أما صيام الفرض (رمضان…",
-    "body": "**السؤال:** هل يجب على المرأة إذن الزوج لصيام التطوع؟\n\n**الجواب:** نعم، يشترط إذن الزوج لصيام التطوع عند وجوده في البيت؛ لحديث: «لا تصوم المرأة وبعلها شاهد إلا بإذنه» — رواه البخاري (5195) ومسلم (1026). أما صيام الفرض (رمضان والقضاء والنذر) فلا يحتاج إذناً. والحكمة: حفظ حق الزوج في الاستمتاع. فإن غاب الزوج أو أذن فلا إشكال.",
-    "category": "الصيام",
-    "subcategory": "صيام رمضان",
-    "subcategories": [
-      "صيام رمضان"
-    ],
-    "quran_evidence": [],
-    "sunnah_evidence": [
-      {
-        "type": "حديث",
-        "text": "رواه البخاري (5195)، ومسلم (1026)",
-        "source": "شرح النووي على مسلم"
-      }
-    ],
-    "scholar_opinions": [],
-    "prevailing_view": "اشتراط",
-    "evidence": [
-      {
-        "type": "حديث",
-        "text": "رواه البخاري (5195)، ومسلم (1026)",
-        "source": "شرح النووي على مسلم"
-      }
-    ],
-    "references": [
-      {
-        "text": "شرح النووي على مسلم",
-        "source": "شرح النووي على مسلم"
-      }
-    ],
-    "keywords": [
-      "صيام رمضان",
-      "sawm",
-      "الصيام"
-    ],
-    "benefits": [],
-    "importance_score": 70,
-    "popularity_score": 0,
-    "view_count": 0,
-    "search_count": 0,
-    "status": "pending_review",
-    "verification_status": "pending_review",
-    "reviewed_by": null,
-    "reviewed_at": null,
-    "provenance": "seed_transform",
-    "source_origin": "qa-seed",
-    "linked_qa_ids": [
-      "seed-qa-317"
-    ],
-    "linked_fatwa_ids": [],
-    "linked_fiqh_ids": [],
-    "published_at": "2026-07-25T00:00:00.000Z",
-    "created_at": "2026-07-25T00:00:00.000Z",
-    "updated_at": "2026-07-25T00:00:00.000Z"
   }
 ] as unknown as ShariaRulingExtended[];
 
-export const RULINGS_ENCYCLOPEDIA_TOTAL = 2852;
+export const RULINGS_ENCYCLOPEDIA_TOTAL = 3212;
