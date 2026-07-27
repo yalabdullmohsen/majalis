@@ -1,5 +1,5 @@
 import { useEffect, useState, type ReactNode } from "react";
-import { Empty, QaSkeleton } from "@/components/ui-common";
+import { Empty, ErrorState, QaSkeleton } from "@/components/ui-common";
 import { PAGE_LOAD_TIMEOUT_MS } from "@/lib/request-manager";
 
 type PageLoadingGuardProps = {
@@ -7,6 +7,7 @@ type PageLoadingGuardProps = {
   error?: string | null;
   empty?: boolean;
   emptyText?: string;
+  errorText?: string;
   onRetry?: () => void;
   children: ReactNode;
   skeleton?: "list" | "search";
@@ -21,7 +22,8 @@ export function PageLoadingGuard({
   error,
   empty,
   emptyText = "لا توجد بيانات حالياً",
-  onRetry: _onRetry,
+  errorText = "تعذّر تحميل البيانات. حاول مجددًا.",
+  onRetry,
   children,
   skeleton = "list",
 }: PageLoadingGuardProps) {
@@ -37,11 +39,16 @@ export function PageLoadingGuard({
   }, [loading]);
 
   if (timedOut && loading) {
-    return <Empty text={emptyText} />;
+    return (
+      <ErrorState
+        text="انتهت مهلة التحميل. تحقق من الاتصال وحاول مجددًا."
+        onRetry={onRetry}
+      />
+    );
   }
 
   if (error) {
-    return <Empty text={emptyText} />;
+    return <ErrorState text={typeof error === "string" && error.trim() ? error : errorText} onRetry={onRetry} />;
   }
 
   if (loading) {

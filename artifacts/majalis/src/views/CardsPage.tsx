@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "wouter";
-import html2canvas from "html2canvas";
+import { toPng } from "html-to-image";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
@@ -117,14 +117,13 @@ export default function CardsPage() {
     if (!cardRef.current) return;
     setIsGenerating(true);
     try {
-      const canvas = await html2canvas(cardRef.current, {
-        scale: 3,
-        useCORS: true,
-        backgroundColor: null,
+      const dataUrl = await toPng(cardRef.current, {
+        pixelRatio: 3,
+        cacheBust: true,
       });
       const link = document.createElement("a");
       link.download = `بطاقة-${Date.now()}.png`;
-      link.href = canvas.toDataURL("image/png", 1.0);
+      link.href = dataUrl;
       link.click();
     } finally {
       setIsGenerating(false);

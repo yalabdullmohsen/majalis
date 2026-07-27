@@ -1,3 +1,5 @@
+import { safeLocationReload } from "@/lib/safe-reload";
+
 /**
  * Unregister stale service workers after deploy — prevents broken cached JS chunks.
  */
@@ -31,7 +33,7 @@ export function registerProductionServiceWorker(): void {
   navigator.serviceWorker.addEventListener("controllerchange", () => {
     if (!hadController || refreshing) return;
     refreshing = true;
-    window.location.reload();
+    safeLocationReload();
   });
 
   window.addEventListener("load", () => {
