@@ -29,13 +29,18 @@ export function BottomNavBar() {
       return (
         location === "/learn" ||
         location.startsWith("/learn/") ||
-        location === "/lessons" ||
-        location.startsWith("/lessons/") ||
-        location.startsWith("/learning/") ||
-        location === "/my-learning" ||
-        location === "/start-here" ||
-        location === "/flashcards" ||
-        location === "/quiz"
+        location === "/fiqh" ||
+        location.startsWith("/fiqh/") ||
+        location === "/rulings" ||
+        location.startsWith("/rulings/") ||
+        location === "/seerah" ||
+        location.startsWith("/seerah/") ||
+        location === "/tawhid" ||
+        location.startsWith("/tawhid/") ||
+        location === "/prophets" ||
+        location.startsWith("/prophets/") ||
+        location === "/nations" ||
+        location.startsWith("/nations/")
       );
     }
     return location === href || location.startsWith(href + "/");

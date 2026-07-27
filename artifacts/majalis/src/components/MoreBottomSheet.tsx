@@ -105,6 +105,7 @@ const SHEET_SECTIONS_RAW: { group: string; items: SheetItem[] }[] = [
     { href: "/seerah",          label: seoNavLabel("/seerah", "السيرة النبوية"),         Icon: BookUser },
     { href: "/sahabah",         label: seoNavLabel("/sahabah", "الصحابة الكرام"),         Icon: Users },
     { href: "/prophets",        label: seoNavLabel("/prophets", "الأنبياء والرسل"),         Icon: Star },
+    { href: "/nations",         label: seoNavLabel("/nations", "الأمم السابقة"),         Icon: Landmark },
     { href: "/stories",            label: seoNavLabel("/stories", "القصص الإسلامية"),     Icon: BookOpen },
     { href: "/islamic-landmarks",  label: seoNavLabel("/islamic-landmarks", "المشاهد والمساجد"),    Icon: Landmark },
   ]},
@@ -125,9 +126,18 @@ const SHEET_SECTIONS_RAW: { group: string; items: SheetItem[] }[] = [
     { href: "/institutions",     label: seoNavLabel("/institutions", "المؤسسات الإسلامية"),   Icon: Landmark },
   ]},
 
-  /* ── التعلّم والأدوات ── */
-  { group: "التعلّم والأدوات", items: [
-    { href: "/learn",                label: seoNavLabel("/learn", "أبواب العلم"),         Icon: Layers },
+  /* ── تعلّم ── */
+  { group: "تعلّم", items: [
+    { href: "/learn",    label: seoNavLabel("/learn", "بوابة التعلّم"),     Icon: GraduationCap },
+    { href: "/fiqh",     label: seoNavLabel("/fiqh", "الفقه والأحكام"),   Icon: Scale },
+    { href: "/seerah",   label: seoNavLabel("/seerah", "السيرة النبوية"),   Icon: BookUser },
+    { href: "/tawhid",   label: seoNavLabel("/tawhid", "العقيدة"),         Icon: Shield },
+    { href: "/prophets", label: seoNavLabel("/prophets", "قصص الأنبياء"),  Icon: Star },
+    { href: "/nations",  label: seoNavLabel("/nations", "الأمم السابقة"), Icon: Landmark },
+  ]},
+
+  /* ── أدوات ومزيد ── */
+  { group: "أدوات ومزيد", items: [
     { href: "/learning/paths",       label: seoNavLabel("/learning/paths", "المسارات العلمية"),    Icon: GraduationCap },
     { href: "/start-here",           label: seoNavLabel("/start-here", "ابدأ من هنا"),         Icon: Waypoints },
     { href: "/quiz",                 label: seoNavLabel("/quiz", "لعبة سين جيم"),  Icon: Zap },

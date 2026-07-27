@@ -28,18 +28,18 @@ export const SECTION_TABS: SectionTab[] = [
 ];
 
 export function isTabActive(location: string, href: string): boolean {
-  if (href === "/learn") {
+  if (href === "/seerah") {
     return (
-      location === "/learn" ||
-      location.startsWith("/learn/") ||
-      location === "/lessons" ||
-      location.startsWith("/lessons/") ||
-      location.startsWith("/learning/") ||
-      location === "/my-learning" ||
-      location === "/start-here" ||
-      location === "/flashcards" ||
-      location === "/quiz"
+      location === "/seerah" ||
+      location.startsWith("/seerah/") ||
+      location === "/prophets" ||
+      location.startsWith("/prophets/") ||
+      location === "/nations" ||
+      location.startsWith("/nations/")
     );
+  }
+  if (href === "/learn") {
+    return location === "/learn" || location.startsWith("/learn/");
   }
   return location === href || location.startsWith(href + "/");
 }

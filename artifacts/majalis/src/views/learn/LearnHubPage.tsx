@@ -1,119 +1,96 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect } from "react";
 import { Link } from "wouter";
-import { BookOpen, CreditCard, GraduationCap, Layers, Map, Search, Waypoints, Zap } from "lucide-react";
-import { PageHeader, SkeletonCardGrid } from "@/components/ui-common";
-import { arabicMatchAny } from "@/lib/arabic-search";
-import { fetchPublishedCategoryTree, type CategoryWithCounts } from "@/lib/learn-library-service";
+import { BookUser, Landmark, Scale, Shield, Star } from "lucide-react";
+import { PageHeader } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
 import "@/styles/pages/library.css";
 
-const LEARN_GATEWAYS = [
-  { href: "/lessons", label: "الدروس", Icon: BookOpen },
-  { href: "/learning/paths", label: "المسارات", Icon: Map },
-  { href: "/start-here", label: "ابدأ من هنا", Icon: Waypoints },
-  { href: "/quiz", label: "المسابقة", Icon: Zap },
-  { href: "/flashcards", label: "البطاقات", Icon: CreditCard },
-  { href: "/my-learning", label: "لوحتي", Icon: GraduationCap },
+const LEARN_SECTIONS = [
+  {
+    href: "/fiqh",
+    label: "الفقه والأحكام",
+    desc: "مداخل الفقه، العبادات، وموسوعة الأحكام الشرعية الموثّقة.",
+    Icon: Scale,
+  },
+  {
+    href: "/seerah",
+    label: "السيرة النبوية",
+    desc: "سيرة النبي ﷺ ومغازيه وشمائله بضوابط الرواية والتمحيص.",
+    Icon: BookUser,
+  },
+  {
+    href: "/tawhid",
+    label: "العقيدة",
+    desc: "التوحيد وأنواعُه ومسائل العقيدة على منهج أهل السنة.",
+    Icon: Shield,
+  },
+  {
+    href: "/prophets",
+    label: "قصص الأنبياء",
+    desc: "قصص الأنبياء المذكورين في القرآن للعبرة والاقتداء.",
+    Icon: Star,
+  },
+  {
+    href: "/nations",
+    label: "الأمم السابقة",
+    desc: "أخبار الأمم في القرآن والسنة الصحيحة وما فيها من عبر.",
+    Icon: Landmark,
+  },
 ] as const;
 
 export default function LearnHubPage() {
-  const [tree, setTree] = useState<CategoryWithCounts[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState("");
-
   useEffect(() => {
     applyPageSeo({
       path: "/learn",
-      title: "أبواب العلم | المجلس العلمي",
-      description: "فهرس شامل للعلوم الشرعية بتصنيف علمي واضح: عقيدة، فقه، حديث، تفسير، سيرة وغيرها — دروس ومسارات حقيقية معتمدة فقط.",
-      keywords: ["أبواب العلم", "العلوم الشرعية", "تصنيف الفقه", "دروس شرعية", "المجلس العلمي"],
+      title: "تعلّم | المجلس العلمي",
+      description:
+        "بوابة التعلّم: الفقه والأحكام، السيرة النبوية، العقيدة، قصص الأنبياء، والأمم السابقة.",
+      keywords: [
+        "تعلّم",
+        "الفقه والأحكام",
+        "السيرة النبوية",
+        "العقيدة",
+        "قصص الأنبياء",
+        "الأمم السابقة",
+        "المجلس العلمي",
+      ],
       jsonLd: [
         {
           "@context": "https://schema.org",
           "@type": "CollectionPage",
-          name: "أبواب العلم",
+          name: "تعلّم",
           url: "https://www.majlisilm.com/learn",
-          description: "فهرس التصنيفات العلمية الشرعية على منصة المجلس العلمي",
+          description:
+            "أقسام التعلّم الأساسية: فقه وأحكام، سيرة، عقيدة، قصص أنبياء، وأمم سابقة",
+          hasPart: LEARN_SECTIONS.map((s) => ({
+            "@type": "WebPage",
+            name: s.label,
+            url: `https://www.majlisilm.com${s.href}`,
+          })),
         },
       ],
     });
   }, []);
 
-  useEffect(() => {
-    fetchPublishedCategoryTree().then(setTree).finally(() => setLoading(false));
-  }, []);
-
-  const filtered = useMemo(() => {
-    if (!search.trim()) return tree;
-    return tree.filter((c) => arabicMatchAny([c.name, c.description], search));
-  }, [tree, search]);
-
-  const totalLessons = tree.reduce((s, c) => s + c.lessonCount, 0);
-  const totalSeries = tree.reduce((s, c) => s + c.seriesCount, 0);
-
   return (
     <div className="page-shell lrn-hub">
       <PageHeader
-        eyebrow="مكتبة علمية منظمة"
-        title="أبواب العلم"
-        subtitle="فهرس شامل للعلوم الشرعية بتصنيف واضح — دروس وسلاسل حقيقية معتمدة فقط، لا أبواب فارغة."
+        eyebrow="بوابة التعلّم"
+        title="تعلّم"
+        subtitle="اختر بابًا: الفقه والأحكام، السيرة، العقيدة، قصص الأنبياء، والأمم السابقة."
       />
 
-      <nav className="lrn-hub-gateways" aria-label="مداخل التعلّم">
-        {LEARN_GATEWAYS.map(({ href, label, Icon }) => (
-          <Link key={href} href={href} className="lrn-hub-gateway">
-            <Icon size={16} strokeWidth={1.8} aria-hidden="true" />
-            <span>{label}</span>
+      <nav className="lrn-hub-grid" aria-label="أقسام التعلّم">
+        {LEARN_SECTIONS.map(({ href, label, desc, Icon }) => (
+          <Link key={href} href={href} className="lrn-hub-card">
+            <div className="lrn-hub-card__icon">
+              <Icon size={22} strokeWidth={1.6} aria-hidden="true" />
+            </div>
+            <h2 className="lrn-hub-card__title">{label}</h2>
+            <p className="lrn-hub-card__desc">{desc}</p>
           </Link>
         ))}
       </nav>
-
-      <div className="lrn-hub-stats">
-        <div className="lrn-hub-stat"><strong>{tree.length}</strong><span>بابًا علميًا منشورًا</span></div>
-        <div className="lrn-hub-stat-divider" />
-        <div className="lrn-hub-stat"><strong>{totalLessons}</strong><span>درسًا معتمدًا</span></div>
-        <div className="lrn-hub-stat-divider" />
-        <div className="lrn-hub-stat"><strong>{totalSeries}</strong><span>سلسلة دروس</span></div>
-      </div>
-
-      <div className="lrn-hub-search">
-        <Search size={16} className="lrn-hub-search__icon" aria-hidden="true" />
-        <input
-          type="search"
-          placeholder="ابحث في أبواب العلم…"
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className="lrn-hub-search__input"
-          aria-label="ابحث في أبواب العلم"
-        />
-      </div>
-
-      {loading && <SkeletonCardGrid count={8} />}
-
-      {!loading && filtered.length === 0 && (
-        <p className="lrn-empty">لا نتائج مطابقة لبحثك.</p>
-      )}
-
-      <div className="lrn-hub-grid">
-        {!loading && filtered.map((cat) => (
-          <Link key={cat.id} href={`/learn/${cat.slug}`} className="lrn-hub-card">
-            <div className="lrn-hub-card__icon"><BookOpen size={22} strokeWidth={1.6} aria-hidden="true" /></div>
-            <h3 className="lrn-hub-card__title">{cat.name}</h3>
-            {cat.description && <p className="lrn-hub-card__desc">{cat.description}</p>}
-            <div className="lrn-hub-card__meta">
-              {cat.lessonCount > 0 && <span className="lrn-hub-card__badge">{cat.lessonCount} درس</span>}
-              {cat.seriesCount > 0 && <span className="lrn-hub-card__badge"><Layers size={11} /> {cat.seriesCount} سلسلة</span>}
-              {cat.children.length > 0 && <span className="lrn-hub-card__badge lrn-hub-card__badge--muted">{cat.children.length} تصنيف فرعي</span>}
-            </div>
-          </Link>
-        ))}
-      </div>
-
-      {!loading && tree.length === 0 && (
-        <div className="lrn-empty-state">
-          <p>لا تصنيفات منشورة بعد — تُضاف الأبواب تباعًا مع اعتماد محتواها علميًا.</p>
-        </div>
-      )}
     </div>
   );
 }
