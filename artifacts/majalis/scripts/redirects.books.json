@@ -48,5 +48,15 @@
     "from": "/library/book-bulugh",
     "to": "/library/book-bulugh-maram",
     "reason": "دمج تكرار: بلوغ المرام"
+  },
+  {
+    "from": "/library/book-maalem-tanzil",
+    "to": "/library/book-tafsir-al-baghawi",
+    "reason": "دمج تكرار: تفسير البغوي (معالم التنزيل)"
+  },
+  {
+    "from": "/library/book-minhaj-talibin",
+    "to": "/library/book-al-minhaj-nawawi",
+    "reason": "معرّف قديم: منهاج الطالبين للنووي"
   }
 ]

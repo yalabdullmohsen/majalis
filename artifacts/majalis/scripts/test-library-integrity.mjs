@@ -31,6 +31,7 @@ const CATALOG_PATH = resolve(APP_ROOT, "src/data/library-catalog.json");
 const CATALOG_TS_PATH = resolve(APP_ROOT, "src/lib/library-catalog.ts");
 const AUTHORS_PATH = resolve(APP_ROOT, "src/data/library-authors.json");
 const REDIRECTS_PATH = resolve(HERE, "redirects.books.json");
+const VERCEL_PATH = resolve(APP_ROOT, "vercel.json");
 
 /* ================================================================== */
 /* التطبيع العربي — مصدر واحد يستخدمه الكاشف والاختبار                */
@@ -173,6 +174,31 @@ async function main() {
     }
   }
 
+  /* 2أ) عنوان مطبَّع يحتوي عنواناً آخر لنفس المؤلف --------------------- */
+  // اكتُشف 2026-07-27: «معالم التنزيل» و«معالم التنزيل في تفسير القرآن»
+  // للبغوي كانا كتابين منفصلين في المكتبة، وأفلتا من الفحص (2) لأنه
+  // يطابق العناوين المطبَّعة تطابقاً تاماً فقط. الكلمات الزائدة هنا
+  // وصفٌ للفن لا عنوانٌ ثانٍ، فاحتواء أحد العنوانين للآخر لنفس المؤلف
+  // مؤشرُ تكرارٍ يجب حسمه (دمجٌ + تحويل) أو تمييزٌ صريح في العنوان.
+  const normalizedByAuthor = new Map();
+  for (const book of books) {
+    const nTitle = book.normalizedTitle || normalizeTitle(book.title);
+    const nAuthor = normalizeAuthor(book.author);
+    const bucket = normalizedByAuthor.get(nAuthor) ?? [];
+    for (const other of bucket) {
+      const a = ` ${nTitle} `;
+      const b = ` ${other.nTitle} `;
+      if (nTitle !== other.nTitle && (a.includes(b) || b.includes(a))) {
+        fail(
+          "DUP_CONTENT_SUBSET",
+          `تكرار محتمل: «${book.title}» (${book.id}) و«${other.book.title}» (${other.book.id}) — أحد العنوانين المطبَّعين يحتوي الآخر ولهما المؤلف نفسه.`
+        );
+      }
+    }
+    bucket.push({ nTitle, book });
+    normalizedByAuthor.set(nAuthor, bucket);
+  }
+
   /* 2ب) اتساق معرّف المؤلف (تحذير) ---------------------------------- */
   const authorIdByNormalized = new Map();
   for (const book of books) {
@@ -264,6 +290,54 @@ async function main() {
   } catch (error) {
     if (error.code !== "ENOENT") throw error;
     warnings.push("لم يُعثر على scripts/redirects.books.json — تخطّي فحص التحويلات.");
+  }
+
+  /* 5ب) تحويلات vercel.json — الملف الذي يُنفَّذ فعلاً على الإنتاج ----- */
+  // اكتُشف 2026-07-27 بفحص الموقع الحيّ: كانت في vercel.json كتلةُ
+  // تحويلاتٍ قديمة معكوسةُ الاتجاه سبقت الكتلة الصحيحة (وفيرسل يُنفِّذ
+  // أوّل قاعدة مطابقة)، فصار /library/book-tafsir-al-saadi يحوّل إلى
+  // معرّفٍ ميت يحوّل إليه من جديد ⇒ حلقةُ تحويلٍ لا نهائية أخفت أربعة
+  // كتبٍ حيّة عن الزوار (تفسير السعدي، والآجرومية، والمستصفى، ومنهاج
+  // الطالبين) رغم سلامة بياناتها في الفهرس. فحصُ redirects.books.json
+  // وحده لم يكشفها لأنه لا يقرأ vercel.json أصلاً.
+  try {
+    const vercel = JSON.parse(await readFile(VERCEL_PATH, "utf8"));
+    const rules = (vercel.redirects ?? []).filter((rule) =>
+      String(rule.source).startsWith("/library/")
+    );
+    const targetBySource = new Map();
+    for (const rule of rules) {
+      const from = String(rule.source).replace("/library/", "");
+      const to = String(rule.destination).replace("/library/", "");
+      if (seenIds.has(from)) {
+        fail(
+          "VERCEL_REDIRECT_LIVE_SOURCE",
+          `vercel.json يحوّل ${rule.source} وهو كتاب حيّ في الفهرس ⇒ الصفحة لا تُفتح.`
+        );
+      }
+      if (!seenIds.has(to)) {
+        fail(
+          "VERCEL_REDIRECT_DEAD_TARGET",
+          `vercel.json يحوّل ${rule.source} إلى ${rule.destination} وهو معرّف غير موجود في الفهرس.`
+        );
+      }
+      const previous = targetBySource.get(from);
+      if (previous && previous !== to) {
+        fail(
+          "VERCEL_REDIRECT_CONFLICT",
+          `vercel.json فيه قاعدتان متعارضتان لـ ${rule.source}: ${previous} و ${to} (تُنفَّذ الأولى فقط).`
+        );
+      }
+      targetBySource.set(from, previous ?? to);
+    }
+    for (const [from, to] of targetBySource) {
+      if (targetBySource.get(to) === from) {
+        fail("VERCEL_REDIRECT_LOOP", `حلقة تحويل في vercel.json: ${from} ⇄ ${to}.`);
+      }
+    }
+  } catch (error) {
+    if (error.code !== "ENOENT") throw error;
+    warnings.push("لم يُعثر على vercel.json — تخطّي فحص تحويلات الإنتاج.");
   }
 
   /* 6) تباعد عن المصدر الحي library-catalog.ts ----------------------- */
