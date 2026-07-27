@@ -42,7 +42,9 @@ jobs:
           EVENT_NAME: ${{ github.event_name }}
         run: |
           set -euo pipefail
-          ALLOW='^(cursor|session|claude|automation|fix|feature)/'
+          # ⚠️ ج-٢٥٩: كنظيره في `auto-merge-to-main.yml` — فرعُ `majalis-content-fill`
+          # بلا بادئةٍ بشرطة مائلة، فكان يسقط من النمط فلا يُحدَّث عند BEHIND/CONFLICTING.
+          ALLOW='^((cursor|session|claude|automation|fix|feature)/|majalis-content-fill$)'
           EXCLUDE_DUAL='^(automation/content|automation/tasks)$'
           nums=""
           if [ "$EVENT_NAME" = "pull_request" ] && [ -n "${PR_NUMBER:-}" ]; then
