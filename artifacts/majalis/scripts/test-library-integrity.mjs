@@ -95,6 +95,31 @@ export function normalizeTitle(input) {
     .join(" ");
 }
 
+/**
+ * أطول تتابع كلماتٍ مشترك بين نصّين بعد التطبيع العربي.
+ * يُستعمل لكشف تكرار *مضمون* حقلٍ داخل آخر حين تختلف الصياغة قليلاً
+ * فلا يمسكه البحث عن لفظٍ ثابت (راجع فحص caution أدناه).
+ */
+export function sharedWordRun(a, b) {
+  const left = normalizeArabic(a).split(" ").filter(Boolean);
+  const right = normalizeArabic(b).split(" ").filter(Boolean);
+  if (!left.length || !right.length) return 0;
+  let best = 0;
+  // مصفوفة سطرٍ واحد: أطول لاحقة مشتركة تنتهي عند كل موضع.
+  let previous = new Array(right.length + 1).fill(0);
+  for (let i = 1; i <= left.length; i += 1) {
+    const current = new Array(right.length + 1).fill(0);
+    for (let j = 1; j <= right.length; j += 1) {
+      if (left[i - 1] === right[j - 1]) {
+        current[j] = previous[j - 1] + 1;
+        if (current[j] > best) best = current[j];
+      }
+    }
+    previous = current;
+  }
+  return best;
+}
+
 /** تطبيع اسم المؤلف: توحيد الحروف + حذف الألقاب */
 export function normalizeAuthor(input) {
   if (!input) return "";
@@ -385,6 +410,17 @@ async function main() {
         fail(
           "CAUTION_IN_DESCRIPTION",
           `${id} — «تنبيه علمي» مكتوب داخل description؛ موضعه حقل caution وحده (وإلا ظهر مرّتين أو لم يُستثنَ من إبراز الرئيسية).`
+        );
+      }
+      // اكتُشف 2026-07-27 (الدفعة التالية): الفحصان أعلاه يمسكان اللفظ
+      // «تنبيه علمي» وحده، فأفلت منهما ثلاثة كتب يتكرّر فيها *مضمون*
+      // التنبيه داخل description بصياغة مقاربة لا بنفس اللفظ ⇒ يقرؤه
+      // الزائر مرّتين: فِقرةً في الوصف ثمّ تحت عنوان «تنبيه علمي:».
+      // فيُقاس التكرار بأطول تتابع كلماتٍ مشترك بعد التطبيع لا بلفظ ثابت.
+      if (caution && sharedWordRun(description, caution) >= 5) {
+        fail(
+          "CAUTION_ECHOED_IN_DESCRIPTION",
+          `${id} — مضمون caution مكرَّر داخل description (تتابع ${sharedWordRun(description, caution)} كلمات مشترك) ⇒ يقرؤه الزائر مرّتين؛ موضعه حقل caution وحده.`
         );
       }
     }
