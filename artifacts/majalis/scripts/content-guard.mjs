@@ -51,6 +51,20 @@ for (const rel of [
   }
 }
 
+/** 2ب) ذيول حشو خاصة ببذرة المجمع الفقهي (نُظِّفت في تدقيق ٢٠٢٦-٠٧-٢٧) */
+const FIQH_COUNCIL_BANNED_TAILS = [
+  "ويُراجع النص الكامل عند الحاجة إلى التفصيل",
+  "وتُعرض للتوثيق التعليمي مع الإحالة إلى المصدر الرسمي",
+  "مع بيان حدود الاعتماد دون اختزال مخلّ",
+];
+{
+  const rel = "src/lib/fiqh-council-seed.ts";
+  const text = read(rel);
+  for (const phrase of FIQH_COUNCIL_BANNED_TAILS) {
+    if (text.includes(phrase)) fail(`${rel}: ذيل قالبي محظور: «${phrase}»`);
+  }
+}
+
 /** 3) لا catch-all يعيد index.html للمسارات المجهولة */
 const vercel = read("vercel.json");
 if (/destination"\s*:\s*"\/index\.html"[\s\S]{0,80}\(\(\?!api/.test(vercel)
