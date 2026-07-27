@@ -363,6 +363,31 @@ async function main() {
         `${orphanedInJson.length} كتاباً في library-catalog.json غير موجود في library-catalog.ts الحي (${orphanedInJson.slice(0, 5).join(", ")}${orphanedInJson.length > 5 ? "…" : ""}). شغّل: npx tsx scripts/regen-library-catalog-json.mjs`
       );
     }
+    /* 7) نظافة حقل caution — يُقرأ من TS لأن JSON لا يحمله ----------- */
+    // اكتُشف 2026-07-27: LibraryDetailPage تطبع البادئة «تنبيه علمي:»
+    // بنفسها قبل نصّ caution، وكانت الحقول الأربعة كلها تبدأ بـ«تنبيه:»
+    // ⇒ يقرأ الزائر «تنبيه علمي: تنبيه: …». وفي book-ihya كان التنبيه
+    // نفسه مكتوباً مرّتين: داخل description وفي caution معاً ⇒ يظهر
+    // مكرّراً في الصفحة. والوصف ليس مكانه أصلاً: library-service.ts
+    // يستثني ذوات caution من الإبراز في الرئيسية بالحقل لا بالنص.
+    const entries = [...tsSource.matchAll(/\n\s{4}id:\s*"([^"]+)"([\s\S]*?)\n\s{2}\},/g)];
+    for (const [, id, body] of entries) {
+      // بلا `,\n` في الذيل: caution آخرُ حقلٍ في السجل غالباً فلا سطر بعده.
+      const caution = (body.match(/\n\s{4}caution:\s*\n?\s*"([\s\S]*?)",/) || [])[1];
+      const description = (body.match(/\n\s{4}description:\s*\n?\s*"([\s\S]*?)",/) || [])[1] || "";
+      if (caution && /^\s*تنبيه/.test(caution)) {
+        fail(
+          "CAUTION_PREFIX_STUTTER",
+          `${id} — نصّ caution يبدأ بـ«تنبيه» والواجهة تسبقه بـ«تنبيه علمي:» ⇒ تكرار البادئة عند الزائر.`
+        );
+      }
+      if (/تنبيه علمي/.test(description)) {
+        fail(
+          "CAUTION_IN_DESCRIPTION",
+          `${id} — «تنبيه علمي» مكتوب داخل description؛ موضعه حقل caution وحده (وإلا ظهر مرّتين أو لم يُستثنَ من إبراز الرئيسية).`
+        );
+      }
+    }
   } catch (error) {
     if (error.code !== "ENOENT") throw error;
     warnings.push("لم يُعثر على src/lib/library-catalog.ts — تخطّي فحص التباعد.");
