@@ -64,6 +64,12 @@ console.log("\n=== NavBar.tsx / App.tsx — نقطة دخول البحث موح�
     cssSrc.includes(".navbar-theme-toggle.navbar-search-toggle") && cssSrc.includes("display: inline-flex"),
     "زر البحث يبقى ظاهرًا على الجوال رغم إخفاء زر الوضع الليلي",
   );
+  assert(cssSrc.includes("header-ticker-marquee"), "حركة الماركي المستمرّة معرَّفة في CSS");
+  assert(cssSrc.includes(".header-ticker--marquee") || cssSrc.includes("header-ticker__track"), "مسار الشريط المتحرّك موجود");
+
+  const tickerSrc = readFileSync(resolve(appRoot, "src/components/HeaderTicker.tsx"), "utf-8");
+  assert(tickerSrc.includes("header-ticker--marquee"), "المكوّن يستخدم وضع الماركي المتحرّك");
+  assert(tickerSrc.includes("Megaphone") || tickerSrc.includes("promo"), "يدعم عناصر ترويج الأقسام/المميزات");
 }
 
 console.log(`\n${"─".repeat(40)}`);
