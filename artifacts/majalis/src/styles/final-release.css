@@ -882,6 +882,15 @@ html[data-theme="dark"] .global-back-btn {
 @media (min-width: 880px) {
   .global-back-btn,
   .scroll-to-top { bottom: 1.5rem; }
+  /* ارفع زر المساعد فوق زر «للأعلى» حتى لا يتراكبا في الزاوية نفسها */
+  .assistant-fab {
+    bottom: calc(1.5rem + 3.25rem + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+.site-footer--v3 .site-footer-group__title,
+.site-footer .site-footer-group__title {
+  color: rgba(250, 248, 242, 0.92);
 }
 
 /* ── حالات التحميل/الخطأ/الفراغ الموحَّدة ── */

@@ -43,6 +43,20 @@ export default function AsmaaHusnaPage() {
   });
 
   useEffect(() => {
+    if (!selected) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setSelected(null);
+    };
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    document.addEventListener("keydown", onKey);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prev;
+    };
+  }, [selected]);
+
+  useEffect(() => {
     applyPageSeo({
       path: "/asma-husna",
       title: "الأسماء الحسنى، أسماء الله التسعة والتسعون | المجلس العلمي",
@@ -217,14 +231,11 @@ export default function AsmaaHusnaPage() {
 
       {/* ═══ نافذة التفاصيل ═══ */}
       {selected && (
-        // onKeyDown يعالج Escape فعليًا هنا؛ role="presentation" يُبقي العنصر
-        // خارج شجرة الوصول عمدًا (الخلفية زخرفية بصريًا)، فلا تعارض فعليًا.
         /* eslint-disable jsx-a11y/no-noninteractive-element-interactions, jsx-a11y/click-events-have-key-events */
         <div
           className="ah-modal-backdrop"
           onClick={() => setSelected(null)}
           role="presentation"
-          onKeyDown={(e) => e.key === "Escape" && setSelected(null)}
         >
           <div
             className="ah-modal"

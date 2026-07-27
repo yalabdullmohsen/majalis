@@ -1383,7 +1383,7 @@ hr.decorative,
     grid-column: 2;
     grid-row: 1 / span 20;
     position: sticky;
-    top: 4rem;
+    top: var(--sticky-below-chrome, 7rem);
   }
 
   .content-hub__toolbar .ds-filter-toggle {

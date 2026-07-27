@@ -83,7 +83,14 @@ function EventModal({ event, onClose }: { event: CalendarEvent; onClose: () => v
   useEffect(() => {
     const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
     document.addEventListener("keydown", handler);
-    return () => document.removeEventListener("keydown", handler);
+    document.body.classList.add("filter-sheet-open");
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", handler);
+      document.body.classList.remove("filter-sheet-open");
+      document.body.style.overflow = prev;
+    };
   }, [onClose]);
 
   return (
