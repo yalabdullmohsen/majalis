@@ -96,14 +96,13 @@ export function SurahList({ surahs, currentSurah, onSelect, onClose, onSelectPag
       )}
 
       {tab === "juz" && (
-        <div className="qs-juz-grid" role="list" aria-label="الأجزاء الثلاثون">
+        <div className="qs-juz-grid" aria-label="الأجزاء الثلاثون">
           {JUZ_START_PAGES.map((page, i) => {
             const juz = i + 1;
             return (
               <button
                 key={juz}
                 type="button"
-                role="listitem"
                 className="qs-juz-chip"
                 onClick={() => {
                   onSelectPage?.(page);

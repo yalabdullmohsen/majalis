@@ -17,14 +17,13 @@
 2. تحقق عمليًا من النتيجة (الصفحة/الوظيفة المعدّلة، شاملًا RTL والجوال).
 3. إن نجح: commit برسالة عربية واضحة ثم push إلى فرع الجلسة فورًا، وانتقل للمهمة التالية.
 4. إن فشل: أصلح ضمن سقف 10 دورات؛ فإن استُنفدت، وثّق المشكلة وانتقل للمهمة التالية إن كانت مستقلة.
-5. لا تدمج إلى main يدويًا من الجلسة (`git push` لـmain / `git merge` محلي) ولا تطلب دمجًا يدويًا من المستخدم. مسار الدمج والنشر التلقائي (مُحدَّث 2026-07-27):
-   - ادفع إلى فرع العمل وافتح **PR واحد Ready** إلى `main` (ليس سلسلة مراحل).
-   - حماية `main` تفرض **Verify build** إلزاميًا — لا دمج بدونه.
-   - `.github/workflows/auto-merge-to-main.yml` يحدّث الفرع من `main` إن لزم، يفعّل Auto-merge (squash) بعد نجاح Verify build، يلغي Auto-merge عند فشل CI، ويغلق المكدّسات التي لا تستهدف `main`.
-   - `.github/workflows/resolve-pr-conflicts.yml` يحدّث الفرع عند CONFLICTING/BEHIND.
-   - النشر من `main` عبر Vercel + بوابة `.github/workflows/auto-deploy.yml`.
+5. **الدمج والنشر جزء من إغلاق المهمة** (أُلغي 2026-07-27 بطلب المالك قيد «بلا دمج/نشر من الجلسة» القديم): بعد نجاح بوابة الإغلاق ادفع الفرع وافتح/حدّث **PR واحد Ready** إلى `main`، وتأكد أن الدمج إلى `main` والنشر اكتملا — لا تتوقف عند «الـPR جاهز» وتعتبر المهمة منتهية.
+   - مسار مفضّل: `.github/workflows/auto-merge-to-main.yml` (Draft→Ready + Auto-merge squash بعد نجاح Verify build) ثم نشر Vercel + `.github/workflows/auto-deploy.yml` من `main`.
+   - حماية `main` تفرض **Verify build** — أصلِح أي فشل CI قبل اعتبار المهمة مكتملة.
+   - عند طلب المالك الصريح بالدمج/النشر: أصلح البوابة وادفع حتى يُدمج الفرع إلى `main` ويظهر النشر؛ لا ترفض بحجة بروتوكول قديم.
+   - يُفضَّل عدم `git push` مباشر لـ`main` من الجلسة طالما مسار الـPR+Auto-merge متاح؛ إن تعذّر الأوتوميشن وبقي طلب المالك قائمًا، ادفع لـ`main` بعد نجاح build محلي.
    **استثناء (content-runner):** `scripts/content-runner.sh` يبقى على مساره التصميمي.
-   **نافذتا automation/content وautomation/tasks:** ادفعا لفرعيهما فقط عبر `scripts/commit-and-push-branch.sh`؛ دمجهما عبر `.github/workflows/release-majlisilm.yml` فقط.
+   **نافذتا automation/content وautomation/tasks:** ادفعا لفرعيهما عبر `scripts/commit-and-push-branch.sh`؛ دمجهما عبر `.github/workflows/release-majlisilm.yml`.
 
 ## صمامات الأمان وكفاءة الرصيد
 - إذا اقترب انتهاء الوقت: أكمل المهمة الجارية فقط وارفعها، ولا تبدأ مهمة جديدة.
