@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "wouter";
-import { Clock, Repeat2, ScrollText, Heart, BookOpen, Sparkles } from "lucide-react";
+import { Clock, Repeat2, ScrollText, Heart, BookOpen, Sparkles, Megaphone } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { fetchPrayerTimes, computePrayerCountdown, type PrayerCountdown, type PrayerSlot } from "@/lib/prayer-times";
 import {
@@ -9,6 +9,7 @@ import {
   readRecent,
   writeRecent,
   nextRotationDelayMs,
+  marqueeDurationSec,
   REFRESH_ON_RETURN_AFTER_MS,
   type TickerContentItem,
   type TickerKind,
@@ -23,11 +24,6 @@ type TickerItem = {
   href: string;
 };
 
-const MAX_TICKER_TEXT_LENGTH = 72;
-
-/* عدّاد الصلاة القادمة — نفس منطق PrayerChip في NavBar.tsx حرفيًا (فترة
-   السماح 30 دقيقة بعد الأذان)، بتحديث كل دقيقة بدل كل ثانية (كافٍ لشريط
-   نصي متحرك، ويتجنّب عرض ثوانٍ متجمّدة بين كل تحديث). */
 function usePrayerTickerItem(): TickerItem | null {
   const [cd, setCd] = useState<PrayerCountdown | null>(null);
   useEffect(() => {
@@ -74,15 +70,12 @@ const KIND_ICON: Record<TickerKind, LucideIcon> = {
   dhikr: Repeat2,
   ayah: BookOpen,
   faida: Heart,
+  promo: Megaphone,
 };
 
 /**
- * دفعة المحتوى المعروضة، مع تدوير دوري ومنع تكرار.
- *
- * سابقًا كان الشريط يعرض ٣ عناصر «يومية» ثابتة (نفس الحديث والذكر طوال
- * اليوم) فبدا متكررًا. الآن: مجمّع محلي كبير (buildTickerPool، بلا تكرار
- * نصّي)، دفعة من ٤ تتبدّل كل ٤٥–٩٠ ثانية بلا إعادة تحميل، ولا يتكرر عنصر
- * ضمن آخر ٢٠ عرضًا. كل نص يُعرض كاملًا من مصدره دون أي قصّ.
+ * دفعة مسار الإعلان: مجمّع محلّي كبير، دفعة متنوّعة تتبدّل دوريًا،
+ * بلا تكرار ضمن آخر 20 عرضًا.
  */
 function useRotatingContent(): TickerContentItem[] {
   const pool = useMemo(() => buildTickerPool(), []);
@@ -98,15 +91,11 @@ function useRotatingContent(): TickerContentItem[] {
     setBatch(next);
   }, [pool]);
 
-  // أول تحميل: يُقرأ السجل من الجلسات السابقة كي لا يعيد الشريط نفس
-  // المحتوى بعد كل فتح للتطبيق.
   useEffect(() => {
     recentRef.current = readRecent();
     rotate();
   }, [rotate]);
 
-  // تدوير دوري بفاصل عشوائي 45–90ث. يُعاد جدولته بعد كل دورة كي لا يكون
-  // الإيقاع رتيبًا ومتوقَّعًا.
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout>;
     const schedule = () => {
@@ -119,8 +108,6 @@ function useRotatingContent(): TickerContentItem[] {
     return () => clearTimeout(timer);
   }, [rotate]);
 
-  // العودة من الخلفية: تُحدَّث الدفعة فقط إن مرّ وقت كافٍ — بلا هذا الشرط
-  // يتبدّل المحتوى مع كل تبديل تبويب، وهو مزعج.
   useEffect(() => {
     const onVisible = () => {
       if (document.visibilityState !== "visible") return;
@@ -134,8 +121,6 @@ function useRotatingContent(): TickerContentItem[] {
   return batch;
 }
 
-// المصدر/التخريج ورقم الحديث لا يُعرضان في الواجهة (طلب مباشر)؛ يبقيان في
-// TickerContentItem.source للتحقق الداخلي فقط — النص المعروض هو المتن الكامل.
 function TickerEntry({ item }: { item: TickerItem }) {
   return (
     <Link href={item.href} className="header-ticker__item">
@@ -146,10 +131,7 @@ function TickerEntry({ item }: { item: TickerItem }) {
   );
 }
 
-/** شريط علوي متحرك يعرض عدّاد الصلاة القادمة بالتناوب مع محتوى معتمد
-    (ذكر/حديث/فائدة من نفس مصدر «مجلس اليوم»)، بدل زر البحث في الهيدر.
-    CSS Marquee بلا مكتبات؛ يتوقف عند hover/لمس، ويتحول لتناوب ثابت بلا
-    حركة عند prefers-reduced-motion. */
+/** شريط إعلان علوي متحرّك مستمر (marquee) — أحاديث وأذكار ونبذ أقسام/مميزات. */
 export function HeaderTicker() {
   const prayerItem = usePrayerTickerItem();
   const contentItems = useRotatingContent();
@@ -158,33 +140,23 @@ export function HeaderTicker() {
   const [paused, setPaused] = useState(false);
 
   const items = useMemo<TickerItem[]>(() => {
-    const rejected: string[] = [];
-    const mapped: TickerItem[] = contentItems.flatMap((c) => {
-      if (!c.text?.trim() || c.text.length > MAX_TICKER_TEXT_LENGTH) {
-        rejected.push(c.id);
-        return [];
-      }
-      return [{
-      key: c.id,
-      Icon: KIND_ICON[c.kind] ?? Sparkles,
-      label: c.label,
-      text: c.text,
-      source: c.source,
-      href: c.href,
-      }];
-    });
-    if (rejected.length > 0 && typeof window !== "undefined") {
-      console.warn("[majalis:ticker:review]", {
-        reason: "excluded-long-or-empty",
-        ids: rejected,
-      });
-    }
+    const mapped: TickerItem[] = contentItems
+      .filter((c) => !!c.text?.trim())
+      .map((c) => ({
+        key: c.id,
+        Icon: KIND_ICON[c.kind] ?? Sparkles,
+        label: c.label,
+        text: c.text,
+        source: c.source,
+        href: c.href,
+      }));
     return prayerItem ? [prayerItem, ...mapped] : mapped;
   }, [prayerItem, contentItems]);
 
+  // وضع تقليل الحركة: تناوب عنصر واحد بلا تمرير مستمر.
   useEffect(() => {
-    if (items.length === 0 || paused) return;
-    const t = setInterval(() => setActiveIndex((i) => (i + 1) % items.length), reducedMotion ? 6000 : 8000);
+    if (!reducedMotion || items.length === 0 || paused) return;
+    const t = setInterval(() => setActiveIndex((i) => (i + 1) % items.length), 6000);
     return () => clearInterval(t);
   }, [reducedMotion, items.length, paused]);
 
@@ -196,21 +168,54 @@ export function HeaderTicker() {
     return <div className="header-ticker header-ticker--empty" aria-hidden="true" />;
   }
 
-  const activeItem = items[activeIndex % items.length];
+  const pauseHandlers = {
+    onPointerDown: () => setPaused(true),
+    onPointerUp: () => setPaused(false),
+    onPointerCancel: () => setPaused(false),
+    onMouseEnter: () => setPaused(true),
+    onMouseLeave: () => setPaused(false),
+    onFocusCapture: () => setPaused(true),
+    onBlurCapture: () => setPaused(false),
+  };
+
+  if (reducedMotion) {
+    const activeItem = items[activeIndex % items.length];
+    return (
+      <div
+        className={`header-ticker header-ticker--static${paused ? " header-ticker--paused" : ""}`}
+        role="status"
+        aria-live="polite"
+        aria-label="شريط معلومات"
+        {...pauseHandlers}
+      >
+        <div className="header-ticker__single-item" key={activeItem.key}>
+          <TickerEntry item={activeItem} />
+        </div>
+      </div>
+    );
+  }
+
+  // مسار مزدوج لحلقة سلسة بلا قفزة (0 → 50%).
+  const loop = [...items, ...items];
+  const durationSec = marqueeDurationSec(items.length);
+
   return (
     <div
-      className={`header-ticker${reducedMotion ? " header-ticker--static" : " header-ticker--single"}${paused ? " header-ticker--paused" : ""}`}
+      className={`header-ticker header-ticker--marquee${paused ? " header-ticker--paused" : ""}`}
       role="status"
-      aria-live="polite"
-      aria-label="شريط معلومات متحرك"
-      onPointerDown={() => setPaused(true)}
-      onPointerUp={() => setPaused(false)}
-      onPointerCancel={() => setPaused(false)}
-      onMouseEnter={() => setPaused(true)}
-      onMouseLeave={() => setPaused(false)}
+      aria-live="off"
+      aria-label="شريط إعلانات متحرّك: أحاديث وأذكار وأقسام"
+      {...pauseHandlers}
     >
-      <div className={`header-ticker__single-item${reducedMotion ? "" : " header-ticker__single-item--animate"}`} key={activeItem.key}>
-        <TickerEntry item={activeItem} />
+      <div className="header-ticker__viewport">
+        <div
+          className="header-ticker__track"
+          style={{ animationDuration: `${durationSec}s` }}
+        >
+          {loop.map((item, i) => (
+            <TickerEntry key={`${item.key}-${i}`} item={item} />
+          ))}
+        </div>
       </div>
     </div>
   );
