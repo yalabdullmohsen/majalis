@@ -16,7 +16,9 @@ export type TimedHeardWord = {
   endSec: number | null;
 };
 
-const MADD_CHARS = /[اويىٰٱ]/;
+const MADD_BASE = new Set(["ا", "و", "ي", "ى", "ٱ"]);
+/** ألف خنجرية U+0670 — خارج character class لتجنب no-misleading-character-class */
+const MADD_SUPERSCRIPT_ALIF = "\u0670";
 /** حد أدنى تقريبي لمدة كلمة فيها مد طبيعي (ثانية) */
 const MADD_MIN_SEC = 0.18;
 /** سقف معقول قبل اعتبار المد زائدًا بوضوح */
@@ -29,7 +31,10 @@ function durationSec(w: TimedHeardWord): number | null {
 }
 
 function hasMaddLetter(raw: string): boolean {
-  return MADD_CHARS.test(raw);
+  for (const ch of raw) {
+    if (MADD_BASE.has(ch) || ch === MADD_SUPERSCRIPT_ALIF) return true;
+  }
+  return false;
 }
 
 /**
