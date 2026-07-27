@@ -120,6 +120,7 @@
   --accent-soft:  var(--gold-100);
   --accent-deep:  var(--gold-700);
 
+
   /* ══════════════════════════════════════════════════════════
      ٣) الطباعة — سُلَّم نسبي 1.2 (Minor Third)
      ══════════════════════════════════════════════════════════ */
@@ -262,6 +263,7 @@ html[data-theme="dark"] {
   --accent-soft:  #33291433;
   --accent-deep:  var(--gold-200);
 
+
   --danger:      #F87171;
   --danger-fg:   #FCA5A5;
   --danger-bg:   #3B1717;
@@ -376,6 +378,7 @@ html[data-theme="dark"] {
   --elite-radius:  var(--r-lg);
   --elite-shadow:  var(--e-2);
 
+  --background:var(--bg);--surfaceElevated:var(--bg-elevated);--cardBackground:var(--surface);--textPrimary:var(--text);--textSecondary:var(--text-2);--textMuted:var(--text-muted);--iconPrimary:var(--text-brand);--accentText:var(--text-brand-deep);--selectedBackground:var(--brand-soft);--selectedText:var(--text-brand-deep);
   /* — أنظمة متفرقة — */
   --msk-primary: var(--brand);
   --msk-bg:      var(--bg);

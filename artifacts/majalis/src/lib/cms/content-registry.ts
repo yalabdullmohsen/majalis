@@ -125,7 +125,7 @@ export const CONTENT_REGISTRY: Record<CmsContentKind, ContentTableConfig> = {
     publishedField: "published_at",
     scheduledField: "scheduled_at",
     statusMap: { approved: "approved", pending: "pending", draft: "draft", archived: "archived", rejected: "rejected" },
-    publicRoute: () => `/rulings`,
+    publicRoute: (id) => (id ? `/rulings/${id}` : `/rulings`),
   },
   news: {
     table: "platform_updates",
@@ -176,7 +176,7 @@ export const CONTENT_REGISTRY: Record<CmsContentKind, ContentTableConfig> = {
     publishedField: "published_at",
     scheduledField: "scheduled_at",
     statusMap: { approved: "published", published: "published", pending: "draft", draft: "draft" },
-    publicRoute: () => `/qa`,
+    publicRoute: (id) => (id ? `/qa?id=${encodeURIComponent(id)}` : `/qa`),
   },
   miracle: {
     table: "scientific_miracles",

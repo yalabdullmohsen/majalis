@@ -1,26 +1,14 @@
-/* ── 175 — MoreBottomSheet & AppRoutes misc ─────────────────────────────── */
-.bottom-sheet__close-btn {
-  float: left;
-  background: none;
-  border: none;
-  font-size: 1.1rem;
-  cursor: pointer;
-  color: var(--majalis-ink-soft);
-  line-height: 1;
-}
-.bottom-sheet__body { padding: 0.75rem 1rem calc(2rem + var(--safe-bottom, 0px)); overflow-y: auto; }
-.bottom-sheet__section { margin-bottom: 1.25rem; }
-.bottom-sheet__section-label {
-  font-size: 0.7rem;
-  font-weight: 700;
-  color: var(--majalis-emerald);
-  letter-spacing: normal;
-  margin-bottom: 0.5rem;
-  text-transform: uppercase;
-}
-.more-sheet-item--active {
-  background: var(--majalis-sage);
-  border-color: var(--majalis-emerald);
-  color: var(--majalis-emerald-deep);
-}
-
+/* MoreBottomSheet — Design Tokens */
+.bottom-sheet{background:var(--surfaceElevated,var(--surface))!important;color:var(--textPrimary,var(--text))!important;border-top:1px solid var(--border)!important}
+.bottom-sheet__head{color:var(--textPrimary,var(--text))!important;border-bottom:1px solid var(--border)!important}
+.bottom-sheet__handle{background:var(--border-strong,var(--border))!important}
+.bottom-sheet__close-btn{float:left;background:var(--surface);border:1px solid var(--border);font-size:1.1rem;cursor:pointer;color:var(--iconPrimary,var(--text-brand));line-height:1;border-radius:var(--r-md)}
+.bottom-sheet__close-btn:hover{color:var(--text);background:var(--surface-2)}
+.bottom-sheet__body{padding:.75rem 1rem calc(2rem + var(--safe-bottom,0));overflow-y:auto}
+.bottom-sheet__section{margin-bottom:1.25rem}
+.bottom-sheet__section-label{font-size:.7rem;font-weight:700;color:var(--textMuted,var(--text-muted));margin-bottom:.5rem;text-transform:uppercase}
+.more-sheet-item{background:var(--cardBackground,var(--surface))!important;border-color:var(--border)!important;color:var(--textPrimary,var(--text))!important}
+.more-sheet-item:hover{background:var(--selectedBackground,var(--surface-2))!important}
+.more-sheet-item--active{background:var(--selectedBackground,var(--brand-soft))!important;border-color:var(--brand)!important;color:var(--selectedText,var(--text-brand-deep))!important}
+.more-sheet-item__icon{background:var(--brand-soft)!important;color:var(--iconPrimary,var(--text-brand))!important}
+.more-sheet-theme-toggle{background:var(--surface-2)!important;color:var(--text)!important;border-color:var(--border)!important}
