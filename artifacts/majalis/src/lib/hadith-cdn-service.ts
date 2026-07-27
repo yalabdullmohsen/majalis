@@ -39,6 +39,12 @@ export interface CdnHadith {
   hadithnumber: number;
   text: string;
   chapter?: string;
+  /** رقم الكتاب في المرآة المحلية */
+  book?: number;
+  /** رقم الحديث داخل الكتاب */
+  inBook?: number;
+  /** رقم عربي بديل (مسلم غالباً) */
+  arabicNumber?: number;
   grades?: { name: string; grade: string }[];
 }
 

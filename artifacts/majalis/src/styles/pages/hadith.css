@@ -866,3 +866,77 @@
   border-color: var(--majalis-emerald, #166048);
   color: #fff;
 }
+
+.hadith-access-bar__row--scope {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.25rem;
+}
+.hadith-access-bar__row--scope button {
+  min-height: 36px;
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-md, 0.55rem);
+  border: 1px solid var(--color-border, #E8E7E2);
+  background: var(--color-surface, #fff);
+  font-weight: 700;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+.hadith-access-bar__row--scope button.is-active {
+  background: var(--majalis-sage, #EAF5EE);
+  border-color: var(--majalis-emerald, #166048);
+  color: var(--majalis-emerald-deep, #143F35);
+}
+
+.hadith-card__text--matn {
+  -webkit-line-clamp: 5;
+}
+.hadith-meta-item--takhrij {
+  color: var(--majalis-emerald-deep, #143F35);
+}
+
+.hadith-modal__section-label {
+  margin: 0 0 0.35rem;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--majalis-emerald-deep, #143F35);
+}
+.hadith-modal__matn-block {
+  display: grid;
+  gap: 0.35rem;
+}
+.hadith-modal__text--matn {
+  font-size: 1.2rem;
+}
+.hadith-modal__isnad-block {
+  display: grid;
+  gap: 0.5rem;
+}
+.hadith-modal__isnad-toggle {
+  justify-self: start;
+  min-height: 40px;
+  padding: 0.35rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid var(--color-border, #E8E7E2);
+  background: var(--color-surface, #fff);
+  font-weight: 700;
+  font-size: 0.82rem;
+  cursor: pointer;
+  color: var(--msk-text-2, #5C5C56);
+}
+.hadith-modal__isnad {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  border-radius: 8px;
+  background: rgba(20, 63, 53, 0.04);
+  border: 1px dashed rgba(20, 63, 53, 0.2);
+  font-size: 0.9rem;
+  line-height: 1.85;
+  color: var(--msk-text-2, #5C5C56);
+}
+.hadith-modal-btn--ghost {
+  background: transparent !important;
+  border: 1px solid var(--color-border, #E8E7E2) !important;
+  color: inherit !important;
+}

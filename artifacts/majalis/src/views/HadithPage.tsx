@@ -11,8 +11,13 @@ import { arabicMatchAny } from "@/lib/arabic-search";
 import {
   ARABIC_LETTER_INDEX,
   compareHadithAccess,
+  extractDisplayMatn,
+  hadithCorpusKey,
   hadithMatchesLetter,
   hadithNumberMatches,
+  normalizeHadithDigits,
+  splitHadithNarration,
+  type HadithSearchScope,
   type HadithSortMode,
 } from "@/lib/hadith-access";
 import { PageHeader, SkeletonCardGrid, Empty, Chip } from "@/components/ui-common";
@@ -87,16 +92,69 @@ function cdnToHadithItems(
     narrator: null,
     source_name: sourceName,
     // الصحيحان: الصحة بعضوية الكتاب لا بدرجة ملفّقة لكل سند من الـCDN.
-    // نعرض تسمية الكتاب؛ الدرجة النصية تبقى null ما لم يُمرَّر خيار صريح.
     grade: opts?.grade ?? null,
     collection,
-    chapter: (h as { chapter?: string }).chapter ?? null,
+    chapter: h.chapter ?? (h.book != null ? `الكتاب ${h.book}` : null),
     explanation: null,
     keywords: null,
     hadith_number: String(h.hadithnumber),
-    metadata: { authenticity: "sahih-by-collection" },
+    metadata: {
+      authenticity: "sahih-by-collection",
+      takhrij: `${sourceName} — الحديث ${h.hadithnumber}${h.book != null ? ` · الكتاب ${h.book}` : ""}${h.inBook != null ? ` · داخله ${h.inBook}` : ""}`,
+      book: h.book ?? null,
+      in_book: h.inBook ?? null,
+      arabic_number: h.arabicNumber ?? null,
+      takhrij_method: "membership",
+    },
     created_at: new Date().toISOString(),
   }));
+}
+
+/**
+ * يُلصق شروح/تخريج البذرة المنسّقة على صفوف الصحيحين بنفس (المجموعة+الرقم)
+ * بدل إظهار بطاقتين مكررتين؛ ويُبقي ما ليس له مقابل في المرجع.
+ */
+function mergeCorpusWithCurated(corpus: HadithItem[], curated: HadithItem[]): HadithItem[] {
+  const byKey = new Map<string, HadithItem>();
+  for (const row of curated) {
+    const key = hadithCorpusKey(row.collection, row.hadith_number);
+    if (key) byKey.set(key, row);
+  }
+  const used = new Set<string>();
+  const out = corpus.map((row) => {
+    const key = hadithCorpusKey(row.collection, row.hadith_number);
+    if (!key) return row;
+    const c = byKey.get(key);
+    if (!c) return row;
+    used.add(key);
+    return {
+      ...row,
+      title: c.title || row.title,
+      narrator: c.narrator || row.narrator,
+      explanation: c.explanation || row.explanation,
+      keywords: c.keywords?.length ? c.keywords : row.keywords,
+      grade: c.grade || row.grade,
+      metadata: {
+        ...(row.metadata ?? {}),
+        ...(c.metadata ?? {}),
+        takhrij:
+          (c.metadata?.takhrij as string | undefined) ||
+          c.source_name ||
+          (row.metadata?.takhrij as string | undefined) ||
+          null,
+        takhrij_method: (c.metadata?.takhrij_method as string | undefined) || "curated+membership",
+        muhaddith: (c.metadata?.muhaddith as string | undefined) || null,
+      },
+    };
+  });
+  for (const row of curated) {
+    const key = hadithCorpusKey(row.collection, row.hadith_number);
+    if (key && used.has(key)) continue;
+    // لا تُضَف بطاقات فهرسة مكررة لنفس رقم البخاري/مسلم بلا دمج
+    if (key) continue;
+    out.push(row);
+  }
+  return out;
 }
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
@@ -169,9 +227,11 @@ function HadithCard({ h, onExpand }: { h: HadithItem; onExpand: (h: HadithItem) 
   const copyTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(() => () => { if (copyTimerRef.current) clearTimeout(copyTimerRef.current); }, []);
 
+  const displayMatn = extractDisplayMatn(h.title, h.text);
+
   function handleCopy(e: React.MouseEvent) {
     e.stopPropagation();
-    const content = `${h.text}\n\n— ${h.narrator ?? ""} | ${h.source_name ?? ""}`;
+    const content = `${displayMatn}\n\n— ${h.source_name ?? ""}${h.hadith_number ? ` ${h.hadith_number}` : ""}`;
     navigator.clipboard.writeText(content).then(() => {
       if (copyTimerRef.current) clearTimeout(copyTimerRef.current);
       setCopied(true);
@@ -185,6 +245,7 @@ function HadithCard({ h, onExpand }: { h: HadithItem; onExpand: (h: HadithItem) 
   }
 
   const compRef = h.metadata?.companion as string | undefined;
+  const takhrijShort = h.metadata?.takhrij ? String(h.metadata.takhrij) : null;
 
   return (
     <div
@@ -194,7 +255,7 @@ function HadithCard({ h, onExpand }: { h: HadithItem; onExpand: (h: HadithItem) 
       onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && onExpand(h)}
       tabIndex={0}
       role="button"
-      aria-label={`عرض تفاصيل الحديث: ${h.title ?? ""}`}
+      aria-label={`عرض تفاصيل الحديث: ${h.title ?? displayMatn.slice(0, 40)}`}
     >
       {/* Header */}
       <header className="hadith-card__header">
@@ -223,8 +284,8 @@ function HadithCard({ h, onExpand }: { h: HadithItem; onExpand: (h: HadithItem) 
         <p className="hadith-card__chapter">{h.chapter}</p>
       )}
 
-      {/* Text */}
-      <blockquote className="hadith-card__text">{h.text}</blockquote>
+      {/* المتن فقط — بلا سند في العرض الخارجي */}
+      <blockquote className="hadith-card__text hadith-card__text--matn">{displayMatn}</blockquote>
 
       {/* Meta */}
       <div className="hadith-card__meta">
@@ -238,6 +299,12 @@ function HadithCard({ h, onExpand }: { h: HadithItem; onExpand: (h: HadithItem) 
           <span className="hadith-meta-item">
             <span className="hadith-meta-label">المصدر:</span>{" "}
             {h.source_name}
+          </span>
+        )}
+        {takhrijShort && (
+          <span className="hadith-meta-item hadith-meta-item--takhrij">
+            <span className="hadith-meta-label">تخريج:</span>{" "}
+            {truncateAtWord(takhrijShort, 72)}
           </span>
         )}
       </div>
@@ -269,7 +336,7 @@ function HadithCard({ h, onExpand }: { h: HadithItem; onExpand: (h: HadithItem) 
           type="button"
           className="hadith-action-btn"
           onClick={handleCopy}
-          aria-label="نسخ الحديث"
+          aria-label="نسخ المتن"
         >
           {copied ? "✓" : "⎘"}
         </button>
@@ -277,12 +344,12 @@ function HadithCard({ h, onExpand }: { h: HadithItem; onExpand: (h: HadithItem) 
           type="button"
           className="hadith-action-btn"
           onClick={(e) => { e.stopPropagation(); onExpand(h); }}
-          aria-label="عرض التفاصيل"
+          aria-label="عرض التفاصيل والتخريج"
         >
           ↗
         </button>
         <ShareButtons
-          title={h.title || "حديث نبوي شريف"}
+          title={h.title || displayMatn.slice(0, 60) || "حديث نبوي شريف"}
           url="https://www.majlisilm.com/hadith"
         />
       </div>
@@ -294,8 +361,13 @@ function HadithCard({ h, onExpand }: { h: HadithItem; onExpand: (h: HadithItem) 
 
 function HadithDetailModal({ h, onClose }: { h: HadithItem; onClose: () => void }) {
   const [copied, setCopied] = useState(false);
+  const [copiedFull, setCopiedFull] = useState(false);
+  const [showIsnad, setShowIsnad] = useState(false);
   const overlayRef = useRef<HTMLDivElement>(null);
   const copyTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const { matn, isnad, hasIsnad } = splitHadithNarration(h.text);
+  const displayMatn = matn || extractDisplayMatn(h.title, h.text);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
@@ -305,8 +377,8 @@ function HadithDetailModal({ h, onClose }: { h: HadithItem; onClose: () => void 
 
   useEffect(() => () => { if (copyTimerRef.current) clearTimeout(copyTimerRef.current); }, []);
 
-  function handleCopy() {
-    const content = `${h.title ? h.title + "\n" : ""}${h.text}\n\n— ${h.narrator ?? ""} | ${h.source_name ?? ""}`;
+  function handleCopyMatn() {
+    const content = `${h.title ? h.title + "\n" : ""}${displayMatn}\n\n— ${h.source_name ?? ""}${h.hadith_number ? ` ${h.hadith_number}` : ""}`;
     navigator.clipboard.writeText(content).then(() => {
       if (copyTimerRef.current) clearTimeout(copyTimerRef.current);
       setCopied(true);
@@ -314,7 +386,25 @@ function HadithDetailModal({ h, onClose }: { h: HadithItem; onClose: () => void 
     });
   }
 
+  function handleCopyFull() {
+    const content = `${h.title ? h.title + "\n" : ""}${h.text}\n\n— ${h.narrator ?? ""} | ${h.source_name ?? ""}`;
+    navigator.clipboard.writeText(content).then(() => {
+      if (copyTimerRef.current) clearTimeout(copyTimerRef.current);
+      setCopiedFull(true);
+      copyTimerRef.current = setTimeout(() => setCopiedFull(false), 2000);
+    });
+  }
+
   const meta = h.metadata ?? {};
+  const takhrijText = meta.takhrij ? String(meta.takhrij) : h.source_name;
+  const methodLabel =
+    meta.takhrij_method === "membership"
+      ? "عضوية الصحيحين"
+      : meta.takhrij_method === "curated+membership"
+        ? "عضوية الصحيحين + تخريج منسّق"
+        : meta.muhaddith
+          ? `تخريج منسوب (${String(meta.muhaddith)})`
+          : "تخريج مرجعي";
 
   return (
     // نقر الخلفية للإغلاق مصحوب بمعالج Escape فعلي (أعلاه) وزر إغلاق ظاهر —
@@ -360,7 +450,26 @@ function HadithDetailModal({ h, onClose }: { h: HadithItem; onClose: () => void 
         )}
         {h.chapter && <p className="hadith-modal__chapter">{h.chapter}</p>}
 
-        <blockquote className="hadith-modal__text">{h.text}</blockquote>
+        <section className="hadith-modal__matn-block" aria-label="متن الحديث">
+          <h3 className="hadith-modal__section-label">المتن</h3>
+          <blockquote className="hadith-modal__text hadith-modal__text--matn">{displayMatn}</blockquote>
+        </section>
+
+        {hasIsnad && isnad && (
+          <section className="hadith-modal__isnad-block" aria-label="سند الحديث">
+            <button
+              type="button"
+              className="hadith-modal__isnad-toggle"
+              aria-expanded={showIsnad}
+              onClick={() => setShowIsnad((v) => !v)}
+            >
+              {showIsnad ? "إخفاء السند" : "عرض السند"}
+            </button>
+            {showIsnad && (
+              <p className="hadith-modal__isnad">{isnad}</p>
+            )}
+          </section>
+        )}
 
         <div className="hadith-modal__meta-grid">
           {(h.narrator || meta.companion) && (
@@ -386,16 +495,38 @@ function HadithDetailModal({ h, onClose }: { h: HadithItem; onClose: () => void 
               </span>
             </div>
           )}
-          {meta.takhrij && (
+          {takhrijText && (
             <div className="hadith-modal__meta-item">
               <strong>التخريج</strong>
               <span>
                 {(() => {
-                  const raw = String(meta.takhrij);
+                  const raw = String(takhrijText);
                   const link = resolveScholarWorkLink(raw);
                   return link.href ? <Link href={link.href}>{raw}</Link> : raw;
                 })()}
               </span>
+            </div>
+          )}
+          <div className="hadith-modal__meta-item">
+            <strong>طريقة التخريج</strong>
+            <span>{methodLabel}</span>
+          </div>
+          {meta.book != null && (
+            <div className="hadith-modal__meta-item">
+              <strong>رقم الكتاب</strong>
+              <span>{String(meta.book)}</span>
+            </div>
+          )}
+          {meta.in_book != null && (
+            <div className="hadith-modal__meta-item">
+              <strong>رقمه داخل الكتاب</strong>
+              <span>{String(meta.in_book)}</span>
+            </div>
+          )}
+          {meta.arabic_number != null && (
+            <div className="hadith-modal__meta-item">
+              <strong>الرقم في الطبعة العربية</strong>
+              <span>{String(meta.arabic_number)}</span>
             </div>
           )}
           <div className="hadith-modal__meta-item">
@@ -436,9 +567,16 @@ function HadithDetailModal({ h, onClose }: { h: HadithItem; onClose: () => void 
           <button
             type="button"
             className="hadith-modal-btn"
-            onClick={handleCopy}
+            onClick={handleCopyMatn}
           >
-            {copied ? "✓ تم النسخ" : "⎘ نسخ الحديث"}
+            {copied ? "✓ تم نسخ المتن" : "⎘ نسخ المتن"}
+          </button>
+          <button
+            type="button"
+            className="hadith-modal-btn hadith-modal-btn--ghost"
+            onClick={handleCopyFull}
+          >
+            {copiedFull ? "✓ تم نسخ السند+المتن" : "⎘ نسخ كاملاً (سند+متن)"}
           </button>
         </div>
 
@@ -447,7 +585,7 @@ function HadithDetailModal({ h, onClose }: { h: HadithItem; onClose: () => void 
             id: h.id,
             content_type: "hadith",
             reference_id: h.hadith_number ? String(h.hadith_number) : null,
-            title_ar: h.title ?? truncateAtWord(h.text, 60),
+            title_ar: h.title ?? truncateAtWord(displayMatn, 60),
             author_name: h.narrator ?? null,
             book_name: h.source_name ?? null,
             is_approved: true,
@@ -484,7 +622,7 @@ export const HADITH_CLASS_META: Record<HadithClass, {
   sahih: {
     eyebrow: "مرجع الصحيحين",
     title: "الأحاديث الصحيحة",
-    subtitle: "مرجع صحيح البخاري وصحيح مسلم كاملاً (الصحة بعضوية الصحيحين)، مع بطاقات منسّقة ذات تخريج وشرح حيث توفّرت.",
+    subtitle: "مرجع صحيح البخاري (٧٥٨٠) وصحيح مسلم (٧٣٦٠) كاملاً — الصحة بعضوية الصحيحين. البطاقات تعرض المتن فقط؛ السند والتخريج في التفاصيل.",
     empty: "لا توجد أحاديث في هذا التصنيف.",
     countUnit: "حديث",
   },
@@ -519,17 +657,25 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
   const [sortMode, setSortMode] = useState<HadithSortMode>(
     authenticityClass === "sahih" ? "number" : "letter",
   );
+  const [searchScope, setSearchScope] = useState<HadithSearchScope>("matn");
+  const [bookQuery, setBookQuery] = useState("");
+  const [inBookQuery, setInBookQuery] = useState("");
   const debouncedSearch = useDebouncedValue(search);
   const debouncedNumber = useDebouncedValue(numberQuery);
+  const debouncedBook = useDebouncedValue(bookQuery);
+  const debouncedInBook = useDebouncedValue(inBookQuery);
   const PAGE_SIZE = authenticityClass === "sahih" ? 40 : 200;
 
   useEffect(() => {
     setPage(1);
-  }, [authenticityClass, activeCollection, activeCategory, debouncedSearch, activeLetter, debouncedNumber, sortMode]);
+  }, [authenticityClass, activeCollection, activeCategory, debouncedSearch, activeLetter, debouncedNumber, debouncedBook, debouncedInBook, sortMode, searchScope]);
 
   useEffect(() => {
     setActiveLetter("الكل");
     setNumberQuery("");
+    setBookQuery("");
+    setInBookQuery("");
+    setSearchScope("matn");
     setSortMode(authenticityClass === "sahih" ? "number" : "letter");
   }, [authenticityClass]);
 
@@ -559,11 +705,7 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
             ...cdnToHadithItems(bukhari, "bukhari", "صحيح البخاري", { grade: "صحيح" }),
             ...cdnToHadithItems(muslim, "muslim", "صحيح مسلم", { grade: "صحيح" }),
           ];
-          // المنسّق أولاً (شروح)، ثم المرجع الكامل دون إسقاطه عند وجود صفوف القاعدة
-          const byId = new Map<string, HadithItem>();
-          for (const row of corpus) byId.set(row.id, row);
-          for (const row of curated) byId.set(row.id, row);
-          setItems(Array.from(byId.values()));
+          setItems(mergeCorpusWithCurated(corpus, curated));
           return;
         }
 
@@ -611,7 +753,9 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
           cat.keys!.some((k) =>
             h.keywords?.includes(k) ||
             h.chapter?.includes(k) ||
-            h.title?.includes(k)
+            h.title?.includes(k) ||
+            extractDisplayMatn(h.title, h.text).includes(k) ||
+            String(h.metadata?.takhrij ?? "").includes(k)
           )
         );
       }
@@ -622,17 +766,71 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
     if (debouncedNumber.trim()) {
       list = list.filter((h) => hadithNumberMatches(h.hadith_number, debouncedNumber));
     }
+    if (debouncedBook.trim()) {
+      const bq = normalizeHadithDigits(debouncedBook);
+      list = list.filter((h) => {
+        const book = h.metadata?.book != null ? String(h.metadata.book) : "";
+        const chapterDigits = normalizeHadithDigits(h.chapter || "");
+        return (book && (book === bq || book.startsWith(bq))) ||
+          (chapterDigits && (chapterDigits === bq || chapterDigits.startsWith(bq)));
+      });
+    }
+    if (debouncedInBook.trim()) {
+      const iq = normalizeHadithDigits(debouncedInBook);
+      list = list.filter((h) => {
+        const inBook = h.metadata?.in_book != null ? String(h.metadata.in_book) : "";
+        const arabicNum = h.metadata?.arabic_number != null ? String(h.metadata.arabic_number) : "";
+        return hadithNumberMatches(inBook, iq) || hadithNumberMatches(arabicNum, iq);
+      });
+    }
     if (debouncedSearch.trim()) {
       const q = debouncedSearch.trim();
-      list = list.filter((h) =>
-        arabicMatchAny([h.text, h.title, h.narrator, h.source_name, h.explanation, h.chapter, h.hadith_number, ...(h.keywords ?? [])], q)
-      );
+      list = list.filter((h) => {
+        if (searchScope === "matn") {
+          return arabicMatchAny([extractDisplayMatn(h.title, h.text), h.title], q);
+        }
+        if (searchScope === "number") {
+          return (
+            hadithNumberMatches(h.hadith_number, q) ||
+            hadithNumberMatches(String(h.metadata?.book ?? ""), q) ||
+            hadithNumberMatches(String(h.metadata?.in_book ?? ""), q) ||
+            hadithNumberMatches(String(h.metadata?.arabic_number ?? ""), q)
+          );
+        }
+        if (searchScope === "takhrij") {
+          return arabicMatchAny([
+            h.source_name,
+            h.explanation,
+            String(h.metadata?.takhrij ?? ""),
+            String(h.metadata?.muhaddith ?? ""),
+            String(h.metadata?.takhrij_method ?? ""),
+            h.grade,
+            h.chapter,
+            h.hadith_number,
+            h.collection ? collectionLabel(h.collection) : "",
+            h.metadata?.book != null ? `الكتاب ${h.metadata.book}` : "",
+            h.metadata?.in_book != null ? `داخله ${h.metadata.in_book}` : "",
+          ], q);
+        }
+        return arabicMatchAny([
+          h.text,
+          extractDisplayMatn(h.title, h.text),
+          h.title,
+          h.narrator,
+          h.source_name,
+          h.explanation,
+          h.chapter,
+          h.hadith_number,
+          String(h.metadata?.takhrij ?? ""),
+          ...(h.keywords ?? []),
+        ], q);
+      });
     }
     if (sortMode !== "default") {
       list = [...list].sort((a, b) => compareHadithAccess(a, b, sortMode));
     }
     return list;
-  }, [items, activeCollection, activeCategory, activeLetter, debouncedNumber, debouncedSearch, sortMode]);
+  }, [items, activeCollection, activeCategory, activeLetter, debouncedNumber, debouncedBook, debouncedInBook, debouncedSearch, sortMode, searchScope]);
 
   const totalPages = Math.max(1, Math.ceil(displayItems.length / PAGE_SIZE));
   const safePage = Math.min(page, totalPages);
@@ -646,13 +844,34 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
       <input
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        placeholder="ابحث بالنص أو الراوي أو المصدر..."
+        placeholder="ابحث بالمتن أو التخريج أو الرقم…"
         className="page-search-input full content-hub-search"
         aria-label="بحث نصي في الأحاديث"
       />
 
       <div className="hadith-filter-section">
-        <p className="hadith-filter-label">رقم الحديث</p>
+        <p className="hadith-filter-label">نطاق البحث (طرق التخريج الحديثة)</p>
+        <div className="content-hub-chips" role="group" aria-label="نطاق البحث">
+          {([
+            ["matn", "المتن فقط"],
+            ["full", "سند + متن"],
+            ["takhrij", "تخريج وشرح"],
+            ["number", "أرقام التخريج"],
+          ] as const).map(([id, label]) => (
+            <button
+              key={id}
+              type="button"
+              onClick={() => setSearchScope(id)}
+              className={searchScope === id ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
+            >
+              {label}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="hadith-filter-section">
+        <p className="hadith-filter-label">رقم الحديث (في الكتاب)</p>
         <input
           value={numberQuery}
           onChange={(e) => setNumberQuery(e.target.value)}
@@ -662,6 +881,33 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
           aria-label="الانتقال برقم الحديث"
         />
       </div>
+
+      {authenticityClass === "sahih" && (
+        <>
+          <div className="hadith-filter-section">
+            <p className="hadith-filter-label">رقم الكتاب</p>
+            <input
+              value={bookQuery}
+              onChange={(e) => setBookQuery(e.target.value)}
+              inputMode="numeric"
+              placeholder="مثال: 2"
+              className="page-search-input full content-hub-search"
+              aria-label="تصفية برقم الكتاب"
+            />
+          </div>
+          <div className="hadith-filter-section">
+            <p className="hadith-filter-label">رقم الحديث داخل الكتاب / الرقم العربي</p>
+            <input
+              value={inBookQuery}
+              onChange={(e) => setInBookQuery(e.target.value)}
+              inputMode="numeric"
+              placeholder="مثال: 15"
+              className="page-search-input full content-hub-search"
+              aria-label="تصفية برقم الحديث داخل الكتاب"
+            />
+          </div>
+        </>
+      )}
 
       <div className="hadith-filter-section">
         <p className="hadith-filter-label">الترتيب</p>
@@ -684,7 +930,7 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
       </div>
 
       <div className="hadith-filter-section">
-        <p className="hadith-filter-label">المجموعة</p>
+        <p className="hadith-filter-label">المجموعة / طريق التخريج بالمصدر</p>
         <div className="content-hub-chips" role="tablist" aria-label="تصفية مجموعة الحديث">
           {collections.map((c) => (
             <button
@@ -741,14 +987,17 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
               <strong>{collections.length - 1}</strong> مجموعة
             </span>
           )}
-          {(debouncedSearch || debouncedNumber || activeLetter !== "الكل") && (
+          {(debouncedSearch || debouncedNumber || debouncedBook || debouncedInBook || activeLetter !== "الكل") && (
             <button
               type="button"
               className="hadith-clear-search"
               onClick={() => {
                 setSearch("");
                 setNumberQuery("");
+                setBookQuery("");
+                setInBookQuery("");
                 setActiveLetter("الكل");
+                setSearchScope("matn");
               }}
             >
               مسح الفلاتر ✕
@@ -781,6 +1030,24 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
             <button type="button" className={sortMode === "number" ? "is-active" : ""} onClick={() => setSortMode("number")}>رقم</button>
             <button type="button" className={sortMode === "letter" ? "is-active" : ""} onClick={() => setSortMode("letter")}>حرف</button>
           </div>
+        </div>
+        <div className="hadith-access-bar__row hadith-access-bar__row--scope" role="group" aria-label="نطاق البحث">
+          <span className="hadith-access-bar__label">بحث</span>
+          {([
+            ["matn", "متن"],
+            ["full", "سند+متن"],
+            ["takhrij", "تخريج"],
+            ["number", "رقم"],
+          ] as const).map(([id, label]) => (
+            <button
+              key={id}
+              type="button"
+              className={searchScope === id ? "is-active" : ""}
+              onClick={() => setSearchScope(id)}
+            >
+              {label}
+            </button>
+          ))}
         </div>
         <div className="hadith-letter-index" role="tablist" aria-label="فهرس الحروف">
           <button
@@ -836,8 +1103,8 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
         <>
           {authenticityClass === "sahih" && (
             <p className="hadith-source-note" role="note">
-              المرجع: صحيح البخاري وصحيح مسلم كاملاً بعد تصفية النصوص الفارغة —
-              الصحة بعضوية الصحيحين (مصدر: fawazahmed0/hadith-api).{" "}
+              المرجع الكامل: صحيح البخاري (٧٥٨٠) وصحيح مسلم (٧٣٦٠) — الصحة بعضوية الصحيحين.
+              العرض الخارجي للمتون فقط؛ السند والتخريج في التفاصيل.{" "}
               <Link href="/hadith/books">تصفح بالأبواب</Link>
             </p>
           )}
