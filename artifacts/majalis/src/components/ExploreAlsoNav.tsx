@@ -27,7 +27,7 @@ export function ExploreAlsoNav({
       <h2 className="fg-related__title">{title}</h2>
       <div className="fg-related__grid">
         {links.map((g) => (
-          <Link key={g.href} href={g.href} className="fg-related__link">
+          <Link key={`${g.href}::${g.label}`} href={g.href} className="fg-related__link">
             {g.label}
           </Link>
         ))}

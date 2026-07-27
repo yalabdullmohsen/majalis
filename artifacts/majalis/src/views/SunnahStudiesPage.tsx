@@ -1,6 +1,7 @@
 import { Link } from "wouter";
 import { SectionAccordionLayout } from "@/components/SectionAccordionLayout";
 import { SUNNAH_STUDIES } from "@/lib/sunnah-studies-data";
+import { accordionExploreLinks } from "@/lib/explore-links";
 
 export default function SunnahStudiesPage() {
   return (
@@ -28,13 +29,7 @@ export default function SunnahStudiesPage() {
         title="جوامع الكلم والسنن اليومية"
         sections={SUNNAH_STUDIES}
         stat3Label="موضوع/باب"
-        relatedLinks={[
-          { href: "/hadith", label: "الأحاديث" },
-          { href: "/hadith-science", label: "مصطلح الحديث" },
-          { href: "/arbaeen-nawawi", label: "الأربعون النووية" },
-          { href: "/sunan-yawmiyya", label: "السنن اليومية" },
-          { href: "/wasaya-nabawiyya", label: "الوصايا النبوية" },
-        ]}
+        relatedLinks={accordionExploreLinks("sunnah")}
       />
     </>
   );
