@@ -95,7 +95,7 @@ export default function NavBar() {
 
   const openSearch = () => {
     closeAll();
-    navigate("/search");
+    window.location.href = "/search";
   };
 
   // Desktop only: full auth bar
