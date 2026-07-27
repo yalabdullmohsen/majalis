@@ -828,7 +828,15 @@ function CompareView({ onSelect }: { onSelect: (slug: string) => void }) {
                 <tr
                   key={p.slug}
                   className={`${isAzm ? "nb-table__row--azm" : ""} nb-table__row--clickable`}
+                  style={{
+                    "--prophet-color": prophetColor(p.slug),
+                    "--prophet-accent": prophetAccent(p.slug),
+                  } as React.CSSProperties}
                   onClick={() => onSelect(p.slug)}
+                  onKeyDown={e => (e.key === "Enter" || e.key === " ") && onSelect(p.slug)}
+                  tabIndex={0}
+                  role="link"
+                  aria-label={`قصة ${p.arabicName}`}
                 >
                   <td>{p.id}</td>
                   <td className="nb-table__name">
