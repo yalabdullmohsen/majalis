@@ -141,14 +141,40 @@ function resolveReviewState(partial) {
 }
 
 
-/** اقتطاع ملخص عند حدود كلمة عربية/مسافة — يمنع بتر منتصف كلمة */
+/** وسمُ موضع الآية الذي يلي ﴾ مباشرةً: [البقرة: ٤٣] أو [النساء: ٤٨ و١١٦] */
+const AYAH_TAG_RE = /^\s*\[[^\[\]]+?:\s*[٠-٩0-9\sو-]+\]/;
+
+/**
+ * اقتطاع ملخص عند حدود كلمة عربية/مسافة — يمنع بتر منتصف كلمة.
+ *
+ * ويمنع كذلك **بتر الآية نفسها**: القطعُ عند حدِّ كلمةٍ قد يقع داخل ﴿…﴾
+ * فيُعرَض المصحفُ ناقصًا بلا ﴾ تُغلقه (﴿لَّا يَمَسُّهُ إِلَّا الْمُ…). فإن
+ * وقع القطعُ داخل اقتباس: يُمَدُّ الاقتطاعُ حتى ينغلقَ الاقتباسُ بـ﴾ ومعه
+ * وسمُ موضعه إن تلاه، فإن لم يوجد إغلاقٌ في النصّ أصلًا رُدَّ القطعُ إلى ما
+ * قبل ﴿ فلا يُعرَض شطرُ آية. والزيادةُ في الطول مقصودةٌ: تمامُ الآية أولى
+ * من التزام الحدّ.
+ */
 function summarizeText(text, max = 160) {
   const s = String(text || "").trim();
   if (s.length <= max) return s;
   const slice = s.slice(0, max);
   const breakAt = Math.max(slice.lastIndexOf(" "), slice.lastIndexOf("،"), slice.lastIndexOf("؛"), slice.lastIndexOf("."));
-  if (breakAt >= Math.floor(max * 0.6)) return slice.slice(0, breakAt).trimEnd() + "…";
-  return slice.trimEnd() + "…";
+  let cut = breakAt >= Math.floor(max * 0.6) ? breakAt : max;
+
+  // وقع القطعُ داخل ﴿…﴾؟ (عددُ ﴿ قبله يزيد على عدد ﴾)
+  const opens = (t) => (t.match(/﴿/g) || []).length - (t.match(/﴾/g) || []).length;
+  if (opens(s.slice(0, cut)) > 0) {
+    const close = s.indexOf("﴾", cut);
+    if (close < 0) {
+      cut = s.lastIndexOf("﴿", cut);          // لا إغلاقَ في النصّ ⇒ اطرح الشطر
+    } else {
+      cut = close + 1;
+      const tag = AYAH_TAG_RE.exec(s.slice(cut));
+      if (tag) cut += tag[0].length;
+    }
+  }
+  const out = s.slice(0, cut).trimEnd();
+  return cut >= s.trimEnd().length ? out : out + "…";
 }
 
 function makeRuling(partial) {
