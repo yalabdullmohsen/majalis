@@ -217,6 +217,14 @@ const MawarithPage = lazy(() => import("@/views/MawarithPage"));
 const MawarithCalculatorPage = lazy(() => import("@/views/MawarithCalculatorPage"));
 const SalahGuidePage = lazy(() => import("@/views/SalahGuidePage"));
 const DuasQuranPage = lazy(() => import("@/views/DuasQuranPage"));
+const RibaPage = lazy(() => import("@/views/RibaPage"));
+const NikahPage = lazy(() => import("@/views/NikahPage"));
+const TalaqPage = lazy(() => import("@/views/TalaqPage"));
+const UdhiyaPage = lazy(() => import("@/views/UdhiyaPage"));
+const RuqyaPage = lazy(() => import("@/views/RuqyaPage"));
+const JumuahPage = lazy(() => import("@/views/JumuahPage"));
+const WaqfPage = lazy(() => import("@/views/WaqfPage"));
+const SadaqaPage = lazy(() => import("@/views/SadaqaPage"));
 const AdminPage = lazyWithRetry(() => import("@/views/AdminPage"), "AdminPage");
 const LessonImportImagePage = lazyWithRetry(() => import("@/views/admin/LessonImportImagePage"), "LessonImportImagePage");
 const LessonImportUrlPage = lazyWithRetry(() => import("@/views/admin/LessonImportUrlPage"), "LessonImportUrlPage");
@@ -532,6 +540,14 @@ function Router() {
       <Route path="/mawarith"><SafeLazyRoute component={MawarithPage} /></Route>
       <Route path="/mawarith/calculator"><SafeLazyRoute component={MawarithCalculatorPage} /></Route>
       <Route path="/salah-guide"><SafeLazyRoute component={SalahGuidePage} /></Route>
+      <Route path="/jumuah"><SafeLazyRoute component={JumuahPage} /></Route>
+      <Route path="/riba"><SafeLazyRoute component={RibaPage} /></Route>
+      <Route path="/nikah"><SafeLazyRoute component={NikahPage} /></Route>
+      <Route path="/talaq"><SafeLazyRoute component={TalaqPage} /></Route>
+      <Route path="/udhiya"><SafeLazyRoute component={UdhiyaPage} /></Route>
+      <Route path="/ruqya"><SafeLazyRoute component={RuqyaPage} /></Route>
+      <Route path="/waqf"><SafeLazyRoute component={WaqfPage} /></Route>
+      <Route path="/sadaqa"><SafeLazyRoute component={SadaqaPage} /></Route>
       <Route path="/duas-quran"><SafeLazyRoute component={DuasQuranPage} /></Route>
       <Route path="/submit"><SafeLazyRoute component={SubmitContentPage} /></Route>
       <Route path="/upload"><SafeLazyRoute component={UploadPage} /></Route>
