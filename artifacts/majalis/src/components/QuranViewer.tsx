@@ -5,15 +5,34 @@
  * Font size is user-controlled (18–40, step 2), persisted in localStorage
  * (`userFontSize` — same key as the RN AsyncStorage sketch), with
  * lineHeight = fontSize + 20. The ± control bar is hidden while focused.
+ * Reader theme (light/dark paper) uses THEMES below — independent of app chrome.
  * `text-size-adjust: 100%` resists OS/browser text scaling (RN allowFontScaling={false}).
  */
 import { useCallback, useEffect, useState, type CSSProperties } from "react";
-import { Maximize2, Minimize2 } from "lucide-react";
+import { Maximize2, Minimize2, Moon, Sun } from "lucide-react";
 import { fetchSurahDetail, getSurahMeta, type Ayah } from "@/lib/quran-api";
 import { useQuranEngine } from "@/hooks/useQuranEngine";
 import { QuranActionBar } from "@/components/QuranActionBar";
 import { toArabicDigits } from "@/lib/utils";
 import "@/styles/quran-engine-ui.css";
+
+/** Reader paper themes — defined outside the component (RN FullScreenQuranReader sketch). */
+export const THEMES = {
+  light: {
+    background: "#FAF6EF",
+    text: "#000000",
+    header: "#F0EAD6",
+  },
+  dark: {
+    background: "#1A1A1A",
+    text: "#D1D1D1",
+    header: "#262626",
+  },
+} as const;
+
+export type QuranReaderThemeId = keyof typeof THEMES;
+
+export const QURAN_THEME_STORAGE_KEY = "quranReaderDarkMode";
 
 /** Mushaf type scale — mirrors RN FullScreenQuranReader sketch. */
 export const QURAN_FONT_MIN_PX = 18;
@@ -36,6 +55,16 @@ function readStoredFontSize(): number {
     return clampFontSize(parsed);
   } catch {
     return QURAN_FONT_DEFAULT_PX;
+  }
+}
+
+function readStoredDarkMode(): boolean {
+  try {
+    const raw = localStorage.getItem(QURAN_THEME_STORAGE_KEY);
+    if (raw == null) return false;
+    return raw === "1" || raw === "true";
+  } catch {
+    return false;
   }
 }
 
@@ -80,7 +109,9 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
   const [reloadKey, setReloadKey] = useState(0);
   const [isFocusMode, setIsFocusMode] = useState(false);
   const [fontSize, setFontSize] = useState(QURAN_FONT_DEFAULT_PX);
+  const [isDarkMode, setIsDarkMode] = useState(false);
   const meta = getSurahMeta(surahNum);
+  const currentTheme = isDarkMode ? THEMES.dark : THEMES.light;
 
   const reload = useCallback(() => setReloadKey((k) => k + 1), []);
 
@@ -94,9 +125,10 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
 
   const toggleFocus = useCallback(() => setFocus(!isFocusMode), [isFocusMode, setFocus]);
 
-  /** Load persisted font size once (RN AsyncStorage → localStorage). */
+  /** Load persisted font size + reader theme once. */
   useEffect(() => {
     setFontSize(readStoredFontSize());
+    setIsDarkMode(readStoredDarkMode());
   }, []);
 
   const updateFontSize = useCallback((next: number) => {
@@ -108,6 +140,19 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
       /* ignore quota / private mode */
     }
   }, []);
+
+  const setReaderDarkMode = useCallback((next: boolean) => {
+    setIsDarkMode(next);
+    try {
+      localStorage.setItem(QURAN_THEME_STORAGE_KEY, next ? "1" : "0");
+    } catch {
+      /* ignore */
+    }
+  }, []);
+
+  const toggleDarkMode = useCallback(() => {
+    setReaderDarkMode(!isDarkMode);
+  }, [isDarkMode, setReaderDarkMode]);
 
   const increaseFont = useCallback(() => {
     if (fontSize < QURAN_FONT_MAX_PX) updateFontSize(fontSize + QURAN_FONT_STEP_PX);
@@ -125,8 +170,14 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
   useEffect(() => {
     if (!isFocusMode) return;
     document.body.classList.add("qe-focus-mode");
-    return () => document.body.classList.remove("qe-focus-mode");
-  }, [isFocusMode]);
+    document.body.style.setProperty("--qe-reader-bg", currentTheme.background);
+    document.body.style.backgroundColor = currentTheme.background;
+    return () => {
+      document.body.classList.remove("qe-focus-mode");
+      document.body.style.removeProperty("--qe-reader-bg");
+      document.body.style.backgroundColor = "";
+    };
+  }, [isFocusMode, currentTheme.background]);
 
   useEffect(() => {
     if (!isFocusMode) return;
@@ -140,6 +191,11 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
   const mushafTypeStyle = {
     ["--qe-mushaf-fs" as string]: `${fontSize}px`,
     ["--qe-mushaf-lh" as string]: `${fontSize + 20}px`,
+    ["--qe-reader-bg" as string]: currentTheme.background,
+    ["--qe-reader-text" as string]: currentTheme.text,
+    ["--qe-reader-header" as string]: currentTheme.header,
+    backgroundColor: currentTheme.background,
+    color: currentTheme.text,
   } as CSSProperties;
 
   useEffect(() => {
@@ -192,9 +248,10 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
 
   return (
     <div
-      className={`qe-viewer${isFocusMode ? " qe-viewer--focus" : ""} ${className ?? ""}`.trim()}
+      className={`qe-viewer${isFocusMode ? " qe-viewer--focus" : ""}${isDarkMode ? " qe-viewer--dark" : " qe-viewer--light"} ${className ?? ""}`.trim()}
       dir="rtl"
       data-focus={isFocusMode ? "1" : "0"}
+      data-reader-theme={isDarkMode ? "dark" : "light"}
       style={mushafTypeStyle}
     >
       {/* Chrome outside the tappable surface — no stopPropagation needed */}
@@ -215,6 +272,17 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
               aria-pressed={isTajweedEnabled}
             >
               تجويد
+            </button>
+            <button
+              type="button"
+              className="qe-chip"
+              onClick={toggleDarkMode}
+              aria-pressed={isDarkMode}
+              aria-label={isDarkMode ? "التبديل إلى الوضع النهاري" : "التبديل إلى الوضع الليلي"}
+              title={isDarkMode ? "نهاري" : "ليلي"}
+            >
+              {isDarkMode ? <Sun size={14} aria-hidden="true" /> : <Moon size={14} aria-hidden="true" />}
+              {isDarkMode ? "نهاري" : "ليلي"}
             </button>
             <button
               type="button"
@@ -288,6 +356,7 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
                         fontSize: `${fontSize}px`,
                         lineHeight: `${fontSize + 20}px`,
                         textAlign: "right",
+                        color: currentTheme.text,
                       }}
                     >
                       {ayah.text}
