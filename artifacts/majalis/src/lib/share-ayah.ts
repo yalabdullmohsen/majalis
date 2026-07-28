@@ -45,16 +45,52 @@ export async function copyAyahTextPlain(text: string, surahName: string, ayahNum
 }
 
 export async function shareAyahAsText(text: string, surahName: string, ayahNum: number): Promise<boolean> {
-  const formatted = `${text} ﴿${ayahNum}﴾\n— سورة ${surahName}`;
-  if (navigator.share) {
+  const result = await shareVerse(text, { surahName, ayahNum });
+  return result.shared;
+}
+
+export type ShareVerseResult = {
+  /** True when the verse was shared natively or copied as fallback. */
+  shared: boolean;
+  method: "native" | "clipboard" | "cancelled" | "failed";
+};
+
+/**
+ * Web port of RN `Share.share({ message: \`آية من القرآن الكريم: ${verseText}\` })`.
+ * Uses `navigator.share` when available, otherwise copies to the clipboard.
+ */
+export async function shareVerse(
+  verseText: string,
+  opts?: { surahName?: string; ayahNum?: number },
+): Promise<ShareVerseResult> {
+  const trimmed = verseText.trim();
+  if (!trimmed) return { shared: false, method: "failed" };
+
+  const message =
+    opts?.surahName && opts?.ayahNum != null
+      ? `آية من القرآن الكريم:\n${trimmed} ﴿${opts.ayahNum}﴾\n— سورة ${opts.surahName}`
+      : `آية من القرآن الكريم: ${trimmed}`;
+
+  if (typeof navigator !== "undefined" && typeof navigator.share === "function") {
     try {
-      await navigator.share({ text: formatted, title: `آية ${ayahNum} — سورة ${surahName}` });
-      return true;
-    } catch {
-      // المستخدم أغلق نافذة المشاركة أو فشلت — نرجع لنسخ النص بدل ترك الزر بلا أثر
+      await navigator.share({
+        text: message,
+        title: opts?.surahName
+          ? `آية ${opts.ayahNum ?? ""} — سورة ${opts.surahName}`.trim()
+          : "آية من القرآن الكريم",
+      });
+      return { shared: true, method: "native" };
+    } catch (error) {
+      // AbortError = user dismissed the sheet (RN Share.dismissedAction)
+      if (error instanceof DOMException && error.name === "AbortError") {
+        return { shared: false, method: "cancelled" };
+      }
+      console.error("خطأ في المشاركة:", error instanceof Error ? error.message : error);
     }
   }
-  return copyPlainText(formatted);
+
+  const copied = await copyPlainText(message);
+  return { shared: copied, method: copied ? "clipboard" : "failed" };
 }
 
 type ShareImageOptions = {
