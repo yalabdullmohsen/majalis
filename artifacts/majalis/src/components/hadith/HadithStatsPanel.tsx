@@ -62,7 +62,9 @@ function StatRing({
   const total = slices.reduce((s, x) => s + x.value, 0) || 1;
   return (
     <div className="hsp-ring-card">
-      <h3 className="hsp-panel__title">{title}</h3>
+      <p className="hsp-panel__title" role="heading" aria-level={3}>
+        {title}
+      </p>
       <div className="hsp-ring-layout">
         <div
           className="hsp-ring"
@@ -122,7 +124,10 @@ export function HadithStatsPanel({ compact = false, className = "", snapshot }: 
       <header className="hsp__head">
         <div>
           <p className="hsp__eyebrow">لوحة إحصائيات الحديث</p>
-          <h2 className="hsp__title">علوم الحديث بالأرقام</h2>
+          {/* عنوان غير h2 لتفادي قواعد .page-shell h2 الداكنة عالية الخصوصية */}
+          <p className="hsp__title" role="heading" aria-level={2}>
+            علوم الحديث بالأرقام
+          </p>
           <p className="hsp__sub">{stats.updatedLabel}</p>
         </div>
         {!compact && (
@@ -194,7 +199,7 @@ export function HadithStatsPanel({ compact = false, className = "", snapshot }: 
 
           <div className="hsp-panels">
             <div className="hsp-panel">
-              <h3 className="hsp-panel__title">توزيع الأقسام</h3>
+              <p className="hsp-panel__title" role="heading" aria-level={3}>توزيع الأقسام</p>
               <div className="hsp-bars">
                 {stats.authenticityBars.map((bar) => (
                   <StatBar key={bar.id} bar={bar} />
@@ -202,7 +207,7 @@ export function HadithStatsPanel({ compact = false, className = "", snapshot }: 
               </div>
             </div>
             <div className="hsp-panel">
-              <h3 className="hsp-panel__title">نِسب الصحيحين والكتب</h3>
+              <p className="hsp-panel__title" role="heading" aria-level={3}>نِسب الصحيحين والكتب</p>
               <div className="hsp-bars">
                 {stats.sahihaynBars.map((bar) => (
                   <StatBar key={bar.id} bar={bar} />
@@ -210,7 +215,7 @@ export function HadithStatsPanel({ compact = false, className = "", snapshot }: 
               </div>
             </div>
             <div className="hsp-panel">
-              <h3 className="hsp-panel__title">علوم ومصطلح وجودة العرض</h3>
+              <p className="hsp-panel__title" role="heading" aria-level={3}>علوم ومصطلح وجودة العرض</p>
               <div className="hsp-bars">
                 {stats.scienceBars.map((bar) => (
                   <StatBar key={bar.id} bar={bar} />

@@ -1041,16 +1041,16 @@
   gap: 0.75rem;
   margin-bottom: 0.95rem;
 }
+.page-shell .hsp .hsp__eyebrow,
 .hsp__eyebrow {
-  margin: 0 0 0.2rem;
-  font-size: 0.72rem;
-  font-weight: 800;
+  margin: 0 0 0.2rem !important;
+  font-size: 0.72rem !important;
+  font-weight: 800 !important;
   letter-spacing: 0.02em;
-  color: rgba(255, 255, 255, 0.72);
+  color: rgba(255, 255, 255, 0.78) !important;
 }
-/* عنوان اللوحة فوق خلفية زمردية داكنة — يُلغى لون h2 الداكن من .page-shell */
-.hadith-page .hsp h2.hsp__title,
-.page-shell .hsp h2.hsp__title,
+/* عنوان اللوحة فوق خلفية زمردية — عنصر p لتجاوز قواعد .page-shell h2 */
+.page-shell .hsp .hsp__title,
 .hsp__title {
   margin: 0 !important;
   padding: 0 !important;
@@ -1060,11 +1060,12 @@
   color: #FFFFFF !important;
   line-height: 1.3 !important;
 }
+.page-shell .hsp .hsp__sub,
 .hsp__sub {
-  margin: 0.35rem 0 0;
-  font-size: 0.8rem;
-  line-height: 1.55;
-  color: rgba(255, 255, 255, 0.78);
+  margin: 0.35rem 0 0 !important;
+  font-size: 0.8rem !important;
+  line-height: 1.55 !important;
+  color: rgba(255, 255, 255, 0.82) !important;
   max-width: 38rem;
 }
 .hsp__science-link {
@@ -1273,8 +1274,7 @@
   background: rgba(12, 33, 28, 0.28);
   border: 1px solid rgba(255, 255, 255, 0.12);
 }
-.hadith-page .hsp h3.hsp-panel__title,
-.page-shell .hsp h3.hsp-panel__title,
+.page-shell .hsp .hsp-panel__title,
 .hsp-panel__title {
   margin: 0 0 0.7rem !important;
   padding: 0 !important;
@@ -1385,15 +1385,16 @@
   color: rgba(255, 255, 255, 0.9);
 }
 
+.page-shell .hsp .hsp__disclaimer,
 .hsp__disclaimer {
-  margin: 0.85rem 0 0;
+  margin: 0.85rem 0 0 !important;
   padding: 0.65rem 0.75rem;
   border-radius: var(--radius-md, 0.65rem);
   background: rgba(12, 33, 28, 0.35);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  font-size: 0.72rem;
-  line-height: 1.55;
-  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.72rem !important;
+  line-height: 1.55 !important;
+  color: rgba(255, 255, 255, 0.78) !important;
 }
 
 .hadith-stats-inline {
