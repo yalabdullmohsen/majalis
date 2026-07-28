@@ -90,6 +90,35 @@ export const CORE_QURAN_DB_VERSION = 3;
 /** Stable settings_store key for optional Tajweed color coding. */
 export const TAJWEED_ENABLED_SETTING_KEY = "isTajweedEnabled";
 
+/** Prefix for per-day reading stats in `settings_store` (`daily_reading_stats:YYYY-MM-DD`). */
+export const DAILY_READING_STATS_KEY_PREFIX = "daily_reading_stats:";
+
+/** Local calendar day key (YYYY-MM-DD) for daily reading aggregates. */
+export function localDateKey(d: Date = new Date()): string {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, "0");
+  const day = String(d.getDate()).padStart(2, "0");
+  return `${y}-${m}-${day}`;
+}
+
+/** Persisted daily reading counters (pages + time). */
+export type DailyReadingStatsRecord = {
+  dateKey: string;
+  /** Unique Mushaf page numbers touched today. */
+  pages: number[];
+  total_time_ms: number;
+};
+
+/** Aggregated dashboard snapshot (khatmah + today counters). */
+export type DashboardStats = {
+  dateKey: string;
+  streak_days: number;
+  pages_read_today: number;
+  total_time_ms: number;
+  daily_wird_target: number;
+  active_khatmah: KhatmahStore | null;
+};
+
 /** `settings_store` — durable engine preferences (key/value). */
 export type SettingsStore = {
   key: string;
@@ -555,6 +584,134 @@ export class DatabaseManager {
     } catch (err) {
       console.warn("[DatabaseManager] listPendingReflections:", err);
       return [];
+    }
+  }
+
+  /**
+   * Recent reflections / notes — sorted by updated_at then created_at (newest first).
+   * Small table expected; full scan is fine and avoids optional-index gaps.
+   */
+  async listRecentReflections(limit = 3): Promise<ReflectionsStore[]> {
+    try {
+      const db = await this.ensureDb();
+      if (!db) return [];
+      const cap = Math.max(1, Math.min(50, Math.floor(limit) || 3));
+      const rows = await db.user_reflections_store.toArray();
+      return rows
+        .sort(
+          (a, b) =>
+            (b.updated_at ?? b.created_at) - (a.updated_at ?? a.created_at),
+        )
+        .slice(0, cap);
+    } catch (err) {
+      console.warn("[DatabaseManager] listRecentReflections:", err);
+      return [];
+    }
+  }
+
+  // ── Daily reading stats (settings_store) ───────────────────────────────
+
+  private dailyStatsKey(dateKey = localDateKey()): string {
+    return `${DAILY_READING_STATS_KEY_PREFIX}${dateKey}`;
+  }
+
+  async getDailyReadingRecord(
+    dateKey = localDateKey(),
+  ): Promise<DailyReadingStatsRecord> {
+    const empty: DailyReadingStatsRecord = {
+      dateKey,
+      pages: [],
+      total_time_ms: 0,
+    };
+    try {
+      const stored = await this.getSetting<DailyReadingStatsRecord>(
+        this.dailyStatsKey(dateKey),
+      );
+      if (!stored || typeof stored !== "object") return empty;
+      return {
+        dateKey,
+        pages: Array.isArray(stored.pages)
+          ? stored.pages.filter((p) => typeof p === "number" && p >= 1 && p <= 604)
+          : [],
+        total_time_ms:
+          typeof stored.total_time_ms === "number" && stored.total_time_ms > 0
+            ? stored.total_time_ms
+            : 0,
+      };
+    } catch (err) {
+      console.warn("[DatabaseManager] getDailyReadingRecord:", err);
+      return empty;
+    }
+  }
+
+  /** Record a unique page read for today (idempotent per page). */
+  async recordDailyPageRead(page: number, dateKey = localDateKey()): Promise<DailyReadingStatsRecord> {
+    const clamped = Math.min(604, Math.max(1, Math.floor(page) || 1));
+    const current = await this.getDailyReadingRecord(dateKey);
+    if (current.pages.includes(clamped)) return current;
+    const next: DailyReadingStatsRecord = {
+      ...current,
+      pages: [...current.pages, clamped],
+    };
+    await this.setSetting(this.dailyStatsKey(dateKey), next);
+    return next;
+  }
+
+  /** Accumulate focused reading time for today (ms). */
+  async addDailyReadingTimeMs(
+    deltaMs: number,
+    dateKey = localDateKey(),
+  ): Promise<DailyReadingStatsRecord> {
+    const add = Math.max(0, Math.floor(deltaMs) || 0);
+    const current = await this.getDailyReadingRecord(dateKey);
+    if (add <= 0) return current;
+    const next: DailyReadingStatsRecord = {
+      ...current,
+      total_time_ms: current.total_time_ms + add,
+    };
+    await this.setSetting(this.dailyStatsKey(dateKey), next);
+    return next;
+  }
+
+  /**
+   * Aggregate dashboard stats from khatmah + today's reading counters.
+   * Prefers ACTIVE reading profile when present.
+   */
+  async getDashboardStats(activeKhatmahId?: string): Promise<DashboardStats> {
+    const dateKey = localDateKey();
+    const empty: DashboardStats = {
+      dateKey,
+      streak_days: 0,
+      pages_read_today: 0,
+      total_time_ms: 0,
+      daily_wird_target: 1,
+      active_khatmah: null,
+    };
+    try {
+      const daily = await this.getDailyReadingRecord(dateKey);
+      let khatmah: KhatmahStore | null = null;
+      if (activeKhatmahId) {
+        khatmah = await this.getKhatmah(activeKhatmahId);
+      }
+      if (!khatmah) {
+        const active = await this.listKhatmah({ activeOnly: true });
+        khatmah = active[0] ?? null;
+      }
+      if (!khatmah) {
+        const all = await this.listKhatmah();
+        khatmah = all[0] ?? null;
+      }
+      return {
+        dateKey,
+        streak_days: khatmah?.streak_days ?? 0,
+        pages_read_today: daily.pages.length,
+        total_time_ms: daily.total_time_ms,
+        daily_wird_target: Math.max(1, khatmah?.daily_wird_target ?? 1),
+        active_khatmah: khatmah,
+      };
+    } catch (err) {
+      console.warn("[DatabaseManager] getDashboardStats:", err);
+      return empty;
     }
   }
 

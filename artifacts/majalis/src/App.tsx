@@ -37,6 +37,8 @@ import { recordNavigationVisit } from "@/lib/navigation-back";
 
 const lazy = lazyWithRetry;
 
+const HomeDashboardPage = lazy(() => import("@/views/HomeDashboardPage"));
+const HomePage = lazy(() => import("@/views/HomePage"));
 /**
  * تحميل كسول للمساعد الذكي العائم — مكوّن ثانوي (تفاعلي عند الطلب فقط)
  * كان يُستورَد بشكل عاجل في كل صفحة رغم أن أغلب الزوّار لا يفتحونه أبداً،
@@ -56,7 +58,6 @@ const GlobalSearchModal = lazyWithRetry(
   "GlobalSearchModal",
 );
 
-const HomePage = lazy(() => import("@/views/HomePage"));
 const AboutPage = lazy(() => import("@/views/AboutPage"));
 const SiteMapPage = lazy(() => import("@/views/SiteMapPage"));
 const PrivacyPage = lazy(() => import("@/views/PrivacyPage"));
@@ -458,8 +459,9 @@ function Router() {
   return (
     <Switch>
       <Route path="/">
-        <HomePage />
+        <SafeLazyRoute component={HomeDashboardPage} />
       </Route>
+      <Route path="/platform"><SafeLazyRoute component={HomePage} /></Route>
       <Route path="/about"><SafeLazyRoute component={AboutPage} /></Route>
       <Route path="/methodology"><SafeLazyRoute component={MethodologyPage} /></Route>
       <Route path="/sitemap"><SafeLazyRoute component={SiteMapPage} /></Route>

@@ -360,6 +360,7 @@ class QuranEngineContextImpl implements QuranEngineContextApi {
   /**
    * Persist reading progress into khatmah_store (upsert).
    * Never throws — returns null on failure so the UI thread stays stable.
+   * Also bumps today's page counter and streak when the calendar day advances.
    */
   async updateReadingProgress(progress: ReadingProgressInput): Promise<KhatmahStore | null> {
     try {
@@ -370,6 +371,27 @@ class QuranEngineContextImpl implements QuranEngineContextApi {
       const id = progress.khatmahId ?? ACTIVE_READING_KHATMAH_ID;
 
       const existing = await this.db.getKhatmah(id);
+      const now = Date.now();
+      let streak = existing?.streak_days ?? 0;
+      if (existing?.last_read_timestamp) {
+        const last = new Date(existing.last_read_timestamp);
+        const today = new Date(now);
+        const lastKey = `${last.getFullYear()}-${last.getMonth()}-${last.getDate()}`;
+        const todayKey = `${today.getFullYear()}-${today.getMonth()}-${today.getDate()}`;
+        const yday = new Date(now);
+        yday.setDate(yday.getDate() - 1);
+        const ydayKey = `${yday.getFullYear()}-${yday.getMonth()}-${yday.getDate()}`;
+        if (lastKey === todayKey) {
+          /* same day — keep streak */
+        } else if (lastKey === ydayKey) {
+          streak = Math.max(1, streak + 1);
+        } else {
+          streak = 1;
+        }
+      } else {
+        streak = Math.max(1, streak || 1);
+      }
+
       const row = await this.db.upsertKhatmah({
         id,
         title: progress.title ?? existing?.title ?? "ختمة جارية",
@@ -378,9 +400,9 @@ class QuranEngineContextImpl implements QuranEngineContextApi {
         current_ayah: ayah,
         current_page: page,
         daily_wird_target: progress.daily_wird_target ?? existing?.daily_wird_target ?? 1,
-        streak_days: existing?.streak_days ?? 0,
+        streak_days: streak,
         is_completed: existing?.is_completed ?? false,
-        last_read_timestamp: Date.now(),
+        last_read_timestamp: now,
       });
 
       if (row) {
@@ -391,6 +413,8 @@ class QuranEngineContextImpl implements QuranEngineContextApi {
           verseKey: `${surah}:${ayah}`,
           page,
         });
+        // Fire-and-forget daily page aggregate — never block UI
+        void this.db.recordDailyPageRead(page).catch(() => undefined);
       }
       return row;
     } catch (err) {
