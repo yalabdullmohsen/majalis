@@ -1,15 +1,24 @@
 import { useEffect, useState } from "react";
-import { X, Copy, Check, Bookmark, StickyNote, Play, Pause, ChevronRight, ChevronLeft, ChevronDown, Flag, BookOpen, Mic2, Repeat, Gauge } from "lucide-react";
-import { copyAyahText, copyAyahTextPlain } from "@/lib/share-ayah";
-import { addBookmark, removeBookmark, isBookmarked, getNote, saveNote } from "@/lib/quran-personal";
+import { X, Copy, Check, Bookmark, StickyNote, Play, Pause, ChevronRight, ChevronLeft, ChevronDown, Flag, BookOpen, Mic2, Repeat, Gauge, Share2, Languages, Minus, Plus } from "lucide-react";
+import { copyAyahText, copyAyahTextPlain, shareAyahAsImage } from "@/lib/share-ayah";
+import {
+  addBookmark, removeBookmark, isBookmarked, getNote, saveNote,
+  BOOKMARK_RIBBONS, getBookmarkListForAyah, getBookmarkRibbon,
+} from "@/lib/quran-personal";
 import { fetchTafsirAyahs } from "@/lib/quran-api";
 import { MUSHAF_TAFSIR_EDITIONS } from "@/lib/tafsir-seed";
+import { QURAN_TRANSLATION_EDITIONS, fetchAyahTranslation } from "@/lib/quran-translation";
 import { RECITERS } from "@/lib/quran-audio";
 import { CONTACT_EMAIL } from "@/lib/site-config";
 import { afterNextPaint, yieldToMain } from "@/lib/yield-to-main";
 import { prewarmTextApis } from "@/lib/resource-prewarm";
 
 const TAFSIR_EDITION_KEY = "majalis-mushaf-tafsir-edition-v1";
+const TRANSLATION_EDITION_KEY = "majalis-mushaf-translation-edition-v1";
+const TAFSIR_FONT_KEY = "majalis-mushaf-tafsir-font-v1";
+
+/** تفاسير سريعة في الواجهة الأمامية (الميسّر / السعدي / ابن كثير). */
+const QUICK_TAFSIR_IDS = ["ar.muyassar", "ar.sadi", "en.ibnukathir"] as const;
 
 function getStoredTafsirEdition(): string {
   try {
@@ -17,6 +26,22 @@ function getStoredTafsirEdition(): string {
     if (v && MUSHAF_TAFSIR_EDITIONS.some((e) => e.id === v)) return v;
   } catch { /* ignore */ }
   return "ar.muyassar";
+}
+
+function getStoredTranslationEdition(): string {
+  try {
+    const v = localStorage.getItem(TRANSLATION_EDITION_KEY);
+    if (v && QURAN_TRANSLATION_EDITIONS.some((e) => e.id === v)) return v;
+  } catch { /* ignore */ }
+  return "en.sahih";
+}
+
+function getStoredTafsirFont(): number {
+  try {
+    const n = Number(localStorage.getItem(TAFSIR_FONT_KEY));
+    if (Number.isFinite(n) && n >= 14 && n <= 28) return n;
+  } catch { /* ignore */ }
+  return 16;
 }
 
 /**
@@ -53,7 +78,10 @@ type Props = {
 
 export function PageAyahActionSheet({ surahNum, surahName, ayahNum, ayahText, isPlaying, onTogglePlay, canPlay = true, onPrev, onNext, onClose, reciterId, onSetReciter, playbackRate, onSetPlaybackRate, repeatOn, onToggleRepeat }: Props) {
   const [bookmarked, setBookmarked] = useState(() => isBookmarked(surahNum, ayahNum));
+  const [bookmarkList, setBookmarkList] = useState<string | null>(() => getBookmarkListForAyah(surahNum, ayahNum));
+  const [ribbonOpen, setRibbonOpen] = useState(false);
   const [copiedKind, setCopiedKind] = useState<"full" | "plain" | null>(null);
+  const [sharing, setSharing] = useState(false);
   const [noteOpen, setNoteOpen] = useState(false);
   const [noteText, setNoteText] = useState(() => getNote(surahNum, ayahNum));
   const [noteSaved, setNoteSaved] = useState(false);
@@ -64,9 +92,17 @@ export function PageAyahActionSheet({ surahNum, surahName, ayahNum, ayahText, is
   const [tafsirLoading, setTafsirLoading] = useState(false);
   const [tafsirError, setTafsirError] = useState(false);
   const [tafsirEdition, setTafsirEdition] = useState(getStoredTafsirEdition);
+  const [tafsirFont, setTafsirFont] = useState(getStoredTafsirFont);
+  const [translationOpen, setTranslationOpen] = useState(false);
+  const [translationText, setTranslationText] = useState<string | null>(null);
+  const [translationLoading, setTranslationLoading] = useState(false);
+  const [translationError, setTranslationError] = useState(false);
+  const [translationEdition, setTranslationEdition] = useState(getStoredTranslationEdition);
 
   useEffect(() => {
     setBookmarked(isBookmarked(surahNum, ayahNum));
+    setBookmarkList(getBookmarkListForAyah(surahNum, ayahNum));
+    setRibbonOpen(false);
     setNoteText(getNote(surahNum, ayahNum));
     setCopiedKind(null);
     setNoteOpen(false);
@@ -74,6 +110,9 @@ export function PageAyahActionSheet({ surahNum, surahName, ayahNum, ayahText, is
     setTafsirOpen(false);
     setTafsirText(null);
     setTafsirError(false);
+    setTranslationOpen(false);
+    setTranslationText(null);
+    setTranslationError(false);
   }, [surahNum, ayahNum]);
 
   const loadTafsir = async (edition: string) => {
@@ -111,7 +150,49 @@ export function PageAyahActionSheet({ surahNum, surahName, ayahNum, ayahText, is
     if (tafsirOpen) await loadTafsir(id);
   };
 
+  const bumpTafsirFont = (delta: number) => {
+    setTafsirFont((prev) => {
+      const next = Math.min(28, Math.max(14, prev + delta));
+      try { localStorage.setItem(TAFSIR_FONT_KEY, String(next)); } catch { /* ignore */ }
+      return next;
+    });
+  };
+
+  const loadTranslation = async (edition: string) => {
+    setTranslationLoading(true);
+    setTranslationError(false);
+    try {
+      await afterNextPaint();
+      const text = await fetchAyahTranslation(surahNum, ayahNum, edition);
+      await yieldToMain();
+      setTranslationText(text);
+      if (!text) setTranslationError(true);
+    } catch {
+      setTranslationError(true);
+    } finally {
+      setTranslationLoading(false);
+    }
+  };
+
+  const handleToggleTranslation = async () => {
+    const next = !translationOpen;
+    setTranslationOpen(next);
+    if (next && translationText === null && !translationLoading) {
+      await loadTranslation(translationEdition);
+    }
+  };
+
+  const handleSelectTranslation = async (id: string) => {
+    setTranslationEdition(id);
+    try { localStorage.setItem(TRANSLATION_EDITION_KEY, id); } catch { /* ignore */ }
+    if (translationOpen) await loadTranslation(id);
+  };
+
   const currentEditionMeta = MUSHAF_TAFSIR_EDITIONS.find((e) => e.id === tafsirEdition);
+  const quickEditions = MUSHAF_TAFSIR_EDITIONS.filter((e) => (QUICK_TAFSIR_IDS as readonly string[]).includes(e.id));
+  const moreEditions = MUSHAF_TAFSIR_EDITIONS.filter((e) => !(QUICK_TAFSIR_IDS as readonly string[]).includes(e.id));
+  const currentTranslationMeta = QURAN_TRANSLATION_EDITIONS.find((e) => e.id === translationEdition);
+  const activeRibbon = bookmarkList ? getBookmarkRibbon(bookmarkList) : null;
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
@@ -119,13 +200,21 @@ export function PageAyahActionSheet({ surahNum, surahName, ayahNum, ayahText, is
     return () => document.removeEventListener("keydown", onKey);
   }, [onClose]);
 
+  const applyBookmarkList = (list: string) => {
+    addBookmark({ surahNum, ayahNum, surahName, text: ayahText }, list);
+    setBookmarked(true);
+    setBookmarkList(list);
+    setRibbonOpen(false);
+  };
+
   const toggleBookmark = () => {
     if (bookmarked) {
       removeBookmark(surahNum, ayahNum);
       setBookmarked(false);
+      setBookmarkList(null);
+      setRibbonOpen(false);
     } else {
-      addBookmark({ surahNum, ayahNum, surahName, text: ayahText });
-      setBookmarked(true);
+      setRibbonOpen(true);
     }
   };
 
@@ -134,6 +223,17 @@ export function PageAyahActionSheet({ surahNum, surahName, ayahNum, ayahText, is
     if (ok) {
       setCopiedKind(plain ? "plain" : "full");
       setTimeout(() => setCopiedKind((k) => (k === (plain ? "plain" : "full") ? null : k)), 1800);
+    }
+  };
+
+  const handleShareImage = async () => {
+    setSharing(true);
+    try {
+      await shareAyahAsImage({ text: ayahText, surahName, ayahNum, surahNum });
+    } catch {
+      /* المستخدم ألغى أو فشل التوليد */
+    } finally {
+      setSharing(false);
     }
   };
 
@@ -222,8 +322,8 @@ export function PageAyahActionSheet({ surahNum, surahName, ayahNum, ayahText, is
         </button>
         {tafsirOpen && (
           <div className="ayah-sheet__tafsir-body">
-            <div className="ayah-sheet__tafsir-editions" role="tablist" aria-label="اختر التفسير">
-              {MUSHAF_TAFSIR_EDITIONS.map((ed) => (
+            <div className="ayah-sheet__tafsir-editions" role="tablist" aria-label="تفسير سريع">
+              {quickEditions.map((ed) => (
                 <button
                   key={ed.id}
                   type="button"
@@ -235,6 +335,29 @@ export function PageAyahActionSheet({ surahNum, surahName, ayahNum, ayahText, is
                   {ed.label}
                 </button>
               ))}
+            </div>
+            <div className="ayah-sheet__tafsir-editions" role="tablist" aria-label="تفاسير إضافية">
+              {moreEditions.map((ed) => (
+                <button
+                  key={ed.id}
+                  type="button"
+                  role="tab"
+                  className={`ayah-sheet__tafsir-ed${tafsirEdition === ed.id ? " is-active" : ""}`}
+                  aria-selected={tafsirEdition === ed.id}
+                  onClick={() => handleSelectEdition(ed.id)}
+                >
+                  {ed.label}
+                </button>
+              ))}
+            </div>
+            <div className="aas-font-scale" aria-label="حجم خط التفسير">
+              <button type="button" className="aas-font-scale__btn" onClick={() => bumpTafsirFont(-1)} aria-label="تصغير خط التفسير">
+                <Minus size={14} aria-hidden="true" />
+              </button>
+              <span>{tafsirFont}px</span>
+              <button type="button" className="aas-font-scale__btn" onClick={() => bumpTafsirFont(1)} aria-label="تكبير خط التفسير">
+                <Plus size={14} aria-hidden="true" />
+              </button>
             </div>
             {currentEditionMeta?.caution && (
               <p className="ayah-sheet__tafsir-caution">{currentEditionMeta.caution}</p>
@@ -248,11 +371,65 @@ export function PageAyahActionSheet({ surahNum, surahName, ayahNum, ayahText, is
                 <p className="ayah-sheet__tafsir-meta">
                   {currentEditionMeta?.label} — {currentEditionMeta?.author}
                 </p>
-                <p className="ayah-sheet__tafsir-text">{tafsirText}</p>
+                <p className="ayah-sheet__tafsir-text" style={{ fontSize: `${tafsirFont}px` }}>{tafsirText}</p>
               </>
             ) : (
               <p className="ayah-sheet__tafsir-status">تعذّر تحميل التفسير. تحقّق من اتصالك.</p>
             )}
+          </div>
+        )}
+
+        <button type="button" className="ayah-sheet__tafsir-toggle" onClick={handleToggleTranslation} aria-expanded={translationOpen}>
+          <Languages size={14} aria-hidden="true" />
+          <span>ترجمة الآية</span>
+          <ChevronDown size={14} aria-hidden="true" className={translationOpen ? "is-open" : ""} />
+        </button>
+        {translationOpen && (
+          <div className="ayah-sheet__tafsir-body">
+            <div className="ayah-sheet__tafsir-editions" role="tablist" aria-label="اختر الترجمة">
+              {QURAN_TRANSLATION_EDITIONS.map((ed) => (
+                <button
+                  key={ed.id}
+                  type="button"
+                  role="tab"
+                  className={`ayah-sheet__tafsir-ed${translationEdition === ed.id ? " is-active" : ""}`}
+                  aria-selected={translationEdition === ed.id}
+                  onClick={() => handleSelectTranslation(ed.id)}
+                >
+                  {ed.label}
+                </button>
+              ))}
+            </div>
+            {translationLoading && !translationText ? (
+              <p className="ayah-sheet__tafsir-status">جارٍ تحميل الترجمة…</p>
+            ) : translationError && !translationText ? (
+              <p className="ayah-sheet__tafsir-status">تعذّر تحميل الترجمة.</p>
+            ) : translationText ? (
+              <>
+                <p className="ayah-sheet__tafsir-meta">{currentTranslationMeta?.label}</p>
+                <p className="ayah-sheet__tafsir-text" dir="auto" style={{ fontSize: `${tafsirFont}px` }}>{translationText}</p>
+              </>
+            ) : (
+              <p className="ayah-sheet__tafsir-status">تعذّر تحميل الترجمة.</p>
+            )}
+          </div>
+        )}
+
+        {ribbonOpen && (
+          <div className="aas-ribbons" role="listbox" aria-label="تصنيف الإشارة المرجعية">
+            {BOOKMARK_RIBBONS.map((r) => (
+              <button
+                key={r.id}
+                type="button"
+                role="option"
+                className="aas-ribbon"
+                style={{ ["--aas-ribbon" as string]: r.color }}
+                onClick={() => applyBookmarkList(r.id)}
+              >
+                <span className="aas-ribbon__swatch" aria-hidden="true" />
+                {r.label}
+              </button>
+            ))}
           </div>
         )}
 
@@ -273,8 +450,8 @@ export function PageAyahActionSheet({ surahNum, surahName, ayahNum, ayahText, is
 
         <div className="aas-panel__grid">
           <button type="button" className={`aas-action-btn ${bookmarked ? "is-active" : ""}`} onClick={toggleBookmark}>
-            <Bookmark size={18} aria-hidden="true" fill={bookmarked ? "currentColor" : "none"} />
-            {bookmarked ? "محفوظة" : "إشارة مرجعية"}
+            <Bookmark size={18} aria-hidden="true" fill={bookmarked ? "currentColor" : "none"} color={activeRibbon?.color} />
+            {bookmarked ? (activeRibbon?.label ?? "محفوظة") : "إشارة مرجعية"}
           </button>
           <button type="button" className={`aas-action-btn ${noteOpen ? "is-active" : ""}`} onClick={() => setNoteOpen((v) => !v)}>
             <StickyNote size={18} aria-hidden="true" />
@@ -299,6 +476,10 @@ export function PageAyahActionSheet({ surahNum, surahName, ayahNum, ayahText, is
           <button type="button" className="aas-action-btn" onClick={() => handleCopy(true)}>
             {copiedKind === "plain" ? <Check size={18} aria-hidden="true" /> : <Copy size={18} aria-hidden="true" />}
             نسخ بلا تشكيل
+          </button>
+          <button type="button" className="aas-action-btn" onClick={handleShareImage} disabled={sharing}>
+            <Share2 size={18} aria-hidden="true" />
+            {sharing ? "جارٍ…" : "مشاركة صورة"}
           </button>
           {onPrev && (
             <button type="button" className="aas-action-btn" onClick={onPrev}>

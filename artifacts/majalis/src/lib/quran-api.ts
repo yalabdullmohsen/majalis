@@ -743,9 +743,18 @@ export function loadPosition(): { surah: number; ayah: number } | null {
 // ─── Page-view position persistence (وضع "الصفحة" الحقيقي) ────────────────
 const PAGE_POS_KEY = "mj-quran-page-pos-v1";
 
-export function savePagePosition(page: number) {
+export function savePagePosition(page: number, opts?: { surah?: number; ayah?: number }) {
   try {
-    localStorage.setItem(PAGE_POS_KEY, JSON.stringify({ page, at: Date.now() }));
+    const payload: { page: number; at: number; surah?: number; ayah?: number } = {
+      page,
+      at: Date.now(),
+    };
+    if (opts?.surah != null && opts.surah >= 1 && opts.surah <= 114) payload.surah = opts.surah;
+    if (opts?.ayah != null && opts.ayah >= 1) payload.ayah = opts.ayah;
+    localStorage.setItem(PAGE_POS_KEY, JSON.stringify(payload));
+    if (payload.surah != null && payload.ayah != null) {
+      savePosition(payload.surah, payload.ayah);
+    }
   } catch {
     // ignore
   }
@@ -757,6 +766,29 @@ export function loadPagePosition(): number | null {
     if (!raw) return null;
     const page = Number(JSON.parse(raw)?.page);
     return Number.isFinite(page) && page >= 1 && page <= 604 ? page : null;
+  } catch {
+    return null;
+  }
+}
+
+/** موضع آخر قراءة المفصّل: صفحة + سورة + آية عند توفرها. */
+export function loadLastReadDetail(): { page: number; surah?: number; ayah?: number } | null {
+  try {
+    const raw = localStorage.getItem(PAGE_POS_KEY);
+    if (!raw) {
+      const pos = loadPosition();
+      return pos ? { page: 1, surah: pos.surah, ayah: pos.ayah } : null;
+    }
+    const parsed = JSON.parse(raw);
+    const page = Number(parsed?.page);
+    if (!Number.isFinite(page) || page < 1 || page > 604) return null;
+    const surah = Number(parsed?.surah);
+    const ayah = Number(parsed?.ayah);
+    return {
+      page,
+      surah: Number.isFinite(surah) && surah >= 1 && surah <= 114 ? surah : undefined,
+      ayah: Number.isFinite(ayah) && ayah >= 1 ? ayah : undefined,
+    };
   } catch {
     return null;
   }

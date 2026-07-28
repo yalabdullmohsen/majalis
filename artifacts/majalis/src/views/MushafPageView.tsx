@@ -2,21 +2,24 @@ import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from "rea
 import { createPortal } from "react-dom";
 import { useParams, useLocation } from "wouter";
 import {
-  Menu, Settings, X, ChevronRight, ChevronLeft, RotateCcw, ArrowRight,
+  Menu, Settings, X, ChevronRight, ChevronLeft, RotateCcw, ArrowRight, Search,
 } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { toArabicDigits } from "@/lib/utils";
 import {
   fetchSurahDetail, getSurahList, getSurahMeta, getSurahForPage, SURAH_START_PAGES,
-  savePagePosition, loadPagePosition, deriveHizbRub,
+  savePagePosition, loadPagePosition, loadLastReadDetail, deriveHizbRub,
   type Ayah, type SurahSummary,
 } from "@/lib/quran-api";
 import { loadPageJuzIndex, getSegmentsForPage, findPageForAyah, type QuranSegment } from "@/lib/recitation-ai/page-juz-lookup";
-import { useQuranPreferences, type QuranReadingTheme, type QuranFrameStyle, type QuranHighlightStyle, type QuranPageMode } from "@/hooks/useQuranPreferences";
+import { useQuranPreferences, type QuranReadingTheme, type QuranFrameStyle, type QuranHighlightStyle, type QuranPageMode, type QuranReadingLayout } from "@/hooks/useQuranPreferences";
 import { useAyahPlayer } from "@/hooks/useAyahPlayer";
+import { useWordAudioSync } from "@/hooks/useWordAudioSync";
 import { SurahList } from "@/components/quran/SurahList";
 import { PageAyahActionSheet } from "@/components/quran/PageAyahActionSheet";
 import { ReciterDownloadManager } from "@/components/quran/ReciterDownloadManager";
+import { QuranSearchPanel } from "@/components/quran/QuranSearchPanel";
+import { ContinuousUthmaniReader } from "@/components/quran/ContinuousUthmaniReader";
 import { loadMushafPage, prefetchMushafPage, type MushafPageLayout, type QpcWord } from "@/lib/mushaf-v2-data";
 import { beginAbortScope, abortScope, guardAsync } from "@/lib/route-abort";
 import { logDiagnostic } from "@/lib/diagnostics";
@@ -24,9 +27,11 @@ import { MushafPageV2 } from "@/components/quran/MushafPageV2";
 import { goBackOrFallback } from "@/lib/navigation-back";
 import { SectionErrorBoundary } from "@/components/ErrorBoundary";
 import { afterNextPaint, yieldToMain } from "@/lib/yield-to-main";
+import { warmQuranSearchIndex } from "@/lib/quran-local-search";
 import "@/styles/quran.css";
 import "@/styles/mushaf-v2.css";
 import "@/styles/pages/mushaf-reader.css";
+import "@/styles/quran-reader-upgrade.css";
 
 const TOTAL_PAGES = 604;
 
@@ -76,6 +81,10 @@ const PAGE_MODE_OPTIONS: { id: QuranPageMode; label: string; hint: string }[] = 
   { id: "precision", label: "دقة مطبعية (الافتراضي)", hint: "خط QPC مطابق للمطبوع لكل صفحة — ~155 كيلوبايت/صفحة عند الفتح" },
   { id: "light", label: "خفيف", hint: "خط موحّد لكل الصفحات — بلا تحميل إضافي، مناسب لبطء الاتصال" },
 ];
+const LAYOUT_OPTIONS: { id: QuranReadingLayout; label: string; hint: string }[] = [
+  { id: "madani", label: "مصحف المدينة", hint: "صفحة بصفحة (604) مطابقة لمجمع الملك فهد" },
+  { id: "continuous", label: "قراءة متصلة", hint: "تمرير رأسي متصل بخط عثماني سلس — أسلوب آية/ترتيل" },
+];
 
 export default function MushafPageView() {
   // مُثبَّت أيضًا على المسار القديم /mushaf/:surah (رقم سورة) — يُحوَّل
@@ -101,12 +110,26 @@ export default function MushafPageView() {
   const [resumeBanner, setResumeBanner] = useState<number | null>(null);
   const [jumpSurah, setJumpSurah] = useState(1);
   const [jumpAyah, setJumpAyah] = useState(1);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [continuousStart, setContinuousStart] = useState<{ surah: number; ayah: number }>(() => {
+    const detail = loadLastReadDetail();
+    if (detail?.surah && detail?.ayah) return { surah: detail.surah, ayah: detail.ayah };
+    return { surah: getSurahForPage(clampPage(routePage ?? loadPagePosition() ?? 1)).number, ayah: 1 };
+  });
+  const continuousPlayerSurahRef = useRef(continuousStart.surah);
   /* تجربة قراءة غامرة بنمط "آية"/"ترتيل": نقرة واحدة على جسم الصفحة (لا
      على آية — onClick على .mf2-ayah-group يوقف الانتشار propagation)
      تُبدِّل ظهور الشريطين العلوي/السفلي، مستقلة عن chromeVisible الخاصة
      مستقلة عن باقي التبديلات — تبديل دائم لا اختفاء تلقائي بعد مهلة). */
   const [textChromeVisible, setTextChromeVisible] = useState(true);
   const touchStartX = useRef<number | null>(null);
+
+  // فهرس البحث في الخلفية عند فتح المصحف (غير حاجب)
+  useEffect(() => {
+    const ac = new AbortController();
+    void warmQuranSearchIndex(ac.signal).catch(() => {});
+    return () => ac.abort();
+  }, []);
 
   // ── استئناف تلقائي: عند الدخول دون رقم صفحة صريح في الرابط، نبدأ من آخر موضع محفوظ محليًا ──
   useEffect(() => {
@@ -124,6 +147,15 @@ export default function MushafPageView() {
     setPageInput(String(page));
     savePagePosition(page);
   }, [page]);
+
+  // عند اكتمال تحميل مقاطع الصفحة الحالية: ثبّت سورة/آية أول الصفحة مع رقم الصفحة
+  useEffect(() => {
+    if (loading || !segAyahs?.[0]?.ayahs[0]) return;
+    const first = segAyahs[0].ayahs[0];
+    if (first.surahNumber != null) {
+      savePagePosition(page, { surah: first.surahNumber, ayah: first.numberInSurah });
+    }
+  }, [loading, segAyahs, page]);
 
   // يمنع تمرير الصفحة الأساسية خلف الوضع الغامر (نفس نمط
   // body.assistant-panel-open القائم فعلاً لنوافذ أخرى في التطبيق) —
@@ -274,40 +306,96 @@ export default function MushafPageView() {
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (settingsOpen || sidebarOpen || selectedAyah) return;
+      if (settingsOpen || sidebarOpen || selectedAyah || searchOpen) return;
+      if (prefs.readingLayout === "continuous") return;
       if (e.key === "ArrowLeft") nextPage();
       else if (e.key === "ArrowRight") prevPage();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [nextPage, prevPage, settingsOpen, sidebarOpen, selectedAyah]);
+  }, [nextPage, prevPage, settingsOpen, sidebarOpen, selectedAyah, searchOpen, prefs.readingLayout]);
 
-  const activeSurahForPlayer = primarySegment?.segment.surah ?? 1;
-  const activeSurahAyahCount = primarySegment ? getSurahMeta(activeSurahForPlayer).ayahs : 0;
-  const { currentAyah, playerState, togglePlayAyah, reciterId, setReciterId, playbackRate, setPlaybackRate, repeatOn, setRepeatOn } = useAyahPlayer(activeSurahForPlayer, activeSurahAyahCount);
+  const activeSurahForPlayer = selectedAyah?.surah
+    ?? (prefs.readingLayout === "continuous" ? continuousPlayerSurahRef.current : null)
+    ?? primarySegment?.segment.surah
+    ?? 1;
+  const activeSurahAyahCount = getSurahMeta(activeSurahForPlayer).ayahs;
+  const {
+    currentAyah, playerState, togglePlayAyah, reciterId, setReciterId,
+    playbackRate, setPlaybackRate, repeatOn, setRepeatOn, audioElement,
+  } = useAyahPlayer(activeSurahForPlayer, activeSurahAyahCount);
 
-  // ── جسر بين مكوّني تخطيط السطر الحقيقي (V2/خفيف) وحالة الآية المختارة/المُشغَّلة القائمة أصلًا ──
-  const handleV2AyahPress = useCallback((verseKey: string) => {
-    const [s, a] = verseKey.split(":").map(Number);
-    setSelectedAyah({ surah: s, ayah: a });
-  }, []);
-  const v2ActiveKey = selectedAyah
-    ? `${selectedAyah.surah}:${selectedAyah.ayah}`
-    : (playerState === "playing" || playerState === "buffering") && currentAyah !== null
-      ? `${activeSurahForPlayer}:${currentAyah}`
-      : null;
-
-  const shellThemeClass = `quran-shell--${prefs.readingTheme}`;
-  const frameClass = prefs.frameStyle === "emerald" ? "" : `qs-mushaf-frame--${prefs.frameStyle}`;
+  const [selectedAyahText, setSelectedAyahText] = useState<string | null>(null);
 
   const selectedAyahData = useMemo(() => {
-    if (!selectedAyah || !segAyahs) return null;
+    if (!selectedAyah) return null;
+    if (selectedAyahText) {
+      return { text: selectedAyahText, numberInSurah: selectedAyah.ayah, surahNumber: selectedAyah.surah } as Ayah & { surahNumber: number };
+    }
+    if (!segAyahs) return null;
     for (const seg of segAyahs) {
       const found = seg.ayahs.find((a) => a.surahNumber === selectedAyah.surah && a.numberInSurah === selectedAyah.ayah);
       if (found) return found;
     }
     return null;
-  }, [selectedAyah, segAyahs]);
+  }, [selectedAyah, selectedAyahText, segAyahs]);
+
+  const activeWordCount = useMemo(() => {
+    if (currentAyah == null) return 0;
+    if (prefs.readingLayout === "continuous") {
+      const text = selectedAyahData?.text
+        ?? segAyahs?.flatMap((s) => s.ayahs).find((a) => a.surahNumber === activeSurahForPlayer && a.numberInSurah === currentAyah)?.text;
+      return text ? text.trim().split(/\s+/).filter(Boolean).length : 0;
+    }
+    if (!v2Layout) return 0;
+    let count = 0;
+    for (const row of v2Layout.rows) {
+      if (row.kind !== "line") continue;
+      for (const w of row.words) {
+        if (w.verseKey === `${activeSurahForPlayer}:${currentAyah}` && w.charType !== "end") count += 1;
+      }
+    }
+    return count;
+  }, [currentAyah, prefs.readingLayout, selectedAyahData, segAyahs, activeSurahForPlayer, v2Layout]);
+
+  const activeWordIndex = useWordAudioSync(audioElement, {
+    playing: playerState === "playing",
+    wordCount: activeWordCount,
+  });
+
+  // ── جسر بين مكوّني تخطيط السطر الحقيقي (V2/خفيف) وحالة الآية المختارة/المُشغَّلة القائمة أصلًا ──
+  const handleV2AyahPress = useCallback((verseKey: string) => {
+    const [s, a] = verseKey.split(":").map(Number);
+    setSelectedAyahText(null);
+    setSelectedAyah({ surah: s, ayah: a });
+    savePagePosition(page, { surah: s, ayah: a });
+  }, [page]);
+
+  const handleContinuousAyahPress = useCallback((surah: number, ayah: number, text?: string) => {
+    setSelectedAyahText(text ?? null);
+    setSelectedAyah({ surah, ayah });
+    continuousPlayerSurahRef.current = surah;
+    savePagePosition(page, { surah, ayah });
+  }, [page]);
+
+  const handleContinuousVisible = useCallback((surah: number, ayah: number, ayahPage: number) => {
+    continuousPlayerSurahRef.current = surah;
+    // لا نغيّر continuousStart هنا — وإلا يُعاد تحميل القارئ عند كل تمرير
+    if (ayahPage >= 1 && ayahPage <= TOTAL_PAGES && ayahPage !== page) {
+      setPageState(ayahPage);
+      navigate(`/mushaf/page/${ayahPage}`, { replace: true });
+    }
+    savePagePosition(ayahPage || page, { surah, ayah });
+  }, [page, navigate]);
+
+  const v2ActiveKey = selectedAyah
+    ? `${selectedAyah.surah}:${selectedAyah.ayah}`
+    : (playerState === "playing" || playerState === "buffering" || playerState === "loading") && currentAyah !== null
+      ? `${activeSurahForPlayer}:${currentAyah}`
+      : null;
+
+  const shellThemeClass = `quran-shell--${prefs.readingTheme}`;
+  const frameClass = prefs.frameStyle === "emerald" ? "" : `qs-mushaf-frame--${prefs.frameStyle}`;
 
   const flatAyahs = useMemo(() => segAyahs?.flatMap((s) => s.ayahs) ?? [], [segAyahs]);
   const selectedIdx = selectedAyah ? flatAyahs.findIndex((a) => a.surahNumber === selectedAyah.surah && a.numberInSurah === selectedAyah.ayah) : -1;
@@ -327,6 +415,9 @@ export default function MushafPageView() {
               {primarySurahMeta.name}
               <small>صفحة {toArabicDigits(page)} · جزء {toArabicDigits(juz)}</small>
             </div>
+            <button type="button" className="mpv-toolbar__btn" onClick={() => setSearchOpen(true)} aria-label="بحث في القرآن">
+              <Search size={16} aria-hidden="true" />
+            </button>
             <button type="button" className="mpv-toolbar__btn" onClick={() => setSettingsOpen(true)} aria-label="إعدادات القراءة">
               <Settings size={16} aria-hidden="true" />
             </button>
@@ -337,9 +428,9 @@ export default function MushafPageView() {
               للوصول بلوحة المفاتيح في مكان آخر بالصفحة. */}
           {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
           <div
-            className="mpv-body"
-            onTouchStart={onTouchStart}
-            onTouchEnd={onTouchEnd}
+            className={`mpv-body${prefs.readingLayout === "continuous" ? " mpv-body--continuous" : ""}`}
+            onTouchStart={prefs.readingLayout === "madani" ? onTouchStart : undefined}
+            onTouchEnd={prefs.readingLayout === "madani" ? onTouchEnd : undefined}
             onClick={() => setTextChromeVisible((v) => !v)}
           >
             {resumeBanner && (
@@ -351,8 +442,21 @@ export default function MushafPageView() {
               </div>
             )}
 
-            {error && !loading ? (
+            {error && !loading && prefs.readingLayout === "madani" ? (
               <p className="ds-empty">تعذّر تحميل هذه الصفحة. تحقّق من اتصالك وحاول مجددًا.</p>
+            ) : prefs.readingLayout === "continuous" ? (
+              <div className="cur-frame" onClick={(e) => e.stopPropagation()}>
+                <ContinuousUthmaniReader
+                  key={`cur-${continuousStart.surah}-${continuousStart.ayah}`}
+                  startSurah={continuousStart.surah}
+                  startAyah={continuousStart.ayah}
+                  fontScale={prefs.fontScale}
+                  activeAyahKey={v2ActiveKey}
+                  activeWordIndex={activeWordIndex}
+                  onAyahPress={handleContinuousAyahPress}
+                  onVisibleAyah={handleContinuousVisible}
+                />
+              </div>
             ) : (
               <div className={`qs-mushaf-frame ${frameClass}`}>
                 <span className="qs-mushaf-corner qs-mushaf-corner--tl" aria-hidden="true">❈</span>
@@ -376,11 +480,18 @@ export default function MushafPageView() {
                     {loading || !segAyahs ? (
                       <MushafPageV2 layout={null} bare />
                     ) : prefs.pageMode === "precision" ? (
-                      <MushafPageV2 layout={v2Layout} activeAyahKey={v2ActiveKey} onAyahPress={handleV2AyahPress} bare />
+                      <MushafPageV2
+                        layout={v2Layout}
+                        activeAyahKey={v2ActiveKey}
+                        activeWordIndex={activeWordIndex}
+                        onAyahPress={handleV2AyahPress}
+                        bare
+                      />
                     ) : (
                       <MushafPageV2
                         layout={v2Layout}
                         activeAyahKey={v2ActiveKey}
+                        activeWordIndex={activeWordIndex}
                         onAyahPress={handleV2AyahPress}
                         sharedFontFamily={'"Amiri Quran", "Scheherazade New", serif'}
                         renderWord={renderLightWord}
@@ -399,6 +510,7 @@ export default function MushafPageView() {
             )}
           </div>
 
+          {prefs.readingLayout === "madani" && (
           <nav className={`mpv-navbar ${textChromeVisible ? "" : "mpv-navbar--hidden"}`} aria-label="التنقل بين صفحات المصحف">
             <button type="button" className="mpv-navbar__btn" onClick={prevPage} disabled={page <= 1} aria-label="الصفحة السابقة">
               <ChevronRight size={18} aria-hidden="true" />
@@ -421,6 +533,7 @@ export default function MushafPageView() {
               <ChevronLeft size={18} aria-hidden="true" />
             </button>
           </nav>
+          )}
         </>
 
       {sidebarOpen && (
@@ -513,6 +626,33 @@ export default function MushafPageView() {
             </div>
 
             <div className="mpv-settings-group">
+              <span className="mpv-settings-group__label">تخطيط القراءة</span>
+              <div className="mpv-settings-group__grid">
+                {LAYOUT_OPTIONS.map((o) => (
+                  <button
+                    key={o.id}
+                    type="button"
+                    className={`mpv-chip ${prefs.readingLayout === o.id ? "is-active" : ""}`}
+                    onClick={() => {
+                      setPref("readingLayout", o.id);
+                      if (o.id === "continuous") {
+                        const first = segAyahs?.[0]?.ayahs[0];
+                        if (first?.surahNumber) {
+                          setContinuousStart({ surah: first.surahNumber, ayah: first.numberInSurah });
+                        }
+                      }
+                    }}
+                  >
+                    {o.label}
+                  </button>
+                ))}
+              </div>
+              <small style={{ display: "block", opacity: .7, marginTop: ".35rem" }}>
+                {LAYOUT_OPTIONS.find((o) => o.id === prefs.readingLayout)?.hint}
+              </small>
+            </div>
+
+            <div className="mpv-settings-group">
               <span className="mpv-settings-group__label">وضع عرض الصفحة</span>
               <div className="mpv-settings-group__grid">
                 {PAGE_MODE_OPTIONS.map((o) => (
@@ -565,6 +705,19 @@ export default function MushafPageView() {
         </div>
       )}
 
+      {searchOpen && (
+        <QuranSearchPanel
+          open={searchOpen}
+          onClose={() => setSearchOpen(false)}
+          onSelect={(hit) => {
+            setSearchOpen(false);
+            setContinuousStart({ surah: hit.surahNumber, ayah: hit.ayahNumber });
+            setSelectedAyahText(hit.text);
+            void goToPageOrAyah(hit.page, { surah: hit.surahNumber, ayah: hit.ayahNumber });
+          }}
+        />
+      )}
+
       {selectedAyah && selectedAyahData && (
         <SectionErrorBoundary name="PageAyahActionSheet">
           <PageAyahActionSheet
@@ -573,17 +726,19 @@ export default function MushafPageView() {
             ayahNum={selectedAyah.ayah}
             ayahText={selectedAyahData.text}
             isPlaying={selectedAyah.surah === activeSurahForPlayer && currentAyah === selectedAyah.ayah && (playerState === "playing" || playerState === "buffering")}
-            canPlay={selectedAyah.surah === activeSurahForPlayer}
+            canPlay={true}
             onTogglePlay={() => togglePlayAyah(selectedAyah.ayah)}
             onPrev={selectedIdx > 0 ? () => {
               const prev = flatAyahs[selectedIdx - 1];
+              setSelectedAyahText(null);
               setSelectedAyah({ surah: prev.surahNumber!, ayah: prev.numberInSurah });
             } : undefined}
             onNext={selectedIdx >= 0 && selectedIdx < flatAyahs.length - 1 ? () => {
               const next = flatAyahs[selectedIdx + 1];
+              setSelectedAyahText(null);
               setSelectedAyah({ surah: next.surahNumber!, ayah: next.numberInSurah });
             } : undefined}
-            onClose={() => setSelectedAyah(null)}
+            onClose={() => { setSelectedAyah(null); setSelectedAyahText(null); }}
             reciterId={reciterId}
             onSetReciter={setReciterId}
             playbackRate={playbackRate}

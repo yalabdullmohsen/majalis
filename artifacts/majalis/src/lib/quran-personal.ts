@@ -15,6 +15,24 @@ export type QuranBookmark = {
   addedAt: number;
 };
 
+/** شرائط تصنيف الإشارات — ألوان هادئة بلا بنفسجي صاخب. */
+export type BookmarkRibbon = {
+  id: string;
+  label: string;
+  color: string;
+};
+
+export const BOOKMARK_RIBBONS: BookmarkRibbon[] = [
+  { id: "المفضلة", label: "المفضلة", color: "#0E6E52" },
+  { id: "ورد يومي", label: "ورد يومي", color: "#B08D2E" },
+  { id: "حفظ", label: "حفظ", color: "#1D6A9A" },
+  { id: "تأمّل", label: "تأمّل", color: "#9A4A2E" },
+];
+
+export function getBookmarkRibbon(listName: string): BookmarkRibbon {
+  return BOOKMARK_RIBBONS.find((r) => r.id === listName) ?? BOOKMARK_RIBBONS[0]!;
+}
+
 const BK_KEY = "mj-quran-bookmarks-v1";
 
 function readBookmarks(): QuranBookmark[] {
@@ -22,6 +40,10 @@ function readBookmarks(): QuranBookmark[] {
 }
 function writeBookmarks(list: QuranBookmark[]) {
   try { localStorage.setItem(BK_KEY, JSON.stringify(list)); } catch { /* quota */ }
+}
+
+export function getBookmarkListForAyah(surahNum: number, ayahNum: number): string | null {
+  return readBookmarks().find((b) => b.surahNum === surahNum && b.ayahNum === ayahNum)?.list ?? null;
 }
 
 export function getBookmarks(listName?: string): QuranBookmark[] {

@@ -22,6 +22,11 @@ export function groupWordsByAyah(words: QpcWord[]): QpcWord[][] {
 type Props = {
   layout: MushafPageLayout | null;
   activeAyahKey?: string | null;
+  /**
+   * فهرس الكلمة النشطة داخل الآية المُشغَّلة (0-based بين كلمات charType=word فقط).
+   * يُستخدَم لتظليل كلمة↔كلمة أثناء التلاوة عندما تتوفر مزامنة صوتية.
+   */
+  activeWordIndex?: number | null;
   onAyahPress?: (verseKey: string) => void;
   /** خط موحّد بديل (الوضع الخفيف) — يتخطى تحميل خط QPC الخاص بالصفحة
    * كليًا (لا طلب شبكة إضافي)، يفترض أن الخط مُحمَّل أصلًا في التطبيق.
@@ -43,20 +48,19 @@ type Props = {
 
 const ROW_COUNT_APPROX = 15;
 
-const defaultRenderWord = (w: QpcWord) => (
+const defaultRenderWord = (w: QpcWord, wordActive?: boolean) => (
   <Fragment key={w.id}>
-    <span className="mf2-word">{w.glyphText}</span>
+    <span className={`mf2-word${wordActive ? " mf2-word--active" : ""}`}>{w.glyphText}</span>
     {w.charType === "end" && w.sajdahNumber !== null && (
       <span className="mf2-sajda-badge">سجدة</span>
     )}
   </Fragment>
 );
 
-export function MushafPageV2({ layout, activeAyahKey, onAyahPress, sharedFontFamily, renderWord, bare }: Props) {
+export function MushafPageV2({ layout, activeAyahKey, activeWordIndex = null, onAyahPress, sharedFontFamily, renderWord, bare }: Props) {
   const perPageFontReady = useMushafPageFont(sharedFontFamily ? null : (layout?.pageNumber ?? null));
   const fontReady = sharedFontFamily ? true : perPageFontReady;
   const fontFamily = sharedFontFamily ?? (layout ? mushafPageFontFamily(layout.pageNumber) : undefined);
-  const wordRenderer = renderWord ?? defaultRenderWord;
   const lineRefs = useRef(new Map<number, HTMLDivElement>());
   const [lineFontSizes, setLineFontSizes] = useState<Map<number, number>>(new Map());
   const [centeredLines, setCenteredLines] = useState<Set<number>>(new Set());
@@ -157,17 +161,34 @@ export function MushafPageV2({ layout, activeAyahKey, onAyahPress, sharedFontFam
             >
               {groupWordsByAyah(row.words).map((group) => {
                 const verseKey = group[0].verseKey;
+                const ayahActive = verseKey === activeAyahKey;
+                let wordIdx = -1;
                 return (
                   <span
                     key={verseKey}
-                    className={`mf2-ayah-group${verseKey === activeAyahKey ? " mf2-ayah-group--active" : ""}`}
+                    className={`mf2-ayah-group${ayahActive ? " mf2-ayah-group--active" : ""}`}
                     role="button"
                     tabIndex={0}
                     aria-label={`آية ${verseKey}`}
                     onClick={(e) => { e.stopPropagation(); onAyahPress?.(verseKey); }}
                     onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onAyahPress?.(verseKey); } }}
                   >
-                    {group.map((w) => wordRenderer(w))}
+                    {group.map((w) => {
+                      const isWord = w.charType !== "end";
+                      if (isWord) wordIdx += 1;
+                      const wordActive = ayahActive && activeWordIndex != null && isWord && wordIdx === activeWordIndex;
+                      if (renderWord) {
+                        const node = renderWord(w);
+                        if (!wordActive || !isWord) return node;
+                        // غلاف خفيف لكلمة مخصَّصة نشطة دون كسر مفتاح المُصيِّر
+                        return (
+                          <span key={w.id} className="mf2-word-wrap mf2-word-wrap--active">
+                            {node}
+                          </span>
+                        );
+                      }
+                      return defaultRenderWord(w, wordActive);
+                    })}
                   </span>
                 );
               })}

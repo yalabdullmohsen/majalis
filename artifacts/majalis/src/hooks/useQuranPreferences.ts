@@ -22,6 +22,13 @@ export type QuranHighlightStyle = "wash" | "border" | "underline" | "text-color"
  */
 export type QuranPageMode = "light" | "precision";
 
+/**
+ * تخطيط القراءة:
+ * - madani: صفحة بصفحة وفق مصحف المدينة (604 صفحة)
+ * - continuous: تمرير رأسي متصل بخط عثماني (أسلوب آية/ترتيل)
+ */
+export type QuranReadingLayout = "madani" | "continuous";
+
 export type QuranPreferences = {
   fontScale: number;
   fontId: QuranFontId;
@@ -31,6 +38,7 @@ export type QuranPreferences = {
   frameStyle: QuranFrameStyle;
   highlightStyle: QuranHighlightStyle;
   pageMode: QuranPageMode;
+  readingLayout: QuranReadingLayout;
 };
 
 const KEY = "mj-quran-prefs-v4";
@@ -49,6 +57,7 @@ const DEFAULTS: QuranPreferences = {
   frameStyle: "none",
   highlightStyle: "wash",
   pageMode: "precision",
+  readingLayout: "madani",
 };
 
 /** أول زيارة بلا أي تفضيل محفوظ فقط: يحترم prefers-color-scheme النظامي

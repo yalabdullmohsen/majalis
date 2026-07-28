@@ -388,10 +388,23 @@ export const MUSHAF_TAFSIR_EDITIONS: MushafTafsirEdition[] = [
     level: "مبتدئ",
   },
   {
+    id: "ar.sadi",
+    label: "تفسير السعدي",
+    author: "عبد الرحمن السعدي",
+    level: "مبتدئ",
+  },
+  {
     id: "ar.jalalayn",
     label: "تفسير الجلالين",
     author: "المحلّي والسيوطي",
     level: "مبتدئ",
+  },
+  {
+    id: "en.ibnukathir",
+    label: "ابن كثير (إنجليزي)",
+    author: "ابن كثير — ترجمة",
+    level: "متوسط",
+    caution: "ترجمة إنجليزية لتفسير ابن كثير عبر واجهة AlQuran Cloud (لا نص عربي كامل في هذه الطبعة).",
   },
   {
     id: "ar.baghawi",
