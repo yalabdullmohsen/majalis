@@ -23,7 +23,15 @@ import {
   type StallRecoveryHandle,
   type StallRecoveryPhase,
 } from "@/lib/audio-stall-recovery";
-import { prewarmAudioCdns } from "@/lib/resource-prewarm";
+import { prewarmAudioCdns, prewarmUrl } from "@/lib/resource-prewarm";
+import {
+  applyAudioBufferPolicy,
+  getAudioBufferPolicy,
+  observeAudioLatency,
+  observeAudioThroughput,
+} from "@/lib/audio-buffer-policy";
+import { logDiagnostic } from "@/lib/diagnostics";
+import { useWakeLock } from "@/hooks/useWakeLock";
 
 export type PlayerState = "idle" | "loading" | "playing" | "paused" | "error" | "buffering";
 
@@ -32,6 +40,7 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
   const stallRef = useRef<StallRecoveryHandle | null>(null);
   const pauseCleanupRef = useRef<(() => void) | null>(null);
   const delayTimerRef = useRef<number | null>(null);
+  const mountedRef = useRef(true);
   const [reciterId, setReciterIdState] = useState<string>(loadReciterId);
   const [currentAyah, setCurrentAyah] = useState<number | null>(null);
   const [playerState, setPlayerState] = useState<PlayerState>("idle");
@@ -43,6 +52,9 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
   const loopRuntimeRef = useRef<AyahLoopRuntime | null>(null);
   const [loopConfig, setLoopConfigState] = useState<AyahLoopConfig | null>(null);
   const loadAndPlayRef = useRef<(surah: number, ayah: number, reciter: string) => void>(() => undefined);
+
+  // Part 19: keep screen awake only while actively playing; release on pause/blur
+  useWakeLock(playerState === "playing" || playerState === "buffering" || playerState === "loading");
 
   const clearDelayTimer = useCallback(() => {
     if (delayTimerRef.current != null) {
@@ -90,27 +102,35 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
     [totalAyahs, clearDelayTimer],
   );
 
+  useEffect(() => {
+    mountedRef.current = true;
+    return () => {
+      mountedRef.current = false;
+    };
+  }, []);
+
   // create audio element once + attach stall recovery
   useEffect(() => {
     const audio = new Audio();
-    audio.preload = "none";
+    const policy = getAudioBufferPolicy();
+    applyAudioBufferPolicy(audio, policy);
     audio.playbackRate = playbackRateRef.current;
     audioRef.current = audio;
 
     const onPhase = (phase: StallRecoveryPhase) => {
+      if (!mountedRef.current) return;
       if (phase === "buffering" || phase === "recovering") {
         setPlayerState((s) => (s === "paused" || s === "idle" || s === "error" ? s : "buffering"));
+        logDiagnostic("audio-stall", phase);
       }
-      // successful resume lands on "playing" via the playing listener in loadAndPlay
     };
 
     stallRef.current = attachAudioStallRecovery(audio, {
-      maxAttempts: 3,
-      stallGraceMs: 600,
+      maxAttempts: policy.maxStallAttempts,
+      stallGraceMs: policy.stallGraceMs,
       onPhaseChange: onPhase,
     });
 
-    // Warm CDN TLS early so first play pays less handshake cost
     prewarmAudioCdns();
 
     return () => {
@@ -129,17 +149,22 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
     if (!audio) return;
 
     clearDelayTimer();
-    // Remove previous pause listener before adding a new one
     pauseCleanupRef.current?.();
     pauseCleanupRef.current = null;
     stallRef.current?.reset();
     prewarmAudioCdns();
 
+    const policy = getAudioBufferPolicy();
+    applyAudioBufferPolicy(audio, policy);
+
+    const t0 = performance.now();
     audio.pause();
     audio.src = getAyahAudioUrl(surah, ayah, reciter);
     audio.playbackRate = playbackRateRef.current;
-    setCurrentAyah(ayah);
-    setPlayerState("loading");
+    if (mountedRef.current) {
+      setCurrentAyah(ayah);
+      setPlayerState("loading");
+    }
     saveAudioResumeState({
       surah,
       ayah,
@@ -148,9 +173,19 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
       updatedAt: Date.now(),
     });
 
-    const onPlaying = () => setPlayerState("playing");
+    const onPlaying = () => {
+      if (!mountedRef.current) return;
+      const latency = performance.now() - t0;
+      observeAudioLatency(latency);
+      // Rough throughput sample from typical ayah size (~80KB) / latency
+      if (latency > 0) observeAudioThroughput(80_000, latency);
+      setPlayerState("playing");
+      if (policy.warmNextAyah && ayah < totalAyahs) {
+        prewarmUrl(getAyahAudioUrl(surah, ayah + 1, reciter), { mode: "cors" });
+      }
+    };
     const onPause = () => {
-      if (audio.ended) return;
+      if (!mountedRef.current || audio.ended) return;
       // Keep ayah + timeline; do not clear currentAyah on buffer underrun
       const stallPhase = stallRef.current?.getPhase();
       if (stallPhase === "buffering" || stallPhase === "recovering") {
@@ -170,6 +205,7 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
       pauseCleanupRef.current?.();
       pauseCleanupRef.current = null;
       stallRef.current?.reset();
+      if (!mountedRef.current) return;
 
       const loopRt = loopRuntimeRef.current;
       if (loopRt?.active) {
@@ -208,6 +244,8 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
         // attachAudioStallRecovery schedules resume; surface error only if attempts exhausted
         if (phase !== "failed") return;
       }
+      if (!mountedRef.current) return;
+      logDiagnostic("audio-chunk-fail", "ayah audio error", { surah, ayah, reciter, code });
       setPlayerState("error");
     };
 
@@ -231,7 +269,11 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
        — هذا هو السبب الجذري الفعلي لعطل التشغيل على iOS تحديدًا (مؤكَّد
        2026-07-22). المتصفح يدير الانتظار الداخلي لتوفر البيانات بنفسه طالما
        استُدعيت play() بالتوقيت الصحيح؛ لا حاجة لانتظار canplay يدويًا. */
-    audio.play().catch(() => setPlayerState("error"));
+    audio.play().catch(() => {
+      if (!mountedRef.current) return;
+      setPlayerState("error");
+      logDiagnostic("audio-chunk-fail", "play-rejected", { surah, ayah });
+    });
   }, [totalAyahs, clearDelayTimer]);
 
   loadAndPlayRef.current = loadAndPlay;

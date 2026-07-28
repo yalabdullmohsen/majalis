@@ -19,6 +19,7 @@ import { ASRProviderUnavailableError } from "../asr-provider";
 import { isNative } from "../../capacitor-utils";
 import { SITE_URL } from "../../site-config";
 import { normalizeQuranWord } from "../quran-normalize";
+import { getWaveformSampleIntervalMs } from "@/lib/render-fps-throttle";
 
 const ENDPOINT = isNative ? `${SITE_URL}/api/recitation-transcribe` : "/api/recitation-transcribe";
 /** مدة كل دفعة timeslice من المُسجِّل المستمر */
@@ -176,6 +177,8 @@ export class ServerQuranASRProvider implements QuranASRProvider {
 
     if (analyser) {
       const data = new Uint8Array(analyser.frequencyBinCount);
+      // Part 19: battery-aware sample interval (downscale when battery < 20%)
+      const sampleMs = getWaveformSampleIntervalMs(100);
       active.levelTimer = setInterval(() => {
         if (!active.analyser || active.stopped) return;
         active.analyser.getByteTimeDomainData(data);
@@ -187,7 +190,7 @@ export class ServerQuranASRProvider implements QuranASRProvider {
         const rms = Math.sqrt(sum / data.length);
         const level = Math.min(1, rms * 4);
         for (const cb of active.levelListeners) cb(level);
-      }, 100);
+      }, sampleMs);
     }
 
     this.startContinuousRecorder(id, active);

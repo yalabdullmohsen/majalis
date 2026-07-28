@@ -35,14 +35,20 @@ function keyFor(reciterId: string, surah: number): string {
 }
 
 async function putBlob(reciterId: string, surah: number, blob: Blob): Promise<void> {
-  const db = await openDb();
-  await new Promise<void>((resolve, reject) => {
-    const tx = db.transaction(STORE, "readwrite");
-    tx.objectStore(STORE).put(blob, keyFor(reciterId, surah));
-    tx.oncomplete = () => resolve();
-    tx.onerror = () => reject(tx.error);
+  const { withIdbRecovery } = await import("@/lib/idb-self-heal");
+  const { logDiagnostic } = await import("@/lib/diagnostics");
+  await withIdbRecovery(async () => {
+    const db = await openDb();
+    await new Promise<void>((resolve, reject) => {
+      const tx = db.transaction(STORE, "readwrite");
+      tx.objectStore(STORE).put(blob, keyFor(reciterId, surah));
+      tx.oncomplete = () => resolve();
+      tx.onerror = () => reject(tx.error);
+    });
+    db.close();
+  }, {
+    onHeal: (reason) => logDiagnostic("idb-heal", reason, { reciterId, surah }),
   });
-  db.close();
 }
 
 async function getBlob(reciterId: string, surah: number): Promise<Blob | null> {

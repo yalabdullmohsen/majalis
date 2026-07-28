@@ -59,17 +59,23 @@ export async function enginePut<T>(
   value: T,
   revision?: string,
 ): Promise<void> {
-  const db = getEngine();
-  if (!db) return;
-  const row: OfflineRecord<T> = {
-    id: rowId(store, key),
-    store,
-    key,
-    value,
-    updatedAt: new Date().toISOString(),
-    revision,
-  };
-  await db.records.put(row as OfflineRecord);
+  const { withIdbRecovery } = await import("@/lib/idb-self-heal");
+  const { logDiagnostic } = await import("@/lib/diagnostics");
+  await withIdbRecovery(async () => {
+    const db = getEngine();
+    if (!db) return;
+    const row: OfflineRecord<T> = {
+      id: rowId(store, key),
+      store,
+      key,
+      value,
+      updatedAt: new Date().toISOString(),
+      revision,
+    };
+    await db.records.put(row as OfflineRecord);
+  }, {
+    onHeal: (reason) => logDiagnostic("idb-heal", reason, { store, key }),
+  });
 }
 
 export async function engineGet<T>(
