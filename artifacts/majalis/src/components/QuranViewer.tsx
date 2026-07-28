@@ -10,8 +10,9 @@
  * strips parenthetical markers via renderQuranText — same idea as the RN sketch.
  * After 30 minutes of reading, a gentle break reminder appears (RN Alert.alert port).
  * Typeface cycles Amiri → Traditional Arabic → Scheherazade via prefs.fontId.
- * Inline tafsir mode (`showTafsir`) loads the surah edition once and renders
- * under each ayah when enabled — RN conditional-rendering sketch.
+ * Inline tafsir mode (`showTafsir` / `toggleTafsir`) fills session
+ * `tafsirDatabase` (`surah:ayah` → text) via `@/lib/quran-tafsir-database`
+ * and renders under each ayah — RN sketch with a separate data file.
  * Inline translation (`showTranslation`) mirrors the same pattern with
  * Saheeh International (`en.sahih`) via `fetchTafsirAyahs`.
  * Per-ayah audio toggle uses AudioEngine (web port of expo-av Sound) with
@@ -32,6 +33,14 @@ import {
   readTranslationEdition,
   translationMapFromRows,
 } from "@/lib/quran-translation";
+import {
+  getTafsirForAyah,
+  loadSurahTafsirIntoDatabase,
+  persistShowTafsir,
+  readInlineTafsirEdition,
+  readStoredShowTafsir,
+  verseTafsirId,
+} from "@/lib/quran-tafsir-database";
 import { useQuranEngine } from "@/hooks/useQuranEngine";
 import { useQuranPreferences } from "@/hooks/useQuranPreferences";
 import { useReadingBreakReminder } from "@/hooks/useReadingBreakReminder";
@@ -52,7 +61,6 @@ import {
   readStoredQuranFontSize,
 } from "@/lib/quran-font-size";
 import { shareVerse } from "@/lib/share-ayah";
-import { DEFAULT_TAFSEER_SOURCE } from "@/core/tafseer/TafseerService";
 import { QuranActionBar } from "@/components/QuranActionBar";
 import { ReadingBreakDialog } from "@/components/quran/ReadingBreakDialog";
 import { toArabicDigits } from "@/lib/utils";
@@ -79,8 +87,8 @@ export type QuranReaderThemeId = keyof typeof THEMES;
 
 /** `"auto"` = follow OS; `"1"`/`"0"` = manual dark/light override. */
 export const QURAN_THEME_STORAGE_KEY = "quranReaderDarkMode";
-export const QURAN_TAFSIR_TOGGLE_KEY = "quranReaderShowTafsir";
-export const QURAN_INLINE_TAFSIR_EDITION_KEY = "majalis-mushaf-tafsir-edition-v1";
+/** @deprecated استخدم المفتاح من `@/lib/quran-tafsir-database` */
+export { QURAN_TAFSIR_TOGGLE_KEY, QURAN_INLINE_TAFSIR_EDITION_KEY } from "@/lib/quran-tafsir-database";
 
 /** Re-export RN font-size constants for callers that imported them from here. */
 export {
@@ -103,26 +111,6 @@ function readStoredThemeOverride(): ReaderThemeOverride {
   } catch {
     return null;
   }
-}
-
-function readStoredShowTafsir(): boolean {
-  try {
-    const raw = localStorage.getItem(QURAN_TAFSIR_TOGGLE_KEY);
-    if (raw == null) return false;
-    return raw === "1" || raw === "true";
-  } catch {
-    return false;
-  }
-}
-
-function readInlineTafsirEdition(): string {
-  try {
-    const v = localStorage.getItem(QURAN_INLINE_TAFSIR_EDITION_KEY);
-    if (v) return v;
-  } catch {
-    /* ignore */
-  }
-  return DEFAULT_TAFSEER_SOURCE;
 }
 
 /**
@@ -191,6 +179,7 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
   const [fontSize, setFontSize] = useState(QURAN_FONT_DEFAULT_PX);
   /** null = follow deviceTheme (auto). */
   const [themeOverride, setThemeOverride] = useState<ReaderThemeOverride>(null);
+  // 2. حالة العرض — RN showTafsir
   const [showTafsir, setShowTafsir] = useState(false);
   const [tafsirByAyah, setTafsirByAyah] = useState<Record<number, string>>({});
   const [tafsirLoading, setTafsirLoading] = useState(false);
@@ -254,14 +243,11 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
     setPref("fontId", nextQuranFontId(prefs.fontId));
   }, [prefs.fontId, setPref]);
 
+  // 3. طريقة العرض — تبديل التفسير
   const toggleTafsir = useCallback(() => {
     setShowTafsir((prev) => {
       const next = !prev;
-      try {
-        localStorage.setItem(QURAN_TAFSIR_TOGGLE_KEY, next ? "1" : "0");
-      } catch {
-        /* ignore */
-      }
+      persistShowTafsir(next);
       return next;
     });
   }, []);
@@ -293,7 +279,7 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
     setShowTranslation(readStoredShowTranslation());
   }, []);
 
-  /** When inline tafsir is on, fetch the whole surah edition once (cached). */
+  /** When inline tafsir is on, fill RN `tafsirDatabase` then render from it. */
   useEffect(() => {
     if (!showTafsir) return;
     let cancelled = false;
@@ -302,14 +288,10 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
     void (async () => {
       try {
         const edition = readInlineTafsirEdition();
-        const rows = await fetchTafsirAyahs(surahNum, edition);
+        const { count, byAyah } = await loadSurahTafsirIntoDatabase(surahNum, edition);
         if (cancelled) return;
-        const map: Record<number, string> = {};
-        for (const row of rows) {
-          if (row.text) map[row.numberInSurah] = row.text;
-        }
-        setTafsirByAyah(map);
-        if (!rows.length) setTafsirError(true);
+        setTafsirByAyah(byAyah);
+        if (!count) setTafsirError(true);
       } catch {
         if (!cancelled) {
           setTafsirByAyah({});
@@ -622,9 +604,12 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
               const active =
                 ayah.numberInSurah === currentAyah ||
                 selected?.ayah === ayah.numberInSurah;
-              const ayahTafsir = tafsirByAyah[ayah.numberInSurah];
+              const ayahTafsir =
+                tafsirByAyah[ayah.numberInSurah] ??
+                getTafsirForAyah(surahNum, ayah.numberInSurah);
               const ayahTranslation = translationByAyah[ayah.numberInSurah];
               const playingThis = isPlayingAyah(surahNum, ayah.numberInSurah);
+              const verseId = verseTafsirId(surahNum, ayah.numberInSurah);
               return (
                 <li key={ayah.numberInSurah} className="qe-ayah-item">
                   <div className="qe-ayah-row">
@@ -694,6 +679,7 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
                       className="qe-ayah__tafsir"
                       onClick={(e) => e.stopPropagation()}
                       role="note"
+                      data-verse-id={verseId}
                       aria-label={`تفسير الآية ${toArabicDigits(ayah.numberInSurah)}`}
                     >
                       {tafsirLoading && !ayahTafsir ? (
