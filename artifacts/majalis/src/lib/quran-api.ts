@@ -81,9 +81,11 @@ export async function fetchSurahList(): Promise<SurahSummary[]> {
 
 async function fetchLocalSurahDetail(surahNumber: number): Promise<SurahDetail | null> {
   try {
+    const { pooledFetch } = await import("@/lib/fetch-pool");
     const padded = String(surahNumber).padStart(3, "0");
-    const res = await fetch(`${LOCAL_QURAN_DATA_BASE}/surah-${padded}.json`, {
-      signal: AbortSignal.timeout(8_000),
+    const res = await pooledFetch(`${LOCAL_QURAN_DATA_BASE}/surah-${padded}.json`, {
+      timeoutMs: 8_000,
+      dedupeKey: `quran-local:${padded}`,
     });
     if (!res.ok) return null;
     const detail = await res.json();
@@ -94,7 +96,13 @@ async function fetchLocalSurahDetail(surahNumber: number): Promise<SurahDetail |
   }
 }
 
+const surahDetailInflight = new Map<number, Promise<SurahDetail>>();
+
 export async function fetchSurahDetail(surahNumber: number): Promise<SurahDetail> {
+  const existing = surahDetailInflight.get(surahNumber);
+  if (existing) return existing;
+
+  const run = (async (): Promise<SurahDetail> => {
   const key = `surah-${surahNumber}`;
   const cached = readCache<SurahDetail>(key);
   if (cached) {
@@ -115,8 +123,10 @@ export async function fetchSurahDetail(surahNumber: number): Promise<SurahDetail
   }
 
   try {
-    const res = await fetch(`${BASE}/surah/${surahNumber}/quran-uthmani`, {
-      signal: AbortSignal.timeout(15_000),
+    const { pooledFetch } = await import("@/lib/fetch-pool");
+    const res = await pooledFetch(`${BASE}/surah/${surahNumber}/quran-uthmani`, {
+      timeoutMs: 15_000,
+      dedupeKey: `quran-api:${surahNumber}`,
     });
     if (!res.ok) throw new Error(`AlQuran Cloud: HTTP ${res.status}`);
     const json = await res.json();
@@ -137,6 +147,14 @@ export async function fetchSurahDetail(surahNumber: number): Promise<SurahDetail
       /* ignore */
     }
     throw err;
+  }
+  })();
+
+  surahDetailInflight.set(surahNumber, run);
+  try {
+    return await run;
+  } finally {
+    if (surahDetailInflight.get(surahNumber) === run) surahDetailInflight.delete(surahNumber);
   }
 }
 

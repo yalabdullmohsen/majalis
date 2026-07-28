@@ -8,6 +8,9 @@
  * ملاحظة: لا يُولَّد أي محتوى بالذكاء الاصطناعي — المحتوى من المصدر الخارجي.
  */
 
+import { pooledFetch } from "@/lib/fetch-pool";
+import { safeJsonParse } from "@/lib/safe-json";
+
 const CDN_BASE = "https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions";
 const CACHE_PREFIX = "hadith_cdn_";
 const CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 ساعة
@@ -103,10 +106,18 @@ function readCache<T>(key: string): T | null {
   try {
     const raw = sessionStorage.getItem(key);
     if (!raw) return null;
-    const { ts, data } = JSON.parse(raw);
-    if (Date.now() - ts > CACHE_TTL_MS) { sessionStorage.removeItem(key); return null; }
-    return data as T;
-  } catch { return null; }
+    const parsed = safeJsonParse<{ ts: number; data: T } | null>(raw, null, (v): v is { ts: number; data: T } => {
+      return typeof v === "object" && v !== null && typeof (v as { ts?: unknown }).ts === "number" && "data" in (v as object);
+    });
+    if (!parsed.ok || !parsed.value) return null;
+    if (Date.now() - parsed.value.ts > CACHE_TTL_MS) {
+      sessionStorage.removeItem(key);
+      return null;
+    }
+    return parsed.value.data;
+  } catch {
+    return null;
+  }
 }
 
 function writeCache(key: string, data: unknown): void {
@@ -120,7 +131,7 @@ export async function fetchHadithByNumber(
 ): Promise<CdnHadith | null> {
   const url = `${CDN_BASE}/${cdnEditionSlug(collection)}/${number}.min.json`;
   try {
-    const res = await fetch(url);
+    const res = await pooledFetch(url, { dedupeKey: `hadith-cdn:n:${collection}:${number}`, timeoutMs: 15_000 });
     if (!res.ok) return null;
     const data = await res.json();
     return data.hadiths?.[0] ?? data ?? null;
@@ -138,7 +149,7 @@ export async function fetchHadithsByChapter(
 
   const url = `${CDN_BASE}/${cdnEditionSlug(collection)}/${chapter}.min.json`;
   try {
-    const res = await fetch(url);
+    const res = await pooledFetch(url, { dedupeKey: `hadith-cdn:ch:${collection}:${chapter}`, timeoutMs: 20_000 });
     if (!res.ok) return [];
     const data = await res.json();
     const hadiths: CdnHadith[] = data.hadiths ?? [];
@@ -155,7 +166,7 @@ export async function fetchChapters(collection: HadithCollection): Promise<CdnCh
 
   const url = `${CDN_BASE}/${cdnEditionSlug(collection)}.min.json`;
   try {
-    const res = await fetch(url);
+    const res = await pooledFetch(url, { dedupeKey: `hadith-cdn:meta:${collection}`, timeoutMs: 30_000 });
     if (!res.ok) return [];
     const data = await res.json();
 
@@ -215,7 +226,7 @@ export async function fetchAllHadiths(collection: HadithCollection): Promise<Cdn
 
   const url = `${CDN_BASE}/${cdnEditionSlug(collection)}.min.json`;
   try {
-    const res = await fetch(url);
+    const res = await pooledFetch(url, { dedupeKey: `hadith-cdn:all:${collection}`, timeoutMs: 45_000 });
     if (!res.ok) return [];
     const data = await res.json();
     const hadiths: CdnHadith[] = data.hadiths ?? [];

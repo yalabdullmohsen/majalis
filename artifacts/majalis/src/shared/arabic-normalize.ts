@@ -5,9 +5,14 @@
  * ⚠️ قاعدة حرجة: هذه الوحدة للفهرسة والمقارنة الداخلية فقط.
  *    النص المعروض للمستخدم (آيات / أحاديث / أذكار) يُعرض دائماً
  *    بتشكيله الكامل بدون أي تعديل.
+ *
+ * Memoized via LRU (max 2k entries) — identical strings normalize once.
  */
 
 import { toLatinDigits } from "@/lib/numerals";
+import { LruStringCache } from "@/lib/lru-cache";
+
+const NORMALIZE_CACHE = new LruStringCache(2_048);
 
 /** يحوّل أي أرقام هندية عربية أو فارسية داخل نص إلى أرقام لاتينية عادية،
  *  مع ترك بقية النص كما هو تمامًا. آمن للاستدعاء على نص لا يحوي أرقامًا
@@ -37,27 +42,8 @@ function removeTashkeel(text: string): string {
     .replace(/[ۥ-ۦ]/g, "");
 }
 
-/**
- * يطبّع نصاً عربياً للفهرسة والبحث المقارن.
- *
- * خطوات التطبيع (بالترتيب):
- * 1. توحيد الأرقام الهندية/الفارسية إلى أرقام لاتينية (٢ ↔ 2)
- * 2. إزالة التشكيل الكامل (حركات + علامات وقف + مدّات قرآنية)
- * 3. توحيد أشكال الألف: أ إ آ ٱ → ا
- * 4. ؤ → و
- * 5. ئ → ي
- * 6. ة → ه
- * 7. ى → ي
- * 8. إزالة الكشيدة ـ
- * 9. توحيد المسافات
- * 10. إزالة علامات الترقيم الفاصلة
- *
- * @param text النص المراد تطبيعه
- * @returns النص المطبّع — لا يُعرض للمستخدم، للفهرسة فقط
- */
-export function normalizeArabic(text: string): string {
-  if (!text) return "";
-
+/** Uncached normalize core — used by memoized wrapper. */
+function normalizeArabicUncached(text: string): string {
   // ─── توحيد الأرقام (لوحة مفاتيح عربية على iOS/Android تكتب ٢ لا 2) ──
   let s = toWesternDigits(text);
 
@@ -89,6 +75,28 @@ export function normalizeArabic(text: string): string {
   s = s.replace(/\s+/g, " ").trim();
 
   return s;
+}
+
+/**
+ * يطبّع نصاً عربياً للفهرسة والبحث المقارن.
+ * Cached (LRU) — repeated queries over Quran/Matn corpora hit memo.
+ */
+export function normalizeArabic(text: string): string {
+  if (!text) return "";
+  const hit = NORMALIZE_CACHE.get(text);
+  if (hit !== undefined) return hit;
+  const out = normalizeArabicUncached(text);
+  NORMALIZE_CACHE.set(text, out);
+  return out;
+}
+
+/** Clear normalize memo (tests / memory pressure). */
+export function clearNormalizeArabicCache(): void {
+  NORMALIZE_CACHE.clear();
+}
+
+export function getNormalizeArabicCacheSize(): number {
+  return NORMALIZE_CACHE.size;
 }
 
 /**
