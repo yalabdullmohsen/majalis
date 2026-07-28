@@ -404,14 +404,24 @@
   position: fixed;
   inset: 0;
   z-index: 10050;
-  background: rgba(0, 0, 0, 0.4);
   display: flex;
   align-items: flex-end;
   justify-content: center;
 }
 
+.tafsir-modal-overlay__backdrop {
+  position: absolute;
+  inset: 0;
+  border: none;
+  padding: 0;
+  margin: 0;
+  background: rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+}
+
 .tafsir-modal {
   position: relative;
+  z-index: 1;
   width: min(100%, 32rem);
   height: min(60vh, 32rem);
   background: #faf8f5;

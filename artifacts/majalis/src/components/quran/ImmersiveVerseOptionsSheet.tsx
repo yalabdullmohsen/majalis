@@ -42,18 +42,19 @@ export function ImmersiveVerseOptionsSheet({
   copyLabel = "نسخ الآية",
 }: ImmersiveVerseOptionsSheetProps) {
   const sheet = (
-    <div
-      className="immersive-verse-sheet-overlay"
-      role="presentation"
-      onClick={onClose}
-    >
+    <div className="immersive-verse-sheet-overlay">
+      <button
+        type="button"
+        className="immersive-verse-sheet-overlay__backdrop"
+        aria-label="إغلاق"
+        onClick={onClose}
+      />
       <div
         className="immersive-verse-sheet"
         role="dialog"
         aria-modal="true"
         aria-label="خيارات الآية"
         style={{ backgroundColor: paperBg }}
-        onClick={(e) => e.stopPropagation()}
       >
         <div className="immersive-verse-sheet__handle" aria-hidden="true" />
         <div className="immersive-verse-sheet__head">

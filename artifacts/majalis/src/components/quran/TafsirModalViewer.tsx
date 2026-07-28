@@ -21,13 +21,18 @@ export function TafsirModalViewer({
   if (!open) return null;
 
   const modal = (
-    <div className="tafsir-modal-overlay" role="presentation" onClick={onClose}>
+    <div className="tafsir-modal-overlay">
+      <button
+        type="button"
+        className="tafsir-modal-overlay__backdrop"
+        aria-label="إغلاق"
+        onClick={onClose}
+      />
       <div
         className="tafsir-modal"
         role="dialog"
         aria-modal="true"
         aria-label="التفسير الميسر"
-        onClick={(e) => e.stopPropagation()}
       >
         <div className="tafsir-modal__handle" aria-hidden="true" />
         <button

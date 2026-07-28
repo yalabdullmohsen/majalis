@@ -49,14 +49,19 @@ export function ImmersivePrefsDrawer({
   const inc = () => onFontSizeChange(Math.min(fontMax, fontSize + fontStep));
 
   const drawer = (
-    <div className="immersive-prefs-overlay" role="presentation" onClick={onClose}>
+    <div className="immersive-prefs-overlay">
+      <button
+        type="button"
+        className="immersive-prefs-overlay__backdrop"
+        aria-label="إغلاق"
+        onClick={onClose}
+      />
       <aside
         className="immersive-prefs-drawer"
         role="dialog"
         aria-modal="true"
         aria-label={title}
         style={{ backgroundColor: paperBg }}
-        onClick={(e) => e.stopPropagation()}
       >
         <div className="immersive-prefs-drawer__head">
           <h2 className="immersive-prefs-drawer__title">{title}</h2>
@@ -101,7 +106,7 @@ export function ImmersivePrefsDrawer({
             <input
               type="checkbox"
               checked={isDarkMode}
-              onChange={(e) => onToggleDarkMode()}
+              onChange={() => onToggleDarkMode()}
               aria-label="الوضع الليلي"
             />
           </label>

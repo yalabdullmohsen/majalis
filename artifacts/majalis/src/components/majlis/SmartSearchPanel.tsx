@@ -54,7 +54,6 @@ export function SmartSearchPanel({ open, onClose, onSelect }: SmartSearchPanelPr
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="ابحث في القرآن والفقه والسيرة…"
-            autoFocus
             aria-label="نص البحث"
           />
           {query ? (

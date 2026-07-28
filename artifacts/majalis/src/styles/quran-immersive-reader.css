@@ -239,12 +239,23 @@ body.quran-immersive-sticky .scroll-to-top {
   position: fixed;
   inset: 0;
   z-index: 10025;
-  background: rgba(0, 0, 0, 0.35);
   display: flex;
   justify-content: flex-start;
 }
 
+.immersive-prefs-overlay__backdrop {
+  position: absolute;
+  inset: 0;
+  border: none;
+  padding: 0;
+  margin: 0;
+  background: rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+}
+
 .immersive-prefs-drawer {
+  position: relative;
+  z-index: 1;
   width: min(20rem, 88vw);
   height: 100%;
   padding: max(1rem, env(safe-area-inset-top)) 1rem max(1rem, env(safe-area-inset-bottom));
@@ -455,13 +466,24 @@ body.quran-immersive-sticky .scroll-to-top {
   position: fixed;
   inset: 0;
   z-index: 10020;
-  background: rgba(0, 0, 0, 0.35);
   display: flex;
   align-items: flex-end;
   justify-content: center;
 }
 
+.immersive-verse-sheet-overlay__backdrop {
+  position: absolute;
+  inset: 0;
+  border: none;
+  padding: 0;
+  margin: 0;
+  background: rgba(0, 0, 0, 0.35);
+  cursor: pointer;
+}
+
 .immersive-verse-sheet {
+  position: relative;
+  z-index: 1;
   width: min(100%, 28rem);
   border-radius: 1rem 1rem 0 0;
   padding: 0.5rem 0 max(1rem, env(safe-area-inset-bottom, 0px));
