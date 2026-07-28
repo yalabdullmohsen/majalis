@@ -1,22 +1,33 @@
 /**
- * QuranEngineContext — unified non-React state manager for pages, active verse,
- * and audio. Coordinates DatabaseManager + ResourceManager without blocking UI.
+ * QuranEngineContext — unified state manager for pages, active verse, and audio,
+ * bridged to DatabaseManager for durable reading progress (khatmah_store).
  *
- * Existing React hooks (`useQuranEngine`, Provider) remain the view layer;
- * this module is the functional core façade over `quran-engine-store`.
+ * - Non-React API: `getQuranEngineContext()`
+ * - React hook: `useQuranEngineCore()` — resumes last ayah on mount
+ *
+ * DB failures never throw into the UI thread.
  */
+import { useCallback, useEffect, useState } from "react";
 import {
   getQuranEngineState,
   patchQuranEngineState,
   subscribeQuranEngine,
   resetQuranEngineState,
+  useQuranEngineSelector,
   type QuranEngineState,
   type QuranEngineWarmPhase,
 } from "@/lib/quran-engine-store";
 import type { PlayerState, TeachPhase } from "@/hooks/useAyahPlayer";
-import { getDatabaseManager, type DatabaseManager } from "@/core/quran/DatabaseManager";
+import {
+  getDatabaseManager,
+  type DatabaseManager,
+  type KhatmahStore,
+} from "@/core/quran/DatabaseManager";
 import { getResourceManager, type ResourceManager } from "@/core/quran/ResourceManager";
 import { getIndexingService, type IndexingService } from "@/core/quran/IndexingService";
+
+/** Stable id for the in-progress reading profile used by the core engine. */
+export const ACTIVE_READING_KHATMAH_ID = "core-active-reading";
 
 export type ActiveVerse = {
   surah: number;
@@ -30,23 +41,47 @@ export type AudioSnapshot = {
   teachPhase: TeachPhase;
 };
 
+export type ReadingProgressInput = {
+  surah: number;
+  ayah: number;
+  page?: number;
+  /** Override profile id (defaults to ACTIVE_READING_KHATMAH_ID). */
+  khatmahId?: string;
+  title?: string;
+  type?: KhatmahStore["type"];
+  daily_wird_target?: number;
+};
+
 export type QuranEngineContextApi = {
   getState(): QuranEngineState;
   subscribe(listener: () => void): () => void;
   setPage(page: number): void;
-  setActiveVerse(verse: ActiveVerse): void;
+  setActiveVerse(verse: ActiveVerse, opts?: { persist?: boolean }): void;
   clearActiveVerse(): void;
   setAudio(partial: Partial<AudioSnapshot>): void;
   setWarmPhase(phase: QuranEngineWarmPhase, stats?: { pagesCached?: number; fontsCached?: number }): void;
+  /** Load most recently read khatmah profile into engine state. */
+  loadLastReadingProgress(): Promise<KhatmahStore | null>;
+  /** Upsert current ayah into khatmah_store (safe — never throws). */
+  updateReadingProgress(progress: ReadingProgressInput): Promise<KhatmahStore | null>;
   reset(): void;
   readonly db: DatabaseManager;
   readonly resources: ResourceManager;
   readonly indexing: IndexingService;
 };
 
+function clampSurah(n: number): number {
+  return Math.min(114, Math.max(1, Math.floor(n) || 1));
+}
+function clampAyah(n: number): number {
+  return Math.max(1, Math.floor(n) || 1);
+}
+function clampPage(n: number): number {
+  return Math.min(604, Math.max(1, Math.floor(n) || 1));
+}
+
 /**
- * Core context singleton — pure TS, no React imports in the public API surface
- * beyond types already used by the engine store.
+ * Core context singleton — coordinates store + DatabaseManager persistence.
  */
 class QuranEngineContextImpl implements QuranEngineContextApi {
   readonly db = getDatabaseManager();
@@ -59,9 +94,16 @@ class QuranEngineContextImpl implements QuranEngineContextApi {
   async boot(): Promise<void> {
     if (this.booted) return;
     this.booted = true;
-    // Kick resource manager first so pressure flags exist before DB warm
-    this.resources.start();
-    await this.db.initialize();
+    try {
+      this.resources.start();
+    } catch {
+      /* never block boot */
+    }
+    try {
+      await this.db.initialize();
+    } catch {
+      /* IndexedDB may be unavailable — engine still works in-memory */
+    }
   }
 
   getState(): QuranEngineState {
@@ -73,24 +115,36 @@ class QuranEngineContextImpl implements QuranEngineContextApi {
   }
 
   setPage(page: number): void {
-    const p = Math.min(604, Math.max(1, Math.floor(page) || 1));
-    patchQuranEngineState({ page: p });
+    patchQuranEngineState({ page: clampPage(page) });
   }
 
-  setActiveVerse(verse: ActiveVerse): void {
-    const surah = Math.min(114, Math.max(1, Math.floor(verse.surah) || 1));
-    const ayah = Math.max(1, Math.floor(verse.ayah) || 1);
+  /**
+   * Update in-memory active verse. When `persist` is true (default), also
+   * fire-and-forget `updateReadingProgress` into khatmah_store.
+   */
+  setActiveVerse(verse: ActiveVerse, opts?: { persist?: boolean }): void {
+    const surah = clampSurah(verse.surah);
+    const ayah = clampAyah(verse.ayah);
     const patch: Partial<QuranEngineState> = {
       surah,
       ayah,
       verseKey: `${surah}:${ayah}`,
     };
     if (verse.page != null) {
-      patch.page = Math.min(604, Math.max(1, Math.floor(verse.page) || 1));
+      patch.page = clampPage(verse.page);
     }
     patchQuranEngineState(patch);
-    // Non-blocking: touch knowledge LRU for the active ayah
+
+    // Non-blocking knowledge LRU touch
     void this.db.getKnowledge(surah, ayah).catch(() => undefined);
+
+    if (opts?.persist !== false) {
+      void this.updateReadingProgress({
+        surah,
+        ayah,
+        page: patch.page ?? this.getState().page,
+      });
+    }
   }
 
   clearActiveVerse(): void {
@@ -103,11 +157,6 @@ class QuranEngineContextImpl implements QuranEngineContextApi {
     if (partial.playerState != null) next.playerState = partial.playerState;
     if (partial.teachPhase != null) next.teachPhase = partial.teachPhase;
     patchQuranEngineState(next);
-
-    // Under heavy decode pressure, soft-suspend non-essential prefetch
-    if (partial.playerState === "playing") {
-      // no-op unless resources already under pressure — flags handled elsewhere
-    }
   }
 
   setWarmPhase(
@@ -121,6 +170,104 @@ class QuranEngineContextImpl implements QuranEngineContextApi {
     });
   }
 
+  /**
+   * Resume where the user left off — reads the freshest active khatmah row
+   * (via DatabaseManager.khatmahStore / listKhatmah) and patches engine state.
+   */
+  async loadLastReadingProgress(): Promise<KhatmahStore | null> {
+    try {
+      await this.boot();
+      // Prefer direct table when open; fall back to safe list helper
+      let best: KhatmahStore | null = null;
+      const table = this.db.khatmahStore;
+      if (table) {
+        try {
+          const active = await table
+            .where("is_completed")
+            .equals(false)
+            .sortBy("last_read_timestamp");
+          best = active.length ? active[active.length - 1]! : null;
+          if (!best) {
+            const all = await table.orderBy("last_read_timestamp").reverse().first();
+            best = all ?? null;
+          }
+        } catch {
+          best = null;
+        }
+      }
+      if (!best) {
+        const listed = await this.db.listKhatmah({ activeOnly: true });
+        best = listed[0] ?? (await this.db.listKhatmah())[0] ?? null;
+      }
+      // Prefer the stable core profile when present
+      const core = await this.db.getKhatmah(ACTIVE_READING_KHATMAH_ID);
+      if (core && (!best || (core.last_read_timestamp ?? 0) >= (best.last_read_timestamp ?? 0))) {
+        best = core;
+      }
+
+      if (!best) return null;
+
+      patchQuranEngineState({
+        surah: clampSurah(best.current_surah),
+        ayah: clampAyah(best.current_ayah),
+        verseKey: `${clampSurah(best.current_surah)}:${clampAyah(best.current_ayah)}`,
+        page: clampPage(best.current_page || 1),
+      });
+      return best;
+    } catch (err) {
+      console.warn(
+        "[QuranEngineContext] loadLastReadingProgress failed:",
+        err instanceof Error ? err.message : err,
+      );
+      return null;
+    }
+  }
+
+  /**
+   * Persist reading progress into khatmah_store (upsert).
+   * Never throws — returns null on failure so the UI thread stays stable.
+   */
+  async updateReadingProgress(progress: ReadingProgressInput): Promise<KhatmahStore | null> {
+    try {
+      await this.boot();
+      const surah = clampSurah(progress.surah);
+      const ayah = clampAyah(progress.ayah);
+      const page = progress.page != null ? clampPage(progress.page) : this.getState().page;
+      const id = progress.khatmahId ?? ACTIVE_READING_KHATMAH_ID;
+
+      const existing = await this.db.getKhatmah(id);
+      const row = await this.db.upsertKhatmah({
+        id,
+        title: progress.title ?? existing?.title ?? "ختمة جارية",
+        type: progress.type ?? existing?.type ?? "reading",
+        current_surah: surah,
+        current_ayah: ayah,
+        current_page: page,
+        daily_wird_target: progress.daily_wird_target ?? existing?.daily_wird_target ?? 1,
+        streak_days: existing?.streak_days ?? 0,
+        is_completed: existing?.is_completed ?? false,
+        last_read_timestamp: Date.now(),
+      });
+
+      if (row) {
+        // Keep in-memory engine state aligned (persist path may be called alone)
+        patchQuranEngineState({
+          surah,
+          ayah,
+          verseKey: `${surah}:${ayah}`,
+          page,
+        });
+      }
+      return row;
+    } catch (err) {
+      console.warn(
+        "[QuranEngineContext] updateReadingProgress failed:",
+        err instanceof Error ? err.message : err,
+      );
+      return null;
+    }
+  }
+
   reset(): void {
     resetQuranEngineState();
   }
@@ -131,6 +278,124 @@ let ctx: QuranEngineContextImpl | null = null;
 export function getQuranEngineContext(): QuranEngineContextApi & { boot(): Promise<void> } {
   if (!ctx) ctx = new QuranEngineContextImpl();
   return ctx;
+}
+
+export type UseQuranEngineCoreResult = {
+  state: QuranEngineState;
+  /** True while the initial IDB resume is in flight. */
+  hydrating: boolean;
+  /** Last persistence error message (null when healthy). */
+  persistError: string | null;
+  setPage: (page: number) => void;
+  setActiveVerse: (verse: ActiveVerse, opts?: { persist?: boolean }) => void;
+  updateReadingProgress: (progress: ReadingProgressInput) => Promise<KhatmahStore | null>;
+  loadLastReadingProgress: () => Promise<KhatmahStore | null>;
+  clearActiveVerse: () => void;
+  setAudio: (partial: Partial<AudioSnapshot>) => void;
+  db: DatabaseManager;
+};
+
+/**
+ * React hook — on mount, resumes the last ayah from DatabaseManager.khatmahStore.
+ * All DB work is async + try/catch so render never crashes.
+ */
+export function useQuranEngineCore(): UseQuranEngineCoreResult {
+  const engine = getQuranEngineContext();
+  const state = useQuranEngineSelector((s) => s);
+  const [hydrating, setHydrating] = useState(true);
+  const [persistError, setPersistError] = useState<string | null>(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    setHydrating(true);
+    void (async () => {
+      try {
+        await engine.loadLastReadingProgress();
+        if (!cancelled) setPersistError(null);
+      } catch (err) {
+        if (!cancelled) {
+          setPersistError(err instanceof Error ? err.message : "resume-failed");
+        }
+      } finally {
+        if (!cancelled) setHydrating(false);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [engine]);
+
+  const setPage = useCallback((page: number) => {
+    try {
+      engine.setPage(page);
+    } catch {
+      /* ignore */
+    }
+  }, [engine]);
+
+  const setActiveVerse = useCallback((verse: ActiveVerse, opts?: { persist?: boolean }) => {
+    try {
+      engine.setActiveVerse(verse, opts);
+    } catch (err) {
+      setPersistError(err instanceof Error ? err.message : "set-verse-failed");
+    }
+  }, [engine]);
+
+  const updateReadingProgress = useCallback(
+    async (progress: ReadingProgressInput) => {
+      try {
+        const row = await engine.updateReadingProgress(progress);
+        if (!row) setPersistError("upsert-khatmah-failed");
+        else setPersistError(null);
+        return row;
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : "upsert-khatmah-failed";
+        setPersistError(msg);
+        return null;
+      }
+    },
+    [engine],
+  );
+
+  const loadLastReadingProgress = useCallback(async () => {
+    try {
+      const row = await engine.loadLastReadingProgress();
+      setPersistError(null);
+      return row;
+    } catch (err) {
+      setPersistError(err instanceof Error ? err.message : "resume-failed");
+      return null;
+    }
+  }, [engine]);
+
+  const clearActiveVerse = useCallback(() => {
+    try {
+      engine.clearActiveVerse();
+    } catch {
+      /* ignore */
+    }
+  }, [engine]);
+
+  const setAudio = useCallback((partial: Partial<AudioSnapshot>) => {
+    try {
+      engine.setAudio(partial);
+    } catch {
+      /* ignore */
+    }
+  }, [engine]);
+
+  return {
+    state,
+    hydrating,
+    persistError,
+    setPage,
+    setActiveVerse,
+    updateReadingProgress,
+    loadLastReadingProgress,
+    clearActiveVerse,
+    setAudio,
+    db: engine.db,
+  };
 }
 
 /** Convenience re-exports for consumers. */

@@ -9,7 +9,16 @@
  *         └── ResourceManager → LRU budget + memory pressure; can suspend
  *                   IndexingService / prefetch via lifecycle flags
  */
-export { getQuranEngineContext, type QuranEngineContextApi, type ActiveVerse, type AudioSnapshot } from "@/core/quran/QuranEngineContext";
+export {
+  getQuranEngineContext,
+  useQuranEngineCore,
+  ACTIVE_READING_KHATMAH_ID,
+  type QuranEngineContextApi,
+  type ActiveVerse,
+  type AudioSnapshot,
+  type ReadingProgressInput,
+  type UseQuranEngineCoreResult,
+} from "@/core/quran/QuranEngineContext";
 export {
   DatabaseManager,
   getDatabaseManager,

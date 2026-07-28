@@ -123,6 +123,32 @@ async function main() {
     check(ready === false, "initialize soft-fails without IndexedDB");
   }
 
+  console.log("═══ Reading progress persistence API ═══");
+  {
+    const {
+      getQuranEngineContext,
+      ACTIVE_READING_KHATMAH_ID,
+    } = await import("../../src/core/quran/QuranEngineContext");
+    const engine = getQuranEngineContext();
+    check(typeof engine.updateReadingProgress === "function", "updateReadingProgress exists");
+    check(typeof engine.loadLastReadingProgress === "function", "loadLastReadingProgress exists");
+    check(ACTIVE_READING_KHATMAH_ID === "core-active-reading", "stable khatmah id");
+    // Without IndexedDB, upsert must soft-fail (null) — never throw
+    let threw = false;
+    let row = null as unknown;
+    try {
+      row = await engine.updateReadingProgress({ surah: 1, ayah: 1, page: 1 });
+    } catch {
+      threw = true;
+    }
+    check(threw === false, "updateReadingProgress never throws");
+    check(row === null, "updateReadingProgress returns null without IDB");
+    // In-memory state still updates via setActiveVerse(persist:false)
+    engine.setActiveVerse({ surah: 18, ayah: 1, page: 293 }, { persist: false });
+    check(engine.getState().verseKey === "18:1", "setActiveVerse persist:false updates memory");
+    resetQuranEngineState();
+  }
+
   console.log(`\nالنتيجة: ${passed} نجح، ${failed} فشل`);
   if (failed > 0) process.exit(1);
 }

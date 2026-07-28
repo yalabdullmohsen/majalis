@@ -268,6 +268,25 @@ export class DatabaseManager {
     return this.db;
   }
 
+  /**
+   * Direct `khatmah_store` table (null until `initialize()` succeeds).
+   * Prefer `listKhatmah` / `upsertKhatmah` for safe CRUD; this is for
+   * advanced queries from QuranEngineContext.
+   */
+  get khatmahStore() {
+    return this.db?.khatmah_store ?? null;
+  }
+
+  /** Direct `user_reflections_store` table (null until open). */
+  get reflectionsStore() {
+    return this.db?.user_reflections_store ?? null;
+  }
+
+  /** Direct `offline_assets_store` table (null until open). */
+  get offlineAssetsStore() {
+    return this.db?.offline_assets_store ?? null;
+  }
+
   private async ensureDb(): Promise<QuranCoreDatabase | null> {
     const ready = await this.initialize();
     return ready ? this.db : null;
