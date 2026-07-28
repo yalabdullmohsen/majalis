@@ -46,6 +46,32 @@ export async function startPlatformLogicSuite(): Promise<void> {
       /* ignore */
     }
 
+    // Soft-warm: hadith auth index, circadian lighting, bandwidth, weakness recall
+    try {
+      const { warmHadithAuthIndex } = await import("@/lib/hadith-auth-engine");
+      warmHadithAuthIndex();
+    } catch {
+      /* ignore */
+    }
+    try {
+      const { tickCircadianSchedule } = await import("@/lib/circadian-reading-schedule");
+      tickCircadianSchedule();
+    } catch {
+      /* ignore */
+    }
+    try {
+      const { warmBandwidthState } = await import("@/lib/low-bandwidth-sync");
+      void warmBandwidthState();
+    } catch {
+      /* ignore */
+    }
+    try {
+      const { loadPriorityRecallListAsync } = await import("@/lib/weakness-recall-engine");
+      void loadPriorityRecallListAsync();
+    } catch {
+      /* ignore */
+    }
+
     const prediction = predictKhatmahCompletion();
     await syncSmartLocalNotifications({ khatmahBehind: prediction.behindSchedule });
     maybeNotifyKhatmahBehind(prediction);
