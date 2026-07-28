@@ -16,10 +16,12 @@
  * unload on leave.
  * `useKeepAwake()` (Screen Wake Lock) keeps the display on while reading —
  * web port of expo-keep-awake.
+ * Reader colors follow `useColorScheme()` (RN device theme) unless the user
+ * overrides with the نهاري/ليلي chip (`quranReaderDarkMode`).
  * Per-ayah share uses `shareVerse` (web port of RN Share.share).
  * `text-size-adjust: 100%` resists OS/browser text scaling (RN allowFontScaling={false}).
  */
-import { useCallback, useEffect, useState, type CSSProperties } from "react";
+import { useCallback, useEffect, useMemo, useState, type CSSProperties } from "react";
 import { BookOpenText, Hash, Maximize2, Minimize2, Moon, Pause, Play, Share2, Sun, Type } from "lucide-react";
 import { fetchSurahDetail, fetchTafsirAyahs, getSurahMeta, type Ayah } from "@/lib/quran-api";
 import { useQuranEngine } from "@/hooks/useQuranEngine";
@@ -27,6 +29,7 @@ import { useQuranPreferences } from "@/hooks/useQuranPreferences";
 import { useReadingBreakReminder } from "@/hooks/useReadingBreakReminder";
 import { useQuranAudioToggle } from "@/hooks/useQuranAudioToggle";
 import { useKeepAwake } from "@/hooks/useKeepAwake";
+import { useColorScheme } from "@/hooks/useColorScheme";
 import { nextQuranFontId, quranFontOption, quranFontStack } from "@/lib/quran-font-options";
 import { shareVerse } from "@/lib/share-ayah";
 import { DEFAULT_TAFSEER_SOURCE } from "@/core/tafseer/TafseerService";
@@ -35,22 +38,26 @@ import { ReadingBreakDialog } from "@/components/quran/ReadingBreakDialog";
 import { toArabicDigits } from "@/lib/utils";
 import "@/styles/quran-engine-ui.css";
 
-/** Reader paper themes — defined outside the component (RN FullScreenQuranReader sketch). */
+/**
+ * RN QuranReader themeStyles — dynamic colors from device / override.
+ * light: #ffffff / #000000 · dark: #1a1a1a / #e0e0e0
+ */
 export const THEMES = {
   light: {
-    background: "#FAF6EF",
+    background: "#ffffff",
     text: "#000000",
-    header: "#F0EAD6",
+    header: "#f5f5f5",
   },
   dark: {
-    background: "#1A1A1A",
-    text: "#D1D1D1",
+    background: "#1a1a1a",
+    text: "#e0e0e0",
     header: "#262626",
   },
 } as const;
 
 export type QuranReaderThemeId = keyof typeof THEMES;
 
+/** `"auto"` = follow OS; `"1"`/`"0"` = manual dark/light override. */
 export const QURAN_THEME_STORAGE_KEY = "quranReaderDarkMode";
 export const QURAN_TAFSIR_TOGGLE_KEY = "quranReaderShowTafsir";
 export const QURAN_INLINE_TAFSIR_EDITION_KEY = "majalis-mushaf-tafsir-edition-v1";
@@ -61,6 +68,20 @@ export const QURAN_FONT_MAX_PX = 40;
 export const QURAN_FONT_STEP_PX = 2;
 export const QURAN_FONT_DEFAULT_PX = 24;
 export const QURAN_FONT_STORAGE_KEY = "userFontSize";
+
+type ReaderThemeOverride = "light" | "dark" | null;
+
+function readStoredThemeOverride(): ReaderThemeOverride {
+  try {
+    const raw = localStorage.getItem(QURAN_THEME_STORAGE_KEY);
+    if (raw == null || raw === "auto") return null;
+    if (raw === "1" || raw === "true") return "dark";
+    if (raw === "0" || raw === "false") return "light";
+    return null;
+  } catch {
+    return null;
+  }
+}
 
 function readStoredShowTafsir(): boolean {
   try {
@@ -81,6 +102,7 @@ function readInlineTafsirEdition(): string {
   }
   return DEFAULT_TAFSEER_SOURCE;
 }
+
 /**
  * Strip parenthetical ayah markers from continuous mushaf text when numbers are hidden.
  * Matches Western and Arabic-Indic digits: (24) / (٢٤).
@@ -107,16 +129,6 @@ function readStoredFontSize(): number {
     return clampFontSize(parsed);
   } catch {
     return QURAN_FONT_DEFAULT_PX;
-  }
-}
-
-function readStoredDarkMode(): boolean {
-  try {
-    const raw = localStorage.getItem(QURAN_THEME_STORAGE_KEY);
-    if (raw == null) return false;
-    return raw === "1" || raw === "true";
-  } catch {
-    return false;
   }
 }
 
@@ -162,6 +174,8 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
   const { toggleAudio, isPlayingAyah, playerState } = useQuranAudioToggle(currentReciter);
   /** Keep screen lit while the reader is open (expo-keep-awake port). */
   useKeepAwake();
+  /** RN useColorScheme — follows OS light/dark automatically. */
+  const deviceTheme = useColorScheme();
 
   const surahNum = initialSurah ?? currentSurah;
   const [ayahs, setAyahs] = useState<Ayah[]>([]);
@@ -170,13 +184,26 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
   const [reloadKey, setReloadKey] = useState(0);
   const [isFocusMode, setIsFocusMode] = useState(false);
   const [fontSize, setFontSize] = useState(QURAN_FONT_DEFAULT_PX);
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  /** null = follow deviceTheme (auto). */
+  const [themeOverride, setThemeOverride] = useState<ReaderThemeOverride>(null);
   const [showTafsir, setShowTafsir] = useState(false);
   const [tafsirByAyah, setTafsirByAyah] = useState<Record<number, string>>({});
   const [tafsirLoading, setTafsirLoading] = useState(false);
   const [tafsirError, setTafsirError] = useState(false);
   const [shareStatus, setShareStatus] = useState<string | null>(null);
   const meta = getSurahMeta(surahNum);
+
+  const isDarkMode =
+    themeOverride != null ? themeOverride === "dark" : deviceTheme === "dark";
+
+  /** RN themeStyles — dynamic colors from isDarkMode. */
+  const themeStyles = useMemo(
+    () => ({
+      backgroundColor: isDarkMode ? "#1a1a1a" : "#ffffff",
+      textColor: isDarkMode ? "#e0e0e0" : "#000000",
+    }),
+    [isDarkMode],
+  );
   const currentTheme = isDarkMode ? THEMES.dark : THEMES.light;
 
   const reload = useCallback(() => setReloadKey((k) => k + 1), []);
@@ -242,7 +269,7 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
   /** Load persisted font size + reader theme + tafsir toggle once. */
   useEffect(() => {
     setFontSize(readStoredFontSize());
-    setIsDarkMode(readStoredDarkMode());
+    setThemeOverride(readStoredThemeOverride());
     setShowTafsir(readStoredShowTafsir());
   }, []);
 
@@ -288,9 +315,19 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
   }, []);
 
   const setReaderDarkMode = useCallback((next: boolean) => {
-    setIsDarkMode(next);
+    const override: ReaderThemeOverride = next ? "dark" : "light";
+    setThemeOverride(override);
     try {
       localStorage.setItem(QURAN_THEME_STORAGE_KEY, next ? "1" : "0");
+    } catch {
+      /* ignore */
+    }
+  }, []);
+
+  const followSystemTheme = useCallback(() => {
+    setThemeOverride(null);
+    try {
+      localStorage.setItem(QURAN_THEME_STORAGE_KEY, "auto");
     } catch {
       /* ignore */
     }
@@ -316,14 +353,14 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
   useEffect(() => {
     if (!isFocusMode) return;
     document.body.classList.add("qe-focus-mode");
-    document.body.style.setProperty("--qe-reader-bg", currentTheme.background);
-    document.body.style.backgroundColor = currentTheme.background;
+    document.body.style.setProperty("--qe-reader-bg", themeStyles.backgroundColor);
+    document.body.style.backgroundColor = themeStyles.backgroundColor;
     return () => {
       document.body.classList.remove("qe-focus-mode");
       document.body.style.removeProperty("--qe-reader-bg");
       document.body.style.backgroundColor = "";
     };
-  }, [isFocusMode, currentTheme.background]);
+  }, [isFocusMode, themeStyles.backgroundColor]);
 
   useEffect(() => {
     if (!isFocusMode) return;
@@ -337,12 +374,12 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
   const mushafTypeStyle = {
     ["--qe-mushaf-fs" as string]: `${fontSize}px`,
     ["--qe-mushaf-lh" as string]: `${fontSize + 20}px`,
-    ["--qe-reader-bg" as string]: currentTheme.background,
-    ["--qe-reader-text" as string]: currentTheme.text,
+    ["--qe-reader-bg" as string]: themeStyles.backgroundColor,
+    ["--qe-reader-text" as string]: themeStyles.textColor,
     ["--qe-reader-header" as string]: currentTheme.header,
     ["--qe-reader-font" as string]: fontFamily,
-    backgroundColor: currentTheme.background,
-    color: currentTheme.text,
+    backgroundColor: themeStyles.backgroundColor,
+    color: themeStyles.textColor,
   } as CSSProperties;
 
   useEffect(() => {
@@ -454,14 +491,30 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
             </button>
             <button
               type="button"
-              className="qe-chip"
+              className={`qe-chip${themeOverride == null ? " is-on" : ""}`}
               onClick={toggleDarkMode}
+              onContextMenu={(e) => {
+                e.preventDefault();
+                followSystemTheme();
+              }}
               aria-pressed={isDarkMode}
-              aria-label={isDarkMode ? "التبديل إلى الوضع النهاري" : "التبديل إلى الوضع الليلي"}
-              title={isDarkMode ? "نهاري" : "ليلي"}
+              aria-label={
+                themeOverride == null
+                  ? "يتبع مظهر الجهاز — انقر لتثبيت الوضع"
+                  : isDarkMode
+                    ? "التبديل إلى الوضع النهاري"
+                    : "التبديل إلى الوضع الليلي"
+              }
+              title={
+                themeOverride == null
+                  ? "تلقائي (يتبع الجهاز) — زر أيمن للعودة"
+                  : isDarkMode
+                    ? "نهاري"
+                    : "ليلي"
+              }
             >
               {isDarkMode ? <Sun size={14} aria-hidden="true" /> : <Moon size={14} aria-hidden="true" />}
-              {isDarkMode ? "نهاري" : "ليلي"}
+              {themeOverride == null ? "تلقائي" : isDarkMode ? "نهاري" : "ليلي"}
             </button>
             <button
               type="button"
@@ -540,7 +593,7 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
                           fontSize: `${fontSize}px`,
                           lineHeight: `${fontSize + 20}px`,
                           textAlign: "right",
-                          color: currentTheme.text,
+                          color: themeStyles.textColor,
                         }}
                       >
                         {renderQuranText(ayah.text, showAyahNumbers)}
