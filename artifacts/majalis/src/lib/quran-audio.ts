@@ -248,12 +248,15 @@ export function getFeaturedReciters(): QuranReciter[] {
 }
 
 export function getReciter(id: string): QuranReciter {
-  return RECITERS.find((r) => r.id === id) ?? RECITERS[0]!;
+  const normalized =
+    id === "mishary" || id === "afasy" ? "alafasy" : id === "muaiqly" ? "maher" : id;
+  return RECITERS.find((r) => r.id === normalized) ?? RECITERS[0]!;
 }
 
 /** Per-ayah MP3 from everyayah.com — lazy loaded, never pre-fetched */
 export function getAyahAudioUrl(surah: number, ayah: number, reciterId: string): string {
-  const r = getReciter(reciterId);
+  // Same formula as RN `getAudioUrl(verseNumber)` via quran-reciters baseUrl.
+  const r = getReciter(reciterId === "mishary" || reciterId === "afasy" ? "alafasy" : reciterId);
   const s = String(surah).padStart(3, "0");
   const a = String(ayah).padStart(3, "0");
   return `https://everyayah.com/data/${r.everyayahFolder}/${s}${a}.mp3`;

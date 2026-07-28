@@ -13,7 +13,8 @@
  * Inline tafsir mode (`showTafsir`) loads the surah edition once and renders
  * under each ayah when enabled — RN conditional-rendering sketch.
  * Per-ayah audio toggle uses AudioEngine (web port of expo-av Sound) with
- * unload on leave.
+ * unload on leave. Reciter list + `getAudioUrl(verseNumber)` follow the RN
+ * sketch in `@/lib/quran-reciters` (`selectedReciter` ↔ `currentReciter`).
  * `useKeepAwake()` (Screen Wake Lock) keeps the display on while reading —
  * web port of expo-keep-awake.
  * Reader colors follow `useColorScheme()` (RN device theme) unless the user
@@ -22,7 +23,7 @@
  * `text-size-adjust: 100%` resists OS/browser text scaling (RN allowFontScaling={false}).
  */
 import { useCallback, useEffect, useMemo, useState, type CSSProperties } from "react";
-import { BookOpenText, Hash, Maximize2, Minimize2, Moon, Pause, Play, Share2, Sun, Type } from "lucide-react";
+import { BookOpenText, ChevronDown, Hash, Maximize2, Mic2, Minimize2, Moon, Pause, Play, Share2, Sun, Type } from "lucide-react";
 import { fetchSurahDetail, fetchTafsirAyahs, getSurahMeta, type Ayah } from "@/lib/quran-api";
 import { useQuranEngine } from "@/hooks/useQuranEngine";
 import { useQuranPreferences } from "@/hooks/useQuranPreferences";
@@ -31,6 +32,11 @@ import { useQuranAudioToggle } from "@/hooks/useQuranAudioToggle";
 import { useKeepAwake } from "@/hooks/useKeepAwake";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { nextQuranFontId, quranFontOption, quranFontStack } from "@/lib/quran-font-options";
+import { getFeaturedReciters, RECITERS, saveReciterId } from "@/lib/quran-audio";
+import {
+  getReciterCatalogEntry,
+  resolveReciterId,
+} from "@/lib/quran-reciters";
 import { shareVerse } from "@/lib/share-ayah";
 import { DEFAULT_TAFSEER_SOURCE } from "@/core/tafseer/TafseerService";
 import { QuranActionBar } from "@/components/QuranActionBar";
@@ -165,13 +171,30 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
     selectAyah,
     clearActiveVerse,
     toggleTajweed,
+    setReciter,
   } = useQuranEngine();
   const { prefs, setPref } = useQuranPreferences();
   const showAyahNumbers = prefs.showAyahNumbers;
   const fontFamily = quranFontStack(prefs.fontId);
   const fontMeta = quranFontOption(prefs.fontId);
   const breakReminder = useReadingBreakReminder();
-  const { toggleAudio, isPlayingAyah, playerState } = useQuranAudioToggle(currentReciter);
+
+  // 2. الحالة داخل المكون — selectedReciter (محرّك المصحف + تفضيل محفوظ)
+  const selectedReciter = resolveReciterId(currentReciter);
+  const setSelectedReciter = useCallback(
+    (id: string) => {
+      const resolved = resolveReciterId(id);
+      setReciter(resolved);
+      saveReciterId(resolved);
+    },
+    [setReciter],
+  );
+
+  const { toggleAudio, isPlayingAyah, playerState } = useQuranAudioToggle(selectedReciter);
+  const [showAllReciters, setShowAllReciters] = useState(false);
+  const [reciterMenuOpen, setReciterMenuOpen] = useState(false);
+  const listedReciters = showAllReciters ? RECITERS : getFeaturedReciters();
+  const activeReciterEntry = getReciterCatalogEntry(selectedReciter);
   /** Keep screen lit while the reader is open (expo-keep-awake port). */
   useKeepAwake();
   /** RN useColorScheme — follows OS light/dark automatically. */
@@ -470,6 +493,18 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
             </button>
             <button
               type="button"
+              className={`qe-chip${reciterMenuOpen ? " is-on" : ""}`}
+              onClick={() => setReciterMenuOpen((v) => !v)}
+              aria-expanded={reciterMenuOpen}
+              aria-label={`القارئ: ${activeReciterEntry.name}`}
+              title={activeReciterEntry.name}
+            >
+              <Mic2 size={14} aria-hidden="true" />
+              {activeReciterEntry.name}
+              <ChevronDown size={12} aria-hidden="true" />
+            </button>
+            <button
+              type="button"
               className={`qe-chip${showTafsir ? " is-on" : ""}`}
               onClick={toggleTafsir}
               aria-pressed={showTafsir}
@@ -527,6 +562,34 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
               تركيز
             </button>
           </div>
+          {reciterMenuOpen ? (
+            <div className="qe-viewer__reciter-list" role="listbox" aria-label="اختيار القارئ">
+              {listedReciters.map((r) => (
+                <button
+                  key={r.id}
+                  type="button"
+                  role="option"
+                  aria-selected={r.id === selectedReciter}
+                  className={`qe-reciter-chip${r.id === selectedReciter ? " is-on" : ""}`}
+                  onClick={() => {
+                    setSelectedReciter(r.id);
+                    setReciterMenuOpen(false);
+                  }}
+                >
+                  {r.nameAr}
+                </button>
+              ))}
+              <button
+                type="button"
+                className="qe-dash__more-reciters"
+                onClick={() => setShowAllReciters((v) => !v)}
+              >
+                {showAllReciters
+                  ? "أشهر القراء فقط"
+                  : `جميع القراء (${toArabicDigits(RECITERS.length)})`}
+              </button>
+            </div>
+          ) : null}
         </header>
       ) : (
         <button

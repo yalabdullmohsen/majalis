@@ -8,6 +8,7 @@ import { getTafseerService } from "@/core/tafseer/TafseerService";
 import { useQuranEngine } from "@/hooks/useQuranEngine";
 import { getSurahMeta } from "@/lib/quran-api";
 import { getFeaturedReciters, getReciter, RECITERS, saveReciterId } from "@/lib/quran-audio";
+import { resolveReciterId } from "@/lib/quran-reciters";
 import { shareAyahAsText } from "@/lib/share-ayah";
 import { toArabicDigits } from "@/lib/utils";
 import "@/styles/quran-engine-ui.css";
@@ -88,12 +89,13 @@ export function QuranActionBar({ ayah, onClose }: QuranActionBarProps) {
   const listedReciters = showAllReciters ? RECITERS : getFeaturedReciters();
 
   const pickReciter = (id: string) => {
-    setReciter(id);
-    saveReciterId(id);
-    audio.setReciter(id);
+    const resolved = resolveReciterId(id);
+    setReciter(resolved);
+    saveReciterId(resolved);
+    audio.setReciter(resolved);
     setReciterOpen(false);
     setStatusWarn(false);
-    setStatus(`القارئ: ${getReciter(id).nameAr}`);
+    setStatus(`القارئ: ${getReciter(resolved).nameAr}`);
   };
 
   const togglePlay = async () => {

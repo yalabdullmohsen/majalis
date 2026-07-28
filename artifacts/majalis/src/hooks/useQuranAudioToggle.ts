@@ -4,10 +4,18 @@
  *
  * Uses the shared {@link AudioEngine} (HTML5 Audio) and everyayah URLs
  * instead of Expo `Audio.Sound.createAsync`.
+ *
+ * Reciter selection follows the RN sketch:
+ * `selectedReciter` + `getAudioUrl(verseNumber)` via `@/lib/quran-reciters`.
  */
 import { useCallback, useEffect, useState } from "react";
 import { getAudioEngine, type PlayerState } from "@/core/audio/AudioEngine";
-import { getAyahAudioUrl } from "@/lib/quran-audio";
+import {
+  DEFAULT_SELECTED_RECITER,
+  getAudioUrl,
+  getAudioUrlForAyah,
+  resolveReciterId,
+} from "@/lib/quran-reciters";
 
 export type QuranAudioToggleApi = {
   /** Play or stop the given ayah (RN `toggleAudio`). */
@@ -15,16 +23,24 @@ export type QuranAudioToggleApi = {
   /** True when this ayah is currently playing/buffering. */
   isPlayingAyah: (surah: number, ayah: number) => boolean;
   playerState: PlayerState;
-  /** Resolved everyayah URI for the ayah (RN `audioUri`). */
+  /** Resolved everyayah URI for the ayah (RN `getAudioUrl` / `audioUri`). */
   getAudioUri: (surah: number, ayah: number) => string;
+  /**
+   * RN `getAudioUrl(verseNumber)` — `verseNumber` is the SSSAAA file stem
+   * (e.g. `"002255"`), relative to the selected reciter's `baseUrl`.
+   */
+  getAudioUrl: (verseNumber: string | number) => string;
 };
 
 export function useQuranAudioToggle(reciterId?: string): QuranAudioToggleApi {
   const audio = getAudioEngine();
   const [snap, setSnap] = useState(() => audio.getSnapshot());
+  const selectedReciter = resolveReciterId(
+    reciterId ?? snap.reciterId ?? DEFAULT_SELECTED_RECITER,
+  );
 
   useEffect(() => {
-    if (reciterId) audio.setReciter(reciterId);
+    if (reciterId) audio.setReciter(resolveReciterId(reciterId));
   }, [audio, reciterId]);
 
   useEffect(() => audio.onSnapshot(setSnap), [audio]);
@@ -48,10 +64,10 @@ export function useQuranAudioToggle(reciterId?: string): QuranAudioToggleApi {
         audio.stop();
         return;
       }
-      if (reciterId) audio.setReciter(reciterId);
+      audio.setReciter(selectedReciter);
       await audio.playAyah(surah, ayah);
     },
-    [audio, reciterId],
+    [audio, selectedReciter],
   );
 
   const isPlayingAyah = useCallback(
@@ -63,9 +79,13 @@ export function useQuranAudioToggle(reciterId?: string): QuranAudioToggleApi {
   );
 
   const getAudioUri = useCallback(
-    (surah: number, ayah: number) =>
-      getAyahAudioUrl(surah, ayah, reciterId ?? snap.reciterId ?? "alafasy"),
-    [reciterId, snap.reciterId],
+    (surah: number, ayah: number) => getAudioUrlForAyah(surah, ayah, selectedReciter),
+    [selectedReciter],
+  );
+
+  const getAudioUrlBound = useCallback(
+    (verseNumber: string | number) => getAudioUrl(verseNumber, selectedReciter),
+    [selectedReciter],
   );
 
   return {
@@ -73,5 +93,6 @@ export function useQuranAudioToggle(reciterId?: string): QuranAudioToggleApi {
     isPlayingAyah,
     playerState: snap.playerState,
     getAudioUri,
+    getAudioUrl: getAudioUrlBound,
   };
 }
