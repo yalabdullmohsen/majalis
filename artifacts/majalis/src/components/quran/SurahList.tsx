@@ -1,9 +1,9 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import type { SurahSummary } from "@/lib/quran-api";
 import { JUZ_START_PAGES } from "@/lib/quran-api";
-import { arabicMatchAny } from "@/lib/arabic-search";
 import { getBookmarks, type QuranBookmark } from "@/lib/quran-personal";
 import { toArabicDigits } from "@/lib/utils";
+import { SurahIndexFlatList } from "@/components/quran/SurahIndexFlatList";
 
 type SidebarTab = "surahs" | "juz" | "bookmarks";
 
@@ -12,12 +12,11 @@ type Props = {
   currentSurah: number;
   onSelect: (n: number) => void;
   onClose?: () => void;
-  /** الانتقال لصفحة مباشرة (أجزاء / إشارات مرجعية). */
+  /** الانتقال لصفحة مباشرة (أجزاء / إشارات مرجعية / فهرس السور). */
   onSelectPage?: (page: number, opts?: { surah?: number; ayah?: number }) => void;
 };
 
-export function SurahList({ surahs, currentSurah, onSelect, onClose, onSelectPage }: Props) {
-  const [q, setQ] = useState("");
+export function SurahList({ surahs: _surahs, currentSurah, onSelect, onClose, onSelectPage }: Props) {
   const [tab, setTab] = useState<SidebarTab>("surahs");
   const [bookmarks, setBookmarks] = useState<QuranBookmark[]>([]);
 
@@ -25,15 +24,8 @@ export function SurahList({ surahs, currentSurah, onSelect, onClose, onSelectPag
     if (tab === "bookmarks") setBookmarks(getBookmarks());
   }, [tab]);
 
-  const filtered = useMemo(() => {
-    const term = q.trim();
-    if (!term) return surahs;
-    return surahs.filter(
-      (s) =>
-        arabicMatchAny([s.name, s.englishName], term) ||
-        String(s.number).startsWith(term),
-    );
-  }, [surahs, q]);
+  // surahs prop kept for API compatibility; catalog uses RN `surahList` constants.
+  void _surahs;
 
   return (
     <div className="qs-surah-list" role="navigation" aria-label="فهرس المصحف">
@@ -59,36 +51,15 @@ export function SurahList({ surahs, currentSurah, onSelect, onClose, onSelectPag
       </div>
 
       {tab === "surahs" && (
-        <>
-          <div className="qs-surah-list__search">
-            <input
-              type="search"
-              value={q}
-              onChange={(e) => setQ(e.target.value)}
-              placeholder="ابحث عن سورة..."
-              aria-label="ابحث عن سورة"
-              className="qs-search-input"
-            />
-          </div>
-          <ol className="qs-surah-items">
-            {filtered.map((s) => (
-              <li key={s.number}>
-                <button
-                  type="button"
-                  className={`qs-surah-item${s.number === currentSurah ? " is-active" : ""}`}
-                  onClick={() => { onSelect(s.number); onClose?.(); }}
-                  aria-current={s.number === currentSurah ? "true" : undefined}
-                >
-                  <span className="qs-surah-num">{s.number}</span>
-                  <span className="qs-surah-name">{s.name}</span>
-                  <span className="qs-surah-meta">
-                    {s.numberOfAyahs} آية · {s.revelationType === "Meccan" ? "مكية" : "مدنية"}
-                  </span>
-                </button>
-              </li>
-            ))}
-          </ol>
-        </>
+        <SurahIndexFlatList
+          currentSurah={currentSurah}
+          onNavigateToPage={(page, item) => {
+            // RN: navigateToPage(item.page)
+            if (onSelectPage) onSelectPage(page, { surah: item.id });
+            else onSelect(item.id);
+            onClose?.();
+          }}
+        />
       )}
 
       {tab === "juz" && (
@@ -125,7 +96,6 @@ export function SurahList({ surahs, currentSurah, onSelect, onClose, onSelectPag
                     type="button"
                     className="qs-surah-item"
                     onClick={() => {
-                      // الصفحة تُحسب في MushafPageView عبر فهرس page-juz (لا تخمين).
                       onSelectPage?.(1, { surah: b.surahNum, ayah: b.ayahNum });
                       onClose?.();
                     }}
