@@ -46,6 +46,25 @@ export function getMyBookmarks(): MyBookmark[] {
 }
 
 /**
+ * RN storageService.saveBookmarks — replace the whole `myBookmarks` list.
+ */
+export async function saveBookmarks(bookmarks: MyBookmark[]): Promise<void> {
+  try {
+    const list = Array.isArray(bookmarks)
+      ? bookmarks.map((b) => ({
+          id: typeof b.id === "number" ? b.id : Date.now(),
+          page: clampPage(b.page),
+          label: typeof b.label === "string" ? b.label : `صفحة ${clampPage(b.page)}`,
+          date: typeof b.date === "string" ? b.date : new Date().toLocaleDateString("ar"),
+        }))
+      : [];
+    localStorage.setItem(MY_BOOKMARKS_KEY, JSON.stringify(list));
+  } catch (e) {
+    console.error("خطأ في حفظ الفواصل", e);
+  }
+}
+
+/**
  * RN: addBookmark(page, label) — appends `{ id, page, label, date }` to `myBookmarks`.
  */
 export async function addBookmark(page: number, label: string): Promise<MyBookmark | null> {
