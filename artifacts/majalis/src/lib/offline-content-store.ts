@@ -8,7 +8,7 @@ import {
   idbPut,
   isOnline,
   OFFLINE_STORES,
-  type OfflineRecord,
+  type LegacyOfflineRecord,
 } from "@/lib/offline-db";
 import type { SurahDetail, SurahSummary } from "@/lib/quran-api";
 import type { AdhkarItem } from "@/lib/adhkar-seed";
@@ -69,7 +69,7 @@ export async function getCachedArticle(id: string): Promise<OfflineArticle | nul
   return idbGetValue<OfflineArticle>(OFFLINE_STORES.articles, id);
 }
 
-export async function getLastContentSync(): Promise<OfflineRecord<string> | null> {
+export async function getLastContentSync(): Promise<LegacyOfflineRecord<string> | null> {
   return idbGet<string>(OFFLINE_STORES.meta, META_LAST_SYNC);
 }
 

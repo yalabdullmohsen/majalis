@@ -23,6 +23,14 @@ async function syncCorePacks(): Promise<void> {
 
   syncing = (async () => {
     try {
+      // Migrate legacy raw-IDB packs into Dexie engine (best-effort, once)
+      try {
+        const { migrateLegacyOfflineDb } = await import("@/lib/offline-engine");
+        await migrateLegacyOfflineDb();
+      } catch {
+        /* ignore */
+      }
+
       // Quran list + core surahs (local-first fetchSurahDetail already prefers /data/quran)
       const { fetchSurahList, fetchSurahDetail } = await import("@/lib/quran-api");
       const list = await fetchSurahList();
