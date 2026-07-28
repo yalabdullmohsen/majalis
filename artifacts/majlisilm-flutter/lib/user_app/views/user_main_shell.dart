@@ -7,11 +7,7 @@ import '../controllers/user_quran_app_controller.dart';
 import 'user_educational_paths_view.dart';
 import 'user_quran_reader_view.dart';
 
-<<<<<<< HEAD
 /// Bottom nav shell — headers live inside each tab as floating SliverAppBars.
-=======
-/// Bottom nav shell: Quran Reader ↔ Educational/Adhkar + search + endDrawer settings.
->>>>>>> origin/main
 class UserMainShell extends StatefulWidget {
   const UserMainShell({super.key});
 
@@ -21,16 +17,6 @@ class UserMainShell extends StatefulWidget {
 
 class _UserMainShellState extends State<UserMainShell> {
   int _tab = 0;
-<<<<<<< HEAD
-=======
-  final TextEditingController _searchCtrl = TextEditingController();
-
-  @override
-  void dispose() {
-    _searchCtrl.dispose();
-    super.dispose();
-  }
->>>>>>> origin/main
 
   Future<void> _openSearch(BuildContext context) async {
     final quran = context.read<UserQuranAppController>();
@@ -45,7 +31,6 @@ class _UserMainShellState extends State<UserMainShell> {
     );
   }
 
-<<<<<<< HEAD
   void _openSettings(BuildContext context) {
     Scaffold.of(context).openEndDrawer();
   }
@@ -75,41 +60,6 @@ class _UserMainShellState extends State<UserMainShell> {
             ],
           );
         },
-=======
-  @override
-  Widget build(BuildContext context) {
-    final quran = context.watch<UserQuranAppController>();
-    final title = _tab == 0 ? 'المصحف الشريف' : 'المسارات والأذكار';
-
-    return Scaffold(
-      backgroundColor: quran.backgroundColor,
-      appBar: AppBar(
-        backgroundColor: quran.backgroundColor,
-        foregroundColor: quran.textColor,
-        title: Text(title),
-        actions: [
-          IconButton(
-            tooltip: 'بحث',
-            onPressed: () => _openSearch(context),
-            icon: const Icon(Icons.search),
-          ),
-          Builder(
-            builder: (ctx) => IconButton(
-              tooltip: 'إعدادات القراءة',
-              onPressed: () => Scaffold.of(ctx).openEndDrawer(),
-              icon: const Icon(Icons.tune_rounded),
-            ),
-          ),
-        ],
-      ),
-      endDrawer: _UserPrefsDrawer(quran: quran),
-      body: IndexedStack(
-        index: _tab,
-        children: const [
-          UserQuranReaderView(),
-          UserEducationalPathsView(),
-        ],
->>>>>>> origin/main
       ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: _tab,
