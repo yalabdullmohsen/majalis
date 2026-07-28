@@ -32,6 +32,14 @@ export async function startPlatformLogicSuite(): Promise<void> {
       /* ignore */
     }
 
+    // Soft-warm reading analytics aggregate (no UI)
+    try {
+      const { buildReadingAnalyticsPayload } = await import("@/lib/reading-analytics");
+      buildReadingAnalyticsPayload("week");
+    } catch {
+      /* ignore */
+    }
+
     const prediction = predictKhatmahCompletion();
     await syncSmartLocalNotifications({ khatmahBehind: prediction.behindSchedule });
     maybeNotifyKhatmahBehind(prediction);
