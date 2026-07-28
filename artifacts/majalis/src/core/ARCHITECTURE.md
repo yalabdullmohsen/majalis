@@ -1,31 +1,21 @@
 # Quran Engine — architecture scaffold
 
-App root in this monorepo: `artifacts/majalis/src/`  
-(Vercel builds from `artifacts/majalis/` — do not put these under repo-root `/src`.)
+App root: `artifacts/majalis/src/`
 
-```
-src/
-  core/
-    index.ts
-    quran/
-      index.ts
-      DatabaseManager.ts
-      QuranEngineContext.ts
-    audio/
-      index.ts
-      AudioEngine.ts
-    tafseer/
-      index.ts
-      TafseerService.ts
-  components/
-    QuranViewer.tsx
-    QuranActionBar.tsx
-    HomeDashboard.tsx
-  hooks/
-    useQuranEngine.ts
-    useQuranEngineCore.ts   # alias → useQuranEngine
-  tests/
-    core-engine.sample.test.ts
-```
+## DatabaseManager (implemented)
 
-Smoke: `npx tsx src/tests/core-engine.sample.test.ts`
+Dexie DB `majalis-quran-app-db` v1:
+
+| Table | Purpose |
+|-------|---------|
+| `settings` | preferences (`isTajweedEnabled`, …) |
+| `progress` | `lastSurah` / `lastAyah` / `lastPage` |
+| `bookmarks` | ayah bookmarks + note |
+| `tafseer_cache` | offline tafsir by `ayahId` + `source` |
+
+Singleton: `import { databaseManager } from "@/core/quran"`
+
+```bash
+npx tsx src/tests/core-engine.sample.test.ts
+npx tsx src/tests/database-manager.test.ts   # needs fake-indexeddb
+```

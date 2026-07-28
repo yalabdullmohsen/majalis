@@ -1,12 +1,21 @@
 /**
- * Quran Engine — public façade (scaffold).
- * Wire concrete modules here as they are implemented.
+ * Quran Engine — public façade.
  */
 export {
+  databaseManager,
   getDatabaseManager,
   DatabaseManager,
-  type KhatmahStore,
-  type ReflectionsStore,
+  QuranAppDatabase,
+  QURAN_APP_DB_NAME,
+  QURAN_APP_DB_VERSION,
+  ACTIVE_PROGRESS_ID,
+  type SettingsRecord,
+  type KnownSettingKey,
+  type ReadingProgress,
+  type BookmarkRecord,
+  type TafseerCacheRecord,
+  type SaveProgressInput,
+  type AddBookmarkInput,
 } from "./DatabaseManager";
 
 export {
