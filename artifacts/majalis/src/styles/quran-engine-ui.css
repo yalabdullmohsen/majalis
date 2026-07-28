@@ -358,6 +358,61 @@ body.qe-focus-mode {
   gap: 0.55rem;
 }
 
+.qe-ayah-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.qe-ayah__tafsir {
+  margin-inline: 0.15rem 0.35rem;
+  padding: 0.65rem 0.85rem;
+  border-radius: 0.75rem;
+  border: 1px solid color-mix(in srgb, var(--qe-line) 65%, transparent);
+  background: color-mix(in srgb, var(--qe-reader-header, var(--qe-panel)) 88%, transparent);
+  animation: qe-tafsir-in 0.22s ease;
+}
+
+.qe-ayah__tafsir-text {
+  margin: 0;
+  font-family: "IBM Plex Sans Arabic", "Alexandria", system-ui, sans-serif;
+  font-size: 0.92rem;
+  line-height: 1.85;
+  color: color-mix(in srgb, var(--qe-reader-text, var(--qe-ink)) 92%, transparent);
+  text-align: right;
+}
+
+.qe-ayah__tafsir-status {
+  font-size: 0.82rem;
+  color: var(--qe-muted);
+}
+
+.qe-viewer--dark .qe-ayah__tafsir {
+  border-color: color-mix(in srgb, var(--qe-reader-text) 16%, transparent);
+}
+
+.qe-ayah-list--focus .qe-ayah__tafsir {
+  border-color: color-mix(in srgb, var(--qe-reader-text, #000) 12%, transparent);
+  background: color-mix(in srgb, var(--qe-reader-header, #f0ead6) 70%, transparent);
+}
+
+@keyframes qe-tafsir-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .qe-ayah__tafsir {
+    animation: none;
+  }
+}
+
 .qe-ayah {
   width: 100%;
   display: flex;
