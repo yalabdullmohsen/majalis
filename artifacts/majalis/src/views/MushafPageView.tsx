@@ -109,7 +109,7 @@ export default function MushafPageView() {
       : null;
   const [page, setPageState] = useState<number>(() => clampPage(routePage ?? loadPagePosition() ?? 1));
   /**
-   * RN sketch: loadLastPage on mount when URL has no explicit page.
+   * RN sketch: storageService.getLastPage / loadLastPage on mount when URL has no explicit page.
    * Sync init already uses loadPagePosition (falls back to `lastPage`);
    * this async restore mirrors the AsyncStorage useEffect.
    */
@@ -150,7 +150,7 @@ export default function MushafPageView() {
   }, [routePage]);
 
   useEffect(() => {
-    // RN saveLastPage — dual-writes mj-quran-page-pos-v1 + `lastPage`
+    // RN storageService.saveLastPage — dual-writes mj-quran-page-pos-v1 + `lastPage`
     savePagePosition(page);
     setPageBookmarked(isPageBookmarked(page));
   }, [page]);
