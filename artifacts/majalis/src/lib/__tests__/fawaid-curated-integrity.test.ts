@@ -293,6 +293,15 @@ assert(
  * كلَّها بلا إنذار، والنتيجةُ الخضراءُ تُوهمُ تغطيةً لم تقع. فتُطبَّع الأرقامُ
  * قبلَ المقابلة. (وهي عائلةُ فخِّ `\b` بين حرفَينِ عربيَّينِ الموثَّقِ في ج-٢٨٨:
  * **افتراضٌ لاتينيٌّ في صيغةٍ عربيّةٍ يسقطُ صامتًا لا صاخبًا.**)
+ *
+ * ⚠️ **وثغرةٌ ثانيةٌ سُدَّت في ج-٣١٠ — إيجابٌ كاذبٌ لا سلبيٌّ**: الفحصُ كان
+ * يأخذُ **أوَّلَ رقمٍ في المصدرِ كلِّه** ويقابلُه بأوَّلِ «كتاب …» فيه، فمصدرٌ
+ * يجمعُ الصحيحَينِ («صحيح مسلم (٤٦٢٤) — كتاب الجهاد والسير… وخبرُ ابنِ خطلٍ
+ * في صحيح البخاري (٤٢٨٦) — كتاب المغازي») يُقابِلُ **رقمَ مسلمٍ** بمدى
+ * البخاريِّ و**كتابَ مسلمٍ** بكتابِ البخاريِّ فيسقطُ سليمًا. فإن ذُكِر
+ * الصحيحانِ معًا حُصِر الفحصُ في **مقطعِ البخاريِّ** وحدَه (من ذكرِه إلى
+ * ذكرِ مسلمٍ بعدَه أو إلى آخرِ المصدر)؛ وإن انفردَ البخاريُّ فالسلوكُ كما كان
+ * بلا نقصِ تغطية.
  */
 const toLatinDigits = (s: string) =>
   s.replace(/[٠-٩]/g, (d) => String("٠١٢٣٤٥٦٧٨٩".indexOf(d)));
@@ -304,8 +313,15 @@ const BUKHARI_BOOK_RANGES: Array<[string, number, number]> = [
   ["فضائل القرآن", 4979, 5062],
 ];
 const misplacedBookRef = [...FAWAID_CURATED_SEED, ...SEED_FAWAID].filter((f) => {
-  const src = toLatinDigits(f.source ?? "");
-  if (!/البخاري/.test(src)) return false;
+  const full = toLatinDigits(f.source ?? "");
+  const bIdx = full.indexOf("البخاري");
+  if (bIdx < 0) return false;
+  // مصدرٌ يجمعُ الصحيحَينِ ⇒ لا يُقابَلُ إلا مقطعُ البخاريِّ (ج-٣١٠)
+  let src = full;
+  if (/مسلم/.test(full)) {
+    const mIdx = full.indexOf("مسلم", bIdx);
+    src = full.slice(bIdx, mIdx < 0 ? undefined : mIdx);
+  }
   const num = Number(src.match(/(\d{3,4})/)?.[1] ?? 0);
   if (!num) return false;
   const actual = BUKHARI_BOOK_RANGES.find(([, lo, hi]) => num >= lo && num <= hi);
