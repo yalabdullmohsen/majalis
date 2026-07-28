@@ -1,5 +1,13 @@
 /**
  * TafseerService — offline-first tafsir (IndexedDB → AlQuran Cloud API).
+ *
+ * Lookup order is intentional for perceived performance and offline resilience:
+ * 1. In-memory Map (same session)
+ * 2. Dexie `tafseer_cache` via {@link DatabaseManager}
+ * 3. Remote `fetchTafsirAyahs` — then write-through to memory + IDB
+ *
+ * Network/IDB failures return `null` (never throw) so the ActionBar can show a
+ * friendly fallback instead of breaking the ayah sheet.
  */
 import { fetchTafsirAyahs } from "@/lib/quran-api";
 import { getDatabaseManager, type DatabaseManager } from "@/core/quran/DatabaseManager";
@@ -12,14 +20,17 @@ export type TafseerAyahResult = {
   fromCache: boolean;
 };
 
+/** Default Arabic tafsir edition on AlQuran Cloud. */
 export const DEFAULT_TAFSEER_SOURCE = "ar.muyassar";
 
 const memory = new Map<string, TafseerAyahResult>();
 
+/** Composite memory key: `source:surah:ayah`. */
 function memKey(surah: number, ayah: number, source: string): string {
   return `${source}:${surah}:${ayah}`;
 }
 
+/** Stable verse key used by IndexedDB cache rows. */
 function verseKey(surah: number, ayah: number): string {
   return `${surah}:${ayah}`;
 }
@@ -38,6 +49,10 @@ export class TafseerService {
     /* singleton */
   }
 
+  /**
+   * Switch tafsir edition and persist preference in IndexedDB settings.
+   * Persistence is fire-and-forget; UI should not await it.
+   */
   setSource(sourceId: string): void {
     this.sourceId = sourceId || DEFAULT_TAFSEER_SOURCE;
     void this.db.setSetting("preferredTafseerSource", this.sourceId);
@@ -47,13 +62,26 @@ export class TafseerService {
     return this.sourceId;
   }
 
+  /**
+   * Restore preferred edition from IndexedDB (call once during engine hydrate).
+   * Safe when IndexedDB is unavailable — keeps the default source.
+   */
   async hydrateSource(): Promise<void> {
-    const stored = await this.db.getSetting<string>("preferredTafseerSource");
-    if (stored) this.sourceId = stored;
+    try {
+      const stored = await this.db.getSetting<string>("preferredTafseerSource");
+      if (stored) this.sourceId = stored;
+    } catch (err) {
+      console.warn("[TafseerService] hydrateSource:", err);
+    }
   }
 
   /**
    * Resolve ayah tafsir: memory → IndexedDB → remote API (then cache).
+   *
+   * @param surah 1–114
+   * @param ayah 1-based within surah
+   * @param source AlQuran Cloud edition id (defaults to active preference)
+   * @returns resolved text row, or `null` when unavailable offline and online fetch fails
    */
   async getAyahTafsir(
     surah: number,
@@ -94,11 +122,15 @@ export class TafseerService {
         fromCache: false,
       };
       memory.set(mk, row);
-      void this.db.cacheTafseer({
-        ayahId: verseKey(surah, ayah),
-        source,
-        content: hit.text,
-      });
+      try {
+        await this.db.cacheTafseer({
+          ayahId: verseKey(surah, ayah),
+          source,
+          content: hit.text,
+        });
+      } catch (cacheErr) {
+        console.warn("[TafseerService] IDB write:", cacheErr);
+      }
       return row;
     } catch (err) {
       console.warn("[TafseerService] network:", err);

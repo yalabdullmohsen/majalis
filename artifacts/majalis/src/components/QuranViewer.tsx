@@ -1,7 +1,7 @@
 /**
  * QuranViewer — Uthmani ayah list with optional Tajweed tint + selection.
  */
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { fetchSurahDetail, getSurahMeta, type Ayah } from "@/lib/quran-api";
 import { useQuranEngine } from "@/hooks/useQuranEngine";
 import { QuranActionBar } from "@/components/QuranActionBar";
@@ -13,6 +13,18 @@ export type QuranViewerProps = {
   initialSurah?: number;
   className?: string;
 };
+
+function SurahSkeleton() {
+  return (
+    <div className="qe-skel-list" aria-busy="true" aria-label="تحميل الآيات">
+      <div className="qe-skel-ayah" />
+      <div className="qe-skel-ayah" />
+      <div className="qe-skel-ayah" />
+      <div className="qe-skel-ayah" />
+      <div className="qe-skel-ayah" />
+    </div>
+  );
+}
 
 export function QuranViewer({ initialSurah, className }: QuranViewerProps) {
   const {
@@ -31,29 +43,37 @@ export function QuranViewer({ initialSurah, className }: QuranViewerProps) {
   const [ayahs, setAyahs] = useState<Ayah[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [reloadKey, setReloadKey] = useState(0);
   const meta = getSurahMeta(surahNum);
+
+  const reload = useCallback(() => setReloadKey((k) => k + 1), []);
 
   useEffect(() => {
     let cancelled = false;
     setLoading(true);
     setError(null);
-    void fetchSurahDetail(surahNum)
-      .then((detail) => {
-        if (!cancelled) setAyahs(detail.ayahs ?? []);
-      })
-      .catch((err) => {
+    void (async () => {
+      try {
+        const detail = await fetchSurahDetail(surahNum);
+        if (cancelled) return;
+        setAyahs(detail.ayahs ?? []);
+      } catch (err) {
         if (!cancelled) {
-          setError(err instanceof Error ? err.message : "تعذّر تحميل السورة");
+          setError(
+            err instanceof Error && err.message
+              ? err.message
+              : "تعذّر تحميل السورة. تحقق من الاتصال ثم أعد المحاولة.",
+          );
           setAyahs([]);
         }
-      })
-      .finally(() => {
+      } finally {
         if (!cancelled) setLoading(false);
-      });
+      }
+    })();
     return () => {
       cancelled = true;
     };
-  }, [surahNum]);
+  }, [surahNum, reloadKey]);
 
   const selected =
     selectedAyah && selectedAyah.surah === surahNum
@@ -92,11 +112,14 @@ export function QuranViewer({ initialSurah, className }: QuranViewerProps) {
       </header>
 
       {loading ? (
-        <div className="qe-skel" aria-busy="true" aria-label="تحميل الآيات" />
+        <SurahSkeleton />
       ) : error ? (
-        <p className="qe-viewer__error" role="alert">
-          {error}
-        </p>
+        <div role="alert">
+          <p className="qe-viewer__error">{error}</p>
+          <button type="button" className="qe-viewer__retry" onClick={reload}>
+            إعادة المحاولة
+          </button>
+        </div>
       ) : (
         <ol className={`qe-ayah-list${isTajweedEnabled ? " qe-ayah-list--tajweed" : ""}`}>
           {ayahs.map((ayah) => {

@@ -2,6 +2,11 @@
  * AudioEngine — ayah-synced HTML5 Audio for the Quran Engine.
  *
  * Features: play / pause / seek · repeat ayah|surah · teach/student · ayah events
+ *
+ * Design notes:
+ * - Singleton so React trees and non-React callers share one player.
+ * - Never throws into UI for media failures — sets `playerState: "error"` instead.
+ * - Listeners are isolated with try/catch so a bad subscriber cannot crash playback.
  */
 import { getAyahAudioUrl } from "@/lib/quran-audio";
 import { getSurahMeta } from "@/lib/quran-api";
@@ -30,10 +35,15 @@ export type AyahChangePayload = {
 type AyahChangeListener = (payload: AyahChangePayload) => void;
 type SnapshotListener = (snap: AudioEngineSnapshot) => void;
 
+/** Ayah count for a surah (1–114) via local metadata — no network. */
 function ayahCount(surah: number): number {
   return getSurahMeta(surah).ayahs;
 }
 
+/**
+ * Next verse after `(surah, ayah)`, advancing across surah boundaries.
+ * Returns `null` at the end of the mushaf (114:6).
+ */
 function nextAyah(surah: number, ayah: number): { surah: number; ayah: number } | null {
   const max = ayahCount(surah);
   if (ayah < max) return { surah, ayah: ayah + 1 };
@@ -61,6 +71,7 @@ export class AudioEngine {
     return AudioEngine.instance;
   }
 
+  /** Test helper — tears down the singleton without deleting user data. */
   static __resetInstanceForTests(): void {
     try {
       AudioEngine.instance?.pause();
@@ -75,6 +86,10 @@ export class AudioEngine {
     /* singleton */
   }
 
+  /**
+   * Lazily create the shared `HTMLAudioElement` and wire media events.
+   * @throws if `Audio` is unavailable (SSR / non-browser). Callers should catch.
+   */
   private ensureAudio(): HTMLAudioElement {
     if (typeof Audio === "undefined") {
       throw new Error("HTMLAudioElement unavailable");
@@ -126,16 +141,25 @@ export class AudioEngine {
     }
   }
 
+  /**
+   * Subscribe to verse changes (fires when a new ayah starts loading/playing).
+   * @returns unsubscribe function
+   */
   onAyahChange(listener: AyahChangeListener): () => void {
     this.ayahListeners.add(listener);
     return () => this.ayahListeners.delete(listener);
   }
 
+  /**
+   * Subscribe to full player snapshots (state, time, repeat, teach phase).
+   * @returns unsubscribe function
+   */
   onSnapshot(listener: SnapshotListener): () => void {
     this.snapListeners.add(listener);
     return () => this.snapListeners.delete(listener);
   }
 
+  /** Immutable snapshot of the current player for UI binding. */
   getSnapshot(): AudioEngineSnapshot {
     return {
       playerState: this.playerState,
@@ -154,6 +178,12 @@ export class AudioEngine {
     this.emitSnapshot();
   }
 
+  /**
+   * Configure repeat behaviour:
+   * - `off` — play through then advance once
+   * - `ayah` — loop the current ayah
+   * - `surah` — loop the current surah from ayah 1 after the last ayah
+   */
   setRepeatMode(mode: RepeatMode): void {
     this.repeatMode = mode;
     if (mode === "surah" && this.surah != null && this.ayah != null) {
@@ -163,13 +193,20 @@ export class AudioEngine {
     this.emitSnapshot();
   }
 
-  /** Teacher plays once, then student gap (pause) before optional continue. */
+  /**
+   * Teacher/student drill: after teacher audio ends, pause (~1.5s) for the
+   * student to repeat before advancing according to `repeatMode`.
+   */
   setTeachMode(enabled: boolean): void {
     this.teachEnabled = enabled;
     this.teachPhase = enabled ? "teacher" : "idle";
     this.emitSnapshot();
   }
 
+  /**
+   * Load and play a specific ayah for the active (or provided) reciter.
+   * On media failure sets `playerState` to `"error"` and resolves (does not throw).
+   */
   async playAyah(surah: number, ayah: number, reciterId?: string): Promise<void> {
     if (reciterId) this.reciterId = reciterId;
     this.surah = surah;
@@ -179,20 +216,33 @@ export class AudioEngine {
     }
     this.emitAyahChange();
 
-    const el = this.ensureAudio();
+    let el: HTMLAudioElement;
+    try {
+      el = this.ensureAudio();
+    } catch (err) {
+      console.warn("[AudioEngine] ensureAudio:", err);
+      this.setPlayerState("error");
+      return;
+    }
+
     const url = getAyahAudioUrl(surah, ayah, this.reciterId);
     this.setPlayerState("loading");
     if (this.teachEnabled) this.teachPhase = "teacher";
 
-    el.src = url;
     try {
+      el.src = url;
       await el.play();
       this.setPlayerState("playing");
-    } catch {
+    } catch (err) {
+      console.warn("[AudioEngine] playAyah:", err);
       this.setPlayerState("error");
     }
   }
 
+  /**
+   * Toggle play/pause for the given ayah.
+   * If a different ayah is requested (or nothing is loaded), starts fresh playback.
+   */
   async togglePlay(surah: number, ayah: number): Promise<void> {
     const el = this.audio;
     if (
@@ -208,7 +258,8 @@ export class AudioEngine {
         try {
           await el.play();
           this.setPlayerState("playing");
-        } catch {
+        } catch (err) {
+          console.warn("[AudioEngine] resume:", err);
           this.setPlayerState("error");
         }
       }
@@ -217,10 +268,12 @@ export class AudioEngine {
     await this.playAyah(surah, ayah);
   }
 
+  /** Jump to another ayah and start playback (alias of {@link playAyah}). */
   async seekToAyah(surah: number, ayah: number): Promise<void> {
     await this.playAyah(surah, ayah);
   }
 
+  /** Seek within the current track; no-op when duration is unknown. */
   seek(seconds: number): void {
     const el = this.audio;
     if (!el || !Number.isFinite(el.duration)) return;
@@ -233,41 +286,47 @@ export class AudioEngine {
     this.setPlayerState("paused");
   }
 
+  /**
+   * Handle track end: teach gap → repeat ayah/surah → or advance once.
+   * Failures in nested `playAyah` already surface as `playerState: "error"`.
+   */
   private async onEnded(): Promise<void> {
-    if (this.teachEnabled && this.teachPhase === "teacher") {
-      this.teachPhase = "student";
-      this.setPlayerState("paused");
-      // Student gap — auto-resume teacher on next ayah after short delay
-      await new Promise((r) => setTimeout(r, 1500));
-      this.teachPhase = "teacher";
-    }
+    try {
+      if (this.teachEnabled && this.teachPhase === "teacher") {
+        this.teachPhase = "student";
+        this.setPlayerState("paused");
+        await new Promise((r) => setTimeout(r, 1500));
+        this.teachPhase = "teacher";
+      }
 
-    if (this.repeatMode === "ayah" && this.surah != null && this.ayah != null) {
-      await this.playAyah(this.surah, this.ayah);
-      return;
-    }
-
-    if (this.repeatMode === "surah" && this.surah != null && this.ayah != null) {
-      const next = nextAyah(this.surah, this.ayah);
-      if (next && next.surah === this.surah) {
-        await this.playAyah(next.surah, next.ayah);
+      if (this.repeatMode === "ayah" && this.surah != null && this.ayah != null) {
+        await this.playAyah(this.surah, this.ayah);
         return;
       }
-      // End of surah → restart from ayah 1
-      const start = this.surahRepeatStart ?? { surah: this.surah, ayah: 1 };
-      await this.playAyah(start.surah, start.ayah);
-      return;
-    }
 
-    // Advance once when not repeating
-    if (this.surah != null && this.ayah != null) {
-      const next = nextAyah(this.surah, this.ayah);
-      if (next) {
-        await this.playAyah(next.surah, next.ayah);
+      if (this.repeatMode === "surah" && this.surah != null && this.ayah != null) {
+        const next = nextAyah(this.surah, this.ayah);
+        if (next && next.surah === this.surah) {
+          await this.playAyah(next.surah, next.ayah);
+          return;
+        }
+        const start = this.surahRepeatStart ?? { surah: this.surah, ayah: 1 };
+        await this.playAyah(start.surah, start.ayah);
         return;
       }
+
+      if (this.surah != null && this.ayah != null) {
+        const next = nextAyah(this.surah, this.ayah);
+        if (next) {
+          await this.playAyah(next.surah, next.ayah);
+          return;
+        }
+      }
+      this.setPlayerState("idle");
+    } catch (err) {
+      console.warn("[AudioEngine] onEnded:", err);
+      this.setPlayerState("error");
     }
-    this.setPlayerState("idle");
   }
 }
 

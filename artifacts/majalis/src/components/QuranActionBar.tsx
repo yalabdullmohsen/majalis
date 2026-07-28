@@ -24,23 +24,40 @@ export type QuranActionBarProps = {
   onClose?: () => void;
 };
 
+function TafsirSkeleton() {
+  return (
+    <div className="qe-skel-tafsir" aria-busy="true" aria-label="تحميل التفسير">
+      <div className="qe-skel-line" />
+      <div className="qe-skel-line" />
+      <div className="qe-skel-line qe-skel-line--short" />
+    </div>
+  );
+}
+
 export function QuranActionBar({ ayah, onClose }: QuranActionBarProps) {
   const { currentReciter, db } = useQuranEngine();
   const audio = getAudioEngine();
   const tafseer = getTafseerService();
 
   const [playing, setPlaying] = useState(false);
+  const [audioBusy, setAudioBusy] = useState(false);
   const [repeatMode, setRepeatMode] = useState<RepeatMode>("off");
   const [bookmarked, setBookmarked] = useState(false);
   const [tafsirText, setTafsirText] = useState<string | null>(null);
   const [tafsirOpen, setTafsirOpen] = useState(false);
   const [tafsirLoading, setTafsirLoading] = useState(false);
   const [status, setStatus] = useState<string | null>(null);
+  const [statusWarn, setStatusWarn] = useState(false);
 
   useEffect(() => {
     return audio.onSnapshot((snap) => {
       setPlaying(snap.playerState === "playing" || snap.playerState === "buffering");
+      setAudioBusy(snap.playerState === "loading" || snap.playerState === "buffering");
       setRepeatMode(snap.repeatMode);
+      if (snap.playerState === "error") {
+        setStatus("تعذّر تشغيل التلاوة. تحقق من الاتصال أو جرّب قارئًا آخر.");
+        setStatusWarn(true);
+      }
     });
   }, [audio]);
 
@@ -49,9 +66,15 @@ export function QuranActionBar({ ayah, onClose }: QuranActionBarProps) {
     setTafsirOpen(false);
     setTafsirText(null);
     setStatus(null);
-    void db.listBookmarks().then((rows) => {
-      setBookmarked(rows.some((r) => r.verseKey === ayah.verseKey));
-    });
+    setStatusWarn(false);
+    void (async () => {
+      try {
+        const rows = await db.listBookmarks();
+        setBookmarked(rows.some((r) => r.verseKey === ayah.verseKey));
+      } catch {
+        setBookmarked(false);
+      }
+    })();
     audio.setReciter(currentReciter);
   }, [ayah, db, audio, currentReciter]);
 
@@ -60,7 +83,20 @@ export function QuranActionBar({ ayah, onClose }: QuranActionBarProps) {
   const surahName = getSurahMeta(ayah.surah).name;
 
   const togglePlay = async () => {
-    await audio.togglePlay(ayah.surah, ayah.ayah);
+    setStatusWarn(false);
+    try {
+      await audio.togglePlay(ayah.surah, ayah.ayah);
+      const snap = audio.getSnapshot();
+      if (snap.playerState === "error") {
+        setStatus("تعذّر تشغيل التلاوة. تحقق من الاتصال أو جرّب قارئًا آخر.");
+        setStatusWarn(true);
+      } else {
+        setStatus(null);
+      }
+    } catch {
+      setStatus("تعذّر تشغيل التلاوة. تحقق من الاتصال أو جرّب قارئًا آخر.");
+      setStatusWarn(true);
+    }
   };
 
   const toggleRepeat = () => {
@@ -68,39 +104,74 @@ export function QuranActionBar({ ayah, onClose }: QuranActionBarProps) {
     const i = order.indexOf(repeatMode);
     const next = order[(i + 1) % order.length]!;
     audio.setRepeatMode(next);
+    setStatusWarn(false);
     setStatus(next === "off" ? "التكرار متوقف" : next === "ayah" ? "تكرار الآية" : "تكرار السورة");
   };
 
   const openTafsir = async () => {
     setTafsirOpen(true);
     setTafsirLoading(true);
+    setStatusWarn(false);
     try {
       const row = await tafseer.getAyahTafsir(ayah.surah, ayah.ayah);
-      setTafsirText(row?.text ?? "لا يتوفر تفسير لهذه الآية حاليًا.");
+      if (row?.text) {
+        setTafsirText(row.text);
+      } else {
+        setTafsirText(null);
+        setStatus("التفسير غير متاح لهذه الآية حاليًا. حاول لاحقًا.");
+        setStatusWarn(true);
+      }
+    } catch {
+      setTafsirText(null);
+      setStatus("تعذّر جلب التفسير. تحقق من الاتصال ثم أعد المحاولة.");
+      setStatusWarn(true);
     } finally {
       setTafsirLoading(false);
     }
   };
 
   const toggleBookmark = async () => {
-    if (bookmarked) {
-      await db.removeBookmark(ayah.surah, ayah.ayah);
-      setBookmarked(false);
-      setStatus("أُزيلت الإشارة");
-    } else {
-      await db.addBookmark({
-        surahId: ayah.surah,
-        ayahId: ayah.ayah,
-        note: ayah.text.slice(0, 120),
-      });
-      setBookmarked(true);
-      setStatus("حُفظت الإشارة");
+    setStatusWarn(false);
+    try {
+      if (bookmarked) {
+        const ok = await db.removeBookmark(ayah.surah, ayah.ayah);
+        if (!ok) {
+          setStatus("تعذّر إزالة الإشارة.");
+          setStatusWarn(true);
+          return;
+        }
+        setBookmarked(false);
+        setStatus("أُزيلت الإشارة");
+      } else {
+        const row = await db.addBookmark({
+          surahId: ayah.surah,
+          ayahId: ayah.ayah,
+          note: ayah.text.slice(0, 120),
+        });
+        if (!row) {
+          setStatus("تعذّر حفظ الإشارة. قد يكون التخزين المحلي غير متاح.");
+          setStatusWarn(true);
+          return;
+        }
+        setBookmarked(true);
+        setStatus("حُفظت الإشارة");
+      }
+    } catch {
+      setStatus("تعذّر تحديث الإشارة.");
+      setStatusWarn(true);
     }
   };
 
   const share = async () => {
-    const ok = await shareAyahAsText(ayah.text, surahName, ayah.ayah);
-    setStatus(ok ? "تمت المشاركة" : "تعذّرت المشاركة");
+    setStatusWarn(false);
+    try {
+      const ok = await shareAyahAsText(ayah.text, surahName, ayah.ayah);
+      setStatus(ok ? "تمت المشاركة" : "تعذّرت المشاركة");
+      setStatusWarn(!ok);
+    } catch {
+      setStatus("تعذّرت المشاركة");
+      setStatusWarn(true);
+    }
   };
 
   return (
@@ -119,7 +190,13 @@ export function QuranActionBar({ ayah, onClose }: QuranActionBarProps) {
       <p className="qe-abar__preview">{ayah.text.length > 140 ? `${ayah.text.slice(0, 140)}…` : ayah.text}</p>
 
       <div className="qe-abar__actions" role="toolbar" aria-label="إجراءات سريعة">
-        <button type="button" className={`qe-abar__btn${playing ? " is-on" : ""}`} onClick={() => void togglePlay()}>
+        <button
+          type="button"
+          className={`qe-abar__btn${playing ? " is-on" : ""}`}
+          onClick={() => void togglePlay()}
+          disabled={audioBusy}
+          aria-busy={audioBusy}
+        >
           {playing ? <Pause size={18} /> : <Play size={18} />}
           <span>{playing ? "إيقاف" : "تلاوة"}</span>
         </button>
@@ -147,7 +224,7 @@ export function QuranActionBar({ ayah, onClose }: QuranActionBarProps) {
       </div>
 
       {status ? (
-        <p className="qe-abar__status" role="status">
+        <p className={`qe-abar__status${statusWarn ? " qe-abar__status--warn" : ""}`} role="status">
           {status}
         </p>
       ) : null}
@@ -155,7 +232,13 @@ export function QuranActionBar({ ayah, onClose }: QuranActionBarProps) {
       {tafsirOpen ? (
         <div className="qe-abar__tafsir">
           <h3>التفسير</h3>
-          {tafsirLoading ? <p>جاري التحميل…</p> : <p>{tafsirText}</p>}
+          {tafsirLoading ? (
+            <TafsirSkeleton />
+          ) : tafsirText ? (
+            <p>{tafsirText}</p>
+          ) : (
+            <p role="status">لا يتوفر تفسير لهذه الآية حاليًا.</p>
+          )}
         </div>
       ) : null}
     </div>
