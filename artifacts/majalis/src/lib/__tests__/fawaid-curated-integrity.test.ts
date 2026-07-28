@@ -571,6 +571,109 @@ assert(
   strayTail.map((f) => `${f.id}: ${f.text.slice(0, 60)}`).join(" | ")
 );
 
+// ─────────────── ٢١) آيةٌ قرآنيّةٌ مصنَّفةٌ في «الحديث» ───────────────
+
+/**
+ * أربعةُ صفوفٍ (ج-٢٩١) `author_name` فيها «القرآن الكريم» و`source` «الأحزاب:
+ * 35» و`category` «**الحديث**» — والتصنيفُ شريحةُ فلترةٍ معروضةٌ في
+ * `FawaidPage.tsx`، فيُصنَّفُ نصُّ الآيةِ للزائرِ في بابِ الحديثِ النبويِّ.
+ * وعُرفُ الملفِّ في أخواتِها من الآياتِ في السياقِ نفسِه («فاذكروني أذكركم»،
+ * «ادعوني أستجب لكم») هو «الذكر والدعاء» — فنُقلت إليه.
+ */
+const verseUnderHadith = [...FAWAID_CURATED_SEED, ...SEED_FAWAID].filter(
+  (f) => (f.author_name ?? "") === "القرآن الكريم" && f.category === "الحديث"
+);
+assert(
+  verseUnderHadith.length === 0,
+  "لا آيةَ مؤلِّفُها «القرآن الكريم» مصنَّفةً في «الحديث»",
+  verseUnderHadith.map((f) => `${f.id}: ${f.source}`).join(" | ")
+);
+
+// ─────────────── ٢٢) «صحيح الألباني» مكانَ «صححه الألباني» ───────────────
+
+/**
+ * ثمانيةٌ وعشرون صفًّا (٢٧ في `fawaid-curated-seed.ts` وواحدٌ في
+ * `adhkar-seed.ts`) `source` فيها «رواه البيهقي — **صحيح الألباني**» — وهي
+ * صيغةٌ مبتورةٌ تُقرأُ في البطاقةِ خبرًا ناقصًا لا حكمًا. **والصوابُ برهنَ
+ * عليه الملفُّ على نفسِه**: تسعةٌ وستّون موضعًا فيه يكتبُها «**صححه**
+ * الألباني» — فهو عُرفُه؛ فوُحِّدت عليه، ولم يُغيَّرْ حكمٌ ولا نُسب إلى
+ * الألبانيِّ ما لم يكنْ منسوبًا إليه أصلًا.
+ */
+const seedFilesText = ["fawaid-curated-seed", "fawaid-seed", "adhkar-seed", "qa-seed", "quiz-seed"]
+  .map((n) => {
+    try {
+      return readFileSync(new URL(`../${n}.ts`, import.meta.url), "utf8");
+    } catch {
+      return "";
+    }
+  })
+  .join("\n");
+const mangledAlbani = seedFilesText.match(/—\s*صحيح الألباني/g) ?? [];
+assert(
+  mangledAlbani.length === 0,
+  "لا «— صحيح الألباني» في ملفّاتِ البذرة — الصوابُ «صححه الألباني»",
+  `${mangledAlbani.length} موضعًا`
+);
+
+// ─────────────── ٢٣) لفظٌ يخلطُ روايتَينِ متمايزتَينِ من الصحيحِ نفسِه ───────────────
+
+/**
+ * 🔑 **أخطرُ ما في البابِ وأخفاه**: سجلٌّ `author_name` فيه أحدُ الصحيحَينِ
+ * ونصُّه يُطبَعُ بين يدَي الزائرِ لفظًا نبويًّا **لا يوجدُ في ذلك الصحيحِ
+ * كما هو**، وإنّما هو **صدرُ روايةٍ على عجزِ أخرى**. أخرج هذا الفحصُ ثلاثةَ
+ * نصوصٍ (١٥ صفًّا، ج-٢٩١): «الصوم جُنة؛ فإذا كان **يوم صوم أحدكم** فلا يرفث
+ * ولا **يجهل**» — وصدرُه من البخاريِّ ١٩٠٤ ولفظُه «ولا **يصخب**»، وعجزُه من
+ * ١٨٩٤ ولفظُه «الصيام جنة، فلا يرفث ولا يجهل» بلا الصدر؛ و«سبعة يظلهم الله…
+ * وشاب نشأ في عبادة **الله**، ورجل قلبه معلق **بالمساجد**» — والبخاريُّ ٦٦٠
+ * «في عبادة **ربه**… معلق **في** المساجد» و١٤٢٣ «**إمام عدل**…»، فالسجلُّ
+ * يخلطُهما؛ و«إن الله رفيق يحب الرفق في الأمر كله» معزوًّا إلى **مسلمٍ**
+ * وهو لفظُ **البخاريِّ ٦٩٢٧** (ولفظُ مسلمٍ ٥٦٥٦ بلا «رفيق»، و٦٦٠١ «ويعطي
+ * على الرفق…»).
+ *
+ * ⚠️ **والفحصُ يُفرِّقُ بين الخلطِ والاختصار**: الاختصارُ (حذفُ جملةٍ من
+ * روايةٍ واحدةٍ) عُرفٌ صحيحٌ في هذا الملفِّ ولا يُعاب — فلا يسقطُ السجلُّ
+ * إلّا إذا **لم تكنْ كلماتُ النافذةِ متتابعةً (ولو متفرِّقةً) في حديثٍ واحدٍ
+ * بعينِه**. وبهذا الشرطِ خرجت من الفحصِ سبعةُ نصوصٍ سليمةٍ راجعتُها فردًا
+ * فردًا («إذا مات الإنسان انقطع عنه عمله إلا من ثلاثة…» مسلم ٤٢٢٣ بحذفِ
+ * «إلا من» الثانية، و«لا تحاسدوا…» مسلم ٦٥٤١ بحذفِ «ولا يبع بعضكم على بيع
+ * بعض»، و«عجبًا لأمر المؤمن…» مسلم ٧٥٠٠، و«ثلاثة لا يكلمهم الله…» مسلم
+ * ٢٩٣، وغيرُها) — **فلولا هذا الشرطُ لأسقطَ الفحصُ سليمًا كما يُسقطُ عليلًا.**
+ */
+const isSubsequenceOf = (words: string[], hadith: string) => {
+  let i = 0;
+  for (const w of hadith.split(" ")) {
+    if (w === words[i]) i++;
+    if (i === words.length) return true;
+  }
+  return false;
+};
+const hadithsNorm = (["bukhari", "muslim"] as const)
+  .map((c) => new URL(`../../../public/data/hadith/${c}.json`, import.meta.url))
+  .map((u) => (JSON.parse(readFileSync(u, "utf8")).hadiths as Array<{ t: string }>).map((h) => normHadith(h.t)));
+const mixedNarration = [...FAWAID_CURATED_SEED, ...SEED_FAWAID].filter((f) => {
+  const idx = f.author_name === "صحيح البخاري" ? 0 : f.author_name === "صحيح مسلم" ? 1 : -1;
+  if (idx < 0 || REJECTED.test(f.text) || REJECTED.test(f.source ?? "")) return false;
+  const w = normHadith(f.text).split(" ");
+  for (let i = 0; i + 8 <= w.length; i++) {
+    const win = w.slice(i, i + 8);
+    const full = win.join(" ");
+    if (corpus[idx].includes(full)) continue;
+    const head = win.slice(0, 4).join(" ");
+    const tail = win.slice(4).join(" ");
+    // نافذةٌ شطراها في الصحيحِ وهي ليست فيه ⇒ مظنّةُ خلطٍ…
+    if (!corpus[idx].includes(head) || !corpus[idx].includes(tail)) continue;
+    // …إلّا أن تكونَ كلماتُها متتابعةً في حديثٍ واحدٍ، فذاك اختصارٌ لا خلط
+    if (hadithsNorm[idx].some((h) => h.includes(head) && isSubsequenceOf(win, h))) continue;
+    return true;
+  }
+  return false;
+});
+assert(
+  mixedNarration.length === 0,
+  "لا سجلَّ يَخلطُ صدرَ روايةٍ بعجزِ أخرى ثمَّ يعزو اللفظَ إلى أحدِ الصحيحَين",
+  mixedNarration.map((f) => `${f.id}: ${f.text.slice(0, 55)}`).join(" | ")
+);
+
 console.log(`\n${"─".repeat(48)}`);
 console.log(`النتائج: ${passed} نجح، ${failed} فشل`);
 if (failed > 0) process.exit(1);
