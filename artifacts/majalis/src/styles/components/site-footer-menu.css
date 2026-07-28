@@ -1,201 +1,27 @@
-/* تذييل مبسّط: زر واحد يفتح قائمة عن المجلس / التواصل / الرعاية */
-
-.site-footer.site-footer--minimal,
-.site-footer--minimal {
-  margin-top: auto;
-  background: transparent !important;
-  border-top: 1px solid color-mix(in srgb, var(--color-border, #E8E7E2) 80%, transparent) !important;
-  color: var(--color-text-muted, #5C5C56) !important;
-  padding: 0 !important;
-  position: relative;
-}
-
-/* إلغاء الخط الذهبي والزخرفة القديمة */
-.site-footer--minimal::before,
-.site-footer.site-footer--minimal::before {
-  content: none !important;
-  display: none !important;
-}
-
-.site-footer-inner--minimal {
-  width: min(100%, var(--page-width, 56rem));
-  margin-inline: auto;
-  padding: 0.85rem var(--page-gutter, 1.25rem) calc(0.85rem + var(--safe-bottom, 0px));
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.site-footer-menu-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
-  min-height: 44px;
-  padding: 0.55rem 1.15rem;
-  border: 1px solid color-mix(in srgb, var(--color-primary, #226A56) 22%, transparent);
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--color-primary, #226A56) 6%, white);
-  color: var(--color-primary-deep, #143F35);
-  font-size: 0.875rem;
-  font-weight: 700;
-  cursor: pointer;
-  -webkit-tap-highlight-color: transparent;
-  touch-action: manipulation;
-}
-.site-footer-menu-btn:hover {
-  background: color-mix(in srgb, var(--color-primary, #226A56) 12%, white);
-}
-.site-footer-menu-btn:focus-visible {
-  outline: 3px solid color-mix(in srgb, var(--color-accent, #B8963F) 50%, white);
-  outline-offset: 2px;
-}
-
-.footer-about-overlay {
-  position: fixed;
-  inset: 0;
-  z-index: 80;
-  background: rgba(15, 23, 20, 0.45);
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  padding: 0;
-}
-
-.footer-about-sheet {
-  width: min(100%, 28rem);
-  max-height: min(78vh, 34rem);
-  overflow: auto;
-  background: var(--color-surface, #fff);
-  color: var(--color-text, #1F2937);
-  border-radius: 1rem 1rem 0 0;
-  padding: 0.5rem 1rem calc(1rem + env(safe-area-inset-bottom, 0px));
-  box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.12);
-}
-
-.footer-about-sheet__handle {
-  width: 2.5rem;
-  height: 0.25rem;
-  border-radius: 999px;
-  background: #D1D5DB;
-  margin: 0.35rem auto 0.75rem;
-}
-
-.footer-about-sheet__head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  margin-bottom: 0.75rem;
-}
-.footer-about-sheet__head h2 {
-  margin: 0;
-  font-size: 1.05rem;
-  font-weight: 800;
-  color: var(--color-primary-deep, #143F35);
-}
-
-.footer-about-sheet__close {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.25rem;
-  height: 2.25rem;
-  border: 0;
-  border-radius: 0.5rem;
-  background: color-mix(in srgb, var(--color-primary, #226A56) 8%, white);
-  color: var(--color-primary-deep, #143F35);
-  cursor: pointer;
-}
-
-.footer-about-sheet__nav {
-  display: grid;
-  gap: 0.35rem;
-}
-
-.footer-about-sheet__item {
-  display: flex;
-  align-items: center;
-  gap: 0.75rem;
-  min-height: 48px;
-  padding: 0.55rem 0.75rem;
-  border-radius: 0.65rem;
-  text-decoration: none;
-  color: var(--color-text, #1F2937);
-  font-weight: 600;
-  font-size: 0.92rem;
-  background: transparent;
-  border: 1px solid transparent;
-}
-.footer-about-sheet__item:hover {
-  background: color-mix(in srgb, var(--color-primary, #226A56) 7%, white);
-  border-color: color-mix(in srgb, var(--color-primary, #226A56) 12%, transparent);
-}
-.footer-about-sheet__item--sponsor {
-  background: color-mix(in srgb, var(--color-primary, #226A56) 8%, white);
-  border-color: color-mix(in srgb, var(--color-primary, #226A56) 18%, transparent);
-  color: var(--color-primary-deep, #143F35);
-}
-
-.footer-about-sheet__icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 2rem;
-  height: 2rem;
-  border-radius: 0.5rem;
-  background: color-mix(in srgb, var(--color-primary, #226A56) 10%, white);
-  color: var(--color-primary, #226A56);
-  flex-shrink: 0;
-}
-
-.footer-about-sheet__email {
-  margin: 1rem 0 0;
-  padding-top: 0.75rem;
-  border-top: 1px solid var(--color-border, #E8E7E2);
-  text-align: center;
-  font-size: 0.8rem;
-}
-.footer-about-sheet__email a {
-  color: var(--color-text-muted, #5C5C56);
-  text-decoration: none;
-}
-.footer-about-sheet__email a:hover {
-  color: var(--color-primary, #226A56);
-  text-decoration: underline;
-}
-
-@media (min-width: 880px) {
-  .footer-about-overlay {
-    align-items: center;
-    padding: 1.5rem;
-  }
-  .footer-about-sheet {
-    border-radius: 1rem;
-    max-height: min(70vh, 32rem);
-  }
-}
-
-/* الوضع الداكن */
-html[data-theme="dark"] .site-footer--minimal {
-  background: transparent !important;
-  border-top-color: rgba(255, 255, 255, 0.08) !important;
-}
-html[data-theme="dark"] .site-footer-menu-btn {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 255, 255, 0.14);
-  color: #F4F3EE;
-}
-html[data-theme="dark"] .footer-about-sheet {
-  background: #12201c;
-  color: #F4F3EE;
-}
-html[data-theme="dark"] .footer-about-sheet__head h2 {
-  color: #F4F3EE;
-}
-html[data-theme="dark"] .footer-about-sheet__item {
-  color: #F4F3EE;
-}
-html[data-theme="dark"] .footer-about-sheet__item:hover {
-  background: rgba(255, 255, 255, 0.06);
-}
+/* تذييل مبسّط: زر واحد → قائمة عن المجلس / التواصل / الرعاية */
+.site-footer.site-footer--minimal,.site-footer--minimal{margin-top:auto;background:transparent!important;border-top:1px solid color-mix(in srgb,var(--color-border,#E8E7E2) 80%,transparent)!important;color:var(--color-text-muted,#5C5C56)!important;padding:0!important;position:relative}
+.site-footer--minimal::before,.site-footer.site-footer--minimal::before{content:none!important;display:none!important}
+.site-footer-inner--minimal{width:min(100%,var(--page-width,56rem));margin-inline:auto;padding:.85rem var(--page-gutter,1.25rem) calc(.85rem + var(--safe-bottom,0px));display:flex;justify-content:center;align-items:center}
+.site-footer-menu-btn{display:inline-flex;align-items:center;justify-content:center;gap:.4rem;min-height:44px;padding:.55rem 1.15rem;border:1px solid color-mix(in srgb,var(--color-primary,#226A56) 22%,transparent);border-radius:999px;background:color-mix(in srgb,var(--color-primary,#226A56) 6%,white);color:var(--color-primary-deep,#143F35);font-size:.875rem;font-weight:700;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.site-footer-menu-btn:hover{background:color-mix(in srgb,var(--color-primary,#226A56) 12%,white)}
+.site-footer-menu-btn:focus-visible{outline:3px solid color-mix(in srgb,var(--color-accent,#B8963F) 50%,white);outline-offset:2px}
+.footer-about-overlay{position:fixed;inset:0;z-index:80;background:rgba(15,23,20,.45);display:flex;align-items:flex-end;justify-content:center}
+.footer-about-sheet{width:min(100%,28rem);max-height:min(78vh,34rem);overflow:auto;background:var(--color-surface,#fff);color:var(--color-text,#1F2937);border-radius:1rem 1rem 0 0;padding:.5rem 1rem calc(1rem + env(safe-area-inset-bottom,0px));box-shadow:0 -8px 32px rgba(0,0,0,.12)}
+.footer-about-sheet__handle{width:2.5rem;height:.25rem;border-radius:999px;background:#D1D5DB;margin:.35rem auto .75rem}
+.footer-about-sheet__head{display:flex;align-items:center;justify-content:space-between;gap:.75rem;margin-bottom:.75rem}
+.footer-about-sheet__head h2{margin:0;font-size:1.05rem;font-weight:800;color:var(--color-primary-deep,#143F35)}
+.footer-about-sheet__close{display:inline-flex;align-items:center;justify-content:center;width:2.25rem;height:2.25rem;border:0;border-radius:.5rem;background:color-mix(in srgb,var(--color-primary,#226A56) 8%,white);color:var(--color-primary-deep,#143F35);cursor:pointer}
+.footer-about-sheet__nav{display:grid;gap:.35rem}
+.footer-about-sheet__item{display:flex;align-items:center;gap:.75rem;min-height:48px;padding:.55rem .75rem;border-radius:.65rem;text-decoration:none;color:var(--color-text,#1F2937);font-weight:600;font-size:.92rem;background:transparent;border:1px solid transparent}
+.footer-about-sheet__item:hover{background:color-mix(in srgb,var(--color-primary,#226A56) 7%,white);border-color:color-mix(in srgb,var(--color-primary,#226A56) 12%,transparent)}
+.footer-about-sheet__item--sponsor{background:color-mix(in srgb,var(--color-primary,#226A56) 8%,white);border-color:color-mix(in srgb,var(--color-primary,#226A56) 18%,transparent);color:var(--color-primary-deep,#143F35)}
+.footer-about-sheet__icon{display:inline-flex;align-items:center;justify-content:center;width:2rem;height:2rem;border-radius:.5rem;background:color-mix(in srgb,var(--color-primary,#226A56) 10%,white);color:var(--color-primary,#226A56);flex-shrink:0}
+.footer-about-sheet__email{margin:1rem 0 0;padding-top:.75rem;border-top:1px solid var(--color-border,#E8E7E2);text-align:center;font-size:.8rem}
+.footer-about-sheet__email a{color:var(--color-text-muted,#5C5C56);text-decoration:none}
+.footer-about-sheet__email a:hover{color:var(--color-primary,#226A56);text-decoration:underline}
+@media (min-width:880px){.footer-about-overlay{align-items:center;padding:1.5rem}.footer-about-sheet{border-radius:1rem;max-height:min(70vh,32rem)}}
+html[data-theme=dark] .site-footer--minimal{background:transparent!important;border-top-color:rgba(255,255,255,.08)!important}
+html[data-theme=dark] .site-footer-menu-btn{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14);color:#F4F3EE}
+html[data-theme=dark] .footer-about-sheet{background:#12201c;color:#F4F3EE}
+html[data-theme=dark] .footer-about-sheet__head h2,html[data-theme=dark] .footer-about-sheet__item{color:#F4F3EE}
+html[data-theme=dark] .footer-about-sheet__item:hover{background:rgba(255,255,255,.06)}

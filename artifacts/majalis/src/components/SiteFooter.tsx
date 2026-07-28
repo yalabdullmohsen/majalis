@@ -3,7 +3,6 @@ import { createPortal } from "react-dom";
 import { Link } from "wouter";
 import { ChevronUp, Handshake, Info, Mail, Scale, Shield, X } from "lucide-react";
 import { CONTACT_EMAIL, mailtoWithSubject } from "@/lib/site-config";
-import "@/styles/components/site-footer-menu.css";
 
 type FooterMenuItem = {
   href: string;
@@ -116,6 +115,10 @@ function FooterAboutSheet({
 export function SiteFooter() {
   const [open, setOpen] = useState(false);
   const titleId = useId();
+
+  useEffect(() => {
+    void import("@/styles/components/site-footer-menu.css");
+  }, []);
 
   return (
     <footer className="site-footer site-footer--minimal" dir="rtl" aria-label="تذييل موقع المجلس العلمي">
