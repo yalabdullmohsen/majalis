@@ -44,6 +44,15 @@ flutter pub get
 flutter run
 ```
 
+### iOS release (macOS + Xcode)
+
+```bash
+cd artifacts/majlisilm-flutter
+./release.sh
+```
+
+التفاصيل وبيانات App Store Connect في `IOS_RELEASE.md`.
+
 ### Phase gate
 
 **Stop after Phase 1.** Do not implement `admin_panel` until the signal: `Continue Phase 2`.
