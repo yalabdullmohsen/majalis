@@ -262,6 +262,7 @@ export default function SettingsPage() {
               void clearOfflineReading();
               try {
                 localStorage.removeItem("majalis-reading-progress-v1");
+                localStorage.removeItem("readingHistory");
               } catch {
                 /* ignore */
               }

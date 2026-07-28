@@ -16,6 +16,8 @@
  * unload on leave.
  * `useKeepAwake()` (Screen Wake Lock) keeps the display on while reading —
  * web port of expo-keep-awake.
+ * `useLogReadingProgress` bumps localStorage `readingHistory` on page change
+ * (web port of RN AsyncStorage logProgress).
  * `text-size-adjust: 100%` resists OS/browser text scaling (RN allowFontScaling={false}).
  */
 import { useCallback, useEffect, useState, type CSSProperties } from "react";
@@ -26,6 +28,7 @@ import { useQuranPreferences } from "@/hooks/useQuranPreferences";
 import { useReadingBreakReminder } from "@/hooks/useReadingBreakReminder";
 import { useQuranAudioToggle } from "@/hooks/useQuranAudioToggle";
 import { useKeepAwake } from "@/hooks/useKeepAwake";
+import { useLogReadingProgress } from "@/hooks/useLogReadingProgress";
 import { nextQuranFontId, quranFontOption, quranFontStack } from "@/lib/quran-font-options";
 import { DEFAULT_TAFSEER_SOURCE } from "@/core/tafseer/TafseerService";
 import { QuranActionBar } from "@/components/QuranActionBar";
@@ -160,6 +163,8 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
   const { toggleAudio, isPlayingAyah, playerState } = useQuranAudioToggle(currentReciter);
   /** Keep screen lit while the reader is open (expo-keep-awake port). */
   useKeepAwake();
+  /** RN logProgress — bump daily readingHistory when engine page changes. */
+  useLogReadingProgress(currentPage);
 
   const surahNum = initialSurah ?? currentSurah;
   const [ayahs, setAyahs] = useState<Ayah[]>([]);

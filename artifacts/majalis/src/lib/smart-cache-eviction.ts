@@ -67,6 +67,7 @@ export const PROTECTED_LS_KEYS = new Set<string>([
   "mj-quran-wird-v3",
   "mj-quran-pos-v3",
   "mj-quran-page-pos-v1",
+  "readingHistory",
 ]);
 
 /** Prefixes for protected LS keys (notes/bookmarks/streaks families). */
@@ -84,6 +85,7 @@ export const PROTECTED_LS_PREFIXES = [
   "mj-quran-wird",
   "mj-quran-pos",
   "mj-quran-page-pos",
+  "readingHistory",
 ] as const;
 
 /** IndexedDB meta keys that are core / must not be deleted. */

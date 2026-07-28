@@ -16,6 +16,7 @@ import { useQuranPreferences, type QuranReadingTheme, type QuranFrameStyle, type
 import { useReadingBreakReminder } from "@/hooks/useReadingBreakReminder";
 import { useAyahPlayer } from "@/hooks/useAyahPlayer";
 import { useKeepAwake } from "@/hooks/useKeepAwake";
+import { useLogReadingProgress } from "@/hooks/useLogReadingProgress";
 import { SurahList } from "@/components/quran/SurahList";
 import { PageAyahActionSheet } from "@/components/quran/PageAyahActionSheet";
 import { ReadingBreakDialog } from "@/components/quran/ReadingBreakDialog";
@@ -100,6 +101,8 @@ export default function MushafPageView() {
       ? SURAH_START_PAGES[Number(params.surah) - 1]
       : null;
   const [page, setPageState] = useState<number>(() => clampPage(routePage ?? loadPagePosition() ?? 1));
+  /** RN logProgress — bump daily readingHistory on each page turn. */
+  useLogReadingProgress(page);
   const [segAyahs, setSegAyahs] = useState<SegmentAyahs[] | null>(null);
   const [v2Layout, setV2Layout] = useState<MushafPageLayout | null>(null);
   const [loading, setLoading] = useState(true);
