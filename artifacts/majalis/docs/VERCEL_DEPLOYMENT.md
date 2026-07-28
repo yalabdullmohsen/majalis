@@ -3,6 +3,9 @@
 هذا المشروع **Vite + React SPA** مع **Serverless API** (`api/index.js`).  
 **ليس Next.js** — لا تستخدم إعدادات Next.js في Vercel.
 
+للنشر الاستراتيجي لمحرك القرآن (PWA / كاش / مراقبة / أمان) راجع:
+[`quran-engine-going-live.md`](./quran-engine-going-live.md).
+
 ---
 
 ## الإعداد الصحيح في Vercel Dashboard

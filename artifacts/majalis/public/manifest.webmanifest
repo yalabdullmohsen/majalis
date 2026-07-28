@@ -60,6 +60,20 @@
   ],
   "shortcuts": [
     {
+      "name": "لوحة القراءة",
+      "short_name": "القراءة",
+      "url": "/?source=pwa",
+      "description": "الورد والختمة والتأملات",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "المصحف",
+      "short_name": "المصحف",
+      "url": "/quran-viewer?source=pwa",
+      "description": "متابعة القراءة من آخر موضع",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
       "name": "القرآن الكريم",
       "short_name": "القرآن",
       "url": "/quran-hub?source=pwa",
@@ -67,24 +81,10 @@
       "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
     },
     {
-      "name": "الدروس العلمية",
-      "short_name": "الدروس",
-      "url": "/lessons?source=pwa",
-      "description": "دروس ومحاضرات شرعية",
-      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
-    },
-    {
       "name": "أوقات الصلاة",
       "short_name": "الصلاة",
       "url": "/prayer-times?source=pwa",
       "description": "مواقيت الصلاة الدقيقة",
-      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
-    },
-    {
-      "name": "الأذكار",
-      "short_name": "الأذكار",
-      "url": "/adhkar?source=pwa",
-      "description": "أذكار الصباح والمساء",
       "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
     }
   ]

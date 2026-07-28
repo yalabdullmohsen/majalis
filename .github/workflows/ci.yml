@@ -50,6 +50,20 @@ jobs:
           BASE_PATH: "/"
         run: pnpm --filter @workspace/majalis run build
 
+      - name: Web Vitals / Quran readiness smokes
+        run: |
+          cd artifacts/majalis
+          pnpm run test:web-vitals-part9
+          # Quran Engine unit files land via feature PRs; run when present.
+          for f in tests/unit/quran-core-structure.test.ts \
+                   tests/unit/quran-viewer-surface.test.ts \
+                   tests/unit/home-dashboard-stats.test.ts; do
+            if [ -f "$f" ]; then
+              echo "→ $f"
+              npx tsx "$f"
+            fi
+          done
+
       - name: Content import tests
         run: |
           cd artifacts/majalis

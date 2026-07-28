@@ -10,6 +10,7 @@ import { bootstrapSupabaseFromServer, resetSupabaseClient } from "./lib/supabase
 import { createAppQueryClient } from "./lib/query-client";
 import { PERF_SLOW_MS } from "./lib/performance-monitor";
 import { registerProductionServiceWorker } from "./lib/service-worker";
+import { startWebVitalsReporting } from "./lib/web-vitals-reporter";
 import { setupStatusBar, setupKeyboard, isAndroid, isNative } from "./lib/capacitor-utils";
 import { initFinalPolish } from "./lib/init-final-polish";
 import { prewarmAudioCdns, prewarmTextApis } from "./lib/resource-prewarm";
@@ -82,6 +83,13 @@ async function mount() {
 }
 
 void mount();
+
+// Core Web Vitals — idle so first paint is never blocked (see going-live doc).
+if (typeof requestIdleCallback === "function") {
+  requestIdleCallback(() => startWebVitalsReporting(), { timeout: 4_000 });
+} else {
+  setTimeout(() => startWebVitalsReporting(), 2_000);
+}
 
 // داخل تطبيق Capacitor الأصلي نمنع تسجيل SW تمامًا لتفادي أي بقايا كاش
 // من جلسات سابقة داخل WebView؛ تحديث iOS يعتمد على ملفات cap sync فقط.
