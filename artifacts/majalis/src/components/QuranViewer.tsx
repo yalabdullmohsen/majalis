@@ -6,12 +6,15 @@
  * (`userFontSize` — same key as the RN AsyncStorage sketch), with
  * lineHeight = fontSize + 20. The ± control bar is hidden while focused.
  * Reader theme (light/dark paper) uses THEMES below — independent of app chrome.
+ * Ayah numbers toggle (`showAyahNumbers` via useQuranPreferences) hides badges and
+ * strips parenthetical markers via renderQuranText — same idea as the RN sketch.
  * `text-size-adjust: 100%` resists OS/browser text scaling (RN allowFontScaling={false}).
  */
 import { useCallback, useEffect, useState, type CSSProperties } from "react";
-import { Maximize2, Minimize2, Moon, Sun } from "lucide-react";
+import { Hash, Maximize2, Minimize2, Moon, Sun } from "lucide-react";
 import { fetchSurahDetail, getSurahMeta, type Ayah } from "@/lib/quran-api";
 import { useQuranEngine } from "@/hooks/useQuranEngine";
+import { useQuranPreferences } from "@/hooks/useQuranPreferences";
 import { QuranActionBar } from "@/components/QuranActionBar";
 import { toArabicDigits } from "@/lib/utils";
 import "@/styles/quran-engine-ui.css";
@@ -40,6 +43,18 @@ export const QURAN_FONT_MAX_PX = 40;
 export const QURAN_FONT_STEP_PX = 2;
 export const QURAN_FONT_DEFAULT_PX = 24;
 export const QURAN_FONT_STORAGE_KEY = "userFontSize";
+
+/**
+ * Strip parenthetical ayah markers from continuous mushaf text when numbers are hidden.
+ * Matches Western and Arabic-Indic digits: (24) / (٢٤).
+ */
+export function renderQuranText(text: string, showAyahNumbers: boolean): string {
+  if (showAyahNumbers) return text;
+  return text
+    .replace(/\([0-9٠-٩۰-۹]+\)/g, "")
+    .replace(/[ \t\u00a0]{2,}/g, " ")
+    .trim();
+}
 
 function clampFontSize(n: number): number {
   const stepped = Math.round(n / QURAN_FONT_STEP_PX) * QURAN_FONT_STEP_PX;
@@ -101,6 +116,8 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
     clearActiveVerse,
     toggleTajweed,
   } = useQuranEngine();
+  const { prefs, setPref } = useQuranPreferences();
+  const showAyahNumbers = prefs.showAyahNumbers;
 
   const surahNum = initialSurah ?? currentSurah;
   const [ayahs, setAyahs] = useState<Ayah[]>([]);
@@ -114,6 +131,10 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
   const currentTheme = isDarkMode ? THEMES.dark : THEMES.light;
 
   const reload = useCallback(() => setReloadKey((k) => k + 1), []);
+
+  const toggleAyahNumbers = useCallback(() => {
+    setPref("showAyahNumbers", !showAyahNumbers);
+  }, [setPref, showAyahNumbers]);
 
   const setFocus = useCallback(
     (next: boolean) => {
@@ -275,6 +296,17 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
             </button>
             <button
               type="button"
+              className={`qe-chip${showAyahNumbers ? " is-on" : ""}`}
+              onClick={toggleAyahNumbers}
+              aria-pressed={showAyahNumbers}
+              aria-label={showAyahNumbers ? "إخفاء أرقام الآيات" : "إظهار أرقام الآيات"}
+              title="أرقام الآيات"
+            >
+              <Hash size={14} aria-hidden="true" />
+              أرقام
+            </button>
+            <button
+              type="button"
               className="qe-chip"
               onClick={toggleDarkMode}
               aria-pressed={isDarkMode}
@@ -328,7 +360,7 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
           </div>
         ) : (
           <ol
-            className={`qe-ayah-list${isTajweedEnabled ? " qe-ayah-list--tajweed" : ""}${isFocusMode ? " qe-ayah-list--focus" : ""}`}
+            className={`qe-ayah-list${isTajweedEnabled ? " qe-ayah-list--tajweed" : ""}${isFocusMode ? " qe-ayah-list--focus" : ""}${showAyahNumbers ? "" : " qe-ayah-list--no-nums"}`}
           >
             {ayahs.map((ayah) => {
               const active =
@@ -347,9 +379,11 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
                       });
                     }}
                   >
-                    <span className="qe-ayah__num" aria-hidden="true">
-                      {toArabicDigits(ayah.numberInSurah)}
-                    </span>
+                    {showAyahNumbers ? (
+                      <span className="qe-ayah__num" aria-hidden="true">
+                        {toArabicDigits(ayah.numberInSurah)}
+                      </span>
+                    ) : null}
                     <span
                       className="qe-ayah__text"
                       style={{
@@ -359,7 +393,7 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
                         color: currentTheme.text,
                       }}
                     >
-                      {ayah.text}
+                      {renderQuranText(ayah.text, showAyahNumbers)}
                     </span>
                   </button>
                 </li>
