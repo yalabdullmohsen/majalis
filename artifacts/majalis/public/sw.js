@@ -210,9 +210,48 @@ self.addEventListener("fetch", (event) => {
 
 const _adhanTimers = new Map(); // prayerKey → timeoutId (keeps SW alive via waitUntil)
 
+const _smartLocalTimers = new Map(); // tag → timeoutId
+
 self.addEventListener("message", (event) => {
   const msg = event.data;
-  if (!msg || msg.type !== "SCHEDULE_ADHAN") return;
+  if (!msg) return;
+
+  // Smart local schedule (adhkar / streak / khatmah / prayer reminders)
+  if (msg.type === "MAJALIS_SCHEDULE_LOCAL_NOTIFS" && Array.isArray(msg.items)) {
+    const STALE_TOLERANCE_MS = 2 * 60000;
+    for (const item of msg.items) {
+      const tag = item.tag || item.id;
+      if (!tag || typeof item.delayMs !== "number" || item.delayMs < 0) continue;
+      if (_smartLocalTimers.has(tag)) {
+        clearTimeout(_smartLocalTimers.get(tag));
+      }
+      const fireAt = typeof item.fireAt === "number" ? item.fireAt : Date.now() + item.delayMs;
+      const promise = new Promise((resolve) => {
+        const tid = setTimeout(() => {
+          _smartLocalTimers.delete(tag);
+          if (Date.now() - fireAt > STALE_TOLERANCE_MS) {
+            resolve();
+            return;
+          }
+          self.registration.showNotification(item.title || "المجلس العلمي", {
+            body: item.body || "",
+            icon: "/logo.png?v=9",
+            badge: "/favicon.png?v=9",
+            dir: "rtl",
+            lang: "ar",
+            tag,
+            renotify: true,
+            data: { url: item.url || "/" },
+          }).then(resolve).catch(resolve);
+        }, Math.min(item.delayMs, 86_400_000));
+        _smartLocalTimers.set(tag, tid);
+      });
+      event.waitUntil(promise);
+    }
+    return;
+  }
+
+  if (msg.type !== "SCHEDULE_ADHAN") return;
 
   const { prayerKey, prayerArabic, delayMs, fireAt } = msg;
   if (typeof delayMs !== "number" || delayMs < 0) return;

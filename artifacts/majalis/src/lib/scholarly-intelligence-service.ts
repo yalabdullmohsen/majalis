@@ -4,6 +4,8 @@ import { requestFetch } from "@/lib/request-manager";
  */
 
 import { adminFetch as apiFetch } from "@/lib/admin-api";
+import { searchQuranTopics } from "@/lib/quran-topics-index";
+import { expandSemanticQuery } from "@/lib/semantic-search-engine";
 
 export type IntelligentSearchResult = {
   id?: string;
@@ -84,6 +86,55 @@ function sessionId(): string {
   return id;
 }
 
+function mergeQuranTopicHits(
+  query: string,
+  base: IntelligentSearchResponse,
+  limit: number,
+): IntelligentSearchResponse {
+  try {
+    const topicHits = searchQuranTopics(query, 5);
+    const expanded = expandSemanticQuery(query);
+    const existingHrefs = new Set(base.results.map((r) => r.href));
+    const extras: IntelligentSearchResult[] = topicHits
+      .filter((t) => !existingHrefs.has(t.href))
+      .map((t) => ({
+        id: `quran-topic-${t.topicId}`,
+        kind: "quran",
+        kind_label: "قرآن",
+        title: t.title,
+        summary: t.verseRefs.slice(0, 4).join(" · "),
+        href: t.href,
+        relevance_score: t.score,
+        keywords: expanded.slice(0, 8),
+      }));
+    if (!extras.length) {
+      return {
+        ...base,
+        query_info: {
+          normalized: base.query_info?.normalized || query,
+          expanded_terms: [...new Set([...(base.query_info?.expanded_terms || []), ...expanded])],
+        },
+      };
+    }
+    const results = [...extras, ...base.results].slice(0, limit);
+    const groups = { ...base.groups };
+    groups.quran = [...extras, ...(groups.quran || [])];
+    return {
+      ...base,
+      ok: true,
+      count: results.length,
+      results,
+      groups,
+      query_info: {
+        normalized: base.query_info?.normalized || query,
+        expanded_terms: [...new Set([...(base.query_info?.expanded_terms || []), ...expanded])],
+      },
+    };
+  } catch {
+    return base;
+  }
+}
+
 export async function intelligentSearch(
   query: string,
   opts?: {
@@ -95,6 +146,7 @@ export async function intelligentSearch(
     year?: number;
   },
 ): Promise<IntelligentSearchResponse> {
+  const limit = opts?.limit ?? 40;
   const params = new URLSearchParams({ q: query });
   if (opts?.limit) params.set("limit", String(opts.limit));
   if (opts?.type) params.set("type", opts.type);
@@ -104,9 +156,30 @@ export async function intelligentSearch(
   if (opts?.year) params.set("year", String(opts.year));
   params.set("sessionId", sessionId());
 
-  const res = await requestFetch(`/api/intelligent-search?${params}`);
-  if (!res.ok) return { ok: false, query, count: 0, results: [], groups: {}, topics: [] };
-  return res.json();
+  try {
+    const res = await requestFetch(`/api/intelligent-search?${params}`);
+    if (!res.ok) {
+      return mergeQuranTopicHits(query, {
+        ok: false,
+        query,
+        count: 0,
+        results: [],
+        groups: {},
+        topics: [],
+      }, limit);
+    }
+    const data = (await res.json()) as IntelligentSearchResponse;
+    return mergeQuranTopicHits(query, data, limit);
+  } catch {
+    return mergeQuranTopicHits(query, {
+      ok: false,
+      query,
+      count: 0,
+      results: [],
+      groups: {},
+      topics: [],
+    }, limit);
+  }
 }
 
 export async function trackSearchClick(opts: {
