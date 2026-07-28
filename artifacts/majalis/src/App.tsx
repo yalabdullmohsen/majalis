@@ -87,6 +87,7 @@ const QuranCirclesPage = lazy(() => import("@/views/QuranCirclesPage"));
 const QuranHubPage = lazy(() => import("@/views/QuranHubPage"));
 const KidsPage = lazy(() => import("@/views/KidsPage"));
 const SurahIndexPage = lazy(() => import("@/views/SurahIndexPage"));
+const QuranSearchPage = lazy(() => import("@/views/QuranSearchPage"));
 const RevelationOrderPage = lazy(() => import("@/views/RevelationOrderPage"));
 const MakkiMadaniPage = lazy(() => import("@/views/MakkiMadaniPage"));
 const MushafPageView = lazy(() => import("@/views/MushafPageView"));
@@ -646,6 +647,7 @@ function Router() {
       <Route path="/kids"><SafeLazyRoute component={KidsPage} /></Route>
       <Route path="/quran/recitation-test-ai"><SafeLazyRoute component={RecitationTestPage} /></Route>
       <Route path="/quran/surahs"><SafeLazyRoute component={SurahIndexPage} /></Route>
+      <Route path="/quran/search"><SafeLazyRoute component={QuranSearchPage} /></Route>
       <Route path="/quran/revelation-order"><SafeLazyRoute component={RevelationOrderPage} /></Route>
       <Route path="/quran/makki-madani"><SafeLazyRoute component={MakkiMadaniPage} /></Route>
       <Route path="/quran-memorization"><SafeLazyRoute component={QuranMemorizationPage} /></Route>

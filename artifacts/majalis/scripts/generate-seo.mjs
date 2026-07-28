@@ -678,6 +678,7 @@ ${linkList("أقسام الفقه", [
   "/quran-hub": `<p>مركز القرآن الكريم: المصحف الرقمي، فهرس السور، التجويد، القصص، علوم القرآن، والتحفيظ — مدخل موحّد لخدمات القراءة والتعلّم.</p>
 ${linkList("خدمات القرآن", [
   { name: "المصحف الرقمي", url: "/mushaf" },
+  { name: "بحث في الآيات", url: "/quran/search" },
   { name: "فهرس السور", url: "/quran/surahs" },
   { name: "أحكام التجويد", url: "/quran/tajweed" },
   { name: "قصص السور", url: "/quran/surah-stories" },
@@ -1461,6 +1462,14 @@ ${linkList("خدمات القرآن", [
   { name: "قصص السور", url: "/quran/surah-stories" },
   { name: "علوم القرآن", url: "/ulum-quran" },
   { name: "المصحف الرقمي", url: "/mushaf" },
+  { name: "بحث في الآيات", url: "/quran/search" },
+])}`,
+  "/quran/search": `<p>بحث محلي في نص آيات القرآن الكريم — شاشة منفصلة عن المصحف مع الانتقال إلى موضع الآية.</p>
+${linkList("خدمات القرآن", [
+  { name: "مركز القرآن", url: "/quran-hub" },
+  { name: "المصحف الرقمي", url: "/mushaf" },
+  { name: "فهرس السور", url: "/quran/surahs" },
+  { name: "علوم القرآن", url: "/ulum-quran" },
 ])}`,
   "/quran/memorization-plans": `<p>خطط عملية للحفظ والمراجعة اليومية والأسبوعية، مع أدوات المتشابهات واختبارات الحفظ.</p>
 ${linkList("خدمات القرآن", [

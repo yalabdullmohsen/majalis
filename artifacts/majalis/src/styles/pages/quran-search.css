@@ -1,0 +1,91 @@
+/* بحث آيات القرآن — شاشة منفصلة */
+.quran-search-page {
+  max-width: 42rem;
+  margin-inline: auto;
+}
+
+.quran-search-page__form {
+  margin: 0 0 1rem;
+}
+
+.quran-search-page__field {
+  position: relative;
+  display: block;
+}
+
+.quran-search-page__icon {
+  position: absolute;
+  inset-inline-start: 0.85rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--elite-ink-soft, #5d726a);
+  pointer-events: none;
+}
+
+.quran-search-page__input {
+  width: 100%;
+  padding-inline-start: 2.6rem;
+}
+
+.quran-search-page__status,
+.quran-search-page__hint,
+.quran-search-page__meta {
+  margin: 0 0 1rem;
+  font-size: 0.9rem;
+  color: var(--elite-ink-soft, #5d726a);
+}
+
+.quran-search-page__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.quran-search-page__hit {
+  display: block;
+  padding: 0.85rem 1rem;
+  border-radius: 0.85rem;
+  border: 1px solid color-mix(in srgb, var(--elite-border-2, rgba(24, 54, 42, 0.15)) 100%, transparent);
+  background: var(--elite-white, #fafaf8);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+
+.quran-search-page__hit:hover {
+  border-color: color-mix(in srgb, #176b57 45%, transparent);
+  background: color-mix(in srgb, #176b57 6%, #fafaf8);
+}
+
+.quran-search-page__hit header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.35rem 0.75rem;
+  margin-bottom: 0.45rem;
+  font-size: 0.82rem;
+  color: #176b57;
+}
+
+.quran-search-page__hit p {
+  margin: 0;
+  font-family: "Amiri Quran", "Scheherazade New", "Traditional Arabic", serif;
+  font-size: 1.2rem;
+  line-height: 2;
+  color: var(--elite-ink, #1a1a18);
+}
+
+.quran-search-page__footer {
+  margin: 1.75rem 0 0;
+  font-size: 0.88rem;
+  color: var(--elite-ink-soft, #5d726a);
+}
+
+.quran-search-page__footer a {
+  color: #176b57;
+  font-weight: 600;
+}
