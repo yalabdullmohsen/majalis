@@ -90,11 +90,12 @@ html.dark .qe-abar {
   max-width: none;
   min-height: 100dvh;
   margin: 0;
-  padding: max(0.75rem, env(safe-area-inset-top)) 1.4rem
-    max(1.25rem, env(safe-area-inset-bottom));
-  /* Paper / night tone from THEMES via --qe-reader-bg */
-  background: var(--qe-reader-bg, #faf6ef);
-  color: var(--qe-reader-text, #000);
+  /* Flutter SafeArea + EdgeInsets.symmetric(horizontal: 30, vertical: 20) */
+  padding: max(20px, env(safe-area-inset-top)) max(30px, env(safe-area-inset-right))
+    max(20px, env(safe-area-inset-bottom)) max(30px, env(safe-area-inset-left));
+  /* Paper / night tone from THEMES via --qe-reader-bg (Flutter #F5F5DC light) */
+  background: var(--qe-reader-bg, #f5f5dc);
+  color: var(--qe-reader-text, rgba(0, 0, 0, 0.87));
   /* Resist browser/OS text autosizing (≈ allowFontScaling={false}) */
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
@@ -278,8 +279,8 @@ body.qe-focus-mode .bottom-nav-bar {
 
 body.qe-focus-mode {
   overflow: hidden;
-  /* Match reader paper while chrome is hidden */
-  background: var(--qe-reader-bg, #faf6ef);
+  /* Match reader paper while chrome is hidden — Flutter parchment */
+  background: var(--qe-reader-bg, #f5f5dc);
 }
 
 .qe-viewer--dark .qe-ayah {
