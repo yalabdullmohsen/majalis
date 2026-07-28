@@ -1,0 +1,40 @@
+{
+  "id": "/quran-engine?source=pwa",
+  "name": "محرك القرآن — مجالس العلم",
+  "short_name": "محرك القرآن",
+  "description": "قراءة وتلاوة وتفسير أوفلاين عبر محرك القرآن في مجالس العلم.",
+  "lang": "ar",
+  "dir": "rtl",
+  "start_url": "/quran-engine?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#FAFAF8",
+  "theme_color": "#143F35",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "لوحة القراءة",
+      "url": "/quran-engine?source=pwa",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "المصحف",
+      "url": "/quran-engine/viewer?source=pwa",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}
