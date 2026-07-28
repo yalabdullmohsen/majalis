@@ -113,13 +113,22 @@ function main() {
   for (const f of [
     "views/admin/ReviewHubPage.tsx",
     "components/admin/review-hub/ReviewHubShell.tsx",
+    "components/admin/review-hub/ReviewHubHeaderBar.tsx",
+    "components/admin/review-hub/LinearAudioReviewPlayer.tsx",
     "components/admin/review-hub/WaveformAudioPlayer.tsx",
-    "components/admin/review-hub/DiffViewer.tsx",
     "lib/admin-review-hub/store.ts",
     "styles/pages/admin-review-hub.css",
   ]) {
     check(existsSync(join(root, f)), f);
   }
+
+  const flutterSample = REVIEW_HUB_SEED.find((i) => i.id === "rec-003");
+  check(
+    flutterSample?.stream === "recitation" &&
+      flutterSample.userName.includes("أحمد") &&
+      flutterSample.aiScore === 82,
+    "flutter sample verse card",
+  );
 
   console.log(`\n${passed} passed, ${failed} failed`);
   if (failed > 0) process.exit(1);
