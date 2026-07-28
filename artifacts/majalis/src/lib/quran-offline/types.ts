@@ -4,7 +4,8 @@
  */
 
 export const QURAN_OFFLINE_DB_NAME = "majalis-quran-engine-db";
-export const QURAN_OFFLINE_DB_VERSION = 1;
+/** Current schema revision — bump only with additive Dexie upgrades. */
+export const QURAN_OFFLINE_DB_VERSION = 2;
 
 export type KhatmahProfileType = "reading" | "memorization";
 
@@ -42,6 +43,10 @@ export type UserReflectionRecord = {
   created_at: number;
   sync_status: ReflectionSyncStatus;
   updated_at: number;
+  /** v2 — last time reflection was opened/read (silent migration). */
+  last_opened_at?: number;
+  /** v2 — schema stamp for future additive fields. */
+  schema_version?: number;
 };
 
 /** `quran_knowledge_store` — precomputed similarity + thematic graph per ayah. */
@@ -50,6 +55,10 @@ export type QuranKnowledgeRecord = {
   similar_ayah_keys: string[];
   theme_ids: string[];
   updated_at: number;
+  /** v2 — LRU touch */
+  last_accessed_at?: number;
+  /** v2 — LFU counter */
+  access_count?: number;
 };
 
 export type OfflineAssetType =
@@ -79,6 +88,12 @@ export type OfflineAssetRecord = {
   size_bytes: number;
   updated_at: number;
   content_hash?: string;
+  /** v2 — LRU touch */
+  last_accessed_at?: number;
+  /** v2 — LFU counter */
+  access_count?: number;
+  /** v2 — pinned/favorited assets are never auto-evicted */
+  pinned?: boolean;
 };
 
 export type OutboxEntityType =

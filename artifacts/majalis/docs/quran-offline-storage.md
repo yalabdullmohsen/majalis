@@ -8,7 +8,7 @@ Dexie.js IndexedDB layer for Ayah/Tarteel-grade offline interactions.
 | | |
 |--|--|
 | Name | `majalis-quran-engine-db` |
-| Version | `1` (additive upgrades only) |
+| Version | `2` (v1→v2 additive lifecycle fields; upgrades never wipe) |
 | Engine | Dexie `^4.4.4` |
 
 ## Stores & indexes

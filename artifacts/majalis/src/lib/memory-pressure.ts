@@ -156,6 +156,17 @@ export async function purgeUnderMemoryPressure(
     }
   }
 
+  // Quran Engine resource lifecycle — suspend prefetch, purge ephemeral media, budget eviction
+  try {
+    const { handleQuranMemoryPressure } = await import(
+      "@/lib/quran-offline/resource-lifecycle"
+    );
+    const q = await handleQuranMemoryPressure(level);
+    actions.push(...q.actions);
+  } catch {
+    /* ignore */
+  }
+
   return { actions };
 }
 

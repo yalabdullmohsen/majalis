@@ -10,6 +10,7 @@ import { loadMutashabihatIndexCached } from "@/lib/mutashabihat-idb";
 import { loadChapters, prefetchMushafPage } from "@/lib/mushaf-v2-data";
 import { warmQuranSearchIndex } from "@/lib/quran-local-search";
 import { loadPageJuzIndex } from "@/lib/recitation-ai/page-juz-lookup";
+import { isQuranIndexingSuspended } from "@/lib/quran-offline/lifecycle-flags";
 
 const TOTAL_PAGES = 604;
 const PAGE_CHUNK = 6;
@@ -88,7 +89,9 @@ export async function warmQuranEngineCaches(
   opts?: { focusPage?: number; fullPages?: boolean },
 ): Promise<void> {
   const focus = Math.min(TOTAL_PAGES, Math.max(1, opts?.focusPage ?? 1));
-  const fullPages = opts?.fullPages !== false;
+  // Under memory pressure: skip full background indexing / page crawl
+  const fullPages =
+    opts?.fullPages !== false && !isQuranIndexingSuspended() && !signal.aborted;
 
   const idleHandles: number[] = [];
   const unreg = registerQuranEngineDisposable(() => {
@@ -154,7 +157,7 @@ export async function warmQuranEngineCaches(
     await new Promise<void>((resolve) => {
       let cursor = 1;
       const step = () => {
-        if (signal.aborted) {
+        if (signal.aborted || isQuranIndexingSuspended()) {
           patchQuranEngineState({ warmPhase: "aborted" });
           resolve();
           return;

@@ -5,6 +5,7 @@
  */
 import { getQuranOfflineDb } from "@/lib/quran-offline/db";
 import type { QuranKnowledgeRecord } from "@/lib/quran-offline/types";
+import { touchKnowledgeAccess } from "@/lib/quran-offline/access-touch";
 
 export function ayahKey(surah: number, ayah: number): string {
   return `${surah}:${ayah}`;
@@ -16,7 +17,10 @@ export async function getKnowledgeForAyah(
 ): Promise<QuranKnowledgeRecord | null> {
   const db = getQuranOfflineDb();
   if (!db) return null;
-  return (await db.quran_knowledge_store.get(ayahKey(surah, ayah))) ?? null;
+  const key = ayahKey(surah, ayah);
+  const row = (await db.quran_knowledge_store.get(key)) ?? null;
+  if (row) touchKnowledgeAccess(key);
+  return row;
 }
 
 export async function getSimilarAyahKeysCached(
@@ -44,6 +48,8 @@ export async function putKnowledgeBatch(
     similar_ayah_keys: r.similar_ayah_keys ?? [],
     theme_ids: r.theme_ids ?? [],
     updated_at: r.updated_at ?? ts,
+    last_accessed_at: r.last_accessed_at ?? ts,
+    access_count: r.access_count ?? 0,
   }));
   await db.quran_knowledge_store.bulkPut(prepared);
   return prepared.length;

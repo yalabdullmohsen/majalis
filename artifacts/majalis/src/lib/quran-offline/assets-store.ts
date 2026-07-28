@@ -7,6 +7,7 @@ import type {
   OfflineAssetRecord,
   OfflineAssetType,
 } from "@/lib/quran-offline/types";
+import { touchAssetAccess } from "@/lib/quran-offline/access-touch";
 
 export function makeAudioSurahAssetId(reciterId: string, surahId: number): string {
   return `audio_surah:${reciterId}:${surahId}`;
@@ -31,7 +32,9 @@ export function makeTafseerAssetId(edition: string): string {
 export async function getAsset(asset_id: string): Promise<OfflineAssetRecord | null> {
   const db = getQuranOfflineDb();
   if (!db) return null;
-  return (await db.offline_assets_store.get(asset_id)) ?? null;
+  const row = (await db.offline_assets_store.get(asset_id)) ?? null;
+  if (row) touchAssetAccess(asset_id);
+  return row;
 }
 
 export async function listAssetsByType(type: OfflineAssetType): Promise<OfflineAssetRecord[]> {
@@ -57,12 +60,27 @@ export async function upsertAsset(
 ): Promise<OfflineAssetRecord | null> {
   const db = getQuranOfflineDb();
   if (!db) return null;
+  const existing = await db.offline_assets_store.get(input.asset_id);
+  const now = Date.now();
   const row: OfflineAssetRecord = {
+    ...existing,
     ...input,
-    updated_at: input.updated_at ?? Date.now(),
+    updated_at: input.updated_at ?? now,
+    pinned: input.pinned ?? existing?.pinned ?? false,
+    access_count: input.access_count ?? existing?.access_count ?? 0,
+    last_accessed_at: input.last_accessed_at ?? existing?.last_accessed_at ?? now,
   };
   await db.offline_assets_store.put(row);
   return row;
+}
+
+export async function setAssetPinned(asset_id: string, pinned: boolean): Promise<boolean> {
+  const db = getQuranOfflineDb();
+  if (!db) return false;
+  const row = await db.offline_assets_store.get(asset_id);
+  if (!row) return false;
+  await db.offline_assets_store.put({ ...row, pinned, updated_at: Date.now() });
+  return true;
 }
 
 export async function setAssetDownloadStatus(
@@ -85,6 +103,7 @@ export async function registerSurahAudioAsset(opts: {
   status: OfflineAssetDownloadStatus;
   file_reference?: Blob | string;
   size_bytes?: number;
+  pinned?: boolean;
 }): Promise<OfflineAssetRecord | null> {
   return upsertAsset({
     asset_id: makeAudioSurahAssetId(opts.reciterId, opts.surahId),
@@ -93,7 +112,10 @@ export async function registerSurahAudioAsset(opts: {
     surah_id: opts.surahId,
     download_status: opts.status,
     file_reference: opts.file_reference,
-    size_bytes: opts.size_bytes ?? (opts.file_reference instanceof Blob ? opts.file_reference.size : 0),
+    size_bytes:
+      opts.size_bytes ??
+      (opts.file_reference instanceof Blob ? opts.file_reference.size : 0),
+    pinned: opts.pinned ?? false,
   });
 }
 

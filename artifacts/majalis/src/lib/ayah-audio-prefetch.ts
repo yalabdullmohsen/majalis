@@ -3,6 +3,7 @@
  * مكمّل لتنزيل السورة الكاملة في quran-audio-downloads.ts.
  */
 import { getAyahAudioUrl } from "@/lib/quran-audio";
+import { isQuranPrefetchSuspended } from "@/lib/quran-offline/lifecycle-flags";
 
 const DB_NAME = "majalis-ayah-audio-cache";
 const DB_VERSION = 1;
@@ -125,6 +126,8 @@ export function prefetchNextAyahs(
   reciterId: string,
   count = 5,
 ): void {
+  // Resource lifecycle: suspend non-essential prefetch under memory pressure
+  if (isQuranPrefetchSuspended()) return;
   const tasks: Promise<void>[] = [];
   for (let i = 1; i <= count; i++) {
     const ayah = fromAyah + i;

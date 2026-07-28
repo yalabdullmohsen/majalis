@@ -22,8 +22,8 @@ export type QuranOfflineTables = {
   outbox_sync_store: EntityTable<OutboxSyncRecord, "id">;
 };
 
-/** Declared store indexes — single source of truth for upgrades + contract tests. */
-export const QURAN_OFFLINE_STORE_INDEXES = {
+/** v1 indexes (frozen) — kept for upgrade path documentation/tests. */
+export const QURAN_OFFLINE_STORE_INDEXES_V1 = {
   khatmah_store:
     "id, type, last_read_timestamp, is_completed, [type+is_completed], updated_at",
   user_reflections_store:
@@ -31,6 +31,23 @@ export const QURAN_OFFLINE_STORE_INDEXES = {
   quran_knowledge_store: "ayah_key, *theme_ids, *similar_ayah_keys, updated_at",
   offline_assets_store:
     "asset_id, type, download_status, reciter_id, surah_id, [type+reciter_id], [type+surah_id], updated_at",
+  outbox_sync_store:
+    "++id, client_mutation_id, status, created_at, entity_type, [status+created_at], entity_id",
+} as const;
+
+/**
+ * Current (v2) store indexes — lifecycle fields: last_accessed_at / pinned / access_count.
+ * Single source of truth for contract tests.
+ */
+export const QURAN_OFFLINE_STORE_INDEXES = {
+  khatmah_store:
+    "id, type, last_read_timestamp, is_completed, [type+is_completed], updated_at",
+  user_reflections_store:
+    "id, surah_id, ayah_id, [surah_id+ayah_id], sync_status, created_at, updated_at, last_opened_at, *tags",
+  quran_knowledge_store:
+    "ayah_key, *theme_ids, *similar_ayah_keys, updated_at, last_accessed_at, access_count",
+  offline_assets_store:
+    "asset_id, type, download_status, reciter_id, surah_id, [type+reciter_id], [type+surah_id], updated_at, last_accessed_at, pinned, access_count",
   outbox_sync_store:
     "++id, client_mutation_id, status, created_at, entity_type, [status+created_at], entity_id",
 } as const;
@@ -48,7 +65,44 @@ export class QuranOfflineDatabase extends Dexie {
      * v1 — five production stores + compound / multiEntry indexes.
      * Future versions MUST only add indexes/stores; never delete columns.
      */
-    this.version(1).stores({ ...QURAN_OFFLINE_STORE_INDEXES });
+    this.version(1).stores({ ...QURAN_OFFLINE_STORE_INDEXES_V1 });
+
+    /**
+     * v2 — lifecycle / memory-pressure fields (additive, silent backfill).
+     */
+    this.version(2)
+      .stores({ ...QURAN_OFFLINE_STORE_INDEXES })
+      .upgrade(async (tx) => {
+        const now = Date.now();
+        await tx
+          .table("offline_assets_store")
+          .toCollection()
+          .modify((row: OfflineAssetRecord) => {
+            if (row.last_accessed_at == null) {
+              row.last_accessed_at = row.updated_at || now;
+            }
+            if (row.access_count == null) row.access_count = 0;
+            if (row.pinned == null) row.pinned = false;
+          });
+        await tx
+          .table("quran_knowledge_store")
+          .toCollection()
+          .modify((row: QuranKnowledgeRecord) => {
+            if (row.last_accessed_at == null) {
+              row.last_accessed_at = row.updated_at || now;
+            }
+            if (row.access_count == null) row.access_count = 0;
+          });
+        await tx
+          .table("user_reflections_store")
+          .toCollection()
+          .modify((row: UserReflectionRecord) => {
+            if (row.last_opened_at == null) {
+              row.last_opened_at = row.updated_at || row.created_at || now;
+            }
+            if (row.schema_version == null) row.schema_version = 2;
+          });
+      });
   }
 }
 

@@ -87,18 +87,31 @@ console.log("═══ Asset / reflection id helpers ═══");
 console.log("═══ Schema contract ═══");
 {
   check(QURAN_OFFLINE_DB_NAME === "majalis-quran-engine-db", "DB name stable");
-  check(QURAN_OFFLINE_DB_VERSION === 1, "schema version is 1");
+  check(QURAN_OFFLINE_DB_VERSION === 2, "schema version is 2 (lifecycle)");
   check(
     QURAN_OFFLINE_STORE_INDEXES.user_reflections_store.includes("[surah_id+ayah_id]"),
     "reflections composite index [surah_id+ayah_id]",
+  );
+  check(
+    QURAN_OFFLINE_STORE_INDEXES.user_reflections_store.includes("last_opened_at"),
+    "reflections v2 last_opened_at index",
   );
   check(
     QURAN_OFFLINE_STORE_INDEXES.quran_knowledge_store.startsWith("ayah_key"),
     "knowledge primary ayah_key",
   );
   check(
+    QURAN_OFFLINE_STORE_INDEXES.quran_knowledge_store.includes("last_accessed_at"),
+    "knowledge LRU last_accessed_at index",
+  );
+  check(
     QURAN_OFFLINE_STORE_INDEXES.offline_assets_store.startsWith("asset_id"),
     "assets primary asset_id",
+  );
+  check(
+    QURAN_OFFLINE_STORE_INDEXES.offline_assets_store.includes("pinned") &&
+      QURAN_OFFLINE_STORE_INDEXES.offline_assets_store.includes("last_accessed_at"),
+    "assets pinned + LRU indexes",
   );
   check(
     QURAN_OFFLINE_STORE_INDEXES.outbox_sync_store.includes("++id") &&

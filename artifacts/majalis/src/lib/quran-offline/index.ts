@@ -65,6 +65,7 @@ export {
   listAssetsByType,
   listCompletedAssetsForReciter,
   upsertAsset,
+  setAssetPinned,
   setAssetDownloadStatus,
   registerSurahAudioAsset,
   totalCompletedAssetBytes,
@@ -89,3 +90,43 @@ export {
 } from "@/lib/quran-offline/migrate-legacy";
 
 export { startQuranOfflineStorage, forceQuranOfflineSync } from "@/lib/quran-offline/bootstrap";
+
+export {
+  evictionScore,
+  getLifecycleBudgetConfig,
+  setLifecycleBudgetBytes,
+  setLifecycleInactiveDays,
+  DEFAULT_STORAGE_BUDGET_BYTES,
+  DEFAULT_INACTIVE_DAYS,
+} from "@/lib/quran-offline/lifecycle-config";
+
+export {
+  evictOfflineAssetsLru,
+  evictColdKnowledge,
+  enforceStorageBudget,
+  estimateOfflineAssetBytes,
+} from "@/lib/quran-offline/asset-eviction";
+
+export {
+  compactQuranOfflineStores,
+  scheduleIdleCompaction,
+} from "@/lib/quran-offline/compaction";
+
+export { runSilentSchemaMigrations } from "@/lib/quran-offline/schema-migrate";
+
+export {
+  startQuranResourceLifecycle,
+  stopQuranResourceLifecycle,
+  suspendQuranBackgroundWork,
+  resumeQuranBackgroundWork,
+  isQuranPrefetchSuspended,
+  isQuranIndexingSuspended,
+  handleQuranMemoryPressure,
+} from "@/lib/quran-offline/resource-lifecycle";
+
+export {
+  registerEphemeralCanvas,
+  registerAudioDisposer,
+  registerAudioContext,
+  purgeEphemeralMediaResources,
+} from "@/lib/quran-offline/ephemeral-registry";

@@ -27,7 +27,23 @@ export async function startQuranOfflineStorage(): Promise<void> {
       /* never block UX */
     }
     try {
+      const { runSilentSchemaMigrations } = await import(
+        "@/lib/quran-offline/schema-migrate"
+      );
+      await runSilentSchemaMigrations();
+    } catch {
+      /* ignore */
+    }
+    try {
       startQuranOutboxSync();
+    } catch {
+      /* ignore */
+    }
+    try {
+      const { startQuranResourceLifecycle } = await import(
+        "@/lib/quran-offline/resource-lifecycle"
+      );
+      startQuranResourceLifecycle();
     } catch {
       /* ignore */
     }
