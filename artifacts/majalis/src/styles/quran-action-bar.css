@@ -1,0 +1,220 @@
+/* QuranActionBar — minimal floating bottom sheet (does not restyle mushaf chrome). */
+
+.qab-root {
+  position: fixed;
+  inset: 0;
+  z-index: 10050;
+  pointer-events: none;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.qab-scrim {
+  position: absolute;
+  inset: 0;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  pointer-events: auto;
+  background: color-mix(in srgb, #0a1210 38%, transparent);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.qab-sheet {
+  position: relative;
+  z-index: 1;
+  pointer-events: auto;
+  width: min(100%, 28rem);
+  max-height: min(52vh, 22rem);
+  overflow-x: hidden;
+  overflow-y: auto;
+  margin-inline: auto;
+  padding: 0.5rem 0.9rem max(0.85rem, env(safe-area-inset-bottom, 0px));
+  border-radius: 1.1rem 1.1rem 0 0;
+  background: color-mix(in srgb, var(--majalis-panel, #f7f4ef) 94%, transparent);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid color-mix(in srgb, var(--majalis-line, #d4cfc4) 70%, transparent);
+  border-bottom: none;
+  box-shadow: 0 -8px 28px color-mix(in srgb, #0a1210 12%, transparent);
+  color: var(--majalis-ink, #1a2420);
+  overscroll-behavior: contain;
+}
+
+.qab-handle {
+  width: 2.25rem;
+  height: 0.25rem;
+  margin: 0.15rem auto 0.55rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--majalis-line, #d4cfc4) 85%, transparent);
+}
+
+.qab-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-bottom: 0.35rem;
+}
+
+.qab-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.45rem;
+  min-width: 0;
+}
+
+.qab-ref {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--majalis-ink-soft, #3d4a45);
+}
+
+.qab-page {
+  font-size: 0.75rem;
+  color: var(--color-muted, #5c6b66);
+  font-variant-numeric: tabular-nums;
+}
+
+.qab-close {
+  flex-shrink: 0;
+  width: 2.25rem;
+  height: 2.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--majalis-line, #d4cfc4) 55%, transparent);
+  color: var(--majalis-ink-soft, #3d4a45);
+  cursor: pointer;
+}
+
+.qab-ayah-preview {
+  margin: 0 0 0.65rem;
+  padding: 0.45rem 0.55rem;
+  text-align: center;
+  font-family: "Amiri Quran", "KFGQPC Uthmanic Script", "Scheherazade New", serif;
+  font-size: clamp(0.95rem, 2.8vw, 1.1rem);
+  line-height: 1.85;
+  color: var(--majalis-ink, #1a2420);
+  border-radius: 0.55rem;
+  background: color-mix(in srgb, var(--majalis-emerald-deep, #143f35) 6%, transparent);
+  max-height: 4.2em;
+  overflow: hidden;
+}
+
+.qab-actions {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.35rem;
+  margin-bottom: 0.35rem;
+}
+
+.qab-btn {
+  appearance: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  min-height: 3.35rem;
+  padding: 0.35rem 0.15rem;
+  border-radius: 0.65rem;
+  border: 1px solid color-mix(in srgb, var(--majalis-line, #d4cfc4) 80%, transparent);
+  background: color-mix(in srgb, var(--majalis-panel, #f7f4ef) 88%, transparent);
+  color: var(--majalis-emerald-deep, #143f35);
+  font: inherit;
+  font-size: 0.68rem;
+  font-weight: 600;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.qab-btn:disabled {
+  opacity: 0.55;
+  cursor: wait;
+}
+
+.qab-btn--active {
+  border-color: color-mix(in srgb, var(--majalis-emerald-deep, #143f35) 45%, transparent);
+  background: color-mix(in srgb, var(--majalis-emerald-deep, #143f35) 12%, transparent);
+}
+
+.qab-status {
+  margin: 0.15rem 0 0;
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--color-muted, #5c6b66);
+}
+
+.qab-tafsir {
+  overflow: hidden;
+  margin-top: 0.45rem;
+  padding-top: 0.45rem;
+  border-top: 1px solid color-mix(in srgb, var(--majalis-line, #d4cfc4) 70%, transparent);
+}
+
+.qab-tafsir__title {
+  margin: 0 0 0.35rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--majalis-emerald-deep, #143f35);
+}
+
+.qab-tafsir__body {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.7;
+  color: var(--majalis-ink, #1a2420);
+  max-height: 8rem;
+  overflow-y: auto;
+}
+
+.qab-tafsir__body--err {
+  color: #8a3b2a;
+}
+
+/* Keep mushaf text readable: light scrim + compact sheet; desktop floats inset. */
+@media (min-width: 640px) {
+  .qab-root {
+    align-items: flex-end;
+    padding: 0 1rem 1rem;
+  }
+
+  .qab-sheet {
+    border-radius: 1rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--majalis-line, #d4cfc4) 70%, transparent);
+    max-height: min(48vh, 24rem);
+    margin-bottom: 0.5rem;
+  }
+
+  .qab-scrim {
+    background: color-mix(in srgb, #0a1210 22%, transparent);
+  }
+}
+
+@media (max-width: 380px) {
+  .qab-actions {
+    gap: 0.25rem;
+  }
+
+  .qab-btn {
+    font-size: 0.62rem;
+    min-height: 3.1rem;
+  }
+
+  .qab-ayah-preview {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .qab-sheet,
+  .qab-scrim {
+    transition: none !important;
+  }
+}

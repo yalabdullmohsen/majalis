@@ -70,6 +70,11 @@
   min-height: 12rem;
 }
 
+/* Leave breathing room under the page when the floating action bar is open */
+.quran-viewer[data-action-bar="1"] .quran-viewer__stage {
+  padding-bottom: 0.25rem;
+}
+
 .quran-viewer-page {
   padding: 1rem 0.75rem 2rem;
   max-width: 48rem;

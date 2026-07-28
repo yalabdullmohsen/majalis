@@ -4,9 +4,10 @@
  * - Horizontal RTL swipe between pages 1–604 (native touch + keyboard)
  * - Lazy-loads only the active page DOM; prefetches ±1 JSON/fonts
  * - Persists progress via updateReadingProgress on page change
- * - Tap ayah → highlight + onAyahSelect
+ * - Tap ayah → highlight + QuranActionBar + onAyahSelect
  *
- * Performance: transform-only page transitions (PageCurlStage), no framer-motion.
+ * Performance: transform-only page transitions (PageCurlStage).
+ * Action bar uses Framer Motion separately (does not animate page turns).
  */
 import {
   useCallback,
@@ -18,6 +19,7 @@ import {
 } from "react";
 import { MushafPageV2 } from "@/components/quran/MushafPageV2";
 import { PageCurlStage } from "@/components/quran/PageCurlStage";
+import { QuranActionBar } from "@/components/QuranActionBar";
 import {
   useQuranEngineCore,
   type ActiveVerse,
@@ -85,6 +87,7 @@ export function QuranViewer({
   const [loadingPage, setLoadingPage] = useState(false);
   const [dragOffset, setDragOffset] = useState(0);
   const [dragging, setDragging] = useState(false);
+  const [selectedAyah, setSelectedAyah] = useState<QuranViewerAyahSelect | null>(null);
 
   const touchStartX = useRef<number | null>(null);
   const touchStartY = useRef<number | null>(null);
@@ -214,16 +217,23 @@ export function QuranViewer({
       const page = clampPage(activePage);
       setActiveVerse({ surah: parsed.surah, ayah: parsed.ayah, page }, { persist: true });
       const text = layout ? getAyahTextFromLayout(layout, verseKey) ?? "" : "";
-      onAyahSelect?.({
+      const payload: QuranViewerAyahSelect = {
         surah: parsed.surah,
         ayah: parsed.ayah,
         verseKey,
         page,
         text,
-      });
+      };
+      setSelectedAyah(payload);
+      onAyahSelect?.(payload);
     },
     [activePage, layout, onAyahSelect, setActiveVerse],
   );
+
+  // Dismiss action bar when turning pages so it never covers unread text
+  useEffect(() => {
+    setSelectedAyah(null);
+  }, [activePage]);
 
   const activeAyahKey = state.verseKey;
 
@@ -234,6 +244,7 @@ export function QuranViewer({
       dir="rtl"
       data-page={activePage}
       data-hydrating={hydrating ? "1" : "0"}
+      data-action-bar={selectedAyah ? "1" : "0"}
       aria-busy={hydrating || loadingPage}
     >
       {showChrome && (
@@ -297,6 +308,8 @@ export function QuranViewer({
           </PageCurlStage>
         </div>
       </div>
+
+      <QuranActionBar ayah={selectedAyah} onClose={() => setSelectedAyah(null)} />
     </div>
   );
 }
