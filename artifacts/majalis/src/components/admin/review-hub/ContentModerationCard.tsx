@@ -1,12 +1,11 @@
 /**
- * B. Content & Tafsir moderation card with inline diff.
+ * Flutter `TafsirContentReviewCard` — original (rose) vs proposed (sage).
  */
 import { useState } from "react";
 import {
   CONTENT_CATEGORY_LABELS,
   type ContentReviewItem,
 } from "@/lib/admin-review-hub";
-import { DiffViewer } from "./DiffViewer";
 
 export type ContentModerationCardProps = {
   item: ContentReviewItem;
@@ -29,10 +28,10 @@ export function ContentModerationCard({
 
   return (
     <article
-      className={`rh-card rh-card--content${selected ? " is-selected" : ""}`}
+      className={`rh-flutter-card rh-flutter-card--tafsir${selected ? " is-selected" : ""}`}
       data-status={item.status}
     >
-      <header className="rh-card__head">
+      <header className="rh-flutter-card__head rh-flutter-card__head--tafsir">
         <label className="rh-card__check">
           <input
             type="checkbox"
@@ -42,41 +41,40 @@ export function ContentModerationCard({
             aria-label={`تحديد ${item.id}`}
           />
         </label>
-        <div className="rh-card__meta">
-          <h3 className="rh-card__title">{item.title}</h3>
-          <p className="rh-card__sub">
-            {item.userName} · {item.userId} ·{" "}
-            {CONTENT_CATEGORY_LABELS[item.category]}
-          </p>
-        </div>
-        <div className="rh-card__badges">
-          {item.priority === "high" ? (
-            <span className="rh-badge rh-badge--gold">أولوية</span>
-          ) : null}
-          {item.flaggedByAi ? (
-            <span className="rh-badge rh-badge--rose">AI</span>
-          ) : null}
-          <span className={`rh-badge rh-badge--status-${item.status}`}>
-            {item.status}
-          </span>
-        </div>
+        <p className="rh-flutter-card__user">{item.userName}</p>
+        <span className="rh-flutter-card__muted">
+          — {item.title || CONTENT_CATEGORY_LABELS[item.category]}
+        </span>
       </header>
 
-      <DiffViewer original={item.originalText} edited={item.editedText} />
+      <div className="rh-flutter-diff">
+        <div className="rh-flutter-diff__orig">
+          <p className="rh-flutter-diff__label">النص الأصلي</p>
+          <p>{item.originalText || "— (مشاركة جديدة بلا أصل)"}</p>
+        </div>
+        <div className="rh-flutter-diff__prop">
+          <p className="rh-flutter-diff__label">التعديل المقترح</p>
+          <p>{item.editedText}</p>
+        </div>
+      </div>
 
-      {item.notes ? <p className="rh-card__notes">{item.notes}</p> : null}
+      {item.notes ? (
+        <p className="rh-flutter-card__flag rh-flutter-card__flag--muted">
+          {item.notes}
+        </p>
+      ) : null}
 
       {!locked ? (
-        <footer className="rh-card__actions">
-          <button type="button" className="rh-btn rh-btn--sage" onClick={onApprove}>
-            اعتماد المحتوى
-          </button>
+        <footer className="rh-flutter-card__actions">
           <button
             type="button"
-            className="rh-btn rh-btn--rose"
+            className="rh-btn rh-btn--outline"
             onClick={() => setFeedbackOpen((v) => !v)}
           >
-            رفض مع ملاحظة
+            رفض التعديل
+          </button>
+          <button type="button" className="rh-btn rh-btn--brown" onClick={onApprove}>
+            نشر وتعديل في المكتبة
           </button>
         </footer>
       ) : null}
