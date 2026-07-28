@@ -44,6 +44,12 @@ export const IMMERSIVE_PAD_X_PX = 30;
 /** Flutter `EdgeInsets.symmetric(vertical: 20)`. */
 export const IMMERSIVE_PAD_Y_PX = 20;
 
+/** Flutter ImmersiveQuranPage `vertical: 50` list padding. */
+export const IMMERSIVE_LIST_PAD_Y_PX = 50;
+
+/** Flutter `Colors.brown` — selected verse text in ImmersiveQuranPage. */
+export const VERSE_SELECTED_BROWN = "#795548";
+
 /** Body / html class while System UI is immersive-sticky. */
 export const IMMERSIVE_BODY_CLASS = "quran-immersive-sticky";
 
