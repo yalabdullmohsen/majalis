@@ -2,6 +2,7 @@
  * Sync Quran audio position → verse highlight persistence + auto-scroll.
  * Pure logic hook — does not alter layout; callers opt-in to scroll.
  * Unload-safe: stages currentTime and flushes on pagehide / visibility hidden.
+ * Part 14: pooled scratch + stage-only high-frequency ticks (no per-tick LS/IDB).
  */
 import { useEffect, useRef } from "react";
 import {
@@ -14,6 +15,9 @@ import {
   type QuranAudioResumeState,
 } from "@/lib/quran-audio-resume";
 import { registerUnloadPersist } from "@/lib/unload-persist";
+import { fillAudioResumeScratch, releaseAudioResumeScratch } from "@/lib/object-pool";
+import { enqueueProgress } from "@/lib/progress-batch";
+import { onHibernateRestore } from "@/lib/page-hibernate";
 
 export type UseQuranAudioSyncOptions = {
   surah: number;
@@ -48,6 +52,7 @@ export function useQuranAudioSync(opts: UseQuranAudioSyncOptions): {
       reciterId: opts.reciterId,
       updatedAt: Date.now(),
     });
+    enqueueProgress({ kind: "ayah-read", surah: opts.surah, ayah: opts.ayah, count: 1 });
   }, [opts.ayah, opts.surah, opts.autoScroll, opts.scrollContainer, opts.reciterId, opts.audio]);
 
   useEffect(() => {
@@ -56,16 +61,41 @@ export function useQuranAudioSync(opts: UseQuranAudioSyncOptions): {
     const interval = Math.max(1000, opts.persistIntervalMs ?? 2500);
     const id = window.setInterval(() => {
       if (audio.paused) return;
-      saveAudioResumeState({
+      // Stage only — flush on idle/unload via progress-batch + unload-persist
+      const scratch = fillAudioResumeScratch(
+        opts.surah,
+        opts.ayah!,
+        audio.currentTime || 0,
+        opts.reciterId,
+        Date.now(),
+      );
+      stageAudioResumeState(scratch);
+      enqueueProgress({
+        kind: "surah-dwell",
         surah: opts.surah,
-        ayah: opts.ayah!,
-        currentTime: audio.currentTime || 0,
-        reciterId: opts.reciterId,
-        updatedAt: Date.now(),
+        ms: interval,
       });
+      releaseAudioResumeScratch(scratch);
     }, interval);
     return () => window.clearInterval(id);
   }, [opts.audio, opts.ayah, opts.surah, opts.reciterId, opts.persistIntervalMs]);
+
+  // Hibernate wake: re-seek audio quietly if same ayah
+  useEffect(() => {
+    return onHibernateRestore((snap) => {
+      const audio = optsRef.current.audio;
+      const a = snap.audio;
+      if (!audio || !a) return;
+      if (optsRef.current.ayah !== a.ayah || optsRef.current.surah !== a.surah) return;
+      try {
+        if (Number.isFinite(a.currentTime) && a.currentTime > 0) {
+          audio.currentTime = a.currentTime;
+        }
+      } catch {
+        /* ignore */
+      }
+    });
+  }, []);
 
   // Unload / freeze: capture latest currentTime without waiting for interval
   useEffect(() => {

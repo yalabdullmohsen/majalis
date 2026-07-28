@@ -1,5 +1,6 @@
 import { readLocalJson, writeLocalJson, isPlainObject } from "@/lib/safe-json";
 import { registerUnloadPersist } from "@/lib/unload-persist";
+import { enqueueProgress } from "@/lib/progress-batch";
 
 export const READING_PROGRESS_LS_KEY = "majalis-reading-progress-v1";
 const STORAGE_KEY = READING_PROGRESS_LS_KEY;
@@ -122,13 +123,15 @@ export function restoreScrollForSection(section: ReadingSection) {
 
 /**
  * يحفظ موضع التمرير للقسم.
- * إن لم يوجد سجل بعد وكانت الإزاحة معتبرة، يُنشأ سجل خفيف بعنوان الصفحة.
+ * Part 14: stage offset + enqueue batch flush (no sync LS rewrite every rAF).
  */
 export function saveScrollForSection(section: ReadingSection, scrollY?: number) {
   if (typeof window === "undefined") return;
   ensureUnloadRegistration();
   const y = Math.max(0, Math.round(scrollY ?? window.scrollY));
   pendingScroll.set(section, y);
+  enqueueProgress({ kind: "scroll-section", section, scrollY: y });
+  // Only create first entry eagerly when meaningful; subsequent updates flush via batch/unload
   const entry = getReadingProgress(section);
   if (!entry) {
     if (y < 80) return;
@@ -137,7 +140,5 @@ export function saveScrollForSection(section: ReadingSection, scrollY?: number) 
       title: document.title || section,
       scrollY: y,
     });
-    return;
   }
-  markReadingProgress(section, { ...entry, scrollY: y });
 }

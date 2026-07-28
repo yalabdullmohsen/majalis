@@ -13,6 +13,9 @@ import { registerProductionServiceWorker } from "./lib/service-worker";
 import { setupStatusBar, setupKeyboard, isAndroid, isNative } from "./lib/capacitor-utils";
 import { initFinalPolish } from "./lib/init-final-polish";
 import { prewarmAudioCdns, prewarmTextApis } from "./lib/resource-prewarm";
+import { ensureHibernateBinding } from "./lib/page-hibernate";
+import { initProgressBatchBridge } from "./lib/init-progress-batch";
+import { supports } from "./lib/feature-detect";
 // هوية v4: مصدر الرموز الوحيد (لون/طباعة/مسافات/حواف/ظلال/حركة). يجب أن
 // يبقى أول استيراد — كل ملفات CSS اللاحقة تستهلك رموزه، وأنظمة الرموز
 // القديمة الـ15 مُعاد توجيهها إليه داخله كـaliases.
@@ -38,17 +41,17 @@ resetMobileNavBodyLock();
 applyFontPreference(readFontPreference());
 initClientErrorReporting();
 initFinalPolish();
+ensureHibernateBinding();
+initProgressBatchBridge();
 // Idle preconnect for audio/text CDNs — LCP/INP handshake savings without blocking mount.
-if (typeof requestIdleCallback === "function") {
-  requestIdleCallback(() => {
-    prewarmAudioCdns();
-    prewarmTextApis();
-  }, { timeout: 3_000 });
+const kickPrewarm = () => {
+  prewarmAudioCdns();
+  prewarmTextApis();
+};
+if (supports("requestIdleCallback")) {
+  requestIdleCallback(kickPrewarm, { timeout: 3_000 });
 } else {
-  setTimeout(() => {
-    prewarmAudioCdns();
-    prewarmTextApis();
-  }, 1);
+  setTimeout(kickPrewarm, 1);
 }
 
 async function mount() {

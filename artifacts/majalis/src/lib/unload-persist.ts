@@ -90,8 +90,17 @@ function ensureUnloadBinding(): void {
     document.addEventListener("visibilitychange", () => {
       if (document.visibilityState === "hidden") onHide();
     });
-    // Page Lifecycle API
-    document.addEventListener("freeze", onHide as EventListener);
+    // Page Lifecycle API — guarded (silent no-op if unsupported)
+    try {
+      document.addEventListener("freeze", onHide as EventListener);
+    } catch {
+      /* legacy */
+    }
+    try {
+      document.addEventListener("resume", onHide as EventListener);
+    } catch {
+      /* resume flush is optional; hibernate module owns restore */
+    }
   }
 }
 

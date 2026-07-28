@@ -1,18 +1,21 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { subscribeScrollBus } from "@/lib/scroll-raf-bus";
 
+/**
+ * Document reading progress (0–100).
+ * Part 14: shared rAF scroll bus — no per-scroll allocations / duplicate listeners.
+ */
 export function useReadingProgress() {
   const [progress, setProgress] = useState(0);
+  const lastRef = useRef(-1);
 
   useEffect(() => {
-    const update = () => {
-      const el = document.documentElement;
-      const total = el.scrollHeight - el.clientHeight;
-      if (total <= 0) { setProgress(0); return; }
-      setProgress(Math.min(100, Math.round((el.scrollTop / total) * 100)));
-    };
-    window.addEventListener("scroll", update, { passive: true });
-    update();
-    return () => window.removeEventListener("scroll", update);
+    return subscribeScrollBus((sample) => {
+      const pct = sample.progressPct;
+      if (pct === lastRef.current) return;
+      lastRef.current = pct;
+      setProgress(pct);
+    });
   }, []);
 
   return progress;

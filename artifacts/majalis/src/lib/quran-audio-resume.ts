@@ -75,9 +75,27 @@ export function saveAudioResumeState(state: QuranAudioResumeState): void {
   }
 }
 
-/** Stage resume without forcing IDB (for high-frequency timeupdate / unload). */
+/** Stage resume without forcing IDB (for high-frequency timeupdate / unload).
+ * Part 14: mutate pending in place — no per-tick object spread. */
 export function stageAudioResumeState(state: QuranAudioResumeState): void {
-  pendingResume = normalizeState({ ...state, updatedAt: Date.now() });
+  const t = Math.max(0, Number(state.currentTime) || 0);
+  const updatedAt = Number(state.updatedAt) || Date.now();
+  const reciterId = typeof state.reciterId === "string" ? state.reciterId : undefined;
+  if (!pendingResume) {
+    pendingResume = {
+      surah: state.surah,
+      ayah: state.ayah,
+      currentTime: t,
+      reciterId,
+      updatedAt,
+    };
+  } else {
+    pendingResume.surah = state.surah;
+    pendingResume.ayah = state.ayah;
+    pendingResume.currentTime = t;
+    pendingResume.reciterId = reciterId;
+    pendingResume.updatedAt = updatedAt;
+  }
   ensureUnloadRegistration();
 }
 

@@ -11,6 +11,7 @@
 import { pooledFetch } from "@/lib/fetch-pool";
 import { safeJsonParse } from "@/lib/safe-json";
 import { LruCache } from "@/lib/lru-cache";
+import { writeLocalCompressed } from "@/lib/compress-store";
 
 const CDN_BASE = "https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions";
 const CACHE_PREFIX = "hadith_cdn_";
@@ -111,6 +112,27 @@ function readCache<T>(key: string): T | null {
   try {
     const raw = sessionStorage.getItem(key);
     if (!raw) return null;
+    if (raw.startsWith("mjz1:")) {
+      void import("@/lib/compress-store").then(async ({ decompressJson }) => {
+        const parsed = await decompressJson<{ ts: number; data: T }>(raw);
+        if (!parsed || Date.now() - parsed.ts > CACHE_TTL_MS) {
+          try {
+            sessionStorage.removeItem(key);
+          } catch {
+            /* ignore */
+          }
+          return;
+        }
+        hadithMemory.set(key, parsed.data);
+        try {
+          sessionStorage.setItem(key, JSON.stringify(parsed));
+          writeLocalCompressed(key, parsed, sessionStorage);
+        } catch {
+          /* ignore */
+        }
+      });
+      return null;
+    }
     const parsed = safeJsonParse<{ ts: number; data: T } | null>(raw, null, (v): v is { ts: number; data: T } => {
       return typeof v === "object" && v !== null && typeof (v as { ts?: unknown }).ts === "number" && "data" in (v as object);
     });
@@ -128,7 +150,12 @@ function readCache<T>(key: string): T | null {
 
 function writeCache(key: string, data: unknown): void {
   hadithMemory.set(key, data);
-  try { sessionStorage.setItem(key, JSON.stringify({ ts: Date.now(), data })); } catch { /* quota exceeded */ }
+  try {
+    // sessionStorage — compress large chapter payloads in background
+    writeLocalCompressed(key, { ts: Date.now(), data }, sessionStorage);
+  } catch {
+    /* quota exceeded */
+  }
 }
 
 /** جلب حديث معيّن بالرقم من مجموعة */

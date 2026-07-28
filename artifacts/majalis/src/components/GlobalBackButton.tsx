@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { useLocation } from "wouter";
 import { goBackOrFallback } from "@/lib/navigation-back";
+import { subscribeScrollBus, setScrollThreshold } from "@/lib/scroll-raf-bus";
 
 /**
  * زر رجوع عام يظهر في كل شاشة غير الرئيسية، بصرف النظر عن امتلاك الصفحة
@@ -24,10 +25,11 @@ export function GlobalBackButton() {
   const [pastThreshold, setPastThreshold] = useState(false);
 
   useEffect(() => {
+    setScrollThreshold(120);
     setPastThreshold(window.scrollY > 120);
-    const onScroll = () => setPastThreshold(window.scrollY > 120);
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    return subscribeScrollBus((sample) => {
+      setPastThreshold(sample.pastThreshold);
+    });
   }, [location]);
 
   if (location === "/") return null;

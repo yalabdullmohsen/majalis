@@ -14,6 +14,7 @@
  */
 
 import { LruCache } from "@/lib/lru-cache";
+import { writeLocalCompressed, readLocalCompressedSync, decompressJson } from "@/lib/compress-store";
 
 const BASE = "https://api.alquran.cloud/v1";
 const LOCAL_QURAN_DATA_BASE = "/data/quran";
@@ -51,13 +52,48 @@ const TAFSIR_MEM_MAX = 24;
 const surahDetailMemory = new LruCache<number, SurahDetail>(SURAH_MEM_MAX);
 const tafsirMemory = new LruCache<string, TafsirAyah[]>(TAFSIR_MEM_MAX);
 
+type CacheEnvelope<T> = { data: T; at: number };
+
 function readCache<T>(key: string): T | null {
   try {
-    const raw = localStorage.getItem(CACHE_PREFIX + key);
+    const storageKey = CACHE_PREFIX + key;
+    // Sync path for uncompressed; compressed payloads hydrate async into memory only
+    const sync = readLocalCompressedSync<CacheEnvelope<T>>(storageKey);
+    if (sync) {
+      if (Date.now() - sync.at > CACHE_TTL_MS) {
+        localStorage.removeItem(storageKey);
+        return null;
+      }
+      return sync.data;
+    }
+    const raw = localStorage.getItem(storageKey);
     if (!raw) return null;
-    const { data, at } = JSON.parse(raw) as { data: T; at: number };
+    if (raw.startsWith("mjz1:")) {
+      // Kick async decompress — next read may hit sync after rewrite, or memory
+      void decompressJson<CacheEnvelope<T>>(raw).then((parsed) => {
+        if (!parsed || Date.now() - parsed.at > CACHE_TTL_MS) {
+          try {
+            localStorage.removeItem(storageKey);
+          } catch {
+            /* ignore */
+          }
+          return;
+        }
+        // Re-store uncompressed briefly so sync readers work this session
+        try {
+          localStorage.setItem(storageKey, JSON.stringify(parsed));
+          void import("@/lib/compress-store").then(({ writeLocalCompressed }) => {
+            writeLocalCompressed(storageKey, parsed);
+          });
+        } catch {
+          /* ignore */
+        }
+      });
+      return null;
+    }
+    const { data, at } = JSON.parse(raw) as CacheEnvelope<T>;
     if (Date.now() - at > CACHE_TTL_MS) {
-      localStorage.removeItem(CACHE_PREFIX + key);
+      localStorage.removeItem(storageKey);
       return null;
     }
     return data;
@@ -68,7 +104,9 @@ function readCache<T>(key: string): T | null {
 
 function writeCache<T>(key: string, data: T) {
   try {
-    localStorage.setItem(CACHE_PREFIX + key, JSON.stringify({ data, at: Date.now() }));
+    const envelope: CacheEnvelope<T> = { data, at: Date.now() };
+    // Immediate uncompressed write for sync readers, then compress in background
+    writeLocalCompressed(CACHE_PREFIX + key, envelope);
   } catch {
     // localStorage quota exceeded — ignore
   }

@@ -7,22 +7,27 @@
  */
 import { normalizeArabic } from "@/shared/arabic-normalize";
 import { expandSearchTerms } from "@/lib/search-synonyms";
+import { stringListPool } from "@/lib/object-pool";
 
 // إعادة تصدير للتوافق الخلفي مع الملفات التي تستورد من arabic-search
 export { normalizeArabic };
 
 function expandArabicVariants(normalized: string): string[] {
-  const variants = new Set<string>([normalized]);
   if (!normalized) return [];
-
-  // مجلس ↔ مجالس and similar optional alif patterns
-  variants.add(normalized.replace(/لاس/g, "لس"));
-  variants.add(normalized.replace(/([^ا])لس/g, "$1لاس"));
-
-  // tolerate dropped alif in common roots
-  variants.add(normalized.replace(/ا/g, ""));
-
-  return [...variants].filter(Boolean);
+  // Part 14: build into pooled buffer then copy once (avoids Set + spread churn)
+  const buf = stringListPool.acquire();
+  try {
+    buf.push(normalized);
+    const v1 = normalized.replace(/لاس/g, "لس");
+    if (v1 !== normalized) buf.push(v1);
+    const v2 = normalized.replace(/([^ا])لس/g, "$1لاس");
+    if (v2 !== normalized && v2 !== v1) buf.push(v2);
+    const v3 = normalized.replace(/ا/g, "");
+    if (v3 && v3 !== normalized) buf.push(v3);
+    return buf.slice();
+  } finally {
+    stringListPool.release(buf);
+  }
 }
 
 function editDistanceAtMostOne(a: string, b: string): boolean {
