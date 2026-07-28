@@ -5,6 +5,8 @@
 export { useQuranEngine } from "@/hooks/useQuranEngine";
 export { useQuranEngineCore } from "@/hooks/useQuranEngineCore";
 export { useQuranAudioToggle } from "@/hooks/useQuranAudioToggle";
+export { useQuranAudio } from "@/hooks/useQuranAudio";
+export type { QuranAudioApi } from "@/hooks/useQuranAudio";
 export { useQuranPreferences } from "@/hooks/useQuranPreferences";
 export type {
   QuranPreferences,
