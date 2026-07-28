@@ -1,7 +1,13 @@
 /**
  * Daily streak & progress tracking (logic-only).
- * Reads/writes a dedicated local store and can consume daily-progress completion.
- * Streak freeze: one missed day can be absorbed if a freeze token remains.
+ *
+ * Rules (production):
+ * 1) Same calendar day → maintain streak (optional goal counter bump).
+ * 2) Activity on last_activity_date + 1 day → increment streak.
+ * 3) Activity after a gap (> 1 day) → reset streak to 1.
+ *
+ * Optional streak-freeze tokens (default 0) can absorb a single missed day
+ * when explicitly granted — disabled by default to match the core rules.
  */
 
 const STORAGE_KEY = "majalis-user-streak-v1";
@@ -23,7 +29,7 @@ export type UserStreakState = {
   lastActiveDate: string | null;
   /** Sum of completed daily goal marks (not unique days). */
   totalGoalsCompleted: number;
-  /** Remaining streak-freeze tokens (default 1). */
+  /** Remaining streak-freeze tokens (default 0 — core rules ignore freeze). */
   freezeTokens: number;
   /** Date a freeze was consumed (YYYY-MM-DD). */
   freezeUsedOn?: string | null;
@@ -34,7 +40,7 @@ const DEFAULT_STATE: UserStreakState = {
   longestStreak: 0,
   lastActiveDate: null,
   totalGoalsCompleted: 0,
-  freezeTokens: 1,
+  freezeTokens: 0,
   freezeUsedOn: null,
 };
 
@@ -82,17 +88,16 @@ function shiftDateKey(key: string, deltaDays: number): string {
   const d = new Date(`${key}T12:00:00`);
   d.setDate(d.getDate() + deltaDays);
   try {
-    return new Intl.DateTimeFormat("en-CA", {
-      timeZone: "UTC",
-    }).format(d);
+    return new Intl.DateTimeFormat("en-CA", { timeZone: "UTC" }).format(d);
   } catch {
     return d.toISOString().slice(0, 10);
   }
 }
 
 /**
- * Recompute current streak against "today" (handles missed days + freeze).
- * Pure relative to stored lastActiveDate — does not invent activity.
+ * Recompute current streak against "today".
+ * Without activity today and a gap ≥ 2 days → display streak as 0 (broken).
+ * Optional freeze (tokens > 0) can bridge a single missed day.
  */
 export function reconcileStreak(state: UserStreakState = readState(), today = todayKey()): UserStreakState {
   if (!state.lastActiveDate) return state;
@@ -104,7 +109,6 @@ export function reconcileStreak(state: UserStreakState = readState(), today = to
 
   const yesterday = shiftDateKey(today, -1);
 
-  // Missed one calendar day → try freeze
   if (gap === 2 && state.freezeTokens > 0) {
     return {
       ...state,
@@ -114,7 +118,6 @@ export function reconcileStreak(state: UserStreakState = readState(), today = to
     };
   }
 
-  // Gap too large → streak broken until new activity
   if (gap >= 2) {
     return { ...state, currentStreak: 0 };
   }
@@ -122,8 +125,9 @@ export function reconcileStreak(state: UserStreakState = readState(), today = to
 }
 
 export function getUserStreak(): UserStreakState {
-  const reconciled = reconcileStreak(readState());
-  if (JSON.stringify(reconciled) !== JSON.stringify(readState())) {
+  const before = readState();
+  const reconciled = reconcileStreak(before);
+  if (JSON.stringify(reconciled) !== JSON.stringify(before)) {
     writeState(reconciled);
   }
   return reconciled;
@@ -140,6 +144,7 @@ export function recordUserActivity(
   let state = reconcileStreak(readState());
   const today = todayKey();
 
+  // Same day → maintain
   if (state.lastActiveDate === today) {
     if (options?.completedGoal) {
       state = { ...state, totalGoalsCompleted: state.totalGoalsCompleted + 1 };
@@ -149,16 +154,17 @@ export function recordUserActivity(
   }
 
   const yesterday = todayKey(1);
-  let nextStreak = 1;
+  let nextStreak = 1; // gap > 1 day (or first activity) → reset/start at 1
+
   if (state.lastActiveDate === yesterday) {
-    nextStreak = state.currentStreak + 1;
+    // Consecutive day → increment
+    nextStreak = Math.max(1, state.currentStreak) + 1;
   } else if (
     state.lastActiveDate &&
     dayDiff(state.lastActiveDate, today) === 2 &&
     state.freezeTokens > 0
   ) {
-    // Activity after a single missed day with freeze available
-    nextStreak = state.currentStreak + 1;
+    nextStreak = Math.max(1, state.currentStreak) + 1;
     state = {
       ...state,
       freezeTokens: state.freezeTokens - 1,

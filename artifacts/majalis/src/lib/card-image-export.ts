@@ -1,12 +1,24 @@
 /**
  * High-resolution card image export + Web Share API fallback.
- * Uses existing html-to-image dependency — no CSS changes.
+ * Uses existing html-to-image dependency — no CSS / layout changes.
  */
 import { toPng } from "html-to-image";
 
 export type CardExportResult =
   | { ok: true; method: "share" | "download"; fileName: string }
   | { ok: false; error: string };
+
+/** Logical export targets — pixelRatio only (canvas size comes from existing DOM). */
+export type CardExportPreset = "feed" | "story" | "wide";
+
+export const CARD_EXPORT_PRESETS: Record<
+  CardExportPreset,
+  { pixelRatio: number; label: string; aspect: "1:1" | "9:16" | "16:9" }
+> = {
+  feed: { pixelRatio: 3, label: "1:1 Feed", aspect: "1:1" },
+  story: { pixelRatio: 4, label: "9:16 Story", aspect: "9:16" },
+  wide: { pixelRatio: 3, label: "16:9 Wide", aspect: "16:9" },
+};
 
 function dataUrlToBlob(dataUrl: string): Blob {
   const [header, data] = dataUrl.split(",");
@@ -34,6 +46,7 @@ export async function exportCardImage(
     fileName?: string;
     /** Default 3; use 4 for ultra-sharp story exports. */
     pixelRatio?: number;
+    preset?: CardExportPreset;
     title?: string;
     text?: string;
     /** Force download even when Web Share is available. */
@@ -41,13 +54,13 @@ export async function exportCardImage(
   },
 ): Promise<CardExportResult> {
   const fileName = options?.fileName || `بطاقة-مجلس-علمي-${Date.now()}.png`;
-  const pixelRatio = options?.pixelRatio ?? 3;
+  const presetRatio = options?.preset ? CARD_EXPORT_PRESETS[options.preset].pixelRatio : undefined;
+  const pixelRatio = options?.pixelRatio ?? presetRatio ?? 3;
 
   try {
     const dataUrl = await toPng(element, {
       pixelRatio,
       cacheBust: true,
-      // Improve sharpness on high-DPI mobile screens
       quality: 1,
     });
 
@@ -71,7 +84,6 @@ export async function exportCardImage(
           return { ok: true, method: "share", fileName };
         }
       } catch (err) {
-        // User abort → don't fall through as error download spam
         if (err && typeof err === "object" && "name" in err && (err as { name: string }).name === "AbortError") {
           return { ok: false, error: "aborted" };
         }
@@ -93,4 +105,13 @@ export async function downloadCardImage(
   pixelRatio = 3,
 ): Promise<CardExportResult> {
   return exportCardImage(element, { fileName, pixelRatio, forceDownload: true });
+}
+
+/** Convenience: export with a named social preset (story / feed / wide). */
+export async function exportSocialCard(
+  element: HTMLElement,
+  preset: CardExportPreset,
+  options?: Omit<Parameters<typeof exportCardImage>[1], "preset" | "pixelRatio">,
+): Promise<CardExportResult> {
+  return exportCardImage(element, { ...options, preset });
 }
