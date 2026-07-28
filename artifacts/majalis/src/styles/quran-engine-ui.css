@@ -159,6 +159,58 @@ html.dark .qe-viewer--focus {
   opacity: 0.85;
 }
 
+/* Font size control bar — visible only outside focus mode */
+.qe-font-bar {
+  position: sticky;
+  bottom: max(0.75rem, env(safe-area-inset-bottom));
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.85rem;
+  margin: 0.85rem auto 0;
+  width: fit-content;
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--qe-line) 70%, transparent);
+  background: color-mix(in srgb, var(--qe-panel) 94%, transparent);
+  box-shadow: 0 6px 20px color-mix(in srgb, #1a2e24 12%, transparent);
+  backdrop-filter: blur(10px);
+}
+
+.qe-font-bar__btn {
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--qe-emerald) 32%, transparent);
+  background: color-mix(in srgb, var(--qe-emerald) 8%, transparent);
+  color: var(--qe-emerald);
+  font: inherit;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.15s ease, opacity 0.15s ease;
+}
+
+.qe-font-bar__btn:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--qe-emerald) 16%, transparent);
+}
+
+.qe-font-bar__btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.qe-font-bar__value {
+  min-width: 2.25rem;
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--qe-ink, #1a2e24);
+  font-variant-numeric: tabular-nums;
+}
+
 .qe-ayah-list--focus {
   gap: 0.35rem;
   padding-block: 0.5rem;
@@ -180,10 +232,10 @@ html.dark .qe-viewer--focus {
 }
 
 .qe-ayah-list--focus .qe-ayah__text {
-  /* Fixed mushaf type — px, not rem/clamp (see QURAN_FOCUS_* constants) */
+  /* User-controlled mushaf type via --qe-mushaf-* (default 24 / 44) */
   font-family: "Amiri Quran", "Scheherazade New", "Amiri", serif;
-  font-size: 24px !important;
-  line-height: 45px !important;
+  font-size: var(--qe-mushaf-fs, 24px);
+  line-height: var(--qe-mushaf-lh, 44px);
   text-align: right;
   color: #000;
   -webkit-text-size-adjust: 100%;
@@ -323,6 +375,8 @@ body.qe-focus-mode {
   font-family: "Amiri Quran", "Scheherazade New", serif;
   font-size: clamp(1.2rem, 3.8vw, 1.4rem);
   line-height: 2.05;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 .qe-ayah-list--tajweed .qe-ayah__text {

@@ -2,10 +2,12 @@
  * QuranViewer — Uthmani ayah list with optional Tajweed tint, selection, and Focus Mode.
  *
  * Focus Mode (وضع التركيز): hides chrome so the mushaf fills the viewport.
- * Typography in focus mode is intentionally FIXED (24px / 45px line-height) and
- * resists OS/browser text scaling — web equivalent of RN `allowFontScaling={false}`.
+ * Font size is user-controlled (18–40, step 2), persisted in localStorage
+ * (`userFontSize` — same key as the RN AsyncStorage sketch), with
+ * lineHeight = fontSize + 20. The ± control bar is hidden while focused.
+ * `text-size-adjust: 100%` resists OS/browser text scaling (RN allowFontScaling={false}).
  */
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, type CSSProperties } from "react";
 import { Maximize2, Minimize2 } from "lucide-react";
 import { fetchSurahDetail, getSurahMeta, type Ayah } from "@/lib/quran-api";
 import { useQuranEngine } from "@/hooks/useQuranEngine";
@@ -13,9 +15,29 @@ import { QuranActionBar } from "@/components/QuranActionBar";
 import { toArabicDigits } from "@/lib/utils";
 import "@/styles/quran-engine-ui.css";
 
-/** Fixed mushaf type in focus mode — independent of system accessibility text size. */
-export const QURAN_FOCUS_FONT_SIZE_PX = 24;
-export const QURAN_FOCUS_LINE_HEIGHT_PX = 45;
+/** Mushaf type scale — mirrors RN FullScreenQuranReader sketch. */
+export const QURAN_FONT_MIN_PX = 18;
+export const QURAN_FONT_MAX_PX = 40;
+export const QURAN_FONT_STEP_PX = 2;
+export const QURAN_FONT_DEFAULT_PX = 24;
+export const QURAN_FONT_STORAGE_KEY = "userFontSize";
+
+function clampFontSize(n: number): number {
+  const stepped = Math.round(n / QURAN_FONT_STEP_PX) * QURAN_FONT_STEP_PX;
+  return Math.min(QURAN_FONT_MAX_PX, Math.max(QURAN_FONT_MIN_PX, stepped));
+}
+
+function readStoredFontSize(): number {
+  try {
+    const raw = localStorage.getItem(QURAN_FONT_STORAGE_KEY);
+    if (raw == null) return QURAN_FONT_DEFAULT_PX;
+    const parsed = Number.parseInt(raw, 10);
+    if (!Number.isFinite(parsed)) return QURAN_FONT_DEFAULT_PX;
+    return clampFontSize(parsed);
+  } catch {
+    return QURAN_FONT_DEFAULT_PX;
+  }
+}
 
 export type QuranViewerProps = {
   /** Override initial surah (defaults to engine state). */
@@ -57,6 +79,7 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
   const [error, setError] = useState<string | null>(null);
   const [reloadKey, setReloadKey] = useState(0);
   const [isFocusMode, setIsFocusMode] = useState(false);
+  const [fontSize, setFontSize] = useState(QURAN_FONT_DEFAULT_PX);
   const meta = getSurahMeta(surahNum);
 
   const reload = useCallback(() => setReloadKey((k) => k + 1), []);
@@ -70,6 +93,29 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
   );
 
   const toggleFocus = useCallback(() => setFocus(!isFocusMode), [isFocusMode, setFocus]);
+
+  /** Load persisted font size once (RN AsyncStorage → localStorage). */
+  useEffect(() => {
+    setFontSize(readStoredFontSize());
+  }, []);
+
+  const updateFontSize = useCallback((next: number) => {
+    const clamped = clampFontSize(next);
+    setFontSize(clamped);
+    try {
+      localStorage.setItem(QURAN_FONT_STORAGE_KEY, String(clamped));
+    } catch {
+      /* ignore quota / private mode */
+    }
+  }, []);
+
+  const increaseFont = useCallback(() => {
+    if (fontSize < QURAN_FONT_MAX_PX) updateFontSize(fontSize + QURAN_FONT_STEP_PX);
+  }, [fontSize, updateFontSize]);
+
+  const decreaseFont = useCallback(() => {
+    if (fontSize > QURAN_FONT_MIN_PX) updateFontSize(fontSize - QURAN_FONT_STEP_PX);
+  }, [fontSize, updateFontSize]);
 
   useEffect(() => {
     onFocusModeChange?.(isFocusMode);
@@ -90,6 +136,11 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [isFocusMode, setFocus]);
+
+  const mushafTypeStyle = {
+    ["--qe-mushaf-fs" as string]: `${fontSize}px`,
+    ["--qe-mushaf-lh" as string]: `${fontSize + 20}px`,
+  } as CSSProperties;
 
   useEffect(() => {
     let cancelled = false;
@@ -144,6 +195,7 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
       className={`qe-viewer${isFocusMode ? " qe-viewer--focus" : ""} ${className ?? ""}`.trim()}
       dir="rtl"
       data-focus={isFocusMode ? "1" : "0"}
+      style={mushafTypeStyle}
     >
       <div
         className="qe-viewer__page"
@@ -231,15 +283,11 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
                     </span>
                     <span
                       className="qe-ayah__text"
-                      style={
-                        isFocusMode
-                          ? {
-                              fontSize: `${QURAN_FOCUS_FONT_SIZE_PX}px`,
-                              lineHeight: `${QURAN_FOCUS_LINE_HEIGHT_PX}px`,
-                              textAlign: "right",
-                            }
-                          : undefined
-                      }
+                      style={{
+                        fontSize: `${fontSize}px`,
+                        lineHeight: `${fontSize + 20}px`,
+                        textAlign: "right",
+                      }}
                     >
                       {ayah.text}
                     </span>
@@ -265,6 +313,38 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
           </p>
         ) : null}
       </div>
+
+      {/* Font controls — hidden in focus mode (RN controlBar) */}
+      {!isFocusMode ? (
+        <div
+          className="qe-font-bar"
+          onClick={(e) => e.stopPropagation()}
+          role="group"
+          aria-label="حجم خط المصحف"
+        >
+          <button
+            type="button"
+            className="qe-font-bar__btn"
+            onClick={decreaseFont}
+            disabled={fontSize <= QURAN_FONT_MIN_PX}
+            aria-label="تصغير الخط"
+          >
+            −
+          </button>
+          <span className="qe-font-bar__value" aria-live="polite">
+            {toArabicDigits(fontSize)}
+          </span>
+          <button
+            type="button"
+            className="qe-font-bar__btn"
+            onClick={increaseFont}
+            disabled={fontSize >= QURAN_FONT_MAX_PX}
+            aria-label="تكبير الخط"
+          >
+            +
+          </button>
+        </div>
+      ) : null}
 
       {isActionBarEnabled && actionAyah ? (
         <div onClick={(e) => e.stopPropagation()}>
