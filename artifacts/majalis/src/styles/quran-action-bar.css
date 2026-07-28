@@ -1,36 +1,30 @@
 /* QuranActionBar — minimal floating bottom sheet (does not restyle mushaf chrome). */
 
-.qab-root {
-  position: fixed;
-  inset: 0;
-  z-index: 10050;
-  pointer-events: none;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-}
-
 .qab-scrim {
-  position: absolute;
-  inset: 0;
   border: none;
   padding: 0;
   margin: 0;
   cursor: pointer;
-  pointer-events: auto;
-  background: color-mix(in srgb, #0a1210 38%, transparent);
   -webkit-tap-highlight-color: transparent;
 }
 
-.qab-sheet {
-  position: relative;
-  z-index: 1;
-  pointer-events: auto;
+.qab-scrim--fixed {
+  position: fixed;
+  inset: 0;
+  z-index: 10050;
+  background: color-mix(in srgb, #0a1210 38%, transparent);
+}
+
+.qab-sheet--fixed {
+  position: fixed;
+  z-index: 10051;
+  left: 50%;
+  bottom: 0;
+  translate: -50% 0;
   width: min(100%, 28rem);
   max-height: min(52vh, 22rem);
   overflow-x: hidden;
   overflow-y: auto;
-  margin-inline: auto;
   padding: 0.5rem 0.9rem max(0.85rem, env(safe-area-inset-bottom, 0px));
   border-radius: 1.1rem 1.1rem 0 0;
   background: color-mix(in srgb, var(--majalis-panel, #f7f4ef) 94%, transparent);
@@ -178,21 +172,15 @@
   color: #8a3b2a;
 }
 
-/* Keep mushaf text readable: light scrim + compact sheet; desktop floats inset. */
 @media (min-width: 640px) {
-  .qab-root {
-    align-items: flex-end;
-    padding: 0 1rem 1rem;
-  }
-
-  .qab-sheet {
+  .qab-sheet--fixed {
+    bottom: 0.75rem;
     border-radius: 1rem;
     border-bottom: 1px solid color-mix(in srgb, var(--majalis-line, #d4cfc4) 70%, transparent);
     max-height: min(48vh, 24rem);
-    margin-bottom: 0.5rem;
   }
 
-  .qab-scrim {
+  .qab-scrim--fixed {
     background: color-mix(in srgb, #0a1210 22%, transparent);
   }
 }
@@ -213,8 +201,8 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .qab-sheet,
-  .qab-scrim {
+  .qab-sheet--fixed,
+  .qab-scrim--fixed {
     transition: none !important;
   }
 }
