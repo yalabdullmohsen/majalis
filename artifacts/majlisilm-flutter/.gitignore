@@ -9,3 +9,11 @@ build/
 **/doc/api/
 .flutter-plugins
 .flutter-plugins-dependencies
+**/Flutter/ephemeral/
+**/Pods/
+**/podfile.lock
+**/Podfile.lock
+**/DerivedData/
+*.xcuserstate
+xcuserdata/
+.DS_Store
