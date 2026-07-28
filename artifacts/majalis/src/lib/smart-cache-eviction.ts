@@ -60,13 +60,16 @@ export const PROTECTED_LS_KEYS = new Set<string>([
   "majalis-theme",
   "majalis-lang",
   "mj-quran-bookmarks-v1",
+  "myBookmarks",
   "mj-quran-notes-v1",
+  "userNotes",
   "mj-quran-hifz-v1",
   "mj-quran-khatmah-v1",
   "mj-quran-reading-v1",
   "mj-quran-wird-v3",
   "mj-quran-pos-v3",
   "mj-quran-page-pos-v1",
+  "lastPage",
 ]);
 
 /** Prefixes for protected LS keys (notes/bookmarks/streaks families). */
@@ -77,13 +80,16 @@ export const PROTECTED_LS_PREFIXES = [
   "majalis-flashcard",
   "majalis-local-bookmarks",
   "mj-quran-bookmarks",
+  "myBookmarks",
   "mj-quran-notes",
+  "userNotes",
   "mj-quran-hifz",
   "mj-quran-khatmah",
   "mj-quran-reading",
   "mj-quran-wird",
   "mj-quran-pos",
   "mj-quran-page-pos",
+  "lastPage",
 ] as const;
 
 /** IndexedDB meta keys that are core / must not be deleted. */

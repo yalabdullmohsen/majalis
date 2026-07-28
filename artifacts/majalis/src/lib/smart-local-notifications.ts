@@ -11,10 +11,18 @@ import {
   type NotifPrefs,
 } from "./local-notifications";
 import { getUserStreak } from "./user-streak";
+import {
+  QURAN_DAILY_REMINDER_BODY,
+  QURAN_DAILY_REMINDER_HOUR,
+  QURAN_DAILY_REMINDER_MINUTE,
+  QURAN_DAILY_REMINDER_TAG,
+  QURAN_DAILY_REMINDER_TITLE,
+  QURAN_DAILY_REMINDER_URL,
+} from "./quran-daily-reminder";
 
 export interface SmartNotifScheduleItem {
   id: string;
-  kind: "adhkar" | "prayer" | "streak" | "khatmah" | "flashcards";
+  kind: "adhkar" | "prayer" | "streak" | "khatmah" | "flashcards" | "quran";
   title: string;
   body: string;
   /** دقائق من منتصف الليل المحلي */
@@ -113,6 +121,18 @@ export function buildDailySmartSchedule(opts?: {
       minuteOfDay: reminderMinute,
       tag: "majalis-flashcards-daily",
       url: "/flashcards",
+    });
+  }
+
+  if (prefs.quranDailyReminder) {
+    items.push({
+      id: "quran-daily-wird",
+      kind: "quran",
+      title: QURAN_DAILY_REMINDER_TITLE,
+      body: QURAN_DAILY_REMINDER_BODY,
+      minuteOfDay: QURAN_DAILY_REMINDER_HOUR * 60 + QURAN_DAILY_REMINDER_MINUTE,
+      tag: QURAN_DAILY_REMINDER_TAG,
+      url: QURAN_DAILY_REMINDER_URL,
     });
   }
 
@@ -255,6 +275,7 @@ export function enableSmartNotifDefaults(): NotifPrefs {
     flashcardsReminder: true,
     resumeReminder: true,
     prayerReminder: true,
+    quranDailyReminder: true,
   };
   saveNotifPrefs(next);
   void syncSmartLocalNotifications();

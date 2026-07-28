@@ -10,6 +10,8 @@ import {
   toggleFavoriteSurah,
   type SurahIndexEntry,
 } from "@/lib/surah-index";
+import { surahList, mushafPageHref } from "@/lib/quran-surah-list";
+import { toArabicDigits } from "@/lib/utils";
 
 type RevelationFilter = "all" | "meccan" | "medinan" | "favorites";
 /** ترتيب العرض: "mushaf" هو الافتراضي الدائم (رقم السورة في المصحف —
@@ -54,6 +56,11 @@ export default function SurahIndexPage() {
     });
     return () => { cancelled = true; };
   }, []);
+
+  const pageById = useMemo(
+    () => new Map(surahList.map((item) => [item.id, item.page] as const)),
+    [],
+  );
 
   const filtered = useMemo(() => {
     let list = surahs;
@@ -168,23 +175,25 @@ export default function SurahIndexPage() {
         </div>
       ) : (
         <ol className="surah-index-list">
-          {filtered.map((s) => (
+          {filtered.map((s) => {
+            const startPage = pageById.get(s.number) ?? 1;
+            return (
             <li key={s.number}>
-              <Link href={`/mushaf/${s.number}`} className="surah-index-row" title={s.description || undefined}>
+              <Link
+                href={mushafPageHref(startPage)}
+                className="surah-index-row"
+                title={s.description || undefined}
+              >
                 <span className="surah-index-row__num" aria-hidden="true">
                   {sortMode === "revelation" ? s.revelationOrder : s.number}
                 </span>
                 <span className="surah-index-row__body">
                   <span className="surah-index-row__name" style={{ fontFamily: "var(--font-quran)" }}>{s.name}</span>
-                  {/* عدد الآيات والتصنيف (مكية/مدنية) أُخفيا من بطاقة القائمة عمدًا —
-                      اسم السورة فقط هنا؛ كل التفاصيل (عدد الآيات، التصنيف...) تبقى
-                      كاملة داخل صفحة السورة نفسها، لا حذف بيانات، فقط تبسيط بصري
-                      للقائمة. رقم المصحف عند الفرز بترتيب النزول يبقى ظاهرًا لأنه
-                      سياق تنقّل ضروري (الرقم الظاهر في الشارة حينها هو ترتيب النزول
-                      لا رقم المصحف). */}
-                  {sortMode === "revelation" && (
-                    <span className="surah-index-row__meta">سورة رقم {s.number} في المصحف</span>
-                  )}
+                  {/* RN FlatList: «الاسم - صفحة N» — رقم الصفحة سياق تنقّل للمصحف. */}
+                  <span className="surah-index-row__meta">
+                    صفحة {toArabicDigits(startPage)}
+                    {sortMode === "revelation" ? ` · سورة رقم ${toArabicDigits(s.number)} في المصحف` : ""}
+                  </span>
                 </span>
                 <button
                   type="button"
@@ -197,7 +206,8 @@ export default function SurahIndexPage() {
                 </button>
               </Link>
             </li>
-          ))}
+            );
+          })}
         </ol>
       )}
     </div>

@@ -1,9 +1,10 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import type { SurahSummary } from "@/lib/quran-api";
 import { JUZ_START_PAGES } from "@/lib/quran-api";
-import { arabicMatchAny } from "@/lib/arabic-search";
 import { getBookmarks, type QuranBookmark } from "@/lib/quran-personal";
+import { getMyBookmarks, type MyBookmark } from "@/lib/quran-my-bookmarks";
 import { toArabicDigits } from "@/lib/utils";
+import { SurahIndexFlatList } from "@/components/quran/SurahIndexFlatList";
 
 type SidebarTab = "surahs" | "juz" | "bookmarks";
 
@@ -12,28 +13,26 @@ type Props = {
   currentSurah: number;
   onSelect: (n: number) => void;
   onClose?: () => void;
-  /** الانتقال لصفحة مباشرة (أجزاء / إشارات مرجعية). */
+  /** الانتقال لصفحة مباشرة (أجزاء / إشارات مرجعية / فهرس السور). */
   onSelectPage?: (page: number, opts?: { surah?: number; ayah?: number }) => void;
 };
 
-export function SurahList({ surahs, currentSurah, onSelect, onClose, onSelectPage }: Props) {
-  const [q, setQ] = useState("");
+export function SurahList({ surahs: _surahs, currentSurah, onSelect, onClose, onSelectPage }: Props) {
   const [tab, setTab] = useState<SidebarTab>("surahs");
   const [bookmarks, setBookmarks] = useState<QuranBookmark[]>([]);
+  const [pageBookmarks, setPageBookmarks] = useState<MyBookmark[]>([]);
 
   useEffect(() => {
-    if (tab === "bookmarks") setBookmarks(getBookmarks());
+    if (tab === "bookmarks") {
+      setBookmarks(getBookmarks());
+      setPageBookmarks(getMyBookmarks());
+    }
   }, [tab]);
 
-  const filtered = useMemo(() => {
-    const term = q.trim();
-    if (!term) return surahs;
-    return surahs.filter(
-      (s) =>
-        arabicMatchAny([s.name, s.englishName], term) ||
-        String(s.number).startsWith(term),
-    );
-  }, [surahs, q]);
+  // surahs prop kept for API compatibility; catalog uses RN `surahList` constants.
+  void _surahs;
+
+  const hasAnyBookmark = bookmarks.length > 0 || pageBookmarks.length > 0;
 
   return (
     <div className="qs-surah-list" role="navigation" aria-label="فهرس المصحف">
@@ -42,7 +41,7 @@ export function SurahList({ surahs, currentSurah, onSelect, onClose, onSelectPag
           [
             { id: "surahs", label: "السور" },
             { id: "juz", label: "الأجزاء" },
-            { id: "bookmarks", label: "الإشارات" },
+            { id: "bookmarks", label: "الفواصل" },
           ] as const
         ).map((t) => (
           <button
@@ -59,36 +58,15 @@ export function SurahList({ surahs, currentSurah, onSelect, onClose, onSelectPag
       </div>
 
       {tab === "surahs" && (
-        <>
-          <div className="qs-surah-list__search">
-            <input
-              type="search"
-              value={q}
-              onChange={(e) => setQ(e.target.value)}
-              placeholder="ابحث عن سورة..."
-              aria-label="ابحث عن سورة"
-              className="qs-search-input"
-            />
-          </div>
-          <ol className="qs-surah-items">
-            {filtered.map((s) => (
-              <li key={s.number}>
-                <button
-                  type="button"
-                  className={`qs-surah-item${s.number === currentSurah ? " is-active" : ""}`}
-                  onClick={() => { onSelect(s.number); onClose?.(); }}
-                  aria-current={s.number === currentSurah ? "true" : undefined}
-                >
-                  <span className="qs-surah-num">{s.number}</span>
-                  <span className="qs-surah-name">{s.name}</span>
-                  <span className="qs-surah-meta">
-                    {s.numberOfAyahs} آية · {s.revelationType === "Meccan" ? "مكية" : "مدنية"}
-                  </span>
-                </button>
-              </li>
-            ))}
-          </ol>
-        </>
+        <SurahIndexFlatList
+          currentSurah={currentSurah}
+          onNavigateToPage={(page, item) => {
+            // RN: navigateToPage(item.page)
+            if (onSelectPage) onSelectPage(page, { surah: item.id });
+            else onSelect(item.id);
+            onClose?.();
+          }}
+        />
       )}
 
       {tab === "juz" && (
@@ -114,29 +92,54 @@ export function SurahList({ surahs, currentSurah, onSelect, onClose, onSelectPag
       )}
 
       {tab === "bookmarks" && (
-        <div className="qs-bookmark-list" aria-label="الإشارات المرجعية">
-          {bookmarks.length === 0 ? (
-            <p className="qs-bookmark-empty">لا إشارات محفوظة بعد. احفظ آية من قائمة إجراءات الآية.</p>
+        <div className="qs-bookmark-list" aria-label="فواصل الصفحات والإشارات">
+          {!hasAnyBookmark ? (
+            <p className="qs-bookmark-empty">
+              لا فواصل محفوظة بعد. احفظ صفحة من شريط المصحف، أو آية من قائمة الإجراءات.
+            </p>
           ) : (
-            <ul className="qs-surah-items">
-              {bookmarks.map((b) => (
-                <li key={`${b.surahNum}:${b.ayahNum}:${b.addedAt}`}>
-                  <button
-                    type="button"
-                    className="qs-surah-item"
-                    onClick={() => {
-                      // الصفحة تُحسب في MushafPageView عبر فهرس page-juz (لا تخمين).
-                      onSelectPage?.(1, { surah: b.surahNum, ayah: b.ayahNum });
-                      onClose?.();
-                    }}
-                  >
-                    <span className="qs-surah-num">{b.surahNum}:{b.ayahNum}</span>
-                    <span className="qs-surah-name">{b.surahName}</span>
-                    <span className="qs-surah-meta">{b.text.slice(0, 48)}{b.text.length > 48 ? "…" : ""}</span>
-                  </button>
-                </li>
-              ))}
-            </ul>
+            <>
+              {pageBookmarks.length > 0 ? (
+                <ul className="qs-surah-items" aria-label="فواصل الصفحات">
+                  {pageBookmarks.map((b) => (
+                    <li key={`page-${b.id}`}>
+                      <button
+                        type="button"
+                        className="qs-surah-item"
+                        onClick={() => {
+                          onSelectPage?.(b.page);
+                          onClose?.();
+                        }}
+                      >
+                        <span className="qs-surah-num">{toArabicDigits(b.page)}</span>
+                        <span className="qs-surah-name">{b.label}</span>
+                        <span className="qs-surah-meta">صفحة {toArabicDigits(b.page)} · {b.date}</span>
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
+              {bookmarks.length > 0 ? (
+                <ul className="qs-surah-items" aria-label="إشارات الآيات">
+                  {bookmarks.map((b) => (
+                    <li key={`${b.surahNum}:${b.ayahNum}:${b.addedAt}`}>
+                      <button
+                        type="button"
+                        className="qs-surah-item"
+                        onClick={() => {
+                          onSelectPage?.(1, { surah: b.surahNum, ayah: b.ayahNum });
+                          onClose?.();
+                        }}
+                      >
+                        <span className="qs-surah-num">{b.surahNum}:{b.ayahNum}</span>
+                        <span className="qs-surah-name">{b.surahName}</span>
+                        <span className="qs-surah-meta">{b.text.slice(0, 48)}{b.text.length > 48 ? "…" : ""}</span>
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              ) : null}
+            </>
           )}
         </div>
       )}

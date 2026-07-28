@@ -8,7 +8,7 @@
  * - Never throws into UI for media failures — sets `playerState: "error"` instead.
  * - Listeners are isolated with try/catch so a bad subscriber cannot crash playback.
  */
-import { getAyahAudioUrl } from "@/lib/quran-audio";
+import { getAyahAudioUrl, loadPlaybackRate, normalizePlaybackRate, savePlaybackRate } from "@/lib/quran-audio";
 import { getSurahMeta } from "@/lib/quran-api";
 
 export type RepeatMode = "off" | "ayah" | "surah";
@@ -20,6 +20,8 @@ export type AudioEngineSnapshot = {
   teachPhase: TeachPhase;
   repeatMode: RepeatMode;
   reciterId: string;
+  /** Current playback rate (0.5–2) — RN setRateAsync. */
+  playbackRate: number;
   surah: number | null;
   ayah: number | null;
   currentTime: number;
@@ -56,6 +58,8 @@ export class AudioEngine {
 
   private audio: HTMLAudioElement | null = null;
   private reciterId = "alafasy";
+  private playbackRate = 1;
+  private rateHydrated = false;
   private surah: number | null = null;
   private ayah: number | null = null;
   private playerState: PlayerState = "idle";
@@ -83,7 +87,17 @@ export class AudioEngine {
   }
 
   private constructor() {
-    /* singleton */
+    /* singleton — rate hydrated lazily (localStorage may be unavailable in SSR). */
+  }
+
+  private hydrateRate(): void {
+    if (this.rateHydrated) return;
+    this.rateHydrated = true;
+    try {
+      this.playbackRate = loadPlaybackRate();
+    } catch {
+      this.playbackRate = 1;
+    }
   }
 
   /**
@@ -91,12 +105,14 @@ export class AudioEngine {
    * @throws if `Audio` is unavailable (SSR / non-browser). Callers should catch.
    */
   private ensureAudio(): HTMLAudioElement {
+    this.hydrateRate();
     if (typeof Audio === "undefined") {
       throw new Error("HTMLAudioElement unavailable");
     }
     if (!this.audio) {
       this.audio = new Audio();
       this.audio.preload = "auto";
+      this.audio.playbackRate = this.playbackRate;
       this.audio.addEventListener("playing", () => this.setPlayerState("playing"));
       this.audio.addEventListener("pause", () => {
         if (this.playerState !== "loading") this.setPlayerState("paused");
@@ -161,11 +177,13 @@ export class AudioEngine {
 
   /** Immutable snapshot of the current player for UI binding. */
   getSnapshot(): AudioEngineSnapshot {
+    this.hydrateRate();
     return {
       playerState: this.playerState,
       teachPhase: this.teachPhase,
       repeatMode: this.repeatMode,
       reciterId: this.reciterId,
+      playbackRate: this.playbackRate,
       surah: this.surah,
       ayah: this.ayah,
       currentTime: this.audio?.currentTime ?? 0,
@@ -176,6 +194,62 @@ export class AudioEngine {
   setReciter(reciterId: string): void {
     this.reciterId = reciterId || "alafasy";
     this.emitSnapshot();
+  }
+
+  /** Live HTMLAudioElement (RN `sound`) — null until first play. */
+  getSound(): HTMLAudioElement | null {
+    return this.audio;
+  }
+
+  /**
+   * RN `setRateAsync(newRate, true)` / `setPlaybackSpeed`.
+   * Applies immediately if a sound is loaded; persists for the next play.
+   */
+  setPlaybackRate(newRate: number): number {
+    this.hydrateRate();
+    this.playbackRate = normalizePlaybackRate(newRate);
+    savePlaybackRate(this.playbackRate);
+    if (this.audio) {
+      try {
+        this.audio.playbackRate = this.playbackRate;
+      } catch {
+        /* ignore */
+      }
+    }
+    this.emitSnapshot();
+    return this.playbackRate;
+  }
+
+  /** Alias matching RN `changeSpeed`. */
+  async changeSpeed(newRate: number): Promise<number> {
+    return this.setPlaybackRate(newRate);
+  }
+
+  /**
+   * Play an arbitrary audio URL (RN `Audio.Sound.createAsync({ uri })`).
+   * Clears surah/ayah tracking — use {@link playAyah} for verse-synced playback.
+   */
+  async playUrl(url: string): Promise<void> {
+    let el: HTMLAudioElement;
+    try {
+      el = this.ensureAudio();
+    } catch (err) {
+      console.warn("[AudioEngine] ensureAudio:", err);
+      this.setPlayerState("error");
+      return;
+    }
+    this.surah = null;
+    this.ayah = null;
+    this.setPlayerState("loading");
+    try {
+      el.src = url;
+      el.playbackRate = this.playbackRate;
+      await el.play();
+      this.setPlayerState("playing");
+    } catch (err) {
+      console.warn("[AudioEngine] playUrl:", err);
+      this.setPlayerState("error");
+    }
   }
 
   /**
@@ -231,6 +305,7 @@ export class AudioEngine {
 
     try {
       el.src = url;
+      el.playbackRate = this.playbackRate;
       await el.play();
       this.setPlayerState("playing");
     } catch (err) {
@@ -284,6 +359,49 @@ export class AudioEngine {
   pause(): void {
     this.audio?.pause();
     this.setPlayerState("paused");
+  }
+
+  /**
+   * Stop playback (RN `sound.stopAsync` equivalent) — pauses and rewinds.
+   * Keeps the element for a quick resume/re-play of another ayah.
+   */
+  stop(): void {
+    const el = this.audio;
+    if (!el) {
+      this.setPlayerState("idle");
+      return;
+    }
+    try {
+      el.pause();
+      el.currentTime = 0;
+    } catch {
+      /* ignore */
+    }
+    this.setPlayerState("idle");
+    this.emitSnapshot();
+  }
+
+  /**
+   * Full teardown (RN `sound.unloadAsync`) — pause, clear `src`, drop element.
+   * Call on leaving the reading screen so media resources are released.
+   */
+  stopAndUnload(): void {
+    const el = this.audio;
+    if (el) {
+      try {
+        el.pause();
+        el.removeAttribute("src");
+        el.load();
+      } catch {
+        /* ignore */
+      }
+    }
+    this.audio = null;
+    this.surah = null;
+    this.ayah = null;
+    this.teachPhase = "idle";
+    this.surahRepeatStart = null;
+    this.setPlayerState("idle");
   }
 
   /**

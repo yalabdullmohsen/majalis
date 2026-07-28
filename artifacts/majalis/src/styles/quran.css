@@ -163,6 +163,76 @@
   color: var(--text-muted, #6b7280);
 }
 
+/* RN FlatList surah index — name + start page */
+.surah-flat-list {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  flex: 1;
+}
+.surah-flat-list__search {
+  padding: 0.5rem 0.75rem;
+  flex-shrink: 0;
+}
+.surah-flat-list__items {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  flex: 1;
+  scrollbar-width: thin;
+}
+.surah-flat-item {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  width: 100%;
+  padding: 0.65rem 0.85rem;
+  text-align: right;
+  text-decoration: none;
+  color: inherit;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  border-bottom: 1px solid var(--border, #E8E7E2);
+  font: inherit;
+  font-size: 0.9rem;
+  direction: rtl;
+  transition: background 0.1s ease;
+}
+.surah-flat-item:hover {
+  background: var(--bg-hover, #f3f0eb);
+}
+.surah-flat-item.is-active {
+  background: var(--majalis-emerald-soft, #F0F7F4);
+  color: var(--majalis-emerald, #143F35);
+  font-weight: 700;
+}
+.surah-flat-item__id {
+  flex-shrink: 0;
+  width: 1.7rem;
+  height: 1.7rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 0.75rem;
+  color: var(--text-muted, #6b7280);
+  background: var(--bg-base, #faf9f6);
+}
+.surah-flat-item__text {
+  flex: 1;
+  min-width: 0;
+  font-family: var(--font-quran, "Amiri Quran", serif);
+  line-height: 1.5;
+}
+.surah-flat-list__empty {
+  margin: 1rem;
+  text-align: center;
+  color: var(--text-muted, #6b7280);
+  font-size: 0.88rem;
+}
+
 /* ── Main reading area ── */
 .qs-main {
   padding: 1.5rem 2rem 8rem;
@@ -2058,10 +2128,25 @@ body.has-immersive-mushaf { overflow: hidden; }
   -webkit-tap-highlight-color: transparent;
 }
 .mpv-toolbar__btn:hover { background: var(--bg-hover, #f3f0eb); }
-.mpv-toolbar__btn.is-active {
+.mpv-toolbar__btn.is-active,
+.mpv-toolbar__btn.is-on {
   background: var(--majalis-emerald, #176B57);
   border-color: var(--majalis-emerald, #176B57);
   color: #fff;
+}
+.mpv-bookmark-status {
+  position: fixed;
+  top: calc(3.25rem + env(safe-area-inset-top, 0px));
+  inset-inline: 0;
+  z-index: 40;
+  margin: 0;
+  padding: 0.35rem 0.75rem;
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--majalis-emerald, #176B57);
+  background: color-mix(in srgb, var(--bg-elevated, #fff) 92%, transparent);
+  pointer-events: none;
 }
 .mpv-toolbar__title { flex: 1; text-align: center; font-size: .85rem; font-weight: 700; color: var(--text-base, #1a1a1a); }
 .mpv-toolbar__title small { display: block; font-size: .78rem; font-weight: 500; color: var(--text-muted, #6b7280); }

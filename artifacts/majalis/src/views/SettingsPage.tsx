@@ -12,6 +12,11 @@ import { DEFAULT_PREFERENCES, type UserPreferences } from "@/lib/user-preference
 import { clearLocalBookmarks } from "@/lib/local-bookmarks";
 import { clearOfflineReading } from "@/lib/offline-reading-pack";
 import { useQuranPreferences, type QuranFontId } from "@/hooks/useQuranPreferences";
+import {
+  QURAN_FONT_MAX_PX,
+  QURAN_FONT_MIN_PX,
+  QURAN_FONT_STEP_PX,
+} from "@/lib/quran-font-size";
 import { PushPrompt } from "@/components/PushPrompt";
 import { useLanguage } from "@/components/LanguageProvider";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
@@ -179,8 +184,9 @@ export default function SettingsPage() {
           <span>{t("settings_quran_font_size")}</span>
           <input
             type="range"
-            min="18"
-            max="40"
+            min={QURAN_FONT_MIN_PX}
+            max={QURAN_FONT_MAX_PX}
+            step={QURAN_FONT_STEP_PX}
             value={quranPrefs.fontScale}
             onChange={(e) => setQuranPref("fontScale", Number(e.target.value))}
           />
@@ -192,9 +198,9 @@ export default function SettingsPage() {
             value={quranPrefs.fontId}
             onChange={(e) => setQuranPref("fontId", e.target.value as QuranFontId)}
           >
-            <option value="uthmani">عثماني</option>
-            <option value="naskh">نسخ</option>
-            <option value="amiri">أميري</option>
+            <option value="uthmani">شهرزاد (Scheherazade)</option>
+            <option value="naskh">نسخ (Traditional Arabic)</option>
+            <option value="amiri">أميري (Amiri)</option>
           </select>
         </label>
         <ToggleRow label={t("settings_ayah_numbers")} checked={quranPrefs.showAyahNumbers} onChange={(v) => setQuranPref("showAyahNumbers", v)} />
@@ -262,6 +268,11 @@ export default function SettingsPage() {
               void clearOfflineReading();
               try {
                 localStorage.removeItem("majalis-reading-progress-v1");
+                localStorage.removeItem("userNotes");
+                localStorage.removeItem("mj-quran-notes-v1");
+                localStorage.removeItem("myBookmarks");
+                localStorage.removeItem("lastPage");
+                localStorage.removeItem("mj-quran-page-pos-v1");
               } catch {
                 /* ignore */
               }

@@ -289,7 +289,24 @@ export function saveReciterId(id: string) {
 
 // ─── Playback speed preference (0.5x–2x) ───────────────────────────────────
 const PLAYBACK_RATE_KEY = "mj-quran-playback-rate-v1";
-const VALID_RATES = [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2];
+
+/** Valid rates — 0.5 بطيء · 1 عادي · 1.5 سريع … (RN setRateAsync presets). */
+export const VALID_PLAYBACK_RATES = [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2] as const;
+const VALID_RATES: number[] = [...VALID_PLAYBACK_RATES];
+
+export function normalizePlaybackRate(rate: number): number {
+  if (!Number.isFinite(rate)) return 1;
+  let best = 1;
+  let bestDist = Infinity;
+  for (const r of VALID_RATES) {
+    const d = Math.abs(r - rate);
+    if (d < bestDist) {
+      best = r;
+      bestDist = d;
+    }
+  }
+  return best;
+}
 
 export function loadPlaybackRate(): number {
   try {
@@ -303,7 +320,7 @@ export function loadPlaybackRate(): number {
 
 export function savePlaybackRate(rate: number) {
   try {
-    localStorage.setItem(PLAYBACK_RATE_KEY, String(rate));
+    localStorage.setItem(PLAYBACK_RATE_KEY, String(normalizePlaybackRate(rate)));
   } catch {
     /* ignore */
   }

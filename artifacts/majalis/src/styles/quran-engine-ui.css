@@ -146,12 +146,22 @@ html.dark .qe-abar {
 }
 
 .qe-viewer__footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem 1rem;
   margin-top: 1.25rem;
   padding: 0.75rem 0 0.25rem;
   text-align: center;
   font-size: 0.85rem;
   color: var(--qe-muted);
   border-top: 1px solid color-mix(in srgb, var(--qe-line) 55%, transparent);
+}
+
+.qe-viewer__share-status {
+  color: var(--qe-emerald);
+  font-weight: 600;
 }
 
 .qe-viewer__focus-hint {
@@ -243,8 +253,8 @@ html.dark .qe-abar {
 }
 
 .qe-ayah-list--focus .qe-ayah__text {
-  /* User-controlled mushaf type via --qe-mushaf-* (default 24 / 44) */
-  font-family: "Amiri Quran", "Scheherazade New", "Amiri", serif;
+  /* User-controlled mushaf type via --qe-mushaf-* / --qe-reader-font */
+  font-family: var(--qe-reader-font, "Amiri Quran", "Scheherazade New", "Amiri", serif);
   font-size: var(--qe-mushaf-fs, 24px);
   line-height: var(--qe-mushaf-lh, 44px);
   text-align: right;
@@ -291,6 +301,10 @@ body.qe-focus-mode {
 .qe-viewer--dark .qe-viewer__focus-hint,
 .qe-viewer--dark .qe-viewer__sub {
   color: color-mix(in srgb, var(--qe-reader-text) 72%, transparent);
+}
+
+.qe-viewer--dark .qe-viewer__share-status {
+  color: color-mix(in srgb, var(--qe-emerald) 85%, var(--qe-reader-text));
 }
 
 .qe-viewer__title {
@@ -358,6 +372,167 @@ body.qe-focus-mode {
   gap: 0.55rem;
 }
 
+.qe-ayah-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.qe-ayah-row {
+  display: flex;
+  align-items: stretch;
+  gap: 0.4rem;
+}
+
+.qe-ayah-row .qe-ayah {
+  flex: 1;
+  min-width: 0;
+}
+
+.qe-ayah__play {
+  flex-shrink: 0;
+  width: 2.65rem;
+  align-self: stretch;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.85rem;
+  border: 1px solid color-mix(in srgb, var(--qe-emerald) 30%, transparent);
+  background: color-mix(in srgb, var(--qe-emerald) 8%, transparent);
+  color: var(--qe-emerald);
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.qe-ayah__play:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--qe-emerald) 16%, transparent);
+}
+
+.qe-ayah__play.is-on {
+  background: var(--qe-emerald);
+  color: #f4faf7;
+  border-color: var(--qe-emerald);
+}
+
+.qe-ayah__play:disabled {
+  opacity: 0.55;
+  cursor: wait;
+}
+
+.qe-ayah-list--focus .qe-ayah__play {
+  border-color: color-mix(in srgb, var(--qe-reader-text, #000) 18%, transparent);
+  background: color-mix(in srgb, var(--qe-reader-header, #f0ead6) 80%, transparent);
+}
+
+.qe-ayah__share {
+  flex-shrink: 0;
+  width: 2.65rem;
+  align-self: stretch;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.85rem;
+  border: 1px solid color-mix(in srgb, var(--qe-emerald) 30%, transparent);
+  background: color-mix(in srgb, var(--qe-emerald) 8%, transparent);
+  color: var(--qe-emerald);
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.qe-ayah__share:hover {
+  background: color-mix(in srgb, var(--qe-emerald) 16%, transparent);
+}
+
+.qe-ayah-list--focus .qe-ayah__share {
+  border-color: color-mix(in srgb, var(--qe-reader-text, #000) 18%, transparent);
+  background: color-mix(in srgb, var(--qe-reader-header, #f0ead6) 80%, transparent);
+}
+
+.qe-ayah__tafsir {
+  margin-inline: 0.15rem 0.35rem;
+  padding: 0.65rem 0.85rem;
+  border-radius: 0.75rem;
+  border: 1px solid color-mix(in srgb, var(--qe-line) 65%, transparent);
+  background: color-mix(in srgb, var(--qe-reader-header, var(--qe-panel)) 88%, transparent);
+  animation: qe-tafsir-in 0.22s ease;
+}
+
+.qe-ayah__tafsir-text {
+  margin: 0;
+  font-family: "IBM Plex Sans Arabic", "Alexandria", system-ui, sans-serif;
+  font-size: 0.92rem;
+  line-height: 1.85;
+  color: color-mix(in srgb, var(--qe-reader-text, var(--qe-ink)) 92%, transparent);
+  text-align: right;
+}
+
+.qe-ayah__tafsir-status {
+  font-size: 0.82rem;
+  color: var(--qe-muted);
+}
+
+.qe-ayah__translation {
+  margin-inline: 0.15rem 0.35rem;
+  margin-top: 0.35rem;
+  padding: 0.65rem 0.85rem;
+  border-radius: 0.75rem;
+  border: 1px dashed color-mix(in srgb, var(--qe-emerald) 32%, transparent);
+  background: color-mix(in srgb, var(--qe-emerald) 6%, var(--qe-reader-header, var(--qe-panel)));
+  animation: qe-tafsir-in 0.22s ease;
+}
+
+.qe-ayah__translation-text {
+  margin: 0;
+  font-family: var(--font-body, "Alexandria", "IBM Plex Sans Arabic", system-ui, sans-serif);
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: color-mix(in srgb, var(--qe-reader-text, var(--qe-ink)) 88%, transparent);
+  text-align: left;
+}
+
+.qe-ayah__translation-status {
+  font-size: 0.82rem;
+  color: var(--qe-muted);
+  text-align: left;
+}
+
+.qe-viewer--dark .qe-ayah__tafsir {
+  border-color: color-mix(in srgb, var(--qe-reader-text) 16%, transparent);
+}
+
+.qe-viewer--dark .qe-ayah__translation {
+  border-color: color-mix(in srgb, var(--qe-emerald) 28%, transparent);
+  background: color-mix(in srgb, var(--qe-emerald) 10%, var(--qe-reader-header, #1a1a1a));
+}
+
+.qe-ayah-list--focus .qe-ayah__tafsir {
+  border-color: color-mix(in srgb, var(--qe-reader-text, #000) 12%, transparent);
+  background: color-mix(in srgb, var(--qe-reader-header, #f0ead6) 70%, transparent);
+}
+
+.qe-ayah-list--focus .qe-ayah__translation {
+  border-color: color-mix(in srgb, var(--qe-emerald) 22%, transparent);
+  background: color-mix(in srgb, var(--qe-emerald) 8%, var(--qe-reader-header, #f0ead6));
+}
+
+@keyframes qe-tafsir-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .qe-ayah__tafsir,
+  .qe-ayah__translation {
+    animation: none;
+  }
+}
+
 .qe-ayah {
   width: 100%;
   display: flex;
@@ -401,7 +576,7 @@ body.qe-focus-mode {
 }
 
 .qe-ayah__text {
-  font-family: "Amiri Quran", "Scheherazade New", serif;
+  font-family: var(--qe-reader-font, "Amiri Quran", "Scheherazade New", serif);
   font-size: clamp(1.2rem, 3.8vw, 1.4rem);
   line-height: 2.05;
   -webkit-text-size-adjust: 100%;
