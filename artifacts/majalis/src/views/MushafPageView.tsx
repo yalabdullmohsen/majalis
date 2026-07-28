@@ -13,9 +13,12 @@ import {
 } from "@/lib/quran-api";
 import { loadPageJuzIndex, getSegmentsForPage, findPageForAyah, type QuranSegment } from "@/lib/recitation-ai/page-juz-lookup";
 import { useQuranPreferences, type QuranReadingTheme, type QuranFrameStyle, type QuranHighlightStyle, type QuranPageMode } from "@/hooks/useQuranPreferences";
+import { useReadingBreakReminder } from "@/hooks/useReadingBreakReminder";
 import { useAyahPlayer } from "@/hooks/useAyahPlayer";
 import { SurahList } from "@/components/quran/SurahList";
 import { PageAyahActionSheet } from "@/components/quran/PageAyahActionSheet";
+import { ReadingBreakDialog } from "@/components/quran/ReadingBreakDialog";
+import { JumpPageModal } from "@/components/quran/JumpPageModal";
 import { ReciterDownloadManager } from "@/components/quran/ReciterDownloadManager";
 import { loadMushafPage, prefetchMushafPage, type MushafPageLayout, type QpcWord } from "@/lib/mushaf-v2-data";
 import { beginAbortScope, abortScope, guardAsync } from "@/lib/route-abort";
@@ -85,6 +88,7 @@ export default function MushafPageView() {
   const params = useParams<{ page?: string; surah?: string }>();
   const [, navigate] = useLocation();
   const { prefs, setPref } = useQuranPreferences();
+  const breakReminder = useReadingBreakReminder();
 
   const routePage = params.page
     ? Number(params.page)
@@ -98,8 +102,8 @@ export default function MushafPageView() {
   const [error, setError] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [isJumpModalVisible, setIsJumpModalVisible] = useState(false);
   const [selectedAyah, setSelectedAyah] = useState<{ surah: number; ayah: number } | null>(null);
-  const [pageInput, setPageInput] = useState(String(page));
   const [resumeBanner, setResumeBanner] = useState<number | null>(null);
   const [jumpSurah, setJumpSurah] = useState(1);
   const [jumpAyah, setJumpAyah] = useState(1);
@@ -123,7 +127,6 @@ export default function MushafPageView() {
   }, [routePage]);
 
   useEffect(() => {
-    setPageInput(String(page));
     savePagePosition(page);
   }, [page]);
 
@@ -276,13 +279,22 @@ export default function MushafPageView() {
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (settingsOpen || sidebarOpen || selectedAyah) return;
+      if (settingsOpen || sidebarOpen || selectedAyah || isJumpModalVisible) return;
       if (e.key === "ArrowLeft") nextPage();
       else if (e.key === "ArrowRight") prevPage();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [nextPage, prevPage, settingsOpen, sidebarOpen, selectedAyah]);
+  }, [nextPage, prevPage, settingsOpen, sidebarOpen, selectedAyah, isJumpModalVisible]);
+
+  const openJumpModal = useCallback(() => {
+    setIsJumpModalVisible(true);
+  }, []);
+
+  /** RN sketch handleJump → validate 1–604, save via goToPage, close modal. */
+  const handleJump = useCallback((pageNum: number) => {
+    goToPage(pageNum); // clamps + navigates; savePagePosition runs in page effect
+  }, [goToPage]);
 
   const activeSurahForPlayer = primarySegment?.segment.surah ?? 1;
   const activeSurahAyahCount = primarySegment ? getSurahMeta(activeSurahForPlayer).ayahs : 0;
@@ -394,7 +406,14 @@ export default function MushafPageView() {
 
                 <div className="qs-mushaf-footer-row">
                   <span className="qs-mushaf-footer-row__line" aria-hidden="true" />
-                  <span className="qs-mushaf-footer-row__page">صفحة {toArabicDigits(page)}</span>
+                  <button
+                    type="button"
+                    className="qs-mushaf-footer-row__page qs-mushaf-footer-row__page-btn"
+                    onClick={openJumpModal}
+                    aria-label={`الانتقال إلى صفحة — الحالية ${toArabicDigits(page)}`}
+                  >
+                    صفحة {toArabicDigits(page)}
+                  </button>
                   <span className="qs-mushaf-footer-row__line" aria-hidden="true" />
                 </div>
               </div>
@@ -405,20 +424,18 @@ export default function MushafPageView() {
             <button type="button" className="mpv-navbar__btn" onClick={prevPage} disabled={page <= 1} aria-label="الصفحة السابقة">
               <ChevronRight size={18} aria-hidden="true" />
             </button>
-            <div className="mpv-navbar__page-input-wrap">
-              <input
-                type="number"
-                className="mpv-navbar__page-input"
-                value={pageInput}
-                min={1}
-                max={TOTAL_PAGES}
-                onChange={(e) => setPageInput(e.target.value)}
-                onBlur={() => { const n = Number(pageInput); if (Number.isFinite(n)) goToPage(n); else setPageInput(String(page)); }}
-                onKeyDown={(e) => { if (e.key === "Enter") (e.target as HTMLInputElement).blur(); }}
-                aria-label="رقم الصفحة"
-              />
-              <span>من {toArabicDigits(TOTAL_PAGES)}</span>
-            </div>
+            <button
+              type="button"
+              className="mpv-navbar__page-jump"
+              onClick={openJumpModal}
+              aria-haspopup="dialog"
+              aria-expanded={isJumpModalVisible}
+              aria-label={`فتح الانتقال إلى صفحة — الحالية ${toArabicDigits(page)} من ${toArabicDigits(TOTAL_PAGES)}`}
+            >
+              <span>{toArabicDigits(page)}</span>
+              <span aria-hidden="true">/</span>
+              <span>{toArabicDigits(TOTAL_PAGES)}</span>
+            </button>
             <button type="button" className="mpv-navbar__btn" onClick={nextPage} disabled={page >= TOTAL_PAGES} aria-label="الصفحة التالية">
               <ChevronLeft size={18} aria-hidden="true" />
             </button>
@@ -617,6 +634,21 @@ export default function MushafPageView() {
           />
         </SectionErrorBoundary>
       )}
+
+      <ReadingBreakDialog
+        open={breakReminder.open}
+        title={breakReminder.title}
+        message={breakReminder.message}
+        onDismiss={breakReminder.dismiss}
+      />
+
+      <JumpPageModal
+        open={isJumpModalVisible}
+        currentPage={page}
+        totalPages={TOTAL_PAGES}
+        onClose={() => setIsJumpModalVisible(false)}
+        onJump={handleJump}
+      />
     </div>,
     document.body,
   );

@@ -8,6 +8,7 @@
  * Reader theme (light/dark paper) uses THEMES below — independent of app chrome.
  * Ayah numbers toggle (`showAyahNumbers` via useQuranPreferences) hides badges and
  * strips parenthetical markers via renderQuranText — same idea as the RN sketch.
+ * After 30 minutes of reading, a gentle break reminder appears (RN Alert.alert port).
  * `text-size-adjust: 100%` resists OS/browser text scaling (RN allowFontScaling={false}).
  */
 import { useCallback, useEffect, useState, type CSSProperties } from "react";
@@ -15,7 +16,9 @@ import { Hash, Maximize2, Minimize2, Moon, Sun } from "lucide-react";
 import { fetchSurahDetail, getSurahMeta, type Ayah } from "@/lib/quran-api";
 import { useQuranEngine } from "@/hooks/useQuranEngine";
 import { useQuranPreferences } from "@/hooks/useQuranPreferences";
+import { useReadingBreakReminder } from "@/hooks/useReadingBreakReminder";
 import { QuranActionBar } from "@/components/QuranActionBar";
+import { ReadingBreakDialog } from "@/components/quran/ReadingBreakDialog";
 import { toArabicDigits } from "@/lib/utils";
 import "@/styles/quran-engine-ui.css";
 
@@ -118,6 +121,7 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
   } = useQuranEngine();
   const { prefs, setPref } = useQuranPreferences();
   const showAyahNumbers = prefs.showAyahNumbers;
+  const breakReminder = useReadingBreakReminder();
 
   const surahNum = initialSurah ?? currentSurah;
   const [ayahs, setAyahs] = useState<Ayah[]>([]);
@@ -447,6 +451,13 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
       {isActionBarEnabled && actionAyah ? (
         <QuranActionBar ayah={actionAyah} onClose={() => clearActiveVerse()} />
       ) : null}
+
+      <ReadingBreakDialog
+        open={breakReminder.open}
+        title={breakReminder.title}
+        message={breakReminder.message}
+        onDismiss={breakReminder.dismiss}
+      />
     </div>
   );
 }
