@@ -46,6 +46,7 @@ function main() {
   check(typeof hooks.useQuranEngine === "function", "hooks.useQuranEngine");
   check(typeof hooks.useQuranAudioToggle === "function", "hooks.useQuranAudioToggle");
   check(typeof hooks.useQuranAudio === "function", "hooks.useQuranAudio");
+  check(typeof hooks.useImmersiveSystemUi === "function", "hooks.useImmersiveSystemUi");
   check(typeof hooks.useAyahPlayer === "function", "hooks.useAyahPlayer");
   check(typeof hooks.useColorScheme === "function", "hooks.useColorScheme");
   check(
@@ -53,6 +54,7 @@ function main() {
       (constants.VALID_PLAYBACK_RATES as readonly number[]).includes(0.5),
     "constants.VALID_PLAYBACK_RATES",
   );
+  check(constants.IMMERSIVE_PAPER_BG === "#F5F5DC", "constants.IMMERSIVE_PAPER_BG");
 
   check(typeof context.QuranEngineProvider === "function", "context.QuranEngineProvider");
   check(typeof context.getQuranEngineContext === "function", "context.getQuranEngineContext");

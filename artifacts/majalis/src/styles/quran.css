@@ -1387,7 +1387,7 @@
   --mf-gold-faint: rgba(14,110,82,0.18);
   --mf-bg-warm:    #153025;
   --mf-ink:        #1A1610;
-  --qs-parchment:  #F8F2E4;
+  --qs-parchment:  #F5F5DC; /* Flutter QuranReaderPage Color(0xFFF5F5DC) */
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
