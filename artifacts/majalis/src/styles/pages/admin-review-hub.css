@@ -1,20 +1,22 @@
-/* Admin Review Hub — minimalist moderation command center */
+/* Admin Review Hub — Flutter AdminDashboardApp visual port */
 
 .rh-shell {
-  --rh-bg: #f7f4ec;
-  --rh-surface: #fffcf6;
+  --rh-bg: #f8f9fa;
+  --rh-surface: #ffffff;
   --rh-ink: #1c1b19;
-  --rh-muted: #6b675f;
-  --rh-line: rgba(28, 27, 25, 0.1);
-  --rh-sage: #5f7a66;
-  --rh-sage-soft: rgba(95, 122, 102, 0.14);
-  --rh-gold: #b08d57;
-  --rh-gold-soft: rgba(176, 141, 87, 0.16);
-  --rh-rose: #a65d5d;
-  --rh-rose-soft: rgba(166, 93, 93, 0.14);
-  --rh-sidebar: #f1eee4;
+  --rh-muted: #6c757d;
+  --rh-line: #efefef;
+  --rh-sage: #2e7d32;
+  --rh-sage-soft: rgba(46, 125, 50, 0.1);
+  --rh-gold: #d4af37;
+  --rh-gold-soft: rgba(212, 175, 55, 0.16);
+  --rh-rose: #ff5252;
+  --rh-rose-soft: #ffebee;
+  --rh-brown: #795548;
+  --rh-brown-deep: rgba(121, 85, 72, 0.85);
+  --rh-sidebar: #1e1e2d;
   --rh-radius: 12px;
-  --rh-font: var(--font-primary, "IBM Plex Sans Arabic", "Noto Naskh Arabic", sans-serif);
+  --rh-font: var(--font-primary, "IBM Plex Sans Arabic", "Segoe UI", sans-serif);
   --rh-quran: var(--font-quran, "Amiri Quran", "Scheherazade New", serif);
 
   display: flex;
@@ -25,140 +27,110 @@
   direction: rtl;
 }
 
-.rh-shell[data-theme="dark"] {
-  --rh-bg: #121212;
-  --rh-surface: #1a1a1a;
-  --rh-ink: #f2efe8;
-  --rh-muted: #a8a49a;
-  --rh-line: rgba(242, 239, 232, 0.12);
-  --rh-sage: #8fad98;
-  --rh-sage-soft: rgba(143, 173, 152, 0.18);
-  --rh-gold: #d4b483;
-  --rh-gold-soft: rgba(212, 180, 131, 0.18);
-  --rh-rose: #d08a8a;
-  --rh-rose-soft: rgba(208, 138, 138, 0.18);
-  --rh-sidebar: #161616;
+.rh-shell--flutter .rh-sidebar {
+  width: 250px;
+  background: var(--rh-sidebar);
+  border: none;
+  color: #fff;
+  padding: 0 0 1.25rem;
 }
 
 .rh-sidebar {
-  width: 15.5rem;
+  width: 250px;
   flex-shrink: 0;
   background: var(--rh-sidebar);
-  border-inline-start: 1px solid var(--rh-line);
   display: flex;
   flex-direction: column;
-  padding: 1rem 0.75rem;
-  gap: 1rem;
-  transition: width 0.2s ease;
   z-index: 40;
-}
-
-.rh-sidebar.is-collapsed {
-  width: 4.25rem;
 }
 
 .rh-sidebar__brand {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 0.65rem;
-  padding: 0.35rem 0.25rem 0.75rem;
-  border-bottom: 1px solid var(--rh-line);
+  padding: 1.85rem 1rem 1.5rem;
 }
 
-.rh-sidebar__mark {
-  width: 2.1rem;
-  height: 2.1rem;
-  border-radius: 0.55rem;
-  display: grid;
-  place-items: center;
-  background: var(--rh-sage-soft);
-  color: var(--rh-sage);
-  font-weight: 700;
+.rh-sidebar__spark {
+  color: var(--rh-gold);
   flex-shrink: 0;
 }
 
 .rh-sidebar__title {
   margin: 0;
-  font-size: 0.92rem;
+  color: #fff;
+  font-size: 1.15rem;
   font-weight: 700;
-}
-
-.rh-sidebar__sub {
-  margin: 0.1rem 0 0;
-  font-size: 0.72rem;
-  color: var(--rh-muted);
-}
-
-.rh-sidebar__collapse {
-  margin-inline-start: auto;
-  border: none;
-  background: transparent;
-  color: var(--rh-muted);
-  cursor: pointer;
-  padding: 0.35rem;
-  border-radius: 0.4rem;
 }
 
 .rh-sidebar__nav {
   display: flex;
   flex-direction: column;
   gap: 0.25rem;
+  padding: 0 0.75rem;
   flex: 1;
 }
 
 .rh-sidebar__item {
   display: flex;
   align-items: center;
-  gap: 0.65rem;
+  gap: 0.75rem;
   width: 100%;
-  min-height: 2.55rem;
-  padding: 0.45rem 0.65rem;
+  min-height: 2.75rem;
+  padding: 0.45rem 0.85rem;
+  margin: 0.15rem 0;
   border: none;
-  border-radius: 0.65rem;
+  border-radius: 8px;
   background: transparent;
-  color: var(--rh-ink);
+  color: rgba(255, 255, 255, 0.7);
   font: inherit;
-  font-size: 0.88rem;
+  font-size: 0.9rem;
   text-align: start;
   cursor: pointer;
 }
 
 .rh-sidebar__item:hover {
-  background: rgba(0, 0, 0, 0.04);
-}
-
-.rh-shell[data-theme="dark"] .rh-sidebar__item:hover {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
 }
 
 .rh-sidebar__item.is-active {
-  background: var(--rh-surface);
-  box-shadow: inset 0 0 0 1px var(--rh-line);
+  background: var(--rh-brown-deep);
+  color: #fff;
+  font-weight: 700;
 }
 
-.rh-sidebar__item.is-primary.is-active {
-  background: var(--rh-sage-soft);
-  color: var(--rh-sage);
+.rh-sidebar__item-label {
+  flex: 1;
 }
 
-.rh-sidebar.is-collapsed .rh-sidebar__item {
-  justify-content: center;
-  padding-inline: 0.4rem;
+.rh-sidebar__badge {
+  padding: 0.1rem 0.5rem;
+  border-radius: 12px;
+  background: #f59e0b;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
 }
 
 .rh-sidebar__foot {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  padding-top: 0.5rem;
-  border-top: 1px solid var(--rh-line);
+  padding: 0 0.75rem;
+}
+
+.rh-sidebar__divider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.14);
+  margin: 0.5rem 0.35rem 0.75rem;
 }
 
 .rh-sidebar__site {
-  font-size: 0.8rem;
-  color: var(--rh-muted);
+  display: block;
+  margin-top: 0.5rem;
+  padding: 0.35rem 0.85rem;
+  color: rgba(255, 255, 255, 0.45);
   text-decoration: none;
-  padding: 0.35rem 0.65rem;
+  font-size: 0.82rem;
 }
 
 .rh-backdrop {
@@ -170,25 +142,88 @@
   min-width: 0;
   display: flex;
   flex-direction: column;
+  background: var(--rh-bg);
 }
 
-.rh-shell__top {
+.rh-shell__stack {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+}
+
+/* Header bar (Flutter _buildHeaderBar) */
+.rh-header {
+  height: 70px;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
-  gap: 0.75rem;
-  padding: 0.75rem 1.25rem 0;
+  gap: 1rem;
+  padding: 0 1.5rem;
+  background: #fff;
+  border-bottom: 1px solid var(--rh-line);
 }
 
-.rh-shell__crumb {
-  margin: 0;
-  font-size: 0.8rem;
+.rh-header__search {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  max-width: 400px;
+  width: 100%;
+  padding: 0.45rem 0.85rem;
+  background: #f1f3f5;
+  border-radius: 8px;
+  color: #9ca3af;
+}
+
+.rh-header__search input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  font: inherit;
+  font-size: 0.9rem;
+  color: var(--rh-ink);
+  outline: none;
+}
+
+.rh-header__spacer {
+  flex: 1;
+}
+
+.rh-header__icon {
+  border: none;
+  background: transparent;
   color: var(--rh-muted);
+  cursor: pointer;
+  padding: 0.35rem;
+  display: inline-flex;
+}
+
+.rh-header__user {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.rh-header__avatar {
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 999px;
+  background: var(--rh-brown);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+}
+
+.rh-header__name {
+  font-weight: 700;
+  font-size: 0.92rem;
 }
 
 .rh-mobile-toggle {
   display: none;
   border: 1px solid var(--rh-line);
-  background: var(--rh-surface);
+  background: #fff;
   border-radius: 0.5rem;
   width: 2.4rem;
   height: 2.4rem;
@@ -198,391 +233,316 @@
 }
 
 .rh-workspace {
-  padding: 1rem 1.25rem 2rem;
+  padding: 1.5rem;
   max-width: 72rem;
   width: 100%;
   margin-inline: auto;
 }
 
-.rh-workspace--hint {
+.rh-placeholder {
+  display: grid;
+  place-items: center;
+  min-height: 50vh;
   color: var(--rh-muted);
-  line-height: 1.7;
+  font-size: 1.05rem;
 }
 
-.rh-workspace__header {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  align-items: flex-start;
-  margin-bottom: 1.25rem;
-  flex-wrap: wrap;
-}
-
-.rh-workspace__eyebrow {
-  margin: 0;
-  font-size: 0.75rem;
-  letter-spacing: 0.04em;
-  color: var(--rh-gold);
-  font-weight: 600;
-}
-
-.rh-workspace__title {
-  margin: 0.2rem 0 0.35rem;
-  font-size: clamp(1.35rem, 2.2vw, 1.75rem);
-  font-weight: 700;
-}
-
-.rh-workspace__lead {
-  margin: 0;
-  color: var(--rh-muted);
-  font-size: 0.92rem;
-  max-width: 36rem;
-  line-height: 1.65;
-}
-
-.rh-workspace__header-actions {
-  display: flex;
-  gap: 0.5rem;
-  flex-wrap: wrap;
-}
-
-.rh-stats {
+/* Flutter stat metric cards */
+.rh-flutter-stats {
   list-style: none;
-  margin: 0 0 1.15rem;
+  margin: 0 0 1.5rem;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0.75rem;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
 }
 
-.rh-stats__card {
+.rh-flutter-stats__card {
   display: flex;
-  gap: 0.75rem;
   align-items: center;
-  padding: 0.9rem 1rem;
-  background: var(--rh-surface);
+  gap: 0.75rem;
+  padding: 1rem;
+  background: #fff;
   border: 1px solid var(--rh-line);
   border-radius: var(--rh-radius);
 }
 
-.rh-stats__icon {
-  width: 2.25rem;
-  height: 2.25rem;
-  border-radius: 0.55rem;
+.rh-flutter-stats__icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 999px;
   display: grid;
   place-items: center;
-  background: rgba(0, 0, 0, 0.04);
-  color: var(--rh-muted);
+  font-size: 0.95rem;
 }
 
-.rh-stats__card--sage .rh-stats__icon {
-  background: var(--rh-sage-soft);
-  color: var(--rh-sage);
+.rh-flutter-stats__icon--orange {
+  background: rgba(255, 152, 0, 0.12);
+  color: #f57c00;
 }
 
-.rh-stats__card--gold .rh-stats__icon {
-  background: var(--rh-gold-soft);
-  color: var(--rh-gold);
+.rh-flutter-stats__icon--green {
+  background: rgba(46, 125, 50, 0.12);
+  color: #2e7d32;
 }
 
-.rh-stats__value {
+.rh-flutter-stats__icon--blue {
+  background: rgba(33, 150, 243, 0.12);
+  color: #1976d2;
+}
+
+.rh-flutter-stats__label {
   margin: 0;
+  color: var(--rh-muted);
+  font-size: 0.82rem;
+}
+
+.rh-flutter-stats__value {
+  margin: 0.15rem 0 0;
   font-size: 1.25rem;
   font-weight: 700;
 }
 
-.rh-stats__label {
-  margin: 0.15rem 0 0;
-  font-size: 0.78rem;
-  color: var(--rh-muted);
-}
-
-.rh-filters {
+.rh-flutter-toolbar {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  align-items: center;
   gap: 0.75rem;
   margin-bottom: 1rem;
 }
 
-.rh-filters__search {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.55rem 0.85rem;
-  background: var(--rh-surface);
-  border: 1px solid var(--rh-line);
-  border-radius: 999px;
-  color: var(--rh-muted);
-}
-
-.rh-filters__search input {
-  flex: 1;
-  border: none;
-  background: transparent;
-  font: inherit;
-  color: var(--rh-ink);
-  outline: none;
-}
-
-.rh-filters__clear {
-  border: none;
-  background: transparent;
-  color: var(--rh-muted);
-  cursor: pointer;
-  display: inline-flex;
-}
-
-.rh-filters__streams,
-.rh-filters__tabs {
+.rh-flutter-chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.4rem;
+  gap: 0.5rem;
 }
 
-.rh-filters__streams button,
-.rh-filters__tab {
-  border: 1px solid var(--rh-line);
-  background: transparent;
+.rh-chip {
+  border: 1px solid #ddd;
+  background: #fff;
   color: var(--rh-ink);
   font: inherit;
-  font-size: 0.82rem;
-  padding: 0.4rem 0.75rem;
+  font-size: 0.86rem;
+  padding: 0.4rem 0.85rem;
   border-radius: 999px;
   cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.35rem;
 }
 
-.rh-filters__streams button.is-on,
-.rh-filters__tab.is-on {
-  background: var(--rh-ink);
-  color: var(--rh-bg);
-  border-color: var(--rh-ink);
-}
-
-.rh-shell[data-theme="dark"] .rh-filters__streams button.is-on,
-.rh-shell[data-theme="dark"] .rh-filters__tab.is-on {
-  background: var(--rh-gold);
-  color: #121212;
-  border-color: var(--rh-gold);
-}
-
-.rh-filters__count {
-  min-width: 1.25rem;
-  height: 1.25rem;
-  padding: 0 0.35rem;
-  border-radius: 999px;
-  background: var(--rh-gold-soft);
-  color: var(--rh-gold);
-  font-size: 0.72rem;
-  font-weight: 700;
-  display: inline-grid;
-  place-items: center;
-}
-
-.rh-filters__tab.is-on .rh-filters__count {
-  background: rgba(255, 255, 255, 0.2);
-  color: inherit;
-}
-
-.rh-filters__bulk {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.65rem 0.85rem;
-  border-radius: var(--rh-radius);
-  background: var(--rh-gold-soft);
-  border: 1px solid rgba(176, 141, 87, 0.25);
-  font-size: 0.88rem;
-}
-
-.rh-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.35rem;
-  min-height: 2.35rem;
-  padding: 0.35rem 0.85rem;
-  border-radius: 0.55rem;
-  border: 1px solid transparent;
-  font: inherit;
-  font-size: 0.84rem;
+.rh-chip.is-on {
+  background: var(--rh-brown);
+  border-color: var(--rh-brown);
+  color: #fff;
   font-weight: 600;
-  cursor: pointer;
 }
 
-.rh-btn--sage {
-  background: var(--rh-sage);
-  color: #fff;
-}
-
-.rh-btn--rose {
-  background: var(--rh-rose);
-  color: #fff;
-}
-
-.rh-btn--gold {
-  background: var(--rh-gold);
-  color: #1c1b19;
-}
-
-.rh-btn--ghost {
-  background: transparent;
-  border-color: var(--rh-line);
-  color: var(--rh-ink);
+.rh-flutter-toolbar__actions {
+  margin-inline-start: auto;
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
 }
 
 .rh-workspace__feed {
   display: flex;
   flex-direction: column;
-  gap: 0.85rem;
+  gap: 1rem;
+}
+
+.rh-workspace__empty,
+.rh-workspace__hint {
+  color: var(--rh-muted);
+  font-size: 0.88rem;
 }
 
 .rh-workspace__empty {
-  margin: 2rem 0;
   text-align: center;
+  margin: 2rem 0;
+}
+
+/* Flutter review cards */
+.rh-flutter-card {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: var(--rh-radius);
+  padding: 1.25rem;
+}
+
+.rh-flutter-card.is-selected {
+  box-shadow: inset 0 0 0 1px var(--rh-brown);
+}
+
+.rh-flutter-card__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem;
+  margin-bottom: 0.75rem;
+}
+
+.rh-flutter-card__user {
+  margin: 0;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.rh-flutter-card__verse-badge {
+  padding: 0.15rem 0.5rem;
+  border-radius: 6px;
+  background: #efebe9;
+  color: var(--rh-brown);
+  font-size: 0.75rem;
+}
+
+.rh-flutter-card__ai {
+  margin-inline-start: auto;
+  font-weight: 700;
+  font-size: 0.88rem;
+}
+
+.rh-flutter-card__muted {
+  color: var(--rh-muted);
+  font-size: 0.9rem;
+}
+
+.rh-flutter-card__quran {
+  width: 100%;
+  padding: 0.75rem;
+  border-radius: 8px;
+  background: #faf8f5;
+  margin-bottom: 0.75rem;
+}
+
+.rh-flutter-card__quran p {
+  margin: 0;
+  text-align: center;
+  font-family: var(--rh-quran);
+  font-size: 1.15rem;
+  font-weight: 700;
+  line-height: 1.9;
+}
+
+.rh-flutter-card__flag {
+  margin: 0.65rem 0 0;
+  color: var(--rh-rose);
+  font-size: 0.78rem;
+}
+
+.rh-flutter-card__flag--muted {
   color: var(--rh-muted);
 }
 
-.rh-card {
-  background: var(--rh-surface);
-  border: 1px solid var(--rh-line);
-  border-radius: var(--rh-radius);
-  padding: 1rem;
+.rh-flutter-card__divider {
+  height: 1px;
+  background: var(--rh-line);
+  margin: 1rem 0;
 }
 
-.rh-card.is-selected {
-  box-shadow: inset 0 0 0 1px var(--rh-gold);
-}
-
-.rh-card__head {
+.rh-flutter-card__actions {
   display: flex;
-  gap: 0.75rem;
-  align-items: flex-start;
-  margin-bottom: 0.85rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 0.65rem;
+}
+
+.rh-flutter-diff {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.65rem;
+  margin-bottom: 0.75rem;
+}
+
+.rh-flutter-diff__orig,
+.rh-flutter-diff__prop {
+  padding: 0.65rem;
+  border-radius: 6px;
+  font-size: 0.84rem;
+  line-height: 1.7;
+}
+
+.rh-flutter-diff__orig {
+  background: #ffebee;
+}
+
+.rh-flutter-diff__prop {
+  background: #e8f5e9;
+  font-weight: 700;
+}
+
+.rh-flutter-diff__label {
+  margin: 0 0 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  opacity: 0.75;
+}
+
+.rh-flutter-diff__orig p:last-child,
+.rh-flutter-diff__prop p:last-child {
+  margin: 0;
+}
+
+/* Linear audio player (Flutter sketch) */
+.rh-linear-audio {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.rh-linear-audio__play {
+  border: none;
+  background: transparent;
+  color: var(--rh-brown);
+  cursor: pointer;
+  display: inline-flex;
+  padding: 0;
+}
+
+.rh-linear-audio__track {
+  flex: 1;
+  min-width: 8rem;
+  height: 6px;
+  border: none;
+  border-radius: 999px;
+  background: #e5e7eb;
+  padding: 0;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.rh-linear-audio__bar {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  background: var(--rh-brown);
+  border-radius: inherit;
+}
+
+.rh-linear-audio__time {
+  font-size: 0.75rem;
+  color: var(--rh-muted);
+  white-space: nowrap;
+}
+
+.rh-linear-audio__error {
+  width: 100%;
+  margin: 0.25rem 0 0;
+  font-size: 0.75rem;
+  color: var(--rh-rose);
 }
 
 .rh-card__check {
-  padding-top: 0.25rem;
-}
-
-.rh-card__meta {
-  flex: 1;
-  min-width: 0;
-}
-
-.rh-card__title {
-  margin: 0;
-  font-size: 1rem;
-  font-weight: 700;
-}
-
-.rh-card__sub {
-  margin: 0.25rem 0 0;
-  font-size: 0.8rem;
-  color: var(--rh-muted);
-}
-
-.rh-card__badges {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.3rem;
-  justify-content: flex-end;
-}
-
-.rh-badge {
-  font-size: 0.68rem;
-  font-weight: 700;
-  padding: 0.2rem 0.45rem;
-  border-radius: 999px;
-  background: rgba(0, 0, 0, 0.06);
-  color: var(--rh-muted);
-  text-transform: uppercase;
-}
-
-.rh-badge--gold {
-  background: var(--rh-gold-soft);
-  color: var(--rh-gold);
-}
-
-.rh-badge--rose {
-  background: var(--rh-rose-soft);
-  color: var(--rh-rose);
-}
-
-.rh-badge--status-approved {
-  background: var(--rh-sage-soft);
-  color: var(--rh-sage);
-}
-
-.rh-badge--status-rejected {
-  background: var(--rh-rose-soft);
-  color: var(--rh-rose);
-}
-
-.rh-card__body--split {
-  display: grid;
-  grid-template-columns: 1.1fr 1fr;
-  gap: 1rem;
-  align-items: start;
-}
-
-.rh-card__label {
-  margin: 0 0 0.35rem;
-  font-size: 0.75rem;
-  color: var(--rh-muted);
-}
-
-.rh-card__uthmani {
-  margin: 0;
-  font-family: var(--rh-quran);
-  font-size: 1.35rem;
-  line-height: 2;
-  text-align: center;
-  padding: 0.75rem;
-  border-radius: 0.65rem;
-  background: rgba(95, 122, 102, 0.08);
-}
-
-.rh-card__score {
-  margin: 0.55rem 0 0;
-  font-size: 0.86rem;
-}
-
-.rh-card__override-note {
-  color: var(--rh-gold);
-  font-size: 0.8rem;
-}
-
-.rh-card__notes,
-.rh-card__feedback {
-  margin: 0.65rem 0 0;
-  font-size: 0.84rem;
-  color: var(--rh-muted);
-  line-height: 1.6;
-}
-
-.rh-card__actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.45rem;
-  margin-top: 0.9rem;
+  display: inline-flex;
 }
 
 .rh-card__panel {
   margin-top: 0.75rem;
   padding: 0.75rem;
   border-radius: 0.65rem;
-  background: rgba(0, 0, 0, 0.03);
+  background: #f8f9fa;
   display: flex;
   flex-direction: column;
   gap: 0.55rem;
-}
-
-.rh-shell[data-theme="dark"] .rh-card__panel {
-  background: rgba(255, 255, 255, 0.04);
 }
 
 .rh-card__panel textarea,
@@ -590,7 +550,7 @@
   width: 100%;
   border: 1px solid var(--rh-line);
   border-radius: 0.5rem;
-  background: var(--rh-surface);
+  background: #fff;
   color: var(--rh-ink);
   font: inherit;
   padding: 0.55rem 0.7rem;
@@ -603,135 +563,62 @@
   font-size: 0.84rem;
 }
 
-/* Waveform player */
-.rh-waveform {
-  padding: 0.75rem;
-  border-radius: 0.65rem;
-  border: 1px solid var(--rh-line);
-  background: rgba(0, 0, 0, 0.02);
+.rh-card__feedback {
+  margin: 0.65rem 0 0;
+  font-size: 0.84rem;
+  color: var(--rh-muted);
 }
 
-.rh-waveform__row {
-  display: flex;
+.rh-btn {
+  display: inline-flex;
   align-items: center;
-  gap: 0.65rem;
-}
-
-.rh-waveform__play {
-  width: 2.35rem;
-  height: 2.35rem;
-  border-radius: 999px;
-  border: none;
-  background: var(--rh-sage);
-  color: #fff;
-  display: grid;
-  place-items: center;
-  cursor: pointer;
-  flex-shrink: 0;
-}
-
-.rh-waveform__bars {
-  flex: 1;
-  height: 3rem;
-  display: flex;
-  align-items: flex-end;
-  gap: 2px;
-  border: none;
-  background: transparent;
-  padding: 0;
-  cursor: pointer;
-}
-
-.rh-waveform__bar {
-  flex: 1;
-  min-width: 2px;
-  border-radius: 2px 2px 0 0;
-  background: rgba(95, 122, 102, 0.25);
-}
-
-.rh-waveform__bar.is-on {
-  background: var(--rh-sage);
-}
-
-.rh-waveform__speeds {
-  display: flex;
+  justify-content: center;
   gap: 0.35rem;
-  margin-top: 0.55rem;
-}
-
-.rh-waveform__speed {
-  border: 1px solid var(--rh-line);
-  background: transparent;
-  color: var(--rh-ink);
+  min-height: 2.35rem;
+  padding: 0.35rem 0.9rem;
+  border-radius: 0.5rem;
+  border: 1px solid transparent;
   font: inherit;
-  font-size: 0.75rem;
-  padding: 0.25rem 0.55rem;
-  border-radius: 999px;
+  font-size: 0.86rem;
+  font-weight: 600;
   cursor: pointer;
 }
 
-.rh-waveform__speed.is-on {
-  background: var(--rh-gold-soft);
-  border-color: var(--rh-gold);
-  color: var(--rh-gold);
+.rh-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
 }
 
-.rh-waveform__error {
-  margin: 0.45rem 0 0;
-  font-size: 0.78rem;
-  color: var(--rh-rose);
+.rh-btn--sage {
+  background: #2e7d32;
+  color: #fff;
 }
 
-/* Diff viewer */
-.rh-diff {
-  margin-top: 0.25rem;
+.rh-btn--brown {
+  background: var(--rh-brown);
+  color: #fff;
 }
 
-.rh-diff__cols {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.75rem;
+.rh-btn--rose {
+  background: #c62828;
+  color: #fff;
 }
 
-.rh-diff__label {
-  margin: 0 0 0.35rem;
-  font-size: 0.75rem;
-  color: var(--rh-muted);
-  font-weight: 600;
+.rh-btn--gold {
+  background: var(--rh-gold);
+  color: #1c1b19;
 }
 
-.rh-diff__body {
-  margin: 0;
-  padding: 0.7rem;
-  border-radius: 0.55rem;
-  border: 1px solid var(--rh-line);
-  font-size: 0.9rem;
-  line-height: 1.75;
-  min-height: 4.5rem;
-}
-
-.rh-diff__body--muted {
-  color: var(--rh-muted);
-  background: rgba(0, 0, 0, 0.02);
-}
-
-.rh-diff__same {
+.rh-btn--outline {
+  background: transparent;
+  border-color: #ccc;
   color: var(--rh-ink);
 }
 
-.rh-diff__add {
-  background: var(--rh-sage-soft);
-  color: var(--rh-sage);
-  border-radius: 0.2rem;
-  padding: 0 0.15rem;
-}
-
-.rh-diff__del {
-  background: var(--rh-rose-soft);
-  color: var(--rh-rose);
-  text-decoration: line-through;
-  border-radius: 0.2rem;
-  padding: 0 0.15rem;
+.rh-btn--ghost {
+  background: transparent;
+  border-color: var(--rh-line);
+  color: var(--rh-muted);
 }
 
 .rh-toast {
@@ -739,8 +626,8 @@
   bottom: 1.25rem;
   left: 50%;
   transform: translateX(-50%);
-  background: var(--rh-ink);
-  color: var(--rh-bg);
+  background: #1e1e2d;
+  color: #fff;
   padding: 0.65rem 1rem;
   border-radius: 999px;
   font-size: 0.86rem;
@@ -748,13 +635,20 @@
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
 }
 
+/* Keep older waveform/diff utilities usable if imported elsewhere */
+.rh-waveform,
+.rh-diff,
+.rh-stats,
+.rh-filters {
+  /* legacy hooks retained for optional embeds */
+}
+
 @media (max-width: 1024px) {
-  .rh-stats {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .rh-flutter-stats {
+    grid-template-columns: 1fr;
   }
 
-  .rh-card__body--split,
-  .rh-diff__cols {
+  .rh-flutter-diff {
     grid-template-columns: 1fr;
   }
 }
@@ -764,17 +658,13 @@
     position: fixed;
     inset-block: 0;
     inset-inline-end: 0;
-    transform: translateX(-110%);
-    transition: transform 0.2s ease;
-    box-shadow: -8px 0 32px rgba(0, 0, 0, 0.15);
-  }
-
-  .rh-shell[dir="rtl"] .rh-sidebar {
     transform: translateX(110%);
+    transition: transform 0.2s ease;
+    box-shadow: -8px 0 32px rgba(0, 0, 0, 0.25);
   }
 
   .rh-sidebar.is-open {
-    transform: translateX(0) !important;
+    transform: translateX(0);
   }
 
   .rh-backdrop.is-open {
@@ -789,7 +679,12 @@
     display: grid;
   }
 
-  .rh-stats {
-    grid-template-columns: 1fr;
+  .rh-header__name {
+    display: none;
+  }
+
+  .rh-flutter-card__ai {
+    margin-inline-start: 0;
+    width: 100%;
   }
 }
