@@ -2,11 +2,12 @@
  * QuranActionBar — floating ayah actions (audio, tafseer, bookmark, share).
  */
 import { useEffect, useState } from "react";
-import { BookOpen, Bookmark, Pause, Play, Repeat, Share2, X } from "lucide-react";
+import { BookOpen, Bookmark, ChevronDown, Mic2, Pause, Play, Repeat, Share2, X } from "lucide-react";
 import { getAudioEngine, type RepeatMode } from "@/core/audio/AudioEngine";
 import { getTafseerService } from "@/core/tafseer/TafseerService";
 import { useQuranEngine } from "@/hooks/useQuranEngine";
 import { getSurahMeta } from "@/lib/quran-api";
+import { getFeaturedReciters, getReciter, RECITERS, saveReciterId } from "@/lib/quran-audio";
 import { shareAyahAsText } from "@/lib/share-ayah";
 import { toArabicDigits } from "@/lib/utils";
 import "@/styles/quran-engine-ui.css";
@@ -35,7 +36,7 @@ function TafsirSkeleton() {
 }
 
 export function QuranActionBar({ ayah, onClose }: QuranActionBarProps) {
-  const { currentReciter, db } = useQuranEngine();
+  const { currentReciter, db, setReciter } = useQuranEngine();
   const audio = getAudioEngine();
   const tafseer = getTafseerService();
 
@@ -48,6 +49,8 @@ export function QuranActionBar({ ayah, onClose }: QuranActionBarProps) {
   const [tafsirLoading, setTafsirLoading] = useState(false);
   const [status, setStatus] = useState<string | null>(null);
   const [statusWarn, setStatusWarn] = useState(false);
+  const [reciterOpen, setReciterOpen] = useState(false);
+  const [showAllReciters, setShowAllReciters] = useState(false);
 
   useEffect(() => {
     return audio.onSnapshot((snap) => {
@@ -81,6 +84,17 @@ export function QuranActionBar({ ayah, onClose }: QuranActionBarProps) {
   if (!ayah) return null;
 
   const surahName = getSurahMeta(ayah.surah).name;
+  const activeReciter = getReciter(currentReciter);
+  const listedReciters = showAllReciters ? RECITERS : getFeaturedReciters();
+
+  const pickReciter = (id: string) => {
+    setReciter(id);
+    saveReciterId(id);
+    audio.setReciter(id);
+    setReciterOpen(false);
+    setStatusWarn(false);
+    setStatus(`القارئ: ${getReciter(id).nameAr}`);
+  };
 
   const togglePlay = async () => {
     setStatusWarn(false);
@@ -188,6 +202,41 @@ export function QuranActionBar({ ayah, onClose }: QuranActionBarProps) {
       </header>
 
       <p className="qe-abar__preview">{ayah.text.length > 140 ? `${ayah.text.slice(0, 140)}…` : ayah.text}</p>
+
+      <button
+        type="button"
+        className={`qe-abar__reciter-toggle${reciterOpen ? " is-on" : ""}`}
+        onClick={() => setReciterOpen((v) => !v)}
+        aria-expanded={reciterOpen}
+      >
+        <Mic2 size={14} aria-hidden="true" />
+        <span>{activeReciter.nameAr}</span>
+        <ChevronDown size={14} aria-hidden="true" className={reciterOpen ? "is-open" : undefined} />
+      </button>
+
+      {reciterOpen ? (
+        <div className="qe-abar__reciter-list" role="listbox" aria-label="أشهر القراء">
+          {listedReciters.map((r) => (
+            <button
+              key={r.id}
+              type="button"
+              role="option"
+              aria-selected={r.id === activeReciter.id}
+              className={`qe-abar__reciter-item${r.id === activeReciter.id ? " is-on" : ""}`}
+              onClick={() => pickReciter(r.id)}
+            >
+              {r.nameAr}
+            </button>
+          ))}
+          <button
+            type="button"
+            className="qe-abar__reciter-more"
+            onClick={() => setShowAllReciters((v) => !v)}
+          >
+            {showAllReciters ? "أشهر القراء فقط" : `جميع القراء (${toArabicDigits(RECITERS.length)})`}
+          </button>
+        </div>
+      ) : null}
 
       <div className="qe-abar__actions" role="toolbar" aria-label="إجراءات سريعة">
         <button

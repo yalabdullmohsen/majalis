@@ -2,10 +2,11 @@
  * HomeDashboard — continue reading, daily progress, recent bookmarks/reflections.
  */
 import { useEffect, useState } from "react";
-import { BookOpen, Bookmark, Flame, Moon, Play, Sun } from "lucide-react";
+import { BookOpen, Bookmark, Flame, Mic2, Moon, Play, Sun } from "lucide-react";
 import { useQuranEngine } from "@/hooks/useQuranEngine";
 import { useThemePreference } from "@/components/ThemePreferenceProvider";
 import { getSurahMeta } from "@/lib/quran-api";
+import { getFeaturedReciters, getReciter, RECITERS, saveReciterId } from "@/lib/quran-audio";
 import { toArabicDigits } from "@/lib/utils";
 import type { BookmarkRecord, ReadingProgress } from "@/core/quran/DatabaseManager";
 import "@/styles/quran-engine-ui.css";
@@ -20,10 +21,12 @@ export function HomeDashboard({ onContinue, onOpenViewer }: HomeDashboardProps) 
     currentSurah,
     currentAyah,
     currentPage,
+    currentReciter,
     hydrating,
     db,
     loadLastReadingProgress,
     setActiveVerse,
+    setReciter,
   } = useQuranEngine();
   const { resolvedTheme, toggleDark } = useThemePreference();
 
@@ -31,6 +34,7 @@ export function HomeDashboard({ onContinue, onOpenViewer }: HomeDashboardProps) 
   const [bookmarks, setBookmarks] = useState<BookmarkRecord[]>([]);
   const [pagesToday, setPagesToday] = useState(0);
   const [loadError, setLoadError] = useState<string | null>(null);
+  const [showAllReciters, setShowAllReciters] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
@@ -67,11 +71,18 @@ export function HomeDashboard({ onContinue, onOpenViewer }: HomeDashboardProps) 
   const target = 5;
   const pct = Math.min(100, Math.round((pagesToday / target) * 100));
   const isDark = resolvedTheme === "dark";
+  const activeReciter = getReciter(currentReciter);
+  const listedReciters = showAllReciters ? RECITERS : getFeaturedReciters();
 
   const continueReading = () => {
     setActiveVerse({ surah, ayah, page }, { persist: true });
     if (progress) onContinue?.(progress);
     onOpenViewer?.(surah, ayah);
+  };
+
+  const pickReciter = (id: string) => {
+    setReciter(id);
+    saveReciterId(id);
   };
 
   return (
@@ -119,6 +130,39 @@ export function HomeDashboard({ onContinue, onOpenViewer }: HomeDashboardProps) 
         <button type="button" className="qe-dash__cta" onClick={continueReading}>
           <Play size={16} aria-hidden="true" />
           متابعة القراءة
+        </button>
+      </section>
+
+      <section className="qe-dash__card">
+        <header>
+          <h2 className="qe-dash__h2-with-icon">
+            <Mic2 size={16} aria-hidden="true" />
+            أشهر القراء
+          </h2>
+          <p>القارئ الحالي: {activeReciter.nameAr}</p>
+        </header>
+        <div className="qe-reciter-grid" role="listbox" aria-label="أشهر القراء">
+          {listedReciters.map((r) => (
+            <button
+              key={r.id}
+              type="button"
+              role="option"
+              aria-selected={r.id === activeReciter.id}
+              className={`qe-reciter-chip${r.id === activeReciter.id ? " is-on" : ""}`}
+              onClick={() => pickReciter(r.id)}
+            >
+              {r.nameAr}
+            </button>
+          ))}
+        </div>
+        <button
+          type="button"
+          className="qe-dash__more-reciters"
+          onClick={() => setShowAllReciters((v) => !v)}
+        >
+          {showAllReciters
+            ? "عرض أشهر القراء فقط"
+            : `عرض جميع القراء (${toArabicDigits(RECITERS.length)})`}
         </button>
       </section>
 
