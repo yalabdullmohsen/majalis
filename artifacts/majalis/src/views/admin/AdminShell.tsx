@@ -67,6 +67,15 @@ const NAV_GROUPS: Array<{ title?: string; items: NavItem[] }> = [
     ],
   },
   {
+    title: "المراجعة",
+    items: [
+      { key: "submissions", label: "مقترحات المجتمع", Icon: MessageSquare },
+      { key: "reports", label: "التقارير", Icon: Flag },
+      { key: "scholarly-verification", label: "التوثيق العلمي", Icon: ShieldCheck },
+      { key: "religious-calendar-review", label: "مراجعة التقويم الشرعي", Icon: ShieldCheck },
+    ],
+  },
+  {
     title: "المحتوى",
     items: [
       { key: "categories", label: "أبواب العلم (تصنيفات)", Icon: FolderTree },
@@ -89,7 +98,6 @@ const NAV_GROUPS: Array<{ title?: string; items: NavItem[] }> = [
       { key: "dawah",          label: "التعريف بالإسلام", Icon: Compass },
       { key: "learning-paths", label: "المسارات العلمية", Icon: Route },
       { key: "week-day-facts", label: "أيام الأسبوع",     Icon: CalendarClock },
-      { key: "religious-calendar-review", label: "مراجعة التقويم الشرعي", Icon: ShieldCheck },
       { key: "arbaeen-love",   label: "الأربعون في محبة رب العالمين", Icon: Heart },
       { key: "researches",     label: "الأبحاث الشرعية", Icon: BookOpen },
     ],
@@ -98,8 +106,6 @@ const NAV_GROUPS: Array<{ title?: string; items: NavItem[] }> = [
     title: "المجتمع",
     items: [
       { key: "users",       label: "المستخدمون",    Icon: Users },
-      { key: "submissions", label: "مقترحات",       Icon: MessageSquare },
-      { key: "reports",     label: "التقارير",      Icon: Flag },
       { key: "error-logs",  label: "سجل الأخطاء",   Icon: AlertTriangle },
     ],
   },
@@ -122,7 +128,6 @@ const NAV_GROUPS: Array<{ title?: string; items: NavItem[] }> = [
     items: [
       { key: "search-analytics",       label: "تحليل البحث",    Icon: Search },
       { key: "verified-knowledge",     label: "المعرفة الموثقة", Icon: CheckCircle2 },
-      { key: "scholarly-verification", label: "التوثيق العلمي",  Icon: ShieldCheck },
       { key: "knowledge-reasoning",    label: "محرك الاستدلال",  Icon: MessageCircle },
     ],
   },
@@ -276,10 +281,13 @@ export function AdminShell({ section, onSectionChange, children }: AdminShellPro
 
           {/* روابط سريعة */}
           <div className="admin-sidebar__quicklinks">
+            <Link href="/admin/review-hub" className="admin-quicklink admin-quicklink--accent">
+              خانة المراجعة
+            </Link>
             <Link href="/admin/auto-content" className="admin-quicklink">
               ⬆ الاستيراد التلقائي
             </Link>
-            <Link href="/admin/autonomous-platform" className="admin-quicklink admin-quicklink--accent">
+            <Link href="/admin/autonomous-platform" className="admin-quicklink">
               ⚙ المنصة الذاتية AKP
             </Link>
             <Link href="/" className="admin-quicklink">
