@@ -4,6 +4,8 @@
  * during prolonged reading/audio while keeping playback + reading timers alive.
  */
 
+import { monoNow } from "@/lib/monotonic-time";
+
 export type PowerSaverMode = "off" | "balanced" | "aggressive";
 
 export type PowerSaverState = {
@@ -135,7 +137,7 @@ export function beginPowerSaverSession(opts?: { immediate?: boolean }): PowerSav
   ensureVisibilityBinding();
   const prefs = loadPowerSaverPrefs();
   state.sessionActive = true;
-  state.startedAt = Date.now();
+  state.startedAt = monoNow();
   state.audioExempt = true;
   state.readingTimerExempt = true;
 
@@ -218,7 +220,7 @@ function rebalanceManagedIntervals(): void {
  * Based on maxUiHz under power-saver.
  */
 let lastUiTick = 0;
-export function shouldThrottleUiRender(now = Date.now()): boolean {
+export function shouldThrottleUiRender(now = monoNow()): boolean {
   if (!state.throttleBackground) return false;
   const minGap = 1000 / Math.max(1, state.maxUiHz);
   if (now - lastUiTick < minGap) return true;

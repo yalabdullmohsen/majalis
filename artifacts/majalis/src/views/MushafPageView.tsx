@@ -21,6 +21,7 @@ import { loadMushafPage, prefetchMushafPage, type MushafPageLayout, type QpcWord
 import { MushafPageV2 } from "@/components/quran/MushafPageV2";
 import { goBackOrFallback } from "@/lib/navigation-back";
 import { SectionErrorBoundary } from "@/components/ErrorBoundary";
+import { addPassiveSwipeListener } from "@/lib/gesture-raf";
 import { afterNextPaint, yieldToMain } from "@/lib/yield-to-main";
 import "@/styles/quran.css";
 import "@/styles/mushaf-v2.css";
@@ -104,7 +105,7 @@ export default function MushafPageView() {
      تُبدِّل ظهور الشريطين العلوي/السفلي، مستقلة عن chromeVisible الخاصة
      مستقلة عن باقي التبديلات — تبديل دائم لا اختفاء تلقائي بعد مهلة). */
   const [textChromeVisible, setTextChromeVisible] = useState(true);
-  const touchStartX = useRef<number | null>(null);
+  const pageBodyRef = useRef<HTMLDivElement | null>(null);
 
   // ── استئناف تلقائي: عند الدخول دون رقم صفحة صريح في الرابط، نبدأ من آخر موضع محفوظ محليًا ──
   useEffect(() => {
@@ -251,15 +252,19 @@ export default function MushafPageView() {
     goBackOrFallback(`/mushaf/page/${page}`, "/quran-hub");
   }, [page]);
 
-  // ── سحب أفقي RTL صحيح الاتجاه: تحريك الإصبع لليسار = الصفحة التالية (تقدّم في القراءة) ──
-  const onTouchStart = (e: React.TouchEvent) => { touchStartX.current = e.touches[0].clientX; };
-  const onTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartX.current === null) return;
-    const delta = e.changedTouches[0].clientX - touchStartX.current;
-    touchStartX.current = null;
-    if (Math.abs(delta) < 55) return;
-    if (delta < 0) nextPage(); else prevPage();
-  };
+  // ── سحب أفقي RTL: مستمعات passive + rAF حتى لا تُحجب لمسات قلب الصفحة (INP) ──
+  useEffect(() => {
+    const el = pageBodyRef.current;
+    if (!el) return;
+    return addPassiveSwipeListener(el, {
+      rtl: true,
+      thresholdPx: 55,
+      onSwipe: (dir) => {
+        if (dir === "next") nextPage();
+        else prevPage();
+      },
+    });
+  }, [nextPage, prevPage]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -326,9 +331,8 @@ export default function MushafPageView() {
               للوصول بلوحة المفاتيح في مكان آخر بالصفحة. */}
           {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
           <div
+            ref={pageBodyRef}
             className="mpv-body"
-            onTouchStart={onTouchStart}
-            onTouchEnd={onTouchEnd}
             onClick={() => setTextChromeVisible((v) => !v)}
           >
             {resumeBanner && (

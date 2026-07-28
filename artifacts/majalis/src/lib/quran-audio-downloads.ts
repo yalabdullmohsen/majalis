@@ -10,6 +10,8 @@
  * السورة كاملة (getOfflineSurahUrl)، لا خطوة آية-بآية.
  */
 import { RECITERS, getSurahAudioUrl } from "@/lib/quran-audio";
+import { pooledFetch } from "@/lib/fetch-pool";
+import { validateAudioBlob, validateAudioResponse } from "@/lib/audio-cache-integrity";
 
 const DB_NAME = "majalis-quran-audio";
 const DB_VERSION = 1;
@@ -122,6 +124,23 @@ export async function getAllDownloadStatuses(): Promise<ReciterDownloadStatus[]>
 
 export type DownloadProgress = { surah: number; done: number; total: number };
 
+/** Quiet background re-fetch when a stored blob fails integrity. */
+async function revalidateSurahAudio(reciterId: string, surah: number): Promise<void> {
+  try {
+    const res = await pooledFetch(getSurahAudioUrl(surah, reciterId), {
+      priority: "low",
+      dedupeKey: `audio-revalidate:${reciterId}:${surah}`,
+      timeoutMs: 60_000,
+    });
+    const checked = await validateAudioResponse(res);
+    if (checked.ok && checked.blob) {
+      await putBlob(reciterId, surah, checked.blob);
+    }
+  } catch {
+    /* keep offline miss — live URL still works */
+  }
+}
+
 /** يحمّل السور 1..114 تسلسليًا (لا تزامنًا — يتفادى إغراق الشبكة/الذاكرة على الجوال)، يتخطى ما هو محمَّل مسبقًا. */
 export async function downloadReciter(
   reciterId: string,
@@ -132,11 +151,27 @@ export async function downloadReciter(
   for (let surah = 1; surah <= TOTAL_SURAHS; surah++) {
     if (isCancelled()) return;
     if (!existing.has(surah)) {
-      const res = await fetch(getSurahAudioUrl(surah, reciterId));
+      const res = await pooledFetch(getSurahAudioUrl(surah, reciterId), {
+        priority: "low",
+        dedupeKey: `audio-dl:${reciterId}:${surah}`,
+        timeoutMs: 120_000,
+      });
       if (!res.ok) throw new Error(`فشل تنزيل السورة ${surah}: ${res.status}`);
-      const blob = await res.blob();
+      const checked = await validateAudioResponse(res);
+      if (!checked.ok || !checked.blob) {
+        throw new Error(`ملف صوت تالف أو غير مكتمل للسورة ${surah}`);
+      }
       if (isCancelled()) return;
-      await putBlob(reciterId, surah, blob);
+      await putBlob(reciterId, surah, checked.blob);
+    } else {
+      // Re-validate existing blob; replace quietly if truncated/corrupt
+      const blob = await getBlob(reciterId, surah);
+      const check = await validateAudioBlob(blob);
+      if (!check.ok) {
+        await deleteBlob(reciterId, surah);
+        if (isCancelled()) return;
+        await revalidateSurahAudio(reciterId, surah);
+      }
     }
     onProgress({ surah, done: surah, total: TOTAL_SURAHS });
   }
@@ -150,7 +185,15 @@ export async function deleteReciterDownloads(reciterId: string): Promise<void> {
 /** رابط تشغيل محلي (Object URL) للسورة إن كانت مُنزَّلة، وإلا null (يُستخدَم عندها الرابط الحي كالمعتاد). استدعِ URL.revokeObjectURL على النتيجة عند انتهاء الاستخدام. */
 export async function getOfflineSurahUrl(reciterId: string, surah: number): Promise<string | null> {
   const blob = await getBlob(reciterId, surah);
-  return blob ? URL.createObjectURL(blob) : null;
+  const check = await validateAudioBlob(blob);
+  if (!check.ok) {
+    if (blob) {
+      await deleteBlob(reciterId, surah).catch(() => undefined);
+      void revalidateSurahAudio(reciterId, surah);
+    }
+    return null;
+  }
+  return URL.createObjectURL(blob!);
 }
 
 export async function estimateStorageUsage(): Promise<{ usage: number; quota: number } | null> {

@@ -4,6 +4,7 @@
  */
 
 import { measureAsync } from "@/lib/performance-monitor";
+import { monoNow } from "@/lib/monotonic-time";
 
 export const REQUEST_TIMEOUT_MS = 8000;
 /** Hard ceiling for page/route loading guards — never show loading longer than this. */
@@ -83,7 +84,7 @@ export async function requestFetch(input: RequestInfo | URL, init: RequestInit =
   const promise = RequestManager.fetch(input, { ...init, label });
   if (dedupeKey) {
     const controller = new AbortController();
-    inflight.set(dedupeKey, { promise, controller, started: Date.now() });
+    inflight.set(dedupeKey, { promise, controller, started: monoNow() });
     void promise.finally(() => {
       if (inflight.get(dedupeKey)?.promise === promise) inflight.delete(dedupeKey);
     });
@@ -188,7 +189,7 @@ export class RequestManager {
       if (inflight.get(dedupeKey)?.promise === promise) inflight.delete(dedupeKey);
     });
 
-    inflight.set(dedupeKey, { promise, controller, started: Date.now() });
+    inflight.set(dedupeKey, { promise, controller, started: monoNow() });
     return promise;
   }
 

@@ -10,34 +10,40 @@ import {
   type DevotionalSection,
   type TimeAwarePrompt,
 } from "@/lib/devotional-balance-engine";
+import { monoElapsed, monoNow } from "@/lib/monotonic-time";
 
 /** Devotional balance & time-awareness — logic only. */
 export function useDevotionalBalance(section?: DevotionalSection) {
   const [state, setState] = useState<DevotionalBalanceState>(() => loadDevotionalBalance());
   const [prompts, setPrompts] = useState<TimeAwarePrompt[]>(() => generateTimeAwarePrompts());
-  const startedAt = useRef<number>(Date.now());
+  const startedAt = useRef<number>(monoNow());
 
   useEffect(() => {
+    let cancelled = false;
     void loadDevotionalBalanceAsync().then((s) => {
+      if (cancelled) return;
       setState(s);
       setPrompts(generateTimeAwarePrompts({ state: s }));
     });
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   useEffect(() => {
     if (!section || typeof document === "undefined") return;
-    startedAt.current = Date.now();
+    startedAt.current = monoNow();
     const flush = () => {
-      const dwell = Date.now() - startedAt.current;
+      const dwell = monoElapsed(startedAt.current);
       if (dwell < 1_000) return;
       const next = recordSectionTime(section, dwell);
       setState(next);
       setPrompts(generateTimeAwarePrompts({ state: next }));
-      startedAt.current = Date.now();
+      startedAt.current = monoNow();
     };
     const onVis = () => {
       if (document.visibilityState === "hidden") flush();
-      else startedAt.current = Date.now();
+      else startedAt.current = monoNow();
     };
     document.addEventListener("visibilitychange", onVis);
     const interval = window.setInterval(flush, 60_000);

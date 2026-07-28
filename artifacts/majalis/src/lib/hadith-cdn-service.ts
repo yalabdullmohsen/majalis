@@ -138,7 +138,7 @@ export async function fetchHadithByNumber(
 ): Promise<CdnHadith | null> {
   const url = `${CDN_BASE}/${cdnEditionSlug(collection)}/${number}.min.json`;
   try {
-    const res = await pooledFetch(url, { dedupeKey: `hadith-cdn:n:${collection}:${number}`, timeoutMs: 15_000 });
+    const res = await pooledFetch(url, { dedupeKey: `hadith-cdn:n:${collection}:${number}`, timeoutMs: 15_000, priority: "low" });
     if (!res.ok) return null;
     const data = await res.json();
     return data.hadiths?.[0] ?? data ?? null;

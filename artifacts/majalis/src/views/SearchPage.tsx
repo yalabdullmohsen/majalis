@@ -10,25 +10,19 @@ import { SearchSuggestions } from "@/components/SearchSuggestions";
 import { SheikhAvatar } from "@/components/lessons/SheikhAvatar";
 import { canonicalizeLessonPublicId } from "@/lib/lesson-id-aliases";
 import { findSeedLessonById } from "@/lib/lessons-seed";
+import { normalizeArabic } from "@/shared/arabic-normalize";
+import { buildSafeHighlightPattern } from "@/lib/safe-regex";
 import "@/styles/pages/search.css";
 
 /* ── تمييز مصطلح البحث في النصوص ── */
 const ARABIC_DIACRITICS_RE = /[ؐ-ًؚ-ٰٟٓ-ٕ]/;
 
 function buildHighlightPattern(query: string): RegExp | null {
-  const words = query.trim().split(/\s+/).filter(w => w.length >= 2);
+  const words = query.trim().split(/\s+/).filter((w) => w.length >= 2);
   if (!words.length) return null;
-  const alts = words.map(w => {
-    const n = normalizeArabic(w)
-      .replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
-      .replace(/ه/g, "[هة]")
-      .replace(/ي/g, "[يى]")
-      .replace(/ا/g, "[اأإآٱ]")
-      .replace(/و/g, "[وؤ]");
-    return `(${n})`;
-  });
-  try { return new RegExp(alts.join("|"), "g"); }
-  catch { return null; }
+  // Normalize each word first, then build a bounded safe pattern (no nested quantifiers).
+  const normalizedQuery = words.map((w) => normalizeArabic(w)).join(" ");
+  return buildSafeHighlightPattern(normalizedQuery);
 }
 
 function highlightText(text: string, query: string): React.ReactNode {
@@ -62,7 +56,6 @@ import {
   trackSearchClick,
   type IntelligentSearchResult,
 } from "@/lib/scholarly-intelligence-service";
-import { normalizeArabic } from "@/shared/arabic-normalize";
 
 const EMPTY: SearchResults = {
   lessons: [],

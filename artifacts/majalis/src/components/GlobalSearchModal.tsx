@@ -81,8 +81,10 @@ function useIsMobile() {
 
 function Highlight({ text, query }: { text: string; query: string }) {
   if (!query.trim() || !text) return <>{text}</>;
-  const nText  = normalizeArabic(text);
-  const nQuery = normalizeArabic(query.trim());
+  // Cap query to avoid O(n*m) spikes on paste-bombs (indexOf loop stays linear on clipped needle)
+  const clippedQuery = query.trim().slice(0, 256);
+  const nText  = normalizeArabic(text.length > 8_000 ? text.slice(0, 8_000) : text);
+  const nQuery = normalizeArabic(clippedQuery);
   if (!nQuery || nQuery.length < 2) return <>{text}</>;
 
   // إيجاد جميع المطابقات وإبرازها

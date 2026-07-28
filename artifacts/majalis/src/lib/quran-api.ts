@@ -94,6 +94,7 @@ async function fetchLocalSurahDetail(surahNumber: number): Promise<SurahDetail |
     const res = await pooledFetch(`${LOCAL_QURAN_DATA_BASE}/surah-${padded}.json`, {
       timeoutMs: 8_000,
       dedupeKey: `quran-local:${padded}`,
+      priority: "high",
     });
     if (!res.ok) return null;
     const detail = await res.json();
@@ -140,6 +141,7 @@ export async function fetchSurahDetail(surahNumber: number): Promise<SurahDetail
     const res = await pooledFetch(`${BASE}/surah/${surahNumber}/quran-uthmani`, {
       timeoutMs: 15_000,
       dedupeKey: `quran-api:${surahNumber}`,
+      priority: "high",
     });
     if (!res.ok) throw new Error(`AlQuran Cloud: HTTP ${res.status}`);
     const json = await res.json();

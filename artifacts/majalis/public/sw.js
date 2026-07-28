@@ -24,6 +24,7 @@ try {
 
 const OFFLINE_CACHE = `majalis-offline-${SW_BUILD_ID}`;
 const DATA_CACHE    = `majalis-data-${SW_BUILD_ID}`;
+const AUDIO_CACHE   = `majalis-audio-${SW_BUILD_ID}`;
 const VERSION_CACHE = "majalis-version";
 const FETCH_TIMEOUT = 8000;
 
@@ -31,6 +32,12 @@ const FETCH_TIMEOUT = 8000;
 const DATA_FIRST_ORIGINS = [
   "api.alquran.cloud",
   "api.aladhan.com",
+];
+
+/** Full-file audio CDNs — cache with integrity checks (never store Range partials). */
+const AUDIO_CDN_HOSTS = [
+  "everyayah.com",
+  "mp3quran.net",
 ];
 
 // Internal API routes to cache for offline use
@@ -85,7 +92,7 @@ self.addEventListener("activate", (event) => {
       const keys = await caches.keys();
       await Promise.all(
         keys
-          .filter((k) => k !== OFFLINE_CACHE && k !== DATA_CACHE && k !== VERSION_CACHE)
+          .filter((k) => k !== OFFLINE_CACHE && k !== DATA_CACHE && k !== AUDIO_CACHE && k !== VERSION_CACHE)
           .map((k) => caches.delete(k)),
       );
 
@@ -134,6 +141,64 @@ async function cacheFirst(req, cacheName) {
   }
 }
 
+function looksLikeMp3Bytes(buf) {
+  if (!buf || buf.byteLength < 3) return false;
+  const u8 = new Uint8Array(buf);
+  if (u8[0] === 0x49 && u8[1] === 0x44 && u8[2] === 0x33) return true; // ID3
+  if (u8[0] === 0xff && (u8[1] & 0xe0) === 0xe0) return true; // MPEG sync
+  return false;
+}
+
+/**
+ * Audio CDN cache with byte-integrity validation.
+ * Rejects truncated / corrupt MP3s and re-fetches quietly (does not touch playback UI).
+ * Range requests pass through untouched so HTMLMediaElement byte-range seeks stay correct.
+ */
+async function audioIntegrityCache(req) {
+  if (req.headers && req.headers.get("range")) {
+    return fetch(req);
+  }
+
+  const cache = await caches.open(AUDIO_CACHE);
+  const cached = await cache.match(req);
+  if (cached) {
+    try {
+      const head = await cached.clone().arrayBuffer();
+      const expected = Number(cached.headers.get("content-length") || 0);
+      const sizeOk = head.byteLength >= 2048;
+      const magicOk = looksLikeMp3Bytes(head.slice(0, 16));
+      const lengthOk = !expected || head.byteLength >= expected * 0.95;
+      if (sizeOk && magicOk && lengthOk) return cached;
+      await cache.delete(req);
+    } catch {
+      await cache.delete(req).catch(() => undefined);
+    }
+  }
+
+  try {
+    const res = await fetch(req);
+    if (!res.ok) return res;
+    const buf = await res.clone().arrayBuffer();
+    const expected = Number(res.headers.get("content-length") || 0);
+    const sizeOk = buf.byteLength >= 2048;
+    const magicOk = looksLikeMp3Bytes(buf.slice(0, 16));
+    const lengthOk = !expected || buf.byteLength >= expected * 0.95;
+    if (sizeOk && magicOk && lengthOk) {
+      const headers = new Headers(res.headers);
+      if (!headers.has("content-length")) headers.set("content-length", String(buf.byteLength));
+      const toStore = new Response(buf.slice(0), {
+        status: res.status,
+        statusText: res.statusText,
+        headers,
+      });
+      void cache.put(req, toStore).catch(() => undefined);
+    }
+    return new Response(buf, { status: res.status, statusText: res.statusText, headers: res.headers });
+  } catch {
+    return cached || new Response("", { status: 503 });
+  }
+}
+
 /** Navigations must never be stored: current network document or offline page only. */
 async function networkFirstNavigation(req) {
   try {
@@ -153,6 +218,12 @@ self.addEventListener("fetch", (event) => {
   // External Quran/prayer APIs → cache-first (data rarely changes mid-day)
   if (DATA_FIRST_ORIGINS.some((h) => url.hostname.includes(h))) {
     event.respondWith(cacheFirst(req, DATA_CACHE));
+    return;
+  }
+
+  // Audio CDNs — integrity-validated full-file cache (Range → network passthrough)
+  if (AUDIO_CDN_HOSTS.some((h) => url.hostname.includes(h)) || /\.mp3(\?|$)/i.test(url.pathname)) {
+    event.respondWith(audioIntegrityCache(req));
     return;
   }
 

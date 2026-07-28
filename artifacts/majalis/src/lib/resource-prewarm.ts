@@ -74,11 +74,12 @@ export function prewarmUrl(url: string, { mode = "no-cors" }: { mode?: RequestMo
       mode,
       credentials: "omit",
       cache: "force-cache",
-      // Abort quickly — we only want connection warm-up
+      // Low priority — never contend with verse/page text on congested links
+      priority: "low",
       signal: typeof AbortSignal !== "undefined" && "timeout" in AbortSignal
         ? AbortSignal.timeout(2_500)
         : undefined,
-    }).catch(() => undefined);
+    } as RequestInit).catch(() => undefined);
   } catch {
     /* ignore */
   }

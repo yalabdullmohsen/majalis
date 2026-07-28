@@ -11,6 +11,7 @@
 
 import { toLatinDigits } from "@/lib/numerals";
 import { LruStringCache } from "@/lib/lru-cache";
+import { clampSearchInput, SAFE_TEXT_MAX_CHARS } from "@/lib/safe-regex";
 
 const NORMALIZE_CACHE = new LruStringCache(2_048);
 
@@ -83,10 +84,13 @@ function normalizeArabicUncached(text: string): string {
  */
 export function normalizeArabic(text: string): string {
   if (!text) return "";
-  const hit = NORMALIZE_CACHE.get(text);
+  // Cap adversarial / paste-bomb inputs — linear char-class replaces stay O(n)
+  // but must not process multi-megabyte strings on the UI thread.
+  const clipped = text.length > SAFE_TEXT_MAX_CHARS ? clampSearchInput(text) : text;
+  const hit = NORMALIZE_CACHE.get(clipped);
   if (hit !== undefined) return hit;
-  const out = normalizeArabicUncached(text);
-  NORMALIZE_CACHE.set(text, out);
+  const out = normalizeArabicUncached(clipped);
+  NORMALIZE_CACHE.set(clipped, out);
   return out;
 }
 

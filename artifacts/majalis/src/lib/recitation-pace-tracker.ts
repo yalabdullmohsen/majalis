@@ -5,6 +5,7 @@
 
 import { fetchTafsirAyahs } from "@/lib/quran-api";
 import { idbGetValue, idbPut, OFFLINE_STORES } from "@/lib/offline-db";
+import { monoElapsed, monoNow } from "@/lib/monotonic-time";
 
 export type RecitationTargetKind = "page" | "ayah";
 
@@ -113,7 +114,7 @@ function timerKey(kind: RecitationTargetKind, targetId: string): string {
 }
 
 export function startRecitationTimer(kind: RecitationTargetKind, targetId: string): void {
-  activeTimers.set(timerKey(kind, targetId), Date.now());
+  activeTimers.set(timerKey(kind, targetId), monoNow());
 }
 
 export function stopRecitationTimer(
@@ -124,8 +125,8 @@ export function stopRecitationTimer(
   const startedAt = activeTimers.get(key);
   activeTimers.delete(key);
   if (!startedAt) return null;
-  const endedAt = Date.now();
-  const durationMs = endedAt - startedAt;
+  const endedAt = monoNow();
+  const durationMs = monoElapsed(startedAt, endedAt);
   if (durationMs < MIN_DWELL_MS) return null;
 
   const sample: RecitationPaceSample = { kind, targetId, startedAt, endedAt, durationMs };

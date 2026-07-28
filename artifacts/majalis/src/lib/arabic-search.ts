@@ -65,6 +65,12 @@ function fuzzyWordIncludes(haystack: string, needle: string): boolean {
 export function arabicIncludes(haystack: string | null | undefined, needle: string): boolean {
   if (!needle.trim()) return true;
   if (!haystack) return false;
+  // ReDoS / CPU guard — oversize needles never enter fuzzy loops
+  if (needle.length > 4_000 || haystack.length > 200_000) {
+    const h = normalizeArabic(haystack.slice(0, 4_000));
+    const n = normalizeArabic(needle.slice(0, 256));
+    return n.length > 0 && h.includes(n);
+  }
 
   const hayVariants = expandArabicVariants(normalizeArabic(haystack));
   const needles = expandSearchTerms(needle);

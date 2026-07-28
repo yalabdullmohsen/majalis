@@ -72,6 +72,7 @@ export function loadChapters(): Promise<Map<number, MushafChapter>> {
     chaptersPromise = pooledFetch("/data/quran-v2/chapters.json", {
       signal: AbortSignal.timeout(10_000),
       dedupeKey: "mushaf-v2:chapters",
+      priority: "high",
     })
       .then((res) => {
         if (!res.ok) throw new Error(`chapters.json fetch failed: HTTP ${res.status}`);
@@ -109,6 +110,7 @@ function fetchRawPage(pageNumber: number): Promise<QpcVerse[]> {
     p = pooledFetch(`/data/quran-v2/pages/page-${String(pageNumber).padStart(3, "0")}.json`, {
       signal: AbortSignal.timeout(10_000),
       dedupeKey: `mushaf-v2:page:${pageNumber}`,
+      priority: "high",
     })
       .then((res) => {
         if (!res.ok) throw new Error(`page ${pageNumber} fetch failed: HTTP ${res.status}`);
