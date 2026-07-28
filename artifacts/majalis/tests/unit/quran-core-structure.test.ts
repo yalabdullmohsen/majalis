@@ -92,6 +92,37 @@ async function main() {
     check(typeof rm.isPrefetchSuspended() === "boolean", "prefetch flag readable");
   }
 
+  console.log("═══ DatabaseManager schema contract ═══");
+  {
+    const {
+      CORE_QURAN_DB_NAME,
+      CORE_QURAN_DB_VERSION,
+      CORE_STORE_INDEXES,
+      DatabaseManager,
+    } = await import("../../src/core/quran/DatabaseManager");
+    check(CORE_QURAN_DB_NAME === "majalis-quran-engine-db", "core DB name");
+    check(CORE_QURAN_DB_VERSION === 2, "core DB version 2");
+    check(
+      CORE_STORE_INDEXES.user_reflections_store.includes("[surah_id+ayah_id]"),
+      "reflections composite index",
+    );
+    check(
+      CORE_STORE_INDEXES.khatmah_store.startsWith("id,"),
+      "khatmah primary id",
+    );
+    check(
+      CORE_STORE_INDEXES.offline_assets_store.startsWith("asset_id"),
+      "assets primary asset_id",
+    );
+    check(
+      DatabaseManager.getInstance() === getDatabaseManager(),
+      "getInstance === getDatabaseManager",
+    );
+    // No IndexedDB in Node — initialize must fail soft
+    const ready = await getDatabaseManager().initialize();
+    check(ready === false, "initialize soft-fails without IndexedDB");
+  }
+
   console.log(`\nالنتيجة: ${passed} نجح، ${failed} فشل`);
   if (failed > 0) process.exit(1);
 }

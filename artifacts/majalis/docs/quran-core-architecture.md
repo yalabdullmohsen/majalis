@@ -7,7 +7,7 @@ Functional backend for the Ayah/Tarteel engine — **no UI**.
 | File | Role |
 |------|------|
 | `QuranEngineContext.ts` | Unified page / active verse / audio state; boots DB + resources |
-| `DatabaseManager.ts` | Async Dexie façade (Khatmah, Reflections, OfflineAssets, knowledge) |
+| `DatabaseManager.ts` | Self-contained Dexie schema + singleton CRUD (Khatmah / Reflections / OfflineAssets) |
 | `ResourceManager.ts` | LRU budget + memory-pressure observer |
 | `IndexingService.ts` | Web Workers for mutashabihat flatten + tajweed timings |
 | `workers/*.worker.ts` | Off-main-thread compute |
