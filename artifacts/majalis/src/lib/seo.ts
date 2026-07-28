@@ -254,7 +254,9 @@ export function applyPageSeo(options: PageSeoOptions) {
   // المسار الأساسي بلا ? أو # — يمنع تكرار /adhkar?cat= و/lessons?tab= في الفهرسة
   const canonicalPath = normalizePath(options.canonicalPath || normalized);
   const canonical = absoluteUrl(canonicalPath);
-  const image = options.image || absoluteUrl(seoData.defaultImage);
+  // Prefer explicit page image → route default → branded OG share card
+  const imagePath = options.image || seoData.defaultImage || "/opengraph.jpg";
+  const image = /^https?:\/\//i.test(imagePath) ? imagePath : absoluteUrl(imagePath);
   const keywords = [...new Set([...(options.keywords || []), ...seoData.defaultKeywords])].join(", ");
   const robots = options.robots || "index, follow";
   const ogType = options.ogType || "website";

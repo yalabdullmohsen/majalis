@@ -275,7 +275,7 @@ function siteJsonLdScript() {
     "@type": "Organization",
     name: SITE_NAME,
     url: SITE_URL,
-    logo: absoluteUrl(DEFAULT_IMAGE),
+    logo: absoluteUrl("/logo.png"),
     inLanguage: "ar",
   };
   const site = {
@@ -443,8 +443,8 @@ function prerenderHtml(route, extraJsonLd = "", richBody = "", parents = []) {
     <meta property="og:description" content="${escapeHtml(route.description)}" />
     <meta property="og:url" content="${escapeHtml(canonical)}" />
     <meta property="og:image" content="${escapeHtml(image)}" />
-    <meta property="og:image:width" content="512" />
-    <meta property="og:image:height" content="512" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="${escapeHtml(title)}" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${escapeHtml(title)}" />
@@ -461,7 +461,7 @@ function prerenderHtml(route, extraJsonLd = "", richBody = "", parents = []) {
         "@type": "Organization",
         name: SITE_NAME,
         url: SITE_URL,
-        logo: { "@type": "ImageObject", url: absoluteUrl(DEFAULT_IMAGE) },
+        logo: { "@type": "ImageObject", url: absoluteUrl("/logo.png") },
       },
     })}
     ${breadcrumbFor(route, parents)}
