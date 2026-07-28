@@ -20,3 +20,5 @@ export { useRestoreLastPage } from "@/hooks/useRestoreLastPage";
 export { useKeepAwake } from "@/hooks/useKeepAwake";
 export { useColorScheme } from "@/hooks/useColorScheme";
 export { useImmersiveSystemUi } from "@/hooks/useImmersiveSystemUi";
+export { useQuranController } from "@/hooks/useQuranController";
+export type { UseQuranControllerResult } from "@/hooks/useQuranController";

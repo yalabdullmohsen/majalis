@@ -65,3 +65,177 @@ body.quran-immersive-sticky .assistant-fab,
 body.quran-immersive-sticky .scroll-to-top {
   display: none !important;
 }
+
+/* ── Flutter ImmersiveQuranPage + PageView ── */
+.immersive-quran-page {
+  position: fixed;
+  inset: 0;
+  z-index: 10010;
+  display: flex;
+  flex-direction: column;
+  background: var(--quran-immersive-paper, #f5f5dc);
+  color: var(--quran-immersive-ink, rgba(0, 0, 0, 0.87));
+  overflow: hidden;
+  overscroll-behavior: contain;
+}
+
+.immersive-quran-page__safe {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  padding-inline-start: env(safe-area-inset-left, 0px);
+  padding-inline-end: env(safe-area-inset-right, 0px);
+}
+
+.immersive-quran-page__pager {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: row;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  /* Flutter PageScrollPhysics — one page at a time */
+  overscroll-behavior-x: contain;
+}
+
+.immersive-quran-page__sheet {
+  flex: 0 0 100%;
+  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  /* Flutter ListView padding: symmetric(horizontal: 30, vertical: 50) */
+  padding: var(--quran-immersive-list-pad-y, 50px) var(--quran-immersive-pad-x, 30px);
+  box-sizing: border-box;
+}
+
+.immersive-quran-page__verses {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  max-width: 40rem;
+}
+
+.immersive-quran-page__verse-item {
+  margin: 0;
+}
+
+.immersive-quran-page__verse {
+  display: block;
+  width: 100%;
+  margin: 0;
+  padding: 10px 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.immersive-quran-page__verse-text {
+  display: block;
+  text-align: center;
+  font-family: var(--font-quran, "Amiri Quran", "Scheherazade New", "Amiri", serif);
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+.immersive-quran-page__verse.is-selected .immersive-quran-page__verse-text {
+  color: var(--quran-verse-selected-brown, #795548);
+}
+
+/* Flutter showModalBottomSheet */
+.immersive-verse-sheet-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10020;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.immersive-verse-sheet {
+  width: min(100%, 28rem);
+  border-radius: 1rem 1rem 0 0;
+  padding: 0.5rem 0 max(1rem, env(safe-area-inset-bottom, 0px));
+  box-shadow: 0 -8px 28px rgba(0, 0, 0, 0.12);
+  background: var(--quran-immersive-paper, #f5f5dc);
+}
+
+.immersive-verse-sheet__handle {
+  width: 2.5rem;
+  height: 0.28rem;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.18);
+  margin: 0.35rem auto 0.5rem;
+}
+
+.immersive-verse-sheet__head {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  padding: 0.35rem 1rem 0.75rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.immersive-verse-sheet__preview {
+  flex: 1;
+  margin: 0;
+  font-family: var(--font-quran, "Amiri Quran", "Scheherazade New", "Amiri", serif);
+  font-size: 1.05rem;
+  line-height: 1.8;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.87);
+}
+
+.immersive-verse-sheet__close {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  background: transparent;
+  color: rgba(0, 0, 0, 0.65);
+  cursor: pointer;
+}
+
+.immersive-verse-sheet__list {
+  list-style: none;
+  margin: 0;
+  padding: 0.35rem 0;
+}
+
+.immersive-verse-sheet__row {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  width: 100%;
+  min-height: 3rem;
+  padding: 0.65rem 1.25rem;
+  border: none;
+  background: transparent;
+  color: rgba(0, 0, 0, 0.87);
+  font: inherit;
+  font-size: 1rem;
+  cursor: pointer;
+  text-align: start;
+}
+
+.immersive-verse-sheet__row:hover,
+.immersive-verse-sheet__row:focus-visible {
+  background: rgba(121, 85, 72, 0.12);
+  outline: none;
+}
