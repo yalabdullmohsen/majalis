@@ -216,6 +216,68 @@ self.addEventListener("message", (event) => {
   const msg = event.data;
   if (!msg) return;
 
+  // Part 19: MessageChannel request/response (__majalisChannel + ports[0])
+  if (msg.__majalisChannel && event.ports && event.ports[0]) {
+    const port = event.ports[0];
+    const reply = (ok, payload, error) => {
+      try {
+        port.postMessage({
+          ok,
+          type: msg.type,
+          id: msg.id,
+          payload,
+          error,
+        });
+      } catch (_) {
+        /* ignore */
+      }
+    };
+
+    if (msg.type === "MAJALIS_OFFLINE_CACHE_STATUS") {
+      event.waitUntil(
+        (async () => {
+          try {
+            const names = await caches.keys();
+            let entries = 0;
+            for (const name of names) {
+              const cache = await caches.open(name);
+              const keys = await cache.keys();
+              entries += keys.length;
+            }
+            reply(true, { caches: names.length, entries });
+          } catch (err) {
+            reply(false, null, String(err && err.message ? err.message : err));
+          }
+        })(),
+      );
+      return;
+    }
+
+    if (msg.type === "MAJALIS_OFFLINE_SYNC") {
+      // Acknowledge sync kick — actual warm runs on the client; SW confirms receipt
+      reply(true, { received: true, at: Date.now(), payload: msg.payload ?? null });
+      return;
+    }
+
+    if (msg.type === "MAJALIS_AUDIO_CACHE_STATUS") {
+      event.waitUntil(
+        (async () => {
+          try {
+            const cache = await caches.open("majalis-audio-v1").catch(() => null);
+            const keys = cache ? await cache.keys() : [];
+            reply(true, { audioEntries: keys.length });
+          } catch (err) {
+            reply(false, null, String(err && err.message ? err.message : err));
+          }
+        })(),
+      );
+      return;
+    }
+
+    reply(false, null, "unknown-type");
+    return;
+  }
+
   // Smart local schedule (adhkar / streak / khatmah / prayer reminders)
   if (msg.type === "MAJALIS_SCHEDULE_LOCAL_NOTIFS" && Array.isArray(msg.items)) {
     const STALE_TOLERANCE_MS = 2 * 60000;

@@ -1,5 +1,10 @@
 import { useEffect, useState } from "react";
-import { loadFontFaceSafe, waitForDocumentFonts } from "@/lib/font-ready";
+import {
+  loadFontFaceSafe,
+  waitForDocumentFonts,
+  findCachedFontFace,
+  warmStaticQuranicFonts,
+} from "@/lib/font-ready";
 import { logDiagnostic } from "@/lib/diagnostics";
 import { createMountGuard } from "@/lib/route-abort";
 
@@ -10,9 +15,11 @@ import { createMountGuard } from "@/lib/route-abort";
  *
  * Part 16: waits document.fonts.ready after each face load so glyph layout
  * measurements (MushafPageV2 fit) never run against unparsed PUA glyphs.
+ * Part 19: FontFaceSet registry reuse — zero re-download across view changes.
  */
 const MAX_LOADED = 12;
 const loadedFonts = new Map<number, FontFace>();
+let staticWarmed = false;
 
 function fontFamilyForPage(page: number): string {
   return `qpc-page-${page}`;
@@ -27,6 +34,14 @@ async function ensurePageFontLoaded(page: number): Promise<void> {
   }
 
   const family = fontFamilyForPage(page);
+
+  // Reuse FontFaceSet if already parsed (view switch / back-navigation)
+  const cached = findCachedFontFace(family);
+  if (cached && cached.status === "loaded") {
+    loadedFonts.set(page, cached);
+    return;
+  }
+
   const face = await loadFontFaceSafe(
     family,
     `url(/fonts/qpc-v2/p${page}.woff2) format("woff2")`,
@@ -62,6 +77,10 @@ export function useMushafPageFont(pageNumber: number | null): boolean {
 
     (async () => {
       try {
+        if (!staticWarmed) {
+          staticWarmed = true;
+          void warmStaticQuranicFonts();
+        }
         await ensurePageFontLoaded(pageNumber);
         const wait = await waitForDocumentFonts(4_000);
         if (wait.waitedMs > 50) {
