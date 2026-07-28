@@ -47,7 +47,12 @@ const STATIC_SHELL_ASSETS = [
   "/offline.html",
   "/logo.png",
   "/favicon.png",
+  "/icon-192.png",
+  "/icon-512.png",
   "/star-pattern.svg",
+  "/site.webmanifest",
+  "/manifest.webmanifest",
+  "/opengraph.jpg",
 ];
 
 self.addEventListener("install", (event) => {
@@ -167,6 +172,7 @@ self.addEventListener("fetch", (event) => {
     STATIC_SHELL_ASSETS.includes(url.pathname) ||
     url.pathname.startsWith("/fonts/") ||
     url.pathname === "/manifest.webmanifest" ||
+    url.pathname === "/site.webmanifest" ||
     url.pathname === "/manifest.json"
   ) {
     event.respondWith(cacheFirst(req, OFFLINE_CACHE));

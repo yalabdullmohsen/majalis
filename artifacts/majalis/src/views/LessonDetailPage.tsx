@@ -10,6 +10,7 @@ import { isDemoId } from "@/lib/demo-id";
 import { extractLessonSchedule, hasValue } from "@/lib/lesson-display";
 import { resolveLessonSheikhImage } from "@/lib/sheikh-image";
 import { OptimizedSheikhImage } from "@/components/sheikh/OptimizedSheikhImage";
+import { OptimizedImage } from "@/components/media/OptimizedImage";
 import { FavoriteButton } from "@/components/FavoriteButton";
 import { UnifiedLessonCard } from "@/components/lessons/UnifiedLessonCard";
 import {
@@ -269,6 +270,9 @@ export default function LessonDetailPage({
   const sheikhName = unified.sheikhName;
   const sheikhImage = kuwaitLesson?.sheikhImage || resolveLessonSheikhImage(lesson);
   const hasSheikhPhoto = Boolean(sheikhImage && !sheikhImage.includes("logo"));
+  const lessonPosterUrl =
+    kuwaitLesson?.lessonImage ||
+    resolveLessonPosterUrl(lesson?.poster_image_url);
   const { day, time, dateLabel } = lesson ? extractLessonSchedule(lesson) : { day: unified.day, time: unified.time, dateLabel: unified.gregorianDate };
   const mapsEmbed = buildMapsEmbed(unified.mapsUrl, unified.mosque, unified.region);
   const activityLabel = normalizeActivityLabel(unified.activityType);
@@ -335,6 +339,18 @@ export default function LessonDetailPage({
             )}
           </div>
         </div>
+
+        {lessonPosterUrl && (
+          <figure className="lesson-detail-poster">
+            <OptimizedImage
+              src={lessonPosterUrl}
+              alt={unified.title}
+              aspect="16/9"
+              priority={!hasSheikhPhoto}
+              sizes="(max-width: 720px) 100vw, 720px"
+            />
+          </figure>
+        )}
 
         <div className="lesson-detail-stats-row">
           <StatPill label="المشاهدات" value={stats.views} />

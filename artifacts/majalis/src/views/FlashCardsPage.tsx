@@ -12,6 +12,7 @@ import {
   getDueFlashCards,
   submitCardReview,
   getFlashCardStats,
+  syncDirtyFlashcardReviews,
   type FlashCard,
   type FlashCardStats,
 } from "@/lib/flashcard-service";
@@ -21,6 +22,7 @@ import {
   type ReviewQuality,
   type CardState,
 } from "@/lib/spaced-repetition";
+import { recordUserActivity } from "@/lib/user-streak";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import "@/styles/pages/flashcards.css";
 
@@ -254,6 +256,8 @@ export default function FlashCardsPage() {
     setFlipped(false);
     setReviewedCount(0);
     try {
+      // Flush any reviews saved while offline
+      await syncDirtyFlashcardReviews(user.id).catch(() => 0);
       const [newCards, newStats] = await Promise.all([
         getDueFlashCards(user.id, 20),
         getFlashCardStats(user.id),
@@ -262,7 +266,9 @@ export default function FlashCardsPage() {
       setStats(newStats);
       if (newCards.length === 0) setSessionDone(true);
     } catch {
+      // Offline-safe: never leave the page in a hard error state
       setCards([]);
+      setStats({ totalReviewed: 0, dueToday: 0, masteredCount: 0 });
     } finally {
       setLoading(false);
     }
@@ -271,6 +277,7 @@ export default function FlashCardsPage() {
   const handleRate = useCallback(async (quality: ReviewQuality) => {
     if (!user?.id || !cards[currentIdx]) return;
     await submitCardReview(user.id, cards[currentIdx], quality);
+    recordUserActivity("flashcards");
     setReviewedCount((n) => n + 1);
     const next = currentIdx + 1;
     if (next >= cards.length) {

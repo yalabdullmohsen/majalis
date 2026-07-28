@@ -66,6 +66,7 @@ function stripTashkeelMapped(raw: string): { plain: string; toRaw: number[] } {
     toRaw.push(i);
     if ("أإآٱ".includes(ch)) plain += "ا";
     else if (ch === "ة") plain += "ه";
+    else if (ch === "ى") plain += "ي";
     else plain += ch;
   }
   toRaw.push(raw.length);
