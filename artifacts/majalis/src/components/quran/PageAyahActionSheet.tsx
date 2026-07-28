@@ -1,5 +1,21 @@
-import { useEffect, useState } from "react";
-import { X, Copy, Check, Bookmark, StickyNote, Play, Pause, ChevronRight, ChevronLeft, ChevronDown, Flag, BookOpen, Mic2, Repeat, Gauge } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import {
+  X,
+  Copy,
+  Check,
+  Bookmark,
+  StickyNote,
+  Play,
+  Pause,
+  ChevronRight,
+  ChevronLeft,
+  ChevronDown,
+  Flag,
+  BookOpen,
+  Mic2,
+  Repeat,
+  Gauge,
+} from "lucide-react";
 import { copyAyahText, copyAyahTextPlain } from "@/lib/share-ayah";
 import { addBookmark, removeBookmark, isBookmarked, getNote, saveNote } from "@/lib/quran-personal";
 import { fetchTafsirAyahs } from "@/lib/quran-api";
@@ -8,6 +24,8 @@ import { RECITERS } from "@/lib/quran-audio";
 import { CONTACT_EMAIL } from "@/lib/site-config";
 import { afterNextPaint, yieldToMain } from "@/lib/yield-to-main";
 import { prewarmTextApis } from "@/lib/resource-prewarm";
+import { toArabicDigits } from "@/lib/utils";
+import "@/styles/components/ayah-action-sheet.css";
 
 const TAFSIR_EDITION_KEY = "majalis-mushaf-tafsir-edition-v1";
 
@@ -15,19 +33,26 @@ function getStoredTafsirEdition(): string {
   try {
     const v = localStorage.getItem(TAFSIR_EDITION_KEY);
     if (v && MUSHAF_TAFSIR_EDITIONS.some((e) => e.id === v)) return v;
-  } catch { /* ignore */ }
+  } catch {
+    /* ignore */
+  }
   return "ar.muyassar";
 }
 
+/** Split long tafsir into readable paragraphs without inventing content. */
+function tafsirParagraphs(text: string): string[] {
+  const cleaned = text.replace(/\r\n/g, "\n").trim();
+  if (!cleaned) return [];
+  const byBreak = cleaned.split(/\n{2,}|\n/).map((p) => p.trim()).filter(Boolean);
+  if (byBreak.length > 1) return byBreak;
+  // Soft-split very long single blocks on sentence boundaries (Arabic / Latin)
+  const soft = cleaned.split(/(?<=[.؟!。])\s+/).map((p) => p.trim()).filter(Boolean);
+  return soft.length > 1 ? soft : [cleaned];
+}
+
 /**
- * ورقة إجراءات الآية — القسم "ز. التفاعل مع الآية" من مواصفة نواة المصحف
- * الرقمي. تربط أدوات كانت موجودة فعليًا لكنها غير مُستخدَمة في أي واجهة:
- * quran-personal.ts (إشارات مرجعية وملاحظات — محلي بالكامل، لا خادم) و
- * share-ayah.ts (نسخ نص، مع/دون تشكيل — أزرار المشاركة أُلغيت 2026-07-24).
- *
- * ملاحظة دمج: يستخدمه MushafPageView.tsx (قارئ /mushaf/page بنظام
- * الصفحات). قارئ /mushaf التقليدي (MushafPage.tsx) يستخدم مكوّنًا منفصلًا
- * بواجهة props مختلفة تمامًا: AyahActionSheet.tsx.
+ * ورقة إجراءات الآية — قارئ تفسير مُعاد تصميمه:
+ * ترويسة واحدة · آية بارزة · منتقي تفسير منسدل · نص هادئ بمسافات واسعة.
  */
 type Props = {
   surahNum: number;
@@ -36,22 +61,36 @@ type Props = {
   ayahText: string;
   isPlaying: boolean;
   onTogglePlay: () => void;
-  /** false على الصفحات النادرة التي تضم سورتين — مشغّل الصوت مربوط بسورة واحدة فقط لكل صفحة (راجع MushafPageView). */
   canPlay?: boolean;
   onPrev?: () => void;
   onNext?: () => void;
   onClose: () => void;
-  /** اختياريان — عند تمريرهما فقط يظهر منتقي القارئ (لا يكسر MushafPageView.tsx القائم الذي لا يمرّرهما). */
   reciterId?: string;
   onSetReciter?: (id: string) => void;
-  /** اختياريان أيضًا — سرعة التلاوة (0.5x–2x) وتكرار الآية للحفظ. */
   playbackRate?: number;
   onSetPlaybackRate?: (rate: number) => void;
   repeatOn?: boolean;
   onToggleRepeat?: () => void;
 };
 
-export function PageAyahActionSheet({ surahNum, surahName, ayahNum, ayahText, isPlaying, onTogglePlay, canPlay = true, onPrev, onNext, onClose, reciterId, onSetReciter, playbackRate, onSetPlaybackRate, repeatOn, onToggleRepeat }: Props) {
+export function PageAyahActionSheet({
+  surahNum,
+  surahName,
+  ayahNum,
+  ayahText,
+  isPlaying,
+  onTogglePlay,
+  canPlay = true,
+  onPrev,
+  onNext,
+  onClose,
+  reciterId,
+  onSetReciter,
+  playbackRate,
+  onSetPlaybackRate,
+  repeatOn,
+  onToggleRepeat,
+}: Props) {
   const [bookmarked, setBookmarked] = useState(() => isBookmarked(surahNum, ayahNum));
   const [copiedKind, setCopiedKind] = useState<"full" | "plain" | null>(null);
   const [noteOpen, setNoteOpen] = useState(false);
@@ -59,11 +98,12 @@ export function PageAyahActionSheet({ surahNum, surahName, ayahNum, ayahText, is
   const [noteSaved, setNoteSaved] = useState(false);
   const [reciterPickerOpen, setReciterPickerOpen] = useState(false);
   const [speedPickerOpen, setSpeedPickerOpen] = useState(false);
-  const [tafsirOpen, setTafsirOpen] = useState(false);
+  const [editionMenuOpen, setEditionMenuOpen] = useState(false);
   const [tafsirText, setTafsirText] = useState<string | null>(null);
   const [tafsirLoading, setTafsirLoading] = useState(false);
   const [tafsirError, setTafsirError] = useState(false);
   const [tafsirEdition, setTafsirEdition] = useState(getStoredTafsirEdition);
+  const editionMenuRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     setBookmarked(isBookmarked(surahNum, ayahNum));
@@ -71,18 +111,17 @@ export function PageAyahActionSheet({ surahNum, surahName, ayahNum, ayahText, is
     setCopiedKind(null);
     setNoteOpen(false);
     setNoteSaved(false);
-    setTafsirOpen(false);
+    setEditionMenuOpen(false);
+    setReciterPickerOpen(false);
+    setSpeedPickerOpen(false);
     setTafsirText(null);
     setTafsirError(false);
   }, [surahNum, ayahNum]);
 
   const loadTafsir = async (edition: string) => {
-    // Part 21 CLS shield: do NOT null committed tafsir text while loading —
-    // keeps drawer height stable (zero layout shift).
     setTafsirLoading(true);
     setTafsirError(false);
     try {
-      // Drawer already open — yield so open animation / press feedback paints (INP).
       await afterNextPaint();
       prewarmTextApis();
       const ayahs = await fetchTafsirAyahs(surahNum, edition);
@@ -97,27 +136,49 @@ export function PageAyahActionSheet({ surahNum, surahName, ayahNum, ayahText, is
     }
   };
 
-  const handleToggleTafsir = async () => {
-    const next = !tafsirOpen;
-    setTafsirOpen(next);
-    if (next && tafsirText === null && !tafsirLoading) {
-      await loadTafsir(tafsirEdition);
+  // Auto-load tafsir — reading is the primary job of this sheet
+  useEffect(() => {
+    void loadTafsir(tafsirEdition);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- reload when verse or edition changes
+  }, [surahNum, ayahNum, tafsirEdition]);
+
+  const handleSelectEdition = (id: string) => {
+    setTafsirEdition(id);
+    setEditionMenuOpen(false);
+    try {
+      localStorage.setItem(TAFSIR_EDITION_KEY, id);
+    } catch {
+      /* ignore */
     }
   };
 
-  const handleSelectEdition = async (id: string) => {
-    setTafsirEdition(id);
-    try { localStorage.setItem(TAFSIR_EDITION_KEY, id); } catch { /* ignore */ }
-    if (tafsirOpen) await loadTafsir(id);
-  };
-
   const currentEditionMeta = MUSHAF_TAFSIR_EDITIONS.find((e) => e.id === tafsirEdition);
+  const paragraphs = useMemo(
+    () => (tafsirText ? tafsirParagraphs(tafsirText) : []),
+    [tafsirText],
+  );
 
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        if (editionMenuOpen) setEditionMenuOpen(false);
+        else onClose();
+      }
+    };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
-  }, [onClose]);
+  }, [onClose, editionMenuOpen]);
+
+  useEffect(() => {
+    if (!editionMenuOpen) return;
+    const onDoc = (e: MouseEvent) => {
+      if (editionMenuRef.current && !editionMenuRef.current.contains(e.target as Node)) {
+        setEditionMenuOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", onDoc);
+    return () => document.removeEventListener("mousedown", onDoc);
+  }, [editionMenuOpen]);
 
   const toggleBookmark = () => {
     if (bookmarked) {
@@ -130,7 +191,9 @@ export function PageAyahActionSheet({ surahNum, surahName, ayahNum, ayahText, is
   };
 
   const handleCopy = async (plain: boolean) => {
-    const ok = plain ? await copyAyahTextPlain(ayahText, surahName, ayahNum) : await copyAyahText(ayahText, surahName, ayahNum);
+    const ok = plain
+      ? await copyAyahTextPlain(ayahText, surahName, ayahNum)
+      : await copyAyahText(ayahText, surahName, ayahNum);
     if (ok) {
       setCopiedKind(plain ? "plain" : "full");
       setTimeout(() => setCopiedKind((k) => (k === (plain ? "plain" : "full") ? null : k)), 1800);
@@ -148,176 +211,275 @@ export function PageAyahActionSheet({ surahNum, surahName, ayahNum, ayahText, is
     `الصفحة: ${window.location.href}\nسورة: ${surahName} (${surahNum})\nآية: ${ayahNum}\n\nالملاحظة:\n`,
   );
 
+  const reciterName =
+    RECITERS.find((r) => r.id === reciterId)?.nameAr ?? RECITERS[0]?.nameAr ?? "القارئ";
+
   return (
-    // نقر الخلفية للإغلاق مصحوب بمعالج Escape فعلي (أعلاه) وزر إغلاق ظاهر —
-    // مساران بديلان كاملان بلوحة المفاتيح.
     /* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions */
-    <div className="aas-sheet" onClick={onClose} role="presentation">
-      <div className="aas-panel" onClick={(e) => e.stopPropagation()} role="dialog" aria-modal="true" aria-label={`إجراءات الآية ${ayahNum}`}>
+    <div className="aas-sheet aas-sheet--reader" onClick={onClose} role="presentation">
+      <div
+        className="aas-panel aas-panel--reader"
+        onClick={(e) => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+        aria-label={`تفسير سورة ${surahName} آية ${ayahNum}`}
+      >
         <div className="aas-panel__handle" aria-hidden="true" />
-        <div className="aas-panel__ref">
-          سورة {surahName} — آية {ayahNum}
-          <button type="button" onClick={onClose} aria-label="إغلاق" style={{ float: "left", marginLeft: "1rem", background: "none", border: "none", cursor: "pointer" }}>
-            <X size={16} aria-hidden="true" />
+
+        {/* ── Single elegant header ── */}
+        <header className="aas-reader__header">
+          <div className="aas-reader__nav">
+            {onPrev ? (
+              <button type="button" className="aas-reader__icon-btn" onClick={onPrev} aria-label="الآية السابقة">
+                <ChevronRight size={18} aria-hidden="true" />
+              </button>
+            ) : (
+              <span className="aas-reader__icon-btn is-ghost" aria-hidden="true" />
+            )}
+            <div className="aas-reader__title">
+              <strong>
+                سورة {surahName}
+              </strong>
+              <span>الآية {toArabicDigits(ayahNum)}</span>
+            </div>
+            {onNext ? (
+              <button type="button" className="aas-reader__icon-btn" onClick={onNext} aria-label="الآية التالية">
+                <ChevronLeft size={18} aria-hidden="true" />
+              </button>
+            ) : (
+              <span className="aas-reader__icon-btn is-ghost" aria-hidden="true" />
+            )}
+          </div>
+          <button type="button" className="aas-reader__close" onClick={onClose} aria-label="إغلاق">
+            <X size={18} aria-hidden="true" />
           </button>
-        </div>
-        <p className="aas-panel__text" dir="rtl">{ayahText}</p>
+        </header>
 
-        {reciterId && onSetReciter && (
-          <>
-            <button type="button" className="ayah-sheet__reciter-toggle" onClick={() => setReciterPickerOpen((v) => !v)}>
-              <Mic2 size={14} aria-hidden="true" />
-              <span>القارئ: {RECITERS.find((r) => r.id === reciterId)?.nameAr ?? RECITERS[0].nameAr}</span>
-              <ChevronDown size={14} aria-hidden="true" className={reciterPickerOpen ? "is-open" : ""} />
-            </button>
-            {reciterPickerOpen && (
-              <div className="ayah-sheet__reciter-list" role="listbox" aria-label="اختيار القارئ">
-                {RECITERS.map((r) => (
-                  <button
-                    key={r.id}
-                    type="button"
-                    role="option"
-                    aria-selected={r.id === reciterId}
-                    className={`ayah-sheet__reciter-item${r.id === reciterId ? " is-active" : ""}`}
-                    onClick={() => { onSetReciter(r.id); setReciterPickerOpen(false); }}
-                  >
-                    {r.nameAr}
-                  </button>
-                ))}
+        {/* ── Ayah card ── */}
+        <section className="aas-reader__ayah" aria-label="نص الآية">
+          <p className="aas-reader__ayah-text" dir="rtl">
+            {ayahText}
+          </p>
+        </section>
+
+        {/* ── Audio strip (horizontal) ── */}
+        {(canPlay || (reciterId && onSetReciter) || playbackRate !== undefined) && (
+          <div className="aas-reader__audio-strip" role="toolbar" aria-label="التلاوة">
+            {canPlay ? (
+              <button
+                type="button"
+                className={`aas-reader__audio-chip${isPlaying ? " is-on" : ""}`}
+                onClick={onTogglePlay}
+              >
+                {isPlaying ? <Pause size={15} aria-hidden="true" /> : <Play size={15} aria-hidden="true" />}
+                <span>{isPlaying ? "إيقاف" : "استماع"}</span>
+              </button>
+            ) : null}
+
+            {canPlay && onToggleRepeat ? (
+              <button
+                type="button"
+                className={`aas-reader__audio-chip${repeatOn ? " is-on" : ""}`}
+                onClick={onToggleRepeat}
+                aria-pressed={repeatOn}
+              >
+                <Repeat size={15} aria-hidden="true" />
+                <span>تكرار</span>
+              </button>
+            ) : null}
+
+            {reciterId && onSetReciter ? (
+              <div className="aas-reader__dropdown-wrap">
+                <button
+                  type="button"
+                  className={`aas-reader__audio-chip${reciterPickerOpen ? " is-on" : ""}`}
+                  onClick={() => {
+                    setReciterPickerOpen((v) => !v);
+                    setSpeedPickerOpen(false);
+                    setEditionMenuOpen(false);
+                  }}
+                  aria-expanded={reciterPickerOpen}
+                >
+                  <Mic2 size={15} aria-hidden="true" />
+                  <span>{reciterName}</span>
+                  <ChevronDown size={14} aria-hidden="true" />
+                </button>
+                {reciterPickerOpen ? (
+                  <div className="aas-reader__dropdown" role="listbox" aria-label="اختيار القارئ">
+                    {RECITERS.map((r) => (
+                      <button
+                        key={r.id}
+                        type="button"
+                        role="option"
+                        aria-selected={r.id === reciterId}
+                        className={r.id === reciterId ? "is-active" : undefined}
+                        onClick={() => {
+                          onSetReciter(r.id);
+                          setReciterPickerOpen(false);
+                        }}
+                      >
+                        {r.nameAr}
+                      </button>
+                    ))}
+                  </div>
+                ) : null}
               </div>
-            )}
-          </>
+            ) : null}
+
+            {playbackRate !== undefined && onSetPlaybackRate ? (
+              <div className="aas-reader__dropdown-wrap">
+                <button
+                  type="button"
+                  className={`aas-reader__audio-chip${speedPickerOpen ? " is-on" : ""}`}
+                  onClick={() => {
+                    setSpeedPickerOpen((v) => !v);
+                    setReciterPickerOpen(false);
+                    setEditionMenuOpen(false);
+                  }}
+                  aria-expanded={speedPickerOpen}
+                >
+                  <Gauge size={15} aria-hidden="true" />
+                  <span>{playbackRate}×</span>
+                  <ChevronDown size={14} aria-hidden="true" />
+                </button>
+                {speedPickerOpen ? (
+                  <div className="aas-reader__dropdown aas-reader__dropdown--compact" role="listbox" aria-label="سرعة التلاوة">
+                    {[0.5, 0.75, 1, 1.25, 1.5, 1.75, 2].map((rate) => (
+                      <button
+                        key={rate}
+                        type="button"
+                        role="option"
+                        aria-selected={rate === playbackRate}
+                        className={rate === playbackRate ? "is-active" : undefined}
+                        onClick={() => {
+                          onSetPlaybackRate(rate);
+                          setSpeedPickerOpen(false);
+                        }}
+                      >
+                        {rate}×
+                      </button>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
+            ) : null}
+          </div>
         )}
 
-        {playbackRate !== undefined && onSetPlaybackRate && (
-          <>
-            <button type="button" className="ayah-sheet__speed-toggle" onClick={() => setSpeedPickerOpen((v) => !v)}>
-              <Gauge size={14} aria-hidden="true" />
-              <span>سرعة التلاوة: {playbackRate}×</span>
-              <ChevronDown size={14} aria-hidden="true" className={speedPickerOpen ? "is-open" : ""} />
-            </button>
-            {speedPickerOpen && (
-              <div className="ayah-sheet__speed-list" role="listbox" aria-label="اختيار سرعة التلاوة">
-                {[0.5, 0.75, 1, 1.25, 1.5, 1.75, 2].map((rate) => (
-                  <button
-                    key={rate}
-                    type="button"
-                    role="option"
-                    aria-selected={rate === playbackRate}
-                    className={`ayah-sheet__speed-item${rate === playbackRate ? " is-active" : ""}`}
-                    onClick={() => { onSetPlaybackRate(rate); setSpeedPickerOpen(false); }}
-                  >
-                    {rate}×
-                  </button>
-                ))}
-              </div>
-            )}
-          </>
-        )}
-
-        <button type="button" className="ayah-sheet__tafsir-toggle" onClick={handleToggleTafsir} aria-expanded={tafsirOpen}>
-          <BookOpen size={14} aria-hidden="true" />
-          <span>تفسير الآية</span>
-          <ChevronDown size={14} aria-hidden="true" className={tafsirOpen ? "is-open" : ""} />
-        </button>
-        {tafsirOpen && (
-          <div className="ayah-sheet__tafsir-body">
-            <div className="ayah-sheet__tafsir-editions" role="tablist" aria-label="اختر التفسير">
+        {/* ── Smart tafsir edition dropdown ── */}
+        <div className="aas-reader__edition" ref={editionMenuRef}>
+          <button
+            type="button"
+            className="aas-reader__edition-btn"
+            onClick={() => {
+              setEditionMenuOpen((v) => !v);
+              setReciterPickerOpen(false);
+              setSpeedPickerOpen(false);
+            }}
+            aria-expanded={editionMenuOpen}
+            aria-haspopup="listbox"
+          >
+            <BookOpen size={16} aria-hidden="true" />
+            <span className="aas-reader__edition-label">
+              <em>التفسير</em>
+              <strong>{currentEditionMeta?.label ?? "اختر تفسيرًا"}</strong>
+            </span>
+            <ChevronDown size={16} aria-hidden="true" className={editionMenuOpen ? "is-open" : undefined} />
+          </button>
+          {editionMenuOpen ? (
+            <div className="aas-reader__edition-menu" role="listbox" aria-label="قائمة التفاسير">
               {MUSHAF_TAFSIR_EDITIONS.map((ed) => (
                 <button
                   key={ed.id}
                   type="button"
-                  role="tab"
-                  className={`ayah-sheet__tafsir-ed${tafsirEdition === ed.id ? " is-active" : ""}`}
-                  aria-selected={tafsirEdition === ed.id}
+                  role="option"
+                  aria-selected={ed.id === tafsirEdition}
+                  className={ed.id === tafsirEdition ? "is-active" : undefined}
                   onClick={() => handleSelectEdition(ed.id)}
                 >
-                  {ed.label}
+                  <strong>{ed.label}</strong>
+                  <span>
+                    {ed.author}
+                    {ed.level ? ` · ${ed.level}` : ""}
+                  </span>
                 </button>
               ))}
             </div>
-            {currentEditionMeta?.caution && (
-              <p className="ayah-sheet__tafsir-caution">{currentEditionMeta.caution}</p>
-            )}
-            {tafsirLoading && !tafsirText ? (
-              <p className="ayah-sheet__tafsir-status">جارٍ تحميل {currentEditionMeta?.label ?? "التفسير"}...</p>
-            ) : tafsirError && !tafsirText ? (
-              <p className="ayah-sheet__tafsir-status">تعذّر تحميل التفسير. تحقّق من اتصالك.</p>
-            ) : tafsirText ? (
-              <>
-                <p className="ayah-sheet__tafsir-meta">
-                  {currentEditionMeta?.label} — {currentEditionMeta?.author}
-                </p>
-                <p className="ayah-sheet__tafsir-text">{tafsirText}</p>
-              </>
-            ) : (
-              <p className="ayah-sheet__tafsir-status">تعذّر تحميل التفسير. تحقّق من اتصالك.</p>
-            )}
-          </div>
-        )}
+          ) : null}
+        </div>
 
-        {noteOpen && (
-          <div className="aas-panel__note">
+        {currentEditionMeta?.caution ? (
+          <p className="aas-reader__caution" role="note">
+            {currentEditionMeta.caution}
+          </p>
+        ) : null}
+
+        {/* ── Tafsir body (hero) ── */}
+        <section className="aas-reader__body" aria-live="polite" aria-busy={tafsirLoading}>
+          {currentEditionMeta ? (
+            <p className="aas-reader__author">
+              <span>{currentEditionMeta.author}</span>
+            </p>
+          ) : null}
+
+          {tafsirLoading && !tafsirText ? (
+            <div className="aas-reader__skel" aria-label="جاري تحميل التفسير">
+              <span />
+              <span />
+              <span />
+            </div>
+          ) : tafsirError && !tafsirText ? (
+            <p className="aas-reader__status">تعذّر تحميل التفسير. تحقّق من اتصالك ثم أعد المحاولة.</p>
+          ) : paragraphs.length > 0 ? (
+            <div className="aas-reader__prose" key={tafsirEdition}>
+              {paragraphs.map((p, i) => (
+                <p key={`${i}-${p.slice(0, 24)}`}>{p}</p>
+              ))}
+            </div>
+          ) : (
+            <p className="aas-reader__status">لا يتوفر تفسير لهذه الآية في المصدر المختار.</p>
+          )}
+        </section>
+
+        {/* ── Secondary tools ── */}
+        {noteOpen ? (
+          <div className="aas-reader__note">
             <textarea
               value={noteText}
               onChange={(e) => setNoteText(e.target.value)}
               placeholder="اكتب ملاحظتك على هذه الآية..."
               dir="rtl"
             />
-            <button type="button" className="aas-action-btn is-active" style={{ marginTop: ".5rem", width: "100%" }} onClick={handleSaveNote}>
+            <button type="button" className="aas-reader__note-save" onClick={handleSaveNote}>
               {noteSaved ? <Check size={16} aria-hidden="true" /> : <StickyNote size={16} aria-hidden="true" />}
               {noteSaved ? "تم الحفظ" : "حفظ الملاحظة"}
             </button>
           </div>
-        )}
+        ) : null}
 
-        <div className="aas-panel__grid">
-          <button type="button" className={`aas-action-btn ${bookmarked ? "is-active" : ""}`} onClick={toggleBookmark}>
-            <Bookmark size={18} aria-hidden="true" fill={bookmarked ? "currentColor" : "none"} />
-            {bookmarked ? "محفوظة" : "إشارة مرجعية"}
+        <div className="aas-reader__tools">
+          <button type="button" className={bookmarked ? "is-on" : undefined} onClick={toggleBookmark}>
+            <Bookmark size={16} aria-hidden="true" fill={bookmarked ? "currentColor" : "none"} />
+            {bookmarked ? "محفوظة" : "إشارة"}
           </button>
-          <button type="button" className={`aas-action-btn ${noteOpen ? "is-active" : ""}`} onClick={() => setNoteOpen((v) => !v)}>
-            <StickyNote size={18} aria-hidden="true" />
+          <button type="button" className={noteOpen ? "is-on" : undefined} onClick={() => setNoteOpen((v) => !v)}>
+            <StickyNote size={16} aria-hidden="true" />
             ملاحظة
           </button>
-          {canPlay && (
-            <button type="button" className="aas-action-btn" onClick={onTogglePlay}>
-              {isPlaying ? <Pause size={18} aria-hidden="true" /> : <Play size={18} aria-hidden="true" />}
-              {isPlaying ? "إيقاف" : "استماع"}
-            </button>
-          )}
-          {canPlay && onToggleRepeat && (
-            <button type="button" className={`aas-action-btn ${repeatOn ? "is-active" : ""}`} onClick={onToggleRepeat} aria-pressed={repeatOn}>
-              <Repeat size={18} aria-hidden="true" />
-              {repeatOn ? "التكرار: مُفعَّل" : "تكرار الآية"}
-            </button>
-          )}
-          <button type="button" className="aas-action-btn" onClick={() => handleCopy(false)}>
-            {copiedKind === "full" ? <Check size={18} aria-hidden="true" /> : <Copy size={18} aria-hidden="true" />}
-            نسخ بالتشكيل
+          <button type="button" onClick={() => void handleCopy(false)}>
+            {copiedKind === "full" ? <Check size={16} aria-hidden="true" /> : <Copy size={16} aria-hidden="true" />}
+            نسخ
           </button>
-          <button type="button" className="aas-action-btn" onClick={() => handleCopy(true)}>
-            {copiedKind === "plain" ? <Check size={18} aria-hidden="true" /> : <Copy size={18} aria-hidden="true" />}
-            نسخ بلا تشكيل
+          <button type="button" onClick={() => void handleCopy(true)}>
+            {copiedKind === "plain" ? <Check size={16} aria-hidden="true" /> : <Copy size={16} aria-hidden="true" />}
+            بلا تشكيل
           </button>
-          {onPrev && (
-            <button type="button" className="aas-action-btn" onClick={onPrev}>
-              <ChevronRight size={18} aria-hidden="true" />
-              الآية السابقة
-            </button>
-          )}
-          {onNext && (
-            <button type="button" className="aas-action-btn" onClick={onNext}>
-              <ChevronLeft size={18} aria-hidden="true" />
-              الآية التالية
-            </button>
-          )}
           <a
-            className="aas-action-btn aas-action-btn--report"
+            className="aas-reader__report"
             href={`mailto:${CONTACT_EMAIL}?subject=${reportSubject}&body=${reportBody}`}
           >
-            <Flag size={18} aria-hidden="true" />
-            إبلاغ عن خطأ
+            <Flag size={16} aria-hidden="true" />
+            إبلاغ
           </a>
         </div>
       </div>
