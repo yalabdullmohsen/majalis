@@ -287,6 +287,24 @@ export default function NotificationSettingsPage() {
         <ToggleRow label="مراجعة البطاقات" sub="تذكير يومي عند وجود بطاقات مستحقة" checked={prefs.flashcardsReminder} onChange={v => update({ flashcardsReminder: v })} disabled={!canToggle} />
         <ToggleRow label="تابع من حيث توقفت" sub="تذكير بالدرس أو الكتاب الذي لم تُكمله" checked={prefs.resumeReminder} onChange={v => update({ resumeReminder: v })} disabled={!canToggle} />
         <ToggleRow label="تنبيه الصلاة" sub="إشعار قبل 10 دقائق من وقت الصلاة" checked={prefs.prayerReminder} onChange={v => update({ prayerReminder: v })} disabled={!canToggle} />
+        <ToggleRow
+          label="ورد القرآن اليومي"
+          sub="تذكير يومي الساعة 5 مساءً لقراءة الورد"
+          checked={prefs.quranDailyReminder}
+          onChange={(v) => {
+            void (async () => {
+              if (v) {
+                const { scheduleDailyReminder } = await import("@/lib/quran-daily-reminder");
+                await scheduleDailyReminder();
+              } else {
+                const { cancelDailyReminder } = await import("@/lib/quran-daily-reminder");
+                await cancelDailyReminder();
+              }
+              setPrefs(loadNotifPrefs());
+            })();
+          }}
+          disabled={!canToggle}
+        />
       </div>
 
       {/* ── وقت التذكير ── */}

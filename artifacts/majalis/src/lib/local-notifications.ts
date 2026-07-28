@@ -7,6 +7,8 @@ export type NotifPrefs = {
   flashcardsReminder: boolean;   // مراجعة البطاقات المستحقة
   resumeReminder: boolean;       // الدرس الذي لم يُكتمل
   prayerReminder: boolean;       // قبل الصلاة بـ 10 دقائق
+  /** تذكير ورد القرآن اليومي الساعة 5 مساءً (RN scheduleDailyReminder). */
+  quranDailyReminder: boolean;
   reminderHour: number;          // الساعة المفضلة للتذكير (0-23)
   reminderMinute: number;
 };
@@ -16,6 +18,7 @@ const DEFAULTS: NotifPrefs = {
   flashcardsReminder: true,
   resumeReminder: true,
   prayerReminder: false,
+  quranDailyReminder: true,
   reminderHour: 8,
   reminderMinute: 0,
 };

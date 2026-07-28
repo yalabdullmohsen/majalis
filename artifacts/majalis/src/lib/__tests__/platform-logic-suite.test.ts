@@ -113,6 +113,7 @@ console.log("\n=== 4. Smart local schedule ===");
       flashcardsReminder: true,
       resumeReminder: true,
       prayerReminder: true,
+      quranDailyReminder: true,
       reminderHour: 8,
       reminderMinute: 0,
     }),
@@ -120,8 +121,11 @@ console.log("\n=== 4. Smart local schedule ===");
   const items = buildDailySmartSchedule({ khatmahBehind: true });
   assert(items.some((i) => i.kind === "adhkar"), "schedules adhkar");
   assert(items.some((i) => i.kind === "prayer"), "schedules prayer");
+  assert(items.some((i) => i.kind === "quran"), "schedules quran daily reminder");
   assert(items.some((i) => i.kind === "khatmah"), "schedules khatmah when behind");
   assert(items.every((i, idx) => idx === 0 || items[idx - 1].minuteOfDay <= i.minuteOfDay), "sorted by minute");
+  const quran = items.find((i) => i.kind === "quran");
+  assert(quran?.minuteOfDay === 17 * 60, "quran reminder at 17:00");
 }
 
 console.log("\n=== 5. Ayah loop controller ===");
