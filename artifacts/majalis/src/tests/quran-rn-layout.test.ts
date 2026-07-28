@@ -45,8 +45,14 @@ function main() {
 
   check(typeof hooks.useQuranEngine === "function", "hooks.useQuranEngine");
   check(typeof hooks.useQuranAudioToggle === "function", "hooks.useQuranAudioToggle");
+  check(typeof hooks.useQuranAudio === "function", "hooks.useQuranAudio");
   check(typeof hooks.useAyahPlayer === "function", "hooks.useAyahPlayer");
   check(typeof hooks.useColorScheme === "function", "hooks.useColorScheme");
+  check(
+    Array.isArray(constants.VALID_PLAYBACK_RATES) &&
+      (constants.VALID_PLAYBACK_RATES as readonly number[]).includes(0.5),
+    "constants.VALID_PLAYBACK_RATES",
+  );
 
   check(typeof context.QuranEngineProvider === "function", "context.QuranEngineProvider");
   check(typeof context.getQuranEngineContext === "function", "context.getQuranEngineContext");

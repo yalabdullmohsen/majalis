@@ -8,6 +8,7 @@ export type { SurahListItem } from "@/lib/quran-surah-list";
 export { RECITERS, getFeaturedReciters } from "@/lib/quran-audio";
 
 /** Playback rate presets (mushaf + engine) — 0.5 بطيء · 1 عادي · 1.5 سريع … */
+export { VALID_PLAYBACK_RATES, normalizePlaybackRate } from "@/lib/quran-audio";
 export const PLAYBACK_RATE_PRESETS = [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2] as const;
 
 export {

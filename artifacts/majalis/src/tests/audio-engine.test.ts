@@ -43,6 +43,18 @@ function main() {
   a.setTeachMode(false);
   check(a.getSnapshot().teachPhase === "idle", "teach mode off");
 
+  check(a.getSnapshot().playbackRate === 1, "default playbackRate 1");
+  check(a.setPlaybackRate(1.5) === 1.5, "setPlaybackRate 1.5");
+  check(a.getSnapshot().playbackRate === 1.5, "snapshot rate 1.5");
+  check(a.setPlaybackRate(1.4) === 1.5, "normalize 1.4 → 1.5");
+  check(a.setPlaybackRate(0.9) === 1, "normalize 0.9 → 1");
+  check(a.getSound() === null, "getSound null before play");
+  check(typeof a.playUrl === "function", "playUrl");
+  check(typeof a.changeSpeed === "function", "changeSpeed");
+  check(typeof a.stop === "function", "stop");
+  check(typeof a.stopAndUnload === "function", "stopAndUnload");
+  a.setPlaybackRate(1);
+
   let ayahEvents = 0;
   const unsub = a.onAyahChange(() => {
     ayahEvents += 1;
