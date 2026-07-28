@@ -82,6 +82,7 @@
     "test:pwa": "npx tsx src/lib/__tests__/pwa-mobile-launch.test.ts",
     "test:quran-db": "npx tsx src/tests/database-manager.test.ts",
     "test:quran-scaffold": "npx tsx src/tests/core-engine.sample.test.ts",
+    "test:quran-audio": "npx tsx src/tests/audio-engine.test.ts",
     "test:nav-active": "npx tsx src/lib/__tests__/nav-active.test.ts",
     "test": "pnpm run test:pwa && pnpm run test:nav-active && pnpm run test:seo",
     "test:identity": "node scripts/test-identity.mjs",

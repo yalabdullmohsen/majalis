@@ -20,7 +20,13 @@ export {
 
 export {
   getQuranEngineContext,
+  QuranEngineProvider,
+  useQuranEngineContext,
+  useQuranEngineContextOptional,
+  __resetQuranEngineContextForTests,
   type QuranEngineContextApi,
+  type QuranEngineState,
+  type QuranEngineReactValue,
   type ActiveVerse,
   type ReadingProgressInput,
 } from "./QuranEngineContext";

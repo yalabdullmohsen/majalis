@@ -1,5 +1,5 @@
 /**
- * Sample scaffold smoke — Quran Engine façades (no IndexedDB required).
+ * Sample scaffold smoke — Quran Engine façades.
  * Run: npx tsx src/tests/core-engine.sample.test.ts
  */
 import { getDatabaseManager, databaseManager } from "../core/quran/DatabaseManager";
@@ -24,17 +24,17 @@ function check(cond: boolean, label: string) {
 async function main() {
   console.log("═══ Quran Engine façade smoke ═══");
 
-  check(getDatabaseManager() === databaseManager, "databaseManager singleton export");
+  check(getDatabaseManager() === databaseManager, "databaseManager singleton");
   check(typeof getDatabaseManager().saveProgress === "function", "saveProgress");
-  check(typeof getDatabaseManager().getReadingProgress === "function", "getReadingProgress");
-  check(typeof getDatabaseManager().addBookmark === "function", "addBookmark");
-  check(typeof getDatabaseManager().getCachedTafseer === "function", "getCachedTafseer");
+  check(typeof getAudioEngine().playAyah === "function", "AudioEngine.playAyah");
+  check(typeof getAudioEngine().setRepeatMode === "function", "AudioEngine.setRepeatMode");
+  check(typeof getTafseerService().getAyahTafsir === "function", "TafseerService.getAyahTafsir");
 
   const ctx = getQuranEngineContext();
-  check(ctx.db === databaseManager, "context.db is DatabaseManager");
+  check(ctx.db === databaseManager, "context.db");
+  check(typeof ctx.toggleTajweed === "function", "toggleTajweed");
+  check(typeof ctx.toggleActionBar === "function", "toggleActionBar");
   check(typeof useQuranEngine === "function", "useQuranEngine hook");
-  check(getAudioEngine() === getAudioEngine(), "AudioEngine singleton");
-  check(getTafseerService() === getTafseerService(), "TafseerService singleton");
 
   console.log(`\n${passed} passed, ${failed} failed`);
   if (failed > 0) process.exit(1);

@@ -1,21 +1,29 @@
-# Quran Engine — architecture scaffold
+# Quran Engine — core implementation
 
 App root: `artifacts/majalis/src/`
 
-## DatabaseManager (implemented)
+## Modules
 
-Dexie DB `majalis-quran-app-db` v1:
+| Area | Path | Status |
+|------|------|--------|
+| Database | `core/quran/DatabaseManager.ts` | Dexie singleton |
+| State | `core/quran/QuranEngineContext.ts` | Provider + store |
+| Audio | `core/audio/AudioEngine.ts` | Play/pause/seek, repeat, teach |
+| Tafseer | `core/tafseer/TafseerService.ts` | IDB → API |
+| UI | `components/Quran{Viewer,ActionBar}.tsx`, `HomeDashboard.tsx` | Wired |
+| Hook | `hooks/useQuranEngine.ts` | Provider or singleton |
+| Route | `/quran-engine` | `views/QuranEnginePage.tsx` |
 
-| Table | Purpose |
-|-------|---------|
-| `settings` | preferences (`isTajweedEnabled`, …) |
-| `progress` | `lastSurah` / `lastAyah` / `lastPage` |
-| `bookmarks` | ayah bookmarks + note |
-| `tafseer_cache` | offline tafsir by `ayahId` + `source` |
+## PWA
 
-Singleton: `import { databaseManager } from "@/core/quran"`
+- `public/quran-engine-manifest.json`
+- `public/quran-engine-sw.js` (Workbox CDN)
+- `workbox-quran-engine.config.cjs` (generateSW)
+
+## Tests
 
 ```bash
-npx tsx src/tests/core-engine.sample.test.ts
-npx tsx src/tests/database-manager.test.ts   # needs fake-indexeddb
+pnpm --filter @workspace/majalis run test:quran-scaffold
+pnpm --filter @workspace/majalis run test:quran-db
+pnpm --filter @workspace/majalis run test:quran-audio
 ```
