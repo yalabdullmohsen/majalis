@@ -7,7 +7,6 @@
 
 import {
   idbDelete,
-  idbGetAll,
   idbGetValue,
   idbPut,
   OFFLINE_STORES,
@@ -208,17 +207,20 @@ export async function inspectStorage(): Promise<StorageInspectorReport> {
   }
 
   try {
+    const { idbStreamAll } = await import("@/lib/offline-db");
     for (const store of Object.values(OFFLINE_STORES)) {
-      const rows = await idbGetAll(store);
-      for (const row of rows) {
-        entries.push({
-          layer: "indexedDB",
-          key: `${store}/${row.key}`,
-          bytes: approxJsonBytes(row.value) + utf8Bytes(row.key),
-          lastAccessedAt: lru[`idb:${store}/${row.key}`] ?? (Date.parse(row.updatedAt) || now),
-          protected: isProtectedIdbKey(store, row.key),
-        });
-      }
+      // Part 21: stream IDB inventory in batches instead of one giant toArray
+      await idbStreamAll(store, (batch) => {
+        for (const row of batch) {
+          entries.push({
+            layer: "indexedDB",
+            key: `${store}/${row.key}`,
+            bytes: approxJsonBytes(row.value) + utf8Bytes(row.key),
+            lastAccessedAt: lru[`idb:${store}/${row.key}`] ?? (Date.parse(row.updatedAt) || now),
+            protected: isProtectedIdbKey(store, row.key),
+          });
+        }
+      });
     }
   } catch {
     /* ignore */

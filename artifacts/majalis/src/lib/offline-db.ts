@@ -16,6 +16,7 @@ import {
   engineGetValue,
   engineKeys,
   enginePut,
+  engineStreamStore,
   type OfflineRecord,
   type OfflineStoreName,
 } from "@/lib/offline-engine";
@@ -74,4 +75,27 @@ export async function idbGetAll<T>(storeName: OfflineStoreName): Promise<LegacyO
     updatedAt: row.updatedAt,
     revision: row.revision,
   }));
+}
+
+/** Chunked store scan — prefer over idbGetAll for large indexes. */
+export async function idbStreamAll<T>(
+  storeName: OfflineStoreName,
+  onBatch: (batch: LegacyOfflineRecord<T>[], offset: number) => void | Promise<void>,
+  opts?: { batchSize?: number; signal?: AbortSignal },
+): Promise<number> {
+  return engineStreamStore<T>(
+    storeName,
+    async (batch, offset) => {
+      await onBatch(
+        batch.map((row) => ({
+          key: row.key,
+          value: row.value,
+          updatedAt: row.updatedAt,
+          revision: row.revision,
+        })),
+        offset,
+      );
+    },
+    opts,
+  );
 }

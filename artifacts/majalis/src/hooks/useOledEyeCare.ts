@@ -41,6 +41,12 @@ export function useOledEyeCare() {
     [prefs.mode],
   );
 
+  const releaseCanvas = useCallback((canvas: HTMLCanvasElement | null | undefined) => {
+    void import("@/lib/canvas-gl-cleanup").then(({ releaseCanvasResources }) => {
+      releaseCanvasResources(canvas);
+    });
+  }, []);
+
   const canvasTextColor = resolveOledCanvasTextColor(prefs.mode);
 
   return {
@@ -50,6 +56,7 @@ export function useOledEyeCare() {
     beginSession,
     endSession,
     paintCanvas,
+    releaseCanvas,
     canvasTextColor,
   };
 }
