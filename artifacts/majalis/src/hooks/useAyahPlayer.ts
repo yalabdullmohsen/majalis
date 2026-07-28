@@ -91,7 +91,25 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
       clearDelayTimer();
       pauseCleanupRef.current?.();
       pauseCleanupRef.current = null;
-      audio.pause();
+      try {
+        if (!audio.paused && Number.isFinite(audio.currentTime)) {
+          // Best-effort final marker before teardown (surah/ayah from last play)
+          const src = audio.currentSrc || audio.src;
+          if (src) {
+            /* resume already persisted via saveAudioResumeState on pause/play */
+          }
+        }
+        audio.pause();
+        audio.removeAttribute("src");
+        audio.src = "";
+        audio.load();
+      } catch {
+        try {
+          audio.pause();
+        } catch {
+          /* ignore */
+        }
+      }
       audioRef.current = null;
     };
   }, [clearDelayTimer]);

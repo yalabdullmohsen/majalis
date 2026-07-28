@@ -71,7 +71,24 @@ function sleep(ms: number, signal?: AbortSignal): Promise<void> {
 
 export async function requestFetch(input: RequestInfo | URL, init: RequestInit = {}): Promise<Response> {
   const label = typeof input === "string" ? input : input.toString();
-  return RequestManager.fetch(input, { ...init, label });
+  const method = (init.method || "GET").toUpperCase();
+  // Dedupe identical in-flight GETs (static JSON / multi-tab spam prevention)
+  const dedupeKey =
+    method === "GET" || method === "HEAD"
+      ? `fetch:${method}:${label}`
+      : undefined;
+  if (dedupeKey && inflight.has(dedupeKey)) {
+    return inflight.get(dedupeKey)!.promise as Promise<Response>;
+  }
+  const promise = RequestManager.fetch(input, { ...init, label });
+  if (dedupeKey) {
+    const controller = new AbortController();
+    inflight.set(dedupeKey, { promise, controller, started: Date.now() });
+    void promise.finally(() => {
+      if (inflight.get(dedupeKey)?.promise === promise) inflight.delete(dedupeKey);
+    });
+  }
+  return promise;
 }
 
 export class RequestManager {

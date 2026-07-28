@@ -1,7 +1,4 @@
-/**
- * مرجع الصحيحين المحلي (البخاري + مسلم) من public/data/hadith/.
- * الصحة = عضوية الكتاب؛ لا تُلصق درجة فردية ملفّقة.
- */
+import { pooledFetch } from "@/lib/fetch-pool";
 import type { CdnHadith } from "@/lib/hadith-cdn-service";
 
 export type SahihaynCollection = "bukhari" | "muslim";
@@ -58,7 +55,10 @@ async function loadCollectionFile(collection: SahihaynCollection): Promise<CdnHa
   if (hit) return hit;
 
   const promise = (async () => {
-    const res = await fetch(`/data/hadith/${collection}.json`);
+    const res = await pooledFetch(`/data/hadith/${collection}.json`, {
+      dedupeKey: `sahihayn:${collection}`,
+      timeoutMs: 20_000,
+    });
     if (!res.ok) throw new Error(`مرجع ${collection} غير متاح (${res.status})`);
     const data = (await res.json()) as SahihaynFile;
     if (!Array.isArray(data.hadiths)) return [];
@@ -95,7 +95,10 @@ export async function fetchSahihaynLocal(
 
 export async function fetchSahihaynManifest(): Promise<SahihaynManifest | null> {
   try {
-    const res = await fetch("/data/hadith/manifest.json");
+    const res = await pooledFetch("/data/hadith/manifest.json", {
+      dedupeKey: "sahihayn:manifest",
+      timeoutMs: 10_000,
+    });
     if (!res.ok) return null;
     return (await res.json()) as SahihaynManifest;
   } catch {

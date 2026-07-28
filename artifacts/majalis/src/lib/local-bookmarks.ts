@@ -3,6 +3,8 @@
  * لا تُخزَّن بيانات حسّاسة؛ فقط نوع المحتوى والمعرّف والعنوان والمسار.
  */
 
+import { readLocalJson, writeLocalJson, isPlainObject } from "@/lib/safe-json";
+
 const STORAGE_KEY = "majalis-local-bookmarks-v1";
 const MAX_ITEMS = 80;
 
@@ -15,19 +17,30 @@ export type LocalBookmark = {
   savedAt: string;
 };
 
+function isBookmark(v: unknown): v is LocalBookmark {
+  return (
+    isPlainObject(v) &&
+    typeof v.id === "string" &&
+    typeof v.contentType === "string" &&
+    typeof v.contentId === "string" &&
+    typeof v.title === "string" &&
+    typeof v.href === "string" &&
+    typeof v.savedAt === "string"
+  );
+}
+
+function isBookmarkList(v: unknown): v is LocalBookmark[] {
+  return Array.isArray(v) && v.every(isBookmark);
+}
+
 function readAll(): LocalBookmark[] {
   if (typeof window === "undefined") return [];
-  try {
-    const raw = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
-    return Array.isArray(raw) ? (raw as LocalBookmark[]) : [];
-  } catch {
-    return [];
-  }
+  return readLocalJson<LocalBookmark[]>(STORAGE_KEY, [], isBookmarkList);
 }
 
 function writeAll(items: LocalBookmark[]) {
   if (typeof window === "undefined") return;
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(items.slice(0, MAX_ITEMS)));
+  writeLocalJson(STORAGE_KEY, items.slice(0, MAX_ITEMS));
 }
 
 export function listLocalBookmarks(): LocalBookmark[] {
