@@ -23,6 +23,7 @@ import {
   type NotifRecord,
 } from "@/lib/notification-history";
 import { applyPageSeo } from "@/lib/seo";
+import { PushPrompt } from "@/components/PushPrompt";
 import "@/styles/pages/notifications.css";
 
 type Permission = ReturnType<typeof getPermissionStatus>;
@@ -248,6 +249,14 @@ export default function NotificationSettingsPage() {
         title="الإشعارات"
         subtitle="تذكّرات مخصصة تساعدك على المثابرة في طلب العلم."
       />
+
+      <section className="notif-card" aria-label="إشعارات الدفع عبر الويب">
+        <h2 className="notif-card__title">إشعارات الدفع (PWA)</h2>
+        <p className="notif-row__sub" style={{ marginBottom: "0.75rem" }}>
+          تُرسل عبر متصفحك عند تثبيت التطبيق أو السماح بالإشعارات.
+        </p>
+        <PushPrompt />
+      </section>
 
       {/* ── حالة الصلاحية ── */}
       {isUnsupported && (

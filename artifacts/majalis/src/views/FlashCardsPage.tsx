@@ -12,6 +12,7 @@ import {
   getDueFlashCards,
   submitCardReview,
   getFlashCardStats,
+  syncDirtyFlashcardReviews,
   type FlashCard,
   type FlashCardStats,
 } from "@/lib/flashcard-service";
@@ -21,6 +22,7 @@ import {
   type ReviewQuality,
   type CardState,
 } from "@/lib/spaced-repetition";
+import { recordUserActivity } from "@/lib/user-streak";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import "@/styles/pages/flashcards.css";
 
@@ -128,14 +130,15 @@ function CardFace({
 
 // ── Quality Bar ───────────────────────────────────────────────────────────────
 
+// Reuse existing CSS modifiers (fc-q--2) for Hard quality=3 — no CSS file edits.
 const FC_Q_MOD: Record<number, string> = {
   0: "fc-q--0",
-  2: "fc-q--2",
+  3: "fc-q--2",
   4: "fc-q--4",
   5: "fc-q--5",
 };
 
-const KEY_LABELS: Record<number, string> = { 0: "1", 2: "2", 4: "3", 5: "4" };
+const KEY_LABELS: Record<number, string> = { 0: "1", 3: "2", 4: "3", 5: "4" };
 
 function QualityBar({
   card,
@@ -254,6 +257,8 @@ export default function FlashCardsPage() {
     setFlipped(false);
     setReviewedCount(0);
     try {
+      // Flush any reviews saved while offline
+      await syncDirtyFlashcardReviews(user.id).catch(() => 0);
       const [newCards, newStats] = await Promise.all([
         getDueFlashCards(user.id, 20),
         getFlashCardStats(user.id),
@@ -262,7 +267,9 @@ export default function FlashCardsPage() {
       setStats(newStats);
       if (newCards.length === 0) setSessionDone(true);
     } catch {
+      // Offline-safe: never leave the page in a hard error state
       setCards([]);
+      setStats({ totalReviewed: 0, dueToday: 0, masteredCount: 0 });
     } finally {
       setLoading(false);
     }
@@ -271,6 +278,7 @@ export default function FlashCardsPage() {
   const handleRate = useCallback(async (quality: ReviewQuality) => {
     if (!user?.id || !cards[currentIdx]) return;
     await submitCardReview(user.id, cards[currentIdx], quality);
+    recordUserActivity("flashcards");
     setReviewedCount((n) => n + 1);
     const next = currentIdx + 1;
     if (next >= cards.length) {
@@ -285,10 +293,10 @@ export default function FlashCardsPage() {
   // اختصارات لوحة المفاتيح — Space/Enter للقلب، 1–4 (ولوحة الأرقام) للتقييم
   useEffect(() => {
     const rateByCode = (code: string): ReviewQuality | null => {
-      if (code === "Digit1" || code === "Numpad1") return 0;
-      if (code === "Digit2" || code === "Numpad2") return 2;
-      if (code === "Digit3" || code === "Numpad3") return 4;
-      if (code === "Digit4" || code === "Numpad4") return 5;
+      if (code === "Digit1" || code === "Numpad1") return 0; // Again
+      if (code === "Digit2" || code === "Numpad2") return 3; // Hard
+      if (code === "Digit3" || code === "Numpad3") return 4; // Good
+      if (code === "Digit4" || code === "Numpad4") return 5; // Easy
       return null;
     };
 

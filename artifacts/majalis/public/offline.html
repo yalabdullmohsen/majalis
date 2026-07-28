@@ -3,151 +3,135 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#153025" />
+  <meta name="theme-color" content="#143F35" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
   <title>غير متصل — المجلس العلمي</title>
+  <link rel="icon" href="/favicon.png" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     body {
-      font-family: "Times New Roman", Times, serif;
+      font-family: "Segoe UI", Tahoma, "Noto Naskh Arabic", sans-serif;
       min-height: 100svh;
-      background: #F0F5F2;
-      color: #1F4D3A;
+      min-height: 100dvh;
+      background:
+        radial-gradient(90% 60% at 100% 0%, rgba(184,150,63,0.12), transparent 50%),
+        linear-gradient(160deg, #143F35 0%, #1A5245 55%, #226A56 100%);
+      color: #fff;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 1.5rem;
+      padding: max(1.25rem, env(safe-area-inset-top)) 1.25rem max(1.25rem, env(safe-area-inset-bottom));
       text-align: center;
     }
-
     .offline-card {
-      background: #fff;
-      border: 1px solid rgba(31,77,58,0.15);
-      border-radius: 1.5rem;
-      padding: 2.5rem 2rem;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.16);
+      border-radius: 1.1rem;
+      padding: 2rem 1.4rem 1.6rem;
       max-width: 440px;
       width: 100%;
-      box-shadow: 0 8px 32px rgba(31,77,58,0.1);
+      backdrop-filter: blur(6px);
     }
-
-    .offline-icon {
-      width: 72px;
-      height: 72px;
-      margin: 0 auto 1.25rem;
-      background: #EEF7F2;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2rem;
-      border: 2px solid rgba(31,77,58,0.12);
+    .offline-logo {
+      width: 64px;
+      height: 64px;
+      margin: 0 auto 1rem;
+      border-radius: 0.85rem;
+      object-fit: contain;
+      background: rgba(255,255,255,0.1);
+      padding: 0.35rem;
     }
-
     h1 {
-      font-size: 1.3rem;
-      font-weight: 800;
-      color: #1F4D3A;
-      margin-bottom: .6rem;
+      font-size: 1.25rem;
+      font-weight: 900;
+      margin-bottom: 0.55rem;
     }
-
     .subtitle {
-      font-size: .92rem;
-      color: #4E6658;
+      font-size: 0.92rem;
+      color: rgba(255,255,255,0.82);
       line-height: 1.75;
-      margin-bottom: 1.75rem;
+      margin-bottom: 1.5rem;
     }
-
-    .offline-actions {
-      display: flex;
-      flex-direction: column;
-      gap: .6rem;
-    }
-
+    .offline-actions { display: grid; gap: 0.55rem; }
     .btn {
       display: block;
-      padding: .75rem 1.25rem;
-      border-radius: .75rem;
-      font-size: .9rem;
-      font-weight: 700;
+      min-height: 48px;
+      line-height: 48px;
+      padding: 0 1.1rem;
+      border-radius: 0.65rem;
+      font-size: 0.92rem;
+      font-weight: 800;
       text-decoration: none;
       cursor: pointer;
       border: none;
       font-family: inherit;
-      transition: opacity .15s, transform .15s;
     }
-    .btn:hover { opacity: .88; transform: translateY(-1px); }
-    .btn--primary  { background: #1F4D3A; color: #ffffff; }
-    .btn--secondary { background: #EEF7F2; color: #1F4D3A; border: 1px solid rgba(31,77,58,0.2); }
-
+    .btn--primary { background: #B8963F; color: #143F35; }
+    .btn--secondary {
+      background: rgba(255,255,255,0.1);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.22);
+    }
     .offline-cached {
-      margin-top: 1.75rem;
-      padding-top: 1.25rem;
-      border-top: 1px solid rgba(31,77,58,0.12);
+      margin-top: 1.4rem;
+      padding-top: 1.1rem;
+      border-top: 1px solid rgba(255,255,255,0.12);
     }
     .offline-cached p {
-      font-size: .78rem;
-      font-weight: 700;
-      letter-spacing: .06em;
-      color: #607D6E;
-      margin-bottom: .75rem;
+      font-size: 0.75rem;
+      font-weight: 800;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 0.7rem;
     }
     .cached-links {
       display: flex;
       flex-wrap: wrap;
-      gap: .4rem;
+      gap: 0.4rem;
       justify-content: center;
     }
     .cached-link {
-      display: inline-block;
-      padding: .3rem .75rem;
-      border-radius: 999px;
-      font-size: .82rem;
-      font-weight: 600;
-      background: #F0F5F2;
-      color: #1F4D3A;
+      display: inline-flex;
+      align-items: center;
+      min-height: 36px;
+      padding: 0.25rem 0.75rem;
+      border-radius: 0.5rem;
+      font-size: 0.8rem;
+      font-weight: 700;
+      background: rgba(255,255,255,0.1);
+      color: #fff;
       text-decoration: none;
-      border: 1px solid rgba(31,77,58,0.15);
-      transition: background .15s;
+      border: 1px solid rgba(255,255,255,0.16);
     }
-    .cached-link:hover { background: #EEF7F2; }
-
     .offline-footer {
-      margin-top: 1.5rem;
-      font-size: .75rem;
-      color: #4E6658;
+      margin-top: 1.25rem;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.7);
     }
   </style>
 </head>
 <body>
   <div class="offline-card">
-    <div class="offline-icon">📡</div>
+    <img class="offline-logo" src="/icon-192.png" width="64" height="64" alt="المجلس العلمي" />
     <h1>أنت غير متصل بالإنترنت</h1>
     <p class="subtitle">
-      تعذّر الاتصال بمنصة المجلس العلمي. يمكنك الوصول إلى المحتوى المحفوظ مسبقاً
-      أو المحاولة مجدداً عند استعادة الاتصال.
+      تعذّر الاتصال بمنصة المجلس العلمي. المحتوى المحفوظ والمصحف والأذكار قد تبقى متاحة عند فتحها مسبقًا.
     </p>
-
     <div class="offline-actions">
-      <button class="btn btn--primary" onclick="window.location.reload()">
-        ↻ إعادة المحاولة
-      </button>
+      <button class="btn btn--primary" type="button" onclick="window.location.reload()">إعادة المحاولة</button>
       <a href="/" class="btn btn--secondary">العودة للرئيسية</a>
     </div>
-
     <div class="offline-cached">
-      <p>متاح دون اتصال</p>
+      <p>روابط سريعة</p>
       <div class="cached-links">
-        <a href="/adhkar" class="cached-link">🤲 الأذكار</a>
-        <a href="/quran-hub" class="cached-link">📖 القرآن</a>
-        <a href="/prayer-times" class="cached-link">🕌 مواقيت الصلاة</a>
-        <a href="/tasbih" class="cached-link">📿 التسبيح</a>
-        <a href="/daily-wird" class="cached-link">📅 الورد اليومي</a>
-        <a href="/sunan-yawmiyya" class="cached-link">☀️ السنن اليومية</a>
-        <a href="/start-here" class="cached-link">🎓 ابدأ من هنا</a>
+        <a href="/adhkar" class="cached-link">الأذكار</a>
+        <a href="/quran-hub" class="cached-link">القرآن</a>
+        <a href="/prayer-times" class="cached-link">مواقيت الصلاة</a>
+        <a href="/tasbih" class="cached-link">التسبيح</a>
+        <a href="/vault" class="cached-link">المحفوظات</a>
       </div>
     </div>
   </div>
-
-  <p class="offline-footer">🕌 المجلس العلمي — منصة العلوم الشرعية</p>
+  <p class="offline-footer">المجلس العلمي — منصة العلوم الشرعية</p>
 </body>
 </html>
