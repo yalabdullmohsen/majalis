@@ -12,7 +12,7 @@ import {
   type Ayah, type SurahSummary,
 } from "@/lib/quran-api";
 import { loadPageJuzIndex, getSegmentsForPage, findPageForAyah, type QuranSegment } from "@/lib/recitation-ai/page-juz-lookup";
-import { useQuranPreferences, type QuranReadingTheme, type QuranFrameStyle, type QuranHighlightStyle, type QuranPageMode, type QuranReadingLayout } from "@/hooks/useQuranPreferences";
+import { useQuranPreferences, type QuranReadingTheme, type QuranFrameStyle, type QuranHighlightStyle, type QuranPageMode, type QuranReadingLayout, type QuranPageTransition } from "@/hooks/useQuranPreferences";
 import { useAyahPlayer } from "@/hooks/useAyahPlayer";
 import { useWordAudioSync } from "@/hooks/useWordAudioSync";
 import { SurahList } from "@/components/quran/SurahList";
@@ -24,6 +24,9 @@ import { MushafNavigatorDrawer } from "@/components/quran/MushafNavigatorDrawer"
 import { MutashabihatSheet } from "@/components/quran/MutashabihatSheet";
 import { WordSenseSheet } from "@/components/quran/WordSenseSheet";
 import { KhatmahProfilesPanel } from "@/components/quran/KhatmahProfilesPanel";
+import { PageCurlStage } from "@/components/quran/PageCurlStage";
+import { WirdSettingsPanel } from "@/components/quran/WirdSettingsPanel";
+import { QuranBackupPanel } from "@/components/quran/QuranBackupPanel";
 import { loadMushafPage, prefetchMushafPage, type MushafPageLayout, type QpcWord } from "@/lib/mushaf-v2-data";
 import { beginAbortScope, abortScope, guardAsync } from "@/lib/route-abort";
 import { logDiagnostic } from "@/lib/diagnostics";
@@ -38,12 +41,14 @@ import { senseFromQpcWord, type WordSense } from "@/lib/gharib-lite";
 import { useAudioFollowScroll } from "@/hooks/useAudioFollowScroll";
 import { useQuranAudioSync } from "@/hooks/useQuranAudioSync";
 import { bumpActiveKhatmahPages, persistProgressBundle, syncProgressAcrossDevices, ensureDefaultKhatmahProfiles } from "@/lib/khatmah-sync";
+import { recordWirdProgress, scheduleWirdReminder } from "@/lib/wird-engine";
 import "@/styles/quran.css";
 import "@/styles/mushaf-v2.css";
 import "@/styles/pages/mushaf-reader.css";
 import "@/styles/quran-reader-upgrade.css";
 import "@/styles/quran-reader-part2.css";
 import "@/styles/quran-reader-part3.css";
+import "@/styles/quran-reader-part4.css";
 
 const TOTAL_PAGES = 604;
 
@@ -61,7 +66,9 @@ function renderLightWord(w: QpcWord) {
     return (
       <Fragment key={w.id}>
         <span className="qs-ayah-num">{toArabicDigits(Number(w.textUthmani.replace(/\D/g, "")) || 0)}</span>
-        {w.sajdahNumber !== null && <span className="mf2-sajda-badge">سجدة</span>}
+        {w.sajdahNumber !== null && (
+          <span className="mf2-sajda-badge" role="img" aria-label={`موضع سجدة رقم ${w.sajdahNumber}`}>سجدة</span>
+        )}
       </Fragment>
     );
   }
@@ -99,6 +106,11 @@ const PAGE_MODE_OPTIONS: { id: QuranPageMode; label: string; hint: string }[] = 
 const LAYOUT_OPTIONS: { id: QuranReadingLayout; label: string; hint: string }[] = [
   { id: "madani", label: "مصحف المدينة", hint: "صفحة بصفحة (604) مطابقة لمجمع الملك فهد" },
   { id: "continuous", label: "قراءة متصلة", hint: "تمرير رأسي متصل بخط عثماني سلس — أسلوب آية/ترتيل" },
+];
+const TRANSITION_OPTIONS: { id: QuranPageTransition; label: string; hint: string }[] = [
+  { id: "instant", label: "فوري", hint: "بدون حركة — أسرع انتقال" },
+  { id: "smooth", label: "سحب سلس", hint: "انزلاق أفقي خفيف بمعدّل ٦٠ إطارًا" },
+  { id: "curl", label: "طيّ كتاب", hint: "إحساس طيّ صفحة ثلاثي الأبعاد" },
 ];
 
 export default function MushafPageView() {
@@ -167,6 +179,7 @@ export default function MushafPageView() {
     ensureDefaultKhatmahProfiles();
     void loadMutashabihatIndexCached().catch(() => {});
     void syncProgressAcrossDevices();
+    scheduleWirdReminder();
   }, []);
 
   // شارات المتشابهات لآيات الصفحة الحالية
@@ -187,12 +200,14 @@ export default function MushafPageView() {
     return () => { alive = false; };
   }, [segAyahs]);
 
-  // تقدّم الختمة عند الانتقال بين الصفحات
+  // تقدّم الختمة والورد عند الانتقال بين الصفحات
   useEffect(() => {
     if (lastPageForKhatmah.current !== page) {
       bumpActiveKhatmahPages(1);
       lastPageForKhatmah.current = page;
       void persistProgressBundle();
+      const meta = getSurahForPage(page);
+      recordWirdProgress({ pages: 1, surah: meta.number, ayah: 1 });
     }
   }, [page]);
 
@@ -388,6 +403,7 @@ export default function MushafPageView() {
   const {
     currentAyah, playerState, togglePlayAyah, playFromAyah, reciterId, setReciterId,
     playbackRate, setPlaybackRate, repeatOn, setRepeatOn, loopConfig, setLoopConfig, audioElement,
+    teachConfig, setTeachConfig, teachPhase, finishStudentPause,
   } = useAyahPlayer(activeSurahForPlayer, activeSurahAyahCount);
 
   const [selectedAyahText, setSelectedAyahText] = useState<string | null>(null);
@@ -515,7 +531,16 @@ export default function MushafPageView() {
   }, []);
 
   return createPortal(
-    <div className={`quran-shell quran-shell--immersive ${shellThemeClass}`} dir="rtl">
+    <div
+      className={[
+        "quran-shell quran-shell--immersive mpv-root",
+        shellThemeClass,
+        prefs.contrastBoost ? "mpv-root--contrast-boost" : "",
+        prefs.dyslexiaFriendly ? "mpv-root--dyslexia" : "",
+        prefs.highVisAyahNumbers ? "mpv-root--high-vis-ayah" : "",
+      ].filter(Boolean).join(" ")}
+      dir="rtl"
+    >
       <>
           <div className={`mpv-toolbar ${textChromeVisible ? "" : "mpv-toolbar--hidden"}`}>
             <button type="button" className="mpv-toolbar__btn" onClick={goBack} aria-label="رجوع">
@@ -583,13 +608,14 @@ export default function MushafPageView() {
                 />
               </div>
             ) : (
+              <PageCurlStage page={page} mode={prefs.pageTransition}>
               <div className={`qs-mushaf-frame ${frameClass}`}>
                 <span className="qs-mushaf-corner qs-mushaf-corner--tl" aria-hidden="true">❈</span>
                 <span className="qs-mushaf-corner qs-mushaf-corner--tr" aria-hidden="true">❈</span>
                 <span className="qs-mushaf-corner qs-mushaf-corner--bl" aria-hidden="true">❈</span>
                 <span className="qs-mushaf-corner qs-mushaf-corner--br" aria-hidden="true">❈</span>
 
-                <div className="qs-mushaf-header-row">
+                <div className="qs-mushaf-header-row" role="banner" aria-label={`سورة ${primarySurahMeta.name}`}>
                   <span>سورة {primarySurahMeta.name}</span>
                   <span>الجزء {toArabicDigits(juz)} · الحزب {toArabicDigits(hizb)} · الربع {toArabicDigits(rubInHizb)}</span>
                 </div>
@@ -617,6 +643,7 @@ export default function MushafPageView() {
                         onAyahPress={handleV2AyahPress}
                         onMutashabihPress={handleMutashabihPress}
                         onWordLongPress={handleWordLongPress}
+                        screenReaderEnhanced={prefs.screenReaderEnhanced}
                         bare
                       />
                     ) : (
@@ -632,6 +659,7 @@ export default function MushafPageView() {
                         onAyahPress={handleV2AyahPress}
                         onMutashabihPress={handleMutashabihPress}
                         onWordLongPress={handleWordLongPress}
+                        screenReaderEnhanced={prefs.screenReaderEnhanced}
                         sharedFontFamily={'"Amiri Quran", "Scheherazade New", serif'}
                         renderWord={renderLightWord}
                         bare
@@ -646,6 +674,7 @@ export default function MushafPageView() {
                   <span className="qs-mushaf-footer-row__line" aria-hidden="true" />
                 </div>
               </div>
+              </PageCurlStage>
             )}
           </div>
 
@@ -791,6 +820,27 @@ export default function MushafPageView() {
               </small>
             </div>
 
+            {prefs.readingLayout === "madani" && (
+              <div className="mpv-settings-group">
+                <span className="mpv-settings-group__label">انتقال الصفحة</span>
+                <div className="mpv-settings-group__grid">
+                  {TRANSITION_OPTIONS.map((o) => (
+                    <button
+                      key={o.id}
+                      type="button"
+                      className={`mpv-chip ${prefs.pageTransition === o.id ? "is-active" : ""}`}
+                      onClick={() => setPref("pageTransition", o.id)}
+                    >
+                      {o.label}
+                    </button>
+                  ))}
+                </div>
+                <small style={{ display: "block", opacity: .7, marginTop: ".35rem" }}>
+                  {TRANSITION_OPTIONS.find((o) => o.id === prefs.pageTransition)?.hint}
+                </small>
+              </div>
+            )}
+
             <div className="mpv-settings-group">
               <span className="mpv-settings-group__label">وضع عرض الصفحة</span>
               <div className="mpv-settings-group__grid">
@@ -860,6 +910,26 @@ export default function MushafPageView() {
               </div>
             </div>
 
+            <div className="mpv-settings-group">
+              <span className="mpv-settings-group__label">إتاحة ووضوح النص</span>
+              <div className="mpv-settings-group__grid">
+                <button type="button" className={`mpv-chip ${prefs.contrastBoost ? "is-active" : ""}`} onClick={() => setPref("contrastBoost", !prefs.contrastBoost)}>
+                  تباين أعلى
+                </button>
+                <button type="button" className={`mpv-chip ${prefs.highVisAyahNumbers ? "is-active" : ""}`} onClick={() => setPref("highVisAyahNumbers", !prefs.highVisAyahNumbers)}>
+                  أرقام آيات أوضح
+                </button>
+                <button type="button" className={`mpv-chip ${prefs.dyslexiaFriendly ? "is-active" : ""}`} onClick={() => setPref("dyslexiaFriendly", !prefs.dyslexiaFriendly)}>
+                  قراءة ميسّرة
+                </button>
+                <button type="button" className={`mpv-chip ${prefs.screenReaderEnhanced ? "is-active" : ""}`} onClick={() => setPref("screenReaderEnhanced", !prefs.screenReaderEnhanced)}>
+                  تسميات قارئ الشاشة
+                </button>
+              </div>
+            </div>
+
+            <WirdSettingsPanel />
+            <QuranBackupPanel />
             <ReciterDownloadManager />
             <KhatmahProfilesPanel />
           </div>
@@ -942,6 +1012,10 @@ export default function MushafPageView() {
             hideVerseTest={prefs.hideVerseTest}
             onToggleHideVerse={() => setPref("hideVerseTest", !prefs.hideVerseTest)}
             onTadabburChanged={refreshNotedKeys}
+            teachConfig={teachConfig}
+            onTeachConfigChange={setTeachConfig}
+            teachPhase={teachPhase}
+            onSkipStudentPause={finishStudentPause}
           />
         </SectionErrorBoundary>
       )}

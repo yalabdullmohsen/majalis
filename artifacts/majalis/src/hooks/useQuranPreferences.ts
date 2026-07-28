@@ -36,6 +36,9 @@ export type QuranPageMode = "light" | "precision";
  */
 export type QuranReadingLayout = "madani" | "continuous";
 
+/** انتقال الصفحة: فوري / سحب سلس / طيّ كتاب ثلاثي الأبعاد */
+export type QuranPageTransition = "instant" | "smooth" | "curl";
+
 export type QuranPreferences = {
   fontScale: number;
   fontId: QuranFontId;
@@ -52,6 +55,16 @@ export type QuranPreferences = {
   continuousLineHeight: number;
   /** هامش جانبي لوضع القراءة المتصلة (px) */
   continuousSideMargin: number;
+  /** فيزياء تقليب الصفحة */
+  pageTransition: QuranPageTransition;
+  /** تعزيز تباين النص/الخلفية */
+  contrastBoost: boolean;
+  /** شارات أرقام آيات عالية الوضوح */
+  highVisAyahNumbers: boolean;
+  /** خط أوضح لقارئي صعوبة القراءة (dyslexia-friendly) */
+  dyslexiaFriendly: boolean;
+  /** تسميات ARIA مفصّلة لكل آية/سجدة */
+  screenReaderEnhanced: boolean;
 };
 
 const KEY = "mj-quran-prefs-v4";
@@ -74,6 +87,11 @@ const DEFAULTS: QuranPreferences = {
   hideVerseTest: false,
   continuousLineHeight: 2.15,
   continuousSideMargin: 18,
+  pageTransition: "smooth",
+  contrastBoost: false,
+  highVisAyahNumbers: false,
+  dyslexiaFriendly: false,
+  screenReaderEnhanced: true,
 };
 
 /** أول زيارة بلا أي تفضيل محفوظ فقط: يحترم prefers-color-scheme النظامي

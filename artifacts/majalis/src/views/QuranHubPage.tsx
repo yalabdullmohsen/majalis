@@ -10,7 +10,9 @@ import { ShareButtons } from "@/components/ContentActions";
 import { useEffect } from "react";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { isComingSoonPath } from "@/lib/nav-visibility";
+import { WirdProgressWidget } from "@/components/quran/WirdProgressWidget";
 import "@/styles/pages/quran-hub.css";
+import "@/styles/quran-reader-part4.css";
 
 type QuranSection = { href: string; title: string; desc: string; Icon: LucideIcon; accent: string; tag: string; featured?: boolean };
 
@@ -200,6 +202,8 @@ export default function QuranHubPage() {
           ))}
         </div>
       </section>
+
+      <WirdProgressWidget />
 
       {/* ── أقسام القرآن ─────────────────────────────────────── */}
       <section className="quran-hub-sections">

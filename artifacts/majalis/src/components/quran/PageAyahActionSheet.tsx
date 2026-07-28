@@ -15,9 +15,12 @@ import { CONTACT_EMAIL } from "@/lib/site-config";
 import { afterNextPaint, yieldToMain } from "@/lib/yield-to-main";
 import { prewarmTextApis } from "@/lib/resource-prewarm";
 import { MemorizationLoopPanel } from "@/components/quran/MemorizationLoopPanel";
+import { ReciteRepeatPanel } from "@/components/quran/ReciteRepeatPanel";
 import { AyahShareCardPanel } from "@/components/quran/AyahShareCardPanel";
 import { TafsirComparePanel } from "@/components/quran/TafsirComparePanel";
 import type { AyahLoopConfig } from "@/lib/ayah-loop-controller";
+import type { TeachRepeatConfig } from "@/lib/teach-repeat-controller";
+import type { TeachPhase } from "@/hooks/useAyahPlayer";
 
 const TAFSIR_EDITION_KEY = "majalis-mushaf-tafsir-edition-v1";
 const TRANSLATION_EDITION_KEY = "majalis-mushaf-translation-edition-v1";
@@ -86,6 +89,10 @@ type Props = {
   hideVerseTest?: boolean;
   onToggleHideVerse?: () => void;
   onTadabburChanged?: () => void;
+  teachConfig?: TeachRepeatConfig;
+  onTeachConfigChange?: (patch: Partial<TeachRepeatConfig>) => void;
+  teachPhase?: TeachPhase;
+  onSkipStudentPause?: () => void;
 };
 
 export function PageAyahActionSheet({
@@ -93,6 +100,7 @@ export function PageAyahActionSheet({
   isPlaying, onTogglePlay, canPlay = true, onPrev, onNext, onClose,
   reciterId, onSetReciter, playbackRate, onSetPlaybackRate, repeatOn, onToggleRepeat,
   loopConfig = null, onSetLoop, onPlayFrom, hideVerseTest = false, onToggleHideVerse, onTadabburChanged,
+  teachConfig, onTeachConfigChange, teachPhase = "idle", onSkipStudentPause,
 }: Props) {
   const [bookmarked, setBookmarked] = useState(() => isBookmarked(surahNum, ayahNum));
   const [bookmarkList, setBookmarkList] = useState<string | null>(() => getBookmarkListForAyah(surahNum, ayahNum));
@@ -508,6 +516,15 @@ export function PageAyahActionSheet({
               />
             )}
           </>
+        )}
+
+        {teachConfig && onTeachConfigChange && (
+          <ReciteRepeatPanel
+            config={teachConfig}
+            phase={teachPhase === "student-pause" ? "student-pause" : teachPhase === "teacher" ? "teacher" : "idle"}
+            onChange={onTeachConfigChange}
+            onSkipPause={onSkipStudentPause}
+          />
         )}
 
         {shareOpen && (

@@ -1,0 +1,275 @@
+/* ── جزء٤: طيّ الصفحة، ورد، ترديد، نسخ احتياطي، إتاحة ── */
+
+/* انتقال الصفحات — GPU فقط */
+.pcs-stage {
+  position: relative;
+  height: 100%;
+  perspective: 1600px;
+  transform-style: preserve-3d;
+  overflow: hidden;
+}
+.pcs-leaf {
+  height: 100%;
+  will-change: transform, opacity;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+}
+.pcs-stage[data-pcs-mode="instant"] .pcs-leaf {
+  transition: none;
+}
+.pcs-stage.pcs--smooth-fwd .pcs-leaf {
+  animation: pcs-smooth-fwd 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.pcs-stage.pcs--smooth-back .pcs-leaf {
+  animation: pcs-smooth-back 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+.pcs-stage.pcs--curl-fwd .pcs-leaf {
+  animation: pcs-curl-fwd 0.42s cubic-bezier(0.33, 1, 0.32, 1) both;
+  transform-origin: left center;
+}
+.pcs-stage.pcs--curl-back .pcs-leaf {
+  animation: pcs-curl-back 0.42s cubic-bezier(0.33, 1, 0.32, 1) both;
+  transform-origin: right center;
+}
+
+@keyframes pcs-smooth-fwd {
+  from { transform: translate3d(-12%, 0, 0); opacity: 0.55; }
+  to { transform: translate3d(0, 0, 0); opacity: 1; }
+}
+@keyframes pcs-smooth-back {
+  from { transform: translate3d(12%, 0, 0); opacity: 0.55; }
+  to { transform: translate3d(0, 0, 0); opacity: 1; }
+}
+@keyframes pcs-curl-fwd {
+  from { transform: rotateY(-48deg) translate3d(-4%, 0, 0); opacity: 0.4; filter: brightness(0.92); }
+  to { transform: rotateY(0deg) translate3d(0, 0, 0); opacity: 1; filter: none; }
+}
+@keyframes pcs-curl-back {
+  from { transform: rotateY(48deg) translate3d(4%, 0, 0); opacity: 0.4; filter: brightness(0.92); }
+  to { transform: rotateY(0deg) translate3d(0, 0, 0); opacity: 1; filter: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pcs-stage.pcs--smooth-fwd .pcs-leaf,
+  .pcs-stage.pcs--smooth-back .pcs-leaf,
+  .pcs-stage.pcs--curl-fwd .pcs-leaf,
+  .pcs-stage.pcs--curl-back .pcs-leaf {
+    animation: none;
+  }
+}
+
+/* ويدجت الورد في مركز القرآن */
+.wpw-widget {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin: 0 auto 1.25rem;
+  max-width: 640px;
+  padding: 1rem 1.15rem;
+  border-radius: 1rem;
+  background: linear-gradient(135deg, rgba(20, 63, 53, 0.06), rgba(176, 141, 46, 0.07));
+  border: 1px solid rgba(20, 63, 53, 0.1);
+}
+.wpw-widget__ring-wrap {
+  position: relative;
+  flex-shrink: 0;
+  width: 112px;
+  height: 112px;
+}
+.wpw-ring-fill {
+  transition: stroke-dashoffset 0.6s ease;
+}
+.wpw-widget__ring-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  text-align: center;
+  line-height: 1.2;
+}
+.wpw-widget__ring-label strong {
+  font-size: 1.25rem;
+  color: var(--majalis-emerald, #143F35);
+}
+.wpw-widget__ring-label span {
+  font-size: 0.72rem;
+  opacity: 0.7;
+}
+.wpw-widget__title {
+  margin: 0 0 0.35rem;
+  font-size: 1.05rem;
+  color: var(--majalis-emerald, #143F35);
+}
+.wpw-widget__streak,
+.wpw-widget__eta {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0.2rem 0;
+  font-size: 0.88rem;
+  opacity: 0.85;
+}
+.wpw-widget__link {
+  display: inline-block;
+  margin-top: 0.45rem;
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--majalis-emerald, #143F35);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* لوحة الترديد */
+.rrp-panel, .wsp-panel, .qbp-panel {
+  margin-top: 0.75rem;
+  padding: 0.75rem 0.85rem;
+  border-radius: 0.85rem;
+  background: color-mix(in srgb, var(--majalis-emerald, #0E6E52) 6%, transparent);
+  border: 1px solid color-mix(in srgb, var(--majalis-emerald, #0E6E52) 14%, transparent);
+}
+.rrp-panel__head, .wsp-panel__head, .qbp-panel__head {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.55rem;
+  font-size: 0.92rem;
+}
+.rrp-panel__badge {
+  margin-inline-start: auto;
+  font-size: 0.72rem;
+  padding: 0.1rem 0.45rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--majalis-emerald, #0E6E52) 18%, transparent);
+}
+.rrp-toggle, .wsp-notif, .qbp-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  width: 100%;
+  padding: 0.55rem 0.7rem;
+  border-radius: 0.65rem;
+  border: 1px solid color-mix(in srgb, var(--majalis-emerald, #0E6E52) 28%, transparent);
+  background: var(--majalis-panel, #faf8f4);
+  cursor: pointer;
+  font: inherit;
+}
+.rrp-toggle.is-active, .wsp-notif.is-active, .qbp-btn {
+  background: color-mix(in srgb, var(--majalis-emerald, #0E6E52) 14%, transparent);
+  font-weight: 600;
+}
+.rrp-row, .wsp-row, .qbp-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.55rem;
+}
+.rrp-chip, .wsp-chip {
+  padding: 0.35rem 0.65rem;
+  border-radius: 999px;
+  border: 1px solid rgba(20, 63, 53, 0.18);
+  background: transparent;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.82rem;
+}
+.rrp-chip.is-active, .wsp-chip.is-active {
+  background: color-mix(in srgb, var(--majalis-emerald, #0E6E52) 16%, transparent);
+  border-color: color-mix(in srgb, var(--majalis-emerald, #0E6E52) 40%, transparent);
+  font-weight: 600;
+}
+.rrp-check, .wsp-label, .qbp-label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  margin-top: 0.55rem;
+  font-size: 0.84rem;
+}
+.rrp-check {
+  flex-direction: row;
+  align-items: center;
+  gap: 0.45rem;
+}
+.wsp-label input, .qbp-label input {
+  padding: 0.4rem 0.55rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(20, 63, 53, 0.2);
+  font: inherit;
+  background: var(--majalis-panel, #fff);
+}
+.wsp-time {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+}
+.rrp-pause-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-top: 0.65rem;
+  padding: 0.55rem 0.65rem;
+  border-radius: 0.65rem;
+  background: color-mix(in srgb, #B08D2E 18%, transparent);
+  font-weight: 600;
+}
+.qbp-hint, .wsp-hint, .qbp-status {
+  margin: 0.35rem 0 0;
+  font-size: 0.8rem;
+  opacity: 0.8;
+  line-height: 1.45;
+}
+.qbp-btn--ghost {
+  background: transparent;
+}
+.qbp-actions .qbp-btn {
+  flex: 1;
+  width: auto;
+}
+
+/* إتاحة ووضوح */
+.mpv-root--contrast-boost {
+  --qs-ink: #0a0a0a;
+  --majalis-ink: #0a0a0a;
+  filter: contrast(1.08);
+}
+.mpv-root--contrast-boost.mpv-theme-night,
+.mpv-root--contrast-boost.mpv-theme-oled {
+  --qs-ink: #f5f5f5;
+  filter: contrast(1.12);
+}
+.mpv-root--dyslexia .qs-mushaf-body,
+.mpv-root--dyslexia .mf2-lines,
+.mpv-root--dyslexia .cur-frame {
+  letter-spacing: 0.03em;
+  word-spacing: 0.08em;
+  line-height: 1.85;
+  font-family: "Scheherazade New", "Amiri Quran", "Noto Naskh Arabic", serif !important;
+}
+.mpv-root--high-vis-ayah .qs-ayah-num,
+.mpv-root--high-vis-ayah .mf2-ayah-end,
+.mpv-root--high-vis-ayah .mf2-sajda-badge {
+  outline: 2px solid color-mix(in srgb, var(--majalis-emerald, #0E6E52) 55%, transparent);
+  outline-offset: 2px;
+  background: color-mix(in srgb, var(--majalis-emerald, #0E6E52) 14%, #fff);
+  font-weight: 800;
+  padding: 0 0.2em;
+  border-radius: 0.35em;
+}
+.mf2-sajda-badge[role="img"] {
+  display: inline-block;
+}
+
+@media (max-width: 560px) {
+  .wpw-widget {
+    flex-direction: column;
+    text-align: center;
+  }
+  .wpw-widget__streak,
+  .wpw-widget__eta {
+    justify-content: center;
+  }
+}

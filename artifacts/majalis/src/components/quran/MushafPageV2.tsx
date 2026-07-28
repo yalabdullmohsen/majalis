@@ -38,6 +38,8 @@ type Props = {
   onAyahPress?: (verseKey: string) => void;
   onMutashabihPress?: (verseKey: string) => void;
   onWordLongPress?: (word: QpcWord) => void;
+  /** تسميات ARIA أوضح لقارئ الشاشة */
+  screenReaderEnhanced?: boolean;
   /** خط موحّد بديل (الوضع الخفيف) — يتخطى تحميل خط QPC الخاص بالصفحة
    * كليًا (لا طلب شبكة إضافي)، يفترض أن الخط مُحمَّل أصلًا في التطبيق.
    * افتراضيًا: خط QPC الرقمي الخاص بكل صفحة (وضع الدقة المطبعية). */
@@ -58,11 +60,22 @@ type Props = {
 
 const ROW_COUNT_APPROX = 15;
 
-const defaultRenderWord = (w: QpcWord, wordActive?: boolean) => (
+const defaultRenderWord = (w: QpcWord, wordActive?: boolean, screenReaderEnhanced = true) => (
   <Fragment key={w.id}>
-    <span className={`mf2-word${wordActive ? " mf2-word--active" : ""}`}>{w.glyphText}</span>
+    <span
+      className={`mf2-word${wordActive ? " mf2-word--active" : ""}`}
+      aria-hidden={w.charType === "end" ? undefined : true}
+    >
+      {w.glyphText}
+    </span>
     {w.charType === "end" && w.sajdahNumber !== null && (
-      <span className="mf2-sajda-badge">سجدة</span>
+      <span
+        className="mf2-sajda-badge"
+        role="img"
+        aria-label={screenReaderEnhanced ? `موضع سجدة رقم ${w.sajdahNumber}` : "سجدة"}
+      >
+        سجدة
+      </span>
     )}
   </Fragment>
 );
@@ -79,6 +92,7 @@ export function MushafPageV2({
   onAyahPress,
   onMutashabihPress,
   onWordLongPress,
+  screenReaderEnhanced = true,
   sharedFontFamily,
   renderWord,
   bare,
@@ -186,11 +200,22 @@ export function MushafPageV2({
             >
               {groupWordsByAyah(row.words).map((group) => {
                 const verseKey = group[0].verseKey;
+                const [surahPart, ayahPart] = verseKey.split(":");
                 const ayahActive = verseKey === activeAyahKey;
                 const hasNote = notedVerseKeys?.has(verseKey);
                 const hasMuta = mutashabihVerseKeys?.has(verseKey);
                 const isHidden = hideVerseTest && !revealedVerseKeys?.has(verseKey) && !ayahActive;
+                const hasSajdah = group.some((w) => w.charType === "end" && w.sajdahNumber != null);
                 let wordIdx = -1;
+                const ariaParts = screenReaderEnhanced
+                  ? [
+                      `سورة رقم ${surahPart} آية ${ayahPart}`,
+                      hasNote ? "عليها تدبّر" : null,
+                      hasMuta ? "لها متشابهات لفظية" : null,
+                      hasSajdah ? "تتضمن موضع سجدة" : null,
+                      isHidden ? "مخفية لاختبار الحفظ" : null,
+                    ].filter(Boolean)
+                  : [`آية ${verseKey}`];
                 return (
                   <span
                     key={verseKey}
@@ -198,8 +223,9 @@ export function MushafPageV2({
                     role="button"
                     tabIndex={0}
                     data-verse-key={verseKey}
-                    data-ayah={verseKey.split(":")[1]}
-                    aria-label={`آية ${verseKey}${hasNote ? " — عليها تدبّر" : ""}${hasMuta ? " — لها متشابهات" : ""}`}
+                    data-ayah={ayahPart}
+                    aria-current={ayahActive ? "true" : undefined}
+                    aria-label={ariaParts.join(" — ")}
                     onClick={(e) => {
                       e.stopPropagation();
                       if (isHidden) {
@@ -267,7 +293,7 @@ export function MushafPageV2({
                       }
                       return (
                         <span key={w.id} {...longPressHandlers}>
-                          {defaultRenderWord(w, wordActive)}
+                          {defaultRenderWord(w, wordActive, screenReaderEnhanced)}
                         </span>
                       );
                     })}
@@ -293,11 +319,17 @@ export function MushafPageV2({
 
 export function SurahHeaderBanner({ chapter, spanRows }: { chapter: MushafPageLayout["surahsOnPage"][number]; spanRows: number }) {
   return (
-    <div className="mf2-surah-header" style={{ flex: spanRows }}>
+    <div
+      className="mf2-surah-header"
+      style={{ flex: spanRows }}
+      role="heading"
+      aria-level={2}
+      aria-label={`سورة ${chapter.nameArabic}`}
+    >
       <div className="mf2-surah-header__frame">
         <span className="mf2-surah-header__name">سُورَةُ {chapter.nameArabic}</span>
       </div>
-      {chapter.bismillahPre && <div className="mf2-bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>}
+      {chapter.bismillahPre && <div className="mf2-bismillah" aria-label="البسملة">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>}
     </div>
   );
 }

@@ -34,8 +34,14 @@ import { logDiagnostic } from "@/lib/diagnostics";
 import { useWakeLock } from "@/hooks/useWakeLock";
 import { holdPreviousWhileLoading } from "@/lib/cls-layout-reserve";
 import { prefetchNextAyahs, peekCachedAyahObjectUrl, warmAyahObjectUrl, releaseAyahObjectUrls } from "@/lib/ayah-audio-prefetch";
+import {
+  advanceAfterTeacherEnded,
+  DEFAULT_TEACH_CONFIG,
+  type TeachRepeatConfig,
+} from "@/lib/teach-repeat-controller";
 
 export type PlayerState = "idle" | "loading" | "playing" | "paused" | "error" | "buffering";
+export type TeachPhase = "idle" | "teacher" | "student-pause";
 
 export function useAyahPlayer(surahNum: number, totalAyahs: number) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -54,7 +60,13 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
   const playbackRateRef = useRef(playbackRate);
   const loopRuntimeRef = useRef<AyahLoopRuntime | null>(null);
   const [loopConfig, setLoopConfigState] = useState<AyahLoopConfig | null>(null);
+  const teachConfigRef = useRef<TeachRepeatConfig>({ ...DEFAULT_TEACH_CONFIG });
+  const [teachConfig, setTeachConfigState] = useState<TeachRepeatConfig>({ ...DEFAULT_TEACH_CONFIG });
+  const studentDoneRef = useRef(false);
+  const pendingTeachAyahRef = useRef<number | null>(null);
+  const [teachPhase, setTeachPhase] = useState<TeachPhase>("idle");
   const loadAndPlayRef = useRef<(surah: number, ayah: number, reciter: string) => void>(() => undefined);
+  const finishStudentPauseRef = useRef<() => void>(() => undefined);
 
   // Part 19: keep screen awake only while actively playing; release on pause/blur
   useWakeLock(playerState === "playing" || playerState === "buffering" || playerState === "loading");
@@ -84,6 +96,9 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
     if (on) {
       loopRuntimeRef.current = null;
       setLoopConfigState(null);
+      teachConfigRef.current = { ...teachConfigRef.current, enabled: false };
+      setTeachConfigState((c) => ({ ...c, enabled: false }));
+      setTeachPhase("idle");
     }
   }, []);
 
@@ -101,9 +116,55 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
       setLoopConfigState(normalized);
       repeatOnRef.current = false;
       setRepeatOnState(false);
+      teachConfigRef.current = { ...teachConfigRef.current, enabled: false };
+      setTeachConfigState((c) => ({ ...c, enabled: false }));
+      setTeachPhase("idle");
     },
     [totalAyahs, clearDelayTimer],
   );
+
+  const setTeachConfig = useCallback((patch: Partial<TeachRepeatConfig>) => {
+    const next = { ...teachConfigRef.current, ...patch };
+    teachConfigRef.current = next;
+    setTeachConfigState(next);
+    if (next.enabled) {
+      repeatOnRef.current = false;
+      setRepeatOnState(false);
+      loopRuntimeRef.current = null;
+      setLoopConfigState(null);
+    } else {
+      setTeachPhase("idle");
+      studentDoneRef.current = false;
+      pendingTeachAyahRef.current = null;
+      clearDelayTimer();
+    }
+  }, [clearDelayTimer]);
+
+  const finishStudentPause = useCallback(() => {
+    clearDelayTimer();
+    const ayah = pendingTeachAyahRef.current;
+    if (ayah == null) {
+      setTeachPhase("idle");
+      return;
+    }
+    studentDoneRef.current = true;
+    setTeachPhase("teacher");
+    const next = advanceAfterTeacherEnded(teachConfigRef.current, ayah, totalAyahs, true);
+    if (next.action === "replay-teacher") {
+      studentDoneRef.current = false;
+      loadAndPlayRef.current(surahNum, next.ayah, reciterId);
+    } else if (next.action === "next-ayah") {
+      studentDoneRef.current = false;
+      loadAndPlayRef.current(surahNum, next.ayah, reciterId);
+    } else {
+      setCurrentAyah(null);
+      setPlayerState("idle");
+      setTeachPhase("idle");
+      pendingTeachAyahRef.current = null;
+    }
+  }, [clearDelayTimer, totalAyahs, surahNum, reciterId]);
+
+  finishStudentPauseRef.current = finishStudentPause;
 
   useEffect(() => {
     mountedRef.current = true;
@@ -169,6 +230,11 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
     if (mountedRef.current) {
       setCurrentAyah(ayah);
       setPlayerState("loading");
+      if (teachConfigRef.current.enabled) {
+        studentDoneRef.current = false;
+        pendingTeachAyahRef.current = ayah;
+        setTeachPhase("teacher");
+      }
     }
     saveAudioResumeState({
       surah,
@@ -188,6 +254,7 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
       observeAudioLatency(latency);
       if (latency > 0) observeAudioThroughput(80_000, latency);
       setPlayerState("playing");
+      if (teachConfigRef.current.enabled) setTeachPhase("teacher");
       prefetchNextAyahs(surah, ayah, totalAyahs, reciter, 5);
       // سخن Object URLs للآيات التالية قبل الانتقال
       for (let i = 1; i <= 5; i++) {
@@ -233,6 +300,33 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
         }
         setCurrentAyah(null);
         setPlayerState("idle");
+        return;
+      }
+
+      if (teachConfigRef.current.enabled) {
+        const next = advanceAfterTeacherEnded(
+          teachConfigRef.current,
+          ayah,
+          totalAyahs,
+          studentDoneRef.current,
+        );
+        if (next.action === "wait-student") {
+          pendingTeachAyahRef.current = ayah;
+          setPlayerState("paused");
+          setTeachPhase("student-pause");
+          delayTimerRef.current = window.setTimeout(() => {
+            finishStudentPauseRef.current();
+          }, next.pauseMs);
+          return;
+        }
+        if (next.action === "replay-teacher" || next.action === "next-ayah") {
+          studentDoneRef.current = false;
+          loadAndPlayRef.current(surah, next.ayah, reciter);
+          return;
+        }
+        setCurrentAyah(null);
+        setPlayerState("idle");
+        setTeachPhase("idle");
         return;
       }
 
@@ -333,6 +427,9 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
     stop();
     loopRuntimeRef.current = null;
     setLoopConfigState(null);
+    setTeachPhase("idle");
+    studentDoneRef.current = false;
+    pendingTeachAyahRef.current = null;
   }, [surahNum, stop]);
 
   useMediaSession(
@@ -372,6 +469,10 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
     /** Memorization loop config (null = disabled). Additive — existing UI ignores it. */
     loopConfig,
     setLoopConfig,
+    teachConfig,
+    setTeachConfig,
+    teachPhase,
+    finishStudentPause,
     playFromAyah,
     togglePlayAyah,
     pause,
