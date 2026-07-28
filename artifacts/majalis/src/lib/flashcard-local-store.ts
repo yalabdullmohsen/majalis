@@ -2,7 +2,7 @@
  * Local persistence for flashcard SM-2 review states (IndexedDB + localStorage mirror).
  * Used offline-first; syncs to Supabase when the user is authenticated.
  */
-import { idbGetAll, idbPut, OFFLINE_STORES } from "@/lib/offline-db";
+import { idbPut, idbStreamAll, OFFLINE_STORES } from "@/lib/offline-db";
 import type { ReviewQuality } from "@/lib/spaced-repetition";
 import { readLocalJson, writeLocalJson, isPlainObject } from "@/lib/safe-json";
 
@@ -71,13 +71,15 @@ export async function saveLocalReview(row: LocalFlashReview): Promise<void> {
 export async function listLocalReviews(userId: string): Promise<LocalFlashReview[]> {
   const fromLs = readLs().filter((r) => r.user_id === userId);
   try {
-    const idbRows = await idbGetAll<LocalFlashReview>(OFFLINE_STORES.flashcards);
     const map = new Map<string, LocalFlashReview>();
     for (const r of fromLs) map.set(r.key, r);
-    for (const rec of idbRows) {
-      const v = rec.value;
-      if (v?.user_id === userId) map.set(v.key, v);
-    }
+    // Part 21: stream IDB flashcards in batches of 50 — no full toArray spike
+    await idbStreamAll<LocalFlashReview>(OFFLINE_STORES.flashcards, (batch) => {
+      for (const rec of batch) {
+        const v = rec.value;
+        if (v?.user_id === userId) map.set(v.key, v);
+      }
+    });
     return [...map.values()];
   } catch {
     return fromLs;
