@@ -1092,7 +1092,7 @@ export default function HadithSciencePage() {
           {[
             { href: "/hadith",         label: "الأحاديث النبوية" },
             { href: "/hadith/sahih",   label: "الأحاديث الصحيحة" },
-            { href: "/hadith/daif",    label: "الأحاديث المكذوبة" },
+            { href: "/hadith/daif",    label: "الأحاديث الضعيفة" },
             { href: "/hadith/mawdu",   label: "الأحاديث الموضوعة" },
             { href: "/arbaeen-nawawi", label: "الأربعون النووية" },
           ].map(({ href, label }) => (
