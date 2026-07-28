@@ -2,7 +2,7 @@ import { Link } from "wouter";
 import {
   Layers, Circle, Star,
   ChevronLeft, BookMarked, BookOpen, Headphones, GraduationCap,
-  Moon, Heart, Sparkles, Mic, History, CalendarCheck,
+  Moon, Heart, Sparkles, Mic, History, CalendarCheck, Search,
   type LucideIcon,
 } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
@@ -40,6 +40,14 @@ const QURAN_SECTIONS: QuranSection[] = [
     Icon: BookOpen,
     accent: "#143F35",
     tag: "٦٠٤ صفحة",
+  },
+  {
+    href: "/quran/search",
+    title: "بحث في الآيات",
+    desc: "شاشة بحث منفصلة في نص القرآن الكريم — ابحث بكلمة أو جملة وانتقل مباشرة إلى موضع الآية في المصحف؛ يُستفاد في التعلم والتدبر",
+    Icon: Search,
+    accent: "#143F35",
+    tag: "بحث",
   },
   {
     href: "/quran/surahs",
