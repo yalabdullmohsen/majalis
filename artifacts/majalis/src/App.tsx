@@ -418,7 +418,11 @@ function PrayerAlertSchedulerBootstrap() {
   return null;
 }
 
-function SafeLazyRoute({ component: Component }: { component: ComponentType<any> }) {
+function SafeLazyRoute({
+  component: Component,
+}: {
+  component: ComponentType<{ params?: Record<string, string | undefined> }>;
+}) {
   // useParams يُعيد params المسار الحالي (مثل { id } أو { slug })
   // ويُمرَّر كـ prop "params" لجميع صفحات التفاصيل
   const params = useParams();
@@ -447,7 +451,11 @@ function Router() {
   return (
     <Switch>
       <Route path="/">
-        <HomePage />
+        <ErrorBoundary>
+          <Suspense fallback={<LazyRouteFallback />}>
+            <HomePage />
+          </Suspense>
+        </ErrorBoundary>
       </Route>
       <Route path="/about"><SafeLazyRoute component={AboutPage} /></Route>
       <Route path="/methodology"><SafeLazyRoute component={MethodologyPage} /></Route>

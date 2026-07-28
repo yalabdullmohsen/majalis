@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import {
   dismissTimeAwarePrompt,
   generateTimeAwarePrompts,
+  getEmptyDevotionalBalance,
   loadDevotionalBalance,
   loadDevotionalBalanceAsync,
   recordSectionTime,
@@ -13,11 +14,14 @@ import {
 
 /** Devotional balance & time-awareness — logic only. */
 export function useDevotionalBalance(section?: DevotionalSection) {
-  const [state, setState] = useState<DevotionalBalanceState>(() => loadDevotionalBalance());
-  const [prompts, setPrompts] = useState<TimeAwarePrompt[]>(() => generateTimeAwarePrompts());
+  const [state, setState] = useState<DevotionalBalanceState>(() => getEmptyDevotionalBalance());
+  const [prompts, setPrompts] = useState<TimeAwarePrompt[]>([]);
   const startedAt = useRef<number>(Date.now());
 
   useEffect(() => {
+    const local = loadDevotionalBalance();
+    setState(local);
+    setPrompts(generateTimeAwarePrompts({ state: local }));
     void loadDevotionalBalanceAsync().then((s) => {
       setState(s);
       setPrompts(generateTimeAwarePrompts({ state: s }));

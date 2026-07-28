@@ -75,5 +75,12 @@ export function useAchievementCheck() {
     return () => clearTimeout(t);
   }, [isLoggedIn, user?.id, runCheck]);
 
+  // تنظيف مؤقت scheduleCheck عند إلغاء التركيب
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, []);
+
   return { newBadges, scheduleCheck, dismissBadges };
 }

@@ -14,12 +14,24 @@ import {
 
 /** Adaptive auto-scroll & reading pace — logic only. */
 export function useAdaptiveAutoScroll(opts?: { container?: HTMLElement | null }) {
-  const [prefs, setPrefs] = useState<AutoScrollPrefs>(() => loadAutoScrollPrefs());
-  const [profile, setProfile] = useState<ReadingVelocityProfile>(() => loadReadingVelocityProfile());
+  const [prefs, setPrefs] = useState<AutoScrollPrefs>({
+    enabled: true,
+    followAudio: true,
+    overrideMsPerAyah: null,
+  });
+  const [profile, setProfile] = useState<ReadingVelocityProfile>({
+    msPerAyah: 4_500,
+    msPerPage: 45_000,
+    wordsPerMinute: 120,
+    acceleration: 1,
+    updatedAt: new Date(0).toISOString(),
+  });
   const cancelRef = useRef<(() => void) | null>(null);
   const dwellStart = useRef(Date.now());
 
   useEffect(() => {
+    setPrefs(loadAutoScrollPrefs());
+    setProfile(loadReadingVelocityProfile());
     void hydrateAutoScrollFromIdb().then(({ prefs: p, profile: pr }) => {
       setPrefs(p);
       setProfile(pr);

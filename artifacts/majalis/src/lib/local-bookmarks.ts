@@ -27,7 +27,11 @@ function readAll(): LocalBookmark[] {
 
 function writeAll(items: LocalBookmark[]) {
   if (typeof window === "undefined") return;
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(items.slice(0, MAX_ITEMS)));
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(items.slice(0, MAX_ITEMS)));
+  } catch {
+    /* quota / private mode */
+  }
 }
 
 export function listLocalBookmarks(): LocalBookmark[] {

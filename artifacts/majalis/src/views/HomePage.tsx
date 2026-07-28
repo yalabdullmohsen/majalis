@@ -25,6 +25,7 @@ import { HomeExplorePlatform } from "@/components/home/HomeExplorePlatform";
 import { QUICK_LINKS } from "@/lib/home-feature-catalog";
 import {
   HOME_WIDGET_DEFS,
+  getDefaultHomepagePrefs,
   getLocalHomepagePrefs,
   saveLocalHomepagePrefs,
   fetchRemoteHomepagePrefs,
@@ -100,9 +101,12 @@ export default function HomePage() {
   const continueHref  = lastVisited?.href ?? "/daily-wird";
   const continueLabel = lastVisited ? `تابع: ${lastVisited.label}` : "ابدأ يومك: الورد اليومي";
 
-  // تخصيص أقسام الصفحة الرئيسية: محلي فورًا، مع مزامنة اختيارية من Supabase عند تسجيل الدخول
-  const [homePrefs, setHomePrefs] = useState<HomepagePrefs>(() => getLocalHomepagePrefs());
+  // تخصيص أقسام الصفحة الرئيسية: افتراض SSR أولًا، ثم ترطيب من localStorage بعد التركيب
+  const [homePrefs, setHomePrefs] = useState<HomepagePrefs>(() => getDefaultHomepagePrefs());
   const [customizeOpen, setCustomizeOpen] = useState(false);
+  useEffect(() => {
+    setHomePrefs(getLocalHomepagePrefs());
+  }, []);
   useEffect(() => {
     if (!user?.id) return;
     fetchRemoteHomepagePrefs(user.id).then((remote) => {

@@ -76,9 +76,9 @@ export async function startPlatformLogicSuite(): Promise<void> {
       /* ignore */
     }
     try {
-      const { getCrossTabId, subscribeCrossTab } = await import("@/lib/cross-tab-sync");
+      const { getCrossTabId, isBroadcastChannelSupported } = await import("@/lib/cross-tab-sync");
       getCrossTabId();
-      subscribeCrossTab(() => undefined);
+      void isBroadcastChannelSupported();
     } catch {
       /* ignore */
     }

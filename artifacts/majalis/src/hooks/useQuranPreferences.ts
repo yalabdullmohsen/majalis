@@ -64,6 +64,7 @@ function systemPrefersDark(): boolean {
 
 function load(): QuranPreferences {
   try {
+    if (typeof localStorage === "undefined") return { ...DEFAULTS };
     const raw = localStorage.getItem(KEY) ?? localStorage.getItem(LEGACY_KEY);
     if (raw) return { ...DEFAULTS, ...JSON.parse(raw) };
     return { ...DEFAULTS, readingTheme: systemPrefersDark() ? "night" : "standard" };
@@ -73,11 +74,23 @@ function load(): QuranPreferences {
 }
 
 export function useQuranPreferences() {
-  const [prefs, setPrefsState] = useState<QuranPreferences>(load);
+  // SSR/prerender-safe defaults; hydrate from LS after mount
+  const [prefs, setPrefsState] = useState<QuranPreferences>(DEFAULTS);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    try { localStorage.setItem(KEY, JSON.stringify(prefs)); } catch { /* ignore */ }
-  }, [prefs]);
+    setPrefsState(load());
+    setReady(true);
+  }, []);
+
+  useEffect(() => {
+    if (!ready) return;
+    try {
+      localStorage.setItem(KEY, JSON.stringify(prefs));
+    } catch {
+      /* ignore */
+    }
+  }, [prefs, ready]);
 
   const setPref = useCallback(<K extends keyof QuranPreferences>(key: K, value: QuranPreferences[K]) => {
     setPrefsState((p) => ({ ...p, [key]: value }));

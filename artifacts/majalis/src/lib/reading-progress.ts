@@ -22,7 +22,11 @@ function readStore(): ReadingProgressStore {
 
 function writeStore(store: ReadingProgressStore) {
   if (typeof window === "undefined") return;
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
+  } catch {
+    /* quota / private mode */
+  }
 }
 
 export function markReadingProgress(section: ReadingSection, entry: Omit<ReadingProgressEntry, "at">) {

@@ -66,6 +66,11 @@ function emptyState(dateKey = todayKey()): DevotionalBalanceState {
   };
 }
 
+/** SSR-safe empty balance (no localStorage). */
+export function getEmptyDevotionalBalance(): DevotionalBalanceState {
+  return emptyState("1970-01-01");
+}
+
 function readState(): DevotionalBalanceState {
   try {
     const raw = localStorage.getItem(LS_KEY);

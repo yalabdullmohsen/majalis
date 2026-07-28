@@ -30,7 +30,11 @@ export function loadNotifPrefs(): NotifPrefs {
 }
 
 export function saveNotifPrefs(prefs: NotifPrefs): void {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(prefs));
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(prefs));
+  } catch {
+    /* quota / private mode */
+  }
 }
 
 export async function requestPermission(): Promise<NotificationPermission> {

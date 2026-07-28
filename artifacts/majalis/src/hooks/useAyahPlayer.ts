@@ -15,7 +15,7 @@ import {
   type AyahLoopConfig,
   type AyahLoopRuntime,
 } from "@/lib/ayah-loop-controller";
-import { saveAudioResumeState } from "@/lib/quran-audio-resume";
+import { saveAudioResumeState, flushAudioResumeState } from "@/lib/quran-audio-resume";
 
 export type PlayerState = "idle" | "loading" | "playing" | "paused" | "error";
 
@@ -91,7 +91,13 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
       clearDelayTimer();
       pauseCleanupRef.current?.();
       pauseCleanupRef.current = null;
-      audio.pause();
+      try {
+        audio.pause();
+        audio.removeAttribute("src");
+        audio.load();
+      } catch {
+        /* ignore */
+      }
       audioRef.current = null;
     };
   }, [clearDelayTimer]);
@@ -122,7 +128,7 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
     const onPause = () => {
       if (audio.ended) return;
       setPlayerState("paused");
-      saveAudioResumeState({
+      flushAudioResumeState({
         surah,
         ayah,
         currentTime: audio.currentTime || 0,
@@ -169,7 +175,12 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
     audio.addEventListener("ended", onEnded, { once: true });
     audio.addEventListener("error", onError, { once: true });
 
-    pauseCleanupRef.current = () => audio.removeEventListener("pause", onPause);
+    pauseCleanupRef.current = () => {
+      audio.removeEventListener("pause", onPause);
+      audio.removeEventListener("playing", onPlaying);
+      audio.removeEventListener("ended", onEnded);
+      audio.removeEventListener("error", onError);
+    };
 
     audio.load();
     /* استدعاء play() فورًا ومتزامنًا مع نفس استدعاء لمسة المستخدم — لا ننتظر
@@ -201,11 +212,22 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
     clearDelayTimer();
     const audio = audioRef.current;
     if (!audio) return;
+    try {
+      flushAudioResumeState({
+        surah: surahNum,
+        ayah: currentAyah || 1,
+        currentTime: audio.currentTime || 0,
+        reciterId,
+        updatedAt: Date.now(),
+      });
+    } catch {
+      /* ignore */
+    }
     audio.pause();
     audio.src = "";
     setCurrentAyah(null);
     setPlayerState("idle");
-  }, [clearDelayTimer]);
+  }, [clearDelayTimer, surahNum, currentAyah, reciterId]);
 
   const togglePlayAyah = useCallback((ayah: number) => {
     if (currentAyah === ayah && playerState === "playing") {

@@ -9,20 +9,20 @@
  */
 
 export type SeedBundle = {
-  DEMO_FAWAID: any[];
-  DEMO_LESSONS: any[];
-  DEMO_QA_CATEGORIES: any[];
-  DEMO_SHEIKHS: any[];
-  filterDemoQa: (opts: { categoryId?: string; search?: string }) => any[];
-  searchDemoContent: (term: string) => any;
-  filterMiraclesSeed: (opts?: { category?: string; sourceType?: string }) => any[];
-  searchMiraclesSeed: (q: string) => any[];
-  LESSONS_SEED: any[];
-  findSeedLessonById: (id: string) => any;
-  DEMO_QUIZ_QUESTIONS: any[];
-  ADHKAR_CATEGORIES: any[];
-  filterAdhkar: (q: string) => any[];
-  searchPlatformSeed: (q: string) => any;
+  DEMO_FAWAID: unknown[];
+  DEMO_LESSONS: unknown[];
+  DEMO_QA_CATEGORIES: unknown[];
+  DEMO_SHEIKHS: unknown[];
+  filterDemoQa: (opts: { categoryId?: string; search?: string }) => unknown[];
+  searchDemoContent: (term: string) => unknown;
+  filterMiraclesSeed: (opts?: { category?: string; sourceType?: string }) => unknown[];
+  searchMiraclesSeed: (q: string) => unknown[];
+  LESSONS_SEED: unknown[];
+  findSeedLessonById: (id: string) => unknown;
+  DEMO_QUIZ_QUESTIONS: unknown[];
+  ADHKAR_CATEGORIES: unknown[];
+  filterAdhkar: (q: string) => unknown[];
+  searchPlatformSeed: (q: string) => unknown;
 };
 
 let _cache: SeedBundle | null = null;

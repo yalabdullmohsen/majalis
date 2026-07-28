@@ -72,6 +72,11 @@ const DEFAULT_HIDDEN: HomeWidgetId[] = [
 const DEFAULT_PREFS: HomepagePrefs = { order: DEFAULT_ORDER, hidden: DEFAULT_HIDDEN };
 const STORAGE_KEY = "majalis-homepage-prefs-v1";
 
+/** Defaults safe for SSR/prerender — no localStorage access. */
+export function getDefaultHomepagePrefs(): HomepagePrefs {
+  return { order: [...DEFAULT_PREFS.order], hidden: [...DEFAULT_PREFS.hidden] };
+}
+
 export function sanitizePrefs(raw: unknown): HomepagePrefs {
   const obj = (raw ?? {}) as Partial<HomepagePrefs>;
   const rawOrder = Array.isArray(obj.order) ? obj.order.filter((id): id is HomeWidgetId => VALID_IDS.has(id)) : [];
