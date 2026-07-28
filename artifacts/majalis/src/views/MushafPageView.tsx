@@ -13,9 +13,11 @@ import {
 } from "@/lib/quran-api";
 import { loadPageJuzIndex, getSegmentsForPage, findPageForAyah, type QuranSegment } from "@/lib/recitation-ai/page-juz-lookup";
 import { useQuranPreferences, type QuranReadingTheme, type QuranFrameStyle, type QuranHighlightStyle, type QuranPageMode } from "@/hooks/useQuranPreferences";
+import { useReadingBreakReminder } from "@/hooks/useReadingBreakReminder";
 import { useAyahPlayer } from "@/hooks/useAyahPlayer";
 import { SurahList } from "@/components/quran/SurahList";
 import { PageAyahActionSheet } from "@/components/quran/PageAyahActionSheet";
+import { ReadingBreakDialog } from "@/components/quran/ReadingBreakDialog";
 import { ReciterDownloadManager } from "@/components/quran/ReciterDownloadManager";
 import { loadMushafPage, prefetchMushafPage, type MushafPageLayout, type QpcWord } from "@/lib/mushaf-v2-data";
 import { beginAbortScope, abortScope, guardAsync } from "@/lib/route-abort";
@@ -85,6 +87,7 @@ export default function MushafPageView() {
   const params = useParams<{ page?: string; surah?: string }>();
   const [, navigate] = useLocation();
   const { prefs, setPref } = useQuranPreferences();
+  const breakReminder = useReadingBreakReminder();
 
   const routePage = params.page
     ? Number(params.page)
@@ -617,6 +620,13 @@ export default function MushafPageView() {
           />
         </SectionErrorBoundary>
       )}
+
+      <ReadingBreakDialog
+        open={breakReminder.open}
+        title={breakReminder.title}
+        message={breakReminder.message}
+        onDismiss={breakReminder.dismiss}
+      />
     </div>,
     document.body,
   );
