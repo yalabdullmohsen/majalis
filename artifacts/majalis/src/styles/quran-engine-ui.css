@@ -90,11 +90,12 @@ html.dark .qe-abar {
   max-width: none;
   min-height: 100dvh;
   margin: 0;
-  padding: max(0.75rem, env(safe-area-inset-top)) 1.4rem
-    max(1.25rem, env(safe-area-inset-bottom));
-  /* Paper / night tone from THEMES via --qe-reader-bg */
-  background: var(--qe-reader-bg, #faf6ef);
-  color: var(--qe-reader-text, #000);
+  /* Flutter SafeArea + EdgeInsets.symmetric(horizontal: 30, vertical: 20) */
+  padding: max(20px, env(safe-area-inset-top)) max(30px, env(safe-area-inset-right))
+    max(20px, env(safe-area-inset-bottom)) max(30px, env(safe-area-inset-left));
+  /* Paper / night tone from THEMES via --qe-reader-bg (Flutter #F5F5DC light) */
+  background: var(--qe-reader-bg, #f5f5dc);
+  color: var(--qe-reader-text, rgba(0, 0, 0, 0.87));
   /* Resist browser/OS text autosizing (≈ allowFontScaling={false}) */
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
@@ -240,8 +241,9 @@ html.dark .qe-abar {
 .qe-ayah-list--focus .qe-ayah {
   border-color: transparent;
   background: transparent;
-  border-radius: 0;
-  padding: 0.15rem 0.1rem;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 0.25rem;
 }
 
 .qe-ayah-list--focus .qe-ayah__num {
@@ -257,16 +259,21 @@ html.dark .qe-abar {
   font-family: var(--qe-reader-font, "Amiri Quran", "Scheherazade New", "Amiri", serif);
   font-size: var(--qe-mushaf-fs, 24px);
   line-height: var(--qe-mushaf-lh, 44px);
-  text-align: right;
-  color: var(--qe-reader-text, #000);
+  text-align: center;
+  color: var(--qe-reader-text, rgba(0, 0, 0, 0.87));
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
 }
 
 .qe-ayah-list--focus .qe-ayah.is-active {
-  background: color-mix(in srgb, var(--qe-emerald) 10%, transparent);
-  border-radius: 0.65rem;
-  padding-inline: 0.55rem;
+  /* Flutter: Colors.brown.withOpacity(0.2) + brown[900] text */
+  background: var(--quran-verse-selected-bg, rgba(121, 85, 72, 0.2));
+  border-radius: 10px;
+  padding: 10px;
+}
+
+.qe-ayah-list--focus .qe-ayah.is-active .qe-ayah__text {
+  color: var(--quran-verse-selected-ink, #3e2723);
 }
 
 /* Hide platform bottom nav while Quran Engine focus mode is on */
@@ -278,8 +285,8 @@ body.qe-focus-mode .bottom-nav-bar {
 
 body.qe-focus-mode {
   overflow: hidden;
-  /* Match reader paper while chrome is hidden */
-  background: var(--qe-reader-bg, #faf6ef);
+  /* Match reader paper while chrome is hidden — Flutter parchment */
+  background: var(--qe-reader-bg, #f5f5dc);
 }
 
 .qe-viewer--dark .qe-ayah {

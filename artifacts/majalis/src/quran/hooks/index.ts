@@ -19,3 +19,4 @@ export { useReadingBreakReminder } from "@/hooks/useReadingBreakReminder";
 export { useRestoreLastPage } from "@/hooks/useRestoreLastPage";
 export { useKeepAwake } from "@/hooks/useKeepAwake";
 export { useColorScheme } from "@/hooks/useColorScheme";
+export { useImmersiveSystemUi } from "@/hooks/useImmersiveSystemUi";
