@@ -24,6 +24,12 @@ import { JumpPageModal } from "@/components/quran/JumpPageModal";
 import { ReciterDownloadManager } from "@/components/quran/ReciterDownloadManager";
 import { loadMushafPage, prefetchMushafPage, type MushafPageLayout, type QpcWord } from "@/lib/mushaf-v2-data";
 import { FONT_OPTIONS, quranFontStack } from "@/lib/quran-font-options";
+import {
+  QURAN_FONT_DEFAULT_PX,
+  QURAN_FONT_MAX_PX,
+  QURAN_FONT_MIN_PX,
+  QURAN_FONT_STEP_PX,
+} from "@/lib/quran-font-size";
 import { beginAbortScope, abortScope, guardAsync } from "@/lib/route-abort";
 import { logDiagnostic } from "@/lib/diagnostics";
 import { MushafPageV2 } from "@/components/quran/MushafPageV2";
@@ -398,7 +404,7 @@ export default function MushafPageView() {
                   className={`qs-mushaf-body qs-mushaf-body--hl-${prefs.highlightStyle} ${prefs.highlightStyle === "spotlight" && selectedAyah ? "qs-mushaf-body--spotlight" : ""}`}
                   style={{
                     ["--qs-font-size" as string]: `${prefs.fontScale}px`,
-                    ["--qs-font-scale" as string]: String(prefs.fontScale / 26),
+                    ["--qs-font-scale" as string]: String(prefs.fontScale / QURAN_FONT_DEFAULT_PX),
                   }}
                 >
                   <div className="qs-mushaf-body-inner">
@@ -500,9 +506,9 @@ export default function MushafPageView() {
             <div className="mpv-settings-group">
               <span className="mpv-settings-group__label">حجم الخط</span>
               <div className="mpv-settings-group__grid">
-                <button type="button" className="mpv-chip" onClick={() => setPref("fontScale", Math.max(18, prefs.fontScale - 2))}>أصغر −</button>
+                <button type="button" className="mpv-chip" onClick={() => setPref("fontScale", Math.max(QURAN_FONT_MIN_PX, prefs.fontScale - QURAN_FONT_STEP_PX))}>أصغر −</button>
                 <span className="mpv-chip is-active">{prefs.fontScale}px</span>
-                <button type="button" className="mpv-chip" onClick={() => setPref("fontScale", Math.min(42, prefs.fontScale + 2))}>أكبر +</button>
+                <button type="button" className="mpv-chip" onClick={() => setPref("fontScale", Math.min(QURAN_FONT_MAX_PX, prefs.fontScale + QURAN_FONT_STEP_PX))}>أكبر +</button>
               </div>
               <small style={{ display: "block", opacity: .7, marginTop: ".35rem" }}>
                 يكبّر الصفحة مع تمرير داخل الإطار — بلا قصّ بـtransform.
