@@ -1,9 +1,9 @@
 /**
  * QuranViewer — Uthmani ayah list with optional Tajweed tint, selection, and Focus Mode.
  *
- * Focus Mode (وضع التركيز): hides chrome (header / page nav / footer) so the
- * mushaf text fills the viewport — same idea as the RN QuranReader sketch
- * (tap toggles chrome; StatusBar-equivalent = app chrome + bottom nav).
+ * Focus Mode (وضع التركيز): hides chrome so the mushaf fills the viewport.
+ * Typography in focus mode is intentionally FIXED (24px / 45px line-height) and
+ * resists OS/browser text scaling — web equivalent of RN `allowFontScaling={false}`.
  */
 import { useCallback, useEffect, useState } from "react";
 import { Maximize2, Minimize2 } from "lucide-react";
@@ -12,6 +12,10 @@ import { useQuranEngine } from "@/hooks/useQuranEngine";
 import { QuranActionBar } from "@/components/QuranActionBar";
 import { toArabicDigits } from "@/lib/utils";
 import "@/styles/quran-engine-ui.css";
+
+/** Fixed mushaf type in focus mode — independent of system accessibility text size. */
+export const QURAN_FOCUS_FONT_SIZE_PX = 24;
+export const QURAN_FOCUS_LINE_HEIGHT_PX = 45;
 
 export type QuranViewerProps = {
   /** Override initial surah (defaults to engine state). */
@@ -225,7 +229,20 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
                     <span className="qe-ayah__num" aria-hidden="true">
                       {toArabicDigits(ayah.numberInSurah)}
                     </span>
-                    <span className="qe-ayah__text">{ayah.text}</span>
+                    <span
+                      className="qe-ayah__text"
+                      style={
+                        isFocusMode
+                          ? {
+                              fontSize: `${QURAN_FOCUS_FONT_SIZE_PX}px`,
+                              lineHeight: `${QURAN_FOCUS_LINE_HEIGHT_PX}px`,
+                              textAlign: "right",
+                            }
+                          : undefined
+                      }
+                    >
+                      {ayah.text}
+                    </span>
                   </button>
                 </li>
               );

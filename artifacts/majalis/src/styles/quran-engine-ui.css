@@ -87,14 +87,18 @@ html.dark .qe-abar {
   max-width: none;
   min-height: 100dvh;
   margin: 0;
-  padding: max(0.75rem, env(safe-area-inset-top)) 1rem
+  padding: max(0.75rem, env(safe-area-inset-top)) 1.4rem
     max(1.25rem, env(safe-area-inset-bottom));
-  background: #fffdf5;
+  /* Paper tone — matches FullScreenQuranReader (#FAF6EF) */
+  background: #faf6ef;
+  /* Resist browser/OS text autosizing (≈ allowFontScaling={false}) */
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 html[data-theme="dark"] .qe-viewer--focus,
 html.dark .qe-viewer--focus {
-  background: #0f1a16;
+  background: #121a16;
 }
 
 .qe-viewer__head {
@@ -155,17 +159,40 @@ html.dark .qe-viewer--focus {
   opacity: 0.85;
 }
 
+.qe-ayah-list--focus {
+  gap: 0.35rem;
+  padding-block: 0.5rem;
+}
+
 .qe-ayah-list--focus .qe-ayah {
   border-color: transparent;
   background: transparent;
   border-radius: 0;
-  padding-inline: 0.15rem;
+  padding: 0.15rem 0.1rem;
+}
+
+.qe-ayah-list--focus .qe-ayah__num {
+  /* Keep marker subtle; do not inherit fixed mushaf size */
+  font-size: 12px;
+  line-height: 1.2;
+  width: 1.5rem;
+  height: 1.5rem;
 }
 
 .qe-ayah-list--focus .qe-ayah__text {
-  font-size: clamp(1.35rem, 4.2vw, 1.65rem);
-  line-height: 2.25;
-  text-align: justify;
+  /* Fixed mushaf type — px, not rem/clamp (see QURAN_FOCUS_* constants) */
+  font-family: "Amiri Quran", "Scheherazade New", "Amiri", serif;
+  font-size: 24px !important;
+  line-height: 45px !important;
+  text-align: right;
+  color: #000;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+html[data-theme="dark"] .qe-ayah-list--focus .qe-ayah__text,
+html.dark .qe-ayah-list--focus .qe-ayah__text {
+  color: #e8efe9;
 }
 
 .qe-ayah-list--focus .qe-ayah.is-active {
