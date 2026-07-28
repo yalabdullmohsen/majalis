@@ -4,6 +4,7 @@
  */
 import { idbGetAll, idbPut, OFFLINE_STORES } from "@/lib/offline-db";
 import type { ReviewQuality } from "@/lib/spaced-repetition";
+import { readLocalJson, writeLocalJson, isPlainObject } from "@/lib/safe-json";
 
 const LS_KEY = "majalis-flashcard-reviews-v1";
 
@@ -26,23 +27,32 @@ function reviewKey(userId: string, cardType: string, cardId: string): string {
   return `${userId}::${cardType}:${cardId}`;
 }
 
+function isFlashReview(v: unknown): v is LocalFlashReview {
+  return (
+    isPlainObject(v) &&
+    typeof v.key === "string" &&
+    typeof v.user_id === "string" &&
+    typeof v.card_type === "string" &&
+    typeof v.card_id === "string" &&
+    typeof v.next_review_at === "string" &&
+    typeof v.interval_days === "number" &&
+    typeof v.ease_factor === "number" &&
+    typeof v.repetitions === "number"
+  );
+}
+
+function isFlashReviewList(v: unknown): v is LocalFlashReview[] {
+  return Array.isArray(v) && v.every(isFlashReview);
+}
+
 function readLs(): LocalFlashReview[] {
   if (typeof window === "undefined") return [];
-  try {
-    const raw = JSON.parse(localStorage.getItem(LS_KEY) || "[]");
-    return Array.isArray(raw) ? (raw as LocalFlashReview[]) : [];
-  } catch {
-    return [];
-  }
+  return readLocalJson<LocalFlashReview[]>(LS_KEY, [], isFlashReviewList);
 }
 
 function writeLs(rows: LocalFlashReview[]): void {
   if (typeof window === "undefined") return;
-  try {
-    localStorage.setItem(LS_KEY, JSON.stringify(rows.slice(0, 2_000)));
-  } catch {
-    /* quota */
-  }
+  writeLocalJson(LS_KEY, rows.slice(0, 2_000));
 }
 
 export async function saveLocalReview(row: LocalFlashReview): Promise<void> {

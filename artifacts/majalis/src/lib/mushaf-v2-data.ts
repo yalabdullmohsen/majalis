@@ -7,6 +7,8 @@
  * لا تطبيع ولا تعديل لأي نص هنا — نقل وتجميع فقط.
  */
 
+import { pooledFetch } from "@/lib/fetch-pool";
+
 export type QpcWord = {
   id: number;
   position: number;
@@ -65,7 +67,10 @@ let chaptersPromise: Promise<Map<number, MushafChapter>> | null = null;
 
 export function loadChapters(): Promise<Map<number, MushafChapter>> {
   if (!chaptersPromise) {
-    chaptersPromise = fetch("/data/quran-v2/chapters.json", { signal: AbortSignal.timeout(10_000) })
+    chaptersPromise = pooledFetch("/data/quran-v2/chapters.json", {
+      signal: AbortSignal.timeout(10_000),
+      dedupeKey: "mushaf-v2:chapters",
+    })
       .then((res) => {
         if (!res.ok) throw new Error(`chapters.json fetch failed: HTTP ${res.status}`);
         return res.json();
@@ -97,8 +102,9 @@ const pageCache = new Map<number, Promise<QpcVerse[]>>();
 function fetchRawPage(pageNumber: number): Promise<QpcVerse[]> {
   let p = pageCache.get(pageNumber);
   if (!p) {
-    p = fetch(`/data/quran-v2/pages/page-${String(pageNumber).padStart(3, "0")}.json`, {
+    p = pooledFetch(`/data/quran-v2/pages/page-${String(pageNumber).padStart(3, "0")}.json`, {
       signal: AbortSignal.timeout(10_000),
+      dedupeKey: `mushaf-v2:page:${pageNumber}`,
     })
       .then((res) => {
         if (!res.ok) throw new Error(`page ${pageNumber} fetch failed: HTTP ${res.status}`);
