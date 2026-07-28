@@ -10,15 +10,18 @@
  * strips parenthetical markers via renderQuranText — same idea as the RN sketch.
  * After 30 minutes of reading, a gentle break reminder appears (RN Alert.alert port).
  * Typeface cycles Amiri → Traditional Arabic → Scheherazade via prefs.fontId.
+ * Inline tafsir mode (`showTafsir`) loads the surah edition once and renders
+ * under each ayah when enabled — RN conditional-rendering sketch.
  * `text-size-adjust: 100%` resists OS/browser text scaling (RN allowFontScaling={false}).
  */
 import { useCallback, useEffect, useState, type CSSProperties } from "react";
-import { Hash, Maximize2, Minimize2, Moon, Sun, Type } from "lucide-react";
-import { fetchSurahDetail, getSurahMeta, type Ayah } from "@/lib/quran-api";
+import { BookOpenText, Hash, Maximize2, Minimize2, Moon, Sun, Type } from "lucide-react";
+import { fetchSurahDetail, fetchTafsirAyahs, getSurahMeta, type Ayah } from "@/lib/quran-api";
 import { useQuranEngine } from "@/hooks/useQuranEngine";
 import { useQuranPreferences } from "@/hooks/useQuranPreferences";
 import { useReadingBreakReminder } from "@/hooks/useReadingBreakReminder";
 import { nextQuranFontId, quranFontOption, quranFontStack } from "@/lib/quran-font-options";
+import { DEFAULT_TAFSEER_SOURCE } from "@/core/tafseer/TafseerService";
 import { QuranActionBar } from "@/components/QuranActionBar";
 import { ReadingBreakDialog } from "@/components/quran/ReadingBreakDialog";
 import { toArabicDigits } from "@/lib/utils";
@@ -41,6 +44,8 @@ export const THEMES = {
 export type QuranReaderThemeId = keyof typeof THEMES;
 
 export const QURAN_THEME_STORAGE_KEY = "quranReaderDarkMode";
+export const QURAN_TAFSIR_TOGGLE_KEY = "quranReaderShowTafsir";
+export const QURAN_INLINE_TAFSIR_EDITION_KEY = "majalis-mushaf-tafsir-edition-v1";
 
 /** Mushaf type scale — mirrors RN FullScreenQuranReader sketch. */
 export const QURAN_FONT_MIN_PX = 18;
@@ -49,6 +54,25 @@ export const QURAN_FONT_STEP_PX = 2;
 export const QURAN_FONT_DEFAULT_PX = 24;
 export const QURAN_FONT_STORAGE_KEY = "userFontSize";
 
+function readStoredShowTafsir(): boolean {
+  try {
+    const raw = localStorage.getItem(QURAN_TAFSIR_TOGGLE_KEY);
+    if (raw == null) return false;
+    return raw === "1" || raw === "true";
+  } catch {
+    return false;
+  }
+}
+
+function readInlineTafsirEdition(): string {
+  try {
+    const v = localStorage.getItem(QURAN_INLINE_TAFSIR_EDITION_KEY);
+    if (v) return v;
+  } catch {
+    /* ignore */
+  }
+  return DEFAULT_TAFSEER_SOURCE;
+}
 /**
  * Strip parenthetical ayah markers from continuous mushaf text when numbers are hidden.
  * Matches Western and Arabic-Indic digits: (24) / (٢٤).
@@ -135,6 +159,10 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
   const [isFocusMode, setIsFocusMode] = useState(false);
   const [fontSize, setFontSize] = useState(QURAN_FONT_DEFAULT_PX);
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [showTafsir, setShowTafsir] = useState(false);
+  const [tafsirByAyah, setTafsirByAyah] = useState<Record<number, string>>({});
+  const [tafsirLoading, setTafsirLoading] = useState(false);
+  const [tafsirError, setTafsirError] = useState(false);
   const meta = getSurahMeta(surahNum);
   const currentTheme = isDarkMode ? THEMES.dark : THEMES.light;
 
@@ -149,6 +177,18 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
     setPref("fontId", nextQuranFontId(prefs.fontId));
   }, [prefs.fontId, setPref]);
 
+  const toggleTafsir = useCallback(() => {
+    setShowTafsir((prev) => {
+      const next = !prev;
+      try {
+        localStorage.setItem(QURAN_TAFSIR_TOGGLE_KEY, next ? "1" : "0");
+      } catch {
+        /* ignore */
+      }
+      return next;
+    });
+  }, []);
+
   const setFocus = useCallback(
     (next: boolean) => {
       setIsFocusMode(next);
@@ -159,11 +199,43 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
 
   const toggleFocus = useCallback(() => setFocus(!isFocusMode), [isFocusMode, setFocus]);
 
-  /** Load persisted font size + reader theme once. */
+  /** Load persisted font size + reader theme + tafsir toggle once. */
   useEffect(() => {
     setFontSize(readStoredFontSize());
     setIsDarkMode(readStoredDarkMode());
+    setShowTafsir(readStoredShowTafsir());
   }, []);
+
+  /** When inline tafsir is on, fetch the whole surah edition once (cached). */
+  useEffect(() => {
+    if (!showTafsir) return;
+    let cancelled = false;
+    setTafsirLoading(true);
+    setTafsirError(false);
+    void (async () => {
+      try {
+        const edition = readInlineTafsirEdition();
+        const rows = await fetchTafsirAyahs(surahNum, edition);
+        if (cancelled) return;
+        const map: Record<number, string> = {};
+        for (const row of rows) {
+          if (row.text) map[row.numberInSurah] = row.text;
+        }
+        setTafsirByAyah(map);
+        if (!rows.length) setTafsirError(true);
+      } catch {
+        if (!cancelled) {
+          setTafsirByAyah({});
+          setTafsirError(true);
+        }
+      } finally {
+        if (!cancelled) setTafsirLoading(false);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [showTafsir, surahNum]);
 
   const updateFontSize = useCallback((next: number) => {
     const clamped = clampFontSize(next);
@@ -321,6 +393,17 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
             </button>
             <button
               type="button"
+              className={`qe-chip${showTafsir ? " is-on" : ""}`}
+              onClick={toggleTafsir}
+              aria-pressed={showTafsir}
+              aria-label={showTafsir ? "إخفاء التفسير المضمّن" : "إظهار التفسير تحت الآيات"}
+              title="التفسير"
+            >
+              <BookOpenText size={14} aria-hidden="true" />
+              تفسير
+            </button>
+            <button
+              type="button"
               className="qe-chip"
               onClick={toggleFont}
               aria-label={`خط المصحف: ${fontMeta.labelAr} — اضغط للتبديل`}
@@ -389,8 +472,9 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
               const active =
                 ayah.numberInSurah === currentAyah ||
                 selected?.ayah === ayah.numberInSurah;
+              const ayahTafsir = tafsirByAyah[ayah.numberInSurah];
               return (
-                <li key={ayah.numberInSurah}>
+                <li key={ayah.numberInSurah} className="qe-ayah-item">
                   <button
                     type="button"
                     className={`qe-ayah${active ? " is-active" : ""}`}
@@ -420,6 +504,25 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
                       {renderQuranText(ayah.text, showAyahNumbers)}
                     </span>
                   </button>
+                  {showTafsir ? (
+                    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions -- stop focus-toggle bubble only
+                    <div
+                      className="qe-ayah__tafsir"
+                      onClick={(e) => e.stopPropagation()}
+                      role="note"
+                      aria-label={`تفسير الآية ${toArabicDigits(ayah.numberInSurah)}`}
+                    >
+                      {tafsirLoading && !ayahTafsir ? (
+                        <span className="qe-ayah__tafsir-status">جاري تحميل التفسير…</span>
+                      ) : ayahTafsir ? (
+                        <p className="qe-ayah__tafsir-text">{ayahTafsir}</p>
+                      ) : tafsirError ? (
+                        <span className="qe-ayah__tafsir-status">تعذّر تحميل التفسير لهذه الآية.</span>
+                      ) : (
+                        <span className="qe-ayah__tafsir-status">لا يتوفر تفسير لهذه الآية حاليًا.</span>
+                      )}
+                    </div>
+                  ) : null}
                 </li>
               );
             })}
