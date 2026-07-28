@@ -5,6 +5,7 @@
  */
 
 import { fetchSurahList, fetchSurahDetail, type SurahSummary, type Ayah } from "./quran-api";
+import { applyReviewRating } from "./spaced-repetition";
 
 // ── أنواع الاختبارات ──────────────────────────────────────────────────────────
 
@@ -118,27 +119,27 @@ export function getStatsSnapshot() {
   };
 }
 
-/** SM-2: تحديث بطاقة بعد تقييم الإجابة (quality 0–5) */
+/** SM-2: تحديث بطاقة بعد تقييم الإجابة (quality 0–5) — محرك موحّد */
 export function reviewCard(key: string, quality: 0 | 1 | 2 | 3 | 4 | 5): void {
   const cards = loadCards();
   const idx = cards.findIndex((c) => c.key === key);
   if (idx === -1) return;
 
   const card = { ...cards[idx] };
+  const metrics = applyReviewRating(
+    {
+      easeFactor: card.ef,
+      interval: card.interval,
+      repetitions: card.repetitions,
+      nextReviewDate: new Date(card.dueAt || Date.now()).toISOString(),
+    },
+    quality,
+  );
 
-  if (quality < 3) {
-    card.repetitions = 0;
-    card.interval = 1;
-  } else {
-    if (card.repetitions === 0) card.interval = 1;
-    else if (card.repetitions === 1) card.interval = 6;
-    else card.interval = Math.round(card.interval * card.ef);
-
-    card.repetitions += 1;
-    card.ef = Math.max(1.3, card.ef + 0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02));
-  }
-
-  card.dueAt = Date.now() + card.interval * 24 * 60 * 60 * 1000;
+  card.repetitions = metrics.repetitions;
+  card.interval = metrics.interval;
+  card.ef = metrics.easeFactor;
+  card.dueAt = new Date(metrics.nextReviewDate).getTime();
   card.lastReview = Date.now();
 
   cards[idx] = card;

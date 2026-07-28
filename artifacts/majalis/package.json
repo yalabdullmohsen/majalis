@@ -79,7 +79,7 @@
     "test:seo": "node scripts/test-seo.mjs",
     "test:identity": "node scripts/test-identity.mjs",
     "test:critical-css": "node scripts/test-critical-css-budget.mjs",
-    "test:sm2": "node scripts/test-sm2.mjs",
+    "test:sm2": "node scripts/test-sm2.mjs && npx tsx src/lib/__tests__/offline-sm2-streaks.test.ts",
     "test:guardrails": "node lib/__tests__/islamic-answer-guardrails.test.mjs",
     "test:search-normalize": "node lib/__tests__/search-normalize.test.mjs",
     "test:scholars-integrity": "npx tsx src/lib/__tests__/scholars-data-integrity.test.ts",

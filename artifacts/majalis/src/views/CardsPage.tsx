@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "wouter";
-import { toPng } from "html-to-image";
 import { ShareButtons } from "@/components/ContentActions";
+import { downloadCardImage, exportCardImage } from "@/lib/card-image-export";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { applyPageSeo } from "@/lib/seo";
@@ -117,14 +117,25 @@ export default function CardsPage() {
     if (!cardRef.current) return;
     setIsGenerating(true);
     try {
-      const dataUrl = await toPng(cardRef.current, {
-        pixelRatio: 3,
-        cacheBust: true,
+      // Story/post: higher pixelRatio for crisp mobile exports
+      const pixelRatio = size === "story" ? 4 : 3;
+      await downloadCardImage(cardRef.current, `بطاقة-${Date.now()}.png`, pixelRatio);
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
+  const shareCard = async () => {
+    if (!cardRef.current) return;
+    setIsGenerating(true);
+    try {
+      const pixelRatio = size === "story" ? 4 : 3;
+      await exportCardImage(cardRef.current, {
+        fileName: `بطاقة-${Date.now()}.png`,
+        pixelRatio,
+        title: "بطاقة المجلس العلمي",
+        text: `${quote}\n— ${source}`,
       });
-      const link = document.createElement("a");
-      link.download = `بطاقة-${Date.now()}.png`;
-      link.href = dataUrl;
-      link.click();
     } finally {
       setIsGenerating(false);
     }
@@ -200,7 +211,10 @@ export default function CardsPage() {
               <button type="button" className="ui-card-btn template-btn template-btn--ghost" onClick={resetForm}>
                 إعادة ضبط
               </button>
-              <button type="button" onClick={downloadCard} disabled={isGenerating} className="ui-card-btn template-btn template-btn--primary">
+              <button type="button" onClick={() => void shareCard()} disabled={isGenerating} className="ui-card-btn template-btn template-btn--ghost">
+                {isGenerating ? "جاري الإنشاء..." : "مشاركة"}
+              </button>
+              <button type="button" onClick={() => void downloadCard()} disabled={isGenerating} className="ui-card-btn template-btn template-btn--primary">
                 {isGenerating ? "جاري الإنشاء..." : "تحميل الصورة"}
               </button>
             </div>
