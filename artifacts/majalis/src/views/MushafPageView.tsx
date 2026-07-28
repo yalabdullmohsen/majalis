@@ -27,6 +27,8 @@ import { KhatmahProfilesPanel } from "@/components/quran/KhatmahProfilesPanel";
 import { PageCurlStage } from "@/components/quran/PageCurlStage";
 import { WirdSettingsPanel } from "@/components/quran/WirdSettingsPanel";
 import { QuranBackupPanel } from "@/components/quran/QuranBackupPanel";
+import { QuranEngineProvider, useQuranEngineApi } from "@/components/quran/QuranEngineProvider";
+import { registerQuranEngineDisposable } from "@/lib/quran-engine-teardown";
 import { loadMushafPage, prefetchMushafPage, type MushafPageLayout, type QpcWord } from "@/lib/mushaf-v2-data";
 import { beginAbortScope, abortScope, guardAsync } from "@/lib/route-abort";
 import { logDiagnostic } from "@/lib/diagnostics";
@@ -403,8 +405,39 @@ export default function MushafPageView() {
   const {
     currentAyah, playerState, togglePlayAyah, playFromAyah, reciterId, setReciterId,
     playbackRate, setPlaybackRate, repeatOn, setRepeatOn, loopConfig, setLoopConfig, audioElement,
-    teachConfig, setTeachConfig, teachPhase, finishStudentPause,
+    teachConfig, setTeachConfig, teachPhase, finishStudentPause, stop: stopAyahPlayer,
   } = useAyahPlayer(activeSurahForPlayer, activeSurahAyahCount);
+
+  const engineApi = useQuranEngineApi();
+  useEffect(() => {
+    engineApi.syncFromReader({
+      page,
+      surah: activeSurahForPlayer,
+      ayah: currentAyah ?? selectedAyah?.ayah ?? null,
+      reciterId,
+      playerState,
+      readingTheme: prefs.readingTheme,
+      readingLayout: prefs.readingLayout,
+      teachPhase,
+    });
+  }, [
+    engineApi,
+    page,
+    activeSurahForPlayer,
+    currentAyah,
+    selectedAyah?.ayah,
+    reciterId,
+    playerState,
+    prefs.readingTheme,
+    prefs.readingLayout,
+    teachPhase,
+  ]);
+
+  useEffect(() => {
+    return registerQuranEngineDisposable(() => {
+      stopAyahPlayer();
+    });
+  }, [stopAyahPlayer]);
 
   const [selectedAyahText, setSelectedAyahText] = useState<string | null>(null);
 
@@ -531,6 +564,7 @@ export default function MushafPageView() {
   }, []);
 
   return createPortal(
+    <QuranEngineProvider focusPage={page} enableFullWarm>
     <div
       className={[
         "quran-shell quran-shell--immersive mpv-root",
@@ -1019,7 +1053,8 @@ export default function MushafPageView() {
           />
         </SectionErrorBoundary>
       )}
-    </div>,
+    </div>
+    </QuranEngineProvider>,
     document.body,
   );
 }

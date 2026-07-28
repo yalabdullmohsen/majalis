@@ -189,8 +189,10 @@ self.addEventListener("fetch", (event) => {
   // cache-first يسرّع تقليب الصفحات ويُتيح قراءة محدودة دون شبكة.
   if (
     url.pathname.startsWith("/data/quran-v2/") ||
+    url.pathname.startsWith("/data/quran/") ||
     url.pathname === "/data/quran/page-juz-index.json" ||
-    url.pathname.startsWith("/fonts/quran/")
+    url.pathname.startsWith("/fonts/quran/") ||
+    url.pathname.startsWith("/fonts/qpc-v2/")
   ) {
     event.respondWith(cacheFirst(req, DATA_CACHE));
     return;
@@ -266,6 +268,40 @@ self.addEventListener("message", (event) => {
             const cache = await caches.open("majalis-audio-v1").catch(() => null);
             const keys = cache ? await cache.keys() : [];
             reply(true, { audioEntries: keys.length });
+          } catch (err) {
+            reply(false, null, String(err && err.message ? err.message : err));
+          }
+        })(),
+      );
+      return;
+    }
+
+    if (msg.type === "MAJALIS_QURAN_PRECACHE") {
+      event.waitUntil(
+        (async () => {
+          try {
+            const urls = msg.payload && Array.isArray(msg.payload.urls) ? msg.payload.urls : [];
+            const cache = await caches.open(DATA_CACHE);
+            let cached = 0;
+            for (let i = 0; i < urls.length; i++) {
+              const u = urls[i];
+              if (typeof u !== "string" || !u.startsWith("/")) continue;
+              try {
+                const hit = await cache.match(u);
+                if (hit) {
+                  cached += 1;
+                  continue;
+                }
+                const res = await fetch(u, { credentials: "same-origin" });
+                if (res && res.ok) {
+                  await cache.put(u, res.clone());
+                  cached += 1;
+                }
+              } catch (_) {
+                /* skip single url */
+              }
+            }
+            reply(true, { cached, total: urls.length, buildId: SW_BUILD_ID });
           } catch (err) {
             reply(false, null, String(err && err.message ? err.message : err));
           }

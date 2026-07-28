@@ -69,7 +69,10 @@ export function useWordAudioSync(
 
     rafRef.current = requestAnimationFrame(tick);
     return () => {
-      if (rafRef.current != null) cancelAnimationFrame(rafRef.current);
+      if (rafRef.current != null) {
+        cancelAnimationFrame(rafRef.current);
+        rafRef.current = null;
+      }
     };
   }, [audioRef, playing, wordCount, wordTimestamps, resolvedTs]);
 
