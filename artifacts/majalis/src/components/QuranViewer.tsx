@@ -12,14 +12,17 @@
  * Typeface cycles Amiri → Traditional Arabic → Scheherazade via prefs.fontId.
  * Inline tafsir mode (`showTafsir`) loads the surah edition once and renders
  * under each ayah when enabled — RN conditional-rendering sketch.
+ * Per-ayah audio toggle uses AudioEngine (web port of expo-av Sound) with
+ * unload on leave.
  * `text-size-adjust: 100%` resists OS/browser text scaling (RN allowFontScaling={false}).
  */
 import { useCallback, useEffect, useState, type CSSProperties } from "react";
-import { BookOpenText, Hash, Maximize2, Minimize2, Moon, Sun, Type } from "lucide-react";
+import { BookOpenText, Hash, Maximize2, Minimize2, Moon, Pause, Play, Sun, Type } from "lucide-react";
 import { fetchSurahDetail, fetchTafsirAyahs, getSurahMeta, type Ayah } from "@/lib/quran-api";
 import { useQuranEngine } from "@/hooks/useQuranEngine";
 import { useQuranPreferences } from "@/hooks/useQuranPreferences";
 import { useReadingBreakReminder } from "@/hooks/useReadingBreakReminder";
+import { useQuranAudioToggle } from "@/hooks/useQuranAudioToggle";
 import { nextQuranFontId, quranFontOption, quranFontStack } from "@/lib/quran-font-options";
 import { DEFAULT_TAFSEER_SOURCE } from "@/core/tafseer/TafseerService";
 import { QuranActionBar } from "@/components/QuranActionBar";
@@ -137,6 +140,7 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
     currentSurah,
     currentAyah,
     currentPage,
+    currentReciter,
     isTajweedEnabled,
     isActionBarEnabled,
     selectedAyah,
@@ -150,6 +154,7 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
   const fontFamily = quranFontStack(prefs.fontId);
   const fontMeta = quranFontOption(prefs.fontId);
   const breakReminder = useReadingBreakReminder();
+  const { toggleAudio, isPlayingAyah, playerState } = useQuranAudioToggle(currentReciter);
 
   const surahNum = initialSurah ?? currentSurah;
   const [ayahs, setAyahs] = useState<Ayah[]>([]);
@@ -473,37 +478,58 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
                 ayah.numberInSurah === currentAyah ||
                 selected?.ayah === ayah.numberInSurah;
               const ayahTafsir = tafsirByAyah[ayah.numberInSurah];
+              const playingThis = isPlayingAyah(surahNum, ayah.numberInSurah);
               return (
                 <li key={ayah.numberInSurah} className="qe-ayah-item">
-                  <button
-                    type="button"
-                    className={`qe-ayah${active ? " is-active" : ""}`}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      selectAyah({
-                        surah: surahNum,
-                        ayah: ayah.numberInSurah,
-                      });
-                    }}
-                  >
-                    {showAyahNumbers ? (
-                      <span className="qe-ayah__num" aria-hidden="true">
-                        {toArabicDigits(ayah.numberInSurah)}
-                      </span>
-                    ) : null}
-                    <span
-                      className="qe-ayah__text"
-                      style={{
-                        fontFamily,
-                        fontSize: `${fontSize}px`,
-                        lineHeight: `${fontSize + 20}px`,
-                        textAlign: "right",
-                        color: currentTheme.text,
+                  <div className="qe-ayah-row">
+                    <button
+                      type="button"
+                      className={`qe-ayah${active ? " is-active" : ""}`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        selectAyah({
+                          surah: surahNum,
+                          ayah: ayah.numberInSurah,
+                        });
                       }}
                     >
-                      {renderQuranText(ayah.text, showAyahNumbers)}
-                    </span>
-                  </button>
+                      {showAyahNumbers ? (
+                        <span className="qe-ayah__num" aria-hidden="true">
+                          {toArabicDigits(ayah.numberInSurah)}
+                        </span>
+                      ) : null}
+                      <span
+                        className="qe-ayah__text"
+                        style={{
+                          fontFamily,
+                          fontSize: `${fontSize}px`,
+                          lineHeight: `${fontSize + 20}px`,
+                          textAlign: "right",
+                          color: currentTheme.text,
+                        }}
+                      >
+                        {renderQuranText(ayah.text, showAyahNumbers)}
+                      </span>
+                    </button>
+                    <button
+                      type="button"
+                      className={`qe-ayah__play${playingThis ? " is-on" : ""}`}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        void toggleAudio(surahNum, ayah.numberInSurah);
+                      }}
+                      disabled={playerState === "loading" && !playingThis}
+                      aria-pressed={playingThis}
+                      aria-label={
+                        playingThis
+                          ? `إيقاف تلاوة الآية ${toArabicDigits(ayah.numberInSurah)}`
+                          : `تشغيل تلاوة الآية ${toArabicDigits(ayah.numberInSurah)}`
+                      }
+                      title={playingThis ? "إيقاف" : "استماع"}
+                    >
+                      {playingThis ? <Pause size={16} aria-hidden="true" /> : <Play size={16} aria-hidden="true" />}
+                    </button>
+                  </div>
                   {showTafsir ? (
                     // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions -- stop focus-toggle bubble only
                     <div

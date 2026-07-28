@@ -287,6 +287,49 @@ export class AudioEngine {
   }
 
   /**
+   * Stop playback (RN `sound.stopAsync` equivalent) — pauses and rewinds.
+   * Keeps the element for a quick resume/re-play of another ayah.
+   */
+  stop(): void {
+    const el = this.audio;
+    if (!el) {
+      this.setPlayerState("idle");
+      return;
+    }
+    try {
+      el.pause();
+      el.currentTime = 0;
+    } catch {
+      /* ignore */
+    }
+    this.setPlayerState("idle");
+    this.emitSnapshot();
+  }
+
+  /**
+   * Full teardown (RN `sound.unloadAsync`) — pause, clear `src`, drop element.
+   * Call on leaving the reading screen so media resources are released.
+   */
+  stopAndUnload(): void {
+    const el = this.audio;
+    if (el) {
+      try {
+        el.pause();
+        el.removeAttribute("src");
+        el.load();
+      } catch {
+        /* ignore */
+      }
+    }
+    this.audio = null;
+    this.surah = null;
+    this.ayah = null;
+    this.teachPhase = "idle";
+    this.surahRepeatStart = null;
+    this.setPlayerState("idle");
+  }
+
+  /**
    * Handle track end: teach gap → repeat ayah/surah → or advance once.
    * Failures in nested `playAyah` already surface as `playerState: "error"`.
    */
