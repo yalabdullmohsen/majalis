@@ -232,6 +232,7 @@ const LessonImportImagePage = lazyWithRetry(() => import("@/views/admin/LessonIm
 const LessonImportUrlPage = lazyWithRetry(() => import("@/views/admin/LessonImportUrlPage"), "LessonImportUrlPage");
 const AutomationSourcesPage = lazyWithRetry(() => import("@/views/admin/AutomationSourcesPage"), "AutomationSourcesPage");
 const AutomationReviewPage = lazyWithRetry(() => import("@/views/admin/AutomationReviewPage"), "AutomationReviewPage");
+const ReviewHubPage = lazyWithRetry(() => import("@/views/admin/ReviewHubPage"), "ReviewHubPage");
 const AutomationDashboardPage = lazyWithRetry(() => import("@/views/admin/AutomationDashboardPage"), "AutomationDashboardPage");
 const AutomationCenterPage = lazyWithRetry(() => import("@/views/admin/AutomationCenterPage"), "AutomationCenterPage");
 const AutonomousPlatformPage = lazyWithRetry(() => import("@/views/admin/AutonomousPlatformPage"), "AutonomousPlatformPage");
@@ -743,6 +744,7 @@ function Router() {
       <Route path="/admin/autonomous-platform"><AdminLazyRoute component={AutonomousPlatformPage} /></Route>
       <Route path="/admin/automation"><Redirect to="/admin/automation/center" /></Route>
       <Route path="/admin/integrations/instagram"><AdminLazyRoute component={InstagramIntegrationPage} /></Route>
+      <Route path="/admin/review-hub"><AdminLazyRoute component={ReviewHubPage} /></Route>
       <Route path="/admin/review-center"><AdminLazyRoute component={AutomationReviewPage} /></Route>
       <Route path="/admin/automation/review"><AdminLazyRoute component={AutomationReviewPage} /></Route>
       <Route path="/admin/content-import/url"><AdminLazyRoute component={LessonImportUrlPage} /></Route>

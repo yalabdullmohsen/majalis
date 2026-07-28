@@ -2253,17 +2253,18 @@
     },
     {
       "path": "/quran-circles",
-      "title": "حلقات التحفيظ (قريبًا)",
-      "description": "دليل حلقات تحفيظ القرآن قيد التجهيز — أدوات الحفظ وخطط المراجعة متاحة الآن.",
+      "title": "حلقات تحفيظ القرآن",
+      "description": "دليل حلقات تحفيظ القرآن في الكويت والمنصات الموثوقة — بروابط تسجيل وتواصل من وزارة الأوقاف والمصادر المعلنة.",
       "keywords": [
         "حلقات القرآن",
         "حفظ القرآن",
-        "قريبًا"
+        "أوقاف الكويت",
+        "حلقات عن بعد"
       ],
-      "sitemap": false,
-      "changefreq": "monthly",
-      "priority": 0.3,
-      "robots": "noindex, follow"
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.7,
+      "robots": "index, follow"
     },
     {
       "path": "/quran-memorization",

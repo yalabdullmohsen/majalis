@@ -100,10 +100,10 @@ const QURAN_SECTIONS: QuranSection[] = [
   {
     href: "/quran-circles",
     title: "حلقات القرآن",
-    desc: "دليل حلقات الحفظ والمراجعة — قيد التجهيز؛ يُستفاد في التعلم والتدبر",
+    desc: "دليل حلقات التحفيظ في الكويت والمنصات الموثوقة — بروابط تسجيل وتواصل",
     Icon: Circle,
     accent: "#143F35",
-    tag: "قريبًا",
+    tag: "دليل",
   },
   {
     href: "/daily-wird",
