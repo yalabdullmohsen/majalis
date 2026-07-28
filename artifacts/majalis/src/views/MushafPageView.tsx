@@ -20,6 +20,8 @@ import { ReciterDownloadManager } from "@/components/quran/ReciterDownloadManage
 import { loadMushafPage, prefetchMushafPage, type MushafPageLayout, type QpcWord } from "@/lib/mushaf-v2-data";
 import { MushafPageV2 } from "@/components/quran/MushafPageV2";
 import { goBackOrFallback } from "@/lib/navigation-back";
+import { SectionErrorBoundary } from "@/components/ErrorBoundary";
+import { afterNextPaint, yieldToMain } from "@/lib/yield-to-main";
 import "@/styles/quran.css";
 import "@/styles/mushaf-v2.css";
 import "@/styles/pages/mushaf-reader.css";
@@ -141,10 +143,15 @@ export default function MushafPageView() {
   const loadPage = useCallback(async (p: number, { silent }: { silent?: boolean } = {}) => {
     if (!silent) { setLoading(true); setError(false); }
     try {
+      // Yield so page-switch click/touch paint lands before heavy JSON work (INP).
+      if (!silent) await afterNextPaint();
+      else await yieldToMain();
       const index = await loadPageJuzIndex();
+      await yieldToMain();
       const segments = getSegmentsForPage(index, p);
       if (segments.length === 0) throw new Error("لا مقاطع لهذه الصفحة");
       const details = await Promise.all(segments.map((s) => fetchSurahDetail(s.surah)));
+      await yieldToMain();
       const result: SegmentAyahs[] = segments.map((seg, i) => ({
         segment: seg,
         ayahs: details[i].ayahs
@@ -275,7 +282,7 @@ export default function MushafPageView() {
   }, []);
   const v2ActiveKey = selectedAyah
     ? `${selectedAyah.surah}:${selectedAyah.ayah}`
-    : playerState === "playing" && currentAyah !== null
+    : (playerState === "playing" || playerState === "buffering") && currentAyah !== null
       ? `${activeSurahForPlayer}:${currentAyah}`
       : null;
 
@@ -548,30 +555,32 @@ export default function MushafPageView() {
       )}
 
       {selectedAyah && selectedAyahData && (
-        <PageAyahActionSheet
-          surahNum={selectedAyah.surah}
-          surahName={getSurahMeta(selectedAyah.surah).name}
-          ayahNum={selectedAyah.ayah}
-          ayahText={selectedAyahData.text}
-          isPlaying={selectedAyah.surah === activeSurahForPlayer && currentAyah === selectedAyah.ayah && playerState === "playing"}
-          canPlay={selectedAyah.surah === activeSurahForPlayer}
-          onTogglePlay={() => togglePlayAyah(selectedAyah.ayah)}
-          onPrev={selectedIdx > 0 ? () => {
-            const prev = flatAyahs[selectedIdx - 1];
-            setSelectedAyah({ surah: prev.surahNumber!, ayah: prev.numberInSurah });
-          } : undefined}
-          onNext={selectedIdx >= 0 && selectedIdx < flatAyahs.length - 1 ? () => {
-            const next = flatAyahs[selectedIdx + 1];
-            setSelectedAyah({ surah: next.surahNumber!, ayah: next.numberInSurah });
-          } : undefined}
-          onClose={() => setSelectedAyah(null)}
-          reciterId={reciterId}
-          onSetReciter={setReciterId}
-          playbackRate={playbackRate}
-          onSetPlaybackRate={setPlaybackRate}
-          repeatOn={repeatOn}
-          onToggleRepeat={() => setRepeatOn(!repeatOn)}
-        />
+        <SectionErrorBoundary name="PageAyahActionSheet">
+          <PageAyahActionSheet
+            surahNum={selectedAyah.surah}
+            surahName={getSurahMeta(selectedAyah.surah).name}
+            ayahNum={selectedAyah.ayah}
+            ayahText={selectedAyahData.text}
+            isPlaying={selectedAyah.surah === activeSurahForPlayer && currentAyah === selectedAyah.ayah && (playerState === "playing" || playerState === "buffering")}
+            canPlay={selectedAyah.surah === activeSurahForPlayer}
+            onTogglePlay={() => togglePlayAyah(selectedAyah.ayah)}
+            onPrev={selectedIdx > 0 ? () => {
+              const prev = flatAyahs[selectedIdx - 1];
+              setSelectedAyah({ surah: prev.surahNumber!, ayah: prev.numberInSurah });
+            } : undefined}
+            onNext={selectedIdx >= 0 && selectedIdx < flatAyahs.length - 1 ? () => {
+              const next = flatAyahs[selectedIdx + 1];
+              setSelectedAyah({ surah: next.surahNumber!, ayah: next.numberInSurah });
+            } : undefined}
+            onClose={() => setSelectedAyah(null)}
+            reciterId={reciterId}
+            onSetReciter={setReciterId}
+            playbackRate={playbackRate}
+            onSetPlaybackRate={setPlaybackRate}
+            repeatOn={repeatOn}
+            onToggleRepeat={() => setRepeatOn(!repeatOn)}
+          />
+        </SectionErrorBoundary>
       )}
     </div>,
     document.body,
