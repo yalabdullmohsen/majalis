@@ -1796,6 +1796,110 @@ assert(
   mixedMuslimNumbering.map((f) => `${f.id}: ${f.source}`).join(" | ")
 );
 
+// ── ٤٩) لفظٌ مسوقٌ بين «» مع رقمِ حديثٍ لا يوجدُ اللفظُ فيه ──
+
+/**
+ * ج-٣١٣: **الفحصُ ٤٨ حرسَ نصفَ الثغرةِ فحسب**. ذاك يمنعُ رقمًا لمسلمٍ **فوقَ
+ * ٣٠٣٣** بلا تصريحٍ بترقيمِ النسخة — لأنَّ ما فوقَ الحدِّ لا يحتملُ إلّا ترقيمَ
+ * النسخة. أمّا ما **دونَ** الحدِّ فيحتملُ الترقيمَين معًا، فقيل حينَها: «الرقمُ
+ * الصغيرُ لا يُحكَمُ عليه». وهذا صحيحٌ **بمجرَّدِ النظرِ في الرقم** — وقد كُشف
+ * اليومَ أنَّ في النسخةِ ما يحسمُه: 🔑 **حقلُ `a` في `muslim.json` يحملُ رقمَ
+ * عبد الباقي لكلِّ حديثٍ** (٧٢١٢ من ٧٣٦٠ حديثًا، بكسرٍ عشريٍّ للرواياتِ تحت
+ * الرقمِ الواحد: `2865.04`). فما كان دعوى غيرَ قابلةٍ للفحصِ صار مقابلةً.
+ *
+ * وأوَّلُ ما أخرجَه: ستَّةُ صفوفٍ تعزو «اقْرَءُوا سُورَةَ الْبَقَرَةِ…»
+ * و«اقْرَءُوا الْقُرْآنَ فَإِنَّهُ يَأْتِي…» إلى **«صحيح مسلم (١٨٧٤)»** مجرَّدًا
+ * — و١٨٧٤ رقمُ النسخةِ لا عبد الباقي (وعبدُ الباقي: **٨٠٤**)، ورقمُ ١٨٧٤ عندَه
+ * حديثٌ آخرُ بالجملة. فمرَّ من الفحصِ ٤٨ لأنَّه دون ٣٠٣٣، ومن الفحوصِ ٣٠–٣٧
+ * لأنَّها تسألُ «أفي الصحيحَينِ هذا اللفظُ؟» لا «أفي **هذا الحديثِ** بعينِه؟».
+ *
+ * فالفحصُ يسألُ السؤالَ الأخير: كلُّ لفظٍ مسوقٍ بين «» في `source` يُقابَلُ
+ * **بالحديثِ الذي عُزِيَ إليه وحدَه** — يُلتمَسُ أقربُ ذكرٍ لصحيحٍ برقمٍ قبلَ
+ * موضعِ اللفظ، ثمَّ يُطلَبُ أن تكونَ كلماتُ اللفظِ متتابعةً (بالترتيبِ) في نصِّ
+ * ذلك الحديثِ في نسخةِ المستودع.
+ *
+ * ⚠️ **وأربعةُ قيودٍ لولاها لأسقطَ الفحصُ سليمًا** (انكشفت بتشغيلِه على الملفَّينِ
+ * قبلَ إقرارِه — درسُ ج-٣١٢ نفسُه: الفحصُ يُجرَّبُ قبلَ الاطمئنانِ إليه):
+ *   (١) **اللفظُ بلا رقمٍ يخرج**: «واللفظُ للبخاري (٢٤٦٥)؛ ولفظُ مسلم: «…»» —
+ *       عزوُ اللفظِ الثاني مطلقٌ فلا حديثَ بعينِه يُقابَلُ به ⇒ يُتخطّى لا يُسقَط.
+ *   (٢) **رقمُ مسلمٍ يُلتمَسُ في `a` لا في `n`** إلّا إذا صرَّح المصدرُ بترقيمِ
+ *       النسخةِ — وإلّا لَقُوبِل رقمُ عبد الباقي بحديثٍ أجنبيٍّ عنه فسقطَ سليمٌ.
+ *   (٣) **الآيةُ تخرج**: ما بين ﴿﴾ ليس لفظَ الحديثِ فلا يُطلَبُ في نصِّه.
+ *   (٤) **ما دون أربعِ كلماتٍ يخرج**: «سُبْحَانَ اللَّهِ الْعَظِيمِ» ونحوُه يقعُ
+ *       في مئاتِ المواضعِ فلا يشهدُ لرقمٍ بعينِه.
+ *
+ * وبهذه القيودِ فحصَ **١٠٠ مقطعًا** في الملفَّينِ فأخرجَ عائلةَ العطبِ وحدَها
+ * (٦ صفوفٍ) بلا إيجابٍ كاذبٍ واحد، ويمرُّ اليومَ بلا صفٍّ بعد تصحيحِها إلى ٨٠٤.
+ */
+type MuslimRow = { n: number; a?: number; t: string };
+const muslimRows = JSON.parse(
+  readFileSync(new URL("../../../public/data/hadith/muslim.json", import.meta.url), "utf8")
+).hadiths as MuslimRow[];
+const bukhariRows = JSON.parse(
+  readFileSync(new URL("../../../public/data/hadith/bukhari.json", import.meta.url), "utf8")
+).hadiths as Array<{ n: number; t: string }>;
+
+const muslimByCopyNo = new Map<number, string>();
+/** رقمُ عبد الباقي (`a`) ⇐ نصوصُ رواياتِه، والكسرُ العشريُّ روايةٌ تحتَ الرقمِ نفسِه */
+const muslimByAbdulbaqi = new Map<number, string[]>();
+for (const h of muslimRows) {
+  muslimByCopyNo.set(h.n, normStrict(h.t));
+  if (h.a != null) {
+    const key = Math.floor(h.a);
+    if (!muslimByAbdulbaqi.has(key)) muslimByAbdulbaqi.set(key, []);
+    muslimByAbdulbaqi.get(key)!.push(normStrict(h.t));
+  }
+}
+const bukhariByNo = new Map<number, string>();
+for (const h of bukhariRows) bukhariByNo.set(h.n, normStrict(h.t));
+
+/** كلماتُ اللفظِ متتابعةٌ بالترتيبِ في نصِّ الحديثِ (تسمحُ بما بينَها من إسنادٍ وزيادة) */
+const wordsInOrder = (words: string[], hadith: string) => {
+  let i = 0;
+  for (const w of hadith.split(" ")) {
+    if (w === words[i]) i++;
+    if (i === words.length) return true;
+  }
+  return false;
+};
+
+const quotedNotInCitedHadith = [...FAWAID_CURATED_SEED, ...SEED_FAWAID].filter((f) => {
+  const raw = f.source ?? "";
+  if (!raw.includes("«")) return false;
+  const src = toLatinDigits(raw);
+  const declaresCopyNo = /بترقيم\s*(?:ال)?نسخة/.test(src);
+  const marks = [...src.matchAll(/(بخاري|مسلم)([^\d«»]{0,12})(\d{1,4})?/g)].map((m) => ({
+    at: m.index ?? 0,
+    isMuslim: m[1] === "مسلم",
+    no: Number(m[3] ?? 0),
+  }));
+  for (const q of src.matchAll(/«([^»]{20,})»/g)) {
+    const mark = [...marks].reverse().find((x) => x.at < (q.index ?? 0));
+    if (!mark || !mark.no) continue; // (١) عزوٌ مطلقٌ لا يُقابَلُ بحديثٍ بعينِه
+    const pool = mark.isMuslim
+      ? [
+          ...(muslimByAbdulbaqi.get(mark.no) ?? []), // (٢) الأصلُ ترقيمُ عبد الباقي
+          ...(declaresCopyNo && muslimByCopyNo.has(mark.no) ? [muslimByCopyNo.get(mark.no)!] : []),
+        ]
+      : bukhariByNo.has(mark.no)
+        ? [bukhariByNo.get(mark.no)!]
+        : [];
+    if (pool.length === 0) continue;
+    for (const part of q[1].split(/…|\.\.\./)) {
+      if (/[﴿﴾]/.test(part)) continue; // (٣) الآيةُ ليست لفظَ الحديث
+      const words = normStrict(part).split(" ").filter(Boolean);
+      if (words.length < 4) continue; // (٤) القِصَرُ لا يشهدُ لرقمٍ بعينِه
+      if (!pool.some((h) => wordsInOrder(words, h))) return true;
+    }
+  }
+  return false;
+});
+assert(
+  quotedNotInCitedHadith.length === 0,
+  "لا لفظَ مسوقٍ بين «» في `source` إلّا وهو في الحديثِ المعزوِّ إليه بعينِه في نسخةِ المستودع",
+  quotedNotInCitedHadith.map((f) => `${f.id}: ${f.source}`).join(" | ")
+);
+
 console.log(`\n${"─".repeat(48)}`);
 console.log(`النتائج: ${passed} نجح، ${failed} فشل`);
 if (failed > 0) process.exit(1);
