@@ -40,3 +40,9 @@ export {
 } from "@/lib/quran-translation";
 
 export { shareVerse } from "@/lib/share-ayah";
+
+export {
+  QuranController,
+  createQuranController,
+  type QuranControllerSnapshot,
+} from "@/lib/quran-controller";

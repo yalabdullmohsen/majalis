@@ -8,11 +8,16 @@ import {
   IMMERSIVE_LINE_HEIGHT_RATIO,
   IMMERSIVE_PAD_X_PX,
   IMMERSIVE_PAD_Y_PX,
+  IMMERSIVE_LIST_PAD_Y_PX,
   IMMERSIVE_PAPER_BG,
+<<<<<<< HEAD
   VERSE_ITEM_GAP_PX,
   VERSE_SELECTED_BG,
   VERSE_SELECTED_INK,
   VERSE_SELECTED_RADIUS_PX,
+=======
+  VERSE_SELECTED_BROWN,
+>>>>>>> origin/cursor/quran-immersive-controller-1f54
   __resetImmersiveForTests,
   immersiveReaderCssVars,
 } from "../lib/quran-immersive";
@@ -41,6 +46,8 @@ function main() {
   check(IMMERSIVE_LINE_HEIGHT_RATIO === 2, "height 2.0");
   check(IMMERSIVE_PAD_X_PX === 30, "padX 30");
   check(IMMERSIVE_PAD_Y_PX === 20, "padY 20");
+  check(IMMERSIVE_LIST_PAD_Y_PX === 50, "list padY 50");
+  check(VERSE_SELECTED_BROWN.toUpperCase() === "#795548", "Colors.brown");
 
   check(VERSE_SELECTED_BG.includes("0.2"), "selected bg brown@0.2");
   check(VERSE_SELECTED_INK.toUpperCase() === "#3E2723", "selected ink brown900");

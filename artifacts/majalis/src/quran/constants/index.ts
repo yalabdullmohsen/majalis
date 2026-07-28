@@ -35,8 +35,13 @@ export {
   IMMERSIVE_LINE_HEIGHT_RATIO,
   IMMERSIVE_PAD_X_PX,
   IMMERSIVE_PAD_Y_PX,
+<<<<<<< HEAD
   VERSE_SELECTED_BG,
   VERSE_SELECTED_INK,
   VERSE_SELECTED_RADIUS_PX,
   VERSE_ITEM_GAP_PX,
+=======
+  IMMERSIVE_LIST_PAD_Y_PX,
+  VERSE_SELECTED_BROWN,
+>>>>>>> origin/cursor/quran-immersive-controller-1f54
 } from "@/lib/quran-immersive";
