@@ -2,6 +2,8 @@ import { defineConfig, devices } from "@playwright/test";
 
 export default defineConfig({
   testDir: "./tests",
+  testMatch: /.*\.spec\.ts$/,
+  testIgnore: ["**/unit/**", "**/perf/**", "**/pwa/**"],
   timeout: 30_000,
   expect: { timeout: 8_000 },
   fullyParallel: false, // sequential — one dev server

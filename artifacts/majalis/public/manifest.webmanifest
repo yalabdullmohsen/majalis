@@ -87,5 +87,21 @@
       "description": "أذكار الصباح والمساء",
       "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
     }
+  ],
+  "screenshots": [
+    {
+      "src": "/opengraph.jpg",
+      "sizes": "1200x630",
+      "type": "image/jpeg",
+      "form_factor": "wide",
+      "label": "المجلس العلمي — منصة الدروس والقرآن"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "أيقونة المجلس العلمي"
+    }
   ]
 }
