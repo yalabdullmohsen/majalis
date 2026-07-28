@@ -77,6 +77,9 @@ html.dark .qe-abar {
   max-width: 42rem;
   margin-inline: auto;
   padding: 1rem 1rem calc(7.5rem + var(--bottom-nav-total, 3.5rem));
+  background: var(--qe-reader-bg, transparent);
+  color: var(--qe-reader-text, var(--qe-ink));
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 .qe-viewer__page {
@@ -89,16 +92,12 @@ html.dark .qe-abar {
   margin: 0;
   padding: max(0.75rem, env(safe-area-inset-top)) 1.4rem
     max(1.25rem, env(safe-area-inset-bottom));
-  /* Paper tone — matches FullScreenQuranReader (#FAF6EF) */
-  background: #faf6ef;
+  /* Paper / night tone from THEMES via --qe-reader-bg */
+  background: var(--qe-reader-bg, #faf6ef);
+  color: var(--qe-reader-text, #000);
   /* Resist browser/OS text autosizing (≈ allowFontScaling={false}) */
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-}
-
-html[data-theme="dark"] .qe-viewer--focus,
-html.dark .qe-viewer--focus {
-  background: #121a16;
 }
 
 .qe-viewer__head {
@@ -107,6 +106,10 @@ html.dark .qe-viewer--focus {
   justify-content: space-between;
   gap: 0.75rem;
   margin-bottom: 1rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: 0.85rem;
+  background: var(--qe-reader-header, transparent);
+  transition: background-color 0.25s ease;
 }
 
 .qe-viewer__head-actions {
@@ -131,8 +134,8 @@ html.dark .qe-viewer--focus {
   gap: 0.35rem;
   margin-bottom: 0.75rem;
   border: 1px solid color-mix(in srgb, var(--qe-emerald) 30%, transparent);
-  background: color-mix(in srgb, var(--qe-panel) 92%, transparent);
-  color: var(--qe-emerald);
+  background: var(--qe-reader-header, color-mix(in srgb, var(--qe-panel) 92%, transparent));
+  color: var(--qe-reader-text, var(--qe-emerald));
   border-radius: 999px;
   padding: 0.4rem 0.85rem;
   font: inherit;
@@ -237,14 +240,9 @@ html.dark .qe-viewer--focus {
   font-size: var(--qe-mushaf-fs, 24px);
   line-height: var(--qe-mushaf-lh, 44px);
   text-align: right;
-  color: #000;
+  color: var(--qe-reader-text, #000);
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
-}
-
-html[data-theme="dark"] .qe-ayah-list--focus .qe-ayah__text,
-html.dark .qe-ayah-list--focus .qe-ayah__text {
-  color: #e8efe9;
 }
 
 .qe-ayah-list--focus .qe-ayah.is-active {
@@ -262,6 +260,29 @@ body.qe-focus-mode .bottom-nav-bar {
 
 body.qe-focus-mode {
   overflow: hidden;
+  /* Match reader paper while chrome is hidden */
+  background: var(--qe-reader-bg, #faf6ef);
+}
+
+.qe-viewer--dark .qe-ayah {
+  background: color-mix(in srgb, var(--qe-reader-header) 88%, transparent);
+  border-color: color-mix(in srgb, var(--qe-reader-text) 18%, transparent);
+  color: var(--qe-reader-text);
+}
+
+.qe-viewer--dark .qe-font-bar {
+  background: color-mix(in srgb, var(--qe-reader-header) 94%, transparent);
+  border-color: color-mix(in srgb, var(--qe-reader-text) 18%, transparent);
+}
+
+.qe-viewer--dark .qe-font-bar__value {
+  color: var(--qe-reader-text);
+}
+
+.qe-viewer--dark .qe-viewer__footer,
+.qe-viewer--dark .qe-viewer__focus-hint,
+.qe-viewer--dark .qe-viewer__sub {
+  color: color-mix(in srgb, var(--qe-reader-text) 72%, transparent);
 }
 
 .qe-viewer__title {
