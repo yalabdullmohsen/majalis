@@ -6,37 +6,48 @@ import {
   type EarnedBadge,
 } from "@/lib/user-profile-service";
 import { BADGE_MAP } from "@/lib/user-badges";
+import { readLocalJson, writeLocalJson, isStringArray } from "@/lib/safe-json";
 
 const STORAGE_KEY = "majalis_notified_badges";
 
 function getNotifiedKeys(): Set<string> {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return new Set(raw ? JSON.parse(raw) : []);
-  } catch {
-    return new Set();
-  }
+  const list = readLocalJson<string[]>(STORAGE_KEY, [], isStringArray);
+  return new Set(list);
 }
 
 function markNotified(keys: string[]) {
   try {
     const existing = getNotifiedKeys();
     keys.forEach((k) => existing.add(k));
-    localStorage.setItem(STORAGE_KEY, JSON.stringify([...existing]));
-  } catch { /* localStorage unavailable */ }
+    writeLocalJson(STORAGE_KEY, [...existing]);
+  } catch {
+    /* localStorage unavailable */
+  }
 }
 
 export function useAchievementCheck() {
   const { user, isLoggedIn } = useAuth();
   const [newBadges, setNewBadges] = useState<EarnedBadge[]>([]);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const mountedRef = useRef(true);
+
+  useEffect(() => {
+    mountedRef.current = true;
+    return () => {
+      mountedRef.current = false;
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+        timerRef.current = null;
+      }
+    };
+  }, []);
 
   const runCheck = useCallback(async () => {
     if (!isLoggedIn || !user?.id) return;
     try {
       const stats = await getUserProfileStats(user.id);
       const newKeys = await checkAndAwardBadges(user.id, stats);
-      if (newKeys.length === 0) return;
+      if (newKeys.length === 0 || !mountedRef.current) return;
 
       const notified = getNotifiedKeys();
       const unnotified = newKeys.filter((k) => !notified.has(k));
@@ -55,8 +66,10 @@ export function useAchievementCheck() {
       });
 
       markNotified(unnotified);
-      setNewBadges(badges);
-    } catch { /* silent — badge check is non-critical */ }
+      if (mountedRef.current) setNewBadges(badges);
+    } catch {
+      /* silent — badge check is non-critical */
+    }
   }, [isLoggedIn, user?.id]);
 
   const scheduleCheck = useCallback(() => {

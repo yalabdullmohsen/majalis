@@ -11,6 +11,7 @@ import { createAppQueryClient } from "./lib/query-client";
 import { PERF_SLOW_MS } from "./lib/performance-monitor";
 import { registerProductionServiceWorker } from "./lib/service-worker";
 import { setupStatusBar, setupKeyboard, isAndroid, isNative } from "./lib/capacitor-utils";
+import { initFinalPolish } from "./lib/init-final-polish";
 // هوية v4: مصدر الرموز الوحيد (لون/طباعة/مسافات/حواف/ظلال/حركة). يجب أن
 // يبقى أول استيراد — كل ملفات CSS اللاحقة تستهلك رموزه، وأنظمة الرموز
 // القديمة الـ15 مُعاد توجيهها إليه داخله كـaliases.
@@ -35,6 +36,7 @@ const queryClient = createAppQueryClient();
 resetMobileNavBodyLock();
 applyFontPreference(readFontPreference());
 initClientErrorReporting();
+initFinalPolish();
 
 async function mount() {
   const started = performance.now();

@@ -1,4 +1,8 @@
-const STORAGE_KEY = "majalis-daily-progress-v1";
+import { readLocalJson, writeLocalJson, isPlainObject } from "@/lib/safe-json";
+import { registerUnloadPersist } from "@/lib/unload-persist";
+
+export const DAILY_PROGRESS_LS_KEY = "majalis-daily-progress-v1";
+const STORAGE_KEY = DAILY_PROGRESS_LS_KEY;
 
 export type ProgressTaskId =
   | "wird"
@@ -26,6 +30,30 @@ export const PROGRESS_TASKS: ProgressTask[] = [
 
 type DayProgress = Record<ProgressTaskId, number>;
 
+const EMPTY_DAY: DayProgress = {
+  wird: 0,
+  "morning-adhkar": 0,
+  "evening-adhkar": 0,
+  nawafil: 0,
+  tasbih: 0,
+  quran: 0,
+};
+
+let lastStore: Record<string, DayProgress> | null = null;
+let unloadRegistered = false;
+
+function isDayProgress(v: unknown): v is DayProgress {
+  if (!isPlainObject(v)) return false;
+  return (Object.keys(EMPTY_DAY) as ProgressTaskId[]).every(
+    (k) => v[k] == null || typeof v[k] === "number",
+  );
+}
+
+function isProgressStore(v: unknown): v is Record<string, DayProgress> {
+  if (!isPlainObject(v)) return false;
+  return Object.values(v).every((day) => day == null || isDayProgress(day));
+}
+
 function todayKey() {
   try {
     return new Intl.DateTimeFormat("en-CA", {
@@ -36,34 +64,33 @@ function todayKey() {
   }
 }
 
+function ensureUnloadRegistration(): void {
+  if (unloadRegistered || typeof window === "undefined") return;
+  unloadRegistered = true;
+  registerUnloadPersist("daily-progress", () => {
+    if (!lastStore) return null;
+    return { [STORAGE_KEY]: JSON.stringify(lastStore) };
+  });
+}
+
 function readStore(): Record<string, DayProgress> {
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    return raw ? JSON.parse(raw) : {};
-  } catch {
-    return {};
-  }
+  const store = readLocalJson<Record<string, DayProgress>>(STORAGE_KEY, {}, isProgressStore);
+  lastStore = store;
+  ensureUnloadRegistration();
+  return store;
 }
 
 function writeStore(data: Record<string, DayProgress>) {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-  } catch {
-    /* ignore quota */
-  }
+  lastStore = data;
+  ensureUnloadRegistration();
+  writeLocalJson(STORAGE_KEY, data);
 }
 
 export function getTodayProgress(): DayProgress {
   const store = readStore();
   const key = todayKey();
-  return store[key] || {
-    wird: 0,
-    "morning-adhkar": 0,
-    "evening-adhkar": 0,
-    nawafil: 0,
-    tasbih: 0,
-    quran: 0,
-  };
+  const day = store[key];
+  return day ? { ...EMPTY_DAY, ...day } : { ...EMPTY_DAY };
 }
 
 export function setTaskProgress(taskId: ProgressTaskId, value: number) {

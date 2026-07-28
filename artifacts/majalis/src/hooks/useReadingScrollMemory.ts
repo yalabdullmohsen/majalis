@@ -47,10 +47,19 @@ export function useReadingScrollMemory(section: ReadingSection, enabled = true) 
 
     window.addEventListener("scroll", onScroll, { passive: true });
 
+    const onHide = () => saveScrollForSection(sectionRef.current, window.scrollY);
+    const onVisibility = () => {
+      if (document.visibilityState === "hidden") onHide();
+    };
+    window.addEventListener("pagehide", onHide);
+    document.addEventListener("visibilitychange", onVisibility);
+
     return () => {
       cancelled = true;
       window.clearTimeout(t);
       window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("pagehide", onHide);
+      document.removeEventListener("visibilitychange", onVisibility);
       saveScrollForSection(sectionRef.current, window.scrollY);
     };
   }, [section, enabled]);
