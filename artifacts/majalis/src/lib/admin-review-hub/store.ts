@@ -157,7 +157,7 @@ export function countByFilter(
 export class ReviewHubStore {
   private items: ReviewItem[] = loadItems();
   private filter: ReviewFilterTab = "pending";
-  private streamFocus: "all" | ReviewStream = "all";
+  private streamFocus: "all" | ReviewStream = "recitation";
   private searchQuery = "";
   private selectedIds: string[] = [];
   private darkMode = loadUi().darkMode;

@@ -1,18 +1,14 @@
 /**
- * Collapsible sidebar for Review Hub — 5 primary destinations.
+ * Flutter AdminMainLayout sidebar — dark #1E1E2D, gold brand, brown selected.
  */
 import { Link, useLocation } from "wouter";
 import {
   BookOpen,
   ClipboardCheck,
   LayoutDashboard,
-  Menu,
-  Moon,
   Settings,
-  Sun,
+  Sparkles,
   Users,
-  PanelRightClose,
-  PanelRightOpen,
 } from "lucide-react";
 
 export type ReviewHubNavKey =
@@ -23,11 +19,8 @@ export type ReviewHubNavKey =
   | "settings";
 
 export type ReviewHubSidebarProps = {
-  collapsed: boolean;
-  darkMode: boolean;
   active: ReviewHubNavKey;
-  onToggleCollapse: () => void;
-  onToggleDark: () => void;
+  pendingCount: number;
   onNavigate: (key: ReviewHubNavKey) => void;
   mobileOpen: boolean;
   onCloseMobile: () => void;
@@ -38,26 +31,27 @@ const NAV: Array<{
   label: string;
   href?: string;
   Icon: typeof LayoutDashboard;
-  primary?: boolean;
+  badge?: boolean;
 }> = [
-  { key: "overview", label: "نظرة عامة", href: "/admin", Icon: LayoutDashboard },
-  { key: "review", label: "خانة المراجعة", Icon: ClipboardCheck, primary: true },
+  { key: "overview", label: "الإحصائيات العامة", Icon: LayoutDashboard },
+  { key: "review", label: "مركز المراجعة", Icon: ClipboardCheck, badge: true },
   {
     key: "content",
-    label: "القرآن والمحتوى",
+    label: "إدارة المحتوى",
     href: "/admin?section=categories",
     Icon: BookOpen,
   },
-  { key: "roles", label: "المستخدمون والعلماء", href: "/admin?section=users", Icon: Users },
-  { key: "settings", label: "إعدادات النظام", href: "/admin?section=settings", Icon: Settings },
+  {
+    key: "roles",
+    label: "المستخدمين والمشايخ",
+    href: "/admin?section=users",
+    Icon: Users,
+  },
 ];
 
 export function ReviewHubSidebar({
-  collapsed,
-  darkMode,
   active,
-  onToggleCollapse,
-  onToggleDark,
+  pendingCount,
   onNavigate,
   mobileOpen,
   onCloseMobile,
@@ -72,86 +66,59 @@ export function ReviewHubSidebar({
         aria-hidden="true"
       />
       <aside
-        className={`rh-sidebar${collapsed ? " is-collapsed" : ""}${mobileOpen ? " is-open" : ""}`}
+        className={`rh-sidebar${mobileOpen ? " is-open" : ""}`}
         aria-label="تنقل لوحة الإدارة"
       >
         <div className="rh-sidebar__brand">
-          <span className="rh-sidebar__mark" aria-hidden="true">
-            م
-          </span>
-          {!collapsed ? (
-            <div>
-              <p className="rh-sidebar__title">المجلس العلمي</p>
-              <p className="rh-sidebar__sub">لوحة الإدارة</p>
-            </div>
-          ) : null}
-          <button
-            type="button"
-            className="rh-sidebar__collapse"
-            onClick={onToggleCollapse}
-            aria-label={collapsed ? "توسيع القائمة" : "طي القائمة"}
-          >
-            {collapsed ? <PanelRightOpen size={16} /> : <PanelRightClose size={16} />}
-          </button>
+          <Sparkles size={26} className="rh-sidebar__spark" aria-hidden="true" />
+          <p className="rh-sidebar__title">المجلس العلمي</p>
         </div>
 
         <nav className="rh-sidebar__nav">
-          {NAV.map(({ key, label, href, Icon, primary }) => {
+          {NAV.map(({ key, label, href, Icon, badge }) => {
             const isActive = active === key;
             return (
               <button
                 key={key}
                 type="button"
-                className={`rh-sidebar__item${isActive ? " is-active" : ""}${primary ? " is-primary" : ""}`}
+                className={`rh-sidebar__item${isActive ? " is-active" : ""}`}
                 aria-current={isActive ? "page" : undefined}
-                title={label}
                 onClick={() => {
                   onNavigate(key);
                   onCloseMobile();
-                  if (href && key !== "review") navigate(href);
+                  if (href && key !== "review" && key !== "overview") navigate(href);
                 }}
               >
-                <Icon size={18} strokeWidth={1.7} aria-hidden="true" />
-                {!collapsed ? <span>{label}</span> : null}
+                <Icon size={18} strokeWidth={1.8} aria-hidden="true" />
+                <span className="rh-sidebar__item-label">{label}</span>
+                {badge ? (
+                  <span className="rh-sidebar__badge">{pendingCount}</span>
+                ) : null}
               </button>
             );
           })}
         </nav>
 
         <div className="rh-sidebar__foot">
+          <div className="rh-sidebar__divider" />
           <button
             type="button"
-            className="rh-sidebar__item"
-            onClick={onToggleDark}
-            aria-pressed={darkMode}
-            title={darkMode ? "وضع فاتح" : "وضع داكن"}
+            className={`rh-sidebar__item${active === "settings" ? " is-active" : ""}`}
+            onClick={() => {
+              onNavigate("settings");
+              onCloseMobile();
+              navigate("/admin?section=settings");
+            }}
           >
-            {darkMode ? <Sun size={18} /> : <Moon size={18} />}
-            {!collapsed ? <span>{darkMode ? "وضع فاتح" : "وضع داكن"}</span> : null}
+            <Settings size={18} aria-hidden="true" />
+            <span className="rh-sidebar__item-label">الإعدادات</span>
           </button>
           <Link href="/" className="rh-sidebar__site" onClick={onCloseMobile}>
-            ← الموقع
+            ← العودة للموقع
           </Link>
         </div>
       </aside>
     </>
-  );
-}
-
-export function ReviewHubMobileToggle({
-  onOpen,
-}: {
-  onOpen: () => void;
-}) {
-  return (
-    <button
-      type="button"
-      className="rh-mobile-toggle"
-      onClick={onOpen}
-      aria-label="فتح القائمة"
-    >
-      <Menu size={18} />
-    </button>
   );
 }
 
