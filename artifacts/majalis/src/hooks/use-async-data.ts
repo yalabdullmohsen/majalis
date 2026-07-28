@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { RequestManager } from "@/lib/request-manager";
+import { beginAbortScope, abortScope } from "@/lib/route-abort";
+import { logDiagnostic } from "@/lib/diagnostics";
 
 export type AsyncStatus = "loading" | "success" | "error" | "empty";
 
@@ -22,6 +24,7 @@ export type UseAsyncDataResult<T> = {
 
 /**
  * Guaranteed terminal state within timeout — never infinite loading.
+ * Part 16: route-scoped abort + generation guard against unmounted setState.
  */
 export function useAsyncData<T>(
   key: string,
@@ -41,6 +44,7 @@ export function useAsyncData<T>(
   const [status, setStatus] = useState<AsyncStatus>(initialData !== undefined ? "success" : "loading");
   const [error, setError] = useState<string | null>(null);
   const generation = useRef(0);
+  const scopeKey = dedupeKey ?? key;
 
   const load = useCallback(async () => {
     if (!enabled) {
@@ -51,10 +55,19 @@ export function useAsyncData<T>(
     const gen = ++generation.current;
     setStatus("loading");
     setError(null);
+    const signal = beginAbortScope(`async:${scopeKey}`);
 
     try {
-      const result = await RequestManager.run(key, loader, { dedupeKey: dedupeKey ?? key, timeoutMs });
-      if (gen !== generation.current) return;
+      const result = await RequestManager.run(
+        key,
+        (sig) => {
+          // Prefer route abort; also honor RequestManager signal
+          const combined = signal.aborted ? signal : sig;
+          return loader(combined);
+        },
+        { dedupeKey: scopeKey, timeoutMs },
+      );
+      if (gen !== generation.current || signal.aborted) return;
 
       const isEmpty = emptyWhen ? emptyWhen(result) : Array.isArray(result) && result.length === 0;
       setData(result);
@@ -62,18 +75,23 @@ export function useAsyncData<T>(
       if (isEmpty) setError(emptyMessage);
     } catch (err) {
       if (gen !== generation.current) return;
+      if ((err as { name?: string })?.name === "AbortError" || signal.aborted) {
+        logDiagnostic("nav-abort", scopeKey);
+        return;
+      }
       setError(String((err as Error)?.message || err));
       setStatus("error");
     }
-  }, [enabled, key, loader, dedupeKey, timeoutMs, emptyWhen, emptyMessage]);
+  }, [enabled, key, loader, scopeKey, timeoutMs, emptyWhen, emptyMessage]);
 
   useEffect(() => {
     void load();
     return () => {
       generation.current++;
-      if (dedupeKey ?? key) RequestManager.cancel(dedupeKey ?? key);
+      abortScope(`async:${scopeKey}`);
+      RequestManager.cancel(scopeKey);
     };
-  }, [load, key, dedupeKey]);
+  }, [load, scopeKey]);
 
   const retry = useCallback(() => {
     void load();

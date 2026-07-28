@@ -88,6 +88,7 @@
     "test:platform-logic": "npx tsx src/lib/__tests__/platform-logic-suite.test.ts",
     "test:final-polish": "npx tsx src/lib/__tests__/final-polish-persistence.test.ts",
     "test:web-vitals-part9": "npx tsx src/lib/__tests__/web-vitals-part9.test.ts",
+    "test:audio-idb-part16": "npx tsx src/lib/__tests__/audio-idb-fonts-part16.test.ts",
     "test:tadabbur-suite": "npx tsx src/lib/__tests__/tadabbur-vault-oled-discovery-sync.test.ts",
     "test:topic-chunk-cache-suite": "npx tsx src/lib/__tests__/topic-chunk-cache-suite.test.ts",
     "test:speech-scroll-sacred-sync-suite": "npx tsx src/lib/__tests__/speech-scroll-sacred-sync-suite.test.ts",
