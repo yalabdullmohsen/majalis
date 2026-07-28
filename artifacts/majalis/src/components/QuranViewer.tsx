@@ -16,10 +16,11 @@
  * unload on leave.
  * `useKeepAwake()` (Screen Wake Lock) keeps the display on while reading —
  * web port of expo-keep-awake.
+ * Per-ayah share uses `shareVerse` (web port of RN Share.share).
  * `text-size-adjust: 100%` resists OS/browser text scaling (RN allowFontScaling={false}).
  */
 import { useCallback, useEffect, useState, type CSSProperties } from "react";
-import { BookOpenText, Hash, Maximize2, Minimize2, Moon, Pause, Play, Sun, Type } from "lucide-react";
+import { BookOpenText, Hash, Maximize2, Minimize2, Moon, Pause, Play, Share2, Sun, Type } from "lucide-react";
 import { fetchSurahDetail, fetchTafsirAyahs, getSurahMeta, type Ayah } from "@/lib/quran-api";
 import { useQuranEngine } from "@/hooks/useQuranEngine";
 import { useQuranPreferences } from "@/hooks/useQuranPreferences";
@@ -27,6 +28,7 @@ import { useReadingBreakReminder } from "@/hooks/useReadingBreakReminder";
 import { useQuranAudioToggle } from "@/hooks/useQuranAudioToggle";
 import { useKeepAwake } from "@/hooks/useKeepAwake";
 import { nextQuranFontId, quranFontOption, quranFontStack } from "@/lib/quran-font-options";
+import { shareVerse } from "@/lib/share-ayah";
 import { DEFAULT_TAFSEER_SOURCE } from "@/core/tafseer/TafseerService";
 import { QuranActionBar } from "@/components/QuranActionBar";
 import { ReadingBreakDialog } from "@/components/quran/ReadingBreakDialog";
@@ -173,10 +175,38 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
   const [tafsirByAyah, setTafsirByAyah] = useState<Record<number, string>>({});
   const [tafsirLoading, setTafsirLoading] = useState(false);
   const [tafsirError, setTafsirError] = useState(false);
+  const [shareStatus, setShareStatus] = useState<string | null>(null);
   const meta = getSurahMeta(surahNum);
   const currentTheme = isDarkMode ? THEMES.dark : THEMES.light;
 
   const reload = useCallback(() => setReloadKey((k) => k + 1), []);
+
+  const shareAyahVerse = useCallback(
+    async (verseText: string, ayahNum: number) => {
+      try {
+        const result = await shareVerse(verseText, {
+          surahName: meta.name,
+          ayahNum,
+        });
+        if (result.method === "cancelled") return;
+        if (result.shared) {
+          setShareStatus(result.method === "clipboard" ? "نُسخ النص للمشاركة" : "تمت المشاركة");
+        } else {
+          setShareStatus("تعذّرت المشاركة");
+        }
+      } catch (error) {
+        console.error("خطأ في المشاركة:", error instanceof Error ? error.message : error);
+        setShareStatus("تعذّرت المشاركة");
+      }
+    },
+    [meta.name],
+  );
+
+  useEffect(() => {
+    if (!shareStatus) return;
+    const t = window.setTimeout(() => setShareStatus(null), 2200);
+    return () => window.clearTimeout(t);
+  }, [shareStatus]);
 
   const toggleAyahNumbers = useCallback(() => {
     setPref("showAyahNumbers", !showAyahNumbers);
@@ -534,6 +564,18 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
                     >
                       {playingThis ? <Pause size={16} aria-hidden="true" /> : <Play size={16} aria-hidden="true" />}
                     </button>
+                    <button
+                      type="button"
+                      className="qe-ayah__share"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        void shareAyahVerse(ayah.text, ayah.numberInSurah);
+                      }}
+                      aria-label={`مشاركة الآية ${toArabicDigits(ayah.numberInSurah)}`}
+                      title="مشاركة"
+                    >
+                      <Share2 size={16} aria-hidden="true" />
+                    </button>
                   </div>
                   {showTafsir ? (
                     // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions -- stop focus-toggle bubble only
@@ -572,6 +614,11 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
           <span>
             سورة {meta.name} · صفحة {toArabicDigits(currentPage)}
           </span>
+          {shareStatus ? (
+            <span className="qe-viewer__share-status" role="status" aria-live="polite">
+              {shareStatus}
+            </span>
+          ) : null}
         </footer>
       ) : null}
 
