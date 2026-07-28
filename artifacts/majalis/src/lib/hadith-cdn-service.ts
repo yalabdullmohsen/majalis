@@ -251,5 +251,8 @@ export async function searchHadiths(
   const all = await fetchAllHadiths(collection);
   const q = query.trim();
   if (!q) return all.slice(0, limit);
-  return all.filter((h) => h.text.includes(q)).slice(0, limit);
+  // Part 21: chunked filter so deep Hadith scans don't block the main thread
+  const { filterInChunks } = await import("@/lib/idb-cursor-stream");
+  const matched = await filterInChunks(all, (h) => h.text.includes(q), { batchSize: 50 });
+  return matched.slice(0, limit);
 }

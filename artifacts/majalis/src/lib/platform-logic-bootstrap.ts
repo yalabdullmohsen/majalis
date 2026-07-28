@@ -68,6 +68,14 @@ export async function startPlatformLogicSuite(): Promise<void> {
       /* ignore */
     }
 
+    // Part 21: cross-storage drift reconcile (LS ↔ session ↔ memory ↔ IDB)
+    try {
+      const { runStorageReconcile } = await import("@/lib/storage-reconciler");
+      void runStorageReconcile();
+    } catch {
+      /* ignore */
+    }
+
     // Soft-warm: sacred times, cross-tab channel, auto-scroll pace, power-saver binding
     try {
       const { hydrateAutoScrollFromIdb } = await import("@/lib/adaptive-auto-scroll");

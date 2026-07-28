@@ -229,6 +229,10 @@ async function renderProcessed(
     bottom: Math.round(bounds.bottom / sampleScale),
   };
 
+  // Part 21: release sample canvas GPU buffers before allocating output
+  const { releaseCanvasResources } = await import("@/lib/canvas-gl-cleanup");
+  releaseCanvasResources(sampleCanvas);
+
   const canvas = document.createElement("canvas");
   canvas.width = outW;
   canvas.height = outH;
@@ -239,8 +243,12 @@ async function renderProcessed(
   drawBlurredBackdrop(ctx, img, outW, outH);
   drawSubject(ctx, img, scaledBounds, outW, outH, focal);
 
-  const blob = await canvasToBlob(canvas);
-  return { url: URL.createObjectURL(blob), width: outW, height: outH };
+  try {
+    const blob = await canvasToBlob(canvas);
+    return { url: URL.createObjectURL(blob), width: outW, height: outH };
+  } finally {
+    releaseCanvasResources(canvas);
+  }
 }
 
 export async function processSheikhImage(options: {
