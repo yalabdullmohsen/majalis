@@ -2,7 +2,7 @@ import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from "rea
 import { createPortal } from "react-dom";
 import { useParams, useLocation } from "wouter";
 import {
-  Menu, Settings, X, ChevronRight, ChevronLeft, RotateCcw, ArrowRight, Search,
+  Menu, Settings, X, ChevronRight, ChevronLeft, RotateCcw, ArrowRight, Search, LayoutGrid,
 } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { toArabicDigits } from "@/lib/utils";
@@ -20,6 +20,10 @@ import { PageAyahActionSheet } from "@/components/quran/PageAyahActionSheet";
 import { ReciterDownloadManager } from "@/components/quran/ReciterDownloadManager";
 import { QuranSearchPanel } from "@/components/quran/QuranSearchPanel";
 import { ContinuousUthmaniReader } from "@/components/quran/ContinuousUthmaniReader";
+import { MushafNavigatorDrawer } from "@/components/quran/MushafNavigatorDrawer";
+import { MutashabihatSheet } from "@/components/quran/MutashabihatSheet";
+import { WordSenseSheet } from "@/components/quran/WordSenseSheet";
+import { KhatmahProfilesPanel } from "@/components/quran/KhatmahProfilesPanel";
 import { loadMushafPage, prefetchMushafPage, type MushafPageLayout, type QpcWord } from "@/lib/mushaf-v2-data";
 import { beginAbortScope, abortScope, guardAsync } from "@/lib/route-abort";
 import { logDiagnostic } from "@/lib/diagnostics";
@@ -29,11 +33,17 @@ import { SectionErrorBoundary } from "@/components/ErrorBoundary";
 import { afterNextPaint, yieldToMain } from "@/lib/yield-to-main";
 import { warmQuranSearchIndex } from "@/lib/quran-local-search";
 import { getTadabburVerseKeySet } from "@/lib/quran-tadabbur";
+import { loadMutashabihatIndexCached, getSimilarAyahsCached } from "@/lib/mutashabihat-idb";
+import { senseFromQpcWord, type WordSense } from "@/lib/gharib-lite";
+import { useAudioFollowScroll } from "@/hooks/useAudioFollowScroll";
+import { useQuranAudioSync } from "@/hooks/useQuranAudioSync";
+import { bumpActiveKhatmahPages, persistProgressBundle, syncProgressAcrossDevices, ensureDefaultKhatmahProfiles } from "@/lib/khatmah-sync";
 import "@/styles/quran.css";
 import "@/styles/mushaf-v2.css";
 import "@/styles/pages/mushaf-reader.css";
 import "@/styles/quran-reader-upgrade.css";
 import "@/styles/quran-reader-part2.css";
+import "@/styles/quran-reader-part3.css";
 
 const TOTAL_PAGES = 604;
 
@@ -123,7 +133,14 @@ export default function MushafPageView() {
   });
   const continuousPlayerSurahRef = useRef(continuousStart.surah);
   const [notedVerseKeys, setNotedVerseKeys] = useState<Set<string>>(() => new Set());
+  const [mutashabihVerseKeys, setMutashabihVerseKeys] = useState<Set<string>>(() => new Set());
+  const [mutaSheet, setMutaSheet] = useState<{ surah: number; ayah: number; text: string } | null>(null);
+  const [wordSense, setWordSense] = useState<WordSense | null>(null);
+  const [navOpen, setNavOpen] = useState(false);
   const [revealedVerseKeys, setRevealedVerseKeys] = useState<Set<string>>(() => new Set());
+  const bodyRef = useRef<HTMLDivElement | null>(null);
+  const [scrollRoot, setScrollRoot] = useState<HTMLElement | null>(null);
+  const lastPageForKhatmah = useRef(page);
   /* تجربة قراءة غامرة بنمط "آية"/"ترتيل": نقرة واحدة على جسم الصفحة (لا
      على آية — onClick على .mf2-ayah-group يوقف الانتشار propagation)
      تُبدِّل ظهور الشريطين العلوي/السفلي، مستقلة عن chromeVisible الخاصة
@@ -145,6 +162,39 @@ export default function MushafPageView() {
   useEffect(() => {
     refreshNotedKeys();
   }, [refreshNotedKeys]);
+
+  useEffect(() => {
+    ensureDefaultKhatmahProfiles();
+    void loadMutashabihatIndexCached().catch(() => {});
+    void syncProgressAcrossDevices();
+  }, []);
+
+  // شارات المتشابهات لآيات الصفحة الحالية
+  useEffect(() => {
+    if (!segAyahs) return;
+    let alive = true;
+    void (async () => {
+      const set = new Set<string>();
+      for (const seg of segAyahs) {
+        for (const a of seg.ayahs) {
+          const s = a.surahNumber ?? seg.segment.surah;
+          const matches = await getSimilarAyahsCached(s, a.numberInSurah);
+          if (matches.length) set.add(`${s}:${a.numberInSurah}`);
+        }
+      }
+      if (alive) setMutashabihVerseKeys(set);
+    })();
+    return () => { alive = false; };
+  }, [segAyahs]);
+
+  // تقدّم الختمة عند الانتقال بين الصفحات
+  useEffect(() => {
+    if (lastPageForKhatmah.current !== page) {
+      bumpActiveKhatmahPages(1);
+      lastPageForKhatmah.current = page;
+      void persistProgressBundle();
+    }
+  }, [page]);
 
   // ── استئناف تلقائي: عند الدخول دون رقم صفحة صريح في الرابط، نبدأ من آخر موضع محفوظ محليًا ──
   useEffect(() => {
@@ -376,6 +426,23 @@ export default function MushafPageView() {
   const activeWordIndex = useWordAudioSync(audioElement, {
     playing: playerState === "playing",
     wordCount: activeWordCount,
+    surah: activeSurahForPlayer,
+    ayah: currentAyah,
+    reciterId,
+  });
+
+  useQuranAudioSync({
+    surah: activeSurahForPlayer,
+    ayah: currentAyah,
+    audio: audioElement.current,
+    reciterId,
+    autoScroll: false,
+  });
+
+  useAudioFollowScroll({
+    enabled: playerState === "playing" && currentAyah != null,
+    verseKey: currentAyah != null ? `${activeSurahForPlayer}:${currentAyah}` : null,
+    container: scrollRoot,
   });
 
   // ── جسر بين مكوّني تخطيط السطر الحقيقي (V2/خفيف) وحالة الآية المختارة/المُشغَّلة القائمة أصلًا ──
@@ -422,6 +489,27 @@ export default function MushafPageView() {
     return { start: Math.min(...nums), end: Math.max(...nums) };
   }, [flatAyahs, activeSurahForPlayer]);
 
+  const handleMutashabihPress = useCallback((verseKey: string) => {
+    const [s, a] = verseKey.split(":").map(Number);
+    let text = "";
+    for (const seg of segAyahs ?? []) {
+      const found = seg.ayahs.find((x) => x.surahNumber === s && x.numberInSurah === a);
+      if (found) { text = found.text; break; }
+    }
+    setMutaSheet({ surah: s, ayah: a, text });
+  }, [segAyahs]);
+
+  const handleWordLongPress = useCallback((w: QpcWord) => {
+    const sense = senseFromQpcWord({
+      verseKey: w.verseKey,
+      position: w.position,
+      arabic: w.textQpcHafs || w.textUthmani,
+      meaning: w.translation,
+      transliteration: w.transliteration,
+    });
+    if (sense) setWordSense(sense);
+  }, []);
+
   const onRevealVerse = useCallback((verseKey: string) => {
     setRevealedVerseKeys((prev) => new Set(prev).add(verseKey));
   }, []);
@@ -436,6 +524,9 @@ export default function MushafPageView() {
             <button type="button" className="mpv-toolbar__btn" onClick={() => setSidebarOpen(true)} aria-label="فهرس السور">
               <Menu size={16} aria-hidden="true" />
               الفهرس
+            </button>
+            <button type="button" className="mpv-toolbar__btn" onClick={() => setNavOpen(true)} aria-label="فهرس سريع">
+              <LayoutGrid size={16} aria-hidden="true" />
             </button>
             <div className="mpv-toolbar__title">
               {primarySurahMeta.name}
@@ -454,6 +545,10 @@ export default function MushafPageView() {
               للوصول بلوحة المفاتيح في مكان آخر بالصفحة. */}
           {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
           <div
+            ref={(el) => {
+              bodyRef.current = el;
+              if (el !== scrollRoot) setScrollRoot(el);
+            }}
             className={`mpv-body${prefs.readingLayout === "continuous" ? " mpv-body--continuous" : ""}`}
             onTouchStart={prefs.readingLayout === "madani" ? onTouchStart : undefined}
             onTouchEnd={prefs.readingLayout === "madani" ? onTouchEnd : undefined}
@@ -515,10 +610,13 @@ export default function MushafPageView() {
                         activeAyahKey={v2ActiveKey}
                         activeWordIndex={activeWordIndex}
                         notedVerseKeys={notedVerseKeys}
+                        mutashabihVerseKeys={mutashabihVerseKeys}
                         hideVerseTest={prefs.hideVerseTest}
                         revealedVerseKeys={revealedVerseKeys}
                         onRevealVerse={onRevealVerse}
                         onAyahPress={handleV2AyahPress}
+                        onMutashabihPress={handleMutashabihPress}
+                        onWordLongPress={handleWordLongPress}
                         bare
                       />
                     ) : (
@@ -527,10 +625,13 @@ export default function MushafPageView() {
                         activeAyahKey={v2ActiveKey}
                         activeWordIndex={activeWordIndex}
                         notedVerseKeys={notedVerseKeys}
+                        mutashabihVerseKeys={mutashabihVerseKeys}
                         hideVerseTest={prefs.hideVerseTest}
                         revealedVerseKeys={revealedVerseKeys}
                         onRevealVerse={onRevealVerse}
                         onAyahPress={handleV2AyahPress}
+                        onMutashabihPress={handleMutashabihPress}
+                        onWordLongPress={handleWordLongPress}
                         sharedFontFamily={'"Amiri Quran", "Scheherazade New", serif'}
                         renderWord={renderLightWord}
                         bare
@@ -760,9 +861,37 @@ export default function MushafPageView() {
             </div>
 
             <ReciterDownloadManager />
+            <KhatmahProfilesPanel />
           </div>
         </div>
       )}
+
+      <MushafNavigatorDrawer
+        open={navOpen}
+        onClose={() => setNavOpen(false)}
+        surahs={surahs}
+        currentSurah={primarySurahMeta.number}
+        currentPage={page}
+        onSelectSurah={(n) => goToPage(SURAH_START_PAGES[n - 1])}
+        onSelectPage={(p, opts) => { void goToPageOrAyah(p, opts); }}
+        onPlaySurah={(n) => {
+          goToPage(SURAH_START_PAGES[n - 1]);
+          // يبدأ من أول آية بعد التنقّل عبر اختيار الآية لاحقًا
+        }}
+      />
+
+      {mutaSheet && (
+        <MutashabihatSheet
+          open
+          surah={mutaSheet.surah}
+          ayah={mutaSheet.ayah}
+          ayahText={mutaSheet.text}
+          onClose={() => setMutaSheet(null)}
+          onGoTo={(s, a) => { void goToPageOrAyah(1, { surah: s, ayah: a }); }}
+        />
+      )}
+
+      <WordSenseSheet sense={wordSense} onClose={() => setWordSense(null)} />
 
       {searchOpen && (
         <QuranSearchPanel

@@ -1,4 +1,4 @@
-import { Fragment, useLayoutEffect, useRef, useState, type ReactNode } from "react";
+import { Fragment, useLayoutEffect, useRef, useState, type ReactNode, type MouseEvent, type PointerEvent } from "react";
 import { useMushafPageFont, mushafPageFontFamily } from "@/hooks/useMushafPageFont";
 import type { MushafPageLayout, QpcWord } from "@/lib/mushaf-v2-data";
 
@@ -29,11 +29,15 @@ type Props = {
   activeWordIndex?: number | null;
   /** آيات عليها تدبّر/ملاحظة — شريط مؤشر جانبي */
   notedVerseKeys?: Set<string>;
+  /** آيات لها متشابهات لفظية */
+  mutashabihVerseKeys?: Set<string>;
   /** وضع اختبار الحفظ: تمويه النص حتى النقر */
   hideVerseTest?: boolean;
   revealedVerseKeys?: Set<string>;
   onRevealVerse?: (verseKey: string) => void;
   onAyahPress?: (verseKey: string) => void;
+  onMutashabihPress?: (verseKey: string) => void;
+  onWordLongPress?: (word: QpcWord) => void;
   /** خط موحّد بديل (الوضع الخفيف) — يتخطى تحميل خط QPC الخاص بالصفحة
    * كليًا (لا طلب شبكة إضافي)، يفترض أن الخط مُحمَّل أصلًا في التطبيق.
    * افتراضيًا: خط QPC الرقمي الخاص بكل صفحة (وضع الدقة المطبعية). */
@@ -68,10 +72,13 @@ export function MushafPageV2({
   activeAyahKey,
   activeWordIndex = null,
   notedVerseKeys,
+  mutashabihVerseKeys,
   hideVerseTest = false,
   revealedVerseKeys,
   onRevealVerse,
   onAyahPress,
+  onMutashabihPress,
+  onWordLongPress,
   sharedFontFamily,
   renderWord,
   bare,
@@ -181,6 +188,7 @@ export function MushafPageV2({
                 const verseKey = group[0].verseKey;
                 const ayahActive = verseKey === activeAyahKey;
                 const hasNote = notedVerseKeys?.has(verseKey);
+                const hasMuta = mutashabihVerseKeys?.has(verseKey);
                 const isHidden = hideVerseTest && !revealedVerseKeys?.has(verseKey) && !ayahActive;
                 let wordIdx = -1;
                 return (
@@ -189,7 +197,9 @@ export function MushafPageV2({
                     className={`mf2-ayah-group${ayahActive ? " mf2-ayah-group--active" : ""}${hasNote ? " mf2-ayah-group--noted" : ""}${isHidden ? " mf2-ayah-group--hidden" : ""}`}
                     role="button"
                     tabIndex={0}
-                    aria-label={`آية ${verseKey}${hasNote ? " — عليها تدبّر" : ""}`}
+                    data-verse-key={verseKey}
+                    data-ayah={verseKey.split(":")[1]}
+                    aria-label={`آية ${verseKey}${hasNote ? " — عليها تدبّر" : ""}${hasMuta ? " — لها متشابهات" : ""}`}
                     onClick={(e) => {
                       e.stopPropagation();
                       if (isHidden) {
@@ -207,20 +217,59 @@ export function MushafPageV2({
                     }}
                   >
                     {hasNote && <span className="mf2-note-ribbon" aria-hidden="true" />}
+                    {hasMuta && (
+                      <button
+                        type="button"
+                        className="mf2-muta-badge"
+                        aria-label="عرض المتشابهات"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onMutashabihPress?.(verseKey);
+                        }}
+                      >
+                        ≈
+                      </button>
+                    )}
                     {group.map((w) => {
                       const isWord = w.charType !== "end";
                       if (isWord) wordIdx += 1;
                       const wordActive = ayahActive && activeWordIndex != null && isWord && wordIdx === activeWordIndex;
+                      const longPressHandlers = onWordLongPress && isWord
+                        ? {
+                            onContextMenu: (e: MouseEvent) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              onWordLongPress(w);
+                            },
+                            onPointerDown: (e: PointerEvent) => {
+                              if (e.pointerType !== "touch") return;
+                              const t = window.setTimeout(() => onWordLongPress(w), 480);
+                              const clear = () => window.clearTimeout(t);
+                              e.currentTarget.addEventListener("pointerup", clear, { once: true });
+                              e.currentTarget.addEventListener("pointercancel", clear, { once: true });
+                            },
+                          }
+                        : {};
                       if (renderWord) {
                         const node = renderWord(w);
-                        if (!wordActive || !isWord) return node;
+                        if (!wordActive || !isWord) {
+                          return (
+                            <span key={w.id} className="mf2-word-wrap" {...longPressHandlers}>
+                              {node}
+                            </span>
+                          );
+                        }
                         return (
-                          <span key={w.id} className="mf2-word-wrap mf2-word-wrap--active">
+                          <span key={w.id} className="mf2-word-wrap mf2-word-wrap--active" {...longPressHandlers}>
                             {node}
                           </span>
                         );
                       }
-                      return defaultRenderWord(w, wordActive);
+                      return (
+                        <span key={w.id} {...longPressHandlers}>
+                          {defaultRenderWord(w, wordActive)}
+                        </span>
+                      );
                     })}
                   </span>
                 );

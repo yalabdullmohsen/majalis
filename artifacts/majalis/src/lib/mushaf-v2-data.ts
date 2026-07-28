@@ -24,6 +24,10 @@ export type QpcWord = {
    * قراءة شاشة) لأنه بلا معنى خارج سياق ذلك الخط. */
   glyphText: string;
   audioUrl: string | null;
+  /** ترجمة إنجليزية قصيرة للكلمة من بيانات quran-v2 (إن وُجدت). */
+  translation?: string | null;
+  /** نقل حرفي لاتيني للكلمة. */
+  transliteration?: string | null;
   /** مكرَّرة من الآية الأم عمدًا (denormalized) — تُغني عن أي بحث عكسي
    * لمعرفة أي آية تنتمي إليها كلمة عند التفاعل معها (نقرة تفتح Action Sheet). */
   verseKey: string;
@@ -140,6 +144,12 @@ function fetchRawPage(pageNumber: number): Promise<QpcVerse[]> {
                 // Phase 2 فعليًا؛ راجع تعليق fetch-mushaf-v2-data.mjs.
                 glyphText: w.code_v2,
                 audioUrl: w.audio_url ?? null,
+                translation: typeof w.translation === "string"
+                  ? w.translation
+                  : w.translation?.text ?? null,
+                transliteration: typeof w.transliteration === "string"
+                  ? w.transliteration
+                  : w.transliteration?.text ?? null,
                 verseKey: v.verse_key,
                 sajdahNumber: v.sajdah_number,
               }),

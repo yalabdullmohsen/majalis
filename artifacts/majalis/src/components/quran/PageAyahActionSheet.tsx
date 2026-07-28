@@ -16,6 +16,7 @@ import { afterNextPaint, yieldToMain } from "@/lib/yield-to-main";
 import { prewarmTextApis } from "@/lib/resource-prewarm";
 import { MemorizationLoopPanel } from "@/components/quran/MemorizationLoopPanel";
 import { AyahShareCardPanel } from "@/components/quran/AyahShareCardPanel";
+import { TafsirComparePanel } from "@/components/quran/TafsirComparePanel";
 import type { AyahLoopConfig } from "@/lib/ayah-loop-controller";
 
 const TAFSIR_EDITION_KEY = "majalis-mushaf-tafsir-edition-v1";
@@ -99,6 +100,7 @@ export function PageAyahActionSheet({
   const [copiedKind, setCopiedKind] = useState<"full" | "plain" | null>(null);
   const [shareOpen, setShareOpen] = useState(false);
   const [loopOpen, setLoopOpen] = useState(false);
+  const [compareOpen, setCompareOpen] = useState(false);
   const [noteOpen, setNoteOpen] = useState(false);
   const [noteText, setNoteText] = useState(() => getNote(surahNum, ayahNum));
   const [noteSaved, setNoteSaved] = useState(false);
@@ -130,6 +132,7 @@ export function PageAyahActionSheet({
     setNoteSaved(false);
     setShareOpen(false);
     setLoopOpen(false);
+    setCompareOpen(false);
     setTafsirOpen(false);
     setTafsirText(null);
     setTafsirError(false);
@@ -517,6 +520,13 @@ export function PageAyahActionSheet({
             tafsirSnippet={tafsirText}
           />
         )}
+
+        <button type="button" className="ayah-sheet__tafsir-toggle" onClick={() => setCompareOpen((v) => !v)} aria-expanded={compareOpen}>
+          <BookOpen size={14} aria-hidden="true" />
+          <span>مقارنة التفاسير</span>
+          <ChevronDown size={14} aria-hidden="true" className={compareOpen ? "is-open" : ""} />
+        </button>
+        <TafsirComparePanel surahNum={surahNum} ayahNum={ayahNum} open={compareOpen} />
 
         {ribbonOpen && (
           <div className="aas-ribbons" role="listbox" aria-label="تصنيف الإشارة المرجعية">
