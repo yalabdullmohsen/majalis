@@ -364,6 +364,52 @@ body.qe-focus-mode {
   gap: 0.35rem;
 }
 
+.qe-ayah-row {
+  display: flex;
+  align-items: stretch;
+  gap: 0.4rem;
+}
+
+.qe-ayah-row .qe-ayah {
+  flex: 1;
+  min-width: 0;
+}
+
+.qe-ayah__play {
+  flex-shrink: 0;
+  width: 2.65rem;
+  align-self: stretch;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.85rem;
+  border: 1px solid color-mix(in srgb, var(--qe-emerald) 30%, transparent);
+  background: color-mix(in srgb, var(--qe-emerald) 8%, transparent);
+  color: var(--qe-emerald);
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.qe-ayah__play:hover:not(:disabled) {
+  background: color-mix(in srgb, var(--qe-emerald) 16%, transparent);
+}
+
+.qe-ayah__play.is-on {
+  background: var(--qe-emerald);
+  color: #f4faf7;
+  border-color: var(--qe-emerald);
+}
+
+.qe-ayah__play:disabled {
+  opacity: 0.55;
+  cursor: wait;
+}
+
+.qe-ayah-list--focus .qe-ayah__play {
+  border-color: color-mix(in srgb, var(--qe-reader-text, #000) 18%, transparent);
+  background: color-mix(in srgb, var(--qe-reader-header, #f0ead6) 80%, transparent);
+}
+
 .qe-ayah__tafsir {
   margin-inline: 0.15rem 0.35rem;
   padding: 0.65rem 0.85rem;
