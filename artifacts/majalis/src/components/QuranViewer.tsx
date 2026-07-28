@@ -197,63 +197,64 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
       data-focus={isFocusMode ? "1" : "0"}
       style={mushafTypeStyle}
     >
-      <div
-        className="qe-viewer__page"
-        onClick={onPageSurfaceClick}
-        role="presentation"
-      >
-        {/* Header — hidden in focus mode */}
-        {!isFocusMode ? (
-          <header className="qe-viewer__head" onClick={(e) => e.stopPropagation()}>
-            <div>
-              <h1 className="qe-viewer__title">سورة {meta.name}</h1>
-              <p className="qe-viewer__sub">
-                {meta.revelation} · {toArabicDigits(meta.ayahs)} آية
-                {hydrating ? " · جاري المزامنة…" : ""}
-              </p>
-            </div>
-            <div className="qe-viewer__head-actions">
-              <button
-                type="button"
-                className={`qe-chip${isTajweedEnabled ? " is-on" : ""}`}
-                onClick={toggleTajweed}
-                aria-pressed={isTajweedEnabled}
-              >
-                تجويد
-              </button>
-              <button
-                type="button"
-                className="qe-chip"
-                onClick={toggleFocus}
-                aria-pressed={false}
-                title="وضع التركيز"
-              >
-                <Maximize2 size={14} aria-hidden="true" />
-                تركيز
-              </button>
-            </div>
-          </header>
-        ) : (
-          <button
-            type="button"
-            className="qe-viewer__exit-focus"
-            onClick={(e) => {
-              e.stopPropagation();
-              setFocus(false);
-            }}
-            aria-label="إنهاء وضع التركيز"
-          >
-            <Minimize2 size={16} aria-hidden="true" />
-            إنهاء التركيز
-          </button>
-        )}
+      {/* Chrome outside the tappable surface — no stopPropagation needed */}
+      {!isFocusMode ? (
+        <header className="qe-viewer__head">
+          <div>
+            <h1 className="qe-viewer__title">سورة {meta.name}</h1>
+            <p className="qe-viewer__sub">
+              {meta.revelation} · {toArabicDigits(meta.ayahs)} آية
+              {hydrating ? " · جاري المزامنة…" : ""}
+            </p>
+          </div>
+          <div className="qe-viewer__head-actions">
+            <button
+              type="button"
+              className={`qe-chip${isTajweedEnabled ? " is-on" : ""}`}
+              onClick={toggleTajweed}
+              aria-pressed={isTajweedEnabled}
+            >
+              تجويد
+            </button>
+            <button
+              type="button"
+              className="qe-chip"
+              onClick={toggleFocus}
+              aria-pressed={false}
+              title="وضع التركيز"
+            >
+              <Maximize2 size={14} aria-hidden="true" />
+              تركيز
+            </button>
+          </div>
+        </header>
+      ) : (
+        <button
+          type="button"
+          className="qe-viewer__exit-focus"
+          onClick={() => setFocus(false)}
+          aria-label="إنهاء وضع التركيز"
+        >
+          <Minimize2 size={16} aria-hidden="true" />
+          إنهاء التركيز
+        </button>
+      )}
 
+      {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- tap empty mushaf surface toggles focus; Esc is handled globally */}
+      <div className="qe-viewer__page" onClick={onPageSurfaceClick} role="presentation">
         {loading ? (
           <SurahSkeleton />
         ) : error ? (
-          <div role="alert" onClick={(e) => e.stopPropagation()}>
+          <div role="alert">
             <p className="qe-viewer__error">{error}</p>
-            <button type="button" className="qe-viewer__retry" onClick={reload}>
+            <button
+              type="button"
+              className="qe-viewer__retry"
+              onClick={(e) => {
+                e.stopPropagation();
+                reload();
+              }}
+            >
               إعادة المحاولة
             </button>
           </div>
@@ -298,15 +299,6 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
           </ol>
         )}
 
-        {/* Footer page marker — hidden in focus mode */}
-        {!isFocusMode && !loading && !error ? (
-          <footer className="qe-viewer__footer" onClick={(e) => e.stopPropagation()}>
-            <span>
-              سورة {meta.name} · صفحة {toArabicDigits(currentPage)}
-            </span>
-          </footer>
-        ) : null}
-
         {isFocusMode ? (
           <p className="qe-viewer__focus-hint" aria-live="polite">
             انقر على الخلفية أو Esc للخروج من وضع التركيز
@@ -314,14 +306,17 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
         ) : null}
       </div>
 
+      {!isFocusMode && !loading && !error ? (
+        <footer className="qe-viewer__footer">
+          <span>
+            سورة {meta.name} · صفحة {toArabicDigits(currentPage)}
+          </span>
+        </footer>
+      ) : null}
+
       {/* Font controls — hidden in focus mode (RN controlBar) */}
       {!isFocusMode ? (
-        <div
-          className="qe-font-bar"
-          onClick={(e) => e.stopPropagation()}
-          role="group"
-          aria-label="حجم خط المصحف"
-        >
+        <div className="qe-font-bar" role="group" aria-label="حجم خط المصحف">
           <button
             type="button"
             className="qe-font-bar__btn"
@@ -347,9 +342,7 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
       ) : null}
 
       {isActionBarEnabled && actionAyah ? (
-        <div onClick={(e) => e.stopPropagation()}>
-          <QuranActionBar ayah={actionAyah} onClose={() => clearActiveVerse()} />
-        </div>
+        <QuranActionBar ayah={actionAyah} onClose={() => clearActiveVerse()} />
       ) : null}
     </div>
   );
