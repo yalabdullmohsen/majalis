@@ -11,6 +11,7 @@ import { useMobileNavState } from "@/hooks/useMobileNavState";
 import { isNavHrefActive } from "@/lib/nav-active";
 import { PRIMARY_NAV_ITEMS } from "@/lib/navigation";
 import { fetchPrayerTimes, computePrayerCountdown, type PrayerCountdown } from "@/lib/prayer-times";
+import { subscribeViewportSafe } from "@/lib/viewport-safe";
 import "@/styles/components/dark-emerald-menus.css";
 
 function PrayerChip() {
@@ -46,9 +47,10 @@ function PrayerChip() {
 function useIsMobile() {
   const [mobile, setMobile] = useState(typeof window !== "undefined" ? window.innerWidth <= 879 : false);
   useEffect(() => {
-    const onResize = () => setMobile(window.innerWidth <= 879);
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
+    const sub = subscribeViewportSafe((info) => {
+      setMobile(info.width <= 879);
+    }, { debounceMs: 120 });
+    return () => sub.unsubscribe();
   }, []);
   return mobile;
 }

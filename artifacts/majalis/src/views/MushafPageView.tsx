@@ -18,6 +18,7 @@ import { SurahList } from "@/components/quran/SurahList";
 import { PageAyahActionSheet } from "@/components/quran/PageAyahActionSheet";
 import { ReciterDownloadManager } from "@/components/quran/ReciterDownloadManager";
 import { loadMushafPage, prefetchMushafPage, type MushafPageLayout, type QpcWord } from "@/lib/mushaf-v2-data";
+import { shouldPrefetch } from "@/lib/adaptive-prefetch";
 import { MushafPageV2 } from "@/components/quran/MushafPageV2";
 import { goBackOrFallback } from "@/lib/navigation-back";
 import { SectionErrorBoundary } from "@/components/ErrorBoundary";
@@ -185,8 +186,10 @@ export default function MushafPageView() {
     let cancelled = false;
     setV2Layout(null);
     loadMushafPage(page).then((layout) => { if (!cancelled) setV2Layout(layout); }).catch(() => {});
-    if (page > 1) prefetchMushafPage(page - 1);
-    if (page < TOTAL_PAGES) prefetchMushafPage(page + 1);
+    if (shouldPrefetch("text")) {
+      if (page > 1) prefetchMushafPage(page - 1);
+      if (page < TOTAL_PAGES) prefetchMushafPage(page + 1);
+    }
     return () => { cancelled = true; };
   }, [page]);
 

@@ -2,11 +2,19 @@
  * arabic-search.ts
  * وحدة البحث العربي — تعتمد على @/shared/arabic-normalize كقاعدة مشتركة.
  *
+ * Part 13: bitwise char-mask prefilter + Aho-Corasick multi-needle fast path.
+ *
  * ⚠️ normalizeArabic() مُعاد تصديرها من الوحدة المشتركة للتوافق الخلفي.
  *    كل الاستخدامات الجديدة تستورد مباشرةً من @/shared/arabic-normalize.
  */
 import { normalizeArabic } from "@/shared/arabic-normalize";
 import { expandSearchTerms } from "@/lib/search-synonyms";
+import {
+  AhoCorasick,
+  bitmaskContains,
+  buildAho,
+  charBitmask,
+} from "@/lib/aho-corasick";
 
 // إعادة تصدير للتوافق الخلفي مع الملفات التي تستورد من arabic-search
 export { normalizeArabic };
@@ -62,24 +70,105 @@ function fuzzyWordIncludes(haystack: string, needle: string): boolean {
   );
 }
 
+/** Collect all normalized needle variants for a query (synonyms + alif forms). */
+export function collectNeedleVariants(needle: string): string[] {
+  const out = new Set<string>();
+  for (const raw of expandSearchTerms(needle)) {
+    for (const v of expandArabicVariants(normalizeArabic(raw))) {
+      if (v) out.add(v);
+    }
+  }
+  return [...out];
+}
+
+/**
+ * Fast-path includes: bitmask reject → Aho-Corasick multi-variant scan → fuzzy fallback.
+ * Targets sub-10ms for typical autocomplete needles against moderate haystacks.
+ */
 export function arabicIncludes(haystack: string | null | undefined, needle: string): boolean {
   if (!needle.trim()) return true;
   if (!haystack) return false;
 
-  const hayVariants = expandArabicVariants(normalizeArabic(haystack));
-  const needles = expandSearchTerms(needle);
+  const needles = collectNeedleVariants(needle);
+  if (!needles.length) return true;
 
-  return hayVariants.some((h) =>
-    needles.some((raw) => {
-      const needleVariants = expandArabicVariants(normalizeArabic(raw));
-      return needleVariants.some((n) => n.length > 0 && (h.includes(n) || fuzzyWordIncludes(h, n)));
-    }),
+  const hayVariants = expandArabicVariants(normalizeArabic(haystack));
+  if (!hayVariants.length) return false;
+
+  // Bitwise prefilter: needle char-mask must be ⊆ hay mask (union of variants)
+  let hayMask = { hi: 0, lo: 0 };
+  for (const h of hayVariants) {
+    const m = charBitmask(h);
+    hayMask = { hi: hayMask.hi | m.hi, lo: hayMask.lo | m.lo };
+  }
+
+  const viableNeedles = needles.filter((n) => bitmaskContains(hayMask, charBitmask(n)));
+  if (!viableNeedles.length) {
+    // Fuzzy may still match with edits that introduce missing chars — only for long needles
+    return hayVariants.some((h) => needles.some((n) => fuzzyWordIncludes(h, n)));
+  }
+
+  // Exact multi-pattern via Aho-Corasick (single pass per hay variant)
+  if (viableNeedles.length === 1) {
+    const n = viableNeedles[0]!;
+    if (hayVariants.some((h) => h.includes(n))) return true;
+  } else {
+    const ac = buildAho(viableNeedles);
+    if (hayVariants.some((h) => ac.hasAny(h))) return true;
+  }
+
+  return hayVariants.some((h) => viableNeedles.some((n) => fuzzyWordIncludes(h, n)));
+}
+
+/**
+ * Match query against many pre-normalized documents using one AC automaton.
+ * `docs` entries should already be normalizeArabic()'d for best speed.
+ */
+export function arabicMatchDocsFast(
+  docs: readonly string[],
+  needle: string,
+): number[] {
+  const needles = collectNeedleVariants(needle);
+  if (!needles.length) return docs.map((_, i) => i);
+  const ac = buildAho(needles);
+  const needleMask = needles.reduce(
+    (acc, n) => {
+      const m = charBitmask(n);
+      return { hi: acc.hi | m.hi, lo: acc.lo | m.lo };
+    },
+    { hi: 0, lo: 0 },
   );
+  // For OR-of-variants we need ANY needle ⊆ doc; prefilter with union is too strict.
+  // Instead: reject docs that miss ALL chars of the shortest needle.
+  const shortest = needles.reduce((a, b) => (a.length <= b.length ? a : b));
+  const shortMask = charBitmask(shortest);
+
+  const hits: number[] = [];
+  for (let i = 0; i < docs.length; i++) {
+    const d = docs[i]!;
+    if (!bitmaskContains(charBitmask(d), shortMask) && !ac.hasAny(d)) {
+      // still try AC in case bitmask false-negative on rare buckets — actually
+      // if shortMask not subset, exact match of shortest is impossible; skip AC.
+      continue;
+    }
+    if (ac.hasAny(d)) hits.push(i);
+  }
+  void needleMask;
+  return hits;
+}
+
+/** Reuse a prebuilt automaton across many haystacks (autocomplete hot path). */
+export function matchWithAho(ac: AhoCorasick, haystackNormalized: string): boolean {
+  return ac.hasAny(haystackNormalized);
+}
+
+export function buildNeedleAho(needle: string): AhoCorasick {
+  return buildAho(collectNeedleVariants(needle));
 }
 
 export function arabicMatchAny(
   fields: Array<string | null | undefined>,
-  needle: string
+  needle: string,
 ): boolean {
   return fields.some((f) => arabicIncludes(f ?? "", needle));
 }
@@ -92,10 +181,6 @@ export function arabicSearchPatterns(term: string): string[] {
   const variants = new Set<string>();
   for (const expanded of expandSearchTerms(base)) {
     variants.add(expanded);
-    // نضمن دومًا وجود الصيغة المطبَّعة الكاملة (بلا تشكيل) بين الأنماط —
-    // وإلا فاستدعاء هذه الدالة على نص لم يُطبَّع مسبقًا (كمصطلح فيه شدة، مثل
-    // "مصلّى") ينتج أنماطًا لا تلتقي أبدًا مع نتيجة استدعائها على "مصلي"
-    // المطبَّعة، فيفشل البحث الفعلي بين الصيغتين رغم أنهما نفس الكلمة.
     variants.add(normalizeArabic(expanded));
     const hamzaMap: Record<string, string[]> = {
       ا: ["أ", "إ", "آ", "ٱ"],

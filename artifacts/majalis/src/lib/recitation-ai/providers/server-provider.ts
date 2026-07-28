@@ -19,6 +19,8 @@ import { ASRProviderUnavailableError } from "../asr-provider";
 import { isNative } from "../../capacitor-utils";
 import { SITE_URL } from "../../site-config";
 import { normalizeQuranWord } from "../quran-normalize";
+import { createOrientationSafeTicker } from "../../viewport-safe";
+import { zeroBytes } from "../../secure-memory";
 
 const ENDPOINT = isNative ? `${SITE_URL}/api/recitation-transcribe` : "/api/recitation-transcribe";
 /** مدة كل دفعة timeslice من المُسجِّل المستمر */
@@ -49,6 +51,8 @@ type Active = {
   analyser: AnalyserNode | null;
   audioCtx: AudioContext | null;
   levelTimer: ReturnType<typeof setInterval> | null;
+  /** Orientation-safe ticker stop (Part 13) — preferred over raw levelTimer */
+  stopLevelTicker: (() => void) | null;
   sessionStartedAt: number;
 };
 
@@ -164,6 +168,7 @@ export class ServerQuranASRProvider implements QuranASRProvider {
       analyser,
       audioCtx,
       levelTimer: null,
+      stopLevelTicker: null,
       sessionStartedAt: Date.now(),
     };
     this.sessions.set(id, active);
@@ -176,18 +181,23 @@ export class ServerQuranASRProvider implements QuranASRProvider {
 
     if (analyser) {
       const data = new Uint8Array(analyser.frequencyBinCount);
-      active.levelTimer = setInterval(() => {
+      const ticker = createOrientationSafeTicker(() => {
         if (!active.analyser || active.stopped) return;
         active.analyser.getByteTimeDomainData(data);
         let sum = 0;
         for (let i = 0; i < data.length; i++) {
-          const v = (data[i] - 128) / 128;
+          const v = (data[i]! - 128) / 128;
           sum += v * v;
         }
         const rms = Math.sqrt(sum / data.length);
         const level = Math.min(1, rms * 4);
         for (const cb of active.levelListeners) cb(level);
-      }, 100);
+      }, 100, { stormMs: 220 });
+      ticker.start();
+      active.stopLevelTicker = () => {
+        ticker.stop();
+        zeroBytes(data);
+      };
     }
 
     this.startContinuousRecorder(id, active);
@@ -319,6 +329,7 @@ export class ServerQuranASRProvider implements QuranASRProvider {
     if (!active) return { fullText: "", words: [] };
 
     active.stopped = true;
+    if (active.stopLevelTicker) active.stopLevelTicker();
     if (active.levelTimer) clearInterval(active.levelTimer);
     if (active.recorder && active.recorder.state !== "inactive") {
       try { active.recorder.stop(); } catch { /* ignore */ }

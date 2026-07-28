@@ -13,6 +13,8 @@ import { registerProductionServiceWorker } from "./lib/service-worker";
 import { setupStatusBar, setupKeyboard, isAndroid, isNative } from "./lib/capacitor-utils";
 import { initFinalPolish } from "./lib/init-final-polish";
 import { prewarmAudioCdns, prewarmTextApis } from "./lib/resource-prewarm";
+import { probeBattery } from "./lib/adaptive-prefetch";
+import { ensureSoftLeaderListener } from "./lib/cross-tab-leader";
 // هوية v4: مصدر الرموز الوحيد (لون/طباعة/مسافات/حواف/ظلال/حركة). يجب أن
 // يبقى أول استيراد — كل ملفات CSS اللاحقة تستهلك رموزه، وأنظمة الرموز
 // القديمة الـ15 مُعاد توجيهها إليه داخله كـaliases.
@@ -38,7 +40,10 @@ resetMobileNavBodyLock();
 applyFontPreference(readFontPreference());
 initClientErrorReporting();
 initFinalPolish();
+ensureSoftLeaderListener();
+void probeBattery();
 // Idle preconnect for audio/text CDNs — LCP/INP handshake savings without blocking mount.
+// Adaptive budget may no-op on 2G / save-data / low battery.
 if (typeof requestIdleCallback === "function") {
   requestIdleCallback(() => {
     prewarmAudioCdns();

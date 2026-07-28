@@ -20,6 +20,7 @@ import {
 import { normalizeArabic } from "@/shared/arabic-normalize";
 import { afterNextPaint, yieldToMain } from "@/lib/yield-to-main";
 import { TEXT_API_ORIGINS, useResourcePrewarm } from "@/lib/resource-prewarm";
+import { subscribeViewportSafe } from "@/lib/viewport-safe";
 import "@/styles/components/global-search-modal.css";
 
 // ── ثوابت ───────────────────────────────────────────────────────────────────
@@ -72,9 +73,10 @@ function useIsMobile() {
     typeof window !== "undefined" ? window.innerWidth < 880 : false,
   );
   useEffect(() => {
-    const handler = () => setMobile(window.innerWidth < 880);
-    window.addEventListener("resize", handler, { passive: true });
-    return () => window.removeEventListener("resize", handler);
+    const sub = subscribeViewportSafe((info) => {
+      setMobile(info.width < 880);
+    }, { debounceMs: 120 });
+    return () => sub.unsubscribe();
   }, []);
   return mobile;
 }

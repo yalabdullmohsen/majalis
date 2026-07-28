@@ -1,4 +1,5 @@
 import { safeLocationReload } from "@/lib/safe-reload";
+import { electStickyLeader, ensureSoftLeaderListener } from "@/lib/cross-tab-leader";
 
 /**
  * Unregister stale service workers after deploy — prevents broken cached JS chunks.
@@ -25,6 +26,8 @@ export function registerProductionServiceWorker(): void {
   if (typeof navigator === "undefined" || !("serviceWorker" in navigator)) return;
   if (!import.meta.env.PROD) return;
 
+  ensureSoftLeaderListener();
+
   // عند تفعيل SW جديد (skipWaiting + clients.claim من طرف sw.js → controllerchange
   // يُطلَق تلقائيًا في كل تبويب مفتوح حسب مواصفة Service Worker) أعد تحميل الصفحة
   // تلقائيًا فورًا — بلا انتظار ضغطة مستخدم، بأمر صريح من المالك.
@@ -39,14 +42,25 @@ export function registerProductionServiceWorker(): void {
   window.addEventListener("load", () => {
     void purgeStaleServiceWorkers().then(() => {
       navigator.serviceWorker.register("/sw.js").then((registration) => {
-        // الفجوة الحقيقية المتبقية: registration.update() الافتراضي في
-        // المتصفحات (خصوصًا Safari/iOS، جمهور المنصة الأساسي) قد يتأخر
-        // ساعات قبل التحقق من تغيّر سكربت sw.js فعليًا على الخادم — بلا هذا،
-        // controllerchange أعلاه لن يُطلَق أصلًا رغم نشر إصدار جديد.
-        // نفرض تحققًا فعليًا متكررًا بدل انتظار مؤقّت المتصفح الداخلي.
-        const forceCheck = () => { void registration.update().catch(() => undefined); };
-        forceCheck();
-        window.setInterval(forceCheck, SW_UPDATE_CHECK_INTERVAL_MS);
+        // Only ONE tab runs periodic registration.update() — Web Locks / soft leader.
+        let updateTimer: ReturnType<typeof setInterval> | null = null;
+        const forceCheck = () => {
+          void registration.update().catch(() => undefined);
+        };
+        const stopLoop = () => {
+          if (updateTimer != null) {
+            clearInterval(updateTimer);
+            updateTimer = null;
+          }
+        };
+        const startLoop = () => {
+          forceCheck();
+          stopLoop();
+          updateTimer = window.setInterval(forceCheck, SW_UPDATE_CHECK_INTERVAL_MS);
+        };
+
+        electStickyLeader("majalis:sw-update", startLoop, stopLoop);
+
         document.addEventListener("visibilitychange", () => {
           if (document.visibilityState === "visible") forceCheck();
         });

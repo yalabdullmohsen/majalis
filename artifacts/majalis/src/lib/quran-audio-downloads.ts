@@ -10,6 +10,9 @@
  * السورة كاملة (getOfflineSurahUrl)، لا خطوة آية-بآية.
  */
 import { RECITERS, getSurahAudioUrl } from "@/lib/quran-audio";
+import { withTabLock } from "@/lib/cross-tab-leader";
+import { createTrackedObjectUrl, revokeObjectUrl } from "@/lib/secure-memory";
+import { shouldPrefetch } from "@/lib/adaptive-prefetch";
 
 const DB_NAME = "majalis-quran-audio";
 const DB_VERSION = 1;
@@ -122,24 +125,27 @@ export async function getAllDownloadStatuses(): Promise<ReciterDownloadStatus[]>
 
 export type DownloadProgress = { surah: number; done: number; total: number };
 
-/** يحمّل السور 1..114 تسلسليًا (لا تزامنًا — يتفادى إغراق الشبكة/الذاكرة على الجوال)، يتخطى ما هو محمَّل مسبقًا. */
+/** يحمّل السور 1..114 تسلسليًا (لا تزامنًا — يتفادى إغراق الشبكة/الذاكرة على الجوال)، يتخطى ما هو محمَّل مسبقًا.
+ * Part 13: Web Lock يضمن تبويبًا واحدًا فقط ينفّذ التنزيل الثقيل. */
 export async function downloadReciter(
   reciterId: string,
   onProgress: (p: DownloadProgress) => void,
   isCancelled: () => boolean,
 ): Promise<void> {
-  const existing = new Set((await listKeysForReciter(reciterId)).map((e) => e.surah));
-  for (let surah = 1; surah <= TOTAL_SURAHS; surah++) {
-    if (isCancelled()) return;
-    if (!existing.has(surah)) {
-      const res = await fetch(getSurahAudioUrl(surah, reciterId));
-      if (!res.ok) throw new Error(`فشل تنزيل السورة ${surah}: ${res.status}`);
-      const blob = await res.blob();
+  await withTabLock("majalis:audio-download", async () => {
+    const existing = new Set((await listKeysForReciter(reciterId)).map((e) => e.surah));
+    for (let surah = 1; surah <= TOTAL_SURAHS; surah++) {
       if (isCancelled()) return;
-      await putBlob(reciterId, surah, blob);
+      if (!existing.has(surah)) {
+        const res = await fetch(getSurahAudioUrl(surah, reciterId));
+        if (!res.ok) throw new Error(`فشل تنزيل السورة ${surah}: ${res.status}`);
+        const blob = await res.blob();
+        if (isCancelled()) return;
+        await putBlob(reciterId, surah, blob);
+      }
+      onProgress({ surah, done: surah, total: TOTAL_SURAHS });
     }
-    onProgress({ surah, done: surah, total: TOTAL_SURAHS });
-  }
+  });
 }
 
 export async function deleteReciterDownloads(reciterId: string): Promise<void> {
@@ -147,10 +153,39 @@ export async function deleteReciterDownloads(reciterId: string): Promise<void> {
   await Promise.all(entries.map((e) => deleteBlob(reciterId, e.surah)));
 }
 
-/** رابط تشغيل محلي (Object URL) للسورة إن كانت مُنزَّلة، وإلا null (يُستخدَم عندها الرابط الحي كالمعتاد). استدعِ URL.revokeObjectURL على النتيجة عند انتهاء الاستخدام. */
+/** رابط تشغيل محلي (Object URL) للسورة إن كانت مُنزَّلة، وإلا null.
+ * يُتتبَّع عبر secure-memory — استدعِ revokeOfflineSurahUrl عند انتهاء الاستخدام. */
 export async function getOfflineSurahUrl(reciterId: string, surah: number): Promise<string | null> {
   const blob = await getBlob(reciterId, surah);
-  return blob ? URL.createObjectURL(blob) : null;
+  return blob ? createTrackedObjectUrl(blob) : null;
+}
+
+export function revokeOfflineSurahUrl(url: string | null | undefined): void {
+  revokeObjectUrl(url);
+}
+
+/** Prefetch a single surah audio into HTTP cache when budget allows (leader-gated). */
+export async function prefetchSurahAudio(reciterId: string, surah: number): Promise<void> {
+  if (!shouldPrefetch("audio")) return;
+  await withTabLock(
+    "majalis:audio-prefetch",
+    async () => {
+      const url = getSurahAudioUrl(surah, reciterId);
+      try {
+        await fetch(url, {
+          method: "GET",
+          credentials: "omit",
+          cache: "force-cache",
+          signal: typeof AbortSignal !== "undefined" && "timeout" in AbortSignal
+            ? AbortSignal.timeout(8_000)
+            : undefined,
+        });
+      } catch {
+        /* ignore */
+      }
+    },
+    { ifAvailable: true },
+  );
 }
 
 export async function estimateStorageUsage(): Promise<{ usage: number; quota: number } | null> {

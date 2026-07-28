@@ -23,7 +23,9 @@ import {
   type StallRecoveryHandle,
   type StallRecoveryPhase,
 } from "@/lib/audio-stall-recovery";
-import { prewarmAudioCdns } from "@/lib/resource-prewarm";
+import { prewarmAudioCdns, prewarmUrl } from "@/lib/resource-prewarm";
+import { shouldPrefetch } from "@/lib/adaptive-prefetch";
+import { withTabLock } from "@/lib/cross-tab-leader";
 
 export type PlayerState = "idle" | "loading" | "playing" | "paused" | "error" | "buffering";
 
@@ -148,7 +150,20 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
       updatedAt: Date.now(),
     });
 
-    const onPlaying = () => setPlayerState("playing");
+    const onPlaying = () => {
+      setPlayerState("playing");
+      // Adaptive next-ayah audio warm (leader-gated, budget-aware)
+      if (shouldPrefetch("audio") && ayah < totalAyahs) {
+        const nextUrl = getAyahAudioUrl(surah, ayah + 1, reciter);
+        void withTabLock(
+          "majalis:audio-prefetch",
+          () => {
+            prewarmUrl(nextUrl, { kind: "audio", mode: "cors" });
+          },
+          { ifAvailable: true },
+        );
+      }
+    };
     const onPause = () => {
       if (audio.ended) return;
       // Keep ayah + timeline; do not clear currentAyah on buffer underrun

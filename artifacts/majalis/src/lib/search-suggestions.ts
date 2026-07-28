@@ -1,4 +1,6 @@
-import { arabicMatchAny } from "@/lib/arabic-search";
+import { arabicMatchAny, buildNeedleAho, matchWithAho } from "@/lib/arabic-search";
+import { normalizeArabic } from "@/shared/arabic-normalize";
+import { charBitmask, bitmaskContains } from "@/lib/aho-corasick";
 
 /**
  * فهرس اقتراحات البحث — يُحمَّل كسولًا.
@@ -99,6 +101,7 @@ function pushUnique(
 /**
  * يبني الاقتراحات من الفهرس المحمَّل.
  * يعيد [] إن لم يُحمَّل الفهرس بعد — نادِ ensureSuggestionIndex() أولًا.
+ * Part 13: Aho-Corasick + bitwise prefilter on concatenated normalized fields.
  */
 export function buildSearchSuggestions(query: string, limit = 12): SearchSuggestion[] {
   const q = query.trim();
@@ -117,10 +120,23 @@ export function buildSearchSuggestions(query: string, limit = 12): SearchSuggest
 
   const results: SearchSuggestion[] = [];
   const seen = new Set<string>();
+  const ac = buildNeedleAho(q);
+  const shortMask = charBitmask(normalizeArabic(q).replace(/\s+/g, "") || normalizeArabic(q));
+
+  const fieldsHit = (fields: Array<string | null | undefined>) => {
+    const blob = normalizeArabic(fields.filter(Boolean).join(" "));
+    if (!blob) return false;
+    if (!bitmaskContains(charBitmask(blob), shortMask)) {
+      // Bitmask reject — fall back to full arabicMatchAny only for fuzzy edge cases
+      return arabicMatchAny(fields, q);
+    }
+    if (matchWithAho(ac, blob)) return true;
+    return arabicMatchAny(fields, q);
+  };
 
   for (const lesson of LESSONS_SEED) {
     if (results.length >= limit) break;
-    if (!arabicMatchAny([lesson.title, lesson.description, lesson.speaker_name, lesson.category, ...(lesson.keywords || [])], q)) continue;
+    if (!fieldsHit([lesson.title, lesson.description, lesson.speaker_name, lesson.category, ...(lesson.keywords || [])])) continue;
     pushUnique(results, seen, {
       id: lesson.id,
       label: lesson.title,
@@ -133,7 +149,7 @@ export function buildSearchSuggestions(query: string, limit = 12): SearchSuggest
 
   for (const f of SEED_FAWAID) {
     if (results.length >= limit) break;
-    if (!arabicMatchAny([f.text, f.author_name, f.category], q)) continue;
+    if (!fieldsHit([f.text, f.author_name, f.category])) continue;
     pushUnique(results, seen, {
       id: f.id,
       label: f.text.slice(0, 72) + (f.text.length > 72 ? "…" : ""),
@@ -146,7 +162,7 @@ export function buildSearchSuggestions(query: string, limit = 12): SearchSuggest
 
   for (const item of SEED_QA) {
     if (results.length >= limit) break;
-    if (!arabicMatchAny([item.question, item.answer, item.reference], q)) continue;
+    if (!fieldsHit([item.question, item.answer, item.reference])) continue;
     pushUnique(results, seen, {
       id: item.id,
       label: item.question.slice(0, 72) + (item.question.length > 72 ? "…" : ""),
@@ -159,7 +175,7 @@ export function buildSearchSuggestions(query: string, limit = 12): SearchSuggest
 
   for (const adhkar of adhkarItems) {
     if (results.length >= limit) break;
-    if (!arabicMatchAny([adhkar.text, ...(adhkar.keywords || []), adhkar.source, adhkar.reference], q)) continue;
+    if (!fieldsHit([adhkar.text, ...(adhkar.keywords || []), adhkar.source, adhkar.reference])) continue;
     const category = ADHKAR_CATEGORIES.find((c) => c.id === adhkar.categoryId);
     pushUnique(results, seen, {
       id: adhkar.id,
@@ -173,7 +189,7 @@ export function buildSearchSuggestions(query: string, limit = 12): SearchSuggest
 
   for (const h of ARBAEEN_NAWAWI) {
     if (results.length >= limit) break;
-    if (!arabicMatchAny([h.title, h.text, h.explanation], q)) continue;
+    if (!fieldsHit([h.title, h.text, h.explanation])) continue;
     pushUnique(results, seen, {
       id: String(h.id),
       label: h.title,
@@ -186,7 +202,7 @@ export function buildSearchSuggestions(query: string, limit = 12): SearchSuggest
 
   for (const s of SCHOLARS) {
     if (results.length >= limit) break;
-    if (!arabicMatchAny([s.name, s.fullName, s.bio, ...s.specialty], q)) continue;
+    if (!fieldsHit([s.name, s.fullName, s.bio, ...s.specialty])) continue;
     pushUnique(results, seen, {
       id: s.id,
       label: s.name,
