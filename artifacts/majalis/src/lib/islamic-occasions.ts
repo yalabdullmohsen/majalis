@@ -5,23 +5,32 @@ import {
   type IslamicOccasion,
 } from "@/lib/islamic-occasions-seed";
 import { arabicMatchAny } from "@/lib/arabic-search";
+import {
+  enrichOccasionForPublish,
+  type PublishableOccasion,
+} from "@/lib/religious-content";
 
-export type IslamicOccasionView = IslamicOccasion & {
+export type IslamicOccasionView = PublishableOccasion & {
   daysRemaining: number | null;
   nextGregorian?: string | null;
 };
 
 /**
- * محسوبة محليًا دائمًا — جدول islamic_occasions_cache غير موجود في قاعدة
- * البيانات (لم يُنشأ قط)، وكان استدعاؤه يفشل صامتًا على كل تحميل للرئيسية
- * (خطأ PGRST205 في الطرفية) قبل الرجوع لهذا الحساب المحلي نفسه في كل مرة.
+ * تُحمَّل المناسبات من البذرة ثم تُمرَّر على طبقة التوثيق والتحقق.
+ * أي مناسبة بلا سجل موثّق معتمد لا تُعرض للعامة.
  */
 export async function loadIslamicOccasions(): Promise<IslamicOccasionView[]> {
   const today = estimateHijriDate();
-  return ISLAMIC_OCCASIONS.map((occasion) => ({
-    ...occasion,
-    daysRemaining: daysUntilOccasion(occasion, today),
-  }));
+  const out: IslamicOccasionView[] = [];
+  for (const occasion of ISLAMIC_OCCASIONS) {
+    const enriched = enrichOccasionForPublish(occasion);
+    if (!enriched) continue;
+    out.push({
+      ...enriched,
+      daysRemaining: daysUntilOccasion(enriched, today),
+    });
+  }
+  return out;
 }
 
 export function sortOccasionsByUpcoming(items: IslamicOccasionView[]) {
@@ -39,3 +48,5 @@ export async function filterOccasionsWithCache(query: string): Promise<IslamicOc
   if (!q) return items;
   return items.filter((o) => arabicMatchAny([o.name, o.summary, ...o.deeds], q));
 }
+
+export type { IslamicOccasion };

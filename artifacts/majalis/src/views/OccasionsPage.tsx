@@ -11,9 +11,11 @@ import {
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { HijriMonthSelect } from "@/components/HijriMonthSelect";
 import { getHijriMonthName, isSacredMonth } from "@/lib/hijri-utils";
+import { contentKindLabel } from "@/lib/religious-content";
 import { applyPageSeo } from "@/lib/seo";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import "@/styles/pages/occasions.css";
+import "@/styles/components/home/home-learning-seasons.css";
 
 function CountdownBadge({ days }: { days: number | null | undefined }) {
   if (days == null) return <span className="occasion-detail__countdown">موسمية</span>;
@@ -48,7 +50,7 @@ export default function OccasionsPage() {
             { "@type": "ListItem", position: 1, name: "شهر رمضان المبارك", url: "https://www.majlisilm.com/occasions?month=9" },
             { "@type": "ListItem", position: 2, name: "عيد الفطر المبارك", url: "https://www.majlisilm.com/occasions?month=10" },
             { "@type": "ListItem", position: 3, name: "عيد الأضحى المبارك", url: "https://www.majlisilm.com/occasions?month=12" },
-            { "@type": "ListItem", position: 4, name: "ذكرى الهجرة النبوية", url: "https://www.majlisilm.com/occasions?month=1" },
+            { "@type": "ListItem", position: 4, name: "ذكرى الهجرة النبوية", url: "https://www.majlisilm.com/occasions?month=3" },
             { "@type": "ListItem", position: 5, name: "ليلة القدر", url: "https://www.majlisilm.com/occasions?month=9" },
             { "@type": "ListItem", position: 6, name: "يوم عرفة", url: "https://www.majlisilm.com/occasions?month=12" },
             { "@type": "ListItem", position: 7, name: "الأشهر الحرم", url: "https://www.majlisilm.com/occasions" },
@@ -149,6 +151,10 @@ export default function OccasionsPage() {
                 <CountdownBadge days={occasion.daysRemaining} />
               </div>
 
+              <span className={`religious-kind-badge religious-kind-badge--${occasion.contentKind}`}>
+                {contentKindLabel(occasion.contentKind)}
+              </span>
+
               {occasion.nextGregorian && (
                 <p className="occasion-detail__date">
                   التاريخ الميلادي التقريبي: {occasion.nextGregorian}
@@ -156,10 +162,19 @@ export default function OccasionsPage() {
               )}
 
               <p>{occasion.summary}</p>
+              {occasion.caveat ? (
+                <p className="occasion-detail__caveat"><strong>تنبيه:</strong> {occasion.caveat}</p>
+              ) : null}
 
-              <h3>الأعمال المستحبة</h3>
+              <h3>
+                {occasion.contentKind === "personal_suggestion"
+                  ? "اقتراحات تنظيمية"
+                  : occasion.contentKind === "recommended_deed"
+                    ? "أعمال مستحبة بدليل"
+                    : "أعمال مقترحة"}
+              </h3>
               <ul>
-                {occasion.deeds.map((d) => (
+                {occasion.deeds.map((d: string) => (
                   <li key={d}>{d}</li>
                 ))}
               </ul>
@@ -167,6 +182,9 @@ export default function OccasionsPage() {
               <p className="occasion-evidence">
                 <strong>الدليل:</strong> {occasion.evidence}
               </p>
+              {occasion.sourceName ? (
+                <p className="occasion-evidence"><strong>المصدر:</strong> {occasion.sourceName}</p>
+              ) : null}
             </article>
           ))}
         </div>

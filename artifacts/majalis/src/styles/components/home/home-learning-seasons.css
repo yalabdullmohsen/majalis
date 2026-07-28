@@ -2,14 +2,55 @@
 
 .ds-skeleton--card { height: 6rem; border-radius: var(--ds-radius-lg); }
 
-/* lsw — Learning Seasons Widget — per-season color tokens */
-.lsw--rajab-1448      { --lsw-color: #1e4d8a; --lsw-dot-color: #1e4d8a; }
-.lsw--shaban-1448     { --lsw-color: #7c3aed; --lsw-dot-color: #7c3aed; }
-.lsw--ramadan-1448    { --lsw-color: var(--majalis-emerald-deep, #143F35); --lsw-dot-color: var(--majalis-emerald-deep, #143F35); }
-.lsw--dhul-hijja-1448 { --lsw-color: var(--majalis-emerald, #226A56);     --lsw-dot-color: var(--majalis-emerald, #226A56); }
+/* lsw — Learning Seasons Widget — per-month color tokens */
+.lsw--month-1  { --lsw-color: #143F35; --lsw-dot-color: #143F35; }
+.lsw--month-3  { --lsw-color: #0F766E; --lsw-dot-color: #0F766E; }
+.lsw--month-7  { --lsw-color: #1e4d8a; --lsw-dot-color: #1e4d8a; }
+.lsw--month-8  { --lsw-color: #5B4B8A; --lsw-dot-color: #5B4B8A; }
+.lsw--month-9  { --lsw-color: var(--majalis-emerald-deep, #143F35); --lsw-dot-color: var(--majalis-emerald-deep, #143F35); }
+.lsw--month-12 { --lsw-color: var(--majalis-emerald, #226A56);     --lsw-dot-color: var(--majalis-emerald, #226A56); }
 .lsw-featured { border-color: var(--lsw-color, var(--majalis-emerald)); }
 .lsw-featured__name { color: var(--lsw-color, var(--majalis-emerald)); }
 .lsw-featured__now { background: var(--lsw-color, var(--majalis-emerald)); }
 .lsw-featured__cta { background: var(--lsw-color, var(--majalis-emerald)); }
 .lsw-mini-item__dot { background: var(--lsw-dot-color, var(--majalis-emerald)); }
+
+.lsw-featured__caveat {
+  margin: 0.5rem 0 0;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: var(--color-text-muted, #4B5563);
+}
+.lsw-featured__source {
+  margin: 0.35rem 0 0.75rem;
+  font-size: 0.75rem;
+  color: var(--color-text-muted, #6B7280);
+}
+
+/* تمييز بصري لنوع المحتوى الشرعي/التاريخي */
+.religious-kind-badge {
+  display: inline-block;
+  margin-top: 0.4rem;
+  padding: 0.15rem 0.5rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  border-radius: 0.35rem;
+  letter-spacing: 0;
+}
+.religious-kind-badge--verified_fact {
+  background: color-mix(in srgb, #143F35 12%, white);
+  color: #143F35;
+}
+.religious-kind-badge--recommended_deed {
+  background: color-mix(in srgb, #226A56 14%, white);
+  color: #145A45;
+}
+.religious-kind-badge--personal_suggestion {
+  background: color-mix(in srgb, #92400E 12%, white);
+  color: #78350F;
+}
+.religious-kind-badge--historical_event {
+  background: color-mix(in srgb, #1e4d8a 12%, white);
+  color: #1e3a5f;
+}
 
