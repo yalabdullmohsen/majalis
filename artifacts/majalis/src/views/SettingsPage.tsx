@@ -264,6 +264,7 @@ export default function SettingsPage() {
                 localStorage.removeItem("majalis-reading-progress-v1");
                 localStorage.removeItem("userNotes");
                 localStorage.removeItem("mj-quran-notes-v1");
+                localStorage.removeItem("myBookmarks");
                 localStorage.removeItem("lastPage");
                 localStorage.removeItem("mj-quran-page-pos-v1");
               } catch {
