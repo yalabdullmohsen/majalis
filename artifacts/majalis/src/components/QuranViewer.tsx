@@ -9,14 +9,16 @@
  * Ayah numbers toggle (`showAyahNumbers` via useQuranPreferences) hides badges and
  * strips parenthetical markers via renderQuranText — same idea as the RN sketch.
  * After 30 minutes of reading, a gentle break reminder appears (RN Alert.alert port).
+ * Typeface cycles Amiri → Traditional Arabic → Scheherazade via prefs.fontId.
  * `text-size-adjust: 100%` resists OS/browser text scaling (RN allowFontScaling={false}).
  */
 import { useCallback, useEffect, useState, type CSSProperties } from "react";
-import { Hash, Maximize2, Minimize2, Moon, Sun } from "lucide-react";
+import { Hash, Maximize2, Minimize2, Moon, Sun, Type } from "lucide-react";
 import { fetchSurahDetail, getSurahMeta, type Ayah } from "@/lib/quran-api";
 import { useQuranEngine } from "@/hooks/useQuranEngine";
 import { useQuranPreferences } from "@/hooks/useQuranPreferences";
 import { useReadingBreakReminder } from "@/hooks/useReadingBreakReminder";
+import { nextQuranFontId, quranFontOption, quranFontStack } from "@/lib/quran-font-options";
 import { QuranActionBar } from "@/components/QuranActionBar";
 import { ReadingBreakDialog } from "@/components/quran/ReadingBreakDialog";
 import { toArabicDigits } from "@/lib/utils";
@@ -121,6 +123,8 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
   } = useQuranEngine();
   const { prefs, setPref } = useQuranPreferences();
   const showAyahNumbers = prefs.showAyahNumbers;
+  const fontFamily = quranFontStack(prefs.fontId);
+  const fontMeta = quranFontOption(prefs.fontId);
   const breakReminder = useReadingBreakReminder();
 
   const surahNum = initialSurah ?? currentSurah;
@@ -139,6 +143,11 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
   const toggleAyahNumbers = useCallback(() => {
     setPref("showAyahNumbers", !showAyahNumbers);
   }, [setPref, showAyahNumbers]);
+
+  /** RN toggleFont — cycle Amiri → Traditional Arabic → Scheherazade. */
+  const toggleFont = useCallback(() => {
+    setPref("fontId", nextQuranFontId(prefs.fontId));
+  }, [prefs.fontId, setPref]);
 
   const setFocus = useCallback(
     (next: boolean) => {
@@ -219,6 +228,7 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
     ["--qe-reader-bg" as string]: currentTheme.background,
     ["--qe-reader-text" as string]: currentTheme.text,
     ["--qe-reader-header" as string]: currentTheme.header,
+    ["--qe-reader-font" as string]: fontFamily,
     backgroundColor: currentTheme.background,
     color: currentTheme.text,
   } as CSSProperties;
@@ -312,6 +322,16 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
             <button
               type="button"
               className="qe-chip"
+              onClick={toggleFont}
+              aria-label={`خط المصحف: ${fontMeta.labelAr} — اضغط للتبديل`}
+              title={`${fontMeta.label} / ${fontMeta.labelAr}`}
+            >
+              <Type size={14} aria-hidden="true" />
+              {fontMeta.labelAr}
+            </button>
+            <button
+              type="button"
+              className="qe-chip"
               onClick={toggleDarkMode}
               aria-pressed={isDarkMode}
               aria-label={isDarkMode ? "التبديل إلى الوضع النهاري" : "التبديل إلى الوضع الليلي"}
@@ -344,7 +364,6 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
         </button>
       )}
 
-      {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- tap empty mushaf surface toggles focus; Esc is handled globally */}
       <div className="qe-viewer__page" onClick={onPageSurfaceClick} role="presentation">
         {loading ? (
           <SurahSkeleton />
@@ -391,6 +410,7 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
                     <span
                       className="qe-ayah__text"
                       style={{
+                        fontFamily,
                         fontSize: `${fontSize}px`,
                         lineHeight: `${fontSize + 20}px`,
                         textAlign: "right",
