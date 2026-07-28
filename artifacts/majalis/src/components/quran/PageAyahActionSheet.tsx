@@ -200,6 +200,7 @@ export function PageAyahActionSheet({
   };
 
   const handleSaveNote = () => {
+    // Dual-writes mj-quran-notes-v1 + RN `userNotes` (surah:ayah).
     saveNote(surahNum, ayahNum, noteText);
     setNoteSaved(true);
     setTimeout(() => setNoteSaved(false), 1500);
