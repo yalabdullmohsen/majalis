@@ -98,6 +98,14 @@ export async function startPlatformLogicSuite(): Promise<void> {
       /* ignore */
     }
 
+    // Quran core façade (state + DB + resources + workers) — idle boot, no UI
+    try {
+      const { startQuranCore } = await import("@/core/quran/bootstrap");
+      void startQuranCore();
+    } catch {
+      /* ignore */
+    }
+
     // Soft-warm: sacred times, cross-tab channel, auto-scroll pace, power-saver binding
     try {
       const { hydrateAutoScrollFromIdb } = await import("@/lib/adaptive-auto-scroll");
