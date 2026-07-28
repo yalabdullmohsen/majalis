@@ -592,6 +592,14 @@
     {
       "source": "/hadith/:path*",
       "destination": "/index.html"
+    },
+    {
+      "source": "/quran-engine",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/quran-engine/:path*",
+      "destination": "/index.html"
     }
   ],
   "headers": [
