@@ -68,6 +68,14 @@ export async function startPlatformLogicSuite(): Promise<void> {
       /* ignore */
     }
 
+    // Unified logic engine (Modules 1–5) — soft-warm, never block UX
+    try {
+      const { startUnifiedLogicEngine } = await import("@/services/unified-logic-engine");
+      void startUnifiedLogicEngine();
+    } catch {
+      /* ignore */
+    }
+
     const prediction = predictKhatmahCompletion();
     await syncSmartLocalNotifications({ khatmahBehind: prediction.behindSchedule });
     maybeNotifyKhatmahBehind(prediction);
