@@ -732,7 +732,37 @@ assert(
   wrongNumber.map((f) => `${f.id}: ${f.source}`).join(" | ")
 );
 
-// ─── ٣٢) دعوى «متفق عليه» على صدرٍ ينفردُ به أحدُ الصحيحَينِ (بلا «») ───
+/**
+ * تطبيعٌ أشدُّ للهمزة (تُحذفُ بحاملِها) وتسويةُ واوِ العطفِ وفائِه — يستعملُهما
+ * الفحصانِ ٣٢ و٣٦ فصاعدًا، وشرحُ الحاجةِ إليهما في تعليقِ الفحصِ ٣٦.
+ */
+const normStrict = (s: string) =>
+  s
+    .replace(/[ً-ْٰـ]/g, "")
+    .replace(/[ءؤئأإآٱ]/g, "")
+    .replace(/ى/g, "ي")
+    .replace(/ة/g, "ه")
+    .replace(/[^ء-ي\s]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+const strictWords = (["bukhari", "muslim"] as const)
+  .map((c) => new URL(`../../../public/data/hadith/${c}.json`, import.meta.url))
+  .map((u) =>
+    (JSON.parse(readFileSync(u, "utf8")).hadiths as Array<{ t: string }>).map((h) => normStrict(h.t).split(" "))
+  );
+const strictCorpus = strictWords.map((hs) => hs.map((w) => w.join(" ")).join(" @@ "));
+/** واوُ العطفِ وفاؤُه لا يُفرِّقان لفظًا عن لفظ */
+const bareConj = (w: string) => w.replace(/^[وف]/, "");
+const isSubsequenceLoose = (words: string[], hadith: string[]) => {
+  let i = 0;
+  for (const w of hadith) {
+    if (w === words[i] || bareConj(w) === bareConj(words[i])) i++;
+    if (i === words.length) return true;
+  }
+  return false;
+};
+
+// ─── ٣٢) دعوى «متفق عليه» على لفظٍ ينفردُ به أحدُ الصحيحَينِ (بلا «») ───
 
 /**
  * البوابةُ ٢٢ (ج-٢٩٠) تُمسِكُ دعوى «متفق عليه» على لفظٍ منفردٍ، لكنَّها
@@ -750,21 +780,59 @@ assert(
  * ⇒ لا يُفحَص؛ وإن كان في كلَيهما ⇒ الدعوى صادقةٌ ⇒ لا يُفحَص. فلا يسقطُ
  * إلّا ما كان في واحدٍ بعينِه والدعوى تنسبُه إليهما.
  */
+/**
+ * ج-٣٠٣: **ثقبانِ في تنفيذِ هذا الفحصِ نفسِه، لا في قاعدتِه** — انكشفا بتعميمِ
+ * درسِ ج-٣٠٢ («يُقابَلُ كلُّ حدٍّ وكلُّ قائمةِ ألفاظٍ بحدودِه»):
+ *   (١) **حدُّ الصدر**: كان يقرأُ `headLafz` وحدَه (ما قبلَ أوَّلِ «؛») — وهو
+ *       عينُ الثقبِ الذي أُنشئ الفحصُ ٣٤ لأجلِه (ج-٢٩٤)، إذ أكثرُ سجلّاتِ
+ *       الملفَّينِ يُلصِقُ اللفظَ بكلامِ المحرِّرِ بفاصلةٍ لا بفاصلةٍ منقوطة،
+ *       فيصيرُ «الصدرُ» كلَّ النصِّ فلا يثبتُ في نسخةٍ فلا يُفحَص. فالفحصُ ٣٤
+ *       عُولج بنافذةٍ منزلقةٍ ومفتاحُه `author_name`، وبقيَ هذا — ومفتاحُه
+ *       `متفق عليه` في المصدرِ — على الصدرِ وحدَه. **فأفلتَ منه سبعةُ صفوفٍ**
+ *       مصدرُها «متفق عليه» مجرَّدًا ولفظُها ينفردُ به أحدُ الصحيحَين.
+ *   (٢) **صيغةُ الاستثناء**: كان يُعفي بـ«واللفظ ل» وحدَها — فلو خصَّصَ
+ *       السجلُّ لفظَه بصيغةٍ أخرى (**«متفق عليه: البخاري ٢٠٧٩»** بالرقم) لسقطَ
+ *       سليمًا. والاستثناءُ الآن **معلَّقٌ بصاحبِ اللفظِ المكشوفِ بعينِه** لا
+ *       بأيِّ تخصيصٍ كان: يُعفى السجلُّ إن سمّى مصدرُه **صاحبَ اللفظِ الذي
+ *       انفردَ به** (بـ«اللفظ له» أو برقمِ حديثٍ عنده) — فمن خصَّصَ لغيرِ
+ *       صاحبِه لا يزالُ يسقط.
+ * والنافذةُ خمسُ كلماتٍ بتطبيعِ `normStrict` وتسويةِ واوِ العطفِ وفائِه
+ * (`bareConj`) — وبلا هذه التسويةِ يسقطُ `seed-fawaid-115` سليمًا: «**و**من
+ * كان يؤمن بالله واليوم الآخر فليكرم جاره» ولفظُ البخاريِّ (٦٠١٩) هو هو بلا
+ * واوٍ. وبهذه القيودِ خرجَ **٧ صفوفٍ** من ٢٨٠٦، والـ٦٧ صفًّا التي خصَّصت
+ * لفظَها في الدوراتِ السابقة (ج-٢٩٠ و٢٩٢ و٢٩٤) باقيةٌ معفاةً كما هي.
+ */
+const conjWordsOf = strictWords.map((hs) => hs.map((w) => w.map(bareConj)));
+const conjCorpus = conjWordsOf.map((hs) => hs.map((w) => w.join(" ")).join(" @@ "));
+/** أسمَّى المصدرُ صاحبَ اللفظِ المنفردِ نفسَه؟ (بـ«اللفظ له» أو برقمِ حديثٍ عنده) */
+const specifiesOwner = (src: string, owner: number) => {
+  // ⚠️ الجذرُ بلا «ال» عمدًا: لامُ الجرِّ تُدغَمُ في لامِ التعريفِ فتسقطُ ألفُها
+  // («واللفظ **للبخاري**» لا «لالبخاري») — وأوَّلُ صياغةٍ اشترطت «البخاري»
+  // فأسقطت ٢٩ صفًّا مخصَّصًا سليمًا.
+  const stem = owner === 0 ? "بخاري" : "مسلم";
+  return new RegExp(`اللفظ\\s+لل?(?:ال)?${stem}`).test(src)
+    || new RegExp(`${stem}[^)\\d]{0,12}\\(?[\\d٠-٩]`).test(src);
+};
 const soleLafzClaimedAgreed = [...FAWAID_CURATED_SEED, ...SEED_FAWAID].filter((f) => {
-  if (!/متفق عليه/.test(f.source ?? "")) return false;
-  // مستثنًى: مصدرٌ خصَّص اللفظَ لصاحبِه بالفعل (علاجُ ج-٢٩٠)
-  if (/واللفظ ل/.test(f.source ?? "")) return false;
-  if (REJECTED.test(f.text) || REJECTED.test(f.source ?? "")) return false;
-  const head = headLafz(f.text);
-  if (head.split(" ").length < 5) return false;
-  const inB = corpus[0].includes(head);
-  const inM = corpus[1].includes(head);
-  if (inB === inM) return false;
-  // …إلّا أن يكونَ اللفظُ في الآخرِ متتابعًا داخلَ حديثٍ واحدٍ ولو تخلَّلَه
-  // اعتراضٌ من الراوي («حتى يحبَّ لأخيه — أو قال لجاره — ما يحبُّ لنفسه»
-  // مسلم ١٧٠) أو فَصْلُ لفظةٍ يسيرة: فذاك اختلافُ روايةٍ لا انفرادٌ بلفظ.
-  const words = head.split(" ");
-  return !hadithsNorm[inB ? 1 : 0].some((h) => isSubsequenceOf(words, h));
+  const src = f.source ?? "";
+  if (!/متفق عليه/.test(src)) return false;
+  if (REJECTED.test(f.text) || REJECTED.test(src)) return false;
+  const w = normStrict(f.text).split(" ").filter(Boolean).map(bareConj);
+  for (let i = 0; i + 5 <= w.length; i++) {
+    const win = w.slice(i, i + 5);
+    const inB = conjCorpus[0].includes(win.join(" "));
+    const inM = conjCorpus[1].includes(win.join(" "));
+    if (inB === inM) continue;
+    const other = inB ? 1 : 0;
+    // …إلّا أن يكونَ اللفظُ في الآخرِ متتابعًا داخلَ حديثٍ واحدٍ ولو تخلَّلَه
+    // اعتراضٌ من الراوي («حتى يحبَّ لأخيه — أو قال لجاره — ما يحبُّ لنفسه»
+    // مسلم ١٧٠) أو فَصْلُ لفظةٍ يسيرة: فذاك اختلافُ روايةٍ لا انفرادٌ بلفظ.
+    if (conjWordsOf[other].some((h) => isSubsequenceLoose(win, h))) continue;
+    // مستثنًى: مصدرٌ خصَّص اللفظَ لصاحبِه بالفعل (علاجُ ج-٢٩٠)
+    if (specifiesOwner(src, inB ? 0 : 1)) continue;
+    return true;
+  }
+  return false;
 });
 assert(
   soleLafzClaimedAgreed.length === 0,
@@ -927,31 +995,8 @@ assert(
  *       فيفترقان وهما لفظٌ واحد (مسلم ١٨٧٤، صفٌّ نجا به).
  * وبهذه القيودِ أخرج الفحصُ **٥ صفوفٍ بلا إيجابٍ كاذبٍ واحدٍ** من ٢١٩٠ سجلًّا.
  */
-const normStrict = (s: string) =>
-  s
-    .replace(/[ً-ْٰـ]/g, "")
-    .replace(/[ءؤئأإآٱ]/g, "")
-    .replace(/ى/g, "ي")
-    .replace(/ة/g, "ه")
-    .replace(/[^ء-ي\s]/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
-const strictWords = (["bukhari", "muslim"] as const)
-  .map((c) => new URL(`../../../public/data/hadith/${c}.json`, import.meta.url))
-  .map((u) =>
-    (JSON.parse(readFileSync(u, "utf8")).hadiths as Array<{ t: string }>).map((h) => normStrict(h.t).split(" "))
-  );
-const strictCorpus = strictWords.map((hs) => hs.map((w) => w.join(" ")).join(" @@ "));
-/** واوُ العطفِ وفاؤُه لا يُفرِّقان لفظًا عن لفظ */
-const bareConj = (w: string) => w.replace(/^[وف]/, "");
-const isSubsequenceLoose = (words: string[], hadith: string[]) => {
-  let i = 0;
-  for (const w of hadith) {
-    if (w === words[i] || bareConj(w) === bareConj(words[i])) i++;
-    if (i === words.length) return true;
-  }
-  return false;
-};
+/** (`normStrict` و`strictWords` و`bareConj` و`isSubsequenceLoose` مرفوعةٌ
+ *  إلى ما قبلَ الفحصِ ٣٢ منذ ج-٣٠٣، إذ صار يستعملُها هو أيضًا.) */
 const transposedHead = [...FAWAID_CURATED_SEED, ...SEED_FAWAID].filter((f) => {
   const idx = f.author_name === "صحيح البخاري" ? 0 : f.author_name === "صحيح مسلم" ? 1 : -1;
   if (idx < 0 || REJECTED.test(f.text) || REJECTED.test(f.source ?? "")) return false;
