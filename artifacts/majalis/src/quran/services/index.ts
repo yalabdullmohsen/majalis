@@ -3,6 +3,11 @@
  */
 
 export {
+  storageService,
+  type MyBookmark,
+} from "./storageService";
+
+export {
   getDatabaseManager,
   DatabaseManager,
   type BookmarkRecord,
