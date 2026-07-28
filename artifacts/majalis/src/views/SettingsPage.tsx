@@ -192,9 +192,9 @@ export default function SettingsPage() {
             value={quranPrefs.fontId}
             onChange={(e) => setQuranPref("fontId", e.target.value as QuranFontId)}
           >
-            <option value="uthmani">عثماني</option>
-            <option value="naskh">نسخ</option>
-            <option value="amiri">أميري</option>
+            <option value="uthmani">شهرزاد (Scheherazade)</option>
+            <option value="naskh">نسخ (Traditional Arabic)</option>
+            <option value="amiri">أميري (Amiri)</option>
           </select>
         </label>
         <ToggleRow label={t("settings_ayah_numbers")} checked={quranPrefs.showAyahNumbers} onChange={(v) => setQuranPref("showAyahNumbers", v)} />
