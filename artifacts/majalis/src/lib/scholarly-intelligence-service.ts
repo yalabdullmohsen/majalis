@@ -144,6 +144,7 @@ export async function intelligentSearch(
     status?: string;
     language?: string;
     year?: number;
+    signal?: AbortSignal;
   },
 ): Promise<IntelligentSearchResponse> {
   const limit = opts?.limit ?? 40;
@@ -156,8 +157,17 @@ export async function intelligentSearch(
   if (opts?.year) params.set("year", String(opts.year));
   params.set("sessionId", sessionId());
 
+  if (opts?.signal?.aborted) {
+    throw new DOMException("Aborted", "AbortError");
+  }
+
   try {
-    const res = await requestFetch(`/api/intelligent-search?${params}`);
+    const res = await requestFetch(`/api/intelligent-search?${params}`, {
+      signal: opts?.signal,
+    });
+    if (opts?.signal?.aborted) {
+      throw new DOMException("Aborted", "AbortError");
+    }
     if (!res.ok) {
       return mergeQuranTopicHits(query, {
         ok: false,
@@ -170,7 +180,8 @@ export async function intelligentSearch(
     }
     const data = (await res.json()) as IntelligentSearchResponse;
     return mergeQuranTopicHits(query, data, limit);
-  } catch {
+  } catch (err) {
+    if ((err as Error)?.name === "AbortError") throw err;
     return mergeQuranTopicHits(query, {
       ok: false,
       query,

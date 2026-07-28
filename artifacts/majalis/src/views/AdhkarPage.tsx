@@ -138,6 +138,15 @@ export default function AdhkarPage() {
   const { data: publishedItems = [], isLoading, isError } = usePublishedAdhkarItems();
 
   useEffect(() => {
+    void import("@/lib/protected-session").then((m) => {
+      m.beginProtectedSession("adhkar");
+    });
+    return () => {
+      void import("@/lib/protected-session").then((m) => m.endProtectedSession());
+    };
+  }, []);
+
+  useEffect(() => {
     applyPageSeo({
       path: "/adhkar",
       canonicalPath: "/adhkar",

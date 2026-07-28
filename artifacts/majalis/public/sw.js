@@ -69,7 +69,8 @@ self.addEventListener("install", (event) => {
       )
       .catch(() => undefined),
   );
-  self.skipWaiting();
+  // Do NOT skipWaiting here — wait for client SKIP_WAITING message so active
+  // Quran/Azkar reading sessions are never interrupted mid-stream by a deploy.
 });
 
 self.addEventListener("activate", (event) => {
@@ -92,15 +93,9 @@ self.addEventListener("activate", (event) => {
       // تخزين النسخة الحالية
       await verCache.put("/sw-version", new Response(SW_BUILD_ID));
 
-      // السيطرة على كل النوافذ
+      // السيطرة على كل النوافذ — only after explicit SKIP_WAITING from a client
       await self.clients.claim();
 
-      // ملاحظة: كانت هذه الكتلة تُعيد تحميل كل النوافذ المفتوحة تلقائيًا
-      // عند أي تحديث. كانت خاملة عمليًا طالما SHELL_CACHE مرقَّم يدويًا
-      // (v18) نادر التغيّر — الآن بعد ربطه بمعرّف كل نشر فعلي (commit)،
-      // كانت ستُصبح نشطة على كل نشر تقريبًا (وتيرة نشر عالية جدًا)، فتُقاطع
-      // المستخدمين قسرًا أثناء الاستخدام. أُزيلت لصالح شريط "تحديث متاح"
-      // الجديد (اختياري، بضغطة المستخدم فقط) — راجع UpdateAvailableBanner.
       void isUpdate;
     })(),
   );
@@ -215,6 +210,12 @@ const _smartLocalTimers = new Map(); // tag → timeoutId
 self.addEventListener("message", (event) => {
   const msg = event.data;
   if (!msg) return;
+
+  // Client opted in to activate the waiting worker (after reading session ends)
+  if (msg.type === "SKIP_WAITING" || msg === "SKIP_WAITING") {
+    self.skipWaiting();
+    return;
+  }
 
   // Smart local schedule (adhkar / streak / khatmah / prayer reminders)
   if (msg.type === "MAJALIS_SCHEDULE_LOCAL_NOTIFS" && Array.isArray(msg.items)) {

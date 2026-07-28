@@ -1,12 +1,9 @@
 /**
- * Background bootstrap for the 8 logic modules — no UI.
+ * Background bootstrap for the logic modules — deferred until after first paint.
  * Safe to call once on app mount; all failures are silent.
  */
 
-import { syncSmartLocalNotifications } from "@/lib/smart-local-notifications";
-import { predictKhatmahCompletion, maybeNotifyKhatmahBehind, syncKhatmahFromWird } from "@/lib/quran-khatmah-tracker";
-import { buildWeeklyProgressAnalytics } from "@/lib/weekly-progress-analytics";
-import { loadAudioResumeState } from "@/lib/quran-audio-resume";
+import { scheduleIdle, afterFirstPaint } from "@/lib/idle-defer";
 
 const BOOT_FLAG = "__majalis_platform_logic_booted__";
 
@@ -17,22 +14,42 @@ export async function startPlatformLogicSuite(): Promise<void> {
     if (w[BOOT_FLAG]) return;
     w[BOOT_FLAG] = true;
 
-    // Warm weekly analytics (side-effect free except local reads)
+    // Defer ALL IndexedDB / storage hydrations until after paint + idle
+    afterFirstPaint(() => {
+      scheduleIdle(() => {
+        void runDeferredWarm();
+      }, { timeoutMs: 5_000 });
+    });
+  } catch {
+    /* never interrupt UX */
+  }
+}
+
+async function runDeferredWarm(): Promise<void> {
+  try {
+    const { buildWeeklyProgressAnalytics } = await import("@/lib/weekly-progress-analytics");
     try {
       buildWeeklyProgressAnalytics();
     } catch {
       /* ignore */
     }
 
-    // Warm audio resume + khatmah sync
     try {
+      const { loadAudioResumeState } = await import("@/lib/quran-audio-resume");
+      const { syncKhatmahFromWird, predictKhatmahCompletion, maybeNotifyKhatmahBehind } = await import(
+        "@/lib/quran-khatmah-tracker"
+      );
       loadAudioResumeState();
       syncKhatmahFromWird();
+
+      const { syncSmartLocalNotifications } = await import("@/lib/smart-local-notifications");
+      const prediction = predictKhatmahCompletion();
+      await syncSmartLocalNotifications({ khatmahBehind: prediction.behindSchedule });
+      maybeNotifyKhatmahBehind(prediction);
     } catch {
       /* ignore */
     }
 
-    // Soft-warm: unseen discovery + delta sync (never block UX)
     try {
       const { serveLaunchDiscovery } = await import("@/lib/unseen-benefit-discovery");
       serveLaunchDiscovery(1);
@@ -46,7 +63,6 @@ export async function startPlatformLogicSuite(): Promise<void> {
       /* ignore */
     }
 
-    // Soft-warm: topic index + devotional balance + storage LRU (never block UX)
     try {
       const { listTopicCategories } = await import("@/lib/islamic-topic-index");
       listTopicCategories();
@@ -68,7 +84,6 @@ export async function startPlatformLogicSuite(): Promise<void> {
       /* ignore */
     }
 
-    // Soft-warm: sacred times, cross-tab channel, auto-scroll pace, power-saver binding
     try {
       const { hydrateAutoScrollFromIdb } = await import("@/lib/adaptive-auto-scroll");
       void hydrateAutoScrollFromIdb();
@@ -76,9 +91,9 @@ export async function startPlatformLogicSuite(): Promise<void> {
       /* ignore */
     }
     try {
-      const { getCrossTabId, subscribeCrossTab } = await import("@/lib/cross-tab-sync");
+      // Warm tab id only — no immortal empty BroadcastChannel subscriber
+      const { getCrossTabId } = await import("@/lib/cross-tab-sync");
       getCrossTabId();
-      subscribeCrossTab(() => undefined);
     } catch {
       /* ignore */
     }
@@ -88,10 +103,6 @@ export async function startPlatformLogicSuite(): Promise<void> {
     } catch {
       /* ignore */
     }
-
-    const prediction = predictKhatmahCompletion();
-    await syncSmartLocalNotifications({ khatmahBehind: prediction.behindSchedule });
-    maybeNotifyKhatmahBehind(prediction);
   } catch {
     /* never interrupt UX */
   }

@@ -2,9 +2,17 @@
  * Smart Deep-Linking Generator for Verses & Texts.
  * Encodes verse IDs / Matn line anchors into shareable URLs and
  * parses hash/query on load to navigate, scroll, and highlight.
+ * Malformed / out-of-bounds params clamp to safe defaults — never throw.
  */
 
 import { scrollActiveAyahIntoView } from "@/lib/quran-audio-resume";
+import {
+  clampAyah,
+  clampSurah,
+  parsePositiveInt,
+  safeDecodeURIComponent,
+  safeSearchParams,
+} from "@/lib/url-param-safe";
 
 export type DeepLinkTargetKind = "ayah" | "matn" | "adhkar";
 
@@ -36,8 +44,8 @@ const HIGHLIGHT_CLASS = "majalis-deep-link-target";
 
 /** Build a shareable path for a mushaf ayah. */
 export function buildAyahDeepLink(surah: number, ayah: number, opts?: { useHash?: boolean }): string {
-  const s = Math.max(1, Math.min(114, Math.floor(surah)));
-  const a = Math.max(1, Math.floor(ayah));
+  const s = clampSurah(surah);
+  const a = clampAyah(s, ayah);
   if (opts?.useHash) return `/mushaf/${s}#ayah-${a}`;
   return `/mushaf/${s}?ayah=${a}`;
 }
@@ -51,9 +59,10 @@ export function buildMatnDeepLink(
   const base = slugOrPath.startsWith("/") ? slugOrPath.split("?")[0]! : `/${slugOrPath.replace(/^\//, "")}`;
   const params = new URLSearchParams();
   if (opts?.itemId) params.set("id", opts.itemId);
-  params.set("line", String(Math.max(1, Math.floor(line))));
+  const safeLine = parsePositiveInt(String(line), { min: 1, max: 50_000, fallback: 1 });
+  params.set("line", String(safeLine));
   const q = params.toString();
-  return `${base}?${q}#matn-line-${Math.max(1, Math.floor(line))}`;
+  return `${base}?${q}#matn-line-${safeLine}`;
 }
 
 /** Build adhkar deep link with category + item. */
@@ -67,7 +76,7 @@ export function buildAdhkarDeepLink(categorySlug: string, itemId?: string): stri
 
 export function encodeDeepLink(target: DeepLinkTarget): string {
   if (target.kind === "ayah") {
-    const surah = Number(target.resourceId) || 1;
+    const surah = clampSurah(Number(target.resourceId) || 1);
     return buildAyahDeepLink(surah, target.anchor ?? 1);
   }
   if (target.kind === "adhkar") {
@@ -78,8 +87,7 @@ export function encodeDeepLink(target: DeepLinkTarget): string {
 
 /**
  * Parse path + search + hash into a deep-link target.
- * Accepts `/mushaf/2?ayah=255`, `/mushaf/2#ayah-255`, `#ayah-255`,
- * `?line=12#matn-line-12`, `/adhkar?cat=morning&id=…`.
+ * Out-of-range ayah/surah clamp; invalid numbers fall back safely.
  */
 export function parseDeepLink(
   input?: string | { pathname?: string; search?: string; hash?: string },
@@ -106,29 +114,34 @@ export function parseDeepLink(
       return null;
     }
 
-    const params = new URLSearchParams(search.startsWith("?") ? search.slice(1) : search);
-    const hashBody = hash.replace(/^#/, "");
+    const params = safeSearchParams(search);
+    const hashBody = safeDecodeURIComponent(hash.replace(/^#/, ""));
 
     const mushafMatch = pathname.match(/\/mushaf\/(\d+)/);
-    const ayahFromQuery = Number(params.get("ayah") || params.get("aya") || 0);
+    const ayahRaw = params.get("ayah") || params.get("aya") || "";
     const ayahFromHash = hashBody.match(/^ayah-(\d+)$/i);
-    const ayah = ayahFromQuery || (ayahFromHash ? Number(ayahFromHash[1]) : 0);
+    const ayahCandidate = ayahRaw
+      ? parsePositiveInt(ayahRaw, { min: 1, max: 300, fallback: 0 })
+      : ayahFromHash
+        ? parsePositiveInt(ayahFromHash[1], { min: 1, max: 300, fallback: 0 })
+        : 0;
 
-    if (mushafMatch || ayah > 0) {
-      const surah =
-        Number(mushafMatch?.[1] || params.get("surah") || 0) ||
-        (mushafMatch ? Number(mushafMatch[1]) : 0);
-      if (surah > 0 && ayah > 0) {
-        return {
-          kind: "ayah",
-          resourceId: String(surah),
-          anchor: ayah,
-          path: mushafMatch ? `/mushaf/${surah}` : pathname || `/mushaf/${surah}`,
-          search: ayahFromQuery ? `?ayah=${ayah}` : "",
-          hash: `#ayah-${ayah}`,
-        };
-      }
-      if (surah > 0) {
+    if (mushafMatch || ayahCandidate > 0 || params.has("surah")) {
+      const surahRaw = mushafMatch?.[1] || params.get("surah") || "0";
+      const surahNum = parsePositiveInt(surahRaw, { min: 0, max: 114, fallback: 0 });
+      if (surahNum > 0) {
+        const surah = clampSurah(surahNum);
+        if (ayahCandidate > 0) {
+          const ayah = clampAyah(surah, ayahCandidate);
+          return {
+            kind: "ayah",
+            resourceId: String(surah),
+            anchor: ayah,
+            path: `/mushaf/${surah}`,
+            search: `?ayah=${ayah}`,
+            hash: `#ayah-${ayah}`,
+          };
+        }
         return {
           kind: "ayah",
           resourceId: String(surah),
@@ -139,18 +152,21 @@ export function parseDeepLink(
       }
     }
 
-    const lineFromQuery = Number(params.get("line") || 0);
+    const lineFromQuery = parsePositiveInt(params.get("line"), { min: 0, max: 50_000, fallback: 0 });
     const lineFromHash = hashBody.match(/^matn-line-(\d+)$/i);
-    const line = lineFromQuery || (lineFromHash ? Number(lineFromHash[1]) : 0);
-    if (line > 0 || hashBody.startsWith("matn-line-")) {
+    const lineCandidate =
+      lineFromQuery ||
+      (lineFromHash ? parsePositiveInt(lineFromHash[1], { min: 1, max: 50_000, fallback: 0 }) : 0);
+    if (lineCandidate > 0 || hashBody.startsWith("matn-line-")) {
+      const line = lineCandidate > 0 ? lineCandidate : 1;
       return {
         kind: "matn",
         resourceId: pathname || "/",
-        anchor: line || 1,
+        anchor: line,
         itemId: params.get("id") || undefined,
         path: pathname || "/",
         search: search || "",
-        hash: `#matn-line-${line || 1}`,
+        hash: `#matn-line-${line}`,
       };
     }
 

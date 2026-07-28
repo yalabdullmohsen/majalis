@@ -83,15 +83,14 @@ export function startOfflineSync(): void {
   if (typeof window === "undefined" || started) return;
   started = true;
 
-  // Initial warm after idle so first paint stays light
-  const kick = () => {
-    void syncCorePacks();
-  };
-  if (typeof window.requestIdleCallback === "function") {
-    window.requestIdleCallback(kick);
-  } else {
-    globalThis.setTimeout(kick, 2_500);
-  }
+  // Defer IndexedDB warm until after first paint + idle (cold-boot friendly)
+  void import("@/lib/idle-defer").then(({ afterFirstPaint, scheduleIdle }) => {
+    afterFirstPaint(() => {
+      scheduleIdle(() => {
+        void syncCorePacks();
+      }, { timeoutMs: 6_000 });
+    });
+  });
 
   window.addEventListener("online", () => {
     void syncCorePacks();

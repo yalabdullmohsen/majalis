@@ -219,13 +219,16 @@ export function GlobalSearchModal({ onClose }: Props) {
       setLoading(true);
       setError(false);
       try {
-        const opts = filter !== "all" ? { type: filter, limit: 20 } : { limit: 24 };
+        const opts = filter !== "all"
+          ? { type: filter, limit: 20, signal: abortRef.current.signal }
+          : { limit: 24, signal: abortRef.current.signal };
         const res  = await intelligentSearch(q.trim(), opts);
+        if (abortRef.current?.signal.aborted) return;
         setResults(res.results ?? []);
       } catch (err: unknown) {
         if ((err as Error)?.name !== "AbortError") setError(true);
       } finally {
-        setLoading(false);
+        if (!abortRef.current?.signal.aborted) setLoading(false);
       }
     },
     [],
@@ -240,7 +243,10 @@ export function GlobalSearchModal({ onClose }: Props) {
       return;
     }
     timerRef.current = setTimeout(() => doSearch(query, activeFilter), DEBOUNCE_MS);
-    return () => { if (timerRef.current) clearTimeout(timerRef.current); };
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+      abortRef.current?.abort();
+    };
   }, [query, activeFilter, doSearch]);
 
   const handleSelect = useCallback(
