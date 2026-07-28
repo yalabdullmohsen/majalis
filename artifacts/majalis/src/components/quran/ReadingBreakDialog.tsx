@@ -24,7 +24,7 @@ export function ReadingBreakDialog({ open, title, message, onDismiss }: ReadingB
 
   if (!open) return null;
 
-  /* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions, jsx-a11y/no-noninteractive-element-interactions -- modal dismiss patterns; Esc handled above */
+  /* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions -- modal dismiss patterns; Esc handled above */
   return (
     <div className="qe-break-backdrop" role="presentation" onClick={onDismiss}>
       <div
@@ -50,7 +50,7 @@ export function ReadingBreakDialog({ open, title, message, onDismiss }: ReadingB
       </div>
     </div>
   );
-  /* eslint-enable jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions, jsx-a11y/no-noninteractive-element-interactions */
+  /* eslint-enable jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions */
 }
 
 export default ReadingBreakDialog;
