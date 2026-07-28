@@ -46,6 +46,17 @@ export async function startPlatformLogicSuite(): Promise<void> {
       /* ignore */
     }
 
+    // Soft-warm learning track resume pointers
+    try {
+      const { loadAllTrackProgressAsync, getResumePointers } = await import(
+        "@/lib/learning-track-tracker"
+      );
+      await loadAllTrackProgressAsync();
+      getResumePointers();
+    } catch {
+      /* ignore */
+    }
+
     const prediction = predictKhatmahCompletion();
     await syncSmartLocalNotifications({ khatmahBehind: prediction.behindSchedule });
     maybeNotifyKhatmahBehind(prediction);

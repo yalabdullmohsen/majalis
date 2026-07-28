@@ -87,6 +87,7 @@
     "test:sm2": "node scripts/test-sm2.mjs && npx tsx src/lib/__tests__/offline-sm2-streaks.test.ts",
     "test:platform-logic": "npx tsx src/lib/__tests__/platform-logic-suite.test.ts",
     "test:tadabbur-suite": "npx tsx src/lib/__tests__/tadabbur-vault-oled-discovery-sync.test.ts",
+    "test:learning-tracks-suite": "npx tsx src/lib/__tests__/learning-tracks-fiqh-backup.test.ts",
     "test:guardrails": "node lib/__tests__/islamic-answer-guardrails.test.mjs",
     "test:search-normalize": "node lib/__tests__/search-normalize.test.mjs",
     "test:scholars-integrity": "npx tsx src/lib/__tests__/scholars-data-integrity.test.ts",
