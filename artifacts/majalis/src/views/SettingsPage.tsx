@@ -262,6 +262,8 @@ export default function SettingsPage() {
               void clearOfflineReading();
               try {
                 localStorage.removeItem("majalis-reading-progress-v1");
+                localStorage.removeItem("userNotes");
+                localStorage.removeItem("mj-quran-notes-v1");
               } catch {
                 /* ignore */
               }
