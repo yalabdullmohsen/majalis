@@ -104,8 +104,15 @@ function streakMsg(streak: number): string {
 export default function DailyWirdPage() {
   const [state, setState] = useState(getDailyWirdState);
   const [khatmaCelebration, setKhatmaCelebration] = useState(false);
+  const [reminderStatus, setReminderStatus] = useState<string | null>(null);
   const prevKhatmasRef = useRef(Math.floor(getDailyWirdState().totalPagesEver / QURAN_PAGES));
   const surahs = getSurahList();
+
+  useEffect(() => {
+    if (!reminderStatus) return;
+    const t = window.setTimeout(() => setReminderStatus(null), 3200);
+    return () => window.clearTimeout(t);
+  }, [reminderStatus]);
 
   useEffect(() => {
     applyPageSeo({
@@ -351,6 +358,29 @@ export default function DailyWirdPage() {
         <Link href={`/mushaf/${state.currentSurah}`} className="wird-quran-link">
           <BookOpen size={15} strokeWidth={1.8} aria-hidden="true" /> فتح المصحف من هذا الموضع
         </Link>
+
+        <button
+          type="button"
+          className="wird-quran-link"
+          style={{ border: "none", cursor: "pointer", font: "inherit", width: "100%", textAlign: "start" }}
+          onClick={() => {
+            void import("@/lib/quran-daily-reminder").then(async ({ scheduleDailyReminder }) => {
+              const result = await scheduleDailyReminder();
+              setReminderStatus(
+                result.ok
+                  ? "تم جدولة تذكير الورد يوميًا الساعة 5 مساءً"
+                  : result.reason === "permission"
+                    ? "يلزم السماح بالإشعارات أولًا"
+                    : "تعذّرت جدولة التذكير",
+              );
+            });
+          }}
+        >
+          تفعيل تذكير الورد الساعة 5 مساءً
+        </button>
+        {reminderStatus ? (
+          <p className="wird-streak-msg" role="status" aria-live="polite">{reminderStatus}</p>
+        ) : null}
       </div>
 
       <RelatedKnowledge kind="lesson" query="الورد اليومي القرآن" title="دروس ومواد في الورد القرآني" limit={6} />
