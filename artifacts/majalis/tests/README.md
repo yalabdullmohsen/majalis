@@ -5,8 +5,9 @@ Dedicated quality gates for the Ayah/Tarteel Quran Engine. **No production UI/la
 ## Layout
 
 ```
+src/tests/             Vitest units + Playwright critical/offline (see TESTING.md)
 tests/
-  e2e/                 Playwright reader + offline journeys
+  e2e/                 Playwright reader + offline journeys (legacy pipeline)
   unit/                Mutashabihat / Tajweed / Wird / offline schema
   perf/                Web Vitals + memory slope benches
   pwa/                 Installability audit
@@ -16,6 +17,8 @@ helpers.ts             Shared Playwright utilities
 ## Commands
 
 ```bash
+pnpm --filter @workspace/majalis run test:quran-vitest   # NEW — DatabaseManager + Context
+pnpm --filter @workspace/majalis run test:quran-e2e      # NEW — critical journey + offline
 pnpm --filter @workspace/majalis run test:quran-engine-unit
 pnpm --filter @workspace/majalis run test:quran-offline-schema
 pnpm --filter @workspace/majalis run test:quran-resource-lifecycle
@@ -25,6 +28,7 @@ pnpm --filter @workspace/majalis run test:quran-engine-perf    # needs preview U
 pnpm --filter @workspace/majalis run test:quran-engine-qa      # unit + offline schema + PWA (CI-safe)
 ```
 
+Full author guide: [`../TESTING.md`](../TESTING.md)
 ## Gates
 
 | Area | Gate |

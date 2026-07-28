@@ -87,6 +87,9 @@
     "test:audio-engine-core": "npx tsx tests/unit/audio-engine-core.test.ts",
     "test:tafseer-service": "npx tsx tests/unit/tafseer-service.test.ts",
     "test:quran-viewer-surface": "npx tsx tests/unit/quran-viewer-surface.test.ts",
+    "test:quran-vitest": "vitest run --config vitest.config.ts",
+    "test:quran-e2e": "playwright test --config playwright.quran-engine.config.ts",
+    "test:quran-suite": "pnpm run test:quran-vitest",
     "test:quran-engine-pwa": "npx tsx tests/pwa/pwa-installability.test.ts",
     "test:quran-engine-e2e": "playwright test tests/e2e --project=desktop",
     "test:quran-engine-perf": "node tests/perf/quran-web-vitals-bench.mjs",
@@ -225,6 +228,7 @@
     "embla-carousel-react": "^8.6.0",
     "eslint": "^10.5.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
+    "fake-indexeddb": "6.0.0",
     "globals": "^17.7.0",
     "input-otp": "^1.4.2",
     "lightningcss-darwin-arm64": "^1.32.0",
@@ -245,6 +249,7 @@
     "typescript-eslint": "^8.62.0",
     "vaul": "^1.1.2",
     "vite": "catalog:",
+    "vitest": "3.2.4",
     "zod": "catalog:"
   },
   "dependencies": {

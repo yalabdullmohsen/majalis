@@ -1,0 +1,72 @@
+name: Quran Engine Tests
+
+# Fast, non-blocking suite for DatabaseManager / QuranEngineContext / viewer journeys.
+# Failures are reported but do NOT block merge (continue-on-error).
+# Hard quality gate remains .github/workflows/ci.yml (build + typecheck).
+
+on:
+  pull_request:
+    paths:
+      - "artifacts/majalis/src/core/quran/**"
+      - "artifacts/majalis/src/core/audio/**"
+      - "artifacts/majalis/src/core/tafseer/**"
+      - "artifacts/majalis/src/components/Quran*.tsx"
+      - "artifacts/majalis/src/components/HomeDashboard.tsx"
+      - "artifacts/majalis/src/tests/**"
+      - "artifacts/majalis/vitest.config.ts"
+      - "artifacts/majalis/playwright.quran-engine.config.ts"
+      - "artifacts/majalis/package.json"
+      - ".github/workflows/quran-engine-tests.yml"
+  push:
+    branches: [main]
+    paths:
+      - "artifacts/majalis/src/core/quran/**"
+      - "artifacts/majalis/src/tests/**"
+      - "artifacts/majalis/vitest.config.ts"
+  workflow_dispatch: {}
+
+concurrency:
+  group: quran-engine-tests-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  unit:
+    name: Quran Vitest (non-blocking)
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - name: Install
+        run: pnpm install --frozen-lockfile
+      - name: Vitest unit suite
+        run: pnpm --filter @workspace/majalis run test:quran-vitest
+
+  e2e:
+    name: Quran Playwright E2E (non-blocking)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    continue-on-error: true
+    needs: unit
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - name: Install
+        run: pnpm install --frozen-lockfile
+      - name: Install Chromium
+        run: pnpm --filter @workspace/majalis exec playwright install --with-deps chromium
+      - name: E2E critical + offline
+        env:
+          CI: "true"
+          PORT: "5173"
+          BASE_PATH: "/"
+        run: pnpm --filter @workspace/majalis run test:quran-e2e
