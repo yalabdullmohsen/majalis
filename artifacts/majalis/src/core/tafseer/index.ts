@@ -1,4 +1,6 @@
-/**
- * Tafseer façade (scaffold).
- */
-export { getTafseerService, TafseerService, type TafseerAyahResult } from "./TafseerService";
+export {
+  getTafseerService,
+  TafseerService,
+  DEFAULT_TAFSEER_SOURCE,
+  type TafseerAyahResult,
+} from "./TafseerService";

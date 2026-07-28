@@ -1,31 +1,29 @@
-# Quran Engine — architecture scaffold
+# Quran Engine — core implementation
 
-App root in this monorepo: `artifacts/majalis/src/`  
-(Vercel builds from `artifacts/majalis/` — do not put these under repo-root `/src`.)
+App root: `artifacts/majalis/src/`
 
+## Modules
+
+| Area | Path | Status |
+|------|------|--------|
+| Database | `core/quran/DatabaseManager.ts` | Dexie singleton |
+| State | `core/quran/QuranEngineContext.ts` | Provider + store |
+| Audio | `core/audio/AudioEngine.ts` | Play/pause/seek, repeat, teach |
+| Tafseer | `core/tafseer/TafseerService.ts` | IDB → API |
+| UI | `components/Quran{Viewer,ActionBar}.tsx`, `HomeDashboard.tsx` | Wired |
+| Hook | `hooks/useQuranEngine.ts` | Provider or singleton |
+| Route | `/quran-engine` | `views/QuranEnginePage.tsx` |
+
+## PWA
+
+- `public/quran-engine-manifest.json`
+- `public/quran-engine-sw.js` (Workbox CDN)
+- `workbox-quran-engine.config.cjs` (generateSW)
+
+## Tests
+
+```bash
+pnpm --filter @workspace/majalis run test:quran-scaffold
+pnpm --filter @workspace/majalis run test:quran-db
+pnpm --filter @workspace/majalis run test:quran-audio
 ```
-src/
-  core/
-    index.ts
-    quran/
-      index.ts
-      DatabaseManager.ts
-      QuranEngineContext.ts
-    audio/
-      index.ts
-      AudioEngine.ts
-    tafseer/
-      index.ts
-      TafseerService.ts
-  components/
-    QuranViewer.tsx
-    QuranActionBar.tsx
-    HomeDashboard.tsx
-  hooks/
-    useQuranEngine.ts
-    useQuranEngineCore.ts   # alias → useQuranEngine
-  tests/
-    core-engine.sample.test.ts
-```
-
-Smoke: `npx tsx src/tests/core-engine.sample.test.ts`
