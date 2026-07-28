@@ -1,10 +1,8 @@
 /**
- * Sample scaffold test — Quran Engine core façades.
+ * Sample scaffold smoke — Quran Engine façades.
  * Run: npx tsx src/tests/core-engine.sample.test.ts
- *
- * Replace with Vitest suites under src/tests/unit as implementation lands.
  */
-import { getDatabaseManager } from "../core/quran/DatabaseManager";
+import { getDatabaseManager, databaseManager } from "../core/quran/DatabaseManager";
 import { getQuranEngineContext } from "../core/quran/QuranEngineContext";
 import { getAudioEngine } from "../core/audio/AudioEngine";
 import { getTafseerService } from "../core/tafseer/TafseerService";
@@ -24,23 +22,19 @@ function check(cond: boolean, label: string) {
 }
 
 async function main() {
-  console.log("═══ Quran Engine scaffold smoke ═══");
+  console.log("═══ Quran Engine façade smoke ═══");
 
-  const db = getDatabaseManager();
+  check(getDatabaseManager() === databaseManager, "databaseManager singleton");
+  check(typeof getDatabaseManager().saveProgress === "function", "saveProgress");
+  check(typeof getAudioEngine().playAyah === "function", "AudioEngine.playAyah");
+  check(typeof getAudioEngine().setRepeatMode === "function", "AudioEngine.setRepeatMode");
+  check(typeof getTafseerService().getAyahTafsir === "function", "TafseerService.getAyahTafsir");
+
   const ctx = getQuranEngineContext();
-  const audio = getAudioEngine();
-  const tafseer = getTafseerService();
-
-  check(db === getDatabaseManager(), "DatabaseManager singleton");
-  check(ctx.db === db, "QuranEngineContext.db is DatabaseManager");
-  check(audio === getAudioEngine(), "AudioEngine singleton");
-  check(tafseer === getTafseerService(), "TafseerService singleton");
-  check(typeof useQuranEngine === "function", "useQuranEngine hook exported");
-
-  check((await db.initialize()) === false, "DatabaseManager.initialize scaffold returns false");
-  check((await ctx.loadLastReadingProgress()) === null, "loadLastReadingProgress scaffold null");
-  check(audio.getSnapshot().playerState === "idle", "AudioEngine idle snapshot");
-  check((await tafseer.getAyahTafsir(1, 1)) === null, "TafseerService scaffold null");
+  check(ctx.db === databaseManager, "context.db");
+  check(typeof ctx.toggleTajweed === "function", "toggleTajweed");
+  check(typeof ctx.toggleActionBar === "function", "toggleActionBar");
+  check(typeof useQuranEngine === "function", "useQuranEngine hook");
 
   console.log(`\n${passed} passed, ${failed} failed`);
   if (failed > 0) process.exit(1);

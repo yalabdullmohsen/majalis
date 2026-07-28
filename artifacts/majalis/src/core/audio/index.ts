@@ -1,4 +1,9 @@
-/**
- * Audio engine façade (scaffold).
- */
-export { getAudioEngine, AudioEngine, type RepeatMode } from "./AudioEngine";
+export {
+  getAudioEngine,
+  AudioEngine,
+  type RepeatMode,
+  type TeachPhase,
+  type PlayerState,
+  type AudioEngineSnapshot,
+  type AyahChangePayload,
+} from "./AudioEngine";
