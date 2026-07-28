@@ -63,11 +63,17 @@ function main() {
     "components/majlis/EducationalCoursesWidget.tsx",
     "components/majlis/SmartSearchPanel.tsx",
     "components/majlis/QuranReaderWidget.tsx",
+    "components/majlis/AIRecitationWidget.tsx",
     "components/quran/TafsirModalViewer.tsx",
+    "lib/majlis-audio-service.ts",
+    "lib/majlis-local-storage-service.ts",
     "majlis/index.ts",
   ]) {
     check(existsSync(join(root, f)), f);
   }
+
+  check(typeof services.getMajlisAudioService === "function", "services audio");
+  check(typeof services.getLocalStorageService === "function", "services storage");
 
   console.log(`\n${passed} passed, ${failed} failed`);
   if (failed > 0) process.exit(1);

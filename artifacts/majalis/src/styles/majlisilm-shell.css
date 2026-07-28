@@ -178,6 +178,99 @@
   accent-color: #795548;
 }
 
+.majlisilm-app__edu {
+  padding: 1rem 1rem max(1rem, env(safe-area-inset-bottom, 0px));
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  height: 100%;
+}
+
+/* AI Recitation widget */
+.ai-recitation {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  border-radius: 12px;
+  background: rgba(121, 85, 72, 0.06);
+}
+
+.ai-recitation__title {
+  margin: 0 0 0.5rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.ai-recitation__hint {
+  margin: 0 0 0.75rem;
+  font-size: 0.88rem;
+  line-height: 1.6;
+  opacity: 0.8;
+}
+
+.ai-recitation__target {
+  margin: 0 0 0.85rem;
+  padding: 0.65rem;
+  border-radius: 8px;
+  background: rgba(121, 85, 72, 0.08);
+  text-align: center;
+  font-family: var(--font-quran, "Amiri Quran", "Scheherazade New", serif);
+  font-size: 1.15rem;
+  line-height: 1.9;
+}
+
+.ai-recitation__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 2.5rem;
+  padding: 0.4rem 0.9rem;
+  border: none;
+  border-radius: 0.55rem;
+  background: #795548;
+  color: #fff;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.ai-recitation__btn--active {
+  background: #b45309;
+}
+
+.ai-recitation__btn--ghost {
+  background: transparent;
+  color: #795548;
+  border: 1px solid rgba(121, 85, 72, 0.35);
+  margin-top: 0.65rem;
+}
+
+.ai-recitation__score {
+  margin: 0 0 0.45rem;
+  font-weight: 700;
+}
+
+.ai-recitation__bar {
+  height: 8px;
+  border-radius: 999px;
+  background: #e5e7eb;
+  overflow: hidden;
+  margin-bottom: 0.65rem;
+}
+
+.ai-recitation__bar > span {
+  display: block;
+  height: 100%;
+  background: #795548;
+  border-radius: inherit;
+  transition: width 0.25s ease;
+}
+
+.ai-recitation__transcript {
+  margin: 0.5rem 0 0;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  opacity: 0.85;
+}
+
 /* Smart search */
 .smart-search {
   position: fixed;

@@ -76,3 +76,19 @@ export {
   type SearchCategory,
   type SmartSearchItem,
 } from "@/lib/smart-search-engine";
+
+/** Flutter just_audio AudioService → HTMLAudio wrapper. */
+export {
+  MajlisAudioService,
+  AudioService,
+  createMajlisAudioService,
+  getMajlisAudioService,
+  type AudioServiceState,
+} from "@/lib/majlis-audio-service";
+
+/** Flutter shared_preferences LocalStorageService. */
+export {
+  LocalStorageService,
+  getLocalStorageService,
+  type PersistedQuranPrefs,
+} from "@/lib/majlis-local-storage-service";

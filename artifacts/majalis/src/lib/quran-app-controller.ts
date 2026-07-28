@@ -21,6 +21,7 @@
  */
 
 import { IMMERSIVE_PAPER_BG } from "@/lib/quran-immersive";
+import { getLocalStorageService } from "@/lib/majlis-local-storage-service";
 
 /** Flutter ImmersiveQuranApp Slider min/max. */
 export const QURAN_APP_FONT_MIN = 20;
@@ -142,8 +143,32 @@ export class QuranAppController {
   }
 }
 
-export function createQuranAppController(): QuranAppController {
-  return new QuranAppController();
+export function createQuranAppController(opts?: {
+  /** Load font/theme from LocalStorageService (default true). */
+  hydrate?: boolean;
+  /** Persist on every notifyListeners (default true when hydrate). */
+  persist?: boolean;
+}): QuranAppController {
+  const c = new QuranAppController();
+  const hydrate = opts?.hydrate !== false;
+  const persist = opts?.persist ?? hydrate;
+  const ls = getLocalStorageService();
+
+  if (hydrate) {
+    c.updateFontSize(ls.getFontSizeSync());
+    c.toggleTheme(ls.getDarkModeSync());
+    void ls.getLastVerseIndex().then((idx) => {
+      if (idx != null) c.selectVerse(idx);
+    });
+  }
+
+  if (persist) {
+    c.subscribe(() => {
+      void ls.persistController(c);
+    });
+  }
+
+  return c;
 }
 
 /** Al-Fatiha sample used in Flutter ImmersiveQuranApp. */
