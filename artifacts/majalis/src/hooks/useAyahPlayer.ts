@@ -182,12 +182,17 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
     };
     const onError = () => setPlayerState("error");
 
-    audio.addEventListener("playing", onPlaying, { once: true });
+    audio.addEventListener("playing", onPlaying);
     audio.addEventListener("pause", onPause);
-    audio.addEventListener("ended", onEnded, { once: true });
-    audio.addEventListener("error", onError, { once: true });
+    audio.addEventListener("ended", onEnded);
+    audio.addEventListener("error", onError);
 
-    pauseCleanupRef.current = () => audio.removeEventListener("pause", onPause);
+    pauseCleanupRef.current = () => {
+      audio.removeEventListener("playing", onPlaying);
+      audio.removeEventListener("pause", onPause);
+      audio.removeEventListener("ended", onEnded);
+      audio.removeEventListener("error", onError);
+    };
 
     audio.load();
     /* استدعاء play() فورًا ومتزامنًا مع نفس استدعاء لمسة المستخدم — لا ننتظر

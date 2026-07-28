@@ -12,6 +12,7 @@ import { PERF_SLOW_MS } from "./lib/performance-monitor";
 import { registerProductionServiceWorker } from "./lib/service-worker";
 import { setupStatusBar, setupKeyboard, isAndroid, isNative } from "./lib/capacitor-utils";
 import { initFinalPolish } from "./lib/init-final-polish";
+import { initSystemHardening } from "./lib/init-system-hardening";
 // هوية v4: مصدر الرموز الوحيد (لون/طباعة/مسافات/حواف/ظلال/حركة). يجب أن
 // يبقى أول استيراد — كل ملفات CSS اللاحقة تستهلك رموزه، وأنظمة الرموز
 // القديمة الـ15 مُعاد توجيهها إليه داخله كـaliases.
@@ -37,6 +38,7 @@ resetMobileNavBodyLock();
 applyFontPreference(readFontPreference());
 initClientErrorReporting();
 initFinalPolish();
+initSystemHardening();
 
 async function mount() {
   const started = performance.now();

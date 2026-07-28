@@ -13,6 +13,8 @@ import {
   type LocalFlashReview,
 } from "@/lib/flashcard-local-store";
 import { isOnline } from "@/lib/offline-db";
+import { withHarmonyLock } from "@/lib/system-harmony";
+import { isQuotaExceededError, enterQuotaEmergencyMode } from "@/lib/quota-emergency";
 
 // ─── Card type ─────────────────────────────────────────────────────────────────
 
@@ -228,31 +230,34 @@ export async function submitCardReview(
 /** Push dirty local reviews to Supabase when back online. */
 export async function syncDirtyFlashcardReviews(userId: string): Promise<number> {
   if (!isOnline()) return 0;
-  const dirty = await listDirtyReviews(userId);
-  let synced = 0;
-  for (const row of dirty) {
-    try {
-      await supabase.from("flashcard_reviews").upsert(
-        {
-          user_id: row.user_id,
-          card_type: row.card_type,
-          card_id: row.card_id,
-          next_review_at: row.next_review_at,
-          interval_days: row.interval_days,
-          ease_factor: row.ease_factor,
-          repetitions: row.repetitions,
-          last_quality: row.last_quality,
-          reviewed_at: row.reviewed_at,
-        },
-        { onConflict: "user_id,card_type,card_id" },
-      );
-      await markReviewClean(row);
-      synced += 1;
-    } catch {
-      /* keep dirty */
+  return withHarmonyLock("flashcard-sync", async () => {
+    const dirty = await listDirtyReviews(userId);
+    let synced = 0;
+    for (const row of dirty) {
+      try {
+        await supabase.from("flashcard_reviews").upsert(
+          {
+            user_id: row.user_id,
+            card_type: row.card_type,
+            card_id: row.card_id,
+            next_review_at: row.next_review_at,
+            interval_days: row.interval_days,
+            ease_factor: row.ease_factor,
+            repetitions: row.repetitions,
+            last_quality: row.last_quality,
+            reviewed_at: row.reviewed_at,
+          },
+          { onConflict: "user_id,card_type,card_id" },
+        );
+        await markReviewClean(row);
+        synced += 1;
+      } catch (err) {
+        if (isQuotaExceededError(err)) void enterQuotaEmergencyMode("flashcard-sync");
+        /* keep dirty */
+      }
     }
-  }
-  return synced;
+    return synced;
+  });
 }
 
 // ─── Stats ─────────────────────────────────────────────────────────────────────

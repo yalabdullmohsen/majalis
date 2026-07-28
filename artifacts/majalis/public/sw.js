@@ -115,6 +115,71 @@ function fetchWithTimeout(req, ms = FETCH_TIMEOUT) {
   ]);
 }
 
+/** When true, skip writing non-essential Cache Storage entries (quota emergency). */
+let ephemeralCacheMode = false;
+
+async function notifyClientsQuotaEmergency() {
+  try {
+    const list = await self.clients.matchAll({ type: "window", includeUncontrolled: true });
+    for (const client of list) {
+      client.postMessage({ type: "MAJALIS_QUOTA_EMERGENCY", at: Date.now() });
+    }
+  } catch {
+    /* ignore */
+  }
+}
+
+/** Evict older data/offline caches; trim current DATA_CACHE. Never deletes VERSION_CACHE. */
+async function handleQuotaEmergency() {
+  try {
+    const keys = await caches.keys();
+    for (const k of keys) {
+      if (k === VERSION_CACHE) continue;
+      if (
+        (k.startsWith("majalis-data-") && k !== DATA_CACHE) ||
+        (k.startsWith("majalis-offline-") && k !== OFFLINE_CACHE)
+      ) {
+        await caches.delete(k);
+      }
+    }
+    try {
+      const cache = await caches.open(DATA_CACHE);
+      const reqs = await cache.keys();
+      const drop = Math.ceil(reqs.length / 2);
+      for (let i = 0; i < drop; i++) {
+        await cache.delete(reqs[i]);
+      }
+    } catch {
+      /* ignore */
+    }
+  } finally {
+    ephemeralCacheMode = true;
+    await notifyClientsQuotaEmergency();
+  }
+}
+
+function isQuotaError(err) {
+  if (!err) return false;
+  if (err.name === "QuotaExceededError") return true;
+  return /quota/i.test(String(err.message || err));
+}
+
+async function safeCachePut(cache, req, res) {
+  if (ephemeralCacheMode) return;
+  try {
+    await cache.put(req, res);
+  } catch (err) {
+    if (!isQuotaError(err)) return;
+    await handleQuotaEmergency();
+    if (ephemeralCacheMode) return;
+    try {
+      await cache.put(req, res);
+    } catch {
+      ephemeralCacheMode = true;
+    }
+  }
+}
+
 /** Cache-first: try cache, fall back to network and update cache. */
 async function cacheFirst(req, cacheName) {
   const cached = await caches.match(req);
@@ -123,7 +188,8 @@ async function cacheFirst(req, cacheName) {
     const res = await fetch(req);
     if (res.ok) {
       const cache = await caches.open(cacheName);
-      cache.put(req, res.clone()).catch(() => undefined);
+      // Do not await put on the critical path — but quota-guard the write.
+      void safeCachePut(cache, req, res.clone());
     }
     return res;
   } catch {
@@ -215,6 +281,16 @@ const _smartLocalTimers = new Map(); // tag → timeoutId
 self.addEventListener("message", (event) => {
   const msg = event.data;
   if (!msg) return;
+
+  if (msg.type === "MAJALIS_SET_EPHEMERAL_CACHE") {
+    ephemeralCacheMode = !!msg.enabled;
+    return;
+  }
+
+  if (msg.type === "MAJALIS_QUOTA_EVICT") {
+    event.waitUntil(handleQuotaEmergency());
+    return;
+  }
 
   // Smart local schedule (adhkar / streak / khatmah / prayer reminders)
   if (msg.type === "MAJALIS_SCHEDULE_LOCAL_NOTIFS" && Array.isArray(msg.items)) {

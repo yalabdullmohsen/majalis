@@ -8,6 +8,9 @@
 import { savePosition, loadPosition } from "@/lib/quran-api";
 import { readLocalJson, writeLocalJson, isPlainObject } from "@/lib/safe-json";
 import { registerUnloadPersist } from "@/lib/unload-persist";
+import { withHarmonyLock } from "@/lib/system-harmony";
+import { isQuotaExceededError, enterQuotaEmergencyMode } from "@/lib/quota-emergency";
+import { guardIdbValue, isGuardedAudioResume } from "@/lib/idb-payload-guards";
 
 export const AUDIO_RESUME_LS_KEY = "majalis-quran-audio-resume-v1";
 const LS_KEY = AUDIO_RESUME_LS_KEY;
@@ -66,12 +69,20 @@ export function saveAudioResumeState(state: QuranAudioResumeState): void {
     const payload = normalizeState({ ...state, updatedAt: Date.now() });
     pendingResume = payload;
     ensureUnloadRegistration();
-    writeLocalJson(LS_KEY, payload);
+    const ok = writeLocalJson(LS_KEY, payload);
+    if (!ok) {
+      // LS write may fail under quota — protect resume via emergency then stage
+      void enterQuotaEmergencyMode("audio-resume-ls").then(() => {
+        writeLocalJson(LS_KEY, payload);
+      });
+    }
     // Keep legacy position in sync for existing Mushaf resume UX
     savePosition(payload.surah, payload.ayah);
-    void idbPut(payload);
-  } catch {
-    /* silent */
+    void withHarmonyLock("audio-resume", () => idbPut(payload)).catch((err: unknown) => {
+      if (isQuotaExceededError(err)) void enterQuotaEmergencyMode("audio-resume-idb");
+    });
+  } catch (err) {
+    if (isQuotaExceededError(err)) void enterQuotaEmergencyMode("audio-resume");
   }
 }
 
@@ -119,6 +130,10 @@ export function loadAudioResumeState(): QuranAudioResumeState | null {
 export async function loadAudioResumeStateAsync(): Promise<QuranAudioResumeState | null> {
   try {
     const fromIdb = await idbGet();
+    const guarded = guardIdbValue(fromIdb, isGuardedAudioResume);
+    if (guarded) {
+      return normalizeState(guarded);
+    }
     if (fromIdb && isAudioResumeState(fromIdb)) {
       return normalizeState(fromIdb);
     }

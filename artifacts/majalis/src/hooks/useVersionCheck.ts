@@ -6,6 +6,8 @@ import {
   isNewVersionAvailable,
 } from "@/lib/version-check";
 import { safeLocationReload } from "@/lib/safe-reload";
+import { scaleIntervalMs } from "@/lib/power-saver-engine";
+import { getBatteryThrottleState } from "@/lib/battery-throttle";
 
 /**
  * يفحص دوريًا (كل بضع دقائق + فور رجوع التبويب من الخلفية) هل صار هناك
@@ -49,15 +51,23 @@ export function useVersionCheck() {
   useEffect(() => {
     if (!loadedCommit || updateAvailable) return; // dev/local build أو تم الاكتشاف بالفعل
 
-    const interval = window.setInterval(() => { void check(); }, VERSION_CHECK_INTERVAL_MS);
+    const bat = getBatteryThrottleState();
+    const base = bat.deferBackground ? VERSION_CHECK_INTERVAL_MS * 3 : VERSION_CHECK_INTERVAL_MS;
+    const intervalMs = scaleIntervalMs(base);
+    const interval = window.setInterval(() => { void check(); }, intervalMs);
     const onVisibility = () => {
       if (document.visibilityState === "visible") void check();
     };
+    const onThrottle = () => {
+      /* interval rebuilt via effect deps if we listened — soft: next tick uses scaled ms on remount */
+    };
     document.addEventListener("visibilitychange", onVisibility);
+    window.addEventListener("majalis-battery-throttle", onThrottle);
 
     return () => {
       window.clearInterval(interval);
       document.removeEventListener("visibilitychange", onVisibility);
+      window.removeEventListener("majalis-battery-throttle", onThrottle);
     };
   }, [loadedCommit, updateAvailable, check]);
 

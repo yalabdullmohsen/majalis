@@ -1,33 +1,41 @@
 /**
- * Tiny LRU cache for string→string (Arabic normalize memoization).
+ * Bounded LRU caches for volatile in-memory data.
  * Avoid TS parameter properties — Node strip-only mode (SEO generate) rejects them.
  */
 
-export class LruStringCache {
-  private map = new Map<string, string>();
+/** Generic Map-backed LRU with strict max size (evicts least-recently-used). */
+export class LruCache<K, V> {
+  private map = new Map<K, V>();
   private maxSize: number;
 
   constructor(maxSize: number) {
-    this.maxSize = maxSize;
+    this.maxSize = Math.max(1, maxSize | 0);
   }
 
-  get(key: string): string | undefined {
+  get(key: K): V | undefined {
     const v = this.map.get(key);
     if (v === undefined) return undefined;
-    // refresh recency
     this.map.delete(key);
     this.map.set(key, v);
     return v;
   }
 
-  set(key: string, value: string): void {
+  has(key: K): boolean {
+    return this.map.has(key);
+  }
+
+  set(key: K, value: V): void {
     if (this.map.has(key)) this.map.delete(key);
     this.map.set(key, value);
     while (this.map.size > this.maxSize) {
-      const oldest = this.map.keys().next().value;
+      const oldest = this.map.keys().next().value as K | undefined;
       if (oldest === undefined) break;
       this.map.delete(oldest);
     }
+  }
+
+  delete(key: K): boolean {
+    return this.map.delete(key);
   }
 
   clear(): void {
@@ -36,6 +44,31 @@ export class LruStringCache {
 
   get size(): number {
     return this.map.size;
+  }
+}
+
+/** Tiny LRU cache for string→string (Arabic normalize memoization). */
+export class LruStringCache {
+  private inner: LruCache<string, string>;
+
+  constructor(maxSize: number) {
+    this.inner = new LruCache(maxSize);
+  }
+
+  get(key: string): string | undefined {
+    return this.inner.get(key);
+  }
+
+  set(key: string, value: string): void {
+    this.inner.set(key, value);
+  }
+
+  clear(): void {
+    this.inner.clear();
+  }
+
+  get size(): number {
+    return this.inner.size;
   }
 }
 

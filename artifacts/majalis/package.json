@@ -87,6 +87,7 @@
     "test:sm2": "node scripts/test-sm2.mjs && npx tsx src/lib/__tests__/offline-sm2-streaks.test.ts",
     "test:platform-logic": "npx tsx src/lib/__tests__/platform-logic-suite.test.ts",
     "test:final-polish": "npx tsx src/lib/__tests__/final-polish-persistence.test.ts",
+    "test:system-hardening-part10": "npx tsx src/lib/__tests__/system-hardening-part10.test.ts",
     "test:tadabbur-suite": "npx tsx src/lib/__tests__/tadabbur-vault-oled-discovery-sync.test.ts",
     "test:topic-chunk-cache-suite": "npx tsx src/lib/__tests__/topic-chunk-cache-suite.test.ts",
     "test:speech-scroll-sacred-sync-suite": "npx tsx src/lib/__tests__/speech-scroll-sacred-sync-suite.test.ts",

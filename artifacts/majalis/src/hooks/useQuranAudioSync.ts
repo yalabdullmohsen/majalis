@@ -1,8 +1,3 @@
-/**
- * Sync Quran audio position → verse highlight persistence + auto-scroll.
- * Pure logic hook — does not alter layout; callers opt-in to scroll.
- * Unload-safe: stages currentTime and flushes on pagehide / visibility hidden.
- */
 import { useEffect, useRef } from "react";
 import {
   saveAudioResumeState,
@@ -14,6 +9,7 @@ import {
   type QuranAudioResumeState,
 } from "@/lib/quran-audio-resume";
 import { registerUnloadPersist } from "@/lib/unload-persist";
+import { setThrottledInterval, clearThrottledInterval } from "@/lib/power-saver-engine";
 
 export type UseQuranAudioSyncOptions = {
   surah: number;
@@ -54,7 +50,8 @@ export function useQuranAudioSync(opts: UseQuranAudioSyncOptions): {
     const audio = opts.audio;
     if (!audio || opts.ayah == null) return;
     const interval = Math.max(1000, opts.persistIntervalMs ?? 2500);
-    const id = window.setInterval(() => {
+    // Critical lane — never slowed by power-saver (audio timeline integrity).
+    const id = setThrottledInterval(() => {
       if (audio.paused) return;
       saveAudioResumeState({
         surah: opts.surah,
@@ -63,11 +60,10 @@ export function useQuranAudioSync(opts: UseQuranAudioSyncOptions): {
         reciterId: opts.reciterId,
         updatedAt: Date.now(),
       });
-    }, interval);
-    return () => window.clearInterval(id);
+    }, interval, { critical: true });
+    return () => clearThrottledInterval(id);
   }, [opts.audio, opts.ayah, opts.surah, opts.reciterId, opts.persistIntervalMs]);
 
-  // Unload / freeze: capture latest currentTime without waiting for interval
   useEffect(() => {
     const unreg = registerUnloadPersist("useQuranAudioSync", () => {
       const o = optsRef.current;

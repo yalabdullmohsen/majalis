@@ -18,10 +18,15 @@ export function useDevotionalBalance(section?: DevotionalSection) {
   const startedAt = useRef<number>(Date.now());
 
   useEffect(() => {
+    let cancelled = false;
     void loadDevotionalBalanceAsync().then((s) => {
+      if (cancelled) return;
       setState(s);
       setPrompts(generateTimeAwarePrompts({ state: s }));
     });
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   useEffect(() => {

@@ -1,10 +1,12 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { isOnline } from "@/lib/offline-db";
 import { withOfflineFallback } from "@/lib/offline-content-store";
+import { useAbortableEffect } from "@/hooks/useAbortableEffect";
 
 /**
  * Generic offline-first reader for any content key.
  * Returns cached data when the network fails — never surfaces a thrown error.
+ * Abort/generation-safe across remounts and rapid reload().
  */
 export function useOfflineContent<T>(options: {
   enabled?: boolean;
@@ -17,23 +19,32 @@ export function useOfflineContent<T>(options: {
   const [fromCache, setFromCache] = useState(false);
   const [loading, setLoading] = useState(enabled);
   const [online, setOnline] = useState(isOnline());
+  const genRef = useRef(0);
+  const optsRef = useRef(options);
+  optsRef.current = options;
 
-  const reload = useCallback(async () => {
+  const reload = useCallback(async (signal?: AbortSignal) => {
     if (!enabled) return;
+    const myGen = ++genRef.current;
     setLoading(true);
+    const o = optsRef.current;
     const result = await withOfflineFallback({
-      fetchOnline: options.fetchOnline,
-      readCache: options.readCache,
-      writeCache: options.writeCache,
+      fetchOnline: o.fetchOnline,
+      readCache: o.readCache,
+      writeCache: o.writeCache,
     });
+    if (signal?.aborted || myGen !== genRef.current) return;
     setData(result.data);
     setFromCache(result.fromCache);
     setLoading(false);
-  }, [enabled, options.fetchOnline, options.readCache, options.writeCache]);
+  }, [enabled]);
 
-  useEffect(() => {
-    void reload();
-  }, [reload]);
+  useAbortableEffect(
+    (signal) => {
+      void reload(signal);
+    },
+    [reload],
+  );
 
   useEffect(() => {
     const onOnline = () => {
@@ -46,6 +57,7 @@ export function useOfflineContent<T>(options: {
     return () => {
       window.removeEventListener("online", onOnline);
       window.removeEventListener("offline", onOffline);
+      genRef.current += 1; // invalidate in-flight on unmount
     };
   }, [reload]);
 

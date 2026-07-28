@@ -40,13 +40,16 @@ const DEFAULT_PREFS: PowerSaverPrefs = {
 };
 
 type ManagedInterval = {
-  id: number;
+  /** Live window timer id (may change on rebalance). */
+  timerId: number;
   callback: () => void;
   baseMs: number;
   critical: boolean;
 };
 
+/** handleId (stable) → managed entry */
 const managed = new Map<number, ManagedInterval>();
+let nextHandle = 1;
 let sessionTimer: ReturnType<typeof setTimeout> | null = null;
 let visibilityBound = false;
 let state: PowerSaverState = {
@@ -74,6 +77,13 @@ function emit(): void {
     }
   }
   rebalanceManagedIntervals();
+  if (typeof window !== "undefined") {
+    try {
+      window.dispatchEvent(new CustomEvent("majalis-power-saver", { detail: state }));
+    } catch {
+      /* ignore */
+    }
+  }
 }
 
 export function loadPowerSaverPrefs(): PowerSaverPrefs {
@@ -182,6 +192,7 @@ export function subscribePowerSaver(listener: (s: PowerSaverState) => void): () 
 /**
  * Register an interval that auto-throttles under power-saver.
  * Critical intervals (audio progress, reading timers) are never slowed.
+ * Returns a stable handle (not the raw timer id) so rebalance cannot leak.
  */
 export function setThrottledInterval(
   callback: () => void,
@@ -190,26 +201,31 @@ export function setThrottledInterval(
 ): number {
   const critical = opts?.critical === true;
   const effective = critical ? baseMs : Math.round(baseMs * state.intervalMultiplier);
-  const id = window.setInterval(callback, Math.max(250, effective));
-  managed.set(id, { id, callback, baseMs, critical });
-  return id;
+  const timerId = window.setInterval(callback, Math.max(250, effective));
+  const handleId = nextHandle++;
+  managed.set(handleId, { timerId, callback, baseMs, critical });
+  return handleId;
 }
 
-export function clearThrottledInterval(id: number): void {
-  window.clearInterval(id);
-  managed.delete(id);
+export function clearThrottledInterval(handleId: number): void {
+  const entry = managed.get(handleId);
+  if (entry) {
+    window.clearInterval(entry.timerId);
+    managed.delete(handleId);
+  } else {
+    window.clearInterval(handleId);
+  }
 }
 
 function rebalanceManagedIntervals(): void {
   if (typeof window === "undefined") return;
-  for (const entry of [...managed.values()]) {
-    window.clearInterval(entry.id);
-    managed.delete(entry.id);
+  for (const [handleId, entry] of managed.entries()) {
+    window.clearInterval(entry.timerId);
     const effective = entry.critical
       ? entry.baseMs
       : Math.round(entry.baseMs * state.intervalMultiplier);
-    const newId = window.setInterval(entry.callback, Math.max(250, effective));
-    managed.set(newId, { ...entry, id: newId });
+    const timerId = window.setInterval(entry.callback, Math.max(250, effective));
+    managed.set(handleId, { ...entry, timerId });
   }
 }
 

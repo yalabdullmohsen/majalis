@@ -5,6 +5,9 @@
 import { idbGetAll, idbPut, OFFLINE_STORES } from "@/lib/offline-db";
 import type { ReviewQuality } from "@/lib/spaced-repetition";
 import { readLocalJson, writeLocalJson, isPlainObject } from "@/lib/safe-json";
+import { withHarmonyLock } from "@/lib/system-harmony";
+import { guardIdbValue, isGuardedFlashReview } from "@/lib/idb-payload-guards";
+import { isQuotaExceededError, enterQuotaEmergencyMode } from "@/lib/quota-emergency";
 
 const LS_KEY = "majalis-flashcard-reviews-v1";
 
@@ -58,14 +61,16 @@ function writeLs(rows: LocalFlashReview[]): void {
 export async function saveLocalReview(row: LocalFlashReview): Promise<void> {
   const key = reviewKey(row.user_id, row.card_type, row.card_id);
   const full = { ...row, key };
-  const list = readLs().filter((r) => r.key !== key);
-  list.unshift(full);
-  writeLs(list);
-  try {
-    await idbPut(OFFLINE_STORES.flashcards, key, full);
-  } catch {
-    /* IDB optional */
-  }
+  await withHarmonyLock("flashcard-sync", async () => {
+    const list = readLs().filter((r) => r.key !== key);
+    list.unshift(full);
+    writeLs(list);
+    try {
+      await idbPut(OFFLINE_STORES.flashcards, key, full);
+    } catch (err) {
+      if (isQuotaExceededError(err)) void enterQuotaEmergencyMode("flashcard-idb");
+    }
+  });
 }
 
 export async function listLocalReviews(userId: string): Promise<LocalFlashReview[]> {
@@ -75,8 +80,12 @@ export async function listLocalReviews(userId: string): Promise<LocalFlashReview
     const map = new Map<string, LocalFlashReview>();
     for (const r of fromLs) map.set(r.key, r);
     for (const rec of idbRows) {
-      const v = rec.value;
-      if (v?.user_id === userId) map.set(v.key, v);
+      const v = isFlashReview(rec.value)
+        ? rec.value
+        : guardIdbValue(rec.value, isGuardedFlashReview);
+      if (v && "user_id" in v && v.user_id === userId && "key" in v) {
+        map.set(String(v.key), v as LocalFlashReview);
+      }
     }
     return [...map.values()];
   } catch {
