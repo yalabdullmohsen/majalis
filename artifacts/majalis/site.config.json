@@ -22,5 +22,5 @@
   "forbiddenBrandNames": ["مجالس العلم", "منصة المجالس", "مجالس العلمية"],
   "forbiddenEmailDomains": ["gmail.com", "hotmail.com", "outlook.com", "yahoo.com"],
 
-  "defaultImage": "/logo.png"
+  "defaultImage": "/opengraph.jpg"
 }

@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Link } from "wouter";
 import { Empty } from "@/components/ui-common";
 import {
@@ -7,7 +6,8 @@ import {
   getLocationLabel,
   getScientificAnnouncementById,
 } from "@/lib/scientific-announcements";
-import { applyPageSeo } from "@/lib/seo";
+import { MetaHead } from "@/components/seo/MetaHead";
+import { OptimizedImage } from "@/components/media/OptimizedImage";
 import { ContentDetailLayout } from "@/components/platform/ContentDetailLayout";
 import "@/styles/pages/scientific-announcements.css";
 
@@ -36,35 +36,6 @@ export default function ScientificAnnouncementDetailPage({
 }) {
   const item = getScientificAnnouncementById(params.id);
 
-  useEffect(() => {
-    if (!item) {
-      applyPageSeo({
-        path: `/scientific-announcements/${params.id}`,
-        title: "الإعلان غير موجود | المجلس العلمي",
-        description: "لم يُعثر على هذا الإعلان العلمي.",
-        robots: "noindex, follow",
-        jsonLd: [],
-      });
-      return;
-    }
-    applyPageSeo({
-      path: `/scientific-announcements/${params.id}`,
-      title: `${item.announcementTitle} | المجلس العلمي`,
-      description: `${item.announcementTitle}، تفاصيل الإعلان العلمي والمؤتمرات والدورات الإسلامية.`,
-      keywords: ["إعلانات علمية", "مؤتمرات إسلامية", "دورات علمية", "فعاليات شرعية"],
-      jsonLd: [
-        {
-          "@context": "https://schema.org",
-          "@type": "Event",
-          name: item.announcementTitle,
-          url: `https://www.majlisilm.com/scientific-announcements/${params.id}`,
-          description: `${item.announcementTitle} — تفاصيل الحدث العلمي`,
-          organizer: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
-        },
-      ],
-    });
-  }, [item, params.id]);
-
   // نصّ النسخ ورابط الصفحة: يُمرَّران الآن إلى ContentDetailLayout بدل زرّي
   // "مشاركة"/"نسخ التفاصيل" المخصَّصين سابقًا (navigator.share يدويًا مع
   // احتياط نسخ). ShareButtons المشتركة (المستخدَمة في 14+ صفحة أخرى) تدعم
@@ -82,6 +53,13 @@ export default function ScientificAnnouncementDetailPage({
   if (!item) {
     return (
       <div className="page-shell narrow">
+        <MetaHead
+          path={`/scientific-announcements/${params.id}`}
+          title="الإعلان غير موجود | المجلس العلمي"
+          description="لم يُعثر على هذا الإعلان العلمي."
+          robots="noindex, follow"
+          jsonLd={[]}
+        />
         <Empty text="لم يُعثر على الإعلان." />
         <Link href="/lessons" className="sci-ann-detail__back">
           العودة إلى الدروس
@@ -106,6 +84,26 @@ export default function ScientificAnnouncementDetailPage({
     : undefined;
 
   return (
+    <>
+    <MetaHead
+      path={`/scientific-announcements/${params.id}`}
+      title={`${item.announcementTitle} | المجلس العلمي`}
+      description={`${item.announcementTitle}، تفاصيل الإعلان العلمي والمؤتمرات والدورات الإسلامية.`}
+      keywords={["إعلانات علمية", "مؤتمرات إسلامية", "دورات علمية", "فعاليات شرعية"]}
+      ogImage={item.posterImage}
+      ogType="website"
+      jsonLd={[
+        {
+          "@context": "https://schema.org",
+          "@type": "Event",
+          name: item.announcementTitle,
+          url: `https://www.majlisilm.com/scientific-announcements/${params.id}`,
+          description: `${item.announcementTitle} — تفاصيل الحدث العلمي`,
+          organizer: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
+          ...(item.posterImage ? { image: item.posterImage } : {}),
+        },
+      ]}
+    />
     <ContentDetailLayout
       breadcrumbs={[
         { label: "الرئيسية", href: "/" },
@@ -121,7 +119,15 @@ export default function ScientificAnnouncementDetailPage({
     >
       {item.posterImage && (
         <figure className="sci-ann-detail__poster">
-          <img src={item.posterImage} alt={item.lessonTitle} loading="lazy" decoding="async" width="800" height="600" />
+          <OptimizedImage
+            src={item.posterImage}
+            alt={item.lessonTitle}
+            aspect="4/3"
+            priority
+            width={800}
+            height={600}
+            sizes="(max-width: 720px) 100vw, 800px"
+          />
         </figure>
       )}
 
@@ -225,5 +231,6 @@ export default function ScientificAnnouncementDetailPage({
             اكتُشف بمراجعة اللقطة البصرية بعد الهجرة، لا افتراضًا. */}
       </article>
     </ContentDetailLayout>
+    </>
   );
 }
