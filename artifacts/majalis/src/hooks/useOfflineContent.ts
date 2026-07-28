@@ -1,10 +1,12 @@
 import { useCallback, useEffect, useState } from "react";
 import { isOnline } from "@/lib/offline-db";
 import { withOfflineFallback } from "@/lib/offline-content-store";
+import { useIsOnline } from "@/hooks/useNetworkStatus";
 
 /**
  * Generic offline-first reader for any content key.
  * Returns cached data when the network fails — never surfaces a thrown error.
+ * Online flag comes from the shared network store (no duplicate listeners).
  */
 export function useOfflineContent<T>(options: {
   enabled?: boolean;
@@ -16,7 +18,7 @@ export function useOfflineContent<T>(options: {
   const [data, setData] = useState<T | null>(null);
   const [fromCache, setFromCache] = useState(false);
   const [loading, setLoading] = useState(enabled);
-  const [online, setOnline] = useState(isOnline());
+  const online = useIsOnline();
 
   const reload = useCallback(async () => {
     if (!enabled) return;
@@ -36,18 +38,8 @@ export function useOfflineContent<T>(options: {
   }, [reload]);
 
   useEffect(() => {
-    const onOnline = () => {
-      setOnline(true);
-      void reload();
-    };
-    const onOffline = () => setOnline(false);
-    window.addEventListener("online", onOnline);
-    window.addEventListener("offline", onOffline);
-    return () => {
-      window.removeEventListener("online", onOnline);
-      window.removeEventListener("offline", onOffline);
-    };
-  }, [reload]);
+    if (online) void reload();
+  }, [online, reload]);
 
-  return { data, fromCache, loading, online, reload };
+  return { data, fromCache, loading, online: online && isOnline(), reload };
 }

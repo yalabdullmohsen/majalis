@@ -4,6 +4,7 @@ import {
   saveScrollForSection,
   type ReadingSection,
 } from "@/lib/reading-progress";
+import { addSafeWindowListener, addSafeDocumentListener } from "@/lib/safe-listeners";
 
 /**
  * يستعيد موضع التمرير لقسم محتوى عند أول زيارة للصفحة،
@@ -45,21 +46,19 @@ export function useReadingScrollMemory(section: ReadingSection, enabled = true) 
       });
     };
 
-    window.addEventListener("scroll", onScroll, { passive: true });
-
+    const unScroll = addSafeWindowListener("scroll", onScroll, { passive: true });
     const onHide = () => saveScrollForSection(sectionRef.current, window.scrollY);
-    const onVisibility = () => {
+    const unHide = addSafeWindowListener("pagehide", onHide);
+    const unVis = addSafeDocumentListener("visibilitychange", () => {
       if (document.visibilityState === "hidden") onHide();
-    };
-    window.addEventListener("pagehide", onHide);
-    document.addEventListener("visibilitychange", onVisibility);
+    });
 
     return () => {
       cancelled = true;
       window.clearTimeout(t);
-      window.removeEventListener("scroll", onScroll);
-      window.removeEventListener("pagehide", onHide);
-      document.removeEventListener("visibilitychange", onVisibility);
+      unScroll();
+      unHide();
+      unVis();
       saveScrollForSection(sectionRef.current, window.scrollY);
     };
   }, [section, enabled]);

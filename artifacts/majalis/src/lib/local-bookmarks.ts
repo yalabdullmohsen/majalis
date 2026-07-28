@@ -4,6 +4,7 @@
  */
 
 import { readLocalJson, writeLocalJson, isPlainObject } from "@/lib/safe-json";
+import { withSyncMutex } from "@/lib/storage-lock";
 
 const STORAGE_KEY = "majalis-local-bookmarks-v1";
 const MAX_ITEMS = 80;
@@ -57,28 +58,30 @@ export function toggleLocalBookmark(input: {
   title?: string;
   href?: string;
 }): boolean {
-  const list = readAll();
-  const idx = list.findIndex(
-    (b) => b.contentType === input.contentType && b.contentId === input.contentId,
-  );
-  if (idx >= 0) {
-    list.splice(idx, 1);
+  return withSyncMutex(`bookmark:${input.contentType}:${input.contentId}`, () => {
+    const list = readAll();
+    const idx = list.findIndex(
+      (b) => b.contentType === input.contentType && b.contentId === input.contentId,
+    );
+    if (idx >= 0) {
+      list.splice(idx, 1);
+      writeAll(list);
+      return false;
+    }
+    const href =
+      input.href ||
+      (typeof window !== "undefined" ? `${window.location.pathname}${window.location.search}` : "/");
+    list.unshift({
+      id: `lb-${input.contentType}-${input.contentId}-${Date.now()}`,
+      contentType: input.contentType,
+      contentId: input.contentId,
+      title: (input.title || "").trim() || `${input.contentType}/${input.contentId}`,
+      href,
+      savedAt: new Date().toISOString(),
+    });
     writeAll(list);
-    return false;
-  }
-  const href =
-    input.href ||
-    (typeof window !== "undefined" ? `${window.location.pathname}${window.location.search}` : "/");
-  list.unshift({
-    id: `lb-${input.contentType}-${input.contentId}-${Date.now()}`,
-    contentType: input.contentType,
-    contentId: input.contentId,
-    title: (input.title || "").trim() || `${input.contentType}/${input.contentId}`,
-    href,
-    savedAt: new Date().toISOString(),
+    return true;
   });
-  writeAll(list);
-  return true;
 }
 
 export function removeLocalBookmark(contentType: string, contentId: string): void {

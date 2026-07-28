@@ -161,21 +161,26 @@ export async function fetchSurahDetail(surahNumber: number): Promise<SurahDetail
 export async function fetchTafsirAyahs(
   surahNumber: number,
   edition: string,
+  opts?: { signal?: AbortSignal },
 ): Promise<TafsirAyah[]> {
   const key = `tafsir-${edition}-${surahNumber}`;
   const cached = readCache<TafsirAyah[]>(key);
   if (cached) return cached;
 
-  const res = await fetch(`${BASE}/surah/${surahNumber}/${edition}`, {
-    signal: AbortSignal.timeout(20_000),
+  const { fetchJsonProgressive, mapInChunks } = await import("@/lib/json-progressive-loader");
+  const json = await fetchJsonProgressive<{
+    code: number;
+    data?: { ayahs?: Array<{ numberInSurah: number; text: string }> };
+  }>(`${BASE}/surah/${surahNumber}/${edition}`, {
+    signal: opts?.signal,
+    timeoutMs: 20_000,
   });
-  if (!res.ok) throw new Error(`AlQuran Cloud tafsir: HTTP ${res.status}`);
-  const json = await res.json();
   if (json.code !== 200 || !json.data?.ayahs) return [];
-  const result: TafsirAyah[] = json.data.ayahs.map((a: { numberInSurah: number; text: string }) => ({
-    numberInSurah: a.numberInSurah,
-    text: a.text,
-  }));
+  const result = await mapInChunks(
+    json.data.ayahs,
+    (a) => ({ numberInSurah: a.numberInSurah, text: a.text }),
+    { chunkSize: 32, signal: opts?.signal },
+  );
   writeCache(key, result);
   return result;
 }

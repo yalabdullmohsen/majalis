@@ -93,17 +93,30 @@ export function startOfflineSync(): void {
     globalThis.setTimeout(kick, 2_500);
   }
 
-  window.addEventListener("online", () => {
-    void syncCorePacks();
+  void import("@/lib/safe-listeners").then(({ addSafeWindowListener }) => {
+    addSafeWindowListener("online", () => {
+      void syncCorePacks();
+      void import("@/lib/offline-mutation-queue").then(({ flushMutationQueue, initOfflineMutationQueue }) => {
+        void initOfflineMutationQueue().then(() => flushMutationQueue());
+      });
+    });
   });
 
-  // Periodic soft refresh while tab is open (6h)
+  // Periodic soft refresh while tab is open (6h) — skip while hibernating
   window.setInterval(() => {
-    void getLastContentSync().then((last) => {
-      const age = last ? Date.now() - new Date(last.updatedAt).getTime() : Infinity;
-      if (age > 6 * 60 * 60 * 1000) void syncCorePacks();
+    void import("@/lib/background-hibernation").then(({ isTabHibernating }) => {
+      if (isTabHibernating()) return;
+      void getLastContentSync().then((last) => {
+        const age = last ? Date.now() - new Date(last.updatedAt).getTime() : Infinity;
+        if (age > 6 * 60 * 60 * 1000) void syncCorePacks();
+      });
     });
   }, 30 * 60 * 1000);
+
+  // Boot mutation queue
+  void import("@/lib/offline-mutation-queue").then(({ initOfflineMutationQueue }) => {
+    void initOfflineMutationQueue();
+  });
 }
 
 /** Manual sync trigger (settings / vault). */

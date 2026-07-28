@@ -55,14 +55,13 @@ async function loadCollectionFile(collection: SahihaynCollection): Promise<CdnHa
   if (hit) return hit;
 
   const promise = (async () => {
-    const res = await pooledFetch(`/data/hadith/${collection}.json`, {
-      dedupeKey: `sahihayn:${collection}`,
+    const { fetchJsonProgressive, mapInChunks } = await import("@/lib/json-progressive-loader");
+    const data = await fetchJsonProgressive<SahihaynFile>(`/data/hadith/${collection}.json`, {
       timeoutMs: 20_000,
     });
-    if (!res.ok) throw new Error(`مرجع ${collection} غير متاح (${res.status})`);
-    const data = (await res.json()) as SahihaynFile;
     if (!Array.isArray(data.hadiths)) return [];
-    return data.hadiths.map(leanToCdn);
+    // Chunked map yields to main thread on large collections (Bukhari/Muslim)
+    return mapInChunks(data.hadiths, (h) => leanToCdn(h), { chunkSize: 128 });
   })();
 
   cache.set(collection, promise);

@@ -6,6 +6,7 @@ import {
   type UserStreakActivity,
   type UserStreakState,
 } from "@/lib/user-streak";
+import { addSafeWindowListener } from "@/lib/safe-listeners";
 
 /**
  * Read current streak count / metrics without refactoring existing UI.
@@ -28,13 +29,13 @@ export function useUserStreak() {
   useEffect(() => {
     const refresh = () => setState(getUserStreak());
     refresh();
-    window.addEventListener(USER_STREAK_EVENT, refresh as EventListener);
-    window.addEventListener("majalis-progress-updated", refresh as EventListener);
-    window.addEventListener("storage", refresh);
+    const u1 = addSafeWindowListener(USER_STREAK_EVENT, refresh as EventListener);
+    const u2 = addSafeWindowListener("majalis-progress-updated", refresh as EventListener);
+    const u3 = addSafeWindowListener("storage", refresh);
     return () => {
-      window.removeEventListener(USER_STREAK_EVENT, refresh as EventListener);
-      window.removeEventListener("majalis-progress-updated", refresh as EventListener);
-      window.removeEventListener("storage", refresh);
+      u1();
+      u2();
+      u3();
     };
   }, []);
 

@@ -69,7 +69,11 @@ export async function enginePut<T>(
     updatedAt: new Date().toISOString(),
     revision,
   };
-  await db.records.put(row as OfflineRecord);
+  try {
+    await db.records.put(row as OfflineRecord);
+  } catch {
+    /* IndexedDB blocked (private mode / WebView) — silent */
+  }
 }
 
 export async function engineGet<T>(

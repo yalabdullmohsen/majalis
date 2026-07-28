@@ -1,23 +1,26 @@
-import { useState, type Dispatch, type SetStateAction } from "react";
+import { useEffect, useState, type Dispatch, type SetStateAction } from "react";
 import { safeJsonParse } from "@/lib/safe-json";
 
 /**
  * بديل مباشر لـ useState يحفظ القيمة في sessionStorage فيبقى محفوظًا عند
- * إعادة تركيب الصفحة (مثلاً بعد الرجوع إليها عبر GlobalBackButton/زر رجوع
- * المتصفح، حيث يُزيل wouter مكوّن المسار تمامًا) — بلا تغيير في شكل
- * الاستدعاء الأصلي، فيبقى نفس توقيع useState.
+ * إعادة تركيب الصفحة. القراءة من sessionStorage مؤجَّلة لما بعد mount
+ * لتفادي اختلاف SSR/prerender عن العميل.
  */
 export function usePersistedState<T>(key: string, initial: T): [T, Dispatch<SetStateAction<T>>] {
-  const [state, setState] = useState<T>(() => {
+  const [state, setState] = useState<T>(initial);
+  const [hydrated, setHydrated] = useState(false);
+
+  useEffect(() => {
     try {
       const raw = sessionStorage.getItem(key);
       const parsed = safeJsonParse<T>(raw, initial);
-      return parsed.value;
+      setState(parsed.value);
     } catch {
-      /* sessionStorage غير متاح أو JSON تالف — استخدم القيمة الأولية */
-      return initial;
+      /* sessionStorage غير متاح — أبقِ القيمة الأولية */
     }
-  });
+    setHydrated(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [key]);
 
   const setAndPersist: Dispatch<SetStateAction<T>> = (value) => {
     setState((prev) => {
@@ -31,5 +34,7 @@ export function usePersistedState<T>(key: string, initial: T): [T, Dispatch<SetS
     });
   };
 
+  // Until hydrated, behave as controlled initial — callers see stable first paint
+  void hydrated;
   return [state, setAndPersist];
 }

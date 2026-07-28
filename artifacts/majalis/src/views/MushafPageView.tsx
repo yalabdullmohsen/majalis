@@ -14,6 +14,10 @@ import {
 import { loadPageJuzIndex, getSegmentsForPage, findPageForAyah, type QuranSegment } from "@/lib/recitation-ai/page-juz-lookup";
 import { useQuranPreferences, type QuranReadingTheme, type QuranFrameStyle, type QuranHighlightStyle, type QuranPageMode } from "@/hooks/useQuranPreferences";
 import { useAyahPlayer } from "@/hooks/useAyahPlayer";
+import { useQuranAudioSync } from "@/hooks/useQuranAudioSync";
+import { createGenerationGuard } from "@/lib/storage-lock";
+import { runWhenIdle } from "@/lib/idle-defer";
+import { trackPrefetchAbort, ensureHibernationBinding } from "@/lib/background-hibernation";
 import { SurahList } from "@/components/quran/SurahList";
 import { PageAyahActionSheet } from "@/components/quran/PageAyahActionSheet";
 import { ReciterDownloadManager } from "@/components/quran/ReciterDownloadManager";
@@ -85,7 +89,8 @@ export default function MushafPageView() {
     : params.surah && Number(params.surah) >= 1 && Number(params.surah) <= 114
       ? SURAH_START_PAGES[Number(params.surah) - 1]
       : null;
-  const [page, setPageState] = useState<number>(() => clampPage(routePage ?? loadPagePosition() ?? 1));
+  // Deterministic first paint: route param or 1 — hydrate LS position after mount
+  const [page, setPageState] = useState<number>(() => clampPage(routePage ?? 1));
   const [segAyahs, setSegAyahs] = useState<SegmentAyahs[] | null>(null);
   const [v2Layout, setV2Layout] = useState<MushafPageLayout | null>(null);
   const [loading, setLoading] = useState(true);
@@ -103,14 +108,18 @@ export default function MushafPageView() {
      مستقلة عن باقي التبديلات — تبديل دائم لا اختفاء تلقائي بعد مهلة). */
   const [textChromeVisible, setTextChromeVisible] = useState(true);
   const touchStartX = useRef<number | null>(null);
+  const pageGenRef = useRef(createGenerationGuard());
 
   // ── استئناف تلقائي: عند الدخول دون رقم صفحة صريح في الرابط، نبدأ من آخر موضع محفوظ محليًا ──
   useEffect(() => {
     if (!routePage) {
       const saved = loadPagePosition();
-      if (saved && saved !== 1) setResumeBanner(saved);
+      if (saved && saved >= 1) {
+        setPageState(clampPage(saved));
+        if (saved !== 1) setResumeBanner(saved);
+      }
     }
-  }, []);
+  }, [routePage]);
 
   useEffect(() => {
     if (routePage) setPageState(clampPage(routePage));
@@ -138,13 +147,18 @@ export default function MushafPageView() {
   );
 
   // ── تحميل محتوى الصفحة (نص) — يعتمد على فهرس page-juz-index.json + fetchSurahDetail المحليّين الموجودين فعلاً ──
-  const loadPage = useCallback(async (p: number, { silent }: { silent?: boolean } = {}) => {
+  const loadPage = useCallback(async (
+    p: number,
+    { silent, token }: { silent?: boolean; token?: number } = {},
+  ) => {
     if (!silent) { setLoading(true); setError(false); }
     try {
       const index = await loadPageJuzIndex();
+      if (token != null && !pageGenRef.current.isCurrent(token)) return null;
       const segments = getSegmentsForPage(index, p);
       if (segments.length === 0) throw new Error("لا مقاطع لهذه الصفحة");
       const details = await Promise.all(segments.map((s) => fetchSurahDetail(s.surah)));
+      if (token != null && !pageGenRef.current.isCurrent(token)) return null;
       const result: SegmentAyahs[] = segments.map((seg, i) => ({
         segment: seg,
         ayahs: details[i].ayahs
@@ -154,22 +168,33 @@ export default function MushafPageView() {
       if (!silent) setSegAyahs(result);
       return result;
     } catch {
-      if (!silent) setError(true);
+      if (!silent && (token == null || pageGenRef.current.isCurrent(token))) setError(true);
       return null;
     } finally {
-      if (!silent) setLoading(false);
+      if (!silent && (token == null || pageGenRef.current.isCurrent(token))) setLoading(false);
     }
   }, []);
 
   useEffect(() => {
-    let cancelled = false;
-    loadPage(page).then(() => {
-      if (cancelled) return;
-      // تحميل مسبق هادئ للصفحتين المجاورتين — لا يُحدِّث الواجهة، فقط يملأ ذاكرة fetchSurahDetail المحلية
-      if (page > 1) loadPage(page - 1, { silent: true });
-      if (page < TOTAL_PAGES) loadPage(page + 1, { silent: true });
+    const token = pageGenRef.current.next();
+    ensureHibernationBinding();
+    loadPage(page, { token }).then(() => {
+      if (!pageGenRef.current.isCurrent(token)) return;
+      // Prefetch neighbors only during idle + visible tab
+      runWhenIdle(
+        () => {
+          if (!pageGenRef.current.isCurrent(token)) return;
+          const ac = trackPrefetchAbort(new AbortController());
+          if (ac.signal.aborted) return;
+          if (page > 1) void loadPage(page - 1, { silent: true, token });
+          if (page < TOTAL_PAGES) void loadPage(page + 1, { silent: true, token });
+        },
+        { timeoutMs: 2_500, requireVisible: true },
+      );
     });
-    return () => { cancelled = true; };
+    return () => {
+      pageGenRef.current.next();
+    };
   }, [page, loadPage]);
 
   // ── تخطيط السطر الحقيقي (line_number) من نفس بيانات quran-v2 — مصدر
@@ -266,7 +291,27 @@ export default function MushafPageView() {
 
   const activeSurahForPlayer = primarySegment?.segment.surah ?? 1;
   const activeSurahAyahCount = primarySegment ? getSurahMeta(activeSurahForPlayer).ayahs : 0;
-  const { currentAyah, playerState, togglePlayAyah, reciterId, setReciterId, playbackRate, setPlaybackRate, repeatOn, setRepeatOn } = useAyahPlayer(activeSurahForPlayer, activeSurahAyahCount);
+  const {
+    currentAyah,
+    playerState,
+    togglePlayAyah,
+    reciterId,
+    setReciterId,
+    playbackRate,
+    setPlaybackRate,
+    repeatOn,
+    setRepeatOn,
+    audioElement,
+  } = useAyahPlayer(activeSurahForPlayer, activeSurahAyahCount);
+
+  useQuranAudioSync({
+    surah: activeSurahForPlayer,
+    ayah: currentAyah,
+    audio: audioElement.current,
+    reciterId,
+    autoScroll: playerState === "playing",
+    persistIntervalMs: 2500,
+  });
 
   // ── جسر بين مكوّني تخطيط السطر الحقيقي (V2/خفيف) وحالة الآية المختارة/المُشغَّلة القائمة أصلًا ──
   const handleV2AyahPress = useCallback((verseKey: string) => {

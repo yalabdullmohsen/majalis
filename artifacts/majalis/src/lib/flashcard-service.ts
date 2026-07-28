@@ -202,7 +202,11 @@ export async function submitCardReview(
   // Always persist locally first (offline-safe)
   await saveLocalReview(localRow);
 
-  if (!isOnline()) return;
+  if (!isOnline()) {
+    const { enqueueMutation } = await import("@/lib/offline-mutation-queue");
+    enqueueMutation("flashcard-sync", { userId }, { id: `flashcard-sync:${userId}` });
+    return;
+  }
 
   try {
     await supabase.from("flashcard_reviews").upsert(
@@ -221,7 +225,9 @@ export async function submitCardReview(
     );
     await markReviewClean(localRow);
   } catch {
-    /* stays dirty for later sync */
+    /* stays dirty — queue for reconnect */
+    const { enqueueMutation } = await import("@/lib/offline-mutation-queue");
+    enqueueMutation("flashcard-sync", { userId }, { id: `flashcard-sync:${userId}` });
   }
 }
 

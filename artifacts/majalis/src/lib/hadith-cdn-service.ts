@@ -226,9 +226,8 @@ export async function fetchAllHadiths(collection: HadithCollection): Promise<Cdn
 
   const url = `${CDN_BASE}/${cdnEditionSlug(collection)}.min.json`;
   try {
-    const res = await pooledFetch(url, { dedupeKey: `hadith-cdn:all:${collection}`, timeoutMs: 45_000 });
-    if (!res.ok) return [];
-    const data = await res.json();
+    const { fetchJsonProgressive } = await import("@/lib/json-progressive-loader");
+    const data = await fetchJsonProgressive<{ hadiths?: CdnHadith[] }>(url, { timeoutMs: 45_000 });
     const hadiths: CdnHadith[] = data.hadiths ?? [];
     writeCache(key, hadiths);
     return hadiths;
