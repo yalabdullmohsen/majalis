@@ -658,10 +658,10 @@ export const HADITH_CLASS_META: Record<HadithClass, {
   },
   daif: {
     eyebrow: "التمييز والتحذير",
-    title: "الأحاديث المكذوبة",
-    subtitle: "روايات مكذوبة النسبة أو ضعيفة الإسناد المشهورة، تُعرض للتمييز والتحذير لا للاحتجاج.",
-    empty: "لا تُدرَج في هذا القسم رواية إلا بتخريج منسوب إلى إمام معتمد في التضعيف.",
-    countUnit: "حديث مكذوب",
+    title: "الأحاديث الضعيفة",
+    subtitle: "روايات مشهورة على الألسنة، كلٌّ مقرونةٌ بدرجتها وتخريجها المنسوب — فيها الحسن الذي يُعمل به، وفيها الضعيف، وفيها ما لا تصح نسبته إلى النبي ﷺ. فالمعتمَد درجةُ كلِّ بطاقة وحدَها، لا حكمٌ جمليٌّ على القسم.",
+    empty: "لا تُدرَج في هذا القسم رواية إلا بتخريج ودرجة منسوبَين إلى إمام معتمد.",
+    countUnit: "حديث",
   },
   mawdu: {
     eyebrow: "التحذير والبيان",
@@ -1036,7 +1036,7 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
       <nav className="hadith-class-switch" aria-label="أقسام الحديث">
         <Link href="/hadith/sahih" className={`hadith-class-switch__link${authenticityClass === "sahih" ? " is-active" : ""}`}>الصحيح</Link>
         <Link href="/hadith/mawdu" className={`hadith-class-switch__link${authenticityClass === "mawdu" ? " is-active" : ""}`}>الموضوع</Link>
-        <Link href="/hadith/daif" className={`hadith-class-switch__link${authenticityClass === "daif" ? " is-active" : ""}`}>المكذوب</Link>
+        <Link href="/hadith/daif" className={`hadith-class-switch__link${authenticityClass === "daif" ? " is-active" : ""}`}>الضعيف</Link>
         <Link href="/hadith/books" className="hadith-class-switch__link hadith-class-switch__link--books">الكتب كاملة</Link>
       </nav>
 
@@ -1214,7 +1214,7 @@ export default function HadithPage() {
     applyPageSeo({
       path: "/hadith",
       title: "الأحاديث النبوية الشريفة | المجلس العلمي",
-      description: "مكتبة الأحاديث النبوية: الصحيحان كاملان، مع أقسام الموضوع والمكذوب، ولوحة إحصائيات لعلوم الحديث والتخريج.",
+      description: "مكتبة الأحاديث النبوية: الصحيحان كاملان، مع أقسام الموضوع والضعيف، ولوحة إحصائيات لعلوم الحديث والتخريج.",
       keywords: ["أحاديث نبوية", "الحديث الشريف", "صحيح البخاري", "صحيح مسلم", "الحديث الموضوع", "مصطلح الحديث"],
       jsonLd: [
         {
@@ -1237,13 +1237,13 @@ export default function HadithPage() {
       <PageHeader
         eyebrow="السنة النبوية الشريفة"
         title="الأحاديث النبوية"
-        subtitle="ثلاثة أقسام مرتّبة: الصحيح ثم الموضوع ثم المكذوب — مع إحصائيات علوم الحديث وبحث حديث مبسّط."
+        subtitle="ثلاثة أقسام مرتّبة: الصحيح ثم الموضوع ثم الضعيف — مع إحصائيات علوم الحديث وبحث حديث مبسّط."
       />
       <HadithStatsPanel />
       <nav className="hadith-class-switch" aria-label="أقسام الحديث">
         <Link href="/hadith/sahih" className="hadith-class-switch__link">الصحيح</Link>
         <Link href="/hadith/mawdu" className="hadith-class-switch__link">الموضوع</Link>
-        <Link href="/hadith/daif" className="hadith-class-switch__link">المكذوب</Link>
+        <Link href="/hadith/daif" className="hadith-class-switch__link">الضعيف</Link>
         <Link href="/hadith/books" className="hadith-class-switch__link hadith-class-switch__link--books">الكتب كاملة</Link>
       </nav>
       <div className="hadith-hub-gates" aria-label="بوابات أقسام الحديث">
@@ -1258,9 +1258,9 @@ export default function HadithPage() {
           <em>للتمييز لا للاحتجاج ←</em>
         </Link>
         <Link href="/hadith/daif" className="hadith-hub-gate hadith-hub-gate--daif">
-          <strong>المكذوب</strong>
-          <span>{formatHadithStat(HADITH_STATS_SOURCE.curatedDaif)} رواية مضعّفة منسوبة</span>
-          <em>بيان العلة والتخريج ←</em>
+          <strong>الضعيف</strong>
+          <span>{formatHadithStat(HADITH_STATS_SOURCE.curatedDaif)} رواية بدرجتها وتخريجها</span>
+          <em>بيان الدرجة والتخريج ←</em>
         </Link>
       </div>
       <HadithSection authenticityClass="sahih" embedded />

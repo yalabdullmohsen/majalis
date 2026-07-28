@@ -31,7 +31,7 @@ export const FEATURE_REGISTRY: FeatureEntry[] = [
   { id: "fawaid",       label: "الفوائد",            path: "/fawaid",       group: "تعليم",         status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "hadith-index", label: "الأحاديث النبوية",   path: "/hadith",       group: "حديث",          status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "hadith-sahih", label: "الأحاديث الصحيحة",  path: "/hadith/sahih", group: "حديث",          status: "active",       inSideNav: false, inBottomNav: false },
-  { id: "hadith-daif",  label: "الأحاديث المكذوبة",  path: "/hadith/daif",  group: "حديث",          status: "active",       inSideNav: false, inBottomNav: false },
+  { id: "hadith-daif",  label: "الأحاديث الضعيفة",    path: "/hadith/daif",  group: "حديث",          status: "active",       inSideNav: false, inBottomNav: false },
   { id: "hadith-mawdu", label: "الأحاديث الموضوعة", path: "/hadith/mawdu", group: "حديث",          status: "active",       inSideNav: false, inBottomNav: false },
   { id: "tawhid",       label: "التوحيد",            path: "/tawhid",       group: "عقيدة",         status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "adhkar",       label: "الأذكار",            path: "/adhkar",       group: "عبادات",        status: "active",       inSideNav: true,  inBottomNav: false },

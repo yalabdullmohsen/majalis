@@ -72,7 +72,7 @@ const LABEL_MAP: Record<string, string> = {
   "/hadith":                        "الأحاديث",
   "/hadith/books":                  "كتب الحديث",
   "/hadith/sahih":                  "الأحاديث الصحيحة",
-  "/hadith/daif":                   "الأحاديث المكذوبة",
+  "/hadith/daif":                   "الأحاديث الضعيفة",
   "/hadith/mawdu":                  "الأحاديث الموضوعة",
   "/hadith-science":                "علوم الحديث",
   "/arbaeen-nawawi":                "الأربعون النووية",
