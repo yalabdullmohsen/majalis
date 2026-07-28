@@ -89,6 +89,7 @@ const SurahIndexPage = lazy(() => import("@/views/SurahIndexPage"));
 const RevelationOrderPage = lazy(() => import("@/views/RevelationOrderPage"));
 const MakkiMadaniPage = lazy(() => import("@/views/MakkiMadaniPage"));
 const MushafPageView = lazy(() => import("@/views/MushafPageView"));
+const QuranViewerPage = lazy(() => import("@/views/QuranViewerPage"));
 const MushafEditionInfoPage = lazy(() => import("@/views/MushafEditionInfoPage"));
 const ReflectionJournalPage = lazy(() => import("@/views/ReflectionJournalPage"));
 const RecitationTestPage = lazy(() => import("@/views/RecitationTestPage"));
@@ -631,6 +632,8 @@ function Router() {
       <Route path="/quran"><Redirect to="/quran-hub" /></Route>
       <Route path="/mushaf/page/:page"><SafeLazyRoute component={MushafPageView} /></Route>
       <Route path="/mushaf/page"><SafeLazyRoute component={MushafPageView} /></Route>
+      <Route path="/quran-viewer/page/:page"><SafeLazyRoute component={QuranViewerPage} /></Route>
+      <Route path="/quran-viewer"><SafeLazyRoute component={QuranViewerPage} /></Route>
       {/* ⚠️ ترتيب حرج: المسار الحرفي /mushaf/about-edition يجب أن يسبق
           /mushaf/:surah أدناه — وإلا طابقه :surah أولًا بوصفه رقم سورة
           (Switch يُصيّر أول تطابق فقط)، مطابق تمامًا لتحذير wouter العام

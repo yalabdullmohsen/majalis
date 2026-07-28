@@ -1,0 +1,105 @@
+/* QuranViewer — lightweight chrome around Madani mf2 page (no layout redesign). */
+
+.quran-viewer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  width: 100%;
+  max-width: 42rem;
+  margin-inline: auto;
+  touch-action: pan-y;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.quran-viewer__chrome {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.35rem 0.5rem;
+}
+
+.quran-viewer__nav-btn {
+  appearance: none;
+  border: 1px solid color-mix(in srgb, var(--color-primary, #143f35) 28%, transparent);
+  background: color-mix(in srgb, var(--color-primary, #143f35) 8%, transparent);
+  color: var(--color-primary, #143f35);
+  border-radius: 0.5rem;
+  padding: 0.4rem 0.85rem;
+  font: inherit;
+  cursor: pointer;
+  min-height: 44px;
+}
+
+.quran-viewer__nav-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.quran-viewer__page-label {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.95rem;
+  color: var(--color-muted, #5c6b66);
+}
+
+.quran-viewer__stage {
+  position: relative;
+  width: 100%;
+  /* Madani page aspect — matches qs-mushaf-frame usage */
+  aspect-ratio: 1 / 1.45;
+  overflow: hidden;
+  will-change: transform;
+  contain: layout paint;
+  border-radius: 0.35rem;
+}
+
+.quran-viewer__body {
+  height: 100%;
+  width: 100%;
+}
+
+.quran-viewer__curl,
+.quran-viewer__curl .pcs-leaf {
+  height: 100%;
+  width: 100%;
+}
+
+.quran-viewer__skeleton {
+  height: 100%;
+  min-height: 12rem;
+}
+
+.quran-viewer-page {
+  padding: 1rem 0.75rem 2rem;
+  max-width: 48rem;
+  margin-inline: auto;
+}
+
+.quran-viewer-page__header {
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.quran-viewer-page__title {
+  margin: 0;
+  font-size: 1.35rem;
+  color: var(--color-primary, #143f35);
+  font-weight: 700;
+}
+
+.quran-viewer-page__sub {
+  margin: 0.35rem 0 0;
+  color: var(--color-muted, #5c6b66);
+  font-size: 0.9rem;
+}
+
+.quran-viewer-page__viewer {
+  max-width: none;
+}
+
+@media (min-width: 768px) {
+  .quran-viewer__stage {
+    aspect-ratio: 1 / 1.42;
+  }
+}

@@ -282,11 +282,15 @@ export function getQuranEngineContext(): QuranEngineContextApi & { boot(): Promi
 
 export type UseQuranEngineCoreResult = {
   state: QuranEngineState;
+  /** Alias for `state.page` (1–604). */
+  activePage: number;
   /** True while the initial IDB resume is in flight. */
   hydrating: boolean;
   /** Last persistence error message (null when healthy). */
   persistError: string | null;
   setPage: (page: number) => void;
+  /** Navigate to an ayah (resolves mushaf page when omitted). */
+  goToAyah: (verse: ActiveVerse) => Promise<void>;
   setActiveVerse: (verse: ActiveVerse, opts?: { persist?: boolean }) => void;
   updateReadingProgress: (progress: ReadingProgressInput) => Promise<KhatmahStore | null>;
   loadLastReadingProgress: () => Promise<KhatmahStore | null>;
@@ -332,6 +336,32 @@ export function useQuranEngineCore(): UseQuranEngineCoreResult {
       /* ignore */
     }
   }, [engine]);
+
+  const goToAyah = useCallback(
+    async (verse: ActiveVerse) => {
+      try {
+        let page = verse.page;
+        if (page == null) {
+          try {
+            const { findPageForAyah, loadPageJuzIndex } = await import(
+              "@/lib/recitation-ai/page-juz-lookup"
+            );
+            const index = await loadPageJuzIndex();
+            page = findPageForAyah(index, verse.surah, verse.ayah) ?? undefined;
+          } catch {
+            page = undefined;
+          }
+        }
+        engine.setActiveVerse(
+          { surah: verse.surah, ayah: verse.ayah, page },
+          { persist: true },
+        );
+      } catch (err) {
+        setPersistError(err instanceof Error ? err.message : "go-to-ayah-failed");
+      }
+    },
+    [engine],
+  );
 
   const setActiveVerse = useCallback((verse: ActiveVerse, opts?: { persist?: boolean }) => {
     try {
@@ -386,9 +416,11 @@ export function useQuranEngineCore(): UseQuranEngineCoreResult {
 
   return {
     state,
+    activePage: state.page,
     hydrating,
     persistError,
     setPage,
+    goToAyah,
     setActiveVerse,
     updateReadingProgress,
     loadLastReadingProgress,
