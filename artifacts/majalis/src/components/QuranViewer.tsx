@@ -14,6 +14,8 @@
  * under each ayah when enabled — RN conditional-rendering sketch.
  * Per-ayah audio toggle uses AudioEngine (web port of expo-av Sound) with
  * unload on leave.
+ * `useKeepAwake()` (Screen Wake Lock) keeps the display on while reading —
+ * web port of expo-keep-awake.
  * `text-size-adjust: 100%` resists OS/browser text scaling (RN allowFontScaling={false}).
  */
 import { useCallback, useEffect, useState, type CSSProperties } from "react";
@@ -23,6 +25,7 @@ import { useQuranEngine } from "@/hooks/useQuranEngine";
 import { useQuranPreferences } from "@/hooks/useQuranPreferences";
 import { useReadingBreakReminder } from "@/hooks/useReadingBreakReminder";
 import { useQuranAudioToggle } from "@/hooks/useQuranAudioToggle";
+import { useKeepAwake } from "@/hooks/useKeepAwake";
 import { nextQuranFontId, quranFontOption, quranFontStack } from "@/lib/quran-font-options";
 import { DEFAULT_TAFSEER_SOURCE } from "@/core/tafseer/TafseerService";
 import { QuranActionBar } from "@/components/QuranActionBar";
@@ -155,6 +158,8 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
   const fontMeta = quranFontOption(prefs.fontId);
   const breakReminder = useReadingBreakReminder();
   const { toggleAudio, isPlayingAyah, playerState } = useQuranAudioToggle(currentReciter);
+  /** Keep screen lit while the reader is open (expo-keep-awake port). */
+  useKeepAwake();
 
   const surahNum = initialSurah ?? currentSurah;
   const [ayahs, setAyahs] = useState<Ayah[]>([]);
