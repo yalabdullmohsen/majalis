@@ -2,9 +2,9 @@
  * QuranViewer — Uthmani ayah list with optional Tajweed tint, selection, and Focus Mode.
  *
  * Focus Mode (وضع التركيز): hides chrome so the mushaf fills the viewport.
- * Font size is user-controlled (18–40, step 2), persisted in localStorage
+ * Font size is user-controlled (12–40, step 2, default 20), persisted in localStorage
  * (`userFontSize` — same key as the RN AsyncStorage sketch), with
- * lineHeight = fontSize + 20. The ± control bar is hidden while focused.
+ * lineHeight = fontSize * 1.5. The ± control bar is hidden while focused.
  * Reader theme (light/dark paper) uses THEMES below — independent of app chrome.
  * Ayah numbers toggle (`showAyahNumbers` via useQuranPreferences) hides badges and
  * strips parenthetical markers via renderQuranText — same idea as the RN sketch.
@@ -31,6 +31,18 @@ import { useQuranAudioToggle } from "@/hooks/useQuranAudioToggle";
 import { useKeepAwake } from "@/hooks/useKeepAwake";
 import { useColorScheme } from "@/hooks/useColorScheme";
 import { nextQuranFontId, quranFontOption, quranFontStack } from "@/lib/quran-font-options";
+import {
+  QURAN_FONT_DEFAULT_PX,
+  QURAN_FONT_MAX_PX,
+  QURAN_FONT_MIN_PX,
+  canDecreaseFont,
+  canIncreaseFont,
+  nextDecreasedFont,
+  nextIncreasedFont,
+  persistQuranFontSize,
+  quranTextStyle,
+  readStoredQuranFontSize,
+} from "@/lib/quran-font-size";
 import { shareVerse } from "@/lib/share-ayah";
 import { DEFAULT_TAFSEER_SOURCE } from "@/core/tafseer/TafseerService";
 import { QuranActionBar } from "@/components/QuranActionBar";
@@ -62,12 +74,14 @@ export const QURAN_THEME_STORAGE_KEY = "quranReaderDarkMode";
 export const QURAN_TAFSIR_TOGGLE_KEY = "quranReaderShowTafsir";
 export const QURAN_INLINE_TAFSIR_EDITION_KEY = "majalis-mushaf-tafsir-edition-v1";
 
-/** Mushaf type scale — mirrors RN FullScreenQuranReader sketch. */
-export const QURAN_FONT_MIN_PX = 18;
-export const QURAN_FONT_MAX_PX = 40;
-export const QURAN_FONT_STEP_PX = 2;
-export const QURAN_FONT_DEFAULT_PX = 24;
-export const QURAN_FONT_STORAGE_KEY = "userFontSize";
+/** Re-export RN font-size constants for callers that imported them from here. */
+export {
+  QURAN_FONT_MIN_PX,
+  QURAN_FONT_MAX_PX,
+  QURAN_FONT_STEP_PX,
+  QURAN_FONT_DEFAULT_PX,
+  QURAN_FONT_STORAGE_KEY,
+} from "@/lib/quran-font-size";
 
 type ReaderThemeOverride = "light" | "dark" | null;
 
@@ -113,23 +127,6 @@ export function renderQuranText(text: string, showAyahNumbers: boolean): string 
     .replace(/\([0-9٠-٩۰-۹]+\)/g, "")
     .replace(/[ \t\u00a0]{2,}/g, " ")
     .trim();
-}
-
-function clampFontSize(n: number): number {
-  const stepped = Math.round(n / QURAN_FONT_STEP_PX) * QURAN_FONT_STEP_PX;
-  return Math.min(QURAN_FONT_MAX_PX, Math.max(QURAN_FONT_MIN_PX, stepped));
-}
-
-function readStoredFontSize(): number {
-  try {
-    const raw = localStorage.getItem(QURAN_FONT_STORAGE_KEY);
-    if (raw == null) return QURAN_FONT_DEFAULT_PX;
-    const parsed = Number.parseInt(raw, 10);
-    if (!Number.isFinite(parsed)) return QURAN_FONT_DEFAULT_PX;
-    return clampFontSize(parsed);
-  } catch {
-    return QURAN_FONT_DEFAULT_PX;
-  }
 }
 
 export type QuranViewerProps = {
@@ -268,7 +265,7 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
 
   /** Load persisted font size + reader theme + tafsir toggle once. */
   useEffect(() => {
-    setFontSize(readStoredFontSize());
+    setFontSize(readStoredQuranFontSize());
     setThemeOverride(readStoredThemeOverride());
     setShowTafsir(readStoredShowTafsir());
   }, []);
@@ -305,13 +302,7 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
   }, [showTafsir, surahNum]);
 
   const updateFontSize = useCallback((next: number) => {
-    const clamped = clampFontSize(next);
-    setFontSize(clamped);
-    try {
-      localStorage.setItem(QURAN_FONT_STORAGE_KEY, String(clamped));
-    } catch {
-      /* ignore quota / private mode */
-    }
+    setFontSize(persistQuranFontSize(next));
   }, []);
 
   const setReaderDarkMode = useCallback((next: boolean) => {
@@ -337,12 +328,14 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
     setReaderDarkMode(!isDarkMode);
   }, [isDarkMode, setReaderDarkMode]);
 
+  /** RN increaseFont — max 40, step +2 */
   const increaseFont = useCallback(() => {
-    if (fontSize < QURAN_FONT_MAX_PX) updateFontSize(fontSize + QURAN_FONT_STEP_PX);
+    if (canIncreaseFont(fontSize)) updateFontSize(nextIncreasedFont(fontSize));
   }, [fontSize, updateFontSize]);
 
+  /** RN decreaseFont — min 12, step -2 */
   const decreaseFont = useCallback(() => {
-    if (fontSize > QURAN_FONT_MIN_PX) updateFontSize(fontSize - QURAN_FONT_STEP_PX);
+    if (canDecreaseFont(fontSize)) updateFontSize(nextDecreasedFont(fontSize));
   }, [fontSize, updateFontSize]);
 
   useEffect(() => {
@@ -371,9 +364,12 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
     return () => window.removeEventListener("keydown", onKey);
   }, [isFocusMode, setFocus]);
 
+  // 3. طريقة التطبيق في التنسيق — lineHeight = fontSize * 1.5
+  const textStyle = quranTextStyle(fontSize);
+
   const mushafTypeStyle = {
-    ["--qe-mushaf-fs" as string]: `${fontSize}px`,
-    ["--qe-mushaf-lh" as string]: `${fontSize + 20}px`,
+    ["--qe-mushaf-fs" as string]: `${textStyle.fontSize}px`,
+    ["--qe-mushaf-lh" as string]: `${textStyle.lineHeight}px`,
     ["--qe-reader-bg" as string]: themeStyles.backgroundColor,
     ["--qe-reader-text" as string]: themeStyles.textColor,
     ["--qe-reader-header" as string]: currentTheme.header,
@@ -590,8 +586,8 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
                         className="qe-ayah__text"
                         style={{
                           fontFamily,
-                          fontSize: `${fontSize}px`,
-                          lineHeight: `${fontSize + 20}px`,
+                          fontSize: textStyle.fontSize,
+                          lineHeight: `${textStyle.lineHeight}px`,
                           textAlign: "right",
                           color: themeStyles.textColor,
                         }}

@@ -12,6 +12,11 @@ import { DEFAULT_PREFERENCES, type UserPreferences } from "@/lib/user-preference
 import { clearLocalBookmarks } from "@/lib/local-bookmarks";
 import { clearOfflineReading } from "@/lib/offline-reading-pack";
 import { useQuranPreferences, type QuranFontId } from "@/hooks/useQuranPreferences";
+import {
+  QURAN_FONT_MAX_PX,
+  QURAN_FONT_MIN_PX,
+  QURAN_FONT_STEP_PX,
+} from "@/lib/quran-font-size";
 import { PushPrompt } from "@/components/PushPrompt";
 import { useLanguage } from "@/components/LanguageProvider";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
@@ -179,8 +184,9 @@ export default function SettingsPage() {
           <span>{t("settings_quran_font_size")}</span>
           <input
             type="range"
-            min="18"
-            max="40"
+            min={QURAN_FONT_MIN_PX}
+            max={QURAN_FONT_MAX_PX}
+            step={QURAN_FONT_STEP_PX}
             value={quranPrefs.fontScale}
             onChange={(e) => setQuranPref("fontScale", Number(e.target.value))}
           />

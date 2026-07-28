@@ -1,4 +1,9 @@
 import { useCallback, useEffect, useState } from "react";
+import {
+  QURAN_FONT_DEFAULT_PX,
+  QURAN_FONT_MAX_PX,
+  QURAN_FONT_MIN_PX,
+} from "@/lib/quran-font-size";
 
 export type QuranFontId = "uthmani" | "naskh" | "amiri";
 
@@ -37,7 +42,7 @@ const KEY = "mj-quran-prefs-v4";
 const LEGACY_KEY = "mj-quran-prefs-v3";
 
 const DEFAULTS: QuranPreferences = {
-  fontScale: 26,
+  fontScale: QURAN_FONT_DEFAULT_PX, // 20 — متوافق مع رسم RN
   fontId: "uthmani",
   showAyahNumbers: true,
   nightMode: false,
@@ -65,7 +70,14 @@ function systemPrefersDark(): boolean {
 function load(): QuranPreferences {
   try {
     const raw = localStorage.getItem(KEY) ?? localStorage.getItem(LEGACY_KEY);
-    if (raw) return { ...DEFAULTS, ...JSON.parse(raw) };
+    if (raw) {
+      const parsed = { ...DEFAULTS, ...JSON.parse(raw) } as QuranPreferences;
+      parsed.fontScale = Math.min(
+        QURAN_FONT_MAX_PX,
+        Math.max(QURAN_FONT_MIN_PX, Number(parsed.fontScale) || QURAN_FONT_DEFAULT_PX),
+      );
+      return parsed;
+    }
     return { ...DEFAULTS, readingTheme: systemPrefersDark() ? "night" : "standard" };
   } catch {
     return { ...DEFAULTS };
@@ -84,7 +96,10 @@ export function useQuranPreferences() {
   }, []);
 
   const bumpFont = useCallback((delta: number) => {
-    setPrefsState((p) => ({ ...p, fontScale: Math.min(42, Math.max(18, p.fontScale + delta)) }));
+    setPrefsState((p) => ({
+      ...p,
+      fontScale: Math.min(QURAN_FONT_MAX_PX, Math.max(QURAN_FONT_MIN_PX, p.fontScale + delta)),
+    }));
   }, []);
 
   return { prefs, setPref, bumpFont };
