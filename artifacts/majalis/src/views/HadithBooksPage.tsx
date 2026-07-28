@@ -14,6 +14,7 @@ import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { truncateAtWord } from "@/lib/utils";
 import { extractDisplayMatn, splitHadithNarration } from "@/lib/hadith-access";
 import "@/styles/pages/hadith-books.css";
+import "@/styles/pages/hadith.css";
 
 // ─── Chapter index built from hadith data ─────────────────────────────────────
 
@@ -438,14 +439,20 @@ export default function HadithBooksPage() {
         </p>
       </header>
 
-      {/* إشعار الضعيف والموضوع */}
+      <nav className="hadith-class-switch" aria-label="أقسام الحديث" style={{ marginTop: "0.75rem" }}>
+        <Link href="/hadith/sahih" className="hadith-class-switch__link">الصحيح</Link>
+        <Link href="/hadith/mawdu" className="hadith-class-switch__link">الموضوع</Link>
+        <Link href="/hadith/daif" className="hadith-class-switch__link">المكذوب</Link>
+        <Link href="/hadith/books" className="hadith-class-switch__link hadith-class-switch__link--books is-active">الكتب كاملة</Link>
+      </nav>
+
+      {/* إشعار المكذوب والموضوع */}
       <div className="hb-notice" role="note" dir="rtl">
         <AlertTriangle size={14} className="inline ml-1" />
-        <strong>الأحاديث الضعيفة والموضوعة:</strong> تُضاف من خلال لوحة التحكم فقط بعد التحقق من المصادر
-        المتخصصة. لا يُولَّد أي محتوى شرعي بالذكاء الاصطناعي.{" "}
-        <Link href="/hadith/daif" className="hb-notice__link">تصفّح الضعيفة</Link>
+        <strong>المكذوب والموضوع:</strong> بطاقات تحذير منسّقة بتخريج منسوب — لا يُولَّد أي محتوى شرعي بالذكاء الاصطناعي.{" "}
+        <Link href="/hadith/daif" className="hb-notice__link">تصفّح المكذوب</Link>
         {" · "}
-        <Link href="/hadith/mawdu" className="hb-notice__link">تصفّح الموضوعة</Link>
+        <Link href="/hadith/mawdu" className="hb-notice__link">تصفّح الموضوع</Link>
       </div>
 
       {/* تبويبات المجموعات */}
