@@ -471,13 +471,48 @@ body.qe-focus-mode {
   color: var(--qe-muted);
 }
 
+.qe-ayah__translation {
+  margin-inline: 0.15rem 0.35rem;
+  margin-top: 0.35rem;
+  padding: 0.65rem 0.85rem;
+  border-radius: 0.75rem;
+  border: 1px dashed color-mix(in srgb, var(--qe-emerald) 32%, transparent);
+  background: color-mix(in srgb, var(--qe-emerald) 6%, var(--qe-reader-header, var(--qe-panel)));
+  animation: qe-tafsir-in 0.22s ease;
+}
+
+.qe-ayah__translation-text {
+  margin: 0;
+  font-family: var(--font-body, "Alexandria", "IBM Plex Sans Arabic", system-ui, sans-serif);
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: color-mix(in srgb, var(--qe-reader-text, var(--qe-ink)) 88%, transparent);
+  text-align: left;
+}
+
+.qe-ayah__translation-status {
+  font-size: 0.82rem;
+  color: var(--qe-muted);
+  text-align: left;
+}
+
 .qe-viewer--dark .qe-ayah__tafsir {
   border-color: color-mix(in srgb, var(--qe-reader-text) 16%, transparent);
+}
+
+.qe-viewer--dark .qe-ayah__translation {
+  border-color: color-mix(in srgb, var(--qe-emerald) 28%, transparent);
+  background: color-mix(in srgb, var(--qe-emerald) 10%, var(--qe-reader-header, #1a1a1a));
 }
 
 .qe-ayah-list--focus .qe-ayah__tafsir {
   border-color: color-mix(in srgb, var(--qe-reader-text, #000) 12%, transparent);
   background: color-mix(in srgb, var(--qe-reader-header, #f0ead6) 70%, transparent);
+}
+
+.qe-ayah-list--focus .qe-ayah__translation {
+  border-color: color-mix(in srgb, var(--qe-emerald) 22%, transparent);
+  background: color-mix(in srgb, var(--qe-emerald) 8%, var(--qe-reader-header, #f0ead6));
 }
 
 @keyframes qe-tafsir-in {
@@ -492,7 +527,8 @@ body.qe-focus-mode {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .qe-ayah__tafsir {
+  .qe-ayah__tafsir,
+  .qe-ayah__translation {
     animation: none;
   }
 }
