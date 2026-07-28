@@ -13,11 +13,33 @@
 - `Info.plist`: صلاحيات الميكروفون/التعرف على الكلام + `UIBackgroundModes: audio`
 - مشروع `ios/` جاهز لفتحه في Xcode عبر `Runner.xcworkspace`
 
-## على Mac فقط (Xcode / CocoaPods)
+## الإصدار بنقرة واحدة (مفضّل)
+
+```bash
+cd artifacts/majlisilm-flutter
+chmod +x release.sh   # مرة واحدة
+./release.sh
+```
+
+السكربت ينفّذ بالترتيب: `git pull` → `flutter clean` → `pub get` → `pod install` → فتح `Runner.xcworkspace` → زيادة Build Number → Archive/IPA → رفع App Store Connect.
+
+بيانات الرفع (اختر واحدة):
+```bash
+export ASC_KEY_ID=...
+export ASC_ISSUER_ID=...
+export ASC_KEY_PATH=/path/to/AuthKey_XXX.p8
+# أو:
+export APPLE_ID=...
+export APP_SPECIFIC_PASSWORD=...
+```
+
+تخطي اختياري: `SKIP_UPLOAD=1` / `SKIP_OPEN_XCODE=1` / `DRY_RUN=1`
+
+## على Mac يدوياً (Xcode / CocoaPods)
 
 ```bash
 cd /path/to/majalis
-git pull origin main   # بعد دمج PR المزامنة
+git pull origin main
 cd artifacts/majlisilm-flutter
 
 flutter clean
