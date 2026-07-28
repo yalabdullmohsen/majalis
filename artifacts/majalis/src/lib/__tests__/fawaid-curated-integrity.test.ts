@@ -1092,6 +1092,88 @@ assert(
   graftedGloss.map((f) => f.text.slice(0, 55)).join(" | ")
 );
 
+// ───── ٣٩) كلمةٌ مدسوسةٌ بين كلمتَينِ **متلاصقتَينِ** في الصحيحِ المعزوِّ إليه ─────
+
+/**
+ * 🔑 **عطبُ ج-٢٩٨**: الفحصُ ٣٨ يمسكُ الغرسَ بشرطِ أن تكونَ كلمةُ الفجوةِ
+ * **خارجَ معجمِ الصحيحِ كلِّه** — وهو شرطٌ لزِمَ يومَها للتفريقِ بين الغرسِ
+ * والاختصار. لكنَّه يُفلِتُ الغرسَ إذا كانت الكلمةُ المدسوسةُ **من كلماتِ
+ * الصحيحِ الشائعة**: «أقرب ما يكون العبد من ربه وهو ساجد؛ فأكثروا **فيه**
+ * الدعاء» عن «رواه مسلم» — ولفظُ مسلمٍ (١٠٨٣ بترقيمِ نسخةِ المستودع):
+ * «أَقْرَبُ مَا يَكُونُ الْعَبْدُ مِنْ رَبِّهِ وَهُوَ سَاجِدٌ فَأَكْثِرُوا
+ * الدُّعَاءَ» — فـ«فيه» ضميرٌ زادَه محرِّرٌ ليُعيدَه على السجود، و«فيه» من
+ * أشيعِ كلماتِ الصحيحَين فيمرُّ من الفحصِ ٣٨ سالمًا.
+ *
+ * ⚠️ **والفارقُ المنضبطُ هنا غيرُ فارقِ ٣٨ — وهو الالتصاق**: في الاختصارِ
+ * المشروعِ يُحذَفُ من الروايةِ شيءٌ، فكلمتا حافَّتَي الفجوةِ **متباعدتانِ**
+ * في الصحيح؛ وفي الدسِّ هما **متلاصقتانِ** فيه، فلا شيءَ حُذِف ⇒ الزائدُ
+ * زيادةٌ لا اختصار. ولذا يُشترَطُ أن يستأنفَ الحديثُ بكلمةِ السجلِّ التاليةِ
+ * **في أوَّلِ ما بعدَ الشوطِ مباشرةً** لا في أيِّ موضعٍ منه.
+ *
+ * وقيدانِ يمنعانِ الإيجابَ الكاذب:
+ *   (١) **حارسُ الفاصلِ التحريري**: إن سبقَ كلماتِ الفجوةِ فاصلٌ (— « » ( ) ؛ :)
+ *       فهي بيانُ محرِّرٍ مفصولٌ لا لفظٌ مدسوسٌ في وسطِ الرواية. ولولاه لسقطَ
+ *       `fawaid-curated-064` سليمًا: «أعوذ بكلمات الله التامات من شر ما خلق
+ *       **— من قالها** لم يضره شيء» — والشرطةُ تفصلُ الدعاءَ عن كلامِ المحرِّر.
+ *   (٢) **روايةٌ أخرى تحملُ الزيادة**: إن ورد الشوطُ بالزيادةِ نفسِها في أيِّ
+ *       موضعٍ من الصحيحَين فهي روايةٌ لا دسّ.
+ * وبهذَين خرجت عائلةُ العطبِ وحدَها (٣ صفوف) بلا إيجابٍ كاذبٍ من ٢١٩٠ سجلًّا.
+ */
+const SEP_MARK = /[—–«»()[\]؛:"…]/;
+/** يُطبِّعُ نصَّ السجلِّ كلمةً كلمةً مع تسجيلِ ما سبقَه فاصلٌ تحريري */
+function tokenizeWithSeps(text: string) {
+  const words: string[] = [];
+  const sepBefore: boolean[] = [];
+  let pending = false;
+  for (const chunk of text.split(/\s+/)) {
+    const bare = normHadith(chunk);
+    if (!bare) {
+      if (SEP_MARK.test(chunk)) pending = true;
+      continue;
+    }
+    const firstLetter = chunk.search(/[ء-ي]/);
+    const lead = chunk.slice(0, firstLetter);
+    bare.split(" ").forEach((p, k) => {
+      words.push(p);
+      sepBefore.push(k === 0 ? pending || SEP_MARK.test(lead) : false);
+    });
+    pending = SEP_MARK.test(chunk.slice(firstLetter));
+  }
+  return { words, sepBefore };
+}
+const insertedWord = [...FAWAID_CURATED_SEED, ...SEED_FAWAID].filter((f) => {
+  const idx = f.author_name === "صحيح البخاري" ? 0 : f.author_name === "صحيح مسلم" ? 1 : -1;
+  if (idx < 0 || REJECTED.test(f.text) || REJECTED.test(f.source ?? "")) return false;
+  const { words: w, sepBefore } = tokenizeWithSeps(f.text);
+  for (let i = 0; i + 5 <= w.length; i++) {
+    // مرشِّحٌ رخيصٌ على النسخةِ المدموجةِ قبلَ الدورانِ على ٧٥٨٠ حديثًا
+    if (!corpus[idx].includes(w.slice(i, i + 5).join(" "))) continue;
+    for (const h of hadithsNorm[idx]) {
+      let j = i + 5;
+      if (!h.includes(w.slice(i, j).join(" "))) continue;
+      while (j < w.length && h.includes(w.slice(i, j + 1).join(" "))) j++;
+      const run = w.slice(i, j).join(" ");
+      const after = h.slice(h.indexOf(run) + run.length).trimStart();
+      for (let gap = 1; gap <= 3; gap++) {
+        const next = w[j + gap];
+        if (!next) break;
+        if (sepBefore.slice(j, j + gap + 1).some(Boolean)) break; // فاصلٌ تحريريٌّ ⇒ بيانٌ لا دسّ
+        // الالتصاق: يستأنفُ الحديثُ بالكلمةِ التاليةِ فورًا ⇒ لم يُحذَفْ منه شيء
+        if (!(after === next || after.startsWith(`${next} `))) continue;
+        const withGap = `${run} ${w.slice(j, j + gap).join(" ")} ${next}`;
+        if (corpus[0].includes(withGap) || corpus[1].includes(withGap)) continue;
+        return true;
+      }
+    }
+  }
+  return false;
+});
+assert(
+  insertedWord.length === 0,
+  "لا سجلَّ يدسُّ كلمةً بين كلمتَينِ متلاصقتَينِ في الصحيحِ المعزوِّ إليه",
+  insertedWord.map((f) => `${f.id}: ${f.text.slice(0, 55)}`).join(" | ")
+);
+
 console.log(`\n${"─".repeat(48)}`);
 console.log(`النتائج: ${passed} نجح، ${failed} فشل`);
 if (failed > 0) process.exit(1);
