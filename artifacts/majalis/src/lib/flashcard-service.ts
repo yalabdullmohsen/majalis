@@ -13,6 +13,12 @@ import {
   type LocalFlashReview,
 } from "@/lib/flashcard-local-store";
 import { isOnline } from "@/lib/offline-db";
+import {
+  createIdempotencyKey,
+  enqueueOutbox,
+  claimIdempotencyKey,
+  completeOutboxEntry,
+} from "@/lib/offline-outbox";
 
 // ─── Card type ─────────────────────────────────────────────────────────────────
 
@@ -202,7 +208,26 @@ export async function submitCardReview(
   // Always persist locally first (offline-safe)
   await saveLocalReview(localRow);
 
+  const idem = createIdempotencyKey();
+  enqueueOutbox(
+    "flashcard_review",
+    {
+      user_id: userId,
+      card_type: card.card_type,
+      card_id: card.card_id,
+      next_review_at: metrics.nextReviewDate,
+      interval_days: metrics.interval,
+      ease_factor: metrics.easeFactor,
+      repetitions: metrics.repetitions,
+      last_quality: q,
+      reviewed_at: localRow.reviewed_at,
+    },
+    { idempotencyKey: idem },
+  );
+
   if (!isOnline()) return;
+
+  if (!claimIdempotencyKey(idem)) return;
 
   try {
     await supabase.from("flashcard_reviews").upsert(
@@ -220,7 +245,9 @@ export async function submitCardReview(
       { onConflict: "user_id,card_type,card_id" },
     );
     await markReviewClean(localRow);
+    completeOutboxEntry(idem, true);
   } catch {
+    completeOutboxEntry(idem, false);
     /* stays dirty for later sync */
   }
 }

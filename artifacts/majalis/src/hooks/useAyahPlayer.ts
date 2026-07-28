@@ -31,6 +31,8 @@ import {
   observeAudioThroughput,
 } from "@/lib/audio-buffer-policy";
 import { logDiagnostic } from "@/lib/diagnostics";
+import { acquireAudioElement, releaseAudioElementToPool } from "@/lib/audio-buffer-pool";
+import { scheduleInputAck } from "@/lib/yield-to-main";
 
 export type PlayerState = "idle" | "loading" | "playing" | "paused" | "error" | "buffering";
 
@@ -107,7 +109,7 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
 
   // create audio element once + attach stall recovery
   useEffect(() => {
-    const audio = new Audio();
+    const audio = acquireAudioElement();
     const policy = getAudioBufferPolicy();
     applyAudioBufferPolicy(audio, policy);
     audio.playbackRate = playbackRateRef.current;
@@ -136,6 +138,7 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
       stallRef.current?.dispose();
       stallRef.current = null;
       releaseAudioElement(audio);
+      releaseAudioElementToPool(audio);
       audioRef.current = null;
     };
   }, [clearDelayTimer]);
@@ -305,13 +308,19 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
   }, [clearDelayTimer]);
 
   const togglePlayAyah = useCallback((ayah: number) => {
+    // Play/pause must stay synchronous with the user gesture (iOS audio policy).
+    // Heavy post-play work is already deferred inside loadAndPlay listeners.
     if (currentAyah === ayah && playerState === "playing") {
       pause();
-    } else if (currentAyah === ayah && (playerState === "paused" || playerState === "buffering")) {
-      resume();
-    } else {
-      playFromAyah(ayah);
+      return;
     }
+    if (currentAyah === ayah && (playerState === "paused" || playerState === "buffering")) {
+      resume();
+      return;
+    }
+    playFromAyah(ayah);
+    // Acknowledge any non-critical follow-up after the input frame
+    void scheduleInputAck(() => undefined);
   }, [currentAyah, playerState, pause, resume, playFromAyah]);
 
   // stop when surah changes

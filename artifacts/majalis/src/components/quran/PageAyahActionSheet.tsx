@@ -6,8 +6,9 @@ import { fetchTafsirAyahs } from "@/lib/quran-api";
 import { MUSHAF_TAFSIR_EDITIONS } from "@/lib/tafsir-seed";
 import { RECITERS } from "@/lib/quran-audio";
 import { CONTACT_EMAIL } from "@/lib/site-config";
-import { afterNextPaint, yieldToMain } from "@/lib/yield-to-main";
+import { afterNextPaint, yieldToMain, scheduleInputAck } from "@/lib/yield-to-main";
 import { prewarmTextApis } from "@/lib/resource-prewarm";
+import { enqueueOutbox } from "@/lib/offline-outbox";
 
 const TAFSIR_EDITION_KEY = "majalis-mushaf-tafsir-edition-v1";
 
@@ -119,13 +120,17 @@ export function PageAyahActionSheet({ surahNum, surahName, ayahNum, ayahText, is
   }, [onClose]);
 
   const toggleBookmark = () => {
-    if (bookmarked) {
-      removeBookmark(surahNum, ayahNum);
-      setBookmarked(false);
-    } else {
-      addBookmark({ surahNum, ayahNum, surahName, text: ayahText });
-      setBookmarked(true);
-    }
+    const next = !bookmarked;
+    setBookmarked(next); // optimistic — INP < 16ms
+    void scheduleInputAck(() => {
+      if (!next) {
+        removeBookmark(surahNum, ayahNum);
+        enqueueOutbox("bookmark_delete", { surahNum, ayahNum, kind: "quran-ayah" });
+      } else {
+        addBookmark({ surahNum, ayahNum, surahName, text: ayahText });
+        enqueueOutbox("bookmark_upsert", { surahNum, ayahNum, surahName, kind: "quran-ayah" });
+      }
+    });
   };
 
   const handleCopy = async (plain: boolean) => {

@@ -10,12 +10,14 @@
 import { pooledFetch } from "@/lib/fetch-pool";
 import { LruCache } from "@/lib/lru-cache";
 import { mapInChunks, yieldToMain } from "@/lib/yield-to-main";
+import { makeQpcVerseShape, makeQpcWordShape, normalizeCharType } from "@/lib/stable-shapes";
 
 export type QpcWord = {
   id: number;
   position: number;
   lineNumber: number;
-  charType: "word" | "end" | string;
+  /** Closed union — keeps V8 hidden class monomorphic in hot verse loops */
+  charType: "word" | "end" | "pause" | "other";
   textUthmani: string;
   /** نص Hafs بترميز Unicode عادي (تشكيل بأسلوب QPC) — للنسخ/البحث/قراءة الشاشة. */
   textQpcHafs: string;
@@ -110,41 +112,49 @@ function fetchRawPage(pageNumber: number): Promise<QpcVerse[]> {
       signal: AbortSignal.timeout(10_000),
       dedupeKey: `mushaf-v2:page:${pageNumber}`,
     })
-      .then((res) => {
+      .then(async (res) => {
         if (!res.ok) throw new Error(`page ${pageNumber} fetch failed: HTTP ${res.status}`);
-        return res.json();
+        // Part 20: binary/stream decode path — fewer intermediate allocations
+        try {
+          const { decodeResponseText } = await import("@/lib/binary-text-stream");
+          const text = await decodeResponseText(res);
+          return JSON.parse(text) as any[];
+        } catch {
+          return res.json();
+        }
       })
       .then(async (raw: any[]) => {
         // Yield before mapping large page payloads so INP stays responsive when flipping Juz/pages.
         await yieldToMain();
         return mapInChunks(raw ?? [], 40, (v): QpcVerse => {
-          const [surahStr, ayahStr] = v.verse_key.split(":");
-          return {
-            verseKey: v.verse_key,
-            surahNumber: Number(surahStr),
-            ayahNumber: Number(ayahStr),
-            pageNumber: v.page_number,
-            juzNumber: v.juz_number,
-            hizbNumber: v.hizb_number,
-            rubElHizbNumber: v.rub_el_hizb_number,
-            sajdahNumber: v.sajdah_number,
-            words: (v.words ?? []).map(
-              (w: any): QpcWord => ({
-                id: w.id,
-                position: w.position,
-                lineNumber: w.line_number,
-                charType: w.char_type_name,
-                textUthmani: w.text_uthmani,
-                textQpcHafs: w.text_qpc_hafs,
-                // code_v2 لا text (V1) — يطابق خط "hafs/v2" المُنزَّل في
-                // Phase 2 فعليًا؛ راجع تعليق fetch-mushaf-v2-data.mjs.
-                glyphText: w.code_v2,
-                audioUrl: w.audio_url ?? null,
-                verseKey: v.verse_key,
-                sajdahNumber: v.sajdah_number,
-              }),
-            ),
-          };
+          const [surahStr, ayahStr] = String(v.verse_key || "").split(":");
+          const words = (v.words ?? []).map((w: any) =>
+            makeQpcWordShape({
+              id: Number(w.id) || 0,
+              position: Number(w.position) || 0,
+              lineNumber: Number(w.line_number) || 0,
+              charType: normalizeCharType(w.char_type_name),
+              textUthmani: String(w.text_uthmani ?? ""),
+              textQpcHafs: String(w.text_qpc_hafs ?? ""),
+              // code_v2 لا text (V1) — يطابق خط "hafs/v2" المُنزَّل في
+              // Phase 2 فعليًا؛ راجع تعليق fetch-mushaf-v2-data.mjs.
+              glyphText: String(w.code_v2 ?? ""),
+              audioUrl: w.audio_url ?? null,
+              verseKey: String(v.verse_key ?? ""),
+              sajdahNumber: v.sajdah_number ?? null,
+            }),
+          );
+          return makeQpcVerseShape({
+            verseKey: String(v.verse_key ?? ""),
+            surahNumber: Number(surahStr) || 0,
+            ayahNumber: Number(ayahStr) || 0,
+            pageNumber: Number(v.page_number) || 0,
+            juzNumber: Number(v.juz_number) || 0,
+            hizbNumber: Number(v.hizb_number) || 0,
+            rubElHizbNumber: Number(v.rub_el_hizb_number) || 0,
+            sajdahNumber: v.sajdah_number ?? null,
+            words,
+          });
         });
       })
       .catch((err) => {

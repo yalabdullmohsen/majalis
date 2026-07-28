@@ -1,12 +1,16 @@
 /**
  * Main-thread yielding for elite INP (Interaction to Next Paint).
- * Prefer `scheduler.yield()` when available; fall back to setTimeout(0).
+ * Prefer `scheduler.yield()` / `postTask` when available.
+ * Part 20: sub-16ms input ack — defer state commits off the event handler.
  * Logic-only — no UI.
  */
 
 type SchedulerWithYield = {
   yield?: () => Promise<void>;
-  postTask?: <T>(fn: () => T, opts?: { priority?: string }) => Promise<T>;
+  postTask?: <T>(
+    fn: () => T,
+    opts?: { priority?: "user-blocking" | "user-visible" | "background" },
+  ) => Promise<T>;
 };
 
 function getScheduler(): SchedulerWithYield | undefined {
@@ -21,6 +25,43 @@ export function yieldToMain(): Promise<void> {
   return new Promise((resolve) => {
     setTimeout(resolve, 0);
   });
+}
+
+/**
+ * Schedule work after the current input event is acknowledged (<1 frame / 16ms).
+ * Uses scheduler.postTask(user-blocking) when available, else queueMicrotask + setTimeout(0).
+ */
+export function scheduleInputAck<T>(task: () => T | Promise<T>): Promise<T> {
+  const sched = getScheduler();
+  if (sched?.postTask) {
+    return sched.postTask(() => Promise.resolve(task()).then((v) => v), {
+      priority: "user-blocking",
+    }) as Promise<T>;
+  }
+  return new Promise((resolve, reject) => {
+    // Microtask lets the event handler return (INP start→end) before heavy work
+    queueMicrotask(() => {
+      setTimeout(() => {
+        try {
+          Promise.resolve(task()).then(resolve, reject);
+        } catch (err) {
+          reject(err);
+        }
+      }, 0);
+    });
+  });
+}
+
+/**
+ * Optimistic UI commit first (sync), then run heavy persistence via scheduleInputAck.
+ * Keeps INP under one frame budget for tap-to-read / bookmark / play controls.
+ */
+export function commitAfterInput<T>(
+  syncOptimistic: () => void,
+  heavy: () => T | Promise<T>,
+): Promise<T> {
+  syncOptimistic();
+  return scheduleInputAck(heavy);
 }
 
 /**

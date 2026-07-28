@@ -1,9 +1,12 @@
 /**
  * مفضّلات محلية للجهاز — بديل آمن دون حساب.
- * لا تُخزَّن بيانات حسّاسة؛ فقط نوع المحتوى والمعرّف والعنوان والمسار.
+ * Part 20: Map-indexed O(1) lookups (monomorphic) + outbox idempotency on mutate.
  */
 
 import { readLocalJson, writeLocalJson, isPlainObject } from "@/lib/safe-json";
+import { bookmarkLookupKey, indexByKey } from "@/lib/stable-shapes";
+import { enqueueOutbox } from "@/lib/offline-outbox";
+import { scheduleInputAck } from "@/lib/yield-to-main";
 
 const STORAGE_KEY = "majalis-local-bookmarks-v1";
 const MAX_ITEMS = 80;
@@ -33,22 +36,38 @@ function isBookmarkList(v: unknown): v is LocalBookmark[] {
   return Array.isArray(v) && v.every(isBookmark);
 }
 
+let indexCache: Map<string, LocalBookmark> | null = null;
+let listCache: LocalBookmark[] | null = null;
+
 function readAll(): LocalBookmark[] {
   if (typeof window === "undefined") return [];
-  return readLocalJson<LocalBookmark[]>(STORAGE_KEY, [], isBookmarkList);
+  if (listCache) return listCache;
+  listCache = readLocalJson<LocalBookmark[]>(STORAGE_KEY, [], isBookmarkList);
+  indexCache = indexByKey(listCache, (b) => bookmarkLookupKey(b.contentType, b.contentId));
+  return listCache;
+}
+
+function getIndex(): Map<string, LocalBookmark> {
+  if (!indexCache) {
+    readAll();
+  }
+  return indexCache ?? new Map();
 }
 
 function writeAll(items: LocalBookmark[]) {
   if (typeof window === "undefined") return;
-  writeLocalJson(STORAGE_KEY, items.slice(0, MAX_ITEMS));
+  const next = items.slice(0, MAX_ITEMS);
+  writeLocalJson(STORAGE_KEY, next);
+  listCache = next;
+  indexCache = indexByKey(next, (b) => bookmarkLookupKey(b.contentType, b.contentId));
 }
 
 export function listLocalBookmarks(): LocalBookmark[] {
-  return readAll().sort((a, b) => (a.savedAt < b.savedAt ? 1 : -1));
+  return readAll().slice().sort((a, b) => (a.savedAt < b.savedAt ? 1 : -1));
 }
 
 export function isLocalBookmarked(contentType: string, contentId: string): boolean {
-  return readAll().some((b) => b.contentType === contentType && b.contentId === contentId);
+  return getIndex().has(bookmarkLookupKey(contentType, contentId));
 }
 
 export function toggleLocalBookmark(input: {
@@ -57,35 +76,57 @@ export function toggleLocalBookmark(input: {
   title?: string;
   href?: string;
 }): boolean {
-  const list = readAll();
+  const key = bookmarkLookupKey(input.contentType, input.contentId);
+  const list = readAll().slice();
   const idx = list.findIndex(
-    (b) => b.contentType === input.contentType && b.contentId === input.contentId,
+    (b) => bookmarkLookupKey(b.contentType, b.contentId) === key,
   );
   if (idx >= 0) {
+    const removed = list[idx]!;
     list.splice(idx, 1);
     writeAll(list);
+    // Outbox delete with idempotency — deferred so INP stays under 16ms
+    void scheduleInputAck(() => {
+      enqueueOutbox("bookmark_delete", {
+        contentType: removed.contentType,
+        contentId: removed.contentId,
+        id: removed.id,
+      });
+    });
     return false;
   }
   const href =
     input.href ||
     (typeof window !== "undefined" ? `${window.location.pathname}${window.location.search}` : "/");
-  list.unshift({
+  const entry: LocalBookmark = {
     id: `lb-${input.contentType}-${input.contentId}-${Date.now()}`,
     contentType: input.contentType,
     contentId: input.contentId,
     title: (input.title || "").trim() || `${input.contentType}/${input.contentId}`,
     href,
     savedAt: new Date().toISOString(),
-  });
+  };
+  list.unshift(entry);
   writeAll(list);
+  void scheduleInputAck(() => {
+    enqueueOutbox("bookmark_upsert", { ...entry });
+  });
   return true;
 }
 
 export function removeLocalBookmark(contentType: string, contentId: string): void {
   writeAll(readAll().filter((b) => !(b.contentType === contentType && b.contentId === contentId)));
+  void scheduleInputAck(() => {
+    enqueueOutbox("bookmark_delete", { contentType, contentId });
+  });
 }
 
 export function clearLocalBookmarks(): void {
   if (typeof window === "undefined") return;
-  localStorage.removeItem(STORAGE_KEY);
+  writeAll([]);
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch {
+    /* ignore */
+  }
 }

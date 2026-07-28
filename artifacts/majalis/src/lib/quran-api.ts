@@ -193,12 +193,20 @@ export async function fetchTafsirAyahs(
     signal: AbortSignal.timeout(20_000),
   });
   if (!res.ok) throw new Error(`AlQuran Cloud tafsir: HTTP ${res.status}`);
-  const json = await res.json();
+  // Part 20: stream/binary decode before JSON.parse
+  let json: { code?: number; data?: { ayahs?: Array<{ numberInSurah: number; text: string }> } };
+  try {
+    const { decodeResponseText } = await import("@/lib/binary-text-stream");
+    json = JSON.parse(await decodeResponseText(res));
+  } catch {
+    json = await res.json();
+  }
   if (json.code !== 200 || !json.data?.ayahs) return [];
-  const result: TafsirAyah[] = json.data.ayahs.map((a: { numberInSurah: number; text: string }) => ({
-    numberInSurah: a.numberInSurah,
-    text: a.text,
-  }));
+  // Stable shape — always same keys for monomorphic map
+  const result: TafsirAyah[] = json.data.ayahs.map((a) => {
+    const row: TafsirAyah = { numberInSurah: a.numberInSurah | 0, text: String(a.text ?? "") };
+    return row;
+  });
   writeCache(key, result);
   tafsirMemory.set(key, result);
   return result;

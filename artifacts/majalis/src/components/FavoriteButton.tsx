@@ -4,6 +4,8 @@ import {
   isLocalBookmarked,
   toggleLocalBookmark,
 } from "@/lib/local-bookmarks";
+import { scheduleInputAck } from "@/lib/yield-to-main";
+import { enqueueOutbox } from "@/lib/offline-outbox";
 
 type Props = {
   contentType: string;
@@ -55,44 +57,55 @@ export function FavoriteButton({
 
   const toggle = async () => {
     if (busy) return;
+    const next = !bookmarked;
+    // Optimistic UI within the same frame (<16ms INP)
+    setBookmarked(next);
     setBusy(true);
     try {
-      const {
-        data: { user },
-      } = await supabase.auth.getUser();
+      await scheduleInputAck(async () => {
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
 
-      if (!user) {
-        const next = toggleLocalBookmark({
-          contentType,
-          contentId,
-          title,
-          href: `${window.location.pathname}${window.location.search}`,
-        });
-        setBookmarked(next);
-        setMode("local");
-        return;
-      }
-
-      setMode("cloud");
-      if (bookmarked) {
-        await supabase
-          .from("bookmarks")
-          .delete()
-          .match({ user_id: user.id, content_type: contentType, content_id: contentId });
-        // أزل النسخة المحلية إن وُجدت لتفادي ازدواج الحالة
-        if (isLocalBookmarked(contentType, contentId)) {
-          toggleLocalBookmark({ contentType, contentId });
+        if (!user) {
+          const persisted = toggleLocalBookmark({
+            contentType,
+            contentId,
+            title,
+            href: `${window.location.pathname}${window.location.search}`,
+          });
+          setBookmarked(persisted);
+          setMode("local");
+          return;
         }
-        setBookmarked(false);
-      } else {
-        await supabase.from("bookmarks").insert({
-          user_id: user.id,
-          content_type: contentType,
-          content_id: contentId,
-          title: title ?? null,
-        });
-        setBookmarked(true);
-      }
+
+        setMode("cloud");
+        if (!next) {
+          await supabase
+            .from("bookmarks")
+            .delete()
+            .match({ user_id: user.id, content_type: contentType, content_id: contentId });
+          if (isLocalBookmarked(contentType, contentId)) {
+            toggleLocalBookmark({ contentType, contentId });
+          }
+          enqueueOutbox("bookmark_delete", { contentType, contentId, userId: user.id });
+        } else {
+          await supabase.from("bookmarks").insert({
+            user_id: user.id,
+            content_type: contentType,
+            content_id: contentId,
+            title: title ?? null,
+          });
+          enqueueOutbox("bookmark_upsert", {
+            contentType,
+            contentId,
+            title: title ?? null,
+            userId: user.id,
+          });
+        }
+      });
+    } catch {
+      setBookmarked(!next);
     } finally {
       setBusy(false);
     }
