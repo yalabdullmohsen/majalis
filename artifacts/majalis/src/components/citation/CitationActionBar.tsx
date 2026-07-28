@@ -54,7 +54,7 @@ function SelectionTooltip({
     };
 
     document.addEventListener("mouseup", handleSelect);
-    document.addEventListener("touchend", handleSelect);
+    document.addEventListener("touchend", handleSelect, { passive: true });
     document.addEventListener("mousedown", handleClickOut);
     return () => {
       document.removeEventListener("mouseup", handleSelect);

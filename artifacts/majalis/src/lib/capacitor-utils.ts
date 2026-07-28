@@ -1,4 +1,5 @@
 import { Capacitor } from "@capacitor/core";
+import { safeVibrate } from "@/lib/browser-features";
 
 export const isNative = Capacitor.isNativePlatform();
 export const isAndroid = Capacitor.getPlatform() === "android";
@@ -59,7 +60,7 @@ const WEB_VIBRATE_PATTERN: Record<"success" | "warning" | "error", number[]> = {
 
 export async function hapticTap(style: "light" | "medium" | "heavy" = "light") {
   if (!isNative) {
-    try { navigator.vibrate?.(WEB_VIBRATE_MS[style]); } catch { /* متصفح لا يدعم Vibration API — تجاهل بأمان */ }
+    safeVibrate(WEB_VIBRATE_MS[style]);
     return;
   }
   try {
@@ -71,7 +72,7 @@ export async function hapticTap(style: "light" | "medium" | "heavy" = "light") {
 
 export async function hapticNotify(type: "success" | "warning" | "error") {
   if (!isNative) {
-    try { navigator.vibrate?.(WEB_VIBRATE_PATTERN[type]); } catch { /* تجاهل بأمان */ }
+    safeVibrate(WEB_VIBRATE_PATTERN[type]);
     return;
   }
   try {

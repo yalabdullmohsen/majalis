@@ -1,10 +1,11 @@
 import { safeLocationReload } from "@/lib/safe-reload";
+import { canUseServiceWorker } from "@/lib/browser-features";
 
 /**
  * Unregister stale service workers after deploy — prevents broken cached JS chunks.
  */
 export async function purgeStaleServiceWorkers(): Promise<void> {
-  if (typeof navigator === "undefined" || !("serviceWorker" in navigator)) return;
+  if (!canUseServiceWorker()) return;
 
   try {
     const registrations = await navigator.serviceWorker.getRegistrations();
@@ -21,13 +22,24 @@ export async function purgeStaleServiceWorkers(): Promise<void> {
 
 const SW_UPDATE_CHECK_INTERVAL_MS = 60 * 1000; // فحص فعلي للسكربت كل دقيقة أثناء الاستخدام
 
+let updateIntervalId: number | null = null;
+let visibilityHandler: (() => void) | null = null;
+
+/** Ask SW to drop DATA_CACHE (API/Quran) while keeping shell — active offline sessions keep reading from IDB. */
+export async function purgeServiceWorkerDataCache(): Promise<void> {
+  if (!canUseServiceWorker()) return;
+  try {
+    const reg = await navigator.serviceWorker.ready;
+    reg.active?.postMessage({ type: "MAJALIS_PURGE_DATA_CACHE" });
+  } catch {
+    /* ignore */
+  }
+}
+
 export function registerProductionServiceWorker(): void {
-  if (typeof navigator === "undefined" || !("serviceWorker" in navigator)) return;
+  if (!canUseServiceWorker()) return;
   if (!import.meta.env.PROD) return;
 
-  // عند تفعيل SW جديد (skipWaiting + clients.claim من طرف sw.js → controllerchange
-  // يُطلَق تلقائيًا في كل تبويب مفتوح حسب مواصفة Service Worker) أعد تحميل الصفحة
-  // تلقائيًا فورًا — بلا انتظار ضغطة مستخدم، بأمر صريح من المالك.
   const hadController = !!navigator.serviceWorker.controller;
   let refreshing = false;
   navigator.serviceWorker.addEventListener("controllerchange", () => {
@@ -39,20 +51,34 @@ export function registerProductionServiceWorker(): void {
   window.addEventListener("load", () => {
     void purgeStaleServiceWorkers().then(() => {
       navigator.serviceWorker.register("/sw.js").then((registration) => {
-        // الفجوة الحقيقية المتبقية: registration.update() الافتراضي في
-        // المتصفحات (خصوصًا Safari/iOS، جمهور المنصة الأساسي) قد يتأخر
-        // ساعات قبل التحقق من تغيّر سكربت sw.js فعليًا على الخادم — بلا هذا،
-        // controllerchange أعلاه لن يُطلَق أصلًا رغم نشر إصدار جديد.
-        // نفرض تحققًا فعليًا متكررًا بدل انتظار مؤقّت المتصفح الداخلي.
-        const forceCheck = () => { void registration.update().catch(() => undefined); };
+        const forceCheck = () => {
+          void registration.update().catch(() => undefined);
+        };
         forceCheck();
-        window.setInterval(forceCheck, SW_UPDATE_CHECK_INTERVAL_MS);
-        document.addEventListener("visibilitychange", () => {
+        if (updateIntervalId != null) window.clearInterval(updateIntervalId);
+        updateIntervalId = window.setInterval(forceCheck, SW_UPDATE_CHECK_INTERVAL_MS);
+        if (visibilityHandler) {
+          document.removeEventListener("visibilitychange", visibilityHandler);
+        }
+        visibilityHandler = () => {
           if (document.visibilityState === "visible") forceCheck();
-        });
+        };
+        document.addEventListener("visibilitychange", visibilityHandler);
       }).catch((error) => {
         console.warn("[majalis:pwa] service worker registration failed", error);
       });
     });
   });
+
+  // Tear down update interval on pagehide to avoid orphan timers in BFCache restores
+  window.addEventListener(
+    "pagehide",
+    () => {
+      if (updateIntervalId != null) {
+        window.clearInterval(updateIntervalId);
+        updateIntervalId = null;
+      }
+    },
+    { once: true },
+  );
 }

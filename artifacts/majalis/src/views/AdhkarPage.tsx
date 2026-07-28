@@ -112,14 +112,14 @@ function hapticsLight() {
   try {
     const enabled = localStorage.getItem("adhkar_haptics_enabled");
     if (enabled === "false") return;
-    if (navigator.vibrate) navigator.vibrate(18);
+    void import("@/lib/browser-features").then((m) => m.safeVibrate(18));
   } catch { /* */ }
 }
 function hapticsComplete() {
   try {
     const enabled = localStorage.getItem("adhkar_haptics_enabled");
     if (enabled === "false") return;
-    if (navigator.vibrate) navigator.vibrate([30, 60, 30]);
+    void import("@/lib/browser-features").then((m) => m.safeVibrate([30, 60, 30]));
   } catch { /* */ }
 }
 

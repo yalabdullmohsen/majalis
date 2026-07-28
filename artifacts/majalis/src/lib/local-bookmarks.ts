@@ -1,7 +1,10 @@
 /**
  * مفضّلات محلية للجهاز — بديل آمن دون حساب.
  * لا تُخزَّن بيانات حسّاسة؛ فقط نوع المحتوى والمعرّف والعنوان والمسار.
+ * Writes use a sync storage lock to avoid cross-tab clobber races.
  */
+
+import { withStorageLockSync } from "@/lib/storage-lock";
 
 const STORAGE_KEY = "majalis-local-bookmarks-v1";
 const MAX_ITEMS = 80;
@@ -27,11 +30,17 @@ function readAll(): LocalBookmark[] {
 
 function writeAll(items: LocalBookmark[]) {
   if (typeof window === "undefined") return;
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(items.slice(0, MAX_ITEMS)));
+  try {
+    withStorageLockSync("local-bookmarks", () => {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(items.slice(0, MAX_ITEMS)));
+    });
+  } catch {
+    /* quota / private mode */
+  }
 }
 
 export function listLocalBookmarks(): LocalBookmark[] {
-  return readAll().sort((a, b) => (a.savedAt < b.savedAt ? 1 : -1));
+  return [...readAll()].sort((a, b) => (a.savedAt < b.savedAt ? 1 : -1));
 }
 
 export function isLocalBookmarked(contentType: string, contentId: string): boolean {
@@ -49,22 +58,25 @@ export function toggleLocalBookmark(input: {
     (b) => b.contentType === input.contentType && b.contentId === input.contentId,
   );
   if (idx >= 0) {
-    list.splice(idx, 1);
-    writeAll(list);
+    writeAll([...list.slice(0, idx), ...list.slice(idx + 1)]);
     return false;
   }
   const href =
     input.href ||
-    (typeof window !== "undefined" ? `${window.location.pathname}${window.location.search}` : "/");
-  list.unshift({
-    id: `lb-${input.contentType}-${input.contentId}-${Date.now()}`,
-    contentType: input.contentType,
-    contentId: input.contentId,
-    title: (input.title || "").trim() || `${input.contentType}/${input.contentId}`,
-    href,
-    savedAt: new Date().toISOString(),
-  });
-  writeAll(list);
+    (typeof window !== "undefined" && window.location
+      ? `${window.location.pathname}${window.location.search}`
+      : "/");
+  writeAll([
+    {
+      id: `lb-${input.contentType}-${input.contentId}-${Date.now()}`,
+      contentType: input.contentType,
+      contentId: input.contentId,
+      title: (input.title || "").trim() || `${input.contentType}/${input.contentId}`,
+      href,
+      savedAt: new Date().toISOString(),
+    },
+    ...list,
+  ]);
   return true;
 }
 
@@ -74,5 +86,15 @@ export function removeLocalBookmark(contentType: string, contentId: string): voi
 
 export function clearLocalBookmarks(): void {
   if (typeof window === "undefined") return;
-  localStorage.removeItem(STORAGE_KEY);
+  try {
+    withStorageLockSync("local-bookmarks", () => {
+      localStorage.removeItem(STORAGE_KEY);
+    });
+  } catch {
+    try {
+      localStorage.removeItem(STORAGE_KEY);
+    } catch {
+      /* ignore */
+    }
+  }
 }

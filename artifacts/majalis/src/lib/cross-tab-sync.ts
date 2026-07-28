@@ -4,6 +4,8 @@
  * notifications across open tabs without reloads.
  */
 
+import { canUseBroadcastChannel } from "@/lib/browser-features";
+
 export type CrossTabEventType =
   | "bookmark_changed"
   | "azkar_progress"
@@ -59,7 +61,7 @@ export function getCrossTabId(): string {
 }
 
 export function isBroadcastChannelSupported(): boolean {
-  return typeof BroadcastChannel !== "undefined";
+  return canUseBroadcastChannel();
 }
 
 function getChannel(): BroadcastChannel | null {
@@ -155,6 +157,9 @@ export function subscribeCrossTab(handler: CrossTabHandler): () => void {
   handlers.add(handler);
   return () => {
     handlers.delete(handler);
+    if (handlers.size === 0) {
+      closeCrossTabChannel();
+    }
   };
 }
 

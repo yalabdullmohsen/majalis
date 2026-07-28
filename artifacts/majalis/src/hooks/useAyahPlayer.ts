@@ -92,6 +92,13 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
       pauseCleanupRef.current?.();
       pauseCleanupRef.current = null;
       audio.pause();
+      audio.removeAttribute("src");
+      audio.src = "";
+      try {
+        audio.load();
+      } catch {
+        /* ignore */
+      }
       audioRef.current = null;
     };
   }, [clearDelayTimer]);

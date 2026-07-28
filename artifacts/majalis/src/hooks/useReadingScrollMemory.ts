@@ -4,6 +4,7 @@ import {
   saveScrollForSection,
   type ReadingSection,
 } from "@/lib/reading-progress";
+import { bindRafListener } from "@/lib/passive-events";
 
 /**
  * يستعيد موضع التمرير لقسم محتوى عند أول زيارة للصفحة،
@@ -35,22 +36,14 @@ export function useReadingScrollMemory(section: ReadingSection, enabled = true) 
 
     const t = window.setTimeout(tryRestore, 120);
 
-    let ticking = false;
-    const onScroll = () => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(() => {
-        ticking = false;
-        saveScrollForSection(sectionRef.current, window.scrollY);
-      });
-    };
-
-    window.addEventListener("scroll", onScroll, { passive: true });
+    const unbind = bindRafListener(window, "scroll", () => {
+      saveScrollForSection(sectionRef.current, window.scrollY);
+    });
 
     return () => {
       cancelled = true;
       window.clearTimeout(t);
-      window.removeEventListener("scroll", onScroll);
+      unbind();
       saveScrollForSection(sectionRef.current, window.scrollY);
     };
   }, [section, enabled]);

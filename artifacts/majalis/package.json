@@ -89,6 +89,7 @@
     "test:tadabbur-suite": "npx tsx src/lib/__tests__/tadabbur-vault-oled-discovery-sync.test.ts",
     "test:topic-chunk-cache-suite": "npx tsx src/lib/__tests__/topic-chunk-cache-suite.test.ts",
     "test:speech-scroll-sacred-sync-suite": "npx tsx src/lib/__tests__/speech-scroll-sacred-sync-suite.test.ts",
+    "test:main-thread-workers": "npx tsx src/lib/__tests__/main-thread-workers-resilience.test.ts",
     "test:guardrails": "node lib/__tests__/islamic-answer-guardrails.test.mjs",
     "test:search-normalize": "node lib/__tests__/search-normalize.test.mjs",
     "test:scholars-integrity": "npx tsx src/lib/__tests__/scholars-data-integrity.test.ts",

@@ -6,6 +6,7 @@ import {
   type TasbeehWird,
 } from "@/lib/tasbeeh-storage";
 import { hapticTap, hapticNotify, isNative } from "@/lib/capacitor-utils";
+import { safeVibrate } from "@/lib/browser-features";
 
 type Options = {
   storageId: string;
@@ -23,9 +24,7 @@ type Options = {
  */
 function hapticTick() {
   if (isNative) { hapticTap("light"); return; }
-  if (typeof navigator !== "undefined" && "vibrate" in navigator) {
-    navigator.vibrate(12);
-  }
+  safeVibrate(12);
 }
 
 export function useTasbeehCounter({ storageId, initialTarget, wird, onWirdChange }: Options) {

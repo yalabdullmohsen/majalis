@@ -1,11 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 /**
  * تحكم الصوت من شاشة القفل ومركز التحكم (iOS/macOS/Android) — واجهة ويب
- * قياسية (Media Session API)، تعمل تلقائيًا داخل WKWebView لتطبيق iOS
- * الأصلي دون أي إضافة Capacitor، فلا حاجة لأي كود Swift/Kotlin. بلا هذا
- * الهوك، تشغيل الإذاعة أو تلاوة الآيات لا يظهر إطلاقًا في شاشة القفل ولا
- * يمكن التحكم به دون فتح التطبيق.
+ * قياسية (Media Session API). Feature-detected; silent no-op when unavailable.
  */
 type Options = {
   title: string;
@@ -18,36 +15,63 @@ type Options = {
   onPrevious?: () => void;
 } | null;
 
+function clearMediaSessionHandlers(ms: MediaSession): void {
+  for (const action of ["play", "pause", "stop", "nexttrack", "previoustrack"] as MediaSessionAction[]) {
+    try {
+      ms.setActionHandler(action, null);
+    } catch {
+      /* unsupported */
+    }
+  }
+  try {
+    ms.metadata = null;
+    ms.playbackState = "none";
+  } catch {
+    /* ignore */
+  }
+}
+
 export function useMediaSession(opts: Options) {
+  const optsRef = useRef(opts);
+  optsRef.current = opts;
+
   useEffect(() => {
     if (typeof navigator === "undefined" || !("mediaSession" in navigator)) return;
     const ms = navigator.mediaSession;
 
     if (!opts) {
-      ms.metadata = null;
-      ms.playbackState = "none";
+      clearMediaSessionHandlers(ms);
       return;
     }
 
-    ms.metadata = new MediaMetadata({
-      title: opts.title,
-      artist: opts.artist || "المجلس العلمي",
-    });
-    ms.playbackState = opts.playing ? "playing" : "paused";
+    try {
+      ms.metadata = new MediaMetadata({
+        title: opts.title,
+        artist: opts.artist || "المجلس العلمي",
+      });
+      ms.playbackState = opts.playing ? "playing" : "paused";
+    } catch {
+      /* MediaMetadata unsupported in some webviews */
+    }
 
-    const set = (action: MediaSessionAction, handler?: () => void) => {
+    const set = (action: MediaSessionAction, getHandler: () => (() => void) | undefined) => {
       try {
-        ms.setActionHandler(action, handler ? () => handler() : null);
-      } catch { /* إجراء غير مدعوم على هذه المنصة — تجاهل بأمان */ }
+        ms.setActionHandler(action, () => {
+          getHandler()?.();
+        });
+      } catch {
+        /* إجراء غير مدعوم على هذه المنصة — تجاهل بأمان */
+      }
     };
-    set("play", opts.onPlay);
-    set("pause", opts.onPause);
-    set("stop", opts.onStop);
-    set("nexttrack", opts.onNext);
-    set("previoustrack", opts.onPrevious);
+
+    set("play", () => optsRef.current?.onPlay);
+    set("pause", () => optsRef.current?.onPause);
+    set("stop", () => optsRef.current?.onStop);
+    set("nexttrack", () => optsRef.current?.onNext);
+    set("previoustrack", () => optsRef.current?.onPrevious);
 
     return () => {
-      set("play"); set("pause"); set("stop"); set("nexttrack"); set("previoustrack");
+      clearMediaSessionHandlers(ms);
     };
-  }, [opts?.title, opts?.artist, opts?.playing, opts?.onPlay, opts?.onPause, opts?.onStop, opts?.onNext, opts?.onPrevious]);
+  }, [opts?.title, opts?.artist, opts?.playing, Boolean(opts)]);
 }

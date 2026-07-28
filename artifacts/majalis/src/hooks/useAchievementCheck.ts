@@ -75,5 +75,12 @@ export function useAchievementCheck() {
     return () => clearTimeout(t);
   }, [isLoggedIn, user?.id, runCheck]);
 
+  // Clear scheduled check on unmount — prevent timer leak across routes
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, []);
+
   return { newBadges, scheduleCheck, dismissBadges };
 }

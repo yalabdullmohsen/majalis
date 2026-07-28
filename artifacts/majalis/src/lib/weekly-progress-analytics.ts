@@ -152,3 +152,32 @@ export function buildWeeklyProgressAnalytics(
 export function exportWeeklyProgressJson(userId = "local"): string {
   return JSON.stringify(buildWeeklyProgressAnalytics(userId), null, 2);
 }
+
+/**
+ * Async weekly analytics — aggregation step can run in a Web Worker.
+ * Falls back to sync builder.
+ */
+export async function buildWeeklyProgressAnalyticsAsync(
+  userId = "local",
+  now: Date = new Date(),
+): Promise<WeeklyProgressPayload> {
+  const base = buildWeeklyProgressAnalytics(userId, now);
+  try {
+    const { aggregateDaysOffthread } = await import("@/lib/offthread-compute");
+    const agg = await aggregateDaysOffthread(
+      base.daily.map((d) => ({
+        tasksCompleted: d.tasksCompleted,
+        tasksTotal: d.tasksTotal,
+        pagesRead: d.pagesRead,
+        active: d.active,
+      })),
+    );
+    return {
+      ...base,
+      completionRate: agg.completionRate,
+      quranPagesThisWeek: agg.totalPages || base.quranPagesThisWeek,
+    };
+  } catch {
+    return base;
+  }
+}

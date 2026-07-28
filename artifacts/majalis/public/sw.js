@@ -134,6 +134,49 @@ async function cacheFirst(req, cacheName) {
   }
 }
 
+/**
+ * Stale-while-revalidate — serve cache instantly, refresh in background.
+ * Prevents "stale-forever" for Quran/prayer/API data without blocking offline reads.
+ */
+async function staleWhileRevalidate(req, cacheName) {
+  const cache = await caches.open(cacheName);
+  const cached = await cache.match(req);
+  const networkPromise = fetch(req)
+    .then((res) => {
+      if (res && res.ok) {
+        cache.put(req, res.clone()).catch(() => undefined);
+      }
+      return res;
+    })
+    .catch(() => null);
+
+  if (cached) {
+    // Kick revalidation; do not await — keep UI responsive
+    eventWait(networkPromise);
+    return cached;
+  }
+
+  const network = await networkPromise;
+  if (network) return network;
+  return new Response(JSON.stringify({ ok: false, error: "offline" }), {
+    status: 503,
+    headers: { "Content-Type": "application/json" },
+  });
+}
+
+/** Attach a promise to the current fetch event if available. */
+function eventWait(promise) {
+  try {
+    // fetch handler sets self.__majalis_fetch_event
+    const ev = self.__majalis_fetch_event;
+    if (ev && typeof ev.waitUntil === "function") {
+      ev.waitUntil(Promise.resolve(promise).catch(() => undefined));
+    }
+  } catch {
+    /* ignore */
+  }
+}
+
 /** Navigations must never be stored: current network document or offline page only. */
 async function networkFirstNavigation(req) {
   try {
@@ -148,11 +191,14 @@ self.addEventListener("fetch", (event) => {
   const req = event.request;
   if (req.method !== "GET") return;
 
+  // Expose event for SWR waitUntil helper
+  self.__majalis_fetch_event = event;
+
   const url = new URL(req.url);
 
-  // External Quran/prayer APIs → cache-first (data rarely changes mid-day)
+  // External Quran/prayer APIs → stale-while-revalidate (fresh in background)
   if (DATA_FIRST_ORIGINS.some((h) => url.hostname.includes(h))) {
-    event.respondWith(cacheFirst(req, DATA_CACHE));
+    event.respondWith(staleWhileRevalidate(req, DATA_CACHE));
     return;
   }
 
@@ -179,20 +225,20 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // Internal API data (lessons, fawaid, prayer) → cache-first for offline
+  // Internal API data (lessons, fawaid, prayer) → SWR for offline + freshness
   if (CACHEABLE_API_PATHS.some((p) => url.pathname.startsWith(p))) {
-    event.respondWith(cacheFirst(req, DATA_CACHE));
+    event.respondWith(staleWhileRevalidate(req, DATA_CACHE));
     return;
   }
 
   // بيانات المصحف QPC v2 (صفحات JSON + فهارس) — ثابتة ونادرة التغيّر،
-  // cache-first يسرّع تقليب الصفحات ويُتيح قراءة محدودة دون شبكة.
+  // SWR يحدّث في الخلفية دون كسر جلسة القراءة الأوفلاين النشطة.
   if (
     url.pathname.startsWith("/data/quran-v2/") ||
     url.pathname === "/data/quran/page-juz-index.json" ||
     url.pathname.startsWith("/fonts/quran/")
   ) {
-    event.respondWith(cacheFirst(req, DATA_CACHE));
+    event.respondWith(staleWhileRevalidate(req, DATA_CACHE));
     return;
   }
 
@@ -215,6 +261,20 @@ const _smartLocalTimers = new Map(); // tag → timeoutId
 self.addEventListener("message", (event) => {
   const msg = event.data;
   if (!msg) return;
+
+  // Explicit data-cache invalidation (keeps offline shell; refreshes API/Quran data)
+  if (msg.type === "MAJALIS_PURGE_DATA_CACHE") {
+    event.waitUntil(
+      (async () => {
+        try {
+          await caches.delete(DATA_CACHE);
+        } catch {
+          /* ignore */
+        }
+      })(),
+    );
+    return;
+  }
 
   // Smart local schedule (adhkar / streak / khatmah / prayer reminders)
   if (msg.type === "MAJALIS_SCHEDULE_LOCAL_NOTIFS" && Array.isArray(msg.items)) {

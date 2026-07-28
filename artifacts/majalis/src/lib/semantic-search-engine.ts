@@ -127,3 +127,34 @@ export function semanticSearchDocuments(
     return [];
   }
 }
+
+/**
+ * Async semantic search — offloads large doc filters to a Web Worker when available.
+ * Same ranking semantics as `semanticSearchDocuments`.
+ */
+export async function semanticSearchDocumentsAsync(
+  query: string,
+  docs: SearchableDocument[],
+  limit = 20,
+): Promise<SemanticSearchHit[]> {
+  const q = query.trim();
+  if (!q) return [];
+  if (docs.length < 40) return semanticSearchDocuments(query, docs, limit);
+
+  try {
+    const { filterDocsOffthread } = await import("@/lib/offthread-compute");
+    const { expandSearchTerms } = await import("@/lib/search-synonyms");
+    const needles = [...new Set([q, ...expandSearchTerms(q)])];
+    const matchDocs = docs.map((d) => ({
+      id: d.id,
+      fields: [d.title, d.body || "", ...(d.keywords || [])].filter(Boolean) as string[],
+    }));
+    const ids = await filterDocsOffthread(matchDocs, needles);
+    const idSet = new Set(ids);
+    const narrowed = docs.filter((d) => idSet.has(d.id));
+    // Rank on the narrowed set (main thread — typically much smaller)
+    return semanticSearchDocuments(query, narrowed, limit);
+  } catch {
+    return semanticSearchDocuments(query, docs, limit);
+  }
+}

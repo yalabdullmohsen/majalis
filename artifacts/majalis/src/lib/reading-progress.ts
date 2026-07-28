@@ -1,3 +1,5 @@
+import { withStorageLockSync } from "@/lib/storage-lock";
+
 const STORAGE_KEY = "majalis-reading-progress-v1";
 
 export type ReadingSection = "adhkar" | "qa" | "fawaid" | "hadith" | "rulings" | "stories" | "assistant";
@@ -22,11 +24,17 @@ function readStore(): ReadingProgressStore {
 
 function writeStore(store: ReadingProgressStore) {
   if (typeof window === "undefined") return;
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
+  try {
+    withStorageLockSync("reading-progress", () => {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(store));
+    });
+  } catch {
+    /* quota */
+  }
 }
 
 export function markReadingProgress(section: ReadingSection, entry: Omit<ReadingProgressEntry, "at">) {
-  const store = readStore();
+  const store = { ...readStore() };
   const prev = store[section];
   store[section] = {
     ...prev,

@@ -8,6 +8,7 @@
 import { diffRecitation } from "@/lib/recitation-diff";
 import { normalizeQuranWord } from "@/lib/recitation-ai/quran-normalize";
 import { idbPut, OFFLINE_STORES } from "@/lib/offline-db";
+import { canUseSpeechRecognition } from "@/lib/browser-features";
 
 export type RecitationHintKind =
   | "none"
@@ -65,6 +66,7 @@ const DEFAULT_HESITATION_MS = 2_200;
 
 function getSpeechCtor(): SpeechCtor | null {
   if (typeof window === "undefined") return null;
+  if (!canUseSpeechRecognition()) return null;
   const w = window as unknown as {
     SpeechRecognition?: SpeechCtor;
     webkitSpeechRecognition?: SpeechCtor;

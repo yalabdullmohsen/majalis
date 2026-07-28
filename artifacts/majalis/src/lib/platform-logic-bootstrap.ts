@@ -76,9 +76,16 @@ export async function startPlatformLogicSuite(): Promise<void> {
       /* ignore */
     }
     try {
-      const { getCrossTabId, subscribeCrossTab } = await import("@/lib/cross-tab-sync");
+      // Warm tab id only — avoid immortal empty BroadcastChannel subscriber
+      const { getCrossTabId } = await import("@/lib/cross-tab-sync");
       getCrossTabId();
-      subscribeCrossTab(() => undefined);
+    } catch {
+      /* ignore */
+    }
+    try {
+      // Soft-warm: feature detect + dispose-safe worker probe (never block UX)
+      const { detectBrowserFeatures } = await import("@/lib/browser-features");
+      detectBrowserFeatures();
     } catch {
       /* ignore */
     }
