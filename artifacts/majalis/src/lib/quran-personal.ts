@@ -4,6 +4,8 @@
  * كل البيانات تُخزَّن محلياً في localStorage فقط (لا ترسل لأي سيرفر).
  */
 
+import { deleteUserNote, getUserNote, getUserNotes, makeVerseId, parseVerseId, saveNote as saveUserNoteByVerseId } from "@/lib/quran-user-notes";
+
 // ── Bookmarks ────────────────────────────────────────────────────────────────
 
 export type QuranBookmark = {
@@ -62,17 +64,39 @@ function readNotes(): QuranNote[] {
 }
 
 export function getNote(surahNum: number, ayahNum: number): string {
-  return readNotes().find((n) => n.surahNum === surahNum && n.ayahNum === ayahNum)?.text ?? "";
+  const fromList = readNotes().find((n) => n.surahNum === surahNum && n.ayahNum === ayahNum)?.text ?? "";
+  if (fromList) return fromList;
+  // Fallback: RN `userNotes` map (`surah:ayah`)
+  return getUserNote(makeVerseId(surahNum, ayahNum));
 }
 
 export function saveNote(surahNum: number, ayahNum: number, text: string) {
+  const trimmed = text.trim();
   const all = readNotes().filter((n) => !(n.surahNum === surahNum && n.ayahNum === ayahNum));
-  if (text.trim()) all.unshift({ surahNum, ayahNum, text: text.trim(), updatedAt: Date.now() });
+  if (trimmed) all.unshift({ surahNum, ayahNum, text: trimmed, updatedAt: Date.now() });
   try { localStorage.setItem(NOTE_KEY, JSON.stringify(all)); } catch { /* quota */ }
+
+  // Dual-write RN sketch key `userNotes` so both stores stay in sync.
+  const verseId = makeVerseId(surahNum, ayahNum);
+  if (trimmed) {
+    void saveUserNoteByVerseId(verseId, trimmed);
+  } else {
+    void deleteUserNote(verseId);
+  }
 }
 
 export function getAllNotes(): QuranNote[] {
-  return readNotes();
+  const list = readNotes();
+  const seen = new Set(list.map((n) => makeVerseId(n.surahNum, n.ayahNum)));
+  const extras: QuranNote[] = [];
+  for (const [id, text] of Object.entries(getUserNotes())) {
+    const trimmed = text.trim();
+    if (!trimmed || seen.has(id)) continue;
+    const parsed = parseVerseId(id);
+    if (!parsed) continue;
+    extras.push({ surahNum: parsed.surahNum, ayahNum: parsed.ayahNum, text: trimmed, updatedAt: 0 });
+  }
+  return extras.length ? [...list, ...extras] : list;
 }
 
 // ── Hifz Progress ────────────────────────────────────────────────────────────
