@@ -6,6 +6,8 @@ import { fetchTafsirAyahs } from "@/lib/quran-api";
 import { MUSHAF_TAFSIR_EDITIONS } from "@/lib/tafsir-seed";
 import { RECITERS } from "@/lib/quran-audio";
 import { CONTACT_EMAIL } from "@/lib/site-config";
+import { afterNextPaint, yieldToMain } from "@/lib/yield-to-main";
+import { prewarmTextApis } from "@/lib/resource-prewarm";
 
 const TAFSIR_EDITION_KEY = "majalis-mushaf-tafsir-edition-v1";
 
@@ -79,7 +81,11 @@ export function PageAyahActionSheet({ surahNum, surahName, ayahNum, ayahText, is
     setTafsirError(false);
     setTafsirText(null);
     try {
+      // Drawer already open — yield so open animation / press feedback paints (INP).
+      await afterNextPaint();
+      prewarmTextApis();
       const ayahs = await fetchTafsirAyahs(surahNum, edition);
+      await yieldToMain();
       const found = ayahs.find((a) => a.numberInSurah === ayahNum);
       setTafsirText(found?.text ?? null);
       if (!found) setTafsirError(true);

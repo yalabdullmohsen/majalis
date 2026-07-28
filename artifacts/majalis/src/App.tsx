@@ -16,7 +16,7 @@ import { ComingSoonDialog } from "@/components/ComingSoonDialog";
 import { AchievementToast } from "@/components/AchievementToast";
 import { useAchievementCheck } from "@/hooks/useAchievementCheck";
 import NotFound from "@/views/not-found";
-import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { ErrorBoundary, SectionErrorBoundary } from "@/components/ErrorBoundary";
 import { usePageSeo } from "@/lib/seo";
 import { lazyWithRetry } from "@/lib/lazy-with-retry";
 import { LazyRouteFallback } from "@/components/LazyRouteFallback";
@@ -848,9 +848,11 @@ function AppShell() {
           <AchievementToast badges={newBadges} onDismiss={dismissBadges} />
         )}
         {searchOpen && (
-          <Suspense fallback={null}>
-            <GlobalSearchModal onClose={() => setSearchOpen(false)} />
-          </Suspense>
+          <SectionErrorBoundary name="GlobalSearchModal">
+            <Suspense fallback={null}>
+              <GlobalSearchModal onClose={() => setSearchOpen(false)} />
+            </Suspense>
+          </SectionErrorBoundary>
         )}
         <ComingSoonDialog
           open={comingSoonOpen}

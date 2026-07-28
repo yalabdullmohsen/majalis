@@ -8,6 +8,8 @@
  */
 
 import { pooledFetch } from "@/lib/fetch-pool";
+import { LruCache } from "@/lib/lru-cache";
+import { mapInChunks, yieldToMain } from "@/lib/yield-to-main";
 
 export type QpcWord = {
   id: number;
@@ -97,7 +99,9 @@ export function loadChapters(): Promise<Map<number, MushafChapter>> {
   return chaptersPromise;
 }
 
-const pageCache = new Map<number, Promise<QpcVerse[]>>();
+/** Bounded LRU of in-flight/resolved page JSON — prevents unbounded growth across long mushaf sessions. */
+const PAGE_CACHE_MAX = 32;
+const pageCache = new LruCache<number, Promise<QpcVerse[]>>(PAGE_CACHE_MAX);
 
 function fetchRawPage(pageNumber: number): Promise<QpcVerse[]> {
   let p = pageCache.get(pageNumber);
@@ -110,8 +114,10 @@ function fetchRawPage(pageNumber: number): Promise<QpcVerse[]> {
         if (!res.ok) throw new Error(`page ${pageNumber} fetch failed: HTTP ${res.status}`);
         return res.json();
       })
-      .then((raw: any[]) =>
-        raw.map((v): QpcVerse => {
+      .then(async (raw: any[]) => {
+        // Yield before mapping large page payloads so INP stays responsive when flipping Juz/pages.
+        await yieldToMain();
+        return mapInChunks(raw ?? [], 40, (v): QpcVerse => {
           const [surahStr, ayahStr] = v.verse_key.split(":");
           return {
             verseKey: v.verse_key,
@@ -139,8 +145,8 @@ function fetchRawPage(pageNumber: number): Promise<QpcVerse[]> {
               }),
             ),
           };
-        }),
-      )
+        });
+      })
       .catch((err) => {
         pageCache.delete(pageNumber);
         throw err;
