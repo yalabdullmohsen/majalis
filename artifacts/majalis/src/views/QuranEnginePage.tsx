@@ -5,6 +5,7 @@
 import { useState } from "react";
 import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { QuranEngineProvider } from "@/core/quran/QuranEngineContext";
+import { QuranProvider } from "@/context/QuranContext";
 import { HomeDashboard } from "@/components/HomeDashboard";
 import { QuranViewer } from "@/components/QuranViewer";
 import "@/styles/quran-engine-ui.css";
@@ -17,6 +18,7 @@ export default function QuranEnginePage() {
   return (
     <ErrorBoundary>
       <QuranEngineProvider>
+        <QuranProvider>
         <main
           className={`qe-page${focusMode ? " qe-page--focus" : ""}`}
           dir="rtl"
@@ -60,6 +62,7 @@ export default function QuranEnginePage() {
             <QuranViewer initialSurah={surah} onFocusModeChange={setFocusMode} />
           )}
         </main>
+        </QuranProvider>
       </QuranEngineProvider>
     </ErrorBoundary>
   );

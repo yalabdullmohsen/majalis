@@ -1,13 +1,15 @@
 /**
  * RN sketch: restore `lastPage` on mount; caller still saves on page change
- * via {@link saveLastPage} / {@link savePagePosition}.
+ * via {@link storageService.saveLastPage} / {@link savePagePosition}.
  *
  * ```ts
- * useEffect(() => { void loadLastPage().then(p => p && setCurrentPage(p)); }, []);
+ * useEffect(() => {
+ *   void storageService.getLastPage().then((p) => p && setCurrentPage(Number(p)));
+ * }, []);
  * ```
  */
 import { useEffect, useRef } from "react";
-import { loadLastPage } from "@/lib/quran-last-page";
+import { storageService } from "@/lib/quran-storage-service";
 
 type Options = {
   /** When false, skip restore (e.g. URL already specifies a page). */
@@ -25,7 +27,7 @@ export function useRestoreLastPage({ enabled = true, onRestore }: Options): void
     let cancelled = false;
     const run = async () => {
       try {
-        const savedPage = await loadLastPage();
+        const savedPage = await storageService.getLastPageNumber();
         if (cancelled || savedPage === null) return;
         onRestoreRef.current(savedPage);
       } catch (e) {

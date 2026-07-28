@@ -13,6 +13,7 @@ App root: `artifacts/majalis/src/`
 | UI | `components/Quran{Viewer,ActionBar}.tsx`, `HomeDashboard.tsx` | Wired |
 | Hook | `hooks/useQuranEngine.ts` | Provider or singleton |
 | Route | `/quran-engine` | `views/QuranEnginePage.tsx` |
+| RN layout façade | `quran/{assets,components,screens,hooks,context,services,constants}` | Re-exports only |
 
 ## PWA
 
