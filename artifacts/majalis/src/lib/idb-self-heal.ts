@@ -68,19 +68,39 @@ export function backupCriticalUserState(): CriticalUserBackup {
     quranPersonalJson,
     capturedAt: Date.now(),
   };
+  // Master polish: also mirror into sessionStorage as secondary volatile fallback
+  try {
+    if (typeof sessionStorage !== "undefined") {
+      sessionStorage.setItem(
+        "majalis-idb-heal-volatile-v1",
+        JSON.stringify(volatileBackup),
+      );
+    }
+  } catch {
+    /* ignore */
+  }
   return volatileBackup;
 }
 
 export function restoreCriticalUserState(backup = volatileBackup): void {
-  if (!backup) return;
-  if (backup.bookmarksJson) {
-    for (const k of BOOKMARK_KEYS) writeLs(k, backup.bookmarksJson);
+  let snap = backup;
+  if (!snap) {
+    try {
+      const raw = sessionStorage.getItem("majalis-idb-heal-volatile-v1");
+      if (raw) snap = JSON.parse(raw) as CriticalUserBackup;
+    } catch {
+      /* ignore */
+    }
   }
-  if (backup.khatmahJson) {
-    for (const k of KHATMAH_KEYS) writeLs(k, backup.khatmahJson);
+  if (!snap) return;
+  if (snap.bookmarksJson) {
+    for (const k of BOOKMARK_KEYS) writeLs(k, snap.bookmarksJson);
   }
-  if (backup.quranPersonalJson) {
-    for (const k of PERSONAL_KEYS) writeLs(k, backup.quranPersonalJson);
+  if (snap.khatmahJson) {
+    for (const k of KHATMAH_KEYS) writeLs(k, snap.khatmahJson);
+  }
+  if (snap.quranPersonalJson) {
+    for (const k of PERSONAL_KEYS) writeLs(k, snap.quranPersonalJson);
   }
 }
 

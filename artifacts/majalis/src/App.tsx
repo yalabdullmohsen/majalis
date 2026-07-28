@@ -763,31 +763,54 @@ function GlobalAppShortcuts({ onToggleSearch }: { onToggleSearch: () => void }) 
   const [, navigate] = useLocation();
 
   useEffect(() => {
-    const keyHandler = (e: KeyboardEvent) => {
-      const target = e.target as HTMLElement | null;
-      const tag = target?.tagName;
-      const typing =
-        tag === "INPUT" ||
-        tag === "TEXTAREA" ||
-        tag === "SELECT" ||
-        target?.isContentEditable;
+    let unbind: (() => void) | undefined;
+    void import("@/lib/keyboard-inp").then(({ bindKeyboardInp }) => {
+      // Part 23: sync preventDefault, deferred navigate/search open (INP <30ms)
+      unbind = bindKeyboardInp(
+        (e) => {
+          const target = e.target as HTMLElement | null;
+          const tag = target?.tagName;
+          const typing =
+            tag === "INPUT" ||
+            tag === "TEXTAREA" ||
+            tag === "SELECT" ||
+            target?.isContentEditable;
 
-      // Ctrl/Cmd+K — البحث الشامل
-      if ((e.metaKey || e.ctrlKey) && !e.shiftKey && e.key.toLowerCase() === "k") {
-        e.preventDefault();
-        onToggleSearch();
-        return;
-      }
-
-      // Ctrl/Cmd+Shift+R — بطاقات المراجعة (لا يتعارض مع تحديث الصفحة Ctrl+R)
-      if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.key.toLowerCase() === "r") {
-        if (typing) return;
-        e.preventDefault();
-        navigate("/flashcards");
-      }
-    };
-    window.addEventListener("keydown", keyHandler);
-    return () => window.removeEventListener("keydown", keyHandler);
+          if ((e.metaKey || e.ctrlKey) && !e.shiftKey && e.key.toLowerCase() === "k") {
+            onToggleSearch();
+            return;
+          }
+          if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.key.toLowerCase() === "r") {
+            if (typing) return;
+            navigate("/flashcards");
+          }
+        },
+        {
+          preventKeys: [],
+          ignoreEditable: false,
+          when: (e) => {
+            if ((e.metaKey || e.ctrlKey) && !e.shiftKey && e.key.toLowerCase() === "k") {
+              e.preventDefault();
+              return true;
+            }
+            if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.key.toLowerCase() === "r") {
+              const target = e.target as HTMLElement | null;
+              const tag = target?.tagName;
+              const typing =
+                tag === "INPUT" ||
+                tag === "TEXTAREA" ||
+                tag === "SELECT" ||
+                target?.isContentEditable;
+              if (typing) return false;
+              e.preventDefault();
+              return true;
+            }
+            return false;
+          },
+        },
+      );
+    });
+    return () => unbind?.();
   }, [navigate, onToggleSearch]);
 
   return null;

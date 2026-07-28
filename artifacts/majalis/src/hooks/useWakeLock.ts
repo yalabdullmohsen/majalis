@@ -3,8 +3,9 @@
  * Releases on pause, unmount, or tab blur — prevents battery drain.
  * Logic-only — no UI.
  */
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createWakeLockController, type WakeLockHandle } from "@/lib/wake-lock";
+import { shouldAttemptWakeLock } from "@/lib/webview-guard";
 
 /**
  * @param active — true while audio playing or continuous reading mode is on
@@ -14,27 +15,29 @@ export function useWakeLock(active: boolean): {
   supported: boolean;
 } {
   const ctrlRef = useRef<WakeLockHandle | null>(null);
-  const heldRef = useRef(false);
+  const [isHeld, setIsHeld] = useState(false);
+  const supported =
+    typeof navigator !== "undefined" && "wakeLock" in navigator && shouldAttemptWakeLock();
 
   useEffect(() => {
+    if (!supported) return;
     const ctrl = createWakeLockController();
     ctrlRef.current = ctrl;
     return () => {
       ctrl.dispose();
       ctrlRef.current = null;
-      heldRef.current = false;
+      setIsHeld(false);
     };
-  }, []);
+  }, [supported]);
 
   useEffect(() => {
     const ctrl = ctrlRef.current;
     if (!ctrl) return;
     ctrl.setSessionActive(active);
-    heldRef.current = ctrl.isHeld();
+    void (active ? ctrl.request() : ctrl.release()).finally(() => {
+      setIsHeld(ctrl.isHeld());
+    });
   }, [active]);
 
-  return {
-    isHeld: heldRef.current,
-    supported: typeof navigator !== "undefined" && "wakeLock" in navigator,
-  };
+  return { isHeld, supported };
 }

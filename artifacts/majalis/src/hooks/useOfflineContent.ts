@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { isOnline } from "@/lib/offline-db";
 import { withOfflineFallback } from "@/lib/offline-content-store";
+import { createLifecycleHandle } from "@/lib/hook-lifecycle";
 
 /**
  * Generic offline-first reader for any content key.
@@ -36,17 +37,15 @@ export function useOfflineContent<T>(options: {
   }, [reload]);
 
   useEffect(() => {
+    const life = createLifecycleHandle();
     const onOnline = () => {
       setOnline(true);
       void reload();
     };
     const onOffline = () => setOnline(false);
-    window.addEventListener("online", onOnline);
-    window.addEventListener("offline", onOffline);
-    return () => {
-      window.removeEventListener("online", onOnline);
-      window.removeEventListener("offline", onOffline);
-    };
+    life.addListener(window, "online", onOnline);
+    life.addListener(window, "offline", onOffline);
+    return () => life.dispose();
   }, [reload]);
 
   return { data, fromCache, loading, online, reload };

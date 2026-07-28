@@ -126,20 +126,26 @@ export async function getAllDownloadStatuses(): Promise<ReciterDownloadStatus[]>
 
 export type DownloadProgress = { surah: number; done: number; total: number };
 
-/** يحمّل السور 1..114 تسلسليًا (لا تزامنًا — يتفادى إغراق الشبكة/الذاكرة على الجوال)، يتخطى ما هو محمَّل مسبقًا. */
+/** يحمّل السور 1..114 تسلسليًا مع استئناف Range عند الانقطاع. */
 export async function downloadReciter(
   reciterId: string,
   onProgress: (p: DownloadProgress) => void,
   isCancelled: () => boolean,
 ): Promise<void> {
   const existing = new Set((await listKeysForReciter(reciterId)).map((e) => e.surah));
+  const { downloadWithRangeResume } = await import("@/lib/range-download");
   for (let surah = 1; surah <= TOTAL_SURAHS; surah++) {
     if (isCancelled()) return;
     if (!existing.has(surah)) {
-      const res = await fetch(getSurahAudioUrl(surah, reciterId));
-      if (!res.ok) throw new Error(`فشل تنزيل السورة ${surah}: ${res.status}`);
-      const blob = await res.blob();
+      const url = getSurahAudioUrl(surah, reciterId);
+      const result = await downloadWithRangeResume({
+        url,
+        signal: undefined,
+      });
       if (isCancelled()) return;
+      const blob = new Blob([result.bytes], {
+        type: result.contentType || "audio/mpeg",
+      });
       await putBlob(reciterId, surah, blob);
     }
     onProgress({ surah, done: surah, total: TOTAL_SURAHS });
@@ -151,10 +157,54 @@ export async function deleteReciterDownloads(reciterId: string): Promise<void> {
   await Promise.all(entries.map((e) => deleteBlob(reciterId, e.surah)));
 }
 
-/** رابط تشغيل محلي (Object URL) للسورة إن كانت مُنزَّلة، وإلا null (يُستخدَم عندها الرابط الحي كالمعتاد). استدعِ URL.revokeObjectURL على النتيجة عند انتهاء الاستخدام. */
-export async function getOfflineSurahUrl(reciterId: string, surah: number): Promise<string | null> {
+/** رابط تشغيل محلي (Object URL) للسورة إن كانت مُنزَّلة، وإلا null.
+ * Part 23: optional MSE path for large blobs — flattens memory via SourceBuffer eviction.
+ */
+export async function getOfflineSurahUrl(
+  reciterId: string,
+  surah: number,
+  opts?: { audioEl?: HTMLAudioElement; preferMse?: boolean },
+): Promise<string | null> {
   const blob = await getBlob(reciterId, surah);
-  return blob ? URL.createObjectURL(blob) : null;
+  if (!blob) return null;
+
+  if (opts?.preferMse && opts.audioEl) {
+    try {
+      const { createMseAudioSession, isMseSupported } = await import("@/lib/mse-audio-buffer");
+      if (isMseSupported("audio/mpeg")) {
+        const session = await createMseAudioSession(opts.audioEl, {
+          mimeType: "audio/mpeg",
+          retainBehindSec: 45,
+          maxAheadSec: 120,
+        });
+        if (session) {
+          const buf = await blob.arrayBuffer();
+          // Chunk append to exercise backpressure path on large surahs
+          const CHUNK = 256 * 1024;
+          for (let offset = 0; offset < buf.byteLength; offset += CHUNK) {
+            const slice = buf.slice(offset, Math.min(offset + CHUNK, buf.byteLength));
+            const result = await session.append(slice);
+            if (!result.ok && result.error === "QuotaExceededError") {
+              session.evictPlayed();
+              await session.append(slice);
+            }
+          }
+          session.endOfStream();
+          // Attach destroy on ended
+          const onEnded = () => {
+            session.destroy();
+            opts.audioEl?.removeEventListener("ended", onEnded);
+          };
+          opts.audioEl.addEventListener("ended", onEnded);
+          return session.objectUrl;
+        }
+      }
+    } catch {
+      /* fall through to blob URL */
+    }
+  }
+
+  return URL.createObjectURL(blob);
 }
 
 export async function estimateStorageUsage(): Promise<{ usage: number; quota: number } | null> {

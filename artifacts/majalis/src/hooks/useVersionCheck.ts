@@ -27,7 +27,11 @@ export function useVersionCheck() {
       window.clearTimeout(reloadTimerRef.current);
       reloadTimerRef.current = null;
     }
-    safeLocationReload();
+    // Part 23: flush progress before version-driven reload
+    void import("@/lib/sw-lifecycle-guard").then((m) => {
+      m.flushClientStateForSwUpdate();
+      safeLocationReload();
+    }).catch(() => safeLocationReload());
   }, []);
 
   const check = useCallback(async () => {

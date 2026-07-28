@@ -5,25 +5,11 @@
  * ⚠️ normalizeArabic() مُعاد تصديرها من الوحدة المشتركة للتوافق الخلفي.
  *    كل الاستخدامات الجديدة تستورد مباشرةً من @/shared/arabic-normalize.
  */
-import { normalizeArabic, normalizeArabicUtf8Copy } from "@/shared/arabic-normalize";
+import { normalizeArabic } from "@/shared/arabic-normalize";
 import { expandSearchTerms } from "@/lib/search-synonyms";
 
 // إعادة تصدير للتوافق الخلفي مع الملفات التي تستورد من arabic-search
 export { normalizeArabic };
-
-/**
- * Part 22: stable UTF-8 fingerprint for search index keys (shared TextEncoder).
- * Hex of first 16 bytes of normalized UTF-8 — cheap identity for large corpora.
- */
-export function arabicIndexFingerprint(text: string): string {
-  const bytes = normalizeArabicUtf8Copy(text);
-  const n = Math.min(16, bytes.length);
-  let hex = "";
-  for (let i = 0; i < n; i++) {
-    hex += bytes[i]!.toString(16).padStart(2, "0");
-  }
-  return `${hex}:${bytes.length}`;
-}
 
 function expandArabicVariants(normalized: string): string[] {
   const variants = new Set<string>([normalized]);
@@ -135,4 +121,26 @@ export function arabicSearchPatterns(term: string): string[] {
 
 export function ilikePattern(term: string): string {
   return `%${term.trim()}%`;
+}
+
+/**
+ * Part 23: concurrent large-corpus scan (SharedArrayBuffer when isolated,
+ * structured-clone / chunked yield fallback otherwise).
+ */
+export async function searchArabicCorpusConcurrent(
+  items: readonly string[],
+  query: string,
+  limit = 50,
+): Promise<Array<{ index: number; score: number; mode: string }>> {
+  const { runConcurrentIndex } = await import("@/lib/shared-buffer-index");
+  const normalizedItems = items.map((s) => normalizeArabic(s));
+  const result = await runConcurrentIndex(
+    {
+      id: `ar-search-${Date.now()}`,
+      items: normalizedItems,
+      query: normalizeArabic(query),
+    },
+    { limit },
+  );
+  return result.hits.map((h) => ({ ...h, mode: result.mode }));
 }

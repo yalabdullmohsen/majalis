@@ -95,6 +95,16 @@ self.addEventListener("activate", (event) => {
       // السيطرة على كل النوافذ
       await self.clients.claim();
 
+      // Part 23: notify clients so they can flush progress without relying solely on reload
+      try {
+        const clients = await self.clients.matchAll({ type: "window" });
+        for (const client of clients) {
+          client.postMessage({ type: "MAJALIS_SW_ACTIVATED", buildId: SW_BUILD_ID, isUpdate });
+        }
+      } catch (_) {
+        /* ignore */
+      }
+
       // ملاحظة: كانت هذه الكتلة تُعيد تحميل كل النوافذ المفتوحة تلقائيًا
       // عند أي تحديث. كانت خاملة عمليًا طالما SHELL_CACHE مرقَّم يدويًا
       // (v18) نادر التغيّر — الآن بعد ربطه بمعرّف كل نشر فعلي (commit)،
@@ -215,6 +225,12 @@ const _smartLocalTimers = new Map(); // tag → timeoutId
 self.addEventListener("message", (event) => {
   const msg = event.data;
   if (!msg) return;
+
+  // Part 23: explicit skipWaiting from client lifecycle guard
+  if (msg.type === "SKIP_WAITING" || msg.type === "MAJALIS_SKIP_WAITING") {
+    self.skipWaiting();
+    return;
+  }
 
   // Part 19: MessageChannel request/response (__majalisChannel + ports[0])
   if (msg.__majalisChannel && event.ports && event.ports[0]) {

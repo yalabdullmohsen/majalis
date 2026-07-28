@@ -272,19 +272,41 @@ export default function MushafPageView() {
     if (delta < 0) nextPage(); else prevPage();
   };
 
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (settingsOpen || sidebarOpen || selectedAyah) return;
-      if (e.key === "ArrowLeft") nextPage();
-      else if (e.key === "ArrowRight") prevPage();
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [nextPage, prevPage, settingsOpen, sidebarOpen, selectedAyah]);
-
   const activeSurahForPlayer = primarySegment?.segment.surah ?? 1;
   const activeSurahAyahCount = primarySegment ? getSurahMeta(activeSurahForPlayer).ayahs : 0;
   const { currentAyah, playerState, togglePlayAyah, reciterId, setReciterId, playbackRate, setPlaybackRate, repeatOn, setRepeatOn } = useAyahPlayer(activeSurahForPlayer, activeSurahAyahCount);
+
+  useEffect(() => {
+    // Part 23: INP-safe keyboard — sync preventDefault, deferred page flip / play
+    let unbind: (() => void) | undefined;
+    void import("@/lib/keyboard-inp").then(({ bindKeyboardInp }) => {
+      unbind = bindKeyboardInp(
+        (e) => {
+          if (settingsOpen || sidebarOpen || selectedAyah) return;
+          if (e.key === "ArrowLeft") nextPage();
+          else if (e.key === "ArrowRight") prevPage();
+          else if (e.key === " " || e.key === "Spacebar") {
+            // Space — play/pause current or first ayah on page (no layout change)
+            const ayah = currentAyah ?? 1;
+            togglePlayAyah(ayah);
+          }
+        },
+        {
+          preventKeys: ["ArrowLeft", "ArrowRight", " ", "Spacebar"],
+          when: (e) => {
+            if (settingsOpen || sidebarOpen || selectedAyah) return false;
+            return (
+              e.key === "ArrowLeft" ||
+              e.key === "ArrowRight" ||
+              e.key === " " ||
+              e.key === "Spacebar"
+            );
+          },
+        },
+      );
+    });
+    return () => unbind?.();
+  }, [nextPage, prevPage, settingsOpen, sidebarOpen, selectedAyah, currentAyah, togglePlayAyah]);
 
   // ── جسر بين مكوّني تخطيط السطر الحقيقي (V2/خفيف) وحالة الآية المختارة/المُشغَّلة القائمة أصلًا ──
   const handleV2AyahPress = useCallback((verseKey: string) => {

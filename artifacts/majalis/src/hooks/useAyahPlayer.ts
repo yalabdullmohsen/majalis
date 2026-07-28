@@ -43,6 +43,7 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
   const delayTimerRef = useRef<number | null>(null);
   const mountedRef = useRef(true);
   const lastAyahRef = useRef<number | null>(null);
+  const crossfadeRef = useRef<ReturnType<typeof import("@/lib/audio-crossfade").createAudioCrossfade> | null>(null);
   const [reciterId, setReciterIdState] = useState<string>(loadReciterId);
   const [currentAyah, setCurrentAyah] = useState<number | null>(null);
   const [playerState, setPlayerState] = useState<PlayerState>("idle");
@@ -133,6 +134,13 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
       onPhaseChange: onPhase,
     });
 
+    // Master polish: silent crossfade helper (dispose with audio)
+    void import("@/lib/audio-crossfade").then(({ createAudioCrossfade }) => {
+      if (!mountedRef.current) return;
+      crossfadeRef.current?.dispose();
+      crossfadeRef.current = createAudioCrossfade();
+    });
+
     prewarmAudioCdns();
 
     return () => {
@@ -141,6 +149,12 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
       pauseCleanupRef.current = null;
       stallRef.current?.dispose();
       stallRef.current = null;
+      try {
+        crossfadeRef.current?.dispose();
+      } catch {
+        /* ignore */
+      }
+      crossfadeRef.current = null;
       releaseAudioElement(audio);
       audioRef.current = null;
     };
@@ -182,9 +196,26 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
       // Rough throughput sample from typical ayah size (~80KB) / latency
       if (latency > 0) observeAudioThroughput(80_000, latency);
       setPlayerState("playing");
-      if (policy.warmNextAyah && ayah < totalAyahs) {
-        prewarmUrl(getAyahAudioUrl(surah, ayah + 1, reciter), { mode: "cors" });
-      }
+      // Master polish: soft fade-in eliminates start click without delaying play()
+      void crossfadeRef.current?.fadeIn(audio, 35);
+      // Part 23: RTT-tuned prefetch count (0..N next ayahs)
+      void import("@/lib/network-scheduler")
+        .then(({ getNetworkSchedulerPolicy }) => {
+          const sched = getNetworkSchedulerPolicy();
+          const n = policy.warmNextAyah
+            ? Math.max(1, sched.audioPrefetchCount)
+            : sched.audioPrefetchCount;
+          for (let i = 1; i <= n; i++) {
+            if (ayah + i <= totalAyahs) {
+              prewarmUrl(getAyahAudioUrl(surah, ayah + i, reciter), { mode: "cors" });
+            }
+          }
+        })
+        .catch(() => {
+          if (policy.warmNextAyah && ayah < totalAyahs) {
+            prewarmUrl(getAyahAudioUrl(surah, ayah + 1, reciter), { mode: "cors" });
+          }
+        });
     };
     const onPause = () => {
       if (!mountedRef.current || audio.ended) return;

@@ -90,6 +90,14 @@ export async function startPlatformLogicSuite(): Promise<void> {
       /* ignore */
     }
 
+    // Master polish consolidation — RTT, fonts, locks, WebView profile
+    try {
+      const { startMasterPolishSuite } = await import("@/lib/master-polish-bootstrap");
+      void startMasterPolishSuite();
+    } catch {
+      /* ignore */
+    }
+
     // Soft-warm: sacred times, cross-tab channel, auto-scroll pace, power-saver binding
     try {
       const { hydrateAutoScrollFromIdb } = await import("@/lib/adaptive-auto-scroll");
