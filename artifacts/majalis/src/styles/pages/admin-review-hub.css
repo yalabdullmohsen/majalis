@@ -16,14 +16,12 @@
   --rh-brown-deep: rgba(121, 85, 72, 0.85);
   --rh-sidebar: #1e1e2d;
   --rh-radius: 12px;
-  --rh-font: var(--font-primary, "IBM Plex Sans Arabic", "Segoe UI", sans-serif);
-  --rh-quran: var(--font-quran, "Amiri Quran", "Scheherazade New", serif);
 
   display: flex;
   min-height: 100vh;
   background: var(--rh-bg);
   color: var(--rh-ink);
-  font-family: var(--rh-font);
+  font-family: var(--font-primary, "Alexandria", "IBM Plex Sans Arabic", sans-serif);
   direction: rtl;
 }
 
@@ -415,7 +413,7 @@
 .rh-flutter-card__quran p {
   margin: 0;
   text-align: center;
-  font-family: var(--rh-quran);
+  font-family: var(--font-quran, "Amiri Quran", "Scheherazade New", serif);
   font-size: 1.15rem;
   font-weight: 700;
   line-height: 1.9;
