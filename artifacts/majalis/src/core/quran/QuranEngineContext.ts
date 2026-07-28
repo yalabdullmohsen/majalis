@@ -22,6 +22,8 @@ import {
   type DatabaseManager,
   type ReadingProgress,
 } from "./DatabaseManager";
+import { getReciter, saveReciterId } from "@/lib/quran-audio";
+import { getAudioEngine } from "@/core/audio/AudioEngine";
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -158,9 +160,15 @@ class QuranEngineContextImpl implements QuranEngineContextApi {
   }
 
   setReciter(reciterId: string): void {
-    const id = reciterId.trim() || "alafasy";
+    const id = getReciter(reciterId.trim() || "alafasy").id;
     this.patch({ currentReciter: id });
     void this.db.setSetting("preferredReciterId", id);
+    saveReciterId(id);
+    try {
+      getAudioEngine().setReciter(id);
+    } catch {
+      /* Audio unavailable (SSR / tests without Audio) */
+    }
   }
 
   async hydratePreferences(): Promise<void> {
@@ -174,9 +182,13 @@ class QuranEngineContextImpl implements QuranEngineContextApi {
       this.patch({
         isTajweedEnabled: tajweed ?? false,
         isActionBarEnabled: actionBar ?? true,
-        currentReciter: reciter || "alafasy",
+        currentReciter: getReciter(reciter || "alafasy").id,
       });
-    } catch (err) {
+      try {
+        getAudioEngine().setReciter(getReciter(reciter || "alafasy").id);
+      } catch {
+        /* ignore */
+      }    } catch (err) {
       console.warn("[QuranEngineContext] hydratePreferences:", err);
     }
   }
