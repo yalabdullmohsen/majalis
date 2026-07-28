@@ -146,12 +146,22 @@ html.dark .qe-abar {
 }
 
 .qe-viewer__footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem 1rem;
   margin-top: 1.25rem;
   padding: 0.75rem 0 0.25rem;
   text-align: center;
   font-size: 0.85rem;
   color: var(--qe-muted);
   border-top: 1px solid color-mix(in srgb, var(--qe-line) 55%, transparent);
+}
+
+.qe-viewer__share-status {
+  color: var(--qe-emerald);
+  font-weight: 600;
 }
 
 .qe-viewer__focus-hint {
@@ -293,6 +303,10 @@ body.qe-focus-mode {
   color: color-mix(in srgb, var(--qe-reader-text) 72%, transparent);
 }
 
+.qe-viewer--dark .qe-viewer__share-status {
+  color: color-mix(in srgb, var(--qe-emerald) 85%, var(--qe-reader-text));
+}
+
 .qe-viewer__title {
   margin: 0;
   font-size: 1.35rem;
@@ -406,6 +420,30 @@ body.qe-focus-mode {
 }
 
 .qe-ayah-list--focus .qe-ayah__play {
+  border-color: color-mix(in srgb, var(--qe-reader-text, #000) 18%, transparent);
+  background: color-mix(in srgb, var(--qe-reader-header, #f0ead6) 80%, transparent);
+}
+
+.qe-ayah__share {
+  flex-shrink: 0;
+  width: 2.65rem;
+  align-self: stretch;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.85rem;
+  border: 1px solid color-mix(in srgb, var(--qe-emerald) 30%, transparent);
+  background: color-mix(in srgb, var(--qe-emerald) 8%, transparent);
+  color: var(--qe-emerald);
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+
+.qe-ayah__share:hover {
+  background: color-mix(in srgb, var(--qe-emerald) 16%, transparent);
+}
+
+.qe-ayah-list--focus .qe-ayah__share {
   border-color: color-mix(in srgb, var(--qe-reader-text, #000) 18%, transparent);
   background: color-mix(in srgb, var(--qe-reader-header, #f0ead6) 80%, transparent);
 }
