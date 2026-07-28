@@ -139,7 +139,6 @@ export function PageAyahActionSheet({
   // Auto-load tafsir — reading is the primary job of this sheet
   useEffect(() => {
     void loadTafsir(tafsirEdition);
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- reload when verse or edition changes
   }, [surahNum, ayahNum, tafsirEdition]);
 
   const handleSelectEdition = (id: string) => {
