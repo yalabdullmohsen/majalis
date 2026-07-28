@@ -16,6 +16,7 @@ import { useQuranPreferences, type QuranReadingTheme, type QuranFrameStyle, type
 import { useReadingBreakReminder } from "@/hooks/useReadingBreakReminder";
 import { useAyahPlayer } from "@/hooks/useAyahPlayer";
 import { useKeepAwake } from "@/hooks/useKeepAwake";
+import { useRestoreLastPage } from "@/hooks/useRestoreLastPage";
 import { SurahList } from "@/components/quran/SurahList";
 import { PageAyahActionSheet } from "@/components/quran/PageAyahActionSheet";
 import { ReadingBreakDialog } from "@/components/quran/ReadingBreakDialog";
@@ -100,6 +101,15 @@ export default function MushafPageView() {
       ? SURAH_START_PAGES[Number(params.surah) - 1]
       : null;
   const [page, setPageState] = useState<number>(() => clampPage(routePage ?? loadPagePosition() ?? 1));
+  /**
+   * RN sketch: loadLastPage on mount when URL has no explicit page.
+   * Sync init already uses loadPagePosition (falls back to `lastPage`);
+   * this async restore mirrors the AsyncStorage useEffect.
+   */
+  useRestoreLastPage({
+    enabled: !routePage,
+    onRestore: (saved) => setPageState(clampPage(saved)),
+  });
   const [segAyahs, setSegAyahs] = useState<SegmentAyahs[] | null>(null);
   const [v2Layout, setV2Layout] = useState<MushafPageLayout | null>(null);
   const [loading, setLoading] = useState(true);
@@ -131,6 +141,7 @@ export default function MushafPageView() {
   }, [routePage]);
 
   useEffect(() => {
+    // RN saveLastPage — dual-writes mj-quran-page-pos-v1 + `lastPage`
     savePagePosition(page);
   }, [page]);
 
