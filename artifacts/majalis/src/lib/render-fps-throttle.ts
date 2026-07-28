@@ -5,6 +5,7 @@
  */
 
 import { getPowerSaverState, shouldThrottleUiRender } from "@/lib/power-saver-engine";
+import { startVisibilityAwareRafLoop } from "@/lib/visibility-raf";
 
 export type RenderFpsPolicy = {
   targetFps: number;
@@ -101,29 +102,21 @@ export function getRenderFpsPolicy(): RenderFpsPolicy {
 
 /**
  * rAF wrapper that skips frames to honor target FPS.
- * Returns a cancel function.
+ * Part 22: hard-freezes (cancelAnimationFrame) while document.hidden —
+ * zero background CPU frame cycles. Returns a cancel function.
  */
 export function startThrottledAnimationLoop(
   tick: (now: number) => void,
   opts?: { critical?: boolean },
 ): () => void {
   if (opts?.critical) {
-    let id = 0;
-    const loop = (now: number) => {
-      tick(now);
-      id = requestAnimationFrame(loop);
-    };
-    id = requestAnimationFrame(loop);
-    return () => cancelAnimationFrame(id);
+    const handle = startVisibilityAwareRafLoop((now) => tick(now));
+    return () => handle.cancel();
   }
 
   startBatteryFpsMonitor();
-  let raf = 0;
   let lastDraw = 0;
-  let cancelled = false;
-
-  const loop = (now: number) => {
-    if (cancelled) return;
+  const handle = startVisibilityAwareRafLoop((now) => {
     const policy = getRenderFpsPolicy();
     if (now - lastDraw >= policy.frameIntervalMs) {
       if (!shouldThrottleUiRender(now)) {
@@ -131,13 +124,8 @@ export function startThrottledAnimationLoop(
         tick(now);
       }
     }
-    raf = requestAnimationFrame(loop);
-  };
-  raf = requestAnimationFrame(loop);
-  return () => {
-    cancelled = true;
-    cancelAnimationFrame(raf);
-  };
+  });
+  return () => handle.cancel();
 }
 
 /** Interval ms for waveform level meters under current power policy. */

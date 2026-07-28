@@ -12,6 +12,7 @@ import {
   OFFLINE_STORES,
   type OfflineStoreName,
 } from "@/lib/offline-db";
+import { utf8ByteLength } from "@/lib/text-codec";
 
 export type StorageLayer = "localStorage" | "indexedDB" | "cacheStorage";
 
@@ -107,7 +108,8 @@ type LruMap = Record<string, number>;
 
 function utf8Bytes(s: string): number {
   try {
-    return new TextEncoder().encode(s).length;
+    // Part 22: reuse global TextEncoder scratch — no per-call allocation
+    return utf8ByteLength(s);
   } catch {
     return s.length * 2;
   }

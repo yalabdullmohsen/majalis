@@ -132,7 +132,9 @@ export async function fetchContentDeltas(opts?: {
       if (rev) params.set(`since_${id}`, rev);
     }
     const url = `${opts?.url || DEFAULT_DELTA_URL}?${params}`;
-    const res = await fetch(url, { signal: AbortSignal.timeout(12_000) });
+    // Part 22: prefer pooled fetch (HTTP/2) — transport engine used for reading sync
+    const { pooledFetch } = await import("@/lib/fetch-pool");
+    const res = await pooledFetch(url, { timeoutMs: 12_000 });
     if (!res.ok) return [];
     const json = (await res.json()) as { packs?: ContentDeltaPack[] } | ContentDeltaPack[];
     if (Array.isArray(json)) return json;

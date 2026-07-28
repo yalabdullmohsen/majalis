@@ -11,6 +11,7 @@
 
 import { toLatinDigits } from "@/lib/numerals";
 import { LruStringCache } from "@/lib/lru-cache";
+import { encodeUtf8, encodeUtf8Copy, utf8ByteLength } from "@/lib/text-codec";
 
 const NORMALIZE_CACHE = new LruStringCache(2_048);
 
@@ -97,6 +98,24 @@ export function clearNormalizeArabicCache(): void {
 
 export function getNormalizeArabicCacheSize(): number {
   return NORMALIZE_CACHE.size;
+}
+
+/**
+ * Part 22: normalize → UTF-8 via shared TextEncoder scratch (view valid until next encode).
+ * Use for ephemeral index comparisons; prefer `normalizeArabicUtf8Copy` for stored keys.
+ */
+export function normalizeArabicUtf8(text: string): Uint8Array {
+  return encodeUtf8(normalizeArabic(text));
+}
+
+/** Durable UTF-8 bytes for search index keys / hashing. */
+export function normalizeArabicUtf8Copy(text: string): Uint8Array {
+  return encodeUtf8Copy(normalizeArabic(text));
+}
+
+/** Byte length of normalized form without retaining an allocation beyond scratch. */
+export function normalizeArabicUtf8Length(text: string): number {
+  return utf8ByteLength(normalizeArabic(text));
 }
 
 /**
