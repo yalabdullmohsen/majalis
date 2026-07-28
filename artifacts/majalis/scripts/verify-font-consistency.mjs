@@ -35,15 +35,28 @@ const MONOSPACE_MARKERS = [
   "courier", "courier new", "roboto mono", "source code pro",
 ];
 
-const FONT_FAMILY_RE = /font-family\s*[:=]\s*["'`]?([^;"'`\n)]+)/gi;
+// الشقُّ الأوَّلُ من البدلِ يلتقطُ `var(--x, <بديل>)` كاملةً حتى آخرِ قوسٍ في السطر،
+// لأنَّ المتغيّرَ لا يُحكَمُ عليه باسمِه بل ببديلِه المصرَّح (انظر unwrapVar)؛ والشقُّ
+// الثاني هو النمطُ الأصليُّ لسائرِ القيم بلا تغيير.
+const FONT_FAMILY_RE = /font-family\s*[:=]\s*(var\([^;\n]*\)|["'`]?[^;"'`\n)]+)/gi;
 
 function firstToken(value) {
   return value
     .split(",")[0]
     .replace(/!important/i, "")
     .trim()
-    .replace(/^["']|["']$/g, "")
+    .replace(/^["'`]|["'`]$/g, "")
     .toLowerCase();
+}
+
+/**
+ * `var(--x, <بديل>)` ⇐ `<بديل>`؛ فالمتغيّرُ غيرُ المعروفِ لا يُحكَمُ عليه باسمِه،
+ * بل بالبديلِ المصرَّحِ في الموضعِ نفسِه (وهو ما يُعرَض فعلًا إن لم يُضبَط المتغيّر).
+ * ويعودُ `null` إن لم تكن القيمةُ `var()` أو لم يكن لها بديل.
+ */
+function unwrapVar(value) {
+  const m = /^var\(\s*(--[\w-]+)\s*,([\s\S]+)\)\s*$/.exec(value.trim());
+  return m ? m[2].trim() : null;
 }
 
 const UI_FONT_MARKERS = [
@@ -53,6 +66,8 @@ const UI_FONT_MARKERS = [
 function isAllowed(rawValue) {
   const value = rawValue.trim();
   if (/^var\(\s*--(mj-)?font-/i.test(value)) return true; // تُحلّ عبر :root إلى IBM Plex Sans Arabic (أو --font-quran المعتمد)
+  const fallback = unwrapVar(value);
+  if (fallback) return isAllowed(fallback); // يُحكَمُ على البديلِ المصرَّحِ لا على اسمِ المتغيّر
   const first = firstToken(value);
   if (first === "inherit" || first === "") return true;
   if (UI_FONT_MARKERS.includes(first)) return true;
