@@ -1,73 +1,32 @@
 /**
- * Lightweight IndexedDB helper (no Dexie/LocalForage dependency).
- * Mirrors the pattern in quran-audio-downloads.ts for core offline packs.
+ * Offline storage facade — delegates to the Dexie engine (offline-engine.ts).
+ * Keeps the stable `idbPut` / `idbGet` API used across the app.
  */
+export {
+  OFFLINE_STORES,
+  isOnline,
+  type OfflineStoreName,
+  type OfflineRecord,
+} from "@/lib/offline-engine";
 
-const DB_NAME = "majalis-offline-content-v1";
-const DB_VERSION = 1;
+import {
+  engineDelete,
+  engineGet,
+  engineGetAll,
+  engineGetValue,
+  engineKeys,
+  enginePut,
+  type OfflineRecord,
+  type OfflineStoreName,
+} from "@/lib/offline-engine";
 
-/** Object stores for static/core content packs. */
-export const OFFLINE_STORES = {
-  meta: "meta",
-  quran: "quran",
-  adhkar: "adhkar",
-  articles: "articles",
-  flashcards: "flashcards",
-} as const;
-
-export type OfflineStoreName = (typeof OFFLINE_STORES)[keyof typeof OFFLINE_STORES];
-
-export type OfflineRecord<T = unknown> = {
+/** @deprecated shape without `id` — mapped for callers that read `.key/.value`. */
+export type LegacyOfflineRecord<T = unknown> = Omit<OfflineRecord<T>, "id" | "store"> & {
   key: string;
   value: T;
   updatedAt: string;
-  /** Content revision / etag-style marker for background sync. */
   revision?: string;
 };
-
-function openDb(): Promise<IDBDatabase> {
-  return new Promise((resolve, reject) => {
-    if (typeof indexedDB === "undefined") {
-      reject(new Error("indexedDB_unavailable"));
-      return;
-    }
-    const req = indexedDB.open(DB_NAME, DB_VERSION);
-    req.onupgradeneeded = () => {
-      const db = req.result;
-      for (const name of Object.values(OFFLINE_STORES)) {
-        if (!db.objectStoreNames.contains(name)) {
-          db.createObjectStore(name, { keyPath: "key" });
-        }
-      }
-    };
-    req.onsuccess = () => resolve(req.result);
-    req.onerror = () => reject(req.error ?? new Error("indexedDB_open_failed"));
-  });
-}
-
-async function withStore<T>(
-  storeName: OfflineStoreName,
-  mode: IDBTransactionMode,
-  fn: (store: IDBObjectStore) => IDBRequest<T> | void,
-): Promise<T | undefined> {
-  const db = await openDb();
-  try {
-    return await new Promise<T | undefined>((resolve, reject) => {
-      const tx = db.transaction(storeName, mode);
-      const store = tx.objectStore(storeName);
-      const req = fn(store);
-      if (!req) {
-        tx.oncomplete = () => resolve(undefined);
-        tx.onerror = () => reject(tx.error);
-        return;
-      }
-      req.onsuccess = () => resolve(req.result as T);
-      req.onerror = () => reject(req.error);
-    });
-  } finally {
-    db.close();
-  }
-}
 
 export async function idbPut<T>(
   storeName: OfflineStoreName,
@@ -75,61 +34,44 @@ export async function idbPut<T>(
   value: T,
   revision?: string,
 ): Promise<void> {
-  const record: OfflineRecord<T> = {
-    key,
-    value,
-    updatedAt: new Date().toISOString(),
-    revision,
-  };
-  await withStore(storeName, "readwrite", (store) => store.put(record));
+  await enginePut(storeName, key, value, revision);
 }
 
 export async function idbGet<T>(
   storeName: OfflineStoreName,
   key: string,
-): Promise<OfflineRecord<T> | null> {
-  try {
-    const row = await withStore<OfflineRecord<T>>(storeName, "readonly", (store) =>
-      store.get(key),
-    );
-    return row ?? null;
-  } catch {
-    return null;
-  }
+): Promise<LegacyOfflineRecord<T> | null> {
+  const row = await engineGet<T>(storeName, key);
+  if (!row) return null;
+  return {
+    key: row.key,
+    value: row.value,
+    updatedAt: row.updatedAt,
+    revision: row.revision,
+  };
 }
 
 export async function idbGetValue<T>(
   storeName: OfflineStoreName,
   key: string,
 ): Promise<T | null> {
-  const row = await idbGet<T>(storeName, key);
-  return row ? row.value : null;
+  return engineGetValue<T>(storeName, key);
 }
 
 export async function idbDelete(storeName: OfflineStoreName, key: string): Promise<void> {
-  await withStore(storeName, "readwrite", (store) => store.delete(key));
+  await engineDelete(storeName, key);
 }
 
 export async function idbKeys(storeName: OfflineStoreName): Promise<string[]> {
-  try {
-    const keys = await withStore<IDBValidKey[]>(storeName, "readonly", (store) => store.getAllKeys());
-    return (keys ?? []).map(String);
-  } catch {
-    return [];
-  }
+  return engineKeys(storeName);
 }
 
-export async function idbGetAll<T>(storeName: OfflineStoreName): Promise<OfflineRecord<T>[]> {
-  try {
-    const rows = await withStore<OfflineRecord<T>[]>(storeName, "readonly", (store) =>
-      store.getAll(),
-    );
-    return rows ?? [];
-  } catch {
-    return [];
-  }
-}
-
-export function isOnline(): boolean {
-  return typeof navigator === "undefined" ? true : navigator.onLine !== false;
+export async function idbGetAll<T>(storeName: OfflineStoreName): Promise<LegacyOfflineRecord<T>[]> {
+  const rows = await engineGetAll<T>(storeName);
+  return rows.map((row) => ({
+    key: row.key,
+    value: row.value,
+    updatedAt: row.updatedAt,
+    revision: row.revision,
+  }));
 }

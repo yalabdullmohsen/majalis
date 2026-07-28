@@ -182,7 +182,7 @@ export async function submitCardReview(
   );
 
   const q: ReviewQuality = typeof quality === "number" ? quality : (
-    { again: 0, hard: 2, good: 4, easy: 5 } as const
+    { again: 0, hard: 3, good: 4, easy: 5 } as const
   )[quality];
 
   const localRow: LocalFlashReview = {

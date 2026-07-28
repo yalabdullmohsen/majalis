@@ -1,7 +1,11 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "wouter";
 import { ShareButtons } from "@/components/ContentActions";
-import { downloadCardImage, exportCardImage } from "@/lib/card-image-export";
+import {
+  downloadCardImage,
+  exportSocialCard,
+  type CardExportPreset,
+} from "@/lib/card-image-export";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { applyPageSeo } from "@/lib/seo";
@@ -113,12 +117,17 @@ export default function CardsPage() {
     setShowLogo(false);
   };
 
+  const exportPreset = ((): CardExportPreset => {
+    if (size === "story") return "story";
+    if (size === "wide") return "wide";
+    return "feed";
+  })();
+
   const downloadCard = async () => {
     if (!cardRef.current) return;
     setIsGenerating(true);
     try {
-      // Story/post: higher pixelRatio for crisp mobile exports
-      const pixelRatio = size === "story" ? 4 : 3;
+      const pixelRatio = exportPreset === "story" ? 4 : 3;
       await downloadCardImage(cardRef.current, `بطاقة-${Date.now()}.png`, pixelRatio);
     } finally {
       setIsGenerating(false);
@@ -129,10 +138,8 @@ export default function CardsPage() {
     if (!cardRef.current) return;
     setIsGenerating(true);
     try {
-      const pixelRatio = size === "story" ? 4 : 3;
-      await exportCardImage(cardRef.current, {
+      await exportSocialCard(cardRef.current, exportPreset, {
         fileName: `بطاقة-${Date.now()}.png`,
-        pixelRatio,
         title: "بطاقة المجلس العلمي",
         text: `${quote}\n— ${source}`,
       });

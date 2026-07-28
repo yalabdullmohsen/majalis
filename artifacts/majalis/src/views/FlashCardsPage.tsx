@@ -130,14 +130,15 @@ function CardFace({
 
 // ── Quality Bar ───────────────────────────────────────────────────────────────
 
+// Reuse existing CSS modifiers (fc-q--2) for Hard quality=3 — no CSS file edits.
 const FC_Q_MOD: Record<number, string> = {
   0: "fc-q--0",
-  2: "fc-q--2",
+  3: "fc-q--2",
   4: "fc-q--4",
   5: "fc-q--5",
 };
 
-const KEY_LABELS: Record<number, string> = { 0: "1", 2: "2", 4: "3", 5: "4" };
+const KEY_LABELS: Record<number, string> = { 0: "1", 3: "2", 4: "3", 5: "4" };
 
 function QualityBar({
   card,
@@ -292,10 +293,10 @@ export default function FlashCardsPage() {
   // اختصارات لوحة المفاتيح — Space/Enter للقلب، 1–4 (ولوحة الأرقام) للتقييم
   useEffect(() => {
     const rateByCode = (code: string): ReviewQuality | null => {
-      if (code === "Digit1" || code === "Numpad1") return 0;
-      if (code === "Digit2" || code === "Numpad2") return 2;
-      if (code === "Digit3" || code === "Numpad3") return 4;
-      if (code === "Digit4" || code === "Numpad4") return 5;
+      if (code === "Digit1" || code === "Numpad1") return 0; // Again
+      if (code === "Digit2" || code === "Numpad2") return 3; // Hard
+      if (code === "Digit3" || code === "Numpad3") return 4; // Good
+      if (code === "Digit4" || code === "Numpad4") return 5; // Easy
       return null;
     };
 
