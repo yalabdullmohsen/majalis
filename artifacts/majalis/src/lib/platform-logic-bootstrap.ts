@@ -68,6 +68,27 @@ export async function startPlatformLogicSuite(): Promise<void> {
       /* ignore */
     }
 
+    // Soft-warm: sacred times, cross-tab channel, auto-scroll pace, power-saver binding
+    try {
+      const { hydrateAutoScrollFromIdb } = await import("@/lib/adaptive-auto-scroll");
+      void hydrateAutoScrollFromIdb();
+    } catch {
+      /* ignore */
+    }
+    try {
+      const { getCrossTabId, subscribeCrossTab } = await import("@/lib/cross-tab-sync");
+      getCrossTabId();
+      subscribeCrossTab(() => undefined);
+    } catch {
+      /* ignore */
+    }
+    try {
+      const { loadPowerSaverPrefs } = await import("@/lib/power-saver-engine");
+      loadPowerSaverPrefs();
+    } catch {
+      /* ignore */
+    }
+
     const prediction = predictKhatmahCompletion();
     await syncSmartLocalNotifications({ khatmahBehind: prediction.behindSchedule });
     maybeNotifyKhatmahBehind(prediction);
