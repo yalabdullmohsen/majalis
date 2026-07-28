@@ -9,5 +9,6 @@ export 'views/user_educational_paths_view.dart';
 export 'views/user_main_shell.dart';
 export 'views/user_quran_reader_view.dart';
 export 'widgets/user_ai_recitation_widget.dart';
+export 'widgets/user_hide_on_scroll_app_bar.dart';
 export 'widgets/user_tafsir_modal.dart';
 export 'widgets/user_verse_bottom_sheet.dart';
