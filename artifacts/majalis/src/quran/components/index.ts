@@ -26,3 +26,5 @@ export { ImmersiveVerseOptionsSheet } from "@/components/quran/ImmersiveVerseOpt
 export type { ImmersiveVerseOptionsSheetProps } from "@/components/quran/ImmersiveVerseOptionsSheet";
 export { ImmersivePrefsDrawer } from "@/components/quran/ImmersivePrefsDrawer";
 export type { ImmersivePrefsDrawerProps } from "@/components/quran/ImmersivePrefsDrawer";
+export { ImmersiveQuranApp } from "@/components/quran/ImmersiveQuranApp";
+export type { ImmersiveQuranAppProps } from "@/components/quran/ImmersiveQuranApp";

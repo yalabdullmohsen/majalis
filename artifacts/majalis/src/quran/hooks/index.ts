@@ -26,3 +26,5 @@ export { useAppController } from "@/hooks/useAppController";
 export type { UseAppControllerResult } from "@/hooks/useAppController";
 export { useAudioTrackingCursor } from "@/hooks/useAudioTrackingCursor";
 export type { AudioTrackingCursor } from "@/hooks/useAudioTrackingCursor";
+export { useQuranAppController } from "@/hooks/useQuranAppController";
+export type { UseQuranAppControllerResult } from "@/hooks/useQuranAppController";

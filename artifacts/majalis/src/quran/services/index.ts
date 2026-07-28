@@ -53,3 +53,10 @@ export {
   getAppController,
   type AppControllerSnapshot,
 } from "@/lib/app-controller";
+
+export {
+  QuranAppController,
+  createQuranAppController,
+  SAMPLE_FATIHA_VERSES,
+  type QuranAppControllerSnapshot,
+} from "@/lib/quran-app-controller";

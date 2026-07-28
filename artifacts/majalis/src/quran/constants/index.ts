@@ -42,3 +42,14 @@ export {
   VERSE_ITEM_GAP_PX,
   VERSE_SELECTED_BROWN,
 } from "@/lib/quran-immersive";
+
+export {
+  QURAN_APP_FONT_MIN,
+  QURAN_APP_FONT_MAX,
+  QURAN_APP_FONT_DEFAULT,
+  QURAN_APP_LINE_HEIGHT,
+  VERSE_PLAYING_BG,
+  VERSE_SELECTED_SOFT_BG,
+  SAMPLE_FATIHA_VERSES,
+} from "@/lib/quran-app-controller";
+

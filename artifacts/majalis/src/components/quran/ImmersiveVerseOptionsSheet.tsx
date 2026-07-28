@@ -19,6 +19,10 @@ export type ImmersiveVerseOptionsSheetProps = {
   onToggleBookmark?: () => void;
   bookmarked?: boolean;
   copyStatus?: string | null;
+  playLabelPlaying?: string;
+  playLabelIdle?: string;
+  tafsirLabel?: string;
+  copyLabel?: string;
 };
 
 export function ImmersiveVerseOptionsSheet({
@@ -32,6 +36,10 @@ export function ImmersiveVerseOptionsSheet({
   onToggleBookmark,
   bookmarked = false,
   copyStatus = null,
+  playLabelPlaying = "إيقاف",
+  playLabelIdle = "استماع",
+  tafsirLabel = "تفسير الآية",
+  copyLabel = "نسخ الآية",
 }: ImmersiveVerseOptionsSheetProps) {
   const sheet = (
     <div
@@ -76,7 +84,7 @@ export function ImmersiveVerseOptionsSheet({
               ) : (
                 <Play size={20} aria-hidden="true" />
               )}
-              <span>{isPlaying ? "إيقاف" : "استماع"}</span>
+              <span>{isPlaying ? playLabelPlaying : playLabelIdle}</span>
             </button>
           </li>
           <li>
@@ -89,14 +97,14 @@ export function ImmersiveVerseOptionsSheet({
               }}
             >
               <BookOpen size={20} aria-hidden="true" />
-              <span>تفسير الآية</span>
+              <span>{tafsirLabel}</span>
             </button>
           </li>
           {onCopy ? (
             <li>
               <button type="button" className="immersive-verse-sheet__row" onClick={onCopy}>
                 <Copy size={20} aria-hidden="true" />
-                <span>نسخ الآية</span>
+                <span>{copyLabel}</span>
               </button>
             </li>
           ) : null}

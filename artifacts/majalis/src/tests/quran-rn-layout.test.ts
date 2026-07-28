@@ -50,6 +50,7 @@ function main() {
   check(typeof hooks.useQuranController === "function", "hooks.useQuranController");
   check(typeof hooks.useAppController === "function", "hooks.useAppController");
   check(typeof hooks.useAudioTrackingCursor === "function", "hooks.useAudioTrackingCursor");
+  check(typeof hooks.useQuranAppController === "function", "hooks.useQuranAppController");
   check(typeof hooks.useAyahPlayer === "function", "hooks.useAyahPlayer");
   check(typeof hooks.useColorScheme === "function", "hooks.useColorScheme");
   check(
@@ -60,6 +61,8 @@ function main() {
   check(constants.IMMERSIVE_PAPER_BG === "#F5F5DC", "constants.IMMERSIVE_PAPER_BG");
   check(constants.VERSE_SELECTED_BROWN === "#795548", "constants.VERSE_SELECTED_BROWN");
   check(constants.IMMERSIVE_LIST_PAD_Y_PX === 50, "constants.IMMERSIVE_LIST_PAD_Y_PX");
+  check(constants.QURAN_APP_FONT_DEFAULT === 28, "constants.QURAN_APP_FONT_DEFAULT");
+  check(constants.VERSE_PLAYING_BG.includes("0.3"), "constants.VERSE_PLAYING_BG");
 
   check(typeof context.QuranEngineProvider === "function", "context.QuranEngineProvider");
   check(typeof context.getQuranEngineContext === "function", "context.getQuranEngineContext");
@@ -71,6 +74,7 @@ function main() {
   check(typeof services.loadPlaybackRate === "function", "services.loadPlaybackRate");
   check(typeof services.createQuranController === "function", "services.createQuranController");
   check(typeof services.createAppController === "function", "services.createAppController");
+  check(typeof services.createQuranAppController === "function", "services.createQuranAppController");
 
   check(Array.isArray(constants.surahList) && constants.surahList.length === 114, "constants.surahList 114");
   check(constants.QURAN_FONT_DEFAULT_PX === 20, "constants.font default 20");

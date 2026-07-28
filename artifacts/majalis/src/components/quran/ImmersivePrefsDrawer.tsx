@@ -3,7 +3,7 @@
  * font scale, dark/light paper, resume last page — no chrome clutter.
  */
 import { createPortal } from "react-dom";
-import { Moon, Sun, Type, X, Bookmark } from "lucide-react";
+import { Type, X, Bookmark } from "lucide-react";
 import {
   QURAN_FONT_MAX_PX,
   QURAN_FONT_MIN_PX,
@@ -22,6 +22,10 @@ export type ImmersivePrefsDrawerProps = {
   lastPage?: number | null;
   onResumeLastPage?: () => void;
   paperBg?: string;
+  title?: string;
+  fontMin?: number;
+  fontMax?: number;
+  fontStep?: number;
 };
 
 export function ImmersivePrefsDrawer({
@@ -34,13 +38,15 @@ export function ImmersivePrefsDrawer({
   lastPage,
   onResumeLastPage,
   paperBg = IMMERSIVE_PAPER_BG,
+  title = "تخصيص القراءة",
+  fontMin = QURAN_FONT_MIN_PX,
+  fontMax = QURAN_FONT_MAX_PX,
+  fontStep = QURAN_FONT_STEP_PX,
 }: ImmersivePrefsDrawerProps) {
   if (!open) return null;
 
-  const dec = () =>
-    onFontSizeChange(Math.max(QURAN_FONT_MIN_PX, fontSize - QURAN_FONT_STEP_PX));
-  const inc = () =>
-    onFontSizeChange(Math.min(QURAN_FONT_MAX_PX, fontSize + QURAN_FONT_STEP_PX));
+  const dec = () => onFontSizeChange(Math.max(fontMin, fontSize - fontStep));
+  const inc = () => onFontSizeChange(Math.min(fontMax, fontSize + fontStep));
 
   const drawer = (
     <div className="immersive-prefs-overlay" role="presentation" onClick={onClose}>
@@ -48,12 +54,12 @@ export function ImmersivePrefsDrawer({
         className="immersive-prefs-drawer"
         role="dialog"
         aria-modal="true"
-        aria-label="إعدادات القراءة"
+        aria-label={title}
         style={{ backgroundColor: paperBg }}
         onClick={(e) => e.stopPropagation()}
       >
         <div className="immersive-prefs-drawer__head">
-          <h2 className="immersive-prefs-drawer__title">تخصيص القراءة</h2>
+          <h2 className="immersive-prefs-drawer__title">{title}</h2>
           <button
             type="button"
             className="immersive-prefs-drawer__close"
@@ -72,31 +78,33 @@ export function ImmersivePrefsDrawer({
             <button type="button" onClick={dec} aria-label="تصغير الخط">
               −
             </button>
-            <span>{fontSize}</span>
+            <span>{Math.round(fontSize)}</span>
             <button type="button" onClick={inc} aria-label="تكبير الخط">
               +
             </button>
           </div>
           <input
             type="range"
-            min={QURAN_FONT_MIN_PX}
-            max={QURAN_FONT_MAX_PX}
-            step={QURAN_FONT_STEP_PX}
+            min={fontMin}
+            max={fontMax}
+            step={fontStep}
             value={fontSize}
             onChange={(e) => onFontSizeChange(Number(e.target.value))}
             aria-label="شريط حجم الخط"
+            className="immersive-prefs-drawer__slider"
           />
         </div>
 
         <div className="immersive-prefs-drawer__section">
-          <button
-            type="button"
-            className="immersive-prefs-drawer__row"
-            onClick={onToggleDarkMode}
-          >
-            {isDarkMode ? <Sun size={18} aria-hidden="true" /> : <Moon size={18} aria-hidden="true" />}
-            <span>{isDarkMode ? "وضع نهاري" : "وضع ليلي"}</span>
-          </button>
+          <label className="immersive-prefs-drawer__switch">
+            <span>الوضع الليلي</span>
+            <input
+              type="checkbox"
+              checked={isDarkMode}
+              onChange={(e) => onToggleDarkMode()}
+              aria-label="الوضع الليلي"
+            />
+          </label>
         </div>
 
         {lastPage != null && lastPage > 0 && onResumeLastPage ? (
