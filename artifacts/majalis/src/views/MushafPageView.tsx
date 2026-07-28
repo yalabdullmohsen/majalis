@@ -18,6 +18,8 @@ import { SurahList } from "@/components/quran/SurahList";
 import { PageAyahActionSheet } from "@/components/quran/PageAyahActionSheet";
 import { ReciterDownloadManager } from "@/components/quran/ReciterDownloadManager";
 import { loadMushafPage, prefetchMushafPage, type MushafPageLayout, type QpcWord } from "@/lib/mushaf-v2-data";
+import { beginAbortScope, abortScope, guardAsync } from "@/lib/route-abort";
+import { logDiagnostic } from "@/lib/diagnostics";
 import { MushafPageV2 } from "@/components/quran/MushafPageV2";
 import { goBackOrFallback } from "@/lib/navigation-back";
 import { SectionErrorBoundary } from "@/components/ErrorBoundary";
@@ -169,25 +171,34 @@ export default function MushafPageView() {
   }, []);
 
   useEffect(() => {
-    let cancelled = false;
-    loadPage(page).then(() => {
-      if (cancelled) return;
-      // تحميل مسبق هادئ للصفحتين المجاورتين — لا يُحدِّث الواجهة، فقط يملأ ذاكرة fetchSurahDetail المحلية
+    const signal = beginAbortScope(`mushaf-page:${page}`);
+    void guardAsync(signal, async () => {
+      await loadPage(page);
+      if (signal.aborted) return;
       if (page > 1) loadPage(page - 1, { silent: true });
       if (page < TOTAL_PAGES) loadPage(page + 1, { silent: true });
     });
-    return () => { cancelled = true; };
+    return () => {
+      abortScope(`mushaf-page:${page}`);
+      logDiagnostic("nav-abort", `mushaf-page:${page}`);
+    };
   }, [page, loadPage]);
 
   // ── تخطيط السطر الحقيقي (line_number) من نفس بيانات quran-v2 — مصدر
   // واحد يُستهلَك من كلا وضعي العرض (خفيف/دقة مطبعية)، لا تحميل مزدوج. ──
   useEffect(() => {
-    let cancelled = false;
+    const signal = beginAbortScope(`mushaf-layout:${page}`);
     setV2Layout(null);
-    loadMushafPage(page).then((layout) => { if (!cancelled) setV2Layout(layout); }).catch(() => {});
+    void guardAsync(signal, async () => {
+      const layout = await loadMushafPage(page);
+      if (signal.aborted) return;
+      setV2Layout(layout);
+    }).catch(() => {});
     if (page > 1) prefetchMushafPage(page - 1);
     if (page < TOTAL_PAGES) prefetchMushafPage(page + 1);
-    return () => { cancelled = true; };
+    return () => {
+      abortScope(`mushaf-layout:${page}`);
+    };
   }, [page]);
 
   const primarySegment = segAyahs?.[0];

@@ -291,15 +291,24 @@ function SeoManager() {
   const [location] = useLocation();
   usePageSeo(location);
   useEffect(() => {
-    // تأخير قصير يمنح صفحة التفاصيل (مثلًا عنوان درس حقيقي بعد جلبه من
-    // Supabase) فرصة لضبط document.title الخاص بها قبل أن نسجّله في "زرت
-    // مؤخرًا" — بلا هذا التأخير قد نلتقط عنوان الصفحة السابقة أو عنوانًا
-    // عامًا مؤقتًا فقط.
+    // Part 16: abort previous route-scoped work on fast navigation
+    void import("@/lib/route-abort").then(({ beginAbortScope, abortScope }) => {
+      abortScope("route:prev");
+      beginAbortScope(`route:${location}`);
+    });
+    void import("@/lib/diagnostics").then(({ logDiagnostic }) => {
+      logDiagnostic("custom", "route-change", { location });
+    });
     const timer = window.setTimeout(() => {
       const rawTitle = document.title.split(" | ")[0]?.trim();
       recordRecentPage(location, rawTitle);
     }, 400);
-    return () => window.clearTimeout(timer);
+    return () => {
+      window.clearTimeout(timer);
+      void import("@/lib/route-abort").then(({ abortScope }) => {
+        abortScope(`route:${location}`);
+      });
+    };
   }, [location]);
   return null;
 }

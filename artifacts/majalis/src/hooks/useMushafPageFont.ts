@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
+import { loadFontFaceSafe, waitForDocumentFonts } from "@/lib/font-ready";
+import { logDiagnostic } from "@/lib/diagnostics";
+import { createMountGuard } from "@/lib/route-abort";
 
 /**
  * useMushafPageFont — يحمّل خط QPC V2 الخاص بصفحة واحدة (public/fonts/qpc-v2/pN.woff2)
- * عبر FontFace API، مع تحميل مسبق للصفحة الحالية ± 2 (القسم 5.3)، وذاكرة
- * LRU لا تُبقي أكثر من 12 خط صفحة محمَّلًا في الذاكرة دفعة واحدة (تُزال
- * الأقدم استخدامًا via document.fonts.delete — لا تأثير على صفحة ظاهرة
- * حاليًا، فقط صفحات بعيدة عن نطاق التصفح الحالي).
+ * عبر FontFace API، مع تحميل مسبق للصفحة الحالية ± 2، وذاكرة
+ * LRU لا تُبقي أكثر من 12 خط صفحة محمَّلًا.
  *
- * font-display:block إلزامي فعليًا هنا عبر انتظار تحميل الخط قبل عرض أي
- * نص — لا FOUT أبدًا (خط بديل سيعرض رموزًا PUA غير مفهومة بلا معنى).
+ * Part 16: waits document.fonts.ready after each face load so glyph layout
+ * measurements (MushafPageV2 fit) never run against unparsed PUA glyphs.
  */
 const MAX_LOADED = 12;
-const loadedFonts = new Map<number, FontFace>(); // page -> FontFace، بترتيب الاستخدام (Map يحفظ ترتيب الإدراج)
+const loadedFonts = new Map<number, FontFace>();
 
 function fontFamilyForPage(page: number): string {
   return `qpc-page-${page}`;
@@ -19,7 +20,6 @@ function fontFamilyForPage(page: number): string {
 
 async function ensurePageFontLoaded(page: number): Promise<void> {
   if (loadedFonts.has(page)) {
-    // اجعله "الأحدث استخدامًا": احذفه وأعد إدراجه (Map يحفظ ترتيب الإدراج).
     const f = loadedFonts.get(page)!;
     loadedFonts.delete(page);
     loadedFonts.set(page, f);
@@ -27,11 +27,12 @@ async function ensurePageFontLoaded(page: number): Promise<void> {
   }
 
   const family = fontFamilyForPage(page);
-  const face = new FontFace(family, `url(/fonts/qpc-v2/p${page}.woff2) format("woff2")`, {
-    display: "block",
-  });
-  await face.load();
-  document.fonts.add(face);
+  const face = await loadFontFaceSafe(
+    family,
+    `url(/fonts/qpc-v2/p${page}.woff2) format("woff2")`,
+    { display: "block" },
+  );
+  if (!face) throw new Error(`font load failed: ${page}`);
   loadedFonts.set(page, face);
 
   if (loadedFonts.size > MAX_LOADED) {
@@ -50,25 +51,35 @@ export function mushafPageFontFamily(page: number): string {
   return fontFamilyForPage(page);
 }
 
-/** true فور تحميل خط الصفحة المطلوبة فعليًا وجاهزيته للعرض. */
+/** true فور تحميل خط الصفحة المطلوبة وجاهزية document.fonts للقياس. */
 export function useMushafPageFont(pageNumber: number | null): boolean {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
     if (pageNumber === null) return;
-    let cancelled = false;
+    const guard = createMountGuard();
     setReady(false);
 
-    ensurePageFontLoaded(pageNumber)
-      .then(() => { if (!cancelled) setReady(true); })
-      .catch(() => { if (!cancelled) setReady(false); });
+    (async () => {
+      try {
+        await ensurePageFontLoaded(pageNumber);
+        const wait = await waitForDocumentFonts(4_000);
+        if (wait.waitedMs > 50) {
+          logDiagnostic("font-wait", `page ${pageNumber}`, { ms: Math.round(wait.waitedMs) });
+        }
+        if (guard.isCurrent()) setReady(true);
+      } catch {
+        if (guard.isCurrent()) setReady(false);
+      }
+    })();
 
-    // تحميل مسبق صامت للصفحتين قبل وبعد (لا ينتظرهما هذا الأثر، ولا يُغيّر ready).
     for (const neighbor of [pageNumber - 2, pageNumber - 1, pageNumber + 1, pageNumber + 2]) {
       if (neighbor >= 1 && neighbor <= 604) void ensurePageFontLoaded(neighbor).catch(() => {});
     }
 
-    return () => { cancelled = true; };
+    return () => {
+      guard.abort();
+    };
   }, [pageNumber]);
 
   return ready;
