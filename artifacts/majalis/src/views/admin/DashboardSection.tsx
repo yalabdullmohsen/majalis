@@ -468,6 +468,45 @@ export function DashboardSection() {
         <div className="admin-welcome__icon" aria-hidden="true"><Building2 size={28} strokeWidth={1.4} /></div>
       </div>
 
+      <div
+        style={{
+          marginBottom: "1rem",
+          padding: "0.9rem 1rem",
+          borderRadius: "0.75rem",
+          border: "1px solid var(--majalis-line)",
+          background: "rgba(95, 122, 102, 0.08)",
+          display: "flex",
+          flexWrap: "wrap",
+          gap: "0.75rem",
+          alignItems: "center",
+          justifyContent: "space-between",
+        }}
+      >
+        <div>
+          <p style={{ margin: 0, fontWeight: 700 }}>خانة المراجعة — مركز القيادة</p>
+          <p style={{ margin: "0.25rem 0 0", fontSize: "0.85rem", opacity: 0.75 }}>
+            مراجعة التلاوات والمحتوى والتفسير مع إجراءات جماعية سريعة.
+          </p>
+        </div>
+        <Link
+          href="/admin/review-hub"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            minHeight: "2.4rem",
+            padding: "0.35rem 0.9rem",
+            borderRadius: "0.55rem",
+            background: "#5f7a66",
+            color: "#fff",
+            textDecoration: "none",
+            fontWeight: 600,
+            fontSize: "0.88rem",
+          }}
+        >
+          فتح مركز المراجعة
+        </Link>
+      </div>
+
       {/* ── حالة النظام ── */}
       <div className="admin-status-row">
         <span className={`admin-status-dot admin-status-dot--${dbOk ? "ok" : "warn"}`}>

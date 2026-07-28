@@ -6,7 +6,6 @@
 
 export const COMING_SOON_PATHS = new Set<string>([
   "/kids",
-  "/quran-circles",
 ]);
 
 /** عناصر أُزيلت من الاكتشاف العام حسب مراجعة الدمج/الإلغاء. */
@@ -27,7 +26,6 @@ export const HIDDEN_FROM_NAV_PATHS = new Set<string>([
   "/universities", // مُنزَّل من المستوى الأول
   "/mind-map", // يُفتح من صفحة استكشف المعرفة (لا قائمة أولى)
   "/mushaf/page", // مدخل مصحف واحد: /mushaf
-  "/quran-circles", // قريبًا — يُبقى في مركز القرآن فقط بشارة
   "/quran/recitation-test-ai", // تجريبي — من مركز القرآن/المصحف فقط
 
   // ── دمج هيكل المعلومات (2026-07-27) — مسارات مُعاد توجيهها أو مُنزَّلة من الاكتشاف
