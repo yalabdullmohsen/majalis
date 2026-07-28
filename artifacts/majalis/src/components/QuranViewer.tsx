@@ -12,6 +12,8 @@
  * Typeface cycles Amiri → Traditional Arabic → Scheherazade via prefs.fontId.
  * Inline tafsir mode (`showTafsir`) loads the surah edition once and renders
  * under each ayah when enabled — RN conditional-rendering sketch.
+ * Inline translation (`showTranslation`) mirrors the same pattern with
+ * Saheeh International (`en.sahih`) via `fetchTafsirAyahs`.
  * Per-ayah audio toggle uses AudioEngine (web port of expo-av Sound) with
  * unload on leave.
  * `useKeepAwake()` (Screen Wake Lock) keeps the display on while reading —
@@ -22,8 +24,14 @@
  * `text-size-adjust: 100%` resists OS/browser text scaling (RN allowFontScaling={false}).
  */
 import { useCallback, useEffect, useMemo, useState, type CSSProperties } from "react";
-import { BookOpenText, Hash, Maximize2, Minimize2, Moon, Pause, Play, Share2, Sun, Type } from "lucide-react";
+import { BookOpenText, Hash, Languages, Maximize2, Minimize2, Moon, Pause, Play, Share2, Sun, Type } from "lucide-react";
 import { fetchSurahDetail, fetchTafsirAyahs, getSurahMeta, type Ayah } from "@/lib/quran-api";
+import {
+  persistShowTranslation,
+  readStoredShowTranslation,
+  readTranslationEdition,
+  translationMapFromRows,
+} from "@/lib/quran-translation";
 import { useQuranEngine } from "@/hooks/useQuranEngine";
 import { useQuranPreferences } from "@/hooks/useQuranPreferences";
 import { useReadingBreakReminder } from "@/hooks/useReadingBreakReminder";
@@ -187,6 +195,11 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
   const [tafsirByAyah, setTafsirByAyah] = useState<Record<number, string>>({});
   const [tafsirLoading, setTafsirLoading] = useState(false);
   const [tafsirError, setTafsirError] = useState(false);
+  // 1. الحالة داخل المكون — عرض الترجمة تحت الآية (RN showTranslation)
+  const [showTranslation, setShowTranslation] = useState(false);
+  const [translationByAyah, setTranslationByAyah] = useState<Record<number, string>>({});
+  const [translationLoading, setTranslationLoading] = useState(false);
+  const [translationError, setTranslationError] = useState(false);
   const [shareStatus, setShareStatus] = useState<string | null>(null);
   const meta = getSurahMeta(surahNum);
 
@@ -253,6 +266,15 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
     });
   }, []);
 
+  // 2. دالة التبديل — إظهار/إخفاء الترجمة
+  const toggleTranslation = useCallback(() => {
+    setShowTranslation((prev) => {
+      const next = !prev;
+      persistShowTranslation(next);
+      return next;
+    });
+  }, []);
+
   const setFocus = useCallback(
     (next: boolean) => {
       setIsFocusMode(next);
@@ -263,11 +285,12 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
 
   const toggleFocus = useCallback(() => setFocus(!isFocusMode), [isFocusMode, setFocus]);
 
-  /** Load persisted font size + reader theme + tafsir toggle once. */
+  /** Load persisted font size + reader theme + tafsir/translation toggles once. */
   useEffect(() => {
     setFontSize(readStoredQuranFontSize());
     setThemeOverride(readStoredThemeOverride());
     setShowTafsir(readStoredShowTafsir());
+    setShowTranslation(readStoredShowTranslation());
   }, []);
 
   /** When inline tafsir is on, fetch the whole surah edition once (cached). */
@@ -300,6 +323,33 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
       cancelled = true;
     };
   }, [showTafsir, surahNum]);
+
+  /** When translation is on, fetch Saheeh International (or stored edition) once per surah. */
+  useEffect(() => {
+    if (!showTranslation) return;
+    let cancelled = false;
+    setTranslationLoading(true);
+    setTranslationError(false);
+    void (async () => {
+      try {
+        const edition = readTranslationEdition();
+        const rows = await fetchTafsirAyahs(surahNum, edition);
+        if (cancelled) return;
+        setTranslationByAyah(translationMapFromRows(rows));
+        if (!rows.length) setTranslationError(true);
+      } catch {
+        if (!cancelled) {
+          setTranslationByAyah({});
+          setTranslationError(true);
+        }
+      } finally {
+        if (!cancelled) setTranslationLoading(false);
+      }
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, [showTranslation, surahNum]);
 
   const updateFontSize = useCallback((next: number) => {
     setFontSize(persistQuranFontSize(next));
@@ -477,6 +527,17 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
             </button>
             <button
               type="button"
+              className={`qe-chip${showTranslation ? " is-on" : ""}`}
+              onClick={toggleTranslation}
+              aria-pressed={showTranslation}
+              aria-label={showTranslation ? "إخفاء الترجمة" : "إظهار الترجمة تحت الآيات"}
+              title="الترجمة"
+            >
+              <Languages size={14} aria-hidden="true" />
+              ترجمة
+            </button>
+            <button
+              type="button"
               className="qe-chip"
               onClick={toggleFont}
               aria-label={`خط المصحف: ${fontMeta.labelAr} — اضغط للتبديل`}
@@ -562,6 +623,7 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
                 ayah.numberInSurah === currentAyah ||
                 selected?.ayah === ayah.numberInSurah;
               const ayahTafsir = tafsirByAyah[ayah.numberInSurah];
+              const ayahTranslation = translationByAyah[ayah.numberInSurah];
               const playingThis = isPlayingAyah(surahNum, ayah.numberInSurah);
               return (
                 <li key={ayah.numberInSurah} className="qe-ayah-item">
@@ -642,6 +704,28 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
                         <span className="qe-ayah__tafsir-status">تعذّر تحميل التفسير لهذه الآية.</span>
                       ) : (
                         <span className="qe-ayah__tafsir-status">لا يتوفر تفسير لهذه الآية حاليًا.</span>
+                      )}
+                    </div>
+                  ) : null}
+                  {/* 3. عرض الترجمة فقط إذا كان showTranslation true */}
+                  {showTranslation ? (
+                    // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions -- stop focus-toggle bubble only
+                    <div
+                      className="qe-ayah__translation"
+                      onClick={(e) => e.stopPropagation()}
+                      role="note"
+                      aria-label={`ترجمة الآية ${toArabicDigits(ayah.numberInSurah)}`}
+                      lang="en"
+                      dir="ltr"
+                    >
+                      {translationLoading && !ayahTranslation ? (
+                        <span className="qe-ayah__translation-status">Loading translation…</span>
+                      ) : ayahTranslation ? (
+                        <p className="qe-ayah__translation-text">{ayahTranslation}</p>
+                      ) : translationError ? (
+                        <span className="qe-ayah__translation-status">Could not load this translation.</span>
+                      ) : (
+                        <span className="qe-ayah__translation-status">No translation available for this ayah.</span>
                       )}
                     </div>
                   ) : null}
