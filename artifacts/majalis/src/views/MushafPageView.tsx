@@ -15,6 +15,7 @@ import { loadPageJuzIndex, getSegmentsForPage, findPageForAyah, type QuranSegmen
 import { useQuranPreferences, type QuranReadingTheme, type QuranFrameStyle, type QuranHighlightStyle, type QuranPageMode } from "@/hooks/useQuranPreferences";
 import { useReadingBreakReminder } from "@/hooks/useReadingBreakReminder";
 import { useAyahPlayer } from "@/hooks/useAyahPlayer";
+import { useKeepAwake } from "@/hooks/useKeepAwake";
 import { SurahList } from "@/components/quran/SurahList";
 import { PageAyahActionSheet } from "@/components/quran/PageAyahActionSheet";
 import { ReadingBreakDialog } from "@/components/quran/ReadingBreakDialog";
@@ -90,6 +91,8 @@ export default function MushafPageView() {
   const [, navigate] = useLocation();
   const { prefs, setPref } = useQuranPreferences();
   const breakReminder = useReadingBreakReminder();
+  /** Keep screen lit while the mushaf page is open (expo-keep-awake port). */
+  useKeepAwake();
 
   const routePage = params.page
     ? Number(params.page)
