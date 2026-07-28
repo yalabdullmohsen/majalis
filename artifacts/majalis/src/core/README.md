@@ -76,6 +76,7 @@ PORT=24216 BASE_PATH=/ pnpm --filter @workspace/majalis run start
 
 ```
 artifacts/majalis/src/
+  quran/               RN-shaped façade (assets/components/screens/hooks/context/services/constants)
   core/quran/          DatabaseManager, QuranEngineContext
   core/audio/          AudioEngine
   core/tafseer/        TafseerService
@@ -86,6 +87,7 @@ artifacts/majalis/src/
   tests/               database-manager, audio-engine, scaffold
 ```
 
+See [`src/quran/README.md`](../quran/README.md) for the React Native folder mapping.
 ## PWA (additive)
 
 - Manifest: `public/quran-engine-manifest.json`
