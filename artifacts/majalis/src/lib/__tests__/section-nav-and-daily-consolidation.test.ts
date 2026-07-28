@@ -117,8 +117,8 @@ console.log("\n=== تعطيل الباحث الشرعي — سجل الميزا�
     "مدخل قسم الأطفال coming-soon وخارج القائمة الجانبية (يبقى في المزيد)");
 
   const circlesEntry = FEATURE_REGISTRY.find((f) => f.id === "quran-circles");
-  assert(circlesEntry !== undefined && circlesEntry.status === "coming-soon" && circlesEntry.inSideNav === false,
-    "حلقات التحفيظ بحالة coming-soon وخارج القائمة الجانبية");
+  assert(circlesEntry !== undefined && circlesEntry.status === "active" && circlesEntry.inSideNav === true,
+    "حلقات التحفيظ نشطة وتظهر في القائمة الجانبية");
 
   const uniEntry = FEATURE_REGISTRY.find((f) => f.id === "universities");
   assert(uniEntry !== undefined && uniEntry.inSideNav === false,
@@ -173,8 +173,8 @@ console.log("\n=== seo-routes.json — /kids مسجَّل (noindex)، /scholarly
   assert(kidsRoute?.sitemap === false && kidsRoute?.robots === "noindex, follow",
     "/kids خارج sitemap وبـ noindex أثناء حالة قريبًا");
   const circlesRoute = routes.find((r) => r.path === "/quran-circles");
-  assert(circlesRoute !== undefined && circlesRoute.sitemap === false && circlesRoute.robots === "noindex, follow",
-    "/quran-circles خارج sitemap وبـ noindex أثناء حالة قريبًا");
+  assert(circlesRoute !== undefined && circlesRoute.sitemap === true && circlesRoute.robots === "index, follow",
+    "/quran-circles في sitemap وبـ index بعد التفعيل");
   for (const p of ["/universities", "/universities/compare"]) {
     const route = routes.find((r) => r.path === p);
     assert(route !== undefined && route.sitemap === false, `${p} خارج sitemap بعد التنزيل`);
@@ -204,14 +204,15 @@ console.log("\n=== nav-visibility — إخفاء/دمج/قريبًا ===");
 {
   for (const p of [
     "/islam-stats", "/study-room", "/vault", "/cards", "/car-mode", "/mosque-mode",
-    "/family", "/universities", "/mind-map", "/mushaf/page", "/quran-circles",
+    "/family", "/universities", "/mind-map", "/mushaf/page",
     "/quran/recitation-test-ai",
     "/quran-studies", "/anbiya", "/start-here", "/learning/calendar",
     "/prayer-countdown", "/annual-courses", "/duas", "/prayer-ranks", "/sujood-sahw",
   ]) {
     assert(HIDDEN_FROM_NAV_PATHS.has(p), `${p} ضمن المسارات المخفية من الاكتشاف`);
   }
-  assert(isComingSoonPath("/kids") && isComingSoonPath("/quran-circles"), "الأطفال وحلقات التحفيظ قريبًا");
+  assert(isComingSoonPath("/kids") && !isComingSoonPath("/quran-circles"), "الأطفال قريبًا وحلقات التحفيظ مفعّلة");
+  assert(!HIDDEN_FROM_NAV_PATHS.has("/quran-circles"), "حلقات التحفيظ ظاهرة في الاكتشاف");
   assert(resolveMergedPath("/knowledge-map") === "/knowledge-graph", "knowledge-map → knowledge-graph");
   assert(resolveMergedPath("/mind-map") === "/mind-map", "mind-map يبقى حيًا (لا توجيه)");
   assert(HIDDEN_FROM_NAV_PATHS.has("/mind-map"), "mind-map مخفي من القوائم الأولى ويُفتح من بوابة المعرفة");
@@ -231,8 +232,8 @@ console.log("\n=== nav-visibility — إخفاء/دمج/قريبًا ===");
     { href: "/quran-circles" },
     { href: "/anbiya" },
   ]);
-  assert(filtered.map((i) => i.href).join(",") === "/learn,/kids",
-    `filterNavItems يُبقي الظاهر و«قريبًا» للأطفال ويُسقط المخفي (الفعلي: ${filtered.map((i) => i.href).join(",")})`);
+  assert(filtered.map((i) => i.href).join(",") === "/learn,/kids,/quran-circles",
+    `filterNavItems يُبقي الظاهر و«قريبًا» للأطفال والحلقات ويُسقط المخفي (الفعلي: ${filtered.map((i) => i.href).join(",")})`);
 
   const homeHrefs = FEATURE_CATS.flatMap((c) => c.items.map((i) => i.href));
   assert(!homeHrefs.includes("/car-mode") && !homeHrefs.includes("/mosque-mode"),
@@ -251,12 +252,13 @@ console.log("\n=== sitemap + SEO لمسارات مدمجة/مخفية ===");
 {
   const sitemap = readFileSync(resolve(appRoot, "public/sitemap.xml"), "utf-8");
   for (const p of [
-    "/kids", "/quran-circles", "/cards", "/learning-plan", "/study-room",
+    "/kids", "/cards", "/learning-plan", "/study-room",
     "/universities", "/universities/compare", "/knowledge-map", "/islam-stats",
     "/quran-studies", "/anbiya", "/start-here", "/prayer-countdown", "/annual-courses",
   ]) {
     assert(!sitemap.includes(`majlisilm.com${p}<`), `${p} خارج sitemap.xml`);
   }
+  assert(sitemap.includes("majlisilm.com/quran-circles"), "/quran-circles داخل sitemap.xml بعد التفعيل");
   const seoConfig = JSON.parse(readFileSync(resolve(appRoot, "src/lib/seo-routes.json"), "utf-8"));
   const routes = seoConfig.routes as Array<{ path: string; sitemap?: boolean; robots?: string }>;
   for (const p of ["/learning-plan", "/knowledge-map", "/quran-studies", "/anbiya", "/start-here", "/annual-courses"]) {

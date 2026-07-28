@@ -142,6 +142,7 @@ const FEATURE_CATS_RAW: FeatureCat[] = [
       { href: "/quran/tajweed",        Icon: Mic2,       title: seoNavLabel("/quran/tajweed", "علم التجويد"),        desc: "أحكام التجويد الشاملة" },
       { href: "/ulum-quran",           Icon: GraduationCap, title: seoNavLabel("/ulum-quran", "علوم القرآن الكريم"),      desc: "النزول والجمع والإعجاز والتفسير" },
       { href: "/tafsir",               Icon: BookOpen,      title: seoNavLabel("/tafsir", "علم التفسير"),            desc: "أنواع التفسير وأصوله وأشهر كتب المفسرين" },
+      { href: "/quran-circles",        Icon: Users,         title: seoNavLabel("/quran-circles", "حلقات التحفيظ"),   desc: "دليل حلقات القرآن في الكويت والمنصات الموثوقة" },
     ],
   },
   {
