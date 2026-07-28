@@ -602,6 +602,7 @@ html.dark .nav-soon-badge {
 }
 
 /* Footer is a concise trust/navigation surface, not a duplicate sitemap. */
+.site-footer--minimal,
 .site-footer--v3 { margin-block-start: clamp(2rem, 5vw, 4rem); }
 .site-footer-inner--v3 {
   width: min(100%, var(--page-width));
