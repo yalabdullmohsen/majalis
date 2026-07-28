@@ -46,6 +46,28 @@ export async function startPlatformLogicSuite(): Promise<void> {
       /* ignore */
     }
 
+    // Soft-warm: topic index + devotional balance + storage LRU (never block UX)
+    try {
+      const { listTopicCategories } = await import("@/lib/islamic-topic-index");
+      listTopicCategories();
+    } catch {
+      /* ignore */
+    }
+    try {
+      const { loadDevotionalBalance, generateTimeAwarePrompts } = await import(
+        "@/lib/devotional-balance-engine"
+      );
+      generateTimeAwarePrompts({ state: loadDevotionalBalance() });
+    } catch {
+      /* ignore */
+    }
+    try {
+      const { maybeAutoEvictStorage } = await import("@/lib/smart-cache-eviction");
+      void maybeAutoEvictStorage();
+    } catch {
+      /* ignore */
+    }
+
     const prediction = predictKhatmahCompletion();
     await syncSmartLocalNotifications({ khatmahBehind: prediction.behindSchedule });
     maybeNotifyKhatmahBehind(prediction);
