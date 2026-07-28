@@ -21,8 +21,12 @@ const STATUS_MAP: Record<string, { variant: BadgeVariant; label: string }> = {
   // مرفوض
   rejected: { variant: "rejected", label: "مرفوض" },
   archived: { variant: "rejected", label: "مؤرشف" },
-  // مسودة
+  // مسودة / مخفي
   draft: { variant: "draft", label: "مسودة" },
+  hidden: { variant: "draft", label: "مخفي" },
+  unpublished: { variant: "draft", label: "مخفي" },
+  under_review: { variant: "pending", label: "قيد المراجعة" },
+  review_pending: { variant: "pending", label: "قيد المراجعة" },
 };
 
 export function StatusBadge({ status, label }: { status: string | null | undefined; label?: string }) {

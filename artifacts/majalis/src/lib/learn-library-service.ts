@@ -5,6 +5,7 @@
  */
 import { supabase } from "@/lib/supabase";
 import { buildCategoryTree, rollUpCounts } from "@/lib/category-tree";
+import { isPublicVisibleStatus } from "@/lib/category-status";
 import {
   getSeedLessonById as getBatch3LessonById,
   getSeedLessonsForSlug as getBatch3LessonsForSlug,
@@ -85,7 +86,8 @@ export async function fetchPublishedCategoryTree(): Promise<CategoryWithCounts[]
     supabase.from("lesson_series").select("category_id").eq("status", "published").not("category_id", "is", null),
   ]);
 
-  const categories = (cats ?? []) as CategoryRow[];
+  // دفاع إضافي: حتى لو تغيّرت سياسة RLS، لا يظهر للمستخدم غير المنشور
+  const categories = ((cats ?? []) as CategoryRow[]).filter((c) => isPublicVisibleStatus(c.status));
   const directLessonCounts = new Map<string, number>();
   for (const r of lessonRows ?? []) {
     const id = (r as { category_id: string }).category_id;
