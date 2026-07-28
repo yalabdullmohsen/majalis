@@ -31,6 +31,7 @@ import {
   observeAudioThroughput,
 } from "@/lib/audio-buffer-policy";
 import { logDiagnostic } from "@/lib/diagnostics";
+import { useWakeLock } from "@/hooks/useWakeLock";
 
 export type PlayerState = "idle" | "loading" | "playing" | "paused" | "error" | "buffering";
 
@@ -51,6 +52,9 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
   const loopRuntimeRef = useRef<AyahLoopRuntime | null>(null);
   const [loopConfig, setLoopConfigState] = useState<AyahLoopConfig | null>(null);
   const loadAndPlayRef = useRef<(surah: number, ayah: number, reciter: string) => void>(() => undefined);
+
+  // Part 19: keep screen awake only while actively playing; release on pause/blur
+  useWakeLock(playerState === "playing" || playerState === "buffering" || playerState === "loading");
 
   const clearDelayTimer = useCallback(() => {
     if (delayTimerRef.current != null) {

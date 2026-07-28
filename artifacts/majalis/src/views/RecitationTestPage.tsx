@@ -136,7 +136,7 @@ function RecitationTestPageInner() {
   const [unclearNotice, setUnclearNotice] = useState<string | null>(null);
   const unclearNoticeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [audioLevel, setAudioLevel] = useState(0);
-  const wakeLockRef = useRef<{ release: () => Promise<void> } | null>(null);
+  const wakeLockRef = useRef<ReturnType<typeof import("@/lib/wake-lock").createWakeLockController> | null>(null);
   /** وضع استماع ثم تكرار: يعرض شريط «استمع للقارئ» قبل فتح الميكروفون. */
   const [listenModelPlaying, setListenModelPlaying] = useState(false);
   const [tajweedNotes, setTajweedNotes] = useState<TajweedNote[]>([]);
@@ -339,12 +339,11 @@ function RecitationTestPageInner() {
     const asrSession = await provider.startSession({ language: "ar-SA", precisionLevel });
     asrSessionRef.current = asrSession;
 
-    // منع إطفاء الشاشة أثناء التسميع (يُحرَّر عند الإنهاء/الإيقاف)
+    // منع إطفاء الشاشة أثناء التسميع (يُحرَّر عند الإنهاء/الإيقاف) — Part 19 controller
     try {
-      const nav = navigator as Navigator & { wakeLock?: { request: (t: "screen") => Promise<{ release: () => Promise<void> }> } };
-      if (nav.wakeLock?.request) {
-        wakeLockRef.current = await nav.wakeLock.request("screen");
-      }
+      const { createWakeLockController } = await import("@/lib/wake-lock");
+      if (!wakeLockRef.current) wakeLockRef.current = createWakeLockController();
+      wakeLockRef.current.setSessionActive(true);
     } catch { /* غير مدعوم أو مرفوض — تجاهل */ }
 
     if (provider.onAudioLevel) {
@@ -846,7 +845,8 @@ function RecitationTestPageInner() {
     setAudioLevel(0);
     setListenModelPlaying(false);
     listenCancelRef.current.cancelled = true;
-    try { await wakeLockRef.current?.release(); } catch { /* ignore */ }
+    try { wakeLockRef.current?.setSessionActive(false); } catch { /* ignore */ }
+    try { wakeLockRef.current?.dispose(); } catch { /* ignore */ }
     wakeLockRef.current = null;
     unsubRef.current?.();
     unsubRef.current = null;

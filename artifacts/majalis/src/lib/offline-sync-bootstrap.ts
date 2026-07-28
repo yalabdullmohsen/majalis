@@ -70,6 +70,13 @@ async function syncCorePacks(): Promise<void> {
       }
 
       await markContentSynced();
+      // Part 19: confirm sync receipt with SW via MessageChannel (timeout-safe)
+      try {
+        const { swNotifyOfflineSync } = await import("@/lib/sw-message-channel");
+        void swNotifyOfflineSync({ at: Date.now(), packs: "core" });
+      } catch {
+        /* SW optional */
+      }
     } finally {
       syncing = null;
     }

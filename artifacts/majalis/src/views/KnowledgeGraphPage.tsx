@@ -265,15 +265,20 @@ export default function KnowledgeGraphPage() {
     let step = 0;
     cancelAnimationFrame(animRef.current);
 
-    function tick() {
-      if (step >= MAX_STEPS) return;
-      step++;
-      runForce(nodesRef.current, gEdges);
-      setGNodes([...nodesRef.current]);
-      animRef.current = requestAnimationFrame(tick);
-    }
-    animRef.current = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(animRef.current);
+    let cancelLoop: (() => void) | null = null;
+    void import("@/lib/render-fps-throttle").then(({ startThrottledAnimationLoop }) => {
+      cancelLoop = startThrottledAnimationLoop(() => {
+        if (step >= MAX_STEPS) return;
+        step++;
+        runForce(nodesRef.current, gEdges);
+        setGNodes([...nodesRef.current]);
+      });
+    });
+
+    return () => {
+      cancelLoop?.();
+      cancelAnimationFrame(animRef.current);
+    };
   }, [gEdges]);
 
   const handleTagSearch = useCallback(async () => {
