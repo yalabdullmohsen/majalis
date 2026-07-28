@@ -1,9 +1,11 @@
 /**
- * RequestManager — central layer for all client network operations.
- * Enforces timeout, single retry, cancel, dedupe, and slow-request logging.
+ * Exponential backoff helpers + RequestManager upgrades.
+ * Central layer for all client network operations.
+ * Enforces timeout, exponential retry, cancel, dedupe, and slow-request logging.
  */
 
 import { measureAsync } from "@/lib/performance-monitor";
+import { sleepWithBackoff } from "@/utils/backoff";
 
 export const REQUEST_TIMEOUT_MS = 8000;
 /** Hard ceiling for page/route loading guards — never show loading longer than this. */
@@ -51,22 +53,15 @@ function mergeSignals(a?: AbortSignal, b?: AbortSignal): AbortSignal | undefined
   return controller.signal;
 }
 
-function sleep(ms: number, signal?: AbortSignal): Promise<void> {
-  return new Promise((resolve, reject) => {
-    if (signal?.aborted) {
-      reject(new DOMException("Aborted", "AbortError"));
-      return;
-    }
-    const id = window.setTimeout(resolve, ms);
-    signal?.addEventListener(
-      "abort",
-      () => {
-        window.clearTimeout(id);
-        reject(new DOMException("Aborted", "AbortError"));
-      },
-      { once: true },
-    );
-  });
+function isAbortError(err: unknown): boolean {
+  return (err as Error)?.name === "AbortError";
+}
+
+/** Retryable network failures only — never retry 4xx except 408/429. */
+function shouldRetryResponse(res: Response): boolean {
+  if (res.ok) return false;
+  if (res.status === 408 || res.status === 429) return true;
+  return res.status >= 500;
 }
 
 export async function requestFetch(input: RequestInfo | URL, init: RequestInit = {}): Promise<Response> {
@@ -84,6 +79,7 @@ export class RequestManager {
     const retries = init.retries ?? REQUEST_MAX_RETRIES;
 
     let lastError: unknown;
+    let lastResponse: Response | null = null;
     for (let attempt = 0; attempt <= retries; attempt++) {
       const controller = new AbortController();
       const timeoutId =
@@ -95,18 +91,28 @@ export class RequestManager {
           attempt,
         });
         if (timeoutId != null) window.clearTimeout(timeoutId);
+        lastResponse = res;
+        if (shouldRetryResponse(res) && attempt < retries) {
+          await sleepWithBackoff({ attempt, baseMs: 250, maxMs: 6_000 }, init.signal ?? undefined).catch(
+            () => {},
+          );
+          continue;
+        }
         return res;
       } catch (err) {
         if (timeoutId != null) window.clearTimeout(timeoutId);
         lastError = err;
         if (attempt < retries) {
-          await sleep(200, init.signal ?? undefined).catch(() => {});
+          await sleepWithBackoff({ attempt, baseMs: 250, maxMs: 6_000 }, init.signal ?? undefined).catch(
+            () => {},
+          );
           continue;
         }
       }
     }
 
-    if ((lastError as Error)?.name === "AbortError") {
+    if (lastResponse) return lastResponse;
+    if (isAbortError(lastError)) {
       throw new RequestTimeoutError(label, timeoutMs ?? REQUEST_TIMEOUT_MS);
     }
     throw lastError;
@@ -152,13 +158,13 @@ export class RequestManager {
             if (timeoutId != null) window.clearTimeout(timeoutId);
             lastError = err;
             if (attempt < retries) {
-              await sleep(200, linked).catch(() => {});
+              await sleepWithBackoff({ attempt, baseMs: 250, maxMs: 6_000 }, linked).catch(() => {});
               continue;
             }
           }
         }
 
-        if ((lastError as Error)?.name === "AbortError") {
+        if (isAbortError(lastError)) {
           throw new RequestTimeoutError(label, timeoutMs ?? REQUEST_TIMEOUT_MS);
         }
         throw lastError;

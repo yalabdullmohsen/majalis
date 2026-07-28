@@ -1,6 +1,7 @@
 /**
  * Background sync: warm IndexedDB packs when online / on reconnect.
  * Safe to call multiple times — coalesces concurrent runs.
+ * Interval + listeners are cleaned via stopOfflineSync (pagehide / tests).
  */
 import { isOnline } from "@/lib/offline-db";
 import {
@@ -14,8 +15,8 @@ import {
 
 let started = false;
 let syncing: Promise<void> | null = null;
-
-const CORE_SURAHS = [1, 18, 36, 55, 67, 112, 113, 114];
+let intervalId: number | null = null;
+let onlineHandler: (() => void) | null = null;
 
 async function syncCorePacks(): Promise<void> {
   if (!isOnline()) return;
@@ -25,8 +26,17 @@ async function syncCorePacks(): Promise<void> {
     try {
       // Migrate legacy raw-IDB packs into Dexie engine (best-effort, once)
       try {
-        const { migrateLegacyOfflineDb } = await import("@/lib/offline-engine");
+        const { migrateLegacyOfflineDb, ensureOfflineSchema } = await import("@/lib/offline-engine");
+        await ensureOfflineSchema();
         await migrateLegacyOfflineDb();
+      } catch {
+        /* ignore */
+      }
+
+      // Automated schema migrations (additive, ledgered)
+      try {
+        const { runSchemaMigrations } = await import("@/lib/idb-schema-migrate");
+        await runSchemaMigrations();
       } catch {
         /* ignore */
       }
@@ -78,10 +88,27 @@ async function syncCorePacks(): Promise<void> {
   return syncing;
 }
 
+const CORE_SURAHS = [1, 18, 36, 55, 67, 112, 113, 114];
+
 /** Start listeners once from App shell — no UI / CSS. */
 export function startOfflineSync(): void {
   if (typeof window === "undefined" || started) return;
   started = true;
+
+  // Offline mutation queue (bookmarks / streaks) — flush on reconnect
+  void import("@/lib/offline-action-queue").then((m) => {
+    m.startOfflineActionQueue();
+    // Register default handlers that re-apply local mutations (already applied optimistically)
+    m.registerOfflineActionHandler("bookmark_toggle", async () => {
+      /* local toggle already committed — queue entry is a sync beacon */
+    });
+    m.registerOfflineActionHandler("streak_record", async () => {
+      /* local streak already committed */
+    });
+    m.registerOfflineActionHandler("progress_set", async () => {
+      /* local progress already committed */
+    });
+  });
 
   // Initial warm after idle so first paint stays light
   const kick = () => {
@@ -93,17 +120,32 @@ export function startOfflineSync(): void {
     globalThis.setTimeout(kick, 2_500);
   }
 
-  window.addEventListener("online", () => {
+  onlineHandler = () => {
     void syncCorePacks();
-  });
+    void import("@/lib/offline-action-queue").then((m) => m.flushOfflineActionQueue());
+  };
+  window.addEventListener("online", onlineHandler);
 
-  // Periodic soft refresh while tab is open (6h)
-  window.setInterval(() => {
+  // Periodic soft refresh while tab is open (6h) — store id for teardown
+  intervalId = window.setInterval(() => {
     void getLastContentSync().then((last) => {
       const age = last ? Date.now() - new Date(last.updatedAt).getTime() : Infinity;
       if (age > 6 * 60 * 60 * 1000) void syncCorePacks();
     });
   }, 30 * 60 * 1000);
+}
+
+/** Tear down interval + online listener (tests / HMR). */
+export function stopOfflineSync(): void {
+  if (intervalId != null) {
+    window.clearInterval(intervalId);
+    intervalId = null;
+  }
+  if (onlineHandler) {
+    window.removeEventListener("online", onlineHandler);
+    onlineHandler = null;
+  }
+  started = false;
 }
 
 /** Manual sync trigger (settings / vault). */

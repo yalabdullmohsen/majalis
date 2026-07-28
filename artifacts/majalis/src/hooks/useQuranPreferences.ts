@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 export type QuranFontId = "uthmani" | "naskh" | "amiri";
 
@@ -73,10 +73,24 @@ function load(): QuranPreferences {
 }
 
 export function useQuranPreferences() {
-  const [prefs, setPrefsState] = useState<QuranPreferences>(load);
+  // SSR/prerender-safe defaults — hydrate from LocalStorage after mount
+  const [prefs, setPrefsState] = useState<QuranPreferences>(DEFAULTS);
+  const skipPersist = useRef(true);
 
   useEffect(() => {
-    try { localStorage.setItem(KEY, JSON.stringify(prefs)); } catch { /* ignore */ }
+    setPrefsState(load());
+  }, []);
+
+  useEffect(() => {
+    if (skipPersist.current) {
+      skipPersist.current = false;
+      return;
+    }
+    try {
+      localStorage.setItem(KEY, JSON.stringify(prefs));
+    } catch {
+      /* ignore */
+    }
   }, [prefs]);
 
   const setPref = useCallback(<K extends keyof QuranPreferences>(key: K, value: QuranPreferences[K]) => {

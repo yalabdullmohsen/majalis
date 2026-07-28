@@ -5,8 +5,12 @@
 export {
   OFFLINE_STORES,
   isOnline,
+  engineTransact,
+  enginePutMany,
+  ensureOfflineSchema,
   type OfflineStoreName,
   type OfflineRecord,
+  type EngineTxApi,
 } from "@/lib/offline-engine";
 
 import {
@@ -16,6 +20,8 @@ import {
   engineGetValue,
   engineKeys,
   enginePut,
+  enginePutMany,
+  engineTransact,
   type OfflineRecord,
   type OfflineStoreName,
 } from "@/lib/offline-engine";
@@ -35,6 +41,20 @@ export async function idbPut<T>(
   revision?: string,
 ): Promise<void> {
   await enginePut(storeName, key, value, revision);
+}
+
+export async function idbPutMany(
+  entries: Array<{ store: OfflineStoreName; key: string; value: unknown; revision?: string }>,
+): Promise<number> {
+  return enginePutMany(entries);
+}
+
+/** Run multiple IDB ops in one atomic transaction. */
+export async function idbTransact<T>(
+  mode: "r" | "rw",
+  fn: Parameters<typeof engineTransact<T>>[1],
+): Promise<T | undefined> {
+  return engineTransact(mode, fn);
 }
 
 export async function idbGet<T>(

@@ -1,11 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "wouter";
 import { ShareButtons } from "@/components/ContentActions";
-import {
-  downloadCardImage,
-  exportSocialCard,
-  type CardExportPreset,
-} from "@/lib/card-image-export";
+import type { CardExportPreset } from "@/lib/card-image-export";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { applyPageSeo } from "@/lib/seo";
@@ -127,6 +123,8 @@ export default function CardsPage() {
     if (!cardRef.current) return;
     setIsGenerating(true);
     try {
+      // Dynamic import — keep html-to-image out of the initial cards route chunk
+      const { downloadCardImage } = await import("@/lib/card-image-export");
       const pixelRatio = exportPreset === "story" ? 4 : 3;
       await downloadCardImage(cardRef.current, `بطاقة-${Date.now()}.png`, pixelRatio);
     } finally {
@@ -138,6 +136,7 @@ export default function CardsPage() {
     if (!cardRef.current) return;
     setIsGenerating(true);
     try {
+      const { exportSocialCard } = await import("@/lib/card-image-export");
       await exportSocialCard(cardRef.current, exportPreset, {
         fileName: `بطاقة-${Date.now()}.png`,
         title: "بطاقة المجلس العلمي",

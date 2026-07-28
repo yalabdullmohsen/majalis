@@ -67,7 +67,7 @@ export function getTodayProgress(): DayProgress {
 }
 
 export function setTaskProgress(taskId: ProgressTaskId, value: number) {
-  const store = readStore();
+  const store = { ...readStore() };
   const key = todayKey();
   const prev = getTodayProgress();
   const day = { ...prev };
@@ -76,6 +76,9 @@ export function setTaskProgress(taskId: ProgressTaskId, value: number) {
   writeStore(store);
   if (typeof window !== "undefined") {
     window.dispatchEvent(new CustomEvent("majalis-progress-updated"));
+    void import("@/lib/offline-action-queue")
+      .then((m) => m.enqueueOfflineAction("progress_set", { taskId, value: day[taskId] }))
+      .catch(() => {});
     // Streak logic (no UI change) — fire-and-forget dynamic import
     void import("@/lib/user-streak").then(({ recordUserActivity }) => {
       const activityMap: Partial<Record<ProgressTaskId, "quran" | "adhkar" | "wird" | "tasbih">> = {

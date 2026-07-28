@@ -68,7 +68,7 @@ export async function startPlatformLogicSuite(): Promise<void> {
       /* ignore */
     }
 
-    // Soft-warm: sacred times, cross-tab channel, auto-scroll pace, power-saver binding
+    // Soft-warm: sacred times, cross-tab id, auto-scroll pace, power-saver binding
     try {
       const { hydrateAutoScrollFromIdb } = await import("@/lib/adaptive-auto-scroll");
       void hydrateAutoScrollFromIdb();
@@ -76,9 +76,16 @@ export async function startPlatformLogicSuite(): Promise<void> {
       /* ignore */
     }
     try {
-      const { getCrossTabId, subscribeCrossTab } = await import("@/lib/cross-tab-sync");
+      // Warm tab id only — do NOT leave an immortal empty BroadcastChannel subscriber
+      const { getCrossTabId } = await import("@/lib/cross-tab-sync");
       getCrossTabId();
-      subscribeCrossTab(() => undefined);
+    } catch {
+      /* ignore */
+    }
+    try {
+      const { ensureOfflineSchema } = await import("@/lib/offline-engine");
+      const { runSchemaMigrations } = await import("@/lib/idb-schema-migrate");
+      void ensureOfflineSchema().then(() => runSchemaMigrations());
     } catch {
       /* ignore */
     }

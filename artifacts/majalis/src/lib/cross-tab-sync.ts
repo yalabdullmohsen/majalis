@@ -155,6 +155,10 @@ export function subscribeCrossTab(handler: CrossTabHandler): () => void {
   handlers.add(handler);
   return () => {
     handlers.delete(handler);
+    // Close channel when last subscriber leaves — prevents orphan BroadcastChannel
+    if (handlers.size === 0) {
+      closeCrossTabChannel();
+    }
   };
 }
 
