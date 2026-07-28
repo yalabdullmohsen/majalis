@@ -442,15 +442,15 @@ export default function HadithBooksPage() {
       <nav className="hadith-class-switch" aria-label="أقسام الحديث" style={{ marginTop: "0.75rem" }}>
         <Link href="/hadith/sahih" className="hadith-class-switch__link">الصحيح</Link>
         <Link href="/hadith/mawdu" className="hadith-class-switch__link">الموضوع</Link>
-        <Link href="/hadith/daif" className="hadith-class-switch__link">المكذوب</Link>
+        <Link href="/hadith/daif" className="hadith-class-switch__link">الضعيف</Link>
         <Link href="/hadith/books" className="hadith-class-switch__link hadith-class-switch__link--books is-active">الكتب كاملة</Link>
       </nav>
 
-      {/* إشعار المكذوب والموضوع */}
+      {/* إشعار الضعيف والموضوع */}
       <div className="hb-notice" role="note" dir="rtl">
         <AlertTriangle size={14} className="inline ml-1" />
-        <strong>المكذوب والموضوع:</strong> بطاقات تحذير منسّقة بتخريج منسوب — لا يُولَّد أي محتوى شرعي بالذكاء الاصطناعي.{" "}
-        <Link href="/hadith/daif" className="hb-notice__link">تصفّح المكذوب</Link>
+        <strong>الضعيف والموضوع:</strong> بطاقات منسّقة بتخريج منسوب ودرجة مبيَّنة على كل بطاقة — لا يُولَّد أي محتوى شرعي بالذكاء الاصطناعي.{" "}
+        <Link href="/hadith/daif" className="hb-notice__link">تصفّح الضعيف</Link>
         {" · "}
         <Link href="/hadith/mawdu" className="hb-notice__link">تصفّح الموضوع</Link>
       </div>

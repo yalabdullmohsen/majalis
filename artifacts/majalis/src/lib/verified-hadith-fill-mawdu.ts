@@ -992,52 +992,6 @@ export const HADITH_FILL_MAWDU: LocalVerifiedHadith[] = [
     "created_at": "2026-07-27T22:00:00.000Z"
   },
   {
-    "id": "mawdu-u-044",
-    "collection": "various",
-    "hadith_number": null,
-    "title": "زينوا القرآن بأصواتكم",
-    "text": "زينوا القرآن بأصواتكم.",
-    "narrator": "ثابت — تمييز عن الموضوع في الباب",
-    "source_name": "أبو داود",
-    "grade": "صحيح/حسن",
-    "chapter": "قرآن",
-    "keywords": [
-      "قرآن",
-      "موضوع",
-      "تخريج"
-    ],
-    "explanation": "للتحذير لا للاحتجاج. صحيح/حسن. راجع: أبو داود.",
-    "authenticity_class": "mawdu",
-    "metadata": {
-      "batch": "fill-2026-07-unique",
-      "muhaddith": "كتب التخريج"
-    },
-    "created_at": "2026-07-27T22:00:00.000Z"
-  },
-  {
-    "id": "mawdu-u-045",
-    "collection": "various",
-    "hadith_number": null,
-    "title": "من قرأ قل هو الله أحد فكأنما قرأ ثلث القرآن",
-    "text": "من قرأ قل هو الله أحد فكأنما قرأ ثلث القرآن.",
-    "narrator": "ثابت — تمييز",
-    "source_name": "البخاري",
-    "grade": "صحيح",
-    "chapter": "قرآن",
-    "keywords": [
-      "قرآن",
-      "موضوع",
-      "تخريج"
-    ],
-    "explanation": "للتحذير لا للاحتجاج. صحيح. راجع: البخاري.",
-    "authenticity_class": "mawdu",
-    "metadata": {
-      "batch": "fill-2026-07-unique",
-      "muhaddith": "كتب التخريج"
-    },
-    "created_at": "2026-07-27T22:00:00.000Z"
-  },
-  {
     "id": "mawdu-u-046",
     "collection": "various",
     "hadith_number": null,
@@ -1329,29 +1283,6 @@ export const HADITH_FILL_MAWDU: LocalVerifiedHadith[] = [
       "تخريج"
     ],
     "explanation": "للتحذير لا للاحتجاج. موضوع. راجع: الموضوعات.",
-    "authenticity_class": "mawdu",
-    "metadata": {
-      "batch": "fill-2026-07-unique",
-      "muhaddith": "كتب التخريج"
-    },
-    "created_at": "2026-07-27T22:00:00.000Z"
-  },
-  {
-    "id": "mawdu-u-060",
-    "collection": "various",
-    "hadith_number": null,
-    "title": "أول من يُكسى إبراهيم",
-    "text": "أول من يُكسى إبراهيم.",
-    "narrator": "ثابت — تمييز",
-    "source_name": "البخاري",
-    "grade": "صحيح",
-    "chapter": "آخرة",
-    "keywords": [
-      "آخرة",
-      "موضوع",
-      "تخريج"
-    ],
-    "explanation": "للتحذير لا للاحتجاج. صحيح. راجع: البخاري.",
     "authenticity_class": "mawdu",
     "metadata": {
       "batch": "fill-2026-07-unique",
