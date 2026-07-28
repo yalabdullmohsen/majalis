@@ -107,6 +107,10 @@ export class RequestManager {
     }
 
     if ((lastError as Error)?.name === "AbortError") {
+      // Distinguish caller abort from our timeout abort
+      if (init.signal?.aborted) {
+        throw lastError;
+      }
       throw new RequestTimeoutError(label, timeoutMs ?? REQUEST_TIMEOUT_MS);
     }
     throw lastError;
@@ -159,6 +163,8 @@ export class RequestManager {
         }
 
         if ((lastError as Error)?.name === "AbortError") {
+          // External caller abort (navigation / typing) must stay AbortError
+          if (opts.signal?.aborted) throw lastError;
           throw new RequestTimeoutError(label, timeoutMs ?? REQUEST_TIMEOUT_MS);
         }
         throw lastError;

@@ -121,8 +121,9 @@ async function cacheFirst(req, cacheName) {
   if (cached) return cached;
   try {
     const res = await fetch(req);
-    if (res.ok) {
+    if (res.ok && shouldCacheResponse(req, res)) {
       const cache = await caches.open(cacheName);
+      await enforceDataCacheBudget(cache, cacheName);
       cache.put(req, res.clone()).catch(() => undefined);
     }
     return res;
@@ -131,6 +132,65 @@ async function cacheFirst(req, cacheName) {
       status: 503,
       headers: { "Content-Type": "application/json" },
     });
+  }
+}
+
+/** Never persist audio / large media in Cache Storage. */
+function shouldCacheResponse(req, res) {
+  try {
+    const url = new URL(req.url);
+    const path = url.pathname.toLowerCase();
+    if (/\.(mp3|m4a|ogg|wav|webm|mp4)(\?|$)/i.test(path)) return false;
+    if (url.hostname.includes("everyayah") || url.hostname.includes("mp3quran")) return false;
+    if (url.hostname.includes("jsdelivr") && path.includes("adhan")) return false;
+    const len = Number(res.headers.get("content-length") || 0);
+    // Soft cap: skip caching payloads > 2.5MB
+    if (len > 2_500_000) return false;
+    return true;
+  } catch {
+    return true;
+  }
+}
+
+const DATA_CACHE_MAX_ENTRIES = 120;
+
+async function enforceDataCacheBudget(cache, cacheName) {
+  if (!String(cacheName).startsWith("majalis-data-")) return;
+  try {
+    const keys = await cache.keys();
+    if (keys.length < DATA_CACHE_MAX_ENTRIES) return;
+    const overflow = keys.length - DATA_CACHE_MAX_ENTRIES + 10;
+    for (let i = 0; i < overflow; i++) {
+      await cache.delete(keys[i]);
+    }
+  } catch {
+    /* ignore */
+  }
+}
+
+async function rotateCachesForPressure(pressure) {
+  try {
+    const keys = await caches.keys();
+    const offline = keys.filter((k) => k.startsWith("majalis-offline-")).sort();
+    const data = keys.filter((k) => k.startsWith("majalis-data-")).sort();
+    for (const group of [offline, data]) {
+      for (const old of group.slice(0, Math.max(0, group.length - 1))) {
+        await caches.delete(old);
+      }
+    }
+    const newestData = data[data.length - 1];
+    if (newestData && (pressure === "warn" || pressure === "critical")) {
+      const cache = await caches.open(newestData);
+      const reqs = await cache.keys();
+      const keep = pressure === "critical" ? 40 : 80;
+      if (reqs.length > keep) {
+        for (const req of reqs.slice(0, reqs.length - keep)) {
+          await cache.delete(req);
+        }
+      }
+    }
+  } catch {
+    /* ignore */
   }
 }
 
@@ -158,6 +218,11 @@ self.addEventListener("fetch", (event) => {
 
   // Only handle same-origin from here
   if (url.origin !== self.location.origin) return;
+
+  // Never cache audio / media streams via SW
+  if (/\.(mp3|m4a|ogg|wav|webm|mp4)(\?|$)/i.test(url.pathname)) {
+    return; // network default
+  }
 
   // Hashed JS/CSS bundles: always network (stale chunks break lazy routes)
   if (url.pathname.startsWith("/assets/")) {
@@ -215,6 +280,11 @@ const _smartLocalTimers = new Map(); // tag → timeoutId
 self.addEventListener("message", (event) => {
   const msg = event.data;
   if (!msg) return;
+
+  if (msg.type === "MAJALIS_QUOTA_ROTATE") {
+    event.waitUntil(rotateCachesForPressure(msg.pressure || "warn"));
+    return;
+  }
 
   // Smart local schedule (adhkar / streak / khatmah / prayer reminders)
   if (msg.type === "MAJALIS_SCHEDULE_LOCAL_NOTIFS" && Array.isArray(msg.items)) {

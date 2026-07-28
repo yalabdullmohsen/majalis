@@ -16,6 +16,7 @@ import {
   type AyahLoopRuntime,
 } from "@/lib/ayah-loop-controller";
 import { saveAudioResumeState } from "@/lib/quran-audio-resume";
+import { releaseAudioElement, assignAudioSrc } from "@/lib/audio-memory";
 
 export type PlayerState = "idle" | "loading" | "playing" | "paused" | "error";
 
@@ -43,7 +44,12 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
   }, []);
 
   const setReciterId = useCallback((id: string) => {
-    setReciterIdState(id);
+    setReciterIdState((prev) => {
+      if (prev === id) return prev;
+      // Drop buffered audio for previous reciter before switching
+      releaseAudioElement(audioRef.current);
+      return id;
+    });
     saveReciterId(id);
   }, []);
 
@@ -91,7 +97,7 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
       clearDelayTimer();
       pauseCleanupRef.current?.();
       pauseCleanupRef.current = null;
-      audio.pause();
+      releaseAudioElement(audio);
       audioRef.current = null;
     };
   }, [clearDelayTimer]);
@@ -106,7 +112,8 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
     pauseCleanupRef.current = null;
 
     audio.pause();
-    audio.src = getAyahAudioUrl(surah, ayah, reciter);
+    // Release previous buffer before assigning the next ayah URL
+    assignAudioSrc(audio, getAyahAudioUrl(surah, ayah, reciter));
     audio.playbackRate = playbackRateRef.current;
     setCurrentAyah(ayah);
     setPlayerState("loading");
@@ -201,8 +208,7 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
     clearDelayTimer();
     const audio = audioRef.current;
     if (!audio) return;
-    audio.pause();
-    audio.src = "";
+    releaseAudioElement(audio);
     setCurrentAyah(null);
     setPlayerState("idle");
   }, [clearDelayTimer]);

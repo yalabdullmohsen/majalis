@@ -160,6 +160,9 @@ export function MushafPageV2({ layout, activeAyahKey, onAyahPress, sharedFontFam
                 return (
                   <span
                     key={verseKey}
+                    data-verse-key={verseKey}
+                    data-ayah={verseKey.split(":")[1] || undefined}
+                    data-ayah-number={verseKey.split(":")[1] || undefined}
                     className={`mf2-ayah-group${verseKey === activeAyahKey ? " mf2-ayah-group--active" : ""}`}
                     role="button"
                     tabIndex={0}

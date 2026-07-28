@@ -14,6 +14,7 @@ import {
 import { loadPageJuzIndex, getSegmentsForPage, findPageForAyah, type QuranSegment } from "@/lib/recitation-ai/page-juz-lookup";
 import { useQuranPreferences, type QuranReadingTheme, type QuranFrameStyle, type QuranHighlightStyle, type QuranPageMode } from "@/hooks/useQuranPreferences";
 import { useAyahPlayer } from "@/hooks/useAyahPlayer";
+import { useQuranAudioSync } from "@/hooks/useQuranAudioSync";
 import { SurahList } from "@/components/quran/SurahList";
 import { PageAyahActionSheet } from "@/components/quran/PageAyahActionSheet";
 import { ReciterDownloadManager } from "@/components/quran/ReciterDownloadManager";
@@ -138,13 +139,19 @@ export default function MushafPageView() {
   );
 
   // ── تحميل محتوى الصفحة (نص) — يعتمد على فهرس page-juz-index.json + fetchSurahDetail المحليّين الموجودين فعلاً ──
-  const loadPage = useCallback(async (p: number, { silent }: { silent?: boolean } = {}) => {
+  const loadPage = useCallback(async (
+    p: number,
+    { silent, signal }: { silent?: boolean; signal?: AbortSignal } = {},
+  ) => {
     if (!silent) { setLoading(true); setError(false); }
     try {
+      if (signal?.aborted) throw new DOMException("Aborted", "AbortError");
       const index = await loadPageJuzIndex();
+      if (signal?.aborted) throw new DOMException("Aborted", "AbortError");
       const segments = getSegmentsForPage(index, p);
       if (segments.length === 0) throw new Error("لا مقاطع لهذه الصفحة");
       const details = await Promise.all(segments.map((s) => fetchSurahDetail(s.surah)));
+      if (signal?.aborted) throw new DOMException("Aborted", "AbortError");
       const result: SegmentAyahs[] = segments.map((seg, i) => ({
         segment: seg,
         ayahs: details[i].ayahs
@@ -153,34 +160,39 @@ export default function MushafPageView() {
       }));
       if (!silent) setSegAyahs(result);
       return result;
-    } catch {
+    } catch (err) {
+      if ((err as Error)?.name === "AbortError") return null;
       if (!silent) setError(true);
       return null;
     } finally {
-      if (!silent) setLoading(false);
+      if (!silent && !signal?.aborted) setLoading(false);
     }
   }, []);
 
   useEffect(() => {
-    let cancelled = false;
-    loadPage(page).then(() => {
-      if (cancelled) return;
+    const ac = new AbortController();
+    loadPage(page, { signal: ac.signal }).then(() => {
+      if (ac.signal.aborted) return;
       // تحميل مسبق هادئ للصفحتين المجاورتين — لا يُحدِّث الواجهة، فقط يملأ ذاكرة fetchSurahDetail المحلية
-      if (page > 1) loadPage(page - 1, { silent: true });
-      if (page < TOTAL_PAGES) loadPage(page + 1, { silent: true });
+      if (page > 1) void loadPage(page - 1, { silent: true, signal: ac.signal });
+      if (page < TOTAL_PAGES) void loadPage(page + 1, { silent: true, signal: ac.signal });
     });
-    return () => { cancelled = true; };
+    return () => { ac.abort(); };
   }, [page, loadPage]);
 
   // ── تخطيط السطر الحقيقي (line_number) من نفس بيانات quran-v2 — مصدر
   // واحد يُستهلَك من كلا وضعي العرض (خفيف/دقة مطبعية)، لا تحميل مزدوج. ──
   useEffect(() => {
-    let cancelled = false;
+    const ac = new AbortController();
     setV2Layout(null);
-    loadMushafPage(page).then((layout) => { if (!cancelled) setV2Layout(layout); }).catch(() => {});
+    loadMushafPage(page)
+      .then((layout) => {
+        if (!ac.signal.aborted) setV2Layout(layout);
+      })
+      .catch(() => {});
     if (page > 1) prefetchMushafPage(page - 1);
     if (page < TOTAL_PAGES) prefetchMushafPage(page + 1);
-    return () => { cancelled = true; };
+    return () => { ac.abort(); };
   }, [page]);
 
   const primarySegment = segAyahs?.[0];
@@ -266,7 +278,28 @@ export default function MushafPageView() {
 
   const activeSurahForPlayer = primarySegment?.segment.surah ?? 1;
   const activeSurahAyahCount = primarySegment ? getSurahMeta(activeSurahForPlayer).ayahs : 0;
-  const { currentAyah, playerState, togglePlayAyah, reciterId, setReciterId, playbackRate, setPlaybackRate, repeatOn, setRepeatOn } = useAyahPlayer(activeSurahForPlayer, activeSurahAyahCount);
+  const {
+    currentAyah,
+    playerState,
+    togglePlayAyah,
+    reciterId,
+    setReciterId,
+    playbackRate,
+    setPlaybackRate,
+    repeatOn,
+    setRepeatOn,
+    audioElement,
+  } = useAyahPlayer(activeSurahForPlayer, activeSurahAyahCount);
+
+  // Frame-budget resume persist + optional auto-scroll (no layout/CSS changes)
+  useQuranAudioSync({
+    surah: activeSurahForPlayer,
+    ayah: currentAyah,
+    audio: audioElement.current,
+    reciterId,
+    autoScroll: playerState === "playing",
+    persistIntervalMs: 2500,
+  });
 
   // ── جسر بين مكوّني تخطيط السطر الحقيقي (V2/خفيف) وحالة الآية المختارة/المُشغَّلة القائمة أصلًا ──
   const handleV2AyahPress = useCallback((verseKey: string) => {

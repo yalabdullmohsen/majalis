@@ -216,16 +216,23 @@ export function GlobalSearchModal({ onClose }: Props) {
       }
       abortRef.current?.abort();
       abortRef.current = new AbortController();
+      const signal = abortRef.current.signal;
       setLoading(true);
       setError(false);
       try {
-        const opts = filter !== "all" ? { type: filter, limit: 20 } : { limit: 24 };
-        const res  = await intelligentSearch(q.trim(), opts);
+        const opts = filter !== "all"
+          ? { type: filter, limit: 20, signal }
+          : { limit: 24, signal };
+        // Off-thread normalize of the query (keeps typing crisp); search API uses signal
+        const { normalizeArabicOffthread } = await import("@/lib/search-offload");
+        await normalizeArabicOffthread(q.trim(), signal);
+        const res = await intelligentSearch(q.trim(), opts);
+        if (signal.aborted) return;
         setResults(res.results ?? []);
       } catch (err: unknown) {
         if ((err as Error)?.name !== "AbortError") setError(true);
       } finally {
-        setLoading(false);
+        if (!abortRef.current?.signal.aborted) setLoading(false);
       }
     },
     [],

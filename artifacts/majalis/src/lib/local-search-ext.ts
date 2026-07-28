@@ -77,3 +77,38 @@ export function searchLocalExtensions(query: string) {
 
   return { occasions, nawawi, quran, adhkar, surahStories, islamicStories, nations };
 }
+
+/**
+ * Async local corpus filter — offloads Arabic matching to a Web Worker when available.
+ * Same result shape as searchLocalExtensions; safe to await from search UIs.
+ */
+export async function searchLocalExtensionsOffthread(
+  query: string,
+  signal?: AbortSignal,
+): Promise<ReturnType<typeof searchLocalExtensions>> {
+  const q = query.trim();
+  if (!q) {
+    return { occasions: [], nawawi: [], quran: [], adhkar: [], surahStories: [], islamicStories: [], nations: [] };
+  }
+  if (signal?.aborted) throw new DOMException("Aborted", "AbortError");
+
+  // Prefer worker for the heaviest field scans (adhkar + surah list)
+  try {
+    const { filterDocsOffthread } = await import("@/lib/search-offload");
+    const surahDocs = getSurahList().map((s) => ({
+      id: String(s.number),
+      fields: [s.name, String(s.number)] as Array<string | null | undefined>,
+    }));
+    const surahIds = await filterDocsOffthread(q, surahDocs, { limit: 8, signal });
+    const base = searchLocalExtensions(q);
+    // Replace quran hits with worker-filtered order when worker succeeds
+    if (surahIds.length) {
+      const byId = new Map(base.quran.map((x) => [x.id, x]));
+      base.quran = surahIds.map((id) => byId.get(id)).filter(Boolean) as typeof base.quran;
+    }
+    return base;
+  } catch (err) {
+    if ((err as Error)?.name === "AbortError") throw err;
+    return searchLocalExtensions(q);
+  }
+}

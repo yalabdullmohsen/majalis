@@ -187,8 +187,15 @@ export function playAdhan(muezzin: Muezzin, isFajr = false): HTMLAudioElement {
 
 export function stopAdhan() {
   if (_current) {
-    _current.pause();
-    _current.currentTime = 0;
+    try {
+      _current.pause();
+      _current.currentTime = 0;
+      _current.removeAttribute("src");
+      _current.src = "";
+      _current.load();
+    } catch {
+      /* ignore */
+    }
     _current = null;
   }
 }

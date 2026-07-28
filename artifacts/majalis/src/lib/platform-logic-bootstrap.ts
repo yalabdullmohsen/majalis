@@ -67,6 +67,12 @@ export async function startPlatformLogicSuite(): Promise<void> {
     } catch {
       /* ignore */
     }
+    try {
+      const { runQuotaSafeguardOnBoot } = await import("@/lib/storage-quota");
+      void runQuotaSafeguardOnBoot();
+    } catch {
+      /* ignore */
+    }
 
     // Soft-warm: sacred times, cross-tab channel, auto-scroll pace, power-saver binding
     try {

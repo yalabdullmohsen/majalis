@@ -93,8 +93,11 @@ export function scrollActiveAyahIntoView(
     const el =
       root.querySelector(`[data-ayah="${ayah}"]`) ||
       root.querySelector(`[data-ayah-number="${ayah}"]`) ||
+      root.querySelector(`[data-verse-key$=":${ayah}"]`) ||
       document.getElementById(`ayah-${ayah}`);
     if (!el || !(el instanceof HTMLElement)) return false;
+    // Read geometry then scroll in the same frame only when needed —
+    // avoid measuring unrelated nodes.
     el.scrollIntoView({
       block: "center",
       inline: "nearest",
