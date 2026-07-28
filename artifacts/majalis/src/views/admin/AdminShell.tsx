@@ -53,6 +53,7 @@ export type AdminSection =
   | "learning-paths"
   | "categories"
   | "week-day-facts"
+  | "religious-calendar-review"
   | "arbaeen-love"
   | "researches"
 ;
@@ -88,6 +89,7 @@ const NAV_GROUPS: Array<{ title?: string; items: NavItem[] }> = [
       { key: "dawah",          label: "التعريف بالإسلام", Icon: Compass },
       { key: "learning-paths", label: "المسارات العلمية", Icon: Route },
       { key: "week-day-facts", label: "أيام الأسبوع",     Icon: CalendarClock },
+      { key: "religious-calendar-review", label: "مراجعة التقويم الشرعي", Icon: ShieldCheck },
       { key: "arbaeen-love",   label: "الأربعون في محبة رب العالمين", Icon: Heart },
       { key: "researches",     label: "الأبحاث الشرعية", Icon: BookOpen },
     ],

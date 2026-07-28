@@ -102,7 +102,7 @@ function getPeriod(month: number, day: number, year: number): Period {
       reminders: [
         { Icon: Moon,    label: "الصيام",    body: "أفضل الصيام بعد رمضان صيام شهر الله المحرَّم.", type: "fasting" },
         { Icon: Moon,    label: "استعداد",   body: `تبقّى ${10 - day} أيام على عاشوراء، استعدّ لصيامها.`, type: "fasting", urgent: true },
-        { Icon: RotateCw, label: "الاستغفار", body: "أكثر من الاستغفار في أول السنة الهجرية الجديدة.", type: "dhikr" },
+        { Icon: RotateCw, label: "الاستغفار", body: "أكثر من الاستغفار المشروع؛ ومحرّم أول شهور العدّ الهجري وأحد الأشهر الحرم — لا يُخلط بوقوع الهجرة في ربيع الأول.", type: "dhikr" },
       ],
     };
     return {

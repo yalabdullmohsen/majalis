@@ -1,90 +1,11 @@
 import { Lightbulb } from "lucide-react";
 import { Link } from "wouter";
+import {
+  contentKindLabel,
+  getPublishableLearningSeasons,
+  type LearningSeasonCard,
+} from "@/lib/religious-content";
 import "@/styles/components/home/home-learning-seasons.css";
-
-// Approximate Gregorian dates for Islamic seasons (1448 هـ)
-type Season = {
-  id: string;
-  name: string;
-  arabicName: string;
-  startDate: Date;
-  endDate?: Date;
-  description: string;
-  suggestion: string;
-  href: string;
-  color: string;
-};
-
-function getSeasons(): Season[] {
-  return [
-    {
-      id: "muharram-1448",
-      name: "Muharram",
-      arabicName: "محرم",
-      startDate: new Date("2026-07-01"),
-      endDate: new Date("2026-07-29"),
-      description: "رأس السنة الهجرية 1448هـ — شهر الله المحرم",
-      suggestion: "تجديد النية واستحضار نعمة الهجرة",
-      href: "/raqaiq",
-      color: "#143F35",
-    },
-    {
-      id: "rabi-awwal-1448",
-      name: "Rabi al-Awwal",
-      arabicName: "ربيع الأول",
-      startDate: new Date("2026-09-25"),
-      endDate: new Date("2026-10-24"),
-      description: "ربيع الأول 1448هـ — ذكرى مولد النبي ﷺ",
-      suggestion: "قراءة السيرة النبوية والشمائل المحمدية",
-      href: "/shamael",
-      color: "#143F35",
-    },
-    {
-      id: "rajab-1448",
-      name: "Rajab",
-      arabicName: "رجب",
-      startDate: new Date("2026-12-30"),
-      endDate: new Date("2027-01-28"),
-      description: "شهر رجب، من الأشهر الحرم",
-      suggestion: "أكثر من الاستغفار وقراءة القرآن",
-      href: "/adhkar",
-      color: "#1e4d8a",
-    },
-    {
-      id: "shaban-1448",
-      name: "Shaban",
-      arabicName: "شعبان",
-      startDate: new Date("2027-01-29"),
-      endDate: new Date("2027-02-27"),
-      description: "شهر شعبان، تُرفع فيه الأعمال",
-      suggestion: "استعد لرمضان بمراجعة القرآن",
-      href: "/quran-hub",
-      color: "#7c3aed",
-    },
-    {
-      id: "ramadan-1448",
-      name: "Ramadan",
-      arabicName: "رمضان",
-      startDate: new Date("2027-02-28"),
-      endDate: new Date("2027-03-29"),
-      description: "شهر رمضان المبارك 1448هـ",
-      suggestion: "خطة تعلّم رمضانية مكثّفة",
-      href: "/learning/paths",
-      color: "var(--majalis-emerald-deep, #143F35)",
-    },
-    {
-      id: "dhul-hijja-1448",
-      name: "Dhul Hijja",
-      arabicName: "عشر ذي الحجة",
-      startDate: new Date("2027-05-18"),
-      endDate: new Date("2027-05-27"),
-      description: "أفضل أيام الدنيا، العشر الأول من ذي الحجة 1448هـ",
-      suggestion: "مراجعة أعمال اليوم العظيمة",
-      href: "/adhkar",
-      color: "var(--majalis-emerald, #143F35)",
-    },
-  ];
-}
 
 function daysUntil(date: Date): number {
   const now = new Date();
@@ -94,16 +15,16 @@ function daysUntil(date: Date): number {
   return Math.ceil((target.getTime() - now.getTime()) / (1000 * 60 * 60 * 24));
 }
 
-function isActive(season: Season): boolean {
+function isActive(season: LearningSeasonCard): boolean {
   const now = new Date();
-  return now >= season.startDate && (!season.endDate || now <= season.endDate);
+  return now >= season.startDate && now <= season.endDate;
 }
 
 export function HomeLearningSeasonsWidget() {
-  const seasons = getSeasons();
+  // المواسم من السجلات الموثّقة فقط — لا تخمين لغوي ولا ربط الهجرة بمحرّم
+  const seasons = getPublishableLearningSeasons();
   const now = new Date();
 
-  // Find current active season, or the next upcoming one
   const active = seasons.find((s) => isActive(s));
   const upcoming = seasons
     .filter((s) => s.startDate > now)
@@ -126,11 +47,10 @@ export function HomeLearningSeasonsWidget() {
           </svg>
           <h2 className="ds-section__title">مواسم التعلّم</h2>
         </div>
-        <span className="lsw-badge">تقريبي</span>
+        <span className="lsw-badge">موثّق</span>
       </div>
 
-      {/* Featured season card */}
-      <div className={`lsw-featured lsw--${featured.id}`} style={{ position: "relative", overflow: "hidden" }}>
+      <div className={`lsw-featured lsw--month-${featured.hijriMonth}`} style={{ position: "relative", overflow: "hidden" }}>
         <svg aria-hidden="true" style={{ position: "absolute", top: "-15px", left: "-15px", opacity: 0.07, pointerEvents: "none" }} width="100" height="100" viewBox="0 0 100 100">
           <polygon points="50,5 62,35 92,35 68,55 78,85 50,65 22,85 32,55 8,35 38,35" fill="white"/>
           <circle cx="50" cy="50" r="18" fill="none" stroke="white" strokeWidth="1.5"/>
@@ -141,12 +61,15 @@ export function HomeLearningSeasonsWidget() {
               {featured.arabicName}
             </span>
             <p className="lsw-featured__desc">{featured.description}</p>
+            <span
+              className={`religious-kind-badge religious-kind-badge--${featured.contentKind}`}
+            >
+              {contentKindLabel(featured.contentKind)}
+            </span>
           </div>
           <div className="lsw-featured__countdown">
             {isNow ? (
-              <span className="lsw-featured__now">
-                الآن
-              </span>
+              <span className="lsw-featured__now">الآن</span>
             ) : (
               <span className="lsw-featured__days">
                 <strong>{days}</strong>
@@ -156,20 +79,27 @@ export function HomeLearningSeasonsWidget() {
           </div>
         </div>
         <p className="lsw-featured__suggestion">
-          <Lightbulb size={14} className="inline ml-1" /><strong>اقتراح:</strong> {featured.suggestion}
+          <Lightbulb size={14} className="inline ml-1" />
+          <strong>
+            {featured.contentKind === "personal_suggestion" ? "اقتراح تنظيمي:" : "اقتراح:"}
+          </strong>{" "}
+          {featured.suggestion}
         </p>
+        {featured.caveat ? (
+          <p className="lsw-featured__caveat">{featured.caveat}</p>
+        ) : null}
+        <p className="lsw-featured__source">المصدر: {featured.sourceName}</p>
         <Link href={featured.href} className="lsw-featured__cta">
           ابدأ الآن ←
         </Link>
       </div>
 
-      {/* Upcoming mini list */}
       {upcoming.length > 1 && (
         <div className="lsw-mini-list">
           {upcoming.slice(active ? 0 : 1).map((s) => {
             const d = daysUntil(s.startDate);
             return (
-              <div key={s.id} className={`lsw-mini-item lsw--${s.id}`}>
+              <div key={s.id} className={`lsw-mini-item lsw--month-${s.hijriMonth}`}>
                 <span className="lsw-mini-item__dot" />
                 <span className="lsw-mini-item__name">{s.arabicName}</span>
                 <span className="lsw-mini-item__days">{d} يوم</span>

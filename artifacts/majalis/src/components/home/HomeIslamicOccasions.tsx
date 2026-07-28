@@ -6,7 +6,9 @@ import {
   sortOccasionsByUpcoming,
   type IslamicOccasionView,
 } from "@/lib/islamic-occasions";
+import { contentKindLabel } from "@/lib/religious-content";
 import { Widget } from "@/components/widgets/Widget";
+import "@/styles/components/home/home-learning-seasons.css";
 
 const OccasionsIcon = () => (
   <svg aria-hidden="true" width="18" height="18" viewBox="0 0 18 18" style={{ marginTop: "0.15rem", flexShrink: 0 }}>
@@ -55,6 +57,9 @@ export function HomeIslamicOccasions() {
           {items.map((occasion) => (
             <Link key={occasion.id} href="/occasions" className="home-occasion-card ui-card">
               <strong>{occasion.name}</strong>
+              <span className={`religious-kind-badge religious-kind-badge--${occasion.contentKind}`}>
+                {contentKindLabel(occasion.contentKind)}
+              </span>
               <p>{occasion.summary}</p>
               <span className="home-occasion-card__meta">
                 {occasion.daysRemaining != null
