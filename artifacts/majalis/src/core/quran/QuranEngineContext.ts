@@ -17,7 +17,7 @@ import {
   type QuranEngineState,
   type QuranEngineWarmPhase,
 } from "@/lib/quran-engine-store";
-import type { PlayerState, TeachPhase } from "@/hooks/useAyahPlayer";
+import type { PlayerState, TeachPhase } from "@/core/audio/types";
 import {
   getDatabaseManager,
   TAJWEED_ENABLED_SETTING_KEY,
@@ -26,6 +26,8 @@ import {
 } from "@/core/quran/DatabaseManager";
 import { getResourceManager, type ResourceManager } from "@/core/quran/ResourceManager";
 import { getIndexingService, type IndexingService } from "@/core/quran/IndexingService";
+import { getAudioEngine, type AudioEngine } from "@/core/audio/AudioEngine";
+import type { RepeatMode, RepeatRange } from "@/core/audio/types";
 
 /** Stable id for the in-progress reading profile used by the core engine. */
 export const ACTIVE_READING_KHATMAH_ID = "core-active-reading";
@@ -57,7 +59,7 @@ export type QuranEngineContextApi = {
   getState(): QuranEngineState;
   subscribe(listener: () => void): () => void;
   setPage(page: number): void;
-  setActiveVerse(verse: ActiveVerse, opts?: { persist?: boolean }): void;
+  setActiveVerse(verse: ActiveVerse, opts?: { persist?: boolean; seekAudio?: boolean }): void;
   clearActiveVerse(): void;
   setAudio(partial: Partial<AudioSnapshot>): void;
   setWarmPhase(phase: QuranEngineWarmPhase, stats?: { pagesCached?: number; fontsCached?: number }): void;
@@ -71,10 +73,18 @@ export type QuranEngineContextApi = {
   loadLastReadingProgress(): Promise<KhatmahStore | null>;
   /** Upsert current ayah into khatmah_store (safe — never throws). */
   updateReadingProgress(progress: ReadingProgressInput): Promise<KhatmahStore | null>;
+  /** Play / toggle / seek via the shared AudioEngine. */
+  playAyah(surah: number, ayah: number): Promise<void>;
+  togglePlayAyah(surah: number, ayah: number): Promise<void>;
+  seekAudioToAyah(surah: number, ayah: number): Promise<void>;
+  pauseAudio(): void;
+  setRepeatMode(mode: RepeatMode, range?: RepeatRange): void;
+  downloadSurahAudio(surah: number, reciterId?: string): Promise<boolean>;
   reset(): void;
   readonly db: DatabaseManager;
   readonly resources: ResourceManager;
   readonly indexing: IndexingService;
+  readonly audio: AudioEngine;
 };
 
 function clampSurah(n: number): number {
@@ -94,8 +104,10 @@ class QuranEngineContextImpl implements QuranEngineContextApi {
   readonly db = getDatabaseManager();
   readonly resources = getResourceManager();
   readonly indexing = getIndexingService();
+  readonly audio = getAudioEngine();
 
   private booted = false;
+  private audioUnsubs: Array<() => void> = [];
 
   /** Idempotent: open IDB + start resource lifecycle (idle) + hydrate settings. */
   async boot(): Promise<void> {
@@ -116,6 +128,30 @@ class QuranEngineContextImpl implements QuranEngineContextApi {
     } catch {
       /* preference defaults to false */
     }
+    this.bindAudioEngine();
+  }
+
+  /** Bridge AudioEngine events → store patches (idempotent). */
+  private bindAudioEngine(): void {
+    if (this.audioUnsubs.length) return;
+    this.audioUnsubs.push(
+      this.audio.on("onStateChange", (snap) => {
+        patchQuranEngineState({
+          reciterId: snap.reciterId,
+          playerState: snap.playerState,
+          teachPhase: snap.teachPhase,
+        });
+      }),
+    );
+    this.audioUnsubs.push(
+      this.audio.on("onAyahChange", (ev) => {
+        patchQuranEngineState({
+          surah: ev.surah,
+          ayah: ev.ayah,
+          verseKey: ev.verseKey,
+        });
+      }),
+    );
   }
 
   getState(): QuranEngineState {
@@ -134,7 +170,7 @@ class QuranEngineContextImpl implements QuranEngineContextApi {
    * Update in-memory active verse. When `persist` is true (default), also
    * fire-and-forget `updateReadingProgress` into khatmah_store.
    */
-  setActiveVerse(verse: ActiveVerse, opts?: { persist?: boolean }): void {
+  setActiveVerse(verse: ActiveVerse, opts?: { persist?: boolean; seekAudio?: boolean }): void {
     const surah = clampSurah(verse.surah);
     const ayah = clampAyah(verse.ayah);
     const patch: Partial<QuranEngineState> = {
@@ -156,6 +192,68 @@ class QuranEngineContextImpl implements QuranEngineContextApi {
         ayah,
         page: patch.page ?? this.getState().page,
       });
+    }
+
+    // When audio is actively playing, seek to the newly selected ayah
+    const ps = this.getState().playerState;
+    const shouldSeek =
+      opts?.seekAudio === true ||
+      (opts?.seekAudio !== false &&
+        (ps === "playing" || ps === "buffering" || ps === "loading"));
+    if (shouldSeek) {
+      void this.audio.seekToAyah(surah, ayah).catch(() => undefined);
+    }
+  }
+
+  async playAyah(surah: number, ayah: number): Promise<void> {
+    try {
+      this.bindAudioEngine();
+      await this.audio.playAyah(clampSurah(surah), clampAyah(ayah));
+    } catch {
+      /* ignore */
+    }
+  }
+
+  async togglePlayAyah(surah: number, ayah: number): Promise<void> {
+    try {
+      this.bindAudioEngine();
+      await this.audio.togglePlay(clampSurah(surah), clampAyah(ayah));
+    } catch {
+      /* ignore */
+    }
+  }
+
+  async seekAudioToAyah(surah: number, ayah: number): Promise<void> {
+    try {
+      this.bindAudioEngine();
+      await this.audio.seekToAyah(clampSurah(surah), clampAyah(ayah));
+    } catch {
+      /* ignore */
+    }
+  }
+
+  pauseAudio(): void {
+    try {
+      this.audio.pause();
+    } catch {
+      /* ignore */
+    }
+  }
+
+  setRepeatMode(mode: RepeatMode, range?: RepeatRange): void {
+    try {
+      this.audio.setRepeatMode(mode, range);
+    } catch {
+      /* ignore */
+    }
+  }
+
+  async downloadSurahAudio(surah: number, reciterId?: string): Promise<boolean> {
+    try {
+      this.bindAudioEngine();
+      return await this.audio.downloadSurahOffline(clampSurah(surah), reciterId);
+    } catch {
+      return false;
     }
   }
 
@@ -329,13 +427,20 @@ export type UseQuranEngineCoreResult = {
   setPage: (page: number) => void;
   /** Navigate to an ayah (resolves mushaf page when omitted). */
   goToAyah: (verse: ActiveVerse) => Promise<void>;
-  setActiveVerse: (verse: ActiveVerse, opts?: { persist?: boolean }) => void;
+  setActiveVerse: (verse: ActiveVerse, opts?: { persist?: boolean; seekAudio?: boolean }) => void;
   updateReadingProgress: (progress: ReadingProgressInput) => Promise<KhatmahStore | null>;
   loadLastReadingProgress: () => Promise<KhatmahStore | null>;
   clearActiveVerse: () => void;
   setAudio: (partial: Partial<AudioSnapshot>) => void;
   toggleTajweed: () => void;
   setTajweedEnabled: (enabled: boolean) => void;
+  playAyah: (surah: number, ayah: number) => Promise<void>;
+  togglePlayAyah: (surah: number, ayah: number) => Promise<void>;
+  seekAudioToAyah: (surah: number, ayah: number) => Promise<void>;
+  pauseAudio: () => void;
+  setRepeatMode: (mode: RepeatMode, range?: RepeatRange) => void;
+  downloadSurahAudio: (surah: number, reciterId?: string) => Promise<boolean>;
+  audio: AudioEngine;
   db: DatabaseManager;
 };
 
@@ -406,13 +511,16 @@ export function useQuranEngineCore(): UseQuranEngineCoreResult {
     [engine],
   );
 
-  const setActiveVerse = useCallback((verse: ActiveVerse, opts?: { persist?: boolean }) => {
-    try {
-      engine.setActiveVerse(verse, opts);
-    } catch (err) {
-      setPersistError(err instanceof Error ? err.message : "set-verse-failed");
-    }
-  }, [engine]);
+  const setActiveVerse = useCallback(
+    (verse: ActiveVerse, opts?: { persist?: boolean; seekAudio?: boolean }) => {
+      try {
+        engine.setActiveVerse(verse, opts);
+      } catch (err) {
+        setPersistError(err instanceof Error ? err.message : "set-verse-failed");
+      }
+    },
+    [engine],
+  );
 
   const updateReadingProgress = useCallback(
     async (progress: ReadingProgressInput) => {
@@ -473,6 +581,43 @@ export function useQuranEngineCore(): UseQuranEngineCoreResult {
     }
   }, [engine]);
 
+  const playAyah = useCallback(
+    async (surah: number, ayah: number) => {
+      await engine.playAyah(surah, ayah);
+    },
+    [engine],
+  );
+
+  const togglePlayAyah = useCallback(
+    async (surah: number, ayah: number) => {
+      await engine.togglePlayAyah(surah, ayah);
+    },
+    [engine],
+  );
+
+  const seekAudioToAyah = useCallback(
+    async (surah: number, ayah: number) => {
+      await engine.seekAudioToAyah(surah, ayah);
+    },
+    [engine],
+  );
+
+  const pauseAudio = useCallback(() => {
+    engine.pauseAudio();
+  }, [engine]);
+
+  const setRepeatMode = useCallback(
+    (mode: RepeatMode, range?: RepeatRange) => {
+      engine.setRepeatMode(mode, range);
+    },
+    [engine],
+  );
+
+  const downloadSurahAudio = useCallback(
+    async (surah: number, reciterId?: string) => engine.downloadSurahAudio(surah, reciterId),
+    [engine],
+  );
+
   return {
     state,
     activePage: state.page,
@@ -488,6 +633,13 @@ export function useQuranEngineCore(): UseQuranEngineCoreResult {
     setAudio,
     toggleTajweed,
     setTajweedEnabled,
+    playAyah,
+    togglePlayAyah,
+    seekAudioToAyah,
+    pauseAudio,
+    setRepeatMode,
+    downloadSurahAudio,
+    audio: engine.audio,
     db: engine.db,
   };
 }

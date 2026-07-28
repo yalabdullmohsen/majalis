@@ -43,6 +43,9 @@ import {
 export type PlayerState = "idle" | "loading" | "playing" | "paused" | "error" | "buffering";
 export type TeachPhase = "idle" | "teacher" | "student-pause";
 
+// Re-export core audio types for consumers that imported from this hook historically.
+export type { RepeatMode, RepeatRange } from "@/core/audio/types";
+
 export function useAyahPlayer(surahNum: number, totalAyahs: number) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const stallRef = useRef<StallRecoveryHandle | null>(null);

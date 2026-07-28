@@ -52,7 +52,11 @@ check(actionBar.includes("openTafsir") || actionBar.includes("تفسير"), "Taf
 check(actionBar.includes("toggleBookmark") || actionBar.includes("إشارة"), "Bookmark control");
 check(actionBar.includes("toggleRepeat") || actionBar.includes("تكرار"), "Repeat control");
 check(actionBar.includes("shareAyahAsImage"), "Share image card");
-check(actionBar.includes("useQuranEngineCore") && actionBar.includes("setAudio"), "wired to QuranEngineContext");
+check(
+  actionBar.includes("togglePlayAyah") || actionBar.includes("getAudioEngine") || actionBar.includes("audio."),
+  "ActionBar wired to AudioEngine",
+);
+check(actionBar.includes("useQuranEngineCore") && actionBar.includes("setRepeatMode"), "wired to QuranEngineContext");
 check(actionBar.includes("getDatabaseManager") && actionBar.includes("upsertReflection"), "wired to DatabaseManager");
 
 console.log(`\nالنتيجة: ${passed} نجح، ${failed} فشل`);

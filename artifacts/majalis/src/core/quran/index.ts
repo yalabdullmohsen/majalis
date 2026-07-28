@@ -40,3 +40,11 @@ export {
 export { ResourceManager, getResourceManager } from "@/core/quran/ResourceManager";
 export { IndexingService, getIndexingService } from "@/core/quran/IndexingService";
 export { startQuranCore } from "@/core/quran/bootstrap";
+export {
+  getAudioEngine,
+  AudioEngine,
+  type RepeatMode,
+  type RepeatRange,
+  type AudioEngineSnapshot,
+  type DownloadProgress,
+} from "@/core/audio";

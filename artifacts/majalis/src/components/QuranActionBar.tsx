@@ -3,7 +3,7 @@
  * Play · Tafseer · Bookmark · Repeat · Share
  * Wired to QuranEngineContext + DatabaseManager; Framer Motion slide-up/down.
  */
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import {
   BookOpen,
@@ -15,7 +15,6 @@ import {
   X,
 } from "lucide-react";
 import { getSurahMeta, fetchTafsirAyahs } from "@/lib/quran-api";
-import { getAyahAudioUrl, loadReciterId } from "@/lib/quran-audio";
 import {
   addBookmark,
   isBookmarked,
@@ -24,7 +23,6 @@ import {
 import { shareAyahAsImage } from "@/lib/share-ayah-card";
 import { getDatabaseManager } from "@/core/quran/DatabaseManager";
 import { useQuranEngineCore } from "@/core/quran/QuranEngineContext";
-import { resolveAyahAudioSrc } from "@/lib/ayah-audio-prefetch";
 import "@/styles/quran-action-bar.css";
 
 export type QuranActionBarAyah = {
@@ -44,11 +42,15 @@ const QUICK_TAFSIR = "ar.muyassar";
 
 export function QuranActionBar({ ayah, onClose }: QuranActionBarProps) {
   const reduceMotion = useReducedMotion();
-  const { setAudio, state, updateReadingProgress } = useQuranEngineCore();
+  const {
+    updateReadingProgress,
+    togglePlayAyah,
+    pauseAudio,
+    setRepeatMode,
+    audio,
+  } = useQuranEngineCore();
   const db = getDatabaseManager();
 
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-  const repeatOnRef = useRef(false);
   const [playing, setPlaying] = useState(false);
   const [repeatOn, setRepeatOn] = useState(false);
   const [bookmarked, setBookmarked] = useState(false);
@@ -61,7 +63,28 @@ export function QuranActionBar({ ayah, onClose }: QuranActionBarProps) {
 
   const surahName = ayah ? getSurahMeta(ayah.surah).name : "";
 
-  // Sync bookmark flag when ayah changes
+  // Mirror AudioEngine state for the selected ayah
+  useEffect(() => {
+    return audio.on("onStateChange", (snap) => {
+      if (!ayah) {
+        setPlaying(false);
+        return;
+      }
+      const isThis =
+        snap.surah === ayah.surah &&
+        snap.ayah === ayah.ayah &&
+        (snap.playerState === "playing" ||
+          snap.playerState === "buffering" ||
+          snap.playerState === "loading");
+      setPlaying(isThis);
+      setRepeatOn(snap.repeatMode === "ayah");
+      if (snap.playerState === "error") {
+        setStatusMsg("تعذّر تشغيل التلاوة");
+      }
+    });
+  }, [audio, ayah]);
+
+  // Sync bookmark flag when ayah changes + seek audio if already playing
   useEffect(() => {
     if (!ayah) {
       setBookmarked(false);
@@ -76,89 +99,31 @@ export function QuranActionBar({ ayah, onClose }: QuranActionBarProps) {
     setTafsirText(null);
     setTafsirError(false);
     setStatusMsg(null);
-    setRepeatOn(false);
-    repeatOnRef.current = false;
-    // Persist reading progress (safe)
+    setRepeatOn(audio.getRepeatMode() === "ayah");
     void updateReadingProgress({
       surah: ayah.surah,
       ayah: ayah.ayah,
       page: ayah.page,
     });
-  }, [ayah, updateReadingProgress]);
-
-  // Tear down audio on unmount / ayah change
-  useEffect(() => {
-    return () => {
-      const a = audioRef.current;
-      if (a) {
-        try {
-          a.pause();
-          a.removeAttribute("src");
-          a.load();
-        } catch {
-          /* ignore */
-        }
-      }
-      audioRef.current = null;
-    };
-  }, [ayah?.verseKey]);
+    // Seek when playback is already active
+    void audio.seekToAyah(ayah.surah, ayah.ayah).catch(() => undefined);
+  }, [ayah, updateReadingProgress, audio]);
 
   const stopAudio = useCallback(() => {
-    const a = audioRef.current;
-    if (a) {
-      try {
-        a.pause();
-      } catch {
-        /* ignore */
-      }
-    }
+    pauseAudio();
     setPlaying(false);
-    setAudio({ playerState: "paused" });
-  }, [setAudio]);
+  }, [pauseAudio]);
 
   const togglePlay = useCallback(async () => {
     if (!ayah) return;
     try {
-      if (playing) {
-        stopAudio();
-        return;
-      }
-      let audio = audioRef.current;
-      if (!audio) {
-        audio = new Audio();
-        audio.preload = "auto";
-        audioRef.current = audio;
-        audio.addEventListener("ended", () => {
-          if (repeatOnRef.current && audioRef.current) {
-            void audioRef.current.play().catch(() => setPlaying(false));
-            return;
-          }
-          setPlaying(false);
-          setAudio({ playerState: "paused" });
-        });
-        audio.addEventListener("error", () => {
-          setPlaying(false);
-          setAudio({ playerState: "error" });
-          setStatusMsg("تعذّر تشغيل التلاوة");
-        });
-      }
-      const reciter = state.reciterId || loadReciterId();
-      const src =
-        (await resolveAyahAudioSrc(ayah.surah, ayah.ayah, reciter).catch(() => null)) ??
-        getAyahAudioUrl(ayah.surah, ayah.ayah, reciter);
-      if (audio.src !== src) {
-        audio.src = src;
-      }
-      setAudio({ playerState: "playing", reciterId: reciter });
-      await audio.play();
-      setPlaying(true);
+      await togglePlayAyah(ayah.surah, ayah.ayah);
       setStatusMsg(null);
     } catch {
       setPlaying(false);
-      setAudio({ playerState: "error" });
       setStatusMsg("تعذّر تشغيل التلاوة");
     }
-  }, [ayah, playing, setAudio, state.reciterId, stopAudio]);
+  }, [ayah, togglePlayAyah]);
 
   const openTafsir = useCallback(async () => {
     if (!ayah) return;
@@ -213,13 +178,11 @@ export function QuranActionBar({ ayah, onClose }: QuranActionBarProps) {
   }, [ayah, bookmarked, db, surahName]);
 
   const toggleRepeat = useCallback(() => {
-    setRepeatOn((v) => {
-      const next = !v;
-      repeatOnRef.current = next;
-      setStatusMsg(next ? "تكرار مفعّل للحفظ" : "أُوقف التكرار");
-      return next;
-    });
-  }, []);
+    const next = !repeatOn;
+    setRepeatMode(next ? "ayah" : "none");
+    setRepeatOn(next);
+    setStatusMsg(next ? "تكرار مفعّل للحفظ" : "أُوقف التكرار");
+  }, [repeatOn, setRepeatMode]);
 
   const shareCard = useCallback(async () => {
     if (!ayah) return;

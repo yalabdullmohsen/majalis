@@ -51,6 +51,16 @@ async function putBlob(reciterId: string, surah: number, blob: Blob): Promise<vo
   });
 }
 
+/** Store a surah MP3 blob already fetched (e.g. AudioEngine download with progress). */
+export async function cacheSurahBlob(
+  reciterId: string,
+  surah: number,
+  blob: Blob,
+): Promise<void> {
+  if (surah < 1 || surah > TOTAL_SURAHS || !blob.size) return;
+  await putBlob(reciterId, surah, blob);
+}
+
 async function getBlob(reciterId: string, surah: number): Promise<Blob | null> {
   const db = await openDb();
   const blob = await new Promise<Blob | null>((resolve, reject) => {
