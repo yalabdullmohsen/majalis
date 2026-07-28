@@ -7,6 +7,7 @@ import '../../shared/theme/majlis_colors.dart';
 import '../../shared/theme/majlis_theme.dart';
 import '../controllers/user_quran_app_controller.dart';
 import '../data/user_quran_repository.dart';
+<<<<<<< HEAD
 import '../widgets/user_hide_on_scroll_app_bar.dart';
 import '../widgets/user_verse_bottom_sheet.dart';
 
@@ -24,6 +25,15 @@ class UserQuranReaderView extends StatelessWidget {
   final String title;
   final VoidCallback? onSearch;
   final VoidCallback? onOpenSettings;
+=======
+import '../widgets/user_verse_bottom_sheet.dart';
+
+/// Immersive Quran reader — PageView of verse ListViews, tap to select + sheet.
+class UserQuranReaderView extends StatelessWidget {
+  const UserQuranReaderView({super.key, this.surah = 1});
+
+  final int surah;
+>>>>>>> origin/main
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +45,7 @@ class UserQuranReaderView extends StatelessWidget {
       child: PageView.builder(
         itemCount: 1,
         itemBuilder: (context, page) {
+<<<<<<< HEAD
           return CustomScrollView(
             physics: const BouncingScrollPhysics(
               parent: AlwaysScrollableScrollPhysics(),
@@ -86,6 +97,32 @@ class UserQuranReaderView extends StatelessWidget {
                 ),
               ),
             ],
+=======
+          return ListView.builder(
+            padding: const EdgeInsets.fromLTRB(16, 12, 16, 100),
+            itemCount: verses.length,
+            itemBuilder: (context, index) {
+              final verse = verses[index];
+              return _VerseTile(
+                verse: verse,
+                index: index,
+                fontSize: quran.fontSize,
+                textColor: quran.textColor,
+                selected: quran.selectedVerseIndex == index,
+                playing: quran.isPlayingAudio &&
+                    quran.currentPlayingVerse == index,
+                isDark: quran.isDarkMode,
+                onTap: () {
+                  quran.selectVerse(index);
+                  UserVerseBottomSheet.show(
+                    context,
+                    verse: verse,
+                    index: index,
+                  );
+                },
+              );
+            },
+>>>>>>> origin/main
           );
         },
       ),
