@@ -1,16 +1,18 @@
 /**
  * Web port of Flutter `QuranReaderPage` scaffold:
- * immersive sticky System UI · parchment cream · SafeArea padding · Uthmani type.
+ * immersive sticky · parchment · ListView verse selection (InkWell).
  *
- * Shell only — children supply ayah/mushaf content (loose coupling).
+ * Selection is local or controlled — audio/tafsir via `onSelectVerse` only
+ * (loose coupling; no direct import of players/tafseer).
  */
-import type { CSSProperties, ReactNode } from "react";
+import { useState, type CSSProperties, type ReactNode } from "react";
 import { useImmersiveSystemUi } from "@/hooks/useImmersiveSystemUi";
 import {
   IMMERSIVE_INK,
   IMMERSIVE_PAPER_BG,
   immersiveReaderCssVars,
 } from "@/lib/quran-immersive";
+import { QuranVerseList } from "@/components/quran/QuranVerseList";
 import "@/styles/quran-immersive-reader.css";
 
 export type QuranReaderPageProps = {
@@ -24,6 +26,18 @@ export type QuranReaderPageProps = {
   fontSize?: number;
   /** When false, skip System UI hide (nested under another immersive shell). */
   immersive?: boolean;
+  /**
+   * Flutter `verses` — when set (and no `children`), renders `QuranVerseList`.
+   */
+  verses?: readonly string[];
+  /** Controlled selected verse index (Flutter `selectedIndex`). */
+  selectedIndex?: number | null;
+  /** Uncontrolled initial selection. */
+  defaultSelectedIndex?: number | null;
+  /**
+   * Flutter onTap hook — wire tafsir / audio from the parent Logic Handler.
+   */
+  onSelectVerse?: (index: number, text: string) => void;
 };
 
 /**
@@ -31,7 +45,7 @@ export type QuranReaderPageProps = {
  * ```dart
  * Scaffold(
  *   backgroundColor: Color(0xFFF5F5DC),
- *   body: SafeArea(child: Padding(... Text(UthmaniFont)...)),
+ *   body: ListView.builder(… InkWell → selectedIndex …),
  * )
  * ```
  */
@@ -42,14 +56,38 @@ export function QuranReaderPage({
   ink = IMMERSIVE_INK,
   fontSize,
   immersive = true,
+  verses,
+  selectedIndex: selectedIndexProp,
+  defaultSelectedIndex = null,
+  onSelectVerse,
 }: QuranReaderPageProps) {
   useImmersiveSystemUi(immersive, paperBg);
+
+  const controlled = selectedIndexProp !== undefined;
+  const [internalIndex, setInternalIndex] = useState<number | null>(defaultSelectedIndex);
+  const selectedIndex = controlled ? (selectedIndexProp ?? null) : internalIndex;
+
+  const handleSelect = (index: number, text: string) => {
+    if (!controlled) setInternalIndex(index);
+    onSelectVerse?.(index, text);
+  };
 
   const style = {
     ...immersiveReaderCssVars({ fontSize, paperBg, ink }),
     backgroundColor: paperBg,
     color: ink,
   } as CSSProperties;
+
+  const body =
+    children ??
+    (verses ? (
+      <QuranVerseList
+        verses={verses}
+        selectedIndex={selectedIndex}
+        onSelectVerse={handleSelect}
+        fontSize={fontSize}
+      />
+    ) : null);
 
   return (
     <div
@@ -59,7 +97,7 @@ export function QuranReaderPage({
       data-immersive={immersive ? "1" : "0"}
     >
       <div className="quran-reader-page__safe">
-        <div className="quran-reader-page__pad">{children}</div>
+        <div className="quran-reader-page__pad quran-reader-page__pad--list">{body}</div>
       </div>
     </div>
   );

@@ -49,7 +49,7 @@ import { useQuranAudioToggle } from "@/hooks/useQuranAudioToggle";
 import { useKeepAwake } from "@/hooks/useKeepAwake";
 import { useImmersiveSystemUi } from "@/hooks/useImmersiveSystemUi";
 import { useQuranContext } from "@/context/QuranContext";
-import { IMMERSIVE_INK, IMMERSIVE_LINE_HEIGHT_RATIO, IMMERSIVE_PAPER_BG } from "@/lib/quran-immersive";
+import { IMMERSIVE_INK, IMMERSIVE_LINE_HEIGHT_RATIO, IMMERSIVE_PAPER_BG, VERSE_SELECTED_BG, VERSE_SELECTED_INK } from "@/lib/quran-immersive";
 import { nextQuranFontId, quranFontOption, quranFontStack } from "@/lib/quran-font-options";
 import {
   QURAN_FONT_MAX_PX,
@@ -373,6 +373,8 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
     ["--qe-reader-text" as string]: themeStyles.textColor,
     ["--qe-reader-header" as string]: currentTheme.header,
     ["--qe-reader-font" as string]: fontFamily,
+    ["--quran-verse-selected-bg" as string]: VERSE_SELECTED_BG,
+    ["--quran-verse-selected-ink" as string]: isDarkMode ? "#D7CCC8" : VERSE_SELECTED_INK,
     backgroundColor: themeStyles.backgroundColor,
     color: themeStyles.textColor,
   } as CSSProperties;

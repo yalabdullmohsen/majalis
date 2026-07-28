@@ -18,3 +18,5 @@ export { JumpPageModal } from "@/components/quran/JumpPageModal";
 export { MushafPageV2 } from "@/components/quran/MushafPageV2";
 export { QuranReaderPage } from "@/components/quran/QuranReaderPage";
 export type { QuranReaderPageProps } from "@/components/quran/QuranReaderPage";
+export { QuranVerseList } from "@/components/quran/QuranVerseList";
+export type { QuranVerseListProps } from "@/components/quran/QuranVerseList";

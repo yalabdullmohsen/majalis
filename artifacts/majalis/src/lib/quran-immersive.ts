@@ -20,6 +20,18 @@ export const IMMERSIVE_PAPER_BG = "#F5F5DC";
 /** Flutter `Colors.black87` ≈ #000000 at 87% opacity on paper. */
 export const IMMERSIVE_INK = "rgba(0, 0, 0, 0.87)";
 
+/** Flutter `Colors.brown.withOpacity(0.2)` — verse selection wash. */
+export const VERSE_SELECTED_BG = "rgba(121, 85, 72, 0.2)";
+
+/** Flutter `Colors.brown[900]` — selected verse ink. */
+export const VERSE_SELECTED_INK = "#3E2723";
+
+/** Flutter `BorderRadius.circular(10)`. */
+export const VERSE_SELECTED_RADIUS_PX = 10;
+
+/** Flutter list item `margin: EdgeInsets.only(bottom: 20)`. */
+export const VERSE_ITEM_GAP_PX = 20;
+
 /** Flutter demo `fontSize: 28` (focus comfort; prefs may override). */
 export const IMMERSIVE_FONT_SIZE_PX = 28;
 
