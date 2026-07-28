@@ -14,6 +14,7 @@ import {
 import { loadPageJuzIndex, getSegmentsForPage, findPageForAyah, type QuranSegment } from "@/lib/recitation-ai/page-juz-lookup";
 import { useQuranPreferences, type QuranReadingTheme, type QuranFrameStyle, type QuranHighlightStyle, type QuranPageMode } from "@/hooks/useQuranPreferences";
 import { useAyahPlayer } from "@/hooks/useAyahPlayer";
+import { useQuranAudioSync } from "@/hooks/useQuranAudioSync";
 import { SurahList } from "@/components/quran/SurahList";
 import { PageAyahActionSheet } from "@/components/quran/PageAyahActionSheet";
 import { ReciterDownloadManager } from "@/components/quran/ReciterDownloadManager";
@@ -273,7 +274,27 @@ export default function MushafPageView() {
 
   const activeSurahForPlayer = primarySegment?.segment.surah ?? 1;
   const activeSurahAyahCount = primarySegment ? getSurahMeta(activeSurahForPlayer).ayahs : 0;
-  const { currentAyah, playerState, togglePlayAyah, reciterId, setReciterId, playbackRate, setPlaybackRate, repeatOn, setRepeatOn } = useAyahPlayer(activeSurahForPlayer, activeSurahAyahCount);
+  const {
+    currentAyah,
+    playerState,
+    togglePlayAyah,
+    reciterId,
+    setReciterId,
+    playbackRate,
+    setPlaybackRate,
+    repeatOn,
+    setRepeatOn,
+    audioElement,
+  } = useAyahPlayer(activeSurahForPlayer, activeSurahAyahCount);
+
+  // Precise rAF resume stamps — autoScroll off to preserve existing scroll behavior
+  useQuranAudioSync({
+    surah: activeSurahForPlayer,
+    ayah: currentAyah,
+    audioRef: audioElement,
+    reciterId,
+    autoScroll: false,
+  });
 
   // ── جسر بين مكوّني تخطيط السطر الحقيقي (V2/خفيف) وحالة الآية المختارة/المُشغَّلة القائمة أصلًا ──
   const handleV2AyahPress = useCallback((verseKey: string) => {

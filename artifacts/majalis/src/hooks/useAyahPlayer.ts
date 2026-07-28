@@ -23,7 +23,10 @@ import {
   type StallRecoveryHandle,
   type StallRecoveryPhase,
 } from "@/lib/audio-stall-recovery";
+import { attachAudioRafClock, type AudioRafClockHandle } from "@/lib/audio-raf-clock";
 import { prewarmAudioCdns } from "@/lib/resource-prewarm";
+import { tryAutoplay } from "@/lib/feature-permission-shield";
+import { wallNowMs } from "@/lib/monotonic-time";
 
 export type PlayerState = "idle" | "loading" | "playing" | "paused" | "error" | "buffering";
 
@@ -43,6 +46,8 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
   const loopRuntimeRef = useRef<AyahLoopRuntime | null>(null);
   const [loopConfig, setLoopConfigState] = useState<AyahLoopConfig | null>(null);
   const loadAndPlayRef = useRef<(surah: number, ayah: number, reciter: string) => void>(() => undefined);
+  const clockRef = useRef<AudioRafClockHandle | null>(null);
+  const preciseTimeRef = useRef(0);
 
   const clearDelayTimer = useCallback(() => {
     if (delayTimerRef.current != null) {
@@ -110,6 +115,14 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
       onPhaseChange: onPhase,
     });
 
+    // High-precision rAF clock — interpolates between coarse browser currentTime updates
+    clockRef.current = attachAudioRafClock(audio, {
+      minEmitMs: 8,
+      onSample: (s) => {
+        preciseTimeRef.current = s.mediaTime;
+      },
+    });
+
     // Warm CDN TLS early so first play pays less handshake cost
     prewarmAudioCdns();
 
@@ -119,6 +132,8 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
       pauseCleanupRef.current = null;
       stallRef.current?.dispose();
       stallRef.current = null;
+      clockRef.current?.stop();
+      clockRef.current = null;
       releaseAudioElement(audio);
       audioRef.current = null;
     };
@@ -140,15 +155,20 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
     audio.playbackRate = playbackRateRef.current;
     setCurrentAyah(ayah);
     setPlayerState("loading");
+    preciseTimeRef.current = 0;
+    clockRef.current?.resync();
     saveAudioResumeState({
       surah,
       ayah,
       currentTime: 0,
       reciterId: reciter,
-      updatedAt: Date.now(),
+      updatedAt: wallNowMs(),
     });
 
-    const onPlaying = () => setPlayerState("playing");
+    const onPlaying = () => {
+      clockRef.current?.resync();
+      setPlayerState("playing");
+    };
     const onPause = () => {
       if (audio.ended) return;
       // Keep ayah + timeline; do not clear currentAyah on buffer underrun
@@ -161,9 +181,9 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
       saveAudioResumeState({
         surah,
         ayah,
-        currentTime: audio.currentTime || 0,
+        currentTime: preciseTimeRef.current || audio.currentTime || 0,
         reciterId: reciter,
-        updatedAt: Date.now(),
+        updatedAt: wallNowMs(),
       });
     };
     const onEnded = () => {
@@ -231,7 +251,9 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
        — هذا هو السبب الجذري الفعلي لعطل التشغيل على iOS تحديدًا (مؤكَّد
        2026-07-22). المتصفح يدير الانتظار الداخلي لتوفر البيانات بنفسه طالما
        استُدعيت play() بالتوقيت الصحيح؛ لا حاجة لانتظار canplay يدويًا. */
-    audio.play().catch(() => setPlayerState("error"));
+    void tryAutoplay(audio).then((ok) => {
+      if (!ok) setPlayerState("error");
+    });
   }, [totalAyahs, clearDelayTimer]);
 
   loadAndPlayRef.current = loadAndPlay;
@@ -246,7 +268,12 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
   }, [clearDelayTimer]);
 
   const resume = useCallback(() => {
-    audioRef.current?.play().catch(() => setPlayerState("error"));
+    const audio = audioRef.current;
+    if (!audio) return;
+    void tryAutoplay(audio).then((ok) => {
+      if (!ok) setPlayerState("error");
+      else clockRef.current?.resync();
+    });
   }, []);
 
   const stop = useCallback(() => {
@@ -254,14 +281,8 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
     const audio = audioRef.current;
     if (!audio) return;
     stallRef.current?.reset();
-    audio.pause();
-    try {
-      audio.removeAttribute("src");
-      audio.src = "";
-      audio.load();
-    } catch {
-      /* ignore */
-    }
+    releaseAudioElement(audio);
+    preciseTimeRef.current = 0;
     setCurrentAyah(null);
     setPlayerState("idle");
   }, [clearDelayTimer]);
@@ -317,5 +338,8 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
     stop,
     /** Exposed for sync/resume hooks without changing layout */
     audioElement: audioRef,
+    /** Millisecond-grade interpolated media time (rAF clock). */
+    getPreciseTime: () => preciseTimeRef.current || audioRef.current?.currentTime || 0,
+    getAudioClockSample: () => clockRef.current?.getSample() ?? null,
   };
 }

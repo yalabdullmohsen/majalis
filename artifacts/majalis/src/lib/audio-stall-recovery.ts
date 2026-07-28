@@ -232,18 +232,34 @@ export function attachAudioStallRecovery(
 
 /**
  * Release decoded audio buffers by clearing src and calling load().
- * Call on unmount / surah change after pause.
+ * Also revokes blob: Object URLs to prevent media GC leaks.
  */
 export function releaseAudioElement(audio: HTMLAudioElement | null | undefined): void {
   if (!audio) return;
   try {
-    audio.pause();
-  } catch {
-    /* ignore */
-  }
-  try {
+    // Prefer shared media-gc when available (tracked blob revoke + src clear)
+    // Inline fallback keeps this module usable in Node unit tests without circular deps.
+    const src = audio.currentSrc || audio.getAttribute("src") || audio.src || "";
+    try {
+      audio.pause();
+    } catch {
+      /* ignore */
+    }
+    if (src.startsWith("blob:")) {
+      try {
+        URL.revokeObjectURL(src);
+      } catch {
+        /* ignore */
+      }
+    }
     audio.removeAttribute("src");
     audio.src = "";
+    try {
+      // @ts-expect-error clear MediaStream binding if present
+      audio.srcObject = null;
+    } catch {
+      /* ignore */
+    }
     audio.load();
   } catch {
     /* ignore */

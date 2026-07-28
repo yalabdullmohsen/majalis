@@ -10,6 +10,7 @@
  * السورة كاملة (getOfflineSurahUrl)، لا خطوة آية-بآية.
  */
 import { RECITERS, getSurahAudioUrl } from "@/lib/quran-audio";
+import { createTrackedObjectUrl } from "@/lib/media-gc";
 
 const DB_NAME = "majalis-quran-audio";
 const DB_VERSION = 1;
@@ -147,10 +148,10 @@ export async function deleteReciterDownloads(reciterId: string): Promise<void> {
   await Promise.all(entries.map((e) => deleteBlob(reciterId, e.surah)));
 }
 
-/** رابط تشغيل محلي (Object URL) للسورة إن كانت مُنزَّلة، وإلا null (يُستخدَم عندها الرابط الحي كالمعتاد). استدعِ URL.revokeObjectURL على النتيجة عند انتهاء الاستخدام. */
+/** رابط تشغيل محلي (Object URL) للسورة إن كانت مُنزَّلة، وإلا null (يُستخدَم عندها الرابط الحي كالمعتاد). يُتتبَّع عبر media-gc ويُبطَل عند تبديل المسار. */
 export async function getOfflineSurahUrl(reciterId: string, surah: number): Promise<string | null> {
   const blob = await getBlob(reciterId, surah);
-  return blob ? URL.createObjectURL(blob) : null;
+  return blob ? createTrackedObjectUrl(blob) : null;
 }
 
 export async function estimateStorageUsage(): Promise<{ usage: number; quota: number } | null> {

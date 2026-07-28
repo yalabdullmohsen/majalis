@@ -13,6 +13,7 @@ import {
 } from "@/lib/study-session-service";
 import { applyPageSeo } from "@/lib/seo";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { closeAudioContext, trackAudioContext } from "@/lib/media-gc";
 import "@/styles/pages/study-room.css";
 
 // ─── Pomodoro config ──────────────────────────────────────────────────────────
@@ -33,10 +34,10 @@ function formatTime(seconds: number) {
   return `${pad(Math.floor(seconds / 60))}:${pad(seconds % 60)}`;
 }
 
-// Simple beep using Web Audio API
+// Simple beep using Web Audio API — close context after tone to avoid leaks
 function beep(type: "start" | "end") {
   try {
-    const ctx = new AudioContext();
+    const ctx = trackAudioContext(new AudioContext());
     const osc = ctx.createOscillator();
     const gain = ctx.createGain();
     osc.connect(gain);
@@ -46,6 +47,13 @@ function beep(type: "start" | "end") {
     gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.6);
     osc.start();
     osc.stop(ctx.currentTime + 0.6);
+    osc.onended = () => {
+      void closeAudioContext(ctx);
+    };
+    // Fallback close if onended is delayed/missed
+    setTimeout(() => {
+      void closeAudioContext(ctx);
+    }, 900);
   } catch { /* AudioContext may be blocked */ }
 }
 

@@ -19,6 +19,8 @@ import { ASRProviderUnavailableError } from "../asr-provider";
 import { isNative } from "../../capacitor-utils";
 import { SITE_URL } from "../../site-config";
 import { normalizeQuranWord } from "../quran-normalize";
+import { probeFeature } from "../../feature-permission-shield";
+import { closeAudioContext, trackAudioContext } from "../../media-gc";
 
 const ENDPOINT = isNative ? `${SITE_URL}/api/recitation-transcribe` : "/api/recitation-transcribe";
 /** مدة كل دفعة timeslice من المُسجِّل المستمر */
@@ -124,6 +126,14 @@ export class ServerQuranASRProvider implements QuranASRProvider {
       });
     }
 
+    const mic = await probeFeature("microphone");
+    if (!mic.canUse) {
+      throw new ASRProviderUnavailableError({
+        code: "PERMISSION_DENIED",
+        message: "لم يُمنح إذن الميكروفون.",
+      });
+    }
+
     let stream: MediaStream;
     try {
       stream = await navigator.mediaDevices.getUserMedia({
@@ -138,7 +148,7 @@ export class ServerQuranASRProvider implements QuranASRProvider {
     let audioCtx: AudioContext | null = null;
     try {
       const AC = window.AudioContext || (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
-      audioCtx = new AC();
+      audioCtx = trackAudioContext(new AC());
       const source = audioCtx.createMediaStreamSource(stream);
       analyser = audioCtx.createAnalyser();
       analyser.fftSize = 256;
@@ -324,7 +334,7 @@ export class ServerQuranASRProvider implements QuranASRProvider {
       try { active.recorder.stop(); } catch { /* ignore */ }
     }
     for (const track of active.stream.getTracks()) track.stop();
-    try { await active.audioCtx?.close(); } catch { /* ignore */ }
+    try { await closeAudioContext(active.audioCtx); } catch { /* ignore */ }
 
     await Promise.all(active.pendingSegments).catch(() => {});
     return {

@@ -12,6 +12,7 @@ import { PERF_SLOW_MS } from "./lib/performance-monitor";
 import { registerProductionServiceWorker } from "./lib/service-worker";
 import { setupStatusBar, setupKeyboard, isAndroid, isNative } from "./lib/capacitor-utils";
 import { initFinalPolish } from "./lib/init-final-polish";
+import { initStoragePersistence } from "./lib/feature-permission-shield";
 import { prewarmAudioCdns, prewarmTextApis } from "./lib/resource-prewarm";
 // هوية v4: مصدر الرموز الوحيد (لون/طباعة/مسافات/حواف/ظلال/حركة). يجب أن
 // يبقى أول استيراد — كل ملفات CSS اللاحقة تستهلك رموزه، وأنظمة الرموز
@@ -38,6 +39,8 @@ resetMobileNavBodyLock();
 applyFontPreference(readFontPreference());
 initClientErrorReporting();
 initFinalPolish();
+// Best-effort Storage Persistence — silent fallback when denied/unsupported.
+void initStoragePersistence();
 // Idle preconnect for audio/text CDNs — LCP/INP handshake savings without blocking mount.
 if (typeof requestIdleCallback === "function") {
   requestIdleCallback(() => {

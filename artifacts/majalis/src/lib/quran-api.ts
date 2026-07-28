@@ -14,6 +14,7 @@
  */
 
 import { LruCache } from "@/lib/lru-cache";
+import { fetchProgressiveAyahArray } from "@/lib/stream-json";
 
 const BASE = "https://api.alquran.cloud/v1";
 const LOCAL_QURAN_DATA_BASE = "/data/quran";
@@ -178,30 +179,64 @@ export async function fetchSurahDetail(surahNumber: number): Promise<SurahDetail
 export async function fetchTafsirAyahs(
   surahNumber: number,
   edition: string,
+  opts?: {
+    signal?: AbortSignal;
+    /** Progressive callback as ayah objects arrive over the wire. */
+    onPartial?: (ayahs: TafsirAyah[]) => void;
+  },
 ): Promise<TafsirAyah[]> {
   const key = `tafsir-${edition}-${surahNumber}`;
   const memHit = tafsirMemory.get(key);
-  if (memHit) return memHit;
+  if (memHit) {
+    opts?.onPartial?.(memHit);
+    return memHit;
+  }
 
   const cached = readCache<TafsirAyah[]>(key);
   if (cached) {
     tafsirMemory.set(key, cached);
+    opts?.onPartial?.(cached);
     return cached;
   }
 
-  const res = await fetch(`${BASE}/surah/${surahNumber}/${edition}`, {
-    signal: AbortSignal.timeout(20_000),
-  });
-  if (!res.ok) throw new Error(`AlQuran Cloud tafsir: HTTP ${res.status}`);
-  const json = await res.json();
-  if (json.code !== 200 || !json.data?.ayahs) return [];
-  const result: TafsirAyah[] = json.data.ayahs.map((a: { numberInSurah: number; text: string }) => ({
-    numberInSurah: a.numberInSurah,
-    text: a.text,
-  }));
-  writeCache(key, result);
-  tafsirMemory.set(key, result);
-  return result;
+  const url = `${BASE}/surah/${surahNumber}/${edition}`;
+  const partial: TafsirAyah[] = [];
+  try {
+    const result = await fetchProgressiveAyahArray(
+      url,
+      {
+        signal: opts?.signal ?? AbortSignal.timeout(20_000),
+        priority: "high",
+      } as RequestInit,
+      {
+        signal: opts?.signal,
+        onItem: (ayah) => {
+          partial.push(ayah);
+          opts?.onPartial?.(partial.slice());
+        },
+      },
+    );
+    writeCache(key, result);
+    tafsirMemory.set(key, result);
+    opts?.onPartial?.(result);
+    return result;
+  } catch {
+    // Fallback to classic full JSON if stream path fails
+    const res = await fetch(url, {
+      signal: opts?.signal ?? AbortSignal.timeout(20_000),
+    });
+    if (!res.ok) throw new Error(`AlQuran Cloud tafsir: HTTP ${res.status}`);
+    const json = await res.json();
+    if (json.code !== 200 || !json.data?.ayahs) return [];
+    const result: TafsirAyah[] = json.data.ayahs.map((a: { numberInSurah: number; text: string }) => ({
+      numberInSurah: a.numberInSurah,
+      text: a.text,
+    }));
+    writeCache(key, result);
+    tafsirMemory.set(key, result);
+    opts?.onPartial?.(result);
+    return result;
+  }
 }
 
 export type SearchMatch = {
@@ -211,25 +246,86 @@ export type SearchMatch = {
   text: string;
 };
 
-export async function searchQuran(query: string): Promise<SearchMatch[]> {
+export async function searchQuran(
+  query: string,
+  opts?: {
+    signal?: AbortSignal;
+    onPartial?: (matches: SearchMatch[]) => void;
+  },
+): Promise<SearchMatch[]> {
   if (!query.trim()) return [];
-  const res = await fetch(
-    `${BASE}/search/${encodeURIComponent(query.trim())}/all/ar`,
-    { signal: AbortSignal.timeout(15_000) },
-  );
-  if (!res.ok) return [];
-  const json = await res.json();
-  if (json.code !== 200 || !json.data?.matches) return [];
-  return (json.data.matches as Array<{
-    surah: { number: number; name: string };
-    numberInSurah: number;
-    text: string;
-  }>).map((m) => ({
-    surahNumber: m.surah.number,
-    surahName: m.surah.name,
-    ayahNumber: m.numberInSurah,
-    text: m.text,
-  }));
+  const url = `${BASE}/search/${encodeURIComponent(query.trim())}/all/ar`;
+  try {
+    const { readResponseTextStreaming, extractCompletedJsonObjects } = await import("@/lib/stream-json");
+    const res = await fetch(url, {
+      signal: opts?.signal ?? AbortSignal.timeout(15_000),
+      priority: "high",
+    } as RequestInit);
+    if (!res.ok) return [];
+
+    const mapMatch = (raw: unknown): SearchMatch | null => {
+      if (!raw || typeof raw !== "object") return null;
+      const m = raw as {
+        surah?: { number?: number; name?: string };
+        numberInSurah?: number;
+        text?: string;
+      };
+      if (!m.surah?.number || typeof m.text !== "string" || !Number.isFinite(Number(m.numberInSurah))) {
+        return null;
+      }
+      return {
+        surahNumber: m.surah.number,
+        surahName: m.surah.name ?? "",
+        ayahNumber: Number(m.numberInSurah),
+        text: m.text,
+      };
+    };
+
+    const partial: SearchMatch[] = [];
+    const seen = new Set<string>();
+    const text = await readResponseTextStreaming(
+      res,
+      (_chunk, total) => {
+        // Prefer "matches" array region — extractCompletedJsonObjects looks for first [
+        // after "ayahs" OR bare array; for search payloads rename hint via temporary splice
+        const matchesIdx = total.indexOf('"matches"');
+        const buf = matchesIdx >= 0 ? total.slice(matchesIdx) : total;
+        const { items } = extractCompletedJsonObjects(buf.replace('"matches"', '"ayahs"'));
+        let grew = false;
+        for (const raw of items) {
+          const mapped = mapMatch(raw);
+          if (!mapped) continue;
+          const key = `${mapped.surahNumber}:${mapped.ayahNumber}`;
+          if (seen.has(key)) continue;
+          seen.add(key);
+          partial.push(mapped);
+          grew = true;
+        }
+        if (grew) opts?.onPartial?.(partial.slice());
+      },
+      opts?.signal,
+    );
+
+    try {
+      const json = JSON.parse(text) as {
+        code?: number;
+        data?: { matches?: Array<{ surah: { number: number; name: string }; numberInSurah: number; text: string }> };
+      };
+      if (json.code !== 200 || !json.data?.matches) return partial;
+      const finalList = json.data.matches.map((m) => ({
+        surahNumber: m.surah.number,
+        surahName: m.surah.name,
+        ayahNumber: m.numberInSurah,
+        text: m.text,
+      }));
+      opts?.onPartial?.(finalList);
+      return finalList;
+    } catch {
+      return partial;
+    }
+  } catch {
+    return [];
+  }
 }
 
 export function clearQuranCache() {

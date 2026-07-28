@@ -37,7 +37,15 @@ export async function requestPermission(): Promise<NotificationPermission> {
   if (!("Notification" in window)) return "denied";
   if (Notification.permission === "granted") return "granted";
   if (Notification.permission === "denied") return "denied";
-  return Notification.requestPermission();
+  try {
+    const { ensureFeature } = await import("@/lib/feature-permission-shield");
+    const probe = await ensureFeature("notifications");
+    if (probe.state === "granted") return "granted";
+    if (probe.state === "denied") return "denied";
+    return Notification.permission;
+  } catch {
+    return Notification.requestPermission();
+  }
 }
 
 export function getPermissionStatus(): NotificationPermission | "unsupported" {

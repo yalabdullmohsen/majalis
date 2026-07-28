@@ -84,7 +84,13 @@ export function PageAyahActionSheet({ surahNum, surahName, ayahNum, ayahText, is
       // Drawer already open — yield so open animation / press feedback paints (INP).
       await afterNextPaint();
       prewarmTextApis();
-      const ayahs = await fetchTafsirAyahs(surahNum, edition);
+      const ayahs = await fetchTafsirAyahs(surahNum, edition, {
+        onPartial: (partial) => {
+          // Progressive: show target ayah as soon as it arrives over the stream
+          const found = partial.find((a) => a.numberInSurah === ayahNum);
+          if (found?.text) setTafsirText(found.text);
+        },
+      });
       await yieldToMain();
       const found = ayahs.find((a) => a.numberInSurah === ayahNum);
       setTafsirText(found?.text ?? null);
