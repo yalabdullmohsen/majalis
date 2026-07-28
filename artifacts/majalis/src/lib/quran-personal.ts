@@ -172,7 +172,8 @@ export function getDailyReading(): DailyReadingEntry[] {
 
 export function recordDailyReading(ayahsRead: number, pagesRead = 0, minutesRead = 0) {
   const today = new Date().toISOString().slice(0, 10);
-  const all = getDailyReading();
+  const snap = getDailyReading();
+  const all = snap.map((e) => ({ ...e }));
   const idx = all.findIndex((e) => e.date === today);
   if (idx >= 0) {
     all[idx] = {
@@ -184,7 +185,38 @@ export function recordDailyReading(ayahsRead: number, pagesRead = 0, minutesRead
   } else {
     all.unshift({ date: today, ayahsRead, pagesRead, minutesRead });
   }
-  try { localStorage.setItem(READING_KEY, JSON.stringify(all.slice(0, 365))); } catch { /* quota */ }
+  try {
+    localStorage.setItem(READING_KEY, JSON.stringify(all.slice(0, 365)));
+  } catch {
+    // Part 22: quota failure → leave previous counters intact (no partial write)
+    try {
+      localStorage.setItem(READING_KEY, JSON.stringify(snap));
+    } catch {
+      /* ignore */
+    }
+  }
+}
+
+/**
+ * Part 22: push reading progress via adaptive transport fallback
+ * (WebTransport → WebSocket → HTTP Fetch) without blocking the UI.
+ */
+export async function syncDailyReadingRemote(): Promise<boolean> {
+  try {
+    const entries = getDailyReading().slice(0, 7);
+    const { syncWithTransportFallback } = await import("@/lib/adaptive-transport");
+    const result = await syncWithTransportFallback(
+      { type: "daily-reading", entries, at: Date.now() },
+      {
+        httpUrl: "/api/reading-sync",
+        prefer: ["webtransport", "websocket", "fetch"],
+        probeTimeoutMs: 3_000,
+      },
+    );
+    return result.ok;
+  } catch {
+    return false;
+  }
 }
 
 // سلسلة الأيام المتتالية

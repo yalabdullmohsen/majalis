@@ -5,11 +5,25 @@
  * ⚠️ normalizeArabic() مُعاد تصديرها من الوحدة المشتركة للتوافق الخلفي.
  *    كل الاستخدامات الجديدة تستورد مباشرةً من @/shared/arabic-normalize.
  */
-import { normalizeArabic } from "@/shared/arabic-normalize";
+import { normalizeArabic, normalizeArabicUtf8Copy } from "@/shared/arabic-normalize";
 import { expandSearchTerms } from "@/lib/search-synonyms";
 
 // إعادة تصدير للتوافق الخلفي مع الملفات التي تستورد من arabic-search
 export { normalizeArabic };
+
+/**
+ * Part 22: stable UTF-8 fingerprint for search index keys (shared TextEncoder).
+ * Hex of first 16 bytes of normalized UTF-8 — cheap identity for large corpora.
+ */
+export function arabicIndexFingerprint(text: string): string {
+  const bytes = normalizeArabicUtf8Copy(text);
+  const n = Math.min(16, bytes.length);
+  let hex = "";
+  for (let i = 0; i < n; i++) {
+    hex += bytes[i]!.toString(16).padStart(2, "0");
+  }
+  return `${hex}:${bytes.length}`;
+}
 
 function expandArabicVariants(normalized: string): string[] {
   const variants = new Set<string>([normalized]);

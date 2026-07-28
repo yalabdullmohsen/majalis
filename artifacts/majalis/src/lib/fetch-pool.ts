@@ -54,3 +54,26 @@ export async function pooledJson<T>(
     return fallback;
   }
 }
+
+/**
+ * Part 22: POST JSON via adaptive transport fallback
+ * (WebTransport → WebSocket → HTTP Fetch) for live reading/sync payloads.
+ */
+export async function resilientSyncPost(
+  httpUrl: string,
+  payload: unknown,
+  opts?: { wsUrl?: string; webTransportUrl?: string },
+): Promise<boolean> {
+  try {
+    const { syncWithTransportFallback } = await import("@/lib/adaptive-transport");
+    const result = await syncWithTransportFallback(payload, {
+      httpUrl,
+      wsUrl: opts?.wsUrl,
+      webTransportUrl: opts?.webTransportUrl,
+      prefer: ["webtransport", "websocket", "fetch"],
+    });
+    return result.ok;
+  } catch {
+    return false;
+  }
+}

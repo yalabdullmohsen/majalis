@@ -32,6 +32,7 @@ import {
 } from "@/lib/audio-buffer-policy";
 import { logDiagnostic } from "@/lib/diagnostics";
 import { useWakeLock } from "@/hooks/useWakeLock";
+import { holdPreviousWhileLoading } from "@/lib/cls-layout-reserve";
 
 export type PlayerState = "idle" | "loading" | "playing" | "paused" | "error" | "buffering";
 
@@ -41,6 +42,7 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
   const pauseCleanupRef = useRef<(() => void) | null>(null);
   const delayTimerRef = useRef<number | null>(null);
   const mountedRef = useRef(true);
+  const lastAyahRef = useRef<number | null>(null);
   const [reciterId, setReciterIdState] = useState<string>(loadReciterId);
   const [currentAyah, setCurrentAyah] = useState<number | null>(null);
   const [playerState, setPlayerState] = useState<PlayerState>("idle");
@@ -340,8 +342,18 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
       : null,
   );
 
-  return {
+  // Part 21 CLS shield: hold previous ayah highlight during loading/buffering
+  // so word/ayah highlight does not unmount → remount (layout shift).
+  if (currentAyah != null) lastAyahRef.current = currentAyah;
+  const stickyAyah = holdPreviousWhileLoading(
+    lastAyahRef.current,
     currentAyah,
+    playerState === "loading" || playerState === "buffering",
+  );
+  if (playerState === "idle") lastAyahRef.current = null;
+
+  return {
+    currentAyah: stickyAyah,
     playerState,
     reciterId,
     setReciterId,

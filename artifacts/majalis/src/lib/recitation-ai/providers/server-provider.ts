@@ -49,7 +49,8 @@ type Active = {
   sliceChunks: Blob[];
   analyser: AnalyserNode | null;
   audioCtx: AudioContext | null;
-  levelTimer: ReturnType<typeof setInterval> | null;
+  /** Part 22: visibility-aware waveform cancel (replaces raw setInterval id). */
+  levelCancel: (() => void) | null;
   sessionStartedAt: number;
 };
 
@@ -164,7 +165,7 @@ export class ServerQuranASRProvider implements QuranASRProvider {
       sliceChunks: [],
       analyser,
       audioCtx,
-      levelTimer: null,
+      levelCancel: null,
       sessionStartedAt: Date.now(),
     };
     this.sessions.set(id, active);
@@ -179,18 +180,23 @@ export class ServerQuranASRProvider implements QuranASRProvider {
       const data = new Uint8Array(analyser.frequencyBinCount);
       // Part 19: battery-aware sample interval (downscale when battery < 20%)
       const sampleMs = getWaveformSampleIntervalMs(100);
-      active.levelTimer = setInterval(() => {
-        if (!active.analyser || active.stopped) return;
-        active.analyser.getByteTimeDomainData(data);
-        let sum = 0;
-        for (let i = 0; i < data.length; i++) {
-          const v = (data[i] - 128) / 128;
-          sum += v * v;
-        }
-        const rms = Math.sqrt(sum / data.length);
-        const level = Math.min(1, rms * 4);
-        for (const cb of active.levelListeners) cb(level);
-      }, sampleMs);
+      // Part 22: freeze waveform sampling while tab/phone screen is hidden
+      void import("@/lib/visibility-raf").then(({ startVisibilityAwareInterval }) => {
+        if (active.stopped) return;
+        const handle = startVisibilityAwareInterval(() => {
+          if (!active.analyser || active.stopped) return;
+          active.analyser.getByteTimeDomainData(data);
+          let sum = 0;
+          for (let i = 0; i < data.length; i++) {
+            const v = (data[i]! - 128) / 128;
+            sum += v * v;
+          }
+          const rms = Math.sqrt(sum / data.length);
+          const level = Math.min(1, rms * 4);
+          for (const cb of active.levelListeners) cb(level);
+        }, sampleMs);
+        active.levelCancel = () => handle.cancel();
+      });
     }
 
     this.startContinuousRecorder(id, active);
@@ -322,7 +328,12 @@ export class ServerQuranASRProvider implements QuranASRProvider {
     if (!active) return { fullText: "", words: [] };
 
     active.stopped = true;
-    if (active.levelTimer) clearInterval(active.levelTimer);
+    try {
+      active.levelCancel?.();
+    } catch {
+      /* ignore */
+    }
+    active.levelCancel = null;
     if (active.recorder && active.recorder.state !== "inactive") {
       try { active.recorder.stop(); } catch { /* ignore */ }
     }

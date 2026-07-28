@@ -68,6 +68,28 @@ export async function startPlatformLogicSuite(): Promise<void> {
       /* ignore */
     }
 
+    // Part 21: cross-storage drift reconcile (LS ↔ session ↔ memory ↔ IDB)
+    try {
+      const { runStorageReconcile } = await import("@/lib/storage-reconciler");
+      void runStorageReconcile();
+    } catch {
+      /* ignore */
+    }
+
+    // Part 22: memory pressure observer + soft reading sync via transport fallback
+    try {
+      const { startMemoryPressureObserver } = await import("@/lib/memory-pressure");
+      startMemoryPressureObserver({ intervalMs: 15_000 });
+    } catch {
+      /* ignore */
+    }
+    try {
+      const { syncDailyReadingRemote } = await import("@/lib/quran-personal");
+      void syncDailyReadingRemote();
+    } catch {
+      /* ignore */
+    }
+
     // Soft-warm: sacred times, cross-tab channel, auto-scroll pace, power-saver binding
     try {
       const { hydrateAutoScrollFromIdb } = await import("@/lib/adaptive-auto-scroll");
