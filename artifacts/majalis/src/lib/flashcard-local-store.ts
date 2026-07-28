@@ -58,13 +58,30 @@ function writeLs(rows: LocalFlashReview[]): void {
 export async function saveLocalReview(row: LocalFlashReview): Promise<void> {
   const key = reviewKey(row.user_id, row.card_type, row.card_id);
   const full = { ...row, key };
-  const list = readLs().filter((r) => r.key !== key);
-  list.unshift(full);
-  writeLs(list);
-  try {
-    await idbPut(OFFLINE_STORES.flashcards, key, full);
-  } catch {
-    /* IDB optional */
+  const { withAtomicProgressMutation, cloneProgressSnapshot } = await import(
+    "@/lib/atomic-progress"
+  );
+
+  const result = await withAtomicProgressMutation<LocalFlashReview[]>({
+    key: `flash:${key}`,
+    snapshot: () => cloneProgressSnapshot(readLs()),
+    restore: (snap) => writeLs(snap),
+    mutate: (snap) => {
+      const list = snap.filter((r) => r.key !== key);
+      list.unshift(full);
+      const next = list.slice(0, 2_000);
+      writeLs(next);
+      return next;
+    },
+    commit: async () => {
+      // IDB unavailable (private mode / SSR) — local LS is authoritative
+      if (typeof indexedDB === "undefined") return;
+      await idbPut(OFFLINE_STORES.flashcards, key, full);
+    },
+  });
+
+  if (!result.ok && result.rolledBack) {
+    throw new Error(result.error || "flashcard-atomic-rollback");
   }
 }
 
