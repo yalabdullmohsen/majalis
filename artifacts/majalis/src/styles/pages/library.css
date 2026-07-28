@@ -352,6 +352,40 @@ html.dark .lrn-hub-gateway {
 }
 .lrn-hub-card__badge--muted { background: var(--majalis-bg-subtle, #f9fafb); color: var(--majalis-ink-soft); }
 
+.lrn-hub-catalog {
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--majalis-line, #e5e7eb);
+}
+.lrn-hub-catalog__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1rem;
+  margin-bottom: 1rem;
+}
+.lrn-hub-catalog__title {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 750;
+  color: var(--majalis-ink);
+}
+.lrn-hub-catalog .lrn-hub-stats {
+  margin-bottom: 0;
+  padding: 0.55rem 0.9rem;
+}
+.lrn-hub-catalog .lrn-hub-stat strong { font-size: 1.1rem; }
+.lrn-hub-empty {
+  color: var(--majalis-ink-soft);
+  text-align: center;
+  padding: 1.5rem 1rem;
+  font-size: 0.9rem;
+}
+
 .lrn-empty, .lrn-empty-state { color: var(--majalis-ink-soft); text-align: center; padding: 2rem 1rem; font-size: .9rem; }
 
 /* صفحة تصنيف واحد */
