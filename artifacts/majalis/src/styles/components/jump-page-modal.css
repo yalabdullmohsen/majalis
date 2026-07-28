@@ -1,0 +1,205 @@
+/* Jump-to-page modal — mushaf 1–604 */
+.mpv-jump-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 85;
+  display: grid;
+  place-items: center;
+  padding: 1.25rem;
+  background: color-mix(in srgb, #1a2e24 45%, transparent);
+  backdrop-filter: blur(4px);
+  animation: mpv-jump-fade 0.2s ease;
+}
+
+.mpv-jump-dialog {
+  width: min(100%, 22rem);
+  border-radius: 1rem;
+  padding: 1.25rem 1.2rem 1.1rem;
+  background: #faf6ef;
+  color: #1a2e24;
+  border: 1px solid color-mix(in srgb, #1a2e24 12%, transparent);
+  box-shadow: 0 18px 48px color-mix(in srgb, #0a1812 28%, transparent);
+  text-align: center;
+  animation: mpv-jump-pop 0.26s ease;
+}
+
+.mpv-jump-dialog__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  margin-bottom: 0.55rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, #143f35 12%, transparent);
+  color: #143f35;
+}
+
+.mpv-jump-dialog__title {
+  margin: 0 0 0.35rem;
+  font-size: 1.12rem;
+  font-weight: 700;
+  color: #143f35;
+}
+
+.mpv-jump-dialog__hint {
+  margin: 0 0 0.85rem;
+  font-size: 0.85rem;
+  color: color-mix(in srgb, #1a2e24 70%, transparent);
+}
+
+.mpv-jump-dialog__label {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: color-mix(in srgb, #1a2e24 75%, transparent);
+}
+
+.mpv-jump-dialog__input {
+  width: 100%;
+  min-height: 2.85rem;
+  margin-bottom: 0.55rem;
+  border-radius: 0.75rem;
+  border: 1px solid color-mix(in srgb, #143f35 28%, transparent);
+  background: #fff;
+  color: #1a2e24;
+  font: inherit;
+  font-size: 1.15rem;
+  font-weight: 700;
+  text-align: center;
+  padding: 0.45rem 0.75rem;
+}
+
+.mpv-jump-dialog__input:focus {
+  outline: 2px solid color-mix(in srgb, #143f35 45%, transparent);
+  outline-offset: 1px;
+}
+
+.mpv-jump-dialog__error {
+  margin: 0 0 0.65rem;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: #8b2e2e;
+}
+
+.mpv-jump-dialog__actions {
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 0.5rem;
+}
+
+.mpv-jump-dialog__cancel,
+.mpv-jump-dialog__ok {
+  min-height: 2.65rem;
+  border-radius: 0.75rem;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.15s ease, transform 0.1s ease;
+}
+
+.mpv-jump-dialog__cancel {
+  border: 1px solid color-mix(in srgb, #143f35 25%, transparent);
+  background: transparent;
+  color: #143f35;
+}
+
+.mpv-jump-dialog__ok {
+  border: none;
+  background: #143f35;
+  color: #f4faf7;
+}
+
+.mpv-jump-dialog__ok:hover {
+  background: #1a5244;
+}
+
+.mpv-jump-dialog__cancel:active,
+.mpv-jump-dialog__ok:active {
+  transform: scale(0.98);
+}
+
+.mpv-navbar__page-jump {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  min-height: 2.5rem;
+  border-radius: 0.75rem;
+  border: 1px solid color-mix(in srgb, var(--text-muted, #6b7280) 35%, transparent);
+  background: color-mix(in srgb, var(--surface, #fff) 88%, transparent);
+  color: inherit;
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0.35rem 0.75rem;
+}
+
+.mpv-navbar__page-jump:hover {
+  border-color: color-mix(in srgb, #143f35 40%, transparent);
+}
+
+.qs-mushaf-footer-row__page-btn {
+  appearance: none;
+  border: none;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0.15rem 0.35rem;
+  border-radius: 0.4rem;
+}
+
+.qs-mushaf-footer-row__page-btn:hover {
+  background: color-mix(in srgb, #143f35 8%, transparent);
+}
+
+@keyframes mpv-jump-fade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes mpv-jump-pop {
+  from {
+    opacity: 0;
+    transform: translateY(0.45rem) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mpv-jump-backdrop,
+  .mpv-jump-dialog {
+    animation: none;
+  }
+}
+
+html[data-theme="dark"] .mpv-jump-dialog,
+html.dark .mpv-jump-dialog {
+  background: #1a1a1a;
+  color: #d1d1d1;
+  border-color: #333;
+}
+
+html[data-theme="dark"] .mpv-jump-dialog__title,
+html.dark .mpv-jump-dialog__title,
+html[data-theme="dark"] .mpv-jump-dialog__icon,
+html.dark .mpv-jump-dialog__icon,
+html[data-theme="dark"] .mpv-jump-dialog__cancel,
+html.dark .mpv-jump-dialog__cancel {
+  color: #9dceb8;
+}
+
+html[data-theme="dark"] .mpv-jump-dialog__input,
+html.dark .mpv-jump-dialog__input {
+  background: #262626;
+  color: #d1d1d1;
+  border-color: #444;
+}
