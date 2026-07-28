@@ -2,8 +2,15 @@ import { useCallback, useEffect, useState } from "react";
 
 export type QuranFontId = "uthmani" | "naskh" | "amiri";
 
-/** وضع القراءة — "عادي" أبيض عاجي، "ليلي"/"دافئ" مبنيان مسبقًا في quran.css (.quran-shell--night/--warm)، "عالي التباين" جديد. */
-export type QuranReadingTheme = "standard" | "night" | "warm" | "high-contrast";
+/** وضع القراءة — عادي / ليلي / دافئ / تباين عالٍ + أوضاع جزء٢ (رقّ، OLED، سيبيا). */
+export type QuranReadingTheme =
+  | "standard"
+  | "night"
+  | "warm"
+  | "high-contrast"
+  | "parchment"
+  | "oled"
+  | "sepia";
 
 /** لون إطار صفحة المصحف — يُطبَّق كمتغيرات CSS على .qs-mushaf-frame، لا كتصميم منفصل مكرَّر. */
 export type QuranFrameStyle = "emerald" | "gold-classic" | "paper" | "minimal" | "none";
@@ -39,6 +46,12 @@ export type QuranPreferences = {
   highlightStyle: QuranHighlightStyle;
   pageMode: QuranPageMode;
   readingLayout: QuranReadingLayout;
+  /** وضع اختبار الحفظ — إخفاء/تمويه نص الآية حتى النقر */
+  hideVerseTest: boolean;
+  /** ارتفاع السطر لوضع القراءة المتصلة (نسبة مضاعفة) */
+  continuousLineHeight: number;
+  /** هامش جانبي لوضع القراءة المتصلة (px) */
+  continuousSideMargin: number;
 };
 
 const KEY = "mj-quran-prefs-v4";
@@ -58,6 +71,9 @@ const DEFAULTS: QuranPreferences = {
   highlightStyle: "wash",
   pageMode: "precision",
   readingLayout: "madani",
+  hideVerseTest: false,
+  continuousLineHeight: 2.15,
+  continuousSideMargin: 18,
 };
 
 /** أول زيارة بلا أي تفضيل محفوظ فقط: يحترم prefers-color-scheme النظامي

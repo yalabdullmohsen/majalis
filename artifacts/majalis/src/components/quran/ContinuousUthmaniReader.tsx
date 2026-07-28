@@ -16,8 +16,12 @@ type Props = {
   /** آية البداية (تُمرَّر للتمرير الأولي) */
   startAyah: number;
   fontScale: number;
+  lineHeight?: number;
+  sideMargin?: number;
   activeAyahKey?: string | null;
   activeWordIndex?: number | null;
+  hideVerseTest?: boolean;
+  notedVerseKeys?: Set<string>;
   onAyahPress?: (surah: number, ayah: number, text: string) => void;
   onVisibleAyah?: (surah: number, ayah: number, page: number) => void;
 };
@@ -30,8 +34,12 @@ export function ContinuousUthmaniReader({
   startSurah,
   startAyah,
   fontScale,
+  lineHeight = 2.15,
+  sideMargin = 18,
   activeAyahKey,
   activeWordIndex,
+  hideVerseTest = false,
+  notedVerseKeys,
   onAyahPress,
   onVisibleAyah,
 }: Props) {
@@ -39,6 +47,7 @@ export function ContinuousUthmaniReader({
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const [nextSurah, setNextSurah] = useState(startSurah);
+  const [revealed, setRevealed] = useState<Set<string>>(() => new Set());
   const scrollerRef = useRef<HTMLDivElement>(null);
   const didScrollRef = useRef(false);
   const lastReported = useRef<string>("");
@@ -163,7 +172,12 @@ export function ContinuousUthmaniReader({
       ref={scrollerRef}
       className="cur-scroller"
       onScroll={onScroll}
-      style={{ ["--cur-font-size" as string]: `${fontScale}px` }}
+      style={{
+        ["--cur-font-size" as string]: `${fontScale}px`,
+        ["--cur-line-height" as string]: String(lineHeight),
+        ["--cur-side-margin" as string]: `${sideMargin}px`,
+        paddingInline: `${sideMargin}px`,
+      }}
     >
       {grouped.map((a, idx) => {
         const prev = grouped[idx - 1];
@@ -171,6 +185,8 @@ export function ContinuousUthmaniReader({
         const verseKey = `${a.surahNumber}:${a.numberInSurah}`;
         const isActive = verseKey === activeAyahKey;
         const words = splitWords(a.text);
+        const hasNote = notedVerseKeys?.has(verseKey);
+        const isHidden = hideVerseTest && !revealed.has(verseKey) && !isActive;
         return (
           <div key={verseKey}>
             {showHeader && (
@@ -185,14 +201,21 @@ export function ContinuousUthmaniReader({
             )}
             <button
               type="button"
-              className={`cur-ayah${isActive ? " cur-ayah--active" : ""}`}
+              className={`cur-ayah${isActive ? " cur-ayah--active" : ""}${isHidden ? " cur-ayah--hidden" : ""}${hasNote ? " cur-ayah--noted" : ""}`}
               data-verse-key={verseKey}
               data-surah={a.surahNumber}
               data-ayah={a.numberInSurah}
               data-page={a.page ?? 1}
-              onClick={() => onAyahPress?.(a.surahNumber, a.numberInSurah, a.text)}
-              aria-label={`سورة ${a.surahName} آية ${a.numberInSurah}`}
+              onClick={() => {
+                if (isHidden) {
+                  setRevealed((prev) => new Set(prev).add(verseKey));
+                  return;
+                }
+                onAyahPress?.(a.surahNumber, a.numberInSurah, a.text);
+              }}
+              aria-label={`سورة ${a.surahName} آية ${a.numberInSurah}${hasNote ? " — عليها تدبّر" : ""}`}
             >
+              {hasNote && <span className="cur-note-ribbon" aria-hidden="true" />}
               <span className="cur-ayah__text" dir="rtl">
                 {words.map((w, wi) => (
                   <span

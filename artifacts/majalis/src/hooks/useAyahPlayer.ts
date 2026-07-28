@@ -23,7 +23,7 @@ import {
   type StallRecoveryHandle,
   type StallRecoveryPhase,
 } from "@/lib/audio-stall-recovery";
-import { prewarmAudioCdns, prewarmUrl } from "@/lib/resource-prewarm";
+import { prewarmAudioCdns } from "@/lib/resource-prewarm";
 import {
   applyAudioBufferPolicy,
   getAudioBufferPolicy,
@@ -33,6 +33,7 @@ import {
 import { logDiagnostic } from "@/lib/diagnostics";
 import { useWakeLock } from "@/hooks/useWakeLock";
 import { holdPreviousWhileLoading } from "@/lib/cls-layout-reserve";
+import { prefetchNextAyahs, peekCachedAyahObjectUrl, warmAyahObjectUrl, releaseAyahObjectUrls } from "@/lib/ayah-audio-prefetch";
 
 export type PlayerState = "idle" | "loading" | "playing" | "paused" | "error" | "buffering";
 
@@ -88,7 +89,7 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
 
   /** Configure a memorization loop (range + N reps + silent delay). Disables simple repeatOn. */
   const setLoopConfig = useCallback(
-    (cfg: Partial<AyahLoopConfig> & { startAyah: number } | null) => {
+    (cfg: (Partial<AyahLoopConfig> & { startAyah: number; infinite?: boolean }) | null) => {
       clearDelayTimer();
       if (!cfg) {
         loopRuntimeRef.current = null;
@@ -143,6 +144,7 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
       stallRef.current = null;
       releaseAudioElement(audio);
       audioRef.current = null;
+      releaseAyahObjectUrls();
     };
   }, [clearDelayTimer]);
 
@@ -161,7 +163,8 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
 
     const t0 = performance.now();
     audio.pause();
-    audio.src = getAyahAudioUrl(surah, ayah, reciter);
+    // مسار متزامن للمس المستخدم: كاش الذاكرة إن وُجد، وإلا CDN فورًا (لا await).
+    audio.src = peekCachedAyahObjectUrl(surah, ayah, reciter) ?? getAyahAudioUrl(surah, ayah, reciter);
     audio.playbackRate = playbackRateRef.current;
     if (mountedRef.current) {
       setCurrentAyah(ayah);
@@ -175,15 +178,20 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
       updatedAt: Date.now(),
     });
 
+    // جهّز الآية الحالية + الخمس التالية في IndexedDB دون حجب التشغيل
+    warmAyahObjectUrl(surah, ayah, reciter);
+    prefetchNextAyahs(surah, ayah, totalAyahs, reciter, 5);
+
     const onPlaying = () => {
       if (!mountedRef.current) return;
       const latency = performance.now() - t0;
       observeAudioLatency(latency);
-      // Rough throughput sample from typical ayah size (~80KB) / latency
       if (latency > 0) observeAudioThroughput(80_000, latency);
       setPlayerState("playing");
-      if (policy.warmNextAyah && ayah < totalAyahs) {
-        prewarmUrl(getAyahAudioUrl(surah, ayah + 1, reciter), { mode: "cors" });
+      prefetchNextAyahs(surah, ayah, totalAyahs, reciter, 5);
+      // سخن Object URLs للآيات التالية قبل الانتقال
+      for (let i = 1; i <= 5; i++) {
+        if (ayah + i <= totalAyahs) warmAyahObjectUrl(surah, ayah + i, reciter);
       }
     };
     const onPause = () => {

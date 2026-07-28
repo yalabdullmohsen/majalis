@@ -28,10 +28,12 @@ import { goBackOrFallback } from "@/lib/navigation-back";
 import { SectionErrorBoundary } from "@/components/ErrorBoundary";
 import { afterNextPaint, yieldToMain } from "@/lib/yield-to-main";
 import { warmQuranSearchIndex } from "@/lib/quran-local-search";
+import { getTadabburVerseKeySet } from "@/lib/quran-tadabbur";
 import "@/styles/quran.css";
 import "@/styles/mushaf-v2.css";
 import "@/styles/pages/mushaf-reader.css";
 import "@/styles/quran-reader-upgrade.css";
+import "@/styles/quran-reader-part2.css";
 
 const TOTAL_PAGES = 604;
 
@@ -58,8 +60,11 @@ function renderLightWord(w: QpcWord) {
 
 const THEME_OPTIONS: { id: QuranReadingTheme; label: string }[] = [
   { id: "standard", label: "عادي" },
+  { id: "parchment", label: "رقّ مدني" },
   { id: "night", label: "ليلي" },
+  { id: "oled", label: "OLED أسود" },
   { id: "warm", label: "دافئ" },
+  { id: "sepia", label: "سيبيا" },
   { id: "high-contrast", label: "عالي التباين" },
 ];
 const FRAME_OPTIONS: { id: QuranFrameStyle; label: string }[] = [
@@ -117,6 +122,8 @@ export default function MushafPageView() {
     return { surah: getSurahForPage(clampPage(routePage ?? loadPagePosition() ?? 1)).number, ayah: 1 };
   });
   const continuousPlayerSurahRef = useRef(continuousStart.surah);
+  const [notedVerseKeys, setNotedVerseKeys] = useState<Set<string>>(() => new Set());
+  const [revealedVerseKeys, setRevealedVerseKeys] = useState<Set<string>>(() => new Set());
   /* تجربة قراءة غامرة بنمط "آية"/"ترتيل": نقرة واحدة على جسم الصفحة (لا
      على آية — onClick على .mf2-ayah-group يوقف الانتشار propagation)
      تُبدِّل ظهور الشريطين العلوي/السفلي، مستقلة عن chromeVisible الخاصة
@@ -130,6 +137,14 @@ export default function MushafPageView() {
     void warmQuranSearchIndex(ac.signal).catch(() => {});
     return () => ac.abort();
   }, []);
+
+  const refreshNotedKeys = useCallback(() => {
+    void getTadabburVerseKeySet().then(setNotedVerseKeys);
+  }, []);
+
+  useEffect(() => {
+    refreshNotedKeys();
+  }, [refreshNotedKeys]);
 
   // ── استئناف تلقائي: عند الدخول دون رقم صفحة صريح في الرابط، نبدأ من آخر موضع محفوظ محليًا ──
   useEffect(() => {
@@ -321,8 +336,8 @@ export default function MushafPageView() {
     ?? 1;
   const activeSurahAyahCount = getSurahMeta(activeSurahForPlayer).ayahs;
   const {
-    currentAyah, playerState, togglePlayAyah, reciterId, setReciterId,
-    playbackRate, setPlaybackRate, repeatOn, setRepeatOn, audioElement,
+    currentAyah, playerState, togglePlayAyah, playFromAyah, reciterId, setReciterId,
+    playbackRate, setPlaybackRate, repeatOn, setRepeatOn, loopConfig, setLoopConfig, audioElement,
   } = useAyahPlayer(activeSurahForPlayer, activeSurahAyahCount);
 
   const [selectedAyahText, setSelectedAyahText] = useState<string | null>(null);
@@ -400,6 +415,17 @@ export default function MushafPageView() {
   const flatAyahs = useMemo(() => segAyahs?.flatMap((s) => s.ayahs) ?? [], [segAyahs]);
   const selectedIdx = selectedAyah ? flatAyahs.findIndex((a) => a.surahNumber === selectedAyah.surah && a.numberInSurah === selectedAyah.ayah) : -1;
 
+  const pageRangeForLoop = useMemo(() => {
+    const sameSurah = flatAyahs.filter((a) => a.surahNumber === activeSurahForPlayer);
+    if (sameSurah.length === 0) return null;
+    const nums = sameSurah.map((a) => a.numberInSurah);
+    return { start: Math.min(...nums), end: Math.max(...nums) };
+  }, [flatAyahs, activeSurahForPlayer]);
+
+  const onRevealVerse = useCallback((verseKey: string) => {
+    setRevealedVerseKeys((prev) => new Set(prev).add(verseKey));
+  }, []);
+
   return createPortal(
     <div className={`quran-shell quran-shell--immersive ${shellThemeClass}`} dir="rtl">
       <>
@@ -451,8 +477,12 @@ export default function MushafPageView() {
                   startSurah={continuousStart.surah}
                   startAyah={continuousStart.ayah}
                   fontScale={prefs.fontScale}
+                  lineHeight={prefs.continuousLineHeight}
+                  sideMargin={prefs.continuousSideMargin}
                   activeAyahKey={v2ActiveKey}
                   activeWordIndex={activeWordIndex}
+                  hideVerseTest={prefs.hideVerseTest}
+                  notedVerseKeys={notedVerseKeys}
                   onAyahPress={handleContinuousAyahPress}
                   onVisibleAyah={handleContinuousVisible}
                 />
@@ -484,6 +514,10 @@ export default function MushafPageView() {
                         layout={v2Layout}
                         activeAyahKey={v2ActiveKey}
                         activeWordIndex={activeWordIndex}
+                        notedVerseKeys={notedVerseKeys}
+                        hideVerseTest={prefs.hideVerseTest}
+                        revealedVerseKeys={revealedVerseKeys}
+                        onRevealVerse={onRevealVerse}
                         onAyahPress={handleV2AyahPress}
                         bare
                       />
@@ -492,6 +526,10 @@ export default function MushafPageView() {
                         layout={v2Layout}
                         activeAyahKey={v2ActiveKey}
                         activeWordIndex={activeWordIndex}
+                        notedVerseKeys={notedVerseKeys}
+                        hideVerseTest={prefs.hideVerseTest}
+                        revealedVerseKeys={revealedVerseKeys}
+                        onRevealVerse={onRevealVerse}
                         onAyahPress={handleV2AyahPress}
                         sharedFontFamily={'"Amiri Quran", "Scheherazade New", serif'}
                         renderWord={renderLightWord}
@@ -678,6 +716,27 @@ export default function MushafPageView() {
               </div>
             </div>
 
+            {prefs.readingLayout === "continuous" && (
+              <div className="mpv-settings-group">
+                <span className="mpv-settings-group__label">تباعد وهامش القراءة المتصلة</span>
+                <div className="mpv-settings-group__grid">
+                  <button type="button" className="mpv-chip" onClick={() => setPref("continuousLineHeight", Math.max(1.6, +(prefs.continuousLineHeight - 0.1).toFixed(2)))}>ارتفاع −</button>
+                  <span className="mpv-chip is-active">{prefs.continuousLineHeight.toFixed(2)}</span>
+                  <button type="button" className="mpv-chip" onClick={() => setPref("continuousLineHeight", Math.min(3.2, +(prefs.continuousLineHeight + 0.1).toFixed(2)))}>ارتفاع +</button>
+                  <button type="button" className="mpv-chip" onClick={() => setPref("continuousSideMargin", Math.max(8, prefs.continuousSideMargin - 4))}>هامش −</button>
+                  <span className="mpv-chip is-active">{prefs.continuousSideMargin}px</span>
+                  <button type="button" className="mpv-chip" onClick={() => setPref("continuousSideMargin", Math.min(48, prefs.continuousSideMargin + 4))}>هامش +</button>
+                </div>
+              </div>
+            )}
+
+            <div className="mpv-settings-group">
+              <span className="mpv-settings-group__label">دفتر التدبّر</span>
+              <a className="mpv-chip is-active" href="/mushaf/reflections" style={{ textAlign: "center", textDecoration: "none" }}>
+                فتح دفتر الملاحظات والتأمّلات
+              </a>
+            </div>
+
             <div className="mpv-settings-group">
               <span className="mpv-settings-group__label">إطار الصفحة</span>
               <div className="mpv-settings-group__grid">
@@ -725,6 +784,9 @@ export default function MushafPageView() {
             surahName={getSurahMeta(selectedAyah.surah).name}
             ayahNum={selectedAyah.ayah}
             ayahText={selectedAyahData.text}
+            ayahJuz={selectedAyahData.juz ?? (juz || 1)}
+            totalAyahs={getSurahMeta(selectedAyah.surah).ayahs}
+            pageRange={selectedAyah.surah === activeSurahForPlayer ? pageRangeForLoop : null}
             isPlaying={selectedAyah.surah === activeSurahForPlayer && currentAyah === selectedAyah.ayah && (playerState === "playing" || playerState === "buffering")}
             canPlay={true}
             onTogglePlay={() => togglePlayAyah(selectedAyah.ayah)}
@@ -745,6 +807,12 @@ export default function MushafPageView() {
             onSetPlaybackRate={setPlaybackRate}
             repeatOn={repeatOn}
             onToggleRepeat={() => setRepeatOn(!repeatOn)}
+            loopConfig={loopConfig}
+            onSetLoop={setLoopConfig}
+            onPlayFrom={playFromAyah}
+            hideVerseTest={prefs.hideVerseTest}
+            onToggleHideVerse={() => setPref("hideVerseTest", !prefs.hideVerseTest)}
+            onTadabburChanged={refreshNotedKeys}
           />
         </SectionErrorBoundary>
       )}

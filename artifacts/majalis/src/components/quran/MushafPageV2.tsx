@@ -27,6 +27,12 @@ type Props = {
    * يُستخدَم لتظليل كلمة↔كلمة أثناء التلاوة عندما تتوفر مزامنة صوتية.
    */
   activeWordIndex?: number | null;
+  /** آيات عليها تدبّر/ملاحظة — شريط مؤشر جانبي */
+  notedVerseKeys?: Set<string>;
+  /** وضع اختبار الحفظ: تمويه النص حتى النقر */
+  hideVerseTest?: boolean;
+  revealedVerseKeys?: Set<string>;
+  onRevealVerse?: (verseKey: string) => void;
   onAyahPress?: (verseKey: string) => void;
   /** خط موحّد بديل (الوضع الخفيف) — يتخطى تحميل خط QPC الخاص بالصفحة
    * كليًا (لا طلب شبكة إضافي)، يفترض أن الخط مُحمَّل أصلًا في التطبيق.
@@ -57,7 +63,19 @@ const defaultRenderWord = (w: QpcWord, wordActive?: boolean) => (
   </Fragment>
 );
 
-export function MushafPageV2({ layout, activeAyahKey, activeWordIndex = null, onAyahPress, sharedFontFamily, renderWord, bare }: Props) {
+export function MushafPageV2({
+  layout,
+  activeAyahKey,
+  activeWordIndex = null,
+  notedVerseKeys,
+  hideVerseTest = false,
+  revealedVerseKeys,
+  onRevealVerse,
+  onAyahPress,
+  sharedFontFamily,
+  renderWord,
+  bare,
+}: Props) {
   const perPageFontReady = useMushafPageFont(sharedFontFamily ? null : (layout?.pageNumber ?? null));
   const fontReady = sharedFontFamily ? true : perPageFontReady;
   const fontFamily = sharedFontFamily ?? (layout ? mushafPageFontFamily(layout.pageNumber) : undefined);
@@ -162,17 +180,33 @@ export function MushafPageV2({ layout, activeAyahKey, activeWordIndex = null, on
               {groupWordsByAyah(row.words).map((group) => {
                 const verseKey = group[0].verseKey;
                 const ayahActive = verseKey === activeAyahKey;
+                const hasNote = notedVerseKeys?.has(verseKey);
+                const isHidden = hideVerseTest && !revealedVerseKeys?.has(verseKey) && !ayahActive;
                 let wordIdx = -1;
                 return (
                   <span
                     key={verseKey}
-                    className={`mf2-ayah-group${ayahActive ? " mf2-ayah-group--active" : ""}`}
+                    className={`mf2-ayah-group${ayahActive ? " mf2-ayah-group--active" : ""}${hasNote ? " mf2-ayah-group--noted" : ""}${isHidden ? " mf2-ayah-group--hidden" : ""}`}
                     role="button"
                     tabIndex={0}
-                    aria-label={`آية ${verseKey}`}
-                    onClick={(e) => { e.stopPropagation(); onAyahPress?.(verseKey); }}
-                    onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onAyahPress?.(verseKey); } }}
+                    aria-label={`آية ${verseKey}${hasNote ? " — عليها تدبّر" : ""}`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (isHidden) {
+                        onRevealVerse?.(verseKey);
+                        return;
+                      }
+                      onAyahPress?.(verseKey);
+                    }}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        if (isHidden) onRevealVerse?.(verseKey);
+                        else onAyahPress?.(verseKey);
+                      }
+                    }}
                   >
+                    {hasNote && <span className="mf2-note-ribbon" aria-hidden="true" />}
                     {group.map((w) => {
                       const isWord = w.charType !== "end";
                       if (isWord) wordIdx += 1;
@@ -180,7 +214,6 @@ export function MushafPageV2({ layout, activeAyahKey, activeWordIndex = null, on
                       if (renderWord) {
                         const node = renderWord(w);
                         if (!wordActive || !isWord) return node;
-                        // غلاف خفيف لكلمة مخصَّصة نشطة دون كسر مفتاح المُصيِّر
                         return (
                           <span key={w.id} className="mf2-word-wrap mf2-word-wrap--active">
                             {node}

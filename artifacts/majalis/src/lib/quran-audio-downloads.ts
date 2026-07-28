@@ -146,6 +146,26 @@ export async function downloadReciter(
   }
 }
 
+/** تنزيل سورة واحدة بلمسة واحدة للقارئ الحالي. */
+export async function downloadSurah(
+  reciterId: string,
+  surah: number,
+): Promise<boolean> {
+  if (surah < 1 || surah > TOTAL_SURAHS) return false;
+  const existing = await getBlob(reciterId, surah);
+  if (existing) return true;
+  const res = await fetch(getSurahAudioUrl(surah, reciterId));
+  if (!res.ok) return false;
+  const blob = await res.blob();
+  await putBlob(reciterId, surah, blob);
+  return true;
+}
+
+export async function isSurahDownloaded(reciterId: string, surah: number): Promise<boolean> {
+  const blob = await getBlob(reciterId, surah);
+  return Boolean(blob);
+}
+
 export async function deleteReciterDownloads(reciterId: string): Promise<void> {
   const entries = await listKeysForReciter(reciterId);
   await Promise.all(entries.map((e) => deleteBlob(reciterId, e.surah)));

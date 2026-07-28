@@ -1,17 +1,22 @@
-import { useEffect, useState } from "react";
-import { X, Copy, Check, Bookmark, StickyNote, Play, Pause, ChevronRight, ChevronLeft, ChevronDown, Flag, BookOpen, Mic2, Repeat, Gauge, Share2, Languages, Minus, Plus } from "lucide-react";
-import { copyAyahText, copyAyahTextPlain, shareAyahAsImage } from "@/lib/share-ayah";
+import { useEffect, useRef, useState } from "react";
+import { X, Copy, Check, Bookmark, StickyNote, Play, Pause, ChevronRight, ChevronLeft, ChevronDown, Flag, BookOpen, Mic2, Repeat, Gauge, Share2, Languages, Minus, Plus, Download, Mic } from "lucide-react";
+import { copyAyahText, copyAyahTextPlain } from "@/lib/share-ayah";
 import {
-  addBookmark, removeBookmark, isBookmarked, getNote, saveNote,
+  addBookmark, removeBookmark, isBookmarked, getNote,
   BOOKMARK_RIBBONS, getBookmarkListForAyah, getBookmarkRibbon,
 } from "@/lib/quran-personal";
+import { upsertTadabbur, saveTafsirClip, saveVoiceBookmark } from "@/lib/quran-tadabbur";
 import { fetchTafsirAyahs } from "@/lib/quran-api";
 import { MUSHAF_TAFSIR_EDITIONS } from "@/lib/tafsir-seed";
 import { QURAN_TRANSLATION_EDITIONS, fetchAyahTranslation } from "@/lib/quran-translation";
 import { RECITERS } from "@/lib/quran-audio";
+import { downloadSurah, isSurahDownloaded } from "@/lib/quran-audio-downloads";
 import { CONTACT_EMAIL } from "@/lib/site-config";
 import { afterNextPaint, yieldToMain } from "@/lib/yield-to-main";
 import { prewarmTextApis } from "@/lib/resource-prewarm";
+import { MemorizationLoopPanel } from "@/components/quran/MemorizationLoopPanel";
+import { AyahShareCardPanel } from "@/components/quran/AyahShareCardPanel";
+import type { AyahLoopConfig } from "@/lib/ayah-loop-controller";
 
 const TAFSIR_EDITION_KEY = "majalis-mushaf-tafsir-edition-v1";
 const TRANSLATION_EDITION_KEY = "majalis-mushaf-translation-edition-v1";
@@ -59,29 +64,41 @@ type Props = {
   surahName: string;
   ayahNum: number;
   ayahText: string;
+  ayahJuz?: number;
+  totalAyahs?: number;
+  pageRange?: { start: number; end: number } | null;
   isPlaying: boolean;
   onTogglePlay: () => void;
-  /** false على الصفحات النادرة التي تضم سورتين — مشغّل الصوت مربوط بسورة واحدة فقط لكل صفحة (راجع MushafPageView). */
   canPlay?: boolean;
   onPrev?: () => void;
   onNext?: () => void;
   onClose: () => void;
-  /** اختياريان — عند تمريرهما فقط يظهر منتقي القارئ (لا يكسر MushafPageView.tsx القائم الذي لا يمرّرهما). */
   reciterId?: string;
   onSetReciter?: (id: string) => void;
-  /** اختياريان أيضًا — سرعة التلاوة (0.5x–2x) وتكرار الآية للحفظ. */
   playbackRate?: number;
   onSetPlaybackRate?: (rate: number) => void;
   repeatOn?: boolean;
   onToggleRepeat?: () => void;
+  loopConfig?: AyahLoopConfig | null;
+  onSetLoop?: (cfg: (Partial<AyahLoopConfig> & { startAyah: number; infinite?: boolean }) | null) => void;
+  onPlayFrom?: (ayah: number) => void;
+  hideVerseTest?: boolean;
+  onToggleHideVerse?: () => void;
+  onTadabburChanged?: () => void;
 };
 
-export function PageAyahActionSheet({ surahNum, surahName, ayahNum, ayahText, isPlaying, onTogglePlay, canPlay = true, onPrev, onNext, onClose, reciterId, onSetReciter, playbackRate, onSetPlaybackRate, repeatOn, onToggleRepeat }: Props) {
+export function PageAyahActionSheet({
+  surahNum, surahName, ayahNum, ayahText, ayahJuz = 1, totalAyahs = 286, pageRange = null,
+  isPlaying, onTogglePlay, canPlay = true, onPrev, onNext, onClose,
+  reciterId, onSetReciter, playbackRate, onSetPlaybackRate, repeatOn, onToggleRepeat,
+  loopConfig = null, onSetLoop, onPlayFrom, hideVerseTest = false, onToggleHideVerse, onTadabburChanged,
+}: Props) {
   const [bookmarked, setBookmarked] = useState(() => isBookmarked(surahNum, ayahNum));
   const [bookmarkList, setBookmarkList] = useState<string | null>(() => getBookmarkListForAyah(surahNum, ayahNum));
   const [ribbonOpen, setRibbonOpen] = useState(false);
   const [copiedKind, setCopiedKind] = useState<"full" | "plain" | null>(null);
-  const [sharing, setSharing] = useState(false);
+  const [shareOpen, setShareOpen] = useState(false);
+  const [loopOpen, setLoopOpen] = useState(false);
   const [noteOpen, setNoteOpen] = useState(false);
   const [noteText, setNoteText] = useState(() => getNote(surahNum, ayahNum));
   const [noteSaved, setNoteSaved] = useState(false);
@@ -94,6 +111,10 @@ export function PageAyahActionSheet({ surahNum, surahName, ayahNum, ayahText, is
   const [tafsirEdition, setTafsirEdition] = useState(getStoredTafsirEdition);
   const [tafsirFont, setTafsirFont] = useState(getStoredTafsirFont);
   const [translationOpen, setTranslationOpen] = useState(false);
+  const [downloadBusy, setDownloadBusy] = useState(false);
+  const [downloadDone, setDownloadDone] = useState(false);
+  const [voiceBusy, setVoiceBusy] = useState(false);
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const [translationText, setTranslationText] = useState<string | null>(null);
   const [translationLoading, setTranslationLoading] = useState(false);
   const [translationError, setTranslationError] = useState(false);
@@ -107,13 +128,21 @@ export function PageAyahActionSheet({ surahNum, surahName, ayahNum, ayahText, is
     setCopiedKind(null);
     setNoteOpen(false);
     setNoteSaved(false);
+    setShareOpen(false);
+    setLoopOpen(false);
     setTafsirOpen(false);
     setTafsirText(null);
     setTafsirError(false);
     setTranslationOpen(false);
     setTranslationText(null);
     setTranslationError(false);
+    setDownloadDone(false);
   }, [surahNum, ayahNum]);
+
+  useEffect(() => {
+    if (!reciterId) return;
+    void isSurahDownloaded(reciterId, surahNum).then(setDownloadDone);
+  }, [reciterId, surahNum]);
 
   const loadTafsir = async (edition: string) => {
     // Part 21 CLS shield: do NOT null committed tafsir text while loading —
@@ -227,20 +256,58 @@ export function PageAyahActionSheet({ surahNum, surahName, ayahNum, ayahText, is
   };
 
   const handleShareImage = async () => {
-    setSharing(true);
+    setShareOpen((v) => !v);
+  };
+
+  const handleSaveNote = async () => {
+    await upsertTadabbur({ surahNum, ayahNum, text: noteText, juz: ayahJuz });
+    setNoteSaved(true);
+    onTadabburChanged?.();
+    setTimeout(() => setNoteSaved(false), 1500);
+  };
+
+  const handleSaveTafsirClip = async () => {
+    if (!tafsirText) return;
+    await saveTafsirClip(surahNum, ayahNum, tafsirText.slice(0, 500), tafsirEdition, ayahJuz);
+    onTadabburChanged?.();
+  };
+
+  const handleDownloadSurah = async () => {
+    if (!reciterId) return;
+    setDownloadBusy(true);
     try {
-      await shareAyahAsImage({ text: ayahText, surahName, ayahNum, surahNum });
-    } catch {
-      /* المستخدم ألغى أو فشل التوليد */
+      const ok = await downloadSurah(reciterId, surahNum);
+      setDownloadDone(ok);
     } finally {
-      setSharing(false);
+      setDownloadBusy(false);
     }
   };
 
-  const handleSaveNote = () => {
-    saveNote(surahNum, ayahNum, noteText);
-    setNoteSaved(true);
-    setTimeout(() => setNoteSaved(false), 1500);
+  const handleVoiceBookmark = async () => {
+    if (voiceBusy) {
+      mediaRecorderRef.current?.stop();
+      return;
+    }
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const chunks: BlobPart[] = [];
+      const rec = new MediaRecorder(stream);
+      mediaRecorderRef.current = rec;
+      rec.ondataavailable = (e) => { if (e.data.size) chunks.push(e.data); };
+      rec.onstop = () => {
+        stream.getTracks().forEach((t) => t.stop());
+        setVoiceBusy(false);
+        const blob = new Blob(chunks, { type: rec.mimeType || "audio/webm" });
+        void saveVoiceBookmark(surahNum, ayahNum, blob, ayahJuz).then(() => onTadabburChanged?.());
+      };
+      rec.start();
+      setVoiceBusy(true);
+      window.setTimeout(() => {
+        if (mediaRecorderRef.current === rec && rec.state === "recording") rec.stop();
+      }, 15_000);
+    } catch {
+      setVoiceBusy(false);
+    }
   };
 
   const reportSubject = encodeURIComponent(`تصحيح نص قرآني — سورة ${surahName} آية ${ayahNum}`);
@@ -372,6 +439,9 @@ export function PageAyahActionSheet({ surahNum, surahName, ayahNum, ayahText, is
                   {currentEditionMeta?.label} — {currentEditionMeta?.author}
                 </p>
                 <p className="ayah-sheet__tafsir-text" style={{ fontSize: `${tafsirFont}px` }}>{tafsirText}</p>
+                <button type="button" className="aas-action-btn is-active" style={{ width: "100%", marginTop: ".5rem" }} onClick={() => void handleSaveTafsirClip()}>
+                  حفظ مقطع التفسير مع التدبّر
+                </button>
               </>
             ) : (
               <p className="ayah-sheet__tafsir-status">تعذّر تحميل التفسير. تحقّق من اتصالك.</p>
@@ -415,6 +485,39 @@ export function PageAyahActionSheet({ surahNum, surahName, ayahNum, ayahText, is
           </div>
         )}
 
+        {onSetLoop && onPlayFrom && onToggleHideVerse && (
+          <>
+            <button type="button" className="ayah-sheet__tafsir-toggle" onClick={() => setLoopOpen((v) => !v)} aria-expanded={loopOpen}>
+              <Repeat size={14} aria-hidden="true" />
+              <span>تكرار الحفظ المتقدّم</span>
+              <ChevronDown size={14} aria-hidden="true" className={loopOpen ? "is-open" : ""} />
+            </button>
+            {loopOpen && (
+              <MemorizationLoopPanel
+                currentAyah={ayahNum}
+                totalAyahs={totalAyahs}
+                pageRange={pageRange}
+                loopConfig={loopConfig}
+                onSetLoop={onSetLoop}
+                onPlayFrom={onPlayFrom}
+                hideVerseTest={hideVerseTest}
+                onToggleHideVerse={onToggleHideVerse}
+              />
+            )}
+          </>
+        )}
+
+        {shareOpen && (
+          <AyahShareCardPanel
+            text={ayahText}
+            surahName={surahName}
+            ayahNum={ayahNum}
+            surahNum={surahNum}
+            translationText={translationText}
+            tafsirSnippet={tafsirText}
+          />
+        )}
+
         {ribbonOpen && (
           <div className="aas-ribbons" role="listbox" aria-label="تصنيف الإشارة المرجعية">
             {BOOKMARK_RIBBONS.map((r) => (
@@ -441,7 +544,7 @@ export function PageAyahActionSheet({ surahNum, surahName, ayahNum, ayahText, is
               placeholder="اكتب ملاحظتك على هذه الآية..."
               dir="rtl"
             />
-            <button type="button" className="aas-action-btn is-active" style={{ marginTop: ".5rem", width: "100%" }} onClick={handleSaveNote}>
+            <button type="button" className="aas-action-btn is-active" style={{ marginTop: ".5rem", width: "100%" }} onClick={() => void handleSaveNote()}>
               {noteSaved ? <Check size={16} aria-hidden="true" /> : <StickyNote size={16} aria-hidden="true" />}
               {noteSaved ? "تم الحفظ" : "حفظ الملاحظة"}
             </button>
@@ -477,10 +580,20 @@ export function PageAyahActionSheet({ surahNum, surahName, ayahNum, ayahText, is
             {copiedKind === "plain" ? <Check size={18} aria-hidden="true" /> : <Copy size={18} aria-hidden="true" />}
             نسخ بلا تشكيل
           </button>
-          <button type="button" className="aas-action-btn" onClick={handleShareImage} disabled={sharing}>
+          <button type="button" className={`aas-action-btn ${shareOpen ? "is-active" : ""}`} onClick={handleShareImage}>
             <Share2 size={18} aria-hidden="true" />
-            {sharing ? "جارٍ…" : "مشاركة صورة"}
+            بطاقة مشاركة
           </button>
+          <button type="button" className={`aas-action-btn ${voiceBusy ? "is-active" : ""}`} onClick={() => void handleVoiceBookmark()}>
+            <Mic size={18} aria-hidden="true" />
+            {voiceBusy ? "إيقاف التسجيل" : "إشارة صوتية"}
+          </button>
+          {reciterId && (
+            <button type="button" className={`aas-action-btn ${downloadDone ? "is-active" : ""}`} onClick={() => void handleDownloadSurah()} disabled={downloadBusy}>
+              <Download size={18} aria-hidden="true" />
+              {downloadBusy ? "جارٍ…" : downloadDone ? "السورة محفوظة" : "تنزيل السورة"}
+            </button>
+          )}
           {onPrev && (
             <button type="button" className="aas-action-btn" onClick={onPrev}>
               <ChevronRight size={18} aria-hidden="true" />

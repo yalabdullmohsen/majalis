@@ -90,6 +90,7 @@ const RevelationOrderPage = lazy(() => import("@/views/RevelationOrderPage"));
 const MakkiMadaniPage = lazy(() => import("@/views/MakkiMadaniPage"));
 const MushafPageView = lazy(() => import("@/views/MushafPageView"));
 const MushafEditionInfoPage = lazy(() => import("@/views/MushafEditionInfoPage"));
+const ReflectionJournalPage = lazy(() => import("@/views/ReflectionJournalPage"));
 const RecitationTestPage = lazy(() => import("@/views/RecitationTestPage"));
 const SurahStoriesPage = lazy(() => import("@/views/SurahStoriesPage"));
 const QuranTajweedPage = lazy(() => import("@/views/QuranTajweedPage"));
@@ -635,6 +636,7 @@ function Router() {
           (Switch يُصيّر أول تطابق فقط)، مطابق تمامًا لتحذير wouter العام
           بترتيب المسارات الحرفية قبل الديناميكية على نفس البادئة. */}
       <Route path="/mushaf/about-edition"><SafeLazyRoute component={MushafEditionInfoPage} /></Route>
+      <Route path="/mushaf/reflections"><SafeLazyRoute component={ReflectionJournalPage} /></Route>
       {/* /mushaf و/mushaf/:surah يستخدمان MushafPageView (تخطيط سطري مطابق لمصحف المدينة). */}
       <Route path="/mushaf/:surah"><SafeLazyRoute component={MushafPageView} /></Route>
       <Route path="/mushaf"><SafeLazyRoute component={MushafPageView} /></Route>
