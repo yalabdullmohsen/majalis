@@ -8,6 +8,7 @@ import { getDatabaseManager } from "../core/quran/DatabaseManager";
 import { getQuranEngineContext } from "../core/quran/QuranEngineContext";
 import { getAudioEngine } from "../core/audio/AudioEngine";
 import { getTafseerService } from "../core/tafseer/TafseerService";
+import { useQuranEngine } from "../hooks/useQuranEngine";
 
 let passed = 0;
 let failed = 0;
@@ -34,6 +35,7 @@ async function main() {
   check(ctx.db === db, "QuranEngineContext.db is DatabaseManager");
   check(audio === getAudioEngine(), "AudioEngine singleton");
   check(tafseer === getTafseerService(), "TafseerService singleton");
+  check(typeof useQuranEngine === "function", "useQuranEngine hook exported");
 
   check((await db.initialize()) === false, "DatabaseManager.initialize scaffold returns false");
   check((await ctx.loadLastReadingProgress()) === null, "loadLastReadingProgress scaffold null");

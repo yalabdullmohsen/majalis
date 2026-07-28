@@ -1,6 +1,7 @@
 # Quran Engine — architecture scaffold
 
-Initialized under `artifacts/majalis/src/` (app root in this monorepo).
+App root in this monorepo: `artifacts/majalis/src/`  
+(Vercel builds from `artifacts/majalis/` — do not put these under repo-root `/src`.)
 
 ```
 src/
@@ -8,20 +9,21 @@ src/
     index.ts
     quran/
       index.ts
-      DatabaseManager.ts      # stub
-      QuranEngineContext.ts   # stub
+      DatabaseManager.ts
+      QuranEngineContext.ts
     audio/
       index.ts
-      AudioEngine.ts          # stub
+      AudioEngine.ts
     tafseer/
       index.ts
-      TafseerService.ts       # stub
+      TafseerService.ts
   components/
-    QuranViewer.tsx           # stub
-    QuranActionBar.tsx        # stub
-    HomeDashboard.tsx         # stub
+    QuranViewer.tsx
+    QuranActionBar.tsx
+    HomeDashboard.tsx
   hooks/
-    useQuranEngineCore.ts     # stub for new core (legacy useQuranEngine.ts kept)
+    useQuranEngine.ts
+    useQuranEngineCore.ts   # alias → useQuranEngine
   tests/
     core-engine.sample.test.ts
 ```
