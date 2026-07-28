@@ -802,10 +802,39 @@ const strictWords = (["bukhari", "muslim"] as const)
 const strictCorpus = strictWords.map((hs) => hs.map((w) => w.join(" ")).join(" @@ "));
 /** واوُ العطفِ وفاؤُه لا يُفرِّقان لفظًا عن لفظ */
 const bareConj = (w: string) => w.replace(/^[وف]/, "");
-const isSubsequenceLoose = (words: string[], hadith: string[]) => {
-  let i = 0;
-  for (const w of hadith) {
-    if (w === words[i] || bareConj(w) === bareConj(words[i])) i++;
+/**
+ * ج-٣٠٧: **الفجوةُ محدودةٌ لا مطلقة** — تعميمُ ما برهنَ عليه الفحصُ ٤٦ في ج-٣٠٦.
+ * كانت الدالةُ تمسحُ الحديثَ **كلَّه بإسنادِه** بلا حدٍّ للفجوة، فتلتقطُ كلماتِ
+ * النافذةِ متفرِّقةً على مئاتِ الكلماتِ فتشهدُ بتتابعٍ لا وجودَ له — وهو الثقبُ
+ * الذي أفلتَ منه عطبا ج-٣٠٥. وهي مشتركةٌ بين الفحوصِ ٣٢ و٣٦ و٣٧، فالثقبُ واحدٌ
+ * فيها كلِّها ⇒ فحُدَّت الفجوةُ **تراكميًّا** على الشاهدِ كلِّه كما في
+ * `agreementWitness`، وصار المطلعُ يُبحَثُ عنه في كلِّ موضعٍ من الحديثِ لا من
+ * أوَّلِه وحدَه (وإلّا لَضاعَ شاهدٌ صحيحٌ يقعُ متأخِّرًا).
+ *
+ * ⚠️ **والحدُّ ستٌّ لا أربعٌ — وقوبل بمسبارٍ مؤقَّتٍ (حُذف) على ٢٨٠٦ سجلًّا**:
+ * فحدُّ الأربعِ (حدُّ الفحصِ ٤٦) يُسقِطُ هنا **خمسةَ صفوفٍ إيجابًا كاذبًا** —
+ * `fawaid-curated-` ٠٧٤ و٣٠٤ و٥٢٦ و٧٤٨ و٩٧٠: «لا تحاسدوا ولا تناجشوا ولا
+ * تباغضوا ولا تدابروا وكونوا عباد الله إخوانًا» وهو لفظُ مسلمٍ (٦٥٤١) بحرفِه
+ * **مختصرًا بإسقاطِ جملةٍ من وسطِه** («ولا يبع بعضكم على بيع بعض» = ستُّ كلماتٍ)،
+ * والاختصارُ في نقلِ الحديثِ ليس عطبًا. وحدودُ ٦ و٨ و١٢ و٢٠ تُعطي النتيجةَ
+ * نفسَها ⇒ **فالستُّ أضبطُ حدٍّ لا يُسقِطُ مختصَرًا سليمًا**، وهي دونَ طولِ أيِّ
+ * إسنادٍ بكثيرٍ فيبقى المقصودُ الأوَّلُ (منعُ مسحِ الحديثِ بإسنادِه) محقَّقًا.
+ * **وفرقُ الحدَّينِ سببُه فرقُ النافذة**: نافذةُ ٤٦ خمسُ كلماتٍ، ونوافذُ ٣٦ و٣٧
+ * ثلاثَ عشرةَ وعشرٌ — فالشاهدُ أطولُ فاحتمالُ اختصارٍ داخلَه أكبر.
+ */
+const LOOSE_MAX_GAP = 6;
+const isSubsequenceLoose = (words: string[], hadith: string[], maxGap = LOOSE_MAX_GAP) => {
+  const eq = (a: string, b: string) => a === b || bareConj(a) === bareConj(b);
+  for (let s = 0; s < hadith.length; s++) {
+    if (!eq(hadith[s], words[0])) continue;
+    let i = 1;
+    let j = s + 1;
+    let gap = 0;
+    while (j < hadith.length && i < words.length) {
+      if (eq(hadith[j], words[i])) i++;
+      else if (++gap > maxGap) break;
+      j++;
+    }
     if (i === words.length) return true;
   }
   return false;
@@ -866,7 +895,17 @@ const soleLafzClaimedAgreed = [...FAWAID_CURATED_SEED, ...SEED_FAWAID].filter((f
   const src = f.source ?? "";
   if (!/متفق عليه/.test(src)) return false;
   if (REJECTED.test(f.text) || REJECTED.test(src)) return false;
-  const w = normStrict(f.text).split(" ").filter(Boolean).map(bareConj);
+  // ج-٣٠٧: النافذةُ **داخلَ المقتبسِ وحدَه** إن كان في النصِّ «» — وهو القيدُ
+  // الثاني من قيودِ الفحصِ ٤٦ (ج-٣٠٦) نفسُه، ولزومُه هنا انكشفَ بتحديدِ الفجوةِ:
+  // بلا هذا القيدِ يسقطُ `seed-fawaid-257` إيجابًا كاذبًا، إذ تعبرُ نافذتُه
+  // («**قال** المسلم من سلم المسلمون») الحدَّ بين كلامِ المحرِّرِ («قال ﷺ:»)
+  // واللفظِ، و«قال» تتقدَّمُ اللفظَ في البخاريِّ (١٠) لانتهاءِ إسنادِه بها ولا
+  // تتقدَّمُه في مسلمٍ (١٦٢) — وهو عينُ ثقبِ الفحصِ ٣٠ في ج-٣٠٤.
+  const quotedUnits = [...f.text.matchAll(/«([^»]+)»/g)].map((m) => m[1]);
+  const units = (quotedUnits.length ? quotedUnits : [f.text]).map((t) =>
+    normStrict(t).split(" ").filter(Boolean).map(bareConj)
+  );
+  for (const w of units) {
   for (let i = 0; i + 5 <= w.length; i++) {
     const win = w.slice(i, i + 5);
     const inB = conjCorpus[0].includes(win.join(" "));
@@ -880,6 +919,7 @@ const soleLafzClaimedAgreed = [...FAWAID_CURATED_SEED, ...SEED_FAWAID].filter((f
     // مستثنًى: مصدرٌ خصَّص اللفظَ لصاحبِه بالفعل (علاجُ ج-٢٩٠)
     if (specifiesOwner(src, inB ? 0 : 1)) continue;
     return true;
+  }
   }
   return false;
 });
