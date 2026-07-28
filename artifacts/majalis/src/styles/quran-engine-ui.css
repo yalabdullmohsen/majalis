@@ -5,6 +5,10 @@
   transition: background-color 0.25s ease, color 0.25s ease;
 }
 
+.qe-page--focus {
+  min-height: 100dvh;
+}
+
 .qe-page__nav {
   display: flex;
   gap: 0.4rem;
@@ -75,12 +79,110 @@ html.dark .qe-abar {
   padding: 1rem 1rem calc(7.5rem + var(--bottom-nav-total, 3.5rem));
 }
 
+.qe-viewer__page {
+  min-height: inherit;
+}
+
+.qe-viewer--focus {
+  max-width: none;
+  min-height: 100dvh;
+  margin: 0;
+  padding: max(0.75rem, env(safe-area-inset-top)) 1rem
+    max(1.25rem, env(safe-area-inset-bottom));
+  background: #fffdf5;
+}
+
+html[data-theme="dark"] .qe-viewer--focus,
+html.dark .qe-viewer--focus {
+  background: #0f1a16;
+}
+
 .qe-viewer__head {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
   gap: 0.75rem;
   margin-bottom: 1rem;
+}
+
+.qe-viewer__head-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  justify-content: flex-end;
+}
+
+.qe-viewer__head-actions .qe-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.qe-viewer__exit-focus {
+  position: sticky;
+  top: max(0.5rem, env(safe-area-inset-top));
+  z-index: 5;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-bottom: 0.75rem;
+  border: 1px solid color-mix(in srgb, var(--qe-emerald) 30%, transparent);
+  background: color-mix(in srgb, var(--qe-panel) 92%, transparent);
+  color: var(--qe-emerald);
+  border-radius: 999px;
+  padding: 0.4rem 0.85rem;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+}
+
+.qe-viewer__footer {
+  margin-top: 1.25rem;
+  padding: 0.75rem 0 0.25rem;
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--qe-muted);
+  border-top: 1px solid color-mix(in srgb, var(--qe-line) 55%, transparent);
+}
+
+.qe-viewer__focus-hint {
+  margin: 1rem 0 0;
+  text-align: center;
+  font-size: 0.78rem;
+  color: var(--qe-muted);
+  opacity: 0.85;
+}
+
+.qe-ayah-list--focus .qe-ayah {
+  border-color: transparent;
+  background: transparent;
+  border-radius: 0;
+  padding-inline: 0.15rem;
+}
+
+.qe-ayah-list--focus .qe-ayah__text {
+  font-size: clamp(1.35rem, 4.2vw, 1.65rem);
+  line-height: 2.25;
+  text-align: justify;
+}
+
+.qe-ayah-list--focus .qe-ayah.is-active {
+  background: color-mix(in srgb, var(--qe-emerald) 10%, transparent);
+  border-radius: 0.65rem;
+  padding-inline: 0.55rem;
+}
+
+/* Hide platform bottom nav while Quran Engine focus mode is on */
+body.qe-focus-mode .bottom-nav,
+body.qe-focus-mode .bottom-nav--v2,
+body.qe-focus-mode .bottom-nav-bar {
+  display: none !important;
+}
+
+body.qe-focus-mode {
+  overflow: hidden;
 }
 
 .qe-viewer__title {
