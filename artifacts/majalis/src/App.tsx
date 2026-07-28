@@ -822,6 +822,7 @@ function AppShell() {
         <IslamicReminderBootstrap />
         <AdhanSchedulerBootstrap />
         <PrayerAlertSchedulerBootstrap />
+        <OfflineSyncBootstrap />
         <NavBar />
         <TopSectionBar />
         <PrayerCountdownBanner />
@@ -857,6 +858,20 @@ function AppShell() {
       </div>
     </WouterRouter>
   );
+}
+
+/** Background IndexedDB warm + reconnect sync — logic only, no UI. */
+function OfflineSyncBootstrap() {
+  useEffect(() => {
+    let cancelled = false;
+    void import("@/lib/offline-sync-bootstrap").then((m) => {
+      if (!cancelled) m.startOfflineSync();
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+  return null;
 }
 
 /** يؤجّل تحميل حزمة المساعد حتى الخمول أو أول تفاعل — لا يحجب العرض الأول. */
