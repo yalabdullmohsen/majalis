@@ -32,6 +32,20 @@ export async function startPlatformLogicSuite(): Promise<void> {
       /* ignore */
     }
 
+    // Soft-warm: unseen discovery + delta sync (never block UX)
+    try {
+      const { serveLaunchDiscovery } = await import("@/lib/unseen-benefit-discovery");
+      serveLaunchDiscovery(1);
+    } catch {
+      /* ignore */
+    }
+    try {
+      const { runDeltaSync } = await import("@/lib/delta-content-sync");
+      void runDeltaSync();
+    } catch {
+      /* ignore */
+    }
+
     const prediction = predictKhatmahCompletion();
     await syncSmartLocalNotifications({ khatmahBehind: prediction.behindSchedule });
     maybeNotifyKhatmahBehind(prediction);
