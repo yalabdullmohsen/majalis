@@ -1,7 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
-import { BookUser, Landmark, Scale, Shield, Star } from "lucide-react";
-import { PageHeader } from "@/components/ui-common";
+import { BookOpen, BookUser, Landmark, Layers, Scale, Search, Shield, Star } from "lucide-react";
+import { PageHeader, SkeletonCardGrid } from "@/components/ui-common";
+import { arabicMatchAny } from "@/lib/arabic-search";
+import { fetchPublishedCategoryTree, type CategoryWithCounts } from "@/lib/learn-library-service";
 import { applyPageSeo } from "@/lib/seo";
 import "@/styles/pages/library.css";
 
@@ -39,14 +41,19 @@ const LEARN_SECTIONS = [
 ] as const;
 
 export default function LearnHubPage() {
+  const [tree, setTree] = useState<CategoryWithCounts[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState("");
+
   useEffect(() => {
     applyPageSeo({
       path: "/learn",
       title: "تعلّم | المجلس العلمي",
       description:
-        "بوابة التعلّم: الفقه والأحكام، السيرة النبوية، العقيدة، قصص الأنبياء، والأمم السابقة.",
+        "بوابة التعلّم: الفقه والأحكام، السيرة النبوية، العقيدة، قصص الأنبياء، والأمم السابقة — مع فهرس أبواب العلم المنشورة.",
       keywords: [
         "تعلّم",
+        "أبواب العلم",
         "الفقه والأحكام",
         "السيرة النبوية",
         "العقيدة",
@@ -61,7 +68,7 @@ export default function LearnHubPage() {
           name: "تعلّم",
           url: "https://www.majlisilm.com/learn",
           description:
-            "أقسام التعلّم الأساسية: فقه وأحكام، سيرة، عقيدة، قصص أنبياء، وأمم سابقة",
+            "أقسام التعلّم الأساسية وفهرس أبواب العلم المنشورة",
           hasPart: LEARN_SECTIONS.map((s) => ({
             "@type": "WebPage",
             name: s.label,
@@ -72,12 +79,27 @@ export default function LearnHubPage() {
     });
   }, []);
 
+  useEffect(() => {
+    fetchPublishedCategoryTree()
+      .then(setTree)
+      .catch(() => setTree([]))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const filtered = useMemo(() => {
+    if (!search.trim()) return tree;
+    return tree.filter((c) => arabicMatchAny([c.name, c.description], search));
+  }, [tree, search]);
+
+  const totalLessons = tree.reduce((s, c) => s + c.lessonCount, 0);
+  const totalSeries = tree.reduce((s, c) => s + c.seriesCount, 0);
+
   return (
     <div className="page-shell lrn-hub">
       <PageHeader
         eyebrow="بوابة التعلّم"
         title="تعلّم"
-        subtitle="اختر بابًا: الفقه والأحكام، السيرة، العقيدة، قصص الأنبياء، والأمم السابقة."
+        subtitle="اختر بابًا: الفقه والأحكام، السيرة، العقيدة، قصص الأنبياء، والأمم السابقة — أو تصفّح فهرس أبواب العلم المنشورة."
       />
 
       <nav className="lrn-hub-grid" aria-label="أقسام التعلّم">
@@ -91,6 +113,71 @@ export default function LearnHubPage() {
           </Link>
         ))}
       </nav>
+
+      <section className="lrn-hub-catalog" aria-label="فهرس أبواب العلم">
+        <div className="lrn-hub-catalog__head">
+          <h2 className="lrn-hub-catalog__title">
+            <Layers size={18} aria-hidden="true" /> أبواب العلم المنشورة
+          </h2>
+          {!loading && (
+            <div className="lrn-hub-stats" aria-live="polite">
+              <div className="lrn-hub-stat">
+                <strong>{tree.length}</strong>
+                <span>باب رئيسي</span>
+              </div>
+              <span className="lrn-hub-stat-divider" aria-hidden="true" />
+              <div className="lrn-hub-stat">
+                <strong>{totalLessons}</strong>
+                <span>درس</span>
+              </div>
+              <span className="lrn-hub-stat-divider" aria-hidden="true" />
+              <div className="lrn-hub-stat">
+                <strong>{totalSeries}</strong>
+                <span>سلسلة</span>
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div className="lrn-hub-search">
+          <Search size={16} className="lrn-hub-search__icon" aria-hidden="true" />
+          <input
+            className="lrn-hub-search__input"
+            type="search"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="ابحث في أبواب العلم المنشورة…"
+            aria-label="بحث في أبواب العلم"
+          />
+        </div>
+
+        {loading ? (
+          <SkeletonCardGrid count={6} />
+        ) : filtered.length === 0 ? (
+          <p className="lrn-hub-empty">لا أبواب منشورة مطابقة للبحث حاليًا.</p>
+        ) : (
+          <div className="lrn-hub-grid">
+            {filtered.map((cat) => (
+              <Link key={cat.id} href={`/learn/${cat.slug}`} className="lrn-hub-card">
+                <div className="lrn-hub-card__icon">
+                  <BookOpen size={20} strokeWidth={1.6} aria-hidden="true" />
+                </div>
+                <h3 className="lrn-hub-card__title">{cat.name}</h3>
+                {cat.description && <p className="lrn-hub-card__desc">{cat.description}</p>}
+                <div className="lrn-hub-card__meta">
+                  <span className="lrn-hub-card__badge">{cat.lessonCount} درس</span>
+                  {cat.seriesCount > 0 && (
+                    <span className="lrn-hub-card__badge lrn-hub-card__badge--muted">{cat.seriesCount} سلسلة</span>
+                  )}
+                  {cat.children.length > 0 && (
+                    <span className="lrn-hub-card__badge lrn-hub-card__badge--muted">{cat.children.length} فرع</span>
+                  )}
+                </div>
+              </Link>
+            ))}
+          </div>
+        )}
+      </section>
     </div>
   );
 }
