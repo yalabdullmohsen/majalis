@@ -219,6 +219,14 @@ html.dark .qe-abar {
   padding-block: 0.5rem;
 }
 
+.qe-ayah-list--no-nums .qe-ayah {
+  gap: 0;
+}
+
+.qe-ayah-list--no-nums .qe-ayah__num {
+  display: none;
+}
+
 .qe-ayah-list--focus .qe-ayah {
   border-color: transparent;
   background: transparent;

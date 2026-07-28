@@ -39,11 +39,13 @@ function clampPage(n: number): number {
 /** عرض كلمة للوضع الخفيف: نص Unicode عادي (لا PUA خاص بخط الصفحة) —
  * شارة نجمية زمردية زخرفية موحّدة لرقم نهاية الآية بدل glyph خط الصفحة
  * (خط QPC غير مُحمَّل أصلًا في هذا الوضع). */
-function renderLightWord(w: QpcWord) {
+function renderLightWord(w: QpcWord, showAyahNumbers: boolean) {
   if (w.charType === "end") {
     return (
       <Fragment key={w.id}>
-        <span className="qs-ayah-num">{toArabicDigits(Number(w.textUthmani.replace(/\D/g, "")) || 0)}</span>
+        {showAyahNumbers ? (
+          <span className="qs-ayah-num">{toArabicDigits(Number(w.textUthmani.replace(/\D/g, "")) || 0)}</span>
+        ) : null}
         {w.sajdahNumber !== null && <span className="mf2-sajda-badge">سجدة</span>}
       </Fragment>
     );
@@ -383,7 +385,7 @@ export default function MushafPageView() {
                         activeAyahKey={v2ActiveKey}
                         onAyahPress={handleV2AyahPress}
                         sharedFontFamily={'"Amiri Quran", "Scheherazade New", serif'}
-                        renderWord={renderLightWord}
+                        renderWord={(w) => renderLightWord(w, prefs.showAyahNumbers)}
                         bare
                       />
                     )}
@@ -508,6 +510,28 @@ export default function MushafPageView() {
                   }}
                 >
                   انتقل
+                </button>
+              </div>
+            </div>
+
+            <div className="mpv-settings-group">
+              <span className="mpv-settings-group__label">أرقام الآيات</span>
+              <div className="mpv-settings-group__grid">
+                <button
+                  type="button"
+                  className={`mpv-chip ${prefs.showAyahNumbers ? "is-active" : ""}`}
+                  onClick={() => setPref("showAyahNumbers", true)}
+                  aria-pressed={prefs.showAyahNumbers}
+                >
+                  إظهار
+                </button>
+                <button
+                  type="button"
+                  className={`mpv-chip ${!prefs.showAyahNumbers ? "is-active" : ""}`}
+                  onClick={() => setPref("showAyahNumbers", false)}
+                  aria-pressed={!prefs.showAyahNumbers}
+                >
+                  إخفاء
                 </button>
               </div>
             </div>
