@@ -29,6 +29,8 @@ export type QuranEngineState = {
   warmPhase: QuranEngineWarmPhase;
   pagesCached: number;
   fontsCached: number;
+  /** Optional Tajweed color coding on mushaf/continuous text (default off). */
+  isTajweedEnabled: boolean;
 };
 
 const DEFAULT_STATE: QuranEngineState = {
@@ -44,6 +46,7 @@ const DEFAULT_STATE: QuranEngineState = {
   warmPhase: "idle",
   pagesCached: 0,
   fontsCached: 0,
+  isTajweedEnabled: false,
 };
 
 type Listener = () => void;

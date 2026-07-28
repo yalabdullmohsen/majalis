@@ -78,9 +78,11 @@ export function QuranViewer({
     state,
     activePage,
     hydrating,
+    isTajweedEnabled,
     setPage,
     setActiveVerse,
     updateReadingProgress,
+    toggleTajweed,
   } = useQuranEngineCore();
 
   const [layout, setLayout] = useState<MushafPageLayout | null>(null);
@@ -270,6 +272,16 @@ export function QuranViewer({
           >
             التالي
           </button>
+          <button
+            type="button"
+            className={`quran-viewer__nav-btn quran-viewer__tajweed-btn${isTajweedEnabled ? " is-active" : ""}`}
+            role="switch"
+            aria-checked={isTajweedEnabled}
+            aria-label="تفعيل تلوين أحكام التجويد"
+            onClick={() => toggleTajweed()}
+          >
+            {isTajweedEnabled ? "تجويد ✓" : "تجويد"}
+          </button>
         </div>
       )}
 
@@ -303,6 +315,7 @@ export function QuranViewer({
                 activeAyahKey={activeAyahKey}
                 onAyahPress={onAyahPress}
                 screenReaderEnhanced
+                tajweedEnabled={isTajweedEnabled}
               />
             )}
           </PageCurlStage>

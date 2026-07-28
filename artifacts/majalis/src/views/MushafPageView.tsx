@@ -27,9 +27,13 @@ import { KhatmahProfilesPanel } from "@/components/quran/KhatmahProfilesPanel";
 import { PageCurlStage } from "@/components/quran/PageCurlStage";
 import { WirdSettingsPanel } from "@/components/quran/WirdSettingsPanel";
 import { QuranBackupPanel } from "@/components/quran/QuranBackupPanel";
+import { TajweedColorToggle } from "@/components/quran/TajweedColorToggle";
 import { QuranEngineProvider, useQuranEngineApi } from "@/components/quran/QuranEngineProvider";
+import { useQuranEngineSelector } from "@/lib/quran-engine-store";
+import { getQuranEngineContext } from "@/core/quran/QuranEngineContext";
 import { registerQuranEngineDisposable } from "@/lib/quran-engine-teardown";
 import { loadMushafPage, prefetchMushafPage, type MushafPageLayout, type QpcWord } from "@/lib/mushaf-v2-data";
+import { getTajweedRuleForWord } from "@/lib/tajweed-color-tags";
 import { beginAbortScope, abortScope, guardAsync } from "@/lib/route-abort";
 import { logDiagnostic } from "@/lib/diagnostics";
 import { MushafPageV2 } from "@/components/quran/MushafPageV2";
@@ -63,7 +67,7 @@ function clampPage(n: number): number {
 /** عرض كلمة للوضع الخفيف: نص Unicode عادي (لا PUA خاص بخط الصفحة) —
  * شارة نجمية زمردية زخرفية موحّدة لرقم نهاية الآية بدل glyph خط الصفحة
  * (خط QPC غير مُحمَّل أصلًا في هذا الوضع). */
-function renderLightWord(w: QpcWord) {
+function renderLightWord(w: QpcWord, tajweedEnabled = false) {
   if (w.charType === "end") {
     return (
       <Fragment key={w.id}>
@@ -74,7 +78,17 @@ function renderLightWord(w: QpcWord) {
       </Fragment>
     );
   }
-  return <span key={w.id} className="mf2-word">{w.textQpcHafs}</span>;
+  const rule = tajweedEnabled ? getTajweedRuleForWord(w.textUthmani || w.textQpcHafs || "") : null;
+  return (
+    <span
+      key={w.id}
+      className={`mf2-word${rule ? ` mf2-word--tj mf2-word--tj-${rule.ruleId}` : ""}`}
+      style={rule ? { color: rule.color } : undefined}
+      data-tj-rule={rule?.ruleId}
+    >
+      {w.textQpcHafs}
+    </span>
+  );
 }
 
 const THEME_OPTIONS: { id: QuranReadingTheme; label: string }[] = [
@@ -409,6 +423,11 @@ export default function MushafPageView() {
   } = useAyahPlayer(activeSurahForPlayer, activeSurahAyahCount);
 
   const engineApi = useQuranEngineApi();
+  const isTajweedEnabled = useQuranEngineSelector((s) => s.isTajweedEnabled);
+
+  useEffect(() => {
+    void getQuranEngineContext().loadTajweedPreference();
+  }, []);
   useEffect(() => {
     engineApi.syncFromReader({
       page,
@@ -637,6 +656,7 @@ export default function MushafPageView() {
                   activeWordIndex={activeWordIndex}
                   hideVerseTest={prefs.hideVerseTest}
                   notedVerseKeys={notedVerseKeys}
+                  tajweedEnabled={isTajweedEnabled}
                   onAyahPress={handleContinuousAyahPress}
                   onVisibleAyah={handleContinuousVisible}
                 />
@@ -678,6 +698,7 @@ export default function MushafPageView() {
                         onMutashabihPress={handleMutashabihPress}
                         onWordLongPress={handleWordLongPress}
                         screenReaderEnhanced={prefs.screenReaderEnhanced}
+                        tajweedEnabled={isTajweedEnabled}
                         bare
                       />
                     ) : (
@@ -695,7 +716,8 @@ export default function MushafPageView() {
                         onWordLongPress={handleWordLongPress}
                         screenReaderEnhanced={prefs.screenReaderEnhanced}
                         sharedFontFamily={'"Amiri Quran", "Scheherazade New", serif'}
-                        renderWord={renderLightWord}
+                        renderWord={(w) => renderLightWord(w, isTajweedEnabled)}
+                        tajweedEnabled={isTajweedEnabled}
                         bare
                       />
                     )}
@@ -960,6 +982,16 @@ export default function MushafPageView() {
                   تسميات قارئ الشاشة
                 </button>
               </div>
+            </div>
+
+            <div className="mpv-settings-group">
+              <span className="mpv-settings-group__label">تلوين أحكام التجويد</span>
+              <div className="mpv-settings-group__grid">
+                <TajweedColorToggle />
+              </div>
+              <p className="mpv-settings-hint" style={{ margin: "0.4rem 0 0", fontSize: "0.78rem", opacity: 0.75 }}>
+                عند الإيقاف يُعرض النص العثماني بلا ألوان. يُحفظ الاختيار بين الجلسات.
+              </p>
             </div>
 
             <WirdSettingsPanel />

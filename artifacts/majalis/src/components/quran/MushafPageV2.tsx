@@ -1,6 +1,7 @@
 import { Fragment, useLayoutEffect, useRef, useState, type ReactNode, type MouseEvent, type PointerEvent } from "react";
 import { useMushafPageFont, mushafPageFontFamily } from "@/hooks/useMushafPageFont";
 import type { MushafPageLayout, QpcWord } from "@/lib/mushaf-v2-data";
+import { getTajweedRuleForWord } from "@/lib/tajweed-color-tags";
 
 /** يُجمِّع كلمات سطر متتالية بنفس verseKey في عنقود واحد — الوحدة
  * التفاعلية الحقيقية هي "الآية" لا الكلمة المفردة (مطابقًا لـMushafPage.tsx
@@ -49,6 +50,11 @@ type Props = {
    * مسؤول عن وضع key={w.id} على العقدة المُعادة. افتراضيًا: نفس عرض
    * وضع الدقة المطبعية (glyph الصفحة + شارة سجدة نصية). */
   renderWord?: (w: QpcWord) => ReactNode;
+  /**
+   * When true, apply optional Tajweed color classes/styles on word glyphs
+   * (based on textUthmani). When false, plain Uthmani/QPC rendering.
+   */
+  tajweedEnabled?: boolean;
   /** true: يُصدَّر .mf2-lines وحدها بلا .mf2-page/.mf2-frame الخاصين بها
    * (بلا إطار/outline/خلفية/aspect-ratio مستقلة) — لاستخدام هذا المكوّن
    * متداخلاً داخل إطار صفحة قائم أصلًا (مثل .qs-mushaf-frame في
@@ -60,25 +66,38 @@ type Props = {
 
 const ROW_COUNT_APPROX = 15;
 
-const defaultRenderWord = (w: QpcWord, wordActive?: boolean, screenReaderEnhanced = true) => (
-  <Fragment key={w.id}>
-    <span
-      className={`mf2-word${wordActive ? " mf2-word--active" : ""}`}
-      aria-hidden={w.charType === "end" ? undefined : true}
-    >
-      {w.glyphText}
-    </span>
-    {w.charType === "end" && w.sajdahNumber !== null && (
+const defaultRenderWord = (
+  w: QpcWord,
+  wordActive?: boolean,
+  screenReaderEnhanced = true,
+  tajweedEnabled = false,
+) => {
+  const rule =
+    tajweedEnabled && w.charType !== "end"
+      ? getTajweedRuleForWord(w.textUthmani || w.textQpcHafs || "")
+      : null;
+  return (
+    <Fragment key={w.id}>
       <span
-        className="mf2-sajda-badge"
-        role="img"
-        aria-label={screenReaderEnhanced ? `موضع سجدة رقم ${w.sajdahNumber}` : "سجدة"}
+        className={`mf2-word${wordActive ? " mf2-word--active" : ""}${rule ? ` mf2-word--tj mf2-word--tj-${rule.ruleId}` : ""}`}
+        style={rule ? { color: rule.color } : undefined}
+        data-tj-rule={rule?.ruleId}
+        aria-hidden={w.charType === "end" ? undefined : true}
       >
-        سجدة
+        {w.glyphText}
       </span>
-    )}
-  </Fragment>
-);
+      {w.charType === "end" && w.sajdahNumber !== null && (
+        <span
+          className="mf2-sajda-badge"
+          role="img"
+          aria-label={screenReaderEnhanced ? `موضع سجدة رقم ${w.sajdahNumber}` : "سجدة"}
+        >
+          سجدة
+        </span>
+      )}
+    </Fragment>
+  );
+};
 
 export function MushafPageV2({
   layout,
@@ -95,6 +114,7 @@ export function MushafPageV2({
   screenReaderEnhanced = true,
   sharedFontFamily,
   renderWord,
+  tajweedEnabled = false,
   bare,
 }: Props) {
   const perPageFontReady = useMushafPageFont(sharedFontFamily ? null : (layout?.pageNumber ?? null));
@@ -293,7 +313,7 @@ export function MushafPageV2({
                       }
                       return (
                         <span key={w.id} {...longPressHandlers}>
-                          {defaultRenderWord(w, wordActive, screenReaderEnhanced)}
+                          {defaultRenderWord(w, wordActive, screenReaderEnhanced, tajweedEnabled)}
                         </span>
                       );
                     })}

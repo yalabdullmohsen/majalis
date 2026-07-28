@@ -37,6 +37,8 @@ check(viewer.includes("onAyahSelect") && viewer.includes("onAyahPress"), "ayah t
 check(viewer.includes("prefetchMushafPage"), "lazy/prefetch neighbors");
 check(viewer.includes("PageCurlStage"), "transform page transition");
 check(viewer.includes("QuranActionBar") && viewer.includes("selectedAyah"), "wires QuranActionBar on select");
+check(viewer.includes("tajweedEnabled") && viewer.includes("isTajweedEnabled"), "conditional Tajweed coloring");
+check(viewer.includes("toggleTajweed"), "viewer exposes Tajweed toggle");
 check(page.includes("QuranViewer"), "page wrapper mounts QuranViewer");
 check(app.includes("/quran-viewer"), "App route registered");
 check(ctx.includes("goToAyah") && ctx.includes("activePage"), "context exposes goToAyah + activePage");

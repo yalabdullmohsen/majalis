@@ -20,6 +20,7 @@ import {
 import type { PlayerState, TeachPhase } from "@/hooks/useAyahPlayer";
 import {
   getDatabaseManager,
+  TAJWEED_ENABLED_SETTING_KEY,
   type DatabaseManager,
   type KhatmahStore,
 } from "@/core/quran/DatabaseManager";
@@ -60,6 +61,12 @@ export type QuranEngineContextApi = {
   clearActiveVerse(): void;
   setAudio(partial: Partial<AudioSnapshot>): void;
   setWarmPhase(phase: QuranEngineWarmPhase, stats?: { pagesCached?: number; fontsCached?: number }): void;
+  /** Flip optional Tajweed color coding and persist to settings_store. */
+  toggleTajweed(): void;
+  /** Explicitly set Tajweed coloring on/off (persists). */
+  setTajweedEnabled(enabled: boolean): void;
+  /** Hydrate isTajweedEnabled from settings_store (safe). */
+  loadTajweedPreference(): Promise<boolean>;
   /** Load most recently read khatmah profile into engine state. */
   loadLastReadingProgress(): Promise<KhatmahStore | null>;
   /** Upsert current ayah into khatmah_store (safe — never throws). */
@@ -90,7 +97,7 @@ class QuranEngineContextImpl implements QuranEngineContextApi {
 
   private booted = false;
 
-  /** Idempotent: open IDB + start resource lifecycle (idle). */
+  /** Idempotent: open IDB + start resource lifecycle (idle) + hydrate settings. */
   async boot(): Promise<void> {
     if (this.booted) return;
     this.booted = true;
@@ -103,6 +110,11 @@ class QuranEngineContextImpl implements QuranEngineContextApi {
       await this.db.initialize();
     } catch {
       /* IndexedDB may be unavailable — engine still works in-memory */
+    }
+    try {
+      await this.loadTajweedPreference();
+    } catch {
+      /* preference defaults to false */
     }
   }
 
@@ -168,6 +180,30 @@ class QuranEngineContextImpl implements QuranEngineContextApi {
       ...(stats?.pagesCached != null ? { pagesCached: stats.pagesCached } : {}),
       ...(stats?.fontsCached != null ? { fontsCached: stats.fontsCached } : {}),
     });
+  }
+
+  /** Persist + patch `isTajweedEnabled`. Never throws. */
+  setTajweedEnabled(enabled: boolean): void {
+    const next = Boolean(enabled);
+    patchQuranEngineState({ isTajweedEnabled: next });
+    void this.db.setSetting(TAJWEED_ENABLED_SETTING_KEY, next).catch(() => undefined);
+  }
+
+  toggleTajweed(): void {
+    this.setTajweedEnabled(!this.getState().isTajweedEnabled);
+  }
+
+  async loadTajweedPreference(): Promise<boolean> {
+    try {
+      await this.db.initialize();
+      const stored = await this.db.getSetting<boolean>(TAJWEED_ENABLED_SETTING_KEY);
+      const enabled = stored === true;
+      patchQuranEngineState({ isTajweedEnabled: enabled });
+      return enabled;
+    } catch {
+      patchQuranEngineState({ isTajweedEnabled: false });
+      return false;
+    }
   }
 
   /**
@@ -288,6 +324,8 @@ export type UseQuranEngineCoreResult = {
   hydrating: boolean;
   /** Last persistence error message (null when healthy). */
   persistError: string | null;
+  /** Optional Tajweed color coding (from engine state). */
+  isTajweedEnabled: boolean;
   setPage: (page: number) => void;
   /** Navigate to an ayah (resolves mushaf page when omitted). */
   goToAyah: (verse: ActiveVerse) => Promise<void>;
@@ -296,6 +334,8 @@ export type UseQuranEngineCoreResult = {
   loadLastReadingProgress: () => Promise<KhatmahStore | null>;
   clearActiveVerse: () => void;
   setAudio: (partial: Partial<AudioSnapshot>) => void;
+  toggleTajweed: () => void;
+  setTajweedEnabled: (enabled: boolean) => void;
   db: DatabaseManager;
 };
 
@@ -314,7 +354,10 @@ export function useQuranEngineCore(): UseQuranEngineCoreResult {
     setHydrating(true);
     void (async () => {
       try {
-        await engine.loadLastReadingProgress();
+        await Promise.all([
+          engine.loadLastReadingProgress(),
+          engine.loadTajweedPreference(),
+        ]);
         if (!cancelled) setPersistError(null);
       } catch (err) {
         if (!cancelled) {
@@ -414,11 +457,28 @@ export function useQuranEngineCore(): UseQuranEngineCoreResult {
     }
   }, [engine]);
 
+  const toggleTajweed = useCallback(() => {
+    try {
+      engine.toggleTajweed();
+    } catch {
+      /* ignore */
+    }
+  }, [engine]);
+
+  const setTajweedEnabled = useCallback((enabled: boolean) => {
+    try {
+      engine.setTajweedEnabled(enabled);
+    } catch {
+      /* ignore */
+    }
+  }, [engine]);
+
   return {
     state,
     activePage: state.page,
     hydrating,
     persistError,
+    isTajweedEnabled: state.isTajweedEnabled,
     setPage,
     goToAyah,
     setActiveVerse,
@@ -426,6 +486,8 @@ export function useQuranEngineCore(): UseQuranEngineCoreResult {
     loadLastReadingProgress,
     clearActiveVerse,
     setAudio,
+    toggleTajweed,
+    setTajweedEnabled,
     db: engine.db,
   };
 }

@@ -11,6 +11,7 @@ import {
   type OfflineAssetRecord,
   type OutboxSyncRecord,
   type QuranKnowledgeRecord,
+  type SettingsStoreRecord,
   type UserReflectionRecord,
 } from "@/lib/quran-offline/types";
 
@@ -20,6 +21,7 @@ export type QuranOfflineTables = {
   quran_knowledge_store: EntityTable<QuranKnowledgeRecord, "ayah_key">;
   offline_assets_store: EntityTable<OfflineAssetRecord, "asset_id">;
   outbox_sync_store: EntityTable<OutboxSyncRecord, "id">;
+  settings_store: EntityTable<SettingsStoreRecord, "key">;
 };
 
 /** v1 indexes (frozen) — kept for upgrade path documentation/tests. */
@@ -37,9 +39,9 @@ export const QURAN_OFFLINE_STORE_INDEXES_V1 = {
 
 /**
  * Current (v2) store indexes — lifecycle fields: last_accessed_at / pinned / access_count.
- * Single source of truth for contract tests.
+ * Frozen for the v2 → v3 upgrade path.
  */
-export const QURAN_OFFLINE_STORE_INDEXES = {
+export const QURAN_OFFLINE_STORE_INDEXES_V2 = {
   khatmah_store:
     "id, type, last_read_timestamp, is_completed, [type+is_completed], updated_at",
   user_reflections_store:
@@ -52,12 +54,22 @@ export const QURAN_OFFLINE_STORE_INDEXES = {
     "++id, client_mutation_id, status, created_at, entity_type, [status+created_at], entity_id",
 } as const;
 
+/**
+ * Current (v3) store indexes — adds settings_store (shared with DatabaseManager).
+ * Single source of truth for contract tests.
+ */
+export const QURAN_OFFLINE_STORE_INDEXES = {
+  ...QURAN_OFFLINE_STORE_INDEXES_V2,
+  settings_store: "key, updated_at",
+} as const;
+
 export class QuranOfflineDatabase extends Dexie {
   khatmah_store!: EntityTable<KhatmahStoreRecord, "id">;
   user_reflections_store!: EntityTable<UserReflectionRecord, "id">;
   quran_knowledge_store!: EntityTable<QuranKnowledgeRecord, "ayah_key">;
   offline_assets_store!: EntityTable<OfflineAssetRecord, "asset_id">;
   outbox_sync_store!: EntityTable<OutboxSyncRecord, "id">;
+  settings_store!: EntityTable<SettingsStoreRecord, "key">;
 
   constructor(name = QURAN_OFFLINE_DB_NAME) {
     super(name);
@@ -71,7 +83,7 @@ export class QuranOfflineDatabase extends Dexie {
      * v2 — lifecycle / memory-pressure fields (additive, silent backfill).
      */
     this.version(2)
-      .stores({ ...QURAN_OFFLINE_STORE_INDEXES })
+      .stores({ ...QURAN_OFFLINE_STORE_INDEXES_V2 })
       .upgrade(async (tx) => {
         const now = Date.now();
         await tx
@@ -103,6 +115,11 @@ export class QuranOfflineDatabase extends Dexie {
             if (row.schema_version == null) row.schema_version = 2;
           });
       });
+
+    /**
+     * v3 — settings_store for durable engine preferences (additive).
+     */
+    this.version(3).stores({ ...QURAN_OFFLINE_STORE_INDEXES });
   }
 }
 

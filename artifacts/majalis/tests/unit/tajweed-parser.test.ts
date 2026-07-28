@@ -7,6 +7,7 @@ import { analyzeTajweedTimings } from "../../src/lib/recitation-ai/tajweed-timin
 import type { ReferenceWord } from "../../src/lib/recitation-ai/types";
 import {
   assertValidTajweedColor,
+  getTajweedRuleForWord,
   tagTajweedColors,
   TAJWEED_COLOR_RULES,
 } from "../../src/lib/tajweed-color-tags";
@@ -81,6 +82,10 @@ console.log("═══ Tajweed Color Tags ═══");
 
   const iqlab = tagTajweedColors("من بعد");
   check(iqlab.some((t) => t.ruleId === "iqlab"), "من ب ⇒ إقلاب");
+
+  check(getTajweedRuleForWord("قد")?.ruleId === "qalqalah", "getTajweedRuleForWord قد");
+  check(getTajweedRuleForWord("إنّ")?.ruleId === "ghunnah", "getTajweedRuleForWord إنّ");
+  check(getTajweedRuleForWord("الرحمن") == null, "plain word ⇒ null rule");
 }
 
 console.log(`\nالنتيجة: ${passed} نجح، ${failed} فشل`);

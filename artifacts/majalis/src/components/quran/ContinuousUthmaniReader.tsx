@@ -7,6 +7,7 @@ import { fetchSurahDetail, getSurahMeta, type Ayah } from "@/lib/quran-api";
 import { toArabicDigits } from "@/lib/utils";
 import { yieldToMain } from "@/lib/yield-to-main";
 import { beginAbortScope, abortScope, guardAsync } from "@/lib/route-abort";
+import { getTajweedRuleForWord } from "@/lib/tajweed-color-tags";
 
 export type ContinuousAyah = Ayah & { surahNumber: number; surahName: string };
 
@@ -22,6 +23,8 @@ type Props = {
   activeWordIndex?: number | null;
   hideVerseTest?: boolean;
   notedVerseKeys?: Set<string>;
+  /** When true, color-code words by tajweed rules; otherwise plain Uthmani. */
+  tajweedEnabled?: boolean;
   onAyahPress?: (surah: number, ayah: number, text: string) => void;
   onVisibleAyah?: (surah: number, ayah: number, page: number) => void;
 };
@@ -40,6 +43,7 @@ export function ContinuousUthmaniReader({
   activeWordIndex,
   hideVerseTest = false,
   notedVerseKeys,
+  tajweedEnabled = false,
   onAyahPress,
   onVisibleAyah,
 }: Props) {
@@ -217,14 +221,19 @@ export function ContinuousUthmaniReader({
             >
               {hasNote && <span className="cur-note-ribbon" aria-hidden="true" />}
               <span className="cur-ayah__text" dir="rtl">
-                {words.map((w, wi) => (
-                  <span
-                    key={wi}
-                    className={`cur-word${isActive && activeWordIndex === wi ? " cur-word--active" : ""}`}
-                  >
-                    {w}
-                  </span>
-                ))}
+                {words.map((w, wi) => {
+                  const rule = tajweedEnabled ? getTajweedRuleForWord(w) : null;
+                  return (
+                    <span
+                      key={wi}
+                      className={`cur-word${isActive && activeWordIndex === wi ? " cur-word--active" : ""}${rule ? " cur-word--tj" : ""}`}
+                      style={rule ? { color: rule.color } : undefined}
+                      data-tj-rule={rule?.ruleId}
+                    >
+                      {w}
+                    </span>
+                  );
+                })}
               </span>
               <span className="cur-ayah__num" aria-hidden="true">
                 ﴿{toArabicDigits(a.numberInSurah)}﴾

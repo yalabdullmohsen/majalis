@@ -103,6 +103,30 @@
   max-width: none;
 }
 
+.quran-viewer__nav-btn.is-active,
+.quran-viewer__tajweed-btn.is-active {
+  background: color-mix(in srgb, var(--color-primary, #143f35) 18%, transparent);
+  border-color: color-mix(in srgb, var(--color-primary, #143f35) 45%, transparent);
+}
+
+.tajweed-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.tajweed-toggle__state {
+  font-size: 0.72rem;
+  opacity: 0.8;
+  font-weight: 600;
+}
+
+.mf2-word--tj,
+.cur-word--tj {
+  /* Color applied inline from rule catalog; class marks enabled state for CSS/QA. */
+  transition: color 0.15s ease;
+}
+
 @media (min-width: 768px) {
   .quran-viewer__stage {
     aspect-ratio: 1 / 1.42;

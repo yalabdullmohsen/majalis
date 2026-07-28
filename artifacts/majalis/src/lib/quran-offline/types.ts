@@ -5,7 +5,14 @@
 
 export const QURAN_OFFLINE_DB_NAME = "majalis-quran-engine-db";
 /** Current schema revision — bump only with additive Dexie upgrades. */
-export const QURAN_OFFLINE_DB_VERSION = 2;
+export const QURAN_OFFLINE_DB_VERSION = 3;
+
+/** `settings_store` — durable engine preferences (shared with DatabaseManager). */
+export type SettingsStoreRecord = {
+  key: string;
+  value: unknown;
+  updated_at: number;
+};
 
 export type KhatmahProfileType = "reading" | "memorization";
 

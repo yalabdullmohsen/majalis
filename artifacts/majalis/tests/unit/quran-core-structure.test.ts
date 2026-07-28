@@ -48,6 +48,11 @@ async function main() {
     check(ctx.getState().playerState === "playing", "setAudio playerState");
     ctx.clearActiveVerse();
     check(ctx.getState().ayah == null && ctx.getState().verseKey == null, "clearActiveVerse");
+    check(ctx.getState().isTajweedEnabled === false, "isTajweedEnabled defaults false");
+    ctx.toggleTajweed();
+    check(ctx.getState().isTajweedEnabled === true, "toggleTajweed flips on");
+    ctx.setTajweedEnabled(false);
+    check(ctx.getState().isTajweedEnabled === false, "setTajweedEnabled(false)");
     let notified = false;
     const unsub = ctx.subscribe(() => {
       notified = true;
@@ -101,7 +106,11 @@ async function main() {
       DatabaseManager,
     } = await import("../../src/core/quran/DatabaseManager");
     check(CORE_QURAN_DB_NAME === "majalis-quran-engine-db", "core DB name");
-    check(CORE_QURAN_DB_VERSION === 2, "core DB version 2");
+    check(CORE_QURAN_DB_VERSION === 3, "core DB version 3 (settings_store)");
+    check(
+      CORE_STORE_INDEXES.settings_store === "key, updated_at",
+      "settings_store indexes",
+    );
     check(
       CORE_STORE_INDEXES.user_reflections_store.includes("[surah_id+ayah_id]"),
       "reflections composite index",

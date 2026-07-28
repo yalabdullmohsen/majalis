@@ -24,6 +24,7 @@ export type {
   OutboxSyncRecord,
   OutboxEntityType,
   ReflectionSyncStatus,
+  SettingsStoreRecord,
 } from "@/lib/quran-offline/types";
 
 export {

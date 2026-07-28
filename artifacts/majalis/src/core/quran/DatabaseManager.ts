@@ -85,21 +85,36 @@ export type OfflineAssetsStore = {
 
 export const CORE_QURAN_DB_NAME = "majalis-quran-engine-db";
 /** Keep in sync with `@/lib/quran-offline` so both openers share one IDB. */
-export const CORE_QURAN_DB_VERSION = 2;
+export const CORE_QURAN_DB_VERSION = 3;
 
-/** Index declarations — single source of truth for version upgrades. */
-export const CORE_STORE_INDEXES = {
+/** Stable settings_store key for optional Tajweed color coding. */
+export const TAJWEED_ENABLED_SETTING_KEY = "isTajweedEnabled";
+
+/** `settings_store` — durable engine preferences (key/value). */
+export type SettingsStore = {
+  key: string;
+  value: unknown;
+  updated_at: number;
+};
+
+/** Frozen v2 indexes (upgrade path). */
+export const CORE_STORE_INDEXES_V2 = {
   khatmah_store:
     "id, type, last_read_timestamp, is_completed, [type+is_completed], updated_at",
   user_reflections_store:
     "id, surah_id, ayah_id, [surah_id+ayah_id], sync_status, created_at, updated_at, last_opened_at, *tags",
   offline_assets_store:
     "asset_id, type, download_status, reciter_id, surah_id, [type+reciter_id], [type+surah_id], updated_at, last_accessed_at, pinned, access_count",
-  // Knowledge table kept for compatibility with the offline knowledge cache layer
   quran_knowledge_store:
     "ayah_key, *theme_ids, *similar_ayah_keys, updated_at, last_accessed_at, access_count",
   outbox_sync_store:
     "++id, client_mutation_id, status, created_at, entity_type, [status+created_at], entity_id",
+} as const;
+
+/** Index declarations — single source of truth for current version upgrades. */
+export const CORE_STORE_INDEXES = {
+  ...CORE_STORE_INDEXES_V2,
+  settings_store: "key, updated_at",
 } as const;
 
 type KnowledgeRow = {
@@ -131,6 +146,7 @@ export class QuranCoreDatabase extends Dexie {
   offline_assets_store!: EntityTable<OfflineAssetsStore, "asset_id">;
   quran_knowledge_store!: EntityTable<KnowledgeRow, "ayah_key">;
   outbox_sync_store!: EntityTable<OutboxRow, "id">;
+  settings_store!: EntityTable<SettingsStore, "key">;
 
   constructor(name = CORE_QURAN_DB_NAME) {
     super(name);
@@ -150,7 +166,7 @@ export class QuranCoreDatabase extends Dexie {
 
     // v2 — lifecycle indexes (additive; never wipe user rows)
     this.version(2)
-      .stores({ ...CORE_STORE_INDEXES })
+      .stores({ ...CORE_STORE_INDEXES_V2 })
       .upgrade(async (tx) => {
         const now = Date.now();
         await tx
@@ -185,6 +201,9 @@ export class QuranCoreDatabase extends Dexie {
             }
           });
       });
+
+    // v3 — settings_store for durable engine preferences (Tajweed toggle, …)
+    this.version(3).stores({ ...CORE_STORE_INDEXES });
   }
 }
 
@@ -287,9 +306,53 @@ export class DatabaseManager {
     return this.db?.offline_assets_store ?? null;
   }
 
+  /** Direct `settings_store` table (null until open). */
+  get settingsStore() {
+    return this.db?.settings_store ?? null;
+  }
+
   private async ensureDb(): Promise<QuranCoreDatabase | null> {
     const ready = await this.initialize();
     return ready ? this.db : null;
+  }
+
+  // ── SettingsStore CRUD ─────────────────────────────────────────────────
+
+  async getSetting<T = unknown>(key: string): Promise<T | null> {
+    try {
+      const db = await this.ensureDb();
+      if (!db) return null;
+      const row = await db.settings_store.get(key);
+      return row ? (row.value as T) : null;
+    } catch (err) {
+      console.warn("[DatabaseManager] getSetting:", err);
+      return null;
+    }
+  }
+
+  async setSetting(key: string, value: unknown): Promise<SettingsStore | null> {
+    try {
+      const db = await this.ensureDb();
+      if (!db) return null;
+      const row: SettingsStore = { key, value, updated_at: Date.now() };
+      await db.settings_store.put(row);
+      return row;
+    } catch (err) {
+      console.warn("[DatabaseManager] setSetting:", err);
+      return null;
+    }
+  }
+
+  async deleteSetting(key: string): Promise<boolean> {
+    try {
+      const db = await this.ensureDb();
+      if (!db) return false;
+      await db.settings_store.delete(key);
+      return true;
+    } catch (err) {
+      console.warn("[DatabaseManager] deleteSetting:", err);
+      return false;
+    }
   }
 
   // ── KhatmahStore CRUD ──────────────────────────────────────────────────

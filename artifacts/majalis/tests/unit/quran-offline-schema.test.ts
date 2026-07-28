@@ -87,7 +87,12 @@ console.log("═══ Asset / reflection id helpers ═══");
 console.log("═══ Schema contract ═══");
 {
   check(QURAN_OFFLINE_DB_NAME === "majalis-quran-engine-db", "DB name stable");
-  check(QURAN_OFFLINE_DB_VERSION === 2, "schema version is 2 (lifecycle)");
+  check(QURAN_OFFLINE_DB_VERSION === 3, "schema version is 3 (settings_store)");
+  check(
+    typeof QURAN_OFFLINE_STORE_INDEXES.settings_store === "string" &&
+      QURAN_OFFLINE_STORE_INDEXES.settings_store.includes("key"),
+    "settings_store indexes present",
+  );
   check(
     QURAN_OFFLINE_STORE_INDEXES.user_reflections_store.includes("[surah_id+ayah_id]"),
     "reflections composite index [surah_id+ayah_id]",
