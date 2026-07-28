@@ -243,8 +243,8 @@ html.dark .qe-abar {
 }
 
 .qe-ayah-list--focus .qe-ayah__text {
-  /* User-controlled mushaf type via --qe-mushaf-* (default 24 / 44) */
-  font-family: "Amiri Quran", "Scheherazade New", "Amiri", serif;
+  /* User-controlled mushaf type via --qe-mushaf-* / --qe-reader-font */
+  font-family: var(--qe-reader-font, "Amiri Quran", "Scheherazade New", "Amiri", serif);
   font-size: var(--qe-mushaf-fs, 24px);
   line-height: var(--qe-mushaf-lh, 44px);
   text-align: right;
@@ -401,7 +401,7 @@ body.qe-focus-mode {
 }
 
 .qe-ayah__text {
-  font-family: "Amiri Quran", "Scheherazade New", serif;
+  font-family: var(--qe-reader-font, "Amiri Quran", "Scheherazade New", serif);
   font-size: clamp(1.2rem, 3.8vw, 1.4rem);
   line-height: 2.05;
   -webkit-text-size-adjust: 100%;

@@ -21,6 +21,7 @@ import { ReadingBreakDialog } from "@/components/quran/ReadingBreakDialog";
 import { JumpPageModal } from "@/components/quran/JumpPageModal";
 import { ReciterDownloadManager } from "@/components/quran/ReciterDownloadManager";
 import { loadMushafPage, prefetchMushafPage, type MushafPageLayout, type QpcWord } from "@/lib/mushaf-v2-data";
+import { FONT_OPTIONS, quranFontStack } from "@/lib/quran-font-options";
 import { beginAbortScope, abortScope, guardAsync } from "@/lib/route-abort";
 import { logDiagnostic } from "@/lib/diagnostics";
 import { MushafPageV2 } from "@/components/quran/MushafPageV2";
@@ -396,7 +397,7 @@ export default function MushafPageView() {
                         layout={v2Layout}
                         activeAyahKey={v2ActiveKey}
                         onAyahPress={handleV2AyahPress}
-                        sharedFontFamily={'"Amiri Quran", "Scheherazade New", serif'}
+                        sharedFontFamily={quranFontStack(prefs.fontId)}
                         renderWord={(w) => renderLightWord(w, prefs.showAyahNumbers)}
                         bare
                       />
@@ -529,6 +530,27 @@ export default function MushafPageView() {
                   انتقل
                 </button>
               </div>
+            </div>
+
+            <div className="mpv-settings-group">
+              <span className="mpv-settings-group__label">خط المصحف</span>
+              <div className="mpv-settings-group__grid">
+                {FONT_OPTIONS.map((o) => (
+                  <button
+                    key={o.id}
+                    type="button"
+                    className={`mpv-chip ${prefs.fontId === o.id ? "is-active" : ""}`}
+                    onClick={() => setPref("fontId", o.id)}
+                    aria-pressed={prefs.fontId === o.id}
+                    title={o.label}
+                  >
+                    {o.labelAr}
+                  </button>
+                ))}
+              </div>
+              <small style={{ display: "block", opacity: .7, marginTop: ".35rem" }}>
+                يُطبَّق في الوضع الخفيف وعارض محرك القرآن (أميري / نسخ / شهرزاد).
+              </small>
             </div>
 
             <div className="mpv-settings-group">
