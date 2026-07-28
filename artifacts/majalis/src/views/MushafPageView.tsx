@@ -2,7 +2,7 @@ import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from "rea
 import { createPortal } from "react-dom";
 import { useParams, useLocation } from "wouter";
 import {
-  Menu, Settings, X, ChevronRight, ChevronLeft, RotateCcw, ArrowRight,
+  Menu, Settings, X, ChevronRight, ChevronLeft, RotateCcw, ArrowRight, Bookmark,
 } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { toArabicDigits } from "@/lib/utils";
@@ -17,6 +17,7 @@ import { useReadingBreakReminder } from "@/hooks/useReadingBreakReminder";
 import { useAyahPlayer } from "@/hooks/useAyahPlayer";
 import { useKeepAwake } from "@/hooks/useKeepAwake";
 import { useRestoreLastPage } from "@/hooks/useRestoreLastPage";
+import { addBookmark as addPageBookmark, isPageBookmarked } from "@/lib/quran-my-bookmarks";
 import { SurahList } from "@/components/quran/SurahList";
 import { PageAyahActionSheet } from "@/components/quran/PageAyahActionSheet";
 import { ReadingBreakDialog } from "@/components/quran/ReadingBreakDialog";
@@ -24,6 +25,12 @@ import { JumpPageModal } from "@/components/quran/JumpPageModal";
 import { ReciterDownloadManager } from "@/components/quran/ReciterDownloadManager";
 import { loadMushafPage, prefetchMushafPage, type MushafPageLayout, type QpcWord } from "@/lib/mushaf-v2-data";
 import { FONT_OPTIONS, quranFontStack } from "@/lib/quran-font-options";
+import {
+  QURAN_FONT_DEFAULT_PX,
+  QURAN_FONT_MAX_PX,
+  QURAN_FONT_MIN_PX,
+  QURAN_FONT_STEP_PX,
+} from "@/lib/quran-font-size";
 import { beginAbortScope, abortScope, guardAsync } from "@/lib/route-abort";
 import { logDiagnostic } from "@/lib/diagnostics";
 import { MushafPageV2 } from "@/components/quran/MushafPageV2";
@@ -126,6 +133,8 @@ export default function MushafPageView() {
      تُبدِّل ظهور الشريطين العلوي/السفلي، مستقلة عن chromeVisible الخاصة
      مستقلة عن باقي التبديلات — تبديل دائم لا اختفاء تلقائي بعد مهلة). */
   const [textChromeVisible, setTextChromeVisible] = useState(true);
+  const [bookmarkStatus, setBookmarkStatus] = useState<string | null>(null);
+  const [pageBookmarked, setPageBookmarked] = useState(() => isPageBookmarked(page));
   const touchStartX = useRef<number | null>(null);
 
   // ── استئناف تلقائي: عند الدخول دون رقم صفحة صريح في الرابط، نبدأ من آخر موضع محفوظ محليًا ──
@@ -143,7 +152,14 @@ export default function MushafPageView() {
   useEffect(() => {
     // RN saveLastPage — dual-writes mj-quran-page-pos-v1 + `lastPage`
     savePagePosition(page);
+    setPageBookmarked(isPageBookmarked(page));
   }, [page]);
+
+  useEffect(() => {
+    if (!bookmarkStatus) return;
+    const t = window.setTimeout(() => setBookmarkStatus(null), 2000);
+    return () => window.clearTimeout(t);
+  }, [bookmarkStatus]);
 
   // يمنع تمرير الصفحة الأساسية خلف الوضع الغامر (نفس نمط
   // body.assistant-panel-open القائم فعلاً لنوافذ أخرى في التطبيق) —
@@ -245,6 +261,19 @@ export default function MushafPageView() {
     setResumeBanner(null);
     navigate(`/mushaf/page/${clamped}`, { replace: true });
   }, [navigate]);
+
+  /** RN addBookmark(page, label) — page separator in `myBookmarks`. */
+  const saveCurrentPageBookmark = useCallback(async () => {
+    const surahName = primarySurahMeta.name;
+    const label = `سورة ${surahName} · ص ${page}`;
+    const saved = await addPageBookmark(page, label);
+    if (saved) {
+      setPageBookmarked(true);
+      setBookmarkStatus("تم حفظ الفاصل");
+    } else {
+      setBookmarkStatus("تعذّر حفظ الفاصل");
+    }
+  }, [page, primarySurahMeta.name]);
 
   const goToPageOrAyah = useCallback(async (pageNum: number, opts?: { surah?: number; ayah?: number }) => {
     if (opts?.surah && opts?.ayah) {
@@ -356,10 +385,24 @@ export default function MushafPageView() {
               {primarySurahMeta.name}
               <small>صفحة {toArabicDigits(page)} · جزء {toArabicDigits(juz)}</small>
             </div>
+            <button
+              type="button"
+              className={`mpv-toolbar__btn${pageBookmarked ? " is-on" : ""}`}
+              onClick={() => void saveCurrentPageBookmark()}
+              aria-label={pageBookmarked ? "الصفحة محفوظة كفاصل" : "حفظ فاصل لهذه الصفحة"}
+              title={pageBookmarked ? "محفوظة" : "فاصل"}
+            >
+              <Bookmark size={16} aria-hidden="true" fill={pageBookmarked ? "currentColor" : "none"} />
+            </button>
             <button type="button" className="mpv-toolbar__btn" onClick={() => setSettingsOpen(true)} aria-label="إعدادات القراءة">
               <Settings size={16} aria-hidden="true" />
             </button>
           </div>
+          {bookmarkStatus ? (
+            <p className="mpv-bookmark-status" role="status" aria-live="polite">
+              {bookmarkStatus}
+            </p>
+          ) : null}
 
           {/* onClick هنا ميزة راحة بالماوس/اللمس فقط (تبديل ظهور أدوات القراءة)،
               لا إجراء أساسي وحيد — كل التحكمات الفعلية أزرار حقيقية قابلة
@@ -398,7 +441,7 @@ export default function MushafPageView() {
                   className={`qs-mushaf-body qs-mushaf-body--hl-${prefs.highlightStyle} ${prefs.highlightStyle === "spotlight" && selectedAyah ? "qs-mushaf-body--spotlight" : ""}`}
                   style={{
                     ["--qs-font-size" as string]: `${prefs.fontScale}px`,
-                    ["--qs-font-scale" as string]: String(prefs.fontScale / 26),
+                    ["--qs-font-scale" as string]: String(prefs.fontScale / QURAN_FONT_DEFAULT_PX),
                   }}
                 >
                   <div className="qs-mushaf-body-inner">
@@ -500,9 +543,9 @@ export default function MushafPageView() {
             <div className="mpv-settings-group">
               <span className="mpv-settings-group__label">حجم الخط</span>
               <div className="mpv-settings-group__grid">
-                <button type="button" className="mpv-chip" onClick={() => setPref("fontScale", Math.max(18, prefs.fontScale - 2))}>أصغر −</button>
+                <button type="button" className="mpv-chip" onClick={() => setPref("fontScale", Math.max(QURAN_FONT_MIN_PX, prefs.fontScale - QURAN_FONT_STEP_PX))}>أصغر −</button>
                 <span className="mpv-chip is-active">{prefs.fontScale}px</span>
-                <button type="button" className="mpv-chip" onClick={() => setPref("fontScale", Math.min(42, prefs.fontScale + 2))}>أكبر +</button>
+                <button type="button" className="mpv-chip" onClick={() => setPref("fontScale", Math.min(QURAN_FONT_MAX_PX, prefs.fontScale + QURAN_FONT_STEP_PX))}>أكبر +</button>
               </div>
               <small style={{ display: "block", opacity: .7, marginTop: ".35rem" }}>
                 يكبّر الصفحة مع تمرير داخل الإطار — بلا قصّ بـtransform.

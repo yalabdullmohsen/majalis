@@ -2128,10 +2128,25 @@ body.has-immersive-mushaf { overflow: hidden; }
   -webkit-tap-highlight-color: transparent;
 }
 .mpv-toolbar__btn:hover { background: var(--bg-hover, #f3f0eb); }
-.mpv-toolbar__btn.is-active {
+.mpv-toolbar__btn.is-active,
+.mpv-toolbar__btn.is-on {
   background: var(--majalis-emerald, #176B57);
   border-color: var(--majalis-emerald, #176B57);
   color: #fff;
+}
+.mpv-bookmark-status {
+  position: fixed;
+  top: calc(3.25rem + env(safe-area-inset-top, 0px));
+  inset-inline: 0;
+  z-index: 40;
+  margin: 0;
+  padding: 0.35rem 0.75rem;
+  text-align: center;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--majalis-emerald, #176B57);
+  background: color-mix(in srgb, var(--bg-elevated, #fff) 92%, transparent);
+  pointer-events: none;
 }
 .mpv-toolbar__title { flex: 1; text-align: center; font-size: .85rem; font-weight: 700; color: var(--text-base, #1a1a1a); }
 .mpv-toolbar__title small { display: block; font-size: .78rem; font-weight: 500; color: var(--text-muted, #6b7280); }
