@@ -1,0 +1,67 @@
+/**
+ * Flutter `QuranReaderPage` shell — parchment + SafeArea + immersive sticky.
+ */
+
+.quran-reader-page {
+  position: fixed;
+  inset: 0;
+  z-index: 10010;
+  display: flex;
+  flex-direction: column;
+  background: var(--quran-immersive-paper, #f5f5dc);
+  color: var(--quran-immersive-ink, rgba(0, 0, 0, 0.87));
+  overflow: hidden;
+  overscroll-behavior: contain;
+}
+
+.quran-reader-page__safe {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  /* Flutter SafeArea */
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  padding-inline-start: env(safe-area-inset-left, 0px);
+  padding-inline-end: env(safe-area-inset-right, 0px);
+}
+
+.quran-reader-page__pad {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  /* Flutter EdgeInsets.symmetric(horizontal: 30, vertical: 20) */
+  padding: var(--quran-immersive-pad-y, 20px) var(--quran-immersive-pad-x, 30px);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.quran-reader-page__sample {
+  margin: auto;
+  max-width: 40rem;
+  text-align: center;
+  font-family: var(--font-quran, "Amiri Quran", "Scheherazade New", "Amiri", serif);
+  font-size: var(--quran-immersive-fs, 28px);
+  line-height: var(--quran-immersive-lh, 56px);
+  color: inherit;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+/* Immersive sticky — hide app chrome (web StatusBar / nav equivalent) */
+html.quran-immersive-sticky,
+body.quran-immersive-sticky {
+  overflow: hidden;
+  background: var(--quran-immersive-paper, #f5f5dc);
+}
+
+body.quran-immersive-sticky .bottom-nav,
+body.quran-immersive-sticky .bottom-nav--v2,
+body.quran-immersive-sticky .bottom-nav-bar,
+body.quran-immersive-sticky .navbar-v3,
+body.quran-immersive-sticky .assistant-fab,
+body.quran-immersive-sticky .scroll-to-top {
+  display: none !important;
+}

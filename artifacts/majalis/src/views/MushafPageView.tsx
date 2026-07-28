@@ -17,6 +17,8 @@ import { useReadingBreakReminder } from "@/hooks/useReadingBreakReminder";
 import { useAyahPlayer } from "@/hooks/useAyahPlayer";
 import { useKeepAwake } from "@/hooks/useKeepAwake";
 import { useRestoreLastPage } from "@/hooks/useRestoreLastPage";
+import { useImmersiveSystemUi } from "@/hooks/useImmersiveSystemUi";
+import { IMMERSIVE_PAPER_BG } from "@/lib/quran-immersive";
 import { addBookmark as addPageBookmark, isPageBookmarked } from "@/lib/quran-my-bookmarks";
 import { SurahList } from "@/components/quran/SurahList";
 import { PageAyahActionSheet } from "@/components/quran/PageAyahActionSheet";
@@ -40,6 +42,7 @@ import { afterNextPaint, yieldToMain } from "@/lib/yield-to-main";
 import "@/styles/quran.css";
 import "@/styles/mushaf-v2.css";
 import "@/styles/pages/mushaf-reader.css";
+import "@/styles/quran-immersive-reader.css";
 
 const TOTAL_PAGES = 604;
 
@@ -101,6 +104,14 @@ export default function MushafPageView() {
   const breakReminder = useReadingBreakReminder();
   /** Keep screen lit while the mushaf page is open (expo-keep-awake port). */
   useKeepAwake();
+  /** Flutter SystemChrome.immersiveSticky — hide StatusBar / app chrome on /mushaf. */
+  const immersivePaper =
+    prefs.readingTheme === "night"
+      ? "#1a1a1a"
+      : prefs.readingTheme === "high-contrast"
+        ? "#ffffff"
+        : IMMERSIVE_PAPER_BG;
+  useImmersiveSystemUi(true, immersivePaper);
 
   const routePage = params.page
     ? Number(params.page)

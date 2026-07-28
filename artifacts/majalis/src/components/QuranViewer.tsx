@@ -1,11 +1,13 @@
 /**
  * QuranViewer — Uthmani ayah list with optional Tajweed tint, selection, and Focus Mode.
  *
- * Focus Mode (وضع التركيز): hides chrome so the mushaf fills the viewport.
+ * Focus Mode (وضع التركيز): hides chrome so the mushaf fills the viewport —
+ * Flutter `SystemUiMode.immersiveSticky` via `useImmersiveSystemUi`.
  * Font size is user-controlled (12–40, step 2, default 20), persisted in localStorage
  * (`userFontSize` — same key as the RN AsyncStorage sketch), with
- * lineHeight = fontSize * 1.5. The ± control bar is hidden while focused.
- * Reader theme (light/dark paper) uses THEMES below — independent of app chrome.
+ * lineHeight = fontSize * 1.5 (focus uses * 2.0 like Flutter `height: 2.0`).
+ * The ± control bar is hidden while focused.
+ * Light paper is Flutter parchment `#F5F5DC` — independent of app chrome.
  * Ayah numbers toggle (`showAyahNumbers` via useQuranPreferences) hides badges and
  * strips parenthetical markers via renderQuranText — same idea as the RN sketch.
  * After 30 minutes of reading, a gentle break reminder appears (RN Alert.alert port).
@@ -45,7 +47,9 @@ import { useQuranPreferences } from "@/hooks/useQuranPreferences";
 import { useReadingBreakReminder } from "@/hooks/useReadingBreakReminder";
 import { useQuranAudioToggle } from "@/hooks/useQuranAudioToggle";
 import { useKeepAwake } from "@/hooks/useKeepAwake";
+import { useImmersiveSystemUi } from "@/hooks/useImmersiveSystemUi";
 import { useQuranContext } from "@/context/QuranContext";
+import { IMMERSIVE_INK, IMMERSIVE_LINE_HEIGHT_RATIO, IMMERSIVE_PAPER_BG } from "@/lib/quran-immersive";
 import { nextQuranFontId, quranFontOption, quranFontStack } from "@/lib/quran-font-options";
 import {
   QURAN_FONT_MAX_PX,
@@ -61,16 +65,17 @@ import { QuranActionBar } from "@/components/QuranActionBar";
 import { ReadingBreakDialog } from "@/components/quran/ReadingBreakDialog";
 import { toArabicDigits } from "@/lib/utils";
 import "@/styles/quran-engine-ui.css";
+import "@/styles/quran-immersive-reader.css";
 
 /**
- * RN QuranReader themeStyles — dynamic colors from device / override.
- * light: #ffffff / #000000 · dark: #1a1a1a / #e0e0e0
+ * Flutter / RN reader paper — light matches `Color(0xFFF5F5DC)` + `Colors.black87`.
+ * dark: #1a1a1a / #e0e0e0
  */
 export const THEMES = {
   light: {
-    background: "#ffffff",
-    text: "#000000",
-    header: "#f5f5f5",
+    background: IMMERSIVE_PAPER_BG,
+    text: IMMERSIVE_INK,
+    header: "#ebebd2",
   },
   dark: {
     background: "#1a1a1a",
@@ -177,15 +182,18 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
   const [shareStatus, setShareStatus] = useState<string | null>(null);
   const meta = getSurahMeta(surahNum);
 
-  /** RN themeStyles — dynamic colors from isDarkMode (QuranContext). */
+  /** Flutter parchment / night — from THEMES (SSOT). */
   const themeStyles = useMemo(
     () => ({
-      backgroundColor: isDarkMode ? "#1a1a1a" : "#ffffff",
-      textColor: isDarkMode ? "#e0e0e0" : "#000000",
+      backgroundColor: isDarkMode ? THEMES.dark.background : THEMES.light.background,
+      textColor: isDarkMode ? THEMES.dark.text : THEMES.light.text,
     }),
     [isDarkMode],
   );
   const currentTheme = isDarkMode ? THEMES.dark : THEMES.light;
+
+  /** Flutter SystemChrome.immersiveSticky while Focus Mode is on. */
+  useImmersiveSystemUi(isFocusMode, themeStyles.backgroundColor);
 
   const reload = useCallback(() => setReloadKey((k) => k + 1), []);
 
@@ -348,8 +356,15 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
     return () => window.removeEventListener("keydown", onKey);
   }, [isFocusMode, setFocus]);
 
-  // 3. طريقة التطبيق في التنسيق — lineHeight = fontSize * 1.5
-  const textStyle = quranTextStyle(fontSize);
+  // lineHeight = fontSize * 1.5 normally; Focus Mode uses Flutter height: 2.0
+  const textStyle = useMemo(() => {
+    const base = quranTextStyle(fontSize);
+    if (!isFocusMode) return base;
+    return {
+      fontSize: base.fontSize,
+      lineHeight: Math.round(base.fontSize * IMMERSIVE_LINE_HEIGHT_RATIO),
+    };
+  }, [fontSize, isFocusMode]);
 
   const mushafTypeStyle = {
     ["--qe-mushaf-fs" as string]: `${textStyle.fontSize}px`,

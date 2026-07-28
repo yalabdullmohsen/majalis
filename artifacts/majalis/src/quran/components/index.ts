@@ -16,3 +16,5 @@ export { PageAyahActionSheet } from "@/components/quran/PageAyahActionSheet";
 export { ReadingBreakDialog } from "@/components/quran/ReadingBreakDialog";
 export { JumpPageModal } from "@/components/quran/JumpPageModal";
 export { MushafPageV2 } from "@/components/quran/MushafPageV2";
+export { QuranReaderPage } from "@/components/quran/QuranReaderPage";
+export type { QuranReaderPageProps } from "@/components/quran/QuranReaderPage";

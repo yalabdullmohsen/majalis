@@ -17,3 +17,6 @@ export const QURAN_STYLESHEET = "@/styles/quran.css";
 
 /** Quran Engine UI chrome stylesheet. */
 export const QURAN_ENGINE_UI_STYLESHEET = "@/styles/quran-engine-ui.css";
+
+/** Flutter immersive reader shell stylesheet. */
+export const QURAN_IMMERSIVE_STYLESHEET = "@/styles/quran-immersive-reader.css";
