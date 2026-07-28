@@ -7141,10 +7141,18 @@ body.has-assistant-fab .app-main {
   border-top: 1px solid var(--majalis-line);
 }
 
-/* Gold-to-emerald top accent line — أُلغي بطلب تبسيط التذييل (2026-07-28) */
+/* Gold-to-emerald top accent line */
 .site-footer--v3::before {
-  content: none;
-  display: none;
+  content: "";
+  display: block;
+  height: 2px;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    var(--majalis-brass) 20%,
+    var(--majalis-emerald) 50%,
+    var(--majalis-brass) 80%,
+    transparent 100%
+  );
 }
 
 .site-footer-inner--v3 {

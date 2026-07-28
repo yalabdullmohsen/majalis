@@ -4726,23 +4726,19 @@ html[data-theme="dark"] a:hover:not(.fiqh-hub-strip__tab--active):not(.hpv4-hero
 /* ════════════════════════════════════
    77r — SiteFooter محسَّن
    ════════════════════════════════════ */
-.site-footer:not(.site-footer--minimal), footer[class*="footer"]:not(.site-footer--minimal) {
+.site-footer, footer[class*="footer"] {
   background: var(--color-primary-deep, #143F35) !important;
   color: rgba(255,255,255,.75) !important;
   font-family: var(--font-body) !important;
 }
-.site-footer.site-footer--minimal {
-  background: transparent !important;
-  color: var(--color-text-muted, #5C5C56) !important;
-}
-.site-footer:not(.site-footer--minimal) a {
+.site-footer a {
   color: rgba(255,255,255,.65) !important;
   transition: color 120ms !important;
 }
-.site-footer:not(.site-footer--minimal) a:hover {
+.site-footer a:hover {
   color: rgba(255,255,255,.95) !important;
 }
-html[data-theme="dark"] .site-footer:not(.site-footer--minimal) {
+html[data-theme="dark"] .site-footer {
   background: #0A1210 !important;
 }
 
@@ -4887,12 +4883,9 @@ html[data-theme="dark"] hr { border-top-color: rgba(255,255,255,.07) !important;
    مختفٍ (تباين ~1.27:1، اكتُشف عبر تدقيق تباين حي شامل). التذييل الرئيسي
    الفعلي يحمل دومًا className="site-footer" (راجع SiteFooter.tsx)، فلا
    حاجة لمحدد الوسم الخام إطلاقًا. */
-.site-footer:not(.site-footer--minimal),
+.site-footer,
 [class*="footer-wrap"] {
   background: var(--color-primary-deep, #143F35) !important;
-}
-.site-footer.site-footer--minimal {
-  background: transparent !important;
 }
 
 /* عناوين الأقسام */
@@ -5433,9 +5426,9 @@ html[data-theme="dark"] tr:hover td {
 .fatwas-page-header *,
 .hadith-page-header *,
 .adhkar-page-header *,
-.site-footer:not(.site-footer--minimal) *,
-footer:not(.site-footer--minimal),
-footer:not(.site-footer--minimal) *,
+.site-footer *,
+footer,
+footer *,
 .page-hero-wrap *,
 [class*="page-header"][class*="dark"],
 [class*="page-header"][class*="dark"] *,
@@ -5779,8 +5772,8 @@ body .kng-type-badge {
 .courses-page-header svg,
 .library-page-header svg,
 .quran-page-header svg,
-.site-footer:not(.site-footer--minimal) svg,
-footer:not(.site-footer--minimal) svg {
+.site-footer svg,
+footer svg {
   color: #FFFFFF !important;
   stroke: currentColor !important;
 }
@@ -5790,13 +5783,13 @@ footer:not(.site-footer--minimal) svg {
 .ds-page-header a,
 .lessons-page-header a,
 .scholars-page-header a,
-.site-footer:not(.site-footer--minimal) a,
-footer:not(.site-footer--minimal) a {
+.site-footer a,
+footer a {
   color: rgba(255,255,255,0.85) !important;
 }
 .hpv4-hero a:hover:not(.hpv4-hero__cta-primary),
-.site-footer:not(.site-footer--minimal) a:hover,
-footer:not(.site-footer--minimal) a:hover {
+.site-footer a:hover,
+footer a:hover {
   color: #FFFFFF !important;
 }
 /* الزر الأساسي (CTA) داخل الهيرو له خلفية فاتحة مقصودة — يحتفظ بلونه الغامق للتباين */
@@ -5836,8 +5829,8 @@ html[data-theme="dark"] .hpv4-hero,
 html[data-theme="dark"] .hpv4-hero *,
 html[data-theme="dark"] .lesson-unified-card__header,
 html[data-theme="dark"] .lesson-unified-card__header *,
-html[data-theme="dark"] html[data-theme="dark"] .site-footer:not(.site-footer--minimal),
-html[data-theme="dark"] .site-footer:not(.site-footer--minimal) * {
+html[data-theme="dark"] html[data-theme="dark"] .site-footer,
+html[data-theme="dark"] .site-footer * {
   color: #FFFFFF !important;
 }
 
@@ -6215,8 +6208,9 @@ html[data-theme="dark"] .rk-card:hover,
 .ftw-type-badge--fatwa,
 .btn--primary:hover,
 .btn-primary:hover,
-.site-footer:not(.site-footer--minimal),
-footer[class*="footer"]:not(.site-footer--minimal),
+.site-footer,
+footer[class*="footer"],
+.toast,
 [class*="toast"],
 [class*="btn"][class*="primary"],
 .lesson-unified-card--today .lesson-unified-card__header,
