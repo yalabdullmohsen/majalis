@@ -10,14 +10,11 @@ import {
   IMMERSIVE_PAD_Y_PX,
   IMMERSIVE_LIST_PAD_Y_PX,
   IMMERSIVE_PAPER_BG,
-<<<<<<< HEAD
   VERSE_ITEM_GAP_PX,
   VERSE_SELECTED_BG,
+  VERSE_SELECTED_BROWN,
   VERSE_SELECTED_INK,
   VERSE_SELECTED_RADIUS_PX,
-=======
-  VERSE_SELECTED_BROWN,
->>>>>>> origin/cursor/quran-immersive-controller-1f54
   __resetImmersiveForTests,
   immersiveReaderCssVars,
 } from "../lib/quran-immersive";
@@ -60,6 +57,7 @@ function main() {
 
   check(constants.IMMERSIVE_PAPER_BG === IMMERSIVE_PAPER_BG, "constants re-export");
   check(constants.VERSE_SELECTED_INK === VERSE_SELECTED_INK, "constants selected ink");
+  check(constants.VERSE_SELECTED_BROWN === VERSE_SELECTED_BROWN, "constants brown");
 
   console.log(`\n${passed} passed, ${failed} failed`);
   if (failed > 0) process.exit(1);

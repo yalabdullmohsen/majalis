@@ -48,6 +48,8 @@ function main() {
   check(typeof hooks.useQuranAudio === "function", "hooks.useQuranAudio");
   check(typeof hooks.useImmersiveSystemUi === "function", "hooks.useImmersiveSystemUi");
   check(typeof hooks.useQuranController === "function", "hooks.useQuranController");
+  check(typeof hooks.useAppController === "function", "hooks.useAppController");
+  check(typeof hooks.useAudioTrackingCursor === "function", "hooks.useAudioTrackingCursor");
   check(typeof hooks.useAyahPlayer === "function", "hooks.useAyahPlayer");
   check(typeof hooks.useColorScheme === "function", "hooks.useColorScheme");
   check(
@@ -68,6 +70,7 @@ function main() {
   check(typeof services.fetchSurahDetail === "function", "services.fetchSurahDetail");
   check(typeof services.loadPlaybackRate === "function", "services.loadPlaybackRate");
   check(typeof services.createQuranController === "function", "services.createQuranController");
+  check(typeof services.createAppController === "function", "services.createAppController");
 
   check(Array.isArray(constants.surahList) && constants.surahList.length === 114, "constants.surahList 114");
   check(constants.QURAN_FONT_DEFAULT_PX === 20, "constants.font default 20");

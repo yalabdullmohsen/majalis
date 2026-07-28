@@ -1,8 +1,8 @@
 /**
- * Flutter `showModalBottomSheet` — استماع / تفسير الآية.
- * UI-only; play/tafsir wired via callbacks (no AudioEngine / TafseerService import).
+ * Flutter `showModalBottomSheet` — Master Prompt options:
+ * Audio · Tafsir · Copy · Bookmark — callbacks only (loose coupling).
  */
-import { BookOpen, Pause, Play, X } from "lucide-react";
+import { BookOpen, Bookmark, BookmarkCheck, Copy, Pause, Play, X } from "lucide-react";
 import { createPortal } from "react-dom";
 import { IMMERSIVE_PAPER_BG } from "@/lib/quran-immersive";
 
@@ -13,6 +13,12 @@ export type ImmersiveVerseOptionsSheetProps = {
   onTafsir: () => void;
   onClose: () => void;
   paperBg?: string;
+  /** نسخ الآية */
+  onCopy?: () => void;
+  /** فاصلة مرجعية */
+  onToggleBookmark?: () => void;
+  bookmarked?: boolean;
+  copyStatus?: string | null;
 };
 
 export function ImmersiveVerseOptionsSheet({
@@ -22,6 +28,10 @@ export function ImmersiveVerseOptionsSheet({
   onTafsir,
   onClose,
   paperBg = IMMERSIVE_PAPER_BG,
+  onCopy,
+  onToggleBookmark,
+  bookmarked = false,
+  copyStatus = null,
 }: ImmersiveVerseOptionsSheetProps) {
   const sheet = (
     <div
@@ -49,6 +59,11 @@ export function ImmersiveVerseOptionsSheet({
             <X size={18} aria-hidden="true" />
           </button>
         </div>
+        {copyStatus ? (
+          <p className="immersive-verse-sheet__status" role="status">
+            {copyStatus}
+          </p>
+        ) : null}
         <ul className="immersive-verse-sheet__list">
           <li>
             <button
@@ -77,6 +92,30 @@ export function ImmersiveVerseOptionsSheet({
               <span>تفسير الآية</span>
             </button>
           </li>
+          {onCopy ? (
+            <li>
+              <button type="button" className="immersive-verse-sheet__row" onClick={onCopy}>
+                <Copy size={20} aria-hidden="true" />
+                <span>نسخ الآية</span>
+              </button>
+            </li>
+          ) : null}
+          {onToggleBookmark ? (
+            <li>
+              <button
+                type="button"
+                className="immersive-verse-sheet__row"
+                onClick={onToggleBookmark}
+              >
+                {bookmarked ? (
+                  <BookmarkCheck size={20} aria-hidden="true" />
+                ) : (
+                  <Bookmark size={20} aria-hidden="true" />
+                )}
+                <span>{bookmarked ? "إزالة الفاصلة" : "إضافة فاصلة"}</span>
+              </button>
+            </li>
+          ) : null}
         </ul>
       </div>
     </div>

@@ -22,3 +22,7 @@ export { useColorScheme } from "@/hooks/useColorScheme";
 export { useImmersiveSystemUi } from "@/hooks/useImmersiveSystemUi";
 export { useQuranController } from "@/hooks/useQuranController";
 export type { UseQuranControllerResult } from "@/hooks/useQuranController";
+export { useAppController } from "@/hooks/useAppController";
+export type { UseAppControllerResult } from "@/hooks/useAppController";
+export { useAudioTrackingCursor } from "@/hooks/useAudioTrackingCursor";
+export type { AudioTrackingCursor } from "@/hooks/useAudioTrackingCursor";

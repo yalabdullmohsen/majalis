@@ -46,3 +46,10 @@ export {
   createQuranController,
   type QuranControllerSnapshot,
 } from "@/lib/quran-controller";
+
+export {
+  AppController,
+  createAppController,
+  getAppController,
+  type AppControllerSnapshot,
+} from "@/lib/app-controller";

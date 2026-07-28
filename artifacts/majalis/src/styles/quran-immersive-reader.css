@@ -207,8 +207,124 @@ body.quran-immersive-sticky .scroll-to-top {
   text-size-adjust: 100%;
 }
 
+.immersive-quran-page__verse.is-selected {
+  /* Master Prompt: Colors.brown.withOpacity(0.2) */
+  background: var(--quran-verse-selected-bg, rgba(121, 85, 72, 0.2));
+  border-radius: 10px;
+  padding: 10px 8px;
+}
+
 .immersive-quran-page__verse.is-selected .immersive-quran-page__verse-text {
-  color: var(--quran-verse-selected-brown, #795548);
+  color: var(--quran-verse-selected-ink, #3e2723);
+}
+
+.immersive-quran-page__verse.is-reciting {
+  /* Audio tracking cursor — soft emerald pulse while recited */
+  box-shadow: inset 0 0 0 2px color-mix(in srgb, #176b57 45%, transparent);
+  border-radius: 10px;
+  background: color-mix(in srgb, #176b57 8%, transparent);
+}
+
+.immersive-verse-sheet__status {
+  margin: 0;
+  padding: 0.35rem 1.25rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #176b57;
+  text-align: center;
+}
+
+/* Prefs drawer — silent personalization */
+.immersive-prefs-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10025;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  justify-content: flex-start;
+}
+
+.immersive-prefs-drawer {
+  width: min(20rem, 88vw);
+  height: 100%;
+  padding: max(1rem, env(safe-area-inset-top)) 1rem max(1rem, env(safe-area-inset-bottom));
+  box-shadow: 4px 0 24px rgba(0, 0, 0, 0.12);
+  overflow-y: auto;
+  background: var(--quran-immersive-paper, #f5f5dc);
+}
+
+.immersive-prefs-drawer__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.immersive-prefs-drawer__title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.immersive-prefs-drawer__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  background: transparent;
+  cursor: pointer;
+}
+
+.immersive-prefs-drawer__section {
+  margin-bottom: 1.25rem;
+}
+
+.immersive-prefs-drawer__label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0 0 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.immersive-prefs-drawer__font-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.immersive-prefs-drawer__font-row button {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: rgba(255, 255, 255, 0.5);
+  font-size: 1.25rem;
+  cursor: pointer;
+}
+
+.immersive-prefs-drawer__section input[type="range"] {
+  width: 100%;
+}
+
+.immersive-prefs-drawer__row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.5rem 0.25rem;
+  border: none;
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+  text-align: start;
 }
 
 /* Flutter showModalBottomSheet */
