@@ -1038,6 +1038,60 @@ assert(
   appendedTail.map((f) => `${f.id}: ${f.text.slice(0, 55)}`).join(" | ")
 );
 
+// ─────────────── ٣٨) كلمةٌ غريبةٌ مغروسةٌ في وسطِ لفظٍ متَّصلٍ من الصحيحِ ───────────────
+
+/**
+ * 🔑 **عطبُ ج-٢٩٧**: سجلٌّ يفتتحُ بلفظٍ ثابتٍ بنصِّه في الصحيحِ المعزوِّ إليه،
+ * ثمَّ **يُغرَسُ في وسطِه شرحُ محرِّرٍ** فيستأنفُ بعدَه بقيّةَ اللفظِ نفسِه —
+ * فيقرأُ الزائرُ كلمةَ المحرِّرِ لفظًا نبويًّا: «الشفاء في ثلاثة: شربة عسل،
+ * **وحجامة** (شرطة مِحجم)، وكية بالنار» عن «البخاري (٥٦٨٠)» — ولفظُ ٥٦٨٠:
+ * «الشِّفَاءُ فِي ثَلاَثَةٍ شَرْبَةِ عَسَلٍ، وَشَرْطَةِ مِحْجَمٍ، وَكَيَّةِ نَارٍ،
+ * وَأَنْهَى أُمَّتِي عَنِ الْكَىِّ» — و«حجامة» تفسيرٌ لا رواية.
+ *
+ * ⚠️ **والفحصُ يُفرِّقُ بين الغرسِ والاختصار** — وهو مَقتلُه: الاختصارُ (تخطّي
+ * جملةٍ من الروايةِ) عُرفٌ صحيحٌ لا يُعاب، وشكلُه في المقابلةِ **شكلُ الغرسِ
+ * نفسُه**. والفارقُ الوحيدُ المنضبط: كلماتُ الفجوةِ في الاختصارِ **من ألفاظِ
+ * ذلك الصحيحِ**، وفي الغرسِ **لا تردُ في الصحيحِ كلِّه ألبتّة**. فلولا شرطُ
+ * انعدامِ كلمةِ الفجوةِ من معجمِ الصحيحِ لأسقطَ الفحصُ سبعةَ سجلّاتٍ سليمةٍ
+ * راجعتُها فردًا فردًا («سبعة يظلهم الله… الإمام العادل»، و«ثلاثة لا يكلمهم
+ * الله يوم القيامة: المُسبل والمنّان»، و«من أدرك ركعة من الصلاة مع الإمام»،
+ * و«البيّعان بالخيار… كتما وكذبا»، وغيرُها) — وكلُّ فجوةٍ فيها لفظٌ من الصحيحِ.
+ * وبهذا الشرطِ أخرج الفحصُ **عائلةَ العطبِ وحدَها بلا إيجابٍ كاذبٍ واحد**.
+ */
+const corpusVocab = hadithsNorm.map((hs) => {
+  const v = new Set<string>();
+  for (const h of hs) for (const t of h.split(" ")) v.add(t);
+  return v;
+});
+const graftedGloss = [...FAWAID_CURATED_SEED, ...SEED_FAWAID].filter((f) => {
+  const idx = f.author_name === "صحيح البخاري" ? 0 : f.author_name === "صحيح مسلم" ? 1 : -1;
+  if (idx < 0 || REJECTED.test(f.text) || REJECTED.test(f.source ?? "")) return false;
+  const w = normHadith(f.text).split(" ").filter(Boolean);
+  for (let i = 0; i + 5 <= w.length; i++) {
+    // مرشِّحٌ رخيصٌ على النسخةِ المدموجةِ قبلَ الدورانِ على ٧٥٨٠ حديثًا
+    if (!corpus[idx].includes(w.slice(i, i + 5).join(" "))) continue;
+    for (const h of hadithsNorm[idx]) {
+      let j = i + 5;
+      if (!h.includes(w.slice(i, j).join(" "))) continue;
+      while (j < w.length && h.includes(w.slice(i, j + 1).join(" "))) j++;
+      const run = w.slice(i, j).join(" ");
+      const after = h.slice(h.indexOf(run) + run.length);
+      for (let gap = 1; gap <= 4; gap++) {
+        if (j + gap + 3 > w.length) break;
+        // فجوةٌ فيها لفظٌ من الصحيحِ ⇒ اختصارُ روايةٍ لا غرسَ شرح
+        if (w.slice(j, j + gap).some((g) => corpusVocab[idx].has(g))) continue;
+        if (after.includes(w.slice(j + gap, j + gap + 3).join(" "))) return true;
+      }
+    }
+  }
+  return false;
+});
+assert(
+  graftedGloss.length === 0,
+  "لا سجلَّ يغرسُ في وسطِ لفظٍ متَّصلٍ من الصحيحِ كلمةً ليست من معجمِه",
+  graftedGloss.map((f) => f.text.slice(0, 55)).join(" | ")
+);
+
 console.log(`\n${"─".repeat(48)}`);
 console.log(`النتائج: ${passed} نجح، ${failed} فشل`);
 if (failed > 0) process.exit(1);
