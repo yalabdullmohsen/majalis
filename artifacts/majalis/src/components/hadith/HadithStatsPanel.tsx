@@ -15,13 +15,22 @@ function toneClass(tone: HadithStatBar["tone"]): string {
 
 function StatBar({ bar }: { bar: HadithStatBar }) {
   const pct = bar.total > 0 ? Math.min(100, (bar.value / bar.total) * 100) : 0;
+  const isPercentScale = bar.total === 100;
+  const valueLabel = isPercentScale
+    ? formatHadithPct(bar.value, 100)
+    : formatHadithStat(bar.value);
+  const noteLabel = bar.note
+    ? bar.note
+    : isPercentScale
+      ? null
+      : `/ ${formatHadithStat(bar.total)}`;
   const inner = (
     <>
       <div className="hsp-bar__head">
         <span className="hsp-bar__label">{bar.label}</span>
         <span className="hsp-bar__value">
-          {formatHadithStat(bar.value)}
-          <small>{bar.note ? ` · ${bar.note}` : ` / ${formatHadithStat(bar.total)}`}</small>
+          {valueLabel}
+          {noteLabel ? <small>{` · ${noteLabel}`}</small> : null}
         </span>
       </div>
       <div className="hsp-bar__track" aria-hidden="true">

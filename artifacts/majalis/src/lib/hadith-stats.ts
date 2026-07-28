@@ -86,13 +86,14 @@ export function formatHadithPct(part: number, whole: number): string {
 
 /** زوايا conic-gradient من شرائح النسب (مجموع = ١٠٠٪ من القيم). */
 export function ringConicGradient(slices: HadithRingSlice[]): string {
+  /** ألوان الهوية: نجاح زمردي، تحذير رملي، خطأ نظام، رمل مساند، محايد زمردي باهت */
   const toneColor: Record<HadithRingSlice["tone"], string> = {
-    sahih: "#5CC49A",
-    emerald: "#3FAE84",
-    daif: "#F59E0B",
-    mawdu: "#EF4444",
+    sahih: "#34785F",
+    emerald: "#226A56",
+    daif: "#B67A32",
+    mawdu: "#B44A4A",
     sand: "#B8963F",
-    neutral: "#94A3B8",
+    neutral: "#6E8C81",
   };
   const total = slices.reduce((s, x) => s + x.value, 0) || 1;
   let cursor = 0;
@@ -263,18 +264,18 @@ export function buildHadithStatsSnapshot(): HadithStatsSnapshot {
       {
         id: "matn-b",
         label: "فصل متن البخاري",
-        value: Math.round(s.matnSplitBukhariPct),
+        value: s.matnSplitBukhariPct,
         total: 100,
         tone: "emerald",
-        note: `${s.matnSplitBukhariPct.toLocaleString("ar-EG")}٪ عرض بلا سند`,
+        note: "عرض بلا سند",
       },
       {
         id: "matn-m",
         label: "فصل متن مسلم",
-        value: Math.round(s.matnSplitMuslimPct),
+        value: s.matnSplitMuslimPct,
         total: 100,
         tone: "sahih",
-        note: `${s.matnSplitMuslimPct.toLocaleString("ar-EG")}٪ عرض بلا سند`,
+        note: "عرض بلا سند",
       },
       {
         id: "takhrij",
