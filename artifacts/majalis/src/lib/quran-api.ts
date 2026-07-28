@@ -97,23 +97,47 @@ async function fetchLocalSurahDetail(surahNumber: number): Promise<SurahDetail |
 export async function fetchSurahDetail(surahNumber: number): Promise<SurahDetail> {
   const key = `surah-${surahNumber}`;
   const cached = readCache<SurahDetail>(key);
-  if (cached) return cached;
+  if (cached) {
+    // Mirror into IndexedDB for offline-first packs (best-effort)
+    void import("@/lib/offline-content-store")
+      .then((m) => m.cacheQuranSurah(cached))
+      .catch(() => undefined);
+    return cached;
+  }
 
   const local = await fetchLocalSurahDetail(surahNumber);
   if (local) {
     writeCache(key, local);
+    void import("@/lib/offline-content-store")
+      .then((m) => m.cacheQuranSurah(local))
+      .catch(() => undefined);
     return local;
   }
 
-  const res = await fetch(`${BASE}/surah/${surahNumber}/quran-uthmani`, {
-    signal: AbortSignal.timeout(15_000),
-  });
-  if (!res.ok) throw new Error(`AlQuran Cloud: HTTP ${res.status}`);
-  const json = await res.json();
-  if (json.code !== 200 || !json.data) throw new Error("AlQuran Cloud: unexpected response");
-  const detail: SurahDetail = json.data;
-  writeCache(key, detail);
-  return detail;
+  try {
+    const res = await fetch(`${BASE}/surah/${surahNumber}/quran-uthmani`, {
+      signal: AbortSignal.timeout(15_000),
+    });
+    if (!res.ok) throw new Error(`AlQuran Cloud: HTTP ${res.status}`);
+    const json = await res.json();
+    if (json.code !== 200 || !json.data) throw new Error("AlQuran Cloud: unexpected response");
+    const detail: SurahDetail = json.data;
+    writeCache(key, detail);
+    void import("@/lib/offline-content-store")
+      .then((m) => m.cacheQuranSurah(detail))
+      .catch(() => undefined);
+    return detail;
+  } catch (err) {
+    // Graceful offline fallback from IndexedDB before surfacing failure
+    try {
+      const { getCachedQuranSurah } = await import("@/lib/offline-content-store");
+      const offline = await getCachedQuranSurah(surahNumber);
+      if (offline) return offline;
+    } catch {
+      /* ignore */
+    }
+    throw err;
+  }
 }
 
 export async function fetchTafsirAyahs(

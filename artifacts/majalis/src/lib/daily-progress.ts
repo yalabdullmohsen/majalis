@@ -69,12 +69,30 @@ export function getTodayProgress(): DayProgress {
 export function setTaskProgress(taskId: ProgressTaskId, value: number) {
   const store = readStore();
   const key = todayKey();
-  const day = getTodayProgress();
+  const prev = getTodayProgress();
+  const day = { ...prev };
   day[taskId] = Math.max(0, value);
   store[key] = day;
   writeStore(store);
   if (typeof window !== "undefined") {
     window.dispatchEvent(new CustomEvent("majalis-progress-updated"));
+    // Streak logic (no UI change) — fire-and-forget dynamic import
+    void import("@/lib/user-streak").then(({ recordUserActivity }) => {
+      const activityMap: Partial<Record<ProgressTaskId, "quran" | "adhkar" | "wird" | "tasbih">> = {
+        quran: "quran",
+        wird: "wird",
+        tasbih: "tasbih",
+        "morning-adhkar": "adhkar",
+        "evening-adhkar": "adhkar",
+        nawafil: "adhkar",
+      };
+      const activity = activityMap[taskId] || "goal";
+      const task = PROGRESS_TASKS.find((t) => t.id === taskId);
+      const wasDone = task ? (prev[taskId] || 0) >= task.target : false;
+      const nowDone = task ? day[taskId] >= task.target : false;
+      const dayComplete = PROGRESS_TASKS.every((t) => (day[t.id] || 0) >= t.target);
+      recordUserActivity(activity, { completedGoal: (!wasDone && nowDone) || dayComplete });
+    });
   }
 }
 
