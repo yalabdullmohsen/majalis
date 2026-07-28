@@ -10,10 +10,13 @@
 
 import { pooledFetch } from "@/lib/fetch-pool";
 import { safeJsonParse } from "@/lib/safe-json";
+import { LruCache } from "@/lib/lru-cache";
 
 const CDN_BASE = "https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions";
 const CACHE_PREFIX = "hadith_cdn_";
 const CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 ساعة
+/** Cap in-memory hadith payloads so long browse sessions do not inflate heap. */
+const hadithMemory = new LruCache<string, unknown>(24);
 
 /**
  * "nawawi" و"qudsi" مُعرَّفان بلا بادئة لغة في هذا المشروع، لكن fawazahmed0/hadith-api
@@ -103,6 +106,8 @@ function cacheKey(collection: string, chapter?: number): string {
 }
 
 function readCache<T>(key: string): T | null {
+  const mem = hadithMemory.get(key);
+  if (mem !== undefined) return mem as T;
   try {
     const raw = sessionStorage.getItem(key);
     if (!raw) return null;
@@ -114,6 +119,7 @@ function readCache<T>(key: string): T | null {
       sessionStorage.removeItem(key);
       return null;
     }
+    hadithMemory.set(key, parsed.value.data);
     return parsed.value.data;
   } catch {
     return null;
@@ -121,6 +127,7 @@ function readCache<T>(key: string): T | null {
 }
 
 function writeCache(key: string, data: unknown): void {
+  hadithMemory.set(key, data);
   try { sessionStorage.setItem(key, JSON.stringify({ ts: Date.now(), data })); } catch { /* quota exceeded */ }
 }
 

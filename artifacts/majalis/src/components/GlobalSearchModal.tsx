@@ -18,6 +18,8 @@ import {
   getTopSearchQueries,
 } from "@/lib/search-history";
 import { normalizeArabic } from "@/shared/arabic-normalize";
+import { afterNextPaint, yieldToMain } from "@/lib/yield-to-main";
+import { TEXT_API_ORIGINS, useResourcePrewarm } from "@/lib/resource-prewarm";
 import "@/styles/components/global-search-modal.css";
 
 // ── ثوابت ───────────────────────────────────────────────────────────────────
@@ -180,6 +182,9 @@ export function GlobalSearchModal({ onClose }: Props) {
   const abortRef  = useRef<AbortController | null>(null);
   const isMobile  = useIsMobile();
 
+  // Preconnect text APIs while the modal is open (DNS/TLS warm for search).
+  useResourcePrewarm(TEXT_API_ORIGINS, true);
+
   useEffect(() => {
     const t = setTimeout(() => inputRef.current?.focus(), 80);
     return () => clearTimeout(t);
@@ -219,8 +224,12 @@ export function GlobalSearchModal({ onClose }: Props) {
       setLoading(true);
       setError(false);
       try {
+        // Yield so keystroke / filter-chip feedback paints before search work (INP).
+        await afterNextPaint();
+        await yieldToMain();
         const opts = filter !== "all" ? { type: filter, limit: 20 } : { limit: 24 };
         const res  = await intelligentSearch(q.trim(), opts);
+        await yieldToMain();
         setResults(res.results ?? []);
       } catch (err: unknown) {
         if ((err as Error)?.name !== "AbortError") setError(true);
