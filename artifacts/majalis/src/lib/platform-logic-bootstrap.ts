@@ -76,6 +76,14 @@ export async function startPlatformLogicSuite(): Promise<void> {
       /* ignore */
     }
 
+    // Part 23: start RTT / jitter network scheduler
+    try {
+      const { startNetworkScheduler } = await import("@/lib/network-scheduler");
+      startNetworkScheduler();
+    } catch {
+      /* ignore */
+    }
+
     // Soft-warm: sacred times, cross-tab channel, auto-scroll pace, power-saver binding
     try {
       const { hydrateAutoScrollFromIdb } = await import("@/lib/adaptive-auto-scroll");

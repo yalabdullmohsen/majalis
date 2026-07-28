@@ -3,6 +3,8 @@
  * Logic-only — no UI.
  */
 
+import { getNetworkSchedulerPolicy, observeNetworkRtt } from "@/lib/network-scheduler";
+
 export type AudioPreloadMode = "none" | "metadata" | "auto";
 
 export type AudioBufferPolicy = {
@@ -55,6 +57,11 @@ export function observeAudioLatency(rttMs: number): void {
   if (!Number.isFinite(rttMs) || rttMs < 0) return;
   lastRtt = lastRtt == null ? rttMs : lastRtt * 0.6 + rttMs * 0.4;
   lastSampleAt = Date.now();
+  try {
+    observeNetworkRtt(rttMs);
+  } catch {
+    /* ignore */
+  }
 }
 
 export function getAudioBufferPolicy(): AudioBufferPolicy {
@@ -107,6 +114,24 @@ export function getAudioBufferPolicy(): AudioBufferPolicy {
     preload = "auto";
     targetBufferSec = Math.max(targetBufferSec, 16);
     stallGraceMs = Math.max(stallGraceMs, 1_000);
+  }
+
+  // Part 23: blend live network scheduler (jitter-aware) into audio policy
+  try {
+    if (rtt != null) observeNetworkRtt(rtt);
+    const sched = getNetworkSchedulerPolicy();
+    targetBufferSec = Math.max(targetBufferSec, sched.targetBufferSec);
+    if (sched.audioPrefetchCount === 0) warmNextAyah = false;
+    if (sched.rttMs != null && sched.rttMs > 300) {
+      stallGraceMs = Math.max(stallGraceMs, 900);
+    }
+    for (const r of sched.reasons) {
+      if (!reasons.includes(`sched:${r}`) && !reasons.includes(r)) {
+        reasons.push(`sched:${r}`);
+      }
+    }
+  } catch {
+    /* scheduler optional */
   }
 
   if (downlink != null && downlink < 0.5) {

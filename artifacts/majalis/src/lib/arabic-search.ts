@@ -122,3 +122,25 @@ export function arabicSearchPatterns(term: string): string[] {
 export function ilikePattern(term: string): string {
   return `%${term.trim()}%`;
 }
+
+/**
+ * Part 23: concurrent large-corpus scan (SharedArrayBuffer when isolated,
+ * structured-clone / chunked yield fallback otherwise).
+ */
+export async function searchArabicCorpusConcurrent(
+  items: readonly string[],
+  query: string,
+  limit = 50,
+): Promise<Array<{ index: number; score: number; mode: string }>> {
+  const { runConcurrentIndex } = await import("@/lib/shared-buffer-index");
+  const normalizedItems = items.map((s) => normalizeArabic(s));
+  const result = await runConcurrentIndex(
+    {
+      id: `ar-search-${Date.now()}`,
+      items: normalizedItems,
+      query: normalizeArabic(query),
+    },
+    { limit },
+  );
+  return result.hits.map((h) => ({ ...h, mode: result.mode }));
+}

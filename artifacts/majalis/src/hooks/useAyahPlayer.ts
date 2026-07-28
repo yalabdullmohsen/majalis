@@ -182,9 +182,24 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
       // Rough throughput sample from typical ayah size (~80KB) / latency
       if (latency > 0) observeAudioThroughput(80_000, latency);
       setPlayerState("playing");
-      if (policy.warmNextAyah && ayah < totalAyahs) {
-        prewarmUrl(getAyahAudioUrl(surah, ayah + 1, reciter), { mode: "cors" });
-      }
+      // Part 23: RTT-tuned prefetch count (0..N next ayahs)
+      void import("@/lib/network-scheduler")
+        .then(({ getNetworkSchedulerPolicy }) => {
+          const sched = getNetworkSchedulerPolicy();
+          const n = policy.warmNextAyah
+            ? Math.max(1, sched.audioPrefetchCount)
+            : sched.audioPrefetchCount;
+          for (let i = 1; i <= n; i++) {
+            if (ayah + i <= totalAyahs) {
+              prewarmUrl(getAyahAudioUrl(surah, ayah + i, reciter), { mode: "cors" });
+            }
+          }
+        })
+        .catch(() => {
+          if (policy.warmNextAyah && ayah < totalAyahs) {
+            prewarmUrl(getAyahAudioUrl(surah, ayah + 1, reciter), { mode: "cors" });
+          }
+        });
     };
     const onPause = () => {
       if (!mountedRef.current || audio.ended) return;

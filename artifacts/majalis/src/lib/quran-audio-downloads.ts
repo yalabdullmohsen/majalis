@@ -151,10 +151,54 @@ export async function deleteReciterDownloads(reciterId: string): Promise<void> {
   await Promise.all(entries.map((e) => deleteBlob(reciterId, e.surah)));
 }
 
-/** رابط تشغيل محلي (Object URL) للسورة إن كانت مُنزَّلة، وإلا null (يُستخدَم عندها الرابط الحي كالمعتاد). استدعِ URL.revokeObjectURL على النتيجة عند انتهاء الاستخدام. */
-export async function getOfflineSurahUrl(reciterId: string, surah: number): Promise<string | null> {
+/** رابط تشغيل محلي (Object URL) للسورة إن كانت مُنزَّلة، وإلا null.
+ * Part 23: optional MSE path for large blobs — flattens memory via SourceBuffer eviction.
+ */
+export async function getOfflineSurahUrl(
+  reciterId: string,
+  surah: number,
+  opts?: { audioEl?: HTMLAudioElement; preferMse?: boolean },
+): Promise<string | null> {
   const blob = await getBlob(reciterId, surah);
-  return blob ? URL.createObjectURL(blob) : null;
+  if (!blob) return null;
+
+  if (opts?.preferMse && opts.audioEl) {
+    try {
+      const { createMseAudioSession, isMseSupported } = await import("@/lib/mse-audio-buffer");
+      if (isMseSupported("audio/mpeg")) {
+        const session = await createMseAudioSession(opts.audioEl, {
+          mimeType: "audio/mpeg",
+          retainBehindSec: 45,
+          maxAheadSec: 120,
+        });
+        if (session) {
+          const buf = await blob.arrayBuffer();
+          // Chunk append to exercise backpressure path on large surahs
+          const CHUNK = 256 * 1024;
+          for (let offset = 0; offset < buf.byteLength; offset += CHUNK) {
+            const slice = buf.slice(offset, Math.min(offset + CHUNK, buf.byteLength));
+            const result = await session.append(slice);
+            if (!result.ok && result.error === "QuotaExceededError") {
+              session.evictPlayed();
+              await session.append(slice);
+            }
+          }
+          session.endOfStream();
+          // Attach destroy on ended
+          const onEnded = () => {
+            session.destroy();
+            opts.audioEl?.removeEventListener("ended", onEnded);
+          };
+          opts.audioEl.addEventListener("ended", onEnded);
+          return session.objectUrl;
+        }
+      }
+    } catch {
+      /* fall through to blob URL */
+    }
+  }
+
+  return URL.createObjectURL(blob);
 }
 
 export async function estimateStorageUsage(): Promise<{ usage: number; quota: number } | null> {
