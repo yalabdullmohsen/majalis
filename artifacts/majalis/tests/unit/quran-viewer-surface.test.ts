@@ -49,6 +49,7 @@ check(pkg.includes('"framer-motion"'), "framer-motion dependency");
 check(actionBar.includes("AnimatePresence") && actionBar.includes("motion."), "Framer Motion slide enter/exit");
 check(actionBar.includes("togglePlay") || actionBar.includes("تلاوة"), "Play/Pause control");
 check(actionBar.includes("openTafsir") || actionBar.includes("تفسير"), "Tafseer control");
+check(actionBar.includes("TafseerDrawer"), "ActionBar mounts TafseerDrawer");
 check(actionBar.includes("toggleBookmark") || actionBar.includes("إشارة"), "Bookmark control");
 check(actionBar.includes("toggleRepeat") || actionBar.includes("تكرار"), "Repeat control");
 check(actionBar.includes("shareAyahAsImage"), "Share image card");

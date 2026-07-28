@@ -1,0 +1,190 @@
+/* TafseerDrawer — bottom/side sliding interpretation panel */
+
+.tafseer-drawer__scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 10060;
+  border: none;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  background: color-mix(in srgb, #0a1210 40%, transparent);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.tafseer-drawer {
+  position: fixed;
+  z-index: 10061;
+  left: 50%;
+  bottom: 0;
+  translate: -50% 0;
+  width: min(100%, 32rem);
+  max-height: min(78vh, 36rem);
+  display: flex;
+  flex-direction: column;
+  padding: 0.45rem 1rem max(1rem, env(safe-area-inset-bottom, 0px));
+  border-radius: 1.15rem 1.15rem 0 0;
+  background: color-mix(in srgb, var(--majalis-panel, #f7f4ef) 96%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid color-mix(in srgb, var(--majalis-line, #d4cfc4) 70%, transparent);
+  border-bottom: none;
+  box-shadow: 0 -10px 32px color-mix(in srgb, #0a1210 14%, transparent);
+  color: var(--majalis-ink, #1a2420);
+  overscroll-behavior: contain;
+}
+
+.tafseer-drawer__handle {
+  width: 2.35rem;
+  height: 0.25rem;
+  margin: 0.1rem auto 0.55rem;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--majalis-line, #d4cfc4) 85%, transparent);
+}
+
+.tafseer-drawer__head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.55rem;
+}
+
+.tafseer-drawer__title-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  min-width: 0;
+  color: var(--majalis-emerald-deep, #143f35);
+}
+
+.tafseer-drawer__title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.tafseer-drawer__meta {
+  margin: 0.15rem 0 0;
+  font-size: 0.78rem;
+  color: var(--color-muted, #5c6b66);
+}
+
+.tafseer-drawer__close {
+  flex-shrink: 0;
+  width: 2.25rem;
+  height: 2.25rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--majalis-line, #d4cfc4) 55%, transparent);
+  color: var(--majalis-ink-soft, #3d4a45);
+  cursor: pointer;
+}
+
+.tafseer-drawer__ayah {
+  margin: 0 0 0.65rem;
+  padding: 0.5rem 0.65rem;
+  text-align: center;
+  font-family: "Amiri Quran", "KFGQPC Uthmanic Script", "Scheherazade New", serif;
+  font-size: clamp(0.95rem, 2.6vw, 1.12rem);
+  line-height: 1.85;
+  border-radius: 0.55rem;
+  background: color-mix(in srgb, var(--majalis-emerald-deep, #143f35) 7%, transparent);
+}
+
+.tafseer-drawer__sources {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.35rem;
+  overflow-x: auto;
+  padding-bottom: 0.35rem;
+  margin-bottom: 0.45rem;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+.tafseer-drawer__chip {
+  appearance: none;
+  flex: 0 0 auto;
+  border: 1px solid color-mix(in srgb, var(--majalis-line, #d4cfc4) 80%, transparent);
+  background: color-mix(in srgb, var(--majalis-panel, #f7f4ef) 90%, transparent);
+  color: var(--majalis-emerald-deep, #143f35);
+  border-radius: 999px;
+  padding: 0.35rem 0.75rem;
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.tafseer-drawer__chip.is-active {
+  border-color: color-mix(in srgb, var(--majalis-emerald-deep, #143f35) 45%, transparent);
+  background: color-mix(in srgb, var(--majalis-emerald-deep, #143f35) 14%, transparent);
+}
+
+.tafseer-drawer__body {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding-bottom: 0.35rem;
+}
+
+.tafseer-drawer__source-line {
+  margin: 0 0 0.45rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--majalis-emerald-deep, #143f35);
+}
+
+.tafseer-drawer__caution {
+  margin: 0 0 0.55rem;
+  font-size: 0.75rem;
+  line-height: 1.5;
+  color: #8a3b2a;
+}
+
+.tafseer-drawer__text {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.85;
+  white-space: pre-wrap;
+}
+
+.tafseer-drawer__status {
+  margin: 0.75rem 0;
+  text-align: center;
+  font-size: 0.88rem;
+  color: var(--color-muted, #5c6b66);
+}
+
+.tafseer-drawer__status--err {
+  color: #8a3b2a;
+}
+
+@media (min-width: 768px) {
+  .tafseer-drawer {
+    left: auto;
+    right: 1rem;
+    bottom: 1rem;
+    translate: 0 0;
+    width: min(26rem, calc(100vw - 2rem));
+    max-height: min(72vh, 34rem);
+    border-radius: 1rem;
+    border-bottom: 1px solid color-mix(in srgb, var(--majalis-line, #d4cfc4) 70%, transparent);
+  }
+
+  .tafseer-drawer__scrim {
+    background: color-mix(in srgb, #0a1210 22%, transparent);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tafseer-drawer,
+  .tafseer-drawer__scrim {
+    transition: none !important;
+  }
+}

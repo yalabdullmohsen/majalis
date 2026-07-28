@@ -48,3 +48,10 @@ export {
   type AudioEngineSnapshot,
   type DownloadProgress,
 } from "@/core/audio";
+export {
+  getTafseerService,
+  TafseerService,
+  TAFSEER_SOURCES,
+  type TafseerSource,
+  type TafseerAyahResult,
+} from "@/core/tafseer";

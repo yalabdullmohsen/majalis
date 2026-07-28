@@ -14,7 +14,7 @@ import {
   Share2,
   X,
 } from "lucide-react";
-import { getSurahMeta, fetchTafsirAyahs } from "@/lib/quran-api";
+import { getSurahMeta } from "@/lib/quran-api";
 import {
   addBookmark,
   isBookmarked,
@@ -23,6 +23,7 @@ import {
 import { shareAyahAsImage } from "@/lib/share-ayah-card";
 import { getDatabaseManager } from "@/core/quran/DatabaseManager";
 import { useQuranEngineCore } from "@/core/quran/QuranEngineContext";
+import { TafseerDrawer } from "@/components/TafseerDrawer";
 import "@/styles/quran-action-bar.css";
 
 export type QuranActionBarAyah = {
@@ -37,8 +38,6 @@ export type QuranActionBarProps = {
   ayah: QuranActionBarAyah | null;
   onClose: () => void;
 };
-
-const QUICK_TAFSIR = "ar.muyassar";
 
 export function QuranActionBar({ ayah, onClose }: QuranActionBarProps) {
   const reduceMotion = useReducedMotion();
@@ -55,9 +54,6 @@ export function QuranActionBar({ ayah, onClose }: QuranActionBarProps) {
   const [repeatOn, setRepeatOn] = useState(false);
   const [bookmarked, setBookmarked] = useState(false);
   const [tafsirOpen, setTafsirOpen] = useState(false);
-  const [tafsirText, setTafsirText] = useState<string | null>(null);
-  const [tafsirLoading, setTafsirLoading] = useState(false);
-  const [tafsirError, setTafsirError] = useState(false);
   const [sharing, setSharing] = useState(false);
   const [statusMsg, setStatusMsg] = useState<string | null>(null);
 
@@ -89,15 +85,11 @@ export function QuranActionBar({ ayah, onClose }: QuranActionBarProps) {
     if (!ayah) {
       setBookmarked(false);
       setTafsirOpen(false);
-      setTafsirText(null);
-      setTafsirError(false);
       setPlaying(false);
       return;
     }
     setBookmarked(isBookmarked(ayah.surah, ayah.ayah));
     setTafsirOpen(false);
-    setTafsirText(null);
-    setTafsirError(false);
     setStatusMsg(null);
     setRepeatOn(audio.getRepeatMode() === "ayah");
     void updateReadingProgress({
@@ -105,7 +97,6 @@ export function QuranActionBar({ ayah, onClose }: QuranActionBarProps) {
       ayah: ayah.ayah,
       page: ayah.page,
     });
-    // Seek when playback is already active
     void audio.seekToAyah(ayah.surah, ayah.ayah).catch(() => undefined);
   }, [ayah, updateReadingProgress, audio]);
 
@@ -125,25 +116,10 @@ export function QuranActionBar({ ayah, onClose }: QuranActionBarProps) {
     }
   }, [ayah, togglePlayAyah]);
 
-  const openTafsir = useCallback(async () => {
+  const openTafsir = useCallback(() => {
     if (!ayah) return;
     setTafsirOpen(true);
-    if (tafsirText) return;
-    setTafsirLoading(true);
-    setTafsirError(false);
-    try {
-      const rows = await fetchTafsirAyahs(ayah.surah, QUICK_TAFSIR);
-      const hit = rows.find((r) => r.numberInSurah === ayah.ayah);
-      const text = hit?.text?.trim() || null;
-      setTafsirText(text);
-      if (!text) setTafsirError(true);
-    } catch {
-      setTafsirError(true);
-      setTafsirText(null);
-    } finally {
-      setTafsirLoading(false);
-    }
-  }, [ayah, tafsirText]);
+  }, [ayah]);
 
   const toggleBookmark = useCallback(async () => {
     if (!ayah) return;
@@ -214,6 +190,7 @@ export function QuranActionBar({ ayah, onClose }: QuranActionBarProps) {
   const sheetY = reduceMotion ? 0 : 24;
 
   return (
+    <>
     <AnimatePresence>
       {open && ayah ? (
         <>
@@ -274,7 +251,7 @@ export function QuranActionBar({ ayah, onClose }: QuranActionBarProps) {
               <button
                 type="button"
                 className={`qab-btn${tafsirOpen ? " qab-btn--active" : ""}`}
-                onClick={() => void openTafsir()}
+                onClick={openTafsir}
                 aria-expanded={tafsirOpen}
               >
                 <BookOpen size={20} />
@@ -314,36 +291,19 @@ export function QuranActionBar({ ayah, onClose }: QuranActionBarProps) {
                 {statusMsg}
               </p>
             )}
-
-            <AnimatePresence initial={false}>
-              {tafsirOpen && (
-                <motion.div
-                  key="tafsir"
-                  className="qab-tafsir"
-                  initial={reduceMotion ? false : { height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.22 }}
-                >
-                  <h3 className="qab-tafsir__title">التفسير الميسّر</h3>
-                  {tafsirLoading && <p className="qab-tafsir__body">جاري التحميل…</p>}
-                  {tafsirError && !tafsirLoading && (
-                    <p className="qab-tafsir__body qab-tafsir__body--err">
-                      تعذّر جلب التفسير. حاول لاحقًا.
-                    </p>
-                  )}
-                  {tafsirText && !tafsirLoading && (
-                    <p className="qab-tafsir__body" dir="rtl">
-                      {tafsirText}
-                    </p>
-                  )}
-                </motion.div>
-              )}
-            </AnimatePresence>
           </motion.div>
         </>
       ) : null}
     </AnimatePresence>
+
+    <TafseerDrawer
+      open={tafsirOpen && Boolean(ayah)}
+      onClose={() => setTafsirOpen(false)}
+      surah={ayah?.surah}
+      ayah={ayah?.ayah}
+      ayahText={ayah?.text}
+    />
+    </>
   );
 }
 
