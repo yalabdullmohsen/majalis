@@ -1,4 +1,9 @@
-// خوارزمية SM-2 للتكرار المتباعد
+/**
+ * Spaced Repetition SM-2 — integer-precision intervals & ease factors.
+ * Eliminates floating-point drift so offline/online schedules stay bit-stable.
+ * Logic-only — no UI.
+ */
+
 // https://www.supermemo.com/en/articles/twenty-rules
 
 export type ReviewQuality = 0 | 1 | 2 | 3 | 4 | 5;
@@ -31,7 +36,6 @@ export const INITIAL_CARD_STATE: CardState = {
 /**
  * Map Again / Hard / Good / Easy → SM-2 quality 0–5.
  * Spec: Again[0], Hard[3], Good[4], Easy[5]
- * (Hard ≥ 3 counts as a successful recall with a shorter interval growth.)
  */
 export const RATING_TO_QUALITY: Record<ReviewRating, ReviewQuality> = {
   again: 0,
@@ -44,28 +48,65 @@ export function ratingToQuality(rating: ReviewRating): ReviewQuality {
   return RATING_TO_QUALITY[rating];
 }
 
+/** Fixed 2-decimal ease — prevents IEEE754 drift across sessions. */
+export function quantizeEaseFactor(ef: number): number {
+  const clamped = Math.max(1.3, ef);
+  return Math.round(clamped * 100) / 100;
+}
+
+/** Whole-day intervals only — no fractional day drift. */
+export function quantizeIntervalDays(days: number): number {
+  if (!Number.isFinite(days) || days <= 0) return 1;
+  return Math.max(1, Math.round(days));
+}
+
+/**
+ * Canonical calendar day key (UTC midnight) for stable offline/online sync.
+ */
+export function toUtcDayKey(date: Date = new Date()): string {
+  const y = date.getUTCFullYear();
+  const m = String(date.getUTCMonth() + 1).padStart(2, "0");
+  const d = String(date.getUTCDate()).padStart(2, "0");
+  return `${y}-${m}-${d}`;
+}
+
+/**
+ * Add whole days to a UTC calendar date — avoids DST / local TZ float issues.
+ */
+export function addUtcDays(from: Date, days: number): Date {
+  const whole = quantizeIntervalDays(days);
+  const base = Date.UTC(from.getUTCFullYear(), from.getUTCMonth(), from.getUTCDate());
+  return new Date(base + whole * 86_400_000);
+}
+
 export function sm2(state: CardState, quality: ReviewQuality): CardState {
-  let { interval_days, ease_factor, repetitions } = state;
+  let interval_days = quantizeIntervalDays(state.interval_days || 0);
+  let ease_factor = quantizeEaseFactor(state.ease_factor || 2.5);
+  let repetitions = Math.max(0, Math.floor(state.repetitions || 0));
 
   if (quality >= 3) {
     if (repetitions === 0) interval_days = 1;
     else if (repetitions === 1) interval_days = 6;
-    else interval_days = Math.round(interval_days * ease_factor);
+    else {
+      // Multiply in centi-ease (×100) then divide — integer path before round
+      const centi = Math.round(ease_factor * 100);
+      interval_days = quantizeIntervalDays((interval_days * centi) / 100);
+    }
     repetitions += 1;
   } else {
     repetitions = 0;
     interval_days = 1;
   }
 
-  ease_factor = Math.max(1.3, ease_factor + 0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02));
+  // Classic SM-2 ease update, then quantize
+  const delta = 0.1 - (5 - quality) * (0.08 + (5 - quality) * 0.02);
+  ease_factor = quantizeEaseFactor(ease_factor + delta);
 
   return { interval_days, ease_factor, repetitions };
 }
 
 export function nextReviewDate(intervalDays: number, from: Date = new Date()): Date {
-  const d = new Date(from.getTime());
-  d.setDate(d.getDate() + intervalDays);
-  return d;
+  return addUtcDays(from, intervalDays);
 }
 
 /**
@@ -77,13 +118,14 @@ export function applyReviewRating(
   from: Date = new Date(),
 ): Sm2CardMetrics {
   const quality = typeof rating === "number" ? rating : ratingToQuality(rating);
-  const normalized: CardState = "easeFactor" in state
-    ? {
-        interval_days: state.interval,
-        ease_factor: state.easeFactor,
-        repetitions: state.repetitions,
-      }
-    : state;
+  const normalized: CardState =
+    "easeFactor" in state
+      ? {
+          interval_days: state.interval,
+          ease_factor: state.easeFactor,
+          repetitions: state.repetitions,
+        }
+      : state;
 
   const next = sm2(normalized, quality);
   const due = nextReviewDate(next.interval_days, from);
@@ -118,8 +160,10 @@ export const rateGood = (state: CardState | Sm2CardMetrics, from?: Date) =>
 export const rateEasy = (state: CardState | Sm2CardMetrics, from?: Date) =>
   applyReviewRating(state, "easy", from);
 
-export function isDue(nextReviewAt: string): boolean {
-  return new Date(nextReviewAt) <= new Date();
+export function isDue(nextReviewAt: string, now: Date = new Date()): boolean {
+  const t = Date.parse(nextReviewAt);
+  if (!Number.isFinite(t)) return true;
+  return t <= now.getTime();
 }
 
 export function qualityLabel(q: ReviewQuality): string {

@@ -16,7 +16,7 @@ import { ComingSoonDialog } from "@/components/ComingSoonDialog";
 import { AchievementToast } from "@/components/AchievementToast";
 import { useAchievementCheck } from "@/hooks/useAchievementCheck";
 import NotFound from "@/views/not-found";
-import { ErrorBoundary } from "@/components/ErrorBoundary";
+import { ErrorBoundary, SectionErrorBoundary } from "@/components/ErrorBoundary";
 import { usePageSeo } from "@/lib/seo";
 import { lazyWithRetry } from "@/lib/lazy-with-retry";
 import { LazyRouteFallback } from "@/components/LazyRouteFallback";
@@ -291,15 +291,24 @@ function SeoManager() {
   const [location] = useLocation();
   usePageSeo(location);
   useEffect(() => {
-    // تأخير قصير يمنح صفحة التفاصيل (مثلًا عنوان درس حقيقي بعد جلبه من
-    // Supabase) فرصة لضبط document.title الخاص بها قبل أن نسجّله في "زرت
-    // مؤخرًا" — بلا هذا التأخير قد نلتقط عنوان الصفحة السابقة أو عنوانًا
-    // عامًا مؤقتًا فقط.
+    // Part 16: abort previous route-scoped work on fast navigation
+    void import("@/lib/route-abort").then(({ beginAbortScope, abortScope }) => {
+      abortScope("route:prev");
+      beginAbortScope(`route:${location}`);
+    });
+    void import("@/lib/diagnostics").then(({ logDiagnostic }) => {
+      logDiagnostic("custom", "route-change", { location });
+    });
     const timer = window.setTimeout(() => {
       const rawTitle = document.title.split(" | ")[0]?.trim();
       recordRecentPage(location, rawTitle);
     }, 400);
-    return () => window.clearTimeout(timer);
+    return () => {
+      window.clearTimeout(timer);
+      void import("@/lib/route-abort").then(({ abortScope }) => {
+        abortScope(`route:${location}`);
+      });
+    };
   }, [location]);
   return null;
 }
@@ -848,9 +857,11 @@ function AppShell() {
           <AchievementToast badges={newBadges} onDismiss={dismissBadges} />
         )}
         {searchOpen && (
-          <Suspense fallback={null}>
-            <GlobalSearchModal onClose={() => setSearchOpen(false)} />
-          </Suspense>
+          <SectionErrorBoundary name="GlobalSearchModal">
+            <Suspense fallback={null}>
+              <GlobalSearchModal onClose={() => setSearchOpen(false)} />
+            </Suspense>
+          </SectionErrorBoundary>
         )}
         <ComingSoonDialog
           open={comingSoonOpen}

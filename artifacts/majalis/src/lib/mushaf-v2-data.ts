@@ -7,6 +7,10 @@
  * لا تطبيع ولا تعديل لأي نص هنا — نقل وتجميع فقط.
  */
 
+import { pooledFetch } from "@/lib/fetch-pool";
+import { LruCache } from "@/lib/lru-cache";
+import { mapInChunks, yieldToMain } from "@/lib/yield-to-main";
+
 export type QpcWord = {
   id: number;
   position: number;
@@ -65,7 +69,10 @@ let chaptersPromise: Promise<Map<number, MushafChapter>> | null = null;
 
 export function loadChapters(): Promise<Map<number, MushafChapter>> {
   if (!chaptersPromise) {
-    chaptersPromise = fetch("/data/quran-v2/chapters.json", { signal: AbortSignal.timeout(10_000) })
+    chaptersPromise = pooledFetch("/data/quran-v2/chapters.json", {
+      signal: AbortSignal.timeout(10_000),
+      dedupeKey: "mushaf-v2:chapters",
+    })
       .then((res) => {
         if (!res.ok) throw new Error(`chapters.json fetch failed: HTTP ${res.status}`);
         return res.json();
@@ -92,20 +99,25 @@ export function loadChapters(): Promise<Map<number, MushafChapter>> {
   return chaptersPromise;
 }
 
-const pageCache = new Map<number, Promise<QpcVerse[]>>();
+/** Bounded LRU of in-flight/resolved page JSON — prevents unbounded growth across long mushaf sessions. */
+const PAGE_CACHE_MAX = 32;
+const pageCache = new LruCache<number, Promise<QpcVerse[]>>(PAGE_CACHE_MAX);
 
 function fetchRawPage(pageNumber: number): Promise<QpcVerse[]> {
   let p = pageCache.get(pageNumber);
   if (!p) {
-    p = fetch(`/data/quran-v2/pages/page-${String(pageNumber).padStart(3, "0")}.json`, {
+    p = pooledFetch(`/data/quran-v2/pages/page-${String(pageNumber).padStart(3, "0")}.json`, {
       signal: AbortSignal.timeout(10_000),
+      dedupeKey: `mushaf-v2:page:${pageNumber}`,
     })
       .then((res) => {
         if (!res.ok) throw new Error(`page ${pageNumber} fetch failed: HTTP ${res.status}`);
         return res.json();
       })
-      .then((raw: any[]) =>
-        raw.map((v): QpcVerse => {
+      .then(async (raw: any[]) => {
+        // Yield before mapping large page payloads so INP stays responsive when flipping Juz/pages.
+        await yieldToMain();
+        return mapInChunks(raw ?? [], 40, (v): QpcVerse => {
           const [surahStr, ayahStr] = v.verse_key.split(":");
           return {
             verseKey: v.verse_key,
@@ -133,8 +145,8 @@ function fetchRawPage(pageNumber: number): Promise<QpcVerse[]> {
               }),
             ),
           };
-        }),
-      )
+        });
+      })
       .catch((err) => {
         pageCache.delete(pageNumber);
         throw err;

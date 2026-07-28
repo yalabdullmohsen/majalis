@@ -1,6 +1,7 @@
 /**
  * Background sync: warm IndexedDB packs when online / on reconnect.
  * Safe to call multiple times — coalesces concurrent runs.
+ * Part 21: adaptive heartbeat + jitter suppressor (no fixed setInterval storms).
  */
 import { isOnline } from "@/lib/offline-db";
 import {
@@ -11,16 +12,25 @@ import {
   getLastContentSync,
   markContentSynced,
 } from "@/lib/offline-content-store";
+import {
+  createAdaptiveHeartbeat,
+  type AdaptiveHeartbeatHandle,
+} from "@/lib/adaptive-heartbeat";
 
 let started = false;
 let syncing: Promise<void> | null = null;
+let heartbeat: AdaptiveHeartbeatHandle | null = null;
 
 const CORE_SURAHS = [1, 18, 36, 55, 67, 112, 113, 114];
 
-async function syncCorePacks(): Promise<void> {
-  if (!isOnline()) return;
-  if (syncing) return syncing;
+async function syncCorePacks(): Promise<boolean> {
+  if (!isOnline()) return false;
+  if (syncing) {
+    await syncing;
+    return true;
+  }
 
+  let ok = true;
   syncing = (async () => {
     try {
       // Migrate legacy raw-IDB packs into Dexie engine (best-effort, once)
@@ -70,12 +80,36 @@ async function syncCorePacks(): Promise<void> {
       }
 
       await markContentSynced();
+      // Part 19: confirm sync receipt with SW via MessageChannel (timeout-safe)
+      try {
+        const { swNotifyOfflineSync } = await import("@/lib/sw-message-channel");
+        void swNotifyOfflineSync({ at: Date.now(), packs: "core" });
+      } catch {
+        /* SW optional */
+      }
+    } catch {
+      ok = false;
     } finally {
       syncing = null;
     }
   })();
 
-  return syncing;
+  await syncing;
+  return ok;
+}
+
+async function maybeSoftRefresh(): Promise<boolean> {
+  if (!isOnline()) return false;
+  try {
+    const last = await getLastContentSync();
+    const age = last ? Date.now() - new Date(last.updatedAt).getTime() : Infinity;
+    if (age > 6 * 60 * 60 * 1000) {
+      return await syncCorePacks();
+    }
+    return true;
+  } catch {
+    return false;
+  }
 }
 
 /** Start listeners once from App shell — no UI / CSS. */
@@ -85,7 +119,10 @@ export function startOfflineSync(): void {
 
   // Initial warm after idle so first paint stays light
   const kick = () => {
-    void syncCorePacks();
+    void syncCorePacks().then((ok) => {
+      if (ok) heartbeat?.notifySuccess();
+      else heartbeat?.notifyFailure();
+    });
   };
   if (typeof window.requestIdleCallback === "function") {
     window.requestIdleCallback(kick);
@@ -94,19 +131,31 @@ export function startOfflineSync(): void {
   }
 
   window.addEventListener("online", () => {
-    void syncCorePacks();
+    // Part 21: reconnect burst → exponential jitter, not an immediate herd
+    heartbeat?.notifyReconnect();
+    void syncCorePacks().then((ok) => {
+      if (ok) heartbeat?.notifySuccess();
+      else heartbeat?.notifyFailure();
+    });
   });
 
-  // Periodic soft refresh while tab is open (6h)
-  window.setInterval(() => {
-    void getLastContentSync().then((last) => {
-      const age = last ? Date.now() - new Date(last.updatedAt).getTime() : Infinity;
-      if (age > 6 * 60 * 60 * 1000) void syncCorePacks();
-    });
-  }, 30 * 60 * 1000);
+  heartbeat = createAdaptiveHeartbeat({
+    baseIntervalMs: 30 * 60 * 1000,
+    minIntervalMs: 2 * 60 * 1000,
+    maxIntervalMs: 6 * 60 * 60 * 1000,
+    onTick: () => maybeSoftRefresh(),
+  });
+  heartbeat.start();
 }
 
 /** Manual sync trigger (settings / vault). */
 export async function forceOfflineContentSync(): Promise<void> {
-  await syncCorePacks();
+  const ok = await syncCorePacks();
+  if (ok) heartbeat?.notifySuccess();
+  else heartbeat?.notifyFailure();
+}
+
+/** Test / diagnostics */
+export function getOfflineSyncHeartbeat(): AdaptiveHeartbeatHandle | null {
+  return heartbeat;
 }

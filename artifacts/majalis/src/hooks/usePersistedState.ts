@@ -1,4 +1,5 @@
 import { useState, type Dispatch, type SetStateAction } from "react";
+import { safeJsonParse } from "@/lib/safe-json";
 
 /**
  * بديل مباشر لـ useState يحفظ القيمة في sessionStorage فيبقى محفوظًا عند
@@ -10,15 +11,22 @@ export function usePersistedState<T>(key: string, initial: T): [T, Dispatch<SetS
   const [state, setState] = useState<T>(() => {
     try {
       const raw = sessionStorage.getItem(key);
-      if (raw !== null) return JSON.parse(raw) as T;
-    } catch { /* sessionStorage غير متاح أو JSON تالف — استخدم القيمة الأولية */ }
-    return initial;
+      const parsed = safeJsonParse<T>(raw, initial);
+      return parsed.value;
+    } catch {
+      /* sessionStorage غير متاح أو JSON تالف — استخدم القيمة الأولية */
+      return initial;
+    }
   });
 
   const setAndPersist: Dispatch<SetStateAction<T>> = (value) => {
     setState((prev) => {
       const next = typeof value === "function" ? (value as (p: T) => T)(prev) : value;
-      try { sessionStorage.setItem(key, JSON.stringify(next)); } catch { /* تجاهل */ }
+      try {
+        sessionStorage.setItem(key, JSON.stringify(next));
+      } catch {
+        /* تجاهل */
+      }
       return next;
     });
   };

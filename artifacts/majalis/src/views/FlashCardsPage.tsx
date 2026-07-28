@@ -24,6 +24,7 @@ import {
 } from "@/lib/spaced-repetition";
 import { recordUserActivity } from "@/lib/user-streak";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { SectionErrorBoundary } from "@/components/ErrorBoundary";
 import "@/styles/pages/flashcards.css";
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
@@ -239,7 +240,7 @@ function StatsBar({ stats }: { stats: FlashCardStats }) {
 
 // ── Main Page ─────────────────────────────────────────────────────────────────
 
-export default function FlashCardsPage() {
+function FlashCardsPageInner() {
   const { user, isLoggedIn, loading: authLoading } = useAuth();
   const [cards,         setCards]        = useState<FlashCard[]>([]);
   const [currentIdx,    setCurrentIdx]   = useState(0);
@@ -436,5 +437,13 @@ export default function FlashCardsPage() {
         <SectionQuiz categoryId={["quran", "hadith", "fiqh"]} title="اختبر معلوماتك في العلوم الشرعية" count={4} />
       </div>
     </div>
+  );
+}
+
+export default function FlashCardsPage() {
+  return (
+    <SectionErrorBoundary name="FlashCardsEngine">
+      <FlashCardsPageInner />
+    </SectionErrorBoundary>
   );
 }

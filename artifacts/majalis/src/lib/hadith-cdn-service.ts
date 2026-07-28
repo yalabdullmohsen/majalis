@@ -8,9 +8,15 @@
  * ملاحظة: لا يُولَّد أي محتوى بالذكاء الاصطناعي — المحتوى من المصدر الخارجي.
  */
 
+import { pooledFetch } from "@/lib/fetch-pool";
+import { safeJsonParse } from "@/lib/safe-json";
+import { LruCache } from "@/lib/lru-cache";
+
 const CDN_BASE = "https://cdn.jsdelivr.net/gh/fawazahmed0/hadith-api@1/editions";
 const CACHE_PREFIX = "hadith_cdn_";
 const CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 ساعة
+/** Cap in-memory hadith payloads so long browse sessions do not inflate heap. */
+const hadithMemory = new LruCache<string, unknown>(24);
 
 /**
  * "nawawi" و"qudsi" مُعرَّفان بلا بادئة لغة في هذا المشروع، لكن fawazahmed0/hadith-api
@@ -100,16 +106,28 @@ function cacheKey(collection: string, chapter?: number): string {
 }
 
 function readCache<T>(key: string): T | null {
+  const mem = hadithMemory.get(key);
+  if (mem !== undefined) return mem as T;
   try {
     const raw = sessionStorage.getItem(key);
     if (!raw) return null;
-    const { ts, data } = JSON.parse(raw);
-    if (Date.now() - ts > CACHE_TTL_MS) { sessionStorage.removeItem(key); return null; }
-    return data as T;
-  } catch { return null; }
+    const parsed = safeJsonParse<{ ts: number; data: T } | null>(raw, null, (v): v is { ts: number; data: T } => {
+      return typeof v === "object" && v !== null && typeof (v as { ts?: unknown }).ts === "number" && "data" in (v as object);
+    });
+    if (!parsed.ok || !parsed.value) return null;
+    if (Date.now() - parsed.value.ts > CACHE_TTL_MS) {
+      sessionStorage.removeItem(key);
+      return null;
+    }
+    hadithMemory.set(key, parsed.value.data);
+    return parsed.value.data;
+  } catch {
+    return null;
+  }
 }
 
 function writeCache(key: string, data: unknown): void {
+  hadithMemory.set(key, data);
   try { sessionStorage.setItem(key, JSON.stringify({ ts: Date.now(), data })); } catch { /* quota exceeded */ }
 }
 
@@ -120,7 +138,7 @@ export async function fetchHadithByNumber(
 ): Promise<CdnHadith | null> {
   const url = `${CDN_BASE}/${cdnEditionSlug(collection)}/${number}.min.json`;
   try {
-    const res = await fetch(url);
+    const res = await pooledFetch(url, { dedupeKey: `hadith-cdn:n:${collection}:${number}`, timeoutMs: 15_000 });
     if (!res.ok) return null;
     const data = await res.json();
     return data.hadiths?.[0] ?? data ?? null;
@@ -138,7 +156,7 @@ export async function fetchHadithsByChapter(
 
   const url = `${CDN_BASE}/${cdnEditionSlug(collection)}/${chapter}.min.json`;
   try {
-    const res = await fetch(url);
+    const res = await pooledFetch(url, { dedupeKey: `hadith-cdn:ch:${collection}:${chapter}`, timeoutMs: 20_000 });
     if (!res.ok) return [];
     const data = await res.json();
     const hadiths: CdnHadith[] = data.hadiths ?? [];
@@ -155,7 +173,7 @@ export async function fetchChapters(collection: HadithCollection): Promise<CdnCh
 
   const url = `${CDN_BASE}/${cdnEditionSlug(collection)}.min.json`;
   try {
-    const res = await fetch(url);
+    const res = await pooledFetch(url, { dedupeKey: `hadith-cdn:meta:${collection}`, timeoutMs: 30_000 });
     if (!res.ok) return [];
     const data = await res.json();
 
@@ -215,7 +233,7 @@ export async function fetchAllHadiths(collection: HadithCollection): Promise<Cdn
 
   const url = `${CDN_BASE}/${cdnEditionSlug(collection)}.min.json`;
   try {
-    const res = await fetch(url);
+    const res = await pooledFetch(url, { dedupeKey: `hadith-cdn:all:${collection}`, timeoutMs: 45_000 });
     if (!res.ok) return [];
     const data = await res.json();
     const hadiths: CdnHadith[] = data.hadiths ?? [];
@@ -233,5 +251,8 @@ export async function searchHadiths(
   const all = await fetchAllHadiths(collection);
   const q = query.trim();
   if (!q) return all.slice(0, limit);
-  return all.filter((h) => h.text.includes(q)).slice(0, limit);
+  // Part 21: chunked filter so deep Hadith scans don't block the main thread
+  const { filterInChunks } = await import("@/lib/idb-cursor-stream");
+  const matched = await filterInChunks(all, (h) => h.text.includes(q), { batchSize: 50 });
+  return matched.slice(0, limit);
 }

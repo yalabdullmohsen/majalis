@@ -889,7 +889,7 @@ export const HADITH_FILL_DAIF_B2: LocalVerifiedHadith[] = [
       "رقائق",
       "تحذير"
     ],
-    "explanation": "حسن عند قوم. المرجع النقدي: الترمذي. للتحذير والتمييز لا للاحتجاج.",
+    "explanation": "حسن عند قوم. المرجع النقدي: الترمذي.",
     "authenticity_class": "daif",
     "metadata": {
       "batch": "fill-2026-07-b2",
@@ -912,7 +912,7 @@ export const HADITH_FILL_DAIF_B2: LocalVerifiedHadith[] = [
       "قضاء",
       "تحذير"
     ],
-    "explanation": "حسن بشواهد. المرجع النقدي: أبو داود. للتحذير والتمييز لا للاحتجاج.",
+    "explanation": "حسن بشواهد. المرجع النقدي: أبو داود.",
     "authenticity_class": "daif",
     "metadata": {
       "batch": "fill-2026-07-b2",
@@ -958,7 +958,7 @@ export const HADITH_FILL_DAIF_B2: LocalVerifiedHadith[] = [
       "آداب",
       "تحذير"
     ],
-    "explanation": "حسن. المرجع النقدي: أبو داود. للتحذير والتمييز لا للاحتجاج.",
+    "explanation": "حسن. المرجع النقدي: أبو داود.",
     "authenticity_class": "daif",
     "metadata": {
       "batch": "fill-2026-07-b2",
@@ -1280,7 +1280,7 @@ export const HADITH_FILL_DAIF_B2: LocalVerifiedHadith[] = [
       "قرآن",
       "تحذير"
     ],
-    "explanation": "حسن. المرجع النقدي: الترمذي. للتحذير والتمييز لا للاحتجاج.",
+    "explanation": "حسن. المرجع النقدي: الترمذي.",
     "authenticity_class": "daif",
     "metadata": {
       "batch": "fill-2026-07-b2",
@@ -1395,7 +1395,7 @@ export const HADITH_FILL_DAIF_B2: LocalVerifiedHadith[] = [
       "صلاة على النبي",
       "تحذير"
     ],
-    "explanation": "حسن. المرجع النقدي: الترمذي. للتحذير والتمييز لا للاحتجاج.",
+    "explanation": "حسن. المرجع النقدي: الترمذي.",
     "authenticity_class": "daif",
     "metadata": {
       "batch": "fill-2026-07-b2",
@@ -1464,7 +1464,7 @@ export const HADITH_FILL_DAIF_B2: LocalVerifiedHadith[] = [
       "دعاء",
       "تحذير"
     ],
-    "explanation": "حسن. المرجع النقدي: أبو داود. للتحذير والتمييز لا للاحتجاج.",
+    "explanation": "حسن. المرجع النقدي: أبو داود.",
     "authenticity_class": "daif",
     "metadata": {
       "batch": "fill-2026-07-b2",
@@ -1510,7 +1510,7 @@ export const HADITH_FILL_DAIF_B2: LocalVerifiedHadith[] = [
       "صلاة",
       "تحذير"
     ],
-    "explanation": "حسن. المرجع النقدي: أبو داود. للتحذير والتمييز لا للاحتجاج.",
+    "explanation": "حسن. المرجع النقدي: أبو داود.",
     "authenticity_class": "daif",
     "metadata": {
       "batch": "fill-2026-07-b2",
@@ -1533,7 +1533,7 @@ export const HADITH_FILL_DAIF_B2: LocalVerifiedHadith[] = [
       "صلاة",
       "تحذير"
     ],
-    "explanation": "حسن. المرجع النقدي: أبو داود. للتحذير والتمييز لا للاحتجاج.",
+    "explanation": "حسن. المرجع النقدي: أبو داود.",
     "authenticity_class": "daif",
     "metadata": {
       "batch": "fill-2026-07-b2",
@@ -1556,7 +1556,7 @@ export const HADITH_FILL_DAIF_B2: LocalVerifiedHadith[] = [
       "صلاة",
       "تحذير"
     ],
-    "explanation": "حسن. المرجع النقدي: أبو داود. للتحذير والتمييز لا للاحتجاج.",
+    "explanation": "حسن. المرجع النقدي: أبو داود.",
     "authenticity_class": "daif",
     "metadata": {
       "batch": "fill-2026-07-b2",
@@ -1579,7 +1579,7 @@ export const HADITH_FILL_DAIF_B2: LocalVerifiedHadith[] = [
       "صلاة",
       "تحذير"
     ],
-    "explanation": "حسن. المرجع النقدي: أبو داود. للتحذير والتمييز لا للاحتجاج.",
+    "explanation": "حسن. المرجع النقدي: أبو داود.",
     "authenticity_class": "daif",
     "metadata": {
       "batch": "fill-2026-07-b2",
@@ -1602,7 +1602,7 @@ export const HADITH_FILL_DAIF_B2: LocalVerifiedHadith[] = [
       "سفر",
       "تحذير"
     ],
-    "explanation": "حسن. المرجع النقدي: أبو داود. للتحذير والتمييز لا للاحتجاج.",
+    "explanation": "حسن. المرجع النقدي: أبو داود.",
     "authenticity_class": "daif",
     "metadata": {
       "batch": "fill-2026-07-b2",
@@ -1671,7 +1671,7 @@ export const HADITH_FILL_DAIF_B2: LocalVerifiedHadith[] = [
       "سفر",
       "تحذير"
     ],
-    "explanation": "حسن. المرجع النقدي: أبو داود. للتحذير والتمييز لا للاحتجاج.",
+    "explanation": "حسن. المرجع النقدي: أبو داود.",
     "authenticity_class": "daif",
     "metadata": {
       "batch": "fill-2026-07-b2",
@@ -1694,7 +1694,7 @@ export const HADITH_FILL_DAIF_B2: LocalVerifiedHadith[] = [
       "آداب",
       "تحذير"
     ],
-    "explanation": "حسن. المرجع النقدي: أبو داود. للتحذير والتمييز لا للاحتجاج.",
+    "explanation": "حسن. المرجع النقدي: أبو داود.",
     "authenticity_class": "daif",
     "metadata": {
       "batch": "fill-2026-07-b2",
@@ -1740,7 +1740,7 @@ export const HADITH_FILL_DAIF_B2: LocalVerifiedHadith[] = [
       "طعام",
       "تحذير"
     ],
-    "explanation": "حسن. المرجع النقدي: الترمذي. للتحذير والتمييز لا للاحتجاج.",
+    "explanation": "حسن. المرجع النقدي: الترمذي.",
     "authenticity_class": "daif",
     "metadata": {
       "batch": "fill-2026-07-b2",
@@ -1763,7 +1763,7 @@ export const HADITH_FILL_DAIF_B2: LocalVerifiedHadith[] = [
       "طعام",
       "تحذير"
     ],
-    "explanation": "حسن. المرجع النقدي: الترمذي. للتحذير والتمييز لا للاحتجاج.",
+    "explanation": "حسن. المرجع النقدي: الترمذي.",
     "authenticity_class": "daif",
     "metadata": {
       "batch": "fill-2026-07-b2",
@@ -1809,7 +1809,7 @@ export const HADITH_FILL_DAIF_B2: LocalVerifiedHadith[] = [
       "طعام",
       "تحذير"
     ],
-    "explanation": "حسن. المرجع النقدي: الترمذي. للتحذير والتمييز لا للاحتجاج.",
+    "explanation": "حسن. المرجع النقدي: الترمذي.",
     "authenticity_class": "daif",
     "metadata": {
       "batch": "fill-2026-07-b2",
@@ -1832,7 +1832,7 @@ export const HADITH_FILL_DAIF_B2: LocalVerifiedHadith[] = [
       "طب",
       "تحذير"
     ],
-    "explanation": "حسن. المرجع النقدي: ابن ماجه. للتحذير والتمييز لا للاحتجاج.",
+    "explanation": "حسن. المرجع النقدي: ابن ماجه.",
     "authenticity_class": "daif",
     "metadata": {
       "batch": "fill-2026-07-b2",
@@ -2062,7 +2062,7 @@ export const HADITH_FILL_DAIF_B2: LocalVerifiedHadith[] = [
       "آداب",
       "تحذير"
     ],
-    "explanation": "حسن. المرجع النقدي: الترمذي. للتحذير والتمييز لا للاحتجاج.",
+    "explanation": "حسن. المرجع النقدي: الترمذي.",
     "authenticity_class": "daif",
     "metadata": {
       "batch": "fill-2026-07-b2",
@@ -2085,7 +2085,7 @@ export const HADITH_FILL_DAIF_B2: LocalVerifiedHadith[] = [
       "لسان",
       "تحذير"
     ],
-    "explanation": "حسن. المرجع النقدي: الترمذي. للتحذير والتمييز لا للاحتجاج.",
+    "explanation": "حسن. المرجع النقدي: الترمذي.",
     "authenticity_class": "daif",
     "metadata": {
       "batch": "fill-2026-07-b2",
@@ -2200,7 +2200,7 @@ export const HADITH_FILL_DAIF_B2: LocalVerifiedHadith[] = [
       "إيمان",
       "تحذير"
     ],
-    "explanation": "حسن. المرجع النقدي: أبو داود. للتحذير والتمييز لا للاحتجاج.",
+    "explanation": "حسن. المرجع النقدي: أبو داود.",
     "authenticity_class": "daif",
     "metadata": {
       "batch": "fill-2026-07-b2",
@@ -2292,7 +2292,7 @@ export const HADITH_FILL_DAIF_B2: LocalVerifiedHadith[] = [
       "آداب",
       "تحذير"
     ],
-    "explanation": "حسن. المرجع النقدي: ابن ماجه. للتحذير والتمييز لا للاحتجاج.",
+    "explanation": "حسن. المرجع النقدي: ابن ماجه.",
     "authenticity_class": "daif",
     "metadata": {
       "batch": "fill-2026-07-b2",
@@ -2315,7 +2315,7 @@ export const HADITH_FILL_DAIF_B2: LocalVerifiedHadith[] = [
       "آداب",
       "تحذير"
     ],
-    "explanation": "حسن. المرجع النقدي: أبو داود. للتحذير والتمييز لا للاحتجاج.",
+    "explanation": "حسن. المرجع النقدي: أبو داود.",
     "authenticity_class": "daif",
     "metadata": {
       "batch": "fill-2026-07-b2",
@@ -2338,7 +2338,7 @@ export const HADITH_FILL_DAIF_B2: LocalVerifiedHadith[] = [
       "آداب",
       "تحذير"
     ],
-    "explanation": "حسن. المرجع النقدي: أبو داود. للتحذير والتمييز لا للاحتجاج.",
+    "explanation": "حسن. المرجع النقدي: أبو داود.",
     "authenticity_class": "daif",
     "metadata": {
       "batch": "fill-2026-07-b2",
@@ -2361,7 +2361,7 @@ export const HADITH_FILL_DAIF_B2: LocalVerifiedHadith[] = [
       "علم",
       "تحذير"
     ],
-    "explanation": "حسن. المرجع النقدي: أحمد. للتحذير والتمييز لا للاحتجاج.",
+    "explanation": "حسن. المرجع النقدي: أحمد.",
     "authenticity_class": "daif",
     "metadata": {
       "batch": "fill-2026-07-b2",
@@ -2407,7 +2407,7 @@ export const HADITH_FILL_DAIF_B2: LocalVerifiedHadith[] = [
       "علم",
       "تحذير"
     ],
-    "explanation": "حسن. المرجع النقدي: أبو داود. للتحذير والتمييز لا للاحتجاج.",
+    "explanation": "حسن. المرجع النقدي: أبو داود.",
     "authenticity_class": "daif",
     "metadata": {
       "batch": "fill-2026-07-b2",
@@ -2430,7 +2430,7 @@ export const HADITH_FILL_DAIF_B2: LocalVerifiedHadith[] = [
       "جهاد",
       "تحذير"
     ],
-    "explanation": "حسن. المرجع النقدي: الترمذي. للتحذير والتمييز لا للاحتجاج.",
+    "explanation": "حسن. المرجع النقدي: الترمذي.",
     "authenticity_class": "daif",
     "metadata": {
       "batch": "fill-2026-07-b2",
@@ -2453,7 +2453,7 @@ export const HADITH_FILL_DAIF_B2: LocalVerifiedHadith[] = [
       "جهاد",
       "تحذير"
     ],
-    "explanation": "حسن. المرجع النقدي: الترمذي. للتحذير والتمييز لا للاحتجاج.",
+    "explanation": "حسن. المرجع النقدي: الترمذي.",
     "authenticity_class": "daif",
     "metadata": {
       "batch": "fill-2026-07-b2",
@@ -2476,7 +2476,7 @@ export const HADITH_FILL_DAIF_B2: LocalVerifiedHadith[] = [
       "جهاد",
       "تحذير"
     ],
-    "explanation": "حسن. المرجع النقدي: الترمذي. للتحذير والتمييز لا للاحتجاج.",
+    "explanation": "حسن. المرجع النقدي: الترمذي.",
     "authenticity_class": "daif",
     "metadata": {
       "batch": "fill-2026-07-b2",
@@ -2522,7 +2522,7 @@ export const HADITH_FILL_DAIF_B2: LocalVerifiedHadith[] = [
       "وصايا",
       "تحذير"
     ],
-    "explanation": "حسن. المرجع النقدي: الترمذي. للتحذير والتمييز لا للاحتجاج.",
+    "explanation": "حسن. المرجع النقدي: الترمذي.",
     "authenticity_class": "daif",
     "metadata": {
       "batch": "fill-2026-07-b2",
@@ -2545,7 +2545,7 @@ export const HADITH_FILL_DAIF_B2: LocalVerifiedHadith[] = [
       "توكل",
       "تحذير"
     ],
-    "explanation": "حسن. المرجع النقدي: الترمذي. للتحذير والتمييز لا للاحتجاج.",
+    "explanation": "حسن. المرجع النقدي: الترمذي.",
     "authenticity_class": "daif",
     "metadata": {
       "batch": "fill-2026-07-b2",
@@ -2568,7 +2568,7 @@ export const HADITH_FILL_DAIF_B2: LocalVerifiedHadith[] = [
       "قدر",
       "تحذير"
     ],
-    "explanation": "حسن. المرجع النقدي: الترمذي. للتحذير والتمييز لا للاحتجاج.",
+    "explanation": "حسن. المرجع النقدي: الترمذي.",
     "authenticity_class": "daif",
     "metadata": {
       "batch": "fill-2026-07-b2",
@@ -2591,7 +2591,7 @@ export const HADITH_FILL_DAIF_B2: LocalVerifiedHadith[] = [
       "قضاء",
       "تحذير"
     ],
-    "explanation": "حسن. المرجع النقدي: الترمذي. للتحذير والتمييز لا للاحتجاج.",
+    "explanation": "حسن. المرجع النقدي: الترمذي.",
     "authenticity_class": "daif",
     "metadata": {
       "batch": "fill-2026-07-b2",
@@ -2614,7 +2614,7 @@ export const HADITH_FILL_DAIF_B2: LocalVerifiedHadith[] = [
       "قضاء",
       "تحذير"
     ],
-    "explanation": "حسن بشواهد. المرجع النقدي: البيهقي. للتحذير والتمييز لا للاحتجاج.",
+    "explanation": "حسن بشواهد. المرجع النقدي: البيهقي.",
     "authenticity_class": "daif",
     "metadata": {
       "batch": "fill-2026-07-b2",
@@ -2683,7 +2683,7 @@ export const HADITH_FILL_DAIF_B2: LocalVerifiedHadith[] = [
       "بلاء",
       "تحذير"
     ],
-    "explanation": "حسن. المرجع النقدي: الترمذي. للتحذير والتمييز لا للاحتجاج.",
+    "explanation": "حسن. المرجع النقدي: الترمذي.",
     "authenticity_class": "daif",
     "metadata": {
       "batch": "fill-2026-07-b2",

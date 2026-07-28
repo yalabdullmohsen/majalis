@@ -59,17 +59,23 @@ export async function enginePut<T>(
   value: T,
   revision?: string,
 ): Promise<void> {
-  const db = getEngine();
-  if (!db) return;
-  const row: OfflineRecord<T> = {
-    id: rowId(store, key),
-    store,
-    key,
-    value,
-    updatedAt: new Date().toISOString(),
-    revision,
-  };
-  await db.records.put(row as OfflineRecord);
+  const { withIdbRecovery } = await import("@/lib/idb-self-heal");
+  const { logDiagnostic } = await import("@/lib/diagnostics");
+  await withIdbRecovery(async () => {
+    const db = getEngine();
+    if (!db) return;
+    const row: OfflineRecord<T> = {
+      id: rowId(store, key),
+      store,
+      key,
+      value,
+      updatedAt: new Date().toISOString(),
+      revision,
+    };
+    await db.records.put(row as OfflineRecord);
+  }, {
+    onHeal: (reason) => logDiagnostic("idb-heal", reason, { store, key }),
+  });
 }
 
 export async function engineGet<T>(
@@ -115,14 +121,44 @@ export async function engineKeys(store: OfflineStoreName): Promise<string[]> {
   }
 }
 
-export async function engineGetAll<T>(store: OfflineStoreName): Promise<OfflineRecord<T>[]> {
+/**
+ * Stream all records for a store in batches (default 50), yielding to the
+ * main thread between pages — Part 21 zero-block baseline for large scans.
+ */
+export async function engineStreamStore<T>(
+  store: OfflineStoreName,
+  onBatch: (batch: OfflineRecord<T>[], offset: number) => void | Promise<void>,
+  opts?: { batchSize?: number; signal?: AbortSignal },
+): Promise<number> {
   const db = getEngine();
-  if (!db) return [];
+  if (!db) return 0;
   try {
-    return (await db.records.where("store").equals(store).toArray()) as OfflineRecord<T>[];
+    const { streamPagedQuery, IDB_CURSOR_DEFAULT_BATCH } = await import(
+      "@/lib/idb-cursor-stream"
+    );
+    const batchSize = opts?.batchSize ?? IDB_CURSOR_DEFAULT_BATCH;
+    return await streamPagedQuery<OfflineRecord<T>>(
+      async (offset, limit) =>
+        (await db.records
+          .where("store")
+          .equals(store)
+          .offset(offset)
+          .limit(limit)
+          .toArray()) as OfflineRecord<T>[],
+      onBatch,
+      { batchSize, signal: opts?.signal },
+    );
   } catch {
-    return [];
+    return 0;
   }
+}
+
+export async function engineGetAll<T>(store: OfflineStoreName): Promise<OfflineRecord<T>[]> {
+  const out: OfflineRecord<T>[] = [];
+  await engineStreamStore<T>(store, (batch) => {
+    out.push(...batch);
+  });
+  return out;
 }
 
 /** One-shot migration from legacy raw-IDB DB (v1) into Dexie engine. */

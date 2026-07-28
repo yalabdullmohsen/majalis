@@ -7,12 +7,12 @@
 
 import {
   idbDelete,
-  idbGetAll,
   idbGetValue,
   idbPut,
   OFFLINE_STORES,
   type OfflineStoreName,
 } from "@/lib/offline-db";
+import { utf8ByteLength } from "@/lib/text-codec";
 
 export type StorageLayer = "localStorage" | "indexedDB" | "cacheStorage";
 
@@ -108,7 +108,8 @@ type LruMap = Record<string, number>;
 
 function utf8Bytes(s: string): number {
   try {
-    return new TextEncoder().encode(s).length;
+    // Part 22: reuse global TextEncoder scratch — no per-call allocation
+    return utf8ByteLength(s);
   } catch {
     return s.length * 2;
   }
@@ -208,17 +209,20 @@ export async function inspectStorage(): Promise<StorageInspectorReport> {
   }
 
   try {
+    const { idbStreamAll } = await import("@/lib/offline-db");
     for (const store of Object.values(OFFLINE_STORES)) {
-      const rows = await idbGetAll(store);
-      for (const row of rows) {
-        entries.push({
-          layer: "indexedDB",
-          key: `${store}/${row.key}`,
-          bytes: approxJsonBytes(row.value) + utf8Bytes(row.key),
-          lastAccessedAt: lru[`idb:${store}/${row.key}`] ?? (Date.parse(row.updatedAt) || now),
-          protected: isProtectedIdbKey(store, row.key),
-        });
-      }
+      // Part 21: stream IDB inventory in batches instead of one giant toArray
+      await idbStreamAll(store, (batch) => {
+        for (const row of batch) {
+          entries.push({
+            layer: "indexedDB",
+            key: `${store}/${row.key}`,
+            bytes: approxJsonBytes(row.value) + utf8Bytes(row.key),
+            lastAccessedAt: lru[`idb:${store}/${row.key}`] ?? (Date.parse(row.updatedAt) || now),
+            protected: isProtectedIdbKey(store, row.key),
+          });
+        }
+      });
     }
   } catch {
     /* ignore */

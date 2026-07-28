@@ -2,11 +2,15 @@
  * Audio-to-Text Verse Sync & Auto-Resume — persistence + scroll helpers.
  * Stores exact audio timestamp + active verse for zero-latency resume.
  * Uses localStorage primary + IndexedDB mirror when available (offline-first).
+ * Unload-safe: stages last known state and flushes on pagehide via unload-persist.
  */
 
 import { savePosition, loadPosition } from "@/lib/quran-api";
+import { readLocalJson, writeLocalJson, isPlainObject } from "@/lib/safe-json";
+import { registerUnloadPersist } from "@/lib/unload-persist";
 
-const LS_KEY = "majalis-quran-audio-resume-v1";
+export const AUDIO_RESUME_LS_KEY = "majalis-quran-audio-resume-v1";
+const LS_KEY = AUDIO_RESUME_LS_KEY;
 const IDB_NAME = "majalis-quran-audio-resume";
 const IDB_STORE = "resume";
 const IDB_KEY = "current";
@@ -20,16 +24,49 @@ export type QuranAudioResumeState = {
   updatedAt: number;
 };
 
+/** In-memory pending snapshot — flushed sync on unload even if last write was truncated. */
+let pendingResume: QuranAudioResumeState | null = null;
+let unloadRegistered = false;
+
+function isAudioResumeState(v: unknown): v is QuranAudioResumeState {
+  if (!isPlainObject(v)) return false;
+  const surah = Number(v.surah);
+  const ayah = Number(v.ayah);
+  return (
+    Number.isFinite(surah) &&
+    surah >= 1 &&
+    surah <= 114 &&
+    Number.isFinite(ayah) &&
+    ayah >= 1
+  );
+}
+
+function normalizeState(state: QuranAudioResumeState): QuranAudioResumeState {
+  return {
+    surah: state.surah,
+    ayah: state.ayah,
+    currentTime: Math.max(0, Number(state.currentTime) || 0),
+    reciterId: typeof state.reciterId === "string" ? state.reciterId : undefined,
+    updatedAt: Number(state.updatedAt) || Date.now(),
+  };
+}
+
+function ensureUnloadRegistration(): void {
+  if (unloadRegistered || typeof window === "undefined") return;
+  unloadRegistered = true;
+  registerUnloadPersist("quran-audio-resume", () => {
+    const snap = pendingResume ?? loadAudioResumeState();
+    if (!snap) return null;
+    return { [LS_KEY]: JSON.stringify(normalizeState(snap)) };
+  });
+}
+
 export function saveAudioResumeState(state: QuranAudioResumeState): void {
   try {
-    const payload: QuranAudioResumeState = {
-      surah: state.surah,
-      ayah: state.ayah,
-      currentTime: Math.max(0, Number(state.currentTime) || 0),
-      reciterId: state.reciterId,
-      updatedAt: Date.now(),
-    };
-    localStorage.setItem(LS_KEY, JSON.stringify(payload));
+    const payload = normalizeState({ ...state, updatedAt: Date.now() });
+    pendingResume = payload;
+    ensureUnloadRegistration();
+    writeLocalJson(LS_KEY, payload);
     // Keep legacy position in sync for existing Mushaf resume UX
     savePosition(payload.surah, payload.ayah);
     void idbPut(payload);
@@ -38,25 +75,35 @@ export function saveAudioResumeState(state: QuranAudioResumeState): void {
   }
 }
 
-export function loadAudioResumeState(): QuranAudioResumeState | null {
+/** Stage resume without forcing IDB (for high-frequency timeupdate / unload). */
+export function stageAudioResumeState(state: QuranAudioResumeState): void {
+  pendingResume = normalizeState({ ...state, updatedAt: Date.now() });
+  ensureUnloadRegistration();
+}
+
+/** Flush pending resume sync to LocalStorage (pagehide / hook cleanup). */
+export function flushAudioResumeState(): void {
+  if (!pendingResume) return;
   try {
-    const raw = localStorage.getItem(LS_KEY);
-    if (raw) {
-      const parsed = JSON.parse(raw) as Partial<QuranAudioResumeState>;
-      const surah = Number(parsed.surah);
-      const ayah = Number(parsed.ayah);
-      if (Number.isFinite(surah) && surah >= 1 && surah <= 114 && Number.isFinite(ayah) && ayah >= 1) {
-        return {
-          surah,
-          ayah,
-          currentTime: Math.max(0, Number(parsed.currentTime) || 0),
-          reciterId: typeof parsed.reciterId === "string" ? parsed.reciterId : undefined,
-          updatedAt: Number(parsed.updatedAt) || 0,
-        };
-      }
-    }
+    writeLocalJson(LS_KEY, pendingResume);
+    savePosition(pendingResume.surah, pendingResume.ayah);
   } catch {
-    /* fall through */
+    /* silent */
+  }
+}
+
+export function loadAudioResumeState(): QuranAudioResumeState | null {
+  const parsed = readLocalJson<QuranAudioResumeState | null>(LS_KEY, null, (v): v is QuranAudioResumeState =>
+    isAudioResumeState(v),
+  );
+  if (parsed) {
+    return {
+      surah: Number(parsed.surah),
+      ayah: Number(parsed.ayah),
+      currentTime: Math.max(0, Number(parsed.currentTime) || 0),
+      reciterId: typeof parsed.reciterId === "string" ? parsed.reciterId : undefined,
+      updatedAt: Number(parsed.updatedAt) || 0,
+    };
   }
   // Fallback to legacy surah/ayah position
   const legacy = loadPosition();
@@ -72,7 +119,9 @@ export function loadAudioResumeState(): QuranAudioResumeState | null {
 export async function loadAudioResumeStateAsync(): Promise<QuranAudioResumeState | null> {
   try {
     const fromIdb = await idbGet();
-    if (fromIdb) return fromIdb;
+    if (fromIdb && isAudioResumeState(fromIdb)) {
+      return normalizeState(fromIdb);
+    }
   } catch {
     /* ignore */
   }
@@ -155,7 +204,10 @@ async function idbGet(): Promise<QuranAudioResumeState | null> {
     try {
       const tx = db.transaction(IDB_STORE, "readonly");
       const req = tx.objectStore(IDB_STORE).get(IDB_KEY);
-      req.onsuccess = () => resolve((req.result as QuranAudioResumeState) || null);
+      req.onsuccess = () => {
+        const v = req.result;
+        resolve(isAudioResumeState(v) ? normalizeState(v) : null);
+      };
       req.onerror = () => resolve(null);
     } catch {
       resolve(null);

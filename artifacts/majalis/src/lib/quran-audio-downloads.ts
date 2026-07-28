@@ -35,14 +35,20 @@ function keyFor(reciterId: string, surah: number): string {
 }
 
 async function putBlob(reciterId: string, surah: number, blob: Blob): Promise<void> {
-  const db = await openDb();
-  await new Promise<void>((resolve, reject) => {
-    const tx = db.transaction(STORE, "readwrite");
-    tx.objectStore(STORE).put(blob, keyFor(reciterId, surah));
-    tx.oncomplete = () => resolve();
-    tx.onerror = () => reject(tx.error);
+  const { withIdbRecovery } = await import("@/lib/idb-self-heal");
+  const { logDiagnostic } = await import("@/lib/diagnostics");
+  await withIdbRecovery(async () => {
+    const db = await openDb();
+    await new Promise<void>((resolve, reject) => {
+      const tx = db.transaction(STORE, "readwrite");
+      tx.objectStore(STORE).put(blob, keyFor(reciterId, surah));
+      tx.oncomplete = () => resolve();
+      tx.onerror = () => reject(tx.error);
+    });
+    db.close();
+  }, {
+    onHeal: (reason) => logDiagnostic("idb-heal", reason, { reciterId, surah }),
   });
-  db.close();
 }
 
 async function getBlob(reciterId: string, surah: number): Promise<Blob | null> {
@@ -70,26 +76,24 @@ async function deleteBlob(reciterId: string, surah: number): Promise<void> {
 
 async function listKeysForReciter(reciterId: string): Promise<{ surah: number; size: number }[]> {
   const db = await openDb();
-  const result = await new Promise<{ surah: number; size: number }[]>((resolve, reject) => {
+  const out: { surah: number; size: number }[] = [];
+  try {
+    const { streamObjectStoreCursor } = await import("@/lib/idb-cursor-stream");
     const tx = db.transaction(STORE, "readonly");
     const store = tx.objectStore(STORE);
-    const out: { surah: number; size: number }[] = [];
-    const cursorReq = store.openCursor();
-    cursorReq.onsuccess = () => {
-      const cursor = cursorReq.result;
-      if (!cursor) { resolve(out); return; }
-      const key = String(cursor.key);
-      if (key.startsWith(`${reciterId}:`)) {
-        const surah = Number(key.split(":")[1]);
-        const blob = cursor.value as Blob;
-        out.push({ surah, size: blob.size });
-      }
-      cursor.continue();
-    };
-    cursorReq.onerror = () => reject(cursorReq.error);
-  });
-  db.close();
-  return result;
+    await streamObjectStoreCursor<Blob>(store, (item) => {
+      const key = String(item.key);
+      if (!key.startsWith(`${reciterId}:`)) return;
+      const surah = Number(key.split(":")[1]);
+      if (!Number.isFinite(surah)) return;
+      out.push({ surah, size: item.value?.size ?? 0 });
+    });
+  } catch {
+    /* empty */
+  } finally {
+    db.close();
+  }
+  return out;
 }
 
 export type ReciterDownloadStatus = {

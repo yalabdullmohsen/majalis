@@ -13,6 +13,8 @@
  *    All content comes from the API (live or its verbatim local snapshot) only.
  */
 
+import { LruCache } from "@/lib/lru-cache";
+
 const BASE = "https://api.alquran.cloud/v1";
 const LOCAL_QURAN_DATA_BASE = "/data/quran";
 const CACHE_PREFIX = "mj-quran-v3-";
@@ -42,6 +44,12 @@ export type Ayah = {
 export type SurahDetail = SurahSummary & { ayahs: Ayah[] };
 
 export type TafsirAyah = { numberInSurah: number; text: string };
+
+/** In-memory Surah/Tafsir LRU — caps heap growth during long reading sessions. */
+const SURAH_MEM_MAX = 48;
+const TAFSIR_MEM_MAX = 24;
+const surahDetailMemory = new LruCache<number, SurahDetail>(SURAH_MEM_MAX);
+const tafsirMemory = new LruCache<string, TafsirAyah[]>(TAFSIR_MEM_MAX);
 
 function readCache<T>(key: string): T | null {
   try {
@@ -81,9 +89,11 @@ export async function fetchSurahList(): Promise<SurahSummary[]> {
 
 async function fetchLocalSurahDetail(surahNumber: number): Promise<SurahDetail | null> {
   try {
+    const { pooledFetch } = await import("@/lib/fetch-pool");
     const padded = String(surahNumber).padStart(3, "0");
-    const res = await fetch(`${LOCAL_QURAN_DATA_BASE}/surah-${padded}.json`, {
-      signal: AbortSignal.timeout(8_000),
+    const res = await pooledFetch(`${LOCAL_QURAN_DATA_BASE}/surah-${padded}.json`, {
+      timeoutMs: 8_000,
+      dedupeKey: `quran-local:${padded}`,
     });
     if (!res.ok) return null;
     const detail = await res.json();
@@ -94,10 +104,20 @@ async function fetchLocalSurahDetail(surahNumber: number): Promise<SurahDetail |
   }
 }
 
+const surahDetailInflight = new Map<number, Promise<SurahDetail>>();
+
 export async function fetchSurahDetail(surahNumber: number): Promise<SurahDetail> {
+  const memHit = surahDetailMemory.get(surahNumber);
+  if (memHit) return memHit;
+
+  const existing = surahDetailInflight.get(surahNumber);
+  if (existing) return existing;
+
+  const run = (async (): Promise<SurahDetail> => {
   const key = `surah-${surahNumber}`;
   const cached = readCache<SurahDetail>(key);
   if (cached) {
+    surahDetailMemory.set(surahNumber, cached);
     // Mirror into IndexedDB for offline-first packs (best-effort)
     void import("@/lib/offline-content-store")
       .then((m) => m.cacheQuranSurah(cached))
@@ -108,6 +128,7 @@ export async function fetchSurahDetail(surahNumber: number): Promise<SurahDetail
   const local = await fetchLocalSurahDetail(surahNumber);
   if (local) {
     writeCache(key, local);
+    surahDetailMemory.set(surahNumber, local);
     void import("@/lib/offline-content-store")
       .then((m) => m.cacheQuranSurah(local))
       .catch(() => undefined);
@@ -115,14 +136,17 @@ export async function fetchSurahDetail(surahNumber: number): Promise<SurahDetail
   }
 
   try {
-    const res = await fetch(`${BASE}/surah/${surahNumber}/quran-uthmani`, {
-      signal: AbortSignal.timeout(15_000),
+    const { pooledFetch } = await import("@/lib/fetch-pool");
+    const res = await pooledFetch(`${BASE}/surah/${surahNumber}/quran-uthmani`, {
+      timeoutMs: 15_000,
+      dedupeKey: `quran-api:${surahNumber}`,
     });
     if (!res.ok) throw new Error(`AlQuran Cloud: HTTP ${res.status}`);
     const json = await res.json();
     if (json.code !== 200 || !json.data) throw new Error("AlQuran Cloud: unexpected response");
     const detail: SurahDetail = json.data;
     writeCache(key, detail);
+    surahDetailMemory.set(surahNumber, detail);
     void import("@/lib/offline-content-store")
       .then((m) => m.cacheQuranSurah(detail))
       .catch(() => undefined);
@@ -132,11 +156,22 @@ export async function fetchSurahDetail(surahNumber: number): Promise<SurahDetail
     try {
       const { getCachedQuranSurah } = await import("@/lib/offline-content-store");
       const offline = await getCachedQuranSurah(surahNumber);
-      if (offline) return offline;
+      if (offline) {
+        surahDetailMemory.set(surahNumber, offline);
+        return offline;
+      }
     } catch {
       /* ignore */
     }
     throw err;
+  }
+  })();
+
+  surahDetailInflight.set(surahNumber, run);
+  try {
+    return await run;
+  } finally {
+    if (surahDetailInflight.get(surahNumber) === run) surahDetailInflight.delete(surahNumber);
   }
 }
 
@@ -145,8 +180,14 @@ export async function fetchTafsirAyahs(
   edition: string,
 ): Promise<TafsirAyah[]> {
   const key = `tafsir-${edition}-${surahNumber}`;
+  const memHit = tafsirMemory.get(key);
+  if (memHit) return memHit;
+
   const cached = readCache<TafsirAyah[]>(key);
-  if (cached) return cached;
+  if (cached) {
+    tafsirMemory.set(key, cached);
+    return cached;
+  }
 
   const res = await fetch(`${BASE}/surah/${surahNumber}/${edition}`, {
     signal: AbortSignal.timeout(20_000),
@@ -159,6 +200,7 @@ export async function fetchTafsirAyahs(
     text: a.text,
   }));
   writeCache(key, result);
+  tafsirMemory.set(key, result);
   return result;
 }
 

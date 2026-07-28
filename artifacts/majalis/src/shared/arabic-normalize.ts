@@ -5,9 +5,15 @@
  * ⚠️ قاعدة حرجة: هذه الوحدة للفهرسة والمقارنة الداخلية فقط.
  *    النص المعروض للمستخدم (آيات / أحاديث / أذكار) يُعرض دائماً
  *    بتشكيله الكامل بدون أي تعديل.
+ *
+ * Memoized via LRU (max 2k entries) — identical strings normalize once.
  */
 
 import { toLatinDigits } from "@/lib/numerals";
+import { LruStringCache } from "@/lib/lru-cache";
+import { encodeUtf8, encodeUtf8Copy, utf8ByteLength } from "@/lib/text-codec";
+
+const NORMALIZE_CACHE = new LruStringCache(2_048);
 
 /** يحوّل أي أرقام هندية عربية أو فارسية داخل نص إلى أرقام لاتينية عادية،
  *  مع ترك بقية النص كما هو تمامًا. آمن للاستدعاء على نص لا يحوي أرقامًا
@@ -37,27 +43,8 @@ function removeTashkeel(text: string): string {
     .replace(/[ۥ-ۦ]/g, "");
 }
 
-/**
- * يطبّع نصاً عربياً للفهرسة والبحث المقارن.
- *
- * خطوات التطبيع (بالترتيب):
- * 1. توحيد الأرقام الهندية/الفارسية إلى أرقام لاتينية (٢ ↔ 2)
- * 2. إزالة التشكيل الكامل (حركات + علامات وقف + مدّات قرآنية)
- * 3. توحيد أشكال الألف: أ إ آ ٱ → ا
- * 4. ؤ → و
- * 5. ئ → ي
- * 6. ة → ه
- * 7. ى → ي
- * 8. إزالة الكشيدة ـ
- * 9. توحيد المسافات
- * 10. إزالة علامات الترقيم الفاصلة
- *
- * @param text النص المراد تطبيعه
- * @returns النص المطبّع — لا يُعرض للمستخدم، للفهرسة فقط
- */
-export function normalizeArabic(text: string): string {
-  if (!text) return "";
-
+/** Uncached normalize core — used by memoized wrapper. */
+function normalizeArabicUncached(text: string): string {
   // ─── توحيد الأرقام (لوحة مفاتيح عربية على iOS/Android تكتب ٢ لا 2) ──
   let s = toWesternDigits(text);
 
@@ -89,6 +76,46 @@ export function normalizeArabic(text: string): string {
   s = s.replace(/\s+/g, " ").trim();
 
   return s;
+}
+
+/**
+ * يطبّع نصاً عربياً للفهرسة والبحث المقارن.
+ * Cached (LRU) — repeated queries over Quran/Matn corpora hit memo.
+ */
+export function normalizeArabic(text: string): string {
+  if (!text) return "";
+  const hit = NORMALIZE_CACHE.get(text);
+  if (hit !== undefined) return hit;
+  const out = normalizeArabicUncached(text);
+  NORMALIZE_CACHE.set(text, out);
+  return out;
+}
+
+/** Clear normalize memo (tests / memory pressure). */
+export function clearNormalizeArabicCache(): void {
+  NORMALIZE_CACHE.clear();
+}
+
+export function getNormalizeArabicCacheSize(): number {
+  return NORMALIZE_CACHE.size;
+}
+
+/**
+ * Part 22: normalize → UTF-8 via shared TextEncoder scratch (view valid until next encode).
+ * Use for ephemeral index comparisons; prefer `normalizeArabicUtf8Copy` for stored keys.
+ */
+export function normalizeArabicUtf8(text: string): Uint8Array {
+  return encodeUtf8(normalizeArabic(text));
+}
+
+/** Durable UTF-8 bytes for search index keys / hashing. */
+export function normalizeArabicUtf8Copy(text: string): Uint8Array {
+  return encodeUtf8Copy(normalizeArabic(text));
+}
+
+/** Byte length of normalized form without retaining an allocation beyond scratch. */
+export function normalizeArabicUtf8Length(text: string): number {
+  return utf8ByteLength(normalizeArabic(text));
 }
 
 /**

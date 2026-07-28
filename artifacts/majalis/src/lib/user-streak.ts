@@ -10,7 +10,11 @@
  * when explicitly granted — disabled by default to match the core rules.
  */
 
-const STORAGE_KEY = "majalis-user-streak-v1";
+import { readLocalJson, writeLocalJson, isPlainObject, mergeWithDefaults } from "@/lib/safe-json";
+import { registerUnloadPersist } from "@/lib/unload-persist";
+
+export const USER_STREAK_LS_KEY = "majalis-user-streak-v1";
+const STORAGE_KEY = USER_STREAK_LS_KEY;
 export const USER_STREAK_EVENT = "majalis-streak-updated";
 
 export type UserStreakActivity =
@@ -44,6 +48,30 @@ const DEFAULT_STATE: UserStreakState = {
   freezeUsedOn: null,
 };
 
+let lastWritten: UserStreakState | null = null;
+let unloadRegistered = false;
+
+function isStreakState(v: unknown): v is UserStreakState {
+  if (!isPlainObject(v)) return false;
+  const m = mergeWithDefaults(v, DEFAULT_STATE as unknown as Record<string, unknown>);
+  return (
+    typeof m.currentStreak === "number" &&
+    typeof m.longestStreak === "number" &&
+    typeof m.totalGoalsCompleted === "number" &&
+    typeof m.freezeTokens === "number" &&
+    (m.lastActiveDate === null || typeof m.lastActiveDate === "string")
+  );
+}
+
+function ensureUnloadRegistration(): void {
+  if (unloadRegistered || typeof window === "undefined") return;
+  unloadRegistered = true;
+  registerUnloadPersist("user-streak", () => {
+    const snap = lastWritten ?? readState();
+    return { [STORAGE_KEY]: JSON.stringify(snap) };
+  });
+}
+
 function todayKey(offset = 0): string {
   try {
     const d = new Date();
@@ -65,22 +93,18 @@ function dayDiff(a: string, b: string): number {
 
 function readState(): UserStreakState {
   if (typeof window === "undefined") return { ...DEFAULT_STATE };
-  try {
-    const raw = localStorage.getItem(STORAGE_KEY);
-    if (!raw) return { ...DEFAULT_STATE };
-    return { ...DEFAULT_STATE, ...(JSON.parse(raw) as UserStreakState) };
-  } catch {
-    return { ...DEFAULT_STATE };
-  }
+  ensureUnloadRegistration();
+  const raw = readLocalJson<unknown>(STORAGE_KEY, null);
+  if (raw == null) return { ...DEFAULT_STATE };
+  if (!isStreakState(raw)) return { ...DEFAULT_STATE };
+  return { ...DEFAULT_STATE, ...raw };
 }
 
 function writeState(state: UserStreakState): void {
   if (typeof window === "undefined") return;
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
-  } catch {
-    /* ignore */
-  }
+  lastWritten = state;
+  ensureUnloadRegistration();
+  writeLocalJson(STORAGE_KEY, state);
   window.dispatchEvent(new CustomEvent(USER_STREAK_EVENT, { detail: state }));
 }
 

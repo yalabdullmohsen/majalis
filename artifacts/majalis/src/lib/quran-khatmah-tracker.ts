@@ -93,19 +93,39 @@ export function saveKhatmahGoal(goal: KhatmahGoal): KhatmahGoal {
     pagesCompleted: Math.max(0, Math.min(QURAN_TOTAL_PAGES, goal.pagesCompleted)),
     updatedAt: todayKey(),
   };
+
+  // Part 22: atomic LS write + wird mirror with rollback on secondary failure
+  let snapRaw: string | null = null;
+  let wirdSnap: DailyWirdState | null = null;
+  try {
+    snapRaw = localStorage.getItem(STORAGE_KEY);
+  } catch {
+    snapRaw = null;
+  }
+  try {
+    wirdSnap = getDailyWirdState();
+  } catch {
+    wirdSnap = null;
+  }
+
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
   } catch {
-    /* ignore */
+    return loadKhatmahGoal();
   }
-  // Mirror pagesPerDay into daily wird for consistency (no UI change)
+
   try {
-    const wird = getDailyWirdState();
-    if (wird.pagesPerDay !== next.pagesPerDay) {
-      saveDailyWirdState({ ...wird, pagesPerDay: next.pagesPerDay });
+    if (wirdSnap && wirdSnap.pagesPerDay !== next.pagesPerDay) {
+      saveDailyWirdState({ ...wirdSnap, pagesPerDay: next.pagesPerDay });
     }
   } catch {
-    /* ignore */
+    try {
+      if (snapRaw == null) localStorage.removeItem(STORAGE_KEY);
+      else localStorage.setItem(STORAGE_KEY, snapRaw);
+    } catch {
+      /* ignore */
+    }
+    return loadKhatmahGoal();
   }
   return next;
 }
@@ -121,12 +141,51 @@ export function setKhatmahTargetDate(isoDate: string | null): KhatmahGoal {
 }
 
 export function recordKhatmahPages(pages: number): KhatmahGoal {
-  const g = loadKhatmahGoal();
   const add = Math.max(0, Math.floor(pages));
+  // Gate rapid taps so counters never double-apply mid-write
+  const g = loadKhatmahGoal();
   return saveKhatmahGoal({
     ...g,
     pagesCompleted: Math.min(QURAN_TOTAL_PAGES, g.pagesCompleted + add),
   });
+}
+
+/** Async atomic variant for callers that also flush IDB / cloud. */
+export async function recordKhatmahPagesAtomic(pages: number): Promise<KhatmahGoal> {
+  const { withAtomicProgressMutation, cloneProgressSnapshot } = await import(
+    "@/lib/atomic-progress"
+  );
+  const add = Math.max(0, Math.floor(pages));
+  const result = await withAtomicProgressMutation<KhatmahGoal>({
+    key: "khatmah:pages",
+    snapshot: () => cloneProgressSnapshot(loadKhatmahGoal()),
+    restore: (snap) => {
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(snap));
+      } catch {
+        /* ignore */
+      }
+    },
+    mutate: (snap) => {
+      const next: KhatmahGoal = {
+        ...snap,
+        pagesCompleted: Math.min(QURAN_TOTAL_PAGES, snap.pagesCompleted + add),
+        updatedAt: todayKey(),
+      };
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+      } catch {
+        throw new Error("khatmah-ls-write-failed");
+      }
+      return next;
+    },
+    commit: async (next) => {
+      if (typeof indexedDB === "undefined") return;
+      const { idbPut, OFFLINE_STORES } = await import("@/lib/offline-db");
+      await idbPut(OFFLINE_STORES.meta, "khatmah-goal-v1", next);
+    },
+  });
+  return result.value ?? loadKhatmahGoal();
 }
 
 /** Sync completed pages from DailyWird totalPagesEver modulo full khatmas */

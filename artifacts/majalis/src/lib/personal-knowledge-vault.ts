@@ -4,7 +4,7 @@
  */
 
 import { normalizeArabic } from "@/shared/arabic-normalize";
-import { idbDelete, idbGetAll, idbGetValue, idbPut, OFFLINE_STORES } from "@/lib/offline-db";
+import { idbDelete, idbGetValue, idbPut, idbStreamAll, OFFLINE_STORES } from "@/lib/offline-db";
 import { getAllNotes as getLegacyQuranNotes, saveNote as saveLegacyQuranNote } from "@/lib/quran-personal";
 
 export type AnnotationTargetKind = "quran" | "adhkar" | "matn" | "other";
@@ -156,11 +156,16 @@ export async function listAllAnnotations(): Promise<PersonalAnnotation[]> {
   }
 
   try {
-    const all = await idbGetAll<PersonalAnnotation>(OFFLINE_STORES.articles);
-    return all
-      .map((r) => r.value)
-      .filter((v) => v && typeof v === "object" && "targetId" in v && "body" in v)
-      .sort((a, b) => (a.updatedAt < b.updatedAt ? 1 : -1));
+    const scanned: PersonalAnnotation[] = [];
+    await idbStreamAll<PersonalAnnotation>(OFFLINE_STORES.articles, (batch) => {
+      for (const r of batch) {
+        const v = r.value;
+        if (v && typeof v === "object" && "targetId" in v && "body" in v) {
+          scanned.push(v);
+        }
+      }
+    });
+    return scanned.sort((a, b) => (a.updatedAt < b.updatedAt ? 1 : -1));
   } catch {
     return [];
   }

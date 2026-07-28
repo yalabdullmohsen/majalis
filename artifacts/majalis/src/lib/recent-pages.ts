@@ -1,4 +1,5 @@
 import { resolveMergedPath } from "@/lib/nav-visibility";
+import { readLocalJson, writeLocalJson } from "@/lib/safe-json";
 
 const KEY = "msk_recent_pages";
 const MAX = 8;
@@ -72,7 +73,7 @@ const LABEL_MAP: Record<string, string> = {
   "/hadith":                        "الأحاديث",
   "/hadith/books":                  "كتب الحديث",
   "/hadith/sahih":                  "الأحاديث الصحيحة",
-  "/hadith/daif":                   "الأحاديث المكذوبة",
+  "/hadith/daif":                   "الأحاديث الضعيفة",
   "/hadith/mawdu":                  "الأحاديث الموضوعة",
   "/hadith-science":                "علوم الحديث",
   "/arbaeen-nawawi":                "الأربعون النووية",
@@ -284,12 +285,25 @@ function preferSpecificTitle(href: string, specificTitle: string | undefined, ge
   return cleaned;
 }
 
+function isRecentPage(v: unknown): v is RecentPage {
+  return (
+    typeof v === "object" &&
+    v !== null &&
+    typeof (v as RecentPage).href === "string" &&
+    typeof (v as RecentPage).label === "string" &&
+    typeof (v as RecentPage).visitedAt === "number"
+  );
+}
+
+function isRecentPageList(v: unknown): v is RecentPage[] {
+  return Array.isArray(v) && v.every(isRecentPage);
+}
+
 export function recordRecentPage(href: string, specificTitle?: string): void {
   const resolved = resolveMergedPath(href);
   if (shouldSkip(resolved)) return;
   try {
-    const raw = localStorage.getItem(KEY);
-    const stored: RecentPage[] = raw ? JSON.parse(raw) : [];
+    const stored = readLocalJson<RecentPage[]>(KEY, [], isRecentPageList);
     const migrated = migrateStoredPages(stored);
     const filtered = migrated.filter((p) => p.href !== resolved);
     const generic = labelFor(resolved);
@@ -298,7 +312,7 @@ export function recordRecentPage(href: string, specificTitle?: string): void {
       label: preferSpecificTitle(resolved, specificTitle, generic),
       visitedAt: Date.now(),
     });
-    localStorage.setItem(KEY, JSON.stringify(filtered.slice(0, MAX)));
+    writeLocalJson(KEY, filtered.slice(0, MAX));
   } catch {
     // localStorage might be unavailable
   }
@@ -306,12 +320,10 @@ export function recordRecentPage(href: string, specificTitle?: string): void {
 
 export function getRecentPages(limit = 6): RecentPage[] {
   try {
-    const raw = localStorage.getItem(KEY);
-    if (!raw) return [];
-    const pages: RecentPage[] = JSON.parse(raw);
+    const pages = readLocalJson<RecentPage[]>(KEY, [], isRecentPageList);
+    if (pages.length === 0) return [];
     const migrated = migrateStoredPages(pages);
-    // persist migration silently
-    try { localStorage.setItem(KEY, JSON.stringify(migrated)); } catch { /* ok */ }
+    writeLocalJson(KEY, migrated);
     return migrated.slice(0, limit);
   } catch {
     return [];

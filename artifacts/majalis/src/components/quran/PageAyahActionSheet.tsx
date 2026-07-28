@@ -6,6 +6,8 @@ import { fetchTafsirAyahs } from "@/lib/quran-api";
 import { MUSHAF_TAFSIR_EDITIONS } from "@/lib/tafsir-seed";
 import { RECITERS } from "@/lib/quran-audio";
 import { CONTACT_EMAIL } from "@/lib/site-config";
+import { afterNextPaint, yieldToMain } from "@/lib/yield-to-main";
+import { prewarmTextApis } from "@/lib/resource-prewarm";
 
 const TAFSIR_EDITION_KEY = "majalis-mushaf-tafsir-edition-v1";
 
@@ -75,11 +77,16 @@ export function PageAyahActionSheet({ surahNum, surahName, ayahNum, ayahText, is
   }, [surahNum, ayahNum]);
 
   const loadTafsir = async (edition: string) => {
+    // Part 21 CLS shield: do NOT null committed tafsir text while loading —
+    // keeps drawer height stable (zero layout shift).
     setTafsirLoading(true);
     setTafsirError(false);
-    setTafsirText(null);
     try {
+      // Drawer already open — yield so open animation / press feedback paints (INP).
+      await afterNextPaint();
+      prewarmTextApis();
       const ayahs = await fetchTafsirAyahs(surahNum, edition);
+      await yieldToMain();
       const found = ayahs.find((a) => a.numberInSurah === ayahNum);
       setTafsirText(found?.text ?? null);
       if (!found) setTafsirError(true);
@@ -232,17 +239,19 @@ export function PageAyahActionSheet({ surahNum, surahName, ayahNum, ayahText, is
             {currentEditionMeta?.caution && (
               <p className="ayah-sheet__tafsir-caution">{currentEditionMeta.caution}</p>
             )}
-            {tafsirLoading ? (
+            {tafsirLoading && !tafsirText ? (
               <p className="ayah-sheet__tafsir-status">جارٍ تحميل {currentEditionMeta?.label ?? "التفسير"}...</p>
-            ) : tafsirError || !tafsirText ? (
+            ) : tafsirError && !tafsirText ? (
               <p className="ayah-sheet__tafsir-status">تعذّر تحميل التفسير. تحقّق من اتصالك.</p>
-            ) : (
+            ) : tafsirText ? (
               <>
                 <p className="ayah-sheet__tafsir-meta">
                   {currentEditionMeta?.label} — {currentEditionMeta?.author}
                 </p>
                 <p className="ayah-sheet__tafsir-text">{tafsirText}</p>
               </>
+            ) : (
+              <p className="ayah-sheet__tafsir-status">تعذّر تحميل التفسير. تحقّق من اتصالك.</p>
             )}
           </div>
         )}
