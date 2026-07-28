@@ -90,6 +90,14 @@ export async function startPlatformLogicSuite(): Promise<void> {
       /* ignore */
     }
 
+    // Quran Engine offline schema (Dexie) — migrate + outbox drain (no UI)
+    try {
+      const { startQuranOfflineStorage } = await import("@/lib/quran-offline/bootstrap");
+      void startQuranOfflineStorage();
+    } catch {
+      /* ignore */
+    }
+
     // Soft-warm: sacred times, cross-tab channel, auto-scroll pace, power-saver binding
     try {
       const { hydrateAutoScrollFromIdb } = await import("@/lib/adaptive-auto-scroll");

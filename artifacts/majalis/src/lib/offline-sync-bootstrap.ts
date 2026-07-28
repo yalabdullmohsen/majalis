@@ -137,6 +137,10 @@ export function startOfflineSync(): void {
       if (ok) heartbeat?.notifySuccess();
       else heartbeat?.notifyFailure();
     });
+    // Quran outbox drain on reconnect (schema layer — no UI)
+    void import("@/lib/quran-offline/outbox-sync")
+      .then((m) => m.drainQuranOutbox())
+      .catch(() => undefined);
   });
 
   heartbeat = createAdaptiveHeartbeat({

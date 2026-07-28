@@ -125,6 +125,10 @@ async function deleteDatabase(name: string): Promise<void> {
   });
 }
 
+/** Content / cache DBs safe to purge on heal. NEVER include user-data DBs:
+ *  - majalis-quran-engine-db (khatmah / reflections / outbox)
+ *  - majalis-tadabbur / majalis-mutashabihat / majalis-khatmah-sync
+ */
 const KNOWN_DBS = [
   "majalis-offline-engine-v2",
   "majalis-quran-audio",
