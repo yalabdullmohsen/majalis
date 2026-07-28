@@ -5,6 +5,10 @@ import { useQuery } from "@tanstack/react-query";
 import { getPublishedAdhkarItems } from "@/lib/adhkar-admin";
 import type { AdhkarItem } from "@/lib/adhkar-seed";
 import { fetchVerifiedAdhkarItems } from "@/lib/adhkar-supabase";
+import { LruCache } from "@/lib/lru-cache";
+
+/** Bounded merge-result cache — prevents retaining unbounded adhkar list snapshots. */
+const ADHKAR_LIST_CACHE = new LruCache<string, AdhkarItem[]>(4);
 
 /** لا تُعرض للعامة أذكارٌ صُرِّح بضعفها — منهج الموقع: لا ضعيف في الترغيب/التعبّد. */
 export function isPublishableAdhkar(item: AdhkarItem): boolean {
@@ -27,12 +31,19 @@ export function usePublishedAdhkarItems() {
   return useQuery({
     queryKey: ["adhkar", "published", "no-daif"],
     queryFn: async () => {
+      const cacheKey = "published:no-daif";
       const remote = await fetchVerifiedAdhkarItems();
       const local = getPublishedAdhkarItems();
-      return mergeAdhkarSources(local, remote);
+      const merged = mergeAdhkarSources(local, remote);
+      ADHKAR_LIST_CACHE.set(cacheKey, merged);
+      return merged;
     },
     // Seed local data so UI renders immediately without a loading flash (eliminates CLS)
-    initialData: () => mergeAdhkarSources(getPublishedAdhkarItems(), []),
+    initialData: () => {
+      const hit = ADHKAR_LIST_CACHE.get("published:no-daif");
+      if (hit) return hit;
+      return mergeAdhkarSources(getPublishedAdhkarItems(), []);
+    },
     staleTime: 30_000,
   });
 }

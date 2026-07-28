@@ -3,6 +3,7 @@
  * Auto-advances to next ayah when current ends.
  * Reports currently-playing ayah number for visual highlight.
  * Additive: optional range loop + repeat count + silent delay (memorization).
+ * Part 9: stall/network-drop recovery preserves playback position (no UI timeline reset).
  */
 import { useCallback, useEffect, useRef, useState } from "react";
 import { getAyahAudioUrl, loadReciterId, saveReciterId, loadPlaybackRate, savePlaybackRate } from "@/lib/quran-audio";
@@ -16,11 +17,19 @@ import {
   type AyahLoopRuntime,
 } from "@/lib/ayah-loop-controller";
 import { saveAudioResumeState } from "@/lib/quran-audio-resume";
+import {
+  attachAudioStallRecovery,
+  releaseAudioElement,
+  type StallRecoveryHandle,
+  type StallRecoveryPhase,
+} from "@/lib/audio-stall-recovery";
+import { prewarmAudioCdns } from "@/lib/resource-prewarm";
 
-export type PlayerState = "idle" | "loading" | "playing" | "paused" | "error";
+export type PlayerState = "idle" | "loading" | "playing" | "paused" | "error" | "buffering";
 
 export function useAyahPlayer(surahNum: number, totalAyahs: number) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  const stallRef = useRef<StallRecoveryHandle | null>(null);
   const pauseCleanupRef = useRef<(() => void) | null>(null);
   const delayTimerRef = useRef<number | null>(null);
   const [reciterId, setReciterIdState] = useState<string>(loadReciterId);
@@ -81,35 +90,36 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
     [totalAyahs, clearDelayTimer],
   );
 
-  // create audio element once
+  // create audio element once + attach stall recovery
   useEffect(() => {
     const audio = new Audio();
     audio.preload = "none";
     audio.playbackRate = playbackRateRef.current;
     audioRef.current = audio;
+
+    const onPhase = (phase: StallRecoveryPhase) => {
+      if (phase === "buffering" || phase === "recovering") {
+        setPlayerState((s) => (s === "paused" || s === "idle" || s === "error" ? s : "buffering"));
+      }
+      // successful resume lands on "playing" via the playing listener in loadAndPlay
+    };
+
+    stallRef.current = attachAudioStallRecovery(audio, {
+      maxAttempts: 3,
+      stallGraceMs: 600,
+      onPhaseChange: onPhase,
+    });
+
+    // Warm CDN TLS early so first play pays less handshake cost
+    prewarmAudioCdns();
+
     return () => {
       clearDelayTimer();
       pauseCleanupRef.current?.();
       pauseCleanupRef.current = null;
-      try {
-        if (!audio.paused && Number.isFinite(audio.currentTime)) {
-          // Best-effort final marker before teardown (surah/ayah from last play)
-          const src = audio.currentSrc || audio.src;
-          if (src) {
-            /* resume already persisted via saveAudioResumeState on pause/play */
-          }
-        }
-        audio.pause();
-        audio.removeAttribute("src");
-        audio.src = "";
-        audio.load();
-      } catch {
-        try {
-          audio.pause();
-        } catch {
-          /* ignore */
-        }
-      }
+      stallRef.current?.dispose();
+      stallRef.current = null;
+      releaseAudioElement(audio);
       audioRef.current = null;
     };
   }, [clearDelayTimer]);
@@ -122,6 +132,8 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
     // Remove previous pause listener before adding a new one
     pauseCleanupRef.current?.();
     pauseCleanupRef.current = null;
+    stallRef.current?.reset();
+    prewarmAudioCdns();
 
     audio.pause();
     audio.src = getAyahAudioUrl(surah, ayah, reciter);
@@ -139,6 +151,12 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
     const onPlaying = () => setPlayerState("playing");
     const onPause = () => {
       if (audio.ended) return;
+      // Keep ayah + timeline; do not clear currentAyah on buffer underrun
+      const stallPhase = stallRef.current?.getPhase();
+      if (stallPhase === "buffering" || stallPhase === "recovering") {
+        setPlayerState("buffering");
+        return;
+      }
       setPlayerState("paused");
       saveAudioResumeState({
         surah,
@@ -151,6 +169,7 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
     const onEnded = () => {
       pauseCleanupRef.current?.();
       pauseCleanupRef.current = null;
+      stallRef.current?.reset();
 
       const loopRt = loopRuntimeRef.current;
       if (loopRt?.active) {
@@ -180,14 +199,29 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
         setPlayerState("idle");
       }
     };
-    const onError = () => setPlayerState("error");
+    const onError = () => {
+      const phase = stallRef.current?.getPhase();
+      if (phase === "buffering" || phase === "recovering") return;
+      // Network/decode errors that stall recovery already claimed — wait for failed phase
+      const code = audio.error?.code;
+      if (code === 1 || code === 2 || code === 4) {
+        // attachAudioStallRecovery schedules resume; surface error only if attempts exhausted
+        if (phase !== "failed") return;
+      }
+      setPlayerState("error");
+    };
 
-    audio.addEventListener("playing", onPlaying, { once: true });
+    // Keep playing/error listeners for the ayah lifetime so stall resumes update UI state
+    audio.addEventListener("playing", onPlaying);
     audio.addEventListener("pause", onPause);
     audio.addEventListener("ended", onEnded, { once: true });
-    audio.addEventListener("error", onError, { once: true });
+    audio.addEventListener("error", onError);
 
-    pauseCleanupRef.current = () => audio.removeEventListener("pause", onPause);
+    pauseCleanupRef.current = () => {
+      audio.removeEventListener("pause", onPause);
+      audio.removeEventListener("playing", onPlaying);
+      audio.removeEventListener("error", onError);
+    };
 
     audio.load();
     /* استدعاء play() فورًا ومتزامنًا مع نفس استدعاء لمسة المستخدم — لا ننتظر
@@ -219,8 +253,15 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
     clearDelayTimer();
     const audio = audioRef.current;
     if (!audio) return;
+    stallRef.current?.reset();
     audio.pause();
-    audio.src = "";
+    try {
+      audio.removeAttribute("src");
+      audio.src = "";
+      audio.load();
+    } catch {
+      /* ignore */
+    }
     setCurrentAyah(null);
     setPlayerState("idle");
   }, [clearDelayTimer]);
@@ -228,7 +269,7 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
   const togglePlayAyah = useCallback((ayah: number) => {
     if (currentAyah === ayah && playerState === "playing") {
       pause();
-    } else if (currentAyah === ayah && playerState === "paused") {
+    } else if (currentAyah === ayah && (playerState === "paused" || playerState === "buffering")) {
       resume();
     } else {
       playFromAyah(ayah);
@@ -247,7 +288,7 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
       ? {
           title: `سورة ${getSurahMeta(surahNum).name} — آية ${currentAyah}`,
           artist: "تلاوة القرآن الكريم — المجلس العلمي",
-          playing: playerState === "playing",
+          playing: playerState === "playing" || playerState === "buffering",
           onPlay: resume,
           onPause: pause,
           onStop: stop,
