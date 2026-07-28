@@ -60,3 +60,19 @@ export {
   SAMPLE_FATIHA_VERSES,
   type QuranAppControllerSnapshot,
 } from "@/lib/quran-app-controller";
+
+export {
+  EducationalProgressController,
+  createEducationalProgressController,
+  type EducationalProgressSnapshot,
+} from "@/lib/educational-progress-controller";
+
+export { QuranRepository, SAMPLE_VERSES_DATA, type QuranVerseRecord } from "@/lib/quran-repository";
+
+export {
+  filterSmartSearch,
+  SMART_SEARCH_DATABASE,
+  SEARCH_CATEGORY_LABELS,
+  type SearchCategory,
+  type SmartSearchItem,
+} from "@/lib/smart-search-engine";

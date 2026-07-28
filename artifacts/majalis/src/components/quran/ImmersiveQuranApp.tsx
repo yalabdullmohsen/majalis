@@ -28,6 +28,11 @@ export type ImmersiveQuranAppProps = {
   /** Wire AudioEngine / tafsir outside (loose coupling). */
   onToggleAudio?: (index: number, playing: boolean, text: string) => void;
   onTafsirVerse?: (index: number, text: string) => void;
+  /**
+   * Embed inside `MajlisIlmApp` — no fixed fullscreen / System UI takeover;
+   * parent owns chrome + settings drawer.
+   */
+  embedded?: boolean;
 };
 
 export function ImmersiveQuranApp({
@@ -37,6 +42,7 @@ export function ImmersiveQuranApp({
   controller: external,
   onToggleAudio,
   onTafsirVerse,
+  embedded = false,
 }: ImmersiveQuranAppProps) {
   const {
     controller,
@@ -53,8 +59,8 @@ export function ImmersiveQuranApp({
     toggleAudio,
   } = useQuranAppController(external);
 
-  useImmersiveSystemUi(true, backgroundColor);
-  useKeepAwake(true);
+  useImmersiveSystemUi(!embedded, backgroundColor);
+  useKeepAwake(!embedded);
 
   const pages =
     pagesProp && pagesProp.length > 0
@@ -127,28 +133,30 @@ export function ImmersiveQuranApp({
     ["--quran-app-ink" as string]: textColor,
     ["--quran-verse-playing-bg" as string]: VERSE_PLAYING_BG,
     ["--quran-verse-selected-soft" as string]: VERSE_SELECTED_SOFT_BG,
-    backgroundColor,
+    backgroundColor: embedded ? "transparent" : backgroundColor,
     color: textColor,
   } as CSSProperties;
 
   return (
     <div
-      className={`immersive-quran-app${className ? ` ${className}` : ""}`}
+      className={`immersive-quran-app${embedded ? " immersive-quran-app--embedded" : ""}${className ? ` ${className}` : ""}`}
       dir="rtl"
       style={style}
       data-dark={isDarkMode ? "1" : "0"}
     >
       <div className="immersive-quran-app__safe">
-        <div className="immersive-quran-app__toolbar">
-          <button
-            type="button"
-            className="immersive-quran-app__settings-btn"
-            onClick={() => setDrawerOpen(true)}
-            aria-label="إعدادات القراءة"
-          >
-            إعدادات
-          </button>
-        </div>
+        {!embedded ? (
+          <div className="immersive-quran-app__toolbar">
+            <button
+              type="button"
+              className="immersive-quran-app__settings-btn"
+              onClick={() => setDrawerOpen(true)}
+              aria-label="إعدادات القراءة"
+            >
+              إعدادات
+            </button>
+          </div>
+        ) : null}
 
         {/* Flutter PageView.builder + BouncingScrollPhysics */}
         <div
@@ -213,20 +221,22 @@ export function ImmersiveQuranApp({
         />
       ) : null}
 
-      {/* Flutter endDrawer — إعدادات القراءة */}
-      <ImmersivePrefsDrawer
-        open={drawerOpen}
-        onClose={() => setDrawerOpen(false)}
-        fontSize={fontSize}
-        onFontSizeChange={updateFontSize}
-        fontMin={QURAN_APP_FONT_MIN}
-        fontMax={QURAN_APP_FONT_MAX}
-        fontStep={1}
-        isDarkMode={isDarkMode}
-        onToggleDarkMode={() => toggleTheme(!isDarkMode)}
-        paperBg={backgroundColor}
-        title="إعدادات القراءة"
-      />
+      {/* Flutter endDrawer — إعدادات القراءة (standalone only) */}
+      {!embedded ? (
+        <ImmersivePrefsDrawer
+          open={drawerOpen}
+          onClose={() => setDrawerOpen(false)}
+          fontSize={fontSize}
+          onFontSizeChange={updateFontSize}
+          fontMin={QURAN_APP_FONT_MIN}
+          fontMax={QURAN_APP_FONT_MAX}
+          fontStep={1}
+          isDarkMode={isDarkMode}
+          onToggleDarkMode={() => toggleTheme(!isDarkMode)}
+          paperBg={backgroundColor}
+          title="إعدادات القراءة"
+        />
+      ) : null}
     </div>
   );
 }

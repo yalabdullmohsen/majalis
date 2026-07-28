@@ -28,3 +28,5 @@ export { ImmersivePrefsDrawer } from "@/components/quran/ImmersivePrefsDrawer";
 export type { ImmersivePrefsDrawerProps } from "@/components/quran/ImmersivePrefsDrawer";
 export { ImmersiveQuranApp } from "@/components/quran/ImmersiveQuranApp";
 export type { ImmersiveQuranAppProps } from "@/components/quran/ImmersiveQuranApp";
+export { TafsirModalViewer } from "@/components/quran/TafsirModalViewer";
+export type { TafsirModalViewerProps } from "@/components/quran/TafsirModalViewer";

@@ -11,6 +11,10 @@ Wake Lock / StatusBar.
 | Immersive sticky + parchment `#F5F5DC` | `lib/quran-immersive.ts`, `useImmersiveSystemUi`, `AppController` |
 | `QuranController` ChangeNotifier | `lib/quran-controller.ts`, `useQuranController` |
 | `QuranAppController` (font/theme/audio track) | `lib/quran-app-controller.ts`, `useQuranAppController`, `ImmersiveQuranApp` |
+| `EducationalProgressController` | `lib/educational-progress-controller.ts` |
+| `QuranRepository` + tafsir sample | `lib/quran-repository.ts`, `TafsirModalViewer` |
+| `SmartSearchEngine` | `lib/smart-search-engine.ts`, `SmartSearchPanel` |
+| `MajlisIlmApp` / `MainNavigationScreen` | `components/majlis/MainNavigationScreen.tsx`, `@/majlis` |
 | `AppController` (wakelock / orientation / immersive) | `lib/app-controller.ts`, `useAppController` |
 | PageView + verse tap | `ImmersiveQuranPage` |
 | Modal options (audio / tafsir / copy / bookmark) | `ImmersiveVerseOptionsSheet` |
