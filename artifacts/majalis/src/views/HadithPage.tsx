@@ -27,6 +27,7 @@ import { CitationActionBar } from "@/components/citation/CitationActionBar";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { HadithStatsPanel } from "@/components/hadith/HadithStatsPanel";
+import { HADITH_STATS_SOURCE, formatHadithStat } from "@/lib/hadith-stats";
 import { fetchAllHadiths, type CdnHadith } from "@/lib/hadith-cdn-service";
 import { fetchSahihaynLocal } from "@/lib/sahihayn-local";
 import { getLocalVerifiedHadith } from "@/lib/verified-hadith-local-seed";
@@ -208,12 +209,20 @@ const GRADE_CLASS: Record<string, string> = {
   "حسن صحيح": "hadith-grade--hasan-sahih",
   حسن: "hadith-grade--hasan",
   ضعيف: "hadith-grade--daif",
+  موضوع: "hadith-grade--mawdu",
 };
 
-/** لا نُلوّن درجة مجهولة بلون الصحيح — الدرجة غير المعروفة تبقى محايدة. */
+/** يطابق الدرجات المركّبة («ضعيف — …»، «موضوع — …») دون تلفيق لون الصحيح. */
 function gradeClass(grade: string | null): string {
   if (!grade) return "hadith-grade--unknown";
-  return GRADE_CLASS[grade.trim()] ?? "hadith-grade--unknown";
+  const g = grade.trim();
+  if (GRADE_CLASS[g]) return GRADE_CLASS[g];
+  if (/موضوع|باطل|مكذوب|لا\s*أصل/i.test(g)) return "hadith-grade--mawdu";
+  if (/ضعيف/.test(g)) return "hadith-grade--daif";
+  if (/حسن\s*صحيح/.test(g)) return "hadith-grade--hasan-sahih";
+  if (/^حسن\b/.test(g) || /\bحسن\b/.test(g)) return "hadith-grade--hasan";
+  if (/^صحيح\b/.test(g) || g === "صحيح") return "hadith-grade--sahih";
+  return "hadith-grade--unknown";
 }
 
 const GRADE_UNKNOWN_LABEL = "الدرجة غير مثبتة في المصدر";
@@ -222,7 +231,15 @@ const GRADE_UNKNOWN_LABEL = "الدرجة غير مثبتة في المصدر";
 
 function HadithCard({ h, onExpand }: { h: HadithItem; onExpand: (h: HadithItem) => void }) {
   const [copied, setCopied] = useState(false);
-  const [saved, setSaved] = useState(false);
+  const [saved, setSaved] = useState(() => {
+    try {
+      const raw = localStorage.getItem("majalis:hadith-saved");
+      const ids: string[] = raw ? (JSON.parse(raw) as string[]) : [];
+      return ids.includes(h.id);
+    } catch {
+      return false;
+    }
+  });
   const copyTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   useEffect(() => () => { if (copyTimerRef.current) clearTimeout(copyTimerRef.current); }, []);
 
@@ -240,7 +257,21 @@ function HadithCard({ h, onExpand }: { h: HadithItem; onExpand: (h: HadithItem) 
 
   function handleSave(e: React.MouseEvent) {
     e.stopPropagation();
-    setSaved((s) => !s);
+    setSaved((s) => {
+      const next = !s;
+      try {
+        const key = "majalis:hadith-saved";
+        const raw = localStorage.getItem(key);
+        const ids: string[] = raw ? (JSON.parse(raw) as string[]) : [];
+        const set = new Set(ids);
+        if (next) set.add(h.id);
+        else set.delete(h.id);
+        localStorage.setItem(key, JSON.stringify([...set]));
+      } catch {
+        /* تجاهل فشل التخزين المحلي */
+      }
+      return next;
+    });
   }
 
   const compRef = h.metadata?.companion as string | undefined;
@@ -597,7 +628,7 @@ function HadithDetailModal({ h, onClose }: { h: HadithItem; onClose: () => void 
           <p><AlertTriangle size={13} className="inline ml-1" />تحقق من صحة الحديث ومصدره قبل النشر أو الاستشهاد به.</p>
         </footer>
       </div>
-      <AdminQuickEdit section="qa" />
+      <AdminQuickEdit section="hadith" />
     </div>
   );
 }
@@ -627,10 +658,10 @@ export const HADITH_CLASS_META: Record<HadithClass, {
   },
   daif: {
     eyebrow: "التمييز والتحذير",
-    title: "الأحاديث المكذوبة والضعيفة",
-    subtitle: "روايات ضعيفة أو مكذوبة النسبة، تُعرض للتمييز والتحذير لا للاحتجاج.",
+    title: "الأحاديث المكذوبة",
+    subtitle: "روايات مكذوبة النسبة أو ضعيفة الإسناد المشهورة، تُعرض للتمييز والتحذير لا للاحتجاج.",
     empty: "لا تُدرَج في هذا القسم رواية إلا بتخريج منسوب إلى إمام معتمد في التضعيف.",
-    countUnit: "حديث مكذوب/ضعيف",
+    countUnit: "حديث مكذوب",
   },
   mawdu: {
     eyebrow: "التحذير والبيان",
@@ -746,15 +777,18 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
     if (activeCategory !== "الكل") {
       const cat = CATEGORIES.find((c) => c.id === activeCategory);
       if (cat?.keys) {
-        list = list.filter((h) =>
-          cat.keys!.some((k) =>
-            h.keywords?.includes(k) ||
-            h.chapter?.includes(k) ||
-            h.title?.includes(k) ||
-            extractDisplayMatn(h.title, h.text).includes(k) ||
-            String(h.metadata?.takhrij ?? "").includes(k)
-          )
-        );
+        list = list.filter((h) => {
+          const hay = [
+            ...(h.keywords ?? []),
+            h.chapter,
+            h.title,
+            extractDisplayMatn(h.title, h.text),
+            h.text,
+            String(h.metadata?.takhrij ?? ""),
+            h.explanation,
+          ];
+          return cat.keys!.some((k) => arabicMatchAny(hay, k));
+        });
       }
     }
     if (debouncedNumber.trim()) {
@@ -1010,14 +1044,31 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
 
       <div className="hadith-access-bar" aria-label="بحث حديث مبسّط">
         <div className="hadith-access-bar__row">
+          <label className="hadith-access-bar__label" htmlFor={`hadith-q-${authenticityClass}`}>بحث</label>
+          <input
+            id={`hadith-q-${authenticityClass}`}
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder={
+              searchScope === "number"
+                ? "رقم الحديث أو الكتاب…"
+                : searchScope === "takhrij"
+                  ? "تخريج أو مصدر أو شرح…"
+                  : searchScope === "full"
+                    ? "ابحث في السند والمتن…"
+                    : "ابحث في متن الحديث…"
+            }
+            className="hadith-access-bar__num hadith-access-bar__search"
+            aria-label="بحث نصي في الأحاديث"
+          />
           <label className="hadith-access-bar__label" htmlFor={`hadith-num-${authenticityClass}`}>رقم</label>
           <input
             id={`hadith-num-${authenticityClass}`}
             value={numberQuery}
             onChange={(e) => setNumberQuery(e.target.value)}
             inputMode="numeric"
-            placeholder="رقم الحديث…"
-            className="hadith-access-bar__num"
+            placeholder="رقم…"
+            className="hadith-access-bar__num hadith-access-bar__num--short"
             aria-label="تصفية برقم الحديث"
           />
           <div className="hadith-access-bar__sort" role="group" aria-label="الترتيب">
@@ -1026,7 +1077,7 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
           </div>
         </div>
         <div className="hadith-access-bar__row hadith-access-bar__row--scope" role="group" aria-label="نطاق البحث">
-          <span className="hadith-access-bar__label">بحث</span>
+          <span className="hadith-access-bar__label">نطاق</span>
           {([
             ["matn", "متن"],
             ["full", "سند+متن"],
@@ -1195,13 +1246,24 @@ export default function HadithPage() {
         <Link href="/hadith/daif" className="hadith-class-switch__link">المكذوب</Link>
         <Link href="/hadith/books" className="hadith-class-switch__link hadith-class-switch__link--books">الكتب كاملة</Link>
       </nav>
-      <div className="hadith-stacked-sections">
-        <HadithSection authenticityClass="sahih" embedded />
-        <div className="hadith-section-sep" role="separator" aria-hidden="true" />
-        <HadithSection authenticityClass="mawdu" embedded />
-        <div className="hadith-section-sep" role="separator" aria-hidden="true" />
-        <HadithSection authenticityClass="daif" embedded />
+      <div className="hadith-hub-gates" aria-label="بوابات أقسام الحديث">
+        <Link href="/hadith/sahih" className="hadith-hub-gate hadith-hub-gate--sahih">
+          <strong>الصحيح</strong>
+          <span>{formatHadithStat(HADITH_STATS_SOURCE.sahihayn)} حديثًا في الصحيحين</span>
+          <em>تصفّح المرجع ←</em>
+        </Link>
+        <Link href="/hadith/mawdu" className="hadith-hub-gate hadith-hub-gate--mawdu">
+          <strong>الموضوع</strong>
+          <span>{formatHadithStat(HADITH_STATS_SOURCE.curatedMawdu)} بطاقة تحذير منسّقة</span>
+          <em>للتمييز لا للاحتجاج ←</em>
+        </Link>
+        <Link href="/hadith/daif" className="hadith-hub-gate hadith-hub-gate--daif">
+          <strong>المكذوب</strong>
+          <span>{formatHadithStat(HADITH_STATS_SOURCE.curatedDaif)} رواية مضعّفة منسوبة</span>
+          <em>بيان العلة والتخريج ←</em>
+        </Link>
       </div>
+      <HadithSection authenticityClass="sahih" embedded />
       <RecommendationWidget
         context="hadith"
         contentType="hadith"

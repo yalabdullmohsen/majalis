@@ -53,7 +53,7 @@ export const HADITH_STATS_SOURCE = {
   sahihayn: 14940,
   bukhariBooks: 97,
   muslimBooks: 56,
-  curatedSahih: 931,
+  curatedSahih: 1167,
   curatedDaif: 349,
   curatedMawdu: 265,
   mustalahTerms: 101,
@@ -191,7 +191,7 @@ export function buildHadithStatsSnapshot(): HadithStatsSnapshot {
       },
       {
         id: "makthub",
-        label: "المكذوب / الضعيف",
+        label: "المكذوب",
         value: s.curatedDaif,
         total: sectionTotal,
         tone: "daif",
@@ -292,7 +292,7 @@ export function buildHadithStatsSnapshot(): HadithStatsSnapshot {
     ],
     curatedRing: [
       { id: "c-sahih", label: "صحيح منسّق", value: s.curatedSahih, tone: "sahih", href: "/hadith/sahih" },
-      { id: "c-daif", label: "مكذوب/ضعيف", value: s.curatedDaif, tone: "daif", href: "/hadith/daif" },
+      { id: "c-daif", label: "المكذوب", value: s.curatedDaif, tone: "daif", href: "/hadith/daif" },
       { id: "c-mawdu", label: "موضوع", value: s.curatedMawdu, tone: "mawdu", href: "/hadith/mawdu" },
     ],
     mustalahRing: [

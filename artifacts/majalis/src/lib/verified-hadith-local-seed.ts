@@ -12,6 +12,7 @@ import { HADITH_FILL_SAHIH_B2 } from "./verified-hadith-fill-sahih-b2";
 import { HADITH_FILL_DAIF_B3 } from "./verified-hadith-fill-daif-b3";
 import { HADITH_FILL_MAWDU_B3 } from "./verified-hadith-fill-mawdu-b3";
 import { HADITH_FILL_SAHIH_B3 } from "./verified-hadith-fill-sahih-b3";
+import { HADITH_FILL_SAHIH_B4 } from "./verified-hadith-fill-sahih-b4";
 
 export type LocalHadithClass = "sahih" | "daif" | "mawdu";
 
@@ -4802,6 +4803,7 @@ const FILL_BATCHES: LocalVerifiedHadith[] = [
   ...HADITH_FILL_DAIF_B3,
   ...HADITH_FILL_MAWDU_B3,
   ...HADITH_FILL_SAHIH_B3,
+  ...HADITH_FILL_SAHIH_B4,
 ];
 
 function mergeHadithFills(base: LocalVerifiedHadith[]): LocalVerifiedHadith[] {
