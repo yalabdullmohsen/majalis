@@ -43,6 +43,13 @@ function main() {
   a.setTeachMode(false);
   check(a.getSnapshot().teachPhase === "idle", "teach mode off");
 
+  check(typeof a.changeSpeed === "function", "changeSpeed");
+  check(typeof a.setPlaybackRate === "function", "setPlaybackRate");
+  const rate = a.setPlaybackRate(1.5);
+  check(rate === 1.5, "setPlaybackRate 1.5");
+  check(a.getSnapshot().playbackRate === 1.5, "snapshot playbackRate");
+  check(a.setPlaybackRate(0.5) === 0.5, "changeSpeed alias via setPlaybackRate 0.5");
+
   let ayahEvents = 0;
   const unsub = a.onAyahChange(() => {
     ayahEvents += 1;

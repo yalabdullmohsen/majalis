@@ -21,6 +21,7 @@ import { addBookmark, removeBookmark, isBookmarked, getNote, saveNote } from "@/
 import { fetchTafsirAyahs } from "@/lib/quran-api";
 import { MUSHAF_TAFSIR_EDITIONS } from "@/lib/tafsir-seed";
 import { RECITERS } from "@/lib/quran-audio";
+import { VALID_PLAYBACK_RATES } from "@/lib/quran-playback-speed";
 import { CONTACT_EMAIL } from "@/lib/site-config";
 import { afterNextPaint, yieldToMain } from "@/lib/yield-to-main";
 import { prewarmTextApis } from "@/lib/resource-prewarm";
@@ -344,7 +345,7 @@ export function PageAyahActionSheet({
                 </button>
                 {speedPickerOpen ? (
                   <div className="aas-reader__dropdown aas-reader__dropdown--compact" role="listbox" aria-label="سرعة التلاوة">
-                    {[0.5, 0.75, 1, 1.25, 1.5, 1.75, 2].map((rate) => (
+                    {VALID_PLAYBACK_RATES.map((rate) => (
                       <button
                         key={rate}
                         type="button"

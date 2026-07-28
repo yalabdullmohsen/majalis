@@ -2,12 +2,13 @@
  * QuranActionBar — floating ayah actions (audio, tafseer, bookmark, share).
  */
 import { useEffect, useState } from "react";
-import { BookOpen, Bookmark, ChevronDown, Mic2, Pause, Play, Repeat, Share2, X } from "lucide-react";
+import { BookOpen, Bookmark, ChevronDown, Gauge, Mic2, Pause, Play, Repeat, Share2, X } from "lucide-react";
 import { getAudioEngine, type RepeatMode } from "@/core/audio/AudioEngine";
 import { getTafseerService } from "@/core/tafseer/TafseerService";
 import { useQuranEngine } from "@/hooks/useQuranEngine";
 import { getSurahMeta } from "@/lib/quran-api";
 import { getFeaturedReciters, getReciter, RECITERS, saveReciterId } from "@/lib/quran-audio";
+import { VALID_PLAYBACK_RATES } from "@/lib/quran-playback-speed";
 import { shareAyahAsText } from "@/lib/share-ayah";
 import { toArabicDigits } from "@/lib/utils";
 import "@/styles/quran-engine-ui.css";
@@ -51,12 +52,15 @@ export function QuranActionBar({ ayah, onClose }: QuranActionBarProps) {
   const [statusWarn, setStatusWarn] = useState(false);
   const [reciterOpen, setReciterOpen] = useState(false);
   const [showAllReciters, setShowAllReciters] = useState(false);
+  const [playbackRate, setPlaybackRate] = useState(() => audio.getSnapshot().playbackRate);
+  const [speedOpen, setSpeedOpen] = useState(false);
 
   useEffect(() => {
     return audio.onSnapshot((snap) => {
       setPlaying(snap.playerState === "playing" || snap.playerState === "buffering");
       setAudioBusy(snap.playerState === "loading" || snap.playerState === "buffering");
       setRepeatMode(snap.repeatMode);
+      setPlaybackRate(snap.playbackRate);
       if (snap.playerState === "error") {
         setStatus("تعذّر تشغيل التلاوة. تحقق من الاتصال أو جرّب قارئًا آخر.");
         setStatusWarn(true);
@@ -120,6 +124,22 @@ export function QuranActionBar({ ayah, onClose }: QuranActionBarProps) {
     audio.setRepeatMode(next);
     setStatusWarn(false);
     setStatus(next === "off" ? "التكرار متوقف" : next === "ayah" ? "تكرار الآية" : "تكرار السورة");
+  };
+
+  /** RN changeSpeed — 0.5 بطيء · 1 عادي · 1.5 سريع */
+  const changeSpeed = async (newRate: number) => {
+    const applied = await audio.changeSpeed(newRate);
+    setSpeedOpen(false);
+    setStatusWarn(false);
+    setStatus(
+      applied === 0.5
+        ? "السرعة: بطيء (٠٫٥×)"
+        : applied === 1
+          ? "السرعة: عادي (١×)"
+          : applied === 1.5
+            ? "السرعة: سريع (١٫٥×)"
+            : `السرعة: ${applied}×`,
+    );
   };
 
   const openTafsir = async () => {
@@ -235,6 +255,38 @@ export function QuranActionBar({ ayah, onClose }: QuranActionBarProps) {
           >
             {showAllReciters ? "أشهر القراء فقط" : `جميع القراء (${toArabicDigits(RECITERS.length)})`}
           </button>
+        </div>
+      ) : null}
+
+      <button
+        type="button"
+        className={`qe-abar__reciter-toggle${speedOpen ? " is-on" : ""}`}
+        onClick={() => {
+          setSpeedOpen((v) => !v);
+          setReciterOpen(false);
+        }}
+        aria-expanded={speedOpen}
+        aria-label={`سرعة التلاوة ${playbackRate}×`}
+      >
+        <Gauge size={14} aria-hidden="true" />
+        <span>السرعة {playbackRate}×</span>
+        <ChevronDown size={14} aria-hidden="true" className={speedOpen ? "is-open" : undefined} />
+      </button>
+
+      {speedOpen ? (
+        <div className="qe-abar__speed-list" role="listbox" aria-label="سرعة التلاوة">
+          {VALID_PLAYBACK_RATES.map((rate) => (
+            <button
+              key={rate}
+              type="button"
+              role="option"
+              aria-selected={rate === playbackRate}
+              className={`qe-abar__speed-item${rate === playbackRate ? " is-on" : ""}`}
+              onClick={() => void changeSpeed(rate)}
+            >
+              {rate === 0.5 ? "بطيء ٠٫٥×" : rate === 1 ? "عادي ١×" : rate === 1.5 ? "سريع ١٫٥×" : `${rate}×`}
+            </button>
+          ))}
         </div>
       ) : null}
 

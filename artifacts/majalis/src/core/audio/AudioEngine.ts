@@ -2,13 +2,15 @@
  * AudioEngine — ayah-synced HTML5 Audio for the Quran Engine.
  *
  * Features: play / pause / seek · repeat ayah|surah · teach/student · ayah events
+ * · playback rate (RN `setRateAsync` / `changeSpeed`)
  *
  * Design notes:
  * - Singleton so React trees and non-React callers share one player.
  * - Never throws into UI for media failures — sets `playerState: "error"` instead.
  * - Listeners are isolated with try/catch so a bad subscriber cannot crash playback.
  */
-import { getAyahAudioUrl } from "@/lib/quran-audio";
+import { getAyahAudioUrl, loadPlaybackRate } from "@/lib/quran-audio";
+import { applyPlaybackRateToElement } from "@/lib/quran-playback-speed";
 import { getSurahMeta } from "@/lib/quran-api";
 
 export type RepeatMode = "off" | "ayah" | "surah";
@@ -20,6 +22,8 @@ export type AudioEngineSnapshot = {
   teachPhase: TeachPhase;
   repeatMode: RepeatMode;
   reciterId: string;
+  /** Current playback rate (0.5–2) — RN soundObject rate. */
+  playbackRate: number;
   surah: number | null;
   ayah: number | null;
   currentTime: number;
@@ -56,6 +60,8 @@ export class AudioEngine {
 
   private audio: HTMLAudioElement | null = null;
   private reciterId = "alafasy";
+  private playbackRate = 1;
+  private rateHydrated = false;
   private surah: number | null = null;
   private ayah: number | null = null;
   private playerState: PlayerState = "idle";
@@ -83,7 +89,17 @@ export class AudioEngine {
   }
 
   private constructor() {
-    /* singleton */
+    /* singleton — rate hydrated lazily (localStorage may be unavailable in SSR). */
+  }
+
+  private hydrateRate(): void {
+    if (this.rateHydrated) return;
+    this.rateHydrated = true;
+    try {
+      this.playbackRate = loadPlaybackRate();
+    } catch {
+      this.playbackRate = 1;
+    }
   }
 
   /**
@@ -91,12 +107,14 @@ export class AudioEngine {
    * @throws if `Audio` is unavailable (SSR / non-browser). Callers should catch.
    */
   private ensureAudio(): HTMLAudioElement {
+    this.hydrateRate();
     if (typeof Audio === "undefined") {
       throw new Error("HTMLAudioElement unavailable");
     }
     if (!this.audio) {
       this.audio = new Audio();
       this.audio.preload = "auto";
+      this.audio.playbackRate = this.playbackRate;
       this.audio.addEventListener("playing", () => this.setPlayerState("playing"));
       this.audio.addEventListener("pause", () => {
         if (this.playerState !== "loading") this.setPlayerState("paused");
@@ -161,11 +179,13 @@ export class AudioEngine {
 
   /** Immutable snapshot of the current player for UI binding. */
   getSnapshot(): AudioEngineSnapshot {
+    this.hydrateRate();
     return {
       playerState: this.playerState,
       teachPhase: this.teachPhase,
       repeatMode: this.repeatMode,
       reciterId: this.reciterId,
+      playbackRate: this.playbackRate,
       surah: this.surah,
       ayah: this.ayah,
       currentTime: this.audio?.currentTime ?? 0,
@@ -176,6 +196,23 @@ export class AudioEngine {
   setReciter(reciterId: string): void {
     this.reciterId = reciterId || "alafasy";
     this.emitSnapshot();
+  }
+
+  /**
+   * RN `changeSpeed` / `soundObject.setRateAsync(newRate, true)`.
+   * Applies immediately if a sound is loaded; persists for the next play.
+   * @returns normalized rate that was applied
+   */
+  setPlaybackRate(newRate: number): number {
+    this.hydrateRate();
+    this.playbackRate = applyPlaybackRateToElement(this.audio, newRate);
+    this.emitSnapshot();
+    return this.playbackRate;
+  }
+
+  /** Alias matching the RN sketch name. */
+  async changeSpeed(newRate: number): Promise<number> {
+    return this.setPlaybackRate(newRate);
   }
 
   /**
@@ -231,6 +268,7 @@ export class AudioEngine {
 
     try {
       el.src = url;
+      el.playbackRate = this.playbackRate;
       await el.play();
       this.setPlayerState("playing");
     } catch (err) {

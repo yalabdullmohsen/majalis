@@ -172,16 +172,27 @@ html.dark .qe-abar {
   opacity: 0.85;
 }
 
-/* Font size control bar — visible only outside focus mode */
-.qe-font-bar {
+/* Font size + playback speed control bars — visible only outside focus mode */
+.qe-viewer__controls {
   position: sticky;
   bottom: max(0.75rem, env(safe-area-inset-bottom));
   z-index: 6;
   display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  margin: 0.85rem auto 0;
+  width: fit-content;
+  max-width: calc(100% - 1rem);
+}
+
+.qe-font-bar {
+  display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.85rem;
-  margin: 0.85rem auto 0;
+  margin: 0;
   width: fit-content;
   padding: 0.45rem 0.85rem;
   border-radius: 999px;
@@ -189,6 +200,50 @@ html.dark .qe-abar {
   background: color-mix(in srgb, var(--qe-panel) 94%, transparent);
   box-shadow: 0 6px 20px color-mix(in srgb, #1a2e24 12%, transparent);
   backdrop-filter: blur(10px);
+}
+
+.qe-speed-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  margin: 0;
+  width: fit-content;
+  padding: 0.35rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--qe-line) 70%, transparent);
+  background: color-mix(in srgb, var(--qe-panel) 94%, transparent);
+  box-shadow: 0 6px 20px color-mix(in srgb, #1a2e24 12%, transparent);
+  backdrop-filter: blur(10px);
+}
+
+.qe-speed-bar__btn {
+  min-width: 2.4rem;
+  height: 2.1rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--qe-emerald) 28%, transparent);
+  background: transparent;
+  color: var(--qe-emerald);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0 0.55rem;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.qe-speed-bar__btn.is-on,
+.qe-speed-bar__btn[aria-pressed="true"] {
+  background: var(--qe-emerald);
+  color: #f4faf7;
+  border-color: var(--qe-emerald);
+}
+
+.qe-speed-bar__current {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--qe-muted);
+  padding-inline: 0.25rem;
 }
 
 .qe-font-bar__btn {
@@ -295,6 +350,11 @@ body.qe-focus-mode {
 
 .qe-viewer--dark .qe-font-bar__value {
   color: var(--qe-reader-text);
+}
+
+.qe-viewer--dark .qe-speed-bar {
+  background: color-mix(in srgb, var(--qe-reader-header) 94%, transparent);
+  border-color: color-mix(in srgb, var(--qe-reader-text) 18%, transparent);
 }
 
 .qe-viewer--dark .qe-viewer__footer,
@@ -1097,6 +1157,30 @@ body.qe-focus-mode {
   font-weight: 600;
   cursor: pointer;
   padding: 0.3rem 0.4rem;
+}
+
+.qe-abar__speed-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0 0 0.65rem;
+}
+
+.qe-abar__speed-item {
+  border: 1px solid color-mix(in srgb, var(--qe-line) 65%, transparent);
+  background: color-mix(in srgb, var(--qe-panel) 90%, transparent);
+  color: var(--qe-ink);
+  border-radius: 999px;
+  padding: 0.3rem 0.65rem;
+  font: inherit;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.qe-abar__speed-item.is-on {
+  background: var(--qe-emerald);
+  color: #f4faf7;
+  border-color: var(--qe-emerald);
 }
 
 @media (max-width: 480px) {

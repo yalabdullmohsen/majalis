@@ -77,6 +77,15 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
     if (audioRef.current) audioRef.current.playbackRate = rate;
   }, []);
 
+  /** RN `changeSpeed(newRate)` — alias of {@link setPlaybackRate}. */
+  const changeSpeed = useCallback(
+    async (newRate: number) => {
+      setPlaybackRate(newRate);
+      return newRate;
+    },
+    [setPlaybackRate],
+  );
+
   const setRepeatOn = useCallback((on: boolean) => {
     repeatOnRef.current = on;
     setRepeatOnState(on);
@@ -359,6 +368,7 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
     setReciterId,
     playbackRate,
     setPlaybackRate,
+    changeSpeed,
     repeatOn,
     setRepeatOn,
     /** Memorization loop config (null = disabled). Additive — existing UI ignores it. */

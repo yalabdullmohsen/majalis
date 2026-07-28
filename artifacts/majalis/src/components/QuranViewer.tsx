@@ -12,6 +12,8 @@
  * Typeface cycles Amiri → Traditional Arabic → Scheherazade via prefs.fontId.
  * Inline tafsir mode (`showTafsir`) loads the surah edition once and renders
  * under each ayah when enabled — RN conditional-rendering sketch.
+ * Playback speed uses RN `changeSpeed` / `setRateAsync` via AudioEngine
+ * (`0.5` بطيء · `1` عادي · `1.5` سريع) with sticky chips beside the font bar.
  * Per-ayah audio toggle uses AudioEngine (web port of expo-av Sound) with
  * unload on leave.
  * `useKeepAwake()` (Screen Wake Lock) keeps the display on while reading —
@@ -168,7 +170,7 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
   const fontFamily = quranFontStack(prefs.fontId);
   const fontMeta = quranFontOption(prefs.fontId);
   const breakReminder = useReadingBreakReminder();
-  const { toggleAudio, isPlayingAyah, playerState } = useQuranAudioToggle(currentReciter);
+  const { toggleAudio, isPlayingAyah, playerState, playbackRate, changeSpeed } = useQuranAudioToggle(currentReciter);
   /** Keep screen lit while the reader is open (expo-keep-awake port). */
   useKeepAwake();
   /** RN useColorScheme — follows OS light/dark automatically. */
@@ -671,30 +673,54 @@ export function QuranViewer({ initialSurah, className, onFocusModeChange }: Qura
         </footer>
       ) : null}
 
-      {/* Font controls — hidden in focus mode (RN controlBar) */}
+      {/* Font + speed controls — hidden in focus mode (RN controlBar) */}
       {!isFocusMode ? (
-        <div className="qe-font-bar" role="group" aria-label="حجم خط المصحف">
-          <button
-            type="button"
-            className="qe-font-bar__btn"
-            onClick={decreaseFont}
-            disabled={fontSize <= QURAN_FONT_MIN_PX}
-            aria-label="تصغير الخط"
-          >
-            −
-          </button>
-          <span className="qe-font-bar__value" aria-live="polite">
-            {toArabicDigits(fontSize)}
-          </span>
-          <button
-            type="button"
-            className="qe-font-bar__btn"
-            onClick={increaseFont}
-            disabled={fontSize >= QURAN_FONT_MAX_PX}
-            aria-label="تكبير الخط"
-          >
-            +
-          </button>
+        <div className="qe-viewer__controls">
+          <div className="qe-font-bar" role="group" aria-label="حجم خط المصحف">
+            <button
+              type="button"
+              className="qe-font-bar__btn"
+              onClick={decreaseFont}
+              disabled={fontSize <= QURAN_FONT_MIN_PX}
+              aria-label="تصغير الخط"
+            >
+              −
+            </button>
+            <span className="qe-font-bar__value" aria-live="polite">
+              {toArabicDigits(fontSize)}
+            </span>
+            <button
+              type="button"
+              className="qe-font-bar__btn"
+              onClick={increaseFont}
+              disabled={fontSize >= QURAN_FONT_MAX_PX}
+              aria-label="تكبير الخط"
+            >
+              +
+            </button>
+          </div>
+          <div className="qe-speed-bar" role="group" aria-label="سرعة التلاوة">
+            {([0.5, 1, 1.5] as const).map((rate) => (
+              <button
+                key={rate}
+                type="button"
+                className={`qe-speed-bar__btn${playbackRate === rate ? " is-on" : ""}`}
+                onClick={() => void changeSpeed(rate)}
+                aria-pressed={playbackRate === rate}
+                aria-label={
+                  rate === 0.5 ? "سرعة بطيئة" : rate === 1 ? "سرعة عادية" : "سرعة سريعة"
+                }
+                title={`${rate}×`}
+              >
+                {rate}×
+              </button>
+            ))}
+            {!([0.5, 1, 1.5] as readonly number[]).includes(playbackRate) ? (
+              <span className="qe-speed-bar__current" aria-live="polite">
+                {playbackRate}×
+              </span>
+            ) : null}
+          </div>
         </div>
       ) : null}
 
