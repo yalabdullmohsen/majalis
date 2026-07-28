@@ -57,6 +57,7 @@ const GlobalSearchModal = lazyWithRetry(
 );
 
 const HomePage = lazy(() => import("@/views/HomePage"));
+const QuranEnginePage = lazy(() => import("@/views/QuranEnginePage"));
 const AboutPage = lazy(() => import("@/views/AboutPage"));
 const SiteMapPage = lazy(() => import("@/views/SiteMapPage"));
 const PrivacyPage = lazy(() => import("@/views/PrivacyPage"));
@@ -458,6 +459,8 @@ function Router() {
       <Route path="/">
         <HomePage />
       </Route>
+      <Route path="/quran-engine/viewer"><SafeLazyRoute component={QuranEnginePage} /></Route>
+      <Route path="/quran-engine"><SafeLazyRoute component={QuranEnginePage} /></Route>
       <Route path="/about"><SafeLazyRoute component={AboutPage} /></Route>
       <Route path="/methodology"><SafeLazyRoute component={MethodologyPage} /></Route>
       <Route path="/sitemap"><SafeLazyRoute component={SiteMapPage} /></Route>
