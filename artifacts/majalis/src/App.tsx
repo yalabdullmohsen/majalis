@@ -824,6 +824,7 @@ function AppShell() {
         <AdhanSchedulerBootstrap />
         <PrayerAlertSchedulerBootstrap />
         <OfflineSyncBootstrap />
+        <PlatformLogicBootstrap />
         <NavBar />
         <TopSectionBar />
         <PrayerCountdownBanner />
@@ -867,6 +868,20 @@ function OfflineSyncBootstrap() {
     let cancelled = false;
     void import("@/lib/offline-sync-bootstrap").then((m) => {
       if (!cancelled) m.startOfflineSync();
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+  return null;
+}
+
+/** Smart recommendations / search warm / weekly analytics / local notifs / khatmah — logic only. */
+function PlatformLogicBootstrap() {
+  useEffect(() => {
+    let cancelled = false;
+    void import("@/lib/platform-logic-bootstrap").then((m) => {
+      if (!cancelled) void m.startPlatformLogicSuite();
     });
     return () => {
       cancelled = true;
