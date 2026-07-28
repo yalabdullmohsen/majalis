@@ -22,6 +22,7 @@
 import { readFileSync } from "node:fs";
 import { FAWAID_CURATED_SEED, FAWAID_CURATED_CATEGORIES } from "../fawaid-curated-seed";
 import { SEED_FAWAID } from "../fawaid-seed";
+import { getLocalVerifiedHadith } from "../verified-hadith-local-seed";
 
 let passed = 0;
 let failed = 0;
@@ -1172,6 +1173,43 @@ assert(
   insertedWord.length === 0,
   "لا سجلَّ يدسُّ كلمةً بين كلمتَينِ متلاصقتَينِ في الصحيحِ المعزوِّ إليه",
   insertedWord.map((f) => `${f.id}: ${f.text.slice(0, 55)}`).join(" | ")
+);
+
+// ───── ٤٠) حديثٌ ثابتٌ في الصحيحَينِ معروضٌ في قسمِ «المكذوب» أو «الموضوع» ─────
+
+/**
+ * 🔑 **عطبُ ج-٢٩٩ — وهو أوَّلُ عطبٍ خرجَ من ملفِّ الفوائدِ إلى بذرةِ الحديثِ
+ * نفسِها**: تُصفَّى بطاقاتُ `/hadith/daif` و`/hadith/mawdu` بحقلِ
+ * `authenticity_class` وحدَه (`getLocalVerifiedHadith`)، وعنوانُ الأولى
+ * المطبوعُ للزائرِ **«الأحاديث المكذوبة»** وعدّادُها «حديث مكذوب»، والثانيةِ
+ * «الأحاديث الموضوعة». وكان في `verified-hadith-fill-daif.ts` و
+ * `verified-hadith-fill-mawdu.ts` **٢٥ سجلًّا حقلُ `grade` فيها «صحيح»**
+ * (٢٣ + ٢) ونصُّها **ثابتٌ بحرفِه في نسختَي الصحيحَينِ في المستودع** — منها
+ * «إن الله كتب الإحسان على كل شيء» (مسلم ٥٠٥٥)، و«من صام رمضان إيمانًا
+ * واحتسابًا» (البخاري ٣٨)، و«من أحب لقاء الله أحب الله لقاءه» (البخاري
+ * ٦٥٠٧) — فيقرؤها الزائرُ مكذوبةً على النبيِّ ﷺ وهي في الصحيحَين.
+ *
+ * ونيّةُ المحرِّرِ كانت «بطاقةَ تمييزٍ» (تُقرَنُ بالمكذوبِ ليُفرَّقَ بينهما)،
+ * لكنَّ العرضَ لا يُظهِرُ التمييزَ ألبتّةَ: العنوانُ والعدّادُ يشملانِها.
+ * ومعيارُ القسمِ نفسُه مكتوبٌ في `HADITH_CLASS_META.daif.empty`: «لا تُدرَج
+ * في هذا القسم رواية إلا بتخريج منسوب إلى إمام معتمد **في التضعيف**».
+ *
+ * ⚠️ **وقيدٌ يمنعُ الإيجابَ الكاذب**: الشرطُ أن يكونَ **متنُ السجلِّ كلُّه**
+ * (لا نافذةٌ منه) ثابتًا متتابعًا في حديثٍ واحدٍ من الصحيحَين، وألّا يقلَّ عن
+ * خمسِ كلمات — فالعبارةُ القصيرةُ تردُ في الصحيحِ بالمصادفةِ داخلَ سياقٍ آخر،
+ * والروايةُ المكذوبةُ إنّما تُشبِهُ الصحيحَ في بعضِه لا في كلِّه.
+ */
+const displayedAsFabricated = getLocalVerifiedHadith()
+  .filter((h) => h.authenticity_class === "daif" || h.authenticity_class === "mawdu")
+  .filter((h) => {
+    const t = normStrict(h.text ?? "");
+    if (t.split(" ").filter(Boolean).length < 5) return false;
+    return hadithsNorm.some((_, i) => strictWords[i].some((w) => w.join(" ").includes(t)));
+  });
+assert(
+  displayedAsFabricated.length === 0,
+  "لا حديثَ ثابتًا بحرفِه في الصحيحَينِ يُعرَضُ في قسمِ «المكذوب» أو «الموضوع»",
+  displayedAsFabricated.map((h) => `${h.id}: ${h.title}`).join(" | ")
 );
 
 console.log(`\n${"─".repeat(48)}`);

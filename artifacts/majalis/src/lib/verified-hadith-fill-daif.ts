@@ -463,29 +463,6 @@ export const HADITH_FILL_DAIF: LocalVerifiedHadith[] = [
     "created_at": "2026-07-27T22:00:00.000Z"
   },
   {
-    "id": "daif-u-021",
-    "collection": "various",
-    "hadith_number": null,
-    "title": "من دل على خير فله مثل أجر فاعله",
-    "text": "من دل على خير فله مثل أجر فاعله.",
-    "narrator": "أبو مسعود",
-    "source_name": "مسلم",
-    "grade": "صحيح — بطاقة تمييز",
-    "chapter": "علم",
-    "keywords": [
-      "علم",
-      "ضعيف",
-      "تخريج"
-    ],
-    "explanation": "صحيح — بطاقة تمييز. التخريج المرجعي: مسلم.",
-    "authenticity_class": "daif",
-    "metadata": {
-      "batch": "fill-2026-07-unique",
-      "muhaddith": "كتب التخريج"
-    },
-    "created_at": "2026-07-27T22:00:00.000Z"
-  },
-  {
     "id": "daif-u-022",
     "collection": "various",
     "hadith_number": null,
@@ -501,29 +478,6 @@ export const HADITH_FILL_DAIF: LocalVerifiedHadith[] = [
       "تخريج"
     ],
     "explanation": "صحيح/حسن. التخريج المرجعي: أبو داود.",
-    "authenticity_class": "daif",
-    "metadata": {
-      "batch": "fill-2026-07-unique",
-      "muhaddith": "كتب التخريج"
-    },
-    "created_at": "2026-07-27T22:00:00.000Z"
-  },
-  {
-    "id": "daif-u-023",
-    "collection": "various",
-    "hadith_number": null,
-    "title": "من لا يرحم لا يُرحم",
-    "text": "من لا يرحم لا يُرحم.",
-    "narrator": "أبو هريرة",
-    "source_name": "البخاري",
-    "grade": "صحيح — تمييز",
-    "chapter": "أخلاق",
-    "keywords": [
-      "أخلاق",
-      "ضعيف",
-      "تخريج"
-    ],
-    "explanation": "صحيح — تمييز. التخريج المرجعي: البخاري.",
     "authenticity_class": "daif",
     "metadata": {
       "batch": "fill-2026-07-unique",
@@ -716,29 +670,6 @@ export const HADITH_FILL_DAIF: LocalVerifiedHadith[] = [
     "created_at": "2026-07-27T22:00:00.000Z"
   },
   {
-    "id": "daif-u-032",
-    "collection": "various",
-    "hadith_number": null,
-    "title": "من أخذ أموال الناس يريد أداءها",
-    "text": "من أخذ أموال الناس يريد أداءها.",
-    "narrator": "أبو هريرة",
-    "source_name": "البخاري",
-    "grade": "صحيح — تمييز",
-    "chapter": "بيوع",
-    "keywords": [
-      "بيوع",
-      "ضعيف",
-      "تخريج"
-    ],
-    "explanation": "صحيح — تمييز. التخريج المرجعي: البخاري.",
-    "authenticity_class": "daif",
-    "metadata": {
-      "batch": "fill-2026-07-unique",
-      "muhaddith": "كتب التخريج"
-    },
-    "created_at": "2026-07-27T22:00:00.000Z"
-  },
-  {
     "id": "daif-u-033",
     "collection": "various",
     "hadith_number": null,
@@ -854,52 +785,6 @@ export const HADITH_FILL_DAIF: LocalVerifiedHadith[] = [
     "created_at": "2026-07-27T22:00:00.000Z"
   },
   {
-    "id": "daif-u-038",
-    "collection": "various",
-    "hadith_number": null,
-    "title": "إن الله كتب الإحسان على كل شيء",
-    "text": "إن الله كتب الإحسان على كل شيء.",
-    "narrator": "شداد",
-    "source_name": "مسلم",
-    "grade": "صحيح — تمييز",
-    "chapter": "إحسان",
-    "keywords": [
-      "إحسان",
-      "ضعيف",
-      "تخريج"
-    ],
-    "explanation": "صحيح — تمييز. التخريج المرجعي: مسلم.",
-    "authenticity_class": "daif",
-    "metadata": {
-      "batch": "fill-2026-07-unique",
-      "muhaddith": "كتب التخريج"
-    },
-    "created_at": "2026-07-27T22:00:00.000Z"
-  },
-  {
-    "id": "daif-u-039",
-    "collection": "various",
-    "hadith_number": null,
-    "title": "من لا يرحم الناس لا يرحمه الله",
-    "text": "من لا يرحم الناس لا يرحمه الله.",
-    "narrator": "جري",
-    "source_name": "البخاري",
-    "grade": "صحيح — تمييز",
-    "chapter": "رحمة",
-    "keywords": [
-      "رحمة",
-      "ضعيف",
-      "تخريج"
-    ],
-    "explanation": "صحيح — تمييز. التخريج المرجعي: البخاري.",
-    "authenticity_class": "daif",
-    "metadata": {
-      "batch": "fill-2026-07-unique",
-      "muhaddith": "كتب التخريج"
-    },
-    "created_at": "2026-07-27T22:00:00.000Z"
-  },
-  {
     "id": "daif-u-040",
     "collection": "various",
     "hadith_number": null,
@@ -980,52 +865,6 @@ export const HADITH_FILL_DAIF: LocalVerifiedHadith[] = [
     "chapter": "عمل",
     "keywords": [
       "عمل",
-      "ضعيف",
-      "تخريج"
-    ],
-    "explanation": "صحيح — تمييز. التخريج المرجعي: البخاري.",
-    "authenticity_class": "daif",
-    "metadata": {
-      "batch": "fill-2026-07-unique",
-      "muhaddith": "كتب التخريج"
-    },
-    "created_at": "2026-07-27T22:00:00.000Z"
-  },
-  {
-    "id": "daif-u-044",
-    "collection": "various",
-    "hadith_number": null,
-    "title": " اليد العليا خير من اليد السفلى",
-    "text": " اليد العليا خير من اليد السفلى.",
-    "narrator": "حكيم",
-    "source_name": "البخاري",
-    "grade": "صحيح — تمييز",
-    "chapter": "صدقة",
-    "keywords": [
-      "صدقة",
-      "ضعيف",
-      "تخريج"
-    ],
-    "explanation": "صحيح — تمييز. التخريج المرجعي: البخاري.",
-    "authenticity_class": "daif",
-    "metadata": {
-      "batch": "fill-2026-07-unique",
-      "muhaddith": "كتب التخريج"
-    },
-    "created_at": "2026-07-27T22:00:00.000Z"
-  },
-  {
-    "id": "daif-u-045",
-    "collection": "various",
-    "hadith_number": null,
-    "title": "اتقوا النار ولو بشق تمرة",
-    "text": "اتقوا النار ولو بشق تمرة.",
-    "narrator": "عدي",
-    "source_name": "البخاري",
-    "grade": "صحيح — تمييز",
-    "chapter": "صدقة",
-    "keywords": [
-      "صدقة",
       "ضعيف",
       "تخريج"
     ],
@@ -1153,104 +992,12 @@ export const HADITH_FILL_DAIF: LocalVerifiedHadith[] = [
     "created_at": "2026-07-27T22:00:00.000Z"
   },
   {
-    "id": "daif-u-051",
-    "collection": "various",
-    "hadith_number": null,
-    "title": "من صام رمضان إيمانا واحتسابا",
-    "text": "من صام رمضان إيمانا واحتسابا.",
-    "narrator": "أبو هريرة",
-    "source_name": "البخاري",
-    "grade": "صحيح — تمييز",
-    "chapter": "صيام",
-    "keywords": [
-      "صيام",
-      "ضعيف",
-      "تخريج"
-    ],
-    "explanation": "صحيح — تمييز. التخريج المرجعي: البخاري.",
-    "authenticity_class": "daif",
-    "metadata": {
-      "batch": "fill-2026-07-unique",
-      "muhaddith": "كتب التخريج"
-    },
-    "created_at": "2026-07-27T22:00:00.000Z"
-  },
-  {
-    "id": "daif-u-052",
-    "collection": "various",
-    "hadith_number": null,
-    "title": "من قام رمضان إيمانا واحتسابا",
-    "text": "من قام رمضان إيمانا واحتسابا.",
-    "narrator": "أبو هريرة",
-    "source_name": "البخاري",
-    "grade": "صحيح — تمييز",
-    "chapter": "قيام",
-    "keywords": [
-      "قيام",
-      "ضعيف",
-      "تخريج"
-    ],
-    "explanation": "صحيح — تمييز. التخريج المرجعي: البخاري.",
-    "authenticity_class": "daif",
-    "metadata": {
-      "batch": "fill-2026-07-unique",
-      "muhaddith": "كتب التخريج"
-    },
-    "created_at": "2026-07-27T22:00:00.000Z"
-  },
-  {
-    "id": "daif-u-053",
-    "collection": "various",
-    "hadith_number": null,
-    "title": "من قام ليلة القدر إيمانا واحتسابا",
-    "text": "من قام ليلة القدر إيمانا واحتسابا.",
-    "narrator": "أبو هريرة",
-    "source_name": "البخاري",
-    "grade": "صحيح — تمييز",
-    "chapter": "قيام",
-    "keywords": [
-      "قيام",
-      "ضعيف",
-      "تخريج"
-    ],
-    "explanation": "صحيح — تمييز. التخريج المرجعي: البخاري.",
-    "authenticity_class": "daif",
-    "metadata": {
-      "batch": "fill-2026-07-unique",
-      "muhaddith": "كتب التخريج"
-    },
-    "created_at": "2026-07-27T22:00:00.000Z"
-  },
-  {
     "id": "daif-u-054",
     "collection": "various",
     "hadith_number": null,
     "title": "إذا دخل رمضان فتحت أبواب السماء",
     "text": "إذا دخل رمضان فتحت أبواب السماء.",
     "narrator": "أبو هريرة",
-    "source_name": "البخاري",
-    "grade": "صحيح — تمييز",
-    "chapter": "صيام",
-    "keywords": [
-      "صيام",
-      "ضعيف",
-      "تخريج"
-    ],
-    "explanation": "صحيح — تمييز. التخريج المرجعي: البخاري.",
-    "authenticity_class": "daif",
-    "metadata": {
-      "batch": "fill-2026-07-unique",
-      "muhaddith": "كتب التخريج"
-    },
-    "created_at": "2026-07-27T22:00:00.000Z"
-  },
-  {
-    "id": "daif-u-055",
-    "collection": "various",
-    "hadith_number": null,
-    "title": "تسحّروا فإن في السحور بركة",
-    "text": "تسحّروا فإن في السحور بركة.",
-    "narrator": "أنس",
     "source_name": "البخاري",
     "grade": "صحيح — تمييز",
     "chapter": "صيام",
@@ -1283,29 +1030,6 @@ export const HADITH_FILL_DAIF: LocalVerifiedHadith[] = [
       "تخريج"
     ],
     "explanation": "حسن. التخريج المرجعي: أبو داود.",
-    "authenticity_class": "daif",
-    "metadata": {
-      "batch": "fill-2026-07-unique",
-      "muhaddith": "كتب التخريج"
-    },
-    "created_at": "2026-07-27T22:00:00.000Z"
-  },
-  {
-    "id": "daif-u-057",
-    "collection": "various",
-    "hadith_number": null,
-    "title": "من لم يدع قول الزور",
-    "text": "من لم يدع قول الزور.",
-    "narrator": "أبو هريرة",
-    "source_name": "البخاري",
-    "grade": "صحيح — تمييز",
-    "chapter": "صيام",
-    "keywords": [
-      "صيام",
-      "ضعيف",
-      "تخريج"
-    ],
-    "explanation": "صحيح — تمييز. التخريج المرجعي: البخاري.",
     "authenticity_class": "daif",
     "metadata": {
       "batch": "fill-2026-07-unique",
@@ -1452,52 +1176,6 @@ export const HADITH_FILL_DAIF: LocalVerifiedHadith[] = [
     "created_at": "2026-07-27T22:00:00.000Z"
   },
   {
-    "id": "daif-u-064",
-    "collection": "various",
-    "hadith_number": null,
-    "title": "أقرب ما يكون العبد من ربه وهو ساجد",
-    "text": "أقرب ما يكون العبد من ربه وهو ساجد.",
-    "narrator": "أبو هريرة",
-    "source_name": "مسلم",
-    "grade": "صحيح — تمييز",
-    "chapter": "صلاة",
-    "keywords": [
-      "صلاة",
-      "ضعيف",
-      "تخريج"
-    ],
-    "explanation": "صحيح — تمييز. التخريج المرجعي: مسلم.",
-    "authenticity_class": "daif",
-    "metadata": {
-      "batch": "fill-2026-07-unique",
-      "muhaddith": "كتب التخريج"
-    },
-    "created_at": "2026-07-27T22:00:00.000Z"
-  },
-  {
-    "id": "daif-u-065",
-    "collection": "various",
-    "hadith_number": null,
-    "title": "أمرت أن أسجد على سبعة أعظم",
-    "text": "أمرت أن أسجد على سبعة أعظم.",
-    "narrator": "ابن عباس",
-    "source_name": "البخاري",
-    "grade": "صحيح — تمييز",
-    "chapter": "صلاة",
-    "keywords": [
-      "صلاة",
-      "ضعيف",
-      "تخريج"
-    ],
-    "explanation": "صحيح — تمييز. التخريج المرجعي: البخاري.",
-    "authenticity_class": "daif",
-    "metadata": {
-      "batch": "fill-2026-07-unique",
-      "muhaddith": "كتب التخريج"
-    },
-    "created_at": "2026-07-27T22:00:00.000Z"
-  },
-  {
     "id": "daif-u-066",
     "collection": "various",
     "hadith_number": null,
@@ -1582,29 +1260,6 @@ export const HADITH_FILL_DAIF: LocalVerifiedHadith[] = [
       "تخريج"
     ],
     "explanation": "صحيح. التخريج المرجعي: الترمذي.",
-    "authenticity_class": "daif",
-    "metadata": {
-      "batch": "fill-2026-07-unique",
-      "muhaddith": "كتب التخريج"
-    },
-    "created_at": "2026-07-27T22:00:00.000Z"
-  },
-  {
-    "id": "daif-u-070",
-    "collection": "various",
-    "hadith_number": null,
-    "title": "من ترك صلاة العصر حبط عمله",
-    "text": "من ترك صلاة العصر حبط عمله.",
-    "narrator": "بريدة",
-    "source_name": "البخاري",
-    "grade": "صحيح — تمييز",
-    "chapter": "صلاة",
-    "keywords": [
-      "صلاة",
-      "ضعيف",
-      "تخريج"
-    ],
-    "explanation": "صحيح — تمييز. التخريج المرجعي: البخاري.",
     "authenticity_class": "daif",
     "metadata": {
       "batch": "fill-2026-07-unique",
@@ -1843,127 +1498,12 @@ export const HADITH_FILL_DAIF: LocalVerifiedHadith[] = [
     "created_at": "2026-07-27T22:00:00.000Z"
   },
   {
-    "id": "daif-u-081",
-    "collection": "various",
-    "hadith_number": null,
-    "title": "ثلاث من كن فيه وجد حلاوة الإيمان",
-    "text": "ثلاث من كن فيه وجد حلاوة الإيمان.",
-    "narrator": "أنس",
-    "source_name": "البخاري",
-    "grade": "صحيح — تمييز",
-    "chapter": "إيمان",
-    "keywords": [
-      "إيمان",
-      "ضعيف",
-      "تخريج"
-    ],
-    "explanation": "صحيح — تمييز. التخريج المرجعي: البخاري.",
-    "authenticity_class": "daif",
-    "metadata": {
-      "batch": "fill-2026-07-unique",
-      "muhaddith": "كتب التخريج"
-    },
-    "created_at": "2026-07-27T22:00:00.000Z"
-  },
-  {
-    "id": "daif-u-082",
-    "collection": "various",
-    "hadith_number": null,
-    "title": "ذاق طعم الإيمان من رضي بالله ربا",
-    "text": "ذاق طعم الإيمان من رضي بالله ربا.",
-    "narrator": "العباس",
-    "source_name": "مسلم",
-    "grade": "صحيح — تمييز",
-    "chapter": "إيمان",
-    "keywords": [
-      "إيمان",
-      "ضعيف",
-      "تخريج"
-    ],
-    "explanation": "صحيح — تمييز. التخريج المرجعي: مسلم.",
-    "authenticity_class": "daif",
-    "metadata": {
-      "batch": "fill-2026-07-unique",
-      "muhaddith": "كتب التخريج"
-    },
-    "created_at": "2026-07-27T22:00:00.000Z"
-  },
-  {
     "id": "daif-u-083",
     "collection": "various",
     "hadith_number": null,
     "title": "من قال لا إله إلا الله دخل الجنة",
     "text": "من قال لا إله إلا الله دخل الجنة.",
     "narrator": "أبو ذر",
-    "source_name": "البخاري",
-    "grade": "صحيح — تمييز",
-    "chapter": "توحيد",
-    "keywords": [
-      "توحيد",
-      "ضعيف",
-      "تخريج"
-    ],
-    "explanation": "صحيح — تمييز. التخريج المرجعي: البخاري.",
-    "authenticity_class": "daif",
-    "metadata": {
-      "batch": "fill-2026-07-unique",
-      "muhaddith": "كتب التخريج"
-    },
-    "created_at": "2026-07-27T22:00:00.000Z"
-  },
-  {
-    "id": "daif-u-084",
-    "collection": "various",
-    "hadith_number": null,
-    "title": "حق الله على العباد أن يعبدوه",
-    "text": "حق الله على العباد أن يعبدوه.",
-    "narrator": "معاذ",
-    "source_name": "البخاري",
-    "grade": "صحيح — تمييز",
-    "chapter": "توحيد",
-    "keywords": [
-      "توحيد",
-      "ضعيف",
-      "تخريج"
-    ],
-    "explanation": "صحيح — تمييز. التخريج المرجعي: البخاري.",
-    "authenticity_class": "daif",
-    "metadata": {
-      "batch": "fill-2026-07-unique",
-      "muhaddith": "كتب التخريج"
-    },
-    "created_at": "2026-07-27T22:00:00.000Z"
-  },
-  {
-    "id": "daif-u-085",
-    "collection": "various",
-    "hadith_number": null,
-    "title": "من مات وهو يعلم أنه لا إله إلا الله دخل الجنة",
-    "text": "من مات وهو يعلم أنه لا إله إلا الله دخل الجنة.",
-    "narrator": "عثمان",
-    "source_name": "مسلم",
-    "grade": "صحيح — تمييز",
-    "chapter": "توحيد",
-    "keywords": [
-      "توحيد",
-      "ضعيف",
-      "تخريج"
-    ],
-    "explanation": "صحيح — تمييز. التخريج المرجعي: مسلم.",
-    "authenticity_class": "daif",
-    "metadata": {
-      "batch": "fill-2026-07-unique",
-      "muhaddith": "كتب التخريج"
-    },
-    "created_at": "2026-07-27T22:00:00.000Z"
-  },
-  {
-    "id": "daif-u-086",
-    "collection": "various",
-    "hadith_number": null,
-    "title": "أمرت أن أقاتل الناس حتى يشهدوا",
-    "text": "أمرت أن أقاتل الناس حتى يشهدوا.",
-    "narrator": "ابن عمر",
     "source_name": "البخاري",
     "grade": "صحيح — تمييز",
     "chapter": "توحيد",
@@ -2015,29 +1555,6 @@ export const HADITH_FILL_DAIF: LocalVerifiedHadith[] = [
     "chapter": "نية",
     "keywords": [
       "نية",
-      "ضعيف",
-      "تخريج"
-    ],
-    "explanation": "صحيح — تمييز. التخريج المرجعي: البخاري.",
-    "authenticity_class": "daif",
-    "metadata": {
-      "batch": "fill-2026-07-unique",
-      "muhaddith": "كتب التخريج"
-    },
-    "created_at": "2026-07-27T22:00:00.000Z"
-  },
-  {
-    "id": "daif-u-089",
-    "collection": "various",
-    "hadith_number": null,
-    "title": "إن الحلال بيّن وإن الحرام بيّن",
-    "text": "إن الحلال بيّن وإن الحرام بيّن.",
-    "narrator": "نعمان",
-    "source_name": "البخاري",
-    "grade": "صحيح — تمييز",
-    "chapter": "ورع",
-    "keywords": [
-      "ورع",
       "ضعيف",
       "تخريج"
     ],
@@ -2280,29 +1797,6 @@ export const HADITH_FILL_DAIF: LocalVerifiedHadith[] = [
     "created_at": "2026-07-27T22:00:00.000Z"
   },
   {
-    "id": "daif-u-100",
-    "collection": "various",
-    "hadith_number": null,
-    "title": "من أحب أن يُزحزح عن النار",
-    "text": "من أحب أن يُزحزح عن النار.",
-    "narrator": "أبو هريرة",
-    "source_name": "مسلم",
-    "grade": "صحيح — تمييز",
-    "chapter": "آخرة",
-    "keywords": [
-      "آخرة",
-      "ضعيف",
-      "تخريج"
-    ],
-    "explanation": "صحيح — تمييز. التخريج المرجعي: مسلم.",
-    "authenticity_class": "daif",
-    "metadata": {
-      "batch": "fill-2026-07-unique",
-      "muhaddith": "كتب التخريج"
-    },
-    "created_at": "2026-07-27T22:00:00.000Z"
-  },
-  {
     "id": "daif-u-101",
     "collection": "various",
     "hadith_number": null,
@@ -2364,29 +1858,6 @@ export const HADITH_FILL_DAIF: LocalVerifiedHadith[] = [
       "تخريج"
     ],
     "explanation": "ضعيف. التخريج المرجعي: أحمد.",
-    "authenticity_class": "daif",
-    "metadata": {
-      "batch": "fill-2026-07-unique",
-      "muhaddith": "كتب التخريج"
-    },
-    "created_at": "2026-07-27T22:00:00.000Z"
-  },
-  {
-    "id": "daif-u-104",
-    "collection": "various",
-    "hadith_number": null,
-    "title": "من أحب لقاء الله أحب الله لقاءه",
-    "text": "من أحب لقاء الله أحب الله لقاءه.",
-    "narrator": "عائشة",
-    "source_name": "البخاري",
-    "grade": "صحيح — تمييز",
-    "chapter": "موت",
-    "keywords": [
-      "موت",
-      "ضعيف",
-      "تخريج"
-    ],
-    "explanation": "صحيح — تمييز. التخريج المرجعي: البخاري.",
     "authenticity_class": "daif",
     "metadata": {
       "batch": "fill-2026-07-unique",

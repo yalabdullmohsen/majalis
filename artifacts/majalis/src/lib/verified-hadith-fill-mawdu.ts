@@ -1314,29 +1314,6 @@ export const HADITH_FILL_MAWDU: LocalVerifiedHadith[] = [
     "created_at": "2026-07-27T22:00:00.000Z"
   },
   {
-    "id": "mawdu-u-058",
-    "collection": "various",
-    "hadith_number": null,
-    "title": "فضل عائشة على النساء كفضل الثريد",
-    "text": "فضل عائشة على النساء كفضل الثريد.",
-    "narrator": "ثابت في الصحيح — تمييز",
-    "source_name": "البخاري",
-    "grade": "صحيح",
-    "chapter": "فضائل",
-    "keywords": [
-      "فضائل",
-      "موضوع",
-      "تخريج"
-    ],
-    "explanation": "للتحذير لا للاحتجاج. صحيح. راجع: البخاري.",
-    "authenticity_class": "mawdu",
-    "metadata": {
-      "batch": "fill-2026-07-unique",
-      "muhaddith": "كتب التخريج"
-    },
-    "created_at": "2026-07-27T22:00:00.000Z"
-  },
-  {
     "id": "mawdu-u-059",
     "collection": "various",
     "hadith_number": null,
@@ -1365,29 +1342,6 @@ export const HADITH_FILL_MAWDU: LocalVerifiedHadith[] = [
     "hadith_number": null,
     "title": "أول من يُكسى إبراهيم",
     "text": "أول من يُكسى إبراهيم.",
-    "narrator": "ثابت — تمييز",
-    "source_name": "البخاري",
-    "grade": "صحيح",
-    "chapter": "آخرة",
-    "keywords": [
-      "آخرة",
-      "موضوع",
-      "تخريج"
-    ],
-    "explanation": "للتحذير لا للاحتجاج. صحيح. راجع: البخاري.",
-    "authenticity_class": "mawdu",
-    "metadata": {
-      "batch": "fill-2026-07-unique",
-      "muhaddith": "كتب التخريج"
-    },
-    "created_at": "2026-07-27T22:00:00.000Z"
-  },
-  {
-    "id": "mawdu-u-061",
-    "collection": "various",
-    "hadith_number": null,
-    "title": "يُحشر الناس يوم القيامة حفاة عراة",
-    "text": "يُحشر الناس يوم القيامة حفاة عراة.",
     "narrator": "ثابت — تمييز",
     "source_name": "البخاري",
     "grade": "صحيح",
