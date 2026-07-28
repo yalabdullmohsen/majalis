@@ -1,4 +1,5 @@
 import { safeLocationReload } from "@/lib/safe-reload";
+import { getWebViewProfile, withWebViewGuard } from "@/lib/webview-detect";
 
 /**
  * Unregister stale service workers after deploy — prevents broken cached JS chunks.
@@ -19,15 +20,16 @@ export async function purgeStaleServiceWorkers(): Promise<void> {
   }
 }
 
-const SW_UPDATE_CHECK_INTERVAL_MS = 60 * 1000; // فحص فعلي للسكربت كل دقيقة أثناء الاستخدام
+const SW_UPDATE_CHECK_INTERVAL_MS = 60 * 1000;
 
 export function registerProductionServiceWorker(): void {
   if (typeof navigator === "undefined" || !("serviceWorker" in navigator)) return;
   if (!import.meta.env.PROD) return;
 
-  // عند تفعيل SW جديد (skipWaiting + clients.claim من طرف sw.js → controllerchange
-  // يُطلَق تلقائيًا في كل تبويب مفتوح حسب مواصفة Service Worker) أعد تحميل الصفحة
-  // تلقائيًا فورًا — بلا انتظار ضغطة مستخدم، بأمر صريح من المالك.
+  // Part 15: skip SW entirely in restricted in-app WebViews (WhatsApp/IG/etc.)
+  const profile = getWebViewProfile();
+  if (!profile.serviceWorkerSafe) return;
+
   const hadController = !!navigator.serviceWorker.controller;
   let refreshing = false;
   navigator.serviceWorker.addEventListener("controllerchange", () => {
@@ -37,22 +39,25 @@ export function registerProductionServiceWorker(): void {
   });
 
   window.addEventListener("load", () => {
-    void purgeStaleServiceWorkers().then(() => {
-      navigator.serviceWorker.register("/sw.js").then((registration) => {
-        // الفجوة الحقيقية المتبقية: registration.update() الافتراضي في
-        // المتصفحات (خصوصًا Safari/iOS، جمهور المنصة الأساسي) قد يتأخر
-        // ساعات قبل التحقق من تغيّر سكربت sw.js فعليًا على الخادم — بلا هذا،
-        // controllerchange أعلاه لن يُطلَق أصلًا رغم نشر إصدار جديد.
-        // نفرض تحققًا فعليًا متكررًا بدل انتظار مؤقّت المتصفح الداخلي.
-        const forceCheck = () => { void registration.update().catch(() => undefined); };
-        forceCheck();
-        window.setInterval(forceCheck, SW_UPDATE_CHECK_INTERVAL_MS);
-        document.addEventListener("visibilitychange", () => {
-          if (document.visibilityState === "visible") forceCheck();
-        });
-      }).catch((error) => {
-        console.warn("[majalis:pwa] service worker registration failed", error);
-      });
-    });
+    void withWebViewGuard(
+      "serviceWorker",
+      async () => {
+        await purgeStaleServiceWorkers();
+        try {
+          const registration = await navigator.serviceWorker.register("/sw.js");
+          const forceCheck = () => {
+            void registration.update().catch(() => undefined);
+          };
+          forceCheck();
+          window.setInterval(forceCheck, SW_UPDATE_CHECK_INTERVAL_MS);
+          document.addEventListener("visibilitychange", () => {
+            if (document.visibilityState === "visible") forceCheck();
+          });
+        } catch {
+          /* silent — never white-screen on SW failure in WebViews */
+        }
+      },
+      undefined,
+    );
   });
 }

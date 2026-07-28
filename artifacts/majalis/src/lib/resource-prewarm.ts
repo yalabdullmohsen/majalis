@@ -1,10 +1,12 @@
 /**
  * Dynamic domain preconnect / DNS prefetch for audio CDNs and text APIs.
  * Reduces DNS+TLS handshake latency before first play/search.
- * Logic-only — injects <link> tags; no layout/CSS.
+ * Part 15: throttled on low-end devices. Logic-only — injects <link> tags; no layout/CSS.
  */
 
 import { useEffect } from "react";
+import { getDeviceCapabilities } from "@/lib/device-capabilities";
+import { abortTimeout } from "@/lib/feature-detect";
 
 export const AUDIO_CDN_ORIGINS = [
   "https://everyayah.com",
@@ -28,6 +30,8 @@ function ensureHead(): HTMLHeadElement | null {
  * Safe to call repeatedly from hooks / interaction handlers.
  */
 export function preconnectOrigin(origin: string, { crossOrigin = true }: { crossOrigin?: boolean } = {}): void {
+  const caps = getDeviceCapabilities();
+  if (!caps.allowAggressivePrefetch && warmed.size >= 2) return;
   const head = ensureHead();
   if (!head || !origin) return;
   let url: URL;
@@ -57,16 +61,25 @@ export function preconnectOrigin(origin: string, { crossOrigin = true }: { cross
 
 /** Warm known audio CDN origins (everyayah + mp3quran). */
 export function prewarmAudioCdns(): void {
+  if (!getDeviceCapabilities().allowAggressivePrefetch) {
+    preconnectOrigin(AUDIO_CDN_ORIGINS[0]);
+    return;
+  }
   for (const o of AUDIO_CDN_ORIGINS) preconnectOrigin(o);
 }
 
 /** Warm Quran/Hadith text API origins. */
 export function prewarmTextApis(): void {
+  if (!getDeviceCapabilities().allowAggressivePrefetch) {
+    preconnectOrigin(TEXT_API_ORIGINS[0]);
+    return;
+  }
   for (const o of TEXT_API_ORIGINS) preconnectOrigin(o);
 }
 
 /** Best-effort HEAD/GET warmup of a URL without consuming the body heavily. */
 export function prewarmUrl(url: string, { mode = "no-cors" }: { mode?: RequestMode } = {}): void {
+  if (!getDeviceCapabilities().allowAggressivePrefetch) return;
   if (typeof fetch !== "function" || !url) return;
   try {
     void fetch(url, {
@@ -74,10 +87,7 @@ export function prewarmUrl(url: string, { mode = "no-cors" }: { mode?: RequestMo
       mode,
       credentials: "omit",
       cache: "force-cache",
-      // Abort quickly — we only want connection warm-up
-      signal: typeof AbortSignal !== "undefined" && "timeout" in AbortSignal
-        ? AbortSignal.timeout(2_500)
-        : undefined,
+      signal: abortTimeout(2_500),
     }).catch(() => undefined);
   } catch {
     /* ignore */

@@ -14,6 +14,7 @@ import {
   type QuranAudioResumeState,
 } from "@/lib/quran-audio-resume";
 import { registerUnloadPersist } from "@/lib/unload-persist";
+import { onLifecycleResume } from "@/lib/page-lifecycle";
 
 export type UseQuranAudioSyncOptions = {
   surah: number;
@@ -85,9 +86,23 @@ export function useQuranAudioSync(opts: UseQuranAudioSyncOptions): {
       stageAudioResumeState(state);
       return { [AUDIO_RESUME_LS_KEY]: JSON.stringify(state) };
     });
+    const unregLife = onLifecycleResume((snap) => {
+      const audio = optsRef.current.audio;
+      const a = snap?.audio;
+      if (!audio || !a) return;
+      if (optsRef.current.ayah !== a.ayah || optsRef.current.surah !== a.surah) return;
+      try {
+        if (Number.isFinite(a.currentTime) && a.currentTime > 0) {
+          audio.currentTime = a.currentTime;
+        }
+      } catch {
+        /* ignore */
+      }
+    });
     return () => {
       flushAudioResumeState();
       unreg();
+      unregLife();
     };
   }, []);
 

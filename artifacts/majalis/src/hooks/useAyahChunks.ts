@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import type { Ayah } from "@/lib/quran-api";
+import { createIntersectionObserverSafe } from "@/lib/feature-detect";
 
 const CHUNK_SIZE = 60;
 
@@ -30,7 +31,7 @@ export function useAyahChunks(ayahs: Ayah[], targetAyah: number) {
     const sentinel = sentinelRef.current;
     if (!sentinel) return;
 
-    const obs = new IntersectionObserver(
+    const obs = createIntersectionObserverSafe(
       (entries) => {
         if (entries[0]?.isIntersecting) {
           setVisibleChunks((v) => Math.min(v + 1, totalChunks));
@@ -38,6 +39,10 @@ export function useAyahChunks(ayahs: Ayah[], targetAyah: number) {
       },
       { rootMargin: "200px" },
     );
+    if (!obs) {
+      setVisibleChunks(totalChunks);
+      return;
+    }
     obs.observe(sentinel);
     return () => obs.disconnect();
   }, [visibleChunks, totalChunks]);

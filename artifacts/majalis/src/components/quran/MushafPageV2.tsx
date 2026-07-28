@@ -1,6 +1,8 @@
 import { Fragment, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import { useMushafPageFont, mushafPageFontFamily } from "@/hooks/useMushafPageFont";
 import type { MushafPageLayout, QpcWord } from "@/lib/mushaf-v2-data";
+import { fitFontSizeToWidth } from "@/lib/layout-batch";
+import { getDeviceCapabilities } from "@/lib/device-capabilities";
 
 /** يُجمِّع كلمات سطر متتالية بنفس verseKey في عنقود واحد — الوحدة
  * التفاعلية الحقيقية هي "الآية" لا الكلمة المفردة (مطابقًا لـMushafPage.tsx
@@ -91,42 +93,28 @@ export function MushafPageV2({ layout, activeAyahKey, onAyahPress, sharedFontFam
     // لتملأ السطر، بل تُتوسَّط بحجم طبيعي). لأي سطر لا يصل طبيعيًا لعرض
     // الحاوية حتى عند هذا السقف المعقول، نُحوِّله لـjustify-content:center
     // بدل تمديده قسرًا (القسم 6.2: "نفّذه كحالة خاصة من بيانات QUL نفسها").
-    const ITERATIONS = 14;
+    // Part 15: scale binary-search iterations on low-end devices; batch geometry reads
+    const ITERATIONS = getDeviceCapabilities().fontFitIterations;
 
+    // Phase 1 — read all container metrics (no style writes)
+    const metrics = new Map<number, { containerWidth: number; maxFont: number }>();
     for (const [lineNumber, el] of lineRefs.current.entries()) {
       if (!el) continue;
       const containerWidth = el.parentElement?.clientWidth ?? 0;
       if (containerWidth <= 0) continue;
-
-      // ⚠️ إصلاح خلل رأسي حقيقي: تحديد سقف العرض وحده بلا سقف مرتبط
-      // بارتفاع خانة هذا السطر الفعلي (el.clientHeight، من flex:1 ضمن 15
-      // خانة) أنتج نصًا يتمدَّد رأسيًا فيتراكب مع الأسطر المجاورة (رُصد
-      // بلقطة حقيقية: نص ضخم متراكب رغم عدم وجود أي فيضان أفقي مقيس).
-      // النص العربي المُشكَّل يحتاج ~1.5× حجم الخط ارتفاعًا فعليًا (تشكيل
-      // فوق/تحت خط الأساس) — 0.6 من ارتفاع الخانة هامش أمان معقول لذلك.
       const lineHeightAvailable = el.clientHeight || 999;
       const MAX_FONT_PX = Math.min(45, lineHeightAvailable * 0.6);
+      metrics.set(lineNumber, { containerWidth, maxFont: MAX_FONT_PX });
+    }
 
-      let lo = 1;
-      let hi = MAX_FONT_PX;
-      el.style.fontSize = `${hi}px`;
-      if (el.scrollWidth <= containerWidth) {
-        // لا يملأ العرض حتى عند السقف المعقول — سطر قصير طبيعيًا (صفحة
-        // خاصة)، يُتوسَّط بدل تمديده.
-        sizes.set(lineNumber, hi);
-        centered.add(lineNumber);
-        continue;
-      }
-      for (let i = 0; i < ITERATIONS; i++) {
-        const mid = (lo + hi) / 2;
-        el.style.fontSize = `${mid}px`;
-        if (el.scrollWidth <= containerWidth) lo = mid;
-        else hi = mid;
-      }
-      // lo مضمون رياضيًا أنه لا يفيض (آخر قيمة نجحت في الاختبار) — لا
-      // حاجة لأي هامش أمان إضافي يُضحّي بدقة المطابقة لحدود الصفحة.
-      el.style.fontSize = `${lo}px`;
-      sizes.set(lineNumber, lo);
+    // Phase 2 — mutate + measure via shared fit helper (minimized iterations)
+    for (const [lineNumber, el] of lineRefs.current.entries()) {
+      if (!el) continue;
+      const m = metrics.get(lineNumber);
+      if (!m) continue;
+      const { size, centered: isShort } = fitFontSizeToWidth(el, m.containerWidth, m.maxFont, ITERATIONS);
+      sizes.set(lineNumber, size);
+      if (isShort) centered.add(lineNumber);
     }
 
     setLineFontSizes(sizes);

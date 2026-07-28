@@ -14,6 +14,8 @@
  */
 
 import { LruCache } from "@/lib/lru-cache";
+import { scaledLruSize } from "@/lib/device-capabilities";
+import { wrapWithIntegrity, unwrapWithIntegrity, verifyOrRepairPayload } from "@/lib/offline-integrity";
 
 const BASE = "https://api.alquran.cloud/v1";
 const LOCAL_QURAN_DATA_BASE = "/data/quran";
@@ -45,22 +47,63 @@ export type SurahDetail = SurahSummary & { ayahs: Ayah[] };
 
 export type TafsirAyah = { numberInSurah: number; text: string };
 
-/** In-memory Surah/Tafsir LRU — caps heap growth during long reading sessions. */
-const SURAH_MEM_MAX = 48;
-const TAFSIR_MEM_MAX = 24;
+/** In-memory Surah/Tafsir LRU — caps heap growth; scaled on low-end devices (Part 15). */
+const SURAH_MEM_MAX = scaledLruSize(48);
+const TAFSIR_MEM_MAX = scaledLruSize(24);
 const surahDetailMemory = new LruCache<number, SurahDetail>(SURAH_MEM_MAX);
 const tafsirMemory = new LruCache<string, TafsirAyah[]>(TAFSIR_MEM_MAX);
+
+type CacheEnvelope<T> = { data: T; at: number; sha256?: string };
+
+let quranManifestPromise: Promise<Map<number, string> | null> | null = null;
+
+async function loadQuranShaMap(): Promise<Map<number, string> | null> {
+  if (quranManifestPromise) return quranManifestPromise;
+  quranManifestPromise = (async () => {
+    try {
+      const { pooledFetch } = await import("@/lib/fetch-pool");
+      const res = await pooledFetch(`${LOCAL_QURAN_DATA_BASE}/manifest.json`, {
+        timeoutMs: 8_000,
+        dedupeKey: "quran-manifest",
+      });
+      if (!res.ok) return null;
+      const man = (await res.json()) as {
+        surahs?: Array<{ number: number; sha256: string }>;
+      };
+      const map = new Map<number, string>();
+      for (const s of man.surahs ?? []) {
+        if (s.sha256) map.set(s.number, s.sha256);
+      }
+      return map;
+    } catch {
+      return null;
+    }
+  })();
+  return quranManifestPromise;
+}
 
 function readCache<T>(key: string): T | null {
   try {
     const raw = localStorage.getItem(CACHE_PREFIX + key);
     if (!raw) return null;
-    const { data, at } = JSON.parse(raw) as { data: T; at: number };
-    if (Date.now() - at > CACHE_TTL_MS) {
+    const parsed = JSON.parse(raw) as CacheEnvelope<T>;
+    if (Date.now() - parsed.at > CACHE_TTL_MS) {
       localStorage.removeItem(CACHE_PREFIX + key);
       return null;
     }
-    return data;
+    // Sync path: if sha present, verify async and drop on fail; return data optimistically
+    if (parsed.sha256) {
+      void unwrapWithIntegrity(parsed).then(({ ok }) => {
+        if (!ok) {
+          try {
+            localStorage.removeItem(CACHE_PREFIX + key);
+          } catch {
+            /* ignore */
+          }
+        }
+      });
+    }
+    return parsed.data;
   } catch {
     return null;
   }
@@ -68,6 +111,14 @@ function readCache<T>(key: string): T | null {
 
 function writeCache<T>(key: string, data: T) {
   try {
+    void wrapWithIntegrity(data).then((envelope) => {
+      try {
+        localStorage.setItem(CACHE_PREFIX + key, JSON.stringify(envelope));
+      } catch {
+        /* quota */
+      }
+    });
+    // Immediate write without sha for sync readers this session
     localStorage.setItem(CACHE_PREFIX + key, JSON.stringify({ data, at: Date.now() }));
   } catch {
     // localStorage quota exceeded — ignore
@@ -91,12 +142,30 @@ async function fetchLocalSurahDetail(surahNumber: number): Promise<SurahDetail |
   try {
     const { pooledFetch } = await import("@/lib/fetch-pool");
     const padded = String(surahNumber).padStart(3, "0");
-    const res = await pooledFetch(`${LOCAL_QURAN_DATA_BASE}/surah-${padded}.json`, {
+    const url = `${LOCAL_QURAN_DATA_BASE}/surah-${padded}.json`;
+    const res = await pooledFetch(url, {
       timeoutMs: 8_000,
       dedupeKey: `quran-local:${padded}`,
     });
     if (!res.ok) return null;
-    const detail = await res.json();
+    const text = await res.text();
+    const shaMap = await loadQuranShaMap();
+    const expected = shaMap?.get(surahNumber) ?? null;
+    const verified = await verifyOrRepairPayload(text, {
+      expectedSha256: expected,
+      cacheKey: CACHE_PREFIX + `surah-${surahNumber}`,
+      repair: async () => {
+        const again = await pooledFetch(url, {
+          timeoutMs: 8_000,
+          dedupeKey: `quran-local:${padded}:repair`,
+          cache: "reload",
+        } as RequestInit);
+        if (!again.ok) return null;
+        return again.text();
+      },
+    });
+    if (!verified.ok && expected) return null;
+    const detail = JSON.parse(verified.text);
     if (!detail || !Array.isArray(detail.ayahs)) return null;
     return detail as SurahDetail;
   } catch {

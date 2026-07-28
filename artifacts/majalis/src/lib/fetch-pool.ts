@@ -1,7 +1,10 @@
 /**
- * Static JSON / data fetch pooling — merges duplicate in-flight GETs.
+ * Static JSON / data fetch pooling — merges duplicate in-flight GETs
+ * and caps concurrency from device capabilities (Part 15).
  */
 import { dedupePromise } from "@/lib/lru-cache";
+import { getDeviceCapabilities } from "@/lib/device-capabilities";
+import { abortTimeout } from "@/lib/feature-detect";
 
 const POOL = "static-json";
 
@@ -10,6 +13,29 @@ export type PooledFetchInit = RequestInit & {
   dedupeKey?: string;
   timeoutMs?: number;
 };
+
+let inFlight = 0;
+const waiters: Array<() => void> = [];
+
+function acquireSlot(): Promise<void> {
+  const max = getDeviceCapabilities().maxConcurrentFetches;
+  if (inFlight < max) {
+    inFlight += 1;
+    return Promise.resolve();
+  }
+  return new Promise((resolve) => {
+    waiters.push(() => {
+      inFlight += 1;
+      resolve();
+    });
+  });
+}
+
+function releaseSlot(): void {
+  inFlight = Math.max(0, inFlight - 1);
+  const next = waiters.shift();
+  if (next) next();
+}
 
 /**
  * Deduplicated GET (or other) fetch for static assets (/data/*, Quran JSON, Hadith packs).
@@ -20,23 +46,25 @@ export function pooledFetch(input: RequestInfo | URL, init: PooledFetchInit = {}
   const url = typeof input === "string" ? input : input.toString();
   const key = init.dedupeKey || `${method}:${url}`;
 
-  // Only dedupe safe/idempotent GETs by default
   if (method !== "GET" && method !== "HEAD") {
     return fetch(input, init);
   }
 
   return dedupePromise(POOL, key, async () => {
-    const timeoutMs = init.timeoutMs;
-    if (timeoutMs != null && timeoutMs > 0 && !init.signal) {
-      const controller = new AbortController();
-      const timer = window.setTimeout(() => controller.abort(), timeoutMs);
-      try {
-        return await fetch(input, { ...init, signal: controller.signal });
-      } finally {
-        window.clearTimeout(timer);
+    await acquireSlot();
+    try {
+      const timeoutMs = init.timeoutMs;
+      if (timeoutMs != null && timeoutMs > 0 && !init.signal) {
+        try {
+          return await fetch(input, { ...init, signal: abortTimeout(timeoutMs) });
+        } catch (err) {
+          throw err;
+        }
       }
+      return await fetch(input, init);
+    } finally {
+      releaseSlot();
     }
-    return fetch(input, init);
   });
 }
 
