@@ -1,7 +1,14 @@
 /**
  * Safe JSON / schema guards for LocalStorage & IndexedDB payloads.
  * Never throws into React lifecycle — returns fallback + optionally clears corrupt keys.
+ * Part 17: hybrid memory + sessionStorage bridge for private/incognito modes.
  */
+
+import {
+  hybridGetItem,
+  hybridRemoveItem,
+  hybridSetItem,
+} from "@/lib/private-storage-guard";
 
 export type SafeParseResult<T> =
   | { ok: true; value: T }
@@ -33,22 +40,17 @@ export function safeJsonParse<T>(
   }
 }
 
-/** Read LS key with schema guard; wipe key if corrupt. */
+/** Read LS key with schema guard; wipe key if corrupt. Uses hybrid store. */
 export function readLocalJson<T>(
   key: string,
   fallback: T,
   guard?: SchemaGuard<T>,
 ): T {
-  if (typeof localStorage === "undefined") return fallback;
   try {
-    const raw = localStorage.getItem(key);
+    const raw = hybridGetItem(key);
     const result = safeJsonParse(raw, fallback, guard);
     if (!result.ok) {
-      try {
-        localStorage.removeItem(key);
-      } catch {
-        /* ignore */
-      }
+      hybridRemoveItem(key);
     }
     return result.value;
   } catch {
@@ -56,11 +58,10 @@ export function readLocalJson<T>(
   }
 }
 
-/** Write LS with try/catch — never throws. */
+/** Write with hybrid fallback (LS → session → memory) — never throws. */
 export function writeLocalJson(key: string, value: unknown): boolean {
-  if (typeof localStorage === "undefined") return false;
   try {
-    localStorage.setItem(key, JSON.stringify(value));
+    hybridSetItem(key, JSON.stringify(value));
     return true;
   } catch {
     return false;

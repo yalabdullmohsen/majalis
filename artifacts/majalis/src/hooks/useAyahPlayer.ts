@@ -24,6 +24,7 @@ import {
   type StallRecoveryPhase,
 } from "@/lib/audio-stall-recovery";
 import { prewarmAudioCdns } from "@/lib/resource-prewarm";
+import { markJourneyStart, endJourney } from "@/lib/journey-perf";
 
 export type PlayerState = "idle" | "loading" | "playing" | "paused" | "error" | "buffering";
 
@@ -135,6 +136,7 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
     stallRef.current?.reset();
     prewarmAudioCdns();
 
+    markJourneyStart("audio-first-byte");
     audio.pause();
     audio.src = getAyahAudioUrl(surah, ayah, reciter);
     audio.playbackRate = playbackRateRef.current;
@@ -148,7 +150,10 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
       updatedAt: Date.now(),
     });
 
-    const onPlaying = () => setPlayerState("playing");
+    const onPlaying = () => {
+      endJourney("audio-first-byte");
+      setPlayerState("playing");
+    };
     const onPause = () => {
       if (audio.ended) return;
       // Keep ayah + timeline; do not clear currentAyah on buffer underrun

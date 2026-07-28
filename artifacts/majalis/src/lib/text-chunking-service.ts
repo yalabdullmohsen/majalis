@@ -5,6 +5,8 @@
  */
 
 import { idbGetValue, idbPut, OFFLINE_STORES } from "@/lib/offline-db";
+import { hybridGetItem, hybridSetItem } from "@/lib/private-storage-guard";
+import { captureScrollAnchor, restoreScrollAnchor } from "@/lib/scroll-anchor-stability";
 
 export type ContentChunk = {
   index: number;
@@ -42,7 +44,7 @@ const BOUNDARY_RE = /([.!?؟۔\n]|\u06D6|\u06D7|\u06D8|\u06D9|\u06DA|\u06DB|\u06
 
 function readProgressMap(): Record<string, ChunkProgressState> {
   try {
-    const raw = localStorage.getItem(LS_KEY);
+    const raw = hybridGetItem(LS_KEY);
     return raw ? (JSON.parse(raw) as Record<string, ChunkProgressState>) : {};
   } catch {
     return {};
@@ -51,11 +53,25 @@ function readProgressMap(): Record<string, ChunkProgressState> {
 
 function writeProgressMap(map: Record<string, ChunkProgressState>): void {
   try {
-    localStorage.setItem(LS_KEY, JSON.stringify(map));
+    hybridSetItem(LS_KEY, JSON.stringify(map));
   } catch {
     /* quota */
   }
   void idbPut(OFFLINE_STORES.meta, IDB_KEY, map).catch(() => undefined);
+}
+
+/**
+ * Advance chunk index while preserving scroll anchor (Part 17 — no CSS).
+ * Callers that mutate DOM around chunk changes should prefer this helper.
+ */
+export function advanceChunkWithScrollStability(
+  setChunk: (next: number) => void,
+  nextIndex: number,
+  anchorEl?: Element | null,
+): void {
+  const snap = captureScrollAnchor(anchorEl);
+  setChunk(nextIndex);
+  restoreScrollAnchor(snap, anchorEl);
 }
 
 /**

@@ -8,12 +8,20 @@
  * ملفات mp3quran.net كاملة السورة بلا طوابع توقيت لكل آية، فلا يمكن ربطها
  * بتظليل آية واحدة أثناء التشغيل — الاستماع دون اتصال هنا يعني تشغيل
  * السورة كاملة (getOfflineSurahUrl)، لا خطوة آية-بآية.
+ *
+ * Part 17: HTTP Range byte-chunking with resume from exact offset.
  */
 import { RECITERS, getSurahAudioUrl } from "@/lib/quran-audio";
+import {
+  downloadResumable,
+  type PartialAssetStore,
+} from "@/lib/resumable-range-download";
+import { markJourneyStart, endJourney } from "@/lib/journey-perf";
 
 const DB_NAME = "majalis-quran-audio";
-const DB_VERSION = 1;
+const DB_VERSION = 2;
 const STORE = "surah-audio";
+const PARTIAL_STORE = "surah-audio-partial";
 const TOTAL_SURAHS = 114;
 
 function openDb(): Promise<IDBDatabase> {
@@ -23,6 +31,9 @@ function openDb(): Promise<IDBDatabase> {
       const db = req.result;
       if (!db.objectStoreNames.contains(STORE)) {
         db.createObjectStore(STORE); // key: `${reciterId}:${surahNum}`
+      }
+      if (!db.objectStoreNames.contains(PARTIAL_STORE)) {
+        db.createObjectStore(PARTIAL_STORE); // key: same — ArrayBuffer partials
       }
     };
     req.onsuccess = () => resolve(req.result);
@@ -60,12 +71,63 @@ async function getBlob(reciterId: string, surah: number): Promise<Blob | null> {
 async function deleteBlob(reciterId: string, surah: number): Promise<void> {
   const db = await openDb();
   await new Promise<void>((resolve, reject) => {
-    const tx = db.transaction(STORE, "readwrite");
+    const tx = db.transaction([STORE, PARTIAL_STORE], "readwrite");
     tx.objectStore(STORE).delete(keyFor(reciterId, surah));
+    tx.objectStore(PARTIAL_STORE).delete(keyFor(reciterId, surah));
     tx.oncomplete = () => resolve();
     tx.onerror = () => reject(tx.error);
   });
   db.close();
+}
+
+function createPartialStore(): PartialAssetStore {
+  return {
+    async getPartial(assetKey: string): Promise<Uint8Array | null> {
+      try {
+        const db = await openDb();
+        const val = await new Promise<ArrayBuffer | Uint8Array | null>((resolve, reject) => {
+          const tx = db.transaction(PARTIAL_STORE, "readonly");
+          const req = tx.objectStore(PARTIAL_STORE).get(assetKey);
+          req.onsuccess = () => resolve((req.result as ArrayBuffer | Uint8Array | undefined) ?? null);
+          req.onerror = () => reject(req.error);
+        });
+        db.close();
+        if (!val) return null;
+        return val instanceof Uint8Array ? val : new Uint8Array(val);
+      } catch {
+        return null;
+      }
+    },
+    async putPartial(assetKey: string, bytes: Uint8Array): Promise<void> {
+      try {
+        const db = await openDb();
+        const copy = bytes.slice();
+        await new Promise<void>((resolve, reject) => {
+          const tx = db.transaction(PARTIAL_STORE, "readwrite");
+          tx.objectStore(PARTIAL_STORE).put(copy, assetKey);
+          tx.oncomplete = () => resolve();
+          tx.onerror = () => reject(tx.error);
+        });
+        db.close();
+      } catch {
+        /* ignore partial checkpoint failures */
+      }
+    },
+    async clearPartial(assetKey: string): Promise<void> {
+      try {
+        const db = await openDb();
+        await new Promise<void>((resolve, reject) => {
+          const tx = db.transaction(PARTIAL_STORE, "readwrite");
+          tx.objectStore(PARTIAL_STORE).delete(assetKey);
+          tx.oncomplete = () => resolve();
+          tx.onerror = () => reject(tx.error);
+        });
+        db.close();
+      } catch {
+        /* ignore */
+      }
+    },
+  };
 }
 
 async function listKeysForReciter(reciterId: string): Promise<{ surah: number; size: number }[]> {
@@ -122,24 +184,45 @@ export async function getAllDownloadStatuses(): Promise<ReciterDownloadStatus[]>
 
 export type DownloadProgress = { surah: number; done: number; total: number };
 
-/** يحمّل السور 1..114 تسلسليًا (لا تزامنًا — يتفادى إغراق الشبكة/الذاكرة على الجوال)، يتخطى ما هو محمَّل مسبقًا. */
+/** يحمّل السور 1..114 تسلسليًا مع استئناف Range لكل سورة. */
 export async function downloadReciter(
   reciterId: string,
   onProgress: (p: DownloadProgress) => void,
   isCancelled: () => boolean,
 ): Promise<void> {
+  markJourneyStart("offline-sync");
   const existing = new Set((await listKeysForReciter(reciterId)).map((e) => e.surah));
+  const partialStore = createPartialStore();
+
   for (let surah = 1; surah <= TOTAL_SURAHS; surah++) {
-    if (isCancelled()) return;
+    if (isCancelled()) {
+      endJourney("offline-sync");
+      return;
+    }
     if (!existing.has(surah)) {
-      const res = await fetch(getSurahAudioUrl(surah, reciterId));
-      if (!res.ok) throw new Error(`فشل تنزيل السورة ${surah}: ${res.status}`);
-      const blob = await res.blob();
-      if (isCancelled()) return;
-      await putBlob(reciterId, surah, blob);
+      const url = getSurahAudioUrl(surah, reciterId);
+      const assetKey = keyFor(reciterId, surah);
+      try {
+        const blob = await downloadResumable(url, assetKey, partialStore, {
+          isCancelled,
+          chunkSize: 512 * 1024,
+        });
+        if (isCancelled()) {
+          endJourney("offline-sync");
+          return;
+        }
+        await putBlob(reciterId, surah, blob);
+      } catch (err) {
+        if ((err as { name?: string })?.name === "AbortError" || isCancelled()) {
+          endJourney("offline-sync");
+          return;
+        }
+        throw new Error(`فشل تنزيل السورة ${surah}: ${String((err as Error)?.message || err)}`);
+      }
     }
     onProgress({ surah, done: surah, total: TOTAL_SURAHS });
   }
+  endJourney("offline-sync");
 }
 
 export async function deleteReciterDownloads(reciterId: string): Promise<void> {
@@ -147,7 +230,7 @@ export async function deleteReciterDownloads(reciterId: string): Promise<void> {
   await Promise.all(entries.map((e) => deleteBlob(reciterId, e.surah)));
 }
 
-/** رابط تشغيل محلي (Object URL) للسورة إن كانت مُنزَّلة، وإلا null (يُستخدَم عندها الرابط الحي كالمعتاد). استدعِ URL.revokeObjectURL على النتيجة عند انتهاء الاستخدام. */
+/** رابط تشغيل محلي (Object URL) للسورة إن كانت مُنزَّلة، وإلا null. */
 export async function getOfflineSurahUrl(reciterId: string, surah: number): Promise<string | null> {
   const blob = await getBlob(reciterId, surah);
   return blob ? URL.createObjectURL(blob) : null;

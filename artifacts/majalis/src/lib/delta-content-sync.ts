@@ -142,7 +142,7 @@ export async function fetchContentDeltas(opts?: {
   }
 }
 
-/** Fetch + apply all available deltas. */
+/** Fetch + apply all available deltas — scheduled with backoff when used from background. */
 export async function runDeltaSync(opts?: {
   url?: string;
   packIds?: string[];
@@ -166,6 +166,27 @@ export async function runDeltaSync(opts?: {
     saveDeltaSyncState(state);
     return { packs: 0, ops: 0 };
   }
+}
+
+/** Enqueue delta sync with exponential backoff + jitter (Part 17). */
+export function scheduleDeltaSync(opts?: {
+  url?: string;
+  packIds?: string[];
+}): void {
+  void import("@/lib/sync-backoff").then(({ scheduleBackgroundSync }) => {
+    scheduleBackgroundSync(
+      "delta-content-sync",
+      async () => {
+        try {
+          await runDeltaSync(opts);
+          return { ok: true };
+        } catch (err) {
+          return { ok: false, error: String((err as Error)?.message || err) };
+        }
+      },
+      { baseMs: 2_000, maxMs: 120_000, minIntervalMs: 10_000 },
+    );
+  });
 }
 
 /**

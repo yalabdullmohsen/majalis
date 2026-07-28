@@ -1,8 +1,10 @@
 /**
  * Performance monitor — logs operations exceeding threshold to console + error pipeline.
+ * Part 17: User Timing marks for slow ops; budget alerts only in dev/staging.
  */
 
 import { logClientError, buildErrorReport } from "@/lib/error-report";
+import { markJourneyStart, endJourney } from "@/lib/journey-perf";
 
 export const PERF_SLOW_MS = 3000;
 
@@ -49,22 +51,29 @@ export async function measureAsync<T>(
   fn: () => Promise<T>,
   meta?: Record<string, unknown>,
 ): Promise<T> {
+  // Unique journey key avoids colliding concurrent measureAsync marks
+  const journey = `${kind}:${label}`.slice(0, 80);
+  markJourneyStart(journey);
   const started = performance.now();
   try {
     const result = await fn();
+    const durationMs = Math.round(performance.now() - started);
+    endJourney(journey, PERF_SLOW_MS);
     recordPerformance({
       kind,
       label,
-      durationMs: Math.round(performance.now() - started),
+      durationMs,
       ok: true,
       meta,
     });
     return result;
   } catch (err) {
+    const durationMs = Math.round(performance.now() - started);
+    endJourney(journey, PERF_SLOW_MS);
     recordPerformance({
       kind,
       label,
-      durationMs: Math.round(performance.now() - started),
+      durationMs,
       ok: false,
       meta: { ...meta, error: String((err as Error)?.message || err) },
     });

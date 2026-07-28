@@ -225,31 +225,37 @@ export async function submitCardReview(
   }
 }
 
-/** Push dirty local reviews to Supabase when back online. */
+/** Push dirty local reviews to Supabase when back online — backoff between failures. */
 export async function syncDirtyFlashcardReviews(userId: string): Promise<number> {
   if (!isOnline()) return 0;
+  const { runWithBackoff } = await import("@/lib/sync-backoff");
   const dirty = await listDirtyReviews(userId);
   let synced = 0;
   for (const row of dirty) {
     try {
-      await supabase.from("flashcard_reviews").upsert(
-        {
-          user_id: row.user_id,
-          card_type: row.card_type,
-          card_id: row.card_id,
-          next_review_at: row.next_review_at,
-          interval_days: row.interval_days,
-          ease_factor: row.ease_factor,
-          repetitions: row.repetitions,
-          last_quality: row.last_quality,
-          reviewed_at: row.reviewed_at,
+      await runWithBackoff(
+        async () => {
+          await supabase.from("flashcard_reviews").upsert(
+            {
+              user_id: row.user_id,
+              card_type: row.card_type,
+              card_id: row.card_id,
+              next_review_at: row.next_review_at,
+              interval_days: row.interval_days,
+              ease_factor: row.ease_factor,
+              repetitions: row.repetitions,
+              last_quality: row.last_quality,
+              reviewed_at: row.reviewed_at,
+            },
+            { onConflict: "user_id,card_type,card_id" },
+          );
         },
-        { onConflict: "user_id,card_type,card_id" },
+        { maxAttempts: 3, baseMs: 800, maxMs: 20_000 },
       );
       await markReviewClean(row);
       synced += 1;
     } catch {
-      /* keep dirty */
+      /* keep dirty — next session will retry with fresh backoff */
     }
   }
   return synced;

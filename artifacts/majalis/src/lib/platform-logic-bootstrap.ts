@@ -32,6 +32,14 @@ export async function startPlatformLogicSuite(): Promise<void> {
       /* ignore */
     }
 
+    // Soft-warm: private/incognito storage probe (hybrid LS fallback)
+    try {
+      const { startPrivateStorageGuard } = await import("@/lib/private-storage-guard");
+      startPrivateStorageGuard();
+    } catch {
+      /* ignore */
+    }
+
     // Soft-warm: unseen discovery + delta sync (never block UX)
     try {
       const { serveLaunchDiscovery } = await import("@/lib/unseen-benefit-discovery");
@@ -40,8 +48,8 @@ export async function startPlatformLogicSuite(): Promise<void> {
       /* ignore */
     }
     try {
-      const { runDeltaSync } = await import("@/lib/delta-content-sync");
-      void runDeltaSync();
+      const { scheduleDeltaSync } = await import("@/lib/delta-content-sync");
+      scheduleDeltaSync();
     } catch {
       /* ignore */
     }

@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import type { Ayah } from "@/lib/quran-api";
+import { withScrollAnchorStability } from "@/lib/scroll-anchor-stability";
+import { markJourneyStart, endJourney } from "@/lib/journey-perf";
 
 const CHUNK_SIZE = 60;
 
@@ -7,6 +9,8 @@ const CHUNK_SIZE = 60;
  * Renders ayahs in progressive chunks using IntersectionObserver.
  * Preserves the continuous inline mushaf layout while avoiding
  * DOM bloat for long surahs (e.g. Al-Baqarah with 286 ayahs).
+ *
+ * Part 17: scroll-anchor stability across chunk recycling (no CSS changes).
  */
 export function useAyahChunks(ayahs: Ayah[], targetAyah: number) {
   const totalChunks = Math.ceil(ayahs.length / CHUNK_SIZE);
@@ -18,11 +22,25 @@ export function useAyahChunks(ayahs: Ayah[], targetAyah: number) {
 
   const [visibleChunks, setVisibleChunks] = useState(initialChunks || 1);
   const sentinelRef = useRef<HTMLDivElement>(null);
+  const ttfvMarked = useRef(false);
 
   // Reset visible chunks when surah changes
   useEffect(() => {
-    setVisibleChunks(initialChunks || 1);
+    withScrollAnchorStability(() => {
+      setVisibleChunks(initialChunks || 1);
+    });
+    ttfvMarked.current = false;
+    markJourneyStart("ttfv-interactive");
   }, [ayahs, initialChunks]);
+
+  // First interactive verse budget
+  useEffect(() => {
+    if (ttfvMarked.current) return;
+    if (visibleChunks > 0 && ayahs.length > 0) {
+      ttfvMarked.current = true;
+      endJourney("ttfv-interactive");
+    }
+  }, [visibleChunks, ayahs.length]);
 
   // IntersectionObserver: load next chunk when sentinel enters viewport
   useEffect(() => {
@@ -33,7 +51,12 @@ export function useAyahChunks(ayahs: Ayah[], targetAyah: number) {
     const obs = new IntersectionObserver(
       (entries) => {
         if (entries[0]?.isIntersecting) {
-          setVisibleChunks((v) => Math.min(v + 1, totalChunks));
+          withScrollAnchorStability(
+            () => {
+              setVisibleChunks((v) => Math.min(v + 1, totalChunks));
+            },
+            sentinel,
+          );
         }
       },
       { rootMargin: "200px" },
