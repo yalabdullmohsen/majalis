@@ -7,6 +7,25 @@ import '../../shared/theme/majlis_colors.dart';
 import '../../shared/theme/majlis_theme.dart';
 import '../controllers/user_quran_app_controller.dart';
 import '../data/user_quran_repository.dart';
+<<<<<<< HEAD
+import '../widgets/user_hide_on_scroll_app_bar.dart';
+import '../widgets/user_verse_bottom_sheet.dart';
+
+/// Immersive Quran reader with hide-on-scroll header (floating/snapping SliverAppBar).
+class UserQuranReaderView extends StatelessWidget {
+  const UserQuranReaderView({
+    super.key,
+    this.surah = 1,
+    this.title = 'المصحف الشريف',
+    this.onSearch,
+    this.onOpenSettings,
+  });
+
+  final int surah;
+  final String title;
+  final VoidCallback? onSearch;
+  final VoidCallback? onOpenSettings;
+=======
 import '../widgets/user_verse_bottom_sheet.dart';
 
 /// Immersive Quran reader — PageView of verse ListViews, tap to select + sheet.
@@ -14,6 +33,7 @@ class UserQuranReaderView extends StatelessWidget {
   const UserQuranReaderView({super.key, this.surah = 1});
 
   final int surah;
+>>>>>>> origin/main
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +45,59 @@ class UserQuranReaderView extends StatelessWidget {
       child: PageView.builder(
         itemCount: 1,
         itemBuilder: (context, page) {
+<<<<<<< HEAD
+          return CustomScrollView(
+            physics: const BouncingScrollPhysics(
+              parent: AlwaysScrollableScrollPhysics(),
+            ),
+            slivers: [
+              UserHideOnScrollAppBar(
+                title: title,
+                backgroundColor: quran.backgroundColor,
+                foregroundColor: quran.textColor,
+                onSearch: onSearch,
+                onOpenSettings: onOpenSettings,
+                bottom: onSearch == null
+                    ? null
+                    : UserHideOnScrollSearchBar(
+                        hintText: 'بحث برقم الآية أو النص…',
+                        onTap: onSearch!,
+                        backgroundColor: quran.isDarkMode
+                            ? Colors.white10
+                            : Colors.black.withOpacity(0.05),
+                      ),
+              ),
+              SliverPadding(
+                padding: const EdgeInsets.fromLTRB(16, 8, 16, 100),
+                sliver: SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      final verse = verses[index];
+                      return _VerseTile(
+                        verse: verse,
+                        index: index,
+                        fontSize: quran.fontSize,
+                        textColor: quran.textColor,
+                        selected: quran.selectedVerseIndex == index,
+                        playing: quran.isPlayingAudio &&
+                            quran.currentPlayingVerse == index,
+                        isDark: quran.isDarkMode,
+                        onTap: () {
+                          quran.selectVerse(index);
+                          UserVerseBottomSheet.show(
+                            context,
+                            verse: verse,
+                            index: index,
+                          );
+                        },
+                      );
+                    },
+                    childCount: verses.length,
+                  ),
+                ),
+              ),
+            ],
+=======
           return ListView.builder(
             padding: const EdgeInsets.fromLTRB(16, 12, 16, 100),
             itemCount: verses.length,
@@ -49,6 +122,7 @@ class UserQuranReaderView extends StatelessWidget {
                 },
               );
             },
+>>>>>>> origin/main
           );
         },
       ),

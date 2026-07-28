@@ -7,7 +7,11 @@ import '../controllers/user_quran_app_controller.dart';
 import 'user_educational_paths_view.dart';
 import 'user_quran_reader_view.dart';
 
+<<<<<<< HEAD
+/// Bottom nav shell — headers live inside each tab as floating SliverAppBars.
+=======
 /// Bottom nav shell: Quran Reader ↔ Educational/Adhkar + search + endDrawer settings.
+>>>>>>> origin/main
 class UserMainShell extends StatefulWidget {
   const UserMainShell({super.key});
 
@@ -17,6 +21,8 @@ class UserMainShell extends StatefulWidget {
 
 class _UserMainShellState extends State<UserMainShell> {
   int _tab = 0;
+<<<<<<< HEAD
+=======
   final TextEditingController _searchCtrl = TextEditingController();
 
   @override
@@ -24,6 +30,7 @@ class _UserMainShellState extends State<UserMainShell> {
     _searchCtrl.dispose();
     super.dispose();
   }
+>>>>>>> origin/main
 
   Future<void> _openSearch(BuildContext context) async {
     final quran = context.read<UserQuranAppController>();
@@ -38,6 +45,37 @@ class _UserMainShellState extends State<UserMainShell> {
     );
   }
 
+<<<<<<< HEAD
+  void _openSettings(BuildContext context) {
+    Scaffold.of(context).openEndDrawer();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final quran = context.watch<UserQuranAppController>();
+
+    return Scaffold(
+      backgroundColor: quran.backgroundColor,
+      endDrawer: _UserPrefsDrawer(quran: quran),
+      body: Builder(
+        builder: (bodyContext) {
+          return IndexedStack(
+            index: _tab,
+            children: [
+              UserQuranReaderView(
+                title: 'المصحف الشريف',
+                onSearch: () => _openSearch(bodyContext),
+                onOpenSettings: () => _openSettings(bodyContext),
+              ),
+              UserEducationalPathsView(
+                title: 'المسارات والأذكار',
+                onSearch: () => _openSearch(bodyContext),
+                onOpenSettings: () => _openSettings(bodyContext),
+              ),
+            ],
+          );
+        },
+=======
   @override
   Widget build(BuildContext context) {
     final quran = context.watch<UserQuranAppController>();
@@ -71,6 +109,7 @@ class _UserMainShellState extends State<UserMainShell> {
           UserQuranReaderView(),
           UserEducationalPathsView(),
         ],
+>>>>>>> origin/main
       ),
       bottomNavigationBar: NavigationBar(
         selectedIndex: _tab,
