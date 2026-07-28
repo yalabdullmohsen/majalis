@@ -1,6 +1,7 @@
 /**
  * Main-thread yielding for elite INP (Interaction to Next Paint).
  * Prefer `scheduler.yield()` when available; fall back to setTimeout(0).
+ * Part 18: budget-aware slicing so long transforms stay under ~50ms.
  * Logic-only — no UI.
  */
 
@@ -57,6 +58,44 @@ export async function mapInChunks<T, R>(
     }
   }
   return out;
+}
+
+/**
+ * Time-budgeted transform — yields whenever a slice exceeds `budgetMs` (default 50).
+ * Keeps long array work (roots, flashcard queues, tafseer refs) off long tasks.
+ */
+export async function mapWithTimeBudget<T, R>(
+  items: readonly T[],
+  mapper: (item: T, index: number) => R,
+  budgetMs = 50,
+): Promise<R[]> {
+  const out: R[] = [];
+  let sliceStart = typeof performance !== "undefined" ? performance.now() : Date.now();
+  for (let i = 0; i < items.length; i++) {
+    out.push(mapper(items[i]!, i));
+    const now = typeof performance !== "undefined" ? performance.now() : Date.now();
+    if (now - sliceStart >= budgetMs) {
+      await yieldToMain();
+      sliceStart = typeof performance !== "undefined" ? performance.now() : Date.now();
+    }
+  }
+  return out;
+}
+
+/** Side-effecting variant of mapWithTimeBudget. */
+export async function forEachWithTimeBudget<T>(
+  items: readonly T[],
+  fn: (item: T, index: number) => void,
+  budgetMs = 50,
+): Promise<void> {
+  await mapWithTimeBudget(
+    items,
+    (item, i) => {
+      fn(item, i);
+      return undefined;
+    },
+    budgetMs,
+  );
 }
 
 /** Run a heavy async task after yielding so the triggering interaction paints first. */

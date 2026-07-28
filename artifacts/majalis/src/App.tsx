@@ -834,6 +834,7 @@ function AppShell() {
         <PrayerAlertSchedulerBootstrap />
         <OfflineSyncBootstrap />
         <PlatformLogicBootstrap />
+        <SpeculativePrefetchBootstrap />
         <NavBar />
         <TopSectionBar />
         <PrayerCountdownBanner />
@@ -896,6 +897,23 @@ function PlatformLogicBootstrap() {
     });
     return () => {
       cancelled = true;
+    };
+  }, []);
+  return null;
+}
+
+/** Intent-based route/JSON prefetch on hover/touch/focus — logic only (Part 18). */
+function SpeculativePrefetchBootstrap() {
+  useEffect(() => {
+    let dispose: (() => void) | undefined;
+    let cancelled = false;
+    void import("@/lib/speculative-prefetch").then((m) => {
+      if (cancelled) return;
+      dispose = m.startSpeculativePrefetchObserver();
+    });
+    return () => {
+      cancelled = true;
+      dispose?.();
     };
   }, []);
   return null;

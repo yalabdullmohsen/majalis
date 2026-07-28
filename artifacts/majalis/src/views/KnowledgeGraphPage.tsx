@@ -273,7 +273,13 @@ export default function KnowledgeGraphPage() {
       animRef.current = requestAnimationFrame(tick);
     }
     animRef.current = requestAnimationFrame(tick);
-    return () => cancelAnimationFrame(animRef.current);
+    return () => {
+      cancelAnimationFrame(animRef.current);
+      // Part 18: release detached SVG vector nodes after graph view recycles
+      void import("@/lib/vector-memory-cleanup").then(({ scheduleVectorCleanup }) => {
+        scheduleVectorCleanup(svgRef.current);
+      });
+    };
   }, [gEdges]);
 
   const handleTagSearch = useCallback(async () => {

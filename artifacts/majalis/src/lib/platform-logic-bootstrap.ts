@@ -78,7 +78,22 @@ export async function startPlatformLogicSuite(): Promise<void> {
     try {
       const { getCrossTabId, subscribeCrossTab } = await import("@/lib/cross-tab-sync");
       getCrossTabId();
-      subscribeCrossTab(() => undefined);
+      subscribeCrossTab((msg) => {
+        if (msg.type === "bookmark_changed" && Array.isArray((msg.payload as { items?: unknown })?.items)) {
+          void import("@/lib/local-bookmarks").then(({ mergeLocalBookmarksLww }) => {
+            mergeLocalBookmarksLww(
+              (msg.payload as { items: import("@/lib/local-bookmarks").LocalBookmark[] }).items,
+            );
+          });
+        }
+        if (msg.type === "daily_progress" && msg.payload && typeof msg.payload === "object") {
+          void import("@/lib/reading-progress").then(({ mergeReadingProgressLww }) => {
+            mergeReadingProgressLww(
+              msg.payload as Parameters<typeof mergeReadingProgressLww>[0],
+            );
+          });
+        }
+      });
     } catch {
       /* ignore */
     }

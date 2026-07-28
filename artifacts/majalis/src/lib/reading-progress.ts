@@ -1,5 +1,7 @@
 import { readLocalJson, writeLocalJson, isPlainObject } from "@/lib/safe-json";
 import { registerUnloadPersist } from "@/lib/unload-persist";
+import { mergeProgressMapsByLww } from "@/lib/lww-crdt-sync";
+import { publishCrossTabEvent } from "@/lib/cross-tab-sync";
 
 export const READING_PROGRESS_LS_KEY = "majalis-reading-progress-v1";
 const STORAGE_KEY = READING_PROGRESS_LS_KEY;
@@ -79,6 +81,24 @@ function readStore(): ReadingProgressStore {
 function writeStore(store: ReadingProgressStore) {
   if (typeof window === "undefined") return;
   writeLocalJson(STORAGE_KEY, store);
+  try {
+    publishCrossTabEvent("daily_progress", store, STORAGE_KEY);
+  } catch {
+    /* ignore */
+  }
+}
+
+/** Merge a remote progress snapshot with LWW on `at` — never clobber newer local. */
+export function mergeReadingProgressLww(
+  remote: Partial<Record<ReadingSection, ReadingProgressEntry>>,
+): ReadingProgressStore {
+  const local = readStore();
+  const merged = mergeProgressMapsByLww(
+    local as Record<string, ReadingProgressEntry>,
+    remote as Record<string, ReadingProgressEntry>,
+  ) as ReadingProgressStore;
+  writeLocalJson(STORAGE_KEY, merged);
+  return merged;
 }
 
 export function markReadingProgress(section: ReadingSection, entry: Omit<ReadingProgressEntry, "at">) {

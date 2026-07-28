@@ -5,6 +5,8 @@
 import { idbGetAll, idbPut, OFFLINE_STORES } from "@/lib/offline-db";
 import type { ReviewQuality } from "@/lib/spaced-repetition";
 import { readLocalJson, writeLocalJson, isPlainObject } from "@/lib/safe-json";
+import { mergeKeyedByLww, toUpdatedAtMs } from "@/lib/lww-crdt-sync";
+import { mapWithTimeBudget } from "@/lib/yield-to-main";
 
 const LS_KEY = "majalis-flashcard-reviews-v1";
 
@@ -72,13 +74,16 @@ export async function listLocalReviews(userId: string): Promise<LocalFlashReview
   const fromLs = readLs().filter((r) => r.user_id === userId);
   try {
     const idbRows = await idbGetAll<LocalFlashReview>(OFFLINE_STORES.flashcards);
-    const map = new Map<string, LocalFlashReview>();
-    for (const r of fromLs) map.set(r.key, r);
+    const fromIdb: LocalFlashReview[] = [];
     for (const rec of idbRows) {
       const v = rec.value;
-      if (v?.user_id === userId) map.set(v.key, v);
+      if (v?.user_id === userId) fromIdb.push(v);
     }
-    return [...map.values()];
+    // Part 18: LWW on reviewed_at — IDB/LS never clobber newer reviews
+    return mergeKeyedByLww(fromLs, fromIdb, {
+      getKey: (r) => r.key,
+      getUpdatedAt: (r) => toUpdatedAtMs(r.reviewed_at),
+    });
   } catch {
     return fromLs;
   }
@@ -87,8 +92,15 @@ export async function listLocalReviews(userId: string): Promise<LocalFlashReview
 export async function listDueLocalReviews(userId: string, limit = 50): Promise<LocalFlashReview[]> {
   const now = Date.now();
   const all = await listLocalReviews(userId);
-  return all
-    .filter((r) => new Date(r.next_review_at).getTime() <= now)
+  // Yield during large deck scans so queue build never exceeds ~50ms long tasks
+  const flagged = await mapWithTimeBudget(
+    all,
+    (r) => ({ r, due: new Date(r.next_review_at).getTime() <= now }),
+    50,
+  );
+  return flagged
+    .filter((x) => x.due)
+    .map((x) => x.r)
     .sort((a, b) => a.next_review_at.localeCompare(b.next_review_at))
     .slice(0, limit);
 }

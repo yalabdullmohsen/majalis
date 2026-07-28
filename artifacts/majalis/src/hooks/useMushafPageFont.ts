@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { loadFontFaceSafe, waitForDocumentFonts } from "@/lib/font-ready";
 import { logDiagnostic } from "@/lib/diagnostics";
 import { createMountGuard } from "@/lib/route-abort";
+import { releaseFontFaces } from "@/lib/vector-memory-cleanup";
 
 /**
  * useMushafPageFont — يحمّل خط QPC V2 الخاص بصفحة واحدة (public/fonts/qpc-v2/pN.woff2)
@@ -42,6 +43,8 @@ async function ensurePageFontLoaded(page: number): Promise<void> {
       if (oldFace) {
         document.fonts.delete(oldFace);
         loadedFonts.delete(oldestPage);
+        // Part 18: explicit glyph memory release for evicted page fonts
+        releaseFontFaces([fontFamilyForPage(oldestPage)]);
       }
     }
   }

@@ -31,12 +31,17 @@ import {
   observeAudioThroughput,
 } from "@/lib/audio-buffer-policy";
 import { logDiagnostic } from "@/lib/diagnostics";
+import {
+  attachAudioTransitionController,
+  type AudioTransitionHandle,
+} from "@/lib/audio-crossfade";
 
 export type PlayerState = "idle" | "loading" | "playing" | "paused" | "error" | "buffering";
 
 export function useAyahPlayer(surahNum: number, totalAyahs: number) {
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const stallRef = useRef<StallRecoveryHandle | null>(null);
+  const xfadeRef = useRef<AudioTransitionHandle | null>(null);
   const pauseCleanupRef = useRef<(() => void) | null>(null);
   const delayTimerRef = useRef<number | null>(null);
   const mountedRef = useRef(true);
@@ -113,6 +118,9 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
     audio.playbackRate = playbackRateRef.current;
     audioRef.current = audio;
 
+    // Part 18: WebAudio gain graph for click-free ayah/reciter swaps
+    xfadeRef.current = attachAudioTransitionController(audio);
+
     const onPhase = (phase: StallRecoveryPhase) => {
       if (!mountedRef.current) return;
       if (phase === "buffering" || phase === "recovering") {
@@ -135,6 +143,8 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
       pauseCleanupRef.current = null;
       stallRef.current?.dispose();
       stallRef.current = null;
+      xfadeRef.current?.dispose();
+      xfadeRef.current = null;
       releaseAudioElement(audio);
       audioRef.current = null;
     };
@@ -154,7 +164,13 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
     applyAudioBufferPolicy(audio, policy);
 
     const t0 = performance.now();
-    audio.pause();
+    // Silent gain ramp BEFORE src swap — keeps play() sync with user-gesture (iOS)
+    xfadeRef.current?.silence();
+    try {
+      audio.pause();
+    } catch {
+      /* ignore */
+    }
     audio.src = getAyahAudioUrl(surah, ayah, reciter);
     audio.playbackRate = playbackRateRef.current;
     if (mountedRef.current) {
@@ -171,6 +187,7 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
 
     const onPlaying = () => {
       if (!mountedRef.current) return;
+      xfadeRef.current?.unsilence();
       const latency = performance.now() - t0;
       observeAudioLatency(latency);
       // Rough throughput sample from typical ayah size (~80KB) / latency
@@ -292,6 +309,7 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
     const audio = audioRef.current;
     if (!audio) return;
     stallRef.current?.reset();
+    xfadeRef.current?.silence();
     audio.pause();
     try {
       audio.removeAttribute("src");
@@ -300,6 +318,7 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
     } catch {
       /* ignore */
     }
+    xfadeRef.current?.unsilence();
     setCurrentAyah(null);
     setPlayerState("idle");
   }, [clearDelayTimer]);

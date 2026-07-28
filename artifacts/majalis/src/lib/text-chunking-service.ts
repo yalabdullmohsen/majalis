@@ -107,6 +107,32 @@ export function chunkText(text: string, opts?: ChunkingOptions): ContentChunk[] 
   return chunks;
 }
 
+/**
+ * Async chunking with main-thread yields for long Matn / tafseer bodies (Part 18).
+ * Short texts stay on the sync fast path.
+ */
+export async function chunkTextAsync(text: string, opts?: ChunkingOptions): Promise<ContentChunk[]> {
+  const raw = text.replace(/\r\n/g, "\n").trim();
+  if (raw.length < 4_000) return chunkText(text, opts);
+  const { yieldToMain } = await import("@/lib/yield-to-main");
+  await yieldToMain();
+  const mid = Math.floor(raw.length / 2);
+  // Split work across two yields so long tasks stay under ~50ms
+  const left = chunkText(raw.slice(0, mid), opts);
+  await yieldToMain();
+  const right = chunkText(raw.slice(mid), opts);
+  const merged = [
+    ...left,
+    ...right.map((c, i) => ({
+      ...c,
+      index: left.length + i,
+      startOffset: c.startOffset + mid,
+      endOffset: c.endOffset + mid,
+    })),
+  ];
+  return merged;
+}
+
 /** Chunk a list of ayahs/lines as separate units then pack into target-size groups. */
 export function chunkLines(lines: string[], opts?: ChunkingOptions): ContentChunk[] {
   const joined = lines.map((l) => l.trim()).filter(Boolean).join("\n");

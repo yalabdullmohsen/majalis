@@ -1,9 +1,12 @@
 /**
  * مفضّلات محلية للجهاز — بديل آمن دون حساب.
  * لا تُخزَّن بيانات حسّاسة؛ فقط نوع المحتوى والمعرّف والعنوان والمسار.
+ * Part 18: LWW merge + cross-tab broadcast so multi-device/tabs never clobber newer rows.
  */
 
 import { readLocalJson, writeLocalJson, isPlainObject } from "@/lib/safe-json";
+import { mergeKeyedByLww, toUpdatedAtMs } from "@/lib/lww-crdt-sync";
+import { broadcastBookmarkChanged, getCrossTabId } from "@/lib/cross-tab-sync";
 
 const STORAGE_KEY = "majalis-local-bookmarks-v1";
 const MAX_ITEMS = 80;
@@ -41,6 +44,27 @@ function readAll(): LocalBookmark[] {
 function writeAll(items: LocalBookmark[]) {
   if (typeof window === "undefined") return;
   writeLocalJson(STORAGE_KEY, items.slice(0, MAX_ITEMS));
+  try {
+    broadcastBookmarkChanged({
+      items: items.slice(0, MAX_ITEMS),
+      actorId: getCrossTabId(),
+      ts: Date.now(),
+    });
+  } catch {
+    /* ignore */
+  }
+}
+
+/** Merge remote bookmark list into local with LWW on savedAt (contentType+contentId key). */
+export function mergeLocalBookmarksLww(remote: LocalBookmark[]): LocalBookmark[] {
+  const local = readAll();
+  const merged = mergeKeyedByLww(local, remote, {
+    getKey: (b) => `${b.contentType}::${b.contentId}`,
+    getUpdatedAt: (b) => toUpdatedAtMs(b.savedAt),
+  });
+  merged.sort((a, b) => (a.savedAt < b.savedAt ? 1 : -1));
+  writeLocalJson(STORAGE_KEY, merged.slice(0, MAX_ITEMS));
+  return merged.slice(0, MAX_ITEMS);
 }
 
 export function listLocalBookmarks(): LocalBookmark[] {
@@ -87,5 +111,15 @@ export function removeLocalBookmark(contentType: string, contentId: string): voi
 
 export function clearLocalBookmarks(): void {
   if (typeof window === "undefined") return;
-  localStorage.removeItem(STORAGE_KEY);
+  writeLocalJson(STORAGE_KEY, []);
+  try {
+    localStorage.removeItem(STORAGE_KEY);
+  } catch {
+    /* ignore */
+  }
+  try {
+    broadcastBookmarkChanged({ items: [], actorId: getCrossTabId(), ts: Date.now() });
+  } catch {
+    /* ignore */
+  }
 }
