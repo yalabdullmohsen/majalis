@@ -634,6 +634,120 @@ html.dark .qe-abar {
   font-size: 0.88rem;
 }
 
+.qe-dash__h2-with-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.qe-reciter-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.qe-reciter-chip {
+  border: 1px solid color-mix(in srgb, var(--qe-emerald) 28%, transparent);
+  background: color-mix(in srgb, var(--qe-panel) 88%, transparent);
+  color: var(--qe-emerald);
+  border-radius: 999px;
+  padding: 0.4rem 0.75rem;
+  font: inherit;
+  font-size: 0.8rem;
+  cursor: pointer;
+  min-height: 2.35rem;
+  transition:
+    background-color 0.18s ease,
+    color 0.18s ease,
+    border-color 0.18s ease;
+}
+
+.qe-reciter-chip.is-on,
+.qe-reciter-chip[aria-selected="true"] {
+  background: var(--qe-emerald);
+  color: #f4faf7;
+  border-color: var(--qe-emerald);
+}
+
+.qe-dash__more-reciters {
+  margin-top: 0.7rem;
+  border: none;
+  background: transparent;
+  color: var(--qe-emerald);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.25rem 0;
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+}
+
+.qe-abar__reciter-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0 0 0.55rem;
+  border: 1px solid color-mix(in srgb, var(--qe-line) 70%, transparent);
+  background: color-mix(in srgb, var(--qe-emerald) 8%, transparent);
+  color: var(--qe-emerald);
+  border-radius: 0.65rem;
+  padding: 0.45rem 0.65rem;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.18s ease, border-color 0.18s ease;
+}
+
+.qe-abar__reciter-toggle.is-on {
+  border-color: color-mix(in srgb, var(--qe-emerald) 40%, transparent);
+}
+
+.qe-abar__reciter-toggle .is-open,
+.qe-abar__reciter-toggle svg.is-open {
+  transform: rotate(180deg);
+}
+
+.qe-abar__reciter-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0 0 0.65rem;
+  max-height: 8.5rem;
+  overflow: auto;
+  padding-bottom: 0.15rem;
+}
+
+.qe-abar__reciter-item {
+  border: 1px solid color-mix(in srgb, var(--qe-line) 65%, transparent);
+  background: color-mix(in srgb, var(--qe-panel) 90%, transparent);
+  color: var(--qe-ink);
+  border-radius: 999px;
+  padding: 0.3rem 0.65rem;
+  font: inherit;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.qe-abar__reciter-item.is-on {
+  background: var(--qe-emerald);
+  color: #f4faf7;
+  border-color: var(--qe-emerald);
+}
+
+.qe-abar__reciter-more {
+  border: none;
+  background: transparent;
+  color: var(--qe-emerald);
+  font: inherit;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.3rem 0.4rem;
+}
+
 @media (max-width: 480px) {
   .qe-abar {
     width: min(100% - 0.75rem, 28rem);
@@ -664,8 +778,9 @@ html.dark .qe-abar {
     padding-inline: 0.75rem;
   }
 
-  .qe-dash__theme span {
-    /* Keep icon+label readable; shorten on very narrow if needed via CSS */
+  .qe-reciter-chip {
+    font-size: 0.76rem;
+    padding: 0.35rem 0.65rem;
   }
 }
 
