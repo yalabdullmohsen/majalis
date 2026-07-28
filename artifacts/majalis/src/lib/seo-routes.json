@@ -2,7 +2,7 @@
   "$comment": "titleSuffix يُضاف برمجيًا من site.config.json — لا تكتب «| المجلس العلمي» داخل title. siteUrl/siteName/defaultImage مرآة لـ site.config.json (يحرسها scripts/test-seo.mjs).",
   "siteUrl": "https://majlisilm.com",
   "siteName": "المجلس العلمي",
-  "defaultImage": "/logo.png",
+  "defaultImage": "/opengraph.jpg",
   "defaultKeywords": [
     "المجلس العلمي",
     "دروس علمية",

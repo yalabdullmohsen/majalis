@@ -1,10 +1,8 @@
 /**
  * Web Push Notifications — frontend subscription logic.
  *
- * يتطلب تفعيل الإشعارات الحقيقية ضبط المتغيرات في Vercel:
- *   VITE_VAPID_PUBLIC_KEY  — المفتاح العام للـ VAPID
- *   VAPID_PRIVATE_KEY      — المفتاح الخاص (server-only)
- *   VAPID_EMAIL            — بريد المطوّر (مثل: mailto:admin@example.com)
+ * Client-only: uses the public VAPID key (`VITE_VAPID_PUBLIC_KEY`).
+ * Private VAPID material must stay on the server (never bundled here).
  */
 
 const VAPID_PUBLIC_KEY = import.meta.env.VITE_VAPID_PUBLIC_KEY as string | undefined;
@@ -65,6 +63,20 @@ export async function unsubscribeFromPush(): Promise<void> {
     const reg = await navigator.serviceWorker.ready;
     const sub = await reg.pushManager.getSubscription();
     if (sub) {
+      try {
+        const json = sub.toJSON();
+        await fetch("/api/push/subscribe", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          credentials: "include",
+          body: JSON.stringify({
+            endpoint: json.endpoint,
+            expirationTime: json.expirationTime ?? null,
+            keys: json.keys,
+            unsubscribe: true,
+          }),
+        });
+      } catch { /* ignore network */ }
       await sub.unsubscribe();
       localStorage.removeItem(PUSH_SUB_KEY);
     }
@@ -85,11 +97,16 @@ function savePushSub(sub: PushSubscription): void {
 
 async function sendSubToServer(sub: PushSubscription): Promise<void> {
   try {
+    const json = sub.toJSON();
     await fetch("/api/push/subscribe", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
-      body: JSON.stringify(sub),
+      body: JSON.stringify({
+        endpoint: json.endpoint,
+        expirationTime: json.expirationTime ?? null,
+        keys: json.keys,
+      }),
     });
   } catch { /* ignore — subscription is saved locally */ }
 }

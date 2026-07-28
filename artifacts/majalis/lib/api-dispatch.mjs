@@ -102,6 +102,12 @@ const clientErrorLogRateLimit = createRateLimiter({
   keyPrefix: "client-error-log",
 });
 
+const pushSubscribeRateLimit = createRateLimiter({
+  windowMs: 60_000,
+  max: 12,
+  keyPrefix: "push-subscribe",
+});
+
 // اختبار التسميع بالذكاء الاصطناعي — مقطع صوتي كل 2-4 ثوانٍ تقريبًا أثناء
 // الاستماع الفعلي؛ سقف سخي نسبيًا (يسمح بجلسة تسميع طويلة) لكن يمنع إساءة
 // استخدام واضحة (استدعاءات Groq مدفوعة خلف هذا المسار).
@@ -230,6 +236,7 @@ export const API_ROUTES = [
   { prefix: "/api/fiqh-research-assistant", module: "./api-handlers/fiqh-research-assistant.js", rateLimit: fiqhResearchRateLimit, allowGet: true },
   { prefix: "/api/assistant", module: "./api-handlers/assistant.js", rateLimit: assistantRateLimit, allowGet: true },
   { prefix: "/api/client-error-log", module: "./api-handlers/client-error-log.js", allowGet: true, rateLimit: clientErrorLogRateLimit },
+  { prefix: "/api/push/subscribe", module: "./api-handlers/push-subscribe.js", allowGet: true, exact: true, rateLimit: pushSubscribeRateLimit },
   { prefix: "/api/test-anthropic", module: "./api-handlers/test-anthropic.js", allowGet: true },
   { prefix: "/api/transcribe", module: "./api-handlers/transcribe.js", rateLimit: transcribeRateLimit },
   { prefix: "/api/recitation-transcribe", module: "./api-handlers/recitation-transcribe.js", rateLimit: recitationTranscribeRateLimit, allowGet: true, exact: true, corsPreflightOrigins: NATIVE_APP_ORIGINS },
