@@ -1,0 +1,16 @@
+-- TEMPLATE ONLY — DO NOT APPLY TO PRODUCTION WITHOUT APPROVAL + BACKUP + STAGING PROOF
+-- For each SECURITY DEFINER function that must not be callable by anon/authenticated/PUBLIC:
+--
+-- ALTER FUNCTION public.<fn>(...) SECURITY INVOKER;  -- when DEFINER not required
+-- ALTER FUNCTION public.<fn>(...) SET search_path = pg_catalog, public;
+-- REVOKE ALL ON FUNCTION public.<fn>(...) FROM PUBLIC;
+-- REVOKE ALL ON FUNCTION public.<fn>(...) FROM anon;
+-- REVOKE ALL ON FUNCTION public.<fn>(...) FROM authenticated;
+-- GRANT EXECUTE ON FUNCTION public.<fn>(...) TO service_role; -- only if needed
+--
+-- Verify:
+-- SELECT p.proname, has_function_privilege('anon', p.oid, 'EXECUTE') AS anon_exec,
+--        has_function_privilege('authenticated', p.oid, 'EXECUTE') AS auth_exec,
+--        has_function_privilege('public', p.oid, 'EXECUTE') AS public_exec
+-- FROM pg_proc p JOIN pg_namespace n ON n.oid = p.pronamespace
+-- WHERE n.nspname = 'public' AND p.prosecdef;
