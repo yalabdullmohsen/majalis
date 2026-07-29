@@ -1,64 +1,14 @@
-/* MoreBottomSheet — Design Tokens (light/dark explicit — يمنع نصًا أبيض على سطح أبيض) */
-.bottom-sheet{
-  background:var(--surfaceElevated,var(--surface,#F9F5ED))!important;
-  color:var(--textPrimary,var(--text,#1A1714))!important;
-  border-top:1px solid var(--border)!important;
-}
-.bottom-sheet__head{
-  color:var(--textPrimary,var(--text,#1A1714))!important;
-  border-bottom:1px solid var(--border)!important;
-}
+/* MoreBottomSheet — color tokens only (layout lives in index/final-release) */
+.bottom-sheet{background:var(--surfaceElevated,var(--surface))!important;color:var(--textPrimary,var(--text))!important;border-top:1px solid var(--border)!important}
+.bottom-sheet__head{color:inherit!important;border-bottom:1px solid var(--border)!important}
 .bottom-sheet__handle{background:var(--border-strong,var(--border))!important}
-.bottom-sheet__close-btn{
-  float:left;background:var(--surface,#F9F5ED);border:1px solid var(--border);
-  font-size:1.1rem;cursor:pointer;color:var(--iconPrimary,var(--text-brand,#226A56));
-  line-height:1;border-radius:var(--r-md);
-}
-.bottom-sheet__close-btn:hover{color:var(--text,#1A1714);background:var(--surface-2)}
-.bottom-sheet__body{padding:.75rem 1rem calc(2rem + var(--safe-bottom,0));overflow-y:auto}
-.bottom-sheet__section{margin-bottom:1.25rem}
-.bottom-sheet__section-label{
-  font-size:.7rem;font-weight:700;
-  color:var(--textMuted,var(--text-muted,#5C5C56));
-  margin-bottom:.5rem;text-transform:uppercase;
-}
-.more-sheet-item{
-  background:var(--cardBackground,var(--surface,#fff))!important;
-  border:1px solid var(--border)!important;
-  color:var(--textPrimary,var(--text,#1A1714))!important;
-}
+.bottom-sheet__close-btn{color:var(--iconPrimary,var(--text-brand))}
+.bottom-sheet__close-btn:hover{color:var(--text);background:var(--surface-2)}
+.bottom-sheet__section-label{color:var(--textMuted,var(--text-muted))}
+.more-sheet-item{background:var(--cardBackground,var(--surface))!important;border:1px solid var(--border)!important;color:var(--textPrimary,var(--text))!important}
 .more-sheet-item:hover{background:var(--selectedBackground,var(--surface-2))!important}
-.more-sheet-item--active{
-  background:var(--selectedBackground,var(--brand-soft))!important;
-  border-color:var(--brand)!important;
-  color:var(--selectedText,var(--text-brand-deep,#143F35))!important;
-}
-.more-sheet-item__icon{
-  background:var(--brand-soft,#EAF5EE)!important;
-  color:var(--iconPrimary,var(--text-brand,#226A56))!important;
-}
-.more-sheet-theme-toggle{
-  background:var(--surface-2)!important;
-  color:var(--text,#1A1714)!important;
-  border-color:var(--border)!important;
-}
-/* الوضع النهاري صراحةً — لا ترث ألوان الوضع الليلي إن بقي data-theme عالقًا جزئيًا */
-html:not([data-theme="dark"]) .bottom-sheet,
-html[data-theme="light"] .bottom-sheet{
-  background:var(--surface,#F9F5ED)!important;
-  color:var(--text,#1A1714)!important;
-}
-html:not([data-theme="dark"]) .more-sheet-item,
-html[data-theme="light"] .more-sheet-item{
-  background:var(--cardBackground,var(--surface,#fff))!important;
-  color:var(--text,#1A1714)!important;
-}
-html[data-theme="dark"] .bottom-sheet{
-  background:var(--surfaceElevated,var(--surface,#12211C))!important;
-  color:var(--text,#EDF2F0)!important;
-}
-html[data-theme="dark"] .more-sheet-item{
-  background:var(--cardBackground,var(--surface,#1A2E28))!important;
-  color:var(--text,#EDF2F0)!important;
-  border-color:var(--border)!important;
-}
+.more-sheet-item--active{background:var(--selectedBackground,var(--brand-soft))!important;border-color:var(--brand)!important;color:var(--selectedText,var(--text-brand-deep))!important}
+.more-sheet-item__icon{background:var(--brand-soft)!important;color:var(--iconPrimary,var(--text-brand))!important}
+.more-sheet-theme-toggle{background:var(--surface-2)!important;color:var(--text)!important;border-color:var(--border)!important}
+html:not([data-theme=dark]) .bottom-sheet,html:not([data-theme=dark]) .more-sheet-item{color:var(--text,#1A1714)!important}
+html[data-theme=dark] .bottom-sheet,html[data-theme=dark] .more-sheet-item{background:var(--surface,#12211C)!important;color:var(--text,#EDF2F0)!important}

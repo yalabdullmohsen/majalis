@@ -1,10 +1,9 @@
 /**
  * Native deep-link path resolver for Capacitor iOS/Android.
- * Supports:
- * - https://majlisilm.com/prayer-times?...
- * - majlisilm://prayer-times?...
- * - majlisilm:///prayer-times?...
+ * Supports trusted https hosts and majlisilm:// custom scheme only.
  */
+const TRUSTED_HTTPS_HOSTS = new Set(["majlisilm.com", "www.majlisilm.com"]);
+
 export function resolveNativeDeepLinkPath(url: string): string | null {
   // Reject traversal before URL normalization swallows ".."
   if (url.includes("..")) return null;
@@ -17,9 +16,11 @@ export function resolveNativeDeepLinkPath(url: string): string | null {
   }
 
   const scheme = parsed.protocol.replace(/:$/, "").toLowerCase();
-  let path = "";
+  let path: string;
 
   if (scheme === "http" || scheme === "https") {
+    const host = parsed.hostname.toLowerCase();
+    if (!TRUSTED_HTTPS_HOSTS.has(host)) return null;
     path = `${parsed.pathname || "/"}${parsed.search}${parsed.hash}`;
   } else if (scheme === "majlisilm") {
     // Custom scheme forms:
@@ -42,7 +43,6 @@ export function resolveNativeDeepLinkPath(url: string): string | null {
   }
 
   if (!path.startsWith("/")) path = `/${path}`;
-  // Block path traversal
   if (path.includes("..")) return null;
   return path;
 }

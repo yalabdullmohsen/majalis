@@ -22,19 +22,49 @@ function ok(cond, msg) {
 console.log("=== iOS Capacitor static gates ===\n");
 
 const plist = readFileSync(join(iosApp, "App", "Info.plist"), "utf8");
+ok(plist.includes("<key>CFBundleURLTypes</key>"), "CFBundleURLTypes present");
 ok(plist.includes("<string>majlisilm</string>"), "CFBundleURLSchemes includes majlisilm");
 ok(plist.includes("UIBackgroundModes"), "UIBackgroundModes declared");
 ok(plist.includes("<string>audio</string>"), "background audio mode");
-ok(plist.includes("NSAllowsArbitraryLoads") && /NSAllowsArbitraryLoads<\/key>\s*<false\/>/s.test(plist), "ATS NSAllowsArbitraryLoads=false");
+ok(
+  plist.includes("NSAllowsArbitraryLoads") && /NSAllowsArbitraryLoads<\/key>\s*<false\/>/s.test(plist),
+  "ATS NSAllowsArbitraryLoads=false",
+);
 
 const pbx = readFileSync(join(iosApp, "App.xcodeproj", "project.pbxproj"), "utf8");
-ok(pbx.includes("PrivacyInfo.xcprivacy in Resources"), "PrivacyInfo.xcprivacy in Resources build phase");
-ok(pbx.includes("MajlisPlaybackAudioPlugin.swift in Sources"), "MajlisPlaybackAudioPlugin in Sources");
-ok(/IPHONEOS_DEPLOYMENT_TARGET = 16\.2;/.test(pbx), "deployment target aligned to 16.2");
-ok(!/IPHONEOS_DEPLOYMENT_TARGET = 15\.0;/.test(pbx), "no leftover 15.0 deployment target on App project");
+const privacyBuildFiles = (pbx.match(/\/\* PrivacyInfo\.xcprivacy in Resources \*\/ = \{isa = PBXBuildFile/g) || []).length;
+ok(privacyBuildFiles === 1, `PrivacyInfo.xcprivacy PBXBuildFile exactly once (got ${privacyBuildFiles})`);
+const playbackBuildFiles = (pbx.match(/\/\* MajlisPlaybackAudioPlugin\.swift in Sources \*\/ = \{isa = PBXBuildFile/g) || []).length;
+ok(playbackBuildFiles === 1, `MajlisPlaybackAudioPlugin.swift PBXBuildFile exactly once (got ${playbackBuildFiles})`);
+ok(
+  /504EC3001FED79650016851F \/\* Sources \*\/ = \{[\s\S]*MajlisPlaybackAudioPlugin\.swift in Sources[\s\S]*?\};/.test(pbx),
+  "MajlisPlaybackAudioPlugin listed under App target Sources",
+);
+ok(
+  /504EC3021FED79650016851F \/\* Resources \*\/ = \{[\s\S]*PrivacyInfo\.xcprivacy in Resources[\s\S]*?\};/.test(pbx),
+  "PrivacyInfo listed under App target Resources",
+);
+
+const deployTargets = [...pbx.matchAll(/IPHONEOS_DEPLOYMENT_TARGET = ([0-9.]+);/g)].map((m) => m[1]);
+ok(deployTargets.length > 0, "deployment targets present");
+ok(
+  deployTargets.every((t) => t === "16.2"),
+  `all deployment targets are 16.2 (got ${[...new Set(deployTargets)].join(",")})`,
+);
 
 ok(existsSync(join(iosApp, "App", "PrivacyInfo.xcprivacy")), "PrivacyInfo.xcprivacy file exists");
 ok(existsSync(join(iosApp, "App", "MajlisPlaybackAudioPlugin.swift")), "MajlisPlaybackAudioPlugin.swift exists");
+
+const pluginSwift = readFileSync(join(iosApp, "App", "MajlisPlaybackAudioPlugin.swift"), "utf8");
+ok(pluginSwift.includes("CAPBridgedPlugin"), "plugin conforms to CAPBridgedPlugin");
+ok(pluginSwift.includes('jsName = "MajlisPlaybackAudio"'), "plugin jsName MajlisPlaybackAudio");
+ok(pluginSwift.includes("enablePlayback"), "enablePlayback method");
+ok(pluginSwift.includes("enableRecording"), "enableRecording method");
+ok(pluginSwift.includes("deactivate"), "deactivate method");
+ok(pluginSwift.includes("interruptionNotification"), "handles audio interruptions");
+ok(pluginSwift.includes("routeChangeNotification"), "handles route changes");
+ok(!/try\?/.test(pluginSwift), "plugin does not swallow errors with try?");
+ok(!/call\.resolve\(\[\]\)/.test(pluginSwift), "plugin does not resolve empty on failure");
 
 const live = readFileSync(
   join(iosApp, "PrayerLiveActivity", "PrayerLiveActivityLiveActivity.swift"),
@@ -47,11 +77,35 @@ ok(entitlements.includes("applinks:majlisilm.com"), "associated domains applinks
 
 const deepLink = readFileSync(join(root, "src", "lib", "native-deep-link.ts"), "utf8");
 ok(deepLink.includes("majlisilm"), "native-deep-link handles custom scheme");
+ok(deepLink.includes("TRUSTED_HTTPS_HOSTS"), "native-deep-link trusts only majlisilm hosts");
 
 const mainTsx = readFileSync(join(root, "src", "main.tsx"), "utf8");
 ok(mainTsx.includes("resolveNativeDeepLinkPath"), "main.tsx wires deep-link resolver");
+ok(
+  !/ensureNativePlaybackAudioSession\(\)/.test(mainTsx),
+  "main.tsx does not activate AVAudioSession at launch",
+);
 
-// Secret scan — iOS Swift + plist (no service role / private keys)
+const playbackTs = readFileSync(join(root, "src", "lib", "native-playback-audio.ts"), "utf8");
+ok(playbackTs.includes("ensureNativeRecordingAudioSession"), "JS bridge exposes recording mode");
+ok(playbackTs.includes("deactivateNativeAudioSession"), "JS bridge exposes deactivate");
+
+const audioEngine = readFileSync(join(root, "src", "core", "audio", "AudioEngine.ts"), "utf8");
+ok(audioEngine.includes("activatePlaybackSession"), "AudioEngine activates session before play");
+ok(audioEngine.includes("releasePlaybackSession"), "AudioEngine releases session on stop");
+
+// UUID sanity: PBX ids are 24 hex chars
+const idRe = /\b([0-9A-Fa-f]{24})\b/g;
+const ids = [...pbx.matchAll(idRe)].map((m) => m[1]);
+ok(ids.length > 20, "pbxproj contains 24-char hex IDs");
+
+// Stronger check: BuildFile IDs must be unique among BuildFile entries
+const buildFileIds = [...pbx.matchAll(/^\s+([0-9A-Fa-f]{24}) \/\*.* in (Sources|Resources) \*\/ = \{isa = PBXBuildFile/gm)].map(
+  (m) => m[1],
+);
+const bfSet = new Set(buildFileIds);
+ok(bfSet.size === buildFileIds.length, "no duplicate PBXBuildFile IDs");
+
 const secretPatterns = [
   /service_role/i,
   /BEGIN (RSA |EC )?PRIVATE KEY/,
@@ -81,6 +135,14 @@ ok(
   bundleIdMatches.every((id) => id === "com.yousef.majlisilm" || id.includes("PrayerLiveActivity")),
   "bundle identifiers unchanged (App + extension only)",
 );
+ok(
+  /DEVELOPMENT_TEAM = 5D8TX37HTS;/.test(pbx),
+  "DEVELOPMENT_TEAM unchanged",
+);
+
+// Capacitor auto-discovers CAPBridgedPlugin — AppDelegate must not manually register a conflicting name
+const appDelegate = readFileSync(join(iosApp, "App", "AppDelegate.swift"), "utf8");
+ok(!appDelegate.includes("MajlisPlaybackAudio"), "AppDelegate does not manually register playback plugin (CAPBridgedPlugin auto-discovery)");
 
 if (failed) {
   console.error(`\n${failed} gate(s) failed`);

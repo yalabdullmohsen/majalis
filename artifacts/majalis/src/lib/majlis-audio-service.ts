@@ -27,9 +27,6 @@ export class MajlisAudioService {
     if (!this.audio) {
       this.audio = new Audio();
       this.audio.preload = "auto";
-      void import("@/lib/native-playback-audio").then(({ ensureNativePlaybackAudioSession }) => {
-        void ensureNativePlaybackAudioSession();
-      });
       this.audio.addEventListener("playing", () => {
         this.playing = true;
         this.loading = false;
@@ -99,6 +96,12 @@ export class MajlisAudioService {
     try {
       if (el.src !== url) {
         el.src = url;
+      }
+      try {
+        const { ensureNativePlaybackAudioSession } = await import("@/lib/native-playback-audio");
+        await ensureNativePlaybackAudioSession();
+      } catch (sessionErr) {
+        console.warn("[MajlisAudioService] native playback session:", sessionErr);
       }
       await el.play();
       this.playing = true;

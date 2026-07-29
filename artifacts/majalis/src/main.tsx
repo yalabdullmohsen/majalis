@@ -120,10 +120,6 @@ if (isAndroid) {
  * تُصيَّر المسار بشكل صحيح خارج تحميل index.html الأول.
  */
 if (isNative) {
-  void import("@/lib/native-playback-audio").then(({ ensureNativePlaybackAudioSession }) => {
-    void ensureNativePlaybackAudioSession();
-  });
-
   import("@capacitor/app").then(({ App: CapApp }) => {
     CapApp.addListener("appUrlOpen", ({ url }) => {
       void import("@/lib/native-deep-link").then(({ resolveNativeDeepLinkPath, shouldNavigateNativeDeepLink }) => {

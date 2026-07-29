@@ -1,72 +1,97 @@
 # تدقيق استقرار iOS — المجلس العلمي (Capacitor)
 
 **الفرع:** `cursor/fix-ios-comprehensive-stability-audit-1f54`  
-**التاريخ:** 2026-07-29  
-**بيئة الوكيل:** Linux (بدون Xcode / Simulator) — بناء Archive/Debug/Release على الجهاز يتطلب macOS.
+**PR:** [#617](https://github.com/yalabdullmohsen/majalis/pull/617) (Draft — NO-AUTO-MERGE)  
+**آخر تحديث:** 2026-07-29  
+**بيئة الوكيل:** Linux (بدون Xcode / Simulator)
 
 ## 1. اكتشاف البنية
 
 | العنصر | النتيجة |
 |---|---|
-| نوع التطبيق | **Hybrid Capacitor 8** يغلّف مخرجات Vite (`webDir: dist`) داخل `WKWebView` عبر `CAPBridgeViewController` |
-| ليس | تطبيق SwiftUI أصلي منفصل للإنتاج |
-| مسار Xcode | `artifacts/majalis/ios/App/App.xcodeproj` |
-| Workspace / Pods | لا CocoaPods — Swift Package محلي `CapApp-SPM` |
+| نوع التطبيق | **Hybrid Capacitor 8.4.1** — Vite `webDir: dist` داخل WKWebView |
+| مشروع Xcode | `artifacts/majalis/ios/App/App.xcodeproj` |
+| Workspace الفعلي | `App.xcodeproj/project.xcworkspace` (داخلي لـ SPM؛ أوامر `xcodebuild` تستخدم **`-project App.xcodeproj`**) |
+| Scheme | **`App`** (target `App` + extension `PrayerLiveActivityExtension`) |
+| CocoaPods | لا — Swift Package `CapApp-SPM` |
 | Bundle ID | `com.yousef.majlisilm` (لم يُغيَّر) |
-| Extension | `PrayerLiveActivity` — Live Activities |
-| Plugins مخصصة | Speech، RecitationAudioCapture، PrayerLiveActivity، **MajlisPlaybackAudio** (جديد) |
-| نقطة الدخول | `AppDelegate` → Storyboard → Capacitor bridge → `src/main.tsx` |
-| بدائل موجودة (غير مسار TestFlight الحالي) | Expo `majalis-mobile`، Flutter تراثي |
+| Team | `5D8TX37HTS` (لم يُغيَّر) |
+| Deployment Target | **16.2** (App + Extension + Project متسقة) |
+| نقطة الدخول | `AppDelegate` → Storyboard → Capacitor → `src/main.tsx` |
 
-## 2. مشاكل حرجة / مرتفعة أُصلحت
+## 2. ما تم التحقق منه على Linux (نتائج فعلية)
 
-| # | الدرجة | المشكلة | الجذر | الإصلاح | دليل |
-|---|---|---|---|---|---|
-| 1 | حرج | روابط Live Activity `majlisilm://` لا تُفتح داخل التطبيق | لا `CFBundleURLTypes` + `appUrlOpen` يأخذ `pathname` فقط (فارغ للمخطط المخصص) | تسجيل مخطط `majlisilm` + `resolveNativeDeepLinkPath` + widgetURL → `https://majlisilm.com/prayer-times` | `test:ios-stability` + `test:ios-gates` |
-| 2 | مرتفع | `PrivacyInfo.xcprivacy` غير مضمّن في Resources | ملف موجود بلا FileRef/Build phase | إضافته إلى `project.pbxproj` | `test:ios-gates` |
-| 3 | مرتفع | تعارض Deployment Target 15.0 مقابل 16.2 للامتداد/SPM | إعدادات مشروع قديمة | توحيد App/Project على **16.2** | `test:ios-gates` |
-| 4 | مرتفع | صوت الخلفية معلن في plist بلا جلسة `.playback` | HTMLAudio في WKWebView يحتاج AVAudioSession | `MajlisPlaybackAudioPlugin` + استدعاء من AudioEngine/main | بوابة مصادر + مراجعة كود |
-| 5 | متوسط | شريط الصلاة يعرض «التالي» أثناء فترة ما بعد الأذان | HeaderTicker يتجاهل `sinceHms` | عرض «مضى على الأذان» + تكتّك تكيّفي | مراجعة `HeaderTicker` + وحدة prayer-ticker |
-| 6 | متوسط | مؤقت صلاة كل ثانية دائمًا | `setInterval(1000)` | 1s فقط في نافذة 15/35 دقيقة وإلا 30s + تحديث عند العودة من الخلفية | `usePrayerCountdown` |
-| 7 | متوسط | تباين إجابات الاختبارات في الوضع الليلي | `.sq-answer-label` بلا override داكن | ألوان دلالية في `section-quiz.css` | مراجعة CSS |
-| 8 | متوسط | قائمة «المزيد» قد تفقد تباين النص نهارًا | رموز/وراثة متضاربة | قواعد صريحة light/dark في `more-bottom-sheet.css` | مراجعة CSS |
-
-## 3. ما لم يُنفَّذ هنا (قيود البيئة)
-
-| البند | السبب | يمنع الدمج؟ |
+| الفحص | الأمر | النتيجة |
 |---|---|---|
-| `xcodebuild` Debug/Release/Archive | لا Xcode على Linux | **لا** — يُشغَّل على Mac قبل TestFlight |
-| UI Tests على Simulator | لا Simulator | لا — يُكمَل يدويًا / macOS CI لاحقًا |
-| Instruments (Leaks/Time Profiler) | يتطلب جهازًا | لا |
-| نشر TestFlight | ممنوع صراحة في المهمة | — |
-| دمج إلى main | ممنوع | — |
+| تثبيت | `pnpm install --frozen-lockfile` | نجح |
+| Typecheck | `pnpm --filter @workspace/majalis run typecheck` | نجح |
+| Lint | `pnpm --filter @workspace/majalis run lint` | نجح (0 errors) |
+| iOS static gates | `pnpm --filter @workspace/majalis run test:ios-gates` | نجح |
+| iOS unit tests | `pnpm --filter @workspace/majalis run test:ios-stability` | **35/35** نجح |
+| Build + CSS budget | `PORT=24216 BASE_PATH=/ pnpm --filter @workspace/majalis run build` | نجح |
+| حجم CSS الحرج | `index-*.css` | **503965 بايت** (حد 505000، هامش **1035** بايت ≥ 1KB) |
+| تحذير SectionAccordion sourcemap | بعد إزالة `"use client"` غير المستخدم في Vite | **اختفى** من سجل البناء |
 
-## 4. الأمن
+## 3. ما لم يُشغَّل (macOS مطلوب)
 
-- ATS: `NSAllowsArbitraryLoads=false`
-- لا Service Role في هدف العميل (بوابة مسح نصي)
-- الجلسة عبر Supabase JS `persistSession` / `autoRefreshToken` (localStorage داخل WebView — سلوك Capacitor القياسي؛ Keychain أصلي خارج نطاق هذا الـhybrid shell)
-- Privacy Manifest مضمّن في الحزمة الآن
+| الفحص | الحالة |
+|---|---|
+| `xcodebuild` Debug Simulator | **لم يُنفَّذ** — لا Xcode على Linux |
+| `xcodebuild` Release generic iOS | **لم يُنفَّذ** |
+| `xcodebuild archive` | **لم يُنفَّذ** |
+| UI Tests / Instruments | **لم يُنفَّذ** |
+| TestFlight | **لم يُنشر** (مقصود) |
 
-## 5. أوامر التحقق (Linux)
+> لا يُدّعى نجاح Debug/Release/Archive دون تشغيل `xcodebuild` فعلي على macOS.
 
-```bash
-pnpm --filter @workspace/majalis run test:ios-gates
-pnpm --filter @workspace/majalis run test:ios-stability
-pnpm --filter @workspace/majalis run typecheck
-```
+## 4. إصلاحات هذه الجولة (بعد #617 الأولي)
 
-## 6. أوامر التحقق (macOS — يدوي قبل TestFlight)
+1. **CSS:** تقليص تكرار more-sheet / final-release / section-quiz دون رفع الميزانية؛ الحفاظ على تباين نهاري/ليلي.
+2. **الصوت:** لا تفعيل `AVAudioSession` عند الإقلاع؛ تفعيل `.playback` فقط قبل `play()`؛ `enableRecording` قبل التعرف الصوتي؛ `deactivate` عند التوقف؛ observers للانقطاع وتغيّر المسار؛ بلا `try?`.
+3. **الروابط:** رفض hosts غير `majlisilm.com` / `www.majlisilm.com`.
+4. **بوابات/اختبارات:** تغطية scheme، universal link، رفض خارجي، PrivacyInfo، plugin، deployment، حالات شريط الصلاة (قبل 15 / آخر 15 / بعد أذان 35 / بعد 35 / منتصف الليل).
+5. **pbxproj:** مراجعة يدوية — UUID 24-hex، PrivacyInfo مرة واحدة في Resources، Plugin مرة واحدة في Sources لهدف App، Capacitor `CAPBridgedPlugin` اكتشاف تلقائي (لا تسجيل يدوي في AppDelegate).
+
+## 5. Required macOS verification before merge
+
+من مجلد المشروع:
 
 ```bash
 cd artifacts/majalis
 pnpm exec cap sync ios
 cd ios/App
-xcodebuild -list
-xcodebuild -scheme App -configuration Debug -destination 'platform=iOS Simulator,name=iPhone 16' build
-xcodebuild -scheme App -configuration Release -destination 'generic/platform=iOS' archive -archivePath /tmp/Majlis.xcarchive
+
+# Debug — Simulator
+xcodebuild \
+  -project App.xcodeproj \
+  -scheme App \
+  -configuration Debug \
+  -sdk iphonesimulator \
+  -destination 'platform=iOS Simulator,name=iPhone 17 Pro' \
+  clean build
+
+# Release — generic device
+xcodebuild \
+  -project App.xcodeproj \
+  -scheme App \
+  -configuration Release \
+  -destination 'generic/platform=iOS' \
+  clean build
+
+# Archive
+xcodebuild \
+  -project App.xcodeproj \
+  -scheme App \
+  -configuration Release \
+  -destination 'generic/platform=iOS' \
+  -archivePath build/Majalis.xcarchive \
+  archive
 ```
 
-## 7. Rollback
+ملاحظة: لا يوجد `.xcworkspace` منفصل خارج `App.xcodeproj`؛ الأوامر تستخدم `-project App.xcodeproj` و`-scheme App` كما في المشروع الفعلي.
 
-إعادة الفرع أو `git revert` لسلسلة commits الخاصة بـiOS على هذا الفرع فقط — لا يمس main حتى الدمج اليدوي عبر workflow النشر.
+## 6. السياسة
+
+- Draft PR — **لا Auto-merge** / **لا دمج إلى main** من هذه الجلسة  
+- عنوان PR يتضمن `NO-AUTO-MERGE`  
+- الدمج لاحقًا عبر مراجعة يدوية فقط

@@ -95,22 +95,13 @@
 
 /* dark mode */
 html[data-theme="dark"] .sq-section { background: #143F35; border-color: rgba(92,196,154,.25); }
-/* .sq-header يعتمد background: var(--ds-emerald) — هذا المتغير يتحوّل لأخضر
-   نعناعي فاتح (#3BAD8A) في الوضع الليلي (يتقاطع مع --msk-gold عبر سلسلة
-   الإرث)، فيُفشِل تباين النص الأبيض فوقه (2.4:1 فقط). تثبيت صريح بلون
-   زمردي داكن مطابق للوضع النهاري بدل الاعتماد على المتغير المتقاطع. */
 html[data-theme="dark"] .sq-header { background: #226A56 !important; }
 html[data-theme="dark"] .sq-card { background: #143F35; border-color: rgba(92,196,154,.15); color: #E8DED4; }
 html[data-theme="dark"] .sq-card--correct { background: #143F35; border-color: #22c55e; }
 html[data-theme="dark"] .sq-card--wrong   { background: #2e0d0d; border-color: #ef4444; }
 html[data-theme="dark"] .sq-question { color: #E8DED4; }
-/* تسمية «الإجابة:» كانت ترث الزمرد الداكن فوق خلفية داكنة → تباين ضعيف */
-html[data-theme="dark"] .sq-answer-label { color: #7DDBB0; }
+html[data-theme="dark"] .sq-answer-label,html[data-theme="dark"] .sq-summary-score { color: #7DDBB0; }
 html[data-theme="dark"] .sq-answer-text { color: #C8D8D0; }
 html[data-theme="dark"] .sq-hint { color: #8AA89E; }
-html[data-theme="dark"] .sq-summary-score { color: #7DDBB0; }
-html[data-theme="dark"] .sq-refresh-btn {
-  border-color: #7DDBB0;
-  color: #7DDBB0;
-}
+html[data-theme="dark"] .sq-refresh-btn { border-color: #7DDBB0; color: #7DDBB0; }
 

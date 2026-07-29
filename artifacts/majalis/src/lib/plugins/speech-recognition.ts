@@ -38,6 +38,31 @@ let cached: MajlisSpeechRecognitionPlugin | null = null;
 /** null على الويب أو خارج التطبيق الأصلي — مدعوم على iOS وأندرويد فقط. */
 export function getSpeechRecognitionPlugin(): MajlisSpeechRecognitionPlugin | null {
   if (!isNative || !(isIOS || isAndroid)) return null;
-  if (!cached) cached = registerPlugin<MajlisSpeechRecognitionPlugin>("MajlisSpeechRecognition");
+  if (!cached) {
+    const raw = registerPlugin<MajlisSpeechRecognitionPlugin>("MajlisSpeechRecognition");
+    cached = {
+      available: () => raw.available(),
+      requestPermissions: () => raw.requestPermissions(),
+      addListener: (eventName, listener) => raw.addListener(eventName, listener),
+      async start(options) {
+        if (isIOS) {
+          const { ensureNativeRecordingAudioSession } = await import("@/lib/native-playback-audio");
+          await ensureNativeRecordingAudioSession();
+        }
+        return raw.start(options);
+      },
+      async stop() {
+        await raw.stop();
+        if (isIOS) {
+          try {
+            const { deactivateNativeAudioSession } = await import("@/lib/native-playback-audio");
+            await deactivateNativeAudioSession();
+          } catch (err) {
+            console.warn("[speech-recognition] deactivate session:", err);
+          }
+        }
+      },
+    };
+  }
   return cached;
 }

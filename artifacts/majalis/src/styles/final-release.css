@@ -1539,8 +1539,6 @@ body {
   padding: 0.65rem 0.9rem;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md, var(--r-md));
-  background: var(--color-surface-muted);
-  color: var(--color-text);
   font-weight: 700;
   text-align: start;
 }
@@ -1551,8 +1549,6 @@ body {
 }
 .bottom-sheet {
   border-radius: var(--r-2xl, 2rem) var(--r-2xl, 2rem) 0 0;
-  background: var(--color-surface);
-  color: var(--color-text);
   box-shadow: var(--shadow-soft);
 }
 .bottom-sheet__head {
@@ -1562,16 +1558,12 @@ body {
   gap: 0.75rem;
   min-height: 48px;
   padding-inline: 1rem;
-  color: var(--color-text);
   font-weight: 800;
 }
 .bottom-sheet__close-btn {
   min-width: 44px;
   min-height: 44px;
   border-radius: var(--radius-md, var(--r-md));
-  border: 1px solid var(--color-border);
-  background: var(--color-surface);
-  color: var(--color-primary);
 }
 .content-hub-chip,
 .ds-chip {
