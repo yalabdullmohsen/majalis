@@ -29,7 +29,7 @@ const PERIODS: Record<string, SunnahPeriod> = {
     suggestions: [
       { label: "صلاة الضحى", href: "/adhkar?cat=salah" },
       { label: "قراءة القرآن", href: "/quran-hub" },
-      { label: "الأسئلة والأجوبة", href: "/qa" },
+      { label: "لعبة سين جيم", href: "/quiz" },
       { label: "دروس الأسبوع", href: "/lessons" },
     ],
   },

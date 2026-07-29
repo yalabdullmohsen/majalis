@@ -1168,8 +1168,16 @@ export async function getQuizQuestions({ section, level }: { section?: string; l
   const localUsedIds = getLocalUsedQuizIds();
 
   const filterSeed = async () => {
-    const { DEMO_QUIZ_QUESTIONS } = await loadSeedData();
-    let rows = DEMO_QUIZ_QUESTIONS.filter(
+    const { DEMO_QUIZ_QUESTIONS, QA_AS_QUIZ_QUESTIONS } = await loadSeedData();
+    const seen = new Set<string>();
+    const combined: any[] = [];
+    for (const q of [...DEMO_QUIZ_QUESTIONS, ...(QA_AS_QUIZ_QUESTIONS || [])]) {
+      const key = String(q.question || "").trim().toLowerCase();
+      if (!key || seen.has(key)) continue;
+      seen.add(key);
+      combined.push(q);
+    }
+    let rows = combined.filter(
       (q: any) => q.status !== "draft" && !localUsedIds.has(q.id ?? ""),
     );
     if (section && section !== "الكل") rows = rows.filter((q: any) => q.section === section);

@@ -12,7 +12,7 @@ export function buildRulingRelations(ruling: ShariaRulingExtended): RulingRelati
         type: "qa",
         id: qa.id,
         title: qa.question,
-        href: `/qa#${qa.id}`,
+        href: `/quiz`,
         meta: qa.qa_categories?.name,
       });
     }
@@ -46,9 +46,9 @@ export function buildRulingRelations(ruling: ShariaRulingExtended): RulingRelati
     links.push({
       type: "qa",
       id: "search",
-      title: `أسئلة في ${kw}`,
-      href: `/qa?search=${encodeURIComponent(kw)}`,
-      meta: "بحث",
+      title: `أسئلة تعليمية في ${kw}`,
+      href: `/quiz`,
+      meta: "سين جيم",
     });
     links.push({
       type: "lesson",

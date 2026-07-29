@@ -116,11 +116,6 @@
     <priority>0.82</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/qa</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
     <loc>https://majlisilm.com/quiz</loc>
     <changefreq>weekly</changefreq>
     <priority>0.78</priority>

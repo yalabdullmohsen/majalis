@@ -122,9 +122,13 @@ function routeForPath(path: string) {
   }
 
   if (normalized.startsWith("/library/")) {
+    const slug = decodeURIComponent(normalized.slice("/library/".length)).trim();
+    const bookLabel = slug
+      ? slug.replace(/^book-/, "").replace(/-/g, " ")
+      : "كتاب";
     return {
       ...requiredRoute("/library"),
-      title: "كتاب شرعي | المجلس العلمي",
+      title: `${bookLabel} | المكتبة العلمية، المجلس العلمي`,
       description: "تفاصيل الكتاب — المؤلف، التصنيف، ملخص المحتوى، وروابط التحميل.",
       ogType: "book",
     };

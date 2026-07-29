@@ -151,7 +151,7 @@ export function buildSearchSuggestions(query: string, limit = 12): SearchSuggest
       id: item.id,
       label: item.question.slice(0, 72) + (item.question.length > 72 ? "…" : ""),
       meta: item.qa_categories?.name,
-      href: `/qa?q=${encodeURIComponent(q)}`,
+      href: "/quiz",
       group: "qa",
     });
     if (results.filter((r) => r.group === "qa").length >= MAX_PER_GROUP) break;

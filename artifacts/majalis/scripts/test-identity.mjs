@@ -60,6 +60,11 @@ for await (const file of walk(resolve(appRoot, "src"))) {
         failures.push(`${at} — بريد شخصي/خارجي: @${domain}`);
       }
     }
+    for (const badEmail of config.forbiddenEmails || []) {
+      if (line.toLowerCase().includes(String(badEmail).toLowerCase())) {
+        failures.push(`${at} — بريد ممنوع: ${badEmail}`);
+      }
+    }
 
     // ٢) اسم تجاري قديم — مع استثناء المعنى اللغوي في بذور المحتوى الديني
     for (const bad of config.forbiddenBrandNames) {

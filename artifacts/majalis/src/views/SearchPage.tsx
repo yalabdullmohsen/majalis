@@ -641,8 +641,8 @@ export default function SearchPage() {
                       meta={[book.author || book.author_name, book.category].filter(Boolean).join(" · ")}
                     />
                   )} />
-                  <Group title="الأسئلة والأجوبة" items={results.qa} render={(x) => (
-                    <ResultRow key={x.id} href={`/qa?id=${encodeURIComponent(x.id)}`} kind="qa" query={q} title={displayText(x.question)} meta={x.qa_categories?.name} />
+                  <Group title="أسئلة تعليمية (سين جيم)" items={results.qa} render={(x) => (
+                    <ResultRow key={x.id} href="/quiz" kind="qa" query={q} title={displayText(x.question)} meta={x.qa_categories?.name} />
                   )} />
                   <Group title="الأذكار" id="adhkar" items={results.adhkar} render={(a) => (
                     <ResultRow

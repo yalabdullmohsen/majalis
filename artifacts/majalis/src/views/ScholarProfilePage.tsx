@@ -10,6 +10,8 @@ import { KnowledgeRelatedItems } from "@/components/knowledge/KnowledgeRelatedIt
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import { resolveScholarWorkLink } from "@/lib/scholar-library-links";
 import { PAGE_EXPLORE_LINKS } from "@/lib/explore-links";
+import { extractShortSummary, pickUniqueSummaryAndBio } from "@/lib/content-dedupe";
+import { SITE_URL } from "@/lib/site-config";
 import "@/styles/pages/scholars.css";
 
 // ── تحويل أرقام عربية-هندية إلى رقم ─────────────────────────────────────
@@ -161,7 +163,9 @@ export default function ScholarProfilePage() {
       });
       return;
     }
-    const metaDesc = scholar.bio.length > 155 ? scholar.bio.slice(0, 152).replace(/\s+\S*$/, "") + "…" : scholar.bio;
+    const short = extractShortSummary(scholar.bio, 155);
+    const { summary, biography } = pickUniqueSummaryAndBio(short, scholar.bio);
+    const metaDesc = summary || (biography.length > 155 ? biography.slice(0, 152).replace(/\s+\S*$/, "") + "…" : biography);
     applyPageSeo({
       path: `/scholars/${scholar.id}`,
       title: `${scholar.name} — سيرة العالم | المجلس العلمي`,
@@ -172,9 +176,9 @@ export default function ScholarProfilePage() {
         "@type": "Person",
         name: scholar.fullName,
         alternateName: scholar.name,
-        description: scholar.bio,
+        description: metaDesc,
         knowsAbout: scholar.specialty,
-        url: `https://www.majlisilm.com/scholars/${scholar.id}`,
+        url: `${SITE_URL}/scholars/${scholar.id}`,
       }],
     });
   }, [scholar, id]);
@@ -194,6 +198,10 @@ export default function ScholarProfilePage() {
   const idx = SCHOLARS.findIndex(s => s.id === scholar.id);
   const prev = idx > 0 ? SCHOLARS[idx - 1] : null;
   const next = idx < SCHOLARS.length - 1 ? SCHOLARS[idx + 1] : null;
+  const { summary: displaySummary, biography: displayBio } = pickUniqueSummaryAndBio(
+    extractShortSummary(scholar.bio, 140),
+    scholar.bio,
+  );
 
   return (
     <div className="page-shell">
@@ -236,10 +244,13 @@ export default function ScholarProfilePage() {
         </p>
       </div>
 
-      {/* Bio */}
+      {/* Bio — ملخص قصير فقط إن اختلف عن النبذة؛ وإلا نبذة واحدة بلا تكرار */}
       <section className="sch-profile-section" aria-labelledby="bio-heading">
         <h2 id="bio-heading" className="sch-profile-section__title">نبذة تعريفية</h2>
-        <p className="sch-profile-bio">{scholar.bio}</p>
+        {displaySummary && displaySummary !== displayBio ? (
+          <p className="sch-profile-bio sch-profile-bio--summary">{displaySummary}</p>
+        ) : null}
+        <p className="sch-profile-bio">{displayBio || scholar.bio}</p>
       </section>
 
       {/* Quote */}

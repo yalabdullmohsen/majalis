@@ -224,7 +224,17 @@
     },
     {
       "source": "/scholarly-research",
-      "destination": "/qa",
+      "destination": "/quiz",
+      "permanent": true
+    },
+    {
+      "source": "/qa",
+      "destination": "/quiz",
+      "permanent": true
+    },
+    {
+      "source": "/qa/:path*",
+      "destination": "/quiz",
       "permanent": true
     },
     {
@@ -554,10 +564,6 @@
       "destination": "/index.html"
     },
     {
-      "source": "/quran/:path*",
-      "destination": "/index.html"
-    },
-    {
       "source": "/nations/:path*",
       "destination": "/index.html"
     },
@@ -664,6 +670,37 @@
         {
           "key": "Cache-Control",
           "value": "no-cache, no-store, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/quran/recitation-test-ai",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "index, follow"
+        }
+      ]
+    },
+    {
+      "source": "/quran/recitation-test-ai/",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/quran/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
         }
       ]
     },

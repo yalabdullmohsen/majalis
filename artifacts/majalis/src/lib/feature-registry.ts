@@ -38,7 +38,7 @@ export const FEATURE_REGISTRY: FeatureEntry[] = [
   { id: "arbaeen",      label: "الأربعون النووية",   path: "/arbaeen-nawawi",group:"حديث",          status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "daily-wird",   label: "الورد اليومي",       path: "/daily-wird",   group: "عبادات",        status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "tasbih",       label: "التسبيح",            path: "/tasbih",       group: "عبادات",        status: "active",       inSideNav: true,  inBottomNav: false },
-  { id: "qa",           label: "الأسئلة والأجوبة",  path: "/qa",           group: "تعليم",         status: "active",       inSideNav: false, inBottomNav: false },
+  { id: "qa",           label: "لعبة سين جيم",      path: "/quiz",         group: "تعليم",         status: "active",       inSideNav: false, inBottomNav: false },
   { id: "quiz",         label: "لعبة سين جيم – أسئلة وأجوبة", path: "/quiz",   group: "تفاعلي",        status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "stories",      label: "القصص الإسلامية",   path: "/stories",      group: "قصص",           status: "active",       inSideNav: false, inBottomNav: false },
   { id: "prophets",     label: "قصص الأنبياء",      path: "/prophets",     group: "قصص",           status: "active",       inSideNav: true,  inBottomNav: false },

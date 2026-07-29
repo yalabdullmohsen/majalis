@@ -180,18 +180,24 @@ export default function FiqhCouncilIssueDetailPage({ params }: { params: { slug:
         {/* ── محل الاتفاق ومحل الخلاف والأقوال — سياسة التحرير العلمي
             للمسائل الخلافية. لا تُملأ آليًا؛ فارغة حتى تُراجَع المسألة
             علميًا بهذا التفصيل، وتُعرض كذلك صراحة بدل الإخفاء. ── */}
-        {(issue.area_of_agreement || issue.area_of_disagreement || (issue.opinions && issue.opinions.length > 0)) ? (
+        {(issue.area_of_agreement || issue.area_of_disagreement || (issue.opinions && issue.opinions.length > 0) || issue.question_framing || issue.disagreement_cause || issue.sources_note) ? (
           <section className="content-detail-evidence ui-card fiqh-comparative-section">
-            <h2>محل الاتفاق والخلاف</h2>
+            <h2>بنية المسألة الخلافية</h2>
+            {issue.question_framing && (
+              <p><strong>تصوير المسألة:</strong> {issue.question_framing}</p>
+            )}
             {issue.area_of_agreement && (
               <p><strong>محل الاتفاق:</strong> {issue.area_of_agreement}</p>
             )}
             {issue.area_of_disagreement && (
               <p><strong>محل الخلاف:</strong> {issue.area_of_disagreement}</p>
             )}
+            {issue.disagreement_cause && (
+              <p><strong>سبب الخلاف:</strong> {issue.disagreement_cause}</p>
+            )}
             {issue.opinions && issue.opinions.length > 0 && (
               <div className="fiqh-opinions-list">
-                <h3>أشهر الأقوال</h3>
+                <h3>الأقوال المعتبرة وأصحابها وأدلتها</h3>
                 <ul>
                   {issue.opinions.map((op, i) => (
                     <li key={i}>
@@ -204,8 +210,17 @@ export default function FiqhCouncilIssueDetailPage({ params }: { params: { slug:
             )}
             {issue.adopted_opinion && (
               <p className="fiqh-adopted-opinion">
-                <strong>القول المعتمد في المنصة:</strong> {issue.adopted_opinion}
+                <strong>الترجيح المعتمد في المنصة:</strong> {issue.adopted_opinion}
                 {issue.adopted_reason && <span> — {issue.adopted_reason}</span>}
+              </p>
+            )}
+            {issue.sources_note && (
+              <p><strong>المصادر:</strong> {issue.sources_note}</p>
+            )}
+            {(issue.reviewed_by || issue.last_reviewed_at) && (
+              <p>
+                {issue.reviewed_by ? <><strong>جهة/اسم المراجعة:</strong> {issue.reviewed_by} </> : null}
+                {issue.last_reviewed_at ? <><strong>آخر مراجعة:</strong> {issue.last_reviewed_at}</> : null}
               </p>
             )}
             {issue.context_disclaimer && (
@@ -214,8 +229,8 @@ export default function FiqhCouncilIssueDetailPage({ params }: { params: { slug:
           </section>
         ) : issue.documentation_level === "official_verified" ? (
           <p className="fiqh-comparative-pending">
-            لم تُراجَع هذه المسألة بعد بتفصيل محل الاتفاق والخلاف وتعدد الأقوال —
-            الخلاصة أعلاه هي الحد الأدنى الموثَّق حاليًا.
+            لم تُراجَع هذه المسألة بعد بتفصيل تصوير المسألة ومحل الاتفاق والخلاف وتعدد الأقوال والأدلة —
+            الخلاصة أعلاه هي الحد الأدنى الموثَّق حاليًا، دون توليد أقوال أو أدلة آلية.
           </p>
         ) : null}
 

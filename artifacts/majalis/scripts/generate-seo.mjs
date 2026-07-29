@@ -412,6 +412,36 @@ const HEAD_ASSETS = `<link rel="icon" type="image/svg+xml" href="/favicon.svg" /
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />`;
 
+function normalizeForCompare(text) {
+  return String(text || "")
+    .replace(/[ً-ْٰـ]/g, "")
+    .replace(/[أإآٱ]/g, "ا")
+    .replace(/ة/g, "ه")
+    .replace(/ى/g, "ي")
+    .replace(/[«»""'’()،,.\-–—:؛]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
+}
+
+function stripTags(html) {
+  return String(html || "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+}
+
+/** لا تكرّر فقرة الوصف إن كان richBody يحتوي نفس النص أو بدايته الطويلة. */
+function leadParagraph(description, richBody) {
+  const desc = String(description || "").trim();
+  if (!desc) return richBody || "";
+  if (!richBody) return `<p>${escapeHtml(desc)}</p>`;
+  const nDesc = normalizeForCompare(desc);
+  const nBody = normalizeForCompare(stripTags(richBody));
+  const prefix = nDesc.slice(0, Math.min(80, nDesc.length));
+  if (prefix.length >= 40 && nBody.includes(prefix)) {
+    return richBody;
+  }
+  return `<p>${escapeHtml(desc)}</p>\n${richBody}`;
+}
+
 function prerenderHtml(route, extraJsonLd = "", richBody = "", parents = []) {
   const canonical = absoluteUrl(route.path);
   const image = absoluteUrl(route.image || DEFAULT_IMAGE);
@@ -420,6 +450,7 @@ function prerenderHtml(route, extraJsonLd = "", richBody = "", parents = []) {
   const ogType = route.ogType || "website";
   const title = pageTitle(route);
   const h1 = String(route.title || "").split(" | ")[0];
+  const bodyLead = leadParagraph(route.description, richBody);
 
   return `<!DOCTYPE html>
 <html lang="ar" dir="rtl">
@@ -480,8 +511,7 @@ function prerenderHtml(route, extraJsonLd = "", richBody = "", parents = []) {
     <main>
       <article>
         <h1>${escapeHtml(h1)}</h1>
-        <p>${escapeHtml(route.description)}</p>
-        ${richBody}
+        ${bodyLead}
         <nav aria-label="التنقل">
           <a href="${escapeHtml(SITE_URL)}">الرئيسية</a>
           ${route.path !== "/" ? `<a href="${escapeHtml(canonical)}">${escapeHtml(h1)}</a>` : ""}
@@ -577,8 +607,8 @@ const LIST_JSON_LD = {
     "قرارات المجمع الفقهي",
   ),
   "/qa": itemListJsonLdScript(
-    (PLATFORM_SEED.qa_items || []).map((r) => ({ name: r.question, url: `/qa#${r.id}` })),
-    "الأسئلة والأجوبة الشرعية",
+    [{ name: "لعبة سين جيم – أسئلة تعليمية", url: "/quiz" }],
+    "أسئلة تعليمية داخل لعبة سين جيم",
   ),
   "/rulings": itemListJsonLdScript((PLATFORM_SEED.rulings || []).map((r) => ({ name: r.title, url: `/rulings/${r.id}` })), "الأحكام الشرعية"),
   "/lessons": itemListJsonLdScript(lessonRows.slice(0, 30).map((r) => ({ name: r.title, url: `/lessons/${r.id}` })), "الدروس الشرعية"),
@@ -635,10 +665,7 @@ ${linkList("روابط ذات صلة", [
     "من علماء المسلمين",
     SCHOLARS.slice(0, 30).map((s) => ({ name: s.name, url: `/scholars/${s.id}`, note: s.died })),
   ),
-  "/qa": linkList(
-    "أسئلة وأجوبة شرعية",
-    (PLATFORM_SEED.qa_items || []).slice(0, 12).map((q) => ({ name: q.question, url: `/qa#${q.id}` })),
-  ),
+  "/qa": `<p>أُدمجت الأسئلة التعليمية في لعبة سين جيم. يُعاد توجيه هذا المسار إلى /quiz.</p>${linkList("الوجهة", [{ name: "لعبة سين جيم", url: "/quiz" }])}`,
   "/prophets": linkList(
     "قصص الأنبياء",
     PROPHETS.map((p) => ({ name: `نبي الله ${p.arabicName} عليه السلام`, url: `/prophets/${p.slug}` })),
@@ -656,6 +683,29 @@ ${linkList(
     SURAH_STORIES.slice(0, 30).map((s) => ({ name: `سورة ${s.name}`, url: `/quran/surah-stories/${s.number}` })),
   ),
   "/sins-and-rights": linkList("موضوعات الذنوب والحقوق", SINS_TOPICS.map((t) => ({ name: t.title, url: `/sins-and-rights/${t.slug}` }))),
+  "/quran/recitation-test-ai": `<p>ميزة اختيارية لاختبار التسميع والحفظ بالتعرّف الصوتي، مع تقرير تفصيلي وكشف تدريجي في المصحف.</p>
+<h2>خطوات الاستخدام</h2>
+<ol>
+  <li>افتح الصفحة واقرأ شاشة الموافقة والخصوصية.</li>
+  <li>اختر السورة أو نطاق الآيات ووضع التسميع المناسب.</li>
+  <li>اضغط البدء وامنح إذن الميكروفون من نافذة النظام عند الطلب.</li>
+  <li>اتلُ بصوت واضح؛ راقب المؤشر والكلمات، ثم راجع التقرير في نهاية الجلسة.</li>
+</ol>
+<h2>إذن الميكروفون</h2>
+<p>لا يعمل التسجيل دون إذن صريح منك في المتصفح أو نظام التشغيل. يمكنك رفض الإذن أو سحبه لاحقًا من إعدادات الجهاز؛ عند الرفض تُعطَّل الميزة دون التأثير على بقية المنصة.</p>
+<h2>أين تُعالَج التلاوة؟</h2>
+<ul>
+  <li>يُفضَّل التعرّف على الجهاز عند توفره.</li>
+  <li>إن لزم الأمر، تُرسل مقاطع صوتية قصيرة عبر اتصال مشفّر (HTTPS) إلى مسار الخادم <code>/api/recitation-transcribe</code> (محرّك Whisper عبر مزوّد Groq) للتحويل إلى نص، ثم تُقارن بالنص القرآني محليًا.</li>
+  <li>لا يُحفظ التسجيل الصوتي على خوادم المجلس افتراضيًا؛ تقارير الجلسة النصية قد تُحفظ لحسابك إن سجّلت الدخول لأغراض المراجعة.</li>
+</ul>
+<p>راجع <a href="${absoluteUrl("/privacy")}">سياسة الخصوصية</a> و<a href="${absoluteUrl("/account-deletion")}">حذف الحساب والبيانات</a>.</p>
+${linkList("روابط ذات صلة", [
+  { name: "مركز القرآن", url: "/quran-hub" },
+  { name: "المصحف الرقمي", url: "/mushaf" },
+  { name: "خطط الحفظ", url: "/quran/memorization-plans" },
+  { name: "سياسة الخصوصية", url: "/privacy" },
+])}`,
   "/fiqh-council/issues": linkList(
     "المسائل الفقهية المعاصرة",
     PUBLIC_FIQH_ISSUES.slice(0, 25).map((i) => ({ name: i.title, url: `/fiqh-council/issues/${i.slug}` })),
@@ -668,7 +718,7 @@ ${linkList("أقسام الفقه", [
   { name: "النوازل المعاصرة", url: "/fiqh-council/nawazil" },
   { name: "القواعد الفقهية", url: "/fiqh-qawaid" },
   { name: "المذاهب الأربعة", url: "/madhahib" },
-  { name: "الأسئلة والأجوبة", url: "/qa" },
+  { name: "لعبة سين جيم", url: "/quiz" },
   { name: "الطهارة", url: "/tahara" },
   { name: "دليل الصلاة", url: "/salah-guide" },
   { name: "الزكاة", url: "/zakat" },
@@ -721,7 +771,7 @@ ${linkList("أقسام ذات صلة", [
   { name: "المسائل الفقهية", url: "/fiqh-council/issues" },
   { name: "القواعد الفقهية", url: "/fiqh-qawaid" },
   { name: "المذاهب الأربعة", url: "/madhahib" },
-  { name: "الأسئلة والأجوبة", url: "/qa" },
+  { name: "لعبة سين جيم", url: "/quiz" },
   { name: "الطهارة", url: "/tahara" },
   { name: "دليل الصلاة", url: "/salah-guide" },
   { name: "الزكاة", url: "/zakat" },
@@ -1229,32 +1279,30 @@ ${linkList("روابط ذات صلة", [
   { name: "منهجيتنا", url: "/methodology" },
   { name: "سياسة الخصوصية", url: "/privacy" },
   { name: "شروط الاستخدام", url: "/terms" },
-  { name: "الأسئلة والأجوبة", url: "/qa" },
+  { name: "لعبة سين جيم", url: "/quiz" },
 ])}`,
-  "/privacy": `<p>سياسة الخصوصية لمنصة المجلس العلمي توضّح ما نجمعه من بيانات، وكيف نستخدمها، وما لا نجمعه، وحقوقك في الاطلاع والتصحيح والحذف.</p>
-<h2>البيانات التي نجمعها</h2>
+  "/privacy": `<p>سياسة الخصوصية لمنصة المجلس العلمي توضّح ما نجمعه من بيانات، وكيف نستخدمها، وما لا نجمعه، وحقوقك في الاطلاع والتصحيح والحذف. البريد الرسمي: Majlisilm.app@gmail.com. تاريخ آخر تحديث: 29 يوليو 2026.</p>
+<h2>الحسابات والبريد</h2>
 <ul>
-  <li><strong>بيانات الحساب:</strong> الاسم والبريد عند التسجيل لتفعيل الحساب والتواصل الضروري.</li>
-  <li><strong>سجل الاستخدام:</strong> الصفحات التي تطّلع عليها؛ إن سجّلت الدخول يُربَط بحسابك لحفظ التقدّم، ويُحذف عند حذف الحساب.</li>
-  <li><strong>تفضيلات محلية:</strong> الوضع الليلي وحجم الخط على جهازك.</li>
+  <li>الاسم والبريد عند التسجيل عبر Supabase Auth لتفعيل الحساب.</li>
+  <li>البريد الرسمي الوحيد: Majlisilm.app@gmail.com.</li>
 </ul>
-<h2>اختبار التلاوة (الميكروفون)</h2>
+<h2>الموقع ومواقيت الصلاة والإشعارات</h2>
 <ul>
-  <li>الميزة اختيارية ولا تعمل إلا بموافقتك في إذن النظام.</li>
-  <li>يُحوَّل الصوت إلى نص عبر محرّك التعرّف في نظام جهازك؛ قد تُعالَج المقاطع على خوادم النظام عند غياب تعرّف عربي كامل على الجهاز.</li>
-  <li><strong>لا يُرفَع صوتك إلى خوادم مجالس ولا يُخزَّن هناك مطلقًا</strong> — المقارنة تتم على جهازك.</li>
-  <li>يمكنك سحب إذن الميكروفون من إعدادات الجهاز في أي وقت.</li>
+  <li>الموقع التقريبي لحساب المواقيت والقبلة فقط؛ يمكن الإدخال اليدوي.</li>
+  <li>الإشعارات لتنبيهات الصلاة أو الحساب — بلا تسويق.</li>
 </ul>
-<h2>الموقع الجغرافي والإشعارات</h2>
+<h2>الميكروفون واختبار التلاوة</h2>
 <ul>
-  <li>الموقع يُستخدم فقط لحساب مواقيت الصلاة والقبلة، ولا يُخزَّن على خوادمنا.</li>
-  <li>الإشعارات لتنبيهات الصلاة أو الدروس فقط — بلا إعلانات.</li>
+  <li>الميزة اختيارية وتتطلب إذن الميكروفون الصريح.</li>
+  <li>قد تُعالَج المقاطع على الجهاز أو تُرسل عبر HTTPS إلى /api/recitation-transcribe (Whisper عبر Groq) ثم تُقارن محليًا بالنص القرآني.</li>
+  <li>لا يُحفظ التسجيل الصوتي الخام على خوادم المجلس افتراضيًا؛ تقارير الجلسة النصية قد تُحفظ للحساب.</li>
+  <li>راجع <a href="https://majlisilm.com/account-deletion">حذف الحساب</a>.</li>
 </ul>
-<h2>مدة الاحتفاظ وحذف الحساب</h2>
+<h2>التخزين والمشاركة</h2>
 <ul>
-  <li>بيانات الحساب طوال نشاطه؛ سجل الاستخدام يُحذف بعد 12 شهرًا من عدم النشاط.</li>
-  <li>التسجيلات الصوتية لا تُخزَّن على خوادمنا.</li>
-  <li>يمكنك حذف الحساب نهائيًا من <a href="https://majlisilm.com/account-deletion">صفحة حذف الحساب</a>؛ الحذف يزيل صفوف المستخدم من المصادقة والجداول المرتبطة (bookmarks والتقدم وغيرها) عبر قاعدة البيانات.</li>
+  <li>تفضيلات محلية في المتصفح؛ مزامنة محدودة مع الحساب عند تسجيل الدخول.</li>
+  <li>لا نبيع البيانات. مزودو البنية: Vercel وSupabase وGroq عند مسار التلاوة الخادمي.</li>
 </ul>
 ${linkList("روابط ذات صلة", [
   { name: "شروط الاستخدام", url: "/terms" },
@@ -1355,7 +1403,7 @@ ${linkList("روابط ذات صلة", [
 ${linkList("روابط ذات صلة", [
   { name: "البطاقات التعليمية", url: "/flashcards" },
   { name: "الفوائد", url: "/fawaid" },
-  { name: "الأسئلة والأجوبة", url: "/qa" },
+  { name: "لعبة سين جيم", url: "/quiz" },
   { name: "ابدأ من هنا", url: "/start-here" },
   { name: "المسارات العلمية", url: "/learning/paths" },
 ])}`,
@@ -1372,7 +1420,7 @@ ${linkList("روابط ذات صلة", [
   { name: "البحث", url: "/search" },
   { name: "الدروس الشرعية", url: "/lessons" },
   { name: "المكتبة العلمية", url: "/library" },
-  { name: "الأسئلة والأجوبة", url: "/qa" },
+  { name: "لعبة سين جيم", url: "/quiz" },
   { name: "خريطة كل الأقسام", url: "/sitemap" },
   { name: "منهجيتنا", url: "/methodology" },
 ])}`,
@@ -1938,8 +1986,7 @@ for (const row of LIBRARY_CATALOG) {
       extraJsonLd: bookJsonLdScript({ ...row, description: desc }),
       parents: [{ name: "المكتبة العلمية", path: "/library" }],
       priority: 0.7,
-      richBody: `<h2>عن الكتاب</h2>
-<p>${escapeHtml(desc)}</p>
+      richBody: `<h2>بيانات الكتاب</h2>
 <ul>
   ${row.author ? `<li>المؤلف: ${escapeHtml(row.author)}</li>` : ""}
   ${row.category ? `<li>التصنيف: ${escapeHtml(row.category)}</li>` : ""}
@@ -1972,18 +2019,25 @@ ${linkList("روابط ذات صلة", [
 // العلماء — Person JSON-LD (٩٦ ترجمة). المعرّفات تُقرأ وقت البناء من scholars-data.ts.
 for (const s of SCHOLARS) {
   const works = s.key_works?.length ? ` من مؤلفاته: ${s.key_works.slice(0, 3).join("، ")}.` : "";
+  const shortSummary = (() => {
+    const bio = String(s.bio || "").trim();
+    const sentence = bio.split(/(?<=[.。!?؟])\s+/)[0] || bio;
+    return sentence.length > 140 ? `${sentence.slice(0, 137).replace(/\s+\S*$/, "")}…` : sentence;
+  })();
+  const metaDesc = clamp(padDesc(shortSummary || s.name, `ترجمة ${s.name} في ${SITE_NAME}`), 155);
   addPage(
     {
       // العنوان مطابق لما تضبطه ScholarProfilePage وقت التشغيل، فلا يتبدّل العنوان بعد التحميل.
       path: `/scholars/${s.id}`,
       title: `${s.name} — سيرة العالم`,
-      description: clamp(padDesc(s.bio, `ترجمة ${s.name} في ${SITE_NAME}`), 155),
+      description: metaDesc,
       keywords: [s.name, s.fullName, ...(s.specialty || []), "علماء الإسلام", "سير الأعلام"].filter(Boolean),
       ogType: "profile",
     },
     {
       extraJsonLd: scholarJsonLdScript(s),
       parents: [{ name: "أعلام العلماء المسلمين", path: "/scholars" }],
+      // النبذة مرة واحدة فقط — لا تكرار بعد فقرة الوصف المختصرة في leadParagraph
       richBody: `<h2>نبذة</h2>
 <p>${escapeHtml(s.bio)}</p>
 <ul>

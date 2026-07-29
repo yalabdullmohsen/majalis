@@ -37,12 +37,13 @@ console.log("\n=== content-href الموحّد ===");
   assert(hrefLessons("abc") === "/lessons/abc", "hrefLessons");
   assert(hrefScholars("s1") === "/scholars/s1", "hrefScholars");
   assert(hrefFawaid("f1") === "/fawaid#f1", "hrefFawaid");
-  assert(hrefQa("q1") === "/qa?id=q1", "hrefQa");
+  assert(hrefQa("q1") === "/quiz", "hrefQa → /quiz");
+  assert(hrefQa() === "/quiz", "hrefQa بلا id → /quiz");
   assert(
     hrefRulingsFilter("الأسرة") === `/rulings?category=${encodeURIComponent("الأسرة")}`,
     "hrefRulingsFilter",
   );
-  assert(KNOWLEDGE_RELATED_HREF.question("q") === "/qa?id=q", "KNOWLEDGE_RELATED_HREF.question");
+  assert(KNOWLEDGE_RELATED_HREF.question("q") === "/quiz", "KNOWLEDGE_RELATED_HREF.question → /quiz");
 }
 
 console.log("\n=== روابط التوصيات تحتفظ بالمعرّف (إعادة تصدير) ===");
@@ -51,7 +52,7 @@ console.log("\n=== روابط التوصيات تحتفظ بالمعرّف (إع
   assert(CONTENT_TYPE_HREF.book("b1") === "/library/b1", "book → /library/:id");
   assert(CONTENT_TYPE_HREF.scholar("s1") === "/scholars/s1", "scholar → /scholars/:id");
   assert(CONTENT_TYPE_HREF.benefit("f1") === "/fawaid#f1", "benefit → /fawaid#id");
-  assert(CONTENT_TYPE_HREF.qa("q1") === "/qa?id=q1", "qa → /qa?id=");
+  assert(CONTENT_TYPE_HREF.qa("q1") === "/quiz", "qa → /quiz");
   assert(CONTENT_TYPE_HREF.scholar("") === "/scholars", "scholar بلا id → القائمة");
   assert(CONTENT_TYPE_HREF.story("omar") === "/stories?slug=omar", "story → /stories?slug=");
   assert(CONTENT_TYPE_HREF.miracle("m1") === "/miracles#m1", "miracle → /miracles#id");
@@ -115,7 +116,7 @@ console.log("\n=== صفحات كانت ميتة تحمل ExploreAlso / Related =
   assert(surah.includes("path: \"/quran/surah-stories\""), "SEO قصص السور على المسار الصحيح");
 
   const search = readFileSync(resolve(srcRoot, "views/SearchPage.tsx"), "utf8");
-  assert(search.includes("/qa?id="), "نتائج البحث تربط الأسئلة بـ ?id=");
+  assert(search.includes('href="/quiz"'), "نتائج البحث تربط الأسئلة بلعبة سين جيم");
   assert(search.includes("/fawaid#"), "نتائج البحث تربط الفوائد بـ #id");
   assert(search.includes("علوم القرآن"), "تسمية علوم القرآن صحيحة في البحث");
 

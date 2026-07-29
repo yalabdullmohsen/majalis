@@ -30,7 +30,7 @@ function CatIcon({ name }: { name?: string }) {
 
 const TABS: { key: Tab; label: string; Icon: LucideIcon }[] = [
   { key: "rulings", label: "الأحكام الشرعية",  Icon: BookOpen },
-  { key: "qa",      label: "الأسئلة والأجوبة", Icon: MessageCircle },
+  { key: "qa",      label: "سين جيم", Icon: MessageCircle },
   { key: "council", label: "المجمع الفقهي",     Icon: Building2 },
 ];
 
@@ -256,17 +256,17 @@ export default function FiqhPage() {
           </div>
         )}
 
-        {/* تبويب الأسئلة والأجوبة */}
+        {/* تبويب الأسئلة — تُعرض داخل لعبة سين جيم فقط */}
         {activeTab === "qa" && (
           <div role="tabpanel" id="fqp-panel-qa" aria-labelledby="fqp-tab-qa">
             <div className="flex items-center justify-between mb-6">
-              <h2 className="fqp-section-title"><MessageCircle size={20} />الأسئلة والأجوبة الشرعية</h2>
-              <Link href="/qa"><span className="fqp-see-all">عرض الكل ←</span></Link>
+              <h2 className="fqp-section-title"><MessageCircle size={20} />أسئلة تعليمية — لعبة سين جيم</h2>
+              <Link href="/quiz"><span className="fqp-see-all">افتح اللعبة ←</span></Link>
             </div>
 
             <div className="flex flex-wrap gap-2 mb-6">
               {QA_CATEGORIES.slice(0, 8).map((cat) => (
-                <Link key={cat.id} href={`/qa?cat=${cat.slug}`}>
+                <Link key={cat.id} href="/quiz">
                   <span className="fqp-cat-chip">{cat.name}</span>
                 </Link>
               ))}
@@ -279,7 +279,7 @@ export default function FiqhPage() {
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {qaItems.map((item: any) => (
-                  <Link key={item.id} href={`/qa?id=${encodeURIComponent(item.id)}`}>
+                  <Link key={item.id} href="/quiz">
                     <div className="fqp-card h-full">
                       <p className="fqp-card__title fqp-card__title--mb2 line-clamp-2 leading-snug">
                         {item.question}
@@ -296,9 +296,9 @@ export default function FiqhPage() {
             )}
 
             <div className="mt-8 text-center">
-              <Link href="/qa">
+              <Link href="/quiz">
                 <span className="inline-block px-8 py-3 text-white rounded-xl font-medium transition-colors cursor-pointer fqp-cta-btn">
-                  استعرض جميع الأسئلة والأجوبة
+                  العب سين جيم — بنك الأسئلة التعليمية
                 </span>
               </Link>
             </div>

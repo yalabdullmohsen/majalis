@@ -20,6 +20,7 @@ export type SeedBundle = {
   LESSONS_SEED: any[];
   findSeedLessonById: (id: string) => any;
   DEMO_QUIZ_QUESTIONS: any[];
+  QA_AS_QUIZ_QUESTIONS: any[];
   ADHKAR_CATEGORIES: any[];
   filterAdhkar: (q: string) => any[];
   searchPlatformSeed: (q: string) => any;
@@ -35,11 +36,12 @@ export function loadSeedData(): Promise<SeedBundle> {
   _loading = Promise.all([
     import("./demo-content"),    // يسحب: qa-seed, fawaid-seed, lessons-seed, miracles-seed, sheikhs-seed, library-service
     import("./quiz-seed"),       // مستقل وثقيل (130 kB مصدر)
+    import("./qa-to-quiz"),      // تحويل SEED_QA → صفوف اللعبة (بدون واجهة /qa)
     import("./adhkar-seed"),     // مستقل وثقيل (162 kB مصدر)
     import("./miracles-seed"),   // مستقل خفيف
     import("./lessons-seed"),    // مستقل خفيف
     import("./platform-search"), // مستقل خفيف
-  ]).then(([demo, quiz, adhkar, miracles, lessons, platform]) => {
+  ]).then(([demo, quiz, qaQuiz, adhkar, miracles, lessons, platform]) => {
     _cache = {
       DEMO_FAWAID: demo.DEMO_FAWAID,
       DEMO_LESSONS: demo.DEMO_LESSONS,
@@ -52,6 +54,7 @@ export function loadSeedData(): Promise<SeedBundle> {
       LESSONS_SEED: lessons.LESSONS_SEED,
       findSeedLessonById: lessons.findSeedLessonById,
       DEMO_QUIZ_QUESTIONS: quiz.DEMO_QUIZ_QUESTIONS,
+      QA_AS_QUIZ_QUESTIONS: qaQuiz.qaSeedToQuizQuestions(),
       ADHKAR_CATEGORIES: adhkar.ADHKAR_CATEGORIES,
       filterAdhkar: adhkar.filterAdhkar,
       searchPlatformSeed: platform.searchPlatformSeed,

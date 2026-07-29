@@ -21,6 +21,11 @@
   "$forbiddenNote": "أسماء وعناوين ممنوعة في أي نص معروض للمستخدم — يحرسها scripts/test-identity.mjs. استثناء وحيد: contactEmail أعلاه معتمَد رغم كونه على نطاق gmail.com.",
   "forbiddenBrandNames": ["مجالس العلم", "منصة المجالس", "مجالس العلمية"],
   "forbiddenEmailDomains": ["gmail.com", "hotmail.com", "outlook.com", "yahoo.com"],
+  "forbiddenEmails": [
+    "info@majlisilm.com",
+    "yalabdullmohsen1@gmail.com",
+    "yalabdullmohsen@gmail.com"
+  ],
 
   "defaultImage": "/opengraph.jpg"
 }

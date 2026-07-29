@@ -143,7 +143,7 @@ console.log("\n=== vercel.json — إعادة توجيه دائمة لمسار �
   const redirects = vercelConfig.redirects as Array<{ source: string; destination: string; permanent: boolean }>;
   const redirect = redirects.find((r) => r.source === "/scholarly-research");
   assert(redirect !== undefined, "قاعدة توجيه على مستوى الخادم موجودة لـ /scholarly-research");
-  assert(redirect?.destination === "/qa", `الوجهة /qa صحيحة (الفعلية: ${redirect?.destination})`);
+  assert(redirect?.destination === "/quiz", `الوجهة /quiz صحيحة (الفعلية: ${redirect?.destination})`);
   assert(redirect?.permanent === true, "التوجيه دائم (301) لا مؤقت — صحيح لمحركات البحث");
 
   const mergeRedirects: Array<[string, string]> = [

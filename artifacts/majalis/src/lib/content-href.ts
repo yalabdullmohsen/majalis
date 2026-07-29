@@ -29,9 +29,9 @@ export function hrefRulings(id?: string | null): string {
   return pathWithId("/rulings", id);
 }
 
-export function hrefQa(id?: string | null): string {
-  const t = idOrEmpty(id);
-  return t ? `/qa?id=${encodeURIComponent(t)}` : "/qa";
+export function hrefQa(_id?: string | null): string {
+  // الأسئلة التعليمية داخل لعبة سين جيم فقط — لا صفحة /qa عامة.
+  return "/quiz";
 }
 
 export function hrefFawaid(id?: string | null): string {

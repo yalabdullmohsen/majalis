@@ -58,8 +58,8 @@ const SECTIONS = [
     title: "الفقه والأحكام",
     emoji: "⚖️",
     links: [
-      { href: "/fiqh",        label: "مدخل الفقه",          desc: "بوابة الفقه والفتاوى" },
-      { href: "/qa",          label: "الأسئلة والأجوبة",     desc: "أسئلة وأجوبة شرعية" },
+      { href: "/fiqh",        label: "مدخل الفقه",          desc: "بوابة الفقه والأحكام" },
+      { href: "/quiz",        label: "لعبة سين جيم",         desc: "أسئلة تعليمية داخل اللعبة" },
       { href: "/rulings",     label: "الأحكام الشرعية",      desc: "موسوعة الأحكام" },
       { href: "/tahara",      label: "الطهارة",              desc: "الوضوء والغسل والتيمم" },
       { href: "/salah-guide", label: "الصلاة",               desc: "دليل الصلاة كاملاً" },
