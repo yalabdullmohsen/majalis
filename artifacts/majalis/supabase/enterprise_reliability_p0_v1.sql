@@ -94,9 +94,14 @@ END $$;
 
 CREATE INDEX IF NOT EXISTS idx_qa_categories_sort_order ON qa_categories (sort_order);
 
--- Prayer times hot path (location + date) — safe IF NOT EXISTS
-CREATE INDEX IF NOT EXISTS idx_prayer_times_city_date
-  ON prayer_times (city, prayer_date);
+-- Prayer times hot path (location + date) — only if table exists
+DO $$
+BEGIN
+  IF to_regclass('public.prayer_times') IS NOT NULL THEN
+    CREATE INDEX IF NOT EXISTS idx_prayer_times_city_date
+      ON public.prayer_times (city, prayer_date);
+  END IF;
+END $$;
 
 -- Upcoming lessons hot filters (status + schedule) when columns exist
 DO $$

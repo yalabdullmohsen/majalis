@@ -1,6 +1,6 @@
 import { getSupabaseAdmin } from "../supabase-admin.mjs";
 import { getEnvStatus, syncDatabaseUrlEnv } from "../env-config.mjs";
-import { ensureSchemaReady } from "../db-migrate.mjs";
+import { verifySchema } from "../db-migrate.mjs";
 import {
   aiAnalyzeContent,
   calculateQualityScore,
@@ -380,14 +380,16 @@ export async function runAutoContentSync({ triggerType = "cron", skipSchemaCheck
   logger.log("env", "Loaded Environment", { detail: envStatus });
 
   if (!skipSchemaCheck) {
-    logger.log("database", "Verifying schema migrations...");
-    const schema = await ensureSchemaReady();
+    logger.log("database", "Verifying schema (read-only — no runtime DDL)...");
+    const schema = await verifySchema();
     if (!schema.ok) {
-      logger.error("database", "Schema not ready — migrations required", { detail: schema });
+      logger.error("database", "Schema not ready — apply migrations via CLI/CI only", {
+        detail: schema,
+      });
       return {
         ok: false,
         error: "Schema migrations required",
-        reason: "Run /api/cron/apply-migrations or set DATABASE_URL on Vercel",
+        reason: "Apply migrations via dedicated CLI/CI — runtime DDL is disabled",
         schema,
         env: envStatus,
         ...logger.summary(),
@@ -396,9 +398,6 @@ export async function runAutoContentSync({ triggerType = "cron", skipSchemaCheck
         skipped: 0,
         failed: 0,
       };
-    }
-    if (schema.migrated) {
-      logger.log("database", "Schema migrations applied successfully");
     }
   }
 

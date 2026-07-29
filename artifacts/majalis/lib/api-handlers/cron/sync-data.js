@@ -1,27 +1,6 @@
-import { sendJson } from "../../api/_http.mjs";
-import { validateCronAuth } from "../../../lib/env-config.mjs";
-import { runDailyDataSync } from "../../../lib/sync-data.mjs";
+/**
+ * GET/POST /api/cron/sync-data — enqueue only (202). Work runs via /api/cron/job-worker.
+ */
+import { createEnqueueCronHandler } from "../../jobs/cron-enqueue.mjs";
 
-export default async function handler(req, res) {
-  if (req.method !== "GET" && req.method !== "POST") {
-    sendJson(res, 405, { ok: false, message: "الطريقة غير مدعومة." });
-    return;
-  }
-
-  if (!validateCronAuth(req)) {
-    sendJson(res, 401, { ok: false, message: "غير مصرح." });
-    return;
-  }
-
-  try {
-    const result = await runDailyDataSync();
-    sendJson(res, 200, result);
-  } catch (error) {
-    console.error("[cron/sync-data] failed", error);
-    sendJson(res, 500, {
-      ok: false,
-      message: "فشل التحديث التلقائي.",
-      at: new Date().toISOString(),
-    });
-  }
-}
+export default createEnqueueCronHandler("sync-data");

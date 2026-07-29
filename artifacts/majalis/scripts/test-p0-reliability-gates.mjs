@@ -15,7 +15,7 @@ const sql = readFileSync(join(root, "supabase/enterprise_reliability_p0_v1.sql")
 const supabaseTs = readFileSync(join(root, "src/lib/supabase.ts"), "utf8");
 
 assert.match(applyMig, /runtime_schema_migrations_disabled/, "apply-migrations must block schema writes");
-assert.match(applyMig, /schemaMutationBlocked|permanently disabled/, "blocked response required");
+assert.match(applyMig, /schemaMutationBlocked|Runtime schema migrations are permanently disabled/, "blocked response required");
 assert.doesNotMatch(applyMig, /ALLOW_RUNTIME_SCHEMA_MIGRATIONS/, "no runtime DDL escape hatch");
 assert.doesNotMatch(applyMig, /applyMigrations\(/, "must not call applyMigrations at runtime");
 assert.match(http, /headersSent|isResponseClosed/, "safe sendJson required");

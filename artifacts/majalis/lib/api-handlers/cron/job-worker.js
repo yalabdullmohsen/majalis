@@ -5,21 +5,8 @@
 import { sendJson } from "../../api/_http.mjs";
 import { validateCronAuth } from "../../../lib/env-config.mjs";
 import { claimNextJob, checkpointJob, completeJob, failJob } from "../../../lib/jobs/queue.mjs";
+import { getJobWorker } from "../../../lib/jobs/job-workers.mjs";
 import { randomUUID } from "node:crypto";
-
-const WORKERS = {
-  "source-monitor": async ({ signal, cursor, metadata }) => {
-    if (signal?.aborted) return { done: false, continue: false, cursor };
-    const { runLessonSourceMonitor } = await import("../../../lib/cms/lesson-source-monitor.mjs");
-    const result = await runLessonSourceMonitor({
-      dryRun: Boolean(metadata?.dryRun),
-      sourceId: metadata?.sourceId || null,
-      signal,
-    });
-    return { done: true, continue: false, cursor: { ...cursor, resultSummary: { ok: result?.ok } } };
-  },
-  "lesson-source-monitor": async (args) => WORKERS["source-monitor"](args),
-};
 
 export default async function handler(req, res) {
   if (!validateCronAuth(req)) {
@@ -35,11 +22,19 @@ export default async function handler(req, res) {
     return;
   }
 
-  const run = WORKERS[job.job_type];
+  const run = getJobWorker(job.job_type);
   if (!run) {
-    // Accept enqueue for all allowed types; mark complete with stub until dedicated worker lands.
-    await completeJob(job.job_id, { note: "no_inline_worker_yet" });
-    sendJson(res, 200, { ok: true, jobId: job.job_id, status: "accepted_no_inline_worker" });
+    await failJob(job.job_id, {
+      errorCode: "no_worker_registered",
+      errorMessage: `No inline worker registered for job_type=${job.job_type}`,
+      forceDeadLetter: true,
+    });
+    sendJson(res, 200, {
+      ok: false,
+      jobId: job.job_id,
+      status: "dead_letter",
+      error: "no_worker_registered",
+    });
     return;
   }
 
