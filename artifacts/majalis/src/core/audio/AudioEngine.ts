@@ -125,6 +125,24 @@ export class AudioEngine {
     return this.audio;
   }
 
+  private async activatePlaybackSession(): Promise<void> {
+    try {
+      const { ensureNativePlaybackAudioSession } = await import("@/lib/native-playback-audio");
+      await ensureNativePlaybackAudioSession();
+    } catch (err) {
+      console.warn("[AudioEngine] native playback session:", err);
+    }
+  }
+
+  private async releasePlaybackSession(): Promise<void> {
+    try {
+      const { deactivateNativeAudioSession } = await import("@/lib/native-playback-audio");
+      await deactivateNativeAudioSession();
+    } catch (err) {
+      console.warn("[AudioEngine] native session deactivate:", err);
+    }
+  }
+
   private setPlayerState(state: PlayerState): void {
     this.playerState = state;
     this.emitSnapshot();
@@ -244,6 +262,7 @@ export class AudioEngine {
     try {
       el.src = url;
       el.playbackRate = this.playbackRate;
+      await this.activatePlaybackSession();
       await el.play();
       this.setPlayerState("playing");
     } catch (err) {
@@ -306,6 +325,7 @@ export class AudioEngine {
     try {
       el.src = url;
       el.playbackRate = this.playbackRate;
+      await this.activatePlaybackSession();
       await el.play();
       this.setPlayerState("playing");
     } catch (err) {
@@ -369,6 +389,7 @@ export class AudioEngine {
     const el = this.audio;
     if (!el) {
       this.setPlayerState("idle");
+      void this.releasePlaybackSession();
       return;
     }
     try {
@@ -379,6 +400,7 @@ export class AudioEngine {
     }
     this.setPlayerState("idle");
     this.emitSnapshot();
+    void this.releasePlaybackSession();
   }
 
   /**
@@ -402,6 +424,7 @@ export class AudioEngine {
     this.teachPhase = "idle";
     this.surahRepeatStart = null;
     this.setPlayerState("idle");
+    void this.releasePlaybackSession();
   }
 
   /**

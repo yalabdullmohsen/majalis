@@ -1,0 +1,62 @@
+name: iOS Capacitor Gates
+
+# Static verification for the Capacitor iOS shell.
+# Runs on Linux — does NOT invoke xcodebuild / TestFlight / App Store Connect.
+on:
+  pull_request:
+    paths:
+      - "artifacts/majalis/ios/**"
+      - "artifacts/majalis/capacitor.config.ts"
+      - "artifacts/majalis/src/lib/native-deep-link.ts"
+      - "artifacts/majalis/src/lib/native-playback-audio.ts"
+      - "artifacts/majalis/src/lib/prayer-ticker.ts"
+      - "artifacts/majalis/src/lib/__tests__/ios-stability-audit.test.ts"
+      - "artifacts/majalis/scripts/test-ios-capacitor-gates.mjs"
+      - "artifacts/majalis/src/main.tsx"
+      - ".github/workflows/ios-capacitor-gates.yml"
+  push:
+    branches: [main]
+    paths:
+      - "artifacts/majalis/ios/**"
+      - "artifacts/majalis/capacitor.config.ts"
+      - "artifacts/majalis/src/lib/native-deep-link.ts"
+      - "artifacts/majalis/scripts/test-ios-capacitor-gates.mjs"
+
+concurrency:
+  group: ios-gates-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  ios-static:
+    name: iOS static gates + unit tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: iOS Capacitor static gates
+        run: pnpm --filter @workspace/majalis run test:ios-gates
+
+      - name: iOS stability unit tests
+        run: pnpm --filter @workspace/majalis run test:ios-stability
+
+      - name: Note — Xcode builds require macOS
+        run: |
+          echo "xcodebuild Debug/Release/Archive must run on macOS CI or a local Mac."
+          echo "This workflow intentionally does not publish to TestFlight."

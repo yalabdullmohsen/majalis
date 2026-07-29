@@ -7697,7 +7697,6 @@ body.has-assistant-fab .app-main {
   background: var(--majalis-emerald-soft, #EAF5EE);
   border-color: rgba(22, 96, 72, 0.25);
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(22, 96, 72, 0.12);
 }
 
 .more-sheet-item:active {

@@ -223,6 +223,16 @@ jobs:
               continue
             fi
 
+            # طلب صريح من مالك المهمة / Cloud Agent: لا Auto-merge لعناوين تحمل هذه العلامات
+            title=$(gh "${REPO_FLAG[@]}" pr view "$n" --json title --jq .title)
+            if echo "$title" | grep -Eqi 'NO-AUTO-MERGE|دون دمج|do-not-merge'; then
+              echo "تخطي: العنوان يطلب تعطيل Auto-merge ($title)"
+              gh "${REPO_FLAG[@]}" pr ready "$n" --undo || true
+              gh "${REPO_FLAG[@]}" pr merge "$n" --disable-auto || true
+              echo "::endgroup::"
+              continue
+            fi
+
             # تحديث إلزامي إن كان متأخرًا أو متعارضًا
             if [ "$mergeable" = "CONFLICTING" ] || [ "$mstatus" = "BEHIND" ] || [ "$mstatus" = "DIRTY" ]; then
               if ! update_from_main "$n" "$head"; then
