@@ -120,7 +120,18 @@ public class RecitationAudioCapturePlugin: CAPPlugin, CAPBridgedPlugin {
             audioEngine.stop()
             audioEngine.inputNode.removeTap(onBus: 0)
         }
-        try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+        do {
+            try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+        } catch {
+            NSLog("[RecitationCapture] AVAudioSession deactivate failed: %@", error.localizedDescription)
+            notifyListeners("audioSessionError", data: [
+                "op": "deactivate",
+                "message": error.localizedDescription,
+            ])
+            call.reject("تعذّر إيقاف جلسة الصوت: \(error.localizedDescription)")
+            isCapturing = false
+            return
+        }
         isCapturing = false
         call.resolve()
     }

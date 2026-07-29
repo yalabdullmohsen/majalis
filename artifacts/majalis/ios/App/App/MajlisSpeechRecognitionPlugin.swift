@@ -148,6 +148,15 @@ public class MajlisSpeechRecognitionPlugin: CAPPlugin, CAPBridgedPlugin {
         recognitionRequest = nil
         recognitionTask?.cancel()
         recognitionTask = nil
-        try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+        do {
+            try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+        } catch {
+            // Critical path: surface deactivation failures (do not swallow with try?).
+            NSLog("[MajlisSpeech] AVAudioSession deactivate failed: %@", error.localizedDescription)
+            notifyListeners("audioSessionError", data: [
+                "op": "deactivate",
+                "message": error.localizedDescription,
+            ])
+        }
     }
 }
