@@ -9,7 +9,8 @@ export type LogFields = Record<string, string | number | boolean | null | undefi
 
 const SENSITIVE = /^(authorization|cookie|password|token|apikey|api_key|secret|anon.?key)$/i;
 
-function sanitize(fields?: LogFields): LogFields | undefined {
+/** Exported for unit tests — redacts credential-like keys. */
+export function sanitizeLogFields(fields?: LogFields): LogFields | undefined {
   if (!fields) return undefined;
   const out: LogFields = {};
   for (const [key, value] of Object.entries(fields)) {
@@ -28,7 +29,7 @@ function emit(level: LogLevel, message: string, fields?: LogFields): void {
     level,
     msg: message,
     service: "majalis-web",
-    ...sanitize(fields),
+    ...sanitizeLogFields(fields),
   };
   const line = JSON.stringify(entry);
   if (level === "error") {

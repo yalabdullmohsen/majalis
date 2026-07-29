@@ -51,7 +51,7 @@ class UserEducationalPathsView extends StatelessWidget {
                     onTap: onSearch!,
                     backgroundColor: quran.isDarkMode
                         ? Colors.white10
-                        : Colors.black.withOpacity(0.05),
+                        : Colors.black.withValues(alpha: 0.05),
                   ),
           ),
           SliverPadding(
@@ -71,7 +71,7 @@ class UserEducationalPathsView extends StatelessWidget {
                     elevation: 0,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(12),
-                      side: BorderSide(color: Colors.brown.withOpacity(0.12)),
+                      side: BorderSide(color: Colors.brown.withValues(alpha: 0.12)),
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(16),
@@ -125,7 +125,7 @@ class UserEducationalPathsView extends StatelessWidget {
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
-                    side: BorderSide(color: Colors.brown.withOpacity(0.12)),
+                    side: BorderSide(color: Colors.brown.withValues(alpha: 0.12)),
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(16),
