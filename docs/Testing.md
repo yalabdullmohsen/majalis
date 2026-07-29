@@ -13,7 +13,7 @@ Includes (non-exhaustive):
 | Suite | Focus |
 |---|---|
 | `test:pwa` / `test:nav-active` / `test:seo` | Shell, navigation, SEO contracts |
-| `test:phase1-quality` … `test:phase9-coverage` | Enterprise phase invariants |
+| `test:phase1-quality` … `test:phase10-docs` | Enterprise phase invariants |
 | `test:lessons-domain` | Clean Architecture use case |
 | `test:inheritance-engine` | Faraid math (unit) |
 | `test:learning-paths-engine` | Certificates / scheduling |
