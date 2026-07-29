@@ -1501,19 +1501,39 @@
 .qs-mushaf-corner--bl { bottom: 3px; left: 3px; }
 .qs-mushaf-corner--br { bottom: 3px; right: 3px; }
 
-/* ── سطر رأس الصفحة: اسم السورة (يمين) / الجزء (يسار) — بسيط بلا صندوق ── */
+/* ── سطر رأس الصفحة: سورة | الجزء·الحزب | رقم الصفحة — ثلاث خانات متوازنة ── */
 .qs-mushaf-header-row {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
-  padding: 0.22rem 0.4rem 0.18rem;
-  font-size: 0.78rem;
+  gap: 0.35rem;
+  padding: 0.45rem 0.65rem 0.35rem;
+  font-size: 0.82rem;
   font-weight: 600;
   color: var(--mf-ink, #1A1610);
   direction: rtl;
   font-family: var(--font-body);
   border-bottom: 1px solid var(--mf-gold-faint, rgba(31,77,58,0.15));
   user-select: none;
+  background: color-mix(in srgb, var(--qs-parchment, #F8F2E4) 88%, #ffffff);
+}
+.qs-mushaf-header-row__surah {
+  text-align: start;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.qs-mushaf-header-row__meta {
+  text-align: center;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted, #4b5563);
+  font-weight: 600;
+}
+.qs-mushaf-header-row__page {
+  text-align: end;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
 }
 
 /* ── صندوق اسم السورة — مستطيل بحد ذهبي — بصري خالص ── */
@@ -1625,9 +1645,10 @@
   align-items: center;
   justify-content: center;
   gap: var(--ds-space-2);
-  padding: 0.25rem 0.5rem;
+  padding: 0.4rem 0.65rem 0.5rem;
   border-top: 1px solid var(--mf-gold-faint, rgba(31,77,58,0.15));
   user-select: none;
+  background: color-mix(in srgb, var(--qs-parchment, #F8F2E4) 88%, #ffffff);
 }
 .qs-mushaf-footer-row__line {
   flex: 1;
@@ -1636,10 +1657,11 @@
   background: linear-gradient(90deg, transparent, var(--mf-gold-soft, rgba(31,77,58,0.35)), transparent);
 }
 .qs-mushaf-footer-row__page {
-  font-size: 0.63rem;
+  font-size: 0.8rem;
   font-weight: 600;
   color: var(--mf-ink, #1A1610);
   font-family: var(--font-body);
+  font-variant-numeric: tabular-nums;
 }
 
 /* ── شريط التحكم — تحسين بصري ── */

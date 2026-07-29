@@ -396,8 +396,10 @@ export default function MushafPageView() {
               الفهرس
             </button>
             <div className="mpv-toolbar__title">
-              {primarySurahMeta.name}
-              <small>صفحة {toArabicDigits(page)} · جزء {toArabicDigits(juz)}</small>
+              سورة {primarySurahMeta.name}
+              <small>
+                صفحة {toArabicDigits(page)} · الجزء {toArabicDigits(juz)} · الحزب {toArabicDigits(hizb)}
+              </small>
             </div>
             <button
               type="button"
@@ -446,9 +448,15 @@ export default function MushafPageView() {
                 <span className="qs-mushaf-corner qs-mushaf-corner--bl" aria-hidden="true">❈</span>
                 <span className="qs-mushaf-corner qs-mushaf-corner--br" aria-hidden="true">❈</span>
 
-                <div className="qs-mushaf-header-row">
-                  <span>سورة {primarySurahMeta.name}</span>
-                  <span>الجزء {toArabicDigits(juz)} · الحزب {toArabicDigits(hizb)} · الربع {toArabicDigits(rubInHizb)}</span>
+                <div className="qs-mushaf-header-row" aria-label="معلومات الصفحة">
+                  <span className="qs-mushaf-header-row__surah">سورة {primarySurahMeta.name}</span>
+                  <span
+                    className="qs-mushaf-header-row__meta"
+                    title={rubInHizb ? `الربع ${toArabicDigits(rubInHizb)} من الحزب` : undefined}
+                  >
+                    الجزء {toArabicDigits(juz)} · الحزب {toArabicDigits(hizb)}
+                  </span>
+                  <span className="qs-mushaf-header-row__page">صفحة {toArabicDigits(page)}</span>
                 </div>
 
                 <div
