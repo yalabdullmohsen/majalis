@@ -1,0 +1,38 @@
+name: PR status comments (no auto-merge)
+
+# Comments only. Does NOT undraft, enable auto-merge, or merge.
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, ready_for_review, converted_to_draft]
+    branches: [main]
+
+permissions:
+  contents: read
+  pull-requests: write
+
+concurrency:
+  group: pr-status-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  comment:
+    if: github.repository == 'yalabdullmohsen/majalis'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Policy reminder
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          n="${{ github.event.pull_request.number }}"
+          draft="${{ github.event.pull_request.draft }}"
+          title="${{ github.event.pull_request.title }}"
+          body="📋 **سياسة الدمج:** لا Auto-merge من Workflows. المراجعة البشرية مطلوبة. Draft=$draft"
+          if echo "$title" | grep -Eqi 'NO-AUTO-MERGE|دون دمج|do-not-merge'; then
+            body="$body"$'\n'"⛔ العنوان يطلب عدم الدمج الآلي."
+          fi
+          # Avoid spam: only on opened
+          if [ "${{ github.event.action }}" = "opened" ]; then
+            gh -R "$GITHUB_REPOSITORY" pr comment "$n" --body "$body" || true
+          fi

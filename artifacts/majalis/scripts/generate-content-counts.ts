@@ -30,10 +30,10 @@ const { ADHKAR_ITEMS } = await import("../src/lib/adhkar-seed.js");
 const { SEED_QA } = await import("../src/lib/qa-seed.js");
 const { NATIONS } = await import("../src/lib/nations-seed.js");
 
-const counts = {
-  $comment:
-    "مُولَّد آليًا من السجلات — لا تحرّره يدويًا. أعِد التوليد: npx tsx scripts/generate-content-counts.ts",
-  generatedAt: new Date().toISOString().slice(0, 10),
+const outPath = resolve(appRoot, "src/data/content-counts.json");
+const checkOnly = process.argv.includes("--check");
+
+const numbersOnly = {
   books: LIBRARY_CATALOG.length,
   scholars: SCHOLARS.length,
   fawaid: SEED_FAWAID.length,
@@ -47,11 +47,45 @@ const counts = {
   nations: NATIONS.length,
 };
 
-await writeFile(
-  resolve(appRoot, "src/data/content-counts.json"),
-  JSON.stringify(counts, null, 2) + "\n",
-  "utf8",
-);
+let previousGeneratedAt = new Date().toISOString().slice(0, 10);
+try {
+  const prev = JSON.parse(await readFile(outPath, "utf8")) as Record<string, unknown>;
+  const prevNumbers = { ...prev };
+  delete prevNumbers.$comment;
+  delete prevNumbers.generatedAt;
+  const same =
+    JSON.stringify(prevNumbers, Object.keys(prevNumbers).sort()) ===
+    JSON.stringify(numbersOnly, Object.keys(numbersOnly).sort());
+  if (same && typeof prev.generatedAt === "string") {
+    previousGeneratedAt = prev.generatedAt;
+  }
+  if (checkOnly) {
+    if (!same) {
+      console.error("content-counts.json out of date — run: pnpm run generate:counts");
+      process.exit(1);
+    }
+    console.log("✓ content-counts.json up to date (--check)");
+    process.exit(0);
+  }
+  if (same) {
+    console.log("✓ أعداد المحتوى دون تغيير — لا إعادة كتابة الملف");
+    console.log("✓ أعداد المحتوى المحسوبة:", numbersOnly);
+    process.exit(0);
+  }
+} catch {
+  if (checkOnly) {
+    console.error("content-counts.json missing");
+    process.exit(1);
+  }
+}
 
-const { $comment, generatedAt, ...numbers } = counts;
-console.log("✓ أعداد المحتوى المحسوبة:", numbers);
+const counts = {
+  $comment:
+    "مُولَّد آليًا من السجلات — لا تحرّره يدويًا. أعِد التوليد: npx tsx scripts/generate-content-counts.ts",
+  generatedAt: previousGeneratedAt,
+  ...numbersOnly,
+};
+
+await writeFile(outPath, JSON.stringify(counts, null, 2) + "\n", "utf8");
+
+console.log("✓ أعداد المحتوى المحسوبة:", numbersOnly);

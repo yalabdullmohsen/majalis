@@ -9,7 +9,8 @@
     "build": "pnpm run typecheck && pnpm -r --filter \"!./artifacts/majalis-mobile\" --if-present run build",
     "typecheck:libs": "tsc --build",
     "typecheck": "pnpm run typecheck:libs && pnpm -r --filter \"./artifacts/**\" --filter \"./scripts\" --if-present run typecheck",
-    "verify:production-complete": "pnpm --filter @workspace/majalis run verify:production-complete"
+    "verify:production-complete": "pnpm --filter @workspace/majalis run verify:production-complete",
+    "verify:no-unsafe-auto-merge": "node scripts/verify-no-unsafe-auto-merge.mjs"
   },
   "private": true,
   "devDependencies": {

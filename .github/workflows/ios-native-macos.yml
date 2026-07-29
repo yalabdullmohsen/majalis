@@ -1,0 +1,97 @@
+name: iOS native (macOS)
+
+# Real Xcode build/test when iOS/Capacitor paths change.
+# Does NOT upload to TestFlight. Does NOT change signing settings.
+on:
+  pull_request:
+    paths:
+      - "artifacts/majalis/ios/**"
+      - "artifacts/majalis/capacitor.config.ts"
+      - "artifacts/majalis/src/lib/native-*.ts"
+      - "artifacts/majalis/src/lib/prayer-ticker.ts"
+      - ".github/workflows/ios-native-macos.yml"
+  push:
+    branches: [main]
+    paths:
+      - "artifacts/majalis/ios/**"
+      - "artifacts/majalis/capacitor.config.ts"
+
+concurrency:
+  group: ios-native-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  xcode:
+    name: xcodebuild-simulator
+    runs-on: macos-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install + web build + cap sync
+        working-directory: artifacts/majalis
+        env:
+          PORT: "24216"
+          BASE_PATH: "/"
+        run: |
+          cd ../..
+          pnpm install --frozen-lockfile
+          pnpm --filter @workspace/majalis run build
+          cd artifacts/majalis
+          pnpm exec cap sync ios
+
+      - name: List schemes / simulators
+        working-directory: artifacts/majalis/ios/App
+        run: |
+          xcodebuild -version
+          xcodebuild -list -project App.xcodeproj
+          xcrun simctl list devices available
+
+      - name: Debug simulator build
+        working-directory: artifacts/majalis/ios/App
+        run: |
+          set -euo pipefail
+          UDID=$(xcrun simctl list devices available -j | python3 -c '
+          import json,sys
+          d=json.load(sys.stdin)
+          for runtime, devices in d.get("devices", {}).items():
+            if "iOS" not in runtime: continue
+            for dev in devices:
+              if dev.get("isAvailable") and "iPhone" in dev.get("name",""):
+                print(dev["udid"]); sys.exit(0)
+          sys.exit(1)
+          ')
+          echo "UDID=$UDID"
+          xcodebuild \
+            -project App.xcodeproj \
+            -scheme App \
+            -configuration Debug \
+            -sdk iphonesimulator \
+            -destination "platform=iOS Simulator,id=$UDID" \
+            clean build | xcpretty || xcodebuild \
+            -project App.xcodeproj \
+            -scheme App \
+            -configuration Debug \
+            -sdk iphonesimulator \
+            -destination "platform=iOS Simulator,id=$UDID" \
+            clean build
+
+      - name: Upload logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-xcode-logs
+          path: |
+            artifacts/majalis/ios/App/build
+            ~/Library/Logs/gym
+          if-no-files-found: ignore

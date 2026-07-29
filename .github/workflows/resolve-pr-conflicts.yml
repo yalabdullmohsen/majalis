@@ -108,7 +108,7 @@ jobs:
             git checkout -B "pr-$n" "origin/$head"
             if git merge --no-edit origin/main; then
               git push origin "HEAD:$head"
-              gh -R "$GITHUB_REPOSITORY" pr comment "$n" --body "✅ حُدّث الفرع من \`main\` تلقائيًا. تُعاد الفحوصات (Verify build) ثم Auto-merge (squash)." || true
+              gh -R "$GITHUB_REPOSITORY" pr comment "$n" --body "✅ حُدّث الفرع من \`main\` تلقائيًا. أُعيد تشغيل الفحوصات. **لا Auto-merge** — الدمج يدوي بعد المراجعة." || true
               echo "✓ دُفع $head"
             else
               git merge --abort || true

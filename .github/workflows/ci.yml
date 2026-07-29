@@ -6,7 +6,6 @@ on:
   pull_request:
     branches: [main]
 
-# Cancel redundant runs for the same branch.
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -15,37 +14,41 @@ permissions:
   contents: read
 
 jobs:
-  verify:
-    name: Verify build
+  quality:
+    name: quality
     runs-on: ubuntu-latest
-    timeout-minutes: 20
-
+    timeout-minutes: 45
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 24
           cache: pnpm
 
-      - name: Install dependencies
+      - name: Install
         run: pnpm install --frozen-lockfile
 
-      - name: Content guard (audit gates)
-        run: pnpm --filter @workspace/majalis run test:content-guard
-
-      - name: TypeScript check
+      - name: Governance / security static gates
         run: |
-          pnpm run typecheck:libs
-          pnpm --filter @workspace/majalis run typecheck
+          node scripts/verify-no-unsafe-auto-merge.mjs
+          test ! -f .github/workflows/auto-merge-to-main.yml
 
-      - name: Lint
-        run: pnpm -r --if-present run lint
+      - name: Typecheck
+        run: pnpm -r --if-present run typecheck
+
+      - name: Lint (zero warnings)
+        run: pnpm --filter @workspace/majalis exec eslint src lib --max-warnings=0
+
+      - name: Generated artifacts --check
+        run: |
+          pnpm --filter @workspace/majalis exec tsx scripts/generate-content-counts.ts --check
+          pnpm --filter @workspace/majalis exec node scripts/generate-quran-pages-manifest.mjs --check
+
+      - name: Full package test
+        run: pnpm --filter @workspace/majalis run test
 
       - name: Build
         env:
@@ -53,18 +56,8 @@ jobs:
           BASE_PATH: "/"
         run: pnpm --filter @workspace/majalis run build
 
-      - name: Content import tests
-        run: |
-          cd artifacts/majalis
-          pnpm run test:content-import
-          pnpm run test:content-import-e2e
+      - name: Build must not dirty git
+        run: git diff --exit-code
 
-      - name: Autonomous platform tests
-        run: |
-          cd artifacts/majalis
-          pnpm run verify:autonomous-platform
-          pnpm run verify:majlis-knowledge-engine
-          pnpm run verify:import-jobs-integrity
-
-      - name: Verify deploy output
+      - name: Deploy output verify
         run: pnpm --filter @workspace/majalis run verify:deploy
