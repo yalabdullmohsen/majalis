@@ -6,7 +6,6 @@ on:
   pull_request:
     branches: [main]
 
-# Cancel redundant runs for the same branch.
 concurrency:
   group: ci-${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
@@ -15,37 +14,42 @@ permissions:
   contents: read
 
 jobs:
-  verify:
-    name: Verify build
+  quality:
+    name: quality
     runs-on: ubuntu-latest
-    timeout-minutes: 20
-
+    timeout-minutes: 45
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+      - uses: pnpm/action-setup@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 24
           cache: pnpm
 
-      - name: Install dependencies
+      - name: Install
         run: pnpm install --frozen-lockfile
 
-      - name: Content guard (audit gates)
-        run: pnpm --filter @workspace/majalis run test:content-guard
+      - name: Governance / auto-merge safety gate
+        run: node scripts/verify-no-unsafe-auto-merge.mjs
 
-      - name: TypeScript check
+      - name: Typecheck (project references via tsc -b)
         run: |
-          pnpm run typecheck:libs
-          pnpm --filter @workspace/majalis run typecheck
+          pnpm exec tsc -b --clean
+          pnpm exec tsc -b
+          pnpm -r --filter "./artifacts/**" --filter "./scripts" --filter "!@workspace/api-server" --if-present run typecheck
 
-      - name: Lint
-        run: pnpm -r --if-present run lint
+      - name: Lint (zero warnings)
+        run: pnpm --filter @workspace/majalis exec eslint src lib --max-warnings=0
+
+      - name: Generated artifacts --check
+        run: |
+          pnpm --filter @workspace/majalis exec tsx scripts/generate-content-counts.ts --check
+          pnpm --filter @workspace/majalis exec node scripts/generate-quran-pages-manifest.mjs --check
+
+      - name: Full package test
+        run: pnpm --filter @workspace/majalis run test
 
       - name: Build
         env:
@@ -53,18 +57,65 @@ jobs:
           BASE_PATH: "/"
         run: pnpm --filter @workspace/majalis run build
 
-      - name: Content import tests
-        run: |
-          cd artifacts/majalis
-          pnpm run test:content-import
-          pnpm run test:content-import-e2e
+      - name: Build must not dirty git
+        run: git diff --exit-code
 
-      - name: Autonomous platform tests
-        run: |
-          cd artifacts/majalis
-          pnpm run verify:autonomous-platform
-          pnpm run verify:majlis-knowledge-engine
-          pnpm run verify:import-jobs-integrity
-
-      - name: Verify deploy output
+      - name: Deploy output verify
         run: pnpm --filter @workspace/majalis run verify:deploy
+
+      - name: Platform hardening SQL static gate
+        run: node scripts/verify-platform-hardening-sql.mjs
+
+      - name: Schema drift expectations (static + optional local DB)
+        run: node scripts/verify-schema-drift-expectations.mjs
+
+      - name: DB migration verify (static + live when URL set)
+        env:
+          MIGRATION_TEST_DATABASE_URL: ${{ secrets.MIGRATION_TEST_DATABASE_URL }}
+        run: node scripts/db-migration-verify.mjs verify
+
+  postgres-integration:
+    name: postgres-integration
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: majalis_test
+          POSTGRES_PASSWORD: majalis_test
+          POSTGRES_DB: majalis_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U majalis_test -d majalis_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Queue integration (REQUIRED)
+        env:
+          REQUIRE_POSTGRES_INTEGRATION: "1"
+          MIGRATION_TEST_DATABASE_URL: postgresql://majalis_test:majalis_test@localhost:5432/majalis_test
+          DATABASE_URL: postgresql://majalis_test:majalis_test@localhost:5432/majalis_test
+          NODE_ENV: test
+        run: node scripts/test-postgres-queue-integration.mjs
+
+      - name: Migration verify + upgrade idempotency
+        env:
+          MIGRATION_TEST_DATABASE_URL: postgresql://majalis_test:majalis_test@localhost:5432/majalis_test
+        run: |
+          node scripts/db-migration-verify.mjs verify
+          node scripts/db-migration-verify.mjs upgrade

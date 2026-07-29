@@ -1,26 +1,19 @@
 #!/usr/bin/env node
 /**
- * توليد بيان صفحات المصحف (ترقيم مدينة، 604 صفحة) — المرحلة 8.
+ * توليد بيان صفحات المصحف (ترقيم مدينة، 604 صفحة) — حتمي + وضع --check.
  *
- * لا يقرأ ولا يُعدِّل نص أي آية إطلاقًا — يقرأ فقط حقل "page" الموجود
- * أصلاً في كل آية داخل public/data/quran/surah-*.json (جزء من بيانات
- * AlQuran Cloud الأصلية المحفوظة حرفيًا، ومطابق فعليًا لترقيم مجمع الملك
- * فهد المعياري — تحقّقتُ يدويًا: سورة البقرة صفحات 2-49، سورة الناس
- * (الأخيرة) صفحة 604) ويبني منه فهرسًا مرجعيًا: كل صفحة ← أي سور/نطاقات
- * آيات تقع فيها. الفهرس لا يحتوي نص أي آية — إشارات (أرقام) فقط، فلا خطر
- * على النص المحمي، ومصدر الحقيقة الوحيد يبقى ملفات السور نفسها.
- *
- * تشغيل: node scripts/generate-quran-pages-manifest.mjs
- * (يُعاد توليده تلقائيًا لو تغيّرت ملفات السور المحلية — راجع أيضًا
- * scripts/verify-quran-pages-manifest.mjs الذي يتحقق من اكتماله وصحته.)
+ * تشغيل:
+ *   node scripts/generate-quran-pages-manifest.mjs
+ *   node scripts/generate-quran-pages-manifest.mjs --check
  */
-import { readFile, writeFile } from "node:fs/promises";
+import { readFile, writeFile, readdir } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
 const DATA_DIR = path.join(ROOT, "public", "data", "quran");
+const OUT_PATH = path.join(DATA_DIR, "pages-manifest.json");
 
 const EXPECTED_TOTAL_PAGES = 604;
 const GREEN = "\x1b[32m";
@@ -28,20 +21,43 @@ const RED = "\x1b[31m";
 const RESET = "\x1b[0m";
 const BOLD = "\x1b[1m";
 
-async function main() {
-  console.log(`${BOLD}توليد بيان صفحات المصحف (604 صفحة)${RESET}\n`);
+const checkOnly = process.argv.includes("--check");
 
+function stableStringify(value) {
+  return `${JSON.stringify(value, null, 2)}\n`.replace(/\r\n/g, "\n");
+}
+
+async function buildManifest() {
   const manifestRaw = await readFile(path.join(DATA_DIR, "manifest.json"), "utf8");
   const manifest = JSON.parse(manifestRaw);
 
+  // Deterministic surah order: prefer manifest.surahs, else sorted surah-*.json
+  let surahEntries = Array.isArray(manifest.surahs) ? [...manifest.surahs] : [];
+  surahEntries.sort((a, b) => Number(a.number) - Number(b.number));
+  if (!surahEntries.length) {
+    const files = (await readdir(DATA_DIR))
+      .filter((f) => /^surah-\d+\.json$/.test(f))
+      .sort((a, b) => {
+        const na = Number(a.match(/surah-(\d+)/)[1]);
+        const nb = Number(b.match(/surah-(\d+)/)[1]);
+        return na - nb;
+      });
+    surahEntries = files.map((file) => ({
+      number: Number(file.match(/surah-(\d+)/)[1]),
+      file,
+    }));
+  }
+
   /** @type {Map<number, Array<{surah:number, from:number, to:number}>>} */
   const byPage = new Map();
-  /** أول صفحة تظهر فيها كل جزء (1-30) — من نفس حقل "juz" الموجود أصلاً بكل آية. */
   const firstPageOfJuz = new Map();
   let totalAyahsSeen = 0;
 
-  for (const entry of manifest.surahs) {
+  for (const entry of surahEntries) {
     const content = JSON.parse(await readFile(path.join(DATA_DIR, entry.file), "utf8"));
+    const ayahs = [...(content.ayahs || [])].sort(
+      (a, b) => Number(a.numberInSurah) - Number(b.numberInSurah),
+    );
     let rangeStart = null;
     let rangePage = null;
     let prevAyah = null;
@@ -49,11 +65,11 @@ async function main() {
     const flush = (endAyah) => {
       if (rangePage == null || rangeStart == null) return;
       const list = byPage.get(rangePage) ?? [];
-      list.push({ surah: entry.number, from: rangeStart, to: endAyah });
+      list.push({ surah: Number(entry.number), from: rangeStart, to: endAyah });
       byPage.set(rangePage, list);
     };
 
-    for (const ayah of content.ayahs) {
+    for (const ayah of ayahs) {
       totalAyahsSeen++;
       if (rangePage === null) {
         rangePage = ayah.page;
@@ -68,54 +84,85 @@ async function main() {
       }
       prevAyah = ayah;
     }
-    flush(prevAyah.numberInSurah);
+    if (prevAyah) flush(prevAyah.numberInSurah);
+  }
+
+  // Stable range order within each page
+  for (const [page, ranges] of byPage) {
+    ranges.sort((a, b) => a.surah - b.surah || a.from - b.from || a.to - b.to);
+    byPage.set(page, ranges);
   }
 
   const pages = [];
   for (let p = 1; p <= EXPECTED_TOTAL_PAGES; p++) {
     const ranges = byPage.get(p);
     if (!ranges) {
-      console.log(`${RED}✗ الصفحة ${p} بلا أي آيات — توقّف${RESET}`);
-      process.exit(1);
+      throw new Error(`الصفحة ${p} بلا أي آيات`);
     }
     pages.push({ page: p, ranges });
   }
 
   const extraPages = [...byPage.keys()].filter((p) => p < 1 || p > EXPECTED_TOTAL_PAGES);
   if (extraPages.length) {
-    console.log(`${RED}✗ أرقام صفحات خارج النطاق 1-604: ${extraPages.join(", ")}${RESET}`);
-    process.exit(1);
+    throw new Error(`أرقام صفحات خارج النطاق 1-604: ${extraPages.sort((a, b) => a - b).join(", ")}`);
   }
 
   const EXPECTED_JUZ_COUNT = 30;
   if (firstPageOfJuz.size !== EXPECTED_JUZ_COUNT) {
-    console.log(`${RED}✗ عدد الأجزاء المكتشفة ${firstPageOfJuz.size} ≠ 30${RESET}`);
-    process.exit(1);
+    throw new Error(`عدد الأجزاء المكتشفة ${firstPageOfJuz.size} ≠ 30`);
   }
   const juz = [];
   for (let j = 1; j <= EXPECTED_JUZ_COUNT; j++) {
-    if (!firstPageOfJuz.has(j)) {
-      console.log(`${RED}✗ الجزء ${j} غير موجود${RESET}`);
-      process.exit(1);
-    }
+    if (!firstPageOfJuz.has(j)) throw new Error(`الجزء ${j} غير موجود`);
     juz.push({ juz: j, firstPage: firstPageOfJuz.get(j) });
   }
 
-  const output = {
-    $comment: "مُولَّد آليًا من public/data/quran/surah-*.json عبر scripts/generate-quran-pages-manifest.mjs — لا تحرّره يدويًا. لا يحتوي نص أي آية، إشارات (سورة/نطاق رقم آية، وأول صفحة لكل جزء) فقط.",
-    generatedAt: new Date().toISOString().slice(0, 10),
-    totalPages: EXPECTED_TOTAL_PAGES,
-    pages,
-    juz,
+  // No generatedAt / timestamps — content-derived only for git stability.
+  return {
+    output: {
+      $comment:
+        "مُولَّد آليًا من public/data/quran/surah-*.json عبر scripts/generate-quran-pages-manifest.mjs — لا تحرّره يدويًا. لا يحتوي نص أي آية، إشارات (سورة/نطاق رقم آية، وأول صفحة لكل جزء) فقط.",
+      totalPages: EXPECTED_TOTAL_PAGES,
+      pages,
+      juz,
+    },
+    totalAyahsSeen,
   };
+}
 
-  await writeFile(path.join(DATA_DIR, "pages-manifest.json"), JSON.stringify(output, null, 2) + "\n", "utf8");
+async function main() {
+  console.log(`${BOLD}توليد بيان صفحات المصحف (604 صفحة)${checkOnly ? " [--check]" : ""}${RESET}\n`);
+  const { output, totalAyahsSeen } = await buildManifest();
+  const next = stableStringify(output);
 
-  console.log(`${GREEN}✓ ${EXPECTED_TOTAL_PAGES} صفحة، ${totalAyahsSeen} آية، ${juz.length} جزءًا مفحوصة${RESET}`);
-  console.log(`${GREEN}✓ كُتب public/data/quran/pages-manifest.json${RESET}`);
+  let current = null;
+  try {
+    current = (await readFile(OUT_PATH, "utf8")).replace(/\r\n/g, "\n");
+  } catch {
+    current = null;
+  }
+
+  if (checkOnly) {
+    if (current === next) {
+      console.log(`${GREEN}✓ pages-manifest.json مطابق (حتمي)${RESET}`);
+      return;
+    }
+    console.error(`${RED}✗ pages-manifest.json مختلف عن التوليد الحتمي${RESET}`);
+    process.exit(1);
+  }
+
+  if (current === next) {
+    console.log(`${GREEN}✓ لا تغيير — الملف محدّث أصلًا${RESET}`);
+  } else {
+    await writeFile(OUT_PATH, next, "utf8");
+    console.log(`${GREEN}✓ كُتب public/data/quran/pages-manifest.json${RESET}`);
+  }
+  console.log(
+    `${GREEN}✓ ${EXPECTED_TOTAL_PAGES} صفحة، ${totalAyahsSeen} آية، ${output.juz.length} جزءًا مفحوصة${RESET}`,
+  );
 }
 
 main().catch((err) => {
-  console.error(`${RED}خطأ:${RESET}`, err);
+  console.error(`${RED}خطأ:${RESET}`, err instanceof Error ? err.message : err);
   process.exit(1);
 });
