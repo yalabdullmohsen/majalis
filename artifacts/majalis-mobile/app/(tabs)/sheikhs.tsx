@@ -22,7 +22,7 @@ export default function SheikhsScreen() {
   const insets = useSafeAreaInsets();
   const [search, setSearch] = useState("");
 
-  const { data, isLoading, refetch } = useQuery({
+  const { data, isLoading, isFetching, refetch } = useQuery({
     queryKey: ["sheikhs"],
     queryFn: getSheikhs,
   });
@@ -61,7 +61,7 @@ export default function SheikhsScreen() {
             paddingBottom: Platform.OS === "web" ? 34 : insets.bottom + 80,
           }}
           onRefresh={refetch}
-          refreshing={isLoading}
+          refreshing={isFetching && !isLoading}
           ListEmptyComponent={() => (
             <View style={styles.empty}>
               <Ionicons name="people-outline" size={40} color={colors.mutedForeground} />

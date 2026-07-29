@@ -56,11 +56,17 @@ function handleNotificationNavigation(
   const { screen, id } = data;
 
   if (screen === "sheikh" && id) {
-    router.push(`/sheikh/${id}` as any);
+    router.push(`/sheikh/${id}`);
   } else if (screen === "lessons") {
-    router.push("/(tabs)/lessons" as any);
+    router.push("/(tabs)/lessons");
   } else if (screen === "fawaid") {
-    router.push("/(tabs)/fawaid" as any);
+    router.push("/(tabs)/fawaid");
+  } else if (screen === "library") {
+    router.push("/library");
+  } else if (screen === "qa") {
+    router.push("/qa");
+  } else if (screen === "miracles") {
+    router.push("/miracles");
   }
 }
 
@@ -105,6 +111,11 @@ function RootLayoutNav() {
   useEffect(() => {
     // Request permission and register push token on first load
     registerForPushNotifications();
+
+    // Cold start: user tapped a notification that launched the app
+    void Notifications.getLastNotificationResponseAsync().then((response) => {
+      if (response) handleNotificationNavigation(response);
+    });
 
     // Foreground notification listener (already shown via setNotificationHandler)
     notificationListener.current =
@@ -181,7 +192,7 @@ export default function RootLayout() {
       <ErrorBoundary>
         <QueryClientProvider client={queryClient}>
           <AuthProvider>
-            <GestureHandlerRootView>
+            <GestureHandlerRootView style={{ flex: 1 }}>
               <KeyboardProvider>
                 <RootLayoutNav />
               </KeyboardProvider>

@@ -24,7 +24,7 @@ type Mode = "login" | "register";
 export default function AccountScreen() {
   const colors = useColors();
   const insets = useSafeAreaInsets();
-  const { user, signOut } = useAuth();
+  const { user, isAdmin, signOut } = useAuth();
   const [mode, setMode] = useState<Mode>("login");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -53,8 +53,9 @@ export default function AccountScreen() {
         Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
         Alert.alert("تم التسجيل", "تم إنشاء حسابك بنجاح");
       }
-    } catch (err: any) {
-      Alert.alert("خطأ", err?.message || "حدث خطأ");
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "حدث خطأ";
+      Alert.alert("خطأ", message);
     } finally {
       setLoading(false);
     }
@@ -73,21 +74,32 @@ export default function AccountScreen() {
 
         <View style={[styles.section, { marginTop: 24 }]}>
           <View style={[styles.menuCard, { backgroundColor: colors.card, borderColor: colors.border }]}>
-            <Pressable style={[styles.menuItem, { borderColor: colors.border }]}>
+            <Pressable
+              style={[styles.menuItem, { borderColor: colors.border }]}
+              onPress={() => router.push("/(tabs)/lessons")}
+              accessibilityRole="button"
+              accessibilityLabel="دروسي المسجلة"
+            >
               <Ionicons name="book-outline" size={20} color={colors.primary} />
               <Text style={[styles.menuText, { color: colors.foreground }]}>دروسي المسجلة</Text>
               <Ionicons name="chevron-back" size={18} color={colors.mutedForeground} />
             </Pressable>
+            {isAdmin ? (
+              <Pressable
+                style={[styles.menuItem, { borderTopWidth: 1, borderColor: colors.border }]}
+                onPress={() => router.push("/admin")}
+                accessibilityRole="button"
+                accessibilityLabel="لوحة الإشراف"
+              >
+                <Ionicons name="shield-checkmark-outline" size={20} color={colors.brass} />
+                <Text style={[styles.menuText, { color: colors.foreground }]}>لوحة الإشراف</Text>
+                <Ionicons name="chevron-back" size={18} color={colors.mutedForeground} />
+              </Pressable>
+            ) : null}
             <Pressable
               style={[styles.menuItem, { borderTopWidth: 1, borderColor: colors.border }]}
-              onPress={() => router.push("/admin" as any)}
-            >
-              <Ionicons name="shield-checkmark-outline" size={20} color={colors.brass} />
-              <Text style={[styles.menuText, { color: colors.foreground }]}>لوحة الإشراف</Text>
-              <Ionicons name="chevron-back" size={18} color={colors.mutedForeground} />
-            </Pressable>
-            <Pressable
-              style={[styles.menuItem, { borderTopWidth: 1, borderColor: colors.border }]}
+              accessibilityRole="button"
+              accessibilityLabel="تسجيل الخروج"
               onPress={async () => {
                 await signOut();
                 Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
