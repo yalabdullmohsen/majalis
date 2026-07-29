@@ -106,6 +106,10 @@
       "schedule": "*/30 * * * *"
     },
     {
+      "path": "/api/cron/job-worker",
+      "schedule": "*/5 * * * *"
+    },
+    {
       "path": "/api/cron/lesson-intelligence",
       "schedule": "15,45 * * * *"
     },
