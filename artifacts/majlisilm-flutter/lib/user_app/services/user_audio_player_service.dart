@@ -1,13 +1,25 @@
+import 'dart:async';
+
 import 'package:just_audio/just_audio.dart';
 
 import '../../shared/constants/majlis_constants.dart';
 
 /// User-module wrapper around [just_audio] — namespaced to avoid admin collisions.
 class UserAudioPlayerService {
-  UserAudioPlayerService({AudioPlayer? player}) : _player = player ?? AudioPlayer();
+  UserAudioPlayerService({AudioPlayer? player}) : _player = player ?? AudioPlayer() {
+    _stateSub = _player.playerStateStream.listen((state) {
+      if (state.processingState == ProcessingState.completed) {
+        onCompleted?.call();
+      }
+    });
+  }
 
   final AudioPlayer _player;
+  StreamSubscription<PlayerState>? _stateSub;
   String? _currentUrl;
+
+  /// Invoked when the current track reaches [ProcessingState.completed].
+  void Function()? onCompleted;
 
   AudioPlayer get player => _player;
   String? get currentUrl => _currentUrl;
@@ -49,6 +61,8 @@ class UserAudioPlayerService {
   Future<void> setSpeed(double speed) => _player.setSpeed(speed);
 
   Future<void> dispose() async {
+    await _stateSub?.cancel();
+    _stateSub = null;
     await _player.dispose();
   }
 }

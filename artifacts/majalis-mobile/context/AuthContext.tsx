@@ -13,6 +13,12 @@ interface AuthContextType {
   signOut: () => Promise<void>;
 }
 
+type AuthProfileUser = {
+  id: string;
+  email?: string;
+  user_metadata?: Record<string, unknown>;
+};
+
 const AuthContext = createContext<AuthContextType>({
   user: null,
   isAdmin: false,
@@ -20,8 +26,7 @@ const AuthContext = createContext<AuthContextType>({
   signOut: async () => {},
 });
 
-async function fetchOrCreateProfile(supabaseUser: { id: string; email?: string; user_metadata?: any }) {
-  // Try to fetch existing profile
+async function fetchOrCreateProfile(supabaseUser: AuthProfileUser) {
   const { data: profile } = await supabase
     .from("profiles")
     .select("role")
@@ -30,16 +35,20 @@ async function fetchOrCreateProfile(supabaseUser: { id: string; email?: string; 
 
   if (profile) return profile;
 
-  // Profile missing — create it now (fallback if DB trigger is absent)
+  const fullName =
+    typeof supabaseUser.user_metadata?.full_name === "string"
+      ? supabaseUser.user_metadata.full_name
+      : "";
+
   const { data: created } = await supabase
     .from("profiles")
     .upsert(
       {
         id: supabaseUser.id,
-        full_name: supabaseUser.user_metadata?.full_name ?? "",
+        full_name: fullName,
         role: "user",
       },
-      { onConflict: "id" }
+      { onConflict: "id" },
     )
     .select("role")
     .single();
@@ -52,30 +61,37 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
 
-  const hydrateUser = async (supabaseUser: { id: string; email?: string; user_metadata?: any } | null) => {
-    if (!supabaseUser) {
-      setUser(null);
-      setIsAdmin(false);
-      return;
-    }
-    setUser({ id: supabaseUser.id, email: supabaseUser.email });
-    const profile = await fetchOrCreateProfile(supabaseUser);
-    setIsAdmin(profile?.role === "admin");
-  };
-
   useEffect(() => {
+    let alive = true;
+
+    const hydrateUser = async (supabaseUser: AuthProfileUser | null) => {
+      if (!alive) return;
+      if (!supabaseUser) {
+        setUser(null);
+        setIsAdmin(false);
+        return;
+      }
+      setUser({ id: supabaseUser.id, email: supabaseUser.email });
+      const profile = await fetchOrCreateProfile(supabaseUser);
+      if (!alive) return;
+      setIsAdmin(profile?.role === "admin");
+    };
+
     supabase.auth.getSession().then(async ({ data: { session } }) => {
       await hydrateUser(session?.user ?? null);
-      setLoading(false);
+      if (alive) setLoading(false);
     });
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange(
-      async (_event, session) => {
-        await hydrateUser(session?.user ?? null);
-      }
-    );
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange(async (_event, session) => {
+      await hydrateUser(session?.user ?? null);
+    });
 
-    return () => subscription.unsubscribe();
+    return () => {
+      alive = false;
+      subscription.unsubscribe();
+    };
   }, []);
 
   const handleSignOut = async () => {

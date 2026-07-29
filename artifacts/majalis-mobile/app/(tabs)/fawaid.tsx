@@ -29,7 +29,7 @@ export default function FawaidScreen() {
   const [newText, setNewText] = useState("");
   const [authorName, setAuthorName] = useState("");
 
-  const { data, isLoading, refetch } = useQuery({
+  const { data, isLoading, isFetching, refetch } = useQuery({
     queryKey: ["fawaid"],
     queryFn: getApprovedFawaid,
   });
@@ -65,7 +65,7 @@ export default function FawaidScreen() {
             paddingBottom: Platform.OS === "web" ? 34 : insets.bottom + 80,
           }}
           onRefresh={refetch}
-          refreshing={isLoading}
+          refreshing={isFetching && !isLoading}
           ListEmptyComponent={() => (
             <View style={styles.empty}>
               <Ionicons name="star-outline" size={40} color={colors.mutedForeground} />
@@ -99,6 +99,8 @@ export default function FawaidScreen() {
       {user && (
         <Pressable
           style={[styles.fab, { backgroundColor: colors.primary, bottom: Platform.OS === "web" ? 34 + 16 : insets.bottom + 80 + 16 }]}
+          accessibilityRole="button"
+          accessibilityLabel="إضافة فائدة"
           onPress={() => {
             Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
             setModalVisible(true);
@@ -113,7 +115,11 @@ export default function FawaidScreen() {
         <View style={styles.overlay}>
           <View style={[styles.modal, { backgroundColor: colors.card, borderColor: colors.border }]}>
             <View style={styles.modalHeader}>
-              <Pressable onPress={() => setModalVisible(false)}>
+              <Pressable
+                onPress={() => setModalVisible(false)}
+                accessibilityRole="button"
+                accessibilityLabel="إغلاق"
+              >
                 <Ionicons name="close" size={24} color={colors.foreground} />
               </Pressable>
               <Text style={[styles.modalTitle, { color: colors.foreground }]}>أضف فائدة</Text>

@@ -38,9 +38,9 @@ export default function LessonsScreen() {
   const [category, setCategory] = useState("الكل");
   const [city, setCity] = useState("كل المحافظات");
 
-  const { data, isLoading, refetch } = useQuery({
-    queryKey: ["lessons", category, city, search],
-    queryFn: () => getLessons({ category, city, search }),
+  const { data, isLoading, isFetching, refetch } = useQuery({
+    queryKey: ["lessons", category, city],
+    queryFn: () => getLessons({ category, city }),
   });
 
   const { data: myRegData } = useQuery({
@@ -50,6 +50,11 @@ export default function LessonsScreen() {
   });
 
   const myReg: string[] = myRegData || [];
+  const lessons = (data?.data || []).filter((l) => {
+    const s = search.trim();
+    if (!s) return true;
+    return Boolean(l.title?.includes(s) || l.mosque?.includes(s) || l.city?.includes(s));
+  });
 
   const toggleMutation = useMutation({
     mutationFn: async (lessonId: string) => {
@@ -64,8 +69,8 @@ export default function LessonsScreen() {
       Haptics.notificationAsync(Haptics.NotificationFeedbackType.Success);
       queryClient.invalidateQueries({ queryKey: ["my-registrations", user?.id] });
     },
-    onError: (err: any) => {
-      if (err?.message === "not-logged-in") {
+    onError: (err: unknown) => {
+      if (err instanceof Error && err.message === "not-logged-in") {
         Alert.alert("تنبيه", "يرجى تسجيل الدخول أولاً");
       } else {
         Alert.alert("خطأ", "حدث خطأ أثناء التسجيل");
@@ -80,8 +85,6 @@ export default function LessonsScreen() {
     }
     toggleMutation.mutate(lessonId);
   };
-
-  const lessons = data?.data || [];
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
@@ -166,13 +169,13 @@ export default function LessonsScreen() {
       ) : (
         <FlatList
           data={lessons}
-          keyExtractor={(item: any) => item.id}
+          keyExtractor={(item) => String(item.id)}
           contentContainerStyle={{
             padding: 16,
             paddingBottom: Platform.OS === "web" ? 34 : insets.bottom + 80,
           }}
           onRefresh={refetch}
-          refreshing={isLoading}
+          refreshing={isFetching && !isLoading}
           ListEmptyComponent={() => (
             <View style={styles.empty}>
               <Ionicons name="book-outline" size={40} color={colors.mutedForeground} />
@@ -181,7 +184,7 @@ export default function LessonsScreen() {
               </Text>
             </View>
           )}
-          renderItem={({ item }: { item: any }) => {
+          renderItem={({ item }) => {
             const registered = myReg.includes(item.id);
             return (
               <View
