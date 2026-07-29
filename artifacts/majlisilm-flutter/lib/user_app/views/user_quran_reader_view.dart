@@ -52,7 +52,7 @@ class UserQuranReaderView extends StatelessWidget {
                       onTap: onSearch!,
                       backgroundColor: quran.isDarkMode
                           ? Colors.white10
-                          : Colors.black.withOpacity(0.05),
+                          : Colors.black.withValues(alpha: 0.05),
                     ),
             ),
           ];

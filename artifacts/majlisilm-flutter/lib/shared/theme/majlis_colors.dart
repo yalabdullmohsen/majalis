@@ -12,8 +12,8 @@ abstract final class MajlisColors {
   static const Color parchmentSoft = Color(0xFFFAF8F5);
 
   static Color verseSelected(bool dark) =>
-      Colors.brown.withOpacity(dark ? 0.35 : 0.15);
+      Colors.brown.withValues(alpha: dark ? 0.35 : 0.15);
 
   static Color versePlaying(bool dark) =>
-      Colors.amber.withOpacity(dark ? 0.35 : 0.3);
+      Colors.amber.withValues(alpha: dark ? 0.35 : 0.3);
 }
