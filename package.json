@@ -9,7 +9,13 @@
     "build": "pnpm run typecheck && pnpm -r --filter \"!./artifacts/majalis-mobile\" --if-present run build",
     "typecheck:libs": "tsc --build",
     "typecheck": "pnpm run typecheck:libs && pnpm -r --filter \"./artifacts/**\" --filter \"./scripts\" --if-present run typecheck",
-    "verify:production-complete": "pnpm --filter @workspace/majalis run verify:production-complete"
+    "verify:production-complete": "pnpm --filter @workspace/majalis run verify:production-complete",
+    "verify:no-runtime-ddl": "node scripts/verify-no-runtime-ddl.mjs",
+    "verify:single-response": "node scripts/verify-single-response-pattern.mjs",
+    "db:migration:verify": "node scripts/db-migration-verify.mjs verify",
+    "db:migration:test:fresh": "node scripts/db-migration-verify.mjs fresh",
+    "db:migration:test:upgrade": "node scripts/db-migration-verify.mjs upgrade",
+    "test:postgres-integration": "node scripts/test-postgres-queue-integration.mjs"
   },
   "private": true,
   "devDependencies": {

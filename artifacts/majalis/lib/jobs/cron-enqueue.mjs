@@ -43,7 +43,13 @@ export function createEnqueueCronHandler(jobType) {
     });
 
     if (!result.ok) {
-      sendJson(res, 400, { ok: false, error: result.error });
+      const status =
+        result.error === "durable_store_unavailable" ? 503 : 400;
+      sendJson(res, status, {
+        ok: false,
+        error: result.error,
+        durable: result.durable === true,
+      });
       return;
     }
 

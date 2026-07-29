@@ -1,5 +1,6 @@
 /**
  * P0 reliability unit tests — AI circuit, HTTP double-send, queue, UUID/slug.
+ * Run with NODE_ENV=test (see package.json test:p0-reliability).
  */
 import assert from "node:assert/strict";
 import { classifyAiError, isPermanentAiFailure, AI_ERROR_CODES } from "../ai/error-classifier.mjs";
