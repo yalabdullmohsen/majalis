@@ -7,7 +7,7 @@
 |---|---|---|---|---|---|---|---|
 | 0 — Baseline audit | **done** | docs/audits + delivery docs | install/typecheck/lint/test/build | all 0; build dirty dates proven then fixed in PR1 | PR #619; `/tmp/baseline-audit` | — | لا |
 | 1 — Governance/CI | **Draft PR** | delete auto-merge, CODEOWNERS, full test, lint0, macos xcode wf | verify-no-unsafe-auto-merge; build stable | 0 | PR #620 | Branch protection UI | Branch protection يدوي |
-| 2 — Supabase | **Draft docs only** | drift docs + revoke template | verify-schema-drift-expectations (static) | 0 static | PR (supabase branch) | Live Advisors + policy DDL | **نعم** لـProd |
+| 2 — Supabase | **PR ready (no Prod apply)** | hardening SQL + rollback + RLS matrix | verify-platform-hardening-sql; local psql apply | 0; anon denied on background_jobs | this PR | Prod Advisors + Auth dashboard | **نعم** لـProd |
 | 3 — Runtime/Cron/AI | **partial elsewhere** | durable queue/AI/enqueue | see PR #618 | Draft open | #618 | Merge review after #620 | Prod migration |
 | 4 — Web UUID/SW | pending | — | — | — | — | PR4 | لا |
 | 5 — iOS native xcode | **blocked on Linux agent** | macos workflow added in #620 | xcodebuild | **NOT RUN HERE** | workflow file | macos Actions run | Signing |
