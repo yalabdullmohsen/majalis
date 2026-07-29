@@ -9,6 +9,7 @@ import { useThemePreference } from "./ThemePreferenceProvider";
 
 import { useMobileNavState } from "@/hooks/useMobileNavState";
 import { isNavHrefActive } from "@/lib/nav-active";
+import { isImmersiveChromePath, isQuranImmersivePath } from "@/lib/immersive-chrome";
 import { PRIMARY_NAV_ITEMS } from "@/lib/navigation";
 import { fetchPrayerTimes, computePrayerCountdown, type PrayerCountdown } from "@/lib/prayer-times";
 import "@/styles/components/dark-emerald-menus.css";
@@ -123,9 +124,8 @@ export default function NavBar() {
     </div>
   );
 
-  // قارئ المصحف /mushaf غامر مخصَّص بهيدره/تنقّله الخاصين — شريط الموقع
-  // الكامل (بحث/دخول/قوائم) فوقه يجعله يبدو صفحة ويب لا تطبيق قراءة.
-  if (location.startsWith("/mushaf")) return null;
+  // قارئ المصحف غامر بتنقّله الخاص — شريط الموقع الكامل فوقه يجعله صفحة ويب.
+  if (isQuranImmersivePath(location)) return null;
 
   return (
     <>
@@ -173,11 +173,12 @@ export default function NavBar() {
               البحث الشامل) واختصار Ctrl/Cmd+K القائم أصلاً. على الجوال
               يشغل المساحة الوسطى الفارغة أصلاً؛ على سطح المكتب يحلّ محل
               مربع البحث المضمّن تحديدًا. */}
-          {isMobile && <HeaderTicker />}
+          {/* شريط الأحاديث/النصوص المتحرّك — يُمنع في مسارات الصلاة والمصحف */}
+          {isMobile && !isImmersiveChromePath(location) && <HeaderTicker />}
 
           <div className="navbar-v3__end">
-            {/* عداد الصلاة التالية — سطح المكتب فقط */}
-            {!isMobile && <PrayerChip />}
+            {/* عداد الصلاة التالية — سطح المكتب فقط؛ يُخفى داخل صفحة المواقيت نفسها */}
+            {!isMobile && !isImmersiveChromePath(location) && <PrayerChip />}
             {/* زر الوضع الليلي */}
             <button
               type="button"
@@ -200,7 +201,7 @@ export default function NavBar() {
             >
               <Search size={17} strokeWidth={1.8} aria-hidden="true" />
             </button>
-            {!isMobile && <HeaderTicker />}
+            {!isMobile && !isImmersiveChromePath(location) && <HeaderTicker />}
             {!isMobile && desktopAuthLinks}
 
             {/* Mobile: زر دخول/حساب واضح دائمًا — لا يُترك مخفيًا داخل قائمة الهامبرغر فقط */}
