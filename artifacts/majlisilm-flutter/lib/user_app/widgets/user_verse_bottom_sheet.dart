@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
+import '../../features/ai_recitation/ai_recitation.dart';
 import '../../shared/models/shared_quran_verse.dart';
 import '../../shared/theme/majlis_colors.dart';
 import '../controllers/user_quran_app_controller.dart';
@@ -98,6 +99,19 @@ class UserVerseBottomSheet extends StatelessWidget {
                   tafsirText: verse.tafsir.isEmpty
                       ? 'لا يتوفر تفسير لهذه الآية في العينة.'
                       : verse.tafsir,
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.mic_rounded, color: MajlisColors.brown),
+              title: const Text('التسميع الذكي'),
+              subtitle: const Text('مطابقة فورية للكلمات أثناء التلاوة'),
+              onTap: () {
+                Navigator.pop(context);
+                AiRecitationView.open(
+                  context,
+                  targetVerse: verse.textUthmani,
+                  verseRef: verse.verseRef,
                 );
               },
             ),

@@ -7,12 +7,14 @@ artifacts/majlisilm-flutter/
 ├── pubspec.yaml
 └── lib/
     ├── main.dart                 # User app entry (Phase 1)
+    ├── features/
+    │   └── ai_recitation/        # Tarteel-style AI recitation + alignment
     ├── shared/                   # Shared models + theme (both modules)
     ├── user_app/                 # PHASE 1 — complete
     │   ├── controllers/          # UserQuranAppController, UserEducationalProgressController
     │   ├── services/             # Audio, LocalStorage
     │   ├── data/                 # Quran repository sample
-    │   ├── widgets/              # AI recitation, sheets, tafsir
+    │   ├── widgets/              # Sheets, tafsir, AI launcher
     │   └── views/                # Reader, educational paths, shell
     └── admin_panel/              # PHASE 2 — wait for "Continue Phase 2"
 ```
@@ -22,6 +24,7 @@ artifacts/majlisilm-flutter/
 | Concern | User module | Admin module (Phase 2) |
 |---|---|---|
 | Quran / reading state | `UserQuranAppController` | — |
+| AI recitation | `features/ai_recitation` (`AiRecitationController`) | — |
 | Progress / Adhkar | `UserEducationalProgressController` | — |
 | Audio | `UserAudioPlayerService` | `AdminAudioPreviewService` (P2) |
 | Storage | `UserLocalStorageService` | `AdminLocalStorageService` (P2) |
@@ -31,8 +34,10 @@ artifacts/majlisilm-flutter/
 
 - **Provider** — ChangeNotifier controllers
 - **just_audio** — URL MP3 playback (everyayah)
+- **record** — 16 kHz / 16-bit mono PCM mic streaming for ASR
+- **web_socket_channel** — optional cloud ASR streaming
 - **shared_preferences** — font, theme, last verse, progress
-- **speech_to_text** — `ar_SA` recitation matching
+- **speech_to_text** — on-device `ar_SA` fallback recognition
 - **SystemUiMode.immersiveSticky** — distraction-free reader
 - Theme: cream `#F5F5DC` / dark `#1A1A1A`
 
