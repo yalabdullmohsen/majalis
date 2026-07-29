@@ -229,64 +229,63 @@ function parseJson(text) {
   }
 }
 
+import { classifyAiError } from "../ai/error-classifier.mjs";
+import { runAiCall } from "../ai/provider-client.mjs";
+
 // ── Error classifier ──────────────────────────────────────────────────────────
 function classifyAnthropicError(err) {
-  const status = err?.status ?? err?.statusCode ?? 0;
-  const msg = String(err?.message || err?.error?.message || "").toLowerCase();
-
-  if (status === 400) {
-    if (msg.includes("credit") || msg.includes("balance")) {
-      return { code: "credit_exhausted", arabic: "رصيد API منتهٍ — يُرجى شحن حساب Anthropic.", retryable: false };
-    }
-    if (msg.includes("api_key") || msg.includes("api key") || msg.includes("invalid key")) {
-      return { code: "invalid_api_key", arabic: "مفتاح API غير صالح.", retryable: false };
-    }
-    if (msg.includes("model")) {
-      return { code: "model_not_found", arabic: "النموذج المطلوب غير متاح حالياً.", retryable: false };
-    }
-    return { code: "bad_request", arabic: "طلب غير صالح — يُرجى المحاولة مجدداً.", retryable: false };
-  }
-  if (status === 401) return { code: "unauthorized", arabic: "مفتاح API غير صالح أو منتهي الصلاحية.", retryable: false };
-  if (status === 403) return { code: "forbidden", arabic: "لا تملك صلاحية استخدام هذه الخدمة.", retryable: false };
-  if (status === 404) return { code: "not_found", arabic: "النموذج أو الخدمة غير موجودة.", retryable: false };
-  if (status === 429) return { code: "rate_limit", arabic: "تجاوزت حد الطلبات — سيُعاد المحاولة تلقائياً.", retryable: true };
-  if (status === 408 || err?.name === "APIConnectionTimeoutError") {
-    return { code: "timeout", arabic: "انتهت مهلة الاتصال — سيُعاد المحاولة.", retryable: true };
-  }
-  if (status >= 500 && status < 600) {
-    return { code: "server_error", arabic: "خطأ مؤقت في خادم Anthropic — سيُعاد المحاولة.", retryable: true };
-  }
-  if (err?.name === "APIConnectionError") {
-    return { code: "network_error", arabic: "تعذر الاتصال بالخادم — تحقق من الشبكة وأعد المحاولة.", retryable: true };
-  }
-  return { code: "unknown", arabic: "تعذر الاستخراج التلقائي — يمكنك إدخال البيانات يدويًا.", retryable: false };
+  const c = classifyAiError(err);
+  const arabicByCode = {
+    credit_exhausted: "رصيد API منتهٍ — يُرجى شحن حساب Anthropic.",
+    authentication_error: "مفتاح API غير صالح أو منتهي الصلاحية.",
+    rate_limited: "تجاوزت حد الطلبات — سيُعاد المحاولة تلقائياً.",
+    invalid_request: "طلب غير صالح — يُرجى المحاولة مجدداً.",
+    provider_unavailable: "خطأ مؤقت في خادم Anthropic — سيُعاد المحاولة.",
+    timeout: "انتهت مهلة الاتصال — سيُعاد المحاولة.",
+    network_error: "تعذر الاتصال بالخادم — تحقق من الشبكة وأعد المحاولة.",
+    circuit_open: "مزود الذكاء متوقف مؤقتاً بسبب نفاد الرصيد أو خطأ دائم.",
+    daily_limit: "تم بلوغ الحد اليومي لاستدعاءات الذكاء الاصطناعي.",
+    unknown: "تعذر الاستخراج التلقائي — يمكنك إدخال البيانات يدويًا.",
+  };
+  return {
+    code: c.code === "rate_limited" ? "rate_limit" : c.code,
+    arabic: arabicByCode[c.code] || arabicByCode.unknown,
+    retryable: c.retryable,
+  };
 }
 
-// ── Retry wrapper ─────────────────────────────────────────────────────────────
+// ── Retry wrapper (delegates to distributed circuit breaker) ─────────────────
 async function callWithRetry(fn, label) {
-  let lastErr;
-  for (let attempt = 1; attempt <= MAX_RETRIES; attempt++) {
-    const t0 = Date.now();
-    try {
-      const result = await fn();
-      console.log(`[lesson-extractor] ${label} ok attempt=${attempt} ms=${Date.now() - t0}`);
-      return { ok: true, text: result, ms: Date.now() - t0 };
-    } catch (err) {
-      lastErr = err;
-      const c = classifyAnthropicError(err);
-      console.error(
-        `[lesson-extractor] ${label} error attempt=${attempt} ms=${Date.now() - t0} code=${c.code} status=${err?.status ?? 0}`,
-      );
-      if (!c.retryable || attempt === MAX_RETRIES) {
-        return { ok: false, errorCode: c.code, errorArabic: c.arabic, ms: Date.now() - t0 };
-      }
-      const delay = BASE_BACKOFF_MS * Math.pow(2, attempt - 1) + Math.random() * 500;
-      console.log(`[lesson-extractor] ${label} retry in ${Math.round(delay)}ms`);
-      await new Promise((r) => setTimeout(r, delay));
-    }
+  const t0 = Date.now();
+  const outcome = await runAiCall("anthropic", fn, {
+    opts: { maxRetries: MAX_RETRIES - 1, requestTimeoutMs: 60_000 },
+  });
+  if (outcome.ok) {
+    console.log(`[lesson-extractor] ${label} ok ms=${Date.now() - t0}`);
+    return { ok: true, text: outcome.result, ms: Date.now() - t0 };
   }
-  const c = classifyAnthropicError(lastErr);
-  return { ok: false, errorCode: c.code, errorArabic: c.arabic };
+  const code = outcome.errorCode || "unknown";
+  const mapped = classifyAnthropicError({
+    status: code === "credit_exhausted" ? 400 : code === "rate_limited" || code === "rate_limit" ? 429 : 500,
+    message: code,
+  });
+  console.error(
+    JSON.stringify({
+      level: "error",
+      msg: "lesson-extractor.failed",
+      label,
+      code: mapped.code,
+      skippedProvider: Boolean(outcome.skippedProvider),
+      ms: Date.now() - t0,
+    }),
+  );
+  return {
+    ok: false,
+    errorCode: mapped.code,
+    errorArabic: mapped.arabic,
+    ms: Date.now() - t0,
+    providerPaused: outcome.body || null,
+  };
 }
 
 // ── Vision call ───────────────────────────────────────────────────────────────
