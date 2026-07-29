@@ -1,4 +1,4 @@
-# CI/CD Security Model
+# CI/CD Security Model — المجلس العلمي (Majalis)
 
 ## Separation of concerns
 
