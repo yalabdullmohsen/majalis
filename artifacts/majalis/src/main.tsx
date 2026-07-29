@@ -120,17 +120,20 @@ if (isAndroid) {
  * تُصيَّر المسار بشكل صحيح خارج تحميل index.html الأول.
  */
 if (isNative) {
+  void import("@/lib/native-playback-audio").then(({ ensureNativePlaybackAudioSession }) => {
+    void ensureNativePlaybackAudioSession();
+  });
+
   import("@capacitor/app").then(({ App: CapApp }) => {
     CapApp.addListener("appUrlOpen", ({ url }) => {
-      try {
-        const parsed = new URL(url);
-        const path = `${parsed.pathname}${parsed.search}${parsed.hash}`;
+      void import("@/lib/native-deep-link").then(({ resolveNativeDeepLinkPath, shouldNavigateNativeDeepLink }) => {
+        const path = resolveNativeDeepLinkPath(url);
         const current = `${window.location.pathname}${window.location.search}${window.location.hash}`;
-        if (path && path !== current) {
+        if (shouldNavigateNativeDeepLink(current, path) && path) {
           window.history.pushState({}, "", path);
           window.dispatchEvent(new PopStateEvent("popstate"));
         }
-      } catch { /* رابط غير صالح — تجاهل بأمان */ }
+      });
     });
   }).catch(() => {});
 }

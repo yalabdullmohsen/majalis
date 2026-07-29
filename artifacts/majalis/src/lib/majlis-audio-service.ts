@@ -27,6 +27,9 @@ export class MajlisAudioService {
     if (!this.audio) {
       this.audio = new Audio();
       this.audio.preload = "auto";
+      void import("@/lib/native-playback-audio").then(({ ensureNativePlaybackAudioSession }) => {
+        void ensureNativePlaybackAudioSession();
+      });
       this.audio.addEventListener("playing", () => {
         this.playing = true;
         this.loading = false;

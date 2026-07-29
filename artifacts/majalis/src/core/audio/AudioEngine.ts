@@ -121,6 +121,9 @@ export class AudioEngine {
       this.audio.addEventListener("error", () => this.setPlayerState("error"));
       this.audio.addEventListener("timeupdate", () => this.emitSnapshot());
       this.audio.addEventListener("ended", () => void this.onEnded());
+      void import("@/lib/native-playback-audio").then(({ ensureNativePlaybackAudioSession }) => {
+        void ensureNativePlaybackAudioSession();
+      });
     }
     return this.audio;
   }
