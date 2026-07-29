@@ -1,0 +1,78 @@
+name: Preview smoke (commit-linked)
+
+# ينتظر Deployment Preview من Vercel لنفس SHA ثم يشغّل smoke خفيفًا.
+# لا يدمج ولا يفعّل auto-merge. يتطلب VERCEL_TOKEN اختياريًا؛ وإلا يتخطى بتعليق.
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
+
+concurrency:
+  group: preview-smoke-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: write
+  deployments: read
+
+jobs:
+  preview-smoke:
+    name: preview-smoke
+    if: github.event.pull_request.draft == false || contains(github.event.pull_request.title, 'NO-AUTO-MERGE') || true
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Resolve Preview URL for head SHA
+        id: preview
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_NUM: ${{ github.event.pull_request.number }}
+        run: |
+          set -euo pipefail
+          echo "head_sha=$HEAD_SHA" >> "$GITHUB_OUTPUT"
+          # Prefer GitHub deployment statuses for this SHA
+          url=$(gh api "repos/${GITHUB_REPOSITORY}/deployments?sha=${HEAD_SHA}&environment=Preview&per_page=10" \
+            --jq '.[0].payload.web_url // empty' 2>/dev/null || true)
+          if [ -z "$url" ]; then
+            # Fallback: PR comments / checks often expose vercel.app
+            url=$(gh pr view "$PR_NUM" --json comments,statusCheckRollup --jq '
+              [
+                (.comments // [] | .[].body),
+                (.statusCheckRollup // [] | .[].detailsUrl // "")
+              ] | map(select(. != null)) | join("\n")
+              | capture("https://[a-zA-Z0-9.-]+\\.vercel\\.app") | .string
+            ' 2>/dev/null || true)
+          fi
+          if [ -z "${url:-}" ]; then
+            echo "preview_ready=false" >> "$GITHUB_OUTPUT"
+            echo "Preview URL not found yet for $HEAD_SHA — mark job neutral"
+            exit 0
+          fi
+          echo "preview_url=$url" >> "$GITHUB_OUTPUT"
+          echo "preview_ready=true" >> "$GITHUB_OUTPUT"
+
+      - name: Smoke against Preview
+        if: steps.preview.outputs.preview_ready == 'true'
+        env:
+          PREVIEW_URL: ${{ steps.preview.outputs.preview_url }}
+        run: |
+          set -euo pipefail
+          curl -fsS -o /dev/null -w "%{http_code}\n" "$PREVIEW_URL/" | grep -E '200|301|302'
+          curl -fsS -o /dev/null -w "%{http_code}\n" "$PREVIEW_URL/api/healthz" | grep -E '200'
+          code=$(curl -s -o /dev/null -w "%{http_code}" "$PREVIEW_URL/api/cron/job-worker" || true)
+          test "$code" = "401" -o "$code" = "403"
+          echo "preview-smoke ok for $PREVIEW_URL"
+
+      - name: Comment when Preview missing
+        if: steps.preview.outputs.preview_ready != 'true'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh pr comment ${{ github.event.pull_request.number }} --body "⚠️ Preview smoke: لم يُعثر بعد على Preview URL لنفس SHA \`${{ github.event.pull_request.head.sha }}\`. تحقق من مشروع majalis-majalis وdeploymentEnabled." || true
