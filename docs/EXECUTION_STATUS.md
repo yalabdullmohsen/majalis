@@ -1,51 +1,39 @@
 # EXECUTION STATUS — Platform Root Cause Program
 
 **Baseline SHA:** `87be8fb50e083b05edd0d947ddb04ef77842718c`  
-**Updated:** 2026-07-29 (UTC)  
-**Rule:** No Production merge/deploy from this program without human approval.
+**Updated:** 2026-07-29 (UTC)
 
-| المرحلة | الحالة | الملفات / النطاق | الأمر المنفذ | النتيجة | الدليل | المتبقي | موافقة؟ |
+| المرحلة | الحالة | الملفات / النطاق | الأمر | النتيجة | الدليل | المتبقي | موافقة؟ |
 |---|---|---|---|---|---|---|---|
-| 0 — Isolate + baseline | completed_with_findings | audit branch + docs | `git pull`; `pnpm install --frozen-lockfile`; typecheck; lint | install 0; typecheck 0; lint 0 (max-warnings 50) | `/tmp/baseline-audit/0*.log`; this file | full `test`+`build`+git diff | لا |
-| 1 — Governance/CI | pending | auto-merge, CODEOWNERS, CI, lint=0, macOS gate | — | — | — | PR1 Draft | Branch protection يدوي |
-| 2 — Supabase | pending | RLS, DEFINER, drift SQL | — | — | — | Staging apply | **نعم** لـProd SQL/Auth |
-| 3 — Runtime/Cron/AI | pending | dispatcher, enqueue, circuit | — | — | — | PR3 (يتقاطع مع #618) | لا للكود؛ نعم لـProd migrate |
-| 4 — Web | pending | UUID/SW/perf | — | — | — | PR4 | لا |
-| 5 — iOS native | blocked_on_host | xcodebuild | — | **NO_XCODE on Linux** | audit §1 | macos-latest / Mac | Signing/Archive |
-| Advisors / Vercel inventory | pending | — | — | not run | — | API access | Dashboard changes |
+| 0 — Baseline audit | **done** | docs/audits + delivery docs | install/typecheck/lint/test/build | all 0; build dirty dates proven then fixed in PR1 | PR #619; `/tmp/baseline-audit` | — | لا |
+| 1 — Governance/CI | **Draft PR** | delete auto-merge, CODEOWNERS, full test, lint0, macos xcode wf | verify-no-unsafe-auto-merge; build stable | 0 | PR #620 | Branch protection UI | Branch protection يدوي |
+| 2 — Supabase | **Draft docs only** | drift docs + revoke template | verify-schema-drift-expectations (static) | 0 static | PR (supabase branch) | Live Advisors + policy DDL | **نعم** لـProd |
+| 3 — Runtime/Cron/AI | **partial elsewhere** | durable queue/AI/enqueue | see PR #618 | Draft open | #618 | Merge review after #620 | Prod migration |
+| 4 — Web UUID/SW | pending | — | — | — | — | PR4 | لا |
+| 5 — iOS native xcode | **blocked on Linux agent** | macos workflow added in #620 | xcodebuild | **NOT RUN HERE** | workflow file | macos Actions run | Signing |
 
-## PRs
+## Draft PRs (none merged, no auto-merge)
 
-| PR | Branch | Purpose | Auto-merge | Merged? |
-|---|---|---|---|---|
-| (this audit) | `cursor/audit-platform-root-cause-2026-07-29-1f54` | Phase 0 docs + baseline | NO | NO |
-| #618 (prior) | `cursor/fix-pr616-production-hardening-1f54` | Post-#616 hardening | NO (Draft) | NO |
+| PR | Branch | Purpose |
+|---|---|---|
+| #619 | `cursor/audit-platform-root-cause-2026-07-29-1f54` | Phase 0 audit docs |
+| #620 | `cursor/governance-ci-hardening-1f54` | Governance + CI |
+| (supabase) | `cursor/supabase-security-schema-drift-1f54` | Drift docs / templates |
+| #618 | `cursor/fix-pr616-production-hardening-1f54` | Runtime hardening post-#616 |
 
-## Commands log (Phase 0)
+## Baseline exits
 
-```
-git rev-parse HEAD
-→ 87be8fb50e083b05edd0d947ddb04ef77842718c
+- install 0
+- typecheck 0
+- lint 0 (max-warnings 50 on main; 0 achievable)
+- test 0
+- build 0
+- post-build dirty: `content-counts.json` + `pages-manifest.json` dates (**defect**; fixed in PR1 generators)
 
-corepack enable && pnpm install --frozen-lockfile
-→ INSTALL_EXIT=0
+## Not run / not claimed
 
-pnpm -r --if-present run typecheck
-→ TYPECHECK_EXIT=0
-
-pnpm -r --if-present run lint
-→ LINT_EXIT=0  (still allows 50 warnings — defect G4)
-
-pnpm --filter @workspace/majalis run test
-→ TEST_EXIT=0 (/tmp/baseline-audit/03-test.log)
-
-pnpm --filter @workspace/majalis run build
-→ BUILD_EXIT=0 (/tmp/baseline-audit/04-build.log)
-
-git status --short AFTER BUILD (before restore)
-→ M artifacts/majalis/public/data/quran/pages-manifest.json
-→ M artifacts/majalis/src/data/content-counts.json
-→ **DEFECT: build is not deterministic / mutates tracked sources**
-
-After `git checkout --` those two files: clean except audit docs.
-```
+- Supabase Security/Performance Advisors (no live privileged session logged)
+- Vercel Dashboard project triad comparison
+- Production SQL apply
+- Physical iPhone audio 90m
+- xcodebuild / XCTest / Archive on this host
