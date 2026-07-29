@@ -24,6 +24,7 @@ const INLINE_ALLOWLIST = new Set([
   "job-worker.js", // processes one claimed job under deadline
   "majlis-knowledge-engine.js", // health inline + enqueue for full
   "bootstrap-database.js", // verify/connection inline; full enqueues
+  "process-import-jobs.js", // short watchdog + bounded import queue (content-import contract)
 ]);
 
 const HEAVY_PATTERNS = [
