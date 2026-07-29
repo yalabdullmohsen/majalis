@@ -260,6 +260,12 @@ export type FiqhCouncilIssue = {
   area_of_agreement?: string;
   /** محل الخلاف المعتبر — فارغ يعني لم يُراجَع بهذا التفصيل بعد */
   area_of_disagreement?: string;
+  /** تصوير المسألة — إن وُجد من مراجعة بشرية */
+  question_framing?: string;
+  /** سبب الخلاف — إن وُجد من مراجعة بشرية */
+  disagreement_cause?: string;
+  /** ملاحظة مصادر مجمّعة للمسألة */
+  sources_note?: string;
   /** أشهر الأقوال، كل قول بصاحبه ودليله — لا تُعرض المسألة كمحسومة إن كانت فارغة ومعها خلاف */
   opinions?: Array<{ holder: string; position: string; evidence?: string }>;
   /** القول المعتمد في المنصة إن وُجد */
