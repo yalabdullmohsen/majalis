@@ -2206,6 +2206,9 @@ Allow: /
 Disallow: /admin
 Disallow: /admin/
 Disallow: /login
+Disallow: /register
+Disallow: /auth/
+Disallow: /vault
 Disallow: /api/
 Disallow: /search/
 

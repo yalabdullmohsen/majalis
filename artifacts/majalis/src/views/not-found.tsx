@@ -31,7 +31,7 @@ export default function NotFound() {
     <div className="nf2-page" dir="rtl" lang="ar">
       <section className="nf2-card">
         <div className="nf2-brand">
-          <img src="/favicon.png" width={40} height={40} alt="" className="nf2-brand__logo" />
+          <img src="/favicon.png" width={40} height={40} alt="" className="nf2-brand__logo" loading="eager" decoding="async" />
           <span className="nf2-brand__name">المجلس العلمي</span>
         </div>
 

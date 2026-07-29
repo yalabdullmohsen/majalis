@@ -79,6 +79,8 @@ app.use((_req, res, next) => {
   res.setHeader("X-Frame-Options", "DENY");
   res.setHeader("X-XSS-Protection", "1; mode=block");
   res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
+  res.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload");
+  res.setHeader("Permissions-Policy", "camera=(), microphone=(self), geolocation=()");
   next();
 });
 
@@ -309,6 +311,8 @@ const SPA_PREFIXES = [
   "/discover-islam", "/quran", "/nations", "/prophets", "/prophet-stories",
   "/sins-and-rights", "/arbaeen-nawawi", "/annual-courses",
   "/scientific-announcements", "/c", "/hadith",
+  "/rulings", "/fiqh-council", "/academic-research", "/updates/auto", "/fiqh",
+  "/quran-engine",
 ];
 
 function needsSpaShell(urlPath) {
