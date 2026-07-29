@@ -12,7 +12,7 @@ import { PERF_SLOW_MS } from "./lib/performance-monitor";
 import { registerProductionServiceWorker } from "./lib/service-worker";
 import { setupStatusBar, setupKeyboard, isAndroid, isNative } from "./lib/capacitor-utils";
 import { initFinalPolish } from "./lib/init-final-polish";
-import { prewarmAudioCdns, prewarmTextApis } from "./lib/resource-prewarm";
+import { prewarmAudioCdns, prewarmTextApis, prewarmSupabaseOrigin } from "./lib/resource-prewarm";
 // هوية v4: مصدر الرموز الوحيد (لون/طباعة/مسافات/حواف/ظلال/حركة). يجب أن
 // يبقى أول استيراد — كل ملفات CSS اللاحقة تستهلك رموزه، وأنظمة الرموز
 // القديمة الـ15 مُعاد توجيهها إليه داخله كـaliases.
@@ -43,11 +43,13 @@ if (typeof requestIdleCallback === "function") {
   requestIdleCallback(() => {
     prewarmAudioCdns();
     prewarmTextApis();
+    prewarmSupabaseOrigin();
   }, { timeout: 3_000 });
 } else {
   setTimeout(() => {
     prewarmAudioCdns();
     prewarmTextApis();
+    prewarmSupabaseOrigin();
   }, 1);
 }
 

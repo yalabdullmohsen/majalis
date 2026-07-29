@@ -19,12 +19,34 @@ const basePath = process.env.BASE_PATH || "/";
 const commitHash = process.env.VERCEL_GIT_COMMIT_SHA || process.env.GIT_COMMIT || "dev";
 const buildId = process.env.VERCEL_DEPLOYMENT_ID || process.env.BUILD_ID || "local";
 
+/**
+ * Vendor chunk matcher — must NOT use a bare `includes("react")`.
+ * That incorrectly pulls `react-hook-form`, `@radix-ui/react-*`, etc. into the
+ * long-lived `vendor` chunk and defeats route-level code splitting.
+ */
+function isReactCoreModule(id: string): boolean {
+  return (
+    id.includes("/react-dom/") ||
+    id.includes("/react-dom\\") ||
+    id.includes("/react/") ||
+    id.includes("/react\\") ||
+    id.includes("/scheduler/") ||
+    id.includes("/scheduler\\") ||
+    id.includes("/wouter/") ||
+    id.includes("/wouter\\")
+  );
+}
+
 export default defineConfig({
   base: basePath,
   define: {
     "import.meta.env.VITE_COMMIT_HASH": JSON.stringify(commitHash),
     "import.meta.env.VITE_BUILD_ID": JSON.stringify(buildId),
     "import.meta.env.VITE_VERCEL_GIT_COMMIT_SHA": JSON.stringify(process.env.VERCEL_GIT_COMMIT_SHA || ""),
+  },
+  esbuild: {
+    target: "es2022",
+    legalComments: "none",
   },
   plugins: [
     react(),
@@ -55,10 +77,16 @@ export default defineConfig({
   },
   root: path.resolve(import.meta.dirname),
   build: {
+    target: "es2022",
     outDir: path.resolve(import.meta.dirname, "dist"),
     emptyOutDir: true,
     cssMinify: true,
+    cssCodeSplit: true,
+    assetsInlineLimit: 4096,
     chunkSizeWarningLimit: 600,
+    modulePreload: {
+      polyfill: true,
+    },
     rollupOptions: {
       output: {
         /**
@@ -84,7 +112,7 @@ export default defineConfig({
           if (id.includes("recharts") || id.includes("d3-") || id.includes("victory")) return "charts";
           if (id.includes("adhan")) return "adhan";
           if (id.includes("@tanstack")) return "query";
-          if (id.includes("react") || id.includes("wouter") || id.includes("scheduler")) return "vendor";
+          if (isReactCoreModule(id)) return "vendor";
           if (id.includes("zod") || id.includes("react-hook-form") || id.includes("@hookform")) return "forms";
           if (id.includes("framer-motion") || id.includes("motion")) return "animation";
           if (id.includes("cmdk") || id.includes("vaul") || id.includes("sonner")) return "ui-extra";
