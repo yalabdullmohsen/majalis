@@ -319,7 +319,7 @@ export default function MushafPageView() {
   // لأنه يتراكب فعليًا فوق شريط التنقّل السفلي الثابت بعرض الشاشة هنا،
   // اكتُشف حيًّا أثناء تحقّق Playwright (زر "السابقة" تعذّر النقر عليه).
   const goBack = useCallback(() => {
-    goBackOrFallback(`/mushaf/page/${page}`, "/quran-hub");
+    goBackOrFallback(`/mushaf/page/${page}`, "/");
   }, [page]);
 
   // ── سحب أفقي RTL صحيح الاتجاه: تحريك الإصبع لليسار = الصفحة التالية (تقدّم في القراءة) ──
@@ -382,7 +382,10 @@ export default function MushafPageView() {
   const selectedIdx = selectedAyah ? flatAyahs.findIndex((a) => a.surahNumber === selectedAyah.surah && a.numberInSurah === selectedAyah.ayah) : -1;
 
   return createPortal(
-    <div className={`quran-shell quran-shell--immersive ${shellThemeClass}`} dir="rtl">
+    <div
+      className={`quran-shell quran-shell--immersive ${shellThemeClass}${textChromeVisible ? "" : " quran-shell--chrome-hidden"}`}
+      dir="rtl"
+    >
       <>
           <div className={`mpv-toolbar ${textChromeVisible ? "" : "mpv-toolbar--hidden"}`}>
             <button type="button" className="mpv-toolbar__btn" onClick={goBack} aria-label="رجوع">
@@ -393,8 +396,10 @@ export default function MushafPageView() {
               الفهرس
             </button>
             <div className="mpv-toolbar__title">
-              {primarySurahMeta.name}
-              <small>صفحة {toArabicDigits(page)} · جزء {toArabicDigits(juz)}</small>
+              سورة {primarySurahMeta.name}
+              <small>
+                صفحة {toArabicDigits(page)} · الجزء {toArabicDigits(juz)} · الحزب {toArabicDigits(hizb)}
+              </small>
             </div>
             <button
               type="button"
@@ -443,9 +448,15 @@ export default function MushafPageView() {
                 <span className="qs-mushaf-corner qs-mushaf-corner--bl" aria-hidden="true">❈</span>
                 <span className="qs-mushaf-corner qs-mushaf-corner--br" aria-hidden="true">❈</span>
 
-                <div className="qs-mushaf-header-row">
-                  <span>سورة {primarySurahMeta.name}</span>
-                  <span>الجزء {toArabicDigits(juz)} · الحزب {toArabicDigits(hizb)} · الربع {toArabicDigits(rubInHizb)}</span>
+                <div className="qs-mushaf-header-row" aria-label="معلومات الصفحة">
+                  <span className="qs-mushaf-header-row__surah">سورة {primarySurahMeta.name}</span>
+                  <span
+                    className="qs-mushaf-header-row__meta"
+                    title={rubInHizb ? `الربع ${toArabicDigits(rubInHizb)} من الحزب` : undefined}
+                  >
+                    الجزء {toArabicDigits(juz)} · الحزب {toArabicDigits(hizb)}
+                  </span>
+                  <span className="qs-mushaf-header-row__page">صفحة {toArabicDigits(page)}</span>
                 </div>
 
                 <div

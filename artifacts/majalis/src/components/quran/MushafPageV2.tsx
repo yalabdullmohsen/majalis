@@ -194,7 +194,11 @@ export function SurahHeaderBanner({ chapter, spanRows }: { chapter: MushafPageLa
       <div className="mf2-surah-header__frame">
         <span className="mf2-surah-header__name">سُورَةُ {chapter.nameArabic}</span>
       </div>
-      {chapter.bismillahPre && <div className="mf2-bismillah">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</div>}
+      {chapter.bismillahPre && (
+        <div className="mf2-bismillah" lang="ar" dir="rtl">
+          بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+        </div>
+      )}
     </div>
   );
 }

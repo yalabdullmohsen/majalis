@@ -1,17 +1,7 @@
 import { useEffect, useState } from "react";
 import { applyPageSeo } from "@/lib/seo";
-import { ShareButtons } from "@/components/ContentActions";
 import { Link } from "wouter";
-import {
-  Bell,
-  BookOpen,
-  Compass,
-  MapPin,
-  Moon,
-  RotateCw,
-  Star,
-} from "lucide-react";
-import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { Bell, Compass, MapPin } from "lucide-react";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 import {
   KUWAIT_GOVERNORATES,
@@ -109,13 +99,7 @@ function MosqueSilhouette() {
         fill="currentColor"
         opacity="0.14"
       />
-      <path
-        d="M180 18v22"
-        stroke="currentColor"
-        strokeWidth="3"
-        strokeLinecap="round"
-        opacity="0.22"
-      />
+      <path d="M180 18v22" stroke="currentColor" strokeWidth="3" strokeLinecap="round" opacity="0.22" />
       <circle cx="180" cy="14" r="4" fill="currentColor" opacity="0.28" />
       <rect x="118" y="112" width="124" height="88" rx="6" fill="currentColor" opacity="0.12" />
       <path
@@ -139,6 +123,21 @@ function MosqueSilhouette() {
       <path d="M40 200h280" stroke="currentColor" strokeWidth="2" opacity="0.1" />
     </svg>
   );
+}
+
+/** حالة مختصرة لكل صف في قائمة المواقيت */
+function rowStatusLabel(
+  key: string,
+  nextKey: string | undefined,
+  inGrace: boolean,
+  graceKey: string | undefined,
+  past: boolean,
+): string {
+  if (inGrace && key === graceKey) return "مضى على الأذان";
+  if (key === nextKey && !inGrace) return "قادمة";
+  if (inGrace && key === nextKey) return "حان وقتها";
+  if (past) return "مضت";
+  return "قادمة";
 }
 
 export default function PrayerTimesPage() {
@@ -224,13 +223,13 @@ export default function PrayerTimesPage() {
   const heroLabel = pinnedKey && pinnedKey !== countdown.next.key
     ? "الوقت المتبقي لـ"
     : inGrace
-      ? "الوقت منذ أذان"
+      ? "مضى على الأذان"
       : "الصلاة القادمة";
 
   const isNext = (key: string) => key === countdown.next?.key;
   const isPinned = (key: string) => key === displayKey;
   const isPast = (p: PrayerSlot) =>
-    p.minutes != null && p.minutes < nowInfo.totalMinutes && !isNext(p.key);
+    p.minutes != null && p.minutes < nowInfo.totalMinutes && !isNext(p.key) && !(inGrace && p.key === ranKey);
 
   const hijriStr = formatHijri(data?.date?.hijri ?? null);
   const gregStr = kuwaitDateReadable();
@@ -238,7 +237,6 @@ export default function PrayerTimesPage() {
   return (
     <div className="pts-screen" dir="rtl">
       <header className="pts-header">
-        <h1 className="pts-title">الصلاة</h1>
         <button
           type="button"
           className="pts-location"
@@ -254,6 +252,7 @@ export default function PrayerTimesPage() {
           <span className="pts-dates__sep" aria-hidden="true">·</span>
           <span>{gregStr}</span>
         </div>
+        <h1 className="pts-title sr-only">مواقيت الصلاة</h1>
       </header>
 
       {govOpen && (
@@ -290,6 +289,9 @@ export default function PrayerTimesPage() {
           >
             {displayHms}
           </div>
+          {inGrace && !pinnedKey && (
+            <p className="pts-hero__hint">حتى مرور ٣٥ دقيقة ثم الانتقال للصلاة التالية</p>
+          )}
           {pinnedKey && pinnedKey !== countdown.next.key && (
             <div className="pts-hero__actions">
               {isTomorrow && <span className="pts-badge">غداً</span>}
@@ -307,21 +309,25 @@ export default function PrayerTimesPage() {
             const next = isNext(p.key);
             const pinned = isPinned(p.key);
             const past = isPast(p);
+            const status = rowStatusLabel(p.key, countdown.next?.key, inGrace, ranKey, past);
             return (
               <button
                 key={p.key}
                 type="button"
                 className={[
                   "pts-row",
-                  next ? "pts-row--next" : "",
+                  next || (inGrace && p.key === ranKey) ? "pts-row--next" : "",
                   pinned && !next ? "pts-row--pinned" : "",
                   past ? "pts-row--past" : "",
                 ].filter(Boolean).join(" ")}
                 onClick={() => setPinnedKey(p.key === pinnedKey ? null : p.key)}
                 aria-pressed={pinned}
-                aria-label={`${PRAYER_AR[p.key] ?? p.name}، ${displayTime24(p)}`}
+                aria-label={`${PRAYER_AR[p.key] ?? p.name}، ${displayTime24(p)}، ${status}`}
               >
-                <span className="pts-row__name">{PRAYER_AR[p.key] ?? p.name}</span>
+                <span className="pts-row__meta">
+                  <span className="pts-row__name">{PRAYER_AR[p.key] ?? p.name}</span>
+                  <span className="pts-row__status">{status}</span>
+                </span>
                 <span className="pts-row__time" dir="ltr">{displayTime24(p)}</span>
               </button>
             );
@@ -329,37 +335,16 @@ export default function PrayerTimesPage() {
         </nav>
       )}
 
-      <nav className="pts-dock" aria-label="روابط سريعة">
+      <nav className="pts-dock" aria-label="أدوات الصلاة">
         <Link href="/qibla" className="pts-dock__item">
           <span className="pts-dock__icon"><Compass size={20} strokeWidth={1.7} /></span>
           <span>القبلة</span>
         </Link>
-        <Link href="/adhkar" className="pts-dock__item">
-          <span className="pts-dock__icon"><Moon size={20} strokeWidth={1.7} /></span>
-          <span>الأذكار</span>
-        </Link>
-        <Link href="/tasbih" className="pts-dock__item">
-          <span className="pts-dock__icon"><RotateCw size={20} strokeWidth={1.7} /></span>
-          <span>التسبيح</span>
-        </Link>
-        <Link href="/salah-guide" className="pts-dock__item">
-          <span className="pts-dock__icon"><BookOpen size={20} strokeWidth={1.7} /></span>
-          <span>الدليل</span>
-        </Link>
         <Link href="/adhan-settings" className="pts-dock__item">
           <span className="pts-dock__icon"><Bell size={20} strokeWidth={1.7} /></span>
-          <span>الأذان</span>
-        </Link>
-        <Link href="/salah-guide?tab=maratib" className="pts-dock__item">
-          <span className="pts-dock__icon"><Star size={20} strokeWidth={1.7} /></span>
-          <span>المراتب</span>
+          <span>تنبيهات الأذان</span>
         </Link>
       </nav>
-
-      <div className="pts-footer">
-        <ShareButtons title="مواقيت الصلاة — المجلس العلمي" url="https://www.majlisilm.com/prayer-times" />
-        <SectionQuiz categoryId="fiqh" title="اختبر معلوماتك في أحكام الصلاة" count={4} />
-      </div>
     </div>
   );
 }

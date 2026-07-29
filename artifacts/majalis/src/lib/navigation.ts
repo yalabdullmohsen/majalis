@@ -74,7 +74,7 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
   { href: "/fiqh-qawaid",      label: seoNavLabel("/fiqh-qawaid", "القواعد الفقهية الكبرى") },
   { href: "/duas-quran",        label: seoNavLabel("/duas-quran", "أدعية القرآن الكريم") },
   // القرآن
-  { href: "/quran-hub",           label: seoNavLabel("/quran-hub", "مركز القرآن") },
+  { href: "/mushaf",              label: seoNavLabel("/mushaf", "المصحف الشريف") },
   { href: "/quran/surah-stories", label: seoNavLabel("/quran/surah-stories", "قصص القرآن") },
   // الأذكار
   { href: "/adhkar",        label: seoNavLabel("/adhkar", "الأذكار") },
@@ -99,7 +99,7 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
  */
 export const PRIMARY_NAV_ITEMS: NavLink[] = [
   { href: "/",          label: seoNavLabel("/", "الرئيسية") },
-  { href: "/quran-hub", label: seoNavLabel("/quran-hub", "القرآن"),   description: "مصحف · تجويد · قراء" },
+  { href: "/mushaf",    label: seoNavLabel("/mushaf", "القرآن"),   description: "مصحف · تجويد · قراء" },
   { href: "/library",   label: seoNavLabel("/library", "المكتبة العلمية"),  description: "كتب · مخطوطات · مؤسسات" },
   { href: "/scholars",  label: seoNavLabel("/scholars", "أعلام الإسلام"),  description: "تراجم العلماء والمشايخ" },
   { href: "/fiqh",      label: seoNavLabel("/fiqh", "الفقه"),    description: "أحكام · مسائل · مجمع فقهي" },
@@ -153,7 +153,7 @@ export const HOME_FEATURE_CARDS = [
 export const HOME_MORE_SECTIONS_RAW = [
   { href: "/lessons",               title: seoNavLabel("/lessons", "الدروس"),                description: "دروس ودورات علمية" },
   { href: "/lessons?tab=courses",   title: seoNavLabel("/lessons?tab=courses", "الدورات العلمية"), description: "برامج ودورات ضمن جدول الدروس" },
-  { href: "/quran-hub",    title: seoNavLabel("/quran-hub", "مركز القرآن"),          description: "بوابتك الشاملة للمصحف والتجويد وعلوم القرآن" },
+  { href: "/mushaf",    title: seoNavLabel("/mushaf", "المصحف الشريف"),          description: "قراءة القرآن الكريم مع التلاوة والبحث والمرجع الأخير" },
   { href: "/quran/surah-stories",  title: seoNavLabel("/quran/surah-stories", "قصص القرآن"),            description: "أسباب نزول ومحاور وقصص ١١٤ سورة قرآنية" },
   { href: "/hadith", title: seoNavLabel("/hadith", "الأحاديث النبوية"), description: "أحاديث صحيحة وضعيفة وموضوعة مصنّفة ومفصولة" },
   { href: "/tawhid", title: seoNavLabel("/tawhid", "التوحيد والعقيدة"), description: "أنواع التوحيد وأركان الإيمان والأسماء الحسنى على منهج أهل السنة" },

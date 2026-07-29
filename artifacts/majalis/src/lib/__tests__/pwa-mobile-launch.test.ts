@@ -53,7 +53,8 @@ assert.match(dispatch, /\/api\/push\/subscribe/);
 assert.match(dispatch, /pushSubscribeRateLimit/);
 
 // ── Nav smoke (critical mobile flow) ────────────────────────────────────────
-assert.equal(isNavHrefActive("/quran-hub", "/quran-hub"), true);
+assert.equal(isNavHrefActive("/mushaf", "/mushaf"), true);
+assert.equal(isNavHrefActive("/mushaf/page/12", "/mushaf"), true);
 assert.equal(isNavHrefActive("/prayer-times", "/prayer-times"), true);
 assert.equal(isNavHrefActive("/lessons", "/"), false);
 

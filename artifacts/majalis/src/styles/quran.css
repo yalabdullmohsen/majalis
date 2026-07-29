@@ -1445,8 +1445,9 @@
   background: var(--qs-parchment, #F8F2E4);
   border: 1.5px solid var(--mf-gold, #143F35);
   border-radius: 1px;
-  margin: 0.5rem 0;
+  margin: 0;
   padding: 0;
+  width: 100%;
   box-shadow: 0 2px 16px rgba(31,77,58,0.10);
   /* يملأ الارتفاع المتاح فعليًا في .mpv-body (flex:1 أعلاه) بدل الاكتفاء
      بارتفاع محتواه الداخلي فقط — ضروري ليحصل .qs-mushaf-body على ارتفاع
@@ -1500,19 +1501,39 @@
 .qs-mushaf-corner--bl { bottom: 3px; left: 3px; }
 .qs-mushaf-corner--br { bottom: 3px; right: 3px; }
 
-/* ── سطر رأس الصفحة: اسم السورة (يمين) / الجزء (يسار) — بسيط بلا صندوق ── */
+/* ── سطر رأس الصفحة: سورة | الجزء·الحزب | رقم الصفحة — ثلاث خانات متوازنة ── */
 .qs-mushaf-header-row {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
-  padding: 0.35rem 0.5rem 0.3rem;
-  font-size: 0.78rem;
+  gap: 0.35rem;
+  padding: 0.45rem 0.65rem 0.35rem;
+  font-size: 0.82rem;
   font-weight: 600;
   color: var(--mf-ink, #1A1610);
   direction: rtl;
   font-family: var(--font-body);
   border-bottom: 1px solid var(--mf-gold-faint, rgba(31,77,58,0.15));
   user-select: none;
+  background: color-mix(in srgb, var(--qs-parchment, #F8F2E4) 88%, #ffffff);
+}
+.qs-mushaf-header-row__surah {
+  text-align: start;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.qs-mushaf-header-row__meta {
+  text-align: center;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+  color: var(--text-muted, #4b5563);
+  font-weight: 600;
+}
+.qs-mushaf-header-row__page {
+  text-align: end;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
 }
 
 /* ── صندوق اسم السورة — مستطيل بحد ذهبي — بصري خالص ── */
@@ -1545,8 +1566,8 @@
 /* ── نص الآيات داخل الإطار — حبر أسود على عاجي ── */
 .qs-mushaf-frame .qs-mushaf-body {
   color: var(--mf-ink, #1A1610);
-  padding-top:    0.75rem;
-  padding-bottom: 0.75rem;
+  padding-top:    0.35rem;
+  padding-bottom: 0.35rem;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -1578,12 +1599,14 @@
    390×844 جوال، 834×1194 و1194×834 آيباد portrait/landscape). */
 .qs-mushaf-body .qs-mushaf-body-inner {
   aspect-ratio: 0.72;
-  /* تكبير المستخدم عبر عرض نسبي قابل للتمرير — بلا transform:scale الذي
-     كان يقصّ النص ويُشعر بتجربة PDF. عند المقياس 1 يطابق 100% كما قبل. */
+  /* احتواء كامل الشاشة (object-fit:contain): أكبر عرض ممكن بلا تمديد
+     ولا قصّ — يملأ العرض أو الارتفاع المتاح أيّهما أضيق. */
   width: min(
     calc(100% * var(--qs-font-scale, 1)),
     calc(100cqh * 0.72 * var(--qs-font-scale, 1))
   );
+  max-width: 100%;
+  height: auto;
   margin-inline: auto;
   margin-block: auto;
 }
@@ -1622,9 +1645,10 @@
   align-items: center;
   justify-content: center;
   gap: var(--ds-space-2);
-  padding: 0.4rem 1rem;
+  padding: 0.4rem 0.65rem 0.5rem;
   border-top: 1px solid var(--mf-gold-faint, rgba(31,77,58,0.15));
   user-select: none;
+  background: color-mix(in srgb, var(--qs-parchment, #F8F2E4) 88%, #ffffff);
 }
 .qs-mushaf-footer-row__line {
   flex: 1;
@@ -1633,10 +1657,11 @@
   background: linear-gradient(90deg, transparent, var(--mf-gold-soft, rgba(31,77,58,0.35)), transparent);
 }
 .qs-mushaf-footer-row__page {
-  font-size: 0.63rem;
+  font-size: 0.8rem;
   font-weight: 600;
   color: var(--mf-ink, #1A1610);
   font-family: var(--font-body);
+  font-variant-numeric: tabular-nums;
 }
 
 /* ── شريط التحكم — تحسين بصري ── */
@@ -2079,7 +2104,12 @@ html[data-theme="dark"] .rtp-transcript {
   position: fixed;
   inset: 0;
   z-index: 10010;
-  overflow-y: auto;
+  width: 100%;
+  height: 100dvh;
+  max-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
   -webkit-overflow-scrolling: touch;
   /* يمنع سحب "لإعادة التحميل" (bounce/rubber-band) من سلسلة التمرير إلى
      الصفحة الأم خلف القارئ الغامر — خاص بمشغّلات القراءة الغامرة. */
@@ -2087,23 +2117,24 @@ html[data-theme="dark"] .rtp-transcript {
 }
 body.has-immersive-mushaf { overflow: hidden; }
 
-/* ── شريط أدوات علوي لصفحة المصحف ── */
+/* ── شريط أدوات علوي لصفحة المصحف — مضغوط لترك أكبر مساحة للصفحة ── */
 .mpv-toolbar {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: .5rem;
-  padding: .6rem .9rem;
+  gap: .35rem;
+  padding: .3rem .45rem;
   /* ⚠️ إصلاح جذري (2026-07-22): كانت بلا أي مراعاة للنوتش/الجزيرة الديناميكية
      (env(safe-area-inset-top)) — الشريط السفلي .mpv-navbar كان يراعي
      inset-bottom أصلًا، هذا يوازيه للأعلى. */
-  padding-top: max(.6rem, env(safe-area-inset-top));
+  padding-top: max(.3rem, env(safe-area-inset-top));
   background: var(--bg-card, #fff);
   border-bottom: 1px solid var(--border, #E8E7E2);
   direction: rtl;
   position: sticky;
   top: 0;
   z-index: 30;
+  flex-shrink: 0;
 }
 .mpv-toolbar__btn {
   display: inline-flex;
@@ -2151,35 +2182,30 @@ body.has-immersive-mushaf { overflow: hidden; }
 .mpv-toolbar__title { flex: 1; text-align: center; font-size: .85rem; font-weight: 700; color: var(--text-base, #1a1a1a); }
 .mpv-toolbar__title small { display: block; font-size: .78rem; font-weight: 500; color: var(--text-muted, #6b7280); }
 
-/* ── حاوية الصفحة ── */
-/* ⚠️ إصلاح جذري (2026-07-22): .mpv-body ابن flex عمودي مباشر لـ.quran-shell
-   (flex-direction:column) بلا width صريح — كان يعتمد ضمنيًا على
-   align-items:stretch الافتراضي لملء العرض، لكنه كان يقف عمليًا عند
-   ٢٧٥px فقط على شاشة ٣٧٥px (قياس فعلي)، تاركًا صفحة المصحف بطاقة صغيرة
-   وسط فراغ. width:100% صريح (بدل الاعتماد على stretch الضمني) يضمن ملء
-   العرض المتاح فعليًا على كل المقاسات — تحقّقتُ أنه يرفعها لـ343px
-   (العرض الكامل ناقص الحشو) على نفس القياس. */
-/* ⚠️ إصلاح جذري إضافي (2026-07-22): width:100% وحدها (الإصلاح السابق)
-   ملأت العرض الأفقي فعلًا، لكن الارتفاع ظل يُشتَقّ من العرض فقط عبر
-   aspect-ratio على .qs-mushaf-frame — على الشاشات الطويلة (آيفون 15،
-   آيباد) هذا يترك فراغًا رأسيًا ضخمًا فارغًا لأن .mpv-body لم يكن له
-   flex:1 يجعله يملأ الارتفاع المتاح فعليًا أصلًا (قياس مباشر: آيباد
-   820×1180 كانت البطاقة 380px ارتفاعًا من أصل ~1055px متاحة). flex:1
-   هنا يجعل الارتفاع المتاح حقيقيًا، وmax-height:100% على .qs-mushaf-frame
-   (أدناه) يجعل المتصفح يعيد حساب العرض تلقائيًا من الارتفاع كلما كان
-   الارتفاع هو القيد الفعلي (سلوك قياسي لصناديق aspect-ratio، كـ
-   object-fit:contain) — بلا فرض أي بُعد ثابت يدويًا. */
+/* ── حاوية الصفحة — عرض كامل الشاشة (full-bleed) ── */
+/* ⚠️ 2026-07-29: أُزيل max-width:720px والحشو الأفقي الكبير (1rem) اللذان
+   حبسا صفحة المصحف داخل بطاقة ضيقة وسط فراغ. الصفحة الآن تملأ العرض
+   المتاح مع هامش أمان 6px فقط (4–8px) كي لا يلامس النص حافة الزجاج،
+   مع الحفاظ على نسبة الصفحة 0.72 عبر .qs-mushaf-body-inner (contain). */
 .mpv-body {
   width: 100%;
-  max-width: 720px;
-  margin: 0 auto;
-  padding: 1rem 1rem 7rem;
+  max-width: none;
+  margin: 0;
+  padding:
+    6px
+    max(6px, env(safe-area-inset-left, 0px))
+    calc(3.1rem + env(safe-area-inset-bottom, 0px) + 6px)
+    max(6px, env(safe-area-inset-right, 0px));
   direction: rtl;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   flex: 1;
   min-height: 0;
+}
+/* عند إخفاء الأدوات باللمس: لا نحجز فراغًا للشريط السفلي */
+.quran-shell--chrome-hidden .mpv-body {
+  padding-bottom: max(6px, env(safe-area-inset-bottom, 0px));
 }
 .mpv-resume-banner {
   display: flex;
@@ -2205,7 +2231,7 @@ body.has-immersive-mushaf { overflow: hidden; }
   flex-shrink: 0;
 }
 
-/* ── شريط تنقّل سفلي ثابت ── */
+/* ── شريط تنقّل سفلي ثابت — مضغوط ── */
 .mpv-navbar {
   position: fixed;
   bottom: 0;
@@ -2214,9 +2240,9 @@ body.has-immersive-mushaf { overflow: hidden; }
   z-index: 40;
   display: flex;
   align-items: center;
-  gap: .5rem;
-  padding: .6rem .9rem;
-  padding-bottom: max(.6rem, env(safe-area-inset-bottom));
+  gap: .4rem;
+  padding: .35rem .5rem;
+  padding-bottom: max(.35rem, env(safe-area-inset-bottom));
   background: var(--bg-card, #fff);
   border-top: 1px solid var(--border, #E8E7E2);
   direction: rtl;

@@ -2,6 +2,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { Pencil, X, Check, ChevronDown, RefreshCw } from "lucide-react";
 import { useAuth } from "@/components/AuthProvider";
 import { safeLocationReload } from "@/lib/safe-reload";
+import { isImmersiveChromePath } from "@/lib/immersive-chrome";
 
 /* ── localStorage helpers ── */
 const LS_PREFIX = "site_edit:";
@@ -192,6 +193,8 @@ export function AdminSiteEditBar() {
   }, [path]);
 
   if (!isAdmin) return null;
+  /* مواقيت الصلاة والمصحف: لا أزرار عائمة تغطي المحتوى */
+  if (isImmersiveChromePath(path)) return null;
 
   return (
     <>
