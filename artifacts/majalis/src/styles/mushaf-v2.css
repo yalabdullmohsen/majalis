@@ -8,9 +8,11 @@
 
 .mf2-page {
   direction: rtl;
-  max-width: 720px;
-  margin: 0 auto;
-  padding: var(--ds-space-4);
+  max-width: none;
+  width: 100%;
+  margin: 0;
+  padding: 6px;
+  box-sizing: border-box;
 }
 
 .mf2-frame {
