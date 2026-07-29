@@ -101,11 +101,24 @@ public class MajlisPlaybackAudioPlugin: CAPPlugin, CAPBridgedPlugin {
             let type = AVAudioSession.InterruptionType(rawValue: typeValue)
         else { return }
 
-        var payload: [String: Any] = ["type": type == .began ? "began" : "ended"]
+        var payload: [String: Any] = ["type": type == .began ? "began" : "ended", "mode": mode]
         if type == .ended,
            let optionsValue = info[AVAudioSessionInterruptionOptionKey] as? UInt {
             let options = AVAudioSession.InterruptionOptions(rawValue: optionsValue)
-            payload["shouldResume"] = options.contains(.shouldResume)
+            let shouldResume = options.contains(.shouldResume)
+            payload["shouldResume"] = shouldResume
+            if shouldResume && mode == "playback" {
+                do {
+                    try AVAudioSession.sharedInstance().setActive(true, options: [])
+                } catch {
+                    NSLog("[MajlisPlayback] resume after interruption failed: %@", error.localizedDescription)
+                    payload["resumeError"] = error.localizedDescription
+                    notifyListeners("audioSessionError", data: [
+                        "op": "resume_after_interruption",
+                        "message": error.localizedDescription,
+                    ])
+                }
+            }
         }
         notifyListeners("audioInterruption", data: payload)
     }
