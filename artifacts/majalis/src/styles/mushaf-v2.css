@@ -194,9 +194,20 @@ html[data-theme="dark"] .mf2-sajda-badge {
 html[data-theme="dark"] .mf2-surah-header__name { color: #5EC49A; }
 .quran-shell--night .mf2-surah-header__name { color: #5EC49A; }
 .mf2-bismillah {
-  font-family: var(--font-quran, "Amiri Quran", serif);
-  font-size: 4.8cqw;
-  color: var(--mf2-ink, #1C1A18);
+  font-family: var(--font-quran, "Amiri Quran", "Scheherazade New", serif);
+  /* يمنع انقسام البسملة مع إبقاء الحجم متناسبًا مع عرض الصفحة */
+  font-size: clamp(1.15rem, 5.4cqw, 2.15rem);
+  line-height: 2.15;
+  text-align: center;
+  white-space: nowrap;
+  color: var(--mf2-ink, #111827);
+  margin: 0.15em auto 0.35em;
+  max-width: 100%;
+  overflow: hidden;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "liga" 1, "calt" 1;
+  user-select: none;
 }
 
 /* هيكل تحميل (skeleton) — أسطر عاجية باهتة بنبض خفيف، بلا أي نص إطلاقًا
