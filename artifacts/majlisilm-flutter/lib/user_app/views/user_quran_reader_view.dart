@@ -57,7 +57,8 @@ class UserQuranReaderView extends StatelessWidget {
                       ),
               ),
               SliverPadding(
-                padding: const EdgeInsets.fromLTRB(16, 8, 16, 100),
+                // هامش أمان ضيق (≈6px) — صفحة القراءة بعرض الشاشة تقريبًا
+                padding: const EdgeInsets.fromLTRB(6, 4, 6, 88),
                 sliver: SliverList(
                   delegate: SliverChildBuilderDelegate(
                     (context, index) {
@@ -128,7 +129,7 @@ class _VerseTile extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 4),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
