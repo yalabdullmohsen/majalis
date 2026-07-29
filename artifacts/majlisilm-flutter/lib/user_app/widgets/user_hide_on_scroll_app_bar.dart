@@ -10,6 +10,7 @@ class UserHideOnScrollAppBar extends StatelessWidget {
     this.onSearch,
     this.onOpenSettings,
     this.bottom,
+    this.forceElevated = false,
   });
 
   final String title;
@@ -18,6 +19,7 @@ class UserHideOnScrollAppBar extends StatelessWidget {
   final VoidCallback? onSearch;
   final VoidCallback? onOpenSettings;
   final PreferredSizeWidget? bottom;
+  final bool forceElevated;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,7 @@ class UserHideOnScrollAppBar extends StatelessWidget {
       pinned: false,
       floating: true,
       snap: true,
-      forceElevated: false,
+      forceElevated: forceElevated,
       elevation: 0,
       scrolledUnderElevation: 1,
       backgroundColor: backgroundColor,
@@ -66,13 +68,13 @@ class UserHideOnScrollSearchBar extends StatelessWidget
   final Color? backgroundColor;
 
   @override
-  Size get preferredSize => const Size.fromHeight(52);
+  Size get preferredSize => const Size.fromHeight(48);
 
   @override
   Widget build(BuildContext context) {
     final bg = backgroundColor ?? Colors.black.withOpacity(0.05);
     return Padding(
-      padding: const EdgeInsets.fromLTRB(16, 0, 16, 10),
+      padding: const EdgeInsets.fromLTRB(4, 0, 4, 8),
       child: Material(
         color: bg,
         borderRadius: BorderRadius.circular(12),

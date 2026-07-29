@@ -2,14 +2,14 @@
 
 ## الإصدار الحالي
 - **Marketing:** `1.0.0`
-- **Build:** `4` (`pubspec.yaml` → `1.0.0+4`)
+- **Build:** `5` (`pubspec.yaml` → `1.0.0+5`)
 - **Bundle ID:** `com.majlisilm.majlisilmFlutter`
 - **Display name:** المجلس العلمي
 - **Min iOS:** 13.0
 
 ## ما يشمله هذا التحديث
-- إصلاح علامات تعارض git التي تسربت إلى `main` في ملفات Flutter
-- الإبقاء على hide-on-scroll (`SliverAppBar` floating + snap)
+- صفحة مصحف أصلية بعرض الشاشة الكامل (`UserQuranPageView` + `InteractiveViewer` / `BoxFit.contain`، هامش أمان 3px)
+- `NestedScrollView` + `SliverAppBar` floating/snap — إخفاء الهيدر والبحث عند التمرير للأسفل وإظهارهما عند التمرير للأعلى
 - `Info.plist`: صلاحيات الميكروفون/التعرف على الكلام + `UIBackgroundModes: audio`
 - مشروع `ios/` جاهز لفتحه في Xcode عبر `Runner.xcworkspace`
 
