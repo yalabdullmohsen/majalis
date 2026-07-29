@@ -5,7 +5,13 @@ export default async function handler(req, res) {
   const lite = req.query?.lite === "1" || req.query?.full !== "1";
 
   if (lite) {
-    sendJson(res, 200, { ok: true, service: "majlisilm-web" });
+    sendJson(res, 200, {
+      ok: true,
+      service: "majlisilm-web",
+      at: new Date().toISOString(),
+      uptimeMs: Math.round(process.uptime() * 1000),
+      commit: process.env.VERCEL_GIT_COMMIT_SHA || process.env.GIT_COMMIT || null,
+    });
     return;
   }
 

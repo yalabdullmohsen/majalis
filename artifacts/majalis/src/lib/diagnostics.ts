@@ -22,7 +22,7 @@ export type DiagnosticEvent = {
 };
 
 const CAPACITY = 128;
-const buffer: DiagnosticEvent[] = new Array(CAPACITY);
+const buffer: Array<DiagnosticEvent | undefined> = new Array(CAPACITY);
 let writeIdx = 0;
 let size = 0;
 let counters: Record<string, number> = Object.create(null);
@@ -74,7 +74,6 @@ export function clearDiagnostics(): void {
   size = 0;
   counters = Object.create(null);
   for (let i = 0; i < CAPACITY; i++) {
-    // @ts-expect-error clear slot
     buffer[i] = undefined;
   }
 }
