@@ -1,3 +1,8 @@
+/**
+ * GET/POST /api/cron/apply-migrations
+ * Schema mutations are blocked at runtime unless ALLOW_RUNTIME_SCHEMA_MIGRATIONS=1.
+ * Default actions: verify / test only.
+ */
 import { sendJson } from "../../api/_http.mjs";
 import { validateCronAuth } from "../../../lib/env-config.mjs";
 import { applyMigrations, verifySchema } from "../../../lib/db-migrate.mjs";
@@ -19,24 +24,51 @@ function resolvedMeta() {
   };
 }
 
+function runtimeSchemaAllowed() {
+  return String(process.env.ALLOW_RUNTIME_SCHEMA_MIGRATIONS || "").trim() === "1";
+}
+
 export default async function handler(req, res) {
   if (!validateCronAuth(req)) {
     sendJson(res, 401, { ok: false, error: "Unauthorized" });
     return;
   }
 
-  const action = req.query?.action || req.body?.action || "apply";
+  const action = req.query?.action || req.body?.action || "verify";
 
   try {
-    if (action === "verify") {
-      const schema = await verifySchema();
-      sendJson(res, schema.ok ? 200 : 500, schema);
-      return;
+    if (action === "verify" || action === "apply") {
+      // Default "apply" is remapped to verify unless explicitly unlocked.
+      if (action === "apply" && !runtimeSchemaAllowed()) {
+        const schema = await verifySchema();
+        sendJson(res, 200, {
+          ok: true,
+          schemaMutationBlocked: true,
+          message: "Runtime schema migrations disabled. Set ALLOW_RUNTIME_SCHEMA_MIGRATIONS=1 for emergency only.",
+          schema,
+          resolved: resolvedMeta(),
+        });
+        return;
+      }
+      if (action === "verify") {
+        const schema = await verifySchema();
+        sendJson(res, schema.ok ? 200 : 500, schema);
+        return;
+      }
     }
 
     if (action === "test") {
       const conn = await testDatabaseConnection();
       sendJson(res, conn.ok ? 200 : 500, { connection: conn, resolved: resolvedMeta() });
+      return;
+    }
+
+    if (!runtimeSchemaAllowed()) {
+      sendJson(res, 403, {
+        ok: false,
+        error: "runtime_schema_migrations_disabled",
+        message: "Schema changes must run via authorized admin workflow, not Production cron.",
+      });
       return;
     }
 
