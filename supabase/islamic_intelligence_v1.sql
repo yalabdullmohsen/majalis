@@ -117,9 +117,9 @@ ALTER TABLE intelligence_discovery_items ENABLE ROW LEVEL SECURITY;
 ALTER TABLE intelligence_weekly_reports ENABLE ROW LEVEL SECURITY;
 ALTER TABLE intelligence_agent_metrics ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Service role full access intelligence_runs" ON intelligence_runs FOR ALL USING (true);
-CREATE POLICY "Service role full access intelligence_audit_findings" ON intelligence_audit_findings FOR ALL USING (true);
-CREATE POLICY "Service role full access intelligence_content_plans" ON intelligence_content_plans FOR ALL USING (true);
-CREATE POLICY "Service role full access intelligence_discovery_items" ON intelligence_discovery_items FOR ALL USING (true);
-CREATE POLICY "Service role full access intelligence_weekly_reports" ON intelligence_weekly_reports FOR ALL USING (true);
-CREATE POLICY "Service role full access intelligence_agent_metrics" ON intelligence_agent_metrics FOR ALL USING (true);
+CREATE POLICY "Service role full access intelligence_runs" ON intelligence_runs FOR ALL TO service_role USING (true) WITH CHECK (true);
+CREATE POLICY "Service role full access intelligence_audit_findings" ON intelligence_audit_findings FOR ALL TO service_role USING (true) WITH CHECK (true);
+CREATE POLICY "Service role full access intelligence_content_plans" ON intelligence_content_plans FOR ALL TO service_role USING (true) WITH CHECK (true);
+CREATE POLICY "Service role full access intelligence_discovery_items" ON intelligence_discovery_items FOR ALL TO service_role USING (true) WITH CHECK (true);
+CREATE POLICY "Service role full access intelligence_weekly_reports" ON intelligence_weekly_reports FOR ALL TO service_role USING (true) WITH CHECK (true);
+CREATE POLICY "Service role full access intelligence_agent_metrics" ON intelligence_agent_metrics FOR ALL TO service_role USING (true) WITH CHECK (true);

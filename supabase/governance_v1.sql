@@ -131,10 +131,10 @@ ALTER TABLE governance_reviews ENABLE ROW LEVEL SECURITY;
 ALTER TABLE governance_backup_runs ENABLE ROW LEVEL SECURITY;
 ALTER TABLE governance_security_audits ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Service role governance_user_roles" ON governance_user_roles FOR ALL USING (true);
-CREATE POLICY "Service role governance_audit_log" ON governance_audit_log FOR ALL USING (true);
-CREATE POLICY "Service role governance_content_lifecycle" ON governance_content_lifecycle FOR ALL USING (true);
-CREATE POLICY "Service role governance_lifecycle_history" ON governance_lifecycle_history FOR ALL USING (true);
-CREATE POLICY "Service role governance_reviews" ON governance_reviews FOR ALL USING (true);
-CREATE POLICY "Service role governance_backup_runs" ON governance_backup_runs FOR ALL USING (true);
-CREATE POLICY "Service role governance_security_audits" ON governance_security_audits FOR ALL USING (true);
+CREATE POLICY "Service role governance_user_roles" ON governance_user_roles FOR ALL TO service_role USING (true) WITH CHECK (true);
+CREATE POLICY "Service role governance_audit_log" ON governance_audit_log FOR ALL TO service_role USING (true) WITH CHECK (true);
+CREATE POLICY "Service role governance_content_lifecycle" ON governance_content_lifecycle FOR ALL TO service_role USING (true) WITH CHECK (true);
+CREATE POLICY "Service role governance_lifecycle_history" ON governance_lifecycle_history FOR ALL TO service_role USING (true) WITH CHECK (true);
+CREATE POLICY "Service role governance_reviews" ON governance_reviews FOR ALL TO service_role USING (true) WITH CHECK (true);
+CREATE POLICY "Service role governance_backup_runs" ON governance_backup_runs FOR ALL TO service_role USING (true) WITH CHECK (true);
+CREATE POLICY "Service role governance_security_audits" ON governance_security_audits FOR ALL TO service_role USING (true) WITH CHECK (true);
