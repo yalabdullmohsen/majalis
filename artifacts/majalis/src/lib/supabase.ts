@@ -92,7 +92,9 @@ function isAdminRoute(): boolean {
   return window.location.pathname.startsWith("/admin");
 }
 
-export async function getCurrentUser() {
+let getCurrentUserInflight: Promise<Awaited<ReturnType<typeof getCurrentUserImpl>>> | null = null;
+
+async function getCurrentUserImpl() {
   if (!isConfigured) return null;
 
   try {
@@ -167,6 +169,14 @@ export async function getCurrentUser() {
     logSupabaseError("getCurrentUser", err);
     return null;
   }
+}
+
+export async function getCurrentUser() {
+  if (getCurrentUserInflight) return getCurrentUserInflight;
+  getCurrentUserInflight = getCurrentUserImpl().finally(() => {
+    getCurrentUserInflight = null;
+  });
+  return getCurrentUserInflight;
 }
 
 /**
@@ -325,19 +335,28 @@ export async function getLessonById(id: string) {
   }
 
   try {
-    const byId = await supabase
-      .from("lessons")
-      .select(`*, ${SHEIKH_EMBED}`)
-      .eq("id", id)
-      .eq("status", "approved")
-      .maybeSingle();
+    const { isUuid, normalizeSlug, classifyIdentifier } = await import("@/lib/identifiers/lesson-id");
+    const kind = classifyIdentifier(id);
+    if (kind === "invalid") {
+      return { lesson: fallback, error: null, usingSeed: !!fallback };
+    }
 
-    if (byId.error) throw byId.error;
-    if (byId.data) return { lesson: byId.data, error: null, usingSeed: false };
+    if (kind === "uuid" && isUuid(id)) {
+      const byId = await supabase
+        .from("lessons")
+        .select(`*, ${SHEIKH_EMBED}`)
+        .eq("id", id.trim())
+        .eq("status", "approved")
+        .maybeSingle();
 
-    // external_key قد يُخزَّن بـ ":" (kuwait-lessons:HASH) بينما الرابط يستخدم "-"
+      if (byId.error) throw byId.error;
+      if (byId.data) return { lesson: byId.data, error: null, usingSeed: false };
+      return { lesson: fallback, error: null, usingSeed: !!fallback };
+    }
+
+    // Slug / external_key path — never send non-UUID to id column.
     const { canonicalizeLessonPublicId, lessonExternalKeyCandidates } = await import("@/lib/lesson-id-aliases");
-    const canonical = canonicalizeLessonPublicId(id) || id;
+    const canonical = canonicalizeLessonPublicId(id) || normalizeSlug(id) || id;
     const keys = lessonExternalKeyCandidates(canonical);
     const orFilter = keys.map((k) => `external_key.eq.${k}`).join(",");
     const byExternalKey = await supabase
@@ -1031,7 +1050,7 @@ export async function getQaCategories() {
   const { data, error } = await supabase
     .from("qa_categories")
     .select("*")
-    .order("created_at", { ascending: true });
+    .order("sort_order", { ascending: true });
 
   if (error) {
     logSupabaseError("getQaCategories", error);

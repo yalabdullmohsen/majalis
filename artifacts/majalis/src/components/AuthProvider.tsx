@@ -79,6 +79,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
             if (active) setUser(null);
             return;
           }
+          // TOKEN_REFRESHED must not re-fetch profile (historically caused ~10s stalls).
+          if (event === "TOKEN_REFRESHED" || event === "INITIAL_SESSION") {
+            return;
+          }
           try {
             const next = await RequestManager.run(
               `auth:onAuthStateChange:${event}`,
