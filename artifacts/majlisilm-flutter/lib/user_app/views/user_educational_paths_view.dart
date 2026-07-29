@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../features/ai_recitation/ai_recitation.dart';
 import '../../shared/theme/majlis_colors.dart';
 import '../controllers/user_educational_progress_controller.dart';
 import '../controllers/user_quran_app_controller.dart';
 import '../data/user_quran_repository.dart';
-import '../widgets/user_ai_recitation_widget.dart';
 import '../widgets/user_hide_on_scroll_app_bar.dart';
 
 /// Educational courses + Adhkar + AI recitation with hide-on-scroll header.
@@ -25,11 +25,11 @@ class UserEducationalPathsView extends StatelessWidget {
   Widget build(BuildContext context) {
     final edu = context.watch<UserEducationalProgressController>();
     final quran = context.watch<UserQuranAppController>();
-    final target = UserQuranRepository.getByIndex(
+    final verse = UserQuranRepository.getByIndex(
           quran.selectedVerseIndex ?? 0,
-        )?.textUthmani ??
-        UserQuranRepository.getByIndex(0)?.textUthmani ??
-        '';
+        ) ??
+        UserQuranRepository.getByIndex(0);
+    final target = verse?.textUthmani ?? '';
 
     return ColoredBox(
       color: quran.backgroundColor,
@@ -120,8 +120,50 @@ class UserEducationalPathsView extends StatelessWidget {
                     controlAffinity: ListTileControlAffinity.leading,
                   );
                 }),
-                const SizedBox(height: 8),
-                UserAIRecitationWidget(targetVerse: target),
+                const SizedBox(height: 12),
+                Card(
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    side: BorderSide(color: Colors.brown.withOpacity(0.12)),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Text(
+                          'التسميع الذكي',
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                        const SizedBox(height: 8),
+                        Text(
+                          target.isEmpty
+                              ? 'اختر آية من المصحف ثم ابدأ التسميع.'
+                              : target,
+                          textAlign: TextAlign.center,
+                          textDirection: TextDirection.rtl,
+                          style: const TextStyle(fontSize: 18, height: 1.9),
+                        ),
+                        const SizedBox(height: 12),
+                        FilledButton.icon(
+                          onPressed: target.isEmpty
+                              ? null
+                              : () => AiRecitationView.open(
+                                    context,
+                                    targetVerse: target,
+                                    verseRef: verse?.verseRef,
+                                  ),
+                          icon: const Icon(Icons.mic_rounded),
+                          label: const Text('فتح جلسة التسميع المتقدمة'),
+                          style: FilledButton.styleFrom(
+                            backgroundColor: MajlisColors.brown,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
               ]),
             ),
           ),
