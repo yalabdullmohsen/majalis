@@ -63,16 +63,15 @@ git add src/index.css   # يذهب لجذر المستودع وليس artifacts/
 
 ### Lint / test / build
 
-- There is **no ESLint/Prettier-script, and no automated test suite** wired up. The quality gate is
-  TypeScript: `pnpm run typecheck` (root) or per package `pnpm --filter <pkg> run typecheck`.
+- Quality gates: root `pnpm run typecheck`; package lint via `pnpm --filter @workspace/majalis run lint`
+  (ESLint flat config, `--max-warnings 50`); majalis embeds content-guard and regression checks in `build`.
 - Build all: `pnpm run build` (runs typecheck first). Build only web: `PORT=24216 BASE_PATH=/ pnpm --filter @workspace/majalis run build`.
-- Production web serve: `PORT=24216 BASE_PATH=/ pnpm --filter @workspace/majalis run start` (Express static + `/api/assistant`).
+- Production web serve: `PORT=24216 BASE_PATH=/ pnpm --filter @workspace/majalis run start` (Vite preview; assistant API is under `/api/assistant` on Vercel).
 - `ANTHROPIC_API_KEY` must be set as a server secret for the assistant API in production.
-- **Known pre-existing typecheck failure:** `pnpm run typecheck` reports 2 errors in
-  `artifacts/majalis/src/components/ui/button-group.tsx` and `.../calendar.tsx` caused by two
-  `@types/react` versions coexisting in the lockfile (19.1.17 pulled by Expo/React-Native deps and
-  19.2.14 from the catalog). This is independent of Node version and does **not** affect the Vite
-  dev server or `vite build` (neither runs `tsc`). Do not "fix" it by editing those components.
+- **Latent dual `@types/react`:** the lockfile can resolve both catalog `19.2.x` (web) and Expo `19.1.x`
+  (mobile). `skipLibCheck: true` keeps typecheck green. Unused shadcn leftovers that previously surfaced
+  this (`button-group`, `calendar`) were removed; do **not** “fix” dual versions by editing UI kits.
+  Prefer a future pnpm override only after verifying both web and mobile typecheck.
 
 ### أتمتة الدمج والنشر (إلزامي للوكلاء)
 

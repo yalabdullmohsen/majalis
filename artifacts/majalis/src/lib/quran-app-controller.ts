@@ -20,24 +20,25 @@
  * Real AudioEngine wired via optional callbacks (loose coupling).
  */
 
-import { IMMERSIVE_PAPER_BG } from "@/lib/quran-immersive";
 import { getLocalStorageService } from "@/lib/majlis-local-storage-service";
+import {
+  QURAN_APP_DARK_BG,
+  QURAN_APP_FONT_DEFAULT,
+  QURAN_APP_FONT_MAX,
+  QURAN_APP_FONT_MIN,
+  QURAN_APP_LIGHT_BG,
+} from "@/lib/quran-app-constants";
 
-/** Flutter ImmersiveQuranApp Slider min/max. */
-export const QURAN_APP_FONT_MIN = 20;
-export const QURAN_APP_FONT_MAX = 42;
-export const QURAN_APP_FONT_DEFAULT = 28;
-/** Flutter `height: 2.1`. */
-export const QURAN_APP_LINE_HEIGHT = 2.1;
-
-export const QURAN_APP_DARK_BG = "#1A1A1A";
-export const QURAN_APP_LIGHT_BG = IMMERSIVE_PAPER_BG;
-
-/** Flutter `Colors.amber.withOpacity(0.3)` — currently recited. */
-export const VERSE_PLAYING_BG = "rgba(255, 193, 7, 0.3)";
-
-/** Flutter `Colors.brown.withOpacity(0.15)` — selected (this sketch). */
-export const VERSE_SELECTED_SOFT_BG = "rgba(121, 85, 72, 0.15)";
+export {
+  QURAN_APP_DARK_BG,
+  QURAN_APP_FONT_DEFAULT,
+  QURAN_APP_FONT_MAX,
+  QURAN_APP_FONT_MIN,
+  QURAN_APP_LIGHT_BG,
+  QURAN_APP_LINE_HEIGHT,
+  VERSE_PLAYING_BG,
+  VERSE_SELECTED_SOFT_BG,
+} from "@/lib/quran-app-constants";
 
 export type QuranAppControllerSnapshot = {
   fontSize: number;
