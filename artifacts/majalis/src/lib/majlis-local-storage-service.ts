@@ -9,8 +9,8 @@ import {
   QURAN_APP_FONT_MAX,
   QURAN_APP_FONT_MIN,
   QURAN_APP_LIGHT_BG,
-  type QuranAppController,
-} from "@/lib/quran-app-controller";
+} from "@/lib/quran-app-constants";
+import type { QuranAppController } from "@/lib/quran-app-controller";
 
 const FONT_KEY = "majlisilm-quran-font-size-v1";
 const THEME_KEY = "majlisilm-quran-dark-v1";

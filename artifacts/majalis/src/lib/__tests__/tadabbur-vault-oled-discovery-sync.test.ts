@@ -72,7 +72,6 @@ console.log("\n=== 1. Recitation pace ===");
   startRecitationTimer("page", "1");
   // Force a sample by manipulating — stop immediately may be < MIN; inject via sleep simulation
   // Use direct save path: start then fake long duration by calling stop after delaying clocks
-  const started = Date.now() - 5_000;
   // bypass: write a sample through stop after stubbing Map — instead assert idle pause + tooFast helper
   const idle = createIdleReflectionPause();
   assert(idle.active === false, "idle reflection pause");

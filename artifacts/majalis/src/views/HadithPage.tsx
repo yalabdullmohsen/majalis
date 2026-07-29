@@ -715,8 +715,8 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
 
         if (authenticityClass === "sahih") {
           // مرجع الصحيحين الكامل (محلي أولاً) + البطاقات المنسّقة ذات الشرح
-          let bukhari: CdnHadith[] = [];
-          let muslim: CdnHadith[] = [];
+          let bukhari: CdnHadith[];
+          let muslim: CdnHadith[];
           try {
             const local = await fetchSahihaynLocal("both");
             bukhari = local.bukhari;

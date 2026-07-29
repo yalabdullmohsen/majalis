@@ -1,5 +1,5 @@
 import { findPotentialDuplicates } from "./fiqh-council-dedup";
-import { isOfficialSourceVerified } from "./fiqh-council-trust";
+import { isOfficialSourceVerified } from "./fiqh-official-source";
 import type { FiqhCouncilItem, FiqhCouncilSession } from "./fiqh-council-types";
 
 export const MIN_FIQH_COMPLETION_SCORE = 80;

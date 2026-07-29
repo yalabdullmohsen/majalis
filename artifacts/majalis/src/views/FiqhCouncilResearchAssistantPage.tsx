@@ -10,6 +10,7 @@ import {
   type FiqhItemType,
 } from "@/lib/fiqh-council-types";
 import { FIQH_RESEARCH_DISCLAIMER } from "@/lib/fiqh-citation";
+import { fiqhYearFilterOptions } from "@/lib/fiqh-year-options";
 
 export default function FiqhCouncilResearchAssistantPage() {
   const [type, setType] = useState("الكل");
@@ -27,7 +28,7 @@ export default function FiqhCouncilResearchAssistantPage() {
   const [source, setSource] = useState("");
   const [year, setYear] = useState("الكل");
 
-  const years = ["الكل", ...Array.from({ length: 8 }, (_, i) => String(new Date().getFullYear() - i))];
+  const years = fiqhYearFilterOptions();
 
   return (
     <div className="page-shell narrow content-hub-page fiqh-council-page fiqh-research-assistant-page">

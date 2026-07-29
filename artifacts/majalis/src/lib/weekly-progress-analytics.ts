@@ -5,7 +5,7 @@
 import { getUserStreak, type UserStreakState } from "@/lib/user-streak";
 import { getDailyWirdState, type DailyWirdState } from "@/lib/quran-api";
 import { localFlashStats } from "@/lib/flashcard-local-store";
-import { getTodayProgress, PROGRESS_TASKS, type ProgressTaskId } from "@/lib/daily-progress";
+import { PROGRESS_TASKS, type ProgressTaskId } from "@/lib/daily-progress";
 
 export type WeeklyDayMetric = {
   date: string; // YYYY-MM-DD
@@ -114,7 +114,6 @@ export function buildWeeklyProgressAnalytics(
 
     const streak = getUserStreak();
     const flash = localFlashStats(userId);
-    const today = getTodayProgress();
     const todayKeyStr = dateKey(now);
 
     return {
