@@ -97,6 +97,18 @@ export function normalizeToTransactionPooler(urlStr) {
   }
 
   const parsed = parsePostgresUrl(urlStr);
+  const host = String(parsed?.host || "").toLowerCase();
+  if (
+    host === "localhost" ||
+    host === "127.0.0.1" ||
+    host === "::1" ||
+    host.endsWith(".local") ||
+    host === "postgres" ||
+    host.startsWith("pg-") // CI service aliases sometimes
+  ) {
+    return { url: urlStr, source: "local_env", normalized: false, reason: "local_or_ci_host" };
+  }
+
   const ref = parsed?.ref || getProjectRef();
   const password = resolvePassword(parsed);
 

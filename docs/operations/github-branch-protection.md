@@ -1,15 +1,39 @@
-# GitHub branch protection (manual)
+# حماية فرع main — GitHub
 
-Required on `main`:
+## المطلوب (يدوي في Settings → Branches)
 
-1. Settings → Branches → Add rule for `main`.
-2. Require PR before merge; dismiss stale approvals.
-3. Require status checks (names as shown in Actions):
-   - `Verify build` (current `ci.yml`)
-   - Future split jobs when added: quality / migration-check / api-contract / playwright
-   - `Vercel – majalis-majalis`
-4. Require branches up to date.
-5. Block force pushes and deletions.
-6. Do **not** allow bypass for deploy automation except documented owners.
+| القاعدة | القيمة |
+|---|---|
+| Direct push | ممنوع |
+| PR إلزامي | نعم |
+| Approvals | ≥ 1 إن أمكن |
+| Conversation resolution | مطلوب |
+| Force push | ممنوع |
+| Deletion | ممنوع |
+| Require branches up to date | نعم |
+| Auto-merge الافتراضي | معطّل على مستوى المستودع إن أمكن |
 
-Agent cannot apply org settings without admin UI access.
+## Required Checks المقترحة
+
+- `CI / quality`
+- `CI / migration-check`
+- `CI / postgres-integration`
+- `Vercel – majalis-majalis` (Preview جاهز)
+
+اختياري لاحقًا عند تفعيلها فعليًا:
+
+- `CI / api-contract-tests`
+- `CI / route-smoke-tests`
+- `CI / playwright-mobile`
+- `CI / preview-smoke`
+
+## سياسات Workflow
+
+- **ممنوع:** `gh pr merge` / undraft / `enablePullRequestAutoMerge` بدون Label يدوي صريح.
+- التحقق الآلي: `pnpm verify:no-unsafe-auto-merge`
+- Workflow التعليقات فقط: `pr-status-no-automerge.yml`
+
+## Production deploy
+
+- من `main` فقط عبر Vercel Git Integration بعد دمج بشري.
+- لا تنشر من فروع الإصلاح مباشرة.

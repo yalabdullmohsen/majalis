@@ -1,0 +1,69 @@
+name: PR status comments (no auto-merge)
+
+# سياسة ما بعد PR #616: لا Draft→Ready، لا Auto-merge، لا استدعاء merge API.
+# هذا الـworkflow يعلّق فقط عند فشل CI ويغلق PRs غير المستهدفة لـmain عند الحاجة.
+# الدمج إلى main يدوي فقط بعد Required Checks + Preview صالح.
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, ready_for_review, converted_to_draft]
+    branches: [main]
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: "رقم PR للتعليق عليه (اختياري)"
+        required: false
+        type: string
+
+concurrency:
+  group: pr-status-${{ github.event.pull_request.number || github.event.workflow_run.id || github.event.inputs.pr_number || 'batch' }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: write
+  actions: read
+  checks: read
+
+jobs:
+  comment-on-ci-failure:
+    if: github.repository == 'yalabdullmohsen/majalis' && github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'failure'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: تعليق عند فشل CI (بلا تعطيل/تفعيل Auto-merge)
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          WORKFLOW_HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+          WORKFLOW_HEAD_BRANCH: ${{ github.event.workflow_run.head_branch }}
+        run: |
+          set -euo pipefail
+          nums=$(gh api "repos/${GITHUB_REPOSITORY}/commits/${WORKFLOW_HEAD_SHA}/pulls" \
+            --jq '[.[] | select(.base.ref=="main") | .number] | join(" ")' || true)
+          if [ -z "${nums}" ]; then
+            nums=$(gh -R "$GITHUB_REPOSITORY" pr list --base main --state open \
+              --head "${GITHUB_REPOSITORY_OWNER}:${WORKFLOW_HEAD_BRANCH}" \
+              --json number --jq '.[].number' | tr '\n' ' ' || true)
+          fi
+          for n in $nums; do
+            gh -R "$GITHUB_REPOSITORY" pr comment "$n" --body \
+              "⛔ فشل فحص CI / Verify build لهذا الـcommit. أصلِح الفشل قبل طلب المراجعة اليدوية. (لا يوجد Auto-merge.)" \
+              || true
+          done
+
+  note-on-pr:
+    if: github.repository == 'yalabdullmohsen/majalis' && github.event_name == 'pull_request' && github.event.action == 'opened'
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: تذكير سياسة الدمج اليدوي
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          gh -R "$GITHUB_REPOSITORY" pr comment "$PR_NUMBER" --body \
+            "📋 سياسة الدمج: يبقى الـPR للمراجعة اليدوية. لا تحويل Draft→Ready تلقائيًا ولا Auto-merge من هذا المستودع." \
+            || true

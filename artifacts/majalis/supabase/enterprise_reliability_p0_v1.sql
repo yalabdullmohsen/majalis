@@ -1,6 +1,8 @@
 -- Enterprise P0: distributed AI circuit + durable background jobs + qa_categories.sort_order
 -- Apply via authorized admin migration path only (never automatic Production deploy).
 
+CREATE EXTENSION IF NOT EXISTS pgcrypto;
+
 -- ── AI provider circuit ──────────────────────────────────────────────────────
 CREATE TABLE IF NOT EXISTS ai_provider_circuit (
   provider TEXT PRIMARY KEY,
@@ -72,31 +74,34 @@ ALTER TABLE background_jobs ENABLE ROW LEVEL SECURITY;
 ALTER TABLE background_job_attempts ENABLE ROW LEVEL SECURITY;
 ALTER TABLE background_job_dead_letters ENABLE ROW LEVEL SECURITY;
 
--- ── qa_categories.sort_order (expand-only) ───────────────────────────────────
-ALTER TABLE qa_categories ADD COLUMN IF NOT EXISTS sort_order INT;
-
-UPDATE qa_categories
-SET sort_order = COALESCE(sort_order, 0)
-WHERE sort_order IS NULL;
-
-ALTER TABLE qa_categories ALTER COLUMN sort_order SET DEFAULT 0;
-
--- Only enforce NOT NULL after backfill
+-- ── qa_categories.sort_order (expand-only; skip if table absent) ─────────────
 DO $$
 BEGIN
   IF EXISTS (
-    SELECT 1 FROM information_schema.columns
-    WHERE table_name = 'qa_categories' AND column_name = 'sort_order'
-  ) AND NOT EXISTS (SELECT 1 FROM qa_categories WHERE sort_order IS NULL) THEN
-    ALTER TABLE qa_categories ALTER COLUMN sort_order SET NOT NULL;
+    SELECT 1 FROM information_schema.tables
+    WHERE table_schema = 'public' AND table_name = 'qa_categories'
+  ) THEN
+    ALTER TABLE qa_categories ADD COLUMN IF NOT EXISTS sort_order INT;
+    UPDATE qa_categories SET sort_order = COALESCE(sort_order, 0) WHERE sort_order IS NULL;
+    ALTER TABLE qa_categories ALTER COLUMN sort_order SET DEFAULT 0;
+    IF NOT EXISTS (SELECT 1 FROM qa_categories WHERE sort_order IS NULL) THEN
+      ALTER TABLE qa_categories ALTER COLUMN sort_order SET NOT NULL;
+    END IF;
+    CREATE INDEX IF NOT EXISTS idx_qa_categories_sort_order ON qa_categories (sort_order);
   END IF;
 END $$;
 
-CREATE INDEX IF NOT EXISTS idx_qa_categories_sort_order ON qa_categories (sort_order);
-
 -- Prayer times hot path (location + date) — safe IF NOT EXISTS
-CREATE INDEX IF NOT EXISTS idx_prayer_times_city_date
-  ON prayer_times (city, prayer_date);
+DO $$
+BEGIN
+  IF EXISTS (
+    SELECT 1 FROM information_schema.tables
+    WHERE table_schema = 'public' AND table_name = 'prayer_times'
+  ) THEN
+    CREATE INDEX IF NOT EXISTS idx_prayer_times_city_date
+      ON prayer_times (city, prayer_date);
+  END IF;
+END $$;
 
 -- Upcoming lessons hot filters (status + schedule) when columns exist
 DO $$
