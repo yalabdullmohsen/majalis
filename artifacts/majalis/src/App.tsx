@@ -34,6 +34,7 @@ import { UpdateAvailableBanner } from "@/components/UpdateAvailableBanner";
 import { PwaInstallBanner } from "@/components/PwaInstallBanner";
 import { setPrayerTimesCache } from "@/lib/lesson-time";
 import { recordNavigationVisit } from "@/lib/navigation-back";
+import { isImmersiveChromePath } from "@/lib/immersive-chrome";
 
 const lazy = lazyWithRetry;
 
@@ -84,7 +85,6 @@ const HadithBooksPage = lazy(() => import("@/views/HadithBooksPage"));
 const HadithBooksAndRulingsPage = lazy(() => import("@/views/HadithBooksAndRulingsPage"));
 const ArbaeenLovePage = lazy(() => import("@/views/ArbaeenLovePage"));
 const QuranCirclesPage = lazy(() => import("@/views/QuranCirclesPage"));
-const QuranHubPage = lazy(() => import("@/views/QuranHubPage"));
 const KidsPage = lazy(() => import("@/views/KidsPage"));
 const SurahIndexPage = lazy(() => import("@/views/SurahIndexPage"));
 const QuranSearchPage = lazy(() => import("@/views/QuranSearchPage"));
@@ -319,7 +319,7 @@ function SeoManager() {
 /* وجهات شريط الأقسام العلوي (TopSectionBar) — التبديل بينها يُعامَل معاملة
    "الرجوع" (استعادة آخر موضع تمرير)، لا "تنقّل للأمام" (تمرير للأعلى)،
    لأن المستخدم يُنهي غالبًا جولة في قسم ثم يعود إليه لاحقًا عبر تبويبه. */
-const SECTION_BAR_PATHS = new Set(["/", "/quran-hub", "/tawhid", "/seerah", "/fiqh", "/hadith", "/library", "/scholars"]);
+const SECTION_BAR_PATHS = new Set(["/", "/mushaf", "/quran-hub", "/tawhid", "/seerah", "/fiqh", "/hadith", "/library", "/scholars"]);
 
 /**
  * كان يفرض scrollTo(0,0) على كل تغيير مسار بلا استثناء، فيُفقِد موضع
@@ -632,7 +632,7 @@ function Router() {
           </Suspense>
         </ErrorBoundary>
       </Route>
-      <Route path="/quran"><Redirect to="/quran-hub" /></Route>
+      <Route path="/quran"><Redirect to="/mushaf" /></Route>
       <Route path="/mushaf/page/:page"><SafeLazyRoute component={MushafPageView} /></Route>
       <Route path="/mushaf/page"><SafeLazyRoute component={MushafPageView} /></Route>
       {/* ⚠️ ترتيب حرج: المسار الحرفي /mushaf/about-edition يجب أن يسبق
@@ -644,7 +644,8 @@ function Router() {
       <Route path="/mushaf/:surah"><SafeLazyRoute component={MushafPageView} /></Route>
       <Route path="/mushaf"><SafeLazyRoute component={MushafPageView} /></Route>
       <Route path="/mushaf-v2-preview"><Redirect to="/mushaf" /></Route>
-      <Route path="/quran-hub"><SafeLazyRoute component={QuranHubPage} /></Route>
+      {/* تبويب القرآن → المصحف مباشرة بلا مركز بطاقات/اختبارات */}
+      <Route path="/quran-hub"><Redirect to="/mushaf" /></Route>
       <Route path="/kids"><SafeLazyRoute component={KidsPage} /></Route>
       <Route path="/quran/recitation-test-ai"><SafeLazyRoute component={RecitationTestPage} /></Route>
       <Route path="/quran/surahs"><SafeLazyRoute component={SurahIndexPage} /></Route>
@@ -801,12 +802,22 @@ function GlobalAppShortcuts({ onToggleSearch }: { onToggleSearch: () => void }) 
 }
 
 function AppShell() {
+  return (
+    <WouterRouter base={(import.meta.env.BASE_URL || "/").replace(/\/$/, "")}>
+      <AppShellInner />
+    </WouterRouter>
+  );
+}
+
+function AppShellInner() {
   const { dir, t } = useLanguage();
   const { isAdmin } = useAuth();
   const { newBadges, dismissBadges } = useAchievementCheck();
   const [searchOpen, setSearchOpen] = useState(false);
   const [comingSoonTitle, setComingSoonTitle] = useState("");
   const [comingSoonOpen, setComingSoonOpen] = useState(false);
+  const [location] = useLocation();
+  const immersive = isImmersiveChromePath(location);
 
   useEffect(() => {
     const evtHandler = () => setSearchOpen(true);
@@ -824,59 +835,59 @@ function AppShell() {
   }, []);
 
   return (
-    <WouterRouter base={(import.meta.env.BASE_URL || "/").replace(/\/$/, "")}>
-      <div
-        className="app-shell"
-        style={{ "--app-dir": dir } as React.CSSProperties}
-      >
-        <GlobalAppShortcuts onToggleSearch={() => setSearchOpen((v) => !v)} />
-        <a href="#main-content" className="skip-link">{t("skip_to_content")}</a>
-        <OfflineBanner />
-        <UpdateAvailableBanner />
-        <NavProgressBar />
-        <SeoManager />
-        <ScrollResetOnNav />
-        <IslamicReminderBootstrap />
-        <AdhanSchedulerBootstrap />
-        <PrayerAlertSchedulerBootstrap />
-        <OfflineSyncBootstrap />
-        <PlatformLogicBootstrap />
-        <NavBar />
-        <TopSectionBar />
-        <PrayerCountdownBanner />
-        <AdhanNotificationBar />
-        <PrayerRespectBanner />
-        <main id="main-content" className="app-main" tabIndex={-1}>
-          <Router />
-        </main>
-        <SiteFooter />
-        <DeferredAssistantWidget />
-        {isAdmin && (
+    <div
+      className="app-shell"
+      style={{ "--app-dir": dir } as React.CSSProperties}
+    >
+      <GlobalAppShortcuts onToggleSearch={() => setSearchOpen((v) => !v)} />
+      <a href="#main-content" className="skip-link">{t("skip_to_content")}</a>
+      <OfflineBanner />
+      <UpdateAvailableBanner />
+      <NavProgressBar />
+      <SeoManager />
+      <ScrollResetOnNav />
+      <IslamicReminderBootstrap />
+      <AdhanSchedulerBootstrap />
+      <PrayerAlertSchedulerBootstrap />
+      <OfflineSyncBootstrap />
+      <PlatformLogicBootstrap />
+      <NavBar />
+      <TopSectionBar />
+      {/* شريط العدّ التنازلي العام يُخفى في مسارات المواقيت والمصحف */}
+      {!immersive && <PrayerCountdownBanner />}
+      <AdhanNotificationBar />
+      <PrayerRespectBanner />
+      <main id="main-content" className="app-main" tabIndex={-1}>
+        <Router />
+      </main>
+      {!immersive && <SiteFooter />}
+      <DeferredAssistantWidget />
+      {/* أزرار تحرير المشرف العائمة لا تغطي المواقيت/المصحف */}
+      {isAdmin && !immersive && (
+        <Suspense fallback={null}>
+          <AdminSiteEditBar />
+        </Suspense>
+      )}
+      <ScrollToTop />
+      <GlobalBackButton />
+      <PwaInstallBanner />
+      <BottomNavBar />
+      {newBadges.length > 0 && (
+        <AchievementToast badges={newBadges} onDismiss={dismissBadges} />
+      )}
+      {searchOpen && (
+        <SectionErrorBoundary name="GlobalSearchModal">
           <Suspense fallback={null}>
-            <AdminSiteEditBar />
+            <GlobalSearchModal onClose={() => setSearchOpen(false)} />
           </Suspense>
-        )}
-        <ScrollToTop />
-        <GlobalBackButton />
-        <PwaInstallBanner />
-        <BottomNavBar />
-        {newBadges.length > 0 && (
-          <AchievementToast badges={newBadges} onDismiss={dismissBadges} />
-        )}
-        {searchOpen && (
-          <SectionErrorBoundary name="GlobalSearchModal">
-            <Suspense fallback={null}>
-              <GlobalSearchModal onClose={() => setSearchOpen(false)} />
-            </Suspense>
-          </SectionErrorBoundary>
-        )}
-        <ComingSoonDialog
-          open={comingSoonOpen}
-          title={comingSoonTitle}
-          onClose={() => setComingSoonOpen(false)}
-        />
-      </div>
-    </WouterRouter>
+        </SectionErrorBoundary>
+      )}
+      <ComingSoonDialog
+        open={comingSoonOpen}
+        title={comingSoonTitle}
+        onClose={() => setComingSoonOpen(false)}
+      />
+    </div>
   );
 }
 

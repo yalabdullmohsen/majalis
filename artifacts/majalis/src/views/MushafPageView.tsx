@@ -319,7 +319,7 @@ export default function MushafPageView() {
   // لأنه يتراكب فعليًا فوق شريط التنقّل السفلي الثابت بعرض الشاشة هنا،
   // اكتُشف حيًّا أثناء تحقّق Playwright (زر "السابقة" تعذّر النقر عليه).
   const goBack = useCallback(() => {
-    goBackOrFallback(`/mushaf/page/${page}`, "/quran-hub");
+    goBackOrFallback(`/mushaf/page/${page}`, "/");
   }, [page]);
 
   // ── سحب أفقي RTL صحيح الاتجاه: تحريك الإصبع لليسار = الصفحة التالية (تقدّم في القراءة) ──

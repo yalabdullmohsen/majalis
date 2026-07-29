@@ -14,7 +14,7 @@ type NavTab = {
    مكان لعنصر الصلاة المخصَّص (استخدام يومي متكرر يستحق وصولاً مباشرًا). */
 const NAV_TABS: NavTab[] = [
   { href: "/",             label: "الرئيسية",    Icon: Home },
-  { href: "/quran-hub",    label: "القرآن",      Icon: BookOpen },
+  { href: "/mushaf",       label: "القرآن",      Icon: BookOpen },
   { href: "/prayer-times", label: "الصلاة",      Icon: Clock },
 ];
 

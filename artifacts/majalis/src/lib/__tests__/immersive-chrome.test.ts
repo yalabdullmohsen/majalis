@@ -1,0 +1,49 @@
+/**
+ * مسارات الواجهة الغامرة — الصلاة والمصحف بلا شريط أقسام/تيكر/اختبارات مشتركة.
+ * تشغيل: npx tsx src/lib/__tests__/immersive-chrome.test.ts
+ */
+import assert from "node:assert/strict";
+import { readFileSync } from "node:fs";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+import {
+  isImmersiveChromePath,
+  isPrayerTimesPath,
+  isQuranImmersivePath,
+} from "../immersive-chrome";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const appRoot = resolve(__dirname, "../../..");
+
+assert.equal(isPrayerTimesPath("/prayer-times"), true);
+assert.equal(isPrayerTimesPath("/prayer-times/"), true);
+assert.equal(isPrayerTimesPath("/fiqh"), false);
+
+assert.equal(isQuranImmersivePath("/mushaf"), true);
+assert.equal(isQuranImmersivePath("/mushaf/page/1"), true);
+assert.equal(isQuranImmersivePath("/quran-hub"), true);
+assert.equal(isQuranImmersivePath("/fiqh"), false);
+
+assert.equal(isImmersiveChromePath("/prayer-times"), true);
+assert.equal(isImmersiveChromePath("/mushaf"), true);
+assert.equal(isImmersiveChromePath("/"), false);
+assert.equal(isImmersiveChromePath("/hadith"), false);
+
+const prayerSrc = readFileSync(resolve(appRoot, "src/views/PrayerTimesPage.tsx"), "utf8");
+assert.equal(prayerSrc.includes("SectionQuiz"), false, "صفحة الصلاة بلا SectionQuiz");
+assert.equal(prayerSrc.includes("categoryId"), false, "صفحة الصلاة لا تحمّل تصنيفات اختبار");
+assert.match(prayerSrc, /مضى على الأذان/);
+assert.match(prayerSrc, /تنبيهات الأذان/);
+
+const topBar = readFileSync(resolve(appRoot, "src/components/TopSectionBar.tsx"), "utf8");
+assert.match(topBar, /isImmersiveChromePath/);
+
+const appSrc = readFileSync(resolve(appRoot, "src/App.tsx"), "utf8");
+assert.match(appSrc, /quran-hub"><Redirect to="\/mushaf"/);
+assert.match(appSrc, /isImmersiveChromePath/);
+
+const bottomNav = readFileSync(resolve(appRoot, "src/components/BottomNavBar.tsx"), "utf8");
+assert.match(bottomNav, /href: "\/mushaf"/);
+assert.equal(bottomNav.includes('href: "/quran-hub"'), false);
+
+console.log("immersive-chrome.test.ts: ok");

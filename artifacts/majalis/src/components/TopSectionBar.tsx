@@ -4,6 +4,7 @@ import {
   Shield, BookUser, Scale, ScrollText, BookMarked, Library,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { isImmersiveChromePath } from "@/lib/immersive-chrome";
 
 type SectionTab = {
   href: string;
@@ -21,7 +22,7 @@ export const SECTION_TABS: SectionTab[] = [
   { href: "/seerah",   label: "السيرة والتاريخ",  Icon: BookUser,      prefetch: () => import("@/views/SeerahPage") },
   { href: "/fiqh",     label: "الفقه والأحكام",   Icon: Scale,         prefetch: () => import("@/views/FiqhPage") },
   { href: "/hadith",   label: "الحديث والسنة",    Icon: ScrollText,    prefetch: () => import("@/views/HadithPage") },
-  { href: "/quran-hub",label: "القرآن",           Icon: BookMarked,    prefetch: () => import("@/views/QuranHubPage") },
+  { href: "/mushaf",   label: "القرآن",           Icon: BookMarked,    prefetch: () => import("@/views/MushafPageView") },
   { href: "/library",  label: "المكتبة",          Icon: Library,       prefetch: () => import("@/views/LibraryPage") },
   { href: "/scholars", label: "العلماء",          Icon: BookUser,      prefetch: () => import("@/views/IslamicScholarsPage") },
 ];
@@ -41,16 +42,16 @@ export function isTabActive(location: string, href: string): boolean {
       location.startsWith("/sahabah/")
     );
   }
-  if (href === "/quran-hub") {
+  if (href === "/mushaf") {
     return (
+      location === "/mushaf" ||
+      location.startsWith("/mushaf/") ||
       location === "/quran-hub" ||
       location.startsWith("/quran-hub/") ||
       location === "/tafsir" ||
       location.startsWith("/tafsir/") ||
       location === "/ulum-quran" ||
       location.startsWith("/ulum-quran/") ||
-      location === "/mushaf" ||
-      location.startsWith("/mushaf/") ||
       location.startsWith("/quran/")
     );
   }
@@ -67,7 +68,8 @@ export function TopSectionBar() {
     activeRef.current?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
   }, [location]);
 
-  if (location.startsWith("/mushaf")) return null;
+  /* مواقيت الصلاة والمصحف: بلا شريط أقسام عام (عقيدة/سيرة/فقه…) */
+  if (isImmersiveChromePath(location)) return null;
 
   function triggerPrefetch(tab: SectionTab) {
     if (prefetched.current.has(tab.href)) return;
