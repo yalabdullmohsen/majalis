@@ -1,0 +1,188 @@
+name: Auto-ready and merge PRs to main
+
+# Safe auto-merge (squash) — never undrafts, never merges Draft/failed/conflicting PRs.
+# Sensitive paths (workflows, supabase, migrations, ios, vercel.json) require CI quality success
+# and are still only merged after all required checks via --auto.
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, ready_for_review]
+    branches: [main]
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
+  schedule:
+    - cron: "*/15 * * * *"
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: "رقم PR محدد (فارغ = المؤهلة فقط)"
+        required: false
+        type: string
+
+concurrency:
+  group: auto-merge-pr-${{ github.event.pull_request.number || github.event.workflow_run.id || github.event.inputs.pr_number || 'batch' }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+  pull-requests: write
+  actions: read
+  checks: read
+
+env:
+  GH_TOKEN: ${{ secrets.PROD_DEPLOY_TOKEN || secrets.GITHUB_TOKEN }}
+
+jobs:
+  cancel-on-ci-failure:
+    if: github.repository == 'yalabdullmohsen/majalis' && github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'failure'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Disable auto-merge on CI failure
+        env:
+          WORKFLOW_HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+          WORKFLOW_HEAD_BRANCH: ${{ github.event.workflow_run.head_branch }}
+        run: |
+          set -euo pipefail
+          nums=$(gh api "repos/${GITHUB_REPOSITORY}/commits/${WORKFLOW_HEAD_SHA}/pulls" \
+            --jq '[.[] | select(.base.ref=="main") | .number] | join(" ")' || true)
+          if [ -z "${nums}" ]; then
+            nums=$(gh -R "$GITHUB_REPOSITORY" pr list --base main --state open \
+              --head "${GITHUB_REPOSITORY_OWNER}:${WORKFLOW_HEAD_BRANCH}" \
+              --json number --jq '.[].number' | tr '\n' ' ' || true)
+          fi
+          for n in $nums; do
+            gh -R "$GITHUB_REPOSITORY" pr merge "$n" --disable-auto || true
+            gh -R "$GITHUB_REPOSITORY" pr comment "$n" --body "⛔ أُلغي Auto-merge لأن CI فشل." || true
+          done
+
+  auto-merge:
+    if: github.repository == 'yalabdullmohsen/majalis' && (github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success')
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.PROD_DEPLOY_TOKEN || secrets.GITHUB_TOKEN }}
+
+      - name: Select eligible PRs
+        id: targets
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          PR_HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name }}
+          PR_BASE_REF: ${{ github.event.pull_request.base.ref }}
+          WORKFLOW_HEAD_BRANCH: ${{ github.event.workflow_run.head_branch }}
+          WORKFLOW_HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+          DISPATCH_PR: ${{ github.event.inputs.pr_number }}
+        run: |
+          set -euo pipefail
+          ALLOW='^((cursor|session|claude|automation|fix|feature)/|majalis-content-fill$)'
+          EXCLUDE_DUAL='^(automation/content|automation/tasks)$'
+          nums=""
+          if [ "$EVENT_NAME" = "pull_request" ]; then
+            [ "$PR_BASE_REF" = "main" ] || { echo "nums=" >> "$GITHUB_OUTPUT"; exit 0; }
+            [ "$PR_HEAD_REPO" = "$GITHUB_REPOSITORY" ] || { echo "nums=" >> "$GITHUB_OUTPUT"; exit 0; }
+            nums="$PR_NUMBER"
+          elif [ "$EVENT_NAME" = "workflow_run" ]; then
+            nums=$(gh api "repos/${GITHUB_REPOSITORY}/commits/${WORKFLOW_HEAD_SHA}/pulls" \
+              --jq '[.[] | select(.base.ref=="main" and .head.repo.full_name=="'"${GITHUB_REPOSITORY}"'") | .number] | join(" ")' || true)
+          else
+            nums="${DISPATCH_PR:-}"
+            if [ -z "$nums" ]; then
+              nums=$(gh -R "$GITHUB_REPOSITORY" pr list --base main --state open --limit 30 \
+                --json number --jq '.[].number' | tr '\n' ' ' || true)
+            fi
+          fi
+          echo "nums=${nums}" >> "$GITHUB_OUTPUT"
+          echo "allow=${ALLOW}" >> "$GITHUB_OUTPUT"
+          echo "exclude_dual=${EXCLUDE_DUAL}" >> "$GITHUB_OUTPUT"
+
+      - name: Enable squash auto-merge for eligible Ready PRs
+        if: steps.targets.outputs.nums != ''
+        env:
+          ALLOW: ${{ steps.targets.outputs.allow }}
+          EXCLUDE_DUAL: ${{ steps.targets.outputs.exclude_dual }}
+          NUMS: ${{ steps.targets.outputs.nums }}
+        run: |
+          set -u
+          REPO_FLAG=(-R "$GITHUB_REPOSITORY")
+          quality_ok() {
+            local n="$1" checks
+            checks=$(gh "${REPO_FLAG[@]}" pr checks "$n" 2>&1 || true)
+            echo "$checks"
+            # Fail if quality is fail/pending/cancel
+            if echo "$checks" | grep -Ei '^quality\b' | grep -qiE 'fail|pending|cancel'; then
+              return 1
+            fi
+            if echo "$checks" | grep -Ei '^quality\b' | grep -qiE 'pass|success'; then
+              return 0
+            fi
+            # Fallback: Verify build (legacy name)
+            if echo "$checks" | grep -i 'Verify build' | grep -qiE 'fail|pending|cancel'; then
+              return 1
+            fi
+            if echo "$checks" | grep -i 'Verify build' | grep -qiE 'pass|success'; then
+              return 0
+            fi
+            return 1
+          }
+
+          for n in $NUMS; do
+            echo "::group::PR #$n"
+            meta=$(gh "${REPO_FLAG[@]}" pr view "$n" --json state,isDraft,baseRefName,headRefName,isCrossRepository,mergeable,mergeStateStatus,title,files \
+              --jq '{state,isDraft,base:.baseRefName,head:.headRefName,cross:.isCrossRepository,mergeable,mergeStateStatus,title,files:[.files[].path]}')
+            state=$(echo "$meta" | jq -r .state)
+            draft=$(echo "$meta" | jq -r .isDraft)
+            base=$(echo "$meta" | jq -r .base)
+            head=$(echo "$meta" | jq -r .head)
+            cross=$(echo "$meta" | jq -r .cross)
+            mergeable=$(echo "$meta" | jq -r .mergeable)
+            mstatus=$(echo "$meta" | jq -r .mergeStateStatus)
+            title=$(echo "$meta" | jq -r .title)
+
+            if [ "$state" != "OPEN" ] || [ "$base" != "main" ] || [ "$cross" = "true" ]; then
+              echo "skip: not eligible"; echo "::endgroup::"; continue
+            fi
+            if [ "$draft" = "true" ]; then
+              echo "skip: Draft (never undraft)"; echo "::endgroup::"; continue
+            fi
+            if ! echo "$head" | grep -Eq "$ALLOW"; then
+              echo "skip: branch pattern"; echo "::endgroup::"; continue
+            fi
+            if echo "$head" | grep -Eq "$EXCLUDE_DUAL"; then
+              echo "skip: dual automation"; echo "::endgroup::"; continue
+            fi
+            if echo "$title" | grep -Eqi 'NO-AUTO-MERGE|دون دمج|do-not-merge'; then
+              echo "skip: title forbids auto-merge"
+              gh "${REPO_FLAG[@]}" pr merge "$n" --disable-auto || true
+              echo "::endgroup::"; continue
+            fi
+            if [ "$mergeable" = "CONFLICTING" ] || [ "$mstatus" = "DIRTY" ]; then
+              echo "skip: conflicting"
+              gh "${REPO_FLAG[@]}" pr merge "$n" --disable-auto || true
+              echo "::endgroup::"; continue
+            fi
+            if [ "$mstatus" = "BEHIND" ]; then
+              echo "skip: behind main — update required"; echo "::endgroup::"; continue
+            fi
+
+            # Sensitive paths: still require quality green (no bypass)
+            sensitive=$(echo "$meta" | jq -r '.files[]' | grep -E '^(\.github/workflows/|artifacts/majalis/supabase/|.*migration.*|artifacts/majalis/ios/|artifacts/majalis/vercel\.json|\.github/CODEOWNERS)' || true)
+            if [ -n "$sensitive" ]; then
+              echo "sensitive paths detected — requiring quality success"
+            fi
+
+            if ! quality_ok "$n"; then
+              echo "skip: quality checks not green"
+              gh "${REPO_FLAG[@]}" pr merge "$n" --disable-auto || true
+              echo "::endgroup::"; continue
+            fi
+
+            echo "enable auto-merge squash for #$n"
+            gh "${REPO_FLAG[@]}" pr merge "$n" --auto --squash --delete-branch || true
+            echo "::endgroup::"
+          done

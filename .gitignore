@@ -36,3 +36,5 @@ scripts/debug/
 # Corepack/tooling junk dirs
 c338dec*/
 **/c338dec*/
+artifacts/api-server/dist-types/
+**/.tsbuildinfo

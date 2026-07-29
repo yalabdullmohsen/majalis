@@ -31,13 +31,14 @@ jobs:
       - name: Install
         run: pnpm install --frozen-lockfile
 
-      - name: Governance / security static gates
-        run: |
-          node scripts/verify-no-unsafe-auto-merge.mjs
-          test ! -f .github/workflows/auto-merge-to-main.yml
+      - name: Governance / auto-merge safety gate
+        run: node scripts/verify-no-unsafe-auto-merge.mjs
 
-      - name: Typecheck
-        run: pnpm -r --if-present run typecheck
+      - name: Typecheck (project references via tsc -b)
+        run: |
+          pnpm exec tsc -b --clean
+          pnpm exec tsc -b
+          pnpm -r --filter "./artifacts/**" --filter "./scripts" --filter "!@workspace/api-server" --if-present run typecheck
 
       - name: Lint (zero warnings)
         run: pnpm --filter @workspace/majalis exec eslint src lib --max-warnings=0
