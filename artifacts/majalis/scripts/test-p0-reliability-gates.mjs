@@ -14,8 +14,10 @@ const extractor = readFileSync(join(root, "lib/cms/lesson-extractor.mjs"), "utf8
 const sql = readFileSync(join(root, "supabase/enterprise_reliability_p0_v1.sql"), "utf8");
 const supabaseTs = readFileSync(join(root, "src/lib/supabase.ts"), "utf8");
 
-assert.match(applyMig, /ALLOW_RUNTIME_SCHEMA_MIGRATIONS/, "apply-migrations must gate schema writes");
-assert.match(applyMig, /runtime_schema_migrations_disabled|schemaMutationBlocked/, "blocked response required");
+assert.match(applyMig, /runtime_schema_migrations_disabled/, "apply-migrations must block schema writes");
+assert.match(applyMig, /schemaMutationBlocked|Runtime schema migrations are permanently disabled/, "blocked response required");
+assert.doesNotMatch(applyMig, /ALLOW_RUNTIME_SCHEMA_MIGRATIONS/, "no runtime DDL escape hatch");
+assert.doesNotMatch(applyMig, /applyMigrations\(/, "must not call applyMigrations at runtime");
 assert.match(http, /headersSent|isResponseClosed/, "safe sendJson required");
 assert.match(dispatch, /createRequestContext/, "dispatch must abort on timeout");
 assert.match(dispatch, /CRON_HANDLER_TIMEOUT_MS = 12_000/, "cron HTTP timeout shortened");

@@ -1,17 +1,12 @@
 /**
  * GET/POST /api/cron/apply-migrations
- * Schema mutations are blocked at runtime unless ALLOW_RUNTIME_SCHEMA_MIGRATIONS=1.
- * Default actions: verify / test only.
+ * Runtime NEVER applies DDL. Verify / connection test only.
+ * Schema changes: authorized admin workflow or Supabase SQL Editor.
  */
 import { sendJson } from "../../api/_http.mjs";
 import { validateCronAuth } from "../../../lib/env-config.mjs";
-import { applyMigrations, verifySchema } from "../../../lib/db-migrate.mjs";
+import { verifySchema } from "../../../lib/db-migrate.mjs";
 import { testDatabaseConnection, resolveDatabaseUrl } from "../../../lib/database.mjs";
-import { ensureContentImportSchema } from "../../../lib/content-import/ensure-schema.mjs";
-import { runActivationMigrations, runActivationTableMigrations } from "../../../lib/migration-runner.mjs";
-import { ACTIVATION_TABLES, countTableRows } from "../../../lib/table-probe.mjs";
-import { seedRulingsFromFilesystem } from "../../../lib/rulings-db-seed.mjs";
-import { assertServiceSecrets } from "../../../lib/service-guard.mjs";
 
 function resolvedMeta() {
   const r = resolveDatabaseUrl();
@@ -24,10 +19,6 @@ function resolvedMeta() {
   };
 }
 
-function runtimeSchemaAllowed() {
-  return String(process.env.ALLOW_RUNTIME_SCHEMA_MIGRATIONS || "").trim() === "1";
-}
-
 export default async function handler(req, res) {
   if (!validateCronAuth(req)) {
     sendJson(res, 401, { ok: false, error: "Unauthorized" });
@@ -37,117 +28,35 @@ export default async function handler(req, res) {
   const action = req.query?.action || req.body?.action || "verify";
 
   try {
-    if (action === "verify" || action === "apply") {
-      // Default "apply" is remapped to verify unless explicitly unlocked.
-      if (action === "apply" && !runtimeSchemaAllowed()) {
-        const schema = await verifySchema();
-        sendJson(res, 200, {
-          ok: true,
-          schemaMutationBlocked: true,
-          message: "Runtime schema migrations disabled. Set ALLOW_RUNTIME_SCHEMA_MIGRATIONS=1 for emergency only.",
-          schema,
-          resolved: resolvedMeta(),
-        });
-        return;
-      }
-      if (action === "verify") {
-        const schema = await verifySchema();
-        sendJson(res, schema.ok ? 200 : 500, schema);
-        return;
-      }
-    }
-
     if (action === "test") {
       const conn = await testDatabaseConnection();
       sendJson(res, conn.ok ? 200 : 500, { connection: conn, resolved: resolvedMeta() });
       return;
     }
 
-    if (!runtimeSchemaAllowed()) {
-      sendJson(res, 403, {
-        ok: false,
-        error: "runtime_schema_migrations_disabled",
-        message: "Schema changes must run via authorized admin workflow, not Production cron.",
-      });
+    if (action === "verify") {
+      const schema = await verifySchema();
+      sendJson(res, schema.ok ? 200 : 500, { ...schema, resolved: resolvedMeta() });
       return;
     }
 
-    if (action === "content-import-schema") {
-      const result = await ensureContentImportSchema();
-      sendJson(res, result.ok ? 200 : 500, result);
-      return;
-    }
-
-    const force = req.query?.force === "1" || req.body?.force === true;
-    const scope = req.query?.scope || req.body?.scope || "full";
-
-    if (scope === "seed-rulings") {
-      const count = await countTableRows("sharia_rulings");
-      const seed =
-        count !== null && count > 0
-          ? { ok: true, skipped: true, reason: "already_seeded", count }
-          : await seedRulingsFromFilesystem({ dryRun: req.query?.dryRun === "1" });
-      sendJson(res, seed.ok ? 200 : 500, { ok: seed.ok, scope: "seed-rulings", seed, countBefore: count });
-      return;
-    }
-
-    if (scope === "activation-tables") {
-      const seedRulings = req.query?.seed !== "0" && req.body?.seed !== false;
-      const activation = await runActivationTableMigrations({ seedRulings });
-      sendJson(res, activation.ok ? 200 : 500, {
-        ok: activation.ok,
-        scope: "activation-tables",
-        activation,
-        resolved: resolvedMeta(),
-      });
-      return;
-    }
-
-    if (scope === "activation") {
-      assertServiceSecrets("migrations");
-      const seedRulings = req.query?.seed !== "0" && req.body?.seed !== false;
-      const activation = await runActivationMigrations({ seedRulings });
-      sendJson(res, activation.ok ? 200 : 500, {
-        ok: activation.ok,
-        scope: "activation",
-        activation,
-        resolved: resolvedMeta(),
-      });
-      return;
-    }
-
-    const verify = await verifySchema();
-    if (verify.ok && !force) {
-      sendJson(res, 200, {
-        ok: true,
-        alreadyApplied: true,
-        schema: verify,
-        resolved: resolvedMeta(),
-      });
-      return;
-    }
-
-    const result = await applyMigrations({ continueOnError: false, trackApplied: true });
-    const verifyAfter = await verifySchema();
-    let activation = null;
-    const activationMissing = ACTIVATION_TABLES.filter((t) => verifyAfter.checks?.[t] !== "ok");
-    if (activationMissing.length > 0 || req.query?.activation === "1" || req.body?.activation === true) {
-      activation = await runActivationMigrations({ seedRulings: req.query?.seed !== "0" });
-    }
-    const ok = result.ok && verifyAfter.ok && (!activation || activation.ok);
-    sendJson(res, ok ? 200 : 500, {
-      ok,
-      migrations: result,
-      schema: verifyAfter,
-      activation,
+    // Any mutate / apply / activation / seed-schema action is permanently blocked at runtime.
+    const schema = await verifySchema();
+    sendJson(res, 403, {
+      ok: false,
+      error: "runtime_schema_migrations_disabled",
+      schemaMutationBlocked: true,
+      message:
+        "Runtime schema migrations are permanently disabled. Apply DDL via CI or Supabase SQL Editor (see docs/operations/pr616-migration-application.md).",
+      requestedAction: action,
+      schema,
       resolved: resolvedMeta(),
     });
   } catch (error) {
     sendJson(res, 500, {
       ok: false,
-      error: error.message,
+      error: error instanceof Error ? error.message : String(error),
       resolved: resolvedMeta(),
-      hint: "Set DATABASE_URL to Supabase Transaction Pooler URL on Vercel (port 6543)",
     });
   }
 }

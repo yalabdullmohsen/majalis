@@ -130,6 +130,7 @@ const NATIVE_APP_ORIGINS = new Set(["capacitor://localhost", "https://localhost"
 /** Route table uses dynamic imports so Vercel bundles one lightweight function entrypoint. */
 export const API_ROUTES = [
   { prefix: "/api/healthz", module: "./api-handlers/healthz.js", allowGet: true, exact: true },
+  { prefix: "/api/readyz", module: "./api-handlers/readyz.js", allowGet: true, exact: true },
   { prefix: "/api/public-config", module: "./api-handlers/public-config.js", allowGet: true, exact: true },
   { prefix: "/api/assistant/health", module: "./api-handlers/assistant/health.js", allowGet: true, exact: true },
   { prefix: "/api/prayer-times", module: "./api-handlers/prayer-times.js", allowGet: true, exact: true },

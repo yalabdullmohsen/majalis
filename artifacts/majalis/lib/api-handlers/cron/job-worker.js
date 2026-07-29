@@ -37,9 +37,18 @@ export default async function handler(req, res) {
 
   const run = WORKERS[job.job_type];
   if (!run) {
-    // Accept enqueue for all allowed types; mark complete with stub until dedicated worker lands.
-    await completeJob(job.job_id, { note: "no_inline_worker_yet" });
-    sendJson(res, 200, { ok: true, jobId: job.job_id, status: "accepted_no_inline_worker" });
+    // Never stub-succeed: dead-letter so operators see missing workers.
+    await failJob(job.job_id, {
+      errorCode: "no_worker_registered",
+      errorMessage: `No inline worker registered for job_type=${job.job_type}`,
+      forceDeadLetter: true,
+    });
+    sendJson(res, 200, {
+      ok: false,
+      jobId: job.job_id,
+      status: "dead_letter",
+      error: "no_worker_registered",
+    });
     return;
   }
 
