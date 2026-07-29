@@ -382,7 +382,10 @@ export default function MushafPageView() {
   const selectedIdx = selectedAyah ? flatAyahs.findIndex((a) => a.surahNumber === selectedAyah.surah && a.numberInSurah === selectedAyah.ayah) : -1;
 
   return createPortal(
-    <div className={`quran-shell quran-shell--immersive ${shellThemeClass}`} dir="rtl">
+    <div
+      className={`quran-shell quran-shell--immersive ${shellThemeClass}${textChromeVisible ? "" : " quran-shell--chrome-hidden"}`}
+      dir="rtl"
+    >
       <>
           <div className={`mpv-toolbar ${textChromeVisible ? "" : "mpv-toolbar--hidden"}`}>
             <button type="button" className="mpv-toolbar__btn" onClick={goBack} aria-label="رجوع">
