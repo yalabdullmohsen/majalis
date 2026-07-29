@@ -28,26 +28,56 @@ function usePrayerTickerItem(): TickerItem | null {
   const [cd, setCd] = useState<PrayerCountdown | null>(null);
   useEffect(() => {
     let prayers: PrayerSlot[] = [];
-    let interval: ReturnType<typeof setInterval> | undefined;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    let cancelled = false;
+
+    const schedule = () => {
+      if (cancelled || !prayers.length) return;
+      const next = computePrayerCountdown(prayers);
+      setCd(next);
+      const inGrace = next.sinceSeconds != null;
+      const preAlert = next.remainingMs > 0 && next.remainingMs <= 15 * 60 * 1000;
+      timer = setTimeout(schedule, inGrace || preAlert ? 1_000 : 30_000);
+    };
+
     fetchPrayerTimes()
       .then((payload) => {
+        if (cancelled) return;
         prayers = payload.prayers;
-        setCd(computePrayerCountdown(prayers));
-        interval = setInterval(() => setCd(computePrayerCountdown(prayers)), 60_000);
+        schedule();
       })
       .catch(() => {});
-    return () => { if (interval) clearInterval(interval); };
+
+    const onVisible = () => {
+      if (document.visibilityState !== "visible") return;
+      if (timer) clearTimeout(timer);
+      schedule();
+    };
+    document.addEventListener("visibilitychange", onVisible);
+
+    return () => {
+      cancelled = true;
+      if (timer) clearTimeout(timer);
+      document.removeEventListener("visibilitychange", onVisible);
+    };
   }, []);
 
   if (!cd?.next) return null;
   const inGrace = cd.sinceSeconds != null;
-  const name = inGrace && cd.graceNextSlot ? cd.graceNextSlot.name : cd.next.name;
-  const hms = inGrace && cd.graceNextHms ? cd.graceNextHms : cd.remainingHms;
-  const hm = hms.split(":").slice(0, 2).join(":");
+  if (inGrace && cd.sinceHms) {
+    return {
+      key: "prayer",
+      Icon: Clock,
+      label: `مضى على أذان ${cd.next.name}`,
+      text: cd.sinceHms,
+      href: "/prayer-times",
+    };
+  }
+  const hm = cd.remainingHms.split(":").slice(0, 2).join(":");
   return {
     key: "prayer",
     Icon: Clock,
-    label: `المتبقي على صلاة ${name}`,
+    label: `المتبقي على صلاة ${cd.next.name}`,
     text: hm,
     href: "/prayer-times",
   };

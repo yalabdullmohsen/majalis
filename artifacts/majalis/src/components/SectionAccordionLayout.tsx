@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import { PageHeader } from "@/components/ui-common";
 import { ExploreAlsoNav, type ExploreAlsoLink } from "@/components/ExploreAlsoNav";
