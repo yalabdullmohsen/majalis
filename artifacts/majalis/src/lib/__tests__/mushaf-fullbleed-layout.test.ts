@@ -30,4 +30,20 @@ assert.ok(bodyInner, ".qs-mushaf-body-inner موجود");
 assert.match(bodyInner[0], /aspect-ratio:\s*0\.72/);
 assert.match(bodyInner[0], /100cqh\s*\*\s*0\.72/);
 
+assert.match(viewSrc, /qs-mushaf-header-row__surah/);
+assert.match(viewSrc, /qs-mushaf-header-row__meta/);
+assert.match(viewSrc, /qs-mushaf-header-row__page/);
+assert.match(viewSrc, /سورة \{primarySurahMeta\.name\}/);
+
+const headerRow = quranCss.match(/\.qs-mushaf-header-row\s*\{[^}]+\}/);
+assert.ok(headerRow, ".qs-mushaf-header-row معرّف");
+assert.match(headerRow[0], /grid-template-columns/);
+
+const mushafV2 = readFileSync(resolve(appRoot, "src/styles/mushaf-v2.css"), "utf8");
+const bismillah = mushafV2.match(/\.mf2-bismillah\s*\{[^}]+\}/);
+assert.ok(bismillah, ".mf2-bismillah معرّف");
+assert.match(bismillah[0], /white-space:\s*nowrap/);
+assert.match(bismillah[0], /Amiri Quran/);
+assert.match(bismillah[0], /optimizeLegibility/);
+
 console.log("mushaf-fullbleed-layout.test.ts: ok");
