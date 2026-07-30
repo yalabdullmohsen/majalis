@@ -1,4 +1,3 @@
-import "./patch-url-parse.mjs";
 import express from "express";
 import compression from "compression";
 import path from "node:path";

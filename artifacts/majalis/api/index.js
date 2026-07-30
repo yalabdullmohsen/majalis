@@ -1,4 +1,3 @@
-import "../server/patch-url-parse.mjs";
 import "./_deps.mjs";
 import "../lib/rate-limit.mjs";
 import { sendJson, isResponseClosed } from "../lib/api/_http.mjs";
