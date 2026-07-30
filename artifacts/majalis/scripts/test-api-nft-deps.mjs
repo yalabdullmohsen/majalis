@@ -41,11 +41,10 @@ const vercel = readFileSync(join(root, "vercel.json"), "utf8");
 assert.match(vercel, /"api\/healthz\.js"/, "vercel.json registers healthz function");
 assert.match(vercel, /"api\/readyz\.js"/, "vercel.json registers readyz function");
 assert.match(vercel, /"api\/cron\/job-worker\.js"/, "vercel.json registers job-worker function");
-assert.match(
-  vercel,
-  /\/api\/\(\(\?!healthz\$\|readyz\$\|cron\/job-worker\$\)\.\*\)/,
-  "catch-all rewrite must exclude light endpoints",
-);
+// Catch-all stays simple — Vercel filesystem routes (api/healthz.js etc.) win before
+// afterFiles rewrites. Negative-lookahead sources have broken Production deploys.
+assert.match(vercel, /"source":\s*"\/api\/\(\.\*\)"/, "api catch-all rewrite must stay path-to-regexp safe");
+assert.doesNotMatch(vercel, /\(\?!/, "vercel.json must not use negative lookahead routes");
 
 const dispatch = readFileSync(join(root, "lib/api-dispatch.mjs"), "utf8");
 assert.match(dispatch, /CRON_HANDLER_TIMEOUT_MS\s*=\s*12_000/, "cron HTTP budget stays under 45s");
