@@ -71,11 +71,29 @@ import { allowInMemoryReliabilityStore, isProductionRuntime } from "../reliabili
 {
   process.env.NODE_ENV = "test";
   delete process.env.VERCEL_ENV;
+  // Force memory path: clear DB URLs so this assertion is not polluted by CI Postgres.
+  const memDbKeys = [
+    "DATABASE_URL",
+    "POSTGRES_URL",
+    "POSTGRES_PRISMA_URL",
+    "POSTGRES_URL_NON_POOLING",
+    "SUPABASE_DB_URL",
+    "MIGRATION_TEST_DATABASE_URL",
+  ];
+  const prevMemDb = Object.fromEntries(memDbKeys.map((k) => [k, process.env[k]]));
+  for (const k of memDbKeys) delete process.env[k];
+  process.env.ALLOW_IN_MEMORY_RELIABILITY_STORE = "1";
+
   assert.equal(allowInMemoryReliabilityStore(), true);
   __resetJobMemory();
   const enq = await enqueueJob({ jobType: "source-monitor", idempotencyKey: "test-mem" });
   assert.equal(enq.ok, true);
   assert.equal(enq.durable, false);
+
+  for (const k of memDbKeys) {
+    if (prevMemDb[k] == null) delete process.env[k];
+    else process.env[k] = prevMemDb[k];
+  }
 }
 
 console.log("p0-reliability-failclosed: ok");

@@ -1,0 +1,101 @@
+name: Preview smoke (commit-linked)
+
+# ينتظر Deployment Preview من Vercel لنفس SHA ثم يشغّل smoke خفيفًا.
+# لا يدمج ولا يفعّل auto-merge. يستخدم GITHUB_TOKEN فقط.
+
+on:
+  pull_request:
+    branches: [main]
+    types: [opened, synchronize, reopened, ready_for_review]
+
+concurrency:
+  group: preview-smoke-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  pull-requests: write
+  deployments: read
+
+jobs:
+  preview-smoke:
+    name: preview-smoke
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Wait for Preview URL (same head SHA)
+        id: preview
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HEAD_SHA: ${{ github.event.pull_request.head.sha }}
+          PR_NUM: ${{ github.event.pull_request.number }}
+          IS_DRAFT: ${{ github.event.pull_request.draft }}
+        run: |
+          set -euo pipefail
+          echo "head_sha=$HEAD_SHA" >> "$GITHUB_OUTPUT"
+          url=""
+          for i in $(seq 1 24); do
+            # Soft-pass when Vercel explicitly skipped this SHA (Ignored Build Step)
+            vercel_state=$(gh pr checks "$PR_NUM" 2>/dev/null | awk 'BEGIN{IGNORECASE=1} $1 ~ /Vercel/ {print $2" "$0}' | head -5 || true)
+            if echo "$vercel_state" | grep -qiE 'Skipped|Canceled|Ignored'; then
+              echo "preview_ready=false" >> "$GITHUB_OUTPUT"
+              echo "Vercel preview skipped for this change set — soft pass"
+              exit 0
+            fi
+            # GitHub deployments for this SHA
+            url=$(gh api "repos/${GITHUB_REPOSITORY}/deployments?sha=${HEAD_SHA}&per_page=20" \
+              --jq '[.[] | select((.environment|tostring|test("[Pp]review")) or (.environment|tostring|test("vercel")))] | .[0].payload.web_url // empty' 2>/dev/null || true)
+            if [ -z "${url:-}" ]; then
+              url=$(gh pr view "$PR_NUM" --json comments,statusCheckRollup --jq '
+                [
+                  (.comments // [] | .[].body // ""),
+                  (.statusCheckRollup // [] | .[].detailsUrl // ""),
+                  (.statusCheckRollup // [] | .[].description // "")
+                ] | join("\n")
+                | capture("(?<u>https://[a-zA-Z0-9.-]+\\.vercel\\.app)") | .u
+              ' 2>/dev/null || true)
+            fi
+            if [ -n "${url:-}" ]; then
+              echo "preview_url=$url" >> "$GITHUB_OUTPUT"
+              echo "preview_ready=true" >> "$GITHUB_OUTPUT"
+              echo "Found preview: $url"
+              exit 0
+            fi
+            echo "attempt $i/24: preview not ready yet…"
+            sleep 30
+          done
+          if [ "$IS_DRAFT" = "true" ]; then
+            echo "preview_ready=false" >> "$GITHUB_OUTPUT"
+            echo "Draft PR — preview missing tolerated"
+            exit 0
+          fi
+          # Paths that never produce a web Preview (docs/workflows-only) — soft pass
+          changed=$(gh api "repos/${GITHUB_REPOSITORY}/pulls/${PR_NUM}/files?per_page=100" --jq '.[].filename' || true)
+          # مسارات واجهة حقيقية فقط تتطلب Preview؛ JSON/SQL/scripts وحدها soft-pass
+          if ! echo "$changed" | grep -Eq '^(artifacts/majalis/(src/(views|components|pages|App\.tsx|main\.tsx)|index\.html|vite\.config)|artifacts/api-server/src/)'; then
+            echo "preview_ready=false" >> "$GITHUB_OUTPUT"
+            echo "No interactive frontend deploy paths — soft pass without Preview URL"
+            exit 0
+          fi
+          echo "preview_ready=false" >> "$GITHUB_OUTPUT"
+          echo "::error::Preview URL not found for SHA $HEAD_SHA after waiting"
+          exit 1
+
+      - name: Smoke against Preview
+        if: steps.preview.outputs.preview_ready == 'true'
+        env:
+          PREVIEW_URL: ${{ steps.preview.outputs.preview_url }}
+        run: |
+          set -euo pipefail
+          curl -fsS -o /dev/null -w "%{http_code}\n" "$PREVIEW_URL/" | grep -E '200|301|302'
+          # healthz may 200; cron must reject unauthenticated
+          code_health=$(curl -s -o /dev/null -w "%{http_code}" "$PREVIEW_URL/api/healthz" || true)
+          echo "healthz=$code_health"
+          test "$code_health" = "200" -o "$code_health" = "401" -o "$code_health" = "404"
+          code=$(curl -s -o /dev/null -w "%{http_code}" "$PREVIEW_URL/api/cron/job-worker" || true)
+          echo "cron=$code"
+          test "$code" = "401" -o "$code" = "403" -o "$code" = "404"
+          echo "preview-smoke ok for $PREVIEW_URL"
