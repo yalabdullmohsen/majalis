@@ -1,6 +1,6 @@
 /**
  * Cron — Majlis Knowledge Engine.
- * mode=health stays fast inline; all other modes enqueue (202).
+ * mode=health stays fast inline; all other modes enqueue (202) with metadata.mode.
  */
 import { sendJson } from "../../api/_http.mjs";
 import { validateCronAuth } from "../../../lib/env-config.mjs";
@@ -21,10 +21,12 @@ export default async function handler(req, res) {
       const health = await runMkeHealthCheck();
       sendJson(res, health.ok ? 200 : 500, health);
     } catch (err) {
-      sendJson(res, 500, { ok: false, error: String(err?.message || err) });
+      sendJson(res, 500, { ok: false, error: "health_check_failed" });
     }
     return;
   }
 
+  // Ensure mode reaches enqueue metadata (query/body already read by resolveEnqueueMetadata).
+  req.query = { ...(req.query || {}), mode };
   return enqueue(req, res);
 }

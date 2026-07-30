@@ -11,6 +11,13 @@ import { createRequire } from "node:module";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const sqlPath = join(root, "artifacts", "majalis", "supabase", "enterprise_reliability_p0_v1.sql");
+const hardenPath = join(
+  root,
+  "artifacts",
+  "majalis",
+  "supabase",
+  "background_jobs_runtime_hardening_v1.sql",
+);
 const mode = process.argv[2] || "verify"; // verify | fresh | upgrade
 
 console.log(`=== db:migration:${mode} ===\n`);
@@ -19,8 +26,13 @@ if (!existsSync(sqlPath)) {
   console.error("missing enterprise_reliability_p0_v1.sql");
   process.exit(1);
 }
+if (!existsSync(hardenPath)) {
+  console.error("missing background_jobs_runtime_hardening_v1.sql");
+  process.exit(1);
+}
 
 const sql = readFileSync(sqlPath, "utf8");
+const hardenSql = readFileSync(hardenPath, "utf8");
 const sqlRequired = [
   "ai_provider_circuit",
   "background_jobs",
@@ -35,6 +47,14 @@ for (const token of sqlRequired) {
     failed++;
   } else {
     console.log(`  ✓ contains ${token}`);
+  }
+}
+for (const token of ["next_retry_at", "completed_at"]) {
+  if (!hardenSql.includes(token)) {
+    console.error(`  ✗ hardening SQL missing: ${token}`);
+    failed++;
+  } else {
+    console.log(`  ✓ hardening contains ${token}`);
   }
 }
 
@@ -68,16 +88,21 @@ try {
   if (mode === "fresh" || mode === "verify" || mode === "upgrade") {
     await client.query(sql);
     console.log("  ✓ applied enterprise_reliability_p0_v1.sql");
+    await client.query(hardenSql);
+    console.log("  ✓ applied background_jobs_runtime_hardening_v1.sql");
   }
   if (mode === "upgrade") {
     await client.query(sql);
-    console.log("  ✓ re-applied migration (idempotency)");
+    await client.query(hardenSql);
+    console.log("  ✓ re-applied migrations (idempotency)");
   }
 
   const checks = [
     `SELECT 1 FROM information_schema.tables WHERE table_name = 'ai_provider_circuit'`,
     `SELECT 1 FROM information_schema.tables WHERE table_name = 'background_jobs'`,
     `SELECT 1 FROM information_schema.tables WHERE table_name = 'background_job_dead_letters'`,
+    `SELECT 1 FROM information_schema.columns WHERE table_name = 'background_jobs' AND column_name = 'next_retry_at'`,
+    `SELECT 1 FROM information_schema.columns WHERE table_name = 'background_jobs' AND column_name = 'completed_at'`,
   ];
   for (const q of checks) {
     const { rows } = await client.query(q);
