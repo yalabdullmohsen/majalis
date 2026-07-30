@@ -254,7 +254,7 @@ export default function MushafPageView() {
   const firstAyahOfPage = primarySegment?.ayahs[0];
   const { hizb } = firstAyahOfPage?.hizbQuarter
     ? deriveHizbRub(firstAyahOfPage.hizbQuarter)
-    : { hizb: 0, rubInHizb: 0 };
+    : { hizb: 0 };
   const juz = firstAyahOfPage?.juz ?? 0;
 
   useEffect(() => {
