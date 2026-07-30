@@ -3,9 +3,7 @@ import { Link } from "wouter";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
-import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import "@/styles/pages/tajweed.css";
-import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 /* ══ بيانات قواعد التجويد ══ */
 type TajweedRule = {
   id: string;
@@ -495,9 +493,7 @@ export default function QuranTajweedPage() {
       <div className="twh-share">
         <ShareButtons title="أحكام التجويد، المجلس العلمي" url="https://www.majlisilm.com/quran-tajweed" />
       </div>
-      <RelatedKnowledge kind="lesson" query="التجويد" title="دروس ومواد في التجويد" limit={6} />
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId="quran" title="اختبر معلوماتك في علم التجويد" count={4} />
       </div>
     </div>
   );

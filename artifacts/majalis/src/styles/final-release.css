@@ -853,6 +853,18 @@ html[data-theme="dark"] .bottom-nav--v2 {
 .scroll-to-top:hover { background: var(--majalis-emerald-deep, #143F35); }
 .global-back-btn:active,
 .scroll-to-top:active { transform: scale(.93); }
+@media (prefers-reduced-motion: reduce) {
+  .global-back-btn,
+  .scroll-to-top,
+  .global-back-btn:hover,
+  .scroll-to-top:hover,
+  .global-back-btn:active,
+  .scroll-to-top:active,
+  .global-back-btn--hidden {
+    transition: none;
+    transform: none;
+  }
+}
 body.filter-sheet-open .global-back-btn { display: none; }
 .global-back-btn--hidden {
   opacity: 0;

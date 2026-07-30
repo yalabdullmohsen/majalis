@@ -197,10 +197,6 @@
   line-height: 2;
   color: var(--majalis-ink);
   font-weight: 500;
-  display: -webkit-box;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
 }
 
 /* Meta */
@@ -947,7 +943,7 @@
 }
 
 .hadith-card__text--matn {
-  -webkit-line-clamp: 5;
+  /* عرض النص كاملًا — بلا اقتطاع */
 }
 .hadith-meta-item--takhrij {
   color: var(--majalis-emerald-deep, #143F35);
@@ -1013,7 +1009,6 @@
 .hadith-card__text--matn {
   font-size: 0.95rem;
   line-height: 1.75;
-  -webkit-line-clamp: 4;
 }
 .hadith-badge,
 .hadith-grade {

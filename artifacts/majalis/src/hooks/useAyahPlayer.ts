@@ -33,6 +33,10 @@ import {
 import { logDiagnostic } from "@/lib/diagnostics";
 import { useWakeLock } from "@/hooks/useWakeLock";
 import { holdPreviousWhileLoading } from "@/lib/cls-layout-reserve";
+import {
+  deactivateNativeAudioSession,
+  ensureNativePlaybackAudioSession,
+} from "@/lib/native-playback-audio";
 
 export type PlayerState = "idle" | "loading" | "playing" | "paused" | "error" | "buffering";
 
@@ -143,6 +147,7 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
       stallRef.current = null;
       releaseAudioElement(audio);
       audioRef.current = null;
+      void deactivateNativeAudioSession().catch(() => undefined);
     };
   }, [clearDelayTimer]);
 
@@ -270,7 +275,17 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
        event-loop لاحقة للمسة الأصلية، فيرفض التشغيل صامتًا (NotAllowedError)
        — هذا هو السبب الجذري الفعلي لعطل التشغيل على iOS تحديدًا (مؤكَّد
        2026-07-22). المتصفح يدير الانتظار الداخلي لتوفر البيانات بنفسه طالما
-       استُدعيت play() بالتوقيت الصحيح؛ لا حاجة لانتظار canplay يدويًا. */
+       استُدعيت play() بالتوقيت الصحيح؛ لا حاجة لانتظار canplay يدويًا.
+
+       جلسة AVAudioSession الأصلية تُفعَّل بدون await قبل play() حتى لا
+       نكسر سلسلة الإيماءة؛ الفشل يُسجَّل تشخيصيًا ولا يمنع محاولة التشغيل. */
+    void ensureNativePlaybackAudioSession().catch((err) => {
+      logDiagnostic("audio-session", "native-playback-failed", {
+        surah,
+        ayah,
+        error: err instanceof Error ? err.message : String(err),
+      });
+    });
     audio.play().catch(() => {
       if (!mountedRef.current) return;
       setPlayerState("error");
@@ -290,6 +305,7 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
   }, [clearDelayTimer]);
 
   const resume = useCallback(() => {
+    void ensureNativePlaybackAudioSession().catch(() => undefined);
     audioRef.current?.play().catch(() => setPlayerState("error"));
   }, []);
 
@@ -308,6 +324,7 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
     }
     setCurrentAyah(null);
     setPlayerState("idle");
+    void deactivateNativeAudioSession().catch(() => undefined);
   }, [clearDelayTimer]);
 
   const togglePlayAyah = useCallback((ayah: number) => {

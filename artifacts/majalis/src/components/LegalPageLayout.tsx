@@ -9,7 +9,7 @@ type Props = {
 
 function goBack() {
   const currentPath = `${window.location.pathname}${window.location.search}${window.location.hash}`;
-  goBackOrFallback(currentPath, "/");
+  goBackOrFallback(currentPath);
 }
 
 export function LegalPageLayout({ eyebrow, title, children }: Props) {

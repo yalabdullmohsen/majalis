@@ -77,12 +77,15 @@ export function useRecitationTest(canonicalText: string) {
         if (!avail.available) { setState("unsupported"); return; }
 
         const perm = await plugin.requestPermissions();
-        if (perm.speechRecognition === "prompt") {
-          // ما زال النظام يعرض حوار الإذن — لا نُخفِيها كـdenied صامت
+        // "prompt"/undetermined بعد الحوار: لا نعامله كرفض صامت ولا نكمل الاستماع.
+        if (perm.speechRecognition === "denied" || perm.speechRecognition === "restricted") {
           setState("denied");
           return;
         }
-        if (perm.speechRecognition !== "granted") { setState("denied"); return; }
+        if (perm.speechRecognition !== "granted") {
+          setState("error");
+          return;
+        }
 
         setState("listening");
         const handle = await plugin.addListener("partialResults", (data) => {
@@ -95,7 +98,8 @@ export function useRecitationTest(canonicalText: string) {
           const res = await plugin.start({ language: "ar-SA", partialResults: true, popup: false, maxResults: 1 });
           const text = res.matches?.[0] || transcriptRef.current;
           if (!text.trim()) {
-            console.error("[useRecitationTest] empty matches after successful start resolve");
+            // لا نتائج صامتة — نُظهر خطأ واضحًا (لا كلام مُكتشف)
+            setTranscript("");
             setState("error");
             return;
           }

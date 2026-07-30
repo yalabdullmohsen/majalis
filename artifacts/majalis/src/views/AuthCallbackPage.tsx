@@ -3,6 +3,9 @@ import { useLocation } from "wouter";
 import { supabase } from "@/lib/supabase";
 import { Loading } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
+import { sanitizeAuthNext } from "@/lib/auth-redirect";
+
+export { sanitizeAuthNext } from "@/lib/auth-redirect";
 
 export default function AuthCallbackPage() {
   const [, navigate] = useLocation();
@@ -18,17 +21,31 @@ export default function AuthCallbackPage() {
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
-    const next = params.get("next") || "/";
+    const next = sanitizeAuthNext(params.get("next"));
 
-    supabase.auth.onAuthStateChange((event) => {
-      if (event === "SIGNED_IN") {
-        navigate(next.startsWith("/") ? next : "/");
+    const { data: sub } = supabase.auth.onAuthStateChange((event) => {
+      if (event === "SIGNED_IN" || event === "INITIAL_SESSION") {
+        const sessionEvent = event;
+        // INITIAL_SESSION بعد hash redirect يعني الجلسة جاهزة
+        if (sessionEvent === "SIGNED_IN" || sessionEvent === "INITIAL_SESSION") {
+          void supabase.auth.getSession().then(({ data }) => {
+            if (data.session) navigate(next);
+          });
+        }
       }
     });
 
     // Fallback: redirect after Supabase processes the hash
-    const timer = setTimeout(() => navigate(next.startsWith("/") ? next : "/"), 3000);
-    return () => clearTimeout(timer);
+    const timer = setTimeout(() => {
+      void supabase.auth.getSession().then(({ data }) => {
+        navigate(data.session ? next : "/login");
+      });
+    }, 3000);
+
+    return () => {
+      sub.subscription.unsubscribe();
+      clearTimeout(timer);
+    };
   }, [navigate]);
 
   return (

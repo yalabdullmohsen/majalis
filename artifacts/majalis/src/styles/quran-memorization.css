@@ -340,8 +340,10 @@
 
 .qmem-voice-btn {
   flex-shrink: 0;
-  width: 36px;
-  height: 36px;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
   border-radius: 50%;
   border: 1.5px solid var(--ds-border, #e5e7eb);
   background: var(--ds-surface, #fff);
@@ -366,9 +368,27 @@
   animation: qmem-pulse 1s ease infinite;
 }
 
+.qmem-voice-error {
+  margin: 0.35rem 0 0;
+  font-size: 0.82rem;
+  color: #b91c1c;
+  line-height: 1.5;
+}
+
 @keyframes qmem-pulse {
   0%, 100% { transform: scale(1); }
   50% { transform: scale(1.1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .qmem-voice-btn--active {
+    animation: none;
+  }
+  .qmem-voice-btn,
+  .qmem-option,
+  .qmem-type-card {
+    transition: none;
+  }
 }
 
 .qmem-answer-input {

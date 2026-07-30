@@ -153,7 +153,13 @@ export class OnDeviceQuranASRProvider implements QuranASRProvider {
     }
     try {
       const result = pending ? await pending : { matches: [] as string[] };
-      const fullText = result.matches?.[0] ?? "";
+      const fullText = (result.matches?.[0] ?? "").trim();
+      if (!fullText) {
+        throw new ASRProviderUnavailableError({
+          code: "NO_SPEECH",
+          message: "لم يُكتشف كلام واضح. تأكد من إذن الميكروفون وحاول مجددًا بصوت أوضح.",
+        });
+      }
       return { fullText, words: fullText.split(/\s+/).filter(Boolean) };
     } catch (err) {
       if (err instanceof ASRProviderUnavailableError) throw err;

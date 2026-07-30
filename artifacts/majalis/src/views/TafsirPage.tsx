@@ -14,8 +14,6 @@ import {
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
-import { SectionQuiz } from "@/components/ui/SectionQuiz";
-import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { LIBRARY_CATALOG } from "@/lib/library-catalog";
 import {
   BOOK_SPOTLIGHTS,
@@ -501,10 +499,7 @@ export default function TafsirPage() {
           ))}
         </div>
       </section>
-
-      <RelatedKnowledge kind="quran" query="تفسير" title="مواد ذات صلة بالتفسير" limit={6} />
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId="quran" title="اختبر معلوماتك في التفسير وعلوم القرآن" count={5} />
       </div>
     </main>
   );

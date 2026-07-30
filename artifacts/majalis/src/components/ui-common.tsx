@@ -103,7 +103,7 @@ export function PageHeader({
         <button
           type="button"
           className="ds-page-back-btn"
-          onClick={() => goBackOrFallback(currentPath, "/")}
+          onClick={() => goBackOrFallback(currentPath)}
           aria-label="رجوع"
         >
           → رجوع

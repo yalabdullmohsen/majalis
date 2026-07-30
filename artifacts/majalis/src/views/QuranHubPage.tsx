@@ -8,7 +8,6 @@ import {
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { useEffect } from "react";
-import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { isComingSoonPath } from "@/lib/nav-visibility";
 import "@/styles/pages/quran-hub.css";
 
@@ -262,12 +261,6 @@ export default function QuranHubPage() {
         </p>
         <span className="quran-hub-closing__ref">الإسراء: ٩</span>
       </section>
-
-      <SectionQuiz
-        categoryId="quran"
-        title="اختبر معلوماتك في القرآن الكريم"
-        count={4}
-      />
 
       <div className="twh-share">
         <ShareButtons title="مركز القرآن الكريم — المجلس العلمي" url="https://www.majlisilm.com/quran-hub" />

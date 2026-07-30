@@ -8,7 +8,7 @@ import { useThemePreference } from "./ThemePreferenceProvider";
 
 import { useMobileNavState } from "@/hooks/useMobileNavState";
 import { isNavHrefActive } from "@/lib/nav-active";
-import { isImmersiveChromePath, isQuranImmersivePath } from "@/lib/immersive-chrome";
+import { isImmersiveChromePath } from "@/lib/immersive-chrome";
 import { PRIMARY_NAV_ITEMS } from "@/lib/navigation";
 import { fetchPrayerTimes, computePrayerCountdown, type PrayerCountdown } from "@/lib/prayer-times";
 import "@/styles/components/dark-emerald-menus.css";
@@ -126,8 +126,8 @@ export default function NavBar() {
     </div>
   );
 
-  // قارئ المصحف غامر بتنقّله الخاص — شريط الموقع الكامل فوقه يجعله صفحة ويب.
-  if (isQuranImmersivePath(location)) return null;
+  // مسارات غامرة (مصحف / صلاة / مركز قرآن) لها شريطها الخاص.
+  if (isImmersiveChromePath(location)) return null;
 
   return (
     <>
