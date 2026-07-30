@@ -22,27 +22,16 @@ assert.doesNotMatch(
 assert.match(healthz, /import\(["']\.\.\/platform-health\.mjs["']\)/, "healthz full probe must lazy-import platform-health");
 assert.match(healthz, /full\s*===\s*["']1["']|query\?\.full/, "healthz deep probe is opt-in via full=1");
 
-const healthEntry = readFileSync(join(root, "api/healthz.js"), "utf8");
-assert.doesNotMatch(healthEntry, /from\s+["'][^"']*_deps\.mjs["']/, "api/healthz must not import _deps");
-assert.doesNotMatch(healthEntry, /from\s+["'][^"']*api-dispatch/, "api/healthz must not import api-dispatch");
-assert.doesNotMatch(healthEntry, /from\s+["'][^"']*platform-health/, "api/healthz must not import platform-health");
-assert.match(healthEntry, /api-handlers\/healthz/, "api/healthz re-exports light handler");
-
-assert.ok(existsSync(join(root, "api/readyz.js")), "dedicated api/readyz.js required");
-assert.ok(existsSync(join(root, "api/cron/job-worker.js")), "dedicated api/cron/job-worker.js required");
-
-const readyzEntry = readFileSync(join(root, "api/readyz.js"), "utf8");
-assert.match(readyzEntry, /import\s+["']pg["']/, "readyz entry must NFT-mark pg");
+// Dedicated light function files are optional Phase-1 stretch; do not require them
+// after Production deploy regressions from multi-function vercel.json configs.
+assert.equal(existsSync(join(root, "api/index.js")), true, "api/index.js is the serverless entry");
 
 const index = readFileSync(join(root, "api/index.js"), "utf8");
 assert.match(index, /isResponseClosed|sendJson/, "api/index bootstrap must guard double-response");
+assert.match(index, /_deps\.mjs/, "api/index must load NFT markers");
 
 const vercel = readFileSync(join(root, "vercel.json"), "utf8");
-assert.match(vercel, /"api\/healthz\.js"/, "vercel.json registers healthz function");
-assert.match(vercel, /"api\/readyz\.js"/, "vercel.json registers readyz function");
-assert.match(vercel, /"api\/cron\/job-worker\.js"/, "vercel.json registers job-worker function");
-// Catch-all stays simple — Vercel filesystem routes (api/healthz.js etc.) win before
-// afterFiles rewrites. Negative-lookahead sources have broken Production deploys.
+assert.match(vercel, /"api\/index\.js"/, "vercel.json registers api/index function");
 assert.match(vercel, /"source":\s*"\/api\/\(\.\*\)"/, "api catch-all rewrite must stay path-to-regexp safe");
 assert.doesNotMatch(vercel, /\(\?!/, "vercel.json must not use negative lookahead routes");
 
