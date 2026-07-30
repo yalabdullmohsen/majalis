@@ -18,7 +18,7 @@ import { useAyahPlayer } from "@/hooks/useAyahPlayer";
 import { useKeepAwake } from "@/hooks/useKeepAwake";
 import { useRestoreLastPage } from "@/hooks/useRestoreLastPage";
 import { useImmersiveSystemUi } from "@/hooks/useImmersiveSystemUi";
-import { IMMERSIVE_PAPER_BG } from "@/lib/quran-immersive";
+import { AYAH_MUSHAF_PAPER_BG } from "@/lib/quran-immersive";
 import { addBookmark as addPageBookmark, isPageBookmarked } from "@/lib/quran-my-bookmarks";
 import { SurahList } from "@/components/quran/SurahList";
 import { PageAyahActionSheet } from "@/components/quran/PageAyahActionSheet";
@@ -104,13 +104,14 @@ export default function MushafPageView() {
   const breakReminder = useReadingBreakReminder();
   /** Keep screen lit while the mushaf page is open (expo-keep-awake port). */
   useKeepAwake();
-  /** Flutter SystemChrome.immersiveSticky — hide StatusBar / app chrome on /mushaf. */
+  /** Flutter SystemChrome.immersiveSticky — hide StatusBar / app chrome on /mushaf.
+   * Ayah warm paper `#FAF7F2` for standard/warm; night & high-contrast keep contrast. */
   const immersivePaper =
     prefs.readingTheme === "night"
       ? "#1a1a1a"
       : prefs.readingTheme === "high-contrast"
         ? "#ffffff"
-        : IMMERSIVE_PAPER_BG;
+        : AYAH_MUSHAF_PAPER_BG;
   useImmersiveSystemUi(true, immersivePaper);
 
   const routePage = params.page
@@ -251,9 +252,9 @@ export default function MushafPageView() {
   const primarySegment = segAyahs?.[0];
   const primarySurahMeta = primarySegment ? getSurahMeta(primarySegment.segment.surah) : getSurahForPage(page);
   const firstAyahOfPage = primarySegment?.ayahs[0];
-  const { hizb, rubInHizb } = firstAyahOfPage?.hizbQuarter
+  const { hizb } = firstAyahOfPage?.hizbQuarter
     ? deriveHizbRub(firstAyahOfPage.hizbQuarter)
-    : { hizb: 0, rubInHizb: 0 };
+    : { hizb: 0 };
   const juz = firstAyahOfPage?.juz ?? 0;
 
   useEffect(() => {
@@ -367,7 +368,14 @@ export default function MushafPageView() {
       : null;
 
   const shellThemeClass = `quran-shell--${prefs.readingTheme}`;
-  const frameClass = prefs.frameStyle === "emerald" ? "" : `qs-mushaf-frame--${prefs.frameStyle}`;
+  /* Ayah reading surface is borderless by default; optional frame styles
+     still apply when the user explicitly picks one other than "none". */
+  const frameClass =
+    prefs.frameStyle === "none"
+      ? "qs-mushaf-frame--ayah"
+      : prefs.frameStyle === "emerald"
+        ? "qs-mushaf-frame--ayah-chrome"
+        : `qs-mushaf-frame--ayah-chrome qs-mushaf-frame--${prefs.frameStyle}`;
 
   const selectedAyahData = useMemo(() => {
     if (!selectedAyah || !segAyahs) return null;
@@ -383,11 +391,21 @@ export default function MushafPageView() {
 
   return createPortal(
     <div
-      className={`quran-shell quran-shell--immersive ${shellThemeClass}${textChromeVisible ? "" : " quran-shell--chrome-hidden"}`}
+      className={`quran-shell quran-shell--immersive quran-shell--ayah ${shellThemeClass}${textChromeVisible ? "" : " quran-shell--chrome-hidden"}`}
       dir="rtl"
+      style={{ ["--ayah-paper" as string]: immersivePaper }}
     >
       <>
-          <div className={`mpv-toolbar ${textChromeVisible ? "" : "mpv-toolbar--hidden"}`}>
+          {/* رأس عائم بنمط آية: الجزء يمين / اسم السورة يسار — بلا صناديق */}
+          <header className="mpv-ayah-header" aria-label="معلومات الصفحة">
+            <span className="mpv-ayah-header__juz">
+              الجزء {juz ? toArabicDigits(juz) : "—"}
+              {hizb ? ` · الحزب ${toArabicDigits(hizb)}` : ""}
+            </span>
+            <span className="mpv-ayah-header__surah">{primarySurahMeta.name}</span>
+          </header>
+
+          <div className={`mpv-toolbar mpv-toolbar--ayah ${textChromeVisible ? "" : "mpv-toolbar--hidden"}`}>
             <button type="button" className="mpv-toolbar__btn" onClick={goBack} aria-label="رجوع">
               <ArrowRight size={16} aria-hidden="true" />
             </button>
@@ -395,12 +413,7 @@ export default function MushafPageView() {
               <Menu size={16} aria-hidden="true" />
               الفهرس
             </button>
-            <div className="mpv-toolbar__title">
-              سورة {primarySurahMeta.name}
-              <small>
-                صفحة {toArabicDigits(page)} · الجزء {toArabicDigits(juz)} · الحزب {toArabicDigits(hizb)}
-              </small>
-            </div>
+            <span className="mpv-toolbar__spacer" aria-hidden="true" />
             <button
               type="button"
               className={`mpv-toolbar__btn${pageBookmarked ? " is-on" : ""}`}
@@ -425,7 +438,7 @@ export default function MushafPageView() {
               للوصول بلوحة المفاتيح في مكان آخر بالصفحة. */}
           {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
           <div
-            className="mpv-body"
+            className="mpv-body mpv-body--ayah"
             onTouchStart={onTouchStart}
             onTouchEnd={onTouchEnd}
             onClick={() => setTextChromeVisible((v) => !v)}
@@ -443,24 +456,8 @@ export default function MushafPageView() {
               <p className="ds-empty">تعذّر تحميل هذه الصفحة. تحقّق من اتصالك وحاول مجددًا.</p>
             ) : (
               <div className={`qs-mushaf-frame ${frameClass}`}>
-                <span className="qs-mushaf-corner qs-mushaf-corner--tl" aria-hidden="true">❈</span>
-                <span className="qs-mushaf-corner qs-mushaf-corner--tr" aria-hidden="true">❈</span>
-                <span className="qs-mushaf-corner qs-mushaf-corner--bl" aria-hidden="true">❈</span>
-                <span className="qs-mushaf-corner qs-mushaf-corner--br" aria-hidden="true">❈</span>
-
-                <div className="qs-mushaf-header-row" aria-label="معلومات الصفحة">
-                  <span className="qs-mushaf-header-row__surah">سورة {primarySurahMeta.name}</span>
-                  <span
-                    className="qs-mushaf-header-row__meta"
-                    title={rubInHizb ? `الربع ${toArabicDigits(rubInHizb)} من الحزب` : undefined}
-                  >
-                    الجزء {toArabicDigits(juz)} · الحزب {toArabicDigits(hizb)}
-                  </span>
-                  <span className="qs-mushaf-header-row__page">صفحة {toArabicDigits(page)}</span>
-                </div>
-
                 <div
-                  className={`qs-mushaf-body qs-mushaf-body--hl-${prefs.highlightStyle} ${prefs.highlightStyle === "spotlight" && selectedAyah ? "qs-mushaf-body--spotlight" : ""}`}
+                  className={`qs-mushaf-body qs-mushaf-body--ayah qs-mushaf-body--hl-${prefs.highlightStyle} ${prefs.highlightStyle === "spotlight" && selectedAyah ? "qs-mushaf-body--spotlight" : ""}`}
                   style={{
                     ["--qs-font-size" as string]: `${prefs.fontScale}px`,
                     ["--qs-font-scale" as string]: String(prefs.fontScale / QURAN_FONT_DEFAULT_PX),
@@ -483,43 +480,41 @@ export default function MushafPageView() {
                     )}
                   </div>
                 </div>
-
-                <div className="qs-mushaf-footer-row">
-                  <span className="qs-mushaf-footer-row__line" aria-hidden="true" />
-                  <button
-                    type="button"
-                    className="qs-mushaf-footer-row__page qs-mushaf-footer-row__page-btn"
-                    onClick={openJumpModal}
-                    aria-label={`الانتقال إلى صفحة — الحالية ${toArabicDigits(page)}`}
-                  >
-                    صفحة {toArabicDigits(page)}
-                  </button>
-                  <span className="qs-mushaf-footer-row__line" aria-hidden="true" />
-                </div>
               </div>
             )}
           </div>
 
-          <nav className={`mpv-navbar ${textChromeVisible ? "" : "mpv-navbar--hidden"}`} aria-label="التنقل بين صفحات المصحف">
-            <button type="button" className="mpv-navbar__btn" onClick={prevPage} disabled={page <= 1} aria-label="الصفحة السابقة">
+          {/* تذييل آية: شارة بيضاوية دائمة + أسهم خفيفة مع الأدوات */}
+          <footer className="mpv-ayah-footer">
+            <button
+              type="button"
+              className={`mpv-navbar__btn mpv-ayah-nav-btn ${textChromeVisible ? "" : "mpv-ayah-nav-btn--hidden"}`}
+              onClick={prevPage}
+              disabled={page <= 1}
+              aria-label="الصفحة السابقة"
+            >
               <ChevronRight size={18} aria-hidden="true" />
             </button>
             <button
               type="button"
-              className="mpv-navbar__page-jump"
+              className="mpv-ayah-page-badge"
               onClick={openJumpModal}
               aria-haspopup="dialog"
               aria-expanded={isJumpModalVisible}
-              aria-label={`فتح الانتقال إلى صفحة — الحالية ${toArabicDigits(page)} من ${toArabicDigits(TOTAL_PAGES)}`}
+              aria-label={`الانتقال إلى صفحة — الحالية ${toArabicDigits(page)} من ${toArabicDigits(TOTAL_PAGES)}`}
             >
-              <span>{toArabicDigits(page)}</span>
-              <span aria-hidden="true">/</span>
-              <span>{toArabicDigits(TOTAL_PAGES)}</span>
+              {toArabicDigits(page)}
             </button>
-            <button type="button" className="mpv-navbar__btn" onClick={nextPage} disabled={page >= TOTAL_PAGES} aria-label="الصفحة التالية">
+            <button
+              type="button"
+              className={`mpv-navbar__btn mpv-ayah-nav-btn ${textChromeVisible ? "" : "mpv-ayah-nav-btn--hidden"}`}
+              onClick={nextPage}
+              disabled={page >= TOTAL_PAGES}
+              aria-label="الصفحة التالية"
+            >
               <ChevronLeft size={18} aria-hidden="true" />
             </button>
-          </nav>
+          </footer>
         </>
 
       {sidebarOpen && (

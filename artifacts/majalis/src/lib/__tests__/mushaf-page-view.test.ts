@@ -76,6 +76,8 @@ console.log("═══ MushafPageView — بلا transform:scale، تمييز mf
   assert(!viewSrc.includes("transform: `scale("), "أُزيل تكبير transform:scale من قارئ المصحف");
   assert(viewSrc.includes("--qs-font-scale"), "تكبير الخط عبر متغير CSS قابل للتمرير");
   assert(viewSrc.includes("qs-mushaf-body--hl-"), "نمط التمييز يُمرَّر لحاوية الصفحة");
+  assert(viewSrc.includes("quran-shell--ayah"), "قارئ المصحف بنمط آية");
+  assert(viewSrc.includes("mpv-ayah-page-badge"), "شارة رقم الصفحة البيضاوية");
   assert(viewSrc.includes("onSelectPage"), "فهرس المصحف يدعم الانتقال لصفحة/إشارة");
 
   const listSrc = readFileSync(path.join(ROOT, "src/components/quran/SurahList.tsx"), "utf8");
