@@ -1,16 +1,6 @@
 /**
  * اختبار التلاوة — يستمع لصوت المستخدم عبر التعرف الصوتي الأصلي للمنصة
- * ويقارن ما تعرّف عليه بنص المرجع (سورة كاملة الآن، لا آية واحدة محدَّدة
- * — بلا أي رفع للصوت أو النص إلى خوادم مجالس
- * (راجع useRecitationTest.ts لتفاصيل المعالجة والخصوصية).
- *
- * ⚠️ نطاق النص المرجعي مفتوح لأي سورة كاملة الآن (كان مقصورًا على آية
- * واحدة فقط)، لكن حدًا تقنيًا صادقًا يبقى قائمًا: الاستماع عبر Web Speech
- * API/المكوّن الأصلي جلسة واحدة قد تتوقف تلقائيًا بعد سكتة قصيرة بين
- * الآيات على بعض المتصفحات رغم تفعيل continuous — للتسميع الكامل الموثوق
- * لسورة طويلة استُخدِم محرك "اختبار التسميع بالذكاء الاصطناعي" المخصص
- * (/quran/recitation-test-ai) المبني خصيصًا لجلسات طويلة متعددة الآيات؛
- * هذه لوحة "فحص سريع" مصاحبة، لا بديلًا عنه.
+ * ويقارن ما تعرّف عليه بنص المرجع.
  */
 import { useState } from "react";
 import { Mic, Square, RotateCcw } from "lucide-react";
@@ -18,7 +8,8 @@ import { useRecitationTest, hasRecitationConsent, grantRecitationConsent } from 
 
 export function RecitationTestPanel({ referenceText, referenceLabel }: { referenceText: string; referenceLabel: string }) {
   const [consented, setConsented] = useState(hasRecitationConsent);
-  const { state, transcript, result, start, stop, reset } = useRecitationTest(referenceText);
+  const { state, transcript, result, start, stop, reset, audioLevel, errorMessage, statusLabel } =
+    useRecitationTest(referenceText);
 
   if (!consented) {
     return (
@@ -43,20 +34,35 @@ export function RecitationTestPanel({ referenceText, referenceLabel }: { referen
 
   return (
     <div className="rtp-panel">
-      {state === "idle" && (
-        <button type="button" className="rtp-mic-btn" onClick={start}>
+      {(state === "idle" || state === "ready") && (
+        <button type="button" className="rtp-mic-btn" onClick={() => void start()}>
           <Mic size={16} aria-hidden="true" /> اختبر تلاوتك لـ{referenceLabel}
         </button>
       )}
 
-      {state === "requesting-permission" && <p className="rtp-status">جارٍ طلب إذن الميكروفون…</p>}
+      {state === "warming" && <p className="rtp-status" role="status">{statusLabel}</p>}
+      {state === "requesting-permission" && <p className="rtp-status" role="status">{statusLabel}</p>}
 
       {state === "listening" && (
         <div className="rtp-listening">
-          <button type="button" className="rtp-mic-btn rtp-mic-btn--active" onClick={stop}>
+          <button type="button" className="rtp-mic-btn rtp-mic-btn--active" onClick={() => void stop()}>
             <Square size={14} aria-hidden="true" /> استمع الآن… اضغط للإيقاف
           </button>
-          {transcript && <p className="rtp-transcript" dir="rtl">{transcript}</p>}
+          <span
+            className="rtp-audio-level"
+            role="meter"
+            aria-label="مستوى الصوت"
+            aria-valuemin={0}
+            aria-valuemax={100}
+            aria-valuenow={Math.round(audioLevel * 100)}
+          >
+            <span className="rtp-audio-level__fill" style={{ transform: `scaleX(${Math.max(0.05, audioLevel)})` }} />
+          </span>
+          {transcript ? (
+            <p className="rtp-transcript" dir="rtl">{transcript}</p>
+          ) : (
+            <p className="rtp-status">استمع الآن — تظهر النتائج فور التعرّف</p>
+          )}
         </div>
       )}
 
@@ -82,10 +88,18 @@ export function RecitationTestPanel({ referenceText, referenceLabel }: { referen
         <p className="rtp-status rtp-status--warn">اختبار التلاوة غير مدعوم على هذا الجهاز أو المتصفح حاليًا.</p>
       )}
       {state === "denied" && (
-        <p className="rtp-status rtp-status--warn">لم يُمنح إذن الميكروفون. فعّله من إعدادات الجهاز لاستخدام هذه الميزة.</p>
+        <div className="rtp-status rtp-status--warn">
+          <p>{errorMessage || "لم يُمنح إذن الميكروفون. فعّله من إعدادات الجهاز لاستخدام هذه الميزة."}</p>
+          <button type="button" className="rtp-retry-btn" onClick={reset}>إعادة المحاولة</button>
+        </div>
       )}
-      {state === "error" && (
-        <p className="rtp-status rtp-status--warn">حدث خطأ أثناء الاستماع. حاول مجددًا.</p>
+      {(state === "error" || state === "no_audio") && (
+        <div className="rtp-status rtp-status--warn" role="alert">
+          <p>{errorMessage || (state === "no_audio" ? "لم يصل صوت من الميكروفون." : "حدث خطأ أثناء الاستماع.")}</p>
+          <button type="button" className="rtp-retry-btn" onClick={() => { reset(); void start(); }}>
+            <RotateCcw size={13} aria-hidden="true" /> إعادة المحاولة
+          </button>
+        </div>
       )}
     </div>
   );

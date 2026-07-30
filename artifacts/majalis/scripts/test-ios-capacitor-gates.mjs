@@ -90,9 +90,23 @@ for (const code of [
 }
 ok(speechSwift.includes("mediaServicesWereResetNotification"), "speech observes media services reset");
 ok(speechSwift.includes("deinit"), "speech plugin cleans up in deinit");
+ok(speechSwift.includes('name: "prepare"'), "speech plugin exposes prepare for prewarm");
+ok(speechSwift.includes('name: "teardown"'), "speech plugin exposes teardown");
+ok(speechSwift.includes("NO_AUDIO_BUFFER"), "speech classifies no first buffer");
+ok(speechSwift.includes("shouldReportPartialResults"), "speech enables partial results");
+ok(speechSwift.includes("playAndRecord"), "speech uses playAndRecord to avoid category thrash");
+ok(speechSwift.includes("notifyListeners(\"latency\""), "speech emits latency metrics");
+ok(speechSwift.includes("notifyListeners(\"audioLevel\""), "speech emits audio level");
+ok(speechSwift.includes("sessionPrepared"), "speech keeps warm session state");
 
 ok(plist.includes("NSMicrophoneUsageDescription"), "Info.plist NSMicrophoneUsageDescription");
 ok(plist.includes("NSSpeechRecognitionUsageDescription"), "Info.plist NSSpeechRecognitionUsageDescription");
+
+const speechJs = readFileSync(join(root, "src", "lib", "plugins", "speech-recognition.ts"), "utf8");
+ok(speechJs.includes("prepare("), "JS speech bridge exposes prepare");
+ok(speechJs.includes("teardown("), "JS speech bridge exposes teardown");
+ok(speechJs.includes("stopQuranPlaybackForRecitation"), "JS stops Quran before recitation");
+ok(speechJs.includes("NO_AUDIO_BUFFER"), "JS classifies NO_AUDIO_BUFFER");
 
 const captureSwift = readFileSync(join(iosApp, "App", "RecitationAudioCapturePlugin.swift"), "utf8");
 ok(!/try\?/.test(captureSwift), "capture plugin does not swallow errors with try?");
