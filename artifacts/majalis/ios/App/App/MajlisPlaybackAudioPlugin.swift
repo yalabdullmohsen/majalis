@@ -19,13 +19,29 @@ public class MajlisPlaybackAudioPlugin: CAPPlugin, CAPBridgedPlugin {
 
     private var observersInstalled = false
     private var mode: String = "inactive"
+    private var mediaResetObserver: NSObjectProtocol?
 
     public override func load() {
         super.load()
         installSessionObserversIfNeeded()
+        mediaResetObserver = NotificationCenter.default.addObserver(
+            forName: AVAudioSession.mediaServicesWereResetNotification,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            guard let self else { return }
+            self.mode = "inactive"
+            self.notifyListeners("audioSessionError", data: [
+                "op": "media_services_reset",
+                "message": "AVAudioSession media services were reset",
+            ])
+        }
     }
 
     deinit {
+        if let mediaResetObserver {
+            NotificationCenter.default.removeObserver(mediaResetObserver)
+        }
         NotificationCenter.default.removeObserver(self)
     }
 
@@ -41,7 +57,11 @@ public class MajlisPlaybackAudioPlugin: CAPPlugin, CAPBridgedPlugin {
             mode = "playback"
             call.resolve(["ok": true, "mode": mode])
         } catch {
-            call.reject("audio_session_failed", error.localizedDescription, error)
+            call.reject(
+                "تعذّر تفعيل جلسة التشغيل: \(error.localizedDescription)",
+                "AUDIO_SESSION_FAILED",
+                error
+            )
         }
     }
 
@@ -58,7 +78,11 @@ public class MajlisPlaybackAudioPlugin: CAPPlugin, CAPBridgedPlugin {
             mode = "recording"
             call.resolve(["ok": true, "mode": mode])
         } catch {
-            call.reject("audio_session_failed", error.localizedDescription, error)
+            call.reject(
+                "تعذّر تفعيل جلسة التسجيل: \(error.localizedDescription)",
+                "AUDIO_SESSION_FAILED",
+                error
+            )
         }
     }
 
@@ -68,7 +92,11 @@ public class MajlisPlaybackAudioPlugin: CAPPlugin, CAPBridgedPlugin {
             mode = "inactive"
             call.resolve(["ok": true, "mode": mode])
         } catch {
-            call.reject("audio_session_failed", error.localizedDescription, error)
+            call.reject(
+                "تعذّر إيقاف جلسة الصوت: \(error.localizedDescription)",
+                "AUDIO_SESSION_FAILED",
+                error
+            )
         }
     }
 

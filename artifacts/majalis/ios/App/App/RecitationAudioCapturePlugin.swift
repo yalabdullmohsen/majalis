@@ -31,6 +31,47 @@ public class RecitationAudioCapturePlugin: CAPPlugin, CAPBridgedPlugin {
     private let audioEngine = AVAudioEngine()
     private var isCapturing = false
     private let targetSampleRate: Double = 16_000
+    private var mediaResetObserver: NSObjectProtocol?
+
+    public override func load() {
+        super.load()
+        mediaResetObserver = NotificationCenter.default.addObserver(
+            forName: AVAudioSession.mediaServicesWereResetNotification,
+            object: nil,
+            queue: .main
+        ) { [weak self] _ in
+            guard let self else { return }
+            if self.isCapturing {
+                self.teardownCapture()
+                self.notifyListeners("audioSessionError", data: [
+                    "op": "media_services_reset",
+                    "message": "AVAudioSession media services were reset",
+                ])
+            }
+        }
+    }
+
+    deinit {
+        if let mediaResetObserver {
+            NotificationCenter.default.removeObserver(mediaResetObserver)
+        }
+        teardownCapture()
+    }
+
+    private func teardownCapture() {
+        if audioEngine.isRunning {
+            audioEngine.stop()
+            audioEngine.inputNode.removeTap(onBus: 0)
+        } else {
+            audioEngine.inputNode.removeTap(onBus: 0)
+        }
+        isCapturing = false
+        do {
+            try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+        } catch {
+            NSLog("[RecitationCapture] AVAudioSession deactivate failed: %@", error.localizedDescription)
+        }
+    }
 
     @objc func requestPermission(_ call: CAPPluginCall) {
         AVAudioSession.sharedInstance().requestRecordPermission { granted in
@@ -119,6 +160,8 @@ public class RecitationAudioCapturePlugin: CAPPlugin, CAPBridgedPlugin {
         if audioEngine.isRunning {
             audioEngine.stop()
             audioEngine.inputNode.removeTap(onBus: 0)
+        } else {
+            audioEngine.inputNode.removeTap(onBus: 0)
         }
         do {
             try AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
@@ -128,7 +171,7 @@ public class RecitationAudioCapturePlugin: CAPPlugin, CAPBridgedPlugin {
                 "op": "deactivate",
                 "message": error.localizedDescription,
             ])
-            call.reject("تعذّر إيقاف جلسة الصوت: \(error.localizedDescription)")
+            call.reject("تعذّر إيقاف جلسة الصوت: \(error.localizedDescription)", "AUDIO_SESSION_FAILED", error)
             isCapturing = false
             return
         }

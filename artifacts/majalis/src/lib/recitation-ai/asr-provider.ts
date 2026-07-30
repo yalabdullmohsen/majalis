@@ -51,7 +51,18 @@ export type FinalResult = {
   timedWords?: TimedWordResult[];
 };
 
-export type ASRProviderError = { code: "NOT_CONFIGURED" | "UNAVAILABLE" | "PERMISSION_DENIED" | "NETWORK" | "UNKNOWN"; message: string };
+export type ASRProviderError = {
+  code:
+    | "NOT_CONFIGURED"
+    | "UNAVAILABLE"
+    | "PERMISSION_DENIED"
+    | "NETWORK"
+    | "NO_SPEECH"
+    | "AUDIO_SESSION"
+    | "RECOGNITION_FAILED"
+    | "UNKNOWN";
+  message: string;
+};
 
 export class ASRProviderUnavailableError extends Error {
   constructor(public readonly detail: ASRProviderError) {

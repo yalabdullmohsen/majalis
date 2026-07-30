@@ -65,6 +65,49 @@ ok(pluginSwift.includes("interruptionNotification"), "handles audio interruption
 ok(pluginSwift.includes("routeChangeNotification"), "handles route changes");
 ok(!/try\?/.test(pluginSwift), "plugin does not swallow errors with try?");
 ok(!/call\.resolve\(\[\]\)/.test(pluginSwift), "plugin does not resolve empty on failure");
+ok(pluginSwift.includes("AUDIO_SESSION_FAILED"), "playback rejects with AUDIO_SESSION_FAILED code");
+ok(pluginSwift.includes("mediaServicesWereResetNotification"), "playback observes media services reset");
+
+const speechSwift = readFileSync(join(iosApp, "App", "MajlisSpeechRecognitionPlugin.swift"), "utf8");
+ok(speechSwift.includes("CAPBridgedPlugin"), "speech plugin conforms to CAPBridgedPlugin");
+ok(speechSwift.includes('jsName = "MajlisSpeechRecognition"'), "speech plugin jsName");
+ok(!/try\?/.test(speechSwift), "speech plugin does not swallow errors with try?");
+ok(
+  !/call\.resolve\(\[\s*"matches"\s*:\s*\[\s*\]\s*\]\)/.test(speechSwift),
+  "speech plugin does not silently resolve empty matches",
+);
+ok(speechSwift.includes('call.reject'), "speech plugin uses call.reject for failures");
+for (const code of [
+  "RECOGNIZER_UNAVAILABLE",
+  "SPEECH_DENIED",
+  "MICROPHONE_DENIED",
+  "AUDIO_SESSION_FAILED",
+  "NO_SPEECH_DETECTED",
+  "MEDIA_SERVICES_RESET",
+  "RECOGNITION_FAILED",
+]) {
+  ok(speechSwift.includes(`"${code}"`), `speech plugin classifies ${code}`);
+}
+ok(speechSwift.includes("mediaServicesWereResetNotification"), "speech observes media services reset");
+ok(speechSwift.includes("deinit"), "speech plugin cleans up in deinit");
+
+ok(plist.includes("NSMicrophoneUsageDescription"), "Info.plist NSMicrophoneUsageDescription");
+ok(plist.includes("NSSpeechRecognitionUsageDescription"), "Info.plist NSSpeechRecognitionUsageDescription");
+
+const captureSwift = readFileSync(join(iosApp, "App", "RecitationAudioCapturePlugin.swift"), "utf8");
+ok(!/try\?/.test(captureSwift), "capture plugin does not swallow errors with try?");
+ok(captureSwift.includes("AUDIO_SESSION_FAILED"), "capture rejects deactivate with AUDIO_SESSION_FAILED");
+ok(captureSwift.includes("mediaServicesWereResetNotification"), "capture observes media services reset");
+
+const privacy = readFileSync(join(iosApp, "App", "PrivacyInfo.xcprivacy"), "utf8");
+ok(privacy.includes("NSPrivacyTracking"), "PrivacyInfo declares tracking key");
+ok(/NSPrivacyTracking<\/key>\s*<false\/>/s.test(privacy), "PrivacyInfo tracking=false");
+ok(privacy.includes("NSPrivacyAccessedAPICategoryUserDefaults"), "PrivacyInfo declares UserDefaults API reason");
+ok(
+  !privacy.includes("NSPrivacyAccessedAPICategoryDiskSpace") &&
+    !privacy.includes("NSPrivacyAccessedAPICategorySystemBootTime"),
+  "PrivacyInfo does not invent unused Required Reason APIs",
+);
 
 const live = readFileSync(
   join(iosApp, "PrayerLiveActivity", "PrayerLiveActivityLiveActivity.swift"),
