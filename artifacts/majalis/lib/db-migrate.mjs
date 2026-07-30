@@ -153,7 +153,19 @@ export async function ensureSchemaReady() {
   return { ok: verify.ok, migrated: true, migration, schema: verify };
 }
 
+function assertMigrationsCallerAllowed() {
+  // Permanent fail-closed on Vercel request runtimes unless explicit CLI opt-in.
+  const onVercel = String(process.env.VERCEL || "").trim() === "1";
+  const allowCli = String(process.env.MAJALIS_ALLOW_CLI_MIGRATIONS || "").trim() === "1";
+  if (onVercel && !allowCli) {
+    const err = new Error("runtime_schema_migrations_disabled");
+    err.code = "runtime_schema_migrations_disabled";
+    throw err;
+  }
+}
+
 export async function applyMigrations(options = {}) {
+  assertMigrationsCallerAllowed();
   const files = options.files || MIGRATION_FILES;
   const results = [];
   const accessToken = pick("SUPABASE_ACCESS_TOKEN", "SUPABASE_MANAGEMENT_TOKEN", "SUPABASE_PAT");

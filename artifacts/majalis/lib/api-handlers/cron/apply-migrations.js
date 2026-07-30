@@ -51,9 +51,18 @@ export default async function handler(req, res) {
       resolved: resolvedMeta(),
     });
   } catch (error) {
+    console.error(
+      JSON.stringify({
+        level: "error",
+        msg: "cron_apply_migrations_failed",
+        error: error instanceof Error ? error.message : String(error),
+        ts: new Date().toISOString(),
+      }),
+    );
     sendJson(res, 500, {
       ok: false,
-      error: error instanceof Error ? error.message : String(error),
+      error: "internal_error",
+      userMessageAr: "تعذّر التحقق من المخطط.",
       resolved: resolvedMeta(),
     });
   }

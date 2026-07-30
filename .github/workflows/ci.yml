@@ -53,6 +53,9 @@ jobs:
           BASE_PATH: "/"
         run: pnpm --filter @workspace/majalis run build
 
+      - name: Verify no runtime DDL
+        run: pnpm verify:no-runtime-ddl
+
       - name: Content import tests
         run: |
           cd artifacts/majalis

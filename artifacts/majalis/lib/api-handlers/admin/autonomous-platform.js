@@ -1,4 +1,5 @@
 import { sendJson } from "../../api/_http.mjs";
+import { sendSafeError } from "../../api/safe-error.mjs";
 import { requireAdminAccess } from "../../../lib/admin-auth.mjs";
 import {
   getPlatformDashboard,
@@ -154,6 +155,6 @@ export default async function handler(req, res) {
         "review-queue", "review-decide", "dlq", "logs", "pipeline-runs", "run"],
     });
   } catch (err) {
-    sendJson(res, 500, { ok: false, error: err.message });
+    sendSafeError(res, sendJson, err, { code: "admin_handler_error" });
   }
 }

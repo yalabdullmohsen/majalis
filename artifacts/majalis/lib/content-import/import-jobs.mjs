@@ -62,36 +62,47 @@ function loadMigrationSql() {
   }
 }
 
-/** @deprecated use loadMigrationSql — kept for callers importing ENSURE_IMPORT_JOBS_SQL */
+/** @deprecated SQL text for CLI docs only — never applied at runtime */
 export const ENSURE_IMPORT_JOBS_SQL = loadMigrationSql() || "";
 
-export async function ensureImportTables(admin) {
+/**
+ * Verify import job tables exist (read-only probe). Never runs DDL.
+ */
+export async function verifyImportTables(admin) {
   if (!admin) {
-    logJobs("ensure_schema_skip", { reason: "no_admin" });
-    return { ok: false, error: "no_admin" };
+    logJobs("verify_schema_skip", { reason: "no_admin" });
+    return { ok: false, error: "no_admin", schemaMutationBlocked: true };
   }
 
-  const sql = loadMigrationSql();
-  if (!sql) {
-    logJobs("ensure_schema_failed", { reason: "migration_file_missing", file: MIGRATION_FILE });
-    return { ok: false, error: `migration_missing:${MIGRATION_FILE}` };
+  const { error: jobsErr } = await admin.from("content_import_jobs").select("id").limit(0);
+  if (jobsErr) {
+    logJobs("verify_schema_failed", { table: "content_import_jobs", code: jobsErr.code });
+    return {
+      ok: false,
+      error: "import_schema_not_ready",
+      schemaMutationBlocked: true,
+      hint: `Apply supabase/${MIGRATION_FILE} via CLI/SQL Editor (REQUIRES_EXPLICIT_APPROVAL).`,
+    };
   }
 
-  try {
-    const { getPgClient } = await import("../database.mjs");
-    const { client } = await getPgClient();
-    try {
-      await client.query(sql);
-      const recovered = await recoverOrphanStaging(client);
-      logJobs("ensure_schema_ok", { via: "postgres", recovered_orphans: recovered });
-      return { ok: true, via: "postgres", recovered_orphans: recovered };
-    } finally {
-      await client.end().catch(() => {});
-    }
-  } catch (err) {
-    logJobs("ensure_schema_postgres_failed", { error: err.message });
-    return { ok: false, error: err.message };
+  const { error: stagingErr } = await admin.from("content_import_staging").select("id").limit(0);
+  if (stagingErr) {
+    logJobs("verify_schema_failed", { table: "content_import_staging", code: stagingErr.code });
+    return {
+      ok: false,
+      error: "import_schema_not_ready",
+      schemaMutationBlocked: true,
+      hint: `Apply supabase/${MIGRATION_FILE} via CLI/SQL Editor (REQUIRES_EXPLICIT_APPROVAL).`,
+    };
   }
+
+  logJobs("verify_schema_ok", { via: "verify_only" });
+  return { ok: true, via: "verify_only", schemaMutationBlocked: true };
+}
+
+/** @deprecated name kept — verify-only, never applies DDL */
+export async function ensureImportTables(admin) {
+  return verifyImportTables(admin);
 }
 
 async function recoverOrphanStaging(client) {
@@ -102,12 +113,14 @@ async function recoverOrphanStaging(client) {
   return rowCount ?? 0;
 }
 
-export async function recoverImportJobIntegrity() {
+export async function recoverImportJobIntegrity(opts = {}) {
   const admin = getSupabaseAdmin();
   if (!admin) return { ok: false, error: "no_admin" };
 
-  const ensured = await ensureImportTables(admin);
-  if (!ensured.ok) return ensured;
+  if (!opts.skipEnsure) {
+    const ensured = await verifyImportTables(admin);
+    if (!ensured.ok) return ensured;
+  }
 
   try {
     const { getPgClient } = await import("../database.mjs");
@@ -264,12 +277,14 @@ export async function createImportJob({ type, filename, totalRows, createdBy }) 
     return { ok: true, job, id: jobId, persisted: false, via: "memory" };
   }
 
-  const schema = await ensureImportTables(admin);
+  const schema = await verifyImportTables(admin);
   if (!schema.ok) {
     return {
       ok: false,
-      error: `import_schema_not_ready: ${schema.error}`,
+      error: "import_schema_not_ready",
       code: "schema_not_ready",
+      schemaMutationBlocked: true,
+      hint: schema.hint,
     };
   }
 

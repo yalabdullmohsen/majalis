@@ -1,4 +1,5 @@
 import { sendJson } from "../../api/_http.mjs";
+import { sendSafeError } from "../../api/safe-error.mjs";
 import { requireAdminAccess } from "../../../lib/admin-auth.mjs";
 import {
   startImportJob,
@@ -105,7 +106,7 @@ export default async function handler(req, res) {
       sendJson(res, result.ok ? 200 : 422, { ok: result.ok, ...result });
     } catch (err) {
       console.error("[admin/content-import:phase2-trial]", err);
-      sendJson(res, 500, { ok: false, error: String(err.message || err) });
+      sendSafeError(res, sendJson, err, { code: "admin_handler_error" });
     }
     return;
   }
@@ -315,7 +316,7 @@ export default async function handler(req, res) {
       } catch (err) {
         console.error("[admin/content-import:commit:sync]", err);
         jobLog(jobId, "commit_sync_exception", {
-          error: String(err.message || err),
+          error: String(err.message || err).slice(0, 500),
           contentType: job?.type,
           targetTable,
         });
@@ -324,7 +325,6 @@ export default async function handler(req, res) {
             code: "import_failed",
             contentType: job?.type,
             targetTable,
-            detail: String(err.message || err),
             failedAt: "processImportJob",
           }),
           jobId,
@@ -370,7 +370,7 @@ export default async function handler(req, res) {
       sendJson(res, result.ok ? 200 : 422, result);
     } catch (err) {
       console.error("[admin/content-import:process]", err);
-      sendJson(res, 500, { ok: false, error: String(err.message || err) });
+      sendSafeError(res, sendJson, err, { code: "admin_handler_error" });
     }
     return;
   }
@@ -382,7 +382,7 @@ export default async function handler(req, res) {
       sendJson(res, 200, result);
     } catch (err) {
       console.error("[admin/content-import:process-queue]", err);
-      sendJson(res, 500, { ok: false, error: String(err.message || err) });
+      sendSafeError(res, sendJson, err, { code: "admin_handler_error" });
     }
     return;
   }

@@ -1,10 +1,13 @@
 import { sendJson } from "../../api/_http.mjs";
 import { requireAdminAccess } from "../../../lib/admin-auth.mjs";
-import {
-  runPlatformBootstrap,
-  getPlatformBootstrapStatus,
-} from "../../../lib/platform-bootstrap.mjs";
+import { getPlatformBootstrapStatus } from "../../../lib/platform-bootstrap.mjs";
+import { verifySchema } from "../../../lib/db-migrate.mjs";
+import { sendSafeError } from "../../api/safe-error.mjs";
 
+/**
+ * Admin platform bootstrap — verify/status only.
+ * Schema apply is CLI / SQL Editor only (never HTTP).
+ */
 export default async function handler(req, res) {
   const auth = await requireAdminAccess(req, res, sendJson);
   if (!auth) return;
@@ -18,17 +21,32 @@ export default async function handler(req, res) {
       return;
     }
 
-    if (action === "run" || action === "bootstrap") {
-      const result = await runPlatformBootstrap({
-        forceMigrations: req.query?.force === "1" || req.body?.force === true,
-        skipProductionTests: req.query?.skipTests === "1",
+    if (action === "verify" || action === "run" || action === "bootstrap") {
+      // "run"/"bootstrap" kept as aliases but permanently verify-only (no DDL).
+      const [status, schema] = await Promise.all([
+        getPlatformBootstrapStatus(),
+        verifySchema(),
+      ]);
+      const ok = schema?.ok === true;
+      sendJson(res, ok ? 200 : 503, {
+        ok,
+        mode: "verify_only",
+        schemaMutationBlocked: true,
+        error: ok ? undefined : "runtime_schema_migrations_disabled",
+        message:
+          "Runtime schema migrations are permanently disabled over HTTP. Apply SQL via CLI/SQL Editor (see REQUIRES_EXPLICIT_APPROVAL.md).",
+        schema,
+        bootstrap: status,
       });
-      sendJson(res, result.ok ? 200 : 500, result);
       return;
     }
 
-    sendJson(res, 400, { ok: false, error: "unknown_action", actions: ["status", "run", "bootstrap"] });
+    sendJson(res, 400, {
+      ok: false,
+      error: "unknown_action",
+      actions: ["status", "verify"],
+    });
   } catch (err) {
-    sendJson(res, 500, { ok: false, error: err.message || String(err) });
+    sendSafeError(res, sendJson, err, { code: "platform_bootstrap_failed" });
   }
 }

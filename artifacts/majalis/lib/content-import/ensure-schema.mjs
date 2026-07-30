@@ -1,72 +1,73 @@
 /**
- * Ensure Supabase schema supports content import (lessons extended columns).
- * Runs kuwait_lessons_extend.sql when external_key column is missing.
+ * Content-import schema — verify-only (never apply DDL at runtime).
+ * Apply kuwait_lessons_extend.sql / content_import_jobs_v1.sql via CLI/SQL Editor.
  */
 
-import { readFileSync } from "node:fs";
 import { getSupabaseAdmin } from "../supabase-admin.mjs";
-import { getPgClient } from "../database.mjs";
-import { migrationFilePath } from "../migration-paths.mjs";
-import { ensureImportTables, recoverImportJobIntegrity } from "./import-jobs.mjs";
-
-const CONTENT_IMPORT_MIGRATION = "kuwait_lessons_extend.sql";
+import { verifyImportTables, recoverImportJobIntegrity } from "./import-jobs.mjs";
 
 async function lessonsImportColumnsReady(admin) {
   const { error } = await admin.from("lessons").select("external_key, speaker_name, day_of_week").limit(0);
   if (!error) return { ok: true };
   const msg = String(error.message || "");
   if (msg.includes("external_key") || msg.includes("speaker_name") || msg.includes("day_of_week")) {
-    return { ok: false, missing: true, error: msg };
+    return { ok: false, missing: true, error: "schema_not_ready" };
   }
-  return { ok: false, missing: false, error: msg };
+  return { ok: false, missing: false, error: "schema_check_failed" };
 }
 
+/**
+ * Verify content-import schema readiness. Never runs CREATE/ALTER.
+ * @deprecated name kept for callers — behavior is verify-only.
+ */
 export async function ensureContentImportSchema() {
+  return verifyContentImportSchema();
+}
+
+export async function verifyContentImportSchema() {
   const admin = getSupabaseAdmin();
   if (!admin) {
-    return { ok: false, error: "Supabase admin not configured (SUPABASE_SERVICE_ROLE_KEY required)" };
-  }
-
-  const ready = await lessonsImportColumnsReady(admin);
-  const importJobs = await ensureImportTables(admin);
-  const integrity = importJobs.ok ? await recoverImportJobIntegrity() : { ok: false, error: importJobs.error };
-
-  if (ready.ok) {
     return {
-      ok: importJobs.ok,
-      alreadyReady: true,
-      importJobs: importJobs.ok,
-      importJobsVia: importJobs.via,
-      integrity,
-      error: importJobs.ok ? undefined : importJobs.error,
+      ok: false,
+      error: "supabase_admin_missing",
+      schemaMutationBlocked: true,
     };
   }
 
-  if (!ready.missing) {
-    return { ok: false, error: ready.error || "lessons schema check failed" };
+  const ready = await lessonsImportColumnsReady(admin);
+  const importJobs = await verifyImportTables(admin);
+  const integrity = importJobs.ok
+    ? await recoverImportJobIntegrity({ skipEnsure: true })
+    : { ok: false, error: importJobs.error };
+
+  if (!ready.ok) {
+    return {
+      ok: false,
+      error: ready.missing ? "schema_not_ready" : ready.error,
+      schemaMutationBlocked: true,
+      hint: "Apply supabase/kuwait_lessons_extend.sql via CLI/SQL Editor (REQUIRES_EXPLICIT_APPROVAL).",
+      importJobs: importJobs.ok,
+      integrity,
+    };
   }
 
-  let sql;
-  try {
-    sql = readFileSync(migrationFilePath(CONTENT_IMPORT_MIGRATION), "utf8");
-  } catch (err) {
-    return { ok: false, error: `Migration file missing: ${CONTENT_IMPORT_MIGRATION} — ${err.message}` };
+  if (!importJobs.ok) {
+    return {
+      ok: false,
+      error: "import_schema_not_ready",
+      schemaMutationBlocked: true,
+      hint: "Apply supabase/content_import_jobs_v1.sql via CLI/SQL Editor (REQUIRES_EXPLICIT_APPROVAL).",
+      integrity,
+    };
   }
 
-  let client;
-  try {
-    ({ client } = await getPgClient());
-    await client.query(sql);
-  } catch (err) {
-    return { ok: false, error: `Failed to apply ${CONTENT_IMPORT_MIGRATION}: ${err.message}` };
-  } finally {
-    await client?.end().catch(() => {});
-  }
-
-  const after = await lessonsImportColumnsReady(admin);
-  if (!after.ok) {
-    return { ok: false, error: `Migration applied but columns still missing: ${after.error}` };
-  }
-
-  return { ok: true, migrated: true, file: CONTENT_IMPORT_MIGRATION, importJobs, integrity };
+  return {
+    ok: true,
+    alreadyReady: true,
+    mode: "verify_only",
+    schemaMutationBlocked: true,
+    importJobs: true,
+    importJobsVia: importJobs.via,
+    integrity,
+  };
 }

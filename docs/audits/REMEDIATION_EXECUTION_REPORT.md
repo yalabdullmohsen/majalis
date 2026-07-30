@@ -88,20 +88,54 @@ Postgres integration / migration live: تُشغَّل في CI عند توفر `M
 
 ## 9) PRs
 
-- Phase 1: يُنشأ بعد نجاح الفحوص المحلية (هذا الفرع).
+| المرحلة | PR | النتيجة |
+|---|---|---|
+| Phase 1 | https://github.com/yalabdullmohsen/majalis/pull/627 | MERGED → `59db9b77` |
+| Phase 2 | (هذا الفرع) | قيد الإنشاء |
 
 ## 10) ما يحتاج موافقة صريحة
 
-1. تطبيق `background_jobs_runtime_hardening_v1.sql` على Staging ثم Production.
-2. أي تغييرات Dashboard لاحقة (Auth/Vercel/Branch protection) — خارج هذه المرحلة.
-3. لا TestFlight / لا Signing.
+انظر `docs/REQUIRES_EXPLICIT_APPROVAL.md`:
 
-## 11) Rollback Phase 1
+1. SQL Staging→Production (enterprise + hardening + bootstrap_runs + definer grants + import schema).
+2. Auth Dashboard: Leaked Password Protection + MFA إداري + Redirect URLs.
+3. Vercel: تأكيد `DATABASE_URL` لدوال Production.
+4. لا TestFlight / لا Signing.
 
-1. Revert PR / رجوع `main` للـSHA السابق.
-2. SQL: تشغيل `background_jobs_runtime_hardening_v1_ROLLBACK.sql` إن طُبِّقت الهجرة فقط.
-3. الـcrons تعود لسلوك #624 (enqueue بلا workers) إن أُرجِع الكود دون إبقاء الـworkers.
+## 11) Rollback
 
-## 12) المراحل التالية
+- Phase 1: `background_jobs_runtime_hardening_v1_ROLLBACK.sql` + revert PR.
+- Phase 2: `platform_bootstrap_runs_v1_ROLLBACK.sql` + `p0_security_definer_grants_v2_ROLLBACK.sql` + revert PR (يعيد Admin DDL — غير مرغوب).
 
-لم تبدأ. Phase 2 تُنفَّذ فقط بعد أخضر CI لـPR المرحلة الأولى.
+---
+
+# المرحلة الثانية — P0 Security / Runtime DDL
+
+## SHA البداية
+
+`59db9b77a85064e2591baa0cc4315bba04797a73`
+
+## مشاكل أُعيد إثباتها
+
+1. Admin `platform-bootstrap` / `production-activate` ما زالا يستدعيان `runPlatformBootstrap` / `runActivationMigrations` (DDL عبر HTTP).
+2. `ensureContentImportSchema` / `ensureImportTables` يطبّقان SQL من ملفات الهجرة عند طلبات الاستيراد.
+3. `platform-bootstrap-state` ينفّذ `CREATE TABLE` في كل تشغيل.
+4. Universities Admin تستخدم `profiles.is_admin` فقط — خارج RBAC الموحّد.
+5. `requireAdminAccess` كان يعيد `debug` للعميل؛ ومعظم Admin catch يمرّر `error.message` خامًا.
+6. وثائق ما زالت تذكر `ALLOW_RUNTIME_SCHEMA_MIGRATIONS` رغم حذفه من الكود.
+
+## ما أُصلح
+
+- Admin bootstrap/activate → verify-only + `runtime_schema_migrations_disabled`.
+- Content-import schema → verify-only؛ لا `client.query(sql)`.
+- Bootstrap state → بدون DDL؛ جدول عبر SQL migration.
+- `applyMigrations` يرفض على Vercel بلا `MAJALIS_ALLOW_CLI_MIGRATIONS=1`.
+- Universities → `requireAdminAccess` + RBAC.
+- `sendSafeError` / إزالة debug من استجابات Admin.
+- توسيع `verify:no-runtime-ddl` + خطوة CI.
+- SQL + rollback + `docs/REQUIRES_EXPLICIT_APPROVAL.md`.
+
+## اختبارات Phase 2
+
+- `pnpm verify:no-runtime-ddl`
+- `lib/__tests__/p0-security-runtime-ddl.test.mjs` (ضمن `test:p0-reliability`)

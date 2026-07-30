@@ -1,4 +1,5 @@
 import { sendJson } from "../../api/_http.mjs";
+import { sendSafeError } from "../../api/safe-error.mjs";
 import { getPlatformHealth, probeProductionRoutes } from "../../../lib/platform-health.mjs";
 import { getPlatformBootstrapStatus } from "../../../lib/platform-bootstrap.mjs";
 import { readFileSync } from "node:fs";

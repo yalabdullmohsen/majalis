@@ -262,7 +262,6 @@ export async function validateAdminAccess(req, opts = {}) {
       permission: opts.permission,
       userMessage: "Missing database permission.",
       userMessageAr: "ليس لديك صلاحية تنفيذ هذا الإجراء.",
-      debug,
     };
   }
 
@@ -276,7 +275,6 @@ export async function validateAdminAccess(req, opts = {}) {
       permission: "import",
       userMessage: "Missing database permission.",
       userMessageAr: "ليس لديك صلاحية استيراد المحتوى.",
-      debug,
     };
   }
 
@@ -294,7 +292,6 @@ export async function requireAdminAccess(req, res, sendJson, opts = {}) {
         (auth.error === "unauthorized" ? "Session expired or not signed in." : "Missing database permission."),
       userMessageAr: auth.userMessageAr || "تعذّر التحقق من الصلاحيات.",
       reason: auth.error,
-      debug: auth.debug || undefined,
     });
     return null;
   }

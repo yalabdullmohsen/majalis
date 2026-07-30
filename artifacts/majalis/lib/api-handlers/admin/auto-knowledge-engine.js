@@ -1,4 +1,5 @@
 import { sendJson } from "../../api/_http.mjs";
+import { sendSafeError } from "../../api/safe-error.mjs";
 import { requireAdminAccess } from "../../../lib/admin-auth.mjs";
 import {
   runAutoKnowledgeEngine,
@@ -91,6 +92,6 @@ export default async function handler(req, res) {
     sendJson(res, 400, { ok: false, error: "Unknown action" });
   } catch (error) {
     console.error("[admin/auto-knowledge-engine]", error);
-    sendJson(res, 500, { ok: false, error: error.message });
+    sendSafeError(res, sendJson, error, { code: "admin_handler_error" });
   }
 }

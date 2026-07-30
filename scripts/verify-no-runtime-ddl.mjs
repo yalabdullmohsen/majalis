@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 /**
- * Fail if runtime (non-migration) files contain DDL statements.
+ * Fail if runtime HTTP/Admin/Cron/content-import paths can apply DDL.
  */
 import { readdirSync, readFileSync, statSync, existsSync } from "node:fs";
 import { join, relative, dirname } from "node:path";
@@ -12,13 +12,30 @@ const majalis = join(root, "artifacts", "majalis");
 const DDL =
   /\b(CREATE\s+TABLE|ALTER\s+TABLE|DROP\s+TABLE|CREATE\s+INDEX|CREATE\s+(OR\s+REPLACE\s+)?FUNCTION|CREATE\s+POLICY|DROP\s+POLICY)\b/i;
 
+const FORBIDDEN_CALLS =
+  /\b(applyMigrations|ensureSchemaReady|runActivationMigrations|runActivationTableMigrations|ensureContentImportSchema|ensureImportTables)\s*\(/;
+
 const SCAN_DIRS = [
   join(majalis, "lib", "api-handlers"),
   join(majalis, "lib", "api"),
+  join(majalis, "lib", "content-import"),
+  join(majalis, "lib", "jobs"),
   join(majalis, "api"),
 ];
 
-const ALLOW_PATH_SUBSTR = [
+/** Files that may mention migration helpers but must not invoke apply from HTTP trees */
+const FORBIDDEN_CALL_FILES = [
+  "lib/api-handlers/admin/platform-bootstrap.js",
+  "lib/api-handlers/admin/production-activate.js",
+  "lib/api-handlers/cron/apply-migrations.js",
+  "lib/api-handlers/cron/bootstrap-database.js",
+  "lib/content-import/ensure-schema.mjs",
+  "lib/content-import/import-jobs.mjs",
+  "lib/content-import/phase2-trial.mjs",
+  "lib/platform-bootstrap-state.mjs",
+];
+
+const ALLOW_DDL_PATH_SUBSTR = [
   "/supabase/",
   "/migrations/",
   ".migration-backup/",
@@ -26,22 +43,12 @@ const ALLOW_PATH_SUBSTR = [
   "/lib/migration-runner",
   "/lib/migration-tracker",
   "/lib/migration-paths",
-  "/lib/content-import/ensure-schema",
-  "/lib/platform-bootstrap-state", // documented legacy DDL helper — must not be called from HTTP
-  "/lib/database.mjs", // connection test table only — flagged separately if CREATE TABLE present
 ];
-
-const ALLOW_FILES_WITH_REASON = new Map([
-  [
-    "lib/database.mjs",
-    "_db_connection_test only — not schema migration; still scanned for DROP/ALTER policy",
-  ],
-]);
 
 function walk(dir, out = []) {
   if (!existsSync(dir)) return out;
   for (const name of readdirSync(dir)) {
-    if (name === "node_modules" || name === "dist") continue;
+    if (name === "node_modules" || name === "dist" || name === "__tests__") continue;
     const p = join(dir, name);
     const st = statSync(p);
     if (st.isDirectory()) walk(p, out);
@@ -56,15 +63,14 @@ console.log("=== verify-no-runtime-ddl ===\n");
 const files = SCAN_DIRS.flatMap((d) => walk(d));
 for (const file of files) {
   const rel = relative(majalis, file).replace(/\\/g, "/");
-  if (ALLOW_PATH_SUBSTR.some((s) => rel.includes(s.replace(/^\//, "")) || file.includes(s))) {
+  if (ALLOW_DDL_PATH_SUBSTR.some((s) => file.includes(s) || rel.includes(s.replace(/^\//, "")))) {
     continue;
   }
   const body = readFileSync(file, "utf8");
   if (!DDL.test(body)) continue;
 
-  // Special-case: database.mjs may create ephemeral test table
   if (rel === "lib/database.mjs" && !/\bDROP\s+TABLE\b/i.test(body) && /_db_connection_test/.test(body)) {
-    console.log(`  ~ ${rel}: allowed connection-test DDL (${ALLOW_FILES_WITH_REASON.get(rel)})`);
+    console.log(`  ~ ${rel}: allowed connection-test DDL`);
     continue;
   }
 
@@ -72,10 +78,41 @@ for (const file of files) {
   failed++;
 }
 
-// Hard: apply-migrations / bootstrap must not import applyMigrations
+// platform-bootstrap-state must not contain executable schema DDL
+{
+  const rel = "lib/platform-bootstrap-state.mjs";
+  const full = join(majalis, rel);
+  const body = readFileSync(full, "utf8")
+    .replace(/\/\*[\s\S]*?\*\//g, "")
+    .replace(/\/\/.*$/gm, "");
+  if (/\bCREATE\s+TABLE\b/i.test(body) || /\bENSURE_BOOTSTRAP_STATE_SQL\b/.test(body)) {
+    console.error(`  ✗ ${rel}: runtime schema DDL forbidden`);
+    failed++;
+  } else {
+    console.log(`  ✓ ${rel}: no runtime schema DDL`);
+  }
+}
+
+// ensure-schema / import-jobs must not query migration SQL
+for (const rel of ["lib/content-import/ensure-schema.mjs", "lib/content-import/import-jobs.mjs"]) {
+  const full = join(majalis, rel);
+  const body = readFileSync(full, "utf8");
+  if (/client\.query\(\s*sql\s*\)/.test(body) || /client\.query\(\s*ENSURE_/.test(body)) {
+    console.error(`  ✗ ${rel}: still applies SQL via client.query`);
+    failed++;
+  } else if (/CREATE\s+TABLE/i.test(body)) {
+    console.error(`  ✗ ${rel}: contains CREATE TABLE`);
+    failed++;
+  } else {
+    console.log(`  ✓ ${rel}: verify-only (no DDL apply)`);
+  }
+}
+
 for (const rel of [
   "lib/api-handlers/cron/apply-migrations.js",
   "lib/api-handlers/cron/bootstrap-database.js",
+  "lib/api-handlers/admin/platform-bootstrap.js",
+  "lib/api-handlers/admin/production-activate.js",
 ]) {
   const full = join(majalis, rel);
   if (!existsSync(full)) {
@@ -87,11 +124,28 @@ for (const rel of [
   if (/applyMigrations\s*\(/.test(body) || /ensureSchemaReady\s*\(/.test(body)) {
     console.error(`  ✗ ${rel}: still invokes applyMigrations/ensureSchemaReady`);
     failed++;
-  } else {
-    console.log(`  ✓ ${rel}: no applyMigrations/ensureSchemaReady`);
-  }
-  if (/ALLOW_RUNTIME_SCHEMA_MIGRATIONS/.test(body)) {
+  } else if (/runActivationMigrations\s*\(/.test(body) || /runPlatformBootstrap\s*\(/.test(body)) {
+    console.error(`  ✗ ${rel}: still invokes activation/bootstrap mutate helpers`);
+    failed++;
+  } else if (/ALLOW_RUNTIME_SCHEMA_MIGRATIONS/.test(body)) {
     console.error(`  ✗ ${rel}: still references ALLOW_RUNTIME_SCHEMA_MIGRATIONS escape hatch`);
+    failed++;
+  } else if (!/runtime_schema_migrations_disabled|verify_only|schemaMutationBlocked/.test(body) && rel.includes("admin")) {
+    console.error(`  ✗ ${rel}: must advertise verify-only / schemaMutationBlocked`);
+    failed++;
+  } else {
+    console.log(`  ✓ ${rel}: no runtime DDL apply`);
+  }
+}
+
+// Forbidden call patterns in HTTP-adjacent files
+for (const rel of FORBIDDEN_CALL_FILES) {
+  const full = join(majalis, rel);
+  if (!existsSync(full)) continue;
+  const body = readFileSync(full, "utf8");
+  // allow function *definitions* named ensure* that delegate to verify — ban applyMigrations etc.
+  if (/\b(applyMigrations|ensureSchemaReady|runActivationMigrations|runActivationTableMigrations)\s*\(/.test(body)) {
+    console.error(`  ✗ ${rel}: forbidden migration apply call`);
     failed++;
   }
 }

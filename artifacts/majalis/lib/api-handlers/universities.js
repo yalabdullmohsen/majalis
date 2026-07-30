@@ -18,6 +18,8 @@
  */
 
 import { sendJson } from "../api/_http.mjs";
+import { requireAdminAccess } from "../../lib/admin-auth.mjs";
+import { sendSafeError } from "../api/safe-error.mjs";
 import { getSupabaseAdmin, isMissingTableError } from "../../lib/supabase-admin.mjs";
 import {
   filterCatalog,
@@ -31,28 +33,8 @@ function ok(res, data)   { sendJson(res, 200, data); }
 function bad(res, msg)   { sendJson(res, 400, { error: msg }); }
 function notFound(res)   { sendJson(res, 404, { error: "not_found" }); }
 function forbidden(res)  { sendJson(res, 403, { error: "forbidden" }); }
-function serverErr(res, e){ sendJson(res, 500, { error: String(e?.message || e) }); }
+function serverErr(res, e){ sendSafeError(res, sendJson, e, { code: "universities_error" }); }
 
-function extractBearer(req) {
-  const h = req.headers?.authorization || "";
-  return h.startsWith("Bearer ") ? h.slice(7).trim() : null;
-}
-
-async function assertAdmin(req, admin) {
-  const token = extractBearer(req);
-  if (!token) return null;
-  const { data: { user } } = await admin.auth.getUser(token).catch(() => ({ data: { user: null } }));
-  if (!user) return null;
-
-  const { data: profile } = await admin
-    .from("profiles")
-    .select("is_admin")
-    .eq("id", user.id)
-    .single()
-    .catch(() => ({ data: null }));
-
-  return profile?.is_admin ? user : null;
-}
 
 function safeBody(req) {
   return req.body && typeof req.body === "object" ? req.body : {};
@@ -231,8 +213,8 @@ async function handleAdminList(req, res) {
   const admin = getSupabaseAdmin();
   if (!admin) return serverErr(res, "no supabase admin");
 
-  const adminUser = await assertAdmin(req, admin);
-  if (!adminUser) return forbidden(res);
+  const auth = await requireAdminAccess(req, res, sendJson, { permission: "content.edit" });
+  if (!auth) return;
 
   try {
     const { data, error } = await admin
@@ -254,8 +236,8 @@ async function handleAdminCreate(req, res) {
   const admin = getSupabaseAdmin();
   if (!admin) return serverErr(res, "no supabase admin");
 
-  const adminUser = await assertAdmin(req, admin);
-  if (!adminUser) return forbidden(res);
+  const auth = await requireAdminAccess(req, res, sendJson, { permission: "content.edit" });
+  if (!auth) return;
 
   const body = safeBody(req);
   const {
@@ -272,7 +254,7 @@ async function handleAdminCreate(req, res) {
       .insert({
         slug, name_ar, name_en, country, city, logo_url, about,
         website_url, social_links, accreditation_status, is_verified, is_published,
-        last_reviewed_by: adminUser.email || adminUser.id,
+        last_reviewed_by: auth.email || auth.userId || auth.user?.id,
         last_updated_at: new Date().toISOString(),
       })
       .select()
@@ -289,13 +271,13 @@ async function handleAdminUpdate(req, res, id) {
   const admin = getSupabaseAdmin();
   if (!admin) return serverErr(res, "no supabase admin");
 
-  const adminUser = await assertAdmin(req, admin);
-  if (!adminUser) return forbidden(res);
+  const auth = await requireAdminAccess(req, res, sendJson, { permission: "content.edit" });
+  if (!auth) return;
 
   const body = safeBody(req);
   const updates = {
     ...body,
-    last_reviewed_by: adminUser.email || adminUser.id,
+    last_reviewed_by: auth.email || auth.userId || auth.user?.id,
     last_updated_at:  new Date().toISOString(),
   };
   delete updates.id;
@@ -320,8 +302,8 @@ async function handleAdminAddProgram(req, res, universityId) {
   const admin = getSupabaseAdmin();
   if (!admin) return serverErr(res, "no supabase admin");
 
-  const adminUser = await assertAdmin(req, admin);
-  if (!adminUser) return forbidden(res);
+  const auth = await requireAdminAccess(req, res, sendJson, { permission: "content.edit" });
+  if (!auth) return;
 
   const body = safeBody(req);
   const {
@@ -355,8 +337,8 @@ async function handleAdminUpdateProgram(req, res, id) {
   const admin = getSupabaseAdmin();
   if (!admin) return serverErr(res, "no supabase admin");
 
-  const adminUser = await assertAdmin(req, admin);
-  if (!adminUser) return forbidden(res);
+  const auth = await requireAdminAccess(req, res, sendJson, { permission: "content.edit" });
+  if (!auth) return;
 
   const body = safeBody(req);
   const updates = { ...body };
@@ -383,8 +365,8 @@ async function handleAdminDeleteProgram(req, res, id) {
   const admin = getSupabaseAdmin();
   if (!admin) return serverErr(res, "no supabase admin");
 
-  const adminUser = await assertAdmin(req, admin);
-  if (!adminUser) return forbidden(res);
+  const auth = await requireAdminAccess(req, res, sendJson, { permission: "content.edit" });
+  if (!auth) return;
 
   try {
     const { error } = await admin.from("university_programs").delete().eq("id", id);
@@ -399,8 +381,8 @@ async function handleAdminSaveRequirements(req, res, programId) {
   const admin = getSupabaseAdmin();
   if (!admin) return serverErr(res, "no supabase admin");
 
-  const adminUser = await assertAdmin(req, admin);
-  if (!adminUser) return forbidden(res);
+  const auth = await requireAdminAccess(req, res, sendJson, { permission: "content.edit" });
+  if (!auth) return;
 
   const {
     requirements = [], required_documents = [],
@@ -431,8 +413,8 @@ async function handleAdminAddFaq(req, res, universityId) {
   const admin = getSupabaseAdmin();
   if (!admin) return serverErr(res, "no supabase admin");
 
-  const adminUser = await assertAdmin(req, admin);
-  if (!adminUser) return forbidden(res);
+  const auth = await requireAdminAccess(req, res, sendJson, { permission: "content.edit" });
+  if (!auth) return;
 
   const { question, answer, order_index = 0 } = safeBody(req);
   if (!question || !answer) return bad(res, "question, answer required");
@@ -455,8 +437,8 @@ async function handleAdminDeleteFaq(req, res, id) {
   const admin = getSupabaseAdmin();
   if (!admin) return serverErr(res, "no supabase admin");
 
-  const adminUser = await assertAdmin(req, admin);
-  if (!adminUser) return forbidden(res);
+  const auth = await requireAdminAccess(req, res, sendJson, { permission: "content.edit" });
+  if (!auth) return;
 
   try {
     const { error } = await admin.from("university_faqs").delete().eq("id", id);
@@ -471,8 +453,8 @@ async function handleAdminReminders(req, res) {
   const admin = getSupabaseAdmin();
   if (!admin) return serverErr(res, "no supabase admin");
 
-  const adminUser = await assertAdmin(req, admin);
-  if (!adminUser) return forbidden(res);
+  const auth = await requireAdminAccess(req, res, sendJson, { permission: "content.edit" });
+  if (!auth) return;
 
   try {
     const { data, error } = await admin
@@ -499,8 +481,8 @@ async function handleAdminUpdateReminder(req, res, id) {
   const admin = getSupabaseAdmin();
   if (!admin) return serverErr(res, "no supabase admin");
 
-  const adminUser = await assertAdmin(req, admin);
-  if (!adminUser) return forbidden(res);
+  const auth = await requireAdminAccess(req, res, sendJson, { permission: "content.edit" });
+  if (!auth) return;
 
   const { status, notes } = safeBody(req);
   if (!status) return bad(res, "status required");
@@ -512,7 +494,7 @@ async function handleAdminUpdateReminder(req, res, id) {
         status,
         notes: notes || "",
         reviewed_at: new Date().toISOString(),
-        reviewed_by: adminUser.email || adminUser.id,
+        reviewed_by: auth.email || auth.userId || auth.user?.id,
       })
       .eq("id", id)
       .select()
