@@ -233,6 +233,16 @@ public class MajlisSpeechRecognitionPlugin: CAPPlugin, CAPBridgedPlugin {
             os_signpost(.end, log: log, name: "start_to_listen")
             call.reject(err.message, err.code)
             return
+        } catch {
+            recognitionRequest = nil
+            startCall = nil
+            os_signpost(.end, log: log, name: "start_to_listen")
+            call.reject(
+                "تعذّر تهيئة مدخل الميكروفون: \(error.localizedDescription)",
+                "AUDIO_FORMAT_INVALID",
+                error
+            )
+            return
         }
 
         tTapStart = CFAbsoluteTimeGetCurrent()
@@ -385,7 +395,7 @@ public class MajlisSpeechRecognitionPlugin: CAPPlugin, CAPBridgedPlugin {
         try session.setCategory(
             .playAndRecord,
             mode: .measurement,
-            options: [.duckOthers, .defaultToSpeaker, .allowBluetooth]
+            options: [.duckOthers, .defaultToSpeaker, .allowBluetoothHFP]
         )
         // تجنّب setActive المتكرر إن كانت الجلسة نشطة بالفعل بنفس الفئة تقريبًا
         if !sessionPrepared {
