@@ -121,9 +121,10 @@ jobs:
           REPO_FLAG=(-R "$GITHUB_REPOSITORY")
 
           check_line_status() {
-            # stdin: gh pr checks output; $1 = check name regex
+            # gh pr checks is TSV: name\tstatus\tduration\turl\tdescription
+            # Default awk FS splits on spaces, so "Verify build" never matches — use tab FS.
             local name_re="$1"
-            echo "$CHECKS" | awk -v re="$name_re" 'BEGIN{IGNORECASE=1} $1 ~ re {print $2; found=1} END{if(!found) print "missing"}' | head -1
+            echo "$CHECKS" | awk -F'\t' -v re="$name_re" 'BEGIN{IGNORECASE=1} $1 ~ re {print $2; found=1} END{if(!found) print "missing"}' | head -1
           }
 
           quality_ok() {
@@ -179,8 +180,8 @@ jobs:
               return 1
             fi
 
-            # Any other fail/pending check blocks
-            if echo "$CHECKS" | awk 'BEGIN{IGNORECASE=1} $2 ~ /^(fail|pending|cancel|cancelled)$/ {print; bad=1} END{exit bad?0:1}'; then
+            # Any other fail/pending check blocks (status is column 2 with tab FS)
+            if echo "$CHECKS" | awk -F'\t' 'BEGIN{IGNORECASE=1} $2 ~ /^(fail|pending|cancel|cancelled)$/ {print; bad=1} END{exit bad?0:1}'; then
               echo "block: non-green checks present"
               return 1
             fi

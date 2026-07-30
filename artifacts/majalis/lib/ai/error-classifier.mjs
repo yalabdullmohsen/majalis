@@ -16,7 +16,10 @@ export const AI_ERROR_CODES = Object.freeze({
   network_error: "network_error",
   circuit_open: "circuit_open",
   daily_limit: "daily_limit",
+  daily_spend_limit: "daily_spend_limit",
+  monthly_spend_limit: "monthly_spend_limit",
   concurrency_limit: "concurrency_limit",
+  duplicate_content: "duplicate_content",
   durable_store_unavailable: "durable_store_unavailable",
   unknown: "unknown",
 });
@@ -155,6 +158,9 @@ export function isPermanentAiFailure(code) {
     code === AI_ERROR_CODES.invalid_request ||
     code === AI_ERROR_CODES.circuit_open ||
     code === AI_ERROR_CODES.daily_limit ||
+    code === AI_ERROR_CODES.daily_spend_limit ||
+    code === AI_ERROR_CODES.monthly_spend_limit ||
+    code === AI_ERROR_CODES.duplicate_content ||
     code === AI_ERROR_CODES.durable_store_unavailable
   );
 }

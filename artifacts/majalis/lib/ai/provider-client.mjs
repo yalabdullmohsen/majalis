@@ -1,7 +1,10 @@
 /**
- * Distributed AI provider circuit breaker + usage limits.
+ * Distributed AI provider circuit breaker + usage/spend limits + cache/dedupe.
  * Production: PostgreSQL durable store only (fail-closed).
  * Tests/dev: Memory only when ALLOW_IN_MEMORY_RELIABILITY_STORE=1 or NODE_ENV=test.
+ *
+ * Never logs tokens/secrets/user text. Retries: rate_limit/network/timeout only —
+ * never credit_exhausted.
  */
 
 import {
@@ -18,6 +21,11 @@ import {
   logDurableStoreUnavailable,
   isProductionRuntime,
 } from "../reliability/env.mjs";
+import { checkSpendLimits, recordSpend } from "./spend-governance.mjs";
+import { lookupAiCache, storeAiCache, claimAiDedup } from "./content-cache.mjs";
+import { shouldRetryAiError, resolveProviderFallbacks } from "./fallback-policy.mjs";
+import { structuredLog, withCorrelation } from "../observability/structured-log.mjs";
+import { incCounter, observeDuration, setGauge, METRIC } from "../observability/metrics.mjs";
 
 const DEFAULTS = Object.freeze({
   failureThreshold: 1,
@@ -32,6 +40,8 @@ const DEFAULTS = Object.freeze({
   baseBackoffMs: 400,
   maxBackoffMs: 4_000,
   requestTimeoutMs: 45_000,
+  cacheTtlSec: 86_400,
+  dedupeTtlSec: 300,
 });
 
 /** @type {Map<string, any>} */
@@ -208,37 +218,142 @@ function cooldownMsFor(code, opts, retryAfterHeader) {
   return opts.resetTimeoutMs;
 }
 
-function logOpenOnce(provider, reason) {
+function logOpenOnce(provider, reason, corr = {}) {
   const key = `${provider}:${reason}:${todayKey()}`;
   if (openAlertOnce.has(key)) return;
   openAlertOnce.set(key, Date.now());
-  console.error(
-    JSON.stringify({
-      level: "error",
-      msg: "ai.circuit.opened",
-      metric: "ai_circuit_open",
-      provider,
-      reason,
-      ts: new Date().toISOString(),
-    }),
-  );
+  structuredLog("error", "ai.circuit.opened", {
+    ...withCorrelation(corr),
+    metric: "ai_circuit_open",
+    provider,
+    reason,
+  });
+  setGauge(METRIC.aiCircuitState, `open:${reason}`);
 }
 
 /**
  * @param {string} provider
  * @param {() => Promise<any>} fn
- * @param {{ signal?: AbortSignal, idempotencyKey?: string, opts?: Partial<typeof DEFAULTS> }} [options]
+ * @param {{
+ *   signal?: AbortSignal,
+ *   idempotencyKey?: string,
+ *   opts?: Partial<typeof DEFAULTS>,
+ *   contentKey?: string|object,
+ *   requestId?: string,
+ *   traceId?: string,
+ *   jobRunId?: string,
+ *   model?: string,
+ *   fallbackProviders?: string[],
+ *   allowExpensiveFallback?: boolean,
+ *   skipCache?: boolean,
+ *   extractUsage?: (result: any) => { inputTokens?: number, outputTokens?: number },
+ * }} [options]
  */
 export async function runAiCall(provider, fn, options = {}) {
   const opts = { ...DEFAULTS, ...(options.opts || {}) };
   const signal = options.signal;
+  const corr = {
+    requestId: options.requestId,
+    traceId: options.traceId || options.requestId,
+    jobRunId: options.jobRunId,
+  };
+  const started = Date.now();
 
+  // Spend limits (daily / monthly USD)
+  const spend = await checkSpendLimits(opts);
+  if (!spend.allowed) {
+    const code =
+      spend.reason === "monthly_spend_limit"
+        ? AI_ERROR_CODES.monthly_spend_limit
+        : AI_ERROR_CODES.daily_spend_limit;
+    structuredLog("warn", "ai.spend.blocked", withCorrelation(corr, { reason: spend.reason }));
+    return {
+      ok: false,
+      errorCode: code,
+      body: providerPausedBody(code, new Date(Date.now() + 3_600_000).toISOString()),
+      skippedProvider: true,
+      meta: { spend },
+    };
+  }
+
+  // Cache hit
+  if (options.contentKey && !options.skipCache) {
+    const cached = await lookupAiCache(options.contentKey, {
+      provider,
+      model: options.model || "*",
+      ttlSec: opts.cacheTtlSec,
+    });
+    if (cached.hit) {
+      observeDuration("ai.call.duration_ms", Date.now() - started);
+      await recordSpend({
+        provider,
+        model: options.model,
+        inputTokens: 0,
+        outputTokens: 0,
+        costUsd: 0,
+        requestId: corr.requestId,
+        traceId: corr.traceId,
+        jobRunId: corr.jobRunId,
+        contentHash: cached.hash,
+        cacheHit: true,
+        status: "cache_hit",
+      });
+      return {
+        ok: true,
+        result: cached.result,
+        cacheHit: true,
+        meta: { content_hash: cached.hash },
+      };
+    }
+
+    const dedup = await claimAiDedup(options.contentKey, {
+      provider,
+      ttlSec: opts.dedupeTtlSec,
+    });
+    if (dedup.duplicate) {
+      return {
+        ok: false,
+        errorCode: AI_ERROR_CODES.duplicate_content,
+        body: { status: "duplicate", reason: AI_ERROR_CODES.duplicate_content },
+        skippedProvider: true,
+        meta: { content_hash: dedup.hash },
+      };
+    }
+  }
+
+  const providersToTry = [
+    provider,
+    ...resolveProviderFallbacks(provider, options.fallbackProviders || [], {
+      allowExpensiveFallback: options.allowExpensiveFallback === true,
+    }),
+  ];
+
+  let lastFailure = null;
+  for (const activeProvider of providersToTry) {
+    const outcome = await runAiCallOnce(activeProvider, fn, options, opts, corr, started);
+    if (outcome.ok) return outcome;
+    lastFailure = outcome;
+    // Never fall through after credit_exhausted
+    if (
+      outcome.errorCode === AI_ERROR_CODES.credit_exhausted ||
+      outcome.errorCode === AI_ERROR_CODES.authentication_error
+    ) {
+      return outcome;
+    }
+  }
+  return lastFailure || durableUnavailableResult();
+}
+
+async function runAiCallOnce(provider, fn, options, opts, corr, started) {
+  const signal = options.signal;
   const got = await getProviderState(provider);
   if (got.unavailable) {
     return durableUnavailableResult();
   }
   const state = got.state;
   const now = Date.now();
+
+  setGauge(METRIC.aiCircuitState, state.state || "closed");
 
   if (state.state === "open") {
     const retryAt = state.retry_after ? new Date(state.retry_after).getTime() : 0;
@@ -248,7 +363,7 @@ export async function runAiCall(provider, fn, options = {}) {
         errorCode: AI_ERROR_CODES.circuit_open,
         body: providerPausedBody(state.opened_reason || AI_ERROR_CODES.circuit_open, state.retry_after),
         skippedProvider: true,
-        meta: { store_adapter: got.adapter },
+        meta: { store_adapter: got.adapter, provider },
       };
     }
     try {
@@ -268,7 +383,7 @@ export async function runAiCall(provider, fn, options = {}) {
       errorCode: AI_ERROR_CODES.daily_limit,
       body: providerPausedBody(AI_ERROR_CODES.daily_limit, new Date(Date.now() + 3_600_000).toISOString()),
       skippedProvider: true,
-      meta: { store_adapter: got.adapter },
+      meta: { store_adapter: got.adapter, provider },
     };
   }
 
@@ -279,12 +394,13 @@ export async function runAiCall(provider, fn, options = {}) {
       errorCode: AI_ERROR_CODES.concurrency_limit,
       body: { status: "busy", reason: AI_ERROR_CODES.concurrency_limit },
       skippedProvider: true,
-      meta: { store_adapter: got.adapter },
+      meta: { store_adapter: got.adapter, provider },
     };
   }
 
   inflight.set(provider, concurrent + 1);
   let lastClass = null;
+  let retriesUsed = 0;
 
   try {
     for (let attempt = 0; attempt <= opts.maxRetries; attempt++) {
@@ -319,11 +435,81 @@ export async function runAiCall(provider, fn, options = {}) {
           daily_requests: (state.daily_requests || 0) + 1,
           last_alert_at: state.last_alert_at,
         });
-        return { ok: true, result, meta: { store_adapter: got.adapter } };
+
+        const usage =
+          typeof options.extractUsage === "function"
+            ? options.extractUsage(result) || {}
+            : { inputTokens: 0, outputTokens: 0 };
+
+        if (options.contentKey && !options.skipCache) {
+          await storeAiCache(options.contentKey, result, {
+            provider,
+            model: options.model || "*",
+            ttlSec: opts.cacheTtlSec,
+          });
+        }
+
+        await recordSpend({
+          provider,
+          model: options.model,
+          inputTokens: usage.inputTokens || 0,
+          outputTokens: usage.outputTokens || 0,
+          requestId: corr.requestId,
+          traceId: corr.traceId,
+          jobRunId: corr.jobRunId,
+          status: "ok",
+        });
+
+        observeDuration("ai.call.duration_ms", Date.now() - started);
+        if (retriesUsed) incCounter(METRIC.aiRetryCount, retriesUsed);
+        setGauge(METRIC.aiCircuitState, "closed");
+
+        return {
+          ok: true,
+          result,
+          meta: { store_adapter: got.adapter, provider, retries: retriesUsed },
+        };
       } catch (err) {
         lastClass = classifyAiError(err, {
           headers: err?.headers || err?.response?.headers,
         });
+
+        // Hard rule: never retry credit_exhausted
+        if (lastClass.code === AI_ERROR_CODES.credit_exhausted) {
+          const coolMs = cooldownMsFor(lastClass.code, opts, lastClass.retryAfterHeader);
+          const retryAfter = new Date(Date.now() + coolMs).toISOString();
+          try {
+            await persistState(provider, {
+              state: "open",
+              opened_reason: lastClass.code,
+              opened_at: new Date().toISOString(),
+              retry_after: retryAfter,
+              daily_requests: (state.daily_requests || 0) + 1,
+              last_alert_at: new Date().toISOString(),
+            });
+          } catch {
+            return durableUnavailableResult();
+          }
+          logOpenOnce(provider, lastClass.code, corr);
+          await recordSpend({
+            provider,
+            model: options.model,
+            requestId: corr.requestId,
+            traceId: corr.traceId,
+            jobRunId: corr.jobRunId,
+            status: "error",
+            errorCode: lastClass.code,
+            costUsd: 0,
+          });
+          return {
+            ok: false,
+            errorCode: lastClass.code,
+            body: providerPausedBody(lastClass.code, retryAfter),
+            skippedProvider: false,
+            meta: { store_adapter: got.adapter, provider },
+          };
+        }
+
         const shouldOpenImmediate = opensCircuitImmediately(lastClass.code);
         const softCount = (softFailures.get(provider) || 0) + 1;
         softFailures.set(provider, softCount);
@@ -350,19 +536,24 @@ export async function runAiCall(provider, fn, options = {}) {
           } catch {
             return durableUnavailableResult();
           }
-          logOpenOnce(provider, lastClass.code);
+          logOpenOnce(provider, lastClass.code, corr);
           return {
             ok: false,
             errorCode: lastClass.code,
             body: providerPausedBody(lastClass.code, retryAfter),
             skippedProvider: false,
-            meta: { store_adapter: got.adapter },
+            meta: { store_adapter: got.adapter, provider },
           };
         }
 
-        if (isPermanentAiFailure(lastClass.code) || !lastClass.retryable || attempt >= opts.maxRetries) {
+        if (
+          isPermanentAiFailure(lastClass.code) ||
+          !shouldRetryAiError(lastClass.code, { attempt, maxRetries: opts.maxRetries })
+        ) {
           break;
         }
+        retriesUsed += 1;
+        incCounter(METRIC.aiRetryCount, 1);
         await sleep(backoffMs(attempt, opts.baseBackoffMs, opts.maxBackoffMs), signal).catch(() => undefined);
       }
     }
@@ -372,7 +563,7 @@ export async function runAiCall(provider, fn, options = {}) {
       errorCode: lastClass?.code || AI_ERROR_CODES.unknown,
       body: { status: "error", reason: lastClass?.code || AI_ERROR_CODES.unknown },
       skippedProvider: false,
-      meta: { store_adapter: got.adapter },
+      meta: { store_adapter: got.adapter, provider, retries: retriesUsed },
     };
   } finally {
     inflight.set(provider, Math.max(0, (inflight.get(provider) || 1) - 1));

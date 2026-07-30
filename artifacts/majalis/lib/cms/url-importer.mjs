@@ -2,6 +2,8 @@
  * Import lesson metadata from social / web URLs.
  */
 
+import { safeFetch, assertSafeUrl } from "../security/ssrf.mjs";
+
 const SUPPORTED_PLATFORMS = new Set(["instagram", "youtube", "twitter", "telegram", "website"]);
 
 const PLATFORM_PATTERNS = [
@@ -64,18 +66,17 @@ function extractMeta(html, property) {
 }
 
 export async function fetchUrlContent(url) {
-  const res = await fetch(url, {
+  await assertSafeUrl(url);
+  const res = await safeFetch(url, {
     headers: {
       "User-Agent": "MajalisBot/1.0 (+https://www.majlisilm.com)",
       Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
     },
-    redirect: "follow",
-    signal: AbortSignal.timeout(15000),
   });
   if (!res.ok) throw new Error(`HTTP ${res.status}`);
   const contentType = res.headers.get("content-type") || "";
   const body = await res.text();
-  return { body, contentType, finalUrl: res.url };
+  return { body, contentType, finalUrl: res.url || url };
 }
 
 export async function importFromUrl(url) {

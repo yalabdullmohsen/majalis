@@ -87,6 +87,32 @@ export default async function handler(req, res) {
             }),
           );
         }
+
+        try {
+          const { rows: depthRows } = await pool.query(
+            `SELECT
+               COUNT(*) FILTER (WHERE status = 'queued')::int AS queued,
+               COUNT(*) FILTER (WHERE status = 'running')::int AS running,
+               COUNT(*) FILTER (WHERE status = 'dead_letter')::int AS dlq
+             FROM background_jobs`,
+          );
+          const { setGauge } = await import("../observability/metrics.mjs");
+          setGauge("queue.depth", (depthRows[0]?.queued || 0) + (depthRows[0]?.running || 0));
+          setGauge("queue.dlq_count", depthRows[0]?.dlq || 0);
+          details.queueDepth = depthRows[0]?.queued ?? null;
+          details.dlqCount = depthRows[0]?.dlq ?? null;
+        } catch {
+          details.queueDepth = "unavailable";
+        }
+
+        try {
+          const { rows: spendTables } = await pool.query(
+            `SELECT to_regclass('public.ai_spend_ledger') IS NOT NULL AS has_spend`,
+          );
+          details.aiSpendLedger = spendTables[0]?.has_spend ? "ok" : "pending_migration";
+        } catch {
+          details.aiSpendLedger = "unavailable";
+        }
       }
     }
   } catch (err) {

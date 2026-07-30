@@ -7,7 +7,7 @@ export type LogLevel = "debug" | "info" | "warn" | "error";
 
 export type LogFields = Record<string, string | number | boolean | null | undefined>;
 
-const SENSITIVE = /^(authorization|cookie|password|token|apikey|api_key|secret|anon.?key)$/i;
+const SENSITIVE = /^(authorization|cookie|password|token|apikey|api_key|secret|anon.?key|refresh.?token|access.?token|session|prompt|completion|transcript|user_text)$/i;
 
 /** Exported for unit tests — redacts credential-like keys. */
 export function sanitizeLogFields(fields?: LogFields): LogFields | undefined {

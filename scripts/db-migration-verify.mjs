@@ -17,6 +17,13 @@ const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const mode = process.argv[2] || "verify"; // verify | fresh | upgrade
 const sqlPath = join(root, "artifacts", "majalis", "supabase", "enterprise_reliability_p0_v1.sql");
 const qaBaseline = join(root, "artifacts", "majalis", "supabase", "qa_phase4_seed.sql");
+const p2SqlPath = join(
+  root,
+  "artifacts",
+  "majalis",
+  "supabase",
+  "observability_ai_governance_p2_v1.sql",
+);
 
 console.log(`=== db:migration:${mode} ===\n`);
 
@@ -29,14 +36,22 @@ if (!existsSync(qaBaseline)) {
   console.error("missing qa_phase4_seed.sql (baseline for qa_categories)");
   process.exit(1);
 }
+if (!existsSync(p2SqlPath)) {
+  console.error("missing observability_ai_governance_p2_v1.sql");
+  process.exit(1);
+}
 
 const sql = readFileSync(sqlPath, "utf8");
 const qaSql = readFileSync(qaBaseline, "utf8");
+const p2Sql = readFileSync(p2SqlPath, "utf8");
 for (const [label, body, token] of [
   ["enterprise", sql, "ai_provider_circuit"],
   ["enterprise", sql, "background_jobs"],
   ["enterprise", sql, "sort_order"],
   ["qa_phase4_seed", qaSql, "CREATE TABLE IF NOT EXISTS qa_categories"],
+  ["p2_obs", p2Sql, "ai_spend_ledger"],
+  ["p2_obs", p2Sql, "ai_request_dedup"],
+  ["p2_obs", p2Sql, "ai_content_cache"],
 ]) {
   if (!body.includes(token)) {
     console.error(`  ✗ ${label} missing: ${token}`);
@@ -97,6 +112,9 @@ async function assertRequired(client, requiredStrict) {
       `SELECT 1 AS r FROM information_schema.columns
        WHERE table_schema='public' AND table_name='qa_categories' AND column_name='sort_order'`,
     ],
+    ["ai_spend_ledger", `SELECT to_regclass('public.ai_spend_ledger') AS r`],
+    ["ai_request_dedup", `SELECT to_regclass('public.ai_request_dedup') AS r`],
+    ["ai_content_cache", `SELECT to_regclass('public.ai_content_cache') AS r`],
   ];
   for (const [name, q] of need) {
     const { rows } = await client.query(q);
@@ -149,6 +167,11 @@ try {
     console.log("  ✓ P0 applied");
     await client.query(sql);
     console.log("  ✓ P0 re-applied (idempotent)");
+    console.log("  … applying observability_ai_governance_p2_v1.sql (upgrade)");
+    await client.query(p2Sql);
+    console.log("  ✓ P2 applied");
+    await client.query(p2Sql);
+    console.log("  ✓ P2 re-applied (idempotent)");
   } else {
     // verify + fresh: full ordered chain via project runner
     console.log(`  … applying full MIGRATION_FILES (${MIGRATION_FILES.length}) via applyMigrations`);
@@ -165,7 +188,11 @@ try {
       console.log(`    · failed ${r.file}: ${String(r.error || "").slice(0, 120)}`);
     }
     // Critical: qa_phase4_seed and enterprise must succeed
-    const critical = ["qa_phase4_seed.sql", "enterprise_reliability_p0_v1.sql"];
+    const critical = [
+      "qa_phase4_seed.sql",
+      "enterprise_reliability_p0_v1.sql",
+      "observability_ai_governance_p2_v1.sql",
+    ];
     for (const file of critical) {
       const row = results.find((r) => r.file === file);
       if (!row?.ok) {
