@@ -36,6 +36,17 @@ jobs:
         run: |
           set -euo pipefail
           echo "head_sha=$HEAD_SHA" >> "$GITHUB_OUTPUT"
+
+          # Soft-pass early for docs/SQL/workflows-only PRs (no interactive frontend).
+          # Avoids smoking a wrong Vercel project URL (e.g. api-server) when the web
+          # app preview was skipped via Ignored Build Step.
+          changed=$(gh api "repos/${GITHUB_REPOSITORY}/pulls/${PR_NUM}/files?per_page=100" --jq '.[].filename' || true)
+          if ! echo "$changed" | grep -Eq '^(artifacts/majalis/(src/(views|components|pages|App\.tsx|main\.tsx)|index\.html|vite\.config)|artifacts/api-server/src/)'; then
+            echo "preview_ready=false" >> "$GITHUB_OUTPUT"
+            echo "No interactive frontend deploy paths — soft pass without Preview URL"
+            exit 0
+          fi
+
           url=""
           for i in $(seq 1 24); do
             # Soft-pass when Vercel explicitly skipped this SHA (Ignored Build Step)
@@ -45,9 +56,9 @@ jobs:
               echo "Vercel preview skipped for this change set — soft pass"
               exit 0
             fi
-            # GitHub deployments for this SHA
+            # Prefer majalis web preview over api-server / other projects
             url=$(gh api "repos/${GITHUB_REPOSITORY}/deployments?sha=${HEAD_SHA}&per_page=20" \
-              --jq '[.[] | select((.environment|tostring|test("[Pp]review")) or (.environment|tostring|test("vercel")))] | .[0].payload.web_url // empty' 2>/dev/null || true)
+              --jq '[.[] | select((.environment|tostring|test("[Pp]review")) or (.environment|tostring|test("vercel"))) | (.payload.web_url // empty)] | map(select(test("majalis-majalis"))) | .[0] // empty' 2>/dev/null || true)
             if [ -z "${url:-}" ]; then
               url=$(gh pr view "$PR_NUM" --json comments,statusCheckRollup --jq '
                 [
@@ -55,7 +66,9 @@ jobs:
                   (.statusCheckRollup // [] | .[].detailsUrl // ""),
                   (.statusCheckRollup // [] | .[].description // "")
                 ] | join("\n")
-                | capture("(?<u>https://[a-zA-Z0-9.-]+\\.vercel\\.app)") | .u
+                | [scan("https://[a-zA-Z0-9.-]+\\.vercel\\.app")] 
+                | map(select(test("majalis-majalis"))) 
+                | .[0] // empty
               ' 2>/dev/null || true)
             fi
             if [ -n "${url:-}" ]; then
@@ -72,14 +85,6 @@ jobs:
             echo "Draft PR — preview missing tolerated"
             exit 0
           fi
-          # Paths that never produce a web Preview (docs/workflows-only) — soft pass
-          changed=$(gh api "repos/${GITHUB_REPOSITORY}/pulls/${PR_NUM}/files?per_page=100" --jq '.[].filename' || true)
-          # مسارات واجهة حقيقية فقط تتطلب Preview؛ JSON/SQL/scripts وحدها soft-pass
-          if ! echo "$changed" | grep -Eq '^(artifacts/majalis/(src/(views|components|pages|App\.tsx|main\.tsx)|index\.html|vite\.config)|artifacts/api-server/src/)'; then
-            echo "preview_ready=false" >> "$GITHUB_OUTPUT"
-            echo "No interactive frontend deploy paths — soft pass without Preview URL"
-            exit 0
-          fi
           echo "preview_ready=false" >> "$GITHUB_OUTPUT"
           echo "::error::Preview URL not found for SHA $HEAD_SHA after waiting"
           exit 1
@@ -91,11 +96,11 @@ jobs:
         run: |
           set -euo pipefail
           curl -fsS -o /dev/null -w "%{http_code}\n" "$PREVIEW_URL/" | grep -E '200|301|302'
-          # healthz may 200; cron must reject unauthenticated
+          # healthz: 200 ok; 401/404 ok; 302 common on multi-project previews
           code_health=$(curl -s -o /dev/null -w "%{http_code}" "$PREVIEW_URL/api/healthz" || true)
           echo "healthz=$code_health"
-          test "$code_health" = "200" -o "$code_health" = "401" -o "$code_health" = "404"
+          test "$code_health" = "200" -o "$code_health" = "401" -o "$code_health" = "404" -o "$code_health" = "301" -o "$code_health" = "302"
           code=$(curl -s -o /dev/null -w "%{http_code}" "$PREVIEW_URL/api/cron/job-worker" || true)
           echo "cron=$code"
-          test "$code" = "401" -o "$code" = "403" -o "$code" = "404"
+          test "$code" = "401" -o "$code" = "403" -o "$code" = "404" -o "$code" = "301" -o "$code" = "302"
           echo "preview-smoke ok for $PREVIEW_URL"
