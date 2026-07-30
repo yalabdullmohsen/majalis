@@ -1,6 +1,9 @@
 import { useCallback, useRef, useState } from "react";
 import { isAndroid, isIOS, isNative } from "@/lib/capacitor-utils";
-import { getSpeechRecognitionPlugin } from "@/lib/plugins/speech-recognition";
+import {
+  classifySpeechPluginError,
+  getSpeechRecognitionPlugin,
+} from "@/lib/plugins/speech-recognition";
 import { diffRecitation, type RecitationDiffResult } from "@/lib/recitation-diff";
 
 export type RecitationTestState =
@@ -74,6 +77,11 @@ export function useRecitationTest(canonicalText: string) {
         if (!avail.available) { setState("unsupported"); return; }
 
         const perm = await plugin.requestPermissions();
+        if (perm.speechRecognition === "prompt") {
+          // ما زال النظام يعرض حوار الإذن — لا نُخفِيها كـdenied صامت
+          setState("denied");
+          return;
+        }
         if (perm.speechRecognition !== "granted") { setState("denied"); return; }
 
         setState("listening");
@@ -85,12 +93,29 @@ export function useRecitationTest(canonicalText: string) {
 
         try {
           const res = await plugin.start({ language: "ar-SA", partialResults: true, popup: false, maxResults: 1 });
-          finish(res.matches?.[0] || transcriptRef.current);
+          const text = res.matches?.[0] || transcriptRef.current;
+          if (!text.trim()) {
+            console.error("[useRecitationTest] empty matches after successful start resolve");
+            setState("error");
+            return;
+          }
+          finish(text);
         } finally {
           handle.remove();
         }
-      } catch {
-        setState("error");
+      } catch (err) {
+        const classified = classifySpeechPluginError(err);
+        console.error("[useRecitationTest]", classified.code, classified.message);
+        if (
+          classified.code === "SPEECH_DENIED" ||
+          classified.code === "MICROPHONE_DENIED" ||
+          classified.code === "SPEECH_NOT_DETERMINED" ||
+          classified.code === "MICROPHONE_NOT_DETERMINED"
+        ) {
+          setState("denied");
+        } else {
+          setState("error");
+        }
       }
       return;
     }

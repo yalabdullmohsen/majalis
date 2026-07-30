@@ -22,9 +22,74 @@ export type SpeechPartialPayload = {
   confidences?: number[];
 };
 
+export type SpeechPermissionStatus = "granted" | "denied" | "prompt" | "restricted";
+
+export type SpeechPermissionsResult = {
+  /** مُجمَّع: granted فقط إن مُنح الكلام والميكروفون معًا */
+  speechRecognition: SpeechPermissionStatus;
+  speech?: SpeechPermissionStatus;
+  microphone?: SpeechPermissionStatus;
+};
+
+/** رموز رفض مُصنَّفة من MajlisSpeechRecognitionPlugin (iOS) */
+export type SpeechRecognitionErrorCode =
+  | "RECOGNIZER_UNAVAILABLE"
+  | "SPEECH_DENIED"
+  | "SPEECH_NOT_DETERMINED"
+  | "MICROPHONE_DENIED"
+  | "MICROPHONE_NOT_DETERMINED"
+  | "AUDIO_SESSION_FAILED"
+  | "AUDIO_FORMAT_INVALID"
+  | "ENGINE_START_FAILED"
+  | "NO_SPEECH_DETECTED"
+  | "MEDIA_SERVICES_RESET"
+  | "RECOGNITION_FAILED"
+  | "NETWORK"
+  | "SESSION_SUPERSEDED"
+  | "UNKNOWN";
+
+export class SpeechRecognitionError extends Error {
+  readonly code: SpeechRecognitionErrorCode;
+
+  constructor(code: SpeechRecognitionErrorCode, message: string) {
+    super(message);
+    this.name = "SpeechRecognitionError";
+    this.code = code;
+  }
+}
+
+export function classifySpeechPluginError(err: unknown): SpeechRecognitionError {
+  if (err instanceof SpeechRecognitionError) return err;
+  const e = err as { code?: string; message?: string; errorMessage?: string } | null;
+  const rawCode = typeof e?.code === "string" ? e.code : "UNKNOWN";
+  const message =
+    (typeof e?.message === "string" && e.message) ||
+    (typeof e?.errorMessage === "string" && e.errorMessage) ||
+    (err instanceof Error ? err.message : "فشل التعرّف الصوتي");
+  const known: SpeechRecognitionErrorCode[] = [
+    "RECOGNIZER_UNAVAILABLE",
+    "SPEECH_DENIED",
+    "SPEECH_NOT_DETERMINED",
+    "MICROPHONE_DENIED",
+    "MICROPHONE_NOT_DETERMINED",
+    "AUDIO_SESSION_FAILED",
+    "AUDIO_FORMAT_INVALID",
+    "ENGINE_START_FAILED",
+    "NO_SPEECH_DETECTED",
+    "MEDIA_SERVICES_RESET",
+    "RECOGNITION_FAILED",
+    "NETWORK",
+    "SESSION_SUPERSEDED",
+  ];
+  const code = (known as string[]).includes(rawCode)
+    ? (rawCode as SpeechRecognitionErrorCode)
+    : "UNKNOWN";
+  return new SpeechRecognitionError(code, message);
+}
+
 export interface MajlisSpeechRecognitionPlugin {
   available(): Promise<{ available: boolean }>;
-  requestPermissions(): Promise<{ speechRecognition: "granted" | "denied" | "prompt" }>;
+  requestPermissions(): Promise<SpeechPermissionsResult>;
   start(options?: SpeechRecognitionStartOptions): Promise<{ matches?: string[] }>;
   stop(): Promise<void>;
   addListener(
@@ -49,16 +114,25 @@ export function getSpeechRecognitionPlugin(): MajlisSpeechRecognitionPlugin | nu
           const { ensureNativeRecordingAudioSession } = await import("@/lib/native-playback-audio");
           await ensureNativeRecordingAudioSession();
         }
-        return raw.start(options);
+        try {
+          return await raw.start(options);
+        } catch (err) {
+          throw classifySpeechPluginError(err);
+        }
       },
       async stop() {
-        await raw.stop();
-        if (isIOS) {
-          try {
-            const { deactivateNativeAudioSession } = await import("@/lib/native-playback-audio");
-            await deactivateNativeAudioSession();
-          } catch (err) {
-            console.warn("[speech-recognition] deactivate session:", err);
+        try {
+          await raw.stop();
+        } catch (err) {
+          throw classifySpeechPluginError(err);
+        } finally {
+          if (isIOS) {
+            try {
+              const { deactivateNativeAudioSession } = await import("@/lib/native-playback-audio");
+              await deactivateNativeAudioSession();
+            } catch (deactivateErr) {
+              console.warn("[speech-recognition] deactivate session:", deactivateErr);
+            }
           }
         }
       },
