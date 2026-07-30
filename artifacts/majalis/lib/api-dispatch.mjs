@@ -130,9 +130,12 @@ const NATIVE_APP_ORIGINS = new Set(["capacitor://localhost", "https://localhost"
 /** Route table uses dynamic imports so Vercel bundles one lightweight function entrypoint. */
 export const API_ROUTES = [
   { prefix: "/api/healthz", module: "./api-handlers/healthz.js", allowGet: true, exact: true },
+  { prefix: "/api/readyz", module: "./api-handlers/readyz.js", allowGet: true, exact: true },
   { prefix: "/api/public-config", module: "./api-handlers/public-config.js", allowGet: true, exact: true },
   { prefix: "/api/assistant/health", module: "./api-handlers/assistant/health.js", allowGet: true, exact: true },
   { prefix: "/api/prayer-times", module: "./api-handlers/prayer-times.js", allowGet: true, exact: true },
+  { prefix: "/api/content-delta", module: "./api-handlers/content-delta.js", allowGet: true, exact: true },
+  { prefix: "/api/reading-sync", module: "./api-handlers/reading-sync.js", allowGet: true, exact: true },
   { prefix: "/api/cron/sync-data", module: "./api-handlers/cron/sync-data.js", allowGet: true, exact: true },
   { prefix: "/api/cron/knowledge-sync", module: "./api-handlers/cron/knowledge-sync.js", allowGet: true, exact: true },
   { prefix: "/api/cron/sync-fiqh-council", module: "./api-handlers/cron/sync-fiqh-council.js", allowGet: true, exact: true },
@@ -220,6 +223,7 @@ export const API_ROUTES = [
   { prefix: "/api/cron/autonomous-platform-monitor", module: "./api-handlers/cron/autonomous-platform.js", allowGet: true, exact: true },
   { prefix: "/api/cron/autonomous-platform-recovery", module: "./api-handlers/cron/autonomous-platform.js", allowGet: true, exact: true },
   { prefix: "/api/cron/source-monitor", module: "./api-handlers/cron/source-monitor.js", allowGet: true, exact: true },
+  { prefix: "/api/cron/job-worker", module: "./api-handlers/cron/job-worker.js", allowGet: true, exact: true },
   { prefix: "/api/admin/content-import", module: "./api-handlers/admin/content-import.js", timeoutMs: 58_000 },
   { prefix: "/api/cron/process-import-jobs", module: "./api-handlers/cron/process-import-jobs.js", allowGet: true, exact: true },
   { prefix: "/api/cron/import-phase2-trial", module: "./api-handlers/cron/import-phase2-trial.js", allowGet: true, exact: true },
@@ -336,43 +340,32 @@ async function readJsonBody(req) {
   }
 }
 
-export function sendJson(res, status, payload) {
-  if (typeof res.status === "function" && typeof res.json === "function") {
-    res.status(status).json(payload);
-    return;
-  }
-
-  res.statusCode = status;
-  res.setHeader("Content-Type", "application/json; charset=utf-8");
-  res.end(JSON.stringify(payload));
-}
+export { sendJson, endEmpty, isResponseClosed, applyHandlerResult } from "./api/_http.mjs";
+import { sendJson } from "./api/_http.mjs";
 
 const DEFAULT_HANDLER_TIMEOUT_MS = 25_000;
-const CRON_HANDLER_TIMEOUT_MS = 55_000;
+/** Cron HTTP path must enqueue quickly — long work belongs to background workers. */
+const CRON_HANDLER_TIMEOUT_MS = 12_000;
 
 async function invokeHandler(handler, req, res, routePrefix, routeOpts = {}) {
   const isCron = routePrefix.startsWith("/api/cron/");
   const timeoutMs = routeOpts.timeoutMs ?? (isCron ? CRON_HANDLER_TIMEOUT_MS : DEFAULT_HANDLER_TIMEOUT_MS);
 
-  let finished = false;
-  const timer = setTimeout(() => {
-    if (!finished && !res.headersSent) {
-      console.error(`[api] handler timeout ${routePrefix} after ${timeoutMs}ms`);
-      sendJson(res, 504, {
-        ok: false,
-        error: "handler_timeout",
-        message: "تعذر إكمال الطلب في الوقت المحدد.",
-        fallback: true,
-      });
-      finished = true;
-    }
-  }, timeoutMs);
+  const { createRequestContext } = await import("./api/request-lifecycle.mjs");
+  const ctx = createRequestContext(req, res, { timeoutMs });
+  req.abortSignal = ctx.signal;
+  req.requestId = ctx.requestId;
 
   try {
-    await handler(req, res);
+    const result = await handler(req, res);
+    // Optional typed result from migrated handlers
+    if (result && typeof result === "object" && typeof result.status === "number" && !res.headersSent) {
+      const { applyHandlerResult } = await import("./api/_http.mjs");
+      applyHandlerResult(res, result);
+    }
+    ctx.markSettled();
   } finally {
-    clearTimeout(timer);
-    finished = true;
+    ctx.dispose();
   }
 }
 

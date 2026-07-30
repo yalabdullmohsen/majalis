@@ -43,7 +43,7 @@ export function UniversityCard({ university: u, compact = false }: Props) {
           <MapPin size={13} />
           <span>{u.city ? `${u.city}، ` : ""}{u.country}</span>
           {u.is_verified && (
-            <span className="mr-auto univ-badge univ-badge--verified">✓ موثقة</span>
+            <span className="me-auto univ-badge univ-badge--verified">✓ موثقة</span>
           )}
         </div>
 
@@ -76,7 +76,7 @@ export function UniversityCard({ university: u, compact = false }: Props) {
             <span key={m} className="univ-badge univ-badge--mode">{m}</span>
           ))}
           {hasScholarship && (
-            <span className="univ-badge univ-badge--scholarship"><GraduationCap size={12} className="inline ml-1" />منح متاحة</span>
+            <span className="univ-badge univ-badge--scholarship"><GraduationCap size={12} className="inline ms-1" />منح متاحة</span>
           )}
         </div>
 
@@ -100,7 +100,7 @@ export function UniversityCard({ university: u, compact = false }: Props) {
             className="univ-btn univ-btn--ghost"
             aria-label={`الموقع الرسمي لـ ${u.name_ar}`}
           >
-            <Globe size={13} className="inline ml-1" />الموقع
+            <Globe size={13} className="inline ms-1" />الموقع
           </a>
         )}
 

@@ -3,7 +3,6 @@ import { useEffect, useState, useMemo } from "react";
 import { applyPageSeo } from "../lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
-import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import "@/styles/pages/ulum-quran.css";
 
 
@@ -576,7 +575,6 @@ export default function UlumQuranPage() {
         </nav>
       </div>
       <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId="quran" title="اختبر معلوماتك في علوم القرآن" count={4} />
       </div>
     </main>
   );

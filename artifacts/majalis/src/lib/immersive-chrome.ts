@@ -11,7 +11,9 @@ export function isImmersiveChromePath(pathname: string): boolean {
     p === "/mushaf" ||
     p.startsWith("/mushaf/") ||
     p === "/quran-hub" ||
-    p.startsWith("/quran-hub/")
+    p.startsWith("/quran-hub/") ||
+    p === "/quran/recitation-test-ai" ||
+    p.startsWith("/quran/recitation-test-ai/")
   );
 }
 

@@ -1,12 +1,13 @@
 import type { RulingRelationLink, ShariaRulingExtended } from "./rulings-types";
-import { SEED_QA } from "./qa-seed";
+import { loadSeedQa } from "./qa-seed";
 import { FIQH_COUNCIL_SEED } from "./fiqh-council-service";
 
-export function buildRulingRelations(ruling: ShariaRulingExtended): RulingRelationLink[] {
+export async function buildRulingRelations(ruling: ShariaRulingExtended): Promise<RulingRelationLink[]> {
   const links: RulingRelationLink[] = [];
+  const seedQa = await loadSeedQa();
 
   for (const qaId of ruling.linked_qa_ids ?? []) {
-    const qa = SEED_QA.find((q) => q.id === qaId);
+    const qa = seedQa.find((q) => q.id === qaId);
     if (qa) {
       links.push({
         type: "qa",
@@ -40,7 +41,6 @@ export function buildRulingRelations(ruling: ShariaRulingExtended): RulingRelati
     });
   }
 
-  // Keyword-based suggestions
   const kw = ruling.keywords?.[0] || ruling.subcategory;
   if (kw) {
     links.push({

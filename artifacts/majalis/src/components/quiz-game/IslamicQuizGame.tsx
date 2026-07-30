@@ -407,28 +407,28 @@ function SetupPhase({ onStart }: { onStart: (cats: string[], mode: GameMode, nam
       </div>
 
       <section className="qzg-section-card">
-        <h2 className="qzg-section-h2"><Users size={18} className="inline ml-1" />نمط اللعب</h2>
+        <h2 className="qzg-section-h2"><Users size={18} className="inline ms-1" />نمط اللعب</h2>
         <div className="qzg-mode-toggle">
           <button
             type="button"
             onClick={() => setMode("solo")}
             className={`qzg-mode-btn${mode === "solo" ? " qzg-mode-btn--on" : ""}`}
           >
-            <User size={16} className="inline ml-1" />فردي
+            <User size={16} className="inline ms-1" />فردي
           </button>
           <button
             type="button"
             onClick={() => setMode("team")}
             className={`qzg-mode-btn${mode === "team" ? " qzg-mode-btn--on" : ""}`}
           >
-            <Users size={16} className="inline ml-1" />جماعي
+            <Users size={16} className="inline ms-1" />جماعي
           </button>
         </div>
       </section>
 
       {mode === "team" ? (
         <section className="qzg-section-card">
-          <h2 className="qzg-section-h2"><Trophy size={18} className="inline ml-1" />عدد الفرق وأسماؤها</h2>
+          <h2 className="qzg-section-h2"><Trophy size={18} className="inline ms-1" />عدد الفرق وأسماؤها</h2>
           <div className="qzg-team-count-row">
             {([2, 3, 4] as const).map((n) => (
               <button
@@ -459,7 +459,7 @@ function SetupPhase({ onStart }: { onStart: (cats: string[], mode: GameMode, nam
         </section>
       ) : (
         <section className="qzg-section-card">
-          <h2 className="qzg-section-h2"><User size={18} className="inline ml-1" />اسمك (اختياري)</h2>
+          <h2 className="qzg-section-h2"><User size={18} className="inline ms-1" />اسمك (اختياري)</h2>
           <input
             value={soloName}
             onChange={(e) => setSoloName(e.target.value)}
@@ -472,7 +472,7 @@ function SetupPhase({ onStart }: { onStart: (cats: string[], mode: GameMode, nam
 
       <section className="qzg-section-card">
         <div className="qzg-cats-head">
-          <h2 className="qzg-section-h2 qzg-section-h2--flush"><Library size={16} className="inline ml-1" />اختر الفئات</h2>
+          <h2 className="qzg-section-h2 qzg-section-h2--flush"><Library size={16} className="inline ms-1" />اختر الفئات</h2>
           <span className="qzg-cats-count">{selected.length}/6 (2 كحد أدنى)</span>
         </div>
         <div className="qzg-cats-grid">
@@ -499,7 +499,7 @@ function SetupPhase({ onStart }: { onStart: (cats: string[], mode: GameMode, nam
 
       <section className="qzg-section-card qzg-section-card--mb-lg">
         <h3 className="qzg-lifelines-h3">
-          <Zap size={14} className="inline ml-1" />
+          <Zap size={14} className="inline ms-1" />
           {mode === "solo" ? "مساعدة إضافية" : "وسائل المساعدة (لكل فريق 3 وسائل)"}
         </h3>
         <div className={`qzg-lifelines-grid${mode === "solo" ? " qzg-lifelines-grid--solo" : ""}`}>
@@ -676,7 +676,7 @@ function QuestionPhase({
 
         {passedToTeamId && (
           <div className="qzg-q-passed-banner">
-            <Send size={14} className="inline ml-1" />تم إرسال السؤال — يجيب الآن: <strong>{scoringTeam?.name}</strong>
+            <Send size={14} className="inline ms-1" />تم إرسال السؤال — يجيب الآن: <strong>{scoringTeam?.name}</strong>
           </div>
         )}
 
@@ -689,7 +689,7 @@ function QuestionPhase({
         {mode === "team" && !passedToTeamId && (
           <div className="qzg-q-transfer-row">
             <button type="button" onClick={() => requestTeamAction("transfer")} className="qzg-btn-transfer">
-              <Send size={14} className="inline ml-1" />أرسل لفريق آخر
+              <Send size={14} className="inline ms-1" />أرسل لفريق آخر
             </button>
           </div>
         )}
@@ -697,7 +697,7 @@ function QuestionPhase({
 
       {!revealed && (
         <button type="button" onClick={() => setRevealed(true)} className="qzg-btn-gold qzg-btn-gold--wide qzg-btn-gold--mb">
-          <Search size={14} className="inline ml-1" />كشف الإجابة
+          <Search size={14} className="inline ms-1" />كشف الإجابة
         </button>
       )}
 
@@ -707,7 +707,7 @@ function QuestionPhase({
             <p className="qzg-answer-label">الإجابة الصحيحة:</p>
             <p className="qzg-answer-text">{activeQuestion?.a ?? "—"}</p>
             {showHint && (
-              <p className="qzg-hint-text"><Lightbulb size={13} className="inline ml-1" />{activeQuestion?.hint}</p>
+              <p className="qzg-hint-text"><Lightbulb size={13} className="inline ms-1" />{activeQuestion?.hint}</p>
             )}
             {!showHint && activeQuestion?.hint && (
               <button type="button" onClick={() => dispatch({ type: "REVEAL_HINT" })} className="qzg-btn-ghost qzg-btn-ghost--mt">
@@ -718,17 +718,17 @@ function QuestionPhase({
 
           <div className="qzg-result-grid">
             <button type="button" onClick={onMarkCorrect} className="qzg-btn-correct">
-              <CheckCircle2 size={14} className="inline ml-1" />صحيح +{activeCell.points}
+              <CheckCircle2 size={14} className="inline ms-1" />صحيح +{activeCell.points}
             </button>
             <button type="button" onClick={onMarkWrong} className="qzg-btn-wrong">
-              <XCircle size={14} className="inline ml-1" />خطأ
+              <XCircle size={14} className="inline ms-1" />خطأ
             </button>
           </div>
         </>
       )}
 
       <div className="qzg-section-card">
-        <p className="qzg-lifelines-label"><Zap size={14} className="inline ml-1" />وسائل المساعدة — {activeTeamObj.name}</p>
+        <p className="qzg-lifelines-label"><Zap size={14} className="inline ms-1" />وسائل المساعدة — {activeTeamObj.name}</p>
 
         {eliminateBanner && (
           <p className="qzg-q-passed-banner">تم استبعاد لاعب من: <strong>{eliminateBanner}</strong></p>
@@ -824,7 +824,7 @@ function WinnerPhase({ teams, mode, onReset }: { teams: Team[]; mode: GameMode; 
       </div>
 
       <button type="button" onClick={onReset} className="qzg-btn-gold qzg-btn-gold--px">
-        <RefreshCw size={14} className="inline ml-1" />لعبة جديدة
+        <RefreshCw size={14} className="inline ms-1" />لعبة جديدة
       </button>
     </div>
   );
@@ -919,7 +919,7 @@ export function IslamicQuizGame() {
       <div className="qzg-inner">
         {(state.phase === "board" || state.phase === "question") && (
           <div className="qzg-game-title-bar">
-            <span className="qzg-game-title"><Landmark size={16} className="inline ml-1" />سين جيم</span>
+            <span className="qzg-game-title"><Landmark size={16} className="inline ms-1" />سين جيم</span>
           </div>
         )}
 

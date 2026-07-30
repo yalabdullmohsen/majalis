@@ -62,7 +62,7 @@ class UserTafsirModal extends StatelessWidget {
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
-                color: MajlisColors.brown.withOpacity(0.08),
+                color: MajlisColors.brown.withValues(alpha: 0.08),
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Text(

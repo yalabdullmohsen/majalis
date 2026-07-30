@@ -97,6 +97,12 @@ export class MajlisAudioService {
       if (el.src !== url) {
         el.src = url;
       }
+      try {
+        const { ensureNativePlaybackAudioSession } = await import("@/lib/native-playback-audio");
+        await ensureNativePlaybackAudioSession();
+      } catch (sessionErr) {
+        console.warn("[MajlisAudioService] native playback session:", sessionErr);
+      }
       await el.play();
       this.playing = true;
       this.loading = false;

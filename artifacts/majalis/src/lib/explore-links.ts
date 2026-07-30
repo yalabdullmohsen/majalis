@@ -1,4 +1,4 @@
-import type { ExploreAlsoLink } from "@/components/ExploreAlsoNav";
+import type { ExploreAlsoLink } from "@/lib/explore-link-types";
 
 /**
  * روابط «استكشف أيضًا» لصفحات التخطيط الأكورديوني — مصدر واحد بدل تكرار

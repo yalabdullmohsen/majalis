@@ -4,6 +4,9 @@ import {
   MIN_FIQH_COMPLETION_SCORE,
   verifyFiqhItem,
 } from "./fiqh-verification-service";
+import { isOfficialSourceVerified } from "./fiqh-official-source";
+
+export { isOfficialSourceVerified } from "./fiqh-official-source";
 
 export type FiqhDocumentationLevel =
   | "official_verified"
@@ -53,16 +56,6 @@ export function isVerifiedPublicItem(item: FiqhCouncilItem): boolean {
 
 export function isPublicDisplayableItem(item: FiqhCouncilItem): boolean {
   return isVerifiedPublicItem(item);
-}
-
-export function isOfficialSourceVerified(
-  item: Pick<FiqhCouncilItem, "source_name" | "source_url" | "confidence_level">,
-): boolean {
-  return Boolean(
-    item.source_name &&
-      item.source_url &&
-      item.confidence_level === "source_verified",
-  );
 }
 
 export function isPublicIssue(issue: FiqhCouncilIssue): boolean {

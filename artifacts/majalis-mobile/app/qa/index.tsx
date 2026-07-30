@@ -29,17 +29,21 @@ export default function QaScreen() {
     queryFn: getQaCategories,
   });
 
-  const { data, isLoading, refetch } = useQuery({
-    queryKey: ["qa-questions", categoryId, search],
-    queryFn: () => getQaQuestions({ categoryId, search }),
+  const { data, isLoading, isFetching, refetch } = useQuery({
+    queryKey: ["qa-questions", categoryId],
+    queryFn: () => getQaQuestions({ categoryId }),
   });
 
   const categories = catData?.data || [];
-  const questions = data?.data || [];
+  const questions = (data?.data || []).filter((q: { question?: string | null; answer?: string | null }) => {
+    const s = search.trim();
+    if (!s) return true;
+    return Boolean(q.question?.includes(s) || q.answer?.includes(s));
+  });
 
   return (
     <View style={[styles.container, { backgroundColor: colors.background }]}>
-      <View style={{ paddingTop: Platform.OS === "web" ? 67 + 8 : insets.top + 8, paddingHorizontal: 12 }}>
+      <View style={{ paddingTop: Platform.OS === "web" ? 67 + 8 : 8, paddingHorizontal: 12 }}>
         <View style={[styles.searchBox, { backgroundColor: colors.card, borderColor: colors.border }]}>
           <Ionicons name="search-outline" size={18} color={colors.mutedForeground} />
           <TextInput
@@ -59,7 +63,7 @@ export default function QaScreen() {
         contentContainerStyle={styles.pillsRow}
         style={{ flexGrow: 0 }}
       >
-        {[{ id: undefined, name: "الكل" }, ...categories].map((c: any) => {
+        {[{ id: undefined as string | undefined, name: "الكل" }, ...categories].map((c: { id?: string; name?: string }) => {
           const active = categoryId === c.id;
           return (
             <Pressable
@@ -87,7 +91,7 @@ export default function QaScreen() {
             paddingBottom: Platform.OS === "web" ? 34 : insets.bottom + 80,
           }}
           onRefresh={refetch}
-          refreshing={isLoading}
+          refreshing={isFetching && !isLoading}
           ListEmptyComponent={() => (
             <View style={styles.empty}>
               <Ionicons name="help-circle-outline" size={40} color={colors.mutedForeground} />

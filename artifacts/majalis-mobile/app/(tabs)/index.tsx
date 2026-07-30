@@ -15,7 +15,7 @@ import {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 import { useColors } from "@/hooks/useColors";
-import { getApprovedFawaid, getLessons, getSheikhs } from "@/lib/supabase";
+import { getApprovedFawaid, getLessons } from "@/lib/supabase";
 
 const CATEGORIES = [
   { icon: "book-outline", label: "الدروس والدورات", route: "/lessons" },
@@ -34,10 +34,6 @@ export default function HomeScreen() {
   const { data: lessonsData, isLoading: lessonsLoading } = useQuery({
     queryKey: ["lessons-home"],
     queryFn: () => getLessons(),
-  });
-  const { data: sheikhsData } = useQuery({
-    queryKey: ["sheikhs-home"],
-    queryFn: getSheikhs,
   });
   const { data: fawaidData } = useQuery({
     queryKey: ["fawaid-home"],

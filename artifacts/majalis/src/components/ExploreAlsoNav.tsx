@@ -1,10 +1,8 @@
 import { Link } from "wouter";
 import "@/styles/pages/fiqh-guide.css";
+import type { ExploreAlsoLink } from "@/lib/explore-link-types";
 
-export type ExploreAlsoLink = {
-  href: string;
-  label: string;
-};
+export type { ExploreAlsoLink } from "@/lib/explore-link-types";
 
 type Props = {
   title?: string;

@@ -30,7 +30,7 @@ export default function LibraryScreen() {
   const insets = useSafeAreaInsets();
   const [selectedType, setSelectedType] = useState<string | undefined>(undefined);
 
-  const { data, isLoading, refetch } = useQuery({
+  const { data, isLoading, isFetching, refetch } = useQuery({
     queryKey: ["library", selectedType],
     queryFn: () => getLibrary({ type: selectedType }),
   });
@@ -78,7 +78,7 @@ export default function LibraryScreen() {
             paddingBottom: Platform.OS === "web" ? 34 : insets.bottom + 80,
           }}
           onRefresh={refetch}
-          refreshing={isLoading}
+          refreshing={isFetching && !isLoading}
           ListEmptyComponent={() => (
             <View style={styles.empty}>
               <Ionicons name="library-outline" size={40} color={colors.mutedForeground} />

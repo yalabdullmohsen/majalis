@@ -511,10 +511,9 @@ html.dark .nav-soon-badge {
 .lesson-unified-card--compact .lesson-unified-card__title {
   font-size: .95rem;
   line-height: 1.4;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  /* عنوان الدرس كاملًا — بلا قصّ سطرين يُخفي المعنى */
+  white-space: normal;
+  overflow: visible;
 }
 .lesson-unified-card--compact .lesson-unified-card__sheikh {
   font-size: .82rem;
@@ -853,6 +852,18 @@ html[data-theme="dark"] .bottom-nav--v2 {
 .scroll-to-top:hover { background: var(--majalis-emerald-deep, #143F35); }
 .global-back-btn:active,
 .scroll-to-top:active { transform: scale(.93); }
+@media (prefers-reduced-motion: reduce) {
+  .global-back-btn,
+  .scroll-to-top,
+  .global-back-btn:hover,
+  .scroll-to-top:hover,
+  .global-back-btn:active,
+  .scroll-to-top:active,
+  .global-back-btn--hidden {
+    transition: none;
+    transform: none;
+  }
+}
 body.filter-sheet-open .global-back-btn { display: none; }
 .global-back-btn--hidden {
   opacity: 0;
@@ -1406,10 +1417,8 @@ a.twitter-timeline {
 }
 
 /* ══ عقد أسطح الصفحات + نماذج + جداول + تمرير أفقي (iPhone) ══ */
-html {
-  -webkit-text-size-adjust: 100%;
-  text-size-adjust: 100%;
-}
+/* Dynamic Type: أُزيل فرض 100% هنا عمدًا — index.css يضبط auto ليحترم
+   تكبير النظام؛ قارئات المصحف تفرض 100% محليًا في quran-immersive-reader.css. */
 body {
   -webkit-tap-highlight-color: transparent;
   overscroll-behavior-y: none;
@@ -1539,8 +1548,6 @@ body {
   padding: 0.65rem 0.9rem;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md, var(--r-md));
-  background: var(--color-surface-muted);
-  color: var(--color-text);
   font-weight: 700;
   text-align: start;
 }
@@ -1551,8 +1558,6 @@ body {
 }
 .bottom-sheet {
   border-radius: var(--r-2xl, 2rem) var(--r-2xl, 2rem) 0 0;
-  background: var(--color-surface);
-  color: var(--color-text);
   box-shadow: var(--shadow-soft);
 }
 .bottom-sheet__head {
@@ -1562,16 +1567,12 @@ body {
   gap: 0.75rem;
   min-height: 48px;
   padding-inline: 1rem;
-  color: var(--color-text);
   font-weight: 800;
 }
 .bottom-sheet__close-btn {
   min-width: 44px;
   min-height: 44px;
   border-radius: var(--radius-md, var(--r-md));
-  border: 1px solid var(--color-border);
-  background: var(--color-surface);
-  color: var(--color-primary);
 }
 .content-hub-chip,
 .ds-chip {

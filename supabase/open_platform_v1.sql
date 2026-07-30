@@ -88,7 +88,7 @@ ALTER TABLE open_api_audit_logs ENABLE ROW LEVEL SECURITY;
 ALTER TABLE open_webhooks ENABLE ROW LEVEL SECURITY;
 ALTER TABLE open_webhook_deliveries ENABLE ROW LEVEL SECURITY;
 
-CREATE POLICY "Service role open_api_keys" ON open_api_keys FOR ALL USING (true);
-CREATE POLICY "Service role open_api_audit_logs" ON open_api_audit_logs FOR ALL USING (true);
-CREATE POLICY "Service role open_webhooks" ON open_webhooks FOR ALL USING (true);
-CREATE POLICY "Service role open_webhook_deliveries" ON open_webhook_deliveries FOR ALL USING (true);
+CREATE POLICY "Service role open_api_keys" ON open_api_keys FOR ALL TO service_role USING (true) WITH CHECK (true);
+CREATE POLICY "Service role open_api_audit_logs" ON open_api_audit_logs FOR ALL TO service_role USING (true) WITH CHECK (true);
+CREATE POLICY "Service role open_webhooks" ON open_webhooks FOR ALL TO service_role USING (true) WITH CHECK (true);
+CREATE POLICY "Service role open_webhook_deliveries" ON open_webhook_deliveries FOR ALL TO service_role USING (true) WITH CHECK (true);

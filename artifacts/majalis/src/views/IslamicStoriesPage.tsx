@@ -5,7 +5,7 @@ import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { supabase } from "@/lib/supabase";
 import { isSupabaseConfigured } from "@/lib/supabase-config";
 import { PageHeader, SkeletonCardGrid, Chip, Empty } from "@/components/ui-common";
-import { ISLAMIC_STORIES_SEED } from "@/lib/islamic-stories-seed";
+import { loadIslamicStoriesSeed } from "@/lib/islamic-stories-seed";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
@@ -225,33 +225,54 @@ export default function IslamicStoriesPage() {
   }, []);
 
   useEffect(() => {
+    let cancelled = false;
+    const applySeed = async () => {
+      const seed = (await loadIslamicStoriesSeed()) as unknown as IslamicStory[];
+      if (!cancelled) setStories(seed);
+    };
+
     if (!isSupabaseConfigured()) {
-      setStories(ISLAMIC_STORIES_SEED as unknown as IslamicStory[]);
-      setLoading(false);
-      return;
+      void applySeed().finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+      return () => {
+        cancelled = true;
+      };
     }
+
     Promise.resolve(
       supabase
         .from("islamic_stories")
-        .select("*")
+        .select(
+          "id, slug, title, category, era, icon, summary, full_content, key_lessons, related_figures, sources, tags, is_approved",
+        )
         .eq("is_approved", true)
         .order("category")
         .order("era"),
     )
-      .then(({ data, error: err }) => {
+      .then(async ({ data, error: err }) => {
+        if (cancelled) return;
         if (err) {
           setError("تعذّر تحميل القصص.");
-          setStories(ISLAMIC_STORIES_SEED as unknown as IslamicStory[]);
+          await applySeed();
         } else {
           const rows = (data || []) as IslamicStory[];
-          setStories(rows.length > 0 ? rows : ISLAMIC_STORIES_SEED as unknown as IslamicStory[]);
+          if (rows.length > 0) setStories(rows);
+          else await applySeed();
         }
       })
-      .catch(() => {
+      .catch(async () => {
+        if (cancelled) return;
         setError("تعذّر تحميل القصص.");
-        setStories(ISLAMIC_STORIES_SEED as unknown as IslamicStory[]);
+        await applySeed();
       })
-      .finally(() => setLoading(false));
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const filtered = stories.filter((s) => {

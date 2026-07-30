@@ -2,7 +2,6 @@ import { useEffect, useMemo, useState } from "react";
 import { Link, useLocation } from "wouter";
 import { AdminInlineEdit } from "@/components/AdminInlineEdit";
 import { ReadingProgressBar } from "@/components/ReadingProgressBar";
-import { getLessonById, getSheikhs } from "@/lib/supabase";
 import { SkeletonPage, Empty } from "@/components/ui-common";
 import ContentActions from "@/components/ContentActions";
 import { ContentReportButton } from "@/components/ContentReportButton";
@@ -19,21 +18,14 @@ import {
   fromKuwaitLesson,
 } from "@/lib/unified-lesson-card";
 import { cleanDisplayText } from "@/lib/display-text";
-import {
-  fetchRelatedLessons,
-  fetchSameSheikhLessons,
-  fetchSeriesLessons,
-  getUnifiedLessonById,
-} from "@/lib/lessons-service";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
-import { mapLessonRow } from "@/lib/kuwait-lessons";
 import { formatShortLessonTime } from "@/lib/lesson-time";
 import { useLessonSeo } from "@/lib/seo";
 import { usePageView } from "@/hooks/usePageView";
-import { fetchLessonEngagementStats, type LessonEngagementStats } from "@/lib/lesson-stats";
+import type { LessonEngagementStats } from "@/lib/lesson-stats";
 import { normalizeActivityLabel } from "@/lib/activity-label";
 import { resolveLessonPosterUrl } from "@/lib/lesson-image";
-import { sheikhNameKey, stripSheikhHonorifics } from "@/lib/sheikh-name";
+import { stripSheikhHonorifics } from "@/lib/sheikh-name";
 import { SectionErrorBoundary } from "@/components/ErrorBoundary";
 import { KnowledgeRelatedItems } from "@/components/knowledge/KnowledgeRelatedItems";
 import { ScholarFollowButton } from "@/components/ScholarFollowButton";
@@ -41,6 +33,7 @@ import { RecommendationWidget } from "@/components/recommendations/Recommendatio
 import { ContentMindMap } from "@/components/ContentMindMap";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { canonicalizeLessonPublicId } from "@/lib/lesson-id-aliases";
+import { getLessonsModule, type LessonDbRow } from "@/features/lessons";
 
 function buildMapsEmbed(url?: string, mosque?: string, region?: string) {
   if (url?.includes("google.com/maps") || url?.includes("goo.gl/maps") || url?.includes("maps.app")) {
@@ -119,7 +112,7 @@ export default function LessonDetailPage({
   initialLesson?: KuwaitLessonRecord | null;
 }) {
   const [, setLocation] = useLocation();
-  const [lesson, setLesson] = useState<any>(null);
+  const [lesson, setLesson] = useState<LessonDbRow | null>(null);
 
   // أسماء بديلة تاريخية (kuwait-lessons-HASH) → المعرّف الكانوني kw-*
   useEffect(() => {
@@ -149,81 +142,36 @@ export default function LessonDetailPage({
   const [loading, setLoading] = useState(!initialLesson);
 
   useEffect(() => {
-    if (initialLesson) {
-      Promise.all([
-        fetchRelatedLessons(initialLesson),
-        fetchSameSheikhLessons(initialLesson),
-        fetchSeriesLessons(initialLesson),
-        fetchLessonEngagementStats(initialLesson.id),
-      ]).then(([related, sheikhLessons, series, engagement]) => {
-        setSimilar(related);
-        setSameSheikh(sheikhLessons);
-        setSeriesLessons(series);
-        setStats(engagement);
-      }).catch(() => {
+    let cancelled = false;
+    setLoading(!initialLesson);
+
+    getLessonsModule()
+      .loadLessonDetail(params.id, initialLesson)
+      .then((result) => {
+        if (cancelled) return;
+        setKuwaitLesson(result.kuwaitLesson);
+        setLesson(result.dbLesson);
+        setSimilar(result.similar);
+        setSameSheikh(result.sameSheikh);
+        setSeriesLessons(result.seriesLessons);
+        setStats(result.stats);
+        setSheikhBio(result.sheikhBio);
+      })
+      .catch(() => {
+        if (cancelled) return;
         setSimilar([]);
         setSameSheikh([]);
         setSeriesLessons([]);
+        setSheikhBio("");
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
       });
-      return;
-    }
 
-    if (!params.id) {
-      setLoading(false);
-      return;
-    }
-
-    setLoading(true);
-    getUnifiedLessonById(params.id)
-      .then(({ lesson: staticLesson }) => {
-        if (staticLesson) {
-          setKuwaitLesson(staticLesson);
-          setLesson(null);
-          return Promise.all([
-            fetchRelatedLessons(staticLesson),
-            fetchSameSheikhLessons(staticLesson),
-            fetchSeriesLessons(staticLesson),
-            fetchLessonEngagementStats(staticLesson.id),
-          ]).then(([related, sheikhLessons, series, engagement]) => {
-            setSimilar(related);
-            setSameSheikh(sheikhLessons);
-            setSeriesLessons(series);
-            setStats(engagement);
-          });
-        }
-
-        return getLessonById(params.id).then(({ lesson: dbLesson }) => {
-          setLesson(dbLesson);
-          setKuwaitLesson(null);
-          if (!dbLesson) return undefined;
-          const mapped = mapLessonRow(dbLesson);
-          return Promise.all([
-            fetchRelatedLessons(mapped),
-            fetchSameSheikhLessons(mapped),
-            fetchSeriesLessons(mapped),
-            fetchLessonEngagementStats(mapped.id),
-          ]).then(([related, sheikhLessons, series, engagement]) => {
-            setSimilar(related);
-            setSameSheikh(sheikhLessons);
-            setSeriesLessons(series);
-            setStats(engagement);
-          });
-        });
-      })
-      .finally(() => setLoading(false));
+    return () => {
+      cancelled = true;
+    };
   }, [params.id, initialLesson]);
-
-  useEffect(() => {
-    const name = kuwaitLesson?.sheikhName || lesson?.speaker_name || lesson?.sheikhs?.name;
-    if (!name) return;
-    getSheikhs()
-      .then(({ data }) => {
-        const key = sheikhNameKey(name);
-        const match = (data || []).find((s: { name?: string; bio?: string }) => sheikhNameKey(s.name || "") === key);
-        if (match?.bio) setSheikhBio(match.bio);
-      })
-      .catch(() => undefined);
-  }, [kuwaitLesson, lesson]);
 
   const unified = useMemo(() => {
     if (kuwaitLesson) return fromKuwaitLesson(kuwaitLesson);
@@ -268,7 +216,7 @@ export default function LessonDetailPage({
   if (!unified) return <Empty text="لم يُعثر على الدرس." />;
 
   const sheikhName = unified.sheikhName;
-  const sheikhImage = kuwaitLesson?.sheikhImage || resolveLessonSheikhImage(lesson);
+  const sheikhImage = kuwaitLesson?.sheikhImage || (lesson ? resolveLessonSheikhImage(lesson) : undefined);
   const hasSheikhPhoto = Boolean(sheikhImage && !sheikhImage.includes("logo"));
   const lessonPosterUrl =
     kuwaitLesson?.lessonImage ||

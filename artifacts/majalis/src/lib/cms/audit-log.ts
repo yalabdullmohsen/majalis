@@ -1,4 +1,4 @@
-import { supabase } from "@/lib/supabase";
+import { getSupabaseClient } from "@/lib/supabase-bootstrap";
 import { logSupabaseError } from "@/lib/supabase-config";
 import type { CmsContentKind } from "./content-types";
 
@@ -24,8 +24,13 @@ export type AuditLogEntry = {
   metadata?: Record<string, unknown>;
 };
 
+function client() {
+  return getSupabaseClient();
+}
+
 export async function writeAuditLog(entry: AuditLogEntry): Promise<void> {
   try {
+    const supabase = client();
     const { data: { user } } = await supabase.auth.getUser();
     const { error } = await supabase.from("admin_audit_logs").insert({
       user_id: user?.id || entry.user_id || null,
@@ -42,6 +47,7 @@ export async function writeAuditLog(entry: AuditLogEntry): Promise<void> {
 }
 
 export async function getRecentAuditLogs(limit = 20) {
+  const supabase = client();
   const { data, error } = await supabase
     .from("admin_audit_logs")
     .select("id, action, table_name, record_id, content_kind, metadata, created_at, profiles(full_name)")
@@ -56,6 +62,7 @@ export async function getRecentAuditLogs(limit = 20) {
 }
 
 export async function getAuditLogsForRecord(tableName: string, recordId: string, limit = 50) {
+  const supabase = client();
   const { data, error } = await supabase
     .from("admin_audit_logs")
     .select("*")

@@ -65,6 +65,21 @@ export function prewarmTextApis(): void {
   for (const o of TEXT_API_ORIGINS) preconnectOrigin(o);
 }
 
+/**
+ * Warm the configured Supabase project origin from build-time env.
+ * Prefer runtime env over static HTML hints so staging/preview projects
+ * do not pay for a wrong host connection.
+ */
+export function prewarmSupabaseOrigin(): void {
+  const raw = import.meta.env.VITE_SUPABASE_URL;
+  if (typeof raw !== "string" || raw.length === 0) return;
+  try {
+    preconnectOrigin(new URL(raw).origin);
+  } catch {
+    /* ignore invalid env */
+  }
+}
+
 /** Best-effort HEAD/GET warmup of a URL without consuming the body heavily. */
 export function prewarmUrl(url: string, { mode = "no-cors" }: { mode?: RequestMode } = {}): void {
   if (typeof fetch !== "function" || !url) return;

@@ -99,7 +99,7 @@ export function ResearchAnswer({ result, onSave }: Props) {
           >
             {t.label}
             {t.key !== "answer" && t.key !== "opinions" && t.types && (
-              <span className="mr-1 text-xs opacity-70">
+              <span className="me-1 text-xs opacity-70">
                 ({getSourcesForTab(t.key).length})
               </span>
             )}
@@ -124,7 +124,7 @@ export function ResearchAnswer({ result, onSave }: Props) {
                 onClick={() => { navigator.clipboard.writeText(result.answer).catch(() => {}); }}
                 className="ra-action-btn"
               >
-                <ClipboardCopy size={14} className="inline ml-1" />نسخ الجواب
+                <ClipboardCopy size={14} className="inline ms-1" />نسخ الجواب
               </button>
               {onSave && (
                 <button
@@ -132,7 +132,7 @@ export function ResearchAnswer({ result, onSave }: Props) {
                   onClick={onSave}
                   className="citation-btn citation-btn--primary"
                 >
-                  <Save size={14} className="inline ml-1" />حفظ في المكتبة
+                  <Save size={14} className="inline ms-1" />حفظ في المكتبة
                 </button>
               )}
             </div>
@@ -164,7 +164,7 @@ export function ResearchAnswer({ result, onSave }: Props) {
         {activeTab === "opinions" && (
           <div role="tabpanel" id="ra-panel-opinions" aria-labelledby="ra-tab-opinions" className="space-y-3">
             <div className="ra-opinions-note">
-              <Scale size={13} className="inline ml-1" />تعدّدت آراء العلماء في هذه المسألة. يعرض النظام الأقوال بمصادرها ولا يُرجِّح بنفسه.
+              <Scale size={13} className="inline ms-1" />تعدّدت آراء العلماء في هذه المسألة. يعرض النظام الأقوال بمصادرها ولا يُرجِّح بنفسه.
             </div>
             <div className="space-y-3">
               {result.opinions?.map((op, i) => (
@@ -175,7 +175,7 @@ export function ResearchAnswer({ result, onSave }: Props) {
                       <p className="ra-opinion-title">{op.title}</p>
                       <p className="ra-opinion-excerpt">{op.excerpt}</p>
                       <p className="ra-opinion-source">
-                        <Library size={11} className="inline ml-1" />{op.source}
+                        <Library size={11} className="inline ms-1" />{op.source}
                         {op.source_url && (
                           <a href={op.source_url} target="_blank" rel="noopener noreferrer"
                             className="ra-opinion-link">

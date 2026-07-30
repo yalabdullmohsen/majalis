@@ -30,6 +30,9 @@ export { SURAH_START_PAGES } from "@/lib/quran-api";
 /** Flutter `QuranReaderPage` immersive paper / type defaults. */
 export {
   IMMERSIVE_PAPER_BG,
+  AYAH_MUSHAF_PAPER_BG,
+  AYAH_MUSHAF_INK,
+  AYAH_MUSHAF_META,
   IMMERSIVE_INK,
   IMMERSIVE_FONT_SIZE_PX,
   IMMERSIVE_LINE_HEIGHT_RATIO,

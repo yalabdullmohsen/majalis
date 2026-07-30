@@ -5,7 +5,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { RequestManager } from "@/lib/request-manager";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
-import { DEMO_FAWAID, FAWAID_CATEGORIES } from "@/lib/demo-content";
+import { DEMO_FAWAID, FAWAID_CATEGORIES, ensureDemoContentLoaded } from "@/lib/demo-content";
 import { canSubmitForm } from "@/lib/form-rate-limit";
 import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
@@ -105,8 +105,9 @@ export default function FawaidPage({
       .then(({ data }) => {
         setFawaid(data);
       })
-      .catch(() => {
-        setFawaid(DEMO_FAWAID);
+      .catch(async () => {
+        await ensureDemoContentLoaded();
+        setFawaid([...DEMO_FAWAID]);
       })
       .finally(() => setLoading(false));
   }, [initialFawaid]);

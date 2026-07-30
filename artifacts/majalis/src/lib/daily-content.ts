@@ -1,7 +1,5 @@
-import { SEED_FAWAID } from "./fawaid-seed";
-import { filterQualityFawaid } from "./content-quality";
-import { ADHKAR_ITEMS } from "./adhkar-seed";
-import { ARBAEEN_NAWAWI } from "./arbaeen-nawawi-seed";
+import { DAILY_TICKER_NAWAWI } from "./daily-ticker-nawawi";
+import { DAILY_TICKER_DHIKR } from "./daily-ticker-dhikr";
 
 export type DailyHadithEntry = {
   id: string;
@@ -51,9 +49,7 @@ export function pickDailyItem<T>(items: T[], date = new Date()): T {
 
 /** أرقام الأربعين النووية التي لها مدخل مستقل في البنك بنصها الكامل:
  *  1 (الأعمال بالنيات)، 13 (حب الخير للأخ)، 15 (فليقل خيراً)، 18 (اتق الله حيثما كنت)،
- *  36 (من سلك طريقاً يلتمس فيه علماً). */
-const NAWAWI_IDS_WITH_STANDALONE_ENTRY = new Set([1, 13, 15, 18, 36]);
-
+ *  36 (من سلك طريقاً يلتمس فيه علماً). — مُستبعدة مسبقًا في daily-ticker-nawawi.ts */
 export const DAILY_HADITH_POOL: DailyHadithEntry[] = [
   {
     id: "dh-1",
@@ -111,16 +107,13 @@ export const DAILY_HADITH_POOL: DailyHadithEntry[] = [
     grade: "صحيح",
     meaning: "السعي في طلب العلم سبب لتيسير طريق الجنة.",
   },
-  // الأربعون النووية بنصوصها الكاملة. تُستبعَد الأحاديث التي لها مدخل مستقل
-  // أعلاه (بنفس النص الكامل مع راويه ومعناه) حتى لا يتكرر الحديث في الشريط.
-  ...ARBAEEN_NAWAWI.filter((h) => !NAWAWI_IDS_WITH_STANDALONE_ENTRY.has(h.id)).map((h) => ({
-    id: `nawawi-${h.id}`,
+  // الأربعون النووية بنصوصها الكاملة (شريحة الـticker فقط — بدون استيراد البذرة الكاملة).
+  ...DAILY_TICKER_NAWAWI.map((h) => ({
+    id: h.id,
     text: h.text,
-    // بيانات الأربعين لا تحوي حقل راوٍ منفصل، وعنوانُ الحديث ليس راويَه؛
-    // فتُنسب إلى مجموعها بوسم صريح بدل إيهام القارئ بأن العنوان راوٍ.
-    narrator: `الأربعون النووية — ${h.title}`,
+    narrator: h.narrator,
     source: h.source,
-    meaning: h.benefits,
+    meaning: h.meaning,
   })),
 ];
 
@@ -367,20 +360,10 @@ export const DAILY_AYAH_POOL: DailyAyahEntry[] = [
   },
 ];
 
-const curatedFawaid = filterQualityFawaid(
-  SEED_FAWAID.filter(
-    (f) => f.source === "القرآن الكريم" || f.author_name === "المجلس العلمي",
-  ),
-).slice(0, 14);
+const curatedFawaid: DailyFaidaEntry[] = [];
 
 export const DAILY_FAIDA_POOL: DailyFaidaEntry[] = [
-  ...curatedFawaid.map((f) => ({
-    id: f.id,
-    text: f.text,
-    category: f.category,
-    source: f.source || undefined,
-    author_name: f.author_name || undefined,
-  })),
+  ...curatedFawaid,
   {
     id: "df-1",
     text: "قال ﷺ: «من سلك طريقًا يلتمس فيه علمًا سهل الله له طريقًا إلى الجنة».",
@@ -439,8 +422,8 @@ export function getDailyFaida(date = new Date()) {
 }
 
 export function getDailyDhikr(date = new Date()): DailyDhikrEntry {
-  const pool = ADHKAR_ITEMS.filter((item) => item.categoryId === "adh-morning" || item.categoryId === "adh-evening");
-  const item = pickDailyItem(pool.length > 0 ? pool : ADHKAR_ITEMS, date);
+  const pool = DAILY_TICKER_DHIKR;
+  const item = pickDailyItem(pool, date);
   return {
     id: item.id,
     text: item.text,

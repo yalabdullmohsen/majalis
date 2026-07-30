@@ -10,6 +10,8 @@ interface ImportMetaEnv {
   readonly VITE_VERCEL_GIT_COMMIT_SHA?: string;
   readonly VITE_OWNER_EMAILS?: string;
   readonly VITE_RESEARCH_DEMO?: string;
+  /** Opt-in remote daily-reading sync (requires reading_sync_events). */
+  readonly VITE_READING_SYNC?: string;
   readonly BASE_URL?: string;
   readonly DEV?: boolean;
   readonly MODE?: string;

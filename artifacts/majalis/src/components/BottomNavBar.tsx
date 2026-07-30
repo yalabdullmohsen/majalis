@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useLocation } from "wouter";
 import { BookOpen, Clock, Home, LayoutGrid } from "lucide-react";
 import { isNavHrefActive } from "@/lib/nav-active";
+import { isImmersiveChromePath } from "@/lib/immersive-chrome";
 import { MoreBottomSheet } from "./MoreBottomSheet";
 
 type NavTab = {
@@ -25,10 +26,8 @@ export function BottomNavBar() {
   const onPrimaryTab = NAV_TABS.some(({ href }) => isNavHrefActive(location, href));
   const moreActive = moreOpen || !onPrimaryTab;
 
-  // قارئ المصحف /mushaf غامر مخصَّص بتنقّله الخاص (pager/سحب صفحات) —
-  // شريط تنقّل سفلي عام فوقه يجعله يبدو صفحة ويب لا تطبيق قراءة، ويحجز
-  // مساحة (--bottom-nav-h) كانت ستبقى محسوبة في تخطيط المصحف بلا داعٍ.
-  if (location.startsWith("/mushaf")) return null;
+  // مسارات غامرة (مصحف / صلاة / مركز قرآن) لها تنقّل مخصّص — لا شريط سفلي عام.
+  if (isImmersiveChromePath(location)) return null;
 
   return (
     <>

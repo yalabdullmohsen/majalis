@@ -115,7 +115,7 @@ class _MushafPageCanvas extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final border = MajlisColors.brown.withOpacity(isDark ? 0.45 : 0.55);
+    final border = MajlisColors.brown.withValues(alpha: isDark ? 0.45 : 0.55);
     final surahName = verses.isNotEmpty ? verses.first.surahNameAr : 'القرآن';
 
     return DecoratedBox(
@@ -124,7 +124,7 @@ class _MushafPageCanvas extends StatelessWidget {
         border: Border.all(color: border, width: 1.2),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(isDark ? 0.35 : 0.08),
+            color: Colors.black.withValues(alpha: isDark ? 0.35 : 0.08),
             blurRadius: 10,
             offset: const Offset(0, 2),
           ),
@@ -142,7 +142,7 @@ class _MushafPageCanvas extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 11,
                     fontWeight: FontWeight.w700,
-                    color: textColor.withOpacity(0.85),
+                    color: textColor.withValues(alpha: 0.85),
                   ),
                 ),
                 const Spacer(),
@@ -151,13 +151,13 @@ class _MushafPageCanvas extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 10,
                     fontWeight: FontWeight.w600,
-                    color: textColor.withOpacity(0.55),
+                    color: textColor.withValues(alpha: 0.55),
                   ),
                 ),
               ],
             ),
           ),
-          Divider(height: 1, thickness: 0.6, color: border.withOpacity(0.45)),
+          Divider(height: 1, thickness: 0.6, color: border.withValues(alpha: 0.45)),
           Expanded(
             child: Padding(
               padding: const EdgeInsets.fromLTRB(6, 6, 6, 4),

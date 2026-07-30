@@ -25,6 +25,7 @@ import {
   type FiqhItemType,
 } from "@/lib/fiqh-council-types";
 import { applyPageSeo } from "@/lib/seo";
+import { fiqhYearFilterOptions } from "@/lib/fiqh-year-options";
 import "@/styles/pages/fiqh-council.css";
 
 const SUBNAV_LINKS = [
@@ -93,10 +94,7 @@ export function FiqhCouncilFilters({
   showType = true,
 }: FilterProps) {
   const [filtersOpen, setFiltersOpen] = useState(false);
-  const years = useMemo(() => {
-    const current = new Date().getFullYear();
-    return ["الكل", ...Array.from({ length: 8 }, (_, i) => String(current - i))];
-  }, []);
+  const years = useMemo(() => fiqhYearFilterOptions(), []);
 
   return (
     <div className="fiqh-council-filters">

@@ -203,7 +203,7 @@ function ResumeList({
 
   return (
     <section className="profile-resume">
-      <h2 className="profile-section-title"><MapPin size={16} className="inline ml-1" /> تابع من حيث توقفت</h2>
+      <h2 className="profile-section-title"><MapPin size={16} className="inline ms-1" /> تابع من حيث توقفت</h2>
       <div className="profile-resume__list">
         {items.map((item) => (
           <div key={`${item.content_type}-${item.content_id}`} className="profile-resume__item">

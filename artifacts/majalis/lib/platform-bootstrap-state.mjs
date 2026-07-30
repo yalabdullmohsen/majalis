@@ -1,26 +1,10 @@
 /**
  * Persist platform self-bootstrap run history.
+ * Table must exist via SQL migration — never emit schema DDL at runtime.
  */
 
 import { getPgClient } from "./database.mjs";
 import { getSupabaseAdmin } from "./supabase-admin.mjs";
-
-export const ENSURE_BOOTSTRAP_STATE_SQL = `
-CREATE TABLE IF NOT EXISTS platform_bootstrap_runs (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  started_at TIMESTAMPTZ NOT NULL DEFAULT now(),
-  completed_at TIMESTAMPTZ,
-  status TEXT NOT NULL DEFAULT 'running',
-  current_step TEXT,
-  steps JSONB NOT NULL DEFAULT '[]'::jsonb,
-  error TEXT,
-  owner_actions JSONB,
-  production_ready BOOLEAN NOT NULL DEFAULT false
-);
-
-CREATE INDEX IF NOT EXISTS idx_platform_bootstrap_runs_started
-  ON platform_bootstrap_runs (started_at DESC);
-`;
 
 async function withPg(fn) {
   let clientInfo;
@@ -31,8 +15,21 @@ async function withPg(fn) {
   }
   const { client } = clientInfo;
   try {
-    await client.query(ENSURE_BOOTSTRAP_STATE_SQL);
     return await fn(client);
+  } catch (err) {
+    const msg = String(err?.message || err);
+    if (/platform_bootstrap_runs|does not exist|42P01/i.test(msg)) {
+      console.error(
+        JSON.stringify({
+          level: "warn",
+          msg: "platform_bootstrap_runs_missing",
+          hint: "Apply supabase/platform_bootstrap_runs_v1.sql (REQUIRES_EXPLICIT_APPROVAL)",
+          ts: new Date().toISOString(),
+        }),
+      );
+      return null;
+    }
+    throw err;
   } finally {
     await client.end().catch(() => {});
   }

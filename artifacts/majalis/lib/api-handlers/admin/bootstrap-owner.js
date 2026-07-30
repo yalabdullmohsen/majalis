@@ -1,4 +1,5 @@
 import { sendJson } from "../../api/_http.mjs";
+import { sendSafeError } from "../../api/safe-error.mjs";
 import { requireAdminAccess } from "../../../lib/admin-auth.mjs";
 import { getSupabaseAdmin } from "../../../lib/supabase-admin.mjs";
 import { promoteOwnerByEmail } from "../../../lib/owner-promotion.mjs";
@@ -29,6 +30,6 @@ export default async function handler(req, res) {
     const result = await promoteOwnerByEmail(admin, email, { assignedBy: auth.userId || "admin-api" });
     sendJson(res, result.ok ? 200 : 422, result);
   } catch (error) {
-    sendJson(res, 500, { ok: false, error: error.message || String(error) });
+    sendSafeError(res, sendJson, error, { code: "admin_handler_error" });
   }
 }

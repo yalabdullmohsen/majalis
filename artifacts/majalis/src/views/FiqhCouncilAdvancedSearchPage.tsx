@@ -10,6 +10,7 @@ import { advancedSearchFiqhCouncil } from "@/lib/fiqh-council-service";
 import { FIQH_CATEGORY_TREE } from "@/lib/fiqh-council-categories";
 import { applyPageSeo } from "@/lib/seo";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { fiqhYearFilterOptions } from "@/lib/fiqh-year-options";
 import {
   FIQH_COUNCIL_CATEGORIES,
   FIQH_ITEM_TYPES,
@@ -75,7 +76,7 @@ export default function FiqhCouncilAdvancedSearchPage() {
       .finally(() => setLoading(false));
   }, [debouncedQuery, type, category, subcategory, debouncedSource, year, decisionNumber]);
 
-  const years = ["الكل", ...Array.from({ length: 8 }, (_, i) => String(new Date().getFullYear() - i))];
+  const years = fiqhYearFilterOptions();
 
   return (
     <div className="page-shell narrow content-hub-page fiqh-council-page fiqh-search-page">

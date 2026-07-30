@@ -6,117 +6,131 @@ on:
   pull_request:
     branches: [main]
 
-# Cancel redundant runs for the same branch.
+# Concurrency منفصل لكل PR (ولكل push إلى main عبر run_id/sha).
 concurrency:
-  group: ci-${{ github.workflow }}-${{ github.ref }}
+  group: ci-${{ github.workflow }}-pr-${{ github.event.pull_request.number || format('push-{0}', github.sha) }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
+# Pin trusted action SHAs (tag comments for humans).
+
 jobs:
+  # الاسم "Verify build" يبقى لفحص حماية الفرع الحالي.
   verify:
     name: Verify build
     runs-on: ubuntu-latest
-    timeout-minutes: 20
-
+    timeout-minutes: 45
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4.1.0
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: 24
           cache: pnpm
 
-      - name: Install dependencies
+      - name: Install
         run: pnpm install --frozen-lockfile
 
-      - name: Content guard (audit gates)
-        run: pnpm --filter @workspace/majalis run test:content-guard
+      - name: Governance / auto-merge safety gate
+        run: pnpm run verify:no-unsafe-auto-merge
 
-      - name: TypeScript check
+      - name: tsc -b (clean + build)
         run: |
-          pnpm run typecheck:libs
-          pnpm --filter @workspace/majalis run typecheck
+          pnpm exec tsc -b --clean
+          pnpm exec tsc -b
 
-      - name: Lint
-        run: pnpm -r --if-present run lint
+      - name: typecheck (workspace)
+        run: pnpm run typecheck
 
-      - name: Build
+      - name: Lint (zero warnings)
+        run: pnpm --filter @workspace/majalis exec eslint src lib --max-warnings=0
+
+      - name: Generated artifacts --check
+        run: |
+          pnpm --filter @workspace/majalis exec tsx scripts/generate-content-counts.ts --check
+          pnpm --filter @workspace/majalis exec node scripts/generate-quran-pages-manifest.mjs --check
+
+      - name: Full package tests
+        run: pnpm --filter @workspace/majalis run test
+
+      - name: Deterministic build
         env:
           PORT: "24216"
           BASE_PATH: "/"
         run: pnpm --filter @workspace/majalis run build
 
-      - name: Content import tests
-        run: |
-          cd artifacts/majalis
-          pnpm run test:content-import
-          pnpm run test:content-import-e2e
+      - name: git diff --exit-code (build must not dirty tree)
+        run: git diff --exit-code
 
-      - name: Autonomous platform tests
-        run: |
-          cd artifacts/majalis
-          pnpm run verify:autonomous-platform
-          pnpm run verify:majlis-knowledge-engine
-          pnpm run verify:import-jobs-integrity
-
-      - name: Verify deploy output
+      - name: Deploy output verify
         run: pnpm --filter @workspace/majalis run verify:deploy
 
-  production-bootstrap:
-    name: Self Bootstrap after deploy
-    needs: verify
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push' && github.repository == 'yalabdullmohsen/majalis'
+      - name: Verify no runtime DDL
+        run: pnpm verify:no-runtime-ddl
+
+      - name: Platform hardening SQL static gate
+        run: pnpm run verify:platform-hardening-sql
+
+      - name: Schema drift expectations
+        run: node scripts/verify-schema-drift-expectations.mjs
+
+      - name: DB migration verify (static + live when URL set)
+        env:
+          MIGRATION_TEST_DATABASE_URL: ${{ secrets.MIGRATION_TEST_DATABASE_URL }}
+        run: pnpm run db:migration:verify
+
+  postgres-integration:
+    name: postgres-integration
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: majalis_test
+          POSTGRES_PASSWORD: majalis_test
+          POSTGRES_DB: majalis_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U majalis_test -d majalis_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4.1.0
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
         with:
           node-version: 24
           cache: pnpm
 
-      - name: Install dependencies
+      - name: Install
         run: pnpm install --frozen-lockfile
 
-      - name: Wait for Vercel deploy
-        run: sleep 90
-
-      - name: Platform self-bootstrap
+      - name: Queue integration (REQUIRED)
         env:
-          VITE_SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          VITE_SUPABASE_ANON_KEY: ${{ secrets.SUPABASE_ANON_KEY }}
-          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
-          DATABASE_URL: ${{ secrets.DATABASE_URL }}
-          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
-          POSTGRES_URL: ${{ secrets.POSTGRES_URL }}
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-        run: |
-          cd artifacts/majalis
-          if [ -z "$SUPABASE_SERVICE_ROLE_KEY" ] || { [ -z "$DATABASE_URL" ] && [ -z "$SUPABASE_ACCESS_TOKEN" ]; }; then
-            echo "::warning::Self Bootstrap skipped — configure SUPABASE_SERVICE_ROLE_KEY and DATABASE_URL in GitHub secrets"
-            pnpm run bootstrap:platform:status || true
-            exit 0
-          fi
-          pnpm run bootstrap:platform
+          REQUIRE_POSTGRES_INTEGRATION: "1"
+          MIGRATION_TEST_DATABASE_URL: postgresql://majalis_test:majalis_test@localhost:5432/majalis_test
+          DATABASE_URL: postgresql://majalis_test:majalis_test@localhost:5432/majalis_test
+          NODE_ENV: test
+        run: pnpm run test:postgres-integration
 
-      - name: Trigger production cron bootstrap
+      - name: Migration verify + upgrade idempotency
         env:
-          CRON_SECRET: ${{ secrets.CRON_SECRET }}
+          MIGRATION_TEST_DATABASE_URL: postgresql://majalis_test:majalis_test@localhost:5432/majalis_test
         run: |
-          if [ -z "$CRON_SECRET" ]; then
-            echo "Skip cron trigger: CRON_SECRET not configured"
-            exit 0
-          fi
-          curl -sf -H "Authorization: Bearer $CRON_SECRET" \
-            "https://www.majlisilm.com/api/cron/platform-bootstrap?action=run" || true
+          pnpm run db:migration:verify
+          pnpm run db:migration:verify:upgrade

@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { Link } from "wouter";
 import { Compass, BookOpen, BookMarked, MessageCircle, Clock, Scroll, BookText, Scale } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
-import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import "@/styles/pages/not-found.css";
 
 const SUGGESTIONS = [
@@ -31,7 +30,7 @@ export default function NotFound() {
     <div className="nf2-page" dir="rtl" lang="ar">
       <section className="nf2-card">
         <div className="nf2-brand">
-          <img src="/favicon.png" width={40} height={40} alt="" className="nf2-brand__logo" />
+          <img src="/favicon.png" width={40} height={40} alt="" className="nf2-brand__logo" loading="eager" decoding="async" />
           <span className="nf2-brand__name">المجلس العلمي</span>
         </div>
 
@@ -63,10 +62,6 @@ export default function NotFound() {
               </Link>
             ))}
           </div>
-        </div>
-
-        <div className="nf2-quiz-wrap">
-          <SectionQuiz categoryId={["quran","hadith","fiqh","aqeeda"]} title="اختبر معلوماتك أثناء تصفّحك" count={3} />
         </div>
       </section>
     </div>

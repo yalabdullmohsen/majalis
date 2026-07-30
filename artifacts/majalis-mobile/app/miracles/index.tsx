@@ -26,7 +26,7 @@ export default function MiraclesScreen() {
   const [category, setCategory] = useState<string | undefined>(undefined);
   const [sourceType, setSourceType] = useState<string | undefined>(undefined);
 
-  const { data, isLoading, refetch } = useQuery({
+  const { data, isLoading, isFetching, refetch } = useQuery({
     queryKey: ["miracles", category, sourceType],
     queryFn: () => getMiracles({ category, sourceType }),
   });
@@ -94,7 +94,7 @@ export default function MiraclesScreen() {
             paddingBottom: Platform.OS === "web" ? 34 : insets.bottom + 80,
           }}
           onRefresh={refetch}
-          refreshing={isLoading}
+          refreshing={isFetching && !isLoading}
           ListEmptyComponent={() => (
             <View style={styles.empty}>
               <Ionicons name="planet-outline" size={40} color={colors.mutedForeground} />

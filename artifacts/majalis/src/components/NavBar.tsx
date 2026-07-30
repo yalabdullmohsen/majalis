@@ -1,19 +1,21 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, lazy, Suspense } from "react";
 import { Link, useLocation } from "wouter";
 import { Menu, Moon, Search, Sun, User, X } from "lucide-react";
 import { useAuth } from "./AuthProvider";
 import { useLanguage } from "./LanguageProvider";
-import { HeaderTicker } from "./HeaderTicker";
 import { SideNavDrawer } from "./SideNavDrawer";
 import { useThemePreference } from "./ThemePreferenceProvider";
 
 import { useMobileNavState } from "@/hooks/useMobileNavState";
 import { isNavHrefActive } from "@/lib/nav-active";
-import { isImmersiveChromePath, isQuranImmersivePath } from "@/lib/immersive-chrome";
+import { isImmersiveChromePath } from "@/lib/immersive-chrome";
 import { PRIMARY_NAV_ITEMS } from "@/lib/navigation";
 import { fetchPrayerTimes, computePrayerCountdown, type PrayerCountdown } from "@/lib/prayer-times";
 import "@/styles/components/dark-emerald-menus.css";
 
+const HeaderTicker = lazy(() =>
+  import("./HeaderTicker").then((m) => ({ default: m.HeaderTicker })),
+);
 function PrayerChip() {
   const [cd, setCd] = useState<PrayerCountdown | null>(null);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -124,8 +126,8 @@ export default function NavBar() {
     </div>
   );
 
-  // قارئ المصحف غامر بتنقّله الخاص — شريط الموقع الكامل فوقه يجعله صفحة ويب.
-  if (isQuranImmersivePath(location)) return null;
+  // مسارات غامرة (مصحف / صلاة / مركز قرآن) لها شريطها الخاص.
+  if (isImmersiveChromePath(location)) return null;
 
   return (
     <>
@@ -174,7 +176,7 @@ export default function NavBar() {
               يشغل المساحة الوسطى الفارغة أصلاً؛ على سطح المكتب يحلّ محل
               مربع البحث المضمّن تحديدًا. */}
           {/* شريط الأحاديث/النصوص المتحرّك — يُمنع في مسارات الصلاة والمصحف */}
-          {isMobile && !isImmersiveChromePath(location) && <HeaderTicker />}
+          {isMobile && !isImmersiveChromePath(location) && <Suspense fallback={null}><HeaderTicker /></Suspense>}
 
           <div className="navbar-v3__end">
             {/* عداد الصلاة التالية — سطح المكتب فقط؛ يُخفى داخل صفحة المواقيت نفسها */}
@@ -201,7 +203,7 @@ export default function NavBar() {
             >
               <Search size={17} strokeWidth={1.8} aria-hidden="true" />
             </button>
-            {!isMobile && !isImmersiveChromePath(location) && <HeaderTicker />}
+            {!isMobile && !isImmersiveChromePath(location) && <Suspense fallback={null}><HeaderTicker /></Suspense>}
             {!isMobile && desktopAuthLinks}
 
             {/* Mobile: زر دخول/حساب واضح دائمًا — لا يُترك مخفيًا داخل قائمة الهامبرغر فقط */}

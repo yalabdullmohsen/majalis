@@ -100,7 +100,7 @@ export default function PropheticMedicinePage() {
 
 
       {/* تنبيه */}
-      <div className="pmp-disclaimer"><AlertTriangle size={13} className="inline ml-1" />{DISCLAIMER}</div>
+      <div className="pmp-disclaimer"><AlertTriangle size={13} className="inline ms-1" />{DISCLAIMER}</div>
 
       {/* بحث */}
       <div className="pmp-search-wrap">
@@ -160,7 +160,7 @@ export default function PropheticMedicinePage() {
                   <>
                     <p className="pmp-body-text">{item.body}</p>
                     {item.disclaimer && (
-                      <p className="pmp-item-disclaimer"><AlertTriangle size={13} className="inline ml-1" />{item.disclaimer}</p>
+                      <p className="pmp-item-disclaimer"><AlertTriangle size={13} className="inline ms-1" />{item.disclaimer}</p>
                     )}
                   </>
                 )}

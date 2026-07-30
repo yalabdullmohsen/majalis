@@ -12,7 +12,7 @@ import { PERF_SLOW_MS } from "./lib/performance-monitor";
 import { registerProductionServiceWorker } from "./lib/service-worker";
 import { setupStatusBar, setupKeyboard, isAndroid, isNative } from "./lib/capacitor-utils";
 import { initFinalPolish } from "./lib/init-final-polish";
-import { prewarmAudioCdns, prewarmTextApis } from "./lib/resource-prewarm";
+import { prewarmAudioCdns, prewarmTextApis, prewarmSupabaseOrigin } from "./lib/resource-prewarm";
 // هوية v4: مصدر الرموز الوحيد (لون/طباعة/مسافات/حواف/ظلال/حركة). يجب أن
 // يبقى أول استيراد — كل ملفات CSS اللاحقة تستهلك رموزه، وأنظمة الرموز
 // القديمة الـ15 مُعاد توجيهها إليه داخله كـaliases.
@@ -43,11 +43,13 @@ if (typeof requestIdleCallback === "function") {
   requestIdleCallback(() => {
     prewarmAudioCdns();
     prewarmTextApis();
+    prewarmSupabaseOrigin();
   }, { timeout: 3_000 });
 } else {
   setTimeout(() => {
     prewarmAudioCdns();
     prewarmTextApis();
+    prewarmSupabaseOrigin();
   }, 1);
 }
 
@@ -77,7 +79,14 @@ async function mount() {
   // جديد بعد ساعات مثلاً بينما التبويب مفتوح) قادرًا على إعادة تحميل
   // تلقائية واحدة أيضًا، لا محظورًا للأبد لبقية عمر التبويب.
   setTimeout(() => {
-    try { sessionStorage.removeItem("mj-chunk-reload-attempted"); } catch { /* تجاهل */ }
+    void import("@/lib/lazy-with-retry").then(({ clearChunkReloadGuard }) => {
+      clearChunkReloadGuard();
+    }).catch(() => {
+      try {
+        sessionStorage.removeItem("majalis-chunk-reload");
+        sessionStorage.removeItem("mj-chunk-reload-attempted");
+      } catch { /* تجاهل */ }
+    });
   }, 8000);
 }
 
@@ -120,15 +129,17 @@ if (isAndroid) {
 if (isNative) {
   import("@capacitor/app").then(({ App: CapApp }) => {
     CapApp.addListener("appUrlOpen", ({ url }) => {
-      try {
-        const parsed = new URL(url);
-        const path = `${parsed.pathname}${parsed.search}${parsed.hash}`;
+      void import("@/lib/native-deep-link").then(({ resolveNativeDeepLinkPath, shouldNavigateNativeDeepLink }) => {
+        const path = resolveNativeDeepLinkPath(url);
         const current = `${window.location.pathname}${window.location.search}${window.location.hash}`;
-        if (path && path !== current) {
-          window.history.pushState({}, "", path);
-          window.dispatchEvent(new PopStateEvent("popstate"));
+        if (shouldNavigateNativeDeepLink(current, path) && path) {
+          // path is always same-origin relative — never pushState a www absolute URL
+          if (path.startsWith("/") && !path.startsWith("//")) {
+            window.history.pushState({}, "", path);
+            window.dispatchEvent(new PopStateEvent("popstate"));
+          }
         }
-      } catch { /* رابط غير صالح — تجاهل بأمان */ }
+      });
     });
   }).catch(() => {});
 }

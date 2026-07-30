@@ -2,6 +2,11 @@ import { Component, type ErrorInfo, type ReactNode } from "react";
 import { buildErrorReport, copyErrorId, createErrorId, logClientError } from "@/lib/error-report";
 import { CONTACT_EMAIL } from "@/lib/site-config";
 import { safeLocationReload } from "@/lib/safe-reload";
+import {
+  clearChunkReloadGuard,
+  consumeChunkReloadAllowance,
+  isChunkLoadError,
+} from "@/lib/lazy-with-retry";
 import "@/styles/components/error-boundary.css";
 
 type Props = { children: ReactNode };
@@ -9,36 +14,6 @@ type State = { error: Error | null; copied: boolean; errorId: string; componentS
 
 function userFacingBody(): string {
   return "حدث خلل أثناء تحميل هذا القسم. يمكنك إعادة المحاولة أو العودة للرئيسية.";
-}
-
-function isChunkLoadError(error: Error): boolean {
-  const msg = (error.message || "").toLowerCase();
-  return (
-    msg.includes("failed to fetch dynamically imported module") ||
-    msg.includes("loading chunk") ||
-    msg.includes("chunkloaderror") ||
-    msg.includes("/assets/") ||
-    msg.includes("importing a module script failed")
-  );
-}
-
-/**
- * حارس ضد حلقة إعادة تحميل لا نهائية: reload التلقائي أدناه يُصلح الحالة
- * الشائعة الحقيقية (chunk قديم في تبويب مفتوح منذ قبل نشر جديد — التحديث
- * يجلب index.html جديدًا بمراجع chunks صحيحة)، لكن لو كان الفشل من مشكلة
- * شبكة حقيقية مستمرة لا كاش قديم فقط، سيتكرر نفس الخطأ فور التحميل من
- * جديد إلى ما لا نهاية. مرة واحدة فقط لكل جلسة تبويب (sessionStorage) —
- * بعدها تُعرض واجهة الخطأ العادية بأزرارها بدل إعادة تحميل صامتة متكررة.
- */
-const CHUNK_RELOAD_GUARD_KEY = "mj-chunk-reload-attempted";
-function shouldAutoReloadForChunkError(): boolean {
-  try {
-    if (sessionStorage.getItem(CHUNK_RELOAD_GUARD_KEY) === "1") return false;
-    sessionStorage.setItem(CHUNK_RELOAD_GUARD_KEY, "1");
-    return true;
-  } catch {
-    return true; // sessionStorage غير متاح (وضع خاص صارم) — لا حارس، لكن أيضًا لا خطر تكرار عبر التخزين
-  }
 }
 
 export class ErrorBoundary extends Component<Props, State> {
@@ -60,12 +35,15 @@ export class ErrorBoundary extends Component<Props, State> {
       }),
     );
 
-    if (isChunkLoadError(error) && shouldAutoReloadForChunkError()) {
+    if (isChunkLoadError(error) && consumeChunkReloadAllowance()) {
       safeLocationReload();
     }
   }
 
-  reset = () => this.setState({ error: null, copied: false, errorId: "", componentStack: null });
+  reset = () => {
+    clearChunkReloadGuard();
+    this.setState({ error: null, copied: false, errorId: "", componentStack: null });
+  };
 
   goHome = () => {
     this.reset();
@@ -96,7 +74,7 @@ export class ErrorBoundary extends Component<Props, State> {
           <h1 className="error-boundary-page__title">تعذر عرض هذه الصفحة</h1>
           <p className="error-boundary-page__body">
             {chunkError
-              ? "تعذر تحميل هذه الصفحة. حدّث المتصفح أو حاول مجددًا."
+              ? "تعذر تحميل ملفات الصفحة بعد تحديث المنصة. حدّث المتصفح أو اضغط إعادة المحاولة."
               : userFacingBody()}
           </p>
           <p className="error-boundary-page__id">
@@ -145,12 +123,18 @@ type SectionBoundaryProps = {
 type SectionBoundaryState = {
   error: Error | null;
   errorId: string;
+  /** Bumps on retry so failed React.lazy factories are not reused. */
+  remountKey: number;
+  autoReloadTried: boolean;
 };
 
+/**
+ * Lazy-section boundary: one chunk reload max, then Arabic retry that remounts children.
+ */
 export class SectionErrorBoundary extends Component<SectionBoundaryProps, SectionBoundaryState> {
-  state: SectionBoundaryState = { error: null, errorId: "" };
+  state: SectionBoundaryState = { error: null, errorId: "", remountKey: 0, autoReloadTried: false };
 
-  static getDerivedStateFromError(error: Error): SectionBoundaryState {
+  static getDerivedStateFromError(error: Error): Partial<SectionBoundaryState> {
     return { error, errorId: createErrorId("SEC") };
   }
 
@@ -163,19 +147,52 @@ export class SectionErrorBoundary extends Component<SectionBoundaryProps, Sectio
         component: this.props.name,
       }),
     );
+
+    if (isChunkLoadError(error) && !this.state.autoReloadTried && consumeChunkReloadAllowance()) {
+      this.setState({ autoReloadTried: true });
+      safeLocationReload();
+    }
   }
 
-  reset = () => this.setState({ error: null, errorId: "" });
+  reset = () => {
+    this.setState((s) => ({
+      error: null,
+      errorId: "",
+      remountKey: s.remountKey + 1,
+      autoReloadTried: s.autoReloadTried,
+    }));
+  };
+
+  hardReload = () => {
+    if (consumeChunkReloadAllowance()) {
+      safeLocationReload();
+      return;
+    }
+    this.reset();
+  };
 
   render() {
-    if (!this.state.error) return this.props.children;
-    return (
-      <div className="adv-error-state adv-error-state--section" role="alert" aria-live="assertive" dir="rtl">
-        <p className="adv-error-state__msg">تعذّر عرض هذا القسم. يمكنك إعادة المحاولة.</p>
-        <button type="button" className="adv-error-state__retry" onClick={this.reset} aria-label="إعادة المحاولة">
-          إعادة المحاولة
-        </button>
-      </div>
-    );
+    if (this.state.error) {
+      const chunkError = isChunkLoadError(this.state.error);
+      return (
+        <div className="adv-error-state adv-error-state--section" role="alert" aria-live="assertive" dir="rtl">
+          <p className="adv-error-state__msg">
+            {chunkError
+              ? `تعذّر تحميل قسم «${this.props.name}» بعد تحديث المنصة. أعد المحاولة مرة واحدة.`
+              : `تعذّر عرض قسم «${this.props.name}». يمكنك إعادة المحاولة.`}
+          </p>
+          <button
+            type="button"
+            className="adv-error-state__retry"
+            onClick={chunkError ? this.hardReload : this.reset}
+            aria-label="إعادة المحاولة"
+          >
+            إعادة المحاولة
+          </button>
+        </div>
+      );
+    }
+
+    return <div key={this.state.remountKey}>{this.props.children}</div>;
   }
 }

@@ -1,9 +1,13 @@
 /**
- * Cron — Majlis Knowledge Engine (Autonomous Platform 1.0).
+ * Cron — Majlis Knowledge Engine.
+ * mode=health stays fast inline; all other modes enqueue (202) with metadata.mode.
  */
 import { sendJson } from "../../api/_http.mjs";
 import { validateCronAuth } from "../../../lib/env-config.mjs";
-import { runMajlisKnowledgeEngine, runMkeHealthCheck } from "../../../lib/majlis-knowledge-engine/index.mjs";
+import { runMkeHealthCheck } from "../../../lib/majlis-knowledge-engine/index.mjs";
+import { createEnqueueCronHandler } from "../../jobs/cron-enqueue.mjs";
+
+const enqueue = createEnqueueCronHandler("majlis-knowledge-engine");
 
 export default async function handler(req, res) {
   if (!validateCronAuth(req)) {
@@ -12,22 +16,17 @@ export default async function handler(req, res) {
   }
 
   const mode = req.query?.mode || req.body?.mode || "full";
-
-  try {
-    if (mode === "health") {
+  if (mode === "health") {
+    try {
       const health = await runMkeHealthCheck();
       sendJson(res, health.ok ? 200 : 500, health);
-      return;
+    } catch (err) {
+      sendJson(res, 500, { ok: false, error: "health_check_failed" });
     }
-
-    const result = await runMajlisKnowledgeEngine({
-      mode,
-      triggerType: "cron",
-      maxSources: Number(req.query?.maxSources) || undefined,
-    });
-
-    sendJson(res, result.ok ? 200 : 500, result);
-  } catch (err) {
-    sendJson(res, 500, { ok: false, error: String(err.message || err) });
+    return;
   }
+
+  // Ensure mode reaches enqueue metadata (query/body already read by resolveEnqueueMetadata).
+  req.query = { ...(req.query || {}), mode };
+  return enqueue(req, res);
 }

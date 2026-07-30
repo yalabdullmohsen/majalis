@@ -7,7 +7,7 @@ import { filterIslamicStoriesSeed } from "@/lib/islamic-stories-seed";
 import { getSurahList } from "@/lib/quran-api";
 import { searchNations } from "@/lib/nations-seed";
 
-export function searchLocalExtensions(query: string) {
+export async function searchLocalExtensions(query: string) {
   const q = query.trim();
   if (!q) {
     return { occasions: [], nawawi: [], quran: [], adhkar: [], surahStories: [], islamicStories: [], nations: [] };
@@ -57,7 +57,7 @@ export function searchLocalExtensions(query: string) {
       href: `/quran/surah-stories/${s.number}`,
     }));
 
-  const islamicStories = filterIslamicStoriesSeed({ search: q })
+  const islamicStories = (await filterIslamicStoriesSeed({ search: q }))
     .slice(0, 4)
     .map((s: { id: number; title: string; era: string; category: string; slug: string }) => ({
       id: String(s.id),

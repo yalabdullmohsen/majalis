@@ -1,4 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // Normalize to the bare project origin (https://xxx.supabase.co).
 // The supabase-js client appends /rest/v1, /auth/v1, etc. itself, so any
@@ -16,14 +17,21 @@ function normalizeSupabaseUrl(raw: string): string {
 const url = normalizeSupabaseUrl(process.env.EXPO_PUBLIC_SUPABASE_URL || "");
 const key = (process.env.EXPO_PUBLIC_SUPABASE_ANON_KEY || "").trim();
 
-const isConfigured = url.startsWith("https://");
+const isConfigured = url.startsWith("https://") && key.length > 20;
 
-// @ts-ignore
+const authOptions = {
+  storage: AsyncStorage,
+  persistSession: true,
+  autoRefreshToken: true,
+  detectSessionInUrl: false,
+} as const;
+
 export const supabase = isConfigured
-  ? createClient(url, key)
+  ? createClient(url, key, { auth: authOptions })
   : createClient(
       "https://placeholder.supabase.co",
-      "placeholder-anon-key-placeholder-anon-key-placeholder-anon-key-p"
+      "placeholder-anon-key-placeholder-anon-key-placeholder-anon-key-p",
+      { auth: authOptions },
     );
 
 export async function signUp(email: string, password: string, fullName: string) {
@@ -77,6 +85,19 @@ export async function getSheikhById(id: string) {
   return { sheikh, lessons: lessons || [] };
 }
 
+type LessonRow = {
+  id: string;
+  title?: string | null;
+  mosque?: string | null;
+  city?: string | null;
+  category?: string | null;
+  audience?: string | null;
+  delivery?: string | null;
+  day_of_week?: string | null;
+  lesson_time?: string | null;
+  sheikhs?: { name?: string | null; city?: string | null } | null;
+};
+
 export async function getLessons({
   category,
   city,
@@ -90,12 +111,12 @@ export async function getLessons({
   if (category && category !== "الكل") q = q.eq("category", category);
   if (city && city !== "كل المحافظات") q = q.eq("city", city);
   const { data, error } = await q;
-  let result = data || [];
+  let result = (data || []) as LessonRow[];
   if (search?.trim()) {
     const s = search.trim();
     result = result.filter(
-      (l: any) =>
-        l.title?.includes(s) || l.mosque?.includes(s) || l.city?.includes(s)
+      (l) =>
+        Boolean(l.title?.includes(s) || l.mosque?.includes(s) || l.city?.includes(s)),
     );
   }
   return { data: result, error };
@@ -120,7 +141,9 @@ export async function getMyRegistrations(userId: string) {
     .from("lesson_registrations")
     .select("lesson_id")
     .eq("user_id", userId);
-  return (data || []).map((r: any) => r.lesson_id);
+  return (data || [])
+    .map((r) => (typeof r.lesson_id === "string" ? r.lesson_id : null))
+    .filter((id): id is string => Boolean(id));
 }
 
 export async function getApprovedFawaid() {
@@ -209,7 +232,7 @@ export async function getQaQuestions({
   if (search?.trim()) {
     const s = search.trim();
     result = result.filter(
-      (x: any) => x.question?.includes(s) || x.answer?.includes(s)
+      (x: { question?: string | null; answer?: string | null }) => x.question?.includes(s) || x.answer?.includes(s)
     );
   }
   return { data: result, error };
@@ -233,7 +256,7 @@ export async function adminGetAllSheikhs() {
   const { data, error } = await supabase.from("sheikhs").select("*").order("name");
   return { data: data || [], error };
 }
-export async function adminUpsertSheikh(row: any) {
+export async function adminUpsertSheikh(row: Record<string, unknown>) {
   const { id, ...rest } = row;
   if (id) return await supabase.from("sheikhs").update(rest).eq("id", id);
   return await supabase.from("sheikhs").insert(rest);
@@ -248,7 +271,7 @@ export async function adminGetAllLessons() {
     .from("lessons").select("*, sheikhs(name)").order("created_at", { ascending: false });
   return { data: data || [], error };
 }
-export async function adminUpsertLesson(row: any) {
+export async function adminUpsertLesson(row: Record<string, unknown>) {
   const { id, sheikhs, ...rest } = row;
   if (id) return await supabase.from("lessons").update(rest).eq("id", id);
   return await supabase.from("lessons").insert(rest);
@@ -263,7 +286,7 @@ export async function adminGetAllLibrary() {
     .from("library_items").select("*").order("created_at", { ascending: false });
   return { data: data || [], error };
 }
-export async function adminUpsertLibraryItem(row: any) {
+export async function adminUpsertLibraryItem(row: Record<string, unknown>) {
   const { id, ...rest } = row;
   if (id) return await supabase.from("library_items").update(rest).eq("id", id);
   return await supabase.from("library_items").insert(rest);
@@ -278,7 +301,7 @@ export async function adminGetAllMiracles() {
     .from("scientific_miracles").select("*").order("created_at", { ascending: false });
   return { data: data || [], error };
 }
-export async function adminUpsertMiracle(row: any) {
+export async function adminUpsertMiracle(row: Record<string, unknown>) {
   const { id, ...rest } = row;
   if (id) return await supabase.from("scientific_miracles").update(rest).eq("id", id);
   return await supabase.from("scientific_miracles").insert(rest);

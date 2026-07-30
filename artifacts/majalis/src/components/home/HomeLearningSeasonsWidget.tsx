@@ -79,7 +79,7 @@ export function HomeLearningSeasonsWidget() {
           </div>
         </div>
         <p className="lsw-featured__suggestion">
-          <Lightbulb size={14} className="inline ml-1" />
+          <Lightbulb size={14} className="inline ms-1" />
           <strong>
             {featured.contentKind === "personal_suggestion" ? "اقتراح تنظيمي:" : "اقتراح:"}
           </strong>{" "}

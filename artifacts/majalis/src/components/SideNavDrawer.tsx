@@ -3,13 +3,13 @@ import { useState, useMemo, useEffect, useRef } from "react";
 import { Link, useLocation } from "wouter";
 import { seoNavLabel } from "@/lib/seo-nav-labels";
 import {
-  Activity, BarChart3, BookMarked, BookOpen, BookText, BookUser,
-  Bot, Calculator, Calendar, CalendarDays, CheckCircle2, ChevronDown, ChevronUp,
-  Clock, Compass, CreditCard, FileText, GitBranch, GraduationCap,
-  Heart, HelpCircle, Home, Landmark, Layers, Library,
-  LogIn, MapPin, Mic2, Moon, Network, Quote, RefreshCw, Repeat2,
-  Rss, Scale, ScrollText, Search, Settings, Shield, Sparkles, Star, Stethoscope,
-  Sun, Trophy, Users, UserPlus, Waypoints, X, Zap,
+  BarChart3, BookMarked, BookOpen, BookText, BookUser,
+  Calendar, CalendarDays, ChevronDown, ChevronUp,
+  CreditCard, FileText, GitBranch, GraduationCap,
+  HelpCircle, Home, Landmark, Layers, Library,
+  LogIn, MapPin, Mic2, Network,
+  Rss, Search, Settings, Star,
+  Sun, UserPlus, X, Zap,
 } from "lucide-react";
 import { useAuth } from "./AuthProvider";
 import { usePageSwipe } from "@/hooks/usePageSwipe";

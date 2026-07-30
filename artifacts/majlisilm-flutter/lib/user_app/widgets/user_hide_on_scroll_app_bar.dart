@@ -72,7 +72,7 @@ class UserHideOnScrollSearchBar extends StatelessWidget
 
   @override
   Widget build(BuildContext context) {
-    final bg = backgroundColor ?? Colors.black.withOpacity(0.05);
+    final bg = backgroundColor ?? Colors.black.withValues(alpha: 0.05);
     return Padding(
       padding: const EdgeInsets.fromLTRB(4, 0, 4, 8),
       child: Material(

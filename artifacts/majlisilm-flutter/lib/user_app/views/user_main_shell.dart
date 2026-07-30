@@ -64,7 +64,7 @@ class _UserMainShellState extends State<UserMainShell> {
       bottomNavigationBar: NavigationBar(
         selectedIndex: _tab,
         backgroundColor: quran.backgroundColor,
-        indicatorColor: MajlisColors.brown.withOpacity(0.2),
+        indicatorColor: MajlisColors.brown.withValues(alpha: 0.2),
         onDestinationSelected: (i) => setState(() => _tab = i),
         destinations: const [
           NavigationDestination(
@@ -116,7 +116,7 @@ class _UserPrefsDrawer extends StatelessWidget {
                 contentPadding: EdgeInsets.zero,
                 title: const Text('الوضع الداكن'),
                 value: quran.isDarkMode,
-                activeColor: MajlisColors.brown,
+                activeThumbColor: MajlisColors.brown,
                 onChanged: quran.toggleTheme,
               ),
             ],

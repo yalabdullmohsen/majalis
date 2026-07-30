@@ -52,7 +52,7 @@ CREATE POLICY auto_import_runs_admin ON auto_import_runs
   FOR ALL USING (EXISTS (SELECT 1 FROM profiles p WHERE p.id = auth.uid() AND p.role = 'admin'));
 
 DROP POLICY IF EXISTS auto_import_runs_service ON auto_import_runs;
-CREATE POLICY auto_import_runs_service ON auto_import_runs FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY auto_import_runs_service ON auto_import_runs FOR ALL TO service_role USING (true) WITH CHECK (true);
 
 CREATE OR REPLACE FUNCTION get_published_auto_content_by_slug(p_slug text)
 RETURNS SETOF auto_imported_content LANGUAGE sql STABLE SECURITY DEFINER AS $$
@@ -289,7 +289,7 @@ ALTER TABLE auto_publish_queue ENABLE ROW LEVEL SECURITY;
 
 DO $$ BEGIN
   EXECUTE 'DROP POLICY IF EXISTS service_all ON ai_generation_jobs';
-  EXECUTE 'CREATE POLICY service_all ON ai_generation_jobs FOR ALL USING (true) WITH CHECK (true)';
+  EXECUTE 'CREATE POLICY service_all ON ai_generation_jobs FOR ALL TO service_role USING (true) WITH CHECK (true)';
 EXCEPTION WHEN OTHERS THEN NULL; END $$;
 
 -- Migration audit

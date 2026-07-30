@@ -1,15 +1,14 @@
 {
   "$comment": "مُولَّد آليًا من السجلات — لا تحرّره يدويًا. أعِد التوليد: npx tsx scripts/generate-content-counts.ts",
-  "generatedAt": "2026-07-28",
   "books": 173,
   "scholars": 135,
   "fawaid": 616,
-  "quizQuestions": 5028,
+  "quizQuestions": 0,
   "mindMaps": 23,
   "rulings": 3692,
   "courses": 63,
   "miracles": 60,
   "adhkar": 329,
-  "qa": 3545,
+  "qa": 0,
   "nations": 17
 }

@@ -21,7 +21,7 @@ void main() {
 
   group('matchSpokenText', () {
     final matcher = QuranTextMatcher(lookahead: 2);
-    final target =
+    const target =
         'بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ';
 
     test('marks sequential correct words', () {

@@ -5,17 +5,20 @@ export function createAppQueryClient(): QueryClient {
   return new QueryClient({
     defaultOptions: {
       queries: {
-        staleTime: 60_000,
-        gcTime: 300_000,
+        /** Catalog / list pages change infrequently — fewer duplicate Supabase round-trips. */
+        staleTime: 180_000,
+        gcTime: 600_000,
         retry: REQUEST_MAX_RETRIES,
         refetchOnWindowFocus: false,
+        refetchOnReconnect: true,
         throwOnError: false,
-        networkMode: "always",
+        networkMode: "online",
         meta: { timeoutMs: REQUEST_TIMEOUT_MS },
       },
       mutations: {
-        retry: REQUEST_MAX_RETRIES,
-        networkMode: "always",
+        // Never auto-retry mutations — avoids duplicate writes on flaky networks.
+        retry: false,
+        networkMode: "online",
       },
     },
   });

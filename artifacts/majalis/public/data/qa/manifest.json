@@ -1,0 +1,157 @@
+{
+  "version": 1,
+  "total": 3545,
+  "generatedAt": "2026-07-30T04:47:35.389Z",
+  "chunks": [
+    {
+      "file": "seed-cat-sahabah-000.json",
+      "count": 200,
+      "key": "seed-cat-sahabah"
+    },
+    {
+      "file": "seed-cat-sahabah-001.json",
+      "count": 29,
+      "key": "seed-cat-sahabah"
+    },
+    {
+      "file": "seed-cat-aqeedah-002.json",
+      "count": 200,
+      "key": "seed-cat-aqeedah"
+    },
+    {
+      "file": "seed-cat-aqeedah-003.json",
+      "count": 164,
+      "key": "seed-cat-aqeedah"
+    },
+    {
+      "file": "seed-cat-anbiya-004.json",
+      "count": 200,
+      "key": "seed-cat-anbiya"
+    },
+    {
+      "file": "seed-cat-anbiya-005.json",
+      "count": 122,
+      "key": "seed-cat-anbiya"
+    },
+    {
+      "file": "seed-cat-tahara-006.json",
+      "count": 200,
+      "key": "seed-cat-tahara"
+    },
+    {
+      "file": "seed-cat-tahara-007.json",
+      "count": 47,
+      "key": "seed-cat-tahara"
+    },
+    {
+      "file": "seed-cat-salah-008.json",
+      "count": 173,
+      "key": "seed-cat-salah"
+    },
+    {
+      "file": "seed-cat-zakat-009.json",
+      "count": 62,
+      "key": "seed-cat-zakat"
+    },
+    {
+      "file": "seed-cat-sawm-010.json",
+      "count": 103,
+      "key": "seed-cat-sawm"
+    },
+    {
+      "file": "seed-cat-hajj-011.json",
+      "count": 86,
+      "key": "seed-cat-hajj"
+    },
+    {
+      "file": "seed-cat-seerah-012.json",
+      "count": 200,
+      "key": "seed-cat-seerah"
+    },
+    {
+      "file": "seed-cat-seerah-013.json",
+      "count": 200,
+      "key": "seed-cat-seerah"
+    },
+    {
+      "file": "seed-cat-seerah-014.json",
+      "count": 175,
+      "key": "seed-cat-seerah"
+    },
+    {
+      "file": "seed-cat-hadith-015.json",
+      "count": 200,
+      "key": "seed-cat-hadith"
+    },
+    {
+      "file": "seed-cat-hadith-016.json",
+      "count": 125,
+      "key": "seed-cat-hadith"
+    },
+    {
+      "file": "seed-cat-adhkar-017.json",
+      "count": 31,
+      "key": "seed-cat-adhkar"
+    },
+    {
+      "file": "seed-cat-quran-018.json",
+      "count": 174,
+      "key": "seed-cat-quran"
+    },
+    {
+      "file": "seed-cat-adab-019.json",
+      "count": 143,
+      "key": "seed-cat-adab"
+    },
+    {
+      "file": "seed-cat-fiqh-020.json",
+      "count": 200,
+      "key": "seed-cat-fiqh"
+    },
+    {
+      "file": "seed-cat-fiqh-021.json",
+      "count": 54,
+      "key": "seed-cat-fiqh"
+    },
+    {
+      "file": "seed-cat-tawba-022.json",
+      "count": 1,
+      "key": "seed-cat-tawba"
+    },
+    {
+      "file": "seed-cat-akhlaq-023.json",
+      "count": 132,
+      "key": "seed-cat-akhlaq"
+    },
+    {
+      "file": "seed-cat-tazkiyah-024.json",
+      "count": 132,
+      "key": "seed-cat-tazkiyah"
+    },
+    {
+      "file": "seed-cat-history-025.json",
+      "count": 128,
+      "key": "seed-cat-history"
+    },
+    {
+      "file": "seed-cat-language-026.json",
+      "count": 27,
+      "key": "seed-cat-language"
+    },
+    {
+      "file": "seed-cat-maqasid-027.json",
+      "count": 29,
+      "key": "seed-cat-maqasid"
+    },
+    {
+      "file": "seed-cat-ilm-028.json",
+      "count": 4,
+      "key": "seed-cat-ilm"
+    },
+    {
+      "file": "seed-cat-dawah-029.json",
+      "count": 4,
+      "key": "seed-cat-dawah"
+    }
+  ]
+}

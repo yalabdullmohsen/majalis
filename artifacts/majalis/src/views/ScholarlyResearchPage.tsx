@@ -384,7 +384,7 @@ export default function ScholarlyResearchPage() {
             {/* خطأ */}
             {error && !loading && (
               <div className="srp-error" role="alert">
-                <AlertTriangle size={13} aria-hidden="true" className="inline ml-1" />
+                <AlertTriangle size={13} aria-hidden="true" className="inline ms-1" />
                 {error}
               </div>
             )}

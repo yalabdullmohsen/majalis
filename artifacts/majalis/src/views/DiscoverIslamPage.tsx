@@ -1,7 +1,23 @@
 import { useEffect, useState } from "react";
 import { Link } from "wouter";
-import * as LucideIcons from "lucide-react";
-import type { LucideIcon } from "lucide-react";
+import {
+  BookOpen,
+  Compass,
+  Flower2,
+  Globe,
+  Heart,
+  HelpCircle,
+  Landmark,
+  Lightbulb,
+  MessageCircle,
+  Moon,
+  Scale,
+  Shield,
+  Sparkles,
+  Star,
+  Users,
+  type LucideIcon,
+} from "lucide-react";
 import { PageHeader } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
 import { useLanguage } from "@/components/LanguageProvider";
@@ -9,8 +25,27 @@ import { LANG_META } from "@/lib/language-preference";
 import { getFeaturedQuestions, getFeaturedShubuhat, getDawahCategories, type DawahQuestion, type DawahShubha, type DawahCategory } from "@/lib/dawah-service";
 import "@/styles/discover-islam.css";
 
+/** Allowlist — avoids `import * as LucideIcons` pulling the entire icon set into this route. */
+const CATEGORY_ICONS: Record<string, LucideIcon> = {
+  BookOpen,
+  Compass,
+  Flower2,
+  Globe,
+  Heart,
+  HelpCircle,
+  Landmark,
+  Lightbulb,
+  MessageCircle,
+  Moon,
+  Scale,
+  Shield,
+  Sparkles,
+  Star,
+  Users,
+};
+
 function CategoryIcon({ name }: { name: string | null }) {
-  const Icon = (name && (LucideIcons as unknown as Record<string, LucideIcon>)[name]) || LucideIcons.Sparkles;
+  const Icon = (name && CATEGORY_ICONS[name]) || Sparkles;
   return <Icon size={22} aria-hidden="true" />;
 }
 

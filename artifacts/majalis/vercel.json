@@ -5,10 +5,7 @@
   "buildCommand": "pnpm run build",
   "outputDirectory": "dist",
   "git": {
-    "deploymentEnabled": {
-      "*": false,
-      "main": true
-    }
+    "deploymentEnabled": true
   },
   "functions": {
     "api/index.js": {
@@ -104,6 +101,10 @@
     {
       "path": "/api/cron/source-monitor",
       "schedule": "*/30 * * * *"
+    },
+    {
+      "path": "/api/cron/job-worker",
+      "schedule": "*/5 * * * *"
     },
     {
       "path": "/api/cron/lesson-intelligence",
@@ -594,6 +595,26 @@
       "destination": "/index.html"
     },
     {
+      "source": "/rulings/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/fiqh-council/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/academic-research/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/updates/auto/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/fiqh/:path*",
+      "destination": "/index.html"
+    },
+    {
       "source": "/quran-engine",
       "destination": "/index.html"
     },
@@ -772,6 +793,24 @@
         {
           "key": "Cache-Control",
           "value": "public, max-age=3600, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/fonts/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
+      ]
+    },
+    {
+      "source": "/data/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, stale-while-revalidate=604800"
         }
       ]
     },

@@ -5,10 +5,11 @@ import { ADMIN_ACCESS_DENIED_MESSAGE, mapAuthError } from "@/lib/auth-messages";
 import { hasUnrestrictedAdminAccess, isOwnerAuthUser, resolveUserEmail } from "@/lib/owner-config";
 import { isSupabaseConfigured } from "@/lib/supabase-config";
 import { bootstrapSupabaseFromServer } from "@/lib/supabase-bootstrap";
-import { signInWithGoogle, GOOGLE_OAUTH_ENABLED } from "@/lib/supabase";
+import { signInWithGoogle, GOOGLE_OAUTH_ENABLED, resetPasswordForEmail } from "@/lib/supabase";
 import { preloadRoute } from "@/lib/lazy-with-retry";
 import { Loading } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
+import { sanitizeAuthNext } from "@/lib/auth-redirect";
 import "@/styles/pages/auth.css";
 
 function canAccessAdminUser(current: Awaited<ReturnType<typeof import("@/lib/supabase").getCurrentUser>>) {
@@ -31,9 +32,7 @@ function canAccessAdminUser(current: Awaited<ReturnType<typeof import("@/lib/sup
 function getNextPath() {
   if (typeof window === "undefined") return "/";
   const params = new URLSearchParams(window.location.search);
-  const next = params.get("next");
-  if (next && next.startsWith("/") && !next.startsWith("//")) return next;
-  return "/";
+  return sanitizeAuthNext(params.get("next"));
 }
 
 function isAdminLogin(nextPath: string) {
@@ -57,6 +56,8 @@ export default function LoginPage() {
   const [denied, setDenied] = useState(false);
   const [loading, setLoading] = useState(false);
   const [authReady, setAuthReady] = useState(isSupabaseConfigured());
+  const [mode, setMode] = useState<"login" | "forgot">("login");
+  const [resetSent, setResetSent] = useState(false);
   const { login, logout, refreshUser, isAdmin, isLoggedIn, loading: authLoading } = useAuth();
   const [, navigate] = useLocation();
   const nextPath = getNextPath();
@@ -93,6 +94,13 @@ export default function LoginPage() {
     setLoading(true);
 
     try {
+      if (mode === "forgot") {
+        const { error: resetError } = await resetPasswordForEmail(email.trim());
+        if (resetError) throw resetError;
+        setResetSent(true);
+        return;
+      }
+
       const { error: signInError } = await login(email.trim(), password);
       if (signInError) throw signInError;
 
@@ -132,9 +140,15 @@ export default function LoginPage() {
         <div className="login-card__header">
           <img src="/logo.png" alt="المجلس العلمي" className="login-logo" loading="eager" decoding="async" width="512" height="512" />
           <p className="login-card__brand">المجلس العلمي</p>
-          <h1 className="login-card__title">{adminLogin ? "دخول المسؤول" : "تسجيل الدخول"}</h1>
+          <h1 className="login-card__title">
+            {mode === "forgot" ? "استعادة كلمة المرور" : adminLogin ? "دخول المسؤول" : "تسجيل الدخول"}
+          </h1>
           <p className="login-card__subtitle">
-            {adminLogin ? "سجّل الدخول للوصول إلى لوحة التحكم" : "سجّل الدخول للوصول إلى حسابك"}
+            {mode === "forgot"
+              ? "أدخل بريدك وسنرسل رابطًا لإعادة التعيين"
+              : adminLogin
+                ? "سجّل الدخول للوصول إلى لوحة التحكم"
+                : "سجّل الدخول للوصول إلى حسابك"}
           </p>
         </div>
 
@@ -156,6 +170,11 @@ export default function LoginPage() {
           </p>
         )}
 
+        {resetSent ? (
+          <p className="login-alert" role="status">
+            إن وُجد حساب بهذا البريد فستصلك رسالة لإعادة تعيين كلمة المرور. تحقق من صندوق الوارد.
+          </p>
+        ) : (
         <form onSubmit={handleSubmit} className="login-form">
           <div className="login-field">
             <label htmlFor="login-email">البريد الإلكتروني</label>
@@ -170,6 +189,7 @@ export default function LoginPage() {
             />
           </div>
 
+          {mode === "login" ? (
           <div className="login-field">
             <label htmlFor="login-password">كلمة المرور</label>
             <input
@@ -182,19 +202,49 @@ export default function LoginPage() {
               disabled={loading || !authEnabled}
             />
           </div>
+          ) : null}
 
           <button type="submit" className="login-submit" disabled={loading || !authEnabled}>
-            {loading ? "جارٍ التحقق..." : "تسجيل الدخول"}
+            {loading
+              ? "جارٍ التحقق..."
+              : mode === "forgot"
+                ? "إرسال رابط الاستعادة"
+                : "تسجيل الدخول"}
           </button>
         </form>
+        )}
 
-        {!adminLogin && authEnabled && GOOGLE_OAUTH_ENABLED && (
+        {!adminLogin && mode === "login" && authEnabled && (
+          <button
+            type="button"
+            className="login-back-link"
+            style={{ display: "block", width: "100%", border: "none", background: "none", cursor: "pointer", marginTop: "0.75rem" }}
+            onClick={() => { setMode("forgot"); setError(""); setResetSent(false); }}
+          >
+            نسيت كلمة المرور؟
+          </button>
+        )}
+        {mode === "forgot" && (
+          <button
+            type="button"
+            className="login-back-link"
+            style={{ display: "block", width: "100%", border: "none", background: "none", cursor: "pointer", marginTop: "0.75rem" }}
+            onClick={() => { setMode("login"); setError(""); setResetSent(false); }}
+          >
+            العودة لتسجيل الدخول
+          </button>
+        )}
+
+        {!adminLogin && authEnabled && GOOGLE_OAUTH_ENABLED && mode === "login" && (
           <div className="login-oauth">
             <div className="login-oauth__divider"><span>أو</span></div>
             <button
               type="button"
               className="login-oauth__btn"
-              onClick={() => signInWithGoogle(`${window.location.origin}${nextPath !== "/" ? `?next=${encodeURIComponent(nextPath)}` : ""}`)}
+              onClick={async () => {
+                const { getAuthCallbackUrl } = await import("@/lib/auth-redirect");
+                await signInWithGoogle(getAuthCallbackUrl(nextPath !== "/" ? nextPath : "/"));
+              }}
               disabled={loading}
             >
               <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">

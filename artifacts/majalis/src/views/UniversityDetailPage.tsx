@@ -138,7 +138,7 @@ function DetailContent({ university: u }: { university: University }) {
     <div dir="rtl" className="udp-root">
       {/* شريط التحديث */}
       <div className="udp-update-bar">
-        <AlertTriangle size={12} aria-hidden="true" className="inline ml-1" />
+        <AlertTriangle size={12} aria-hidden="true" className="inline ms-1" />
         آخر تحديث: {new Date(u.last_updated_at).toLocaleDateString("ar-SA")}، تحقق من الموقع الرسمي للجامعة قبل اتخاذ أي قرار.
       </div>
 
@@ -253,7 +253,7 @@ function DetailContent({ university: u }: { university: University }) {
 
         {/* إخلاء مسؤولية */}
         <div className="udp-disclaimer">
-          <Info size={12} aria-hidden="true" className="inline ml-1" /> المعلومات أعلاه مُدخَلة يدوياً لأغراض توجيهية فقط. الرسوم والشروط وتواريخ القبول
+          <Info size={12} aria-hidden="true" className="inline ms-1" /> المعلومات أعلاه مُدخَلة يدوياً لأغراض توجيهية فقط. الرسوم والشروط وتواريخ القبول
           قد تتغير. تحقق دائماً من الموقع الرسمي للجامعة أو تواصل معها مباشرة قبل اتخاذ قرار.
         </div>
 

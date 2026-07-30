@@ -9,7 +9,7 @@ import { SearchSkeleton, PageHeader } from "@/components/ui-common";
 import { SearchSuggestions } from "@/components/SearchSuggestions";
 import { SheikhAvatar } from "@/components/lessons/SheikhAvatar";
 import { canonicalizeLessonPublicId } from "@/lib/lesson-id-aliases";
-import { findSeedLessonById } from "@/lib/lessons-seed";
+import { findSeedLessonById, loadLessonsSeed } from "@/lib/lessons-seed";
 import "@/styles/pages/search.css";
 
 /* ── تمييز مصطلح البحث في النصوص ── */
@@ -263,10 +263,43 @@ export default function SearchPage() {
   const [filters, setFilters] = usePersistedState("filters:/search:filters", { type: "", author: "", status: "", language: "" });
   const debounceRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
+  const [localExtra, setLocalExtra] = useState({
+    occasions: [] as { id: string; title: string; meta?: string; href: string }[],
+    nawawi: [] as { id: string; title: string; meta?: string; href: string }[],
+    quran: [] as { id: string; title: string; meta?: string; href: string }[],
+    adhkar: [] as { id: string; title: string; meta?: string; href: string }[],
+    surahStories: [] as { id: string; title: string; meta?: string; href: string }[],
+    islamicStories: [] as { id: string; title: string; meta?: string; href: string }[],
+    nations: [] as { id: string; title: string; meta?: string; href: string }[],
+  });
 
   /* تحميل السجل عند الفتح وبعد كل بحث */
   const refreshHistory = () => setRecentSearches(getSearchHistory().slice(0, 6));
   useEffect(refreshHistory, []);
+  useEffect(() => {
+    void loadLessonsSeed();
+  }, []);
+  useEffect(() => {
+    let cancelled = false;
+    if (!q.trim()) {
+      setLocalExtra({
+        occasions: [],
+        nawawi: [],
+        quran: [],
+        adhkar: [],
+        surahStories: [],
+        islamicStories: [],
+        nations: [],
+      });
+      return;
+    }
+    void searchLocalExtensions(q).then((extra) => {
+      if (!cancelled) setLocalExtra(extra);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [q]);
 
   const runSearch = async (rawQuery: string) => {
     if (!rawQuery.trim()) {
@@ -337,7 +370,7 @@ export default function SearchPage() {
         setResults({ ...EMPTY, lessons: unifiedMatches.map(lessonRecordToSearchRow), usingDemo: false, error: null });
         return;
       }
-      const demo = searchDemoContent(query);
+      const demo = await searchDemoContent(query);
       setResults({ ...demo, usingDemo: true, error: null, adhkar: demo.adhkar || [] });
     } finally {
       setLoading(false);
@@ -375,9 +408,6 @@ export default function SearchPage() {
     }
   };
 
-  const localExtra = q.trim()
-    ? searchLocalExtensions(q)
-    : { occasions: [], nawawi: [], quran: [], adhkar: [], surahStories: [], islamicStories: [], nations: [] };
   const hasActiveFilter = Object.values(filters).some(Boolean);
 
   const intelligentTotal = intelligentResults.length;

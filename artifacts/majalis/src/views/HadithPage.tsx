@@ -30,7 +30,7 @@ import { HadithStatsPanel } from "@/components/hadith/HadithStatsPanel";
 import { HADITH_STATS_SOURCE, formatHadithStat } from "@/lib/hadith-stats";
 import { fetchAllHadiths, type CdnHadith } from "@/lib/hadith-cdn-service";
 import { fetchSahihaynLocal } from "@/lib/sahihayn-local";
-import { getLocalVerifiedHadith } from "@/lib/verified-hadith-local-seed";
+import { loadLocalVerifiedHadith } from "@/lib/verified-hadith-local-seed";
 import { useReadingScrollMemory } from "@/hooks/useReadingScrollMemory";
 import { resolveScholarWorkLink } from "@/lib/scholar-library-links";
 import "@/styles/components/hadith-badge.css";
@@ -57,8 +57,8 @@ type HadithItem = {
 export type HadithClass = "sahih" | "daif" | "mawdu";
 
 /** دمج صفوف القاعدة مع البذرة المحلية (الحي يفوز عند تعارض المعرّف). */
-function mergeHadithRows(remote: HadithItem[], authenticityClass: HadithClass): HadithItem[] {
-  const local = getLocalVerifiedHadith(authenticityClass).map((h) => ({
+async function mergeHadithRows(remote: HadithItem[], authenticityClass: HadithClass): Promise<HadithItem[]> {
+  const local = (await loadLocalVerifiedHadith(authenticityClass)).map((h) => ({
     id: h.id,
     title: h.title,
     text: h.text,
@@ -625,7 +625,7 @@ function HadithDetailModal({ h, onClose }: { h: HadithItem; onClose: () => void 
         />
 
         <footer className="hadith-modal__footer">
-          <p><AlertTriangle size={13} className="inline ml-1" />تحقق من صحة الحديث ومصدره قبل النشر أو الاستشهاد به.</p>
+          <p><AlertTriangle size={13} className="inline ms-1" />تحقق من صحة الحديث ومصدره قبل النشر أو الاستشهاد به.</p>
         </footer>
       </div>
       <AdminQuickEdit section="hadith" />
@@ -711,12 +711,12 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
     setLoading(true);
     RequestManager.run(`hadith:list:${authenticityClass}`, () => getVerifiedHadith({ limit: 500, authenticityClass }))
       .then(async ({ data }) => {
-        const curated = mergeHadithRows((data as HadithItem[]) ?? [], authenticityClass);
+        const curated = await mergeHadithRows((data as HadithItem[]) ?? [], authenticityClass);
 
         if (authenticityClass === "sahih") {
           // مرجع الصحيحين الكامل (محلي أولاً) + البطاقات المنسّقة ذات الشرح
-          let bukhari: CdnHadith[] = [];
-          let muslim: CdnHadith[] = [];
+          let bukhari: CdnHadith[];
+          let muslim: CdnHadith[];
           try {
             const local = await fetchSahihaynLocal("both");
             bukhari = local.bukhari;

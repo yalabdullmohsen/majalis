@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect, useState, type CSSProperties } from "react";
+import { Suspense, useEffect, useState, type CSSProperties } from "react";
 import contentCounts from "@/data/content-counts.json";
 import { applyPageSeo } from "@/lib/seo";
 import { Link } from "wouter";
@@ -8,11 +8,9 @@ import { getRecentPages, type RecentPage } from "@/lib/recent-pages";
 import { Wrench } from "lucide-react";
 import { SectionErrorBoundary } from "@/components/ErrorBoundary";
 import { HomeAboutSection } from "@/components/home/HomeAboutSection";
-import { HomeUpcomingLessons } from "@/components/home/HomeUpcomingLessons";
 import { HomeDailyProgress } from "@/components/home/HomeDailyProgress";
 import { HomeContinueWidget } from "@/components/home/HomeContinueWidget";
 import { HomeLearningSeasonsWidget } from "@/components/home/HomeLearningSeasonsWidget";
-import { HomeUpcomingCourses } from "@/components/home/HomeUpcomingCourses";
 import { FridayBanner } from "@/components/FridayBanner";
 import { getHijriDateString } from "@/lib/hijri-utils";
 import { fetchPrayerTimes, computePrayerCountdown, type PrayerTimesPayload } from "@/lib/prayer-times";
@@ -22,6 +20,11 @@ import { HomeCustomizeSheet } from "@/components/home/HomeCustomizeSheet";
 import { HomeRecentPagesBar } from "@/components/home/HomeRecentPagesBar";
 import { HomeStartHereSection } from "@/components/home/HomeStartHereSection";
 import { HomeExplorePlatform } from "@/components/home/HomeExplorePlatform";
+// «الدروس والدورات» مثبتة تحت البطل — استيراد ثابت يمنع فشل dynamic import على Safari
+// بعد النشر (TypeError: Importing a module script failed).
+import { HomeUpcomingLessons } from "@/components/home/HomeUpcomingLessons";
+import { HomeUpcomingCourses } from "@/components/home/HomeUpcomingCourses";
+import { lazyWithRetry } from "@/lib/lazy-with-retry";
 import { QUICK_LINKS } from "@/lib/home-feature-catalog";
 import {
   HOME_WIDGET_DEFS,
@@ -34,20 +37,19 @@ import {
 import "@/styles/pages/home.css";
 import "@/styles/components/home/home-quick-access.css";
 
-// الودجتات الاختيارية لا تدخل حزمة الرئيسية للمستخدم الجديد. تُحمَّل فقط
-// إذا فعّلها المستخدم من شاشة التخصيص، مع بقاء الوظيفة والحالة المحفوظة.
-const HomeCompactPrayer = lazy(() => import("@/components/home/HomeCompactPrayer").then((m) => ({ default: m.HomeCompactPrayer })));
-const HomeDailyBenefits = lazy(() => import("@/components/home/HomeDailyBenefits").then((m) => ({ default: m.HomeDailyBenefits })));
-const HomeUpcomingEvents = lazy(() => import("@/components/home/HomeUpcomingEvents").then((m) => ({ default: m.HomeUpcomingEvents })));
-const HomeSunnahByTime = lazy(() => import("@/components/home/HomeSunnahByTime").then((m) => ({ default: m.HomeSunnahByTime })));
-const HomeIslamicOccasions = lazy(() => import("@/components/home/HomeIslamicOccasions").then((m) => ({ default: m.HomeIslamicOccasions })));
-const HomeLatestUpdates = lazy(() => import("@/components/home/HomeLatestUpdates").then((m) => ({ default: m.HomeLatestUpdates })));
-const HomePrayerRanks = lazy(() => import("@/components/home/HomePrayerRanks").then((m) => ({ default: m.HomePrayerRanks })));
-const HomeFeaturedLibrary = lazy(() => import("@/components/home/HomeFeaturedLibrary").then((m) => ({ default: m.HomeFeaturedLibrary })));
-const HomeQuizCard = lazy(() => import("@/components/home/HomeQuizCard").then((m) => ({ default: m.HomeQuizCard })));
-const HomeWeekStreak = lazy(() => import("@/components/home/HomeWeekStreak").then((m) => ({ default: m.HomeWeekStreak })));
-const HomeInterestingTopics = lazy(() => import("@/components/home/HomeInterestingTopics").then((m) => ({ default: m.HomeInterestingTopics })));
-const HomeMindMapSection = lazy(() => import("@/components/home/HomeMindMapSection").then((m) => ({ default: m.HomeMindMapSection })));
+// الودجتات الاختيارية تبقى lazy مع إعادة محاولة واحدة عند فشل chunk بعد النشر.
+const HomeCompactPrayer = lazyWithRetry(() => import("@/components/home/HomeCompactPrayer").then((m) => ({ default: m.HomeCompactPrayer })), "HomeCompactPrayer");
+const HomeDailyBenefits = lazyWithRetry(() => import("@/components/home/HomeDailyBenefits").then((m) => ({ default: m.HomeDailyBenefits })), "HomeDailyBenefits");
+const HomeUpcomingEvents = lazyWithRetry(() => import("@/components/home/HomeUpcomingEvents").then((m) => ({ default: m.HomeUpcomingEvents })), "HomeUpcomingEvents");
+const HomeSunnahByTime = lazyWithRetry(() => import("@/components/home/HomeSunnahByTime").then((m) => ({ default: m.HomeSunnahByTime })), "HomeSunnahByTime");
+const HomeIslamicOccasions = lazyWithRetry(() => import("@/components/home/HomeIslamicOccasions").then((m) => ({ default: m.HomeIslamicOccasions })), "HomeIslamicOccasions");
+const HomeLatestUpdates = lazyWithRetry(() => import("@/components/home/HomeLatestUpdates").then((m) => ({ default: m.HomeLatestUpdates })), "HomeLatestUpdates");
+const HomePrayerRanks = lazyWithRetry(() => import("@/components/home/HomePrayerRanks").then((m) => ({ default: m.HomePrayerRanks })), "HomePrayerRanks");
+const HomeFeaturedLibrary = lazyWithRetry(() => import("@/components/home/HomeFeaturedLibrary").then((m) => ({ default: m.HomeFeaturedLibrary })), "HomeFeaturedLibrary");
+const HomeQuizCard = lazyWithRetry(() => import("@/components/home/HomeQuizCard").then((m) => ({ default: m.HomeQuizCard })), "HomeQuizCard");
+const HomeWeekStreak = lazyWithRetry(() => import("@/components/home/HomeWeekStreak").then((m) => ({ default: m.HomeWeekStreak })), "HomeWeekStreak");
+const HomeInterestingTopics = lazyWithRetry(() => import("@/components/home/HomeInterestingTopics").then((m) => ({ default: m.HomeInterestingTopics })), "HomeInterestingTopics");
+const HomeMindMapSection = lazyWithRetry(() => import("@/components/home/HomeMindMapSection").then((m) => ({ default: m.HomeMindMapSection })), "HomeMindMapSection");
 
 
 function SafeHomeSection({ name, children }: { name: string; children: React.ReactNode }) {

@@ -2,6 +2,7 @@
  * Admin API for lesson automation — sources + review center.
  */
 import { sendJson } from "../../api/_http.mjs";
+import { sendSafeError } from "../../api/safe-error.mjs";
 import { requireAdminAccess } from "../../../lib/admin-auth.mjs";
 import {
   listTrustedSources,
@@ -243,6 +244,6 @@ export default async function handler(req, res) {
     });
   } catch (err) {
     console.error("[admin/lesson-automation]", err);
-    sendJson(res, 500, { ok: false, error: String(err.message || err) });
+    sendSafeError(res, sendJson, err, { code: "admin_handler_error" });
   }
 }

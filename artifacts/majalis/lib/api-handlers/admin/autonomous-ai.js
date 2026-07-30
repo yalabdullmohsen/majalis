@@ -1,4 +1,5 @@
 import { sendJson } from "../../api/_http.mjs";
+import { sendSafeError } from "../../api/safe-error.mjs";
 import { requireAdminAccess } from "../../../lib/admin-auth.mjs";
 import { getSupabaseAdmin } from "../../../lib/supabase-admin.mjs";
 import {
@@ -69,6 +70,6 @@ export default async function handler(req, res) {
 
     sendJson(res, 400, { ok: false, error: "unknown_action" });
   } catch (error) {
-    sendJson(res, 500, { ok: false, error: error.message });
+    sendSafeError(res, sendJson, error, { code: "admin_handler_error" });
   }
 }

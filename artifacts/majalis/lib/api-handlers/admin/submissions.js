@@ -1,4 +1,5 @@
 import { sendJson } from "../../api/_http.mjs";
+import { sendSafeError } from "../../api/safe-error.mjs";
 import { requireAdminAccess } from "../../../lib/admin-auth.mjs";
 import { getSupabaseAdmin } from "../../../lib/supabase-admin.mjs";
 import { sendMessage } from "../../../lib/telegram/bot.mjs";
@@ -31,7 +32,7 @@ export default async function handler(req, res) {
       .order("created_at", { ascending: true });
 
     if (error) {
-      sendJson(res, 500, { ok: false, error: error.message });
+      sendSafeError(res, sendJson, error, { code: "admin_handler_error" });
       return;
     }
     sendJson(res, 200, { ok: true, data: data || [] });
@@ -60,7 +61,7 @@ export default async function handler(req, res) {
 
     if (action === "reject") {
       const { error } = await admin.from("submissions").update({ status: "rejected" }).eq("id", id);
-      if (error) { sendJson(res, 500, { ok: false, error: error.message }); return; }
+      if (error) { sendSafeError(res, sendJson, error, { code: "admin_handler_error" }); return; }
       sendJson(res, 200, { ok: true, message: "تم رفض الإضافة." });
       return;
     }
@@ -104,13 +105,13 @@ export default async function handler(req, res) {
     // معلومة وفكرة: تبقى في submissions فقط بحالة approved
 
     if (publishError) {
-      sendJson(res, 500, { ok: false, error: publishError.message, message: "فشل نشر المحتوى." });
+      sendSafeError(res, sendJson, publishError, { code: "publish_failed" });
       return;
     }
 
     const { error: statusErr } = await admin.from("submissions").update({ status: "approved" }).eq("id", id);
     if (statusErr) {
-      sendJson(res, 500, { ok: false, error: statusErr.message });
+      sendSafeError(res, sendJson, statusErr, { code: "submission_update_failed" });
       return;
     }
 

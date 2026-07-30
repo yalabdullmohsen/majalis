@@ -9,7 +9,7 @@
  * أُنشئ هنا ولا نص وُلِّد آليًا، ولا يُقصّ أي نص: كل حديث/ذكر/آية/فائدة
  * يُعرض كاملًا من أوله إلى آخره كما هو مخزَّن في مصدره:
  *   • DAILY_HADITH_POOL  — أحاديث بدرجاتها ورواتها
- *   • ADHKAR_ITEMS       — أذكار الصباح والمساء فقط
+ *   • DAILY_TICKER_DHIKR — أذكار الصباح والمساء فقط (شريحة رفيعة)
  *   • DAILY_AYAH_POOL    — آيات بمراجعها
  *   • DAILY_FAIDA_POOL   — فوائد بمصادرها
  *   • SECTION/FEATURE promos — نبذ موجزة عن الأقسام والمميزات (واجهة، لا تدقيق محتوى)
@@ -17,7 +17,7 @@
  */
 
 import { DAILY_HADITH_POOL, DAILY_AYAH_POOL, DAILY_FAIDA_POOL } from "./daily-content";
-import { ADHKAR_ITEMS } from "./adhkar-seed";
+import { DAILY_TICKER_DHIKR } from "./daily-ticker-dhikr";
 import { FEATURED, QUICK_LINKS } from "./home-feature-catalog";
 
 export type TickerKind = "hadith" | "dhikr" | "ayah" | "faida" | "promo";
@@ -72,9 +72,8 @@ export function buildTickerPool(): TickerContentItem[] {
     });
   }
 
-  for (const d of ADHKAR_ITEMS) {
+  for (const d of DAILY_TICKER_DHIKR) {
     if (!d?.text?.trim()) continue;
-    if (d.categoryId !== "adh-morning" && d.categoryId !== "adh-evening") continue;
     pool.push({
       id: `dhikr:${d.id}`,
       kind: "dhikr",

@@ -1,5 +1,6 @@
 /**
- * GET/POST /api/cron/source-monitor
- * Phase 3 alias — smart source monitoring (hourly).
+ * GET/POST /api/cron/source-monitor — enqueue only (202).
  */
-export { default } from "./lesson-source-monitor.js";
+import { createEnqueueCronHandler } from "../../jobs/cron-enqueue.mjs";
+
+export default createEnqueueCronHandler("source-monitor");

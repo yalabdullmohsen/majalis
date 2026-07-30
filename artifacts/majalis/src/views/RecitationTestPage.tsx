@@ -1,7 +1,8 @@
 import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useSearch } from "wouter";
-import { Pause, Play, Square, ChevronLeft, RotateCcw } from "lucide-react";
+import { Pause, Play, Square, ChevronLeft, RotateCcw, ArrowRight } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
+import { goBackOrFallback } from "@/lib/navigation-back";
 import { useAuth } from "@/components/AuthProvider";
 import { fetchSurahDetail, getSurahList } from "@/lib/quran-api";
 import { buildReferenceWords, buildReferenceWordsForRange } from "@/lib/recitation-ai/quran-reference-words";
@@ -322,16 +323,29 @@ function RecitationTestPageInner() {
     let cancelled = false;
     (async () => {
       try {
-        const provider = (await selectBestProvider(navigator.onLine)).provider;
+        const selection = await selectBestProvider(navigator.onLine);
         if (cancelled) return;
-        const result = await checkTajweedAvailability(provider);
+        const result = await checkTajweedAvailability(selection.provider);
         if (!cancelled) setTajweedAvailable(result);
+        // تسخين مسبق لمسار on-device عند فتح الصفحة (iOS)
+        if (selection.provider?.id === "on-device") {
+          const prep = selection.provider as { prepare?: (lang?: string) => Promise<unknown> };
+          if (typeof prep.prepare === "function") {
+            void prep.prepare("ar-SA").catch(() => undefined);
+          }
+        }
       } catch (err) {
         console.error("recitation-ai: فشل اكتشاف مزوّد التعرّف الصوتي", err);
         if (!cancelled) setTajweedAvailable({ available: false, reason: "تعذّر التحقق من محرك التعرّف الصوتي — أعد تحميل الصفحة" });
       }
     })();
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+      // تحرير الجلسة الدافئة عند مغادرة الصفحة
+      void import("@/lib/plugins/speech-recognition").then(({ getSpeechRecognitionPlugin }) => {
+        void getSpeechRecognitionPlugin()?.teardown().catch(() => undefined);
+      });
+    };
   }, []);
 
   /** يبدأ جلسة ASR جديدة على نفس المزوّد ويُغذّي نفس محرك المحاذاة القائم — يُستخدَم عند البدء الأول وعند الاستئناف بعد إيقاف مؤقت. */
@@ -375,10 +389,20 @@ function RecitationTestPageInner() {
   /** ينطلق منها كل من startSession (سورة كاملة/نطاق) وretryAyah ("مراجعة اليوم" و"إعادة اختبار هذه الآية"). */
   const startSessionWithWords = useCallback(async (wordsIn: ReferenceWord[]) => {
     setPhase("loading");
-    setErrorMsg(null);
+    setErrorMsg("جارٍ تهيئة الميكروفون…");
     setErrorCode(null);
     setTajweedNotes([]);
     try {
+      // أوقف أي تلاوة قائمة قبل فتح الميكروفون
+      try {
+        const { getAudioEngine } = await import("@/core/audio/AudioEngine");
+        getAudioEngine().stop();
+      } catch { /* ignore */ }
+      try {
+        const { getMajlisAudioService } = await import("@/lib/majlis-audio-service");
+        await getMajlisAudioService().stop();
+      } catch { /* ignore */ }
+
       // "اختبار المعلّم" (القسم 2، الوضع 5): يبدأ من آية عشوائية داخل
       // النطاق المُختار بدل أوله دومًا — يقيس قدرة الاسترجاع الفعلية لا
       // مجرد بدء التلاوة من حفظ معروف بالترتيب. الفلترة عبر `globalIndex`
@@ -455,6 +479,7 @@ function RecitationTestPageInner() {
 
       await attachAsrSession(selection.provider, engine);
 
+      setErrorMsg(null);
       setListening(true);
       setPhase("session");
     } catch (e) {
@@ -1420,7 +1445,7 @@ function RecitationTestPageInner() {
             onClick={mode === "freeform" ? () => void startSessionFreeform() : startSession}
             disabled={phase === "loading"}
           >
-            {phase === "loading" ? "جارٍ التحضير…" : "ابدأ التسميع"}
+            {phase === "loading" ? "جارٍ تهيئة الميكروفون…" : "ابدأ التسميع"}
           </button>
           <p className="rai-report__disclaimer">
             سيُطلَب إذن الميكروفون قبل بدء الاستماع، ويُستخدَم فقط أثناء الجلسة — لا يُحفَظ التسجيل افتراضيًا،
@@ -1457,10 +1482,10 @@ function RecitationTestPageInner() {
                 {listenModelPlaying
                   ? "استمع للقارئ… ثم سمّع"
                   : listening
-                    ? "يستمع الآن…"
+                    ? "استمع الآن"
                     : paused
                       ? "متوقّف مؤقتًا"
-                      : "جارٍ الاتصال…"}
+                      : "جارٍ تهيئة الميكروفون…"}
               </span>
               {listening && !listenModelPlaying && (
                 <span
@@ -1754,5 +1779,18 @@ function errorTypeLabel(t: string): string {
 }
 
 export default function RecitationTestPage() {
-  return <RecitationTestPageInner />;
+  return (
+    <div className="rai-shell">
+      <button
+        type="button"
+        className="rai-back-btn"
+        onClick={() => goBackOrFallback("/quran/recitation-test-ai")}
+        aria-label="رجوع"
+      >
+        <ArrowRight size={18} strokeWidth={2.2} aria-hidden="true" />
+        رجوع
+      </button>
+      <RecitationTestPageInner />
+    </div>
+  );
 }

@@ -8,15 +8,15 @@ export default function NotFoundScreen() {
 
   return (
     <>
-      <Stack.Screen options={{ title: "Oops!" }} />
+      <Stack.Screen options={{ title: "غير موجود" }} />
       <View style={[styles.container, { backgroundColor: colors.background }]}>
         <Text style={[styles.title, { color: colors.foreground }]}>
-          This screen doesn&apos;t exist.
+          هذه الصفحة غير موجودة
         </Text>
 
-        <Link href="/" style={styles.link}>
+        <Link href="/" style={styles.link} accessibilityRole="link" accessibilityLabel="العودة للرئيسية">
           <Text style={[styles.linkText, { color: colors.primary }]}>
-            Go to home screen!
+            العودة إلى الصفحة الرئيسية
           </Text>
         </Link>
       </View>
@@ -34,6 +34,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: "bold",
+    textAlign: "center",
   },
   link: {
     marginTop: 15,

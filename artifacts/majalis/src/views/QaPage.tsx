@@ -19,7 +19,7 @@ type FiqhTab = (typeof FIQH_HUB_TABS)[number]["key"];
 function FiqhHubStrip({ current }: { current: FiqhTab }) {
   return (
     <nav className="fiqh-hub-strip" dir="rtl" aria-label="الأقسام الشرعية">
-      <Link href="/fiqh" className="fiqh-hub-strip__brand"><Scale size={14} className="inline ml-1" />الفقه الإسلامي</Link>
+      <Link href="/fiqh" className="fiqh-hub-strip__brand"><Scale size={14} className="inline ms-1" />الفقه الإسلامي</Link>
       <span className="fiqh-hub-strip__sep" aria-hidden="true">·</span>
       {FIQH_HUB_TABS.map((item) => (
         <Link
@@ -40,7 +40,8 @@ import { PageHeader, QaSkeleton } from "@/components/ui-common";
 import { PageLoadingGuard } from "@/components/PageLoadingGuard";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
 import { usePersistedState } from "@/hooks/usePersistedState";
-import { DEMO_QA, DEMO_QA_CATEGORIES } from "@/lib/demo-content";
+import { DEMO_QA, DEMO_QA_CATEGORIES, ensureDemoContentLoaded } from "@/lib/demo-content";
+import { loadSeedQa } from "@/lib/qa-seed";
 import { useReadingScrollMemory } from "@/hooks/useReadingScrollMemory";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
@@ -110,25 +111,32 @@ export default function QaPage({
   }, [urlSearch]);
 
   useEffect(() => {
-    const topQa = DEMO_QA.filter((q: any) => q.answer).slice(0, 8);
-    const faqSchema = topQa.length
-      ? {
-          "@context": "https://schema.org",
-          "@type": "FAQPage",
-          mainEntity: topQa.map((q) => ({
-            "@type": "Question",
-            name: q.question,
-            acceptedAnswer: { "@type": "Answer", text: q.answer },
-          })),
-        }
-      : undefined;
-    applyPageSeo({
-      path: "/qa",
-      title: "الأسئلة والأجوبة الشرعية | المجلس العلمي",
-      description: "أسئلة وأجوبة شرعية في الفقه والعقيدة والعبادات والمعاملات، موثقة من العلماء والمراجع الموثوقة.",
-      keywords: ["أسئلة وأجوبة", "أجوبة شرعية", "فقه إسلامي", "سؤال وجواب", "معلومات إسلامية"],
-      ...(faqSchema ? { jsonLd: [faqSchema] } : {}),
+    let cancelled = false;
+    void loadSeedQa().then((seed) => {
+      if (cancelled) return;
+      const topQa = seed.filter((q) => q.answer).slice(0, 8);
+      const faqSchema = topQa.length
+        ? {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: topQa.map((q) => ({
+              "@type": "Question",
+              name: q.question,
+              acceptedAnswer: { "@type": "Answer", text: q.answer },
+            })),
+          }
+        : undefined;
+      applyPageSeo({
+        path: "/qa",
+        title: "الأسئلة والأجوبة الشرعية | المجلس العلمي",
+        description: "أسئلة وأجوبة شرعية في الفقه والعقيدة والعبادات والمعاملات، موثقة من العلماء والمراجع الموثوقة.",
+        keywords: ["أسئلة وأجوبة", "أجوبة شرعية", "فقه إسلامي", "سؤال وجواب", "معلومات إسلامية"],
+        ...(faqSchema ? { jsonLd: [faqSchema] } : {}),
+      });
     });
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const loadCategories = useCallback(async () => {
@@ -152,9 +160,15 @@ export default function QaPage({
           search: debouncedSearch,
         }),
       );
-      setRawItems(data.length > 0 ? data : DEMO_QA);
+      if (data.length > 0) {
+        setRawItems(data);
+      } else {
+        await ensureDemoContentLoaded();
+        setRawItems([...DEMO_QA]);
+      }
     } catch {
-      setRawItems(DEMO_QA);
+      await ensureDemoContentLoaded();
+      setRawItems([...DEMO_QA]);
     } finally {
       setLoading(false);
     }

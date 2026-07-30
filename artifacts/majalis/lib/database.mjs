@@ -90,14 +90,42 @@ export function buildTransactionPoolerUrl(ref, password, options = {}) {
   return `postgresql://postgres.${ref}:${enc}@${host}:${TRANSACTION_POOLER_PORT}/postgres`;
 }
 
-/** Normalize any Supabase DATABASE_URL to canonical Transaction Pooler format. */
+/** Local / non-Supabase hosts must never be rewritten to Production pooler. */
+function isLocalOrNonSupabaseHost(host) {
+  const h = String(host || "").toLowerCase();
+  if (!h) return true;
+  if (h === "localhost" || h === "127.0.0.1" || h === "::1") return true;
+  if (h.endsWith(".local") || h.endsWith(".internal")) return true;
+  if (/^(10\.|192\.168\.|172\.(1[6-9]|2\d|3[0-1])\.)/.test(h)) return true;
+  if (h.includes("supabase.co") || h.includes("pooler.supabase.com")) return false;
+  // Unknown host without supabase markers — keep as-is (CI Postgres, etc.)
+  return true;
+}
+
+/** Normalize Supabase DATABASE_URL to canonical Transaction Pooler format. */
 export function normalizeToTransactionPooler(urlStr) {
   if (!urlStr) {
     return { url: "", source: "none", normalized: false, reason: "empty" };
   }
 
   const parsed = parsePostgresUrl(urlStr);
-  const ref = parsed?.ref || getProjectRef();
+  if (!parsed) {
+    return { url: urlStr, source: "direct_env", normalized: false, reason: "unparseable" };
+  }
+
+  if (isLocalOrNonSupabaseHost(parsed.host) && !parsed.isDirectSupabaseHost && !parsed.isPoolerHost) {
+    return {
+      url: urlStr,
+      source: "local_or_external",
+      normalized: false,
+      reason: "non_supabase_host_preserved",
+      fromHost: parsed.host,
+      fromPort: parsed.port,
+      fromUser: parsed.user,
+    };
+  }
+
+  const ref = parsed.ref || getProjectRef();
   const password = resolvePassword(parsed);
 
   if (!ref || !password) {
@@ -231,7 +259,15 @@ function pgSsl(url) {
 
 export async function getPgPool() {
   const { url } = resolveDatabaseUrl();
-  if (!url) return null;
+  if (!url) {
+    // Do not reuse a pooled connection after DATABASE_URL is cleared (tests).
+    if (_pool) {
+      const stale = _pool;
+      _pool = null;
+      stale.end().catch(() => {});
+    }
+    return null;
+  }
   if (_pool) return _pool;
   const pg = await import("pg");
   _pool = new pg.default.Pool({

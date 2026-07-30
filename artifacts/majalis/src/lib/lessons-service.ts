@@ -5,7 +5,7 @@
  * 3. Fallback كامل للـ seed عند فراغ الجدول
  */
 import { fetchApprovedLessonsFromDb } from "@/lib/supabase";
-import { LESSONS_SEED, findSeedLessonById } from "@/lib/lessons-seed";
+import { loadLessonsSeed, findSeedLessonById, findSeedLessonByIdAsync } from "@/lib/lessons-seed";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 import { sheikhNameKey } from "@/lib/sheikh-name";
 import {
@@ -29,11 +29,9 @@ let cachedResult: FetchLessonsResult | null = null;
 let cacheTs = 0;
 const CACHE_MS = 60_000;
 
-function mergeDbWithSeed(dbRows: KuwaitLessonRecord[]): KuwaitLessonRecord[] {
-  // Pass DB rows + all seed rows to dedupeKuwaitLessons together.
-  // dedupeKuwaitLessons uses content-based Arabic-normalized keys and keeps
-  // the most complete record — DB rows win when scores are equal.
-  const seedRows = LESSONS_SEED.map((row) => mapLessonRow({ ...row, source: "seed" }));
+async function mergeDbWithSeed(dbRows: KuwaitLessonRecord[]): Promise<KuwaitLessonRecord[]> {
+  const seed = await loadLessonsSeed();
+  const seedRows = seed.map((row) => mapLessonRow({ ...row, source: "seed" }));
   return dedupeKuwaitLessons([...dbRows, ...seedRows]);
 }
 
@@ -47,26 +45,21 @@ export async function fetchLessons(options?: { bypassCache?: boolean }): Promise
   try {
     const { data } = await fetchApprovedLessonsFromDb();
     if (data.length > 0) {
-      // isLessonComplete: يستبعد صفوفًا من Supabase بلا عنوان/شيخ/موعد فعلي
-      // (بطاقات شبه فارغة أو Placeholder) قبل وصولها لأي شاشة — نقطة تصفية
-      // واحدة تغطي كل المستهلكين (الرئيسية، /lessons، الدروس المرتبطة...)
-      // بدل استثناء كل شاشة على حدة. بيانات seed المحلية مكتملة دومًا فتمر
-      // هذا الفلتر بلا أثر.
       const dbMapped = dedupeKuwaitLessons(
         data.map((row) => mapLessonRow({ ...row, source: "supabase" })).filter(isLessonComplete),
       );
-      const lessons = sortKuwaitLessons(mergeDbWithSeed(dbMapped));
+      const lessons = sortKuwaitLessons(await mergeDbWithSeed(dbMapped));
       const source: LessonsSource = lessons.length > dbMapped.length ? "merged" : "supabase";
       cachedResult = { lessons, source };
       cacheTs = now;
       return cachedResult;
     }
-    // Supabase is empty — always fall through to seed data
   } catch {
     /* fallback below */
   }
 
-  const lessons = dedupeKuwaitLessons(LESSONS_SEED.map((row) => mapLessonRow({ ...row, source: "seed" })));
+  const seed = await loadLessonsSeed();
+  const lessons = dedupeKuwaitLessons(seed.map((row) => mapLessonRow({ ...row, source: "seed" })));
   cachedResult = { lessons: sortKuwaitLessons(lessons), source: "seed" };
   cacheTs = now;
   return cachedResult;
@@ -94,7 +87,11 @@ export async function fetchLessonById(id: string): Promise<{
   const found = lessons.find((l) => l.id === id || l.id === canonical);
   if (found) return { lesson: found, source };
 
-  const seedRow = findSeedLessonById(canonical) || findSeedLessonById(id);
+  const seedRow =
+    findSeedLessonById(canonical) ||
+    findSeedLessonById(id) ||
+    (await findSeedLessonByIdAsync(canonical)) ||
+    (await findSeedLessonByIdAsync(id));
   if (seedRow) return { lesson: mapLessonRow(seedRow), source: "seed" };
 
   return { lesson: null, source };

@@ -314,7 +314,7 @@ export default function SeerahPage() {
 
         {/* Hero */}
         <div className="seerah-hero">
-          <div className="seerah-hero__badge"><BookOpen size={14} className="inline ml-1" /> سيرة النبي ﷺ</div>
+          <div className="seerah-hero__badge"><BookOpen size={14} className="inline ms-1" /> سيرة النبي ﷺ</div>
           <h1 className="seerah-hero__title">السيرة النبوية الشريفة</h1>
           <p className="seerah-hero__sub">
             امتداداً لرسالة الأنبياء، حياة خاتمهم محمد ﷺ من المولد إلى الوفاة في 12 مرحلة
@@ -331,7 +331,7 @@ export default function SeerahPage() {
 
         {/* Notice */}
         <div className="seerah-notice">
-          <strong><Lightbulb size={14} className="inline ml-1" /> منهج القسم:</strong> نعتمد المصادر المحرَّرة (ابن هشام بعد التمحيص، وابن سعد، وزاد المعاد، وما وافق الصحيحين والسنن). نميّز بين الثابت والمشهور والمراسيل، ونتجنّب الإسرائيليات والجزم بما لم يثبت، ولا نُشرع احتفالاً بالمولد أو عبادةً بلا دليل.
+          <strong><Lightbulb size={14} className="inline ms-1" /> منهج القسم:</strong> نعتمد المصادر المحرَّرة (ابن هشام بعد التمحيص، وابن سعد، وزاد المعاد، وما وافق الصحيحين والسنن). نميّز بين الثابت والمشهور والمراسيل، ونتجنّب الإسرائيليات والجزم بما لم يثبت، ولا نُشرع احتفالاً بالمولد أو عبادةً بلا دليل.
         </div>
 
         {/* Timeline Layout */}
@@ -460,7 +460,7 @@ export default function SeerahPage() {
 
         {/* المصادر */}
         <div className="seerah-sources">
-          <h2 className="seerah-sources__title"><Library size={18} className="inline ml-2" /> مصادر السيرة المعتمدة</h2>
+          <h2 className="seerah-sources__title"><Library size={18} className="inline ms-2" /> مصادر السيرة المعتمدة</h2>
           <ul className="seerah-sources__list">
             {SOURCES.map(src => (
               <li key={src} className="seerah-sources__item">

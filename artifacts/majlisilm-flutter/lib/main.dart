@@ -18,6 +18,7 @@ Future<void> main() async {
   final audio = UserAudioPlayerService();
   final quranController = UserQuranAppController();
   final eduController = UserEducationalProgressController();
+  audio.onCompleted = quranController.stopAudio;
 
   runApp(
     MajlisIlmUserApp(

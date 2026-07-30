@@ -23,8 +23,9 @@
 
 html {
   font-size: 16px;
-  -webkit-text-size-adjust: 100%;
-  text-size-adjust: 100%;
+  /* يسمح لـ Dynamic Type على iOS بتكبير النص بدل تثبيته عند 100% */
+  -webkit-text-size-adjust: auto;
+  text-size-adjust: auto;
   overflow-x: hidden;
 }
 
@@ -6280,14 +6281,13 @@ svg {
   height: auto;
 }
 
-/* .inline/.ml-1 هما اسما فئتَي Tailwind (className="inline ml-1" على أيقونات
-   قبل نص عربي مباشرة، مثل <Users className="inline ml-1" />نمط اللعب) —
-   Tailwind v4 نفسه مُفعَّل فعليًا في vite.config.ts، لكن هاتين الفئتين تحديدًا
-   لا تُولَّدان في التنسيق النهائي (margin-left المحسوب فعليًا: 0px، تحقَّق
-   مباشرة عبر متصفح حي)، فتلتصق الأيقونة بالنص العربي التالي بلا أي مسافة —
-   103 موضعًا عبر 39 ملفًا. بدل تعديل كل ملف، قاعدة واحدة تطابق قيمة Tailwind
-   الأصلية (0.25rem) تُصلح الجميع دفعة واحدة (2026-07-22). */
-.ml-1 { margin-left: 0.25rem; }
+/* مسافات منطقية للأيقونات المضمّنة قبل النص العربي (RTL/LTR). */
+.ml-1, .ms-1 { margin-inline-start: 0.25rem; }
+.mr-1, .me-1 { margin-inline-end: 0.25rem; }
+.ml-0\.5, .ms-0\.5 { margin-inline-start: 0.125rem; }
+.mr-0\.5, .me-0\.5 { margin-inline-end: 0.125rem; }
+.ml-2, .ms-2 { margin-inline-start: 0.5rem; }
+.mr-2, .me-2 { margin-inline-end: 0.5rem; }
 
 /* ── Hero v3: logo card + mobile stack ── */
 .home-hero-copy--v3 {
@@ -7697,7 +7697,6 @@ body.has-assistant-fab .app-main {
   background: var(--majalis-emerald-soft, #EAF5EE);
   border-color: rgba(22, 96, 72, 0.25);
   transform: translateY(-2px);
-  box-shadow: 0 6px 16px rgba(22, 96, 72, 0.12);
 }
 
 .more-sheet-item:active {
@@ -8417,14 +8416,18 @@ button,
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    transition-delay: 0s !important;
+    scroll-behavior: auto !important;
+  }
+  .skeleton-base,
+  .update-available-banner__icon--spin,
+  .page-shell {
+    animation: none !important;
   }
   .skeleton-base {
-    animation: none;
     background: #e8ede9;
-  }
-  .page-shell {
-    animation: none;
   }
 }
 

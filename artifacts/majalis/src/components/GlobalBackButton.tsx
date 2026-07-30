@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { useLocation } from "wouter";
+import { isImmersiveChromePath } from "@/lib/immersive-chrome";
 import { goBackOrFallback } from "@/lib/navigation-back";
 
 /**
@@ -31,20 +32,20 @@ export function GlobalBackButton() {
   }, [location]);
 
   if (location === "/") return null;
-  // /mushaf/page: قارئ غامر بشريط تنقّل سفلي ثابت بعرض الشاشة كاملاً
-  // (z-index أدنى من هذا الزر) يتراكب معه فعليًا — اكتُشف حيًّا أثناء
-  // تحقّق Playwright. الصفحة توفّر زر "رجوع" مكافئًا داخل شريطها العلوي
-  // (راجع MushafPageView.tsx)، فلا فقدان لوظيفة الرجوع.
-  if (location.startsWith("/mushaf/page")) return null;
+  // مسارات غامرة لها زر رجوع داخل شريطها الخاص — لا نكرّر زرًا عائمًا فوقها.
+  if (isImmersiveChromePath(location)) return null;
+  // مخفي بصريًا قبل عتبة التمرير: يُزال من شجرة VoiceOver تمامًا (لا opacity فقط).
+  if (!pastThreshold) return null;
 
   const goBack = () => {
-    goBackOrFallback(location, "/");
+    // بدون fallback ثابت "/" — sectionAwareFallback يرجع للقسم الأب.
+    goBackOrFallback(location);
   };
 
   return (
     <button
       type="button"
-      className={`global-back-btn${pastThreshold ? "" : " global-back-btn--hidden"}`}
+      className="global-back-btn"
       onClick={goBack}
       aria-label="رجوع"
       title="رجوع"

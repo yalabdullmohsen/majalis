@@ -25,7 +25,7 @@ class UserQuranAppController extends ChangeNotifier {
   int? currentPlayingVerse;
 
   Color get textColor =>
-      isDarkMode ? Colors.white.withOpacity(0.87) : Colors.black87;
+      isDarkMode ? Colors.white.withValues(alpha: 0.87) : Colors.black87;
 
   Future<void> _hydrate() async {
     fontSize = await _storage.getFontSize();

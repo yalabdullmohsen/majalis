@@ -24,6 +24,7 @@ import {
 } from "@/lib/supabase";
 import { ShareButtons } from "@/components/ContentActions";
 import { applyPageSeo } from "@/lib/seo";
+import { absoluteUrl } from "@/lib/site-config";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { Chip } from "@/components/ui-common";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
@@ -186,7 +187,7 @@ export default function KnowledgeGraphPage() {
       title: "الرسم البياني المعرفي | المجلس العلمي",
       description: "استكشف العلاقات بين المفاهيم الإسلامية، رسم بياني تفاعلي يربط العلماء والكتب والمسائل الفقهية. محتوى معتمد في منهج المجلس العلمي",
       keywords: ["رسم بياني معرفي", "علاقات إسلامية", "استكشاف المعرفة", "خريطة علمية", "علم الشبكات"],
-      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "الرسم البياني المعرفي الإسلامي", url: "https://www.majlisilm.com/knowledge-graph", about: { "@type": "Thing", name: "شبكة المعرفة الإسلامية التفاعلية" } }],
+      jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "الرسم البياني المعرفي الإسلامي", url: absoluteUrl("/knowledge-graph"), about: { "@type": "Thing", name: "شبكة المعرفة الإسلامية التفاعلية" } }],
     });
   }, []);
   const [source, setSource] = useState<DataSource>("new");
@@ -209,10 +210,11 @@ export default function KnowledgeGraphPage() {
 
   const loadNew = useCallback(async () => {
     setLoading(true);
-    const nodes = await fetchKnNodes(undefined, 120);
+    const nodes = await fetchKnNodes(undefined, 60);
     if (nodes.length === 0) { setSource("old"); return; }
     if (nodes.length > 0 && !centerNodeId) {
-      const sub = await fetchKnSubgraph(nodes[0].id, 2);
+      // depth 1 on first paint — expand on demand (was depth 2 / 120 nodes).
+      const sub = await fetchKnSubgraph(nodes[0].id, 1);
       if (sub) {
         const { gNodes: gn, gEdges: ge } = buildNewGraph(sub.nodes, sub.edges);
         setGNodes(gn); setGEdges(ge);
@@ -231,8 +233,9 @@ export default function KnowledgeGraphPage() {
 
   const loadOld = useCallback(async () => {
     setLoading(true);
-    const rels = await getAllKnowledgeRelationshipsAdmin(400);
-    const verified = rels.filter((r) => r.is_verified);
+    // Bound fallback graph — do not pull hundreds of unverified rows on first paint.
+    const rels = await getAllKnowledgeRelationshipsAdmin(80);
+    const verified = rels.filter((r) => r.is_verified).slice(0, 60);
     const { gNodes: gn, gEdges: ge } = buildOldGraph(verified);
     setGNodes(gn); setGEdges(ge);
     setNodeCount(gn.length); setEdgeCount(ge.length);
@@ -630,7 +633,7 @@ export default function KnowledgeGraphPage() {
         </div>
       )}
       <div className="twh-share">
-        <ShareButtons title="الرسم البياني المعرفي الإسلامي — المجلس العلمي" url="https://www.majlisilm.com/knowledge-graph" />
+        <ShareButtons title="الرسم البياني المعرفي الإسلامي — المجلس العلمي" url={absoluteUrl("/knowledge-graph")} />
       </div>
       <RelatedKnowledge kind="book" query="معرفة إسلامية" title="مواد ذات صلة بالرسم المعرفي" limit={6} />
       <div className="px-4 pb-6 mt-4">

@@ -95,8 +95,8 @@ export function saveKhatmahGoal(goal: KhatmahGoal): KhatmahGoal {
   };
 
   // Part 22: atomic LS write + wird mirror with rollback on secondary failure
-  let snapRaw: string | null = null;
-  let wirdSnap: DailyWirdState | null = null;
+  let snapRaw: string | null;
+  let wirdSnap: DailyWirdState | null;
   try {
     snapRaw = localStorage.getItem(STORAGE_KEY);
   } catch {
