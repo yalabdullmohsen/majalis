@@ -16,6 +16,7 @@ import { sendJson } from "../api/_http.mjs";
 import { getSupabaseAdmin } from "../../lib/supabase-admin.mjs";
 import { createClient } from "@supabase/supabase-js";
 import QRCode from "qrcode";
+import { sendSafeError } from "../api/safe-error.mjs";
 
 // ── ثوابت ────────────────────────────────────────────────────────────────────
 
@@ -301,7 +302,7 @@ async function getCitationBySlug(req, res, slug) {
 
   if (error) {
     if (isMissingTable(error)) return sendJson(res, 503, { ok: false, error: "الجداول غير مهيأة" });
-    return sendJson(res, 500, { ok: false, error: error.message });
+    return sendJson(res, 500, { ok: false, error: "citation_lookup_failed" });
   }
   if (!data) return sendJson(res, 404, { ok: false, error: "الاقتباس غير موجود" });
 
@@ -373,7 +374,10 @@ async function saveCitation(req, res, citationId) {
     .select()
     .single();
 
-  if (error) return sendJson(res, 500, { ok: false, error: error.message });
+  if (error) {
+    sendSafeError(res, sendJson, error, { code: "citation_save_failed" });
+    return;
+  }
 
   // زيادة عداد الاستخدام
   await client
@@ -418,7 +422,10 @@ async function getUserCitations(req, res) {
   query = query.order(orderCol, { ascending: false }).limit(100);
 
   const { data, error } = await query;
-  if (error) return sendJson(res, 500, { ok: false, error: error.message });
+  if (error) {
+    sendSafeError(res, sendJson, error, { code: "citations_list_failed" });
+    return;
+  }
 
   // جلب المجلدات
   const { data: folders } = await client
@@ -443,7 +450,10 @@ async function createFolder(req, res) {
     .select()
     .single();
 
-  if (error) return sendJson(res, 500, { ok: false, error: error.message });
+  if (error) {
+    sendSafeError(res, sendJson, error, { code: "folder_create_failed" });
+    return;
+  }
   return sendJson(res, 201, { ok: true, folder: data });
 }
 
@@ -468,7 +478,10 @@ async function exportCitations(req, res) {
   if (ids?.length) query = query.in("citation_id", ids);
 
   const { data: saved, error } = await query.order("saved_at", { ascending: false });
-  if (error) return sendJson(res, 500, { ok: false, error: error.message });
+  if (error) {
+    sendSafeError(res, sendJson, error, { code: "citations_export_failed" });
+    return;
+  }
 
   if (format === "markdown") {
     const md = buildMarkdown(saved || [], (saved || []).map((s) => s.citation).filter(Boolean));

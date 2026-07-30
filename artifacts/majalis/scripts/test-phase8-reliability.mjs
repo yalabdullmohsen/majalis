@@ -9,6 +9,7 @@ import { fileURLToPath } from "node:url";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const requestManager = readFileSync(join(root, "src/lib/request-manager.ts"), "utf8");
 const server = readFileSync(join(root, "server/index.mjs"), "utf8");
+const healthz = readFileSync(join(root, "lib/api-handlers/healthz.js"), "utf8");
 const diagnostics = readFileSync(join(root, "src/lib/diagnostics.ts"), "utf8");
 
 assert.match(requestManager, /networkCircuitBreakers/, "RequestManager uses circuit breaker");
@@ -16,8 +17,9 @@ assert.match(requestManager, /computeBackoffDelayMs/, "RequestManager uses expon
 assert.match(requestManager, /structuredLog/, "RequestManager emits structured logs");
 assert.match(requestManager, /run\.graceful_failure/, "graceful failure path logged");
 
-assert.match(server, /uptimeMs/, "healthz exposes uptime");
-assert.match(server, /Cache-Control.*no-store|no-store/, "healthz is non-cacheable");
+assert.match(server, /healthzHandler|api-handlers\/healthz/, "Express uses shared healthz handler");
+assert.match(healthz, /uptimeMs/, "healthz exposes uptime");
+assert.match(healthz, /Cache-Control.*no-store|no-store/, "healthz is non-cacheable");
 
 assert.doesNotMatch(diagnostics, /@ts-expect-error|@ts-ignore/, "diagnostics must not suppress TypeScript");
 

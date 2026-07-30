@@ -25,9 +25,31 @@ const HELP = `🕌 <b>مجالس — تطبيق العلم الشرعي</b>
 /stop — إلغاء الاشتراك
 /help — عرض هذه الرسالة`;
 
+function isProductionLikeEnv() {
+  return (
+    process.env.NODE_ENV === "production" ||
+    process.env.VERCEL_ENV === "production" ||
+    process.env.VERCEL_ENV === "preview"
+  );
+}
+
 export default async function handler(req, res) {
   const secretHeader = String(req.headers?.["x-telegram-bot-api-secret-token"] || "").trim();
   const expectedSecret = String(process.env.TELEGRAM_WEBHOOK_SECRET || "").trim();
+
+  // Production/preview: webhook secret is mandatory (fail closed).
+  if (isProductionLikeEnv() && !expectedSecret) {
+    console.error(
+      JSON.stringify({
+        level: "error",
+        msg: "telegram_webhook_secret_missing",
+        hint: "Set TELEGRAM_WEBHOOK_SECRET on Vercel",
+        ts: new Date().toISOString(),
+      }),
+    );
+    sendJson(res, 503, { ok: false, error: "webhook_misconfigured" });
+    return;
+  }
 
   if (expectedSecret && secretHeader !== expectedSecret) {
     sendJson(res, 403, { ok: false });

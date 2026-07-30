@@ -8,6 +8,7 @@
  */
 import { sendJson } from "../../api/_http.mjs";
 import { sendSafeError } from "../../api/safe-error.mjs";
+import { postgrestOrIlike } from "../../api/postgrest-escape.mjs";
 import { requireAdminAccess } from "../../../lib/admin-auth.mjs";
 import {
   getMe,
@@ -277,7 +278,15 @@ export default async function handler(req, res) {
       if (category) dbq = dbq.eq("category", category);
       if (dateFrom) dbq = dbq.gte("event_date", dateFrom);
       if (dateTo) dbq = dbq.lte("event_date", dateTo);
-      if (query) dbq = dbq.or(`title.ilike.%${query}%,description.ilike.%${query}%,sheikh_name.ilike.%${query}%`);
+      if (query) {
+        dbq = dbq.or(
+          [
+            postgrestOrIlike("title", query),
+            postgrestOrIlike("description", query),
+            postgrestOrIlike("sheikh_name", query),
+          ].join(","),
+        );
+      }
       const { data, error } = await dbq;
       if (error) throw error;
       sendJson(res, 200, { ok: true, results: data || [], count: data?.length || 0 });

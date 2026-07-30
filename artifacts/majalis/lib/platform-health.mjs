@@ -19,6 +19,7 @@ async function probeAssistantPost() {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ message: "ما حكم الوضوء؟" }),
+      signal: AbortSignal.timeout(8_000),
     });
     const json = await res.json().catch(() => ({}));
     return { ok: res.ok && json.ok === true, status: res.status, json };
@@ -29,7 +30,10 @@ async function probeAssistantPost() {
 
 async function probeRoute(path) {
   try {
-    const res = await fetch(`${PRODUCTION_BASE}${path}`, { redirect: "follow" });
+    const res = await fetch(`${PRODUCTION_BASE}${path}`, {
+      redirect: "follow",
+      signal: AbortSignal.timeout(8_000),
+    });
     const text = await res.text();
     return {
       ok: res.status === 200 && !text.includes("تعذر عرض هذه الصفحة"),

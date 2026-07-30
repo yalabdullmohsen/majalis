@@ -33,7 +33,9 @@ export function recordPerformance(entry: PerfEntry): void {
   recent.set(key, now);
 
   const msg = `[perf:slow] ${entry.kind} "${entry.label}" ${entry.durationMs}ms ${entry.ok ? "ok" : "fail"}`;
-  console.warn(msg, entry.meta ?? "");
+  if (import.meta.env.DEV) {
+    console.warn(msg, entry.meta ?? "");
+  }
 
   void logClientError(
     buildErrorReport(new Error(msg), {

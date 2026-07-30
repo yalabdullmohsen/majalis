@@ -117,6 +117,31 @@ const recitationTranscribeRateLimit = createRateLimiter({
   keyPrefix: "recitation-transcribe",
 });
 
+/** Admin surfaces — auth still required inside handlers; this caps abuse of stolen JWTs. */
+const adminRateLimit = createRateLimiter({
+  windowMs: 60_000,
+  max: 60,
+  keyPrefix: "admin",
+});
+
+const searchRateLimit = createRateLimiter({
+  windowMs: 60_000,
+  max: 60,
+  keyPrefix: "search",
+});
+
+const webhookTelegramRateLimit = createRateLimiter({
+  windowMs: 60_000,
+  max: 120,
+  keyPrefix: "webhook-telegram",
+});
+
+const learningPathRateLimit = createRateLimiter({
+  windowMs: 60_000,
+  max: 40,
+  keyPrefix: "learning-path",
+});
+
 // تطبيق iOS/Android الأصلي (Capacitor) يستدعي هذا المسار برابط مطلق
 // (server-provider.ts) لأنه لا يملك خادمًا محليًا خاصًا به — أصله ليس
 // https://www.majlisilm.com بل أحد هذه المخططات المحلية، فيحتاج طلب
@@ -269,6 +294,30 @@ export const API_ROUTES = [
   { prefix: "/api/admin/universities", module: "./api-handlers/universities-vercel.js", allowGet: true, rateLimit: universitiesWriteRateLimit },
   { prefix: "/api/universities",       module: "./api-handlers/universities-vercel.js", allowGet: true },
 ];
+
+// Attach default limiters without rewriting every route row (auth still enforced in handlers).
+const SEARCH_FAMILY_PREFIXES = new Set([
+  "/api/search",
+  "/api/intelligent-search",
+  "/api/scholarly-search",
+  "/api/knowledge-search",
+  "/api/knowledge-recommendations",
+  "/api/topic-content",
+  "/api/content-relations",
+]);
+
+for (const route of API_ROUTES) {
+  if (route.rateLimit) continue;
+  if (route.prefix.startsWith("/api/admin/")) {
+    route.rateLimit = adminRateLimit;
+  } else if (SEARCH_FAMILY_PREFIXES.has(route.prefix)) {
+    route.rateLimit = searchRateLimit;
+  } else if (route.prefix === "/api/webhook/telegram") {
+    route.rateLimit = webhookTelegramRateLimit;
+  } else if (route.prefix === "/api/learning-path") {
+    route.rateLimit = learningPathRateLimit;
+  }
+}
 
 const handlerCache = new Map();
 

@@ -1,4 +1,5 @@
 import { sendJson } from "../api/_http.mjs";
+import { sendSafeError } from "../api/safe-error.mjs";
 import { unifiedSearch, trackResultClick } from "../../lib/scholarly-intelligence/unified-search.mjs";
 
 export default async function handler(req, res) {
@@ -29,7 +30,7 @@ export default async function handler(req, res) {
       });
       sendJson(res, 200, result);
     } catch (error) {
-      sendJson(res, 500, { ok: false, error: error.message });
+      sendSafeError(res, sendJson, error, { code: "intelligent_search_failed" });
     }
     return;
   }
@@ -47,7 +48,7 @@ export default async function handler(req, res) {
         });
         sendJson(res, 200, result);
       } catch (error) {
-        sendJson(res, 500, { ok: false, error: error.message });
+        sendSafeError(res, sendJson, error, { code: "track_click_failed" });
       }
       return;
     }
@@ -68,7 +69,7 @@ export default async function handler(req, res) {
       });
       sendJson(res, 200, result);
     } catch (error) {
-      sendJson(res, 500, { ok: false, error: error.message });
+      sendSafeError(res, sendJson, error, { code: "intelligent_search_failed" });
     }
     return;
   }

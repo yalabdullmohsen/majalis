@@ -1,5 +1,6 @@
 import { sendJson } from "../api/_http.mjs";
 import { getSupabaseAdmin } from "../supabase-admin.mjs";
+import { sendSafeError } from "../api/safe-error.mjs";
 
 const MAX_TITLE = 500;
 const MAX_ABSTRACT = 12000;
@@ -71,11 +72,7 @@ export default async function handler(req, res) {
 
   const { data, error } = await admin.from("research_submissions").insert(row).select("id,status").maybeSingle();
   if (error) {
-    sendJson(res, 500, {
-      ok: false,
-      error: error.message,
-      message: "تعذّر الحفظ. تأكد من تطبيق supabase/researches_v1.sql.",
-    });
+    sendSafeError(res, sendJson, error, { code: "research_insert_failed" });
     return;
   }
 

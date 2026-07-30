@@ -16,6 +16,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { validateLessonDraft, buildExternalKey, buildLessonSlug } from "./content-validator.mjs";
 import { getSupabaseAdmin } from "../supabase-admin.mjs";
+import { postgrestOrIlike } from "../api/postgrest-escape.mjs";
 
 const MODEL = "claude-sonnet-4-6";
 const MAX_RETRIES = 2;
@@ -380,7 +381,9 @@ async function enrichFromDatabase(data, debugStages) {
       const { data: sheikhLessons } = await admin
         .from("lessons")
         .select("mosque, day_of_week, lesson_time, city, region")
-        .or(`speaker_name.ilike.%${normalized}%,title.ilike.%${normalized}%`)
+        .or(
+          [postgrestOrIlike("speaker_name", normalized), postgrestOrIlike("title", normalized)].join(","),
+        )
         .eq("status", "approved")
         .order("created_at", { ascending: false })
         .limit(3);

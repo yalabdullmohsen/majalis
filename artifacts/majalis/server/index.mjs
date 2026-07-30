@@ -8,6 +8,7 @@ import assistantHealthHandler from "../lib/api-handlers/assistant/health.js";
 import testAnthropicHandler from "../lib/api-handlers/test-anthropic.js";
 import transcribeHandler from "../lib/api-handlers/transcribe.js";
 import prayerTimesHandler from "../lib/api-handlers/prayer-times.js";
+import healthzHandler from "../lib/api-handlers/healthz.js";
 import syncDataHandler from "../lib/api-handlers/cron/sync-data.js";
 import knowledgeSyncHandler from "../lib/api-handlers/cron/knowledge-sync.js";
 import knowledgePipelineHandler from "../lib/api-handlers/admin/knowledge-pipeline.js";
@@ -77,10 +78,20 @@ app.use(compression());
 app.use((_req, res, next) => {
   res.setHeader("X-Content-Type-Options", "nosniff");
   res.setHeader("X-Frame-Options", "DENY");
-  res.setHeader("X-XSS-Protection", "1; mode=block");
+  res.setHeader("X-DNS-Prefetch-Control", "on");
   res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
+  res.setHeader("Cross-Origin-Opener-Policy", "same-origin");
   res.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains; preload");
-  res.setHeader("Permissions-Policy", "camera=(), microphone=(self), geolocation=()");
+  // Align with production vercel.json Permissions-Policy (geolocation for qibla/prayer UX).
+  res.setHeader(
+    "Permissions-Policy",
+    "camera=(), microphone=(self), geolocation=(self), interest-cohort=()",
+  );
+  // Parity CSP for local Express (same policy as vercel.json — do not loosen).
+  res.setHeader(
+    "Content-Security-Policy",
+    "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://platform.twitter.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https:; media-src 'self' blob: https://everyayah.com https://server8.mp3quran.net https://cdn-globecast.akamaized.net https://qurango.net https://cdn.jsdelivr.net; connect-src 'self' https://*.supabase.co wss://*.supabase.co https://api.alquran.cloud https://api.aladhan.com https://everyayah.com https://server8.mp3quran.net https://cdn-globecast.akamaized.net https://qurango.net https://cdn.jsdelivr.net; frame-src 'self' https://platform.twitter.com https://syndication.twitter.com https://www.google.com https://maps.google.com https://www.youtube.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; object-src 'none'",
+  );
   next();
 });
 
@@ -285,18 +296,9 @@ app.get("/api/user/citations",              runHandler(citationsHandler, "citati
 app.post("/api/user/citations/folders",     express.json({ limit: "4kb" }), runHandler(citationsHandler, "citations-folders"));
 app.post("/api/user/citations/export",      express.json({ limit: "8kb" }), runHandler(citationsHandler, "citations-export"));
 
-const processStartedAt = Date.now();
-
-app.get("/api/healthz", (_req, res) => {
-  res.setHeader("Cache-Control", "no-store");
-  res.json({
-    ok: true,
-    service: "majalis-web",
-    at: new Date().toISOString(),
-    uptimeMs: Date.now() - processStartedAt,
-    commit: process.env.VERCEL_GIT_COMMIT_SHA || process.env.GIT_COMMIT || null,
-    buildId: process.env.VERCEL_DEPLOYMENT_ID || process.env.BUILD_ID || null,
-  });
+app.get("/api/healthz", (req, res) => {
+  // Share production handler contract (lite by default; ?full=1 redacted).
+  return runHandler(healthzHandler, "healthz")(req, res);
 });
 
 function resolveStaticHtml(urlPath) {

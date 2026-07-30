@@ -1,4 +1,5 @@
 import { sendJson } from "../api/_http.mjs";
+import { sendSafeError } from "../api/safe-error.mjs";
 import { searchScholarlyContent } from "../../lib/scholarly-verification/orchestrator.mjs";
 
 export default async function handler(req, res) {
@@ -19,6 +20,6 @@ export default async function handler(req, res) {
     });
     sendJson(res, 200, result);
   } catch (error) {
-    sendJson(res, 500, { ok: false, error: error.message });
+    sendSafeError(res, sendJson, error, { code: "scholarly_search_failed" });
   }
 }

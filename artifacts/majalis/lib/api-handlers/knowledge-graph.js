@@ -13,6 +13,7 @@
 import { sendJson } from "../api/_http.mjs";
 import { getSupabaseAdmin } from "../../lib/supabase-admin.mjs";
 import { requireAdminAccess } from "../../lib/admin-auth.mjs";
+import { isUuid } from "../api/postgrest-escape.mjs";
 
 const MAX_DEPTH = 3;
 
@@ -48,6 +49,8 @@ function extractId(pathname, segment) {
 
 /** جلب عقدة واحدة مع علاقاتها المباشرة */
 async function getNode(admin, nodeId) {
+  if (!isUuid(nodeId)) return null;
+
   const [nodeRes, edgesRes] = await Promise.all([
     admin.from("kn_nodes").select("*").eq("id", nodeId).maybeSingle(),
     admin
@@ -90,6 +93,7 @@ async function getNode(admin, nodeId) {
 
 /** توسيع الرسم البياني بعمق محدود */
 async function expandNode(admin, nodeId, depth) {
+  if (!isUuid(nodeId)) return null;
   const safeDepth = Math.min(Math.max(1, Number(depth) || 1), MAX_DEPTH);
 
   const { data, error } = await admin.rpc("get_node_subgraph", {
@@ -221,7 +225,7 @@ async function createRelationship(admin, body) {
     if (error.code === "23505") {
       return { ok: false, status: 409, error: "هذه العلاقة موجودة بالفعل" };
     }
-    return { ok: false, status: 500, error: error.message };
+    return { ok: false, status: 500, error: "relationship_create_failed" };
   }
 
   return { ok: true, status: 201, id: data.id };
@@ -266,6 +270,9 @@ export default async function handler(req, res) {
       }
 
       const result = await expandNode(admin, nodeId, query.depth || 1);
+      if (!result) {
+        return sendJson(res, 400, { ok: false, error: "invalid_node_id" });
+      }
       return sendJson(res, 200, { ok: true, ...result });
     }
 

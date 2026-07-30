@@ -388,7 +388,7 @@ async function getRecommendations(req, res) {
       return sendJson(res, 200, { ok: true, recommendations: [], context, pending_setup: true });
     }
     console.error("[recommendations] error:", err.message);
-    return sendJson(res, 500, { ok: false, error: err.message });
+    return sendJson(res, 500, { ok: false, error: "recommendations_failed" });
   }
 }
 

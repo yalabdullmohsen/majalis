@@ -9,6 +9,7 @@
  */
 
 import { MAX_CONTEXT_DOCS, MIN_RELEVANCE_SCORE } from "./constants.mjs";
+import { postgrestOrIlike } from "../api/postgrest-escape.mjs";
 
 /** تطبيع الاستعلام للبحث */
 function normalizeQuery(q) {
@@ -90,7 +91,7 @@ async function searchHadithDirect(admin, query, limit = 6) {
     .from("verified_hadith_items")
     .select("id, title, text, grade, source_name, source_url, narrator, chapter, scholar")
     .is("deleted_at", null)
-    .or(`text.ilike.%${term}%,title.ilike.%${term}%`)
+    .or([postgrestOrIlike("text", term), postgrestOrIlike("title", term)].join(","))
     .limit(limit);
 
   return (data || []).map((h) => ({
@@ -121,7 +122,13 @@ async function searchFiqhDirect(admin, query, limit = 5) {
     // الاستعلام كاملاً (42703) فيعود بحث الفقه في RAG فارغاً دائماً.
     .select("id, title, slug, ruling_text, summary, source_name, source_url, category, type, session_number, session_date")
     .eq("status", "published")
-    .or(`title.ilike.%${term}%,ruling_text.ilike.%${term}%,summary.ilike.%${term}%`)
+    .or(
+      [
+        postgrestOrIlike("title", term),
+        postgrestOrIlike("ruling_text", term),
+        postgrestOrIlike("summary", term),
+      ].join(","),
+    )
     .limit(limit);
 
   return (data || []).map((f) => ({

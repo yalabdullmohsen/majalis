@@ -16,7 +16,8 @@ export function createAppQueryClient(): QueryClient {
         meta: { timeoutMs: REQUEST_TIMEOUT_MS },
       },
       mutations: {
-        retry: REQUEST_MAX_RETRIES,
+        // Never auto-retry mutations — avoids duplicate writes on flaky networks.
+        retry: false,
         networkMode: "online",
       },
     },

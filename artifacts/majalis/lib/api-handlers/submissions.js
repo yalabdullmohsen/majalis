@@ -47,7 +47,16 @@ export default async function handler(req, res) {
 
   const { error } = await admin.from("submissions").insert(row);
   if (error) {
-    sendJson(res, 500, { ok: false, error: error.message });
+    console.error(
+      JSON.stringify({
+        level: "error",
+        msg: "submissions_insert_failed",
+        code: error.code || null,
+        // Never echo raw DB/driver messages to clients.
+        ts: new Date().toISOString(),
+      }),
+    );
+    sendJson(res, 500, { ok: false, error: "insert_failed", message: "تعذّر حفظ المقترح. حاول لاحقاً." });
     return;
   }
 

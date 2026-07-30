@@ -18,6 +18,8 @@
 
 import { sendJson } from "../api/_http.mjs";
 import { createClient } from "@supabase/supabase-js";
+import { postgrestOrIlike, ilikeContains } from "../api/postgrest-escape.mjs";
+import { sendSafeError } from "../api/safe-error.mjs";
 
 // ─── إعداد Supabase ─────────────────────────────────────────────────────────
 
@@ -68,7 +70,7 @@ async function searchLessons(supabase, normQuery, limit) {
     .from("lessons")
     .select("id, title, description, speaker_name, category, mosque")
     .eq("status", "approved")
-    .ilike("search_text", `%${normQuery}%`)
+    .ilike("search_text", ilikeContains(normQuery))
     .limit(limit);
   return (data || []).map((r) => ({
     id: r.id,
@@ -85,7 +87,7 @@ async function searchLibrary(supabase, normQuery, limit) {
     .from("library_items")
     .select("id, title, description, category, type, author_name")
     .eq("status", "approved")
-    .ilike("search_text", `%${normQuery}%`)
+    .ilike("search_text", ilikeContains(normQuery))
     .limit(limit);
   return (data || []).map((r) => ({
     id: r.id,
@@ -102,7 +104,7 @@ async function searchHadith(supabase, normQuery, limit) {
     .from("verified_hadith_items")
     .select("id, title, text, narrator, collection")
     .eq("status", "published")
-    .ilike("search_text", `%${normQuery}%`)
+    .ilike("search_text", ilikeContains(normQuery))
     .limit(limit);
   return (data || []).map((r) => ({
     id: r.id,
@@ -120,7 +122,7 @@ async function searchQa(supabase, normQuery, limit) {
     .from("qa_questions")
     .select("id, question, answer")
     .eq("status", "published")
-    .ilike("search_text", `%${normQuery}%`)
+    .ilike("search_text", ilikeContains(normQuery))
     .limit(limit);
   return (data || []).map((r) => ({
     id: r.id,
@@ -137,7 +139,7 @@ async function searchFawaid(supabase, normQuery, limit) {
     .from("fawaid")
     .select("id, text, author_name")
     .eq("status", "approved")
-    .ilike("search_text", `%${normQuery}%`)
+    .ilike("search_text", ilikeContains(normQuery))
     .limit(limit);
   return (data || []).map((r) => ({
     id: r.id,
@@ -154,7 +156,7 @@ async function searchMiracles(supabase, normQuery, limit) {
     .from("scientific_miracles")
     .select("id, title, body, category")
     .eq("status", "approved")
-    .ilike("search_text", `%${normQuery}%`)
+    .ilike("search_text", ilikeContains(normQuery))
     .limit(limit);
   return (data || []).map((r) => ({
     id: r.id,
@@ -171,7 +173,7 @@ async function searchStories(supabase, normQuery, limit) {
     .from("akp_stories")
     .select("id, title, summary, category")
     .eq("status", "published")
-    .ilike("search_text", `%${normQuery}%`)
+    .ilike("search_text", ilikeContains(normQuery))
     .limit(limit);
   return (data || []).map((r) => ({
     id: r.id,
@@ -190,7 +192,13 @@ async function searchFiqh(supabase, normQuery, limit) {
     .eq("status", "published")
     // الجدول لا يحوي عمود search_text — الفلترة عليه كانت تُفشل الاستعلام كاملاً
     // (42703) فتعود النتيجة فارغة دائماً وكأن لا قرارات مطابقة.
-    .or(`title.ilike.%${normQuery}%,summary.ilike.%${normQuery}%,ruling_text.ilike.%${normQuery}%`)
+    .or(
+      [
+        postgrestOrIlike("title", normQuery),
+        postgrestOrIlike("summary", normQuery),
+        postgrestOrIlike("ruling_text", normQuery),
+      ].join(","),
+    )
     .limit(limit);
   return (data || []).map((r) => ({
     id: r.slug,
@@ -210,7 +218,7 @@ async function searchQuranIndex(supabase, normQuery, limit) {
   const { data } = await supabase
     .from("quran_search_index")
     .select("content_id, surah_name, ayah_text, source_reference")
-    .ilike("search_text", `%${normQuery}%`)
+    .ilike("search_text", ilikeContains(normQuery))
     .limit(limit);
   return (data || []).map((r) => ({
     id: r.content_id,
@@ -233,7 +241,7 @@ async function searchQuranIndex(supabase, normQuery, limit) {
 const ALLOWED_ORIGINS = new Set(
   [
     process.env.SITE_ORIGIN,
-    "https://www.majlisilm.com", // siteUrl المعتمد
+    "https://majlisilm.com",
     "https://www.majlisilm.com",
     "http://majlisilm.com",
     "http://www.majlisilm.com",
@@ -355,8 +363,7 @@ export default async function handler(req, res) {
     if (err.message === "search_timeout") {
       sendJson(res, 408, { ok: false, error: "search_timeout", message: "انتهت مهلة البحث (3s)" });
     } else {
-      console.error("[/api/search]", err);
-      sendJson(res, 500, { ok: false, error: err.message || "internal_error" });
+      sendSafeError(res, sendJson, err, { code: "search_failed" });
     }
   }
 }
