@@ -762,7 +762,11 @@ function Router() {
       <Route path="/admin/users"><Redirect to="/admin?section=users" /></Route>
       <Route path="/admin/universities"><AdminLazyRoute component={UniversitiesAdminPage} /></Route>
       <Route path="/admin"><AdminLazyRoute component={AdminPage} /></Route>
-      <Route component={NotFound} />
+      <Route component={() => (
+        <Suspense fallback={<LazyRouteFallback />}>
+          <NotFound />
+        </Suspense>
+      )} />
     </Switch>
   );
 }
