@@ -530,7 +530,7 @@
       "destination": "/api/lessons/:id"
     },
     {
-      "source": "/api/((?!healthz$|readyz$|cron/job-worker$).*)",
+      "source": "/api/(.*)",
       "destination": "/api/index"
     },
     {
