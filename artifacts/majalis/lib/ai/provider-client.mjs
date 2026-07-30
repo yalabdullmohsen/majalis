@@ -17,7 +17,9 @@ import {
 } from "./error-classifier.mjs";
 import {
   allowInMemoryReliabilityStore,
+  classifyDurablePgError,
   durableStoreUnavailableError,
+  DURABLE_REASONS,
   logDurableStoreUnavailable,
   isProductionRuntime,
 } from "../reliability/env.mjs";
@@ -122,24 +124,53 @@ function memGet(provider) {
   return row;
 }
 
-function durableUnavailableResult() {
+function durableUnavailableResult(reason = DURABLE_REASONS.database_not_configured) {
+  const safeReason = DURABLE_REASONS[reason] || DURABLE_REASONS.queue_query_failed;
   return {
     ok: false,
     errorCode: AI_ERROR_CODES.durable_store_unavailable,
     body: {
       status: "service_unavailable",
       reason: AI_ERROR_CODES.durable_store_unavailable,
+      detail: safeReason,
     },
     skippedProvider: true,
-    meta: { store_adapter: null, production: isProductionRuntime() },
+    meta: {
+      store_adapter: null,
+      production: isProductionRuntime(),
+      reason: safeReason,
+    },
+  };
+}
+
+function defaultCircuitState(provider) {
+  return {
+    provider,
+    state: "closed",
+    opened_reason: null,
+    opened_at: null,
+    retry_after: null,
+    daily_requests: 0,
+    last_alert_at: null,
+    day: todayKey(),
+    concurrency_lease: 0,
   };
 }
 
 /**
- * @returns {Promise<{state: any, adapter: "postgres"|"memory"} | {unavailable: true}>}
+ * @returns {Promise<{state: any, adapter: "postgres"|"memory"} | {unavailable: true, reason?: string}>}
  */
 export async function getProviderState(provider) {
-  const fromDb = await withPg(async (pool) => {
+  try {
+    const { getPgPool } = await import("../database.mjs");
+    const pool = typeof getPgPool === "function" ? await getPgPool() : null;
+    if (!pool) {
+      if (!allowInMemoryReliabilityStore()) {
+        return { unavailable: true, reason: DURABLE_REASONS.database_not_configured };
+      }
+      return { state: { ...memGet(provider) }, adapter: "memory" };
+    }
+
     const { rows } = await pool.query(
       `SELECT provider, circuit_state AS state, opened_reason, opened_at, retry_after,
               daily_request_count AS daily_requests, last_alert_at, day_key AS day,
@@ -147,19 +178,22 @@ export async function getProviderState(provider) {
        FROM ai_provider_circuit WHERE provider = $1`,
       [provider],
     );
-    return rows[0] || null;
-  });
-  if (fromDb) {
+
+    // Empty row ≠ store unavailable: default closed until first persist.
+    const fromDb = rows[0] || defaultCircuitState(provider);
     if (fromDb.day !== todayKey()) {
       fromDb.daily_requests = 0;
       fromDb.day = todayKey();
     }
     return { state: fromDb, adapter: "postgres" };
+  } catch (err) {
+    const reason = classifyDurablePgError(err);
+    logDurableStoreUnavailable("ai_circuit.getProviderState", err?.message || err, reason);
+    if (!allowInMemoryReliabilityStore()) {
+      return { unavailable: true, reason };
+    }
+    return { state: { ...memGet(provider) }, adapter: "memory" };
   }
-  if (!allowInMemoryReliabilityStore()) {
-    return { unavailable: true };
-  }
-  return { state: { ...memGet(provider) }, adapter: "memory" };
 }
 
 async function persistState(provider, patch) {
@@ -348,7 +382,7 @@ async function runAiCallOnce(provider, fn, options, opts, corr, started) {
   const signal = options.signal;
   const got = await getProviderState(provider);
   if (got.unavailable) {
-    return durableUnavailableResult();
+    return durableUnavailableResult(got.reason);
   }
   const state = got.state;
   const now = Date.now();

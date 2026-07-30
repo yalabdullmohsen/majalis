@@ -82,7 +82,12 @@ export default async function handler(req, res) {
     job = await claimNextJob({ workerId, leaseMs: WORKER_LEASE_MS });
   } catch (err) {
     if (err?.code === "durable_store_unavailable") {
-      sendJson(res, 503, { ok: false, error: "durable_store_unavailable", claimed: false });
+      sendJson(res, 503, {
+        ok: false,
+        error: "durable_store_unavailable",
+        reason: err?.reason || null,
+        claimed: false,
+      });
       return;
     }
     throw err;
@@ -146,14 +151,9 @@ export default async function handler(req, res) {
     });
 
     if (result.timedOut || (result.aborted && !result.done)) {
-      await checkpointJob(job.job_id, result.cursor);
-      // Soft fail — lease reclaim continues work; do not dead-letter on budget stop.
-      await failJob(job.job_id, {
-        errorCode: "aborted",
-        errorMessage: result.timedOut ? "worker_deadline" : "aborted",
-        forceDeadLetter: false,
-        attemptId,
-      });
+      // Soft stop: extend lease + keep running. Next claim recovers via expired lease
+      // without burning attempt_count or dead-lettering.
+      await checkpointJob(job.job_id, result.cursor, { leaseMs: WORKER_LEASE_MS });
       sendJson(res, 200, {
         ok: true,
         jobId: job.job_id,
@@ -178,7 +178,7 @@ export default async function handler(req, res) {
       return;
     }
 
-    await checkpointJob(job.job_id, result.cursor);
+    await checkpointJob(job.job_id, result.cursor, { leaseMs: WORKER_LEASE_MS });
     sendJson(res, 200, {
       ok: true,
       jobId: job.job_id,
@@ -189,6 +189,19 @@ export default async function handler(req, res) {
     });
   } catch (err) {
     const code = err?.code || (err?.name === "AbortError" ? "aborted" : "worker_error");
+    if (code === "aborted") {
+      await checkpointJob(job.job_id, job.cursor || {}, { leaseMs: WORKER_LEASE_MS });
+      if (!res.headersSent) {
+        sendJson(res, 200, {
+          ok: true,
+          jobId: job.job_id,
+          status: "checkpointed",
+          reason: "aborted",
+          elapsedMs: Date.now() - started,
+        });
+      }
+      return;
+    }
     await failJob(job.job_id, {
       errorCode: code,
       errorMessage: String(err?.message || err),

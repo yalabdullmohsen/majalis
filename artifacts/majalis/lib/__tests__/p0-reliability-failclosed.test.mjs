@@ -50,6 +50,7 @@ import { allowInMemoryReliabilityStore, isProductionRuntime } from "../reliabili
   const enq = await enqueueJob({ jobType: "source-monitor", idempotencyKey: "prod-fail-closed" });
   assert.equal(enq.ok, false);
   assert.equal(enq.error, "durable_store_unavailable");
+  assert.equal(enq.reason, "database_not_configured");
 
   __resetAiCircuitMemory();
   const ai = await runAiCall("anthropic-prod", async () => "nope");

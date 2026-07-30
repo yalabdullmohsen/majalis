@@ -152,6 +152,31 @@ function mockReq(overrides = {}) {
 }
 
 {
+  // Soft stop (aborted) must re-queue — never dead-letter, even at max_attempts.
+  __resetJobMemory();
+  const enq = await enqueueJob({
+    jobType: "content-scoring",
+    idempotencyKey: "soft-abort-1",
+    maxAttempts: 1,
+  });
+  assert.equal(enq.ok, true);
+  const j = await claimNextJob({ workerId: "soft-1", leaseMs: 30_000 });
+  assert.ok(j);
+  await failJob(j.job_id, {
+    errorCode: "aborted",
+    errorMessage: "worker_deadline",
+    attemptId: j._attempt_id,
+  });
+  assert.equal(__getMemDeadLetter(j.job_id), null, "aborted must not DLQ");
+  const again = await enqueueJob({
+    jobType: "content-scoring",
+    idempotencyKey: "soft-abort-1",
+  });
+  assert.equal(again.job.status, "queued");
+  assert.ok(again.job.next_retry_at || again.job.next_run_at);
+}
+
+{
   const meta = resolveEnqueueMetadata(
     { url: "/api/cron/autonomous-platform-fetch", query: {}, body: {} },
     "autonomous-platform",

@@ -13,9 +13,30 @@ import { randomUUID } from "node:crypto";
 import { classifyAiError, isPermanentAiFailure } from "../ai/error-classifier.mjs";
 import {
   allowInMemoryReliabilityStore,
+  classifyDurablePgError,
   durableStoreUnavailableError,
+  DURABLE_REASONS,
   logDurableStoreUnavailable,
 } from "../reliability/env.mjs";
+
+/** @type {string} */
+let lastDurableReason = DURABLE_REASONS.database_not_configured;
+
+export function getLastDurableReason() {
+  return lastDurableReason;
+}
+
+function setDurableReason(reason) {
+  if (reason == null) {
+    lastDurableReason = DURABLE_REASONS.database_not_configured;
+    return;
+  }
+  lastDurableReason = DURABLE_REASONS[reason] || DURABLE_REASONS.queue_query_failed;
+}
+
+function softStopError(code) {
+  return ["aborted", "budget_exhausted", "time_budget", "worker_deadline"].includes(String(code || ""));
+}
 
 const ALLOWED_JOB_TYPES = new Set([
   "source-monitor",
@@ -69,9 +90,15 @@ async function getPgPoolOrNull() {
   try {
     const mod = await import("../database.mjs");
     const pool = typeof mod.getPgPool === "function" ? await mod.getPgPool() : null;
-    return pool || null;
+    if (!pool) {
+      setDurableReason(DURABLE_REASONS.database_not_configured);
+      return null;
+    }
+    return pool;
   } catch (err) {
-    logDurableStoreUnavailable("queue.pg", err?.message || err);
+    const reason = classifyDurablePgError(err);
+    setDurableReason(reason);
+    logDurableStoreUnavailable("queue.pg", err?.message || err, reason);
     return null;
   }
 }
@@ -82,15 +109,18 @@ async function withPg(fn) {
   try {
     return await fn(pool);
   } catch (err) {
-    logDurableStoreUnavailable("queue.pg.query", err?.message || err);
+    const reason = classifyDurablePgError(err);
+    setDurableReason(reason);
+    logDurableStoreUnavailable("queue.pg.query", err?.message || err, reason);
     return null;
   }
 }
 
 function memoryDenied(op) {
   if (allowInMemoryReliabilityStore()) return null;
-  logDurableStoreUnavailable("queue", op);
-  return { ok: false, error: "durable_store_unavailable", durable: false };
+  const reason = lastDurableReason || DURABLE_REASONS.database_not_configured;
+  logDurableStoreUnavailable("queue", op, reason);
+  return { ok: false, error: "durable_store_unavailable", reason, durable: false };
 }
 
 /** @type {null | { next_retry_at: boolean, completed_at: boolean }} */
@@ -250,12 +280,16 @@ export async function claimNextJob({ workerId, jobTypes = null, leaseMs = 45_000
     const client = await pool.connect();
     try {
       await client.query("BEGIN");
+      const cols = await getColumnSupport(client);
+      const dueExpr = cols.next_retry_at
+        ? "COALESCE(j.next_retry_at, j.next_run_at)"
+        : "j.next_run_at";
       const { rows } = await client.query(
         `WITH cte AS (
            SELECT j.job_id
            FROM background_jobs j
            WHERE (
-               (j.status = 'queued' AND j.next_run_at <= now())
+               (j.status = 'queued' AND ${dueExpr} <= now())
                OR (j.status = 'running' AND j.lease_expires_at IS NOT NULL AND j.lease_expires_at < now())
              )
              AND ($1::text[] IS NULL OR j.job_type = ANY($1::text[]))
@@ -268,7 +302,7 @@ export async function claimNextJob({ workerId, jobTypes = null, leaseMs = 45_000
                  AND r.job_id <> j.job_id
              )
              AND pg_try_advisory_xact_lock(hashtext('bgjob:' || j.job_type))
-           ORDER BY j.next_run_at ASC
+           ORDER BY ${dueExpr} ASC
            FOR UPDATE OF j SKIP LOCKED
            LIMIT 1
          )
@@ -276,7 +310,7 @@ export async function claimNextJob({ workerId, jobTypes = null, leaseMs = 45_000
            status = 'running',
            locked_at = now(),
            locked_by = $2,
-           lease_expires_at = now() + ($3 || ' milliseconds')::interval,
+           lease_expires_at = now() + ($3::text || ' milliseconds')::interval,
            started_at = COALESCE(j.started_at, now()),
            attempt_count = CASE
              WHEN j.status = 'queued' THEN j.attempt_count + 1
@@ -285,12 +319,11 @@ export async function claimNextJob({ workerId, jobTypes = null, leaseMs = 45_000
            updated_at = now()
          FROM cte WHERE j.job_id = cte.job_id
          RETURNING j.*`,
-        [types, workerId, String(leaseMs)],
+        [types, workerId, String(Math.max(1_000, Number(leaseMs) || 45_000))],
       );
 
       let job = rows[0] || null;
       if (job) {
-        const cols = await getColumnSupport(client);
         if (cols.next_retry_at) {
           await client.query(`UPDATE background_jobs SET next_retry_at = NULL WHERE job_id = $1`, [
             job.job_id,
@@ -307,15 +340,20 @@ export async function claimNextJob({ workerId, jobTypes = null, leaseMs = 45_000
       } catch {
         /* ignore */
       }
-      logDurableStoreUnavailable("queue.claim.query", err?.message || err);
+      const reason = classifyDurablePgError(err);
+      setDurableReason(reason);
+      logDurableStoreUnavailable("queue.claim.query", err?.message || err, reason);
       if (!allowInMemoryReliabilityStore()) {
-        throw durableStoreUnavailableError("queue.claim");
+        throw durableStoreUnavailableError("queue.claim", reason);
       }
     } finally {
       client.release();
     }
   } else if (!allowInMemoryReliabilityStore()) {
-    throw durableStoreUnavailableError("queue.claim");
+    throw durableStoreUnavailableError(
+      "queue.claim",
+      lastDurableReason || DURABLE_REASONS.database_not_configured,
+    );
   }
 
   const now = Date.now();
@@ -327,7 +365,8 @@ export async function claimNextJob({ workerId, jobTypes = null, leaseMs = 45_000
       new Date(job.lease_expires_at).getTime() < now;
     if (job.status === "running" && !expired) continue;
     if (job.status !== "queued" && !expired) continue;
-    if (job.status === "queued" && job.next_run_at && new Date(job.next_run_at).getTime() > now) {
+    const dueAt = job.next_retry_at || job.next_run_at;
+    if (job.status === "queued" && dueAt && new Date(dueAt).getTime() > now) {
       continue;
     }
     if (memRunningTypes.has(job.job_type) && !expired) continue;
@@ -353,26 +392,31 @@ export async function claimNextJob({ workerId, jobTypes = null, leaseMs = 45_000
   return null;
 }
 
-export async function checkpointJob(jobId, cursor) {
+export async function checkpointJob(jobId, cursor, options = {}) {
+  const leaseMs = Math.max(1_000, Number(options.leaseMs) || 45_000);
   const fromDb = await withPg(async (pool) => {
     await pool.query(
       `UPDATE background_jobs SET cursor = $2::jsonb, updated_at = now(),
-         lease_expires_at = now() + interval '45 seconds'
-       WHERE job_id = $1`,
-      [jobId, JSON.stringify(cursor || {})],
+         lease_expires_at = now() + ($3::text || ' milliseconds')::interval
+       WHERE job_id = $1 AND status = 'running'`,
+      [jobId, JSON.stringify(cursor || {}), String(leaseMs)],
     );
     return true;
   });
-  if (fromDb) return;
+  if (fromDb) return { ok: true };
   if (!allowInMemoryReliabilityStore()) {
-    throw durableStoreUnavailableError("queue.checkpoint");
+    throw durableStoreUnavailableError(
+      "queue.checkpoint",
+      lastDurableReason || DURABLE_REASONS.database_not_configured,
+    );
   }
   for (const job of memJobs.values()) {
-    if (job.job_id === jobId) {
+    if (job.job_id === jobId && job.status === "running") {
       job.cursor = cursor || {};
-      job.lease_expires_at = new Date(Date.now() + 45_000).toISOString();
+      job.lease_expires_at = new Date(Date.now() + leaseMs).toISOString();
     }
   }
+  return { ok: true };
 }
 
 export async function completeJob(jobId, summary = {}, attemptId = null) {
@@ -400,7 +444,10 @@ export async function completeJob(jobId, summary = {}, attemptId = null) {
   });
   if (fromDb) return;
   if (!allowInMemoryReliabilityStore()) {
-    throw durableStoreUnavailableError("queue.complete");
+    throw durableStoreUnavailableError(
+      "queue.complete",
+      lastDurableReason || DURABLE_REASONS.database_not_configured,
+    );
   }
   for (const job of memJobs.values()) {
     if (job.job_id === jobId) {
@@ -421,14 +468,17 @@ export async function completeJob(jobId, summary = {}, attemptId = null) {
   }
 }
 
-export async function failJob(jobId, { errorCode, errorMessage, forceDeadLetter = false, attemptId = null }) {
+export async function failJob(
+  jobId,
+  { errorCode, errorMessage, forceDeadLetter = false, attemptId = null, retryDelaySec = null } = {},
+) {
   const classified = errorCode ? { code: errorCode } : classifyAiError({ message: errorMessage });
   const code = errorCode || classified.code || "worker_error";
+  const soft = softStopError(code);
+  // Soft worker stops (budget/time/abort) must re-queue — never dead-letter.
   const permanent =
     forceDeadLetter ||
-    code === "no_worker_registered" ||
-    code === "aborted" ||
-    isPermanentAiFailure(code);
+    (!soft && (code === "no_worker_registered" || isPermanentAiFailure(code)));
 
   const fromDb = await withPg(async (pool) => {
     const { rows } = await pool.query(`SELECT * FROM background_jobs WHERE job_id = $1`, [jobId]);
@@ -439,7 +489,7 @@ export async function failJob(jobId, { errorCode, errorMessage, forceDeadLetter 
       errorMessage,
     });
     const cols = await getColumnSupport(pool);
-    const dead = permanent || job.attempt_count >= job.max_attempts;
+    const dead = !soft && (permanent || job.attempt_count >= job.max_attempts);
     if (dead) {
       const deadExtra = [];
       if (cols.completed_at) deadExtra.push("completed_at = NULL");
@@ -469,14 +519,16 @@ export async function failJob(jobId, { errorCode, errorMessage, forceDeadLetter 
         [jobId, job.job_type, code, String(errorMessage || "").slice(0, 500), JSON.stringify(job.metadata || {})],
       );
     } else {
-      const delaySec = Math.min(3600, 2 ** job.attempt_count * 30);
+      const delaySec = soft
+        ? Math.min(120, Math.max(5, Number(retryDelaySec) || 15))
+        : Math.min(3600, 2 ** job.attempt_count * 30);
       const retryExtra = cols.next_retry_at
-        ? ", next_retry_at = now() + ($2 || ' seconds')::interval"
+        ? ", next_retry_at = now() + ($2::text || ' seconds')::interval"
         : "";
       await pool.query(
         `UPDATE background_jobs SET
            status = 'queued',
-           next_run_at = now() + ($2 || ' seconds')::interval,
+           next_run_at = now() + ($2::text || ' seconds')::interval,
            last_error_code = $3,
            last_error_message = $4,
            locked_at = NULL,
@@ -492,7 +544,10 @@ export async function failJob(jobId, { errorCode, errorMessage, forceDeadLetter 
   });
   if (fromDb) return;
   if (!allowInMemoryReliabilityStore()) {
-    throw durableStoreUnavailableError("queue.fail");
+    throw durableStoreUnavailableError(
+      "queue.fail",
+      lastDurableReason || DURABLE_REASONS.database_not_configured,
+    );
   }
   for (const job of memJobs.values()) {
     if (job.job_id !== jobId) continue;
@@ -504,7 +559,7 @@ export async function failJob(jobId, { errorCode, errorMessage, forceDeadLetter 
       a.error_code = code;
       a.error_message = String(errorMessage || "").slice(0, 500);
     }
-    const dead = permanent || job.attempt_count >= job.max_attempts;
+    const dead = !soft && (permanent || job.attempt_count >= job.max_attempts);
     job.status = dead ? "dead_letter" : "queued";
     job.last_error_code = code;
     job.last_error_message = String(errorMessage || "").slice(0, 500);
@@ -521,8 +576,10 @@ export async function failJob(jobId, { errorCode, errorMessage, forceDeadLetter 
       job.finished_at = new Date().toISOString();
       job.next_retry_at = null;
     } else {
-      const delayMs = Math.min(3600, 2 ** job.attempt_count * 30) * 1000;
-      job.next_run_at = new Date(Date.now() + delayMs).toISOString();
+      const delaySec = soft
+        ? Math.min(120, Math.max(5, Number(retryDelaySec) || 15))
+        : Math.min(3600, 2 ** job.attempt_count * 30);
+      job.next_run_at = new Date(Date.now() + delaySec * 1000).toISOString();
       job.next_retry_at = job.next_run_at;
     }
   }
