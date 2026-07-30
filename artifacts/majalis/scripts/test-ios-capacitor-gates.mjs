@@ -137,6 +137,10 @@ const audioEngine = readFileSync(join(root, "src", "core", "audio", "AudioEngine
 ok(audioEngine.includes("activatePlaybackSession"), "AudioEngine activates session before play");
 ok(audioEngine.includes("releasePlaybackSession"), "AudioEngine releases session on stop");
 
+const ayahPlayer = readFileSync(join(root, "src", "hooks", "useAyahPlayer.ts"), "utf8");
+ok(ayahPlayer.includes("ensureNativePlaybackAudioSession"), "useAyahPlayer activates native playback session");
+ok(ayahPlayer.includes("deactivateNativeAudioSession"), "useAyahPlayer deactivates native session on stop");
+
 // UUID sanity: PBX ids are 24 hex chars
 const idRe = /\b([0-9A-Fa-f]{24})\b/g;
 const ids = [...pbx.matchAll(idRe)].map((m) => m[1]);
