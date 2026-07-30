@@ -127,6 +127,30 @@ try {
   await admin.query(`DELETE FROM background_job_dead_letters`);
   await admin.query(`DELETE FROM background_job_attempts`);
   await admin.query(`DELETE FROM background_jobs`);
+
+  // Reproduce process-import-jobs watchdog: jsonb_build_array($2) type inference.
+  {
+    let untypedFailed = false;
+    try {
+      await admin.query(
+        `SELECT jsonb_build_array($2)
+         WHERE $1::text[] IS NOT NULL
+           AND $3::timestamptz IS NOT NULL`,
+        [["running", "processing"], "watchdog reason", new Date().toISOString()],
+      );
+    } catch (err) {
+      untypedFailed = /could not determine data type of parameter \$2/i.test(String(err?.message || err));
+    }
+    assert.equal(untypedFailed, true, "untyped jsonb_build_array($2) must fail (reproduction)");
+
+    const { rows: typedRows } = await admin.query(
+      `SELECT jsonb_build_array($2::text) AS errs
+       WHERE $1::text[] IS NOT NULL
+         AND $3::timestamptz IS NOT NULL`,
+      [["running", "processing"], "watchdog reason", new Date().toISOString()],
+    );
+    assert.equal(typedRows[0]?.errs?.[0], "watchdog reason", "$2::text cast must succeed");
+  }
 } finally {
   await admin.end();
 }

@@ -1801,7 +1801,8 @@ export async function getKnowledgeRelationships(opts?: {
     if (opts?.targetType) q = q.eq("target_type", opts.targetType);
     if (opts?.targetId)   q = q.eq("target_id",   opts.targetId);
     if (opts?.verifiedOnly) q = q.eq("is_verified", true);
-    if (opts?.limit) q = q.limit(opts.limit);
+    // Always bound — unbounded scans were 3–4s on Production.
+    q = q.limit(opts?.limit && opts.limit > 0 ? Math.min(opts.limit, 200) : 50);
 
     const { data, error } = await q;
     if (error) {

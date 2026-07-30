@@ -46,6 +46,8 @@ assert.match(enqueue, /metadata\.mode|mode:/, "enqueue propagates mode");
 const jobWorker = readFileSync(join(root, "lib/api-handlers/cron/job-worker.js"), "utf8");
 assert.match(jobWorker, /AbortController/, "job-worker aborts on deadline");
 assert.match(jobWorker, /worker_deadline/, "deadline abort reason set");
+assert.match(jobWorker, /WORKER_DEADLINE_MS\s*=\s*6_000/, "job-worker budget shortened to avoid 504");
+assert.match(jobWorker, /runJobBatchesWithBudget/, "job-worker races runner against budget");
 
 assert.match(supabaseTs, /classifyIdentifier|isUuid/, "lesson lookup separates UUID/slug");
 assert.match(supabaseTs, /order\("sort_order"/, "QA categories ordered by sort_order");

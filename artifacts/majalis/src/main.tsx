@@ -126,8 +126,11 @@ if (isNative) {
         const path = resolveNativeDeepLinkPath(url);
         const current = `${window.location.pathname}${window.location.search}${window.location.hash}`;
         if (shouldNavigateNativeDeepLink(current, path) && path) {
-          window.history.pushState({}, "", path);
-          window.dispatchEvent(new PopStateEvent("popstate"));
+          // path is always same-origin relative — never pushState a www absolute URL
+          if (path.startsWith("/") && !path.startsWith("//")) {
+            window.history.pushState({}, "", path);
+            window.dispatchEvent(new PopStateEvent("popstate"));
+          }
         }
       });
     });

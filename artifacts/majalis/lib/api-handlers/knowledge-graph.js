@@ -49,7 +49,11 @@ function extractId(pathname, segment) {
 /** جلب عقدة واحدة مع علاقاتها المباشرة */
 async function getNode(admin, nodeId) {
   const [nodeRes, edgesRes] = await Promise.all([
-    admin.from("kn_nodes").select("*").eq("id", nodeId).maybeSingle(),
+    admin
+      .from("kn_nodes")
+      .select("id, node_type, title, summary, reference_id, created_at, updated_at")
+      .eq("id", nodeId)
+      .maybeSingle(),
     admin
       .from("kn_edges")
       .select(`
@@ -58,7 +62,8 @@ async function getNode(admin, nodeId) {
         target:target_node_id(id, node_type, title, summary, reference_id)
       `)
       .or(`source_node_id.eq.${nodeId},target_node_id.eq.${nodeId}`)
-      .order("strength", { ascending: false }),
+      .order("strength", { ascending: false })
+      .limit(50),
   ]);
 
   if (nodeRes.error) throw nodeRes.error;

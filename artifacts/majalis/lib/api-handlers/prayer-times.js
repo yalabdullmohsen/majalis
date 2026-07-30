@@ -19,7 +19,7 @@ async function readPrayerTimesFromDb(dateKey) {
 
   const { data, error } = await admin
     .from("prayer_times")
-    .select("*")
+    .select("date, fajr, sunrise, dhuhr, asr, maghrib, isha, city, governorate, timezone, method")
     .eq("city", KUWAIT_CITY)
     .eq("governorate", KUWAIT_GOVERNORATE)
     .eq("date", dateKey)

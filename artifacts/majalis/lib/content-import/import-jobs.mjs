@@ -418,7 +418,7 @@ export async function runImportJobWatchdog(admin = getSupabaseAdmin()) {
         `UPDATE content_import_jobs
          SET status = 'failed',
              phase = 'failed',
-             import_errors = jsonb_build_array($2),
+             import_errors = jsonb_build_array($2::text),
              completed_at = now(),
              updated_at = now()
          WHERE completed_at IS NULL

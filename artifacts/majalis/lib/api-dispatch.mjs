@@ -134,6 +134,8 @@ export const API_ROUTES = [
   { prefix: "/api/public-config", module: "./api-handlers/public-config.js", allowGet: true, exact: true },
   { prefix: "/api/assistant/health", module: "./api-handlers/assistant/health.js", allowGet: true, exact: true },
   { prefix: "/api/prayer-times", module: "./api-handlers/prayer-times.js", allowGet: true, exact: true },
+  { prefix: "/api/content-delta", module: "./api-handlers/content-delta.js", allowGet: true, exact: true },
+  { prefix: "/api/reading-sync", module: "./api-handlers/reading-sync.js", allowGet: true, exact: true },
   { prefix: "/api/cron/sync-data", module: "./api-handlers/cron/sync-data.js", allowGet: true, exact: true },
   { prefix: "/api/cron/knowledge-sync", module: "./api-handlers/cron/knowledge-sync.js", allowGet: true, exact: true },
   { prefix: "/api/cron/sync-fiqh-council", module: "./api-handlers/cron/sync-fiqh-council.js", allowGet: true, exact: true },
