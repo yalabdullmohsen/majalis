@@ -358,7 +358,24 @@
   color: var(--pts-muted);
   font-size: 0.95rem;
 }
-.pts-error { color: #F0A8A8; }
+.pts-error {
+  color: #F0A8A8;
+  margin-block: 0.75rem;
+}
+.pts-retry {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.45rem 1.1rem;
+  border-radius: 0.65rem;
+  border: 1px solid color-mix(in srgb, currentColor 28%, transparent);
+  background: color-mix(in srgb, currentColor 10%, transparent);
+  color: inherit;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
 
 @media (prefers-reduced-motion: reduce) {
   .pts-row { transition: none; }

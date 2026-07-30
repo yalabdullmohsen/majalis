@@ -34,6 +34,8 @@ export function GlobalBackButton() {
   if (location === "/") return null;
   // مسارات غامرة لها زر رجوع داخل شريطها الخاص — لا نكرّر زرًا عائمًا فوقها.
   if (isImmersiveChromePath(location)) return null;
+  // مخفي بصريًا قبل عتبة التمرير: يُزال من شجرة VoiceOver تمامًا (لا opacity فقط).
+  if (!pastThreshold) return null;
 
   const goBack = () => {
     // بدون fallback ثابت "/" — sectionAwareFallback يرجع للقسم الأب.
@@ -43,7 +45,7 @@ export function GlobalBackButton() {
   return (
     <button
       type="button"
-      className={`global-back-btn${pastThreshold ? "" : " global-back-btn--hidden"}`}
+      className="global-back-btn"
       onClick={goBack}
       aria-label="رجوع"
       title="رجوع"

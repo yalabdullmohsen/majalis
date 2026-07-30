@@ -99,7 +99,7 @@ export default function MushafPageView() {
   // مُثبَّت أيضًا على المسار القديم /mushaf/:surah (رقم سورة) — يُحوَّل
   // مباشرة لأول صفحته عبر SURAH_START_PAGES، دون مسار/مكوّن منفصل مكرَّر.
   const params = useParams<{ page?: string; surah?: string }>();
-  const [, navigate] = useLocation();
+  const [location, navigate] = useLocation();
   const { prefs, setPref } = useQuranPreferences();
   const breakReminder = useReadingBreakReminder();
   /** Keep screen lit while the mushaf page is open (expo-keep-awake port). */
@@ -320,8 +320,8 @@ export default function MushafPageView() {
   // لأنه يتراكب فعليًا فوق شريط التنقّل السفلي الثابت بعرض الشاشة هنا،
   // اكتُشف حيًّا أثناء تحقّق Playwright (زر "السابقة" تعذّر النقر عليه).
   const goBack = useCallback(() => {
-    goBackOrFallback(`/mushaf/page/${page}`);
-  }, [page]);
+    goBackOrFallback(location);
+  }, [location]);
 
   // ── سحب أفقي RTL صحيح الاتجاه: تحريك الإصبع لليسار = الصفحة التالية (تقدّم في القراءة) ──
   const onTouchStart = (e: React.TouchEvent) => { touchStartX.current = e.touches[0].clientX; };
@@ -453,7 +453,17 @@ export default function MushafPageView() {
             )}
 
             {error && !loading ? (
-              <p className="ds-empty">تعذّر تحميل هذه الصفحة. تحقّق من اتصالك وحاول مجددًا.</p>
+              <div className="ds-empty" role="alert">
+                <p>تعذّر تحميل هذه الصفحة. تحقّق من اتصالك وحاول مجددًا.</p>
+                <button
+                  type="button"
+                  className="mpv-resume-banner__btn"
+                  onClick={() => { void loadPage(page); }}
+                  aria-label="إعادة محاولة تحميل الصفحة"
+                >
+                  إعادة المحاولة
+                </button>
+              </div>
             ) : (
               <div className={`qs-mushaf-frame ${frameClass}`}>
                 <div

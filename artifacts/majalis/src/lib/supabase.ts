@@ -84,6 +84,19 @@ export async function signOut() {
   return await supabase.auth.signOut();
 }
 
+/** طلب رابط استعادة كلمة المرور — يعيد إلى /auth/callback ثم صفحة التحديث. */
+export async function resetPasswordForEmail(email: string) {
+  const { getAuthEmailRedirectUrl } = await import("@/lib/auth-redirect");
+  return await supabase.auth.resetPasswordForEmail(email, {
+    redirectTo: getAuthEmailRedirectUrl("/auth/update-password"),
+  });
+}
+
+/** تحديث كلمة المرور بعد جلسة PASSWORD_RECOVERY. */
+export async function updatePassword(newPassword: string) {
+  return await supabase.auth.updateUser({ password: newPassword });
+}
+
 /**
  * مزوّد Google غير مُفعَّل حاليًا في إعدادات Supabase Auth (لوحة التحكم →
  * Authentication → Providers → Google) — تحقّق حي (2026-07-17): الضغط على

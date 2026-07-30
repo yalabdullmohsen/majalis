@@ -26,6 +26,7 @@ assert.equal(isQuranImmersivePath("/fiqh"), false);
 
 assert.equal(isImmersiveChromePath("/prayer-times"), true);
 assert.equal(isImmersiveChromePath("/mushaf"), true);
+assert.equal(isImmersiveChromePath("/quran/recitation-test-ai"), true);
 assert.equal(isImmersiveChromePath("/"), false);
 assert.equal(isImmersiveChromePath("/hadith"), false);
 

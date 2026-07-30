@@ -29,6 +29,30 @@
 }
 html[data-theme="dark"] .rai-page { background: #111714; }
 
+.rai-shell {
+  position: relative;
+  min-height: 100dvh;
+  background: var(--rai-ivory);
+}
+html[data-theme="dark"] .rai-shell { background: #111714; }
+.rai-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: max(0.65rem, env(safe-area-inset-top, 0px)) 1rem 0;
+  min-height: 44px;
+  padding: 0.35rem 0.75rem;
+  border: none;
+  border-radius: 0.65rem;
+  background: transparent;
+  color: var(--rai-emerald-deep, #153025);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+html[data-theme="dark"] .rai-back-btn { color: #E5F0EC; }
+.rai-back-btn:hover { background: color-mix(in srgb, var(--rai-emerald, #0E6E52) 10%, transparent); }
+
 .rai-header {
   max-width: 720px;
   margin: 0 auto 1.5rem;

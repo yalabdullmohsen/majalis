@@ -511,10 +511,9 @@ html.dark .nav-soon-badge {
 .lesson-unified-card--compact .lesson-unified-card__title {
   font-size: .95rem;
   line-height: 1.4;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  /* عنوان الدرس كاملًا — بلا قصّ سطرين يُخفي المعنى */
+  white-space: normal;
+  overflow: visible;
 }
 .lesson-unified-card--compact .lesson-unified-card__sheikh {
   font-size: .82rem;
@@ -1418,10 +1417,8 @@ a.twitter-timeline {
 }
 
 /* ══ عقد أسطح الصفحات + نماذج + جداول + تمرير أفقي (iPhone) ══ */
-html {
-  -webkit-text-size-adjust: 100%;
-  text-size-adjust: 100%;
-}
+/* Dynamic Type: أُزيل فرض 100% هنا عمدًا — index.css يضبط auto ليحترم
+   تكبير النظام؛ قارئات المصحف تفرض 100% محليًا في quran-immersive-reader.css. */
 body {
   -webkit-tap-highlight-color: transparent;
   overscroll-behavior-y: none;

@@ -169,7 +169,7 @@ export default function PrayerTimesPage() {
     });
   }, []);
 
-  const { data, countdown, loading } = usePrayerCountdown(govId);
+  const { data, countdown, loading, reload } = usePrayerCountdown(govId);
   const [pinnedKey, setPinnedKey] = useState<string | null>(null);
   const gov = KUWAIT_GOVERNORATES.find((g) => g.id === govId) ?? KUWAIT_GOVERNORATES[0];
 
@@ -193,7 +193,10 @@ export default function PrayerTimesPage() {
     return (
       <div className="pts-screen" dir="rtl">
         <h1 className="pts-title">الصلاة</h1>
-        <p className="pts-error">تعذّر تحميل مواقيت الصلاة، تحقق من الاتصال.</p>
+        <p className="pts-error" role="alert">تعذّر تحميل مواقيت الصلاة، تحقق من الاتصال.</p>
+        <button type="button" className="pts-retry" onClick={reload} aria-label="إعادة محاولة تحميل المواقيت">
+          إعادة المحاولة
+        </button>
       </div>
     );
   }

@@ -571,10 +571,9 @@
   font-size: 0.9rem;
   direction: rtl;
   color: var(--ds-text-1, #1a1a1a);
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+  /* نص قرآني: بلا قصّ سطر — يمنع اقتطاع الآيات في مراجعة الحفظ */
+  white-space: normal;
+  overflow: visible;
 }
 
 .qmem-review-item__meta { font-size: 0.72rem; color: var(--ds-text-2, #6b7280); }

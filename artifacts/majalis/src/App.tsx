@@ -271,6 +271,7 @@ const VaultPage = lazy(() => import("@/views/VaultPage"));
 const ResearcherProfilePage = lazy(() => import("@/views/ResearcherProfilePage"));
 const InstitutionsPage = lazy(() => import("@/views/InstitutionsPage"));
 const AuthCallbackPage = lazy(() => import("@/views/AuthCallbackPage"));
+const UpdatePasswordPage = lazy(() => import("@/views/UpdatePasswordPage"));
 const ProphetStoriesPage = lazy(() => import("@/views/ProphetStoriesPage"));
 const NationsPage = lazy(() => import("@/views/NationsPage"));
 const NationDetailPage = lazy(() => import("@/views/NationDetailPage"));
@@ -459,7 +460,7 @@ function Router() {
   return (
     <Switch>
       <Route path="/">
-        <HomePage />
+        <SafeLazyRoute component={HomePage} />
       </Route>
       <Route path="/quran-engine/viewer"><SafeLazyRoute component={QuranEnginePage} /></Route>
       <Route path="/quran-engine"><SafeLazyRoute component={QuranEnginePage} /></Route>
@@ -585,6 +586,7 @@ function Router() {
       <Route path="/researcher-profile"><SafeLazyRoute component={ResearcherProfilePage} /></Route>
       <Route path="/institutions"><SafeLazyRoute component={InstitutionsPage} /></Route>
       <Route path="/auth/callback"><SafeLazyRoute component={AuthCallbackPage} /></Route>
+      <Route path="/auth/update-password"><SafeLazyRoute component={UpdatePasswordPage} /></Route>
       <Route path="/learning/paths/:slug"><SafeLazyRoute component={LearningPathDetailPage} /></Route>
       <Route path="/learning/paths"><SafeLazyRoute component={LearningPathsPage} /></Route>
       <Route path="/learn/series/:slug"><SafeLazyRoute component={LearnSeriesPage} /></Route>
@@ -859,8 +861,8 @@ function AppShellInner() {
       <TopSectionBar />
       {/* شريط العدّ التنازلي العام يُخفى في مسارات المواقيت والمصحف */}
       {!immersive && <PrayerCountdownBanner />}
-      <AdhanNotificationBar />
-      <PrayerRespectBanner />
+      {!immersive && <AdhanNotificationBar />}
+      {!immersive && <PrayerRespectBanner />}
       <main id="main-content" className="app-main" tabIndex={-1}>
         <Router />
       </main>
@@ -872,9 +874,9 @@ function AppShellInner() {
           <AdminSiteEditBar />
         </Suspense>
       )}
-      <ScrollToTop />
+      {!immersive && <ScrollToTop />}
       <GlobalBackButton />
-      <PwaInstallBanner />
+      {!immersive && <PwaInstallBanner />}
       <BottomNavBar />
       {newBadges.length > 0 && (
         <AchievementToast badges={newBadges} onDismiss={dismissBadges} />
