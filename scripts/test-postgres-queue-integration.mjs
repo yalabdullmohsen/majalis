@@ -55,7 +55,15 @@ const require = createRequire(join(root, "artifacts", "majalis", "package.json")
 const pg = require("pg");
 
 const sqlPath = join(root, "artifacts", "majalis", "supabase", "enterprise_reliability_p0_v1.sql");
+const hardenPath = join(
+  root,
+  "artifacts",
+  "majalis",
+  "supabase",
+  "background_jobs_runtime_hardening_v1.sql",
+);
 assert.ok(existsSync(sqlPath));
+assert.ok(existsSync(hardenPath));
 
 const admin = new pg.Client({ connectionString: url });
 await admin.connect();
@@ -68,6 +76,7 @@ await admin.query(`
   );
 `);
 await admin.query(readFileSync(sqlPath, "utf8"));
+await admin.query(readFileSync(hardenPath, "utf8"));
 await admin.query(`DELETE FROM background_job_dead_letters`);
 await admin.query(`DELETE FROM background_job_attempts`);
 await admin.query(`DELETE FROM background_jobs`);
@@ -142,5 +151,38 @@ assert.ok(c2);
 assert.equal(c2.job_id, c1.job_id);
 assert.equal(c2.locked_by, "lease-b");
 await completeJob(c2.job_id, { ok: true });
+
+// Same job_type concurrency: second queued job must not claim while first lease is active
+const typeKey = `type-${Date.now()}`;
+await enqueueJob({ jobType: "sync-data", idempotencyKey: `${typeKey}-a` });
+await enqueueJob({ jobType: "sync-data", idempotencyKey: `${typeKey}-b` });
+const t1 = await claimNextJob({ workerId: "type-a", leaseMs: 30_000 });
+assert.ok(t1);
+const t2 = await claimNextJob({ workerId: "type-b", leaseMs: 30_000 });
+assert.equal(t2, null, "same job_type concurrent claim blocked");
+const attemptRows = await (async () => {
+  const c = new pg.Client({ connectionString: url });
+  await c.connect();
+  const { rows } = await c.query(`SELECT * FROM background_job_attempts WHERE job_id = $1`, [t1.job_id]);
+  await c.end();
+  return rows;
+})();
+assert.ok(attemptRows.length >= 1, "attempt row recorded");
+await completeJob(t1.job_id, { ok: true }, t1._attempt_id);
+const t3 = await claimNextJob({ workerId: "type-c", leaseMs: 30_000 });
+assert.ok(t3, "second job claimable after first completes");
+await completeJob(t3.job_id, { ok: true }, t3._attempt_id);
+
+// Hardening columns present
+{
+  const c = new pg.Client({ connectionString: url });
+  await c.connect();
+  const { rows } = await c.query(
+    `SELECT column_name FROM information_schema.columns
+     WHERE table_name = 'background_jobs' AND column_name IN ('next_retry_at','completed_at')`,
+  );
+  assert.equal(rows.length, 2, "hardening columns present");
+  await c.end();
+}
 
 console.log("postgres-integration: ok");

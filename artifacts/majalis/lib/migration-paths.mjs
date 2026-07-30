@@ -77,6 +77,7 @@ export const MIGRATION_FILES = [
   "universities_verify_refresh_2026_07.sql",
   "universities_programs_enrich_v1.sql",
   "enterprise_reliability_p0_v1.sql",
+  "background_jobs_runtime_hardening_v1.sql",
 ];
 
 export function resolveMigrationsDir() {
