@@ -79,7 +79,14 @@ async function mount() {
   // جديد بعد ساعات مثلاً بينما التبويب مفتوح) قادرًا على إعادة تحميل
   // تلقائية واحدة أيضًا، لا محظورًا للأبد لبقية عمر التبويب.
   setTimeout(() => {
-    try { sessionStorage.removeItem("mj-chunk-reload-attempted"); } catch { /* تجاهل */ }
+    void import("@/lib/lazy-with-retry").then(({ clearChunkReloadGuard }) => {
+      clearChunkReloadGuard();
+    }).catch(() => {
+      try {
+        sessionStorage.removeItem("majalis-chunk-reload");
+        sessionStorage.removeItem("mj-chunk-reload-attempted");
+      } catch { /* تجاهل */ }
+    });
   }, 8000);
 }
 
