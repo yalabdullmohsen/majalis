@@ -13,20 +13,7 @@
  * "الصبر والتوكل" → "العقيدة" (التوكل من مسائل الاعتقاد)، "اللغة
  * العربية" → "اللغة" (نفس المعنى بالضبط).
  */
-export const FAWAID_CURATED_CATEGORIES = [
-  "العقيدة",
-  "التفسير",
-  "الحديث",
-  "الفقه",
-  "السيرة",
-  "الآداب",
-  "الأخلاق",
-  "القرآن",
-  "طلب العلم",
-  "الدعوة",
-  "التربية",
-  "اللغة",
-] as const;
+export { FAWAID_CURATED_CATEGORIES } from "./fawaid-curated-categories";
 
 export type FawaidCuratedItem = {
   id: string;

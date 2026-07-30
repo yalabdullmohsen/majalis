@@ -17,6 +17,30 @@ import { isBootstrapOwnerEmail, isOwnerProfile, hasUnrestrictedAdminAccess, reso
 /** Columns that exist on the live `sheikhs` table (no image_url / avatar_url). */
 const SHEIKH_EMBED = "sheikhs(id, name, city, photo_url)";
 const SHEIKH_EMBED_MIN = "sheikhs(name, photo_url)";
+
+/** Columns needed by list/home lesson cards — avoid select('*'). */
+const LESSON_LIST_COLUMNS = [
+  "id",
+  "title",
+  "description",
+  "speaker_name",
+  "category",
+  "mosque",
+  "city",
+  "region",
+  "day_of_week",
+  "lesson_time",
+  "schedule",
+  "status",
+  "sheikh_id",
+  "external_key",
+  "slug",
+  "created_at",
+  "updated_at",
+  "poster_url",
+  "audio_url",
+  "video_url",
+].join(",");
 import { writeAuditLog } from "@/lib/cms/audit-log";
 import { validateSheikhImage, safeUploadFileName } from "./file-validation";
 import { sanitizeFormRecord } from "./sanitize";
@@ -237,12 +261,12 @@ export async function getSheikhById(id: string) {
 
   try {
     const { data: sheikh, error: sheikhError } = await supabase
-      .from("sheikhs").select("*").eq("id", id).single();
+      .from("sheikhs").select("id, name, bio, city, specialties, photo_url, image_url, ijazah").eq("id", id).single();
     if (sheikhError) throw sheikhError;
 
     const { data: lessons, error: lessonsError } = await supabase
       .from("lessons")
-      .select(`*, ${SHEIKH_EMBED_MIN}`)
+      .select(`${LESSON_LIST_COLUMNS}, ${SHEIKH_EMBED_MIN}`)
       .eq("sheikh_id", id)
       .eq("status", "approved")
       .order("created_at", { ascending: false });
@@ -296,9 +320,10 @@ export async function fetchApprovedLessonsFromDb() {
   try {
     const { data, error } = await supabase
       .from("lessons")
-      .select(`*, ${SHEIKH_EMBED}`)
+      .select(`${LESSON_LIST_COLUMNS}, ${SHEIKH_EMBED}`)
       .eq("status", "approved")
-      .order("created_at", { ascending: false });
+      .order("created_at", { ascending: false })
+      .limit(500);
 
     if (error) throw error;
     return { data: data || [], error: null, usingSeed: false };
@@ -458,7 +483,7 @@ export async function getApprovedFawaid() {
     // FawaidPage تُصفّي بالفئة وتبحث محليًا في القائمة كاملة، لذا حدّ ١٠٠ كان
     // ليُخفي ~٨٠٪ من الفوائد (البذرة وحدها ٥١٠). الحدّ هنا حارس ضد الجموح فقط.
     // الإصلاح الجذري = ترقيم صفحات من الخادم داخل FawaidPage.
-    () => supabase.from("fawaid").select("*").eq("status", "approved").order("created_at", { ascending: false }).limit(1000),
+    () => supabase.from("fawaid").select("id, text, category, source, source_name, author_name, status, created_at, verification_status").eq("status", "approved").order("created_at", { ascending: false }).limit(1000),
     DEMO_FAWAID,
   );
   if (result.usingSeed) return result;
@@ -532,7 +557,7 @@ export async function submitFawaid(userId: string, text: string, authorName: str
 
 export async function getPendingFawaid() {
   const { data } = await supabase
-    .from("fawaid").select("*")
+    .from("fawaid").select("id, text, category, source, source_name, author_name, status, created_at, submitted_by")
     .eq("status", "pending")
     .order("created_at", { ascending: false })
     .limit(100);
@@ -554,7 +579,7 @@ export async function getLibrary({ type, category }: { type?: string; category?:
   }
 
   try {
-    let q = supabase.from("library_items").select("*").eq("status", "approved");
+    let q = supabase.from("library_items").select("id, title, description, category, type, author_name, status, created_at, cover_url, file_url, slug").eq("status", "approved");
     if (type) q = q.eq("type", type);
     if (category) q = q.eq("category", category);
     const { data, error } = await q.order("created_at", { ascending: false });
@@ -587,7 +612,7 @@ export async function getLibraryItemById(id: string) {
     try {
       const { data, error } = await supabase
         .from("library_items")
-        .select("*")
+        .select("id, title, description, category, type, author_name, status, created_at, cover_url, file_url, slug")
         .eq("id", id)
         .eq("status", "approved")
         .maybeSingle();
@@ -623,7 +648,7 @@ export async function getMiracles({ category, sourceType }: { category?: string;
 
   try {
     const build = (withVerification: boolean) => {
-      let q = supabase.from("scientific_miracles").select("*").eq("status", "approved");
+      let q = supabase.from("scientific_miracles").select("id, title, summary, category, source_type, status, verification_status, created_at, image_url").eq("status", "approved");
       if (withVerification) q = q.eq("verification_status", "verified");
       if (category) q = q.eq("category", category);
       if (sourceType) q = q.eq("source_type", sourceType);
@@ -650,7 +675,7 @@ export async function getMiracles({ category, sourceType }: { category?: string;
 
 export async function getMyAchievements(userId: string) {
   const { data } = await supabase
-    .from("achievements").select("*")
+    .from("achievements").select("id, user_id, title, description, earned_at, badge_key")
     .eq("user_id", userId)
     .order("earned_at", { ascending: false })
     .limit(100);
@@ -674,17 +699,17 @@ export async function adminGetStats() {
     qaPublished,
     quizPublished,
   ] = await Promise.all([
-    supabase.from("sheikhs").select("*", { count: "exact", head: true }),
-    supabase.from("lessons").select("*", { count: "exact", head: true }),
-    supabase.from("lessons").select("*", { count: "exact", head: true }).eq("status", "approved"),
-    supabase.from("lessons").select("*", { count: "exact", head: true }).eq("status", "pending"),
-    supabase.from("library_items").select("*", { count: "exact", head: true }),
-    supabase.from("scientific_miracles").select("*", { count: "exact", head: true }),
-    supabase.from("fawaid").select("*", { count: "exact", head: true }),
-    supabase.from("fawaid").select("*", { count: "exact", head: true }).eq("status", "pending"),
-    supabase.from("qa_questions").select("*", { count: "exact", head: true }),
-    supabase.from("qa_questions").select("*", { count: "exact", head: true }).eq("status", "published"),
-    supabase.from("quiz_questions").select("*", { count: "exact", head: true }).eq("is_published", true),
+    supabase.from("sheikhs").select("id", { count: "exact", head: true }),
+    supabase.from("lessons").select("id", { count: "exact", head: true }),
+    supabase.from("lessons").select("id", { count: "exact", head: true }).eq("status", "approved"),
+    supabase.from("lessons").select("id", { count: "exact", head: true }).eq("status", "pending"),
+    supabase.from("library_items").select("id", { count: "exact", head: true }),
+    supabase.from("scientific_miracles").select("id", { count: "exact", head: true }),
+    supabase.from("fawaid").select("id", { count: "exact", head: true }),
+    supabase.from("fawaid").select("id", { count: "exact", head: true }).eq("status", "pending"),
+    supabase.from("qa_questions").select("id", { count: "exact", head: true }),
+    supabase.from("qa_questions").select("id", { count: "exact", head: true }).eq("status", "published"),
+    supabase.from("quiz_questions").select("id", { count: "exact", head: true }).eq("is_published", true),
   ]);
   return {
     sheikhsCount: sheikhs.count ?? 0,
@@ -726,21 +751,21 @@ export async function adminGetDashboardStats() {
     { data: viewRows },
     { data: searchRows },
   ] = await Promise.all([
-    supabase.from("profiles").select("*", { count: "exact", head: true }),
-    supabase.from("lessons").select("*", { count: "exact", head: true }),
-    supabase.from("library_items").select("*", { count: "exact", head: true }),
-    supabase.from("fawaid").select("*", { count: "exact", head: true }),
-    supabase.from("qa_questions").select("*", { count: "exact", head: true }),
-    supabase.from("error_reports").select("*", { count: "exact", head: true }).eq("status", "pending"),
-    supabase.from("transcriptions").select("*", { count: "exact", head: true }),
-    supabase.from("content_views").select("*", { count: "exact", head: true }).gte("viewed_at", startOfDay.toISOString()),
-    supabase.from("sheikhs").select("*", { count: "exact", head: true }),
-    supabase.from("verified_hadith_items").select("*", { count: "exact", head: true }).eq("verification_status", "verified"),
-    supabase.from("akp_stories").select("*", { count: "exact", head: true }),
-    supabase.from("scientific_miracles").select("*", { count: "exact", head: true }).eq("status", "approved"),
-    supabase.from("sharia_rulings").select("*", { count: "exact", head: true }),
-    supabase.from("fiqh_council_items").select("*", { count: "exact", head: true }),
-    supabase.from("error_reports").select("*").eq("status", "pending").order("created_at", { ascending: false }).limit(8),
+    supabase.from("profiles").select("id", { count: "exact", head: true }),
+    supabase.from("lessons").select("id", { count: "exact", head: true }),
+    supabase.from("library_items").select("id", { count: "exact", head: true }),
+    supabase.from("fawaid").select("id", { count: "exact", head: true }),
+    supabase.from("qa_questions").select("id", { count: "exact", head: true }),
+    supabase.from("error_reports").select("id", { count: "exact", head: true }).eq("status", "pending"),
+    supabase.from("transcriptions").select("id", { count: "exact", head: true }),
+    supabase.from("content_views").select("id", { count: "exact", head: true }).gte("viewed_at", startOfDay.toISOString()),
+    supabase.from("sheikhs").select("id", { count: "exact", head: true }),
+    supabase.from("verified_hadith_items").select("id", { count: "exact", head: true }).eq("verification_status", "verified"),
+    supabase.from("akp_stories").select("id", { count: "exact", head: true }),
+    supabase.from("scientific_miracles").select("id", { count: "exact", head: true }).eq("status", "approved"),
+    supabase.from("sharia_rulings").select("id", { count: "exact", head: true }),
+    supabase.from("fiqh_council_items").select("id", { count: "exact", head: true }),
+    supabase.from("error_reports").select("id, status, message, created_at, page_path, user_id").eq("status", "pending").order("created_at", { ascending: false }).limit(8),
     supabase.from("lessons").select("activity_type, is_course, status"),
     supabase.from("lessons").select("id, title, updated_at, activity_type").order("updated_at", { ascending: false }).limit(6),
     supabase.from("content_views").select("content_type, content_id").eq("content_type", "lesson").order("viewed_at", { ascending: false }).limit(300),
@@ -1052,7 +1077,7 @@ export async function getQaCategories() {
 
   const { data, error } = await supabase
     .from("qa_categories")
-    .select("*")
+    .select("id, name, slug, sort_order, description")
     .order("sort_order", { ascending: true });
 
   if (error) {
@@ -1076,7 +1101,7 @@ export async function getQaQuestions({ categoryId, search }: { categoryId?: stri
 
   let q = supabase
     .from("qa_questions")
-    .select("*, qa_categories(name, slug)")
+    .select("id, question, answer, category_id, status, created_at, slug, qa_categories(name, slug)")
     .eq("status", "published")
     .order("created_at", { ascending: false });
 

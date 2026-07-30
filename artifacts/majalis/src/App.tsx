@@ -15,7 +15,6 @@ import { GlobalBackButton } from "@/components/GlobalBackButton";
 import { ComingSoonDialog } from "@/components/ComingSoonDialog";
 import { AchievementToast } from "@/components/AchievementToast";
 import { useAchievementCheck } from "@/hooks/useAchievementCheck";
-import NotFound from "@/views/not-found";
 import { ErrorBoundary, SectionErrorBoundary } from "@/components/ErrorBoundary";
 import { usePageSeo } from "@/lib/seo";
 import { lazyWithRetry } from "@/lib/lazy-with-retry";
@@ -57,6 +56,7 @@ const GlobalSearchModal = lazyWithRetry(
   "GlobalSearchModal",
 );
 
+const NotFound = lazy(() => import("@/views/not-found"));
 const HomePage = lazy(() => import("@/views/HomePage"));
 const QuranEnginePage = lazy(() => import("@/views/QuranEnginePage"));
 const AboutPage = lazy(() => import("@/views/AboutPage"));
