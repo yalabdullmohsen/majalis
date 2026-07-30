@@ -194,7 +194,10 @@ export default function LoginPage() {
             <button
               type="button"
               className="login-oauth__btn"
-              onClick={() => signInWithGoogle(`${window.location.origin}${nextPath !== "/" ? `?next=${encodeURIComponent(nextPath)}` : ""}`)}
+              onClick={async () => {
+                const { getAuthCallbackUrl } = await import("@/lib/auth-redirect");
+                await signInWithGoogle(getAuthCallbackUrl(nextPath !== "/" ? nextPath : "/"));
+              }}
               disabled={loading}
             >
               <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">

@@ -14,7 +14,9 @@ Docs: `docs/performance/PERFORMANCE_BASELINE.md`
 | Icons chunk gzip | 146.1 KiB | **21.4 KiB** (−85%) |
 | Entry embeds SEED_FAWAID / ADHKAR / quiz | yes (via shell) | **no** |
 
-Budgets: Initial JS gzip ≤ 350 ✅ · CSS gzip ≤ 100 ✅ · Icons soft ≤ 150 ✅
+Budgets: Initial JS gzip ≤ **160 KiB** ✅ · Icons gzip ≤ **30 KiB** ✅ · CSS gzip ≤ 100 ✅
+
+(Hardened in `release/ios-final-polish` — previously soft 350 / no icons hard gate.)
 
 ## Key changes
 

@@ -45,5 +45,18 @@ assert.match(appSrc, /isImmersiveChromePath/);
 const bottomNav = readFileSync(resolve(appRoot, "src/components/BottomNavBar.tsx"), "utf8");
 assert.match(bottomNav, /href: "\/mushaf"/);
 assert.equal(bottomNav.includes('href: "/quran-hub"'), false);
+assert.match(bottomNav, /isImmersiveChromePath/);
+
+const navBar = readFileSync(resolve(appRoot, "src/components/NavBar.tsx"), "utf8");
+assert.match(navBar, /isImmersiveChromePath\(location\)\) return null/);
+
+const prayerRanks = readFileSync(resolve(appRoot, "src/views/PrayerRanksPage.tsx"), "utf8");
+assert.equal(prayerRanks.includes("SectionQuiz"), false, "مراتب الصلاة بلا SectionQuiz");
+
+const quranHub = readFileSync(resolve(appRoot, "src/views/QuranHubPage.tsx"), "utf8");
+assert.equal(quranHub.includes("SectionQuiz"), false, "مركز القرآن بلا SectionQuiz");
+
+const globalBack = readFileSync(resolve(appRoot, "src/components/GlobalBackButton.tsx"), "utf8");
+assert.match(globalBack, /isImmersiveChromePath/);
 
 console.log("immersive-chrome.test.ts: ok");

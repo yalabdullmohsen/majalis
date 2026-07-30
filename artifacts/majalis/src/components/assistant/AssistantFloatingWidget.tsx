@@ -3,6 +3,7 @@ import { Link, useLocation } from "wouter";
 import { Sparkles, X } from "lucide-react";
 import { useAssistantChat } from "@/hooks/useAssistantChat";
 import { AssistantChatView } from "./AssistantChatView";
+import { isImmersiveChromePath } from "@/lib/immersive-chrome";
 
 export function AssistantFloatingWidget() {
   const [location] = useLocation();
@@ -16,7 +17,10 @@ export function AssistantFloatingWidget() {
   // الشاشة كاملاً — الزر العائم كان يتراكب فوقه فعليًا (z-index:45 أعلى
   // من شريط التنقّل) ويحجب النقر، اكتُشف حيًّا أثناء تحقّق Playwright
   // (انظر MushafPageView.tsx).
-  const hiddenOnPage = location === "/assistant" || location.startsWith("/admin") || location.startsWith("/mushaf");
+  const hiddenOnPage =
+    location === "/assistant" ||
+    location.startsWith("/admin") ||
+    isImmersiveChromePath(location);
 
   useEffect(() => {
     setOpen(false);

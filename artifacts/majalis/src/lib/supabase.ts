@@ -65,10 +65,14 @@ export const supabase = new Proxy({} as ReturnType<typeof getSupabaseClient>, {
 });
 
 export async function signUp(email: string, password: string, fullName: string) {
+  const { getAuthEmailRedirectUrl } = await import("@/lib/auth-redirect");
   return await supabase.auth.signUp({
     email,
     password,
-    options: { data: { full_name: fullName } },
+    options: {
+      data: { full_name: fullName },
+      emailRedirectTo: getAuthEmailRedirectUrl(),
+    },
   });
 }
 
@@ -92,7 +96,8 @@ export async function signOut() {
 export const GOOGLE_OAUTH_ENABLED = false;
 
 export async function signInWithGoogle(redirectTo?: string) {
-  const redirect = redirectTo || `${window.location.origin}/auth/callback`;
+  const { getAuthCallbackUrl } = await import("@/lib/auth-redirect");
+  const redirect = redirectTo || getAuthCallbackUrl();
   return await supabase.auth.signInWithOAuth({
     provider: "google",
     options: {
