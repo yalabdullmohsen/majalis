@@ -89,7 +89,7 @@ jobs:
           DISPATCH_PR: ${{ github.event.inputs.pr_number }}
         run: |
           set -euo pipefail
-          ALLOW='^((cursor|session|claude|automation|fix|feature)/|majalis-content-fill$)'
+          ALLOW='^((cursor|session|claude|automation|fix|feature|security|docs|chore)/|majalis-content-fill$)'
           EXCLUDE_DUAL='^(automation/content|automation/tasks)$'
           nums=""
           if [ "$EVENT_NAME" = "pull_request" ]; then
