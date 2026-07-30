@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { Link } from "wouter";
 import { Compass, BookOpen, BookMarked, MessageCircle, Clock, Scroll, BookText, Scale } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
-import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import "@/styles/pages/not-found.css";
 
 const SUGGESTIONS = [
@@ -63,10 +62,6 @@ export default function NotFound() {
               </Link>
             ))}
           </div>
-        </div>
-
-        <div className="nf2-quiz-wrap">
-          <SectionQuiz categoryId={["quran","hadith","fiqh","aqeeda"]} title="اختبر معلوماتك أثناء تصفّحك" count={3} />
         </div>
       </section>
     </div>

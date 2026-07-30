@@ -75,6 +75,15 @@ export default defineConfig({
     },
     dedupe: ["react", "react-dom"],
   },
+  optimizeDeps: {
+    include: [
+      "react",
+      "react-dom",
+      "wouter",
+      "@tanstack/react-query",
+      "@supabase/supabase-js",
+    ],
+  },
   root: path.resolve(import.meta.dirname),
   build: {
     target: "es2022",

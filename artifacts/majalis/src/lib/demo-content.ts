@@ -1,7 +1,7 @@
 import { arabicMatchAny } from "./arabic-search";
 import { QA_CATEGORIES, filterSeedQa, loadSeedQa, getSeedQaCached, type SeedQaItem } from "./qa-seed";
 import { filterSeedFawaid } from "./fawaid-seed";
-import { FAWAID_CURATED_CATEGORIES } from "./fawaid-curated-seed";
+import { FAWAID_CURATED_CATEGORIES } from "./fawaid-curated-categories";
 import { filterQualityFawaid } from "./content-quality";
 import { ADHKAR_CATEGORIES, filterAdhkar } from "./adhkar-seed";
 import { loadLessonsSeed, getLessonsSeedCached } from "./lessons-seed";
