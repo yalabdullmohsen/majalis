@@ -1,5 +1,6 @@
 import "./_deps.mjs";
 import "../lib/rate-limit.mjs";
+import { sendJson, isResponseClosed } from "../lib/api/_http.mjs";
 
 let dispatchPromise;
 
@@ -29,15 +30,20 @@ export default async function handler(req, res) {
     // تسجيل داخلي كامل (سجلّات الخادم فقط) — لا يُسرَّب شيء منه للعميل.
     console.error("API bootstrap failed", error);
 
-    // ردّ عام بلا تفاصيل: error.message قد يكشف مسارات وأسماء وحدات وأسرار بيئة.
-    const payload = { ok: false, message: "تعذر تشغيل واجهة API." };
-
-    if (typeof res.status === "function" && typeof res.json === "function") {
-      res.status(500).json(payload);
+    if (isResponseClosed(res)) {
+      console.error(
+        JSON.stringify({
+          level: "warn",
+          msg: "http.double_response_blocked",
+          status: 500,
+          phase: "bootstrap",
+          ts: new Date().toISOString(),
+        }),
+      );
       return;
     }
-    res.statusCode = 500;
-    res.setHeader("Content-Type", "application/json; charset=utf-8");
-    res.end(JSON.stringify(payload));
+
+    // ردّ عام بلا تفاصيل: error.message قد يكشف مسارات وأسماء وحدات وأسرار بيئة.
+    sendJson(res, 500, { ok: false, message: "تعذر تشغيل واجهة API." });
   }
 }

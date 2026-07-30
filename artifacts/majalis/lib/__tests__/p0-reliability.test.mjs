@@ -24,6 +24,12 @@ function mockRes() {
     get writableEnded() {
       return state.writableEnded;
     },
+    get statusCode() {
+      return state.statusCode;
+    },
+    set statusCode(v) {
+      state.statusCode = v;
+    },
     setHeader(k, v) {
       state.headers[k] = v;
     },
@@ -74,6 +80,18 @@ function mockRes() {
   assert.equal(sendJson(res, 200, { ok: true }), true);
   assert.equal(isResponseClosed(res), true);
   assert.equal(sendJson(res, 500, { ok: false }), false);
+}
+
+{
+  // healthz lite must respond without loading platform-health / Anthropic.
+  const healthz = (await import("../api-handlers/healthz.js")).default;
+  const res = mockRes();
+  await healthz({ method: "GET", query: {} }, res);
+  assert.equal(res.state.statusCode, 200);
+  const body = JSON.parse(res.state.body);
+  assert.equal(body.ok, true);
+  assert.equal(body.service, "majlisilm-web");
+  assert.equal(typeof body.uptimeMs, "number");
 }
 
 {

@@ -50,4 +50,11 @@ assert.match(jobWorker, /worker_deadline/, "deadline abort reason set");
 assert.match(supabaseTs, /classifyIdentifier|isUuid/, "lesson lookup separates UUID/slug");
 assert.match(supabaseTs, /order\("sort_order"/, "QA categories ordered by sort_order");
 
+const deps = readFileSync(join(root, "api/_deps.mjs"), "utf8");
+assert.match(deps, /@anthropic-ai\/sdk/, "_deps NFT includes Anthropic SDK");
+assert.match(deps, /["']pg["']/, "_deps NFT includes pg");
+
+const healthz = readFileSync(join(root, "lib/api-handlers/healthz.js"), "utf8");
+assert.doesNotMatch(healthz, /import\s+\{[^}]*getPlatformHealth/, "healthz lite path has no static platform-health import");
+
 console.log("p0-reliability-gates: ok");
