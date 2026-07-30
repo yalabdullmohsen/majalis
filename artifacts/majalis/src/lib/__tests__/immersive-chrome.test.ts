@@ -48,7 +48,7 @@ assert.equal(bottomNav.includes('href: "/quran-hub"'), false);
 assert.match(bottomNav, /isImmersiveChromePath/);
 
 const navBar = readFileSync(resolve(appRoot, "src/components/NavBar.tsx"), "utf8");
-assert.match(navBar, /isImmersiveChromePath\(location\) return null/);
+assert.match(navBar, /isImmersiveChromePath\(location\)\) return null/);
 
 const prayerRanks = readFileSync(resolve(appRoot, "src/views/PrayerRanksPage.tsx"), "utf8");
 assert.equal(prayerRanks.includes("SectionQuiz"), false, "مراتب الصلاة بلا SectionQuiz");

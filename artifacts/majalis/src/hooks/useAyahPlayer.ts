@@ -280,7 +280,7 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
        جلسة AVAudioSession الأصلية تُفعَّل بدون await قبل play() حتى لا
        نكسر سلسلة الإيماءة؛ الفشل يُسجَّل تشخيصيًا ولا يمنع محاولة التشغيل. */
     void ensureNativePlaybackAudioSession().catch((err) => {
-      logDiagnostic("audio-session", "native-playback-failed", {
+      logDiagnostic("custom", "native-playback-failed", {
         surah,
         ayah,
         error: err instanceof Error ? err.message : String(err),
