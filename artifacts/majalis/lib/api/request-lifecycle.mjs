@@ -7,7 +7,9 @@ import { randomUUID } from "node:crypto";
 
 export function createRequestContext(req, res, { timeoutMs = 25_000 } = {}) {
   const requestId = String(req.headers?.["x-request-id"] || randomUUID());
+  const traceId = String(req.headers?.["x-trace-id"] || requestId);
   res.setHeader?.("x-request-id", requestId);
+  res.setHeader?.("x-trace-id", traceId);
 
   const controller = new AbortController();
   let settled = false;
@@ -26,6 +28,7 @@ export function createRequestContext(req, res, { timeoutMs = 25_000 } = {}) {
       error: "handler_timeout",
       message: "تعذر إكمال الطلب في الوقت المحدد.",
       requestId,
+      traceId,
       fallback: true,
     });
     settled = true;
@@ -33,6 +36,7 @@ export function createRequestContext(req, res, { timeoutMs = 25_000 } = {}) {
 
   return {
     requestId,
+    traceId,
     signal: controller.signal,
     markSettled() {
       settled = true;

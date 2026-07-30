@@ -12,7 +12,8 @@
 3. `artifacts/majalis/supabase/platform_hardening_security_v1.sql`
 4. `artifacts/majalis/supabase/platform_bootstrap_runs_v1.sql`
 5. `artifacts/majalis/supabase/p0_security_definer_grants_v2.sql`
-6. عند الحاجة للاستيراد: `content_import_jobs_v1.sql` و `kuwait_lessons_extend.sql`
+6. `artifacts/majalis/supabase/observability_ai_governance_p2_v1.sql` (AI spend / cache / metrics)
+7. عند الحاجة للاستيراد: `content_import_jobs_v1.sql` و `kuwait_lessons_extend.sql`
 
 ### Rollback
 
@@ -22,6 +23,7 @@
 | `platform_hardening_security_v1.sql` | `platform_hardening_security_v1_ROLLBACK.sql` |
 | `platform_bootstrap_runs_v1.sql` | `platform_bootstrap_runs_v1_ROLLBACK.sql` |
 | `p0_security_definer_grants_v2.sql` | `p0_security_definer_grants_v2_ROLLBACK.sql` |
+| `observability_ai_governance_p2_v1.sql` | `observability_ai_governance_p2_v1_ROLLBACK.sql` |
 
 CLI الموثّق (ليس HTTP):
 
