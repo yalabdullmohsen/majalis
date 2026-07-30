@@ -226,7 +226,9 @@ export function recordDailyReading(ayahsRead: number, pagesRead = 0, minutesRead
  * (WebTransport → WebSocket → HTTP Fetch) without blocking the UI.
  */
 export async function syncDailyReadingRemote(): Promise<boolean> {
+  // Remote persist requires reading_sync_events (+ VITE_READING_SYNC=1). Local streak stays authoritative.
   try {
+    if (import.meta.env.VITE_READING_SYNC !== "1") return false;
     const entries = getDailyReading().slice(0, 7);
     const { syncWithTransportFallback } = await import("@/lib/adaptive-transport");
     const result = await syncWithTransportFallback(

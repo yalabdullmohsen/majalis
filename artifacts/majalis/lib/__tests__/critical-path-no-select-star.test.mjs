@@ -13,6 +13,7 @@ const CRITICAL = [
   "src/lib/lessons-service.ts",
   "src/lib/prayer-times.ts",
   "src/components/home/HomeUpcomingCourses.tsx",
+  "lib/api-handlers/prayer-times.js",
 ];
 
 const STAR = /\.select\(\s*[`'"]\*[`'"]/;
