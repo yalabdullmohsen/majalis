@@ -11,17 +11,6 @@
     "api/index.js": {
       "maxDuration": 60,
       "includeFiles": "{lib/**,supabase/**,data/**,src/data/universities-catalog.json,public/data/rulings-encyclopedia/**,dist/index.html}"
-    },
-    "api/healthz.js": {
-      "maxDuration": 10
-    },
-    "api/readyz.js": {
-      "maxDuration": 15,
-      "includeFiles": "{lib/api/**,lib/api-handlers/readyz.js,lib/database.mjs,lib/observability/**,lib/env-config.mjs,lib/reliability/**}"
-    },
-    "api/cron/job-worker.js": {
-      "maxDuration": 60,
-      "includeFiles": "{lib/**,supabase/**,data/**}"
     }
   },
   "crons": [
