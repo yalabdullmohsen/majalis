@@ -95,7 +95,7 @@ function CompareContent() {
       <div className="max-w-5xl mx-auto px-2 py-6 overflow-x-auto">
         {/* تنبيه */}
         <div className="ucp-alert">
-          <AlertTriangle size={13} className="inline ml-1" />البيانات تجريبية، تحقق من الموقع الرسمي لكل جامعة قبل التقديم.
+          <AlertTriangle size={13} className="inline ms-1" />البيانات تجريبية، تحقق من الموقع الرسمي لكل جامعة قبل التقديم.
         </div>
 
         {/* جدول المقارنة */}
@@ -148,7 +148,7 @@ function CompareContent() {
             u.website_url ? (
               <a key={u.slug} href={u.website_url} target="_blank" rel="noopener noreferrer"
                 className="text-center py-2.5 citation-btn citation-btn--primary rounded-xl text-sm font-medium transition-colors">
-                <Globe size={13} className="inline ml-1" />موقع {u.name_ar.split(" ")[1] || u.name_ar} ↗
+                <Globe size={13} className="inline ms-1" />موقع {u.name_ar.split(" ")[1] || u.name_ar} ↗
               </a>
             ) : <div key={u.slug} />
           ))}

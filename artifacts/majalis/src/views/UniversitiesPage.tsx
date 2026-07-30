@@ -190,14 +190,14 @@ function UniversitiesContent() {
       <div className="max-w-5xl mx-auto px-4 py-6 space-y-6">
         {/* تنبيه موثوقية البيانات */}
         <div className="up-alert" role="note">
-          <AlertTriangle size={14} aria-hidden="true" className="inline ml-1" />
+          <AlertTriangle size={14} aria-hidden="true" className="inline ms-1" />
           <strong>تنبيه:</strong> راجع دائمًا الموقع الرسمي للجامعة قبل التقديم. الرسوم ومواعيد القبول
           تتغيّر، ولا نثبت أرقامًا غير مؤكدة في هذا الدليل.
         </div>
 
         {seedNeeded && universities.length > 0 && (
           <div className="up-alert" role="status">
-            <Landmark size={14} aria-hidden="true" className="inline ml-1" />
+            <Landmark size={14} aria-hidden="true" className="inline ms-1" />
             يُعرض الآن الكتالوج الموثّق المضمَّن. لمزامنة قاعدة البيانات شغّل:
             {" "}
             <code className="up-code">node scripts/apply-universities-migrations.mjs</code>

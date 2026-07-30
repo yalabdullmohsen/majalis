@@ -46,7 +46,7 @@ export function SourceCard({ source, compact = false }: Props) {
         {/* المصدر */}
         {source.source_ref && (
           <p className="src-ref">
-            <Library size={11} className="inline ml-1" />{source.source_ref}
+            <Library size={11} className="inline ms-1" />{source.source_ref}
           </p>
         )}
       </div>

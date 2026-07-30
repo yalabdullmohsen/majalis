@@ -71,10 +71,10 @@ export default function SettingsPage() {
       <LegalSection title={t("settings_account")}>
         <div className="settings-account-card">
           <div className="settings-avatar" aria-hidden="true">
-            {(user?.profile?.name || user?.email || "م").slice(0, 1)}
+            {(user?.profile?.full_name || user?.email || "م").slice(0, 1)}
           </div>
           <div>
-            <p><strong>{t("settings_name")}:</strong> {user?.profile?.name || t("settings_guest")}</p>
+            <p><strong>{t("settings_name")}:</strong> {user?.profile?.full_name || t("settings_guest")}</p>
             <p><strong>{t("settings_email")}:</strong> {user?.email || t("settings_not_logged_in")}</p>
           </div>
         </div>

@@ -458,8 +458,8 @@ function ProphetDetailView({
         <div className="prophet-detail-lux__actions">
           <button type="button" className="prophet-action-btn" onClick={onBookmark}>
             {isBookmarked
-              ? <><Heart size={13} className="inline icon-danger--filled ml-1" />محفوظ</>
-              : <><Heart size={13} className="inline ml-1" />احفظ</>}
+              ? <><Heart size={13} className="inline icon-danger--filled ms-1" />محفوظ</>
+              : <><Heart size={13} className="inline ms-1" />احفظ</>}
           </button>
           <div className="prophet-font-controls">
             <button type="button" onClick={() => setFontSize(s => Math.max(13, s - 1))} aria-label="تصغير الخط">أ−</button>

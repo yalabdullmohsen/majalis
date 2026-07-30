@@ -183,7 +183,7 @@ export default function AmradQalbiyyaPage() {
                   <span className="text-xs text-gray-400 font-light tracking-wide">{d.arabic}</span>
                 </div>
                 <div
-                  className="mr-auto w-2 h-10 rounded-full flex-shrink-0"
+                  className="me-auto w-2 h-10 rounded-full flex-shrink-0"
                   style={{ background: d.color }}
                 />
               </div>

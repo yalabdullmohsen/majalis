@@ -165,7 +165,7 @@ export default function LearningPathsPage() {
               className={activeCategory === cat ? "lpp-cat-btn lpp-cat-btn--active" : "lpp-cat-btn"}
               onClick={() => setActiveCategory(cat)}
             >
-              {(() => { const I = meta.Icon; return <I size={13} className="inline ml-1" />; })()} {meta.label}
+              {(() => { const I = meta.Icon; return <I size={13} className="inline ms-1" />; })()} {meta.label}
             </button>
           );
         })}

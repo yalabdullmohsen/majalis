@@ -207,7 +207,7 @@ export function AssistantChatView({
 
                 {/* Disclaimer — يُعرض دائمًا؛ ويتأكد ظهوره حين لا مصادر */}
                 <p className="assistant-disclaimer">
-                  <AlertTriangle size={13} className="inline ml-1" />{message.disclaimer || DEFAULT_DISCLAIMER}
+                  <AlertTriangle size={13} className="inline ms-1" />{message.disclaimer || DEFAULT_DISCLAIMER}
                 </p>
               </>
                 );

@@ -28,7 +28,7 @@ function assert(condition: boolean, label: string) {
 
 console.log("\n=== qa-to-quiz — تحويل آمن typed ===");
 {
-  const rows = qaSeedToQuizQuestions();
+  const rows = await qaSeedToQuizQuestions();
   assert(rows.length > 0, `يُنتج أسئلة (الفعلي: ${rows.length})`);
   assert(rows.every((r) => Boolean(r.question && r.answer && r.section)), "كل صف له سؤال وإجابة وقسم");
   assert(rows.every((r) => String(r.id || "").startsWith("qa-")), "معرّفات الصفوف مسبوقة بـ qa-");

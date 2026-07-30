@@ -42,7 +42,7 @@ export default function ArbaeenLovePage() {
       />
 
       <div className="hb-notice" role="note" dir="rtl">
-        <Heart size={14} className="inline ml-1" />
+        <Heart size={14} className="inline ms-1" />
         كل نص هنا منقول حرفيًا من مصادره (صحيح البخاري، صحيح مسلم، وغيرها) بلا
         أي توليد بالذكاء الاصطناعي. المجموعة قيد الاستكمال تدريجيًا حتى تبلغ
         أربعين حديثًا مراجَعًا.

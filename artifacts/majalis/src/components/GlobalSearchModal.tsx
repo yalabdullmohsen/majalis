@@ -385,7 +385,7 @@ export function GlobalSearchModal({ onClose }: Props) {
                         onClick={() => handleQuickQuery(q)}
                         className="gsm-pill"
                       >
-                        <Clock size={12} className="inline ml-1" />{q}
+                        <Clock size={12} className="inline ms-1" />{q}
                       </button>
                     ))}
                   </div>
@@ -403,7 +403,7 @@ export function GlobalSearchModal({ onClose }: Props) {
                         onClick={() => handleQuickQuery(q)}
                         className="gsm-pill gsm-pill--trend"
                       >
-                        <Flame size={12} className="inline ml-1" />{q}
+                        <Flame size={12} className="inline ms-1" />{q}
                       </button>
                     ))}
                   </div>

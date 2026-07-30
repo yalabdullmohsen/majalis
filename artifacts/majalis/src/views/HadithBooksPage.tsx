@@ -281,7 +281,7 @@ function CollectionBrowser({ meta }: { meta: CdnCollectionMeta }) {
   if (error || hadiths.length === 0) {
     return (
       <div className="hb-error" role="alert">
-        <AlertTriangle size={22} className="inline ml-2" />
+        <AlertTriangle size={22} className="inline ms-2" />
         تعذّر تحميل {meta.name}. تحقق من الاتصال بالإنترنت وحاول مجدداً.
       </div>
     );
@@ -448,7 +448,7 @@ export default function HadithBooksPage() {
 
       {/* إشعار الضعيف والموضوع */}
       <div className="hb-notice" role="note" dir="rtl">
-        <AlertTriangle size={14} className="inline ml-1" />
+        <AlertTriangle size={14} className="inline ms-1" />
         <strong>الضعيف والموضوع:</strong> بطاقات منسّقة بتخريج منسوب ودرجة مبيَّنة على كل بطاقة — لا يُولَّد أي محتوى شرعي بالذكاء الاصطناعي.{" "}
         <Link href="/hadith/daif" className="hb-notice__link">تصفّح الضعيف</Link>
         {" · "}

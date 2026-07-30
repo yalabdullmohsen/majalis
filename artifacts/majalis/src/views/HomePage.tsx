@@ -8,11 +8,9 @@ import { getRecentPages, type RecentPage } from "@/lib/recent-pages";
 import { Wrench } from "lucide-react";
 import { SectionErrorBoundary } from "@/components/ErrorBoundary";
 import { HomeAboutSection } from "@/components/home/HomeAboutSection";
-import { HomeUpcomingLessons } from "@/components/home/HomeUpcomingLessons";
 import { HomeDailyProgress } from "@/components/home/HomeDailyProgress";
 import { HomeContinueWidget } from "@/components/home/HomeContinueWidget";
 import { HomeLearningSeasonsWidget } from "@/components/home/HomeLearningSeasonsWidget";
-import { HomeUpcomingCourses } from "@/components/home/HomeUpcomingCourses";
 import { FridayBanner } from "@/components/FridayBanner";
 import { getHijriDateString } from "@/lib/hijri-utils";
 import { fetchPrayerTimes, computePrayerCountdown, type PrayerTimesPayload } from "@/lib/prayer-times";
@@ -36,6 +34,8 @@ import "@/styles/components/home/home-quick-access.css";
 
 // الودجتات الاختيارية لا تدخل حزمة الرئيسية للمستخدم الجديد. تُحمَّل فقط
 // إذا فعّلها المستخدم من شاشة التخصيص، مع بقاء الوظيفة والحالة المحفوظة.
+const HomeUpcomingLessons = lazy(() => import("@/components/home/HomeUpcomingLessons").then((m) => ({ default: m.HomeUpcomingLessons })));
+const HomeUpcomingCourses = lazy(() => import("@/components/home/HomeUpcomingCourses").then((m) => ({ default: m.HomeUpcomingCourses })));
 const HomeCompactPrayer = lazy(() => import("@/components/home/HomeCompactPrayer").then((m) => ({ default: m.HomeCompactPrayer })));
 const HomeDailyBenefits = lazy(() => import("@/components/home/HomeDailyBenefits").then((m) => ({ default: m.HomeDailyBenefits })));
 const HomeUpcomingEvents = lazy(() => import("@/components/home/HomeUpcomingEvents").then((m) => ({ default: m.HomeUpcomingEvents })));

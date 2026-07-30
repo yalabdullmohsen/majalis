@@ -145,7 +145,11 @@ export type NewMuslimDay = {
 const PUBLISHED = { status: "published", is_approved: true } as const;
 
 export async function getDawahCategories(): Promise<DawahCategory[]> {
-  const { data, error } = await supabase.from("dawah_categories").select("*").eq("is_active", true).order("sort_order");
+  const { data, error } = await supabase
+    .from("dawah_categories")
+    .select("id, slug, name_ar, name_en, description_ar, icon, sort_order")
+    .eq("is_active", true)
+    .order("sort_order");
   if (error) return [];
   return (data || []) as DawahCategory[];
 }
@@ -153,7 +157,7 @@ export async function getDawahCategories(): Promise<DawahCategory[]> {
 export async function getFeaturedQuestions(limit = 8): Promise<DawahQuestion[]> {
   const { data, error } = await supabase
     .from("dawah_questions")
-    .select("*")
+    .select("id, category_id, slug, title, short_answer, target_religion, view_count, keywords, updated_at")
     .match(PUBLISHED)
     .order("view_count", { ascending: false })
     .limit(limit);
@@ -172,7 +176,7 @@ export async function getQuestionsByCategory(categorySlug?: string, limit = 50):
 export async function getQuestionsByReligion(religion: ReligionCode, limit = 30): Promise<DawahQuestion[]> {
   const { data, error } = await supabase
     .from("dawah_questions")
-    .select("*")
+    .select("id, category_id, slug, title, short_answer, target_religion, view_count, keywords, updated_at")
     .match(PUBLISHED)
     .eq("target_religion", religion)
     .order("title")
@@ -182,7 +186,14 @@ export async function getQuestionsByReligion(religion: ReligionCode, limit = 30)
 }
 
 export async function getQuestionBySlug(slug: string): Promise<DawahQuestion | null> {
-  const { data, error } = await supabase.from("dawah_questions").select("*").eq("slug", slug).match(PUBLISHED).maybeSingle();
+  const { data, error } = await supabase
+    .from("dawah_questions")
+    .select(
+      "id, category_id, slug, title, short_answer, detailed_answer, evidences, glossary_terms, sources, related_question_ids, keywords, target_religion, reviewed_at, view_count, updated_at",
+    )
+    .eq("slug", slug)
+    .match(PUBLISHED)
+    .maybeSingle();
   if (error || !data) return null;
   return data as DawahQuestion;
 }

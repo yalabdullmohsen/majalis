@@ -10,7 +10,7 @@ import { getRulingsEncyclopedia } from "@/lib/rulings-service";
 import { RULINGS_CATEGORY_TREE } from "@/lib/rulings-categories";
 import { SkeletonCardGrid, Empty, ErrorState } from "@/components/ui-common";
 import { getQaQuestions } from "@/lib/supabase";
-import { SEED_QA, QA_CATEGORIES } from "@/lib/qa-seed";
+import { QA_CATEGORIES, loadSeedQa } from "@/lib/qa-seed";
 import { RequestManager } from "@/lib/request-manager";
 import type { ShariaRulingExtended } from "@/lib/rulings-types";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
@@ -68,25 +68,32 @@ export default function FiqhPage() {
   usePageView("fiqh", null);
 
   useEffect(() => {
-    const topQa = SEED_QA.filter((q: any) => q.answer).slice(0, 5);
-    const faqSchema = topQa.length
-      ? {
-          "@context": "https://schema.org",
-          "@type": "FAQPage",
-          mainEntity: topQa.map((q: any) => ({
-            "@type": "Question",
-            name: q.question,
-            acceptedAnswer: { "@type": "Answer", text: q.answer },
-          })),
-        }
-      : undefined;
-    applyPageSeo({
-      path: "/fiqh",
-      title: "الفقه الإسلامي، أحكام وأسئلة | المجلس العلمي",
-      description: "مرجع شامل في الفقه الإسلامي: أحكام شرعية موثقة، أسئلة وأجوبة، وقرارات المجمع الفقهي. يغطّي أبواب العبادات والمعاملات والنوازل مرجع موثّق لطالب العلم والباحث.",
-      keywords: ["فقه إسلامي", "أحكام شرعية", "الفقه الحنفي", "القواعد الفقهية", "المجمع الفقهي", "أسئلة شرعية"],
-      ...(faqSchema ? { jsonLd: [faqSchema] } : {}),
+    let cancelled = false;
+    void loadSeedQa().then((seed) => {
+      if (cancelled) return;
+      const topQa = seed.filter((q) => q.answer).slice(0, 5);
+      const faqSchema = topQa.length
+        ? {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: topQa.map((q) => ({
+              "@type": "Question",
+              name: q.question,
+              acceptedAnswer: { "@type": "Answer", text: q.answer },
+            })),
+          }
+        : undefined;
+      applyPageSeo({
+        path: "/fiqh",
+        title: "الفقه الإسلامي، أحكام وأسئلة | المجلس العلمي",
+        description: "مرجع شامل في الفقه الإسلامي: أحكام شرعية موثقة، أسئلة وأجوبة، وقرارات المجمع الفقهي. يغطّي أبواب العبادات والمعاملات والنوازل مرجع موثّق لطالب العلم والباحث.",
+        keywords: ["فقه إسلامي", "أحكام شرعية", "الفقه الحنفي", "القواعد الفقهية", "المجمع الفقهي", "أسئلة شرعية"],
+        ...(faqSchema ? { jsonLd: [faqSchema] } : {}),
+      });
     });
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   useEffect(() => {
@@ -132,7 +139,10 @@ export default function FiqhPage() {
         getQaQuestions({ search: "" }),
       )
         .then(({ data }) => setQaItems(Array.isArray(data) ? data.slice(0, 8) : []))
-        .catch(() => setQaItems(SEED_QA.slice(0, 8)))
+        .catch(async () => {
+          const seed = await loadSeedQa();
+          setQaItems(seed.slice(0, 8));
+        })
         .finally(() => setLoadingQ(false));
     }
   }, [activeTab]);

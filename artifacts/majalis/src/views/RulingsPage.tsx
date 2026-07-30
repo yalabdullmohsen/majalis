@@ -20,7 +20,7 @@ const RULINGS_ICON_MAP: Record<string, LucideIcon> = {
 };
 function CatIcon({ name }: { name?: string }) {
   const I: LucideIcon = (name ? RULINGS_ICON_MAP[name] : undefined) ?? BookOpen;
-  return <I size={16} className="inline ml-1" />;
+  return <I size={16} className="inline ms-1" />;
 }
 
 const FIQH_HUB_TABS = [
@@ -33,7 +33,7 @@ type FiqhTab = (typeof FIQH_HUB_TABS)[number]["key"];
 function FiqhHubStrip({ current }: { current: FiqhTab }) {
   return (
     <nav className="fiqh-hub-strip" dir="rtl" aria-label="الأقسام الشرعية">
-      <Link href="/fiqh" className="fiqh-hub-strip__brand"><Scale size={14} className="inline ml-1" />الفقه الإسلامي</Link>
+      <Link href="/fiqh" className="fiqh-hub-strip__brand"><Scale size={14} className="inline ms-1" />الفقه الإسلامي</Link>
       <span className="fiqh-hub-strip__sep" aria-hidden="true">·</span>
       {FIQH_HUB_TABS.map((item) => (
         <Link
