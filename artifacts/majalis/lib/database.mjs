@@ -259,7 +259,15 @@ function pgSsl(url) {
 
 export async function getPgPool() {
   const { url } = resolveDatabaseUrl();
-  if (!url) return null;
+  if (!url) {
+    // Do not reuse a pooled connection after DATABASE_URL is cleared (tests).
+    if (_pool) {
+      const stale = _pool;
+      _pool = null;
+      stale.end().catch(() => {});
+    }
+    return null;
+  }
   if (_pool) return _pool;
   const pg = await import("pg");
   _pool = new pg.default.Pool({

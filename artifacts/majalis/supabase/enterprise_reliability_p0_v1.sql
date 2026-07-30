@@ -72,27 +72,21 @@ ALTER TABLE background_jobs ENABLE ROW LEVEL SECURITY;
 ALTER TABLE background_job_attempts ENABLE ROW LEVEL SECURITY;
 ALTER TABLE background_job_dead_letters ENABLE ROW LEVEL SECURITY;
 
--- ── qa_categories.sort_order (expand-only) ───────────────────────────────────
-ALTER TABLE qa_categories ADD COLUMN IF NOT EXISTS sort_order INT;
-
-UPDATE qa_categories
-SET sort_order = COALESCE(sort_order, 0)
-WHERE sort_order IS NULL;
-
-ALTER TABLE qa_categories ALTER COLUMN sort_order SET DEFAULT 0;
-
--- Only enforce NOT NULL after backfill
+-- ── qa_categories.sort_order (expand-only; baseline CREATE is qa_phase4_seed.sql)
 DO $$
 BEGIN
-  IF EXISTS (
-    SELECT 1 FROM information_schema.columns
-    WHERE table_name = 'qa_categories' AND column_name = 'sort_order'
-  ) AND NOT EXISTS (SELECT 1 FROM qa_categories WHERE sort_order IS NULL) THEN
-    ALTER TABLE qa_categories ALTER COLUMN sort_order SET NOT NULL;
+  IF to_regclass('public.qa_categories') IS NOT NULL THEN
+    ALTER TABLE public.qa_categories ADD COLUMN IF NOT EXISTS sort_order INT;
+    UPDATE public.qa_categories
+    SET sort_order = COALESCE(sort_order, 0)
+    WHERE sort_order IS NULL;
+    ALTER TABLE public.qa_categories ALTER COLUMN sort_order SET DEFAULT 0;
+    IF NOT EXISTS (SELECT 1 FROM public.qa_categories WHERE sort_order IS NULL) THEN
+      ALTER TABLE public.qa_categories ALTER COLUMN sort_order SET NOT NULL;
+    END IF;
+    CREATE INDEX IF NOT EXISTS idx_qa_categories_sort_order ON public.qa_categories (sort_order);
   END IF;
 END $$;
-
-CREATE INDEX IF NOT EXISTS idx_qa_categories_sort_order ON qa_categories (sort_order);
 
 -- Prayer times hot path (location + date) — only if table exists
 DO $$

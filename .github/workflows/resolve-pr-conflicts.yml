@@ -1,8 +1,10 @@
 name: Resolve PR conflicts from main
 
 # عند تعارض أو تأخّر PR يستهدف main: يدمج origin/main في فرع الـ PR.
-# إن نجح الدمج بلا تعارض يُدفع الفرع وتُعاد الفحوصات (Verify build) ثم Auto-merge.
+# إن نجح الدمج بلا تعارض يُدفع الفرع وتُعاد الفحوصات ثم Auto-merge.
 # إن بقي تعارض يُعلَّق تعليقًا واضحًا دون دفع قسري.
+# PAT (PROD_DEPLOY_TOKEN) يُستخدم هنا فقط لأن الدفع بـGITHUB_TOKEN لا يطلق CI
+# على الفرع المحدَّث — لازم لإعادة الفحوصات بعد حل التأخّر، لا للدمج.
 
 on:
   schedule:
@@ -63,7 +65,7 @@ jobs:
 
       - name: Checkout
         if: steps.list.outputs.nums != ''
-        uses: actions/checkout@v4
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           fetch-depth: 0
           token: ${{ secrets.PROD_DEPLOY_TOKEN || secrets.GITHUB_TOKEN }}

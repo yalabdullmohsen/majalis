@@ -1,31 +1,35 @@
 name: Auto-ready and merge PRs to main
 
-# دمج تلقائي (Squash) بلا تدخل يدوي — بعد حماية main + Verify build الإلزامي (2026-07-27):
-# 1) تحديث الفرع من main إن كان متأخرًا/متعارضًا
-# 2) Draft → Ready
-# 3) Auto-merge (squash) فقط؛ لا دمج فوري إلا بعد نجاح Verify build صراحةً
-# 4) عند فشل CI يُلغى Auto-merge
-# 5) حذف الفرع بعد الدمج (إعداد المستودع) + نشر Vercel من main + auto-deploy.yml
+# Safe auto-merge (squash) — Auto-merge يبقى مفعّلًا.
+# لا يحول Draft→Ready تلقائيًا.
+# لا يدمج عند: CI فاشل/Pending، تعارض، Changes Requested، تغيّر head SHA،
+# تغييرات iOS بلا xcodebuild أخضر، تغييرات SQL بلا postgres-integration أخضر.
 
 on:
   pull_request:
-    types: [opened, reopened, synchronize, ready_for_review, converted_to_draft]
+    types: [opened, reopened, synchronize, ready_for_review]
     branches: [main]
   workflow_run:
     workflows: ["CI"]
     types: [completed]
   schedule:
-    # مسح دوري لكل الـ PRs المفتوحة إلى main
     - cron: "*/15 * * * *"
   workflow_dispatch:
     inputs:
       pr_number:
-        description: "رقم PR محدد (فارغ = كل المؤهلة)"
+        description: "رقم PR محدد (فارغ = المؤهلة فقط)"
         required: false
         type: string
 
+# Concurrency منفصل لكل PR؛ الدفعات المجدولة لا تلغي تشغيل PR محدد.
 concurrency:
-  group: auto-merge-pr-${{ github.event.pull_request.number || github.event.workflow_run.id || github.event.inputs.pr_number || 'batch' }}
+  group: >-
+    auto-merge-${{
+      github.event.pull_request.number
+      || github.event.inputs.pr_number
+      || (github.event_name == 'workflow_run' && format('wr-{0}', github.event.workflow_run.id))
+      || 'schedule-batch'
+    }}
   cancel-in-progress: true
 
 permissions:
@@ -34,9 +38,10 @@ permissions:
   actions: read
   checks: read
 
+# GITHUB_TOKEN يكفي لتفعيل --auto squash؛ لا نستخدم PAT واسعًا هنا.
+# (release-majlisilm.yml ما زال يحتاج PROD_DEPLOY_TOKEN لإطلاق workflows بعد الدفع.)
 env:
-  # PAT المالك يطلق workflows على main بعد الدمج؛ GITHUB_TOKEN احتياطي.
-  GH_TOKEN: ${{ secrets.PROD_DEPLOY_TOKEN || secrets.GITHUB_TOKEN }}
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
   cancel-on-ci-failure:
@@ -44,7 +49,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: إلغاء Auto-merge عند فشل CI
+      - name: Disable auto-merge on CI failure
         env:
           WORKFLOW_HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
           WORKFLOW_HEAD_BRANCH: ${{ github.event.workflow_run.head_branch }}
@@ -58,43 +63,21 @@ jobs:
               --json number --jq '.[].number' | tr '\n' ' ' || true)
           fi
           for n in $nums; do
-            echo "إلغاء Auto-merge لـ #$n بسبب فشل CI"
             gh -R "$GITHUB_REPOSITORY" pr merge "$n" --disable-auto || true
-            gh -R "$GITHUB_REPOSITORY" pr comment "$n" --body "⛔ أُلغي Auto-merge لأن فحص CI / Verify build فشل. أصلِح الفشل؛ بعد النجاح يُعاد تفعيل الدمج تلقائيًا." || true
+            gh -R "$GITHUB_REPOSITORY" pr comment "$n" --body "⛔ أُلغي Auto-merge لأن CI فشل." || true
           done
-
-  close-stale-non-main-prs:
-    if: github.repository == 'yalabdullmohsen/majalis' && (github.event_name == 'schedule' || github.event_name == 'workflow_dispatch')
-    runs-on: ubuntu-latest
-    timeout-minutes: 5
-    steps:
-      - name: إغلاق PRs المكدّسة/القديمة التي لا تستهدف main
-        run: |
-          set -euo pipefail
-          # أي PR مفتوح قاعدته ليست main ومن فرع عمل معروف → مكرّر/قديم بعد سياسة PR-واحد
-          gh -R "$GITHUB_REPOSITORY" pr list --state open --limit 100 \
-            --json number,baseRefName,headRefName,title \
-            --jq '.[] | select(.baseRefName != "main") | select(.headRefName | test("^(cursor|session|claude|fix|feature)/")) | .number' \
-            | while read -r n; do
-                [ -z "$n" ] && continue
-                echo "إغلاق #$n (القاعدة ليست main)"
-                gh -R "$GITHUB_REPOSITORY" pr close "$n" \
-                  --comment "أُغلق تلقائيًا: القاعدة ليست \`main\`. السياسة الحالية PR واحد لكل مهمة يستهدف \`main\` فقط، مع Auto-merge بعد نجاح Verify build." \
-                  || true
-              done
 
   auto-merge:
     if: github.repository == 'yalabdullmohsen/majalis' && (github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success')
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
-      - name: Checkout (لتحديث الفروع من main)
-        uses: actions/checkout@v4
+      - name: Checkout (read-only metadata; no branch rewrite)
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
-          fetch-depth: 0
-          token: ${{ secrets.PROD_DEPLOY_TOKEN || secrets.GITHUB_TOKEN }}
+          fetch-depth: 1
 
-      - name: تحديد قائمة الـ PRs المستهدفة
+      - name: Select eligible PRs
         id: targets
         env:
           EVENT_NAME: ${{ github.event_name }}
@@ -106,187 +89,170 @@ jobs:
           DISPATCH_PR: ${{ github.event.inputs.pr_number }}
         run: |
           set -euo pipefail
-          # ⚠️ ج-٢٥٩: فرعُ نافذة التدقيق/الضخّ `majalis-content-fill` **بلا بادئةٍ
-          # بشرطة مائلة**، فكان يسقط من هذا النمط فتتخطّاه الأتمتةُ صامتةً («تخطي:
-          # الفرع … خارج الأنماط») ويبقى الـPR مفتوحًا وإن نجح Verify build.
           ALLOW='^((cursor|session|claude|automation|fix|feature)/|majalis-content-fill$)'
           EXCLUDE_DUAL='^(automation/content|automation/tasks)$'
           nums=""
           if [ "$EVENT_NAME" = "pull_request" ]; then
-            if [ "$PR_BASE_REF" != "main" ]; then
-              echo "تخطي: القاعدة ليست main ($PR_BASE_REF)"
-              echo "nums=" >> "$GITHUB_OUTPUT"
-              exit 0
-            fi
-            if [ "$PR_HEAD_REPO" != "$GITHUB_REPOSITORY" ]; then
-              echo "تخطي: PR من مستودع خارجي"
-              echo "nums=" >> "$GITHUB_OUTPUT"
-              exit 0
-            fi
+            [ "$PR_BASE_REF" = "main" ] || { echo "nums=" >> "$GITHUB_OUTPUT"; exit 0; }
+            [ "$PR_HEAD_REPO" = "$GITHUB_REPOSITORY" ] || { echo "nums=" >> "$GITHUB_OUTPUT"; exit 0; }
             nums="$PR_NUMBER"
           elif [ "$EVENT_NAME" = "workflow_run" ]; then
             nums=$(gh api "repos/${GITHUB_REPOSITORY}/commits/${WORKFLOW_HEAD_SHA}/pulls" \
               --jq '[.[] | select(.base.ref=="main" and .head.repo.full_name=="'"${GITHUB_REPOSITORY}"'") | .number] | join(" ")' || true)
-            if [ -z "${nums}" ]; then
-              nums=$(gh -R "$GITHUB_REPOSITORY" pr list --base main --state open \
-                --head "${GITHUB_REPOSITORY_OWNER}:${WORKFLOW_HEAD_BRANCH}" \
-                --json number --jq '.[].number' | tr '\n' ' ' || true)
-            fi
           else
-            # schedule / workflow_dispatch
-            if [ -n "${DISPATCH_PR:-}" ]; then
-              nums="${DISPATCH_PR}"
-            else
-              nums=$(gh -R "$GITHUB_REPOSITORY" pr list --base main --state open --limit 50 \
-                --json number --jq '.[].number' | tr '\n' ' ' || true)
+            nums="${DISPATCH_PR:-}"
+            if [ -z "$nums" ]; then
+              nums=$(gh -R "$GITHUB_REPOSITORY" pr list --base main --state open --limit 30 \
+                --json number,isDraft --jq '.[] | select(.isDraft==false) | .number' | tr '\n' ' ' || true)
             fi
           fi
-          echo "مرشّحون: ${nums:-∅}"
           echo "nums=${nums}" >> "$GITHUB_OUTPUT"
           echo "allow=${ALLOW}" >> "$GITHUB_OUTPUT"
           echo "exclude_dual=${EXCLUDE_DUAL}" >> "$GITHUB_OUTPUT"
 
-      - name: تحديث من main + Ready + Auto-merge (squash)
+      - name: Enable squash auto-merge for eligible Ready PRs
         if: steps.targets.outputs.nums != ''
         env:
           ALLOW: ${{ steps.targets.outputs.allow }}
           EXCLUDE_DUAL: ${{ steps.targets.outputs.exclude_dual }}
           NUMS: ${{ steps.targets.outputs.nums }}
-        continue-on-error: true
         run: |
           set -u
           REPO_FLAG=(-R "$GITHUB_REPOSITORY")
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git fetch origin main
 
-          verify_build_ok() {
-            local n="$1"
-            local checks
-            checks=$(gh "${REPO_FLAG[@]}" pr checks "$n" 2>&1 || true)
-            echo "$checks"
-            # نجاح صريح لـ Verify build، ورفض fail/pending
-            if echo "$checks" | grep -i 'Verify build' | grep -qiE 'fail|pending|cancel'; then
-              return 1
-            fi
-            if echo "$checks" | grep -i 'Verify build' | grep -qiE 'pass|success'; then
-              return 0
-            fi
-            return 1
+          check_line_status() {
+            # stdin: gh pr checks output; $1 = check name regex
+            local name_re="$1"
+            echo "$CHECKS" | awk -v re="$name_re" 'BEGIN{IGNORECASE=1} $1 ~ re {print $2; found=1} END{if(!found) print "missing"}' | head -1
           }
 
-          update_from_main() {
-            local n="$1" head="$2"
-            echo "تحديث $head من origin/main…"
-            git fetch origin "$head" || return 1
-            git checkout -B "pr-$n" "origin/$head"
-            if git merge --no-edit origin/main; then
-              git push origin "HEAD:$head"
-              gh "${REPO_FLAG[@]}" pr comment "$n" --body "✅ حُدّث الفرع من \`main\` تلقائيًا. تُعاد الفحوصات ثم Auto-merge (squash) بعد نجاح Verify build." || true
-              return 0
+          quality_ok() {
+            local n="$1" files has_ios has_sql st
+            CHECKS=$(gh "${REPO_FLAG[@]}" pr checks "$n" 2>&1 || true)
+            echo "$CHECKS"
+
+            # Verify build / quality must be success (not pending/fail)
+            st=$(check_line_status '^(Verify build|quality)$')
+            if [ "$st" = "fail" ] || [ "$st" = "pending" ] || [ "$st" = "cancel" ] || [ "$st" = "cancelled" ]; then
+              echo "block: Verify build status=$st"
+              return 1
             fi
-            git merge --abort || true
-            gh "${REPO_FLAG[@]}" pr comment "$n" --body "⚠️ تعذّر تحديث الفرع من \`main\` تلقائيًا (تعارض). حدّث الفرع يدويًا مع الحفاظ على تعديلاتك." || true
-            return 1
+            if [ "$st" != "pass" ] && [ "$st" != "success" ]; then
+              echo "block: Verify build missing/not green ($st)"
+              return 1
+            fi
+
+            files=$(gh "${REPO_FLAG[@]}" pr view "$n" --json files --jq '.files[].path' || true)
+            has_ios=0
+            has_sql=0
+            if echo "$files" | grep -Eq '^artifacts/majalis/(ios/|capacitor\.config\.ts)'; then
+              has_ios=1
+            fi
+            if echo "$files" | grep -Eqi '(^artifacts/majalis/supabase/|/migration|db-migrate|migration-runner|enterprise_reliability|qa_phase|\.sql$)'; then
+              has_sql=1
+            fi
+
+            # postgres-integration: always required when check exists; mandatory on SQL paths
+            st=$(check_line_status '^postgres-integration$')
+            if [ "$has_sql" = "1" ]; then
+              if [ "$st" != "pass" ] && [ "$st" != "success" ]; then
+                echo "block: SQL paths require postgres-integration green (got $st)"
+                return 1
+              fi
+            elif [ "$st" = "fail" ] || [ "$st" = "pending" ] || [ "$st" = "cancel" ] || [ "$st" = "cancelled" ]; then
+              echo "block: postgres-integration not green ($st)"
+              return 1
+            fi
+
+            if [ "$has_ios" = "1" ]; then
+              st=$(check_line_status '^xcodebuild-simulator$')
+              if [ "$st" != "pass" ] && [ "$st" != "success" ]; then
+                echo "block: iOS paths require xcodebuild-simulator green (got $st)"
+                return 1
+              fi
+            fi
+
+            # preview-smoke: if reported, must not be fail/pending
+            st=$(check_line_status '^preview-smoke$')
+            if [ "$st" = "fail" ] || [ "$st" = "pending" ] || [ "$st" = "cancel" ] || [ "$st" = "cancelled" ]; then
+              echo "block: preview-smoke not green ($st)"
+              return 1
+            fi
+
+            # Any other fail/pending check blocks
+            if echo "$CHECKS" | awk 'BEGIN{IGNORECASE=1} $2 ~ /^(fail|pending|cancel|cancelled)$/ {print; bad=1} END{exit bad?0:1}'; then
+              echo "block: non-green checks present"
+              return 1
+            fi
+            return 0
           }
 
           for n in $NUMS; do
             echo "::group::PR #$n"
-            if ! meta=$(gh "${REPO_FLAG[@]}" pr view "$n" --json number,state,isDraft,baseRefName,headRefName,isCrossRepository,mergeable,mergeStateStatus,url \
-              --jq '{state,isDraft,base:.baseRefName,head:.headRefName,cross:.isCrossRepository,mergeable,mergeStateStatus,url}'); then
-              echo "::warning::تعذّر قراءة PR #$n"
-              echo "::endgroup::"
-              continue
-            fi
-            echo "$meta"
+            meta=$(gh "${REPO_FLAG[@]}" pr view "$n" --json state,isDraft,baseRefName,headRefName,isCrossRepository,mergeable,mergeStateStatus,title,reviewDecision,headRefOid \
+              --jq '{state,isDraft,base:.baseRefName,branch:.headRefName,cross:.isCrossRepository,mergeable,mergeStateStatus,title,reviewDecision,sha:.headRefOid}')
             state=$(echo "$meta" | jq -r .state)
+            draft=$(echo "$meta" | jq -r .isDraft)
             base=$(echo "$meta" | jq -r .base)
-            head=$(echo "$meta" | jq -r .head)
+            head=$(echo "$meta" | jq -r .branch)
             cross=$(echo "$meta" | jq -r .cross)
             mergeable=$(echo "$meta" | jq -r .mergeable)
             mstatus=$(echo "$meta" | jq -r .mergeStateStatus)
-            draft=$(echo "$meta" | jq -r .isDraft)
+            title=$(echo "$meta" | jq -r .title)
+            review=$(echo "$meta" | jq -r .reviewDecision)
+            head_sha_before=$(echo "$meta" | jq -r .sha)
 
             if [ "$state" != "OPEN" ] || [ "$base" != "main" ] || [ "$cross" = "true" ]; then
-              echo "تخطي: غير مؤهّل"
-              echo "::endgroup::"
-              continue
+              echo "skip: not eligible"; echo "::endgroup::"; continue
+            fi
+            if [ "$draft" = "true" ]; then
+              echo "skip: Draft (never undraft)"; echo "::endgroup::"; continue
+            fi
+            if [ "$review" = "CHANGES_REQUESTED" ]; then
+              echo "skip: changes requested"
+              gh "${REPO_FLAG[@]}" pr merge "$n" --disable-auto || true
+              echo "::endgroup::"; continue
             fi
             if ! echo "$head" | grep -Eq "$ALLOW"; then
-              echo "تخطي: الفرع $head خارج الأنماط"
-              echo "::endgroup::"
-              continue
+              echo "skip: branch pattern"; echo "::endgroup::"; continue
             fi
             if echo "$head" | grep -Eq "$EXCLUDE_DUAL"; then
-              echo "تخطي: $head عبر release-majlisilm.yml"
-              echo "::endgroup::"
-              continue
+              echo "skip: dual automation"; echo "::endgroup::"; continue
             fi
-
-            # طلب صريح من مالك المهمة / Cloud Agent: لا Auto-merge لعناوين تحمل هذه العلامات
-            title=$(gh "${REPO_FLAG[@]}" pr view "$n" --json title --jq .title)
             if echo "$title" | grep -Eqi 'NO-AUTO-MERGE|دون دمج|do-not-merge'; then
-              echo "تخطي: العنوان يطلب تعطيل Auto-merge ($title)"
-              gh "${REPO_FLAG[@]}" pr ready "$n" --undo || true
+              echo "skip: title forbids auto-merge"
               gh "${REPO_FLAG[@]}" pr merge "$n" --disable-auto || true
-              echo "::endgroup::"
-              continue
+              echo "::endgroup::"; continue
+            fi
+            if [ "$mergeable" != "MERGEABLE" ]; then
+              echo "skip: mergeable=$mergeable (require MERGEABLE)"
+              gh "${REPO_FLAG[@]}" pr merge "$n" --disable-auto || true
+              echo "::endgroup::"; continue
+            fi
+            if [ "$mstatus" = "CONFLICTING" ] || [ "$mstatus" = "DIRTY" ]; then
+              echo "skip: conflicting"
+              gh "${REPO_FLAG[@]}" pr merge "$n" --disable-auto || true
+              echo "::endgroup::"; continue
+            fi
+            if [ "$mstatus" = "BEHIND" ]; then
+              echo "skip: behind main — update required (no force-merge)"
+              echo "::endgroup::"; continue
             fi
 
-            # تحديث إلزامي إن كان متأخرًا أو متعارضًا
-            if [ "$mergeable" = "CONFLICTING" ] || [ "$mstatus" = "BEHIND" ] || [ "$mstatus" = "DIRTY" ]; then
-              if ! update_from_main "$n" "$head"; then
-                echo "::warning::تعذّر التحديث — لا دمج"
-                echo "::endgroup::"
-                continue
-              fi
-              # بعد الدفع تُعاد الفحوصات؛ فعّل auto فقط وانتظر الدورة التالية
-              if [ "$draft" = "true" ]; then
-                gh "${REPO_FLAG[@]}" pr ready "$n" || true
-              fi
-              gh "${REPO_FLAG[@]}" pr merge "$n" --auto --squash --delete-branch || true
-              echo "بعد التحديث: Auto-merge في الانتظار لفحص Verify build"
-              echo "::endgroup::"
-              continue
+            if ! quality_ok "$n"; then
+              echo "skip: required checks not green"
+              gh "${REPO_FLAG[@]}" pr merge "$n" --disable-auto || true
+              echo "::endgroup::"; continue
             fi
 
-            if [ "$draft" = "true" ]; then
-              echo "Draft → Ready…"
-              gh "${REPO_FLAG[@]}" pr ready "$n" || echo "::warning::تعذّر undraft"
+            head_sha_after=$(gh "${REPO_FLAG[@]}" pr view "$n" --json headRefOid --jq .headRefOid)
+            if [ "$head_sha_before" != "$head_sha_after" ]; then
+              echo "skip: head SHA changed during checks ($head_sha_before -> $head_sha_after)"
+              gh "${REPO_FLAG[@]}" pr merge "$n" --disable-auto || true
+              echo "::endgroup::"; continue
             fi
 
-            # المسار الآمن مع حماية الفرع: --auto ينتظر الفحوصات الإلزامية (Verify build)
-            echo "تفعيل Auto-merge (squash)…"
-            if gh "${REPO_FLAG[@]}" pr merge "$n" --auto --squash --delete-branch; then
-              echo "✓ Auto-merge مفعّل أو اكتمل لـ #$n"
-            else
-              echo "auto-merge لم يُقبل فورًا — تحقق Verify build قبل أي دمج مباشر"
-            fi
-
-            # دمج فوري فقط إذا نجح Verify build صراحةً والحالة تسمح
-            if verify_build_ok "$n"; then
-              # أعد قراءة الحالة بعد الفحص
-              mstatus=$(gh "${REPO_FLAG[@]}" pr view "$n" --json mergeStateStatus,mergeable,state --jq '.mergeStateStatus')
-              mergeable=$(gh "${REPO_FLAG[@]}" pr view "$n" --json mergeable --jq '.mergeable')
-              state=$(gh "${REPO_FLAG[@]}" pr view "$n" --json state --jq '.state')
-              if [ "$state" != "OPEN" ]; then
-                echo "لم يعد مفتوحًا"
-                echo "::endgroup::"
-                continue
-              fi
-              if [ "$mergeable" = "CONFLICTING" ] || [ "$mstatus" = "BEHIND" ]; then
-                echo "ما زال متأخرًا/متعارضًا بعد النجاح — يُحدَّث لاحقًا"
-                echo "::endgroup::"
-                continue
-              fi
-              if gh "${REPO_FLAG[@]}" pr merge "$n" --squash --delete-branch; then
-                echo "✓ دُمج (squash) بعد نجاح Verify build لـ #$n"
-              else
-                echo "بانتظار حماية الفرع / Auto-merge لـ #$n"
-              fi
-            else
-              echo "Verify build لم ينجح بعد — لا دمج. Auto-merge ينتظر الفحص الإلزامي."
-            fi
+            echo "enable auto-merge squash for #$n (head=$head_sha_after)"
+            gh "${REPO_FLAG[@]}" pr merge "$n" --auto --squash --delete-branch || true
             echo "::endgroup::"
           done
-          exit 0

@@ -453,11 +453,22 @@ function main() {
     byCategory[key].push(item);
   }
 
+  // ترتيب حتمي داخل كل فئة وبين الفئات — يمنع اختلاف JSON/seed بين بنائين متطابقين.
+  const rulingKey = (r) => String(r.id ?? r.slug ?? r.title ?? "");
+  for (const key of Object.keys(byCategory)) {
+    byCategory[key].sort((a, b) => {
+      const d = (b.importance_score ?? 0) - (a.importance_score ?? 0);
+      if (d !== 0) return d;
+      return rulingKey(a).localeCompare(rulingKey(b), "en");
+    });
+  }
+
   // generated_at ثابت لا لحظة البناء: الملف مُتتبَّع في git ولا يقرأه أي كود،
   // فطابع الوقت الحي كان يُنتج تعديلًا وهميًا في كل بناء بلا أي تغيّر محتوى.
   const manifest = { version: 1, generated_at: FALLBACK_TIMESTAMP, total: all.length, chunks: [] };
 
-  for (const [catKey, items] of Object.entries(byCategory)) {
+  for (const catKey of Object.keys(byCategory).sort((a, b) => a.localeCompare(b, "en"))) {
+    const items = byCategory[catKey];
     const filename = `${catKey}.json`;
     fs.writeFileSync(path.resolve(CHUNKS_DIR, filename), JSON.stringify(items, null, 0));
     manifest.chunks.push({ category: items[0].category, file: `chunks/${filename}`, count: items.length });
@@ -465,8 +476,14 @@ function main() {
 
   fs.writeFileSync(path.resolve(OUT_DIR, "manifest.json"), JSON.stringify(manifest, null, 2));
 
-  // Compact seed for TS fallback (first 200 by importance)
-  const top = [...all].sort((a, b) => (b.importance_score ?? 0) - (a.importance_score ?? 0)).slice(0, 200);
+  // Compact seed for TS fallback (first 200 by importance, stable ties)
+  const top = [...all]
+    .sort((a, b) => {
+      const d = (b.importance_score ?? 0) - (a.importance_score ?? 0);
+      if (d !== 0) return d;
+      return rulingKey(a).localeCompare(rulingKey(b), "en");
+    })
+    .slice(0, 200);
   const seedOut = path.resolve(ROOT, "src/lib/rulings-encyclopedia-seed.generated.ts");
   fs.writeFileSync(
     seedOut,

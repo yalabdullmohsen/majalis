@@ -6,8 +6,14 @@ CREATE TABLE IF NOT EXISTS qa_categories (
   name text NOT NULL,
   slug text UNIQUE NOT NULL,
   description text,
+  sort_order integer NOT NULL DEFAULT 0,
   created_at timestamptz DEFAULT now()
 );
+
+-- Expand-only for DBs that already had qa_categories without sort_order
+ALTER TABLE qa_categories ADD COLUMN IF NOT EXISTS sort_order integer;
+UPDATE qa_categories SET sort_order = COALESCE(sort_order, 0) WHERE sort_order IS NULL;
+ALTER TABLE qa_categories ALTER COLUMN sort_order SET DEFAULT 0;
 
 CREATE TABLE IF NOT EXISTS qa_questions (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),

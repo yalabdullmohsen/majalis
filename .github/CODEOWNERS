@@ -1,0 +1,20 @@
+# Default owners for review routing (GitHub CODEOWNERS).
+# Branch protection + required reviews must still be enabled in repo settings.
+
+* @yalabdullmohsen
+
+# Security, CI, DB, iOS — require explicit human review on these paths
+/.github/workflows/ @yalabdullmohsen
+/.github/CODEOWNERS @yalabdullmohsen
+/artifacts/majalis/supabase/ @yalabdullmohsen
+/artifacts/majalis/vercel.json @yalabdullmohsen
+/artifacts/majalis/lib/api-handlers/ @yalabdullmohsen
+/artifacts/majalis/lib/api-dispatch.mjs @yalabdullmohsen
+/artifacts/majalis/lib/db-migrate.mjs @yalabdullmohsen
+/artifacts/majalis/lib/migration-runner.mjs @yalabdullmohsen
+/artifacts/majalis/ios/ @yalabdullmohsen
+*.xcodeproj/ @yalabdullmohsen
+*.entitlements @yalabdullmohsen
+PrivacyInfo.xcprivacy @yalabdullmohsen
+/artifacts/majalis/src/components/AuthProvider.tsx @yalabdullmohsen
+/artifacts/majalis/src/lib/supabase.ts @yalabdullmohsen

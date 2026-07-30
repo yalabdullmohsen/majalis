@@ -4,39 +4,14 @@
   "total": 3692,
   "chunks": [
     {
-      "category": "الطهارة",
-      "file": "chunks/الطهارة.json",
-      "count": 251
+      "category": "الأخلاق والآداب",
+      "file": "chunks/الأخلاق-والآداب.json",
+      "count": 142
     },
     {
-      "category": "الصلاة",
-      "file": "chunks/الصلاة.json",
-      "count": 173
-    },
-    {
-      "category": "الزكاة",
-      "file": "chunks/الزكاة.json",
-      "count": 68
-    },
-    {
-      "category": "الحج والعمرة",
-      "file": "chunks/الحج-والعمرة.json",
-      "count": 90
-    },
-    {
-      "category": "المعاملات",
-      "file": "chunks/المعاملات.json",
-      "count": 9
-    },
-    {
-      "category": "المواريث والوصايا",
-      "file": "chunks/المواريث-والوصايا.json",
-      "count": 5
-    },
-    {
-      "category": "الصيام",
-      "file": "chunks/الصيام.json",
-      "count": 103
+      "category": "الأذكار والدعاء",
+      "file": "chunks/الأذكار-والدعاء.json",
+      "count": 31
     },
     {
       "category": "الأسرة",
@@ -44,24 +19,14 @@
       "count": 8
     },
     {
-      "category": "النوازل المعاصرة",
-      "file": "chunks/النوازل-المعاصرة.json",
-      "count": 73
-    },
-    {
       "category": "الأطعمة والأشربة",
       "file": "chunks/الأطعمة-والأشربة.json",
       "count": 3
     },
     {
-      "category": "اللباس والزينة",
-      "file": "chunks/اللباس-والزينة.json",
-      "count": 2
-    },
-    {
-      "category": "القضاء والحدود",
-      "file": "chunks/القضاء-والحدود.json",
-      "count": 2
+      "category": "الأيمان والنذور",
+      "file": "chunks/الأيمان-والنذور.json",
+      "count": 3
     },
     {
       "category": "الجنائز",
@@ -74,14 +39,29 @@
       "count": 2
     },
     {
-      "category": "الأيمان والنذور",
-      "file": "chunks/الأيمان-والنذور.json",
-      "count": 3
+      "category": "الحج والعمرة",
+      "file": "chunks/الحج-والعمرة.json",
+      "count": 90
     },
     {
-      "category": "طلب العلم والدعوة",
-      "file": "chunks/طلب-العلم-والدعوة.json",
-      "count": 1864
+      "category": "الزكاة",
+      "file": "chunks/الزكاة.json",
+      "count": 68
+    },
+    {
+      "category": "الصلاة",
+      "file": "chunks/الصلاة.json",
+      "count": 173
+    },
+    {
+      "category": "الصيام",
+      "file": "chunks/الصيام.json",
+      "count": 103
+    },
+    {
+      "category": "الطهارة",
+      "file": "chunks/الطهارة.json",
+      "count": 251
     },
     {
       "category": "العقيدة",
@@ -94,14 +74,34 @@
       "count": 497
     },
     {
-      "category": "الأذكار والدعاء",
-      "file": "chunks/الأذكار-والدعاء.json",
-      "count": 31
+      "category": "القضاء والحدود",
+      "file": "chunks/القضاء-والحدود.json",
+      "count": 2
     },
     {
-      "category": "الأخلاق والآداب",
-      "file": "chunks/الأخلاق-والآداب.json",
-      "count": 142
+      "category": "اللباس والزينة",
+      "file": "chunks/اللباس-والزينة.json",
+      "count": 2
+    },
+    {
+      "category": "المعاملات",
+      "file": "chunks/المعاملات.json",
+      "count": 9
+    },
+    {
+      "category": "المواريث والوصايا",
+      "file": "chunks/المواريث-والوصايا.json",
+      "count": 5
+    },
+    {
+      "category": "النوازل المعاصرة",
+      "file": "chunks/النوازل-المعاصرة.json",
+      "count": 73
+    },
+    {
+      "category": "طلب العلم والدعوة",
+      "file": "chunks/طلب-العلم-والدعوة.json",
+      "count": 1864
     }
   ]
 }

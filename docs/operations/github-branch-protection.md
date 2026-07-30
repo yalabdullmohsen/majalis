@@ -1,15 +1,19 @@
-# GitHub branch protection (manual)
+# Branch protection (manual — requires repo admin)
 
-Required on `main`:
+Required status checks on `main` (do not skip):
 
-1. Settings → Branches → Add rule for `main`.
-2. Require PR before merge; dismiss stale approvals.
-3. Require status checks (names as shown in Actions):
-   - `Verify build` (current `ci.yml`)
-   - Future split jobs when added: quality / migration-check / api-contract / playwright
-   - `Vercel – majalis-majalis`
-4. Require branches up to date.
-5. Block force pushes and deletions.
-6. Do **not** allow bypass for deploy automation except documented owners.
+1. `Verify build` — tsc -b, typecheck, lint 0, full tests, deterministic build, `git diff --exit-code`, migration verify (static)
+2. `postgres-integration` — always on PRs/pushes via CI
+3. `preview-smoke` — Ready PRs must resolve a Vercel Preview for the same head SHA
+4. `xcodebuild-simulator` — when iOS/Capacitor paths change (`ios-native-macos.yml`)
+5. `iOS static gates + unit tests` — when Capacitor paths change (`ios-capacitor-gates.yml`)
 
-Agent cannot apply org settings without admin UI access.
+Also enable:
+
+- Require a pull request before merging
+- Require conversation resolution (optional)
+- Do **not** allow bypass without admin
+- Auto-merge: enabled (squash)
+- Delete branch on merge: enabled
+
+CODEOWNERS routes review for workflows/SQL/iOS; required reviews still need enabling in settings if desired.
