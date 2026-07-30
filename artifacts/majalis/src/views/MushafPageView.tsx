@@ -140,11 +140,9 @@ export default function MushafPageView() {
   const [resumeBanner, setResumeBanner] = useState<number | null>(null);
   const [jumpSurah, setJumpSurah] = useState(1);
   const [jumpAyah, setJumpAyah] = useState(1);
-  /* تجربة قراءة غامرة بنمط "آية"/"ترتيل": نقرة واحدة على جسم الصفحة (لا
-     على آية — onClick على .mf2-ayah-group يوقف الانتشار propagation)
-     تُبدِّل ظهور الشريطين العلوي/السفلي، مستقلة عن chromeVisible الخاصة
-     مستقلة عن باقي التبديلات — تبديل دائم لا اختفاء تلقائي بعد مهلة). */
-  const [textChromeVisible, setTextChromeVisible] = useState(true);
+  /* تجربة قراءة غامرة بنمط "آية": افتراضيًا الأدوات مخفية (رأس/شارة فقط)؛
+     نقرة على جسم الصفحة تُظهر أدوات الرجوع/الفهرس/الإعدادات. */
+  const [textChromeVisible, setTextChromeVisible] = useState(false);
   const [bookmarkStatus, setBookmarkStatus] = useState<string | null>(null);
   const [pageBookmarked, setPageBookmarked] = useState(() => isPageBookmarked(page));
   const touchStartX = useRef<number | null>(null);
@@ -396,15 +394,17 @@ export default function MushafPageView() {
       style={{ ["--ayah-paper" as string]: immersivePaper }}
     >
       <>
-          {/* رأس عائم بنمط آية: الجزء يمين / اسم السورة يسار — بلا صناديق */}
+          {/* هيدر عائم بسيط — بلا أزرار أو خلفيات (مطابق مخطط آية) */}
           <header className="mpv-ayah-header" aria-label="معلومات الصفحة">
             <span className="mpv-ayah-header__juz">
-              الجزء {juz ? toArabicDigits(juz) : "—"}
-              {hizb ? ` · الحزب ${toArabicDigits(hizb)}` : ""}
+              {juz
+                ? `الجزء ${toArabicDigits(juz)}${hizb ? ` • الحزب ${toArabicDigits(hizb)}` : ""}`
+                : "—"}
             </span>
-            <span className="mpv-ayah-header__surah">{primarySurahMeta.name}</span>
+            <span className="mpv-ayah-header__surah">سورة {primarySurahMeta.name}</span>
           </header>
 
+          {/* أدوات تظهر فقط عند النقر — خارج مساحة القراءة الافتراضية */}
           <div className={`mpv-toolbar mpv-toolbar--ayah ${textChromeVisible ? "" : "mpv-toolbar--hidden"}`}>
             <button type="button" className="mpv-toolbar__btn" onClick={goBack} aria-label="رجوع">
               <ArrowRight size={16} aria-hidden="true" />
@@ -426,6 +426,24 @@ export default function MushafPageView() {
             <button type="button" className="mpv-toolbar__btn" onClick={() => setSettingsOpen(true)} aria-label="إعدادات القراءة">
               <Settings size={16} aria-hidden="true" />
             </button>
+            <button
+              type="button"
+              className="mpv-toolbar__btn"
+              onClick={prevPage}
+              disabled={page <= 1}
+              aria-label="الصفحة السابقة"
+            >
+              <ChevronRight size={16} aria-hidden="true" />
+            </button>
+            <button
+              type="button"
+              className="mpv-toolbar__btn"
+              onClick={nextPage}
+              disabled={page >= TOTAL_PAGES}
+              aria-label="الصفحة التالية"
+            >
+              <ChevronLeft size={16} aria-hidden="true" />
+            </button>
           </div>
           {bookmarkStatus ? (
             <p className="mpv-bookmark-status" role="status" aria-live="polite">
@@ -442,6 +460,7 @@ export default function MushafPageView() {
             onTouchStart={onTouchStart}
             onTouchEnd={onTouchEnd}
             onClick={() => setTextChromeVisible((v) => !v)}
+            role="presentation"
           >
             {resumeBanner && (
               <div className="mpv-resume-banner">
@@ -494,17 +513,8 @@ export default function MushafPageView() {
             )}
           </div>
 
-          {/* تذييل آية: شارة بيضاوية دائمة + أسهم خفيفة مع الأدوات */}
+          {/* رقم الصفحة فقط — شارة بيضاوية ناعمة (بلا بار تنقّل كحلي) */}
           <footer className="mpv-ayah-footer">
-            <button
-              type="button"
-              className={`mpv-navbar__btn mpv-ayah-nav-btn ${textChromeVisible ? "" : "mpv-ayah-nav-btn--hidden"}`}
-              onClick={prevPage}
-              disabled={page <= 1}
-              aria-label="الصفحة السابقة"
-            >
-              <ChevronRight size={18} aria-hidden="true" />
-            </button>
             <button
               type="button"
               className="mpv-ayah-page-badge"
@@ -514,15 +524,6 @@ export default function MushafPageView() {
               aria-label={`الانتقال إلى صفحة — الحالية ${toArabicDigits(page)} من ${toArabicDigits(TOTAL_PAGES)}`}
             >
               {toArabicDigits(page)}
-            </button>
-            <button
-              type="button"
-              className={`mpv-navbar__btn mpv-ayah-nav-btn ${textChromeVisible ? "" : "mpv-ayah-nav-btn--hidden"}`}
-              onClick={nextPage}
-              disabled={page >= TOTAL_PAGES}
-              aria-label="الصفحة التالية"
-            >
-              <ChevronLeft size={18} aria-hidden="true" />
             </button>
           </footer>
         </>

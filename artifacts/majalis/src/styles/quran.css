@@ -2167,6 +2167,12 @@ body.has-immersive-mushaf { overflow: hidden; }
   color: var(--ayah-ink, #2C2C2E);
   user-select: none;
   -webkit-user-select: none;
+  /* مخطط آية: عمود كامل الشاشة مع تباعد متوازن */
+  justify-content: space-between;
+  padding: 1rem;
+  padding-top: max(1rem, env(safe-area-inset-top, 0px));
+  padding-bottom: max(0.5rem, env(safe-area-inset-bottom, 0px));
+  box-sizing: border-box;
 }
 .quran-shell--ayah.quran-shell--night {
   --ayah-paper: #1a1a1a;
@@ -2194,8 +2200,8 @@ body.has-immersive-mushaf { overflow: hidden; }
   justify-content: space-between;
   align-items: center;
   flex-shrink: 0;
-  padding: max(0.5rem, env(safe-area-inset-top, 0px)) 1rem 0.25rem;
-  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem 0;
+  font-size: 0.75rem; /* text-xs */
   font-weight: 500;
   font-family: var(--font-ui, "Alexandria", "Noto Naskh Arabic", sans-serif);
   color: var(--ayah-meta, #8E8E93);
@@ -2213,12 +2219,13 @@ body.has-immersive-mushaf { overflow: hidden; }
 }
 .mpv-ayah-header__surah {
   font-family: "Amiri", "Noto Naskh Arabic", var(--font-display, serif);
-  font-size: 0.82rem;
+  font-size: 0.75rem;
+  font-weight: 500;
 }
 
 .mpv-toolbar--ayah {
   position: absolute;
-  top: calc(1.75rem + env(safe-area-inset-top, 0px));
+  top: calc(2.25rem + env(safe-area-inset-top, 0px));
   left: 0;
   right: 0;
   background: transparent !important;
@@ -2245,18 +2252,24 @@ body.has-immersive-mushaf { overflow: hidden; }
 }
 
 .mpv-body--ayah {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-block: 0.5rem;
   padding:
-    0.35rem
+    0
     max(12px, env(safe-area-inset-left, 0px))
-    0.35rem
+    0
     max(12px, env(safe-area-inset-right, 0px));
   max-width: none;
-  /* يملأ المساحة بين الرأس والتذييل */
-  height: calc(100dvh - 100px);
-  max-height: calc(100dvh - 100px);
+  /* تعبئة الشاشة بين الرأس والتذييل — مطابق max-h-[83vh] في المخطط */
+  height: auto;
+  max-height: 83vh;
+  min-height: 0;
 }
 .quran-shell--chrome-hidden .mpv-body--ayah {
-  padding-bottom: 0.35rem;
+  padding-bottom: 0;
 }
 
 .qs-mushaf-frame--ayah,
@@ -2273,6 +2286,7 @@ body.has-immersive-mushaf { overflow: hidden; }
   width: 100%;
   max-width: 650px;
   margin-inline: auto;
+  max-height: 83vh;
 }
 .qs-mushaf-frame--ayah::before,
 .qs-mushaf-frame--ayah-chrome::before {
@@ -2296,14 +2310,17 @@ body.has-immersive-mushaf { overflow: hidden; }
   min-height: 0;
   padding: 0 !important;
   color: var(--ayah-ink, #2C2C2E);
+  max-height: 83vh;
 }
 .quran-shell--ayah .qs-mushaf-body .qs-mushaf-body-inner {
-  /* احتواء بعرض أوضح على الجوال مع هامش 12–20px من الحاوية */
+  /* احتواء بعرض كامل مع سقف ارتفاع 83vh */
   width: min(
     calc(100% * var(--qs-font-scale, 1)),
-    calc(100cqh * 0.72 * var(--qs-font-scale, 1))
+    calc(100cqh * 0.72 * var(--qs-font-scale, 1)),
+    calc(83vh * 0.72 * var(--qs-font-scale, 1))
   );
   max-width: 100%;
+  max-height: 83vh;
   aspect-ratio: 0.72;
 }
 
@@ -2322,9 +2339,8 @@ body.has-immersive-mushaf { overflow: hidden; }
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1.25rem;
   flex-shrink: 0;
-  padding: 0.35rem 1rem max(0.55rem, env(safe-area-inset-bottom, 0px));
+  padding: 0.5rem 0 0.25rem;
   background: transparent;
   border: none;
   z-index: 25;
@@ -2334,18 +2350,19 @@ body.has-immersive-mushaf { overflow: hidden; }
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 2.75rem;
-  min-height: 1.65rem;
-  padding: 0.2rem 0.85rem;
+  min-width: 2.5rem;
+  min-height: 1.5rem;
+  padding: 0.25rem 1rem; /* px-4 py-1 */
   border-radius: 999px;
   border: 1px solid var(--ayah-badge-border, #D1C7BD);
   background: var(--ayah-badge-bg, #F4EFEA);
   color: var(--ayah-badge-ink, #635B53);
   font-family: "Amiri", "Noto Naskh Arabic", var(--font-display, serif);
-  font-size: 0.8rem;
+  font-size: 0.75rem; /* text-xs */
   font-weight: 600;
   line-height: 1;
   cursor: pointer;
+  box-shadow: 0 1px 2px rgba(28, 25, 23, 0.06); /* shadow-sm */
   -webkit-tap-highlight-color: transparent;
   transition: opacity 0.2s ease, transform 0.15s ease;
 }
@@ -2354,17 +2371,6 @@ body.has-immersive-mushaf { overflow: hidden; }
 }
 .mpv-ayah-page-badge:active {
   transform: scale(0.97);
-}
-.mpv-ayah-nav-btn {
-  background: transparent !important;
-  border-color: transparent !important;
-  color: var(--ayah-meta, #8E8E93) !important;
-  transition: opacity 0.2s ease, transform 0.2s ease;
-}
-.mpv-ayah-nav-btn--hidden {
-  opacity: 0;
-  pointer-events: none;
-  transform: scale(0.9);
 }
 
 .quran-shell--ayah .mpv-resume-banner {
