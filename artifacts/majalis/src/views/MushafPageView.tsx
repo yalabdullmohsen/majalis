@@ -454,13 +454,20 @@ export default function MushafPageView() {
           {/* onClick هنا ميزة راحة بالماوس/اللمس فقط (تبديل ظهور أدوات القراءة)،
               لا إجراء أساسي وحيد — كل التحكمات الفعلية أزرار حقيقية قابلة
               للوصول بلوحة المفاتيح في مكان آخر بالصفحة. */}
-          {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions */}
           <div
             className="mpv-body mpv-body--ayah"
             onTouchStart={onTouchStart}
             onTouchEnd={onTouchEnd}
             onClick={() => setTextChromeVisible((v) => !v)}
-            role="presentation"
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
+                setTextChromeVisible((v) => !v);
+              }
+            }}
+            role="button"
+            tabIndex={0}
+            aria-label="إظهار أو إخفاء أدوات القراءة"
           >
             {resumeBanner && (
               <div className="mpv-resume-banner">
