@@ -24,21 +24,35 @@ export default function AuthCallbackPage() {
     const next = sanitizeAuthNext(params.get("next"));
 
     const { data: sub } = supabase.auth.onAuthStateChange((event) => {
+      if (event === "PASSWORD_RECOVERY") {
+        navigate("/auth/update-password");
+        return;
+      }
       if (event === "SIGNED_IN" || event === "INITIAL_SESSION") {
-        const sessionEvent = event;
-        // INITIAL_SESSION بعد hash redirect يعني الجلسة جاهزة
-        if (sessionEvent === "SIGNED_IN" || sessionEvent === "INITIAL_SESSION") {
-          void supabase.auth.getSession().then(({ data }) => {
-            if (data.session) navigate(next);
-          });
-        }
+        void supabase.auth.getSession().then(({ data }) => {
+          if (!data.session) return;
+          // إن وُجدت جلسة استعادة عبر hash دون event واضح — احترم next إن كان update-password
+          if (next === "/auth/update-password") {
+            navigate("/auth/update-password");
+            return;
+          }
+          navigate(next);
+        });
       }
     });
 
     // Fallback: redirect after Supabase processes the hash
     const timer = setTimeout(() => {
       void supabase.auth.getSession().then(({ data }) => {
-        navigate(data.session ? next : "/login");
+        if (!data.session) {
+          navigate("/login");
+          return;
+        }
+        if (next === "/auth/update-password") {
+          navigate("/auth/update-password");
+          return;
+        }
+        navigate(next);
       });
     }, 3000);
 

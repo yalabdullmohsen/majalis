@@ -1,7 +1,8 @@
 import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Link, useSearch } from "wouter";
-import { Pause, Play, Square, ChevronLeft, RotateCcw } from "lucide-react";
+import { Pause, Play, Square, ChevronLeft, RotateCcw, ArrowRight } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
+import { goBackOrFallback } from "@/lib/navigation-back";
 import { useAuth } from "@/components/AuthProvider";
 import { fetchSurahDetail, getSurahList } from "@/lib/quran-api";
 import { buildReferenceWords, buildReferenceWordsForRange } from "@/lib/recitation-ai/quran-reference-words";
@@ -1778,5 +1779,18 @@ function errorTypeLabel(t: string): string {
 }
 
 export default function RecitationTestPage() {
-  return <RecitationTestPageInner />;
+  return (
+    <div className="rai-shell">
+      <button
+        type="button"
+        className="rai-back-btn"
+        onClick={() => goBackOrFallback("/quran/recitation-test-ai")}
+        aria-label="رجوع"
+      >
+        <ArrowRight size={18} strokeWidth={2.2} aria-hidden="true" />
+        رجوع
+      </button>
+      <RecitationTestPageInner />
+    </div>
+  );
 }

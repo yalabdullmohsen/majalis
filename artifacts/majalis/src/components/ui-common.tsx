@@ -96,7 +96,7 @@ export function PageHeader({
   subtitle?: string;
   showBack?: boolean;
 }) {
-  const currentPath = `${window.location.pathname}${window.location.search}${window.location.hash}`;
+  const currentPath = window.location.pathname;
   return (
     <header className="ds-page-header" dir="rtl">
       {showBack && (

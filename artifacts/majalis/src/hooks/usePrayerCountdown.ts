@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   computePrayerCountdown,
   fetchPrayerTimes,
@@ -23,6 +23,11 @@ export function usePrayerCountdown(governorateId?: string) {
   const [data, setData] = useState<PrayerTimesPayload | null>(null);
   const [countdown, setCountdown] = useState<PrayerCountdown | null>(null);
   const [loading, setLoading] = useState(true);
+  const [reloadToken, setReloadToken] = useState(0);
+
+  const reload = useCallback(() => {
+    setReloadToken((n) => n + 1);
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
@@ -48,7 +53,7 @@ export function usePrayerCountdown(governorateId?: string) {
     return () => {
       cancelled = true;
     };
-  }, [governorateId]);
+  }, [governorateId, reloadToken]);
 
   useEffect(() => {
     if (!data?.prayers?.length) {
@@ -82,5 +87,5 @@ export function usePrayerCountdown(governorateId?: string) {
     };
   }, [data]);
 
-  return { data, countdown, loading };
+  return { data, countdown, loading, reload };
 }
