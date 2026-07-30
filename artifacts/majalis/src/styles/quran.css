@@ -2153,6 +2153,225 @@ html[data-theme="dark"] .rtp-transcript {
 }
 body.has-immersive-mushaf { overflow: hidden; }
 
+/* ═══════════════════════════════════════════════════════════════════════════
+   قارئ المصحف بنمط «آية» — خلفية ورقية، بلا بطاقات، رأس/تذييل عائم
+   ═══════════════════════════════════════════════════════════════════════════ */
+.quran-shell--ayah {
+  --ayah-paper: #FAF7F2;
+  --ayah-ink: #2C2C2E;
+  --ayah-meta: #8E8E93;
+  --ayah-badge-border: #D1C7BD;
+  --ayah-badge-ink: #635B53;
+  --ayah-badge-bg: #F4EFEA;
+  background: var(--ayah-paper, #FAF7F2);
+  color: var(--ayah-ink, #2C2C2E);
+  user-select: none;
+  -webkit-user-select: none;
+}
+.quran-shell--ayah.quran-shell--night {
+  --ayah-paper: #1a1a1a;
+  --ayah-ink: #e8d5b0;
+  --ayah-meta: #9ca3af;
+  --ayah-badge-border: #3f3f46;
+  --ayah-badge-ink: #d4c4a8;
+  --ayah-badge-bg: #242424;
+}
+.quran-shell--ayah.quran-shell--high-contrast {
+  --ayah-paper: #ffffff;
+  --ayah-ink: #000000;
+  --ayah-meta: #333333;
+  --ayah-badge-border: #000000;
+  --ayah-badge-ink: #000000;
+  --ayah-badge-bg: #ffffff;
+}
+.quran-shell--ayah.quran-shell--warm {
+  --ayah-paper: #FDFBF7;
+  --ayah-ink: #2C2C2E;
+}
+
+.mpv-ayah-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  padding: max(0.5rem, env(safe-area-inset-top, 0px)) 1rem 0.25rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  font-family: var(--font-ui, "Alexandria", "Noto Naskh Arabic", sans-serif);
+  color: var(--ayah-meta, #8E8E93);
+  background: transparent;
+  border: none;
+  z-index: 25;
+  pointer-events: none;
+}
+.mpv-ayah-header__juz,
+.mpv-ayah-header__surah {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 48%;
+}
+.mpv-ayah-header__surah {
+  font-family: "Amiri", "Noto Naskh Arabic", var(--font-display, serif);
+  font-size: 0.82rem;
+}
+
+.mpv-toolbar--ayah {
+  position: absolute;
+  top: calc(1.75rem + env(safe-area-inset-top, 0px));
+  left: 0;
+  right: 0;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+  padding-top: 0.15rem;
+  z-index: 30;
+}
+.quran-shell--ayah.quran-shell--night .mpv-toolbar--ayah,
+.quran-shell--ayah.quran-shell--warm .mpv-toolbar--ayah,
+.quran-shell--ayah.quran-shell--high-contrast .mpv-toolbar--ayah {
+  background: transparent !important;
+  border: none !important;
+}
+.mpv-toolbar--ayah .mpv-toolbar__btn {
+  background: color-mix(in srgb, var(--ayah-paper, #FAF7F2) 82%, transparent);
+  border-color: color-mix(in srgb, var(--ayah-badge-border, #D1C7BD) 70%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+.mpv-toolbar__spacer {
+  flex: 1;
+  min-width: 0;
+}
+
+.mpv-body--ayah {
+  padding:
+    0.35rem
+    max(12px, env(safe-area-inset-left, 0px))
+    0.35rem
+    max(12px, env(safe-area-inset-right, 0px));
+  max-width: none;
+  /* يملأ المساحة بين الرأس والتذييل */
+  height: calc(100dvh - 100px);
+  max-height: calc(100dvh - 100px);
+}
+.quran-shell--chrome-hidden .mpv-body--ayah {
+  padding-bottom: 0.35rem;
+}
+
+.qs-mushaf-frame--ayah,
+.qs-mushaf-frame--ayah-chrome {
+  border: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  margin: 0;
+  border-radius: 0;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  width: 100%;
+  max-width: 650px;
+  margin-inline: auto;
+}
+.qs-mushaf-frame--ayah::before,
+.qs-mushaf-frame--ayah-chrome::before {
+  display: none !important;
+}
+.qs-mushaf-frame--ayah .qs-mushaf-corner,
+.qs-mushaf-frame--ayah-chrome .qs-mushaf-corner {
+  display: none !important;
+}
+/* عند اختيار إطار زخرفي من الإعدادات: حدود خفيفة فقط، بلا رأس/تذييل صفراء */
+.qs-mushaf-frame--ayah-chrome.qs-mushaf-frame--emerald,
+.qs-mushaf-frame--ayah-chrome.qs-mushaf-frame--gold-classic,
+.qs-mushaf-frame--ayah-chrome.qs-mushaf-frame--paper,
+.qs-mushaf-frame--ayah-chrome.qs-mushaf-frame--minimal {
+  border: 1px solid var(--mf-gold-soft, rgba(20, 63, 53, 0.22)) !important;
+  background: transparent !important;
+}
+
+.qs-mushaf-body--ayah {
+  flex: 1;
+  min-height: 0;
+  padding: 0 !important;
+  color: var(--ayah-ink, #2C2C2E);
+}
+.quran-shell--ayah .qs-mushaf-body .qs-mushaf-body-inner {
+  /* احتواء بعرض أوضح على الجوال مع هامش 12–20px من الحاوية */
+  width: min(
+    calc(100% * var(--qs-font-scale, 1)),
+    calc(100cqh * 0.72 * var(--qs-font-scale, 1))
+  );
+  max-width: 100%;
+  aspect-ratio: 0.72;
+}
+
+/* رأس سورة داخل الصفحة — أهدأ، بلا شريط أصفر/ذهبي ثقيل */
+.quran-shell--ayah .mf2-surah-header__frame {
+  border-top-color: color-mix(in srgb, var(--ayah-meta, #8E8E93) 35%, transparent);
+  border-bottom-color: color-mix(in srgb, var(--ayah-meta, #8E8E93) 35%, transparent);
+  background: transparent;
+}
+.quran-shell--ayah .mf2-surah-header__name {
+  color: var(--ayah-meta, #8E8E93);
+  font-weight: 600;
+}
+
+.mpv-ayah-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.25rem;
+  flex-shrink: 0;
+  padding: 0.35rem 1rem max(0.55rem, env(safe-area-inset-bottom, 0px));
+  background: transparent;
+  border: none;
+  z-index: 25;
+}
+.mpv-ayah-page-badge {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.75rem;
+  min-height: 1.65rem;
+  padding: 0.2rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid var(--ayah-badge-border, #D1C7BD);
+  background: var(--ayah-badge-bg, #F4EFEA);
+  color: var(--ayah-badge-ink, #635B53);
+  font-family: "Amiri", "Noto Naskh Arabic", var(--font-display, serif);
+  font-size: 0.8rem;
+  font-weight: 600;
+  line-height: 1;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  transition: opacity 0.2s ease, transform 0.15s ease;
+}
+.mpv-ayah-page-badge:hover {
+  opacity: 0.92;
+}
+.mpv-ayah-page-badge:active {
+  transform: scale(0.97);
+}
+.mpv-ayah-nav-btn {
+  background: transparent !important;
+  border-color: transparent !important;
+  color: var(--ayah-meta, #8E8E93) !important;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.mpv-ayah-nav-btn--hidden {
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.9);
+}
+
+.quran-shell--ayah .mpv-resume-banner {
+  background: color-mix(in srgb, var(--ayah-badge-bg, #F4EFEA) 90%, transparent);
+  border-color: var(--ayah-badge-border, #D1C7BD);
+}
+
 /* ── شريط أدوات علوي لصفحة المصحف — مضغوط لترك أكبر مساحة للصفحة ── */
 .mpv-toolbar {
   display: flex;
