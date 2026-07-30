@@ -1,4 +1,5 @@
 import { sendJson } from "../../api/_http.mjs";
+import { sendSafeError } from "../../api/safe-error.mjs";
 import { requireAdminAccess } from "../../../lib/admin-auth.mjs";
 import { runKnowledgeSync, getKnowledgePipelineStats } from "../../../lib/knowledge-sync.mjs";
 import { getRecommendations, searchHybrid } from "../../../lib/knowledge-engine/recommendations.mjs";
@@ -52,6 +53,6 @@ export default async function handler(req, res) {
     sendJson(res, 400, { ok: false, message: "إجراء غير معروف." });
   } catch (error) {
     console.error("[admin/knowledge-pipeline] failed", error);
-    sendJson(res, 500, { ok: false, message: String(error.message || error) });
+    sendSafeError(res, sendJson, error, { code: "knowledge_pipeline_failed" });
   }
 }

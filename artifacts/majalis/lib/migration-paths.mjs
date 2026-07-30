@@ -78,6 +78,8 @@ export const MIGRATION_FILES = [
   "universities_programs_enrich_v1.sql",
   "enterprise_reliability_p0_v1.sql",
   "background_jobs_runtime_hardening_v1.sql",
+  "platform_bootstrap_runs_v1.sql",
+  "p0_security_definer_grants_v2.sql",
 ];
 
 export function resolveMigrationsDir() {

@@ -3,6 +3,7 @@
  * Import lesson from announcement URL → draft for admin review.
  */
 import { sendJson } from "../../api/_http.mjs";
+import { sendSafeError } from "../../api/safe-error.mjs";
 import { requireAdminAccess } from "../../../lib/admin-auth.mjs";
 import { importLessonFromUrl, normalizeImportUrl } from "../../../lib/cms/url-import-service.mjs";
 import { getPlatformLabel } from "../../../lib/cms/url-importer.mjs";
@@ -162,6 +163,6 @@ export default async function handler(req, res) {
     });
   } catch (err) {
     console.error("[admin/lesson-from-url]", err);
-    sendJson(res, 500, { ok: false, error: String(err.message || err) });
+    sendSafeError(res, sendJson, err, { code: "admin_handler_error" });
   }
 }

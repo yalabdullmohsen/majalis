@@ -93,7 +93,7 @@
     "test:phase8-reliability": "node scripts/test-phase8-reliability.mjs && npx tsx src/lib/__tests__/phase8-reliability.test.ts",
     "test:phase9-coverage": "node scripts/test-phase9-testing.mjs && npx tsx src/lib/__tests__/phase9-testing.test.ts",
     "test:phase10-docs": "node scripts/test-phase10-documentation.mjs",
-    "test:p0-reliability": "node scripts/test-p0-reliability-gates.mjs && NODE_ENV=test ALLOW_IN_MEMORY_RELIABILITY_STORE=1 node lib/__tests__/p0-reliability.test.mjs && NODE_ENV=test ALLOW_IN_MEMORY_RELIABILITY_STORE=1 node lib/__tests__/p0-queue-workers.test.mjs && NODE_ENV=test node lib/__tests__/p0-reliability-failclosed.test.mjs && npx tsx src/lib/__tests__/lesson-id-identifiers.test.ts",
+    "test:p0-reliability": "node scripts/test-p0-reliability-gates.mjs && NODE_ENV=test ALLOW_IN_MEMORY_RELIABILITY_STORE=1 node lib/__tests__/p0-reliability.test.mjs && NODE_ENV=test ALLOW_IN_MEMORY_RELIABILITY_STORE=1 node lib/__tests__/p0-queue-workers.test.mjs && NODE_ENV=test node lib/__tests__/p0-reliability-failclosed.test.mjs && NODE_ENV=test node lib/__tests__/p0-security-runtime-ddl.test.mjs && npx tsx src/lib/__tests__/lesson-id-identifiers.test.ts",
     "test:postgres-integration": "node ../../scripts/test-postgres-queue-integration.mjs",
     "db:migration:verify": "node ../../scripts/db-migration-verify.mjs verify",
     "db:migration:test:fresh": "node ../../scripts/db-migration-verify.mjs fresh",

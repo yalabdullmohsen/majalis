@@ -61,8 +61,8 @@ async function verifyDatabaseIntegrity() {
   assert(db.rawConfigured, "DATABASE_URL configured");
 
   const ensured = await ensureImportTables(admin);
-  assert(ensured.ok, `ensureImportTables: ${ensured.error || "ok"}`);
-  ok(`schema ensured via ${ensured.via || "unknown"}`);
+  assert(ensured.ok, `verifyImportTables: ${ensured.error || "ok"}`);
+  ok(`schema verified via ${ensured.via || "unknown"} (no runtime DDL)`);
 
   const { getPgClient } = await import("../lib/database.mjs");
   const { client } = await getPgClient();

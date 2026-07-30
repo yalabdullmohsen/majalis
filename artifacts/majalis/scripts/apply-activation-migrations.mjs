@@ -11,11 +11,15 @@ import "dotenv/config";
 import { runActivationMigrations } from "../lib/migration-runner.mjs";
 import { ACTIVATION_MIGRATION_FILES } from "../lib/migration-paths.mjs";
 
+// Explicit CLI opt-in — required if VERCEL=1 is present in the environment.
+process.env.MAJALIS_ALLOW_CLI_MIGRATIONS = "1";
+
 const dryRunSeed = process.argv.includes("--dry-run-seed");
 const skipSeed = process.argv.includes("--no-seed");
 
 async function main() {
   console.log("Applying activation migrations:", ACTIVATION_MIGRATION_FILES.join(" → "));
+  console.log("Note: HTTP Admin/Cron paths permanently refuse DDL. This CLI is the approved path.");
 
   const result = await runActivationMigrations({
     seedRulings: !skipSeed,
