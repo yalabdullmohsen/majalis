@@ -4,6 +4,14 @@
  * Tests/dev: Memory allowed only with ALLOW_IN_MEMORY_RELIABILITY_STORE=1 or NODE_ENV=test.
  */
 
+export const DURABLE_REASONS = Object.freeze({
+  database_not_configured: "database_not_configured",
+  database_connection_failed: "database_connection_failed",
+  queue_schema_missing: "queue_schema_missing",
+  queue_column_missing: "queue_column_missing",
+  queue_query_failed: "queue_query_failed",
+});
+
 export function isProductionRuntime() {
   const vercel = String(process.env.VERCEL_ENV || "").toLowerCase();
   if (vercel === "production") return true;
@@ -21,21 +29,56 @@ export function allowInMemoryReliabilityStore() {
   return false;
 }
 
-export function durableStoreUnavailableError(component) {
-  const err = new Error(`durable_store_unavailable:${component}`);
+/**
+ * Classify a Postgres / connection error into a safe diagnostic reason (no secrets).
+ * @param {unknown} err
+ * @returns {keyof typeof DURABLE_REASONS}
+ */
+export function classifyDurablePgError(err) {
+  if (!err) return DURABLE_REASONS.database_not_configured;
+  const code = String(/** @type {{ code?: string }} */ (err).code || "");
+  const msg = String(/** @type {{ message?: string }} */ (err).message || err);
+  if (code === "42P01") return DURABLE_REASONS.queue_schema_missing;
+  if (code === "42703") return DURABLE_REASONS.queue_column_missing;
+  if (
+    code === "ECONNREFUSED" ||
+    code === "ETIMEDOUT" ||
+    code === "ENOTFOUND" ||
+    code === "ECONNRESET" ||
+    code === "57P01" ||
+    code === "57P03" ||
+    /timeout|ECONNRESET|Connection terminated|Connection refused|getaddrinfo/i.test(msg)
+  ) {
+    return DURABLE_REASONS.database_connection_failed;
+  }
+  return DURABLE_REASONS.queue_query_failed;
+}
+
+/**
+ * @param {string} component
+ * @param {string} [reason]
+ */
+export function durableStoreUnavailableError(component, reason = DURABLE_REASONS.database_not_configured) {
+  const safeReason = DURABLE_REASONS[reason] || DURABLE_REASONS.queue_query_failed;
+  const err = new Error(`durable_store_unavailable:${component}:${safeReason}`);
   err.code = "durable_store_unavailable";
   err.component = component;
+  err.reason = safeReason;
   return err;
 }
 
-export function logDurableStoreUnavailable(component, detail) {
+export function logDurableStoreUnavailable(component, detail, reason) {
   console.error(
     JSON.stringify({
       level: "error",
       msg: "durable_store_unavailable",
       metric: "durable_store_unavailable",
       component,
-      detail: String(detail || "").slice(0, 200),
+      reason: reason || null,
+      detail: String(detail || "")
+        .replace(/postgres(ql)?:\/\/[^@\s]+@/gi, "postgres://***@")
+        .replace(/password=[^&\s]+/gi, "password=***")
+        .slice(0, 200),
       production: isProductionRuntime(),
       ts: new Date().toISOString(),
     }),
