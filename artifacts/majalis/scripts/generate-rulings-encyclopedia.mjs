@@ -234,8 +234,24 @@ function makeRuling(partial) {
 // ملاحظة حوكمة: أُزيلت decomposeListRuling() — كانت تُقطّع القوائم المرقّمة إلى «أحكام»
 // مستقلة، فيرث كل بندٍ دليلَ الأصل، ما أنتج نسبة أدلة خاطئة. لا يجوز تصنيع أحكام بالتقطيع.
 
+function loadQaSeedFromJson() {
+  const base = path.resolve(ROOT, "public/data/qa");
+  const manifestPath = path.join(base, "manifest.json");
+  if (!fs.existsSync(manifestPath)) {
+    // تراجع للملف القديم إن وُجدت مصفوفة قديمة (مسارات التوليد التاريخية فقط)
+    return parseSeedArray(path.resolve(ROOT, "src/lib/qa-seed.ts"), "SEED_QA");
+  }
+  const manifest = JSON.parse(fs.readFileSync(manifestPath, "utf8"));
+  return (manifest.chunks || []).flatMap((c) => {
+    const file = path.join(base, c.file);
+    if (!fs.existsSync(file)) return [];
+    const data = JSON.parse(fs.readFileSync(file, "utf8"));
+    return Array.isArray(data) ? data : [];
+  });
+}
+
 function fromQaSeed() {
-  const items = parseSeedArray(path.resolve(ROOT, "src/lib/qa-seed.ts"), "SEED_QA");
+  const items = loadQaSeedFromJson();
   return items
     .map((q) => {
       const slug = q.qa_categories?.slug || "";

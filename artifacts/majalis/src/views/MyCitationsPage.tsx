@@ -178,7 +178,7 @@ export default function MyCitationsPage() {
         <div className="max-w-4xl mx-auto">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <div>
-              <h2 className="mcp-header-title"><FileText size={20} className="inline ml-1" />اقتباساتي</h2>
+              <h2 className="mcp-header-title"><FileText size={20} className="inline ms-1" />اقتباساتي</h2>
               <p className="mcp-header-count">{saved.length} اقتباس محفوظ</p>
             </div>
             <div className="flex items-center gap-2">
@@ -191,7 +191,7 @@ export default function MyCitationsPage() {
                     <FileText size={13} strokeWidth={1.8} aria-hidden="true" /> Markdown
                   </button>
                   <button type="button" onClick={() => handleExport("pdf")} className="mcp-dropdown-item">
-                    <Printer size={13} className="inline ml-1" /> PDF (طباعة)
+                    <Printer size={13} className="inline ms-1" /> PDF (طباعة)
                   </button>
                 </div>
               </div>
@@ -378,7 +378,7 @@ export default function MyCitationsPage() {
                       <div className="mcp-cit-actions">
                         {cit?.deep_link_slug && (
                           <Link href={`/c/${cit.deep_link_slug}`} className="mcp-cit-link">
-                            <Link2 size={12} className="inline ml-1" /> عرض الاقتباس
+                            <Link2 size={12} className="inline ms-1" /> عرض الاقتباس
                           </Link>
                         )}
                         <button

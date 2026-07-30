@@ -107,8 +107,11 @@ async function getCurrentUserImpl() {
     // يحتاج user.id فقط) — كانا يُنتظران بالتتابع فيتراكم زمن الشبكة
     // (رُصد فعليًا: getCurrentUser يصل أحيانًا 9-11 ثانية). التوازي هنا
     // يقصّ أسوأ حالة تقريبًا للنصف دون أي تغيير في RLS/الصلاحيات.
+    const PROFILE_FIELDS =
+      "id, full_name, role, is_admin, is_super_admin, is_owner, status, avatar_url, created_at, updated_at";
+
     const [profileResult, governanceResult] = await Promise.all([
-      supabase.from("profiles").select("*").eq("id", user.id).single(),
+      supabase.from("profiles").select(PROFILE_FIELDS).eq("id", user.id).single(),
       supabase
         .from("governance_user_roles")
         .select("role_id")
@@ -130,7 +133,7 @@ async function getCurrentUserImpl() {
           full_name: user.user_metadata?.full_name ?? "",
           role: "user",
         }, { onConflict: "id" })
-        .select("*")
+        .select(PROFILE_FIELDS)
         .single();
       if (createError) logSupabaseError("getCurrentUser.createProfile", createError);
       profile = created;
@@ -212,7 +215,7 @@ export async function getSheikhs() {
     "getSheikhs",
     // حدّ أمان ضد نموّ الجدول — المستدعون يحتاجون القائمة كاملة (بحث بالاسم/عرض)
     // والعدد الحالي ~١٠٥، فالحدّ لا يقتطع شيئًا اليوم.
-    () => supabase.from("sheikhs").select("*").order("name").limit(300),
+    () => supabase.from("sheikhs").select("id, name, bio, city, specialties, image_url, ijazah").order("name").limit(300),
     DEMO_SHEIKHS,
   );
   if (result.usingSeed) return result;
@@ -1065,7 +1068,7 @@ export async function getQaQuestions({ categoryId, search }: { categoryId?: stri
   if (!isConfigured) {
     const { filterDemoQa } = await loadSeedData();
     return {
-      data: allowSeedFallback() ? filterDemoQa({ categoryId, search }) : [],
+      data: allowSeedFallback() ? await filterDemoQa({ categoryId, search }) : [],
       error: null,
       usingDemo: allowSeedFallback(),
     };
@@ -1096,7 +1099,7 @@ export async function getQaQuestions({ categoryId, search }: { categoryId?: stri
     logSupabaseError("getQaQuestions", error, { categoryId, search });
     const { filterDemoQa } = await loadSeedData();
     return {
-      data: allowSeedFallback() ? filterDemoQa({ categoryId, search }) : [],
+      data: allowSeedFallback() ? await filterDemoQa({ categoryId, search }) : [],
       error: null,
       usingDemo: true,
     };
@@ -1615,7 +1618,7 @@ export async function searchEverything(term: string): Promise<SearchResults> {
 
   if (!isConfigured) {
     const seeds = await loadSeedData();
-    const demo = seeds.searchDemoContent(query);
+    const demo = await seeds.searchDemoContent(query);
     const platform = seeds.searchPlatformSeed(query);
     return { ...demo, ...platform, usingDemo: true, error: null };
   }
@@ -1648,7 +1651,7 @@ export async function searchEverything(term: string): Promise<SearchResults> {
     (merged.updates?.length || 0);
 
   if (total === 0) {
-    const demo = seeds.searchDemoContent(query);
+    const demo = await seeds.searchDemoContent(query);
     const demoPlatform = seeds.searchPlatformSeed(query);
     const demoTotal =
       demo.lessons.length +

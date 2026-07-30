@@ -159,11 +159,50 @@ self.addEventListener("fetch", (event) => {
   // Only handle same-origin from here
   if (url.origin !== self.location.origin) return;
 
-  // Hashed JS/CSS bundles: always network (stale chunks break lazy routes)
+  // Hashed JS/CSS/fonts under /assets/: cache-first by immutable filename.
+  // Never fall back to HTML (SPA offline shell) for script/style requests —
+  // that historically poisoned module loads after deploys.
   if (url.pathname.startsWith("/assets/")) {
     event.respondWith(
-      fetchWithTimeout(req).catch(() => caches.match(req) || Promise.reject()),
+      (async () => {
+        const cached = await caches.match(req);
+        if (cached) {
+          const ct = cached.headers.get("content-type") || "";
+          if (!ct.includes("text/html")) return cached;
+        }
+        try {
+          const res = await fetchWithTimeout(req);
+          const ct = res.headers.get("content-type") || "";
+          if (res.ok && !ct.includes("text/html")) {
+            const cache = await caches.open(OFFLINE_CACHE);
+            cache.put(req, res.clone()).catch(() => undefined);
+          }
+          // رفض إعادة HTML لمسار JS/CSS حتى لا يكسر import()
+          if (ct.includes("text/html") && /\.(js|mjs|css)(\?|$)/i.test(url.pathname)) {
+            return new Response("/* asset not found */", {
+              status: 404,
+              headers: { "Content-Type": "text/plain; charset=utf-8" },
+            });
+          }
+          return res;
+        } catch {
+          if (cached) {
+            const ct = cached.headers.get("content-type") || "";
+            if (!ct.includes("text/html")) return cached;
+          }
+          return new Response("/* offline asset */", {
+            status: 503,
+            headers: { "Content-Type": "text/plain; charset=utf-8" },
+          });
+        }
+      })(),
     );
+    return;
+  }
+
+  // JSON seed chunks — cache-first (نادر التغيّر داخل نفس النشر)
+  if (url.pathname.startsWith("/data/") && url.pathname.endsWith(".json")) {
+    event.respondWith(cacheFirst(req, DATA_CACHE));
     return;
   }
 
@@ -196,9 +235,19 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // HTML/navigation → network-first, never cache the response or fall back to
-  // a previous build's document. Only the build-neutral offline page is cached.
-  if (req.mode === "navigate") {
+  // HTML/navigation → network-first + revalidate; never cache the document.
+  // Only the build-neutral offline page is cached.
+  if (req.mode === "navigate" || (req.headers.get("accept") || "").includes("text/html")) {
+    // لا تُخدم مستندات HTML لطلبات تبدو كأصول JS (Accept خاطئ / تمديد .js)
+    if (/\.(js|mjs|css|map)(\?|$)/i.test(url.pathname)) {
+      event.respondWith(
+        new Response("/* not a document */", {
+          status: 404,
+          headers: { "Content-Type": "text/plain; charset=utf-8" },
+        }),
+      );
+      return;
+    }
     event.respondWith(networkFirstNavigation(req));
     return;
   }

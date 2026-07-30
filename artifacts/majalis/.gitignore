@@ -11,3 +11,4 @@ playwright-report/
 .audit/
 supabase/.temp/
 .env.vercel-production
+.tmp-seed-extract/

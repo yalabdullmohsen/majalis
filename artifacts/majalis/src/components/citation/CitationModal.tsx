@@ -238,14 +238,14 @@ export function CitationModal({ source, initialText = "", startOffset, endOffset
                   onClick={copyTextAndRef}
                   className="citation-btn citation-btn--primary"
                 >
-                  <ClipboardCopy size={14} className="inline ml-1" />نسخ النص والمصدر
+                  <ClipboardCopy size={14} className="inline ms-1" />نسخ النص والمصدر
                 </button>
                 <button
                   type="button"
                   onClick={downloadCardPng}
                   className="citation-btn citation-btn--secondary"
                 >
-                  <ImageDown size={14} className="inline ml-1" />تحميل صورة
+                  <ImageDown size={14} className="inline ms-1" />تحميل صورة
                 </button>
               </div>
             </>
@@ -315,7 +315,7 @@ export function CitationModal({ source, initialText = "", startOffset, endOffset
                         onClick={downloadImage}
                         className="citation-btn citation-btn--brass"
                       >
-                        <ImageDown size={14} className="inline ml-1" />تحميل بطاقة الاقتباس (SVG)
+                        <ImageDown size={14} className="inline ms-1" />تحميل بطاقة الاقتباس (SVG)
                       </button>
                     </div>
                   )}

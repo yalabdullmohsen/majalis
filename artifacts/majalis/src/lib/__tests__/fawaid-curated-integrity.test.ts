@@ -22,7 +22,10 @@
 import { readFileSync } from "node:fs";
 import { FAWAID_CURATED_SEED, FAWAID_CURATED_CATEGORIES } from "../fawaid-curated-seed";
 import { SEED_FAWAID } from "../fawaid-seed";
-import { getLocalVerifiedHadith } from "../verified-hadith-local-seed";
+import { getLocalVerifiedHadith, loadLocalVerifiedHadith } from "../verified-hadith-local-seed";
+
+// بذرة الحديث صارت JSON كسولًا — حمّلها قبل الفحوصات المتزامنة أدناه.
+await loadLocalVerifiedHadith();
 
 let passed = 0;
 let failed = 0;

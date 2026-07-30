@@ -114,7 +114,7 @@ export default function AssistantPage() {
       </section>
 
       <footer className="asp-footer">
-        <AlertTriangle size={13} className="inline ml-1" />الإجابات مولَّدة آليًا وتحتمل الخطأ، راجع أهل العلم في المسائل الشخصية الدقيقة.
+        <AlertTriangle size={13} className="inline ms-1" />الإجابات مولَّدة آليًا وتحتمل الخطأ، راجع أهل العلم في المسائل الشخصية الدقيقة.
       </footer>
     </div>
   );

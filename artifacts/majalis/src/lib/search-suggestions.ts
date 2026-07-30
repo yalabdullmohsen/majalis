@@ -55,12 +55,17 @@ export function ensureSuggestionIndex(): Promise<SuggestionIndex> {
       import("@/lib/scholars-data"),
     ]);
 
+    const [LESSONS_SEED, SEED_QA] = await Promise.all([
+      lessons.loadLessonsSeed(),
+      qa.loadSeedQa(),
+    ]);
+
     const built: SuggestionIndex = {
       ADHKAR_CATEGORIES: adhkar.ADHKAR_CATEGORIES,
       adhkarItems: adhkar.getAllAdhkarItems(),
-      LESSONS_SEED: lessons.LESSONS_SEED,
+      LESSONS_SEED,
       SEED_FAWAID: fawaid.SEED_FAWAID,
-      SEED_QA: qa.SEED_QA,
+      SEED_QA,
       ARBAEEN_NAWAWI: nawawi.ARBAEEN_NAWAWI,
       SCHOLARS: scholars.SCHOLARS,
     };

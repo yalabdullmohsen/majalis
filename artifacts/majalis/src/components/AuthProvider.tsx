@@ -1,4 +1,4 @@
-import React, { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
+import React, { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { ADMIN_GOVERNANCE_ROLES, LEGACY_ROLE_MAP } from "@/lib/governance-roles";
 import { hasUnrestrictedAdminAccess, isOwnerProfile, isOwnerAuthUser, resolveUserEmail } from "@/lib/owner-config";
 import { RequestManager, PAGE_LOAD_TIMEOUT_MS } from "@/lib/request-manager";
@@ -29,6 +29,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<AuthUser>(null);
   const [loading, setLoading] = useState(true);
   const [authApi, setAuthApi] = useState<SupabaseAuthModule | null>(null);
+  const activeRef = useRef(true);
+  const signedOutGeneration = useRef(0);
+  const bootstrapDone = useRef(false);
 
   useEffect(() => {
     if (typeof window !== "undefined") {
@@ -37,68 +40,93 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, [user]);
 
   useEffect(() => {
-    let active = true;
+    activeRef.current = true;
     let unsubscribe: (() => void) | undefined;
     const authTimeout = window.setTimeout(() => {
-      if (active) setLoading(false);
+      if (activeRef.current) setLoading(false);
     }, PAGE_LOAD_TIMEOUT_MS);
 
-    import("@/lib/supabase-bootstrap")
-      .then(({ bootstrapSupabaseFromServer, resetSupabaseClient }) =>
-        RequestManager.run("auth:bootstrap", () => bootstrapSupabaseFromServer().then(() => resetSupabaseClient())),
-      )
-      .then(() => import("@/lib/supabase"))
-      .then((mod) => {
-        if (!active) return;
-        setAuthApi(mod);
+    const generationAtStart = signedOutGeneration.current;
 
-        return RequestManager.run("auth:getCurrentUser", () => mod.getCurrentUser()).then((next) => {
-          if (active) setUser(next);
-        });
-      })
-      .catch(() => {
-        if (active) setUser(null);
-      })
-      .finally(() => {
-        if (active) setLoading(false);
-        window.clearTimeout(authTimeout);
-      });
+    const bootstrap = async () => {
+      const { bootstrapSupabaseFromServer, resetSupabaseClient } = await import("@/lib/supabase-bootstrap");
+      await RequestManager.run("auth:bootstrap", () =>
+        bootstrapSupabaseFromServer().then(() => resetSupabaseClient()),
+      );
+      const mod = await import("@/lib/supabase");
+      if (!activeRef.current) return mod;
 
-    import("@/lib/supabase-bootstrap")
-      .then(({ bootstrapSupabaseFromServer, resetSupabaseClient }) =>
-        RequestManager.run("auth:bootstrap:listener", () =>
-          bootstrapSupabaseFromServer().then(() => resetSupabaseClient()),
-        ),
-      )
-      .then(() => import("@/lib/supabase"))
+      setAuthApi(mod);
+
+      // استعادة الجلسة مرة واحدة فقط — لا مسار bootstrap مزدوج يتسابق مع المستمع
+      if (!bootstrapDone.current) {
+        bootstrapDone.current = true;
+        try {
+          const next = await RequestManager.run("auth:getCurrentUser", () => mod.getCurrentUser());
+          if (
+            activeRef.current &&
+            signedOutGeneration.current === generationAtStart &&
+            next !== null &&
+            next !== undefined
+          ) {
+            setUser(next);
+          }
+        } catch {
+          if (activeRef.current && signedOutGeneration.current === generationAtStart) {
+            setUser(null);
+          }
+        } finally {
+          if (activeRef.current) setLoading(false);
+          window.clearTimeout(authTimeout);
+        }
+      }
+
+      return mod;
+    };
+
+    void bootstrap()
       .then((mod) => {
-        const { data: sub } = mod.supabase.auth.onAuthStateChange(async (event) => {
-          // SIGN_OUT هو الحالة الوحيدة التي تُسمح فيها بمسح المستخدم
-          // باقي الأحداث (TOKEN_REFRESHED, SIGNED_IN, USER_UPDATED…) تُحدّث فقط
+        if (!mod || !activeRef.current) return;
+
+        const { data: sub } = mod.supabase.auth.onAuthStateChange((event) => {
+          // لا عمل ثقيل داخل callback — جدولة دقيقة فقط
           if (event === "SIGNED_OUT") {
-            if (active) setUser(null);
+            signedOutGeneration.current += 1;
+            if (activeRef.current) setUser(null);
             return;
           }
-          // TOKEN_REFRESHED must not re-fetch profile (historically caused ~10s stalls).
+
+          // INITIAL_SESSION وTOKEN_REFRESHED: لا إعادة جلب للملف الشخصي
+          // (الاستعادة تتم عبر bootstrap أعلاه؛ التجديد لا يغيّر الهوية)
           if (event === "TOKEN_REFRESHED" || event === "INITIAL_SESSION") {
             return;
           }
-          try {
-            const next = await RequestManager.run(
-              `auth:onAuthStateChange:${event}`,
-              () => mod.getCurrentUser(),
-            );
-            // لا نمسح المستخدم إذا فشل الاستعلام — نحتفظ بالقيمة السابقة
-            if (active && next !== null && next !== undefined) setUser(next);
-          } catch {
-            // خطأ شبكة مؤقت — لا نمسح الجلسة، نتجاهل الخطأ
-          }
+
+          const gen = signedOutGeneration.current;
+          queueMicrotask(() => {
+            void RequestManager.run(`auth:onAuthStateChange:${event}`, () => mod.getCurrentUser())
+              .then((next) => {
+                if (!activeRef.current) return;
+                if (signedOutGeneration.current !== gen) return; // سباق sign-out
+                if (next !== null && next !== undefined) setUser(next);
+              })
+              .catch(() => {
+                /* شبكة مؤقتة — لا تمسح الجلسة */
+              });
+          });
         });
         unsubscribe = () => sub.subscription.unsubscribe();
+      })
+      .catch(() => {
+        if (activeRef.current) {
+          setUser(null);
+          setLoading(false);
+        }
+        window.clearTimeout(authTimeout);
       });
 
     return () => {
-      active = false;
+      activeRef.current = false;
       window.clearTimeout(authTimeout);
       unsubscribe?.();
     };
@@ -106,16 +134,22 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 
   const refreshUser = useCallback(async () => {
     if (!authApi) return null;
+    const gen = signedOutGeneration.current;
     const next = await authApi.getCurrentUser();
+    if (signedOutGeneration.current !== gen) return null;
     setUser(next);
     return next;
   }, [authApi]);
 
   const logout = useCallback(async () => {
     if (!authApi) return { error: null };
-    const result = await authApi.signOut();
+    signedOutGeneration.current += 1;
     setUser(null);
-    return result;
+    try {
+      return await authApi.signOut();
+    } catch (error) {
+      return { error };
+    }
   }, [authApi]);
 
   const value = useMemo<AuthContextValue>(() => {

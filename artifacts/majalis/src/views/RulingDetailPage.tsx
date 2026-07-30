@@ -4,7 +4,7 @@ import { ContentDetailLayout, RelatedLinks } from "@/components/platform/Content
 import { RulingDetailSections } from "@/components/rulings/RulingDetailSections";
 import { getRulingById, getRelatedRulingsEncyclopedia } from "@/lib/rulings-service";
 import { buildRulingRelations } from "@/lib/rulings-relations";
-import type { ShariaRulingExtended } from "@/lib/rulings-types";
+import type { RulingRelationLink, ShariaRulingExtended } from "@/lib/rulings-types";
 import { applyPageSeo } from "@/lib/seo";
 import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
 import { usePageView } from "@/hooks/usePageView";
@@ -14,6 +14,7 @@ import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 export default function RulingDetailPage({ params }: { params: { id: string } }) {
   const [item, setItem] = useState<ShariaRulingExtended | null>(null);
   const [related, setRelated] = useState<ShariaRulingExtended[]>([]);
+  const [relations, setRelations] = useState<RulingRelationLink[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [retryTick, setRetryTick] = useState(0);
@@ -42,6 +43,20 @@ export default function RulingDetailPage({ params }: { params: { id: string } })
   }, [params.id, retryTick]);
 
   usePageView("rulings", params.id);
+
+  useEffect(() => {
+    if (!item) {
+      setRelations([]);
+      return;
+    }
+    let cancelled = false;
+    void buildRulingRelations(item).then((links) => {
+      if (!cancelled) setRelations(links);
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [item]);
 
   useEffect(() => {
     if (loading) return;
@@ -98,7 +113,6 @@ export default function RulingDetailPage({ params }: { params: { id: string } })
   if (!item) return <Empty text="الحكم غير موجود." />;
 
   const copyText = [item.title, item.summary, item.body].filter(Boolean).join("\n\n");
-  const relations = buildRulingRelations(item);
 
   // حقول الحوكمة قد لا تكون في النوع بعد — تُقرأ من البيانات كما هي، ولا تُخترع.
   const meta = item as typeof item & {

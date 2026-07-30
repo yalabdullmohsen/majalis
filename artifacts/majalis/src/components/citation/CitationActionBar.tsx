@@ -77,7 +77,7 @@ function SelectionTooltip({
         className="cab-tooltip-btn"
         aria-label="اقتبس"
       >
-        <Quote size={13} className="inline ml-1" />اقتباس
+        <Quote size={13} className="inline ms-1" />اقتباس
       </button>
       <button
         type="button"
@@ -85,7 +85,7 @@ function SelectionTooltip({
         className="cab-tooltip-btn"
         aria-label="نسخ"
       >
-        <ClipboardCopy size={13} className="inline ml-1" />نسخ
+        <ClipboardCopy size={13} className="inline ms-1" />نسخ
       </button>
     </div>
   );
@@ -160,7 +160,7 @@ export function CitationActionBar({
       >
         {/* فاصل ملوَّن حسب نوع المحتوى */}
         {!compact && (
-          <span className={`w-1 h-6 rounded-full ml-1 self-center cab-type-bar ${typeMod}`} />
+          <span className={`w-1 h-6 rounded-full ms-1 self-center cab-type-bar ${typeMod}`} />
         )}
 
         <button
@@ -169,7 +169,7 @@ export function CitationActionBar({
           className={btnClass}
           aria-label="اقتباس"
         >
-          <Quote size={13} className="inline ml-1" />{!compact && "اقتباس"}
+          <Quote size={13} className="inline ms-1" />{!compact && "اقتباس"}
         </button>
 
         <button
@@ -178,7 +178,7 @@ export function CitationActionBar({
           className={btnClass}
           aria-label="حفظ"
         >
-          <Star size={13} className="inline ml-1" />{!compact && "حفظ"}
+          <Star size={13} className="inline ms-1" />{!compact && "حفظ"}
         </button>
 
         <button
@@ -187,7 +187,7 @@ export function CitationActionBar({
           className={btnClass}
           aria-label="نسخ"
         >
-          <ClipboardCopy size={13} className="inline ml-1" />{!compact && (copied ? "تم النسخ" : "نسخ")}
+          <ClipboardCopy size={13} className="inline ms-1" />{!compact && (copied ? "تم النسخ" : "نسخ")}
         </button>
 
         <button
@@ -196,7 +196,7 @@ export function CitationActionBar({
           className={btnClass}
           aria-label="طباعة"
         >
-          <Printer size={13} className="inline ml-1" />{!compact && "طباعة"}
+          <Printer size={13} className="inline ms-1" />{!compact && "طباعة"}
         </button>
       </div>
 

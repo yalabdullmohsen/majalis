@@ -308,7 +308,7 @@ export default function QiblaPage() {
 
             {heading == null && !permReq && (
               <p className="qibla-hint">
-                <Smartphone size={13} className="inline ml-1" />على الجوال: وجّه الهاتف في الاتجاه الذي يشير فيه السهم.
+                <Smartphone size={13} className="inline ms-1" />على الجوال: وجّه الهاتف في الاتجاه الذي يشير فيه السهم.
               </p>
             )}
           </>
