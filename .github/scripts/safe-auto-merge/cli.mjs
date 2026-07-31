@@ -1,0 +1,251 @@
+#!/usr/bin/env node
+/**
+ * CLI for safe auto-merge:
+ *   node cli.mjs evaluate --pr N [--json] [--strict-vercel] [--no-checks]
+ *   node cli.mjs report --pr N [--post] [--strict-vercel]
+ *   node cli.mjs ensure-labels
+ *
+ * Exit codes for evaluate: 0 = eligible, 2 = not eligible, 1 = error
+ */
+import { spawnSync } from "node:child_process";
+import { writeFileSync, mkdtempSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+import { evaluateEligibility } from "./eligibility.mjs";
+import { parseGhPrChecksTsv, parseStatusCheckRollup } from "./checks.mjs";
+import { formatEligibilityReport, upsertReportBody } from "./report.mjs";
+import {
+  REPORT_MARKER_BEGIN,
+  SAFE_LABELS,
+} from "./constants.mjs";
+
+function usage() {
+  console.error(`Usage:
+  node cli.mjs evaluate --pr <n> [--json] [--strict-vercel] [--no-checks]
+  node cli.mjs report --pr <n> [--post] [--strict-vercel] [--no-checks]
+  node cli.mjs ensure-labels`);
+}
+
+function parseArgs(argv) {
+  const args = { _: [] };
+  for (let i = 0; i < argv.length; i++) {
+    const a = argv[i];
+    if (a === "--pr") args.pr = argv[++i];
+    else if (a === "--json") args.json = true;
+    else if (a === "--post") args.post = true;
+    else if (a === "--strict-vercel") args.strictVercel = true;
+    else if (a === "--no-checks") args.noChecks = true;
+    else if (a.startsWith("-")) throw new Error(`Unknown flag: ${a}`);
+    else args._.push(a);
+  }
+  return args;
+}
+
+function gh(args, opts = {}) {
+  const r = spawnSync("gh", args, {
+    encoding: "utf8",
+    maxBuffer: 20 * 1024 * 1024,
+    env: process.env,
+    ...opts,
+  });
+  if (r.error) throw r.error;
+  return r;
+}
+
+function loadPr(pr) {
+  const view = gh([
+    "pr",
+    "view",
+    String(pr),
+    "--json",
+    "number,state,isDraft,baseRefName,headRefName,mergeable,mergeStateStatus,reviewDecision,title,body,labels,files,headRefOid,statusCheckRollup,url",
+  ]);
+  if (view.status !== 0) {
+    throw new Error(view.stderr || `gh pr view failed (${view.status})`);
+  }
+  const prJson = JSON.parse(view.stdout);
+
+  const checksProc = gh(["pr", "checks", String(pr)], { stdio: ["ignore", "pipe", "pipe"] });
+  const tsvRows = parseGhPrChecksTsv(checksProc.stdout || "");
+  const rollupRows = parseStatusCheckRollup(prJson.statusCheckRollup || []);
+
+  // Prefer TSV rows; supplement missing names from rollup (Vercel contexts)
+  const byName = new Map();
+  for (const r of tsvRows) byName.set(r.name, r);
+  for (const r of rollupRows) {
+    if (!byName.has(r.name)) byName.set(r.name, r);
+  }
+
+  return {
+    prJson,
+    checks: [...byName.values()],
+  };
+}
+
+function toEvalInput(prJson, checks, flags) {
+  return {
+    isDraft: prJson.isDraft,
+    state: prJson.state,
+    baseRefName: prJson.baseRefName,
+    headRefName: prJson.headRefName,
+    mergeable: prJson.mergeable,
+    mergeStateStatus: prJson.mergeStateStatus,
+    reviewDecision: prJson.reviewDecision,
+    title: prJson.title,
+    body: prJson.body,
+    labels: (prJson.labels || []).map((l) => l.name || l),
+    files: prJson.files || [],
+    checks,
+    requireChecks: !flags.noChecks,
+    strictVercel: Boolean(flags.strictVercel),
+  };
+}
+
+function cmdEvaluate(args) {
+  if (!args.pr) throw new Error("--pr required");
+  const { prJson, checks } = loadPr(args.pr);
+  const result = evaluateEligibility(toEvalInput(prJson, checks, args));
+  const out = {
+    pr: prJson.number,
+    headSha: prJson.headRefOid,
+    url: prJson.url,
+    ...result,
+  };
+  if (args.json) {
+    console.log(JSON.stringify(out, null, 2));
+  } else {
+    console.log(
+      result.eligible
+        ? `ELIGIBLE #${prJson.number}`
+        : `NOT_ELIGIBLE #${prJson.number}`,
+    );
+    for (const b of result.blockers) console.log(`  - ${b}`);
+  }
+  process.exitCode = result.eligible ? 0 : 2;
+}
+
+function findExistingReportComment(pr) {
+  const r = gh([
+    "api",
+    `repos/${process.env.GITHUB_REPOSITORY}/issues/${pr}/comments`,
+    "--paginate",
+    "--jq",
+    `.[] | select(.body | contains("${REPORT_MARKER_BEGIN}")) | {id, body}`,
+  ]);
+  if (r.status !== 0) return null;
+  const lines = (r.stdout || "").trim().split("\n").filter(Boolean);
+  if (!lines.length) return null;
+  try {
+    return JSON.parse(lines[lines.length - 1]);
+  } catch {
+    return null;
+  }
+}
+
+function cmdReport(args) {
+  if (!args.pr) throw new Error("--pr required");
+  const { prJson, checks } = loadPr(args.pr);
+  // Report should show check status without requiring all green for the document itself
+  const result = evaluateEligibility(
+    toEvalInput(prJson, checks, { ...args, noChecks: args.noChecks }),
+  );
+  const body = formatEligibilityReport(result, {
+    prNumber: prJson.number,
+    headSha: prJson.headRefOid,
+  });
+
+  if (!args.post) {
+    console.log(body);
+    process.exitCode = 0;
+    return;
+  }
+
+  if (!process.env.GITHUB_REPOSITORY) {
+    throw new Error("GITHUB_REPOSITORY required to --post");
+  }
+
+  const dir = mkdtempSync(join(tmpdir(), "safe-merge-"));
+  try {
+    const existing = findExistingReportComment(args.pr);
+    if (existing?.id) {
+      const next = upsertReportBody(existing.body, body);
+      const payloadPath = join(dir, "patch.json");
+      writeFileSync(payloadPath, JSON.stringify({ body: next }));
+      const patch = gh([
+        "api",
+        "--method",
+        "PATCH",
+        `repos/${process.env.GITHUB_REPOSITORY}/issues/comments/${existing.id}`,
+        "--input",
+        payloadPath,
+      ]);
+      if (patch.status !== 0) throw new Error(patch.stderr || "comment patch failed");
+      console.log(`updated comment ${existing.id}`);
+    } else {
+      const bodyPath = join(dir, "body.md");
+      writeFileSync(bodyPath, body);
+      const create = gh([
+        "pr",
+        "comment",
+        String(args.pr),
+        "--body-file",
+        bodyPath,
+      ]);
+      if (create.status !== 0) throw new Error(create.stderr || "comment create failed");
+      console.log("posted new report comment");
+    }
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+  process.exitCode = 0;
+}
+
+function cmdEnsureLabels() {
+  const colors = {
+    "content-safe": "0075CA",
+    "ui-safe": "5319E7",
+    "code-safe": "0E8A16",
+    "tests-safe": "1D76DB",
+    "maintenance-safe": "BFDADC",
+    "manual-review": "D93F0B",
+    "no-auto-merge": "B60205",
+  };
+  for (const name of [...SAFE_LABELS, "manual-review", "no-auto-merge"]) {
+    const color = colors[name] || "CCCCCC";
+    const r = gh(
+      [
+        "label",
+        "create",
+        name,
+        "--color",
+        color,
+        "--description",
+        `Safe auto-merge policy: ${name}`,
+        "--force",
+      ],
+      { stdio: "inherit" },
+    );
+    if (r.status !== 0) {
+      console.warn(`label ${name}: exit ${r.status}`);
+    }
+  }
+}
+
+function main() {
+  try {
+    const args = parseArgs(process.argv.slice(2));
+    const cmd = args._[0];
+    if (cmd === "evaluate") cmdEvaluate(args);
+    else if (cmd === "report") cmdReport(args);
+    else if (cmd === "ensure-labels") cmdEnsureLabels();
+    else {
+      usage();
+      process.exitCode = 1;
+    }
+  } catch (err) {
+    console.error(err?.stack || err);
+    process.exitCode = 1;
+  }
+}
+
+main();
