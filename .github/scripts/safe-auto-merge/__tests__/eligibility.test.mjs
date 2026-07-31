@@ -91,22 +91,67 @@ describe("safe-auto-merge eligibility", () => {
     assert.ok(r.blockers.some((b) => /large deletions/i.test(b)));
   });
 
-  it("blocks danger paths (workflows, ios, supabase, lockfile)", () => {
+  it("blocks danger paths (workflows, ios, supabase, api, lockfile)", () => {
     for (const path of [
       ".github/workflows/ci.yml",
       "artifacts/majalis/ios/App/App/AppDelegate.swift",
+      "artifacts/majalis/capacitor.config.ts",
       "artifacts/majalis/supabase/migrations/001.sql",
+      "supabase/migrations/001.sql",
+      "artifacts/majalis/api/index.js",
+      "artifacts/majalis/lib/api-handlers/cron/job-worker.js",
+      "artifacts/majalis/lib/security/ssrf.mjs",
+      "artifacts/majalis/lib/auth/session.js",
+      "artifacts/majalis/lib/jobs/queue.mjs",
       "fastlane/Fastfile",
       "pnpm-lock.yaml",
       "package.json",
       "artifacts/majalis/vercel.json",
     ]) {
       const r = evaluateEligibility(
-        base({ labels: ["code-safe"], files: [{ path, additions: 1, deletions: 0 }] }),
+        base({ labels: ["safe:auto-merge", "code-safe"], files: [{ path, additions: 1, deletions: 0 }] }),
       );
       assert.equal(r.eligible, false, path);
-      assert.ok(r.dangerousFiles.length || r.hasCicd || r.hasIos || r.hasMigration, path);
+      assert.ok(
+        r.dangerousFiles.length || r.hasCicd || r.hasIos || r.hasMigration,
+        path,
+      );
+      assert.ok(
+        r.suggestedAddLabels.includes("blocked:danger-path"),
+        `suggested blocked label for ${path}`,
+      );
     }
+  });
+
+  it("accepts new safe:* labels", () => {
+    const r = evaluateEligibility(base({ labels: ["safe:content"] }));
+    assert.equal(r.eligible, true);
+    assert.equal(r.prType, "safe:content");
+  });
+
+  it("blocks risky:manual-review and blocked:danger-path labels", () => {
+    assert.ok(
+      evaluateEligibility(base({ labels: ["safe:ui", "risky:manual-review"] })).blockers.some((b) =>
+        /risky:manual-review/.test(b),
+      ),
+    );
+    assert.ok(
+      evaluateEligibility(base({ labels: ["safe:test", "blocked:danger-path"] })).blockers.some((b) =>
+        /blocked:danger-path/.test(b),
+      ),
+    );
+  });
+
+  it("blocks failed Color contrast when the check is present", () => {
+    const r = evaluateEligibility(
+      base({
+        checks: [
+          ...greenChecks,
+          { name: "Color contrast (Playwright)", state: "fail" },
+        ],
+      }),
+    );
+    assert.ok(r.blockers.some((b) => /Color contrast/i.test(b)));
   });
 
   it("blocks release-train-ready from immediate auto-merge", () => {

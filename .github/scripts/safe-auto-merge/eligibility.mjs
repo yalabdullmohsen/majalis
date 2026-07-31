@@ -4,6 +4,7 @@
 import {
   AUTH_SECURITY_PATH_PATTERNS,
   AUTH_SECURITY_TEXT,
+  BLOCKED_DANGER_PATH_LABEL,
   BLOCKING_LABELS,
   BRANCH_ALLOW_RE,
   BRANCH_EXCLUDE_RE,
@@ -12,6 +13,9 @@ import {
   MAX_FILES_FOR_AUTO_MERGE,
   MAX_TOTAL_DELETIONS,
   RELEASE_TRAIN_LABEL,
+  REQUIRED_CHECK_NAMES,
+  RISKY_MANUAL_REVIEW_LABEL,
+  SAFE_AUTO_MERGE_LABEL,
   SAFE_LABELS,
   TITLE_BLOCK_RE,
 } from "./constants.mjs";
@@ -145,11 +149,13 @@ export function evaluateEligibility(input = {}) {
     return row ? { name: row.name, state: normalizeCheckState(row.state) } : { name: null, state: "missing" };
   }
 
-  const verify = findCheck(/^(Verify build|quality)$/i);
-  const preview = findCheck(/^preview-smoke$/i);
-  const vercelLint = findCheck(/^lint-typecheck-build$/i);
-  const vercelDeploy = findCheck(/Vercel\s*[–-]\s*majalis-majalis/i);
-  const postgres = findCheck(/^postgres-integration$/i);
+  const verify = findCheck(REQUIRED_CHECK_NAMES.verifyBuild);
+  const preview = findCheck(REQUIRED_CHECK_NAMES.previewSmoke);
+  const vercelLint = findCheck(REQUIRED_CHECK_NAMES.vercelCheck);
+  const vercelDeploy = findCheck(REQUIRED_CHECK_NAMES.vercelDeploy);
+  const postgres = findCheck(REQUIRED_CHECK_NAMES.postgres);
+  const colorContrast = findCheck(REQUIRED_CHECK_NAMES.colorContrast);
+  const iosStatic = findCheck(REQUIRED_CHECK_NAMES.iosStatic);
 
   // --- hard structural gates ---
   if (input.state && String(input.state).toUpperCase() !== "OPEN") {
@@ -253,9 +259,34 @@ export function evaluateEligibility(input = {}) {
   if (hasIos) blockers.push("iOS / Capacitor native change → manual review");
   if (hasCicd) blockers.push("CI/CD / Fastlane change → manual review");
 
+  // Suggested labels for the report/cli sync (never close PRs).
+  const suggestedAddLabels = [];
+  const suggestedRemoveLabels = [];
+  if (dangerousFiles.length || hasMigration || hasIos || hasCicd || authHits.length) {
+    suggestedAddLabels.push(BLOCKED_DANGER_PATH_LABEL, RISKY_MANUAL_REVIEW_LABEL);
+  } else if (hasSafeLabel && !labels.includes(RISKY_MANUAL_REVIEW_LABEL)) {
+    // Clear stale danger labels only when paths are clean (cli applies carefully).
+    suggestedRemoveLabels.push(BLOCKED_DANGER_PATH_LABEL);
+  }
+  if (
+    hasSafeLabel &&
+    !labels.includes(SAFE_AUTO_MERGE_LABEL) &&
+    !dangerousFiles.length &&
+    !hasMigration &&
+    !hasIos &&
+    !hasCicd
+  ) {
+    warnings.push(
+      `consider adding \`${SAFE_AUTO_MERGE_LABEL}\` for explicit auto-merge opt-in`,
+    );
+  }
+
   // --- required checks (when evaluating for merge enable) ---
   const requireChecks = input.requireChecks !== false;
   if (requireChecks) {
+    // Verify build embeds: typecheck, lint, test, build, generators --check,
+    // verify:no-runtime-ddl, verify:single-response, verify:no-unsafe-auto-merge,
+    // db:migration:verify (see .github/workflows/ci.yml).
     if (verify.state !== "pass") {
       blockers.push(`CI Verify build not green (${verify.state})`);
     }
@@ -280,6 +311,16 @@ export function evaluateEligibility(input = {}) {
     }
     if (postgres.state === "fail" || postgres.state === "pending") {
       blockers.push(`postgres-integration not green (${postgres.state})`);
+    }
+    // Soft-required when the workflow job exists for this PR.
+    if (colorContrast.state === "fail" || colorContrast.state === "pending") {
+      blockers.push(`Color contrast gate not green (${colorContrast.state})`);
+    }
+    // iOS static gates: required when the check is present (path-filtered workflow).
+    if (hasIos && (iosStatic.state === "fail" || iosStatic.state === "pending" || iosStatic.state === "missing")) {
+      blockers.push(`iOS static gates required for native changes (${iosStatic.state})`);
+    } else if (iosStatic.state === "fail" || iosStatic.state === "pending") {
+      blockers.push(`iOS static gates not green (${iosStatic.state})`);
     }
   }
 
@@ -306,12 +347,17 @@ export function evaluateEligibility(input = {}) {
     hasMigration,
     hasIos,
     hasCicd,
+    suggestedAddLabels: [...new Set(suggestedAddLabels)],
+    suggestedRemoveLabels: [...new Set(suggestedRemoveLabels)],
+    needsManualReview: !eligible,
     checks: {
       verifyBuild: verify,
       previewSmoke: preview,
       vercelCheck: vercelLint,
       vercelDeploy,
       postgres,
+      colorContrast,
+      iosStatic,
     },
     labels: {
       all: labels,
