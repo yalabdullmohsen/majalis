@@ -119,10 +119,28 @@ const ASSERTIONS = [
 
 const RATIO_FN = `(selector) => {
   function parseColor(str) {
+    if (!str || str === "transparent") return null;
+    // rgb(255, 255, 255) | rgba(255, 255, 255, 0.8) | rgb(255 255 255 / 0.8)
     const m = str.match(/rgba?\\(([^)]+)\\)/);
     if (!m) return null;
-    const parts = m[1].split(",").map((s) => parseFloat(s.trim()));
-    return { r: parts[0], g: parts[1], b: parts[2], a: parts.length > 3 ? parts[3] : 1 };
+    const body = m[1].trim();
+    let r, g, b, a = 1;
+    if (body.includes(",")) {
+      const parts = body.split(",").map((s) => parseFloat(s.trim()));
+      r = parts[0]; g = parts[1]; b = parts[2];
+      if (parts.length > 3 && Number.isFinite(parts[3])) a = parts[3];
+    } else {
+      const [rgbPart, alphaPart] = body.split("/").map((s) => s.trim());
+      const parts = rgbPart.split(/\\s+/).map((s) => parseFloat(s));
+      r = parts[0]; g = parts[1]; b = parts[2];
+      if (alphaPart != null) {
+        a = alphaPart.endsWith("%") ? parseFloat(alphaPart) / 100 : parseFloat(alphaPart);
+      } else if (parts.length > 3) {
+        a = parts[3];
+      }
+    }
+    if (![r, g, b].every(Number.isFinite)) return null;
+    return { r, g, b, a: Number.isFinite(a) ? a : 1 };
   }
   function relLum({ r, g, b }) {
     const f = (c) => { c /= 255; return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); };

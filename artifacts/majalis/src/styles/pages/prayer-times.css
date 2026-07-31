@@ -137,7 +137,11 @@
   gap: 0.4rem;
   align-items: center;
   font-size: 0.78rem;
-  color: var(--pts-muted);
+  /* لون صلب مقروء فوق الزمرد (بدل color-mix الشفاف) — ≥4.5:1 */
+  color: #C8D4CE;
+  background-color: var(--pts-bg-1);
+  border-radius: 0.35rem;
+  padding: 0.1rem 0.15rem;
 }
 .pts-dates__sep { opacity: 0.5; }
 
