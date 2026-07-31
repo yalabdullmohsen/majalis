@@ -41,8 +41,13 @@ export default async function handler(req, res) {
 
   const todayKey = kuwaitDateKey();
 
+  const cacheHeaders = {
+    "Cache-Control": "public, s-maxage=300, stale-while-revalidate=600",
+    Vary: "Accept-Encoding",
+  };
+
   if (cache.dateKey === todayKey && cache.payload) {
-    sendJson(res, 200, cache.payload);
+    sendJson(res, 200, cache.payload, cacheHeaders);
     return;
   }
 
@@ -53,7 +58,7 @@ export default async function handler(req, res) {
       cache.dateKey = todayKey;
       cache.payload = payload;
       cache.fetchedAt = Date.now();
-      sendJson(res, 200, payload);
+      sendJson(res, 200, payload, cacheHeaders);
       return;
     }
 
@@ -62,11 +67,13 @@ export default async function handler(req, res) {
     cache.dateKey = todayKey;
     cache.payload = payload;
     cache.fetchedAt = Date.now();
-    sendJson(res, 200, payload);
+    sendJson(res, 200, payload, cacheHeaders);
   } catch (error) {
     console.error("[prayer-times] fetch failed", error);
     if (cache.payload) {
-      sendJson(res, 200, { ...cache.payload, stale: true });
+      sendJson(res, 200, { ...cache.payload, stale: true }, {
+        "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
+      });
       return;
     }
     sendJson(res, 503, { ok: false, message: "تعذر تحميل مواقيت الصلاة حاليًا." });

@@ -40,7 +40,12 @@ export async function listResource(admin, resource, opts = {}) {
     const todayKey = kuwaitDateKey();
     let payload;
     if (admin) {
-      const { data: row } = await admin.from("prayer_times").select("*").eq("city", KUWAIT_CITY).eq("date", todayKey).maybeSingle();
+      const { data: row } = await admin
+        .from("prayer_times")
+        .select("date, fajr, sunrise, dhuhr, asr, maghrib, isha, city, governorate, timezone, method")
+        .eq("city", KUWAIT_CITY)
+        .eq("date", todayKey)
+        .maybeSingle();
       if (row) payload = payloadFromDbRow(row);
     }
     if (!payload) {

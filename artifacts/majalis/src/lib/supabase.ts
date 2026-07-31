@@ -41,6 +41,25 @@ const LESSON_LIST_COLUMNS = [
   "audio_url",
   "video_url",
 ].join(",");
+
+/** Detail fetch — explicit columns (no select*). */
+const LESSON_DETAIL_COLUMNS = [
+  LESSON_LIST_COLUMNS,
+  "activity_type",
+  "is_course",
+  "location",
+  "country",
+  "notes",
+  "topics",
+  "duration_minutes",
+  "published_at",
+  "approved_at",
+  "view_count",
+  "source_url",
+  "youtube_url",
+  "is_active",
+  "scheduled_at",
+].join(",");
 import { writeAuditLog } from "@/lib/cms/audit-log";
 import { validateSheikhImage, safeUploadFileName } from "./file-validation";
 import { sanitizeFormRecord } from "./sanitize";
@@ -390,7 +409,7 @@ export async function getLessonById(id: string) {
     if (kind === "uuid" && isUuid(id)) {
       const byId = await supabase
         .from("lessons")
-        .select(`*, ${SHEIKH_EMBED}`)
+        .select(`${LESSON_DETAIL_COLUMNS}, ${SHEIKH_EMBED}`)
         .eq("id", id.trim())
         .eq("status", "approved")
         .maybeSingle();
@@ -407,7 +426,7 @@ export async function getLessonById(id: string) {
     const orFilter = keys.map((k) => `external_key.eq.${k}`).join(",");
     const byExternalKey = await supabase
       .from("lessons")
-      .select(`*, ${SHEIKH_EMBED}`)
+      .select(`${LESSON_DETAIL_COLUMNS}, ${SHEIKH_EMBED}`)
       .or(orFilter)
       .eq("status", "approved")
       .maybeSingle();
@@ -950,7 +969,7 @@ export async function adminGetLessons(page = 0, pageSize = 500) {
   const to   = from + pageSize - 1;
   const { data, error, count } = await supabase
     .from("lessons")
-    .select("*, sheikhs(name)", { count: "exact" })
+    .select(`${LESSON_DETAIL_COLUMNS}, sheikhs(name)`, { count: "exact" })
     .order("created_at", { ascending: false })
     .range(from, to);
   return { data: data || [], error, count: count ?? 0 };

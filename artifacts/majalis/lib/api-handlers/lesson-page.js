@@ -59,6 +59,32 @@ const SITE_NAME = "المجلس العلمي";
 const SITE_URL = "https://majlisilm.com";
 const DEFAULT_IMAGE = `${SITE_URL}/opengraph.jpg`;
 const SHEIKH_EMBED = "sheikhs(id, name, city, photo_url)";
+const LESSON_DETAIL_COLUMNS = [
+  "id",
+  "title",
+  "description",
+  "speaker_name",
+  "category",
+  "mosque",
+  "city",
+  "region",
+  "day_of_week",
+  "lesson_time",
+  "schedule",
+  "status",
+  "sheikh_id",
+  "external_key",
+  "slug",
+  "created_at",
+  "updated_at",
+  "poster_url",
+  "audio_url",
+  "video_url",
+  "activity_type",
+  "is_course",
+  "source_url",
+  "youtube_url",
+].join(",");
 
 function escapeHtml(value) {
   return String(value ?? "").replace(/[&<>"']/g, (c) => (
@@ -90,7 +116,7 @@ async function findLesson(idParam) {
     for (const lookId of lookupIds) {
       const byId = await admin
         .from("lessons")
-        .select(`*, ${SHEIKH_EMBED}`)
+        .select(`${LESSON_DETAIL_COLUMNS}, ${SHEIKH_EMBED}`)
         .eq("id", lookId)
         .eq("status", "approved")
         .maybeSingle();
@@ -101,7 +127,7 @@ async function findLesson(idParam) {
       const orFilter = keys.map((k) => `external_key.eq.${k}`).join(",");
       const byExternalKey = await admin
         .from("lessons")
-        .select(`*, ${SHEIKH_EMBED}`)
+        .select(`${LESSON_DETAIL_COLUMNS}, ${SHEIKH_EMBED}`)
         .or(orFilter)
         .eq("status", "approved")
         .maybeSingle();

@@ -233,6 +233,28 @@ jobs:
               gh "${REPO_FLAG[@]}" pr merge "$n" --disable-auto || true
               echo "::endgroup::"; continue
             fi
+
+            # Auth / SQL / iOS / Cron → مراجعة بشرية إلزامية (لا auto-merge)
+            files=$(gh "${REPO_FLAG[@]}" pr view "$n" --json files --jq '.files[].path' || true)
+            if echo "$files" | grep -Eqi '(^|/)(supabase/|migrations?/)|\\.sql$|\\.migration-backup/|db-migrate|migration-runner|enterprise_reliability|qa_phase'; then
+              echo "skip: SQL/migration paths require human review"
+              gh "${REPO_FLAG[@]}" pr merge "$n" --disable-auto || true
+              gh "${REPO_FLAG[@]}" pr comment "$n" --body "🛑 Auto-merge متوقف: تغييرات SQL/migrations تحتاج مراجعة بشرية." || true
+              echo "::endgroup::"; continue
+            fi
+            if echo "$files" | grep -Eqi '(^|/)ios/|\\.swift$|capacitor\\.config\\.(ts|json)$|Info\\.plist$'; then
+              echo "skip: iOS/Capacitor paths require human review"
+              gh "${REPO_FLAG[@]}" pr merge "$n" --disable-auto || true
+              gh "${REPO_FLAG[@]}" pr comment "$n" --body "🛑 Auto-merge متوقف: تغييرات iOS/Capacitor تحتاج مراجعة بشرية." || true
+              echo "::endgroup::"; continue
+            fi
+            if echo "$files" | grep -Eqi 'auth-redirect|AuthContext|LoginPage|RegisterPage|(^|/)auth/|api-handlers/cron/|cron-enqueue|vercel\\.json$'; then
+              echo "skip: Auth/Cron paths require human review"
+              gh "${REPO_FLAG[@]}" pr merge "$n" --disable-auto || true
+              gh "${REPO_FLAG[@]}" pr comment "$n" --body "🛑 Auto-merge متوقف: تغييرات Auth/Cron تحتاج مراجعة بشرية." || true
+              echo "::endgroup::"; continue
+            fi
+
             if [ "$mergeable" != "MERGEABLE" ]; then
               echo "skip: mergeable=$mergeable (require MERGEABLE)"
               gh "${REPO_FLAG[@]}" pr merge "$n" --disable-auto || true

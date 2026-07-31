@@ -10,7 +10,7 @@
 
 | الحقل | القيمة |
 |-------|--------|
-| appId | `com.majlisilm.app` |
+| appId | `com.yousef.majlisilm` |
 | appName | `مجالس العلم` |
 | webDir | `dist` |
 | Capacitor Version | 8.x |

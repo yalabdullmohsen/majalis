@@ -16,12 +16,12 @@ const CRITICAL = [
   "lib/api-handlers/prayer-times.js",
 ];
 
-const STAR = /\.select\(\s*[`'"]\*[`'"]/;
+const STAR = /\.select\(\s*[`'"]\s*\*/;
 
 console.log("=== critical-path-no-select-star ===\n");
 for (const rel of CRITICAL) {
   const src = readFileSync(join(root, rel), "utf8");
-  assert.doesNotMatch(src, STAR, `${rel} must not select('*')`);
+  assert.doesNotMatch(src, STAR, `${rel} must not select('*') / select(\`*\`)`);
   console.log(`  ✓ ${rel}`);
 }
 

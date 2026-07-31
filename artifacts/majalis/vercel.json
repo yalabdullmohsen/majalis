@@ -55,18 +55,6 @@
       "schedule": "0 4 * * *"
     },
     {
-      "path": "/api/cron/platform-bootstrap",
-      "schedule": "30 4 * * *"
-    },
-    {
-      "path": "/api/cron/bootstrap-database",
-      "schedule": "0 5 * * *"
-    },
-    {
-      "path": "/api/cron/apply-migrations",
-      "schedule": "0 4 * * 0"
-    },
-    {
       "path": "/api/cron/check-fiqh-links",
       "schedule": "0 7 * * *"
     },
@@ -161,10 +149,6 @@
     {
       "path": "/api/cron/autonomous-platform-cleanup",
       "schedule": "0 3 1 * *"
-    },
-    {
-      "path": "/api/cron/autonomous-platform-bootstrap",
-      "schedule": "30 5 * * *"
     },
     {
       "path": "/api/cron/autonomous-platform-monitor",
@@ -500,7 +484,12 @@
     },
     {
       "source": "/:path*",
-      "has": [{ "type": "host", "value": "www.majlisilm.com" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "www.majlisilm.com"
+        }
+      ],
       "destination": "https://majlisilm.com/:path*",
       "permanent": true
     }

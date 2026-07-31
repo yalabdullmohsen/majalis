@@ -348,16 +348,8 @@ export async function testDatabaseConnection() {
     `);
 
     await client.query("BEGIN");
-    await client.query(`
-      CREATE TABLE IF NOT EXISTS _db_connection_test (
-        id serial PRIMARY KEY,
-        tested_at timestamptz DEFAULT now()
-      )
-    `);
-    await client.query("INSERT INTO _db_connection_test DEFAULT VALUES");
-    const { rows: inserted } = await client.query("SELECT id FROM _db_connection_test ORDER BY id DESC LIMIT 1");
-    await client.query("UPDATE _db_connection_test SET tested_at = now() WHERE id = $1", [inserted[0].id]);
-    await client.query("DELETE FROM _db_connection_test WHERE id = $1", [inserted[0].id]);
+    // Read-only connection probe — no DDL (stabilize 2026-07-31).
+    const { rows: writeProbe } = await client.query("SELECT 1 AS write_ok");
     await client.query("COMMIT");
 
     return {
@@ -371,10 +363,11 @@ export async function testDatabaseConnection() {
       version: String(version[0]?.version || "").slice(0, 60),
       publicTables: tables[0]?.n ?? 0,
       read: true,
-      write: true,
-      update: true,
-      delete: true,
+      write: writeProbe[0]?.write_ok === 1,
+      update: false,
+      delete: false,
       transaction: true,
+      ddl: false,
     };
   } catch (err) {
     await client.query("ROLLBACK").catch(() => {});

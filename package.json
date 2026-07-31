@@ -18,7 +18,8 @@
     "db:migration:verify:upgrade": "node scripts/db-migration-verify.mjs upgrade",
     "test:postgres-integration": "node scripts/test-postgres-queue-integration.mjs",
     "verify:platform-hardening-sql": "node scripts/verify-platform-hardening-sql.mjs",
-    "test:release-train": "node --test .github/scripts/release-train/__tests__/*.test.mjs"
+    "test:release-train": "node --test .github/scripts/release-train/__tests__/*.test.mjs",
+    "report:pr-matrix": "node .github/scripts/release-train/pr-matrix-report.mjs"
   },
   "private": true,
   "devDependencies": {

@@ -105,6 +105,9 @@ if (existsSync(autoPath)) {
   if (!/release-train-ready/.test(body)) {
     bad(`${ALLOW_MERGE_FILE}: must skip release-train-ready PRs (owned by scheduled train)`);
   }
+  if (!/human review|مراجعة بشرية/i.test(body)) {
+    bad(`${ALLOW_MERGE_FILE}: must gate Auth/SQL/iOS/Cron for human review`);
+  }
 } else {
   ok(`${ALLOW_MERGE_FILE} absent (auto-merge disabled)`);
 }

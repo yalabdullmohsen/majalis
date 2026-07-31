@@ -38,3 +38,5 @@ c338dec*/
 **/c338dec*/
 artifacts/api-server/dist-types/
 artifacts/release-train/last-run.json
+artifacts/release-train/pr-matrix-*.json
+artifacts/release-train/pr-matrix-*.md

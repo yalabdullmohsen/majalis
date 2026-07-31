@@ -58,7 +58,7 @@ export function listOpenMainPrs(opts = {}) {
         "--limit",
         String(opts.limit || 50),
         "--json",
-        "number,title,body,author,isDraft,mergeable,mergeStateStatus,labels,headRefName,baseRefName,url,files,statusCheckRollup",
+        "number,title,body,author,isDraft,mergeable,mergeStateStatus,labels,headRefName,baseRefName,url,files,statusCheckRollup,reviewDecision",
       ],
       opts,
     ) || []
@@ -68,28 +68,18 @@ export function listOpenMainPrs(opts = {}) {
 export function prChecksGreen(pr) {
   const rollup = pr.statusCheckRollup || [];
   if (!Array.isArray(rollup) || rollup.length === 0) return false;
-  // Require at least one completed success that looks like Verify build / quality,
-  // and no failing/pending required-looking checks.
   let hasVerify = false;
   for (const c of rollup) {
     const name = c.name || c.context || "";
     const conclusion = (c.conclusion || "").toUpperCase();
     const status = (c.status || c.state || "").toUpperCase();
-    const failed =
-      conclusion === "FAILURE" ||
-      conclusion === "CANCELLED" ||
-      status === "FAILURE" ||
-      status === "ERROR" ||
-      status === "PENDING" ||
-      status === "QUEUED" ||
-      status === "IN_PROGRESS";
     if (/verify build|quality/i.test(name)) {
       if (conclusion === "SUCCESS" || status === "SUCCESS") hasVerify = true;
       else return false;
-    } else if (failed && conclusion !== "SKIPPED" && status !== "SUCCESS") {
-      // Soft: ignore skipped; block hard failures on other checks when conclusion set.
-      if (conclusion === "FAILURE" || status === "FAILURE" || status === "ERROR") return false;
-      if (status === "PENDING" || status === "IN_PROGRESS" || status === "QUEUED") return false;
+    } else if (conclusion === "FAILURE" || status === "FAILURE" || status === "ERROR") {
+      return false;
+    } else if (status === "PENDING" || status === "IN_PROGRESS" || status === "QUEUED") {
+      return false;
     }
   }
   return hasVerify;

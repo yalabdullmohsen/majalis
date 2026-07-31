@@ -211,10 +211,36 @@ export const JOB_WORKERS = {
 
   "process-import-jobs": async ({ signal, cursor, metadata }) => {
     throwIfAborted(signal);
-    const { processQueuedImportJobs } = await import("../content-import/engine.mjs");
+    const { processQueuedImportJobs, runImportJobWatchdog } = await import("../content-import/engine.mjs");
+    const watchdog = await runImportJobWatchdog();
+    throwIfAborted(signal);
     const result = await processQueuedImportJobs(Number(metadata?.limit) || 3);
     throwIfAborted(signal);
-    return { done: true, continue: false, cursor: { ...cursor, ok: true, result } };
+    return { done: true, continue: false, cursor: { ...cursor, ok: true, watchdog, result } };
+  },
+
+  "check-fiqh-links": async ({ signal, cursor, metadata }) => {
+    throwIfAborted(signal);
+    const { runFiqhLinkCheck } = await import("../fiqh-link-checker.mjs");
+    const result = await runFiqhLinkCheck({ limit: Number(metadata?.limit) || 60 });
+    throwIfAborted(signal);
+    return { done: true, continue: false, cursor: { ...cursor, ok: result?.ok !== false, result } };
+  },
+
+  "connector-health": async ({ signal, cursor }) => {
+    throwIfAborted(signal);
+    const { runConnectorHealthChecks } = await import("../auto-knowledge-sync.mjs");
+    const result = await runConnectorHealthChecks();
+    throwIfAborted(signal);
+    return { done: true, continue: false, cursor: { ...cursor, ok: result?.ok !== false, result } };
+  },
+
+  "daily-benefit-rotation": async ({ signal, cursor }) => {
+    throwIfAborted(signal);
+    const { runDailyBenefitRotation } = await import("./daily-benefit-rotation-runner.mjs");
+    const result = await runDailyBenefitRotation();
+    throwIfAborted(signal);
+    return { done: true, continue: false, cursor: { ...cursor, ok: result?.ok !== false, result } };
   },
 
   "content-scoring": async ({ signal, cursor }) => {

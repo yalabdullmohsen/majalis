@@ -58,6 +58,20 @@ describe("classifyPullRequest", () => {
     assert.match(c, /Level C/);
     assert.match(c, /sql path/);
   });
+  it("Level C for cron / vercel.json / auth helpers", () => {
+    const cron = classifyPullRequest({
+      files: ["artifacts/majalis/lib/api-handlers/cron/job-worker.js"],
+      title: "cron: tweak",
+    });
+    assert.equal(cron.level, "C");
+    assert.equal(cron.blocked, true);
+
+    const auth = classifyPullRequest({
+      files: ["artifacts/majalis/src/views/LoginPage.tsx"],
+      title: "auth: login copy",
+    });
+    assert.equal(auth.level, "C");
+  });
 });
 
 describe("qualify + batch", () => {
@@ -72,6 +86,18 @@ describe("qualify + batch", () => {
     assert.equal(draft.eligible, false);
     assert.equal(draft.reason, "draft");
 
+    const changes = qualifyPullRequest({
+      number: 3,
+      state: "OPEN",
+      isDraft: false,
+      reviewDecision: "CHANGES_REQUESTED",
+      labels: ["release-train-ready", "code-safe"],
+      files: ["docs/a.md"],
+      title: "docs: typo",
+    }, { ciGreen: true });
+    assert.equal(changes.eligible, false);
+    assert.equal(changes.reason, "changes_requested");
+
     const ok = qualifyPullRequest({
       number: 2,
       state: "OPEN",
@@ -80,6 +106,7 @@ describe("qualify + batch", () => {
       labels: ["release-train-ready", "code-safe"],
       files: ["docs/a.md"],
       title: "docs: typo",
+      statusCheckRollup: [{ name: "Verify build", conclusion: "SUCCESS", status: "COMPLETED" }],
     }, { ciGreen: true });
     assert.equal(ok.eligible, true);
     assert.equal(ok.classification.level, "A");

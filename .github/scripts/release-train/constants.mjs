@@ -34,7 +34,7 @@ export const LEVEL = Object.freeze({
   C: "C",
 });
 
-/** Paths / patterns that force Level C (blocked from train). */
+/** Paths / patterns that force Level C (blocked from train — human review). */
 export const LEVEL_C_PATH_PATTERNS = Object.freeze([
   /(^|\/)supabase\//i,
   /(^|\/)migrations?\//i,
@@ -48,9 +48,25 @@ export const LEVEL_C_PATH_PATTERNS = Object.freeze([
   /Info\.plist$/i,
   /bundle.?id/i,
   /(^|\/)auth\//i,
+  /auth-redirect/i,
+  /AuthContext/i,
+  /LoginPage|RegisterPage/i,
+  /supabase\.auth/i,
   /rls[_-]?polic/i,
   /row.?level.?security/i,
+  /api-handlers\/cron\//i,
+  /cron-enqueue/i,
+  /vercel\.json$/i,
+  /\.migration-backup\//i,
 ]);
+
+/** Human-review path classes (also Level C). */
+export const HUMAN_REVIEW_PATH_HINTS = Object.freeze({
+  sql: /(^|\/)supabase\/|\.sql$|(^|\/)migrations?\/|\.migration-backup\//i,
+  ios: /(^|\/)ios\/|\.swift$|capacitor\.config/i,
+  auth: /(^|\/)auth\/|auth-redirect|AuthContext|LoginPage|RegisterPage/i,
+  cron: /api-handlers\/cron\/|cron-enqueue|vercel\.json$/i,
+});
 
 /** Content signals that suggest Level A when no Level-C paths. */
 export const LEVEL_A_PATH_PATTERNS = Object.freeze([

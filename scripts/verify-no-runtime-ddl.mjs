@@ -69,8 +69,9 @@ for (const file of files) {
   const body = readFileSync(file, "utf8");
   if (!DDL.test(body)) continue;
 
-  if (rel === "lib/database.mjs" && !/\bDROP\s+TABLE\b/i.test(body) && /_db_connection_test/.test(body)) {
-    console.log(`  ~ ${rel}: allowed connection-test DDL`);
+  if (rel === "lib/database.mjs" && /_db_connection_test/.test(body) && DDL.test(body)) {
+    console.error(`  ✗ ${rel}: connection-test DDL is no longer allowed`);
+    failed++;
     continue;
   }
 
