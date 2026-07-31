@@ -6,7 +6,7 @@
     {
       "category": "الأخلاق والآداب",
       "file": "chunks/الأخلاق-والآداب.json",
-      "count": 142
+      "count": 143
     },
     {
       "category": "الأذكار والدعاء",
@@ -41,27 +41,27 @@
     {
       "category": "الحج والعمرة",
       "file": "chunks/الحج-والعمرة.json",
-      "count": 90
+      "count": 91
     },
     {
       "category": "الزكاة",
       "file": "chunks/الزكاة.json",
-      "count": 68
+      "count": 70
     },
     {
       "category": "الصلاة",
       "file": "chunks/الصلاة.json",
-      "count": 173
+      "count": 185
     },
     {
       "category": "الصيام",
       "file": "chunks/الصيام.json",
-      "count": 103
+      "count": 109
     },
     {
       "category": "الطهارة",
       "file": "chunks/الطهارة.json",
-      "count": 251
+      "count": 254
     },
     {
       "category": "العقيدة",
@@ -71,7 +71,7 @@
     {
       "category": "القرآن والحديث",
       "file": "chunks/القرآن-والحديث.json",
-      "count": 497
+      "count": 499
     },
     {
       "category": "القضاء والحدود",
@@ -101,7 +101,7 @@
     {
       "category": "طلب العلم والدعوة",
       "file": "chunks/طلب-العلم-والدعوة.json",
-      "count": 1864
+      "count": 1837
     }
   ]
 }
