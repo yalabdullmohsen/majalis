@@ -1,12 +1,15 @@
 #!/usr/bin/env node
 /**
  * strip-enrichment-boilerplate.mjs
- * يزيل الحشو الآلي من أوصاف الصفحات ونصوص الأدلة (آية/حديث) في src/views.
+ * يزيل الحشو الآلي من أوصاف الصفحات ونصوص الأدلة (آية/حديث) في src/views،
+ * ومن حقول الملخّص في بذور src/lib المعروفة (ج-٣٧٥).
  *
  * أوضاع:
- *   --apply     يكتب التعديلات
- *   --report    يبلّغ عن الأوصاف المكررة حرفيًا (بدون كتابة)
- *   (افتراضي)   جاف: يعرض الإحصاء فقط
+ *   --apply       يكتب التعديلات
+ *   --report      يبلّغ عن الأوصاف المكررة حرفيًا (بدون كتابة)
+ *   --limit N     يقصر تنظيف البذور على أوّل N حقلًا (لتحجيم الدفعة للمراجعة)
+ *   --seeds-only  يقصر العمل على بذور src/lib دون src/views
+ *   (افتراضي)     جاف: يعرض الإحصاء فقط
  */
 import fs from "node:fs";
 import path from "node:path";
@@ -17,6 +20,12 @@ const ROOT = path.resolve(__dirname, "..");
 const VIEWS = path.join(ROOT, "src/views");
 const APPLY = process.argv.includes("--apply");
 const REPORT = process.argv.includes("--report");
+const SEEDS_ONLY = process.argv.includes("--seeds-only");
+const LIMIT = (() => {
+  const i = process.argv.indexOf("--limit");
+  const n = i === -1 ? NaN : Number(process.argv[i + 1]);
+  return Number.isFinite(n) && n > 0 ? n : Infinity;
+})();
 
 /** أنماط الحشو المعروفة (من سكربتات enrich-round*) — تُزال من أي حقل. */
 const BOILERPLATE_FRAGMENTS = [
@@ -47,6 +56,27 @@ const BOILERPLATE_FRAGMENTS = [
 
 const TRAILING_DOTS = /\.{4,}/g;
 const TRAILING_JUNK = /[؛,\s—\-]+$/;
+
+/**
+ * حشو بذور src/lib — عباراتٌ ثابتة وَلَّدَتها سكربتات enrich-round* لبلوغ حدٍّ
+ * أدنى للطول (UPDATE_SUMMARY_MIN = 380)، ثمّ أكملت النقص بنقاطٍ حرفية. الحدُّ
+ * نفسه أُبطل لاحقًا في تلك السكربتات (padToNeed ترمي «content-padding banned»)،
+ * لكنّ ما كُتب في البذور قبل الإبطال بقي منشورًا في الواجهة.
+ */
+const SEED_BOILERPLATE = [
+  /\s*؛?\s*ويربط التحديث بمصدره المعتمد في المنصة للمتابعة والاطلاع/g,
+  /\s*؛?\s*يُستفاد منه في متابعة تطورات المنصة والمحتوى/g,
+  /\s*؛?\s*مع الرجوع للتفاصيل الكاملة في صفحة التحديثات/g,
+  /\s*؛?\s*يُعرض للمستخدم بصيغة موجزة للاطلاع السريع/g,
+  /\s*مع بيان نوع التحديث ومصدره المعتمد في المنصة/g,
+  /\s*للعِلم والمتابعة لا بديلاً عن الرجوع للأصل/g,
+  /\s*ويُراجع عبر الرابط المصدر للتفاصيل الكاملة/g,
+];
+
+/** البذور المشمولة: الملفّ، والحقل، وأنماط حشوه. */
+const SEED_TARGETS = [
+  { file: "src/lib/updates-seed.ts", field: "summary", fragments: SEED_BOILERPLATE },
+];
 
 function cleanString(raw, { maxLen = null, evidence = false } = {}) {
   let s = String(raw);
@@ -131,6 +161,35 @@ function processFile(filePath) {
   return { file: path.relative(ROOT, filePath), changes, wrote: APPLY && changes > 0, src: APPLY ? undefined : src, dirty: original !== src };
 }
 
+/**
+ * ينظّف حقلًا واحدًا في ملفّ بذور: يزيل الحشو الثابت وذيل النقاط، ثمّ يعيد
+ * علامة الختام. لا قصّ بطول أقصى — متن التحديث الأصيل قد يبلغ 340 محرفًا.
+ */
+function processSeedFile(target, budget) {
+  const filePath = path.join(ROOT, target.file);
+  let src = fs.readFileSync(filePath, "utf8");
+  let changes = 0;
+  const samples = [];
+
+  const re = new RegExp(`(\\b${target.field}\\s*:\\s*")((?:\\\\.|[^"\\\\])*)(")`, "g");
+  src = src.replace(re, (whole, a, body, c) => {
+    if (changes >= budget) return whole;
+    let s = body;
+    for (const frag of target.fragments) s = s.replace(frag, "");
+    s = s.replace(TRAILING_DOTS, "");
+    s = s.replace(/\s{2,}/g, " ").trim();
+    s = s.replace(TRAILING_JUNK, "").trim();
+    if (s && !/[.!؟»]$/.test(s)) s += ".";
+    if (s === body) return whole;
+    changes++;
+    samples.push({ before: body.length, after: s.length });
+    return a + s.replace(/\\/g, "\\\\").replace(/"/g, '\\"') + c;
+  });
+
+  if (changes > 0 && APPLY) fs.writeFileSync(filePath, src, "utf8");
+  return { file: target.file, field: target.field, changes, samples };
+}
+
 function walkTsx(dir) {
   const out = [];
   for (const ent of fs.readdirSync(dir, { withFileTypes: true })) {
@@ -171,7 +230,7 @@ const ordered = [
 
 let totalChanges = 0;
 let filesTouched = 0;
-for (const f of ordered) {
+for (const f of SEEDS_ONLY ? [] : ordered) {
   const r = processFile(f);
   if (r.changes > 0) {
     filesTouched++;
@@ -180,7 +239,18 @@ for (const f of ordered) {
   }
 }
 
-console.log(`\nالإجمالي: ${totalChanges} حقل في ${filesTouched} ملفًا ${APPLY ? "(طُبِّق)" : "(جاف — مرّر --apply للكتابة)"}`);
+console.log(`\nالإجمالي (src/views): ${totalChanges} حقل في ${filesTouched} ملفًا ${APPLY ? "(طُبِّق)" : "(جاف — مرّر --apply للكتابة)"}`);
+
+let seedBudget = LIMIT;
+for (const target of SEED_TARGETS) {
+  const r = processSeedFile(target, seedBudget);
+  seedBudget -= r.changes;
+  const saved = r.samples.reduce((a, s) => a + (s.before - s.after), 0);
+  console.log(
+    `${APPLY && r.changes > 0 ? "✓ كتب" : "· جاف"} ${r.file} [${r.field}]: ${r.changes} حقل، ${saved} محرف حشو مُزال` +
+      (LIMIT === Infinity ? "" : ` (سقف الدفعة ${LIMIT})`),
+  );
+}
 
 if (REPORT || APPLY) {
   const dups = collectDescs(files);
