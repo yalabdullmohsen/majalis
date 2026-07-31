@@ -444,6 +444,59 @@ const dupWorks = SCHOLARS.filter((s) => {
 });
 assert(dupWorks.length === 0, "لا شارةَ مؤلَّفٍ مكرَّرة داخل السجل نفسه", dupWorks.map((s) => s.id).join(", "));
 
+console.log("\n=== ١٣) روابط «أبرز المؤلفات» تُحيل إلى كتاب صاحبها لا كتابِ غيره ===");
+
+// اكتُشف 2026-07-31: كان resolveScholarWorkLink يقبل «كلمةً جوهريةً مشتركة»
+// (أربعة أحرف فأكثر) فأحال ٢٠٤ روابط من ٣٠٥ إلى كتابٍ لمؤلِّفٍ آخر — «الشرح
+// الممتع» لابن عثيمين إلى «إرشاد الساري» للقسطلاني، و«خلق المسلم» للغزالي
+// إلى «صحيح مسلم». والعلاج: إلغاء ذلك الفرع، واشتراط موافقة النسبة عند
+// وجود قرينتها. وهذا الفحص يحرس الطرفين: ٠ نسبةٍ خاطئة، وتغطيةٌ لا ترتدّ.
+const { resolveScholarWorkLink } = await import("../scholar-library-links");
+const catalogById = new Map(LIBRARY_CATALOG.map((b) => [b.id, b]));
+const misattributed: string[] = [];
+let linkedWorks = 0;
+for (const s of SCHOLARS) {
+  for (const work of s.key_works ?? []) {
+    const link = resolveScholarWorkLink(work, s.name);
+    if (!link.bookId) continue;
+    linkedWorks += 1;
+    const book = catalogById.get(link.bookId);
+    if (!book) {
+      misattributed.push(`${s.id}: «${work}» ⇐ معرِّف كتابٍ غير موجود ${link.bookId}`);
+      continue;
+    }
+    // «ابن القيم» في الترجمة و«ابن قيم الجوزية» في الفهرس اسمٌ واحد
+    const bare = (v: string) => authorNorm(v).map((t) => (t.startsWith("ال") && t.length > 4 ? t.slice(2) : t));
+    const scholarTokens = new Set(bare(s.name));
+    if (!bare(book.author).some((t) => scholarTokens.has(t))) {
+      misattributed.push(`${s.id} «${work}» ⇒ ${book.id} «${book.title}» لـ${book.author}`);
+    }
+  }
+}
+assert(
+  misattributed.length === 0,
+  "لا رابطَ مؤلَّفٍ يُحيل إلى كتابٍ لمؤلِّفٍ لا يشترك مع العالم في جزءٍ مميِّز",
+  misattributed.slice(0, 12).join(" | ")
+);
+assert(
+  linkedWorks >= 90,
+  `تغطية ربط المؤلفات لا ترتدّ (${linkedWorks} عملاً مربوطاً، الحدّ 90)`,
+  "انخفضت التغطية — راجع تغييرك في scholar-library-links.ts"
+);
+
+// عناوينُ متجانسة لمؤلِّفَين مختلفَين في الفهرس نفسه: لا يجوز أن يقع الرابط
+// على غير صاحبه لمجرَّد اتّفاق العنوان.
+const HOMONYM_WORKS: Array<[string, string, string]> = [
+  ["الإمام النسائي", "السنن الكبرى", "سنن البيهقي لا النسائي"],
+  ["الإمام أحمد", "الزهد", "زهد ابن المبارك لا أحمد"],
+  ["الإمام محمد الشيباني", "المبسوط", "مبسوط السرخسي لا الشيباني"],
+  ["ابن حزم الأندلسي", "الإحكام في أصول الأحكام", "إحكام الآمدي لا ابن حزم"],
+];
+const homonymHits = HOMONYM_WORKS.filter(([name, work]) => resolveScholarWorkLink(work, name).bookId).map(
+  ([name, work, why]) => `«${work}» لـ${name} رُبط بـ${resolveScholarWorkLink(work, name).bookId} — ${why}`
+);
+assert(homonymHits.length === 0, `${HOMONYM_WORKS.length} عنواناً متجانساً يبقى بلا رابط`, homonymHits.join(" | "));
+
 console.log(`\n${"─".repeat(48)}`);
 console.log(`النتائج: ${passed} نجح، ${failed} فشل`);
 if (failed > 0) process.exit(1);

@@ -162,7 +162,7 @@ export default function IslamicScholarsPage() {
                     </h3>
                     <ul className="sch-card__works-list">
                       {s.key_works.map((w) => {
-                        const link = resolveScholarWorkLink(w);
+                        const link = resolveScholarWorkLink(w, s.name);
                         return (
                           <li key={w}>
                             {link.href ? (

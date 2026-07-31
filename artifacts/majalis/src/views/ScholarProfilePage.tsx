@@ -259,7 +259,7 @@ export default function ScholarProfilePage() {
           </h2>
           <ul className="sch-profile-works">
             {scholar.key_works.map((w) => {
-              const link = resolveScholarWorkLink(w);
+              const link = resolveScholarWorkLink(w, scholar.name);
               return (
                 <li key={w}>
                   {link.href ? (
