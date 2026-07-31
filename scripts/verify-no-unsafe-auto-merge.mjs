@@ -133,6 +133,38 @@ if (existsSync(trainWf)) {
   ok("scheduled-release-train.yml absent");
 }
 
+const supabaseWf = join(workflowsDir, "supabase-migrations.yml");
+if (existsSync(supabaseWf)) {
+  const sb = readFileSync(supabaseWf, "utf8");
+  const sbActive = stripComments(sb);
+  ok("supabase-migrations.yml present");
+  if (/version:\s*['"]?latest['"]?/.test(sbActive)) {
+    bad("supabase-migrations.yml: Supabase CLI must be pinned (not latest)");
+  }
+  if (!/SUPABASE_CLI_VERSION:\s*"?\d+\.\d+\.\d+"?/.test(sb) && !/version:\s*['"]?\d+\.\d+\.\d+['"]?/.test(sbActive)) {
+    bad("supabase-migrations.yml: expected pinned SemVer CLI version");
+  }
+  if (/ALLOW_SUPABASE_AUTO_MIGRATE/.test(sbActive)) {
+    bad("supabase-migrations.yml: ALLOW_SUPABASE_AUTO_MIGRATE must not enable Production push");
+  }
+  // db push must be gated: only under apply==true paths
+  const pushLines = sbActive.split("\n").filter((l) => /supabase\s+db\s+push/.test(l));
+  if (pushLines.length === 0) {
+    bad("supabase-migrations.yml: expected supabase db push steps for dispatch apply");
+  }
+  if (!/steps\.gate\.outputs\.apply\s*==\s*'true'/.test(sb) && !/outputs\.apply\s*==\s*'true'/.test(sb)) {
+    bad("supabase-migrations.yml: db push must require gate apply=true");
+  }
+  if (/--include-all/.test(sbActive) && !/confirm_include_all/.test(sb)) {
+    bad("supabase-migrations.yml: --include-all requires confirm_include_all input");
+  }
+  if (/--include-all/.test(sbActive) && !/include_all\s*==\s*'true'/.test(sb)) {
+    bad("supabase-migrations.yml: --include-all step must require include_all=true");
+  }
+} else {
+  ok("supabase-migrations.yml absent");
+}
+
 if (failed) {
   console.error(`\n${failed} issue(s)`);
   process.exit(1);

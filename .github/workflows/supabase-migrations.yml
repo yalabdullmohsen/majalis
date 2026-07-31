@@ -1,0 +1,131 @@
+name: Supabase Migrations
+
+# Lists migration status on push (read-only).
+# Applies ONLY via workflow_dispatch with apply=true.
+# --include-all requires a second explicit confirmation input.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "artifacts/majalis/supabase/migrations/**"
+      - "supabase/migrations/**"
+      - ".github/workflows/supabase-migrations.yml"
+  workflow_dispatch:
+    inputs:
+      apply:
+        description: "Apply migrations with supabase db push (Production)"
+        required: true
+        type: boolean
+        default: false
+      confirm_include_all:
+        description: "Confirm --include-all (ONLY if you intentionally need local-only migrations pushed). Default false = safe db push without --include-all."
+        required: true
+        type: boolean
+        default: false
+
+concurrency:
+  group: supabase-migrations-${{ github.ref }}
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  migrate:
+    name: supabase-migrations
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    env:
+      SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+      SUPABASE_PROJECT_ID: ${{ secrets.SUPABASE_PROJECT_ID }}
+      # Pin — never use "latest" in Production automation
+      SUPABASE_CLI_VERSION: "2.110.0"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Setup Supabase CLI (pinned)
+        uses: supabase/setup-cli@ab058987d8d6c725971f6cf9d0b5c98467e30bd1 # v1
+        with:
+          version: ${{ env.SUPABASE_CLI_VERSION }}
+
+      - name: Verify CLI version
+        run: |
+          set -euo pipefail
+          supabase --version
+          supabase --version | grep -F "${SUPABASE_CLI_VERSION}" || {
+            echo "::error::Expected Supabase CLI ${SUPABASE_CLI_VERSION}"
+            exit 1
+          }
+
+      - name: Resolve migrations directory
+        id: paths
+        run: |
+          set -euo pipefail
+          if [ -d artifacts/majalis/supabase ]; then
+            echo "workdir=artifacts/majalis" >> "$GITHUB_OUTPUT"
+          elif [ -d supabase ]; then
+            echo "workdir=." >> "$GITHUB_OUTPUT"
+          else
+            echo "::error::No supabase directory found"
+            exit 1
+          fi
+
+      - name: Link project
+        working-directory: ${{ steps.paths.outputs.workdir }}
+        run: |
+          set -euo pipefail
+          if [ -z "${SUPABASE_ACCESS_TOKEN:-}" ] || [ -z "${SUPABASE_PROJECT_ID:-}" ]; then
+            echo "::error::SUPABASE_ACCESS_TOKEN and SUPABASE_PROJECT_ID secrets are required"
+            exit 1
+          fi
+          supabase link --project-ref "$SUPABASE_PROJECT_ID"
+
+      - name: List migration status (read-only)
+        working-directory: ${{ steps.paths.outputs.workdir }}
+        run: |
+          set -euo pipefail
+          supabase migration list || true
+          ls -la supabase/migrations | head -50
+
+      - name: Decide apply (workflow_dispatch + apply=true ONLY)
+        id: gate
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          DISPATCH_APPLY: ${{ github.event_name == 'workflow_dispatch' && inputs.apply }}
+          CONFIRM_INCLUDE_ALL: ${{ github.event_name == 'workflow_dispatch' && inputs.confirm_include_all }}
+        run: |
+          set -euo pipefail
+          apply=false
+          include_all=false
+          if [ "$EVENT_NAME" = "workflow_dispatch" ] && [ "${DISPATCH_APPLY}" = "true" ]; then
+            apply=true
+          fi
+          if [ "$apply" = "true" ] && [ "${CONFIRM_INCLUDE_ALL}" = "true" ]; then
+            include_all=true
+          fi
+          echo "apply=${apply}" >> "$GITHUB_OUTPUT"
+          echo "include_all=${include_all}" >> "$GITHUB_OUTPUT"
+          echo "Apply migrations: ${apply} (include_all=${include_all})"
+
+      - name: supabase db push (standard)
+        if: steps.gate.outputs.apply == 'true' && steps.gate.outputs.include_all != 'true'
+        working-directory: ${{ steps.paths.outputs.workdir }}
+        run: |
+          set -euo pipefail
+          echo "Running: supabase db push  (WITHOUT --include-all)"
+          supabase db push
+
+      - name: supabase db push --include-all (explicit confirmation)
+        if: steps.gate.outputs.apply == 'true' && steps.gate.outputs.include_all == 'true'
+        working-directory: ${{ steps.paths.outputs.workdir }}
+        run: |
+          set -euo pipefail
+          echo "::warning::Production db push WITH --include-all — confirmed via workflow_dispatch input"
+          supabase db push --include-all
+
+      - name: Skip note
+        if: steps.gate.outputs.apply != 'true'
+        run: |
+          echo "::notice::Migrations were NOT applied. Push events are list-only. Use workflow_dispatch with apply=true to push."
