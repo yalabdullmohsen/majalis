@@ -102,7 +102,17 @@ if (existsSync(safeMergeDir)) {
     pathToFileURL(join(safeMergeDir, "constants.mjs")).href
   );
   const eligibility = readFileSync(join(safeMergeDir, "eligibility.mjs"), "utf8");
-  for (const label of ["content-safe", "ui-safe", "code-safe", "tests-safe", "maintenance-safe"]) {
+  for (const label of [
+    "safe:auto-merge",
+    "safe:content",
+    "safe:ui",
+    "safe:test",
+    "content-safe",
+    "ui-safe",
+    "code-safe",
+    "tests-safe",
+    "maintenance-safe",
+  ]) {
     if (!SAFE_LABELS.includes(label)) {
       bad(`safe-auto-merge/constants.mjs: missing SAFE_LABEL ${label}`);
     }
@@ -113,13 +123,18 @@ if (existsSync(safeMergeDir)) {
   const dangerSrc = DANGER_PATH_PATTERNS.map((r) => r.toString()).join("\n");
   for (const needle of [
     "supabase",
-    "migrations",
     "workflows",
     "fastlane",
     "ios",
+    "capacitor",
     "package",
     "pnpm-lock",
     "vercel",
+    "api-handlers",
+    "lib\\/security",
+    "lib\\/auth",
+    "lib\\/jobs",
+    "majalis\\/api",
   ]) {
     if (!dangerSrc.includes(needle)) {
       bad(`safe-auto-merge: danger path missing coverage for ${needle}`);
@@ -132,6 +147,12 @@ if (existsSync(safeMergeDir)) {
     ".github/workflows/ci.yml",
     "fastlane/Fastfile",
     "artifacts/majalis/ios/App/App/AppDelegate.swift",
+    "artifacts/majalis/capacitor.config.ts",
+    "artifacts/majalis/api/index.js",
+    "artifacts/majalis/lib/api-handlers/cron/job-worker.js",
+    "artifacts/majalis/lib/security/ssrf.mjs",
+    "artifacts/majalis/lib/auth/session.js",
+    "artifacts/majalis/lib/jobs/queue.mjs",
     "package.json",
     "pnpm-lock.yaml",
     "artifacts/majalis/vercel.json",

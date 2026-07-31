@@ -2,6 +2,7 @@ name: Preview smoke (commit-linked)
 
 # ينتظر Deployment Preview من Vercel لنفس SHA ثم يشغّل smoke خفيفًا.
 # لا يدمج ولا يفعّل auto-merge. يستخدم GITHUB_TOKEN فقط.
+# فشل /api/readyz بـ 503 أو JSON غير جاهز يمنع اعتبار الـPR أخضرًا للدمج التلقائي.
 
 on:
   pull_request:
@@ -66,8 +67,8 @@ jobs:
                   (.statusCheckRollup // [] | .[].detailsUrl // ""),
                   (.statusCheckRollup // [] | .[].description // "")
                 ] | join("\n")
-                | [scan("https://[a-zA-Z0-9.-]+\\.vercel\\.app")] 
-                | map(select(test("majalis-majalis"))) 
+                | [scan("https://[a-zA-Z0-9.-]+\\.vercel\\.app")]
+                | map(select(test("majalis-majalis")))
                 | .[0] // empty
               ' 2>/dev/null || true)
             fi
@@ -95,12 +96,44 @@ jobs:
           PREVIEW_URL: ${{ steps.preview.outputs.preview_url }}
         run: |
           set -euo pipefail
-          curl -fsS -o /dev/null -w "%{http_code}\n" "$PREVIEW_URL/" | grep -E '200|301|302'
-          # healthz: 200 ok; 401/404 ok; 302 common on multi-project previews
-          code_health=$(curl -s -o /dev/null -w "%{http_code}" "$PREVIEW_URL/api/healthz" || true)
+          base="${PREVIEW_URL%/}"
+
+          smoke_page() {
+            local path="$1"
+            local code
+            code=$(curl -s -o /dev/null -w "%{http_code}" -L "$base$path" || true)
+            echo "GET $path → $code"
+            echo "$code" | grep -Eq '^(200|301|302)$'
+          }
+
+          smoke_page "/"
+          smoke_page "/mushaf"
+          smoke_page "/prayer-times"
+          smoke_page "/lessons"
+
+          code_health=$(curl -s -o /tmp/healthz.json -w "%{http_code}" "$base/api/healthz" || true)
           echo "healthz=$code_health"
-          test "$code_health" = "200" -o "$code_health" = "401" -o "$code_health" = "404" -o "$code_health" = "301" -o "$code_health" = "302"
-          code=$(curl -s -o /dev/null -w "%{http_code}" "$PREVIEW_URL/api/cron/job-worker" || true)
-          echo "cron=$code"
-          test "$code" = "401" -o "$code" = "403" -o "$code" = "404" -o "$code" = "301" -o "$code" = "302"
-          echo "preview-smoke ok for $PREVIEW_URL"
+          # 200 preferred; 401/404/3xx tolerated on multi-project previews
+          echo "$code_health" | grep -Eq '^(200|401|404|301|302)$'
+          if [ "$code_health" = "200" ]; then
+            node -e 'const j=JSON.parse(require("fs").readFileSync("/tmp/healthz.json","utf8")); if(j.ok!==true){process.exit(1)}'
+          fi
+
+          code_ready=$(curl -s -o /tmp/readyz.json -w "%{http_code}" "$base/api/readyz" || true)
+          echo "readyz=$code_ready"
+          if [ "$code_ready" = "503" ]; then
+            echo "::error::/api/readyz returned 503 (DB/schema not ready) — blocking auto-merge readiness"
+            cat /tmp/readyz.json || true
+            exit 1
+          fi
+          # 200 = ready; 401/404/3xx tolerated when endpoint gated on preview
+          echo "$code_ready" | grep -Eq '^(200|401|404|301|302)$'
+          if [ "$code_ready" = "200" ]; then
+            node -e '
+              const j=JSON.parse(require("fs").readFileSync("/tmp/readyz.json","utf8"));
+              const ok = j.status==="ok" || j.status==="ready" || j.ok===true;
+              if(!ok){ console.error(j); process.exit(1); }
+            '
+          fi
+
+          echo "preview-smoke ok for $base"

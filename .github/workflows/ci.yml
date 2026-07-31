@@ -60,8 +60,11 @@ jobs:
 
       - name: Generated artifacts --check
         run: |
-          pnpm --filter @workspace/majalis exec tsx scripts/generate-content-counts.ts --check
+          pnpm --filter @workspace/majalis exec node --import tsx scripts/generate-content-counts.ts --check
           pnpm --filter @workspace/majalis exec node scripts/generate-quran-pages-manifest.mjs --check
+
+      - name: Cron single-response gate
+        run: pnpm run verify:single-response
 
       - name: Full package tests
         run: pnpm --filter @workspace/majalis run test
