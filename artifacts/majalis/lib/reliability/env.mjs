@@ -9,7 +9,11 @@ export const DURABLE_REASONS = Object.freeze({
   database_connection_failed: "database_connection_failed",
   queue_schema_missing: "queue_schema_missing",
   queue_column_missing: "queue_column_missing",
+  /** Alias used in readiness JSON for missing queue columns. */
+  missing_columns: "missing_columns",
   queue_query_failed: "queue_query_failed",
+  env_mismatch: "env_mismatch",
+  production_db_issue: "production_db_issue",
 });
 
 export function isProductionRuntime() {
@@ -39,7 +43,7 @@ export function classifyDurablePgError(err) {
   const code = String(/** @type {{ code?: string }} */ (err).code || "");
   const msg = String(/** @type {{ message?: string }} */ (err).message || err);
   if (code === "42P01") return DURABLE_REASONS.queue_schema_missing;
-  if (code === "42703") return DURABLE_REASONS.queue_column_missing;
+  if (code === "42703") return DURABLE_REASONS.missing_columns;
   if (
     code === "ECONNREFUSED" ||
     code === "ETIMEDOUT" ||
@@ -49,8 +53,31 @@ export function classifyDurablePgError(err) {
     code === "57P03" ||
     /timeout|ECONNRESET|Connection terminated|Connection refused|getaddrinfo/i.test(msg)
   ) {
-    return DURABLE_REASONS.database_connection_failed;
+    return isProductionRuntime()
+      ? DURABLE_REASONS.production_db_issue
+      : DURABLE_REASONS.database_connection_failed;
   }
+  if (
+    /password authentication failed|ssl (connection|required)|certificate verify|role .* does not exist/i.test(
+      msg,
+    )
+  ) {
+    return DURABLE_REASONS.env_mismatch;
+  }
+  return DURABLE_REASONS.queue_query_failed;
+}
+
+/**
+ * Public readiness reason — allowlisted codes only (never secrets/stack).
+ * @param {string|null|undefined} reason
+ */
+export function publicReadyReason(reason) {
+  const r = String(reason || "");
+  if (Object.prototype.hasOwnProperty.call(DURABLE_REASONS, r)) {
+    return /** @type {keyof typeof DURABLE_REASONS} */ (r);
+  }
+  // Backward-compatible alias
+  if (r === "queue_column_missing") return DURABLE_REASONS.missing_columns;
   return DURABLE_REASONS.queue_query_failed;
 }
 
