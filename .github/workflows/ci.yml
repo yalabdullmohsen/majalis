@@ -69,12 +69,6 @@ jobs:
       - name: Full package tests
         run: pnpm --filter @workspace/majalis run test
 
-      - name: Install Playwright Chromium (color-contrast gate)
-        run: pnpm --filter @workspace/majalis exec playwright install --with-deps chromium
-
-      - name: Color contrast regression gate
-        run: pnpm --filter @workspace/majalis run test:color-contrast-gate
-
       - name: Deterministic build
         env:
           PORT: "24216"
@@ -110,6 +104,51 @@ jobs:
           SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
         run: pnpm run ops:backlog-report
+
+      - name: api-server typecheck/build (required when package present)
+        run: |
+          set -euo pipefail
+          if [ -d artifacts/api-server ]; then
+            pnpm --filter @workspace/api-server run typecheck
+            pnpm --filter @workspace/api-server run build
+          else
+            echo "api-server package absent — skip"
+          fi
+
+  # ---------------------------------------------------------------------------
+  # Color contrast — Playwright Chromium (isolated job; fails loudly if missing)
+  # ---------------------------------------------------------------------------
+  color-contrast:
+    name: Color contrast (Playwright)
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4.1.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Build majalis
+        env:
+          PORT: "24216"
+          BASE_PATH: "/"
+        run: pnpm --filter @workspace/majalis run build
+
+      - name: Color contrast gate
+        run: pnpm --filter @workspace/majalis run test:color-contrast-gate
 
   postgres-integration:
     name: postgres-integration
