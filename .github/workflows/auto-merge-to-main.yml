@@ -2,12 +2,12 @@ name: Auto-ready and merge PRs to main
 
 # Safe auto-merge (squash) — Auto-merge يبقى مفعّلًا.
 # لا يحول Draft→Ready تلقائيًا.
-# لا يدمج عند: CI فاشل/Pending، تعارض، Changes Requested، تغيّر head SHA،
-# تغييرات iOS بلا xcodebuild أخضر، تغييرات SQL بلا postgres-integration أخضر.
+# يتطلب label آمنًا + فحوصات خضراء؛ يمنع المسارات الخطرة (SQL/iOS/CI/Auth/…).
+# بعد الدمج: Vercel ينشر الموقع — بدون TestFlight وبدون supabase db push.
 
 on:
   pull_request:
-    types: [opened, reopened, synchronize, ready_for_review]
+    types: [opened, reopened, synchronize, ready_for_review, labeled, unlabeled]
     branches: [main]
   workflow_run:
     workflows: ["CI"]
@@ -37,9 +37,9 @@ permissions:
   pull-requests: write
   actions: read
   checks: read
+  statuses: read
 
 # GITHUB_TOKEN يكفي لتفعيل --auto squash؛ لا نستخدم PAT واسعًا هنا.
-# (release-majlisilm.yml ما زال يحتاج PROD_DEPLOY_TOKEN لإطلاق workflows بعد الدفع.)
 env:
   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -72,7 +72,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 25
     steps:
-      - name: Checkout (read-only metadata; no branch rewrite)
+      - name: Checkout (policy scripts)
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           fetch-depth: 1
@@ -84,13 +84,10 @@ jobs:
           PR_NUMBER: ${{ github.event.pull_request.number }}
           PR_HEAD_REPO: ${{ github.event.pull_request.head.repo.full_name }}
           PR_BASE_REF: ${{ github.event.pull_request.base.ref }}
-          WORKFLOW_HEAD_BRANCH: ${{ github.event.workflow_run.head_branch }}
           WORKFLOW_HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
           DISPATCH_PR: ${{ github.event.inputs.pr_number }}
         run: |
           set -euo pipefail
-          ALLOW='^((cursor|session|claude|automation|fix|feature|security|docs|chore)/|majalis-content-fill$)'
-          EXCLUDE_DUAL='^(automation/content|automation/tasks)$'
           nums=""
           if [ "$EVENT_NAME" = "pull_request" ]; then
             [ "$PR_BASE_REF" = "main" ] || { echo "nums=" >> "$GITHUB_OUTPUT"; exit 0; }
@@ -107,149 +104,48 @@ jobs:
             fi
           fi
           echo "nums=${nums}" >> "$GITHUB_OUTPUT"
-          echo "allow=${ALLOW}" >> "$GITHUB_OUTPUT"
-          echo "exclude_dual=${EXCLUDE_DUAL}" >> "$GITHUB_OUTPUT"
 
-      - name: Enable squash auto-merge for eligible Ready PRs
+      - name: Enable squash auto-merge for policy-eligible Ready PRs
         if: steps.targets.outputs.nums != ''
         env:
-          ALLOW: ${{ steps.targets.outputs.allow }}
-          EXCLUDE_DUAL: ${{ steps.targets.outputs.exclude_dual }}
           NUMS: ${{ steps.targets.outputs.nums }}
         run: |
           set -u
           REPO_FLAG=(-R "$GITHUB_REPOSITORY")
-
-          check_line_status() {
-            # gh pr checks is TSV: name\tstatus\tduration\turl\tdescription
-            # Default awk FS splits on spaces, so "Verify build" never matches — use tab FS.
-            local name_re="$1"
-            echo "$CHECKS" | awk -F'\t' -v re="$name_re" 'BEGIN{IGNORECASE=1} $1 ~ re {print $2; found=1} END{if(!found) print "missing"}' | head -1
-          }
-
-          quality_ok() {
-            local n="$1" files has_ios has_sql st
-            CHECKS=$(gh "${REPO_FLAG[@]}" pr checks "$n" 2>&1 || true)
-            echo "$CHECKS"
-
-            # Verify build / quality must be success (not pending/fail)
-            st=$(check_line_status '^(Verify build|quality)$')
-            if [ "$st" = "fail" ] || [ "$st" = "pending" ] || [ "$st" = "cancel" ] || [ "$st" = "cancelled" ]; then
-              echo "block: Verify build status=$st"
-              return 1
-            fi
-            if [ "$st" != "pass" ] && [ "$st" != "success" ]; then
-              echo "block: Verify build missing/not green ($st)"
-              return 1
-            fi
-
-            files=$(gh "${REPO_FLAG[@]}" pr view "$n" --json files --jq '.files[].path' || true)
-            has_ios=0
-            has_sql=0
-            if echo "$files" | grep -Eq '^artifacts/majalis/(ios/|capacitor\.config\.ts)'; then
-              has_ios=1
-            fi
-            if echo "$files" | grep -Eqi '(^artifacts/majalis/supabase/|/migration|db-migrate|migration-runner|enterprise_reliability|qa_phase|\.sql$)'; then
-              has_sql=1
-            fi
-
-            # postgres-integration: always required when check exists; mandatory on SQL paths
-            st=$(check_line_status '^postgres-integration$')
-            if [ "$has_sql" = "1" ]; then
-              if [ "$st" != "pass" ] && [ "$st" != "success" ]; then
-                echo "block: SQL paths require postgres-integration green (got $st)"
-                return 1
-              fi
-            elif [ "$st" = "fail" ] || [ "$st" = "pending" ] || [ "$st" = "cancel" ] || [ "$st" = "cancelled" ]; then
-              echo "block: postgres-integration not green ($st)"
-              return 1
-            fi
-
-            if [ "$has_ios" = "1" ]; then
-              st=$(check_line_status '^xcodebuild-simulator$')
-              if [ "$st" != "pass" ] && [ "$st" != "success" ]; then
-                echo "block: iOS paths require xcodebuild-simulator green (got $st)"
-                return 1
-              fi
-            fi
-
-            # preview-smoke: if reported, must not be fail/pending
-            st=$(check_line_status '^preview-smoke$')
-            if [ "$st" = "fail" ] || [ "$st" = "pending" ] || [ "$st" = "cancel" ] || [ "$st" = "cancelled" ]; then
-              echo "block: preview-smoke not green ($st)"
-              return 1
-            fi
-
-            # Any other fail/pending check blocks (status is column 2 with tab FS)
-            if echo "$CHECKS" | awk -F'\t' 'BEGIN{IGNORECASE=1} $2 ~ /^(fail|pending|cancel|cancelled)$/ {print; bad=1} END{exit bad?0:1}'; then
-              echo "block: non-green checks present"
-              return 1
-            fi
-            return 0
-          }
+          EVAL="node .github/scripts/safe-auto-merge/cli.mjs"
 
           for n in $NUMS; do
             echo "::group::PR #$n"
-            meta=$(gh "${REPO_FLAG[@]}" pr view "$n" --json state,isDraft,baseRefName,headRefName,isCrossRepository,mergeable,mergeStateStatus,title,reviewDecision,headRefOid \
-              --jq '{state,isDraft,base:.baseRefName,branch:.headRefName,cross:.isCrossRepository,mergeable,mergeStateStatus,title,reviewDecision,sha:.headRefOid}')
+            meta=$(gh "${REPO_FLAG[@]}" pr view "$n" --json state,isDraft,baseRefName,headRefName,isCrossRepository,headRefOid \
+              --jq '{state,isDraft,base:.baseRefName,branch:.headRefName,cross:.isCrossRepository,sha:.headRefOid}')
             state=$(echo "$meta" | jq -r .state)
             draft=$(echo "$meta" | jq -r .isDraft)
             base=$(echo "$meta" | jq -r .base)
             head=$(echo "$meta" | jq -r .branch)
             cross=$(echo "$meta" | jq -r .cross)
-            mergeable=$(echo "$meta" | jq -r .mergeable)
-            mstatus=$(echo "$meta" | jq -r .mergeStateStatus)
-            title=$(echo "$meta" | jq -r .title)
-            review=$(echo "$meta" | jq -r .reviewDecision)
             head_sha_before=$(echo "$meta" | jq -r .sha)
 
             if [ "$state" != "OPEN" ] || [ "$base" != "main" ] || [ "$cross" = "true" ]; then
-              echo "skip: not eligible"; echo "::endgroup::"; continue
+              echo "skip: not eligible base/state/cross"; echo "::endgroup::"; continue
             fi
             if [ "$draft" = "true" ]; then
               echo "skip: Draft (never undraft)"; echo "::endgroup::"; continue
             fi
-            if [ "$review" = "CHANGES_REQUESTED" ]; then
-              echo "skip: changes requested"
-              gh "${REPO_FLAG[@]}" pr merge "$n" --disable-auto || true
-              echo "::endgroup::"; continue
-            fi
-            if ! echo "$head" | grep -Eq "$ALLOW"; then
-              echo "skip: branch pattern"; echo "::endgroup::"; continue
-            fi
-            if echo "$head" | grep -Eq "$EXCLUDE_DUAL"; then
-              echo "skip: dual automation"; echo "::endgroup::"; continue
-            fi
-            if echo "$title" | grep -Eqi 'NO-AUTO-MERGE|دون دمج|do-not-merge'; then
-              echo "skip: title forbids auto-merge"
-              gh "${REPO_FLAG[@]}" pr merge "$n" --disable-auto || true
-              echo "::endgroup::"; continue
-            fi
 
-            # قطار الإصدار المجدول يملك دمج هذه الـPRs — لا تُفعَّل هنا.
-            labels=$(gh "${REPO_FLAG[@]}" pr view "$n" --json labels --jq '[.labels[].name] | join(",")' 2>/dev/null || true)
-            if echo "$labels" | grep -Fqi 'release-train-ready'; then
-              echo "skip: release-train-ready (owned by scheduled-release-train.yml)"
-              gh "${REPO_FLAG[@]}" pr merge "$n" --disable-auto || true
-              echo "::endgroup::"; continue
-            fi
-            if [ "$mergeable" != "MERGEABLE" ]; then
-              echo "skip: mergeable=$mergeable (require MERGEABLE)"
-              gh "${REPO_FLAG[@]}" pr merge "$n" --disable-auto || true
-              echo "::endgroup::"; continue
-            fi
-            if [ "$mstatus" = "CONFLICTING" ] || [ "$mstatus" = "DIRTY" ]; then
-              echo "skip: conflicting"
-              gh "${REPO_FLAG[@]}" pr merge "$n" --disable-auto || true
-              echo "::endgroup::"; continue
-            fi
-            if [ "$mstatus" = "BEHIND" ]; then
-              echo "skip: behind main — update required (no force-merge)"
-              echo "::endgroup::"; continue
-            fi
+            # Refresh report (best-effort) then evaluate with strict Vercel gate
+            $EVAL report --pr "$n" --post || true
 
-            if ! quality_ok "$n"; then
-              echo "skip: required checks not green"
+            set +e
+            $EVAL evaluate --pr "$n" --strict-vercel
+            code=$?
+            set -e
+            if [ "$code" -eq 2 ]; then
+              echo "skip: policy blockers (see report comment)"
+              gh "${REPO_FLAG[@]}" pr merge "$n" --disable-auto || true
+              echo "::endgroup::"; continue
+            fi
+            if [ "$code" -ne 0 ]; then
+              echo "skip: evaluate error code=$code"
               gh "${REPO_FLAG[@]}" pr merge "$n" --disable-auto || true
               echo "::endgroup::"; continue
             fi

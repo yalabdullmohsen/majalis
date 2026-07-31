@@ -44,6 +44,9 @@ jobs:
       - name: Release Train unit tests
         run: pnpm run test:release-train
 
+      - name: Safe auto-merge policy unit tests
+        run: pnpm run test:safe-auto-merge
+
       - name: tsc -b (clean + build)
         run: |
           pnpm exec tsc -b --clean
