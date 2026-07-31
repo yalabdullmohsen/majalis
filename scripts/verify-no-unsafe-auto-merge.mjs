@@ -102,8 +102,35 @@ if (existsSync(autoPath)) {
   if (/gh\s+pr\s+ready\b(?!\s+--undo)/.test(active)) {
     bad(`${ALLOW_MERGE_FILE}: must not undraft`);
   }
+  if (!/release-train-ready/.test(body)) {
+    bad(`${ALLOW_MERGE_FILE}: must skip release-train-ready PRs (owned by scheduled train)`);
+  }
 } else {
   ok(`${ALLOW_MERGE_FILE} absent (auto-merge disabled)`);
+}
+
+const trainWf = join(workflowsDir, "scheduled-release-train.yml");
+if (existsSync(trainWf)) {
+  const trainBody = readFileSync(trainWf, "utf8");
+  const trainActive = stripComments(trainBody);
+  ok("scheduled-release-train.yml present");
+  if (!/cron:\s*"0 3 \* \* \*"/.test(trainBody) || !/cron:\s*"0 15 \* \* \*"/.test(trainBody)) {
+    bad("scheduled-release-train.yml: expected Kuwait 06:00/18:00 crons (UTC 03:00/15:00)");
+  }
+  if (!/group:\s*release-train/.test(trainBody)) {
+    bad("scheduled-release-train.yml: concurrency group release-train required");
+  }
+  if (!/cancel-in-progress:\s*false/.test(trainBody)) {
+    bad("scheduled-release-train.yml: cancel-in-progress must be false");
+  }
+  if (/gh\s+pr\s+merge\b/.test(trainActive) || /enablePullRequestAutoMerge/.test(trainActive)) {
+    bad("scheduled-release-train.yml: merge must live in .github/scripts/release-train (not workflow YAML)");
+  }
+  if (!/release-train\/run-train\.mjs/.test(trainBody)) {
+    bad("scheduled-release-train.yml: must invoke run-train.mjs");
+  }
+} else {
+  ok("scheduled-release-train.yml absent");
 }
 
 if (failed) {
