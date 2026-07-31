@@ -388,6 +388,48 @@ async function main() {
         `${orphanedInJson.length} كتاباً في library-catalog.json غير موجود في library-catalog.ts الحي (${orphanedInJson.slice(0, 5).join(", ")}${orphanedInJson.length > 5 ? "…" : ""}). شغّل: npx tsx scripts/regen-library-catalog-json.mjs`
       );
     }
+    /* 6ب) تباعد نصّي لا مجرّد تباعد معرّفات ----------------------------- */
+    // اكتُشف 2026-07-31 (ج-٣٩٠): الفحص أعلاه يقابل المعرّفات وحدها، فكان
+    // يمرّ أخضرَ و28 وصفاً في المرآة JSON متجمّد على صيغة قديمة سبقت إثراء
+    // library-catalog.ts. وهو عين القانون الأربعين: تغطيةٌ بلا حدِّ خطأٍ
+    // تَعُدُّ الخطأَ إنجازاً. فيُقابَل الآن نصُّ الحقول المشتركة أيضاً وحدُّ
+    // خطئها صفر. (العنوان والمؤلف والفئة كانت مطابقة 173/173 عند الرصد؛
+    // التباعد كان محصوراً في description وحده.)
+    const tsBlocks = [...tsSource.matchAll(/\n {4}id: "([^"]+)"([\s\S]*?)\n {2}\},/g)];
+    const tsFields = new Map(
+      tsBlocks.map(([, id, body]) => {
+        const read = (key) => {
+          // الحقل قد يلتفّ إلى السطر التالي إذا طال نصّه
+          const m = body.match(new RegExp(`${key}:\\s*\\n?\\s*"((?:[^"\\\\]|\\\\.)*)"`));
+          return m ? JSON.parse(`"${m[1]}"`) : null;
+        };
+        return [id, { title: read("title"), author: read("author"), category: read("category"), description: read("description") }];
+      })
+    );
+    const MIRRORED_FIELDS = ["title", "author", "category", "description"];
+    const textDrift = [];
+    for (const book of books) {
+      const live = tsFields.get(book.id);
+      if (!live) continue; // غيابه أصلاً يُمسك بفحص المعرّفات أعلاه
+      for (const field of MIRRORED_FIELDS) {
+        if (live[field] === null) continue; // حقل اختياري غائب عن TS
+        if ((book[field] ?? "") !== live[field]) textDrift.push(`${book.id}.${field}`);
+      }
+    }
+    if (textDrift.length) {
+      fail(
+        "JSON_TS_DRIFT",
+        `${textDrift.length} حقلاً نصّياً في library-catalog.json يخالف نظيره في library-catalog.ts الحي (${textDrift.slice(0, 5).join("، ")}${textDrift.length > 5 ? "…" : ""}). شغّل: npx tsx scripts/regen-library-catalog-json.mjs`
+      );
+    }
+    // حارسُ الحارس: لو انكسر تحليلُ TS لَمَرَّ الفحصُ أعلاه فارغاً بلا خطأ
+    if (tsFields.size !== liveIds.size) {
+      fail(
+        "JSON_TS_DRIFT",
+        `تحليل حقول library-catalog.ts أنتج ${tsFields.size} سجلاً مقابل ${liveIds.size} معرّفاً — الفحص النصّي غير موثوق حتى يُصلَح المحلِّل.`
+      );
+    }
+
     /* 7) نظافة حقل caution — يُقرأ من TS لأن JSON لا يحمله ----------- */
     // اكتُشف 2026-07-27: LibraryDetailPage تطبع البادئة «تنبيه علمي:»
     // بنفسها قبل نصّ caution، وكانت الحقول الأربعة كلها تبدأ بـ«تنبيه:»
