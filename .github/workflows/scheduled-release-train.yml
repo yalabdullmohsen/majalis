@@ -89,15 +89,7 @@ jobs:
         run: pnpm run test:release-train
 
       - name: Assert cron contract matches Kuwait 06:00 / 18:00
-        run: node --input-type=module -e "
-          import { SCHEDULE_CRONS_UTC } from './.github/scripts/release-train/constants.mjs';
-          import { readFileSync } from 'node:fs';
-          const yml = readFileSync('.github/workflows/scheduled-release-train.yml','utf8');
-          for (const c of SCHEDULE_CRONS_UTC) {
-            if (!yml.includes(c)) { console.error('missing cron', c); process.exit(1); }
-          }
-          console.log('cron contract ok', SCHEDULE_CRONS_UTC.join(', '));
-        "
+        run: node .github/scripts/release-train/assert-cron-contract.mjs
 
       - name: Run Release Train
         env:
