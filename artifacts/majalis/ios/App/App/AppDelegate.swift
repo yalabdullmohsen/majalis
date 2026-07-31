@@ -9,6 +9,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Do not activate AVAudioSession at launch — plugins configure category on demand.
+        _ = AppConfig.shared
+        _ = NetworkService.shared
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(handleMediaServicesReset),

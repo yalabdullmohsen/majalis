@@ -38,3 +38,12 @@ c338dec*/
 **/c338dec*/
 artifacts/api-server/dist-types/
 artifacts/release-train/last-run.json
+
+# Fastlane / Ruby CI
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/
+fastlane/test_output/
+vendor/bundle/
+.bundle/
+artifacts/majalis/ios/build/
