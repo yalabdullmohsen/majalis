@@ -120,6 +120,23 @@
   --accent-soft:  var(--gold-100);
   --accent-deep:  var(--gold-700);
 
+  /* أسماء دلالية موحّدة للواجهات الجديدة — aliases فقط، لا قيم صلبة إضافية */
+  --color-bg:                var(--bg);
+  --color-bg-soft:           var(--surface-2);
+  --color-surface:           var(--surface);
+  --color-surface-elevated:  var(--bg-elevated);
+  --color-text:              var(--text);
+  --color-text-muted:        var(--text-2);
+  --color-primary:           var(--brand);
+  --color-primary-strong:    var(--brand-deep);
+  --color-primary-soft:      var(--brand-soft);
+  --color-accent:            var(--accent);
+  --color-border:            var(--border);
+  --color-danger:            var(--danger);
+  --color-success:           var(--ok-fg);
+  --shadow-soft:             var(--e-1);
+  --radius-card:             var(--r-lg);
+  --space-page:              var(--s-4);
 
   /* ══════════════════════════════════════════════════════════
      ٣) الطباعة — سُلَّم نسبي 1.2 (Minor Third)
@@ -263,6 +280,19 @@ html[data-theme="dark"] {
   --accent-soft:  #33291433;
   --accent-deep:  var(--gold-200);
 
+  --color-bg:                var(--bg);
+  --color-bg-soft:           var(--surface-2);
+  --color-surface:           var(--surface);
+  --color-surface-elevated:  var(--bg-elevated);
+  --color-text:              var(--text);
+  --color-text-muted:        var(--text-2);
+  --color-primary:           var(--brand);
+  --color-primary-strong:    var(--brand-deep);
+  --color-primary-soft:      var(--brand-soft);
+  --color-accent:            var(--accent);
+  --color-border:            var(--border);
+  --color-danger:            var(--danger);
+  --color-success:           var(--ok-fg);
 
   --danger:      #F87171;
   --danger-fg:   #FCA5A5;
@@ -329,20 +359,13 @@ html[data-theme="dark"] {
   --sand:         var(--accent);
   --sand-soft:    var(--accent-soft);
 
-  /* — نظام --color-* — */
-  --color-primary:           var(--brand);
+  /* — نظام --color-* (الجسر + الأسماء الموحّدة أعلاه) — */
   --color-primary-hover:     var(--brand-hover);
-  --color-bg:                var(--bg);
-  --color-surface:           var(--surface);
-  --color-border:            var(--border);
-  --color-text:              var(--text);
   --color-text-secondary:    var(--text-2);
-  --color-accent:            var(--accent);
   --color-accent-fg-on-soft: var(--em-700);
-  --color-accent-soft-bg:    var(--em-50);
+  --color-accent-soft-bg:    var(--brand-soft);
   --color-success-fg:        var(--ok-fg);
   --color-success-bg:        var(--ok-bg);
-  --color-danger:            var(--danger);
   --color-on-dark:           var(--text-on-dark);
 
   /* — نظام --ds-* — */
