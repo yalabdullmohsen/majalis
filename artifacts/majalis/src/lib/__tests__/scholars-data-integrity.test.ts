@@ -340,6 +340,33 @@ assert(
   `غائب: ${missingFromList.join(", ") || "—"} | يتيم: ${orphanedInList.join(", ") || "—"} — شغّل: npx tsx scripts/regen-scholars-list-json.mjs`
 );
 
+// اكتُشف 2026-07-31 (ج-٣٩١): مقابلة المعرِّفات وحدها تمرّ خضراء والنص منحرف —
+// كان `fawzan.died` في المرآة «حيّ (معاصر)» والمصدر الحي «حي (معاصر)». وهذه
+// المرآة تغذّي /api/sitemap و/api/feed، فالمعروض لمحركات البحث نصٌّ لا يراه
+// زائر الصفحة. فالحدّ هنا 0 على الحقلين المشتركين نصًّا لا على المعرِّفات فقط.
+const scholarById = new Map(SCHOLARS.map((s) => [s.id, s]));
+const listTextDrift = scholarsListJson.flatMap((j) => {
+  const live = scholarById.get(j.id);
+  if (!live) return [];
+  const out: string[] = [];
+  if (live.name !== j.name) out.push(`${j.id}.name: مرآة «${j.name}» ≠ حي «${live.name}»`);
+  if (live.died !== j.died) out.push(`${j.id}.died: مرآة «${j.died}» ≠ حي «${live.died}»`);
+  return out;
+});
+assert(
+  listTextDrift.length === 0,
+  `scholars-list.json يطابق المصدر الحي نصًّا لا معرِّفات (${scholarsListJson.length * 2} حقلاً)`,
+  `${listTextDrift.slice(0, 8).join(" | ")} — شغّل: npx tsx scripts/regen-scholars-list-json.mjs`
+);
+
+// حارسٌ للحارس: لو انكسر التوليد فأخرج مصفوفة فارغة، مرّت المقابلة أعلاه
+// فارغةً بلا خرق. فالعدد نفسه شرطٌ مستقل.
+assert(
+  scholarsListJson.length === SCHOLARS.length && scholarsListJson.length > 0,
+  `عدد صفوف المرآة يساوي عدد المصدر الحي (${scholarsListJson.length}/${SCHOLARS.length})`,
+  "مرآة فارغة أو ناقصة تُفرِّغ فحص التطابق النصي أعلاه من معناه"
+);
+
 console.log("\n=== ١١) ربط مؤلّفي المكتبة بصفحات العلماء (ما يصل الزائر لا ما في البيانات) ===");
 
 // اكتُشف 2026-07-27: صفحة الكتاب تربط اسم المؤلف بصفحة العالم عبر
@@ -496,6 +523,58 @@ const homonymHits = HOMONYM_WORKS.filter(([name, work]) => resolveScholarWorkLin
   ([name, work, why]) => `«${work}» لـ${name} رُبط بـ${resolveScholarWorkLink(work, name).bookId} — ${why}`
 );
 assert(homonymHits.length === 0, `${HOMONYM_WORKS.length} عنواناً متجانساً يبقى بلا رابط`, homonymHits.join(" | "));
+
+console.log("\n=== ١٤) حقل quote قولُ صاحبه لا قولٌ فيه ولا قولُ صحابيٍّ ===");
+
+// اكتُشف 2026-07-31 (ج-٣٩١): الصفحة تعرض المقولة منسوبةً صراحةً إلى صاحبها
+// (`<footer>— {scholar.name}</footer>` في ScholarProfilePage)، وكان فيها ثلاثُ
+// مقولاتٍ لا تصحّ نسبتها إليه:
+//   • ابن ماجه (ت٢٧٣هـ): «كتبتُ عن رسول الله ﷺ ما لم يكتبه أحد قبلي» — دعوى
+//     صحبةٍ مستحيلةٌ زمنياً، وأصلُها حديث عبد الله بن عمرو بن العاص
+//     (سنن أبي داود ٣٦٤٦، ومسند أحمد) بلفظ «كنت أكتب كل شيء أسمعه…».
+//   • مسلم وابن خزيمة: ثناءٌ عليهما بضمير الغائب يُسمِّيهما — فهو قولُ غيرهما
+//     فيهما لا قولُهما.
+// والحدّ هنا 0: مقولةٌ تذكر اسم صاحبها بضمير الغائب أو تدّعي سماعاً من النبي ﷺ
+// لمن وُلد بعد عصر الصحابة، تُحذَف أو تُنقَل إلى موضعها الصحيح — ولا تُصاغ صياغةً
+// جديدة.
+const SELF_NAME_STOPWORDS = new Set([
+  ...AR_STOPWORDS,
+  "محمد", "احمد", "علي", "عمر", "حسن", "حسين", "ابراهيم", "يوسف", "عثمان",
+  "يحيي", "صالح", "اسماعيل", "سليمان", "عبدالله",
+]);
+const hijriYear = (died: string): number | null => {
+  const m = died.match(/[٠-٩0-9]+/);
+  if (!m) return null;
+  const digits = [...m[0]].map((c) => (/[٠-٩]/.test(c) ? String("٠١٢٣٤٥٦٧٨٩".indexOf(c)) : c)).join("");
+  return Number.parseInt(digits, 10);
+};
+const selfReferential = SCHOLARS.filter((s) => s.quote).flatMap((s) => {
+  const nq = normalizeArabic(s.quote as string);
+  const own = [
+    ...new Set([...normalizeArabic(s.name).split(/\s+/), ...normalizeArabic(s.fullName).split(/\s+/)]),
+  ].filter((w) => w.length > 3 && !SELF_NAME_STOPWORDS.has(w));
+  const hits = own.filter((w) => nq.includes(w));
+  return hits.length ? [`${s.id}: «${s.quote}» يذكر «${hits.join("، ")}» بضمير الغائب`] : [];
+});
+assert(
+  selfReferential.length === 0,
+  `لا مقولةَ عالِمٍ تُثني عليه باسمه (${SCHOLARS.filter((s) => s.quote).length} مقولة)`,
+  selfReferential.join(" | ")
+);
+
+const impossibleCompanionship = SCHOLARS.filter((s) => s.quote).flatMap((s) => {
+  const year = hijriYear(s.died);
+  if (year === null || year <= 150) return []; // عصر الصحابة وكبار التابعين
+  const q = s.quote as string;
+  return /(كتبتُ|كتبت|سمعتُ|سمعت|رأيتُ|رأيت|سألتُ|سألت)\s+(عن|من)?\s*(رسول الله|النبي)/.test(q)
+    ? [`${s.id} (ت${s.died}): «${q}» — دعوى سماعٍ مباشرٍ ممن لم يُدرك النبي ﷺ`]
+    : [];
+});
+assert(
+  impossibleCompanionship.length === 0,
+  "لا مقولةَ تدّعي صحبةً لمن وُلد بعد عصرها",
+  impossibleCompanionship.join(" | ")
+);
 
 console.log(`\n${"─".repeat(48)}`);
 console.log(`النتائج: ${passed} نجح، ${failed} فشل`);
