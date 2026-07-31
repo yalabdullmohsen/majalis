@@ -238,7 +238,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
   background: var(--card-color, var(--majalis-emerald));
 }
 .tawheed-type-card--emerald { --card-color: var(--majalis-emerald, #226A56); }
-.tawheed-type-card--purple  { --card-color: #7C3AED; }
+.tawheed-type-card--purple  { --card-color: var(--brand, #226A56); }
 .tawheed-hadith-badge {
   border-right-color: var(--grade-color, #15803d);
 }

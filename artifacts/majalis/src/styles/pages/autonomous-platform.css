@@ -53,7 +53,7 @@
 .aup-sb--slow, .aup-sb--running      { background: #226A5622; color: #226A56; }
 .aup-sb--dead, .aup-sb--blocked,
 .aup-sb--failed, .aup-sb--error      { background: #991B1B22; color: #991B1B; }
-.aup-sb--unauthorized                { background: #7C3AED22; color: #7C3AED; }
+.aup-sb--unauthorized                { background: var(--brand, #226A56)22; color: var(--brand, #226A56); }
 .aup-sources-grid   { display: grid; gap: 0.4rem; }
 .aup-source-card    { padding: 0.5rem 0.75rem; border: 1px solid var(--majalis-line); border-radius: var(--ds-radius-sm); }
 .aup-source-row     { display: flex; gap: var(--ds-space-3); align-items: center; flex-wrap: wrap; }

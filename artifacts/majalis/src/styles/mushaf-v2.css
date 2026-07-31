@@ -3,7 +3,7 @@
    ⚠️ الترقيم "mf2-" هنا **مختلف تمامًا** عن بادئة ".mushaf-v2__*"
    الموجودة في elite-2026.css (تلك للقارئ النصي المستمر القديم/الحالي
    على /mushaf، غير مرتبطة بهذا الملف إطلاقًا رغم تشابه الاسم الصدفي).
-   هوية المجلس العلمي: زمردي #0E6E52 / #153025، أسطح عاجية #F8F7F3.
+   هوية المجلس العلمي: زمردي var(--brand-deep, #143F35) / #153025، أسطح عاجية #F8F7F3.
    ═══════════════════════════════════════════════════════════════ */
 
 .mf2-page {
@@ -24,7 +24,7 @@
   container-type: inline-size;
   box-shadow: 0 2px 18px rgba(14, 110, 82, .12);
   /* إطار زخرفي مزدوج — CSS بحت، منفصل كليًا عن النص (القسم 6.1). */
-  outline: 2px solid var(--mf-gold, #0E6E52);
+  outline: 2px solid var(--mf-gold, var(--brand-deep, #143F35));
   outline-offset: -8px;
 }
 .mf2-frame::before {
@@ -131,11 +131,11 @@ html[data-theme="dark"] .mf2-line { --mf2-ink: #F0EDE4; }
 }
 .mf2-ayah-group:hover,
 .mf2-ayah-group:focus-visible {
-  background: color-mix(in srgb, var(--mf-gold, #0E6E52) 10%, transparent);
+  background: color-mix(in srgb, var(--mf-gold, var(--brand-deep, #143F35)) 10%, transparent);
   outline: none;
 }
 .mf2-ayah-group--active {
-  background: color-mix(in srgb, var(--mf-gold, #0E6E52) 16%, transparent);
+  background: color-mix(in srgb, var(--mf-gold, var(--brand-deep, #143F35)) 16%, transparent);
 }
 /* ⚠️ إصلاح جذري (2026-07-22): كل كلمة تُصيَّر كعنصر <span> منفصل (لتفعيل
    الملاءمة الدقيقة لحجم الخط لكل سطر، وربط النقر بالآية)، ونص الكلمة
@@ -187,15 +187,15 @@ html[data-theme="dark"] .mf2-sajda-badge {
   width: 92%;
   text-align: center;
   padding: .35em 1em;
-  border-top: 1.5px solid var(--mf-gold, #0E6E52);
-  border-bottom: 1.5px solid var(--mf-gold, #0E6E52);
+  border-top: 1.5px solid var(--mf-gold, var(--brand-deep, #143F35));
+  border-bottom: 1.5px solid var(--mf-gold, var(--brand-deep, #143F35));
   background: linear-gradient(180deg, var(--mf-gold-faint, rgba(14,110,82,.06)), transparent);
 }
 .mf2-surah-header__name {
   font-family: var(--font-display, "Amiri", serif);
   font-size: 4.2cqw;
   font-weight: 700;
-  color: var(--mf-gold, #0E6E52);
+  color: var(--mf-gold, var(--brand-deep, #143F35));
   letter-spacing: normal;
 }
 html[data-theme="dark"] .mf2-surah-header__name { color: #5EC49A; }

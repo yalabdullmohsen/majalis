@@ -1379,12 +1379,13 @@
 /* --mf-gold-* هنا زمردي فعليًا لا ذهبي — انظر ملاحظة src/index.css
    وREADY_FOR_MERGE.md §15/16 لتفاصيل هذا الاسم التاريخي المتبقّي. */
 :root {
-  /* مُوحَّد مع الهوية الرسمية #0E6E52/#153025 (كانت #6ab58e سابقًا — زمردي
-     أفتح من الرسمي، خلاف طفيف عن .mf2-frame الذي كان يستخدم #0E6E52
+  /* مُوحَّد مع الهوية الرسمية var(--brand-deep, #143F35)/#153025 (كانت #6ab58e سابقًا — زمردي
+     أفتح من الرسمي، خلاف طفيف عن .mf2-frame الذي كان يستخدم var(--brand-deep, #143F35)
      الصحيح أصلًا، فبدت صفحة المصحف بدرجتي أخضر مختلفتين معًا). */
-  --mf-gold:       #0E6E52;
-  --mf-gold-soft:  rgba(14,110,82,0.45);
-  --mf-gold-faint: rgba(14,110,82,0.18);
+  /* إطار المصحف يتبع العلامة (زمرد عميق) — لا أخضر تراثي var(--brand-deep, #143F35) */
+  --mf-gold:       var(--brand-deep, #143F35);
+  --mf-gold-soft:  color-mix(in srgb, var(--brand-deep, #143F35) 45%, transparent);
+  --mf-gold-faint: color-mix(in srgb, var(--brand-deep, #143F35) 18%, transparent);
   --mf-bg-warm:    #153025;
   --mf-ink:        #1A1610;
   --qs-parchment:  #F5F5DC; /* Flutter QuranReaderPage Color(0xFFF5F5DC) */
@@ -2024,23 +2025,23 @@ html[data-theme="dark"] .rtp-transcript {
 /* أنماط تمييز الآية لتخطيط QPC (mf2) — كانت الخيارات موجودة في الإعدادات
    دون أثر بصري على .mf2-ayah-group لأن التمييز القديم يستهدف .qs-ayah-inline فقط. */
 .qs-mushaf-body--hl-wash .mf2-ayah-group--active {
-  background: color-mix(in srgb, var(--mf-gold, #0E6E52) 18%, transparent);
+  background: color-mix(in srgb, var(--mf-gold, var(--brand-deep, #143F35)) 18%, transparent);
 }
 .qs-mushaf-body--hl-border .mf2-ayah-group--active {
   background: transparent;
-  box-shadow: inset 0 0 0 1.5px var(--mf-gold, #0E6E52);
+  box-shadow: inset 0 0 0 1.5px var(--mf-gold, var(--brand-deep, #143F35));
 }
 .qs-mushaf-body--hl-underline .mf2-ayah-group--active {
   background: transparent;
-  box-shadow: inset 0 -2px 0 var(--mf-gold, #0E6E52);
+  box-shadow: inset 0 -2px 0 var(--mf-gold, var(--brand-deep, #143F35));
 }
 .qs-mushaf-body--hl-text-color .mf2-ayah-group--active {
   background: transparent;
-  color: var(--mf-gold, #0E6E52);
+  color: var(--mf-gold, var(--brand-deep, #143F35));
 }
 .qs-mushaf-body--hl-side-indicator .mf2-ayah-group--active {
-  background: color-mix(in srgb, var(--mf-gold, #0E6E52) 8%, transparent);
-  box-shadow: inset -3px 0 0 var(--mf-gold, #0E6E52);
+  background: color-mix(in srgb, var(--mf-gold, var(--brand-deep, #143F35)) 8%, transparent);
+  box-shadow: inset -3px 0 0 var(--mf-gold, var(--brand-deep, #143F35));
 }
 .qs-mushaf-body--spotlight .mf2-ayah-group { opacity: 0.38; transition: opacity 0.2s; }
 .qs-mushaf-body--spotlight .mf2-ayah-group--active { opacity: 1; background: transparent; }
@@ -2659,7 +2660,7 @@ body.has-immersive-mushaf { overflow: hidden; }
 .rdm-row__name { display: block; font-size: .82rem; font-weight: 700; }
 .rdm-row__status { display: block; font-size: .72rem; color: var(--text-muted, #6b7280); margin-top: .1rem; }
 .rdm-progress { height: 4px; border-radius: var(--ds-radius-full); background: var(--border, #E8E7E2); margin-top: .35rem; overflow: hidden; }
-.rdm-progress__fill { height: 100%; background: var(--mf-gold, #0E6E52); transition: width .2s ease; }
+.rdm-progress__fill { height: 100%; background: var(--mf-gold, var(--brand-deep, #143F35)); transition: width .2s ease; }
 
 .quran-shell--night .rdm-row { border-color: #30363d !important; }
 .quran-shell--night .rdm-row__status { color: #8b949e !important; }

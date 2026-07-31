@@ -120,7 +120,7 @@
 
 .prv-badge--quran {
   background: rgba(124,58,237,0.10);
-  color: #7C3AED;
+  color: var(--brand, #226A56);
 }
 
 .prv-badge--other {

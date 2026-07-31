@@ -164,7 +164,7 @@
 }
 .wn-cat--akhlaq   { --wn-cat-color: #226A56; --wn-cat-bg: rgba(31,77,58,.1); }
 .wn-cat--ibada    { --wn-cat-color: #1a3a5c; --wn-cat-bg: rgba(26,58,92,.1); }
-.wn-cat--tawhid   { --wn-cat-color: #7c3aed; --wn-cat-bg: rgba(124,58,237,.1); }
+.wn-cat--tawhid   { --wn-cat-color: var(--brand, #226A56); --wn-cat-bg: rgba(124,58,237,.1); }
 .wn-cat--muamalat { --wn-cat-color: #226A56; --wn-cat-bg: rgba(23,61,53,.10); }
 .wn-cat--hayah    { --wn-cat-color: #0f766e; --wn-cat-bg: rgba(15,118,110,.1); }
 .wn-pick-cat   { font-size: .8rem; font-weight: 700; margin-bottom: .3rem; color: var(--wn-cat-color, #226A56); }

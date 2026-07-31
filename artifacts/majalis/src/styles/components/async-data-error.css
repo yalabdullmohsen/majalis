@@ -63,9 +63,9 @@ select:focus-visible {
 /* Fatwa content type badge */
 
 .ftw-type-badge--fatwa   { background: rgba(23,61,53,.1); color: #226A56; }
-.ftw-type-badge--article { background: rgba(59,130,246,.1); color: #2563eb; }
+.ftw-type-badge--article { background: rgba(59,130,246,.1); color: var(--brand, #226A56); }
 .ftw-type-badge--general { background: rgba(107,114,128,.1); color: #6b7280; }
-.ftw-type-badge--scholar { background: rgba(139,92,246,.1); color: #7c3aed; }
+.ftw-type-badge--scholar { background: rgba(139,92,246,.1); color: var(--brand, #226A56); }
 
 /* AI disclaimer bar in research pages */
 .ai-disclaimer-bar {
