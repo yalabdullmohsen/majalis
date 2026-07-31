@@ -25,6 +25,9 @@
 		EFBF4693BAFB4F5B82254F8C /* PrayerLiveActivityPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4816472931E4AB1A0DE1F42 /* PrayerLiveActivityPlugin.swift */; };
 		A1B2C3D4E5F6071890AB12CD /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6071890AB12CE /* PrivacyInfo.xcprivacy */; };
 		B2C3D4E5F6071890AB12CD01 /* MajlisPlaybackAudioPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C3D4E5F6071890AB12CD02 /* MajlisPlaybackAudioPlugin.swift */; };
+		C1A2B3C4D5E6F708192A3B4D /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1A2B3C4D5E6F708192A3B4C /* AppConfig.swift */; };
+		D2B3C4D5E6F708192A3B4C5E /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B3C4D5E6F708192A3B4C5D /* NetworkService.swift */; };
+		E5F6071890AB12CD01A2B3C4 /* KeychainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F6071890AB12CD01A2B3C5 /* KeychainStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +76,9 @@
 		F4816472931E4AB1A0DE1F42 /* PrayerLiveActivityPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerLiveActivityPlugin.swift; sourceTree = "<group>"; };
 		A1B2C3D4E5F6071890AB12CE /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		B2C3D4E5F6071890AB12CD02 /* MajlisPlaybackAudioPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MajlisPlaybackAudioPlugin.swift; sourceTree = "<group>"; };
+		C1A2B3C4D5E6F708192A3B4C /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
+		D2B3C4D5E6F708192A3B4C5D /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		E5F6071890AB12CD01A2B3C5 /* KeychainStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,6 +122,8 @@
 		504EC3061FED79650016851F /* App */ = {
 			isa = PBXGroup;
 			children = (
+				E3C4D5E6F708192A3B4C5D6E /* Config */,
+				F4D5E6F708192A3B4C5D6E7F /* Services */,
 				50379B222058CBB4000EE86E /* capacitor.config.json */,
 				504EC3071FED79650016851F /* AppDelegate.swift */,
 				20C1C0E442F343FCA02B3616 /* PrayerActivityAttributes.swift */,
@@ -133,6 +141,23 @@
 				50B271D01FEDC1A000F3C39B /* public */,
 			);
 			path = App;
+			sourceTree = "<group>";
+		};
+		E3C4D5E6F708192A3B4C5D6E /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				C1A2B3C4D5E6F708192A3B4C /* AppConfig.swift */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
+		F4D5E6F708192A3B4C5D6E7F /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				E5F6071890AB12CD01A2B3C5 /* KeychainStore.swift */,
+				D2B3C4D5E6F708192A3B4C5D /* NetworkService.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 		B077274F69CA4782AB6069F6 /* PrayerLiveActivity */ = {
@@ -264,6 +289,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				504EC3081FED79650016851F /* AppDelegate.swift in Sources */,
+				C1A2B3C4D5E6F708192A3B4D /* AppConfig.swift in Sources */,
+				E5F6071890AB12CD01A2B3C4 /* KeychainStore.swift in Sources */,
+				D2B3C4D5E6F708192A3B4C5E /* NetworkService.swift in Sources */,
 				B40A70BD645B44F885C91A9B /* PrayerActivityAttributes.swift in Sources */,
 				EFBF4693BAFB4F5B82254F8C /* PrayerLiveActivityPlugin.swift in Sources */,
 				7C1D8E2F3A4B5C6D7E8F9A0B /* MajlisSpeechRecognitionPlugin.swift in Sources */,

@@ -1,0 +1,55 @@
+name: Vercel Check (PR)
+
+on:
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: vercel-check-${{ github.workflow }}-pr-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  quality:
+    name: lint-typecheck-build
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4.1.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install
+        run: pnpm install --frozen-lockfile
+
+      - name: TypeScript check
+        run: pnpm run typecheck
+
+      - name: ESLint (zero warnings)
+        run: pnpm --filter @workspace/majalis exec eslint src lib --max-warnings=0
+
+      - name: Deterministic production build (Vercel function/API dry-run)
+        env:
+          PORT: "24216"
+          BASE_PATH: "/"
+        run: pnpm --filter @workspace/majalis run build
+
+      - name: Build must not dirty the git tree
+        run: git diff --exit-code
+
+      - name: Verify Vercel entrypoints exist
+        run: |
+          set -euo pipefail
+          test -f artifacts/majalis/vercel.json
+          test -f artifacts/majalis/api/index.js
+          node -e "JSON.parse(require('fs').readFileSync('artifacts/majalis/vercel.json','utf8')); console.log('vercel.json ok')"
