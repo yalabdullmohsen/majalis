@@ -5330,11 +5330,18 @@ img:not([src]) {
    عطل من نفس عائلة إصلاح mushaf-v2__ أعلاه، لم يكن مشمولاً باستثنائه لأن
    بادئة الأصناف هنا مختلفة (qs- لا mushaf-v2__). تحقّقتُ فعليًا عبر
    Playwright (getComputedStyle) أن fontFamily كان "Noto Naskh Arabic"
-   حرفيًا قبل هذا الاستثناء، وAmiri Quran صحيحًا بعده. */
+   حرفيًا قبل هذا الاستثناء، وAmiri Quran صحيحًا بعده.
+
+   استثناء قارئ «آية» immersive (2026-07-30 — حادث تحريف صفحات): بعد إعادة
+   تصميم #636–#638 أصبحت الحاويات تحمل أصنافًا مثل quran-shell--ayah /
+   qs-mushaf-body--ayah / mpv-body--ayah / mpv-ayah-* — كلها تحتوي "ayah"
+   ولا تُستثنى بـ mf2-/qs-ayah. فوراثة unicode-bidi:plaintext !important
+   (وخط Noto/line-height) تصل إلى أسطر QPC Presentation Forms فتبدو بعض
+   الصفحات «محرَّفة». الاستثناء يغطي qs-mushaf- و mpv- و quran-shell--ayah. */
 .quran-text,
 .ayah-text,
 [class*="quran-verse"],
-[class*="ayah"]:not([class*="mushaf-v2__"]):not([class*="mf2-"]):not([class*="qs-ayah"]) {
+[class*="ayah"]:not([class*="mushaf-v2__"]):not([class*="mf2-"]):not([class*="qs-ayah"]):not([class*="qs-mushaf-"]):not([class*="mpv-"]):not([class*="quran-shell--ayah"]) {
   font-family: "Noto Naskh Arabic", "Scheherazade New", serif !important;
   font-size: 1.2em !important;
   line-height: 2 !important;

@@ -2311,6 +2311,8 @@ body.has-immersive-mushaf { overflow: hidden; }
   padding: 0 !important;
   color: var(--ayah-ink, #2C2C2E);
   max-height: 83vh;
+  /* لا تسمح لقاعدة elite [class*="ayah"] بوراثة plaintext إلى أسطر QPC */
+  unicode-bidi: isolate;
 }
 .quran-shell--ayah .qs-mushaf-body .qs-mushaf-body-inner {
   /* احتواء بعرض كامل مع سقف ارتفاع 83vh */
