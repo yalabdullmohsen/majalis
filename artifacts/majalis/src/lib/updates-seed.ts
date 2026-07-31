@@ -1,17 +1,19 @@
 import type { PlatformUpdate } from "./platform-types";
 
 export const UPDATES_SEED: PlatformUpdate[] = [
-  {
-    id: "update-fiqh-crypto",
-    title: "قرار جديد: حكم التعامل بالعملات الرقمية",
-    summary: "صدر قرار المجمع الفقهي في حكم التعامل بالعملات الرقمية وضوابطه.",
-    update_type: "قرار",
-    source_type: "fiqh_decision",
-    source_id: "fiqh-crypto-2024",
-    source_url: "/fiqh-council/fiqh-crypto-2024",
-    published_at: "2024-03-15T10:00:00Z",
-    status: "approved",
-  },
+  // ملاحظة تدقيق (٢٠٢٦-٠٧-٣١): حُذف من هنا الصفُّ `update-fiqh-crypto` («قرار
+  // جديد: حكم التعامل بالعملات الرقمية»، source_url = /fiqh-council/fiqh-crypto-2024).
+  // موجبُ الحذف من المصدر نفسه لا من اجتهاد: (١) وجهتُه ميتةٌ — البندُ
+  // `fiqh-crypto-2024` غيرُ موجودٍ في `fiqh-council-seed.ts` فتردُّ
+  // `findFiqhCouncilItemBySlug` قيمةَ null وتُعرَضُ صفحةُ «المحتوى غير موجود».
+  // (٢) وسببُ موتِها موثَّقٌ: حُذف البندُ في الـcommit 70a689a19 ضمن ثلاثين قرارًا
+  // تنسبُ إلى مجامعَ حقيقيةٍ دوراتٍ لم تنعقد، ونسخته محفوظةٌ في
+  // `data/fiqh-council-deleted-2026-07-26-backup.json`. (٣) ومتنُ الصفِّ يحملُ
+  // الخبرَ الباطلَ عينَه — يُثبِتُ صدورَ قرارٍ ويؤرِّخُه بـ2024-03-15، بينما البندُ
+  // القائمُ `items-encrypted-digital-currencies` ينصُّ على أنَّ القرار 237 (24/8)
+  // صدر في دورة دبي (4-6 نوفمبر 2019م) وأنَّه «لم يصدر حكم قاطع» بل أوصى
+  // المجمعُ بمزيدٍ من البحث. فلم يكن التوجيهُ إلى البند القائم علاجًا — إذ
+  // يناقضُ عنوانُ الصفِّ وجهتَه — والعلاجُ إزالةُ الخبرِ لا صياغتُه من جديد.
   {
     id: "update-course-ijazah",
     title: "فتح التسجيل: دورة الإجازة 1447هـ",
