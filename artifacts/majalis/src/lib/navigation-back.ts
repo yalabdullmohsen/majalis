@@ -107,6 +107,7 @@ export function sectionAwareFallback(currentPath: string): string {
   if (p.startsWith("/learn") || p.startsWith("/learning")) return "/learn";
   if (p.startsWith("/admin")) return "/admin";
   if (p.startsWith("/fawaid")) return "/fawaid";
+  if (p.startsWith("/nations/")) return "/nations";
   if (p.startsWith("/seerah") || p.startsWith("/prophet")) return "/seerah";
   if (p.startsWith("/search")) return "/search";
   const parts = p.split("/").filter(Boolean);

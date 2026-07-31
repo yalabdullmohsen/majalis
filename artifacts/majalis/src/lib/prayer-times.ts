@@ -104,7 +104,7 @@ function parseTimeToMinutes(value: string) {
   return Number(match[1]) * 60 + Number(match[2]);
 }
 
-function formatTime12(value: string) {
+export function formatTime12(value: string) {
   const minutes = parseTimeToMinutes(value);
   if (minutes == null) return value;
   const hours24 = Math.floor(minutes / 60);
