@@ -1,0 +1,110 @@
+name: Scheduled Release Train
+
+# قطار إصدار نصف يومي (06:00 و 18:00 بتوقيت الكويت / AST = UTC+3).
+# يجمع PRs موسومة release-train-ready + وسم مجال، يدمجها بالتتابع (squash)،
+# يشغّل بوابات pre-deploy، يتحقق من الإنتاج، ويتراجع عند فشل الصحة.
+#
+# الدمج الفعلي عبر .github/scripts/release-train/* (لا gh pr merge في هذا الملف)
+# حتى تبقى بوابة verify:no-unsafe-auto-merge صارمة.
+
+on:
+  schedule:
+    - cron: "0 3 * * *"   # 06:00 Kuwait
+    - cron: "0 15 * * *"  # 18:00 Kuwait
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Dry run (qualify/report only, no merge/deploy)"
+        required: false
+        type: boolean
+        default: false
+      skip_local_validate:
+        description: "Skip per-PR local typecheck/test (use CI green only)"
+        required: false
+        type: boolean
+        default: false
+      skip_smoke:
+        description: "Skip post-deploy smoke checks"
+        required: false
+        type: boolean
+        default: false
+
+concurrency:
+  group: release-train
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pull-requests: write
+  deployments: write
+  actions: read
+  checks: read
+
+env:
+  GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  RELEASE_TRAIN_BASE_URL: https://majlisilm.com
+
+jobs:
+  release-train:
+    if: github.repository == 'yalabdullmohsen/majalis'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Checkout main
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@a7487c7e89a18df4991f7f222e4898a00d66ddda # v4.1.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Ensure Release Train labels exist
+        run: |
+          set -euo pipefail
+          ensure() {
+            local name="$1" color="$2" desc="$3"
+            gh label create "$name" --color "$color" --description "$desc" 2>/dev/null \
+              || gh label edit "$name" --color "$color" --description "$desc" 2>/dev/null \
+              || true
+          }
+          ensure "release-train-ready" "0E8A16" "Eligible for scheduled release train"
+          ensure "security-safe" "B60205" "Domain: security-safe"
+          ensure "code-safe" "1D76DB" "Domain: code-safe"
+          ensure "performance-safe" "5319E7" "Domain: performance-safe"
+          ensure "maintenance-safe" "FBCA04" "Domain: maintenance-safe"
+          ensure "content-safe" "0075CA" "Domain: content-safe"
+          ensure "tests-safe" "C5DEF5" "Domain: tests-safe"
+
+      - name: Unit tests (release-train logic)
+        run: pnpm run test:release-train
+
+      - name: Assert cron contract matches Kuwait 06:00 / 18:00
+        run: node .github/scripts/release-train/assert-cron-contract.mjs
+
+      - name: Run Release Train
+        env:
+          RELEASE_TRAIN_DRY_RUN: ${{ github.event_name == 'workflow_dispatch' && inputs.dry_run && '1' || '0' }}
+          RELEASE_TRAIN_SKIP_LOCAL_VALIDATE: ${{ github.event_name == 'workflow_dispatch' && inputs.skip_local_validate && '1' || '0' }}
+          RELEASE_TRAIN_SKIP_SMOKE: ${{ github.event_name == 'workflow_dispatch' && inputs.skip_smoke && '1' || '0' }}
+          RELEASE_TRAIN_ROOT: ${{ github.workspace }}
+        run: node .github/scripts/release-train/run-train.mjs
+
+      - name: Upload train artifacts
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: release-train-report
+          path: |
+            artifacts/release-train/reports/
+            artifacts/release-train/last-run.json
+          if-no-files-found: warn
