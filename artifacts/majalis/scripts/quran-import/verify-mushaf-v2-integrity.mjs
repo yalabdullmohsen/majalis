@@ -81,7 +81,13 @@ async function main() {
     issues,
     checksums,
   };
-  await writeFile(OUT_REPORT, JSON.stringify(report, null, 2));
+  // افتراضيًا لا نكتب التقرير — الكتابة تُوسّخ شجرة git في CI (generatedAt).
+  // استخدم --write فقط عند توليد تقرير يدويًا.
+  const writeReport = process.argv.includes("--write");
+  if (writeReport) {
+    await writeFile(OUT_REPORT, JSON.stringify(report, null, 2));
+    console.log(`كُتب التقرير: ${OUT_REPORT}`);
+  }
 
   console.log(`ملفات الصفحات: ${files.length} (المتوقَّع 604)`);
   console.log(`السور: ${totalSurahs} (المتوقَّع 114)`);
