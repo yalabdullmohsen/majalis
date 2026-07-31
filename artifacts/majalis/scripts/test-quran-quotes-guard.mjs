@@ -2,7 +2,8 @@
 /**
  * حارس الاقتباسات القرآنية — يفحص كل نص قرآني معروض في الموقع.
  *
- * يطابق كل ما بين ﴿﴾، وكل حقل arabic/verse/ayah مقرونٍ بمرجع، على مصحف
+ * يطابق كل ما بين ﴿﴾ وما بين {} داخل سلسلة نصية، وكل حقل arabic/verse/ayah
+ * مقرونٍ بمرجع، على مصحف
  * المشروع (public/data/quran)، ويتحقق أن كل «سورة X: رقم» داخل نطاق آياتها.
  * كشف عند إنشائه (2026-07-25) ثمانية أخطاء حقيقية: زيادة على النص في دعاء
  * أيوب ﵇، ودمج آيتين من سورتين في نص واحد، وتبديل ترتيب كلمات آيتين،
@@ -30,6 +31,17 @@ for(const f of files){
     for(const piece of m[1].split(/\s*\*\s*|…|\.\.\./)){
       const q=norm(piece); if(q.length<12)continue; checked++;
       if(!corpus.includes(q)){bad++;issues.push(`${path.relative(ROOT,f)}  ﴿${piece.trim().slice(0,55)}﴾`);}
+    }
+  // 1ب) نصوص بين {} داخل سلسلة نصية — عرف تطويق ثانٍ للاستشهاد القرآني كان
+  //     يمرّ بلا مقابلة (كُشف ج-٣٨٧ في adhkar-seed: adh-160/169/267). القصر على
+  //     ما بين علامتَي اقتباس يستبعد تعليقات JSX ‏{/* … */}‏ وكتل الشفرة.
+  for(const lit of s.matchAll(/"((?:[^"\\\n]|\\.)*)"/g))
+    for(const m of lit[1].matchAll(/\{([^{}]{8,700})\}/g)){
+      if(!/[ء-ي]/.test(m[1]))continue;
+      for(const piece of m[1].split(/\s*\*\s*|…|\.\.\./)){
+        const q=norm(piece); if(q.length<12)continue; checked++;
+        if(!corpus.includes(q)){bad++;issues.push(`${path.relative(ROOT,f)}  {${piece.trim().slice(0,55)}}`);}
+      }
     }
   // 2) حقول arabic/verse/ayah/text مع ref/reference صريح لسورة
   for(const m of s.matchAll(/(?:arabic|verse|ayah|ayahText)\s*:\s*"((?:[^"\\]|\\.){12,})"\s*,\s*\n?\s*(?:ref|reference|surahRef)\s*:\s*"([^"]+)"/g)){
