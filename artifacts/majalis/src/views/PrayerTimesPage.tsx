@@ -1,14 +1,16 @@
 import { useEffect, useState } from "react";
 import { applyPageSeo } from "@/lib/seo";
-import { Link } from "wouter";
-import { Bell, Compass, MapPin } from "lucide-react";
+import { Link, useLocation } from "wouter";
+import { ArrowRight, Bell, Compass, MapPin } from "lucide-react";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 import {
   KUWAIT_GOVERNORATES,
+  formatTime12,
   getSelectedGovernorate,
   setSelectedGovernorate,
   type PrayerSlot,
 } from "@/lib/prayer-times";
+import { getPreviousInternalRoute, goBackOrFallback, normalizeNavPath } from "@/lib/navigation-back";
 import "@/styles/pages/prayer-times.css";
 
 const PRAYER_AR: Record<string, string> = {
@@ -78,11 +80,12 @@ function formatHms(totalSeconds: number): string {
   return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:${String(sec).padStart(2, "0")}`;
 }
 
-function displayTime24(p: PrayerSlot): string {
-  const raw = (p.time24 || p.time || "").trim();
-  const m = raw.match(/^(\d{1,2}):(\d{2})/);
-  if (!m) return p.time;
-  return `${m[1].padStart(2, "0")}:${m[2]}`;
+/** عرض 12 ساعة عربي (ص/م) — الحسابات تبقى على time24/minutes داخليًا */
+function displayTime12(p: PrayerSlot): string {
+  const labeled = (p.time || "").trim();
+  if (labeled && /[صم]/.test(labeled)) return labeled;
+  const raw = (p.time24 || labeled).trim();
+  return raw ? formatTime12(raw) : "—";
 }
 
 function MosqueSilhouette() {
@@ -141,8 +144,19 @@ function rowStatusLabel(
 }
 
 export default function PrayerTimesPage() {
+  const [location, navigate] = useLocation();
   const [govId, setGovId] = useState(() => getSelectedGovernorate().id);
   const [govOpen, setGovOpen] = useState(false);
+
+  function handleBack() {
+    const current = normalizeNavPath(location);
+    const previous = getPreviousInternalRoute(current);
+    if (previous && previous !== current) {
+      goBackOrFallback(current, "/");
+      return;
+    }
+    navigate("/");
+  }
 
   useEffect(() => {
     applyPageSeo({
@@ -183,6 +197,17 @@ export default function PrayerTimesPage() {
   if (loading) {
     return (
       <div className="pts-screen" dir="rtl">
+        <header className="pts-header">
+          <button
+            type="button"
+            className="pts-back"
+            onClick={handleBack}
+            aria-label="رجوع"
+          >
+            <ArrowRight size={18} strokeWidth={2} aria-hidden="true" />
+            <span>رجوع</span>
+          </button>
+        </header>
         <h1 className="pts-title">الصلاة</h1>
         <div className="pts-skeleton" aria-busy="true">جارٍ تحميل المواقيت…</div>
       </div>
@@ -192,6 +217,17 @@ export default function PrayerTimesPage() {
   if (!countdown?.next) {
     return (
       <div className="pts-screen" dir="rtl">
+        <header className="pts-header">
+          <button
+            type="button"
+            className="pts-back"
+            onClick={handleBack}
+            aria-label="رجوع"
+          >
+            <ArrowRight size={18} strokeWidth={2} aria-hidden="true" />
+            <span>رجوع</span>
+          </button>
+        </header>
         <h1 className="pts-title">الصلاة</h1>
         <p className="pts-error" role="alert">تعذّر تحميل مواقيت الصلاة، تحقق من الاتصال.</p>
         <button type="button" className="pts-retry" onClick={reload} aria-label="إعادة محاولة تحميل المواقيت">
@@ -240,16 +276,27 @@ export default function PrayerTimesPage() {
   return (
     <div className="pts-screen" dir="rtl">
       <header className="pts-header">
-        <button
-          type="button"
-          className="pts-location"
-          onClick={() => setGovOpen((v) => !v)}
-          aria-expanded={govOpen}
-          aria-controls="pts-gov-panel"
-        >
-          <MapPin size={15} strokeWidth={2} aria-hidden="true" />
-          <span>الكويت · {gov.name}</span>
-        </button>
+        <div className="pts-header__top">
+          <button
+            type="button"
+            className="pts-back"
+            onClick={handleBack}
+            aria-label="رجوع إلى الصفحة السابقة"
+          >
+            <ArrowRight size={18} strokeWidth={2} aria-hidden="true" />
+            <span>رجوع</span>
+          </button>
+          <button
+            type="button"
+            className="pts-location"
+            onClick={() => setGovOpen((v) => !v)}
+            aria-expanded={govOpen}
+            aria-controls="pts-gov-panel"
+          >
+            <MapPin size={15} strokeWidth={2} aria-hidden="true" />
+            <span>الكويت · {gov.name}</span>
+          </button>
+        </div>
         <div className="pts-dates">
           {hijriStr && <span>{hijriStr}</span>}
           <span className="pts-dates__sep" aria-hidden="true">·</span>
@@ -325,13 +372,13 @@ export default function PrayerTimesPage() {
                 ].filter(Boolean).join(" ")}
                 onClick={() => setPinnedKey(p.key === pinnedKey ? null : p.key)}
                 aria-pressed={pinned}
-                aria-label={`${PRAYER_AR[p.key] ?? p.name}، ${displayTime24(p)}، ${status}`}
+                aria-label={`${PRAYER_AR[p.key] ?? p.name}، ${displayTime12(p)}، ${status}`}
               >
                 <span className="pts-row__meta">
                   <span className="pts-row__name">{PRAYER_AR[p.key] ?? p.name}</span>
                   <span className="pts-row__status">{status}</span>
                 </span>
-                <span className="pts-row__time" dir="ltr">{displayTime24(p)}</span>
+                <span className="pts-row__time" dir="ltr">{displayTime12(p)}</span>
               </button>
             );
           })}

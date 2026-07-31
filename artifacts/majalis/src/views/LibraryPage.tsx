@@ -8,6 +8,7 @@ import { getLibrary } from "@/lib/supabase";
 import { RequestManager } from "@/lib/request-manager";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { LIBRARY_CATEGORIES } from "@/lib/library-catalog";
+import { getLibraryCatalog } from "@/lib/library-service";
 import { Chip } from "@/components/ui-common";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { PageLoadingGuard } from "@/components/PageLoadingGuard";
@@ -114,10 +115,11 @@ export default function LibraryPage({
       const { data } = await RequestManager.run("library:list", () =>
         getLibrary({ category: category === "الكل" ? undefined : category }),
       );
-      setItems(data);
+      const list = Array.isArray(data) ? data : [];
+      setItems(list.length > 0 ? list : getLibraryCatalog());
     } catch {
-      setItems([]);
-      setLoadError("تعذّر تحميل المكتبة. تحقق من الاتصال وحاول مجددًا.");
+      setItems(getLibraryCatalog());
+      setLoadError(null);
     } finally {
       setLoading(false);
     }

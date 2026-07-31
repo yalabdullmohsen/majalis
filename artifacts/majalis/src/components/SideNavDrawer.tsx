@@ -129,6 +129,7 @@ const DRAWER_GROUPS: NavGroup[] = [
     icon: <IcoLibrary />,
     items: [
       { href: "/library",       label: seoNavLabel("/library", "المكتبة العلمية"),     Icon: Library,    desc: "كتب ومخطوطات إسلامية" },
+      { href: "/nations",       label: seoNavLabel("/nations", "الأمم السابقة"),       Icon: BookText,   desc: "قصص الأمم في القرآن والعِبر" },
       { href: "/scholars",      label: seoNavLabel("/scholars", "أعلام الإسلام"),       Icon: BookUser,   desc: "تراجم العلماء والمشايخ" },
       { href: "/institutions",       label: seoNavLabel("/institutions", "المؤسسات الإسلامية"),  Icon: Landmark,   desc: "مساجد · مكتبات · مراكز · جامعات" },
       { href: "/islamic-landmarks",  label: seoNavLabel("/islamic-landmarks", "المشاهد والمساجد"),    Icon: MapPin,     desc: "خريطة المشاهد الإسلامية التاريخية" },

@@ -162,6 +162,7 @@ export const HOME_MORE_SECTIONS_RAW = [
   { href: "/daily-wird", title: seoNavLabel("/daily-wird", "الورد اليومي"), description: "تتبع صفحات القرآن اليومية مع السلسلة المتواصلة" },
   { href: "/salah-guide",   title: seoNavLabel("/salah-guide", "دليل الصلاة الكامل"),  description: "الشروط والأركان وكيفية الصلاة والمبطلات والخشوع وفضائل الصلاة الخمس" },
   { href: "/prophets", title: seoNavLabel("/prophets", "قصص الأنبياء"), description: "الأنبياء الخمسة والعشرون في القرآن — نبذات وعبر" },
+  { href: "/nations", title: seoNavLabel("/nations", "الأمم السابقة"), description: "قصص الأمم في القرآن — العِبر والعقوبات والدروس" },
   { href: "/fiqh", title: seoNavLabel("/fiqh", "الفقه الإسلامي"), description: "الأحكام والأسئلة والمجمع الفقهي" },
   { href: "/seerah", title: seoNavLabel("/seerah", "السيرة النبوية"), description: "حياة النبي محمد ﷺ من المولد إلى الوفاة" },
   { href: "/prophetic-medicine", title: seoNavLabel("/prophetic-medicine", "الطب النبوي"), description: "ما ثبت في السنة من التداوي والوقاية" },
