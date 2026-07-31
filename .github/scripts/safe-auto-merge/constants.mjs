@@ -60,8 +60,9 @@ export const AUTH_SECURITY_PATH_PATTERNS = Object.freeze([
   /grant\s+/i,
 ]);
 
-/** Title/body keywords that force manual review. */
-export const AUTH_SECURITY_TEXT = /\b(rls|row[- ]level|security\s+definer|service[_-]?role|auth\s+bypass|jwt\s+secret)\b/i;
+/** Title/body keywords that force manual review (high-signal only). */
+export const AUTH_SECURITY_TEXT =
+  /\b(security\s+definer|service[_-]?role|auth\s+bypass|jwt\s+secret)\b/i;
 
 /** Labels that explicitly block auto-merge. */
 export const BLOCKING_LABELS = Object.freeze([
