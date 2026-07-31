@@ -25,6 +25,18 @@ function toAr(n: number): string {
   return n.toLocaleString("ar-EG", { useGrouping: false });
 }
 
+/**
+ * لون وسم الدرجة يُؤخذ من صدر الدرجة لا بمطابقةٍ تامّة؛ فالدرجة قد تُقيَّد
+ * («صحيح لغيره»، «حسن صحيح»)، ولا سيّما في الأذكار المستوردة من Supabase.
+ * والتقييد مصدَّرٌ دائمًا، فما لم يبدأ بـ«صحيح» أو «حسن» فهو خارج المعجم.
+ */
+function gradeTone(grade: string): "sahih" | "hasan" | "other" {
+  const g = grade.trim();
+  if (g.startsWith("صحيح")) return "sahih";
+  if (g.startsWith("حسن")) return "hasan";
+  return "other";
+}
+
 /* ── حلقة SVG للتقدم الدائري ── */
 function RingProgress({ pct, size = 120 }: { pct: number; size?: number }) {
   const r = (size - 12) / 2;
@@ -75,7 +87,7 @@ function DhikrSheet({ item, onClose }: { item: AdhkarItem; onClose: () => void }
             <div className="adhkar-sheet-row">
               <dt>الدرجة</dt>
               <dd>
-                <span className={`adhkar-grade adhkar-grade--${item.grade === "صحيح" ? "sahih" : item.grade === "حسن" ? "hasan" : "other"}`}>
+                <span className={`adhkar-grade adhkar-grade--${gradeTone(item.grade)}`}>
                   {item.grade}
                 </span>
               </dd>
