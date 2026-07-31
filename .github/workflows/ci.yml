@@ -41,6 +41,9 @@ jobs:
       - name: Governance / auto-merge safety gate
         run: pnpm run verify:no-unsafe-auto-merge
 
+      - name: Release Train unit tests
+        run: pnpm run test:release-train
+
       - name: tsc -b (clean + build)
         run: |
           pnpm exec tsc -b --clean

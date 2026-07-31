@@ -37,3 +37,4 @@ scripts/debug/
 c338dec*/
 **/c338dec*/
 artifacts/api-server/dist-types/
+artifacts/release-train/last-run.json

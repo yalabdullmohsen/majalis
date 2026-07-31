@@ -225,6 +225,14 @@ jobs:
               gh "${REPO_FLAG[@]}" pr merge "$n" --disable-auto || true
               echo "::endgroup::"; continue
             fi
+
+            # قطار الإصدار المجدول يملك دمج هذه الـPRs — لا تُفعَّل هنا.
+            labels=$(gh "${REPO_FLAG[@]}" pr view "$n" --json labels --jq '[.labels[].name] | join(",")' 2>/dev/null || true)
+            if echo "$labels" | grep -Fqi 'release-train-ready'; then
+              echo "skip: release-train-ready (owned by scheduled-release-train.yml)"
+              gh "${REPO_FLAG[@]}" pr merge "$n" --disable-auto || true
+              echo "::endgroup::"; continue
+            fi
             if [ "$mergeable" != "MERGEABLE" ]; then
               echo "skip: mergeable=$mergeable (require MERGEABLE)"
               gh "${REPO_FLAG[@]}" pr merge "$n" --disable-auto || true
