@@ -576,6 +576,83 @@ assert(
   impossibleCompanionship.join(" | ")
 );
 
+console.log("\n=== ١٥) عنوانُ المؤلَّف لصاحبه: لا كتابَ يُنسب إلى غير مؤلِّفه ===");
+
+// اكتُشف 2026-07-31 (ج-٣٩٢): سجلُّ ابن جبرين (ت١٤٣٠هـ، حنبلي) كان يحمل في
+// key_works وفي bio معاً كتابَين ليسا له البتّة:
+//   • «فتح القريب المجيب شرح كتاب التقريب» — لمحمد بن قاسم الغزّي الشافعي
+//     (ت٩١٨هـ)، شرحُ متن أبي شجاع.
+//   • «التوضيح والبيان لشجرة الإيمان» — لعبد الرحمن بن ناصر السعدي (ت١٣٧٦هـ)،
+//     وهو نفسُه صاحبُ سجلٍّ في هذا الملف (al-saadi).
+// ولم يمسكهما الفحص ١٣ لأنّه لا يفحص إلا ما ردَّه resolveScholarWorkLink برابطٍ،
+// والرابطُ نفسُه يشترط موافقة النسبة ⇒ فالمخالِفُ يسقط قبل أن يُفحَص. والعلاجُ
+// جبهتان: (أ) مقابلةُ العنوان بفهرس المكتبة بالتطبيع وحدَه — بلا اشتراط قرينةِ
+// نسبةٍ — فمن طابقَ كتاباً لمؤلِّفٍ لا يشاركه في جزءٍ مميِّز فهو خرقُ نسبةٍ؛
+// (ب) جدولُ عناوينَ مضبوطةِ النسبة من خارج الفهرس، ومنها الكتابان أعلاه.
+// وحدُّه المعلوم: المقابلةُ بالعنوان التامِّ بعد التطبيع لا بالاحتواء، كيلا يقع
+// إنذارٌ كاذبٌ على العناوين المتقاربة — فمن أراد التوسعة فليُضِف صيغةَ العنوان
+// كما تُكتب في key_works إلى الجدول (كما فُعل بصيغتَي «فتح القريب المجيب»).
+// ألفاظٌ لا تُميِّز شخصاً بعينه، فمشاركتُها لا تُثبت أنّ الكتاب لصاحب السجل:
+// الألقابُ («الشيخ»، «الإمام»)، وأشطُر الأسماء المركّبة الشائعة («عبد» و«الرحمن»
+// و«الله»)، إذ اسمُ الأبِ في سجلٍّ قد يوافق اسمَ مؤلِّفٍ آخر (ابنُ جبرين أبوه
+// «عبد الرحمن» والسعديُّ اسمُه «عبد الرحمن») فيمرّ الخرقُ بقرينةٍ كاذبة.
+const WEAK_NAME_TOKENS = new Set(["شيخ", "امام", "حافظ", "علامه", "عبد", "رحمن", "الله", "ابو", "ابي", "دين"]);
+const bareTok = (v: string) =>
+  authorNorm(v)
+    .map((t) => (t.startsWith("ال") && t.length > 4 ? t.slice(2) : t))
+    .filter((t) => !WEAK_NAME_TOKENS.has(t));
+const workKey = (v: string) => normalizeArabic(v.replace(/\(.*?\)/g, "")).trim();
+
+// عناوينُ متجانسةٌ حقيقيّةٌ: كتابانِ مختلفانِ لمؤلِّفَينِ باسمٍ واحد (وثِّقت ج-٣٩١)
+const HOMONYM_TITLES = new Set(
+  [
+    "الزهد", // لأحمد ولأبي داود ولابن المبارك
+    "السنن الكبرى", // للنسائي وللبيهقي
+    "المبسوط", // للشيباني وللسرخسي
+    "شرح السنة", // للمزني وللبغوي
+    "الإحكام في أصول الأحكام", // لابن حزم وللآمدي
+    "دلائل النبوة", // لأبي نعيم وللبيهقي
+  ].map(workKey)
+);
+
+const catalogByTitle = new Map<string, string[]>();
+for (const b of LIBRARY_CATALOG) {
+  const k = workKey(b.title);
+  catalogByTitle.set(k, [...(catalogByTitle.get(k) ?? []), b.author]);
+}
+
+// (ب) عناوينُ خارج الفهرس ثبتت نسبتُها لغير من قد تُنسب إليه
+const WORK_TRUE_AUTHORS: Array<[string, string]> = [
+  ["فتح القريب المجيب شرح كتاب التقريب", "محمد بن قاسم الغزي"],
+  ["فتح القريب المجيب في شرح ألفاظ التقريب", "محمد بن قاسم الغزي"],
+  ["التوضيح والبيان لشجرة الإيمان", "عبد الرحمن بن ناصر السعدي"],
+];
+const trueAuthorByWork = new Map(WORK_TRUE_AUTHORS.map(([w, a]) => [workKey(w), a]));
+
+const wrongAuthorWorks: string[] = [];
+for (const s of SCHOLARS) {
+  // الاسمُ المعروض + نسبةُ صاحبِ السجل (آخرُ جزءٍ من الاسم الكامل) — لا كلُّ
+  // أجزاء الاسم الكامل، كي لا يكون اسمُ الأبِ أو الجدِّ قرينةَ نسبةٍ للكتاب.
+  const fullTokens = bareTok(s.fullName);
+  const scholarTokens = new Set([...bareTok(s.name), ...fullTokens.slice(-1)]);
+  for (const work of s.key_works ?? []) {
+    const k = workKey(work);
+    if (HOMONYM_TITLES.has(k)) continue;
+    const claimants = [...(catalogByTitle.get(k) ?? [])];
+    const known = trueAuthorByWork.get(k);
+    if (known) claimants.push(known);
+    if (!claimants.length) continue;
+    if (!claimants.some((a) => bareTok(a).some((t) => scholarTokens.has(t)))) {
+      wrongAuthorWorks.push(`${s.id}: «${work}» ⇐ لـ${claimants.join(" / ")}`);
+    }
+  }
+}
+assert(
+  wrongAuthorWorks.length === 0,
+  `لا عنوانَ في key_works ينتسب إلى غير مؤلِّفه (${WORK_TRUE_AUTHORS.length} عنواناً مضبوطاً + ${LIBRARY_CATALOG.length} من الفهرس)`,
+  wrongAuthorWorks.slice(0, 12).join(" | ")
+);
+
 console.log(`\n${"─".repeat(48)}`);
 console.log(`النتائج: ${passed} نجح، ${failed} فشل`);
 if (failed > 0) process.exit(1);
