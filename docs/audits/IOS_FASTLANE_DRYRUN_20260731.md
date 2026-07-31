@@ -47,11 +47,13 @@ On paths under `artifacts/majalis/ios/**` it runs:
 2. **Debug** simulator `xcodebuild clean build`
 3. **Release** `CODE_SIGNING_ALLOWED=NO` archive-style build
 
-**PR #672 result (pre-Keychain revision):** ✅ **SUCCESS** — run  
-https://github.com/yalabdullmohsen/majalis/actions/runs/30612558151  
-(job `xcodebuild-simulator`, completed 2026-07-31T07:25:25Z).
+**PR #672 — Keychain revision (`73689613a`):** ✅ **SUCCESS** —  
+https://github.com/yalabdullmohsen/majalis/actions/runs/30617503045  
 
-**This revision (Keychain + gates):** re-runs on push; agent Linux environment still cannot execute local `xcodebuild`.
+**Earlier revision (pre-Keychain):** ✅ SUCCESS —  
+https://github.com/yalabdullmohsen/majalis/actions/runs/30612558151  
+
+Agent Linux environment cannot execute local `xcodebuild`; macOS CI above is the native proof.
 
 ---
 
