@@ -3598,7 +3598,7 @@ export const ADHKAR_ITEMS: AdhkarItem[] = [
     categoryId: "adh-misc",
     text: "اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ شَرِّ مَا عَمِلْتُ وَمِنْ شَرِّ مَا لَمْ أَعْمَلْ",
     count: 1,
-    narrator: "أبو هريرة",
+    narrator: "عائشة",
     source: "رواه مسلم",
     grade: "صحيح",
     reference: "صحيح مسلم — الذكر",
