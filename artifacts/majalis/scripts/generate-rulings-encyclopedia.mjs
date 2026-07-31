@@ -234,6 +234,21 @@ function makeRuling(partial) {
 // ملاحظة حوكمة: أُزيلت decomposeListRuling() — كانت تُقطّع القوائم المرقّمة إلى «أحكام»
 // مستقلة، فيرث كل بندٍ دليلَ الأصل، ما أنتج نسبة أدلة خاطئة. لا يجوز تصنيع أحكام بالتقطيع.
 
+// عنوان الحكم من سؤال البذرة. كان `question.replace(/^ما |^هل |^من /,"").replace(/\?$/,"")`
+// وفيه عطبان:
+// (١) `/\?$/` علامة استفهام غربية، وأسئلة البذور تنتهي بالعربية (؟ U+061F) ⇒ لم تُحذف
+//     قط، فبقي ٣٥٤٣ عنوانًا من ٣٧١١ خبرًا منتهيًا بعلامة سؤال («حكم الغيبة في الإسلام؟»).
+// (٢) والأخطر: نزع «هل» يقلب سؤال التصور خبرًا يقرّر نقيض ما يقرره الحكم نفسه —
+//     «هل المزاح يبيح الكذب؟» ⇒ «المزاح يبيح الكذب»، و«هل ثبت تحديد يوم مولد النبي ﷺ
+//     قطعًا؟» ⇒ «ثبت … قطعًا» والجواب: لم يثبت. ٣٩٣ سؤالًا بهذه الصورة.
+// فالقاعدة: «ما/من» وحدهما تُنزعان (يبقى مركّب اسمي صالح عنوانًا) ومعهما علامة
+// الاستفهام؛ وما عداهما (هل/كيف/متى/…) يبقى سؤالًا تامًّا بعلامته.
+function qaTitleFromQuestion(question) {
+  const stripped = question.replace(/^(?:ما|من) /, "");
+  if (stripped === question) return question.trim();
+  return stripped.replace(/[?؟]\s*$/, "").trim();
+}
+
 function loadQaSeedFromJson() {
   const base = path.resolve(ROOT, "public/data/qa");
   const manifestPath = path.join(base, "manifest.json");
@@ -269,7 +284,7 @@ function fromQaSeed() {
 
       return makeRuling({
         external_key: `qa-ruling-${q.id}`,
-        title: question.replace(/^ما |^هل |^من /, "").replace(/\?$/, ""),
+        title: qaTitleFromQuestion(question),
         summary: summarizeText(answer, 160),
         body: `**السؤال:** ${question}\n\n**الجواب:** ${answer}`,
         category: catInfo.category,
