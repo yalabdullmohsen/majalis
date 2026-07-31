@@ -2272,6 +2272,60 @@ body.has-immersive-mushaf { overflow: hidden; }
   padding-bottom: 0;
 }
 
+/* تكبير صفحة المصحف — أقصى امتلاء مع زر تصغير واضح */
+.quran-shell--page-fill .mpv-ayah-header {
+  display: none !important;
+}
+.quran-shell--page-fill .mpv-resume-banner {
+  display: none !important;
+}
+.quran-shell--page-fill .mpv-body--ayah {
+  margin-block: 0;
+  padding-inline: max(4px, env(safe-area-inset-left, 0px)) max(4px, env(safe-area-inset-right, 0px));
+  max-height: none;
+  height: 100%;
+  min-height: 100dvh;
+}
+.quran-shell--page-fill .qs-mushaf-frame--ayah,
+.quran-shell--page-fill .qs-mushaf-frame--ayah-chrome {
+  max-width: min(100%, 820px);
+  max-height: none;
+  height: 100%;
+}
+.mpv-fill-exit,
+.mpv-fill-enter {
+  position: fixed;
+  top: max(0.55rem, env(safe-area-inset-top, 0px));
+  inset-inline-start: max(0.55rem, env(safe-area-inset-left, 0px));
+  z-index: 60;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0.4rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid color-mix(in srgb, var(--ayah-badge-border, #D1C7BD) 70%, transparent);
+  background: color-mix(in srgb, var(--ayah-paper, #FAF7F2) 88%, transparent);
+  color: var(--ayah-ink, #1c1917);
+  font-family: var(--font-ui, "Alexandria", "Noto Naskh Arabic", sans-serif);
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12);
+}
+.mpv-fill-exit:focus-visible,
+.mpv-fill-enter:focus-visible {
+  outline: 2px solid var(--ayah-badge-border, #8a7a6a);
+  outline-offset: 2px;
+}
+.quran-shell--night .mpv-fill-exit,
+.quran-shell--night .mpv-fill-enter {
+  color: #f5f5f4;
+  background: color-mix(in srgb, #1c1917 82%, transparent);
+}
+
 .qs-mushaf-frame--ayah,
 .qs-mushaf-frame--ayah-chrome {
   border: none !important;

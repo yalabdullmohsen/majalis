@@ -101,6 +101,7 @@ const SHEET_SECTIONS_RAW: { group: string; items: SheetItem[] }[] = [
     { href: "/seerah",          label: seoNavLabel("/seerah", "السيرة النبوية"),         Icon: BookUser },
     { href: "/sahabah",         label: seoNavLabel("/sahabah", "الصحابة الكرام"),         Icon: Users },
     { href: "/prophets",        label: seoNavLabel("/prophets", "الأنبياء والرسل"),         Icon: Star },
+    { href: "/nations",         label: seoNavLabel("/nations", "الأمم السابقة"),           Icon: Landmark },
     { href: "/islamic-landmarks",  label: seoNavLabel("/islamic-landmarks", "المشاهد والمساجد"),    Icon: Landmark },
   ]},
 

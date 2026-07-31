@@ -15,6 +15,8 @@ assert.equal(sectionAwareFallback("/search/x"), "/search");
 assert.equal(sectionAwareFallback("/prayer-times"), "/prayer-times");
 assert.equal(sectionAwareFallback("/prayer-ranks"), "/prayer-times");
 assert.equal(sectionAwareFallback("/qibla"), "/prayer-times");
+assert.equal(sectionAwareFallback("/nations/nuh"), "/nations");
+assert.equal(sectionAwareFallback("/nations"), "/");
 assert.equal(sectionAwareFallback("/fiqh/topics/tahara"), "/fiqh");
 assert.equal(sectionAwareFallback("/hadith/nawawi"), "/hadith");
 assert.equal(sectionAwareFallback("/adhkar/morning"), "/adhkar");
