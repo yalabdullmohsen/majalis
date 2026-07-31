@@ -25,6 +25,10 @@ const BANNED = [
   { hex: "3b82f6", why: "tailwind blue — خارج الهوية" },
 ];
 
+/** رصد كثافة hex خام خارج طبقات الهوية (تحذير فقط — الهجرة تدريجية). */
+const HARDCODE_HEX_RE = /#[0-9a-f]{3,8}\b/gi;
+const TOKEN_FILE_RE = /brand-v4|design-system|elite-2026|modern-2026|majalis-v2|index\.css$/i;
+
 const SCAN_DIRS = [
   join(stylesRoot, "pages"),
   join(stylesRoot, "components"),
@@ -101,6 +105,26 @@ const requiredTokens = [
 ];
 const missingTokens = requiredTokens.filter((t) => !brandV4.includes(`${t}:`));
 
+/** ملفات صفحات/مكوّنات ما زالت تعتمد hex خامًا كثيرًا (خارج طبقات الهوية). */
+const hardcodeFiles = [];
+for (const file of files) {
+  if (ALLOW_PATH_RE.test(file) || TOKEN_FILE_RE.test(file)) continue;
+  let src;
+  try {
+    src = readFileSync(file, "utf8");
+  } catch {
+    continue;
+  }
+  const matches = src.match(HARDCODE_HEX_RE) || [];
+  if (matches.length >= 6) {
+    hardcodeFiles.push({
+      file: relative(root, file),
+      count: matches.length,
+    });
+  }
+}
+hardcodeFiles.sort((a, b) => b.count - a.count);
+
 console.log("=== brand-identity-gate ===\n");
 if (missingTokens.length) {
   console.error("  ✗ missing tokens in brand-v4.css:");
@@ -112,6 +136,15 @@ if (hits.length) {
     console.error(`    ${h.file}:${h.line}  ${h.hex} — ${h.why}`);
   }
   if (hits.length > 40) console.error(`    … +${hits.length - 40} more`);
+}
+if (hardcodeFiles.length) {
+  console.log(
+    `  ⚠ ${hardcodeFiles.length} page/component CSS files still hard-code ≥6 hex (migrate gradually):`,
+  );
+  for (const h of hardcodeFiles.slice(0, 8)) {
+    console.log(`    ${h.file} (${h.count} hex)`);
+  }
+  if (hardcodeFiles.length > 8) console.log(`    … +${hardcodeFiles.length - 8} more`);
 }
 
 if (missingTokens.length || hits.length) {

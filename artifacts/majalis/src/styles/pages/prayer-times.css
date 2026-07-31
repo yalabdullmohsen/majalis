@@ -13,14 +13,17 @@
   --pts-gold-soft: color-mix(in srgb, var(--gold-400, #D2B063) 28%, transparent);
   --pts-gold-line: color-mix(in srgb, var(--gold-400, #D2B063) 40%, transparent);
   --pts-white: var(--n-50, #FAFAF8);
-  --pts-muted: color-mix(in srgb, var(--n-50, #FAFAF8) 62%, transparent);
+  /* ≥4.5:1 تقريبًا فوق --pts-bg-1 عند المزج مع الشفافية */
+  --pts-muted: color-mix(in srgb, var(--n-50, #FAFAF8) 78%, transparent);
   --pts-row: color-mix(in srgb, var(--n-50, #FAFAF8) 6%, transparent);
   --pts-row-active: color-mix(in srgb, var(--gold-400, #D2B063) 18%, transparent);
 
   direction: rtl;
   min-height: 100%;
   color: var(--pts-white);
-  background:
+  /* لون صلب تحت التدرّج — قياس التباين وfallback عند تعطيل الصور */
+  background-color: var(--pts-bg-1);
+  background-image:
     radial-gradient(ellipse 90% 55% at 70% 8%, rgba(212, 196, 160, 0.08), transparent 55%),
     linear-gradient(180deg, var(--pts-bg-1) 0%, var(--pts-bg-0) 48%, #0A221C 100%);
   padding:
