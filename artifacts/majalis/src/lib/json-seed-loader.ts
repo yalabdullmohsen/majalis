@@ -40,13 +40,11 @@ function getCache<T>(basePath: string): CacheEntry<T> {
 }
 
 async function readJsonFromDisk(urlPath: string): Promise<unknown | null> {
+  // Browser / Vite client: alias maps this to json-seed-disk.browser-stub.ts
+  // (see vite.config). Node/tsx loads the real .node reader with fs/path.
   if (typeof window !== "undefined") return null;
   try {
-    // Dynamic path + vite-ignore keeps node:fs out of the browser graph.
-    const mod = await import(
-      /* @vite-ignore */
-      "./json-seed-disk.node.ts"
-    );
+    const mod = await import("./json-seed-disk.node");
     return mod.readSeedJsonFromDisk(urlPath);
   } catch {
     return null;

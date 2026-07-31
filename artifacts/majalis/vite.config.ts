@@ -49,6 +49,22 @@ export default defineConfig({
     legalComments: "none",
   },
   plugins: [
+    {
+      // Client graph must never resolve the Node fs/path seed reader.
+      name: "stub-json-seed-disk-node",
+      enforce: "pre",
+      resolveId(source) {
+        if (
+          source === "./json-seed-disk.node" ||
+          source.endsWith("/json-seed-disk.node") ||
+          source.endsWith("/json-seed-disk.node.ts") ||
+          source.includes("json-seed-disk.node")
+        ) {
+          return path.resolve(import.meta.dirname, "src/lib/json-seed-disk.browser-stub.ts");
+        }
+        return null;
+      },
+    },
     react(),
     tailwindcss(),
     majalisApiPlugin(),
