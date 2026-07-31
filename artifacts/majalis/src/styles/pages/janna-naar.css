@@ -30,7 +30,7 @@
 .jn-tab--janna       { --jn-tab-active-bg: #226A56; }
 .jn-tab--naar        { --jn-tab-active-bg: #9B1C1C; }
 .jn-tab--asbab-janna { --jn-tab-active-bg: #1a3a5c; }
-.jn-tab--duas        { --jn-tab-active-bg: #312E81; }
+.jn-tab--duas        { --jn-tab-active-bg: var(--brand-deep, #143F35); }
 .jn-tab--active { color: #fff; background: var(--jn-tab-active-bg, #226A56); border-color: var(--jn-tab-active-bg, #226A56); }
 
 .jn-container { max-width: 900px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
@@ -39,7 +39,7 @@
 .jn-section--janna       { --jn-section-color: #226A56; }
 .jn-section--naar        { --jn-section-color: #9B1C1C; }
 .jn-section--asbab-janna { --jn-section-color: #1a3a5c; }
-.jn-section--duas        { --jn-section-color: #312E81; }
+.jn-section--duas        { --jn-section-color: var(--brand-deep, #143F35); }
 .jn-section__title { font-size: 1.1rem; font-weight: 800; margin: 0 0 .85rem; border-right: 3px solid currentColor; padding-right: .7rem; color: var(--jn-section-color, #226A56); }
 
 .jn-cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: .75rem; }

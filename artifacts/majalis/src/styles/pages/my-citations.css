@@ -117,7 +117,7 @@
 /* Citation content-type color tokens — set all 3 vars used across citation components */
 .cit-type--quran-ayah    { --cit-type-color: #065f46; --cm-type-color: #065f46; --cab-type-color: #065f46; }
 .cit-type--hadith        { --cit-type-color: #1d4ed8; --cm-type-color: #1d4ed8; --cab-type-color: #1d4ed8; }
-.cit-type--scholar-quote { --cit-type-color: #7c3aed; --cm-type-color: #7c3aed; --cab-type-color: #7c3aed; }
+.cit-type--scholar-quote { --cit-type-color: var(--brand, #226A56); --cm-type-color: var(--brand, #226A56); --cab-type-color: var(--brand, #226A56); }
 .cit-type--fatwa,
 .cit-type--book          { --cit-type-color: #226A56; --cm-type-color: #226A56; --cab-type-color: #226A56; }
 .cit-type--article       { --cit-type-color: #0369a1; --cm-type-color: #0369a1; --cab-type-color: #0369a1; }

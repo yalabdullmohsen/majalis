@@ -24,7 +24,7 @@
 .rw-type--dhikr,
 .rw-type--quran-ayah { --rw-color: var(--majalis-emerald, #226A56); }
 .rw-type--benefit    { --rw-color: var(--majalis-emerald-deep, #143F35); }
-.rw-type--scholar    { --rw-color: #7c3aed; }
+.rw-type--scholar    { --rw-color: var(--brand, #226A56); }
 .rw-type--qa         { --rw-color: #0369a1; }
 .rw-type--ruling     { --rw-color: var(--majalis-ink-soft, #4A4A4A); }
 .rw-type--story      { --rw-color: var(--majalis-danger, #9B1C1C); }
