@@ -73,11 +73,11 @@ export function classifyDurablePgError(err) {
  */
 export function publicReadyReason(reason) {
   const r = String(reason || "");
+  // Prefer the public alias over the historical internal code.
+  if (r === "queue_column_missing") return DURABLE_REASONS.missing_columns;
   if (Object.prototype.hasOwnProperty.call(DURABLE_REASONS, r)) {
     return /** @type {keyof typeof DURABLE_REASONS} */ (r);
   }
-  // Backward-compatible alias
-  if (r === "queue_column_missing") return DURABLE_REASONS.missing_columns;
   return DURABLE_REASONS.queue_query_failed;
 }
 
