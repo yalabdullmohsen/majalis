@@ -5,7 +5,7 @@
  */
 import { readdirSync, readFileSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
-import { fileURLToPath } from "node:url";
+import { fileURLToPath, pathToFileURL } from "node:url";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const workflowsDir = join(root, ".github", "workflows");
@@ -69,29 +69,18 @@ if (existsSync(autoPath)) {
   if (!/--auto/.test(active)) {
     bad(`${ALLOW_MERGE_FILE}: expected --auto squash path`);
   }
-  if (!/CONFLICTING|conflicting/.test(body)) {
-    bad(`${ALLOW_MERGE_FILE}: must skip conflicting PRs`);
+  if (!/safe-auto-merge\/cli\.mjs/.test(body)) {
+    bad(`${ALLOW_MERGE_FILE}: must invoke safe-auto-merge/cli.mjs for policy`);
   }
-  if (!/MERGEABLE/.test(body)) {
-    bad(`${ALLOW_MERGE_FILE}: must require mergeable=MERGEABLE`);
+  if (!/evaluate\s+--pr/.test(body) && !/evaluate --pr/.test(body)) {
+    bad(`${ALLOW_MERGE_FILE}: must run evaluate --pr`);
   }
-  if (!/CHANGES_REQUESTED/.test(body)) {
-    bad(`${ALLOW_MERGE_FILE}: must skip Changes Requested`);
+  if (!/strict-vercel/.test(body)) {
+    bad(`${ALLOW_MERGE_FILE}: must use --strict-vercel for merge enable`);
   }
-  if (!/headRefOid|head_sha/.test(body)) {
-    bad(`${ALLOW_MERGE_FILE}: must compare head SHA before/after checks`);
-  }
-  if (!/quality_ok|quality\\b|Verify build/.test(body)) {
-    bad(`${ALLOW_MERGE_FILE}: must require CI/quality success`);
-  }
-  if (!/postgres-integration/.test(body)) {
-    bad(`${ALLOW_MERGE_FILE}: must gate on postgres-integration when present`);
-  }
-  if (!/xcodebuild-simulator|has_ios/.test(body)) {
-    bad(`${ALLOW_MERGE_FILE}: must gate iOS path changes on xcodebuild-simulator`);
-  }
-  if (!/has_sql|supabase|migration/.test(body)) {
-    bad(`${ALLOW_MERGE_FILE}: must detect SQL/migration path changes`);
+  if (!/content-safe|SAFE_LABELS|safe-auto-merge/.test(body)) {
+    // Policy labels live in scripts; workflow must still call the script.
+    ok(`${ALLOW_MERGE_FILE}: policy delegated to safe-auto-merge scripts`);
   }
   if (/PROD_DEPLOY_TOKEN/.test(active) && /GH_TOKEN:\s*\$\{\{\s*secrets\.PROD_DEPLOY_TOKEN/.test(active)) {
     bad(`${ALLOW_MERGE_FILE}: prefer GITHUB_TOKEN; do not default GH_TOKEN to wide PAT`);
@@ -102,11 +91,75 @@ if (existsSync(autoPath)) {
   if (/gh\s+pr\s+ready\b(?!\s+--undo)/.test(active)) {
     bad(`${ALLOW_MERGE_FILE}: must not undraft`);
   }
-  if (!/release-train-ready/.test(body)) {
-    bad(`${ALLOW_MERGE_FILE}: must skip release-train-ready PRs (owned by scheduled train)`);
-  }
 } else {
   ok(`${ALLOW_MERGE_FILE} absent (auto-merge disabled)`);
+}
+
+const safeMergeDir = join(root, ".github", "scripts", "safe-auto-merge");
+if (existsSync(safeMergeDir)) {
+  ok("safe-auto-merge scripts present");
+  const { SAFE_LABELS, MAX_FILES_FOR_AUTO_MERGE, DANGER_PATH_PATTERNS } = await import(
+    pathToFileURL(join(safeMergeDir, "constants.mjs")).href
+  );
+  const eligibility = readFileSync(join(safeMergeDir, "eligibility.mjs"), "utf8");
+  for (const label of ["content-safe", "ui-safe", "code-safe", "tests-safe", "maintenance-safe"]) {
+    if (!SAFE_LABELS.includes(label)) {
+      bad(`safe-auto-merge/constants.mjs: missing SAFE_LABEL ${label}`);
+    }
+  }
+  if (MAX_FILES_FOR_AUTO_MERGE !== 40) {
+    bad("safe-auto-merge: MAX_FILES_FOR_AUTO_MERGE must be 40");
+  }
+  const dangerSrc = DANGER_PATH_PATTERNS.map((r) => r.toString()).join("\n");
+  for (const needle of [
+    "supabase",
+    "migrations",
+    "workflows",
+    "fastlane",
+    "ios",
+    "package",
+    "pnpm-lock",
+    "vercel",
+  ]) {
+    if (!dangerSrc.includes(needle)) {
+      bad(`safe-auto-merge: danger path missing coverage for ${needle}`);
+    }
+  }
+  // Smoke-test a few concrete paths against the live patterns
+  const mustMatch = [
+    "supabase/migrations/001.sql",
+    "artifacts/majalis/supabase/migrations/x.sql",
+    ".github/workflows/ci.yml",
+    "fastlane/Fastfile",
+    "artifacts/majalis/ios/App/App/AppDelegate.swift",
+    "package.json",
+    "pnpm-lock.yaml",
+    "artifacts/majalis/vercel.json",
+  ];
+  for (const p of mustMatch) {
+    if (!DANGER_PATH_PATTERNS.some((re) => re.test(p))) {
+      bad(`safe-auto-merge: pattern failed to match ${p}`);
+    }
+  }
+  if (!/release-train-ready/.test(eligibility) && !/RELEASE_TRAIN_LABEL/.test(eligibility)) {
+    bad("safe-auto-merge: must skip release-train-ready");
+  }
+  if (!/CHANGES_REQUESTED/.test(eligibility)) {
+    bad("safe-auto-merge: must skip CHANGES_REQUESTED");
+  }
+  if (!existsSync(join(workflowsDir, "pr-safe-merge-report.yml"))) {
+    bad("pr-safe-merge-report.yml missing (required PR eligibility report)");
+  } else {
+    const reportWf = readFileSync(join(workflowsDir, "pr-safe-merge-report.yml"), "utf8");
+    if (!/safe-auto-merge\/cli\.mjs report/.test(reportWf)) {
+      bad("pr-safe-merge-report.yml must post report via cli.mjs");
+    }
+    if (/gh\s+pr\s+merge|--auto/.test(stripComments(reportWf))) {
+      bad("pr-safe-merge-report.yml must not merge");
+    }
+  }
+} else {
+  bad("safe-auto-merge scripts directory missing");
 }
 
 const trainWf = join(workflowsDir, "scheduled-release-train.yml");

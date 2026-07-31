@@ -126,8 +126,17 @@ Task {
 
 1. Add all secrets above in GitHub → Settings → Secrets and variables → Actions.
 2. **Web (Vercel):** already deploys from `main` when `deploymentEnabled.main=true` in `artifacts/majalis/vercel.json`.
-3. **iOS:** push a semver tag `vX.Y.Z` (or run the workflow manually).
+3. **iOS / TestFlight:** push a semver tag `vX.Y.Z` (or run the workflow manually). **Never** on every merge.
 4. **Supabase:** push events are list-only. Apply only via Actions → *Supabase Migrations* → `apply=true` (and `confirm_include_all=true` only when intentionally needing `--include-all`).
+
+### Safe auto-merge (GitHub)
+
+See `.github/docs/SAFE_AUTO_MERGE.md`.
+
+- Requires one of: `content-safe` | `ui-safe` | `code-safe` | `tests-safe` | `maintenance-safe`
+- Blocks migrations / iOS / workflows / lockfile / auth-security paths
+- Posts an eligibility report on every PR (`pr-safe-merge-report.yml`)
+- Auto-merge stays enabled; dangerous PRs stay on manual review
 
 ---
 

@@ -32,3 +32,6 @@ PR يجب أن يكون Ready (غير Draft)، بدون تعارض، وCI أخض
 ## علاقة بالدمج المستمر
 
 `auto-merge-to-main.yml` **يتجاوز** أي PR يحمل `release-train-ready` حتى لا يُدمَج مرتين — هذه الـPRs تنتظر القطار فقط.
+
+للدمج الفوري (بدون انتظار القطار) راجع `.github/docs/SAFE_AUTO_MERGE.md` — يتطلب وسمًا آمنًا ويمنع مسارات SQL/iOS/CI.
+
