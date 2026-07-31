@@ -27,6 +27,7 @@
 		B2C3D4E5F6071890AB12CD01 /* MajlisPlaybackAudioPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C3D4E5F6071890AB12CD02 /* MajlisPlaybackAudioPlugin.swift */; };
 		C1A2B3C4D5E6F708192A3B4D /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1A2B3C4D5E6F708192A3B4C /* AppConfig.swift */; };
 		D2B3C4D5E6F708192A3B4C5E /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B3C4D5E6F708192A3B4C5D /* NetworkService.swift */; };
+		E5F6071890AB12CD01A2B3C4 /* KeychainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F6071890AB12CD01A2B3C5 /* KeychainStore.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,6 +78,7 @@
 		B2C3D4E5F6071890AB12CD02 /* MajlisPlaybackAudioPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MajlisPlaybackAudioPlugin.swift; sourceTree = "<group>"; };
 		C1A2B3C4D5E6F708192A3B4C /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
 		D2B3C4D5E6F708192A3B4C5D /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		E5F6071890AB12CD01A2B3C5 /* KeychainStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -152,6 +154,7 @@
 		F4D5E6F708192A3B4C5D6E7F /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				E5F6071890AB12CD01A2B3C5 /* KeychainStore.swift */,
 				D2B3C4D5E6F708192A3B4C5D /* NetworkService.swift */,
 			);
 			path = Services;
@@ -287,6 +290,7 @@
 			files = (
 				504EC3081FED79650016851F /* AppDelegate.swift in Sources */,
 				C1A2B3C4D5E6F708192A3B4D /* AppConfig.swift in Sources */,
+				E5F6071890AB12CD01A2B3C4 /* KeychainStore.swift in Sources */,
 				D2B3C4D5E6F708192A3B4C5E /* NetworkService.swift in Sources */,
 				B40A70BD645B44F885C91A9B /* PrayerActivityAttributes.swift in Sources */,
 				EFBF4693BAFB4F5B82254F8C /* PrayerLiveActivityPlugin.swift in Sources */,

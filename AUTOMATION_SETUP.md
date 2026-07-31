@@ -34,7 +34,6 @@ Unified CI/CD for **مجالس العلم (Majalis Al-Ilm)** monorepo.
 | Name | Type | Purpose |
 |---|---|---|
 | `MATCH_PASSWORD` | Secret | Only if you later enable Fastlane Match |
-| `ALLOW_SUPABASE_AUTO_MIGRATE` | **Repository variable** (`true`) | Allows `supabase db push` on push to `main` when migrations change. **Default: off** (list-only). Prefer `workflow_dispatch` with `apply=true`. |
 
 ---
 
@@ -60,11 +59,14 @@ git push origin v1.2.3
 
 **Triggers:** push to `main` touching `artifacts/majalis/supabase/migrations/**`, or manual dispatch.
 
-**Safety:** `supabase db push` runs only when:
-- `workflow_dispatch` with **apply = true**, or
-- repository variable `ALLOW_SUPABASE_AUTO_MIGRATE=true` on push
+**CLI:** pinned to **`2.110.0`** (never `latest`).
 
-Otherwise the job links the project and lists migrations only (no Production apply).
+**Safety:**
+- Push to `main` → **list only** (`migration list`) — never applies.
+- `supabase db push` runs **only** via `workflow_dispatch` with **`apply=true`**.
+- `--include-all` requires a second explicit input: **`confirm_include_all=true`** on the same dispatch. Do not use on Production casually.
+
+Secrets: `SUPABASE_ACCESS_TOKEN`, `SUPABASE_PROJECT_ID` (see also `docs/audits/IOS_FASTLANE_DRYRUN_20260731.md`).
 
 ### 3. Vercel check — `.github/workflows/vercel-check.yml`
 
@@ -101,9 +103,12 @@ bundle exec fastlane ios build_only
 
 `NetworkService`:
 - Supabase Auth password grant + refresh (`/auth/v1/token`)
+- Persists `accessToken` / `refreshToken` in **Keychain** (`KeychainStore`) — never UserDefaults
 - Forwards `Authorization: Bearer <access_token>` to Vercel `/api/*`
 - Offline cache fallback via `getVercelData(path:cacheKey:)`
 - Typed `NetworkServiceError`
+
+Static gate: `pnpm --filter @workspace/majalis run test:ios-gates` fails if tokens are written via UserDefaults.
 
 Example:
 ```swift
@@ -122,7 +127,7 @@ Task {
 1. Add all secrets above in GitHub → Settings → Secrets and variables → Actions.
 2. **Web (Vercel):** already deploys from `main` when `deploymentEnabled.main=true` in `artifacts/majalis/vercel.json`.
 3. **iOS:** push a semver tag `vX.Y.Z` (or run the workflow manually).
-4. **Supabase:** keep auto-migrate **off** until reviewed; then either dispatch with apply, or set `ALLOW_SUPABASE_AUTO_MIGRATE=true`.
+4. **Supabase:** push events are list-only. Apply only via Actions → *Supabase Migrations* → `apply=true` (and `confirm_include_all=true` only when intentionally needing `--include-all`).
 
 ---
 

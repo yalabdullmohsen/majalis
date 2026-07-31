@@ -205,6 +205,36 @@ ok(
 const appDelegate = readFileSync(join(iosApp, "App", "AppDelegate.swift"), "utf8");
 ok(!appDelegate.includes("MajlisPlaybackAudio"), "AppDelegate does not manually register playback plugin (CAPBridgedPlugin auto-discovery)");
 
+// Auth tokens must live in Keychain — never UserDefaults
+const networkServicePath = join(iosApp, "App", "Services", "NetworkService.swift");
+const keychainPath = join(iosApp, "App", "Services", "KeychainStore.swift");
+ok(existsSync(keychainPath), "KeychainStore.swift exists");
+ok(existsSync(networkServicePath), "NetworkService.swift exists");
+if (existsSync(networkServicePath)) {
+  const networkService = readFileSync(networkServicePath, "utf8");
+  ok(networkService.includes("KeychainStore"), "NetworkService uses KeychainStore");
+  ok(
+    !/UserDefaults\.standard\.(set|data|string|object)\s*\([^)]*(accessToken|refreshToken|auth\.session|sessionTokens)/i.test(
+      networkService,
+    ),
+    "NetworkService does not persist access/refresh tokens via UserDefaults setters",
+  );
+  ok(
+    !/UserDefaults\.standard\.set\s*\(\s*data\s*,/.test(networkService),
+    "NetworkService does not UserDefaults.set(data) for session blobs",
+  );
+  const persistBlock = networkService.match(/private func persistSession[\s\S]*?\n    \}/);
+  ok(Boolean(persistBlock), "persistSession function present");
+  if (persistBlock) {
+    ok(!persistBlock[0].includes("UserDefaults"), "persistSession does not touch UserDefaults");
+    ok(persistBlock[0].includes("KeychainStore"), "persistSession writes via KeychainStore");
+  }
+}
+ok(
+  /KeychainStore\.swift in Sources/.test(pbx),
+  "KeychainStore.swift listed under App target Sources",
+);
+
 if (failed) {
   console.error(`\n${failed} gate(s) failed`);
   process.exit(1);

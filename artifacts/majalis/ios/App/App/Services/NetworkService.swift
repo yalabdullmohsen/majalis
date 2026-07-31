@@ -14,7 +14,7 @@ final class NetworkService {
     private var isPathSatisfied = true
 
     private(set) var sessionTokens: AuthSession?
-    private let sessionDefaultsKey = "majlis.auth.session.v1"
+    private let sessionKeychainAccount = "majlis.auth.session.v1"
 
     private init(config: AppConfig = .shared, session: URLSession = .shared) {
         self.config = config
@@ -36,21 +36,31 @@ final class NetworkService {
 
     var isOnline: Bool { isPathSatisfied }
 
-    // MARK: - Session persistence
+    // MARK: - Session persistence (Keychain only — never UserDefaults)
 
     private func restoreSession() {
-        guard let data = UserDefaults.standard.data(forKey: sessionDefaultsKey) else { return }
-        if let decoded = try? JSONDecoder().decode(AuthSession.self, from: data) {
-            sessionTokens = decoded
+        // Purge any legacy insecure UserDefaults token blob if present.
+        UserDefaults.standard.removeObject(forKey: "majlis.auth.session.v1")
+        do {
+            guard let data = try KeychainStore.get(account: sessionKeychainAccount) else { return }
+            if let decoded = try? JSONDecoder().decode(AuthSession.self, from: data) {
+                sessionTokens = decoded
+            }
+        } catch {
+            NSLog("[NetworkService] Keychain restore failed: %@", error.localizedDescription)
         }
     }
 
     private func persistSession(_ session: AuthSession?) {
         sessionTokens = session
-        if let session, let data = try? JSONEncoder().encode(session) {
-            UserDefaults.standard.set(data, forKey: sessionDefaultsKey)
-        } else {
-            UserDefaults.standard.removeObject(forKey: sessionDefaultsKey)
+        do {
+            if let session, let data = try? JSONEncoder().encode(session) {
+                try KeychainStore.set(data, account: sessionKeychainAccount)
+            } else {
+                try KeychainStore.delete(account: sessionKeychainAccount)
+            }
+        } catch {
+            NSLog("[NetworkService] Keychain persist failed: %@", error.localizedDescription)
         }
     }
 
