@@ -68,6 +68,9 @@ html[data-theme="dark"] .mf2-frame {
   align-items: center;
   justify-content: space-between;
   direction: rtl;
+  /* عزل bidi لخطوط QPC Presentation Forms — يمنع وراثة
+     unicode-bidi:plaintext من قواعد elite العامة على حاويات *ayah*. */
+  unicode-bidi: isolate;
   /* حجم خط نسبي لعرض حاوية الصفحة (لا الشاشة) — يتطابق عبر كل المقاسات
      من iPhone SE إلى iPad دون كسر تخطيط (بوابة القبول 3). */
   font-size: 5.6cqw;
@@ -124,6 +127,7 @@ html[data-theme="dark"] .mf2-line { --mf2-ink: #F0EDE4; }
      لهامش ٤٤px حول كل كلمة/مجموعة قصيرة). */
   min-width: 0 !important;
   min-height: 0 !important;
+  unicode-bidi: isolate;
 }
 .mf2-ayah-group:hover,
 .mf2-ayah-group:focus-visible {
@@ -142,7 +146,10 @@ html[data-theme="dark"] .mf2-line { --mf2-ink: #F0EDE4; }
    متتاليتين — لا تُغيّر محتوى النص إطلاقًا (نص كل كلمة يبقى كما هو
    حرفيًا)، ولا تكسر خوارزمية البحث الثنائي للتحجيم (تقيس scrollWidth
    الفعلي المعروض، فتتكيّف تلقائيًا مع العرض الإضافي). */
-.mf2-word { display: inline; }
+.mf2-word {
+  display: inline;
+  unicode-bidi: isolate;
+}
 .mf2-word + .mf2-word,
 .mf2-ayah-group + .mf2-ayah-group .mf2-word:first-child {
   margin-inline-start: 0.24em;

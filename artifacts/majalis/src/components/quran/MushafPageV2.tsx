@@ -153,7 +153,11 @@ export function MushafPageV2({ layout, activeAyahKey, onAyahPress, sharedFontFam
               key={`l-${row.lineNumber}`}
               ref={(el) => { if (el) lineRefs.current.set(row.lineNumber, el); else lineRefs.current.delete(row.lineNumber); }}
               className={`mf2-line${centeredLines.has(row.lineNumber) ? " mf2-line--short" : ""}`}
-              style={{ fontFamily, fontSize: fittedSize ? `${fittedSize}px` : undefined }}
+              style={{
+                fontFamily,
+                fontSize: fittedSize ? `${fittedSize}px` : undefined,
+                unicodeBidi: "isolate",
+              }}
             >
               {groupWordsByAyah(row.words).map((group) => {
                 const verseKey = group[0].verseKey;
