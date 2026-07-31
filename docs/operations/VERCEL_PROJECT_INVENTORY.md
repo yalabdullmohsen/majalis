@@ -23,7 +23,9 @@
 | Dashboard status often `CANCELED` | Expected when ignoreCommand skips the build — **do not** treat as web Production failure |
 | Root `typecheck` | Excludes api-server by design |
 
-If api-server becomes required for a release, remove/adjust `ignoreCommand` and add a CI build step for `@workspace/api-server` before merge. Until then, web readiness = `majalis-majalis` only.
+CI (`Verify build`) typechecks and builds `@workspace/api-server` when the package directory exists, so a broken api-server cannot silently pass merge readiness even while its Vercel project stays skipped via `ignoreCommand`.
+
+Until api-server is deliberately re-enabled on Vercel (remove/adjust `ignoreCommand` + Preview proof), web Production readiness = `majalis-majalis` only.
 
 ## Other similarly named projects
 
