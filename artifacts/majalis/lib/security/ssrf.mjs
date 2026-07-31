@@ -77,7 +77,11 @@ export function isBlockedHostname(hostname) {
 /**
  * Validate URL before fetch. Resolves DNS and rejects private answers.
  * @param {string} rawUrl
- * @param {{ allowlist?: string[] | null, requireAllowlist?: boolean }} [opts]
+ * @param {{
+ *   allowlist?: string[] | null,
+ *   requireAllowlist?: boolean,
+ *   dnsLookup?: typeof lookup,
+ * }} [opts]
  */
 export async function assertSafeUrl(rawUrl, opts = {}) {
   let parsed;
@@ -101,14 +105,17 @@ export async function assertSafeUrl(rawUrl, opts = {}) {
     throw Object.assign(new Error("SSRF_BLOCKED: private IP literal"), { code: "ssrf_blocked" });
   }
   if (!isIP(host)) {
+    const dnsLookup = typeof opts.dnsLookup === "function" ? opts.dnsLookup : lookup;
     let records;
     try {
-      records = await lookup(host, { all: true, verbatim: true });
+      records = await dnsLookup(host, { all: true, verbatim: true });
     } catch {
       throw Object.assign(new Error("SSRF_BLOCKED: DNS failed"), { code: "ssrf_blocked" });
     }
-    for (const r of records) {
-      if (isPrivateIp(r.address)) {
+    const list = Array.isArray(records) ? records : records ? [records] : [];
+    for (const r of list) {
+      const address = typeof r === "string" ? r : r.address;
+      if (isPrivateIp(address)) {
         throw Object.assign(new Error("SSRF_BLOCKED: resolves to private IP"), {
           code: "ssrf_blocked",
         });
