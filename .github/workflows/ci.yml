@@ -60,17 +60,29 @@ jobs:
 
       - name: Generated artifacts --check
         run: |
-          pnpm --filter @workspace/majalis exec tsx scripts/generate-content-counts.ts --check
+          pnpm --filter @workspace/majalis exec node --import tsx scripts/generate-content-counts.ts --check
           pnpm --filter @workspace/majalis exec node scripts/generate-quran-pages-manifest.mjs --check
+
+      - name: Cron single-response gate
+        run: pnpm run verify:single-response
 
       - name: Full package tests
         run: pnpm --filter @workspace/majalis run test
+
+      - name: Install Playwright Chromium (color-contrast gate)
+        run: pnpm --filter @workspace/majalis exec playwright install --with-deps chromium
+
+      - name: Color contrast regression gate
+        run: pnpm --filter @workspace/majalis run test:color-contrast-gate
 
       - name: Deterministic build
         env:
           PORT: "24216"
           BASE_PATH: "/"
         run: pnpm --filter @workspace/majalis run build
+
+      - name: Bundle budget / no mega-seeds in entry
+        run: pnpm --filter @workspace/majalis run test:bundle-budget
 
       - name: git diff --exit-code (build must not dirty tree)
         run: git diff --exit-code
@@ -91,6 +103,13 @@ jobs:
         env:
           MIGRATION_TEST_DATABASE_URL: ${{ secrets.MIGRATION_TEST_DATABASE_URL }}
         run: pnpm run db:migration:verify
+
+      - name: Ops backlog report (read-only counts)
+        continue-on-error: true
+        env:
+          SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: pnpm run ops:backlog-report
 
   postgres-integration:
     name: postgres-integration

@@ -26,3 +26,18 @@ Missing secrets **fail** these workflows (no soft-skip greenwash).
 3. Prefer `pnpm install --frozen-lockfile` and Node **24**.
 4. Workflow `permissions` default to `contents: read` unless write is required.
 5. Vercel cron paths that apply migrations remain operational safeguards; treat them as privileged and protect `CRON_SECRET`.
+
+## Playwright / color-contrast gate
+
+CI installs Chromium before the gate (see `.github/workflows/ci.yml`):
+
+```bash
+pnpm --filter @workspace/majalis exec playwright install --with-deps chromium
+pnpm --filter @workspace/majalis run test:color-contrast-gate
+```
+
+Locally the same install is required — the gate **fails loudly** if Chromium is missing (no silent skip). The gate binds Vite to `127.0.0.1` only.
+
+## TypeScript runners
+
+Prefer `node --import tsx <file>` over `npx tsx` / bare `tsx` in package scripts and CI.
