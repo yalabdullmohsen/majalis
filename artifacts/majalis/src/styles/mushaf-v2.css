@@ -8,10 +8,12 @@
 
 .mf2-page {
   direction: rtl;
-  max-width: none;
+  max-width: 100%;
   width: 100%;
   margin: 0;
-  padding: 6px;
+  /* هامش أفقي آمن — يمنع اقتراب النص من حواف الشاشة/الإطار */
+  padding-block: 8px;
+  padding-inline: max(1rem, env(safe-area-inset-left, 0px)) max(1rem, env(safe-area-inset-right, 0px));
   box-sizing: border-box;
 }
 
@@ -20,7 +22,11 @@
   aspect-ratio: 0.72;
   background: var(--mf2-page-bg, #F8F7F3);
   border-radius: 6px;
-  padding: 3.2cqw 2.6cqw;
+  /* حشو داخلي أوفر للتشكيل العلوي/السفلي وحواف النص */
+  padding: 3.6cqw max(3cqw, 0.85rem);
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
   container-type: inline-size;
   box-shadow: 0 2px 18px rgba(14, 110, 82, .12);
   /* إطار زخرفي مزدوج — CSS بحت، منفصل كليًا عن النص (القسم 6.1). */
@@ -74,20 +80,21 @@ html[data-theme="dark"] .mf2-frame {
   /* حجم خط نسبي لعرض حاوية الصفحة (لا الشاشة) — يتطابق عبر كل المقاسات
      من iPhone SE إلى iPad دون كسر تخطيط (بوابة القبول 3). */
   font-size: 5.6cqw;
-  line-height: 1;
+  /* ارتفاع أوفر من 1 لاستيعاب التشكيل فوق/تحت خط الأساس دون قص */
+  line-height: 1.35;
   color: var(--mf2-ink, #1C1A18);
   white-space: nowrap;
+  word-break: keep-all;
+  overflow-wrap: normal;
   /* منع تحديد النص بالسحب العرضي (يتعارض مع سحب تقليب الصفحات RTL) —
      النسخ الشرعي محفوظ عبر زر "نسخ بالتشكيل" في قائمة إجراءات الآية
      (PageAyahActionSheet)، فلا حاجة للتحديد اليدوي بالسحب. */
   user-select: none;
   -webkit-user-select: none;
   -webkit-tap-highlight-color: transparent;
-  /* شبكة أمان: التحجيم التلقائي عبر JS (useLayoutEffect) دقيق في الغالبية
-     العظمى من الأسطر لكن ليس مضمونًا 100% رياضيًا لكل سطر (راجع تعليق
-     المكوّن) — overflow:hidden يمنع أي فيضان مرئي متبقٍّ من كسر إطار
-     الصفحة، حتى لو نتج عنه اقتصاص نادر جدًا بدل امتداد خارج الحدود. */
-  overflow: hidden;
+  /* قص أفقي فقط — overflow:hidden الكامل كان يقصّ علامات التشكيل رأسيًا. */
+  overflow-x: hidden;
+  overflow-y: visible;
 }
 html[data-theme="dark"] .mf2-line { --mf2-ink: #F0EDE4; }
 /* توحيد الألوان مع وضع القراءة المختار داخل المصحف نفسه (.quran-shell--*)
@@ -99,7 +106,13 @@ html[data-theme="dark"] .mf2-line { --mf2-ink: #F0EDE4; }
 .quran-shell--high-contrast .mf2-line { --mf2-ink: #000; }
 /* سطر قصير طبيعيًا (آية واحدة قصيرة على صفحة خاصة كالفاتحة) لا يُمدَّد
    بحجم خط ضخم ليملأ العرض — يُتوسَّط بحجمه المعقول بدلًا من ذلك. */
-.mf2-line--short { justify-content: center; gap: .5em; }
+/* السطر القصير / الأخير غير الممتلئ — توسيط كآخر سطر في صفحة المصحف */
+.mf2-line--short {
+  justify-content: center;
+  gap: .5em;
+  text-align: center;
+  text-align-last: center;
+}
 
 /* الوحدة التفاعلية الحقيقية = الآية (role="button" هنا فقط)، لا كل
    حرف/كلمة مفردة — كانت role="button" على .mf2-word نفسها تُفعِّل عمدًا
@@ -149,6 +162,10 @@ html[data-theme="dark"] .mf2-line { --mf2-ink: #F0EDE4; }
 .mf2-word {
   display: inline;
   unicode-bidi: isolate;
+  /* لا تُقطع الكلمة العربية عبر حدود السطر — يهزم قاعدة elite على span */
+  word-break: keep-all !important;
+  overflow-wrap: normal !important;
+  white-space: nowrap;
 }
 .mf2-word + .mf2-word,
 .mf2-ayah-group + .mf2-ayah-group .mf2-word:first-child {

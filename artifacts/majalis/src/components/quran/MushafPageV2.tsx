@@ -103,9 +103,10 @@ export function MushafPageV2({ layout, activeAyahKey, onAyahPress, sharedFontFam
       // خانة) أنتج نصًا يتمدَّد رأسيًا فيتراكب مع الأسطر المجاورة (رُصد
       // بلقطة حقيقية: نص ضخم متراكب رغم عدم وجود أي فيضان أفقي مقيس).
       // النص العربي المُشكَّل يحتاج ~1.5× حجم الخط ارتفاعًا فعليًا (تشكيل
-      // فوق/تحت خط الأساس) — 0.6 من ارتفاع الخانة هامش أمان معقول لذلك.
+      // فوق/تحت خط الأساس) — 0.52 من ارتفاع الخانة مع line-height:1.35
+      // يترك هامشًا أوضح للتشكيل بلا قص رأسي.
       const lineHeightAvailable = el.clientHeight || 999;
-      const MAX_FONT_PX = Math.min(45, lineHeightAvailable * 0.6);
+      const MAX_FONT_PX = Math.min(45, lineHeightAvailable * 0.52);
 
       let lo = 1;
       let hi = MAX_FONT_PX;
