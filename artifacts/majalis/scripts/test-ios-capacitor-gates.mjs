@@ -204,6 +204,21 @@ ok(
 // Capacitor auto-discovers CAPBridgedPlugin — AppDelegate must not manually register a conflicting name
 const appDelegate = readFileSync(join(iosApp, "App", "AppDelegate.swift"), "utf8");
 ok(!appDelegate.includes("MajlisPlaybackAudio"), "AppDelegate does not manually register playback plugin (CAPBridgedPlugin auto-discovery)");
+ok(appDelegate.includes("import WebKit"), "AppDelegate imports WebKit for cache purge");
+ok(
+  appDelegate.includes("WKWebsiteDataStore.default().removeData")
+    || /WKWebsiteDataStore\.default\(\)\s*\.removeData/.test(appDelegate),
+  "AppDelegate clears WKWebsiteDataStore on launch (live URL freshness)",
+);
+ok(appDelegate.includes("allWebsiteDataTypes"), "AppDelegate purges all website data types");
+
+// Live server URL must stay in the synced native capacitor.config.json
+const capJsonPath = join(iosApp, "App", "capacitor.config.json");
+ok(existsSync(capJsonPath), "ios capacitor.config.json exists");
+const capJson = JSON.parse(readFileSync(capJsonPath, "utf8"));
+ok(capJson?.server?.url === "https://www.majlisilm.com", "capacitor.config.json server.url is live site");
+ok(capJson?.server?.cleartext === true, "capacitor.config.json cleartext true");
+ok(capJson?.webDir === "dist", "capacitor.config.json webDir is dist");
 
 // Auth tokens must live in Keychain — never UserDefaults
 const networkServicePath = join(iosApp, "App", "Services", "NetworkService.swift");

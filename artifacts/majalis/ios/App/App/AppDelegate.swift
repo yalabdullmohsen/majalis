@@ -1,6 +1,7 @@
 import UIKit
 import Capacitor
 import AVFoundation
+import WebKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -11,6 +12,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Do not activate AVAudioSession at launch — plugins configure category on demand.
         _ = AppConfig.shared
         _ = NetworkService.shared
+        // امسح كاش WKWebView / Service Worker عند كل إقلاع حتى يُحمَّل الموقع الحي بلا بقايا قديمة.
+        WKWebsiteDataStore.default().removeData(
+            ofTypes: WKWebsiteDataStore.allWebsiteDataTypes(),
+            modifiedSince: Date.distantPast
+        ) {}
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(handleMediaServicesReset),
