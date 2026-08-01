@@ -3,8 +3,9 @@
 	"appName": "المجلس العلمي",
 	"webDir": "dist",
 	"server": {
-		"androidScheme": "https",
-		"cleartext": false
+		"url": "https://www.majlisilm.com",
+		"cleartext": true,
+		"androidScheme": "https"
 	},
 	"plugins": {
 		"SplashScreen": {
@@ -23,6 +24,14 @@
 		"Keyboard": {
 			"resize": "body",
 			"resizeOnFullScreen": true
+		},
+		"LocalNotifications": {
+			"presentationOptions": [
+				"badge",
+				"sound",
+				"banner",
+				"list"
+			]
 		}
 	},
 	"android": {

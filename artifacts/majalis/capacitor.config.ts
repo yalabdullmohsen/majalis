@@ -6,8 +6,9 @@ const config: CapacitorConfig = {
   // مخرجات `vite build` — لا تستخدم public/ (أصول المصدر فقط).
   webDir: "dist",
   server: {
+    url: "https://www.majlisilm.com",
+    cleartext: true,
     androidScheme: "https",
-    cleartext: false,
   },
   plugins: {
     SplashScreen: {
