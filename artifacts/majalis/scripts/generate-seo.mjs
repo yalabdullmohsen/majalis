@@ -28,16 +28,23 @@ const appRoot = resolve(__dirname, "..");
 const srcDir = resolve(appRoot, "src");
 
 // ─────────────────────────────────────────────────────────────────────────────
-// تحميل وحدات TypeScript مباشرة (Node ≥22 يجرّد الأنواع تلقائياً).
-// يلزم فقط حلّ الاسم المستعار "@/" وامتدادات .ts الضمنية.
-// register() يأخذ محدّد موديول يُصدّر الـ hooks (لا كائناً مضمّناً كـ registerHooks).
+// تحميل وحدات TypeScript عبر register() (Node ≥22).
+// مهم: shortCircuit على .ts بدون load+format يسبب ERR_UNKNOWN_FILE_EXTENSION،
+// وformat:'module' وحده يمرّر الأنواع كنص JS فيفشل. لذلك:
+//   resolve → يحل @/ ولاحقة .ts
+//   load    → stripTypeScriptTypes + { format: 'module', shortCircuit: true }
 // ─────────────────────────────────────────────────────────────────────────────
-const seoResolveHookSource = `
-import { existsSync } from "node:fs";
+const seoTsLoaderSource = `
+import { existsSync, readFileSync } from "node:fs";
 import { fileURLToPath, pathToFileURL } from "node:url";
 import { resolve as pathResolve } from "node:path";
+import { stripTypeScriptTypes } from "node:module";
 
 const srcDir = ${JSON.stringify(srcDir)};
+
+function isTsUrl(url) {
+  return url.endsWith(".ts") || url.endsWith(".mts") || url.endsWith(".cts");
+}
 
 export async function resolve(specifier, context, nextResolve) {
   let spec = specifier;
@@ -46,13 +53,29 @@ export async function resolve(specifier, context, nextResolve) {
   if (spec.startsWith("file:")) {
     const p = fileURLToPath(spec);
     for (const cand of [p, \`\${p}.ts\`, \`\${p}/index.ts\`]) {
-      if (existsSync(cand)) return { url: pathToFileURL(cand).href, shortCircuit: true };
+      if (existsSync(cand)) {
+        const url = pathToFileURL(cand).href;
+        if (cand.endsWith(".ts") || cand.endsWith(".mts") || cand.endsWith(".cts")) {
+          return { url, shortCircuit: true, format: "module" };
+        }
+        return { url, shortCircuit: true };
+      }
     }
   }
   return nextResolve(specifier, context);
 }
+
+export async function load(url, context, nextLoad) {
+  if (!isTsUrl(url)) return nextLoad(url, context);
+  const source = readFileSync(fileURLToPath(url), "utf8");
+  return {
+    format: "module",
+    shortCircuit: true,
+    source: stripTypeScriptTypes(source),
+  };
+}
 `;
-register(`data:text/javascript,${encodeURIComponent(seoResolveHookSource)}`);
+register(`data:text/javascript,${encodeURIComponent(seoTsLoaderSource)}`);
 
 const importSrc = (relPath) => import(pathToFileURL(resolve(appRoot, relPath)).href);
 
