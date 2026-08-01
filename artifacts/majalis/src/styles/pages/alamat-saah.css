@@ -73,7 +73,7 @@
 .as-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; background: var(--as-status-color, #666); }
 .as-status--waqat   { --as-status-color: #226A56; --as-status-bg: rgba(31,77,58,0.1); }
 .as-status--jariya  { --as-status-color: #1a3a5c; --as-status-bg: rgba(26,58,92,0.1); }
-.as-status--lam-taqaa { --as-status-color: #7c3aed; --as-status-bg: rgba(124,58,237,0.1); }
+.as-status--lam-taqaa { --as-status-color: var(--brand, #226A56); --as-status-bg: rgba(124,58,237,0.1); }
 
 /* Cards list */
 .as-list { display: flex; flex-direction: column; gap: var(--ds-space-4); }

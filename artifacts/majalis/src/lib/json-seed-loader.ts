@@ -1,6 +1,7 @@
 /**
  * محمّل JSON كسول لبذور المحتوى الثقيلة تحت /public/data.
- * في المتصفح: fetch. في Node (اختبارات/prerender): قراءة من القرص.
+ * في المتصفح: fetch فقط (لا node builtins).
+ * في Node (اختبارات/prerender): قراءة من القرص عبر وحدة .node منفصلة.
  */
 import { pooledFetch } from "@/lib/fetch-pool";
 
@@ -39,26 +40,15 @@ function getCache<T>(basePath: string): CacheEntry<T> {
 }
 
 async function readJsonFromDisk(urlPath: string): Promise<unknown | null> {
+  // Browser / Vite client: alias maps this to json-seed-disk.browser-stub.ts
+  // (see vite.config). Node/tsx loads the real .node reader with fs/path.
   if (typeof window !== "undefined") return null;
   try {
-    const fs = await import("node:fs/promises");
-    const path = await import("node:path");
-    const candidates = [
-      path.resolve(process.cwd(), "public" + urlPath),
-      path.resolve(process.cwd(), "artifacts/majalis/public" + urlPath),
-    ];
-    for (const file of candidates) {
-      try {
-        const raw = await fs.readFile(file, "utf8");
-        return JSON.parse(raw) as unknown;
-      } catch {
-        /* try next */
-      }
-    }
+    const mod = await import("./json-seed-disk.node");
+    return mod.readSeedJsonFromDisk(urlPath);
   } catch {
-    /* ignore */
+    return null;
   }
-  return null;
 }
 
 async function loadJson(urlPath: string): Promise<unknown> {

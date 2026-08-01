@@ -2,16 +2,18 @@ import { useEffect, useMemo, useRef, useState, type PointerEvent as ReactPointer
 import { Link } from "wouter";
 import { Archive, Bell, CheckCheck, Trash2 } from "lucide-react";
 import { PageHeader } from "@/components/ui-common";
-import { hapticTap } from "@/lib/capacitor-utils";
+import { hapticTap, isNative } from "@/lib/capacitor-utils";
 import { toArabicDigits } from "@/lib/utils";
 import {
   loadNotifPrefs,
   saveNotifPrefs,
-  requestPermission,
-  getPermissionStatus,
-  sendLocalNotification,
   type NotifPrefs,
 } from "@/lib/local-notifications";
+import {
+  getNotificationPermissionStatus,
+  requestNotificationPermission,
+  type PermissionStatus,
+} from "@/lib/prayer-local-notifications";
 import {
   loadHistory,
   markRead,
@@ -24,10 +26,20 @@ import {
 } from "@/lib/notification-history";
 import { applyPageSeo } from "@/lib/seo";
 import { PushPrompt } from "@/components/PushPrompt";
+import { fireTestLocalNotification } from "@/lib/notifications/test-trigger";
 import "@/styles/pages/notifications.css";
 
-type Permission = ReturnType<typeof getPermissionStatus>;
 type HistoryTab = "inbox" | "archived";
+
+function isDevToolsVisible(): boolean {
+  try {
+    if (typeof window === "undefined") return false;
+    if (import.meta.env.DEV) return true;
+    return new URLSearchParams(window.location.search).get("notifDebug") === "1";
+  } catch {
+    return false;
+  }
+}
 
 /** تسمية اليوم بالعربية لرأس التجميع: اليوم / أمس / تاريخ مختصر. */
 function dayLabel(iso: string): string {
@@ -189,9 +201,15 @@ export default function NotificationSettingsPage() {
       robots: "noindex, follow",
     });
   }, []);
-  const [permission, setPermission] = useState<Permission>(getPermissionStatus);
+  const [permission, setPermission] = useState<PermissionStatus>("prompt");
   const [requesting, setRequesting] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [testStatus, setTestStatus] = useState<string | null>(null);
+  const showDevTools = isDevToolsVisible();
+
+  useEffect(() => {
+    void getNotificationPermissionStatus().then(setPermission);
+  }, []);
 
   // تاريخ الإشعارات
   const [history, setHistory] = useState<NotifRecord[]>(() => loadHistory());
@@ -207,6 +225,9 @@ export default function NotificationSettingsPage() {
     saveNotifPrefs(prefs);
     setSaved(true);
     const t = setTimeout(() => setSaved(false), 1500);
+    void import("@/lib/smart-local-notifications").then(({ syncSmartLocalNotifications }) => {
+      void syncSmartLocalNotifications();
+    });
     return () => clearTimeout(t);
   }, [prefs]);
 
@@ -214,13 +235,26 @@ export default function NotificationSettingsPage() {
 
   const handleEnable = async () => {
     setRequesting(true);
-    const result = await requestPermission();
-    setPermission(result);
-    if (result === "granted") {
+    const granted = await requestNotificationPermission();
+    const status = await getNotificationPermissionStatus();
+    setPermission(status);
+    if (granted) {
       setPrefs(p => ({ ...p, enabled: true }));
-      sendLocalNotification("الإشعارات مفعّلة", { body: "سنذكّرك بمراجعة البطاقات والدروس." });
     }
     setRequesting(false);
+  };
+
+  const handleTestTrigger = async () => {
+    setTestStatus("جاري الإرسال…");
+    const result = await fireTestLocalNotification();
+    if (result.ok) {
+      setTestStatus(result.platform === "native" ? "سيظهر خلال ثانية ونصف" : "تم الإرسال");
+    } else if (result.reason === "permission") {
+      setTestStatus("الإذن غير ممنوح");
+    } else {
+      setTestStatus("فشل الإرسال");
+    }
+    window.setTimeout(() => setTestStatus(null), 4000);
   };
 
   const update = (patch: Partial<NotifPrefs>) => setPrefs(p => ({ ...p, ...patch }));
@@ -250,23 +284,44 @@ export default function NotificationSettingsPage() {
         subtitle="تذكّرات مخصصة تساعدك على المثابرة في طلب العلم."
       />
 
-      <section className="notif-card" aria-label="إشعارات الدفع عبر الويب">
-        <h2 className="notif-card__title">إشعارات الدفع (PWA)</h2>
-        <p className="notif-row__sub" style={{ marginBottom: "0.75rem" }}>
-          تُرسل عبر متصفحك عند تثبيت التطبيق أو السماح بالإشعارات.
-        </p>
-        <PushPrompt />
-      </section>
+      {!isNative && (
+        <section className="notif-card" aria-label="إشعارات الدفع عبر الويب">
+          <h2 className="notif-card__title">إشعارات الدفع (PWA)</h2>
+          <p className="notif-row__sub" style={{ marginBottom: "0.75rem" }}>
+            تُرسل عبر متصفحك عند تثبيت التطبيق أو السماح بالإشعارات.
+          </p>
+          <PushPrompt />
+        </section>
+      )}
+
+      {isNative && (
+        <section className="notif-card" aria-label="إشعارات التطبيق">
+          <h2 className="notif-card__title">إشعارات التطبيق</h2>
+          <p className="notif-row__sub">
+            على iOS تُستخدم الإشعارات المحلية لأوقات الصلاة وورد القرآن اليومي (٥ مساءً).
+            إشعارات الويب (Web Push) معطّلة هنا عمداً لتفادي التعارض.
+          </p>
+        </section>
+      )}
 
       {/* ── حالة الصلاحية ── */}
       {isUnsupported && (
         <div className="notif-banner notif-banner--warn">
-          متصفحك لا يدعم الإشعارات. جرّب Chrome أو Firefox.
+          {isNative
+            ? "هذا الجهاز لا يدعم الإشعارات المحلية."
+            : "متصفحك لا يدعم الإشعارات. جرّب Chrome أو Firefox."}
         </div>
       )}
       {isDenied && (
         <div className="notif-banner notif-banner--err">
-          الإشعارات محجوبة من إعدادات المتصفح. فعّلها يدوياً ثم أعد المحاولة.
+          {isNative
+            ? "الإشعارات محجوبة من إعدادات النظام. افتح الإعدادات ← المجلس العلمي ← الإشعارات وفعّلها، ثم أعد فتح التطبيق."
+            : "الإشعارات محجوبة من إعدادات المتصفح. فعّلها يدوياً ثم أعد المحاولة."}
+        </div>
+      )}
+      {permission === "prompt" && !prefs.enabled && (
+        <div className="notif-banner notif-banner--warn">
+          الإذن لم يُمنَح بعد — فعّل الإشعارات بالزر أدناه لتصل تنبيهات الصلاة والورد.
         </div>
       )}
 
@@ -286,10 +341,20 @@ export default function NotificationSettingsPage() {
         <h3 className="notif-card__title">أنواع التذكّرات</h3>
         <ToggleRow label="مراجعة البطاقات" sub="تذكير يومي عند وجود بطاقات مستحقة" checked={prefs.flashcardsReminder} onChange={v => update({ flashcardsReminder: v })} disabled={!canToggle} />
         <ToggleRow label="تابع من حيث توقفت" sub="تذكير بالدرس أو الكتاب الذي لم تُكمله" checked={prefs.resumeReminder} onChange={v => update({ resumeReminder: v })} disabled={!canToggle} />
-        <ToggleRow label="تنبيه الصلاة" sub="إشعار قبل 10 دقائق من وقت الصلاة" checked={prefs.prayerReminder} onChange={v => update({ prayerReminder: v })} disabled={!canToggle} />
+        <ToggleRow
+          label="تنبيه الصلاة"
+          sub={
+            isNative
+              ? "تذكير داخل الصفحة فقط — التنبيه الأصلي (١٥ دقيقة) من صفحة أوقات الصلاة / إعدادات الأذان"
+              : "إشعار تقريبي قبل الصلاة (الويب)؛ التنبيه الأصلي ١٥ دقيقة من إعدادات الأذان"
+          }
+          checked={prefs.prayerReminder}
+          onChange={v => update({ prayerReminder: v })}
+          disabled={!canToggle}
+        />
         <ToggleRow
           label="ورد القرآن اليومي"
-          sub="تذكير يومي الساعة 5 مساءً لقراءة الورد"
+          sub="تذكير يومي الساعة 5 مساءً (17:00) لقراءة الورد — ليس 5 صباحاً"
           checked={prefs.quranDailyReminder}
           onChange={(v) => {
             void (async () => {
@@ -323,9 +388,28 @@ export default function NotificationSettingsPage() {
       {/* ── اختبار ── */}
       {isGranted && (
         <div className="notif-card">
-          <button type="button" className="notif-test-btn" onClick={() => sendLocalNotification("اختبار الإشعارات", { body: "هذا إشعار تجريبي من المجلس العلمي." })}>
+          <button type="button" className="notif-test-btn" onClick={() => void handleTestTrigger()}>
             إرسال إشعار تجريبي
           </button>
+          {testStatus && <p className="notif-row__sub" style={{ marginTop: "0.5rem" }}>{testStatus}</p>}
+        </div>
+      )}
+
+      {showDevTools && (
+        <div className="notif-card" aria-label="أدوات مطوّر الإشعارات">
+          <h3 className="notif-card__title">تشخيص الإشعارات (مطوّر)</h3>
+          <p className="notif-row__sub" style={{ marginBottom: "0.75rem" }}>
+            منصة: {isNative ? "Capacitor أصلي" : "ويب"} · الإذن: {permission}
+            {!import.meta.env.DEV && " · ?notifDebug=1"}
+          </p>
+          <button
+            type="button"
+            className="notif-test-btn"
+            onClick={() => void handleTestTrigger()}
+          >
+            Test Notification Trigger
+          </button>
+          {testStatus && <p className="notif-row__sub" style={{ marginTop: "0.5rem" }}>{testStatus}</p>}
         </div>
       )}
 

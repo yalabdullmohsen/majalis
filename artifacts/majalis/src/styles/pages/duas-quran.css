@@ -31,7 +31,7 @@
   border-radius: .7rem; font-size: .9rem; outline: none;
   margin-bottom: 1rem; background: #fff; box-sizing: border-box; font-family: inherit;
 }
-.dq-search:focus { border-color: #3B82F6; }
+.dq-search:focus { border-color: var(--info-fg, #1B5E8A); }
 
 /* categories */
 .dq-cats { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: .75rem; }

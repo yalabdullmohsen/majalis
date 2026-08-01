@@ -1,4 +1,8 @@
-// Web Notifications API wrapper — إشعارات محلية في المتصفح
+// Web Notifications API wrapper — إشعارات محلية في المتصفح.
+// على Capacitor الأصلي: إذن العرض يُدار عبر @capacitor/local-notifications
+// (انظر prayer-local-notifications.ts) — لا تعتمد على window.Notification هناك.
+
+import { isNative } from "@/lib/capacitor-utils";
 
 const STORAGE_KEY = "majalis_notif_prefs_v1";
 
@@ -37,13 +41,29 @@ export function saveNotifPrefs(prefs: NotifPrefs): void {
 }
 
 export async function requestPermission(): Promise<NotificationPermission> {
+  if (isNative) {
+    const { requestNotificationPermission, getNotificationPermissionStatus } = await import(
+      "@/lib/prayer-local-notifications"
+    );
+    const granted = await requestNotificationPermission();
+    if (granted) return "granted";
+    const status = await getNotificationPermissionStatus();
+    if (status === "denied") return "denied";
+    if (status === "unsupported") return "denied";
+    return "default";
+  }
   if (!("Notification" in window)) return "denied";
   if (Notification.permission === "granted") return "granted";
   if (Notification.permission === "denied") return "denied";
   return Notification.requestPermission();
 }
 
+/** حالة متزامنة للويب فقط — على الأصل استخدم getNotificationPermissionStatus(). */
 export function getPermissionStatus(): NotificationPermission | "unsupported" {
+  if (isNative) {
+    // WKWebView قد يعرض Notification.permission بلا صلة بإذن Capacitor.
+    return "default";
+  }
   if (!("Notification" in window)) return "unsupported";
   return Notification.permission;
 }
@@ -52,6 +72,40 @@ export function sendLocalNotification(
   title: string,
   options?: { body?: string; icon?: string; tag?: string },
 ): void {
+  if (isNative) {
+    // Web Notification API غير موثوق داخل WKWebView — جدول عبر Capacitor.
+    void (async () => {
+      try {
+        const { LocalNotifications } = await import("@capacitor/local-notifications");
+        const {
+          ensureNotificationChannels,
+          CHANNEL_GENERAL,
+          DEFAULT_ALERT_SOUND,
+        } = await import("@/lib/notifications/channels");
+        await ensureNotificationChannels();
+        const perm = await LocalNotifications.checkPermissions();
+        if (perm.display !== "granted") return;
+        const id = 99800 + (Math.abs(hashTag(options?.tag ?? title)) % 90);
+        await LocalNotifications.cancel({ notifications: [{ id }] });
+        await LocalNotifications.schedule({
+          notifications: [
+            {
+              id,
+              title,
+              body: options?.body ?? "",
+              schedule: { at: new Date(Date.now() + 800), allowWhileIdle: true },
+              sound: DEFAULT_ALERT_SOUND,
+              channelId: CHANNEL_GENERAL,
+              extra: { kind: "local-web-bridge", tag: options?.tag },
+            },
+          ],
+        });
+      } catch {
+        /* ignore */
+      }
+    })();
+    return;
+  }
   if (!("Notification" in window) || Notification.permission !== "granted") return;
   try {
     new Notification(title, {
@@ -64,6 +118,12 @@ export function sendLocalNotification(
   } catch {
     // Safari may throw if page is not focused
   }
+}
+
+function hashTag(s: string): number {
+  let h = 0;
+  for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0;
+  return h;
 }
 
 // ── جدولة التذكيرات عند تحميل الصفحة ──────────────────────────────────────

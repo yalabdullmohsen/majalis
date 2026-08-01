@@ -73,9 +73,8 @@ const ASSERTIONS = [
   // يُقاس فعليًا على آخر مسار آخر تمت زيارته (فشل زائف، لا عطل تباين حقيقي). ──
   // زر التخصيص ثابت في البنية الجديدة ويجب أن يبقى مقروءًا على السطح العاجي.
   { route: "/", selector: ".hpv4-customize-trigger", mode: "light", min: 4.5 },
-  // "مواسم التعلّم" (.ds-section__title نفسه، بطاقة مختلفة بلا .home-section
-  // تعارض) — في الوضع الليلي فقط: --elite-forest يتحوّل لأخضر نعناعي أفتح
-  // فلا يكفي نص أبيض ثابت (color:#fff) فوقه.
+  // "مواسم التعلّم" — شارة عنوان بقسم: نص على خلفية --elite-forest العميقة
+  // (تبقى #143F35 في الوضع الليلي؛ لا تُسطَّح إلى نعناعي).
   { route: "/", selector: ".lsw-section .ds-section__title", mode: "dark", min: 3 },
   // .sq-title (عنوان SectionQuiz داخل .sq-header الداكن) كان يخسر نفس المعركة.
   { route: "/cards", selector: ".sq-title", mode: "light", min: 4.5 },
@@ -108,7 +107,9 @@ const ASSERTIONS = [
   // (#F7F4ED العاجية) — 48+ عنصر نص خافت بتباين ~2.5:1 فقط. اللون الجديد
   // #5E655F (5.5:1 مقابل #F7F4ED) عُمِّم عبر src/ كاملة (نفس القيمة
   // القديمة كانت مكرَّرة حرفيًا 150+ مرة).
-  { route: "/prayer-times", selector: ".pt-date-greg", mode: "light", min: 4.5 },
+  // صفحة الصلاة أعادت البناء إلى pts-* (لا .pt-date-greg). التأكيد على
+  // .pts-dates فوق الخلفية الزمردية الصلبة لـ .pts-screen.
+  { route: "/prayer-times", selector: ".pts-dates", mode: "light", min: 4.5 },
   // 2) نفس نمط "كل <a> أخضر فاتح في الوضع الليلي" الموثَّق أعلاه — 32
   // رابطًا إضافيًا لم يكونا مستثنَيَين (نص شبه غير مرئي فوق خلفيات بيضاء
   // أو خضراء متوسطة خاصة بها، تباين 1.3–2.79:1).
@@ -118,10 +119,28 @@ const ASSERTIONS = [
 
 const RATIO_FN = `(selector) => {
   function parseColor(str) {
+    if (!str || str === "transparent") return null;
+    // rgb(255, 255, 255) | rgba(255, 255, 255, 0.8) | rgb(255 255 255 / 0.8)
     const m = str.match(/rgba?\\(([^)]+)\\)/);
     if (!m) return null;
-    const parts = m[1].split(",").map((s) => parseFloat(s.trim()));
-    return { r: parts[0], g: parts[1], b: parts[2], a: parts.length > 3 ? parts[3] : 1 };
+    const body = m[1].trim();
+    let r, g, b, a = 1;
+    if (body.includes(",")) {
+      const parts = body.split(",").map((s) => parseFloat(s.trim()));
+      r = parts[0]; g = parts[1]; b = parts[2];
+      if (parts.length > 3 && Number.isFinite(parts[3])) a = parts[3];
+    } else {
+      const [rgbPart, alphaPart] = body.split("/").map((s) => s.trim());
+      const parts = rgbPart.split(/\\s+/).map((s) => parseFloat(s));
+      r = parts[0]; g = parts[1]; b = parts[2];
+      if (alphaPart != null) {
+        a = alphaPart.endsWith("%") ? parseFloat(alphaPart) / 100 : parseFloat(alphaPart);
+      } else if (parts.length > 3) {
+        a = parts[3];
+      }
+    }
+    if (![r, g, b].every(Number.isFinite)) return null;
+    return { r, g, b, a: Number.isFinite(a) ? a : 1 };
   }
   function relLum({ r, g, b }) {
     const f = (c) => { c /= 255; return c <= 0.03928 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4); };
@@ -136,9 +155,13 @@ const RATIO_FN = `(selector) => {
     let node = el;
     while (node) {
       const cs = getComputedStyle(node);
-      if (cs.backgroundImage && cs.backgroundImage !== "none") return null;
+      // فضّل background-color الصلب حتى مع تدرّج فوقه (نمط شائع).
       const bg = parseColor(cs.backgroundColor);
+      const hasImage = cs.backgroundImage && cs.backgroundImage !== "none";
+      // Opaque underlay under decorative gradients is measurable; bare
+      // images/gradients without underlay remain unmeasurable (null).
       if (bg && bg.a > 0.5) return bg;
+      if (hasImage) return null;
       node = node.parentElement;
     }
     return { r: 255, g: 255, b: 255, a: 1 };
@@ -169,13 +192,18 @@ function waitForServer(url, timeoutMs = 30000) {
 }
 
 async function main() {
-  console.log(`▶ تشغيل خادم Vite dev محلي على المنفذ ${PORT} لبوابة انحدار تباين الألوان...`);
-  const server = spawn("pnpm", ["run", "dev"], {
-    cwd: appRoot,
-    env: { ...process.env, PORT },
-    stdio: ["ignore", "pipe", "pipe"],
-    detached: true,
-  });
+  console.log(`▶ تشغيل خادم Vite dev على 127.0.0.1:${PORT} لبوابة انحدار تباين الألوان...`);
+  // تجاوز --host 0.0.0.0 في سكربت dev — البوابة تلزم loopback فقط.
+  const server = spawn(
+    "pnpm",
+    ["exec", "vite", "--config", "vite.config.ts", "--host", "127.0.0.1", "--port", PORT],
+    {
+      cwd: appRoot,
+      env: { ...process.env, PORT, BASE_PATH: process.env.BASE_PATH || "/", HOST: "127.0.0.1" },
+      stdio: ["ignore", "pipe", "pipe"],
+      detached: true,
+    },
+  );
   let serverOutput = "";
   server.stdout.on("data", (d) => { serverOutput += d.toString(); });
   server.stderr.on("data", (d) => { serverOutput += d.toString(); });
@@ -193,7 +221,17 @@ async function main() {
     process.exit(1);
   }
 
-  const browser = await chromium.launch();
+  let browser;
+  try {
+    browser = await chromium.launch();
+  } catch (e) {
+    killServer();
+    console.error("❌ متصفح Playwright Chromium غير مثبت أو غير قابل للتشغيل.");
+    console.error("   ثبّته صراحة (لا تتجاوز الفشل بصمت):");
+    console.error("   pnpm exec playwright install --with-deps chromium");
+    console.error(String(e?.message || e).slice(0, 400));
+    process.exit(1);
+  }
   const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
   const failures = [];
   const routeCache = new Map();

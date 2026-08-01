@@ -45,6 +45,19 @@ describe("classifyPullRequest", () => {
     assert.equal(r.blocked, true);
   });
 
+  it("Level C for workflows / api-handlers / package manager", () => {
+    for (const path of [
+      ".github/workflows/ci.yml",
+      "artifacts/majalis/lib/api-handlers/cron/x.js",
+      "package.json",
+      "pnpm-lock.yaml",
+    ]) {
+      const r = classifyPullRequest({ files: [path], title: "ci: change" });
+      assert.equal(r.level, "C", path);
+      assert.equal(r.blocked, true, path);
+    }
+  });
+
   it("Level C when files > 40", () => {
     const files = Array.from({ length: 41 }, (_, i) => `src/f${i}.ts`);
     const r = classifyPullRequest({ files, title: "chore: bulk" });

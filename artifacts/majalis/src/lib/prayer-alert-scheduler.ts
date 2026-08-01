@@ -3,16 +3,19 @@
  * وLive Activity (تعمل تفاعلياً أثناء فتح التطبيق) وحدث الشريط داخل التطبيق.
  *
  * الإشعارات المحلية تُجدوَل فوراً عبر نظام التشغيل (تنجو من إغلاق التطبيق).
- * Live Activity وشريط التطبيق يُفعَّلان بمؤقّتات JS (تعمل فقط والتطبيق مفتوح
- * أو حديث العهد بالخلفية) — لذا نُعيد فحص النافذة أيضاً عند كل عودة للتطبيق
- * (visibilitychange) حتى لا تُفوَّت صلاة دخلت نافذتها والتطبيق كان مغلقاً.
+ * على الأصل: تُجدوَل كل الصلوات المفروضة القادمة (اليوم + ما يلتفّ للغد) حتى
+ * تصل التنبيهات بعد قتل التطبيق/إعادة التشغيل دون الاعتماد على مؤقّتات JS.
+ * Live Activity وشريط التطبيق يُفعَّلان بمؤقّتات JS للصلاة التالية فقط.
  */
 import {
   type PrayerSlot,
   type PrayerTimesPayload,
 } from "./prayer-times";
 import { loadPrayerAlertPrefs, PRE_ALERT_MINUTES, LIVE_ACTIVITY_LINGER_MINUTES } from "./prayer-alert-preferences";
-import { schedulePrayerNativeNotifications } from "./prayer-local-notifications";
+import {
+  cancelAllPrayerNativeNotifications,
+  schedulePrayerNativeNotifications,
+} from "./prayer-local-notifications";
 import { startPrayerLiveActivity, markPrayerLiveActivityEntered, endPrayerLiveActivity } from "./plugins/prayer-live-activity";
 
 export type PrayerAlertEvent = {
@@ -35,12 +38,36 @@ const KEY_TO_ARABIC: Record<string, string> = {
 };
 
 const _timers: ReturnType<typeof setTimeout>[] = [];
-let _lastScheduledKey: string | null = null;
+/** توقيع آخر جدولة أصلية — يمنع التكرار دون حجب إعادة الجدولة عند تغيّر الوقت/التفضيلات. */
+let _lastScheduleSig: string | null = null;
 let _liveActivityActiveForKey: string | null = null;
 
 function clearAllTimers() {
   for (const t of _timers) clearTimeout(t);
   _timers.length = 0;
+}
+
+/** يُصدَّر للاختبارات والواجهات — يبني توقيع جدولة الإشعار الأصلي. */
+export function buildPrayerScheduleSignature(opts: {
+  prayerKey: string;
+  prayerTimeEpochMs: number;
+  preAlertEnabled: boolean;
+  enterAlertEnabled: boolean;
+  preAlertMinutes: number;
+}): string {
+  const minuteBucket = Math.floor(opts.prayerTimeEpochMs / 60_000);
+  return [
+    opts.prayerKey.toLowerCase(),
+    String(minuteBucket),
+    opts.preAlertEnabled ? "1" : "0",
+    opts.enterAlertEnabled ? "1" : "0",
+    String(opts.preAlertMinutes),
+  ].join("|");
+}
+
+/** امسح كاش الجدولة — يُستدعى عند تغيّر التفضيلات أو العودة للتطبيق بقوة. */
+export function invalidatePrayerNativeSchedule(): void {
+  _lastScheduleSig = null;
 }
 
 function kuwaitNowMs(): number {
@@ -57,22 +84,23 @@ function kuwaitNowMs(): number {
   return (h * 3600 + m * 60 + s) * 1000;
 }
 
+/**
+ * كل الصلوات المفروضة مع epoch مطلق (ما فات يلتفّ لليوم التالي).
+ * يُستخدم لجدولة نظام التشغيل — لا يعتمد على بقاء التطبيق مفتوحاً.
+ */
+export function listNativePrayerScheduleSlots(
+  prayers: PrayerSlot[],
+): Array<{ slot: PrayerSlot; epoch: number }> {
+  const obligatory = prayers.filter((p) => p.obligatory && p.minutes != null);
+  return obligatory
+    .map((slot) => ({ slot, epoch: epochForSlot(slot) }))
+    .sort((a, b) => a.epoch - b.epoch);
+}
+
 /** أقرب صلاة قادمة لم يحن وقتها بعد (تتجاهل ما فات، تلتفّ لليوم التالي إن لزم). */
 function findNextUpcoming(prayers: PrayerSlot[]): PrayerSlot | null {
-  const nowMs = kuwaitNowMs();
-  const obligatory = prayers.filter((p) => p.obligatory && p.minutes != null);
-  let best: PrayerSlot | null = null;
-  let bestDelay = Infinity;
-  for (const p of obligatory) {
-    const slotMs = (p.minutes as number) * 60_000;
-    let delay = slotMs - nowMs;
-    if (delay < 0) delay += 24 * 3600_000;
-    if (delay < bestDelay) {
-      bestDelay = delay;
-      best = p;
-    }
-  }
-  return best;
+  const slots = listNativePrayerScheduleSlots(prayers);
+  return slots[0]?.slot ?? null;
 }
 
 function epochForSlot(slot: PrayerSlot): number {
@@ -112,38 +140,71 @@ async function fireLiveActivityEnter() {
   _timers.push(t);
 }
 
-/**
- * يُجدوِل تنبيهي "قبل ١٥ دقيقة" و"دخول الوقت" لأقرب صلاة قادمة فقط (لا داعي
- * لجدولة كل الصلوات مقدَّماً — يُعاد الاستدعاء تلقائياً بعد كل صلاة ومنتصف الليل).
- */
-export async function startPrayerAlertScheduler(payload: PrayerTimesPayload): Promise<void> {
-  clearAllTimers();
-  const next = findNextUpcoming(payload.prayers);
-  if (!next) return;
-
-  const prefs = loadPrayerAlertPrefs();
-  const prayerEpoch = epochForSlot(next);
-  const prayerName = KEY_TO_ARABIC[next.key] ?? next.name;
-
-  // إشعارات محلية أصلية — تُجدوَل فوراً عبر نظام التشغيل (تعمل حتى لو أُغلق التطبيق).
-  if (next.key !== _lastScheduledKey) {
-    _lastScheduledKey = next.key;
-    void schedulePrayerNativeNotifications({
-      prayerKey: next.key.toLowerCase(),
-      prayerName,
-      prayerTimeEpochMs: prayerEpoch,
+async function rescheduleAllNativePrayers(
+  slots: Array<{ slot: PrayerSlot; epoch: number }>,
+  prefs: ReturnType<typeof loadPrayerAlertPrefs>,
+): Promise<void> {
+  if (!prefs.preAlertEnabled && !prefs.enterAlertEnabled) {
+    await cancelAllPrayerNativeNotifications();
+    return;
+  }
+  for (const { slot, epoch } of slots) {
+    await schedulePrayerNativeNotifications({
+      prayerKey: slot.key.toLowerCase(),
+      prayerName: KEY_TO_ARABIC[slot.key] ?? slot.name,
+      prayerTimeEpochMs: epoch,
       preAlertEnabled: prefs.preAlertEnabled,
       enterAlertEnabled: prefs.enterAlertEnabled,
       preAlertMinutes: PRE_ALERT_MINUTES,
     });
   }
+}
+
+/**
+ * يُجدوِل إشعارات نظام التشغيل لكل الصلوات المفروضة القادمة، ويضبط مؤقّتات
+ * الشريط/Live Activity للصلاة التالية فقط.
+ */
+export async function startPrayerAlertScheduler(
+  payload: PrayerTimesPayload,
+  opts?: { forceNativeReschedule?: boolean },
+): Promise<void> {
+  clearAllTimers();
+  const slots = listNativePrayerScheduleSlots(payload.prayers);
+  if (!slots.length) return;
+
+  const prefs = loadPrayerAlertPrefs();
+  const batchSig = !prefs.preAlertEnabled && !prefs.enterAlertEnabled
+    ? "disabled"
+    : slots
+        .map(({ slot, epoch }) =>
+          buildPrayerScheduleSignature({
+            prayerKey: slot.key,
+            prayerTimeEpochMs: epoch,
+            preAlertEnabled: prefs.preAlertEnabled,
+            enterAlertEnabled: prefs.enterAlertEnabled,
+            preAlertMinutes: PRE_ALERT_MINUTES,
+          }),
+        )
+        .join(";");
+
+  if (opts?.forceNativeReschedule || batchSig !== _lastScheduleSig) {
+    _lastScheduleSig = batchSig;
+    await rescheduleAllNativePrayers(slots, prefs);
+  }
+
+  const next = findNextUpcoming(payload.prayers);
+  if (!next) return;
+
+  const prayerEpoch = epochForSlot(next);
+  const prayerName = KEY_TO_ARABIC[next.key] ?? next.name;
+  const prayerKey = next.key.toLowerCase();
 
   const preAlertDelay = prayerEpoch - Date.now() - PRE_ALERT_MINUTES * 60_000;
   const enterDelay = prayerEpoch - Date.now();
 
   const fireEvent: PrayerAlertEvent = {
     type: "pre-alert",
-    prayerKey: next.key.toLowerCase(),
+    prayerKey,
     prayerName,
     prayerTimeEpochMs: prayerEpoch,
     preAlertMinutes: PRE_ALERT_MINUTES,
@@ -165,7 +226,7 @@ export async function startPrayerAlertScheduler(payload: PrayerTimesPayload): Pr
     const t = setTimeout(() => {
       dispatchAlert({ ...fireEvent, type: "entered" });
       void fireLiveActivityEnter();
-      _lastScheduledKey = null; // اسمح بجدولة الصلاة التالية عند إعادة التشغيل
+      _lastScheduleSig = null; // اسمح بجدولة الصلاة التالية عند إعادة التشغيل
       import("./prayer-times").then(({ fetchPrayerTimes }) => {
         fetchPrayerTimes().then((p) => startPrayerAlertScheduler(p));
       });
@@ -179,7 +240,11 @@ export function stopPrayerAlertScheduler() {
 }
 
 /** يُستدعى عند عودة التطبيق للواجهة (resume) — يُعيد فحص النافذة الحالية فوراً. */
-export async function recheckPrayerAlertWindow(payload: PrayerTimesPayload | null) {
+export async function recheckPrayerAlertWindow(
+  payload: PrayerTimesPayload | null,
+  opts?: { force?: boolean },
+) {
   if (!payload) return;
-  await startPrayerAlertScheduler(payload);
+  if (opts?.force) invalidatePrayerNativeSchedule();
+  await startPrayerAlertScheduler(payload, { forceNativeReschedule: opts?.force });
 }

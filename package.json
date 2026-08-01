@@ -9,6 +9,8 @@
     "build": "pnpm run typecheck && pnpm -r --filter \"!./artifacts/majalis-mobile\" --if-present run build",
     "typecheck:libs": "tsc -b",
     "typecheck": "pnpm run typecheck:libs && pnpm -r --filter \"./artifacts/**\" --filter \"./scripts\" --filter \"!@workspace/api-server\" --if-present run typecheck",
+    "lint": "pnpm --filter @workspace/majalis run lint",
+    "test": "pnpm --filter @workspace/majalis run test && pnpm run test:release-train && pnpm run test:safe-auto-merge",
     "verify:production-complete": "pnpm --filter @workspace/majalis run verify:production-complete",
     "verify:no-unsafe-auto-merge": "node scripts/verify-no-unsafe-auto-merge.mjs",
     "verify:no-runtime-ddl": "node scripts/verify-no-runtime-ddl.mjs",
@@ -19,11 +21,13 @@
     "test:postgres-integration": "node scripts/test-postgres-queue-integration.mjs",
     "verify:platform-hardening-sql": "node scripts/verify-platform-hardening-sql.mjs",
     "test:release-train": "node --test .github/scripts/release-train/__tests__/*.test.mjs",
-    "test:safe-auto-merge": "node --test .github/scripts/safe-auto-merge/__tests__/*.test.mjs"
+    "test:safe-auto-merge": "node --test .github/scripts/safe-auto-merge/__tests__/*.test.mjs",
+    "ops:backlog-report": "node scripts/ops-backlog-report.mjs"
   },
   "private": true,
   "devDependencies": {
     "prettier": "^3.8.3",
+    "tsx": "4.21.0",
     "typescript": "~5.9.3"
   }
 }

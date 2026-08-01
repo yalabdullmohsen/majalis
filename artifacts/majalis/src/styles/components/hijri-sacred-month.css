@@ -6,7 +6,7 @@
 /* ألوان الفترات */
 .hmb-period--ramadan  { --hmb-accent: #6D28D9; --hmb-accent-dark: #4C1D95; --hmb-bg: #F5F0FF; }
 .hmb-period--muharram { --hmb-accent: #1D4ED8; --hmb-accent-dark: #1E3A8A; --hmb-bg: #EEF2FF; }
-.hmb-period--shaban   { --hmb-accent: #7C3AED; --hmb-accent-dark: #5B21B6; --hmb-bg: #F3EBFF; }
+.hmb-period--shaban   { --hmb-accent: var(--brand, #226A56); --hmb-accent-dark: #5B21B6; --hmb-bg: #F3EBFF; }
 .hmb-period--emerald  { --hmb-accent: #226A56; --hmb-accent-dark: #143F35; --hmb-bg: #ECFAF3; }
 .hmb-period--regular  { --hmb-accent: #226A56; --hmb-accent-dark: #064E3B; --hmb-bg: #EDFAF5; }
 

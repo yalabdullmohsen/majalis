@@ -23,7 +23,12 @@ import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 import { startAdhanScheduler } from "@/lib/adhan-scheduler";
 import { AdhanNotificationBar } from "@/components/adhan/AdhanNotificationBar";
 import { PrayerRespectBanner } from "@/components/adhan/PrayerRespectBanner";
-import { startPrayerAlertScheduler, recheckPrayerAlertWindow } from "@/lib/prayer-alert-scheduler";
+import {
+  startPrayerAlertScheduler,
+  recheckPrayerAlertWindow,
+  invalidatePrayerNativeSchedule,
+} from "@/lib/prayer-alert-scheduler";
+import { PRAYER_ALERT_PREFS_CHANGED_EVENT } from "@/lib/prayer-alert-preferences";
 import { PrayerCountdownBanner } from "@/components/prayer/PrayerCountdownBanner";
 import { loadNotifPrefs, scheduleIslamicReminder } from "@/lib/local-notifications";
 import { NavProgressBar } from "@/components/NavProgressBar";
@@ -411,23 +416,62 @@ function AdhanSchedulerBootstrap() {
  */
 function PrayerAlertSchedulerBootstrap() {
   const { data } = usePrayerCountdown();
-  const started = useRef(false);
   useEffect(() => {
-    if (!data || started.current) return;
-    started.current = true;
+    if (!data) return;
     startPrayerAlertScheduler(data).catch(() => {});
   }, [data]);
 
   useEffect(() => {
+    const rescheduleOnForeground = () => {
+      // force: يعيد جدولة الإشعار الأصلي بعد الخلفية/إعادة التشغيل بلا تكرار خاطئ.
+      void recheckPrayerAlertWindow(data, { force: true });
+      void import("@/lib/quran-daily-reminder").then(({ ensureQuranDailyReminderScheduled }) => {
+        void ensureQuranDailyReminderScheduled();
+      });
+    };
     const onVisible = () => {
-      if (document.visibilityState === "visible") {
-        void recheckPrayerAlertWindow(data);
-      }
+      if (document.visibilityState === "visible") rescheduleOnForeground();
+    };
+    const onPrefsChanged = () => {
+      invalidatePrayerNativeSchedule();
+      void recheckPrayerAlertWindow(data, { force: true });
     };
     document.addEventListener("visibilitychange", onVisible);
-    return () => document.removeEventListener("visibilitychange", onVisible);
+    window.addEventListener(PRAYER_ALERT_PREFS_CHANGED_EVENT, onPrefsChanged);
+
+    // iOS WKWebView: appStateChange أوثق من visibilitychange في بعض مسارات الخلفية→المقدمة.
+    let removeAppState: (() => void) | undefined;
+    void import("@/lib/capacitor-utils").then(({ isNative }) => {
+      if (!isNative) return;
+      void import("@capacitor/app").then(({ App: CapApp }) => {
+        const sub = CapApp.addListener("appStateChange", ({ isActive }) => {
+          if (isActive) rescheduleOnForeground();
+        });
+        void Promise.resolve(sub).then((handle) => {
+          removeAppState = () => {
+            void handle.remove();
+          };
+        });
+      }).catch(() => {});
+    });
+
+    return () => {
+      document.removeEventListener("visibilitychange", onVisible);
+      window.removeEventListener(PRAYER_ALERT_PREFS_CHANGED_EVENT, onPrefsChanged);
+      removeAppState?.();
+    };
   }, [data]);
 
+  return null;
+}
+
+/** قنوات + مستمعو النقر + إعادة جدولة الورد + سجلات APNs (معطّلة). */
+function NativeNotificationsBootstrap() {
+  useEffect(() => {
+    void import("@/lib/notifications/native-bootstrap").then(({ bootstrapNativeNotifications }) => {
+      void bootstrapNativeNotifications();
+    });
+  }, []);
   return null;
 }
 
@@ -855,6 +899,7 @@ function AppShellInner() {
       <IslamicReminderBootstrap />
       <AdhanSchedulerBootstrap />
       <PrayerAlertSchedulerBootstrap />
+      <NativeNotificationsBootstrap />
       <OfflineSyncBootstrap />
       <PlatformLogicBootstrap />
       <NavBar />

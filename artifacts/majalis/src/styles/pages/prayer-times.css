@@ -5,21 +5,25 @@
    ════════════════════════════════════════════════════════════ */
 
 .pts-screen {
-  --pts-bg-0: #0C2A22;
-  --pts-bg-1: #143F35;
-  --pts-bg-2: #1A5244;
-  --pts-gold: #D4C4A0;
-  --pts-gold-soft: rgba(212, 196, 160, 0.22);
-  --pts-gold-line: rgba(212, 196, 160, 0.35);
-  --pts-white: #FAFAF8;
-  --pts-muted: rgba(250, 250, 248, 0.62);
-  --pts-row: rgba(250, 250, 248, 0.06);
-  --pts-row-active: rgba(212, 196, 160, 0.18);
+  /* مربوط بهوية v4 — لا باليتة موازية */
+  --pts-bg-0: var(--em-950, #081A16);
+  --pts-bg-1: var(--em-800, #143F35);
+  --pts-bg-2: var(--em-700, #195345);
+  --pts-gold: var(--gold-300, #E3CB8C);
+  --pts-gold-soft: color-mix(in srgb, var(--gold-400, #D2B063) 28%, transparent);
+  --pts-gold-line: color-mix(in srgb, var(--gold-400, #D2B063) 40%, transparent);
+  --pts-white: var(--n-50, #FAFAF8);
+  /* ≥4.5:1 تقريبًا فوق --pts-bg-1 عند المزج مع الشفافية */
+  --pts-muted: color-mix(in srgb, var(--n-50, #FAFAF8) 78%, transparent);
+  --pts-row: color-mix(in srgb, var(--n-50, #FAFAF8) 6%, transparent);
+  --pts-row-active: color-mix(in srgb, var(--gold-400, #D2B063) 18%, transparent);
 
   direction: rtl;
   min-height: 100%;
   color: var(--pts-white);
-  background:
+  /* لون صلب تحت التدرّج — قياس التباين وfallback عند تعطيل الصور */
+  background-color: var(--pts-bg-1);
+  background-image:
     radial-gradient(ellipse 90% 55% at 70% 8%, rgba(212, 196, 160, 0.08), transparent 55%),
     linear-gradient(180deg, var(--pts-bg-1) 0%, var(--pts-bg-0) 48%, #0A221C 100%);
   padding:
@@ -133,7 +137,11 @@
   gap: 0.4rem;
   align-items: center;
   font-size: 0.78rem;
-  color: var(--pts-muted);
+  /* لون صلب مقروء فوق الزمرد (بدل color-mix الشفاف) — ≥4.5:1 */
+  color: #C8D4CE;
+  background-color: var(--pts-bg-1);
+  border-radius: 0.35rem;
+  padding: 0.1rem 0.15rem;
 }
 .pts-dates__sep { opacity: 0.5; }
 

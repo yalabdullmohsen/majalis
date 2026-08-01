@@ -15,7 +15,12 @@ import { evaluateEligibility } from "./eligibility.mjs";
 import { parseGhPrChecksTsv, parseStatusCheckRollup } from "./checks.mjs";
 import { formatEligibilityReport, upsertReportBody } from "./report.mjs";
 import {
+  BLOCKED_DANGER_PATH_LABEL,
+  RELEASE_TRAIN_LABEL,
   REPORT_MARKER_BEGIN,
+  RISKY_MANUAL_REVIEW_LABEL,
+  SAFE_AUTO_MERGE_LABEL,
+  SAFE_DOMAIN_LABELS,
   SAFE_LABELS,
 } from "./constants.mjs";
 
@@ -194,14 +199,53 @@ function cmdReport(args) {
       if (create.status !== 0) throw new Error(create.stderr || "comment create failed");
       console.log("posted new report comment");
     }
+
+    // Sync policy labels — never close the PR.
+    syncPrPolicyLabels(args.pr, result);
   } finally {
     rmSync(dir, { recursive: true, force: true });
   }
   process.exitCode = 0;
 }
 
+/**
+ * Apply / remove policy labels based on eligibility (no PR close).
+ * @param {string|number} pr
+ * @param {ReturnType<typeof evaluateEligibility>} result
+ */
+function syncPrPolicyLabels(pr, result) {
+  for (const name of result.suggestedAddLabels || []) {
+    const r = gh(["pr", "edit", String(pr), "--add-label", name], {
+      stdio: ["ignore", "pipe", "pipe"],
+    });
+    if (r.status !== 0) {
+      console.warn(`add-label ${name}: ${(r.stderr || "").slice(0, 200)}`);
+    } else {
+      console.log(`added label ${name}`);
+    }
+  }
+  for (const name of result.suggestedRemoveLabels || []) {
+    const r = gh(["pr", "edit", String(pr), "--remove-label", name], {
+      stdio: ["ignore", "pipe", "pipe"],
+    });
+    if (r.status !== 0) {
+      // Label may already be absent — non-fatal.
+      console.warn(`remove-label ${name}: ${(r.stderr || "skip").slice(0, 120)}`);
+    } else {
+      console.log(`removed label ${name}`);
+    }
+  }
+}
+
 function cmdEnsureLabels() {
   const colors = {
+    [SAFE_AUTO_MERGE_LABEL]: "0E8A16",
+    "safe:content": "0075CA",
+    "safe:ui": "5319E7",
+    "safe:test": "1D76DB",
+    [RELEASE_TRAIN_LABEL]: "0E8A16",
+    [RISKY_MANUAL_REVIEW_LABEL]: "D93F0B",
+    [BLOCKED_DANGER_PATH_LABEL]: "B60205",
     "content-safe": "0075CA",
     "ui-safe": "5319E7",
     "code-safe": "0E8A16",
@@ -210,7 +254,16 @@ function cmdEnsureLabels() {
     "manual-review": "D93F0B",
     "no-auto-merge": "B60205",
   };
-  for (const name of [...SAFE_LABELS, "manual-review", "no-auto-merge"]) {
+  const all = [
+    ...SAFE_LABELS,
+    ...SAFE_DOMAIN_LABELS,
+    RELEASE_TRAIN_LABEL,
+    RISKY_MANUAL_REVIEW_LABEL,
+    BLOCKED_DANGER_PATH_LABEL,
+    "manual-review",
+    "no-auto-merge",
+  ];
+  for (const name of [...new Set(all)]) {
     const color = colors[name] || "CCCCCC";
     const r = gh(
       [
