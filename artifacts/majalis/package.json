@@ -16,6 +16,7 @@
     "test:quran-quotes": "node scripts/test-quran-quotes-guard.mjs",
     "test:hadith-takhrij": "node scripts/test-hadith-takhrij-guard.mjs",
     "test:fiqh-timeline-provenance": "node --import tsx scripts/test-fiqh-timeline-provenance-guard.mjs",
+    "test:fiqh-issue-filler": "node --import tsx scripts/test-fiqh-issue-filler-guard.mjs",
     "verify:sahihayn": "node scripts/verify-hadith-sahihayn.mjs",
     "audit:sahihayn": "node scripts/audit-sahihayn-four-passes.mjs",
     "build:curriculum": "node scripts/build-curriculum-topics.mjs",
