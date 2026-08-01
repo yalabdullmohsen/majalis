@@ -46,10 +46,18 @@ export function loadPrayerAlertPrefs(): PrayerAlertPreferences {
   }
 }
 
+/** يُطلَق بعد حفظ تفضيلات تنبيه الصلاة لإعادة جدولة الإشعارات الأصلية بلا تكرار. */
+export const PRAYER_ALERT_PREFS_CHANGED_EVENT = "majalis:prayer-alert-prefs-changed";
+
 export function savePrayerAlertPrefs(prefs: PrayerAlertPreferences): void {
   try {
     localStorage.setItem(STORE_KEY, JSON.stringify(prefs));
   } catch { /* تجاهل أخطاء الحصة */ }
+  try {
+    if (typeof window !== "undefined") {
+      window.dispatchEvent(new CustomEvent(PRAYER_ALERT_PREFS_CHANGED_EVENT));
+    }
+  } catch { /* ignore */ }
 }
 
 export function patchPrayerAlertPrefs(patch: Partial<PrayerAlertPreferences>): PrayerAlertPreferences {

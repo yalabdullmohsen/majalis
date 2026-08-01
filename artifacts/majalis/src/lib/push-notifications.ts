@@ -1,9 +1,14 @@
 /**
- * Web Push Notifications — frontend subscription logic.
+ * Web Push Notifications — frontend subscription logic (PWA / browsers only).
  *
  * Client-only: uses the public VAPID key (`VITE_VAPID_PUBLIC_KEY`).
  * Private VAPID material must stay on the server (never bundled here).
+ *
+ * على Capacitor iOS/Android: معطّل عمداً — الإشعارات المحلية هي الاستراتيجية
+ * الأساسية، وتسجيل Service Worker / Web Push يتعارض مع WKWebView.
  */
+
+import { isNative } from "@/lib/capacitor-utils";
 
 const VAPID_PUBLIC_KEY = import.meta.env.VITE_VAPID_PUBLIC_KEY as string | undefined;
 const PUSH_SUB_KEY     = "mj-push-sub-v1";
@@ -21,6 +26,7 @@ export type PushPermissionState = "unsupported" | "denied" | "granted" | "defaul
 
 export function getPushSupport(): PushPermissionState {
   if (typeof window === "undefined") return "unsupported";
+  if (isNative) return "unsupported";
   if (!("Notification" in window) || !("serviceWorker" in navigator) || !("PushManager" in window)) {
     return "unsupported";
   }
@@ -30,6 +36,7 @@ export function getPushSupport(): PushPermissionState {
 
 /** طلب الإذن والاشتراك بـ Push. يعيد null إن رُفض أو غير مدعوم. */
 export async function subscribeToPush(): Promise<PushSubscription | null> {
+  if (isNative) return null;
   const state = getPushSupport();
   if (state === "unsupported" || state === "no-vapid" || state === "denied") return null;
 

@@ -21,11 +21,13 @@
     "test:postgres-integration": "node scripts/test-postgres-queue-integration.mjs",
     "verify:platform-hardening-sql": "node scripts/verify-platform-hardening-sql.mjs",
     "test:release-train": "node --test .github/scripts/release-train/__tests__/*.test.mjs",
-    "test:safe-auto-merge": "node --test .github/scripts/safe-auto-merge/__tests__/*.test.mjs"
+    "test:safe-auto-merge": "node --test .github/scripts/safe-auto-merge/__tests__/*.test.mjs",
+    "ops:backlog-report": "node scripts/ops-backlog-report.mjs"
   },
   "private": true,
   "devDependencies": {
     "prettier": "^3.8.3",
+    "tsx": "4.21.0",
     "typescript": "~5.9.3"
   }
 }

@@ -78,11 +78,19 @@ const { SINS_TOPICS } = await importSrc("src/lib/sins-rights-data.ts");
 const { getAllSurahStories } = await importSrc("src/lib/surah-stories.ts");
 const { FIQH_ISSUES_PUBLISHED_SEED } = await importSrc("src/lib/fiqh-issues-seed.ts");
 const { isPublicIssue } = await importSrc("src/lib/fiqh-council-trust.ts");
+const { FIQH_ITEM_TYPE_LABELS } = await importSrc("src/lib/fiqh-council-types.ts");
 const { SCHOLARS } = await importSrc("src/lib/scholars-data.ts");
 const { MUEZZINS } = await importSrc("src/lib/adhan-audio.ts");
 
 const SURAH_STORIES = getAllSurahStories();
 const PUBLIC_FIQH_ISSUES = FIQH_ISSUES_PUBLISHED_SEED.filter(isPublicIssue);
+
+// وسمُ مادّة المجمع يُشتقّ من حقل `type` في السجلّ نفسه لا يُثبَّت على «قرار»:
+// من الأربعة القائمة في fiqh-council-seed.ts اثنان type: "research" نصَّ المجمع
+// فيهما على أنه لم يبتّ (237 (24/8) أوصى بمزيد من البحث، و230 (24/1) أجّل البتّ)،
+// فوسمُهما «قرار» إثباتُ ما نفاه المصدر. والمعجم FIQH_ITEM_TYPE_LABELS هو معجم
+// المنصّة نفسه المستعمَل في العرض والتصدير والاستشهاد.
+const fiqhItemKind = (row) => FIQH_ITEM_TYPE_LABELS[row?.type] || "مادة";
 
 /**
  * قوائم ثابتة محقونة داخل مكوّنات React (لا تُستورَد هنا لأن استيراد .tsx يتطلب JSX).
@@ -987,9 +995,9 @@ ${linkList("روابط ذات صلة", [
 ])}`,
   "/fiqh-council": `<p>المجمع الفقهي الإسلامي: قرارات وفتاوى ومسائل معاصرة ونوازل، مع أدوات بحث ومقارنة وأرشيف.</p>
 ${linkList(
-  "من القرارات",
+  "من مواد المجمع",
   (PLATFORM_SEED.fiqh_decisions || []).slice(0, 12).map((r) => ({
-    name: r.title,
+    name: `${r.title} (${fiqhItemKind(r)})`,
     url: `/fiqh-council/${r.slug || r.id}`,
   })),
 )}
@@ -1869,7 +1877,7 @@ for (const row of PLATFORM_SEED.fiqh_decisions || []) {
     {
       path: `/fiqh-council/${row.slug || row.id}`,
       title: row.title,
-      description: padDesc(row.title, "قرار من المجمع الفقهي الإسلامي الدولي"),
+      description: padDesc(row.title, `${fiqhItemKind(row)} من مجمع الفقه الإسلامي الدولي`),
       ogType: "article",
       robots: "index, follow",
     },
@@ -2223,10 +2231,10 @@ Sitemap: ${SITE_URL}/sitemap.xml
 const FEED_DATE = new Date("2026-07-25T00:00:00Z").toUTCString();
 const rssItems = [
   ...(PLATFORM_SEED.fiqh_decisions || []).slice(0, 6).map((row) => ({
-    title: `[قرار مجمعي] ${row.title}`,
+    title: `[${fiqhItemKind(row)} — مجمع فقهي] ${row.title}`,
     link: absoluteUrl(`/fiqh-council/${row.slug || row.id}`),
-    description: `قرار فقهي جماعي: ${row.title} — ${row.category || "المجمع الفقهي الإسلامي"}`,
-    category: "قرارات فقهية",
+    description: `مادة من مجمع فقهي (${fiqhItemKind(row)}): ${row.title} — ${row.category || "المجمع الفقهي الإسلامي"}`,
+    category: "مواد المجامع الفقهية",
   })),
   ...(PLATFORM_SEED.rulings || []).slice(0, 4).map((row) => ({
     title: `[حكم شرعي] ${row.title}`,

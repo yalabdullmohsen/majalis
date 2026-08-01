@@ -68,10 +68,18 @@ if (css) {
 }
 
 const entryBuf = readFileSync(join(assetsDir, entry.f), "utf8");
-for (const banned of ["SEED_FAWAID", "ADHKAR_ITEMS", "FAWAID_CURATED_SEED", "islamicQuizData"]) {
+for (const banned of [
+  "SEED_FAWAID",
+  "ADHKAR_ITEMS",
+  "FAWAID_CURATED_SEED",
+  "islamicQuizData",
+  "node:fs/promises",
+  "node:path",
+  "json-seed-disk.node",
+]) {
   assert.ok(!entryBuf.includes(banned), `entry must not embed ${banned}`);
 }
-console.log("  ✓ entry does not embed mega-seed identifiers");
+console.log("  ✓ entry does not embed mega-seed identifiers or node builtins");
 
 const oversized = rows
   .filter((r) => r.f.endsWith(".js") && r.gz > CHUNK_GZIP_SOFT)
