@@ -3,7 +3,12 @@
  * Public checks are boolean/status codes only — no secrets, no stack traces.
  */
 import { sendJson } from "../api/_http.mjs";
-import { classifyDurablePgError, DURABLE_REASONS } from "../reliability/env.mjs";
+import {
+  classifyDurablePgError,
+  DURABLE_REASONS,
+  isProductionRuntime,
+  publicReadyReason,
+} from "../reliability/env.mjs";
 
 export default async function handler(req, res) {
   const version =
@@ -20,7 +25,7 @@ export default async function handler(req, res) {
     ai_circuit_table_ready: false,
   };
 
-  /** Internal diagnostics — logged only, never returned with secrets. */
+  /** Internal diagnostics — logged only (plus allowlisted `reason` in JSON). */
   const details = {
     reason: null,
     attempts_table: null,
@@ -36,7 +41,10 @@ export default async function handler(req, res) {
     const pool = typeof getPgPool === "function" ? await getPgPool() : null;
     if (!pool) {
       ready = false;
-      details.reason = DURABLE_REASONS.database_not_configured;
+      // Production without a pool is almost always env wiring, not "healthy".
+      details.reason = isProductionRuntime()
+        ? DURABLE_REASONS.env_mismatch
+        : DURABLE_REASONS.database_not_configured;
     } else {
       const t0 = Date.now();
       const { rows } = await pool.query(
@@ -146,9 +154,14 @@ export default async function handler(req, res) {
     );
   }
 
-  sendJson(res, ready ? 200 : 503, {
+  // Never fake readiness: 503 stays 503. Public reason is allowlisted only.
+  const payload = {
     status: ready ? "ok" : "not_ready",
     version: String(version).slice(0, 40),
     checks,
-  });
+  };
+  if (!ready) {
+    payload.reason = publicReadyReason(details.reason);
+  }
+  sendJson(res, ready ? 200 : 503, payload);
 }

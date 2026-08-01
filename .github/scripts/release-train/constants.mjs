@@ -17,12 +17,16 @@ export const READY_LABEL = "release-train-ready";
 
 /** Domain labels — at least one required (plus READY_LABEL). */
 export const DOMAIN_LABELS = Object.freeze([
+  "safe:content",
+  "safe:ui",
+  "safe:test",
   "security-safe",
   "code-safe",
   "performance-safe",
   "maintenance-safe",
   "content-safe",
   "tests-safe",
+  "ui-safe",
 ]);
 
 /** Lower index = higher merge priority. */
@@ -50,6 +54,16 @@ export const LEVEL_C_PATH_PATTERNS = Object.freeze([
   /(^|\/)auth\//i,
   /rls[_-]?polic/i,
   /row.?level.?security/i,
+  /^\.github\/workflows\//i,
+  /^package\.json$/i,
+  /^pnpm-lock\.yaml$/i,
+  /(^|\/)vercel\.json$/i,
+  /^artifacts\/majalis\/api\//i,
+  /^artifacts\/majalis\/lib\/api-handlers\//i,
+  /^artifacts\/majalis\/lib\/security\//i,
+  /^artifacts\/majalis\/lib\/auth\//i,
+  /^artifacts\/majalis\/lib\/jobs\//i,
+  /^fastlane\//i,
 ]);
 
 /** Content signals that suggest Level A when no Level-C paths. */

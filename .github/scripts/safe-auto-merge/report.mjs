@@ -84,13 +84,29 @@ export function formatEligibilityReport(result, meta = {}) {
     checkLine("Vercel check (build + git diff clean)", c.vercelCheck),
     checkLine("Vercel deployment", c.vercelDeploy),
     checkLine("postgres-integration", c.postgres),
+    checkLine("Color contrast (when present)", c.colorContrast),
+    checkLine("iOS static (when present / required)", c.iosStatic),
     "",
     "### الملفات الخطرة",
     danger,
     "",
+    result.needsManualReview
+      ? [
+          "### مراجعة يدوية مطلوبة",
+          "- لا يُفعَّل Auto-merge لهذا الـPR.",
+          "- لا يُغلق الـPR تلقائيًا — يرجى مراجعة بشرية قبل الدمج.",
+          result.suggestedAddLabels?.length
+            ? `- وسوم مقترحة: ${result.suggestedAddLabels.map((l) => `\`${l}\``).join(", ")}`
+            : null,
+          "",
+        ]
+          .filter(Boolean)
+          .join("\n")
+      : "",
     "### سياسة سريعة",
     `- Labels المسموحة للدمج التلقائي: ${SAFE_LABELS.map((l) => `\`${l}\``).join(", ")}`,
-    "- بعد الدمج: Vercel ينشر الموقع — **بدون** TestFlight و**بدون** `supabase db push`.",
+    "- `release-train-ready` ينتظر قطار الإصدار فقط (لا دمج فوري).",
+    "- بعد الدمج: Vercel ينشر الموقع من `main` — **بدون** TestFlight و**بدون** `supabase db push`.",
     "- TestFlight: tag `v*.*.*` أو `workflow_dispatch` فقط.",
     "- Supabase: `workflow_dispatch` + `apply=true` (+ `confirm_include_all` لـ `--include-all`).",
     "",
