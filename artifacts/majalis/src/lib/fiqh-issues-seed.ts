@@ -1351,7 +1351,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
     ruling_summary:
       "لم يصدر المجمع حكماً قاطعاً في المسألة، وقرَّر تأجيل البتّ فيها لمزيد من الدراسة، نظراً لعدم استقرار قيمة هذه العملات وارتفاع المخاطر المرتبطة بها، وعدم حسم مسألتي: هل تُعدّ سلعة أم خدمة أم أصلاً استثمارياً؟ وهل لها قيمة نقدية معتبرة شرعاً؟",
     evidence_summary:
-      "قرار مجمع الفقه الإسلامي الدولي رقم 237 (8/24) في دورته الرابعة والعشرين، دبي (4-6 نوفمبر 2019).",
+      "قرار مجمع الفقه الإسلامي الدولي رقم 237 (24/8) في دورته الرابعة والعشرين، دبي (4-6 نوفمبر 2019).",
     documentation_level: "official_verified",
     trust_level: "institutional_ruling",
     editorial_review_status: "unreviewed",
@@ -1420,7 +1420,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
     ruling_summary:
       "لم يصدر المجمع حكماً قاطعاً في المسألة، وقرَّر تأجيل البتّ فيها لمزيد من الدراسة، مرتبطاً ذلك بحسم مسألة العملات المشفَّرة أولاً، وريثما تُعقَد ندوة متخصصة بمشاركة خبراء تقنيين في هذا المجال.",
     evidence_summary:
-      "قرار مجمع الفقه الإسلامي الدولي رقم 230 (1/24) في دورته الرابعة والعشرين، دبي (4-6 نوفمبر 2019).",
+      "قرار مجمع الفقه الإسلامي الدولي رقم 230 (24/1) في دورته الرابعة والعشرين، دبي (4-6 نوفمبر 2019).",
     documentation_level: "official_verified",
     trust_level: "institutional_ruling",
     editorial_review_status: "unreviewed",
