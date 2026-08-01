@@ -27,8 +27,8 @@ if [[ ! -d "$ROOT/dist" ]] || [[ ! -f "$ROOT/dist/index.html" ]]; then
   exit 1
 fi
 
-echo "==> npx cap sync ios…"
-npx cap sync ios
+echo "==> pnpm exec cap sync ios…"
+pnpm exec cap sync ios
 
 # cap sync يمسح محتويات public/ — أعد .gitkeep حتى يبقى المجلد متتبَّعًا في git
 # ولا تختفي مرجعية المجلد من المشروع عند العمل على فروع نظيفة.
