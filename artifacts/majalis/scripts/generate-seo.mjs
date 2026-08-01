@@ -21,7 +21,7 @@ import { mkdir, readFile, writeFile, unlink, rm } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { registerHooks } from "node:module";
+import { register } from "node:module";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const appRoot = resolve(__dirname, "..");
@@ -30,21 +30,29 @@ const srcDir = resolve(appRoot, "src");
 // ─────────────────────────────────────────────────────────────────────────────
 // تحميل وحدات TypeScript مباشرة (Node ≥22 يجرّد الأنواع تلقائياً).
 // يلزم فقط حلّ الاسم المستعار "@/" وامتدادات .ts الضمنية.
+// register() يأخذ محدّد موديول يُصدّر الـ hooks (لا كائناً مضمّناً كـ registerHooks).
 // ─────────────────────────────────────────────────────────────────────────────
-registerHooks({
-  resolve(specifier, context, nextResolve) {
-    let spec = specifier;
-    if (spec.startsWith("@/")) spec = pathToFileURL(resolve(srcDir, spec.slice(2))).href;
-    else if (spec.startsWith(".") && context.parentURL) spec = new URL(spec, context.parentURL).href;
-    if (spec.startsWith("file:")) {
-      const p = fileURLToPath(spec);
-      for (const cand of [p, `${p}.ts`, `${p}/index.ts`]) {
-        if (existsSync(cand)) return { url: pathToFileURL(cand).href, shortCircuit: true };
-      }
+const seoResolveHookSource = `
+import { existsSync } from "node:fs";
+import { fileURLToPath, pathToFileURL } from "node:url";
+import { resolve as pathResolve } from "node:path";
+
+const srcDir = ${JSON.stringify(srcDir)};
+
+export async function resolve(specifier, context, nextResolve) {
+  let spec = specifier;
+  if (spec.startsWith("@/")) spec = pathToFileURL(pathResolve(srcDir, spec.slice(2))).href;
+  else if (spec.startsWith(".") && context.parentURL) spec = new URL(spec, context.parentURL).href;
+  if (spec.startsWith("file:")) {
+    const p = fileURLToPath(spec);
+    for (const cand of [p, \`\${p}.ts\`, \`\${p}/index.ts\`]) {
+      if (existsSync(cand)) return { url: pathToFileURL(cand).href, shortCircuit: true };
     }
-    return nextResolve(specifier, context);
-  },
-});
+  }
+  return nextResolve(specifier, context);
+}
+`;
+register(`data:text/javascript,${encodeURIComponent(seoResolveHookSource)}`);
 
 const importSrc = (relPath) => import(pathToFileURL(resolve(appRoot, relPath)).href);
 
