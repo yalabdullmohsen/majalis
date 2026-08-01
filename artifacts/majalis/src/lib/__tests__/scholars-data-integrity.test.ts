@@ -679,6 +679,41 @@ assert(
   retiredHits.join(" | ")
 );
 
+// ١٧) وتدٌ لحقائقَ تُقصِّيت فثبتت: صنفٌ ثالثٌ لا يمسكُه ١٥ ولا ١٦ (ج-٣٩٤).
+// الفحصان قبلَه يحرسان العنوانَ (لمن هو؟ وأله وجود؟)، ولا يحرسان الخبرَ عن
+// صاحب السجل نفسِه: بلدَ نسبته، ومذهبَه، وسلسلةَ نسبه، ووظيفتَه. وهي مواضعُ
+// وقع فيها الخللُ في ج-٣٩٤ خمسَ مرات، وكلُّها من صنفٍ واحد: الخبرُ صادقٌ في
+// جزءٍ منه فيمرُّ على العين (الآمديُّ شافعيٌّ حقاً — لكنه حنبليٌّ قبلَها؛
+// والعينيُّ عُرف بحلبَ حقاً — لكنَّ نسبته إلى عينتابَ مولدِه لا إليها).
+// فتُوتَّدُ هنا بلفظها بعد التقصّي، لا لتُمسِكَ خرقاً جديداً بل لتمنعَ عودةَ
+// المصحَّح — وهي العلّةُ نفسُها التي سُنَّ لها الفحصُ ١٦.
+console.log("\n=== ١٧) حقائقُ مُقصّاةٌ لا تنتكس ===");
+type FactPin = { id: string; field: "fullName" | "bio" | "region" | "madhhab"; must?: string; mustNot?: string; why: string };
+const FACT_PINS: FactPin[] = [
+  { id: "amidi", field: "fullName", must: "أبي علي", why: "أبوه أبو علي وجدُّه محمد ⇒ «علي بن محمد» تُسقط جيلاً (سير أعلام النبلاء، وطبقات الشافعية)" },
+  { id: "amidi", field: "madhhab", must: "حنبلي", why: "تفقّه حنبلياً على ابن المنّي وحفظ «الهداية» في مذهب أحمد ثم انتقل شافعياً" },
+  { id: "ayni", field: "region", must: "عينتاب", why: "نسبتُه إلى عينتابَ مولدِه (٧٦٢هـ)، وإنما رحل إلى حلب سنة ٧٨٣هـ طالباً" },
+  { id: "al-hattab", field: "region", must: "طرابلس", why: "مكيُّ المولد (٩٠٢هـ)، انتقل إلى طرابلس الغرب فتوفي بها (٩٥٤هـ)" },
+  { id: "mardawi", field: "region", must: "مردا", why: "مولدُه ونشأتُه بمردا من قرى نابلس، وإنما قدم دمشقَ سنة ٨٣٨هـ" },
+  { id: "khalil-ibn-ishaq", field: "bio", mustNot: "جمع بين القضاء", why: "ولي الإفتاءَ على مذهب مالك ودرّس بالشيخونية، ولم يلِ القضاء" },
+];
+const brokenPins: string[] = [];
+for (const pin of FACT_PINS) {
+  const s = SCHOLARS.find((x) => x.id === pin.id);
+  if (!s) {
+    brokenPins.push(`${pin.id}: السجلُّ مفقودٌ — الوتدُ بلا محلٍّ`);
+    continue;
+  }
+  const value = (s[pin.field] ?? "") as string;
+  if (pin.must && !value.includes(pin.must)) brokenPins.push(`${pin.id}.${pin.field}: سقط «${pin.must}» — ${pin.why}`);
+  if (pin.mustNot && value.includes(pin.mustNot)) brokenPins.push(`${pin.id}.${pin.field}: عاد «${pin.mustNot}» — ${pin.why}`);
+}
+assert(
+  brokenPins.length === 0,
+  `لا حقيقةَ مُقصّاةً تنتكس (${FACT_PINS.length} وتداً)`,
+  brokenPins.join(" | ")
+);
+
 console.log(`\n${"─".repeat(48)}`);
 console.log(`النتائج: ${passed} نجح، ${failed} فشل`);
 if (failed > 0) process.exit(1);
