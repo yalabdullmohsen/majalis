@@ -341,7 +341,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
     id: "seed-issue-stock-market-trading",
     slug: "stock-market-trading",
     title: "تداول الأسهم في البورصة",
-    summary: "مسألة فقهية شاملة حول حكم شراء الأسهم وبيعها في الأسواق المالية.",
+    summary: "مسألة فقهية حول حكم شراء الأسهم وبيعها في الأسواق المالية.",
     description:
       "تستعرض المسألة شروط جواز التعامل في أسهم الشركات من حيث نشاطها وطريقة التداول وأثر الديون.",
     category: "الاقتصاد الإسلامي",
@@ -1117,7 +1117,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
     title: "حكم العامل عن بُعد في صلاة الجمعة",
     summary: "مسألة فقهية في حكم صلاة الجمعة للموظف الذي يعمل من المنزل (العمل عن بُعد).",
     description:
-      "انتشر العمل عن بُعد بعد جائحة كوفيد-١٩، فصار كثير من الموظفين يعملون من منازلهم. فهل يختلف حكم وجوب صلاة الجمعة عليهم عن الموظف في المكتب؟",
+      "انتشر العمل عن بُعد بعد جائحة كوفيد-19، فصار كثير من الموظفين يعملون من منازلهم. فهل يختلف حكم وجوب صلاة الجمعة عليهم عن الموظف في المكتب؟",
     category: "العبادات",
     subcategory: "الصلاة",
     ruling_summary:
