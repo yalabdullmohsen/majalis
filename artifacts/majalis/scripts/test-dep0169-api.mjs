@@ -2,8 +2,9 @@
  * Gate: Production API entry must not import blind url.parse patches,
  * and loading the API graph must not emit DEP0169 from majalis sources.
  *
- * CI note (Node 24): pnpm/action-setup self-installer emits DEP0169 unless
- * `standalone: true` (@pnpm/exe). Workflows must keep that flag.
+ * CI note (Node 24): `pnpm/action-setup` (self-installer / npm install of
+ * pnpm or @pnpm/exe) emits DEP0169 via `url.parse()`. Workflows must use
+ * Corepack (`corepack enable` + `corepack prepare --activate`) instead.
  */
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
@@ -20,27 +21,27 @@ assert.doesNotMatch(apiIndex, /patch-url-parse/, "api/index must not import url.
 assert.doesNotMatch(serverIndex, /patch-url-parse/, "server/index must not import url.parse patch");
 assert.equal(existsSync(join(root, "server/patch-url-parse.mjs")), false, "blind patch file must be removed");
 
-/** Every pnpm/action-setup step must set standalone: true (avoids DEP0169 self-installer). */
+/** CI workflows that install with pnpm must use Corepack — not pnpm/action-setup. */
 const workflowsDir = join(repoRoot, ".github", "workflows");
 const workflowFiles = readdirSync(workflowsDir).filter((f) => f.endsWith(".yml") || f.endsWith(".yaml"));
-const badWorkflows = [];
+const actionSetupHits = [];
+const missingCorepack = [];
 for (const file of workflowFiles) {
   const text = readFileSync(join(workflowsDir, file), "utf8");
-  if (!text.includes("pnpm/action-setup@")) continue;
-  // Each action-setup occurrence should be followed (within a few lines) by standalone: true
-  const lines = text.split("\n");
-  for (let i = 0; i < lines.length; i++) {
-    if (!lines[i].includes("pnpm/action-setup@")) continue;
-    const window = lines.slice(i, i + 6).join("\n");
-    if (!/standalone:\s*true/.test(window)) {
-      badWorkflows.push(`${file}:${i + 1}`);
-    }
-  }
+  if (text.includes("pnpm/action-setup@")) actionSetupHits.push(file);
+  const installsPnpm =
+    /pnpm\s+install/.test(text) || /cache:\s*['"]?pnpm['"]?/.test(text);
+  if (installsPnpm && !/corepack\s+enable/.test(text)) missingCorepack.push(file);
 }
 assert.equal(
-  badWorkflows.length,
+  actionSetupHits.length,
   0,
-  `pnpm/action-setup missing standalone: true (DEP0169):\n${badWorkflows.join("\n")}`,
+  `pnpm/action-setup forbidden (DEP0169 on Node 24):\n${actionSetupHits.join("\n")}`,
+);
+assert.equal(
+  missingCorepack.length,
+  0,
+  `workflows install pnpm without corepack enable:\n${missingCorepack.join("\n")}`,
 );
 
 // No local url.parse in majalis app/lib/api/server (except comments)
