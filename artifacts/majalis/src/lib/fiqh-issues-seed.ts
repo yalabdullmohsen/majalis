@@ -683,7 +683,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
     ruling_summary:
       "يجوز للمسلم في البلاد التي يتعذر فيها تحديد وقت الفجر أو المغرب أن يعمل بأقرب بلد متعارف الأوقات، أو بالتقدير على مكة المكرمة.",
     evidence_summary:
-      "حديث الدجال وطول يومه كسنة، وقياس الأوقات فيه، وأصول الاجتهاد في المسائل الفقهية المستحدثة.",
+      "حديث الدجال وطول يومه كسنة (مسلم)، وقياس الأوقات فيه، وأصول الاجتهاد في المسائل الفقهية المستحدثة.",
     documentation_level: "official_verified",
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
@@ -751,7 +751,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
     ruling_summary:
       "العمل في الأقسام المتعلقة مباشرة بالعقود الربوية محرم. أما الأعمال البعيدة التي لا تُعين على الربا فالمسألة فيها خلاف، والأحوط تركها مع وجود البديل الحلال.",
     evidence_summary:
-      "حديث لعن آكل الربا وموكله وكاتبه وشاهديه، وقواعد درء المفسدة وسد الذريعة.",
+      "حديث لعن آكل الربا وموكله وكاتبه وشاهديه (مسلم، من حديث جابر رضي الله عنه)، وقواعد درء المفسدة وسد الذريعة.",
     documentation_level: "official_verified",
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
@@ -797,7 +797,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
     ruling_summary:
       "تجوز الجراحة الترميمية لإزالة العيب والتشوه. أما التجميلية المحضة لتغيير الخلقة الطبيعية فهي محرمة لأنها من تغيير خلق الله.",
     evidence_summary:
-      "الحديث: «لعن الله الواشمات والمستوشمات والنامصات والمتنمصات والمتفلجات للحسن المغيرات خلق الله»، وقواعد الضرورة في الترميم.",
+      "الحديث: «لعن الله الواشمات والمستوشمات والنامصات والمتنمصات والمتفلجات للحسن المغيرات خلق الله» (مسلم)، وقواعد الضرورة في الترميم.",
     documentation_level: "official_verified",
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
@@ -844,7 +844,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
     ruling_summary:
       "الراتب الأصيل مقابل العمل الإداري المباح جائز ولو في بنك ربوي — بخلاف الراتب المستفاد من العمل الربوي المباشر. والحج من المال الحلال المختلط بالمشتبه فيه يُنظر فيه إلى الغالب. يُستحسن التخلص من المال المشتبه فيه بالتصدق قبل الحج.",
     evidence_summary:
-      "قاعدة «الأعمال بالنيات» وأحكام الاستئجار وحكم الكسب المختلط من قواعد الفقه المالكي والحنبلي.",
+      "حديث «إنما الأعمال بالنيات» (البخاري: ١) وأحكام الاستئجار وحكم الكسب المختلط من قواعد الفقه المالكي والحنبلي.",
     documentation_level: "official_verified",
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
@@ -867,7 +867,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
     ruling_summary:
       "تكرار العمرة جائز عند جمهور الفقهاء ولا بأس به. غير أن بعض العلماء المعاصرين كرهوه لأن السلف لم يواظبوا عليه في أسفارهم، وأن إفراد الوقت للطواف والتلاوة أفضل. والراجح الجواز مع عدم إلزامه.",
     evidence_summary:
-      "فعل عائشة رضي الله عنها في اعتمارها بتوجيه النبي ﷺ، وعدم ثبوت نهي صريح عن التكرار.",
+      "فعل عائشة رضي الله عنها في اعتمارها بتوجيه النبي ﷺ (البخاري: ١٦٣٨)، وعدم ثبوت نهي صريح عن التكرار.",
     documentation_level: "official_verified",
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
@@ -1169,7 +1169,7 @@ export const FIQH_ISSUES_PUBLISHED_SEED: Array<FiqhCouncilIssue & CitationTrustF
     ruling_summary:
       "لا يجوز اعتماد إجابات الذكاء الاصطناعي فتوى شرعية ملزمة؛ لافتقارها إلى أهلية الاجتهاد والإسناد ومسؤولية الإفتاء. ويجوز الاستئناس بها للتعرف على آراء الفقهاء بشرط عرضها على عالم متخصص.",
     evidence_summary:
-      "فقه الشهادة والإسناد في الفتوى، وقاعدة درء المفسدة عند الشك في أهلية المفتي، وحديث «إن الله لا يقبض العلم انتزاعاً ينتزعه من العباد» (البخاري).",
+      "فقه الشهادة والإسناد في الفتوى، وقاعدة درء المفسدة عند الشك في أهلية المفتي، وحديث «إن الله لا يقبض العلم انتزاعاً ينتزعه من العباد» (البخاري: ١٠٠).",
     documentation_level: "official_verified",
     trust_level: "general_reasoning",
     editorial_review_status: "unreviewed",
