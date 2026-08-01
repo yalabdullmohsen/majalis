@@ -23,7 +23,12 @@ import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 import { startAdhanScheduler } from "@/lib/adhan-scheduler";
 import { AdhanNotificationBar } from "@/components/adhan/AdhanNotificationBar";
 import { PrayerRespectBanner } from "@/components/adhan/PrayerRespectBanner";
-import { startPrayerAlertScheduler, recheckPrayerAlertWindow } from "@/lib/prayer-alert-scheduler";
+import {
+  startPrayerAlertScheduler,
+  recheckPrayerAlertWindow,
+  invalidatePrayerNativeSchedule,
+} from "@/lib/prayer-alert-scheduler";
+import { PRAYER_ALERT_PREFS_CHANGED_EVENT } from "@/lib/prayer-alert-preferences";
 import { PrayerCountdownBanner } from "@/components/prayer/PrayerCountdownBanner";
 import { loadNotifPrefs, scheduleIslamicReminder } from "@/lib/local-notifications";
 import { NavProgressBar } from "@/components/NavProgressBar";
@@ -411,23 +416,43 @@ function AdhanSchedulerBootstrap() {
  */
 function PrayerAlertSchedulerBootstrap() {
   const { data } = usePrayerCountdown();
-  const started = useRef(false);
   useEffect(() => {
-    if (!data || started.current) return;
-    started.current = true;
+    if (!data) return;
     startPrayerAlertScheduler(data).catch(() => {});
   }, [data]);
 
   useEffect(() => {
     const onVisible = () => {
       if (document.visibilityState === "visible") {
-        void recheckPrayerAlertWindow(data);
+        // force: يعيد جدولة الإشعار الأصلي بعد الخلفية/تغيّر المنطقة الزمنية بلا تكرار خاطئ.
+        void recheckPrayerAlertWindow(data, { force: true });
+        void import("@/lib/quran-daily-reminder").then(({ ensureQuranDailyReminderScheduled }) => {
+          void ensureQuranDailyReminderScheduled();
+        });
       }
     };
+    const onPrefsChanged = () => {
+      invalidatePrayerNativeSchedule();
+      void recheckPrayerAlertWindow(data, { force: true });
+    };
     document.addEventListener("visibilitychange", onVisible);
-    return () => document.removeEventListener("visibilitychange", onVisible);
+    window.addEventListener(PRAYER_ALERT_PREFS_CHANGED_EVENT, onPrefsChanged);
+    return () => {
+      document.removeEventListener("visibilitychange", onVisible);
+      window.removeEventListener(PRAYER_ALERT_PREFS_CHANGED_EVENT, onPrefsChanged);
+    };
   }, [data]);
 
+  return null;
+}
+
+/** قنوات + مستمعو النقر + إعادة جدولة الورد + سجلات APNs (معطّلة). */
+function NativeNotificationsBootstrap() {
+  useEffect(() => {
+    void import("@/lib/notifications/native-bootstrap").then(({ bootstrapNativeNotifications }) => {
+      void bootstrapNativeNotifications();
+    });
+  }, []);
   return null;
 }
 
@@ -855,6 +880,7 @@ function AppShellInner() {
       <IslamicReminderBootstrap />
       <AdhanSchedulerBootstrap />
       <PrayerAlertSchedulerBootstrap />
+      <NativeNotificationsBootstrap />
       <OfflineSyncBootstrap />
       <PlatformLogicBootstrap />
       <NavBar />

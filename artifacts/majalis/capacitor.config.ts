@@ -27,6 +27,10 @@ const config: CapacitorConfig = {
       resize: "body",
       resizeOnFullScreen: true,
     },
+    LocalNotifications: {
+      // iOS: badge + sound + banner + notification center (Capacitor 8.2+)
+      presentationOptions: ["badge", "sound", "banner", "list"],
+    },
   },
   android: {
     buildOptions: {
