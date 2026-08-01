@@ -87,7 +87,7 @@ for (const iss of FIQH_ISSUES_PUBLISHED_SEED) {
   const id = issueIdBySlug.get(iss.slug);
   lines.push(
     `INSERT INTO public.fiqh_council_issues (id, slug, title, summary, description, category, subcategory, ruling_summary, evidence_summary, documentation_level, status, views_count, published_at, created_at, updated_at) VALUES (` +
-    `${sqlStr(id)}, ${sqlStr(iss.slug)}, ${sqlStr(iss.title)}, ${sqlStr(iss.summary)}, ${sqlStr(iss.description)}, ${sqlStr(normCategory(iss.category))}, ${sqlStr(iss.subcategory)}, ${sqlStr(iss.ruling_summary)}, ${sqlStr(iss.evidence_summary)}, ${sqlStr(iss.documentation_level || "official_verified")}, ${sqlStr(iss.status || "published")}, ${sqlInt(iss.views_count || 0)}, ${sqlTs(iss.published_at)}, ${sqlTs(iss.created_at) === "NULL" ? "now()" : sqlTs(iss.created_at)}, ${sqlTs(iss.updated_at) === "NULL" ? "now()" : sqlTs(iss.updated_at)}` +
+    `${sqlStr(id)}, ${sqlStr(iss.slug)}, ${sqlStr(iss.title)}, ${sqlStr(iss.summary)}, ${sqlStr(iss.description)}, ${sqlStr(normCategory(iss.category))}, ${sqlStr(iss.subcategory)}, ${sqlStr(iss.ruling_summary)}, ${sqlStr(iss.evidence_summary)}, ${sqlStr(iss.documentation_level || "imported_needs_review")}, ${sqlStr(iss.status || "published")}, ${sqlInt(iss.views_count || 0)}, ${sqlTs(iss.published_at)}, ${sqlTs(iss.created_at) === "NULL" ? "now()" : sqlTs(iss.created_at)}, ${sqlTs(iss.updated_at) === "NULL" ? "now()" : sqlTs(iss.updated_at)}` +
     `) ON CONFLICT (slug) DO NOTHING;`
   );
 }
