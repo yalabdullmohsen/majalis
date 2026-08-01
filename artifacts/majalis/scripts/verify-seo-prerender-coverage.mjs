@@ -23,7 +23,7 @@ if (missing.length) {
   console.error(`❌ ناقص seo-prerender لـ ${missing.length} مسارًا:`);
   for (const p of missing.slice(0, 40)) console.error(`  - ${p}`);
   if (missing.length > 40) console.error(`  … و${missing.length - 40} أخرى`);
-  console.error("شغّل: node scripts/generate-seo.mjs ثم ارفع الملفات الناقصة.");
+  console.error("شغّل: pnpm run generate:seo (أو node --import tsx scripts/generate-seo.mjs) ثم ارفع الملفات الناقصة.");
   process.exit(1);
 }
 

@@ -76,8 +76,11 @@
   overflow-y: auto;
   overflow-x: hidden;
   touch-action: pan-y;
-  padding: 6px;
-  padding-inline: max(6px, env(safe-area-inset-left, 0px)) max(6px, env(safe-area-inset-right, 0px));
+  padding-block: 8px;
+  padding-inline: max(1rem, env(safe-area-inset-left, 0px)) max(1rem, env(safe-area-inset-right, 0px));
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
   cursor: pointer;
 }
 @media (prefers-reduced-motion: no-preference) {
@@ -90,18 +93,20 @@
 }
 
 .mushaf-v2__ayahs {
-  max-width: none;
+  max-width: 100%;
   width: 100%;
   margin: 0;
   cursor: default;
-  /* ⚠️ ممنوع text-align:justify هنا (2026-07-19، شكوى "مسافات مفرطة وأقواس
-     مشوهة"): التبرير في CSS يمدّد مسافات الكلمات آليًا (inter-word
-     justification) ليملأ كل سطر العرض الكامل، فينتج تباعدًا غير منتظم بين
-     الكلمات (شديد التفاوت بين سطر وآخر) ويُبعِد بادئة رقم الآية ﴿١﴾ عن
-     النص بمسافة مطّاطة متغيّرة تبدو "مشوَّهة". محاذاة يمين عادية (طبيعية
-     لـRTL) بلا أي تمديد آلي بين الكلمات — تطابق توجيه المهمة الصريح: لا
-     text-align:justify ولا letter-spacing يدوي على نص القرآن. */
-  text-align: right;
+  box-sizing: border-box;
+  /* تبرير مصحفي مع keep-all — بلا letter-spacing/word-spacing يدوي */
+  text-align: justify;
+  text-justify: inter-word;
+  text-align-last: right;
+  word-break: keep-all !important;
+  overflow-wrap: normal !important;
+  white-space: normal;
+  letter-spacing: normal;
+  word-spacing: normal;
 }
 .mushaf-v2__ayah-wrap {
   display: contents;
@@ -125,11 +130,15 @@
 .mushaf-v2__ayah {
   font-family: var(--font-quran);
   font-size: 1.6rem;
-  line-height: 2.35;
+  /* ارتفاع أوفر للتشكيل العلوي/السفلي */
+  line-height: 2.5;
   color: var(--majalis-ink);
   cursor: pointer;
   border-radius: .3rem;
-  padding: .1rem .15rem;
+  padding: .15rem .2rem;
+  word-break: keep-all !important;
+  overflow-wrap: normal !important;
+  white-space: normal;
   /* تمنع قائمة تحديد/نسخ النص الأصلية من iOS Safari من الظهور فوق ضغطتنا
      المطوّلة المخصَّصة (فتح لوحة إجراءات الآية) — النسخ متاح من داخل تلك
      اللوحة نفسها، لا حاجة لتحديد النص يدويًا. */
