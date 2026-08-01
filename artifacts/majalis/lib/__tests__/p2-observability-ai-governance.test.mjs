@@ -210,9 +210,19 @@ __resetMetrics();
     () => assertSafeUrl("https://evil.example.com/", { allowlist: ["majlisilm.com"] }),
     /SSRF_BLOCKED/,
   );
-  const ok = await assertSafeUrl("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+  // لا DNS خارجي في الاختبارات — حقن lookup عام
+  const ok = await assertSafeUrl("https://www.youtube.com/watch?v=dQw4w9WgXcQ", {
+    dnsLookup: async () => [{ address: "1.1.1.1", family: 4 }],
+  });
   assert.equal(ok.hostname, "www.youtube.com");
-  console.log("  ✓ SSRF blocked + safe allowlist host");
+  await assert.rejects(
+    () =>
+      assertSafeUrl("https://www.youtube.com/", {
+        dnsLookup: async () => [{ address: "127.0.0.1", family: 4 }],
+      }),
+    /SSRF_BLOCKED/,
+  );
+  console.log("  ✓ SSRF blocked + safe allowlist host (dnsLookup injection)");
 }
 
 // ── metrics p50/p95/p99 + sanitization ───────────────────────────────────────

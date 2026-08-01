@@ -100,7 +100,7 @@
 .gl-cat--all     { --gl-cat-bg: rgba(31,77,58,.1);   --gl-cat-color: #226A56; }
 .gl-cat--aqeedah { --gl-cat-bg: rgba(26,90,122,.1);  --gl-cat-color: #1a5a7a; }
 .gl-cat--fiqh    { --gl-cat-bg: rgba(23,61,53,.1);  --gl-cat-color: #226A56; }
-.gl-cat--hadith  { --gl-cat-bg: rgba(49,46,129,.1);  --gl-cat-color: #312E81; }
+.gl-cat--hadith  { --gl-cat-bg: rgba(49,46,129,.1);  --gl-cat-color: var(--brand-deep, #143F35); }
 .gl-cat--quran   { --gl-cat-bg: rgba(6,95,70,.1);    --gl-cat-color: #065F46; }
 .gl-cat--seerah  { --gl-cat-bg: rgba(155,28,28,.1);  --gl-cat-color: #9B1C1C; }
 .gl-cat--tazkiya { --gl-cat-bg: rgba(21,48,37,.1);   --gl-cat-color: #143F35; }

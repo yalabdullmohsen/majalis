@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { isNative } from "@/lib/capacitor-utils";
 import {
   getPushSupport,
   subscribeToPush,
@@ -12,13 +13,18 @@ export function PushPrompt() {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    if (isNative) {
+      setState("unsupported");
+      return;
+    }
     setState(getPushSupport());
     navigator.serviceWorker?.ready.then((reg) =>
       reg.pushManager.getSubscription().then((sub) => setSubscribed(!!sub)),
     ).catch(() => {});
   }, []);
 
-  if (state === "unsupported") return null;
+  // iOS/Android native: Local Notifications only — hide Web Push UI entirely.
+  if (isNative || state === "unsupported") return null;
 
   if (state === "no-vapid") {
     return (

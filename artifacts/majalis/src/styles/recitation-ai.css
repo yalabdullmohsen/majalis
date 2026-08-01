@@ -1,13 +1,13 @@
 /* ═══════════════════════════════════════════════════════════════
    اختبار التسميع بالذكاء الاصطناعي — recitation-ai.css
-   هوية المجلس العلمي: زمردي #0E6E52 / #153025، أسطح عاجية،
+   هوية المجلس العلمي: زمردي var(--brand-deep, #143F35) / #153025، أسطح عاجية،
    Amiri Quran للنص القرآني، var(--font-body) (IBM Plex Sans Arabic)
    للواجهة — لا خط "Almarai" (غير مُعتمَد في هذا المشروع، راجع فحص
    اتساق الخط في pre-commit gate).
    ═══════════════════════════════════════════════════════════════ */
 
 :root {
-  --rai-emerald: #0E6E52;
+  --rai-emerald: var(--brand-deep, #143F35);
   --rai-emerald-deep: #153025;
   --rai-ivory: #F8F7F3;
   --rai-ivory-warm: #F3EFE6;
@@ -15,7 +15,7 @@
   --rai-gold: #C9A227;
   /* لون منفصل تمامًا عن الخطأ (أحمر) والتجويد/التلميح (ذهبي) — بند "غير
      واضح" يجب أن يبدو مختلفًا بصريًا فورًا فلا يُظَن جزمًا بخطأ. */
-  --rai-unclear: #8B5CF6;
+  --rai-unclear: var(--brand-hover, #195345);
   /* المستوى الأوسط في نظام الثقة الثلاثي: "يحتاج إعادة" — كهرماني، منفصل
      عن الأحمر (خطأ مؤكَّد) والبنفسجي (غير واضح) والذهبي (تجويد). */
   --rai-needs-repeat: #D97706;
@@ -51,7 +51,7 @@ html[data-theme="dark"] .rai-shell { background: #111714; }
   cursor: pointer;
 }
 html[data-theme="dark"] .rai-back-btn { color: #E5F0EC; }
-.rai-back-btn:hover { background: color-mix(in srgb, var(--rai-emerald, #0E6E52) 10%, transparent); }
+.rai-back-btn:hover { background: color-mix(in srgb, var(--rai-emerald, var(--brand-deep, #143F35)) 10%, transparent); }
 
 .rai-header {
   max-width: 720px;
@@ -336,7 +336,7 @@ html[data-theme="dark"] .rai-correction-card__teacher-note { color: #FCA5A5; }
   margin: 0 0 .35rem;
   font-family: var(--font-body);
 }
-.rai-correction-card__label { font-size: .8rem; color: var(--text-muted, #6b7280); flex-shrink: 0; }
+.rai-correction-card__label { font-size: .8rem; color: var(--text-muted, var(--text-2, #5C5C56)); flex-shrink: 0; }
 .rai-correction-card__heard,
 .rai-correction-card__correct {
   font-family: "Amiri Quran", "Scheherazade New", serif;

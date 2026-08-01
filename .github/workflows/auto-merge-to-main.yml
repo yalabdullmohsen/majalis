@@ -157,7 +157,10 @@ jobs:
               echo "::endgroup::"; continue
             fi
 
-            echo "enable auto-merge squash for #$n (head=$head_sha_after)"
-            gh "${REPO_FLAG[@]}" pr merge "$n" --auto --squash --delete-branch || true
+            pr_title=$(gh "${REPO_FLAG[@]}" pr view "$n" --json title --jq .title)
+            echo "enable auto-merge squash for #$n (head=$head_sha_after) subject=${pr_title}"
+            # Keep Auto-merge enabled; squash title = PR title (clear history).
+            gh "${REPO_FLAG[@]}" pr merge "$n" --auto --squash --delete-branch \
+              --subject "$pr_title" || true
             echo "::endgroup::"
           done

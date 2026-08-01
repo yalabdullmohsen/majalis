@@ -28,7 +28,7 @@
   font-family: inherit;
 }
 .srp-filter-btn--active      { border-color: var(--majalis-emerald-deep, #143F35); background: var(--majalis-emerald-deep, #143F35); color: #fff; }
-.srp-filter-btn--active-type { border-color: #7c3aed; background: #7c3aed; color: #fff; }
+.srp-filter-btn--active-type { border-color: var(--brand, #226A56); background: var(--brand, #226A56); color: #fff; }
 
 .srp-state           { text-align: center; padding: var(--ds-space-8); color: #9ca3af; }
 .srp-state--error    { text-align: start; padding: var(--ds-space-4); background: var(--majalis-danger-muted, #fef2f2); border: 1px solid var(--majalis-danger, #dc2626); border-radius: 0.6rem; color: var(--majalis-danger, #991b1b); font-size: 0.85rem; }

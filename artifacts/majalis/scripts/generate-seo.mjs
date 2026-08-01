@@ -14,40 +14,39 @@
  *      (مخالفة صريحة لسياسة Google للبيانات المنظمة). QAPage تبقى في صفحات التفصيل.
  *   4. يُمسح seo-prerender/ في البداية، فلا تبقى صفحات يتيمة من توليد سابق.
  *
- * التشغيل: node scripts/generate-seo.mjs   (يسبق vite build)
+ * التشغيل: node --import tsx scripts/generate-seo.mjs   (يسبق vite build)
+ * أو: pnpm run generate:seo
  */
 
 import { mkdir, readFile, writeFile, unlink, rm } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { registerHooks } from "node:module";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const appRoot = resolve(__dirname, "..");
-const srcDir = resolve(appRoot, "src");
 
-// ─────────────────────────────────────────────────────────────────────────────
-// تحميل وحدات TypeScript مباشرة (Node ≥22 يجرّد الأنواع تلقائياً).
-// يلزم فقط حلّ الاسم المستعار "@/" وامتدادات .ts الضمنية.
-// ─────────────────────────────────────────────────────────────────────────────
-registerHooks({
-  resolve(specifier, context, nextResolve) {
-    let spec = specifier;
-    if (spec.startsWith("@/")) spec = pathToFileURL(resolve(srcDir, spec.slice(2))).href;
-    else if (spec.startsWith(".") && context.parentURL) spec = new URL(spec, context.parentURL).href;
-    if (spec.startsWith("file:")) {
-      const p = fileURLToPath(spec);
-      for (const cand of [p, `${p}.ts`, `${p}/index.ts`]) {
-        if (existsSync(cand)) return { url: pathToFileURL(cand).href, shortCircuit: true };
-      }
-    }
-    return nextResolve(specifier, context);
-  },
-});
+/**
+ * استيراد وحدة مصدر (.ts/.js/.mjs/.json) بمسار صريح الامتداد.
+ * يعتمد على `node --import tsx` لتحميل TypeScript — بلا register()/strip hooks.
+ */
+function importSrc(relPath) {
+  if (typeof relPath !== "string" || !relPath.trim()) {
+    return Promise.reject(new Error("importSrc: path required"));
+  }
+  if (!/\.(ts|tsx|js|mjs|cjs|json)$/.test(relPath)) {
+    return Promise.reject(
+      new Error(`importSrc: explicit extension required (.ts/.js/.mjs/.json) — got "${relPath}"`),
+    );
+  }
+  const abs = resolve(appRoot, relPath);
+  if (!existsSync(abs)) {
+    return Promise.reject(new Error(`importSrc: file not found — ${abs}`));
+  }
+  return import(pathToFileURL(abs).href);
+}
 
-const importSrc = (relPath) => import(pathToFileURL(resolve(appRoot, relPath)).href);
-
+async function main() {
 // ─────────────────────────────────────────────────────────────────────────────
 // المصادر
 // ─────────────────────────────────────────────────────────────────────────────
@@ -78,11 +77,19 @@ const { SINS_TOPICS } = await importSrc("src/lib/sins-rights-data.ts");
 const { getAllSurahStories } = await importSrc("src/lib/surah-stories.ts");
 const { FIQH_ISSUES_PUBLISHED_SEED } = await importSrc("src/lib/fiqh-issues-seed.ts");
 const { isPublicIssue } = await importSrc("src/lib/fiqh-council-trust.ts");
+const { FIQH_ITEM_TYPE_LABELS } = await importSrc("src/lib/fiqh-council-types.ts");
 const { SCHOLARS } = await importSrc("src/lib/scholars-data.ts");
 const { MUEZZINS } = await importSrc("src/lib/adhan-audio.ts");
 
 const SURAH_STORIES = getAllSurahStories();
 const PUBLIC_FIQH_ISSUES = FIQH_ISSUES_PUBLISHED_SEED.filter(isPublicIssue);
+
+// وسمُ مادّة المجمع يُشتقّ من حقل `type` في السجلّ نفسه لا يُثبَّت على «قرار»:
+// من الأربعة القائمة في fiqh-council-seed.ts اثنان type: "research" نصَّ المجمع
+// فيهما على أنه لم يبتّ (237 (24/8) أوصى بمزيد من البحث، و230 (24/1) أجّل البتّ)،
+// فوسمُهما «قرار» إثباتُ ما نفاه المصدر. والمعجم FIQH_ITEM_TYPE_LABELS هو معجم
+// المنصّة نفسه المستعمَل في العرض والتصدير والاستشهاد.
+const fiqhItemKind = (row) => FIQH_ITEM_TYPE_LABELS[row?.type] || "مادة";
 
 /**
  * قوائم ثابتة محقونة داخل مكوّنات React (لا تُستورَد هنا لأن استيراد .tsx يتطلب JSX).
@@ -987,9 +994,9 @@ ${linkList("روابط ذات صلة", [
 ])}`,
   "/fiqh-council": `<p>المجمع الفقهي الإسلامي: قرارات وفتاوى ومسائل معاصرة ونوازل، مع أدوات بحث ومقارنة وأرشيف.</p>
 ${linkList(
-  "من القرارات",
+  "من مواد المجمع",
   (PLATFORM_SEED.fiqh_decisions || []).slice(0, 12).map((r) => ({
-    name: r.title,
+    name: `${r.title} (${fiqhItemKind(r)})`,
     url: `/fiqh-council/${r.slug || r.id}`,
   })),
 )}
@@ -1869,7 +1876,7 @@ for (const row of PLATFORM_SEED.fiqh_decisions || []) {
     {
       path: `/fiqh-council/${row.slug || row.id}`,
       title: row.title,
-      description: padDesc(row.title, "قرار من المجمع الفقهي الإسلامي الدولي"),
+      description: padDesc(row.title, `${fiqhItemKind(row)} من مجمع الفقه الإسلامي الدولي`),
       ogType: "article",
       robots: "index, follow",
     },
@@ -2223,10 +2230,10 @@ Sitemap: ${SITE_URL}/sitemap.xml
 const FEED_DATE = new Date("2026-07-25T00:00:00Z").toUTCString();
 const rssItems = [
   ...(PLATFORM_SEED.fiqh_decisions || []).slice(0, 6).map((row) => ({
-    title: `[قرار مجمعي] ${row.title}`,
+    title: `[${fiqhItemKind(row)} — مجمع فقهي] ${row.title}`,
     link: absoluteUrl(`/fiqh-council/${row.slug || row.id}`),
-    description: `قرار فقهي جماعي: ${row.title} — ${row.category || "المجمع الفقهي الإسلامي"}`,
-    category: "قرارات فقهية",
+    description: `مادة من مجمع فقهي (${fiqhItemKind(row)}): ${row.title} — ${row.category || "المجمع الفقهي الإسلامي"}`,
+    category: "مواد المجامع الفقهية",
   })),
   ...(PLATFORM_SEED.rulings || []).slice(0, 4).map((row) => ({
     title: `[حكم شرعي] ${row.title}`,
@@ -2287,3 +2294,18 @@ console.log(
     `  دروس: ${lessonRows.length} · كتب: ${LIBRARY_CATALOG.length}`,
   ].join("\n"),
 );
+} // end main()
+
+try {
+  await main();
+} catch (err) {
+  // توليد SEO مساند للبناء — لا يُسقط pnpm build عند أعطال غير حرجة
+  // (مثل ERR_UNKNOWN_FILE_EXTENSION في بيئات Node بلا محمل TS).
+  const code = err && typeof err === "object" && "code" in err ? String(err.code) : "";
+  const message = err instanceof Error ? err.message : String(err);
+  console.warn(
+    `[generate-seo] warning: SEO generation failed${code ? ` (${code})` : ""} — build continues.`,
+  );
+  console.warn(`[generate-seo] ${message}`);
+  process.exitCode = 0;
+}

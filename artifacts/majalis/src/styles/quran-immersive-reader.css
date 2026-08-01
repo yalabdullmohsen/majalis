@@ -144,8 +144,11 @@ body.quran-immersive-sticky .scroll-to-top {
   flex-direction: column;
   padding-top: env(safe-area-inset-top, 0px);
   padding-bottom: env(safe-area-inset-bottom, 0px);
-  padding-inline-start: env(safe-area-inset-left, 0px);
-  padding-inline-end: env(safe-area-inset-right, 0px);
+  padding-inline-start: max(1rem, env(safe-area-inset-left, 0px));
+  padding-inline-end: max(1rem, env(safe-area-inset-right, 0px));
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
 }
 
 .immersive-quran-page__pager {
@@ -201,8 +204,17 @@ body.quran-immersive-sticky .scroll-to-top {
 
 .immersive-quran-page__verse-text {
   display: block;
-  text-align: center;
+  text-align: justify;
+  text-justify: inter-word;
+  text-align-last: center;
   font-family: var(--font-quran, "Amiri Quran", "Scheherazade New", "Amiri", serif);
+  line-height: var(--quran-immersive-lh, 2.4);
+  word-break: keep-all !important;
+  overflow-wrap: normal !important;
+  white-space: normal;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
   -webkit-text-size-adjust: 100%;
   text-size-adjust: 100%;
 }

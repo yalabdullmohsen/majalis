@@ -10,6 +10,7 @@ import {
   sendLocalNotification,
   type NotifPrefs,
 } from "./local-notifications";
+import { isNative } from "./capacitor-utils";
 import { getUserStreak } from "./user-streak";
 import {
   QURAN_DAILY_REMINDER_BODY,
@@ -246,13 +247,30 @@ export function maybeWarnStreakLoss(): boolean {
   }
 }
 
-/** مزامنة الجدول اليومي مع SW + fallback الصفحة */
+/** مزامنة الجدول اليومي مع SW + fallback الصفحة (الويب) أو Capacitor (الأصل). */
 export async function syncSmartLocalNotifications(opts?: {
   khatmahBehind?: boolean;
 }): Promise<{ scheduled: number; viaSw: boolean }> {
   try {
     const prefs = loadNotifPrefs();
-    if (!prefs.enabled) return { scheduled: 0, viaSw: false };
+    if (!prefs.enabled) {
+      // تعطيل تفضيلات التذكيرات العامة يُلغي ورد القرآن فقط —
+      // تنبيهات الصلاة لها مخزن تفضيلات منفصل (prayer-alert-preferences).
+      if (isNative) {
+        const { cancelNativeQuranReminder } = await import("./quran-daily-reminder");
+        await cancelNativeQuranReminder();
+      }
+      return { scheduled: 0, viaSw: false };
+    }
+
+    // على الأصل: لا SW — ورد القرآن عبر Capacitor؛ باقي التذكيرات وهي الصفحة مفتوحة فقط.
+    if (isNative) {
+      const { ensureQuranDailyReminderScheduled } = await import("./quran-daily-reminder");
+      await ensureQuranDailyReminderScheduled();
+      maybeWarnStreakLoss();
+      return { scheduled: prefs.quranDailyReminder ? 1 : 0, viaSw: false };
+    }
+
     const items = buildDailySmartSchedule({
       prefs,
       khatmahBehind: opts?.khatmahBehind,

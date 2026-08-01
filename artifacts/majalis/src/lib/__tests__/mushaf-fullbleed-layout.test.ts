@@ -21,8 +21,10 @@ assert.equal(
   false,
   ".mpv-body--ayah بلا max-width:720px الذي كان يحبس الصفحة",
 );
-assert.match(mpvBodyBlock[0], /max\(12px/);
+assert.match(mpvBodyBlock[0], /max\(1rem/);
 assert.match(mpvBodyBlock[0], /83vh/);
+assert.match(mpvBodyBlock[0], /box-sizing:\s*border-box/);
+assert.match(mpvBodyBlock[0], /width:\s*100%/);
 
 assert.match(quranCss, /\.quran-shell--chrome-hidden\s+\.mpv-body/);
 assert.match(viewSrc, /quran-shell--chrome-hidden/);

@@ -2,10 +2,15 @@
  * إشعارات محلية أصلية لتنبيه الصلاة (عبر @capacitor/local-notifications على iOS/أندرويد).
  * على الويب: تُستخدَم بنية adhan-scheduler.ts الحالية (window.Notification) بدلاً منها.
  *
- * لا يُطلَب إذن الإشعارات تلقائياً هنا — انظر requestPermissionIfNeeded()، يُستدعى
+ * لا يُطلَب إذن الإشعارات تلقائياً هنا — انظر requestNotificationPermission()، يُستدعى
  * فقط بعد أن يضغط المستخدم زر "تفعيل" في شارة الشرح (PermissionPrompt).
  */
 import { isNative } from "@/lib/capacitor-utils";
+import {
+  CHANNEL_PRAYER,
+  DEFAULT_ALERT_SOUND,
+  ensureNotificationChannels,
+} from "@/lib/notifications/channels";
 
 const PRE_ALERT_ID_BASE = 9100; // نطاق ثابت لمعرّفات إشعارات "قبل الصلاة"
 const ENTER_ID_BASE = 9200; // نطاق ثابت لمعرّفات إشعارات "دخول الوقت"
@@ -47,8 +52,11 @@ export async function requestNotificationPermission(): Promise<boolean> {
   try {
     const { LocalNotifications } = await import("@capacitor/local-notifications");
     const res = await LocalNotifications.requestPermissions();
-    return res.display === "granted";
-  } catch {
+    const granted = res.display === "granted";
+    console.info("[notifications/prayer] permission request →", res.display);
+    return granted;
+  } catch (e) {
+    console.warn("[notifications/prayer] requestPermissions failed", e);
     return false;
   }
 }
@@ -64,21 +72,42 @@ export async function schedulePrayerNativeNotifications(opts: {
 }): Promise<void> {
   if (!isNative) return; // على الويب: adhan-scheduler.ts يتكفّل بالتنبيهات
   try {
+    await ensureNotificationChannels();
     const { LocalNotifications } = await import("@capacitor/local-notifications");
     const perm = await LocalNotifications.checkPermissions();
-    if (perm.display !== "granted") return;
+    if (perm.display !== "granted") {
+      console.info("[notifications/prayer] skip schedule — permission", perm.display);
+      return;
+    }
 
     // ألغِ أي جدولة سابقة لنفس الصلاة قبل إعادة الجدولة (لا تكرار).
     await cancelPrayerNativeNotifications(opts.prayerKey);
 
-    const notifications = [];
+    const notifications: Array<{
+      id: number;
+      title: string;
+      body: string;
+      schedule: { at: Date; allowWhileIdle: boolean };
+      sound: string;
+      channelId: string;
+      interruptionLevel: "timeSensitive";
+      extra: { url: string; kind: string; prayerKey: string };
+    }> = [];
     const preAlertEpoch = opts.prayerTimeEpochMs - opts.preAlertMinutes * 60_000;
     if (opts.preAlertEnabled && preAlertEpoch > Date.now()) {
       notifications.push({
         id: idFor(PRE_ALERT_ID_BASE, opts.prayerKey),
         title: "اقتربت الصلاة",
         body: `اقتربت صلاة ${opts.prayerName} — متبقي ${opts.preAlertMinutes} دقيقة`,
-        schedule: { at: new Date(preAlertEpoch) },
+        schedule: { at: new Date(preAlertEpoch), allowWhileIdle: true },
+        sound: DEFAULT_ALERT_SOUND,
+        channelId: CHANNEL_PRAYER,
+        interruptionLevel: "timeSensitive",
+        extra: {
+          url: "/prayer-times",
+          kind: "prayer-pre",
+          prayerKey: opts.prayerKey,
+        },
       });
     }
     if (opts.enterAlertEnabled && opts.prayerTimeEpochMs > Date.now()) {
@@ -86,14 +115,27 @@ export async function schedulePrayerNativeNotifications(opts: {
         id: idFor(ENTER_ID_BASE, opts.prayerKey),
         title: "حان وقت الصلاة",
         body: `حان الآن وقت صلاة ${opts.prayerName}`,
-        schedule: { at: new Date(opts.prayerTimeEpochMs) },
+        schedule: { at: new Date(opts.prayerTimeEpochMs), allowWhileIdle: true },
+        sound: DEFAULT_ALERT_SOUND,
+        channelId: CHANNEL_PRAYER,
+        interruptionLevel: "timeSensitive",
+        extra: {
+          url: "/prayer-times",
+          kind: "prayer-enter",
+          prayerKey: opts.prayerKey,
+        },
       });
     }
     if (notifications.length > 0) {
       await LocalNotifications.schedule({ notifications });
+      console.info(
+        "[notifications/prayer] scheduled",
+        opts.prayerKey,
+        notifications.map((n) => n.id),
+      );
     }
-  } catch {
-    /* تجاهل — الشريط داخل التطبيق يبقى يعمل بمعزل عن هذا */
+  } catch (e) {
+    console.warn("[notifications/prayer] schedule failed", e);
   }
 }
 

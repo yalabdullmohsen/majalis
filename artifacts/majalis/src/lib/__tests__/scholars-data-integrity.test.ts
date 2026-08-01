@@ -340,6 +340,33 @@ assert(
   `غائب: ${missingFromList.join(", ") || "—"} | يتيم: ${orphanedInList.join(", ") || "—"} — شغّل: npx tsx scripts/regen-scholars-list-json.mjs`
 );
 
+// اكتُشف 2026-07-31 (ج-٣٩١): مقابلة المعرِّفات وحدها تمرّ خضراء والنص منحرف —
+// كان `fawzan.died` في المرآة «حيّ (معاصر)» والمصدر الحي «حي (معاصر)». وهذه
+// المرآة تغذّي /api/sitemap و/api/feed، فالمعروض لمحركات البحث نصٌّ لا يراه
+// زائر الصفحة. فالحدّ هنا 0 على الحقلين المشتركين نصًّا لا على المعرِّفات فقط.
+const scholarById = new Map(SCHOLARS.map((s) => [s.id, s]));
+const listTextDrift = scholarsListJson.flatMap((j) => {
+  const live = scholarById.get(j.id);
+  if (!live) return [];
+  const out: string[] = [];
+  if (live.name !== j.name) out.push(`${j.id}.name: مرآة «${j.name}» ≠ حي «${live.name}»`);
+  if (live.died !== j.died) out.push(`${j.id}.died: مرآة «${j.died}» ≠ حي «${live.died}»`);
+  return out;
+});
+assert(
+  listTextDrift.length === 0,
+  `scholars-list.json يطابق المصدر الحي نصًّا لا معرِّفات (${scholarsListJson.length * 2} حقلاً)`,
+  `${listTextDrift.slice(0, 8).join(" | ")} — شغّل: npx tsx scripts/regen-scholars-list-json.mjs`
+);
+
+// حارسٌ للحارس: لو انكسر التوليد فأخرج مصفوفة فارغة، مرّت المقابلة أعلاه
+// فارغةً بلا خرق. فالعدد نفسه شرطٌ مستقل.
+assert(
+  scholarsListJson.length === SCHOLARS.length && scholarsListJson.length > 0,
+  `عدد صفوف المرآة يساوي عدد المصدر الحي (${scholarsListJson.length}/${SCHOLARS.length})`,
+  "مرآة فارغة أو ناقصة تُفرِّغ فحص التطابق النصي أعلاه من معناه"
+);
+
 console.log("\n=== ١١) ربط مؤلّفي المكتبة بصفحات العلماء (ما يصل الزائر لا ما في البيانات) ===");
 
 // اكتُشف 2026-07-27: صفحة الكتاب تربط اسم المؤلف بصفحة العالم عبر
@@ -496,6 +523,196 @@ const homonymHits = HOMONYM_WORKS.filter(([name, work]) => resolveScholarWorkLin
   ([name, work, why]) => `«${work}» لـ${name} رُبط بـ${resolveScholarWorkLink(work, name).bookId} — ${why}`
 );
 assert(homonymHits.length === 0, `${HOMONYM_WORKS.length} عنواناً متجانساً يبقى بلا رابط`, homonymHits.join(" | "));
+
+console.log("\n=== ١٤) حقل quote قولُ صاحبه لا قولٌ فيه ولا قولُ صحابيٍّ ===");
+
+// اكتُشف 2026-07-31 (ج-٣٩١): الصفحة تعرض المقولة منسوبةً صراحةً إلى صاحبها
+// (`<footer>— {scholar.name}</footer>` في ScholarProfilePage)، وكان فيها ثلاثُ
+// مقولاتٍ لا تصحّ نسبتها إليه:
+//   • ابن ماجه (ت٢٧٣هـ): «كتبتُ عن رسول الله ﷺ ما لم يكتبه أحد قبلي» — دعوى
+//     صحبةٍ مستحيلةٌ زمنياً، وأصلُها حديث عبد الله بن عمرو بن العاص
+//     (سنن أبي داود ٣٦٤٦، ومسند أحمد) بلفظ «كنت أكتب كل شيء أسمعه…».
+//   • مسلم وابن خزيمة: ثناءٌ عليهما بضمير الغائب يُسمِّيهما — فهو قولُ غيرهما
+//     فيهما لا قولُهما.
+// والحدّ هنا 0: مقولةٌ تذكر اسم صاحبها بضمير الغائب أو تدّعي سماعاً من النبي ﷺ
+// لمن وُلد بعد عصر الصحابة، تُحذَف أو تُنقَل إلى موضعها الصحيح — ولا تُصاغ صياغةً
+// جديدة.
+const SELF_NAME_STOPWORDS = new Set([
+  ...AR_STOPWORDS,
+  "محمد", "احمد", "علي", "عمر", "حسن", "حسين", "ابراهيم", "يوسف", "عثمان",
+  "يحيي", "صالح", "اسماعيل", "سليمان", "عبدالله",
+]);
+const hijriYear = (died: string): number | null => {
+  const m = died.match(/[٠-٩0-9]+/);
+  if (!m) return null;
+  const digits = [...m[0]].map((c) => (/[٠-٩]/.test(c) ? String("٠١٢٣٤٥٦٧٨٩".indexOf(c)) : c)).join("");
+  return Number.parseInt(digits, 10);
+};
+const selfReferential = SCHOLARS.filter((s) => s.quote).flatMap((s) => {
+  const nq = normalizeArabic(s.quote as string);
+  const own = [
+    ...new Set([...normalizeArabic(s.name).split(/\s+/), ...normalizeArabic(s.fullName).split(/\s+/)]),
+  ].filter((w) => w.length > 3 && !SELF_NAME_STOPWORDS.has(w));
+  const hits = own.filter((w) => nq.includes(w));
+  return hits.length ? [`${s.id}: «${s.quote}» يذكر «${hits.join("، ")}» بضمير الغائب`] : [];
+});
+assert(
+  selfReferential.length === 0,
+  `لا مقولةَ عالِمٍ تُثني عليه باسمه (${SCHOLARS.filter((s) => s.quote).length} مقولة)`,
+  selfReferential.join(" | ")
+);
+
+const impossibleCompanionship = SCHOLARS.filter((s) => s.quote).flatMap((s) => {
+  const year = hijriYear(s.died);
+  if (year === null || year <= 150) return []; // عصر الصحابة وكبار التابعين
+  const q = s.quote as string;
+  return /(كتبتُ|كتبت|سمعتُ|سمعت|رأيتُ|رأيت|سألتُ|سألت)\s+(عن|من)?\s*(رسول الله|النبي)/.test(q)
+    ? [`${s.id} (ت${s.died}): «${q}» — دعوى سماعٍ مباشرٍ ممن لم يُدرك النبي ﷺ`]
+    : [];
+});
+assert(
+  impossibleCompanionship.length === 0,
+  "لا مقولةَ تدّعي صحبةً لمن وُلد بعد عصرها",
+  impossibleCompanionship.join(" | ")
+);
+
+console.log("\n=== ١٥) عنوانُ المؤلَّف لصاحبه: لا كتابَ يُنسب إلى غير مؤلِّفه ===");
+
+// اكتُشف 2026-07-31 (ج-٣٩٢): سجلُّ ابن جبرين (ت١٤٣٠هـ، حنبلي) كان يحمل في
+// key_works وفي bio معاً كتابَين ليسا له البتّة:
+//   • «فتح القريب المجيب شرح كتاب التقريب» — لمحمد بن قاسم الغزّي الشافعي
+//     (ت٩١٨هـ)، شرحُ متن أبي شجاع.
+//   • «التوضيح والبيان لشجرة الإيمان» — لعبد الرحمن بن ناصر السعدي (ت١٣٧٦هـ)،
+//     وهو نفسُه صاحبُ سجلٍّ في هذا الملف (al-saadi).
+// ولم يمسكهما الفحص ١٣ لأنّه لا يفحص إلا ما ردَّه resolveScholarWorkLink برابطٍ،
+// والرابطُ نفسُه يشترط موافقة النسبة ⇒ فالمخالِفُ يسقط قبل أن يُفحَص. والعلاجُ
+// جبهتان: (أ) مقابلةُ العنوان بفهرس المكتبة بالتطبيع وحدَه — بلا اشتراط قرينةِ
+// نسبةٍ — فمن طابقَ كتاباً لمؤلِّفٍ لا يشاركه في جزءٍ مميِّز فهو خرقُ نسبةٍ؛
+// (ب) جدولُ عناوينَ مضبوطةِ النسبة من خارج الفهرس، ومنها الكتابان أعلاه.
+// وحدُّه المعلوم: المقابلةُ بالعنوان التامِّ بعد التطبيع لا بالاحتواء، كيلا يقع
+// إنذارٌ كاذبٌ على العناوين المتقاربة — فمن أراد التوسعة فليُضِف صيغةَ العنوان
+// كما تُكتب في key_works إلى الجدول (كما فُعل بصيغتَي «فتح القريب المجيب»).
+// ألفاظٌ لا تُميِّز شخصاً بعينه، فمشاركتُها لا تُثبت أنّ الكتاب لصاحب السجل:
+// الألقابُ («الشيخ»، «الإمام»)، وأشطُر الأسماء المركّبة الشائعة («عبد» و«الرحمن»
+// و«الله»)، إذ اسمُ الأبِ في سجلٍّ قد يوافق اسمَ مؤلِّفٍ آخر (ابنُ جبرين أبوه
+// «عبد الرحمن» والسعديُّ اسمُه «عبد الرحمن») فيمرّ الخرقُ بقرينةٍ كاذبة.
+const WEAK_NAME_TOKENS = new Set(["شيخ", "امام", "حافظ", "علامه", "عبد", "رحمن", "الله", "ابو", "ابي", "دين"]);
+const bareTok = (v: string) =>
+  authorNorm(v)
+    .map((t) => (t.startsWith("ال") && t.length > 4 ? t.slice(2) : t))
+    .filter((t) => !WEAK_NAME_TOKENS.has(t));
+const workKey = (v: string) => normalizeArabic(v.replace(/\(.*?\)/g, "")).trim();
+
+// عناوينُ متجانسةٌ حقيقيّةٌ: كتابانِ مختلفانِ لمؤلِّفَينِ باسمٍ واحد (وثِّقت ج-٣٩١)
+const HOMONYM_TITLES = new Set(
+  [
+    "الزهد", // لأحمد ولأبي داود ولابن المبارك
+    "السنن الكبرى", // للنسائي وللبيهقي
+    "المبسوط", // للشيباني وللسرخسي
+    "شرح السنة", // للمزني وللبغوي
+    "الإحكام في أصول الأحكام", // لابن حزم وللآمدي
+    "دلائل النبوة", // لأبي نعيم وللبيهقي
+  ].map(workKey)
+);
+
+const catalogByTitle = new Map<string, string[]>();
+for (const b of LIBRARY_CATALOG) {
+  const k = workKey(b.title);
+  catalogByTitle.set(k, [...(catalogByTitle.get(k) ?? []), b.author]);
+}
+
+// (ب) عناوينُ خارج الفهرس ثبتت نسبتُها لغير من قد تُنسب إليه
+const WORK_TRUE_AUTHORS: Array<[string, string]> = [
+  ["فتح القريب المجيب شرح كتاب التقريب", "محمد بن قاسم الغزي"],
+  ["فتح القريب المجيب في شرح ألفاظ التقريب", "محمد بن قاسم الغزي"],
+  ["التوضيح والبيان لشجرة الإيمان", "عبد الرحمن بن ناصر السعدي"],
+];
+const trueAuthorByWork = new Map(WORK_TRUE_AUTHORS.map(([w, a]) => [workKey(w), a]));
+
+const wrongAuthorWorks: string[] = [];
+for (const s of SCHOLARS) {
+  // الاسمُ المعروض + نسبةُ صاحبِ السجل (آخرُ جزءٍ من الاسم الكامل) — لا كلُّ
+  // أجزاء الاسم الكامل، كي لا يكون اسمُ الأبِ أو الجدِّ قرينةَ نسبةٍ للكتاب.
+  const fullTokens = bareTok(s.fullName);
+  const scholarTokens = new Set([...bareTok(s.name), ...fullTokens.slice(-1)]);
+  for (const work of s.key_works ?? []) {
+    const k = workKey(work);
+    if (HOMONYM_TITLES.has(k)) continue;
+    const claimants = [...(catalogByTitle.get(k) ?? [])];
+    const known = trueAuthorByWork.get(k);
+    if (known) claimants.push(known);
+    if (!claimants.length) continue;
+    if (!claimants.some((a) => bareTok(a).some((t) => scholarTokens.has(t)))) {
+      wrongAuthorWorks.push(`${s.id}: «${work}» ⇐ لـ${claimants.join(" / ")}`);
+    }
+  }
+}
+assert(
+  wrongAuthorWorks.length === 0,
+  `لا عنوانَ في key_works ينتسب إلى غير مؤلِّفه (${WORK_TRUE_AUTHORS.length} عنواناً مضبوطاً + ${LIBRARY_CATALOG.length} من الفهرس)`,
+  wrongAuthorWorks.slice(0, 12).join(" | ")
+);
+
+// ١٦) عنوانٌ لا وجودَ له: صنفٌ لا يمسكُه الفحصُ ١٥ بحكمِ بنائه (ج-٣٩٣).
+// الفحصُ ١٥ يقابلُ العنوانَ بمؤلِّفٍ معلوم، فإن كان العنوانُ لا يقابلُ كتاباً
+// موجوداً أصلاً — تصحيفاً عن عنوانٍ قريبٍ أو خلطاً بعنوانِ كتابٍ آخرَ — فلا
+// مُدَّعِيَ له في الفهرس ولا في الجدول، فيسقطُ من المرمى ويُعرَضُ للزائر.
+// وهذه العناوينُ حُذفت في ج-٣٩٣ بعد تقصّي وجودِها فلم يثبت، فتُمنع عودتُها
+// في `key_works` وفي `bio` معاً (فالخرقُ في ج-٣٩٢ كان مطبوعاً في الحقلَين).
+console.log("\n=== ١٦) عنوانُ مؤلَّفٍ لا يثبتُ وجودُه لا يعود ===");
+const RETIRED_WORK_TITLES: Array<[string, string]> = [
+  ["غرائب الأوابد", "تصحيفٌ عن «غرائب الاغتراب ونزهة الألباب» للآلوسي"],
+  ["المنهج السديد في شرح كتاب التوحيد", "كتابُ السعديِّ «القول السديد شرح كتاب التوحيد»، و«المنهج السديد» شرحٌ لجوهرة التوحيد لغيره"],
+  ["الجواب المفيد في الرد على المعترضين", "لا يثبتُ للمنذريِّ عنوانٌ بهذا اللفظ"],
+];
+const retiredHits: string[] = [];
+for (const s of SCHOLARS) {
+  const haystack = [...(s.key_works ?? []), s.bio ?? ""].map(workKey);
+  for (const [title, why] of RETIRED_WORK_TITLES) {
+    const k = workKey(title);
+    if (haystack.some((h) => h.includes(k))) retiredHits.push(`${s.id}: «${title}» — ${why}`);
+  }
+}
+assert(
+  retiredHits.length === 0,
+  `لا عنوانَ مسحوبَ الثبوت يعود (${RETIRED_WORK_TITLES.length} عنواناً مرصوداً)`,
+  retiredHits.join(" | ")
+);
+
+// ١٧) وتدٌ لحقائقَ تُقصِّيت فثبتت: صنفٌ ثالثٌ لا يمسكُه ١٥ ولا ١٦ (ج-٣٩٤).
+// الفحصان قبلَه يحرسان العنوانَ (لمن هو؟ وأله وجود؟)، ولا يحرسان الخبرَ عن
+// صاحب السجل نفسِه: بلدَ نسبته، ومذهبَه، وسلسلةَ نسبه، ووظيفتَه. وهي مواضعُ
+// وقع فيها الخللُ في ج-٣٩٤ خمسَ مرات، وكلُّها من صنفٍ واحد: الخبرُ صادقٌ في
+// جزءٍ منه فيمرُّ على العين (الآمديُّ شافعيٌّ حقاً — لكنه حنبليٌّ قبلَها؛
+// والعينيُّ عُرف بحلبَ حقاً — لكنَّ نسبته إلى عينتابَ مولدِه لا إليها).
+// فتُوتَّدُ هنا بلفظها بعد التقصّي، لا لتُمسِكَ خرقاً جديداً بل لتمنعَ عودةَ
+// المصحَّح — وهي العلّةُ نفسُها التي سُنَّ لها الفحصُ ١٦.
+console.log("\n=== ١٧) حقائقُ مُقصّاةٌ لا تنتكس ===");
+type FactPin = { id: string; field: "fullName" | "bio" | "region" | "madhhab"; must?: string; mustNot?: string; why: string };
+const FACT_PINS: FactPin[] = [
+  { id: "amidi", field: "fullName", must: "أبي علي", why: "أبوه أبو علي وجدُّه محمد ⇒ «علي بن محمد» تُسقط جيلاً (سير أعلام النبلاء، وطبقات الشافعية)" },
+  { id: "amidi", field: "madhhab", must: "حنبلي", why: "تفقّه حنبلياً على ابن المنّي وحفظ «الهداية» في مذهب أحمد ثم انتقل شافعياً" },
+  { id: "ayni", field: "region", must: "عينتاب", why: "نسبتُه إلى عينتابَ مولدِه (٧٦٢هـ)، وإنما رحل إلى حلب سنة ٧٨٣هـ طالباً" },
+  { id: "al-hattab", field: "region", must: "طرابلس", why: "مكيُّ المولد (٩٠٢هـ)، انتقل إلى طرابلس الغرب فتوفي بها (٩٥٤هـ)" },
+  { id: "mardawi", field: "region", must: "مردا", why: "مولدُه ونشأتُه بمردا من قرى نابلس، وإنما قدم دمشقَ سنة ٨٣٨هـ" },
+  { id: "khalil-ibn-ishaq", field: "bio", mustNot: "جمع بين القضاء", why: "ولي الإفتاءَ على مذهب مالك ودرّس بالشيخونية، ولم يلِ القضاء" },
+];
+const brokenPins: string[] = [];
+for (const pin of FACT_PINS) {
+  const s = SCHOLARS.find((x) => x.id === pin.id);
+  if (!s) {
+    brokenPins.push(`${pin.id}: السجلُّ مفقودٌ — الوتدُ بلا محلٍّ`);
+    continue;
+  }
+  const value = (s[pin.field] ?? "") as string;
+  if (pin.must && !value.includes(pin.must)) brokenPins.push(`${pin.id}.${pin.field}: سقط «${pin.must}» — ${pin.why}`);
+  if (pin.mustNot && value.includes(pin.mustNot)) brokenPins.push(`${pin.id}.${pin.field}: عاد «${pin.mustNot}» — ${pin.why}`);
+}
+assert(
+  brokenPins.length === 0,
+  `لا حقيقةَ مُقصّاةً تنتكس (${FACT_PINS.length} وتداً)`,
+  brokenPins.join(" | ")
+);
 
 console.log(`\n${"─".repeat(48)}`);
 console.log(`النتائج: ${passed} نجح، ${failed} فشل`);

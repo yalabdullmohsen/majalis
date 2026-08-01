@@ -281,20 +281,27 @@
 }
 
 /* Continuous paragraph — all ayahs inline like a real Mushaf page */
-/* ⚠️ لا text-align:justify ولا letter-spacing/word-spacing يدوي هنا (2026-07-19،
-   شكوى "مسافات مفرطة وأقواس مشوهة" على صفحات المصحف): تمديد الكلمات آليًا
-   ليملأ التبرير عرض السطر ينتج تباعدًا غير منتظم بين الكلمات، بمقدار
-   يختلف بشدة من سطر لآخر، ويُبعِد شارة رقم الآية عن النص بمسافة مطّاطة.
-   محاذاة يمين طبيعية لـRTL بلا أي تمديد آلي — النص نفسه غير مُقاس أصلًا
-   بلا حرف/word-spacing إضافي. */
+/* تبرير مصحفي للنص المستمر (Amiri): inter-word + keep-all يقلّلان تمديد
+   المسافات المفرط الذي ظهر سابقًا مع letter-spacing اليدوي. مسار QPC
+   (--ayah) يعتمد flex space-between في .mf2-line وليس هذا التبرير. */
 .qs-mushaf-body {
   font-family: "Amiri Quran", "Scheherazade New", serif;
   font-size: var(--qs-font-size, 26px);
-  line-height: 2.6;
-  text-align: right;
+  line-height: 2.5;
+  text-align: justify;
+  text-justify: inter-word;
+  text-align-last: right;
   direction: rtl;
   color: var(--text-body, #1a1a1a);
-  padding: 1.25rem .5rem 2rem;
+  padding: 1.25rem 1rem 2rem;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
+  word-break: keep-all !important;
+  overflow-wrap: normal !important;
+  white-space: normal;
+  letter-spacing: normal;
+  word-spacing: normal;
 }
 
 /* Each ayah: pure inline, no block breaking */
@@ -321,6 +328,9 @@
   display: inline;
   cursor: pointer;
   transition: background .15s;
+  word-break: keep-all !important;
+  overflow-wrap: normal !important;
+  white-space: normal;
 }
 .qs-ayah-inline__text:hover {
   background: rgba(176, 141, 46, .1);
@@ -1379,12 +1389,13 @@
 /* --mf-gold-* هنا زمردي فعليًا لا ذهبي — انظر ملاحظة src/index.css
    وREADY_FOR_MERGE.md §15/16 لتفاصيل هذا الاسم التاريخي المتبقّي. */
 :root {
-  /* مُوحَّد مع الهوية الرسمية #0E6E52/#153025 (كانت #6ab58e سابقًا — زمردي
-     أفتح من الرسمي، خلاف طفيف عن .mf2-frame الذي كان يستخدم #0E6E52
+  /* مُوحَّد مع الهوية الرسمية var(--brand-deep, #143F35)/#153025 (كانت #6ab58e سابقًا — زمردي
+     أفتح من الرسمي، خلاف طفيف عن .mf2-frame الذي كان يستخدم var(--brand-deep, #143F35)
      الصحيح أصلًا، فبدت صفحة المصحف بدرجتي أخضر مختلفتين معًا). */
-  --mf-gold:       #0E6E52;
-  --mf-gold-soft:  rgba(14,110,82,0.45);
-  --mf-gold-faint: rgba(14,110,82,0.18);
+  /* إطار المصحف يتبع العلامة (زمرد عميق) — لا أخضر تراثي var(--brand-deep, #143F35) */
+  --mf-gold:       var(--brand-deep, #143F35);
+  --mf-gold-soft:  color-mix(in srgb, var(--brand-deep, #143F35) 45%, transparent);
+  --mf-gold-faint: color-mix(in srgb, var(--brand-deep, #143F35) 18%, transparent);
   --mf-bg-warm:    #153025;
   --mf-ink:        #1A1610;
   --qs-parchment:  #F5F5DC; /* Flutter QuranReaderPage Color(0xFFF5F5DC) */
@@ -2024,23 +2035,23 @@ html[data-theme="dark"] .rtp-transcript {
 /* أنماط تمييز الآية لتخطيط QPC (mf2) — كانت الخيارات موجودة في الإعدادات
    دون أثر بصري على .mf2-ayah-group لأن التمييز القديم يستهدف .qs-ayah-inline فقط. */
 .qs-mushaf-body--hl-wash .mf2-ayah-group--active {
-  background: color-mix(in srgb, var(--mf-gold, #0E6E52) 18%, transparent);
+  background: color-mix(in srgb, var(--mf-gold, var(--brand-deep, #143F35)) 18%, transparent);
 }
 .qs-mushaf-body--hl-border .mf2-ayah-group--active {
   background: transparent;
-  box-shadow: inset 0 0 0 1.5px var(--mf-gold, #0E6E52);
+  box-shadow: inset 0 0 0 1.5px var(--mf-gold, var(--brand-deep, #143F35));
 }
 .qs-mushaf-body--hl-underline .mf2-ayah-group--active {
   background: transparent;
-  box-shadow: inset 0 -2px 0 var(--mf-gold, #0E6E52);
+  box-shadow: inset 0 -2px 0 var(--mf-gold, var(--brand-deep, #143F35));
 }
 .qs-mushaf-body--hl-text-color .mf2-ayah-group--active {
   background: transparent;
-  color: var(--mf-gold, #0E6E52);
+  color: var(--mf-gold, var(--brand-deep, #143F35));
 }
 .qs-mushaf-body--hl-side-indicator .mf2-ayah-group--active {
-  background: color-mix(in srgb, var(--mf-gold, #0E6E52) 8%, transparent);
-  box-shadow: inset -3px 0 0 var(--mf-gold, #0E6E52);
+  background: color-mix(in srgb, var(--mf-gold, var(--brand-deep, #143F35)) 8%, transparent);
+  box-shadow: inset -3px 0 0 var(--mf-gold, var(--brand-deep, #143F35));
 }
 .qs-mushaf-body--spotlight .mf2-ayah-group { opacity: 0.38; transition: opacity 0.2s; }
 .qs-mushaf-body--spotlight .mf2-ayah-group--active { opacity: 1; background: transparent; }
@@ -2257,16 +2268,21 @@ body.has-immersive-mushaf { overflow: hidden; }
   align-items: center;
   justify-content: center;
   margin-block: 0.5rem;
-  padding:
-    0
-    max(12px, env(safe-area-inset-left, 0px))
-    0
-    max(12px, env(safe-area-inset-right, 0px));
-  max-width: none;
+  /* هامش أفقي آمن (≈ px-4) + safe-area — النص لا يلمس حافة الشاشة */
+  padding-block: 0;
+  padding-inline: max(1rem, env(safe-area-inset-left, 0px)) max(1rem, env(safe-area-inset-right, 0px));
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
   /* تعبئة الشاشة بين الرأس والتذييل — مطابق max-h-[83vh] في المخطط */
   height: auto;
   max-height: 83vh;
   min-height: 0;
+}
+@media (min-width: 640px) {
+  .mpv-body--ayah {
+    padding-inline: max(1.5rem, env(safe-area-inset-left, 0px)) max(1.5rem, env(safe-area-inset-right, 0px));
+  }
 }
 .quran-shell--chrome-hidden .mpv-body--ayah {
   padding-bottom: 0;
@@ -2281,10 +2297,13 @@ body.has-immersive-mushaf { overflow: hidden; }
 }
 .quran-shell--page-fill .mpv-body--ayah {
   margin-block: 0;
-  padding-inline: max(4px, env(safe-area-inset-left, 0px)) max(4px, env(safe-area-inset-right, 0px));
+  /* لا تقل عن 1rem حتى في وضع الامتلاء — كان 4px يقصّ الحواف على الجوال */
+  padding-inline: max(1rem, env(safe-area-inset-left, 0px)) max(1rem, env(safe-area-inset-right, 0px));
   max-height: none;
   height: 100%;
   min-height: 100dvh;
+  box-sizing: border-box;
+  width: 100%;
 }
 .quran-shell--page-fill .qs-mushaf-frame--ayah,
 .quran-shell--page-fill .qs-mushaf-frame--ayah-chrome {
@@ -2338,9 +2357,11 @@ body.has-immersive-mushaf { overflow: hidden; }
   flex: 1;
   min-height: 0;
   width: 100%;
-  max-width: 650px;
+  max-width: min(100%, 650px);
   margin-inline: auto;
   max-height: 83vh;
+  box-sizing: border-box;
+  padding-inline: 0.15rem;
 }
 .qs-mushaf-frame--ayah::before,
 .qs-mushaf-frame--ayah-chrome::before {
@@ -2367,6 +2388,13 @@ body.has-immersive-mushaf { overflow: hidden; }
   max-height: 83vh;
   /* لا تسمح لقاعدة elite [class*="ayah"] بوراثة plaintext إلى أسطر QPC */
   unicode-bidi: isolate;
+  /* QPC: التبرير عبر flex على .mf2-line — ألغِ تبرير النص المستمر هنا */
+  text-align: start;
+  text-justify: auto;
+  text-align-last: auto;
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 100%;
 }
 .quran-shell--ayah .qs-mushaf-body .qs-mushaf-body-inner {
   /* احتواء بعرض كامل مع سقف ارتفاع 83vh */
@@ -2659,7 +2687,7 @@ body.has-immersive-mushaf { overflow: hidden; }
 .rdm-row__name { display: block; font-size: .82rem; font-weight: 700; }
 .rdm-row__status { display: block; font-size: .72rem; color: var(--text-muted, #6b7280); margin-top: .1rem; }
 .rdm-progress { height: 4px; border-radius: var(--ds-radius-full); background: var(--border, #E8E7E2); margin-top: .35rem; overflow: hidden; }
-.rdm-progress__fill { height: 100%; background: var(--mf-gold, #0E6E52); transition: width .2s ease; }
+.rdm-progress__fill { height: 100%; background: var(--mf-gold, var(--brand-deep, #143F35)); transition: width .2s ease; }
 
 .quran-shell--night .rdm-row { border-color: #30363d !important; }
 .quran-shell--night .rdm-row__status { color: #8b949e !important; }

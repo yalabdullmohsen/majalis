@@ -198,9 +198,9 @@
   background: rgba(124,58,237,0.04);
   border-radius: var(--ds-radius-lg);
   padding: 0.85rem 1rem;
-  border-right: 3px solid #7C3AED;
+  border-right: 3px solid var(--brand, #226A56);
 }
-.arkan-scholar__icon { color: #7C3AED; }
+.arkan-scholar__icon { color: var(--brand, #226A56); }
 .arkan-scholar__quote {
   font-size: 0.88rem;
   color: #143F35;
@@ -212,7 +212,7 @@
 }
 .arkan-scholar__name {
   font-size: 0.78rem;
-  color: #7C3AED;
+  color: var(--brand, #226A56);
   font-weight: 700;
 }
 

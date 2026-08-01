@@ -235,6 +235,44 @@ ok(
   "KeychainStore.swift listed under App target Sources",
 );
 
+// package.json / prepare-ios: لا تستخدم npx cap — من جذر الـ monorepo يحلّ npm حزمة
+// cap@0.2.1 (بلا bin) → "could not determine executable to run". استخدم ثنائي .bin المحلي.
+const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
+const mobileScripts = ["mobile:sync", "mobile:android", "mobile:ios"];
+for (const name of mobileScripts) {
+  const cmd = pkg.scripts?.[name] || "";
+  ok(Boolean(cmd), `package.json has script ${name}`);
+  ok(!/\bnpx\b/.test(cmd), `${name}: must not use npx (resolves wrong npm package "cap")`);
+  ok(!/\bnpm\s+exec\b/.test(cmd), `${name}: must not use npm exec`);
+  ok(!/(?:^|[;&|]|&&|\|\|)\s*pnpm\s+exec\s*(?:$|[;&|])/.test(cmd), `${name}: no empty pnpm exec`);
+  ok(!/\bcap\s+sync\s*(?:$|[;&|])/.test(cmd), `${name}: cap sync must include ios|android`);
+}
+ok(
+  /\bcap\s+sync\s+ios\b/.test(pkg.scripts?.["mobile:sync"] || ""),
+  "mobile:sync runs cap sync ios explicitly",
+);
+ok(
+  /\bcap\s+sync\s+android\b/.test(pkg.scripts?.["mobile:android"] || ""),
+  "mobile:android runs cap sync android explicitly",
+);
+ok(
+  /\bcap\s+open\s+ios\b/.test(pkg.scripts?.["mobile:ios"] || ""),
+  "mobile:ios runs cap open ios explicitly",
+);
+
+const prepareIos = readFileSync(join(root, "scripts", "prepare-ios.sh"), "utf8");
+// تجاهل التعليقات — افحص أوامر التنفيذ فقط
+const prepareIosCode = prepareIos
+  .split("\n")
+  .filter((line) => !/^\s*#/.test(line))
+  .join("\n");
+ok(!/\bnpx\b/.test(prepareIosCode), "prepare-ios.sh must not invoke npx");
+ok(!/\bnpm\s+exec\b/.test(prepareIosCode), "prepare-ios.sh must not invoke npm exec");
+ok(
+  /node_modules\/\.bin\/cap/.test(prepareIosCode) && /"\$CAP_BIN"\s+sync\s+ios/.test(prepareIosCode),
+  "prepare-ios.sh invokes local node_modules/.bin/cap sync ios",
+);
+
 if (failed) {
   console.error(`\n${failed} gate(s) failed`);
   process.exit(1);
