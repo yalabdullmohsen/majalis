@@ -333,6 +333,11 @@ audit-data-quality/build نجحت معًا.
 >   `couldn't find remote ref`، وكذلك `git pull --ff-only`**. **والمسلكُ النافذُ**: `git fetch origin main` ثمَّ
 >   `git merge --no-edit origin/main` في الفرعِ المحلِّيِّ أوَّلَ شيءٍ (خرجَ ٠ فارقٍ عن `origin/main` بعدَه)،
 >   ثمَّ الدفعُ بـ`git push origin majalis-content-fill` (يُنشئُ الفرعَ من جديدٍ) وفتحُ PR جديدةٍ بالـAPI.
+>   ✅ **وسجلُّ الدمجِ والنشرِ (ج-٤٣٠)**: الالتزامُ `a379c164f` على الفرعِ (بعدَ `git merge --no-edit origin/main`
+>   أوَّلَ شيءٍ ⇒ ٠ فارقٍ عن `origin/main` قبلَ العملِ) ⇐ **PR #736** ⇐ **عشرُ فحوصٍ خضراءُ كلُّها** (Verify build،
+>   lint-typecheck-build، Color contrast، postgres-integration، preview-smoke، auto-merge، …) ⇐ **دمجٌ بـ`squash`
+>   عبرَ الـAPI** ⇒ `main` = **`ec4693362`** ⇐ **والنشرُ متحقِّقٌ**: `https://majlisilm.com/version.json` =
+>   `ec469336` @ 13:48:56Z. **و`Verify build` نجحَ من أوَّلِ مرَّةٍ** (فلم يتكرَّرْ عائقُ ج-٤٢٩ السادسُ).
 >   ⇒ 🎯 **الموضعُ التالي (لا استطلاعَ يلزمُ)**: 🏁 **خَتْمُ كتلةِ المولِّدِ ١٤٦ بدفعةِ `demo-quiz-5085`–`5104`
 >   (٢٠ صفًّا)** بعينِ المنهجِ ومن `enrich-round146-content.mjs` نفسِه (و`head -64` صالحٌ فيه، مُثبَتٌ أعلاه).
 >   **ومعالمُ الدفعةِ مقيسةٌ برمجيًّا لا مفترضةٌ (قِيسَت في ج-٤٣٠)**: ٤ ملفّاتٍ × ٥ صفوفٍ (فقه_العهود_والبلدان-107
