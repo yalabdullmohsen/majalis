@@ -27,8 +27,16 @@ if [[ ! -d "$ROOT/dist" ]] || [[ ! -f "$ROOT/dist/index.html" ]]; then
   exit 1
 fi
 
-echo "==> pnpm exec cap sync ios…"
-pnpm exec cap sync ios
+# استدعِ ثنائي @capacitor/cli المحلي مباشرة (node_modules/.bin/cap).
+# تشغيل الاسم المجرد "cap" عبر عدّاء حزم npm من جذر الـ monorepo يحلّ الحزمة
+# الخاطئة cap@0.2.1 (بلا bin) → "could not determine executable to run".
+CAP_BIN="$ROOT/node_modules/.bin/cap"
+if [[ ! -x "$CAP_BIN" ]]; then
+  echo "خطأ: لم يوجد $CAP_BIN — تأكد من تثبيت @capacitor/cli داخل artifacts/majalis" >&2
+  exit 1
+fi
+echo "==> $CAP_BIN sync ios…"
+"$CAP_BIN" sync ios
 
 # cap sync يمسح محتويات public/ — أعد .gitkeep حتى يبقى المجلد متتبَّعًا في git
 # ولا تختفي مرجعية المجلد من المشروع عند العمل على فروع نظيفة.
