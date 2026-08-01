@@ -8,7 +8,10 @@
  *  - scholars/ وlibrary/ بلا rewrite → slug مفقود = 404.html حقيقية.
  *  - كل سجل حي يجب أن يملك ملف prerender مطابق.
  *
- * التشغيل بعد pnpm run build: node scripts/test-dynamic-404-safety.mjs
+ * التشغيل: node --import tsx scripts/test-dynamic-404-safety.mjs
+ * أو: pnpm run test:dynamic-404
+ *
+ * يستورد مصادر TypeScript عبر tsx (بلا registerHooks / strip-types التجريبي).
  */
 import { existsSync, readFileSync } from "node:fs";
 import { resolve, dirname } from "node:path";
@@ -24,8 +27,30 @@ if (!existsSync(distDir)) {
 
 const failures = [];
 
-const { SCHOLARS } = await import(pathToFileURL(resolve(appRoot, "src/lib/scholars-data.ts")).href);
-const { LIBRARY_CATALOG } = await import(pathToFileURL(resolve(appRoot, "src/lib/library-catalog.ts")).href);
+/** استيراد مصدر .ts/.js/.mjs/.json بامتداد صريح — يتطلب `node --import tsx`. */
+async function importSrc(relPath) {
+  if (!/\.(ts|tsx|js|mjs|cjs|json)$/.test(relPath)) {
+    throw new Error(`importSrc: explicit extension required — got "${relPath}"`);
+  }
+  const abs = resolve(appRoot, relPath);
+  if (!existsSync(abs)) {
+    throw new Error(`importSrc: file not found — ${abs}`);
+  }
+  try {
+    return await import(pathToFileURL(abs).href);
+  } catch (err) {
+    const code = err && typeof err === "object" && "code" in err ? String(err.code) : "";
+    if (code === "ERR_UNKNOWN_FILE_EXTENSION") {
+      console.error(
+        "❌ تعذّر تحميل TypeScript. شغّل: node --import tsx scripts/test-dynamic-404-safety.mjs",
+      );
+    }
+    throw err;
+  }
+}
+
+const { SCHOLARS } = await importSrc("src/lib/scholars-data.ts");
+const { LIBRARY_CATALOG } = await importSrc("src/lib/library-catalog.ts");
 
 for (const s of SCHOLARS) {
   const p = resolve(distDir, "scholars", s.id, "index.html");

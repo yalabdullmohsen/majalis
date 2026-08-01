@@ -44,8 +44,8 @@ export const VERSE_ITEM_GAP_PX = 20;
 /** Flutter demo `fontSize: 28` (focus comfort; prefs may override). */
 export const IMMERSIVE_FONT_SIZE_PX = 28;
 
-/** Flutter `height: 2.0` line multiplier. */
-export const IMMERSIVE_LINE_HEIGHT_RATIO = 2;
+/** ارتفاع سطر أوفر للتشكيل (كان 2.0 في Flutter demo). */
+export const IMMERSIVE_LINE_HEIGHT_RATIO = 2.4;
 
 /** Flutter `EdgeInsets.symmetric(horizontal: 30)`. */
 export const IMMERSIVE_PAD_X_PX = 30;

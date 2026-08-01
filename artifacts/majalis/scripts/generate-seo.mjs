@@ -14,40 +14,39 @@
  *      (مخالفة صريحة لسياسة Google للبيانات المنظمة). QAPage تبقى في صفحات التفصيل.
  *   4. يُمسح seo-prerender/ في البداية، فلا تبقى صفحات يتيمة من توليد سابق.
  *
- * التشغيل: node scripts/generate-seo.mjs   (يسبق vite build)
+ * التشغيل: node --import tsx scripts/generate-seo.mjs   (يسبق vite build)
+ * أو: pnpm run generate:seo
  */
 
 import { mkdir, readFile, writeFile, unlink, rm } from "node:fs/promises";
 import { existsSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
-import { registerHooks } from "node:module";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const appRoot = resolve(__dirname, "..");
-const srcDir = resolve(appRoot, "src");
 
-// ─────────────────────────────────────────────────────────────────────────────
-// تحميل وحدات TypeScript مباشرة (Node ≥22 يجرّد الأنواع تلقائياً).
-// يلزم فقط حلّ الاسم المستعار "@/" وامتدادات .ts الضمنية.
-// ─────────────────────────────────────────────────────────────────────────────
-registerHooks({
-  resolve(specifier, context, nextResolve) {
-    let spec = specifier;
-    if (spec.startsWith("@/")) spec = pathToFileURL(resolve(srcDir, spec.slice(2))).href;
-    else if (spec.startsWith(".") && context.parentURL) spec = new URL(spec, context.parentURL).href;
-    if (spec.startsWith("file:")) {
-      const p = fileURLToPath(spec);
-      for (const cand of [p, `${p}.ts`, `${p}/index.ts`]) {
-        if (existsSync(cand)) return { url: pathToFileURL(cand).href, shortCircuit: true };
-      }
-    }
-    return nextResolve(specifier, context);
-  },
-});
+/**
+ * استيراد وحدة مصدر (.ts/.js/.mjs/.json) بمسار صريح الامتداد.
+ * يعتمد على `node --import tsx` لتحميل TypeScript — بلا register()/strip hooks.
+ */
+function importSrc(relPath) {
+  if (typeof relPath !== "string" || !relPath.trim()) {
+    return Promise.reject(new Error("importSrc: path required"));
+  }
+  if (!/\.(ts|tsx|js|mjs|cjs|json)$/.test(relPath)) {
+    return Promise.reject(
+      new Error(`importSrc: explicit extension required (.ts/.js/.mjs/.json) — got "${relPath}"`),
+    );
+  }
+  const abs = resolve(appRoot, relPath);
+  if (!existsSync(abs)) {
+    return Promise.reject(new Error(`importSrc: file not found — ${abs}`));
+  }
+  return import(pathToFileURL(abs).href);
+}
 
-const importSrc = (relPath) => import(pathToFileURL(resolve(appRoot, relPath)).href);
-
+async function main() {
 // ─────────────────────────────────────────────────────────────────────────────
 // المصادر
 // ─────────────────────────────────────────────────────────────────────────────
@@ -2295,3 +2294,18 @@ console.log(
     `  دروس: ${lessonRows.length} · كتب: ${LIBRARY_CATALOG.length}`,
   ].join("\n"),
 );
+} // end main()
+
+try {
+  await main();
+} catch (err) {
+  // توليد SEO مساند للبناء — لا يُسقط pnpm build عند أعطال غير حرجة
+  // (مثل ERR_UNKNOWN_FILE_EXTENSION في بيئات Node بلا محمل TS).
+  const code = err && typeof err === "object" && "code" in err ? String(err.code) : "";
+  const message = err instanceof Error ? err.message : String(err);
+  console.warn(
+    `[generate-seo] warning: SEO generation failed${code ? ` (${code})` : ""} — build continues.`,
+  );
+  console.warn(`[generate-seo] ${message}`);
+  process.exitCode = 0;
+}
