@@ -71,8 +71,10 @@ export function PrayerAlertSettingsCard() {
 
   const doRequestPermission = async () => {
     markNotificationPermissionAsked();
-    const granted = await requestNotificationPermission();
-    setPermission(granted ? "granted" : "denied");
+    await requestNotificationPermission();
+    // أعد الفحص الفعلي — الإلغاء/التأجيل ليس بالضرورة "denied".
+    const status = await getNotificationPermissionStatus();
+    setPermission(status);
     setShowExplainer(false);
   };
 
@@ -118,7 +120,9 @@ export function PrayerAlertSettingsCard() {
             <div>
               <div className="ads-global-label">إذن الإشعارات</div>
               <div className="ads-global-desc">
-                {permission === "denied" ? "محجوب من إعدادات النظام" : "لم يُفعَّل بعد"}
+                {permission === "denied"
+                  ? "محجوب من إعدادات النظام — افتح الإعدادات ← المجلس العلمي ← الإشعارات"
+                  : "لم يُفعَّل بعد"}
               </div>
             </div>
             {permission === "prompt" && (
