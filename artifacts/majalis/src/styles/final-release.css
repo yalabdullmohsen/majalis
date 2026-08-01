@@ -26,8 +26,9 @@
      --bottom-nav-height = كروم التبويبات فقط؛ --bottom-nav-total يشمل Home Indicator مرة واحدة. */
   --header-height: var(--header-h, 3.25rem);
   --bottom-nav-height: var(--bottom-nav-h, 2.75rem);
-  --safe-bottom: env(safe-area-inset-bottom, 0px);
-  --bottom-nav-total: calc(var(--bottom-nav-height) + var(--safe-bottom));
+  /* الحافة السفلية على html/body (index.css)؛ الشريط الثابت يحتفظ بحشوه الداخلي فقط */
+  --safe-bottom: 0px;
+  --bottom-nav-total: calc(var(--bottom-nav-height) + env(safe-area-inset-bottom, 0px));
   /* شريط الأقسام (~min 44px + حشو) — لإلصاق تبويبات الصفحات أسفل الكروم */
   --top-section-bar-h: 3.5rem;
   --sticky-below-chrome: calc(
@@ -58,7 +59,13 @@ body {
   line-height: 1.75;
 }
 
-.app-shell { min-height: 100dvh; background: transparent; color: var(--color-text); }
+.app-shell {
+  min-height: 100dvh;
+  background: transparent;
+  color: var(--color-text);
+  /* يوازن padding-bottom على body حتى لا يتضاعف خلوص Home Indicator مع الشريط الثابت */
+  margin-block-end: calc(-1 * env(safe-area-inset-bottom, 0px));
+}
 .app-main {
   min-height: calc(100dvh - var(--header-height));
   /* خلوص المحتوى = ارتفاع الشريط الفعلي فقط (+ هامش تنفّس صغير)، بلا safe-area مكرّر */
@@ -105,6 +112,8 @@ body {
   position: sticky;
   inset-block-start: 0;
   top: 0;
+  /* html/body يحجزان safe-area؛ نسحب الخلفية إلى النوتش دون حشو نص مزدوج */
+  margin-block-start: calc(-1 * env(safe-area-inset-top, 0px));
   padding-block-start: env(safe-area-inset-top, 0px);
   z-index: var(--z-nav, 200);
   min-height: var(--header-height);
@@ -1417,8 +1426,7 @@ a.twitter-timeline {
 }
 
 /* ══ عقد أسطح الصفحات + نماذج + جداول + تمرير أفقي (iPhone) ══ */
-/* Dynamic Type: أُزيل فرض 100% هنا عمدًا — index.css يضبط auto ليحترم
-   تكبير النظام؛ قارئات المصحف تفرض 100% محليًا في quran-immersive-reader.css. */
+/* غلاف اللمس/الحجم على html,body في index.css (viewport-fit + safe-area). */
 body {
   -webkit-tap-highlight-color: transparent;
   overscroll-behavior-y: none;
