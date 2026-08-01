@@ -434,3 +434,27 @@ html[data-theme="dark"] .ruling-pagination button {
 html[data-theme="dark"] .hadith-grade--sahih {
   color: var(--text-brand) !important;
 }
+
+/* ══════════════════════════════════════════════════════════════
+   ط) أزرار primary في الوضع الداكن — ملء --brand العميق + نص أبيض
+   (بعد إلغاء تسطيح --color-primary إلى النعناعي في elite-2026)
+   ══════════════════════════════════════════════════════════════ */
+html[data-theme="dark"] :is(
+  .btn--primary,
+  .ds-btn--primary,
+  .btn-primary,
+  .page-action-btn--primary
+) {
+  background-color: var(--brand) !important;
+  border-color: var(--brand) !important;
+  color: var(--text-on-brand) !important;
+}
+
+/* روابط التمييز على الأسطح الداكنة تستخدم --text-brand لا ملء الزر */
+html[data-theme="dark"] :is(
+  a.ds-text-link,
+  .text-brand,
+  .link-brand
+) {
+  color: var(--text-brand) !important;
+}

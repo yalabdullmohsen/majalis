@@ -306,11 +306,10 @@ html[data-theme="dark"] .navbar-mobile-login {
   margin-bottom: 0.75rem !important;
 }
 
-/* 4c-dark — في الوضع الليلي يتحوّل --elite-forest من أخضر داكن جدًا
-   (#143F35) إلى نعناعي فاتح نسبيًا (#3BAD8A، انظر html[data-theme="dark"]
-   أعلى الملف)؛ نص أبيض ثابت (color:#fff أعلاه) فوق هذه الخلفية الأفتح
-   ينتج تباينًا 2.39:1 فقط (يلزم 3:1 على الأقل) — نفس نمط عطل [class$="-hero"]:
-   قيمة متغيّر تتبدّل بين السمتين بينما يبقى اللون المقابل لها ثابتًا. */
+/* 4c-dark — شارات عناوين الأقسام تبقى خلفية غابة عميقة (#143F35) في الوضع
+   الليلي أيضًا (انظر إعادة ضبط --elite-forest لاحقًا في هذا الملف). النص
+   يبقى أبيض كما في §4c — لا تُفرض لونًا داكنًا هنا (كان ذلك صالحًا فقط حين
+   كان --elite-forest يُسطَّح إلى نعناعي فاتح). */
 html[data-theme="dark"] .ds-section__title,
 html[data-theme="dark"] .lessons-v2-section__title,
 html[data-theme="dark"] .lessons-past-section__title,
@@ -325,7 +324,8 @@ html[data-theme="dark"] .user-stats-section__title,
 html[data-theme="dark"] .admin-section-title,
 html[data-theme="dark"] .fm-section-title,
 html[data-theme="dark"] .rp-section-title {
-  color: #1A1A18 !important;
+  color: var(--text-on-brand, #fff) !important;
+  background: var(--elite-forest, #143F35) !important;
 }
 
 /* إلغاء الشخطة الزخرفية الزمردية تحت عناوين الأقسام */
@@ -425,10 +425,11 @@ html[data-theme="dark"] .rp-section-title {
   --majalis-ink:           rgba(255,255,255,0.93);
   --majalis-ink-soft:      rgba(255,255,255,0.72);
   --majalis-brass-deep:    rgba(255,255,255,0.72);
-  --majalis-emerald-deep:  #7ED4B5;
-  --majalis-emerald:       #5CC49A;
-  --clr-primary:           #7ED4B5;
-  --color-primary:         #7ED4B5;
+  --majalis-emerald-deep:  var(--text-brand, #88C0AC);
+  --majalis-emerald:       var(--text-brand, #88C0AC);
+  /* تمييز على بطاقة داكنة — ليس ملء زر (الملء يبقى --brand العميق) */
+  --clr-primary:           var(--text-brand, #88C0AC);
+  --color-primary:         var(--text-brand, #88C0AC);
   --txt-primary:           rgba(255,255,255,0.93);
   --txt-secondary:         rgba(255,255,255,0.70);
   color: #fff;
@@ -3518,13 +3519,14 @@ html[data-theme="dark"] {
   --elite-border:       rgba(92,196,154,.10);
   --elite-border-2:     rgba(92,196,154,.18);
   --elite-border-green: rgba(92,196,154,.25);
-  --elite-forest:       #5CC49A;
-  --elite-forest-2:     #4BA882;
+  /* خلفية بطاقات/شارات تبقى عميقة — النعناعي للتمييز النصي فقط */
+  --elite-forest:       #143F35;
+  --elite-forest-2:     #195345;
   --elite-green:        #5CC49A;
   --elite-green-mid:    #4BA882;
   --elite-green-light:  #A8D8C4;
-  --elite-gold:         #5CC49A;
-  --elite-gold-warm:    #4BA882;
+  --elite-gold:         #E3CB8C;
+  --elite-gold-warm:    #D2B063;
   --elite-gold-light:   #6E8E84;
   --elite-gold-deep:    #226A56;
   --elite-gold-pale:    #143F35;
@@ -4119,32 +4121,35 @@ a:hover { color: var(--clr-primary-hov, #226A56); }
 }
 
 .btn--secondary, .ds-btn--secondary {
-  background: var(--color-primary-soft, #E8F2EE) !important;
-  color: var(--color-primary, #226A56) !important;
-  border-color: rgba(23,61,53,.15) !important;
+  background: var(--color-primary-soft, var(--brand-soft, #F0F7F4)) !important;
+  color: var(--color-primary-strong, var(--brand-deep, #143F35)) !important;
+  border-color: var(--border-brand, rgba(23,61,53,.15)) !important;
 }
 .btn--secondary:hover, .ds-btn--secondary:hover {
-  background: #D5EAE3 !important;
-  border-color: rgba(23,61,53,.25) !important;
+  background: var(--em-100, #DBEDE5) !important;
+  border-color: var(--border-strong, rgba(23,61,53,.25)) !important;
 }
 
 .btn--ghost, .ds-btn--ghost {
   background: transparent !important;
-  color: var(--color-text-2, #5C5C56) !important;
+  color: var(--color-text-muted, var(--text-2, #5C5C56)) !important;
   border-color: var(--color-border, #E8E7E2) !important;
 }
 .btn--ghost:hover, .ds-btn--ghost:hover {
-  background: var(--color-surface-sec, #F2F1EC) !important;
-  border-color: var(--color-border-strong, #CBD2CE) !important;
+  background: var(--color-bg-soft, var(--surface-2, #F4F4F1)) !important;
+  border-color: var(--color-border-strong, var(--border-strong, #D6D5CE)) !important;
   color: var(--color-text, #1A1A18) !important;
 }
 
 .btn--danger {
-  background: #B94A48 !important;
+  background: var(--color-danger, var(--danger, #C62828)) !important;
   color: #fff !important;
-  border-color: #B94A48 !important;
+  border-color: var(--color-danger, var(--danger, #C62828)) !important;
 }
-.btn--danger:hover { background: #9B3B39 !important; border-color: #9B3B39 !important; }
+.btn--danger:hover {
+  background: var(--danger-fg, #A81F1F) !important;
+  border-color: var(--danger-fg, #A81F1F) !important;
+}
 
 /* أحجام الأزرار */
 .btn--sm, .ds-btn--sm { padding: 0.35rem 0.85rem !important; font-size: 0.8125rem !important; border-radius: var(--elite-r-sm) !important; }
@@ -4385,67 +4390,66 @@ label {
    77l — Dark Mode احترافي 2026
    ════════════════════════════════════ */
 html[data-theme="dark"] {
-  --clr-bg:           #111714;
-  --clr-surface:      #1A2120;
-  --clr-surface-sec:  #1F2926;
-  --clr-border:       rgba(255,255,255,.08);
-  --clr-border-strong:rgba(255,255,255,.14);
-  --clr-text-1:       #E5F0EC;
-  --clr-text-2:       #8BABA3;
-  --clr-text-muted:   #5E7870;
-  --clr-primary:      #5CC49A;
-  --clr-primary-deep: #226A56;
-  --clr-primary-hov:  #6ED4AC;
-  --clr-primary-soft: rgba(92,196,154,.12);
-  --clr-primary-subtle: rgba(92,196,154,.06);
-  /* --clr-primary الفاتح (#5CC49A) في الوضع الداكن لا يسمح بنص أبيض مقروء
-     فوقه كخلفية زر (تباين ~2:1 فقط)؛ #143F35 هنا يحقق ٥.٥٩:١ — لا تستخدم
-     --clr-primary-deep (يحلّ هنا لـ#226A56، تباينه ٣.٧٩:١ فقط، غير كافٍ) */
-  --text-on-primary:  #143F35;
-  --color-bg:         #111714;
-  --color-surface:    #1A2120;
-  --color-surface-sec:#1F2926;
-  --color-border:     rgba(255,255,255,.08);
-  --color-border-strong: rgba(255,255,255,.14);
-  --color-text:       #E5F0EC;
-  --color-text-2:     #8BABA3;
-  --color-text-muted: #5E7870;
-  --color-primary:    #5CC49A;
-  --color-primary-deep: #226A56;
-  --color-primary-hover: #6ED4AC;
-  --color-primary-soft: rgba(92,196,154,.12);
-  --ivory:            #111714;
-  --ink:              #E5F0EC;
-  --msk-canvas:       #111714;
-  --msk-canvas-1:     #1A2120;
-  --msk-canvas-2:     #1F2926;
-  --msk-text:         #E5F0EC;
-  --msk-text-2:       #8BABA3;
-  --msk-text-3:       #5E7870;
-  /* --msk-gold-* هنا زمردي فعليًا لا ذهبي — انظر ملاحظة src/index.css
-     وREADY_FOR_MERGE.md 15/16 لتفاصيل هذا الاسم التاريخي المتبقّي. */
-  --msk-gold:         #5CC49A;
-  --msk-gold-deep:    #226A56;
-  --msk-border:       rgba(255,255,255,.07);
-  --msk-border-strong: rgba(255,255,255,.12);
-  --msk-divider:      rgba(255,255,255,.04);
-  --elite-white:      #111714;
-  --elite-cream:      #111714;
-  --elite-forest:     #5CC49A;
-  --elite-ink:        #E5F0EC;
-  --elite-ink-soft:   #8BABA3;
-  --elite-ink-muted:  #5E7870;
-  --elite-border:     rgba(255,255,255,.07);
-  --elite-border-2:   rgba(255,255,255,.12);
-  /* --txt-primary/--txt-secondary (نظام modern-2026.css: #1A1A18/#5C5C56)
-     كانا يُعادان تعريفهما فقط داخل نطاق ضيق ([class$="-hero"] وما شابه)
-     لا للوضع الليلي العام — فبقي نص فقرات/عناوين فرعية عادية (خارج تلك
-     البطاقات تحديدًا) رماديًا داكنًا مصمَّمًا لخلفية فاتحة حتى داخل بطاقات
-     داكنة صحيحة أصلاً (qc-card__desc، qlive-player__desc، fq-intro،
-     miracle-item__title، tj-related-title، وفقرات blockquote عامة —
-     5+ مواضع مؤكَّدة عبر audit-color-contrast.mjs). */
-  --txt-primary:      #E5F0EC;
-  --txt-secondary:    #8BABA3;
+  /* محاذاة مع brand-v4: أسطح زمردية عميقة + أخضر تفاعلي يتحمل نصًا أبيض.
+     النعناعي #5CC49A يبقى لروابط/تمييز (--text-brand) لا لملء الأزرار ولا
+     لخلفيات البطاقات (--elite-forest). */
+  --clr-bg:           var(--bg, #081A16);
+  --clr-surface:      var(--surface, #12211C);
+  --clr-surface-sec:  var(--surface-2, #182C25);
+  --clr-border:       var(--border, #224036);
+  --clr-border-strong:var(--border-strong, #2E5347);
+  --clr-text-1:       var(--text, #EDF2F0);
+  --clr-text-2:       var(--text-2, #A9BDB5);
+  --clr-text-muted:   var(--text-muted, #8AA096);
+  --clr-primary:      var(--brand, #2A7A63);
+  --clr-primary-deep: var(--brand-deep, #226A56);
+  --clr-primary-hov:  var(--brand-hover, #33846C);
+  --clr-primary-soft: var(--brand-soft, #16342B);
+  --clr-primary-subtle: var(--surface-brand, #16342B);
+  --text-on-primary:  var(--text-on-brand, #FFFFFF);
+  --color-bg:         var(--bg, #081A16);
+  --color-bg-soft:    var(--surface-2, #182C25);
+  --color-surface:    var(--surface, #12211C);
+  --color-surface-sec:var(--surface-2, #182C25);
+  --color-surface-elevated: var(--bg-elevated, #12211C);
+  --color-border:     var(--border, #224036);
+  --color-border-strong: var(--border-strong, #2E5347);
+  --color-text:       var(--text, #EDF2F0);
+  --color-text-2:     var(--text-2, #A9BDB5);
+  --color-text-muted: var(--text-muted, #8AA096);
+  --color-primary:    var(--brand, #2A7A63);
+  --color-primary-strong: var(--brand-deep, #226A56);
+  --color-primary-deep: var(--brand-deep, #226A56);
+  --color-primary-hover: var(--brand-hover, #33846C);
+  --color-primary-soft: var(--brand-soft, #16342B);
+  --color-accent:     var(--accent, #E3CB8C);
+  --color-danger:     var(--danger, #F87171);
+  --ivory:            var(--bg, #081A16);
+  --ink:              var(--text, #EDF2F0);
+  --msk-canvas:       var(--bg, #081A16);
+  --msk-canvas-1:     var(--surface, #12211C);
+  --msk-canvas-2:     var(--surface-2, #182C25);
+  --msk-text:         var(--text, #EDF2F0);
+  --msk-text-2:       var(--text-2, #A9BDB5);
+  --msk-text-3:       var(--text-muted, #8AA096);
+  /* رابط/تمييز فاتح — ليس ملء زر */
+  --msk-gold:         var(--text-brand, #88C0AC);
+  --msk-gold-deep:    var(--brand, #2A7A63);
+  --msk-border:       var(--border, #224036);
+  --msk-border-strong: var(--border-strong, #2E5347);
+  --msk-divider:      var(--border, #224036);
+  --elite-white:      var(--bg, #081A16);
+  --elite-cream:      var(--bg, #081A16);
+  /* خلفية بطاقات داكنة تبقى عميقة — لا نعناعي */
+  --elite-forest:     #143F35;
+  --elite-green:      var(--text-brand, #88C0AC);
+  --elite-ink:        var(--text, #EDF2F0);
+  --elite-ink-soft:   var(--text-2, #A9BDB5);
+  --elite-ink-muted:  var(--text-muted, #8AA096);
+  --elite-border:     var(--border, #224036);
+  --elite-border-2:   var(--border-strong, #2E5347);
+  --txt-primary:      var(--text, #EDF2F0);
+  --txt-secondary:    var(--text-2, #A9BDB5);
 }
 
 html[data-theme="dark"] body {

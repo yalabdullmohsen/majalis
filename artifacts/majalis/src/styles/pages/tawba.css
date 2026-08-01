@@ -159,7 +159,7 @@
   padding: 1.1rem 1.2rem;
 }
 .tw-tawba-nasuh__title { font-size: var(--ds-text-base); font-weight: 800; color: #1e1b4b; margin: 0 0 .5rem; }
-.tw-tawba-nasuh__text  { font-size: .84rem; color: #312E81; line-height: 1.7; margin: 0 0 .5rem; }
+.tw-tawba-nasuh__text  { font-size: .84rem; color: var(--brand-deep, #143F35); line-height: 1.7; margin: 0 0 .5rem; }
 .tw-tawba-nasuh__text:last-child { margin-bottom: 0; }
 
 /* أذكار */
