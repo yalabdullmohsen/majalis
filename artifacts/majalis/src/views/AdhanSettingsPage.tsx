@@ -88,6 +88,23 @@ function LocationPermBadge() {
   return <PermissionBadge value={state} />;
 }
 
+/** على Capacitor: إذن Local Notifications لا يطابق window.Notification.permission. */
+function NotificationPermBadge() {
+  const [state, setState] = useState<PermissionState>("default");
+  useEffect(() => {
+    let cancelled = false;
+    void import("@/lib/prayer-local-notifications").then(({ getNotificationPermissionStatus }) =>
+      getNotificationPermissionStatus().then((status) => {
+        if (cancelled) return;
+        if (status === "prompt") setState("prompt");
+        else setState(status);
+      }),
+    );
+    return () => { cancelled = true; };
+  }, []);
+  return <PermissionBadge value={state} />;
+}
+
 export default function AdhanSettingsPage() {
   const [prefs, setPrefs] = useState<AdhanPreferences>(() => loadAdhanPrefs());
   const [pickerFor, setPickerFor] = useState<PrayerKey | "default" | null>(null);
@@ -380,12 +397,7 @@ export default function AdhanSettingsPage() {
         <div className="ads-card__body">
           <div className="ads-row-sep">
             <span className="ads-adhan-desc">إذن الإشعارات</span>
-            <PermissionBadge value={
-              "Notification" in window
-                ? Notification.permission === "granted" ? "granted"
-                : Notification.permission === "denied" ? "denied" : "default"
-                : "unsupported"
-            } />
+            <NotificationPermBadge />
           </div>
           <div className="ads-row">
             <span className="ads-adhan-desc">إذن الموقع الجغرافي</span>

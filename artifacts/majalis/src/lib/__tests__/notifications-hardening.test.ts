@@ -109,10 +109,17 @@ console.log("  ✓ channel + test trigger constants");
   assert.match(scheduler, /invalidatePrayerNativeSchedule/, "invalidate helper");
   assert.match(scheduler, /buildPrayerScheduleSignature/, "signature helper");
   assert.match(scheduler, /forceNativeReschedule/, "force reschedule option");
+  assert.match(scheduler, /listNativePrayerScheduleSlots/, "schedules all obligatory slots");
+  assert.match(scheduler, /cancelAllPrayerNativeNotifications/, "cancels when both alerts off");
 
   const app = read("src/App.tsx");
   assert.match(app, /NativeNotificationsBootstrap/, "App boots native notifications");
   assert.match(app, /force:\s*true/, "visibility recheck forces reschedule");
+  assert.match(app, /appStateChange/, "Capacitor appStateChange resume path");
+
+  const quranSrc = read("src/lib/quran-daily-reminder.ts");
+  assert.match(quranSrc, /cancelNativeQuranReminder/, "cancel without flipping prefs");
+  assert.match(quranSrc, /cancelNativeQuranReminder\(\)/, "ensure cancels when disabled");
 
   const boot = read("src/lib/notifications/native-bootstrap.ts");
   assert.match(boot, /localNotificationActionPerformed/, "tap listener");

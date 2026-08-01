@@ -114,11 +114,13 @@ export async function scheduleDailyReminder(): Promise<ScheduleDailyReminderResu
 
 /**
  * إعادة جدولة صامتة عند الإقلاع / تغيّر المنطقة الزمنية — لا تطلب إذناً جديداً.
+ * إن كان التذكير معطّلاً: يُلغى الإشعار الأصلي فوراً حتى لا يبقى معلّقاً بعد التعطيل.
  */
 export async function ensureQuranDailyReminderScheduled(): Promise<ScheduleDailyReminderResult> {
   try {
     const prefs = loadNotifPrefs();
     if (!prefs.enabled || !prefs.quranDailyReminder) {
+      await cancelNativeQuranReminder();
       return { ok: false, reason: "unsupported" };
     }
     if (isNative) {
@@ -133,17 +135,22 @@ export async function ensureQuranDailyReminderScheduled(): Promise<ScheduleDaily
   }
 }
 
-export async function cancelDailyReminder(): Promise<void> {
+/** إلغاء معرّف الورد الأصلي فقط — لا يغيّر التفضيلات (لإقلاع/تعطيل رئيسي). */
+export async function cancelNativeQuranReminder(): Promise<void> {
+  if (!isNative) return;
   try {
-    if (isNative) {
-      const { LocalNotifications } = await import("@capacitor/local-notifications");
-      await LocalNotifications.cancel({
-        notifications: [{ id: QURAN_DAILY_REMINDER_NATIVE_ID }],
-      });
-    }
+    const { LocalNotifications } = await import("@capacitor/local-notifications");
+    await LocalNotifications.cancel({
+      notifications: [{ id: QURAN_DAILY_REMINDER_NATIVE_ID }],
+    });
+    console.info("[notifications/quran] native reminder cancelled");
   } catch {
     /* ignore */
   }
+}
+
+export async function cancelDailyReminder(): Promise<void> {
+  await cancelNativeQuranReminder();
   const prefs = loadNotifPrefs();
   saveNotifPrefs({ ...prefs, quranDailyReminder: false });
   const { syncSmartLocalNotifications } = await import("@/lib/smart-local-notifications");

@@ -93,10 +93,16 @@ const scheduler = read("src/lib/prayer-alert-scheduler.ts");
 ok(scheduler.includes("buildPrayerScheduleSignature"), "schedule signature");
 ok(scheduler.includes("invalidatePrayerNativeSchedule"), "invalidate helper");
 ok(scheduler.includes("forceNativeReschedule"), "force reschedule");
+ok(scheduler.includes("listNativePrayerScheduleSlots"), "all-obligatory native slots");
+ok(scheduler.includes("cancelAllPrayerNativeNotifications"), "cancel-all when alerts off");
 
 const app = read("src/App.tsx");
 ok(app.includes("NativeNotificationsBootstrap"), "App native notifications bootstrap");
 ok(app.includes("PRAYER_ALERT_PREFS_CHANGED_EVENT"), "prefs-changed listener");
+ok(app.includes("appStateChange"), "Capacitor appStateChange resume");
+
+const quranSrc = read("src/lib/quran-daily-reminder.ts");
+ok(quranSrc.includes("cancelNativeQuranReminder"), "cancelNativeQuranReminder export");
 
 const boot = read("src/lib/notifications/native-bootstrap.ts");
 ok(boot.includes("localNotificationActionPerformed"), "notification tap deep-link listener");

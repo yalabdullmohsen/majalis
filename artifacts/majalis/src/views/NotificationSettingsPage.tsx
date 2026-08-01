@@ -341,10 +341,20 @@ export default function NotificationSettingsPage() {
         <h3 className="notif-card__title">أنواع التذكّرات</h3>
         <ToggleRow label="مراجعة البطاقات" sub="تذكير يومي عند وجود بطاقات مستحقة" checked={prefs.flashcardsReminder} onChange={v => update({ flashcardsReminder: v })} disabled={!canToggle} />
         <ToggleRow label="تابع من حيث توقفت" sub="تذكير بالدرس أو الكتاب الذي لم تُكمله" checked={prefs.resumeReminder} onChange={v => update({ resumeReminder: v })} disabled={!canToggle} />
-        <ToggleRow label="تنبيه الصلاة" sub="إشعار قبل 10 دقائق من وقت الصلاة" checked={prefs.prayerReminder} onChange={v => update({ prayerReminder: v })} disabled={!canToggle} />
+        <ToggleRow
+          label="تنبيه الصلاة"
+          sub={
+            isNative
+              ? "تذكير داخل الصفحة فقط — التنبيه الأصلي (١٥ دقيقة) من صفحة أوقات الصلاة / إعدادات الأذان"
+              : "إشعار تقريبي قبل الصلاة (الويب)؛ التنبيه الأصلي ١٥ دقيقة من إعدادات الأذان"
+          }
+          checked={prefs.prayerReminder}
+          onChange={v => update({ prayerReminder: v })}
+          disabled={!canToggle}
+        />
         <ToggleRow
           label="ورد القرآن اليومي"
-          sub="تذكير يومي الساعة 5 مساءً لقراءة الورد"
+          sub="تذكير يومي الساعة 5 مساءً (17:00) لقراءة الورد — ليس 5 صباحاً"
           checked={prefs.quranDailyReminder}
           onChange={(v) => {
             void (async () => {

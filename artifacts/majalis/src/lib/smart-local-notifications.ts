@@ -253,14 +253,20 @@ export async function syncSmartLocalNotifications(opts?: {
 }): Promise<{ scheduled: number; viaSw: boolean }> {
   try {
     const prefs = loadNotifPrefs();
-    if (!prefs.enabled) return { scheduled: 0, viaSw: false };
+    if (!prefs.enabled) {
+      // تعطيل تفضيلات التذكيرات العامة يُلغي ورد القرآن فقط —
+      // تنبيهات الصلاة لها مخزن تفضيلات منفصل (prayer-alert-preferences).
+      if (isNative) {
+        const { cancelNativeQuranReminder } = await import("./quran-daily-reminder");
+        await cancelNativeQuranReminder();
+      }
+      return { scheduled: 0, viaSw: false };
+    }
 
     // على الأصل: لا SW — ورد القرآن عبر Capacitor؛ باقي التذكيرات وهي الصفحة مفتوحة فقط.
     if (isNative) {
-      if (prefs.quranDailyReminder) {
-        const { ensureQuranDailyReminderScheduled } = await import("./quran-daily-reminder");
-        await ensureQuranDailyReminderScheduled();
-      }
+      const { ensureQuranDailyReminderScheduled } = await import("./quran-daily-reminder");
+      await ensureQuranDailyReminderScheduled();
       maybeWarnStreakLoss();
       return { scheduled: prefs.quranDailyReminder ? 1 : 0, viaSw: false };
     }

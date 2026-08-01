@@ -422,14 +422,15 @@ function PrayerAlertSchedulerBootstrap() {
   }, [data]);
 
   useEffect(() => {
+    const rescheduleOnForeground = () => {
+      // force: يعيد جدولة الإشعار الأصلي بعد الخلفية/إعادة التشغيل بلا تكرار خاطئ.
+      void recheckPrayerAlertWindow(data, { force: true });
+      void import("@/lib/quran-daily-reminder").then(({ ensureQuranDailyReminderScheduled }) => {
+        void ensureQuranDailyReminderScheduled();
+      });
+    };
     const onVisible = () => {
-      if (document.visibilityState === "visible") {
-        // force: يعيد جدولة الإشعار الأصلي بعد الخلفية/تغيّر المنطقة الزمنية بلا تكرار خاطئ.
-        void recheckPrayerAlertWindow(data, { force: true });
-        void import("@/lib/quran-daily-reminder").then(({ ensureQuranDailyReminderScheduled }) => {
-          void ensureQuranDailyReminderScheduled();
-        });
-      }
+      if (document.visibilityState === "visible") rescheduleOnForeground();
     };
     const onPrefsChanged = () => {
       invalidatePrayerNativeSchedule();
@@ -437,9 +438,27 @@ function PrayerAlertSchedulerBootstrap() {
     };
     document.addEventListener("visibilitychange", onVisible);
     window.addEventListener(PRAYER_ALERT_PREFS_CHANGED_EVENT, onPrefsChanged);
+
+    // iOS WKWebView: appStateChange أوثق من visibilitychange في بعض مسارات الخلفية→المقدمة.
+    let removeAppState: (() => void) | undefined;
+    void import("@/lib/capacitor-utils").then(({ isNative }) => {
+      if (!isNative) return;
+      void import("@capacitor/app").then(({ App: CapApp }) => {
+        const sub = CapApp.addListener("appStateChange", ({ isActive }) => {
+          if (isActive) rescheduleOnForeground();
+        });
+        void Promise.resolve(sub).then((handle) => {
+          removeAppState = () => {
+            void handle.remove();
+          };
+        });
+      }).catch(() => {});
+    });
+
     return () => {
       document.removeEventListener("visibilitychange", onVisible);
       window.removeEventListener(PRAYER_ALERT_PREFS_CHANGED_EVENT, onPrefsChanged);
+      removeAppState?.();
     };
   }, [data]);
 
