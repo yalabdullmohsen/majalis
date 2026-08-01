@@ -15,7 +15,7 @@ const countsPath = resolve(appRoot, "src/data/content-counts.json");
 
 const before = await readFile(countsPath, "utf8");
 
-execFileSync("npx", ["tsx", "scripts/generate-content-counts.ts"], {
+execFileSync("pnpm", ["exec", "tsx", "scripts/generate-content-counts.ts"], {
   cwd: appRoot,
   stdio: "pipe",
 });

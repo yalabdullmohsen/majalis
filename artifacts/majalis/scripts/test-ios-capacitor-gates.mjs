@@ -235,6 +235,29 @@ ok(
   "KeychainStore.swift listed under App target Sources",
 );
 
+// package.json mobile scripts must name an executable + platform (avoid bare `npx` / `cap sync`)
+const pkg = JSON.parse(readFileSync(join(root, "package.json"), "utf8"));
+const mobileScripts = ["mobile:sync", "mobile:android", "mobile:ios"];
+for (const name of mobileScripts) {
+  const cmd = pkg.scripts?.[name] || "";
+  ok(Boolean(cmd), `package.json has script ${name}`);
+  ok(!/(?:^|[;&|]|&&|\|\|)\s*npx\s*(?:$|[;&|])/.test(cmd), `${name}: no empty npx`);
+  ok(!/\bnpx\s+cap\s+sync\s*(?:$|[;&|])/.test(cmd), `${name}: cap sync must include platform`);
+  ok(!/\bcap\s+sync\s*(?:$|[;&|])/.test(cmd), `${name}: cap sync must include ios|android`);
+}
+ok(
+  /\bcap\s+sync\s+ios\b/.test(pkg.scripts?.["mobile:sync"] || ""),
+  "mobile:sync runs cap sync ios explicitly",
+);
+ok(
+  /\bcap\s+sync\s+android\b/.test(pkg.scripts?.["mobile:android"] || ""),
+  "mobile:android runs cap sync android explicitly",
+);
+ok(
+  /\bcap\s+open\s+ios\b/.test(pkg.scripts?.["mobile:ios"] || ""),
+  "mobile:ios runs cap open ios explicitly",
+);
+
 if (failed) {
   console.error(`\n${failed} gate(s) failed`);
   process.exit(1);
