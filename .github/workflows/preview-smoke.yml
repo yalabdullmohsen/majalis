@@ -42,6 +42,15 @@ jobs:
           # Avoids smoking a wrong Vercel project URL (e.g. api-server) when the web
           # app preview was skipped via Ignored Build Step.
           changed=$(gh api "repos/${GITHUB_REPOSITORY}/pulls/${PR_NUM}/files?per_page=100" --jq '.[].filename' || true)
+          # Content-safe audits (quiz/data/continuation) never need Preview smoke.
+          if [ -n "$changed" ]; then
+            non_content=$(echo "$changed" | grep -Ev '^(artifacts/majalis/(public/data/|data/)|CONTINUATION_PLAN\.md$)' || true)
+            if [ -z "$non_content" ]; then
+              echo "preview_ready=false" >> "$GITHUB_OUTPUT"
+              echo "Content-audit paths only — soft pass without Preview URL"
+              exit 0
+            fi
+          fi
           if ! echo "$changed" | grep -Eq '^(artifacts/majalis/(src/(views|components|pages|App\.tsx|main\.tsx)|index\.html|vite\.config)|artifacts/api-server/src/)'; then
             echo "preview_ready=false" >> "$GITHUB_OUTPUT"
             echo "No interactive frontend deploy paths — soft pass without Preview URL"

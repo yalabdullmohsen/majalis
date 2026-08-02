@@ -4,7 +4,7 @@
 
 /**
  * @param {string} tsv
- * @returns {{ name: string, state: string }[]}
+ * @returns {{ name: string, state: string, description?: string }[]}
  */
 export function parseGhPrChecksTsv(tsv) {
   const rows = [];
@@ -17,7 +17,8 @@ export function parseGhPrChecksTsv(tsv) {
     if (!name) continue;
     // Skip header-like noise
     if (/^name$/i.test(name) && /^status$/i.test(state)) continue;
-    rows.push({ name, state });
+    const description = (parts[4] || parts[3] || "").trim();
+    rows.push({ name, state, description });
   }
   return rows;
 }
@@ -34,13 +35,27 @@ export function parseStatusCheckRollup(rollup = []) {
       rows.push({
         name: item.name,
         state: item.conclusion || item.status || item.state || "",
+        description: item.description || item.detailsUrl || "",
       });
     } else if (item.context) {
       rows.push({
         name: item.context,
         state: item.state || item.conclusion || "",
+        description: item.description || item.targetUrl || "",
       });
     }
   }
   return rows;
+}
+
+/**
+ * True when Vercel (or similar) skipped/canceled because the change set
+ * does not need a Preview deploy (Ignored Build Step).
+ * @param {{ state?: string, description?: string, name?: string }} row
+ */
+export function isIgnorablePreviewStatus(row = {}) {
+  const blob = `${row.state || ""} ${row.description || ""} ${row.name || ""}`;
+  return /ignored\s*build\s*step|skipped\s*-\s*not\s*affected|canceled by ignored|cancelled by ignored|no\s*preview/i.test(
+    blob,
+  );
 }

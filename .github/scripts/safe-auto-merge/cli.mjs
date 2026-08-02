@@ -5,7 +5,7 @@
  *   node cli.mjs report --pr N [--post] [--strict-vercel]
  *   node cli.mjs ensure-labels
  *
- * Exit codes for evaluate: 0 = eligible, 2 = not eligible, 1 = error
+ * Exit codes for evaluate: 0 = eligible, 2 = hard block, 3 = waiting on checks, 1 = error
  */
 import { spawnSync } from "node:child_process";
 import { writeFileSync, mkdtempSync, rmSync } from "node:fs";
@@ -118,15 +118,18 @@ function cmdEvaluate(args) {
   };
   if (args.json) {
     console.log(JSON.stringify(out, null, 2));
+  } else if (result.eligible) {
+    console.log(`ELIGIBLE #${prJson.number}`);
+  } else if (result.waiting) {
+    console.log(`WAITING #${prJson.number}`);
+    for (const b of result.waitBlockers || result.blockers) console.log(`  - ${b}`);
   } else {
-    console.log(
-      result.eligible
-        ? `ELIGIBLE #${prJson.number}`
-        : `NOT_ELIGIBLE #${prJson.number}`,
-    );
-    for (const b of result.blockers) console.log(`  - ${b}`);
+    console.log(`NOT_ELIGIBLE #${prJson.number}`);
+    for (const b of result.hardBlockers || result.blockers) console.log(`  - ${b}`);
   }
-  process.exitCode = result.eligible ? 0 : 2;
+  if (result.eligible) process.exitCode = 0;
+  else if (result.waiting) process.exitCode = 3;
+  else process.exitCode = 2;
 }
 
 function findExistingReportComment(pr) {

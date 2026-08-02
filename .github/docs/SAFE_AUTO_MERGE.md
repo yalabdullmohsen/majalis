@@ -12,10 +12,17 @@ PR **Ready** (غير Draft) إلى `main` عندما:
 4. لا تعارض / ليس `BEHIND`
 5. لا `CHANGES_REQUESTED`
 6. ≤ **40** ملفًا، بلا حذف كبير
-7. كل الفحوصات المطلوبة خضراء
+7. فحوصات CI الأساسية خضراء (`Verify build` = typecheck + lint + test/content-guard + build)
 8. لا يلمس مسارات خطرة
+9. إذا كان الوسم `content-safe` / `safe:content`: الملفات ضمن مسارات تدقيق المحتوى فقط:
+   - `artifacts/majalis/public/data/quiz/**`
+   - `artifacts/majalis/public/data/**`
+   - `artifacts/majalis/data/**`
+   - `CONTINUATION_PLAN.md`
+10. **Vercel Preview ignored/skipped** لا يمنع تدقيق المحتوى الآمن
+11. إذا كانت الفحوصات **pending**: النظام ينتظر (لا يُعطّل Auto-merge نهائيًا)
 
-بعد الدمج (squash): **Vercel ينشر Production من `main` تلقائيًا**.
+بعد الدمج (squash): **Vercel ينشر Production من `main` تلقائيًا** عبر مشروع **`majalis-majalis`** (المشروع القديم `majalis` إن وُجد يُعامل كـ legacy).
 
 ## Labels
 
@@ -72,9 +79,11 @@ Aliases قديمة ما زالت مقبولة: `content-safe`, `ui-safe`, `code-
 | ماذا | السلوك |
 |---|---|
 | موقع الويب | Vercel ينشر تلقائيًا من `main` فقط |
-| Preview | على كل PR (مشروع majalis-majalis) |
+| Preview | على PRs التي تحتاج واجهة؛ content-safe قد يُتخطى (Ignored Build Step) دون منع الدمج |
 | TestFlight | **لا** — tag `v*.*.*` أو `workflow_dispatch` |
 | Supabase migrations | **لا** — فقط `workflow_dispatch` + `apply=true` (+ `confirm_include_all` لـ `--include-all`) |
+
+> Production deploy يتم **فقط** بعد الدمج إلى `main` — ليس من Preview.
 
 ## التنفيذ
 

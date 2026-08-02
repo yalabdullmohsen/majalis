@@ -51,12 +51,30 @@ export const MAX_DELETED_FILES = 12;
  * Paths that always force manual review (no auto-merge).
  * Keep in sync with .github/docs/SAFE_AUTO_MERGE.md
  */
+/**
+ * Labels that mean "content audit only" — files must stay inside CONTENT_SAFE_PATHS.
+ */
+export const CONTENT_SAFE_LABELS = Object.freeze(["content-safe", "safe:content"]);
+
+/**
+ * Allowed paths for content-safe / safe:content auto-merge.
+ * Quiz JSON + content audit artifacts / continuation plan only.
+ */
+export const CONTENT_SAFE_PATH_PATTERNS = Object.freeze([
+  /^artifacts\/majalis\/public\/data\/quiz\//i,
+  /^artifacts\/majalis\/public\/data\//i,
+  /^artifacts\/majalis\/data\//i,
+  /^CONTINUATION_PLAN\.md$/i,
+]);
+
 export const DANGER_PATH_PATTERNS = Object.freeze([
   /^\.github\/workflows\//i,
   /^supabase\//i,
   /^artifacts\/majalis\/supabase\//i,
+  /^ios\//i,
   /^artifacts\/majalis\/ios\//i,
-  /^artifacts\/majalis\/capacitor\.config\.ts$/i,
+  /(^|\/)capacitor\.config\./i,
+  /^api\//i,
   /^artifacts\/majalis\/api\//i,
   /^artifacts\/majalis\/lib\/api-handlers\//i,
   /^artifacts\/majalis\/lib\/security\//i,
