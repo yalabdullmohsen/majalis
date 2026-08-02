@@ -220,6 +220,44 @@ ok(capJson?.server?.url === "https://www.majlisilm.com", "capacitor.config.json 
 ok(capJson?.server?.cleartext === true, "capacitor.config.json cleartext true");
 ok(capJson?.webDir === "dist", "capacitor.config.json webDir is dist");
 
+// Live-update freshness: JS purge + prepare-ios main guard
+const freshnessPath = join(root, "src", "lib", "native-cache-freshness.ts");
+ok(existsSync(freshnessPath), "native-cache-freshness.ts exists");
+const freshnessSrc = readFileSync(freshnessPath, "utf8");
+ok(/\bisNative\b/.test(freshnessSrc), "native-cache-freshness.ts uses isNative");
+ok(
+  freshnessSrc.includes("navigator.serviceWorker.getRegistrations"),
+  "native-cache-freshness.ts uses navigator.serviceWorker.getRegistrations",
+);
+ok(freshnessSrc.includes("caches.keys"), "native-cache-freshness.ts uses caches.keys");
+ok(
+  /export\s+async\s+function\s+purgeNativeWebRuntimeCaches/.test(freshnessSrc),
+  "native-cache-freshness.ts exports purgeNativeWebRuntimeCaches",
+);
+
+ok(
+  mainTsx.includes("purgeNativeWebRuntimeCaches"),
+  "main.tsx imports/calls purgeNativeWebRuntimeCaches",
+);
+ok(
+  /await\s+purgeNativeWebRuntimeCaches\s*\(/.test(mainTsx),
+  "main.tsx awaits purgeNativeWebRuntimeCaches before mount",
+);
+
+const prepareIos = readFileSync(join(root, "scripts", "prepare-ios.sh"), "utf8");
+ok(
+  prepareIos.includes("origin/main") && prepareIos.includes("rev-parse"),
+  "prepare-ios.sh verifies origin/main",
+);
+ok(
+  prepareIos.includes("ALLOW_IOS_NON_MAIN_BUILD"),
+  "prepare-ios.sh contains ALLOW_IOS_NON_MAIN_BUILD override",
+);
+ok(
+  prepareIos.includes("هذا المجلد ليس على آخر origin/main"),
+  "prepare-ios.sh fails with clear stale-tree Arabic message",
+);
+
 // Auth tokens must live in Keychain — never UserDefaults
 const networkServicePath = join(iosApp, "App", "Services", "NetworkService.swift");
 const keychainPath = join(iosApp, "App", "Services", "KeychainStore.swift");
@@ -275,7 +313,6 @@ ok(
   "mobile:ios runs cap open ios explicitly",
 );
 
-const prepareIos = readFileSync(join(root, "scripts", "prepare-ios.sh"), "utf8");
 // تجاهل التعليقات — افحص أوامر التنفيذ فقط
 const prepareIosCode = prepareIos
   .split("\n")
