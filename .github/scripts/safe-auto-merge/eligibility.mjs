@@ -1,6 +1,7 @@
 /**
  * Pure eligibility evaluation for safe auto-merge.
  */
+import { isIgnorablePreviewStatus } from "./checks.mjs";
 import {
   AUTH_SECURITY_PATH_PATTERNS,
   AUTH_SECURITY_TEXT,
@@ -8,6 +9,8 @@ import {
   BLOCKING_LABELS,
   BRANCH_ALLOW_RE,
   BRANCH_EXCLUDE_RE,
+  CONTENT_SAFE_LABELS,
+  CONTENT_SAFE_PATH_PATTERNS,
   DANGER_PATH_PATTERNS,
   MAX_DELETED_FILES,
   MAX_FILES_FOR_AUTO_MERGE,
@@ -22,18 +25,32 @@ import {
 
 /**
  * @typedef {{ path: string, additions?: number, deletions?: number, changeType?: string }} PrFile
- * @typedef {{ name: string, state: string }} CheckRow
+ * @typedef {{ name: string, state: string, description?: string }} CheckRow
  */
 
 /**
- * Normalize check state to pass|fail|pending|missing|other
+ * Normalize check state to pass|fail|pending|missing|skip|other
  * @param {string} raw
+ * @param {string} [description]
  */
-export function normalizeCheckState(raw) {
+export function normalizeCheckState(raw, description = "") {
   const s = String(raw || "").toLowerCase().trim();
+  const desc = String(description || "");
   if (!s || s === "missing") return "missing";
+  // Vercel Ignored Build Step often surfaces as canceled/fail + description.
+  if (
+    isIgnorablePreviewStatus({ state: s, description: desc }) ||
+    (/^(cancel|canceled|cancelled|fail|failure)$/.test(s) &&
+      /ignored|skipped\s*-\s*not\s*affected/i.test(desc))
+  ) {
+    return "skip";
+  }
   if (/^(pass|success|completed_success)$/.test(s)) return "pass";
-  if (/^(fail|failure|cancelled|canceled|timed_out|action_required|error)$/.test(s)) return "fail";
+  if (/^(fail|failure|timed_out|action_required|error)$/.test(s)) return "fail";
+  if (/^(cancel|canceled|cancelled)$/.test(s)) {
+    // Bare cancel without Ignored description — treat as skip for Preview contexts only upstream.
+    return "fail";
+  }
   if (/^(pending|queued|in_progress|expected|waiting|requested)$/.test(s)) return "pending";
   if (/^(skip|skipped|neutral)$/.test(s)) return "skip";
   return "other";
@@ -70,6 +87,15 @@ export function findDangerousFiles(paths = []) {
     }
   }
   return hits;
+}
+
+/**
+ * @param {string[]} paths
+ */
+export function findNonContentSafeFiles(paths = []) {
+  return paths.filter(
+    (p) => !CONTENT_SAFE_PATH_PATTERNS.some((re) => re.test(p)),
+  );
 }
 
 /**
@@ -122,10 +148,13 @@ export function inferPrType(labels = []) {
  *   labels?: string[],
  *   files?: PrFile[],
  *   checks?: CheckRow[],
+ *   requireChecks?: boolean,
+ *   strictVercel?: boolean,
  * }} input
  */
 export function evaluateEligibility(input = {}) {
-  const blockers = [];
+  const hardBlockers = [];
+  const waitBlockers = [];
   const warnings = [];
   const labels = (input.labels || []).map((l) => String(l).toLowerCase());
   const title = String(input.title || "");
@@ -135,18 +164,21 @@ export function evaluateEligibility(input = {}) {
   const dangerousFiles = findDangerousFiles(fileSummary.paths);
   const authHits = findAuthSecurityHits(fileSummary.paths, title, body);
   const prType = inferPrType(labels);
+  const isContentAudit = CONTENT_SAFE_LABELS.some((l) => labels.includes(l));
 
   const hasSafeLabel = SAFE_LABELS.some((l) => labels.includes(l));
   const checks = Array.isArray(input.checks) ? input.checks : [];
 
-  const checkMap = {};
-  for (const c of checks) {
-    checkMap[c.name] = normalizeCheckState(c.state);
-  }
-
   function findCheck(re) {
     const row = checks.find((c) => re.test(c.name));
-    return row ? { name: row.name, state: normalizeCheckState(row.state) } : { name: null, state: "missing" };
+    if (!row) return { name: null, state: "missing", description: "", ignoredPreview: false };
+    const state = normalizeCheckState(row.state, row.description);
+    return {
+      name: row.name,
+      state,
+      description: row.description || "",
+      ignoredPreview: isIgnorablePreviewStatus(row) || state === "skip",
+    };
   }
 
   const verify = findCheck(REQUIRED_CHECK_NAMES.verifyBuild);
@@ -159,34 +191,34 @@ export function evaluateEligibility(input = {}) {
 
   // --- hard structural gates ---
   if (input.state && String(input.state).toUpperCase() !== "OPEN") {
-    blockers.push("PR is not OPEN");
+    hardBlockers.push("PR is not OPEN");
   }
   if (input.baseRefName && input.baseRefName !== "main") {
-    blockers.push("base branch is not main");
+    hardBlockers.push("base branch is not main");
   }
   if (input.isDraft === true) {
-    blockers.push("PR is Draft");
+    hardBlockers.push("PR is Draft");
   }
   if (String(input.reviewDecision || "") === "CHANGES_REQUESTED") {
-    blockers.push("CHANGES_REQUESTED");
+    hardBlockers.push("CHANGES_REQUESTED");
   }
   if (TITLE_BLOCK_RE.test(title)) {
-    blockers.push("title forbids auto-merge");
+    hardBlockers.push("title forbids auto-merge");
   }
   if (labels.includes(RELEASE_TRAIN_LABEL)) {
-    blockers.push("labeled release-train-ready (owned by scheduled train)");
+    hardBlockers.push("labeled release-train-ready (owned by scheduled train)");
   }
   for (const bl of BLOCKING_LABELS) {
-    if (labels.includes(bl)) blockers.push(`blocking label: ${bl}`);
+    if (labels.includes(bl)) hardBlockers.push(`blocking label: ${bl}`);
   }
   if (branch && !BRANCH_ALLOW_RE.test(branch)) {
-    blockers.push(`branch pattern not allowed: ${branch}`);
+    hardBlockers.push(`branch pattern not allowed: ${branch}`);
   }
   if (branch && BRANCH_EXCLUDE_RE.test(branch)) {
-    blockers.push(`dual automation branch excluded: ${branch}`);
+    hardBlockers.push(`dual automation branch excluded: ${branch}`);
   }
   if (!hasSafeLabel) {
-    blockers.push(
+    hardBlockers.push(
       `missing safe label (need one of: ${SAFE_LABELS.join(", ")})`,
     );
   }
@@ -194,33 +226,33 @@ export function evaluateEligibility(input = {}) {
   const mergeable = String(input.mergeable || "");
   const mstatus = String(input.mergeStateStatus || "");
   if (mergeable && mergeable !== "MERGEABLE" && mergeable !== "UNKNOWN") {
-    blockers.push(`mergeable=${mergeable}`);
+    hardBlockers.push(`mergeable=${mergeable}`);
   }
   if (mstatus === "CONFLICTING" || mstatus === "DIRTY") {
-    blockers.push("conflict / dirty merge state");
+    hardBlockers.push("conflict / dirty merge state");
   }
   if (mstatus === "BEHIND") {
-    blockers.push("branch behind main (update required)");
+    hardBlockers.push("branch behind main (update required)");
   }
 
   // --- size / danger ---
   if (fileSummary.fileCount > MAX_FILES_FOR_AUTO_MERGE) {
-    blockers.push(
+    hardBlockers.push(
       `too many files changed (${fileSummary.fileCount} > ${MAX_FILES_FOR_AUTO_MERGE})`,
     );
   }
   if (fileSummary.totalDeletions > MAX_TOTAL_DELETIONS) {
-    blockers.push(
+    hardBlockers.push(
       `large deletions (${fileSummary.totalDeletions} lines > ${MAX_TOTAL_DELETIONS})`,
     );
   }
   if (fileSummary.deletedFiles > MAX_DELETED_FILES) {
-    blockers.push(
+    hardBlockers.push(
       `too many deleted files (${fileSummary.deletedFiles} > ${MAX_DELETED_FILES})`,
     );
   }
   if (dangerousFiles.length) {
-    blockers.push(
+    hardBlockers.push(
       `dangerous paths require manual review (${dangerousFiles.length}): ${dangerousFiles
         .slice(0, 8)
         .map((d) => d.path)
@@ -228,10 +260,22 @@ export function evaluateEligibility(input = {}) {
     );
   }
   if (authHits.length) {
-    blockers.push(
+    hardBlockers.push(
       `auth/security/RLS change detected: ${authHits
         .slice(0, 6)
         .map((h) => h.path)
+        .join(", ")}`,
+    );
+  }
+
+  // content-safe / safe:content → quiz + content-audit paths only
+  const nonContentFiles = isContentAudit
+    ? findNonContentSafeFiles(fileSummary.paths)
+    : [];
+  if (isContentAudit && nonContentFiles.length) {
+    hardBlockers.push(
+      `content-safe PR may only touch quiz/content-audit paths; off-policy: ${nonContentFiles
+        .slice(0, 8)
         .join(", ")}`,
     );
   }
@@ -246,6 +290,7 @@ export function evaluateEligibility(input = {}) {
   );
   const hasIos = fileSummary.paths.some(
     (p) =>
+      /^ios\//i.test(p) ||
       /^artifacts\/majalis\/ios\//i.test(p) ||
       /\.swift$/i.test(p) ||
       /capacitor\.config\./i.test(p),
@@ -255,17 +300,17 @@ export function evaluateEligibility(input = {}) {
       /^\.github\/workflows\//i.test(p) ||
       /^fastlane\//i.test(p),
   );
-  if (hasMigration) blockers.push("migration / SQL change → manual review");
-  if (hasIos) blockers.push("iOS / Capacitor native change → manual review");
-  if (hasCicd) blockers.push("CI/CD / Fastlane change → manual review");
+  if (hasMigration) hardBlockers.push("migration / SQL change → manual review");
+  if (hasIos) hardBlockers.push("iOS / Capacitor native change → manual review");
+  if (hasCicd) hardBlockers.push("CI/CD / Fastlane change → manual review");
 
-  // Suggested labels for the report/cli sync (never close PRs).
   const suggestedAddLabels = [];
   const suggestedRemoveLabels = [];
-  if (dangerousFiles.length || hasMigration || hasIos || hasCicd || authHits.length) {
-    suggestedAddLabels.push(BLOCKED_DANGER_PATH_LABEL, RISKY_MANUAL_REVIEW_LABEL);
+  if (dangerousFiles.length || hasMigration || hasIos || hasCicd || authHits.length || nonContentFiles.length) {
+    if (dangerousFiles.length || hasMigration || hasIos || hasCicd || authHits.length) {
+      suggestedAddLabels.push(BLOCKED_DANGER_PATH_LABEL, RISKY_MANUAL_REVIEW_LABEL);
+    }
   } else if (hasSafeLabel && !labels.includes(RISKY_MANUAL_REVIEW_LABEL)) {
-    // Clear stale danger labels only when paths are clean (cli applies carefully).
     suggestedRemoveLabels.push(BLOCKED_DANGER_PATH_LABEL);
   }
   if (
@@ -281,75 +326,139 @@ export function evaluateEligibility(input = {}) {
     );
   }
 
-  // --- required checks (when evaluating for merge enable) ---
+  // --- required checks ---
+  // Verify build embeds typecheck + lint + test/content-guard + build (ci.yml).
   const requireChecks = input.requireChecks !== false;
+  let vercelPreviewKind = "unknown"; // green | ignored | pending | missing | failed
+
   if (requireChecks) {
-    // Verify build embeds: typecheck, lint, test, build, generators --check,
-    // verify:no-runtime-ddl, verify:single-response, verify:no-unsafe-auto-merge,
-    // db:migration:verify (see .github/workflows/ci.yml).
-    if (verify.state !== "pass") {
-      blockers.push(`CI Verify build not green (${verify.state})`);
+    if (verify.state === "pending" || verify.state === "missing") {
+      waitBlockers.push(`CI Verify build not ready (${verify.state})`);
+    } else if (verify.state !== "pass") {
+      hardBlockers.push(`CI Verify build not green (${verify.state})`);
     }
-    if (preview.state !== "pass") {
-      blockers.push(`preview-smoke not green (${preview.state})`);
+
+    if (preview.state === "pending" || preview.state === "missing") {
+      waitBlockers.push(`preview-smoke not ready (${preview.state})`);
+    } else if (preview.state === "skip" && isContentAudit) {
+      warnings.push("preview-smoke skipped — OK for content-safe audit");
+    } else if (preview.state !== "pass" && preview.state !== "skip") {
+      hardBlockers.push(`preview-smoke not green (${preview.state})`);
     }
-    // git diff clean after build is enforced by vercel-check job
-    if (vercelLint.state !== "pass") {
-      blockers.push(
+
+    if (vercelLint.state === "pending" || vercelLint.state === "missing") {
+      waitBlockers.push(
+        `Vercel check (lint-typecheck-build) not ready (${vercelLint.state})`,
+      );
+    } else if (vercelLint.state !== "pass" && vercelLint.state !== "skip") {
+      hardBlockers.push(
         `Vercel check (lint-typecheck-build / git diff clean) not green (${vercelLint.state})`,
       );
     }
-    if (vercelDeploy.state === "fail" || vercelDeploy.state === "pending") {
-      blockers.push(`Vercel deployment not green (${vercelDeploy.state})`);
+
+    if (vercelDeploy.ignoredPreview || vercelDeploy.state === "skip") {
+      vercelPreviewKind = "ignored";
+      warnings.push(
+        "Vercel Preview ignored/skipped (Ignored Build Step) — لا يمنع content-safe",
+      );
+    } else if (vercelDeploy.state === "pass") {
+      vercelPreviewKind = "green";
+    } else if (vercelDeploy.state === "pending") {
+      vercelPreviewKind = "pending";
+      if (isContentAudit) {
+        warnings.push("Vercel Preview pending — content-safe لا ينتظر Preview إلزاميًا");
+      } else {
+        waitBlockers.push(`Vercel deployment not ready (${vercelDeploy.state})`);
+      }
     } else if (vercelDeploy.state === "missing") {
-      warnings.push("Vercel – majalis-majalis status not reported yet");
-      // Do not hard-block solely on missing Vercel preview context (forks / lag);
-      // when present it must be green. For same-repo PRs it usually appears.
-      if (input.strictVercel === true) {
-        blockers.push("Vercel deployment status missing");
+      vercelPreviewKind = "missing";
+      if (isContentAudit) {
+        warnings.push("Vercel – majalis-majalis status missing — OK for content-safe");
+      } else if (input.strictVercel === true) {
+        waitBlockers.push("Vercel deployment status missing (waiting)");
+      } else {
+        warnings.push("Vercel – majalis-majalis status not reported yet");
+      }
+    } else if (vercelDeploy.state === "fail") {
+      vercelPreviewKind = "failed";
+      if (isContentAudit) {
+        warnings.push(
+          "Vercel Preview fail ignored for content-safe (production ينشر من main فقط)",
+        );
+      } else {
+        hardBlockers.push(`Vercel deployment not green (${vercelDeploy.state})`);
       }
     }
-    if (postgres.state === "fail" || postgres.state === "pending") {
-      blockers.push(`postgres-integration not green (${postgres.state})`);
+
+    if (postgres.state === "pending" || postgres.state === "missing") {
+      waitBlockers.push(`postgres-integration not ready (${postgres.state})`);
+    } else if (postgres.state === "fail") {
+      hardBlockers.push(`postgres-integration not green (${postgres.state})`);
     }
-    // Soft-required when the workflow job exists for this PR.
-    if (colorContrast.state === "fail" || colorContrast.state === "pending") {
-      blockers.push(`Color contrast gate not green (${colorContrast.state})`);
+
+    if (colorContrast.state === "pending") {
+      waitBlockers.push(`Color contrast gate not ready (${colorContrast.state})`);
+    } else if (colorContrast.state === "fail") {
+      hardBlockers.push(`Color contrast gate not green (${colorContrast.state})`);
     }
-    // iOS static gates: required when the check is present (path-filtered workflow).
+
     if (hasIos && (iosStatic.state === "fail" || iosStatic.state === "pending" || iosStatic.state === "missing")) {
-      blockers.push(`iOS static gates required for native changes (${iosStatic.state})`);
-    } else if (iosStatic.state === "fail" || iosStatic.state === "pending") {
-      blockers.push(`iOS static gates not green (${iosStatic.state})`);
+      if (iosStatic.state === "pending" || iosStatic.state === "missing") {
+        waitBlockers.push(`iOS static gates required for native changes (${iosStatic.state})`);
+      } else {
+        hardBlockers.push(`iOS static gates required for native changes (${iosStatic.state})`);
+      }
+    } else if (iosStatic.state === "fail") {
+      hardBlockers.push(`iOS static gates not green (${iosStatic.state})`);
+    } else if (iosStatic.state === "pending") {
+      waitBlockers.push(`iOS static gates not ready (${iosStatic.state})`);
     }
+  } else if (vercelDeploy.ignoredPreview || vercelDeploy.state === "skip") {
+    vercelPreviewKind = "ignored";
+  } else if (vercelDeploy.state === "pass") {
+    vercelPreviewKind = "green";
   }
 
-  // Deduplicate blockers while preserving order
-  const seen = new Set();
-  const uniqueBlockers = [];
-  for (const b of blockers) {
-    if (seen.has(b)) continue;
-    seen.add(b);
-    uniqueBlockers.push(b);
-  }
+  const dedupe = (list) => {
+    const seen = new Set();
+    const out = [];
+    for (const b of list) {
+      if (seen.has(b)) continue;
+      seen.add(b);
+      out.push(b);
+    }
+    return out;
+  };
 
-  const eligible = uniqueBlockers.length === 0;
+  const uniqueHard = dedupe(hardBlockers);
+  const uniqueWait = dedupe(waitBlockers);
+  const blockers = [...uniqueHard, ...uniqueWait];
+  const waiting = uniqueHard.length === 0 && uniqueWait.length > 0;
+  const eligible = uniqueHard.length === 0 && uniqueWait.length === 0;
+  const willDeployProduction = eligible || waiting;
 
   return {
     eligible,
+    waiting,
     prType,
     hasSafeLabel,
-    blockers: uniqueBlockers,
+    isContentAudit,
+    blockers,
+    hardBlockers: uniqueHard,
+    waitBlockers: uniqueWait,
     warnings,
     dangerousFiles,
     authHits,
+    nonContentFiles,
     fileSummary,
     hasMigration,
     hasIos,
     hasCicd,
     suggestedAddLabels: [...new Set(suggestedAddLabels)],
     suggestedRemoveLabels: [...new Set(suggestedRemoveLabels)],
-    needsManualReview: !eligible,
+    needsManualReview: uniqueHard.length > 0,
+    vercelPreviewKind,
+    willDeployProductionAfterMerge: willDeployProduction && !uniqueHard.length,
     checks: {
       verifyBuild: verify,
       previewSmoke: preview,
@@ -362,6 +471,7 @@ export function evaluateEligibility(input = {}) {
     labels: {
       all: labels,
       safeMatched: SAFE_LABELS.filter((l) => labels.includes(l)),
+      contentSafe: isContentAudit,
     },
   };
 }
