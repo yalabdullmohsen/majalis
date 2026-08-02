@@ -12,6 +12,24 @@ echo "==> جذر المشروع: $ROOT"
 echo "==> webDir في capacitor.config.ts:"
 grep -E 'webDir' "$ROOT/capacitor.config.ts" || true
 
+# حارس freshness: لا ترفع TestFlight من مجلد/فرع متأخر عن origin/main.
+# للتجاوز الواعي فقط: ALLOW_IOS_NON_MAIN_BUILD=1
+REPO_ROOT="$(cd "$ROOT/../.." && pwd)"
+if [[ -d "$REPO_ROOT/.git" || -f "$REPO_ROOT/.git" ]] && [[ "${ALLOW_IOS_NON_MAIN_BUILD:-}" != "1" ]]; then
+  echo "==> التحقق أن HEAD يطابق آخر origin/main…"
+  git -C "$REPO_ROOT" fetch --quiet origin main
+  HEAD_SHA="$(git -C "$REPO_ROOT" rev-parse HEAD)"
+  MAIN_SHA="$(git -C "$REPO_ROOT" rev-parse refs/remotes/origin/main)"
+  if [[ "$HEAD_SHA" != "$MAIN_SHA" ]]; then
+    echo "هذا المجلد ليس على آخر origin/main، ورفعه سيُنتج تطبيقًا قديمًا" >&2
+    echo "HEAD=${HEAD_SHA}" >&2
+    echo "origin/main=${MAIN_SHA}" >&2
+    echo "git checkout main && git pull --ff-only origin main" >&2
+    exit 1
+  fi
+  echo "✓ HEAD=$(git -C "$REPO_ROOT" rev-parse --short HEAD) يطابق origin/main"
+fi
+
 echo "==> pnpm install (من جذر الـ monorepo إن لزم)…"
 if [[ -f "$ROOT/../../pnpm-workspace.yaml" ]]; then
   (cd "$ROOT/../.." && pnpm install --frozen-lockfile)
@@ -51,7 +69,7 @@ test -f "$ROOT/ios/App/App/public/index.html"
 test -f "$ROOT/ios/App/App/public/.gitkeep"
 test -f "$ROOT/ios/App/App.xcodeproj/project.pbxproj"
 
-# تأكيد تطابق appId و webDir بين المصدر والنسخة المنسوخة لـ iOS
+# تأكيد تطابق appId و webDir و server.url بين المصدر والنسخة المنسوخة لـ iOS
 node --input-type=module <<'NODE'
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
@@ -60,6 +78,7 @@ const ts = readFileSync(resolve(root, "capacitor.config.ts"), "utf8");
 const json = JSON.parse(readFileSync(resolve(root, "ios/App/App/capacitor.config.json"), "utf8"));
 const appId = (ts.match(/appId:\s*"([^"]+)"/) || [])[1];
 const webDir = (ts.match(/webDir:\s*"([^"]+)"/) || [])[1];
+const serverUrl = (ts.match(/url:\s*"(https:\/\/[^"]+)"/) || [])[1];
 if (!appId || !webDir) {
   console.error("تعذّر قراءة appId/webDir من capacitor.config.ts");
   process.exit(1);
@@ -72,7 +91,19 @@ if (webDir !== "dist") {
   console.error(`webDir يجب أن يكون dist، الموجود: ${webDir}`);
   process.exit(1);
 }
-console.log(`✓ appId=${json.appId} · webDir=${webDir} · ios sync متّسق`);
+if (serverUrl !== "https://www.majlisilm.com") {
+  console.error(`server.url يجب أن يكون https://www.majlisilm.com، الموجود: ${serverUrl}`);
+  process.exit(1);
+}
+if (json?.server?.url !== "https://www.majlisilm.com") {
+  console.error(`ios capacitor.config.json server.url غير حي: ${json?.server?.url}`);
+  process.exit(1);
+}
+if (json?.server?.cleartext !== true) {
+  console.error("ios capacitor.config.json cleartext يجب أن يكون true");
+  process.exit(1);
+}
+console.log(`✓ appId=${json.appId} · webDir=${webDir} · server.url=${json.server.url} · ios sync متّسق`);
 NODE
 
 echo "==> جاهز: افتح ios/App/App.xcodeproj ثم Product → Archive"
