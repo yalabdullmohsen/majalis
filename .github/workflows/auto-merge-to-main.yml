@@ -139,8 +139,13 @@ jobs:
             $EVAL evaluate --pr "$n" --strict-vercel
             code=$?
             set -e
+            # 3 = checks still pending → wait; do NOT disable auto-merge permanently
+            if [ "$code" -eq 3 ]; then
+              echo "skip: waiting on required checks (keep auto-merge undisturbed)"
+              echo "::endgroup::"; continue
+            fi
             if [ "$code" -eq 2 ]; then
-              echo "skip: policy blockers (see report comment)"
+              echo "skip: hard policy blockers (see report comment)"
               gh "${REPO_FLAG[@]}" pr merge "$n" --disable-auto || true
               echo "::endgroup::"; continue
             fi
