@@ -5,6 +5,7 @@ import re
 import subprocess
 import tempfile
 import time
+import wave
 from collections import deque
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional, Tuple
@@ -199,6 +200,25 @@ def write_live_chunks_to_file(chunks: list[bytes], suffix: str = ".m4a") -> str:
         return temp.name
     finally:
         temp.close()
+
+
+def write_pcm_to_wav(
+    pcm_bytes: bytes,
+    sample_rate: int = 16000,
+    channels: int = 1,
+    sample_width: int = 2,
+) -> str:
+    temp = tempfile.NamedTemporaryFile(delete=False, suffix=".wav")
+    temp_path = temp.name
+    temp.close()
+
+    with wave.open(temp_path, "wb") as wav_file:
+        wav_file.setnchannels(channels)
+        wav_file.setsampwidth(sample_width)
+        wav_file.setframerate(sample_rate)
+        wav_file.writeframes(pcm_bytes)
+
+    return temp_path
 
 
 def transcribe_live_file(path: str, language: str = "ar") -> dict:
@@ -674,14 +694,25 @@ async def transcribe(
 
 @app.websocket("/ws/live")
 async def live_asr(websocket: WebSocket):
-    """Live ASR via short audio chunks. Does not replace HTTP /transcribe."""
+    """Live ASR: native PCM binary frames and legacy m4a chunks. Not a /transcribe replacement."""
     await websocket.accept()
 
+    # Legacy m4a chunk mode
     chunks: deque[bytes] = deque(maxlen=4)
     all_chunks: list[bytes] = []
+
+    # Native PCM mode
+    pcm_buffer = bytearray()
+    recent_pcm_buffers: deque[bytes] = deque(maxlen=6)
+    started_pcm = False
+    sample_rate = 16000
+    channels = 1
+    bits_per_sample = 16
+
     language = "ar"
     last_transcribe_at = 0.0
-    min_interval_seconds = float(os.getenv("TASMEE3_LIVE_MIN_INTERVAL", "3.0"))
+    min_interval_seconds = float(os.getenv("TASMEE3_LIVE_MIN_INTERVAL", "2.5"))
+    last_sequence = 0
 
     try:
         await websocket.send_json(
@@ -697,6 +728,62 @@ async def live_asr(websocket: WebSocket):
         while True:
             message = await websocket.receive()
 
+            if "bytes" in message and message["bytes"] is not None:
+                if not started_pcm:
+                    continue
+
+                chunk = message["bytes"]
+                pcm_buffer.extend(chunk)
+                recent_pcm_buffers.append(chunk)
+
+                now = time.time()
+
+                if now - last_transcribe_at < min_interval_seconds:
+                    continue
+
+                last_transcribe_at = now
+
+                recent_bytes = b"".join(recent_pcm_buffers)
+
+                # ~1 second of 16-bit mono PCM at 16kHz = 32000 bytes
+                if len(recent_bytes) < sample_rate * 2:
+                    continue
+
+                wav_path = write_pcm_to_wav(
+                    recent_bytes,
+                    sample_rate=sample_rate,
+                    channels=channels,
+                    sample_width=max(1, bits_per_sample // 8),
+                )
+
+                try:
+                    live_result = transcribe_live_file(wav_path, language=language)
+
+                    await websocket.send_json(
+                        {
+                            "type": "partial",
+                            "text": live_result["text"],
+                            "confidence": live_result["confidence"],
+                            "words": live_result["words"],
+                            "sequence": last_sequence,
+                        }
+                    )
+                except Exception as exc:
+                    await websocket.send_json(
+                        {
+                            "type": "error",
+                            "error": str(exc),
+                            "sequence": last_sequence,
+                        }
+                    )
+                finally:
+                    try:
+                        os.remove(wav_path)
+                    except OSError:
+                        pass
+
+                continue
+
             if "text" not in message:
                 continue
 
@@ -707,15 +794,91 @@ async def live_asr(websocket: WebSocket):
                     {
                         "type": "error",
                         "error": "Invalid JSON message",
-                        "sequence": 0,
+                        "sequence": last_sequence,
                     }
                 )
                 continue
 
             msg_type = payload.get("type")
-            sequence = int(payload.get("sequence", 0))
+            last_sequence = int(payload.get("sequence", last_sequence))
 
-            if msg_type == "start":
+            if msg_type == "startPcm":
+                started_pcm = True
+                language = str(payload.get("language", "ar"))
+                sample_rate = int(payload.get("sampleRate", 16000))
+                channels = int(payload.get("channels", 1))
+                bits_per_sample = int(payload.get("bitsPerSample", 16))
+
+                pcm_buffer.clear()
+                recent_pcm_buffers.clear()
+                last_transcribe_at = 0.0
+
+                await websocket.send_json(
+                    {
+                        "type": "partial",
+                        "text": "",
+                        "confidence": 0.0,
+                        "words": [],
+                        "sequence": last_sequence,
+                    }
+                )
+
+            elif msg_type == "pcmMeta":
+                last_sequence = int(payload.get("sequence", last_sequence))
+
+            elif msg_type == "stopPcm":
+                if pcm_buffer:
+                    wav_path = write_pcm_to_wav(
+                        bytes(pcm_buffer),
+                        sample_rate=sample_rate,
+                        channels=channels,
+                        sample_width=max(1, bits_per_sample // 8),
+                    )
+
+                    try:
+                        final_result = transcribe_live_file(
+                            wav_path,
+                            language=language,
+                        )
+
+                        await websocket.send_json(
+                            {
+                                "type": "final",
+                                "text": final_result["text"],
+                                "confidence": final_result["confidence"],
+                                "words": final_result["words"],
+                                "sequence": last_sequence,
+                            }
+                        )
+                    except Exception as exc:
+                        await websocket.send_json(
+                            {
+                                "type": "error",
+                                "error": str(exc),
+                                "sequence": last_sequence,
+                            }
+                        )
+                    finally:
+                        try:
+                            os.remove(wav_path)
+                        except OSError:
+                            pass
+                else:
+                    await websocket.send_json(
+                        {
+                            "type": "final",
+                            "text": "",
+                            "confidence": 0.0,
+                            "words": [],
+                            "sequence": last_sequence,
+                        }
+                    )
+
+                break
+
+            elif msg_type == "start":
+                # Legacy m4a chunk protocol
+                started_pcm = False
                 language = str(payload.get("language", "ar"))
                 chunks.clear()
                 all_chunks.clear()
@@ -727,7 +890,7 @@ async def live_asr(websocket: WebSocket):
                         "text": "",
                         "confidence": 0.0,
                         "words": [],
-                        "sequence": sequence,
+                        "sequence": last_sequence,
                     }
                 )
 
@@ -745,7 +908,7 @@ async def live_asr(websocket: WebSocket):
                         {
                             "type": "error",
                             "error": "Invalid base64 audio chunk",
-                            "sequence": sequence,
+                            "sequence": last_sequence,
                         }
                     )
                     continue
@@ -760,8 +923,6 @@ async def live_asr(websocket: WebSocket):
 
                 last_transcribe_at = now
 
-                # Prefer latest standalone m4a chunk (byte-concat of AAC containers
-                # is unreliable). Fall back to deque concat when needed.
                 suffix = ".m4a" if fmt == "m4a" else ".wav"
                 temp_path = write_live_chunks_to_file([chunk], suffix=suffix)
 
@@ -774,7 +935,7 @@ async def live_asr(websocket: WebSocket):
                             "text": live_result["text"],
                             "confidence": live_result["confidence"],
                             "words": live_result["words"],
-                            "sequence": sequence,
+                            "sequence": last_sequence,
                         }
                     )
                 except Exception as exc:
@@ -782,7 +943,7 @@ async def live_asr(websocket: WebSocket):
                         {
                             "type": "error",
                             "error": str(exc),
-                            "sequence": sequence,
+                            "sequence": last_sequence,
                         }
                     )
                 finally:
@@ -793,8 +954,6 @@ async def live_asr(websocket: WebSocket):
 
             elif msg_type == "stop":
                 if all_chunks:
-                    # Transcribe each m4a chunk separately then join — safer than
-                    # byte-concat of independent containers.
                     texts: list[str] = []
                     words_out: list[dict] = []
                     confidences: list[float] = []
@@ -830,7 +989,7 @@ async def live_asr(websocket: WebSocket):
                             "text": final_text,
                             "confidence": final_confidence,
                             "words": words_out,
-                            "sequence": sequence,
+                            "sequence": last_sequence,
                         }
                     )
                 else:
@@ -840,7 +999,7 @@ async def live_asr(websocket: WebSocket):
                             "text": "",
                             "confidence": 0.0,
                             "words": [],
-                            "sequence": sequence,
+                            "sequence": last_sequence,
                         }
                     )
 
@@ -854,7 +1013,7 @@ async def live_asr(websocket: WebSocket):
                 {
                     "type": "error",
                     "error": str(exc),
-                    "sequence": 0,
+                    "sequence": last_sequence,
                 }
             )
         except Exception:

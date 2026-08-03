@@ -4,12 +4,14 @@ import '../data/advanced_quran_asr_recognizer.dart';
 import '../data/asr_server_health_service.dart';
 import '../data/assets_quran_repository.dart';
 import '../data/ayah_mastery_repository.dart';
+import '../data/live_asr_pcm_websocket_recognizer.dart';
 import '../data/live_asr_websocket_recognizer.dart';
 import '../data/local_ayah_mastery_repository.dart';
 import '../data/local_tasmee3_asr_settings_repository.dart';
 import '../data/local_tasmee3_failed_job_queue.dart';
 import '../data/local_tasmee3_goal_repository.dart';
 import '../data/local_tasmee3_session_repository.dart';
+import '../data/pcm_audio_stream_service.dart';
 import '../data/quran_repository.dart';
 import '../data/quran_speech_recognizer.dart';
 import '../data/speech_to_text_quran_recognizer.dart';
@@ -24,6 +26,7 @@ import '../domain/asr_connection_status.dart';
 import '../domain/asr_engine_mode.dart';
 import '../domain/ayah_mastery_record.dart';
 import '../domain/live_streaming_config.dart';
+import '../domain/pcm_audio_config.dart';
 import '../domain/queued_tasmee3_job.dart';
 import '../domain/tasmee3_achievement.dart';
 import '../domain/tasmee3_badge.dart';
@@ -117,8 +120,8 @@ final tasmee3AsrSettingsControllerProvider = StateNotifierProvider<
   );
 });
 
-/// Uses user ASR settings (mode / allow upload / endpoint / live WS).
-/// Priority: device fallback → live WebSocket → advanced HTTP → speech_to_text.
+/// Uses user ASR settings (mode / allow upload / endpoint / live WS / PCM).
+/// Priority: device fallback → native PCM WS → m4a chunk WS → advanced HTTP → STT.
 final quranSpeechRecognizerProvider = Provider<QuranSpeechRecognizer>((ref) {
   final asyncSettings = ref.watch(tasmee3UserAsrSettingsProvider);
   final queue = ref.watch(tasmee3FailedJobQueueProvider);
@@ -146,6 +149,20 @@ final quranSpeechRecognizerProvider = Provider<QuranSpeechRecognizer>((ref) {
     return SpeechToTextQuranRecognizer();
   }
 
+  if (settings.canUseNativePcmStreaming) {
+    return LiveAsrPcmWebSocketRecognizer(
+      websocketUri: Uri.parse(settings.liveWebSocketEndpoint),
+      apiKey: settings.apiKey.isEmpty ? null : settings.apiKey,
+      pcmService: ref.watch(pcmAudioStreamServiceProvider),
+      config: const PcmAudioConfig(
+        sampleRate: 16000,
+        channels: 1,
+        bitsPerSample: 16,
+        chunkSizeBytes: 3200,
+      ),
+    );
+  }
+
   if (settings.canUseLiveWebSocket) {
     return LiveAsrWebSocketRecognizer(
       websocketUri: Uri.parse(settings.liveWebSocketEndpoint),
@@ -162,6 +179,10 @@ final quranSpeechRecognizerProvider = Provider<QuranSpeechRecognizer>((ref) {
   }
 
   return SpeechToTextQuranRecognizer();
+});
+
+final pcmAudioStreamServiceProvider = Provider<PcmAudioStreamService>((ref) {
+  return PcmAudioStreamService();
 });
 
 final mistakeDetectionEngineProvider = Provider<MistakeDetectionEngine>((ref) {

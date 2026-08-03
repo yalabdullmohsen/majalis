@@ -181,3 +181,68 @@ ws://localhost:8000/ws/live
 
 الحل الحالي عملي كتجربة أولى، وقد يحتاج تحسين حسب المنصة.
 الخادم يحلّل أحدث chunk منفرداً للـ partial، وعند stop يحلّل كل chunk على حدة ثم يضم النصوص.
+
+## Native PCM WebSocket Streaming
+
+يدعم `/ws/live` الآن binary PCM frames بالإضافة إلى بروتوكول m4a chunks.
+
+بروتوكول العميل:
+
+```json
+{
+  "type": "startPcm",
+  "language": "ar",
+  "sampleRate": 16000,
+  "channels": 1,
+  "bitsPerSample": 16
+}
+```
+
+ثم يرسل العميل binary frames مباشرة عبر WebSocket.
+
+يمكن إرسال metadata اختيارية:
+
+```json
+{
+  "type": "pcmMeta",
+  "sequence": 1
+}
+```
+
+لإنهاء الجلسة:
+
+```json
+{
+  "type": "stopPcm"
+}
+```
+
+الخادم يحول PCM إلى WAV مؤقتا ثم يحلل آخر المقاطع ويرسل:
+
+```json
+{
+  "type": "partial",
+  "text": "...",
+  "confidence": 0.8,
+  "words": []
+}
+```
+
+وعند الإيقاف:
+
+```json
+{
+  "type": "final",
+  "text": "...",
+  "confidence": 0.9,
+  "words": []
+}
+```
+
+### Android
+
+Android يستخدم AudioRecord عبر EventChannel لإرسال PCM 16-bit mono 16k.
+
+### iOS
+
+iOS يحتاج تنفيذ AVAudioEngine لاحقا. إذا لم ينفذ، يستخدم التطبيق fallback.

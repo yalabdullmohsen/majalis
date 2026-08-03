@@ -16,6 +16,7 @@ class LocalTasmee3AsrSettingsRepository
   static const String _apiKeySecureKey = 'tasmee3_asr_api_key';
   static const String _liveWsEndpointKey = 'tasmee3_live_ws_endpoint';
   static const String _enableLiveWsKey = 'tasmee3_enable_live_ws';
+  static const String _enableNativePcmKey = 'tasmee3_enable_native_pcm';
 
   static const FlutterSecureStorage _secureStorage = FlutterSecureStorage();
 
@@ -48,6 +49,8 @@ class LocalTasmee3AsrSettingsRepository
 
     final liveWebSocketEndpoint = prefs.getString(_liveWsEndpointKey) ?? '';
     final enableLiveWebSocket = prefs.getBool(_enableLiveWsKey) ?? false;
+    final enableNativePcmStreaming =
+        prefs.getBool(_enableNativePcmKey) ?? false;
 
     return Tasmee3UserAsrSettings(
       mode: mode,
@@ -59,6 +62,7 @@ class LocalTasmee3AsrSettingsRepository
       saveFailedSessionsQueue: prefs.getBool(_queueKey) ?? true,
       liveWebSocketEndpoint: liveWebSocketEndpoint,
       enableLiveWebSocket: enableLiveWebSocket,
+      enableNativePcmStreaming: enableNativePcmStreaming,
     );
   }
 
@@ -80,6 +84,10 @@ class LocalTasmee3AsrSettingsRepository
       _enableLiveWsKey,
       settings.enableLiveWebSocket,
     );
+    await prefs.setBool(
+      _enableNativePcmKey,
+      settings.enableNativePcmStreaming,
+    );
 
     await _secureStorage.write(
       key: _apiKeySecureKey,
@@ -99,6 +107,7 @@ class LocalTasmee3AsrSettingsRepository
     await prefs.remove(_queueKey);
     await prefs.remove(_liveWsEndpointKey);
     await prefs.remove(_enableLiveWsKey);
+    await prefs.remove(_enableNativePcmKey);
 
     await _secureStorage.delete(key: _apiKeySecureKey);
   }

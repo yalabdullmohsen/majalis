@@ -166,6 +166,32 @@ class _Tasmee3AsrSettingsScreenState
                       ),
                     ),
                   ),
+                  SwitchListTile(
+                    contentPadding: EdgeInsets.zero,
+                    value: state.settings.enableNativePcmStreaming,
+                    title: const Text('استخدام Native PCM Streaming'),
+                    subtitle: const Text(
+                      'تجريبي ومتقدم. يعطي بثا صوتيا أفضل إذا كان مدعوما على الجهاز.',
+                    ),
+                    onChanged: (value) {
+                      controller.updateSettings(
+                        state.settings.copyWith(
+                          enableNativePcmStreaming: value,
+                        ),
+                      );
+                    },
+                  ),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 6),
+                    child: Text(
+                      'إذا لم يعمل PCM Streaming على جهازك، عطله وسيستخدم التطبيق WebSocket chunks أو الخادم العادي.',
+                      style: TextStyle(
+                        color: Colors.orange,
+                        fontSize: 13,
+                        height: 1.5,
+                      ),
+                    ),
+                  ),
                   const SizedBox(height: 12),
                   TextFormField(
                     controller: apiKeyController,

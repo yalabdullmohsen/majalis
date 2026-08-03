@@ -15,6 +15,21 @@ void main() {
     );
 
     expect(enabled.canUseLiveWebSocket, isTrue);
+    expect(enabled.canUseNativePcmStreaming, isFalse);
+  });
+
+  test('canUseNativePcmStreaming requires PCM flag plus live WS prerequisites', () {
+    const disabled = Tasmee3UserAsrSettings.defaults();
+
+    final liveOnly = disabled.copyWith(
+      enableLiveWebSocket: true,
+      allowServerAudioUpload: true,
+      liveWebSocketEndpoint: 'ws://127.0.0.1:8000/ws/live',
+    );
+    expect(liveOnly.canUseNativePcmStreaming, isFalse);
+
+    final withPcm = liveOnly.copyWith(enableNativePcmStreaming: true);
+    expect(withPcm.canUseNativePcmStreaming, isTrue);
   });
 
   test('LiveAsrMessage parses partial payload', () {

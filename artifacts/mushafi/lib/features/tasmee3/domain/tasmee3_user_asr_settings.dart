@@ -10,6 +10,7 @@ class Tasmee3UserAsrSettings {
   final bool saveFailedSessionsQueue;
   final String liveWebSocketEndpoint;
   final bool enableLiveWebSocket;
+  final bool enableNativePcmStreaming;
 
   const Tasmee3UserAsrSettings({
     required this.mode,
@@ -21,6 +22,7 @@ class Tasmee3UserAsrSettings {
     required this.saveFailedSessionsQueue,
     required this.liveWebSocketEndpoint,
     required this.enableLiveWebSocket,
+    required this.enableNativePcmStreaming,
   });
 
   const Tasmee3UserAsrSettings.defaults()
@@ -32,7 +34,8 @@ class Tasmee3UserAsrSettings {
         maxRetryCount = 2,
         saveFailedSessionsQueue = true,
         liveWebSocketEndpoint = '',
-        enableLiveWebSocket = false;
+        enableLiveWebSocket = false,
+        enableNativePcmStreaming = false;
 
   bool get hasEndpoint => endpoint.trim().isNotEmpty;
 
@@ -50,6 +53,13 @@ class Tasmee3UserAsrSettings {
         hasLiveWebSocketEndpoint;
   }
 
+  bool get canUseNativePcmStreaming {
+    return enableNativePcmStreaming &&
+        enableLiveWebSocket &&
+        allowServerAudioUpload &&
+        hasLiveWebSocketEndpoint;
+  }
+
   Tasmee3UserAsrSettings copyWith({
     AsrEngineMode? mode,
     String? endpoint,
@@ -60,6 +70,7 @@ class Tasmee3UserAsrSettings {
     bool? saveFailedSessionsQueue,
     String? liveWebSocketEndpoint,
     bool? enableLiveWebSocket,
+    bool? enableNativePcmStreaming,
   }) {
     return Tasmee3UserAsrSettings(
       mode: mode ?? this.mode,
@@ -74,6 +85,8 @@ class Tasmee3UserAsrSettings {
       liveWebSocketEndpoint:
           liveWebSocketEndpoint ?? this.liveWebSocketEndpoint,
       enableLiveWebSocket: enableLiveWebSocket ?? this.enableLiveWebSocket,
+      enableNativePcmStreaming:
+          enableNativePcmStreaming ?? this.enableNativePcmStreaming,
     );
   }
 }

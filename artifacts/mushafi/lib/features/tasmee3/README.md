@@ -525,3 +525,22 @@ WebSocket الحالي هو بنية جاهزة للبث الحي.
 حزمة record قد لا توفر stream audio raw موحدا لكل المنصات.
 لذلك يستخدم التطبيق chunks قصيرة مسجلة ثم يرسلها.
 لإنتاج احترافي يفضل لاحقا native PCM stream.
+
+## البرومبت الحادي والعشرون - Native PCM Streaming
+
+تمت إضافة:
+
+- `PcmAudioStreamService`
+- `LiveAsrPcmWebSocketRecognizer`
+- Android AudioRecord PCM stream
+- دعم binary frames عبر WebSocket
+- تحويل PCM إلى WAV في الخادم
+- fallback إلى m4a chunks أو HTTP أو speech_to_text
+
+## ملاحظات
+
+- Android مدعوم عبر AudioRecord.
+- iOS يحتاج AVAudioEngine لاحقا.
+- إذا PCM غير متاح، يستخدم التطبيق fallback حسب الإعدادات.
+- iOS PCM Streaming يحتاج تنفيذ AVAudioEngine لإرسال PCM frames عبر EventChannel.
+- حاليا Android مدعوم، و iOS يستخدم fallback إذا لم يتم تنفيذ PCM.
