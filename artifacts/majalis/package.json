@@ -198,9 +198,12 @@
     "fetch:hadith-sahihayn": "node scripts/fetch-hadith-sahihayn.mjs",
     "verify:hadith-sahihayn": "node scripts/verify-hadith-sahihayn.mjs",
     "test:fawaid-curated-integrity": "node --import tsx src/lib/__tests__/fawaid-curated-integrity.test.ts",
-    "test:religious-content": "node --import tsx src/lib/__tests__/religious-content-validator.test.ts"
+    "test:religious-content": "node --import tsx src/lib/__tests__/religious-content-validator.test.ts",
+    "assets:generate": "bash scripts/generate-capacitor-assets.sh",
+    "assets:generate:ios": "bash scripts/generate-capacitor-assets.sh --ios-only"
   },
   "devDependencies": {
+    "@capacitor/assets": "^3.0.5",
     "@eslint/js": "^10.0.1",
     "@hookform/resolvers": "^3.10.0",
     "@playwright/test": "1.61.1",
