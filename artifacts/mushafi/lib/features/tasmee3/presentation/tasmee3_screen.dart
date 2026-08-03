@@ -15,6 +15,7 @@ import 'tasmee3_asr_settings_screen.dart';
 import 'tasmee3_dashboard_screen.dart';
 import 'tasmee3_history_screen.dart';
 import 'tasmee3_privacy_screen.dart';
+import 'tasmee3_report_preview_screen.dart';
 import 'tasmee3_weak_spots_screen.dart';
 import 'widgets/tasmee3_accuracy_card.dart';
 import 'widgets/tasmee3_audio_level_meter.dart';
@@ -651,6 +652,56 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
 
                     if (target == null || sessionResult == null) return;
 
+                    final navigator = Navigator.of(context);
+                    final textBuilder =
+                        ref.read(tasmee3SessionReportBuilderProvider);
+                    final pdfService =
+                        ref.read(tasmee3PdfReportServiceProvider);
+
+                    final reportText = textBuilder.buildTextReport(
+                      target: target,
+                      result: sessionResult,
+                      durationSeconds: state.elapsedSeconds,
+                    );
+
+                    String? pdfPath;
+
+                    try {
+                      final pdfFile = await pdfService.buildSessionPdf(
+                        target: target,
+                        result: sessionResult,
+                        durationSeconds: state.elapsedSeconds,
+                      );
+
+                      pdfPath = pdfFile.path;
+                    } catch (_) {}
+
+                    await navigator.push(
+                      MaterialPageRoute(
+                        builder: (_) => Tasmee3ReportPreviewScreen(
+                          reportText: reportText,
+                          pdfPath: pdfPath,
+                        ),
+                      ),
+                    );
+                  },
+                  icon: const Icon(Icons.preview_outlined),
+                  label: const Text('معاينة التقرير'),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          Row(
+            children: [
+              Expanded(
+                child: OutlinedButton.icon(
+                  onPressed: () async {
+                    final target = state.target;
+                    final sessionResult = state.result;
+
+                    if (target == null || sessionResult == null) return;
+
                     final messenger = ScaffoldMessenger.of(context);
 
                     try {
@@ -666,11 +717,12 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
                       await Share.shareXFiles(
                         [XFile(file.path)],
                         text: 'تقرير جلسة التسميع',
+                        subject: 'تقرير جلسة التسميع',
                       );
                     } catch (e) {
                       messenger.showSnackBar(
                         SnackBar(
-                          content: Text('تعذر تصدير PDF: $e'),
+                          content: Text('تعذر إنشاء تقرير PDF: $e'),
                         ),
                       );
                     }

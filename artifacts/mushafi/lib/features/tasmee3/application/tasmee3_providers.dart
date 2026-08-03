@@ -33,6 +33,7 @@ import 'tasmee3_asr_settings_controller.dart';
 import 'tasmee3_controller.dart';
 import 'tasmee3_goal_controller.dart';
 import 'tasmee3_goal_service.dart';
+import 'tasmee3_pdf_font_loader.dart';
 import 'tasmee3_pdf_report_service.dart';
 import 'tasmee3_session_report_builder.dart';
 import 'tasmee3_ui_settings.dart';
@@ -238,9 +239,15 @@ final tasmee3NotificationServiceProvider =
   return Tasmee3NotificationService();
 });
 
+final tasmee3PdfFontLoaderProvider = Provider<Tasmee3PdfFontLoader>((ref) {
+  return const Tasmee3PdfFontLoader();
+});
+
 final tasmee3PdfReportServiceProvider =
     Provider<Tasmee3PdfReportService>((ref) {
-  return const Tasmee3PdfReportService();
+  return Tasmee3PdfReportService(
+    fontLoader: ref.watch(tasmee3PdfFontLoaderProvider),
+  );
 });
 
 final tasmee3GoalControllerProvider =

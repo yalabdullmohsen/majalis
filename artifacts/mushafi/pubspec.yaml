@@ -48,6 +48,8 @@ flutter:
     - assets/data/
     - assets/images/
     - assets/quran/quran_uthmani.json
+    - assets/fonts/NotoNaskhArabic-Regular.ttf
+    - assets/fonts/NotoNaskhArabic-Bold.ttf
   fonts:
     - family: MushafiQuran
       fonts:
@@ -55,3 +57,8 @@ flutter:
     - family: MushafiUi
       fonts:
         - asset: assets/fonts/ScheherazadeNew-Regular.ttf
+    - family: NotoNaskhArabic
+      fonts:
+        - asset: assets/fonts/NotoNaskhArabic-Regular.ttf
+        - asset: assets/fonts/NotoNaskhArabic-Bold.ttf
+          weight: 700

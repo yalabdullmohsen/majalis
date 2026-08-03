@@ -292,3 +292,30 @@ Forced Alignment الحالي يعتمد على مطابقة كلمات بعد �
 ## ملاحظة PDF
 
 يستخدم التقرير خط `ScheherazadeNew-Regular.ttf` لعرض العربية داخل PDF.
+
+## البرومبت الثاني عشر - PDF عربي احترافي
+
+تمت إضافة:
+
+- تحميل خط عربي للـ PDF (Noto Naskh Arabic).
+- تصميم تقرير PDF أفضل.
+- جدول ملخص الجلسة.
+- جدول الأخطاء.
+- نصائح مراجعة.
+- تاريخ ورقم تقرير.
+- معاينة تقرير داخل التطبيق.
+- مشاركة PDF.
+
+## الخطوط المطلوبة
+
+```text
+assets/fonts/NotoNaskhArabic-Regular.ttf
+assets/fonts/NotoNaskhArabic-Bold.ttf
+```
+
+الخطوط مضافة فعلياً (ترخيص OFL من Google Noto). إذا فشل التحميل، تستخدم الخدمة Scheherazade كاحتياطي.
+
+## الملفات الجديدة
+
+- `Tasmee3PdfFontLoader`
+- `Tasmee3ReportPreviewScreen`
