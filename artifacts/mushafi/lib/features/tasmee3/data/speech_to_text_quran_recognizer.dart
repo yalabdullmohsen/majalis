@@ -20,6 +20,8 @@ class SpeechToTextQuranRecognizer implements QuranSpeechRecognizer {
       StreamController<LiveAudioLevel>.broadcast();
 
   bool _initialized = false;
+  bool _shouldKeepListening = false;
+  DateTime? _lastRestartAt;
 
   @override
   Stream<LiveAudioLevel> get audioLevels => _audioLevelController.stream;
@@ -28,7 +30,17 @@ class SpeechToTextQuranRecognizer implements QuranSpeechRecognizer {
   Future<bool> initialize() async {
     _initialized = await _speech.initialize(
       onError: (_) {},
-      onStatus: (_) {},
+      onStatus: (status) {
+        if (!_shouldKeepListening) return;
+
+        final normalized = status.toLowerCase();
+
+        if (normalized.contains('done') ||
+            normalized.contains('notlistening') ||
+            normalized.contains('not listening')) {
+          _restartIfNeeded();
+        }
+      },
     );
 
     return _initialized;
@@ -36,8 +48,30 @@ class SpeechToTextQuranRecognizer implements QuranSpeechRecognizer {
 
   @override
   Stream<RecognizedSegment> listen() {
+    _shouldKeepListening = true;
     _start();
     return _controller.stream;
+  }
+
+  Future<void> _restartIfNeeded() async {
+    final now = DateTime.now();
+
+    if (_lastRestartAt != null &&
+        now.difference(_lastRestartAt!).inMilliseconds < 800) {
+      return;
+    }
+
+    _lastRestartAt = now;
+
+    await Future<void>.delayed(const Duration(milliseconds: 350));
+
+    if (!_shouldKeepListening) {
+      return;
+    }
+
+    if (!_speech.isListening) {
+      await _start();
+    }
   }
 
   Future<void> _start() async {
@@ -97,6 +131,7 @@ class SpeechToTextQuranRecognizer implements QuranSpeechRecognizer {
 
   @override
   Future<void> stop() async {
+    _shouldKeepListening = false;
     await _speech.stop();
   }
 }

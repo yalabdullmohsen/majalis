@@ -19,9 +19,11 @@ import '../domain/tasmee3_result.dart';
 import '../domain/tasmee3_session_diagnostics.dart';
 import '../domain/tasmee3_session_record.dart';
 import '../domain/tasmee3_live_progress.dart';
+import '../domain/tasmee3_voice_command.dart';
 import 'mistake_detection_engine.dart';
 import 'tasmee3_live_follow_service.dart';
 import 'tasmee3_srs_service.dart';
+import 'tasmee3_voice_command_detector.dart';
 
 enum Tasmee3Status {
   idle,
@@ -49,6 +51,7 @@ class Tasmee3State {
   final Duration sessionDuration;
   final List<QuranAyah> expectedAyahs;
   final Tasmee3LiveProgress liveProgress;
+  final Tasmee3VoiceCommand? lastVoiceCommand;
 
   const Tasmee3State({
     required this.status,
@@ -65,6 +68,7 @@ class Tasmee3State {
     this.sessionDuration = Duration.zero,
     this.expectedAyahs = const [],
     this.liveProgress = const Tasmee3LiveProgress.empty(),
+    this.lastVoiceCommand,
   });
 
   const Tasmee3State.initial()
@@ -81,7 +85,8 @@ class Tasmee3State {
         errorMessage = null,
         sessionDuration = Duration.zero,
         expectedAyahs = const [],
-        liveProgress = const Tasmee3LiveProgress.empty();
+        liveProgress = const Tasmee3LiveProgress.empty(),
+        lastVoiceCommand = null;
 
   Tasmee3State copyWith({
     Tasmee3Status? status,
@@ -98,10 +103,12 @@ class Tasmee3State {
     Duration? sessionDuration,
     List<QuranAyah>? expectedAyahs,
     Tasmee3LiveProgress? liveProgress,
+    Tasmee3VoiceCommand? lastVoiceCommand,
     bool clearResult = false,
     bool clearAlignment = false,
     bool clearAudioLevel = false,
     bool clearDiagnostics = false,
+    bool clearVoiceCommand = false,
   }) {
     return Tasmee3State(
       status: status ?? this.status,
@@ -119,6 +126,9 @@ class Tasmee3State {
       sessionDuration: sessionDuration ?? this.sessionDuration,
       expectedAyahs: expectedAyahs ?? this.expectedAyahs,
       liveProgress: liveProgress ?? this.liveProgress,
+      lastVoiceCommand: clearVoiceCommand
+          ? null
+          : lastVoiceCommand ?? this.lastVoiceCommand,
     );
   }
 }
@@ -131,6 +141,7 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
   final AyahMasteryRepository ayahMasteryRepository;
   final Tasmee3SrsService srsService;
   final Tasmee3LiveFollowService liveFollowService;
+  final Tasmee3VoiceCommandDetector voiceCommandDetector;
   final void Function()? onSessionSaved;
 
   StreamSubscription<RecognizedSegment>? _subscription;
@@ -149,6 +160,7 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
     required this.ayahMasteryRepository,
     required this.srsService,
     required this.liveFollowService,
+    required this.voiceCommandDetector,
     this.onSessionSaved,
   }) : super(const Tasmee3State.initial());
 
@@ -178,6 +190,7 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
         clearResult: true,
         clearAlignment: true,
         clearAudioLevel: true,
+        clearVoiceCommand: true,
         errorMessage: null,
       );
 
@@ -267,6 +280,17 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
             confidence: segment.confidence,
             liveProgress: updatedLiveProgress,
           );
+
+          final command = voiceCommandDetector.detect(segment.text);
+
+          if (command.isKnown) {
+            state = state.copyWith(lastVoiceCommand: command);
+
+            if (command.type == Tasmee3VoiceCommandType.stop) {
+              unawaited(stop());
+              return;
+            }
+          }
 
           if (segment.isFinal) {
             if (segment.alignment != null) {

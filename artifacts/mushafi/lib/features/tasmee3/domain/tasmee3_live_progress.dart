@@ -1,4 +1,5 @@
 import 'ayah_ref.dart';
+import 'tasmee3_live_ayah_progress.dart';
 import 'tasmee3_live_word.dart';
 
 class Tasmee3LiveProgress {
@@ -9,6 +10,7 @@ class Tasmee3LiveProgress {
   final AyahRef? currentAyah;
   final bool isUserPossiblySilent;
   final DateTime? lastUpdatedAt;
+  final List<Tasmee3LiveAyahProgress> ayahProgress;
 
   const Tasmee3LiveProgress({
     required this.words,
@@ -18,6 +20,7 @@ class Tasmee3LiveProgress {
     required this.currentAyah,
     required this.isUserPossiblySilent,
     required this.lastUpdatedAt,
+    required this.ayahProgress,
   });
 
   const Tasmee3LiveProgress.empty()
@@ -27,7 +30,8 @@ class Tasmee3LiveProgress {
         totalWords = 0,
         currentAyah = null,
         isUserPossiblySilent = false,
-        lastUpdatedAt = null;
+        lastUpdatedAt = null,
+        ayahProgress = const [];
 
   double get progress {
     if (totalWords <= 0) {

@@ -49,6 +49,7 @@ import 'tasmee3_session_report_builder.dart';
 import 'tasmee3_srs_service.dart';
 import 'tasmee3_review_suggestion_mapper.dart';
 import 'tasmee3_ui_settings.dart';
+import 'tasmee3_voice_command_detector.dart';
 
 /// Named distinctly from mushaf `quranRepositoryProvider` to avoid import clashes
 /// when both libraries are imported in the same file.
@@ -201,6 +202,11 @@ final tasmee3DisplayBuilderProvider = Provider<Tasmee3DisplayBuilder>((ref) {
 final tasmee3LiveFollowServiceProvider =
     Provider<Tasmee3LiveFollowService>((ref) {
   return const Tasmee3LiveFollowService();
+});
+
+final tasmee3VoiceCommandDetectorProvider =
+    Provider<Tasmee3VoiceCommandDetector>((ref) {
+  return const Tasmee3VoiceCommandDetector();
 });
 
 final tasmee3ReviewSuggestionMapperProvider =
@@ -381,6 +387,7 @@ final tasmee3ControllerProvider =
     ayahMasteryRepository: ref.watch(ayahMasteryRepositoryProvider),
     srsService: ref.watch(tasmee3SrsServiceProvider),
     liveFollowService: ref.watch(tasmee3LiveFollowServiceProvider),
+    voiceCommandDetector: ref.watch(tasmee3VoiceCommandDetectorProvider),
     onSessionSaved: () {
       ref.invalidate(tasmee3SessionHistoryProvider);
       ref.invalidate(tasmee3TodayGoalProgressProvider);

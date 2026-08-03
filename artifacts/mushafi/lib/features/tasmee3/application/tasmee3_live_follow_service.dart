@@ -1,4 +1,5 @@
 import '../domain/quran_ayah.dart';
+import '../domain/tasmee3_live_ayah_progress.dart';
 import '../domain/tasmee3_live_progress.dart';
 import '../domain/tasmee3_live_word.dart';
 import '../domain/tasmee3_live_word_status.dart';
@@ -45,6 +46,7 @@ class Tasmee3LiveFollowService {
       currentAyah: words.isEmpty ? null : words.first.ayahRef,
       isUserPossiblySilent: false,
       lastUpdatedAt: DateTime.now(),
+      ayahProgress: _buildAyahProgress(words),
     );
   }
 
@@ -154,6 +156,7 @@ class Tasmee3LiveFollowService {
       currentAyah: currentAyah,
       isUserPossiblySilent: false,
       lastUpdatedAt: DateTime.now(),
+      ayahProgress: _buildAyahProgress(updated),
     );
   }
 
@@ -171,7 +174,57 @@ class Tasmee3LiveFollowService {
       currentAyah: current.currentAyah,
       isUserPossiblySilent: silent,
       lastUpdatedAt: current.lastUpdatedAt,
+      ayahProgress: current.ayahProgress,
     );
+  }
+
+  List<Tasmee3LiveAyahProgress> _buildAyahProgress(
+    List<Tasmee3LiveWord> words,
+  ) {
+    final grouped = <String, List<Tasmee3LiveWord>>{};
+
+    for (final word in words) {
+      grouped.putIfAbsent(word.ayahRef.key, () => []).add(word);
+    }
+
+    final result = <Tasmee3LiveAyahProgress>[];
+
+    for (final entry in grouped.entries) {
+      final ayahWords = entry.value;
+      final ref = ayahWords.first.ayahRef;
+
+      final recognized = ayahWords.where((word) {
+        return word.status == Tasmee3LiveWordStatus.recognized ||
+            word.status == Tasmee3LiveWordStatus.possibleMistake;
+      }).length;
+
+      final possibleMistakes = ayahWords.where((word) {
+        return word.status == Tasmee3LiveWordStatus.possibleMistake ||
+            word.status == Tasmee3LiveWordStatus.skipped;
+      }).length;
+
+      result.add(
+        Tasmee3LiveAyahProgress(
+          ayahRef: ref,
+          totalWords: ayahWords.length,
+          recognizedWords: recognized,
+          possibleMistakes: possibleMistakes,
+          completed: recognized >= ayahWords.length,
+        ),
+      );
+    }
+
+    result.sort((a, b) {
+      final surahCompare = a.ayahRef.surah.compareTo(b.ayahRef.surah);
+
+      if (surahCompare != 0) {
+        return surahCompare;
+      }
+
+      return a.ayahRef.ayah.compareTo(b.ayahRef.ayah);
+    });
+
+    return result;
   }
 
   int _findNextCurrentIndex(List<Tasmee3LiveWord> words) {

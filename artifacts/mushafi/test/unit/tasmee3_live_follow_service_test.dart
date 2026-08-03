@@ -58,6 +58,7 @@ void main() {
       currentAyah: seeded.currentAyah,
       isUserPossiblySilent: false,
       lastUpdatedAt: DateTime.now().subtract(const Duration(seconds: 6)),
+      ayahProgress: seeded.ayahProgress,
     );
 
     final silent = service.updateWithRecognizedText(

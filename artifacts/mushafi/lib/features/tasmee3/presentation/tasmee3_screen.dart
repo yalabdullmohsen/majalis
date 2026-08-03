@@ -12,15 +12,18 @@ import '../domain/recitation_target.dart';
 import '../domain/surah_info.dart';
 import '../domain/tasmee3_mistake.dart';
 import '../domain/tasmee3_text_visibility_mode.dart';
+import '../domain/tasmee3_voice_command.dart';
 import 'tasmee3_asr_settings_screen.dart';
 import 'tasmee3_dashboard_screen.dart';
 import 'tasmee3_history_screen.dart';
+import 'tasmee3_mistake_training_screen.dart';
 import 'tasmee3_privacy_screen.dart';
 import 'tasmee3_report_preview_screen.dart';
 import 'tasmee3_weak_spots_screen.dart';
 import 'widgets/tasmee3_accuracy_card.dart';
 import 'widgets/tasmee3_audio_level_meter.dart';
 import 'widgets/tasmee3_ayah_scores_card.dart';
+import 'widgets/tasmee3_live_ayah_progress_card.dart';
 import 'widgets/tasmee3_live_progress_card.dart';
 import 'widgets/tasmee3_mistake_report_sheet.dart';
 import 'widgets/tasmee3_mushaf_recitation_view.dart';
@@ -201,6 +204,23 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
     final selectedSurah = SurahCatalog.byId(surah);
 
     ref.listen(tasmee3ControllerProvider, (previous, next) {
+      final command = next.lastVoiceCommand;
+
+      if (command != null &&
+          previous?.lastVoiceCommand?.detectedAt != command.detectedAt) {
+        if (command.type == Tasmee3VoiceCommandType.reveal) {
+          setState(() {
+            forceRevealAll = true;
+          });
+        } else if (command.type == Tasmee3VoiceCommandType.hide) {
+          setState(() {
+            forceRevealAll = false;
+          });
+        } else if (command.type == Tasmee3VoiceCommandType.repeat) {
+          _showExpectedTextSheet();
+        }
+      }
+
       if (previous?.status != Tasmee3Status.completed &&
           next.status == Tasmee3Status.completed) {
         ref.invalidate(tasmee3SessionHistoryProvider);
@@ -608,6 +628,23 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
     return '$m:$s';
   }
 
+  String _voiceCommandLabel(Tasmee3VoiceCommandType type) {
+    switch (type) {
+      case Tasmee3VoiceCommandType.repeat:
+        return 'أعد';
+      case Tasmee3VoiceCommandType.next:
+        return 'التالي';
+      case Tasmee3VoiceCommandType.reveal:
+        return 'أظهر';
+      case Tasmee3VoiceCommandType.hide:
+        return 'أخف';
+      case Tasmee3VoiceCommandType.stop:
+        return 'توقف';
+      case Tasmee3VoiceCommandType.unknown:
+        return '';
+    }
+  }
+
   Widget _listeningContent(Tasmee3State state) {
     return Padding(
       padding: const EdgeInsets.all(20),
@@ -659,6 +696,24 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
           Tasmee3AudioLevelMeter(level: state.audioLevel),
           const SizedBox(height: 10),
           Tasmee3LiveProgressCard(progress: state.liveProgress),
+          const SizedBox(height: 10),
+          Tasmee3LiveAyahProgressCard(
+            ayahProgress: state.liveProgress.ayahProgress,
+          ),
+          if (state.lastVoiceCommand != null &&
+              state.lastVoiceCommand!.type !=
+                  Tasmee3VoiceCommandType.unknown) ...[
+            const SizedBox(height: 8),
+            Text(
+              'تم رصد أمر صوتي: ${_voiceCommandLabel(state.lastVoiceCommand!.type)}',
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                color: Color(0xFFA77A48),
+                fontWeight: FontWeight.w600,
+                fontSize: 13,
+              ),
+            ),
+          ],
           const SizedBox(height: 8),
           const Text(
             'تجنب الضوضاء، واقرأ النطاق المختار فقط دون زيادة.',
@@ -807,6 +862,29 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
               ),
             ],
           ),
+          if (result.mistakesCount > 0) ...[
+            const SizedBox(height: 10),
+            Row(
+              children: [
+                Expanded(
+                  child: OutlinedButton.icon(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => Tasmee3MistakeTrainingScreen(
+                            mistakes: result.mistakes,
+                          ),
+                        ),
+                      );
+                    },
+                    icon: const Icon(Icons.fitness_center),
+                    label: const Text('درّبني على الأخطاء'),
+                  ),
+                ),
+              ],
+            ),
+          ],
           if (state.alignment?.weakSpots.isNotEmpty == true) ...[
             const SizedBox(height: 10),
             Row(

@@ -460,3 +460,25 @@ assets/fonts/NotoNaskhArabic-Bold.ttf
 
 Live Follow Along الحالي يعتمد على النص الجزئي القادم من recognizer.
 إذا تم ربط WebSocket ASR مستقبلا، يمكن تحديث `LiveAsrWebSocketRecognizer` ليرسل partial segments بدقة أعلى.
+
+## البرومبت الثامن عشر - الذكاء الصوتي المباشر
+
+تمت إضافة:
+
+- Auto Resume للـ speech_to_text fallback.
+- تقدم حي لكل آية.
+- أوامر صوتية بسيطة:
+  - أعد
+  - التالي
+  - أظهر
+  - أخف
+  - توقف
+- عرض آخر أمر صوتي تم رصده.
+- تدريب على الأخطاء بعد الجلسة.
+- شاشة `Tasmee3MistakeTrainingScreen`.
+- تجهيز `LiveAsrWebSocketRecognizer` للبث الحي مستقبلا.
+
+## ملاحظات
+
+الأوامر الصوتية تعتمد على النص المتعرف عليه، وقد تختلف دقتها حسب محرك ASR.
+الأوامر لا تغيّر النص القرآني ولا تولده.
