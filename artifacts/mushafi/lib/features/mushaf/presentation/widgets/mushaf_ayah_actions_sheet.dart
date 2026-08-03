@@ -6,6 +6,7 @@ import '../../../tasmee3/domain/quran_ayah.dart';
 import '../../../tasmee3/presentation/tasmee3_design_tokens.dart';
 import '../../application/mushaf_providers.dart';
 import '../../data/tafsir_catalog.dart';
+import '../ayah_share_preview_screen.dart';
 import '../mushaf_tafsir_screen.dart';
 
 class MushafAyahActionsSheet extends ConsumerWidget {
@@ -95,6 +96,21 @@ class MushafAyahActionsSheet extends ConsumerWidget {
                       const SnackBar(content: Text('تم نسخ الآية.')),
                     );
                   }
+                },
+              ),
+              _ActionTile(
+                icon: Icons.image_outlined,
+                title: 'مشاركة كصورة',
+                onTap: () {
+                  Navigator.pop(context);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => AyahSharePreviewScreen(
+                        ayahs: [ayah],
+                      ),
+                    ),
+                  );
                 },
               ),
               _ActionTile(

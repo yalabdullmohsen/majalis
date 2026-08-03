@@ -9,6 +9,7 @@ import '../../tasmee3/presentation/widgets/tasmee3_error_state.dart';
 import '../../tasmee3/presentation/widgets/tasmee3_loading_state.dart';
 import '../application/mushaf_providers.dart';
 import '../domain/mushaf_page.dart';
+import 'ayah_share_preview_screen.dart';
 import 'mushaf_bookmarks_screen.dart';
 import 'mushaf_favorites_screen.dart';
 import 'mushaf_index_screen.dart';
@@ -111,6 +112,12 @@ class _MushafReaderScreenState extends ConsumerState<MushafReaderScreen> {
                           tooltip: 'نسخ',
                           icon: const Icon(Icons.copy),
                           onPressed: () => _copySelectedAyahs(pageItems),
+                        ),
+                        IconButton(
+                          tooltip: 'مشاركة كصورة',
+                          icon: const Icon(Icons.image_outlined),
+                          onPressed: () =>
+                              _openShareImageForSelected(pageItems),
                         ),
                         IconButton(
                           tooltip: 'مشاركة',
@@ -294,6 +301,29 @@ class _MushafReaderScreenState extends ConsumerState<MushafReaderScreen> {
 
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(content: Text('تم نسخ الآيات المحددة.')),
+    );
+  }
+
+  void _openShareImageForSelected(List<MushafPage> pages) {
+    final state = ref.read(mushafControllerProvider);
+    final controller = ref.read(mushafControllerProvider.notifier);
+
+    final ayahs = _selectedAyahsFromPages(
+      pages,
+      state.selectedAyahKeys,
+    );
+
+    if (ayahs.isEmpty) return;
+
+    controller.clearSelection();
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => AyahSharePreviewScreen(
+          ayahs: ayahs,
+        ),
+      ),
     );
   }
 

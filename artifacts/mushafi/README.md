@@ -101,6 +101,17 @@ Current store decision remains **NO-GO** until Android AAB/APK builds, device sm
 - متابعة الختمة.
 - آخر موضع قراءة.
 
+## Ayah Image Sharing
+
+يدعم المصحف مشاركة الآيات كصورة باستخدام تصميم خاص بمصحفي:
+
+- خلفيات متعددة.
+- معاينة قبل المشاركة.
+- نسخ كنص.
+- حفظ مؤقت للصورة قبل المشاركة.
+
+لا يستخدم التطبيق قوالب أو أصول تطبيقات أخرى.
+
 ## Post-Submission Tracking
 
 Post-submission materials:

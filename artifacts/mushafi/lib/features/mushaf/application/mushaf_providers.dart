@@ -8,8 +8,10 @@ import '../data/tafsir_repository.dart';
 import '../domain/mushaf_favorite_ayah.dart';
 import '../domain/mushaf_page.dart';
 import '../domain/mushaf_reading_position.dart';
+import 'ayah_share_text_builder.dart';
 import 'mushaf_controller.dart';
 import 'mushaf_page_builder.dart';
+import 'widget_image_export_service.dart';
 
 final mushafPageBuilderProvider = Provider<MushafPageBuilder>((ref) {
   return const MushafPageBuilder();
@@ -40,6 +42,15 @@ final mushafControllerProvider =
   controller.load();
 
   return controller;
+});
+
+final ayahShareTextBuilderProvider = Provider<AyahShareTextBuilder>((ref) {
+  return const AyahShareTextBuilder();
+});
+
+final widgetImageExportServiceProvider =
+    Provider<WidgetImageExportService>((ref) {
+  return const WidgetImageExportService();
 });
 
 final mushafLastPositionProvider =
