@@ -1,0 +1,91 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:mushafi/core/constants/app_constants.dart';
+import 'package:mushafi/core/theme/app_theme.dart';
+import 'package:mushafi/features/bookmarks/presentation/bookmarks_screen.dart';
+import 'package:mushafi/features/khatmah/presentation/khatmah_dashboard.dart';
+import 'package:mushafi/features/quran/presentation/providers/quran_providers.dart';
+import 'package:mushafi/features/quran/presentation/screens/home_shell.dart';
+import 'package:mushafi/features/quran/presentation/screens/juz_index_screen.dart';
+import 'package:mushafi/features/quran/presentation/screens/mushaf_screen.dart';
+import 'package:mushafi/features/quran/presentation/screens/surah_index_screen.dart';
+import 'package:mushafi/features/search/presentation/search_screen.dart';
+import 'package:mushafi/features/settings/presentation/settings_screen.dart';
+import 'package:mushafi/features/tarteel/presentation/recitation_session_screen.dart';
+
+final _routerProvider = Provider<GoRouter>((ref) {
+  return GoRouter(
+    initialLocation: '/',
+    routes: [
+      GoRoute(path: '/', builder: (_, __) => const HomeShell()),
+      GoRoute(
+        path: '/mushaf',
+        builder: (context, state) {
+          final page = int.tryParse(state.uri.queryParameters['page'] ?? '');
+          return MushafScreen(initialPage: page);
+        },
+      ),
+      GoRoute(path: '/search', builder: (_, __) => const SearchScreen()),
+      GoRoute(path: '/surahs', builder: (_, __) => const SurahIndexScreen()),
+      GoRoute(path: '/juz', builder: (_, __) => const JuzIndexScreen()),
+      GoRoute(path: '/bookmarks', builder: (_, __) => const BookmarksScreen()),
+      GoRoute(path: '/khatmah', builder: (_, __) => const KhatmahDashboard()),
+      GoRoute(path: '/settings', builder: (_, __) => const SettingsScreen()),
+      GoRoute(
+        path: '/hifz',
+        builder: (context, state) => RecitationSessionScreen(
+          ayahKey: state.extra as String?,
+        ),
+      ),
+      GoRoute(
+        path: '/tafsir',
+        builder: (_, __) => const Scaffold(
+          body: Center(
+            child: Text(
+              'التفسير: أضف ملفات مصدر موثّق في assets ثم اربط TafsirRepository.',
+              textAlign: TextAlign.center,
+            ),
+          ),
+        ),
+      ),
+      GoRoute(
+        path: '/notes/new',
+        builder: (_, state) => Scaffold(
+          appBar: AppBar(title: const Text('ملاحظة')),
+          body: Center(child: Text('آية: ${state.extra ?? ''}')),
+        ),
+      ),
+    ],
+  );
+});
+
+class MushafiApp extends ConsumerWidget {
+  const MushafiApp({super.key});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final themeMode = ref.watch(themeModeProvider);
+    final router = ref.watch(_routerProvider);
+    return MaterialApp.router(
+      title: AppConstants.appName,
+      debugShowCheckedModeBanner: false,
+      theme: AppTheme.of(themeMode),
+      locale: const Locale('ar'),
+      supportedLocales: const [Locale('ar'), Locale('en')],
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      builder: (context, child) {
+        return Directionality(
+          textDirection: TextDirection.rtl,
+          child: child ?? const SizedBox.shrink(),
+        );
+      },
+      routerConfig: router,
+    );
+  }
+}
