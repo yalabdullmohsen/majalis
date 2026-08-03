@@ -7,6 +7,7 @@ import '../domain/mushaf_bookmark.dart';
 import '../domain/mushaf_favorite_ayah.dart';
 import '../domain/mushaf_note.dart';
 import '../domain/mushaf_reading_position.dart';
+import '../domain/mushaf_tasmee3_last_range.dart';
 import 'mushaf_local_repository.dart';
 
 class SharedPrefsMushafLocalRepository implements MushafLocalRepository {
@@ -15,6 +16,7 @@ class SharedPrefsMushafLocalRepository implements MushafLocalRepository {
   static const _favoritesKey = 'mushaf_reader_favorites';
   static const _notesKey = 'mushaf_reader_notes';
   static const _khatmahKey = 'mushaf_reader_khatmah_progress';
+  static const _lastTasmee3RangeKey = 'mushaf_last_tasmee3_range';
 
   @override
   Future<MushafReadingPosition?> getLastPosition() async {
@@ -182,5 +184,29 @@ class SharedPrefsMushafLocalRepository implements MushafLocalRepository {
   Future<void> resetKhatmahProgress() async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.remove(_khatmahKey);
+  }
+
+  @override
+  Future<MushafTasmee3LastRange?> getLastTasmee3Range() async {
+    final prefs = await SharedPreferences.getInstance();
+    final raw = prefs.getString(_lastTasmee3RangeKey);
+
+    if (raw == null || raw.trim().isEmpty) {
+      return null;
+    }
+
+    return MushafTasmee3LastRange.fromJson(
+      jsonDecode(raw) as Map<String, dynamic>,
+    );
+  }
+
+  @override
+  Future<void> saveLastTasmee3Range(MushafTasmee3LastRange range) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    await prefs.setString(
+      _lastTasmee3RangeKey,
+      jsonEncode(range.toJson()),
+    );
   }
 }

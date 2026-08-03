@@ -167,6 +167,13 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
     this.errorMapper = const Tasmee3ErrorMapper(),
   }) : super(const Tasmee3State.initial());
 
+  void setTarget(RecitationTarget target) {
+    state = state.copyWith(
+      target: target,
+      errorMessage: null,
+    );
+  }
+
   Future<void> start(RecitationTarget target) async {
     try {
       if (!target.isValid) {

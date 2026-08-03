@@ -10,6 +10,8 @@ import '../domain/asr_engine_mode.dart';
 import '../domain/ayah_ref.dart';
 import '../domain/recitation_target.dart';
 import '../domain/surah_info.dart';
+import '../domain/tasmee3_launch_config.dart';
+import '../domain/tasmee3_launch_source.dart';
 import '../domain/tasmee3_mistake.dart';
 import '../domain/tasmee3_text_visibility_mode.dart';
 import '../domain/tasmee3_voice_command.dart';
@@ -35,13 +37,18 @@ class Tasmee3Screen extends ConsumerStatefulWidget {
   final RecitationTarget? initialTarget;
   final bool startInHifzMode;
   final bool showExpectedTextFirst;
+  final Tasmee3LaunchConfig launchConfig;
 
   const Tasmee3Screen({
     super.key,
     this.initialTarget,
     this.startInHifzMode = false,
     this.showExpectedTextFirst = false,
+    this.launchConfig = const Tasmee3LaunchConfig.defaultConfig(),
   });
+
+  RecitationTarget? get resolvedInitialTarget =>
+      launchConfig.initialTarget ?? initialTarget;
 
   @override
   ConsumerState<Tasmee3Screen> createState() => _Tasmee3ScreenState();
@@ -60,7 +67,7 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
   void initState() {
     super.initState();
 
-    final target = widget.initialTarget;
+    final target = widget.resolvedInitialTarget;
 
     if (target != null) {
       surah = target.from.surah;
@@ -75,11 +82,17 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
       textVisibilityMode = _visibilityFromMode(mode);
     }
 
-    if (widget.showExpectedTextFirst) {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final launchTarget = widget.resolvedInitialTarget;
+
+      if (launchTarget != null) {
+        ref.read(tasmee3ControllerProvider.notifier).setTarget(launchTarget);
+      }
+
+      if (widget.showExpectedTextFirst) {
         _showExpectedTextSheet();
-      });
-    }
+      }
+    });
   }
 
   Tasmee3TextVisibilityMode _visibilityFromMode(Tasmee3Mode value) {
@@ -332,6 +345,28 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          if (widget.launchConfig.showSourceBanner &&
+              widget.launchConfig.source == Tasmee3LaunchSource.mushaf) ...[
+            Container(
+              width: double.infinity,
+              margin: const EdgeInsets.only(bottom: 12),
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: const Color(0xFFFFFCF7),
+                borderRadius: BorderRadius.circular(14),
+                border: Border.all(color: const Color(0xFFE0C5A3)),
+              ),
+              child: const Text(
+                'النطاق محدد من المصحف. يمكنك بدء التسميع مباشرة أو تعديل النطاق.',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Color(0xFF9A8068),
+                  fontSize: 13,
+                  height: 1.5,
+                ),
+              ),
+            ),
+          ],
           const Text(
             'اختر نطاق التسميع',
             style: TextStyle(
@@ -842,6 +877,58 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
           if (state.alignment?.ayahScores.isNotEmpty == true) ...[
             const SizedBox(height: 10),
             Tasmee3AyahScoresCard(scores: state.alignment!.ayahScores),
+          ],
+          if (widget.launchConfig.source == Tasmee3LaunchSource.mushaf &&
+              result.accuracy >= 0.85) ...[
+            const SizedBox(height: 10),
+            Container(
+              padding: const EdgeInsets.all(14),
+              decoration: BoxDecoration(
+                color: const Color(0xFFFFFCF7),
+                borderRadius: BorderRadius.circular(18),
+                border: Border.all(color: const Color(0xFFE0C5A3)),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const Text(
+                    'ربط بالختمة',
+                    style: TextStyle(
+                      color: Color(0xFF11100E),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                  const SizedBox(height: 6),
+                  const Text(
+                    'نتيجتك جيدة. يمكنك تسجيل هذا النطاق ضمن تقدم الختمة إذا كنت قرأته اليوم.',
+                    style: TextStyle(color: Color(0xFF9A8068)),
+                  ),
+                  const SizedBox(height: 10),
+                  OutlinedButton.icon(
+                    onPressed: () {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text(
+                            'سيتم ربط تسجيل نطاق الختمة من المصحف في المرحلة التالية.',
+                          ),
+                        ),
+                      );
+                    },
+                    icon: const Icon(Icons.check_circle_outline),
+                    label: const Text('تسجيل في الختمة'),
+                  ),
+                ],
+              ),
+            ),
+          ],
+          if (widget.launchConfig.returnToMushafAfterCompletion) ...[
+            const SizedBox(height: 10),
+            OutlinedButton.icon(
+              onPressed: () => Navigator.pop(context),
+              icon: const Icon(Icons.menu_book_outlined),
+              label: const Text('العودة للمصحف'),
+            ),
           ],
           const SizedBox(height: 10),
           Row(

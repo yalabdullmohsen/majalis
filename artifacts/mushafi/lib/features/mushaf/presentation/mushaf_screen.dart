@@ -3,14 +3,20 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../../tasmee3/domain/ayah_ref.dart';
 import '../../tasmee3/domain/quran_ayah.dart';
+import '../../tasmee3/domain/recitation_target.dart';
+import '../../tasmee3/domain/tasmee3_launch_config.dart';
+import '../../tasmee3/domain/tasmee3_launch_source.dart';
 import '../../tasmee3/presentation/tasmee3_design_tokens.dart';
+import '../../tasmee3/presentation/tasmee3_screen.dart';
 import '../../tasmee3/presentation/widgets/tasmee3_error_state.dart';
 import '../../tasmee3/presentation/widgets/tasmee3_loading_state.dart';
 import '../application/mushaf_providers.dart';
 import '../domain/mushaf_page.dart';
 import '../domain/mushaf_reading_settings.dart';
 import '../domain/mushaf_reading_theme.dart';
+import '../domain/mushaf_tasmee3_last_range.dart';
 import 'ayah_share_preview_screen.dart';
 import 'mushaf_audio_settings_screen.dart';
 import 'mushaf_bookmarks_screen.dart';
@@ -209,6 +215,12 @@ class _MushafReaderScreenState extends ConsumerState<MushafReaderScreen> {
                 actions: mushafState.selectionMode
                     ? [
                         IconButton(
+                          tooltip: 'تسميع',
+                          icon: const Icon(Icons.mic_none_outlined),
+                          onPressed: () =>
+                              _openTasmee3ForSelectedAyahs(pageItems),
+                        ),
+                        IconButton(
                           tooltip: 'تشغيل',
                           icon: const Icon(Icons.play_arrow),
                           onPressed: () => _playSelectedAyahs(pageItems),
@@ -339,6 +351,54 @@ class _MushafReaderScreenState extends ConsumerState<MushafReaderScreen> {
                               return;
                             }
 
+                            if (value == 'lastTasmee3Range') {
+                              final range = await ref
+                                  .read(mushafLocalRepositoryProvider)
+                                  .getLastTasmee3Range();
+
+                              if (range == null) {
+                                if (context.mounted) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                      content: Text(
+                                        'لا يوجد نطاق تسميع محفوظ بعد.',
+                                      ),
+                                    ),
+                                  );
+                                }
+                                return;
+                              }
+
+                              final target = RecitationTarget(
+                                from: AyahRef(
+                                  surah: range.fromSurah,
+                                  ayah: range.fromAyah,
+                                ),
+                                to: AyahRef(
+                                  surah: range.toSurah,
+                                  ayah: range.toAyah,
+                                ),
+                                mode: Tasmee3Mode.hifzTest,
+                              );
+
+                              if (context.mounted) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => Tasmee3Screen(
+                                      launchConfig: Tasmee3LaunchConfig(
+                                        initialTarget: target,
+                                        source: Tasmee3LaunchSource.mushaf,
+                                        showSourceBanner: true,
+                                        returnToMushafAfterCompletion: true,
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              }
+                              return;
+                            }
+
                             final Widget? screen = switch (value) {
                               'bookmarks' => const MushafBookmarksScreen(),
                               'favorites' => const MushafFavoritesScreen(),
@@ -394,6 +454,10 @@ class _MushafReaderScreenState extends ConsumerState<MushafReaderScreen> {
                             PopupMenuItem(
                               value: 'markPageRead',
                               child: Text('تسجيل قراءة الصفحة'),
+                            ),
+                            PopupMenuItem(
+                              value: 'lastTasmee3Range',
+                              child: Text('آخر نطاق تسميع'),
                             ),
                             PopupMenuItem(
                               value: 'reciters',
@@ -507,6 +571,105 @@ class _MushafReaderScreenState extends ConsumerState<MushafReaderScreen> {
   String _errorMessage(Object error) {
     if (error is StateError) return error.message;
     return error.toString();
+  }
+
+  Future<void> _openTasmee3ForSelectedAyahs(List<MushafPage> pages) async {
+    final state = ref.read(mushafControllerProvider);
+
+    final ayahs = _selectedAyahsFromPages(
+      pages,
+      state.selectedAyahKeys,
+    );
+
+    if (ayahs.isEmpty) {
+      return;
+    }
+
+    if (ayahs.length > 10) {
+      if (!mounted) return;
+
+      await showDialog<void>(
+        context: context,
+        builder: (dialogContext) {
+          return Directionality(
+            textDirection: TextDirection.rtl,
+            child: AlertDialog(
+              title: const Text('نطاق طويل'),
+              content: const Text(
+                'النطاق المحدد طويل. للحصول على نتيجة أدق في التسميع، يفضّل اختيار نطاق أقصر.',
+              ),
+              actions: [
+                TextButton(
+                  onPressed: () => Navigator.pop(dialogContext),
+                  child: const Text('إلغاء'),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.pop(dialogContext);
+                    _pushTasmee3ForAyahs(ayahs);
+                  },
+                  child: const Text('المتابعة'),
+                ),
+              ],
+            ),
+          );
+        },
+      );
+
+      return;
+    }
+
+    await _pushTasmee3ForAyahs(ayahs);
+  }
+
+  Future<void> _pushTasmee3ForAyahs(List<QuranAyah> ayahs) async {
+    final controller = ref.read(mushafControllerProvider.notifier);
+    final mapper = ref.read(mushafToTasmee3TargetMapperProvider);
+    final target = mapper.fromAyahs(ayahs);
+
+    if (!target.isValid) {
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'التسميع حالياً لنطاق داخل سورة واحدة فقط.',
+          ),
+        ),
+      );
+      return;
+    }
+
+    final first = ayahs.first;
+    final last = ayahs.last;
+
+    await ref.read(mushafLocalRepositoryProvider).saveLastTasmee3Range(
+          MushafTasmee3LastRange(
+            fromSurah: first.ref.surah,
+            fromAyah: first.ref.ayah,
+            toSurah: last.ref.surah,
+            toAyah: last.ref.ayah,
+            updatedAt: DateTime.now(),
+          ),
+        );
+
+    controller.clearSelection();
+
+    if (!mounted) return;
+
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => Tasmee3Screen(
+          launchConfig: Tasmee3LaunchConfig(
+            initialTarget: target,
+            source: Tasmee3LaunchSource.mushaf,
+            showSourceBanner: true,
+            returnToMushafAfterCompletion: true,
+          ),
+        ),
+      ),
+    );
   }
 
   Future<void> _playSelectedAyahs(List<MushafPage> pages) async {

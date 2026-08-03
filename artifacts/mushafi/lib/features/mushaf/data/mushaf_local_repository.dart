@@ -3,6 +3,7 @@ import '../domain/mushaf_bookmark.dart';
 import '../domain/mushaf_favorite_ayah.dart';
 import '../domain/mushaf_note.dart';
 import '../domain/mushaf_reading_position.dart';
+import '../domain/mushaf_tasmee3_last_range.dart';
 
 abstract class MushafLocalRepository {
   Future<MushafReadingPosition?> getLastPosition();
@@ -22,4 +23,7 @@ abstract class MushafLocalRepository {
   Future<KhatmahProgress> getKhatmahProgress();
   Future<void> saveKhatmahProgress(KhatmahProgress progress);
   Future<void> resetKhatmahProgress();
+
+  Future<MushafTasmee3LastRange?> getLastTasmee3Range();
+  Future<void> saveLastTasmee3Range(MushafTasmee3LastRange range);
 }

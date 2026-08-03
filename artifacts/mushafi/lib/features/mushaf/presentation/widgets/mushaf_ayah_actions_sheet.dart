@@ -3,9 +3,13 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../tasmee3/domain/quran_ayah.dart';
+import '../../../tasmee3/domain/tasmee3_launch_config.dart';
+import '../../../tasmee3/domain/tasmee3_launch_source.dart';
 import '../../../tasmee3/presentation/tasmee3_design_tokens.dart';
+import '../../../tasmee3/presentation/tasmee3_screen.dart';
 import '../../application/mushaf_providers.dart';
 import '../../data/tafsir_catalog.dart';
+import '../../domain/mushaf_tasmee3_last_range.dart';
 import '../ayah_share_preview_screen.dart';
 import '../mushaf_tafsir_screen.dart';
 
@@ -77,6 +81,42 @@ class MushafAyahActionsSheet extends ConsumerWidget {
                   Navigator.pop(context);
 
                   await audio.playAyah(ayah);
+                },
+              ),
+              _ActionTile(
+                icon: Icons.mic_none_outlined,
+                title: 'سمّعني هذه الآية',
+                onTap: () async {
+                  final mapper = ref.read(mushafToTasmee3TargetMapperProvider);
+                  final target = mapper.fromAyahs([ayah]);
+
+                  await ref.read(mushafLocalRepositoryProvider).saveLastTasmee3Range(
+                        MushafTasmee3LastRange(
+                          fromSurah: ayah.ref.surah,
+                          fromAyah: ayah.ref.ayah,
+                          toSurah: ayah.ref.surah,
+                          toAyah: ayah.ref.ayah,
+                          updatedAt: DateTime.now(),
+                        ),
+                      );
+
+                  if (!context.mounted) return;
+
+                  Navigator.pop(context);
+
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => Tasmee3Screen(
+                        launchConfig: Tasmee3LaunchConfig(
+                          initialTarget: target,
+                          source: Tasmee3LaunchSource.mushaf,
+                          showSourceBanner: true,
+                          returnToMushafAfterCompletion: true,
+                        ),
+                      ),
+                    ),
+                  );
                 },
               ),
               _ActionTile(

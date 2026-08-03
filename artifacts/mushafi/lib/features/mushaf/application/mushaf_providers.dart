@@ -40,6 +40,7 @@ import 'khatmah_reminder_controller.dart';
 import 'khatmah_reminder_coordinator.dart';
 import 'khatmah_statistics_service.dart';
 import 'mushaf_audio_controller.dart';
+import 'mushaf_to_tasmee3_target_mapper.dart';
 import 'mushaf_audio_download_controller.dart';
 import 'mushaf_audio_download_service.dart';
 import 'mushaf_controller.dart';
@@ -57,6 +58,11 @@ import 'widget_image_export_service.dart';
 
 final mushafPageBuilderProvider = Provider<MushafPageBuilder>((ref) {
   return const MushafPageBuilder();
+});
+
+final mushafToTasmee3TargetMapperProvider =
+    Provider<MushafToTasmee3TargetMapper>((ref) {
+  return const MushafToTasmee3TargetMapper();
 });
 
 final quranPageMetadataRepositoryProvider =
