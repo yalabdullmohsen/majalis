@@ -93,3 +93,14 @@
 - [x] تقرير المشكلة لا يحتوي API key.
 - [x] تقرير المشكلة لا يحتوي صوتا.
 - [x] تقرير المشكلة لا يحتوي نص القرآن.
+
+## Post-Submission Tracking
+
+- [x] SUBMISSION_STATUS.md جاهز.
+- [x] Google Play tracker جاهز.
+- [x] App Store tracker جاهز.
+- [x] Rejection response templates جاهزة.
+- [x] Hotfix decision tree جاهز.
+- [x] Store rejection log جاهز.
+- [x] Post-submission checklist جاهز.
+- [x] Launch announcement drafts جاهزة.

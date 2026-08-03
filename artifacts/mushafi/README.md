@@ -73,6 +73,19 @@ Practical release execution log:
 
 Current store decision remains **NO-GO** until Android AAB/APK builds, device smoke, and a hosted Privacy Policy URL are completed. See `GO_RELEASE_EXECUTION.md`.
 
+## Post-Submission Tracking
+
+Post-submission materials:
+
+- `post_submission/SUBMISSION_STATUS.md`
+- `post_submission/google_play/GOOGLE_PLAY_REVIEW_TRACKER.md`
+- `post_submission/app_store/APP_STORE_REVIEW_TRACKER.md`
+- `post_submission/rejection_responses/`
+- `post_submission/hotfix/`
+- `post_submission/launch/`
+- `post_submission/STORE_REJECTION_LOG.md`
+- `post_submission/POST_SUBMISSION_CHECKLIST.md`
+
 ## Store Submission
 
 Store submission materials are located in:

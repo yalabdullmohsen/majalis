@@ -762,3 +762,16 @@ dart run scripts/check_quran_asset.dart
 - مراجعة Data Safety / App Privacy / SDKs / Claims.
 
 الحالة الحالية: **NO-GO** للرفع — ينقص Android SDK لبناء AAB/APK، وCocoaPods لـ iOS، ورابط خصوصية عام، وSmoke على جهاز.
+
+## البرومبت السادس والثلاثون - Post-Submission Tracking
+
+تمت إضافة مجلد `post_submission/` مع:
+
+- تتبع حالة الإرسال.
+- Google Play / App Store review trackers.
+- قوالب ردود الرفض (خصوصية، ميكروفون، ادعاءات دينية، crash).
+- Hotfix decision tree و release notes لـ v1.0.1.
+- مسودات إعلان الإطلاق.
+- سجل الرفض و checklist ما بعد الإرسال.
+
+عند رد المتجر: حدّث `SUBMISSION_STATUS.md` واستخدم القالب المناسب من `rejection_responses/`.
