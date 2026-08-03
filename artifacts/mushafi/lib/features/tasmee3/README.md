@@ -751,3 +751,14 @@ dart run scripts/check_quran_asset.dart
 - قرار GO / NO-GO موثق في تقرير التدقيق.
 
 بعد Launch Lock: ممنوع إضافة ميزات جديدة؛ فقط إصلاحات حرجة.
+
+## البرومبت الخامس والثلاثون - GO Release Execution
+
+تمت إضافة:
+
+- `GO_RELEASE_EXECUTION.md` بتوثيق الفحوصات والبناء والرفع.
+- `store_assets/app_store/review_notes_final.md`.
+- تحديث `FINAL_AUDIT_REPORT.md` و`RC_SIGNOFF.md`.
+- مراجعة Data Safety / App Privacy / SDKs / Claims.
+
+الحالة الحالية: **NO-GO** للرفع — ينقص Android SDK لبناء AAB/APK، وCocoaPods لـ iOS، ورابط خصوصية عام، وSmoke على جهاز.

@@ -64,6 +64,15 @@ Final audit and launch lock documents:
 
 No new features should be added after launch lock except critical fixes.
 
+## GO Release Execution
+
+Practical release execution log:
+
+- `GO_RELEASE_EXECUTION.md`
+- `store_assets/app_store/review_notes_final.md`
+
+Current store decision remains **NO-GO** until Android AAB/APK builds, device smoke, and a hosted Privacy Policy URL are completed. See `GO_RELEASE_EXECUTION.md`.
+
 ## Store Submission
 
 Store submission materials are located in:

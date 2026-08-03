@@ -41,15 +41,26 @@
 - [ ] Results screen reviewed.
 - [ ] Support screen reviewed.
 - [ ] About screen reviewed.
-- [ ] Store metadata reviewed.
+- [x] Store metadata reviewed. *(draft materials present and claims-safe)*
 
 ### Release Manager
 
-Name:
-Date:
+Name: Cursor Release Manager
+Date: 2026-08-04
 Decision:
 - [ ] Approved for internal testing
 - [ ] Approved for store submission
-- [ ] Rejected, fixes required
+- [x] Rejected, fixes required
 
 Notes:
+
+```text
+Engineering and draft store materials are ready. Rejected for upload because:
+- Android APK/AAB could not be built (Android SDK missing).
+- iOS release/archive unavailable (CocoaPods missing).
+- Privacy Policy URL not hosted publicly.
+- Device smoke tests not completed.
+
+Next: install Android SDK → build AAB/APK → smoke → host Privacy URL →
+upload Play Internal testing → then re-sign as Approved for internal testing.
+```

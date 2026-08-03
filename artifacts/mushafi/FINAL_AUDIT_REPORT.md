@@ -10,12 +10,12 @@
 
 ## Audit Owner
 
-Cursor Release Auditor (automated + code review)
+Cursor Release Auditor / Release Manager
 
 ## 1. Quran Integrity
 
 - [x] `assets/quran/quran_uthmani.json` موجود.
-- [x] فحص القرآن نجح. *(dart run scripts/check_quran_asset.dart + asset integrity test)*
+- [x] فحص القرآن نجح.
 - [x] عدد السور = 114.
 - [x] عدد الآيات = 6236.
 - [x] لا توجد آيات فارغة.
@@ -28,13 +28,12 @@ Cursor Release Auditor (automated + code review)
 Notes:
 
 ```text
-Quran asset integrity check passed via automated scripts/tests.
-UI screens QuranSourcesScreen / QuranIntegrityScreen / Tasmee3LimitationsScreen present.
+Reconfirmed during GO Release Execution (2026-08-04).
 ```
 
 ## 2. Privacy Audit
 
-- [x] الميكروفون لا يعمل إلا عند بدء جلسة. *(session-scoped)*
+- [x] الميكروفون لا يعمل إلا عند بدء جلسة.
 - [x] تنبيه الخصوصية يظهر قبل التسجيل.
 - [x] رفع الصوت للخادم غير مفعل افتراضيا.
 - [x] رفع الصوت يحتاج موافقة صريحة.
@@ -43,16 +42,14 @@ UI screens QuranSourcesScreen / QuranIntegrityScreen / Tasmee3LimitationsScreen 
 - [x] التشخيص لا يحتوي صوتا.
 - [x] التشخيص لا يحتوي API key.
 - [x] التشخيص لا يحتوي نص القرآن.
-- [x] Privacy Policy موجودة. *(in-app + store_assets/legal draft)*
+- [x] Privacy Policy موجودة. *(draft + in-app)*
 - [x] Store privacy drafts موجودة.
 
 Notes:
 
 ```text
-Defaults locked in Tasmee3UserAsrSettings.defaults and Tasmee3RuntimeConfig.
-dart-define may seed endpoints but cannot enable upload without user preference.
-Bug reports / diagnostics copy to clipboard only; no automatic upload.
-Privacy policy public URL hosting is still required before store submission.
+Hosted public Privacy Policy URL still required before console submission.
+See GO_RELEASE_EXECUTION.md → Privacy Policy URL.
 ```
 
 ## 3. Claims Audit
@@ -62,32 +59,30 @@ Privacy policy public URL hosting is still required before store submission.
 - [x] لا يوجد ادعاء بحكم شرعي.
 - [x] يتم استخدام “دقة تقريبية”.
 - [x] يتم استخدام “أداة مساعدة”.
-- [x] يتم استخدام “مواضع تحتاج مراجعة” / صياغة حدود واضحة.
+- [x] يتم استخدام صياغة حدود واضحة.
 - [x] وصف المتاجر لا يتضمن وعودا مبالغا فيها.
 
 Notes:
 
 ```text
-Repo-wide search for marketing claim phrases found only disclaimers, checklists,
-test names (perfect recitation), and internal badge naming — not store promises.
+Claims re-reviewed during GO execution. review_notes_final.md created.
 ```
 
 ## 4. Technical Audit
 
-- [x] التطبيق يعمل بدون إنترنت للميزات المحلية. *(architecture + release docs)*
-- [x] التطبيق يعمل بدون خادم. *(defaults → speech_to_text fallback)*
+- [x] التطبيق يعمل بدون إنترنت للميزات المحلية.
+- [x] التطبيق يعمل بدون خادم.
 - [x] fallback speech_to_text موجود.
-- [ ] رفض الميكروفون لا يسبب crash. *(needs device smoke)*
-- [x] endpoint خاطئ لا يسبب crash. *(error mapper + settings health path)*
+- [ ] رفض الميكروفون لا يسبب crash. *(device smoke pending)*
+- [x] endpoint خاطئ لا يسبب crash.
 - [x] reset local data لا يحذف ملف القرآن.
-- [x] PDF لا يحتوي بيانات حساسة. *(local report builder; no API key)*
+- [x] PDF لا يحتوي بيانات حساسة.
 - [x] report bug لا يرسل تلقائيا.
 
 Notes:
 
 ```text
-Device smoke (mic deny path, offline airplane mode on hardware) still required
-before flipping store submission to GO.
+Device smoke blocked until release APK is built.
 ```
 
 ## 5. Tests
@@ -102,7 +97,7 @@ before flipping store submission to GO.
 Notes:
 
 ```text
-Automated gates green on 2026-08-04 audit run.
+GO execution re-run: all automated gates green (65 Flutter tests, 7 pytest).
 ```
 
 ## 6. Store Materials
@@ -111,7 +106,7 @@ Automated gates green on 2026-08-04 audit run.
 - [x] App Store description جاهز.
 - [x] Data Safety draft جاهز.
 - [x] App Privacy draft جاهز.
-- [x] App Review Notes جاهزة.
+- [x] App Review Notes جاهزة. *(+ review_notes_final.md)*
 - [x] Screenshots checklist / plan جاهز.
 - [x] Privacy policy web draft جاهز.
 - [x] Store Submission Checklist جاهز.
@@ -119,16 +114,16 @@ Automated gates green on 2026-08-04 audit run.
 Notes:
 
 ```text
-All required store_assets files listed in the audit prompt are present.
-Still missing for submission: hosted Privacy Policy URL, final screenshots,
-Internal testing / TestFlight completion.
+Materials ready as drafts. Console submission blocked on Privacy URL + binaries.
 ```
 
 ## Build Results
 
-- Android `flutter build apk --release`: **NOT AVAILABLE** on this machine (Android SDK / ANDROID_HOME missing).
-- Android `flutter build appbundle --release`: **NOT AVAILABLE** (same).
-- iOS `flutter build ios --release`: **NOT AVAILABLE** (CocoaPods not installed).
+- Android `flutter build apk --release`: **FAILED** — No Android SDK / ANDROID_HOME.
+- Android `flutter build appbundle --release`: **FAILED** — No Android SDK / ANDROID_HOME.
+- iOS `flutter build ios --release`: **NOT AVAILABLE** — CocoaPods not installed.
+
+See `GO_RELEASE_EXECUTION.md` for full execution log.
 
 ## Final Decision
 
@@ -140,13 +135,11 @@ Choose one:
 Reason:
 
 ```text
-Engineering launch lock is complete and automated gates passed (Quran integrity,
-analyze, tests, pytest, release_check, safe defaults, privacy/claims review).
-
-NO-GO for store submission until:
-1) Android release AAB/APK is built on a machine with Android SDK.
-2) iOS release/archive path works (CocoaPods + codesign).
-3) Device smoke tests completed (offline, mic deny/allow, support/diagnostics).
-4) Privacy Policy URL is publicly hosted and linked in store consoles.
-5) Internal testing / TestFlight smoke signed off in RC_SIGNOFF product section.
+Engineering checks passed and GO execution package prepared, but store upload
+is blocked until:
+1) Android SDK available and AAB/APK built.
+2) Device smoke test completed.
+3) Privacy Policy URL hosted publicly.
+4) Play Internal testing upload completed (Android-first).
+5) iOS/TestFlight when CocoaPods + signing are ready (optional for Android-first).
 ```
