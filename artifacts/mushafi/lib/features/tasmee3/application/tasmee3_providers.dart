@@ -15,6 +15,7 @@ import '../data/pcm_audio_stream_service.dart';
 import '../data/quran_repository.dart';
 import '../data/quran_speech_recognizer.dart';
 import '../data/speech_to_text_quran_recognizer.dart';
+import '../data/tasmee3_app_info_service.dart';
 import '../data/tasmee3_asr_settings_repository.dart';
 import '../data/tasmee3_failed_job_queue.dart';
 import '../data/tasmee3_goal_repository.dart';
@@ -32,6 +33,7 @@ import '../domain/pcm_audio_config.dart';
 import '../domain/queued_tasmee3_job.dart';
 import '../domain/quran_integrity_report.dart';
 import '../domain/tasmee3_achievement.dart';
+import '../domain/tasmee3_app_info.dart';
 import '../domain/tasmee3_badge.dart';
 import '../domain/tasmee3_daily_goal.dart';
 import '../domain/tasmee3_daily_stats.dart';
@@ -47,6 +49,7 @@ import 'tasmee3_analytics_service.dart';
 import 'tasmee3_asr_settings.dart';
 import 'tasmee3_asr_settings_controller.dart';
 import 'tasmee3_controller.dart';
+import 'tasmee3_diagnostics_service.dart';
 import 'tasmee3_error_mapper.dart';
 import 'tasmee3_goal_controller.dart';
 import 'tasmee3_goal_service.dart';
@@ -55,6 +58,7 @@ import 'tasmee3_pdf_report_service.dart';
 import 'tasmee3_reminders_controller.dart';
 import 'tasmee3_display_builder.dart';
 import 'tasmee3_live_follow_service.dart';
+import 'tasmee3_reset_service.dart';
 import 'tasmee3_session_report_builder.dart';
 import 'tasmee3_srs_service.dart';
 import 'tasmee3_review_suggestion_mapper.dart';
@@ -457,4 +461,30 @@ final quranIntegrityReportProvider =
   final ayahs = await repository.getAllAyahs();
 
   return service.validate(ayahs);
+});
+
+final tasmee3AppInfoServiceProvider = Provider<Tasmee3AppInfoService>((ref) {
+  return const Tasmee3AppInfoService();
+});
+
+final tasmee3AppInfoProvider = FutureProvider<Tasmee3AppInfo>((ref) async {
+  final service = ref.watch(tasmee3AppInfoServiceProvider);
+  return service.load();
+});
+
+final tasmee3DiagnosticsServiceProvider =
+    Provider<Tasmee3DiagnosticsService>((ref) {
+  return const Tasmee3DiagnosticsService();
+});
+
+final tasmee3ResetServiceProvider = Provider<Tasmee3ResetService>((ref) {
+  return Tasmee3ResetService(
+    sessionRepository: ref.watch(tasmee3SessionRepositoryProvider),
+    goalRepository: ref.watch(tasmee3GoalRepositoryProvider),
+    reminderRepository: ref.watch(tasmee3ReminderRepositoryProvider),
+    asrSettingsRepository: ref.watch(tasmee3AsrSettingsRepositoryProvider),
+    failedJobQueue: ref.watch(tasmee3FailedJobQueueProvider),
+    ayahMasteryRepository: ref.watch(ayahMasteryRepositoryProvider),
+    onboardingRepository: ref.watch(tasmee3OnboardingRepositoryProvider),
+  );
 });

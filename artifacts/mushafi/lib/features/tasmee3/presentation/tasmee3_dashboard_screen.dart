@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../application/tasmee3_providers.dart';
 import '../domain/recitation_target.dart';
 import '../domain/tasmee3_goal_progress.dart';
+import 'tasmee3_about_screen.dart';
 import 'tasmee3_asr_settings_screen.dart';
 import 'tasmee3_badges_screen.dart';
 import 'tasmee3_design_tokens.dart';
@@ -14,6 +15,7 @@ import 'tasmee3_privacy_screen.dart';
 import 'tasmee3_reminders_screen.dart';
 import 'tasmee3_review_plan_screen.dart';
 import 'tasmee3_screen.dart';
+import 'tasmee3_support_screen.dart';
 import 'tasmee3_today_review_screen.dart';
 import 'quran_sources_screen.dart';
 import 'widgets/tasmee3_error_state.dart';
@@ -566,6 +568,22 @@ class Tasmee3DashboardScreen extends ConsumerWidget {
               icon: Icons.info_outline,
               label: 'حدود التسميع',
               screen: const Tasmee3LimitationsScreen(),
+            ),
+          ],
+        ),
+        const SizedBox(height: 10),
+        Row(
+          children: [
+            action(
+              icon: Icons.info_outline,
+              label: 'حول التطبيق',
+              screen: const Tasmee3AboutScreen(),
+            ),
+            const SizedBox(width: 10),
+            action(
+              icon: Icons.support_agent,
+              label: 'الدعم',
+              screen: const Tasmee3SupportScreen(),
             ),
           ],
         ),

@@ -685,3 +685,24 @@ dart run scripts/check_quran_asset.dart
 ## البرومبت الثلاثون - مرحلة الرفع الفعلي
 
 تمت إضافة metadata النهائية، privacy_policy_web، terms، Internal/TestFlight checklists، screenshot/icon plans، release notes، و`final_submission_commands.md`.
+
+## البرومبت الحادي والثلاثون - حول التطبيق والدعم
+
+تمت إضافة:
+
+- صفحة حول التطبيق.
+- صفحة الدعم والمساعدة.
+- عرض رقم الإصدار.
+- تشخيص محلي قابل للنسخ.
+- إعادة ضبط بيانات Tasmee3 المحلية.
+- روابط الخصوصية ومصادر القرآن وفحص الملف.
+- حماية التشخيص من تضمين الصوت أو API key.
+
+## الملفات الجديدة
+
+- `Tasmee3AppInfo`
+- `Tasmee3AppInfoService`
+- `Tasmee3DiagnosticsService`
+- `Tasmee3ResetService`
+- `Tasmee3AboutScreen`
+- `Tasmee3SupportScreen`
