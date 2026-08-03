@@ -4,16 +4,20 @@ import '../../tasmee3/application/tasmee3_providers.dart';
 import '../data/assets_quran_page_metadata_repository.dart';
 import '../data/assets_tafsir_repository.dart';
 import '../data/mushaf_local_repository.dart';
+import '../data/mushaf_reading_settings_repository.dart';
 import '../data/quran_page_metadata_repository.dart';
 import '../data/shared_prefs_mushaf_local_repository.dart';
+import '../data/shared_prefs_mushaf_reading_settings_repository.dart';
 import '../data/tafsir_repository.dart';
 import '../domain/mushaf_favorite_ayah.dart';
 import '../domain/mushaf_page.dart';
 import '../domain/mushaf_reading_position.dart';
+import '../domain/mushaf_reading_settings.dart';
 import '../domain/quran_page_metadata.dart';
 import 'ayah_share_text_builder.dart';
 import 'mushaf_controller.dart';
 import 'mushaf_page_builder.dart';
+import 'mushaf_reading_settings_controller.dart';
 import 'quran_page_metadata_integrity_service.dart';
 import 'widget_image_export_service.dart';
 
@@ -58,6 +62,30 @@ final tafsirRepositoryProvider = Provider<TafsirRepository>((ref) {
 
 final mushafLocalRepositoryProvider = Provider<MushafLocalRepository>((ref) {
   return SharedPrefsMushafLocalRepository();
+});
+
+final mushafReadingSettingsRepositoryProvider =
+    Provider<MushafReadingSettingsRepository>((ref) {
+  return SharedPrefsMushafReadingSettingsRepository();
+});
+
+final mushafReadingSettingsProvider =
+    FutureProvider<MushafReadingSettings>((ref) async {
+  final repository = ref.watch(mushafReadingSettingsRepositoryProvider);
+  return repository.load();
+});
+
+final mushafReadingSettingsControllerProvider = StateNotifierProvider<
+    MushafReadingSettingsController, MushafReadingSettingsState>((ref) {
+  final repository = ref.watch(mushafReadingSettingsRepositoryProvider);
+
+  final controller = MushafReadingSettingsController(
+    repository: repository,
+    initialSettings: const MushafReadingSettings.defaults(),
+  );
+  controller.load();
+
+  return controller;
 });
 
 final mushafControllerProvider =

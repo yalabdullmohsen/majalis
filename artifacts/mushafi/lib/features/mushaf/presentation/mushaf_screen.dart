@@ -4,17 +4,20 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../tasmee3/domain/quran_ayah.dart';
-import '../../tasmee3/presentation/tasmee3_design_tokens.dart';
 import '../../tasmee3/presentation/widgets/tasmee3_error_state.dart';
 import '../../tasmee3/presentation/widgets/tasmee3_loading_state.dart';
 import '../application/mushaf_providers.dart';
 import '../domain/mushaf_page.dart';
+import '../domain/mushaf_reading_settings.dart';
+import '../domain/mushaf_reading_theme.dart';
 import 'ayah_share_preview_screen.dart';
 import 'mushaf_bookmarks_screen.dart';
 import 'mushaf_favorites_screen.dart';
 import 'mushaf_index_screen.dart';
 import 'mushaf_khatmah_screen.dart';
 import 'mushaf_notes_screen.dart';
+import 'mushaf_reading_settings_screen.dart';
+import 'mushaf_reading_theme_colors.dart';
 import 'mushaf_reciters_screen.dart';
 import 'widgets/mushaf_ayah_actions_sheet.dart';
 import 'widgets/mushaf_page_view.dart';
@@ -39,7 +42,6 @@ typedef MushafScreen = MushafReaderScreen;
 
 class _MushafReaderScreenState extends ConsumerState<MushafReaderScreen> {
   late PageController pageController;
-  bool nightMode = false;
   bool chromeVisible = true;
   int currentPage = 1;
   int? highlightedSurah;
@@ -101,6 +103,10 @@ class _MushafReaderScreenState extends ConsumerState<MushafReaderScreen> {
     final pages = ref.watch(mushafPagesProvider);
     final mushafState = ref.watch(mushafControllerProvider);
     final controller = ref.read(mushafControllerProvider.notifier);
+    final readingSettings =
+        ref.watch(mushafReadingSettingsControllerProvider).settings;
+    final themeColors =
+        MushafReadingThemeColors.fromTheme(readingSettings.theme);
     final pageItems = pages.asData?.value ?? const <MushafPage>[];
 
     if (pageItems.isNotEmpty) {
@@ -113,8 +119,7 @@ class _MushafReaderScreenState extends ConsumerState<MushafReaderScreen> {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        backgroundColor:
-            nightMode ? const Color(0xFF0F0C09) : Tasmee3Colors.background,
+        backgroundColor: themeColors.scaffold,
         appBar: chromeVisible
             ? AppBar(
                 title: Text(
@@ -123,10 +128,8 @@ class _MushafReaderScreenState extends ConsumerState<MushafReaderScreen> {
                       : 'المصحف - صفحة $currentPage',
                 ),
                 centerTitle: true,
-                backgroundColor: nightMode
-                    ? const Color(0xFF0F0C09)
-                    : Tasmee3Colors.background,
-                foregroundColor: nightMode ? Colors.white : Tasmee3Colors.text,
+                backgroundColor: themeColors.scaffold,
+                foregroundColor: themeColors.text,
                 elevation: 0,
                 leading: mushafState.selectionMode
                     ? IconButton(
@@ -171,16 +174,28 @@ class _MushafReaderScreenState extends ConsumerState<MushafReaderScreen> {
                           },
                         ),
                         IconButton(
-                          tooltip: nightMode ? 'الوضع النهاري' : 'الوضع الليلي',
+                          tooltip: readingSettings.theme.isDark
+                              ? 'الوضع النهاري'
+                              : 'الوضع الليلي',
                           icon: Icon(
-                            nightMode ? Icons.light_mode : Icons.dark_mode,
+                            readingSettings.theme.isDark
+                                ? Icons.light_mode
+                                : Icons.dark_mode,
                           ),
-                          onPressed: () {
-                            setState(() => nightMode = !nightMode);
-                          },
+                          onPressed: () => _toggleReadingTheme(readingSettings),
+                        ),
+                        IconButton(
+                          tooltip: 'إعدادات القراءة',
+                          icon: const Icon(Icons.text_fields),
+                          onPressed: _openReadingSettings,
                         ),
                         PopupMenuButton<String>(
-                          onSelected: (value) {
+                          onSelected: (value) async {
+                            if (value == 'reading_settings') {
+                              await _openReadingSettings();
+                              return;
+                            }
+
                             final Widget? screen = switch (value) {
                               'bookmarks' => const MushafBookmarksScreen(),
                               'favorites' => const MushafFavoritesScreen(),
@@ -197,6 +212,10 @@ class _MushafReaderScreenState extends ConsumerState<MushafReaderScreen> {
                             );
                           },
                           itemBuilder: (context) => const [
+                            PopupMenuItem(
+                              value: 'reading_settings',
+                              child: Text('إعدادات القراءة'),
+                            ),
                             PopupMenuItem(
                               value: 'bookmarks',
                               child: Text('العلامات'),
@@ -260,7 +279,7 @@ class _MushafReaderScreenState extends ConsumerState<MushafReaderScreen> {
 
                   return MushafPageView(
                     page: page,
-                    nightMode: nightMode,
+                    readingSettings: readingSettings,
                     highlightedSurah: highlightedSurah,
                     highlightedAyah: highlightedAyah,
                     selectedAyahKeys: mushafState.selectedAyahKeys,
@@ -269,7 +288,7 @@ class _MushafReaderScreenState extends ConsumerState<MushafReaderScreen> {
                       if (mushafState.selectionMode) {
                         controller.toggleSelection(ayah);
                       } else {
-                        _openAyahActions(ayah);
+                        _openAyahActions(ayah, readingSettings);
                       }
                     },
                   );
@@ -376,20 +395,50 @@ class _MushafReaderScreenState extends ConsumerState<MushafReaderScreen> {
     );
   }
 
-  void _openAyahActions(QuranAyah ayah) {
+  Future<void> _openReadingSettings() async {
+    await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => const MushafReadingSettingsScreen(),
+      ),
+    );
+
+    await ref.read(mushafReadingSettingsControllerProvider.notifier).load();
+    ref.invalidate(mushafReadingSettingsProvider);
+  }
+
+  Future<void> _toggleReadingTheme(MushafReadingSettings current) async {
+    final nextTheme = current.theme.isDark
+        ? MushafReadingTheme.sepia
+        : MushafReadingTheme.night;
+    final updated = current.copyWith(theme: nextTheme);
+    final settingsController =
+        ref.read(mushafReadingSettingsControllerProvider.notifier);
+
+    settingsController.update(updated);
+    await settingsController.save();
+    ref.invalidate(mushafReadingSettingsProvider);
+  }
+
+  void _openAyahActions(
+    QuranAyah ayah,
+    MushafReadingSettings readingSettings,
+  ) {
     setState(() {
       highlightedSurah = ayah.ref.surah;
       highlightedAyah = ayah.ref.ayah;
     });
 
+    final themeColors =
+        MushafReadingThemeColors.fromTheme(readingSettings.theme);
+
     showModalBottomSheet(
       context: context,
       showDragHandle: true,
-      backgroundColor:
-          nightMode ? const Color(0xFF1B1611) : Tasmee3Colors.surface,
+      backgroundColor: themeColors.page,
       builder: (_) => MushafAyahActionsSheet(
         ayah: ayah,
-        nightMode: nightMode,
+        nightMode: readingSettings.theme.isDark,
         pageNumber: currentPage,
       ),
     );

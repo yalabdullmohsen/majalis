@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 
 import '../../../tasmee3/domain/quran_ayah.dart';
+import '../../domain/mushaf_font_family.dart';
 import '../../domain/mushaf_page.dart';
+import '../../domain/mushaf_reading_settings.dart';
+import '../../domain/mushaf_reading_theme.dart';
+import '../mushaf_reading_theme_colors.dart';
 
 class MushafPageView extends StatelessWidget {
   final MushafPage page;
@@ -10,35 +14,39 @@ class MushafPageView extends StatelessWidget {
   final Set<String> selectedAyahKeys;
   final int? highlightedSurah;
   final int? highlightedAyah;
-  final bool nightMode;
+  final MushafReadingSettings readingSettings;
 
   const MushafPageView({
     super.key,
     required this.page,
     required this.onAyahTap,
     required this.onAyahLongPress,
+    required this.readingSettings,
     this.selectedAyahKeys = const {},
     this.highlightedSurah,
     this.highlightedAyah,
-    this.nightMode = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    final bg = nightMode ? const Color(0xFF15110D) : const Color(0xFFFFFCF3);
-    final border = nightMode ? const Color(0xFF4D3B2A) : const Color(0xFFE0C5A3);
-    final text = nightMode ? const Color(0xFFF4E9D8) : const Color(0xFF11100E);
+    final colors = MushafReadingThemeColors.fromTheme(readingSettings.theme);
+    final isDark = readingSettings.theme.isDark;
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
-      padding: const EdgeInsets.fromLTRB(18, 16, 18, 12),
+      padding: EdgeInsets.fromLTRB(
+        readingSettings.pagePadding,
+        16,
+        readingSettings.pagePadding,
+        12,
+      ),
       decoration: BoxDecoration(
-        color: bg,
+        color: colors.page,
         borderRadius: BorderRadius.circular(22),
-        border: Border.all(color: border),
+        border: Border.all(color: colors.border),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: nightMode ? 0.20 : 0.04),
+            color: Colors.black.withValues(alpha: isDark ? 0.20 : 0.04),
             blurRadius: 18,
             offset: const Offset(0, 8),
           ),
@@ -48,33 +56,42 @@ class MushafPageView extends StatelessWidget {
         textDirection: TextDirection.rtl,
         child: Column(
           children: [
-            _PageHeader(page: page, nightMode: nightMode),
-            const SizedBox(height: 12),
+            if (readingSettings.showPageHeader) ...[
+              _PageHeader(page: page, colors: colors),
+              const SizedBox(height: 12),
+            ],
             Expanded(
               child: SingleChildScrollView(
+                // TODO: For production-grade mushaf layout, consider using RichText
+                // with TapGestureRecognizer per ayah to improve line wrapping.
                 child: Wrap(
                   textDirection: TextDirection.rtl,
                   alignment: WrapAlignment.center,
-                  runSpacing: 10,
-                  spacing: 4,
+                  runSpacing: readingSettings.lineHeight * 6,
+                  spacing: readingSettings.wordSpacing,
                   children: [
-                    for (final ayah in page.ayahs) _ayahSpan(ayah, text),
+                    for (final ayah in page.ayahs)
+                      _ayahSpan(ayah, colors),
                   ],
                 ),
               ),
             ),
-            const SizedBox(height: 10),
-            _PageFooter(pageNumber: page.pageNumber, nightMode: nightMode),
+            if (readingSettings.showPageFooter) ...[
+              const SizedBox(height: 10),
+              _PageFooter(pageNumber: page.pageNumber, colors: colors),
+            ],
           ],
         ),
       ),
     );
   }
 
-  Widget _ayahSpan(QuranAyah ayah, Color textColor) {
-    final highlighted = ayah.ref.surah == highlightedSurah &&
+  Widget _ayahSpan(QuranAyah ayah, MushafReadingThemeColors colors) {
+    final tapped = ayah.ref.surah == highlightedSurah &&
         ayah.ref.ayah == highlightedAyah;
     final selected = selectedAyahKeys.contains(ayah.ref.key);
+    final showTapHighlight =
+        readingSettings.highlightTappedAyah && tapped && !selected;
 
     return InkWell(
       borderRadius: BorderRadius.circular(12),
@@ -84,9 +101,9 @@ class MushafPageView extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 4),
         decoration: BoxDecoration(
           color: selected
-              ? const Color(0xFFA77A48).withValues(alpha: 0.28)
-              : highlighted
-                  ? const Color(0xFFA77A48).withValues(alpha: 0.18)
+              ? colors.highlight
+              : showTapHighlight
+                  ? colors.highlight
                   : Colors.transparent,
           borderRadius: BorderRadius.circular(10),
         ),
@@ -95,16 +112,20 @@ class MushafPageView extends StatelessWidget {
           text: TextSpan(
             text: '${ayah.textUthmani} ',
             style: TextStyle(
-              fontSize: 25,
-              height: 1.9,
-              color: textColor,
+              fontSize: readingSettings.fontSize,
+              height: readingSettings.lineHeight,
+              color: colors.text,
               fontWeight: FontWeight.w500,
-              fontFamily: 'NotoNaskhArabic',
+              fontFamily: readingSettings.fontFamily.fontFamily,
             ),
             children: [
               WidgetSpan(
                 alignment: PlaceholderAlignment.middle,
-                child: _AyahMarker(number: ayah.ref.ayah),
+                child: _AyahMarker(
+                  number: ayah.ref.ayah,
+                  borderColor: colors.markerBorder,
+                  textColor: colors.markerText,
+                ),
               ),
             ],
           ),
@@ -116,29 +137,33 @@ class MushafPageView extends StatelessWidget {
 
 class _PageHeader extends StatelessWidget {
   final MushafPage page;
-  final bool nightMode;
+  final MushafReadingThemeColors colors;
 
   const _PageHeader({
     required this.page,
-    required this.nightMode,
+    required this.colors,
   });
 
   @override
   Widget build(BuildContext context) {
-    final color = nightMode ? const Color(0xFFD6B98A) : const Color(0xFFA77A48);
-
     return Row(
       children: [
         Text(
           page.firstSurah == null ? '' : 'سورة ${page.firstSurah}',
-          style: TextStyle(color: color, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            color: colors.secondaryText,
+            fontWeight: FontWeight.bold,
+          ),
         ),
         const Spacer(),
         Text(
           page.juz == 0
               ? ''
               : 'الجزء ${page.juz}${page.hizb == 0 ? '' : ' - حزب ${page.hizb}'}',
-          style: TextStyle(color: color, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            color: colors.secondaryText,
+            fontWeight: FontWeight.bold,
+          ),
         ),
       ],
     );
@@ -147,21 +172,19 @@ class _PageHeader extends StatelessWidget {
 
 class _PageFooter extends StatelessWidget {
   final int pageNumber;
-  final bool nightMode;
+  final MushafReadingThemeColors colors;
 
   const _PageFooter({
     required this.pageNumber,
-    required this.nightMode,
+    required this.colors,
   });
 
   @override
   Widget build(BuildContext context) {
-    final color = nightMode ? const Color(0xFFD6B98A) : const Color(0xFFA77A48);
-
     return Text(
       '$pageNumber',
       style: TextStyle(
-        color: color,
+        color: colors.secondaryText,
         fontWeight: FontWeight.bold,
       ),
     );
@@ -170,9 +193,13 @@ class _PageFooter extends StatelessWidget {
 
 class _AyahMarker extends StatelessWidget {
   final int number;
+  final Color borderColor;
+  final Color textColor;
 
   const _AyahMarker({
     required this.number,
+    required this.borderColor,
+    required this.textColor,
   });
 
   @override
@@ -184,12 +211,12 @@ class _AyahMarker extends StatelessWidget {
       alignment: Alignment.center,
       decoration: BoxDecoration(
         shape: BoxShape.circle,
-        border: Border.all(color: const Color(0xFFA77A48)),
+        border: Border.all(color: borderColor),
       ),
       child: Text(
         '$number',
-        style: const TextStyle(
-          color: Color(0xFFA77A48),
+        style: TextStyle(
+          color: textColor,
           fontSize: 11,
           fontWeight: FontWeight.bold,
         ),
