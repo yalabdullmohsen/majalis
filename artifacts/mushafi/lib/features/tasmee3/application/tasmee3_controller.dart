@@ -18,6 +18,7 @@ enum Tasmee3Status {
   loadingQuran,
   requestingPermission,
   listening,
+  uploadingAudio,
   analyzing,
   completed,
   error,
@@ -161,17 +162,32 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
 
       await _subscription?.cancel();
 
-      _subscription = recognizer.listen().listen((segment) {
-        state = state.copyWith(
-          recognizedText: segment.text,
-          recognizedWords: segment.words,
-          confidence: segment.confidence,
-        );
+      _subscription = recognizer.listen().listen(
+        (segment) {
+          state = state.copyWith(
+            recognizedText: segment.text,
+            recognizedWords: segment.words,
+            confidence: segment.confidence,
+          );
 
-        if (segment.isFinal) {
-          analyze();
-        }
-      });
+          if (segment.isFinal) {
+            if (segment.words.isNotEmpty) {
+              analyzeRecognizedWords(
+                segment.words.map((e) => e.word).toList(),
+              );
+            } else {
+              analyze();
+            }
+          }
+        },
+        onError: (error) {
+          _stopSessionTimer();
+          state = state.copyWith(
+            status: Tasmee3Status.error,
+            errorMessage: error.toString(),
+          );
+        },
+      );
     } catch (e) {
       _stopSessionTimer();
       state = state.copyWith(
@@ -186,11 +202,54 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
       return;
     }
 
-    await recognizer.stop();
-    await _subscription?.cancel();
-    _subscription = null;
+    state = state.copyWith(status: Tasmee3Status.uploadingAudio);
 
-    analyze();
+    try {
+      await recognizer.stop();
+
+      // Fallback engines (e.g. speech_to_text) may not emit a final segment.
+      if (state.status == Tasmee3Status.uploadingAudio) {
+        if (state.recognizedWords.isNotEmpty) {
+          analyzeRecognizedWords(
+            state.recognizedWords.map((e) => e.word).toList(),
+          );
+        } else {
+          analyze();
+        }
+      }
+    } catch (e) {
+      _stopSessionTimer();
+      state = state.copyWith(
+        status: Tasmee3Status.error,
+        errorMessage: e.toString(),
+      );
+    }
+  }
+
+  void analyzeRecognizedWords(List<String> words) {
+    if (_expectedAyahs.isEmpty) {
+      state = state.copyWith(
+        status: Tasmee3Status.error,
+        errorMessage: 'لا توجد آيات لتحليلها.',
+      );
+      return;
+    }
+
+    _stopSessionTimer();
+    state = state.copyWith(status: Tasmee3Status.analyzing);
+
+    final result = engine.analyzeWords(
+      expectedAyahs: _expectedAyahs,
+      recognizedWords: words,
+      confidence: state.confidence,
+    );
+
+    _saveSessionIfPossible(result);
+
+    state = state.copyWith(
+      status: Tasmee3Status.completed,
+      result: result,
+    );
   }
 
   void analyze() {
@@ -201,11 +260,6 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
       );
       return;
     }
-
-    final started = _startedAt ?? _listenStartedAt;
-    final durationSeconds = started == null
-        ? state.sessionDuration.inSeconds
-        : DateTime.now().difference(started).inSeconds;
 
     _stopSessionTimer();
     state = state.copyWith(status: Tasmee3Status.analyzing);
@@ -225,29 +279,39 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
       );
     }
 
-    final currentTarget = state.target;
-
-    if (currentTarget != null) {
-      final record = Tasmee3SessionRecord(
-        id: DateTime.now().microsecondsSinceEpoch.toString(),
-        target: currentTarget,
-        accuracyPercent: result.accuracyPercent,
-        mistakesCount: result.mistakesCount,
-        durationSeconds: durationSeconds,
-        createdAt: DateTime.now(),
-      );
-
-      unawaited(
-        sessionRepository.saveSession(record).then((_) {
-          onSessionSaved?.call();
-        }),
-      );
-    }
+    _saveSessionIfPossible(result);
 
     state = state.copyWith(
       status: Tasmee3Status.completed,
       result: result,
-      sessionDuration: Duration(seconds: durationSeconds),
+    );
+  }
+
+  void _saveSessionIfPossible(Tasmee3Result result) {
+    final started = _startedAt;
+    final durationSeconds = started == null
+        ? state.sessionDuration.inSeconds
+        : DateTime.now().difference(started).inSeconds;
+
+    final currentTarget = state.target;
+
+    if (currentTarget == null) {
+      return;
+    }
+
+    final record = Tasmee3SessionRecord(
+      id: DateTime.now().microsecondsSinceEpoch.toString(),
+      target: currentTarget,
+      accuracyPercent: result.accuracyPercent,
+      mistakesCount: result.mistakesCount,
+      durationSeconds: durationSeconds,
+      createdAt: DateTime.now(),
+    );
+
+    unawaited(
+      sessionRepository.saveSession(record).then((_) {
+        onSessionSaved?.call();
+      }),
     );
   }
 

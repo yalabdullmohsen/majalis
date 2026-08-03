@@ -208,6 +208,16 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
                   },
           ),
           const SizedBox(height: 10),
+          Text(
+            ref.watch(tasmee3AsrSettingsProvider).isConfigured
+                ? 'محرك ASR المتقدم مفعّل عبر endpoint.'
+                : 'محرك ASR المتقدم غير مضبوط؛ يعمل التطبيق بوضع fallback (speech_to_text).',
+            style: const TextStyle(
+              color: Color(0xFF9A8068),
+              fontSize: 12,
+            ),
+          ),
+          const SizedBox(height: 6),
           const Text(
             'للحصول على دقة أعلى، ابدأ بنطاق قصير واقرأ في مكان هادئ.',
             style: TextStyle(
@@ -245,6 +255,28 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
 
       case Tasmee3Status.listening:
         return _listeningContent(state);
+
+      case Tasmee3Status.uploadingAudio:
+        return const Center(
+          child: Padding(
+            padding: EdgeInsets.all(24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CircularProgressIndicator(),
+                SizedBox(height: 16),
+                Text(
+                  'جاري رفع الصوت وتحليله...',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Color(0xFF9A8068),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
 
       case Tasmee3Status.analyzing:
         return const Center(child: CircularProgressIndicator());
@@ -375,6 +407,30 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
           Row(
             children: [
               Expanded(
+                child: ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFFA77A48),
+                    foregroundColor: Colors.white,
+                  ),
+                  onPressed: () {
+                    ref.read(tasmee3ControllerProvider.notifier).start(
+                          RecitationTarget(
+                            from: AyahRef(surah: surah, ayah: fromAyah),
+                            to: AyahRef(surah: surah, ayah: toAyah),
+                            mode: mode,
+                          ),
+                        );
+                  },
+                  icon: const Icon(Icons.replay),
+                  label: const Text('إعادة نفس النطاق'),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          Row(
+            children: [
+              Expanded(
                 child: OutlinedButton.icon(
                   onPressed: () {
                     showModalBottomSheet(
@@ -461,6 +517,7 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
     final isListening = state.status == Tasmee3Status.listening;
     final isBusy = state.status == Tasmee3Status.requestingPermission ||
         state.status == Tasmee3Status.loadingQuran ||
+        state.status == Tasmee3Status.uploadingAudio ||
         state.status == Tasmee3Status.analyzing;
 
     return Container(
@@ -483,10 +540,13 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
               ),
               onPressed: isBusy
                   ? null
-                  : () {
+                  : () async {
                       if (isListening) {
                         controller.stop();
                       } else {
+                        final ok = await _showRecordingPrivacyDialog();
+                        if (!ok) return;
+
                         controller.start(
                           RecitationTarget(
                             from: AyahRef(surah: surah, ayah: fromAyah),
@@ -509,5 +569,41 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
         ],
       ),
     );
+  }
+
+  Future<bool> _showRecordingPrivacyDialog() async {
+    final asr = ref.read(tasmee3AsrSettingsProvider);
+    final advancedNote = asr.isConfigured
+        ? 'محرك ASR المتقدم مفعّل؛ قد يُرسل التسجيل إلى الخادم المحدد في إعدادات التشغيل.'
+        : 'محرك ASR المتقدم غير مضبوط؛ سيُستخدم التعرف على الجهاز محلياً (fallback) بدون رفع إلى خادم.';
+
+    final result = await showDialog<bool>(
+      context: context,
+      builder: (context) {
+        return Directionality(
+          textDirection: TextDirection.rtl,
+          child: AlertDialog(
+            title: const Text('تنبيه قبل التسجيل'),
+            content: Text(
+              'سيتم استخدام الميكروفون لتسجيل تلاوتك وتحليلها. $advancedNote '
+              'لا يتم توليد نص القرآن بالذكاء الاصطناعي، وإنما تتم مقارنة تلاوتك '
+              'بالنص القرآني الموثق داخل التطبيق.',
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context, false),
+                child: const Text('إلغاء'),
+              ),
+              ElevatedButton(
+                onPressed: () => Navigator.pop(context, true),
+                child: const Text('موافق'),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+
+    return result ?? false;
   }
 }

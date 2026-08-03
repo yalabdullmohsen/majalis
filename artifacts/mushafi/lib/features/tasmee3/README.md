@@ -27,25 +27,42 @@
 ]
 ```
 
-## الدقة
+## محرك ASR المتقدم
 
-المحرك الحالي يستخدم speech_to_text كحل أولي. للوصول إلى دقة أعلى مثل التطبيقات المتقدمة، يجب ربط محرك ASR قرآني متخصص يعطي:
+تمت إضافة محرك:
 
-- الكلمات.
-- توقيت كل كلمة.
-- نسبة ثقة لكل كلمة.
-- نتيجة نهائية أو جزئية.
+`AdvancedQuranAsrRecognizer`
+
+المحرك يسجل الصوت من التطبيق ثم يرسله إلى endpoint:
+
+`TASMEE3_ASR_ENDPOINT`
+
+مثال تشغيل:
+
+```bash
+flutter run --dart-define=TASMEE3_ASR_ENDPOINT=http://192.168.1.10:8000/transcribe
+```
+
+إذا لم يتم ضبط endpoint، يستخدم التطبيق:
+
+`SpeechToTextQuranRecognizer`
+
+كمحرك fallback. لا يدّعي التطبيق أن المحرك المتقدم يعمل بدون endpoint مضبوط.
+
+## الخادم
+
+يوجد خادم جاهز في:
+
+`server/tasmee3_asr/`
+
+يشغّل FastAPI ويستخدم whisper-timestamped لإرجاع الكلمات مع التوقيت والثقة.
+
+## الخصوصية
+
+إذا كان ASR المتقدم مفعلا، يتم إرسال تسجيل التلاوة إلى الخادم المحدد. يعرض التطبيق تنبيهاً للمستخدم قبل التسجيل. يجب استخدام HTTPS و API key عند النشر.
 
 ## مكان استبدال المحرك
 
-استبدل implementation الحالي في:
-
-`lib/features/tasmee3/data/speech_to_text_quran_recognizer.dart`
-
-أو اربط:
-
-`lib/features/tasmee3/data/advanced_quran_asr_recognizer.dart`
-
-مع provider:
-
-`quranSpeechRecognizerProvider`
+- Fallback: `lib/features/tasmee3/data/speech_to_text_quran_recognizer.dart`
+- Advanced: `lib/features/tasmee3/data/advanced_quran_asr_recognizer.dart`
+- اختيار تلقائي عبر: `quranSpeechRecognizerProvider`

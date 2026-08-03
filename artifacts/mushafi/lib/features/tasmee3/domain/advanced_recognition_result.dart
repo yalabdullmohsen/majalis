@@ -12,4 +12,17 @@ class AdvancedRecognitionResult {
     required this.confidence,
     required this.isFinal,
   });
+
+  factory AdvancedRecognitionResult.fromJson(Map<String, dynamic> json) {
+    final wordsJson = (json['words'] as List<dynamic>? ?? const []);
+
+    return AdvancedRecognitionResult(
+      fullText: json['fullText'] as String? ?? '',
+      words: wordsJson
+          .map((item) => RecognizedWord.fromJson(item as Map<String, dynamic>))
+          .toList(),
+      confidence: (json['confidence'] as num?)?.toDouble() ?? 0,
+      isFinal: json['isFinal'] as bool? ?? true,
+    );
+  }
 }
