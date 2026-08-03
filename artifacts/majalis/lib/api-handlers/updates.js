@@ -32,12 +32,35 @@ async function loadFromSupabase() {
 }
 
 /**
+ * متصفّح يفتح /api/updates كصفحة → يظهر JSON خامًا في الواجهة.
+ * نوجّه طلبات المستند HTML إلى صفحة المستجدات المكوَّنة.
+ */
+function isBrowserDocumentNavigation(req) {
+  const dest = String(req.headers?.["sec-fetch-dest"] || "").toLowerCase();
+  if (dest === "document") return true;
+  const accept = String(req.headers?.accept || "").toLowerCase();
+  if (!accept) return false;
+  const htmlFirst = accept.startsWith("text/html");
+  const wantsJson = accept.includes("application/json");
+  return htmlFirst && !wantsJson;
+}
+
+/**
  * GET /api/updates
  * JSON array for the iOS UpdatesView: [{ id, title, content }, ...]
+ * Browser document navigation → 302 /updates (لا تعرض JSON خامًا).
  */
 export default async function handler(req, res) {
   if (req.method !== "GET") {
     sendJson(res, 405, { error: "Method Not Allowed" }, { Allow: "GET" });
+    return;
+  }
+
+  if (isBrowserDocumentNavigation(req)) {
+    res.statusCode = 302;
+    res.setHeader("Location", "/updates");
+    res.setHeader("Cache-Control", "no-store");
+    res.end();
     return;
   }
 

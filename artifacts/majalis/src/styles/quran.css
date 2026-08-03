@@ -2377,11 +2377,17 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
   flex: 1;
   min-height: 0;
   width: 100%;
-  max-width: 100%;
-  margin-inline: 0;
+  max-width: min(100%, 56rem); /* max-w-4xl — عرض قراءة مريح بلا هامش خانق */
+  margin-inline: auto;
   max-height: 83vh;
   box-sizing: border-box;
-  padding-inline: 0;
+  padding-inline: max(1rem, env(safe-area-inset-left, 0px)) max(1rem, env(safe-area-inset-right, 0px));
+}
+@media (min-width: 768px) {
+  .qs-mushaf-frame--ayah,
+  .qs-mushaf-frame--ayah-chrome {
+    padding-inline: max(2rem, env(safe-area-inset-left, 0px)) max(2rem, env(safe-area-inset-right, 0px));
+  }
 }
 .qs-mushaf-frame--ayah::before,
 .qs-mushaf-frame--ayah-chrome::before {

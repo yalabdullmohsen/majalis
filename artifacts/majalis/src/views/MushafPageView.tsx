@@ -589,7 +589,13 @@ export default function MushafPageView() {
                     {loading || !segAyahs ? (
                       <MushafPageV2 layout={null} bare />
                     ) : prefs.pageMode === "precision" ? (
-                      <MushafPageV2 layout={v2Layout} activeAyahKey={v2ActiveKey} onAyahPress={handleV2AyahPress} bare />
+                      <MushafPageV2
+                        layout={v2Layout}
+                        activeAyahKey={v2ActiveKey}
+                        onAyahPress={handleV2AyahPress}
+                        showAyahNumbers={prefs.showAyahNumbers}
+                        bare
+                      />
                     ) : (
                       <MushafPageV2
                         layout={v2Layout}
@@ -597,6 +603,7 @@ export default function MushafPageView() {
                         onAyahPress={handleV2AyahPress}
                         sharedFontFamily={quranFontStack(prefs.fontId)}
                         renderWord={(w) => renderLightWord(w, prefs.showAyahNumbers)}
+                        showAyahNumbers={prefs.showAyahNumbers}
                         bare
                       />
                     )}

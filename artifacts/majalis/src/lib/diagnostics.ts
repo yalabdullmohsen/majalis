@@ -10,6 +10,7 @@ export type DiagnosticKind =
   | "idb-heal"
   | "worker-restart"
   | "font-wait"
+  | "font-fail"
   | "nav-abort"
   | "fetch-fail"
   | "custom";

@@ -1,5 +1,7 @@
-import { Fragment, useLayoutEffect, useRef, useState, type ReactNode } from "react";
+import { Fragment, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useMushafPageFont, mushafPageFontFamily } from "@/hooks/useMushafPageFont";
+import { quranFontStack } from "@/lib/quran-font-options";
+import { toArabicDigits } from "@/lib/utils";
 import type { MushafPageLayout, QpcWord } from "@/lib/mushaf-v2-data";
 
 /** يُجمِّع كلمات سطر متتالية بنفس verseKey في عنقود واحد — الوحدة
@@ -39,10 +41,13 @@ type Props = {
    * عن توفير حاوية بنسبة عرض/ارتفاع صفحة ثابتة (aspect-ratio) لتعمل
    * flex:1 الخاصة بكل سطر بشكل صحيح. */
   bare?: boolean;
+  /** إظهار أرقام الآيات في مسار التراجع Unicode (فشل خط QPC أو وضع خفيف). */
+  showAyahNumbers?: boolean;
 };
 
 const ROW_COUNT_APPROX = 15;
 
+/** عرض glyph بخط الصفحة فقط — لا يُستخدم أبدًا مع Amiri/Noto. */
 const defaultRenderWord = (w: QpcWord) => (
   <Fragment key={w.id}>
     <span className="mf2-word">{w.glyphText}</span>
@@ -52,45 +57,80 @@ const defaultRenderWord = (w: QpcWord) => (
   </Fragment>
 );
 
-export function MushafPageV2({ layout, activeAyahKey, onAyahPress, sharedFontFamily, renderWord, bare }: Props) {
-  const perPageFontReady = useMushafPageFont(sharedFontFamily ? null : (layout?.pageNumber ?? null));
-  const fontReady = sharedFontFamily ? true : perPageFontReady;
-  const fontFamily = sharedFontFamily ?? (layout ? mushafPageFontFamily(layout.pageNumber) : undefined);
-  const wordRenderer = renderWord ?? defaultRenderWord;
+/**
+ * نص Unicode (textQpcHafs) — المسار الآمن مع Amiri Quran.
+ * يمنع عرض code_v2/Presentation Forms بخط عام → تكسّر الحروف.
+ */
+function renderUnicodeWord(w: QpcWord, showAyahNumbers: boolean) {
+  if (w.charType === "end") {
+    return (
+      <Fragment key={w.id}>
+        {showAyahNumbers ? (
+          <span className="qs-ayah-num">{toArabicDigits(Number(w.textUthmani.replace(/\D/g, "")) || 0)}</span>
+        ) : null}
+        {w.sajdahNumber !== null && <span className="mf2-sajda-badge">سجدة</span>}
+      </Fragment>
+    );
+  }
+  return <span key={w.id} className="mf2-word">{w.textQpcHafs}</span>;
+}
+
+export function MushafPageV2({
+  layout,
+  activeAyahKey,
+  onAyahPress,
+  sharedFontFamily,
+  renderWord,
+  bare,
+  showAyahNumbers = true,
+}: Props) {
+  const wantPrecision = !sharedFontFamily;
+  const pageFont = useMushafPageFont(wantPrecision ? (layout?.pageNumber ?? null) : null);
+
+  /**
+   * تراجع تلقائي: فشل خط QPC → Unicode + Amiri بدل glyph محرَّف.
+   * الوضع الخفيف الصريح (sharedFontFamily) يبقى كما هو.
+   */
+  const useUnicodeSafe = Boolean(sharedFontFamily) || pageFont.failed;
+  const fontReady = useUnicodeSafe ? true : pageFont.ready;
+
+  const fontFamily = useMemo(() => {
+    if (sharedFontFamily) return sharedFontFamily;
+    if (pageFont.failed) return quranFontStack("amiri");
+    if (layout) return mushafPageFontFamily(layout.pageNumber);
+    return undefined;
+  }, [sharedFontFamily, pageFont.failed, layout]);
+
+  const wordRenderer = useMemo(() => {
+    if (renderWord && !pageFont.failed) return renderWord;
+    if (useUnicodeSafe) return (w: QpcWord) => renderUnicodeWord(w, showAyahNumbers);
+    return defaultRenderWord;
+  }, [renderWord, pageFont.failed, useUnicodeSafe, showAyahNumbers]);
+
   const lineRefs = useRef(new Map<number, HTMLDivElement>());
   const [lineFontSizes, setLineFontSizes] = useState<Map<number, number>>(new Map());
   const [centeredLines, setCenteredLines] = useState<Set<number>>(new Set());
   const [fitted, setFitted] = useState(false);
 
   // خطوط QPC V2 مصمَّمة أصلًا ليمتد كل سطر حرفيًا حتى يملأ عرض الصفحة
-  // تمامًا (كما في المطبوع) — حجم خط عام واحد للصفحة كلها لا يحقق هذا أبدًا
-  // (أثبتته لقطة حقيقية: أسطر أطول تفيض خارج الإطار، أخرى تترك فراغًا).
-  //
-  // ⚠️ التحجيم الخطي البسيط (قياس مرة، ثم currentSize×(container/natural))
-  // فشل فعليًا: اختبار حي عبر 604 صفحة أظهر تقاربًا غير كامل على أسطر
-  // كثيفة الكلمات (fonts Arabic معقَّدة لا تتوسَّع خطيًا تمامًا بين
-  // الأحجام بسبب hinting/stem-darkening) — النتيجة كانت تفيضًا حقيقيًا
-  // غير متقارب حتى بعد 8 تمريرات تصحيح، أي **كلمات قرآنية تُدفَع فعليًا
-  // خارج حدود الإطار المرئي وتُقتَص بصمت** (رُصد بلقطة Playwright حقيقية
-  // وبقياس getBoundingClientRect لكل كلمة — إحداثيات سالبة فعلية). هذا
-  // غير مقبول إطلاقًا لنص قرآني.
-  //
-  // الحل: بحث ثنائي (binary search) مباشر على حجم الخط لكل سطر — يختبر
-  // كل مرشَّح فعليًا بدل الاستقراء الخطي، فيتقارب بدقة تحت-بكسلية بصرف
-  // النظر عن أي لا-خطية في hinting الخط (12 تكرارًا كافٍ رياضيًا ليتقارب
-  // فرق أي مدى معقول إلى أقل من 0.02px).
+  // تمامًا (كما في المطبوع) — حجم خط عام واحد للصفحة كلها لا يحقق هذا أبدًا.
+  // الحل: بحث ثنائي (binary search) مباشر على حجم الخط لكل سطر.
+  // في الوضع Unicode الآمن نتخطّى القياس الضيق ونعتمد CSS (justify + lh).
   useLayoutEffect(() => {
-    if (!fontReady || !layout) { setFitted(false); return; }
+    if (!fontReady || !layout) {
+      setFitted(false);
+      return;
+    }
+
+    if (useUnicodeSafe) {
+      setLineFontSizes(new Map());
+      setCenteredLines(new Set());
+      setFitted(true);
+      return;
+    }
+
     const sizes = new Map<number, number>();
     const centered = new Set<number>();
-    // ⚠️ سقف معقول لا تعسفي: صفحة الفاتحة (1) خاصة — أسطرها آية واحدة
-    // قصيرة جدًا (كلمتان-ثلاث)، ومحاولة "تمديدها" عبر حجم خط ضخم (>45px)
-    // حتى تملأ عرض السطر بالكامل عبر justify-content:space-between تُنتج
-    // نصًا مشوَّهًا متراكبًا فعليًا (رُصد بلقطة حقيقية) — هذا ليس أسلوب
-    // مصحف المدينة الحقيقي أصلًا (آيات قصيرة على صفحات خاصة لا تُمدَّد
-    // لتملأ السطر، بل تُتوسَّط بحجم طبيعي). لأي سطر لا يصل طبيعيًا لعرض
-    // الحاوية حتى عند هذا السقف المعقول، نُحوِّله لـjustify-content:center
-    // بدل تمديده قسرًا (القسم 6.2: "نفّذه كحالة خاصة من بيانات QUL نفسها").
     const ITERATIONS = 14;
 
     for (const [lineNumber, el] of lineRefs.current.entries()) {
@@ -98,13 +138,6 @@ export function MushafPageV2({ layout, activeAyahKey, onAyahPress, sharedFontFam
       const containerWidth = el.parentElement?.clientWidth ?? 0;
       if (containerWidth <= 0) continue;
 
-      // ⚠️ إصلاح خلل رأسي حقيقي: تحديد سقف العرض وحده بلا سقف مرتبط
-      // بارتفاع خانة هذا السطر الفعلي (el.clientHeight، من flex:1 ضمن 15
-      // خانة) أنتج نصًا يتمدَّد رأسيًا فيتراكب مع الأسطر المجاورة (رُصد
-      // بلقطة حقيقية: نص ضخم متراكب رغم عدم وجود أي فيضان أفقي مقيس).
-      // النص العربي المُشكَّل يحتاج ~1.5× حجم الخط ارتفاعًا فعليًا (تشكيل
-      // فوق/تحت خط الأساس) — 0.52 من ارتفاع الخانة مع line-height:1.35
-      // يترك هامشًا أوضح للتشكيل بلا قص رأسي.
       const lineHeightAvailable = el.clientHeight || 999;
       const MAX_FONT_PX = Math.min(45, lineHeightAvailable * 0.52);
 
@@ -112,8 +145,6 @@ export function MushafPageV2({ layout, activeAyahKey, onAyahPress, sharedFontFam
       let hi = MAX_FONT_PX;
       el.style.fontSize = `${hi}px`;
       if (el.scrollWidth <= containerWidth) {
-        // لا يملأ العرض حتى عند السقف المعقول — سطر قصير طبيعيًا (صفحة
-        // خاصة)، يُتوسَّط بدل تمديده.
         sizes.set(lineNumber, hi);
         centered.add(lineNumber);
         continue;
@@ -124,8 +155,6 @@ export function MushafPageV2({ layout, activeAyahKey, onAyahPress, sharedFontFam
         if (el.scrollWidth <= containerWidth) lo = mid;
         else hi = mid;
       }
-      // lo مضمون رياضيًا أنه لا يفيض (آخر قيمة نجحت في الاختبار) — لا
-      // حاجة لأي هامش أمان إضافي يُضحّي بدقة المطابقة لحدود الصفحة.
       el.style.fontSize = `${lo}px`;
       sizes.set(lineNumber, lo);
     }
@@ -133,7 +162,7 @@ export function MushafPageV2({ layout, activeAyahKey, onAyahPress, sharedFontFam
     setLineFontSizes(sizes);
     setCenteredLines(centered);
     setFitted(true);
-  }, [fontReady, layout]);
+  }, [fontReady, layout, useUnicodeSafe]);
 
   if (!layout) {
     return bare
@@ -141,9 +170,11 @@ export function MushafPageV2({ layout, activeAyahKey, onAyahPress, sharedFontFam
       : <MushafPageSkeleton />;
   }
 
+  const linesClass = useUnicodeSafe ? "mf2-lines mf2-lines--unicode" : "mf2-lines";
+
   const lines = (
     <>
-      <div className="mf2-lines" style={{ opacity: fitted ? 1 : 0 }}>
+      <div className={linesClass} style={{ opacity: fitted ? 1 : 0 }}>
         {layout.rows.map((row, idx) => {
           if (row.kind === "surah-header") {
             return <SurahHeaderBanner key={`h-${row.surah.id}-${idx}`} chapter={row.surah} spanRows={row.spanRows} />;
@@ -153,10 +184,16 @@ export function MushafPageV2({ layout, activeAyahKey, onAyahPress, sharedFontFam
             <div
               key={`l-${row.lineNumber}`}
               ref={(el) => { if (el) lineRefs.current.set(row.lineNumber, el); else lineRefs.current.delete(row.lineNumber); }}
-              className={`mf2-line${centeredLines.has(row.lineNumber) ? " mf2-line--short" : ""}`}
+              className={`mf2-line${centeredLines.has(row.lineNumber) ? " mf2-line--short" : ""}${useUnicodeSafe ? " mf2-line--unicode" : ""}`}
               style={{
-                fontFamily,
-                fontSize: fittedSize ? `${fittedSize}px` : undefined,
+                // precision: اسم خط الصفحة وحده بلا Amiri/Noto في المكدس
+                // (تلك الخطوط تعيد تفسير Presentation Forms فتحرّف الرسم).
+                fontFamily: useUnicodeSafe
+                  ? fontFamily
+                  : fontFamily
+                    ? `"${fontFamily}"`
+                    : undefined,
+                fontSize: !useUnicodeSafe && fittedSize ? `${fittedSize}px` : undefined,
                 unicodeBidi: "isolate",
               }}
             >
