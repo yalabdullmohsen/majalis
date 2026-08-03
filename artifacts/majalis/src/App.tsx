@@ -38,7 +38,7 @@ import { UpdateAvailableBanner } from "@/components/UpdateAvailableBanner";
 import { PwaInstallBanner } from "@/components/PwaInstallBanner";
 import { setPrayerTimesCache } from "@/lib/lesson-time";
 import { recordNavigationVisit } from "@/lib/navigation-back";
-import { isImmersiveChromePath } from "@/lib/immersive-chrome";
+import { isImmersiveChromePath, isPrayerTimesPath } from "@/lib/immersive-chrome";
 
 const lazy = lazyWithRetry;
 
@@ -868,6 +868,12 @@ function AppShellInner() {
   const [comingSoonOpen, setComingSoonOpen] = useState(false);
   const [location] = useLocation();
   const immersive = isImmersiveChromePath(location);
+
+  useEffect(() => {
+    const onPrayer = isPrayerTimesPath(location);
+    document.documentElement.classList.toggle("pts-immersive", onPrayer);
+    return () => document.documentElement.classList.remove("pts-immersive");
+  }, [location]);
 
   useEffect(() => {
     const evtHandler = () => setSearchOpen(true);

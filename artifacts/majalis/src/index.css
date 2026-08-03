@@ -255,7 +255,9 @@ html {
         كاملة (تنقل، أزرار، قوائم، نصوص، عناوين، قراءة) — Alexandria، ببديل احتياطي
         IBM Plex Sans Arabic / Noto Sans Arabic لو تعذّر تحميل Alexandria.
      2) --font-heritage: عناوين تراثية محدودة فقط (لا نصوص طويلة) — Amiri.
-     3) --font-quran: المصحف حصرًا — خط عثماني موثق (Amiri Quran). لا يتغيّر أبدًا. */
+     3) --font-quran: المصحف حصرًا — خط عثماني موثق (Amiri Quran). لا يتغيّر أبدًا.
+     4) --font-tafsir: نصوص التفسير — Amiri / Noto Naskh للقراءة الطويلة.
+     5) --font-nav: قوائم المزيد/الدرج/الشريط — Cairo/Tajawal لواجهة حديثة نظيفة. */
   --font-primary:  "Alexandria", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, -apple-system, sans-serif;
   --font-ui:       "Alexandria", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, -apple-system, sans-serif;
   --font-body:     "Alexandria", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, -apple-system, sans-serif;
@@ -264,6 +266,16 @@ html {
   --font-quran:    "Amiri Quran", "Scheherazade New", "KFGQPC Hafs Uthmanic", serif;
   /* خط تراثي للعناوين البارزة فقط (لا يُستخدَم في النصوص الطويلة أو الفقرات) */
   --font-heritage: "Amiri", "Aref Ruqaa", "Scheherazade New", serif;
+  --font-tafsir:   "Amiri", "Noto Naskh Arabic", "Traditional Arabic", "Scheherazade New", serif;
+  --font-nav:      "Cairo", "Tajawal", "Alexandria", "IBM Plex Sans Arabic", system-ui, sans-serif;
+
+  /* ── ترتيب الطبقات — سلّم موحَّد يمنع تداخل البحث/الدرج/الهيدر ──
+     القيم العددية أعلى من --z-* القديمة عمدًا لأن بعض الطبقات legacy
+     (navbar 9999، overlays 10000) ما زالت حرفيًا في ملفات أخرى. */
+  --z-overlay-drawer: 10040;
+  --z-overlay-search: 10060;
+  --z-overlay-sheet:  10050;
+  --z-overlay-toast:  10070;
 
   /* ── الحركة — تلاشٍ وهبوط (لا ارتداد) ── */
   --motion-fast:   120ms ease-out;
@@ -4881,7 +4893,7 @@ body.navbar-more-open .navbar-v3 { z-index: 60; }
 .mobile-nav-layer {
   position: fixed;
   inset: 0;
-  z-index: 10000;
+  z-index: var(--z-overlay-drawer, 10040);
   pointer-events: auto;
   -webkit-tap-highlight-color: transparent;
 }
@@ -7658,7 +7670,7 @@ body.has-assistant-fab .app-main {
 .bottom-sheet-overlay {
   position: fixed;
   inset: 0;
-  z-index: var(--z-modal, 400);
+  z-index: var(--z-overlay-sheet, 10050);
   display: flex;
   align-items: flex-end;
   background: rgba(11, 20, 15, 0.55);
@@ -8457,12 +8469,10 @@ html[data-theme="dark"] .skeleton-base {
   background-size: 200% 100%;
 }
 
-/* ── خط واجهة التطبيق والقوائم (SF Arabic على Apple) ──────────────────────
+/* ── خط واجهة التطبيق والقوائم (Cairo/Tajawal على قوائم المزيد والتنقّل) ──
    يُطبَّق حصرًا على عناصر تنقّل/قوائم الواجهة (الهيدر، الشريط السفلي، القائمة
-   الجانبية، ورقة "المزيد")، لا على نصوص المحتوى (تبقى IBM Plex Sans Arabic
-   عبر --font-body/--font-reading). !important ضروري هنا لأن .navbar-v3
-   و.bottom-nav--v2 و.side-nav-drawer معرَّفة بتكرار عبر عدة ملفات CSS
-   لاحقة التحميل (elite-2026.css، majalis-v2.css، modern-2026.css). */
+   الجانبية، ورقة "المزيد")، لا على نصوص المحتوى (--font-body/--font-reading)
+   ولا على التفسير (--font-tafsir) ولا المصحف (--font-quran). */
 .navbar-v3,
 .bottom-nav,
 .bottom-nav--v2,
@@ -8470,7 +8480,8 @@ html[data-theme="dark"] .skeleton-base {
 .side-nav-drawer--v2,
 .bottom-sheet,
 [class*="more-sheet"] {
-  font-family: var(--font-ui) !important;
+  font-family: var(--font-nav, var(--font-ui)) !important;
+  line-height: 1.55;
 }
 
 /* وسم ظاهر للسجلات بلا تخريج — المرحلة 8 */

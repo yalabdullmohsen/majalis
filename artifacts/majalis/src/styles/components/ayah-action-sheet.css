@@ -1,8 +1,8 @@
-/* ── Bottom Sheet لإجراءات الآية (ayah-sheet-*) ── — نفس سبب 10000 أعلاه ── */
+/* ── Bottom Sheet لإجراءات الآية (ayah-sheet-*) ── فوق الدرج وأقل من البحث ── */
 .ayah-sheet-overlay {
   position: fixed;
   inset: 0;
-  z-index: 10000;
+  z-index: var(--z-overlay-sheet, 10050);
   background: rgba(0,0,0,.45);
   display: flex;
   align-items: flex-end;
