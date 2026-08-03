@@ -1,0 +1,16 @@
+{
+  "bismillah": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ",
+  "tafsirSources": [],
+  "reciters": [
+    {
+      "id": "alafasy",
+      "nameArabic": "مشاري العفاسي",
+      "nameEnglish": "Mishary Alafasy",
+      "style": "مرتل",
+      "audioBaseUrl": "https://everyayah.com/data/Alafasy_128kbps/",
+      "supportsAyahTiming": false,
+      "supportsWordTiming": false,
+      "isMockRemote": true
+    }
+  ]
+}

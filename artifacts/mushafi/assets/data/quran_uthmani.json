@@ -1,0 +1,76 @@
+{
+  "schemaVersion": 1,
+  "source": "MOCK_SAMPLE_NOT_COMPLETE_MUSHAF",
+  "licenseNote": "عيّنة تطويرية محدودة للتأكد من الواجهة فقط. استبدلها بنص عثماني مرخّص وموثّق قبل أي إصدار إنتاجي. ليست مصحفًا كاملاً.",
+  "isMock": true,
+  "isComplete": false,
+  "surahs": [
+    {
+      "id": 1,
+      "nameArabic": "الفاتحة",
+      "nameTransliteration": "Al-Fatihah",
+      "revelationType": "Meccan",
+      "ayahCount": 7,
+      "startPage": 1,
+      "startJuz": 1,
+      "bismillahPre": false
+    },
+    {
+      "id": 112,
+      "nameArabic": "الإخلاص",
+      "nameTransliteration": "Al-Ikhlas",
+      "revelationType": "Meccan",
+      "ayahCount": 4,
+      "startPage": 2,
+      "startJuz": 30,
+      "bismillahPre": true
+    },
+    {
+      "id": 113,
+      "nameArabic": "الفلق",
+      "nameTransliteration": "Al-Falaq",
+      "revelationType": "Meccan",
+      "ayahCount": 5,
+      "startPage": 2,
+      "startJuz": 30,
+      "bismillahPre": true
+    },
+    {
+      "id": 114,
+      "nameArabic": "الناس",
+      "nameTransliteration": "An-Nas",
+      "revelationType": "Meccan",
+      "ayahCount": 6,
+      "startPage": 2,
+      "startJuz": 30,
+      "bismillahPre": true
+    }
+  ],
+  "ayahs": [
+    {"surahId": 1, "ayahNumber": 1, "globalAyahNumber": 1, "pageNumber": 1, "juzNumber": 1, "hizbQuarter": 1, "textUthmani": "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ", "textPlain": "بسم الله الرحمن الرحيم"},
+    {"surahId": 1, "ayahNumber": 2, "globalAyahNumber": 2, "pageNumber": 1, "juzNumber": 1, "hizbQuarter": 1, "textUthmani": "ٱلْحَمْدُ لِلَّهِ رَبِّ ٱلْعَٰلَمِينَ", "textPlain": "الحمد لله رب العالمين"},
+    {"surahId": 1, "ayahNumber": 3, "globalAyahNumber": 3, "pageNumber": 1, "juzNumber": 1, "hizbQuarter": 1, "textUthmani": "ٱلرَّحْمَٰنِ ٱلرَّحِيمِ", "textPlain": "الرحمن الرحيم"},
+    {"surahId": 1, "ayahNumber": 4, "globalAyahNumber": 4, "pageNumber": 1, "juzNumber": 1, "hizbQuarter": 1, "textUthmani": "مَٰلِكِ يَوْمِ ٱلدِّينِ", "textPlain": "مالك يوم الدين"},
+    {"surahId": 1, "ayahNumber": 5, "globalAyahNumber": 5, "pageNumber": 1, "juzNumber": 1, "hizbQuarter": 1, "textUthmani": "إِيَّاكَ نَعْبُدُ وَإِيَّاكَ نَسْتَعِينُ", "textPlain": "إياك نعبد وإياك نستعين"},
+    {"surahId": 1, "ayahNumber": 6, "globalAyahNumber": 6, "pageNumber": 1, "juzNumber": 1, "hizbQuarter": 1, "textUthmani": "ٱهْدِنَا ٱلصِّرَٰطَ ٱلْمُسْتَقِيمَ", "textPlain": "اهدنا الصراط المستقيم"},
+    {"surahId": 1, "ayahNumber": 7, "globalAyahNumber": 7, "pageNumber": 1, "juzNumber": 1, "hizbQuarter": 1, "textUthmani": "صِرَٰطَ ٱلَّذِينَ أَنْعَمْتَ عَلَيْهِمْ غَيْرِ ٱلْمَغْضُوبِ عَلَيْهِمْ وَلَا ٱلضَّآلِّينَ", "textPlain": "صراط الذين أنعمت عليهم غير المغضوب عليهم ولا الضالين"},
+
+    {"surahId": 112, "ayahNumber": 1, "globalAyahNumber": 6222, "pageNumber": 2, "juzNumber": 30, "hizbQuarter": 240, "textUthmani": "قُلْ هُوَ ٱللَّهُ أَحَدٌ", "textPlain": "قل هو الله أحد"},
+    {"surahId": 112, "ayahNumber": 2, "globalAyahNumber": 6223, "pageNumber": 2, "juzNumber": 30, "hizbQuarter": 240, "textUthmani": "ٱللَّهُ ٱلصَّمَدُ", "textPlain": "الله الصمد"},
+    {"surahId": 112, "ayahNumber": 3, "globalAyahNumber": 6224, "pageNumber": 2, "juzNumber": 30, "hizbQuarter": 240, "textUthmani": "لَمْ يَلِدْ وَلَمْ يُولَدْ", "textPlain": "لم يلد ولم يولد"},
+    {"surahId": 112, "ayahNumber": 4, "globalAyahNumber": 6225, "pageNumber": 2, "juzNumber": 30, "hizbQuarter": 240, "textUthmani": "وَلَمْ يَكُن لَّهُۥ كُفُوًا أَحَدٌۢ", "textPlain": "ولم يكن له كفوا أحد"},
+
+    {"surahId": 113, "ayahNumber": 1, "globalAyahNumber": 6226, "pageNumber": 2, "juzNumber": 30, "hizbQuarter": 240, "textUthmani": "قُلْ أَعُوذُ بِرَبِّ ٱلْفَلَقِ", "textPlain": "قل أعوذ برب الفلق"},
+    {"surahId": 113, "ayahNumber": 2, "globalAyahNumber": 6227, "pageNumber": 2, "juzNumber": 30, "hizbQuarter": 240, "textUthmani": "مِن شَرِّ مَا خَلَقَ", "textPlain": "من شر ما خلق"},
+    {"surahId": 113, "ayahNumber": 3, "globalAyahNumber": 6228, "pageNumber": 2, "juzNumber": 30, "hizbQuarter": 240, "textUthmani": "وَمِن شَرِّ غَاسِقٍ إِذَا وَقَبَ", "textPlain": "ومن شر غاسق إذا وقب"},
+    {"surahId": 113, "ayahNumber": 4, "globalAyahNumber": 6229, "pageNumber": 2, "juzNumber": 30, "hizbQuarter": 240, "textUthmani": "وَمِن شَرِّ ٱلنَّفَّٰثَٰتِ فِى ٱلْعُقَدِ", "textPlain": "ومن شر النفاثات في العقد"},
+    {"surahId": 113, "ayahNumber": 5, "globalAyahNumber": 6230, "pageNumber": 2, "juzNumber": 30, "hizbQuarter": 240, "textUthmani": "وَمِن شَرِّ حَاسِدٍ إِذَا حَسَدَ", "textPlain": "ومن شر حاسد إذا حسد"},
+
+    {"surahId": 114, "ayahNumber": 1, "globalAyahNumber": 6231, "pageNumber": 2, "juzNumber": 30, "hizbQuarter": 240, "textUthmani": "قُلْ أَعُوذُ بِرَبِّ ٱلنَّاسِ", "textPlain": "قل أعوذ برب الناس"},
+    {"surahId": 114, "ayahNumber": 2, "globalAyahNumber": 6232, "pageNumber": 2, "juzNumber": 30, "hizbQuarter": 240, "textUthmani": "مَلِكِ ٱلنَّاسِ", "textPlain": "ملك الناس"},
+    {"surahId": 114, "ayahNumber": 3, "globalAyahNumber": 6233, "pageNumber": 2, "juzNumber": 30, "hizbQuarter": 240, "textUthmani": "إِلَٰهِ ٱلنَّاسِ", "textPlain": "إله الناس"},
+    {"surahId": 114, "ayahNumber": 4, "globalAyahNumber": 6234, "pageNumber": 2, "juzNumber": 30, "hizbQuarter": 240, "textUthmani": "مِن شَرِّ ٱلْوَسْوَاسِ ٱلْخَنَّاسِ", "textPlain": "من شر الوسواس الخناس"},
+    {"surahId": 114, "ayahNumber": 5, "globalAyahNumber": 6235, "pageNumber": 2, "juzNumber": 30, "hizbQuarter": 240, "textUthmani": "ٱلَّذِى يُوَسْوِسُ فِى صُدُورِ ٱلنَّاسِ", "textPlain": "الذي يوسوس في صدور الناس"},
+    {"surahId": 114, "ayahNumber": 6, "globalAyahNumber": 6236, "pageNumber": 2, "juzNumber": 30, "hizbQuarter": 240, "textUthmani": "مِنَ ٱلْجِنَّةِ وَٱلنَّاسِ", "textPlain": "من الجنة والناس"}
+  ]
+}

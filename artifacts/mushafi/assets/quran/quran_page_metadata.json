@@ -1,0 +1,22 @@
+[
+  {
+    "pageNumber": 1,
+    "juz": 1,
+    "hizb": 1,
+    "rub": 1,
+    "fromSurah": 1,
+    "fromAyah": 1,
+    "toSurah": 1,
+    "toAyah": 7
+  },
+  {
+    "pageNumber": 2,
+    "juz": 1,
+    "hizb": 1,
+    "rub": 1,
+    "fromSurah": 2,
+    "fromAyah": 1,
+    "toSurah": 2,
+    "toAyah": 5
+  }
+]
