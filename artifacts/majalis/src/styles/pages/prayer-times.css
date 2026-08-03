@@ -4,6 +4,14 @@
    فئات pts-* لتجنّب تعارض !important من elite-2026 على .pt-*
    ════════════════════════════════════════════════════════════ */
 
+/* عند فتح صفحة المواقيت (NavBar مخفي): لوّن منطقة safe-area على html/body
+   بنفس الزمرد حتى لا يظهر شريط أبيض فوق الشاشة الخضراء. */
+html.pts-immersive,
+html.pts-immersive body {
+  background-color: #143F35;
+  background-image: none;
+}
+
 .pts-screen {
   /* مربوط بهوية v4 — لا باليتة موازية */
   --pts-bg-0: var(--em-950, #081A16);
@@ -19,7 +27,15 @@
   --pts-row-active: color-mix(in srgb, var(--gold-400, #D2B063) 18%, transparent);
 
   direction: rtl;
-  min-height: 100%;
+  /* ملء الشاشة كاملة — NavBar مخفي على هذا المسار، فلا نخصم ارتفاع هيدر.
+     الهامش السالب يلغي padding الآمن على html/body الذي كان يظهر شريطًا أبيض
+     فوق الخلفية الخضراء (السبب الجذري لفراغ الرأس الأبيض). */
+  min-height: 100dvh;
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  margin-block-start: calc(-1 * env(safe-area-inset-top, 0px));
+  margin-inline: calc(-1 * env(safe-area-inset-left, 0px)) calc(-1 * env(safe-area-inset-right, 0px));
   color: var(--pts-white);
   /* لون صلب تحت التدرّج — قياس التباين وfallback عند تعطيل الصور */
   background-color: var(--pts-bg-1);
@@ -28,13 +44,12 @@
     linear-gradient(180deg, var(--pts-bg-1) 0%, var(--pts-bg-0) 48%, #0A221C 100%);
   padding:
     max(0.85rem, env(safe-area-inset-top, 0px))
-    1.1rem
-    calc(var(--bottom-nav-h, 64px) + 1.25rem + env(safe-area-inset-bottom, 0px));
+    max(1.1rem, env(safe-area-inset-right, 0px))
+    calc(var(--bottom-nav-h, 64px) + 1.25rem + env(safe-area-inset-bottom, 0px))
+    max(1.1rem, env(safe-area-inset-left, 0px));
   display: flex;
   flex-direction: column;
   gap: 0.85rem;
-  max-width: 480px;
-  margin-inline: auto;
   position: relative;
   overflow-x: hidden;
   box-sizing: border-box;
@@ -53,6 +68,10 @@
 .pts-screen > * {
   position: relative;
   z-index: 1;
+  width: 100%;
+  max-width: 32rem;
+  margin-inline: auto;
+  box-sizing: border-box;
 }
 
 /* ── رأس ── */
@@ -420,13 +439,12 @@
   .pts-row { transition: none; }
 }
 
-/* سطح المكتب: عرض مركزي بلا بطاقة مزدوجة/ظلال ضخمة */
+/* سطح المكتب: خلفية ممتلئة بعرض الشاشة، محتوى مركزي مقروء */
 @media (min-width: 640px) {
   .pts-screen {
-    margin-top: 0;
     margin-bottom: 0;
     border-radius: 0;
     box-shadow: none;
-    min-height: calc(100dvh - var(--navbar-h, 56px));
+    min-height: 100dvh;
   }
 }

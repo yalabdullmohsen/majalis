@@ -2,7 +2,13 @@
    صفحة علم التفسير (.tf-*)
    ══════════════════════════════════════════════════════════ */
 
-.tf-page { max-width: 860px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
+.tf-page {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 1.5rem 1rem 4rem;
+  font-family: var(--font-tafsir, "Amiri", "Noto Naskh Arabic", "Traditional Arabic", serif);
+  line-height: 1.85;
+}
 
 .tf-hero {
   background: linear-gradient(135deg, #143F35 0%, #226A56 55%, #1a5c4a 100%);
@@ -54,8 +60,9 @@
   padding: 1.1rem 1.2rem;
   margin-bottom: 1.25rem;
   color: #052E16;
-  line-height: 1.75;
-  font-size: 0.95rem;
+  line-height: 1.85;
+  font-size: 1rem;
+  font-family: var(--font-tafsir, "Amiri", "Noto Naskh Arabic", serif);
 }
 
 .tf-cta {
@@ -170,7 +177,13 @@
 .tf-card__term { font-size: 0.97rem; font-weight: 800; color: #052E16; }
 .tf-card__meta { font-size: 0.78rem; color: #5A7A6C; flex-shrink: 0; }
 .tf-card__body { padding: 0 1.1rem 1rem; }
-.tf-card__def { margin: 0 0 0.65rem; color: #1A3A2E; line-height: 1.7; font-size: 0.9rem; }
+.tf-card__def {
+  margin: 0 0 0.65rem;
+  color: #1A3A2E;
+  line-height: 1.85;
+  font-size: 1rem;
+  font-family: var(--font-tafsir, "Amiri", "Noto Naskh Arabic", serif);
+}
 .tf-card__example {
   font-size: 0.85rem;
   color: #143F35;
@@ -259,8 +272,9 @@
 .tf-intro-paras p {
   margin: 0;
   color: #1A3A2E;
-  line-height: 1.75;
-  font-size: 0.92rem;
+  line-height: 1.85;
+  font-size: 1rem;
+  font-family: var(--font-tafsir, "Amiri", "Noto Naskh Arabic", serif);
 }
 
 .tf-section-head {

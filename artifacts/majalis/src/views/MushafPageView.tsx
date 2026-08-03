@@ -19,6 +19,7 @@ import { useKeepAwake } from "@/hooks/useKeepAwake";
 import { useRestoreLastPage } from "@/hooks/useRestoreLastPage";
 import { useImmersiveSystemUi } from "@/hooks/useImmersiveSystemUi";
 import { AYAH_MUSHAF_PAPER_BG } from "@/lib/quran-immersive";
+import { useThemePreference } from "@/components/ThemePreferenceProvider";
 import { addBookmark as addPageBookmark, isPageBookmarked } from "@/lib/quran-my-bookmarks";
 import { SurahList } from "@/components/quran/SurahList";
 import { PageAyahActionSheet } from "@/components/quran/PageAyahActionSheet";
@@ -101,14 +102,19 @@ export default function MushafPageView() {
   const params = useParams<{ page?: string; surah?: string }>();
   const [location, navigate] = useLocation();
   const { prefs, setPref } = useQuranPreferences();
+  const { resolvedTheme } = useThemePreference();
   const breakReminder = useReadingBreakReminder();
   /** Keep screen lit while the mushaf page is open (expo-keep-awake port). */
   useKeepAwake();
   /** Flutter SystemChrome.immersiveSticky — hide StatusBar / app chrome on /mushaf.
-   * Ayah warm paper `#FAF7F2` for standard/warm; night & high-contrast keep contrast. */
+   * Ayah warm paper `#FAF7F2` for standard/warm; night & site-dark keep contrast. */
+  const siteDarkMushaf =
+    resolvedTheme === "dark" &&
+    prefs.readingTheme !== "warm" &&
+    prefs.readingTheme !== "high-contrast";
   const immersivePaper =
-    prefs.readingTheme === "night"
-      ? "#1a1a1a"
+    prefs.readingTheme === "night" || siteDarkMushaf
+      ? "#0F172A"
       : prefs.readingTheme === "high-contrast"
         ? "#ffffff"
         : AYAH_MUSHAF_PAPER_BG;

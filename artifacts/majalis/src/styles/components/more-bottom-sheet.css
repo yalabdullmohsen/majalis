@@ -1,14 +1,14 @@
-/* MoreBottomSheet — color tokens only (layout lives in index/final-release) */
-.bottom-sheet{background:var(--surfaceElevated,var(--surface))!important;color:var(--textPrimary,var(--text))!important;border-top:1px solid var(--border)!important}
-.bottom-sheet__head{color:inherit!important;border-bottom:1px solid var(--border)!important}
+/* MoreBottomSheet — color tokens + خط تنقّل حديث */
+.bottom-sheet{background:var(--surfaceElevated,var(--surface))!important;color:var(--textPrimary,var(--text))!important;border-top:1px solid var(--border)!important;font-family:var(--font-nav,var(--font-ui))!important;line-height:1.55}
+.bottom-sheet__head{color:inherit!important;border-bottom:1px solid var(--border)!important;font-family:inherit}
 .bottom-sheet__handle{background:var(--border-strong,var(--border))!important}
-.bottom-sheet__close-btn{color:var(--iconPrimary,var(--text-brand))}
+.bottom-sheet__close-btn{color:var(--iconPrimary,var(--text-brand));position:relative;z-index:2}
 .bottom-sheet__close-btn:hover{color:var(--text);background:var(--surface-2)}
-.bottom-sheet__section-label{color:var(--textMuted,var(--text-muted))}
-.more-sheet-item{background:var(--cardBackground,var(--surface))!important;border:1px solid var(--border)!important;color:var(--textPrimary,var(--text))!important}
+.bottom-sheet__section-label{color:var(--textMuted,var(--text-muted));font-weight:600}
+.more-sheet-item{background:var(--cardBackground,var(--surface))!important;border:1px solid var(--border)!important;color:var(--textPrimary,var(--text))!important;font-family:inherit;font-weight:600}
 .more-sheet-item:hover{background:var(--selectedBackground,var(--surface-2))!important}
 .more-sheet-item--active{background:var(--selectedBackground,var(--brand-soft))!important;border-color:var(--brand)!important;color:var(--selectedText,var(--text-brand-deep))!important}
 .more-sheet-item__icon{background:var(--brand-soft)!important;color:var(--iconPrimary,var(--text-brand))!important}
-.more-sheet-theme-toggle{background:var(--surface-2)!important;color:var(--text)!important;border-color:var(--border)!important}
+.more-sheet-theme-toggle{background:var(--surface-2)!important;color:var(--text)!important;border-color:var(--border)!important;font-family:inherit}
 html:not([data-theme=dark]) .bottom-sheet,html:not([data-theme=dark]) .more-sheet-item{color:var(--text,#1A1714)!important}
 html[data-theme=dark] .bottom-sheet,html[data-theme=dark] .more-sheet-item{background:var(--surface,#12211C)!important;color:var(--text,#EDF2F0)!important}
