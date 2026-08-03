@@ -3,6 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../data/advanced_quran_asr_recognizer.dart';
 import '../data/asr_server_health_service.dart';
 import '../data/assets_quran_repository.dart';
+import '../data/ayah_mastery_repository.dart';
+import '../data/local_ayah_mastery_repository.dart';
 import '../data/local_tasmee3_asr_settings_repository.dart';
 import '../data/local_tasmee3_failed_job_queue.dart';
 import '../data/local_tasmee3_goal_repository.dart';
@@ -19,6 +21,7 @@ import '../data/tasmee3_reminder_repository.dart';
 import '../data/tasmee3_session_repository.dart';
 import '../domain/asr_connection_status.dart';
 import '../domain/asr_engine_mode.dart';
+import '../domain/ayah_mastery_record.dart';
 import '../domain/queued_tasmee3_job.dart';
 import '../domain/tasmee3_achievement.dart';
 import '../domain/tasmee3_badge.dart';
@@ -27,6 +30,7 @@ import '../domain/tasmee3_daily_stats.dart';
 import '../domain/tasmee3_goal_progress.dart';
 import '../domain/tasmee3_reminder.dart';
 import '../domain/tasmee3_review_plan_item.dart';
+import '../domain/tasmee3_review_suggestion.dart';
 import '../domain/tasmee3_session_record.dart';
 import '../domain/tasmee3_user_asr_settings.dart';
 import 'mistake_detection_engine.dart';
@@ -40,6 +44,7 @@ import 'tasmee3_pdf_font_loader.dart';
 import 'tasmee3_pdf_report_service.dart';
 import 'tasmee3_reminders_controller.dart';
 import 'tasmee3_session_report_builder.dart';
+import 'tasmee3_srs_service.dart';
 import 'tasmee3_ui_settings.dart';
 
 /// Named distinctly from mushaf `quranRepositoryProvider` to avoid import clashes
@@ -178,6 +183,34 @@ final tasmee3AnalyticsServiceProvider =
   return const Tasmee3AnalyticsService();
 });
 
+final ayahMasteryRepositoryProvider = Provider<AyahMasteryRepository>((ref) {
+  return LocalAyahMasteryRepository();
+});
+
+final tasmee3SrsServiceProvider = Provider<Tasmee3SrsService>((ref) {
+  return const Tasmee3SrsService();
+});
+
+final ayahMasteryRecordsProvider =
+    FutureProvider<List<AyahMasteryRecord>>((ref) async {
+  final repository = ref.watch(ayahMasteryRepositoryProvider);
+  return repository.loadAll();
+});
+
+final tasmee3TodayReviewSuggestionsProvider =
+    FutureProvider<List<Tasmee3ReviewSuggestion>>((ref) async {
+  final records = await ref.watch(ayahMasteryRecordsProvider.future);
+  final service = ref.watch(tasmee3SrsServiceProvider);
+  return service.buildTodaySuggestions(records);
+});
+
+final tasmee3NextRangeSuggestionProvider =
+    FutureProvider<Tasmee3ReviewSuggestion?>((ref) async {
+  final records = await ref.watch(ayahMasteryRecordsProvider.future);
+  final service = ref.watch(tasmee3SrsServiceProvider);
+  return service.suggestNextRange(records);
+});
+
 final tasmee3Last7DaysStatsProvider =
     FutureProvider<List<Tasmee3DailyStats>>((ref) async {
   final sessions = await ref.watch(tasmee3SessionHistoryProvider.future);
@@ -187,6 +220,14 @@ final tasmee3Last7DaysStatsProvider =
 
 final tasmee3ReviewPlanProvider =
     FutureProvider<List<Tasmee3ReviewPlanItem>>((ref) async {
+  final records = await ref.watch(ayahMasteryRecordsProvider.future);
+  final srs = ref.watch(tasmee3SrsServiceProvider);
+  final fromSrs = srs.buildReviewPlanFromMastery(records);
+
+  if (fromSrs.isNotEmpty) {
+    return fromSrs;
+  }
+
   final sessions = await ref.watch(tasmee3SessionHistoryProvider.future);
   final analytics = ref.watch(tasmee3AnalyticsServiceProvider);
   return analytics.buildWeeklyReviewPlan(sessions);
@@ -320,6 +361,8 @@ final tasmee3ControllerProvider =
     recognizer: ref.watch(quranSpeechRecognizerProvider),
     engine: ref.watch(mistakeDetectionEngineProvider),
     sessionRepository: ref.watch(tasmee3SessionRepositoryProvider),
+    ayahMasteryRepository: ref.watch(ayahMasteryRepositoryProvider),
+    srsService: ref.watch(tasmee3SrsServiceProvider),
     onSessionSaved: () {
       ref.invalidate(tasmee3SessionHistoryProvider);
       ref.invalidate(tasmee3TodayGoalProgressProvider);
@@ -327,6 +370,9 @@ final tasmee3ControllerProvider =
       ref.invalidate(tasmee3BadgesProvider);
       ref.invalidate(tasmee3Last7DaysStatsProvider);
       ref.invalidate(tasmee3ReviewPlanProvider);
+      ref.invalidate(ayahMasteryRecordsProvider);
+      ref.invalidate(tasmee3TodayReviewSuggestionsProvider);
+      ref.invalidate(tasmee3NextRangeSuggestionProvider);
     },
   );
 });

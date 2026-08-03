@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../data/ayah_mastery_repository.dart';
 import '../data/quran_forced_alignment_recognizer.dart';
 import '../data/quran_repository.dart';
 import '../data/quran_speech_recognizer.dart';
@@ -18,6 +19,7 @@ import '../domain/tasmee3_result.dart';
 import '../domain/tasmee3_session_diagnostics.dart';
 import '../domain/tasmee3_session_record.dart';
 import 'mistake_detection_engine.dart';
+import 'tasmee3_srs_service.dart';
 
 enum Tasmee3Status {
   idle,
@@ -114,6 +116,8 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
   final QuranSpeechRecognizer recognizer;
   final MistakeDetectionEngine engine;
   final Tasmee3SessionRepository sessionRepository;
+  final AyahMasteryRepository ayahMasteryRepository;
+  final Tasmee3SrsService srsService;
   final void Function()? onSessionSaved;
 
   StreamSubscription<RecognizedSegment>? _subscription;
@@ -129,6 +133,8 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
     required this.recognizer,
     required this.engine,
     required this.sessionRepository,
+    required this.ayahMasteryRepository,
+    required this.srsService,
     this.onSessionSaved,
   }) : super(const Tasmee3State.initial());
 
@@ -445,11 +451,19 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
       createdAt: DateTime.now(),
     );
 
-    unawaited(
-      sessionRepository.saveSession(record).then((_) {
-        onSessionSaved?.call();
-      }),
-    );
+    unawaited(() async {
+      await sessionRepository.saveSession(record);
+
+      final current = await ayahMasteryRepository.loadAll();
+      final updated = srsService.updateMasteryFromSession(
+        currentRecords: current,
+        target: currentTarget,
+        result: result,
+      );
+      await ayahMasteryRepository.upsertMany(updated);
+
+      onSessionSaved?.call();
+    }());
   }
 
   Future<void> retrySameRange() async {

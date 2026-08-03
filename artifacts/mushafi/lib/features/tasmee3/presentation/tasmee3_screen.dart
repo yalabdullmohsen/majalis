@@ -52,6 +52,9 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
         ref.invalidate(tasmee3Last7DaysStatsProvider);
         ref.invalidate(tasmee3ReviewPlanProvider);
         ref.invalidate(tasmee3AchievementsProvider);
+        ref.invalidate(ayahMasteryRecordsProvider);
+        ref.invalidate(tasmee3TodayReviewSuggestionsProvider);
+        ref.invalidate(tasmee3NextRangeSuggestionProvider);
       }
     });
 

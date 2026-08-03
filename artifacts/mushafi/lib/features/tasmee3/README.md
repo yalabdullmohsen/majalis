@@ -346,3 +346,40 @@ assets/fonts/NotoNaskhArabic-Bold.ttf
 - SCHEDULE_EXACT_ALARM
 
 إذا فشل exact alarm، يستخدم التطبيق fallback إلى inexact alarm.
+
+## البرومبت الرابع عشر - SRS والمراجعة الذكية
+
+تمت إضافة:
+
+- Spaced Repetition للآيات.
+- مستوى إتقان لكل آية.
+- اقتراح مراجعة اليوم.
+- اقتراح النطاق التالي.
+- تحديث مستوى الإتقان بعد كل جلسة.
+- عرض مراجعات اليوم في Dashboard.
+- خطة المراجعة تعتمد SRS أولاً مع fallback للتحليل القديم.
+
+## كيف يعمل SRS؟
+
+بعد كل جلسة:
+- يتم توسيع النطاق إلى آيات.
+- يتم حساب الأخطاء لكل آية.
+- يتم تحديث masteryScore.
+- يتم تحديد المستوى:
+  - newAyah
+  - weak
+  - learning
+  - good
+  - mastered
+- يتم تحديد nextReviewAt بناء على الأداء.
+
+## الشاشات الجديدة
+
+- `Tasmee3TodayReviewScreen`
+
+## الملفات الجديدة
+
+- `AyahMasteryRecord`
+- `Tasmee3SrsService`
+- `AyahMasteryRepository`
+- `Tasmee3ReviewSuggestion`

@@ -9,7 +9,9 @@ import 'tasmee3_history_screen.dart';
 import 'tasmee3_reminders_screen.dart';
 import 'tasmee3_review_plan_screen.dart';
 import 'tasmee3_screen.dart';
+import 'tasmee3_today_review_screen.dart';
 import 'widgets/tasmee3_goal_progress_card.dart';
+import 'widgets/tasmee3_today_review_card.dart';
 import 'widgets/tasmee3_week_stats_card.dart';
 
 class Tasmee3DashboardScreen extends ConsumerWidget {
@@ -23,6 +25,7 @@ class Tasmee3DashboardScreen extends ConsumerWidget {
     final goalProgress = ref.watch(tasmee3TodayGoalProgressProvider);
     final streak = ref.watch(tasmee3StreakProvider);
     final dailyGoal = ref.watch(tasmee3DailyGoalProvider);
+    final todayReview = ref.watch(tasmee3TodayReviewSuggestionsProvider);
 
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -77,6 +80,22 @@ class Tasmee3DashboardScreen extends ConsumerWidget {
               loading: () => const SizedBox.shrink(),
               error: (error, stackTrace) => _errorCard(error.toString()),
               data: (value) => _streakCard(value),
+            ),
+            const SizedBox(height: 14),
+            todayReview.when(
+              loading: () => const SizedBox.shrink(),
+              error: (error, stackTrace) => _errorCard(error.toString()),
+              data: (items) => Tasmee3TodayReviewCard(
+                suggestions: items,
+                onOpen: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const Tasmee3TodayReviewScreen(),
+                    ),
+                  );
+                },
+              ),
             ),
             const SizedBox(height: 14),
             stats.when(
@@ -420,6 +439,25 @@ class Tasmee3DashboardScreen extends ConsumerWidget {
                 },
                 icon: const Icon(Icons.notifications_active_outlined),
                 label: const Text('التذكيرات'),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 10),
+        Row(
+          children: [
+            Expanded(
+              child: OutlinedButton.icon(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const Tasmee3TodayReviewScreen(),
+                    ),
+                  );
+                },
+                icon: const Icon(Icons.auto_awesome),
+                label: const Text('مراجعة اليوم'),
               ),
             ),
           ],
