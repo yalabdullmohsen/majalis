@@ -59,6 +59,7 @@ class Tasmee3HistoryScreen extends ConsumerWidget {
                 itemBuilder: (context, index) {
                   final session = sessions[index];
                   final surah = SurahCatalog.byId(session.target.from.surah);
+                  final color = accuracyColor(session.accuracyPercent);
 
                   return Container(
                     padding: const EdgeInsets.all(14),
@@ -70,12 +71,11 @@ class Tasmee3HistoryScreen extends ConsumerWidget {
                     child: Row(
                       children: [
                         CircleAvatar(
-                          backgroundColor:
-                              const Color(0xFFA77A48).withValues(alpha: 0.12),
+                          backgroundColor: color.withValues(alpha: 0.12),
                           child: Text(
                             '${session.accuracyPercent}%',
-                            style: const TextStyle(
-                              color: Color(0xFFA77A48),
+                            style: TextStyle(
+                              color: color,
                               fontWeight: FontWeight.bold,
                               fontSize: 12,
                             ),
@@ -115,4 +115,10 @@ class Tasmee3HistoryScreen extends ConsumerWidget {
       ),
     );
   }
+}
+
+Color accuracyColor(int percent) {
+  if (percent >= 90) return Colors.green.shade700;
+  if (percent >= 75) return Colors.orange.shade800;
+  return Colors.red.shade700;
 }

@@ -15,12 +15,17 @@ import '../data/tasmee3_session_repository.dart';
 import '../domain/asr_connection_status.dart';
 import '../domain/asr_engine_mode.dart';
 import '../domain/queued_tasmee3_job.dart';
+import '../domain/tasmee3_achievement.dart';
+import '../domain/tasmee3_daily_stats.dart';
+import '../domain/tasmee3_review_plan_item.dart';
 import '../domain/tasmee3_session_record.dart';
 import '../domain/tasmee3_user_asr_settings.dart';
 import 'mistake_detection_engine.dart';
+import 'tasmee3_analytics_service.dart';
 import 'tasmee3_asr_settings.dart';
 import 'tasmee3_asr_settings_controller.dart';
 import 'tasmee3_controller.dart';
+import 'tasmee3_session_report_builder.dart';
 import 'tasmee3_ui_settings.dart';
 
 /// Named distinctly from mushaf `quranRepositoryProvider` to avoid import clashes
@@ -152,6 +157,37 @@ final tasmee3SessionHistoryProvider =
     FutureProvider<List<Tasmee3SessionRecord>>((ref) async {
   final repository = ref.watch(tasmee3SessionRepositoryProvider);
   return repository.getSessions();
+});
+
+final tasmee3AnalyticsServiceProvider =
+    Provider<Tasmee3AnalyticsService>((ref) {
+  return const Tasmee3AnalyticsService();
+});
+
+final tasmee3Last7DaysStatsProvider =
+    FutureProvider<List<Tasmee3DailyStats>>((ref) async {
+  final sessions = await ref.watch(tasmee3SessionHistoryProvider.future);
+  final analytics = ref.watch(tasmee3AnalyticsServiceProvider);
+  return analytics.buildLast7DaysStats(sessions);
+});
+
+final tasmee3ReviewPlanProvider =
+    FutureProvider<List<Tasmee3ReviewPlanItem>>((ref) async {
+  final sessions = await ref.watch(tasmee3SessionHistoryProvider.future);
+  final analytics = ref.watch(tasmee3AnalyticsServiceProvider);
+  return analytics.buildReviewPlan(sessions);
+});
+
+final tasmee3AchievementsProvider =
+    FutureProvider<List<Tasmee3Achievement>>((ref) async {
+  final sessions = await ref.watch(tasmee3SessionHistoryProvider.future);
+  final analytics = ref.watch(tasmee3AnalyticsServiceProvider);
+  return analytics.buildAchievements(sessions);
+});
+
+final tasmee3SessionReportBuilderProvider =
+    Provider<Tasmee3SessionReportBuilder>((ref) {
+  return const Tasmee3SessionReportBuilder();
 });
 
 final tasmee3ControllerProvider =

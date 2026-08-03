@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../application/tasmee3_controller.dart';
@@ -10,6 +11,7 @@ import '../domain/recitation_target.dart';
 import '../domain/surah_info.dart';
 import '../domain/tasmee3_mistake.dart';
 import 'tasmee3_asr_settings_screen.dart';
+import 'tasmee3_dashboard_screen.dart';
 import 'tasmee3_history_screen.dart';
 import 'tasmee3_privacy_screen.dart';
 import 'tasmee3_weak_spots_screen.dart';
@@ -49,6 +51,18 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
           foregroundColor: const Color(0xFF11100E),
           elevation: 0,
           actions: [
+            IconButton(
+              tooltip: 'لوحة التسميع',
+              icon: const Icon(Icons.dashboard_outlined),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const Tasmee3DashboardScreen(),
+                  ),
+                );
+              },
+            ),
             IconButton(
               tooltip: 'خصوصية التسميع',
               icon: const Icon(Icons.privacy_tip_outlined),
@@ -574,6 +588,76 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
                   ),
                 ),
               ],
+            ),
+          ],
+          const SizedBox(height: 10),
+          Row(
+            children: [
+              Expanded(
+                child: OutlinedButton.icon(
+                  onPressed: () async {
+                    final target = state.target;
+                    final sessionResult = state.result;
+
+                    if (target == null || sessionResult == null) return;
+
+                    final builder =
+                        ref.read(tasmee3SessionReportBuilderProvider);
+
+                    final report = builder.buildTextReport(
+                      target: target,
+                      result: sessionResult,
+                      durationSeconds: state.elapsedSeconds,
+                    );
+
+                    final messenger = ScaffoldMessenger.of(context);
+
+                    await Clipboard.setData(ClipboardData(text: report));
+
+                    messenger.showSnackBar(
+                      const SnackBar(
+                        content: Text('تم نسخ تقرير الجلسة.'),
+                      ),
+                    );
+                  },
+                  icon: const Icon(Icons.copy),
+                  label: const Text('نسخ تقرير الجلسة'),
+                ),
+              ),
+            ],
+          ),
+          if (state.diagnostics != null &&
+              state.diagnostics!.notes.isNotEmpty) ...[
+            const SizedBox(height: 10),
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: const Color(0xFFFFFCF7),
+                borderRadius: BorderRadius.circular(14),
+                border: Border.all(color: const Color(0xFFE0C5A3)),
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Text(
+                    'تشخيص الجلسة (محلي فقط)',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Color(0xFF11100E),
+                    ),
+                  ),
+                  const SizedBox(height: 6),
+                  for (final note in state.diagnostics!.notes)
+                    Text(
+                      '• $note',
+                      style: const TextStyle(
+                        color: Color(0xFF9A8068),
+                        height: 1.4,
+                      ),
+                    ),
+                ],
+              ),
             ),
           ],
           const SizedBox(height: 12),

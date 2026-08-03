@@ -13,6 +13,7 @@ import 'package:mushafi/features/quran/presentation/screens/mushaf_screen.dart';
 import 'package:mushafi/features/quran/presentation/screens/surah_index_screen.dart';
 import 'package:mushafi/features/search/presentation/search_screen.dart';
 import 'package:mushafi/features/settings/presentation/settings_screen.dart';
+import 'package:mushafi/features/tasmee3/presentation/tasmee3_dashboard_screen.dart';
 import 'package:mushafi/features/tasmee3/presentation/tasmee3_screen.dart';
 
 final _routerProvider = Provider<GoRouter>((ref) {
@@ -36,6 +37,10 @@ final _routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/tasmee3',
         builder: (_, __) => const Tasmee3Screen(),
+      ),
+      GoRoute(
+        path: '/tasmee3-dashboard',
+        builder: (_, __) => const Tasmee3DashboardScreen(),
       ),
       GoRoute(
         path: '/tafsir',

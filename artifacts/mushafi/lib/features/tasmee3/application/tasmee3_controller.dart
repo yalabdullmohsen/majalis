@@ -7,12 +7,15 @@ import '../data/quran_forced_alignment_recognizer.dart';
 import '../data/quran_repository.dart';
 import '../data/quran_speech_recognizer.dart';
 import '../data/tasmee3_session_repository.dart';
+import '../data/advanced_quran_asr_recognizer.dart';
 import '../domain/forced_alignment_result.dart';
 import '../domain/live_audio_level.dart';
 import '../domain/quran_ayah.dart';
 import '../domain/recognized_word.dart';
 import '../domain/recitation_target.dart';
+import '../domain/tasmee3_mistake.dart';
 import '../domain/tasmee3_result.dart';
+import '../domain/tasmee3_session_diagnostics.dart';
 import '../domain/tasmee3_session_record.dart';
 import 'mistake_detection_engine.dart';
 
@@ -36,6 +39,7 @@ class Tasmee3State {
   final Tasmee3Result? result;
   final ForcedAlignmentResult? alignment;
   final LiveAudioLevel? audioLevel;
+  final Tasmee3SessionDiagnostics? diagnostics;
   final int elapsedSeconds;
   final String? errorMessage;
   final Duration sessionDuration;
@@ -49,6 +53,7 @@ class Tasmee3State {
     this.result,
     this.alignment,
     this.audioLevel,
+    this.diagnostics,
     this.elapsedSeconds = 0,
     this.errorMessage,
     this.sessionDuration = Duration.zero,
@@ -63,6 +68,7 @@ class Tasmee3State {
         result = null,
         alignment = null,
         audioLevel = null,
+        diagnostics = null,
         elapsedSeconds = 0,
         errorMessage = null,
         sessionDuration = Duration.zero;
@@ -76,12 +82,14 @@ class Tasmee3State {
     Tasmee3Result? result,
     ForcedAlignmentResult? alignment,
     LiveAudioLevel? audioLevel,
+    Tasmee3SessionDiagnostics? diagnostics,
     int? elapsedSeconds,
     String? errorMessage,
     Duration? sessionDuration,
     bool clearResult = false,
     bool clearAlignment = false,
     bool clearAudioLevel = false,
+    bool clearDiagnostics = false,
   }) {
     return Tasmee3State(
       status: status ?? this.status,
@@ -92,6 +100,8 @@ class Tasmee3State {
       result: clearResult ? null : result ?? this.result,
       alignment: clearAlignment ? null : alignment ?? this.alignment,
       audioLevel: clearAudioLevel ? null : audioLevel ?? this.audioLevel,
+      diagnostics:
+          clearDiagnostics ? null : diagnostics ?? this.diagnostics,
       elapsedSeconds: elapsedSeconds ?? this.elapsedSeconds,
       errorMessage: errorMessage,
       sessionDuration: sessionDuration ?? this.sessionDuration,
@@ -322,6 +332,7 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
       alignment: alignment,
       confidence: alignment.confidence,
       recognizedText: alignment.fullText,
+      diagnostics: _buildDiagnostics(result),
     );
   }
 
@@ -348,6 +359,7 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
     state = state.copyWith(
       status: Tasmee3Status.completed,
       result: result,
+      diagnostics: _buildDiagnostics(result),
     );
   }
 
@@ -383,6 +395,32 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
     state = state.copyWith(
       status: Tasmee3Status.completed,
       result: result,
+      diagnostics: _buildDiagnostics(result),
+    );
+  }
+
+  Tasmee3SessionDiagnostics _buildDiagnostics(Tasmee3Result result) {
+    final usedAdvanced = recognizer is AdvancedQuranAsrRecognizer;
+
+    return Tasmee3SessionDiagnostics(
+      durationSeconds: state.elapsedSeconds,
+      expectedWordsCount: result.expectedWords.length,
+      recognizedWordsCount: result.recognizedWords.length,
+      mistakesCount: result.mistakesCount,
+      lowConfidenceCount: result.mistakes
+          .where((m) => m.type == Tasmee3MistakeType.lowConfidence)
+          .length,
+      accuracy: result.accuracy,
+      averageAudioLevel: state.audioLevel?.average,
+      maxAudioLevel: state.audioLevel?.max,
+      usedAdvancedAsr: usedAdvanced,
+      usedFallback: !usedAdvanced,
+      notes: [
+        if (result.accuracyPercent < 75)
+          'الدقة منخفضة، يفضل إعادة التسميع بنطاق أقصر.',
+        if ((state.audioLevel?.average ?? 1) < 0.08)
+          'مستوى الصوت كان منخفضا أثناء التسجيل.',
+      ],
     );
   }
 
