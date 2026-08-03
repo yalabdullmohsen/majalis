@@ -5,7 +5,10 @@ import '../../domain/mushaf_font_family.dart';
 import '../../domain/mushaf_page.dart';
 import '../../domain/mushaf_reading_settings.dart';
 import '../../domain/mushaf_reading_theme.dart';
+import '../mushaf_design_tokens.dart';
 import '../mushaf_reading_theme_colors.dart';
+
+// Mushaf layout is custom for Mushafi and does not copy any external app UI.
 
 class MushafPageView extends StatelessWidget {
   final MushafPage page;
@@ -46,13 +49,15 @@ class MushafPageView extends StatelessWidget {
       ),
       decoration: BoxDecoration(
         color: colors.page,
-        borderRadius: BorderRadius.circular(22),
-        border: Border.all(color: colors.border),
+        borderRadius: BorderRadius.circular(MushafRadius.xl),
+        border: Border.all(
+          color: colors.border.withValues(alpha: 0.75),
+        ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: isDark ? 0.20 : 0.04),
-            blurRadius: 18,
-            offset: const Offset(0, 8),
+            color: Colors.black.withValues(alpha: isDark ? 0.16 : 0.03),
+            blurRadius: 16,
+            offset: const Offset(0, 6),
           ),
         ],
       ),
@@ -107,16 +112,11 @@ class MushafPageView extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 4),
         decoration: BoxDecoration(
           color: selected
-              ? colors.highlight
+              ? MushafColors.primary.withValues(alpha: 0.20)
               : showTapHighlight
-                  ? colors.highlight
+                  ? MushafColors.primary.withValues(alpha: 0.14)
                   : Colors.transparent,
-          borderRadius: BorderRadius.circular(10),
-          border: needsReview
-              ? Border.all(
-                  color: Colors.orange.withValues(alpha: 0.7),
-                )
-              : null,
+          borderRadius: BorderRadius.circular(MushafRadius.sm),
         ),
         child: Stack(
           clipBehavior: Clip.none,
@@ -146,13 +146,13 @@ class MushafPageView extends StatelessWidget {
             ),
             if (needsReview)
               Positioned(
-                top: -4,
-                left: -4,
+                top: -2,
+                left: -2,
                 child: Container(
-                  width: 8,
-                  height: 8,
+                  width: 6,
+                  height: 6,
                   decoration: const BoxDecoration(
-                    color: Colors.orange,
+                    color: MushafColors.warning,
                     shape: BoxShape.circle,
                   ),
                 ),

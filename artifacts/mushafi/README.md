@@ -338,3 +338,15 @@ dart run scripts/check_quran_asset.dart
 - Light / Dark / Sepia
 - خلفية عاجية `#FBF7EF`، زخرفة `#A77A48`، حبر `#11100E`
 - صفحة بنسبة ≈ 9:16، أدوات تظهر عند اللمس فقط
+
+## Final UX Polish
+
+تم تحسين تجربة المصحف والتسميع:
+
+- Mushaf Home.
+- صفحة قراءة أنظف.
+- قائمة آية منظمة.
+- ربط أوضح بين المصحف والتسميع.
+- نتيجة تسميع أوضح.
+- Dashboard مرتب.
+- Final UX checklist.

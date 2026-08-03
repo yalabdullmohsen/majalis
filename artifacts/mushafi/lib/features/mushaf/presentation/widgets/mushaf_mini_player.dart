@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../../tasmee3/presentation/tasmee3_design_tokens.dart';
 import '../../application/mushaf_providers.dart';
 import '../../domain/mushaf_audio_state.dart';
+import '../mushaf_design_tokens.dart';
 
 class MushafMiniPlayer extends ConsumerWidget {
   const MushafMiniPlayer({super.key});
@@ -21,26 +21,32 @@ class MushafMiniPlayer extends ConsumerWidget {
       return SafeArea(
         top: false,
         child: Container(
-          padding: const EdgeInsets.all(Tasmee3Spacing.md),
+          padding: const EdgeInsets.all(MushafSpacing.md),
           decoration: const BoxDecoration(
-            color: Tasmee3Colors.surface,
+            color: MushafColors.surface,
             border: Border(
-              top: BorderSide(color: Tasmee3Colors.border),
+              top: BorderSide(color: MushafColors.border),
             ),
           ),
           child: Row(
             children: [
-              const Icon(Icons.error_outline, color: Tasmee3Colors.danger),
-              const SizedBox(width: 8),
+              const Icon(Icons.error_outline, color: MushafColors.danger),
+              const SizedBox(width: MushafSpacing.sm),
               Expanded(
                 child: Text(
-                  audio.errorMessage ?? 'تعذر تشغيل الصوت.',
-                  style: const TextStyle(color: Tasmee3Colors.danger),
+                  audio.errorMessage?.contains('مرخص') == true ||
+                          audio.errorMessage?.contains('مصدر') == true
+                      ? 'أضف مصدر صوت مرخص للقارئ من إعدادات الصوت.'
+                      : (audio.errorMessage ?? 'تعذر تشغيل الصوت.'),
+                  style: MushafTextStyles.secondary.copyWith(
+                    color: MushafColors.danger,
+                  ),
                 ),
               ),
               IconButton(
+                tooltip: 'إغلاق',
                 onPressed: controller.stop,
-                icon: const Icon(Icons.close),
+                icon: const Icon(Icons.close, size: 20),
               ),
             ],
           ),
@@ -60,11 +66,11 @@ class MushafMiniPlayer extends ConsumerWidget {
     return SafeArea(
       top: false,
       child: Container(
-        padding: const EdgeInsets.fromLTRB(12, 8, 12, 10),
+        padding: const EdgeInsets.fromLTRB(10, 6, 10, 8),
         decoration: const BoxDecoration(
-          color: Tasmee3Colors.surface,
+          color: MushafColors.surface,
           border: Border(
-            top: BorderSide(color: Tasmee3Colors.border),
+            top: BorderSide(color: MushafColors.border),
           ),
         ),
         child: Column(
@@ -72,36 +78,41 @@ class MushafMiniPlayer extends ConsumerWidget {
           children: [
             if (audio.duration.inMilliseconds > 0)
               ClipRRect(
-                borderRadius: BorderRadius.circular(999),
+                borderRadius: BorderRadius.circular(MushafRadius.pill),
                 child: LinearProgressIndicator(
                   value: progress,
-                  minHeight: 4,
+                  minHeight: 3,
                   backgroundColor:
-                      Tasmee3Colors.border.withValues(alpha: 0.35),
-                  color: Tasmee3Colors.primary,
+                      MushafColors.border.withValues(alpha: 0.35),
+                  color: MushafColors.primary,
                 ),
               ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 6),
             Row(
               children: [
                 IconButton(
+                  tooltip: 'السابق',
+                  visualDensity: VisualDensity.compact,
                   onPressed: controller.previous,
-                  icon: const Icon(Icons.skip_previous),
+                  icon: const Icon(Icons.skip_previous, size: 22),
                 ),
                 IconButton(
+                  tooltip: audio.isPlaying ? 'إيقاف مؤقت' : 'تشغيل',
                   onPressed:
                       audio.isPlaying ? controller.pause : controller.resume,
                   icon: Icon(
                     audio.isPlaying
                         ? Icons.pause_circle_filled
                         : Icons.play_circle_fill,
-                    color: Tasmee3Colors.primary,
-                    size: 34,
+                    color: MushafColors.primary,
+                    size: 32,
                   ),
                 ),
                 IconButton(
+                  tooltip: 'التالي',
+                  visualDensity: VisualDensity.compact,
                   onPressed: controller.next,
-                  icon: const Icon(Icons.skip_next),
+                  icon: const Icon(Icons.skip_next, size: 22),
                 ),
                 Expanded(
                   child: Column(
@@ -109,24 +120,27 @@ class MushafMiniPlayer extends ConsumerWidget {
                     children: [
                       Text(
                         title,
-                        textAlign: TextAlign.right,
-                        style: const TextStyle(
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: MushafTextStyles.body.copyWith(
                           fontWeight: FontWeight.bold,
-                          color: Tasmee3Colors.text,
+                          fontSize: 14,
                         ),
                       ),
                       Text(
                         audio.reciterName ?? 'القارئ',
-                        textAlign: TextAlign.right,
-                        style:
-                            Tasmee3TextStyles.secondary.copyWith(fontSize: 12),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: MushafTextStyles.secondary.copyWith(fontSize: 12),
                       ),
                     ],
                   ),
                 ),
                 IconButton(
+                  tooltip: 'إيقاف',
+                  visualDensity: VisualDensity.compact,
                   onPressed: controller.stop,
-                  icon: const Icon(Icons.close),
+                  icon: const Icon(Icons.stop_circle_outlined, size: 22),
                 ),
               ],
             ),

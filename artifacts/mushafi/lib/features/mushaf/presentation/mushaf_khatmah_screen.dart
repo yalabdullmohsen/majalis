@@ -10,6 +10,7 @@ import '../domain/khatmah_plan.dart';
 import 'khatmah_archive_screen.dart';
 import 'khatmah_create_plan_screen.dart';
 import 'khatmah_reminder_settings_screen.dart';
+import 'mushaf_design_tokens.dart';
 import 'mushaf_screen.dart';
 
 class MushafKhatmahScreen extends ConsumerWidget {
@@ -67,37 +68,35 @@ class MushafKhatmahScreen extends ConsumerWidget {
                   },
                 )
               : ListView(
-                  padding: const EdgeInsets.all(Tasmee3Spacing.lg),
+                  padding: const EdgeInsets.all(MushafSpacing.lg),
                   children: [
                     _ActivePlanCard(plan: active),
-                    const SizedBox(height: Tasmee3Spacing.lg),
-                    _StatsCard(state: state),
-                    const SizedBox(height: Tasmee3Spacing.lg),
+                    const SizedBox(height: MushafSpacing.md),
                     if (active.isLate)
                       Container(
                         margin:
-                            const EdgeInsets.only(bottom: Tasmee3Spacing.md),
-                        padding: const EdgeInsets.all(Tasmee3Spacing.md),
+                            const EdgeInsets.only(bottom: MushafSpacing.md),
+                        padding: const EdgeInsets.all(MushafSpacing.md),
                         decoration: BoxDecoration(
-                          color: Tasmee3Colors.warning.withValues(alpha: 0.08),
+                          color: MushafColors.warning.withValues(alpha: 0.08),
                           borderRadius:
-                              BorderRadius.circular(Tasmee3Radius.md),
+                              BorderRadius.circular(MushafRadius.md),
                           border: Border.all(
                             color:
-                                Tasmee3Colors.warning.withValues(alpha: 0.25),
+                                MushafColors.warning.withValues(alpha: 0.25),
                           ),
                         ),
                         child: Text(
-                          'أنت متأخر تقريبا ${active.lateByPages} صفحة عن الخطة.',
+                          'متأخر ${active.lateByPages} صفحة عن الخطة.',
                           textAlign: TextAlign.center,
-                          style: Tasmee3TextStyles.secondary.copyWith(
-                            color: Tasmee3Colors.warning,
+                          style: MushafTextStyles.secondary.copyWith(
+                            color: MushafColors.warning,
                           ),
                         ),
                       ),
                     ElevatedButton.icon(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Tasmee3Colors.primary,
+                        backgroundColor: MushafColors.primary,
                         foregroundColor: Colors.white,
                         padding: const EdgeInsets.symmetric(vertical: 14),
                       ),
@@ -114,15 +113,53 @@ class MushafKhatmahScreen extends ConsumerWidget {
                       icon: const Icon(Icons.menu_book_outlined),
                       label: const Text('متابعة القراءة'),
                     ),
-                    const SizedBox(height: Tasmee3Spacing.sm),
+                    const SizedBox(height: MushafSpacing.sm),
                     OutlinedButton.icon(
                       onPressed: () {
                         _showMarkReadDialog(context, controller, active);
                       },
                       icon: const Icon(Icons.check_circle_outline),
-                      label: const Text('تسجيل صفحات مقروءة'),
+                      label: const Text('تسجيل صفحات'),
                     ),
-                    const SizedBox(height: Tasmee3Spacing.sm),
+                    const SizedBox(height: MushafSpacing.sm),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: OutlinedButton.icon(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) =>
+                                      const KhatmahReminderSettingsScreen(),
+                                ),
+                              );
+                            },
+                            icon: const Icon(Icons.notifications_outlined),
+                            label: const Text('التذكير'),
+                          ),
+                        ),
+                        const SizedBox(width: MushafSpacing.sm),
+                        Expanded(
+                          child: OutlinedButton.icon(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) =>
+                                      const KhatmahArchiveScreen(),
+                                ),
+                              );
+                            },
+                            icon: const Icon(Icons.archive_outlined),
+                            label: const Text('الأرشيف'),
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: MushafSpacing.lg),
+                    _StatsCard(state: state),
+                    const SizedBox(height: MushafSpacing.sm),
                     OutlinedButton.icon(
                       onPressed: () {
                         Navigator.push(

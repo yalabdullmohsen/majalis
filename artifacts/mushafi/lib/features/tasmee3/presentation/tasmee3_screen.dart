@@ -24,13 +24,13 @@ import 'tasmee3_mistake_training_screen.dart';
 import 'tasmee3_privacy_screen.dart';
 import 'tasmee3_report_preview_screen.dart';
 import 'tasmee3_weak_spots_screen.dart';
-import 'widgets/tasmee3_accuracy_card.dart';
 import 'widgets/tasmee3_audio_level_meter.dart';
 import 'widgets/tasmee3_ayah_scores_card.dart';
 import 'widgets/tasmee3_live_ayah_progress_card.dart';
 import 'widgets/tasmee3_live_progress_card.dart';
 import 'widgets/tasmee3_mistake_report_sheet.dart';
 import 'widgets/tasmee3_mushaf_recitation_view.dart';
+import 'widgets/tasmee3_result_summary_card.dart';
 import 'widgets/tasmee3_section_card.dart';
 import 'widgets/tasmee3_visibility_mode_sheet.dart';
 
@@ -867,14 +867,61 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
       padding: const EdgeInsets.all(16),
       child: Column(
         children: [
-          Tasmee3AccuracyCard(result: result),
-          const SizedBox(height: 8),
-          const Text(
-            'الألوان: الأحمر خطأ، البرتقالي ناقص، الأزرق ثقة منخفضة.',
+          Tasmee3ResultSummaryCard(
+            accuracy: result.accuracy,
+            mistakesCount: result.mistakesCount,
+            durationSeconds: state.elapsedSeconds,
+          ),
+          const SizedBox(height: 10),
+          Text(
+            result.mistakesCount == 0
+                ? 'ما شاء الله، لا توجد مواضع ظاهرة تحتاج مراجعة في هذه الجلسة.'
+                : 'راجع هذه المواضع بهدوء، وكرر التسميع عند الحاجة.',
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               color: Color(0xFF9A8068),
-              fontSize: 13,
+              fontSize: 13.5,
+              height: 1.5,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Theme(
+            data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
+            child: ExpansionTile(
+              tilePadding: EdgeInsets.zero,
+              childrenPadding: const EdgeInsets.only(bottom: 8),
+              title: const Text(
+                'تفاصيل المواضع التي تحتاج مراجعة',
+                style: TextStyle(
+                  color: Color(0xFF11100E),
+                  fontWeight: FontWeight.w600,
+                  fontSize: 14,
+                ),
+              ),
+              children: [
+                const Text(
+                  'الألوان: الأحمر موضع ظاهر، البرتقالي ناقص، الأزرق ثقة منخفضة.',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Color(0xFF9A8068),
+                    fontSize: 13,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                OutlinedButton.icon(
+                  onPressed: () {
+                    showModalBottomSheet(
+                      context: context,
+                      showDragHandle: true,
+                      backgroundColor: const Color(0xFFFFFCF7),
+                      builder: (_) =>
+                          Tasmee3MistakeReportSheet(result: result),
+                    );
+                  },
+                  icon: const Icon(Icons.analytics_outlined),
+                  label: const Text('عرض المواضع الظاهرة'),
+                ),
+              ],
             ),
           ),
           if (state.alignment?.ayahScores.isNotEmpty == true) ...[
@@ -1027,7 +1074,8 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
               label: const Text('تنظيف مؤشرات المراجعة'),
             ),
           ],
-          if (widget.launchConfig.returnToMushafAfterCompletion) ...[
+          if (widget.launchConfig.source == Tasmee3LaunchSource.mushaf ||
+              widget.launchConfig.returnToMushafAfterCompletion) ...[
             const SizedBox(height: 10),
             OutlinedButton.icon(
               onPressed: () => Navigator.pop(context),
@@ -1054,27 +1102,7 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
                         );
                   },
                   icon: const Icon(Icons.replay),
-                  label: const Text('إعادة نفس النطاق'),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          Row(
-            children: [
-              Expanded(
-                child: OutlinedButton.icon(
-                  onPressed: () {
-                    showModalBottomSheet(
-                      context: context,
-                      showDragHandle: true,
-                      backgroundColor: const Color(0xFFFFFCF7),
-                      builder: (_) =>
-                          Tasmee3MistakeReportSheet(result: result),
-                    );
-                  },
-                  icon: const Icon(Icons.analytics_outlined),
-                  label: const Text('تقرير الأخطاء الظاهرة'),
+                  label: const Text('إعادة التسميع'),
                 ),
               ),
             ],

@@ -11,6 +11,7 @@ import '../data/tafsir_catalog.dart';
 import '../domain/mushaf_search_filter.dart';
 import '../domain/mushaf_search_history_item.dart';
 import '../domain/mushaf_search_result.dart';
+import 'mushaf_design_tokens.dart';
 import 'mushaf_screen.dart';
 import 'mushaf_search_filter_sheet.dart';
 import 'mushaf_tafsir_screen.dart';
@@ -89,73 +90,99 @@ class _MushafSearchScreenState extends ConsumerState<MushafSearchScreen> {
         children: [
           Padding(
             padding: const EdgeInsets.fromLTRB(
-              Tasmee3Spacing.lg,
-              Tasmee3Spacing.lg,
-              Tasmee3Spacing.lg,
-              Tasmee3Spacing.sm,
+              MushafSpacing.lg,
+              MushafSpacing.lg,
+              MushafSpacing.lg,
+              MushafSpacing.sm,
             ),
-            child: Column(
-              children: [
-                TextField(
-                  controller: searchController,
-                  textDirection: TextDirection.rtl,
-                  autofocus: true,
-                  decoration: InputDecoration(
-                    hintText: 'ابحث عن كلمة أو جزء من آية',
-                    prefixIcon: const Icon(Icons.search),
-                    suffixIcon: searchController.text.isEmpty
-                        ? null
-                        : IconButton(
-                            icon: const Icon(Icons.close),
-                            onPressed: () {
-                              searchController.clear();
-                              searchNotifier.updateQuery('');
-                              setState(() {});
-                            },
-                          ),
-                    border: const OutlineInputBorder(),
-                  ),
-                  onChanged: (value) {
-                    searchNotifier.updateQuery(value);
-                    setState(() {});
-                  },
-                  onSubmitted: (value) {
-                    searchNotifier.search(value);
-                  },
-                ),
-                const SizedBox(height: Tasmee3Spacing.sm),
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        _filterLabel(searchState.filter),
-                        style: Tasmee3TextStyles.secondary,
+            child: Container(
+              padding: const EdgeInsets.all(MushafSpacing.md),
+              decoration: BoxDecoration(
+                color: MushafColors.surface,
+                borderRadius: BorderRadius.circular(MushafRadius.lg),
+                border: Border.all(color: MushafColors.border),
+              ),
+              child: Column(
+                children: [
+                  TextField(
+                    controller: searchController,
+                    textDirection: TextDirection.rtl,
+                    autofocus: true,
+                    decoration: InputDecoration(
+                      hintText: 'ابحث عن كلمة أو جزء من آية',
+                      prefixIcon: const Icon(
+                        Icons.search,
+                        color: MushafColors.primary,
+                      ),
+                      suffixIcon: searchController.text.isEmpty
+                          ? null
+                          : IconButton(
+                              icon: const Icon(Icons.close),
+                              onPressed: () {
+                                searchController.clear();
+                                searchNotifier.updateQuery('');
+                                setState(() {});
+                              },
+                            ),
+                      filled: true,
+                      fillColor: MushafColors.paper,
+                      border: OutlineInputBorder(
+                        borderRadius:
+                            BorderRadius.circular(MushafRadius.md),
+                        borderSide: const BorderSide(
+                          color: MushafColors.border,
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius:
+                            BorderRadius.circular(MushafRadius.md),
+                        borderSide: const BorderSide(
+                          color: MushafColors.border,
+                        ),
                       ),
                     ),
-                    OutlinedButton.icon(
-                      onPressed: () async {
-                        final selected =
-                            await showModalBottomSheet<MushafSearchFilter>(
-                          context: context,
-                          showDragHandle: true,
-                          isScrollControlled: true,
-                          builder: (_) => MushafSearchFilterSheet(
-                            current: searchState.filter,
-                          ),
-                        );
+                    onChanged: (value) {
+                      searchNotifier.updateQuery(value);
+                      setState(() {});
+                    },
+                    onSubmitted: (value) {
+                      searchNotifier.search(value);
+                    },
+                  ),
+                  const SizedBox(height: MushafSpacing.sm),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: Text(
+                          _filterLabel(searchState.filter),
+                          style: MushafTextStyles.secondary,
+                        ),
+                      ),
+                      OutlinedButton.icon(
+                        onPressed: () async {
+                          final selected =
+                              await showModalBottomSheet<MushafSearchFilter>(
+                            context: context,
+                            showDragHandle: true,
+                            isScrollControlled: true,
+                            builder: (_) => MushafSearchFilterSheet(
+                              current: searchState.filter,
+                            ),
+                          );
 
-                        if (selected != null) {
-                          ref
-                              .read(mushafSearchControllerProvider.notifier)
-                              .updateFilter(selected);
-                        }
-                      },
-                      icon: const Icon(Icons.filter_list),
-                      label: const Text('فلترة'),
-                    ),
-                  ],
-                ),
-              ],
+                          if (selected != null) {
+                            ref
+                                .read(mushafSearchControllerProvider.notifier)
+                                .updateFilter(selected);
+                          }
+                        },
+                        icon: const Icon(Icons.filter_list),
+                        label: const Text('فلترة'),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
           if (searchController.text.trim().isEmpty)
