@@ -8,6 +8,7 @@ import '../domain/tasmee3_app_info.dart';
 import '../domain/tasmee3_daily_goal.dart';
 import '../domain/tasmee3_session_record.dart';
 import '../domain/tasmee3_user_asr_settings.dart';
+import 'tasmee3_bug_report_screen.dart';
 import 'tasmee3_design_tokens.dart';
 import 'widgets/tasmee3_app_scaffold.dart';
 import 'widgets/tasmee3_error_state.dart';
@@ -84,6 +85,19 @@ class Tasmee3SupportScreen extends ConsumerWidget {
                 'الدقة تقريبية وتتأثر بجودة الصوت والضوضاء وسرعة القراءة. للحصول على نتيجة أفضل استخدم نطاقا قصيرا واقرأ في مكان هادئ.',
           ),
           const SizedBox(height: Tasmee3Spacing.md),
+          OutlinedButton.icon(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const Tasmee3BugReportScreen(),
+                ),
+              );
+            },
+            icon: const Icon(Icons.bug_report_outlined),
+            label: const Text('الإبلاغ عن مشكلة'),
+          ),
+          const SizedBox(height: Tasmee3Spacing.sm),
           ElevatedButton.icon(
             style: ElevatedButton.styleFrom(
               backgroundColor: Tasmee3Colors.primary,

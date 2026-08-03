@@ -81,3 +81,15 @@
 - [ ] Offline behavior tested.
 - [ ] Server disabled behavior tested.
 - [ ] Server enabled behavior tested.
+
+## Post-Release Support
+
+- [x] POST_RELEASE_MONITORING.md جاهز.
+- [x] KNOWN_ISSUES.md جاهز.
+- [x] HOTFIX_PLAN.md جاهز.
+- [x] VERSIONING_POLICY.md جاهز.
+- [x] V1_0_1_CHECKLIST.md جاهز.
+- [x] صفحة الإبلاغ عن مشكلة تعمل.
+- [x] تقرير المشكلة لا يحتوي API key.
+- [x] تقرير المشكلة لا يحتوي صوتا.
+- [x] تقرير المشكلة لا يحتوي نص القرآن.

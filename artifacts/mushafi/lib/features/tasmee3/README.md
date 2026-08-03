@@ -716,3 +716,23 @@ dart run scripts/check_quran_asset.dart
 - قفل رفع الصوت / WebSocket / PCM افتراضيا.
 - وثائق `RELEASE_CANDIDATE.md` و`RC_TEST_PLAN.md` و`RC_SIGNOFF.md` و`SMOKE_TEST_CHECKLIST.md`.
 - اختبارات defaults والتشخيص والـ runtime config.
+
+## البرومبت الثالث والثلاثون - مراقبة ما بعد النشر
+
+تمت إضافة:
+
+- خطة مراقبة بعد النشر.
+- Known Issues.
+- Hotfix Plan.
+- Versioning Policy.
+- v1.0.1 Checklist.
+- صفحة الإبلاغ عن مشكلة.
+- تقرير مشكلة قابل للنسخ.
+- تصنيفات مشاكل.
+- حماية الخصوصية في تقارير الدعم.
+
+## مهم
+
+تقارير المشاكل لا ترسل تلقائيا.
+المستخدم ينسخ التقرير ويرسله يدويا.
+التقرير لا يحتوي صوتا ولا API key ولا نص القرآن.

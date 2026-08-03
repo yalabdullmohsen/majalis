@@ -48,6 +48,7 @@ import 'quran_integrity_service.dart';
 import 'tasmee3_analytics_service.dart';
 import 'tasmee3_asr_settings.dart';
 import 'tasmee3_asr_settings_controller.dart';
+import 'tasmee3_bug_report_builder.dart';
 import 'tasmee3_controller.dart';
 import 'tasmee3_diagnostics_service.dart';
 import 'tasmee3_error_mapper.dart';
@@ -488,6 +489,11 @@ final tasmee3AppInfoProvider = FutureProvider<Tasmee3AppInfo>((ref) async {
 final tasmee3DiagnosticsServiceProvider =
     Provider<Tasmee3DiagnosticsService>((ref) {
   return const Tasmee3DiagnosticsService();
+});
+
+final tasmee3BugReportBuilderProvider =
+    Provider<Tasmee3BugReportBuilder>((ref) {
+  return const Tasmee3BugReportBuilder();
 });
 
 final tasmee3ResetServiceProvider = Provider<Tasmee3ResetService>((ref) {

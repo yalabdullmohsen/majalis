@@ -39,6 +39,18 @@ Release candidate documents:
 
 Before store submission, complete all RC checklists and confirm that experimental server features are disabled by default.
 
+## Post-Release
+
+Post-release documents:
+
+- `POST_RELEASE_MONITORING.md`
+- `KNOWN_ISSUES.md`
+- `HOTFIX_PLAN.md`
+- `VERSIONING_POLICY.md`
+- `V1_0_1_CHECKLIST.md`
+
+The app includes local-only diagnostics and a copyable bug report form. No audio, API key, or Quran text should be included in diagnostics.
+
 ## Store Submission
 
 Store submission materials are located in:

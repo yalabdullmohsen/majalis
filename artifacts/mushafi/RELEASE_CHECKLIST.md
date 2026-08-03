@@ -68,6 +68,17 @@ dart run scripts/check_quran_asset.dart
 - [x] App works offline for local features.
 - [x] App does not crash without ASR server.
 
+## Post-Release Readiness
+
+- [x] صفحة الدعم تعمل.
+- [x] صفحة الإبلاغ عن مشكلة تعمل.
+- [x] نسخ التشخيص يعمل.
+- [x] نسخ تقرير المشكلة يعمل.
+- [x] Hotfix plan جاهز.
+- [x] Known issues جاهزة.
+- [x] v1.0.1 checklist جاهز.
+- [x] Versioning policy جاهزة.
+
 ## Store Submission
 
 - [ ] Google Play description reviewed.
