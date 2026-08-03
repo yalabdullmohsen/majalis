@@ -1,0 +1,45 @@
+{
+  "appId": "com.yousef.majlisilm",
+  "appName": "المجلس العلمي",
+  "webDir": "dist",
+  "server": {
+    "url": "https://majlisilm.com",
+    "cleartext": false,
+    "androidScheme": "https"
+  },
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 2000,
+      "launchAutoHide": true,
+      "backgroundColor": "#ffffff",
+      "showSpinner": true,
+      "androidSpinnerStyle": "small",
+      "iosSpinnerStyle": "small",
+      "androidSplashResourceName": "splash",
+      "androidScaleType": "CENTER_CROP",
+      "splashImmersive": true
+    },
+    "StatusBar": {
+      "style": "DARK",
+      "backgroundColor": "#ffffff",
+      "overlaysWebView": false
+    },
+    "Keyboard": {
+      "resize": "body",
+      "resizeOnFullScreen": true
+    },
+    "LocalNotifications": {
+      "presentationOptions": ["badge", "sound", "banner", "list"]
+    }
+  },
+  "android": {
+    "allowMixedContent": false,
+    "captureInput": true,
+    "webContentsDebuggingEnabled": false
+  },
+  "ios": {
+    "contentInset": "never",
+    "backgroundColor": "#ffffff",
+    "scrollEnabled": true
+  }
+}
