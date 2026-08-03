@@ -1,42 +1,51 @@
 # Tasmee3 Feature
 
-ميزة التسميع تعتمد على طبقات منفصلة:
+ميزة التسميع في التطبيق.
 
-- UI: شاشة التسميع.
-- Controller: إدارة الجلسة.
-- QuranRepository: قراءة النص القرآني من ملف موثق.
-- QuranSpeechRecognizer: واجهة التعرف الصوتي.
-- SpeechToTextQuranRecognizer: محرك fallback يعتمد على التعرف الصوتي في الجهاز.
-- AdvancedQuranAsrRecognizer: مكان ربط محرك ASR قرآني متخصص لاحقا.
-- MistakeDetectionEngine: مقارنة الكلمات وكشف الأخطاء.
+## الملفات الأساسية
 
-## رفع الدقة
+- `domain/`: نماذج البيانات.
+- `data/`: قراءة القرآن، التعرف الصوتي، وسجل الجلسات.
+- `application/`: controller ومحرك كشف الأخطاء.
+- `presentation/`: شاشة التسميع، السجل، والتقارير.
 
-للوصول إلى دقة مثل التطبيقات المتقدمة، يجب ربط محرك ASR قرآني متخصص يرجع:
+## مصدر القرآن
 
-- الكلمة
-- بداية الكلمة بالمللي ثانية
-- نهاية الكلمة بالمللي ثانية
-- confidence لكل كلمة
+يجب وضع ملف القرآن هنا:
 
-ثم تمرير النتائج إلى MistakeDetectionEngine.
+`assets/quran/quran_uthmani.json`
 
-## تخصيص الواجهة
+الصيغة:
 
-عدّل القيم الافتراضية أو عدّل `tasmee3UiSettingsProvider` في:
+```json
+[
+  {
+    "surah": 1,
+    "ayah": 1,
+    "textUthmani": "..."
+  }
+]
+```
 
-`lib/features/tasmee3/application/tasmee3_ui_settings.dart`
+## الدقة
 
-## استبدال محرك الصوت
+المحرك الحالي يستخدم speech_to_text كحل أولي. للوصول إلى دقة أعلى مثل التطبيقات المتقدمة، يجب ربط محرك ASR قرآني متخصص يعطي:
 
-غيّر فقط `quranSpeechRecognizerProvider` في:
+- الكلمات.
+- توقيت كل كلمة.
+- نسبة ثقة لكل كلمة.
+- نتيجة نهائية أو جزئية.
 
-`lib/features/tasmee3/application/tasmee3_providers.dart`
+## مكان استبدال المحرك
 
-من `SpeechToTextQuranRecognizer` إلى تنفيذ `AdvancedQuranAsrRecognizer` بعد ربط الـ API.
+استبدل implementation الحالي في:
 
-## ملاحظات مهمة
+`lib/features/tasmee3/data/speech_to_text_quran_recognizer.dart`
 
-- لا يتم توليد النص القرآني بالذكاء الاصطناعي.
-- النص يجب أن يأتي من assets/quran/quran_uthmani.json.
-- speech_to_text مناسب كبداية لكنه ليس مثاليا للتسميع الطويل.
+أو اربط:
+
+`lib/features/tasmee3/data/advanced_quran_asr_recognizer.dart`
+
+مع provider:
+
+`quranSpeechRecognizerProvider`

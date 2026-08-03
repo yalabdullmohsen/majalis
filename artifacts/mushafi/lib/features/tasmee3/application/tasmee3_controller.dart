@@ -5,10 +5,12 @@ import 'package:permission_handler/permission_handler.dart';
 
 import '../data/quran_repository.dart';
 import '../data/quran_speech_recognizer.dart';
+import '../data/tasmee3_session_repository.dart';
 import '../domain/quran_ayah.dart';
 import '../domain/recognized_word.dart';
 import '../domain/recitation_target.dart';
 import '../domain/tasmee3_result.dart';
+import '../domain/tasmee3_session_record.dart';
 import 'mistake_detection_engine.dart';
 
 enum Tasmee3Status {
@@ -80,16 +82,21 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
   final QuranRepository quranRepository;
   final QuranSpeechRecognizer recognizer;
   final MistakeDetectionEngine engine;
+  final Tasmee3SessionRepository sessionRepository;
+  final void Function()? onSessionSaved;
 
   StreamSubscription<RecognizedSegment>? _subscription;
   List<QuranAyah> _expectedAyahs = [];
   Timer? _sessionTimer;
+  DateTime? _startedAt;
   DateTime? _listenStartedAt;
 
   Tasmee3Controller({
     required this.quranRepository,
     required this.recognizer,
     required this.engine,
+    required this.sessionRepository,
+    this.onSessionSaved,
   }) : super(const Tasmee3State.initial());
 
   Future<void> start(RecitationTarget target) async {
@@ -104,6 +111,7 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
       }
 
       _stopSessionTimer();
+      _startedAt = DateTime.now();
 
       state = state.copyWith(
         status: Tasmee3Status.requestingPermission,
@@ -181,7 +189,6 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
     await recognizer.stop();
     await _subscription?.cancel();
     _subscription = null;
-    _stopSessionTimer();
 
     analyze();
   }
@@ -194,6 +201,11 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
       );
       return;
     }
+
+    final started = _startedAt ?? _listenStartedAt;
+    final durationSeconds = started == null
+        ? state.sessionDuration.inSeconds
+        : DateTime.now().difference(started).inSeconds;
 
     _stopSessionTimer();
     state = state.copyWith(status: Tasmee3Status.analyzing);
@@ -213,9 +225,29 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
       );
     }
 
+    final currentTarget = state.target;
+
+    if (currentTarget != null) {
+      final record = Tasmee3SessionRecord(
+        id: DateTime.now().microsecondsSinceEpoch.toString(),
+        target: currentTarget,
+        accuracyPercent: result.accuracyPercent,
+        mistakesCount: result.mistakesCount,
+        durationSeconds: durationSeconds,
+        createdAt: DateTime.now(),
+      );
+
+      unawaited(
+        sessionRepository.saveSession(record).then((_) {
+          onSessionSaved?.call();
+        }),
+      );
+    }
+
     state = state.copyWith(
       status: Tasmee3Status.completed,
       result: result,
+      sessionDuration: Duration(seconds: durationSeconds),
     );
   }
 
@@ -234,15 +266,17 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
 
     _subscription = null;
     _expectedAyahs = [];
+    _startedAt = null;
 
     state = const Tasmee3State.initial();
   }
 
   void _startSessionTimer() {
     _listenStartedAt = DateTime.now();
+    _startedAt ??= _listenStartedAt;
     _sessionTimer?.cancel();
     _sessionTimer = Timer.periodic(const Duration(seconds: 1), (_) {
-      final started = _listenStartedAt;
+      final started = _listenStartedAt ?? _startedAt;
       if (started == null) return;
       state = state.copyWith(
         sessionDuration: DateTime.now().difference(started),
