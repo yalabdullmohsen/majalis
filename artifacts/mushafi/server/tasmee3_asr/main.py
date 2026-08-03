@@ -479,6 +479,9 @@ def health():
             "weak_spots",
             "audio_validation",
         ],
+        "lowConfidenceThreshold": LOW_CONFIDENCE_THRESHOLD,
+        "minAudioBytes": MIN_AUDIO_BYTES,
+        "minAudioDurationSeconds": MIN_AUDIO_DURATION_SECONDS,
     }
 
 

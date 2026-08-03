@@ -1,15 +1,25 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../data/advanced_quran_asr_recognizer.dart';
+import '../data/asr_server_health_service.dart';
 import '../data/assets_quran_repository.dart';
+import '../data/local_tasmee3_asr_settings_repository.dart';
+import '../data/local_tasmee3_failed_job_queue.dart';
 import '../data/local_tasmee3_session_repository.dart';
 import '../data/quran_repository.dart';
 import '../data/quran_speech_recognizer.dart';
 import '../data/speech_to_text_quran_recognizer.dart';
+import '../data/tasmee3_asr_settings_repository.dart';
+import '../data/tasmee3_failed_job_queue.dart';
 import '../data/tasmee3_session_repository.dart';
+import '../domain/asr_connection_status.dart';
+import '../domain/asr_engine_mode.dart';
+import '../domain/queued_tasmee3_job.dart';
 import '../domain/tasmee3_session_record.dart';
+import '../domain/tasmee3_user_asr_settings.dart';
 import 'mistake_detection_engine.dart';
 import 'tasmee3_asr_settings.dart';
+import 'tasmee3_asr_settings_controller.dart';
 import 'tasmee3_controller.dart';
 import 'tasmee3_ui_settings.dart';
 
@@ -19,33 +29,107 @@ final quranRepositoryProvider = Provider<QuranRepository>((ref) {
   return AssetsQuranRepository();
 });
 
-final tasmee3AsrSettingsProvider = Provider<Tasmee3AsrSettings>((ref) {
-  const endpoint = String.fromEnvironment(
-    'TASMEE3_ASR_ENDPOINT',
-    defaultValue: '',
-  );
-  const apiKey = String.fromEnvironment(
-    'TASMEE3_ASR_API_KEY',
-    defaultValue: '',
+/// Legacy compile-time settings from `--dart-define` (kept for backward compat).
+final legacyTasmee3AsrSettingsProvider = Provider<Tasmee3AsrSettings>((ref) {
+  return Tasmee3AsrSettings.fromEnvironment();
+});
+
+/// @Deprecated Prefer [tasmee3UserAsrSettingsProvider]. Kept as alias to legacy
+/// dart-define settings for any remaining call sites.
+final tasmee3AsrSettingsProvider = legacyTasmee3AsrSettingsProvider;
+
+final tasmee3AsrSettingsRepositoryProvider =
+    Provider<Tasmee3AsrSettingsRepository>((ref) {
+  return LocalTasmee3AsrSettingsRepository();
+});
+
+final tasmee3UserAsrSettingsProvider =
+    FutureProvider<Tasmee3UserAsrSettings>((ref) async {
+  final repository = ref.watch(tasmee3AsrSettingsRepositoryProvider);
+  return repository.load();
+});
+
+final asrServerHealthServiceProvider = Provider<AsrServerHealthService>((ref) {
+  return AsrServerHealthService();
+});
+
+final tasmee3ConnectionStatusProvider =
+    StateProvider<AsrConnectionStatus>((ref) {
+  return AsrConnectionStatus.unknown();
+});
+
+final tasmee3FailedJobQueueProvider = Provider<Tasmee3FailedJobQueue>((ref) {
+  return LocalTasmee3FailedJobQueue();
+});
+
+final tasmee3FailedJobsProvider =
+    FutureProvider<List<QueuedTasmee3Job>>((ref) async {
+  final queue = ref.watch(tasmee3FailedJobQueueProvider);
+  return queue.getJobs();
+});
+
+final tasmee3AsrSettingsControllerProvider = StateNotifierProvider<
+    Tasmee3AsrSettingsController, Tasmee3AsrSettingsState>((ref) {
+  final repository = ref.watch(tasmee3AsrSettingsRepositoryProvider);
+  final health = ref.watch(asrServerHealthServiceProvider);
+
+  final asyncSettings = ref.watch(tasmee3UserAsrSettingsProvider);
+
+  final initial = asyncSettings.maybeWhen(
+    data: (value) => value,
+    orElse: () => const Tasmee3UserAsrSettings.defaults(),
   );
 
-  return Tasmee3AsrSettings(
-    useAdvancedAsr: true,
-    endpoint: endpoint.isEmpty ? null : endpoint,
-    apiKey: apiKey.isEmpty ? null : apiKey,
+  return Tasmee3AsrSettingsController(
+    repository: repository,
+    healthService: health,
+    initialSettings: initial,
   );
 });
 
-/// Uses Advanced ASR when `TASMEE3_ASR_ENDPOINT` is set; otherwise speech_to_text fallback.
+/// Uses user ASR settings (mode / allow upload / endpoint). Falls back to
+/// [SpeechToTextQuranRecognizer] when advanced server cannot be used.
 final quranSpeechRecognizerProvider = Provider<QuranSpeechRecognizer>((ref) {
-  final settings = ref.watch(tasmee3AsrSettingsProvider);
+  final asyncSettings = ref.watch(tasmee3UserAsrSettingsProvider);
+  final queue = ref.watch(tasmee3FailedJobQueueProvider);
 
-  if (settings.isConfigured) {
+  final settings = asyncSettings.maybeWhen(
+    data: (value) => value,
+    orElse: () => const Tasmee3UserAsrSettings.defaults(),
+  );
+
+  final maxRetry =
+      settings.enableAutoRetry ? settings.maxRetryCount : 0;
+
+  AdvancedQuranAsrRecognizer buildAdvanced() {
     return AdvancedQuranAsrRecognizer(
-      endpoint: Uri.parse(settings.endpoint!),
-      apiKey: settings.apiKey,
-      uploadTimeout: settings.uploadTimeout,
+      endpoint: Uri.parse(settings.endpoint),
+      apiKey: settings.apiKey.isEmpty ? null : settings.apiKey,
+      maxRetryCount: maxRetry,
+      failedJobQueue:
+          settings.saveFailedSessionsQueue ? queue : null,
+      saveFailedSessionsQueue: settings.saveFailedSessionsQueue,
     );
+  }
+
+  if (settings.mode == AsrEngineMode.deviceFallback) {
+    return SpeechToTextQuranRecognizer();
+  }
+
+  if (settings.mode == AsrEngineMode.advancedServer) {
+    if (settings.canUseAdvancedServer) {
+      return buildAdvanced();
+    }
+
+    return SpeechToTextQuranRecognizer();
+  }
+
+  if (settings.mode == AsrEngineMode.auto) {
+    if (settings.canUseAdvancedServer) {
+      return buildAdvanced();
+    }
+
+    return SpeechToTextQuranRecognizer();
   }
 
   return SpeechToTextQuranRecognizer();

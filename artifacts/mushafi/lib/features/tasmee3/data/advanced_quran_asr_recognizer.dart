@@ -10,20 +10,28 @@ import '../application/arabic_normalizer.dart';
 import '../domain/forced_alignment_result.dart';
 import '../domain/live_audio_level.dart';
 import '../domain/quran_ayah.dart';
+import '../domain/queued_tasmee3_job.dart';
 import '../domain/recitation_target.dart';
 import 'audio_quality_monitor.dart';
 import 'quran_forced_alignment_recognizer.dart';
 import 'quran_speech_recognizer.dart';
+import 'tasmee3_failed_job_queue.dart';
 
 class AdvancedQuranAsrRecognizer implements QuranForcedAlignmentRecognizer {
   final Uri endpoint;
   final String? apiKey;
   final Duration uploadTimeout;
+  final int maxRetryCount;
+  final Tasmee3FailedJobQueue? failedJobQueue;
+  final bool saveFailedSessionsQueue;
 
   AdvancedQuranAsrRecognizer({
     required this.endpoint,
     this.apiKey,
     this.uploadTimeout = const Duration(seconds: 90),
+    this.maxRetryCount = 2,
+    this.failedJobQueue,
+    this.saveFailedSessionsQueue = false,
   });
 
   final AudioRecorder _recorder = AudioRecorder();
@@ -172,17 +180,62 @@ class AdvancedQuranAsrRecognizer implements QuranForcedAlignmentRecognizer {
     }
 
     try {
-      final result = await _uploadAudioWithExpectedText(file);
+      final result = await _uploadWithRetry(file);
       _controller.add(RecognizedSegment.fromAlignment(result));
-    } catch (e) {
-      _controller.addError(e);
-    } finally {
+
       try {
         if (await file.exists()) {
           await file.delete();
         }
       } catch (_) {}
+    } catch (e) {
+      if (saveFailedSessionsQueue && failedJobQueue != null) {
+        try {
+          await failedJobQueue!.addJob(
+            QueuedTasmee3Job(
+              id: 'job_${DateTime.now().millisecondsSinceEpoch}',
+              audioPath: file.path,
+              endpoint: endpoint.toString(),
+              createdAt: DateTime.now(),
+              retryCount: maxRetryCount + 1,
+              reason: e.toString(),
+            ),
+          );
+        } catch (_) {}
+      } else {
+        try {
+          if (await file.exists()) {
+            await file.delete();
+          }
+        } catch (_) {}
+      }
+
+      _controller.addError(e);
     }
+  }
+
+  Future<ForcedAlignmentResult> _uploadWithRetry(File file) async {
+    Object? lastError;
+
+    for (int attempt = 0; attempt <= maxRetryCount; attempt++) {
+      try {
+        return await _uploadAudioWithExpectedText(file);
+      } catch (e) {
+        lastError = e;
+
+        if (attempt >= maxRetryCount) {
+          break;
+        }
+
+        await Future<void>.delayed(
+          Duration(milliseconds: 600 * (attempt + 1)),
+        );
+      }
+    }
+
+    throw StateError(
+      'فشل رفع الصوت بعد ${maxRetryCount + 1} محاولة. السبب: $lastError',
+    );
   }
 
   Future<ForcedAlignmentResult> _uploadAudioWithExpectedText(File file) async {

@@ -123,3 +123,15 @@ flutter run \
 TASMEE3_MIN_AUDIO_BYTES=1200
 TASMEE3_MIN_AUDIO_DURATION_SECONDS=1.2
 ```
+
+## Health endpoint
+
+يرجع `/health` معلومات عن:
+
+- إصدار الخادم.
+- نوع النموذج.
+- الجهاز.
+- الميزات المفعلة.
+- حد الثقة المنخفضة.
+- أقل حجم صوت.
+- أقل مدة صوت.

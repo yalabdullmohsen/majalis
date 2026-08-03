@@ -4,11 +4,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../application/tasmee3_controller.dart';
 import '../application/tasmee3_providers.dart';
 import '../data/surah_catalog.dart';
+import '../domain/asr_engine_mode.dart';
 import '../domain/ayah_ref.dart';
 import '../domain/recitation_target.dart';
 import '../domain/surah_info.dart';
 import '../domain/tasmee3_mistake.dart';
+import 'tasmee3_asr_settings_screen.dart';
 import 'tasmee3_history_screen.dart';
+import 'tasmee3_privacy_screen.dart';
 import 'tasmee3_weak_spots_screen.dart';
 import 'widgets/tasmee3_accuracy_card.dart';
 import 'widgets/tasmee3_audio_level_meter.dart';
@@ -46,6 +49,30 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
           foregroundColor: const Color(0xFF11100E),
           elevation: 0,
           actions: [
+            IconButton(
+              tooltip: 'خصوصية التسميع',
+              icon: const Icon(Icons.privacy_tip_outlined),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const Tasmee3PrivacyScreen(),
+                  ),
+                );
+              },
+            ),
+            IconButton(
+              tooltip: 'إعدادات التسميع',
+              icon: const Icon(Icons.settings),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const Tasmee3AsrSettingsScreen(),
+                  ),
+                );
+              },
+            ),
             IconButton(
               tooltip: 'سجل التسميع',
               icon: const Icon(Icons.history),
@@ -212,9 +239,19 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
           ),
           const SizedBox(height: 10),
           Text(
-            ref.watch(tasmee3AsrSettingsProvider).isConfigured
-                ? 'محرك ASR المتقدم مفعّل عبر endpoint.'
-                : 'محرك ASR المتقدم غير مضبوط؛ يعمل التطبيق بوضع fallback (speech_to_text).',
+            ref.watch(tasmee3UserAsrSettingsProvider).maybeWhen(
+                  data: (settings) {
+                    if (settings.mode == AsrEngineMode.deviceFallback) {
+                      return 'محرك تعرف الجهاز مفعّل (fallback).';
+                    }
+                    if (settings.canUseAdvancedServer) {
+                      return 'محرك ASR المتقدم جاهز (endpoint + إذن الإرسال).';
+                    }
+                    return 'محرك ASR المتقدم غير جاهز؛ يعمل التطبيق بوضع fallback (speech_to_text).';
+                  },
+                  orElse: () =>
+                      'محرك ASR المتقدم غير مضبوط؛ يعمل التطبيق بوضع fallback (speech_to_text).',
+                ),
             style: const TextStyle(
               color: Color(0xFF9A8068),
               fontSize: 12,
@@ -679,10 +716,16 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
   }
 
   Future<bool> _showRecordingPrivacyDialog() async {
-    final asr = ref.read(tasmee3AsrSettingsProvider);
-    final advancedNote = asr.isConfigured
-        ? 'محرك ASR المتقدم مفعّل؛ قد يُرسل التسجيل إلى الخادم المحدد في إعدادات التشغيل.'
-        : 'محرك ASR المتقدم غير مضبوط؛ سيُستخدم التعرف على الجهاز محلياً (fallback) بدون رفع إلى خادم.';
+    final settings = await ref.read(tasmee3UserAsrSettingsProvider.future);
+
+    if (!mounted) return false;
+
+    final usesServer = settings.mode != AsrEngineMode.deviceFallback &&
+        settings.canUseAdvancedServer;
+
+    final message = usesServer
+        ? 'سيتم استخدام الميكروفون لتسجيل تلاوتك، وقد يتم إرسال التسجيل إلى خادم التسميع الذي ضبطته في الإعدادات لتحليل الكلمات ومطابقتها مع النص القرآني الموجود داخل التطبيق.'
+        : 'سيتم استخدام الميكروفون لتسجيل تلاوتك وتحليلها داخل الجهاز قدر الإمكان. لن يتم إرسال الصوت إلى الخادم لأن الخادم غير مفعل أو لم تسمح بإرسال التسجيل.';
 
     final result = await showDialog<bool>(
       context: context,
@@ -691,11 +734,7 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
           textDirection: TextDirection.rtl,
           child: AlertDialog(
             title: const Text('تنبيه قبل التسجيل'),
-            content: Text(
-              'سيتم استخدام الميكروفون لتسجيل تلاوتك وتحليلها. $advancedNote '
-              'لا يتم توليد نص القرآن بالذكاء الاصطناعي، وإنما تتم مقارنة تلاوتك '
-              'بالنص القرآني الموثق داخل التطبيق.',
-            ),
+            content: Text(message),
             actions: [
               TextButton(
                 onPressed: () => Navigator.pop(context, false),
