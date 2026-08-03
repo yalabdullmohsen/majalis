@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../application/tasmee3_providers.dart';
+import '../domain/recitation_target.dart';
 import '../domain/tasmee3_goal_progress.dart';
 import 'tasmee3_badges_screen.dart';
 import 'tasmee3_goal_settings_screen.dart';
@@ -96,6 +97,76 @@ class Tasmee3DashboardScreen extends ConsumerWidget {
                   );
                 },
               ),
+            ),
+            todayReview.when(
+              loading: () => const SizedBox.shrink(),
+              error: (error, stackTrace) => const SizedBox.shrink(),
+              data: (items) {
+                if (items.isEmpty) {
+                  return const SizedBox.shrink();
+                }
+
+                final first = items.first;
+
+                return Container(
+                  margin: const EdgeInsets.only(top: 10),
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFFFCF7),
+                    borderRadius: BorderRadius.circular(18),
+                    border: Border.all(color: const Color(0xFFE0C5A3)),
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const Text(
+                        'المراجعة المقترحة الآن',
+                        style: TextStyle(
+                          color: Color(0xFF11100E),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 17,
+                        ),
+                      ),
+                      const SizedBox(height: 6),
+                      Text(
+                        first.rangeLabel,
+                        style: const TextStyle(
+                          color: Color(0xFF9A8068),
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFFA77A48),
+                          foregroundColor: Colors.white,
+                        ),
+                        onPressed: () {
+                          final mapper =
+                              ref.read(tasmee3ReviewSuggestionMapperProvider);
+
+                          final target = mapper.toTarget(
+                            first,
+                            mode: Tasmee3Mode.hifzTest,
+                          );
+
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => Tasmee3Screen(
+                                initialTarget: target,
+                                startInHifzMode: true,
+                                showExpectedTextFirst: true,
+                              ),
+                            ),
+                          );
+                        },
+                        icon: const Icon(Icons.play_arrow),
+                        label: const Text('ابدأ المراجعة المقترحة'),
+                      ),
+                    ],
+                  ),
+                );
+              },
             ),
             const SizedBox(height: 14),
             stats.when(

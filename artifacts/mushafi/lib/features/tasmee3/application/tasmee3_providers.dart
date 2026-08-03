@@ -45,6 +45,7 @@ import 'tasmee3_pdf_report_service.dart';
 import 'tasmee3_reminders_controller.dart';
 import 'tasmee3_session_report_builder.dart';
 import 'tasmee3_srs_service.dart';
+import 'tasmee3_review_suggestion_mapper.dart';
 import 'tasmee3_ui_settings.dart';
 
 /// Named distinctly from mushaf `quranRepositoryProvider` to avoid import clashes
@@ -189,6 +190,11 @@ final ayahMasteryRepositoryProvider = Provider<AyahMasteryRepository>((ref) {
 
 final tasmee3SrsServiceProvider = Provider<Tasmee3SrsService>((ref) {
   return const Tasmee3SrsService();
+});
+
+final tasmee3ReviewSuggestionMapperProvider =
+    Provider<Tasmee3ReviewSuggestionMapper>((ref) {
+  return const Tasmee3ReviewSuggestionMapper();
 });
 
 final ayahMasteryRecordsProvider =

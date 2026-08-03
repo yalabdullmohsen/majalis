@@ -24,7 +24,16 @@ import 'widgets/tasmee3_mistake_report_sheet.dart';
 import 'widgets/tasmee3_section_card.dart';
 
 class Tasmee3Screen extends ConsumerStatefulWidget {
-  const Tasmee3Screen({super.key});
+  final RecitationTarget? initialTarget;
+  final bool startInHifzMode;
+  final bool showExpectedTextFirst;
+
+  const Tasmee3Screen({
+    super.key,
+    this.initialTarget,
+    this.startInHifzMode = false,
+    this.showExpectedTextFirst = false,
+  });
 
   @override
   ConsumerState<Tasmee3Screen> createState() => _Tasmee3ScreenState();
@@ -35,6 +44,110 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
   int fromAyah = 1;
   int toAyah = 3;
   Tasmee3Mode mode = Tasmee3Mode.showText;
+
+  @override
+  void initState() {
+    super.initState();
+
+    final target = widget.initialTarget;
+
+    if (target != null) {
+      surah = target.from.surah;
+      fromAyah = target.from.ayah;
+      toAyah = target.to.ayah;
+      mode = widget.startInHifzMode ? Tasmee3Mode.hifzTest : target.mode;
+    }
+
+    if (widget.showExpectedTextFirst) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        _showExpectedTextSheet();
+      });
+    }
+  }
+
+  Future<void> _showExpectedTextSheet() async {
+    final repository = ref.read(quranRepositoryProvider);
+
+    final target = RecitationTarget(
+      from: AyahRef(surah: surah, ayah: fromAyah),
+      to: AyahRef(surah: surah, ayah: toAyah),
+      mode: mode,
+    );
+
+    try {
+      final ayahs = await repository.getAyahsInTarget(target);
+
+      if (!mounted) return;
+
+      await showModalBottomSheet<void>(
+        context: context,
+        showDragHandle: true,
+        isScrollControlled: true,
+        backgroundColor: const Color(0xFFFFFCF7),
+        builder: (sheetContext) {
+          final maxHeight = MediaQuery.of(sheetContext).size.height * 0.55;
+
+          return Directionality(
+            textDirection: TextDirection.rtl,
+            child: SafeArea(
+              child: Padding(
+                padding: const EdgeInsets.all(18),
+                child: SizedBox(
+                  height: maxHeight,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      const Text(
+                        'النص المتوقع للتسميع',
+                        style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xFF11100E),
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      Expanded(
+                        child: SingleChildScrollView(
+                          child: Text(
+                            ayahs.map((ayah) => ayah.textUthmani).join('  '),
+                            textAlign: TextAlign.right,
+                            style: const TextStyle(
+                              fontSize: 24,
+                              height: 1.9,
+                              color: Color(0xFF11100E),
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 16),
+                      ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: const Color(0xFFA77A48),
+                          foregroundColor: Colors.white,
+                          padding: const EdgeInsets.symmetric(vertical: 14),
+                        ),
+                        onPressed: () => Navigator.pop(sheetContext),
+                        icon: const Icon(Icons.check),
+                        label: const Text('جاهز للتسميع'),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      );
+    } catch (e) {
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('تعذر عرض النص المتوقع: $e'),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -307,6 +420,12 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
               ),
             ),
           ],
+          const SizedBox(height: 10),
+          OutlinedButton.icon(
+            onPressed: disabled ? null : _showExpectedTextSheet,
+            icon: const Icon(Icons.menu_book_outlined),
+            label: const Text('عرض النص المتوقع'),
+          ),
         ],
       ),
     );
@@ -315,13 +434,17 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
   Widget _content(Tasmee3State state) {
     switch (state.status) {
       case Tasmee3Status.idle:
-        return const Center(
+        final idleMessage = mode == Tasmee3Mode.hifzTest
+            ? 'أنت في وضع اختبار الحفظ. يمكنك عرض النص للمراجعة ثم بدء التسميع.'
+            : 'اختر السورة ونطاق الآيات ثم اضغط بدء التسميع.';
+
+        return Center(
           child: Padding(
-            padding: EdgeInsets.all(24),
+            padding: const EdgeInsets.all(24),
             child: Text(
-              'اختر السورة ونطاق الآيات ثم اضغط بدء التسميع.',
+              idleMessage,
               textAlign: TextAlign.center,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 20,
                 color: Color(0xFF9A8068),
               ),

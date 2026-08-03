@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../application/tasmee3_providers.dart';
 import '../domain/ayah_mastery_level.dart';
+import '../domain/recitation_target.dart';
 import '../domain/tasmee3_review_suggestion.dart';
 import 'tasmee3_screen.dart';
 
@@ -71,15 +72,42 @@ class Tasmee3TodayReviewScreen extends ConsumerWidget {
   }
 }
 
-class _SuggestionCard extends StatelessWidget {
+class _SuggestionCard extends ConsumerWidget {
   final Tasmee3ReviewSuggestion suggestion;
 
   const _SuggestionCard({
     required this.suggestion,
   });
 
+  RecitationTarget _mappedTarget(WidgetRef ref) {
+    final mapper = ref.read(tasmee3ReviewSuggestionMapperProvider);
+    return mapper.toTarget(
+      suggestion,
+      mode: Tasmee3Mode.hifzTest,
+    );
+  }
+
+  void _openSession(
+    BuildContext context,
+    WidgetRef ref, {
+    required bool showExpectedTextFirst,
+  }) {
+    final target = _mappedTarget(ref);
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => Tasmee3Screen(
+          initialTarget: target,
+          startInHifzMode: true,
+          showExpectedTextFirst: showExpectedTextFirst,
+        ),
+      ),
+    );
+  }
+
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final color = _color(suggestion.dominantLevel);
 
     return Container(
@@ -125,19 +153,26 @@ class _SuggestionCard extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 12),
+          OutlinedButton.icon(
+            onPressed: () => _openSession(
+              context,
+              ref,
+              showExpectedTextFirst: true,
+            ),
+            icon: const Icon(Icons.menu_book_outlined),
+            label: const Text('عرض ثم تسميع'),
+          ),
+          const SizedBox(height: 8),
           ElevatedButton.icon(
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xFFA77A48),
               foregroundColor: Colors.white,
             ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => const Tasmee3Screen(),
-                ),
-              );
-            },
+            onPressed: () => _openSession(
+              context,
+              ref,
+              showExpectedTextFirst: false,
+            ),
             icon: const Icon(Icons.mic),
             label: const Text('ابدأ التسميع'),
           ),
