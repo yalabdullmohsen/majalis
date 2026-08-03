@@ -17,10 +17,18 @@ const root = resolve(__dirname, "../../../");
 const siteManifest = JSON.parse(readFileSync(resolve(root, "public/site.webmanifest"), "utf8"));
 assert.equal(siteManifest.display, "standalone");
 assert.equal(siteManifest.orientation, "portrait-primary");
-assert.equal(siteManifest.theme_color, "#143F35");
+assert.equal(siteManifest.name, "Majlisilm");
+assert.equal(siteManifest.start_url, "/");
+assert.equal(siteManifest.theme_color, "#ffffff");
 assert.ok(siteManifest.icons.some((i: { src: string }) => i.src.includes("icon-512")));
 assert.ok(existsSync(resolve(root, "public/manifest.webmanifest")));
 assert.ok(existsSync(resolve(root, "public/manifest.json")));
+
+const jsonManifest = JSON.parse(readFileSync(resolve(root, "public/manifest.json"), "utf8"));
+assert.equal(jsonManifest.name, "Majlisilm");
+assert.equal(jsonManifest.start_url, "/");
+assert.equal(jsonManifest.display, "standalone");
+assert.equal(jsonManifest.theme_color, "#ffffff");
 assert.ok(existsSync(resolve(root, "public/sw.js")));
 assert.ok(existsSync(resolve(root, "public/offline.html")));
 
