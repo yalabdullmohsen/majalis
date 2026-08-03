@@ -123,15 +123,15 @@ class Tasmee3GoalService {
       ),
       Tasmee3Badge(
         type: Tasmee3BadgeType.highAccuracy,
-        title: 'دقة عالية',
-        description: 'حققت دقة 95% أو أكثر في جلسة.',
+        title: 'دقة تقريبية عالية',
+        description: 'حققت دقة تقريبية 95% أو أكثر في جلسة.',
         unlocked: hasHighAccuracy,
         unlockedAt: hasHighAccuracy ? DateTime.now() : null,
       ),
       Tasmee3Badge(
         type: Tasmee3BadgeType.reviewHero,
         title: 'مراجعة متقنة',
-        description: 'أكملت جلسة بدون أخطاء ظاهرة.',
+        description: 'أكملت جلسة بدون أخطاء ظاهرة (تقدير تقني).',
         unlocked: hasReviewHero,
         unlockedAt: hasReviewHero ? DateTime.now() : null,
       ),

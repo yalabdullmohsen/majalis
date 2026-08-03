@@ -185,14 +185,14 @@ class Tasmee3AnalyticsService {
       ),
       Tasmee3Achievement(
         id: 'high_accuracy',
-        title: 'دقة عالية',
-        description: 'وصلت إلى دقة 90% أو أكثر في جلسة.',
+        title: 'دقة تقريبية عالية',
+        description: 'وصلت إلى دقة تقريبية 90% أو أكثر في جلسة.',
         unlocked: bestAccuracy >= 90,
       ),
       Tasmee3Achievement(
         id: 'clean_session',
         title: 'جلسة نظيفة',
-        description: 'جلسة بلا أخطاء ظاهرة وبدقة 95% فأكثر.',
+        description: 'جلسة بلا أخطاء ظاهرة وبدقة تقريبية 95% فأكثر.',
         unlocked: perfectSessions.isNotEmpty,
       ),
     ];

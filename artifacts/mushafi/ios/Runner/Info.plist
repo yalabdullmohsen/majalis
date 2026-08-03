@@ -25,11 +25,11 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>نحتاج الميكروفون لتشغيل ميزة التسميع ومراجعة الحفظ.</string>
+	<string>نحتاج الميكروفون لتسجيل تلاوتك أثناء جلسة التسميع ومقارنتها تقنيا بالنص القرآني الموجود داخل التطبيق.</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
-	<string>نحتاج التعرف على الكلام لمقارنة التلاوة بالنص الصحيح.</string>
+	<string>قد يستخدم التطبيق تعرف الكلام على الجهاز عندما يكون متاحا لتحويل التلاوة إلى نص تقريبي للمراجعة.</string>
 	<key>NSUserNotificationUsageDescription</key>
-	<string>نستخدم الإشعارات لتذكيرك بورد التسميع اليومي.</string>
+	<string>نستخدم الإشعارات لتذكيرك بهدف التسميع اليومي أو المراجعة، ويمكنك تعطيلها من الإعدادات.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>

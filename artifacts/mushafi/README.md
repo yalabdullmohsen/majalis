@@ -26,6 +26,23 @@ flutter run
 - PRIVACY.md
 - SECURITY.md
 - CHANGELOG.md
+- STORE_SUBMISSION_CHECKLIST.md
+
+## Store Submission
+
+Store submission materials are located in:
+
+- `store_assets/google_play/`
+- `store_assets/app_store/`
+- `store_assets/screenshots/`
+- `store_assets/legal/`
+
+Checklist:
+
+- `STORE_SUBMISSION_CHECKLIST.md`
+
+Important:
+Verify all privacy answers against the actual app behavior and third-party SDKs before submission.
 
 ## البنية
 

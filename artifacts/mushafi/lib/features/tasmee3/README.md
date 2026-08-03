@@ -677,3 +677,7 @@ dart run scripts/check_quran_asset.dart
 - CHANGELOG و BUILD_COMMANDS.
 - quick_check / release_check محدّث.
 - Version `1.0.0+1`.
+
+## البرومبت التاسع والعشرون - مواد رفع المتاجر
+
+تمت إضافة مجلد `store_assets/` مع أوصاف Google Play و App Store، مسودات الخصوصية، صلاحيات، لقطات، و`STORE_SUBMISSION_CHECKLIST.md`.

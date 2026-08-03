@@ -55,3 +55,15 @@ dart run scripts/check_quran_asset.dart
 - [ ] fallback `speech_to_text` ما زال متاحا.
 - [ ] سياسة الخصوصية توضح أن الصوت لا يُرسل إلا بإذن.
 - [ ] version في pubspec يطابق CHANGELOG.
+
+## Store Submission
+
+- [ ] Google Play description reviewed.
+- [ ] App Store description reviewed.
+- [ ] Data safety draft reviewed.
+- [ ] App privacy answers draft reviewed.
+- [ ] Permission explanations reviewed.
+- [ ] Screenshots checklist completed.
+- [ ] Store submission checklist completed.
+- [ ] Privacy policy hosted publicly.
+- [ ] Review notes ready.
