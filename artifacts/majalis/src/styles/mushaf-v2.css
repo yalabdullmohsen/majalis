@@ -184,6 +184,54 @@ html[data-theme="dark"] .quran-shell--high-contrast .mf2-line {
   margin-inline-start: 0.24em;
 }
 
+/* ── وضع Unicode الآمن (خفيف / تراجع عند فشل QPC) ─────────────────
+   نص text_qpc_hafs + Amiri Quran: تبرير مستمر، ارتفاع تشكيل أوفر،
+   عرض كامل متجاوب — بلا nowrap/space-between الخاص بخطوط الصفحة. */
+.mf2-lines--unicode {
+  gap: 0.15em;
+}
+.mf2-line--unicode,
+.mf2-lines--unicode .mf2-line {
+  flex: 0 0 auto;
+  min-height: 0;
+  display: block;
+  white-space: normal;
+  word-break: keep-all !important;
+  overflow-wrap: normal !important;
+  overflow-x: visible;
+  overflow-y: visible;
+  justify-content: initial;
+  text-align: justify;
+  text-justify: inter-word;
+  text-align-last: right;
+  line-height: 2.2;
+  font-size: clamp(1.25rem, 4.2vw, 1.875rem);
+  font-family: var(--font-quran, "Amiri Quran", "Scheherazade New", "Traditional Arabic", serif);
+  padding-block: 0.12em;
+}
+.mf2-lines--unicode .mf2-ayah-group {
+  display: inline;
+}
+.mf2-lines--unicode .mf2-word {
+  white-space: normal;
+}
+.mf2-lines--unicode .mf2-line--short {
+  text-align: center;
+  text-align-last: center;
+}
+@media (min-width: 640px) {
+  .mf2-line--unicode,
+  .mf2-lines--unicode .mf2-line {
+    font-size: clamp(1.5rem, 3.2vw, 2rem);
+  }
+}
+@media (min-width: 768px) {
+  .mf2-line--unicode,
+  .mf2-lines--unicode .mf2-line {
+    font-size: clamp(1.75rem, 2.6vw, 2.25rem);
+  }
+}
+
 .mf2-sajda-badge {
   display: inline-flex;
   vertical-align: middle;

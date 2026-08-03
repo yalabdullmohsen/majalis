@@ -42,8 +42,12 @@ assert.match(immersiveCss, /\.immersive-quran-page__verse-text\s*\{[\s\S]*?word-
 // 4) Tashkeel vertical safety
 assert.match(mushafV2, /\.mf2-line\s*\{[\s\S]*?line-height:\s*1\.35/);
 assert.match(mushafV2, /\.mf2-line\s*\{[\s\S]*?overflow-y:\s*visible/);
+assert.match(mushafV2, /\.mf2-line--unicode[\s\S]*?line-height:\s*2\.2/, "وضع Unicode: ارتفاع تشكيل 2.2");
+assert.match(mushafV2, /\.mf2-line--unicode[\s\S]*?text-align:\s*justify/, "وضع Unicode: تبرير");
 assert.match(pageComp, /lineHeightAvailable\s*\*\s*0\.52/);
+assert.match(pageComp, /pageFont\.failed|useUnicodeSafe/, "تراجع تلقائي عند فشل خط QPC");
 assert.match(readerCss, /\.mushaf-v2__ayah\s*\{[\s\S]*?line-height:\s*2\.5/);
 assert.match(immersiveLib, /IMMERSIVE_LINE_HEIGHT_RATIO\s*=\s*2\.4/);
+assert.match(quranCss, /\.qs-mushaf-frame--ayah[\s\S]*?max-width:\s*min\(100%,\s*56rem\)/, "حاوية المصحف max-w-4xl");
 
 console.log("mushaf-typography-layout.test.ts: ok");

@@ -63,7 +63,24 @@ export default function UpdatesPage() {
     setLoading(true);
     setLoadError(false);
     getMergedPlatformUpdates(100)
-      .then(({ data }) => setItems(data))
+      .then(({ data }) => {
+        // دفاعًا: لا نعرض سلسلة JSON خامًا إن عاد المصدر بشكل غير متوقع
+        if (Array.isArray(data)) {
+          setItems(data);
+          return;
+        }
+        if (typeof data === "string") {
+          try {
+            const parsed = JSON.parse(data) as unknown;
+            setItems(Array.isArray(parsed) ? (parsed as MergedUpdateItem[]) : []);
+          } catch {
+            setItems([]);
+            setLoadError(true);
+          }
+          return;
+        }
+        setItems([]);
+      })
       .catch(() => {
         setItems([]);
         setLoadError(true);

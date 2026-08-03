@@ -780,6 +780,7 @@ function Router() {
       <Route path="/rulings"><SafeLazyRoute component={RulingsPage} /></Route>
       <Route path="/updates/auto/:slug"><SafeLazyRoute component={AutoContentDetailPage} /></Route>
       <Route path="/updates"><SafeLazyRoute component={UpdatesPage} /></Route>
+      <Route path="/whats-new"><Redirect to="/updates" /></Route>
       <Route path="/login"><SafeLazyRoute component={LoginPage} /></Route>
       <Route path="/register"><SafeLazyRoute component={RegisterPage} /></Route>
       <Route path="/auth/register"><Redirect to="/register" /></Route>
