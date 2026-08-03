@@ -28,6 +28,7 @@ import 'mushaf_notes_screen.dart';
 import 'mushaf_reading_settings_screen.dart';
 import 'mushaf_reading_theme_colors.dart';
 import 'mushaf_reciters_screen.dart';
+import 'mushaf_review_markers_screen.dart';
 import 'mushaf_search_screen.dart';
 import 'widgets/mushaf_ayah_actions_sheet.dart';
 import 'widgets/mushaf_mini_player.dart';
@@ -144,6 +145,11 @@ class _MushafReaderScreenState extends ConsumerState<MushafReaderScreen> {
     final mushafState = ref.watch(mushafControllerProvider);
     final controller = ref.read(mushafControllerProvider.notifier);
     final audioState = ref.watch(mushafAudioControllerProvider);
+    final reviewMarkersAsync = ref.watch(mushafReviewMarkersProvider);
+    final reviewMarkerKeys = reviewMarkersAsync.maybeWhen(
+      data: (items) => items.map((item) => item.key).toSet(),
+      orElse: () => <String>{},
+    );
     final readingSettings =
         ref.watch(mushafReadingSettingsControllerProvider).settings;
     final themeColors =
@@ -351,6 +357,17 @@ class _MushafReaderScreenState extends ConsumerState<MushafReaderScreen> {
                               return;
                             }
 
+                            if (value == 'reviewMarkers') {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) =>
+                                      const MushafReviewMarkersScreen(),
+                                ),
+                              );
+                              return;
+                            }
+
                             if (value == 'lastTasmee3Range') {
                               final range = await ref
                                   .read(mushafLocalRepositoryProvider)
@@ -460,6 +477,10 @@ class _MushafReaderScreenState extends ConsumerState<MushafReaderScreen> {
                               child: Text('آخر نطاق تسميع'),
                             ),
                             PopupMenuItem(
+                              value: 'reviewMarkers',
+                              child: Text('مواضع المراجعة'),
+                            ),
+                            PopupMenuItem(
                               value: 'reciters',
                               child: Text('القراء'),
                             ),
@@ -512,6 +533,7 @@ class _MushafReaderScreenState extends ConsumerState<MushafReaderScreen> {
                     forceHighlight:
                         activeSurah != null && activeAyah != null,
                     selectedAyahKeys: mushafState.selectedAyahKeys,
+                    reviewMarkerKeys: reviewMarkerKeys,
                     onAyahLongPress: controller.startSelection,
                     onAyahTap: (ayah) {
                       if (mushafState.selectionMode) {

@@ -11,6 +11,7 @@ import '../../application/mushaf_providers.dart';
 import '../../data/tafsir_catalog.dart';
 import '../../domain/mushaf_tasmee3_last_range.dart';
 import '../ayah_share_preview_screen.dart';
+import '../mushaf_ayah_review_screen.dart';
 import '../mushaf_tafsir_screen.dart';
 
 class MushafAyahActionsSheet extends ConsumerWidget {
@@ -32,6 +33,16 @@ class MushafAyahActionsSheet extends ConsumerWidget {
     final isFavorite =
         state.favorites.any((item) => item.key == ayah.ref.key);
     final textColor = nightMode ? Colors.white : Tasmee3Colors.text;
+    final reviewMarkersAsync = ref.watch(mushafReviewMarkersProvider);
+    final ayahMarkers = reviewMarkersAsync.maybeWhen(
+      data: (items) => items
+          .where(
+            (item) =>
+                item.surah == ayah.ref.surah && item.ayah == ayah.ref.ayah,
+          )
+          .toList(),
+      orElse: () => const [],
+    );
 
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -83,6 +94,23 @@ class MushafAyahActionsSheet extends ConsumerWidget {
                   await audio.playAyah(ayah);
                 },
               ),
+              if (ayahMarkers.isNotEmpty)
+                _ActionTile(
+                  icon: Icons.report_problem_outlined,
+                  title: 'مواضع تحتاج مراجعة',
+                  onTap: () {
+                    Navigator.pop(context);
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => MushafAyahReviewScreen(
+                          surah: ayah.ref.surah,
+                          ayah: ayah.ref.ayah,
+                        ),
+                      ),
+                    );
+                  },
+                ),
               _ActionTile(
                 icon: Icons.mic_none_outlined,
                 title: 'سمّعني هذه الآية',

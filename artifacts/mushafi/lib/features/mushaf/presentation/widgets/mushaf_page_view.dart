@@ -12,6 +12,7 @@ class MushafPageView extends StatelessWidget {
   final ValueChanged<QuranAyah> onAyahTap;
   final ValueChanged<QuranAyah> onAyahLongPress;
   final Set<String> selectedAyahKeys;
+  final Set<String> reviewMarkerKeys;
   final int? highlightedSurah;
   final int? highlightedAyah;
   final bool forceHighlight;
@@ -24,6 +25,7 @@ class MushafPageView extends StatelessWidget {
     required this.onAyahLongPress,
     required this.readingSettings,
     this.selectedAyahKeys = const {},
+    this.reviewMarkerKeys = const {},
     this.highlightedSurah,
     this.highlightedAyah,
     this.forceHighlight = false,
@@ -92,6 +94,7 @@ class MushafPageView extends StatelessWidget {
     final tapped = ayah.ref.surah == highlightedSurah &&
         ayah.ref.ayah == highlightedAyah;
     final selected = selectedAyahKeys.contains(ayah.ref.key);
+    final needsReview = reviewMarkerKeys.contains(ayah.ref.key);
     final showTapHighlight = tapped &&
         !selected &&
         (forceHighlight || readingSettings.highlightTappedAyah);
@@ -109,29 +112,52 @@ class MushafPageView extends StatelessWidget {
                   ? colors.highlight
                   : Colors.transparent,
           borderRadius: BorderRadius.circular(10),
+          border: needsReview
+              ? Border.all(
+                  color: Colors.orange.withValues(alpha: 0.7),
+                )
+              : null,
         ),
-        child: RichText(
-          textAlign: TextAlign.center,
-          text: TextSpan(
-            text: '${ayah.textUthmani} ',
-            style: TextStyle(
-              fontSize: readingSettings.fontSize,
-              height: readingSettings.lineHeight,
-              color: colors.text,
-              fontWeight: FontWeight.w500,
-              fontFamily: readingSettings.fontFamily.fontFamily,
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            RichText(
+              textAlign: TextAlign.center,
+              text: TextSpan(
+                text: '${ayah.textUthmani} ',
+                style: TextStyle(
+                  fontSize: readingSettings.fontSize,
+                  height: readingSettings.lineHeight,
+                  color: colors.text,
+                  fontWeight: FontWeight.w500,
+                  fontFamily: readingSettings.fontFamily.fontFamily,
+                ),
+                children: [
+                  WidgetSpan(
+                    alignment: PlaceholderAlignment.middle,
+                    child: _AyahMarker(
+                      number: ayah.ref.ayah,
+                      borderColor: colors.markerBorder,
+                      textColor: colors.markerText,
+                    ),
+                  ),
+                ],
+              ),
             ),
-            children: [
-              WidgetSpan(
-                alignment: PlaceholderAlignment.middle,
-                child: _AyahMarker(
-                  number: ayah.ref.ayah,
-                  borderColor: colors.markerBorder,
-                  textColor: colors.markerText,
+            if (needsReview)
+              Positioned(
+                top: -4,
+                left: -4,
+                child: Container(
+                  width: 8,
+                  height: 8,
+                  decoration: const BoxDecoration(
+                    color: Colors.orange,
+                    shape: BoxShape.circle,
+                  ),
                 ),
               ),
-            ],
-          ),
+          ],
         ),
       ),
     );

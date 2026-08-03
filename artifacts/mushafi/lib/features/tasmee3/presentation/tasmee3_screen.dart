@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:share_plus/share_plus.dart';
 
+import '../../mushaf/application/mushaf_providers.dart';
 import '../application/tasmee3_controller.dart';
 import '../application/tasmee3_providers.dart';
 import '../data/surah_catalog.dart';
@@ -860,6 +861,8 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
     final displayBuilder = ref.watch(tasmee3DisplayBuilderProvider);
     final expectedAyahs = state.expectedAyahs;
 
+    final launchTarget = widget.launchConfig.initialTarget ?? state.target;
+
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Column(
@@ -877,6 +880,39 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
           if (state.alignment?.ayahScores.isNotEmpty == true) ...[
             const SizedBox(height: 10),
             Tasmee3AyahScoresCard(scores: state.alignment!.ayahScores),
+          ],
+          if (widget.launchConfig.source == Tasmee3LaunchSource.mushaf &&
+              result.mistakesCount > 0) ...[
+            const SizedBox(height: 10),
+            OutlinedButton.icon(
+              onPressed: () async {
+                final target = launchTarget;
+                if (target == null) return;
+
+                final messenger = ScaffoldMessenger.of(context);
+                final markerService =
+                    ref.read(tasmee3ResultReviewMarkerServiceProvider);
+
+                final markers = markerService.buildMarkers(
+                  target: target,
+                  result: result,
+                );
+
+                await ref
+                    .read(mushafReviewMarkerRepositoryProvider)
+                    .saveAll(markers);
+
+                ref.invalidate(mushafReviewMarkersProvider);
+
+                messenger.showSnackBar(
+                  const SnackBar(
+                    content: Text('تم حفظ مواضع المراجعة في المصحف.'),
+                  ),
+                );
+              },
+              icon: const Icon(Icons.report_problem_outlined),
+              label: const Text('حفظ مواضع المراجعة في المصحف'),
+            ),
           ],
           if (widget.launchConfig.source == Tasmee3LaunchSource.mushaf &&
               result.accuracy >= 0.85) ...[
@@ -906,20 +942,89 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
                   ),
                   const SizedBox(height: 10),
                   OutlinedButton.icon(
-                    onPressed: () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
+                    onPressed: () async {
+                      final target = launchTarget;
+
+                      if (target == null) {
+                        return;
+                      }
+
+                      final messenger = ScaffoldMessenger.of(context);
+                      final mapper =
+                          ref.read(tasmee3TargetPageRangeMapperProvider);
+                      final pageRange =
+                          await mapper.mapTargetToPageRange(target);
+
+                      if (pageRange == null || !pageRange.isValid) {
+                        messenger.showSnackBar(
+                          const SnackBar(
+                            content: Text(
+                              'تعذر تحديد صفحات هذا النطاق.',
+                            ),
+                          ),
+                        );
+                        return;
+                      }
+
+                      await ref
+                          .read(khatmahPlanControllerProvider.notifier)
+                          .markPagesRead(
+                            fromPage: pageRange.fromPage,
+                            toPage: pageRange.toPage,
+                          );
+
+                      messenger.showSnackBar(
+                        SnackBar(
                           content: Text(
-                            'سيتم ربط تسجيل نطاق الختمة من المصحف في المرحلة التالية.',
+                            'تم تسجيل ${pageRange.label} في الختمة.',
                           ),
                         ),
                       );
                     },
                     icon: const Icon(Icons.check_circle_outline),
-                    label: const Text('تسجيل في الختمة'),
+                    label: const Text('تسجيل النطاق في الختمة'),
                   ),
                 ],
               ),
+            ),
+          ],
+          if (widget.launchConfig.source == Tasmee3LaunchSource.mushaf &&
+              result.accuracy >= 0.95 &&
+              result.mistakesCount == 0) ...[
+            const SizedBox(height: 10),
+            OutlinedButton.icon(
+              onPressed: () async {
+                final target = launchTarget;
+
+                if (target == null) return;
+
+                final messenger = ScaffoldMessenger.of(context);
+
+                if (target.from.surah == target.to.surah) {
+                  for (var ayah = target.from.ayah;
+                      ayah <= target.to.ayah;
+                      ayah++) {
+                    await ref
+                        .read(mushafReviewMarkerRepositoryProvider)
+                        .removeForAyah(
+                          surah: target.from.surah,
+                          ayah: ayah,
+                        );
+                  }
+                }
+
+                ref.invalidate(mushafReviewMarkersProvider);
+
+                messenger.showSnackBar(
+                  const SnackBar(
+                    content: Text(
+                      'تم تنظيف مؤشرات المراجعة لهذا النطاق.',
+                    ),
+                  ),
+                );
+              },
+              icon: const Icon(Icons.cleaning_services_outlined),
+              label: const Text('تنظيف مؤشرات المراجعة'),
             ),
           ],
           if (widget.launchConfig.returnToMushafAfterCompletion) ...[

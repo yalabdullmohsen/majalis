@@ -6,6 +6,7 @@ import '../data/assets_tafsir_repository.dart';
 import '../data/khatmah_plan_repository.dart';
 import '../data/khatmah_reminder_settings_repository.dart';
 import '../data/mushaf_audio_download_repository.dart';
+import '../data/mushaf_review_marker_repository.dart';
 import '../data/shared_prefs_khatmah_reminder_settings_repository.dart';
 import '../data/mushaf_audio_settings_repository.dart';
 import '../data/mushaf_local_repository.dart';
@@ -17,11 +18,13 @@ import '../data/shared_prefs_mushaf_audio_download_repository.dart';
 import '../data/shared_prefs_mushaf_audio_settings_repository.dart';
 import '../data/shared_prefs_mushaf_local_repository.dart';
 import '../data/shared_prefs_mushaf_reading_settings_repository.dart';
+import '../data/shared_prefs_mushaf_review_marker_repository.dart';
 import '../data/shared_prefs_mushaf_search_history_repository.dart';
 import '../data/tafsir_catalog.dart';
 import '../data/tafsir_repository.dart';
 import '../domain/khatmah_reminder_settings.dart';
 import '../domain/mushaf_audio_download.dart';
+import '../domain/mushaf_ayah_review_marker.dart';
 import '../domain/mushaf_audio_settings.dart';
 import '../domain/mushaf_audio_state.dart';
 import '../domain/mushaf_favorite_ayah.dart';
@@ -53,6 +56,8 @@ import 'mushaf_search_suggestions_service.dart';
 import 'quran_page_metadata_integrity_service.dart';
 import 'tafsir_integrity_service.dart';
 import 'tafsir_search_index_builder.dart';
+import 'tasmee3_result_review_marker_service.dart';
+import 'tasmee3_target_page_range_mapper.dart';
 import 'widget_image_export_service.dart';
 
 
@@ -63,6 +68,42 @@ final mushafPageBuilderProvider = Provider<MushafPageBuilder>((ref) {
 final mushafToTasmee3TargetMapperProvider =
     Provider<MushafToTasmee3TargetMapper>((ref) {
   return const MushafToTasmee3TargetMapper();
+});
+
+final tasmee3TargetPageRangeMapperProvider =
+    Provider<Tasmee3TargetPageRangeMapper>((ref) {
+  return Tasmee3TargetPageRangeMapper(
+    metadataRepository: ref.watch(quranPageMetadataRepositoryProvider),
+    pageNumberFallback: ({required int surah, required int ayah}) async {
+      final pages = await ref.read(mushafPagesProvider.future);
+
+      for (final page in pages) {
+        for (final item in page.ayahs) {
+          if (item.ref.surah == surah && item.ref.ayah == ayah) {
+            return page.pageNumber;
+          }
+        }
+      }
+
+      return null;
+    },
+  );
+});
+
+final mushafReviewMarkerRepositoryProvider =
+    Provider<MushafReviewMarkerRepository>((ref) {
+  return SharedPrefsMushafReviewMarkerRepository();
+});
+
+final mushafReviewMarkersProvider =
+    FutureProvider<List<MushafAyahReviewMarker>>((ref) async {
+  final repository = ref.watch(mushafReviewMarkerRepositoryProvider);
+  return repository.getAll();
+});
+
+final tasmee3ResultReviewMarkerServiceProvider =
+    Provider<Tasmee3ResultReviewMarkerService>((ref) {
+  return const Tasmee3ResultReviewMarkerService();
 });
 
 final quranPageMetadataRepositoryProvider =
