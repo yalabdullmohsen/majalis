@@ -570,3 +570,40 @@ WebSocket الحالي هو بنية جاهزة للبث الحي.
 - يتم استخدام WebSocket chunks إذا مفعلة.
 - أو HTTP Advanced ASR.
 - أو speech_to_text fallback.
+
+## البرومبت الرابع والعشرون - الاختبارات و CI
+
+تمت إضافة:
+
+- اختبارات Flutter:
+  - ArabicNormalizer
+  - MistakeDetectionEngine
+  - LiveFollowService
+  - SRS
+  - PDF report
+  - Dashboard widget test
+- اختبارات Backend:
+  - Arabic normalization
+  - Alignment
+  - Health endpoint
+  - WebSocket ready test
+- سكربت:
+  - `scripts/test_all.sh`
+- GitHub Actions:
+  - `.github/workflows/tasmee3_ci.yml`
+
+## تشغيل الاختبارات
+
+```bash
+./scripts/test_all.sh
+```
+
+أو يدويا:
+
+```bash
+flutter analyze
+flutter test
+
+cd server/tasmee3_asr
+python -m pytest tests -q
+```

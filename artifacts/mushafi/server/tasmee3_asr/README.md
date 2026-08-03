@@ -307,3 +307,23 @@ curl http://localhost:8000/health
 
 الخادم لا يحفظ الصوت بشكل دائم. الملفات المؤقتة تحذف بعد التحليل.
 لا تُطبع التسجيلات أو النص الكامل أو API key في logs.
+
+## Tests
+
+```bash
+python -m pytest tests -q
+```
+
+أو بمتطلبات خفيفة بدون تحميل Whisper:
+
+```bash
+pip install -r requirements-test.txt
+python -m pytest tests -q
+```
+
+الاختبارات الحالية تغطي:
+
+* Arabic normalization
+* Alignment
+* Health endpoint
+* WebSocket ready
