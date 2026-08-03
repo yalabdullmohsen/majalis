@@ -17,6 +17,7 @@ class _Tasmee3AsrSettingsScreenState
     extends ConsumerState<Tasmee3AsrSettingsScreen> {
   late TextEditingController endpointController;
   late TextEditingController apiKeyController;
+  late TextEditingController liveWsEndpointController;
 
   @override
   void initState() {
@@ -25,12 +26,16 @@ class _Tasmee3AsrSettingsScreenState
     final state = ref.read(tasmee3AsrSettingsControllerProvider);
     endpointController = TextEditingController(text: state.settings.endpoint);
     apiKeyController = TextEditingController(text: state.settings.apiKey);
+    liveWsEndpointController = TextEditingController(
+      text: state.settings.liveWebSocketEndpoint,
+    );
   }
 
   @override
   void dispose() {
     endpointController.dispose();
     apiKeyController.dispose();
+    liveWsEndpointController.dispose();
     super.dispose();
   }
 
@@ -46,6 +51,10 @@ class _Tasmee3AsrSettingsScreenState
         }
         if (apiKeyController.text.isEmpty && settings.apiKey.isNotEmpty) {
           apiKeyController.text = settings.apiKey;
+        }
+        if (liveWsEndpointController.text.isEmpty &&
+            settings.liveWebSocketEndpoint.isNotEmpty) {
+          liveWsEndpointController.text = settings.liveWebSocketEndpoint;
         }
 
         final current = ref.read(tasmee3AsrSettingsControllerProvider);
@@ -112,6 +121,37 @@ class _Tasmee3AsrSettingsScreenState
                     onChanged: (value) {
                       controller.updateSettings(
                         state.settings.copyWith(endpoint: value.trim()),
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 12),
+                  TextFormField(
+                    controller: liveWsEndpointController,
+                    textDirection: TextDirection.ltr,
+                    decoration: const InputDecoration(
+                      labelText: 'Live WebSocket Endpoint اختياري',
+                      hintText: 'ws://IP:8000/ws/live',
+                      border: OutlineInputBorder(),
+                    ),
+                    onChanged: (value) {
+                      controller.updateSettings(
+                        state.settings.copyWith(
+                          liveWebSocketEndpoint: value.trim(),
+                        ),
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 12),
+                  SwitchListTile(
+                    contentPadding: EdgeInsets.zero,
+                    value: state.settings.enableLiveWebSocket,
+                    title: const Text('تفعيل التسميع المباشر WebSocket'),
+                    subtitle: const Text(
+                      'ميزة تجريبية. إذا فشلت، استخدم الخادم العادي أو تعرف الجهاز.',
+                    ),
+                    onChanged: (value) {
+                      controller.updateSettings(
+                        state.settings.copyWith(enableLiveWebSocket: value),
                       );
                     },
                   ),
@@ -291,6 +331,7 @@ class _Tasmee3AsrSettingsScreenState
 
                       endpointController.text = '';
                       apiKeyController.text = '';
+                      liveWsEndpointController.text = '';
 
                       if (context.mounted) {
                         ref.invalidate(tasmee3UserAsrSettingsProvider);

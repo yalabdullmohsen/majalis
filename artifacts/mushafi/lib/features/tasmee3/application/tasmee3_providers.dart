@@ -4,6 +4,7 @@ import '../data/advanced_quran_asr_recognizer.dart';
 import '../data/asr_server_health_service.dart';
 import '../data/assets_quran_repository.dart';
 import '../data/ayah_mastery_repository.dart';
+import '../data/live_asr_websocket_recognizer.dart';
 import '../data/local_ayah_mastery_repository.dart';
 import '../data/local_tasmee3_asr_settings_repository.dart';
 import '../data/local_tasmee3_failed_job_queue.dart';
@@ -115,8 +116,8 @@ final tasmee3AsrSettingsControllerProvider = StateNotifierProvider<
   );
 });
 
-/// Uses user ASR settings (mode / allow upload / endpoint). Falls back to
-/// [SpeechToTextQuranRecognizer] when advanced server cannot be used.
+/// Uses user ASR settings (mode / allow upload / endpoint / live WS).
+/// Priority: device fallback → live WebSocket → advanced HTTP → speech_to_text.
 final quranSpeechRecognizerProvider = Provider<QuranSpeechRecognizer>((ref) {
   final asyncSettings = ref.watch(tasmee3UserAsrSettingsProvider);
   final queue = ref.watch(tasmee3FailedJobQueueProvider);
@@ -144,20 +145,15 @@ final quranSpeechRecognizerProvider = Provider<QuranSpeechRecognizer>((ref) {
     return SpeechToTextQuranRecognizer();
   }
 
-  if (settings.mode == AsrEngineMode.advancedServer) {
-    if (settings.canUseAdvancedServer) {
-      return buildAdvanced();
-    }
-
-    return SpeechToTextQuranRecognizer();
+  if (settings.canUseLiveWebSocket) {
+    return LiveAsrWebSocketRecognizer(
+      websocketUri: Uri.parse(settings.liveWebSocketEndpoint),
+      apiKey: settings.apiKey.isEmpty ? null : settings.apiKey,
+    );
   }
 
-  if (settings.mode == AsrEngineMode.auto) {
-    if (settings.canUseAdvancedServer) {
-      return buildAdvanced();
-    }
-
-    return SpeechToTextQuranRecognizer();
+  if (settings.canUseAdvancedServer) {
+    return buildAdvanced();
   }
 
   return SpeechToTextQuranRecognizer();

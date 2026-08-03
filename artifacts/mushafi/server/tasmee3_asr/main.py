@@ -7,7 +7,7 @@ from dataclasses import dataclass
 from typing import Any, Dict, List, Optional, Tuple
 
 import whisper_timestamped as whisper
-from fastapi import FastAPI, File, Form, Header, HTTPException, UploadFile
+from fastapi import FastAPI, File, Form, Header, HTTPException, UploadFile, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 
 API_KEY = os.getenv("TASMEE3_ASR_API_KEY", "")
@@ -614,4 +614,102 @@ async def transcribe(
         try:
             os.remove(temp_path)
         except OSError:
+            pass
+
+
+@app.websocket("/ws/live")
+async def live_asr(websocket: WebSocket):
+    """Protocol scaffold for live ASR. Does not replace /transcribe."""
+    await websocket.accept()
+
+    try:
+        await websocket.send_json(
+            {
+                "type": "ready",
+                "text": "",
+                "confidence": 0.0,
+                "words": [],
+            }
+        )
+
+        buffer_messages = []
+        is_started = False
+
+        while True:
+            message = await websocket.receive()
+
+            if "text" in message:
+                try:
+                    payload = json.loads(message["text"])
+                except json.JSONDecodeError:
+                    await websocket.send_json(
+                        {
+                            "type": "error",
+                            "error": "Invalid JSON message",
+                        }
+                    )
+                    continue
+
+                msg_type = payload.get("type")
+
+                if msg_type == "start":
+                    is_started = True
+                    await websocket.send_json(
+                        {
+                            "type": "partial",
+                            "text": "",
+                            "confidence": 0.0,
+                            "words": [],
+                        }
+                    )
+
+                elif msg_type == "stop":
+                    await websocket.send_json(
+                        {
+                            "type": "final",
+                            "text": "",
+                            "confidence": 0.0,
+                            "words": [],
+                        }
+                    )
+                    break
+
+                elif msg_type == "audioChunk":
+                    # Placeholder:
+                    # Real audio-chunk ASR needs agreed PCM/base64 protocol
+                    # then batched transcription. Keep the connection stable.
+                    buffer_messages.append(payload)
+
+                    if is_started:
+                        await websocket.send_json(
+                            {
+                                "type": "partial",
+                                "text": "",
+                                "confidence": 0.0,
+                                "words": [],
+                            }
+                        )
+
+            elif "bytes" in message:
+                # Later: accept raw bytes. Currently acknowledge only.
+                await websocket.send_json(
+                    {
+                        "type": "partial",
+                        "text": "",
+                        "confidence": 0.0,
+                        "words": [],
+                    }
+                )
+
+    except WebSocketDisconnect:
+        return
+    except Exception as exc:
+        try:
+            await websocket.send_json(
+                {
+                    "type": "error",
+                    "error": str(exc),
+                }
+            )
+        except Exception:
             pass

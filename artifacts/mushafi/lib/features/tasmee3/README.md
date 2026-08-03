@@ -482,3 +482,29 @@ Live Follow Along الحالي يعتمد على النص الجزئي القا�
 
 الأوامر الصوتية تعتمد على النص المتعرف عليه، وقد تختلف دقتها حسب محرك ASR.
 الأوامر لا تغيّر النص القرآني ولا تولده.
+
+## البرومبت التاسع عشر - WebSocket Live ASR
+
+تمت إضافة:
+
+- إعداد Live WebSocket endpoint.
+- `LiveAsrWebSocketRecognizer`.
+- اختيار WebSocket من provider عندما يكون مفعلا.
+- WebSocket endpoint في الخادم:
+  `/ws/live`
+- بروتوكول رسائل:
+  - start
+  - audioChunk
+  - stop
+  - ready
+  - partial
+  - final
+  - error
+
+## ملاحظة مهمة
+
+WebSocket الحالي هو بنية جاهزة للبث الحي.
+التحليل النهائي الدقيق ما زال يتم عبر HTTP `/transcribe`.
+إذا لم يكن WebSocket مضبوطا أو فشل، يستخدم التطبيق:
+- Advanced HTTP ASR
+- أو speech_to_text fallback

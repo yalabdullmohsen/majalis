@@ -14,6 +14,8 @@ class LocalTasmee3AsrSettingsRepository
   static const String _maxRetryKey = 'tasmee3_asr_max_retry';
   static const String _queueKey = 'tasmee3_save_failed_queue';
   static const String _apiKeySecureKey = 'tasmee3_asr_api_key';
+  static const String _liveWsEndpointKey = 'tasmee3_live_ws_endpoint';
+  static const String _enableLiveWsKey = 'tasmee3_enable_live_ws';
 
   static const FlutterSecureStorage _secureStorage = FlutterSecureStorage();
 
@@ -44,6 +46,9 @@ class LocalTasmee3AsrSettingsRepository
       orElse: () => AsrEngineMode.auto,
     );
 
+    final liveWebSocketEndpoint = prefs.getString(_liveWsEndpointKey) ?? '';
+    final enableLiveWebSocket = prefs.getBool(_enableLiveWsKey) ?? false;
+
     return Tasmee3UserAsrSettings(
       mode: mode,
       endpoint: endpoint,
@@ -52,6 +57,8 @@ class LocalTasmee3AsrSettingsRepository
       enableAutoRetry: prefs.getBool(_autoRetryKey) ?? true,
       maxRetryCount: prefs.getInt(_maxRetryKey) ?? 2,
       saveFailedSessionsQueue: prefs.getBool(_queueKey) ?? true,
+      liveWebSocketEndpoint: liveWebSocketEndpoint,
+      enableLiveWebSocket: enableLiveWebSocket,
     );
   }
 
@@ -65,6 +72,14 @@ class LocalTasmee3AsrSettingsRepository
     await prefs.setBool(_autoRetryKey, settings.enableAutoRetry);
     await prefs.setInt(_maxRetryKey, settings.maxRetryCount);
     await prefs.setBool(_queueKey, settings.saveFailedSessionsQueue);
+    await prefs.setString(
+      _liveWsEndpointKey,
+      settings.liveWebSocketEndpoint,
+    );
+    await prefs.setBool(
+      _enableLiveWsKey,
+      settings.enableLiveWebSocket,
+    );
 
     await _secureStorage.write(
       key: _apiKeySecureKey,
@@ -82,6 +97,8 @@ class LocalTasmee3AsrSettingsRepository
     await prefs.remove(_autoRetryKey);
     await prefs.remove(_maxRetryKey);
     await prefs.remove(_queueKey);
+    await prefs.remove(_liveWsEndpointKey);
+    await prefs.remove(_enableLiveWsKey);
 
     await _secureStorage.delete(key: _apiKeySecureKey);
   }

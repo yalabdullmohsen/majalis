@@ -135,3 +135,34 @@ TASMEE3_MIN_AUDIO_DURATION_SECONDS=1.2
 - حد الثقة المنخفضة.
 - أقل حجم صوت.
 - أقل مدة صوت.
+
+## WebSocket Live ASR
+
+تمت إضافة endpoint:
+
+`/ws/live`
+
+مثال:
+
+```txt
+ws://localhost:8000/ws/live
+```
+
+الرسائل من العميل:
+
+```json
+{ "type": "start", "language": "ar" }
+{ "type": "audioChunk", "data": "base64..." }
+{ "type": "stop" }
+```
+
+الرسائل من الخادم:
+
+```json
+{ "type": "ready", "text": "", "confidence": 0, "words": [] }
+{ "type": "partial", "text": "", "confidence": 0, "words": [] }
+{ "type": "final", "text": "", "confidence": 0, "words": [] }
+{ "type": "error", "error": "..." }
+```
+
+ملاحظة: التحليل الحي الحقيقي يحتاج استقبال audio chunks بصيغة متفق عليها ثم تشغيل ASR على دفعات. endpoint الحالي يؤسس البروتوكول ولا يستبدل `/transcribe`.

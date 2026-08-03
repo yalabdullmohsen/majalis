@@ -48,6 +48,11 @@ class AsrServerHealthService {
     }
   }
 
+  bool looksLikeWebSocketEndpoint(String endpoint) {
+    final value = endpoint.trim().toLowerCase();
+    return value.startsWith('ws://') || value.startsWith('wss://');
+  }
+
   String _healthPath(Uri transcribeUri) {
     final path = transcribeUri.path;
 

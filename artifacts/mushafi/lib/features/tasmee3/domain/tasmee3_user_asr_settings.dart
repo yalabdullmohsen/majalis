@@ -8,6 +8,8 @@ class Tasmee3UserAsrSettings {
   final bool enableAutoRetry;
   final int maxRetryCount;
   final bool saveFailedSessionsQueue;
+  final String liveWebSocketEndpoint;
+  final bool enableLiveWebSocket;
 
   const Tasmee3UserAsrSettings({
     required this.mode,
@@ -17,6 +19,8 @@ class Tasmee3UserAsrSettings {
     required this.enableAutoRetry,
     required this.maxRetryCount,
     required this.saveFailedSessionsQueue,
+    required this.liveWebSocketEndpoint,
+    required this.enableLiveWebSocket,
   });
 
   const Tasmee3UserAsrSettings.defaults()
@@ -26,12 +30,24 @@ class Tasmee3UserAsrSettings {
         allowServerAudioUpload = false,
         enableAutoRetry = true,
         maxRetryCount = 2,
-        saveFailedSessionsQueue = true;
+        saveFailedSessionsQueue = true,
+        liveWebSocketEndpoint = '',
+        enableLiveWebSocket = false;
 
   bool get hasEndpoint => endpoint.trim().isNotEmpty;
 
   bool get canUseAdvancedServer {
     return allowServerAudioUpload && hasEndpoint;
+  }
+
+  bool get hasLiveWebSocketEndpoint {
+    return liveWebSocketEndpoint.trim().isNotEmpty;
+  }
+
+  bool get canUseLiveWebSocket {
+    return enableLiveWebSocket &&
+        allowServerAudioUpload &&
+        hasLiveWebSocketEndpoint;
   }
 
   Tasmee3UserAsrSettings copyWith({
@@ -42,6 +58,8 @@ class Tasmee3UserAsrSettings {
     bool? enableAutoRetry,
     int? maxRetryCount,
     bool? saveFailedSessionsQueue,
+    String? liveWebSocketEndpoint,
+    bool? enableLiveWebSocket,
   }) {
     return Tasmee3UserAsrSettings(
       mode: mode ?? this.mode,
@@ -53,6 +71,9 @@ class Tasmee3UserAsrSettings {
       maxRetryCount: maxRetryCount ?? this.maxRetryCount,
       saveFailedSessionsQueue:
           saveFailedSessionsQueue ?? this.saveFailedSessionsQueue,
+      liveWebSocketEndpoint:
+          liveWebSocketEndpoint ?? this.liveWebSocketEndpoint,
+      enableLiveWebSocket: enableLiveWebSocket ?? this.enableLiveWebSocket,
     );
   }
 }
