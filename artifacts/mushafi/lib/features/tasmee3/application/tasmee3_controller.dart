@@ -6,6 +6,7 @@ import 'package:permission_handler/permission_handler.dart';
 import '../data/quran_repository.dart';
 import '../data/quran_speech_recognizer.dart';
 import '../domain/quran_ayah.dart';
+import '../domain/recognized_word.dart';
 import '../domain/recitation_target.dart';
 import '../domain/tasmee3_result.dart';
 import 'mistake_detection_engine.dart';
@@ -24,43 +25,53 @@ class Tasmee3State {
   final Tasmee3Status status;
   final RecitationTarget? target;
   final String recognizedText;
+  final List<RecognizedWord> recognizedWords;
   final double confidence;
   final Tasmee3Result? result;
   final String? errorMessage;
+  final Duration sessionDuration;
 
   const Tasmee3State({
     required this.status,
     this.target,
     this.recognizedText = '',
+    this.recognizedWords = const [],
     this.confidence = 0,
     this.result,
     this.errorMessage,
+    this.sessionDuration = Duration.zero,
   });
 
   const Tasmee3State.initial()
       : status = Tasmee3Status.idle,
         target = null,
         recognizedText = '',
+        recognizedWords = const [],
         confidence = 0,
         result = null,
-        errorMessage = null;
+        errorMessage = null,
+        sessionDuration = Duration.zero;
 
   Tasmee3State copyWith({
     Tasmee3Status? status,
     RecitationTarget? target,
     String? recognizedText,
+    List<RecognizedWord>? recognizedWords,
     double? confidence,
     Tasmee3Result? result,
     String? errorMessage,
+    Duration? sessionDuration,
     bool clearResult = false,
   }) {
     return Tasmee3State(
       status: status ?? this.status,
       target: target ?? this.target,
       recognizedText: recognizedText ?? this.recognizedText,
+      recognizedWords: recognizedWords ?? this.recognizedWords,
       confidence: confidence ?? this.confidence,
       result: clearResult ? null : result ?? this.result,
       errorMessage: errorMessage,
+      sessionDuration: sessionDuration ?? this.sessionDuration,
     );
   }
 }
@@ -72,6 +83,8 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
 
   StreamSubscription<RecognizedSegment>? _subscription;
   List<QuranAyah> _expectedAyahs = [];
+  Timer? _sessionTimer;
+  DateTime? _listenStartedAt;
 
   Tasmee3Controller({
     required this.quranRepository,
@@ -90,11 +103,15 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
         return;
       }
 
+      _stopSessionTimer();
+
       state = state.copyWith(
         status: Tasmee3Status.requestingPermission,
         target: target,
         recognizedText: '',
+        recognizedWords: const [],
         confidence: 0,
+        sessionDuration: Duration.zero,
         clearResult: true,
         errorMessage: null,
       );
@@ -132,12 +149,14 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
       }
 
       state = state.copyWith(status: Tasmee3Status.listening);
+      _startSessionTimer();
 
       await _subscription?.cancel();
 
       _subscription = recognizer.listen().listen((segment) {
         state = state.copyWith(
           recognizedText: segment.text,
+          recognizedWords: segment.words,
           confidence: segment.confidence,
         );
 
@@ -146,6 +165,7 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
         }
       });
     } catch (e) {
+      _stopSessionTimer();
       state = state.copyWith(
         status: Tasmee3Status.error,
         errorMessage: e.toString(),
@@ -161,6 +181,7 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
     await recognizer.stop();
     await _subscription?.cancel();
     _subscription = null;
+    _stopSessionTimer();
 
     analyze();
   }
@@ -174,13 +195,23 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
       return;
     }
 
+    _stopSessionTimer();
     state = state.copyWith(status: Tasmee3Status.analyzing);
 
-    final result = engine.analyze(
-      expectedAyahs: _expectedAyahs,
-      recognizedText: state.recognizedText,
-      confidence: state.confidence,
-    );
+    final Tasmee3Result result;
+    if (state.recognizedWords.isNotEmpty) {
+      result = engine.analyzeWords(
+        expectedAyahs: _expectedAyahs,
+        recognizedWords: state.recognizedWords.map((w) => w.word).toList(),
+        confidence: state.confidence,
+      );
+    } else {
+      result = engine.analyze(
+        expectedAyahs: _expectedAyahs,
+        recognizedText: state.recognizedText,
+        confidence: state.confidence,
+      );
+    }
 
     state = state.copyWith(
       status: Tasmee3Status.completed,
@@ -188,9 +219,18 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
     );
   }
 
+  Future<void> retrySameRange() async {
+    final target = state.target;
+    if (target == null) {
+      return;
+    }
+    await start(target);
+  }
+
   Future<void> reset() async {
     await recognizer.stop();
     await _subscription?.cancel();
+    _stopSessionTimer();
 
     _subscription = null;
     _expectedAyahs = [];
@@ -198,9 +238,28 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
     state = const Tasmee3State.initial();
   }
 
+  void _startSessionTimer() {
+    _listenStartedAt = DateTime.now();
+    _sessionTimer?.cancel();
+    _sessionTimer = Timer.periodic(const Duration(seconds: 1), (_) {
+      final started = _listenStartedAt;
+      if (started == null) return;
+      state = state.copyWith(
+        sessionDuration: DateTime.now().difference(started),
+      );
+    });
+  }
+
+  void _stopSessionTimer() {
+    _sessionTimer?.cancel();
+    _sessionTimer = null;
+    _listenStartedAt = null;
+  }
+
   @override
   void dispose() {
     _subscription?.cancel();
+    _stopSessionTimer();
     recognizer.stop();
     super.dispose();
   }

@@ -1,17 +1,32 @@
 import 'dart:async';
 
+import '../domain/advanced_recognition_result.dart';
+import '../domain/recognized_word.dart';
+
 class RecognizedSegment {
   final String text;
   final double confidence;
   final bool isFinal;
   final DateTime timestamp;
+  final List<RecognizedWord> words;
 
   const RecognizedSegment({
     required this.text,
     required this.confidence,
     required this.isFinal,
     required this.timestamp,
+    this.words = const [],
   });
+
+  factory RecognizedSegment.fromAdvanced(AdvancedRecognitionResult result) {
+    return RecognizedSegment(
+      text: result.fullText,
+      confidence: result.confidence,
+      isFinal: result.isFinal,
+      timestamp: DateTime.now(),
+      words: result.words,
+    );
+  }
 }
 
 abstract class QuranSpeechRecognizer {

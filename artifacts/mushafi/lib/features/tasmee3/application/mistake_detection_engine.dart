@@ -23,6 +23,20 @@ class ExpectedWord {
 class MistakeDetectionEngine {
   const MistakeDetectionEngine();
 
+  /// Prefer this when the ASR engine already returns tokenized words
+  /// (advanced Quran ASR with per-word confidence / timestamps).
+  Tasmee3Result analyzeWords({
+    required List<QuranAyah> expectedAyahs,
+    required List<String> recognizedWords,
+    required double confidence,
+  }) {
+    return analyze(
+      expectedAyahs: expectedAyahs,
+      recognizedText: recognizedWords.join(' '),
+      confidence: confidence,
+    );
+  }
+
   Tasmee3Result analyze({
     required List<QuranAyah> expectedAyahs,
     required String recognizedText,

@@ -37,18 +37,24 @@ void main() {
       );
     });
 
-    test('detects wrong word', () {
+    test('analyzeWords mirrors analyze on joined text', () {
       const ayah = QuranAyah(
         ref: AyahRef(surah: 112, ayah: 1),
         textUthmani: 'قُلْ هُوَ',
       );
-      final result = engine.analyze(
+      final fromWords = engine.analyzeWords(
+        expectedAyahs: const [ayah],
+        recognizedWords: const ['قل', 'هي'],
+        confidence: 0.9,
+      );
+      final fromText = engine.analyze(
         expectedAyahs: const [ayah],
         recognizedText: 'قل هي',
         confidence: 0.9,
       );
+      expect(fromWords.mistakesCount, fromText.mistakesCount);
       expect(
-        result.mistakes.any((e) => e.type == Tasmee3MistakeType.wrongWord),
+        fromWords.mistakes.any((e) => e.type == Tasmee3MistakeType.wrongWord),
         isTrue,
       );
     });
