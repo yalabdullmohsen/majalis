@@ -115,7 +115,7 @@ class _MushafSearchFilterSheetState extends State<MushafSearchFilterSheet> {
                 value: filter.includeTafsir,
                 title: const Text('البحث في التفسير'),
                 subtitle: const Text(
-                  'يتطلب وجود ملف تفسير مرخص ومتوفر داخل التطبيق.',
+                  'يعمل فقط إذا كان ملف تفسير مرخص ومتوفر داخل التطبيق.',
                 ),
                 activeColor: Tasmee3Colors.primary,
                 onChanged: (value) {
@@ -131,7 +131,20 @@ class _MushafSearchFilterSheetState extends State<MushafSearchFilterSheet> {
                   foregroundColor: Colors.white,
                   padding: const EdgeInsets.symmetric(vertical: 14),
                 ),
-                onPressed: () => Navigator.pop(context, filter),
+                onPressed: () {
+                  if (!filter.includeQuranText && !filter.includeTafsir) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text(
+                          'اختر البحث في القرآن أو التفسير على الأقل.',
+                        ),
+                      ),
+                    );
+                    return;
+                  }
+
+                  Navigator.pop(context, filter);
+                },
                 icon: const Icon(Icons.check),
                 label: const Text('تطبيق الفلاتر'),
               ),

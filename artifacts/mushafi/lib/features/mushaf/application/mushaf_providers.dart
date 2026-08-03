@@ -14,6 +14,7 @@ import '../data/shared_prefs_mushaf_audio_settings_repository.dart';
 import '../data/shared_prefs_mushaf_local_repository.dart';
 import '../data/shared_prefs_mushaf_reading_settings_repository.dart';
 import '../data/shared_prefs_mushaf_search_history_repository.dart';
+import '../data/tafsir_catalog.dart';
 import '../data/tafsir_repository.dart';
 import '../domain/mushaf_audio_download.dart';
 import '../domain/mushaf_audio_settings.dart';
@@ -25,6 +26,8 @@ import '../domain/mushaf_reading_settings.dart';
 import '../domain/mushaf_search_history_item.dart';
 import '../domain/mushaf_search_index_item.dart';
 import '../domain/quran_page_metadata.dart';
+import '../domain/tafsir_search_index_item.dart';
+import '../domain/tafsir_source.dart';
 import 'ayah_share_text_builder.dart';
 import 'mushaf_audio_controller.dart';
 import 'mushaf_audio_download_controller.dart';
@@ -37,6 +40,8 @@ import 'mushaf_search_index_builder.dart';
 import 'mushaf_search_service.dart';
 import 'mushaf_search_suggestions_service.dart';
 import 'quran_page_metadata_integrity_service.dart';
+import 'tafsir_integrity_service.dart';
+import 'tafsir_search_index_builder.dart';
 import 'widget_image_export_service.dart';
 
 final mushafPageBuilderProvider = Provider<MushafPageBuilder>((ref) {
@@ -239,10 +244,47 @@ final mushafSearchSuggestionsProvider =
   return service.buildSuggestions(index);
 });
 
+final selectedTafsirSourceProvider = Provider<TafsirSource>((ref) {
+  return TafsirCatalog.defaultSource();
+});
+
+final tafsirSearchIndexBuilderProvider =
+    Provider<TafsirSearchIndexBuilder>((ref) {
+  return TafsirSearchIndexBuilder(
+    quranRepository: ref.watch(quranRepositoryProvider),
+    tafsirRepository: ref.watch(tafsirRepositoryProvider),
+    pageMetadataRepository: ref.watch(quranPageMetadataRepositoryProvider),
+  );
+});
+
+final tafsirSearchIndexProvider =
+    FutureProvider<List<TafsirSearchIndexItem>>((ref) async {
+  final builder = ref.watch(tafsirSearchIndexBuilderProvider);
+  final source = ref.watch(selectedTafsirSourceProvider);
+
+  return builder.build(source);
+});
+
+final tafsirIntegrityServiceProvider = Provider<TafsirIntegrityService>((ref) {
+  return const TafsirIntegrityService();
+});
+
+final tafsirIntegrityReportProvider =
+    FutureProvider<TafsirIntegrityReport>((ref) async {
+  final repository = ref.watch(tafsirRepositoryProvider);
+  final source = ref.watch(selectedTafsirSourceProvider);
+  final service = ref.watch(tafsirIntegrityServiceProvider);
+
+  final entries = await repository.getAllEntries(source);
+
+  return service.validate(entries);
+});
+
 final mushafSearchControllerProvider =
     StateNotifierProvider<MushafSearchController, MushafSearchState>((ref) {
   return MushafSearchController(
     loadIndex: () => ref.read(mushafSearchIndexProvider.future),
+    loadTafsirIndex: () => ref.read(tafsirSearchIndexProvider.future),
     searchService: ref.watch(mushafSearchServiceProvider),
     historyRepository: ref.watch(mushafSearchHistoryRepositoryProvider),
   );

@@ -19,6 +19,12 @@ class AssetsTafsirRepository implements TafsirRepository {
     return sourceCache['$surah:$ayah'];
   }
 
+  @override
+  Future<List<TafsirEntry>> getAllEntries(TafsirSource source) async {
+    final sourceCache = await _loadSource(source);
+    return sourceCache.values.toList();
+  }
+
   Future<Map<String, TafsirEntry>> _loadSource(TafsirSource source) async {
     final cached = _cache[source.id];
 

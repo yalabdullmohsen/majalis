@@ -7,11 +7,13 @@ import '../../tasmee3/presentation/widgets/tasmee3_empty_state.dart';
 import '../../tasmee3/presentation/widgets/tasmee3_error_state.dart';
 import '../application/mushaf_providers.dart';
 import '../application/mushaf_search_controller.dart';
+import '../data/tafsir_catalog.dart';
 import '../domain/mushaf_search_filter.dart';
 import '../domain/mushaf_search_history_item.dart';
 import '../domain/mushaf_search_result.dart';
 import 'mushaf_screen.dart';
 import 'mushaf_search_filter_sheet.dart';
+import 'mushaf_tafsir_screen.dart';
 import 'widgets/search_highlighted_ayah_text.dart';
 
 class MushafSearchScreen extends ConsumerStatefulWidget {
@@ -290,10 +292,13 @@ class _SearchResultsContent extends StatelessWidget {
     }
 
     if (state.results.isEmpty) {
-      return const Tasmee3EmptyState(
+      return Tasmee3EmptyState(
         icon: Icons.search_off,
-        title: 'لا توجد نتائج',
-        message: 'جرّب كلمة أخرى أو اكتب جزءا أقصر من الآية.',
+        title: state.infoMessage != null
+            ? 'التفسير غير متوفر'
+            : 'لا توجد نتائج',
+        message: state.infoMessage ??
+            'جرّب كلمة أخرى أو اكتب جزءا أقصر من الآية.',
       );
     }
 
@@ -338,6 +343,8 @@ class _SearchResultCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isTafsir = result.source == MushafSearchResultSource.tafsir;
+
     return Container(
       padding: const EdgeInsets.all(Tasmee3Spacing.md),
       decoration: BoxDecoration(
@@ -345,43 +352,114 @@ class _SearchResultCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(Tasmee3Radius.lg),
         border: Border.all(color: Tasmee3Colors.border),
       ),
-      child: InkWell(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (_) => MushafScreen(
-                initialPage: result.pageNumber,
-                initialHighlightedSurah: result.ayah.ref.surah,
-                initialHighlightedAyah: result.ayah.ref.ayah,
-              ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          InkWell(
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => MushafScreen(
+                    initialPage: result.pageNumber,
+                    initialHighlightedSurah: result.ayah.ref.surah,
+                    initialHighlightedAyah: result.ayah.ref.ayah,
+                  ),
+                ),
+              );
+            },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        'سورة ${result.ayah.ref.surah} - آية ${result.ayah.ref.ayah} - صفحة ${result.pageNumber}',
+                        style: Tasmee3TextStyles.secondary.copyWith(
+                          color: Tasmee3Colors.primary,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: isTafsir
+                            ? Tasmee3Colors.info.withValues(alpha: 0.12)
+                            : Tasmee3Colors.primary.withValues(alpha: 0.12),
+                        borderRadius: BorderRadius.circular(999),
+                      ),
+                      child: Text(
+                        isTafsir ? 'نتيجة من التفسير' : 'نتيجة من القرآن',
+                        style:
+                            Tasmee3TextStyles.secondary.copyWith(fontSize: 12),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 8),
+                SearchHighlightedAyahText(
+                  text: result.snippet,
+                  query: result.query,
+                ),
+                if (isTafsir && result.tafsirSnippet != null) ...[
+                  const SizedBox(height: 10),
+                  Container(
+                    padding: const EdgeInsets.all(Tasmee3Spacing.md),
+                    decoration: BoxDecoration(
+                      color: Tasmee3Colors.background,
+                      borderRadius: BorderRadius.circular(Tasmee3Radius.md),
+                      border: Border.all(color: Tasmee3Colors.border),
+                    ),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Text(
+                          result.tafsirSourceName ?? 'التفسير',
+                          style: Tasmee3TextStyles.secondary.copyWith(
+                            color: Tasmee3Colors.primary,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        const SizedBox(height: 6),
+                        SearchHighlightedAyahText(
+                          text: result.tafsirSnippet!,
+                          query: result.query,
+                          style: Tasmee3TextStyles.body,
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
+              ],
             ),
-          );
-        },
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Text(
-              'سورة ${result.ayah.ref.surah} - آية ${result.ayah.ref.ayah} - صفحة ${result.pageNumber}',
-              style: Tasmee3TextStyles.secondary.copyWith(
-                color: Tasmee3Colors.primary,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-            if (result.source == MushafSearchResultSource.tafsir) ...[
-              const SizedBox(height: 4),
-              Text(
-                'نتيجة من التفسير${result.tafsirSourceName == null ? '' : ' - ${result.tafsirSourceName}'}',
-                style: Tasmee3TextStyles.secondary,
-              ),
-            ],
+          ),
+          if (isTafsir) ...[
             const SizedBox(height: 8),
-            SearchHighlightedAyahText(
-              text: result.snippet,
-              query: result.query,
+            Align(
+              alignment: Alignment.centerLeft,
+              child: TextButton.icon(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => MushafTafsirScreen(
+                        ayah: result.ayah,
+                        source: TafsirCatalog.defaultSource(),
+                      ),
+                    ),
+                  );
+                },
+                icon: const Icon(Icons.menu_book_outlined),
+                label: const Text('فتح التفسير'),
+              ),
             ),
           ],
-        ),
+        ],
       ),
     );
   }

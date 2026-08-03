@@ -14,6 +14,7 @@ class MushafSearchResult {
   final int score;
   final MushafSearchResultSource source;
   final String? tafsirSourceName;
+  final String? tafsirSnippet;
 
   const MushafSearchResult({
     required this.ayah,
@@ -24,5 +25,6 @@ class MushafSearchResult {
     required this.score,
     this.source = MushafSearchResultSource.quranText,
     this.tafsirSourceName,
+    this.tafsirSnippet,
   });
 }

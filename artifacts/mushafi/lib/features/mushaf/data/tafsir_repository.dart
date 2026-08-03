@@ -7,4 +7,6 @@ abstract class TafsirRepository {
     required int surah,
     required int ayah,
   });
+
+  Future<List<TafsirEntry>> getAllEntries(TafsirSource source);
 }

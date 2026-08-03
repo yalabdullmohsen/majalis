@@ -146,6 +146,8 @@ Current store decision remains **NO-GO** until Android AAB/APK builds, device sm
 - فلترة بالسورة والجزء.
 - اقتراحات بحث من النص القرآني.
 - فهرس بحث داخلي سريع.
+- البحث في التفسير عند توفر ملف مرخص.
+- فحص سلامة ملف التفسير.
 
 ## Offline Recitation Audio
 
