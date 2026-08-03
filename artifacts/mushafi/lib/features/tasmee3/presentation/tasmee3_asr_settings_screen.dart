@@ -155,6 +155,17 @@ class _Tasmee3AsrSettingsScreenState
                       );
                     },
                   ),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 6),
+                    child: Text(
+                      'تنبيه: البث المباشر WebSocket ميزة متقدمة وتجريبية. للحصول على ثبات أعلى استخدم الخادم العادي إذا واجهت تقطع.',
+                      style: TextStyle(
+                        color: Colors.orange,
+                        fontSize: 13,
+                        height: 1.5,
+                      ),
+                    ),
+                  ),
                   const SizedBox(height: 12),
                   TextFormField(
                     controller: apiKeyController,

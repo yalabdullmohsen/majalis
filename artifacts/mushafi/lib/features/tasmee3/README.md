@@ -508,3 +508,20 @@ WebSocket الحالي هو بنية جاهزة للبث الحي.
 إذا لم يكن WebSocket مضبوطا أو فشل، يستخدم التطبيق:
 - Advanced HTTP ASR
 - أو speech_to_text fallback
+
+## البرومبت العشرون - Audio Chunks Streaming
+
+تمت إضافة:
+
+- إرسال audio chunks عبر WebSocket.
+- استقبال partial transcripts.
+- watchdog إذا تأخرت partials.
+- final result عند stop.
+- fallback عند فشل WebSocket.
+- استمرار HTTP Forced Alignment كمرحلة نهائية.
+
+## ملاحظة تقنية
+
+حزمة record قد لا توفر stream audio raw موحدا لكل المنصات.
+لذلك يستخدم التطبيق chunks قصيرة مسجلة ثم يرسلها.
+لإنتاج احترافي يفضل لاحقا native PCM stream.

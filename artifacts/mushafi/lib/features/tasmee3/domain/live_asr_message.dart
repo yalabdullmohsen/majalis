@@ -13,6 +13,7 @@ class LiveAsrMessage {
   final List<RecognizedWord> words;
   final double confidence;
   final String? errorMessage;
+  final int sequence;
 
   const LiveAsrMessage({
     required this.type,
@@ -20,6 +21,7 @@ class LiveAsrMessage {
     this.words = const [],
     this.confidence = 0,
     this.errorMessage,
+    this.sequence = 0,
   });
 
   factory LiveAsrMessage.fromJson(Map<String, dynamic> json) {
@@ -61,6 +63,7 @@ class LiveAsrMessage {
       }).toList(),
       confidence: (json['confidence'] as num?)?.toDouble() ?? 0,
       errorMessage: json['error'] as String?,
+      sequence: json['sequence'] as int? ?? 0,
     );
   }
 }

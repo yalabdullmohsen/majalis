@@ -23,6 +23,7 @@ import '../data/tasmee3_session_repository.dart';
 import '../domain/asr_connection_status.dart';
 import '../domain/asr_engine_mode.dart';
 import '../domain/ayah_mastery_record.dart';
+import '../domain/live_streaming_config.dart';
 import '../domain/queued_tasmee3_job.dart';
 import '../domain/tasmee3_achievement.dart';
 import '../domain/tasmee3_badge.dart';
@@ -149,6 +150,10 @@ final quranSpeechRecognizerProvider = Provider<QuranSpeechRecognizer>((ref) {
     return LiveAsrWebSocketRecognizer(
       websocketUri: Uri.parse(settings.liveWebSocketEndpoint),
       apiKey: settings.apiKey.isEmpty ? null : settings.apiKey,
+      config: const LiveStreamingConfig(
+        chunkDuration: Duration(seconds: 3),
+        partialTimeout: Duration(seconds: 8),
+      ),
     );
   }
 

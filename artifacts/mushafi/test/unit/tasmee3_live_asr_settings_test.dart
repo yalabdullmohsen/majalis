@@ -22,6 +22,7 @@ void main() {
       'type': 'partial',
       'text': 'قل',
       'confidence': 0.8,
+      'sequence': 3,
       'words': [
         {'word': 'قل', 'confidence': 0.8},
       ],
@@ -29,7 +30,20 @@ void main() {
 
     expect(message.type, LiveAsrMessageType.partial);
     expect(message.text, 'قل');
+    expect(message.sequence, 3);
     expect(message.words.single.word, 'قل');
+  });
+
+  test('LiveAsrMessage defaults sequence to zero', () {
+    final message = LiveAsrMessage.fromJson({
+      'type': 'final',
+      'text': 'هو',
+      'confidence': 0.9,
+      'words': [],
+    });
+
+    expect(message.type, LiveAsrMessageType.finalResult);
+    expect(message.sequence, 0);
   });
 
   test('looksLikeWebSocketEndpoint detects ws schemes', () {

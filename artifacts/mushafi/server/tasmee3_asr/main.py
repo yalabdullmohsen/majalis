@@ -1,8 +1,11 @@
+import base64
 import json
 import os
 import re
 import subprocess
 import tempfile
+import time
+from collections import deque
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional, Tuple
 
@@ -184,6 +187,58 @@ def extract_words(result: Dict[str, Any]) -> List[Dict[str, Any]]:
             )
 
     return words
+
+
+def write_live_chunks_to_file(chunks: list[bytes], suffix: str = ".m4a") -> str:
+    temp = tempfile.NamedTemporaryFile(delete=False, suffix=suffix)
+
+    try:
+        for chunk in chunks:
+            temp.write(chunk)
+        temp.flush()
+        return temp.name
+    finally:
+        temp.close()
+
+
+def transcribe_live_file(path: str, language: str = "ar") -> dict:
+    model = get_model()
+
+    result = whisper.transcribe(
+        model,
+        path,
+        language=language,
+        vad=True,
+        detect_disfluencies=False,
+        condition_on_previous_text=False,
+        temperature=0.0,
+    )
+
+    words = extract_words(result)
+    text = " ".join([word["word"] for word in words]).strip()
+
+    if not text:
+        text = normalize_arabic(str(result.get("text", "")).strip())
+
+    confidence = (
+        sum(float(word["confidence"]) for word in words) / len(words)
+        if words
+        else 0.0
+    )
+
+    return {
+        "text": text,
+        "confidence": confidence,
+        "words": [
+            {
+                "word": word["word"],
+                "startMs": word["startMs"],
+                "endMs": word["endMs"],
+                "confidence": word["confidence"],
+            }
+            for word in words
+        ],
+    }
 
 
 @dataclass
@@ -619,8 +674,14 @@ async def transcribe(
 
 @app.websocket("/ws/live")
 async def live_asr(websocket: WebSocket):
-    """Protocol scaffold for live ASR. Does not replace /transcribe."""
+    """Live ASR via short audio chunks. Does not replace HTTP /transcribe."""
     await websocket.accept()
+
+    chunks: deque[bytes] = deque(maxlen=4)
+    all_chunks: list[bytes] = []
+    language = "ar"
+    last_transcribe_at = 0.0
+    min_interval_seconds = float(os.getenv("TASMEE3_LIVE_MIN_INTERVAL", "3.0"))
 
     try:
         await websocket.send_json(
@@ -629,77 +690,161 @@ async def live_asr(websocket: WebSocket):
                 "text": "",
                 "confidence": 0.0,
                 "words": [],
+                "sequence": 0,
             }
         )
-
-        buffer_messages = []
-        is_started = False
 
         while True:
             message = await websocket.receive()
 
-            if "text" in message:
-                try:
-                    payload = json.loads(message["text"])
-                except json.JSONDecodeError:
-                    await websocket.send_json(
-                        {
-                            "type": "error",
-                            "error": "Invalid JSON message",
-                        }
-                    )
-                    continue
+            if "text" not in message:
+                continue
 
-                msg_type = payload.get("type")
+            try:
+                payload = json.loads(message["text"])
+            except json.JSONDecodeError:
+                await websocket.send_json(
+                    {
+                        "type": "error",
+                        "error": "Invalid JSON message",
+                        "sequence": 0,
+                    }
+                )
+                continue
 
-                if msg_type == "start":
-                    is_started = True
-                    await websocket.send_json(
-                        {
-                            "type": "partial",
-                            "text": "",
-                            "confidence": 0.0,
-                            "words": [],
-                        }
-                    )
+            msg_type = payload.get("type")
+            sequence = int(payload.get("sequence", 0))
 
-                elif msg_type == "stop":
-                    await websocket.send_json(
-                        {
-                            "type": "final",
-                            "text": "",
-                            "confidence": 0.0,
-                            "words": [],
-                        }
-                    )
-                    break
+            if msg_type == "start":
+                language = str(payload.get("language", "ar"))
+                chunks.clear()
+                all_chunks.clear()
+                last_transcribe_at = 0.0
 
-                elif msg_type == "audioChunk":
-                    # Placeholder:
-                    # Real audio-chunk ASR needs agreed PCM/base64 protocol
-                    # then batched transcription. Keep the connection stable.
-                    buffer_messages.append(payload)
-
-                    if is_started:
-                        await websocket.send_json(
-                            {
-                                "type": "partial",
-                                "text": "",
-                                "confidence": 0.0,
-                                "words": [],
-                            }
-                        )
-
-            elif "bytes" in message:
-                # Later: accept raw bytes. Currently acknowledge only.
                 await websocket.send_json(
                     {
                         "type": "partial",
                         "text": "",
                         "confidence": 0.0,
                         "words": [],
+                        "sequence": sequence,
                     }
                 )
+
+            elif msg_type == "audioChunk":
+                data = payload.get("data", "")
+                fmt = payload.get("format", "m4a")
+
+                if not data:
+                    continue
+
+                try:
+                    chunk = base64.b64decode(data)
+                except Exception:
+                    await websocket.send_json(
+                        {
+                            "type": "error",
+                            "error": "Invalid base64 audio chunk",
+                            "sequence": sequence,
+                        }
+                    )
+                    continue
+
+                chunks.append(chunk)
+                all_chunks.append(chunk)
+
+                now = time.time()
+
+                if now - last_transcribe_at < min_interval_seconds:
+                    continue
+
+                last_transcribe_at = now
+
+                # Prefer latest standalone m4a chunk (byte-concat of AAC containers
+                # is unreliable). Fall back to deque concat when needed.
+                suffix = ".m4a" if fmt == "m4a" else ".wav"
+                temp_path = write_live_chunks_to_file([chunk], suffix=suffix)
+
+                try:
+                    live_result = transcribe_live_file(temp_path, language=language)
+
+                    await websocket.send_json(
+                        {
+                            "type": "partial",
+                            "text": live_result["text"],
+                            "confidence": live_result["confidence"],
+                            "words": live_result["words"],
+                            "sequence": sequence,
+                        }
+                    )
+                except Exception as exc:
+                    await websocket.send_json(
+                        {
+                            "type": "error",
+                            "error": str(exc),
+                            "sequence": sequence,
+                        }
+                    )
+                finally:
+                    try:
+                        os.remove(temp_path)
+                    except OSError:
+                        pass
+
+            elif msg_type == "stop":
+                if all_chunks:
+                    # Transcribe each m4a chunk separately then join — safer than
+                    # byte-concat of independent containers.
+                    texts: list[str] = []
+                    words_out: list[dict] = []
+                    confidences: list[float] = []
+
+                    for chunk in all_chunks:
+                        temp_path = write_live_chunks_to_file(
+                            [chunk], suffix=".m4a"
+                        )
+                        try:
+                            part = transcribe_live_file(
+                                temp_path, language=language
+                            )
+                            if part["text"]:
+                                texts.append(part["text"])
+                            words_out.extend(part["words"])
+                            confidences.append(float(part["confidence"]))
+                        except Exception:
+                            pass
+                        finally:
+                            try:
+                                os.remove(temp_path)
+                            except OSError:
+                                pass
+
+                    final_text = " ".join(texts).strip()
+                    final_confidence = (
+                        sum(confidences) / len(confidences) if confidences else 0.0
+                    )
+
+                    await websocket.send_json(
+                        {
+                            "type": "final",
+                            "text": final_text,
+                            "confidence": final_confidence,
+                            "words": words_out,
+                            "sequence": sequence,
+                        }
+                    )
+                else:
+                    await websocket.send_json(
+                        {
+                            "type": "final",
+                            "text": "",
+                            "confidence": 0.0,
+                            "words": [],
+                            "sequence": sequence,
+                        }
+                    )
+
+                break
 
     except WebSocketDisconnect:
         return
@@ -709,6 +854,7 @@ async def live_asr(websocket: WebSocket):
                 {
                     "type": "error",
                     "error": str(exc),
+                    "sequence": 0,
                 }
             )
         except Exception:
