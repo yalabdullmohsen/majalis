@@ -3,7 +3,12 @@
 # مُعدَّلة 2026-07-22: من جدولة كل ساعة إلى حلقة متواصلة (دفعة فور انتهاء
 # سابقتها، فاصل دقيقة واحدة فقط)، مع معالجة خاصة لنفاد الرصيد ونفاد المحتوى.
 #
-# تشغيل يدوي (طرفية مفتوحة):
+# ⚠️ 2026-08-03: التشغيل التلقائي معطّل افتراضيًا عبر content-runner.disabled
+# و/أو content-runner.stop. للتشغيل اليدوي فقط:
+#   CONTENT_RUNNER_ALLOW=1 bash content-runner.sh --once
+#   CONTENT_RUNNER_ALLOW=1 bash content-runner.sh --once-audit
+#
+# تشغيل يدوي (طرفية مفتوحة) — يتطلب CONTENT_RUNNER_ALLOW=1:
 #   bash /Users/alabdullmohsen/majalis-content-fill/scripts/content-runner.sh
 #
 # إيقاف نظيف (يوقف بعد نهاية الدورة الحالية، لا يقطعها):
@@ -13,20 +18,56 @@
 #   launchctl unload ~/Library/LaunchAgents/com.majalis.content-runner.plist
 #
 # دورة واحدة فقط (اختبار، بلا حلقة، بلا إعادة محاولة تلقائية عند نفاد الرصيد):
-#   bash content-runner.sh --once
-#   bash content-runner.sh --once --audit
+#   CONTENT_RUNNER_ALLOW=1 bash content-runner.sh --once
+#   CONTENT_RUNNER_ALLOW=1 bash content-runner.sh --once --audit
 
 set -uo pipefail
 
 WORKDIR="/Users/alabdullmohsen/majalis-content-fill"
 SCRIPT_DIR="$WORKDIR/scripts"
+# إن وُجدت نسخة السكربت داخل majlis-app/scripts استخدم مجلد السكربت الفعلي
+# كموقع لملفات القفل/التعطيل عندما لا يوجد worktree المنفصل.
+if [[ ! -d "$SCRIPT_DIR" ]]; then
+  SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+  WORKDIR="$(cd "$SCRIPT_DIR/.." && pwd)"
+fi
 LOG_FILE="$SCRIPT_DIR/content-runner.log"
 STOP_FILE="$SCRIPT_DIR/content-runner.stop"
+DISABLED_FILE="$SCRIPT_DIR/content-runner.disabled"
+# نسخة المستودع (إن وُجدت) تُحتسب أيضًا — حتى لا تُعاد الحلقة من worktree منفصل
+REPO_DISABLED_FILE="$(cd "$(dirname "$0")" && pwd)/content-runner.disabled"
 LOCK_FILE="$SCRIPT_DIR/content-runner.lock"
 CONTENT_PROMPT_FILE="$SCRIPT_DIR/content-runner-content-prompt.txt"
 AUDIT_PROMPT_FILE="$SCRIPT_DIR/content-runner-audit-prompt.txt"
 CYCLE_COUNT_FILE="$SCRIPT_DIR/content-runner.cycle-count"
 AUDIT_EVERY_N=5
+
+# ── صمام إيقاف دائم للتدقيق/الملء التلقائي ──────────────────────────────
+automation_kill_switch_active() {
+  [[ -f "$DISABLED_FILE" || -f "$REPO_DISABLED_FILE" || -f "$STOP_FILE" ]]
+}
+
+refuse_if_automation_disabled() {
+  # $1 = mode: loop | once
+  local mode="${1:-loop}"
+  if ! automation_kill_switch_active; then
+    return 0
+  fi
+  if [[ "$mode" == "once" && "${CONTENT_RUNNER_ALLOW:-}" == "1" ]]; then
+    return 0
+  fi
+  echo "التدقيق/الملء التلقائي معطّل (وُجد content-runner.disabled أو .stop)." >&2
+  echo "للتشغيل اليدوي لدورة واحدة فقط:" >&2
+  echo "  CONTENT_RUNNER_ALLOW=1 bash $0 --once" >&2
+  echo "  CONTENT_RUNNER_ALLOW=1 bash $0 --once-audit" >&2
+  exit 0
+}
+
+# فحص مبكر قبل القفل: الحلقة التلقائية تُرفض فورًا؛ --once يُفحص في case أدناه
+case "${1:-}" in
+  --once|--once-audit) ;;
+  *) refuse_if_automation_disabled "loop" ;;
+esac
 
 # قفل عملية واحدة فقط: نسخة ثانية من هذا السكربت (طرفية يدوية أخرى، أو
 # نافذة/جلسة أخرى) تعمل بالتوازي على نفس WORKDIR تُسبِّب تصادم git حقيقي
@@ -148,9 +189,9 @@ run_one_cycle() {
 main_loop() {
   echo "بدأ content-runner.sh (وضع الحلقة المتواصلة) — فاصل ${BETWEEN_BATCHES_SECONDS}s بين الدفعات، تدقيق كل ${AUDIT_EVERY_N} دورات، تراجع 30 دقيقة عند نفاد الرصيد، انتظار ساعة عند نفاد المحتوى. إيقاف نظيف: touch $STOP_FILE"
   while true; do
-    if [[ -f "$STOP_FILE" ]]; then
-      log_line "$(date -u +"%Y-%m-%dT%H:%M:%SZ") | إيقاف | وُجد ملف stop — إنهاء نظيف"
-      rm -f "$STOP_FILE"
+    if [[ -f "$STOP_FILE" || -f "$DISABLED_FILE" || -f "$REPO_DISABLED_FILE" ]]; then
+      log_line "$(date -u +"%Y-%m-%dT%H:%M:%SZ") | إيقاف | وُجد ملف stop/disabled — إنهاء نظيف (الملف يُبقى لمنع إعادة التشغيل)"
+      # لا تحذف STOP/DISABLED — كان الحذف السابق يسمح بإعادة التشغيل غير المقصود
       break
     fi
 
@@ -167,12 +208,15 @@ main_loop() {
 
 case "${1:-}" in
   --once)
+    refuse_if_automation_disabled "once"
     run_one_cycle "${2:-}"
     ;;
   --once-audit)
+    refuse_if_automation_disabled "once"
     run_one_cycle "--audit"
     ;;
   *)
+    refuse_if_automation_disabled "loop"
     main_loop
     ;;
 esac

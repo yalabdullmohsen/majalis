@@ -128,10 +128,21 @@ export const BLOCKING_LABELS = Object.freeze([
 
 export const TITLE_BLOCK_RE = /NO-AUTO-MERGE|دون دمج|do-not-merge/i;
 
-export const BRANCH_ALLOW_RE =
-  /^((cursor|session|claude|codex|automation|fix|feature|security|docs|chore)\/|majalis-content-fill$)/;
+/**
+ * فرع/عناوين تدقيق المحتوى التلقائي (content-runner) — يُستبعد من
+ * auto-merge وتعليقات التقرير (2026-08-03، طلب إيقاف التدقيق التلقائي).
+ * يبقى مسار PR اليدوي عبر فروع cursor/fix/… مع وسم content-safe ممكنًا.
+ */
+export const AUTOMATIC_CONTENT_AUDIT_BRANCH_RE = /^(majalis-content-fill)$/;
 
-export const BRANCH_EXCLUDE_RE = /^(automation\/content|automation\/tasks)$/;
+export const AUTOMATIC_CONTENT_AUDIT_TITLE_RE =
+  /^تدقيق محتوى(\s|:)|تدقيق محتوى منظ/u;
+
+export const BRANCH_ALLOW_RE =
+  /^((cursor|session|claude|codex|automation|fix|feature|security|docs|chore)\/)/;
+
+export const BRANCH_EXCLUDE_RE =
+  /^(automation\/content|automation\/tasks|majalis-content-fill)$/;
 
 /**
  * Check names required before enabling GitHub auto-merge.

@@ -44,9 +44,9 @@ jobs:
           EVENT_NAME: ${{ github.event_name }}
         run: |
           set -euo pipefail
-          # ⚠️ ج-٢٥٩: كنظيره في `auto-merge-to-main.yml` — فرعُ `majalis-content-fill`
-          # بلا بادئةٍ بشرطة مائلة، فكان يسقط من النمط فلا يُحدَّث عند BEHIND/CONFLICTING.
-          ALLOW='^((cursor|session|claude|automation|fix|feature)/|majalis-content-fill$)'
+          # فرع majalis-content-fill أُخرج من الأتمتة (2026-08-03): التدقيق
+          # التلقائي معطّل — لا تُحدَّث PRsه آليًا بعد الآن.
+          ALLOW='^((cursor|session|claude|codex|automation|fix|feature|chore|docs|security)/)'
           EXCLUDE_DUAL='^(automation/content|automation/tasks)$'
           nums=""
           if [ "$EVENT_NAME" = "pull_request" ] && [ -n "${PR_NUMBER:-}" ]; then
