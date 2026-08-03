@@ -1,20 +1,54 @@
 import '../../tasmee3/domain/quran_ayah.dart';
 import '../domain/mushaf_page.dart';
+import '../domain/quran_page_metadata.dart';
 
-/// Builds mushaf pages from Quran ayahs.
+/// Builds mushaf pages from Quran ayahs and optional page metadata.
 ///
-/// When page metadata is unavailable in the Quran asset, this uses an
-/// approximate even split across [madinahPageCount] slots.
-/// Do NOT claim these pages match Mushaf Al-Madinah unless licensed page
-/// metadata is added.
+/// When [metadata] is empty, falls back to an approximate even split.
+/// Do NOT claim pages match Mushaf Al-Madinah unless licensed full metadata
+/// (604 pages) is provided.
 class MushafPageBuilder {
   const MushafPageBuilder();
 
   static const int madinahPageCount = 604;
 
-  List<MushafPage> buildPages(List<QuranAyah> ayahs) {
+  List<MushafPage> buildPages({
+    required List<QuranAyah> ayahs,
+    required List<QuranPageMetadata> metadata,
+  }) {
     if (ayahs.isEmpty) return const [];
 
+    if (metadata.isEmpty) {
+      return _buildApproximatePages(ayahs);
+    }
+
+    final pages = <MushafPage>[];
+
+    for (final pageMeta in metadata) {
+      final pageAyahs = ayahs.where((ayah) {
+        return pageMeta.containsAyah(
+          surah: ayah.ref.surah,
+          ayah: ayah.ref.ayah,
+        );
+      }).toList();
+
+      pages.add(
+        MushafPage(
+          pageNumber: pageMeta.pageNumber,
+          juz: pageMeta.juz,
+          hizb: pageMeta.hizb,
+          ayahs: pageAyahs,
+          metadata: pageMeta,
+        ),
+      );
+    }
+
+    pages.sort((a, b) => a.pageNumber.compareTo(b.pageNumber));
+
+    return pages;
+  }
+
+  List<MushafPage> _buildApproximatePages(List<QuranAyah> ayahs) {
     final pages = <MushafPage>[];
     final total = ayahs.length;
 

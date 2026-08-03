@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../tasmee3/data/surah_catalog.dart';
 import '../../tasmee3/presentation/tasmee3_design_tokens.dart';
 import '../../tasmee3/presentation/widgets/tasmee3_app_scaffold.dart';
+import '../application/mushaf_providers.dart';
 
 class MushafIndexScreen extends ConsumerWidget {
   const MushafIndexScreen({super.key});
@@ -43,10 +44,18 @@ class MushafIndexScreen extends ConsumerWidget {
               ),
               subtitle: Text('${surah.ayahCount} آية'),
               trailing: const Icon(Icons.chevron_left),
-              onTap: () {
-                // Approximate jump until licensed page metadata is available.
-                final page = ((surah.id - 1) * 604 / 114).floor() + 1;
-                Navigator.pop(context, page);
+              onTap: () async {
+                final repository =
+                    ref.read(quranPageMetadataRepositoryProvider);
+
+                final pageMeta = await repository.findPageForAyah(
+                  surah: surah.id,
+                  ayah: 1,
+                );
+
+                if (context.mounted) {
+                  Navigator.pop(context, pageMeta?.pageNumber ?? 1);
+                }
               },
             ),
           );

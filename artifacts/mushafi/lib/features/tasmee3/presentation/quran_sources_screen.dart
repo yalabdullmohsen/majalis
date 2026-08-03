@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../../mushaf/presentation/quran_page_metadata_integrity_screen.dart';
 import 'quran_integrity_screen.dart';
 import 'tasmee3_design_tokens.dart';
 import 'widgets/tasmee3_app_scaffold.dart';
@@ -51,6 +52,19 @@ class QuranSourcesScreen extends StatelessWidget {
             },
             icon: const Icon(Icons.verified_outlined),
             label: const Text('فحص ملف القرآن'),
+          ),
+          const SizedBox(height: Tasmee3Spacing.md),
+          OutlinedButton.icon(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => const QuranPageMetadataIntegrityScreen(),
+                ),
+              );
+            },
+            icon: const Icon(Icons.layers_outlined),
+            label: const Text('فحص بيانات صفحات المصحف'),
           ),
         ],
       ),

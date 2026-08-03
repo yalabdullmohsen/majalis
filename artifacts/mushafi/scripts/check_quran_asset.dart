@@ -47,5 +47,49 @@ void main() {
     }
   }
 
+  final metadataFile = File('assets/quran/quran_page_metadata.json');
+
+  if (metadataFile.existsSync()) {
+    final rawMetadata = metadataFile.readAsStringSync();
+    final decodedMetadata = jsonDecode(rawMetadata);
+
+    if (decodedMetadata is! List) {
+      stderr.writeln('quran_page_metadata.json must be a list.');
+      exit(1);
+    }
+
+    if (decodedMetadata.length != 604) {
+      stderr.writeln(
+        'Warning: quran_page_metadata.json has ${decodedMetadata.length} pages, expected 604.',
+      );
+    }
+
+    for (final item in decodedMetadata) {
+      if (item is! Map) {
+        stderr.writeln('Invalid metadata entry: $item');
+        exit(1);
+      }
+
+      final map = Map<String, dynamic>.from(item);
+      const keys = [
+        'pageNumber',
+        'juz',
+        'hizb',
+        'rub',
+        'fromSurah',
+        'fromAyah',
+        'toSurah',
+        'toAyah',
+      ];
+
+      for (final key in keys) {
+        if (!map.containsKey(key)) {
+          stderr.writeln('Missing metadata key $key in item: $item');
+          exit(1);
+        }
+      }
+    }
+  }
+
   stdout.writeln('Quran asset integrity check passed.');
 }

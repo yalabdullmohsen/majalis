@@ -1,20 +1,35 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../tasmee3/application/tasmee3_providers.dart';
+import '../data/assets_quran_page_metadata_repository.dart';
 import '../data/assets_tafsir_repository.dart';
 import '../data/mushaf_local_repository.dart';
+import '../data/quran_page_metadata_repository.dart';
 import '../data/shared_prefs_mushaf_local_repository.dart';
 import '../data/tafsir_repository.dart';
 import '../domain/mushaf_favorite_ayah.dart';
 import '../domain/mushaf_page.dart';
 import '../domain/mushaf_reading_position.dart';
+import '../domain/quran_page_metadata.dart';
 import 'ayah_share_text_builder.dart';
 import 'mushaf_controller.dart';
 import 'mushaf_page_builder.dart';
+import 'quran_page_metadata_integrity_service.dart';
 import 'widget_image_export_service.dart';
 
 final mushafPageBuilderProvider = Provider<MushafPageBuilder>((ref) {
   return const MushafPageBuilder();
+});
+
+final quranPageMetadataRepositoryProvider =
+    Provider<QuranPageMetadataRepository>((ref) {
+  return AssetsQuranPageMetadataRepository();
+});
+
+final quranPageMetadataProvider =
+    FutureProvider<List<QuranPageMetadata>>((ref) async {
+  final repository = ref.watch(quranPageMetadataRepositoryProvider);
+  return repository.loadAll();
 });
 
 final mushafPagesProvider = FutureProvider<List<MushafPage>>((ref) async {
@@ -23,7 +38,18 @@ final mushafPagesProvider = FutureProvider<List<MushafPage>>((ref) async {
 
   final ayahs = await quranRepository.getAllAyahs();
 
-  return builder.buildPages(ayahs);
+  var metadata = const <QuranPageMetadata>[];
+
+  try {
+    metadata = await ref.watch(quranPageMetadataProvider.future);
+  } catch (_) {
+    metadata = const [];
+  }
+
+  return builder.buildPages(
+    ayahs: ayahs,
+    metadata: metadata,
+  );
 });
 
 final tafsirRepositoryProvider = Provider<TafsirRepository>((ref) {
@@ -51,6 +77,19 @@ final ayahShareTextBuilderProvider = Provider<AyahShareTextBuilder>((ref) {
 final widgetImageExportServiceProvider =
     Provider<WidgetImageExportService>((ref) {
   return const WidgetImageExportService();
+});
+
+final quranPageMetadataIntegrityServiceProvider =
+    Provider<QuranPageMetadataIntegrityService>((ref) {
+  return const QuranPageMetadataIntegrityService();
+});
+
+final quranPageMetadataIntegrityReportProvider =
+    FutureProvider<QuranPageMetadataIntegrityReport>((ref) async {
+  final metadata = await ref.watch(quranPageMetadataProvider.future);
+  final service = ref.watch(quranPageMetadataIntegrityServiceProvider);
+
+  return service.validate(metadata);
 });
 
 final mushafLastPositionProvider =

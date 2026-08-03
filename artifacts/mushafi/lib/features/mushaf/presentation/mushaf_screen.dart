@@ -45,12 +45,14 @@ class _MushafReaderScreenState extends ConsumerState<MushafReaderScreen> {
   int? highlightedSurah;
   int? highlightedAyah;
   bool _restoredLastPosition = false;
+  bool _alignedInitialPage = false;
 
   @override
   void initState() {
     super.initState();
-    currentPage = widget.initialPage.clamp(1, 604);
-    pageController = PageController(initialPage: currentPage - 1);
+    currentPage = widget.initialPage < 1 ? 1 : widget.initialPage;
+    // Align to a real index after pages/metadata load (count may be < 604).
+    pageController = PageController(initialPage: 0);
   }
 
   @override
@@ -59,15 +61,38 @@ class _MushafReaderScreenState extends ConsumerState<MushafReaderScreen> {
     super.dispose();
   }
 
-  void _tryRestoreLastPosition(int savedPage) {
+  int _indexForPageNumber(List<MushafPage> items, int pageNumber) {
+    if (items.isEmpty) return 0;
+    final exact = items.indexWhere((page) => page.pageNumber == pageNumber);
+    if (exact >= 0) return exact;
+    return (pageNumber - 1).clamp(0, items.length - 1);
+  }
+
+  void _jumpToPageNumber(List<MushafPage> items, int pageNumber) {
+    if (items.isEmpty || !pageController.hasClients) return;
+    final index = _indexForPageNumber(items, pageNumber);
+    pageController.jumpToPage(index);
+    setState(() => currentPage = items[index].pageNumber);
+  }
+
+  void _tryRestoreLastPosition(List<MushafPage> items, int savedPage) {
     if (_restoredLastPosition || widget.initialPage != 1) return;
-    if (savedPage <= 1) return;
+    if (savedPage <= 1 || items.isEmpty) return;
 
     _restoredLastPosition = true;
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!mounted || !pageController.hasClients) return;
-      pageController.jumpToPage((savedPage - 1).clamp(0, 603));
-      setState(() => currentPage = savedPage.clamp(1, 604));
+      if (!mounted) return;
+      _jumpToPageNumber(items, savedPage);
+    });
+  }
+
+  void _alignInitialPage(List<MushafPage> items) {
+    if (_alignedInitialPage || items.isEmpty) return;
+    _alignedInitialPage = true;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+      _jumpToPageNumber(items, currentPage);
     });
   }
 
@@ -78,8 +103,11 @@ class _MushafReaderScreenState extends ConsumerState<MushafReaderScreen> {
     final controller = ref.read(mushafControllerProvider.notifier);
     final pageItems = pages.asData?.value ?? const <MushafPage>[];
 
-    if (!mushafState.isLoading) {
-      _tryRestoreLastPosition(mushafState.currentPage);
+    if (pageItems.isNotEmpty) {
+      _alignInitialPage(pageItems);
+      if (!mushafState.isLoading) {
+        _tryRestoreLastPosition(pageItems, mushafState.currentPage);
+      }
     }
 
     return Directionality(
@@ -137,9 +165,8 @@ class _MushafReaderScreenState extends ConsumerState<MushafReaderScreen> {
                               ),
                             );
 
-                            if (selected != null && pageController.hasClients) {
-                              pageController
-                                  .jumpToPage((selected - 1).clamp(0, 603));
+                            if (selected != null) {
+                              _jumpToPageNumber(pageItems, selected);
                             }
                           },
                         ),

@@ -52,6 +52,7 @@ flutter:
     - assets/data/
     - assets/images/
     - assets/quran/quran_uthmani.json
+    - assets/quran/quran_page_metadata.json
     - assets/tafsir/tafsir_muyassar.json
     - assets/fonts/NotoNaskhArabic-Regular.ttf
     - assets/fonts/NotoNaskhArabic-Bold.ttf

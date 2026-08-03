@@ -90,6 +90,15 @@ dart run scripts/check_quran_asset.dart
 - [x] لا توجد ميزات جديدة بعد Launch Lock.
 - [x] قرار GO / NO-GO موثق. *(حالياً NO-GO للمتاجر حتى اكتمال builds + smoke + Privacy URL)*
 
+## Mushaf Page Metadata
+
+- [ ] `assets/quran/quran_page_metadata.json` موجود.
+- [ ] يحتوي 604 صفحة.
+- [ ] كل صفحة تحتوي from/to surah/ayah.
+- [ ] الفهرس يقفز للصفحة الصحيحة.
+- [ ] لا يتم الادعاء بمطابقة مصحف المدينة إلا إذا metadata موثوق ومرخص.
+- [ ] شاشة فحص بيانات الصفحات تعمل.
+
 ## Store Submission
 
 - [ ] Google Play description reviewed.

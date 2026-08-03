@@ -135,7 +135,9 @@ class _PageHeader extends StatelessWidget {
         ),
         const Spacer(),
         Text(
-          page.juz == 0 ? 'تقسيم تقريبي' : 'الجزء ${page.juz}',
+          page.juz == 0
+              ? ''
+              : 'الجزء ${page.juz}${page.hizb == 0 ? '' : ' - حزب ${page.hizb}'}',
           style: TextStyle(color: color, fontWeight: FontWeight.bold),
         ),
       ],
