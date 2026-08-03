@@ -104,3 +104,34 @@ Forced Alignment الحالي يعتمد على مطابقة كلمات بعد �
 - Fallback: `lib/features/tasmee3/data/speech_to_text_quran_recognizer.dart`
 - Advanced: `lib/features/tasmee3/data/advanced_quran_asr_recognizer.dart`
 - اختيار تلقائي عبر: `quranSpeechRecognizerProvider`
+
+## تحسينات البرومبت السادس
+
+تمت إضافة:
+
+- Edit Distance Alignment.
+- ربط كل كلمة بالآية الخاصة بها.
+- نتيجة لكل آية.
+- مواضع الضعف.
+- تحسين تنبيهات المستخدم.
+- دعم expectedWordMap بين Flutter والخادم.
+
+## لماذا Edit Distance؟
+
+المطابقة السابقة تعتمد على المقارنة المباشرة أو الكلمة التالية.
+أما Edit Distance فيتعامل أفضل مع:
+
+- كلمة ناقصة.
+- كلمة زائدة.
+- كلمة قريبة في التفريغ.
+- خطأ بسيط في ASR.
+- اختلافات طفيفة بعد التطبيع.
+
+## نصيحة دقة
+
+لأفضل دقة:
+
+- استخدم نطاقا قصيرا.
+- اقرأ في مكان هادئ.
+- لا تقرأ خارج النطاق المختار.
+- استخدم خادم ASR قريب وسريع.

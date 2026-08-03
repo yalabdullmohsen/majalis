@@ -144,7 +144,28 @@ class AdvancedQuranAsrRecognizer implements QuranForcedAlignmentRecognizer {
 
     final expectedText =
         _expectedAyahs.map((ayah) => ayah.textUthmani).join(' ');
-    final expectedWords = ArabicNormalizer.tokenize(expectedText);
+
+    final expectedWordMap = <Map<String, dynamic>>[];
+    int globalIndex = 0;
+
+    for (final ayah in _expectedAyahs) {
+      final words = ArabicNormalizer.tokenize(ayah.textUthmani);
+
+      for (int i = 0; i < words.length; i++) {
+        expectedWordMap.add({
+          'word': words[i],
+          'globalWordIndex': globalIndex,
+          'wordIndexInAyah': i,
+          'surah': ayah.ref.surah,
+          'ayah': ayah.ref.ayah,
+        });
+
+        globalIndex++;
+      }
+    }
+
+    final expectedWords =
+        expectedWordMap.map((item) => item['word'] as String).toList();
 
     final request = http.MultipartRequest('POST', endpoint);
 
@@ -162,6 +183,7 @@ class AdvancedQuranAsrRecognizer implements QuranForcedAlignmentRecognizer {
     request.fields['toAyah'] = target.to.ayah.toString();
     request.fields['expectedText'] = ArabicNormalizer.normalize(expectedText);
     request.fields['expectedWords'] = jsonEncode(expectedWords);
+    request.fields['expectedWordMap'] = jsonEncode(expectedWordMap);
 
     if (apiKey != null && apiKey!.trim().isNotEmpty) {
       request.headers['Authorization'] = 'Bearer $apiKey';

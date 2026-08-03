@@ -9,7 +9,9 @@ import '../domain/recitation_target.dart';
 import '../domain/surah_info.dart';
 import '../domain/tasmee3_mistake.dart';
 import 'tasmee3_history_screen.dart';
+import 'tasmee3_weak_spots_screen.dart';
 import 'widgets/tasmee3_accuracy_card.dart';
+import 'widgets/tasmee3_ayah_scores_card.dart';
 import 'widgets/tasmee3_mistake_report_sheet.dart';
 import 'widgets/tasmee3_section_card.dart';
 
@@ -225,6 +227,16 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
               fontSize: 13,
             ),
           ),
+          if ((toAyah - fromAyah + 1) > 5) ...[
+            const SizedBox(height: 10),
+            const Text(
+              'النطاق طويل. للحصول على دقة أعلى، جرب 1 إلى 5 آيات في كل جلسة.',
+              style: TextStyle(
+                color: Colors.orange,
+                fontSize: 13,
+              ),
+            ),
+          ],
         ],
       ),
     );
@@ -334,6 +346,15 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
               color: Color(0xFF11100E),
             ),
           ),
+          const SizedBox(height: 8),
+          const Text(
+            'تجنب الضوضاء، واقرأ النطاق المختار فقط دون زيادة.',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Color(0xFF9A8068),
+              fontSize: 14,
+            ),
+          ),
           const SizedBox(height: 6),
           Text(
             _formatDuration(state.sessionDuration),
@@ -404,6 +425,10 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
       child: Column(
         children: [
           Tasmee3AccuracyCard(result: result),
+          if (state.alignment?.ayahScores.isNotEmpty == true) ...[
+            const SizedBox(height: 10),
+            Tasmee3AyahScoresCard(scores: state.alignment!.ayahScores),
+          ],
           const SizedBox(height: 10),
           Row(
             children: [
@@ -448,6 +473,29 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
               ),
             ],
           ),
+          if (state.alignment?.weakSpots.isNotEmpty == true) ...[
+            const SizedBox(height: 10),
+            Row(
+              children: [
+                Expanded(
+                  child: OutlinedButton.icon(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => Tasmee3WeakSpotsScreen(
+                            weakSpots: state.alignment!.weakSpots,
+                          ),
+                        ),
+                      );
+                    },
+                    icon: const Icon(Icons.warning_amber_rounded),
+                    label: const Text('مواضع تحتاج مراجعة'),
+                  ),
+                ),
+              ],
+            ),
+          ],
           const SizedBox(height: 12),
           const Padding(
             padding: EdgeInsets.only(bottom: 8),

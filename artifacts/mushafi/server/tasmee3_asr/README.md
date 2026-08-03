@@ -86,3 +86,25 @@ flutter run \
   ]
 }
 ```
+
+## Version 3.0
+
+يدعم الخادم الآن:
+
+- Edit Distance Alignment.
+- expectedWordMap.
+- ayahScores.
+- weakSpots.
+- تقليل الهلوسة عبر:
+  - condition_on_previous_text=False
+  - temperature=0.0
+
+الاستجابة تشمل:
+
+```json
+{
+  "alignedWords": [],
+  "ayahScores": [],
+  "weakSpots": []
+}
+```

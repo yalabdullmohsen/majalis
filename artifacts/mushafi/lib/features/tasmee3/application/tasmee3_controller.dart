@@ -33,6 +33,7 @@ class Tasmee3State {
   final List<RecognizedWord> recognizedWords;
   final double confidence;
   final Tasmee3Result? result;
+  final ForcedAlignmentResult? alignment;
   final String? errorMessage;
   final Duration sessionDuration;
 
@@ -43,6 +44,7 @@ class Tasmee3State {
     this.recognizedWords = const [],
     this.confidence = 0,
     this.result,
+    this.alignment,
     this.errorMessage,
     this.sessionDuration = Duration.zero,
   });
@@ -54,6 +56,7 @@ class Tasmee3State {
         recognizedWords = const [],
         confidence = 0,
         result = null,
+        alignment = null,
         errorMessage = null,
         sessionDuration = Duration.zero;
 
@@ -64,9 +67,11 @@ class Tasmee3State {
     List<RecognizedWord>? recognizedWords,
     double? confidence,
     Tasmee3Result? result,
+    ForcedAlignmentResult? alignment,
     String? errorMessage,
     Duration? sessionDuration,
     bool clearResult = false,
+    bool clearAlignment = false,
   }) {
     return Tasmee3State(
       status: status ?? this.status,
@@ -75,6 +80,7 @@ class Tasmee3State {
       recognizedWords: recognizedWords ?? this.recognizedWords,
       confidence: confidence ?? this.confidence,
       result: clearResult ? null : result ?? this.result,
+      alignment: clearAlignment ? null : alignment ?? this.alignment,
       errorMessage: errorMessage,
       sessionDuration: sessionDuration ?? this.sessionDuration,
     );
@@ -124,6 +130,7 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
         confidence: 0,
         sessionDuration: Duration.zero,
         clearResult: true,
+        clearAlignment: true,
         errorMessage: null,
       );
 
@@ -256,11 +263,13 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
       fallbackAyahRef: fallbackRef,
     );
 
+    // ayahScores و weakSpots محفوظة حاليا في ForcedAlignmentResult وليست داخل Tasmee3Result.
     _saveSessionIfPossible(result);
 
     state = state.copyWith(
       status: Tasmee3Status.completed,
       result: result,
+      alignment: alignment,
       confidence: alignment.confidence,
       recognizedText: alignment.fullText,
     );

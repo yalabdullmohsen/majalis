@@ -69,9 +69,9 @@ class MistakeDetectionEngine {
       mistakes.add(
         Tasmee3Mistake(
           type: type,
-          ayahRef: fallbackAyahRef,
+          ayahRef: word.ayahRef ?? fallbackAyahRef,
           globalWordIndex: word.globalWordIndex,
-          wordIndexInAyah: word.globalWordIndex,
+          wordIndexInAyah: word.wordIndexInAyah,
           expectedWord: word.expectedWord,
           recognizedWord: word.recognizedWord,
           confidence: word.confidence,
