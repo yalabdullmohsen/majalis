@@ -3,8 +3,8 @@
 	"appName": "المجلس العلمي",
 	"webDir": "dist",
 	"server": {
-		"url": "https://www.majlisilm.com",
-		"cleartext": true,
+		"url": "https://majlisilm.com",
+		"cleartext": false,
 		"androidScheme": "https"
 	},
 	"plugins": {

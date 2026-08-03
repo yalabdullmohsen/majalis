@@ -91,16 +91,17 @@ if (webDir !== "dist") {
   console.error(`webDir يجب أن يكون dist، الموجود: ${webDir}`);
   process.exit(1);
 }
-if (serverUrl !== "https://www.majlisilm.com") {
-  console.error(`server.url يجب أن يكون https://www.majlisilm.com، الموجود: ${serverUrl}`);
+const LIVE = new Set(["https://majlisilm.com", "https://www.majlisilm.com"]);
+if (!LIVE.has(serverUrl)) {
+  console.error(`server.url يجب أن يكون https://majlisilm.com (أو www)، الموجود: ${serverUrl}`);
   process.exit(1);
 }
-if (json?.server?.url !== "https://www.majlisilm.com") {
+if (!LIVE.has(json?.server?.url)) {
   console.error(`ios capacitor.config.json server.url غير حي: ${json?.server?.url}`);
   process.exit(1);
 }
-if (json?.server?.cleartext !== true) {
-  console.error("ios capacitor.config.json cleartext يجب أن يكون true");
+if (json?.server?.cleartext !== false) {
+  console.error("ios capacitor.config.json cleartext يجب أن يكون false (https فقط)");
   process.exit(1);
 }
 console.log(`✓ appId=${json.appId} · webDir=${webDir} · server.url=${json.server.url} · ios sync متّسق`);

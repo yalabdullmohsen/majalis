@@ -216,8 +216,11 @@ ok(appDelegate.includes("allWebsiteDataTypes"), "AppDelegate purges all website 
 const capJsonPath = join(iosApp, "App", "capacitor.config.json");
 ok(existsSync(capJsonPath), "ios capacitor.config.json exists");
 const capJson = JSON.parse(readFileSync(capJsonPath, "utf8"));
-ok(capJson?.server?.url === "https://www.majlisilm.com", "capacitor.config.json server.url is live site");
-ok(capJson?.server?.cleartext === true, "capacitor.config.json cleartext true");
+// Canonical apex — www.majlisilm.com 308-redirects to majlisilm.com.
+const LIVE_SERVER_URLS = new Set(["https://majlisilm.com", "https://www.majlisilm.com"]);
+ok(LIVE_SERVER_URLS.has(capJson?.server?.url), "capacitor.config.json server.url is live site");
+// HTTPS-only live URL: cleartext must stay false (http cleartext unused).
+ok(capJson?.server?.cleartext === false, "capacitor.config.json cleartext false (https-only)");
 ok(capJson?.webDir === "dist", "capacitor.config.json webDir is dist");
 
 // Live-update freshness: JS purge + prepare-ios main guard

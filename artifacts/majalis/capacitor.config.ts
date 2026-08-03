@@ -6,8 +6,10 @@ const config: CapacitorConfig = {
   // مخرجات `vite build` — لا تستخدم public/ (أصول المصدر فقط).
   webDir: "dist",
   server: {
-    url: "https://www.majlisilm.com",
-    cleartext: true,
+    // Canonical apex (www → majlisilm.com is a 308). Load apex directly so
+    // WKWebView cold starts do not depend on a redirect before first paint.
+    url: "https://majlisilm.com",
+    cleartext: false,
     androidScheme: "https",
   },
   plugins: {
