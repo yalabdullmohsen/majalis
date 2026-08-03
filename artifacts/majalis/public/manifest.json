@@ -1,16 +1,16 @@
 {
-  "id": "/?source=pwa",
-  "name": "المجلس العلمي",
-  "short_name": "المجلس العلمي",
-  "description": "منصة علمية شرعية موثقة للدروس والدورات والقرآن والأذكار والفقه والأسئلة والمساعد الشرعي.",
+  "id": "/",
+  "name": "Majlisilm",
+  "short_name": "Majlisilm",
+  "description": "تطبيق عربي يجمع الدروس الشرعية والدورات والمحاضرات والقرآن والأذكار والفوائد في مكان واحد لطالب العلم.",
   "lang": "ar",
   "dir": "rtl",
-  "start_url": "/?source=pwa",
+  "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "display_override": ["standalone", "minimal-ui", "window-controls-overlay"],
-  "background_color": "#FAFAF8",
-  "theme_color": "#143F35",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
   "orientation": "portrait-primary",
   "categories": ["education", "books", "lifestyle"],
   "prefer_related_applications": false,
@@ -62,28 +62,28 @@
     {
       "name": "القرآن الكريم",
       "short_name": "القرآن",
-      "url": "/quran-hub?source=pwa",
+      "url": "/quran-hub",
       "description": "المصحف الرقمي الاحترافي",
       "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
     },
     {
       "name": "الدروس العلمية",
       "short_name": "الدروس",
-      "url": "/lessons?source=pwa",
+      "url": "/lessons",
       "description": "دروس ومحاضرات شرعية",
       "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
     },
     {
       "name": "أوقات الصلاة",
       "short_name": "الصلاة",
-      "url": "/prayer-times?source=pwa",
+      "url": "/prayer-times",
       "description": "مواقيت الصلاة الدقيقة",
       "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
     },
     {
       "name": "الأذكار",
       "short_name": "الأذكار",
-      "url": "/adhkar?source=pwa",
+      "url": "/adhkar",
       "description": "أذكار الصباح والمساء",
       "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
     }

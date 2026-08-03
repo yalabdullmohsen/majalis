@@ -10,7 +10,7 @@ import { bootstrapSupabaseFromServer, resetSupabaseClient } from "./lib/supabase
 import { createAppQueryClient } from "./lib/query-client";
 import { PERF_SLOW_MS } from "./lib/performance-monitor";
 import { registerProductionServiceWorker } from "./lib/service-worker";
-import { setupStatusBar, setupKeyboard, isAndroid, isNative } from "./lib/capacitor-utils";
+import { setupStatusBar, setupKeyboard, isAndroid, isIOS, isNative } from "./lib/capacitor-utils";
 import { purgeNativeWebRuntimeCaches } from "./lib/native-cache-freshness";
 import { initFinalPolish } from "./lib/init-final-polish";
 import { prewarmAudioCdns, prewarmTextApis, prewarmSupabaseOrigin } from "./lib/resource-prewarm";
@@ -32,6 +32,12 @@ import "./styles/brand-v4-components.css";
 // تصحيحات تباين مُقاسة بـPlaywright (خصوصًا الوضع الداكن). تُحمَّل بعد كل
 // شيء كي تحسم التصادمات التي تنتج عن تسطيح الرموز في الثيم الداكن القديم.
 import "./styles/brand-v4-contrast-fixes.css";
+import "./styles/capacitor-native-ux.css";
+
+if (isNative) {
+  document.documentElement.classList.add("capacitor-native");
+  document.documentElement.dataset.platform = isAndroid ? "android" : isIOS ? "ios" : "native";
+}
 
 const queryClient = createAppQueryClient();
 
