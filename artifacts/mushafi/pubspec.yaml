@@ -3,7 +3,7 @@ description: >
   مصحفي — تطبيق مصحف احترافي هادئ للقراءة والتلاوة والتسميع.
   النص القرآني من مصدر عثماني موثّق في assets/quran/quran_uthmani.json.
 publish_to: "none"
-version: 0.1.1+2
+version: 1.0.0+1
 
 environment:
   sdk: ^3.8.1

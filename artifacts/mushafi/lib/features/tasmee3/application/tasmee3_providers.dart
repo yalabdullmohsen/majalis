@@ -47,6 +47,7 @@ import 'tasmee3_analytics_service.dart';
 import 'tasmee3_asr_settings.dart';
 import 'tasmee3_asr_settings_controller.dart';
 import 'tasmee3_controller.dart';
+import 'tasmee3_error_mapper.dart';
 import 'tasmee3_goal_controller.dart';
 import 'tasmee3_goal_service.dart';
 import 'tasmee3_pdf_font_loader.dart';
@@ -64,6 +65,10 @@ import 'tasmee3_voice_command_detector.dart';
 /// when both libraries are imported in the same file.
 final quranRepositoryProvider = Provider<QuranRepository>((ref) {
   return AssetsQuranRepository();
+});
+
+final tasmee3ErrorMapperProvider = Provider<Tasmee3ErrorMapper>((ref) {
+  return const Tasmee3ErrorMapper();
 });
 
 /// Legacy compile-time settings from `--dart-define` (kept for backward compat).
@@ -121,6 +126,7 @@ final tasmee3AsrSettingsControllerProvider = StateNotifierProvider<
     repository: repository,
     healthService: health,
     initialSettings: initial,
+    errorMapper: ref.watch(tasmee3ErrorMapperProvider),
   );
 });
 
@@ -414,6 +420,7 @@ final tasmee3ControllerProvider =
     srsService: ref.watch(tasmee3SrsServiceProvider),
     liveFollowService: ref.watch(tasmee3LiveFollowServiceProvider),
     voiceCommandDetector: ref.watch(tasmee3VoiceCommandDetectorProvider),
+    errorMapper: ref.watch(tasmee3ErrorMapperProvider),
     onSessionSaved: () {
       ref.invalidate(tasmee3SessionHistoryProvider);
       ref.invalidate(tasmee3TodayGoalProgressProvider);

@@ -652,3 +652,28 @@ python -m pytest tests -q
 ```bash
 dart run scripts/check_quran_asset.dart
 ```
+
+## Offline Behavior
+
+تعمل محليا بدون إنترنت:
+
+- Dashboard
+- سجل التسميع
+- SRS / مراجعة اليوم
+- تقارير PDF
+- التذكيرات
+- فحص ملف القرآن
+- تعرف الجهاز (fallback)
+
+يحتاج اتصالا فقط عند استخدام الخادم المتقدم أو التسميع المباشر.
+
+## البرومبت الثامن والعشرون - تجهيز الإطلاق
+
+تمت إضافة:
+
+- Feature Freeze.
+- Performance / Accessibility checklists.
+- Safe Error Mapper.
+- CHANGELOG و BUILD_COMMANDS.
+- quick_check / release_check محدّث.
+- Version `1.0.0+1`.

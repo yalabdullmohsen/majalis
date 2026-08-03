@@ -21,6 +21,7 @@ import '../domain/tasmee3_session_record.dart';
 import '../domain/tasmee3_live_progress.dart';
 import '../domain/tasmee3_voice_command.dart';
 import 'mistake_detection_engine.dart';
+import 'tasmee3_error_mapper.dart';
 import 'tasmee3_live_follow_service.dart';
 import 'tasmee3_srs_service.dart';
 import 'tasmee3_voice_command_detector.dart';
@@ -143,6 +144,7 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
   final Tasmee3LiveFollowService liveFollowService;
   final Tasmee3VoiceCommandDetector voiceCommandDetector;
   final void Function()? onSessionSaved;
+  final Tasmee3ErrorMapper errorMapper;
 
   StreamSubscription<RecognizedSegment>? _subscription;
   StreamSubscription<LiveAudioLevel>? _audioLevelSubscription;
@@ -162,6 +164,7 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
     required this.liveFollowService,
     required this.voiceCommandDetector,
     this.onSessionSaved,
+    this.errorMapper = const Tasmee3ErrorMapper(),
   }) : super(const Tasmee3State.initial());
 
   Future<void> start(RecitationTarget target) async {
@@ -326,14 +329,7 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
   }
 
   String _friendlyError(Object error) {
-    final raw = error.toString();
-    if (raw.startsWith('StateError: ')) {
-      return raw.substring('StateError: '.length);
-    }
-    if (raw.startsWith('Bad state: ')) {
-      return raw.substring('Bad state: '.length);
-    }
-    return raw;
+    return errorMapper.map(error);
   }
 
   Future<void> stop() async {

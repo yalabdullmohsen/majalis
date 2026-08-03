@@ -72,7 +72,7 @@ class Tasmee3DashboardScreen extends ConsumerWidget {
             goalProgress.when(
               loading: () => const SizedBox.shrink(),
               error: (error, stackTrace) =>
-                  Tasmee3ErrorState(message: error.toString()),
+                  Tasmee3ErrorState(message: ref.read(tasmee3ErrorMapperProvider).map(error)),
               data: (progress) => Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
@@ -101,7 +101,7 @@ class Tasmee3DashboardScreen extends ConsumerWidget {
             streak.when(
               loading: () => const SizedBox.shrink(),
               error: (error, stackTrace) =>
-                  Tasmee3ErrorState(message: error.toString()),
+                  Tasmee3ErrorState(message: ref.read(tasmee3ErrorMapperProvider).map(error)),
               data: (value) => _streakCard(value),
             ),
             todayReview.when(
@@ -174,14 +174,14 @@ class Tasmee3DashboardScreen extends ConsumerWidget {
                 message: 'جاري تحميل الإحصاءات...',
               ),
               error: (error, stackTrace) =>
-                  Tasmee3ErrorState(message: error.toString()),
+                  Tasmee3ErrorState(message: ref.read(tasmee3ErrorMapperProvider).map(error)),
               data: (items) => Tasmee3WeekStatsCard(stats: items),
             ),
             const SizedBox(height: Tasmee3Spacing.md),
             history.when(
               loading: () => const SizedBox.shrink(),
               error: (error, stackTrace) =>
-                  Tasmee3ErrorState(message: error.toString()),
+                  Tasmee3ErrorState(message: ref.read(tasmee3ErrorMapperProvider).map(error)),
               data: (sessions) {
                 final total = sessions.length;
                 final avg = sessions.isEmpty
@@ -202,7 +202,7 @@ class Tasmee3DashboardScreen extends ConsumerWidget {
             reviewPlan.when(
               loading: () => const SizedBox.shrink(),
               error: (error, stackTrace) =>
-                  Tasmee3ErrorState(message: error.toString()),
+                  Tasmee3ErrorState(message: ref.read(tasmee3ErrorMapperProvider).map(error)),
               data: (items) => _reviewPlanPreview(context, items.length),
             ),
             const SizedBox(height: Tasmee3Spacing.lg),

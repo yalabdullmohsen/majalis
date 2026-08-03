@@ -192,7 +192,9 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text('تعذر عرض النص المتوقع: $e'),
+          content: Text(
+            'تعذر عرض النص المتوقع: ${ref.read(tasmee3ErrorMapperProvider).map(e)}',
+          ),
         ),
       );
     }
@@ -1048,7 +1050,9 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
                     } catch (e) {
                       messenger.showSnackBar(
                         SnackBar(
-                          content: Text('تعذر إنشاء تقرير PDF: $e'),
+                          content: Text(
+                            'تعذر إنشاء تقرير PDF: ${ref.read(tasmee3ErrorMapperProvider).map(e)}',
+                          ),
                         ),
                       );
                     }

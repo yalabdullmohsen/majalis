@@ -22,7 +22,7 @@ class QuranIntegrityScreen extends ConsumerWidget {
           message: 'جاري فحص ملف القرآن...',
         ),
         error: (error, stackTrace) => Tasmee3ErrorState(
-          message: error.toString(),
+          message: ref.read(tasmee3ErrorMapperProvider).map(error),
           onRetry: () {
             ref.invalidate(quranIntegrityReportProvider);
           },

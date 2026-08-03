@@ -2,8 +2,7 @@
 
 تطبيق مصحف Flutter احترافي هادئ للقراءة والتلاوة ومراجعة الحفظ.
 
-> **تحذير شرعي وتقني:** النص القرآني في `assets/data/quran_uthmani.json` حالياً **عيّنة MOCK محدودة** للتطوير والاختبار فقط.  
-> **لا تعرضه كمصحف مكتمل.** قبل أي إصدار إنتاجي، استبدله بنص عثماني (حفص) من **مصدر موثّق ومرخّص** ثم شغّل سكربت السلامة.
+> **تحذير شرعي وتقني:** قبل أي إصدار إنتاجي، تأكد أن ملف القرآن من **مصدر موثّق ومرخّص** ثم شغّل سكربت السلامة (`dart run scripts/check_quran_asset.dart`). لا يتم توليد نص القرآن بالذكاء الاصطناعي.
 
 ## التشغيل
 
@@ -11,11 +10,22 @@
 export PATH="$HOME/development/flutter/bin:$PATH"
 cd artifacts/mushafi
 flutter pub get
-dart run scripts/quran_integrity_check.dart
+dart run scripts/check_quran_asset.dart
 flutter analyze
 flutter test
 flutter run
 ```
+
+## Release Docs
+
+- FEATURE_FREEZE.md
+- RELEASE_CHECKLIST.md
+- BUILD_COMMANDS.md
+- PERFORMANCE_CHECKLIST.md
+- ACCESSIBILITY_CHECKLIST.md
+- PRIVACY.md
+- SECURITY.md
+- CHANGELOG.md
 
 ## البنية
 

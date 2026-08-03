@@ -4,6 +4,7 @@ import '../data/asr_server_health_service.dart';
 import '../data/tasmee3_asr_settings_repository.dart';
 import '../domain/asr_connection_status.dart';
 import '../domain/tasmee3_user_asr_settings.dart';
+import 'tasmee3_error_mapper.dart';
 
 class Tasmee3AsrSettingsState {
   final Tasmee3UserAsrSettings settings;
@@ -41,11 +42,13 @@ class Tasmee3AsrSettingsController
     extends StateNotifier<Tasmee3AsrSettingsState> {
   final Tasmee3AsrSettingsRepository repository;
   final AsrServerHealthService healthService;
+  final Tasmee3ErrorMapper errorMapper;
 
   Tasmee3AsrSettingsController({
     required this.repository,
     required this.healthService,
     required Tasmee3UserAsrSettings initialSettings,
+    this.errorMapper = const Tasmee3ErrorMapper(),
   }) : super(
           Tasmee3AsrSettingsState(
             settings: initialSettings,
@@ -66,7 +69,7 @@ class Tasmee3AsrSettingsController
     } catch (e) {
       state = state.copyWith(
         isSaving: false,
-        errorMessage: e.toString(),
+        errorMessage: errorMapper.map(e),
       );
     }
   }
@@ -97,7 +100,7 @@ class Tasmee3AsrSettingsController
     } catch (e) {
       state = state.copyWith(
         isSaving: false,
-        errorMessage: e.toString(),
+        errorMessage: errorMapper.map(e),
       );
     }
   }
