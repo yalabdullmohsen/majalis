@@ -2,6 +2,7 @@ import 'dart:async';
 
 import '../domain/advanced_recognition_result.dart';
 import '../domain/forced_alignment_result.dart';
+import '../domain/live_audio_level.dart';
 import '../domain/recognized_word.dart';
 
 class RecognizedSegment {
@@ -46,6 +47,8 @@ abstract class QuranSpeechRecognizer {
   Future<bool> initialize();
 
   Stream<RecognizedSegment> listen();
+
+  Stream<LiveAudioLevel> get audioLevels;
 
   Future<void> stop();
 }

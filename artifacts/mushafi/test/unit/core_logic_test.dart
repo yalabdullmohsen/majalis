@@ -2,7 +2,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mushafi/features/khatmah/domain/khatmah_models.dart';
 import 'package:mushafi/features/tasmee3/application/arabic_normalizer.dart';
 import 'package:mushafi/features/tasmee3/application/mistake_detection_engine.dart';
+import 'package:mushafi/features/tasmee3/data/audio_quality_monitor.dart';
 import 'package:mushafi/features/tasmee3/domain/aligned_word.dart';
+import 'package:mushafi/features/tasmee3/domain/audio_quality_report.dart';
 import 'package:mushafi/features/tasmee3/domain/ayah_ref.dart';
 import 'package:mushafi/features/tasmee3/domain/forced_alignment_result.dart';
 import 'package:mushafi/features/tasmee3/domain/quran_ayah.dart';
@@ -93,6 +95,21 @@ void main() {
         KhatmahProgressCalculator.remaining(completed: 100, total: 604),
         504,
       );
+    });
+  });
+
+  group('AudioQualityMonitor', () {
+    test('rejects too-quiet samples', () {
+      final monitor = AudioQualityMonitor();
+      monitor.start();
+      for (var i = 0; i < 20; i++) {
+        monitor.addAmplitude(0.01);
+      }
+      final report = monitor.buildReport();
+      expect(report.isTooQuiet, isTrue);
+      expect(report.canSubmit, isFalse);
+      expect(report.level, AudioQualityLevel.poor);
+      monitor.dispose();
     });
   });
 }

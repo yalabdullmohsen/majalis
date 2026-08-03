@@ -108,3 +108,18 @@ flutter run \
   "weakSpots": []
 }
 ```
+
+## Audio Validation
+
+الخادم يفحص:
+
+- حجم ملف الصوت.
+- مدة ملف الصوت عبر ffprobe.
+- يرفض الملفات الفارغة أو القصيرة جدا.
+
+متغيرات البيئة:
+
+```bash
+TASMEE3_MIN_AUDIO_BYTES=1200
+TASMEE3_MIN_AUDIO_DURATION_SECONDS=1.2
+```

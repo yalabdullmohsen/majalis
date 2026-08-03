@@ -1,6 +1,7 @@
 import json
 import os
 import re
+import subprocess
 import tempfile
 from dataclasses import dataclass
 from typing import Any, Dict, List, Optional, Tuple
@@ -13,6 +14,10 @@ API_KEY = os.getenv("TASMEE3_ASR_API_KEY", "")
 MODEL_NAME = os.getenv("TASMEE3_ASR_MODEL", "small")
 DEVICE = os.getenv("TASMEE3_ASR_DEVICE", "cpu")
 LOW_CONFIDENCE_THRESHOLD = float(os.getenv("TASMEE3_LOW_CONFIDENCE", "0.55"))
+MIN_AUDIO_BYTES = int(os.getenv("TASMEE3_MIN_AUDIO_BYTES", "1200"))
+MIN_AUDIO_DURATION_SECONDS = float(
+    os.getenv("TASMEE3_MIN_AUDIO_DURATION_SECONDS", "1.2")
+)
 
 app = FastAPI(title="Tasmee3 ASR Server", version="3.0.0")
 
@@ -32,6 +37,32 @@ def get_model():
     if _model is None:
         _model = whisper.load_model(MODEL_NAME, device=DEVICE)
     return _model
+
+
+def get_audio_duration_seconds(path: str) -> float:
+    try:
+        result = subprocess.run(
+            [
+                "ffprobe",
+                "-v",
+                "error",
+                "-show_entries",
+                "format=duration",
+                "-of",
+                "default=noprint_wrappers=1:nokey=1",
+                path,
+            ],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+
+        if result.returncode != 0:
+            return 0.0
+
+        return float(result.stdout.strip())
+    except Exception:
+        return 0.0
 
 
 def check_auth(authorization: Optional[str]):
@@ -446,6 +477,7 @@ def health():
             "edit_distance_alignment",
             "ayah_scores",
             "weak_spots",
+            "audio_validation",
         ],
     }
 
@@ -472,6 +504,22 @@ async def transcribe(
         temp_path = temp.name
 
     try:
+        file_size = os.path.getsize(temp_path)
+
+        if file_size < MIN_AUDIO_BYTES:
+            raise HTTPException(
+                status_code=400,
+                detail="Audio file is too small or empty",
+            )
+
+        duration = get_audio_duration_seconds(temp_path)
+
+        if duration < MIN_AUDIO_DURATION_SECONDS:
+            raise HTTPException(
+                status_code=400,
+                detail="Audio duration is too short",
+            )
+
         model = get_model()
 
         result = whisper.transcribe(
@@ -540,6 +588,10 @@ async def transcribe(
                 "fromAyah": fromAyah,
                 "toSurah": toSurah,
                 "toAyah": toAyah,
+                "audio": {
+                    "durationSeconds": duration,
+                    "fileSizeBytes": file_size,
+                },
             },
             "words": [
                 {

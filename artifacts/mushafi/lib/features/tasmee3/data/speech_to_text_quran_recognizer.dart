@@ -4,6 +4,7 @@ import 'package:speech_to_text/speech_recognition_result.dart';
 import 'package:speech_to_text/speech_to_text.dart';
 
 import '../application/arabic_normalizer.dart';
+import '../domain/live_audio_level.dart';
 import '../domain/recognized_word.dart';
 import 'quran_speech_recognizer.dart';
 
@@ -15,7 +16,13 @@ class SpeechToTextQuranRecognizer implements QuranSpeechRecognizer {
   final StreamController<RecognizedSegment> _controller =
       StreamController<RecognizedSegment>.broadcast();
 
+  final StreamController<LiveAudioLevel> _audioLevelController =
+      StreamController<LiveAudioLevel>.broadcast();
+
   bool _initialized = false;
+
+  @override
+  Stream<LiveAudioLevel> get audioLevels => _audioLevelController.stream;
 
   @override
   Future<bool> initialize() async {
@@ -50,6 +57,20 @@ class SpeechToTextQuranRecognizer implements QuranSpeechRecognizer {
         cancelOnError: false,
       ),
       onResult: _onResult,
+      onSoundLevelChange: (level) {
+        final normalized = ((level + 2) / 12).clamp(0, 1).toDouble();
+
+        if (!_audioLevelController.isClosed) {
+          _audioLevelController.add(
+            LiveAudioLevel(
+              current: normalized,
+              average: normalized,
+              max: normalized,
+              timestamp: DateTime.now(),
+            ),
+          );
+        }
+      },
     );
   }
 

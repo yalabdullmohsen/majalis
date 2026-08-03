@@ -11,6 +11,7 @@ import '../domain/tasmee3_mistake.dart';
 import 'tasmee3_history_screen.dart';
 import 'tasmee3_weak_spots_screen.dart';
 import 'widgets/tasmee3_accuracy_card.dart';
+import 'widgets/tasmee3_audio_level_meter.dart';
 import 'widgets/tasmee3_ayah_scores_card.dart';
 import 'widgets/tasmee3_mistake_report_sheet.dart';
 import 'widgets/tasmee3_section_card.dart';
@@ -300,10 +301,42 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
         return Center(
           child: Padding(
             padding: const EdgeInsets.all(20),
-            child: Text(
-              state.errorMessage ?? 'حدث خطأ',
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 18, color: Colors.red),
+            child: Container(
+              padding: const EdgeInsets.all(18),
+              decoration: BoxDecoration(
+                color: const Color(0xFFFFFCF7),
+                borderRadius: BorderRadius.circular(18),
+                border: Border.all(
+                  color: Colors.red.withValues(alpha: 0.25),
+                ),
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(
+                    Icons.error_outline,
+                    color: Colors.red.shade700,
+                    size: 42,
+                  ),
+                  const SizedBox(height: 12),
+                  Text(
+                    state.errorMessage ?? 'حدث خطأ',
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 17,
+                      color: Color(0xFF11100E),
+                    ),
+                  ),
+                  const SizedBox(height: 12),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      ref.read(tasmee3ControllerProvider.notifier).reset();
+                    },
+                    icon: const Icon(Icons.refresh),
+                    label: const Text('حاول مرة أخرى'),
+                  ),
+                ],
+              ),
             ),
           ),
         );
@@ -346,6 +379,16 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
               color: Color(0xFF11100E),
             ),
           ),
+          const SizedBox(height: 8),
+          Text(
+            'المدة: ${state.elapsedSeconds} ثانية',
+            style: const TextStyle(
+              color: Color(0xFF9A8068),
+              fontSize: 14,
+            ),
+          ),
+          const SizedBox(height: 12),
+          Tasmee3AudioLevelMeter(level: state.audioLevel),
           const SizedBox(height: 8),
           const Text(
             'تجنب الضوضاء، واقرأ النطاق المختار فقط دون زيادة.',

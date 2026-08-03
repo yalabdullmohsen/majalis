@@ -8,8 +8,10 @@ import 'package:record/record.dart';
 
 import '../application/arabic_normalizer.dart';
 import '../domain/forced_alignment_result.dart';
+import '../domain/live_audio_level.dart';
 import '../domain/quran_ayah.dart';
 import '../domain/recitation_target.dart';
+import 'audio_quality_monitor.dart';
 import 'quran_forced_alignment_recognizer.dart';
 import 'quran_speech_recognizer.dart';
 
@@ -25,15 +27,20 @@ class AdvancedQuranAsrRecognizer implements QuranForcedAlignmentRecognizer {
   });
 
   final AudioRecorder _recorder = AudioRecorder();
+  final AudioQualityMonitor _qualityMonitor = AudioQualityMonitor();
 
   final StreamController<RecognizedSegment> _controller =
       StreamController<RecognizedSegment>.broadcast();
 
   String? _recordingPath;
   bool _initialized = false;
+  bool _amplitudeLoopRunning = false;
 
   RecitationTarget? _target;
   List<QuranAyah> _expectedAyahs = const [];
+
+  @override
+  Stream<LiveAudioLevel> get audioLevels => _qualityMonitor.levels;
 
   @override
   void setExpectedAyahs({
@@ -74,20 +81,46 @@ class AdvancedQuranAsrRecognizer implements QuranForcedAlignmentRecognizer {
     }
 
     final dir = await getTemporaryDirectory();
-    final fileName = 'tasmee3_${DateTime.now().millisecondsSinceEpoch}.m4a';
+    // Prefer WAV/PCM for clearer ASR than lossy M4A when supported.
+    final fileName = 'tasmee3_${DateTime.now().millisecondsSinceEpoch}.wav';
     final path = '${dir.path}/$fileName';
 
     _recordingPath = path;
+    _qualityMonitor.start();
 
     await _recorder.start(
       const RecordConfig(
-        encoder: AudioEncoder.aacLc,
-        bitRate: 128000,
+        encoder: AudioEncoder.wav,
         sampleRate: 16000,
         numChannels: 1,
       ),
       path: path,
     );
+
+    unawaited(_unawaitedAmplitudeLoop());
+  }
+
+  Future<void> _unawaitedAmplitudeLoop() async {
+    if (_amplitudeLoopRunning) {
+      return;
+    }
+
+    _amplitudeLoopRunning = true;
+
+    try {
+      while (await _recorder.isRecording()) {
+        try {
+          final amplitude = await _recorder.getAmplitude();
+          final current = amplitude.current;
+          final normalized = ((current + 60) / 60).clamp(0, 1).toDouble();
+          _qualityMonitor.addAmplitude(normalized);
+        } catch (_) {}
+
+        await Future<void>.delayed(const Duration(milliseconds: 180));
+      }
+    } finally {
+      _amplitudeLoopRunning = false;
+    }
   }
 
   @override
@@ -118,6 +151,23 @@ class AdvancedQuranAsrRecognizer implements QuranForcedAlignmentRecognizer {
           timestamp: DateTime.now(),
         ),
       );
+      return;
+    }
+
+    final qualityReport = _qualityMonitor.buildReport();
+
+    if (!qualityReport.canSubmit) {
+      final message = qualityReport.warnings.isEmpty
+          ? 'جودة التسجيل غير كافية. حاول مرة أخرى.'
+          : qualityReport.warnings.join('\n');
+
+      try {
+        if (await file.exists()) {
+          await file.delete();
+        }
+      } catch (_) {}
+
+      _controller.addError(StateError(message));
       return;
     }
 

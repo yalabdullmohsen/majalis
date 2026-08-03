@@ -8,6 +8,7 @@ import '../data/quran_repository.dart';
 import '../data/quran_speech_recognizer.dart';
 import '../data/tasmee3_session_repository.dart';
 import '../domain/forced_alignment_result.dart';
+import '../domain/live_audio_level.dart';
 import '../domain/quran_ayah.dart';
 import '../domain/recognized_word.dart';
 import '../domain/recitation_target.dart';
@@ -34,6 +35,8 @@ class Tasmee3State {
   final double confidence;
   final Tasmee3Result? result;
   final ForcedAlignmentResult? alignment;
+  final LiveAudioLevel? audioLevel;
+  final int elapsedSeconds;
   final String? errorMessage;
   final Duration sessionDuration;
 
@@ -45,6 +48,8 @@ class Tasmee3State {
     this.confidence = 0,
     this.result,
     this.alignment,
+    this.audioLevel,
+    this.elapsedSeconds = 0,
     this.errorMessage,
     this.sessionDuration = Duration.zero,
   });
@@ -57,6 +62,8 @@ class Tasmee3State {
         confidence = 0,
         result = null,
         alignment = null,
+        audioLevel = null,
+        elapsedSeconds = 0,
         errorMessage = null,
         sessionDuration = Duration.zero;
 
@@ -68,10 +75,13 @@ class Tasmee3State {
     double? confidence,
     Tasmee3Result? result,
     ForcedAlignmentResult? alignment,
+    LiveAudioLevel? audioLevel,
+    int? elapsedSeconds,
     String? errorMessage,
     Duration? sessionDuration,
     bool clearResult = false,
     bool clearAlignment = false,
+    bool clearAudioLevel = false,
   }) {
     return Tasmee3State(
       status: status ?? this.status,
@@ -81,6 +91,8 @@ class Tasmee3State {
       confidence: confidence ?? this.confidence,
       result: clearResult ? null : result ?? this.result,
       alignment: clearAlignment ? null : alignment ?? this.alignment,
+      audioLevel: clearAudioLevel ? null : audioLevel ?? this.audioLevel,
+      elapsedSeconds: elapsedSeconds ?? this.elapsedSeconds,
       errorMessage: errorMessage,
       sessionDuration: sessionDuration ?? this.sessionDuration,
     );
@@ -95,8 +107,10 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
   final void Function()? onSessionSaved;
 
   StreamSubscription<RecognizedSegment>? _subscription;
+  StreamSubscription<LiveAudioLevel>? _audioLevelSubscription;
   List<QuranAyah> _expectedAyahs = [];
   Timer? _sessionTimer;
+  Timer? _elapsedTimer;
   DateTime? _startedAt;
   DateTime? _listenStartedAt;
 
@@ -129,8 +143,10 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
         recognizedWords: const [],
         confidence: 0,
         sessionDuration: Duration.zero,
+        elapsedSeconds: 0,
         clearResult: true,
         clearAlignment: true,
+        clearAudioLevel: true,
         errorMessage: null,
       );
 
@@ -177,6 +193,20 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
       state = state.copyWith(status: Tasmee3Status.listening);
       _startSessionTimer();
 
+      _elapsedTimer?.cancel();
+      _elapsedTimer = Timer.periodic(const Duration(seconds: 1), (_) {
+        if (state.status == Tasmee3Status.listening) {
+          state = state.copyWith(
+            elapsedSeconds: state.elapsedSeconds + 1,
+          );
+        }
+      });
+
+      await _audioLevelSubscription?.cancel();
+      _audioLevelSubscription = recognizer.audioLevels.listen((level) {
+        state = state.copyWith(audioLevel: level);
+      });
+
       await _subscription?.cancel();
 
       _subscription = recognizer.listen().listen(
@@ -201,19 +231,34 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
         },
         onError: (error) {
           _stopSessionTimer();
+          _elapsedTimer?.cancel();
+          _audioLevelSubscription?.cancel();
           state = state.copyWith(
             status: Tasmee3Status.error,
-            errorMessage: error.toString(),
+            errorMessage: _friendlyError(error),
           );
         },
       );
     } catch (e) {
       _stopSessionTimer();
+      _elapsedTimer?.cancel();
+      await _audioLevelSubscription?.cancel();
       state = state.copyWith(
         status: Tasmee3Status.error,
-        errorMessage: e.toString(),
+        errorMessage: _friendlyError(e),
       );
     }
+  }
+
+  String _friendlyError(Object error) {
+    final raw = error.toString();
+    if (raw.startsWith('StateError: ')) {
+      return raw.substring('StateError: '.length);
+    }
+    if (raw.startsWith('Bad state: ')) {
+      return raw.substring('Bad state: '.length);
+    }
+    return raw;
   }
 
   Future<void> stop() async {
@@ -222,9 +267,12 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
     }
 
     state = state.copyWith(status: Tasmee3Status.uploadingAudio);
+    _elapsedTimer?.cancel();
 
     try {
       await recognizer.stop();
+      await _audioLevelSubscription?.cancel();
+      _audioLevelSubscription = null;
 
       // Fallback engines (e.g. speech_to_text) may not emit a final segment.
       if (state.status == Tasmee3Status.uploadingAudio) {
@@ -238,9 +286,11 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
       }
     } catch (e) {
       _stopSessionTimer();
+      _elapsedTimer?.cancel();
+      await _audioLevelSubscription?.cancel();
       state = state.copyWith(
         status: Tasmee3Status.error,
-        errorMessage: e.toString(),
+        errorMessage: _friendlyError(e),
       );
     }
   }
@@ -375,9 +425,12 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
   Future<void> reset() async {
     await recognizer.stop();
     await _subscription?.cancel();
+    await _audioLevelSubscription?.cancel();
     _stopSessionTimer();
+    _elapsedTimer?.cancel();
 
     _subscription = null;
+    _audioLevelSubscription = null;
     _expectedAyahs = [];
     _startedAt = null;
 
@@ -406,7 +459,9 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
   @override
   void dispose() {
     _subscription?.cancel();
+    _audioLevelSubscription?.cancel();
     _stopSessionTimer();
+    _elapsedTimer?.cancel();
     recognizer.stop();
     super.dispose();
   }
