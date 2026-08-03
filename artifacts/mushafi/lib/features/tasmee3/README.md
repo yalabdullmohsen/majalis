@@ -404,3 +404,32 @@ assets/fonts/NotoNaskhArabic-Bold.ttf
 3. الضغط على "ابدأ المراجعة المقترحة".
 4. قراءة النص المتوقع إن أراد.
 5. بدء التسميع في وضع اختبار الحفظ.
+
+## البرومبت السادس عشر - تجربة المصحف داخل التسميع
+
+تمت إضافة:
+
+- صفحة عرض آيات شبيهة بالمصحف داخل التسميع.
+- أوضاع عرض النص:
+  - showAll
+  - hideAll
+  - firstWordOnly
+  - hifzTest
+  - revealOnMistake
+- عرض الكلمات الملونة داخل النص.
+- زر إظهار/إخفاء النص.
+- BottomSheet لتغيير وضع العرض.
+- عرض النتيجة داخل صفحة مصحف بدل Chips فقط.
+- fallback للـ Chips إذا لم تتوفر expectedAyahs.
+
+## الملفات الجديدة
+
+- `Tasmee3TextVisibilityMode`
+- `Tasmee3DisplayWord`
+- `Tasmee3DisplayBuilder`
+- `Tasmee3MushafRecitationView`
+- `Tasmee3VisibilityModeSheet`
+
+## ملاحظة
+
+هذه المرحلة لا تغيّر النص القرآني ولا تولده. هي فقط تغير طريقة العرض.

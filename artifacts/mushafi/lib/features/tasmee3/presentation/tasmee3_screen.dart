@@ -11,6 +11,7 @@ import '../domain/ayah_ref.dart';
 import '../domain/recitation_target.dart';
 import '../domain/surah_info.dart';
 import '../domain/tasmee3_mistake.dart';
+import '../domain/tasmee3_text_visibility_mode.dart';
 import 'tasmee3_asr_settings_screen.dart';
 import 'tasmee3_dashboard_screen.dart';
 import 'tasmee3_history_screen.dart';
@@ -21,7 +22,9 @@ import 'widgets/tasmee3_accuracy_card.dart';
 import 'widgets/tasmee3_audio_level_meter.dart';
 import 'widgets/tasmee3_ayah_scores_card.dart';
 import 'widgets/tasmee3_mistake_report_sheet.dart';
+import 'widgets/tasmee3_mushaf_recitation_view.dart';
 import 'widgets/tasmee3_section_card.dart';
+import 'widgets/tasmee3_visibility_mode_sheet.dart';
 
 class Tasmee3Screen extends ConsumerStatefulWidget {
   final RecitationTarget? initialTarget;
@@ -44,6 +47,9 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
   int fromAyah = 1;
   int toAyah = 3;
   Tasmee3Mode mode = Tasmee3Mode.showText;
+  Tasmee3TextVisibilityMode textVisibilityMode =
+      Tasmee3TextVisibilityMode.showAll;
+  bool forceRevealAll = false;
 
   @override
   void initState() {
@@ -58,11 +64,49 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
       mode = widget.startInHifzMode ? Tasmee3Mode.hifzTest : target.mode;
     }
 
+    if (widget.startInHifzMode) {
+      textVisibilityMode = Tasmee3TextVisibilityMode.hifzTest;
+    } else {
+      textVisibilityMode = _visibilityFromMode(mode);
+    }
+
     if (widget.showExpectedTextFirst) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         _showExpectedTextSheet();
       });
     }
+  }
+
+  Tasmee3TextVisibilityMode _visibilityFromMode(Tasmee3Mode value) {
+    switch (value) {
+      case Tasmee3Mode.showText:
+        return Tasmee3TextVisibilityMode.showAll;
+      case Tasmee3Mode.hideText:
+        return Tasmee3TextVisibilityMode.hideAll;
+      case Tasmee3Mode.firstWordOnly:
+        return Tasmee3TextVisibilityMode.firstWordOnly;
+      case Tasmee3Mode.hifzTest:
+        return Tasmee3TextVisibilityMode.hifzTest;
+    }
+  }
+
+  void _openVisibilityModeSheet() {
+    showModalBottomSheet<void>(
+      context: context,
+      showDragHandle: true,
+      backgroundColor: const Color(0xFFFFFCF7),
+      builder: (_) {
+        return Tasmee3VisibilityModeSheet(
+          currentMode: textVisibilityMode,
+          onSelected: (selected) {
+            setState(() {
+              textVisibilityMode = selected;
+              forceRevealAll = false;
+            });
+          },
+        );
+      },
+    );
   }
 
   Future<void> _showExpectedTextSheet() async {
@@ -378,7 +422,11 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
                 ? null
                 : (value) {
                     if (value != null) {
-                      setState(() => mode = value);
+                      setState(() {
+                        mode = value;
+                        textVisibilityMode = _visibilityFromMode(value);
+                        forceRevealAll = false;
+                      });
                     }
                   },
           ),
@@ -425,6 +473,24 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
             onPressed: disabled ? null : _showExpectedTextSheet,
             icon: const Icon(Icons.menu_book_outlined),
             label: const Text('عرض النص المتوقع'),
+          ),
+          const SizedBox(height: 8),
+          OutlinedButton.icon(
+            onPressed: disabled ? null : _openVisibilityModeSheet,
+            icon: const Icon(Icons.visibility_outlined),
+            label: Text(textVisibilityMode.arabicLabel),
+          ),
+          const SizedBox(height: 8),
+          OutlinedButton.icon(
+            onPressed: disabled
+                ? null
+                : () {
+                    setState(() {
+                      forceRevealAll = !forceRevealAll;
+                    });
+                  },
+            icon: Icon(forceRevealAll ? Icons.visibility_off : Icons.visibility),
+            label: Text(forceRevealAll ? 'إخفاء النص' : 'إظهار النص'),
           ),
         ],
       ),
@@ -608,30 +674,38 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
           ),
           const SizedBox(height: 18),
           Expanded(
-            child: Container(
-              width: double.infinity,
-              padding: const EdgeInsets.all(18),
-              decoration: BoxDecoration(
-                color: const Color(0xFFFFFCF7),
-                borderRadius: BorderRadius.circular(18),
-                border: Border.all(color: const Color(0xFFE0C5A3)),
-              ),
-              child: SingleChildScrollView(
-                child: Text(
-                  state.recognizedText.isEmpty
-                      ? 'سيظهر النص المتعرف عليه هنا...'
-                      : state.recognizedText,
-                  textAlign: TextAlign.right,
-                  style: TextStyle(
-                    fontSize: 24,
-                    height: 1.8,
-                    color: state.recognizedText.isEmpty
-                        ? const Color(0xFF9A8068)
-                        : const Color(0xFF11100E),
+            child: state.expectedAyahs.isNotEmpty
+                ? Tasmee3MushafRecitationView(
+                    ayahs: state.expectedAyahs,
+                    mistakes: const [],
+                    visibilityMode: textVisibilityMode,
+                    forceRevealAll: forceRevealAll,
+                    displayBuilder: ref.watch(tasmee3DisplayBuilderProvider),
+                  )
+                : Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(18),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFFFFCF7),
+                      borderRadius: BorderRadius.circular(18),
+                      border: Border.all(color: const Color(0xFFE0C5A3)),
+                    ),
+                    child: SingleChildScrollView(
+                      child: Text(
+                        state.recognizedText.isEmpty
+                            ? 'سيظهر النص المتعرف عليه هنا...'
+                            : state.recognizedText,
+                        textAlign: TextAlign.right,
+                        style: TextStyle(
+                          fontSize: 24,
+                          height: 1.8,
+                          color: state.recognizedText.isEmpty
+                              ? const Color(0xFF9A8068)
+                              : const Color(0xFF11100E),
+                        ),
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            ),
           ),
         ],
       ),
@@ -655,11 +729,23 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
       }
     }
 
+    final displayBuilder = ref.watch(tasmee3DisplayBuilderProvider);
+    final expectedAyahs = state.expectedAyahs;
+
     return Padding(
       padding: const EdgeInsets.all(16),
       child: Column(
         children: [
           Tasmee3AccuracyCard(result: result),
+          const SizedBox(height: 8),
+          const Text(
+            'الألوان: الأحمر خطأ، البرتقالي ناقص، الأزرق ثقة منخفضة.',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Color(0xFF9A8068),
+              fontSize: 13,
+            ),
+          ),
           if (state.alignment?.ayahScores.isNotEmpty == true) ...[
             const SizedBox(height: 10),
             Tasmee3AyahScoresCard(scores: state.alignment!.ayahScores),
@@ -906,20 +992,29 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
             ),
           ),
           Expanded(
-            child: SingleChildScrollView(
-              child: Wrap(
-                textDirection: TextDirection.rtl,
-                spacing: 8,
-                runSpacing: 10,
-                children: [
-                  for (int i = 0; i < result.expectedWords.length; i++)
-                    _wordChip(
-                      word: result.expectedWords[i],
-                      mistake: mistakesByIndex[i],
+            child: expectedAyahs.isNotEmpty
+                ? Tasmee3MushafRecitationView(
+                    ayahs: expectedAyahs,
+                    mistakes: result.mistakes,
+                    visibilityMode: textVisibilityMode,
+                    forceRevealAll: forceRevealAll ||
+                        state.status == Tasmee3Status.completed,
+                    displayBuilder: displayBuilder,
+                  )
+                : SingleChildScrollView(
+                    child: Wrap(
+                      textDirection: TextDirection.rtl,
+                      spacing: 8,
+                      runSpacing: 10,
+                      children: [
+                        for (int i = 0; i < result.expectedWords.length; i++)
+                          _wordChip(
+                            word: result.expectedWords[i],
+                            mistake: mistakesByIndex[i],
+                          ),
+                      ],
                     ),
-                ],
-              ),
-            ),
+                  ),
           ),
         ],
       ),

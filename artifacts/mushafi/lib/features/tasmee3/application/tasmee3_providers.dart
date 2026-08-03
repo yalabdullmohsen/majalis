@@ -43,6 +43,7 @@ import 'tasmee3_goal_service.dart';
 import 'tasmee3_pdf_font_loader.dart';
 import 'tasmee3_pdf_report_service.dart';
 import 'tasmee3_reminders_controller.dart';
+import 'tasmee3_display_builder.dart';
 import 'tasmee3_session_report_builder.dart';
 import 'tasmee3_srs_service.dart';
 import 'tasmee3_review_suggestion_mapper.dart';
@@ -190,6 +191,10 @@ final ayahMasteryRepositoryProvider = Provider<AyahMasteryRepository>((ref) {
 
 final tasmee3SrsServiceProvider = Provider<Tasmee3SrsService>((ref) {
   return const Tasmee3SrsService();
+});
+
+final tasmee3DisplayBuilderProvider = Provider<Tasmee3DisplayBuilder>((ref) {
+  return const Tasmee3DisplayBuilder();
 });
 
 final tasmee3ReviewSuggestionMapperProvider =

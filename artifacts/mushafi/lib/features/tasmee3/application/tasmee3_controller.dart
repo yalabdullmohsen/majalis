@@ -45,6 +45,7 @@ class Tasmee3State {
   final int elapsedSeconds;
   final String? errorMessage;
   final Duration sessionDuration;
+  final List<QuranAyah> expectedAyahs;
 
   const Tasmee3State({
     required this.status,
@@ -59,6 +60,7 @@ class Tasmee3State {
     this.elapsedSeconds = 0,
     this.errorMessage,
     this.sessionDuration = Duration.zero,
+    this.expectedAyahs = const [],
   });
 
   const Tasmee3State.initial()
@@ -73,7 +75,8 @@ class Tasmee3State {
         diagnostics = null,
         elapsedSeconds = 0,
         errorMessage = null,
-        sessionDuration = Duration.zero;
+        sessionDuration = Duration.zero,
+        expectedAyahs = const [];
 
   Tasmee3State copyWith({
     Tasmee3Status? status,
@@ -88,6 +91,7 @@ class Tasmee3State {
     int? elapsedSeconds,
     String? errorMessage,
     Duration? sessionDuration,
+    List<QuranAyah>? expectedAyahs,
     bool clearResult = false,
     bool clearAlignment = false,
     bool clearAudioLevel = false,
@@ -107,6 +111,7 @@ class Tasmee3State {
       elapsedSeconds: elapsedSeconds ?? this.elapsedSeconds,
       errorMessage: errorMessage,
       sessionDuration: sessionDuration ?? this.sessionDuration,
+      expectedAyahs: expectedAyahs ?? this.expectedAyahs,
     );
   }
 }
@@ -187,6 +192,8 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
         );
         return;
       }
+
+      state = state.copyWith(expectedAyahs: _expectedAyahs);
 
       final alignmentRecognizer = recognizer;
       if (alignmentRecognizer is QuranForcedAlignmentRecognizer) {
