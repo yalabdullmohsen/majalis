@@ -7,11 +7,13 @@ import '../data/mushaf_audio_download_repository.dart';
 import '../data/mushaf_audio_settings_repository.dart';
 import '../data/mushaf_local_repository.dart';
 import '../data/mushaf_reading_settings_repository.dart';
+import '../data/mushaf_search_history_repository.dart';
 import '../data/quran_page_metadata_repository.dart';
 import '../data/shared_prefs_mushaf_audio_download_repository.dart';
 import '../data/shared_prefs_mushaf_audio_settings_repository.dart';
 import '../data/shared_prefs_mushaf_local_repository.dart';
 import '../data/shared_prefs_mushaf_reading_settings_repository.dart';
+import '../data/shared_prefs_mushaf_search_history_repository.dart';
 import '../data/tafsir_repository.dart';
 import '../domain/mushaf_audio_download.dart';
 import '../domain/mushaf_audio_settings.dart';
@@ -20,6 +22,7 @@ import '../domain/mushaf_favorite_ayah.dart';
 import '../domain/mushaf_page.dart';
 import '../domain/mushaf_reading_position.dart';
 import '../domain/mushaf_reading_settings.dart';
+import '../domain/mushaf_search_history_item.dart';
 import '../domain/quran_page_metadata.dart';
 import 'ayah_share_text_builder.dart';
 import 'mushaf_audio_controller.dart';
@@ -28,6 +31,8 @@ import 'mushaf_audio_download_service.dart';
 import 'mushaf_controller.dart';
 import 'mushaf_page_builder.dart';
 import 'mushaf_reading_settings_controller.dart';
+import 'mushaf_search_controller.dart';
+import 'mushaf_search_service.dart';
 import 'quran_page_metadata_integrity_service.dart';
 import 'widget_image_export_service.dart';
 
@@ -183,5 +188,31 @@ final mushafAudioControllerProvider =
   return MushafAudioController(
     settingsRepository: ref.watch(mushafAudioSettingsRepositoryProvider),
     downloadRepository: ref.watch(mushafAudioDownloadRepositoryProvider),
+  );
+});
+
+final mushafSearchHistoryRepositoryProvider =
+    Provider<MushafSearchHistoryRepository>((ref) {
+  return SharedPrefsMushafSearchHistoryRepository();
+});
+
+final mushafSearchHistoryProvider =
+    FutureProvider<List<MushafSearchHistoryItem>>((ref) async {
+  final repository = ref.watch(mushafSearchHistoryRepositoryProvider);
+  return repository.load();
+});
+
+final mushafSearchServiceProvider = Provider<MushafSearchService>((ref) {
+  return MushafSearchService(
+    pageMetadataRepository: ref.watch(quranPageMetadataRepositoryProvider),
+  );
+});
+
+final mushafSearchControllerProvider =
+    StateNotifierProvider<MushafSearchController, MushafSearchState>((ref) {
+  return MushafSearchController(
+    quranRepository: ref.watch(quranRepositoryProvider),
+    searchService: ref.watch(mushafSearchServiceProvider),
+    historyRepository: ref.watch(mushafSearchHistoryRepositoryProvider),
   );
 });

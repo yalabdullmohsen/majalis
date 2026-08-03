@@ -18,7 +18,9 @@ class MushafPageBuilder {
   }) {
     if (ayahs.isEmpty) return const [];
 
-    if (metadata.isEmpty) {
+    // Incomplete placeholder metadata must not hide most of the Quran.
+    // Only use licensed full Madinah-style metadata when all 604 pages exist.
+    if (metadata.isEmpty || metadata.length < madinahPageCount) {
       return _buildApproximatePages(ayahs);
     }
 

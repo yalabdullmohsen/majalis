@@ -5,6 +5,7 @@ import '../application/tasmee3_providers.dart';
 import '../domain/recitation_target.dart';
 import '../domain/tasmee3_goal_progress.dart';
 import '../../mushaf/presentation/mushaf_screen.dart';
+import '../../mushaf/presentation/mushaf_search_screen.dart';
 import 'tasmee3_about_screen.dart';
 import 'tasmee3_asr_settings_screen.dart';
 import 'tasmee3_badges_screen.dart';
@@ -518,91 +519,102 @@ class Tasmee3DashboardScreen extends ConsumerWidget {
             ),
             const SizedBox(width: 10),
             action(
-              icon: Icons.history,
-              label: 'السجل',
-              screen: const Tasmee3HistoryScreen(),
+              icon: Icons.search,
+              label: 'بحث في القرآن',
+              screen: const MushafSearchScreen(),
             ),
           ],
         ),
         const SizedBox(height: 10),
         Row(
           children: [
+            action(
+              icon: Icons.history,
+              label: 'السجل',
+              screen: const Tasmee3HistoryScreen(),
+            ),
+            const SizedBox(width: 10),
             action(
               icon: Icons.track_changes,
               label: 'الأهداف',
               screen: const Tasmee3GoalSettingsScreen(),
             ),
-            const SizedBox(width: 10),
+          ],
+        ),
+        const SizedBox(height: 10),
+        Row(
+          children: [
             action(
               icon: Icons.notifications_active_outlined,
               label: 'التذكيرات',
               screen: const Tasmee3RemindersScreen(),
             ),
-          ],
-        ),
-        const SizedBox(height: 10),
-        Row(
-          children: [
+            const SizedBox(width: 10),
             action(
               icon: Icons.settings_outlined,
               label: 'الإعدادات',
               screen: const Tasmee3AsrSettingsScreen(),
             ),
-            const SizedBox(width: 10),
+          ],
+        ),
+        const SizedBox(height: 10),
+        Row(
+          children: [
             action(
               icon: Icons.workspace_premium_outlined,
               label: 'الإنجازات',
               screen: const Tasmee3BadgesScreen(),
             ),
-          ],
-        ),
-        const SizedBox(height: 10),
-        Row(
-          children: [
+            const SizedBox(width: 10),
             action(
               icon: Icons.privacy_tip_outlined,
               label: 'الخصوصية',
               screen: const Tasmee3PrivacyScreen(),
             ),
-            const SizedBox(width: 10),
+          ],
+        ),
+        const SizedBox(height: 10),
+        Row(
+          children: [
             action(
               icon: Icons.source_outlined,
               label: 'مصادر القرآن',
               screen: const QuranSourcesScreen(),
             ),
-          ],
-        ),
-        const SizedBox(height: 10),
-        Row(
-          children: [
+            const SizedBox(width: 10),
             action(
               icon: Icons.info_outline,
               label: 'حدود التسميع',
               screen: const Tasmee3LimitationsScreen(),
             ),
-            const SizedBox(width: 10),
-            action(
-              icon: Icons.view_timeline_outlined,
-              label: 'خطة المراجعة',
-              screen: const Tasmee3ReviewPlanScreen(),
-            ),
           ],
         ),
         const SizedBox(height: 10),
         Row(
           children: [
             action(
+              icon: Icons.view_timeline_outlined,
+              label: 'خطة المراجعة',
+              screen: const Tasmee3ReviewPlanScreen(),
+            ),
+            const SizedBox(width: 10),
+            action(
               icon: Icons.info_outline,
               label: 'حول التطبيق',
               screen: const Tasmee3AboutScreen(),
             ),
-            const SizedBox(width: 10),
-            action(
-              icon: Icons.support_agent,
-              label: 'الدعم',
-              screen: const Tasmee3SupportScreen(),
-            ),
           ],
+        ),
+        const SizedBox(height: 10),
+        OutlinedButton.icon(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => const Tasmee3SupportScreen()),
+            );
+          },
+          icon: const Icon(Icons.support_agent),
+          label: const Text('الدعم'),
         ),
         const SizedBox(height: Tasmee3Spacing.md),
         const Text(

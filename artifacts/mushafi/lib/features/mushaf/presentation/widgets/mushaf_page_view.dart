@@ -14,6 +14,7 @@ class MushafPageView extends StatelessWidget {
   final Set<String> selectedAyahKeys;
   final int? highlightedSurah;
   final int? highlightedAyah;
+  final bool forceHighlight;
   final MushafReadingSettings readingSettings;
 
   const MushafPageView({
@@ -25,6 +26,7 @@ class MushafPageView extends StatelessWidget {
     this.selectedAyahKeys = const {},
     this.highlightedSurah,
     this.highlightedAyah,
+    this.forceHighlight = false,
   });
 
   @override
@@ -90,8 +92,9 @@ class MushafPageView extends StatelessWidget {
     final tapped = ayah.ref.surah == highlightedSurah &&
         ayah.ref.ayah == highlightedAyah;
     final selected = selectedAyahKeys.contains(ayah.ref.key);
-    final showTapHighlight =
-        readingSettings.highlightTappedAyah && tapped && !selected;
+    final showTapHighlight = tapped &&
+        !selected &&
+        (forceHighlight || readingSettings.highlightTappedAyah);
 
     return InkWell(
       borderRadius: BorderRadius.circular(12),

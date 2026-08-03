@@ -22,6 +22,7 @@ import 'mushaf_notes_screen.dart';
 import 'mushaf_reading_settings_screen.dart';
 import 'mushaf_reading_theme_colors.dart';
 import 'mushaf_reciters_screen.dart';
+import 'mushaf_search_screen.dart';
 import 'widgets/mushaf_ayah_actions_sheet.dart';
 import 'widgets/mushaf_mini_player.dart';
 import 'widgets/mushaf_page_view.dart';
@@ -31,10 +32,14 @@ import 'widgets/mushaf_page_view.dart';
 /// Distinct from the app-shell mushaf route under `features/quran`.
 class MushafReaderScreen extends ConsumerStatefulWidget {
   final int initialPage;
+  final int? initialHighlightedSurah;
+  final int? initialHighlightedAyah;
 
   const MushafReaderScreen({
     super.key,
     this.initialPage = 1,
+    this.initialHighlightedSurah,
+    this.initialHighlightedAyah,
   });
 
   @override
@@ -52,11 +57,14 @@ class _MushafReaderScreenState extends ConsumerState<MushafReaderScreen> {
   int? highlightedAyah;
   bool _restoredLastPosition = false;
   bool _alignedInitialPage = false;
+  bool _focusedSearchResult = false;
 
   @override
   void initState() {
     super.initState();
     currentPage = widget.initialPage < 1 ? 1 : widget.initialPage;
+    highlightedSurah = widget.initialHighlightedSurah;
+    highlightedAyah = widget.initialHighlightedAyah;
     // Align to a real index after pages/metadata load (count may be < 604).
     pageController = PageController(initialPage: 0);
   }
@@ -99,7 +107,29 @@ class _MushafReaderScreenState extends ConsumerState<MushafReaderScreen> {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (!mounted) return;
       _jumpToPageNumber(items, currentPage);
+      _tryFocusSearchResult(items);
     });
+  }
+
+  void _tryFocusSearchResult(List<MushafPage> items) {
+    if (_focusedSearchResult) return;
+
+    final surah = widget.initialHighlightedSurah;
+    final ayahNumber = widget.initialHighlightedAyah;
+    if (surah == null || ayahNumber == null || items.isEmpty) return;
+
+    _focusedSearchResult = true;
+
+    for (final page in items) {
+      final matches = page.ayahs.any(
+        (ayah) =>
+            ayah.ref.surah == surah && ayah.ref.ayah == ayahNumber,
+      );
+      if (matches) {
+        _jumpToPageNumber(items, page.pageNumber);
+        return;
+      }
+    }
   }
 
   @override
@@ -206,6 +236,18 @@ class _MushafReaderScreenState extends ConsumerState<MushafReaderScreen> {
                         ),
                       ]
                     : [
+                        IconButton(
+                          tooltip: 'بحث',
+                          icon: const Icon(Icons.search),
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const MushafSearchScreen(),
+                              ),
+                            );
+                          },
+                        ),
                         IconButton(
                           tooltip: 'الفهرس',
                           icon: const Icon(Icons.list_alt),
@@ -379,6 +421,8 @@ class _MushafReaderScreenState extends ConsumerState<MushafReaderScreen> {
                     readingSettings: readingSettings,
                     highlightedSurah: activeSurah,
                     highlightedAyah: activeAyah,
+                    forceHighlight:
+                        activeSurah != null && activeAyah != null,
                     selectedAyahKeys: mushafState.selectedAyahKeys,
                     onAyahLongPress: controller.startSelection,
                     onAyahTap: (ayah) {
