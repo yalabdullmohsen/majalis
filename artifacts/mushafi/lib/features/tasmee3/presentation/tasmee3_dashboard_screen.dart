@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../application/tasmee3_providers.dart';
-import 'tasmee3_achievements_screen.dart';
+import '../domain/tasmee3_goal_progress.dart';
+import 'tasmee3_badges_screen.dart';
+import 'tasmee3_goal_settings_screen.dart';
 import 'tasmee3_history_screen.dart';
 import 'tasmee3_review_plan_screen.dart';
 import 'tasmee3_screen.dart';
+import 'widgets/tasmee3_goal_progress_card.dart';
 import 'widgets/tasmee3_week_stats_card.dart';
 
 class Tasmee3DashboardScreen extends ConsumerWidget {
@@ -16,6 +19,9 @@ class Tasmee3DashboardScreen extends ConsumerWidget {
     final history = ref.watch(tasmee3SessionHistoryProvider);
     final stats = ref.watch(tasmee3Last7DaysStatsProvider);
     final reviewPlan = ref.watch(tasmee3ReviewPlanProvider);
+    final goalProgress = ref.watch(tasmee3TodayGoalProgressProvider);
+    final streak = ref.watch(tasmee3StreakProvider);
+    final dailyGoal = ref.watch(tasmee3DailyGoalProvider);
 
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -27,11 +33,50 @@ class Tasmee3DashboardScreen extends ConsumerWidget {
           backgroundColor: const Color(0xFFFBF7EF),
           foregroundColor: const Color(0xFF11100E),
           elevation: 0,
+          actions: [
+            IconButton(
+              tooltip: 'إعدادات الهدف',
+              icon: const Icon(Icons.track_changes),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const Tasmee3GoalSettingsScreen(),
+                  ),
+                );
+              },
+            ),
+          ],
         ),
         body: ListView(
           padding: const EdgeInsets.all(16),
           children: [
             _heroCard(context),
+            const SizedBox(height: 14),
+            goalProgress.when(
+              loading: () => const SizedBox.shrink(),
+              error: (error, stackTrace) => _errorCard(error.toString()),
+              data: (progress) => Tasmee3GoalProgressCard(progress: progress),
+            ),
+            dailyGoal.maybeWhen(
+              data: (goal) {
+                if (!goal.reminderEnabled) {
+                  return const SizedBox.shrink();
+                }
+
+                return Padding(
+                  padding: const EdgeInsets.only(top: 14),
+                  child: _reminderCard(goal.reminderTime, goalProgress),
+                );
+              },
+              orElse: () => const SizedBox.shrink(),
+            ),
+            const SizedBox(height: 14),
+            streak.when(
+              loading: () => const SizedBox.shrink(),
+              error: (error, stackTrace) => _errorCard(error.toString()),
+              data: (value) => _streakCard(value),
+            ),
             const SizedBox(height: 14),
             stats.when(
               loading: () => const Center(child: CircularProgressIndicator()),
@@ -68,6 +113,45 @@ class Tasmee3DashboardScreen extends ConsumerWidget {
             _quickActions(context),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _reminderCard(
+    String time,
+    AsyncValue<Tasmee3GoalProgress> goalProgress,
+  ) {
+    final incomplete = goalProgress.maybeWhen(
+      data: (progress) => !progress.completed,
+      orElse: () => true,
+    );
+
+    if (!incomplete) {
+      return const SizedBox.shrink();
+    }
+
+    return Container(
+      padding: const EdgeInsets.all(14),
+      decoration: BoxDecoration(
+        color: const Color(0xFFFFF8EE),
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: const Color(0xFFE0C5A3)),
+      ),
+      child: Row(
+        children: [
+          const Icon(Icons.notifications_active_outlined,
+              color: Color(0xFFA77A48)),
+          const SizedBox(width: 10),
+          Expanded(
+            child: Text(
+              'تذكير التسميع مفعّل عند $time. لم يكتمل هدف اليوم بعد.',
+              style: const TextStyle(
+                color: Color(0xFF11100E),
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -114,6 +198,39 @@ class Tasmee3DashboardScreen extends ConsumerWidget {
             },
             icon: const Icon(Icons.mic),
             label: const Text('ابدأ تسميع جديد'),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _streakCard(int streak) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: const Color(0xFFFFFCF7),
+        borderRadius: BorderRadius.circular(18),
+        border: Border.all(color: const Color(0xFFE0C5A3)),
+      ),
+      child: Row(
+        children: [
+          const Icon(
+            Icons.local_fire_department_outlined,
+            color: Color(0xFFA77A48),
+            size: 34,
+          ),
+          const SizedBox(width: 12),
+          Expanded(
+            child: Text(
+              streak == 0
+                  ? 'ابدأ اليوم لبناء سلسلة التسميع.'
+                  : 'سلسلة التسميع الحالية: $streak يوم',
+              style: const TextStyle(
+                color: Color(0xFF11100E),
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+              ),
+            ),
           ),
         ],
       ),
@@ -193,8 +310,8 @@ class Tasmee3DashboardScreen extends ConsumerWidget {
           Expanded(
             child: Text(
               count == 0
-                  ? 'لا توجد خطة مراجعة حاليا.'
-                  : 'لديك $count موضعا مقترحا للمراجعة.',
+                  ? 'لا توجد خطة مراجعة أسبوعية حاليا.'
+                  : 'خطة الأسبوع: $count موضعا مقترحا للمراجعة.',
               style: const TextStyle(
                 fontWeight: FontWeight.w600,
                 color: Color(0xFF11100E),
@@ -262,11 +379,26 @@ class Tasmee3DashboardScreen extends ConsumerWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => const Tasmee3AchievementsScreen(),
+                      builder: (_) => const Tasmee3GoalSettingsScreen(),
                     ),
                   );
                 },
-                icon: const Icon(Icons.emoji_events_outlined),
+                icon: const Icon(Icons.track_changes),
+                label: const Text('الأهداف'),
+              ),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              child: OutlinedButton.icon(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const Tasmee3BadgesScreen(),
+                    ),
+                  );
+                },
+                icon: const Icon(Icons.workspace_premium_outlined),
                 label: const Text('الإنجازات'),
               ),
             ),

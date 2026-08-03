@@ -63,6 +63,21 @@ class Tasmee3AnalyticsService {
     }).toList();
   }
 
+  /// Auto weekly review plan based on sessions from the last 7 days only.
+  List<Tasmee3ReviewPlanItem> buildWeeklyReviewPlan(
+    List<Tasmee3SessionRecord> sessions,
+  ) {
+    final now = DateTime.now();
+    final weekStart =
+        DateTime(now.year, now.month, now.day).subtract(const Duration(days: 6));
+
+    final weekSessions = sessions
+        .where((session) => !session.createdAt.isBefore(weekStart))
+        .toList();
+
+    return buildReviewPlan(weekSessions);
+  }
+
   List<Tasmee3ReviewPlanItem> buildReviewPlan(
     List<Tasmee3SessionRecord> sessions,
   ) {

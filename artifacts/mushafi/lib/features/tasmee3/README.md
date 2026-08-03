@@ -237,3 +237,35 @@ Forced Alignment الحالي يعتمد على مطابقة كلمات بعد �
 - تفاصيل الأخطاء.
 
 التشخيص (`Tasmee3SessionDiagnostics`) يبقى محليا داخل التطبيق ولا يرسل الصوت.
+
+## البرومبت العاشر - الأهداف والإنجازات
+
+تمت إضافة:
+
+- هدف يومي للتسميع.
+- Streak.
+- إنجازات Badges.
+- إعدادات الهدف.
+- عرض تقدم الهدف في Dashboard.
+- خطة مراجعة أسبوعية تلقائية (آخر 7 أيام).
+- تذكير محفوظ داخل التطبيق.
+
+## الشاشات الجديدة
+
+- `Tasmee3GoalSettingsScreen`
+- `Tasmee3BadgesScreen`
+
+## Providers الجديدة
+
+- `tasmee3DailyGoalProvider`
+- `tasmee3TodayGoalProgressProvider`
+- `tasmee3StreakProvider`
+- `tasmee3BadgesProvider`
+
+## ملاحظة عن التذكير
+
+تم حفظ وقت التذكير في الإعدادات، مع تنبيه داخل لوحة التسميع إذا لم يكتمل الهدف. لإشعار فعلي على الجهاز يمكن لاحقا إضافة:
+
+- flutter_local_notifications
+- timezone
+- notification permission handling

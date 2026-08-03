@@ -3,6 +3,7 @@ import 'package:mushafi/features/khatmah/domain/khatmah_models.dart';
 import 'package:mushafi/features/tasmee3/application/arabic_normalizer.dart';
 import 'package:mushafi/features/tasmee3/application/mistake_detection_engine.dart';
 import 'package:mushafi/features/tasmee3/application/tasmee3_analytics_service.dart';
+import 'package:mushafi/features/tasmee3/application/tasmee3_goal_service.dart';
 import 'package:mushafi/features/tasmee3/data/audio_quality_monitor.dart';
 import 'package:mushafi/features/tasmee3/domain/aligned_word.dart';
 import 'package:mushafi/features/tasmee3/domain/audio_quality_report.dart';
@@ -10,6 +11,7 @@ import 'package:mushafi/features/tasmee3/domain/ayah_ref.dart';
 import 'package:mushafi/features/tasmee3/domain/forced_alignment_result.dart';
 import 'package:mushafi/features/tasmee3/domain/quran_ayah.dart';
 import 'package:mushafi/features/tasmee3/domain/recitation_target.dart';
+import 'package:mushafi/features/tasmee3/domain/tasmee3_daily_goal.dart';
 import 'package:mushafi/features/tasmee3/domain/tasmee3_mistake.dart';
 import 'package:mushafi/features/tasmee3/domain/tasmee3_session_record.dart';
 
@@ -139,7 +141,42 @@ void main() {
       expect(stats.length, 7);
       expect(stats.last.sessionsCount, 1);
       expect(analytics.buildReviewPlan(sessions), isNotEmpty);
+      expect(analytics.buildWeeklyReviewPlan(sessions), isNotEmpty);
       expect(analytics.buildAchievements(sessions).first.unlocked, isTrue);
+    });
+  });
+
+  group('Tasmee3GoalService', () {
+    const service = Tasmee3GoalService();
+
+    test('builds today progress and badges', () {
+      final sessions = [
+        Tasmee3SessionRecord(
+          id: '1',
+          target: const RecitationTarget(
+            from: AyahRef(surah: 112, ayah: 1),
+            to: AyahRef(surah: 112, ayah: 3),
+            mode: Tasmee3Mode.showText,
+          ),
+          accuracyPercent: 96,
+          mistakesCount: 0,
+          durationSeconds: 120,
+          createdAt: DateTime.now(),
+        ),
+      ];
+
+      final progress = service.buildTodayProgress(
+        goal: const Tasmee3DailyGoal.defaults(),
+        sessions: sessions,
+      );
+
+      expect(progress.currentValue, 1);
+      expect(progress.completed, isTrue);
+      expect(service.calculateStreak(sessions), greaterThanOrEqualTo(1));
+      expect(
+        service.buildBadges(sessions).any((b) => b.unlocked),
+        isTrue,
+      );
     });
   });
 }

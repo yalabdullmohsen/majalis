@@ -40,6 +40,19 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
     final controller = ref.read(tasmee3ControllerProvider.notifier);
     final selectedSurah = SurahCatalog.byId(surah);
 
+    ref.listen(tasmee3ControllerProvider, (previous, next) {
+      if (previous?.status != Tasmee3Status.completed &&
+          next.status == Tasmee3Status.completed) {
+        ref.invalidate(tasmee3SessionHistoryProvider);
+        ref.invalidate(tasmee3TodayGoalProgressProvider);
+        ref.invalidate(tasmee3StreakProvider);
+        ref.invalidate(tasmee3BadgesProvider);
+        ref.invalidate(tasmee3Last7DaysStatsProvider);
+        ref.invalidate(tasmee3ReviewPlanProvider);
+        ref.invalidate(tasmee3AchievementsProvider);
+      }
+    });
+
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
