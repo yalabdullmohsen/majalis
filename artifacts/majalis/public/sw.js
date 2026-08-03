@@ -52,7 +52,7 @@ const STATIC_SHELL_ASSETS = [
   "/star-pattern.svg",
   "/site.webmanifest",
   "/manifest.webmanifest",
-  "/opengraph.jpg",
+  "/majlisilm-og-2026.jpg",
 ];
 
 self.addEventListener("install", (event) => {

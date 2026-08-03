@@ -39,7 +39,7 @@ assert.equal(normalizePath("/lessons/?tab=1#x"), "/lessons");
 assert.equal(normalizePath("/"), "/");
 
 const seoRoutes = JSON.parse(readFileSync(resolve(root, "src/lib/seo-routes.json"), "utf8"));
-assert.equal(seoRoutes.defaultImage, "/opengraph.jpg");
+assert.equal(seoRoutes.defaultImage, "/majlisilm-og-2026.jpg");
 
 // ── Phase 5/6: push API handler exists + no private key leak patterns in client
 assert.ok(existsSync(resolve(root, "lib/api-handlers/push-subscribe.js")));
