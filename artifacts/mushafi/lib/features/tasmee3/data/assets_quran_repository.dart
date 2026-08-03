@@ -41,6 +41,11 @@ class AssetsQuranRepository implements QuranRepository {
   }
 
   @override
+  Future<List<QuranAyah>> getAllAyahs() async {
+    return _loadAll();
+  }
+
+  @override
   Future<List<QuranAyah>> getAyahsInTarget(RecitationTarget target) async {
     if (!target.isValid) {
       throw StateError('نطاق التسميع غير صحيح.');

@@ -16,6 +16,7 @@ import '../domain/tasmee3_voice_command.dart';
 import 'tasmee3_asr_settings_screen.dart';
 import 'tasmee3_dashboard_screen.dart';
 import 'tasmee3_history_screen.dart';
+import 'tasmee3_limitations_screen.dart';
 import 'tasmee3_mistake_training_screen.dart';
 import 'tasmee3_privacy_screen.dart';
 import 'tasmee3_report_preview_screen.dart';
@@ -248,6 +249,18 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
           elevation: 0,
           actions: [
             IconButton(
+              tooltip: 'حدود التسميع',
+              icon: const Icon(Icons.info_outline),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const Tasmee3LimitationsScreen(),
+                  ),
+                );
+              },
+            ),
+            IconButton(
               tooltip: 'لوحة التسميع',
               icon: const Icon(Icons.dashboard_outlined),
               onPressed: () {
@@ -473,7 +486,7 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
           ),
           const SizedBox(height: 6),
           const Text(
-            'للحصول على دقة تقريبية أفضل، ابدأ بنطاق قصير واقرأ في مكان هادئ.',
+            'للحصول على دقة تقريبية أفضل، ابدأ بنطاق قصير واقرأ في مكان هادئ. النتائج مساعدة تقنية وليست حكما شرعيا.',
             style: TextStyle(
               color: Color(0xFF9A8068),
               fontSize: 13,

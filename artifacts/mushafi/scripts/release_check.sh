@@ -6,6 +6,9 @@ cd "$ROOT"
 
 export PATH="${HOME}/development/flutter/bin:${PATH}"
 
+echo "== Quran asset check =="
+dart run scripts/check_quran_asset.dart
+
 echo "==> flutter pub get"
 flutter pub get
 

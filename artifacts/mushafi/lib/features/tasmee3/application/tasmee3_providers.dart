@@ -30,6 +30,7 @@ import '../domain/ayah_mastery_record.dart';
 import '../domain/live_streaming_config.dart';
 import '../domain/pcm_audio_config.dart';
 import '../domain/queued_tasmee3_job.dart';
+import '../domain/quran_integrity_report.dart';
 import '../domain/tasmee3_achievement.dart';
 import '../domain/tasmee3_badge.dart';
 import '../domain/tasmee3_daily_goal.dart';
@@ -41,6 +42,7 @@ import '../domain/tasmee3_review_suggestion.dart';
 import '../domain/tasmee3_session_record.dart';
 import '../domain/tasmee3_user_asr_settings.dart';
 import 'mistake_detection_engine.dart';
+import 'quran_integrity_service.dart';
 import 'tasmee3_analytics_service.dart';
 import 'tasmee3_asr_settings.dart';
 import 'tasmee3_asr_settings_controller.dart';
@@ -434,4 +436,18 @@ final tasmee3OnboardingRepositoryProvider =
 final tasmee3HasSeenOnboardingProvider = FutureProvider<bool>((ref) async {
   final repository = ref.watch(tasmee3OnboardingRepositoryProvider);
   return repository.hasSeenOnboarding();
+});
+
+final quranIntegrityServiceProvider = Provider<QuranIntegrityService>((ref) {
+  return const QuranIntegrityService();
+});
+
+final quranIntegrityReportProvider =
+    FutureProvider<QuranIntegrityReport>((ref) async {
+  final repository = ref.watch(quranRepositoryProvider);
+  final service = ref.watch(quranIntegrityServiceProvider);
+
+  final ayahs = await repository.getAllAyahs();
+
+  return service.validate(ayahs);
 });

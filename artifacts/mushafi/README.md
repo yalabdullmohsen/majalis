@@ -53,6 +53,23 @@ dart run scripts/quran_integrity_check.dart
 
 يتحقق من: 114 سورة، 6236 آية، عدم فراغ الآيات، بسملة التوبة، توافق الصفحة/الجزء/الربع.
 
+## Quran Data Integrity
+
+قبل النشر (ملف التسميع في `assets/quran/quran_uthmani.json`):
+
+```bash
+dart run scripts/check_quran_asset.dart
+```
+
+يجب أن ينجح الفحص ويتأكد من:
+
+* 114 سورة
+* 6236 آية
+* عدم وجود آيات فارغة
+* وجود المفاتيح المطلوبة (`surah`, `ayah`, `textUthmani`)
+
+لا يتم توليد نص القرآن بالذكاء الاصطناعي. راجع أيضاً `RELEASE_CHECKLIST.md` وشاشة «مصادر القرآن» داخل التسميع.
+
 ## الخطوط
 
 - العائلة: `MushafiQuran` من `assets/fonts/`

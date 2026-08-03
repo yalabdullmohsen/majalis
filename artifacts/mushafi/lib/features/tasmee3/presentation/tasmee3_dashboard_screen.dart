@@ -9,11 +9,13 @@ import 'tasmee3_badges_screen.dart';
 import 'tasmee3_design_tokens.dart';
 import 'tasmee3_goal_settings_screen.dart';
 import 'tasmee3_history_screen.dart';
+import 'tasmee3_limitations_screen.dart';
 import 'tasmee3_privacy_screen.dart';
 import 'tasmee3_reminders_screen.dart';
 import 'tasmee3_review_plan_screen.dart';
 import 'tasmee3_screen.dart';
 import 'tasmee3_today_review_screen.dart';
+import 'quran_sources_screen.dart';
 import 'widgets/tasmee3_error_state.dart';
 import 'widgets/tasmee3_goal_progress_card.dart';
 import 'widgets/tasmee3_loading_state.dart';
@@ -550,6 +552,28 @@ class Tasmee3DashboardScreen extends ConsumerWidget {
               screen: const Tasmee3BadgesScreen(),
             ),
           ],
+        ),
+        const SizedBox(height: 10),
+        Row(
+          children: [
+            action(
+              icon: Icons.source_outlined,
+              label: 'مصادر القرآن',
+              screen: const QuranSourcesScreen(),
+            ),
+            const SizedBox(width: 10),
+            action(
+              icon: Icons.info_outline,
+              label: 'حدود التسميع',
+              screen: const Tasmee3LimitationsScreen(),
+            ),
+          ],
+        ),
+        const SizedBox(height: Tasmee3Spacing.md),
+        const Text(
+          'التسميع أداة مساعدة تقنية بدقة تقريبية، وليست حكما شرعيا على التلاوة.',
+          textAlign: TextAlign.center,
+          style: Tasmee3TextStyles.secondary,
         ),
       ],
     );
