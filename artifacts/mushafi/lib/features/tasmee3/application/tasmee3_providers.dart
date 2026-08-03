@@ -59,6 +59,7 @@ import 'tasmee3_reminders_controller.dart';
 import 'tasmee3_display_builder.dart';
 import 'tasmee3_live_follow_service.dart';
 import 'tasmee3_reset_service.dart';
+import 'tasmee3_runtime_config.dart';
 import 'tasmee3_session_report_builder.dart';
 import 'tasmee3_srs_service.dart';
 import 'tasmee3_review_suggestion_mapper.dart';
@@ -75,6 +76,10 @@ final tasmee3ErrorMapperProvider = Provider<Tasmee3ErrorMapper>((ref) {
   return const Tasmee3ErrorMapper();
 });
 
+final tasmee3RuntimeConfigProvider = Provider<Tasmee3RuntimeConfig>((ref) {
+  return Tasmee3RuntimeConfig.fromEnvironment();
+});
+
 /// Legacy compile-time settings from `--dart-define` (kept for backward compat).
 final legacyTasmee3AsrSettingsProvider = Provider<Tasmee3AsrSettings>((ref) {
   return Tasmee3AsrSettings.fromEnvironment();
@@ -86,7 +91,9 @@ final tasmee3AsrSettingsProvider = legacyTasmee3AsrSettingsProvider;
 
 final tasmee3AsrSettingsRepositoryProvider =
     Provider<Tasmee3AsrSettingsRepository>((ref) {
-  return LocalTasmee3AsrSettingsRepository();
+  return LocalTasmee3AsrSettingsRepository(
+    runtimeConfig: ref.watch(tasmee3RuntimeConfigProvider),
+  );
 });
 
 final tasmee3UserAsrSettingsProvider =
@@ -135,6 +142,10 @@ final tasmee3AsrSettingsControllerProvider = StateNotifierProvider<
 });
 
 /// Uses user ASR settings (mode / allow upload / endpoint / live WS / PCM).
+///
+/// Server / WebSocket / PCM paths require explicit user consent
+/// ([Tasmee3UserAsrSettings.allowServerAudioUpload]) plus the relevant flags
+/// and non-empty endpoints. Dart-define alone never enables upload.
 /// Priority: device fallback → native PCM WS → m4a chunk WS → advanced HTTP → STT.
 final quranSpeechRecognizerProvider = Provider<QuranSpeechRecognizer>((ref) {
   final asyncSettings = ref.watch(tasmee3UserAsrSettingsProvider);
@@ -163,6 +174,8 @@ final quranSpeechRecognizerProvider = Provider<QuranSpeechRecognizer>((ref) {
     return SpeechToTextQuranRecognizer();
   }
 
+  // Requires enableNativePcmStreaming + enableLiveWebSocket +
+  // allowServerAudioUpload + non-empty live WebSocket endpoint.
   if (settings.canUseNativePcmStreaming) {
     return LiveAsrPcmWebSocketRecognizer(
       websocketUri: Uri.parse(settings.liveWebSocketEndpoint),

@@ -39,5 +39,36 @@ void main() {
       expect(text.contains('Audio is not included in diagnostics.'), true);
       expect(text.contains('Quran text is not included in diagnostics.'), true);
     });
+
+    test('does not include Quran text or audio content', () {
+      const service = Tasmee3DiagnosticsService();
+
+      final text = service.buildDiagnostics(
+        appInfo: const Tasmee3AppInfo(
+          appName: 'Test',
+          packageName: 'com.test',
+          version: '1.0.0',
+          buildNumber: '1',
+        ),
+        sessions: const [],
+        asrSettings: const Tasmee3UserAsrSettings(
+          mode: AsrEngineMode.auto,
+          endpoint: '',
+          apiKey: '',
+          allowServerAudioUpload: false,
+          enableAutoRetry: true,
+          maxRetryCount: 2,
+          saveFailedSessionsQueue: true,
+          liveWebSocketEndpoint: '',
+          enableLiveWebSocket: false,
+          enableNativePcmStreaming: false,
+        ),
+        dailyGoal: const Tasmee3DailyGoal.defaults(),
+        quranReport: null,
+      );
+
+      expect(text.contains('قل هو الله احد'), false);
+      expect(text.toLowerCase().contains('audio bytes'), false);
+    });
   });
 }

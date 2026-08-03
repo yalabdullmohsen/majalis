@@ -706,3 +706,13 @@ dart run scripts/check_quran_asset.dart
 - `Tasmee3ResetService`
 - `Tasmee3AboutScreen`
 - `Tasmee3SupportScreen`
+
+## البرومبت الثاني والثلاثون - Release Candidate RC1
+
+تمت إضافة:
+
+- تثبيت الإصدار `1.0.0+1` كـ RC1.
+- `Tasmee3RuntimeConfig` بإعدادات افتراضية آمنة.
+- قفل رفع الصوت / WebSocket / PCM افتراضيا.
+- وثائق `RELEASE_CANDIDATE.md` و`RC_TEST_PLAN.md` و`RC_SIGNOFF.md` و`SMOKE_TEST_CHECKLIST.md`.
+- اختبارات defaults والتشخيص والـ runtime config.

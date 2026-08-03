@@ -1,6 +1,7 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../application/tasmee3_runtime_config.dart';
 import '../domain/asr_engine_mode.dart';
 import '../domain/tasmee3_user_asr_settings.dart';
 import 'tasmee3_asr_settings_repository.dart';
@@ -20,20 +21,25 @@ class LocalTasmee3AsrSettingsRepository
 
   static const FlutterSecureStorage _secureStorage = FlutterSecureStorage();
 
+  final Tasmee3RuntimeConfig runtimeConfig;
+
+  LocalTasmee3AsrSettingsRepository({
+    this.runtimeConfig = const Tasmee3RuntimeConfig(),
+  });
+
   @override
   Future<Tasmee3UserAsrSettings> load() async {
     final prefs = await SharedPreferences.getInstance();
+    final runtime = runtimeConfig;
 
     final modeName = prefs.getString(_modeKey);
     var endpoint = prefs.getString(_endpointKey) ?? '';
     var apiKey = await _secureStorage.read(key: _apiKeySecureKey) ?? '';
 
-    // Seed from dart-define when user has not saved settings yet.
+    // Seed endpoint/API key from dart-define when user has not saved yet.
+    // Never auto-enable upload — that requires an explicit user preference.
     if (endpoint.trim().isEmpty) {
-      endpoint = const String.fromEnvironment(
-        'TASMEE3_ASR_ENDPOINT',
-        defaultValue: '',
-      );
+      endpoint = runtime.defaultHttpAsrEndpoint;
     }
     if (apiKey.trim().isEmpty) {
       apiKey = const String.fromEnvironment(
@@ -47,16 +53,21 @@ class LocalTasmee3AsrSettingsRepository
       orElse: () => AsrEngineMode.auto,
     );
 
-    final liveWebSocketEndpoint = prefs.getString(_liveWsEndpointKey) ?? '';
+    var liveWebSocketEndpoint = prefs.getString(_liveWsEndpointKey) ?? '';
+    if (liveWebSocketEndpoint.trim().isEmpty) {
+      liveWebSocketEndpoint = runtime.defaultWebSocketEndpoint;
+    }
+
     final enableLiveWebSocket = prefs.getBool(_enableLiveWsKey) ?? false;
-    final enableNativePcmStreaming =
-        prefs.getBool(_enableNativePcmKey) ?? false;
+    final enableNativePcmStreaming = prefs.getBool(_enableNativePcmKey) ??
+        runtime.enableExperimentalPcm;
 
     return Tasmee3UserAsrSettings(
       mode: mode,
       endpoint: endpoint,
       apiKey: apiKey,
-      allowServerAudioUpload: prefs.getBool(_allowUploadKey) ?? false,
+      allowServerAudioUpload: prefs.getBool(_allowUploadKey) ??
+          runtime.allowExternalAudioUploadByDefault,
       enableAutoRetry: prefs.getBool(_autoRetryKey) ?? true,
       maxRetryCount: prefs.getInt(_maxRetryKey) ?? 2,
       saveFailedSessionsQueue: prefs.getBool(_queueKey) ?? true,

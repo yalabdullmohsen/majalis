@@ -56,6 +56,18 @@ dart run scripts/check_quran_asset.dart
 - [ ] سياسة الخصوصية توضح أن الصوت لا يُرسل إلا بإذن.
 - [ ] version في pubspec يطابق CHANGELOG.
 
+## Release Candidate
+
+- [x] RELEASE_CANDIDATE.md created.
+- [x] RC_TEST_PLAN.md created.
+- [x] RC_SIGNOFF.md created.
+- [x] SMOKE_TEST_CHECKLIST.md created.
+- [x] Experimental ASR features disabled by default.
+- [x] Audio upload disabled by default.
+- [x] Runtime config defaults are safe.
+- [x] App works offline for local features.
+- [x] App does not crash without ASR server.
+
 ## Store Submission
 
 - [ ] Google Play description reviewed.

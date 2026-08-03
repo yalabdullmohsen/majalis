@@ -28,6 +28,17 @@ flutter run
 - CHANGELOG.md
 - STORE_SUBMISSION_CHECKLIST.md
 
+## Release Candidate
+
+Release candidate documents:
+
+- `RELEASE_CANDIDATE.md`
+- `RC_TEST_PLAN.md`
+- `RC_SIGNOFF.md`
+- `SMOKE_TEST_CHECKLIST.md`
+
+Before store submission, complete all RC checklists and confirm that experimental server features are disabled by default.
+
 ## Store Submission
 
 Store submission materials are located in:

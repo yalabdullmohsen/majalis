@@ -27,8 +27,10 @@ class Tasmee3AsrSettings {
       defaultValue: '',
     );
 
+    // Dart-define may seed an endpoint for developers, but never auto-enables
+    // advanced/server ASR. Upload requires explicit user consent at runtime.
     return Tasmee3AsrSettings(
-      useAdvancedAsr: true,
+      useAdvancedAsr: false,
       endpoint: endpoint.isEmpty ? null : endpoint,
       apiKey: apiKey.isEmpty ? null : apiKey,
     );
