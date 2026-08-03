@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../application/tasmee3_providers.dart';
 import '../domain/recitation_target.dart';
 import '../domain/tasmee3_goal_progress.dart';
+import '../../mushaf/presentation/mushaf_screen.dart';
 import 'tasmee3_about_screen.dart';
 import 'tasmee3_asr_settings_screen.dart';
 import 'tasmee3_badges_screen.dart';
@@ -511,41 +512,41 @@ class Tasmee3DashboardScreen extends ConsumerWidget {
         Row(
           children: [
             action(
+              icon: Icons.menu_book_outlined,
+              label: 'المصحف',
+              screen: const MushafReaderScreen(),
+            ),
+            const SizedBox(width: 10),
+            action(
               icon: Icons.history,
               label: 'السجل',
               screen: const Tasmee3HistoryScreen(),
             ),
-            const SizedBox(width: 10),
+          ],
+        ),
+        const SizedBox(height: 10),
+        Row(
+          children: [
             action(
               icon: Icons.track_changes,
               label: 'الأهداف',
               screen: const Tasmee3GoalSettingsScreen(),
             ),
-          ],
-        ),
-        const SizedBox(height: 10),
-        Row(
-          children: [
+            const SizedBox(width: 10),
             action(
               icon: Icons.notifications_active_outlined,
               label: 'التذكيرات',
               screen: const Tasmee3RemindersScreen(),
             ),
-            const SizedBox(width: 10),
-            action(
-              icon: Icons.settings_outlined,
-              label: 'الإعدادات',
-              screen: const Tasmee3AsrSettingsScreen(),
-            ),
           ],
         ),
         const SizedBox(height: 10),
         Row(
           children: [
             action(
-              icon: Icons.privacy_tip_outlined,
-              label: 'الخصوصية',
-              screen: const Tasmee3PrivacyScreen(),
+              icon: Icons.settings_outlined,
+              label: 'الإعدادات',
+              screen: const Tasmee3AsrSettingsScreen(),
             ),
             const SizedBox(width: 10),
             action(
@@ -559,15 +560,31 @@ class Tasmee3DashboardScreen extends ConsumerWidget {
         Row(
           children: [
             action(
+              icon: Icons.privacy_tip_outlined,
+              label: 'الخصوصية',
+              screen: const Tasmee3PrivacyScreen(),
+            ),
+            const SizedBox(width: 10),
+            action(
               icon: Icons.source_outlined,
               label: 'مصادر القرآن',
               screen: const QuranSourcesScreen(),
             ),
-            const SizedBox(width: 10),
+          ],
+        ),
+        const SizedBox(height: 10),
+        Row(
+          children: [
             action(
               icon: Icons.info_outline,
               label: 'حدود التسميع',
               screen: const Tasmee3LimitationsScreen(),
+            ),
+            const SizedBox(width: 10),
+            action(
+              icon: Icons.view_timeline_outlined,
+              label: 'خطة المراجعة',
+              screen: const Tasmee3ReviewPlanScreen(),
             ),
           ],
         ),

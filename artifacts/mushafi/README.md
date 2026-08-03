@@ -73,6 +73,20 @@ Practical release execution log:
 
 Current store decision remains **NO-GO** until Android AAB/APK builds, device smoke, and a hosted Privacy Policy URL are completed. See `GO_RELEASE_EXECUTION.md`.
 
+## Mushaf Reader
+
+تمت إضافة تجربة مصحف داخل التطبيق من لوحة التسميع:
+
+- صفحات قراءة بهوية مصحفي.
+- تفاعل مع الآية.
+- تفسير (عند توفر ملف مرخص).
+- قراء (بدون روابط صوت غير مرخصة).
+- فهرس.
+- وضع ليلي.
+
+ملاحظة:
+لا يتم نسخ تصميم أو أصول تطبيقات أخرى. النص القرآني يأتي من ملف موثق داخل التطبيق. تقسيم الصفحات تقريبي حتى يتوفر metadata مرخص.
+
 ## Post-Submission Tracking
 
 Post-submission materials:
