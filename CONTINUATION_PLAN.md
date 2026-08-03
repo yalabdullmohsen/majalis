@@ -5,7 +5,7 @@
 > - نُشرت تدقيقات معلّقة من worktree `automation/content` بعد مواءمتها مع بنية `main`:
 >   - `islamicQuizData.ts`: ٩ أسئلة مُصحَّحة/مُستبدلة (عقيدة/سيرة/فقه/قرآن) بمنهج أهل السنة.
 >   - `public/data/quiz`: توسيع جواب البعثة (`demo-quiz-341`) وتصحيح ملك الموت دون اعتماد اسم «عزرائيل».
->   - `rulings-encyclopedia/chunks/الأخلاق-والآداب.json`: إكمال ملخصَي الكذب وزيارة المريض بلا بتر.
+>   - ملفات `rulings-encyclopedia/chunks/*` مولَّدة عبر `generate:rulings` (ملخص ≤160) — لا تُحرَّر يدويًا في هذا الدمج.
 > - لم يُدمج `quiz-seed.ts` القديم من `automation/content` لأن `main` يعتمد JSON chunks.
 
 > اقرأ هذا الملف أولاً قبل أي استئناف. ثم اقرأ `AUDIT_INVENTORY.md` بجذر
