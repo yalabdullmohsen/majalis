@@ -28,6 +28,8 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
+          # Pin to the SDK used for local release checks (avoid CI-only deprecations on newer stables).
+          flutter-version: "3.32.8"
           channel: stable
 
       - name: Flutter Pub Get
