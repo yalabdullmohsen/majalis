@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../tasmee3/application/arabic_normalizer.dart';
 import '../domain/mushaf_search_history_item.dart';
 import 'mushaf_search_history_repository.dart';
 
@@ -45,13 +46,16 @@ class SharedPrefsMushafSearchHistoryRepository
 
     final prefs = await SharedPreferences.getInstance();
     final items = await load();
+    final normalized = ArabicNormalizer.normalize(cleaned);
 
     final updated = [
       MushafSearchHistoryItem(
         query: cleaned,
         searchedAt: DateTime.now(),
       ),
-      ...items.where((item) => item.query != cleaned),
+      ...items.where(
+        (item) => ArabicNormalizer.normalize(item.query) != normalized,
+      ),
     ].take(_maxItems).toList();
 
     await prefs.setString(

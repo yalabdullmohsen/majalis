@@ -23,6 +23,7 @@ import '../domain/mushaf_page.dart';
 import '../domain/mushaf_reading_position.dart';
 import '../domain/mushaf_reading_settings.dart';
 import '../domain/mushaf_search_history_item.dart';
+import '../domain/mushaf_search_index_item.dart';
 import '../domain/quran_page_metadata.dart';
 import 'ayah_share_text_builder.dart';
 import 'mushaf_audio_controller.dart';
@@ -32,7 +33,9 @@ import 'mushaf_controller.dart';
 import 'mushaf_page_builder.dart';
 import 'mushaf_reading_settings_controller.dart';
 import 'mushaf_search_controller.dart';
+import 'mushaf_search_index_builder.dart';
 import 'mushaf_search_service.dart';
+import 'mushaf_search_suggestions_service.dart';
 import 'quran_page_metadata_integrity_service.dart';
 import 'widget_image_export_service.dart';
 
@@ -203,15 +206,43 @@ final mushafSearchHistoryProvider =
 });
 
 final mushafSearchServiceProvider = Provider<MushafSearchService>((ref) {
-  return MushafSearchService(
+  return const MushafSearchService();
+});
+
+final mushafSearchIndexBuilderProvider =
+    Provider<MushafSearchIndexBuilder>((ref) {
+  return MushafSearchIndexBuilder(
     pageMetadataRepository: ref.watch(quranPageMetadataRepositoryProvider),
   );
+});
+
+final mushafSearchIndexProvider =
+    FutureProvider<List<MushafSearchIndexItem>>((ref) async {
+  final quranRepository = ref.watch(quranRepositoryProvider);
+  final builder = ref.watch(mushafSearchIndexBuilderProvider);
+
+  final ayahs = await quranRepository.getAllAyahs();
+
+  return builder.build(ayahs);
+});
+
+final mushafSearchSuggestionsServiceProvider =
+    Provider<MushafSearchSuggestionsService>((ref) {
+  return const MushafSearchSuggestionsService();
+});
+
+final mushafSearchSuggestionsProvider =
+    FutureProvider<List<String>>((ref) async {
+  final index = await ref.watch(mushafSearchIndexProvider.future);
+  final service = ref.watch(mushafSearchSuggestionsServiceProvider);
+
+  return service.buildSuggestions(index);
 });
 
 final mushafSearchControllerProvider =
     StateNotifierProvider<MushafSearchController, MushafSearchState>((ref) {
   return MushafSearchController(
-    quranRepository: ref.watch(quranRepositoryProvider),
+    loadIndex: () => ref.read(mushafSearchIndexProvider.future),
     searchService: ref.watch(mushafSearchServiceProvider),
     historyRepository: ref.watch(mushafSearchHistoryRepositoryProvider),
   );

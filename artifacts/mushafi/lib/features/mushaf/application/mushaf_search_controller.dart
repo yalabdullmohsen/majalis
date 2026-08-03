@@ -2,8 +2,9 @@ import 'dart:async';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../../tasmee3/data/quran_repository.dart';
 import '../data/mushaf_search_history_repository.dart';
+import '../domain/mushaf_search_filter.dart';
+import '../domain/mushaf_search_index_item.dart';
 import '../domain/mushaf_search_result.dart';
 import 'mushaf_search_service.dart';
 
@@ -12,12 +13,14 @@ class MushafSearchState {
   final List<MushafSearchResult> results;
   final bool isSearching;
   final String? errorMessage;
+  final MushafSearchFilter filter;
 
   const MushafSearchState({
     this.query = '',
     this.results = const [],
     this.isSearching = false,
     this.errorMessage,
+    this.filter = const MushafSearchFilter.defaults(),
   });
 
   MushafSearchState copyWith({
@@ -25,23 +28,25 @@ class MushafSearchState {
     List<MushafSearchResult>? results,
     bool? isSearching,
     String? errorMessage,
+    MushafSearchFilter? filter,
   }) {
     return MushafSearchState(
       query: query ?? this.query,
       results: results ?? this.results,
       isSearching: isSearching ?? this.isSearching,
       errorMessage: errorMessage,
+      filter: filter ?? this.filter,
     );
   }
 }
 
 class MushafSearchController extends StateNotifier<MushafSearchState> {
-  final QuranRepository quranRepository;
+  final Future<List<MushafSearchIndexItem>> Function() loadIndex;
   final MushafSearchService searchService;
   final MushafSearchHistoryRepository historyRepository;
 
   MushafSearchController({
-    required this.quranRepository,
+    required this.loadIndex,
     required this.searchService,
     required this.historyRepository,
   }) : super(const MushafSearchState());
@@ -58,11 +63,19 @@ class MushafSearchController extends StateNotifier<MushafSearchState> {
     });
   }
 
+  void updateFilter(MushafSearchFilter filter) {
+    state = state.copyWith(filter: filter);
+
+    if (state.query.trim().isNotEmpty) {
+      unawaited(search(state.query));
+    }
+  }
+
   Future<void> search(String query) async {
     final cleaned = query.trim();
 
     if (cleaned.isEmpty) {
-      state = const MushafSearchState();
+      state = MushafSearchState(filter: state.filter);
       return;
     }
 
@@ -73,11 +86,12 @@ class MushafSearchController extends StateNotifier<MushafSearchState> {
     );
 
     try {
-      final ayahs = await quranRepository.getAllAyahs();
+      final index = await loadIndex();
 
-      final results = await searchService.search(
-        ayahs: ayahs,
+      final results = await searchService.searchIndex(
+        index: index,
         query: cleaned,
+        filter: state.filter,
       );
 
       await historyRepository.add(cleaned);

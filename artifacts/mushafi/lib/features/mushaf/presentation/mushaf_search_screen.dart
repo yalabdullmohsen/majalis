@@ -7,9 +7,12 @@ import '../../tasmee3/presentation/widgets/tasmee3_empty_state.dart';
 import '../../tasmee3/presentation/widgets/tasmee3_error_state.dart';
 import '../application/mushaf_providers.dart';
 import '../application/mushaf_search_controller.dart';
+import '../domain/mushaf_search_filter.dart';
 import '../domain/mushaf_search_history_item.dart';
 import '../domain/mushaf_search_result.dart';
 import 'mushaf_screen.dart';
+import 'mushaf_search_filter_sheet.dart';
+import 'widgets/search_highlighted_ayah_text.dart';
 
 class MushafSearchScreen extends ConsumerStatefulWidget {
   const MushafSearchScreen({super.key});
@@ -21,7 +24,7 @@ class MushafSearchScreen extends ConsumerStatefulWidget {
 class _MushafSearchScreenState extends ConsumerState<MushafSearchScreen> {
   final TextEditingController searchController = TextEditingController();
 
-  final quickSuggestions = const [
+  static const _fallbackSuggestions = [
     'الله',
     'الرحمن',
     'الصبر',
@@ -38,11 +41,34 @@ class _MushafSearchScreenState extends ConsumerState<MushafSearchScreen> {
     super.dispose();
   }
 
+  String _filterLabel(MushafSearchFilter filter) {
+    final parts = <String>[];
+
+    if (filter.surah != null) {
+      parts.add('سورة ${filter.surah}');
+    }
+
+    if (filter.juz != null) {
+      parts.add('جزء ${filter.juz}');
+    }
+
+    if (filter.includeTafsir) {
+      parts.add('يشمل التفسير');
+    }
+
+    if (parts.isEmpty) {
+      return 'البحث في كامل القرآن';
+    }
+
+    return parts.join(' - ');
+  }
+
   @override
   Widget build(BuildContext context) {
     final searchState = ref.watch(mushafSearchControllerProvider);
     final searchNotifier = ref.read(mushafSearchControllerProvider.notifier);
     final history = ref.watch(mushafSearchHistoryProvider);
+    final suggestions = ref.watch(mushafSearchSuggestionsProvider);
 
     ref.listen(mushafSearchControllerProvider, (previous, next) {
       if (previous?.isSearching == true &&
@@ -52,38 +78,82 @@ class _MushafSearchScreenState extends ConsumerState<MushafSearchScreen> {
       }
     });
 
+    final quickSuggestions =
+        suggestions.asData?.value.take(12).toList() ?? _fallbackSuggestions;
+
     return Tasmee3AppScaffold(
       title: 'البحث في القرآن',
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.all(Tasmee3Spacing.lg),
-            child: TextField(
-              controller: searchController,
-              textDirection: TextDirection.rtl,
-              autofocus: true,
-              decoration: InputDecoration(
-                hintText: 'ابحث عن كلمة أو جزء من آية',
-                prefixIcon: const Icon(Icons.search),
-                suffixIcon: searchController.text.isEmpty
-                    ? null
-                    : IconButton(
-                        icon: const Icon(Icons.close),
-                        onPressed: () {
-                          searchController.clear();
-                          searchNotifier.updateQuery('');
-                          setState(() {});
-                        },
+            padding: const EdgeInsets.fromLTRB(
+              Tasmee3Spacing.lg,
+              Tasmee3Spacing.lg,
+              Tasmee3Spacing.lg,
+              Tasmee3Spacing.sm,
+            ),
+            child: Column(
+              children: [
+                TextField(
+                  controller: searchController,
+                  textDirection: TextDirection.rtl,
+                  autofocus: true,
+                  decoration: InputDecoration(
+                    hintText: 'ابحث عن كلمة أو جزء من آية',
+                    prefixIcon: const Icon(Icons.search),
+                    suffixIcon: searchController.text.isEmpty
+                        ? null
+                        : IconButton(
+                            icon: const Icon(Icons.close),
+                            onPressed: () {
+                              searchController.clear();
+                              searchNotifier.updateQuery('');
+                              setState(() {});
+                            },
+                          ),
+                    border: const OutlineInputBorder(),
+                  ),
+                  onChanged: (value) {
+                    searchNotifier.updateQuery(value);
+                    setState(() {});
+                  },
+                  onSubmitted: (value) {
+                    searchNotifier.search(value);
+                  },
+                ),
+                const SizedBox(height: Tasmee3Spacing.sm),
+                Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        _filterLabel(searchState.filter),
+                        style: Tasmee3TextStyles.secondary,
                       ),
-                border: const OutlineInputBorder(),
-              ),
-              onChanged: (value) {
-                searchNotifier.updateQuery(value);
-                setState(() {});
-              },
-              onSubmitted: (value) {
-                searchNotifier.search(value);
-              },
+                    ),
+                    OutlinedButton.icon(
+                      onPressed: () async {
+                        final selected =
+                            await showModalBottomSheet<MushafSearchFilter>(
+                          context: context,
+                          showDragHandle: true,
+                          isScrollControlled: true,
+                          builder: (_) => MushafSearchFilterSheet(
+                            current: searchState.filter,
+                          ),
+                        );
+
+                        if (selected != null) {
+                          ref
+                              .read(mushafSearchControllerProvider.notifier)
+                              .updateFilter(selected);
+                        }
+                      },
+                      icon: const Icon(Icons.filter_list),
+                      label: const Text('فلترة'),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ),
           if (searchController.text.trim().isEmpty)
@@ -229,15 +299,32 @@ class _SearchResultsContent extends StatelessWidget {
 
     final results = state.results;
 
-    return ListView.separated(
-      padding: const EdgeInsets.all(Tasmee3Spacing.lg),
-      itemCount: results.length,
-      separatorBuilder: (_, __) => const SizedBox(height: 10),
-      itemBuilder: (context, index) {
-        final result = results[index];
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: Tasmee3Spacing.lg),
+          child: Align(
+            alignment: Alignment.centerRight,
+            child: Text(
+              '${results.length} نتيجة',
+              style: Tasmee3TextStyles.secondary,
+            ),
+          ),
+        ),
+        const SizedBox(height: 8),
+        Expanded(
+          child: ListView.separated(
+            padding: const EdgeInsets.all(Tasmee3Spacing.lg),
+            itemCount: results.length,
+            separatorBuilder: (_, __) => const SizedBox(height: 10),
+            itemBuilder: (context, index) {
+              final result = results[index];
 
-        return _SearchResultCard(result: result);
-      },
+              return _SearchResultCard(result: result);
+            },
+          ),
+        ),
+      ],
     );
   }
 }
@@ -281,11 +368,17 @@ class _SearchResultCard extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
+            if (result.source == MushafSearchResultSource.tafsir) ...[
+              const SizedBox(height: 4),
+              Text(
+                'نتيجة من التفسير${result.tafsirSourceName == null ? '' : ' - ${result.tafsirSourceName}'}',
+                style: Tasmee3TextStyles.secondary,
+              ),
+            ],
             const SizedBox(height: 8),
-            Text(
-              result.snippet,
-              textAlign: TextAlign.right,
-              style: Tasmee3TextStyles.arabicAyah.copyWith(fontSize: 22),
+            SearchHighlightedAyahText(
+              text: result.snippet,
+              query: result.query,
             ),
           ],
         ),

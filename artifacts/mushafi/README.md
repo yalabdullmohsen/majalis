@@ -138,6 +138,15 @@ Current store decision remains **NO-GO** until Android AAB/APK builds, device sm
 - سجل بحث محلي.
 - اقتراحات سريعة.
 
+## Advanced Quran Search
+
+يدعم البحث المتقدم:
+
+- تمييز كلمات البحث.
+- فلترة بالسورة والجزء.
+- اقتراحات بحث من النص القرآني.
+- فهرس بحث داخلي سريع.
+
 ## Offline Recitation Audio
 
 يدعم المصحف تنزيل صوت الآيات للاستماع دون إنترنت إذا تم ضبط مصدر صوت مرخص.

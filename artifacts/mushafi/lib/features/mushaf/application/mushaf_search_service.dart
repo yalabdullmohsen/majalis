@@ -1,21 +1,15 @@
 import '../../tasmee3/application/arabic_normalizer.dart';
-import '../../tasmee3/domain/quran_ayah.dart';
-import '../data/quran_page_metadata_repository.dart';
+import '../domain/mushaf_search_filter.dart';
+import '../domain/mushaf_search_index_item.dart';
 import '../domain/mushaf_search_result.dart';
-import '../domain/quran_page_metadata.dart';
-import 'mushaf_page_builder.dart';
 
 class MushafSearchService {
-  final QuranPageMetadataRepository pageMetadataRepository;
+  const MushafSearchService();
 
-  const MushafSearchService({
-    required this.pageMetadataRepository,
-  });
-
-  Future<List<MushafSearchResult>> search({
-    required List<QuranAyah> ayahs,
+  Future<List<MushafSearchResult>> searchIndex({
+    required List<MushafSearchIndexItem> index,
     required String query,
-    int limit = 80,
+    required MushafSearchFilter filter,
   }) async {
     final cleanedQuery = query.trim();
 
@@ -30,46 +24,45 @@ class MushafSearchService {
     }
 
     final queryTokens = ArabicNormalizer.tokenize(cleanedQuery);
-    final metadata = await pageMetadataRepository.loadAll();
-    final useLicensedMetadata =
-        metadata.length == MushafPageBuilder.madinahPageCount;
 
     final results = <MushafSearchResult>[];
 
-    for (var index = 0; index < ayahs.length; index++) {
-      final ayah = ayahs[index];
-      final normalizedAyah = ArabicNormalizer.normalize(ayah.textUthmani);
+    // TODO: Add tafsir search when licensed tafsir assets are available
+    // and indexed without affecting Quran text integrity.
+
+    if (!filter.includeQuranText) {
+      return const [];
+    }
+
+    for (final item in index) {
+      if (filter.surah != null && item.ayah.ref.surah != filter.surah) {
+        continue;
+      }
+
+      if (filter.juz != null && item.juz != filter.juz) {
+        continue;
+      }
 
       final score = _score(
-        normalizedAyah: normalizedAyah,
+        normalizedAyah: item.normalizedText,
         normalizedQuery: normalizedQuery,
         queryTokens: queryTokens,
+        ayahTokens: item.tokens,
       );
 
       if (score <= 0) {
         continue;
       }
 
-      final pageNumber = _resolvePageNumber(
-        ayah: ayah,
-        ayahIndex: index,
-        totalAyahs: ayahs.length,
-        metadata: metadata,
-        useLicensedMetadata: useLicensedMetadata,
-      );
-
       results.add(
         MushafSearchResult(
-          ayah: ayah,
-          pageNumber: pageNumber,
+          ayah: item.ayah,
+          pageNumber: item.pageNumber,
           query: cleanedQuery,
           normalizedQuery: normalizedQuery,
-          snippet: _buildSnippet(
-            originalText: ayah.textUthmani,
-            normalizedAyah: normalizedAyah,
-            normalizedQuery: normalizedQuery,
-          ),
+          snippet: item.ayah.textUthmani,
           score: score,
+          source: MushafSearchResultSource.quranText,
         ),
       );
     }
@@ -84,73 +77,40 @@ class MushafSearchService {
       return a.ayah.ref.ayah.compareTo(b.ayah.ref.ayah);
     });
 
-    return results.take(limit).toList();
-  }
-
-  int _resolvePageNumber({
-    required QuranAyah ayah,
-    required int ayahIndex,
-    required int totalAyahs,
-    required List<QuranPageMetadata> metadata,
-    required bool useLicensedMetadata,
-  }) {
-    if (useLicensedMetadata) {
-      for (final page in metadata) {
-        if (page.containsAyah(
-          surah: ayah.ref.surah,
-          ayah: ayah.ref.ayah,
-        )) {
-          return page.pageNumber;
-        }
-      }
-    }
-
-    if (totalAyahs <= 0) return 1;
-
-    final page = ((ayahIndex * MushafPageBuilder.madinahPageCount) / totalAyahs)
-            .floor() +
-        1;
-
-    return page.clamp(1, MushafPageBuilder.madinahPageCount);
+    return results.take(filter.limit).toList();
   }
 
   int _score({
     required String normalizedAyah,
     required String normalizedQuery,
     required List<String> queryTokens,
+    required List<String> ayahTokens,
   }) {
     if (normalizedAyah == normalizedQuery) {
       return 1000;
     }
 
     if (normalizedAyah.contains(normalizedQuery)) {
-      return 750;
+      return 800;
     }
 
     var tokenMatches = 0;
+    var exactTokenMatches = 0;
 
     for (final token in queryTokens) {
       if (token.trim().isEmpty) continue;
 
-      if (normalizedAyah.contains(token)) {
+      if (ayahTokens.contains(token)) {
+        exactTokenMatches++;
+      } else if (normalizedAyah.contains(token)) {
         tokenMatches++;
       }
     }
 
-    if (tokenMatches == 0) {
+    if (exactTokenMatches == 0 && tokenMatches == 0) {
       return 0;
     }
 
-    return 100 + tokenMatches * 50;
-  }
-
-  String _buildSnippet({
-    required String originalText,
-    required String normalizedAyah,
-    required String normalizedQuery,
-  }) {
-    // Keep the original Uthmani text; visual match highlighting can be added
-    // later in the UI without mutating Quran text.
-    return originalText;
+    return 150 + exactTokenMatches * 90 + tokenMatches * 45;
   }
 }
