@@ -5,7 +5,7 @@
  *   node cli.mjs report --pr N [--post] [--strict-vercel]
  *   node cli.mjs ensure-labels
  *
- * Exit codes for evaluate: 0 = eligible, 2 = not eligible, 1 = error
+ * Exit codes for evaluate: 0 = eligible, 2 = hard block, 3 = waiting on checks, 1 = error
  */
 import { spawnSync } from "node:child_process";
 import { writeFileSync, mkdtempSync, rmSync } from "node:fs";
@@ -22,6 +22,8 @@ import {
   SAFE_AUTO_MERGE_LABEL,
   SAFE_DOMAIN_LABELS,
   SAFE_LABELS,
+  AUTOMATIC_CONTENT_AUDIT_BRANCH_RE,
+  AUTOMATIC_CONTENT_AUDIT_TITLE_RE,
 } from "./constants.mjs";
 
 function usage() {
@@ -118,15 +120,18 @@ function cmdEvaluate(args) {
   };
   if (args.json) {
     console.log(JSON.stringify(out, null, 2));
+  } else if (result.eligible) {
+    console.log(`ELIGIBLE #${prJson.number}`);
+  } else if (result.waiting) {
+    console.log(`WAITING #${prJson.number}`);
+    for (const b of result.waitBlockers || result.blockers) console.log(`  - ${b}`);
   } else {
-    console.log(
-      result.eligible
-        ? `ELIGIBLE #${prJson.number}`
-        : `NOT_ELIGIBLE #${prJson.number}`,
-    );
-    for (const b of result.blockers) console.log(`  - ${b}`);
+    console.log(`NOT_ELIGIBLE #${prJson.number}`);
+    for (const b of result.hardBlockers || result.blockers) console.log(`  - ${b}`);
   }
-  process.exitCode = result.eligible ? 0 : 2;
+  if (result.eligible) process.exitCode = 0;
+  else if (result.waiting) process.exitCode = 3;
+  else process.exitCode = 2;
 }
 
 function findExistingReportComment(pr) {
@@ -150,6 +155,20 @@ function findExistingReportComment(pr) {
 function cmdReport(args) {
   if (!args.pr) throw new Error("--pr required");
   const { prJson, checks } = loadPr(args.pr);
+
+  const head = String(prJson.headRefName || "");
+  const title = String(prJson.title || "");
+  if (
+    AUTOMATIC_CONTENT_AUDIT_BRANCH_RE.test(head) ||
+    AUTOMATIC_CONTENT_AUDIT_TITLE_RE.test(title)
+  ) {
+    console.log(
+      "skip report/post: automatic content-audit PR (التدقيق التلقائي معطّل)",
+    );
+    process.exitCode = 0;
+    return;
+  }
+
   // Report should show check status without requiring all green for the document itself
   const result = evaluateEligibility(
     toEvalInput(prJson, checks, { ...args, noChecks: args.noChecks }),

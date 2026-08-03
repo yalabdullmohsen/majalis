@@ -6,21 +6,27 @@ const config: CapacitorConfig = {
   // مخرجات `vite build` — لا تستخدم public/ (أصول المصدر فقط).
   webDir: "dist",
   server: {
-    androidScheme: "https",
+    // Canonical apex (www → majlisilm.com is a 308). Load apex directly so
+    // WKWebView cold starts do not depend on a redirect before first paint.
+    url: "https://majlisilm.com",
     cleartext: false,
+    androidScheme: "https",
   },
   plugins: {
     SplashScreen: {
       launchShowDuration: 2000,
-      backgroundColor: "#143F35",
-      showSpinner: false,
+      launchAutoHide: true,
+      backgroundColor: "#ffffff",
+      showSpinner: true,
+      androidSpinnerStyle: "small",
+      iosSpinnerStyle: "small",
       androidSplashResourceName: "splash",
       androidScaleType: "CENTER_CROP",
       splashImmersive: true,
     },
     StatusBar: {
-      style: "LIGHT",
-      backgroundColor: "#143F35",
+      style: "DARK",
+      backgroundColor: "#ffffff",
       overlaysWebView: false,
     },
     Keyboard: {
@@ -29,6 +35,10 @@ const config: CapacitorConfig = {
     },
     LocalNotifications: {
       // iOS: badge + sound + banner + notification center (Capacitor 8.2+)
+      presentationOptions: ["badge", "sound", "banner", "list"],
+    },
+    PushNotifications: {
+      // Foreground presentation for remote pushes (APNs/FCM)
       presentationOptions: ["badge", "sound", "banner", "list"],
     },
   },
@@ -48,7 +58,7 @@ const config: CapacitorConfig = {
     // Safe areas are owned by the shared CSS shell via env(safe-area-inset-*).
     // UIKit adjustment here would apply a second inset around the WKWebView.
     contentInset: "never",
-    backgroundColor: "#143F35",
+    backgroundColor: "#ffffff",
     scrollEnabled: true,
   },
 };

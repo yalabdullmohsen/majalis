@@ -42,12 +42,12 @@
   pointer-events: none;
 }
 html[data-theme="dark"] .mf2-frame {
-  --mf2-page-bg: #153025;
+  --mf2-page-bg: #0F172A;
   box-shadow: 0 2px 24px rgba(0,0,0,.4);
 }
 /* توحيد مع وضع القراءة المختار داخل المصحف (راجع تعليق --mf2-ink أعلاه
    لنفس السبب الجذري). */
-.quran-shell--night .mf2-frame { --mf2-page-bg: #153025; box-shadow: 0 2px 24px rgba(0,0,0,.4); }
+.quran-shell--night .mf2-frame { --mf2-page-bg: #0F172A; box-shadow: 0 2px 24px rgba(0,0,0,.4); }
 .quran-shell--warm .mf2-frame { --mf2-page-bg: #fdf3e3; }
 .quran-shell--high-contrast .mf2-frame { --mf2-page-bg: #fff; }
 
@@ -82,7 +82,7 @@ html[data-theme="dark"] .mf2-frame {
   font-size: 5.6cqw;
   /* ارتفاع أوفر من 1 لاستيعاب التشكيل فوق/تحت خط الأساس دون قص */
   line-height: 1.35;
-  color: var(--mf2-ink, #1C1A18);
+  color: var(--mf2-ink, #1F2937);
   white-space: nowrap;
   word-break: keep-all;
   overflow-wrap: normal;
@@ -96,13 +96,25 @@ html[data-theme="dark"] .mf2-frame {
   overflow-x: hidden;
   overflow-y: visible;
 }
-html[data-theme="dark"] .mf2-line { --mf2-ink: #F0EDE4; }
+html[data-theme="dark"] .mf2-line { --mf2-ink: #F9FAFB; }
+/* ورقة آية فاتحة تحت الوضع الداكن العام — أبقِ الحبر داكنًا حتى لا يبهت النص */
+html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--night):not(.quran-shell--warm):not(.quran-shell--high-contrast) .mf2-line {
+  /* تُغطّى بورقة داكنة عبر quran.css؛ هذا احتياط إن تأخّرت قواعد الورقة */
+  --mf2-ink: #F9FAFB;
+}
+html[data-theme="dark"] .quran-shell--warm .mf2-line,
+html[data-theme="dark"] .quran-shell--high-contrast .mf2-line {
+  --mf2-ink: #1F2937;
+}
+html[data-theme="dark"] .quran-shell--high-contrast .mf2-line {
+  --mf2-ink: #000;
+}
 /* توحيد الألوان مع وضع القراءة المختار داخل المصحف نفسه (.quran-shell--*)
    — منفصل تمامًا عن مفتاح الوضع الليلي العام للموقع (html[data-theme])
    أعلاه؛ كانا يعملان بمعزل عن بعضهما، فيبقى نص الصفحة بلونه الفاتح حتى
    حين يختار المستخدم وضعًا داكنًا من داخل قارئ المصحف (2026-07-22). */
-.quran-shell--night .mf2-line { --mf2-ink: #F0EDE4; }
-.quran-shell--warm .mf2-line { --mf2-ink: #2c1a0e; }
+.quran-shell--night .mf2-line { --mf2-ink: #F9FAFB; }
+.quran-shell--warm .mf2-line { --mf2-ink: #1F2937; }
 .quran-shell--high-contrast .mf2-line { --mf2-ink: #000; }
 /* سطر قصير طبيعيًا (آية واحدة قصيرة على صفحة خاصة كالفاتحة) لا يُمدَّد
    بحجم خط ضخم ليملأ العرض — يُتوسَّط بحجمه المعقول بدلًا من ذلك. */
@@ -170,6 +182,54 @@ html[data-theme="dark"] .mf2-line { --mf2-ink: #F0EDE4; }
 .mf2-word + .mf2-word,
 .mf2-ayah-group + .mf2-ayah-group .mf2-word:first-child {
   margin-inline-start: 0.24em;
+}
+
+/* ── وضع Unicode الآمن (خفيف / تراجع عند فشل QPC) ─────────────────
+   نص text_qpc_hafs + Amiri Quran: تبرير مستمر، ارتفاع تشكيل أوفر،
+   عرض كامل متجاوب — بلا nowrap/space-between الخاص بخطوط الصفحة. */
+.mf2-lines--unicode {
+  gap: 0.15em;
+}
+.mf2-line--unicode,
+.mf2-lines--unicode .mf2-line {
+  flex: 0 0 auto;
+  min-height: 0;
+  display: block;
+  white-space: normal;
+  word-break: keep-all !important;
+  overflow-wrap: normal !important;
+  overflow-x: visible;
+  overflow-y: visible;
+  justify-content: initial;
+  text-align: justify;
+  text-justify: inter-word;
+  text-align-last: right;
+  line-height: 2.2;
+  font-size: clamp(1.25rem, 4.2vw, 1.875rem);
+  font-family: var(--font-quran, "Amiri Quran", "Scheherazade New", "Traditional Arabic", serif);
+  padding-block: 0.12em;
+}
+.mf2-lines--unicode .mf2-ayah-group {
+  display: inline;
+}
+.mf2-lines--unicode .mf2-word {
+  white-space: normal;
+}
+.mf2-lines--unicode .mf2-line--short {
+  text-align: center;
+  text-align-last: center;
+}
+@media (min-width: 640px) {
+  .mf2-line--unicode,
+  .mf2-lines--unicode .mf2-line {
+    font-size: clamp(1.5rem, 3.2vw, 2rem);
+  }
+}
+@media (min-width: 768px) {
+  .mf2-line--unicode,
+  .mf2-lines--unicode .mf2-line {
+    font-size: clamp(1.75rem, 2.6vw, 2.25rem);
+  }
 }
 
 .mf2-sajda-badge {

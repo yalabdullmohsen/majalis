@@ -20,14 +20,14 @@
 		504EC3121FED79650016851F /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 504EC3101FED79650016851F /* LaunchScreen.storyboard */; };
 		50B271D11FEDC1A000F3C39B /* public in Resources */ = {isa = PBXBuildFile; fileRef = 50B271D01FEDC1A000F3C39B /* public */; };
 		7C1D8E2F3A4B5C6D7E8F9A0B /* MajlisSpeechRecognitionPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B2E7A1C9F0D4E5A8B3C6D7E /* MajlisSpeechRecognitionPlugin.swift */; };
-		B93F28F3C55EC1A0108A8118 /* RecitationAudioCapturePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC779234C02320DA7693A59 /* RecitationAudioCapturePlugin.swift */; };
-		B40A70BD645B44F885C91A9B /* PrayerActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C1C0E442F343FCA02B3616 /* PrayerActivityAttributes.swift */; };
-		EFBF4693BAFB4F5B82254F8C /* PrayerLiveActivityPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4816472931E4AB1A0DE1F42 /* PrayerLiveActivityPlugin.swift */; };
 		A1B2C3D4E5F6071890AB12CD /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F6071890AB12CE /* PrivacyInfo.xcprivacy */; };
 		B2C3D4E5F6071890AB12CD01 /* MajlisPlaybackAudioPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C3D4E5F6071890AB12CD02 /* MajlisPlaybackAudioPlugin.swift */; };
+		B40A70BD645B44F885C91A9B /* PrayerActivityAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 20C1C0E442F343FCA02B3616 /* PrayerActivityAttributes.swift */; };
+		B93F28F3C55EC1A0108A8118 /* RecitationAudioCapturePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AC779234C02320DA7693A59 /* RecitationAudioCapturePlugin.swift */; };
 		C1A2B3C4D5E6F708192A3B4D /* AppConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1A2B3C4D5E6F708192A3B4C /* AppConfig.swift */; };
 		D2B3C4D5E6F708192A3B4C5E /* NetworkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B3C4D5E6F708192A3B4C5D /* NetworkService.swift */; };
 		E5F6071890AB12CD01A2B3C4 /* KeychainStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E5F6071890AB12CD01A2B3C5 /* KeychainStore.swift */; };
+		EFBF4693BAFB4F5B82254F8C /* PrayerLiveActivityPlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4816472931E4AB1A0DE1F42 /* PrayerLiveActivityPlugin.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,8 +57,8 @@
 /* Begin PBXFileReference section */
 		20C1C0E442F343FCA02B3616 /* PrayerActivityAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerActivityAttributes.swift; sourceTree = "<group>"; };
 		2FAD9762203C412B000D30F8 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = config.xml; sourceTree = "<group>"; };
-		4B2E7A1C9F0D4E5A8B3C6D7E /* MajlisSpeechRecognitionPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MajlisSpeechRecognitionPlugin.swift; sourceTree = "<group>"; };
 		4AC779234C02320DA7693A59 /* RecitationAudioCapturePlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecitationAudioCapturePlugin.swift; sourceTree = "<group>"; };
+		4B2E7A1C9F0D4E5A8B3C6D7E /* MajlisSpeechRecognitionPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MajlisSpeechRecognitionPlugin.swift; sourceTree = "<group>"; };
 		50379B222058CBB4000EE86E /* capacitor.config.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = capacitor.config.json; sourceTree = "<group>"; };
 		504EC3041FED79650016851F /* App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = App.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		504EC3071FED79650016851F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -72,13 +72,14 @@
 		8D6429A49DB14D2382B4F753 /* PrayerLiveActivityBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerLiveActivityBundle.swift; sourceTree = "<group>"; };
 		958DCC722DB07C7200EA8C5F /* debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = debug.xcconfig; path = ../debug.xcconfig; sourceTree = SOURCE_ROOT; };
 		9A3C1D4E5F6A7B8C9D0E1F20 /* App.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = App.entitlements; sourceTree = "<group>"; };
-		F40AA07210D9414E9C98BAD5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		F4816472931E4AB1A0DE1F42 /* PrayerLiveActivityPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerLiveActivityPlugin.swift; sourceTree = "<group>"; };
 		A1B2C3D4E5F6071890AB12CE /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		B2C3D4E5F6071890AB12CD02 /* MajlisPlaybackAudioPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MajlisPlaybackAudioPlugin.swift; sourceTree = "<group>"; };
 		C1A2B3C4D5E6F708192A3B4C /* AppConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConfig.swift; sourceTree = "<group>"; };
 		D2B3C4D5E6F708192A3B4C5D /* NetworkService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkService.swift; sourceTree = "<group>"; };
+		E12854653020F96E000D949D /* UpdatesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatesView.swift; sourceTree = "<group>"; };
 		E5F6071890AB12CD01A2B3C5 /* KeychainStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainStore.swift; sourceTree = "<group>"; };
+		F40AA07210D9414E9C98BAD5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F4816472931E4AB1A0DE1F42 /* PrayerLiveActivityPlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerLiveActivityPlugin.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,6 +104,7 @@
 		504EC2FB1FED79650016851F = {
 			isa = PBXGroup;
 			children = (
+				E12854653020F96E000D949D /* UpdatesView.swift */,
 				958DCC722DB07C7200EA8C5F /* debug.xcconfig */,
 				504EC3061FED79650016851F /* App */,
 				B077274F69CA4782AB6069F6 /* PrayerLiveActivity */,
@@ -143,6 +145,16 @@
 			path = App;
 			sourceTree = "<group>";
 		};
+		B077274F69CA4782AB6069F6 /* PrayerLiveActivity */ = {
+			isa = PBXGroup;
+			children = (
+				8D6429A49DB14D2382B4F753 /* PrayerLiveActivityBundle.swift */,
+				51BFB99A02A44271A9C1823F /* PrayerLiveActivityLiveActivity.swift */,
+				F40AA07210D9414E9C98BAD5 /* Info.plist */,
+			);
+			path = PrayerLiveActivity;
+			sourceTree = "<group>";
+		};
 		E3C4D5E6F708192A3B4C5D6E /* Config */ = {
 			isa = PBXGroup;
 			children = (
@@ -158,16 +170,6 @@
 				D2B3C4D5E6F708192A3B4C5D /* NetworkService.swift */,
 			);
 			path = Services;
-			sourceTree = "<group>";
-		};
-		B077274F69CA4782AB6069F6 /* PrayerLiveActivity */ = {
-			isa = PBXGroup;
-			children = (
-				8D6429A49DB14D2382B4F753 /* PrayerLiveActivityBundle.swift */,
-				51BFB99A02A44271A9C1823F /* PrayerLiveActivityLiveActivity.swift */,
-				F40AA07210D9414E9C98BAD5 /* Info.plist */,
-			);
-			path = PrayerLiveActivity;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -345,7 +347,7 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_TEAM = 5D8TX37HTS;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = PrayerLiveActivity/Info.plist;
@@ -372,7 +374,7 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_TEAM = 5D8TX37HTS;
 				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = PrayerLiveActivity/Info.plist;
@@ -509,7 +511,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = App/App.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_TEAM = 5D8TX37HTS;
 				INFOPLIST_FILE = App/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
@@ -533,7 +535,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = App/App.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_TEAM = 5D8TX37HTS;
 				INFOPLIST_FILE = App/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.2;

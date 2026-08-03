@@ -10,7 +10,8 @@ import { bootstrapSupabaseFromServer, resetSupabaseClient } from "./lib/supabase
 import { createAppQueryClient } from "./lib/query-client";
 import { PERF_SLOW_MS } from "./lib/performance-monitor";
 import { registerProductionServiceWorker } from "./lib/service-worker";
-import { setupStatusBar, setupKeyboard, isAndroid, isNative } from "./lib/capacitor-utils";
+import { setupStatusBar, setupKeyboard, isAndroid, isIOS, isNative } from "./lib/capacitor-utils";
+import { purgeNativeWebRuntimeCaches } from "./lib/native-cache-freshness";
 import { initFinalPolish } from "./lib/init-final-polish";
 import { prewarmAudioCdns, prewarmTextApis, prewarmSupabaseOrigin } from "./lib/resource-prewarm";
 // هوية v4: مصدر الرموز الوحيد (لون/طباعة/مسافات/حواف/ظلال/حركة). يجب أن
@@ -31,6 +32,12 @@ import "./styles/brand-v4-components.css";
 // تصحيحات تباين مُقاسة بـPlaywright (خصوصًا الوضع الداكن). تُحمَّل بعد كل
 // شيء كي تحسم التصادمات التي تنتج عن تسطيح الرموز في الثيم الداكن القديم.
 import "./styles/brand-v4-contrast-fixes.css";
+import "./styles/capacitor-native-ux.css";
+
+if (isNative) {
+  document.documentElement.classList.add("capacitor-native");
+  document.documentElement.dataset.platform = isAndroid ? "android" : isIOS ? "ios" : "native";
+}
 
 const queryClient = createAppQueryClient();
 
@@ -55,6 +62,9 @@ if (typeof requestIdleCallback === "function") {
 
 async function mount() {
   const started = performance.now();
+
+  // داخل Capacitor: ألغِ SW/CacheStorage القديمة قبل أول رسم حتى لا تُخدم أصول عتيقة.
+  await purgeNativeWebRuntimeCaches();
 
   // Render immediately — do not block the shell on Supabase bootstrap.
   createRoot(document.getElementById("root")!).render(

@@ -3,26 +3,46 @@
 	"appName": "المجلس العلمي",
 	"webDir": "dist",
 	"server": {
-		"androidScheme": "https",
-		"cleartext": false
+		"url": "https://majlisilm.com",
+		"cleartext": false,
+		"androidScheme": "https"
 	},
 	"plugins": {
 		"SplashScreen": {
 			"launchShowDuration": 2000,
-			"backgroundColor": "#143F35",
-			"showSpinner": false,
+			"launchAutoHide": true,
+			"backgroundColor": "#ffffff",
+			"showSpinner": true,
+			"androidSpinnerStyle": "small",
+			"iosSpinnerStyle": "small",
 			"androidSplashResourceName": "splash",
 			"androidScaleType": "CENTER_CROP",
 			"splashImmersive": true
 		},
 		"StatusBar": {
-			"style": "LIGHT",
-			"backgroundColor": "#143F35",
+			"style": "DARK",
+			"backgroundColor": "#ffffff",
 			"overlaysWebView": false
 		},
 		"Keyboard": {
 			"resize": "body",
 			"resizeOnFullScreen": true
+		},
+		"LocalNotifications": {
+			"presentationOptions": [
+				"badge",
+				"sound",
+				"banner",
+				"list"
+			]
+		},
+		"PushNotifications": {
+			"presentationOptions": [
+				"badge",
+				"sound",
+				"banner",
+				"list"
+			]
 		}
 	},
 	"android": {
@@ -32,7 +52,7 @@
 	},
 	"ios": {
 		"contentInset": "never",
-		"backgroundColor": "#143F35",
+		"backgroundColor": "#ffffff",
 		"scrollEnabled": true
 	},
 	"packageClassList": [
@@ -41,6 +61,7 @@
 		"HapticsPlugin",
 		"KeyboardPlugin",
 		"LocalNotificationsPlugin",
+		"PushNotificationsPlugin",
 		"SplashScreenPlugin",
 		"StatusBarPlugin"
 	]

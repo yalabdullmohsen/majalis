@@ -1,0 +1,18 @@
+services:
+  tasmee3-asr:
+    build: .
+    container_name: tasmee3-asr
+    ports:
+      - "8000:8000"
+    environment:
+      TASMEE3_ASR_MODEL: "small"
+      TASMEE3_ASR_DEVICE: "cpu"
+      TASMEE3_ASR_ENGINE: "whisper_timestamped"
+      TASMEE3_RATE_LIMIT_PER_MINUTE: "60"
+      TASMEE3_MIN_AUDIO_BYTES: "1200"
+      TASMEE3_MAX_AUDIO_BYTES: "25000000"
+      TASMEE3_MIN_AUDIO_DURATION_SECONDS: "1.2"
+      TASMEE3_MAX_AUDIO_DURATION_SECONDS: "180"
+      TASMEE3_LIVE_MIN_INTERVAL: "2.5"
+      TASMEE3_LOG_LEVEL: "INFO"
+    restart: unless-stopped

@@ -1,5 +1,6 @@
 /**
- * إقلاع إشعارات Capacitor: قنوات، مستمعو النقر، إعادة جدولة الورد، سجلات تشخيص.
+ * إقلاع إشعارات Capacitor: قنوات، مستمعو النقر (محلي + remote)، إعادة جدولة الورد.
+ * Remote Push يمر عبر maybeRegisterRemotePush → pushNotifications.ts فقط.
  */
 import { isNative } from "@/lib/capacitor-utils";
 import { ensureNotificationChannels } from "@/lib/notifications/channels";
@@ -47,9 +48,9 @@ export async function attachLocalNotificationListeners(): Promise<void> {
       );
     });
     _listenersAttached = true;
-    console.info("[notifications] listeners attached");
+    console.info("[notifications] local listeners attached");
   } catch (e) {
-    console.warn("[notifications] attach listeners failed", e);
+    console.warn("[notifications] attach local listeners failed", e);
   }
 }
 
@@ -64,6 +65,7 @@ export async function bootstrapNativeNotifications(): Promise<void> {
     if (isNative) {
       await ensureNotificationChannels();
       await attachLocalNotificationListeners();
+      // Remote push registration (APNs/FCM) — no-op when disabled / non-native.
       await maybeRegisterRemotePush();
       const pending = await import("@capacitor/local-notifications")
         .then(({ LocalNotifications }) => LocalNotifications.getPending())

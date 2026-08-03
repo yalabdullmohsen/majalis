@@ -223,7 +223,7 @@ html[data-theme="dark"] .mushaf-v2__sajda-mark {
 .mushaf-v2__sidebar-overlay {
   position: fixed;
   inset: 0;
-  z-index: 10000;
+  z-index: var(--z-overlay-drawer, 10040);
   background: rgba(0,0,0,.45);
   display: flex;
   justify-content: flex-end;

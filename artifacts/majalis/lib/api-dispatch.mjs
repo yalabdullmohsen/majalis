@@ -189,6 +189,8 @@ export const API_ROUTES = [
   { prefix: "/api/admin/ai-agents", module: "./api-handlers/admin/ai-agents.js", allowGet: true },
   { prefix: "/api/sitemap", module: "./api-handlers/sitemap.js", allowGet: true, exact: true },
   { prefix: "/api/feed", module: "./api-handlers/feed.js", allowGet: true, exact: true },
+  // تحديثات حية لتطبيق الآيفون — GET /api/updates → [{ id, title, content }]
+  { prefix: "/api/updates", module: "./api-handlers/updates.js", allowGet: true, exact: true },
   // SSR وقت الطلب لدروس Supabase الحيّة (لا مصدر ثابت لها وقت البناء، بخلاف
   // /scholars و/library). راجع /lessons/:id في vercel.json rewrites.
   // نُسجّل أيضاً البادئة العامة /lessons لأن x-vercel-original-path يبقى

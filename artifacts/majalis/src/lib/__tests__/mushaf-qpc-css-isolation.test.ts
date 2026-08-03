@@ -72,6 +72,8 @@ for (const c of mushafAyahClasses) {
 assert.match(mushafV2, /\.mf2-line\s*\{[\s\S]*?unicode-bidi:\s*isolate/, "mf2-line يعزل bidi");
 assert.match(mushafV2, /\.mf2-word\s*\{[\s\S]*?unicode-bidi:\s*isolate/, "mf2-word يعزل bidi");
 assert.match(pageComp, /unicodeBidi:\s*["']isolate["']/, "MushafPageV2 يضبط isolate inline");
+assert.match(pageComp, /textQpcHafs/, "مسار Unicode الآمن يستخدم textQpcHafs لا glyph عند الفشل");
+assert.match(pageComp, /pageFont\.failed/, "فشل خط الصفحة يفعّل التراجع");
 
 assert.match(viewSrc, /qs-mushaf-body--ayah/);
 assert.match(dataLoader, /code_v2/, "التحميل يعتمد code_v2 لا code_v1");

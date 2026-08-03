@@ -38,7 +38,7 @@ import { UpdateAvailableBanner } from "@/components/UpdateAvailableBanner";
 import { PwaInstallBanner } from "@/components/PwaInstallBanner";
 import { setPrayerTimesCache } from "@/lib/lesson-time";
 import { recordNavigationVisit } from "@/lib/navigation-back";
-import { isImmersiveChromePath } from "@/lib/immersive-chrome";
+import { isImmersiveChromePath, isPrayerTimesPath } from "@/lib/immersive-chrome";
 
 const lazy = lazyWithRetry;
 
@@ -465,7 +465,7 @@ function PrayerAlertSchedulerBootstrap() {
   return null;
 }
 
-/** قنوات + مستمعو النقر + إعادة جدولة الورد + سجلات APNs (معطّلة). */
+/** قنوات + مستمعو النقر + Remote Push (Capacitor) عند الغلاف الأصلي. */
 function NativeNotificationsBootstrap() {
   useEffect(() => {
     void import("@/lib/notifications/native-bootstrap").then(({ bootstrapNativeNotifications }) => {
@@ -780,6 +780,7 @@ function Router() {
       <Route path="/rulings"><SafeLazyRoute component={RulingsPage} /></Route>
       <Route path="/updates/auto/:slug"><SafeLazyRoute component={AutoContentDetailPage} /></Route>
       <Route path="/updates"><SafeLazyRoute component={UpdatesPage} /></Route>
+      <Route path="/whats-new"><Redirect to="/updates" /></Route>
       <Route path="/login"><SafeLazyRoute component={LoginPage} /></Route>
       <Route path="/register"><SafeLazyRoute component={RegisterPage} /></Route>
       <Route path="/auth/register"><Redirect to="/register" /></Route>
@@ -868,6 +869,12 @@ function AppShellInner() {
   const [comingSoonOpen, setComingSoonOpen] = useState(false);
   const [location] = useLocation();
   const immersive = isImmersiveChromePath(location);
+
+  useEffect(() => {
+    const onPrayer = isPrayerTimesPath(location);
+    document.documentElement.classList.toggle("pts-immersive", onPrayer);
+    return () => document.documentElement.classList.remove("pts-immersive");
+  }, [location]);
 
   useEffect(() => {
     const evtHandler = () => setSearchOpen(true);

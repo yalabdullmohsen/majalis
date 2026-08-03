@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import { evaluateEligibility, summarizeFiles } from "../eligibility.mjs";
 import { formatEligibilityReport, upsertReportBody } from "../report.mjs";
-import { parseGhPrChecksTsv } from "../checks.mjs";
+import { isIgnorablePreviewStatus, parseGhPrChecksTsv } from "../checks.mjs";
 import {
   MAX_FILES_FOR_AUTO_MERGE,
   REPORT_MARKER_BEGIN,
@@ -17,6 +17,12 @@ const greenChecks = [
   { name: "postgres-integration", state: "pass" },
 ];
 
+const contentFile = {
+  path: "artifacts/majalis/public/data/quiz/العقيدة-011.json",
+  additions: 2,
+  deletions: 1,
+};
+
 function base(over = {}) {
   return {
     isDraft: false,
@@ -26,21 +32,49 @@ function base(over = {}) {
     mergeable: "MERGEABLE",
     mergeStateStatus: "CLEAN",
     reviewDecision: "",
-    title: "fix: typo",
+    title: "content: دفعة اختبار آمنة",
     body: "",
     labels: ["content-safe"],
-    files: [{ path: "artifacts/majalis/src/pages/Home.tsx", additions: 2, deletions: 1 }],
+    files: [contentFile],
     checks: greenChecks,
     ...over,
   };
 }
 
 describe("safe-auto-merge eligibility", () => {
-  it("allows a small labeled content PR with green checks", () => {
+  it("allows a small labeled content-safe PR with quiz files and green checks", () => {
     const r = evaluateEligibility(base());
     assert.equal(r.eligible, true);
+    assert.equal(r.waiting, false);
     assert.equal(r.prType, "content-safe");
     assert.equal(r.blockers.length, 0);
+    assert.equal(r.willDeployProductionAfterMerge, true);
+  });
+
+  it("blocks majalis-content-fill automatic audit branch", () => {
+    const r = evaluateEligibility(
+      base({ headRefName: "majalis-content-fill", title: "content: from fill branch" }),
+    );
+    assert.equal(r.eligible, false);
+    assert.ok(r.blockers.some((b) => /majalis-content-fill|automatic content-audit branch/i.test(b)));
+  });
+
+  it("blocks automatic تدقيق محتوى titles", () => {
+    const r = evaluateEligibility(
+      base({ title: "تدقيق محتوى: ج-٤٩٢ — صيغ المراجع" }),
+    );
+    assert.equal(r.eligible, false);
+    assert.ok(r.blockers.some((b) => /automatic content-audit title/i.test(b)));
+  });
+
+  it("blocks content-safe PRs that touch non-content paths", () => {
+    const r = evaluateEligibility(
+      base({
+        files: [{ path: "artifacts/majalis/src/pages/Home.tsx", additions: 2, deletions: 1 }],
+      }),
+    );
+    assert.equal(r.eligible, false);
+    assert.ok(r.blockers.some((b) => /content-safe PR may only touch/i.test(b)));
   });
 
   it("requires a safe label", () => {
@@ -74,7 +108,7 @@ describe("safe-auto-merge eligibility", () => {
 
   it("blocks >40 files", () => {
     const files = Array.from({ length: MAX_FILES_FOR_AUTO_MERGE + 1 }, (_, i) => ({
-      path: `docs/a${i}.md`,
+      path: `artifacts/majalis/public/data/quiz/a${i}.json`,
       additions: 1,
       deletions: 0,
     }));
@@ -85,20 +119,23 @@ describe("safe-auto-merge eligibility", () => {
   it("blocks large deletions", () => {
     const r = evaluateEligibility(
       base({
-        files: [{ path: "docs/big.md", additions: 0, deletions: 500 }],
+        files: [{ path: "artifacts/majalis/data/needs-post-review.jsonl", additions: 0, deletions: 500 }],
       }),
     );
     assert.ok(r.blockers.some((b) => /large deletions/i.test(b)));
   });
 
-  it("blocks danger paths (workflows, ios, supabase, api, lockfile)", () => {
+  it("blocks danger paths (workflows, ios, supabase, api, lockfile, capacitor)", () => {
     for (const path of [
       ".github/workflows/ci.yml",
       "artifacts/majalis/ios/App/App/AppDelegate.swift",
+      "ios/App/AppDelegate.swift",
       "artifacts/majalis/capacitor.config.ts",
+      "artifacts/majalis/ios/App/App/capacitor.config.json",
       "artifacts/majalis/supabase/migrations/001.sql",
       "supabase/migrations/001.sql",
       "artifacts/majalis/api/index.js",
+      "api/index.js",
       "artifacts/majalis/lib/api-handlers/cron/job-worker.js",
       "artifacts/majalis/lib/security/ssrf.mjs",
       "artifacts/majalis/lib/auth/session.js",
@@ -109,7 +146,10 @@ describe("safe-auto-merge eligibility", () => {
       "artifacts/majalis/vercel.json",
     ]) {
       const r = evaluateEligibility(
-        base({ labels: ["safe:auto-merge", "code-safe"], files: [{ path, additions: 1, deletions: 0 }] }),
+        base({
+          labels: ["safe:auto-merge", "code-safe"],
+          files: [{ path, additions: 1, deletions: 0 }],
+        }),
       );
       assert.equal(r.eligible, false, path);
       assert.ok(
@@ -123,10 +163,20 @@ describe("safe-auto-merge eligibility", () => {
     }
   });
 
-  it("accepts new safe:* labels", () => {
+  it("accepts new safe:* labels on content paths", () => {
     const r = evaluateEligibility(base({ labels: ["safe:content"] }));
     assert.equal(r.eligible, true);
     assert.equal(r.prType, "safe:content");
+  });
+
+  it("allows code-safe non-content UI file when not content-labeled", () => {
+    const r = evaluateEligibility(
+      base({
+        labels: ["code-safe"],
+        files: [{ path: "artifacts/majalis/src/pages/Home.tsx", additions: 2, deletions: 1 }],
+      }),
+    );
+    assert.equal(r.eligible, true);
   });
 
   it("blocks risky:manual-review and blocked:danger-path labels", () => {
@@ -161,15 +211,50 @@ describe("safe-auto-merge eligibility", () => {
     assert.ok(r.blockers.some((b) => /release-train-ready/i.test(b)));
   });
 
-  it("blocks failed preview-smoke", () => {
+  it("blocks failed preview-smoke for non-content PRs", () => {
     const r = evaluateEligibility(
       base({
+        labels: ["code-safe"],
+        files: [{ path: "artifacts/majalis/src/pages/Home.tsx", additions: 1, deletions: 0 }],
         checks: greenChecks.map((c) =>
           c.name === "preview-smoke" ? { ...c, state: "fail" } : c,
         ),
       }),
     );
     assert.ok(r.blockers.some((b) => /preview-smoke/i.test(b)));
+  });
+
+  it("does not hard-block content-safe when Vercel Preview is Ignored/Canceled", () => {
+    const r = evaluateEligibility(
+      base({
+        strictVercel: true,
+        checks: greenChecks.map((c) =>
+          c.name === "Vercel – majalis-majalis"
+            ? {
+                name: c.name,
+                state: "canceled",
+                description: "Canceled by Ignored Build Step",
+              }
+            : c,
+        ),
+      }),
+    );
+    assert.equal(r.eligible, true, r.blockers.join("; "));
+    assert.equal(r.vercelPreviewKind, "ignored");
+  });
+
+  it("waits (not hard-fail) when Verify build is pending", () => {
+    const r = evaluateEligibility(
+      base({
+        checks: greenChecks.map((c) =>
+          c.name === "Verify build" ? { ...c, state: "pending" } : c,
+        ),
+      }),
+    );
+    assert.equal(r.eligible, false);
+    assert.equal(r.waiting, true);
+    assert.equal(r.needsManualReview, false);
+    assert.ok(r.waitBlockers.some((b) => /Verify build/i.test(b)));
   });
 
   it("blocks auth/security path cues", () => {
@@ -184,31 +269,57 @@ describe("safe-auto-merge eligibility", () => {
 
   it("supports all SAFE_LABELS as prType", () => {
     for (const label of SAFE_LABELS) {
-      const r = evaluateEligibility(base({ labels: [label] }));
+      const r = evaluateEligibility(
+        base({
+          labels: [label],
+          files:
+            label === "content-safe" || label === "safe:content"
+              ? [contentFile]
+              : [{ path: "docs/note.md", additions: 1, deletions: 0 }],
+        }),
+      );
       assert.equal(r.prType, label);
     }
   });
 });
 
 describe("checks + report", () => {
-  it("parses gh pr checks TSV", () => {
+  it("parses gh pr checks TSV including Ignored description", () => {
     const rows = parseGhPrChecksTsv(
-      "Verify build\tpass\t1m\thttps://x\t\npreview-smoke\tpending\t\thttps://y\t",
+      "Verify build\tpass\t1m\thttps://x\t\nVercel – majalis-majalis\tcanceled\t0\thttps://y\tCanceled by Ignored Build Step\n",
     );
     assert.equal(rows.length, 2);
-    assert.equal(rows[0].name, "Verify build");
-    assert.equal(rows[1].state, "pending");
+    assert.equal(rows[1].name, "Vercel – majalis-majalis");
+    assert.equal(rows[1].state, "canceled");
+    assert.ok(isIgnorablePreviewStatus(rows[1]));
   });
 
-  it("formats and upserts report markers", () => {
-    const result = evaluateEligibility(base());
+  it("formats report with Vercel ignore + production deploy lines", () => {
+    const result = evaluateEligibility(
+      base({
+        checks: greenChecks.map((c) =>
+          c.name === "Vercel – majalis-majalis"
+            ? {
+                name: c.name,
+                state: "canceled",
+                description: "Canceled by Ignored Build Step",
+              }
+            : c,
+        ),
+      }),
+    );
     const md = formatEligibilityReport(result, { prNumber: 1, headSha: "abc" });
     assert.ok(md.includes(REPORT_MARKER_BEGIN));
-    assert.ok(md.includes("مؤهل") || md.includes("غير مؤهل"));
-    const next = upsertReportBody(`hello\n${md}\n`, formatEligibilityReport(
-      evaluateEligibility(base({ labels: [] })),
-      { prNumber: 1, headSha: "def" },
-    ));
+    assert.ok(md.includes("مؤهل") || md.includes("بانتظار") || md.includes("غير مؤهل"));
+    assert.ok(md.includes("تجاهُل") || md.includes("Ignored") || md.includes("Production"));
+    assert.ok(md.includes("majalis-majalis") || md.includes("Production"));
+    const next = upsertReportBody(
+      `hello\n${md}\n`,
+      formatEligibilityReport(evaluateEligibility(base({ labels: [] })), {
+        prNumber: 1,
+        headSha: "def",
+      }),
+    );
     assert.ok(next.includes("missing safe label") || next.includes("غير مؤهل"));
     assert.equal(next.indexOf(REPORT_MARKER_BEGIN), next.lastIndexOf(REPORT_MARKER_BEGIN));
   });

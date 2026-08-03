@@ -6,26 +6,44 @@
    بطء/انقطاع الشبكة، هذا يعني سقوطًا فعليًا لخط بديل لا يدعم رموز الرسم
    العثماني (كالحروف المقطّعة "الٓمٓ") بشكل صحيح — نص قرآني مشوَّه ولو
    للحظة. الحل: نفس ملف الخط بالضبط (Amiri Quran العادي، النطاق العربي)
-   مُستضاف محليًا في public/fonts/amiri-quran/، بـfont-display:block
-   (يمنع أي ظهور لخط بديل قبل اكتمال التحميل — لا FOUT للقرآن إطلاقًا)
-   وpreload في index.html. مُعرَّف هنا (لا في quran.css) لأنه يُستخدَم من
+   مُستضاف محليًا في public/fonts/amiri-quran/، مع preload في index.html
+   وfont-display:swap. مُعرَّف هنا (لا في quran.css) لأنه يُستخدَم من
    ملفات غير مرتبطة بالمصحف مباشرة (elite-2026.css، majalis-v2.css...). */
 @font-face {
   font-family: "Amiri Quran";
   font-style: normal;
   font-weight: 400;
-  font-display: block;
+  /* swap + preload في index.html: يظهر النص فورًا بخط نظام ثم يستبدل —
+     أفضل من block الذي كان يؤخّر الرسم على الشبكات البطيئة. خطوط QPC
+     للصفحة تبقى display:block داخل useMushafPageFont. */
+  font-display: swap;
   src: url("/fonts/amiri-quran/AmiriQuran-Regular.woff2") format("woff2");
   unicode-range: U+0600-06FF, U+0750-077F, U+0870-088E, U+0890-0891, U+0897-08E1, U+08E3-08FF, U+200C-200E, U+2010-2011, U+204F, U+2E41, U+FB50-FDFF, U+FE70-FE74, U+FE76-FEFC;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
+/* غلاف iOS / Capacitor: يملأ الشاشة ويحترم النوتش وشريط Home Indicator
+   عبر env(safe-area-inset-*) مع viewport-fit=cover. الكروم الثابت
+   (navbar / bottom-nav) يُرسَم داخل الحافة الآمنة دون حشو مزدوج — انظر
+   final-release.css بعد ترحيل الحشو إلى html/body. */
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  padding-left: env(safe-area-inset-left);
+  padding-right: env(safe-area-inset-right);
+  -webkit-text-size-adjust: 100%;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  box-sizing: border-box;
+}
+
 html {
   font-size: 16px;
-  /* يسمح لـ Dynamic Type على iOS بتكبير النص بدل تثبيته عند 100% */
-  -webkit-text-size-adjust: auto;
-  text-size-adjust: auto;
+  text-size-adjust: 100%;
   overflow-x: hidden;
 }
 
@@ -239,7 +257,9 @@ html {
         كاملة (تنقل، أزرار، قوائم، نصوص، عناوين، قراءة) — Alexandria، ببديل احتياطي
         IBM Plex Sans Arabic / Noto Sans Arabic لو تعذّر تحميل Alexandria.
      2) --font-heritage: عناوين تراثية محدودة فقط (لا نصوص طويلة) — Amiri.
-     3) --font-quran: المصحف حصرًا — خط عثماني موثق (Amiri Quran). لا يتغيّر أبدًا. */
+     3) --font-quran: المصحف حصرًا — خط عثماني موثق (Amiri Quran). لا يتغيّر أبدًا.
+     4) --font-tafsir: نصوص التفسير — Amiri / Noto Naskh للقراءة الطويلة.
+     5) --font-nav: قوائم المزيد/الدرج/الشريط — Cairo/Tajawal لواجهة حديثة نظيفة. */
   --font-primary:  "Alexandria", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, -apple-system, sans-serif;
   --font-ui:       "Alexandria", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, -apple-system, sans-serif;
   --font-body:     "Alexandria", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, -apple-system, sans-serif;
@@ -248,6 +268,16 @@ html {
   --font-quran:    "Amiri Quran", "Scheherazade New", "KFGQPC Hafs Uthmanic", serif;
   /* خط تراثي للعناوين البارزة فقط (لا يُستخدَم في النصوص الطويلة أو الفقرات) */
   --font-heritage: "Amiri", "Aref Ruqaa", "Scheherazade New", serif;
+  --font-tafsir:   "Amiri", "Noto Naskh Arabic", "Traditional Arabic", "Scheherazade New", serif;
+  --font-nav:      "Cairo", "Tajawal", "Alexandria", "IBM Plex Sans Arabic", system-ui, sans-serif;
+
+  /* ── ترتيب الطبقات — سلّم موحَّد يمنع تداخل البحث/الدرج/الهيدر ──
+     القيم العددية أعلى من --z-* القديمة عمدًا لأن بعض الطبقات legacy
+     (navbar 9999، overlays 10000) ما زالت حرفيًا في ملفات أخرى. */
+  --z-overlay-drawer: 10040;
+  --z-overlay-search: 10060;
+  --z-overlay-sheet:  10050;
+  --z-overlay-toast:  10070;
 
   /* ── الحركة — تلاشٍ وهبوط (لا ارتداد) ── */
   --motion-fast:   120ms ease-out;
@@ -4623,11 +4653,11 @@ html[data-theme="dark"] .search-suggestions-panel {
 }
 
 .navbar-v3 {
-  position: sticky;
-  top: 0;
+  position: relative;
+  top: auto;
   z-index: 9999;
   isolation: isolate;
-  transform: translateZ(0);
+  transform: none;
 }
 
 .navbar-v3--menu-open {
@@ -4865,7 +4895,7 @@ body.navbar-more-open .navbar-v3 { z-index: 60; }
 .mobile-nav-layer {
   position: fixed;
   inset: 0;
-  z-index: 10000;
+  z-index: var(--z-overlay-drawer, 10040);
   pointer-events: auto;
   -webkit-tap-highlight-color: transparent;
 }
@@ -7642,7 +7672,7 @@ body.has-assistant-fab .app-main {
 .bottom-sheet-overlay {
   position: fixed;
   inset: 0;
-  z-index: var(--z-modal, 400);
+  z-index: var(--z-overlay-sheet, 10050);
   display: flex;
   align-items: flex-end;
   background: rgba(11, 20, 15, 0.55);
@@ -8441,12 +8471,10 @@ html[data-theme="dark"] .skeleton-base {
   background-size: 200% 100%;
 }
 
-/* ── خط واجهة التطبيق والقوائم (SF Arabic على Apple) ──────────────────────
+/* ── خط واجهة التطبيق والقوائم (Cairo/Tajawal على قوائم المزيد والتنقّل) ──
    يُطبَّق حصرًا على عناصر تنقّل/قوائم الواجهة (الهيدر، الشريط السفلي، القائمة
-   الجانبية، ورقة "المزيد")، لا على نصوص المحتوى (تبقى IBM Plex Sans Arabic
-   عبر --font-body/--font-reading). !important ضروري هنا لأن .navbar-v3
-   و.bottom-nav--v2 و.side-nav-drawer معرَّفة بتكرار عبر عدة ملفات CSS
-   لاحقة التحميل (elite-2026.css، majalis-v2.css، modern-2026.css). */
+   الجانبية، ورقة "المزيد")، لا على نصوص المحتوى (--font-body/--font-reading)
+   ولا على التفسير (--font-tafsir) ولا المصحف (--font-quran). */
 .navbar-v3,
 .bottom-nav,
 .bottom-nav--v2,
@@ -8454,7 +8482,8 @@ html[data-theme="dark"] .skeleton-base {
 .side-nav-drawer--v2,
 .bottom-sheet,
 [class*="more-sheet"] {
-  font-family: var(--font-ui) !important;
+  font-family: var(--font-nav, var(--font-ui)) !important;
+  line-height: 1.55;
 }
 
 /* وسم ظاهر للسجلات بلا تخريج — المرحلة 8 */

@@ -1,0 +1,70 @@
+name: Tasmee3 CI
+
+on:
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - "artifacts/mushafi/**"
+      - ".github/workflows/tasmee3_ci.yml"
+  pull_request:
+    paths:
+      - "artifacts/mushafi/**"
+      - ".github/workflows/tasmee3_ci.yml"
+
+jobs:
+  flutter:
+    name: Flutter Analyze and Tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: artifacts/mushafi
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          # Pin to the SDK used for local release checks (avoid CI-only deprecations on newer stables).
+          flutter-version: "3.32.8"
+          channel: stable
+
+      - name: Flutter Pub Get
+        run: flutter pub get
+
+      - name: Flutter Analyze
+        run: flutter analyze
+
+      - name: Flutter Test
+        run: flutter test
+
+  backend:
+    name: Backend Tests
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: artifacts/mushafi/server/tasmee3_asr
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install ffmpeg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+
+      - name: Install test dependencies
+        run: pip install -r requirements-test.txt
+
+      - name: Run tests
+        run: python -m pytest tests -q
