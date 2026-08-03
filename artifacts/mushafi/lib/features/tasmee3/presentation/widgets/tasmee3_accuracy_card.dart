@@ -65,10 +65,18 @@ class Tasmee3AccuracyCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'عدد الأخطاء: ${result.mistakesCount}',
+                  'أخطاء ظاهرة: ${result.mistakesCount}',
                   style: const TextStyle(
                     color: Color(0xFF9A8068),
                     fontSize: 15,
+                  ),
+                ),
+                const SizedBox(height: 2),
+                Text(
+                  'دقة تقريبية: $percent%',
+                  style: const TextStyle(
+                    color: Color(0xFF9A8068),
+                    fontSize: 13,
                   ),
                 ),
                 if (result.hasLowConfidence) ...[

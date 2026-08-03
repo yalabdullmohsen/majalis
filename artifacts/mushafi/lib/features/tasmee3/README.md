@@ -607,3 +607,24 @@ flutter test
 cd server/tasmee3_asr
 python -m pytest tests -q
 ```
+
+## البرومبت السادس والعشرون - مراجعة UI/UX النهائية
+
+تمت إضافة:
+
+- Design Tokens.
+- Widgets موحدة:
+  - Tasmee3AppScaffold
+  - Tasmee3EmptyState
+  - Tasmee3ErrorState
+  - Tasmee3LoadingState
+  - Tasmee3PrimaryButton
+- Onboarding لأول استخدام.
+- Entry Screen للتسميع.
+- تحسين النصوص العربية.
+- تحسين الخصوصية قبل أول تسميع.
+- UX Copy Guide.
+
+## الهدف
+
+تقديم تجربة أبسط وأكثر اطمئنانا للمستخدم قبل الإطلاق.

@@ -3,6 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../application/tasmee3_providers.dart';
 import '../domain/tasmee3_review_plan_item.dart';
+import 'widgets/tasmee3_empty_state.dart';
+import 'widgets/tasmee3_error_state.dart';
+import 'widgets/tasmee3_loading_state.dart';
 
 class Tasmee3ReviewPlanScreen extends ConsumerWidget {
   const Tasmee3ReviewPlanScreen({super.key});
@@ -23,31 +26,20 @@ class Tasmee3ReviewPlanScreen extends ConsumerWidget {
           elevation: 0,
         ),
         body: plan.when(
-          loading: () => const Center(child: CircularProgressIndicator()),
-          error: (error, stackTrace) => Center(
-            child: Padding(
-              padding: const EdgeInsets.all(24),
-              child: Text(
-                error.toString(),
-                textAlign: TextAlign.center,
-                style: const TextStyle(color: Colors.red),
-              ),
-            ),
+          loading: () => const Tasmee3LoadingState(
+            message: 'جاري تجهيز خطة المراجعة...',
+          ),
+          error: (error, stackTrace) => Tasmee3ErrorState(
+            message: 'تعذر تحميل خطة المراجعة.',
+            onRetry: () => ref.invalidate(tasmee3ReviewPlanProvider),
           ),
           data: (items) {
             if (items.isEmpty) {
-              return const Center(
-                child: Padding(
-                  padding: EdgeInsets.all(24),
-                  child: Text(
-                    'لا توجد مواضع مراجعة حاليا. أكمل بعض جلسات التسميع أولا.',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Color(0xFF9A8068),
-                      fontSize: 18,
-                    ),
-                  ),
-                ),
+              return const Tasmee3EmptyState(
+                icon: Icons.calendar_month_outlined,
+                title: 'لا مواضع مراجعة حاليا',
+                message:
+                    'أكمل بعض جلسات التسميع أولا ليبدأ التطبيق باقتراح مواضع تحتاج مراجعة.',
               );
             }
 

@@ -28,7 +28,7 @@ class Tasmee3MistakeReportSheet extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               const Text(
-                'تقرير الأخطاء',
+                'تقرير الأخطاء الظاهرة',
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,

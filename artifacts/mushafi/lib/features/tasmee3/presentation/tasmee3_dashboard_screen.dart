@@ -4,15 +4,19 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../application/tasmee3_providers.dart';
 import '../domain/recitation_target.dart';
 import '../domain/tasmee3_goal_progress.dart';
+import 'tasmee3_asr_settings_screen.dart';
 import 'tasmee3_badges_screen.dart';
+import 'tasmee3_design_tokens.dart';
 import 'tasmee3_goal_settings_screen.dart';
 import 'tasmee3_history_screen.dart';
+import 'tasmee3_privacy_screen.dart';
 import 'tasmee3_reminders_screen.dart';
 import 'tasmee3_review_plan_screen.dart';
 import 'tasmee3_screen.dart';
 import 'tasmee3_today_review_screen.dart';
+import 'widgets/tasmee3_error_state.dart';
 import 'widgets/tasmee3_goal_progress_card.dart';
-import 'widgets/tasmee3_today_review_card.dart';
+import 'widgets/tasmee3_loading_state.dart';
 import 'widgets/tasmee3_week_stats_card.dart';
 
 class Tasmee3DashboardScreen extends ConsumerWidget {
@@ -31,22 +35,22 @@ class Tasmee3DashboardScreen extends ConsumerWidget {
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Scaffold(
-        backgroundColor: const Color(0xFFFBF7EF),
+        backgroundColor: Tasmee3Colors.background,
         appBar: AppBar(
           title: const Text('لوحة التسميع'),
           centerTitle: true,
-          backgroundColor: const Color(0xFFFBF7EF),
-          foregroundColor: const Color(0xFF11100E),
+          backgroundColor: Tasmee3Colors.background,
+          foregroundColor: Tasmee3Colors.text,
           elevation: 0,
           actions: [
             IconButton(
-              tooltip: 'إعدادات الهدف',
-              icon: const Icon(Icons.track_changes),
+              tooltip: 'إعدادات محرك التسميع',
+              icon: const Icon(Icons.settings_outlined),
               onPressed: () {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => const Tasmee3GoalSettingsScreen(),
+                    builder: (_) => const Tasmee3AsrSettingsScreen(),
                   ),
                 );
               },
@@ -54,14 +58,29 @@ class Tasmee3DashboardScreen extends ConsumerWidget {
           ],
         ),
         body: ListView(
-          padding: const EdgeInsets.all(16),
+          padding: const EdgeInsets.all(Tasmee3Spacing.lg),
           children: [
-            _heroCard(context),
-            const SizedBox(height: 14),
+            history.when(
+              loading: () => _heroCard(context, hasSessions: true),
+              error: (_, __) => _heroCard(context, hasSessions: true),
+              data: (sessions) =>
+                  _heroCard(context, hasSessions: sessions.isNotEmpty),
+            ),
+            const SizedBox(height: Tasmee3Spacing.md),
             goalProgress.when(
               loading: () => const SizedBox.shrink(),
-              error: (error, stackTrace) => _errorCard(error.toString()),
-              data: (progress) => Tasmee3GoalProgressCard(progress: progress),
+              error: (error, stackTrace) =>
+                  Tasmee3ErrorState(message: error.toString()),
+              data: (progress) => Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  Tasmee3GoalProgressCard(progress: progress),
+                  if (progress.completed) ...[
+                    const SizedBox(height: Tasmee3Spacing.sm),
+                    _goalCompletedBanner(),
+                  ],
+                ],
+              ),
             ),
             dailyGoal.maybeWhen(
               data: (goal) {
@@ -70,37 +89,22 @@ class Tasmee3DashboardScreen extends ConsumerWidget {
                 }
 
                 return Padding(
-                  padding: const EdgeInsets.only(top: 14),
+                  padding: const EdgeInsets.only(top: Tasmee3Spacing.md),
                   child: _reminderCard(goal.reminderTime, goalProgress),
                 );
               },
               orElse: () => const SizedBox.shrink(),
             ),
-            const SizedBox(height: 14),
+            const SizedBox(height: Tasmee3Spacing.md),
             streak.when(
               loading: () => const SizedBox.shrink(),
-              error: (error, stackTrace) => _errorCard(error.toString()),
+              error: (error, stackTrace) =>
+                  Tasmee3ErrorState(message: error.toString()),
               data: (value) => _streakCard(value),
             ),
-            const SizedBox(height: 14),
             todayReview.when(
               loading: () => const SizedBox.shrink(),
-              error: (error, stackTrace) => _errorCard(error.toString()),
-              data: (items) => Tasmee3TodayReviewCard(
-                suggestions: items,
-                onOpen: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const Tasmee3TodayReviewScreen(),
-                    ),
-                  );
-                },
-              ),
-            ),
-            todayReview.when(
-              loading: () => const SizedBox.shrink(),
-              error: (error, stackTrace) => const SizedBox.shrink(),
+              error: (_, __) => const SizedBox.shrink(),
               data: (items) {
                 if (items.isEmpty) {
                   return const SizedBox.shrink();
@@ -109,35 +113,29 @@ class Tasmee3DashboardScreen extends ConsumerWidget {
                 final first = items.first;
 
                 return Container(
-                  margin: const EdgeInsets.only(top: 10),
-                  padding: const EdgeInsets.all(16),
+                  margin: const EdgeInsets.only(top: Tasmee3Spacing.md),
+                  padding: const EdgeInsets.all(Tasmee3Spacing.lg),
                   decoration: BoxDecoration(
-                    color: const Color(0xFFFFFCF7),
-                    borderRadius: BorderRadius.circular(18),
-                    border: Border.all(color: const Color(0xFFE0C5A3)),
+                    color: Tasmee3Colors.surface,
+                    borderRadius: BorderRadius.circular(Tasmee3Radius.lg),
+                    border: Border.all(color: Tasmee3Colors.border),
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       const Text(
                         'المراجعة المقترحة الآن',
-                        style: TextStyle(
-                          color: Color(0xFF11100E),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 17,
-                        ),
+                        style: Tasmee3TextStyles.sectionTitle,
                       ),
-                      const SizedBox(height: 6),
+                      const SizedBox(height: Tasmee3Spacing.sm),
                       Text(
                         first.rangeLabel,
-                        style: const TextStyle(
-                          color: Color(0xFF9A8068),
-                        ),
+                        style: Tasmee3TextStyles.secondary,
                       ),
-                      const SizedBox(height: 12),
+                      const SizedBox(height: Tasmee3Spacing.md),
                       ElevatedButton.icon(
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xFFA77A48),
+                          backgroundColor: Tasmee3Colors.primary,
                           foregroundColor: Colors.white,
                         ),
                         onPressed: () {
@@ -168,16 +166,20 @@ class Tasmee3DashboardScreen extends ConsumerWidget {
                 );
               },
             ),
-            const SizedBox(height: 14),
+            const SizedBox(height: Tasmee3Spacing.md),
             stats.when(
-              loading: () => const Center(child: CircularProgressIndicator()),
-              error: (error, stackTrace) => _errorCard(error.toString()),
+              loading: () => const Tasmee3LoadingState(
+                message: 'جاري تحميل الإحصاءات...',
+              ),
+              error: (error, stackTrace) =>
+                  Tasmee3ErrorState(message: error.toString()),
               data: (items) => Tasmee3WeekStatsCard(stats: items),
             ),
-            const SizedBox(height: 14),
+            const SizedBox(height: Tasmee3Spacing.md),
             history.when(
               loading: () => const SizedBox.shrink(),
-              error: (error, stackTrace) => _errorCard(error.toString()),
+              error: (error, stackTrace) =>
+                  Tasmee3ErrorState(message: error.toString()),
               data: (sessions) {
                 final total = sessions.length;
                 final avg = sessions.isEmpty
@@ -194,16 +196,45 @@ class Tasmee3DashboardScreen extends ConsumerWidget {
                 );
               },
             ),
-            const SizedBox(height: 14),
+            const SizedBox(height: Tasmee3Spacing.md),
             reviewPlan.when(
               loading: () => const SizedBox.shrink(),
-              error: (error, stackTrace) => _errorCard(error.toString()),
+              error: (error, stackTrace) =>
+                  Tasmee3ErrorState(message: error.toString()),
               data: (items) => _reviewPlanPreview(context, items.length),
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: Tasmee3Spacing.lg),
             _quickActions(context),
           ],
         ),
+      ),
+    );
+  }
+
+  Widget _goalCompletedBanner() {
+    return Container(
+      padding: const EdgeInsets.all(Tasmee3Spacing.md),
+      decoration: BoxDecoration(
+        color: Tasmee3Colors.success.withValues(alpha: 0.08),
+        borderRadius: BorderRadius.circular(Tasmee3Radius.md),
+        border: Border.all(
+          color: Tasmee3Colors.success.withValues(alpha: 0.25),
+        ),
+      ),
+      child: const Row(
+        children: [
+          Icon(Icons.check_circle_outline, color: Tasmee3Colors.success),
+          SizedBox(width: Tasmee3Spacing.sm),
+          Expanded(
+            child: Text(
+              'أحسنت! اكتمل هدفك اليومي. يمكنك مواصلة التسميع للمراجعة.',
+              style: TextStyle(
+                color: Tasmee3Colors.text,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -225,19 +256,21 @@ class Tasmee3DashboardScreen extends ConsumerWidget {
       padding: const EdgeInsets.all(14),
       decoration: BoxDecoration(
         color: const Color(0xFFFFF8EE),
-        borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: const Color(0xFFE0C5A3)),
+        borderRadius: BorderRadius.circular(Tasmee3Radius.md),
+        border: Border.all(color: Tasmee3Colors.border),
       ),
       child: Row(
         children: [
-          const Icon(Icons.notifications_active_outlined,
-              color: Color(0xFFA77A48)),
+          const Icon(
+            Icons.notifications_active_outlined,
+            color: Tasmee3Colors.primary,
+          ),
           const SizedBox(width: 10),
           Expanded(
             child: Text(
               'تذكير التسميع مفعّل عند $time. لم يكتمل هدف اليوم بعد.',
               style: const TextStyle(
-                color: Color(0xFF11100E),
+                color: Tasmee3Colors.text,
                 fontWeight: FontWeight.w600,
               ),
             ),
@@ -247,37 +280,32 @@ class Tasmee3DashboardScreen extends ConsumerWidget {
     );
   }
 
-  Widget _heroCard(BuildContext context) {
+  Widget _heroCard(BuildContext context, {required bool hasSessions}) {
     return Container(
       padding: const EdgeInsets.all(18),
       decoration: BoxDecoration(
-        color: const Color(0xFFFFFCF7),
-        borderRadius: BorderRadius.circular(22),
-        border: Border.all(color: const Color(0xFFE0C5A3)),
+        color: Tasmee3Colors.surface,
+        borderRadius: BorderRadius.circular(Tasmee3Radius.xl),
+        border: Border.all(color: Tasmee3Colors.border),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const Text(
-            'مراجعة حفظك بذكاء وهدوء',
-            style: TextStyle(
-              fontSize: 22,
-              fontWeight: FontWeight.bold,
-              color: Color(0xFF11100E),
-            ),
+          Text(
+            hasSessions ? 'مراجعة حفظك بهدوء' : 'ابدأ أول جلسة تسميع',
+            style: Tasmee3TextStyles.title,
           ),
-          const SizedBox(height: 8),
-          const Text(
-            'ابدأ جلسة تسميع قصيرة، ثم راجع الأخطاء ومواضع الضعف.',
-            style: TextStyle(
-              color: Color(0xFF9A8068),
-              height: 1.5,
-            ),
+          const SizedBox(height: Tasmee3Spacing.sm),
+          Text(
+            hasSessions
+                ? 'جلسة قصيرة تساعدك على مراجعة الحفظ ومواضع تحتاج متابعة.'
+                : 'اختر سورة ونطاقا قصيرا، ثم ابدأ التسميع بصوت واضح.',
+            style: Tasmee3TextStyles.secondary,
           ),
-          const SizedBox(height: 14),
+          const SizedBox(height: Tasmee3Spacing.md),
           ElevatedButton.icon(
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFFA77A48),
+              backgroundColor: Tasmee3Colors.primary,
               foregroundColor: Colors.white,
               padding: const EdgeInsets.symmetric(vertical: 14),
             ),
@@ -288,7 +316,7 @@ class Tasmee3DashboardScreen extends ConsumerWidget {
               );
             },
             icon: const Icon(Icons.mic),
-            label: const Text('ابدأ تسميع جديد'),
+            label: Text(hasSessions ? 'ابدأ تسميع جديد' : 'ابدأ أول جلسة'),
           ),
         ],
       ),
@@ -297,27 +325,27 @@ class Tasmee3DashboardScreen extends ConsumerWidget {
 
   Widget _streakCard(int streak) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(Tasmee3Spacing.lg),
       decoration: BoxDecoration(
-        color: const Color(0xFFFFFCF7),
-        borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: const Color(0xFFE0C5A3)),
+        color: Tasmee3Colors.surface,
+        borderRadius: BorderRadius.circular(Tasmee3Radius.lg),
+        border: Border.all(color: Tasmee3Colors.border),
       ),
       child: Row(
         children: [
           const Icon(
             Icons.local_fire_department_outlined,
-            color: Color(0xFFA77A48),
+            color: Tasmee3Colors.primary,
             size: 34,
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: Tasmee3Spacing.md),
           Expanded(
             child: Text(
               streak == 0
                   ? 'ابدأ اليوم لبناء سلسلة التسميع.'
                   : 'سلسلة التسميع الحالية: $streak يوم',
               style: const TextStyle(
-                color: Color(0xFF11100E),
+                color: Tasmee3Colors.text,
                 fontWeight: FontWeight.bold,
                 fontSize: 16,
               ),
@@ -333,11 +361,11 @@ class Tasmee3DashboardScreen extends ConsumerWidget {
     required int averageAccuracy,
   }) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(Tasmee3Spacing.lg),
       decoration: BoxDecoration(
-        color: const Color(0xFFFFFCF7),
-        borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: const Color(0xFFE0C5A3)),
+        color: Tasmee3Colors.surface,
+        borderRadius: BorderRadius.circular(Tasmee3Radius.lg),
+        border: Border.all(color: Tasmee3Colors.border),
       ),
       child: Row(
         children: [
@@ -349,7 +377,7 @@ class Tasmee3DashboardScreen extends ConsumerWidget {
           ),
           Expanded(
             child: _numberTile(
-              title: 'متوسط الدقة',
+              title: 'متوسط الدقة التقريبية',
               value: '$averageAccuracy%',
             ),
           ),
@@ -369,15 +397,14 @@ class Tasmee3DashboardScreen extends ConsumerWidget {
           style: const TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
-            color: Color(0xFFA77A48),
+            color: Tasmee3Colors.primary,
           ),
         ),
         const SizedBox(height: 4),
         Text(
           title,
-          style: const TextStyle(
-            color: Color(0xFF9A8068),
-          ),
+          textAlign: TextAlign.center,
+          style: Tasmee3TextStyles.secondary,
         ),
       ],
     );
@@ -385,19 +412,19 @@ class Tasmee3DashboardScreen extends ConsumerWidget {
 
   Widget _reviewPlanPreview(BuildContext context, int count) {
     return Container(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(Tasmee3Spacing.lg),
       decoration: BoxDecoration(
-        color: const Color(0xFFFFFCF7),
-        borderRadius: BorderRadius.circular(18),
-        border: Border.all(color: const Color(0xFFE0C5A3)),
+        color: Tasmee3Colors.surface,
+        borderRadius: BorderRadius.circular(Tasmee3Radius.lg),
+        border: Border.all(color: Tasmee3Colors.border),
       ),
       child: Row(
         children: [
           const Icon(
             Icons.assignment_outlined,
-            color: Color(0xFFA77A48),
+            color: Tasmee3Colors.primary,
           ),
-          const SizedBox(width: 12),
+          const SizedBox(width: Tasmee3Spacing.md),
           Expanded(
             child: Text(
               count == 0
@@ -405,7 +432,7 @@ class Tasmee3DashboardScreen extends ConsumerWidget {
                   : 'خطة الأسبوع: $count موضعا مقترحا للمراجعة.',
               style: const TextStyle(
                 fontWeight: FontWeight.w600,
-                color: Color(0xFF11100E),
+                color: Tasmee3Colors.text,
               ),
             ),
           ),
@@ -426,128 +453,105 @@ class Tasmee3DashboardScreen extends ConsumerWidget {
   }
 
   Widget _quickActions(BuildContext context) {
+    Widget action({
+      required IconData icon,
+      required String label,
+      required Widget screen,
+    }) {
+      return Expanded(
+        child: OutlinedButton.icon(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (_) => screen),
+            );
+          },
+          icon: Icon(icon),
+          label: Text(label),
+        ),
+      );
+    }
+
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
+        const Text('اختصارات', style: Tasmee3TextStyles.sectionTitle),
+        const SizedBox(height: Tasmee3Spacing.sm),
         Row(
           children: [
             Expanded(
-              child: OutlinedButton.icon(
+              child: ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Tasmee3Colors.primary,
+                  foregroundColor: Colors.white,
+                ),
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(
-                      builder: (_) => const Tasmee3HistoryScreen(),
-                    ),
+                    MaterialPageRoute(builder: (_) => const Tasmee3Screen()),
                   );
                 },
-                icon: const Icon(Icons.history),
-                label: const Text('السجل'),
+                icon: const Icon(Icons.mic),
+                label: const Text('ابدأ تسميع'),
               ),
             ),
             const SizedBox(width: 10),
-            Expanded(
-              child: OutlinedButton.icon(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const Tasmee3ReviewPlanScreen(),
-                    ),
-                  );
-                },
-                icon: const Icon(Icons.assignment_outlined),
-                label: const Text('خطة المراجعة'),
-              ),
+            action(
+              icon: Icons.auto_awesome,
+              label: 'مراجعة اليوم',
+              screen: const Tasmee3TodayReviewScreen(),
             ),
           ],
         ),
         const SizedBox(height: 10),
         Row(
           children: [
-            Expanded(
-              child: OutlinedButton.icon(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const Tasmee3GoalSettingsScreen(),
-                    ),
-                  );
-                },
-                icon: const Icon(Icons.track_changes),
-                label: const Text('الأهداف'),
-              ),
+            action(
+              icon: Icons.history,
+              label: 'السجل',
+              screen: const Tasmee3HistoryScreen(),
             ),
             const SizedBox(width: 10),
-            Expanded(
-              child: OutlinedButton.icon(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const Tasmee3BadgesScreen(),
-                    ),
-                  );
-                },
-                icon: const Icon(Icons.workspace_premium_outlined),
-                label: const Text('الإنجازات'),
-              ),
+            action(
+              icon: Icons.track_changes,
+              label: 'الأهداف',
+              screen: const Tasmee3GoalSettingsScreen(),
             ),
           ],
         ),
         const SizedBox(height: 10),
         Row(
           children: [
-            Expanded(
-              child: OutlinedButton.icon(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const Tasmee3RemindersScreen(),
-                    ),
-                  );
-                },
-                icon: const Icon(Icons.notifications_active_outlined),
-                label: const Text('التذكيرات'),
-              ),
+            action(
+              icon: Icons.notifications_active_outlined,
+              label: 'التذكيرات',
+              screen: const Tasmee3RemindersScreen(),
+            ),
+            const SizedBox(width: 10),
+            action(
+              icon: Icons.settings_outlined,
+              label: 'الإعدادات',
+              screen: const Tasmee3AsrSettingsScreen(),
             ),
           ],
         ),
         const SizedBox(height: 10),
         Row(
           children: [
-            Expanded(
-              child: OutlinedButton.icon(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const Tasmee3TodayReviewScreen(),
-                    ),
-                  );
-                },
-                icon: const Icon(Icons.auto_awesome),
-                label: const Text('مراجعة اليوم'),
-              ),
+            action(
+              icon: Icons.privacy_tip_outlined,
+              label: 'الخصوصية',
+              screen: const Tasmee3PrivacyScreen(),
+            ),
+            const SizedBox(width: 10),
+            action(
+              icon: Icons.workspace_premium_outlined,
+              label: 'الإنجازات',
+              screen: const Tasmee3BadgesScreen(),
             ),
           ],
         ),
       ],
-    );
-  }
-
-  Widget _errorCard(String message) {
-    return Container(
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: Colors.red.withValues(alpha: 0.07),
-        borderRadius: BorderRadius.circular(14),
-      ),
-      child: Text(
-        message,
-        style: const TextStyle(color: Colors.red),
-      ),
     );
   }
 }

@@ -4,6 +4,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../application/tasmee3_providers.dart';
 import '../data/surah_catalog.dart';
 import '../domain/tasmee3_session_record.dart';
+import 'widgets/tasmee3_empty_state.dart';
+import 'widgets/tasmee3_error_state.dart';
+import 'widgets/tasmee3_loading_state.dart';
 
 class Tasmee3HistoryScreen extends ConsumerWidget {
   const Tasmee3HistoryScreen({super.key});
@@ -25,27 +28,19 @@ class Tasmee3HistoryScreen extends ConsumerWidget {
           elevation: 0,
         ),
         body: history.when(
-          loading: () => const Center(child: CircularProgressIndicator()),
-          error: (error, stackTrace) => Center(
-            child: Padding(
-              padding: const EdgeInsets.all(24),
-              child: Text(
-                error.toString(),
-                textAlign: TextAlign.center,
-                style: const TextStyle(color: Colors.red),
-              ),
-            ),
+          loading: () => const Tasmee3LoadingState(
+            message: 'جاري تحميل سجل التسميع...',
+          ),
+          error: (error, stackTrace) => Tasmee3ErrorState(
+            message: 'تعذر تحميل السجل. حاول مرة أخرى.',
+            onRetry: () => ref.invalidate(tasmee3SessionHistoryProvider),
           ),
           data: (sessions) {
             if (sessions.isEmpty) {
-              return const Center(
-                child: Text(
-                  'لا توجد جلسات تسميع محفوظة حتى الآن.',
-                  style: TextStyle(
-                    color: Color(0xFF9A8068),
-                    fontSize: 18,
-                  ),
-                ),
+              return const Tasmee3EmptyState(
+                icon: Icons.history,
+                title: 'لا توجد جلسات بعد',
+                message: 'ابدأ أول جلسة تسميع حتى يظهر سجلك هنا.',
               );
             }
 
@@ -105,7 +100,7 @@ class Tasmee3HistoryScreen extends ConsumerWidget {
                               ),
                               const SizedBox(height: 4),
                               Text(
-                                'الأخطاء: ${session.mistakesCount} | المدة: ${session.durationSeconds} ثانية',
+                                'أخطاء ظاهرة: ${session.mistakesCount} | المدة: ${session.durationSeconds} ثانية',
                                 style: const TextStyle(
                                   color: Color(0xFF9A8068),
                                 ),
@@ -164,7 +159,7 @@ class Tasmee3HistoryScreen extends ConsumerWidget {
           ),
           const SizedBox(height: 8),
           Text(
-            'متوسط الدقة: $avg% | آخر 5 جلسات: $recentAvg% | السلسلة: $streak يوم',
+            'متوسط الدقة التقريبية: $avg% | آخر 5 جلسات: $recentAvg% | السلسلة: $streak يوم',
             style: const TextStyle(
               color: Color(0xFF9A8068),
               height: 1.5,

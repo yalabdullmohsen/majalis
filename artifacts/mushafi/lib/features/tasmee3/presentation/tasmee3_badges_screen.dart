@@ -3,6 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../application/tasmee3_providers.dart';
 import '../domain/tasmee3_badge.dart';
+import 'widgets/tasmee3_empty_state.dart';
+import 'widgets/tasmee3_error_state.dart';
+import 'widgets/tasmee3_loading_state.dart';
 
 class Tasmee3BadgesScreen extends ConsumerWidget {
   const Tasmee3BadgesScreen({super.key});
@@ -23,14 +26,22 @@ class Tasmee3BadgesScreen extends ConsumerWidget {
           elevation: 0,
         ),
         body: badges.when(
-          loading: () => const Center(child: CircularProgressIndicator()),
-          error: (error, stackTrace) => Center(
-            child: Text(
-              error.toString(),
-              style: const TextStyle(color: Colors.red),
-            ),
+          loading: () => const Tasmee3LoadingState(
+            message: 'جاري تحميل الإنجازات...',
+          ),
+          error: (error, stackTrace) => Tasmee3ErrorState(
+            message: 'تعذر تحميل الإنجازات.',
+            onRetry: () => ref.invalidate(tasmee3BadgesProvider),
           ),
           data: (items) {
+            if (items.isEmpty) {
+              return const Tasmee3EmptyState(
+                icon: Icons.emoji_events_outlined,
+                title: 'لا إنجازات بعد',
+                message: 'أكمل جلسات تسميع منتظمة لتظهر إنجازاتك هنا.',
+              );
+            }
+
             return GridView.builder(
               padding: const EdgeInsets.all(16),
               itemCount: items.length,

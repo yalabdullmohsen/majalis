@@ -18,8 +18,10 @@ import '../data/speech_to_text_quran_recognizer.dart';
 import '../data/tasmee3_asr_settings_repository.dart';
 import '../data/tasmee3_failed_job_queue.dart';
 import '../data/tasmee3_goal_repository.dart';
+import '../data/local_tasmee3_onboarding_repository.dart';
 import '../data/local_tasmee3_reminder_repository.dart';
 import '../data/tasmee3_notification_service.dart';
+import '../data/tasmee3_onboarding_repository.dart';
 import '../data/tasmee3_reminder_repository.dart';
 import '../data/tasmee3_session_repository.dart';
 import '../domain/asr_connection_status.dart';
@@ -422,4 +424,14 @@ final tasmee3ControllerProvider =
       ref.invalidate(tasmee3NextRangeSuggestionProvider);
     },
   );
+});
+
+final tasmee3OnboardingRepositoryProvider =
+    Provider<Tasmee3OnboardingRepository>((ref) {
+  return LocalTasmee3OnboardingRepository();
+});
+
+final tasmee3HasSeenOnboardingProvider = FutureProvider<bool>((ref) async {
+  final repository = ref.watch(tasmee3OnboardingRepositoryProvider);
+  return repository.hasSeenOnboarding();
 });

@@ -109,99 +109,31 @@ class _Tasmee3AsrSettingsScreenState
             _section(
               title: 'الخادم المتقدم',
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
+                  const Text(
+                    'إذا لم تكن تعرف هذه الإعدادات، اتركها كما هي.',
+                    style: TextStyle(
+                      color: Color(0xFF9A8068),
+                      fontSize: 13,
+                      height: 1.5,
+                    ),
+                  ),
+                  const SizedBox(height: 12),
                   TextFormField(
                     controller: endpointController,
                     textDirection: TextDirection.ltr,
                     decoration: const InputDecoration(
-                      labelText: 'ASR Endpoint',
+                      labelText: 'Endpoint الرئيسي',
                       hintText: 'http://IP:8000/transcribe',
                       border: OutlineInputBorder(),
+                      helperText: 'ASR Endpoint',
                     ),
                     onChanged: (value) {
                       controller.updateSettings(
                         state.settings.copyWith(endpoint: value.trim()),
                       );
                     },
-                  ),
-                  const SizedBox(height: 12),
-                  TextFormField(
-                    controller: liveWsEndpointController,
-                    textDirection: TextDirection.ltr,
-                    decoration: const InputDecoration(
-                      labelText: 'Live WebSocket Endpoint اختياري',
-                      hintText: 'ws://IP:8000/ws/live',
-                      border: OutlineInputBorder(),
-                    ),
-                    onChanged: (value) {
-                      controller.updateSettings(
-                        state.settings.copyWith(
-                          liveWebSocketEndpoint: value.trim(),
-                        ),
-                      );
-                    },
-                  ),
-                  const SizedBox(height: 12),
-                  SwitchListTile(
-                    contentPadding: EdgeInsets.zero,
-                    value: state.settings.enableLiveWebSocket,
-                    title: const Text('تفعيل التسميع المباشر WebSocket'),
-                    subtitle: const Text(
-                      'ميزة تجريبية. إذا فشلت، استخدم الخادم العادي أو تعرف الجهاز.',
-                    ),
-                    onChanged: (value) {
-                      controller.updateSettings(
-                        state.settings.copyWith(enableLiveWebSocket: value),
-                      );
-                    },
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(top: 6),
-                    child: Text(
-                      'تنبيه: البث المباشر WebSocket ميزة متقدمة وتجريبية. للحصول على ثبات أعلى استخدم الخادم العادي إذا واجهت تقطع.',
-                      style: TextStyle(
-                        color: Colors.orange,
-                        fontSize: 13,
-                        height: 1.5,
-                      ),
-                    ),
-                  ),
-                  SwitchListTile(
-                    contentPadding: EdgeInsets.zero,
-                    value: state.settings.enableNativePcmStreaming,
-                    title: const Text('استخدام Native PCM Streaming'),
-                    subtitle: const Text(
-                      'تجريبي ومتقدم. يعطي بثا صوتيا أفضل إذا كان مدعوما على الجهاز.',
-                    ),
-                    onChanged: (value) {
-                      controller.updateSettings(
-                        state.settings.copyWith(
-                          enableNativePcmStreaming: value,
-                        ),
-                      );
-                    },
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(top: 6),
-                    child: Text(
-                      'إذا لم يعمل PCM Streaming على جهازك، عطله وسيستخدم التطبيق WebSocket chunks أو الخادم العادي.',
-                      style: TextStyle(
-                        color: Colors.orange,
-                        fontSize: 13,
-                        height: 1.5,
-                      ),
-                    ),
-                  ),
-                  const Padding(
-                    padding: EdgeInsets.only(top: 6),
-                    child: Text(
-                      'على iOS يتطلب PCM Streaming دعم AVAudioEngine. إذا لم يعمل، عطّل الخيار وسيستخدم التطبيق fallback تلقائيا.',
-                      style: TextStyle(
-                        color: Colors.orange,
-                        fontSize: 13,
-                        height: 1.5,
-                      ),
-                    ),
                   ),
                   const SizedBox(height: 12),
                   TextFormField(
@@ -233,6 +165,23 @@ class _Tasmee3AsrSettingsScreenState
                         ),
                       );
                     },
+                  ),
+                  Container(
+                    width: double.infinity,
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFFFF3E0),
+                      borderRadius: BorderRadius.circular(12),
+                      border: Border.all(color: Colors.orange.shade200),
+                    ),
+                    child: const Text(
+                      'تحذير الخصوصية: الصوت لا يُرسل للخادم إلا إذا فعّلت هذا الخيار واخترت الخادم المتقدم. لا يتم توليد النص القرآني بالذكاء الاصطناعي.',
+                      style: TextStyle(
+                        color: Color(0xFFE65100),
+                        fontSize: 13,
+                        height: 1.5,
+                      ),
+                    ),
                   ),
                   const SizedBox(height: 8),
                   _connectionCard(state.connectionStatus),
@@ -266,6 +215,98 @@ class _Tasmee3AsrSettingsScreenState
                                 )
                               : const Icon(Icons.wifi_tethering),
                           label: const Text('اختبار الاتصال'),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 8),
+                  ExpansionTile(
+                    tilePadding: EdgeInsets.zero,
+                    childrenPadding: EdgeInsets.zero,
+                    title: const Text(
+                      'إعدادات متقدمة',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                    subtitle: const Text(
+                      'التسميع المباشر وبث الصوت الأصلي — للمستخدمين المتقدمين',
+                    ),
+                    children: [
+                      TextFormField(
+                        controller: liveWsEndpointController,
+                        textDirection: TextDirection.ltr,
+                        decoration: const InputDecoration(
+                          labelText: 'Live WebSocket Endpoint اختياري',
+                          hintText: 'ws://IP:8000/ws/live',
+                          border: OutlineInputBorder(),
+                        ),
+                        onChanged: (value) {
+                          controller.updateSettings(
+                            state.settings.copyWith(
+                              liveWebSocketEndpoint: value.trim(),
+                            ),
+                          );
+                        },
+                      ),
+                      const SizedBox(height: 12),
+                      SwitchListTile(
+                        contentPadding: EdgeInsets.zero,
+                        value: state.settings.enableLiveWebSocket,
+                        title: const Text('تفعيل التسميع المباشر'),
+                        subtitle: const Text(
+                          'ميزة تجريبية. إذا فشلت، استخدم الخادم العادي أو تعرف الجهاز.',
+                        ),
+                        onChanged: (value) {
+                          controller.updateSettings(
+                            state.settings.copyWith(enableLiveWebSocket: value),
+                          );
+                        },
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.only(bottom: 8),
+                        child: Text(
+                          'تنبيه: التسميع المباشر ميزة متقدمة وتجريبية. للحصول على ثبات أعلى استخدم الخادم العادي إذا واجهت تقطع.',
+                          style: TextStyle(
+                            color: Colors.orange,
+                            fontSize: 13,
+                            height: 1.5,
+                          ),
+                        ),
+                      ),
+                      SwitchListTile(
+                        contentPadding: EdgeInsets.zero,
+                        value: state.settings.enableNativePcmStreaming,
+                        title: const Text('بث الصوت الأصلي للجهاز'),
+                        subtitle: const Text(
+                          'تجريبي ومتقدم. يعطي بثا صوتيا أفضل إذا كان مدعوما على الجهاز.',
+                        ),
+                        onChanged: (value) {
+                          controller.updateSettings(
+                            state.settings.copyWith(
+                              enableNativePcmStreaming: value,
+                            ),
+                          );
+                        },
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.only(bottom: 8),
+                        child: Text(
+                          'إذا لم يعمل بث الصوت الأصلي على جهازك، عطّله وسيستخدم التطبيق التسميع المباشر أو الخادم العادي.',
+                          style: TextStyle(
+                            color: Colors.orange,
+                            fontSize: 13,
+                            height: 1.5,
+                          ),
+                        ),
+                      ),
+                      const Padding(
+                        padding: EdgeInsets.only(bottom: 8),
+                        child: Text(
+                          'على iOS يتطلب بث الصوت الأصلي دعما أصليا. إذا لم يعمل، عطّل الخيار وسيستخدم التطبيق تعرف الجهاز تلقائيا.',
+                          style: TextStyle(
+                            color: Colors.orange,
+                            fontSize: 13,
+                            height: 1.5,
+                          ),
                         ),
                       ),
                     ],

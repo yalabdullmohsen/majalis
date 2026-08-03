@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../domain/tasmee3_weak_spot.dart';
+import 'widgets/tasmee3_empty_state.dart';
 
 class Tasmee3WeakSpotsScreen extends StatelessWidget {
   final List<Tasmee3WeakSpot> weakSpots;
@@ -24,18 +25,11 @@ class Tasmee3WeakSpotsScreen extends StatelessWidget {
           elevation: 0,
         ),
         body: weakSpots.isEmpty
-            ? const Center(
-                child: Padding(
-                  padding: EdgeInsets.all(24),
-                  child: Text(
-                    'لا توجد مواضع ضعف واضحة في هذه الجلسة.',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Color(0xFF9A8068),
-                      fontSize: 18,
-                    ),
-                  ),
-                ),
+            ? const Tasmee3EmptyState(
+                icon: Icons.check_circle_outline,
+                title: 'لا مواضع ظاهرة للمراجعة',
+                message:
+                    'لم تظهر مواضع تحتاج مراجعة في هذه الجلسة. استمر على نفس الهدوء.',
               )
             : ListView.separated(
                 padding: const EdgeInsets.all(16),

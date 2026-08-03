@@ -456,15 +456,15 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
             ref.watch(tasmee3UserAsrSettingsProvider).maybeWhen(
                   data: (settings) {
                     if (settings.mode == AsrEngineMode.deviceFallback) {
-                      return 'محرك تعرف الجهاز مفعّل (fallback).';
+                      return 'محرك تعرف الجهاز مفعّل.';
                     }
                     if (settings.canUseAdvancedServer) {
-                      return 'محرك ASR المتقدم جاهز (endpoint + إذن الإرسال).';
+                      return 'الخادم المتقدم جاهز (endpoint + إذن الإرسال).';
                     }
-                    return 'محرك ASR المتقدم غير جاهز؛ يعمل التطبيق بوضع fallback (speech_to_text).';
+                    return 'الخادم المتقدم غير جاهز؛ يعمل التطبيق بوضع تعرف الجهاز.';
                   },
                   orElse: () =>
-                      'محرك ASR المتقدم غير مضبوط؛ يعمل التطبيق بوضع fallback (speech_to_text).',
+                      'محرك التسميع غير مضبوط؛ يعمل التطبيق بوضع تعرف الجهاز.',
                 ),
             style: const TextStyle(
               color: Color(0xFF9A8068),
@@ -473,7 +473,7 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
           ),
           const SizedBox(height: 6),
           const Text(
-            'للحصول على دقة أعلى، ابدأ بنطاق قصير واقرأ في مكان هادئ.',
+            'للحصول على دقة تقريبية أفضل، ابدأ بنطاق قصير واقرأ في مكان هادئ.',
             style: TextStyle(
               color: Color(0xFF9A8068),
               fontSize: 13,
@@ -481,11 +481,21 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
           ),
           if ((toAyah - fromAyah + 1) > 5) ...[
             const SizedBox(height: 10),
-            const Text(
-              'النطاق طويل. للحصول على دقة أعلى، جرب 1 إلى 5 آيات في كل جلسة.',
-              style: TextStyle(
-                color: Colors.orange,
-                fontSize: 13,
+            Container(
+              width: double.infinity,
+              padding: const EdgeInsets.all(12),
+              decoration: BoxDecoration(
+                color: const Color(0xFFFFF3E0),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(color: Colors.orange.shade200),
+              ),
+              child: const Text(
+                'النطاق طويل. للحصول على دقة تقريبية أفضل، جرّب 1 إلى 5 آيات في كل جلسة.',
+                style: TextStyle(
+                  color: Color(0xFFE65100),
+                  fontSize: 13,
+                  height: 1.5,
+                ),
               ),
             ),
           ],
@@ -857,7 +867,7 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
                     );
                   },
                   icon: const Icon(Icons.analytics_outlined),
-                  label: const Text('تقرير الأخطاء'),
+                  label: const Text('تقرير الأخطاء الظاهرة'),
                 ),
               ),
             ],
@@ -879,7 +889,7 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
                       );
                     },
                     icon: const Icon(Icons.fitness_center),
-                    label: const Text('درّبني على الأخطاء'),
+                    label: const Text('درّبني على المواضع الظاهرة'),
                   ),
                 ),
               ],
@@ -1227,25 +1237,37 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
         settings.canUseAdvancedServer;
 
     final message = usesServer
-        ? 'سيتم استخدام الميكروفون لتسجيل تلاوتك، وقد يتم إرسال التسجيل إلى خادم التسميع الذي ضبطته في الإعدادات لتحليل الكلمات ومطابقتها مع النص القرآني الموجود داخل التطبيق.'
-        : 'سيتم استخدام الميكروفون لتسجيل تلاوتك وتحليلها داخل الجهاز قدر الإمكان. لن يتم إرسال الصوت إلى الخادم لأن الخادم غير مفعل أو لم تسمح بإرسال التسجيل.';
+        ? 'سيتم استخدام الميكروفون لتسجيل تلاوتك، وقد يتم إرسال التسجيل إلى الخادم الذي ضبطته أنت لتحليل التسميع. تتم المقارنة مع النص القرآني الموجود داخل التطبيق، ولا يتم توليد القرآن بالذكاء الاصطناعي.'
+        : 'سيتم استخدام الميكروفون لتسجيل تلاوتك وتحليلها داخل الجهاز قدر الإمكان. لن يتم إرسال التسجيل إلى الخادم لأن الإرسال غير مفعل.';
 
     final result = await showDialog<bool>(
       context: context,
-      builder: (context) {
+      builder: (dialogContext) {
         return Directionality(
           textDirection: TextDirection.rtl,
           child: AlertDialog(
-            title: const Text('تنبيه قبل التسجيل'),
+            title: const Text('تنبيه الخصوصية'),
             content: Text(message),
             actions: [
               TextButton(
-                onPressed: () => Navigator.pop(context, false),
+                onPressed: () {
+                  Navigator.pop(dialogContext, false);
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute<void>(
+                      builder: (_) => const Tasmee3PrivacyScreen(),
+                    ),
+                  );
+                },
+                child: const Text('سياسة الخصوصية'),
+              ),
+              TextButton(
+                onPressed: () => Navigator.pop(dialogContext, false),
                 child: const Text('إلغاء'),
               ),
               ElevatedButton(
-                onPressed: () => Navigator.pop(context, true),
-                child: const Text('موافق'),
+                onPressed: () => Navigator.pop(dialogContext, true),
+                child: const Text('موافق والبدء'),
               ),
             ],
           ),
