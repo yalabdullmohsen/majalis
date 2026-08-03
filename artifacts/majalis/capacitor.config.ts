@@ -37,6 +37,10 @@ const config: CapacitorConfig = {
       // iOS: badge + sound + banner + notification center (Capacitor 8.2+)
       presentationOptions: ["badge", "sound", "banner", "list"],
     },
+    PushNotifications: {
+      // Foreground presentation for remote pushes (APNs/FCM)
+      presentationOptions: ["badge", "sound", "banner", "list"],
+    },
   },
   android: {
     buildOptions: {

@@ -54,10 +54,10 @@ assert.equal(QURAN_DAILY_REMINDER_MINUTE, 0);
 assert.equal(QURAN_DAILY_REMINDER_NATIVE_ID, 9301);
 console.log("  ✓ quran daily reminder constants");
 
-// ── APNs scaffold stays disabled ──
-assert.equal(REMOTE_PUSH_ENABLED, false);
+// ── APNs / remote push wiring ──
+assert.equal(REMOTE_PUSH_ENABLED, true);
 assert.ok(APNS_TOKEN_STORAGE_KEY.includes("apns"));
-console.log("  ✓ APNs scaffold disabled by default");
+console.log("  ✓ Remote Push enabled (Capacitor)");
 
 // ── Channels / test ids ──
 assert.ok(CHANNEL_PRAYER.startsWith("majalis-"));
@@ -67,11 +67,17 @@ assert.equal(DEFAULT_ALERT_SOUND, "default");
 assert.equal(TEST_NOTIFICATION_NATIVE_ID, 99901);
 console.log("  ✓ channel + test trigger constants");
 
-// ── Source gates: native hides web push; presentationOptions; no aps-environment ──
+// ── Source gates: native hides web push; presentationOptions; Capacitor push wired ──
 {
   const push = read("src/lib/push-notifications.ts");
   assert.match(push, /isNative/, "push-notifications gates native");
   assert.match(push, /if \(isNative\) return "unsupported"/, "getPushSupport unsupported on native");
+
+  const nativePush = read("src/lib/pushNotifications.ts");
+  assert.match(nativePush, /PushNotifications/, "native helper uses Capacitor plugin");
+  assert.match(nativePush, /pushNotificationReceived/, "received listener");
+  assert.match(nativePush, /pushNotificationActionPerformed/, "click listener");
+  assert.match(nativePush, /registerNativePushNotifications/, "register export");
 
   const prompt = read("src/components/PushPrompt.tsx");
   assert.match(prompt, /isNative/, "PushPrompt checks isNative");
@@ -83,17 +89,18 @@ console.log("  ✓ channel + test trigger constants");
 
   const cap = read("capacitor.config.ts");
   assert.match(cap, /LocalNotifications/, "capacitor LocalNotifications config");
+  assert.match(cap, /PushNotifications/, "capacitor PushNotifications config");
   assert.match(cap, /presentationOptions/, "iOS presentationOptions set");
 
   const ent = read("ios/App/App/App.entitlements");
-  assert.doesNotMatch(ent, /aps-environment/, "no aps-environment (Local Notifications primary)");
+  assert.match(ent, /aps-environment/, "aps-environment present for APNs");
 
   const delegate = read("ios/App/App/AppDelegate.swift");
-  assert.match(delegate, /MajlisAPNs/, "AppDelegate APNs stub logs");
-  assert.doesNotMatch(
+  assert.match(delegate, /MajlisAPNs/, "AppDelegate APNs logs");
+  assert.match(
     delegate,
-    /^\s*UIApplication\.shared\.registerForRemoteNotifications/m,
-    "AppDelegate does not call registerForRemoteNotifications",
+    /capacitorDidRegisterForRemoteNotifications/,
+    "AppDelegate forwards APNs token to Capacitor",
   );
 
   const prayer = read("src/lib/prayer-local-notifications.ts");
@@ -124,6 +131,7 @@ console.log("  ✓ channel + test trigger constants");
   const boot = read("src/lib/notifications/native-bootstrap.ts");
   assert.match(boot, /localNotificationActionPerformed/, "tap listener");
   assert.match(boot, /bootstrapNativeNotifications/, "bootstrap export");
+  assert.match(boot, /maybeRegisterRemotePush/, "remote push on boot");
 
   console.log("  ✓ source architecture gates");
 }

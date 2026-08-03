@@ -27,6 +27,23 @@ async function parseBody(req) {
 
 function sanitizeSubscription(body) {
   if (!body || typeof body !== "object") return null;
+
+  // Capacitor native device token (APNs / FCM) — separate from Web Push VAPID.
+  const nativeToken = String(body.token || "").trim();
+  const platform = String(body.platform || "").trim().toLowerCase();
+  if (nativeToken && (platform === "ios" || platform === "android")) {
+    if (nativeToken.length < 8 || nativeToken.length > 512) return null;
+    const endpoint = `capacitor://${platform}/${nativeToken}`;
+    return {
+      endpoint,
+      expirationTime: null,
+      keys: { p256dh: "native", auth: nativeToken.slice(0, 64) },
+      platform,
+      token: nativeToken,
+      kind: "capacitor",
+    };
+  }
+
   const endpoint = String(body.endpoint || "").trim();
   if (!endpoint.startsWith("https://") || endpoint.length > ENDPOINT_MAX) return null;
 
@@ -43,6 +60,7 @@ function sanitizeSubscription(body) {
     endpoint,
     expirationTime: body.expirationTime ?? null,
     keys: { p256dh, auth },
+    kind: "webpush",
   };
 }
 
