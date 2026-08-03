@@ -17,6 +17,7 @@ class PcmAudioStreamService {
       StreamController<PcmAudioChunk>.broadcast();
 
   int _sequence = 0;
+  bool _isRunning = false;
 
   Stream<PcmAudioChunk> get chunks => _controller.stream;
 
@@ -30,6 +31,11 @@ class PcmAudioStreamService {
   }
 
   Future<void> start(PcmAudioConfig config) async {
+    if (_isRunning) {
+      return;
+    }
+
+    _isRunning = true;
     _sequence = 0;
 
     await _subscription?.cancel();
@@ -65,10 +71,17 @@ class PcmAudioStreamService {
       },
     );
 
-    await _methodChannel.invokeMethod<void>(
-      'start',
-      config.toJson(),
-    );
+    try {
+      await _methodChannel.invokeMethod<void>(
+        'start',
+        config.toJson(),
+      );
+    } catch (e) {
+      _isRunning = false;
+      await _subscription?.cancel();
+      _subscription = null;
+      rethrow;
+    }
   }
 
   Future<void> stop() async {
@@ -77,6 +90,7 @@ class PcmAudioStreamService {
     } finally {
       await _subscription?.cancel();
       _subscription = null;
+      _isRunning = false;
     }
   }
 

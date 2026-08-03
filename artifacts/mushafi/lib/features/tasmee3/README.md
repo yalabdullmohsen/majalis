@@ -544,3 +544,29 @@ WebSocket الحالي هو بنية جاهزة للبث الحي.
 - إذا PCM غير متاح، يستخدم التطبيق fallback حسب الإعدادات.
 - iOS PCM Streaming يحتاج تنفيذ AVAudioEngine لإرسال PCM frames عبر EventChannel.
 - حاليا Android مدعوم، و iOS يستخدم fallback إذا لم يتم تنفيذ PCM.
+
+## البرومبت الثاني والعشرون - iOS AVAudioEngine PCM Streaming
+
+تمت إضافة دعم iOS PCM Streaming عبر:
+
+- `AVAudioEngine`
+- `AVAudioConverter`
+- `FlutterMethodChannel`
+- `FlutterEventChannel`
+- PCM 16-bit
+- 16k mono قدر الإمكان
+- إرسال bytes إلى Flutter كـ `FlutterStandardTypedData`
+
+## ملاحظات iOS
+
+- إذا لم يعمل AVAudioEngine على جهاز معين، يعرض التطبيق fallback.
+- يجب وجود `NSMicrophoneUsageDescription`.
+- يفضل الاختبار على جهاز iPhone حقيقي.
+- Simulator قد لا يعطي نتائج صوت دقيقة.
+
+## Fallback
+
+إذا `isAvailable` رجعت false:
+- يتم استخدام WebSocket chunks إذا مفعلة.
+- أو HTTP Advanced ASR.
+- أو speech_to_text fallback.

@@ -759,15 +759,26 @@ async def live_asr(websocket: WebSocket):
                 try:
                     live_result = transcribe_live_file(wav_path, language=language)
 
-                    await websocket.send_json(
-                        {
-                            "type": "partial",
-                            "text": live_result["text"],
-                            "confidence": live_result["confidence"],
-                            "words": live_result["words"],
-                            "sequence": last_sequence,
-                        }
-                    )
+                    if not live_result["text"]:
+                        await websocket.send_json(
+                            {
+                                "type": "partial",
+                                "text": "",
+                                "confidence": 0.0,
+                                "words": [],
+                                "sequence": last_sequence,
+                            }
+                        )
+                    else:
+                        await websocket.send_json(
+                            {
+                                "type": "partial",
+                                "text": live_result["text"],
+                                "confidence": live_result["confidence"],
+                                "words": live_result["words"],
+                                "sequence": last_sequence,
+                            }
+                        )
                 except Exception as exc:
                     await websocket.send_json(
                         {
@@ -844,9 +855,11 @@ async def live_asr(websocket: WebSocket):
                         await websocket.send_json(
                             {
                                 "type": "final",
-                                "text": final_result["text"],
-                                "confidence": final_result["confidence"],
-                                "words": final_result["words"],
+                                "text": final_result.get("text", "") or "",
+                                "confidence": float(
+                                    final_result.get("confidence", 0.0) or 0.0
+                                ),
+                                "words": final_result.get("words", []) or [],
                                 "sequence": last_sequence,
                             }
                         )
@@ -929,15 +942,26 @@ async def live_asr(websocket: WebSocket):
                 try:
                     live_result = transcribe_live_file(temp_path, language=language)
 
-                    await websocket.send_json(
-                        {
-                            "type": "partial",
-                            "text": live_result["text"],
-                            "confidence": live_result["confidence"],
-                            "words": live_result["words"],
-                            "sequence": last_sequence,
-                        }
-                    )
+                    if not live_result["text"]:
+                        await websocket.send_json(
+                            {
+                                "type": "partial",
+                                "text": "",
+                                "confidence": 0.0,
+                                "words": [],
+                                "sequence": last_sequence,
+                            }
+                        )
+                    else:
+                        await websocket.send_json(
+                            {
+                                "type": "partial",
+                                "text": live_result["text"],
+                                "confidence": live_result["confidence"],
+                                "words": live_result["words"],
+                                "sequence": last_sequence,
+                            }
+                        )
                 except Exception as exc:
                     await websocket.send_json(
                         {

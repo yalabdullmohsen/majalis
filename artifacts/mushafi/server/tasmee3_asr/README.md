@@ -245,4 +245,14 @@ Android يستخدم AudioRecord عبر EventChannel لإرسال PCM 16-bit mon
 
 ### iOS
 
-iOS يحتاج تنفيذ AVAudioEngine لاحقا. إذا لم ينفذ، يستخدم التطبيق fallback.
+iOS يرسل PCM frames عبر EventChannel إلى Flutter ثم binary frames إلى `/ws/live`.
+
+المواصفات المستهدفة:
+
+- sampleRate: 16000
+- channels: 1
+- bitsPerSample: 16
+- format: PCM signed 16-bit
+
+الخادم يحول PCM إلى WAV مؤقتا قبل ASR.
+إذا كان النص فارغاً يُرسل partial/final فارغ وليس error.

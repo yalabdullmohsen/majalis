@@ -192,6 +192,17 @@ class _Tasmee3AsrSettingsScreenState
                       ),
                     ),
                   ),
+                  const Padding(
+                    padding: EdgeInsets.only(top: 6),
+                    child: Text(
+                      'على iOS يتطلب PCM Streaming دعم AVAudioEngine. إذا لم يعمل، عطّل الخيار وسيستخدم التطبيق fallback تلقائيا.',
+                      style: TextStyle(
+                        color: Colors.orange,
+                        fontSize: 13,
+                        height: 1.5,
+                      ),
+                    ),
+                  ),
                   const SizedBox(height: 12),
                   TextFormField(
                     controller: apiKeyController,

@@ -15,7 +15,7 @@ import 'quran_speech_recognizer.dart';
 /// Live ASR via native PCM binary frames over WebSocket.
 ///
 /// Falls back when [PcmAudioStreamService.isAvailable] is false
-/// (e.g. iOS until AVAudioEngine is implemented).
+/// (permission denied or native PCM unavailable).
 class LiveAsrPcmWebSocketRecognizer implements QuranSpeechRecognizer {
   final Uri websocketUri;
   final String? apiKey;
@@ -47,8 +47,13 @@ class LiveAsrPcmWebSocketRecognizer implements QuranSpeechRecognizer {
 
   @override
   Future<bool> initialize() async {
-    _initialized = await pcmService.isAvailable();
-    return _initialized;
+    try {
+      _initialized = await pcmService.isAvailable();
+      return _initialized;
+    } catch (_) {
+      _initialized = false;
+      return false;
+    }
   }
 
   @override
@@ -64,7 +69,7 @@ class LiveAsrPcmWebSocketRecognizer implements QuranSpeechRecognizer {
       if (!ok) {
         _segmentsController.addError(
           StateError(
-            'PCM audio stream غير متاح على هذا الجهاز. سيتم استخدام fallback إذا كان مفعلا.',
+            'Native PCM Streaming غير متاح على هذا الجهاز. عطّل خيار PCM أو استخدم WebSocket chunks أو الخادم العادي.',
           ),
         );
         return;
