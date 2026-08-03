@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:share_plus/share_plus.dart';
 
 import '../application/tasmee3_controller.dart';
 import '../application/tasmee3_providers.dart';
@@ -635,6 +636,47 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
                   },
                   icon: const Icon(Icons.copy),
                   label: const Text('نسخ تقرير الجلسة'),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          Row(
+            children: [
+              Expanded(
+                child: OutlinedButton.icon(
+                  onPressed: () async {
+                    final target = state.target;
+                    final sessionResult = state.result;
+
+                    if (target == null || sessionResult == null) return;
+
+                    final messenger = ScaffoldMessenger.of(context);
+
+                    try {
+                      final service =
+                          ref.read(tasmee3PdfReportServiceProvider);
+
+                      final file = await service.buildSessionPdf(
+                        target: target,
+                        result: sessionResult,
+                        durationSeconds: state.elapsedSeconds,
+                      );
+
+                      await Share.shareXFiles(
+                        [XFile(file.path)],
+                        text: 'تقرير جلسة التسميع',
+                      );
+                    } catch (e) {
+                      messenger.showSnackBar(
+                        SnackBar(
+                          content: Text('تعذر تصدير PDF: $e'),
+                        ),
+                      );
+                    }
+                  },
+                  icon: const Icon(Icons.picture_as_pdf_outlined),
+                  label: const Text('تصدير PDF'),
                 ),
               ),
             ],

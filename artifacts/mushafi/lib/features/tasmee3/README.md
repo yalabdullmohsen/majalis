@@ -269,3 +269,26 @@ Forced Alignment الحالي يعتمد على مطابقة كلمات بعد �
 - flutter_local_notifications
 - timezone
 - notification permission handling
+
+## البرومبت الحادي عشر - الإشعارات و PDF
+
+تمت إضافة:
+
+- إشعارات محلية للتذكير اليومي.
+- طلب صلاحية الإشعارات.
+- جدولة تذكير يومي حسب وقت الهدف.
+- إلغاء التذكير عند تعطيله.
+- اختبار إشعار من داخل إعدادات الهدف.
+- تصدير تقرير جلسة PDF.
+- مشاركة التقرير عبر share_plus.
+- شاشة معلومات عن التذكيرات والخصوصية.
+
+## ملفات جديدة
+
+- `Tasmee3NotificationService`
+- `Tasmee3PdfReportService`
+- `Tasmee3NotificationsInfoScreen`
+
+## ملاحظة PDF
+
+يستخدم التقرير خط `ScheherazadeNew-Regular.ttf` لعرض العربية داخل PDF.

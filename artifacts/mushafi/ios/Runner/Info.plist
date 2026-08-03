@@ -28,6 +28,8 @@
 	<string>نحتاج الميكروفون لتشغيل ميزة التسميع ومراجعة الحفظ.</string>
 	<key>NSSpeechRecognitionUsageDescription</key>
 	<string>نحتاج التعرف على الكلام لمقارنة التلاوة بالنص الصحيح.</string>
+	<key>NSUserNotificationUsageDescription</key>
+	<string>نستخدم الإشعارات لتذكيرك بورد التسميع اليومي.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>

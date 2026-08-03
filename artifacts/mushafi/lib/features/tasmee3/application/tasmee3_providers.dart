@@ -13,6 +13,7 @@ import '../data/speech_to_text_quran_recognizer.dart';
 import '../data/tasmee3_asr_settings_repository.dart';
 import '../data/tasmee3_failed_job_queue.dart';
 import '../data/tasmee3_goal_repository.dart';
+import '../data/tasmee3_notification_service.dart';
 import '../data/tasmee3_session_repository.dart';
 import '../domain/asr_connection_status.dart';
 import '../domain/asr_engine_mode.dart';
@@ -32,6 +33,7 @@ import 'tasmee3_asr_settings_controller.dart';
 import 'tasmee3_controller.dart';
 import 'tasmee3_goal_controller.dart';
 import 'tasmee3_goal_service.dart';
+import 'tasmee3_pdf_report_service.dart';
 import 'tasmee3_session_report_builder.dart';
 import 'tasmee3_ui_settings.dart';
 
@@ -231,9 +233,20 @@ final tasmee3BadgesProvider = FutureProvider<List<Tasmee3Badge>>((ref) async {
   return service.buildBadges(sessions);
 });
 
+final tasmee3NotificationServiceProvider =
+    Provider<Tasmee3NotificationService>((ref) {
+  return Tasmee3NotificationService();
+});
+
+final tasmee3PdfReportServiceProvider =
+    Provider<Tasmee3PdfReportService>((ref) {
+  return const Tasmee3PdfReportService();
+});
+
 final tasmee3GoalControllerProvider =
     StateNotifierProvider<Tasmee3GoalController, Tasmee3GoalState>((ref) {
   final repository = ref.watch(tasmee3GoalRepositoryProvider);
+  final notificationService = ref.watch(tasmee3NotificationServiceProvider);
   final asyncGoal = ref.watch(tasmee3DailyGoalProvider);
 
   final initialGoal = asyncGoal.maybeWhen(
@@ -243,6 +256,7 @@ final tasmee3GoalControllerProvider =
 
   return Tasmee3GoalController(
     repository: repository,
+    notificationService: notificationService,
     initialGoal: initialGoal,
   );
 });

@@ -31,6 +31,11 @@ dependencies:
   speech_to_text: ^6.6.2
   record: ^5.2.1
   http: ^1.2.2
+  flutter_local_notifications: ^17.2.3
+  timezone: ^0.9.4
+  pdf: ^3.11.1
+  printing: ^5.13.4
+  share_plus: ^10.0.2
 
 dev_dependencies:
   flutter_test:

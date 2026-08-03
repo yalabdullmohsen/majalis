@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../application/tasmee3_providers.dart';
 import '../domain/tasmee3_daily_goal.dart';
+import 'tasmee3_notifications_info_screen.dart';
 
 class Tasmee3GoalSettingsScreen extends ConsumerWidget {
   const Tasmee3GoalSettingsScreen({super.key});
@@ -22,6 +23,20 @@ class Tasmee3GoalSettingsScreen extends ConsumerWidget {
           backgroundColor: const Color(0xFFFBF7EF),
           foregroundColor: const Color(0xFF11100E),
           elevation: 0,
+          actions: [
+            IconButton(
+              tooltip: 'معلومات التذكير',
+              icon: const Icon(Icons.info_outline),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const Tasmee3NotificationsInfoScreen(),
+                  ),
+                );
+              },
+            ),
+          ],
         ),
         body: ListView(
           padding: const EdgeInsets.all(16),
@@ -162,6 +177,36 @@ class Tasmee3GoalSettingsScreen extends ConsumerWidget {
                     },
               icon: const Icon(Icons.save),
               label: const Text('حفظ الهدف'),
+            ),
+            const SizedBox(height: 10),
+            OutlinedButton.icon(
+              onPressed: () async {
+                final service = ref.read(tasmee3NotificationServiceProvider);
+                final granted = await service.requestPermission();
+
+                if (!context.mounted) return;
+
+                if (!granted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('لم يتم منح صلاحية الإشعارات.'),
+                    ),
+                  );
+                  return;
+                }
+
+                await service.showTestNotification();
+
+                if (context.mounted) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('تم إرسال إشعار تجريبي.'),
+                    ),
+                  );
+                }
+              },
+              icon: const Icon(Icons.notifications_active_outlined),
+              label: const Text('اختبار الإشعار'),
             ),
             TextButton.icon(
               onPressed: state.isSaving
