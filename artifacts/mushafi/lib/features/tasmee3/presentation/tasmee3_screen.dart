@@ -21,6 +21,7 @@ import 'tasmee3_weak_spots_screen.dart';
 import 'widgets/tasmee3_accuracy_card.dart';
 import 'widgets/tasmee3_audio_level_meter.dart';
 import 'widgets/tasmee3_ayah_scores_card.dart';
+import 'widgets/tasmee3_live_progress_card.dart';
 import 'widgets/tasmee3_mistake_report_sheet.dart';
 import 'widgets/tasmee3_mushaf_recitation_view.dart';
 import 'widgets/tasmee3_section_card.dart';
@@ -637,6 +638,15 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
               color: Color(0xFF11100E),
             ),
           ),
+          const SizedBox(height: 6),
+          const Text(
+            'سيتم تمييز الكلمات أثناء التلاوة حسب ما يتعرف عليه النظام.',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Color(0xFF9A8068),
+              fontSize: 13,
+            ),
+          ),
           const SizedBox(height: 8),
           Text(
             'المدة: ${state.elapsedSeconds} ثانية',
@@ -647,6 +657,8 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
           ),
           const SizedBox(height: 12),
           Tasmee3AudioLevelMeter(level: state.audioLevel),
+          const SizedBox(height: 10),
+          Tasmee3LiveProgressCard(progress: state.liveProgress),
           const SizedBox(height: 8),
           const Text(
             'تجنب الضوضاء، واقرأ النطاق المختار فقط دون زيادة.',
@@ -681,6 +693,7 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
                     visibilityMode: textVisibilityMode,
                     forceRevealAll: forceRevealAll,
                     displayBuilder: ref.watch(tasmee3DisplayBuilderProvider),
+                    liveProgress: state.liveProgress,
                   )
                 : Container(
                     width: double.infinity,

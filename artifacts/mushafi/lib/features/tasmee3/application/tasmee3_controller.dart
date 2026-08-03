@@ -18,7 +18,9 @@ import '../domain/tasmee3_mistake.dart';
 import '../domain/tasmee3_result.dart';
 import '../domain/tasmee3_session_diagnostics.dart';
 import '../domain/tasmee3_session_record.dart';
+import '../domain/tasmee3_live_progress.dart';
 import 'mistake_detection_engine.dart';
+import 'tasmee3_live_follow_service.dart';
 import 'tasmee3_srs_service.dart';
 
 enum Tasmee3Status {
@@ -46,6 +48,7 @@ class Tasmee3State {
   final String? errorMessage;
   final Duration sessionDuration;
   final List<QuranAyah> expectedAyahs;
+  final Tasmee3LiveProgress liveProgress;
 
   const Tasmee3State({
     required this.status,
@@ -61,6 +64,7 @@ class Tasmee3State {
     this.errorMessage,
     this.sessionDuration = Duration.zero,
     this.expectedAyahs = const [],
+    this.liveProgress = const Tasmee3LiveProgress.empty(),
   });
 
   const Tasmee3State.initial()
@@ -76,7 +80,8 @@ class Tasmee3State {
         elapsedSeconds = 0,
         errorMessage = null,
         sessionDuration = Duration.zero,
-        expectedAyahs = const [];
+        expectedAyahs = const [],
+        liveProgress = const Tasmee3LiveProgress.empty();
 
   Tasmee3State copyWith({
     Tasmee3Status? status,
@@ -92,6 +97,7 @@ class Tasmee3State {
     String? errorMessage,
     Duration? sessionDuration,
     List<QuranAyah>? expectedAyahs,
+    Tasmee3LiveProgress? liveProgress,
     bool clearResult = false,
     bool clearAlignment = false,
     bool clearAudioLevel = false,
@@ -112,6 +118,7 @@ class Tasmee3State {
       errorMessage: errorMessage,
       sessionDuration: sessionDuration ?? this.sessionDuration,
       expectedAyahs: expectedAyahs ?? this.expectedAyahs,
+      liveProgress: liveProgress ?? this.liveProgress,
     );
   }
 }
@@ -123,6 +130,7 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
   final Tasmee3SessionRepository sessionRepository;
   final AyahMasteryRepository ayahMasteryRepository;
   final Tasmee3SrsService srsService;
+  final Tasmee3LiveFollowService liveFollowService;
   final void Function()? onSessionSaved;
 
   StreamSubscription<RecognizedSegment>? _subscription;
@@ -140,6 +148,7 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
     required this.sessionRepository,
     required this.ayahMasteryRepository,
     required this.srsService,
+    required this.liveFollowService,
     this.onSessionSaved,
   }) : super(const Tasmee3State.initial());
 
@@ -165,6 +174,7 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
         confidence: 0,
         sessionDuration: Duration.zero,
         elapsedSeconds: 0,
+        liveProgress: const Tasmee3LiveProgress.empty(),
         clearResult: true,
         clearAlignment: true,
         clearAudioLevel: true,
@@ -193,7 +203,10 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
         return;
       }
 
-      state = state.copyWith(expectedAyahs: _expectedAyahs);
+      state = state.copyWith(
+        expectedAyahs: _expectedAyahs,
+        liveProgress: liveFollowService.initialize(_expectedAyahs),
+      );
 
       final alignmentRecognizer = recognizer;
       if (alignmentRecognizer is QuranForcedAlignmentRecognizer) {
@@ -219,8 +232,15 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
       _elapsedTimer?.cancel();
       _elapsedTimer = Timer.periodic(const Duration(seconds: 1), (_) {
         if (state.status == Tasmee3Status.listening) {
+          final silenceChecked = liveFollowService.updateWithRecognizedText(
+            current: state.liveProgress,
+            recognizedText: '',
+            confidence: 0,
+          );
+
           state = state.copyWith(
             elapsedSeconds: state.elapsedSeconds + 1,
+            liveProgress: silenceChecked,
           );
         }
       });
@@ -234,10 +254,18 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
 
       _subscription = recognizer.listen().listen(
         (segment) {
+          final updatedLiveProgress =
+              liveFollowService.updateWithRecognizedText(
+            current: state.liveProgress,
+            recognizedText: segment.text,
+            confidence: segment.confidence,
+          );
+
           state = state.copyWith(
             recognizedText: segment.text,
             recognizedWords: segment.words,
             confidence: segment.confidence,
+            liveProgress: updatedLiveProgress,
           );
 
           if (segment.isFinal) {

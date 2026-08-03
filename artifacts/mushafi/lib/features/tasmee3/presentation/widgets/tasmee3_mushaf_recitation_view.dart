@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../../application/tasmee3_display_builder.dart';
 import '../../domain/quran_ayah.dart';
 import '../../domain/tasmee3_display_word.dart';
+import '../../domain/tasmee3_live_progress.dart';
+import '../../domain/tasmee3_live_word_status.dart';
 import '../../domain/tasmee3_mistake.dart';
 import '../../domain/tasmee3_text_visibility_mode.dart';
 
@@ -12,6 +14,7 @@ class Tasmee3MushafRecitationView extends StatelessWidget {
   final Tasmee3TextVisibilityMode visibilityMode;
   final bool forceRevealAll;
   final Tasmee3DisplayBuilder displayBuilder;
+  final Tasmee3LiveProgress? liveProgress;
   final double fontSize;
 
   const Tasmee3MushafRecitationView({
@@ -21,6 +24,7 @@ class Tasmee3MushafRecitationView extends StatelessWidget {
     required this.visibilityMode,
     required this.forceRevealAll,
     required this.displayBuilder,
+    this.liveProgress,
     this.fontSize = 25,
   });
 
@@ -130,90 +134,144 @@ class Tasmee3MushafRecitationView extends StatelessWidget {
     return words[index].ayahRef != words[index + 1].ayahRef;
   }
 
+  Tasmee3LiveWordStatus? _liveStatusFor(Tasmee3DisplayWord word) {
+    final live = liveProgress;
+
+    if (live == null || live.words.isEmpty) {
+      return null;
+    }
+
+    if (word.globalWordIndex < 0 ||
+        word.globalWordIndex >= live.words.length) {
+      return null;
+    }
+
+    return live.words[word.globalWordIndex].status;
+  }
+
   Color _backgroundColor(Tasmee3DisplayWord word) {
     final mistake = word.mistake;
 
-    if (mistake == null) {
-      if (!word.isRevealed) {
-        return const Color(0xFFF9F1E6);
+    // Final analysis mistakes take priority over live follow colors.
+    if (mistake != null) {
+      switch (mistake.type) {
+        case Tasmee3MistakeType.missingWord:
+          return Colors.orange.withValues(alpha: 0.14);
+        case Tasmee3MistakeType.extraWord:
+          return Colors.blue.withValues(alpha: 0.10);
+        case Tasmee3MistakeType.wrongWord:
+          return Colors.red.withValues(alpha: 0.12);
+        case Tasmee3MistakeType.lowConfidence:
+          return Colors.blueGrey.withValues(alpha: 0.12);
       }
-
-      // قبل التحليل: نص هادئ. بعد التحليل: أخضر خفيف للصحيح.
-      if (mistakes.isEmpty) {
-        return Colors.transparent;
-      }
-
-      return Colors.green.withValues(alpha: 0.08);
     }
 
-    switch (mistake.type) {
-      case Tasmee3MistakeType.missingWord:
-        return Colors.orange.withValues(alpha: 0.14);
-      case Tasmee3MistakeType.extraWord:
-        return Colors.blue.withValues(alpha: 0.10);
-      case Tasmee3MistakeType.wrongWord:
-        return Colors.red.withValues(alpha: 0.12);
-      case Tasmee3MistakeType.lowConfidence:
-        return Colors.blueGrey.withValues(alpha: 0.12);
+    final liveStatus = _liveStatusFor(word);
+
+    if (liveStatus == Tasmee3LiveWordStatus.current) {
+      return const Color(0xFFA77A48).withValues(alpha: 0.16);
     }
+
+    if (liveStatus == Tasmee3LiveWordStatus.recognized) {
+      return Colors.green.withValues(alpha: 0.10);
+    }
+
+    if (liveStatus == Tasmee3LiveWordStatus.possibleMistake) {
+      return Colors.red.withValues(alpha: 0.08);
+    }
+
+    if (liveStatus == Tasmee3LiveWordStatus.skipped) {
+      return Colors.orange.withValues(alpha: 0.12);
+    }
+
+    if (!word.isRevealed) {
+      return const Color(0xFFF9F1E6);
+    }
+
+    // قبل التحليل: نص هادئ. بعد التحليل: أخضر خفيف للصحيح.
+    if (mistakes.isEmpty) {
+      return Colors.transparent;
+    }
+
+    return Colors.green.withValues(alpha: 0.08);
   }
 
   Border? _border(Tasmee3DisplayWord word) {
     final mistake = word.mistake;
 
-    if (mistake == null) {
-      if (!word.isRevealed || mistakes.isEmpty) {
-        return null;
+    if (mistake != null) {
+      Color color;
+
+      switch (mistake.type) {
+        case Tasmee3MistakeType.missingWord:
+          color = Colors.orange;
+          break;
+        case Tasmee3MistakeType.extraWord:
+          color = Colors.blue;
+          break;
+        case Tasmee3MistakeType.wrongWord:
+          color = Colors.red;
+          break;
+        case Tasmee3MistakeType.lowConfidence:
+          color = Colors.blueGrey;
+          break;
       }
 
-      return Border.all(color: Colors.green.withValues(alpha: 0.25));
+      return Border.all(color: color.withValues(alpha: 0.35));
     }
 
-    Color color;
+    final liveStatus = _liveStatusFor(word);
 
-    switch (mistake.type) {
-      case Tasmee3MistakeType.missingWord:
-        color = Colors.orange;
-        break;
-      case Tasmee3MistakeType.extraWord:
-        color = Colors.blue;
-        break;
-      case Tasmee3MistakeType.wrongWord:
-        color = Colors.red;
-        break;
-      case Tasmee3MistakeType.lowConfidence:
-        color = Colors.blueGrey;
-        break;
+    if (liveStatus == Tasmee3LiveWordStatus.current) {
+      return Border.all(color: const Color(0xFFA77A48), width: 1.2);
     }
 
-    return Border.all(color: color.withValues(alpha: 0.35));
+    if (!word.isRevealed || mistakes.isEmpty) {
+      return null;
+    }
+
+    return Border.all(color: Colors.green.withValues(alpha: 0.25));
   }
 
   Color _textColor(Tasmee3DisplayWord word) {
     final mistake = word.mistake;
 
-    if (mistake == null) {
-      if (!word.isRevealed) {
-        return const Color(0xFFB8A58F);
+    if (mistake != null) {
+      switch (mistake.type) {
+        case Tasmee3MistakeType.missingWord:
+          return Colors.orange.shade900;
+        case Tasmee3MistakeType.extraWord:
+          return Colors.blue.shade900;
+        case Tasmee3MistakeType.wrongWord:
+          return Colors.red.shade900;
+        case Tasmee3MistakeType.lowConfidence:
+          return Colors.blueGrey.shade900;
       }
+    }
 
-      if (mistakes.isEmpty) {
-        return const Color(0xFF11100E);
-      }
+    final liveStatus = _liveStatusFor(word);
 
+    if (liveStatus == Tasmee3LiveWordStatus.current) {
+      return const Color(0xFFA77A48);
+    }
+
+    if (liveStatus == Tasmee3LiveWordStatus.recognized) {
       return Colors.green.shade900;
     }
 
-    switch (mistake.type) {
-      case Tasmee3MistakeType.missingWord:
-        return Colors.orange.shade900;
-      case Tasmee3MistakeType.extraWord:
-        return Colors.blue.shade900;
-      case Tasmee3MistakeType.wrongWord:
-        return Colors.red.shade900;
-      case Tasmee3MistakeType.lowConfidence:
-        return Colors.blueGrey.shade900;
+    if (liveStatus == Tasmee3LiveWordStatus.possibleMistake) {
+      return Colors.red.shade900;
     }
+
+    if (!word.isRevealed) {
+      return const Color(0xFFB8A58F);
+    }
+
+    if (mistakes.isEmpty) {
+      return const Color(0xFF11100E);
+    }
+
+    return Colors.green.shade900;
   }
 }
 

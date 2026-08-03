@@ -433,3 +433,30 @@ assets/fonts/NotoNaskhArabic-Bold.ttf
 ## ملاحظة
 
 هذه المرحلة لا تغيّر النص القرآني ولا تولده. هي فقط تغير طريقة العرض.
+
+## البرومبت السابع عشر - Live Follow Along
+
+تمت إضافة:
+
+- متابعة مباشرة أثناء التسميع.
+- تمييز الكلمة الحالية.
+- تمييز الكلمات المتعرف عليها.
+- تقدم حي بعدد الكلمات.
+- عرض الآية الحالية.
+- تنبيه عند التوقف.
+- دعم partial recognition من fallback.
+- تجهيز WebSocket recognizer مستقبلي.
+
+## الملفات الجديدة
+
+- `Tasmee3LiveWordStatus`
+- `Tasmee3LiveWord`
+- `Tasmee3LiveProgress`
+- `Tasmee3LiveFollowService`
+- `Tasmee3LiveProgressCard`
+- `LiveAsrWebSocketRecognizer`
+
+## ملاحظة
+
+Live Follow Along الحالي يعتمد على النص الجزئي القادم من recognizer.
+إذا تم ربط WebSocket ASR مستقبلا، يمكن تحديث `LiveAsrWebSocketRecognizer` ليرسل partial segments بدقة أعلى.

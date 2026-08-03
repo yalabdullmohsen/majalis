@@ -44,6 +44,7 @@ import 'tasmee3_pdf_font_loader.dart';
 import 'tasmee3_pdf_report_service.dart';
 import 'tasmee3_reminders_controller.dart';
 import 'tasmee3_display_builder.dart';
+import 'tasmee3_live_follow_service.dart';
 import 'tasmee3_session_report_builder.dart';
 import 'tasmee3_srs_service.dart';
 import 'tasmee3_review_suggestion_mapper.dart';
@@ -195,6 +196,11 @@ final tasmee3SrsServiceProvider = Provider<Tasmee3SrsService>((ref) {
 
 final tasmee3DisplayBuilderProvider = Provider<Tasmee3DisplayBuilder>((ref) {
   return const Tasmee3DisplayBuilder();
+});
+
+final tasmee3LiveFollowServiceProvider =
+    Provider<Tasmee3LiveFollowService>((ref) {
+  return const Tasmee3LiveFollowService();
 });
 
 final tasmee3ReviewSuggestionMapperProvider =
@@ -374,6 +380,7 @@ final tasmee3ControllerProvider =
     sessionRepository: ref.watch(tasmee3SessionRepositoryProvider),
     ayahMasteryRepository: ref.watch(ayahMasteryRepositoryProvider),
     srsService: ref.watch(tasmee3SrsServiceProvider),
+    liveFollowService: ref.watch(tasmee3LiveFollowServiceProvider),
     onSessionSaved: () {
       ref.invalidate(tasmee3SessionHistoryProvider);
       ref.invalidate(tasmee3TodayGoalProgressProvider);
