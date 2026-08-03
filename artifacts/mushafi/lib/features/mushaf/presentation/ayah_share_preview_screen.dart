@@ -126,12 +126,12 @@ class _AyahSharePreviewScreenState
       await Future<void>.delayed(const Duration(milliseconds: 300));
       if (!mounted) return;
 
-      final boundaryContext = repaintKey.currentContext;
-      if (boundaryContext == null) {
+      final boundaryElement = repaintKey.currentContext;
+      if (boundaryElement == null || !boundaryElement.mounted) {
         throw StateError('تعذر الوصول إلى البطاقة.');
       }
 
-      final renderObject = boundaryContext.findRenderObject();
+      final renderObject = boundaryElement.findRenderObject();
       final boundary = renderObject is RenderRepaintBoundary
           ? renderObject
           : null;
