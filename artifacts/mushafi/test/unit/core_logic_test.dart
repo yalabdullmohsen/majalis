@@ -4,7 +4,10 @@ import 'package:mushafi/features/tasmee3/application/arabic_normalizer.dart';
 import 'package:mushafi/features/tasmee3/application/mistake_detection_engine.dart';
 import 'package:mushafi/features/tasmee3/application/tasmee3_analytics_service.dart';
 import 'package:mushafi/features/tasmee3/application/tasmee3_goal_service.dart';
+import 'package:mushafi/features/tasmee3/application/tasmee3_reminders_controller.dart';
 import 'package:mushafi/features/tasmee3/data/audio_quality_monitor.dart';
+import 'package:mushafi/features/tasmee3/data/tasmee3_notification_service.dart';
+import 'package:mushafi/features/tasmee3/data/tasmee3_reminder_repository.dart';
 import 'package:mushafi/features/tasmee3/domain/aligned_word.dart';
 import 'package:mushafi/features/tasmee3/domain/audio_quality_report.dart';
 import 'package:mushafi/features/tasmee3/domain/ayah_ref.dart';
@@ -13,6 +16,7 @@ import 'package:mushafi/features/tasmee3/domain/quran_ayah.dart';
 import 'package:mushafi/features/tasmee3/domain/recitation_target.dart';
 import 'package:mushafi/features/tasmee3/domain/tasmee3_daily_goal.dart';
 import 'package:mushafi/features/tasmee3/domain/tasmee3_mistake.dart';
+import 'package:mushafi/features/tasmee3/domain/tasmee3_reminder.dart';
 import 'package:mushafi/features/tasmee3/domain/tasmee3_session_record.dart';
 
 void main() {
@@ -179,4 +183,46 @@ void main() {
       );
     });
   });
+
+  group('Tasmee3RemindersController smart time', () {
+    test('suggests hour from session activity', () {
+      final repository = _FakeReminderRepository();
+      final controller = Tasmee3RemindersController(
+        repository: repository,
+        notificationService: Tasmee3NotificationService(),
+        initialReminders: [Tasmee3Reminder.defaultSmartTime()],
+      );
+
+      final evening = DateTime(2026, 8, 3, 19, 15);
+      final sessions = List.generate(
+        3,
+        (i) => Tasmee3SessionRecord(
+          id: '$i',
+          target: const RecitationTarget(
+            from: AyahRef(surah: 112, ayah: 1),
+            to: AyahRef(surah: 112, ayah: 1),
+            mode: Tasmee3Mode.showText,
+          ),
+          accuracyPercent: 80,
+          mistakesCount: 1,
+          durationSeconds: 40,
+          createdAt: evening,
+        ),
+      );
+
+      expect(controller.suggestSmartTime(sessions), '19:00');
+      controller.dispose();
+    });
+  });
+}
+
+class _FakeReminderRepository implements Tasmee3ReminderRepository {
+  @override
+  Future<void> clear() async {}
+
+  @override
+  Future<List<Tasmee3Reminder>> loadReminders() async => const [];
+
+  @override
+  Future<void> saveReminders(List<Tasmee3Reminder> reminders) async {}
 }

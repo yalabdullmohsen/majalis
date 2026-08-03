@@ -13,7 +13,9 @@ import '../data/speech_to_text_quran_recognizer.dart';
 import '../data/tasmee3_asr_settings_repository.dart';
 import '../data/tasmee3_failed_job_queue.dart';
 import '../data/tasmee3_goal_repository.dart';
+import '../data/local_tasmee3_reminder_repository.dart';
 import '../data/tasmee3_notification_service.dart';
+import '../data/tasmee3_reminder_repository.dart';
 import '../data/tasmee3_session_repository.dart';
 import '../domain/asr_connection_status.dart';
 import '../domain/asr_engine_mode.dart';
@@ -23,6 +25,7 @@ import '../domain/tasmee3_badge.dart';
 import '../domain/tasmee3_daily_goal.dart';
 import '../domain/tasmee3_daily_stats.dart';
 import '../domain/tasmee3_goal_progress.dart';
+import '../domain/tasmee3_reminder.dart';
 import '../domain/tasmee3_review_plan_item.dart';
 import '../domain/tasmee3_session_record.dart';
 import '../domain/tasmee3_user_asr_settings.dart';
@@ -35,6 +38,7 @@ import 'tasmee3_goal_controller.dart';
 import 'tasmee3_goal_service.dart';
 import 'tasmee3_pdf_font_loader.dart';
 import 'tasmee3_pdf_report_service.dart';
+import 'tasmee3_reminders_controller.dart';
 import 'tasmee3_session_report_builder.dart';
 import 'tasmee3_ui_settings.dart';
 
@@ -247,6 +251,42 @@ final tasmee3PdfReportServiceProvider =
     Provider<Tasmee3PdfReportService>((ref) {
   return Tasmee3PdfReportService(
     fontLoader: ref.watch(tasmee3PdfFontLoaderProvider),
+  );
+});
+
+final tasmee3ReminderRepositoryProvider =
+    Provider<Tasmee3ReminderRepository>((ref) {
+  return LocalTasmee3ReminderRepository();
+});
+
+final tasmee3RemindersProvider =
+    FutureProvider<List<Tasmee3Reminder>>((ref) async {
+  final repository = ref.watch(tasmee3ReminderRepositoryProvider);
+  return repository.loadReminders();
+});
+
+final tasmee3RemindersControllerProvider = StateNotifierProvider<
+    Tasmee3RemindersController, Tasmee3RemindersState>((ref) {
+  final repository = ref.watch(tasmee3ReminderRepositoryProvider);
+  final notificationService = ref.watch(tasmee3NotificationServiceProvider);
+
+  final asyncReminders = ref.watch(tasmee3RemindersProvider);
+
+  final initial = asyncReminders.maybeWhen(
+    data: (items) => items,
+    orElse: () => [
+      Tasmee3Reminder.defaultDailyGoal(),
+      Tasmee3Reminder.defaultStreakProtection(),
+      Tasmee3Reminder.defaultWeakSpotsReview(),
+      Tasmee3Reminder.defaultSmartTime(),
+      Tasmee3Reminder.defaultRamadanWird(),
+    ],
+  );
+
+  return Tasmee3RemindersController(
+    repository: repository,
+    notificationService: notificationService,
+    initialReminders: initial,
   );
 });
 

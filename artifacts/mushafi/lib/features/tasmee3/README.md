@@ -319,3 +319,30 @@ assets/fonts/NotoNaskhArabic-Bold.ttf
 
 - `Tasmee3PdfFontLoader`
 - `Tasmee3ReportPreviewScreen`
+
+## البرومبت الثالث عشر - نظام تذكيرات Production
+
+تمت إضافة:
+
+- إدارة تذكيرات متعددة.
+- تذكير هدف يومي.
+- تذكير حماية Streak.
+- تذكير مواضع الضعف.
+- تذكير ذكي (يقترح وقتاً من نشاط الجلسات).
+- تذكير ورد رمضان.
+- دعم أيام الأسبوع.
+- دعم exactAllowWhileIdle مع fallback إلى inexactAllowWhileIdle.
+- شاشة إدارة التذكيرات.
+
+## الشاشة الجديدة
+
+`Tasmee3RemindersScreen`
+
+## ملاحظات Android
+
+قد تحتاج الأجهزة الحديثة إلى:
+
+- POST_NOTIFICATIONS
+- SCHEDULE_EXACT_ALARM
+
+إذا فشل exact alarm، يستخدم التطبيق fallback إلى inexact alarm.

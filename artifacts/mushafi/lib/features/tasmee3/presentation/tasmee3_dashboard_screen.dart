@@ -6,6 +6,7 @@ import '../domain/tasmee3_goal_progress.dart';
 import 'tasmee3_badges_screen.dart';
 import 'tasmee3_goal_settings_screen.dart';
 import 'tasmee3_history_screen.dart';
+import 'tasmee3_reminders_screen.dart';
 import 'tasmee3_review_plan_screen.dart';
 import 'tasmee3_screen.dart';
 import 'widgets/tasmee3_goal_progress_card.dart';
@@ -400,6 +401,25 @@ class Tasmee3DashboardScreen extends ConsumerWidget {
                 },
                 icon: const Icon(Icons.workspace_premium_outlined),
                 label: const Text('الإنجازات'),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 10),
+        Row(
+          children: [
+            Expanded(
+              child: OutlinedButton.icon(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const Tasmee3RemindersScreen(),
+                    ),
+                  );
+                },
+                icon: const Icon(Icons.notifications_active_outlined),
+                label: const Text('التذكيرات'),
               ),
             ),
           ],
