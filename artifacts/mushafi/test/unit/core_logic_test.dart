@@ -2,7 +2,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mushafi/features/khatmah/domain/khatmah_models.dart';
 import 'package:mushafi/features/tasmee3/application/arabic_normalizer.dart';
 import 'package:mushafi/features/tasmee3/application/mistake_detection_engine.dart';
+import 'package:mushafi/features/tasmee3/domain/aligned_word.dart';
 import 'package:mushafi/features/tasmee3/domain/ayah_ref.dart';
+import 'package:mushafi/features/tasmee3/domain/forced_alignment_result.dart';
 import 'package:mushafi/features/tasmee3/domain/quran_ayah.dart';
 import 'package:mushafi/features/tasmee3/domain/tasmee3_mistake.dart';
 
@@ -37,26 +39,43 @@ void main() {
       );
     });
 
-    test('analyzeWords mirrors analyze on joined text', () {
-      const ayah = QuranAyah(
-        ref: AyahRef(surah: 112, ayah: 1),
-        textUthmani: 'قُلْ هُوَ',
+    test('analyzeAlignment maps missing and mismatch', () {
+      const alignment = ForcedAlignmentResult(
+        fullText: 'قل هي',
+        confidence: 0.8,
+        alignedWords: [
+          AlignedWord(
+            expectedWord: 'قل',
+            recognizedWord: 'قل',
+            globalWordIndex: 0,
+            startMs: 0,
+            endMs: 100,
+            confidence: 0.9,
+            status: AlignedWordStatus.correct,
+          ),
+          AlignedWord(
+            expectedWord: 'هو',
+            recognizedWord: 'هي',
+            globalWordIndex: 1,
+            startMs: 120,
+            endMs: 200,
+            confidence: 0.8,
+            status: AlignedWordStatus.mismatch,
+          ),
+        ],
       );
-      final fromWords = engine.analyzeWords(
-        expectedAyahs: const [ayah],
-        recognizedWords: const ['قل', 'هي'],
-        confidence: 0.9,
+
+      final result = engine.analyzeAlignment(
+        alignment: alignment,
+        fallbackAyahRef: const AyahRef(surah: 112, ayah: 1),
       );
-      final fromText = engine.analyze(
-        expectedAyahs: const [ayah],
-        recognizedText: 'قل هي',
-        confidence: 0.9,
-      );
-      expect(fromWords.mistakesCount, fromText.mistakesCount);
+
+      expect(result.mistakesCount, 1);
       expect(
-        fromWords.mistakes.any((e) => e.type == Tasmee3MistakeType.wrongWord),
+        result.mistakes.any((m) => m.type == Tasmee3MistakeType.wrongWord),
         isTrue,
       );
+      expect(result.hasLowConfidence, isFalse);
     });
   });
 

@@ -61,6 +61,44 @@ flutter run --dart-define=TASMEE3_ASR_ENDPOINT=http://192.168.1.10:8000/transcri
 
 إذا كان ASR المتقدم مفعلا، يتم إرسال تسجيل التلاوة إلى الخادم المحدد. يعرض التطبيق تنبيهاً للمستخدم قبل التسجيل. يجب استخدام HTTPS و API key عند النشر.
 
+## Forced Alignment
+
+تمت إضافة Forced Alignment.
+
+الفكرة:
+
+- التطبيق يرسل الصوت + كلمات الآيات المتوقعة.
+- الخادم يفرغ الصوت إلى كلمات مع timestamps.
+- الخادم يطابق الكلمات المتوقعة مع الكلمات المسموعة.
+- النتيجة ترجع لكل كلمة:
+  - correct
+  - missing
+  - mismatch
+  - lowConfidence
+
+هذا يعطي دقة أعلى من التفريغ الصوتي العام، لأن المقارنة تصبح موجهة بالنص القرآني المتوقع.
+
+## endpoint
+
+يستخدم نفس endpoint:
+
+`/transcribe`
+
+لكن الآن يستقبل:
+
+- audio
+- expectedText
+- expectedWords
+- fromSurah
+- fromAyah
+- toSurah
+- toAyah
+
+## ملاحظة
+
+Forced Alignment الحالي يعتمد على مطابقة كلمات بعد التفريغ.
+للوصول لمستوى أعلى جدا، يمكن لاحقا إضافة alignment صوتي مباشر باستخدام نماذج acoustic alignment أو wav2vec alignment.
+
 ## مكان استبدال المحرك
 
 - Fallback: `lib/features/tasmee3/data/speech_to_text_quran_recognizer.dart`

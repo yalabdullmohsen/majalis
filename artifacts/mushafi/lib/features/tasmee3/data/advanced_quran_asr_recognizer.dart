@@ -6,12 +6,14 @@ import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:record/record.dart';
 
-import '../domain/advanced_recognition_result.dart';
+import '../application/arabic_normalizer.dart';
+import '../domain/forced_alignment_result.dart';
+import '../domain/quran_ayah.dart';
+import '../domain/recitation_target.dart';
+import 'quran_forced_alignment_recognizer.dart';
 import 'quran_speech_recognizer.dart';
 
-/// Records audio locally and uploads it to a specialized Quran ASR endpoint.
-/// Requires a configured [endpoint]; otherwise use [SpeechToTextQuranRecognizer].
-class AdvancedQuranAsrRecognizer implements QuranSpeechRecognizer {
+class AdvancedQuranAsrRecognizer implements QuranForcedAlignmentRecognizer {
   final Uri endpoint;
   final String? apiKey;
   final Duration uploadTimeout;
@@ -29,6 +31,18 @@ class AdvancedQuranAsrRecognizer implements QuranSpeechRecognizer {
 
   String? _recordingPath;
   bool _initialized = false;
+
+  RecitationTarget? _target;
+  List<QuranAyah> _expectedAyahs = const [];
+
+  @override
+  void setExpectedAyahs({
+    required RecitationTarget target,
+    required List<QuranAyah> ayahs,
+  }) {
+    _target = target;
+    _expectedAyahs = ayahs;
+  }
 
   @override
   Future<bool> initialize() async {
@@ -108,8 +122,8 @@ class AdvancedQuranAsrRecognizer implements QuranSpeechRecognizer {
     }
 
     try {
-      final result = await _uploadAudio(file);
-      _controller.add(RecognizedSegment.fromAdvanced(result));
+      final result = await _uploadAudioWithExpectedText(file);
+      _controller.add(RecognizedSegment.fromAlignment(result));
     } catch (e) {
       _controller.addError(e);
     } finally {
@@ -121,7 +135,17 @@ class AdvancedQuranAsrRecognizer implements QuranSpeechRecognizer {
     }
   }
 
-  Future<AdvancedRecognitionResult> _uploadAudio(File file) async {
+  Future<ForcedAlignmentResult> _uploadAudioWithExpectedText(File file) async {
+    final target = _target;
+
+    if (target == null || _expectedAyahs.isEmpty) {
+      throw StateError('لم يتم تمرير النص المتوقع إلى محرك التسميع.');
+    }
+
+    final expectedText =
+        _expectedAyahs.map((ayah) => ayah.textUthmani).join(' ');
+    final expectedWords = ArabicNormalizer.tokenize(expectedText);
+
     final request = http.MultipartRequest('POST', endpoint);
 
     request.files.add(
@@ -132,6 +156,12 @@ class AdvancedQuranAsrRecognizer implements QuranSpeechRecognizer {
     );
 
     request.fields['language'] = 'ar';
+    request.fields['fromSurah'] = target.from.surah.toString();
+    request.fields['fromAyah'] = target.from.ayah.toString();
+    request.fields['toSurah'] = target.to.surah.toString();
+    request.fields['toAyah'] = target.to.ayah.toString();
+    request.fields['expectedText'] = ArabicNormalizer.normalize(expectedText);
+    request.fields['expectedWords'] = jsonEncode(expectedWords);
 
     if (apiKey != null && apiKey!.trim().isNotEmpty) {
       request.headers['Authorization'] = 'Bearer $apiKey';
@@ -147,6 +177,6 @@ class AdvancedQuranAsrRecognizer implements QuranSpeechRecognizer {
     }
 
     final decoded = jsonDecode(response.body) as Map<String, dynamic>;
-    return AdvancedRecognitionResult.fromJson(decoded);
+    return ForcedAlignmentResult.fromJson(decoded);
   }
 }

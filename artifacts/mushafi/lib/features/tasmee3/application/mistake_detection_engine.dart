@@ -1,4 +1,6 @@
+import '../domain/aligned_word.dart';
 import '../domain/ayah_ref.dart';
+import '../domain/forced_alignment_result.dart';
 import '../domain/quran_ayah.dart';
 import '../domain/tasmee3_mistake.dart';
 import '../domain/tasmee3_result.dart';
@@ -34,6 +36,67 @@ class MistakeDetectionEngine {
       expectedAyahs: expectedAyahs,
       recognizedText: recognizedWords.join(' '),
       confidence: confidence,
+    );
+  }
+
+  /// Prefer this when the server returns Forced Alignment word statuses.
+  Tasmee3Result analyzeAlignment({
+    required ForcedAlignmentResult alignment,
+    required AyahRef fallbackAyahRef,
+  }) {
+    final mistakes = <Tasmee3Mistake>[];
+
+    for (final word in alignment.alignedWords) {
+      if (word.status == AlignedWordStatus.correct) {
+        continue;
+      }
+
+      final Tasmee3MistakeType type;
+      switch (word.status) {
+        case AlignedWordStatus.correct:
+          continue;
+        case AlignedWordStatus.missing:
+          type = Tasmee3MistakeType.missingWord;
+          break;
+        case AlignedWordStatus.mismatch:
+          type = Tasmee3MistakeType.wrongWord;
+          break;
+        case AlignedWordStatus.lowConfidence:
+          type = Tasmee3MistakeType.lowConfidence;
+          break;
+      }
+
+      mistakes.add(
+        Tasmee3Mistake(
+          type: type,
+          ayahRef: fallbackAyahRef,
+          globalWordIndex: word.globalWordIndex,
+          wordIndexInAyah: word.globalWordIndex,
+          expectedWord: word.expectedWord,
+          recognizedWord: word.recognizedWord,
+          confidence: word.confidence,
+        ),
+      );
+    }
+
+    final expectedWords =
+        alignment.alignedWords.map((word) => word.expectedWord).toList();
+
+    final recognizedWords = alignment.alignedWords
+        .map((word) => word.recognizedWord ?? '')
+        .where((word) => word.trim().isNotEmpty)
+        .toList();
+
+    final accuracy = _calculateAccuracy(
+      expectedWordsCount: expectedWords.length,
+      mistakes: mistakes,
+    );
+
+    return Tasmee3Result(
+      expectedWords: expectedWords,
+      recognizedWords: recognizedWords,
+      mistakes: mistakes,
+      accuracy: accuracy,
     );
   }
 

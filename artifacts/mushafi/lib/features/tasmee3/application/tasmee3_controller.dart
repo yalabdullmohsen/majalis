@@ -3,9 +3,11 @@ import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../data/quran_forced_alignment_recognizer.dart';
 import '../data/quran_repository.dart';
 import '../data/quran_speech_recognizer.dart';
 import '../data/tasmee3_session_repository.dart';
+import '../domain/forced_alignment_result.dart';
 import '../domain/quran_ayah.dart';
 import '../domain/recognized_word.dart';
 import '../domain/recitation_target.dart';
@@ -147,6 +149,14 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
         return;
       }
 
+      final alignmentRecognizer = recognizer;
+      if (alignmentRecognizer is QuranForcedAlignmentRecognizer) {
+        alignmentRecognizer.setExpectedAyahs(
+          target: target,
+          ayahs: _expectedAyahs,
+        );
+      }
+
       final initialized = await recognizer.initialize();
 
       if (!initialized) {
@@ -171,7 +181,9 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
           );
 
           if (segment.isFinal) {
-            if (segment.words.isNotEmpty) {
+            if (segment.alignment != null) {
+              analyzeAlignment(segment.alignment!);
+            } else if (segment.words.isNotEmpty) {
               analyzeRecognizedWords(
                 segment.words.map((e) => e.word).toList(),
               );
@@ -224,6 +236,34 @@ class Tasmee3Controller extends StateNotifier<Tasmee3State> {
         errorMessage: e.toString(),
       );
     }
+  }
+
+  void analyzeAlignment(ForcedAlignmentResult alignment) {
+    if (_expectedAyahs.isEmpty) {
+      state = state.copyWith(
+        status: Tasmee3Status.error,
+        errorMessage: 'لا توجد آيات لتحليلها.',
+      );
+      return;
+    }
+
+    _stopSessionTimer();
+    state = state.copyWith(status: Tasmee3Status.analyzing);
+
+    final fallbackRef = state.target?.from ?? _expectedAyahs.first.ref;
+    final result = engine.analyzeAlignment(
+      alignment: alignment,
+      fallbackAyahRef: fallbackRef,
+    );
+
+    _saveSessionIfPossible(result);
+
+    state = state.copyWith(
+      status: Tasmee3Status.completed,
+      result: result,
+      confidence: alignment.confidence,
+      recognizedText: alignment.fullText,
+    );
   }
 
   void analyzeRecognizedWords(List<String> words) {

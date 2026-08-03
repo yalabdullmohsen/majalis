@@ -50,3 +50,39 @@ flutter run \
 - استخدم API key.
 - عالج التسجيلات كبيانات حساسة.
 - احذف الملفات المؤقتة بعد التحليل.
+
+## Forced Alignment
+
+الإصدار 2.0 يدعم Forced Alignment.
+
+مثال الحقول المرسلة:
+
+- `audio`: ملف الصوت
+- `language`: ar
+- `expectedText`: النص المتوقع normalized
+- `expectedWords`: JSON array للكلمات المتوقعة
+- `fromSurah`
+- `fromAyah`
+- `toSurah`
+- `toAyah`
+
+الاستجابة تحتوي:
+
+```json
+{
+  "fullText": "...",
+  "confidence": 0.91,
+  "isFinal": true,
+  "alignedWords": [
+    {
+      "expectedWord": "قل",
+      "recognizedWord": "قل",
+      "globalWordIndex": 0,
+      "startMs": 120,
+      "endMs": 400,
+      "confidence": 0.98,
+      "status": "correct"
+    }
+  ]
+}
+```

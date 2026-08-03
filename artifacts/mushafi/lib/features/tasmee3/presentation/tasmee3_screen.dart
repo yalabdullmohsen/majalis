@@ -393,7 +393,8 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
 
     for (final mistake in result.mistakes) {
       if (mistake.type == Tasmee3MistakeType.wrongWord ||
-          mistake.type == Tasmee3MistakeType.missingWord) {
+          mistake.type == Tasmee3MistakeType.missingWord ||
+          mistake.type == Tasmee3MistakeType.lowConfidence) {
         mistakesByIndex[mistake.globalWordIndex] = mistake;
       }
     }
@@ -448,6 +449,17 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
             ],
           ),
           const SizedBox(height: 12),
+          const Padding(
+            padding: EdgeInsets.only(bottom: 8),
+            child: Text(
+              'الألوان توضح نتيجة مطابقة كل كلمة مع النص المتوقع.',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Color(0xFF9A8068),
+                fontSize: 13,
+              ),
+            ),
+          ),
           Expanded(
             child: SingleChildScrollView(
               child: Wrap(
@@ -484,6 +496,10 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
         bg = Colors.orange.withValues(alpha: 0.12);
         text = Colors.orange.shade900;
         border = Colors.orange.withValues(alpha: 0.3);
+      } else if (mistake.type == Tasmee3MistakeType.lowConfidence) {
+        bg = Colors.blueGrey.withValues(alpha: 0.12);
+        text = Colors.blueGrey.shade900;
+        border = Colors.blueGrey.withValues(alpha: 0.3);
       } else {
         bg = Colors.red.withValues(alpha: 0.12);
         text = Colors.red.shade900;
