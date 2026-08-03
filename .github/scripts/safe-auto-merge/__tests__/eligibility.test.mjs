@@ -32,7 +32,7 @@ function base(over = {}) {
     mergeable: "MERGEABLE",
     mergeStateStatus: "CLEAN",
     reviewDecision: "",
-    title: "تدقيق محتوى: دفعة اختبار",
+    title: "content: دفعة اختبار آمنة",
     body: "",
     labels: ["content-safe"],
     files: [contentFile],
@@ -49,6 +49,22 @@ describe("safe-auto-merge eligibility", () => {
     assert.equal(r.prType, "content-safe");
     assert.equal(r.blockers.length, 0);
     assert.equal(r.willDeployProductionAfterMerge, true);
+  });
+
+  it("blocks majalis-content-fill automatic audit branch", () => {
+    const r = evaluateEligibility(
+      base({ headRefName: "majalis-content-fill", title: "content: from fill branch" }),
+    );
+    assert.equal(r.eligible, false);
+    assert.ok(r.blockers.some((b) => /majalis-content-fill|automatic content-audit branch/i.test(b)));
+  });
+
+  it("blocks automatic تدقيق محتوى titles", () => {
+    const r = evaluateEligibility(
+      base({ title: "تدقيق محتوى: ج-٤٩٢ — صيغ المراجع" }),
+    );
+    assert.equal(r.eligible, false);
+    assert.ok(r.blockers.some((b) => /automatic content-audit title/i.test(b)));
   });
 
   it("blocks content-safe PRs that touch non-content paths", () => {

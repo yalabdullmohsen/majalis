@@ -1,0 +1,5 @@
+# Kill switch — automatic content fill/audit is DISABLED (2026-08-03).
+# content-runner.sh exits unless CONTENT_RUNNER_ALLOW=1 is set.
+# Manual one-shot:
+#   CONTENT_RUNNER_ALLOW=1 bash scripts/content-runner.sh --once
+#   CONTENT_RUNNER_ALLOW=1 bash scripts/content-runner.sh --once-audit

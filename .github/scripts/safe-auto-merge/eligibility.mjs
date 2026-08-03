@@ -5,6 +5,8 @@ import { isIgnorablePreviewStatus } from "./checks.mjs";
 import {
   AUTH_SECURITY_PATH_PATTERNS,
   AUTH_SECURITY_TEXT,
+  AUTOMATIC_CONTENT_AUDIT_BRANCH_RE,
+  AUTOMATIC_CONTENT_AUDIT_TITLE_RE,
   BLOCKED_DANGER_PATH_LABEL,
   BLOCKING_LABELS,
   BRANCH_ALLOW_RE,
@@ -204,6 +206,16 @@ export function evaluateEligibility(input = {}) {
   }
   if (TITLE_BLOCK_RE.test(title)) {
     hardBlockers.push("title forbids auto-merge");
+  }
+  if (AUTOMATIC_CONTENT_AUDIT_BRANCH_RE.test(branch)) {
+    hardBlockers.push(
+      "automatic content-audit branch (majalis-content-fill) — التدقيق التلقائي معطّل",
+    );
+  }
+  if (AUTOMATIC_CONTENT_AUDIT_TITLE_RE.test(title)) {
+    hardBlockers.push(
+      "automatic content-audit title — التدقيق التلقائي معطّل (شغّل يدويًا عبر فرع cursor/… إن لزم)",
+    );
   }
   if (labels.includes(RELEASE_TRAIN_LABEL)) {
     hardBlockers.push("labeled release-train-ready (owned by scheduled train)");

@@ -22,6 +22,8 @@ import {
   SAFE_AUTO_MERGE_LABEL,
   SAFE_DOMAIN_LABELS,
   SAFE_LABELS,
+  AUTOMATIC_CONTENT_AUDIT_BRANCH_RE,
+  AUTOMATIC_CONTENT_AUDIT_TITLE_RE,
 } from "./constants.mjs";
 
 function usage() {
@@ -153,6 +155,20 @@ function findExistingReportComment(pr) {
 function cmdReport(args) {
   if (!args.pr) throw new Error("--pr required");
   const { prJson, checks } = loadPr(args.pr);
+
+  const head = String(prJson.headRefName || "");
+  const title = String(prJson.title || "");
+  if (
+    AUTOMATIC_CONTENT_AUDIT_BRANCH_RE.test(head) ||
+    AUTOMATIC_CONTENT_AUDIT_TITLE_RE.test(title)
+  ) {
+    console.log(
+      "skip report/post: automatic content-audit PR (التدقيق التلقائي معطّل)",
+    );
+    process.exitCode = 0;
+    return;
+  }
+
   // Report should show check status without requiring all green for the document itself
   const result = evaluateEligibility(
     toEvalInput(prJson, checks, { ...args, noChecks: args.noChecks }),
