@@ -44,6 +44,19 @@ Checklist:
 Important:
 Verify all privacy answers against the actual app behavior and third-party SDKs before submission.
 
+## Store Release Materials
+
+Release and store submission materials:
+
+- `store_assets/app_metadata.md`
+- `store_assets/google_play/`
+- `store_assets/app_store/`
+- `store_assets/legal/`
+- `store_assets/screenshots/`
+- `STORE_SUBMISSION_CHECKLIST.md`
+
+Before submitting to stores, verify all privacy answers against the actual application behavior and third-party SDKs.
+
 ## البنية
 
 Clean Architecture:

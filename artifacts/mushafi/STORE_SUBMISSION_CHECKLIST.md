@@ -61,3 +61,23 @@
 - [ ] release_check.sh passed.
 - [ ] Android release build passed.
 - [ ] iOS release build passed.
+
+## Final Metadata
+
+- [ ] `store_assets/app_metadata.md` reviewed.
+- [ ] `privacy_policy_web.md` hosted publicly.
+- [ ] `terms_and_disclaimer.md` reviewed.
+- [ ] Google Play release notes ready.
+- [ ] App Store What's New ready.
+- [ ] Screenshot plan ready.
+- [ ] Icon checklist completed.
+- [ ] Review risk checklist completed.
+
+## Testing Tracks
+
+- [ ] Google Play Internal testing completed.
+- [ ] TestFlight internal testing completed.
+- [ ] Crash-free smoke test completed.
+- [ ] Offline behavior tested.
+- [ ] Server disabled behavior tested.
+- [ ] Server enabled behavior tested.

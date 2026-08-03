@@ -79,3 +79,8 @@ Before submission, verify:
 - Third-party libraries.
 - Whether server logs store any user data.
 - Whether audio is retained server-side.
+
+## SDK scan note (2026-08-04)
+
+No analytics, advertising, or tracking SDKs detected in `pubspec.yaml` at time of review.
+Local on-device `Tasmee3AnalyticsService` only. Update this draft if SDKs are added.

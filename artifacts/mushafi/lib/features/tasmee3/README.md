@@ -681,3 +681,7 @@ dart run scripts/check_quran_asset.dart
 ## البرومبت التاسع والعشرون - مواد رفع المتاجر
 
 تمت إضافة مجلد `store_assets/` مع أوصاف Google Play و App Store، مسودات الخصوصية، صلاحيات، لقطات، و`STORE_SUBMISSION_CHECKLIST.md`.
+
+## البرومبت الثلاثون - مرحلة الرفع الفعلي
+
+تمت إضافة metadata النهائية، privacy_policy_web، terms، Internal/TestFlight checklists، screenshot/icon plans، release notes، و`final_submission_commands.md`.

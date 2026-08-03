@@ -61,4 +61,9 @@ If any advertising/analytics SDK is added, re-evaluate.
 ## Privacy Policy URL
 
 A public privacy policy URL is required for App Store submission.
-Use PRIVACY.md as the basis for a hosted web page.
+Use `store_assets/legal/privacy_policy_web.md` as the basis for a hosted web page.
+
+## SDK scan note (2026-08-04)
+
+No analytics, advertising, or tracking SDKs detected in `pubspec.yaml` at time of review.
+Local on-device stats only. Update App Privacy answers if SDKs are added later.
