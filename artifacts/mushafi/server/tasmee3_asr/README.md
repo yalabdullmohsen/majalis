@@ -256,3 +256,54 @@ iOS يرسل PCM frames عبر EventChannel إلى Flutter ثم binary frames إ
 
 الخادم يحول PCM إلى WAV مؤقتا قبل ASR.
 إذا كان النص فارغاً يُرسل partial/final فارغ وليس error.
+
+## Production Hardening
+
+تمت إضافة:
+
+- إعدادات مركزية عبر `settings.py`
+- Auth عبر API key
+- Rate limiting بسيط
+- Safe logging بدون حفظ الصوت أو طباعة API key
+- Audio validation
+- Temporary files cleanup
+- Health metrics
+- Dockerfile production
+- Docker Compose
+- WebSocket PCM و m4a chunks compatibility
+- دعم اختياري لـ `faster-whisper` عبر `TASMEE3_ASR_ENGINE=faster_whisper` إن كان مثبتاً
+
+## Environment Variables
+
+```bash
+TASMEE3_ASR_API_KEY=
+TASMEE3_ASR_MODEL=small
+TASMEE3_ASR_DEVICE=cpu
+TASMEE3_ASR_ENGINE=whisper_timestamped
+TASMEE3_RATE_LIMIT_PER_MINUTE=60
+TASMEE3_MIN_AUDIO_BYTES=1200
+TASMEE3_MAX_AUDIO_BYTES=25000000
+TASMEE3_MIN_AUDIO_DURATION_SECONDS=1.2
+TASMEE3_MAX_AUDIO_DURATION_SECONDS=180
+TASMEE3_LIVE_MIN_INTERVAL=2.5
+TASMEE3_LOG_LEVEL=INFO
+TASMEE3_TEMP_DIR=
+```
+
+## Docker Compose
+
+```bash
+cd server/tasmee3_asr
+docker compose up --build
+```
+
+## Health
+
+```bash
+curl http://localhost:8000/health
+```
+
+## Privacy
+
+الخادم لا يحفظ الصوت بشكل دائم. الملفات المؤقتة تحذف بعد التحليل.
+لا تُطبع التسجيلات أو النص الكامل أو API key في logs.

@@ -1,29 +1,46 @@
 import base64
 import json
 import os
-import re
-import subprocess
-import tempfile
 import time
-import wave
 from collections import deque
-from dataclasses import dataclass
-from typing import Any, Dict, List, Optional, Tuple
+from typing import List, Optional
 
-import whisper_timestamped as whisper
-from fastapi import FastAPI, File, Form, Header, HTTPException, UploadFile, WebSocket, WebSocketDisconnect
-from fastapi.middleware.cors import CORSMiddleware
-
-API_KEY = os.getenv("TASMEE3_ASR_API_KEY", "")
-MODEL_NAME = os.getenv("TASMEE3_ASR_MODEL", "small")
-DEVICE = os.getenv("TASMEE3_ASR_DEVICE", "cpu")
-LOW_CONFIDENCE_THRESHOLD = float(os.getenv("TASMEE3_LOW_CONFIDENCE", "0.55"))
-MIN_AUDIO_BYTES = int(os.getenv("TASMEE3_MIN_AUDIO_BYTES", "1200"))
-MIN_AUDIO_DURATION_SECONDS = float(
-    os.getenv("TASMEE3_MIN_AUDIO_DURATION_SECONDS", "1.2")
+from fastapi import (
+    FastAPI,
+    File,
+    Form,
+    Header,
+    HTTPException,
+    Request,
+    UploadFile,
+    WebSocket,
+    WebSocketDisconnect,
 )
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 
-app = FastAPI(title="Tasmee3 ASR Server", version="3.0.0")
+from alignment_utils import (
+    align_with_edit_distance,
+    build_ayah_scores,
+    build_expected_map,
+    build_weak_spots,
+)
+from arabic_utils import normalize_arabic, tokenize
+from asr_engine import transcribe_file
+from audio_utils import (
+    safe_remove,
+    temp_file_path,
+    validate_audio_file,
+    write_chunks_to_file,
+    write_pcm_to_wav,
+)
+from safe_logging import configure_logging, logger, new_request_id, timed_operation
+from security import check_auth_header, check_rate_limit
+from settings import settings
+
+configure_logging()
+
+app = FastAPI(title="Tasmee3 ASR Server", version="4.0.0")
 
 app.add_middleware(
     CORSMiddleware,
@@ -33,518 +50,30 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-_model = None
 
-
-def get_model():
-    global _model
-    if _model is None:
-        _model = whisper.load_model(MODEL_NAME, device=DEVICE)
-    return _model
-
-
-def get_audio_duration_seconds(path: str) -> float:
-    try:
-        result = subprocess.run(
-            [
-                "ffprobe",
-                "-v",
-                "error",
-                "-show_entries",
-                "format=duration",
-                "-of",
-                "default=noprint_wrappers=1:nokey=1",
-                path,
-            ],
-            capture_output=True,
-            text=True,
-            check=False,
-        )
-
-        if result.returncode != 0:
-            return 0.0
-
-        return float(result.stdout.strip())
-    except Exception:
-        return 0.0
-
-
-def check_auth(authorization: Optional[str]):
-    if not API_KEY:
-        return
-
-    if not authorization:
-        raise HTTPException(status_code=401, detail="Missing Authorization header")
-
-    expected = f"Bearer {API_KEY}"
-    if authorization != expected:
-        raise HTTPException(status_code=403, detail="Invalid API key")
-
-
-_TASHKEEL_RE = re.compile(r"[\u0610-\u061A\u064B-\u065F\u0670\u06D6-\u06ED]")
-_NON_ARABIC_RE = re.compile(r"[^\u0621-\u064A\s]")
-_SPACES_RE = re.compile(r"\s+")
-
-
-def normalize_arabic(text: str) -> str:
-    text = text.strip()
-    text = text.replace("ـ", "")
-    text = _TASHKEEL_RE.sub("", text)
-
-    text = text.replace("ٱ", "ا")
-    text = text.replace("آ", "ا")
-    text = text.replace("أ", "ا")
-    text = text.replace("إ", "ا")
-
-    text = text.replace("ى", "ي")
-    text = text.replace("ؤ", "و")
-    text = text.replace("ئ", "ي")
-    text = text.replace("ة", "ه")
-
-    text = _NON_ARABIC_RE.sub(" ", text)
-    text = _SPACES_RE.sub(" ", text)
-
-    return text.strip()
-
-
-def tokenize(text: str) -> List[str]:
-    normalized = normalize_arabic(text)
-    if not normalized:
-        return []
-    return [word for word in normalized.split(" ") if word.strip()]
-
-
-def word_distance(a: str, b: str) -> int:
-    if a == b:
-        return 0
-
-    rows = len(a) + 1
-    cols = len(b) + 1
-
-    dp = [[0 for _ in range(cols)] for _ in range(rows)]
-
-    for i in range(rows):
-        dp[i][0] = i
-
-    for j in range(cols):
-        dp[0][j] = j
-
-    for i in range(1, rows):
-        for j in range(1, cols):
-            cost = 0 if a[i - 1] == b[j - 1] else 1
-
-            dp[i][j] = min(
-                dp[i - 1][j] + 1,
-                dp[i][j - 1] + 1,
-                dp[i - 1][j - 1] + cost,
-            )
-
-    return dp[-1][-1]
-
-
-def words_are_close(expected: str, recognized: str) -> bool:
-    if expected == recognized:
-        return True
-
-    if not expected or not recognized:
-        return False
-
-    distance = word_distance(expected, recognized)
-    max_len = max(len(expected), len(recognized))
-
-    if max_len <= 3:
-        return distance == 1
-
-    ratio = distance / max_len
-    return ratio <= 0.34
-
-
-def extract_words(result: Dict[str, Any]) -> List[Dict[str, Any]]:
-    words: List[Dict[str, Any]] = []
-
-    for segment in result.get("segments", []):
-        for word in segment.get("words", []):
-            text = str(word.get("text", word.get("word", ""))).strip()
-            if not text:
-                continue
-
-            normalized = normalize_arabic(text)
-
-            if not normalized:
-                continue
-
-            start = float(word.get("start", 0.0))
-            end = float(word.get("end", 0.0))
-            confidence = float(word.get("confidence", word.get("probability", 0.0)))
-
-            words.append(
-                {
-                    "word": normalized,
-                    "originalWord": text,
-                    "startMs": int(start * 1000),
-                    "endMs": int(end * 1000),
-                    "confidence": confidence,
-                }
-            )
-
-    return words
-
-
-def write_live_chunks_to_file(chunks: list[bytes], suffix: str = ".m4a") -> str:
-    temp = tempfile.NamedTemporaryFile(delete=False, suffix=suffix)
-
-    try:
-        for chunk in chunks:
-            temp.write(chunk)
-        temp.flush()
-        return temp.name
-    finally:
-        temp.close()
-
-
-def write_pcm_to_wav(
-    pcm_bytes: bytes,
-    sample_rate: int = 16000,
-    channels: int = 1,
-    sample_width: int = 2,
-) -> str:
-    temp = tempfile.NamedTemporaryFile(delete=False, suffix=".wav")
-    temp_path = temp.name
-    temp.close()
-
-    with wave.open(temp_path, "wb") as wav_file:
-        wav_file.setnchannels(channels)
-        wav_file.setsampwidth(sample_width)
-        wav_file.setframerate(sample_rate)
-        wav_file.writeframes(pcm_bytes)
-
-    return temp_path
-
-
-def transcribe_live_file(path: str, language: str = "ar") -> dict:
-    model = get_model()
-
-    result = whisper.transcribe(
-        model,
-        path,
-        language=language,
-        vad=True,
-        detect_disfluencies=False,
-        condition_on_previous_text=False,
-        temperature=0.0,
-    )
-
-    words = extract_words(result)
-    text = " ".join([word["word"] for word in words]).strip()
-
-    if not text:
-        text = normalize_arabic(str(result.get("text", "")).strip())
-
-    confidence = (
-        sum(float(word["confidence"]) for word in words) / len(words)
-        if words
-        else 0.0
-    )
-
-    return {
-        "text": text,
-        "confidence": confidence,
-        "words": [
-            {
-                "word": word["word"],
-                "startMs": word["startMs"],
-                "endMs": word["endMs"],
-                "confidence": word["confidence"],
-            }
-            for word in words
-        ],
-    }
-
-
-@dataclass
-class AlignmentCell:
-    cost: float
-    operation: str
-
-
-def align_with_edit_distance(
-    expected_map: List[Dict[str, Any]],
-    recognized_words: List[Dict[str, Any]],
-) -> List[Dict[str, Any]]:
-    n = len(expected_map)
-    m = len(recognized_words)
-
-    dp: List[List[float]] = [[0.0] * (m + 1) for _ in range(n + 1)]
-    op: List[List[str]] = [[""] * (m + 1) for _ in range(n + 1)]
-
-    for i in range(1, n + 1):
-        dp[i][0] = float(i)
-        op[i][0] = "missing"
-
-    for j in range(1, m + 1):
-        dp[0][j] = float(j)
-        op[0][j] = "extra"
-
-    for i in range(1, n + 1):
-        expected_word = expected_map[i - 1]["word"]
-
-        for j in range(1, m + 1):
-            recognized_word = recognized_words[j - 1]["word"]
-
-            if expected_word == recognized_word:
-                sub_cost = 0.0
-            elif words_are_close(expected_word, recognized_word):
-                sub_cost = 0.45
-            else:
-                sub_cost = 1.0
-
-            substitution = dp[i - 1][j - 1] + sub_cost
-            deletion = dp[i - 1][j] + 1.0
-            insertion = dp[i][j - 1] + 1.0
-
-            best = min(substitution, deletion, insertion)
-            dp[i][j] = best
-
-            if best == substitution:
-                op[i][j] = "match" if sub_cost == 0.0 else "mismatch"
-            elif best == deletion:
-                op[i][j] = "missing"
-            else:
-                op[i][j] = "extra"
-
-    aligned_reversed: List[Dict[str, Any]] = []
-
-    i = n
-    j = m
-
-    while i > 0 or j > 0:
-        operation = op[i][j] if i <= n and j <= m else ""
-
-        if i > 0 and j > 0 and operation in ("match", "mismatch"):
-            expected_item = expected_map[i - 1]
-            recognized = recognized_words[j - 1]
-            confidence = float(recognized.get("confidence", 0.0))
-
-            if operation == "match":
-                status = "correct"
-                if confidence > 0 and confidence < LOW_CONFIDENCE_THRESHOLD:
-                    status = "lowConfidence"
-            else:
-                status = "mismatch"
-
-            aligned_reversed.append(
-                {
-                    "expectedWord": expected_item["word"],
-                    "recognizedWord": recognized["word"],
-                    "globalWordIndex": expected_item["globalWordIndex"],
-                    "wordIndexInAyah": expected_item["wordIndexInAyah"],
-                    "surah": expected_item["surah"],
-                    "ayah": expected_item["ayah"],
-                    "startMs": recognized.get("startMs"),
-                    "endMs": recognized.get("endMs"),
-                    "confidence": confidence,
-                    "status": status,
-                }
-            )
-
-            i -= 1
-            j -= 1
-            continue
-
-        if i > 0 and (operation == "missing" or j == 0):
-            expected_item = expected_map[i - 1]
-
-            aligned_reversed.append(
-                {
-                    "expectedWord": expected_item["word"],
-                    "recognizedWord": None,
-                    "globalWordIndex": expected_item["globalWordIndex"],
-                    "wordIndexInAyah": expected_item["wordIndexInAyah"],
-                    "surah": expected_item["surah"],
-                    "ayah": expected_item["ayah"],
-                    "startMs": None,
-                    "endMs": None,
-                    "confidence": 0.0,
-                    "status": "missing",
-                }
-            )
-
-            i -= 1
-            continue
-
-        if j > 0:
-            j -= 1
-            continue
-
-        break
-
-    return list(reversed(aligned_reversed))
-
-
-def build_expected_map(
-    expected_words: List[str],
-    expected_word_map_raw: str,
-    from_surah: int,
-    from_ayah: int,
-) -> List[Dict[str, Any]]:
-    if expected_word_map_raw:
+@app.middleware("http")
+async def rate_limit_middleware(request: Request, call_next):
+    if request.url.path not in ["/health"]:
         try:
-            decoded = json.loads(expected_word_map_raw)
-            if isinstance(decoded, list):
-                result = []
-
-                for index, item in enumerate(decoded):
-                    if not isinstance(item, dict):
-                        continue
-
-                    word = normalize_arabic(str(item.get("word", "")))
-
-                    if not word:
-                        continue
-
-                    result.append(
-                        {
-                            "word": word,
-                            "globalWordIndex": int(item.get("globalWordIndex", index)),
-                            "wordIndexInAyah": int(item.get("wordIndexInAyah", index)),
-                            "surah": int(item.get("surah", from_surah)),
-                            "ayah": int(item.get("ayah", from_ayah)),
-                        }
-                    )
-
-                if result:
-                    return result
-        except json.JSONDecodeError:
-            pass
-
-    return [
-        {
-            "word": word,
-            "globalWordIndex": index,
-            "wordIndexInAyah": index,
-            "surah": from_surah,
-            "ayah": from_ayah,
-        }
-        for index, word in enumerate(expected_words)
-    ]
-
-
-def build_ayah_scores(aligned_words: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-    grouped: Dict[Tuple[int, int], List[Dict[str, Any]]] = {}
-
-    for word in aligned_words:
-        key = (int(word.get("surah", 0)), int(word.get("ayah", 0)))
-        grouped.setdefault(key, []).append(word)
-
-    scores: List[Dict[str, Any]] = []
-
-    for (surah, ayah), words in grouped.items():
-        total = len(words)
-        correct = sum(1 for w in words if w["status"] == "correct")
-        missing = sum(1 for w in words if w["status"] == "missing")
-        wrong = sum(1 for w in words if w["status"] == "mismatch")
-        low = sum(1 for w in words if w["status"] == "lowConfidence")
-
-        accuracy = 0.0 if total == 0 else correct / total
-
-        scores.append(
-            {
-                "surah": surah,
-                "ayah": ayah,
-                "totalWords": total,
-                "correctWords": correct,
-                "missingWords": missing,
-                "wrongWords": wrong,
-                "lowConfidenceWords": low,
-                "accuracy": accuracy,
-            }
-        )
-
-    scores.sort(key=lambda item: (item["surah"], item["ayah"]))
-    return scores
-
-
-def build_weak_spots(ayah_scores: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
-    weak_spots: List[Dict[str, Any]] = []
-
-    for score in ayah_scores:
-        surah = int(score["surah"])
-        ayah = int(score["ayah"])
-        accuracy = float(score["accuracy"])
-        missing = int(score["missingWords"])
-        wrong = int(score["wrongWords"])
-        low = int(score["lowConfidenceWords"])
-
-        if accuracy < 0.75:
-            weak_spots.append(
-                {
-                    "surah": surah,
-                    "ayah": ayah,
-                    "type": "lowAccuracy",
-                    "title": "دقة منخفضة في الآية",
-                    "description": f"الدقة التقريبية في هذه الآية {round(accuracy * 100)}%.",
-                    "severity": 3,
-                }
-            )
-        elif accuracy < 0.85:
-            weak_spots.append(
-                {
-                    "surah": surah,
-                    "ayah": ayah,
-                    "type": "lowAccuracy",
-                    "title": "تحتاج الآية إلى مراجعة",
-                    "description": f"الدقة التقريبية في هذه الآية {round(accuracy * 100)}%.",
-                    "severity": 2,
-                }
+            check_rate_limit(request)
+        except HTTPException as exc:
+            return JSONResponse(
+                status_code=exc.status_code,
+                content={"detail": exc.detail},
             )
 
-        if missing > 0:
-            weak_spots.append(
-                {
-                    "surah": surah,
-                    "ayah": ayah,
-                    "type": "missingWords",
-                    "title": "كلمات ناقصة",
-                    "description": f"يوجد {missing} كلمة ناقصة في الآية.",
-                    "severity": 3,
-                }
-            )
-
-        if wrong > 0:
-            weak_spots.append(
-                {
-                    "surah": surah,
-                    "ayah": ayah,
-                    "type": "repeatedMistake",
-                    "title": "كلمات غير مطابقة",
-                    "description": f"يوجد {wrong} كلمة غير مطابقة في الآية.",
-                    "severity": 2,
-                }
-            )
-
-        if low > 0:
-            weak_spots.append(
-                {
-                    "surah": surah,
-                    "ayah": ayah,
-                    "type": "lowConfidence",
-                    "title": "جودة تعرف منخفضة",
-                    "description": f"يوجد {low} كلمة بثقة منخفضة. حاول القراءة في مكان أهدأ.",
-                    "severity": 1,
-                }
-            )
-
-    weak_spots.sort(key=lambda item: item["severity"], reverse=True)
-    return weak_spots[:10]
+    response = await call_next(request)
+    return response
 
 
 @app.get("/health")
 def health():
     return {
         "status": "ok",
-        "model": MODEL_NAME,
-        "device": DEVICE,
-        "version": "3.0.0",
+        "version": "4.0.0",
+        "model": settings.model_name,
+        "device": settings.device,
+        "engine": settings.engine,
         "features": [
             "transcription",
             "word_timestamps",
@@ -552,16 +81,27 @@ def health():
             "edit_distance_alignment",
             "ayah_scores",
             "weak_spots",
-            "audio_validation",
+            "websocket_live",
+            "pcm_streaming",
+            "rate_limiting",
+            "safe_logging",
+            "optional_faster_whisper",
         ],
-        "lowConfidenceThreshold": LOW_CONFIDENCE_THRESHOLD,
-        "minAudioBytes": MIN_AUDIO_BYTES,
-        "minAudioDurationSeconds": MIN_AUDIO_DURATION_SECONDS,
+        "limits": {
+            "minAudioBytes": settings.min_audio_bytes,
+            "maxAudioBytes": settings.max_audio_bytes,
+            "minAudioDurationSeconds": settings.min_audio_duration_seconds,
+            "maxAudioDurationSeconds": settings.max_audio_duration_seconds,
+            "rateLimitPerMinute": settings.rate_limit_per_minute,
+        },
+        "lowConfidenceThreshold": settings.low_confidence_threshold,
+        "authRequired": bool(settings.api_key),
     }
 
 
 @app.post("/transcribe")
 async def transcribe(
+    request: Request,
     audio: UploadFile = File(...),
     language: str = Form("ar"),
     expectedText: str = Form(""),
@@ -573,60 +113,37 @@ async def transcribe(
     toAyah: int = Form(0),
     authorization: Optional[str] = Header(default=None),
 ):
-    check_auth(authorization)
+    request_id = new_request_id()
+    check_auth_header(authorization)
 
     suffix = os.path.splitext(audio.filename or "audio.m4a")[1] or ".m4a"
-
-    with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as temp:
-        temp.write(await audio.read())
-        temp_path = temp.name
+    temp_path = temp_file_path(suffix)
 
     try:
-        file_size = os.path.getsize(temp_path)
+        with timed_operation("save_upload", request_id):
+            with open(temp_path, "wb") as file:
+                file.write(await audio.read())
 
-        if file_size < MIN_AUDIO_BYTES:
-            raise HTTPException(
-                status_code=400,
-                detail="Audio file is too small or empty",
-            )
+        audio_meta = validate_audio_file(temp_path)
 
-        duration = get_audio_duration_seconds(temp_path)
+        with timed_operation("asr_transcribe", request_id):
+            asr_result = transcribe_file(temp_path, language=language)
 
-        if duration < MIN_AUDIO_DURATION_SECONDS:
-            raise HTTPException(
-                status_code=400,
-                detail="Audio duration is too short",
-            )
-
-        model = get_model()
-
-        result = whisper.transcribe(
-            model,
-            temp_path,
-            language=language,
-            vad=True,
-            detect_disfluencies=False,
-            condition_on_previous_text=False,
-            temperature=0.0,
-        )
-
-        recognized_words = extract_words(result)
-        full_text = " ".join([word["word"] for word in recognized_words]).strip()
-
-        if not full_text:
-            full_text = normalize_arabic(str(result.get("text", "")).strip())
-
-        if recognized_words:
-            confidence = sum(float(word["confidence"]) for word in recognized_words) / len(
-                recognized_words
-            )
-        else:
-            confidence = 0.0
+        recognized_words = [
+            {
+                "word": word["word"],
+                "startMs": word["startMs"],
+                "endMs": word["endMs"],
+                "confidence": word["confidence"],
+            }
+            for word in asr_result["words"]
+        ]
 
         parsed_expected_words: List[str] = []
 
         try:
             decoded_expected = json.loads(expectedWords)
+
             if isinstance(decoded_expected, list):
                 parsed_expected_words = [
                     normalize_arabic(str(word))
@@ -647,72 +164,68 @@ async def transcribe(
         )
 
         if expected_map:
-            aligned_words = align_with_edit_distance(
-                expected_map=expected_map,
-                recognized_words=recognized_words,
-            )
+            with timed_operation("alignment", request_id):
+                aligned_words = align_with_edit_distance(
+                    expected_map=expected_map,
+                    recognized_words=recognized_words,
+                )
         else:
             aligned_words = []
 
         ayah_scores = build_ayah_scores(aligned_words)
         weak_spots = build_weak_spots(ayah_scores)
 
+        # Privacy: log counts only — never full transcript or API key.
+        logger.info(
+            "request_id=%s endpoint=/transcribe status=success duration=%.2f words=%s aligned=%s",
+            request_id,
+            audio_meta["durationSeconds"],
+            len(recognized_words),
+            len(aligned_words),
+        )
+
         return {
-            "fullText": full_text,
-            "confidence": confidence,
+            "fullText": asr_result["text"],
+            "confidence": asr_result["confidence"],
             "isFinal": True,
             "meta": {
                 "fromSurah": fromSurah,
                 "fromAyah": fromAyah,
                 "toSurah": toSurah,
                 "toAyah": toAyah,
-                "audio": {
-                    "durationSeconds": duration,
-                    "fileSizeBytes": file_size,
-                },
+                "audio": audio_meta,
+                "requestId": request_id,
+                "engine": asr_result.get("engine", settings.engine),
             },
-            "words": [
-                {
-                    "word": word["word"],
-                    "startMs": word["startMs"],
-                    "endMs": word["endMs"],
-                    "confidence": word["confidence"],
-                }
-                for word in recognized_words
-            ],
+            "words": recognized_words,
             "alignedWords": aligned_words,
             "ayahScores": ayah_scores,
             "weakSpots": weak_spots,
         }
 
     finally:
-        try:
-            os.remove(temp_path)
-        except OSError:
-            pass
+        safe_remove(temp_path)
 
 
 @app.websocket("/ws/live")
 async def live_asr(websocket: WebSocket):
-    """Live ASR: native PCM binary frames and legacy m4a chunks. Not a /transcribe replacement."""
     await websocket.accept()
 
-    # Legacy m4a chunk mode
-    chunks: deque[bytes] = deque(maxlen=4)
-    all_chunks: list[bytes] = []
-
-    # Native PCM mode
     pcm_buffer = bytearray()
     recent_pcm_buffers: deque[bytes] = deque(maxlen=6)
-    started_pcm = False
+
+    m4a_chunks: deque[bytes] = deque(maxlen=4)
+    all_m4a_chunks: List[bytes] = []
+
+    language = "ar"
     sample_rate = 16000
     channels = 1
     bits_per_sample = 16
 
-    language = "ar"
     last_transcribe_at = 0.0
-    min_interval_seconds = float(os.getenv("TASMEE3_LIVE_MIN_INTERVAL", "2.5"))
     last_sequence = 0
+    started_pcm = False
+    started_m4a = False
 
     try:
         await websocket.send_json(
@@ -738,14 +251,13 @@ async def live_asr(websocket: WebSocket):
 
                 now = time.time()
 
-                if now - last_transcribe_at < min_interval_seconds:
+                if now - last_transcribe_at < settings.live_min_interval_seconds:
                     continue
 
                 last_transcribe_at = now
 
                 recent_bytes = b"".join(recent_pcm_buffers)
 
-                # ~1 second of 16-bit mono PCM at 16kHz = 32000 bytes
                 if len(recent_bytes) < sample_rate * 2:
                     continue
 
@@ -757,9 +269,10 @@ async def live_asr(websocket: WebSocket):
                 )
 
                 try:
-                    live_result = transcribe_live_file(wav_path, language=language)
+                    live_result = transcribe_file(wav_path, language=language)
+                    text = live_result.get("text", "") or ""
 
-                    if not live_result["text"]:
+                    if not text:
                         await websocket.send_json(
                             {
                                 "type": "partial",
@@ -773,7 +286,7 @@ async def live_asr(websocket: WebSocket):
                         await websocket.send_json(
                             {
                                 "type": "partial",
-                                "text": live_result["text"],
+                                "text": text,
                                 "confidence": live_result["confidence"],
                                 "words": live_result["words"],
                                 "sequence": last_sequence,
@@ -788,10 +301,7 @@ async def live_asr(websocket: WebSocket):
                         }
                     )
                 finally:
-                    try:
-                        os.remove(wav_path)
-                    except OSError:
-                        pass
+                    safe_remove(wav_path)
 
                 continue
 
@@ -815,6 +325,7 @@ async def live_asr(websocket: WebSocket):
 
             if msg_type == "startPcm":
                 started_pcm = True
+                started_m4a = False
                 language = str(payload.get("language", "ar"))
                 sample_rate = int(payload.get("sampleRate", 16000))
                 channels = int(payload.get("channels", 1))
@@ -847,10 +358,7 @@ async def live_asr(websocket: WebSocket):
                     )
 
                     try:
-                        final_result = transcribe_live_file(
-                            wav_path,
-                            language=language,
-                        )
+                        final_result = transcribe_file(wav_path, language=language)
 
                         await websocket.send_json(
                             {
@@ -872,10 +380,7 @@ async def live_asr(websocket: WebSocket):
                             }
                         )
                     finally:
-                        try:
-                            os.remove(wav_path)
-                        except OSError:
-                            pass
+                        safe_remove(wav_path)
                 else:
                     await websocket.send_json(
                         {
@@ -890,11 +395,11 @@ async def live_asr(websocket: WebSocket):
                 break
 
             elif msg_type == "start":
-                # Legacy m4a chunk protocol
+                started_m4a = True
                 started_pcm = False
                 language = str(payload.get("language", "ar"))
-                chunks.clear()
-                all_chunks.clear()
+                m4a_chunks.clear()
+                all_m4a_chunks.clear()
                 last_transcribe_at = 0.0
 
                 await websocket.send_json(
@@ -908,6 +413,9 @@ async def live_asr(websocket: WebSocket):
                 )
 
             elif msg_type == "audioChunk":
+                if not started_m4a:
+                    continue
+
                 data = payload.get("data", "")
                 fmt = payload.get("format", "m4a")
 
@@ -926,23 +434,25 @@ async def live_asr(websocket: WebSocket):
                     )
                     continue
 
-                chunks.append(chunk)
-                all_chunks.append(chunk)
+                m4a_chunks.append(chunk)
+                all_m4a_chunks.append(chunk)
 
                 now = time.time()
 
-                if now - last_transcribe_at < min_interval_seconds:
+                if now - last_transcribe_at < settings.live_min_interval_seconds:
                     continue
 
                 last_transcribe_at = now
 
+                # Prefer latest standalone m4a chunk (concat of containers is unreliable).
                 suffix = ".m4a" if fmt == "m4a" else ".wav"
-                temp_path = write_live_chunks_to_file([chunk], suffix=suffix)
+                temp_path = write_chunks_to_file([chunk], suffix=suffix)
 
                 try:
-                    live_result = transcribe_live_file(temp_path, language=language)
+                    live_result = transcribe_file(temp_path, language=language)
+                    text = live_result.get("text", "") or ""
 
-                    if not live_result["text"]:
+                    if not text:
                         await websocket.send_json(
                             {
                                 "type": "partial",
@@ -956,7 +466,7 @@ async def live_asr(websocket: WebSocket):
                         await websocket.send_json(
                             {
                                 "type": "partial",
-                                "text": live_result["text"],
+                                "text": text,
                                 "confidence": live_result["confidence"],
                                 "words": live_result["words"],
                                 "sequence": last_sequence,
@@ -971,47 +481,36 @@ async def live_asr(websocket: WebSocket):
                         }
                     )
                 finally:
-                    try:
-                        os.remove(temp_path)
-                    except OSError:
-                        pass
+                    safe_remove(temp_path)
 
             elif msg_type == "stop":
-                if all_chunks:
-                    texts: list[str] = []
-                    words_out: list[dict] = []
-                    confidences: list[float] = []
+                if all_m4a_chunks:
+                    texts: List[str] = []
+                    words_out: List[dict] = []
+                    confidences: List[float] = []
 
-                    for chunk in all_chunks:
-                        temp_path = write_live_chunks_to_file(
-                            [chunk], suffix=".m4a"
-                        )
+                    for chunk in all_m4a_chunks:
+                        temp_path = write_chunks_to_file([chunk], suffix=".m4a")
                         try:
-                            part = transcribe_live_file(
-                                temp_path, language=language
-                            )
-                            if part["text"]:
+                            part = transcribe_file(temp_path, language=language)
+                            if part.get("text"):
                                 texts.append(part["text"])
-                            words_out.extend(part["words"])
-                            confidences.append(float(part["confidence"]))
+                            words_out.extend(part.get("words", []) or [])
+                            confidences.append(float(part.get("confidence", 0.0) or 0.0))
                         except Exception:
                             pass
                         finally:
-                            try:
-                                os.remove(temp_path)
-                            except OSError:
-                                pass
-
-                    final_text = " ".join(texts).strip()
-                    final_confidence = (
-                        sum(confidences) / len(confidences) if confidences else 0.0
-                    )
+                            safe_remove(temp_path)
 
                     await websocket.send_json(
                         {
                             "type": "final",
-                            "text": final_text,
-                            "confidence": final_confidence,
+                            "text": " ".join(texts).strip(),
+                            "confidence": (
+                                sum(confidences) / len(confidences)
+                                if confidences
+                                else 0.0
+                            ),
                             "words": words_out,
                             "sequence": last_sequence,
                         }
