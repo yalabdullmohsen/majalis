@@ -24,7 +24,13 @@ class Tasmee3AchievementsScreen extends ConsumerWidget {
         body: achievements.when(
           loading: () => const Center(child: CircularProgressIndicator()),
           error: (error, stackTrace) => Center(
-            child: Text(error.toString()),
+            child: Padding(
+              padding: const EdgeInsets.all(24),
+              child: Text(
+                ref.read(tasmee3ErrorMapperProvider).map(error),
+                textAlign: TextAlign.center,
+              ),
+            ),
           ),
           data: (items) {
             return ListView.separated(
