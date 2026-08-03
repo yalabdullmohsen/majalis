@@ -79,6 +79,17 @@ dart run scripts/check_quran_asset.dart
 - [x] v1.0.1 checklist جاهز.
 - [x] Versioning policy جاهزة.
 
+## Final Launch Lock
+
+- [x] LAUNCH_LOCK.md موجود.
+- [x] FINAL_AUDIT_REPORT.md موجود.
+- [x] LAST_10_STEPS_BEFORE_SUBMISSION.md موجود.
+- [x] FINAL_PRIVACY_REVIEW.md موجود.
+- [x] FINAL_STORE_REVIEW.md موجود.
+- [x] FINAL_TECHNICAL_REVIEW.md موجود.
+- [x] لا توجد ميزات جديدة بعد Launch Lock.
+- [x] قرار GO / NO-GO موثق. *(حالياً NO-GO للمتاجر حتى اكتمال builds + smoke + Privacy URL)*
+
 ## Store Submission
 
 - [ ] Google Play description reviewed.

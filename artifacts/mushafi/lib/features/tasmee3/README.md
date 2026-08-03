@@ -736,3 +736,18 @@ dart run scripts/check_quran_asset.dart
 تقارير المشاكل لا ترسل تلقائيا.
 المستخدم ينسخ التقرير ويرسله يدويا.
 التقرير لا يحتوي صوتا ولا API key ولا نص القرآن.
+
+## البرومبت الرابع والثلاثون - Launch Lock و Final Audit
+
+تمت إضافة:
+
+- `LAUNCH_LOCK.md`
+- `FINAL_AUDIT_REPORT.md`
+- `LAST_10_STEPS_BEFORE_SUBMISSION.md`
+- `FINAL_PRIVACY_REVIEW.md`
+- `FINAL_STORE_REVIEW.md`
+- `FINAL_TECHNICAL_REVIEW.md`
+- مراجعة نهائية للخصوصية والادعاءات والمواد والإعدادات الافتراضية.
+- قرار GO / NO-GO موثق في تقرير التدقيق.
+
+بعد Launch Lock: ممنوع إضافة ميزات جديدة؛ فقط إصلاحات حرجة.

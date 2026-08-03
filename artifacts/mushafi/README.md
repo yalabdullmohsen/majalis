@@ -51,6 +51,19 @@ Post-release documents:
 
 The app includes local-only diagnostics and a copyable bug report form. No audio, API key, or Quran text should be included in diagnostics.
 
+## Final Launch Lock
+
+Final audit and launch lock documents:
+
+- `LAUNCH_LOCK.md`
+- `FINAL_AUDIT_REPORT.md`
+- `LAST_10_STEPS_BEFORE_SUBMISSION.md`
+- `FINAL_PRIVACY_REVIEW.md`
+- `FINAL_STORE_REVIEW.md`
+- `FINAL_TECHNICAL_REVIEW.md`
+
+No new features should be added after launch lock except critical fixes.
+
 ## Store Submission
 
 Store submission materials are located in:
