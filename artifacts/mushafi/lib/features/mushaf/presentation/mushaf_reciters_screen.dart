@@ -17,7 +17,7 @@ class MushafRecitersScreen extends StatelessWidget {
         separatorBuilder: (_, __) => const SizedBox(height: 8),
         itemBuilder: (context, index) {
           final reciter = RecitersCatalog.all[index];
-          final configured = reciter.audioBaseUrl.trim().isNotEmpty;
+          final configured = reciter.isConfigured;
 
           return Container(
             decoration: BoxDecoration(

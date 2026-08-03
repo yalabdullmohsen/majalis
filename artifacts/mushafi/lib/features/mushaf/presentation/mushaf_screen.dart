@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:share_plus/share_plus.dart';
 
 import '../../tasmee3/domain/quran_ayah.dart';
+import '../../tasmee3/presentation/tasmee3_design_tokens.dart';
 import '../../tasmee3/presentation/widgets/tasmee3_error_state.dart';
 import '../../tasmee3/presentation/widgets/tasmee3_loading_state.dart';
 import '../application/mushaf_providers.dart';
@@ -11,7 +12,9 @@ import '../domain/mushaf_page.dart';
 import '../domain/mushaf_reading_settings.dart';
 import '../domain/mushaf_reading_theme.dart';
 import 'ayah_share_preview_screen.dart';
+import 'mushaf_audio_settings_screen.dart';
 import 'mushaf_bookmarks_screen.dart';
+import 'mushaf_downloads_screen.dart';
 import 'mushaf_favorites_screen.dart';
 import 'mushaf_index_screen.dart';
 import 'mushaf_khatmah_screen.dart';
@@ -20,6 +23,7 @@ import 'mushaf_reading_settings_screen.dart';
 import 'mushaf_reading_theme_colors.dart';
 import 'mushaf_reciters_screen.dart';
 import 'widgets/mushaf_ayah_actions_sheet.dart';
+import 'widgets/mushaf_mini_player.dart';
 import 'widgets/mushaf_page_view.dart';
 
 /// Mushafi-branded Quran reader used from the Tasmee3 dashboard.
@@ -103,11 +107,46 @@ class _MushafReaderScreenState extends ConsumerState<MushafReaderScreen> {
     final pages = ref.watch(mushafPagesProvider);
     final mushafState = ref.watch(mushafControllerProvider);
     final controller = ref.read(mushafControllerProvider.notifier);
+    final audioState = ref.watch(mushafAudioControllerProvider);
     final readingSettings =
         ref.watch(mushafReadingSettingsControllerProvider).settings;
     final themeColors =
         MushafReadingThemeColors.fromTheme(readingSettings.theme);
     final pageItems = pages.asData?.value ?? const <MushafPage>[];
+
+    final activeSurah = audioState.currentSurah ?? highlightedSurah;
+    final activeAyah = audioState.currentAyah ?? highlightedAyah;
+
+    ref.listen(mushafAudioControllerProvider, (previous, next) {
+      final shouldScroll = ref
+              .read(mushafAudioSettingsProvider)
+              .asData
+              ?.value
+              .autoScrollToPlayingAyah ??
+          true;
+
+      if (!shouldScroll) return;
+      if (next.currentSurah == null || next.currentAyah == null) return;
+      if (previous?.currentSurah == next.currentSurah &&
+          previous?.currentAyah == next.currentAyah) {
+        return;
+      }
+
+      final items = ref.read(mushafPagesProvider).asData?.value;
+      if (items == null || items.isEmpty) return;
+
+      for (final page in items) {
+        final matches = page.ayahs.any(
+          (ayah) =>
+              ayah.ref.surah == next.currentSurah &&
+              ayah.ref.ayah == next.currentAyah,
+        );
+        if (matches) {
+          _jumpToPageNumber(items, page.pageNumber);
+          break;
+        }
+      }
+    });
 
     if (pageItems.isNotEmpty) {
       _alignInitialPage(pageItems);
@@ -139,6 +178,16 @@ class _MushafReaderScreenState extends ConsumerState<MushafReaderScreen> {
                     : null,
                 actions: mushafState.selectionMode
                     ? [
+                        IconButton(
+                          tooltip: 'تشغيل',
+                          icon: const Icon(Icons.play_arrow),
+                          onPressed: () => _playSelectedAyahs(pageItems),
+                        ),
+                        IconButton(
+                          tooltip: 'تنزيل',
+                          icon: const Icon(Icons.download_outlined),
+                          onPressed: () => _downloadSelectedAyahs(pageItems),
+                        ),
                         IconButton(
                           tooltip: 'نسخ',
                           icon: const Icon(Icons.copy),
@@ -196,6 +245,38 @@ class _MushafReaderScreenState extends ConsumerState<MushafReaderScreen> {
                               return;
                             }
 
+                            if (value == 'audioSettings') {
+                              await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) =>
+                                      const MushafAudioSettingsScreen(),
+                                ),
+                              );
+                              ref.invalidate(mushafAudioSettingsProvider);
+                              return;
+                            }
+
+                            if (value == 'playPage') {
+                              await _playCurrentPage(pageItems);
+                              return;
+                            }
+
+                            if (value == 'downloadPage') {
+                              await _downloadCurrentPage(pageItems);
+                              return;
+                            }
+
+                            if (value == 'downloads') {
+                              await Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (_) => const MushafDownloadsScreen(),
+                                ),
+                              );
+                              return;
+                            }
+
                             final Widget? screen = switch (value) {
                               'bookmarks' => const MushafBookmarksScreen(),
                               'favorites' => const MushafFavoritesScreen(),
@@ -215,6 +296,22 @@ class _MushafReaderScreenState extends ConsumerState<MushafReaderScreen> {
                             PopupMenuItem(
                               value: 'reading_settings',
                               child: Text('إعدادات القراءة'),
+                            ),
+                            PopupMenuItem(
+                              value: 'audioSettings',
+                              child: Text('إعدادات الصوت'),
+                            ),
+                            PopupMenuItem(
+                              value: 'playPage',
+                              child: Text('تشغيل الصفحة'),
+                            ),
+                            PopupMenuItem(
+                              value: 'downloadPage',
+                              child: Text('تنزيل الصفحة'),
+                            ),
+                            PopupMenuItem(
+                              value: 'downloads',
+                              child: Text('تنزيلات الصوت'),
                             ),
                             PopupMenuItem(
                               value: 'bookmarks',
@@ -280,8 +377,8 @@ class _MushafReaderScreenState extends ConsumerState<MushafReaderScreen> {
                   return MushafPageView(
                     page: page,
                     readingSettings: readingSettings,
-                    highlightedSurah: highlightedSurah,
-                    highlightedAyah: highlightedAyah,
+                    highlightedSurah: activeSurah,
+                    highlightedAyah: activeAyah,
                     selectedAyahKeys: mushafState.selectedAyahKeys,
                     onAyahLongPress: controller.startSelection,
                     onAyahTap: (ayah) {
@@ -297,8 +394,140 @@ class _MushafReaderScreenState extends ConsumerState<MushafReaderScreen> {
             );
           },
         ),
+        bottomNavigationBar: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _downloadProgressBar(),
+            const MushafMiniPlayer(),
+          ],
+        ),
       ),
     );
+  }
+
+  Widget _downloadProgressBar() {
+    final downloadState = ref.watch(mushafAudioDownloadControllerProvider);
+
+    if (!downloadState.isDownloading) {
+      return const SizedBox.shrink();
+    }
+
+    return Container(
+      padding: const EdgeInsets.all(10),
+      color: Tasmee3Colors.surface,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          LinearProgressIndicator(value: downloadState.progress),
+          const SizedBox(height: 6),
+          Text(
+            'جاري التنزيل ${downloadState.completed} من ${downloadState.total}',
+            style: Tasmee3TextStyles.secondary,
+          ),
+        ],
+      ),
+    );
+  }
+
+  MushafPage? _pageByNumber(List<MushafPage> pages, int pageNumber) {
+    for (final page in pages) {
+      if (page.pageNumber == pageNumber) return page;
+    }
+    return null;
+  }
+
+  String _errorMessage(Object error) {
+    if (error is StateError) return error.message;
+    return error.toString();
+  }
+
+  Future<void> _playSelectedAyahs(List<MushafPage> pages) async {
+    final state = ref.read(mushafControllerProvider);
+    final controller = ref.read(mushafControllerProvider.notifier);
+    final audio = ref.read(mushafAudioControllerProvider.notifier);
+
+    final ayahs = _selectedAyahsFromPages(
+      pages,
+      state.selectedAyahKeys,
+    );
+
+    if (ayahs.isEmpty) return;
+
+    controller.clearSelection();
+    await audio.playRange(ayahs);
+  }
+
+  Future<void> _downloadSelectedAyahs(List<MushafPage> pages) async {
+    final state = ref.read(mushafControllerProvider);
+    final controller = ref.read(mushafControllerProvider.notifier);
+    final settingsRepository = ref.read(mushafAudioSettingsRepositoryProvider);
+    final settings = await settingsRepository.load();
+
+    final ayahs = _selectedAyahsFromPages(
+      pages,
+      state.selectedAyahKeys,
+    );
+
+    if (ayahs.isEmpty) return;
+
+    controller.clearSelection();
+
+    try {
+      await ref.read(mushafAudioDownloadControllerProvider.notifier).downloadAyahs(
+            reciterId: settings.reciterId,
+            ayahs: ayahs,
+          );
+
+      ref.invalidate(mushafAudioDownloadsProvider);
+
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('تم تنزيل الصوت المحدد.')),
+      );
+    } catch (e) {
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('تعذر التنزيل: ${_errorMessage(e)}')),
+      );
+    }
+  }
+
+  Future<void> _playCurrentPage(List<MushafPage> pages) async {
+    final page = _pageByNumber(pages, currentPage);
+    if (page == null || page.ayahs.isEmpty) return;
+
+    await ref.read(mushafAudioControllerProvider.notifier).playRange(page.ayahs);
+  }
+
+  Future<void> _downloadCurrentPage(List<MushafPage> pages) async {
+    final page = _pageByNumber(pages, currentPage);
+    if (page == null || page.ayahs.isEmpty) return;
+
+    final settingsRepository = ref.read(mushafAudioSettingsRepositoryProvider);
+    final settings = await settingsRepository.load();
+
+    try {
+      await ref.read(mushafAudioDownloadControllerProvider.notifier).downloadAyahs(
+            reciterId: settings.reciterId,
+            ayahs: page.ayahs,
+          );
+
+      ref.invalidate(mushafAudioDownloadsProvider);
+
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('تم تنزيل صوت الصفحة.')),
+      );
+    } catch (e) {
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('تعذر تنزيل الصفحة: ${_errorMessage(e)}')),
+      );
+    }
   }
 
   List<QuranAyah> _selectedAyahsFromPages(

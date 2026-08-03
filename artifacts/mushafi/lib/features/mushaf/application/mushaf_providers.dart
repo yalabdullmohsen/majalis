@@ -3,18 +3,28 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../tasmee3/application/tasmee3_providers.dart';
 import '../data/assets_quran_page_metadata_repository.dart';
 import '../data/assets_tafsir_repository.dart';
+import '../data/mushaf_audio_download_repository.dart';
+import '../data/mushaf_audio_settings_repository.dart';
 import '../data/mushaf_local_repository.dart';
 import '../data/mushaf_reading_settings_repository.dart';
 import '../data/quran_page_metadata_repository.dart';
+import '../data/shared_prefs_mushaf_audio_download_repository.dart';
+import '../data/shared_prefs_mushaf_audio_settings_repository.dart';
 import '../data/shared_prefs_mushaf_local_repository.dart';
 import '../data/shared_prefs_mushaf_reading_settings_repository.dart';
 import '../data/tafsir_repository.dart';
+import '../domain/mushaf_audio_download.dart';
+import '../domain/mushaf_audio_settings.dart';
+import '../domain/mushaf_audio_state.dart';
 import '../domain/mushaf_favorite_ayah.dart';
 import '../domain/mushaf_page.dart';
 import '../domain/mushaf_reading_position.dart';
 import '../domain/mushaf_reading_settings.dart';
 import '../domain/quran_page_metadata.dart';
 import 'ayah_share_text_builder.dart';
+import 'mushaf_audio_controller.dart';
+import 'mushaf_audio_download_controller.dart';
+import 'mushaf_audio_download_service.dart';
 import 'mushaf_controller.dart';
 import 'mushaf_page_builder.dart';
 import 'mushaf_reading_settings_controller.dart';
@@ -130,4 +140,48 @@ final mushafFavoritesProvider =
     FutureProvider<List<MushafFavoriteAyah>>((ref) async {
   final repository = ref.watch(mushafLocalRepositoryProvider);
   return repository.getFavorites();
+});
+
+final mushafAudioSettingsRepositoryProvider =
+    Provider<MushafAudioSettingsRepository>((ref) {
+  return SharedPrefsMushafAudioSettingsRepository();
+});
+
+final mushafAudioSettingsProvider =
+    FutureProvider<MushafAudioSettings>((ref) async {
+  final repository = ref.watch(mushafAudioSettingsRepositoryProvider);
+  return repository.load();
+});
+
+final mushafAudioDownloadRepositoryProvider =
+    Provider<MushafAudioDownloadRepository>((ref) {
+  return SharedPrefsMushafAudioDownloadRepository();
+});
+
+final mushafAudioDownloadServiceProvider =
+    Provider<MushafAudioDownloadService>((ref) {
+  return MushafAudioDownloadService(
+    repository: ref.watch(mushafAudioDownloadRepositoryProvider),
+  );
+});
+
+final mushafAudioDownloadsProvider =
+    FutureProvider<List<MushafAudioDownload>>((ref) async {
+  final repository = ref.watch(mushafAudioDownloadRepositoryProvider);
+  return repository.getAll();
+});
+
+final mushafAudioDownloadControllerProvider = StateNotifierProvider<
+    MushafAudioDownloadController, MushafAudioDownloadState>((ref) {
+  return MushafAudioDownloadController(
+    service: ref.watch(mushafAudioDownloadServiceProvider),
+  );
+});
+
+final mushafAudioControllerProvider =
+    StateNotifierProvider<MushafAudioController, MushafAudioState>((ref) {
+  return MushafAudioController(
+    settingsRepository: ref.watch(mushafAudioSettingsRepositoryProvider),
+    downloadRepository: ref.watch(mushafAudioDownloadRepositoryProvider),
+  );
 });

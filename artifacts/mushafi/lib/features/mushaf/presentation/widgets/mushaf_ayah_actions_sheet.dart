@@ -71,15 +71,47 @@ class MushafAyahActionsSheet extends ConsumerWidget {
               _ActionTile(
                 icon: Icons.play_arrow,
                 title: 'استماع للآية',
-                onTap: () {
+                onTap: () async {
+                  final audio = ref.read(mushafAudioControllerProvider.notifier);
+
                   Navigator.pop(context);
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text(
-                        'الاستماع يحتاج مصدر صوت مرخص يتم ضبطه في إعدادات القراء.',
-                      ),
-                    ),
-                  );
+
+                  await audio.playAyah(ayah);
+                },
+              ),
+              _ActionTile(
+                icon: Icons.download_outlined,
+                title: 'تنزيل صوت الآية',
+                onTap: () async {
+                  final messenger = ScaffoldMessenger.of(context);
+                  final settingsRepository =
+                      ref.read(mushafAudioSettingsRepositoryProvider);
+                  final settings = await settingsRepository.load();
+                  final downloader =
+                      ref.read(mushafAudioDownloadControllerProvider.notifier);
+
+                  if (context.mounted) {
+                    Navigator.pop(context);
+                  }
+
+                  try {
+                    await downloader.downloadAyahs(
+                      reciterId: settings.reciterId,
+                      ayahs: [ayah],
+                    );
+
+                    ref.invalidate(mushafAudioDownloadsProvider);
+
+                    messenger.showSnackBar(
+                      const SnackBar(content: Text('تم تنزيل صوت الآية.')),
+                    );
+                  } catch (e) {
+                    final message =
+                        e is StateError ? e.message : e.toString();
+                    messenger.showSnackBar(
+                      SnackBar(content: Text('تعذر التنزيل: $message')),
+                    );
+                  }
                 },
               ),
               _ActionTile(

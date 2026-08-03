@@ -1,6 +1,9 @@
 import '../domain/quran_reciter.dart';
 
-/// Catalog of reciters. Audio URLs must be licensed before enabling playback.
+/// Catalog of reciters.
+///
+/// Audio URLs must be licensed and trusted before enabling playback.
+/// Do not copy audio from other apps or use unauthorized sources.
 class RecitersCatalog {
   static const List<QuranReciter> all = [
     QuranReciter(
@@ -8,6 +11,7 @@ class RecitersCatalog {
       nameArabic: 'محمود خليل الحصري',
       riwayah: 'حفص عن عاصم',
       audioBaseUrl: '',
+      fileExtension: 'mp3',
       supportsGapless: false,
       supportsAyahTiming: false,
     ),
@@ -16,6 +20,7 @@ class RecitersCatalog {
       nameArabic: 'محمد صديق المنشاوي',
       riwayah: 'حفص عن عاصم',
       audioBaseUrl: '',
+      fileExtension: 'mp3',
       supportsGapless: false,
       supportsAyahTiming: false,
     ),
@@ -24,6 +29,7 @@ class RecitersCatalog {
       nameArabic: 'مشاري راشد العفاسي',
       riwayah: 'حفص عن عاصم',
       audioBaseUrl: '',
+      fileExtension: 'mp3',
       supportsGapless: false,
       supportsAyahTiming: false,
     ),
