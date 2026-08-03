@@ -65,7 +65,7 @@ if (!fs.existsSync(DIST)) {
 const seoData = JSON.parse(fs.readFileSync(SEO_JSON, "utf8"));
 const routes = seoData.routes;
 const siteUrl = seoData.siteUrl;
-const defaultImage = `${siteUrl}/opengraph.jpg`;
+const defaultImage = `${siteUrl}/majlisilm-og-2026.jpg`;
 
 const baseHtml = fs.readFileSync(path.join(DIST, "index.html"), "utf8");
 

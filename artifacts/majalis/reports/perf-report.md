@@ -60,7 +60,7 @@
 - الصور الأساسية موجودة بصيغة `.webp` بالفعل (sheikhs/*.webp)
 - صور الشيوخ لديها نسخ `.jpg` و `.webp` للتوافق
 - الأيقونات: `favicon.svg`, `favicon.png`, `icon-192.png`, `apple-touch-icon.png`
-- صور OG: `/opengraph.jpg` محدود بـ `max-age=86400`
+- صور OG: `/majlisilm-og-2026.jpg` محدود بـ `max-age=86400`
 
 ### المرحلة 4: طبقة البيانات ✅
 **`vercel.json` (موجود بالفعل ومُحسَّن):**

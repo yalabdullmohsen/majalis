@@ -255,7 +255,7 @@ export function applyPageSeo(options: PageSeoOptions) {
   const canonicalPath = normalizePath(options.canonicalPath || normalized);
   const canonical = absoluteUrl(canonicalPath);
   // Prefer explicit page image → route default → branded OG share card
-  const imagePath = options.image || seoData.defaultImage || "/opengraph.jpg";
+  const imagePath = options.image || seoData.defaultImage || "/majlisilm-og-2026.jpg";
   const image = /^https?:\/\//i.test(imagePath) ? imagePath : absoluteUrl(imagePath);
   const keywords = [...new Set([...(options.keywords || []), ...seoData.defaultKeywords])].join(", ");
   const robots = options.robots || "index, follow";
