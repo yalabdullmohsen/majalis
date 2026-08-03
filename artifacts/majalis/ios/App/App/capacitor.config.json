@@ -35,6 +35,14 @@
 				"banner",
 				"list"
 			]
+		},
+		"PushNotifications": {
+			"presentationOptions": [
+				"badge",
+				"sound",
+				"banner",
+				"list"
+			]
 		}
 	},
 	"android": {
@@ -53,6 +61,7 @@
 		"HapticsPlugin",
 		"KeyboardPlugin",
 		"LocalNotificationsPlugin",
+		"PushNotificationsPlugin",
 		"SplashScreenPlugin",
 		"StatusBarPlugin"
 	]

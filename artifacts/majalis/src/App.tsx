@@ -465,7 +465,7 @@ function PrayerAlertSchedulerBootstrap() {
   return null;
 }
 
-/** قنوات + مستمعو النقر + إعادة جدولة الورد + سجلات APNs (معطّلة). */
+/** قنوات + مستمعو النقر + Remote Push (Capacitor) عند الغلاف الأصلي. */
 function NativeNotificationsBootstrap() {
   useEffect(() => {
     void import("@/lib/notifications/native-bootstrap").then(({ bootstrapNativeNotifications }) => {

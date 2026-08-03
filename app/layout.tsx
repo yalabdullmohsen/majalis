@@ -3,8 +3,9 @@ import "./globals.css";
 
 /**
  * Root layout metadata for native Capacitor / standalone shell.
- * Production web shell is Vite (`artifacts/majalis`); this mirrors native
- * viewport + PWA contract for App Router consumers and tooling.
+ * Production web shell is Vite (`artifacts/majalis`); native push registration
+ * is triggered from `NativeNotificationsBootstrap` in App.tsx (not here),
+ * so Web and Native paths never double-register.
  */
 export const metadata: Metadata = {
   title: "Majlisilm",

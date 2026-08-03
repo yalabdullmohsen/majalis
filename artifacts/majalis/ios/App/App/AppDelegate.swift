@@ -68,20 +68,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return ApplicationDelegateProxy.shared.application(application, continue: userActivity, restorationHandler: restorationHandler)
     }
 
-    // MARK: - APNs stubs (inactive)
-    // Primary strategy: Capacitor Local Notifications (prayer + daily Quran).
-    // Remote Push is NOT registered — App.entitlements has no aps-environment.
-    // These callbacks only fire if the app later opts into remote registration.
-    // To enable later: add Push Notifications capability, aps-environment entitlement,
-    // @capacitor/push-notifications, then register for remote notifications after permission.
+    // MARK: - APNs → Capacitor Push Notifications
+    // Local Notifications remain primary for prayer / daily Quran schedules.
+    // Remote Push is registered from JS via @capacitor/push-notifications.
 
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
+        NotificationCenter.default.post(name: .capacitorDidRegisterForRemoteNotifications, object: deviceToken)
         let token = deviceToken.map { String(format: "%02.2hhx", $0) }.joined()
-        NSLog("[MajlisAPNs] unexpected token registration (Remote Push disabled). length=%lu", UInt(token.count))
+        NSLog("[MajlisAPNs] registered for remote notifications. length=%lu", UInt(token.count))
     }
 
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-        NSLog("[MajlisAPNs] registration failed (expected while Local Notifications are primary): %@", error.localizedDescription)
+        NotificationCenter.default.post(name: .capacitorDidFailToRegisterForRemoteNotifications, object: error)
+        NSLog("[MajlisAPNs] registration failed: %@", error.localizedDescription)
     }
 
 }
