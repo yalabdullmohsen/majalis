@@ -13,7 +13,7 @@ import 'package:mushafi/features/quran/presentation/screens/mushaf_screen.dart';
 import 'package:mushafi/features/quran/presentation/screens/surah_index_screen.dart';
 import 'package:mushafi/features/search/presentation/search_screen.dart';
 import 'package:mushafi/features/settings/presentation/settings_screen.dart';
-import 'package:mushafi/features/tarteel/presentation/recitation_session_screen.dart';
+import 'package:mushafi/features/tasmee3/presentation/tasmee3_screen.dart';
 
 final _routerProvider = Provider<GoRouter>((ref) {
   return GoRouter(
@@ -34,10 +34,8 @@ final _routerProvider = Provider<GoRouter>((ref) {
       GoRoute(path: '/khatmah', builder: (_, __) => const KhatmahDashboard()),
       GoRoute(path: '/settings', builder: (_, __) => const SettingsScreen()),
       GoRoute(
-        path: '/hifz',
-        builder: (context, state) => RecitationSessionScreen(
-          ayahKey: state.extra as String?,
-        ),
+        path: '/tasmee3',
+        builder: (_, __) => const Tasmee3Screen(),
       ),
       GoRoute(
         path: '/tafsir',

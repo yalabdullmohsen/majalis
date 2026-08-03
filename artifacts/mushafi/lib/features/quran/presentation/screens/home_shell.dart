@@ -52,8 +52,8 @@ class HomeShell extends ConsumerWidget {
                 child: const Text('الختمة'),
               ),
               OutlinedButton(
-                onPressed: () => context.go('/hifz'),
-                child: const Text('مراجعة الحفظ'),
+                onPressed: () => context.go('/tasmee3'),
+                child: const Text('تسميع'),
               ),
               OutlinedButton(
                 onPressed: () => context.go('/settings'),

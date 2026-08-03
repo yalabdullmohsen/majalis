@@ -25,7 +25,9 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSMicrophoneUsageDescription</key>
-	<string>يُستخدم الميكروفون فقط لميزة مراجعة الحفظ وبإذنك الصريح. الوضع الافتراضي محلي ولا يرسل الصوت.</string>
+	<string>نحتاج الميكروفون لتشغيل ميزة التسميع ومراجعة الحفظ.</string>
+	<key>NSSpeechRecognitionUsageDescription</key>
+	<string>نحتاج التعرف على الكلام لمقارنة التلاوة بالنص الصحيح.</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>audio</string>

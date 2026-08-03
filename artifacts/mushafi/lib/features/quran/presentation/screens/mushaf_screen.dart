@@ -94,7 +94,7 @@ class _MushafScreenState extends ConsumerState<MushafScreen> {
         },
         onStartHifz: () {
           Navigator.pop(context);
-          context.push('/hifz', extra: ayah.key);
+          context.push('/tasmee3?surah=${ayah.surahId}&ayah=${ayah.ayahNumber}');
         },
       ),
     );

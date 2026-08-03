@@ -1,45 +1,56 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mushafi/core/utils/arabic_normalizer.dart';
 import 'package:mushafi/features/khatmah/domain/khatmah_models.dart';
-import 'package:mushafi/features/tarteel/domain/mistake_detection_engine.dart';
+import 'package:mushafi/features/tasmee3/application/arabic_normalizer.dart';
+import 'package:mushafi/features/tasmee3/application/mistake_detection_engine.dart';
+import 'package:mushafi/features/tasmee3/domain/ayah_ref.dart';
+import 'package:mushafi/features/tasmee3/domain/quran_ayah.dart';
+import 'package:mushafi/features/tasmee3/domain/tasmee3_mistake.dart';
 
 void main() {
   group('ArabicNormalizer', () {
-    test('removes tashkeel', () {
-      expect(
-        ArabicNormalizer.removeTashkeel('بِسْمِ'),
-        'بسم',
-      );
+    test('removes tashkeel via normalize', () {
+      expect(ArabicNormalizer.normalize('بِسْمِ'), 'بسم');
     });
 
-    test('forSearch unifies hamza and ya', () {
-      expect(
-        ArabicNormalizer.forSearch('إبراهيم'),
-        contains('ابراهيم'),
-      );
-      expect(ArabicNormalizer.forSearch('على'), 'علي');
+    test('normalize unifies hamza and ya', () {
+      expect(ArabicNormalizer.normalize('إبراهيم'), contains('ابراهيم'));
+      expect(ArabicNormalizer.normalize('على'), 'علي');
     });
   });
 
   group('MistakeDetectionEngine', () {
-    final engine = MistakeDetectionEngine();
+    const engine = MistakeDetectionEngine();
 
     test('detects missing word', () {
-      final m = engine.compare(
-        expectedWords: ['الحمد', 'لله'],
-        recognizedWords: ['الحمد'],
-        ayahNumber: 2,
+      const ayah = QuranAyah(
+        ref: AyahRef(surah: 1, ayah: 2),
+        textUthmani: 'ٱلْحَمْدُ لِلَّهِ',
       );
-      expect(m.any((e) => e.mistakeType == MistakeType.missing), isTrue);
+      final result = engine.analyze(
+        expectedAyahs: const [ayah],
+        recognizedText: 'الحمد',
+        confidence: 0.9,
+      );
+      expect(
+        result.mistakes.any((e) => e.type == Tasmee3MistakeType.missingWord),
+        isTrue,
+      );
     });
 
     test('detects wrong word', () {
-      final m = engine.compare(
-        expectedWords: ['قل', 'هو'],
-        recognizedWords: ['قل', 'هي'],
-        ayahNumber: 1,
+      const ayah = QuranAyah(
+        ref: AyahRef(surah: 112, ayah: 1),
+        textUthmani: 'قُلْ هُوَ',
       );
-      expect(m.any((e) => e.mistakeType == MistakeType.wrongWord), isTrue);
+      final result = engine.analyze(
+        expectedAyahs: const [ayah],
+        recognizedText: 'قل هي',
+        confidence: 0.9,
+      );
+      expect(
+        result.mistakes.any((e) => e.type == Tasmee3MistakeType.wrongWord),
+        isTrue,
+      );
     });
   });
 
