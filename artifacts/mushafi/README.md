@@ -112,6 +112,15 @@ Current store decision remains **NO-GO** until Android AAB/APK builds, device sm
 - أرشيف ختمات.
 - تسجيل صفحات مقروءة.
 
+## Khatmah Reminders
+
+يدعم المصحف تذكيرا محليا بخطة الختمة:
+
+- تذكير يومي بالورد.
+- تنبيه إذا تأخر المستخدم عن الخطة.
+- إعداد وقت التذكير.
+- لا يتم إرسال أي بيانات خارج الجهاز.
+
 ## Mushaf Reading Settings
 
 يدعم المصحف إعدادات قراءة:

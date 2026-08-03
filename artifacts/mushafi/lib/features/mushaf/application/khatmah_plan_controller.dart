@@ -5,6 +5,7 @@ import '../domain/khatmah_plan.dart';
 import '../domain/khatmah_plan_status.dart';
 import '../domain/khatmah_reading_log.dart';
 import '../domain/khatmah_statistics.dart';
+import 'khatmah_reminder_coordinator.dart';
 import 'khatmah_statistics_service.dart';
 
 class KhatmahPlanState {
@@ -76,11 +77,21 @@ class KhatmahPlanState {
 class KhatmahPlanController extends StateNotifier<KhatmahPlanState> {
   final KhatmahPlanRepository repository;
   final KhatmahStatisticsService statisticsService;
+  final KhatmahReminderCoordinator reminderCoordinator;
 
   KhatmahPlanController({
     required this.repository,
     required this.statisticsService,
+    required this.reminderCoordinator,
   }) : super(KhatmahPlanState.initial());
+
+  Future<void> _rescheduleReminders() async {
+    try {
+      await reminderCoordinator.rescheduleForPlan(state.activePlan);
+    } catch (_) {
+      // Local notification failures must not break khatmah plan updates.
+    }
+  }
 
   Future<void> load() async {
     state = state.copyWith(isLoading: true, errorMessage: null);
@@ -128,6 +139,7 @@ class KhatmahPlanController extends StateNotifier<KhatmahPlanState> {
 
     await repository.savePlan(plan);
     await load();
+    await _rescheduleReminders();
   }
 
   Future<void> markPagesRead({
@@ -176,6 +188,7 @@ class KhatmahPlanController extends StateNotifier<KhatmahPlanState> {
     await repository.savePlan(updated);
     await repository.addLog(log);
     await load();
+    await _rescheduleReminders();
   }
 
   Future<void> pausePlan(String id) async {
@@ -189,6 +202,7 @@ class KhatmahPlanController extends StateNotifier<KhatmahPlanState> {
     );
 
     await load();
+    await _rescheduleReminders();
   }
 
   Future<void> resumePlan(String id) async {
@@ -213,6 +227,7 @@ class KhatmahPlanController extends StateNotifier<KhatmahPlanState> {
     );
 
     await load();
+    await _rescheduleReminders();
   }
 
   Future<void> archivePlan(String id) async {
@@ -226,10 +241,12 @@ class KhatmahPlanController extends StateNotifier<KhatmahPlanState> {
     );
 
     await load();
+    await _rescheduleReminders();
   }
 
   Future<void> deletePlan(String id) async {
     await repository.deletePlan(id);
     await load();
+    await _rescheduleReminders();
   }
 }

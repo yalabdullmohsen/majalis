@@ -9,6 +9,7 @@ import '../application/mushaf_providers.dart';
 import '../domain/khatmah_plan.dart';
 import 'khatmah_archive_screen.dart';
 import 'khatmah_create_plan_screen.dart';
+import 'khatmah_reminder_settings_screen.dart';
 import 'mushaf_screen.dart';
 
 class MushafKhatmahScreen extends ConsumerWidget {
@@ -23,6 +24,18 @@ class MushafKhatmahScreen extends ConsumerWidget {
     return Tasmee3AppScaffold(
       title: 'الختمة',
       actions: [
+        IconButton(
+          tooltip: 'تذكير الختمة',
+          icon: const Icon(Icons.notifications_outlined),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => const KhatmahReminderSettingsScreen(),
+              ),
+            );
+          },
+        ),
         IconButton(
           tooltip: 'الأرشيف',
           icon: const Icon(Icons.archive_outlined),

@@ -186,6 +186,90 @@ class Tasmee3NotificationService {
     await _plugin.cancel(dailyReminderId);
   }
 
+  Future<void> cancelById(int notificationId) async {
+    await initialize();
+    await _plugin.cancel(notificationId);
+  }
+
+  /// Schedules a gentle daily local notification (no Quran text).
+  ///
+  /// Returns `false` when notification permission is denied — callers must
+  /// treat that as a no-op, not a crash.
+  Future<bool> scheduleDailyLocalNotification({
+    required int notificationId,
+    required String title,
+    required String body,
+    required int hour,
+    required int minute,
+    String androidChannelId = 'khatmah_reminders',
+    String androidChannelName = 'تذكيرات الختمة',
+    String androidChannelDescription = 'تذكيرات ورد الختمة المحلية',
+  }) async {
+    await initialize();
+
+    final permission = await requestPermission();
+    if (!permission) {
+      await cancelById(notificationId);
+      return false;
+    }
+
+    final time =
+        '${hour.clamp(0, 23).toString().padLeft(2, '0')}:${minute.clamp(0, 59).toString().padLeft(2, '0')}';
+
+    final scheduledTime = _nextInstanceOfTime(
+      time,
+      const [1, 2, 3, 4, 5, 6, 7],
+    );
+
+    final androidDetails = AndroidNotificationDetails(
+      androidChannelId,
+      androidChannelName,
+      channelDescription: androidChannelDescription,
+      importance: Importance.defaultImportance,
+      priority: Priority.defaultPriority,
+    );
+
+    const iosDetails = DarwinNotificationDetails();
+
+    final details = NotificationDetails(
+      android: androidDetails,
+      iOS: iosDetails,
+    );
+
+    try {
+      await _plugin.zonedSchedule(
+        notificationId,
+        title,
+        body,
+        scheduledTime,
+        details,
+        androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+        uiLocalNotificationDateInterpretation:
+            UILocalNotificationDateInterpretation.absoluteTime,
+        matchDateTimeComponents: DateTimeComponents.time,
+      );
+    } catch (_) {
+      // Exact alarms / platform quirks must not crash the app.
+      try {
+        await _plugin.zonedSchedule(
+          notificationId,
+          title,
+          body,
+          scheduledTime,
+          details,
+          androidScheduleMode: AndroidScheduleMode.inexactAllowWhileIdle,
+          uiLocalNotificationDateInterpretation:
+              UILocalNotificationDateInterpretation.absoluteTime,
+          matchDateTimeComponents: DateTimeComponents.time,
+        );
+      } catch (_) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
   Future<void> cancelManagedReminders() async {
     await initialize();
 

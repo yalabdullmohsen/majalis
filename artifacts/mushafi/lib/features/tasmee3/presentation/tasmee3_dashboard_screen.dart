@@ -41,6 +41,7 @@ class Tasmee3DashboardScreen extends ConsumerWidget {
     final todayReview = ref.watch(tasmee3TodayReviewSuggestionsProvider);
     final khatmahState = ref.watch(khatmahPlanControllerProvider);
     final activeKhatmah = khatmahState.activePlan;
+    final khatmahReminder = ref.watch(khatmahReminderSettingsProvider);
 
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -249,6 +250,24 @@ class Tasmee3DashboardScreen extends ConsumerWidget {
                           color: Tasmee3Colors.warning,
                         ),
                       ),
+                    khatmahReminder.maybeWhen(
+                      data: (settings) {
+                        if (!settings.enabled) {
+                          return const SizedBox.shrink();
+                        }
+
+                        return Padding(
+                          padding: const EdgeInsets.only(top: 6),
+                          child: Text(
+                            'تذكير الختمة مفعل الساعة ${settings.timeLabel}',
+                            style: Tasmee3TextStyles.secondary.copyWith(
+                              fontSize: 13,
+                            ),
+                          ),
+                        );
+                      },
+                      orElse: () => const SizedBox.shrink(),
+                    ),
                     const SizedBox(height: Tasmee3Spacing.md),
                     OutlinedButton.icon(
                       onPressed: () {

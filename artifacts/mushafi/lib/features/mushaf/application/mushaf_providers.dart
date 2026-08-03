@@ -4,7 +4,9 @@ import '../../tasmee3/application/tasmee3_providers.dart';
 import '../data/assets_quran_page_metadata_repository.dart';
 import '../data/assets_tafsir_repository.dart';
 import '../data/khatmah_plan_repository.dart';
+import '../data/khatmah_reminder_settings_repository.dart';
 import '../data/mushaf_audio_download_repository.dart';
+import '../data/shared_prefs_khatmah_reminder_settings_repository.dart';
 import '../data/mushaf_audio_settings_repository.dart';
 import '../data/mushaf_local_repository.dart';
 import '../data/mushaf_reading_settings_repository.dart';
@@ -18,6 +20,7 @@ import '../data/shared_prefs_mushaf_reading_settings_repository.dart';
 import '../data/shared_prefs_mushaf_search_history_repository.dart';
 import '../data/tafsir_catalog.dart';
 import '../data/tafsir_repository.dart';
+import '../domain/khatmah_reminder_settings.dart';
 import '../domain/mushaf_audio_download.dart';
 import '../domain/mushaf_audio_settings.dart';
 import '../domain/mushaf_audio_state.dart';
@@ -31,7 +34,10 @@ import '../domain/quran_page_metadata.dart';
 import '../domain/tafsir_search_index_item.dart';
 import '../domain/tafsir_source.dart';
 import 'ayah_share_text_builder.dart';
+import 'khatmah_notification_service.dart';
 import 'khatmah_plan_controller.dart';
+import 'khatmah_reminder_controller.dart';
+import 'khatmah_reminder_coordinator.dart';
 import 'khatmah_statistics_service.dart';
 import 'mushaf_audio_controller.dart';
 import 'mushaf_audio_download_controller.dart';
@@ -304,11 +310,51 @@ final khatmahStatisticsServiceProvider =
   return const KhatmahStatisticsService();
 });
 
+final khatmahReminderSettingsRepositoryProvider =
+    Provider<KhatmahReminderSettingsRepository>((ref) {
+  return SharedPrefsKhatmahReminderSettingsRepository();
+});
+
+final khatmahReminderSettingsProvider =
+    FutureProvider<KhatmahReminderSettings>((ref) async {
+  final repository = ref.watch(khatmahReminderSettingsRepositoryProvider);
+  return repository.load();
+});
+
+final khatmahNotificationServiceProvider =
+    Provider<KhatmahNotificationService>((ref) {
+  return KhatmahNotificationService(
+    localNotifications: ref.watch(tasmee3NotificationServiceProvider),
+  );
+});
+
+final khatmahReminderCoordinatorProvider =
+    Provider<KhatmahReminderCoordinator>((ref) {
+  return KhatmahReminderCoordinator(
+    settingsRepository: ref.watch(khatmahReminderSettingsRepositoryProvider),
+    notificationService: ref.watch(khatmahNotificationServiceProvider),
+  );
+});
+
+final khatmahReminderControllerProvider =
+    StateNotifierProvider<KhatmahReminderController, KhatmahReminderState>(
+        (ref) {
+  final controller = KhatmahReminderController(
+    repository: ref.watch(khatmahReminderSettingsRepositoryProvider),
+    notificationService: ref.watch(khatmahNotificationServiceProvider),
+  );
+
+  controller.load();
+
+  return controller;
+});
+
 final khatmahPlanControllerProvider =
     StateNotifierProvider<KhatmahPlanController, KhatmahPlanState>((ref) {
   final controller = KhatmahPlanController(
     repository: ref.watch(khatmahPlanRepositoryProvider),
     statisticsService: ref.watch(khatmahStatisticsServiceProvider),
+    reminderCoordinator: ref.watch(khatmahReminderCoordinatorProvider),
   );
 
   controller.load();
