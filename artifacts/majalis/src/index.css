@@ -4651,11 +4651,11 @@ html[data-theme="dark"] .search-suggestions-panel {
 }
 
 .navbar-v3 {
-  position: sticky;
-  top: 0;
+  position: relative;
+  top: auto;
   z-index: 9999;
   isolation: isolate;
-  transform: translateZ(0);
+  transform: none;
 }
 
 .navbar-v3--menu-open {

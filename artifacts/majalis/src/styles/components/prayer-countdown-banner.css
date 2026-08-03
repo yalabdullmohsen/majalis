@@ -1,56 +1,172 @@
-/* ── 193b — PrayerCountdownBanner (pcb-*) ──────────────────────────────────
-   شريط دائم (تدفّق مستند عادي، لا fixed) يظهر أسفل شريط التنقّل مباشرة في
-   آخر ١٥ دقيقة قبل أي صلاة — لا يغطي العنوان ولا الأزرار مطلقاً لأنه يدفع
-   المحتوى لأسفل بدل التراكب فوقه. */
-.pcb-bar {
+/* ── PrayerCountdownBanner (pcb-*) — بطاقة تنبيه عائمة عالية التباين ── */
+
+@keyframes pcb-in {
+  from {
+    opacity: 0;
+    transform: translateY(-0.65rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pcb-out {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-0.45rem);
+  }
+}
+
+.pcb-wrap {
+  direction: rtl;
+  padding: 0.55rem 0.75rem 0.15rem;
+  padding-inline-start: max(0.75rem, env(safe-area-inset-left, 0px));
+  padding-inline-end: max(0.75rem, env(safe-area-inset-right, 0px));
+  box-sizing: border-box;
+  animation: pcb-in 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.pcb-wrap--out {
+  animation: pcb-out 0.22s ease-in both;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pcb-wrap,
+  .pcb-wrap--out {
+    animation: none;
+  }
+}
+
+.pcb-card {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.6rem;
-  padding: 0.5rem 1rem;
-  padding-inline-start: max(1rem, env(safe-area-inset-left));
-  padding-inline-end: max(1rem, env(safe-area-inset-right));
-  background: linear-gradient(90deg, #143F35 0%, #226A56 100%);
-  color: #FFFFFF;
-  font-size: 0.85rem;
-  font-weight: 600;
-  direction: rtl;
+  gap: 0.65rem;
+  max-width: 36rem;
+  margin-inline: auto;
+  padding: 0.7rem 0.75rem 0.7rem 0.85rem;
+  border-radius: 1rem;
+  color: #ffffff !important;
+  font-family: var(--font-nav, "Cairo", "Tajawal", "Alexandria", sans-serif);
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.14), transparent 42%),
+    linear-gradient(120deg, #0f766e 0%, #147a5f 48%, #0b5c4a 100%);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  box-shadow:
+    0 10px 28px rgba(11, 40, 32, 0.28),
+    0 1px 0 rgba(255, 255, 255, 0.12) inset;
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
 }
-.pcb-bar__link {
+
+.pcb-card--countdown {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.16), transparent 45%),
+    linear-gradient(120deg, #115e59 0%, #0f766e 55%, #134e4a 100%);
+}
+
+.pcb-card--elapsed {
+  background:
+    linear-gradient(135deg, rgba(255, 255, 255, 0.14), transparent 42%),
+    linear-gradient(120deg, #14532d 0%, #166534 50%, #0f3d2e 100%);
+}
+
+.pcb-card__link {
   display: flex;
   align-items: center;
-  gap: var(--ds-space-2);
-  color: inherit;
-  text-decoration: none;
+  gap: 0.7rem;
   min-width: 0;
   flex: 1;
+  color: #ffffff !important;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
 }
-.pcb-bar__icon {
-  font-size: var(--ds-text-base);
-  line-height: 1;
-  flex-shrink: 0;
-}
-.pcb-bar__text {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-.pcb-bar__close {
-  display: flex;
+
+.pcb-card__icon {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: 1.5rem;
-  height: 1.5rem;
-  border-radius: var(--ds-radius-full);
-  background: rgba(255,255,255,0.14);
-  color: #FFFFFF;
-  border: none;
+  width: 2.35rem;
+  height: 2.35rem;
+  border-radius: 0.75rem;
+  background: rgba(255, 255, 255, 0.16);
+  color: #ffffff !important;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: 0 1px 0 rgba(255, 255, 255, 0.12) inset;
+}
+
+.pcb-card__copy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.pcb-card__label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: #ffffff !important;
+  letter-spacing: 0.01em;
+}
+
+.pcb-card__timer {
+  font-size: 1.05rem;
+  font-weight: 800;
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.04em;
+  color: #fefce8 !important;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.18);
+}
+
+.pcb-card__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2.15rem;
+  height: 2.15rem;
+  margin: 0;
+  padding: 0;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: rgba(255, 255, 255, 0.14);
+  color: #ffffff !important;
   cursor: pointer;
-}
-.pcb-bar__close:hover { background: rgba(255,255,255,0.24); }
-
-html[data-theme="dark"] .pcb-bar {
-  background: linear-gradient(90deg, #143F35 0%, #143F35 100%);
+  transition: background 0.15s ease, transform 0.12s ease, opacity 0.15s ease;
 }
 
+.pcb-card__close:hover {
+  background: rgba(255, 255, 255, 0.26);
+}
+
+.pcb-card__close:active {
+  transform: scale(0.94);
+  opacity: 0.9;
+}
+
+.pcb-card__close:focus-visible {
+  outline: 2px solid #ffffff;
+  outline-offset: 2px;
+}
+
+/* توافق أسماء قديمة إن وُجدت إشارات خارجية */
+.pcb-bar {
+  display: none;
+}
+
+html[data-theme="dark"] .pcb-card {
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow:
+    0 12px 32px rgba(0, 0, 0, 0.4),
+    0 1px 0 rgba(255, 255, 255, 0.1) inset;
+}
