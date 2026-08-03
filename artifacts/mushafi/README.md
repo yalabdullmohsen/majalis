@@ -101,6 +101,17 @@ Current store decision remains **NO-GO** until Android AAB/APK builds, device sm
 - متابعة الختمة.
 - آخر موضع قراءة.
 
+## Advanced Khatmah Plans
+
+يدعم المصحف خطط ختمة متقدمة:
+
+- خطة ختمة بعدد أيام.
+- ورد يومي محسوب تلقائيا.
+- متابعة التقدم.
+- إحصائيات قراءة.
+- أرشيف ختمات.
+- تسجيل صفحات مقروءة.
+
 ## Mushaf Reading Settings
 
 يدعم المصحف إعدادات قراءة:

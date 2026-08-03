@@ -4,6 +4,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../application/tasmee3_providers.dart';
 import '../domain/recitation_target.dart';
 import '../domain/tasmee3_goal_progress.dart';
+import '../../mushaf/application/mushaf_providers.dart';
+import '../../mushaf/presentation/mushaf_khatmah_screen.dart';
 import '../../mushaf/presentation/mushaf_screen.dart';
 import '../../mushaf/presentation/mushaf_search_screen.dart';
 import 'tasmee3_about_screen.dart';
@@ -37,6 +39,8 @@ class Tasmee3DashboardScreen extends ConsumerWidget {
     final streak = ref.watch(tasmee3StreakProvider);
     final dailyGoal = ref.watch(tasmee3DailyGoalProvider);
     final todayReview = ref.watch(tasmee3TodayReviewSuggestionsProvider);
+    final khatmahState = ref.watch(khatmahPlanControllerProvider);
+    final activeKhatmah = khatmahState.activePlan;
 
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -209,6 +213,59 @@ class Tasmee3DashboardScreen extends ConsumerWidget {
                   Tasmee3ErrorState(message: ref.read(tasmee3ErrorMapperProvider).map(error)),
               data: (items) => _reviewPlanPreview(context, items.length),
             ),
+            if (activeKhatmah != null) ...[
+              const SizedBox(height: Tasmee3Spacing.md),
+              Container(
+                padding: const EdgeInsets.all(Tasmee3Spacing.lg),
+                decoration: BoxDecoration(
+                  color: Tasmee3Colors.surface,
+                  borderRadius: BorderRadius.circular(Tasmee3Radius.lg),
+                  border: Border.all(color: Tasmee3Colors.border),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const Text(
+                      'خطة الختمة',
+                      style: Tasmee3TextStyles.sectionTitle,
+                    ),
+                    const SizedBox(height: Tasmee3Spacing.sm),
+                    LinearProgressIndicator(
+                      value: activeKhatmah.progress,
+                      minHeight: 8,
+                      color: Tasmee3Colors.primary,
+                      backgroundColor:
+                          Tasmee3Colors.border.withValues(alpha: 0.35),
+                    ),
+                    const SizedBox(height: Tasmee3Spacing.sm),
+                    Text(
+                      'أنجزت ${activeKhatmah.progressPercent}% - وردك اليومي ${activeKhatmah.dailyPagesTarget} صفحة',
+                      style: Tasmee3TextStyles.secondary,
+                    ),
+                    if (activeKhatmah.isLate)
+                      Text(
+                        'متأخر ${activeKhatmah.lateByPages} صفحة عن الخطة.',
+                        style: Tasmee3TextStyles.secondary.copyWith(
+                          color: Tasmee3Colors.warning,
+                        ),
+                      ),
+                    const SizedBox(height: Tasmee3Spacing.md),
+                    OutlinedButton.icon(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const MushafKhatmahScreen(),
+                          ),
+                        );
+                      },
+                      icon: const Icon(Icons.menu_book_outlined),
+                      label: const Text('عرض الختمة'),
+                    ),
+                  ],
+                ),
+              ),
+            ],
             const SizedBox(height: Tasmee3Spacing.lg),
             _quickActions(context),
           ],

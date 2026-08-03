@@ -6,6 +6,8 @@ import '../data/tasmee3_onboarding_repository.dart';
 import '../data/tasmee3_reminder_repository.dart';
 import '../data/tasmee3_session_repository.dart';
 
+/// يعيد ضبط بيانات التسميع المحلية فقط.
+/// TODO: إعادة ضبط بيانات المصحف (ختمة/مفضلة/…) منفصلة عن Tasmee3.
 class Tasmee3ResetService {
   final Tasmee3SessionRepository sessionRepository;
   final Tasmee3GoalRepository goalRepository;

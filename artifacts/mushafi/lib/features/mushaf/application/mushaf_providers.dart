@@ -3,12 +3,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../tasmee3/application/tasmee3_providers.dart';
 import '../data/assets_quran_page_metadata_repository.dart';
 import '../data/assets_tafsir_repository.dart';
+import '../data/khatmah_plan_repository.dart';
 import '../data/mushaf_audio_download_repository.dart';
 import '../data/mushaf_audio_settings_repository.dart';
 import '../data/mushaf_local_repository.dart';
 import '../data/mushaf_reading_settings_repository.dart';
 import '../data/mushaf_search_history_repository.dart';
 import '../data/quran_page_metadata_repository.dart';
+import '../data/shared_prefs_khatmah_plan_repository.dart';
 import '../data/shared_prefs_mushaf_audio_download_repository.dart';
 import '../data/shared_prefs_mushaf_audio_settings_repository.dart';
 import '../data/shared_prefs_mushaf_local_repository.dart';
@@ -29,6 +31,8 @@ import '../domain/quran_page_metadata.dart';
 import '../domain/tafsir_search_index_item.dart';
 import '../domain/tafsir_source.dart';
 import 'ayah_share_text_builder.dart';
+import 'khatmah_plan_controller.dart';
+import 'khatmah_statistics_service.dart';
 import 'mushaf_audio_controller.dart';
 import 'mushaf_audio_download_controller.dart';
 import 'mushaf_audio_download_service.dart';
@@ -43,6 +47,7 @@ import 'quran_page_metadata_integrity_service.dart';
 import 'tafsir_integrity_service.dart';
 import 'tafsir_search_index_builder.dart';
 import 'widget_image_export_service.dart';
+
 
 final mushafPageBuilderProvider = Provider<MushafPageBuilder>((ref) {
   return const MushafPageBuilder();
@@ -288,4 +293,25 @@ final mushafSearchControllerProvider =
     searchService: ref.watch(mushafSearchServiceProvider),
     historyRepository: ref.watch(mushafSearchHistoryRepositoryProvider),
   );
+});
+
+final khatmahPlanRepositoryProvider = Provider<KhatmahPlanRepository>((ref) {
+  return SharedPrefsKhatmahPlanRepository();
+});
+
+final khatmahStatisticsServiceProvider =
+    Provider<KhatmahStatisticsService>((ref) {
+  return const KhatmahStatisticsService();
+});
+
+final khatmahPlanControllerProvider =
+    StateNotifierProvider<KhatmahPlanController, KhatmahPlanState>((ref) {
+  final controller = KhatmahPlanController(
+    repository: ref.watch(khatmahPlanRepositoryProvider),
+    statisticsService: ref.watch(khatmahStatisticsServiceProvider),
+  );
+
+  controller.load();
+
+  return controller;
 });

@@ -3,8 +3,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../tasmee3/presentation/tasmee3_design_tokens.dart';
 import '../../tasmee3/presentation/widgets/tasmee3_app_scaffold.dart';
-import '../application/mushaf_controller.dart';
+import '../../tasmee3/presentation/widgets/tasmee3_empty_state.dart';
+import '../application/khatmah_plan_controller.dart';
 import '../application/mushaf_providers.dart';
+import '../domain/khatmah_plan.dart';
+import 'khatmah_archive_screen.dart';
+import 'khatmah_create_plan_screen.dart';
 import 'mushaf_screen.dart';
 
 class MushafKhatmahScreen extends ConsumerWidget {
@@ -12,124 +16,292 @@ class MushafKhatmahScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = ref.watch(mushafControllerProvider);
-    final controller = ref.read(mushafControllerProvider.notifier);
-    final progress = state.khatmahProgress;
+    final state = ref.watch(khatmahPlanControllerProvider);
+    final controller = ref.read(khatmahPlanControllerProvider.notifier);
+    final active = state.activePlan;
 
     return Tasmee3AppScaffold(
       title: 'الختمة',
-      body: ListView(
-        padding: const EdgeInsets.all(Tasmee3Spacing.lg),
-        children: [
-          Container(
-            padding: const EdgeInsets.all(Tasmee3Spacing.lg),
-            decoration: BoxDecoration(
-              color: Tasmee3Colors.surface,
-              borderRadius: BorderRadius.circular(Tasmee3Radius.lg),
-              border: Border.all(color: Tasmee3Colors.border),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Text(
-                  'تقدم الختمة',
-                  style: Tasmee3TextStyles.sectionTitle,
+      actions: [
+        IconButton(
+          tooltip: 'الأرشيف',
+          icon: const Icon(Icons.archive_outlined),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => const KhatmahArchiveScreen(),
+              ),
+            );
+          },
+        ),
+      ],
+      body: state.isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : active == null
+              ? Tasmee3EmptyState(
+                  icon: Icons.menu_book_outlined,
+                  title: 'لا توجد ختمة نشطة',
+                  message: 'أنشئ خطة ختمة لتتابع وردك اليومي.',
+                  actionLabel: 'إنشاء خطة',
+                  onAction: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => const KhatmahCreatePlanScreen(),
+                      ),
+                    );
+                  },
+                )
+              : ListView(
+                  padding: const EdgeInsets.all(Tasmee3Spacing.lg),
+                  children: [
+                    _ActivePlanCard(plan: active),
+                    const SizedBox(height: Tasmee3Spacing.lg),
+                    _StatsCard(state: state),
+                    const SizedBox(height: Tasmee3Spacing.lg),
+                    if (active.isLate)
+                      Container(
+                        margin:
+                            const EdgeInsets.only(bottom: Tasmee3Spacing.md),
+                        padding: const EdgeInsets.all(Tasmee3Spacing.md),
+                        decoration: BoxDecoration(
+                          color: Tasmee3Colors.warning.withValues(alpha: 0.08),
+                          borderRadius:
+                              BorderRadius.circular(Tasmee3Radius.md),
+                          border: Border.all(
+                            color:
+                                Tasmee3Colors.warning.withValues(alpha: 0.25),
+                          ),
+                        ),
+                        child: Text(
+                          'أنت متأخر تقريبا ${active.lateByPages} صفحة عن الخطة.',
+                          textAlign: TextAlign.center,
+                          style: Tasmee3TextStyles.secondary.copyWith(
+                            color: Tasmee3Colors.warning,
+                          ),
+                        ),
+                      ),
+                    ElevatedButton.icon(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Tasmee3Colors.primary,
+                        foregroundColor: Colors.white,
+                        padding: const EdgeInsets.symmetric(vertical: 14),
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => MushafScreen(
+                              initialPage: active.currentPage,
+                            ),
+                          ),
+                        );
+                      },
+                      icon: const Icon(Icons.menu_book_outlined),
+                      label: const Text('متابعة القراءة'),
+                    ),
+                    const SizedBox(height: Tasmee3Spacing.sm),
+                    OutlinedButton.icon(
+                      onPressed: () {
+                        _showMarkReadDialog(context, controller, active);
+                      },
+                      icon: const Icon(Icons.check_circle_outline),
+                      label: const Text('تسجيل صفحات مقروءة'),
+                    ),
+                    const SizedBox(height: Tasmee3Spacing.sm),
+                    OutlinedButton.icon(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const KhatmahCreatePlanScreen(),
+                          ),
+                        );
+                      },
+                      icon: const Icon(Icons.add),
+                      label: const Text('خطة جديدة'),
+                    ),
+                  ],
                 ),
-                const SizedBox(height: Tasmee3Spacing.md),
-                Text(
-                  '${progress.progressPercent}%',
-                  textAlign: TextAlign.center,
-                  style: Tasmee3TextStyles.title.copyWith(
-                    color: Tasmee3Colors.primary,
-                    fontSize: 34,
+    );
+  }
+
+  void _showMarkReadDialog(
+    BuildContext context,
+    KhatmahPlanController controller,
+    KhatmahPlan plan,
+  ) {
+    var fromPage = plan.currentPage;
+    var toPage = (plan.currentPage + plan.dailyPagesTarget - 1)
+        .clamp(1, plan.totalPages);
+
+    showDialog<void>(
+      context: context,
+      builder: (context) {
+        return Directionality(
+          textDirection: TextDirection.rtl,
+          child: StatefulBuilder(
+            builder: (context, setState) {
+              return AlertDialog(
+                title: const Text('تسجيل قراءة'),
+                content: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text('من صفحة: $fromPage'),
+                    Slider(
+                      value: fromPage.toDouble(),
+                      min: 1,
+                      max: plan.totalPages.toDouble(),
+                      divisions: plan.totalPages - 1,
+                      label: '$fromPage',
+                      onChanged: (value) {
+                        setState(() {
+                          fromPage = value.round();
+                          if (toPage < fromPage) {
+                            toPage = fromPage;
+                          }
+                        });
+                      },
+                    ),
+                    Text('إلى صفحة: $toPage'),
+                    Slider(
+                      value: toPage.toDouble(),
+                      min: 1,
+                      max: plan.totalPages.toDouble(),
+                      divisions: plan.totalPages - 1,
+                      label: '$toPage',
+                      onChanged: (value) {
+                        setState(() {
+                          toPage = value.round();
+                          if (fromPage > toPage) {
+                            fromPage = toPage;
+                          }
+                        });
+                      },
+                    ),
+                  ],
+                ),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text('إلغاء'),
                   ),
-                ),
-                const SizedBox(height: Tasmee3Spacing.md),
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(Tasmee3Radius.pill),
-                  child: LinearProgressIndicator(
-                    value: progress.progress,
-                    minHeight: 10,
-                    backgroundColor:
-                        Tasmee3Colors.border.withValues(alpha: 0.35),
-                    color: Tasmee3Colors.primary,
+                  ElevatedButton(
+                    onPressed: () async {
+                      await controller.markPagesRead(
+                        fromPage: fromPage,
+                        toPage: toPage,
+                      );
+
+                      if (context.mounted) {
+                        Navigator.pop(context);
+                      }
+                    },
+                    child: const Text('تسجيل'),
                   ),
-                ),
-                const SizedBox(height: Tasmee3Spacing.md),
-                Text(
-                  'آخر صفحة: ${progress.lastPage}',
-                  textAlign: TextAlign.center,
-                  style: Tasmee3TextStyles.secondary,
-                ),
-                Text(
-                  'الصفحات المقروءة: ${progress.pagesRead} من ${progress.totalPages}',
-                  textAlign: TextAlign.center,
-                  style: Tasmee3TextStyles.secondary,
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: Tasmee3Spacing.lg),
-          ElevatedButton.icon(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Tasmee3Colors.primary,
-              foregroundColor: Colors.white,
-              padding: const EdgeInsets.symmetric(vertical: 14),
-            ),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => MushafScreen(
-                    initialPage: progress.lastPage.clamp(1, 604),
-                  ),
-                ),
+                ],
               );
             },
-            icon: const Icon(Icons.menu_book_outlined),
-            label: const Text('متابعة القراءة'),
           ),
-          const SizedBox(height: Tasmee3Spacing.sm),
-          OutlinedButton.icon(
-            onPressed: () {
-              _confirmReset(context, controller);
-            },
-            icon: const Icon(Icons.refresh),
-            label: const Text('بدء ختمة جديدة'),
+        );
+      },
+    );
+  }
+}
+
+class _ActivePlanCard extends StatelessWidget {
+  final KhatmahPlan plan;
+
+  const _ActivePlanCard({
+    required this.plan,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(Tasmee3Spacing.lg),
+      decoration: BoxDecoration(
+        color: Tasmee3Colors.surface,
+        borderRadius: BorderRadius.circular(Tasmee3Radius.lg),
+        border: Border.all(color: Tasmee3Colors.border),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text(plan.title, style: Tasmee3TextStyles.sectionTitle),
+          const SizedBox(height: Tasmee3Spacing.md),
+          Text(
+            '${plan.progressPercent}%',
+            textAlign: TextAlign.center,
+            style: Tasmee3TextStyles.title.copyWith(
+              color: Tasmee3Colors.primary,
+              fontSize: 34,
+            ),
+          ),
+          const SizedBox(height: Tasmee3Spacing.md),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(Tasmee3Radius.pill),
+            child: LinearProgressIndicator(
+              value: plan.progress,
+              minHeight: 10,
+              color: Tasmee3Colors.primary,
+              backgroundColor: Tasmee3Colors.border.withValues(alpha: 0.35),
+            ),
+          ),
+          const SizedBox(height: Tasmee3Spacing.md),
+          Text(
+            'الورد اليومي: ${plan.dailyPagesTarget} صفحة',
+            textAlign: TextAlign.center,
+            style: Tasmee3TextStyles.secondary,
+          ),
+          Text(
+            'المتبقي: ${plan.remainingPages} صفحة',
+            textAlign: TextAlign.center,
+            style: Tasmee3TextStyles.secondary,
+          ),
+          Text(
+            'آخر صفحة: ${plan.currentPage}',
+            textAlign: TextAlign.center,
+            style: Tasmee3TextStyles.secondary,
           ),
         ],
       ),
     );
   }
+}
 
-  void _confirmReset(BuildContext context, MushafController controller) {
-    showDialog<void>(
-      context: context,
-      builder: (dialogContext) {
-        return Directionality(
-          textDirection: TextDirection.rtl,
-          child: AlertDialog(
-            title: const Text('بدء ختمة جديدة'),
-            content: const Text('سيتم تصفير تقدم الختمة. هل تريد المتابعة؟'),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(dialogContext),
-                child: const Text('إلغاء'),
-              ),
-              ElevatedButton(
-                onPressed: () async {
-                  await controller.resetKhatmah();
+class _StatsCard extends StatelessWidget {
+  final KhatmahPlanState state;
 
-                  if (dialogContext.mounted) {
-                    Navigator.pop(dialogContext);
-                  }
-                },
-                child: const Text('تأكيد'),
-              ),
-            ],
+  const _StatsCard({
+    required this.state,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final stats = state.statistics;
+
+    return Container(
+      padding: const EdgeInsets.all(Tasmee3Spacing.lg),
+      decoration: BoxDecoration(
+        color: Tasmee3Colors.surface,
+        borderRadius: BorderRadius.circular(Tasmee3Radius.lg),
+        border: Border.all(color: Tasmee3Colors.border),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Text('إحصائيات القراءة', style: Tasmee3TextStyles.sectionTitle),
+          const SizedBox(height: Tasmee3Spacing.md),
+          Text('صفحات اليوم: ${stats.pagesToday}'),
+          Text('صفحات آخر 7 أيام: ${stats.pagesThisWeek}'),
+          Text(
+            'متوسط الصفحات اليومي: ${stats.averagePagesPerDay.toStringAsFixed(1)}',
           ),
-        );
-      },
+          Text('الختمات المكتملة: ${stats.completedPlansCount}'),
+        ],
+      ),
     );
   }
 }

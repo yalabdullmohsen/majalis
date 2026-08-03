@@ -319,6 +319,26 @@ class _MushafReaderScreenState extends ConsumerState<MushafReaderScreen> {
                               return;
                             }
 
+                            if (value == 'markPageRead') {
+                              await ref
+                                  .read(khatmahPlanControllerProvider.notifier)
+                                  .markPagesRead(
+                                    fromPage: currentPage,
+                                    toPage: currentPage,
+                                  );
+
+                              if (context.mounted) {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                  const SnackBar(
+                                    content: Text(
+                                      'تم تسجيل الصفحة في الختمة.',
+                                    ),
+                                  ),
+                                );
+                              }
+                              return;
+                            }
+
                             final Widget? screen = switch (value) {
                               'bookmarks' => const MushafBookmarksScreen(),
                               'favorites' => const MushafFavoritesScreen(),
@@ -370,6 +390,10 @@ class _MushafReaderScreenState extends ConsumerState<MushafReaderScreen> {
                             PopupMenuItem(
                               value: 'khatmah',
                               child: Text('الختمة'),
+                            ),
+                            PopupMenuItem(
+                              value: 'markPageRead',
+                              child: Text('تسجيل قراءة الصفحة'),
                             ),
                             PopupMenuItem(
                               value: 'reciters',
