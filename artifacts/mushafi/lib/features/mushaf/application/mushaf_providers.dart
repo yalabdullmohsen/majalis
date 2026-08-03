@@ -8,6 +8,7 @@ import '../data/tafsir_repository.dart';
 import '../domain/mushaf_favorite_ayah.dart';
 import '../domain/mushaf_page.dart';
 import '../domain/mushaf_reading_position.dart';
+import 'mushaf_controller.dart';
 import 'mushaf_page_builder.dart';
 
 final mushafPageBuilderProvider = Provider<MushafPageBuilder>((ref) {
@@ -29,6 +30,16 @@ final tafsirRepositoryProvider = Provider<TafsirRepository>((ref) {
 
 final mushafLocalRepositoryProvider = Provider<MushafLocalRepository>((ref) {
   return SharedPrefsMushafLocalRepository();
+});
+
+final mushafControllerProvider =
+    StateNotifierProvider<MushafController, MushafState>((ref) {
+  final repository = ref.watch(mushafLocalRepositoryProvider);
+
+  final controller = MushafController(repository: repository);
+  controller.load();
+
+  return controller;
 });
 
 final mushafLastPositionProvider =

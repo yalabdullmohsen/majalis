@@ -6,22 +6,26 @@ import '../../../tasmee3/domain/quran_ayah.dart';
 import '../../../tasmee3/presentation/tasmee3_design_tokens.dart';
 import '../../application/mushaf_providers.dart';
 import '../../data/tafsir_catalog.dart';
-import '../../domain/mushaf_favorite_ayah.dart';
-import '../../domain/mushaf_note.dart';
 import '../mushaf_tafsir_screen.dart';
 
 class MushafAyahActionsSheet extends ConsumerWidget {
   final QuranAyah ayah;
   final bool nightMode;
+  final int pageNumber;
 
   const MushafAyahActionsSheet({
     super.key,
     required this.ayah,
     required this.nightMode,
+    required this.pageNumber,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final controller = ref.read(mushafControllerProvider.notifier);
+    final state = ref.watch(mushafControllerProvider);
+    final isFavorite =
+        state.favorites.any((item) => item.key == ayah.ref.key);
     final textColor = nightMode ? Colors.white : Tasmee3Colors.text;
 
     return Directionality(
@@ -94,26 +98,19 @@ class MushafAyahActionsSheet extends ConsumerWidget {
                 },
               ),
               _ActionTile(
-                icon: Icons.star_border,
-                title: 'إضافة للمفضلة',
+                icon: isFavorite ? Icons.star : Icons.star_border,
+                title: isFavorite ? 'إزالة من المفضلة' : 'إضافة للمفضلة',
                 onTap: () async {
-                  final repository = ref.read(mushafLocalRepositoryProvider);
-                  final favorite = MushafFavoriteAyah(
-                    id: DateTime.now().microsecondsSinceEpoch.toString(),
-                    surah: ayah.ref.surah,
-                    ayah: ayah.ref.ayah,
-                    createdAt: DateTime.now(),
-                  );
-
-                  await repository.toggleFavorite(favorite);
-                  ref.invalidate(mushafFavoritesProvider);
+                  await controller.toggleFavorite(ayah);
 
                   if (context.mounted) {
                     Navigator.pop(context);
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text(
-                          'تم تحديث المفضلة للآية ${favorite.surah}:${favorite.ayah}.',
+                          isFavorite
+                              ? 'تمت الإزالة من المفضلة.'
+                              : 'تمت الإضافة للمفضلة.',
                         ),
                       ),
                     );
@@ -121,61 +118,83 @@ class MushafAyahActionsSheet extends ConsumerWidget {
                 },
               ),
               _ActionTile(
-                icon: Icons.note_add_outlined,
-                title: 'إضافة ملاحظة',
+                icon: Icons.bookmark_add_outlined,
+                title: 'إضافة علامة صفحة',
                 onTap: () async {
-                  final controller = TextEditingController();
-                  final noteText = await showDialog<String>(
-                    context: context,
-                    builder: (dialogContext) {
-                      return Directionality(
-                        textDirection: TextDirection.rtl,
-                        child: AlertDialog(
-                          title: const Text('ملاحظة على الآية'),
-                          content: TextField(
-                            controller: controller,
-                            maxLines: 4,
-                            decoration: const InputDecoration(
-                              hintText: 'اكتب ملاحظتك...',
-                              border: OutlineInputBorder(),
-                            ),
-                          ),
-                          actions: [
-                            TextButton(
-                              onPressed: () => Navigator.pop(dialogContext),
-                              child: const Text('إلغاء'),
-                            ),
-                            ElevatedButton(
-                              onPressed: () {
-                                Navigator.pop(
-                                  dialogContext,
-                                  controller.text.trim(),
-                                );
-                              },
-                              child: const Text('حفظ'),
-                            ),
-                          ],
-                        ),
-                      );
-                    },
+                  await controller.addBookmark(
+                    pageNumber: pageNumber,
+                    ayah: ayah,
+                    colorHex: '#A77A48',
                   );
 
-                  if (!context.mounted) return;
+                  if (context.mounted) {
+                    Navigator.pop(context);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text('تمت إضافة علامة.')),
+                    );
+                  }
+                },
+              ),
+              _ActionTile(
+                icon: Icons.note_add_outlined,
+                title: 'إضافة ملاحظة',
+                onTap: () {
                   Navigator.pop(context);
+                  _showNoteDialog(context, ref);
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
 
-                  if (noteText == null || noteText.isEmpty) return;
+  void _showNoteDialog(BuildContext context, WidgetRef ref) {
+    final controller = ref.read(mushafControllerProvider.notifier);
+    final state = ref.read(mushafControllerProvider);
 
-                  final now = DateTime.now();
-                  await ref.read(mushafLocalRepositoryProvider).saveNote(
-                        MushafNote(
-                          id: now.microsecondsSinceEpoch.toString(),
-                          surah: ayah.ref.surah,
-                          ayah: ayah.ref.ayah,
-                          text: noteText,
-                          createdAt: now,
-                          updatedAt: now,
-                        ),
-                      );
+    final existing = state.notes.where((note) => note.key == ayah.ref.key);
+    final textController = TextEditingController(
+      text: existing.isEmpty ? '' : existing.first.text,
+    );
+
+    showDialog<void>(
+      context: context,
+      builder: (dialogContext) {
+        return Directionality(
+          textDirection: TextDirection.rtl,
+          child: AlertDialog(
+            title: const Text('ملاحظة على الآية'),
+            content: TextField(
+              controller: textController,
+              maxLines: 5,
+              decoration: const InputDecoration(
+                hintText: 'اكتب ملاحظتك هنا...',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(dialogContext),
+                child: const Text('إلغاء'),
+              ),
+              ElevatedButton(
+                onPressed: () async {
+                  final text = textController.text.trim();
+                  if (text.isEmpty) {
+                    Navigator.pop(dialogContext);
+                    return;
+                  }
+
+                  await controller.saveNote(
+                    ayah: ayah,
+                    text: text,
+                  );
+
+                  if (dialogContext.mounted) {
+                    Navigator.pop(dialogContext);
+                  }
 
                   if (context.mounted) {
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -183,11 +202,12 @@ class MushafAyahActionsSheet extends ConsumerWidget {
                     );
                   }
                 },
+                child: const Text('حفظ'),
               ),
             ],
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

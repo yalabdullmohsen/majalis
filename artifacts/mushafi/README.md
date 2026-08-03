@@ -87,6 +87,20 @@ Current store decision remains **NO-GO** until Android AAB/APK builds, device sm
 ملاحظة:
 لا يتم نسخ تصميم أو أصول تطبيقات أخرى. النص القرآني يأتي من ملف موثق داخل التطبيق. تقسيم الصفحات تقريبي حتى يتوفر metadata مرخص.
 
+## Mushaf Interactions
+
+يدعم المصحف:
+
+- الضغط على الآية.
+- الضغط المطول للتحديد.
+- نسخ آية أو نطاق.
+- مشاركة نصية.
+- المفضلة.
+- الملاحظات.
+- العلامات.
+- متابعة الختمة.
+- آخر موضع قراءة.
+
 ## Post-Submission Tracking
 
 Post-submission materials:

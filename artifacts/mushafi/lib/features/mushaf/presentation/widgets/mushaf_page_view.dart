@@ -6,6 +6,8 @@ import '../../domain/mushaf_page.dart';
 class MushafPageView extends StatelessWidget {
   final MushafPage page;
   final ValueChanged<QuranAyah> onAyahTap;
+  final ValueChanged<QuranAyah> onAyahLongPress;
+  final Set<String> selectedAyahKeys;
   final int? highlightedSurah;
   final int? highlightedAyah;
   final bool nightMode;
@@ -14,6 +16,8 @@ class MushafPageView extends StatelessWidget {
     super.key,
     required this.page,
     required this.onAyahTap,
+    required this.onAyahLongPress,
+    this.selectedAyahKeys = const {},
     this.highlightedSurah,
     this.highlightedAyah,
     this.nightMode = false,
@@ -70,16 +74,20 @@ class MushafPageView extends StatelessWidget {
   Widget _ayahSpan(QuranAyah ayah, Color textColor) {
     final highlighted = ayah.ref.surah == highlightedSurah &&
         ayah.ref.ayah == highlightedAyah;
+    final selected = selectedAyahKeys.contains(ayah.ref.key);
 
     return InkWell(
       borderRadius: BorderRadius.circular(12),
       onTap: () => onAyahTap(ayah),
+      onLongPress: () => onAyahLongPress(ayah),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 4),
         decoration: BoxDecoration(
-          color: highlighted
-              ? const Color(0xFFA77A48).withValues(alpha: 0.18)
-              : Colors.transparent,
+          color: selected
+              ? const Color(0xFFA77A48).withValues(alpha: 0.28)
+              : highlighted
+                  ? const Color(0xFFA77A48).withValues(alpha: 0.18)
+                  : Colors.transparent,
           borderRadius: BorderRadius.circular(10),
         ),
         child: RichText(

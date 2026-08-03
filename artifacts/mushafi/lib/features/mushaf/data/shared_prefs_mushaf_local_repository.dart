@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../domain/khatmah_progress.dart';
 import '../domain/mushaf_bookmark.dart';
 import '../domain/mushaf_favorite_ayah.dart';
 import '../domain/mushaf_note.dart';
@@ -13,6 +14,7 @@ class SharedPrefsMushafLocalRepository implements MushafLocalRepository {
   static const _bookmarksKey = 'mushaf_reader_bookmarks';
   static const _favoritesKey = 'mushaf_reader_favorites';
   static const _notesKey = 'mushaf_reader_notes';
+  static const _khatmahKey = 'mushaf_reader_khatmah_progress';
 
   @override
   Future<MushafReadingPosition?> getLastPosition() async {
@@ -150,5 +152,35 @@ class SharedPrefsMushafLocalRepository implements MushafLocalRepository {
       _notesKey,
       jsonEncode(updated.map((item) => item.toJson()).toList()),
     );
+  }
+
+  @override
+  Future<KhatmahProgress> getKhatmahProgress() async {
+    final prefs = await SharedPreferences.getInstance();
+    final raw = prefs.getString(_khatmahKey);
+
+    if (raw == null || raw.trim().isEmpty) {
+      return KhatmahProgress.initial();
+    }
+
+    return KhatmahProgress.fromJson(
+      jsonDecode(raw) as Map<String, dynamic>,
+    );
+  }
+
+  @override
+  Future<void> saveKhatmahProgress(KhatmahProgress progress) async {
+    final prefs = await SharedPreferences.getInstance();
+
+    await prefs.setString(
+      _khatmahKey,
+      jsonEncode(progress.toJson()),
+    );
+  }
+
+  @override
+  Future<void> resetKhatmahProgress() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.remove(_khatmahKey);
   }
 }

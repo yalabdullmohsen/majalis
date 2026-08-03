@@ -1,3 +1,4 @@
+import '../domain/khatmah_progress.dart';
 import '../domain/mushaf_bookmark.dart';
 import '../domain/mushaf_favorite_ayah.dart';
 import '../domain/mushaf_note.dart';
@@ -17,4 +18,8 @@ abstract class MushafLocalRepository {
   Future<List<MushafNote>> getNotes();
   Future<void> saveNote(MushafNote note);
   Future<void> removeNote(String id);
+
+  Future<KhatmahProgress> getKhatmahProgress();
+  Future<void> saveKhatmahProgress(KhatmahProgress progress);
+  Future<void> resetKhatmahProgress();
 }
