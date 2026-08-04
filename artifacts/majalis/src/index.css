@@ -260,11 +260,11 @@ html {
      3) --font-quran: المصحف حصرًا — خط عثماني موثق (Amiri Quran). لا يتغيّر أبدًا.
      4) --font-tafsir: نصوص التفسير — Amiri / Noto Naskh للقراءة الطويلة.
      5) --font-nav: قوائم المزيد/الدرج/الشريط — Cairo/Tajawal لواجهة حديثة نظيفة. */
-  --font-primary:  "Alexandria", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, -apple-system, sans-serif;
-  --font-ui:       "Alexandria", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, -apple-system, sans-serif;
-  --font-body:     "Alexandria", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, -apple-system, sans-serif;
-  --font-display:  "Alexandria", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, -apple-system, sans-serif;
-  --font-reading:  "Alexandria", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, -apple-system, sans-serif;
+  --font-primary:  "IBM Plex Sans Arabic", "Noto Sans Arabic", "Noto Naskh Arabic", "Alexandria", system-ui, -apple-system, sans-serif;
+  --font-ui:       "IBM Plex Sans Arabic", "Noto Sans Arabic", "Alexandria", system-ui, -apple-system, sans-serif;
+  --font-body:     "IBM Plex Sans Arabic", "Noto Sans Arabic", "Noto Naskh Arabic", "Alexandria", system-ui, -apple-system, sans-serif;
+  --font-display:  "IBM Plex Sans Arabic", "Noto Sans Arabic", "Alexandria", system-ui, -apple-system, sans-serif;
+  --font-reading:  "IBM Plex Sans Arabic", "Noto Sans Arabic", "Alexandria", system-ui, -apple-system, sans-serif;
   --font-quran:    "Amiri Quran", "Scheherazade New", "KFGQPC Hafs Uthmanic", serif;
   /* خط تراثي للعناوين البارزة فقط (لا يُستخدَم في النصوص الطويلة أو الفقرات) */
   --font-heritage: "Amiri", "Aref Ruqaa", "Scheherazade New", serif;

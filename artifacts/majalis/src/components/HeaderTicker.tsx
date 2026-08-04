@@ -14,6 +14,7 @@ import {
   type TickerContentItem,
   type TickerKind,
 } from "@/lib/ticker-content";
+import "@/styles/components/header-ticker-polish.css";
 
 type TickerItem = {
   key: string;
@@ -22,6 +23,7 @@ type TickerItem = {
   text: string;
   source?: string;
   href: string;
+  kind?: TickerKind;
 };
 
 function usePrayerTickerItem(): TickerItem | null {
@@ -151,11 +153,14 @@ function useRotatingContent(): TickerContentItem[] {
   return batch;
 }
 
-function TickerEntry({ item }: { item: TickerItem }) {
+function TickerEntry({ item }: { item: TickerItem & { kind?: TickerKind } }) {
   return (
     <Link href={item.href} className="header-ticker__item">
       <item.Icon size={13} strokeWidth={1.8} className="header-ticker__icon" aria-hidden="true" />
-      <span className="header-ticker__label">{item.label}:</span>
+      <span className="header-ticker__label">{item.label}</span>
+      {item.kind === "hadith" ? (
+        <span className="header-ticker__warn">تنبيه الحديث</span>
+      ) : null}
       <span className="header-ticker__text">{item.text}</span>
       {item.source ? (
         <span className="header-ticker__source" aria-label={`المصدر: ${item.source}`}>
@@ -184,6 +189,7 @@ export function HeaderTicker() {
         text: c.text,
         source: c.source,
         href: c.href,
+        kind: c.kind,
       }));
     return prayerItem ? [prayerItem, ...mapped] : mapped;
   }, [prayerItem, contentItems]);

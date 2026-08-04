@@ -320,9 +320,9 @@ export function GlobalSearchModal({ onClose }: Props) {
               if (e.key === "Escape") onClose();
               if (e.key === "Enter") handleSubmitSearch();
             }}
-            placeholder="ابحث في الدروس والكتب والفتاوى والأحاديث..."
+            placeholder="ابحث في المحتوى…"
             dir="rtl"
-            aria-label="بحث شامل"
+            aria-label="ابحث في المحتوى"
             autoComplete="off"
             autoCorrect="off"
             autoCapitalize="off"
@@ -464,8 +464,8 @@ export function GlobalSearchModal({ onClose }: Props) {
           {!isEmpty && error && !loading && (
             <div className="gsm-error-state" role="alert" aria-live="assertive">
               <p className="gsm-state-icon"><AlertTriangle size={32} strokeWidth={1.5} aria-hidden="true" /></p>
-              <p className="gsm-state-title">تعذر الاتصال</p>
-              <p className="gsm-state-hint">تحقق من الاتصال بالإنترنت وأعد المحاولة.</p>
+              <p className="gsm-state-title">تعذر تنفيذ البحث. حاول مرة أخرى.</p>
+              <p className="gsm-state-hint">تحقق من الاتصال بالإنترنت ثم أعد المحاولة.</p>
               <button type="button" onClick={() => doSearch(query, activeFilter)} className="gsm-retry-btn">
                 أعد المحاولة
               </button>
@@ -475,7 +475,7 @@ export function GlobalSearchModal({ onClose }: Props) {
           {!isEmpty && !loading && !error && !hasResults && (
             <div className="gsm-empty-state">
               <p className="gsm-state-icon"><Search size={32} strokeWidth={1.5} aria-hidden="true" /></p>
-              <p className="gsm-state-title">لا نتائج لـ «{query}»</p>
+              <p className="gsm-state-title">لا توجد نتائج مطابقة.</p>
               <p className="gsm-state-hint">جرب تبسيط الكلمة أو إزالة التشكيل.</p>
               <div className="gsm-pills gsm-pills--center">
                 {POPULAR_QUERIES.slice(0, 4).map((q) => (

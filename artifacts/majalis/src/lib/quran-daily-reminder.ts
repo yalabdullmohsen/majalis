@@ -20,7 +20,7 @@ import {
 
 export const QURAN_DAILY_REMINDER_HOUR = 17;
 export const QURAN_DAILY_REMINDER_MINUTE = 0;
-export const QURAN_DAILY_REMINDER_TITLE = "وقت القراءة 📖";
+export const QURAN_DAILY_REMINDER_TITLE = "وقت القراءة";
 export const QURAN_DAILY_REMINDER_BODY =
   "هل تود قراءة وردك اليومي من القرآن الكريم؟";
 export const QURAN_DAILY_REMINDER_TAG = "majalis-quran-daily-wird";
@@ -80,7 +80,7 @@ async function scheduleNativeDailyReminder(requestPerm: boolean): Promise<Schedu
  * RN:
  * ```ts
  * await Notifications.scheduleNotificationAsync({
- *   content: { title: "وقت القراءة 📖", body: "هل تود قراءة وردك اليومي…" },
+ *   content: { title: "وقت القراءة", body: "هل تود قراءة وردك اليومي…" },
  *   trigger: { hour: 17, minute: 0, repeats: true },
  * });
  * ```

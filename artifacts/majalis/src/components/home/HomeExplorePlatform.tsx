@@ -12,7 +12,7 @@ export function HomeExplorePlatform() {
           <circle cx="11" cy="11" r="3.5" fill="none" stroke="#143F35" strokeWidth="0.8"/>
         </svg>
         <h2 id="features-heading" className="hp-explore__title">
-          استكشف المنصة
+          استكشف الأقسام
         </h2>
       </div>
 

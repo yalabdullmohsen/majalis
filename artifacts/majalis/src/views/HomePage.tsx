@@ -95,8 +95,7 @@ export default function HomePage() {
     const last = pages.find((p) => p.href !== "/") ?? null;
     setLastVisited(last);
   }, []);
-  const continueHref  = lastVisited?.href ?? "/daily-wird";
-  const continueLabel = lastVisited ? `تابع: ${lastVisited.label}` : "ابدأ يومك: الورد اليومي";
+  const continueHref = lastVisited?.href ?? "/mushaf";
 
   // تخصيص أقسام الصفحة الرئيسية: محلي فورًا، مع مزامنة اختيارية من Supabase عند تسجيل الدخول
   const [homePrefs, setHomePrefs] = useState<HomepagePrefs>(() => getLocalHomepagePrefs());
@@ -203,7 +202,10 @@ export default function HomePage() {
         <div className="hpv4-hero__inner">
 
           <p className="hpv4-hero__brand-eyebrow">المجلس العلمي</p>
-          <h1 className="hpv4-vision-title">ريادة المعرفة الإسلامية الرقمية</h1>
+          <h1 className="hpv4-vision-title">المجلس العلمي</h1>
+          <p className="hpv4-hero__lead">
+            منصة علمية تجمع القرآن، الحديث، الفقه، الصلاة، والحفظ في تجربة منظمة.
+          </p>
 
           <div className="hpv4-hero__greet">
             <p className="hpv4-hero__greet-main">
@@ -219,11 +221,9 @@ export default function HomePage() {
                 className="hpv4-event-chip"
                 style={{ "--hp-event-accent": dailyCtx.accentColor } as CSSProperties}
               >
-                ✦ {dailyCtx.event}
+                {dailyCtx.event}
               </div>
             )}
-            {/* شريط التاريخ والصلاة القادمة — بديل الشعار الكبير واسم التطبيق
-                (يبقى الشعار في شاشة البداية وصفحة "عن التطبيق" والأيقونة فقط) */}
             <div className="hpv4-meta-row">
               <span className="hpv4-meta-chip">
                 <svg width="11" height="11" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" aria-hidden="true">
@@ -252,13 +252,19 @@ export default function HomePage() {
             </svg>
           </div>
 
-          {/* زر متابعة واحد — العنصر الثالث من البطاقة اليومية (ديناميكي: آخر صفحة
-              زارها المستخدم، أو دعوة افتراضية لبدء الورد اليومي لزائر جديد) */}
           <div className="hpv4-hero__cta-wrap">
             <Link href={continueHref} className="hpv4-hero__cta-primary">
               <svg width="15" height="15" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M6 3l8 6-8 6V3z"/></svg>
-              {continueLabel}
+              ابدأ التصفح
             </Link>
+            <button
+              type="button"
+              className="hpv4-hero__cta-secondary"
+              onClick={() => window.dispatchEvent(new CustomEvent("global-search-open"))}
+              aria-label="ابحث في المحتوى"
+            >
+              ابحث في المحتوى
+            </button>
           </div>
 
           {isAdmin && (

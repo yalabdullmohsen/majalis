@@ -26,7 +26,7 @@
 
 /* ── Hero: خصائص كانت inline فوق عقد final-release ── */
 .home-page--v4 .hpv4-hero {
-  background: linear-gradient(135deg, #143F35 0%, #226A56 100%);
+  background: linear-gradient(135deg, #0b2b1d 0%, #12362a 55%, #1a4a3a 100%);
   padding: clamp(1.5rem, 4vw, 2rem) 1rem clamp(1.25rem, 3vw, 1.75rem);
   position: relative;
   overflow: hidden;
@@ -460,9 +460,39 @@ a.hp-explore__sitemap {
   padding: 0.6rem 1.4rem;
   border-radius: 0.7rem;
   text-decoration: none;
-  background: #143f35;
-  color: #fafaf8;
+  background: #12362a;
+  color: #fbf8f1;
   font-size: 0.83rem;
   font-weight: 800;
   min-height: 44px;
+}
+
+.hpv4-hero__cta-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  justify-content: center;
+}
+.hpv4-hero__cta-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 44px;
+  padding: 0.65rem 1.1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff !important;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  font: inherit;
+}
+.hpv4-hero__lead {
+  margin: 0.35rem auto 0;
+  max-width: 36rem;
+  color: rgba(255, 255, 255, 0.86);
+  font-size: clamp(0.88rem, 2.6vw, 1.02rem);
+  line-height: 1.7;
+  text-align: center;
 }

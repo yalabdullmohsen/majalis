@@ -12,6 +12,7 @@ import { isImmersiveChromePath } from "@/lib/immersive-chrome";
 import { PRIMARY_NAV_ITEMS } from "@/lib/navigation";
 import { fetchPrayerTimes, computePrayerCountdown, type PrayerCountdown } from "@/lib/prayer-times";
 import "@/styles/components/dark-emerald-menus.css";
+import "@/styles/components/design-redesign.css";
 
 const HeaderTicker = lazy(() =>
   import("./HeaderTicker").then((m) => ({ default: m.HeaderTicker })),
@@ -206,8 +207,8 @@ export default function NavBar() {
             <button
               type="button"
               onClick={openSearch}
-              aria-label="فتح البحث الشامل"
-              title="البحث الشامل"
+              aria-label="فتح البحث"
+              title="البحث"
               className="navbar-theme-toggle navbar-search-toggle"
             >
               <Search size={17} strokeWidth={1.8} aria-hidden="true" />
@@ -229,6 +230,39 @@ export default function NavBar() {
             )}
           </div>
         </div>
+
+        {/* صف بحث مستقل — لا يتداخل مع التبويبات أو التيكر */}
+        {isMobile && !isImmersiveChromePath(location) && (
+          <div className="navbar-v3__search-row">
+            <button
+              type="button"
+              className="navbar-v3__search-btn"
+              onClick={openSearch}
+              aria-label="فتح البحث"
+            >
+              <Search size={16} strokeWidth={1.8} aria-hidden="true" />
+              <span>ابحث في المحتوى…</span>
+            </button>
+          </div>
+        )}
+
+        {/* تبويبات أفقية قابلة للتمرير على الجوال */}
+        {isMobile && !isImmersiveChromePath(location) && (
+          <nav className="navbar-v3__tabs-row" aria-label="أقسام المنصة">
+            <div className="navbar-v3__tabs">
+              {PRIMARY_NAV_ITEMS.filter((item) => item.href !== "/").map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  className={tabCls(isActive(item.href))}
+                  aria-current={isActive(item.href) ? "page" : undefined}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </div>
+          </nav>
+        )}
 
         {/* صف مستقل تحت أزرار الهيدر — يمنع تداخل التيكر مع القائمة/البحث/الحساب */}
         {isMobile && !isImmersiveChromePath(location) && (

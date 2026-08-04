@@ -443,7 +443,7 @@ export default function SearchPage() {
           value={term}
           onChange={handleTermChange}
           onSubmit={submitSearch}
-          placeholder="ابحث في المنصة..."
+          placeholder="ابحث في المحتوى…"
         />
         <button type="submit" className="search-page-submit ds-btn ds-btn--primary" aria-label="تنفيذ البحث">بحث</button>
       </form>
@@ -603,7 +603,7 @@ export default function SearchPage() {
         <div aria-live="polite" aria-atomic="false">
           {total === 0 ? (
             <div className="search-no-results" role="status">
-              <p className="search-no-results__msg">لا توجد نتائج مطابقة لـ «{q}»</p>
+              <p className="search-no-results__msg">لا توجد نتائج مطابقة.</p>
               <p className="search-no-results__hint">جرّب كلمات مختلفة أو تحقق من الإملاء.</p>
             </div>
           ) : (

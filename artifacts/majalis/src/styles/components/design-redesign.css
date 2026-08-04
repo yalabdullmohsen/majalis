@@ -1,0 +1,8 @@
+/* هيدر الجوال فقط — مسار حرج رفيع */
+.navbar-v3__search-row{width:100%;padding:.45rem var(--page-gutter,.75rem) .35rem;border-block-start:1px solid var(--color-border,rgba(18,54,42,.14));background:var(--color-background,var(--bg,#fbf8f1))}
+.navbar-v3__search-btn{width:100%;min-height:44px;display:flex;align-items:center;gap:.55rem;padding:.55rem .9rem;border:1px solid var(--color-border,rgba(18,54,42,.14));border-radius:14px;background:var(--color-surface,#fff);color:var(--color-muted,#66736d);font:inherit;font-size:.9rem;text-align:right;cursor:pointer}
+.navbar-v3__search-btn:focus-visible{outline:3px solid color-mix(in srgb,var(--color-primary,#12362a) 55%,#fff);outline-offset:2px}
+.navbar-v3__tabs-row{width:100%;overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch;scrollbar-width:none;border-block-start:1px solid var(--color-border,rgba(18,54,42,.14));background:var(--color-surface,#fff);padding:.2rem 0}
+.navbar-v3__tabs-row::-webkit-scrollbar{display:none}
+.navbar-v3__tabs-row .navbar-v3__tabs{display:flex;flex-wrap:nowrap;gap:.15rem;width:max-content;min-width:100%;padding-inline:var(--page-gutter,.65rem);justify-content:flex-start}
+html,body,#root{overflow-x:hidden}

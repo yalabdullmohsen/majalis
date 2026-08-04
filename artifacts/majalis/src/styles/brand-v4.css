@@ -34,20 +34,18 @@
      ١) السلالم الأولية — أرقام خام، لا تُستعمل مباشرة في المكونات
      ══════════════════════════════════════════════════════════ */
 
-  /* الزمردي — هوية المنصة. مُطوَّر من #173D35 التاريخي: نفس الروح
-     (أخضر مائل للمزرقّ، مشبع باعتدال) لكن بسُلَّم كامل 50→950 يسمح
-     بتدرّج حقيقي بدل لونين متطرفين. */
-  --em-50:  #F0F7F4;
-  --em-100: #DBEDE5;
-  --em-200: #B6DACB;
-  --em-300: #88C0AC;
-  --em-400: #57A189;
-  --em-500: #33846C;
-  --em-600: #226A56;  /* اللون التفاعلي الأساسي — 6.43:1 على أبيض */
-  --em-700: #195345;
-  --em-800: #143F35;
-  --em-900: #0F2F28;
-  --em-950: #081A16;
+  /* الزمردي — إعادة تصميم 2026: أخضر داكن هادئ (#12362A) مع سطح كريمي */
+  --em-50:  #E8F0EC;
+  --em-100: #D5E4DC;
+  --em-200: #B0C9BC;
+  --em-300: #7FA392;
+  --em-400: #4A7D68;
+  --em-500: #2F5E4C;
+  --em-600: #1A4A3A;  /* تفاعلي — تباين كافٍ على الأبيض */
+  --em-700: #154033;
+  --em-800: #12362A;  /* الأساسي — هوية المنصة */
+  --em-900: #0B2B1D;
+  --em-950: #061A12;
 
   /* الذهبي النحاسي — لهجة ثانوية للتكريم والتمييز العلمي (لا للتنبيه).
      مستوحى من تذهيب المخطوطات، مكبوح عمدًا كي لا يصبح لون تحذير. */
@@ -62,23 +60,23 @@
   /* نيوترالز دافئة — رمادي بلمسة عاجية تحفظ دفء الهوية السابقة
      دون اصفرار الورق القديم. */
   --n-0:   #FFFFFF;
-  --n-50:  #FAFAF8;
-  --n-100: #F4F4F1;
-  --n-200: #E8E7E2;
-  --n-300: #D6D5CE;
-  --n-400: #A9A8A0;
-  --n-450: #8C8B83;  /* أدنى رمادي يحقق 3:1 على كل الأسطح الفاتحة */
-  --n-500: #7B7A73;
-  --n-600: #5C5C56;
-  --n-700: #444440;
-  --n-800: #2A2A27;
-  --n-900: #1A1A18;
+  --n-50:  #FBF8F1;
+  --n-100: #F4F1EA;
+  --n-200: #E8E4DA;
+  --n-300: #D4CFC4;
+  --n-400: #A9A39A;
+  --n-450: #8C8780;
+  --n-500: #7B766F;
+  --n-600: #66736D;
+  --n-700: #4A524E;
+  --n-800: #2E3331;
+  --n-900: #1D1D1B;
   --n-950: #0E0E0D;
 
   /* ألوان الحالة — كل زوج (نص/خلفية) متحقَّق ≥4.5:1 */
   --danger:      #C62828;
-  --danger-fg:   #A81F1F;
-  --danger-bg:   #FDECEC;
+  --danger-fg:   #A94444;
+  --danger-bg:   #FFF0F0;
   --warn-fg:     #8A5A00;
   --warn-bg:     #FFF6E0;
   --info-fg:     #1B5E8A;
@@ -111,38 +109,44 @@
   --border-interactive: var(--n-450);  /* حقول الإدخال — 3:1 إلزامي */
   --border-brand:       var(--em-200);
 
-  --brand:        var(--em-600);
+  --brand:        var(--em-800);
   --brand-hover:  var(--em-700);
-  --brand-active: var(--em-800);
+  --brand-active: var(--em-900);
   --brand-soft:   var(--em-50);
-  --brand-deep:   var(--em-800);
+  --brand-deep:   var(--em-900);
   --accent:       var(--gold-500);
   --accent-soft:  var(--gold-100);
   --accent-deep:  var(--gold-700);
 
   /* أسماء دلالية موحّدة للواجهات الجديدة — aliases فقط، لا قيم صلبة إضافية */
   --color-bg:                var(--bg);
+  --color-background:        var(--bg);
   --color-bg-soft:           var(--surface-2);
   --color-surface:           var(--surface);
   --color-surface-elevated:  var(--bg-elevated);
   --color-text:              var(--text);
+  --color-muted:             var(--text-2);
   --color-text-muted:        var(--text-2);
   --color-primary:           var(--brand);
+  --color-primary-dark:      var(--brand-deep);
   --color-primary-strong:    var(--brand-deep);
   --color-primary-soft:      var(--brand-soft);
   --color-accent:            var(--accent);
-  --color-border:            var(--border);
+  --color-border:            rgba(18, 54, 42, 0.14);
   --color-danger:            var(--danger);
+  --color-warning-bg:        var(--danger-bg);
+  --color-warning-text:      var(--danger-fg);
   --color-success:           var(--ok-fg);
   --shadow-soft:             var(--e-1);
+  --shadow-card:             0 10px 30px rgba(0, 0, 0, 0.04);
   --radius-card:             var(--r-lg);
   --space-page:              var(--s-4);
 
   /* ══════════════════════════════════════════════════════════
      ٣) الطباعة — سُلَّم نسبي 1.2 (Minor Third)
      ══════════════════════════════════════════════════════════ */
-  --font-body:    "IBM Plex Sans Arabic", "Alexandria", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-display: "Alexandria", "IBM Plex Sans Arabic", system-ui, sans-serif;
+  --font-body:    "IBM Plex Sans Arabic", "Noto Sans Arabic", "Noto Naskh Arabic", "Alexandria", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-display: "IBM Plex Sans Arabic", "Noto Sans Arabic", "Alexandria", system-ui, sans-serif;
   --font-quran:   "Amiri Quran", "Scheherazade New", "Noto Naskh Arabic", serif;
 
   --fs-xs:   0.75rem;    /* 12px */
@@ -281,17 +285,22 @@ html[data-theme="dark"] {
   --accent-deep:  var(--gold-200);
 
   --color-bg:                var(--bg);
+  --color-background:        var(--bg);
   --color-bg-soft:           var(--surface-2);
   --color-surface:           var(--surface);
   --color-surface-elevated:  var(--bg-elevated);
   --color-text:              var(--text);
+  --color-muted:             var(--text-2);
   --color-text-muted:        var(--text-2);
   --color-primary:           var(--brand);
+  --color-primary-dark:      var(--brand-deep);
   --color-primary-strong:    var(--brand-deep);
   --color-primary-soft:      var(--brand-soft);
   --color-accent:            var(--accent);
   --color-border:            var(--border);
   --color-danger:            var(--danger);
+  --color-warning-bg:        var(--danger-bg);
+  --color-warning-text:      var(--danger-fg);
   --color-success:           var(--ok-fg);
 
   --danger:      #F87171;
