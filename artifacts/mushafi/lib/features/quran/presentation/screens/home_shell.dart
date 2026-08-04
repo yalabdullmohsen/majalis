@@ -37,7 +37,35 @@ class HomeShell extends ConsumerWidget {
                 textAlign: TextAlign.center,
                 style: TextStyle(color: colors.secondaryText),
               ),
+              const SizedBox(height: 16),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                decoration: BoxDecoration(
+                  color: const Color(0xFFA77A48).withValues(alpha: 0.12),
+                  borderRadius: BorderRadius.circular(999),
+                  border: Border.all(color: const Color(0xFFE0C5A3)),
+                ),
+                child: const Text(
+                  'تحديث ظاهر: اضغط «المصحف» أدناه',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Color(0xFF765332),
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ),
               const Spacer(),
+              FilledButton.icon(
+                style: FilledButton.styleFrom(
+                  backgroundColor: const Color(0xFFA77A48),
+                  foregroundColor: Colors.white,
+                  minimumSize: const Size(double.infinity, 52),
+                ),
+                onPressed: () => context.go('/mushaf-home'),
+                icon: const Icon(Icons.menu_book_outlined),
+                label: const Text('المصحف'),
+              ),
+              const SizedBox(height: 10),
               FilledButton(
                 onPressed: () => context.go('/mushaf?page=$last'),
                 child: Text('متابعة القراءة — ص $last'),
