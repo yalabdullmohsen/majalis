@@ -21,6 +21,7 @@ import { PushPrompt } from "@/components/PushPrompt";
 import { useLanguage } from "@/components/LanguageProvider";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
 import "@/styles/pages/settings.css";
+import "@/styles/igds/core-pages.css";
 
 function ToggleRow({
   label,

@@ -1,7 +1,8 @@
 import type { ReactNode } from "react";
 import type { AsyncStatus } from "@/hooks/use-async-data";
-import { Empty, ErrorState, QaSkeleton, SearchSkeleton } from "@/components/ui-common";
-import "@/styles/components/async-data-error.css";
+import { IgdsEmptyState, IgdsErrorState, IgdsSkeleton } from "@/components/igds";
+import { QaSkeleton, SearchSkeleton } from "@/components/ui-common";
+import "@/styles/igds/components.css";
 
 type SkeletonVariant = "list" | "search" | "spinner";
 
@@ -18,13 +19,7 @@ type AsyncDataViewProps = {
 function Skeleton({ variant }: { variant: SkeletonVariant }) {
   if (variant === "search") return <SearchSkeleton />;
   if (variant === "list") return <QaSkeleton count={5} />;
-  return (
-    <div className="ds-empty" role="status" aria-live="polite" aria-busy="true">
-      <div className="ds-skeleton adv-skel-line1" />
-      <div className="ds-skeleton adv-skel-line2" />
-      <div className="ds-skeleton adv-skel-line3" />
-    </div>
-  );
+  return <IgdsSkeleton lines={3} />;
 }
 
 export function AsyncDataView({
@@ -38,8 +33,8 @@ export function AsyncDataView({
 }: AsyncDataViewProps) {
   if (status === "loading") return <Skeleton variant={skeleton} />;
   if (status === "error") {
-    return <ErrorState text={errorText} onRetry={onRetry} />;
+    return <IgdsErrorState description={errorText} onRetry={onRetry} />;
   }
-  if (status === "empty") return <Empty text={emptyText} />;
+  if (status === "empty") return <IgdsEmptyState description={emptyText} />;
   return <>{children}</>;
 }

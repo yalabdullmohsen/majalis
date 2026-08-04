@@ -10,6 +10,7 @@ import {
 import { useAuth } from "@/components/AuthProvider";
 import { useRecentProgress } from "@/hooks/useRecentProgress";
 import "@/styles/pages/my-learning.css";
+import "@/styles/igds/core-pages.css";
 import {
   fetchPersonalLibrary,
   fetchLearningNotes,

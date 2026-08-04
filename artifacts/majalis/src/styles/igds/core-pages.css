@@ -1,0 +1,104 @@
+/* IGDS core page shells — hubs, lessons, quiz, settings wrappers */
+
+.igds-page {
+  min-width: 0;
+  max-width: 100%;
+  background: var(--igds-bg);
+  color: var(--igds-text);
+  overflow-x: clip;
+}
+
+.igds-page__hero {
+  padding-block: clamp(1.1rem, 3vw, 1.75rem) 1rem;
+  background: linear-gradient(165deg, var(--igds-em-900), var(--igds-em-800) 60%, var(--igds-em-700));
+  color: var(--igds-text-on-brand);
+}
+
+.igds-page__hero .igds-page-header__title,
+.igds-page__hero .igds-page-header__desc {
+  color: inherit;
+}
+
+.igds-page__hero .igds-page-header__desc {
+  color: rgb(250 248 242 / 82%);
+}
+
+.igds-page__hero .igds-btn--ghost {
+  color: var(--igds-text-on-brand);
+  border-color: rgb(255 255 255 / 25%);
+}
+
+.igds-page__body {
+  padding-block: 1.25rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.igds-page__card-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.4rem;
+  height: 2.4rem;
+  border-radius: var(--igds-radius-sm);
+  background: var(--igds-brand-soft);
+  color: var(--igds-text-brand);
+  order: -1;
+}
+
+.igds-card {
+  position: relative;
+}
+
+/* دروس / اختبار / حسابي / إعدادات — غلاف لوني موحّد دون كسر المنطق */
+.lessons-page-v2.ds-page,
+.quiz-page,
+.myl2-page,
+.settings-page,
+.page-shell.ds-page {
+  background: var(--igds-bg);
+  color: var(--igds-text);
+}
+
+.lessons-page-v2 .ds-page-header h1,
+.myl2-hero__name,
+.settings-page h1 {
+  color: var(--igds-text);
+  font-family: var(--igds-font-body);
+}
+
+.myl2-hero {
+  background: linear-gradient(160deg, var(--igds-em-900), var(--igds-em-800)) !important;
+}
+
+.myl2-card,
+.lesson-unified-card {
+  border-radius: var(--igds-radius-lg) !important;
+  border-color: var(--igds-border) !important;
+  box-shadow: var(--igds-shadow-sm) !important;
+  background: var(--igds-surface) !important;
+}
+
+.lessons-geo-banner {
+  opacity: 0.08 !important;
+}
+.lessons-geo-banner__pattern {
+  color: var(--igds-em-700) !important;
+}
+
+.legal-page {
+  background: var(--igds-bg);
+  color: var(--igds-text);
+}
+.legal-page-hero {
+  background: linear-gradient(165deg, var(--igds-em-900), var(--igds-em-800)) !important;
+}
+.legal-section {
+  border-radius: var(--igds-radius-lg);
+  border: 1px solid var(--igds-border);
+  background: var(--igds-surface);
+  box-shadow: var(--igds-shadow-sm);
+  padding: 1rem;
+  margin-block-end: 1rem;
+}
