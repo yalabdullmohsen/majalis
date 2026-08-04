@@ -174,8 +174,8 @@ export function scheduleResumeReminder(title: string): void {
 export function schedulePrayerReminder(prayerName: string, minutesLeft: number): void {
   if (minutesLeft > 12 || minutesLeft < 8) return;
   if (alreadySentToday(`prayer-${prayerName}`)) return;
-  sendLocalNotification(`🕌 ${prayerName} بعد ${minutesLeft} دقائق`, {
-    body: "استعدّ لصلاتك.",
+  sendLocalNotification("اقتربت الصلاة", {
+    body: `باقي ${minutesLeft} دقيقة على صلاة ${prayerName}`,
     tag: `prayer-${prayerName}`,
   });
   markSentToday(`prayer-${prayerName}`);

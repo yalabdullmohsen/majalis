@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 import { useNumerals } from "@/hooks/useNumerals";
-import { PRE_ALERT_MINUTES, isBannerDismissedFor, dismissBannerFor } from "@/lib/prayer-alert-preferences";
+import { PRE_ALERT_MINUTES, isBannerDismissedFor, dismissBannerFor, loadPrayerAlertPrefs } from "@/lib/prayer-alert-preferences";
 import "@/styles/components/prayer-countdown-banner.css";
 
 const PRAYER_ICONS: Record<string, LucideIcon> = {
@@ -60,7 +60,8 @@ export function PrayerCountdownBanner() {
   } else if (!inGrace) {
     const remainingSeconds = Math.round(countdown.remainingMs / 1000);
     const minutesRemaining = Math.ceil(remainingSeconds / 60);
-    if (minutesRemaining > 0 && minutesRemaining <= PRE_ALERT_MINUTES) {
+    const preWindow = loadPrayerAlertPrefs().preAlertMinutes || PRE_ALERT_MINUTES;
+    if (minutesRemaining > 0 && minutesRemaining <= preWindow) {
       mode = "countdown";
       label = `متبقي على صلاة ${countdown.next.name}`;
       timer =
