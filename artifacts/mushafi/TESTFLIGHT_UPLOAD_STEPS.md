@@ -22,11 +22,19 @@ pod install
 cd ..
 ```
 
-If `pod` is missing:
+If `pod` is missing (common on macOS with system Ruby 2.6):
+
+```bash
+# Prefer Homebrew Ruby + CocoaPods:
+brew install ruby cocoapods
+# Ensure brew ruby/bin is on PATH, then:
+cd ios && pod install && cd ..
+```
+
+Alternative:
 
 ```bash
 sudo gem install cocoapods
-# or: brew install cocoapods
 cd ios && pod install && cd ..
 ```
 
