@@ -146,10 +146,12 @@ console.log("\n=== القوائم بلا أقسام محذوفة وبلا من �
 console.log("\n=== الشريط السفلي والمزيد ===");
 {
   const bottomSrc = readFileSync(resolve(appRoot, "src/components/BottomNavBar.tsx"), "utf-8");
-  assert(bottomSrc.includes('href: "/my-learning"') && bottomSrc.includes('label: "حسابي"'), "حسابي في الشريط السفلي");
+  assert(bottomSrc.includes('href: "/lessons"') && bottomSrc.includes('label: "التعلّم"'), "التعلّم في الشريط السفلي");
+  assert(bottomSrc.includes('href: "/mushaf"') && bottomSrc.includes('href: "/prayer-times"'), "قرآن وصلاة في الشريط");
   assert(!bottomSrc.includes('label: "البحث"'), "البحث ليس تبويبًا سفليًا أساسيًا بعد التنظيف");
   const moreSrc = readFileSync(resolve(appRoot, "src/components/MoreBottomSheet.tsx"), "utf-8");
-  assert(moreSrc.includes("MORE_SHEET_ITEMS"), "المزيد يستورد العناصر الموحّدة");
+  assert(moreSrc.includes("SIDEBAR_NAV_GROUPS") || moreSrc.includes("MORE_GROUPS"), "المزيد يستورد المجموعات الموحّدة");
+  assert(moreSrc.includes("مركز الخدمات") || moreSrc.includes("حسابي"), "المزيد مركز خدمات");
   assert(!moreSrc.includes('"/library"') && !moreSrc.includes('"/about"'), "المزيد بلا مكتبة ولا من نحن");
 }
 

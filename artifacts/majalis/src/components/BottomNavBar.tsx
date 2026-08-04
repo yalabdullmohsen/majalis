@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
-import { BookOpen, Clock, Home, LayoutGrid, User } from "lucide-react";
+import { BookOpen, Clock, GraduationCap, Home, LayoutGrid } from "lucide-react";
 import { isNavHrefActive } from "@/lib/nav-active";
 import { isImmersiveChromePath } from "@/lib/immersive-chrome";
 import { isComingSoonPath } from "@/lib/nav-visibility";
@@ -12,12 +12,12 @@ type NavTab = {
   Icon: React.ComponentType<{ size?: number; strokeWidth?: number; "aria-hidden"?: boolean }>;
 };
 
-/** شريط سفلي مختصر: الرئيسية · القرآن · الصلاة · حسابي · المزيد */
+/** شريط سفلي 2030: الرئيسية · القرآن · الصلاة · التعلّم · المزيد */
 const NAV_TABS: NavTab[] = [
   { href: "/", label: "الرئيسية", Icon: Home },
   { href: "/mushaf", label: "القرآن", Icon: BookOpen },
   { href: "/prayer-times", label: "الصلاة", Icon: Clock },
-  { href: "/my-learning", label: "حسابي", Icon: User },
+  { href: "/lessons", label: "التعلّم", Icon: GraduationCap },
 ];
 
 export function BottomNavBar() {
@@ -31,7 +31,7 @@ export function BottomNavBar() {
 
   return (
     <>
-      <nav className="bottom-nav bottom-nav--v2" aria-label="التنقل السفلي">
+      <nav className="bottom-nav bottom-nav--v2 bottom-nav--m2030" aria-label="التنقل السفلي">
         {NAV_TABS.map(({ href, label, Icon }) => {
           const active = isNavHrefActive(location, href);
           const soon = isComingSoonPath(href);

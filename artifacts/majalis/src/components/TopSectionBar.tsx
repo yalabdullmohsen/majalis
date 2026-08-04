@@ -7,6 +7,8 @@ import type { LucideIcon } from "lucide-react";
 import { isImmersiveChromePath } from "@/lib/immersive-chrome";
 import { isComingSoonPath } from "@/lib/nav-visibility";
 
+/* هوية التبويب العلوي تُحسم عبر styles/m2030/navigation.css */
+
 type SectionTab = {
   href: string;
   label: string;

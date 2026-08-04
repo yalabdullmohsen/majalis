@@ -1,17 +1,20 @@
 import { createPortal } from "react-dom";
 import { Link, useLocation } from "wouter";
 import { useEffect } from "react";
-import { Moon, Sun, X } from "lucide-react";
+import { Moon, Settings, Sun, User, X } from "lucide-react";
 import { useThemePreference } from "@/components/ThemePreferenceProvider";
 import { isComingSoonPath } from "@/lib/nav-visibility";
 import { isNavHrefActive } from "@/lib/nav-active";
-import { MORE_SHEET_ITEMS } from "@/lib/sidebar-nav";
+import { SIDEBAR_NAV_GROUPS } from "@/lib/sidebar-nav";
 import "@/styles/components/more-bottom-sheet.css";
 
 interface Props {
   open: boolean;
   onClose: () => void;
 }
+
+/** مجموعات منظّمة لمركز الخدمات — ليست قائمة مسطّحة طويلة */
+const MORE_GROUPS = SIDEBAR_NAV_GROUPS.filter((g) => g.id !== "quick" && g.id !== "account");
 
 export function MoreBottomSheet({ open, onClose }: Props) {
   const [location] = useLocation();
@@ -40,7 +43,7 @@ export function MoreBottomSheet({ open, onClose }: Props) {
     /* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions */
     <div className="bottom-sheet-overlay" role="presentation" onClick={onClose}>
       <div
-        className="bottom-sheet"
+        className="bottom-sheet bottom-sheet--m2030"
         role="dialog"
         aria-modal="true"
         aria-label="المزيد"
@@ -48,7 +51,7 @@ export function MoreBottomSheet({ open, onClose }: Props) {
       >
         <div className="bottom-sheet__handle" />
         <div className="bottom-sheet__head">
-          <span>المزيد</span>
+          <span>مركز الخدمات</span>
           <button
             type="button"
             onClick={onClose}
@@ -58,45 +61,59 @@ export function MoreBottomSheet({ open, onClose }: Props) {
         </div>
 
         <div className="bottom-sheet__body">
-          <button
-            type="button"
-            className="more-sheet-theme-toggle"
-            onClick={toggleDark}
-            aria-label={resolvedTheme === "dark" ? "التحويل إلى الوضع النهاري" : "التحويل إلى الوضع الليلي"}
-          >
-            <span className="more-sheet-theme-toggle__meta">
-              {resolvedTheme === "dark"
-                ? <Sun size={18} strokeWidth={1.8} aria-hidden="true" />
-                : <Moon size={18} strokeWidth={1.8} aria-hidden="true" />}
-              <span>{resolvedTheme === "dark" ? "الوضع النهاري" : "الوضع الليلي"}</span>
-            </span>
-            <span aria-hidden="true">{resolvedTheme === "dark" ? "الوضع الحالي: ليلي" : "الوضع الحالي: نهاري"}</span>
-          </button>
-
           <div className="bottom-sheet__section">
-            <p className="bottom-sheet__section-label">أقسام</p>
+            <p className="bottom-sheet__section-label">حساب وإعدادات</p>
             <div className="bottom-sheet__grid">
-              {MORE_SHEET_ITEMS.map(({ href, label, Icon }) => {
-                const active = isNavHrefActive(location, href);
-                const soon = isComingSoonPath(href);
-                return (
-                  <Link
-                    key={href}
-                    href={href}
-                    onClick={soon ? (e) => { e.preventDefault(); onSoonClick(label); } : onClose}
-                    className={`more-sheet-item${active ? " more-sheet-item--active" : ""}${soon ? " more-sheet-item--soon" : ""}`}
-                    aria-current={active ? "page" : undefined}
-                    aria-label={soon ? `${label} — قريبًا` : label}
-                  >
-                    <span className="more-sheet-item__icon" aria-hidden="true">
-                      <Icon size={20} strokeWidth={1.8} />
-                    </span>
-                    <span>{label}</span>
-                  </Link>
-                );
-              })}
+              <Link href="/my-learning" onClick={onClose} className="more-sheet-item" aria-label="حسابي">
+                <span className="more-sheet-item__icon" aria-hidden="true"><User size={20} strokeWidth={1.8} /></span>
+                <span>حسابي</span>
+              </Link>
+              <Link href="/settings" onClick={onClose} className="more-sheet-item" aria-label="الإعدادات">
+                <span className="more-sheet-item__icon" aria-hidden="true"><Settings size={20} strokeWidth={1.8} /></span>
+                <span>الإعدادات</span>
+              </Link>
+              <button
+                type="button"
+                className="more-sheet-item more-sheet-theme-toggle"
+                onClick={toggleDark}
+                aria-label={resolvedTheme === "dark" ? "التحويل إلى الوضع النهاري" : "التحويل إلى الوضع الليلي"}
+              >
+                <span className="more-sheet-item__icon" aria-hidden="true">
+                  {resolvedTheme === "dark"
+                    ? <Sun size={18} strokeWidth={1.8} />
+                    : <Moon size={18} strokeWidth={1.8} />}
+                </span>
+                <span>{resolvedTheme === "dark" ? "نهاري" : "ليلي"}</span>
+              </button>
             </div>
           </div>
+
+          {MORE_GROUPS.map((group) => (
+            <div key={group.id} className="bottom-sheet__section">
+              <p className="bottom-sheet__section-label">{group.title}</p>
+              <div className="bottom-sheet__grid">
+                {group.items.map(({ href, label, Icon }) => {
+                  const active = isNavHrefActive(location, href);
+                  const soon = isComingSoonPath(href);
+                  return (
+                    <Link
+                      key={href}
+                      href={href}
+                      onClick={soon ? (e) => { e.preventDefault(); onSoonClick(label); } : onClose}
+                      className={`more-sheet-item${active ? " more-sheet-item--active" : ""}${soon ? " more-sheet-item--soon" : ""}`}
+                      aria-current={active ? "page" : undefined}
+                      aria-label={soon ? `${label} — قريبًا` : label}
+                    >
+                      <span className="more-sheet-item__icon" aria-hidden="true">
+                        <Icon size={20} strokeWidth={1.8} />
+                      </span>
+                      <span>{label}</span>
+                    </Link>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </div>,
