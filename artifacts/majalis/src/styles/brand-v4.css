@@ -247,19 +247,19 @@
    ونصوص مخفّفة (#EDF2F0 لا أبيض نقي) لتقليل الوهج على OLED.
    ══════════════════════════════════════════════════════════════ */
 html[data-theme="dark"] {
-  --bg:              var(--em-950);
-  --bg-elevated:     #12211C;
-  --surface:         #12211C;
-  --surface-2:       #182C25;
-  --surface-3:       #1F3830;
-  --surface-brand:   #16342B;
+  --bg:              #0A1612;
+  --bg-elevated:     #14241E;
+  --surface:         #152820;
+  --surface-2:       #1B3228;
+  --surface-3:       #234034;
+  --surface-brand:   #18352B;
   --surface-inverse: var(--n-50);
 
-  --text:            #EDF2F0;
-  --text-2:          #A9BDB5;
-  --text-muted:      #8AA096;
-  --text-on-dark:    #EDF2F0;
-  --text-brand:      var(--em-300);   /* روابط ونصوص العلامة — 8.08:1 على السطح */
+  --text:            #F5FAF7;
+  --text-2:          #B7CBC3;
+  --text-muted:      #95ADA4;
+  --text-on-dark:    #F5FAF7;
+  --text-brand:      var(--em-300);
   --text-brand-deep: var(--em-200);
 
   --border:             #224036;
