@@ -117,6 +117,7 @@ const DRAWER_GROUPS: NavGroup[] = [
     icon: <IcoSearch />,
     items: [
       { href: "/search",              label: seoNavLabel("/search", "البحث الشامل"),        Icon: Search,    desc: "ابحث في كل محتوى التطبيق · Ctrl+K" },
+      { href: "/qa",                  label: seoNavLabel("/qa", "سؤال وجواب"),            Icon: HelpCircle, desc: "أسئلة شرعية وأجوبتها" },
       { href: "/flashcards",          label: seoNavLabel("/flashcards", "بطاقات المراجعة"), Icon: CreditCard, desc: "مراجعة بالتكرار المتباعد · Ctrl+Shift+R" },
       { href: "/academic-research",   label: seoNavLabel("/academic-research", "الأبحاث الشرعية"),    Icon: FileText,  desc: "مكتبة أبحاث ودراسات شرعية موثّقة" },
       { href: "/knowledge-graph",     label: seoNavLabel("/knowledge-graph", "استكشف المعرفة"),      Icon: Network,   desc: "شبكة المعرفة والخريطة المعرفية" },
