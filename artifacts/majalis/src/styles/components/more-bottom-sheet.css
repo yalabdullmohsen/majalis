@@ -12,3 +12,7 @@
 .more-sheet-theme-toggle{background:var(--surface-2)!important;color:var(--text)!important;border-color:var(--border)!important;font-family:inherit}
 html:not([data-theme=dark]) .bottom-sheet,html:not([data-theme=dark]) .more-sheet-item{color:var(--text,#1A1714)!important}
 html[data-theme=dark] .bottom-sheet,html[data-theme=dark] .more-sheet-item{background:var(--surface,#12211C)!important;color:var(--text,#EDF2F0)!important}
+@media (max-width:420px){
+  .bottom-sheet__grid{grid-template-columns:1fr!important;gap:.45rem}
+  .more-sheet-item{flex-direction:row!important;justify-content:flex-start;text-align:start;gap:.75rem;padding:.7rem .85rem;min-height:48px}
+}

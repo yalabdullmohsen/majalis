@@ -1158,55 +1158,8 @@
   margin: 0.25rem 0;
 }
 
-/* ══ شاشة البداية/splash — مركز شعار الختم ══ */
-.splash-screen {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 100vh;
-  background: var(--mj-ivory-50, #F4F3EE);
-}
-.splash-screen__logo {
-  width: 140px;
-  height: 140px;
-  animation: splash-rise 0.8s cubic-bezier(0.16,1,0.3,1) forwards;
-  opacity: 0;
-}
-.splash-screen__name {
-  font-family: var(--mj-font-display) !important;
-  font-size: 1.8rem;
-  font-weight: 700;
-  color: var(--mj-emerald-800, #143F35);
-  margin-top: 1rem;
-  animation: splash-fade 0.6s 0.4s ease-out forwards;
-  opacity: 0;
-}
-.splash-screen__latin {
-  font-family: var(--mj-font-latin) !important;
-  font-size: 0.72rem;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--mj-emerald-600, #226A56);
-  margin-top: 0.4rem;
-  opacity: 0;
-  animation: splash-fade 0.6s 0.7s ease-out forwards;
-}
-
-@keyframes splash-rise {
-  from { opacity: 0; transform: translateY(20px) scale(0.92); }
-  to   { opacity: 1; transform: translateY(0) scale(1); }
-}
-@keyframes splash-fade {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .splash-screen__logo,
-  .splash-screen__name,
-  .splash-screen__latin { animation: none !important; opacity: 1 !important; }
-}
+/* شاشة splash القديمة (.splash-screen*) أُزيلت — غير موصولة بأي مكوّن React.
+   شاشة الدخول تستخدم .login-page / .login-logo؛ Capacitor يملك الـ native splash. */
 
 /* ══ وضع داكن — تعديلات ═══════════════════════════════════════════ */
 

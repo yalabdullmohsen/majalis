@@ -299,7 +299,7 @@ export function SideNavDrawer({ open, onClose, onLogout }: DrawerProps) {
             <img
               src="/logo-calligraphy.png"
               alt="المجلس العلمي"
-              style={{ height: 36, maxWidth: 150, width: "auto", objectFit: "contain", borderRadius: 5 }}
+              className="side-nav-drawer__brand-logo"
               loading="lazy"
               decoding="async"
             />

@@ -21,11 +21,27 @@
   margin-bottom: 1.5rem;
 }
 
+.login-logo {
+  width: auto !important;
+  max-width: min(78vw, 14rem) !important;
+  max-height: min(45vh, 12rem) !important;
+  height: auto !important;
+  object-fit: contain !important;
+  display: block;
+  margin-inline: auto;
+}
+
 .login-card__brand {
   margin: 0.75rem 0 0;
   font-size: var(--ds-text-base);
   font-weight: 700;
   color: var(--majalis-emerald-deep);
+}
+
+.login-card__tagline {
+  margin: 0.35rem 0 0;
+  font-size: 0.9rem;
+  color: var(--msk-text-2, #5C5C56);
 }
 
 .login-card__title {
@@ -296,7 +312,9 @@
 
 /* ══ 14. Login Page ══════════════════════════════════════════════════════════ */
 .login-page {
-  background: linear-gradient(160deg, #F0FDF4 0%, #FAFAFA 60%, #f0faf5 100%) !important;
+  background: linear-gradient(160deg, #143F35 0%, #1F4D3A 38%, #F0FDF4 72%, #FAFAFA 100%) !important;
+  min-height: 100dvh;
+  padding-block: max(2rem, env(safe-area-inset-top, 0px)) max(2rem, env(safe-area-inset-bottom, 0px));
 }
 .login-card {
   background: #FFFFFF !important;

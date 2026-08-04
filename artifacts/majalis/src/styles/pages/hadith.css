@@ -157,17 +157,23 @@
 /* Grade */
 .hadith-grade {
   display: inline-block;
+  max-width: 100%;
+  box-sizing: border-box;
   border-radius: var(--radius-sm, 0.45rem);
-  padding: 0.15em 0.65em;
+  padding: 0.28em 0.65em;
   font-size: 0.8rem;
   font-weight: 700;
-  white-space: nowrap;
+  line-height: 1.45;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  text-align: start;
 }
 .hadith-grade--sahih       { background: rgba(52,120,95,.12); color: var(--sys-success, #34785F); }
 .hadith-grade--hasan-sahih { background: rgba(34,106,86,.12); color: var(--emerald-400, #226A56); }
 .hadith-grade--hasan       { background: var(--emerald-50, #EEF1F0); color: var(--emerald-500, #143F35); }
-.hadith-grade--daif        { background: rgba(182,122,50,.12); color: var(--sys-warning, #B67A32); }
-.hadith-grade--mawdu       { background: var(--msk-red-dim, rgba(180,74,74,.08)); color: var(--sys-error, #B44A4A); }
+.hadith-grade--daif        { background: #FFF7ED; color: #9A3412; }
+.hadith-grade--mawdu       { background: #FEF2F2; color: #7F1D1D; }
 .hadith-grade--unknown     { background: var(--emerald-50, #EEF1F0); color: var(--msk-text-2, #5C5C56); }
 
 /* Title & chapter */

@@ -140,6 +140,7 @@ export default function LoginPage() {
         <div className="login-card__header">
           <img src="/logo.png" alt="المجلس العلمي" className="login-logo" loading="eager" decoding="async" width="512" height="512" />
           <p className="login-card__brand">المجلس العلمي</p>
+          <p className="login-card__tagline">علم نافع، ومحتوى موثوق</p>
           <h1 className="login-card__title">
             {mode === "forgot" ? "استعادة كلمة المرور" : adminLogin ? "دخول المسؤول" : "تسجيل الدخول"}
           </h1>

@@ -5,7 +5,7 @@ import { Link } from "wouter";
 import { useDailyContext } from "@/lib/daily-context";
 import { useAuth } from "@/components/AuthProvider";
 import { getRecentPages, type RecentPage } from "@/lib/recent-pages";
-import { Wrench } from "lucide-react";
+import { Wrench, UserRound, Brain, Lightbulb, Library } from "lucide-react";
 import { SectionErrorBoundary } from "@/components/ErrorBoundary";
 import { HomeAboutSection } from "@/components/home/HomeAboutSection";
 import { HomeDailyProgress } from "@/components/home/HomeDailyProgress";
@@ -268,13 +268,15 @@ export default function HomePage() {
           {isAdmin && (
             <div className="hpv4-admin-stats">
               {[
-                { num: toArabicDigits(contentCounts.scholars),      label: "عالم مرجعي",   icon: "👤" },
-                { num: toArabicDigits(contentCounts.quizQuestions), label: "سؤال اختباري", icon: "🧠" },
-                { num: toArabicDigits(contentCounts.fawaid),        label: "فائدة علمية",  icon: "💡" },
-                { num: toArabicDigits(contentCounts.books),         label: "كتاب علمي",    icon: "📚" },
-              ].map(({ num, label, icon }) => (
+                { num: toArabicDigits(contentCounts.scholars),      label: "عالم مرجعي",   Icon: UserRound },
+                { num: toArabicDigits(contentCounts.quizQuestions), label: "سؤال اختباري", Icon: Brain },
+                { num: toArabicDigits(contentCounts.fawaid),        label: "فائدة علمية",  Icon: Lightbulb },
+                { num: toArabicDigits(contentCounts.books),         label: "كتاب علمي",    Icon: Library },
+              ].map(({ num, label, Icon }) => (
                 <div key={label} className="hpv4-admin-stat">
-                  <div className="hpv4-admin-stat__icon">{icon}</div>
+                  <div className="hpv4-admin-stat__icon" aria-hidden="true">
+                    <Icon size={18} strokeWidth={1.8} />
+                  </div>
                   <div className="hpv4-admin-stat__num">{num}</div>
                   <div className="hpv4-admin-stat__label">{label}</div>
                 </div>

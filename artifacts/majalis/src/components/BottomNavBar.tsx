@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
-import { BookOpen, Clock, Home, LayoutGrid } from "lucide-react";
+import { BookOpen, Clock, Home, LayoutGrid, Search } from "lucide-react";
 import { isNavHrefActive } from "@/lib/nav-active";
 import { isImmersiveChromePath } from "@/lib/immersive-chrome";
 import { MoreBottomSheet } from "./MoreBottomSheet";
@@ -11,12 +11,11 @@ type NavTab = {
   Icon: React.ComponentType<{ size?: number; strokeWidth?: number; "aria-hidden"?: boolean }>;
 };
 
-/* خمس وجهات ثابتة فقط على الهاتف. "سؤال وجواب" انتقل إلى "المزيد" لإفساح
-   مكان لعنصر الصلاة المخصَّص (استخدام يومي متكرر يستحق وصولاً مباشرًا). */
+/** أهم الوجهات مباشرة في الشريط السفلي — البحث والمزيد للباقي. */
 const NAV_TABS: NavTab[] = [
-  { href: "/",             label: "الرئيسية",    Icon: Home },
-  { href: "/mushaf",       label: "القرآن",      Icon: BookOpen },
-  { href: "/prayer-times", label: "الصلاة",      Icon: Clock },
+  { href: "/",             label: "الرئيسية", Icon: Home },
+  { href: "/mushaf",       label: "القرآن",   Icon: BookOpen },
+  { href: "/prayer-times", label: "الصلاة",   Icon: Clock },
 ];
 
 export function BottomNavBar() {
@@ -24,10 +23,15 @@ export function BottomNavBar() {
   const [moreOpen, setMoreOpen] = useState(false);
 
   const onPrimaryTab = NAV_TABS.some(({ href }) => isNavHrefActive(location, href));
-  const moreActive = moreOpen || !onPrimaryTab;
+  const moreActive = moreOpen || (!onPrimaryTab && location !== "/search");
 
   // مسارات غامرة (مصحف / صلاة / مركز قرآن) لها تنقّل مخصّص — لا شريط سفلي عام.
   if (isImmersiveChromePath(location)) return null;
+
+  const openSearch = () => {
+    setMoreOpen(false);
+    window.dispatchEvent(new CustomEvent("global-search-open"));
+  };
 
   return (
     <>
@@ -49,7 +53,18 @@ export function BottomNavBar() {
           );
         })}
 
-        {/* تبويب المزيد */}
+        <button
+          type="button"
+          className="bottom-nav__tab"
+          onClick={openSearch}
+          aria-label="البحث الشامل"
+        >
+          <span className="bottom-nav__tab-icon" aria-hidden="true">
+            <Search size={20} strokeWidth={1.75} aria-hidden={true} />
+          </span>
+          <span className="bottom-nav__tab-label">البحث</span>
+        </button>
+
         <button
           type="button"
           className={`bottom-nav__tab${moreActive ? " is-active" : ""}`}

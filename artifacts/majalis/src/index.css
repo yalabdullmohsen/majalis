@@ -4999,7 +4999,7 @@ body.mobile-nav-body-lock {
    الكبيرة (كانت width:100% تُغطّي الشاشة كاملة على كل الجوالات تحت 480px،
    فتُخفي طبقة الخلفية الداكنة بالكامل). */
 .mobile-nav-layer--drawer .side-nav-drawer--v2 {
-  width: 82vw;
+  width: min(85vw, 400px);
   max-width: 400px;
 }
 
@@ -5032,6 +5032,7 @@ body.mobile-nav-body-lock {
 }
 
 /* ── Brand ── */
+/* ── Brand ── */
 .side-nav-drawer__brand {
   display: flex;
   align-items: center;
@@ -5040,7 +5041,10 @@ body.mobile-nav-body-lock {
   font-weight: 700;
   color: var(--majalis-emerald-deep, #143F35);
   text-decoration: none;
+  min-width: 0;
+  flex: 1;
 }
+.side-nav-drawer__brand-logo{height:2.25rem;max-width:min(58vw,11rem);width:auto;object-fit:contain;border-radius:5px}
 .side-nav-drawer__brand strong {
   font-family: var(--font-display);
   font-weight: 700;
