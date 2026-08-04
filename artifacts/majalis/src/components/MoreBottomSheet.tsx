@@ -67,6 +67,7 @@ const SHEET_SECTIONS_RAW: { group: string; items: SheetItem[] }[] = [
 
   /* ── الفقه والأحكام ── */
   { group: "الفقه والأحكام", items: [
+    { href: "/qa",                 label: seoNavLabel("/qa", "سؤال وجواب"),          Icon: HelpCircle },
     { href: "/fiqh",               label: seoNavLabel("/fiqh", "الفقه الإسلامي"),     Icon: BookText },
     { href: "/fiqh-council",       label: seoNavLabel("/fiqh-council", "المجمع الفقهي"),      Icon: Users },
     { href: "/madhahib",           label: seoNavLabel("/madhahib", "المذاهب الأربعة"),    Icon: Scale },

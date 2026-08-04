@@ -236,6 +236,16 @@
   overflow: hidden;
   line-height: 1.5;
 }
+.lib-review-note {
+  margin: 0.75rem 0 1rem;
+  padding: 0.75rem 0.9rem;
+  border-radius: 12px;
+  border: 1px solid color-mix(in srgb, var(--clr-primary, #226A56) 22%, transparent);
+  background: color-mix(in srgb, var(--clr-primary, #226A56) 8%, transparent);
+  color: var(--clr-text-2, #5C5C56);
+  font-size: 0.85rem;
+  line-height: 1.55;
+}
 .lib-card-cta {
   display: inline-flex;
   align-items: center;

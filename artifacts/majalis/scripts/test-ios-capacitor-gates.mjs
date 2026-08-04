@@ -218,10 +218,42 @@ ok(existsSync(capJsonPath), "ios capacitor.config.json exists");
 const capJson = JSON.parse(readFileSync(capJsonPath, "utf8"));
 // Canonical apex — www.majlisilm.com 308-redirects to majlisilm.com.
 const LIVE_SERVER_URLS = new Set(["https://majlisilm.com", "https://www.majlisilm.com"]);
+const FORBIDDEN_SERVER_URL_RE =
+  /localhost|127\.0\.0\.1|0\.0\.0\.0|:\d{2,5}|vercel\.app|netlify\.app|cloudfront\.net|ngrok|localtunnel/i;
 ok(LIVE_SERVER_URLS.has(capJson?.server?.url), "capacitor.config.json server.url is live site");
+ok(
+  !FORBIDDEN_SERVER_URL_RE.test(String(capJson?.server?.url || "")),
+  "capacitor.config.json server.url is not localhost/preview",
+);
+const capTs = readFileSync(join(root, "capacitor.config.ts"), "utf8");
+const capTsUrl = (capTs.match(/url:\s*"(https:\/\/[^"]+)"/) || [])[1];
+ok(LIVE_SERVER_URLS.has(capTsUrl), "capacitor.config.ts server.url is live site");
+ok(
+  !FORBIDDEN_SERVER_URL_RE.test(String(capTsUrl || "")),
+  "capacitor.config.ts server.url is not localhost/preview",
+);
+ok(
+  String(capTsUrl) === String(capJson?.server?.url),
+  "capacitor.config.ts and ios capacitor.config.json server.url match",
+);
 // HTTPS-only live URL: cleartext must stay false (http cleartext unused).
 ok(capJson?.server?.cleartext === false, "capacitor.config.json cleartext false (https-only)");
 ok(capJson?.webDir === "dist", "capacitor.config.json webDir is dist");
+
+// Build Number must match between App target and PrayerLiveActivity extension.
+const projectVersions = [...pbx.matchAll(/CURRENT_PROJECT_VERSION = ([0-9]+);/g)].map((m) => m[1]);
+const uniqueProjectVersions = [...new Set(projectVersions)];
+ok(projectVersions.length >= 2, "CURRENT_PROJECT_VERSION present for App and extension");
+ok(
+  uniqueProjectVersions.length === 1,
+  `App and PrayerLiveActivityExtension share CURRENT_PROJECT_VERSION (got ${uniqueProjectVersions.join(",")})`,
+);
+const marketingVersions = [...pbx.matchAll(/MARKETING_VERSION = ([^;]+);/g)].map((m) => m[1].trim());
+const uniqueMarketing = [...new Set(marketingVersions)];
+ok(
+  uniqueMarketing.length === 1,
+  `App and PrayerLiveActivityExtension share MARKETING_VERSION (got ${uniqueMarketing.join(",")})`,
+);
 
 // Live-update freshness: JS purge + prepare-ios main guard
 const freshnessPath = join(root, "src", "lib", "native-cache-freshness.ts");

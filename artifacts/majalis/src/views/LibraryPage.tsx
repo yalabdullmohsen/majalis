@@ -6,7 +6,6 @@ import { ShareButtons } from "@/components/ContentActions";
 import { useEffect, useMemo, useState } from "react";
 import { getLibrary } from "@/lib/supabase";
 import { RequestManager } from "@/lib/request-manager";
-import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { LIBRARY_CATEGORIES } from "@/lib/library-catalog";
 import { getLibraryCatalog } from "@/lib/library-service";
 import { Chip } from "@/components/ui-common";
@@ -272,13 +271,13 @@ export default function LibraryPage({
         </div>
       </PageLoadingGuard>
 
+      <p className="lib-review-note" role="note">
+        فهرس المكتبة متاح للتصفح. بيانات التحقق والمصادر تُستكمل تدريجيًا ولا تُعرض كحقيقة نهائية دون مراجعة.
+      </p>
       <div className="twh-share">
         <ShareButtons title="المكتبة الإسلامية — المجلس العلمي" url="https://www.majlisilm.com/library" />
       </div>
       <RelatedKnowledge kind="book" query="مكتبة إسلامية" title="كتب ومواد ذات صلة" limit={6} />
-      <div className="px-4 pb-6 mt-4">
-        <SectionQuiz categoryId={["quran", "hadith"]} title="اختبر معلوماتك في علوم الكتاب والسنة" count={4} />
-      </div>
     </ContentHubLayout>
   );
 }

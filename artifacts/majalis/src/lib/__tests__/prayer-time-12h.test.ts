@@ -31,6 +31,7 @@ assert.match(mushaf, /تكبير صفحة المصحف/);
 const more = readFileSync(join(root, "components/MoreBottomSheet.tsx"), "utf8");
 assert.match(more, /\/nations/);
 assert.match(more, /الأمم السابقة/);
+assert.match(more, /href: "\/qa"/);
 
 const drawer = readFileSync(join(root, "components/SideNavDrawer.tsx"), "utf8");
 assert.match(drawer, /\/nations/);
