@@ -122,7 +122,12 @@ dart run scripts/check_quran_asset.dart
 
 ## Results
 
-تُحدَّث بعد تشغيل الأوامر في الجلسة.
+- React lint: نجح
+- React build: نجح (CSS الحرج 504218 ≤ 505000)
+- Flutter analyze: No issues found
+- Flutter test: All tests passed (105)
+- `check_quran_asset.dart`: Quran asset integrity check passed
+- لا deploy / لا دمج PR / لا TestFlight
 
 ## Remaining Manual QA
 
@@ -131,3 +136,4 @@ dart run scripts/check_quran_asset.dart
 - التحقق أن `/old-mushaf` و`/ai-recitation` يعيدان التوجيه
 - مراجعة الرئيسية والهيدر والقائمة على جوال React
 - التأكد من عدم ظهور أقسام محذوفة أو إيموجي في الشريط
+- تجربة تسميع يدوية على جهاز حقيقي قبل أي إصدار تجريبي عام
