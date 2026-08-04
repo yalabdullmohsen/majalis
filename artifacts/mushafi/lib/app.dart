@@ -11,6 +11,7 @@ import 'package:mushafi/features/quran/presentation/screens/home_shell.dart';
 import 'package:mushafi/features/quran/presentation/screens/juz_index_screen.dart';
 import 'package:mushafi/features/quran/presentation/screens/mushaf_screen.dart';
 import 'package:mushafi/features/quran/presentation/screens/surah_index_screen.dart';
+import 'package:mushafi/features/mushaf/presentation/mushaf_home_screen.dart';
 import 'package:mushafi/features/search/presentation/search_screen.dart';
 import 'package:mushafi/features/settings/presentation/settings_screen.dart';
 import 'package:mushafi/features/tasmee3/presentation/tasmee3_entry_screen.dart';
@@ -21,6 +22,10 @@ final _routerProvider = Provider<GoRouter>((ref) {
     initialLocation: '/',
     routes: [
       GoRoute(path: '/', builder: (_, __) => const HomeShell()),
+      GoRoute(
+        path: '/mushaf-home',
+        builder: (_, __) => const MushafHomeScreen(),
+      ),
       GoRoute(
         path: '/mushaf',
         builder: (context, state) {

@@ -38,6 +38,41 @@ class HomeShell extends ConsumerWidget {
                 style: TextStyle(color: colors.secondaryText),
               ),
               const Spacer(),
+              FilledButton.icon(
+                style: FilledButton.styleFrom(
+                  backgroundColor: const Color(0xFFA77A48),
+                  foregroundColor: Colors.white,
+                  minimumSize: const Size(double.infinity, 52),
+                ),
+                onPressed: () => context.go('/mushaf-home'),
+                icon: const Icon(Icons.menu_book_outlined),
+                label: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text('المصحف'),
+                    const SizedBox(width: 8),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.orange.withValues(alpha: 0.12),
+                        borderRadius: BorderRadius.circular(999),
+                      ),
+                      child: const Text(
+                        'تحديث ظاهر',
+                        style: TextStyle(
+                          color: Colors.orange,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              const SizedBox(height: 10),
               FilledButton(
                 onPressed: () => context.go('/mushaf?page=$last'),
                 child: Text('متابعة القراءة — ص $last'),
