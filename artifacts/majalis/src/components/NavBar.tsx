@@ -12,7 +12,6 @@ import { isImmersiveChromePath } from "@/lib/immersive-chrome";
 import { PRIMARY_NAV_ITEMS } from "@/lib/navigation";
 import { fetchPrayerTimes, computePrayerCountdown, type PrayerCountdown } from "@/lib/prayer-times";
 import "@/styles/components/dark-emerald-menus.css";
-import "@/styles/components/design-redesign.css";
 
 const HeaderTicker = lazy(() =>
   import("./HeaderTicker").then((m) => ({ default: m.HeaderTicker })),
@@ -84,6 +83,10 @@ export default function NavBar() {
     }
     return isNavHrefActive(location, href);
   };
+
+  useEffect(() => {
+    void import("@/styles/components/design-redesign.css");
+  }, []);
 
   // Bottom nav dispatches "sidenav-open" to open the drawer from outside
   useEffect(() => {
@@ -204,15 +207,18 @@ export default function NavBar() {
                 : <Moon size={17} strokeWidth={1.6} aria-hidden="true" />
               }
             </button>
-            <button
-              type="button"
-              onClick={openSearch}
-              aria-label="فتح البحث"
-              title="البحث"
-              className="navbar-theme-toggle navbar-search-toggle"
-            >
-              <Search size={17} strokeWidth={1.8} aria-hidden="true" />
-            </button>
+            {/* سطح المكتب فقط — على الجوال صف البحث الكامل أدناه يغني عن الأيقونة */}
+            {!isMobile && (
+              <button
+                type="button"
+                onClick={openSearch}
+                aria-label="فتح البحث"
+                title="البحث"
+                className="navbar-theme-toggle navbar-search-toggle"
+              >
+                <Search size={17} strokeWidth={1.8} aria-hidden="true" />
+              </button>
+            )}
             {!isMobile && !isImmersiveChromePath(location) && <Suspense fallback={null}><HeaderTicker /></Suspense>}
             {!isMobile && desktopAuthLinks}
 
@@ -246,23 +252,7 @@ export default function NavBar() {
           </div>
         )}
 
-        {/* تبويبات أفقية قابلة للتمرير على الجوال */}
-        {isMobile && !isImmersiveChromePath(location) && (
-          <nav className="navbar-v3__tabs-row" aria-label="أقسام المنصة">
-            <div className="navbar-v3__tabs">
-              {PRIMARY_NAV_ITEMS.filter((item) => item.href !== "/").map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={tabCls(isActive(item.href))}
-                  aria-current={isActive(item.href) ? "page" : undefined}
-                >
-                  {item.label}
-                </Link>
-              ))}
-            </div>
-          </nav>
-        )}
+        {/* تبويبات الأقسام على الجوال عبر TopSectionBar فقط — تجنّب صفّين متداخلين */}
 
         {/* صف مستقل تحت أزرار الهيدر — يمنع تداخل التيكر مع القائمة/البحث/الحساب */}
         {isMobile && !isImmersiveChromePath(location) && (
