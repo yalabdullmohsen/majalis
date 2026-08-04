@@ -59,7 +59,7 @@ export default function QuranMemorizationPlansPage() {
 
   return (
     <div className="ds-page qmp-page" dir="rtl">
-      <PageHeader eyebrow="القرآن الكريم" title="خطط الحفظ والمراجعة" subtitle="اختر وتيرة واقعية، وغيّرها متى احتجت. التقدم يُحفظ على جهازك دون اشتراط حساب." />
+      <PageHeader eyebrow="الحفظ والمراجعة" title="خطط الحفظ والمراجعة" subtitle="اختر وتيرة واقعية، وغيّرها متى احتجت. التقدم يُحفظ على جهازك دون اشتراط حساب." />
       <section className="qmp-principles" aria-label="منهج الخطة">
         <span><Check size={16} aria-hidden="true" /> مصحف المدينة، 604 صفحات</span>
         <span><RotateCcw size={16} aria-hidden="true" /> مراجعة قريبة وبعيدة</span>

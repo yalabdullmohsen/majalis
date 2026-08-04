@@ -11,6 +11,7 @@ import { SheikhAvatar } from "@/components/lessons/SheikhAvatar";
 import { canonicalizeLessonPublicId } from "@/lib/lesson-id-aliases";
 import { findSeedLessonById, loadLessonsSeed } from "@/lib/lessons-seed";
 import "@/styles/pages/search.css";
+import "@/styles/components/surface-polish.css";
 
 /* ── تمييز مصطلح البحث في النصوص ── */
 const ARABIC_DIACRITICS_RE = /[ؐ-ًؚ-ٰٟٓ-ٕ]/;
@@ -82,7 +83,7 @@ const EMPTY: SearchResults = {
 
 const KIND_LABELS: Record<string, string> = {
   lesson: "درس",       lessons: "درس",
-  fatwa: "فتوى",       fatwas: "فتوى",
+  fatwa: "حكم شرعي",       fatwas: "حكم شرعي",
   ruling: "حكم",       rulings: "حكم",
   qa: "سؤال",
   fawaid: "فائدة",
@@ -101,15 +102,15 @@ const KIND_LABELS: Record<string, string> = {
 
 const KIND_GROUP_LABELS: Record<string, string> = {
   lesson: "الدروس",       lessons: "الدروس",
-  fatwa: "الفتاوى",        fatwas: "الفتاوى",
+  fatwa: "الفقه والأحكام",        fatwas: "الفقه والأحكام",
   ruling: "الأحكام الشرعية", rulings: "الأحكام الشرعية",
   qa: "الأسئلة والأجوبة",
   fawaid: "الفوائد",
   adhkar: "الأذكار",
-  library: "المكتبة",
+  library: "كتب ومراجع",
   miracle: "إشارات كونية", miracles: "إشارات كونية",
   course: "الدورات العلمية", courses: "الدورات العلمية",
-  update: "آخر المستجدات",  updates: "آخر المستجدات",
+  update: "إعلانات",  updates: "إعلانات",
   fiqh_decision: "المجمع الفقهي", fiqh_council: "المجمع الفقهي",
   knowledge: "محرك المعرفة",
   quran: "القرآن",
@@ -381,7 +382,7 @@ export default function SearchPage() {
     applyPageSeo({
       path: "/search",
       title: "بحث شامل في المحتوى الشرعي | المجلس العلمي",
-      description: "ابحث في الدروس والأحاديث والفتاوى والمكتبة الشرعية والقرآن، بحث شامل في المحتوى العلمي الإسلامي.",
+      description: "ابحث في الدروس والأحاديث والأحكام والقرآن والمحتوى العلمي الإسلامي.",
       keywords: ["بحث إسلامي", "بحث شرعي", "بحث قرآني", "بحث أحاديث", "المجلس العلمي"],
       robots: "noindex, follow",
     });
@@ -428,7 +429,7 @@ export default function SearchPage() {
     <div className="page-shell narrow search-page ds-page">
       <PageHeader
         eyebrow="الاستكشاف"
-        title="البحث العلمي"
+        title="البحث الشامل"
         subtitle="يفهم المعنى ويربط الآيات والأحاديث والفتاوى والدروس."
       />
 
@@ -442,7 +443,7 @@ export default function SearchPage() {
           value={term}
           onChange={handleTermChange}
           onSubmit={submitSearch}
-          placeholder="ابحث في المنصة..."
+          placeholder="ابحث في المحتوى…"
         />
         <button type="submit" className="search-page-submit ds-btn ds-btn--primary" aria-label="تنفيذ البحث">بحث</button>
       </form>
@@ -576,17 +577,17 @@ export default function SearchPage() {
             <p className="srch-quick-sections__title">أقسام يمكنك استكشافها</p>
             <div className="srch-quick-grid">
               {([
-                { href: "/quran-hub",    Icon: BookOpen,      label: "القرآن الكريم" },
-                { href: "/hadith",       Icon: Scroll,        label: "الأحاديث النبوية" },
-                { href: "/adhkar",       Icon: Heart,         label: "الأذكار" },
-                { href: "/rulings",      Icon: Scale,         label: "الأحكام الشرعية" },
-                { href: "/lessons",      Icon: GraduationCap, label: "الدروس" },
-                { href: "/library",      Icon: BookMarked,    label: "المكتبة" },
-                { href: "/ulum-quran",   Icon: FlaskConical,  label: "علوم القرآن" },
-                { href: "/miracles",     Icon: FlaskConical,  label: "الإشارات الكونية" },
-                { href: "/stories",      Icon: BookOpen,      label: "القصص الإسلامية" },
-                { href: "/quran/surah-stories", Icon: BookOpen, label: "قصص السور" },
-                { href: "/prayer-times", Icon: Clock,         label: "مواقيت الصلاة" },
+                { href: "/mushaf", Icon: BookOpen, label: "القرآن" },
+                { href: "/quran-knowledge", Icon: BookMarked, label: "القرآن وعلومه" },
+                { href: "/hadith", Icon: Scroll, label: "الحديث والسنة" },
+                { href: "/fiqh", Icon: Scale, label: "الفقه والأحكام" },
+                { href: "/memorization", Icon: GraduationCap, label: "الحفظ والمراجعة" },
+                { href: "/occasions-lessons", Icon: Clock, label: "المناسبات والدروس" },
+                { href: "/islamic-directory", Icon: FlaskConical, label: "الدليل الإسلامي" },
+                { href: "/prayer-times", Icon: Clock, label: "الصلاة" },
+                { href: "/my-learning", Icon: Heart, label: "حسابي" },
+                { href: "/adhkar", Icon: Heart, label: "الأذكار" },
+                { href: "/lessons", Icon: GraduationCap, label: "الدروس" },
               ] as const).map(({ href, Icon, label }) => (
                 <Link key={href} href={href} className="srch-quick-card">
                   <Icon size={20} strokeWidth={1.6} aria-hidden="true" />
@@ -602,7 +603,7 @@ export default function SearchPage() {
         <div aria-live="polite" aria-atomic="false">
           {total === 0 ? (
             <div className="search-no-results" role="status">
-              <p className="search-no-results__msg">لا توجد نتائج مطابقة لـ «{q}»</p>
+              <p className="search-no-results__msg">لا توجد نتائج مطابقة.</p>
               <p className="search-no-results__hint">جرّب كلمات مختلفة أو تحقق من الإملاء.</p>
             </div>
           ) : (
@@ -665,7 +666,7 @@ export default function SearchPage() {
                   <Group title="الفوائد" items={results.fawaid} render={(f) => (
                     <ResultRow key={f.id} href={`/fawaid#${encodeURIComponent(f.id)}`} kind="fawaid" query={q} title={displayText(f.text)} meta={f.author_name} />
                   )} />
-                  <Group title="المكتبة" items={results.library} render={(book) => (
+                  <Group title="كتب ومراجع" items={results.library} render={(book) => (
                     <ResultRow key={book.id} href={`/library/${book.id}`} kind="library" query={q}
                       title={displayText(book.title)}
                       meta={[book.author || book.author_name, book.category].filter(Boolean).join(" · ")}
@@ -726,8 +727,8 @@ export default function SearchPage() {
                       title={displayText(c.title)} meta={c.searchMeta || c.course_type}
                     />
                   )} />
-                  <Group title="آخر المستجدات" items={results.updates || []} render={(u) => (
-                    <ResultRow key={u.id} href="/updates" kind="update" query={q}
+                  <Group title="إعلانات" items={results.updates || []} render={(u) => (
+                    <ResultRow key={u.id} href={u.source_url || (u.slug ? `/updates/auto/${u.slug}` : "/")} kind="update" query={q}
                       title={displayText(u.title)} meta={u.searchMeta || u.update_type}
                     />
                   )} />

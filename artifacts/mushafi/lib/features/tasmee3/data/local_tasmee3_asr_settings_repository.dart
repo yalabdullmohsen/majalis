@@ -59,15 +59,15 @@ class LocalTasmee3AsrSettingsRepository
     }
 
     final enableLiveWebSocket = prefs.getBool(_enableLiveWsKey) ?? false;
-    final enableNativePcmStreaming = prefs.getBool(_enableNativePcmKey) ??
-        runtime.enableExperimentalPcm;
+    // Upload / WebSocket / PCM stay off until the user enables them in settings.
+    // dart-define may seed endpoints only — never auto-enable network audio.
+    final enableNativePcmStreaming = prefs.getBool(_enableNativePcmKey) ?? false;
 
     return Tasmee3UserAsrSettings(
       mode: mode,
       endpoint: endpoint,
       apiKey: apiKey,
-      allowServerAudioUpload: prefs.getBool(_allowUploadKey) ??
-          runtime.allowExternalAudioUploadByDefault,
+      allowServerAudioUpload: prefs.getBool(_allowUploadKey) ?? false,
       enableAutoRetry: prefs.getBool(_autoRetryKey) ?? true,
       maxRetryCount: prefs.getInt(_maxRetryKey) ?? 2,
       saveFailedSessionsQueue: prefs.getBool(_queueKey) ?? true,

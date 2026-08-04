@@ -235,7 +235,7 @@ export default function AboutPage() {
           {" · "}
           <Link href="/rulings">الأحكام الشرعية</Link>
           {" · "}
-          <Link href="/library">المكتبة الشرعية</Link>
+          <Link href="/quran-knowledge">القرآن وعلومه</Link>
           {" · "}
           <Link href="/quiz">المسابقات التعليمية</Link>
           {" · "}

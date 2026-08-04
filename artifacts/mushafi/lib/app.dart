@@ -11,6 +11,7 @@ import 'package:mushafi/features/mushaf/presentation/mushaf_index_screen.dart';
 import 'package:mushafi/features/mushaf/presentation/mushaf_khatmah_screen.dart';
 import 'package:mushafi/features/mushaf/presentation/mushaf_screen.dart';
 import 'package:mushafi/features/mushaf/presentation/mushaf_search_screen.dart';
+import 'package:mushafi/features/mushaf/presentation/mushaf_settings_screen.dart';
 import 'package:mushafi/features/quran/presentation/providers/quran_providers.dart';
 import 'package:mushafi/features/quran/presentation/screens/home_shell.dart';
 import 'package:mushafi/features/settings/presentation/settings_screen.dart';
@@ -98,6 +99,10 @@ final _routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/khatmah',
         builder: (_, __) => const MushafKhatmahScreen(),
+      ),
+      GoRoute(
+        path: '/mushaf-settings',
+        builder: (_, __) => const MushafSettingsScreen(),
       ),
       GoRoute(path: '/settings', builder: (_, __) => const SettingsScreen()),
       GoRoute(

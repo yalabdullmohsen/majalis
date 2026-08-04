@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { Link, useLocation } from "wouter";
 import {
-  Shield, BookUser, Scale, ScrollText, BookMarked, Library,
+  BookMarked, BookOpen, Brain, CalendarDays, Clock, MapPin, Scale, ScrollText, User,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { isImmersiveChromePath } from "@/lib/immersive-chrome";
@@ -14,45 +14,70 @@ type SectionTab = {
 };
 
 /**
- * شريط الأقسام — محاور موسوعية أساسية.
- * بقية الأقسام عبر المزيد / مركز القرآن.
+ * شريط الأقسام — محاور مختصرة بعد تنظيف التنقل (2026-08).
  */
 export const SECTION_TABS: SectionTab[] = [
-  { href: "/tawhid",   label: "العقيدة والتوحيد", Icon: Shield,        prefetch: () => import("@/views/TawhidPage") },
-  { href: "/seerah",   label: "السيرة والتاريخ",  Icon: BookUser,      prefetch: () => import("@/views/SeerahPage") },
-  { href: "/fiqh",     label: "الفقه والأحكام",   Icon: Scale,         prefetch: () => import("@/views/FiqhPage") },
-  { href: "/hadith",   label: "الحديث والسنة",    Icon: ScrollText,    prefetch: () => import("@/views/HadithPage") },
-  { href: "/mushaf",   label: "القرآن",           Icon: BookMarked,    prefetch: () => import("@/views/MushafPageView") },
-  { href: "/library",  label: "المكتبة",          Icon: Library,       prefetch: () => import("@/views/LibraryPage") },
-  { href: "/scholars", label: "العلماء",          Icon: BookUser,      prefetch: () => import("@/views/IslamicScholarsPage") },
+  { href: "/mushaf", label: "القرآن", Icon: BookMarked, prefetch: () => import("@/views/MushafPageView") },
+  { href: "/quran-knowledge", label: "القرآن وعلومه", Icon: BookOpen, prefetch: () => import("@/views/QuranKnowledgeHubPage") },
+  { href: "/hadith", label: "الحديث والسنة", Icon: ScrollText, prefetch: () => import("@/views/HadithPage") },
+  { href: "/fiqh", label: "الفقه والأحكام", Icon: Scale, prefetch: () => import("@/views/FiqhPage") },
+  { href: "/memorization", label: "الحفظ والمراجعة", Icon: Brain, prefetch: () => import("@/views/MemorizationHubPage") },
+  { href: "/occasions-lessons", label: "المناسبات والدروس", Icon: CalendarDays, prefetch: () => import("@/views/OccasionsLessonsHubPage") },
+  { href: "/islamic-directory", label: "الدليل الإسلامي", Icon: MapPin, prefetch: () => import("@/views/IslamicDirectoryHubPage") },
+  { href: "/prayer-times", label: "الصلاة", Icon: Clock, prefetch: () => import("@/views/PrayerTimesPage") },
+  { href: "/my-learning", label: "حسابي", Icon: User, prefetch: () => import("@/views/MyLearningPage") },
 ];
 
 export function isTabActive(location: string, href: string): boolean {
-  if (href === "/seerah") {
-    return (
-      location === "/seerah" ||
-      location.startsWith("/seerah/") ||
-      location === "/prophets" ||
-      location.startsWith("/prophets/") ||
-      location === "/nations" ||
-      location.startsWith("/nations/") ||
-      location === "/stories" ||
-      location.startsWith("/stories/") ||
-      location === "/sahabah" ||
-      location.startsWith("/sahabah/")
-    );
-  }
   if (href === "/mushaf") {
     return (
       location === "/mushaf" ||
       location.startsWith("/mushaf/") ||
       location === "/quran-hub" ||
-      location.startsWith("/quran-hub/") ||
-      location === "/tafsir" ||
-      location.startsWith("/tafsir/") ||
+      location.startsWith("/quran-hub/")
+    );
+  }
+  if (href === "/quran-knowledge") {
+    return (
+      location === "/quran-knowledge" ||
+      location.startsWith("/quran-knowledge/") ||
       location === "/ulum-quran" ||
       location.startsWith("/ulum-quran/") ||
-      location.startsWith("/quran/")
+      location === "/tafsir" ||
+      location.startsWith("/tafsir/") ||
+      location === "/quran/surahs" ||
+      location.startsWith("/quran/surahs/") ||
+      location === "/quran/surah-stories" ||
+      location.startsWith("/quran/surah-stories/") ||
+      location.startsWith("/quran/makki") ||
+      location.startsWith("/quran/revelation")
+    );
+  }
+  if (href === "/memorization") {
+    return (
+      location === "/memorization" ||
+      location.startsWith("/memorization/") ||
+      location === "/quran-memorization" ||
+      location.startsWith("/quran-memorization/") ||
+      location.startsWith("/quran/memorization-plans")
+    );
+  }
+  if (href === "/occasions-lessons") {
+    return (
+      location === "/occasions-lessons" ||
+      location === "/occasions" ||
+      location.startsWith("/occasions/") ||
+      location === "/calendar" ||
+      location.startsWith("/calendar/")
+    );
+  }
+  if (href === "/islamic-directory") {
+    return (
+      location === "/islamic-directory" ||
+      location === "/institutions" ||
+      location.startsWith("/institutions/") ||
+      location === "/islamic-landmarks" ||
+      location.startsWith("/islamic-landmarks/")
     );
   }
   return location === href || location.startsWith(href + "/");
@@ -68,7 +93,6 @@ export function TopSectionBar() {
     activeRef.current?.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
   }, [location]);
 
-  /* مواقيت الصلاة والمصحف: بلا شريط أقسام عام (عقيدة/سيرة/فقه…) */
   if (isImmersiveChromePath(location)) return null;
 
   function triggerPrefetch(tab: SectionTab) {

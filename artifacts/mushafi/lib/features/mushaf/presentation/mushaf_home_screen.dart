@@ -12,6 +12,8 @@ import 'mushaf_notes_screen.dart';
 import 'mushaf_review_markers_screen.dart';
 import 'mushaf_screen.dart';
 import 'mushaf_search_screen.dart';
+import 'mushaf_settings_screen.dart';
+import '../../tasmee3/presentation/tasmee3_entry_screen.dart';
 
 class MushafHomeScreen extends ConsumerWidget {
   const MushafHomeScreen({super.key});
@@ -75,7 +77,7 @@ class MushafHomeScreen extends ConsumerWidget {
               ),
               _QuickItem(
                 icon: Icons.search,
-                label: 'البحث',
+                label: 'البحث في القرآن',
                 onTap: () {
                   Navigator.push(
                     context,
@@ -86,13 +88,25 @@ class MushafHomeScreen extends ConsumerWidget {
                 },
               ),
               _QuickItem(
-                icon: Icons.bookmark_border,
-                label: 'العلامات',
+                icon: Icons.mic_none_outlined,
+                label: 'التسميع',
                 onTap: () {
                   Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => const MushafBookmarksScreen(),
+                      builder: (_) => const Tasmee3EntryScreen(),
+                    ),
+                  );
+                },
+              ),
+              _QuickItem(
+                icon: Icons.route_outlined,
+                label: 'الختمة',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const MushafKhatmahScreen(),
                     ),
                   );
                 },
@@ -110,6 +124,18 @@ class MushafHomeScreen extends ConsumerWidget {
                 },
               ),
               _QuickItem(
+                icon: Icons.bookmark_border,
+                label: 'العلامات',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const MushafBookmarksScreen(),
+                    ),
+                  );
+                },
+              ),
+              _QuickItem(
                 icon: Icons.note_alt_outlined,
                 label: 'الملاحظات',
                 onTap: () {
@@ -117,6 +143,18 @@ class MushafHomeScreen extends ConsumerWidget {
                     context,
                     MaterialPageRoute(
                       builder: (_) => const MushafNotesScreen(),
+                    ),
+                  );
+                },
+              ),
+              _QuickItem(
+                icon: Icons.settings_outlined,
+                label: 'الإعدادات',
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const MushafSettingsScreen(),
                     ),
                   );
                 },
@@ -141,18 +179,6 @@ class MushafHomeScreen extends ConsumerWidget {
                     context,
                     MaterialPageRoute(
                       builder: (_) => const MushafDownloadsScreen(),
-                    ),
-                  );
-                },
-              ),
-              _QuickItem(
-                icon: Icons.route_outlined,
-                label: 'الختمة',
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => const MushafKhatmahScreen(),
                     ),
                   );
                 },

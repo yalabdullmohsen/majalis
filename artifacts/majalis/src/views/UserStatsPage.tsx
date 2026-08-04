@@ -458,7 +458,7 @@ export default function UserStatsPage() {
       {/* ── روابط سريعة ── */}
       <nav className="profile-quick-links" aria-label="روابط الملف">
         <Link href="/lessons" className="profile-quick-link"><GraduationCap size={15} strokeWidth={1.8} aria-hidden="true" /> الدروس</Link>
-        <Link href="/library" className="profile-quick-link"><BookOpen size={15} strokeWidth={1.8} aria-hidden="true" /> المكتبة</Link>
+        <Link href="/my-learning#flashcards" className="profile-quick-link"><BookOpen size={15} strokeWidth={1.8} aria-hidden="true" /> البطاقات</Link>
         <Link href="/tasbih" className="profile-quick-link"><RotateCw size={15} strokeWidth={1.8} aria-hidden="true" /> التسبيح</Link>
         <Link href="/adhkar" className="profile-quick-link"><Leaf size={15} strokeWidth={1.8} aria-hidden="true" /> الأذكار</Link>
       </nav>

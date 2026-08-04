@@ -26,8 +26,8 @@ export const FEATURE_REGISTRY: FeatureEntry[] = [
   // ── المحتوى التعليمي ─────────────────────────────────────────
   { id: "lessons",      label: "الدروس",             path: "/lessons",      group: "تعليم",         status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "annual-courses",label:"الدورات العلمية",    path: "/annual-courses",group:"تعليم",         status: "disabled",     inSideNav: false, inBottomNav: false },
-  { id: "library",      label: "المكتبة",            path: "/library",      group: "تعليم",         status: "active",       inSideNav: true,  inBottomNav: false },
-  { id: "researches",   label: "الأبحاث الشرعية",   path: "/academic-research", group: "تعليم",  status: "active",       inSideNav: true,  inBottomNav: false },
+  { id: "library",      label: "المكتبة",            path: "/library",      group: "تعليم",         status: "disabled",       inSideNav: false,  inBottomNav: false },
+  { id: "researches",   label: "الأبحاث الشرعية",   path: "/academic-research", group: "تعليم",  status: "disabled",       inSideNav: false,  inBottomNav: false },
   { id: "fawaid",       label: "الفوائد",            path: "/fawaid",       group: "تعليم",         status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "hadith-index", label: "الأحاديث النبوية",   path: "/hadith",       group: "حديث",          status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "hadith-sahih", label: "الأحاديث الصحيحة",  path: "/hadith/sahih", group: "حديث",          status: "active",       inSideNav: false, inBottomNav: false },
@@ -43,7 +43,7 @@ export const FEATURE_REGISTRY: FeatureEntry[] = [
   { id: "stories",      label: "القصص الإسلامية",   path: "/stories",      group: "قصص",           status: "active",       inSideNav: false, inBottomNav: false },
   { id: "prophets",     label: "قصص الأنبياء",      path: "/prophets",     group: "قصص",           status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "nations",      label: "الأمم السابقة",     path: "/nations",      group: "قصص",           status: "active",       inSideNav: true,  inBottomNav: false },
-  { id: "updates",      label: "آخر المستجدات",     path: "/updates",      group: "أخبار",         status: "active",       inSideNav: true,  inBottomNav: false },
+  { id: "updates",      label: "آخر المستجدات",     path: "/updates",      group: "أخبار",         status: "disabled",     inSideNav: false,  inBottomNav: false },
   { id: "miracles",     label: "الإعجاز العلمي",    path: "/miracles",     group: "علم",           status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "seerah",       label: "السيرة النبوية",    path: "/seerah",       group: "سيرة",          status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "fiqh",         label: "الفقه الإسلامي",   path: "/fiqh",         group: "فقه",           status: "active",       inSideNav: false, inBottomNav: false },
@@ -66,7 +66,7 @@ export const FEATURE_REGISTRY: FeatureEntry[] = [
   { id: "search",       label: "البحث",             path: "/search",       group: "أدوات",         status: "active",       inSideNav: true,  inBottomNav: true  },
   { id: "assistant",    label: "المساعد الذكي",     path: "/assistant",    group: "أدوات",         status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "flashcards",   label: "بطاقات المراجعة",  path: "/flashcards",   group: "تعليم",         status: "active",       inSideNav: true,  inBottomNav: false },
-  { id: "knowledge-graph",label:"خارطة المعرفة",   path: "/knowledge-graph",group:"أدوات",        status: "active",       inSideNav: true,  inBottomNav: false },
+  { id: "knowledge-graph",label:"خارطة المعرفة",   path: "/knowledge-graph",group:"أدوات",        status: "disabled",       inSideNav: false,  inBottomNav: false },
   /* عُطِّلت 2026-07-23: أُزيلت من كل نقاط الدخول (رئيسية/قوائم/خرائط ذهنية/
      مسارات)، والمسار القديم يُعاد توجيهه دائمًا إلى /qa (App.tsx + vercel.json).
      الكود (ScholarlyResearchPage.tsx وrag-service.ts) لم يُحذف عمدًا — بلا

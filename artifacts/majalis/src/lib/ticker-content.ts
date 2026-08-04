@@ -46,8 +46,8 @@ export const SECTION_PROMOS: Omit<TickerContentItem, "kind">[] = [
   { id: "promo:seerah", label: "قسم", text: "السيرة والتاريخ — سيرة النبي ﷺ ومفاصل الأمة", href: "/seerah" },
   { id: "promo:fiqh", label: "قسم", text: "الفقه والأحكام — عبادات ومعاملات بأسلوب ميسر", href: "/fiqh" },
   { id: "promo:hadith", label: "قسم", text: "الحديث والسنة — أحاديث موثّقة مع التخريج", href: "/hadith" },
-  { id: "promo:quran", label: "قسم", text: "مركز القرآن — مصحف وتلاوة وأدوات التعلّم", href: "/quran-hub" },
-  { id: "promo:library", label: "قسم", text: "المكتبة — كتب ومتون في الفقه والعقيدة والتفسير", href: "/library" },
+  { id: "promo:quran", label: "قسم", text: "مركز القرآن — مصحف وتلاوة وأدوات التعلّم", href: "/mushaf" },
+  { id: "promo:quran-knowledge", label: "قسم", text: "القرآن وعلومه — فهرس وعلوم وأسباب نزول وقصص", href: "/quran-knowledge" },
   { id: "promo:scholars", label: "قسم", text: "العلماء — تراجم وأعلام ومدارس علمية", href: "/scholars" },
   { id: "promo:learn", label: "قسم", text: "تعلّم — مسارات ودروس واختبارات منظّمة", href: "/learn" },
 ];
@@ -92,7 +92,7 @@ export function buildTickerPool(): TickerContentItem[] {
       label: "آية",
       text: normalizeText(v.text),
       source: v.reference || v.surah || undefined,
-      href: "/quran-hub",
+      href: "/mushaf",
     });
   }
 

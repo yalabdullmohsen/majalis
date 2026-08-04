@@ -167,18 +167,17 @@
 }
 
 
-/* صفحة تسجيل الدخول: خلفية مع نمط هندسي خفيف */
+/* صفحة تسجيل الدخول: شاشة شعار رسمية */
 .login-page {
-  min-height: 100vh;
+  min-height: 100dvh;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
-  padding: clamp(2.5rem, 8vh, 5rem) 1.25rem 4rem;
+  align-items: center;
+  padding: 24px;
   background:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56'%3E%3Cpath d='M28 4L34 16L46 10L40 22L52 28L40 34L46 46L34 40L28 52L22 40L10 46L16 34L4 28L16 22L10 10L22 16Z' fill='none' stroke='rgba(22,96,72,0.06)' stroke-width='1'/%3E%3C/svg%3E"),
-    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(22, 96, 72, 0.07) 0%, transparent 65%),
-    var(--majalis-parchment, #F9F6EF);
-  background-size: 56px 56px, cover, cover;
+    radial-gradient(circle at center, rgba(58, 130, 85, 0.34) 0%, transparent 48%),
+    linear-gradient(180deg, #0f3326 0%, #154033 55%, #1f5a45 100%);
+  background-size: auto, cover;
 }
 
 /* بطاقة تسجيل الدخول: elevation متميزة */
@@ -186,13 +185,10 @@
   width: 100%;
   max-width: 22rem;
   padding: 2.25rem 2rem;
-  border-radius: var(--ds-radius-2xl);
-  border: 1px solid var(--majalis-line, #E8E2D8);
-  background: var(--majalis-panel, #fff);
-  box-shadow:
-    0 4px 16px rgba(26, 23, 20, 0.07),
-    0 12px 40px rgba(22, 96, 72, 0.06),
-    0 1px 3px rgba(26, 23, 20, 0.05);
+  border-radius: 24px;
+  border: 1px solid rgba(18, 54, 42, 0.14);
+  background: rgba(251, 248, 241, 0.97);
+  box-shadow: 0 18px 48px rgba(0, 0, 0, 0.22);
 }
 
 /* رأس البطاقة */

@@ -4,7 +4,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { truncateAtWord } from "@/lib/utils";
 import {
   ArrowLeft, BookMarked, BookOpen, Brain, ChevronLeft,
-  Clock, Flame, GraduationCap, Medal, PlayCircle,
+  Clock, CreditCard, Flame, GraduationCap, Medal, PlayCircle,
   Scroll, Sparkles, Star, Target, Trophy, User,
 } from "lucide-react";
 import { useAuth } from "@/components/AuthProvider";
@@ -292,6 +292,25 @@ export default function MyLearningPage() {
           </section>
         )}
 
+        {/* البطاقات المراجعة */}
+        <section id="flashcards" className="myl2-card" aria-labelledby="myl2-flash-hd">
+          <div className="myl2-card__head">
+            <h2 className="myl2-card__title" id="myl2-flash-hd">
+              <CreditCard size={16} aria-hidden="true" />
+              البطاقات المراجعة
+            </h2>
+            <Link href="/flashcards" className="myl2-card__more">
+              فتح البطاقات <ArrowLeft size={12} aria-hidden="true" />
+            </Link>
+          </div>
+          <p className="myl2-empty" style={{ margin: 0, paddingBlock: "0.75rem" }}>
+            راجع البطاقات التي حفظتها أو مررت عليها سابقا.
+          </p>
+          <div className="myl2-empty" style={{ paddingTop: 0 }}>
+            <Link href="/flashcards" className="myl2-empty__cta">ابدأ المراجعة</Link>
+          </div>
+        </section>
+
         {/* المكتبة الشخصية */}
         <section className="myl2-card" aria-labelledby="myl2-lib-hd">
           <div className="myl2-card__head">
@@ -299,9 +318,6 @@ export default function MyLearningPage() {
               <BookMarked size={16} aria-hidden="true" />
               مكتبتي الشخصية
             </h2>
-            <Link href="/library" className="myl2-card__more">
-              المكتبة <ArrowLeft size={12} aria-hidden="true" />
-            </Link>
           </div>
 
           {loading ? (
@@ -315,7 +331,7 @@ export default function MyLearningPage() {
               {library.slice(0, 6).map((item, i) => (
                 <Link
                   key={i}
-                  href={item.content_url ?? (item.content_id ? `/library/${item.content_id}` : "/library")}
+                  href={item.content_url ?? (item.content_id ? `/library/${item.content_id}` : "/my-learning")}
                   className="myl2-lib-item"
                 >
                   <BookOpen size={13} aria-hidden="true" className="myl2-lib-item__icon" />
@@ -327,7 +343,6 @@ export default function MyLearningPage() {
             <div className="myl2-empty">
               <BookOpen size={32} strokeWidth={1} aria-hidden="true" />
               <p>مكتبتك فارغة حتى الآن</p>
-              <Link href="/library" className="myl2-empty__cta">تصفح المكتبة</Link>
             </div>
           )}
         </section>
@@ -357,11 +372,11 @@ export default function MyLearningPage() {
           <Link href="/lessons"  className="myl2-btn myl2-btn--primary">
             <GraduationCap size={14} aria-hidden="true" /> الدروس
           </Link>
-          <Link href="/quran-hub" className="myl2-btn">
+          <Link href="/mushaf" className="myl2-btn">
             <BookOpen size={14} aria-hidden="true" /> القرآن
           </Link>
-          <Link href="/library"  className="myl2-btn">
-            <BookMarked size={14} aria-hidden="true" /> المكتبة
+          <Link href="/flashcards"  className="myl2-btn">
+            <CreditCard size={14} aria-hidden="true" /> البطاقات
           </Link>
           <Link href="/search"   className="myl2-btn">
             <Sparkles size={14} aria-hidden="true" /> البحث الشامل

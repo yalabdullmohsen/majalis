@@ -27,9 +27,9 @@ export const ACCORDION_EXPLORE_LINKS = {
     { href: "/fiqh", label: "بوابة الفقه" },
   ],
   arabic: [
-    { href: "/ulum-quran", label: "علوم القرآن" },
+    { href: "/quran-knowledge", label: "القرآن وعلومه" },
     { href: "/adab-talab-ilm", label: "آداب طالب العلم" },
-    { href: "/library", label: "المكتبة الشرعية" },
+    { href: "/quran-knowledge", label: "القرآن وعلومه" },
     { href: "/learning/paths", label: "المسارات العلمية" },
     { href: "/islamic-glossary", label: "المصطلحات الشرعية" },
   ],
@@ -73,7 +73,7 @@ export const ACCORDION_EXPLORE_LINKS = {
     { href: "/learn", label: "مركز التعلّم" },
     { href: "/learning/paths", label: "المسارات العلمية" },
     { href: "/quiz", label: "المسابقة" },
-    { href: "/library", label: "المكتبة" },
+    { href: "/islamic-directory", label: "الدليل الإسلامي" },
   ],
   tarikh: [
     { href: "/seerah", label: "السيرة النبوية" },
@@ -100,11 +100,11 @@ export function accordionExploreLinks(key: AccordionExploreKey): ExploreAlsoLink
 /** روابط ثابتة لصفحات غير أكورديونية */
 export const PAGE_EXPLORE_LINKS = {
   scholar: [
-    { href: "/library", label: "المكتبة الشرعية" },
+    { href: "/quran-knowledge", label: "القرآن وعلومه" },
     { href: "/lessons", label: "الدروس العلمية" },
     { href: "/madhahib", label: "المذاهب الأربعة" },
     { href: "/learning/paths", label: "المسارات العلمية" },
-    { href: "/knowledge-graph", label: "الرسم المعرفي" },
+    { href: "/memorization", label: "الحفظ والمراجعة" },
   ],
   asmaHusna: [
     { href: "/tawhid", label: "التوحيد" },
@@ -117,7 +117,7 @@ export const PAGE_EXPLORE_LINKS = {
     { href: "/learning/paths", label: "المسارات العلمية" },
     { href: "/tawhid", label: "التوحيد" },
     { href: "/fiqh", label: "بوابة الفقه" },
-    { href: "/library", label: "المكتبة الشرعية" },
+    { href: "/quran-knowledge", label: "القرآن وعلومه" },
     { href: "/lessons", label: "الدروس العلمية" },
     { href: "/fiqh/topics/usul-fiqh", label: "أصول الفقه" },
   ],

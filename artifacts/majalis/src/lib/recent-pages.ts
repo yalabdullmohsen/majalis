@@ -61,8 +61,8 @@ const LABEL_MAP: Record<string, string> = {
   "/learning/certificates":         "الشهادات",
   "/my-learning":                   "تعلمي",
   "/learning-plan":                 "مسارات التعلم",
-  "/knowledge-map":                 "استكشف المعرفة",
-  "/knowledge-graph":               "استكشف المعرفة",
+  "/knowledge-map":                 "الرئيسية",
+  "/knowledge-graph":               "الرئيسية",
   "/masarat":                       "مسارات التعلم",
   "/mind-map":                      "الخرائط الذهنية",
   "/flashcards":                    "بطاقات المراجعة",
@@ -146,7 +146,7 @@ const LABEL_MAP: Record<string, string> = {
   "/islam-stats":                   "إحصائيات الإسلام",
 
   // ─── المكتبة والبحث ───────────────────────────────────────────────
-  "/library":                       "المكتبة",
+  "/library":                       "الرئيسية",
   "/fawaid":                        "الفوائد",
   "/topics":                        "المواضيع",
   "/research":                      "البحث العلمي",
@@ -191,7 +191,7 @@ const LABEL_MAP: Record<string, string> = {
 
   // ─── الأرشيف والمستجدات ───────────────────────────────────────────
   "/vault":                         "الأرشيف",
-  "/updates":                       "المستجدات",
+  "/updates":                       "الرئيسية",
 
   // ─── المستخدم والإعدادات ──────────────────────────────────────────
   "/stats":                         "إحصائياتي",
