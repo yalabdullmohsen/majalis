@@ -64,8 +64,9 @@ console.log("\n=== NavBar.tsx / App.tsx — نقطة دخول البحث موح�
   assert(!appSrc.includes("onTouchStart={onTouchStart}"), "سحب الصفحة لا يفتح البحث من جذر التطبيق");
 
   const sideNavSrc = readFileSync(resolve(appRoot, "src/components/SideNavDrawer.tsx"), "utf-8");
-  assert(sideNavSrc.includes("/search") || sideNavSrc.includes("البحث"), "البحث متاح من التنقل أو المزيد");
-  assert(sideNavSrc.includes("/my-learning") && sideNavSrc.includes("البطاقات المراجعة"), "البطاقات داخل حسابي في الجانبية");
+  const sidebarNavSrc = readFileSync(resolve(appRoot, "src/lib/sidebar-nav.ts"), "utf-8");
+  assert(sideNavSrc.includes("SIDEBAR_NAV_GROUPS"), "القائمة الجانبية مربوطة بالمصدر الموحّد");
+  assert(sidebarNavSrc.includes("/my-learning") && sidebarNavSrc.includes("حسابي"), "حسابي في مصدر القائمة");
 
   const gsmSrc = readFileSync(resolve(appRoot, "src/components/GlobalSearchModal.tsx"), "utf-8");
   assert(gsmSrc.includes("/flashcards") || gsmSrc.includes("/my-learning"), "رابط مراجعة من البحث الشامل");

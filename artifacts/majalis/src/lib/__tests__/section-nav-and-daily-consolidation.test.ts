@@ -122,16 +122,18 @@ console.log("\n=== القوائم بلا أقسام محذوفة وبلا من �
 {
   const moreSrc = readFileSync(resolve(appRoot, "src/components/MoreBottomSheet.tsx"), "utf-8");
   const sideSrc = readFileSync(resolve(appRoot, "src/components/SideNavDrawer.tsx"), "utf-8");
-  for (const src of [moreSrc, sideSrc]) {
-    assert(!src.includes('href: "/library"'), "لا رابط مكتبة في القائمة");
-    assert(!src.includes('href: "/updates"'), "لا آخر المستجدات");
-    assert(!src.includes('href: "/knowledge-graph"'), "لا استكشف المعرفة");
-    assert(!src.includes('href: "/academic-research"'), "لا بحث علمي");
+  const sidebarNavSrc = readFileSync(resolve(appRoot, "src/lib/sidebar-nav.ts"), "utf-8");
+  for (const src of [moreSrc, sideSrc, sidebarNavSrc]) {
+    assert(!src.includes('href: "/library"') && !src.includes('"/library"'), "لا رابط مكتبة في مصدر التنقل");
+    assert(!src.includes('"/updates"'), "لا آخر المستجدات");
+    assert(!src.includes('"/knowledge-graph"'), "لا استكشف المعرفة");
+    assert(!src.includes('"/academic-research"'), "لا بحث علمي");
   }
-  assert(!sideSrc.includes('href: "/about"'), "من نحن خارج الجانبية");
-  assert(!moreSrc.includes('href: "/about"'), "من نحن خارج المزيد");
-  assert(sideSrc.includes("/quran-knowledge") && sideSrc.includes("/memorization"), "بوابات الدمج في الجانبية");
-  assert(sideSrc.includes("البطاقات المراجعة") && sideSrc.includes("/my-learning"), "البطاقات داخل حسابي");
+  assert(!sideSrc.includes('"/about"') && !sidebarNavSrc.includes('"/about"'), "من نحن خارج الجانبية");
+  assert(!moreSrc.includes('"/about"'), "من نحن خارج المزيد");
+  assert(sidebarNavSrc.includes("/quran-knowledge") && sidebarNavSrc.includes("/memorization"), "بوابات الدمج في sidebar-nav");
+  assert(sideSrc.includes("SIDEBAR_NAV_GROUPS") && sideSrc.includes("sidebar-panel"), "القائمة تستخدم التصميم الموحّد");
+  assert(sideSrc.includes("منصة علمية منظمة"), "رأس القائمة يحمل الوصف المطلوب");
 }
 
 console.log("\n=== الشريط السفلي والمزيد ===");
@@ -140,10 +142,8 @@ console.log("\n=== الشريط السفلي والمزيد ===");
   assert(bottomSrc.includes('href: "/my-learning"') && bottomSrc.includes('label: "حسابي"'), "حسابي في الشريط السفلي");
   assert(!bottomSrc.includes('label: "البحث"'), "البحث ليس تبويبًا سفليًا أساسيًا بعد التنظيف");
   const moreSrc = readFileSync(resolve(appRoot, "src/components/MoreBottomSheet.tsx"), "utf-8");
-  for (const must of ["/quran-knowledge", "/hadith", "/fiqh", "/memorization", "/occasions-lessons", "/islamic-directory", "/settings"]) {
-    assert(moreSrc.includes(`"${must}"`), `المزيد يحوي ${must}`);
-  }
-  assert(!moreSrc.includes('href: "/library"') && !moreSrc.includes('href: "/about"'), "المزيد بلا مكتبة ولا من نحن");
+  assert(moreSrc.includes("MORE_SHEET_ITEMS"), "المزيد يستورد العناصر الموحّدة");
+  assert(!moreSrc.includes('"/library"') && !moreSrc.includes('"/about"'), "المزيد بلا مكتبة ولا من نحن");
 }
 
 console.log(`\n${"─".repeat(40)}`);

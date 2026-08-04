@@ -143,14 +143,14 @@ export default function NavBar() {
               onClick={toggleMenu}
               aria-expanded={isMenuOpen}
               aria-controls="main-navigation-drawer"
-              aria-label={isMenuOpen ? t("nav_close") : t("nav_menu")}
+              aria-label={isMenuOpen ? "إغلاق القائمة" : "فتح القائمة"}
             >
               <span className="navbar-menu-btn__geo" aria-hidden="true" />
               {isMenuOpen
                 ? <X className="navbar-menu-btn__icon" size={16} strokeWidth={1.8} aria-hidden="true" />
                 : <Menu className="navbar-menu-btn__icon" size={16} strokeWidth={1.7} aria-hidden="true" />
               }
-              <span className="navbar-menu-btn__label">{isMenuOpen ? t("nav_close") : t("nav_menu")}</span>
+              <span className="navbar-menu-btn__label">{isMenuOpen ? "إغلاق" : "القائمة"}</span>
             </button>
           </div>
 

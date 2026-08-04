@@ -11,6 +11,7 @@ import { SheikhAvatar } from "@/components/lessons/SheikhAvatar";
 import { canonicalizeLessonPublicId } from "@/lib/lesson-id-aliases";
 import { findSeedLessonById, loadLessonsSeed } from "@/lib/lessons-seed";
 import "@/styles/pages/search.css";
+import "@/styles/components/surface-polish.css";
 
 /* ── تمييز مصطلح البحث في النصوص ── */
 const ARABIC_DIACRITICS_RE = /[ؐ-ًؚ-ٰٟٓ-ٕ]/;

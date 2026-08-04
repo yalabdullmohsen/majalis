@@ -1,6 +1,7 @@
 import { Link } from "wouter";
 import { FEATURED, FEATURE_CATS } from "@/lib/home-feature-catalog";
 import { isComingSoonPath } from "@/lib/nav-visibility";
+import "@/styles/components/surface-polish.css";
 
 export function HomeExplorePlatform() {
   return (

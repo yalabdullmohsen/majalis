@@ -1,35 +1,12 @@
 import { createPortal } from "react-dom";
 import { Link, useLocation } from "wouter";
 import { useEffect } from "react";
-import { seoNavLabel } from "@/lib/seo-nav-labels";
-import {
-  BookMarked, BookOpen, Brain, CalendarDays, MapPin, Moon, Scale, ScrollText,
-  Settings, Sun, X,
-} from "lucide-react";
+import { Moon, Sun, X } from "lucide-react";
 import { useThemePreference } from "@/components/ThemePreferenceProvider";
-import { filterNavItems, isComingSoonPath } from "@/lib/nav-visibility";
+import { isComingSoonPath } from "@/lib/nav-visibility";
 import { isNavHrefActive } from "@/lib/nav-active";
+import { MORE_SHEET_ITEMS } from "@/lib/sidebar-nav";
 import "@/styles/components/more-bottom-sheet.css";
-
-type SheetItem = { href: string; label: string; Icon: typeof BookOpen };
-
-/** قائمة «المزيد» المختصرة — عناصر ثانوية فقط (الشريط السفلي يحمل الرئيسية/القرآن/الصلاة/حسابي). */
-const SHEET_SECTIONS_RAW: { group: string; items: SheetItem[] }[] = [
-  { group: "أقسام", items: [
-    { href: "/quran-knowledge", label: seoNavLabel("/quran-knowledge", "القرآن وعلومه"), Icon: BookMarked },
-    { href: "/hadith", label: seoNavLabel("/hadith", "الحديث والسنة"), Icon: ScrollText },
-    { href: "/fiqh", label: seoNavLabel("/fiqh", "الفقه والأحكام"), Icon: Scale },
-    { href: "/memorization", label: seoNavLabel("/memorization", "الحفظ والمراجعة"), Icon: Brain },
-    { href: "/occasions-lessons", label: seoNavLabel("/occasions-lessons", "المناسبات والدروس"), Icon: CalendarDays },
-    { href: "/islamic-directory", label: seoNavLabel("/islamic-directory", "الدليل الإسلامي"), Icon: MapPin },
-    { href: "/settings", label: seoNavLabel("/settings", "الإعدادات"), Icon: Settings },
-  ]},
-];
-
-const SHEET_SECTIONS = SHEET_SECTIONS_RAW.map((section) => ({
-  ...section,
-  items: filterNavItems(section.items),
-})).filter((section) => section.items.length > 0);
 
 interface Props {
   open: boolean;
@@ -66,7 +43,7 @@ export function MoreBottomSheet({ open, onClose }: Props) {
         className="bottom-sheet"
         role="dialog"
         aria-modal="true"
-        aria-label="قائمة المزيد"
+        aria-label="المزيد"
         onClick={(e) => e.stopPropagation()}
       >
         <div className="bottom-sheet__handle" />
@@ -76,7 +53,7 @@ export function MoreBottomSheet({ open, onClose }: Props) {
             type="button"
             onClick={onClose}
             className="bottom-sheet__close-btn"
-            aria-label="إغلاق"
+            aria-label="إغلاق القائمة"
           ><X size={18} strokeWidth={1.8} aria-hidden="true" /></button>
         </div>
 
@@ -95,35 +72,31 @@ export function MoreBottomSheet({ open, onClose }: Props) {
             </span>
             <span aria-hidden="true">{resolvedTheme === "dark" ? "الوضع الحالي: ليلي" : "الوضع الحالي: نهاري"}</span>
           </button>
-          {SHEET_SECTIONS.map((section) => (
-            <div key={section.group} className="bottom-sheet__section">
-              <p className="bottom-sheet__section-label">{section.group}</p>
-              <div className="bottom-sheet__grid">
-                {section.items.map(({ href, label, Icon }) => {
-                  const active = isNavHrefActive(location, href);
-                  const soon = isComingSoonPath(href);
-                  return (
-                    <Link
-                      key={href}
-                      href={href}
-                      onClick={soon ? (e) => { e.preventDefault(); onSoonClick(label); } : onClose}
-                      className={`more-sheet-item${active ? " more-sheet-item--active" : ""}${soon ? " more-sheet-item--soon" : ""}`}
-                      aria-current={active ? "page" : undefined}
-                      aria-label={soon ? `${label} — قريبًا` : label}
-                    >
-                      <span className="more-sheet-item__icon" aria-hidden="true">
-                        <Icon size={20} strokeWidth={1.8} />
-                      </span>
-                      <span>
-                        {label}
-                        {soon ? <span className="nav-soon-badge">قريبًا</span> : null}
-                      </span>
-                    </Link>
-                  );
-                })}
-              </div>
+
+          <div className="bottom-sheet__section">
+            <p className="bottom-sheet__section-label">أقسام</p>
+            <div className="bottom-sheet__grid">
+              {MORE_SHEET_ITEMS.map(({ href, label, Icon }) => {
+                const active = isNavHrefActive(location, href);
+                const soon = isComingSoonPath(href);
+                return (
+                  <Link
+                    key={href}
+                    href={href}
+                    onClick={soon ? (e) => { e.preventDefault(); onSoonClick(label); } : onClose}
+                    className={`more-sheet-item${active ? " more-sheet-item--active" : ""}${soon ? " more-sheet-item--soon" : ""}`}
+                    aria-current={active ? "page" : undefined}
+                    aria-label={soon ? `${label} — قريبًا` : label}
+                  >
+                    <span className="more-sheet-item__icon" aria-hidden="true">
+                      <Icon size={20} strokeWidth={1.8} />
+                    </span>
+                    <span>{label}</span>
+                  </Link>
+                );
+              })}
             </div>
-          ))}
+          </div>
         </div>
       </div>
     </div>,
