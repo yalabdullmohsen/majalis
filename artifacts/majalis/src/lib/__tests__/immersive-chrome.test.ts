@@ -25,7 +25,9 @@ assert.equal(isQuranImmersivePath("/quran-hub"), true);
 assert.equal(isQuranImmersivePath("/fiqh"), false);
 
 assert.equal(isImmersiveChromePath("/prayer-times"), true);
-assert.equal(isImmersiveChromePath("/mushaf"), true);
+// أثناء إيقاف المصحف مؤقتًا («قريبًا») يبقى الشريط ظاهرًا
+assert.equal(isImmersiveChromePath("/mushaf"), false);
+assert.equal(isImmersiveChromePath("/mushaf/2"), false);
 assert.equal(isImmersiveChromePath("/quran/recitation-test-ai"), true);
 assert.equal(isImmersiveChromePath("/"), false);
 assert.equal(isImmersiveChromePath("/hadith"), false);
@@ -41,6 +43,8 @@ assert.match(topBar, /isImmersiveChromePath/);
 
 const appSrc = readFileSync(resolve(appRoot, "src/App.tsx"), "utf8");
 assert.match(appSrc, /quran-hub"><Redirect to="\/mushaf"/);
+assert.match(appSrc, /MushafComingSoonPage/);
+assert.equal(appSrc.includes("MushafPageView"), false, "قارئ المصحف غير موصول أثناء الإيقاف المؤقت");
 assert.match(appSrc, /isImmersiveChromePath/);
 
 const bottomNav = readFileSync(resolve(appRoot, "src/components/BottomNavBar.tsx"), "utf8");

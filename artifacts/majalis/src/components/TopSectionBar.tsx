@@ -5,6 +5,7 @@ import {
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { isImmersiveChromePath } from "@/lib/immersive-chrome";
+import { isComingSoonPath } from "@/lib/nav-visibility";
 
 type SectionTab = {
   href: string;
@@ -17,7 +18,7 @@ type SectionTab = {
  * شريط الأقسام — محاور مختصرة بعد تنظيف التنقل (2026-08).
  */
 export const SECTION_TABS: SectionTab[] = [
-  { href: "/mushaf", label: "القرآن", Icon: BookMarked, prefetch: () => import("@/views/MushafPageView") },
+  { href: "/mushaf", label: "القرآن", Icon: BookMarked, prefetch: () => import("@/views/MushafComingSoonPage") },
   { href: "/quran-knowledge", label: "القرآن وعلومه", Icon: BookOpen, prefetch: () => import("@/views/QuranKnowledgeHubPage") },
   { href: "/hadith", label: "الحديث والسنة", Icon: ScrollText, prefetch: () => import("@/views/HadithPage") },
   { href: "/fiqh", label: "الفقه والأحكام", Icon: Scale, prefetch: () => import("@/views/FiqhPage") },
@@ -106,19 +107,20 @@ export function TopSectionBar() {
       <div className="top-section-bar__scroll" ref={scrollRef}>
         {SECTION_TABS.map((tab) => {
           const active = isTabActive(location, tab.href);
+          const soon = isComingSoonPath(tab.href);
           return (
             <Link
               key={tab.href}
               href={tab.href}
               ref={active ? activeRef : undefined}
-              className={`top-section-bar__tab${active ? " is-active" : ""}`}
+              className={`top-section-bar__tab${active ? " is-active" : ""}${soon ? " is-soon" : ""}`}
               aria-current={active ? "page" : undefined}
-              aria-label={tab.label}
+              aria-label={soon ? `${tab.label} — قريبًا` : tab.label}
               onTouchStart={() => triggerPrefetch(tab)}
               onMouseEnter={() => triggerPrefetch(tab)}
             >
               <tab.Icon size={14} strokeWidth={active ? 2.3 : 1.8} aria-hidden="true" />
-              <span>{tab.label}</span>
+              <span>{soon ? "قريبًا" : tab.label}</span>
             </Link>
           );
         })}

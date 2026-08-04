@@ -95,8 +95,7 @@ const SurahIndexPage = lazy(() => import("@/views/SurahIndexPage"));
 const QuranSearchPage = lazy(() => import("@/views/QuranSearchPage"));
 const RevelationOrderPage = lazy(() => import("@/views/RevelationOrderPage"));
 const MakkiMadaniPage = lazy(() => import("@/views/MakkiMadaniPage"));
-const MushafPageView = lazy(() => import("@/views/MushafPageView"));
-const MushafEditionInfoPage = lazy(() => import("@/views/MushafEditionInfoPage"));
+const MushafComingSoonPage = lazy(() => import("@/views/MushafComingSoonPage"));
 const RecitationTestPage = lazy(() => import("@/views/RecitationTestPage"));
 const SurahStoriesPage = lazy(() => import("@/views/SurahStoriesPage"));
 const QuranTajweedPage = lazy(() => import("@/views/QuranTajweedPage"));
@@ -683,18 +682,13 @@ function Router() {
         </ErrorBoundary>
       </Route>
       <Route path="/quran"><Redirect to="/mushaf" /></Route>
-      <Route path="/mushaf/page/:page"><SafeLazyRoute component={MushafPageView} /></Route>
-      <Route path="/mushaf/page"><SafeLazyRoute component={MushafPageView} /></Route>
-      {/* ⚠️ ترتيب حرج: المسار الحرفي /mushaf/about-edition يجب أن يسبق
-          /mushaf/:surah أدناه — وإلا طابقه :surah أولًا بوصفه رقم سورة
-          (Switch يُصيّر أول تطابق فقط)، مطابق تمامًا لتحذير wouter العام
-          بترتيب المسارات الحرفية قبل الديناميكية على نفس البادئة. */}
-      <Route path="/mushaf/about-edition"><SafeLazyRoute component={MushafEditionInfoPage} /></Route>
-      {/* /mushaf و/mushaf/:surah يستخدمان MushafPageView (تخطيط سطري مطابق لمصحف المدينة). */}
-      <Route path="/mushaf/:surah"><SafeLazyRoute component={MushafPageView} /></Route>
-      <Route path="/mushaf"><SafeLazyRoute component={MushafPageView} /></Route>
+      {/* المصحف متوقف مؤقتًا — كل مساراته تعرض صفحة «قريبًا» */}
+      <Route path="/mushaf/page/:page"><SafeLazyRoute component={MushafComingSoonPage} /></Route>
+      <Route path="/mushaf/page"><SafeLazyRoute component={MushafComingSoonPage} /></Route>
+      <Route path="/mushaf/about-edition"><SafeLazyRoute component={MushafComingSoonPage} /></Route>
+      <Route path="/mushaf/:surah"><SafeLazyRoute component={MushafComingSoonPage} /></Route>
+      <Route path="/mushaf"><SafeLazyRoute component={MushafComingSoonPage} /></Route>
       <Route path="/mushaf-v2-preview"><Redirect to="/mushaf" /></Route>
-      {/* تبويب القرآن → المصحف مباشرة بلا مركز بطاقات/اختبارات */}
       <Route path="/quran-hub"><Redirect to="/mushaf" /></Route>
       <Route path="/quran-knowledge"><SafeLazyRoute component={QuranKnowledgeHubPage} /></Route>
       <Route path="/memorization"><SafeLazyRoute component={MemorizationHubPage} /></Route>
