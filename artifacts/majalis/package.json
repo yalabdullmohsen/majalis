@@ -169,6 +169,7 @@
     "fetch:quran-data": "node scripts/fetch-quran-data.mjs",
     "verify:quran-data": "node --import tsx scripts/verify-quran-integrity.mjs",
     "verify:quran-pages": "node --import tsx scripts/verify-quran-pages-manifest.mjs",
+    "verify:mushaf-metadata-sync": "node ../../scripts/sync-mushaf-page-metadata.mjs --check",
     "test:quran-integrity-guard": "node --import tsx scripts/test-quran-integrity-guard.mjs",
     "build:mutashabihat-index": "node --import tsx scripts/build-mutashabihat-index.mjs",
     "build:quran-position-index": "node --import tsx scripts/build-quran-position-index.mjs",

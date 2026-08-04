@@ -93,7 +93,7 @@ PORT=24216 BASE_PATH=/ pnpm --filter @workspace/majalis run build  # passed
 
 ## Remaining Issues
 
-- `quran_page_metadata.json` still incomplete (2 pages) — approximate page builder fallback remains.
+- `quran_page_metadata.json` مزامَن مع majalis (604 صفحة) عبر `scripts/sync-mushaf-page-metadata.mjs` — راجع `UNIFIED_MUSHAF.md`.
 - Local iOS archive needs CocoaPods (`pod` not installed on this machine).
 - Responsive visual QA of majalis still manual in browser.
 - Large content seeds (glossary filler dots, encyclopedia) not fully copy-edited in this pass.

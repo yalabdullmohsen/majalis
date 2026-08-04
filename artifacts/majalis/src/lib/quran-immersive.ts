@@ -14,16 +14,19 @@
 import { isNative, setupStatusBar } from "@/lib/capacitor-utils";
 import { resolveTheme, readThemePreference } from "@/lib/theme-preference";
 
-/** Flutter `Color(0xFFF5F5DC)` — parchment cream. */
+/** Flutter `Color(0xFFF5F5DC)` — parchment cream (legacy immersive demos). */
 export const IMMERSIVE_PAPER_BG = "#F5F5DC";
 
-/** Ayah-app warm paper for the Mushaf page reader (`/mushaf/page`). */
+/**
+ * ورق قراءة المصحف المشترك مع تطبيق مصحفي (`MushafColors.paper`).
+ * راجع UNIFIED_MUSHAF.md — لا يغيّر محرّك QPC، فقط سطح القراءة.
+ */
 export const AYAH_MUSHAF_PAPER_BG = "#FAF7F2";
 
-/** Soft ink on Ayah paper. */
+/** Soft ink on Ayah paper — مطابق `MushafColors.text` في Flutter. */
 export const AYAH_MUSHAF_INK = "#2C2C2E";
 
-/** Muted meta text (juz / surah) — system gray. */
+/** Muted meta text (juz / surah) — مطابق `MushafColors.mutedText`. */
 export const AYAH_MUSHAF_META = "#8E8E93";
 
 /** Flutter `Colors.black87` ≈ #000000 at 87% opacity on paper. */

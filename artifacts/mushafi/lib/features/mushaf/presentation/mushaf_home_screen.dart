@@ -214,7 +214,7 @@ class _HeroReadingCard extends StatelessWidget {
           ),
           const SizedBox(height: MushafSpacing.xs),
           const Text(
-            'تجربة قراءة هادئة للمتابعة والبحث والختمة والمراجعة.',
+            'تقسيم 604 صفحة كالموقع — متابعة وبحث وختمة ومراجعة.',
             textAlign: TextAlign.center,
             style: MushafTextStyles.secondary,
           ),
@@ -369,7 +369,8 @@ class _PrivacyNote extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Text(
-      'النص القرآني من ملف داخل التطبيق. لا يتم توليد القرآن بالذكاء الاصطناعي.',
+      'النص من ملف موثّق داخل التطبيق (لا يُولَّد بالذكاء الاصطناعي). '
+      'حدود الصفحات موحّدة مع مصحف majlisilm.com (مدينة / 604).',
       textAlign: TextAlign.center,
       style: MushafTextStyles.secondary,
     );
