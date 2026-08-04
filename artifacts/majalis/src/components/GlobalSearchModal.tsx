@@ -55,7 +55,7 @@ const FILTER_CHIPS: { key: string; label: string }[] = [
   { key: "all",     label: "الكل" },
   { key: "lesson",  label: "دروس" },
   { key: "library", label: "كتب" },
-  { key: "fatwa",   label: "فتاوى" },
+  { key: "ruling",  label: "أحكام" },
   { key: "hadith",  label: "أحاديث" },
   { key: "qa",      label: "أسئلة" },
   { key: "fawaid",  label: "فوائد" },

@@ -153,8 +153,7 @@ export const HOME_MORE_SECTIONS_RAW = [
   { href: "/lessons",               title: seoNavLabel("/lessons", "الدروس"),                description: "دروس ودورات علمية" },
   { href: "/lessons?tab=courses",   title: seoNavLabel("/lessons?tab=courses", "الدورات العلمية"), description: "برامج ودورات ضمن جدول الدروس" },
   { href: "/mushaf",    title: seoNavLabel("/mushaf", "المصحف الشريف"),          description: "قراءة القرآن الكريم مع التلاوة والبحث والمرجع الأخير" },
-  { href: "/quran/surah-stories",  title: seoNavLabel("/quran/surah-stories", "قصص القرآن"),            description: "أسباب نزول ومحاور وقصص ١١٤ سورة قرآنية" },
-  { href: "/hadith", title: seoNavLabel("/hadith", "الأحاديث النبوية"), description: "أحاديث صحيحة وضعيفة وموضوعة مصنّفة ومفصولة" },
+    { href: "/hadith", title: seoNavLabel("/hadith", "الأحاديث النبوية"), description: "أحاديث صحيحة وضعيفة وموضوعة مصنّفة ومفصولة" },
   { href: "/tawhid", title: seoNavLabel("/tawhid", "التوحيد والعقيدة"), description: "أنواع التوحيد وأركان الإيمان والأسماء الحسنى على منهج أهل السنة" },
   { href: "/learn/aqeedat-ahl-sunnah", title: seoNavLabel("/learn/aqeedat-ahl-sunnah", "عقيدة أهل السنة والجماعة"), description: "معالم المنهج: التلقي والإيمان والصفات والصحابة والقدر" },
   { href: "/islamic-sects", title: seoNavLabel("/islamic-sects", "الفرق والمذاهب"), description: "عرض تاريخي للفرق مع بيان موقف أهل السنة" },
@@ -165,9 +164,9 @@ export const HOME_MORE_SECTIONS_RAW = [
   { href: "/fiqh", title: seoNavLabel("/fiqh", "الفقه الإسلامي"), description: "الأحكام والأسئلة والمجمع الفقهي" },
   { href: "/seerah", title: seoNavLabel("/seerah", "السيرة النبوية"), description: "حياة النبي محمد ﷺ من المولد إلى الوفاة" },
   { href: "/prophetic-medicine", title: seoNavLabel("/prophetic-medicine", "الطب النبوي"), description: "ما ثبت في السنة من التداوي والوقاية" },
-  { href: "/updates", title: seoNavLabel("/updates", "آخر المستجدات"), description: "قرارات وأحكام ودروس جديدة" },
+  { href: "/occasions-lessons", title: seoNavLabel("/occasions-lessons", "المناسبات والدروس"), description: "مناسبات وتقويم دروس" },
   { href: "/assistant", title: seoNavLabel("/assistant", "المساعد العلمي"), description: "إرشاد داخل التطبيق" },
-  { href: "/library", title: seoNavLabel("/library", "المكتبة العلمية"), description: "كتب ومتون" },
+  { href: "/islamic-directory", title: seoNavLabel("/islamic-directory", "الدليل الإسلامي"), description: "مؤسسات ومساجد ومشاهد" },
   { href: "/learning/paths", title: seoNavLabel("/learning/paths", "المسارات العلمية"), description: "تعلم منظم من المبتدئ للمتقدم" },
   { href: "/my-learning", title: seoNavLabel("/my-learning", "حسابي"), description: "تقدمك وإنجازاتك" },
   { href: "/quiz", title: seoNavLabel("/quiz", "لعبة سين جيم"), description: "اختبر معلوماتك من خلال لعبة أسئلة وأجوبة ممتعة ومتدرجة" },
@@ -189,13 +188,12 @@ export const HOME_MORE_SECTIONS_RAW = [
   { href: "/janaza",         title: seoNavLabel("/janaza", "أحكام الجنائز"),      description: "دليل شامل لما يجب على المسلمين تجاه موتاهم من الغسل والتكفين والصلاة والدفن" },
   { href: "/sahabah",        title: seoNavLabel("/sahabah", "أعلام الصحابة الكرام"), description: "موسوعة كبار الصحابة رضي الله عنهم: سيرتهم وفضائلهم وإرثهم في الإسلام" },
   { href: "/tawba",          title: seoNavLabel("/tawba", "التوبة والاستغفار"),   description: "شروط التوبة النصوح وأنواعها وأفضل صيغ الاستغفار المأثورة وآثارها العظيمة" },
-  { href: "/ulum-quran",    title: seoNavLabel("/ulum-quran", "علوم القرآن الكريم"),  description: "النزول والجمع والتفسير والإعجاز والمحكم والمتشابه والناسخ والمنسوخ" },
+  { href: "/memorization", title: seoNavLabel("/memorization", "الحفظ والمراجعة"), description: "اختبارات وخطط الحفظ" },
   { href: "/tafsir",        title: seoNavLabel("/tafsir", "علم التفسير"),            description: "أنواع التفسير وأصوله وأشهر كتب المفسرين مع روابط المكتبة والمصحف" },
   { href: "/mawarith",      title: seoNavLabel("/mawarith", "المواريث والفرائض"),   description: "حصص الورثة الشرعية وأسباب الإرث وموانعه وأحكام العَصَبة والحجب والعَوْل والردّ" },
   { href: "/duas-quran",    title: seoNavLabel("/duas-quran", "أدعية القرآن الكريم"),  description: "أدعية قرآنية مأثورة: دعاء الأنبياء والمؤمنين مع سياقها وفوائدها" },
-  { href: "/knowledge-graph", title: seoNavLabel("/knowledge-graph", "استكشف المعرفة"),   description: "شبكة المعرفة الإسلامية وعلاقات العلوم الشرعية" },
-  { href: "/calendar", title: seoNavLabel("/calendar", "تقويم الدروس"), description: "التواريخ والأيام المميزة ومواعيد الدروس" },
-] as const;
+  { href: "/quran-knowledge", title: seoNavLabel("/quran-knowledge", "القرآن وعلومه"), description: "فهرس وعلوم وأسباب وقصص" },
+  ] as const;
 
 /** أقسام «المزيد» بعد تطبيق سياسة الإخفاء/الدمج. */
 export const HOME_MORE_SECTIONS = filterNavItems([...HOME_MORE_SECTIONS_RAW]);

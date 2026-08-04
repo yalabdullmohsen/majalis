@@ -34,8 +34,8 @@ const ADAWAT_CARDS = [
   {
     title: "رسم المصحف",
     desc: "الرسم العثماني توقيفي في الجملة؛ موافقتُه شرط في قبول القراءة مع صحة السند وموافقة العربية. لا يُغيَّر رسم المصحف بهوى.",
-    href: "/quran-hub",
-    linkLabel: "مركز القرآن",
+    href: "/quran-knowledge",
+    linkLabel: "القرآن وعلومه",
   },
   {
     title: "غريب القرآن",
@@ -562,7 +562,7 @@ export default function UlumQuranPage() {
           <h2 className="uq-related__title">استكشف أيضاً</h2>
           <div className="uq-related__grid">
             {[
-              { href: "/quran-hub", label: "مركز القرآن" },
+              { href: "/quran-knowledge", label: "القرآن وعلومه" },
               { href: "/mushaf", label: "المصحف" },
               { href: "/tafsir", label: "علم التفسير" },
               { href: "/quran/makki-madani", label: "المكي والمدني" },

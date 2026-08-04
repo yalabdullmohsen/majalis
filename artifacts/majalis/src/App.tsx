@@ -712,6 +712,14 @@ function Router() {
       <Route path="/latest"><Redirect to="/" /></Route>
       <Route path="/fatwas"><Redirect to="/fiqh" /></Route>
       <Route path="/explore"><Redirect to="/" /></Route>
+      <Route path="/news"><Redirect to="/" /></Route>
+      <Route path="/events"><Redirect to="/occasions-lessons" /></Route>
+      <Route path="/islamic-events"><Redirect to="/occasions-lessons" /></Route>
+      <Route path="/lesson-calendar"><Redirect to="/occasions-lessons" /></Route>
+      <Route path="/review-plans"><Redirect to="/memorization" /></Route>
+      <Route path="/masajid"><Redirect to="/islamic-directory" /></Route>
+      <Route path="/quran-sciences"><Redirect to="/quran-knowledge" /></Route>
+
       <Route path="/research"><Redirect to="/" /></Route>
 
       <Route path="/kids"><SafeLazyRoute component={KidsPage} /></Route>

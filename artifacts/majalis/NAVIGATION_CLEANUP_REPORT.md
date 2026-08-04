@@ -1,43 +1,107 @@
 # Navigation Cleanup Report
 
-## الأقسام المحذوفة من الواجهة
+## Removed From Navigation
 
-- المكتبة / المكتبة العلمية (`/library` → `/`؛ تفاصيل الكتب `/library/:id` تبقى)
-- آخر المستجدات (`/updates` → `/`)
-- استكشف المعرفة (`/knowledge-graph` → `/`)
-- البحث العلمي / الأبحاث الشرعية (قائمة `/academic-research` → `/`)
-- قسم الفتاوى كمدخل مستقل (`/fatwas` → `/fiqh`؛ `/fiqh-council/fatwas` مخفي من القوائم)
+- المكتبة
+- المكتبة العلمية
+- آخر المستجدات
+- الفتاوى (كمدخل مستقل / فلتر واجهة)
+- استكشف المعرفة
+- البحث العلمي / الأبحاث الشرعية (قائمة الاكتشاف)
 
-## الأقسام المدمجة
+## Removed From Sidebar Only
 
-| بوابة جديدة | يضم |
+- من نحن (بقيت في `/about` وfooter)
+
+## Merged Sections
+
+### حسابي
+- البطاقات المراجعة (`/my-learning#flashcards`)
+
+### المناسبات والدروس (`/occasions-lessons`)
+- المناسبات الإسلامية
+- تقويم الدروس
+
+### القرآن وعلومه (`/quran-knowledge`)
+- علوم القرآن
+- فهرس القرآن
+- أسباب النزول
+- قصص القرآن
+
+### الحفظ والمراجعة (`/memorization`)
+- اختبارات الحفظ القرآني
+- خطط الحفظ والمراجعة
+
+### الدليل الإسلامي (`/islamic-directory`)
+- دليل المؤسسات الإسلامية
+- المشاهد والمساجد
+
+## Final Navigation
+
+### Bottom bar
+الرئيسية · القرآن · الصلاة · حسابي · المزيد
+
+### More sheet
+القرآن وعلومه · الحديث والسنة · الفقه والأحكام · الحفظ والمراجعة · المناسبات والدروس · الدليل الإسلامي · الإعدادات
+
+### Side drawer
+نفس الأقسام الأساسية + البحث + الإعدادات + حسابي (بلا من نحن)
+
+### Top section bar
+القرآن · القرآن وعلومه · الحديث والسنة · الفقه والأحكام · الحفظ والمراجعة · المناسبات والدروس · الدليل الإسلامي · الصلاة · حسابي
+
+## Routes Updated
+
+| Source | Destination |
 |---|---|
-| `/quran-knowledge` القرآن وعلومه | فهرس السور، علوم القرآن، أسباب النزول، قصص القرآن |
-| `/memorization` الحفظ والمراجعة | اختبارات الحفظ، خطط الحفظ |
-| `/occasions-lessons` المناسبات والدروس | المناسبات الإسلامية، تقويم الدروس |
-| `/islamic-directory` الدليل الإسلامي | المؤسسات، المشاهد والمساجد |
-| حسابي `/my-learning#flashcards` | البطاقات المراجعة |
+| `/library` | `/` |
+| `/updates` | `/` |
+| `/knowledge-graph` | `/` |
+| `/academic-research` | `/` |
+| `/news` `/latest` `/explore` `/research` `/scientific-library` | `/` |
+| `/fatwas` | `/fiqh` |
+| `/quran-index` `/asbab-al-nuzul` `/quran-stories` `/quran-sciences` `/quran-studies` | `/quran-knowledge` |
+| `/memorization-tests` `/memorization-plans` `/review-plans` | `/memorization` |
+| `/islamic-institutions` `/mosques` `/masajid` | `/islamic-directory` |
+| `/events` `/islamic-events` `/lesson-calendar` | `/occasions-lessons` |
+| `/reviewed-cards` | `/my-learning` |
 
-## Routes / Redirects
+صفحات المحتوى الفرعية (`/ulum-quran`, `/calendar`, `/library/:id`…) تبقى للروابط العميقة من البوابات.
 
-انظر `vercel.json` و`App.tsx` و`MERGED_PATH_REDIRECTS` في `nav-visibility.ts`.
+## Search Filters Updated
 
-## من نحن
+- عنوان الصفحة: البحث الشامل (بدل البحث العلمي)
+- شارات/مجموعات: كتب ومراجع، إعلانات، الفقه والأحكام (بدل المكتبة/آخر المستجدات/الفتاوى كأقسام)
+- GlobalSearch: فلتر «فتاوى» ← «أحكام»
+- اختصارات سريعة محدّثة للأقسام المدمجة
 
-- أُزيل من SideNav و More فقط.
-- بقي `/about` وfooter.
+## Files Changed (مرحلة التكملة)
 
-## ملفات رئيسية معدّلة
+- `BottomNavBar.tsx`, `MoreBottomSheet.tsx`
+- `SearchPage.tsx`, `GlobalSearchModal.tsx`, `SiteMapPage.tsx`
+- `HomeMindMapSection.tsx`, `UserStatsPage.tsx`, `AboutPage.tsx`
+- `CalendarPage.tsx`, `OccasionsPage.tsx`, `QuranMemorizationPlansPage.tsx`, `SurahStoriesPage.tsx`, `UlumQuranPage.tsx`
+- `nav-visibility.ts`, `navigation.ts`, `feature-registry.ts`, `explore-links.ts`, `ticker-content.ts`, `recent-pages.ts`, `mind-maps-data.ts`, `masarat-data.ts`
+- `App.tsx`, `vercel.json`
+- اختبارات التنقل
 
-- `src/lib/nav-visibility.ts`
-- `src/components/TopSectionBar.tsx`, `SideNavDrawer.tsx`, `MoreBottomSheet.tsx`
-- `src/lib/home-feature-catalog.ts`, `homepage-layout.ts`, `navigation.ts`
-- `src/views/*HubPage.tsx`, `MergedSectionHubPage.tsx`, `MyLearningPage.tsx`, `HomePage.tsx`, `SearchPage.tsx`, `SiteMapPage.tsx`
-- `src/App.tsx`, `vercel.json`
-- اختبارات `section-nav-and-daily-consolidation.test.ts`, `header-ticker.test.ts`
+## Commands Run
 
-## متبقٍ للمراجعة اليدوية
+- `pnpm --filter @workspace/majalis exec tsx src/lib/__tests__/section-nav-and-daily-consolidation.test.ts`
+- `pnpm --filter @workspace/majalis exec tsx src/lib/__tests__/header-ticker.test.ts`
+- `pnpm --filter @workspace/majalis run lint`
+- `PORT=24216 BASE_PATH=/ pnpm --filter @workspace/majalis run build`
 
-- روابط داخل صفحات المحتوى القديمة التي ما زالت تشير إلى `/library` أو `/quran-hub` (صفحات حية أو redirect).
-- ودجتا `HomeFeaturedLibrary` / `HomeLatestUpdates` لم تُحذف الملفات لكن فُصلا من التخصيص.
-- لفظ «المشاهد» في الدليل الإسلامي كما هو — للمراجعة اللغوية إن لزم.
+## Results
+
+- اختبارات التنقل: 72 نجاح
+- اختبار الشريط المتحرك: 28 نجاح
+- lint: نجح (`--max-warnings 0`)
+- build: نجح
+
+## Remaining Manual Review
+
+- روابط داخل صفحات تفسير قديمة ما زالت تفتح `/library/:id` (تفاصيل كتب حية)
+- لوحة الأدمن تحتفظ بإدارة «المكتبة» داخلياً (ليست navigation عام)
+- ملفّا `HomeFeaturedLibrary` / `HomeLatestUpdates` مفصولان عن التخصيص لكن الملفات موجودة
+- مراجعة بصرية: الرئيسية، الجانبية، المزيد، البحث، الشريط السفلي

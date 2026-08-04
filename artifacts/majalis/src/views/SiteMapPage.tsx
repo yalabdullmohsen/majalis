@@ -11,7 +11,7 @@ import { filterNavItems, isComingSoonPath } from "@/lib/nav-visibility";
 const SECTIONS = [
   {
     title: "القرآن الكريم",
-    emoji: "📖",
+    icon: "quran",
     links: [
       { href: "/mushaf",             label: "القرآن",             desc: "المصحف الشريف" },
       { href: "/quran-knowledge",    label: "القرآن وعلومه",      desc: "فهرس · علوم · أسباب · قصص" },
@@ -25,7 +25,7 @@ const SECTIONS = [
   },
   {
     title: "الحديث والسنة",
-    emoji: "📜",
+    icon: "hadith",
     links: [
       { href: "/hadith",             label: "الأحاديث النبوية",   desc: "موسوعة الأحاديث" },
       { href: "/arbaeen-nawawi",     label: "الأربعون النووية",   desc: "٤٠ حديثاً مع الشرح" },
@@ -37,7 +37,7 @@ const SECTIONS = [
   },
   {
     title: "العقيدة والتوحيد",
-    emoji: "🕌",
+    icon: "aqeeda",
     links: [
       { href: "/tawhid",      label: "التوحيد والعقيدة",   desc: "أنواع التوحيد ومسائل العقيدة" },
       { href: "/learn/aqeedat-ahl-sunnah", label: "عقيدة أهل السنة", desc: "معالم المنهج ودروس منظّمة" },
@@ -50,14 +50,14 @@ const SECTIONS = [
       { href: "/alamat-saah", label: "علامات الساعة",      desc: "الصغرى والكبرى" },
       { href: "/malaika",     label: "الملائكة",           desc: "أسماؤهم ومهامهم" },
       { href: "/islamic-sects", label: "الفرق والمذاهب",    desc: "أهل السنة والفرق — عرض تاريخي" },
-      { href: "/ulum-quran",  label: "الإعجاز القرآني",    desc: "بياني وتشريعي وغيبي — بلا عددي" },
+      { href: "/quran-knowledge", label: "القرآن وعلومه", desc: "فهرس وعلوم وأسباب وقصص" },
     ],
   },
   {
     title: "الفقه والأحكام",
-    emoji: "⚖️",
+    icon: "fiqh",
     links: [
-      { href: "/fiqh",        label: "مدخل الفقه",          desc: "بوابة الفقه والفتاوى" },
+      { href: "/fiqh",        label: "مدخل الفقه",          desc: "بوابة الفقه والأحكام" },
       { href: "/qa",          label: "الأسئلة والأجوبة",     desc: "أسئلة وأجوبة شرعية" },
       { href: "/rulings",     label: "الأحكام الشرعية",      desc: "موسوعة الأحكام" },
       { href: "/tahara",      label: "الطهارة",              desc: "الوضوء والغسل والتيمم" },
@@ -82,7 +82,7 @@ const SECTIONS = [
   },
   {
     title: "العبادة والأذكار",
-    emoji: "🤲",
+    icon: "adhkar",
     links: [
       { href: "/adhkar",            label: "الأذكار والأدعية",    desc: "الصباح والمساء والنوم والأدعية المأثورة" },
       { href: "/tasbih",            label: "التسبيح",              desc: "عداد التسبيح الرقمي" },
@@ -94,26 +94,26 @@ const SECTIONS = [
       { href: "/amr-bil-maruf",     label: "الأمر بالمعروف",       desc: "شروطه ومراتبه ومعرفة المعروف والمنكر" },
       { href: "/raqaiq",            label: "الرقائق والزهد",       desc: "تزكية النفس" },
       { href: "/sins-and-rights",   label: "الذنوب والحقوق",       desc: "التوبة وحقوق العباد" },
-      { href: "/occasions",         label: "المناسبات الإسلامية",  desc: "أذكار المناسبات" },
+      { href: "/occasions-lessons", label: "المناسبات والدروس",    desc: "مناسبات وتقويم دروس" },
       { href: "/adab-talab-ilm",    label: "آداب طالب العلم",      desc: "شروط طلب العلم وآدابه" },
       { href: "/akhlaq",            label: "الأخلاق الإسلامية",    desc: "مكارم الأخلاق" },
     ],
   },
   {
     title: "السيرة والتاريخ",
-    emoji: "🌙",
+    icon: "seerah",
     links: [
       { href: "/seerah",           label: "السيرة النبوية",       desc: "من المولد حتى الوفاة ﷺ" },
       { href: "/sahabah",          label: "الصحابة الكرام",       desc: "سِيَر الصحابة وفضائلهم" },
       { href: "/prophets",         label: "الأنبياء والرسل",      desc: "٢٥ نبياً مذكورًا بالاسم في القرآن، بقصصهم" },
       { href: "/stories",          label: "القصص الإسلامية",      desc: "قصص الصحابة والفتوحات والتاريخ الإسلامي" },
       { href: "/nations",          label: "الأمم السابقة",        desc: "أخبار الأقوام في القرآن والسنة" },
-      { href: "/islamic-landmarks", label: "المعالم الإسلامية",   desc: "معالم ومواقع تاريخية إسلامية" },
+      { href: "/islamic-directory", label: "الدليل الإسلامي",     desc: "مؤسسات ومساجد ومشاهد" },
     ],
   },
   {
-    title: "التعلّم والمكتبة",
-    emoji: "🎓",
+    title: "التعلّم والأدوات",
+    icon: "learn",
     links: [
       { href: "/lessons",          label: "الدروس والمحاضرات",    desc: "دروس صوتية ومرئية" },
       { href: "/lessons?tab=courses", label: "الدورات العلمية",   desc: "برامج وكورسات ضمن جدول الدروس" },
@@ -123,21 +123,17 @@ const SECTIONS = [
       { href: "/quiz",             label: "لعبة سين جيم – أسئلة وأجوبة",   desc: "اختبر معلوماتك من خلال لعبة أسئلة وأجوبة ممتعة ومتدرجة" },
       { href: "/my-learning",      label: "حسابي",                desc: "التقدم والبطاقات المراجعة" },
       { href: "/assistant",        label: "المساعد الذكي",        desc: "استفسر عن أي مسألة" },
-      { href: "/my-learning",      label: "لوحتي التعليمية",     desc: "إحصائياتك وتقدمك" },
-      { href: "/knowledge-graph",  label: "استكشف المعرفة",      desc: "شبكة المعرفة والعلاقات بين المفاهيم" },
-      { href: "/learning/paths",   label: "مسارات التعلم",        desc: "مسارات علمية منظمة بالمستويات" },
+                  { href: "/learning/paths",   label: "مسارات التعلم",        desc: "مسارات علمية منظمة بالمستويات" },
       { href: "/topics",           label: "الموضوعات الشرعية",    desc: "محتوى مجمّع حسب الموضوع" },
-      { href: "/calendar",         label: "التقويم الهجري",      desc: "التقويم والمناسبات" },
-      { href: "/hikam-salaf",      label: "حكم السلف الصالح",     desc: "أقوال الأئمة والصحابة" },
+            { href: "/hikam-salaf",      label: "حكم السلف الصالح",     desc: "أقوال الأئمة والصحابة" },
       { href: "/fawaid",           label: "الفوائد العلمية",      desc: "فوائد ومنقولات موثقة" },
       { href: "/islamic-glossary", label: "المصطلحات الإسلامية",  desc: "معجم المصطلحات" },
       { href: "/occasions-lessons", label: "المناسبات والدروس",   desc: "مناسبات وتقويم دروس" },
-      { href: "/institutions",     label: "المؤسسات الإسلامية",   desc: "المراكز والمجامع العلمية" },
-    ],
+          ],
   },
   {
     title: "الأدوات الشخصية",
-    emoji: "⚙️",
+    icon: "tools",
     links: [
       { href: "/my-citations",       label: "اقتباساتي",           desc: "اقتباساتك المحفوظة" },
       { href: "/my-submissions",     label: "مشاركاتي",            desc: "محتواك المُرسَل للمراجعة" },
@@ -150,15 +146,14 @@ const SECTIONS = [
   },
   {
     title: "المعلومات",
-    emoji: "ℹ️",
+    icon: "info",
     links: [
       { href: "/about",    label: "من نحن",       desc: "رسالتنا وأهدافنا" },
       { href: "/methodology", label: "منهجنا العلمي",  desc: "منهج المراجعة والتوثيق" },
       { href: "/contact",  label: "تواصل معنا",      desc: "للملاحظات والاقتراحات" },
       { href: "/privacy",  label: "سياسة الخصوصية", desc: "كيف نحمي بياناتك" },
       { href: "/terms",    label: "الشروط والأحكام", desc: "شروط استخدام المنصة" },
-      { href: "/updates",  label: "آخر التحديثات",   desc: "مستجدات المنصة" },
-      { href: "/kids",     label: "ركن الأطفال",     desc: "محتوى تعليمي ميسّر — قريبًا" },
+            { href: "/kids",     label: "ركن الأطفال",     desc: "محتوى تعليمي ميسّر — قريبًا" },
     ],
   },
 ];
@@ -188,10 +183,10 @@ export default function SiteMapPage() {
       </header>
 
       <main className="sm-content">
-        {VISIBLE_SECTIONS.map(({ title, emoji, links }) => (
+        {VISIBLE_SECTIONS.map(({ title, icon, links }) => (
           <section key={title} className="sm-section">
             <h2 className="sm-section__title">
-              <span aria-hidden="true"><SectionIcon name={emoji} size={22} /></span>
+              <span aria-hidden="true"><SectionIcon name={icon} size={22} /></span>
               {title}
             </h2>
             <div className="sm-grid">

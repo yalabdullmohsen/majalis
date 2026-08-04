@@ -598,6 +598,41 @@
       "source": "/whats-new",
       "destination": "/",
       "permanent": true
+    },
+    {
+      "source": "/news",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/events",
+      "destination": "/occasions-lessons",
+      "permanent": true
+    },
+    {
+      "source": "/islamic-events",
+      "destination": "/occasions-lessons",
+      "permanent": true
+    },
+    {
+      "source": "/lesson-calendar",
+      "destination": "/occasions-lessons",
+      "permanent": true
+    },
+    {
+      "source": "/review-plans",
+      "destination": "/memorization",
+      "permanent": true
+    },
+    {
+      "source": "/masajid",
+      "destination": "/islamic-directory",
+      "permanent": true
+    },
+    {
+      "source": "/quran-sciences",
+      "destination": "/quran-knowledge",
+      "permanent": true
     }
   ],
   "rewrites": [

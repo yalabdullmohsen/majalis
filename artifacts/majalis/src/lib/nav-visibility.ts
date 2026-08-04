@@ -110,6 +110,13 @@ export const MERGED_PATH_REDIRECTS: Record<string, string> = {
   "/fatwas": "/fiqh",
   "/explore": "/",
   "/research": "/",
+  "/news": "/",
+  "/events": "/occasions-lessons",
+  "/islamic-events": "/occasions-lessons",
+  "/lesson-calendar": "/occasions-lessons",
+  "/review-plans": "/memorization",
+  "/masajid": "/islamic-directory",
+  "/quran-sciences": "/quran-knowledge",
 };
 
 export function resolveMergedPath(href: string): string {

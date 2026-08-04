@@ -21,7 +21,7 @@ import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
 import { resolveLessonDetailsHref } from "@/lib/unified-lesson-card";
 import { PageHeader, SkeletonCardGrid, ErrorState } from "@/components/ui-common";
 import { HijriSacredMonthBanner } from "@/components/HijriSacredMonthBanner";
-import { getHijriDateString, gregorianToHijri } from "@/lib/hijri-utils";
+import { gregorianToHijri } from "@/lib/hijri-utils";
 import { applyPageSeo } from "@/lib/seo";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 
@@ -242,7 +242,7 @@ export default function CalendarPage() {
     <div className="page-shell calendar-page">
       <HijriSacredMonthBanner />
       <PageHeader
-        eyebrow={getHijriDateString() || "التقويم العلمي"}
+        eyebrow="المناسبات والدروس"
         title="تقويم الدروس"
         subtitle="عرض شهري وأسبوعي ويومي للدروس والدورات."
       />

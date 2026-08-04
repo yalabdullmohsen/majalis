@@ -134,6 +134,18 @@ console.log("\n=== القوائم بلا أقسام محذوفة وبلا من �
   assert(sideSrc.includes("البطاقات المراجعة") && sideSrc.includes("/my-learning"), "البطاقات داخل حسابي");
 }
 
+console.log("\n=== الشريط السفلي والمزيد ===");
+{
+  const bottomSrc = readFileSync(resolve(appRoot, "src/components/BottomNavBar.tsx"), "utf-8");
+  assert(bottomSrc.includes('href: "/my-learning"') && bottomSrc.includes('label: "حسابي"'), "حسابي في الشريط السفلي");
+  assert(!bottomSrc.includes('label: "البحث"'), "البحث ليس تبويبًا سفليًا أساسيًا بعد التنظيف");
+  const moreSrc = readFileSync(resolve(appRoot, "src/components/MoreBottomSheet.tsx"), "utf-8");
+  for (const must of ["/quran-knowledge", "/hadith", "/fiqh", "/memorization", "/occasions-lessons", "/islamic-directory", "/settings"]) {
+    assert(moreSrc.includes(`"${must}"`), `المزيد يحوي ${must}`);
+  }
+  assert(!moreSrc.includes('href: "/library"') && !moreSrc.includes('href: "/about"'), "المزيد بلا مكتبة ولا من نحن");
+}
+
 console.log(`\n${"─".repeat(40)}`);
 console.log(`النتائج: ${passed} نجح، ${failed} فشل`);
 if (failed > 0) process.exit(1);

@@ -82,7 +82,7 @@ const EMPTY: SearchResults = {
 
 const KIND_LABELS: Record<string, string> = {
   lesson: "درس",       lessons: "درس",
-  fatwa: "فتوى",       fatwas: "فتوى",
+  fatwa: "حكم شرعي",       fatwas: "حكم شرعي",
   ruling: "حكم",       rulings: "حكم",
   qa: "سؤال",
   fawaid: "فائدة",
@@ -101,15 +101,15 @@ const KIND_LABELS: Record<string, string> = {
 
 const KIND_GROUP_LABELS: Record<string, string> = {
   lesson: "الدروس",       lessons: "الدروس",
-  fatwa: "الفتاوى",        fatwas: "الفتاوى",
+  fatwa: "الفقه والأحكام",        fatwas: "الفقه والأحكام",
   ruling: "الأحكام الشرعية", rulings: "الأحكام الشرعية",
   qa: "الأسئلة والأجوبة",
   fawaid: "الفوائد",
   adhkar: "الأذكار",
-  library: "المكتبة",
+  library: "كتب ومراجع",
   miracle: "إشارات كونية", miracles: "إشارات كونية",
   course: "الدورات العلمية", courses: "الدورات العلمية",
-  update: "آخر المستجدات",  updates: "آخر المستجدات",
+  update: "إعلانات",  updates: "إعلانات",
   fiqh_decision: "المجمع الفقهي", fiqh_council: "المجمع الفقهي",
   knowledge: "محرك المعرفة",
   quran: "القرآن",
@@ -381,7 +381,7 @@ export default function SearchPage() {
     applyPageSeo({
       path: "/search",
       title: "بحث شامل في المحتوى الشرعي | المجلس العلمي",
-      description: "ابحث في الدروس والأحاديث والفتاوى والمكتبة الشرعية والقرآن، بحث شامل في المحتوى العلمي الإسلامي.",
+      description: "ابحث في الدروس والأحاديث والأحكام والقرآن والمحتوى العلمي الإسلامي.",
       keywords: ["بحث إسلامي", "بحث شرعي", "بحث قرآني", "بحث أحاديث", "المجلس العلمي"],
       robots: "noindex, follow",
     });
@@ -428,7 +428,7 @@ export default function SearchPage() {
     <div className="page-shell narrow search-page ds-page">
       <PageHeader
         eyebrow="الاستكشاف"
-        title="البحث العلمي"
+        title="البحث الشامل"
         subtitle="يفهم المعنى ويربط الآيات والأحاديث والفتاوى والدروس."
       />
 
@@ -665,7 +665,7 @@ export default function SearchPage() {
                   <Group title="الفوائد" items={results.fawaid} render={(f) => (
                     <ResultRow key={f.id} href={`/fawaid#${encodeURIComponent(f.id)}`} kind="fawaid" query={q} title={displayText(f.text)} meta={f.author_name} />
                   )} />
-                  <Group title="المكتبة" items={results.library} render={(book) => (
+                  <Group title="كتب ومراجع" items={results.library} render={(book) => (
                     <ResultRow key={book.id} href={`/library/${book.id}`} kind="library" query={q}
                       title={displayText(book.title)}
                       meta={[book.author || book.author_name, book.category].filter(Boolean).join(" · ")}
@@ -726,8 +726,8 @@ export default function SearchPage() {
                       title={displayText(c.title)} meta={c.searchMeta || c.course_type}
                     />
                   )} />
-                  <Group title="آخر المستجدات" items={results.updates || []} render={(u) => (
-                    <ResultRow key={u.id} href="/updates" kind="update" query={q}
+                  <Group title="إعلانات" items={results.updates || []} render={(u) => (
+                    <ResultRow key={u.id} href={u.source_url || (u.slug ? `/updates/auto/${u.slug}` : "/")} kind="update" query={q}
                       title={displayText(u.title)} meta={u.searchMeta || u.update_type}
                     />
                   )} />

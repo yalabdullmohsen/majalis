@@ -1,22 +1,22 @@
 import { Link } from "wouter";
-import { Map, Network } from "lucide-react";
+import { BookMarked, Brain } from "lucide-react";
 import { Widget } from "@/components/widgets/Widget";
 import "@/styles/components/home/home-mindmap.css";
 
 const MAPS = [
   {
-    href: "/knowledge-graph",
-    Icon: Network,
-    title: "استكشف المعرفة",
-    desc: "شبكة دلالية تربط العلوم والمفاهيم والعلماء والكتب",
-    tag: "بوابة",
+    href: "/quran-knowledge",
+    Icon: BookMarked,
+    title: "القرآن وعلومه",
+    desc: "فهرس القرآن وعلومه وأسباب النزول وقصص السور",
+    tag: "قسم",
   },
   {
-    href: "/mind-map",
-    Icon: Map,
-    title: "الخرائط الذهنية",
-    desc: "خرائط تفاعلية للعقيدة والفقه والحديث وسائر العلوم",
-    tag: "تفاعلي",
+    href: "/memorization",
+    Icon: Brain,
+    title: "الحفظ والمراجعة",
+    desc: "اختبارات الحفظ وخطط الحفظ والمراجعة",
+    tag: "قسم",
   },
 ] as const;
 
@@ -25,10 +25,10 @@ export function HomeMindMapSection() {
     <Widget
       id="mind-map"
       className="hmm-section"
-      eyebrow="التعلم المرئي"
-      title="استكشف المعرفة"
-      moreHref="/knowledge-graph"
-      moreLabel="افتح الشبكة"
+      eyebrow="أقسام مقترحة"
+      title="تابع التعلم"
+      moreHref="/quran-knowledge"
+      moreLabel="القرآن وعلومه"
       state="ready"
     >
       <div className="hmm-grid">
