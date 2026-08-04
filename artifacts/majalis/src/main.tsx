@@ -14,25 +14,19 @@ import { setupStatusBar, setupKeyboard, isAndroid, isIOS, isNative } from "./lib
 import { purgeNativeWebRuntimeCaches } from "./lib/native-cache-freshness";
 import { initFinalPolish } from "./lib/init-final-polish";
 import { prewarmAudioCdns, prewarmTextApis, prewarmSupabaseOrigin } from "./lib/resource-prewarm";
-// هوية v4: مصدر الرموز الوحيد (لون/طباعة/مسافات/حواف/ظلال/حركة). يجب أن
-// يبقى أول استيراد — كل ملفات CSS اللاحقة تستهلك رموزه، وأنظمة الرموز
-// القديمة الـ15 مُعاد توجيهها إليه داخله كـaliases.
+// Majlisilm 2030 — مصدر الرموز + طبقات الأساس. أُزيلت من المسار الحرج:
+// elite-2026 / patterns / majalis-v2 / modern-2026 (هوية قديمة).
 import "./styles/brand-v4.css";
 import "./index.css";
 import "./styles/design-system.css";
-import "./styles/patterns.css";
-import "./styles/majalis-v2.css";
-import "./styles/modern-2026.css";
-import "./styles/elite-2026.css";
-// Final release layer: one authoritative visual contract loaded after legacy page styles.
 import "./styles/final-release.css";
-// هوية v4 — طبقة المظهر المشتركة. تُحمَّل أخيرًا كي تحسم شكل البطاقات
-// والأزرار والحقول عبر الموقع. لا تحدّد أي لون (انظر رأس الملف).
 import "./styles/brand-v4-components.css";
-// تصحيحات تباين مُقاسة بـPlaywright (خصوصًا الوضع الداكن). تُحمَّل بعد كل
-// شيء كي تحسم التصادمات التي تنتج عن تسطيح الرموز في الثيم الداكن القديم.
 import "./styles/brand-v4-contrast-fixes.css";
 import "./styles/capacitor-native-ux.css";
+// طبقة الهوية الجديدة — تُحمَّل آخرًا لتحسم الشكل بالكامل
+import "./styles/m2030/foundation.css";
+import "./styles/m2030/navigation.css";
+import "./styles/m2030/pages.css";
 
 if (isNative) {
   document.documentElement.classList.add("capacitor-native");

@@ -60,9 +60,9 @@ const ASSERTIONS = [
   // الرئيسية المركّزة في إصدار الإطلاق: نفحص العناصر الثابتة الظاهرة بدل
   // ودجتات الحديث/المسابقة/المكتبة التي أصبحت اختيارية من شاشة التخصيص.
   // لا تتغير عتبات WCAG؛ تغيرت فقط أهداف DOM لتطابق البنية المنشورة فعليًا.
-  { route: "/", selector: ".hpv4-hero__cta-primary", mode: "light", min: 4.5 },
-  { route: "/", selector: ".hsh-title", mode: "light", min: 4.5 },
-  { route: "/", selector: ".hsh-step__title", mode: "light", min: 4.5 },
+  { route: "/", selector: ".m2030-btn--primary", mode: "light", min: 4.5 },
+  { route: "/", selector: ".m2030-band__title", mode: "light", min: 4.5 },
+  { route: "/", selector: ".m2030-feature__title", mode: "light", min: 4.5 },
   // ── تكليف ثانٍ (2026-07-19، بند 7): عناوين "شارة" أقسام (نص أبيض/خلفية
   // خضراء داكنة، §4c في elite-2026.css) كانت تخسر لونها الأبيض المقصود أمام
   // قواعد `.home-section h2`/`.page-shell h2:not(...)` عالية التخصيص (بفعل
@@ -72,7 +72,7 @@ const ASSERTIONS = [
   // main() لا يُعيد زيارة مسار سبقت زيارته، فتأكيد "/" بعيد عن مجموعته هنا
   // يُقاس فعليًا على آخر مسار آخر تمت زيارته (فشل زائف، لا عطل تباين حقيقي). ──
   // زر التخصيص ثابت في البنية الجديدة ويجب أن يبقى مقروءًا على السطح العاجي.
-  { route: "/", selector: ".hpv4-customize-trigger", mode: "light", min: 4.5 },
+  { route: "/", selector: ".m2030-customize", mode: "light", min: 4.5 },
   // "مواسم التعلّم" — شارة عنوان بقسم: نص على خلفية --elite-forest العميقة
   // (تبقى #143F35 في الوضع الليلي؛ لا تُسطَّح إلى نعناعي).
   { route: "/", selector: ".lsw-section .ds-section__title", mode: "dark", min: 3 },

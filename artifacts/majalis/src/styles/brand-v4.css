@@ -1,76 +1,57 @@
 /**
  * ══════════════════════════════════════════════════════════════════════════
- *  هوية «المجلس العلمي» البصرية — الإصدار الرابع (v4)
- *  المصدر الوحيد للحقيقة: لون · طباعة · مسافات · حواف · ظلال · حركة
+ *  Majlisilm 2030 Islamic Geometric System — مصدر الرموز الوحيد
+ *  (يستبدل هوية brand-v4 القديمة: Forest/Cream/Gold manuscript)
  * ══════════════════════════════════════════════════════════════════════════
  *
- * لماذا هذا الملف موجود
- * ─────────────────────
- * قبل v4 كان في المشروع 15 نظام رموز متوازيًا (--clr-* و--elite-* و
- * --majalis-* و--msk-* و--ds-* و--mn-* و--txt-* …) تتنافس على نفس القيم،
- * إضافة إلى 581 لونًا صلبًا مكتوبًا يدويًا (اللونان الأساسيان وحدهما
- * مكرران 2024 مرة). لذلك كان كل «توحيد» سابق يصمد في صفحات ويسقط في أخرى:
- * لا يوجد مكان واحد يُغيَّر فيه اللون فيتغيّر الموقع كله.
+ * لوحة جديدة (ممنوع إعادة #143F35 / #226A56 / كريمي المخطوطات):
+ *  Midnight Emerald · Porcelain Ivory · Digital Sage · Ink Green
+ *  Soft Gold (محدود) · Teal Glow · Warm Gray
  *
- * v4 يقلب المعادلة: هذا الملف يُحمَّل **أولًا** قبل كل ملفات CSS، ويعرّف
- * السلالم الأولية (primitives). ثم تُعاد كتابة كل الأنظمة القديمة كـ
- * aliases تشير إلى هنا (انظر آخر الملف). النتيجة: تغيير سطر واحد هنا
- * يسري على 70 ألف سطر CSS و250 مسارًا.
- *
- * قاعدة صارمة
- * ───────────
- * لا يجوز لأي ملف آخر تعريف لون صلب جديد. كل لون جديد يُضاف هنا أولًا.
- *
- * التباين
- * ───────
- * كل زوج (نص/خلفية) في هذا الملف مُتحقَّق منه رياضيًا مقابل WCAG 2.2 AA
- * قبل الكتابة — 33 زوجًا، نص عادي ≥4.5:1 وعناصر التحكم ≥3:1، في الوضعين
- * الفاتح والداكن. حدود البطاقات والفواصل زخرفية ومستثناة صراحةً من 1.4.11،
- * ولذلك يوجد رمز منفصل --border-interactive لحدود عناصر الإدخال.
+ * الأنظمة القديمة (--elite/--msk/--majalis/…) تبقى aliases فقط في آخر الملف.
  */
 
 :root {
   /* ══════════════════════════════════════════════════════════
-     ١) السلالم الأولية — أرقام خام، لا تُستعمل مباشرة في المكونات
+     ١) السلالم الأولية — Majlisilm 2030
      ══════════════════════════════════════════════════════════ */
 
-  /* الزمردي — سطوع أعلى قليلاً مع تباين نصّي أقوى على الخلفيات الفاتحة */
-  --em-50:  #EEF5F1;
-  --em-100: #DCEBE3;
-  --em-200: #B8D4C6;
-  --em-300: #86B09C;
-  --em-400: #4F8A72;
-  --em-500: #2F6B55;
-  --em-600: #1F5A45;  /* روابط/تفاعلي — ≥4.5:1 على الأبيض والكريمي */
-  --em-700: #174A38;
-  --em-800: #12362A;  /* أساسي للهوية والعناوين */
-  --em-900: #0C2A1E;
-  --em-950: #071A13;
+  /* Midnight Emerald → Digital Sage (تقنية، ليست غابة تقليدية) */
+  --em-50:  #E8EFEC;   /* Digital Sage soft */
+  --em-100: #D4DED9;
+  --em-200: #B7C9C0;
+  --em-300: #7FA396;
+  --em-400: #4A8F82;   /* Teal Glow mid */
+  --em-500: #2BB5A3;   /* Teal Glow */
+  --em-600: #1F9B8A;   /* تفاعلي أساسي — ليس #226A56 */
+  --em-700: #167A6C;
+  --em-800: #0F2A26;   /* Midnight mid */
+  --em-900: #0A1F1C;   /* Midnight Emerald */
+  --em-950: #051412;   /* Midnight deep */
 
-  /* الذهبي النحاسي — لهجة ثانوية للتكريم والتمييز العلمي (لا للتنبيه).
-     مستوحى من تذهيب المخطوطات، مكبوح عمدًا كي لا يصبح لون تحذير. */
-  --gold-100: #FAF3E0;
-  --gold-200: #F2E3BE;
-  --gold-300: #E3CB8C;
-  --gold-400: #D2B063;
-  --gold-500: #B8963F;
-  --gold-600: #8F7230;
-  --gold-700: #6B5524;
+  /* Soft Gold — لهجة محدودة جدًا (ليس #B8963F كثيفًا) */
+  --gold-100: #F3EFE4;
+  --gold-200: #E5DCC6;
+  --gold-300: #D4C49A;
+  --gold-400: #C4B07A;
+  --gold-500: #BBA46E;
+  --gold-600: #8F7C4A;
+  --gold-700: #6A5C37;
 
-  /* نيوترالز — خلفية أسطع ونص ثانوي أغمق لتباين أوضح دون فقدان الدفء */
+  /* Porcelain Ivory + Warm Gray (باردة نسبيًا — ليست parchment كريمي) */
   --n-0:   #FFFFFF;
-  --n-50:  #FEFDF9;
-  --n-100: #F7F4EC;
-  --n-200: #E9E4D8;
-  --n-300: #D2CBC0;
-  --n-400: #A39C92;
-  --n-450: #817B72;
-  --n-500: #6B6560;
-  --n-600: #524E4A;
-  --n-700: #3C3936;
-  --n-800: #262422;
-  --n-900: #161513;
-  --n-950: #0A0908;
+  --n-50:  #F4F5F3;   /* Porcelain Ivory */
+  --n-100: #ECEAE5;   /* Warm Gray soft */
+  --n-200: #D5D0C8;
+  --n-300: #B8B2A8;
+  --n-400: #8B8680;
+  --n-450: #6F6A64;
+  --n-500: #58534E;
+  --n-600: #3F3B37;
+  --n-700: #2A2724;
+  --n-800: #152824;   /* Ink Green soft */
+  --n-900: #0C1916;   /* Ink Green */
+  --n-950: #060E0C;
 
   /* ألوان الحالة — كل زوج (نص/خلفية) متحقَّق ≥4.5:1 */
   --danger:      #C62828;
@@ -90,30 +71,30 @@
   --bg:              var(--n-50);
   --bg-elevated:     var(--n-0);
   --surface:         var(--n-0);
-  --surface-2:       var(--n-100);
-  --surface-3:       var(--n-200);
-  --surface-brand:   var(--em-50);
+  --surface-2:       var(--em-50);
+  --surface-3:       var(--n-100);
+  --surface-brand:   var(--em-100);
   --surface-inverse: var(--em-900);
 
   --text:            var(--n-900);
   --text-2:          var(--n-600);
   --text-muted:      var(--n-500);
-  --text-on-brand:   #FFFFFF;
-  --text-on-dark:    #F3F8F5;
+  --text-on-brand:   #F4F5F3;
+  --text-on-dark:    #E8EFEC;
   --text-brand:      var(--em-700);
-  --text-brand-deep: var(--em-800);
+  --text-brand-deep: var(--em-900);
 
   --border:             var(--n-200);
   --border-strong:      var(--n-300);
   --border-interactive: var(--n-450);
   --border-brand:       var(--em-200);
 
-  /* أزرار أوضح: أخضر متوسط ساطع للتفاعل، داكن للعناوين */
-  --brand:        var(--em-700);
-  --brand-hover:  var(--em-600);
-  --brand-active: var(--em-800);
+  /* Teal Glow تفاعلي · Midnight للعناوين العميقة */
+  --brand:        var(--em-600);
+  --brand-hover:  var(--em-500);
+  --brand-active: var(--em-700);
   --brand-soft:   var(--em-50);
-  --brand-deep:   var(--em-800);
+  --brand-deep:   var(--em-900);
   --accent:       var(--gold-500);
   --accent-soft:  var(--gold-100);
   --accent-deep:  var(--gold-700);
@@ -132,7 +113,7 @@
   --color-primary-strong:    var(--brand-deep);
   --color-primary-soft:      var(--brand-soft);
   --color-accent:            var(--accent);
-  --color-border:            rgba(18, 54, 42, 0.14);
+  --color-border:            rgba(12, 25, 22, 0.12);
   --color-danger:            var(--danger);
   --color-warning-bg:        var(--danger-bg);
   --color-warning-text:      var(--danger-fg);
@@ -145,8 +126,8 @@
   /* ══════════════════════════════════════════════════════════
      ٣) الطباعة — سُلَّم نسبي 1.2 (Minor Third)
      ══════════════════════════════════════════════════════════ */
-  --font-body:    "IBM Plex Sans Arabic", "Noto Sans Arabic", "Noto Naskh Arabic", "Alexandria", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-display: "IBM Plex Sans Arabic", "Noto Sans Arabic", "Alexandria", system-ui, sans-serif;
+  --font-body:    "IBM Plex Sans Arabic", "Alexandria", "Noto Sans Arabic", system-ui, sans-serif;
+  --font-display: "Scheherazade New", "Aref Ruqaa", "Amiri", "IBM Plex Sans Arabic", serif;
   --font-quran:   "Amiri Quran", "Scheherazade New", "Noto Naskh Arabic", serif;
 
   --fs-xs:   0.75rem;    /* 12px */
@@ -187,30 +168,27 @@
   --s-20: 5rem;
 
   /* ══════════════════════════════════════════════════════════
-     ٥) الحواف — أكبر من v3 عمدًا: اللغة البصرية للتطبيقات 2026
+     ٥) الحواف — هندسية أحدّ من بطاقات 2026 الناعمة
      ══════════════════════════════════════════════════════════ */
-  --r-xs:   0.5rem;    /* 8px  — شارات */
-  --r-sm:   0.75rem;   /* 12px — أزرار صغيرة، حقول */
-  --r-md:   1rem;      /* 16px — أزرار، حقول كبيرة */
-  --r-lg:   1.25rem;   /* 20px — بطاقات */
-  --r-xl:   1.5rem;    /* 24px — بطاقات بارزة */
-  --r-2xl:  2rem;      /* 32px — أوراق سفلية، حاويات */
+  --r-xs:   0.25rem;
+  --r-sm:   0.375rem;
+  --r-md:   0.5rem;
+  --r-lg:   0.625rem;
+  --r-xl:   0.875rem;
+  --r-2xl:  1.125rem;
   --r-full: 9999px;
+  --cut:    0.75rem; /* cut-corner inset */
 
   /* ══════════════════════════════════════════════════════════
-     ٦) الارتفاع — ظلال ملوّنة بالزمردي لا رمادية ميتة
+     ٦) الارتفاع — ظل مسطّح هادئ (لا رفع بطاقات قديم)
      ══════════════════════════════════════════════════════════ */
-  --shadow-color: 158 40% 12%;
+  --shadow-color: 168 30% 10%;
   --e-0: none;
-  --e-1: 0 1px 2px hsl(var(--shadow-color) / 0.05),
-         0 1px 3px hsl(var(--shadow-color) / 0.06);
-  --e-2: 0 2px 4px hsl(var(--shadow-color) / 0.05),
-         0 4px 8px hsl(var(--shadow-color) / 0.07);
-  --e-3: 0 4px 8px hsl(var(--shadow-color) / 0.06),
-         0 8px 20px hsl(var(--shadow-color) / 0.09);
-  --e-4: 0 8px 16px hsl(var(--shadow-color) / 0.08),
-         0 20px 40px hsl(var(--shadow-color) / 0.12);
-  --e-brand: 0 4px 14px hsl(158 50% 20% / 0.22);
+  --e-1: 0 1px 0 hsl(var(--shadow-color) / 0.04);
+  --e-2: 0 1px 2px hsl(var(--shadow-color) / 0.06);
+  --e-3: 0 2px 8px hsl(var(--shadow-color) / 0.07);
+  --e-4: 0 8px 24px hsl(var(--shadow-color) / 0.1);
+  --e-brand: 0 0 0 1px color-mix(in srgb, var(--em-500) 35%, transparent);
 
   /* ══════════════════════════════════════════════════════════
      ٧) الحركة — منحنيات واحدة عبر الموقع
@@ -247,41 +225,35 @@
    ونصوص مخفّفة (#EDF2F0 لا أبيض نقي) لتقليل الوهج على OLED.
    ══════════════════════════════════════════════════════════════ */
 html[data-theme="dark"] {
-  --bg:              #0A1612;
-  --bg-elevated:     #14241E;
-  --surface:         #152820;
-  --surface-2:       #1B3228;
-  --surface-3:       #234034;
-  --surface-brand:   #18352B;
+  --bg:              #051412;
+  --bg-elevated:     #0A1F1C;
+  --surface:         #0F2A26;
+  --surface-2:       #143430;
+  --surface-3:       #1A3E39;
+  --surface-brand:   #12332E;
   --surface-inverse: var(--n-50);
 
-  --text:            #F5FAF7;
-  --text-2:          #B7CBC3;
-  --text-muted:      #95ADA4;
-  --text-on-dark:    #F5FAF7;
-  --text-brand:      var(--em-300);
-  --text-brand-deep: var(--em-200);
+  --text:            #E8EFEC;
+  --text-2:          #B7C9C0;
+  --text-muted:      #8AA39A;
+  --text-on-dark:    #E8EFEC;
+  --text-brand:      var(--em-400);
+  --text-brand-deep: var(--em-300);
 
-  --border:             #224036;
-  --border-strong:      #2E5347;
-  --border-interactive: #4A7A69;
-  --border-brand:       #2E5347;
+  --border:             #1E3D38;
+  --border-strong:      #2A524B;
+  --border-interactive: #3D7A70;
+  --border-brand:       #2A524B;
 
-  /* ⚠ --brand في الوضع الداكن يبقى أخضر متوسّطًا لا فاتحًا.
-     السبب: عشرات آلاف الأسطر القديمة تكتب `color: #FFFFFF` صراحةً فوق
-     خلفية --brand. لو جُعل --brand فاتحًا (em-300) لصار النص الأبيض
-     غير مقروء على كل زر في الموقع — وهو ما حدث فعلًا عند أول محاولة.
-     #2A7A63 يحقق الشرطين معًا: أبيض عليه 5.17:1 (نص AA)،
-     ومقابل السطح الداكن 3.22:1 (تمييز عنصر واجهة، 1.4.11).
-     النصوص والروابط الفاتحة تستعمل --text-brand أعلاه، لا --brand. */
-  --brand:        #2A7A63;
-  --brand-hover:  #33846C;
-  --brand-active: #3C9077;
-  --brand-soft:   #16342B;
-  --brand-deep:   #226A56;
-  --text-on-brand: #FFFFFF;
+  /* Teal Glow متوسط ليتحمل نصًا فاتحًا على الأزرار */
+  --brand:        #1F9B8A;
+  --brand-hover:  #2BB5A3;
+  --brand-active: #167A6C;
+  --brand-soft:   #0F2A26;
+  --brand-deep:   #0A1F1C;
+  --text-on-brand: #F4F5F3;
   --accent:       var(--gold-300);
-  --accent-soft:  #33291433;
+  --accent-soft:  #2A241633;
   --accent-deep:  var(--gold-200);
 
   --color-bg:                var(--bg);

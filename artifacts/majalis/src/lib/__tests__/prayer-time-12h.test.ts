@@ -29,8 +29,8 @@ assert.match(mushaf, /mpv-fill-enter/);
 assert.match(mushaf, /تكبير صفحة المصحف/);
 
 const more = readFileSync(join(root, "components/MoreBottomSheet.tsx"), "utf8");
-assert.match(more, /MORE_SHEET_ITEMS/);
-assert.match(more, /المزيد/);
+assert.match(more, /SIDEBAR_NAV_GROUPS/);
+assert.match(more, /مركز الخدمات/);
 
 const drawer = readFileSync(join(root, "components/SideNavDrawer.tsx"), "utf8");
 assert.match(drawer, /SIDEBAR_NAV_GROUPS/);
