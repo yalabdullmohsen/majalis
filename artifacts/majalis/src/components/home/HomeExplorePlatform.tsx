@@ -16,7 +16,7 @@ export function HomeExplorePlatform() {
         </h2>
       </div>
 
-      <p className="hp-explore__lead" style={{ color: '#66736d', marginBottom: '1rem', lineHeight: 1.7 }}>
+      <p className="hp-explore__lead" style={{ color: '#524e4a', marginBottom: '1rem', lineHeight: 1.7 }}>
         الأقسام الأساسية للمنصة — قرآن، حديث، فقه، حفظ، مناسبات، دليل، صلاة، وحسابك.
       </p>
 

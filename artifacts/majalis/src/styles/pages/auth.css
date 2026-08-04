@@ -175,8 +175,8 @@
   align-items: center;
   padding: 24px;
   background:
-    radial-gradient(circle at center, rgba(58, 130, 85, 0.28) 0%, transparent 48%),
-    linear-gradient(180deg, #0b2b1d 0%, #12362a 100%);
+    radial-gradient(circle at center, rgba(58, 130, 85, 0.34) 0%, transparent 48%),
+    linear-gradient(180deg, #0f3326 0%, #154033 55%, #1f5a45 100%);
   background-size: auto, cover;
 }
 
