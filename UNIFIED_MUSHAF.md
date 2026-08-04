@@ -50,5 +50,6 @@ node scripts/sync-mushaf-page-metadata.mjs --check  # بوابة CI
 
 ## بوابة الجودة
 
-- CI: `node scripts/sync-mushaf-page-metadata.mjs --check` ضمن فحوص المولَّدات.
-- Flutter: `dart run scripts/check_quran_asset.dart` (يتوقع 604 صفحة في metadata).
+- من جذر المستودع: `node scripts/sync-mushaf-page-metadata.mjs --check`
+- أو: `pnpm --filter @workspace/majalis run verify:mushaf-metadata-sync`
+- Flutter: `dart run scripts/check_quran_asset.dart` (يتوقع 604 صفحة) + `scripts/release_check.sh`
