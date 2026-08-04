@@ -576,17 +576,17 @@ export default function SearchPage() {
             <p className="srch-quick-sections__title">أقسام يمكنك استكشافها</p>
             <div className="srch-quick-grid">
               {([
-                { href: "/quran-hub",    Icon: BookOpen,      label: "القرآن الكريم" },
-                { href: "/hadith",       Icon: Scroll,        label: "الأحاديث النبوية" },
-                { href: "/adhkar",       Icon: Heart,         label: "الأذكار" },
-                { href: "/rulings",      Icon: Scale,         label: "الأحكام الشرعية" },
-                { href: "/lessons",      Icon: GraduationCap, label: "الدروس" },
-                { href: "/library",      Icon: BookMarked,    label: "المكتبة" },
-                { href: "/ulum-quran",   Icon: FlaskConical,  label: "علوم القرآن" },
-                { href: "/miracles",     Icon: FlaskConical,  label: "الإشارات الكونية" },
-                { href: "/stories",      Icon: BookOpen,      label: "القصص الإسلامية" },
-                { href: "/quran/surah-stories", Icon: BookOpen, label: "قصص السور" },
-                { href: "/prayer-times", Icon: Clock,         label: "مواقيت الصلاة" },
+                { href: "/mushaf", Icon: BookOpen, label: "القرآن" },
+                { href: "/quran-knowledge", Icon: BookMarked, label: "القرآن وعلومه" },
+                { href: "/hadith", Icon: Scroll, label: "الحديث والسنة" },
+                { href: "/fiqh", Icon: Scale, label: "الفقه والأحكام" },
+                { href: "/memorization", Icon: GraduationCap, label: "الحفظ والمراجعة" },
+                { href: "/occasions-lessons", Icon: Clock, label: "المناسبات والدروس" },
+                { href: "/islamic-directory", Icon: FlaskConical, label: "الدليل الإسلامي" },
+                { href: "/prayer-times", Icon: Clock, label: "الصلاة" },
+                { href: "/my-learning", Icon: Heart, label: "حسابي" },
+                { href: "/adhkar", Icon: Heart, label: "الأذكار" },
+                { href: "/lessons", Icon: GraduationCap, label: "الدروس" },
               ] as const).map(({ href, Icon, label }) => (
                 <Link key={href} href={href} className="srch-quick-card">
                   <Icon size={20} strokeWidth={1.6} aria-hidden="true" />

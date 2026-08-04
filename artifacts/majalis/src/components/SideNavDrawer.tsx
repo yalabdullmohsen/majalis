@@ -3,13 +3,8 @@ import { useState, useMemo, useEffect, useRef } from "react";
 import { Link, useLocation } from "wouter";
 import { seoNavLabel } from "@/lib/seo-nav-labels";
 import {
-  BarChart3, BookMarked, BookOpen, BookText, BookUser,
-  Calendar, CalendarDays, ChevronDown, ChevronUp,
-  CreditCard, FileText, GitBranch, GraduationCap,
-  HelpCircle, Home, Landmark, Layers, Library,
-  LogIn, MapPin, Mic2, Network,
-  Rss, Search, Settings, Star,
-  Sun, UserPlus, X, Zap,
+  BarChart3, BookMarked, BookOpen, Brain, CalendarDays, ChevronDown, ChevronUp,
+  Clock, CreditCard, LogIn, MapPin, Scale, ScrollText, Search, Settings, Star, UserPlus, X,
 } from "lucide-react";
 import { useAuth } from "./AuthProvider";
 import { usePageSwipe } from "@/hooks/usePageSwipe";
@@ -29,32 +24,17 @@ type NavItem = {
   desc?: string;
 };
 
-type SubGroup = {
-  id: string;
-  title: string;
-  items: NavItem[];
-};
-
 type NavGroup = {
   id: string;
   title: string;
   icon: React.ReactNode;
-  items?: NavItem[];
-  subGroups?: SubGroup[];
+  items: NavItem[];
 };
 
-/* ── أيقونات SVG للأقسام ── */
 const IcoHome = () => (
   <svg width="17" height="17" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
     <path d="M1.5 8L9 2l7.5 6v8.5a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5V8z"/>
     <path d="M6.5 17V11h5v6"/>
-  </svg>
-);
-const IcoQuran = () => (
-  <svg width="17" height="17" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <path d="M9 15V4C8 2.5 6 2 3 2.5v12c3-.5 5 0 6 1.5z"/>
-    <path d="M9 15V4c1-1.5 3-2 6-1.5v12c-3-.5-5 0-6 1.5z"/>
-    <line x1="9" y1="4" x2="9" y2="15"/>
   </svg>
 );
 const IcoUser = () => (
@@ -63,163 +43,45 @@ const IcoUser = () => (
     <path d="M2 17c0-3.866 3.134-7 7-7s7 3.134 7 7"/>
   </svg>
 );
-const IcoSearch = () => (
-  <svg width="17" height="17" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <circle cx="7.5" cy="7.5" r="5.5"/>
-    <line x1="11.5" y1="11.5" x2="16" y2="16"/>
-  </svg>
-);
-const IcoLibrary = () => (
-  <svg width="17" height="17" viewBox="0 0 18 18" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <path d="M3 2h2v14H3z"/>
-    <path d="M7 2h2v14H7z"/>
-    <path d="M11.5 2.5l1.93.52L9.5 15.5l-1.93-.52z"/>
-    <path d="M15 2h2v14h-2z"/>
-  </svg>
-);
 
-/* ── بيانات القائمة الجانبية — 6 أقسام ── */
+/** قائمة جانبية مختصرة بعد تنظيف الأقسام — بلا «من نحن» ولا الأقسام المحذوفة. */
 const DRAWER_GROUPS: NavGroup[] = [
   {
-    id: "home",
-    title: "الرئيسية",
+    id: "main",
+    title: "التنقل",
     icon: <IcoHome />,
     items: [
-      { href: "/",        label: seoNavLabel("/", "الصفحة الرئيسية"),    Icon: Home },
-      { href: "/updates", label: seoNavLabel("/updates", "آخر المستجدات"),       Icon: Rss },
-      { href: "/calendar", label: seoNavLabel("/calendar", "تقويم الدروس"),     Icon: Calendar,  desc: "التقويم والمناسبات الإسلامية" },
-      { href: "/occasions", label: seoNavLabel("/occasions", "المناسبات الإسلامية"), Icon: Star,     desc: "أذكار المناسبات والأعياد" },
-      { href: "/about",   label: seoNavLabel("/about", "من نحن"),           Icon: HelpCircle, desc: "تعرّف على المجلس العلمي" },
-    ],
-  },
-  {
-    id: "quran",
-    title: "القرآن",
-    icon: <IcoQuran />,
-    items: [
-      { href: "/quran-hub",           label: seoNavLabel("/quran-hub", "مركز القرآن"),        Icon: Layers,        desc: "بوابة كل ما يتعلق بالقرآن" },
-      { href: "/mushaf",              label: seoNavLabel("/mushaf", "المصحف الشريف"),      Icon: BookOpen,      desc: "اقرأ القرآن الكريم كاملاً" },
-      { href: "/quran/surahs",        label: seoNavLabel("/quran/surahs", "فهرس السور"),         Icon: BookText,      desc: "دليل 114 سورة بالبحث والفلاتر" },
-      { href: "/daily-wird",          label: seoNavLabel("/daily-wird", "الورد اليومي"),       Icon: Sun,           desc: "ختمة متجددة يومياً" },
-      { href: "/quran/tajweed",       label: seoNavLabel("/quran/tajweed", "علم التجويد"),        Icon: Mic2,          desc: "أحكام التجويد بالأمثلة" },
-      { href: "/ulum-quran",          label: seoNavLabel("/ulum-quran", "علوم القرآن الكريم"),        Icon: GraduationCap, desc: "التفسير والناسخ والمنسوخ" },
-      { href: "/tafsir",              label: seoNavLabel("/tafsir", "علم التفسير"),           Icon: BookOpen,      desc: "أنواع التفسير وأصوله وكتب المفسرين" },
-      { href: "/quran/surah-stories", label: seoNavLabel("/quran/surah-stories", "قصص السور"),          Icon: BookText,      desc: "أسباب النزول ومحاور السور" },
-      { href: "/duas-quran",          label: seoNavLabel("/duas-quran", "أدعية القرآن"),       Icon: BookMarked,    desc: "الأدعية القرآنية المختارة" },
-      { href: "/quran-memorization",  label: seoNavLabel("/quran-memorization", "اختبارات الحفظ"),     Icon: Zap,           desc: "12 نوعًا من اختبارات الحفظ" },
-      { href: "/quran/memorization-plans", label: seoNavLabel("/quran/memorization-plans", "خطط الحفظ"),     Icon: CalendarDays,  desc: "خطط مرنة للحفظ والمراجعة والتثبيت" },
-      { href: "/mutashabihat",        label: seoNavLabel("/mutashabihat", "الآيات المتشابهات"),  Icon: GitBranch,     desc: "تمييز الآيات المتشابهة لفظًا" },
-    ],
-  },
-  {
-    id: "search",
-    title: "ابحث",
-    icon: <IcoSearch />,
-    items: [
-      { href: "/search",              label: seoNavLabel("/search", "البحث الشامل"),        Icon: Search,    desc: "ابحث في كل محتوى التطبيق · Ctrl+K" },
-      { href: "/qa",                  label: seoNavLabel("/qa", "سؤال وجواب"),            Icon: HelpCircle, desc: "أسئلة شرعية وأجوبتها" },
-      { href: "/flashcards",          label: seoNavLabel("/flashcards", "بطاقات المراجعة"), Icon: CreditCard, desc: "مراجعة بالتكرار المتباعد · Ctrl+Shift+R" },
-      { href: "/academic-research",   label: seoNavLabel("/academic-research", "الأبحاث الشرعية"),    Icon: FileText,  desc: "مكتبة أبحاث ودراسات شرعية موثّقة" },
-      { href: "/knowledge-graph",     label: seoNavLabel("/knowledge-graph", "استكشف المعرفة"),      Icon: Network,   desc: "شبكة المعرفة والخريطة المعرفية" },
-      { href: "/islamic-glossary",    label: seoNavLabel("/islamic-glossary", "المصطلحات الإسلامية"), Icon: BookOpen,  desc: "معجم المصطلحات الفقهية" },
-    ],
-  },
-  {
-    id: "library",
-    title: "المكتبة",
-    icon: <IcoLibrary />,
-    items: [
-      { href: "/library",       label: seoNavLabel("/library", "المكتبة العلمية"),     Icon: Library,    desc: "كتب ومخطوطات إسلامية" },
-      { href: "/nations",       label: seoNavLabel("/nations", "الأمم السابقة"),       Icon: BookText,   desc: "قصص الأمم في القرآن والعِبر" },
-      { href: "/scholars",      label: seoNavLabel("/scholars", "أعلام الإسلام"),       Icon: BookUser,   desc: "تراجم العلماء والمشايخ" },
-      { href: "/institutions",       label: seoNavLabel("/institutions", "المؤسسات الإسلامية"),  Icon: Landmark,   desc: "مساجد · مكتبات · مراكز · جامعات" },
-      { href: "/islamic-landmarks",  label: seoNavLabel("/islamic-landmarks", "المشاهد والمساجد"),    Icon: MapPin,     desc: "خريطة المشاهد الإسلامية التاريخية" },
+      { href: "/", label: seoNavLabel("/", "الرئيسية"), Icon: BarChart3 },
+      { href: "/mushaf", label: seoNavLabel("/mushaf", "القرآن"), Icon: BookOpen, desc: "المصحف الشريف" },
+      { href: "/quran-knowledge", label: seoNavLabel("/quran-knowledge", "القرآن وعلومه"), Icon: BookMarked, desc: "فهرس · علوم · أسباب · قصص" },
+      { href: "/hadith", label: seoNavLabel("/hadith", "الحديث والسنة"), Icon: ScrollText },
+      { href: "/fiqh", label: seoNavLabel("/fiqh", "الفقه والأحكام"), Icon: Scale },
+      { href: "/memorization", label: seoNavLabel("/memorization", "الحفظ والمراجعة"), Icon: Brain },
+      { href: "/occasions-lessons", label: seoNavLabel("/occasions-lessons", "المناسبات والدروس"), Icon: CalendarDays },
+      { href: "/islamic-directory", label: seoNavLabel("/islamic-directory", "الدليل الإسلامي"), Icon: MapPin },
+      { href: "/prayer-times", label: seoNavLabel("/prayer-times", "الصلاة"), Icon: Clock },
+      { href: "/search", label: seoNavLabel("/search", "البحث الشامل"), Icon: Search },
+      { href: "/settings", label: seoNavLabel("/settings", "الإعدادات"), Icon: Settings },
     ],
   },
 ];
 
 const VISIBLE_DRAWER_GROUPS: NavGroup[] = DRAWER_GROUPS.map((g) => ({
   ...g,
-  items: g.items ? filterNavItems(g.items) : undefined,
-  subGroups: g.subGroups?.map((sg) => ({
-    ...sg,
-    items: filterNavItems(sg.items),
-  })),
+  items: filterNavItems(g.items),
 }));
 
-/* خريطة: href → id المجموعة */
 const HREF_TO_GROUP: Record<string, string> = {};
-VISIBLE_DRAWER_GROUPS.forEach(g => {
-  if (g.items) {
-    g.items.forEach(item => { HREF_TO_GROUP[item.href] = g.id; });
-  }
-  if (g.subGroups) {
-    g.subGroups.forEach(sg => {
-      sg.items.forEach(item => { HREF_TO_GROUP[item.href] = g.id; });
-    });
-  }
+VISIBLE_DRAWER_GROUPS.forEach((g) => {
+  g.items.forEach((item) => { HREF_TO_GROUP[item.href] = g.id; });
 });
 
 function getActiveGroup(pathname: string): string {
-  if (pathname === "/") return "home";
+  if (pathname === "/") return "main";
   for (const [href, gid] of Object.entries(HREF_TO_GROUP)) {
     if (href !== "/" && (pathname === href || pathname.startsWith(href + "/"))) return gid;
   }
-  return "home";
-}
-
-/* ── مكوّن القسم الفرعي داخل "تعلّم" ── */
-function SubGroupSection({
-  subGroup,
-  isActive,
-  onClose,
-  defaultOpen,
-  onSoonClick,
-}: {
-  subGroup: SubGroup;
-  isActive: (href: string) => boolean;
-  onClose: () => void;
-  defaultOpen: boolean;
-  onSoonClick: (label: string) => void;
-}) {
-  const [open, setOpen] = useState(defaultOpen);
-  return (
-    <div className="side-nav-subgroup">
-      <button
-        type="button"
-        className="side-nav-subgroup__toggle"
-        onClick={() => setOpen(o => !o)}
-        aria-expanded={open}
-      >
-        <span>{subGroup.title}</span>
-        {open
-          ? <ChevronUp size={12} strokeWidth={2.5} aria-hidden="true" />
-          : <ChevronDown size={12} strokeWidth={2.5} aria-hidden="true" />}
-      </button>
-      {open && (
-        <nav className="side-nav-subgroup__items" aria-label={subGroup.title}>
-          {subGroup.items.map(({ href, label, Icon, desc }) => (
-            <Link
-              key={href}
-              href={href}
-              onClick={isComingSoonPath(href) ? (e) => { e.preventDefault(); onSoonClick(label); } : onClose}
-              className={`side-nav-link side-nav-link--v2${isActive(href) ? " is-active" : ""}`}
-              aria-label={isComingSoonPath(href) ? `${label} — قريبًا` : label}
-            >
-              <Icon size={15} strokeWidth={1.8} aria-hidden="true" />
-              <span className="side-nav-link__content">
-                <span className="side-nav-link__label">
-                  {label}
-                  {isComingSoonPath(href) ? <span className="nav-soon-badge">قريبًا</span> : null}
-                </span>
-                {desc && <span className="side-nav-link__desc">{desc}</span>}
-              </span>
-            </Link>
-          ))}
-        </nav>
-      )}
-    </div>
-  );
+  return "main";
 }
 
 export function SideNavDrawer({ open, onClose, onLogout }: DrawerProps) {
@@ -229,22 +91,17 @@ export function SideNavDrawer({ open, onClose, onLogout }: DrawerProps) {
   const activeGroup = useMemo(() => getActiveGroup(pathname), [pathname]);
 
   const [openGroups, setOpenGroups] = useState<Set<string>>(() => {
-    return new Set(["home", activeGroup]);
+    return new Set(["main", "account", activeGroup]);
   });
 
   function toggleGroup(id: string) {
-    setOpenGroups(prev => {
+    setOpenGroups((prev) => {
       const next = new Set(prev);
       if (next.has(id)) next.delete(id); else next.add(id);
       return next;
     });
   }
 
-  // إغلاق Escape يُعالَج مركزيًا في useMobileNavState (مستمع عام على window)
-  // — لا حاجة لمستمع محلي مكرر هنا.
-
-  // إمكانية الوصول: أعِد التركيز إلى العنصر الذي فتح القائمة (زر الهامبرغر
-  // عادةً) عند الإغلاق، بدل فقدان التركيز أو بقائه على عنصر أُزيل من DOM.
   const previouslyFocusedRef = useRef<HTMLElement | null>(null);
   useEffect(() => {
     if (open) {
@@ -255,8 +112,6 @@ export function SideNavDrawer({ open, onClose, onLogout }: DrawerProps) {
     }
   }, [open]);
 
-  // سحب لليمين (فعليًا) يُغلق الدرج — إعادة استخدام أداة السحب الموجودة
-  // (usePageSwipe، مُستخدَمة أصلاً لتقليب صفحات المصحف) بلا آلية جديدة.
   const { swipeHandlers } = usePageSwipe({
     onPrev: onClose,
     onNext: () => {},
@@ -281,8 +136,6 @@ export function SideNavDrawer({ open, onClose, onLogout }: DrawerProps) {
         aria-label="إغلاق القائمة الجانبية"
         onClick={onClose}
       />
-      {/* onClick هنا لمنع انتشار النقر إلى الخلفية (button حقيقي أعلاه، مغلِق
-          فعليًا وقابل للوصول بلوحة المفاتيح أصلًا) — لا إجراء مستقل هنا. */}
       {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions */}
       <aside
         id="main-navigation-drawer"
@@ -293,7 +146,6 @@ export function SideNavDrawer({ open, onClose, onLogout }: DrawerProps) {
         onClick={(e) => e.stopPropagation()}
         {...swipeHandlers}
       >
-        {/* Header */}
         <div className="side-nav-drawer__head side-nav-drawer__head--v2">
           <div className="side-nav-drawer__brand">
             <img
@@ -312,9 +164,7 @@ export function SideNavDrawer({ open, onClose, onLogout }: DrawerProps) {
         <div className="side-nav-drawer__body">
           {VISIBLE_DRAWER_GROUPS.map((group) => {
             const isOpen = openGroups.has(group.id);
-            const hasActive = group.items
-              ? group.items.some(i => isActive(i.href))
-              : (group.subGroups ?? []).some(sg => sg.items.some(i => isActive(i.href)));
+            const hasActive = group.items.some((i) => isActive(i.href));
 
             return (
               <div key={group.id} className={`side-nav-group side-nav-group--v2${hasActive ? " side-nav-group--has-active" : ""}`}>
@@ -336,51 +186,32 @@ export function SideNavDrawer({ open, onClose, onLogout }: DrawerProps) {
 
                 {isOpen && (
                   <div id={`nav-group-${group.id}`}>
-                    {/* مجموعة بعناصر مسطحة */}
-                    {group.items && (
-                      <nav aria-label={group.title} className="side-nav-group__items">
-                        {group.items.map(({ href, label, Icon, desc }) => (
-                          <Link
-                            key={href}
-                            href={href}
-                            onClick={isComingSoonPath(href) ? (e) => { e.preventDefault(); onSoonClick(label); } : onClose}
-                            className={`side-nav-link side-nav-link--v2${isActive(href) ? " is-active" : ""}`}
-                            aria-label={isComingSoonPath(href) ? `${label} — قريبًا` : label}
-                          >
-                            <Icon size={16} strokeWidth={1.8} aria-hidden="true" />
-                            <span className="side-nav-link__content">
-                              <span className="side-nav-link__label">
-                                {label}
-                                {isComingSoonPath(href) ? <span className="nav-soon-badge">قريبًا</span> : null}
-                              </span>
-                              {desc && <span className="side-nav-link__desc">{desc}</span>}
+                    <nav aria-label={group.title} className="side-nav-group__items">
+                      {group.items.map(({ href, label, Icon, desc }) => (
+                        <Link
+                          key={href}
+                          href={href}
+                          onClick={isComingSoonPath(href) ? (e) => { e.preventDefault(); onSoonClick(label); } : onClose}
+                          className={`side-nav-link side-nav-link--v2${isActive(href) ? " is-active" : ""}`}
+                          aria-label={isComingSoonPath(href) ? `${label} — قريبًا` : label}
+                        >
+                          <Icon size={16} strokeWidth={1.8} aria-hidden="true" />
+                          <span className="side-nav-link__content">
+                            <span className="side-nav-link__label">
+                              {label}
+                              {isComingSoonPath(href) ? <span className="nav-soon-badge">قريبًا</span> : null}
                             </span>
-                          </Link>
-                        ))}
-                      </nav>
-                    )}
-                    {/* مجموعة بأقسام فرعية (تعلّم) */}
-                    {group.subGroups && (
-                      <div className="side-nav-subgroups-wrap">
-                        {group.subGroups.map(sg => (
-                          <SubGroupSection
-                            key={sg.id}
-                            subGroup={sg}
-                            isActive={isActive}
-                            onClose={onClose}
-                            defaultOpen={sg.items.some(i => isActive(i.href))}
-                            onSoonClick={onSoonClick}
-                          />
-                        ))}
-                      </div>
-                    )}
+                            {desc && <span className="side-nav-link__desc">{desc}</span>}
+                          </span>
+                        </Link>
+                      ))}
+                    </nav>
                   </div>
                 )}
               </div>
             );
           })}
 
-          {/* حسابي */}
           <div className="side-nav-group side-nav-group--v2">
             <button
               type="button"
@@ -408,6 +239,13 @@ export function SideNavDrawer({ open, onClose, onLogout }: DrawerProps) {
                     <Link href="/my-learning" onClick={onClose} className={`side-nav-link side-nav-link--v2${isActive("/my-learning") ? " is-active" : ""}`}>
                       <BarChart3 size={16} strokeWidth={1.8} aria-hidden="true" />
                       <span className="side-nav-link__content"><span className="side-nav-link__label">لوحتي التعليمية</span></span>
+                    </Link>
+                    <Link href="/my-learning#flashcards" onClick={onClose} className="side-nav-link side-nav-link--v2">
+                      <CreditCard size={16} strokeWidth={1.8} aria-hidden="true" />
+                      <span className="side-nav-link__content">
+                        <span className="side-nav-link__label">البطاقات المراجعة</span>
+                        <span className="side-nav-link__desc">داخل حسابي</span>
+                      </span>
                     </Link>
                     <Link href="/stats" onClick={onClose} className={`side-nav-link side-nav-link--v2${isActive("/stats") ? " is-active" : ""}`}>
                       <Star size={16} strokeWidth={1.8} aria-hidden="true" />
@@ -437,6 +275,13 @@ export function SideNavDrawer({ open, onClose, onLogout }: DrawerProps) {
                     <Link href="/register" onClick={onClose} className="side-nav-link side-nav-link--v2">
                       <UserPlus size={16} strokeWidth={1.8} aria-hidden="true" />
                       <span className="side-nav-link__content"><span className="side-nav-link__label">إنشاء حساب</span></span>
+                    </Link>
+                    <Link href="/my-learning#flashcards" onClick={onClose} className="side-nav-link side-nav-link--v2">
+                      <CreditCard size={16} strokeWidth={1.8} aria-hidden="true" />
+                      <span className="side-nav-link__content">
+                        <span className="side-nav-link__label">البطاقات المراجعة</span>
+                        <span className="side-nav-link__desc">داخل حسابي</span>
+                      </span>
                     </Link>
                   </>
                 )}

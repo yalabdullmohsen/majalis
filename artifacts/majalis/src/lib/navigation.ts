@@ -29,19 +29,19 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
   { href: "/",              label: seoNavLabel("/", "الرئيسية") },
   // المحتوى العلمي
   { href: "/lessons",       label: seoNavLabel("/lessons", "الدروس") },
-  { href: "/library",       label: seoNavLabel("/library", "المكتبة العلمية") },
+  { href: "/quran-knowledge", label: seoNavLabel("/quran-knowledge", "القرآن وعلومه") },
   { href: "/hadith",        label: seoNavLabel("/hadith", "الأحاديث") },
   { href: "/fawaid",        label: seoNavLabel("/fawaid", "الفوائد") },
   { href: "/prophets",      label: seoNavLabel("/prophets", "قصص الأنبياء") },
   { href: "/miracles",             label: seoNavLabel("/miracles", "إشارات كونية") },
   { href: "/prophetic-medicine",   label: seoNavLabel("/prophetic-medicine", "الطب النبوي") },
   { href: "/arbaeen-nawawi",label: seoNavLabel("/arbaeen-nawawi", "الأربعون النووية") },
-  { href: "/updates",       label: seoNavLabel("/updates", "المستجدات") },
+  { href: "/occasions-lessons", label: seoNavLabel("/occasions-lessons", "المناسبات والدروس") },
   { href: "/fiqh",               label: seoNavLabel("/fiqh", "الفقه الإسلامي") },
   { href: "/fiqh-council",       label: seoNavLabel("/fiqh-council", "المجمع الفقهي") },
   { href: "/seerah",             label: seoNavLabel("/seerah", "السيرة النبوية") },
   { href: "/scholars",          label: seoNavLabel("/scholars", "أعلام الإسلام") },
-  { href: "/knowledge-graph",   label: seoNavLabel("/knowledge-graph", "استكشف المعرفة") },
+  { href: "/islamic-directory", label: seoNavLabel("/islamic-directory", "الدليل الإسلامي") },
   { href: "/asma-husna",        label: seoNavLabel("/asma-husna", "الأسماء الحسنى") },
   { href: "/akhlaq",            label: seoNavLabel("/akhlaq", "مكارم الأخلاق") },
   { href: "/arkan",             label: seoNavLabel("/arkan", "أركان الإسلام الخمسة") },
@@ -66,24 +66,20 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
   { href: "/wasaya-nabawiyya",  label: seoNavLabel("/wasaya-nabawiyya", "الوصايا النبوية") },
   { href: "/raqaiq",            label: seoNavLabel("/raqaiq", "الرقائق والزهد") },
   { href: "/tawba",             label: seoNavLabel("/tawba", "التوبة والاستغفار") },
-  { href: "/ulum-quran",        label: seoNavLabel("/ulum-quran", "علوم القرآن الكريم") },
+  { href: "/memorization",     label: seoNavLabel("/memorization", "الحفظ والمراجعة") },
   { href: "/tafsir",            label: seoNavLabel("/tafsir", "علم التفسير") },
-  { href: "/academic-research", label: seoNavLabel("/academic-research", "الأبحاث الشرعية") },
   { href: "/mawarith",          label: seoNavLabel("/mawarith", "المواريث والفرائض") },
   { href: "/salah-guide",       label: seoNavLabel("/salah-guide", "دليل الصلاة الكامل") },
   { href: "/fiqh-qawaid",      label: seoNavLabel("/fiqh-qawaid", "القواعد الفقهية الكبرى") },
   { href: "/duas-quran",        label: seoNavLabel("/duas-quran", "أدعية القرآن الكريم") },
   // القرآن
   { href: "/mushaf",              label: seoNavLabel("/mushaf", "المصحف الشريف") },
-  { href: "/quran/surah-stories", label: seoNavLabel("/quran/surah-stories", "قصص القرآن") },
   // الأذكار
   { href: "/adhkar",        label: seoNavLabel("/adhkar", "الأذكار") },
   { href: "/tasbih",        label: seoNavLabel("/tasbih", "التسبيح") },
   // الأدوات
   { href: "/prayer-times",  label: seoNavLabel("/prayer-times", "مواقيت الصلاة") },
   { href: "/qibla",         label: seoNavLabel("/qibla", "القبلة") },
-  { href: "/occasions",     label: seoNavLabel("/occasions", "المناسبات") },
-  { href: "/calendar",      label: seoNavLabel("/calendar", "تقويم الدروس") },
   { href: "/quiz",          label: seoNavLabel("/quiz", "لعبة سين جيم") },
   // عام
   { href: "/search",        label: seoNavLabel("/search", "البحث") },
@@ -98,11 +94,14 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
  * (زر البحث الشامل Ctrl+K، ورابط الحساب/تسجيل الدخول) — انظر NavBar.tsx.
  */
 export const PRIMARY_NAV_ITEMS: NavLink[] = [
-  { href: "/",          label: seoNavLabel("/", "الرئيسية") },
-  { href: "/mushaf",    label: seoNavLabel("/mushaf", "القرآن"),   description: "مصحف · تجويد · قراء" },
-  { href: "/library",   label: seoNavLabel("/library", "المكتبة العلمية"),  description: "كتب · مخطوطات · مؤسسات" },
-  { href: "/scholars",  label: seoNavLabel("/scholars", "أعلام الإسلام"),  description: "تراجم العلماء والمشايخ" },
-  { href: "/fiqh",      label: seoNavLabel("/fiqh", "الفقه"),    description: "أحكام · مسائل · مجمع فقهي" },
+  { href: "/", label: seoNavLabel("/", "الرئيسية") },
+  { href: "/mushaf", label: seoNavLabel("/mushaf", "القرآن"), description: "مصحف · علوم · حفظ" },
+  { href: "/quran-knowledge", label: seoNavLabel("/quran-knowledge", "القرآن وعلومه"), description: "فهرس · علوم · قصص" },
+  { href: "/hadith", label: seoNavLabel("/hadith", "الحديث والسنة"), description: "أحاديث · مصطلح" },
+  { href: "/fiqh", label: seoNavLabel("/fiqh", "الفقه والأحكام"), description: "أحكام · مسائل" },
+  { href: "/memorization", label: seoNavLabel("/memorization", "الحفظ والمراجعة") },
+  { href: "/prayer-times", label: seoNavLabel("/prayer-times", "الصلاة") },
+  { href: "/my-learning", label: seoNavLabel("/my-learning", "حسابي") },
 ];
 
 export const HOME_FEATURE_CARDS = [

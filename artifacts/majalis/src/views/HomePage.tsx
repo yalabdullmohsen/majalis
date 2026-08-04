@@ -43,9 +43,7 @@ const HomeDailyBenefits = lazyWithRetry(() => import("@/components/home/HomeDail
 const HomeUpcomingEvents = lazyWithRetry(() => import("@/components/home/HomeUpcomingEvents").then((m) => ({ default: m.HomeUpcomingEvents })), "HomeUpcomingEvents");
 const HomeSunnahByTime = lazyWithRetry(() => import("@/components/home/HomeSunnahByTime").then((m) => ({ default: m.HomeSunnahByTime })), "HomeSunnahByTime");
 const HomeIslamicOccasions = lazyWithRetry(() => import("@/components/home/HomeIslamicOccasions").then((m) => ({ default: m.HomeIslamicOccasions })), "HomeIslamicOccasions");
-const HomeLatestUpdates = lazyWithRetry(() => import("@/components/home/HomeLatestUpdates").then((m) => ({ default: m.HomeLatestUpdates })), "HomeLatestUpdates");
 const HomePrayerRanks = lazyWithRetry(() => import("@/components/home/HomePrayerRanks").then((m) => ({ default: m.HomePrayerRanks })), "HomePrayerRanks");
-const HomeFeaturedLibrary = lazyWithRetry(() => import("@/components/home/HomeFeaturedLibrary").then((m) => ({ default: m.HomeFeaturedLibrary })), "HomeFeaturedLibrary");
 const HomeQuizCard = lazyWithRetry(() => import("@/components/home/HomeQuizCard").then((m) => ({ default: m.HomeQuizCard })), "HomeQuizCard");
 const HomeWeekStreak = lazyWithRetry(() => import("@/components/home/HomeWeekStreak").then((m) => ({ default: m.HomeWeekStreak })), "HomeWeekStreak");
 const HomeInterestingTopics = lazyWithRetry(() => import("@/components/home/HomeInterestingTopics").then((m) => ({ default: m.HomeInterestingTopics })), "HomeInterestingTopics");
@@ -73,8 +71,6 @@ const WIDGET_RENDERERS: Record<string, () => React.ReactNode> = {
   "explore": () => <HomeExplorePlatform />,
   "learning-seasons": () => <HomeLearningSeasonsWidget />,
   "occasions": () => <HomeIslamicOccasions />,
-  "latest-updates": () => <HomeLatestUpdates />,
-  "library": () => <HomeFeaturedLibrary />,
   "quiz": () => <HomeQuizCard />,
   "daily-benefits": () => <HomeDailyBenefits />,
   "upcoming-events": () => <HomeUpcomingEvents />,

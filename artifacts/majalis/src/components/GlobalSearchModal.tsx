@@ -430,19 +430,19 @@ export function GlobalSearchModal({ onClose }: Props) {
                 <p className="gsm-section__label">تصفح</p>
                 <div className="gsm-quicklinks">
                   {[
-                    { href: "/flashcards",    label: "المراجعة",     Icon: CreditCard },
-                    { href: "/quran-hub",     label: "القرآن",       Icon: BookMarked },
-                    { href: "/adhkar",         label: "الأذكار",      Icon: RotateCw },
-                    { href: "/lessons",        label: "الدروس",       Icon: GraduationCap },
-                    { href: "/rulings",        label: "الأحكام الشرعية", Icon: Scale },
-                    { href: "/library",        label: "المكتبة",      Icon: BookOpen },
-                    { href: "/qa",             label: "الأسئلة",      Icon: HelpCircle },
-                    { href: "/hadith",         label: "الأحاديث",     Icon: Scroll },
-                    { href: "/knowledge-graph", label: "المعرفة",     Icon: Layers },
-                    { href: "/fawaid",         label: "الفوائد",      Icon: Lightbulb },
-                    { href: "/topics",         label: "الموضوعات",    Icon: Tag },
-                    { href: "/seerah",         label: "السيرة",       Icon: Star },
-                    { href: "/occasions",      label: "المناسبات",    Icon: Bell },
+                    { href: "/my-learning#flashcards", label: "المراجعة", Icon: CreditCard },
+                    { href: "/mushaf", label: "القرآن", Icon: BookMarked },
+                    { href: "/quran-knowledge", label: "القرآن وعلومه", Icon: BookOpen },
+                    { href: "/adhkar", label: "الأذكار", Icon: RotateCw },
+                    { href: "/lessons", label: "الدروس", Icon: GraduationCap },
+                    { href: "/fiqh", label: "الفقه والأحكام", Icon: Scale },
+                    { href: "/qa", label: "الأسئلة", Icon: HelpCircle },
+                    { href: "/hadith", label: "الحديث والسنة", Icon: Scroll },
+                    { href: "/memorization", label: "الحفظ", Icon: Layers },
+                    { href: "/islamic-directory", label: "الدليل", Icon: Layers },
+                    { href: "/fawaid", label: "الفوائد", Icon: Lightbulb },
+                    { href: "/seerah", label: "السيرة", Icon: Star },
+                    { href: "/occasions-lessons", label: "المناسبات والدروس", Icon: Bell },
                   ].map((l) => (
                     <button
                       key={l.href}

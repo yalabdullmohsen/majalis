@@ -77,7 +77,7 @@ const TopicsIndexPage = lazy(() => import("@/views/TopicsIndexPage"));
 const LessonsPage = lazy(() => import("@/views/LessonsPage"));
 const LessonDetailPage = lazy(() => import("@/views/LessonDetailPage"));
 const ScientificAnnouncementDetailPage = lazy(() => import("@/views/ScientificAnnouncementDetailPage"));
-const LibraryPage = lazy(() => import("@/views/LibraryPage"));
+const _LibraryPage = lazy(() => import("@/views/LibraryPage"));
 const LibraryDetailPage = lazy(() => import("@/views/LibraryDetailPage"));
 const MiraclesPage = lazy(() => import("@/views/MiraclesPage"));
 const PropheticMedicinePage = lazy(() => import("@/views/PropheticMedicinePage"));
@@ -177,9 +177,9 @@ const SeerahPage = lazy(() => import("@/views/SeerahPage"));
 const RulingsPage = lazy(() => import("@/views/RulingsPage"));
 const RulingDetailPage = lazy(() => import("@/views/RulingDetailPage"));
 const QaPage = lazy(() => import("@/views/QaPage"));
-const UpdatesPage = lazy(() => import("@/views/UpdatesPage"));
+const _UpdatesPage = lazy(() => import("@/views/UpdatesPage"));
 const AutoContentDetailPage = lazy(() => import("@/views/AutoContentDetailPage"));
-const KnowledgeGraphPage = lazy(() => import("@/views/KnowledgeGraphPage"));
+const _KnowledgeGraphPage = lazy(() => import("@/views/KnowledgeGraphPage"));
 const MindMapPage = lazy(() => import("@/views/MindMapPage"));
 const IslamicLandmarksPage = lazy(() => import("@/views/IslamicLandmarksPage"));
 const MutashabihatPage = lazy(() => import("@/views/MutashabihatPage"));
@@ -219,6 +219,10 @@ const SinsAndRightsPage = lazy(() => import("@/views/SinsAndRightsPage"));
 const SinsAndRightsDetailPage = lazy(() => import("@/views/SinsAndRightsDetailPage"));
 const AmrBilMarufPage = lazy(() => import("@/views/AmrBilMarufPage"));
 const UlumQuranPage = lazy(() => import("@/views/UlumQuranPage"));
+const QuranKnowledgeHubPage = lazy(() => import("@/views/QuranKnowledgeHubPage"));
+const MemorizationHubPage = lazy(() => import("@/views/MemorizationHubPage"));
+const OccasionsLessonsHubPage = lazy(() => import("@/views/OccasionsLessonsHubPage"));
+const IslamicDirectoryHubPage = lazy(() => import("@/views/IslamicDirectoryHubPage"));
 const TafsirPage = lazy(() => import("@/views/TafsirPage"));
 const MawarithPage = lazy(() => import("@/views/MawarithPage"));
 const MawarithCalculatorPage = lazy(() => import("@/views/MawarithCalculatorPage"));
@@ -287,7 +291,7 @@ const MethodologyPage = lazy(() => import("@/views/MethodologyPage"));
 const MyCitationsPage = lazy(() => import("@/views/MyCitationsPage"));
 // ScholarlyResearchPage عُطِّلت 2026-07-23 — الاستيراد الكسول أُزيل (لم يعد
 // يُستهلَك)؛ ملف المكوّن نفسه باقٍ بلا حذف (راجع feature-registry.ts).
-const AcademicResearchPage  = lazy(() => import("@/views/AcademicResearchPage"));
+const _AcademicResearchPage  = lazy(() => import("@/views/AcademicResearchPage"));
 const ResearchDetailPage    = lazy(() => import("@/views/ResearchDetailPage"));
 const ResearchSubmitPage    = lazy(() => import("@/views/ResearchSubmitPage"));
 const ResearchAssistantPage = lazy(() => import("@/views/ResearchAssistantPage"));
@@ -325,7 +329,7 @@ function SeoManager() {
 /* وجهات شريط الأقسام العلوي (TopSectionBar) — التبديل بينها يُعامَل معاملة
    "الرجوع" (استعادة آخر موضع تمرير)، لا "تنقّل للأمام" (تمرير للأعلى)،
    لأن المستخدم يُنهي غالبًا جولة في قسم ثم يعود إليه لاحقًا عبر تبويبه. */
-const SECTION_BAR_PATHS = new Set(["/", "/mushaf", "/quran-hub", "/tawhid", "/seerah", "/fiqh", "/hadith", "/library", "/scholars"]);
+const SECTION_BAR_PATHS = new Set(["/", "/mushaf", "/quran-knowledge", "/hadith", "/fiqh", "/memorization", "/occasions-lessons", "/islamic-directory", "/prayer-times", "/my-learning"]);
 
 /**
  * كان يفرض scrollTo(0,0) على كل تغيير مسار بلا استثناء، فيُفقِد موضع
@@ -532,7 +536,7 @@ function Router() {
       <Route path="/sheikhs/:id"><Redirect to="/lessons" /></Route>
       <Route path="/sheikhs"><Redirect to="/lessons" /></Route>
       <Route path="/library/:id"><SafeLazyRoute component={LibraryDetailPage} /></Route>
-      <Route path="/library"><SafeLazyRoute component={LibraryPage} /></Route>
+      <Route path="/library"><Redirect to="/" /></Route>
       <Route path="/miracles"><SafeLazyRoute component={MiraclesPage} /></Route>
       <Route path="/prophetic-medicine"><SafeLazyRoute component={PropheticMedicinePage} /></Route>
       <Route path="/quran-circles"><SafeLazyRoute component={QuranCirclesPage} /></Route>
@@ -556,8 +560,8 @@ function Router() {
       <Route path="/adhkar"><SafeLazyRoute component={AdhkarPage} /></Route>
       <Route path="/qa"><SafeLazyRoute component={QaPage} /></Route>
       <Route path="/quiz"><SafeLazyRoute component={QuizPage} /></Route>
-      <Route path="/knowledge-graph"><SafeLazyRoute component={KnowledgeGraphPage} /></Route>
-      <Route path="/knowledge-map"><Redirect to="/knowledge-graph" /></Route>
+      <Route path="/knowledge-graph"><Redirect to="/" /></Route>
+      <Route path="/knowledge-map"><Redirect to="/" /></Route>
       <Route path="/mind-map"><SafeLazyRoute component={MindMapPage} /></Route>
       <Route path="/islamic-landmarks"><SafeLazyRoute component={IslamicLandmarksPage} /></Route>
       <Route path="/mutashabihat"><SafeLazyRoute component={MutashabihatPage} /></Route>
@@ -659,9 +663,9 @@ function Router() {
       <Route path="/academic-research/submit"><SafeLazyRoute component={ResearchSubmitPage} /></Route>
       <Route path="/academic-research/assistant"><SafeLazyRoute component={ResearchAssistantPage} /></Route>
       <Route path="/academic-research/:id"><SafeLazyRoute component={ResearchDetailPage} /></Route>
-      <Route path="/academic-research"><SafeLazyRoute component={AcademicResearchPage} /></Route>
-      <Route path="/researches"><Redirect to="/academic-research" /></Route>
-      <Route path="/sharia-research"><Redirect to="/academic-research" /></Route>
+      <Route path="/academic-research"><Redirect to="/" /></Route>
+      <Route path="/researches"><Redirect to="/" /></Route>
+      <Route path="/sharia-research"><Redirect to="/" /></Route>
       <Route path="/learning-path/dashboard"><Redirect to="/my-learning" /></Route>
       <Route path="/learning-path/book/:bookId"><Redirect to="/learning/paths" /></Route>
       <Route path="/learning-path/:scienceSlug"><Redirect to="/learning/paths" /></Route>
@@ -692,6 +696,24 @@ function Router() {
       <Route path="/mushaf-v2-preview"><Redirect to="/mushaf" /></Route>
       {/* تبويب القرآن → المصحف مباشرة بلا مركز بطاقات/اختبارات */}
       <Route path="/quran-hub"><Redirect to="/mushaf" /></Route>
+      <Route path="/quran-knowledge"><SafeLazyRoute component={QuranKnowledgeHubPage} /></Route>
+      <Route path="/memorization"><SafeLazyRoute component={MemorizationHubPage} /></Route>
+      <Route path="/occasions-lessons"><SafeLazyRoute component={OccasionsLessonsHubPage} /></Route>
+      <Route path="/islamic-directory"><SafeLazyRoute component={IslamicDirectoryHubPage} /></Route>
+      <Route path="/quran-index"><Redirect to="/quran-knowledge" /></Route>
+      <Route path="/asbab-al-nuzul"><Redirect to="/quran-knowledge" /></Route>
+      <Route path="/quran-stories"><Redirect to="/quran-knowledge" /></Route>
+      <Route path="/memorization-tests"><Redirect to="/memorization" /></Route>
+      <Route path="/memorization-plans"><Redirect to="/memorization" /></Route>
+      <Route path="/islamic-institutions"><Redirect to="/islamic-directory" /></Route>
+      <Route path="/mosques"><Redirect to="/islamic-directory" /></Route>
+      <Route path="/reviewed-cards"><Redirect to="/my-learning" /></Route>
+      <Route path="/scientific-library"><Redirect to="/" /></Route>
+      <Route path="/latest"><Redirect to="/" /></Route>
+      <Route path="/fatwas"><Redirect to="/fiqh" /></Route>
+      <Route path="/explore"><Redirect to="/" /></Route>
+      <Route path="/research"><Redirect to="/" /></Route>
+
       <Route path="/kids"><SafeLazyRoute component={KidsPage} /></Route>
       <Route path="/quran/recitation-test-ai"><SafeLazyRoute component={RecitationTestPage} /></Route>
       <Route path="/quran/surahs"><SafeLazyRoute component={SurahIndexPage} /></Route>
@@ -732,7 +754,7 @@ function Router() {
       <Route path="/tasbih"><SafeLazyRoute component={TasbihPage} /></Route>
       <Route path="/daily-wird"><SafeLazyRoute component={DailyWirdPage} /></Route>
       <Route path="/occasions"><SafeLazyRoute component={OccasionsPage} /></Route>
-      <Route path="/features-in-progress"><Redirect to="/updates" /></Route>
+      <Route path="/features-in-progress"><Redirect to="/" /></Route>
       <Route path="/arbaeen-nawawi/:id"><SafeLazyRoute component={ArbaeenHadithDetailPage} /></Route>
       <Route path="/arbaeen-nawawi"><SafeLazyRoute component={ArbaeenNawawiPage} /></Route>
       <Route path="/sujood-sahw"><SafeLazyRoute component={SujoodSahwPage} /></Route>
@@ -779,8 +801,8 @@ function Router() {
       <Route path="/rulings/:id"><SafeLazyRoute component={RulingDetailPage} /></Route>
       <Route path="/rulings"><SafeLazyRoute component={RulingsPage} /></Route>
       <Route path="/updates/auto/:slug"><SafeLazyRoute component={AutoContentDetailPage} /></Route>
-      <Route path="/updates"><SafeLazyRoute component={UpdatesPage} /></Route>
-      <Route path="/whats-new"><Redirect to="/updates" /></Route>
+      <Route path="/updates"><Redirect to="/" /></Route>
+      <Route path="/whats-new"><Redirect to="/" /></Route>
       <Route path="/login"><SafeLazyRoute component={LoginPage} /></Route>
       <Route path="/register"><SafeLazyRoute component={RegisterPage} /></Route>
       <Route path="/auth/register"><Redirect to="/register" /></Route>
@@ -842,7 +864,7 @@ function GlobalAppShortcuts({ onToggleSearch }: { onToggleSearch: () => void }) 
       if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.key.toLowerCase() === "r") {
         if (typing) return;
         e.preventDefault();
-        navigate("/flashcards");
+        navigate("/my-learning#flashcards");
       }
     };
     window.addEventListener("keydown", keyHandler);

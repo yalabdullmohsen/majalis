@@ -190,12 +190,12 @@
   "redirects": [
     {
       "source": "/researches",
-      "destination": "/academic-research",
+      "destination": "/",
       "permanent": true
     },
     {
       "source": "/sharia-research",
-      "destination": "/academic-research",
+      "destination": "/",
       "permanent": true
     },
     {
@@ -265,7 +265,7 @@
     },
     {
       "source": "/knowledge-map",
-      "destination": "/knowledge-graph",
+      "destination": "/",
       "permanent": true
     },
     {
@@ -280,7 +280,7 @@
     },
     {
       "source": "/features-in-progress",
-      "destination": "/updates",
+      "destination": "/",
       "permanent": true
     },
     {
@@ -290,7 +290,7 @@
     },
     {
       "source": "/quran-studies",
-      "destination": "/ulum-quran",
+      "destination": "/quran-knowledge",
       "permanent": true
     },
     {
@@ -310,7 +310,7 @@
     },
     {
       "source": "/learning/calendar",
-      "destination": "/calendar",
+      "destination": "/occasions-lessons",
       "permanent": true
     },
     {
@@ -500,8 +500,103 @@
     },
     {
       "source": "/:path*",
-      "has": [{ "type": "host", "value": "www.majlisilm.com" }],
+      "has": [
+        {
+          "type": "host",
+          "value": "www.majlisilm.com"
+        }
+      ],
       "destination": "https://majlisilm.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/library",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/updates",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/knowledge-graph",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/academic-research",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/quran-index",
+      "destination": "/quran-knowledge",
+      "permanent": true
+    },
+    {
+      "source": "/asbab-al-nuzul",
+      "destination": "/quran-knowledge",
+      "permanent": true
+    },
+    {
+      "source": "/quran-stories",
+      "destination": "/quran-knowledge",
+      "permanent": true
+    },
+    {
+      "source": "/memorization-tests",
+      "destination": "/memorization",
+      "permanent": true
+    },
+    {
+      "source": "/memorization-plans",
+      "destination": "/memorization",
+      "permanent": true
+    },
+    {
+      "source": "/islamic-institutions",
+      "destination": "/islamic-directory",
+      "permanent": true
+    },
+    {
+      "source": "/mosques",
+      "destination": "/islamic-directory",
+      "permanent": true
+    },
+    {
+      "source": "/reviewed-cards",
+      "destination": "/my-learning",
+      "permanent": true
+    },
+    {
+      "source": "/scientific-library",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/latest",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/fatwas",
+      "destination": "/fiqh",
+      "permanent": true
+    },
+    {
+      "source": "/explore",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/research",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/whats-new",
+      "destination": "/",
       "permanent": true
     }
   ],
