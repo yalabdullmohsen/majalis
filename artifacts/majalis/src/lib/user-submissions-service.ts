@@ -1,7 +1,10 @@
-/** خدمة رفع ومراجعة محتوى المستخدمين عبر Supabase */
+/** خدمة رفع ومراجعة محتوى المستخدمين عبر Supabase.
+ * رفع الأذان أُلغي نهائيًا (2026-08) — يبقى النوع في القراءة فقط للسجلات التاريخية.
+ */
 
 import { supabase } from "@/lib/supabase";
 
+/** "adhan" تاريخي فقط — لا إنشاء طلبات جديدة من هذا النوع. */
 export type SubmissionType = "adhan" | "lesson";
 export type SubmissionStatus = "pending" | "approved" | "rejected";
 
@@ -24,13 +27,6 @@ export type UserSubmission = {
   created_at: string;
 };
 
-export type AdhanMeta = {
-  muezzin_style: string;
-  country: string;
-  origin: string;
-  prayer_type: "general" | "fajr" | "both";
-};
-
 export type LessonMeta = {
   sheikh: string;
   duration_min?: number;
@@ -41,10 +37,7 @@ export type LessonMeta = {
 const BUCKET = "user-submissions";
 
 // ── رفع ملف إلى Supabase Storage ──────────────────────────────────────
-async function uploadFile(
-  file: File,
-  folder: "adhan" | "lessons",
-): Promise<string> {
+async function uploadFile(file: File, folder: "lessons"): Promise<string> {
   const ext = file.name.split(".").pop() ?? "bin";
   const path = `${folder}/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
 
@@ -56,54 +49,6 @@ async function uploadFile(
 
   const { data } = supabase.storage.from(BUCKET).getPublicUrl(path);
   return data.publicUrl;
-}
-
-// ── رفع أذان ──────────────────────────────────────────────────────────
-export async function submitAdhan(params: {
-  file: File;
-  title: string;
-  description: string;
-  submitterName: string;
-  submitterEmail?: string;
-  meta: AdhanMeta;
-}): Promise<{ ok: boolean; id?: string; error?: string }> {
-  try {
-    let fileUrl: string | undefined;
-    let fileName: string | undefined;
-    let fileSizeKb: number | undefined;
-    let fileMime: string | undefined;
-
-    if (params.file) {
-      fileUrl  = await uploadFile(params.file, "adhan");
-      fileName = params.file.name;
-      fileSizeKb = Math.round(params.file.size / 1024);
-      fileMime   = params.file.type;
-    }
-
-    const { data, error } = await supabase
-      .from("user_submissions")
-      .insert({
-        type:             "adhan",
-        title:            params.title,
-        description:      params.description,
-        submitter_name:   params.submitterName,
-        submitter_email:  params.submitterEmail ?? null,
-        file_url:         fileUrl ?? null,
-        file_name:        fileName ?? null,
-        file_size_kb:     fileSizeKb ?? null,
-        file_mime:        fileMime ?? null,
-        meta:             params.meta,
-        status:           "pending",
-      })
-      .select("id")
-      .single();
-
-    if (error) throw error;
-    return { ok: true, id: data?.id };
-  } catch (e: unknown) {
-    const msg = e instanceof Error ? e.message : "خطأ غير متوقع";
-    return { ok: false, error: msg };
-  }
 }
 
 // ── رفع درس ───────────────────────────────────────────────────────────
@@ -193,79 +138,6 @@ export async function reviewSubmission(
   return { ok: true };
 }
 
-// ── Admin: نشر أذان مقبول في مكتبة المؤذنين ──────────────────────────
-export async function publishAdhanToLibrary(
-  sub: UserSubmission,
-): Promise<{ ok: boolean; error?: string }> {
-  if (sub.type !== "adhan" || sub.status !== "approved") {
-    return { ok: false, error: "يجب أن يكون الطلب أذاناً مقبولاً" };
-  }
-
-  const meta = sub.meta as Record<string, string | undefined>;
-  const slug = `community-${sub.id.slice(0, 8)}`;
-
-  const { error } = await supabase
-    .from("muezzins")
-    .insert({
-      slug,
-      name:         sub.title,
-      origin:       meta.origin ?? sub.submitter_name,
-      country:      meta.country ?? "—",
-      category:     "مساهمة المجتمع",
-      style:        meta.muezzin_style ?? "تقليدي",
-      tags:         ["مجتمع", meta.muezzin_style ?? ""].filter(Boolean),
-      biography:    sub.description ?? `أذان مقدَّم من ${sub.submitter_name}`,
-      audio_url:    sub.file_url ?? "",
-      fajr_url:     meta.prayer_type === "fajr" || meta.prayer_type === "both"
-                      ? (sub.file_url ?? undefined) : undefined,
-      duration_sec: 0,
-      rating:       0,
-      total_ratings: 0,
-      followers:    0,
-      is_verified:  true,   // الأدمن وافق → يظهر للعموم مباشرة
-    })
-    .select("id")
-    .single();
-
-  if (error) {
-    if (error.code === "23505") return { ok: false, error: "نُشر هذا الأذان مسبقاً" };
-    return { ok: false, error: error.message };
-  }
-
-  // وضع علامة في الطلب
-  await supabase
-    .from("user_submissions")
-    .update({ meta: { ...meta, published_slug: slug } })
-    .eq("id", sub.id);
-
-  return { ok: true };
-}
-
-// ── تحميل أذانات المجتمع من Supabase ─────────────────────────────────
-export type CommunityMuezzin = {
-  id: string;
-  slug: string;
-  name: string;
-  origin: string;
-  country: string;
-  style: string;
-  biography: string;
-  audio_url: string;
-  fajr_url?: string | null;
-  rating: number;
-};
-
-export async function loadCommunityMuezzins(): Promise<CommunityMuezzin[]> {
-  const { data } = await supabase
-    .from("muezzins")
-    .select("id,slug,name,origin,country,style,biography,audio_url,fajr_url,rating")
-    .eq("category", "مساهمة المجتمع")
-    .eq("is_verified", true)
-    .order("created_at", { ascending: false })
-    .limit(20);
-  return (data ?? []) as CommunityMuezzin[];
-}
-
 // ── Admin: نشر درس مقبول كمسودة في جدول lessons ─────────────────────
 export async function publishLessonAsDraft(
   sub: UserSubmission,
@@ -308,8 +180,9 @@ export type SubmissionStats = {
   pending: number;
   approved: number;
   rejected: number;
-  adhan: number;
   lesson: number;
+  /** سجلات تاريخية فقط — ميزة الرفع ملغاة. */
+  adhanLegacy: number;
 };
 
 export async function getSubmissionStats(): Promise<SubmissionStats> {
@@ -323,8 +196,8 @@ export async function getSubmissionStats(): Promise<SubmissionStats> {
     pending:  rows.filter((r) => r.status === "pending").length,
     approved: rows.filter((r) => r.status === "approved").length,
     rejected: rows.filter((r) => r.status === "rejected").length,
-    adhan:    rows.filter((r) => r.type === "adhan").length,
     lesson:   rows.filter((r) => r.type === "lesson").length,
+    adhanLegacy: rows.filter((r) => r.type === "adhan").length,
   };
 }
 
