@@ -7,7 +7,6 @@ import { useAuth } from "@/components/AuthProvider";
 import { getRecentPages, type RecentPage } from "@/lib/recent-pages";
 import { Wrench, UserRound, Brain, Lightbulb, Library } from "lucide-react";
 import { SectionErrorBoundary } from "@/components/ErrorBoundary";
-import { HomeAboutSection } from "@/components/home/HomeAboutSection";
 import { HomeDailyProgress } from "@/components/home/HomeDailyProgress";
 import { HomeContinueWidget } from "@/components/home/HomeContinueWidget";
 import { HomeLearningSeasonsWidget } from "@/components/home/HomeLearningSeasonsWidget";
@@ -356,9 +355,8 @@ export default function HomePage() {
           </SafeHomeSection>
         ))}
 
-        <SafeHomeSection name="عن المجلس العلمي">
-          <HomeAboutSection />
-        </SafeHomeSection>
+        {/* قسم «من نحن / عن المجلس» أُزيل من الرئيسية (2026-08) ليتوافق مع
+            إخفاء القسم من الاكتشاف — الصفحة /about تبقى للروابط العميقة. */}
 
       </main>
 

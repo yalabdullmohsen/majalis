@@ -709,7 +709,7 @@ export default function LessonsPage({
         links={[
           { href: "/learning/paths", label: "مسارات التعلم" },
           { href: "/scholars", label: "العلماء" },
-          { href: "/library", label: "المكتبة" },
+          { href: "/quran-knowledge", label: "القرآن وعلومه" },
           { href: "/hadith", label: "الأحاديث" },
           { href: "/fiqh", label: "بوابة الفقه" },
         ]}
