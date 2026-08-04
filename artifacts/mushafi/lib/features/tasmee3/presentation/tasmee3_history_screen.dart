@@ -100,7 +100,7 @@ class Tasmee3HistoryScreen extends ConsumerWidget {
                               ),
                               const SizedBox(height: 4),
                               Text(
-                                'أخطاء ظاهرة: ${session.mistakesCount} | المدة: ${session.durationSeconds} ثانية',
+                                'مواضع للمراجعة: ${session.mistakesCount} | المدة: ${session.durationSeconds} ثانية',
                                 style: const TextStyle(
                                   color: Color(0xFF9A8068),
                                 ),

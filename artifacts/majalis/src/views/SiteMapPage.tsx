@@ -153,7 +153,7 @@ const SECTIONS = [
     title: "المعلومات",
     emoji: "ℹ️",
     links: [
-      { href: "/about",    label: "عن المجلس",       desc: "رسالتنا وأهدافنا" },
+      { href: "/about",    label: "من نحن",       desc: "رسالتنا وأهدافنا" },
       { href: "/methodology", label: "منهجنا العلمي",  desc: "منهج المراجعة والتوثيق" },
       { href: "/contact",  label: "تواصل معنا",      desc: "للملاحظات والاقتراحات" },
       { href: "/privacy",  label: "سياسة الخصوصية", desc: "كيف نحمي بياناتك" },

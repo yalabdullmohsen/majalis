@@ -90,7 +90,7 @@ export function ScholarlyTrustBadge({ data, compact = false }: Props) {
           <XCircle size={13} aria-hidden="true" className="stb-missing__icon" />
           لم تُضف بيانات التوثيق بعد
         </p>
-        <Link href="/methodology" className="stb-methodology-link">تعرف على منهجيتنا العلمية</Link>
+        <Link href="/methodology" className="stb-methodology-link">تعرّف على منهجيتنا العلمية</Link>
       </aside>
     );
   }
@@ -105,7 +105,7 @@ export function ScholarlyTrustBadge({ data, compact = false }: Props) {
           <XCircle size={13} aria-hidden="true" className="stb-missing__icon" />
           لم تُضف بيانات التوثيق بعد
         </p>
-        <Link href="/methodology" className="stb-methodology-link">تعرف على منهجيتنا العلمية</Link>
+        <Link href="/methodology" className="stb-methodology-link">تعرّف على منهجيتنا العلمية</Link>
       </aside>
     );
   }

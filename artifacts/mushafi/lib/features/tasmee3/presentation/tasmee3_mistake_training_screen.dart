@@ -23,7 +23,7 @@ class Tasmee3MistakeTrainingScreen extends StatelessWidget {
       child: Scaffold(
         backgroundColor: const Color(0xFFFBF7EF),
         appBar: AppBar(
-          title: const Text('تدريب على الأخطاء'),
+          title: const Text('مراجعة مواضع التسميع'),
           centerTitle: true,
           backgroundColor: const Color(0xFFFBF7EF),
           foregroundColor: const Color(0xFF11100E),
@@ -34,7 +34,7 @@ class Tasmee3MistakeTrainingScreen extends StatelessWidget {
                 child: Padding(
                   padding: EdgeInsets.all(24),
                   child: Text(
-                    'لا توجد أخطاء تحتاج تدريبا في هذه الجلسة.',
+                    'لا توجد مواضع تحتاج مراجعة في هذه الجلسة.',
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Color(0xFF9A8068),

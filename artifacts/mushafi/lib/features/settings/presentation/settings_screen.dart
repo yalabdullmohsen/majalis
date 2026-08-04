@@ -70,25 +70,24 @@ class SettingsScreen extends ConsumerWidget {
           ),
           const Divider(),
           const ListTile(
-            title: Text('التسميع (Tasmee3)'),
+            title: Text('التسميع'),
             subtitle: Text(
-              'الألوان والخطوط عبر Tasmee3UiSettings. '
-              'التعرف الحالي fallback عبر speech_to_text؛ '
-              'اربط AdvancedQuranAsrRecognizer لاحقاً لدقة أعلى.',
+              'أداة مساعدة لمراجعة الحفظ عبر الميكروفون. '
+              'يمكنك ضبط محرك التسميع من إعداداته داخل لوحة التسميع.',
             ),
           ),
           const Divider(),
           const ListTile(
             title: Text('حول مصحفي'),
             subtitle: Text(
-              'تطبيق قراءة هادئ. النص القرآني من ملف عثماني موثّق في الأصول.',
+              'تطبيق قراءة هادئ. النص القرآني من ملف عثماني موثّق داخل التطبيق.',
             ),
           ),
           const ListTile(
             title: Text('الخصوصية'),
             subtitle: Text(
-              'الملاحظات والحفظ محليًا افتراضيًا. '
-              'التسميع يعمل على الجهاز عبر fallback ما لم يُربط محرك ASR خارجي.',
+              'الملاحظات والحفظ محلياً افتراضياً. '
+              'التسميع يعمل على الجهاز افتراضياً، ولا يُرسل الصوت إلا إذا سمحت بذلك.',
             ),
           ),
         ],

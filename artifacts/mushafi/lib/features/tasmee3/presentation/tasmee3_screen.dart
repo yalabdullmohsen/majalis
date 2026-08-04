@@ -510,7 +510,7 @@ class _Tasmee3ScreenState extends ConsumerState<Tasmee3Screen> {
                       return 'محرك تعرف الجهاز مفعّل.';
                     }
                     if (settings.canUseAdvancedServer) {
-                      return 'الخادم المتقدم جاهز (endpoint + إذن الإرسال).';
+                      return 'الخادم المتقدم جاهز، وإرسال الصوت مسموح.';
                     }
                     return 'الخادم المتقدم غير جاهز؛ يعمل التطبيق بوضع تعرف الجهاز.';
                   },

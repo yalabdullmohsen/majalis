@@ -206,6 +206,7 @@ export default function HomePage() {
 
         <div className="hpv4-hero__inner">
 
+          <p className="hpv4-hero__brand-eyebrow">المجلس العلمي</p>
           <h1 className="hpv4-vision-title">ريادة المعرفة الإسلامية الرقمية</h1>
 
           <div className="hpv4-hero__greet">

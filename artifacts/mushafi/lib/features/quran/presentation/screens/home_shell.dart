@@ -87,7 +87,7 @@ class HomeShell extends ConsumerWidget {
               ),
               const Spacer(),
               Text(
-                'يعمل التطبيق على المصحف الجديد والتسميع الجديد فقط.',
+                'اقرأ بهدوء، وراجع حفظك بالتسميع عند الحاجة.',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: colors.secondaryText,
