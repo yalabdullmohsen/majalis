@@ -35,10 +35,8 @@ class Tasmee3RuntimeConfig {
         'TASMEE3_DEBUG_DIAGNOSTICS',
         defaultValue: false,
       ),
-      allowExternalAudioUploadByDefault: bool.fromEnvironment(
-        'TASMEE3_ALLOW_EXTERNAL_AUDIO_UPLOAD',
-        defaultValue: false,
-      ),
+      // Upload never auto-enabled by dart-define; user toggle only.
+      allowExternalAudioUploadByDefault: false,
     );
   }
 }

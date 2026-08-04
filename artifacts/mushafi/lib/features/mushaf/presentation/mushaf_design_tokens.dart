@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 
 class MushafColors {
-  /// ورق القراءة المشترك مع موقع majlisilm.com (`AYAH_MUSHAF_PAPER_BG`).
-  static const background = Color(0xFFFAF7F2);
-  static const paper = Color(0xFFFAF7F2);
-  static const surface = Color(0xFFFFFCF7);
+  /// خلفية عامة أصلية للمصحف (هوية مصحفي — ليست نسخًا لتطبيق خارجي).
+  static const background = Color(0xFFFBF7EF);
+  /// سطح صفحة القراءة.
+  static const paper = Color(0xFFFFFCF3);
+  static const surface = Color(0xFFFFFCF3);
   static const primary = Color(0xFFA77A48);
   static const primaryDark = Color(0xFF765332);
-  /// حبر مشترك مع الموقع (`AYAH_MUSHAF_INK`).
-  static const text = Color(0xFF2C2C2E);
-  static const mutedText = Color(0xFF8E8E93);
+  static const text = Color(0xFF11100E);
+  static const mutedText = Color(0xFF9A8068);
   static const border = Color(0xFFE0C5A3);
   static const success = Color(0xFF2E7D32);
   static const warning = Color(0xFFF57C00);
