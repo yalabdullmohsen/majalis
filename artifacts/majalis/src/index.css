@@ -6100,15 +6100,16 @@ svg {
 
 /* ── Touch-friendly buttons (mobile base) ── */
 @media (max-width: 879px) {
+  /* لا max-height هنا — الهيدر متعدّد الصفوف (بحث/تيكّر)؛ القص كان يسبب تداخلاً */
   .navbar-v3 {
-    min-height: var(--mobile-header-h);
-    max-height: 4.5rem;
-    padding-top: env(safe-area-inset-top, 0px);
+    min-height: 0;
+    max-height: none;
+    height: auto;
   }
 
   .navbar-v3__inner {
-    min-height: calc(var(--mobile-header-h) - env(safe-area-inset-top, 0px));
-    max-height: 4.5rem;
+    min-height: var(--header-height, 3rem);
+    max-height: none;
     padding: 0.35rem var(--mobile-padding-x);
     gap: 0.35rem;
   }

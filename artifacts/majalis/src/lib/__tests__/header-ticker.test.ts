@@ -46,9 +46,11 @@ console.log("\n=== محتوى معتمد بمصدر — نفس مصدر مجلس
 console.log("\n=== NavBar.tsx / App.tsx — نقطة دخول البحث موحّدة بلا سحب للأسفل ===");
 {
   const navBarSrc = readFileSync(resolve(appRoot, "src/components/NavBar.tsx"), "utf-8");
-  assert(navBarSrc.includes("navbar-search-toggle"), "زر بحث واضح موجود في الهيدر");
+  assert(navBarSrc.includes("navbar-search-toggle"), "زر بحث واضح موجود في الهيدر (سطح المكتب)");
+  assert(navBarSrc.includes("navbar-v3__search-row") || navBarSrc.includes("navbar-v3__search-btn"), "صف بحث كامل على الجوال");
   assert(!navBarSrc.includes("SearchBox"), "لا مربع بحث مضمّن قديم متبقٍّ في مصدر الهيدر");
   assert(navBarSrc.includes("HeaderTicker"), "الشريط المتحرك مُدرَج فعليًا في الهيدر");
+  assert(!navBarSrc.includes("navbar-v3__tabs-row"), "لا صف تبويبات مكرر في الهيدر — TopSectionBar يكفي");
 
   const appSrc = readFileSync(resolve(appRoot, "src/App.tsx"), "utf-8");
   assert(
@@ -78,8 +80,12 @@ console.log("\n=== NavBar.tsx / App.tsx — نقطة دخول البحث موح�
 
   const cssSrc = readFileSync(resolve(appRoot, "src/styles/final-release.css"), "utf-8");
   assert(
-    cssSrc.includes(".navbar-theme-toggle.navbar-search-toggle") && cssSrc.includes("display: inline-flex"),
-    "زر البحث يبقى ظاهرًا على الجوال رغم إخفاء زر الوضع الليلي",
+    cssSrc.includes("flex-direction: column") && cssSrc.includes("header.navbar-v3"),
+    "الهيدر عمودي على الجوال (يمنع تداخل صفوف البحث/التيكّر)",
+  );
+  assert(
+    cssSrc.includes("max-height: none") && cssSrc.includes(".navbar-v3"),
+    "لا قصّ max-height على الهيدر متعدّد الصفوف",
   );
   assert(cssSrc.includes("header-ticker-marquee"), "حركة الماركي المستمرّة معرَّفة في CSS");
   assert(cssSrc.includes(".header-ticker--marquee") || cssSrc.includes("header-ticker__track"), "مسار الشريط المتحرّك موجود");

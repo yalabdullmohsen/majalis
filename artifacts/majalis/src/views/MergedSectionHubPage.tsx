@@ -31,27 +31,33 @@ export default function MergedSectionHubPage({ path, title, description, cards }
   }, [path, title, description]);
 
   return (
-    <div className="qh-page" dir="rtl">
-      <header className="qh-hero">
-        <h1 className="qh-hero__title">{title}</h1>
-        <p className="qh-hero__desc">{description}</p>
+    <div className="quran-hub-page" dir="rtl">
+      <header className="quran-hub-hero">
+        <h1 className="quran-hub-hero__title">{title}</h1>
+        <p className="quran-hub-hero__sub">{description}</p>
         <ShareButtons title={`${title} — المجلس العلمي`} url={`https://www.majlisilm.com${path}`} />
       </header>
 
-      <section className="qh-grid" aria-label={title}>
-        {cards.map(({ href, title: cardTitle, desc, Icon }) => (
-          <Link key={`${href}:${cardTitle}`} href={href} className="qh-card">
-            <span className="qh-card__icon" aria-hidden="true">
-              <Icon size={22} strokeWidth={1.6} />
-            </span>
-            <strong className="qh-card__title">{cardTitle}</strong>
-            <p className="qh-card__desc">{desc}</p>
-          </Link>
-        ))}
+      <section className="quran-hub-sections" aria-label={title}>
+        <div className="quran-hub-grid">
+          {cards.map(({ href, title: cardTitle, desc, Icon }) => (
+            <Link key={`${href}:${cardTitle}`} href={href} className="quran-hub-card">
+              <div className="quran-hub-card__header qhc-accent--deep">
+                <span className="quran-hub-card__icon" aria-hidden="true">
+                  <Icon size={22} strokeWidth={1.6} />
+                </span>
+              </div>
+              <div className="quran-hub-card__body">
+                <strong className="quran-hub-card__title">{cardTitle}</strong>
+                <p className="quran-hub-card__desc">{desc}</p>
+              </div>
+            </Link>
+          ))}
+        </div>
       </section>
 
       {cards.length === 0 ? (
-        <p className="qh-empty" role="status">لا يوجد محتوى معروض في هذا القسم حالياً.</p>
+        <p className="quran-hub-empty" role="status">لا يوجد محتوى معروض في هذا القسم حالياً.</p>
       ) : null}
     </div>
   );

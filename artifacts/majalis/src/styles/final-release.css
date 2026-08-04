@@ -757,15 +757,17 @@ html.dark .nav-soon-badge {
   .navbar-brand--compact { justify-self: center; min-width: 0; max-width: 100%; gap: .35rem; overflow: hidden; }
   .navbar-brand--compact .navbar-brand__mark { height: 1.7rem; width: auto; max-width: 7rem; object-fit: contain; }
   .navbar-brand--compact .navbar-brand__copy { display: none; }
-  .navbar-ticker-row { width: 100%; box-sizing: border-box; border-block-start: 1px solid var(--color-border, #E8E7E2); overflow: hidden; min-height: 2.15rem; }
-  /* الوضع الليلي يبقى داخل القائمة على الجوال لتوفير المساحة، أما زر البحث
-     فيبقى ظاهرًا دائمًا — نقطة الدخول الثابتة بعد إلغاء السحب للبحث. */
-  .navbar-theme-toggle { display: none; }
-  .navbar-theme-toggle.navbar-search-toggle {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+  .navbar-ticker-row {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    border-block-start: 1px solid var(--color-border, #E8E7E2);
+    overflow: hidden;
+    min-height: 2.15rem;
+    padding-block: 0.15rem;
   }
+  /* الوضع الليلي داخل «المزيد»؛ البحث عبر الصف الكامل فقط */
+  .navbar-theme-toggle { display: none; }
   .navbar-menu-btn__label, .navbar-mobile-login__label { display: none; }
   .hpv4-hero { border-radius: var(--radius-lg); }
   .site-footer--v3 .site-footer-groups { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--ds-space-6); }
@@ -1610,17 +1612,19 @@ body {
   .ds-skeleton { animation: none; }
 }
 
-/* ════════════════════════════════════════════════════════════
-   الهيدر يتمرّر مع الصفحة (2026-08-03) — يتجاوز sticky !important
-   المتفرّق في elite/index دون كسر z-index عند فتح القائمة.
-   ════════════════════════════════════════════════════════════ */
+/* هيدر عمودي + بلا قصّ — يمنع تداخل صفوف الجوال */
 header.navbar-v3,
-.navbar-v3:not(.navbar-v3--menu-open) {
-  position: relative !important;
-  top: auto !important;
-  inset-block-start: auto !important;
+.navbar-v3:not(.navbar-v3--menu-open){
+  position:relative!important;top:auto!important;inset-block-start:auto!important;
+  display:flex!important;flex-direction:column!important;align-items:stretch!important;
+  max-height:none!important;height:auto!important;width:100%!important;max-width:100%!important;
+  box-sizing:border-box!important;overflow-x:clip!important
 }
-.top-section-bar {
-  position: relative !important;
-  top: auto !important;
+.top-section-bar{position:relative!important;top:auto!important}
+@media (max-width:879px){
+  .navbar-v3{min-height:0!important}
+  .navbar-theme-toggle.navbar-search-toggle{display:none!important}
+  .navbar-v3__search-row{width:100%;box-sizing:border-box;padding:.45rem var(--page-gutter,.75rem) .35rem;border-block-start:1px solid var(--color-border)}
+  .navbar-v3__search-btn{width:100%;min-height:44px;display:flex;align-items:center;gap:.55rem;padding:.55rem .9rem;border:1px solid var(--color-border);border-radius:14px;background:var(--color-surface);text-align:start}
+  .navbar-ticker-row .header-ticker{width:100%;min-width:0;border-radius:0;min-height:2.25rem}
 }
