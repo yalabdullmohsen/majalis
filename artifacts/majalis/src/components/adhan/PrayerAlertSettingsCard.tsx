@@ -5,8 +5,9 @@ import {
   patchPrayerAlertPrefs,
   hasAskedNotificationPermission,
   markNotificationPermissionAsked,
-  PRE_ALERT_MINUTES,
+  PRE_ALERT_MINUTE_OPTIONS,
   type PrayerAlertPreferences,
+  type PreAlertMinutes,
 } from "@/lib/prayer-alert-preferences";
 import {
   getNotificationPermissionStatus,
@@ -14,6 +15,10 @@ import {
   type PermissionStatus,
 } from "@/lib/prayer-local-notifications";
 import { areLiveActivitiesSupported } from "@/lib/plugins/prayer-live-activity";
+import {
+  PRAYER_SOUND_PROFILE_OPTIONS,
+  type PrayerSoundProfile,
+} from "@/lib/prayer-notification-sounds";
 
 function MiniToggle({
   checked,
@@ -78,6 +83,9 @@ export function PrayerAlertSettingsCard() {
     setShowExplainer(false);
   };
 
+  const alertsOn = prefs.alertsEnabled;
+  const preMinutes = prefs.preAlertMinutes;
+
   return (
     <div className="ads-card">
       <div className="ads-card__head">
@@ -86,8 +94,7 @@ export function PrayerAlertSettingsCard() {
       </div>
       <div className="ads-card__body">
         <p className="ads-adhan-desc">
-          شريط داخل التطبيق وتنبيه قبل كل صلاة بـ{PRE_ALERT_MINUTES} دقيقة، مع Live Activity
-          في الحالات المدعومة.
+          إشعارات قصيرة قبل الصلاة وعند دخول الوقت، مع نصوص متنوعة وصوت مناسب لشاشة القفل.
         </p>
 
         {showExplainer && (
@@ -96,7 +103,7 @@ export function PrayerAlertSettingsCard() {
             <div>
               <p className="pasc-explainer__title">لماذا نطلب إذن الإشعارات؟</p>
               <p className="pasc-explainer__desc">
-                لتنبيهك قبل كل صلاة بـ{PRE_ALERT_MINUTES} دقيقة وعند دخول وقتها، حتى لو كان
+                لتنبيهك قبل كل صلاة بـ{preMinutes} دقيقة وعند دخول وقتها، حتى لو كان
                 التطبيق مغلقاً. يمكنك تعطيل هذا لاحقاً في أي وقت.
               </p>
               <div className="pasc-explainer__actions">
@@ -135,17 +142,53 @@ export function PrayerAlertSettingsCard() {
 
         <div className="ads-row-sep">
           <div>
+            <div className="ads-global-label">إشعارات الصلاة</div>
+            <div className="ads-global-desc">تفعيل أو إيقاف كل تنبيهات مواقيت الصلاة</div>
+          </div>
+          <MiniToggle
+            checked={prefs.alertsEnabled}
+            onChange={(v) => patch({ alertsEnabled: v })}
+            label="إشعارات الصلاة"
+          />
+        </div>
+
+        <div className={`ads-row-sep${alertsOn ? "" : " is-disabled"}`}>
+          <div>
             <div className="ads-global-label">تنبيه قبل الصلاة</div>
-            <div className="ads-global-desc">شريط وإشعار قبل {PRE_ALERT_MINUTES} دقيقة من كل صلاة</div>
+            <div className="ads-global-desc">شريط وإشعار قبل الموعد</div>
           </div>
           <MiniToggle
             checked={prefs.preAlertEnabled}
             onChange={(v) => patch({ preAlertEnabled: v })}
             label="تنبيه قبل الصلاة"
+            disabled={!alertsOn}
           />
         </div>
 
-        <div className="ads-row-sep">
+        {alertsOn && prefs.preAlertEnabled && (
+          <div className="ads-row-sep">
+            <div>
+              <div className="ads-global-label">مدة التذكير قبل الصلاة</div>
+              <div className="ads-global-desc">متى يصل الإشعار المسبق</div>
+            </div>
+            <select
+              className="ads-gov-select"
+              aria-label="مدة التذكير قبل الصلاة"
+              value={prefs.preAlertMinutes}
+              onChange={(e) =>
+                patch({ preAlertMinutes: Number(e.target.value) as PreAlertMinutes })
+              }
+            >
+              {PRE_ALERT_MINUTE_OPTIONS.map((m) => (
+                <option key={m} value={m}>
+                  {m} دقائق
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
+
+        <div className={`ads-row-sep${alertsOn ? "" : " is-disabled"}`}>
           <div>
             <div className="ads-global-label">تنبيه دخول الوقت</div>
             <div className="ads-global-desc">إشعار فور دخول وقت كل صلاة</div>
@@ -154,8 +197,48 @@ export function PrayerAlertSettingsCard() {
             checked={prefs.enterAlertEnabled}
             onChange={(v) => patch({ enterAlertEnabled: v })}
             label="تنبيه دخول الوقت"
+            disabled={!alertsOn}
           />
         </div>
+
+        <div className={`ads-row-sep${alertsOn ? "" : " is-disabled"}`}>
+          <div>
+            <div className="ads-global-label">تذكير خفيف بعد الصلاة</div>
+            <div className="ads-global-desc">تنبيه لطيف بعد دخول الوقت بقليل</div>
+          </div>
+          <MiniToggle
+            checked={prefs.postReminderEnabled}
+            onChange={(v) => patch({ postReminderEnabled: v })}
+            label="تذكير خفيف بعد الصلاة"
+            disabled={!alertsOn}
+          />
+        </div>
+
+        {alertsOn && (
+          <div className="ads-row-sep">
+            <div>
+              <div className="ads-global-label">صوت الإشعار</div>
+              <div className="ads-global-desc">
+                {PRAYER_SOUND_PROFILE_OPTIONS.find((o) => o.id === prefs.soundProfile)?.hint ??
+                  "صوت النظام حتى تُضاف ملفات مخصصة"}
+              </div>
+            </div>
+            <select
+              className="ads-gov-select"
+              aria-label="صوت إشعار الصلاة"
+              value={prefs.soundProfile}
+              onChange={(e) =>
+                patch({ soundProfile: e.target.value as PrayerSoundProfile })
+              }
+            >
+              {PRAYER_SOUND_PROFILE_OPTIONS.map((o) => (
+                <option key={o.id} value={o.id}>
+                  {o.label}
+                </option>
+              ))}
+            </select>
+          </div>
+        )}
 
         <div className="ads-row-sep">
           <div>

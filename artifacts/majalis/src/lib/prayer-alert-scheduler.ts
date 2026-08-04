@@ -11,12 +11,13 @@ import {
   type PrayerSlot,
   type PrayerTimesPayload,
 } from "./prayer-times";
-import { loadPrayerAlertPrefs, PRE_ALERT_MINUTES, LIVE_ACTIVITY_LINGER_MINUTES } from "./prayer-alert-preferences";
+import { loadPrayerAlertPrefs, LIVE_ACTIVITY_LINGER_MINUTES } from "./prayer-alert-preferences";
 import {
   cancelAllPrayerNativeNotifications,
   schedulePrayerNativeNotifications,
 } from "./prayer-local-notifications";
 import { startPrayerLiveActivity, markPrayerLiveActivityEntered, endPrayerLiveActivity } from "./plugins/prayer-live-activity";
+import type { PrayerSoundProfile } from "./prayer-notification-sounds";
 
 export type PrayerAlertEvent = {
   type: "pre-alert" | "entered";
@@ -54,6 +55,8 @@ export function buildPrayerScheduleSignature(opts: {
   preAlertEnabled: boolean;
   enterAlertEnabled: boolean;
   preAlertMinutes: number;
+  postReminderEnabled?: boolean;
+  soundProfile?: PrayerSoundProfile;
 }): string {
   const minuteBucket = Math.floor(opts.prayerTimeEpochMs / 60_000);
   return [
@@ -62,6 +65,8 @@ export function buildPrayerScheduleSignature(opts: {
     opts.preAlertEnabled ? "1" : "0",
     opts.enterAlertEnabled ? "1" : "0",
     String(opts.preAlertMinutes),
+    opts.postReminderEnabled ? "1" : "0",
+    opts.soundProfile ?? "auto",
   ].join("|");
 }
 
@@ -144,7 +149,10 @@ async function rescheduleAllNativePrayers(
   slots: Array<{ slot: PrayerSlot; epoch: number }>,
   prefs: ReturnType<typeof loadPrayerAlertPrefs>,
 ): Promise<void> {
-  if (!prefs.preAlertEnabled && !prefs.enterAlertEnabled) {
+  const anyAlert =
+    prefs.alertsEnabled &&
+    (prefs.preAlertEnabled || prefs.enterAlertEnabled || prefs.postReminderEnabled);
+  if (!anyAlert) {
     await cancelAllPrayerNativeNotifications();
     return;
   }
@@ -153,9 +161,11 @@ async function rescheduleAllNativePrayers(
       prayerKey: slot.key.toLowerCase(),
       prayerName: KEY_TO_ARABIC[slot.key] ?? slot.name,
       prayerTimeEpochMs: epoch,
-      preAlertEnabled: prefs.preAlertEnabled,
-      enterAlertEnabled: prefs.enterAlertEnabled,
-      preAlertMinutes: PRE_ALERT_MINUTES,
+      preAlertEnabled: prefs.alertsEnabled && prefs.preAlertEnabled,
+      enterAlertEnabled: prefs.alertsEnabled && prefs.enterAlertEnabled,
+      postReminderEnabled: prefs.alertsEnabled && prefs.postReminderEnabled,
+      preAlertMinutes: prefs.preAlertMinutes,
+      soundProfile: prefs.soundProfile,
     });
   }
 }
@@ -173,16 +183,22 @@ export async function startPrayerAlertScheduler(
   if (!slots.length) return;
 
   const prefs = loadPrayerAlertPrefs();
-  const batchSig = !prefs.preAlertEnabled && !prefs.enterAlertEnabled
+  const preMinutes = prefs.preAlertMinutes;
+  const anyAlert =
+    prefs.alertsEnabled &&
+    (prefs.preAlertEnabled || prefs.enterAlertEnabled || prefs.postReminderEnabled);
+  const batchSig = !anyAlert
     ? "disabled"
     : slots
         .map(({ slot, epoch }) =>
           buildPrayerScheduleSignature({
             prayerKey: slot.key,
             prayerTimeEpochMs: epoch,
-            preAlertEnabled: prefs.preAlertEnabled,
-            enterAlertEnabled: prefs.enterAlertEnabled,
-            preAlertMinutes: PRE_ALERT_MINUTES,
+            preAlertEnabled: prefs.alertsEnabled && prefs.preAlertEnabled,
+            enterAlertEnabled: prefs.alertsEnabled && prefs.enterAlertEnabled,
+            preAlertMinutes: preMinutes,
+            postReminderEnabled: prefs.alertsEnabled && prefs.postReminderEnabled,
+            soundProfile: prefs.soundProfile,
           }),
         )
         .join(";");
@@ -199,7 +215,7 @@ export async function startPrayerAlertScheduler(
   const prayerName = KEY_TO_ARABIC[next.key] ?? next.name;
   const prayerKey = next.key.toLowerCase();
 
-  const preAlertDelay = prayerEpoch - Date.now() - PRE_ALERT_MINUTES * 60_000;
+  const preAlertDelay = prayerEpoch - Date.now() - preMinutes * 60_000;
   const enterDelay = prayerEpoch - Date.now();
 
   const fireEvent: PrayerAlertEvent = {
@@ -207,16 +223,17 @@ export async function startPrayerAlertScheduler(
     prayerKey,
     prayerName,
     prayerTimeEpochMs: prayerEpoch,
-    preAlertMinutes: PRE_ALERT_MINUTES,
+    preAlertMinutes: preMinutes,
   };
 
+  const preOn = prefs.alertsEnabled && prefs.preAlertEnabled;
   if (preAlertDelay <= 0 && enterDelay > 0) {
-    // التطبيق فُتح بالفعل داخل نافذة الـ١٥ دقيقة — فعّل فوراً بدل انتظار مؤقّت سالب.
-    if (prefs.preAlertEnabled) dispatchAlert(fireEvent);
+    // التطبيق فُتح بالفعل داخل نافذة التنبيه المسبق — فعّل فوراً بدل انتظار مؤقّت سالب.
+    if (preOn) dispatchAlert(fireEvent);
     void fireLiveActivityStart(next, prayerEpoch, payload.city);
   } else if (preAlertDelay > 0) {
     const t = setTimeout(() => {
-      if (prefs.preAlertEnabled) dispatchAlert(fireEvent);
+      if (preOn) dispatchAlert(fireEvent);
       void fireLiveActivityStart(next, prayerEpoch, payload.city);
     }, preAlertDelay);
     _timers.push(t);

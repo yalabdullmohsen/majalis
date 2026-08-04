@@ -81,11 +81,11 @@ function showBrowserNotification(event: AdhanEvent) {
   if (event.type === "adhan") return;
   if (!("Notification" in window) || Notification.permission !== "granted") return;
   const title = event.type === "advance"
-    ? `تنبيه: ${event.prayerName} بعد ${event.minutesBefore} دقيقة`
-    : `حان وقت ${event.prayerName}`;
+    ? `اقتربت الصلاة`
+    : `حان وقت الصلاة`;
   const body = event.type === "advance"
-    ? `استعد لصلاة ${event.prayerName}`
-    : "الصلاة خير من النوم — حي على الصلاة";
+    ? `باقي ${event.minutesBefore} دقيقة على صلاة ${event.prayerName}`
+    : `حان وقت صلاة ${event.prayerName}`;
 
   try {
     new Notification(title, {
