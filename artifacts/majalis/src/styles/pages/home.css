@@ -69,6 +69,13 @@
   position: relative;
   text-align: center;
 }
+.hpv4-hero__brand-eyebrow {
+  margin: 0 0 0.55rem;
+  color: rgba(250, 248, 242, 0.88);
+  font-size: clamp(0.95rem, 2.6vw, 1.15rem);
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
 .hpv4-hero__greet {
   margin-bottom: 1.1rem;
 }

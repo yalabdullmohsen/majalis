@@ -71,10 +71,10 @@ export class ErrorBoundary extends Component<Props, State> {
 
       return (
         <div role="alert" className="error-boundary-page">
-          <h1 className="error-boundary-page__title">تعذر عرض هذه الصفحة</h1>
+          <h1 className="error-boundary-page__title">تعذّر عرض هذه الصفحة</h1>
           <p className="error-boundary-page__body">
             {chunkError
-              ? "تعذر تحميل ملفات الصفحة بعد تحديث المنصة. حدّث المتصفح أو اضغط إعادة المحاولة."
+              ? "تعذّر تحميل ملفات الصفحة بعد تحديث المنصة. حدّث المتصفح أو اضغط إعادة المحاولة."
               : userFacingBody()}
           </p>
           <p className="error-boundary-page__id">

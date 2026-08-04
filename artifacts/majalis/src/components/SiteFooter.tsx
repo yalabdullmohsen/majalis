@@ -13,7 +13,7 @@ type FooterMenuItem = {
 
 /** القائمة التي كانت أسفل التطبيق: عن المجلس والتواصل… + عروض الرعاية */
 const FOOTER_MENU_ITEMS: FooterMenuItem[] = [
-  { href: "/about", label: "عن المجلس", Icon: Info },
+  { href: "/about", label: "من نحن", Icon: Info },
   { href: "/methodology", label: "منهجية التوثيق", Icon: Scale },
   { href: "/privacy", label: "الخصوصية", Icon: Shield },
   { href: "/terms", label: "الشروط", Icon: Scale },

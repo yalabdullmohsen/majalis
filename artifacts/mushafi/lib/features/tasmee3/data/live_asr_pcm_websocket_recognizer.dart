@@ -185,7 +185,7 @@ class LiveAsrPcmWebSocketRecognizer implements QuranSpeechRecognizer {
 
       if (message.type == LiveAsrMessageType.error) {
         _segmentsController.addError(
-          StateError(message.errorMessage ?? 'خطأ في PCM live ASR'),
+          StateError(message.errorMessage ?? 'تعذر إكمال البث الصوتي المباشر'),
         );
         return;
       }

@@ -124,10 +124,10 @@ class _Tasmee3AsrSettingsScreenState
                     controller: endpointController,
                     textDirection: TextDirection.ltr,
                     decoration: const InputDecoration(
-                      labelText: 'Endpoint الرئيسي',
+                      labelText: 'عنوان خادم التسميع',
                       hintText: 'http://IP:8000/transcribe',
                       border: OutlineInputBorder(),
-                      helperText: 'ASR Endpoint',
+                      helperText: 'اختياري — للمحرك المتقدم فقط',
                     ),
                     onChanged: (value) {
                       controller.updateSettings(
@@ -141,7 +141,7 @@ class _Tasmee3AsrSettingsScreenState
                     textDirection: TextDirection.ltr,
                     obscureText: true,
                     decoration: const InputDecoration(
-                      labelText: 'API Key اختياري',
+                      labelText: 'مفتاح الوصول (اختياري)',
                       border: OutlineInputBorder(),
                     ),
                     onChanged: (value) {
@@ -156,7 +156,7 @@ class _Tasmee3AsrSettingsScreenState
                     value: state.settings.allowServerAudioUpload,
                     title: const Text('السماح بإرسال التسجيل للخادم'),
                     subtitle: const Text(
-                      'إذا كان الخيار مغلقا، سيتم استخدام تعرف الجهاز فقط.',
+                      'إذا كان الخيار مغلقاً، يُستخدم تعرف الجهاز فقط دون إرسال الصوت.',
                     ),
                     onChanged: (value) {
                       controller.updateSettings(
@@ -228,14 +228,14 @@ class _Tasmee3AsrSettingsScreenState
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                     subtitle: const Text(
-                      'التسميع المباشر وبث الصوت الأصلي — للمستخدمين المتقدمين',
+                      'التسميع المباشر والبث الصوتي المباشر — للمستخدمين المتقدمين',
                     ),
                     children: [
                       TextFormField(
                         controller: liveWsEndpointController,
                         textDirection: TextDirection.ltr,
                         decoration: const InputDecoration(
-                          labelText: 'Live WebSocket Endpoint اختياري',
+                          labelText: 'عنوان التسميع المباشر (اختياري)',
                           hintText: 'ws://IP:8000/ws/live',
                           border: OutlineInputBorder(),
                         ),
@@ -275,9 +275,9 @@ class _Tasmee3AsrSettingsScreenState
                       SwitchListTile(
                         contentPadding: EdgeInsets.zero,
                         value: state.settings.enableNativePcmStreaming,
-                        title: const Text('بث الصوت الأصلي للجهاز'),
+                        title: const Text('بث صوتي مباشر (تجريبي)'),
                         subtitle: const Text(
-                          'تجريبي ومتقدم. يعطي بثا صوتيا أفضل إذا كان مدعوما على الجهاز.',
+                          'تجريبي ومتقدم. يعطي بثاً صوتياً أفضل إذا كان مدعوماً على الجهاز.',
                         ),
                         onChanged: (value) {
                           controller.updateSettings(

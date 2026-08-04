@@ -209,7 +209,7 @@ export function MoreBottomSheet({ open, onClose }: Props) {
                 : <Moon size={18} strokeWidth={1.8} aria-hidden="true" />}
               <span>{resolvedTheme === "dark" ? "الوضع النهاري" : "الوضع الليلي"}</span>
             </span>
-            <span aria-hidden="true">{resolvedTheme === "dark" ? "مفعّل ليلي" : "مفعّل نهاري"}</span>
+            <span aria-hidden="true">{resolvedTheme === "dark" ? "الوضع الحالي: ليلي" : "الوضع الحالي: نهاري"}</span>
           </button>
           {SHEET_SECTIONS.map((section) => (
             <div key={section.group} className="bottom-sheet__section">

@@ -214,7 +214,7 @@ class _HeroReadingCard extends StatelessWidget {
           ),
           const SizedBox(height: MushafSpacing.xs),
           const Text(
-            'تجربة قراءة هادئة، مع ربط المصحف بالتسميع والمراجعة.',
+            'تجربة قراءة هادئة للمتابعة والبحث والختمة والمراجعة.',
             textAlign: TextAlign.center,
             style: MushafTextStyles.secondary,
           ),
