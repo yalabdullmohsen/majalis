@@ -34,9 +34,9 @@ import 'widgets/mushaf_ayah_actions_sheet.dart';
 import 'widgets/mushaf_mini_player.dart';
 import 'widgets/mushaf_page_view.dart';
 
-/// Mushafi-branded Quran reader used from the Tasmee3 dashboard.
+/// Mushafi-branded Quran reader (active mushaf).
 ///
-/// Distinct from the app-shell mushaf route under `features/quran`.
+/// Legacy reader lives under `lib/deprecated/legacy_mushaf/` and is not routed.
 class MushafReaderScreen extends ConsumerStatefulWidget {
   final int initialPage;
   final int? initialHighlightedSurah;

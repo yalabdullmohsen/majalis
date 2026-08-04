@@ -5,7 +5,7 @@ import 'package:mushafi/design_system/colors.dart';
 import 'package:mushafi/features/audio/presentation/widgets/mini_player.dart';
 import 'package:mushafi/features/quran/domain/entities/ayah.dart';
 import 'package:mushafi/features/quran/presentation/providers/quran_providers.dart';
-import 'package:mushafi/features/quran/presentation/widgets/ayah_action_sheet.dart';
+import 'package:mushafi/deprecated/legacy_mushaf/ayah_action_sheet.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() {

@@ -24,6 +24,7 @@ class MushafHomeScreen extends ConsumerWidget {
 
     return Tasmee3AppScaffold(
       title: 'المصحف',
+      titleBadge: 'المصحف الجديد',
       body: ListView(
         padding: const EdgeInsets.all(MushafSpacing.lg),
         children: [

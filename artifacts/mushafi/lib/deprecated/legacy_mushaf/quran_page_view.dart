@@ -1,3 +1,5 @@
+// DEPRECATED: Do not use in navigation. Replaced by lib/features/mushaf and lib/features/tasmee3.
+
 import 'package:flutter/material.dart';
 import 'package:mushafi/core/utils/arabic_numbers.dart';
 import 'package:mushafi/design_system/colors.dart';

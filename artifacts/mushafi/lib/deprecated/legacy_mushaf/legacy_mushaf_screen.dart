@@ -1,3 +1,6 @@
+// DEPRECATED: Do not use. Replaced by lib/features/mushaf.
+// Kept isolated under lib/deprecated/ to avoid conflicting with the new mushaf.
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -9,21 +12,22 @@ import 'package:mushafi/features/audio/presentation/widgets/mini_player.dart';
 import 'package:mushafi/features/audio/presentation/providers/audio_providers.dart';
 import 'package:mushafi/features/quran/domain/entities/ayah.dart';
 import 'package:mushafi/features/quran/presentation/providers/quran_providers.dart';
-import 'package:mushafi/features/quran/presentation/widgets/ayah_action_sheet.dart';
-import 'package:mushafi/features/quran/presentation/widgets/quran_page_view.dart';
-import 'package:mushafi/features/quran/presentation/widgets/quran_toolbar.dart';
 import 'package:mushafi/features/bookmarks/data/bookmark_repository.dart';
 
-class MushafScreen extends ConsumerStatefulWidget {
-  const MushafScreen({super.key, this.initialPage});
+import 'ayah_action_sheet.dart';
+import 'quran_page_view.dart';
+import 'quran_toolbar.dart';
+
+class LegacyMushafScreen extends ConsumerStatefulWidget {
+  const LegacyMushafScreen({super.key, this.initialPage});
 
   final int? initialPage;
 
   @override
-  ConsumerState<MushafScreen> createState() => _MushafScreenState();
+  ConsumerState<LegacyMushafScreen> createState() => _LegacyMushafScreenState();
 }
 
-class _MushafScreenState extends ConsumerState<MushafScreen> {
+class _LegacyMushafScreenState extends ConsumerState<LegacyMushafScreen> {
   late final PageController _controller;
   bool _ready = false;
 
