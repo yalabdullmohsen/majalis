@@ -752,13 +752,12 @@ html.dark .nav-soon-badge {
     min-height: 44px;
   }
 
-  /* ثلاثة أعمدة لا عمودان: أبناء الهيدر على الجوال ثلاثة فعليًا
-     (navbar-v3__start ثم HeaderTicker ثم navbar-v3__end). بعمودين كان
-     الابن الثالث ينتقل إلى صف ضمني ثانٍ، فيخرج زر الحساب الدائري أسفل
-     الهيدر (ارتفاعه ثابت) ويغطي شريط التصنيفات تحته. العمود الأوسط
-     minmax(0,1fr) كي ينكمش الشريط بدل أن يدفع الزر خارج الصف. */
   .navbar-v3__inner { grid-template-columns: auto minmax(0, 1fr) auto; }
-  .navbar-v3__end { justify-self: end; }
+  .navbar-v3__end { justify-self: end; flex-wrap: nowrap; }
+  .navbar-brand--compact { justify-self: center; min-width: 0; max-width: 100%; gap: .35rem; overflow: hidden; }
+  .navbar-brand--compact .navbar-brand__mark { height: 1.7rem; width: auto; max-width: 7rem; object-fit: contain; }
+  .navbar-brand--compact .navbar-brand__copy { display: none; }
+  .navbar-ticker-row { width: 100%; box-sizing: border-box; border-block-start: 1px solid var(--color-border, #E8E7E2); overflow: hidden; min-height: 2.15rem; }
   /* الوضع الليلي يبقى داخل القائمة على الجوال لتوفير المساحة، أما زر البحث
      فيبقى ظاهرًا دائمًا — نقطة الدخول الثابتة بعد إلغاء السحب للبحث. */
   .navbar-theme-toggle { display: none; }

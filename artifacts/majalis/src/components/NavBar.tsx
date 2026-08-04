@@ -170,13 +170,22 @@ export default function NavBar() {
             </nav>
           )}
 
-          {/* الشريط المتحرك — يحلّ محل زر البحث في الهيدر (تكليف 2026-07-24).
-              البحث نفسه لم يُحذف: يبقى متاحًا عبر القائمة الجانبية (ابحث ←
-              البحث الشامل) واختصار Ctrl/Cmd+K القائم أصلاً. على الجوال
-              يشغل المساحة الوسطى الفارغة أصلاً؛ على سطح المكتب يحلّ محل
-              مربع البحث المضمّن تحديدًا. */}
-          {/* شريط الأحاديث/النصوص المتحرّك — يُمنع في مسارات الصلاة والمصحف */}
-          {isMobile && !isImmersiveChromePath(location) && <Suspense fallback={null}><HeaderTicker /></Suspense>}
+          {/* جوال: شعار مضغوط في الوسط بدل التيكر داخل الشبكة (كان يسبب تداخلاً) */}
+          {isMobile && (
+            <Link href="/" className="navbar-brand navbar-brand--compact" aria-label="المجلس العلمي — الرئيسية">
+              <img
+                src="/logo-calligraphy.png"
+                alt=""
+                className="navbar-brand__mark"
+                width={120}
+                height={36}
+                decoding="async"
+              />
+              <span className="navbar-brand__copy">
+                <strong>المجلس العلمي</strong>
+              </span>
+            </Link>
+          )}
 
           <div className="navbar-v3__end">
             {/* عداد الصلاة التالية — سطح المكتب فقط؛ يُخفى داخل صفحة المواقيت نفسها */}
@@ -220,6 +229,13 @@ export default function NavBar() {
             )}
           </div>
         </div>
+
+        {/* صف مستقل تحت أزرار الهيدر — يمنع تداخل التيكر مع القائمة/البحث/الحساب */}
+        {isMobile && !isImmersiveChromePath(location) && (
+          <div className="navbar-ticker-row" aria-label="شريط تنبيهات ومقتطفات">
+            <Suspense fallback={null}><HeaderTicker /></Suspense>
+          </div>
+        )}
       </header>
 
       <SideNavDrawer
