@@ -4,18 +4,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:mushafi/core/constants/app_constants.dart';
 import 'package:mushafi/core/theme/app_theme.dart';
-import 'package:mushafi/features/bookmarks/presentation/bookmarks_screen.dart';
-import 'package:mushafi/features/khatmah/presentation/khatmah_dashboard.dart';
+import 'package:mushafi/features/mushaf/presentation/mushaf_bookmarks_screen.dart';
+import 'package:mushafi/features/mushaf/presentation/mushaf_home_screen.dart';
+import 'package:mushafi/features/mushaf/presentation/mushaf_index_screen.dart';
+import 'package:mushafi/features/mushaf/presentation/mushaf_khatmah_screen.dart';
+import 'package:mushafi/features/mushaf/presentation/mushaf_screen.dart';
+import 'package:mushafi/features/mushaf/presentation/mushaf_search_screen.dart';
 import 'package:mushafi/features/quran/presentation/providers/quran_providers.dart';
 import 'package:mushafi/features/quran/presentation/screens/home_shell.dart';
-import 'package:mushafi/features/quran/presentation/screens/juz_index_screen.dart';
-import 'package:mushafi/features/quran/presentation/screens/mushaf_screen.dart';
-import 'package:mushafi/features/quran/presentation/screens/surah_index_screen.dart';
-import 'package:mushafi/features/mushaf/presentation/mushaf_home_screen.dart';
-import 'package:mushafi/features/search/presentation/search_screen.dart';
 import 'package:mushafi/features/settings/presentation/settings_screen.dart';
 import 'package:mushafi/features/tasmee3/presentation/tasmee3_entry_screen.dart';
-import 'package:mushafi/features/tasmee3/presentation/tasmee3_screen.dart';
 
 final _routerProvider = Provider<GoRouter>((ref) {
   return GoRouter(
@@ -30,22 +28,47 @@ final _routerProvider = Provider<GoRouter>((ref) {
         path: '/mushaf',
         builder: (context, state) {
           final page = int.tryParse(state.uri.queryParameters['page'] ?? '');
-          return MushafScreen(initialPage: page);
+          return MushafScreen(initialPage: page ?? 1);
         },
       ),
-      GoRoute(path: '/search', builder: (_, __) => const SearchScreen()),
-      GoRoute(path: '/surahs', builder: (_, __) => const SurahIndexScreen()),
-      GoRoute(path: '/juz', builder: (_, __) => const JuzIndexScreen()),
-      GoRoute(path: '/bookmarks', builder: (_, __) => const BookmarksScreen()),
-      GoRoute(path: '/khatmah', builder: (_, __) => const KhatmahDashboard()),
+      // Legacy paths → new mushaf / tasmee3 only.
+      GoRoute(
+        path: '/search',
+        builder: (_, __) => const MushafSearchScreen(),
+      ),
+      GoRoute(
+        path: '/surahs',
+        builder: (_, __) => const MushafIndexScreen(),
+      ),
+      GoRoute(
+        path: '/juz',
+        redirect: (_, __) => '/mushaf-home',
+      ),
+      GoRoute(
+        path: '/bookmarks',
+        builder: (_, __) => const MushafBookmarksScreen(),
+      ),
+      GoRoute(
+        path: '/khatmah',
+        builder: (_, __) => const MushafKhatmahScreen(),
+      ),
       GoRoute(path: '/settings', builder: (_, __) => const SettingsScreen()),
       GoRoute(
         path: '/tasmee3',
-        builder: (_, __) => const Tasmee3Screen(),
+        builder: (_, __) => const Tasmee3EntryScreen(),
       ),
       GoRoute(
         path: '/tasmee3-dashboard',
-        builder: (_, __) => const Tasmee3EntryScreen(),
+        redirect: (_, __) => '/tasmee3',
+      ),
+      // Old AI/recitation aliases → new tasmee3 only.
+      GoRoute(
+        path: '/ai-recitation',
+        redirect: (_, __) => '/tasmee3',
+      ),
+      GoRoute(
+        path: '/old-mushaf',
+        redirect: (_, __) => '/mushaf-home',
       ),
       GoRoute(
         path: '/tafsir',

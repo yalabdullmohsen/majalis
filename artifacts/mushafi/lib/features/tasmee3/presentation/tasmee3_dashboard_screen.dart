@@ -48,7 +48,28 @@ class Tasmee3DashboardScreen extends ConsumerWidget {
       child: Scaffold(
         backgroundColor: Tasmee3Colors.background,
         appBar: AppBar(
-          title: const Text('لوحة التسميع'),
+          title: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text('لوحة التسميع'),
+              const SizedBox(width: 8),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+                decoration: BoxDecoration(
+                  color: Tasmee3Colors.primary.withValues(alpha: 0.12),
+                  borderRadius: BorderRadius.circular(999),
+                ),
+                child: const Text(
+                  'التسميع الجديد',
+                  style: TextStyle(
+                    color: Tasmee3Colors.primary,
+                    fontSize: 11,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ],
+          ),
           centerTitle: true,
           backgroundColor: Tasmee3Colors.background,
           foregroundColor: Tasmee3Colors.text,

@@ -82,6 +82,8 @@ final tasmee3RuntimeConfigProvider = Provider<Tasmee3RuntimeConfig>((ref) {
 });
 
 /// Legacy compile-time settings from `--dart-define` (kept for backward compat).
+/// DEPRECATED for UI/navigation: Do not wire screens to this. Prefer
+/// [tasmee3UserAsrSettingsProvider]. Replaced by lib/features/tasmee3 user settings.
 final legacyTasmee3AsrSettingsProvider = Provider<Tasmee3AsrSettings>((ref) {
   return Tasmee3AsrSettings.fromEnvironment();
 });

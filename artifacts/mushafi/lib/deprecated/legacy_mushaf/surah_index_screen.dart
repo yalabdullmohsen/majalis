@@ -1,3 +1,5 @@
+// DEPRECATED: Do not use in navigation. Replaced by lib/features/mushaf and lib/features/tasmee3.
+
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
