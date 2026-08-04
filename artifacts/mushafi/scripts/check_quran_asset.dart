@@ -60,8 +60,9 @@ void main() {
 
     if (decodedMetadata.length != 604) {
       stderr.writeln(
-        'Warning: quran_page_metadata.json has ${decodedMetadata.length} pages, expected 604.',
+        'quran_page_metadata.json has ${decodedMetadata.length} pages, expected 604.',
       );
+      exit(1);
     }
 
     for (final item in decodedMetadata) {

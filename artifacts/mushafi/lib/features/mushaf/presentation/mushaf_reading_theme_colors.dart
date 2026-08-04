@@ -37,11 +37,12 @@ class MushafReadingThemeColors {
           markerText: Color(0xFFA77A48),
         );
       case MushafReadingTheme.sepia:
+        // مطابق لورق المصحف على الموقع (#FAF7F2 / #2C2C2E).
         return const MushafReadingThemeColors(
-          scaffold: Color(0xFFFBF7EF),
-          page: Color(0xFFFFFCF3),
-          text: Color(0xFF11100E),
-          secondaryText: Color(0xFF9A8068),
+          scaffold: Color(0xFFFAF7F2),
+          page: Color(0xFFFAF7F2),
+          text: Color(0xFF2C2C2E),
+          secondaryText: Color(0xFF8E8E93),
           border: Color(0xFFE0C5A3),
           highlight: Color(0x2EA77A48),
           markerBorder: Color(0xFFA77A48),

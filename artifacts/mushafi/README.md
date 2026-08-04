@@ -85,7 +85,7 @@ Current store decision remains **NO-GO** until Android AAB/APK builds, device sm
 - وضع ليلي.
 
 ملاحظة:
-لا يتم نسخ تصميم أو أصول تطبيقات أخرى. النص القرآني يأتي من ملف موثق داخل التطبيق. صفحات المصحف تُبنى من `quran_page_metadata.json` (placeholder حالياً حتى يتوفر ملف 604 صفحة موثوق ومرخص).
+لا يتم نسخ تصميم أو أصول تطبيقات أخرى. النص القرآني يأتي من ملف موثق داخل التطبيق. صفحات المصحف تُبنى من `quran_page_metadata.json` المزامَن من فهرس صفحات majalis (604) — راجع `UNIFIED_MUSHAF.md`.
 
 ## Mushaf Interactions
 
