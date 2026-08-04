@@ -1,0 +1,95 @@
+/* IGDS Navigation — bottom bar + mobile top-section hide */
+
+.igds-bottom-nav {
+  display: none;
+}
+
+@media (max-width: 879px) {
+  .igds-bottom-nav {
+    display: flex;
+    position: fixed;
+    inset-inline: 0;
+    bottom: 0;
+    z-index: var(--igds-z-nav, 200);
+    align-items: stretch;
+    justify-content: space-around;
+    gap: 0;
+    width: 100%;
+    min-height: var(--igds-bottom-nav-h);
+    margin: 0;
+    padding-top: 0.15rem;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+    padding-inline: max(0.2rem, env(safe-area-inset-left, 0px)) max(0.2rem, env(safe-area-inset-right, 0px));
+    background: color-mix(in srgb, var(--igds-surface) 94%, transparent);
+    border-block-start: 1px solid var(--igds-border);
+    box-shadow: 0 -6px 20px rgb(14 44 37 / 6%);
+    backdrop-filter: blur(18px) saturate(1.1);
+    -webkit-backdrop-filter: blur(18px) saturate(1.1);
+    box-sizing: border-box;
+  }
+
+  .igds-bottom-nav__tab {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.15rem;
+    min-width: 0;
+    min-height: var(--igds-touch-min);
+    height: var(--igds-bottom-nav-h);
+    padding: 0.15rem 0.1rem;
+    border: 0;
+    border-radius: var(--igds-radius-sm);
+    background: transparent;
+    color: var(--igds-text-muted);
+    font: inherit;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    line-height: 1.1;
+    text-decoration: none;
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .igds-bottom-nav__tab.is-active {
+    color: var(--igds-text-brand);
+    background: color-mix(in srgb, var(--igds-brand) 10%, transparent);
+    font-weight: 800;
+  }
+
+  .igds-bottom-nav__tab:focus-visible {
+    outline: 3px solid var(--igds-focus);
+    outline-offset: 2px;
+  }
+
+  .igds-bottom-nav__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+
+  .igds-bottom-nav__label {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* الجوال: شريط الأقسام العلوي يُخفى لصالح Bottom + المزيد */
+  .top-section-bar {
+    display: none !important;
+  }
+
+  .app-main {
+    padding-block-end: calc(var(--igds-bottom-nav-total) + 0.35rem) !important;
+  }
+}
+
+@media (min-width: 880px) {
+  .igds-bottom-nav {
+    display: none !important;
+  }
+}

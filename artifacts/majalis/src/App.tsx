@@ -922,8 +922,8 @@ function AppShellInner() {
   }, []);
 
   return (
-    <div
-      className="app-shell"
+      <div
+      className="app-shell igds-shell"
       style={{ "--app-dir": dir } as React.CSSProperties}
     >
       <GlobalAppShortcuts onToggleSearch={() => setSearchOpen((v) => !v)} />

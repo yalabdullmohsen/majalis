@@ -144,7 +144,9 @@ console.log("\n=== القوائم بلا أقسام محذوفة وبلا من �
 console.log("\n=== الشريط السفلي والمزيد ===");
 {
   const bottomSrc = readFileSync(resolve(appRoot, "src/components/BottomNavBar.tsx"), "utf-8");
-  assert(bottomSrc.includes('href: "/my-learning"') && bottomSrc.includes('label: "حسابي"'), "حسابي في الشريط السفلي");
+  assert(bottomSrc.includes('href: "/lessons"') && bottomSrc.includes('label: "التعلم"'), "التعلم في الشريط السفلي");
+  assert(bottomSrc.includes("igds-bottom-nav"), "الشريط السفلي يستخدم IGDS");
+  assert(!bottomSrc.includes('label: "حسابي"'), "حسابي لم يعد تبويب Bottom (انتقل للمزيد)");
   assert(!bottomSrc.includes('label: "البحث"'), "البحث ليس تبويبًا سفليًا أساسيًا بعد التنظيف");
   const moreSrc = readFileSync(resolve(appRoot, "src/components/MoreBottomSheet.tsx"), "utf-8");
   assert(moreSrc.includes("MORE_SHEET_ITEMS"), "المزيد يستورد العناصر الموحّدة");

@@ -95,7 +95,7 @@ export const SIDEBAR_NAV_GROUPS: SidebarNavGroup[] = SIDEBAR_NAV_GROUPS_RAW.map(
   items: filterNavItems(group.items),
 })).filter((group) => group.items.length > 0);
 
-/** عناصر قائمة المزيد (ثانوية) — نفس الهوية بلا تكرار الرئيسية/القرآن/الصلاة/حسابي. */
+/** عناصر قائمة المزيد — أقسام علمية + حسابي + إعدادات (التعلم في الشريط السفلي). */
 export const MORE_SHEET_ITEMS: SidebarNavItem[] = filterNavItems([
   SIDEBAR_NAV_GROUPS_RAW[1].items[0],
   SIDEBAR_NAV_GROUPS_RAW[1].items[1],
@@ -103,6 +103,7 @@ export const MORE_SHEET_ITEMS: SidebarNavItem[] = filterNavItems([
   SIDEBAR_NAV_GROUPS_RAW[1].items[3],
   SIDEBAR_NAV_GROUPS_RAW[2].items[0],
   SIDEBAR_NAV_GROUPS_RAW[2].items[1],
+  SIDEBAR_NAV_GROUPS_RAW[3].items[0],
   SIDEBAR_NAV_GROUPS_RAW[3].items[1],
 ]);
 
