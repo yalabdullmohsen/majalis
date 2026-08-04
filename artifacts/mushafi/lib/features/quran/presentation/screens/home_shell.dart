@@ -37,23 +37,6 @@ class HomeShell extends ConsumerWidget {
                 textAlign: TextAlign.center,
                 style: TextStyle(color: colors.secondaryText),
               ),
-              const SizedBox(height: 16),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                decoration: BoxDecoration(
-                  color: const Color(0xFFA77A48).withValues(alpha: 0.12),
-                  borderRadius: BorderRadius.circular(999),
-                  border: Border.all(color: const Color(0xFFE0C5A3)),
-                ),
-                child: const Text(
-                  'تحديث ظاهر: اضغط «المصحف» أدناه',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Color(0xFF765332),
-                    fontWeight: FontWeight.w700,
-                  ),
-                ),
-              ),
               const Spacer(),
               FilledButton.icon(
                 style: FilledButton.styleFrom(
@@ -63,7 +46,31 @@ class HomeShell extends ConsumerWidget {
                 ),
                 onPressed: () => context.go('/mushaf-home'),
                 icon: const Icon(Icons.menu_book_outlined),
-                label: const Text('المصحف'),
+                label: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    const Text('المصحف'),
+                    const SizedBox(width: 8),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.orange.withValues(alpha: 0.12),
+                        borderRadius: BorderRadius.circular(999),
+                      ),
+                      child: const Text(
+                        'تحديث ظاهر',
+                        style: TextStyle(
+                          color: Colors.orange,
+                          fontSize: 12,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(height: 10),
               FilledButton(
