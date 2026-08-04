@@ -110,6 +110,8 @@ console.log("\n=== nav-visibility تنظيف ===");
   assert(resolveMergedPath("/reviewed-cards") === "/my-learning", "reviewed-cards → حسابي");
   assert(Object.keys(MERGED_PATH_REDIRECTS).length >= 10, "جدول التوجيه غير فارغ");
   assert(isComingSoonPath("/kids"), "الأطفال قريبًا");
+  assert(isComingSoonPath("/mushaf"), "المصحف قريبًا مؤقتًا");
+  assert(isComingSoonPath("/mushaf/1"), "مسارات المصحف الفرعية قريبًا");
 
   const homeHrefs = FEATURE_CATS.flatMap((c) => c.items.map((i) => i.href));
   assert(!homeHrefs.includes("/library") && !homeHrefs.includes("/flashcards"), "الكتالوج بلا مكتبة/بطاقات منفصلة");

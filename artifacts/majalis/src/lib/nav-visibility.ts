@@ -6,6 +6,7 @@
 
 export const COMING_SOON_PATHS = new Set<string>([
   "/kids",
+  "/mushaf", // متوقف مؤقتًا — صفحة «قريبًا» بدل القارئ
 ]);
 
 /** عناصر أُزيلت من الاكتشاف العام حسب مراجعة الدمج/الإلغاء. */
@@ -126,8 +127,13 @@ export function resolveMergedPath(href: string): string {
 }
 
 export function isComingSoonPath(href: string): boolean {
-  const clean = href.split("#")[0].split("?")[0] || href;
-  return COMING_SOON_PATHS.has(clean);
+  const clean = (href.split("#")[0].split("?")[0] || href).replace(/\/+$/, "") || "/";
+  if (COMING_SOON_PATHS.has(clean)) return true;
+  // بادئات: /mushaf و /mushaf/page/… إلخ
+  for (const path of COMING_SOON_PATHS) {
+    if (path !== "/" && (clean === path || clean.startsWith(`${path}/`))) return true;
+  }
+  return false;
 }
 
 export function isHiddenFromNav(href: string): boolean {

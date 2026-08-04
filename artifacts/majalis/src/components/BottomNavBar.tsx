@@ -3,6 +3,7 @@ import { Link, useLocation } from "wouter";
 import { BookOpen, Clock, Home, LayoutGrid, User } from "lucide-react";
 import { isNavHrefActive } from "@/lib/nav-active";
 import { isImmersiveChromePath } from "@/lib/immersive-chrome";
+import { isComingSoonPath } from "@/lib/nav-visibility";
 import { MoreBottomSheet } from "./MoreBottomSheet";
 
 type NavTab = {
@@ -33,17 +34,19 @@ export function BottomNavBar() {
       <nav className="bottom-nav bottom-nav--v2" aria-label="التنقل السفلي">
         {NAV_TABS.map(({ href, label, Icon }) => {
           const active = isNavHrefActive(location, href);
+          const soon = isComingSoonPath(href);
           return (
             <Link
               key={href}
               href={href}
-              className={`bottom-nav__tab${active ? " is-active" : ""}`}
+              className={`bottom-nav__tab${active ? " is-active" : ""}${soon ? " is-soon" : ""}`}
               aria-current={active ? "page" : undefined}
+              aria-label={soon ? `${label} — قريبًا` : label}
             >
               <span className="bottom-nav__tab-icon" aria-hidden="true">
                 <Icon size={20} strokeWidth={active ? 2.25 : 1.75} aria-hidden={true} />
               </span>
-              <span className="bottom-nav__tab-label">{label}</span>
+              <span className="bottom-nav__tab-label">{soon ? "قريبًا" : label}</span>
             </Link>
           );
         })}
