@@ -1,0 +1,82 @@
+/**
+ * IGDS Foundation — containers, geometric wash, RTL-friendly base, a11y motion.
+ * يُحمَّل بعد tokens وقبل طبقات المكوّنات.
+ */
+
+.igds-container {
+  width: min(100%, var(--igds-content-max));
+  margin-inline: auto;
+  padding-inline: var(--igds-gutter);
+  box-sizing: border-box;
+}
+
+.igds-container--narrow {
+  width: min(100%, var(--igds-content-narrow));
+}
+
+.igds-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--igds-space-6);
+  min-width: 0;
+}
+
+.igds-cluster {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--igds-space-3);
+  min-width: 0;
+}
+
+.igds-grid-auto {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16rem), 1fr));
+  gap: var(--igds-space-4);
+}
+
+/* زخرفة هندسية خفيفة — خلفية فقط، لا تغطي النص */
+.igds-geo-wash {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+}
+
+.igds-geo-wash::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: var(--igds-geo-opacity);
+  background-image:
+    linear-gradient(30deg, var(--igds-geo-color) 1px, transparent 1px),
+    linear-gradient(150deg, var(--igds-geo-color) 1px, transparent 1px),
+    linear-gradient(90deg, transparent 46%, var(--igds-geo-color) 46%, var(--igds-geo-color) 54%, transparent 54%);
+  background-size: 28px 48px, 28px 48px, 56px 56px;
+  background-position: 0 0, 14px 0, 0 0;
+}
+
+.igds-geo-wash > * {
+  position: relative;
+  z-index: 1;
+}
+
+.igds-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .igds-motion-safe {
+    animation: none !important;
+    transition: none !important;
+  }
+}

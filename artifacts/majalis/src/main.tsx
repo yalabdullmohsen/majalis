@@ -18,11 +18,15 @@ import { prewarmAudioCdns, prewarmTextApis, prewarmSupabaseOrigin } from "./lib/
 // يبقى أول استيراد — كل ملفات CSS اللاحقة تستهلك رموزه، وأنظمة الرموز
 // القديمة الـ15 مُعاد توجيهها إليه داخله كـaliases.
 import "./styles/brand-v4.css";
+import "./styles/igds/tokens.css";
+import "./styles/igds/foundation.css";
 import "./index.css";
 import "./styles/design-system.css";
-import "./styles/patterns.css";
-import "./styles/majalis-v2.css";
-import "./styles/modern-2026.css";
+// patterns / majalis-v2 / modern-2026: أُجّلت عن المسار الحرج لإفساح IGDS
+// (إعادة التصميم — Checkpoint 2). تُحمَّل بعد الإقلاع دون حجب First Paint.
+void import("./styles/patterns.css");
+void import("./styles/majalis-v2.css");
+void import("./styles/modern-2026.css");
 import "./styles/elite-2026.css";
 // Final release layer: one authoritative visual contract loaded after legacy page styles.
 import "./styles/final-release.css";

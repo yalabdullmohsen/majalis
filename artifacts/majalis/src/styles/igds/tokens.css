@@ -1,0 +1,223 @@
+/**
+ * Islamic Geometric Design System (IGDS) — Design Tokens
+ * المصدر البصري الجديد لإعادة تصميم المجلس العلمي.
+ * لا يغيّر مسارات أو بيانات؛ يعرّف رموزًا ويُعيد توجيه الدلالة البصرية.
+ *
+ * قواعد:
+ * - Soft Gold = accent فقط (شارات/تمييز)، ليس خلفية أساسية.
+ * - زخرفة هندسية عبر utilities منفصلة وبشفافية منخفضة.
+ * - RTL عبر logical properties في طبقة foundation/components.
+ */
+
+:root {
+  /* ── Primitives: Emerald ── */
+  --igds-em-50: #f1f7f4;
+  --igds-em-100: #dceee6;
+  --igds-em-200: #b7d9cb;
+  --igds-em-300: #86bba6;
+  --igds-em-400: #549a80;
+  --igds-em-500: #2f7a60;
+  --igds-em-600: #226a56;
+  --igds-em-700: #1a5544;
+  --igds-em-800: #143f35;
+  --igds-em-900: #0e2c25;
+  --igds-em-950: #081a16;
+
+  /* ── Primitives: Sage ── */
+  --igds-sage-100: #e8f0ea;
+  --igds-sage-200: #c9dbcf;
+  --igds-sage-300: #9fbaa8;
+  --igds-sage-400: #6f947c;
+  --igds-sage-500: #4d7359;
+
+  /* ── Primitives: Ivory / Warm Gray / Charcoal Green ── */
+  --igds-ivory-50: #fffcf7;
+  --igds-ivory-100: #faf6ee;
+  --igds-ivory-200: #f0eadc;
+  --igds-ivory-300: #ddd4c2;
+  --igds-warm-200: #e7e2d8;
+  --igds-warm-400: #9a948a;
+  --igds-warm-600: #5c574f;
+  --igds-warm-800: #2e2b27;
+  --igds-charcoal: #12211c;
+  --igds-charcoal-deep: #0b1612;
+
+  /* Soft Gold — accent only */
+  --igds-gold-200: #f0e4c4;
+  --igds-gold-400: #c4a35a;
+  --igds-gold-600: #8a7130;
+
+  /* Status */
+  --igds-ok: #1b6b3a;
+  --igds-ok-bg: #e6f5ec;
+  --igds-warn: #8a5a00;
+  --igds-warn-bg: #fff6e0;
+  --igds-danger: #a32626;
+  --igds-danger-bg: #fdecec;
+
+  /* ── Semantic (light) ── */
+  --igds-bg: var(--igds-ivory-100);
+  --igds-bg-elevated: var(--igds-ivory-50);
+  --igds-surface: #ffffff;
+  --igds-surface-muted: var(--igds-em-50);
+  --igds-surface-inverse: var(--igds-em-800);
+  --igds-text: var(--igds-charcoal);
+  --igds-text-muted: var(--igds-warm-600);
+  --igds-text-on-brand: #faf8f2;
+  --igds-text-brand: var(--igds-em-700);
+  --igds-border: color-mix(in srgb, var(--igds-em-800) 12%, var(--igds-ivory-200));
+  --igds-border-strong: color-mix(in srgb, var(--igds-em-800) 22%, transparent);
+  --igds-brand: var(--igds-em-800);
+  --igds-brand-hover: var(--igds-em-700);
+  --igds-brand-soft: var(--igds-em-100);
+  --igds-accent: var(--igds-gold-400);
+  --igds-accent-soft: var(--igds-gold-200);
+  --igds-focus: color-mix(in srgb, var(--igds-em-600) 55%, white);
+
+  /* Typography */
+  --igds-font-body: "IBM Plex Sans Arabic", system-ui, sans-serif;
+  --igds-font-display: "IBM Plex Sans Arabic", system-ui, sans-serif;
+  --igds-text-xs: 0.75rem;
+  --igds-text-sm: 0.8125rem;
+  --igds-text-md: 0.9375rem;
+  --igds-text-lg: 1.0625rem;
+  --igds-text-xl: 1.25rem;
+  --igds-text-2xl: clamp(1.35rem, 3.5vw, 1.75rem);
+  --igds-text-3xl: clamp(1.6rem, 4.5vw, 2.15rem);
+  --igds-leading-tight: 1.35;
+  --igds-leading-body: 1.7;
+  --igds-leading-relaxed: 1.85;
+
+  /* Spacing (4pt) */
+  --igds-space-1: 0.25rem;
+  --igds-space-2: 0.5rem;
+  --igds-space-3: 0.75rem;
+  --igds-space-4: 1rem;
+  --igds-space-5: 1.25rem;
+  --igds-space-6: 1.5rem;
+  --igds-space-8: 2rem;
+  --igds-space-10: 2.5rem;
+  --igds-space-12: 3rem;
+  --igds-gutter: clamp(1rem, 3vw, 1.5rem);
+  --igds-content-max: 72rem;
+  --igds-content-narrow: 42rem;
+
+  /* Radius — هندسي هادئ، ليس pills مبالغ فيها */
+  --igds-radius-sm: 0.5rem;
+  --igds-radius-md: 0.75rem;
+  --igds-radius-lg: 1rem;
+  --igds-radius-xl: 1.25rem;
+  --igds-radius-full: 9999px;
+
+  /* Shadows — خفيفة */
+  --igds-shadow-sm: 0 1px 2px rgb(14 44 37 / 6%);
+  --igds-shadow-md: 0 6px 18px rgb(14 44 37 / 8%);
+  --igds-shadow-lg: 0 14px 36px rgb(14 44 37 / 10%);
+
+  /* Motion */
+  --igds-dur-fast: 120ms;
+  --igds-dur-med: 220ms;
+  --igds-ease: cubic-bezier(0.22, 1, 0.36, 1);
+
+  /* Z-index */
+  --igds-z-base: 1;
+  --igds-z-sticky: 100;
+  --igds-z-nav: 200;
+  --igds-z-drawer: 300;
+  --igds-z-modal: 400;
+  --igds-z-toast: 500;
+
+  /* Chrome metrics */
+  --igds-header-h: 3.25rem;
+  --igds-bottom-nav-h: 3.5rem;
+  --igds-bottom-nav-total: calc(var(--igds-bottom-nav-h) + env(safe-area-inset-bottom, 0px));
+  --igds-touch-min: 44px;
+
+  /* Geometric ornament */
+  --igds-geo-opacity: 0.055;
+  --igds-geo-color: var(--igds-em-700);
+
+  /* Bridge → legacy semantic aliases (تحوّل بصري تدريجي بلا كسر) */
+  --bg: var(--igds-bg);
+  --surface: var(--igds-surface);
+  --surface-2: var(--igds-surface-muted);
+  --text: var(--igds-text);
+  --text-2: var(--igds-text-muted);
+  --text-brand: var(--igds-text-brand);
+  --text-on-brand: var(--igds-text-on-brand);
+  --border: var(--igds-border);
+  --brand: var(--igds-brand-hover);
+  --brand-deep: var(--igds-brand);
+  --brand-soft: var(--igds-brand-soft);
+  --accent: var(--igds-accent);
+  --color-background: var(--igds-bg);
+  --color-surface: var(--igds-surface);
+  --color-surface-muted: var(--igds-surface-muted);
+  --color-primary: var(--igds-brand);
+  --color-primary-hover: var(--igds-brand-hover);
+  --color-primary-foreground: var(--igds-text-on-brand);
+  --color-accent: var(--igds-accent);
+  --color-text: var(--igds-text);
+  --color-text-muted: var(--igds-text-muted);
+  --color-border: var(--igds-border);
+  --font-body: var(--igds-font-body);
+  --page-gutter: var(--igds-gutter);
+  --page-width: var(--igds-content-max);
+  --radius-sm: var(--igds-radius-sm);
+  --radius-md: var(--igds-radius-md);
+  --radius-lg: var(--igds-radius-lg);
+  --header-h: var(--igds-header-h);
+  --bottom-nav-h: var(--igds-bottom-nav-h);
+  --z-nav: var(--igds-z-nav);
+}
+
+html[data-theme="dark"] {
+  --igds-bg: var(--igds-charcoal-deep);
+  --igds-bg-elevated: #0f1c18;
+  --igds-surface: #12211c;
+  --igds-surface-muted: #163029;
+  --igds-surface-inverse: var(--igds-em-200);
+  --igds-text: #edf2f0;
+  --igds-text-muted: #a7b5ae;
+  --igds-text-on-brand: #081a16;
+  --igds-text-brand: #9fe3c8;
+  --igds-border: rgb(159 227 200 / 14%);
+  --igds-border-strong: rgb(159 227 200 / 24%);
+  --igds-brand: #3dad8a;
+  --igds-brand-hover: #5bc4a0;
+  --igds-brand-soft: #16342b;
+  --igds-accent: #d2b063;
+  --igds-accent-soft: #3a3220;
+  --igds-focus: color-mix(in srgb, #3dad8a 60%, white);
+  --igds-ok-bg: #143528;
+  --igds-warn-bg: #3a3018;
+  --igds-danger-bg: #3a1818;
+  --igds-geo-opacity: 0.08;
+  --igds-geo-color: #9fe3c8;
+  --igds-shadow-sm: 0 1px 2px rgb(0 0 0 / 35%);
+  --igds-shadow-md: 0 8px 22px rgb(0 0 0 / 40%);
+  --igds-shadow-lg: 0 16px 40px rgb(0 0 0 / 45%);
+
+  --bg: var(--igds-bg);
+  --surface: var(--igds-surface);
+  --surface-2: var(--igds-surface-muted);
+  --text: var(--igds-text);
+  --text-2: var(--igds-text-muted);
+  --text-brand: var(--igds-text-brand);
+  --text-on-brand: var(--igds-text-on-brand);
+  --border: var(--igds-border);
+  --brand: var(--igds-brand);
+  --brand-deep: var(--igds-brand-hover);
+  --brand-soft: var(--igds-brand-soft);
+  --accent: var(--igds-accent);
+  --color-background: var(--igds-bg);
+  --color-surface: var(--igds-surface);
+  --color-surface-muted: var(--igds-surface-muted);
+  --color-primary: var(--igds-brand);
+  --color-primary-hover: var(--igds-brand-hover);
+  --color-primary-foreground: var(--igds-text-on-brand);
+  --color-accent: var(--igds-accent);
+  --color-text: var(--igds-text);
+  --color-text-muted: var(--igds-text-muted);
+  --color-border: var(--igds-border);
+}
