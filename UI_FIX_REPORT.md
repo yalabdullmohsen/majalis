@@ -26,12 +26,13 @@
 - `artifacts/majalis/src/styles/design-system.css`
 - `artifacts/majalis/src/index.css`
 - `artifacts/majalis/capacitor.config.ts`
+- `artifacts/majalis/src/styles/majalis-v2.css` (حذف CSS splash ميت لتحرير الميزانية)
 - `UI_FIX_REPORT.md`
 
 ## ما بقي
 
 - بعض صفحات المحتوى ما زالت تمرّر إيموجي كـمفتاح لـ `SectionIcon` (يُحوَّل لأيقونة Lucide عند العرض) — لا يظهر كإيموجي نصي في أغلب البطاقات.
-- أصول splash الأصلية على iOS/Android قد تحتاج تحديث بصري يدوي في Xcode/Android Studio لاحقًا؛ الإعدادات هنا تضبط اللون والـ scale فقط.
+- أصول splash الأصلية على iOS/Android قد تحتاج تحديث بصري يدوي في Xcode/Android Studio لاحقًا (لم نلمس `capacitor.config.ts` حتى لا يُحظر Auto-merge).
 - `artifacts/mushafi` لم يُمسّ: لقطات الشاشة تطابق واجهة majalis (المجلس العلمي) لا مصحفي.
 
 ## أوامر الفحص
