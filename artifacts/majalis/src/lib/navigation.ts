@@ -84,7 +84,6 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
   // عام
   { href: "/search",        label: seoNavLabel("/search", "البحث") },
   { href: "/settings",      label: seoNavLabel("/settings", "الإعدادات") },
-  { href: "/about",         label: seoNavLabel("/about", "من نحن") },
   { href: "/methodology",   label: seoNavLabel("/methodology", "منهجية التوثيق") },
 ];
 

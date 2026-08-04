@@ -216,11 +216,11 @@ export default function IslamicScholarsPage() {
         <Link href="/lessons" className="sch-related-link">
           <BookOpen size={16} /> دروس المشايخ <ChevronLeft size={14} />
         </Link>
-        <Link href="/knowledge-graph" className="sch-related-link">
-          <Star size={16} /> استكشف المعرفة <ChevronLeft size={14} />
+        <Link href="/learning/paths" className="sch-related-link">
+          <Star size={16} /> المسارات العلمية <ChevronLeft size={14} />
         </Link>
-        <Link href="/library" className="sch-related-link">
-          <BookOpen size={16} /> المكتبة الإسلامية <ChevronLeft size={14} />
+        <Link href="/hadith" className="sch-related-link">
+          <BookOpen size={16} /> الحديث والسنة <ChevronLeft size={14} />
         </Link>
       </div>
     </div>

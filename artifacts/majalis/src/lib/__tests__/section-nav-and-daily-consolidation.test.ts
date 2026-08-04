@@ -123,6 +123,8 @@ console.log("\n=== القوائم بلا أقسام محذوفة وبلا من �
   const moreSrc = readFileSync(resolve(appRoot, "src/components/MoreBottomSheet.tsx"), "utf-8");
   const sideSrc = readFileSync(resolve(appRoot, "src/components/SideNavDrawer.tsx"), "utf-8");
   const sidebarNavSrc = readFileSync(resolve(appRoot, "src/lib/sidebar-nav.ts"), "utf-8");
+  const homeSrc = readFileSync(resolve(appRoot, "src/views/HomePage.tsx"), "utf-8");
+  const footerSrc = readFileSync(resolve(appRoot, "src/components/SiteFooter.tsx"), "utf-8");
   for (const src of [moreSrc, sideSrc, sidebarNavSrc]) {
     assert(!src.includes('href: "/library"') && !src.includes('"/library"'), "لا رابط مكتبة في مصدر التنقل");
     assert(!src.includes('"/updates"'), "لا آخر المستجدات");
@@ -131,9 +133,12 @@ console.log("\n=== القوائم بلا أقسام محذوفة وبلا من �
   }
   assert(!sideSrc.includes('"/about"') && !sidebarNavSrc.includes('"/about"'), "من نحن خارج الجانبية");
   assert(!moreSrc.includes('"/about"'), "من نحن خارج المزيد");
+  assert(!homeSrc.includes("HomeAboutSection"), "من نحن خارج الرئيسية");
+  assert(!footerSrc.includes('label: "من نحن"') && !footerSrc.includes('"/about"'), "من نحن خارج التذييل");
   assert(sidebarNavSrc.includes("/quran-knowledge") && sidebarNavSrc.includes("/memorization"), "بوابات الدمج في sidebar-nav");
   assert(sideSrc.includes("SIDEBAR_NAV_GROUPS") && sideSrc.includes("sidebar-panel"), "القائمة تستخدم التصميم الموحّد");
   assert(sideSrc.includes("منصة علمية منظمة"), "رأس القائمة يحمل الوصف المطلوب");
+  assert(HIDDEN_FROM_NAV_PATHS.has("/about"), "about مخفي من الاكتشاف");
 }
 
 console.log("\n=== الشريط السفلي والمزيد ===");
