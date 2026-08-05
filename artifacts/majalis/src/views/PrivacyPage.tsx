@@ -16,7 +16,7 @@ export default function PrivacyPage() {
   }, []);
 
   return (
-    <LegalPageLayout eyebrow="الخصوصية" title="سياسة الخصوصية">
+    <LegalPageLayout eyebrow="الخصوصية" title="سياسة الخصوصية" updatedAt="2026-08-05">
       <LegalSection title="البيانات التي نجمعها">
         <p>
           قد نجمع البيانات التالية عند استخدامك للمنصة:

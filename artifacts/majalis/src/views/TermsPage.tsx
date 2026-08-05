@@ -17,7 +17,7 @@ export default function TermsPage() {
   }, []);
 
   return (
-    <LegalPageLayout eyebrow="الاستخدام" title="شروط الاستخدام">
+    <LegalPageLayout eyebrow="الاستخدام" title="شروط الاستخدام" updatedAt="2026-08-05">
       <LegalSection title="قبول الشروط">
         <p>
           باستخدامك منصة المجلس العلمي فإنك توافق على هذه الشروط كاملةً. إن لم

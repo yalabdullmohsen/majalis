@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
+import { useSearch } from "wouter";
 import { AlertTriangle, Lock, Mail, Plus, Settings2, Users2 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { LegalBackLink, LegalPageLayout, LegalSection } from "@/components/LegalPageLayout";
@@ -30,15 +31,33 @@ const FAQ = [
   },
 ];
 
-const TOPICS: { Icon: LucideIcon; label: string; note: string; subject: string }[] = [
-  { Icon: AlertTriangle, label: "الإبلاغ عن خطأ في المحتوى",     note: "درس / حديث / فتوى / معلومة غير دقيقة", subject: "الإبلاغ عن خطأ" },
-  { Icon: Plus,          label: "اقتراح محتوى أو شيخ جديد",       note: "علماء / كتب / دروس / فوائد", subject: "اقتراح أو شراكة" },
-  { Icon: Settings2,     label: "مشكلة تقنية في المنصة",          note: "خلل في عرض الصفحات أو الأدوات", subject: "ملاحظة تقنية" },
-  { Icon: Lock,          label: "طلب حذف أو تعديل بيانات الحساب", note: "خصوصيتك مكفولة", subject: "استفسار عام" },
-  { Icon: Users2,        label: "شراكات مؤسسية وعلمية",           note: "مؤسسات / هيئات / جامعات", subject: "اقتراح أو شراكة" },
+const TOPICS: { id: string; Icon: LucideIcon; label: string; note: string; subject: string }[] = [
+  { id: "report", Icon: AlertTriangle, label: "الإبلاغ عن خطأ في المحتوى", note: "درس / حديث / فتوى / معلومة غير دقيقة", subject: "الإبلاغ عن خطأ" },
+  { id: "suggest", Icon: Plus, label: "اقتراح محتوى أو شيخ جديد", note: "علماء / كتب / دروس / فوائد", subject: "اقتراح أو شراكة" },
+  { id: "tech", Icon: Settings2, label: "مشكلة تقنية في المنصة", note: "خلل في عرض الصفحات أو الأدوات", subject: "ملاحظة تقنية" },
+  { id: "privacy", Icon: Lock, label: "طلب حذف أو تعديل بيانات الحساب", note: "خصوصيتك مكفولة", subject: "استفسار عام" },
+  { id: "partner", Icon: Users2, label: "شراكات مؤسسية وعلمية", note: "مؤسسات / هيئات / جامعات", subject: "اقتراح أو شراكة" },
 ];
 
+function resolveTopicId(raw: string): string | null {
+  const t = decodeURIComponent(raw).trim().toLowerCase();
+  if (!t) return null;
+  if (t === "rate" || t.includes("تقييم") || t.includes("rate")) return "report";
+  if (t.includes("خطأ") || t.includes("تصحيح") || t.includes("report") || t.includes("content")) return "report";
+  if (t.includes("اقتراح") || t.includes("suggest")) return "suggest";
+  if (t.includes("تقنية") || t.includes("tech")) return "tech";
+  if (t.includes("حذف") || t.includes("خصوصية") || t.includes("privacy")) return "privacy";
+  if (t.includes("شراكة") || t.includes("partner")) return "partner";
+  // سياق صفحة محتوى (من ContentReportLink) → إبلاغ
+  return "report";
+}
+
 export default function ContactPage() {
+  const search = useSearch();
+  const topicParam = useMemo(() => new URLSearchParams(search.startsWith("?") ? search.slice(1) : search).get("topic") || "", [search]);
+  const activeTopicId = useMemo(() => resolveTopicId(topicParam), [topicParam]);
+  const activeTopic = TOPICS.find((t) => t.id === activeTopicId) ?? null;
+
   useEffect(() => {
     applyPageSeo({
       path: "/contact",
@@ -49,21 +68,40 @@ export default function ContactPage() {
     });
   }, []);
 
+  const mailtoSubject = activeTopic
+    ? topicParam && topicParam !== activeTopic.id
+      ? `${activeTopic.subject} — ${topicParam}`
+      : activeTopic.subject
+    : "استفسار عام";
+
   return (
-    <LegalPageLayout eyebrow="التواصل" title="تواصل معنا">
+    <LegalPageLayout eyebrow="التواصل" title="تواصل معنا" updatedAt="2026-08-05">
 
       <LegalSection title="يسعدنا تواصلك">
         <p>
           فريق المجلس العلمي حريصٌ على الرد على جميع الاستفسارات الشرعية والتقنية
           وملاحظات المحتوى. اختر القناة الأنسب أو وصف موضوعك أدناه.
         </p>
+        {activeTopic ? (
+          <p className="contact-topic-banner" role="status">
+            موضوع مقترَح من الرابط: <strong>{activeTopic.label}</strong>
+            {topicParam && topicParam !== activeTopic.id ? (
+              <>
+                {" "}
+                — السياق: <span dir="auto">{topicParam}</span>
+              </>
+            ) : null}
+            . يمكنك المتابعة مباشرة عبر{" "}
+            <a href={mailtoWithSubject(mailtoSubject)}>البريد الإلكتروني</a>.
+          </p>
+        ) : null}
       </LegalSection>
 
       <LegalSection title="قنوات التواصل">
         <div className="contact-channels">
           <div className="contact-channel">
             <p className="contact-channel__label">البريد الإلكتروني الرسمي والتواصل</p>
-            <a href={mailtoWithSubject("استفسار عام")} className="contact-channel__link">
+            <a href={mailtoWithSubject(mailtoSubject)} className="contact-channel__link">
               {CONTACT_EMAIL}
             </a>
             <p className="contact-channel__note">
@@ -81,16 +119,28 @@ export default function ContactPage() {
 
       <LegalSection title="يمكننا مساعدتك في">
         <div className="contact-topics">
-          {TOPICS.map((t) => (
-            <a key={t.label} href={mailtoWithSubject(t.subject)} className="contact-topic contact-topic--link">
-              <span className="contact-topic__icon" aria-hidden="true">{(() => { const I = t.Icon; return <I size={18} strokeWidth={1.8} />; })()}</span>
-              <div>
-                <strong className="contact-topic__label">{t.label}</strong>
-                <p className="contact-topic__note">{t.note}</p>
-              </div>
-              <Mail size={15} strokeWidth={1.8} className="contact-topic__mail-icon" aria-hidden="true" />
-            </a>
-          ))}
+          {TOPICS.map((t) => {
+            const selected = activeTopicId === t.id;
+            const subject =
+              selected && topicParam && topicParam !== t.id
+                ? `${t.subject} — ${topicParam}`
+                : t.subject;
+            return (
+              <a
+                key={t.label}
+                href={mailtoWithSubject(subject)}
+                className={`contact-topic contact-topic--link${selected ? " is-selected" : ""}`}
+                aria-current={selected ? "true" : undefined}
+              >
+                <span className="contact-topic__icon" aria-hidden="true">{(() => { const I = t.Icon; return <I size={18} strokeWidth={1.8} />; })()}</span>
+                <div>
+                  <strong className="contact-topic__label">{t.label}</strong>
+                  <p className="contact-topic__note">{t.note}</p>
+                </div>
+                <Mail size={15} strokeWidth={1.8} className="contact-topic__mail-icon" aria-hidden="true" />
+              </a>
+            );
+          })}
         </div>
       </LegalSection>
 
