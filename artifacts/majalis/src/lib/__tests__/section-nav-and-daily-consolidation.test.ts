@@ -121,11 +121,12 @@ console.log("\n=== nav-visibility تنظيف ===");
     "filterNavItems يسقط المكتبة");
 }
 
-console.log("\n=== القوائم بلا أقسام محذوفة وبلا من نحن في الجانبية/المزيد ===");
+console.log("\n=== القوائم بلا أقسام محذوفة؛ من نحن في المزيد والتذييل ===");
 {
   const moreSrc = readFileSync(resolve(appRoot, "src/components/MoreBottomSheet.tsx"), "utf-8");
   const sideSrc = readFileSync(resolve(appRoot, "src/components/SideNavDrawer.tsx"), "utf-8");
   const sidebarNavSrc = readFileSync(resolve(appRoot, "src/lib/sidebar-nav.ts"), "utf-8");
+  const servicesNavSrc = readFileSync(resolve(appRoot, "src/lib/services-center-nav.ts"), "utf-8");
   const homeSrc = readFileSync(resolve(appRoot, "src/views/HomePage.tsx"), "utf-8");
   const footerSrc = readFileSync(resolve(appRoot, "src/components/SiteFooter.tsx"), "utf-8");
   for (const src of [moreSrc, sideSrc, sidebarNavSrc]) {
@@ -135,13 +136,14 @@ console.log("\n=== القوائم بلا أقسام محذوفة وبلا من �
     assert(!src.includes('"/academic-research"'), "لا بحث علمي");
   }
   assert(!sideSrc.includes('"/about"') && !sidebarNavSrc.includes('"/about"'), "من نحن خارج الجانبية");
-  assert(!moreSrc.includes('"/about"'), "من نحن خارج المزيد");
+  assert(servicesNavSrc.includes('"/about-us"') && servicesNavSrc.includes('"/about"'), "من نحن وحول التطبيق في مركز الخدمات");
+  assert(moreSrc.includes("services-center-nav") || moreSrc.includes("filterServicesCenterGroups"), "المزيد يستورد كتالوج الخدمات");
   assert(!homeSrc.includes("HomeAboutSection"), "من نحن خارج الرئيسية");
-  assert(!footerSrc.includes('label: "من نحن"') && !footerSrc.includes('"/about"'), "من نحن خارج التذييل");
+  assert(footerSrc.includes('"/about-us"') && footerSrc.includes('label: "من نحن"'), "من نحن في التذييل");
   assert(sidebarNavSrc.includes("/quran-knowledge") && sidebarNavSrc.includes("/memorization"), "بوابات الدمج في sidebar-nav");
   assert(sideSrc.includes("SIDEBAR_NAV_GROUPS") && sideSrc.includes("sidebar-panel"), "القائمة تستخدم التصميم الموحّد");
   assert(sideSrc.includes("منصة علمية منظمة"), "رأس القائمة يحمل الوصف المطلوب");
-  assert(HIDDEN_FROM_NAV_PATHS.has("/about"), "about مخفي من الاكتشاف");
+  assert(!HIDDEN_FROM_NAV_PATHS.has("/about"), "about ظاهر في الاكتشاف عبر مركز الخدمات");
 }
 
 console.log("\n=== الشريط السفلي والمزيد ===");
@@ -151,9 +153,10 @@ console.log("\n=== الشريط السفلي والمزيد ===");
   assert(bottomSrc.includes('href: "/mushaf"') && bottomSrc.includes('href: "/prayer-times"'), "قرآن وصلاة في الشريط");
   assert(!bottomSrc.includes('label: "البحث"'), "البحث ليس تبويبًا سفليًا أساسيًا بعد التنظيف");
   const moreSrc = readFileSync(resolve(appRoot, "src/components/MoreBottomSheet.tsx"), "utf-8");
-  assert(moreSrc.includes("SIDEBAR_NAV_GROUPS") || moreSrc.includes("MORE_GROUPS"), "المزيد يستورد المجموعات الموحّدة");
-  assert(moreSrc.includes("مركز الخدمات") || moreSrc.includes("حسابي"), "المزيد مركز خدمات");
-  assert(!moreSrc.includes('"/library"') && !moreSrc.includes('"/about"'), "المزيد بلا مكتبة ولا من نحن");
+  assert(moreSrc.includes("filterServicesCenterGroups") || moreSrc.includes("SERVICES_CENTER"), "المزيد يستورد المجموعات الموحّدة");
+  assert(moreSrc.includes("مركز الخدمات"), "المزيد مركز خدمات");
+  assert(!moreSrc.includes('"/library"'), "المزيد بلا مكتبة");
+  assert(moreSrc.includes("bottom-sheet__search") || moreSrc.includes("ابحث في الخدمات"), "بحث فوري في مركز الخدمات");
 }
 
 console.log(`\n${"─".repeat(40)}`);

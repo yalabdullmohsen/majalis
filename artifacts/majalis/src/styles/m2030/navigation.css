@@ -108,6 +108,8 @@ header.navbar-v3,
   font-size: 0.62rem;
 }
 
+/* 2026-08 — أُزيل clip-path المضلع عن .more-sheet-item (كان يكشف شرائط خضراء
+ * خلف البطاقات). تنسيق مركز الخدمات في more-bottom-sheet.css. */
 .bottom-sheet {
   background: var(--bg) !important;
   border-radius: var(--r-xl) var(--r-xl) 0 0 !important;
@@ -116,21 +118,20 @@ header.navbar-v3,
 }
 
 .bottom-sheet__head {
-  font-family: var(--font-display);
+  font-family: var(--mj-ui, var(--font-display));
   color: var(--text-title) !important;
 }
 
 .bottom-sheet__section-label {
-  color: var(--text-meta) !important;
+  color: var(--text-2, var(--text-meta)) !important;
   font-size: 0.72rem;
-  letter-spacing: 0.03em;
+  letter-spacing: 0;
 }
 
 .more-sheet-item {
   background: var(--surface) !important;
   border: 1px solid var(--border) !important;
   border-radius: var(--r-md) !important;
-  clip-path: polygon(0.45rem 0, calc(100% - 0.45rem) 0, 100% 0.45rem, 100% 100%, 0.45rem 100%, 0 calc(100% - 0.45rem));
   color: var(--text) !important;
   min-height: 4.75rem !important;
 }

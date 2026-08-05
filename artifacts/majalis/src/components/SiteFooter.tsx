@@ -1,7 +1,7 @@
 import { useEffect, useId, useState } from "react";
 import { createPortal } from "react-dom";
 import { Link } from "wouter";
-import { ChevronUp, Handshake, Mail, Scale, Shield, X } from "lucide-react";
+import { BookOpen, ChevronUp, Handshake, Info, Mail, Scale, Shield, Star, X } from "lucide-react";
 import { CONTACT_EMAIL, mailtoWithSubject } from "@/lib/site-config";
 
 type FooterMenuItem = {
@@ -11,12 +11,14 @@ type FooterMenuItem = {
   external?: boolean;
 };
 
-/** تذييل قانوني/تواصل فقط — بلا «من نحن/مكتبة/مستجدات» بعد تنظيف الاكتشاف. */
+/** تذييل: عن المجلس + قانوني/تواصل */
 const FOOTER_MENU_ITEMS: FooterMenuItem[] = [
-  { href: "/methodology", label: "منهجية التوثيق", Icon: Scale },
-  { href: "/privacy", label: "الخصوصية", Icon: Shield },
-  { href: "/terms", label: "الشروط", Icon: Scale },
-  { href: "/contact", label: "التواصل", Icon: Mail },
+  { href: "/about-us", label: "من نحن", Icon: Info },
+  { href: "/about", label: "حول التطبيق", Icon: Star },
+  { href: "/privacy", label: "سياسة الخصوصية", Icon: Shield },
+  { href: "/terms", label: "شروط الاستخدام", Icon: Scale },
+  { href: "/contact", label: "تواصل معنا", Icon: Mail },
+  { href: "/methodology", label: "منهجية التوثيق", Icon: BookOpen },
   {
     href: mailtoWithSubject("عرض رعاية — المجلس العلمي"),
     label: "نقبل بعروض الرعاية",

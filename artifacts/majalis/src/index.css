@@ -7423,7 +7423,8 @@ body.has-assistant-fab .app-main {
   gap: 0.75rem;
 }
 
-/* Item cards */
+/* Item cards — 2026-08: حُذفت قواعد hover/active ذات الألوان الصريحة (#EAF5EE)
+ * لمركز الخدمات؛ المصدر: styles/components/more-bottom-sheet.css */
 .more-sheet-item {
   display: flex;
   flex-direction: column;
@@ -7436,23 +7437,13 @@ body.has-assistant-fab .app-main {
   transition: background 0.2s, border-color 0.2s, transform 0.2s, box-shadow 0.2s;
 }
 
-.more-sheet-item:hover {
-  background: var(--majalis-emerald-soft, #EAF5EE);
-  border-color: rgba(22, 96, 72, 0.25);
-  transform: translateY(-2px);
-}
-
-.more-sheet-item:active {
-  transform: none;
-}
-
 /* Icon container */
 .more-sheet-item__icon {
   width: 2.25rem;
   height: 2.25rem;
   border-radius: 0.625rem;
-  background: var(--majalis-emerald-soft, #EAF5EE);
-  color: var(--majalis-emerald, var(--mj-brand));
+  background: var(--mj-brand-soft, var(--majalis-emerald-soft, #EAF5EE));
+  color: var(--mj-brand, var(--majalis-emerald));
 }
 
 /* ── BottomNavBar refinements ── */

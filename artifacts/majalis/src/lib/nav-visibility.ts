@@ -67,7 +67,6 @@ export const HIDDEN_FROM_NAV_PATHS = new Set<string>([
   "/quran/surah-stories",
   "/quran-memorization",
   "/quran/memorization-plans",
-  "/about", // خارج الاكتشاف؛ الصفحة تبقى للروابط العميقة
 ]);
 
 /**

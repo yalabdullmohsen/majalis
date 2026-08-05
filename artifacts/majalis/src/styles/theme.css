@@ -19,8 +19,8 @@
   --color-accent-soft: #F5EEDF;
 
   --font-face: "Amiri", serif;
-  --font-ui: "Tajawal", system-ui, sans-serif;
-  --font-num: "Alexandria", sans-serif;
+  --font-ui: "Alexandria", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, sans-serif;
+  --font-num: "Alexandria", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, sans-serif;
 
   --radius-mj-sm: 12px;
   --radius-mj-md: 16px;
@@ -74,8 +74,8 @@
   --mj-s6: 24px;
   --mj-s8: 32px;
   --mj-face: "Amiri", serif;
-  --mj-ui: "Tajawal", system-ui, sans-serif;
-  --mj-num: "Alexandria", sans-serif;
+  --mj-ui: "Alexandria", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, sans-serif;
+  --mj-num: "Alexandria", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, sans-serif;
   --mj-fs-display: 40px;
   --mj-fs-h1: 28px;
   --mj-fs-h2: 19px;
@@ -135,6 +135,11 @@ html.dark,
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+html,
+body {
+  font-family: var(--mj-ui);
 }
 
 /* ═══════════ المكوّنات المشتركة mj-* ═══════════ */

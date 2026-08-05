@@ -1545,25 +1545,8 @@ body {
   0% { background-position: 100% 0; }
   100% { background-position: -100% 0; }
 }
-.more-sheet-theme-toggle {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  width: 100%;
-  min-height: 48px;
-  margin-block: 0.25rem 0.75rem;
-  padding: 0.65rem 0.9rem;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md, var(--r-md));
-  font-weight: 700;
-  text-align: start;
-}
-.more-sheet-theme-toggle__meta {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.55rem;
-}
+/* 2026-08: قواعد theme-toggle القديمة كانت تكسر محاذاة RTL داخل شبكة البطاقات.
+ * مركز الخدمات يستخدم .more-sheet-item--theme في more-bottom-sheet.css. */
 .bottom-sheet {
   border-radius: var(--r-2xl, 2rem) var(--r-2xl, 2rem) 0 0;
   box-shadow: var(--shadow-soft);
@@ -1580,7 +1563,7 @@ body {
 .bottom-sheet__close-btn {
   min-width: 44px;
   min-height: 44px;
-  border-radius: var(--radius-md, var(--r-md));
+  border-radius: var(--mj-r-pill, 999px);
 }
 .content-hub-chip,
 .ds-chip {
