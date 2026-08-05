@@ -14,19 +14,18 @@ const config: CapacitorConfig = {
   },
   plugins: {
     SplashScreen: {
-      launchShowDuration: 2000,
-      launchAutoHide: true,
-      backgroundColor: "#ffffff",
-      showSpinner: true,
-      androidSpinnerStyle: "small",
-      iosSpinnerStyle: "small",
+      launchShowDuration: 0,
+      launchAutoHide: false,
+      backgroundColor: "#011608",
+      showSpinner: false,
       androidSplashResourceName: "splash",
-      androidScaleType: "CENTER_CROP",
+      androidScaleType: "CENTER_INSIDE",
       splashImmersive: true,
+      splashFullScreen: true,
     },
     StatusBar: {
       style: "DARK",
-      backgroundColor: "#ffffff",
+      backgroundColor: "#011608",
       overlaysWebView: false,
     },
     Keyboard: {
@@ -58,7 +57,7 @@ const config: CapacitorConfig = {
     // Safe areas are owned by the shared CSS shell via env(safe-area-inset-*).
     // UIKit adjustment here would apply a second inset around the WKWebView.
     contentInset: "never",
-    backgroundColor: "#ffffff",
+    backgroundColor: "#011608",
     scrollEnabled: true,
   },
 };

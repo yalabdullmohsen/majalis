@@ -11,7 +11,57 @@
     <meta name="description" content="تطبيق عربي يجمع الدروس الشرعية والدورات والمحاضرات والقرآن والأذكار والفوائد في مكان واحد لطالب العلم." />
     <meta name="keywords" content="المجلس العلمي, دروس علمية, دروس شرعية, محاضرات إسلامية, دورات شرعية, طلب العلم, القرآن الكريم, السنة النبوية, الفوائد العلمية, الأذكار" />
     <meta name="robots" content="index, follow" />
-    <meta name="theme-color" content="#FFFFFF" />
+    <meta name="theme-color" content="#011608" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#011608" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#011608" />
+    <link rel="stylesheet" href="/brand/splash-boot.css" />
+    <!-- apple-touch-startup-image: تُحقَن عبر assets:splash → brand/apple-splash/links.html -->
+    <link rel="apple-touch-startup-image" media="(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3)" href="/brand/apple-splash/iPhone_15_Pro_Max__iPhone_15_Plus__iPhone_14_Pro_Max.png" />
+    <link rel="apple-touch-startup-image" media="(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3)" href="/brand/apple-splash/iPhone_15_Pro__iPhone_15__iPhone_14_Pro.png" />
+    <link rel="apple-touch-startup-image" media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3)" href="/brand/apple-splash/iPhone_14__iPhone_13_Pro__iPhone_13__iPhone_12_Pro__iPhone_12.png" />
+    <link rel="apple-touch-startup-image" media="(device-width: 428px) and (device-height: 926px) and (-webkit-device-pixel-ratio: 3)" href="/brand/apple-splash/iPhone_13_Pro_Max__iPhone_12_Pro_Max.png" />
+    <link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)" href="/brand/apple-splash/iPhone_X__iPhone_11_Pro.png" />
+    <link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 3)" href="/brand/apple-splash/iPhone_11_Pro_Max__iPhone_XS_Max.png" />
+    <link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 896px) and (-webkit-device-pixel-ratio: 2)" href="/brand/apple-splash/iPhone_11__iPhone_XR.png" />
+    <link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)" href="/brand/apple-splash/iPhone_8__iPhone_7__iPhone_6s.png" />
+    <link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3)" href="/brand/apple-splash/iPhone_8_Plus__iPhone_7_Plus.png" />
+    <link rel="apple-touch-startup-image" media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2)" href="/brand/apple-splash/iPad_Pro_11.png" />
+    <link rel="apple-touch-startup-image" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)" href="/brand/apple-splash/iPad_Pro_12.9.png" />
+    <style id="mj-splash-critical">
+      html:not([data-splash-done]),
+      html:not([data-splash-done]) body {
+        background-color: #011608 !important;
+        margin: 0;
+      }
+      #mj-boot-splash {
+        position: fixed;
+        inset: 0;
+        z-index: 2147483000;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        padding-top: max(env(safe-area-inset-top, 0px), 0px);
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+        padding-inline: env(safe-area-inset-left, 0px) env(safe-area-inset-right, 0px);
+        background: #011608;
+        pointer-events: none;
+      }
+      #mj-boot-splash__logo {
+        width: min(60vw, 40vh);
+        height: auto;
+        max-width: 60%;
+        max-height: 40%;
+        object-fit: contain;
+        margin-top: calc(45vh - min(20vh, 12vw));
+      }
+      #mj-boot-splash.is-hiding {
+        opacity: 0;
+        transition: opacity 200ms ease;
+      }
+      @media (prefers-reduced-motion: reduce) {
+        #mj-boot-splash.is-hiding { transition: none; }
+      }
+    </style>
     <meta name="author" content="المجلس العلمي" />
     <link rel="canonical" href="https://majlisilm.com/" />
     <meta property="og:site_name" content="المجلس العلمي" />
@@ -147,6 +197,9 @@
     </script>
   </head>
   <body>
+    <div id="mj-boot-splash" role="presentation" aria-hidden="true">
+      <img id="mj-boot-splash__logo" src="/brand/splash-logo.png" alt="" width="512" height="512" decoding="async" />
+    </div>
     <script>
       try {
         /* مِشكاة: تطبيق الوضع (ليل/نهار) فوراً لمنع الوميض */
@@ -171,9 +224,12 @@
         document.documentElement.dataset.theme = resolved;
         document.documentElement.classList.toggle("dark", resolved === "dark");
         document.documentElement.style.colorScheme = resolved === "light" ? "light" : "dark";
-        /* theme-color متزامن فورًا قبل الطلاء الأول (يطابق src/lib/theme-preference.ts) */
+        /* theme-color أثناء الإقلاع = لون شاشة الدخول (يمنع وميض الشريط) */
         var _themeMeta = document.querySelector('meta[name="theme-color"]');
-        if (_themeMeta) _themeMeta.setAttribute("content", resolved === "dark" ? "#0D1A14" : "#FFFFFF");
+        if (_themeMeta) _themeMeta.setAttribute("content", "#011608");
+        document.querySelectorAll('meta[name="theme-color"]').forEach(function (m) {
+          m.setAttribute("content", "#011608");
+        });
 
         var storedFont = localStorage.getItem("majalis-font-preference-v2");
         document.documentElement.dataset.font =

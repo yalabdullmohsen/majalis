@@ -1,0 +1,15 @@
+{
+  "backgroundColor": "#011608",
+  "backgroundRgb": {
+    "r": 1,
+    "g": 22,
+    "b": 8
+  },
+  "source": "public/brand/splash-source.png",
+  "logo": "public/brand/splash-logo.png",
+  "logoSize": {
+    "width": 1254,
+    "height": 1254
+  },
+  "generatedAt": "2026-08-05T14:05:19.891Z"
+}
