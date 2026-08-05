@@ -12,14 +12,23 @@ import "@/styles/pages/adhkar.css";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 
 const FEATURED_CATEGORY_SLUGS = new Set([
-  "morning", "evening", "sleep", "wakeup", "home-in", "home-out",
-  "mosque", "wudu", "salah", "after-salah", "travel", "food",
-  "rain", "wind", "distress", "istikharah", "istighfar", "misc",
+  "morning", "evening", "sleep", "salah", "travel",
+  "wakeup", "after-salah", "home-in", "home-out",
+  "mosque", "wudu", "food", "rain", "wind", "distress",
+  "istikharah", "istighfar", "misc",
 ]);
 
-const FEATURED_CATEGORIES = ADHKAR_CATEGORIES.filter((c) =>
-  FEATURED_CATEGORY_SLUGS.has(c.slug),
-);
+/** التصنيفات اليومية في أول الشريط — صباح / مساء / نوم / صلاة / سفر */
+const PRIMARY_CATEGORY_SLUGS = ["morning", "evening", "sleep", "salah", "travel"] as const;
+
+const FEATURED_CATEGORIES = [
+  ...PRIMARY_CATEGORY_SLUGS
+    .map((slug) => ADHKAR_CATEGORIES.find((c) => c.slug === slug))
+    .filter((c): c is (typeof ADHKAR_CATEGORIES)[number] => Boolean(c)),
+  ...ADHKAR_CATEGORIES.filter(
+    (c) => FEATURED_CATEGORY_SLUGS.has(c.slug) && !(PRIMARY_CATEGORY_SLUGS as readonly string[]).includes(c.slug),
+  ),
+];
 
 function toAr(n: number): string {
   return n.toLocaleString("ar-EG", { useGrouping: false });

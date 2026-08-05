@@ -54,12 +54,14 @@ const KIND_META: Record<string, { label: string; Icon: LucideIcon; color: string
 const FILTER_CHIPS: { key: string; label: string }[] = [
   { key: "all",     label: "الكل" },
   { key: "lesson",  label: "دروس" },
+  { key: "quran",   label: "قرآن" },
   { key: "library", label: "كتب" },
-  { key: "ruling",  label: "أحكام" },
+  { key: "sheikh",  label: "علماء" },
   { key: "hadith",  label: "أحاديث" },
+  { key: "adhkar",  label: "أذكار" },
   { key: "qa",      label: "أسئلة" },
   { key: "fawaid",  label: "فوائد" },
-  { key: "miracle", label: "إعجاز" },
+  { key: "ruling",  label: "أحكام" },
   { key: "course",  label: "دورات" },
 ];
 

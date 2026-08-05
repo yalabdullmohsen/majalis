@@ -60,10 +60,25 @@ export const SERVICES_CENTER_GROUPS: ServicesCenterGroup[] = [
     title: "الأكثر استخداماً",
     layout: "quick",
     items: [
+      { id: "search", label: "البحث", keywords: ["بحث"], Icon: Search, action: { kind: "search" } },
       { id: "mushaf", label: "المصحف", keywords: ["قرآن", "قراءة"], Icon: BookOpen, action: { kind: "link", href: "/mushaf" } },
       { id: "adhkar", label: "الأذكار", keywords: ["دعاء", "أذكار"], Icon: HandHeart, action: { kind: "link", href: "/adhkar" } },
-      { id: "prayer", label: "مواقيت الصلاة", keywords: ["صلاة", "أذان"], Icon: Clock, action: { kind: "link", href: "/prayer-times" } },
-      { id: "memorize", label: "بطاقات الحفظ", keywords: ["حفظ", "مراجعة"], Icon: Brain, action: { kind: "link", href: "/memorize" } },
+      { id: "quiz-quick", label: "الاختبار", keywords: ["مسابقة", "اختبار"], Icon: Star, action: { kind: "link", href: "/quiz" } },
+    ],
+  },
+  {
+    id: "secondary",
+    title: "أقسام أساسية",
+    layout: "list",
+    items: [
+      { id: "library", label: "المكتبة", keywords: ["مكتبة", "كتب"], Icon: Library, action: { kind: "link", href: "/scholars" } },
+      { id: "scholars", label: "العلماء", keywords: ["علماء", "تراجم"], Icon: Landmark, action: { kind: "link", href: "/scholars" } },
+      { id: "fiqh-sec", label: "الفقه", keywords: ["فقه", "أحكام"], Icon: Scale, action: { kind: "link", href: "/fiqh" } },
+      { id: "hadith-sec", label: "الحديث", keywords: ["حديث", "سنة"], Icon: ScrollText, action: { kind: "link", href: "/hadith" } },
+      { id: "adhkar-sec", label: "الأذكار", keywords: ["أذكار", "دعاء"], Icon: HandHeart, action: { kind: "link", href: "/adhkar" } },
+      { id: "quiz-sec", label: "الاختبار", keywords: ["اختبار", "مسابقة"], Icon: Star, action: { kind: "link", href: "/quiz" } },
+      { id: "settings-sec", label: "الإعدادات", keywords: ["إعدادات"], Icon: Settings, action: { kind: "link", href: "/settings" } },
+      { id: "about-sec", label: "عن التطبيق", keywords: ["حول", "عن"], Icon: Info, action: { kind: "link", href: "/about" } },
     ],
   },
   {
@@ -97,6 +112,8 @@ export const SERVICES_CENTER_GROUPS: ServicesCenterGroup[] = [
     title: "أدوات",
     layout: "list",
     items: [
+      { id: "prayer-tools", label: "مواقيت الصلاة", keywords: ["صلاة", "أذان"], Icon: Clock, action: { kind: "link", href: "/prayer-times" } },
+      { id: "memorize", label: "بطاقات الحفظ", keywords: ["حفظ", "مراجعة"], Icon: Brain, action: { kind: "link", href: "/memorize" } },
       { id: "search", label: "البحث", keywords: ["بحث"], Icon: Search, action: { kind: "search" } },
       { id: "favorites", label: "المحفوظات والمفضلة", keywords: ["مفضلة", "حفظ"], Icon: Heart, action: { kind: "link", href: "/my-citations" } },
       { id: "progress", label: "متابعة التقدّم", keywords: ["تقدم", "إحصاء"], Icon: TrendingUp, action: { kind: "link", href: "/stats" } },

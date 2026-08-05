@@ -205,10 +205,10 @@ export default function PrayerTimesPage() {
             type="button"
             className="pts-back"
             onClick={handleBack}
-            aria-label="رجوع"
+            aria-label="خروج"
           >
             <ArrowRight size={18} strokeWidth={2} aria-hidden="true" />
-            <span>رجوع</span>
+            <span>خروج</span>
           </button>
         </header>
         <h1 className="pts-title">الصلاة</h1>
@@ -225,10 +225,10 @@ export default function PrayerTimesPage() {
             type="button"
             className="pts-back"
             onClick={handleBack}
-            aria-label="رجوع"
+            aria-label="خروج"
           >
             <ArrowRight size={18} strokeWidth={2} aria-hidden="true" />
-            <span>رجوع</span>
+            <span>خروج</span>
           </button>
         </header>
         <h1 className="pts-title">الصلاة</h1>
@@ -284,10 +284,10 @@ export default function PrayerTimesPage() {
             type="button"
             className="pts-back"
             onClick={handleBack}
-            aria-label="رجوع إلى الصفحة السابقة"
+            aria-label="خروج من صفحة الصلاة"
           >
             <ArrowRight size={18} strokeWidth={2} aria-hidden="true" />
-            <span>رجوع</span>
+            <span>خروج</span>
           </button>
           <button
             type="button"
