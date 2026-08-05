@@ -11,9 +11,20 @@ import {
   DEFAULT_ALERT_SOUND,
   ensureNotificationChannels,
 } from "@/lib/notifications/channels";
+import {
+  pickPrayerNotificationCopy,
+  preAlertKindForMinutes,
+} from "@/lib/prayer-notification-copy";
+import {
+  resolvePrayerNotificationSound,
+  soundRoleForNotifKind,
+  type PrayerSoundProfile,
+} from "@/lib/prayer-notification-sounds";
+import { POST_REMINDER_MINUTES } from "@/lib/prayer-alert-preferences";
 
 const PRE_ALERT_ID_BASE = 9100; // نطاق ثابت لمعرّفات إشعارات "قبل الصلاة"
 const ENTER_ID_BASE = 9200; // نطاق ثابت لمعرّفات إشعارات "دخول الوقت"
+const POST_ID_BASE = 9400; // نطاق ثابت لمعرّفات التذكير الخفيف بعد الدخول
 
 const PRAYER_ORDER = ["fajr", "dhuhr", "asr", "maghrib", "isha"] as const;
 
@@ -61,14 +72,38 @@ export async function requestNotificationPermission(): Promise<boolean> {
   }
 }
 
-/** جدولة إشعار "قبل ١٥ دقيقة" + إشعار "دخول الوقت" لصلاة واحدة، عبر النظام الأصلي مباشرة. */
+type NativeNotif = {
+  id: number;
+  title: string;
+  body: string;
+  schedule: { at: Date; allowWhileIdle: boolean };
+  sound: string;
+  channelId: string;
+  interruptionLevel: "timeSensitive";
+  extra: { url: string; kind: string; prayerKey: string };
+};
+
+function safeSound(
+  role: "quiet" | "clear" | "soft",
+  profile: PrayerSoundProfile,
+): string {
+  try {
+    return resolvePrayerNotificationSound(role, profile) || DEFAULT_ALERT_SOUND;
+  } catch {
+    return DEFAULT_ALERT_SOUND;
+  }
+}
+
+/** جدولة إشعار قبل الصلاة + دخول الوقت + تذكير خفيف اختياري، عبر النظام الأصلي مباشرة. */
 export async function schedulePrayerNativeNotifications(opts: {
   prayerKey: string;
   prayerName: string;
   prayerTimeEpochMs: number;
   preAlertEnabled: boolean;
   enterAlertEnabled: boolean;
+  postReminderEnabled?: boolean;
   preAlertMinutes: number;
+  soundProfile?: PrayerSoundProfile;
 }): Promise<void> {
   if (!isNative) return; // على الويب: adhan-scheduler.ts يتكفّل بالتنبيهات
   try {
@@ -83,24 +118,22 @@ export async function schedulePrayerNativeNotifications(opts: {
     // ألغِ أي جدولة سابقة لنفس الصلاة قبل إعادة الجدولة (لا تكرار).
     await cancelPrayerNativeNotifications(opts.prayerKey);
 
-    const notifications: Array<{
-      id: number;
-      title: string;
-      body: string;
-      schedule: { at: Date; allowWhileIdle: boolean };
-      sound: string;
-      channelId: string;
-      interruptionLevel: "timeSensitive";
-      extra: { url: string; kind: string; prayerKey: string };
-    }> = [];
+    const profile: PrayerSoundProfile = opts.soundProfile ?? "auto";
+    const notifications: NativeNotif[] = [];
     const preAlertEpoch = opts.prayerTimeEpochMs - opts.preAlertMinutes * 60_000;
+
     if (opts.preAlertEnabled && preAlertEpoch > Date.now()) {
+      const preCopy = pickPrayerNotificationCopy(
+        preAlertKindForMinutes(opts.preAlertMinutes),
+        opts.prayerName,
+        opts.preAlertMinutes,
+      );
       notifications.push({
         id: idFor(PRE_ALERT_ID_BASE, opts.prayerKey),
-        title: "اقتربت الصلاة",
-        body: `اقتربت صلاة ${opts.prayerName} — متبقي ${opts.preAlertMinutes} دقيقة`,
+        title: preCopy.title,
+        body: preCopy.body,
         schedule: { at: new Date(preAlertEpoch), allowWhileIdle: true },
-        sound: DEFAULT_ALERT_SOUND,
+        sound: safeSound(soundRoleForNotifKind("pre"), profile),
         channelId: CHANNEL_PRAYER,
         interruptionLevel: "timeSensitive",
         extra: {
@@ -110,13 +143,15 @@ export async function schedulePrayerNativeNotifications(opts: {
         },
       });
     }
+
     if (opts.enterAlertEnabled && opts.prayerTimeEpochMs > Date.now()) {
+      const enterCopy = pickPrayerNotificationCopy("enter", opts.prayerName);
       notifications.push({
         id: idFor(ENTER_ID_BASE, opts.prayerKey),
-        title: "حان وقت الصلاة",
-        body: `حان الآن وقت صلاة ${opts.prayerName}`,
+        title: enterCopy.title,
+        body: enterCopy.body,
         schedule: { at: new Date(opts.prayerTimeEpochMs), allowWhileIdle: true },
-        sound: DEFAULT_ALERT_SOUND,
+        sound: safeSound(soundRoleForNotifKind("enter"), profile),
         channelId: CHANNEL_PRAYER,
         interruptionLevel: "timeSensitive",
         extra: {
@@ -126,6 +161,26 @@ export async function schedulePrayerNativeNotifications(opts: {
         },
       });
     }
+
+    const postEpoch = opts.prayerTimeEpochMs + POST_REMINDER_MINUTES * 60_000;
+    if (opts.postReminderEnabled && postEpoch > Date.now()) {
+      const postCopy = pickPrayerNotificationCopy("post-soft", opts.prayerName);
+      notifications.push({
+        id: idFor(POST_ID_BASE, opts.prayerKey),
+        title: postCopy.title,
+        body: postCopy.body,
+        schedule: { at: new Date(postEpoch), allowWhileIdle: true },
+        sound: safeSound(soundRoleForNotifKind("post"), profile),
+        channelId: CHANNEL_PRAYER,
+        interruptionLevel: "timeSensitive",
+        extra: {
+          url: "/prayer-times",
+          kind: "prayer-post",
+          prayerKey: opts.prayerKey,
+        },
+      });
+    }
+
     if (notifications.length > 0) {
       await LocalNotifications.schedule({ notifications });
       console.info(
@@ -147,6 +202,7 @@ export async function cancelPrayerNativeNotifications(prayerKey: string): Promis
       notifications: [
         { id: idFor(PRE_ALERT_ID_BASE, prayerKey) },
         { id: idFor(ENTER_ID_BASE, prayerKey) },
+        { id: idFor(POST_ID_BASE, prayerKey) },
       ],
     });
   } catch { /* تجاهل */ }
@@ -159,6 +215,7 @@ export async function cancelAllPrayerNativeNotifications(): Promise<void> {
     const ids = PRAYER_ORDER.flatMap((key) => [
       { id: idFor(PRE_ALERT_ID_BASE, key) },
       { id: idFor(ENTER_ID_BASE, key) },
+      { id: idFor(POST_ID_BASE, key) },
     ]);
     await LocalNotifications.cancel({ notifications: ids });
   } catch { /* تجاهل */ }

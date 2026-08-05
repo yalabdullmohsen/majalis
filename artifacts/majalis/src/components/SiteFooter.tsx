@@ -1,19 +1,18 @@
 import { useEffect, useId, useState } from "react";
 import { createPortal } from "react-dom";
 import { Link } from "wouter";
-import { ChevronUp, Handshake, Info, Mail, Scale, Shield, X } from "lucide-react";
+import { ChevronUp, Handshake, Mail, Scale, Shield, X } from "lucide-react";
 import { CONTACT_EMAIL, mailtoWithSubject } from "@/lib/site-config";
 
 type FooterMenuItem = {
   href: string;
   label: string;
-  Icon: typeof Info;
+  Icon: typeof Mail;
   external?: boolean;
 };
 
-/** القائمة التي كانت أسفل التطبيق: عن المجلس والتواصل… + عروض الرعاية */
+/** تذييل قانوني/تواصل فقط — بلا «من نحن/مكتبة/مستجدات» بعد تنظيف الاكتشاف. */
 const FOOTER_MENU_ITEMS: FooterMenuItem[] = [
-  { href: "/about", label: "عن المجلس", Icon: Info },
   { href: "/methodology", label: "منهجية التوثيق", Icon: Scale },
   { href: "/privacy", label: "الخصوصية", Icon: Shield },
   { href: "/terms", label: "الشروط", Icon: Scale },

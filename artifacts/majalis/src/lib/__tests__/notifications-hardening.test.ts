@@ -104,9 +104,11 @@ console.log("  ✓ channel + test trigger constants");
   );
 
   const prayer = read("src/lib/prayer-local-notifications.ts");
-  assert.match(prayer, /sound:\s*DEFAULT_ALERT_SOUND/, "prayer notifications set sound");
+  assert.match(prayer, /resolvePrayerNotificationSound|safeSound/, "prayer notifications resolve sound");
+  assert.match(prayer, /pickPrayerNotificationCopy/, "prayer notifications use varied copy");
   assert.match(prayer, /channelId:\s*CHANNEL_PRAYER/, "prayer notifications set channel");
   assert.match(prayer, /allowWhileIdle:\s*true/, "prayer allowWhileIdle");
+  assert.doesNotMatch(prayer, /— متبقي/, "no em-dash after prayer name in schedule body");
 
   const quran = read("src/lib/quran-daily-reminder.ts");
   assert.match(quran, /ensureQuranDailyReminderScheduled/, "ensure helper exported");

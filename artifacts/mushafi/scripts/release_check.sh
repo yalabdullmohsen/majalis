@@ -9,6 +9,12 @@ export PATH="${HOME}/development/flutter/bin:${PATH}"
 echo "== Quran asset check =="
 dart run scripts/check_quran_asset.dart
 
+MONOREPO_ROOT="$(cd "$ROOT/../.." && pwd)"
+if [ -f "$MONOREPO_ROOT/scripts/sync-mushaf-page-metadata.mjs" ]; then
+  echo "== Mushaf page metadata sync (vs majalis) =="
+  node "$MONOREPO_ROOT/scripts/sync-mushaf-page-metadata.mjs" --check
+fi
+
 echo "== Flutter pub get =="
 flutter pub get
 

@@ -1,0 +1,5 @@
+/* تيكّر المقتطفات — يُحمَّل مع HeaderTicker (خارج المسار الحرج) */
+.header-ticker__label{display:inline-flex;align-items:center;padding:.12rem .45rem;border-radius:999px;background:var(--color-primary-soft,#e8f0ec);color:var(--color-primary,#12362a);font-size:.72rem;font-weight:800;line-height:1.2}
+.header-ticker__warn{display:inline-flex;align-items:center;padding:.1rem .4rem;border-radius:999px;background:var(--color-warning-bg,#fff0f0);color:var(--color-warning-text,#a94444);font-size:.68rem;font-weight:700;flex-shrink:0}
+.header-ticker--static .header-ticker__item{white-space:normal;flex-wrap:wrap;max-width:100%;overflow-wrap:anywhere}
+.header-ticker--static .header-ticker__text{white-space:normal}

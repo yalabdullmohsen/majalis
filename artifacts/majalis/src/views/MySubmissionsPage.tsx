@@ -80,10 +80,10 @@ function SubmissionRow({ sub }: { sub: UserSubmission }) {
           </div>
         )}
 
-        {/* Approved adhan notice */}
-        {sub.status === "approved" && sub.type === "adhan" && (
+        {/* Approved adhan notice — ميزة الرفع ملغاة */}
+        {sub.type === "adhan" && (
           <div className="msr-card__notice">
-            <PartyPopper size={14} className="inline ms-1" />تهانينا! تسجيلك قُبِل وسيُضاف قريباً إلى مكتبة المؤذنين.
+            ميزة رفع الأذان أُلغيت نهائيًا. هذا سجل قديم للعرض فقط.
           </div>
         )}
 
@@ -94,8 +94,8 @@ function SubmissionRow({ sub }: { sub: UserSubmission }) {
           </div>
         )}
 
-        {/* Rejected، encourage resubmit */}
-        {sub.status === "rejected" && (
+        {/* Rejected، encourage resubmit (دروس فقط) */}
+        {sub.status === "rejected" && sub.type === "lesson" && (
           <div className="msr-card__resubmit">
             <Link href="/upload">
               <span className="msr-card__resubmit-link">إعادة الإرسال بعد التعديل ←</span>
@@ -219,7 +219,7 @@ export default function MySubmissionsPage() {
           <div className="msp-empty-state__icon" aria-hidden="true"><FileText size={40} strokeWidth={1.3} /></div>
           <p className="msp-empty-state__msg">لا توجد مساهمات مرتبطة بهذا البريد.</p>
           <Link href="/upload">
-            <button type="button" className="msp-cta-btn">ارفع أذاناً أو درساً</button>
+            <button type="button" className="msp-cta-btn">ارفع درساً</button>
           </Link>
         </div>
       )}
@@ -237,7 +237,7 @@ export default function MySubmissionsPage() {
           <div className="msp-cta__text">أو ارفع محتوىً جديداً:</div>
           <Link href="/upload">
             <button type="button" className="msp-cta-btn msp-cta-btn--gradient">
-              <Upload size={15} strokeWidth={2} aria-hidden="true" /> رفع أذان أو درس
+              <Upload size={15} strokeWidth={2} aria-hidden="true" /> رفع درس علمي
             </button>
           </Link>
         </div>

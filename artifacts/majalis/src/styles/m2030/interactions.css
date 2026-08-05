@@ -1,0 +1,283 @@
+/**
+ * Majlisilm 2030 — عناصر الاختيار والتفاعل الموحّدة
+ * أقسام · خيارات · فلاتر · تبويبات · إعدادات · Chips · Toggle
+ */
+
+/* ── عناوين الأقسام ── */
+.ds-section__title,
+.ds-page-header h1,
+.page-header h1,
+.m2030-band__title,
+.settings-page h2,
+.legal-section h2 {
+  color: var(--text-title) !important;
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.ds-section__desc,
+.m2030-band__sub,
+.settings-note,
+.page-header p,
+.legal-section p {
+  color: var(--text-2) !important;
+}
+
+/* ── بطاقات قسم / خيار ── */
+.m2030-option,
+.settings-choice,
+.more-sheet-item,
+.hp-explore-item,
+.kuwait-tab,
+.lessons-tab,
+[role="tab"],
+.filter-chip,
+.chip {
+  transition:
+    background-color var(--dur-fast) var(--ease),
+    border-color var(--dur-fast) var(--ease),
+    color var(--dur-fast) var(--ease),
+    box-shadow var(--dur-fast) var(--ease);
+}
+
+.settings-choice,
+.m2030-option {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-height: 2.85rem;
+  padding: 0.7rem 0.9rem;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  cursor: pointer;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.settings-choice:hover,
+.m2030-option:hover {
+  border-color: var(--border-brand);
+  background: var(--surface-2);
+}
+
+.settings-choice.is-active,
+.m2030-option.is-active,
+.m2030-option[aria-selected="true"] {
+  background: var(--brand-soft);
+  border-color: color-mix(in srgb, var(--brand) 45%, var(--border));
+  color: var(--text-brand-deep);
+  box-shadow: inset -3px 0 0 var(--brand);
+}
+
+.settings-choice span {
+  color: inherit !important;
+}
+
+.settings-option-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(7.5rem, 1fr));
+  gap: 0.55rem;
+}
+
+/* ── حقول / Select ── */
+.settings-field,
+.settings-field select,
+.settings-field input,
+.ds-input,
+select,
+input[type="text"],
+input[type="search"],
+textarea {
+  color: var(--text);
+  background: var(--surface);
+  border-color: var(--border-strong);
+  border-radius: var(--r-sm);
+}
+
+.settings-field {
+  display: grid;
+  gap: 0.35rem;
+  margin-block: 0.65rem;
+  color: var(--text);
+  font-weight: 600;
+  font-size: var(--fs-sm);
+}
+
+.settings-field select,
+.settings-field input {
+  min-height: 2.75rem;
+  padding: 0.55rem 0.75rem;
+  font-weight: 500;
+  font-size: var(--fs-base);
+  border: 1px solid var(--border-strong);
+  width: 100%;
+}
+
+.settings-field select:focus,
+.settings-field input:focus,
+.ds-input:focus {
+  outline: none;
+  border-color: var(--brand);
+  box-shadow: var(--focus-ring);
+}
+
+/* ── Toggle ── */
+.settings-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  min-height: 3rem;
+  padding: 0.65rem 0.85rem;
+  margin-block: 0.4rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  color: var(--text);
+  font-weight: 600;
+}
+
+.settings-toggle-row input[type="checkbox"] {
+  width: 2.75rem;
+  height: 1.45rem;
+  accent-color: var(--brand);
+  cursor: pointer;
+}
+
+/* ── تبويبات / فلاتر / Chips ── */
+.kuwait-tab,
+.lessons-tab,
+[class*="filter"] button,
+.filter-chip,
+.chip,
+.segmented-control button {
+  min-height: 2.5rem;
+  padding: 0.45rem 0.85rem;
+  border-radius: var(--r-sm) !important;
+  border: 1px solid var(--border) !important;
+  background: var(--surface) !important;
+  color: var(--text-2) !important;
+  font-weight: 600;
+}
+
+.kuwait-tab.is-active,
+.kuwait-tab[aria-selected="true"],
+.lessons-tab.is-active,
+.filter-chip.is-active,
+.chip.is-active,
+.segmented-control button[aria-pressed="true"],
+[role="tab"][aria-selected="true"] {
+  background: var(--brand-soft) !important;
+  color: var(--text-brand-deep) !important;
+  border-color: color-mix(in srgb, var(--brand) 40%, var(--border)) !important;
+  box-shadow: inset 0 -2px 0 var(--brand);
+}
+
+.kuwait-tab__soon,
+.nav-soon-badge {
+  background: var(--surface-inverse) !important;
+  color: var(--text-on-dark) !important;
+  border: 1px solid color-mix(in srgb, var(--brand) 35%, transparent);
+  font-size: 0.68rem;
+  padding: 0.1rem 0.4rem;
+  border-radius: var(--r-xs);
+}
+
+/* ── إعدادات: بطاقة حساب وأزرار ── */
+.settings-account-card,
+.settings-actions {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--space-card);
+}
+
+.settings-avatar {
+  background: var(--brand-soft) !important;
+  color: var(--text-brand-deep) !important;
+  border: 1px solid var(--border-brand);
+}
+
+.settings-danger-btn,
+.settings-danger-btn--link {
+  color: var(--danger-fg) !important;
+  border: 1px solid color-mix(in srgb, var(--danger) 35%, var(--border)) !important;
+  background: var(--danger-bg) !important;
+  border-radius: var(--r-sm) !important;
+  min-height: 2.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 0.9rem;
+  font-weight: 600;
+}
+
+.settings-account-links a {
+  color: var(--text-brand);
+  font-weight: 600;
+  text-decoration: none;
+  padding: 0.45rem 0;
+  display: block;
+  border-block-end: 1px solid var(--border);
+}
+
+.settings-account-links a:last-child {
+  border-block-end: none;
+}
+
+/* ── قوائم جانبية / خيارات ── */
+.sidebar-item {
+  min-height: 2.85rem;
+  border-radius: var(--r-sm) !important;
+  color: var(--text) !important;
+}
+
+.sidebar-item-title {
+  color: var(--text) !important;
+  font-weight: 600;
+}
+
+.sidebar-item-description {
+  color: var(--text-meta) !important;
+  font-size: var(--fs-xs);
+}
+
+.sidebar-item.active {
+  background: var(--brand-soft) !important;
+  color: var(--text-brand-deep) !important;
+}
+
+.sidebar-section-title {
+  color: var(--text-meta) !important;
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: none;
+}
+
+/* ── Disabled ── */
+[disabled],
+.is-disabled,
+.more-sheet-item--soon {
+  opacity: 0.72;
+}
+
+.more-sheet-item--soon {
+  position: relative;
+}
+
+html[data-theme="dark"] .settings-choice.is-active,
+html[data-theme="dark"] .kuwait-tab.is-active,
+html[data-theme="dark"] [role="tab"][aria-selected="true"] {
+  color: var(--text-brand-deep) !important;
+  background: var(--brand-soft) !important;
+}
+
+html[data-theme="dark"] .nav-soon-badge,
+html[data-theme="dark"] .kuwait-tab__soon {
+  background: var(--surface-3) !important;
+  color: var(--text-brand) !important;
+}

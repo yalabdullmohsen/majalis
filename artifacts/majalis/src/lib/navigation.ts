@@ -29,19 +29,19 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
   { href: "/",              label: seoNavLabel("/", "الرئيسية") },
   // المحتوى العلمي
   { href: "/lessons",       label: seoNavLabel("/lessons", "الدروس") },
-  { href: "/library",       label: seoNavLabel("/library", "المكتبة العلمية") },
+  { href: "/quran-knowledge", label: seoNavLabel("/quran-knowledge", "القرآن وعلومه") },
   { href: "/hadith",        label: seoNavLabel("/hadith", "الأحاديث") },
   { href: "/fawaid",        label: seoNavLabel("/fawaid", "الفوائد") },
   { href: "/prophets",      label: seoNavLabel("/prophets", "قصص الأنبياء") },
   { href: "/miracles",             label: seoNavLabel("/miracles", "إشارات كونية") },
   { href: "/prophetic-medicine",   label: seoNavLabel("/prophetic-medicine", "الطب النبوي") },
   { href: "/arbaeen-nawawi",label: seoNavLabel("/arbaeen-nawawi", "الأربعون النووية") },
-  { href: "/updates",       label: seoNavLabel("/updates", "المستجدات") },
+  { href: "/occasions-lessons", label: seoNavLabel("/occasions-lessons", "المناسبات والدروس") },
   { href: "/fiqh",               label: seoNavLabel("/fiqh", "الفقه الإسلامي") },
   { href: "/fiqh-council",       label: seoNavLabel("/fiqh-council", "المجمع الفقهي") },
   { href: "/seerah",             label: seoNavLabel("/seerah", "السيرة النبوية") },
   { href: "/scholars",          label: seoNavLabel("/scholars", "أعلام الإسلام") },
-  { href: "/knowledge-graph",   label: seoNavLabel("/knowledge-graph", "استكشف المعرفة") },
+  { href: "/islamic-directory", label: seoNavLabel("/islamic-directory", "الدليل الإسلامي") },
   { href: "/asma-husna",        label: seoNavLabel("/asma-husna", "الأسماء الحسنى") },
   { href: "/akhlaq",            label: seoNavLabel("/akhlaq", "مكارم الأخلاق") },
   { href: "/arkan",             label: seoNavLabel("/arkan", "أركان الإسلام الخمسة") },
@@ -66,29 +66,24 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
   { href: "/wasaya-nabawiyya",  label: seoNavLabel("/wasaya-nabawiyya", "الوصايا النبوية") },
   { href: "/raqaiq",            label: seoNavLabel("/raqaiq", "الرقائق والزهد") },
   { href: "/tawba",             label: seoNavLabel("/tawba", "التوبة والاستغفار") },
-  { href: "/ulum-quran",        label: seoNavLabel("/ulum-quran", "علوم القرآن الكريم") },
+  { href: "/memorization",     label: seoNavLabel("/memorization", "الحفظ والمراجعة") },
   { href: "/tafsir",            label: seoNavLabel("/tafsir", "علم التفسير") },
-  { href: "/academic-research", label: seoNavLabel("/academic-research", "الأبحاث الشرعية") },
   { href: "/mawarith",          label: seoNavLabel("/mawarith", "المواريث والفرائض") },
   { href: "/salah-guide",       label: seoNavLabel("/salah-guide", "دليل الصلاة الكامل") },
   { href: "/fiqh-qawaid",      label: seoNavLabel("/fiqh-qawaid", "القواعد الفقهية الكبرى") },
   { href: "/duas-quran",        label: seoNavLabel("/duas-quran", "أدعية القرآن الكريم") },
   // القرآن
   { href: "/mushaf",              label: seoNavLabel("/mushaf", "المصحف الشريف") },
-  { href: "/quran/surah-stories", label: seoNavLabel("/quran/surah-stories", "قصص القرآن") },
   // الأذكار
   { href: "/adhkar",        label: seoNavLabel("/adhkar", "الأذكار") },
   { href: "/tasbih",        label: seoNavLabel("/tasbih", "التسبيح") },
   // الأدوات
   { href: "/prayer-times",  label: seoNavLabel("/prayer-times", "مواقيت الصلاة") },
   { href: "/qibla",         label: seoNavLabel("/qibla", "القبلة") },
-  { href: "/occasions",     label: seoNavLabel("/occasions", "المناسبات") },
-  { href: "/calendar",      label: seoNavLabel("/calendar", "تقويم الدروس") },
   { href: "/quiz",          label: seoNavLabel("/quiz", "لعبة سين جيم") },
   // عام
   { href: "/search",        label: seoNavLabel("/search", "البحث") },
   { href: "/settings",      label: seoNavLabel("/settings", "الإعدادات") },
-  { href: "/about",         label: seoNavLabel("/about", "من نحن") },
   { href: "/methodology",   label: seoNavLabel("/methodology", "منهجية التوثيق") },
 ];
 
@@ -98,11 +93,14 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
  * (زر البحث الشامل Ctrl+K، ورابط الحساب/تسجيل الدخول) — انظر NavBar.tsx.
  */
 export const PRIMARY_NAV_ITEMS: NavLink[] = [
-  { href: "/",          label: seoNavLabel("/", "الرئيسية") },
-  { href: "/mushaf",    label: seoNavLabel("/mushaf", "القرآن"),   description: "مصحف · تجويد · قراء" },
-  { href: "/library",   label: seoNavLabel("/library", "المكتبة العلمية"),  description: "كتب · مخطوطات · مؤسسات" },
-  { href: "/scholars",  label: seoNavLabel("/scholars", "أعلام الإسلام"),  description: "تراجم العلماء والمشايخ" },
-  { href: "/fiqh",      label: seoNavLabel("/fiqh", "الفقه"),    description: "أحكام · مسائل · مجمع فقهي" },
+  { href: "/", label: seoNavLabel("/", "الرئيسية") },
+  { href: "/mushaf", label: seoNavLabel("/mushaf", "القرآن"), description: "مصحف · علوم · حفظ" },
+  { href: "/quran-knowledge", label: seoNavLabel("/quran-knowledge", "القرآن وعلومه"), description: "فهرس · علوم · قصص" },
+  { href: "/hadith", label: seoNavLabel("/hadith", "الحديث والسنة"), description: "أحاديث · مصطلح" },
+  { href: "/fiqh", label: seoNavLabel("/fiqh", "الفقه والأحكام"), description: "أحكام · مسائل" },
+  { href: "/memorization", label: seoNavLabel("/memorization", "الحفظ والمراجعة") },
+  { href: "/prayer-times", label: seoNavLabel("/prayer-times", "الصلاة") },
+  { href: "/my-learning", label: seoNavLabel("/my-learning", "حسابي") },
 ];
 
 export const HOME_FEATURE_CARDS = [
@@ -154,8 +152,7 @@ export const HOME_MORE_SECTIONS_RAW = [
   { href: "/lessons",               title: seoNavLabel("/lessons", "الدروس"),                description: "دروس ودورات علمية" },
   { href: "/lessons?tab=courses",   title: seoNavLabel("/lessons?tab=courses", "الدورات العلمية"), description: "برامج ودورات ضمن جدول الدروس" },
   { href: "/mushaf",    title: seoNavLabel("/mushaf", "المصحف الشريف"),          description: "قراءة القرآن الكريم مع التلاوة والبحث والمرجع الأخير" },
-  { href: "/quran/surah-stories",  title: seoNavLabel("/quran/surah-stories", "قصص القرآن"),            description: "أسباب نزول ومحاور وقصص ١١٤ سورة قرآنية" },
-  { href: "/hadith", title: seoNavLabel("/hadith", "الأحاديث النبوية"), description: "أحاديث صحيحة وضعيفة وموضوعة مصنّفة ومفصولة" },
+    { href: "/hadith", title: seoNavLabel("/hadith", "الأحاديث النبوية"), description: "أحاديث صحيحة وضعيفة وموضوعة مصنّفة ومفصولة" },
   { href: "/tawhid", title: seoNavLabel("/tawhid", "التوحيد والعقيدة"), description: "أنواع التوحيد وأركان الإيمان والأسماء الحسنى على منهج أهل السنة" },
   { href: "/learn/aqeedat-ahl-sunnah", title: seoNavLabel("/learn/aqeedat-ahl-sunnah", "عقيدة أهل السنة والجماعة"), description: "معالم المنهج: التلقي والإيمان والصفات والصحابة والقدر" },
   { href: "/islamic-sects", title: seoNavLabel("/islamic-sects", "الفرق والمذاهب"), description: "عرض تاريخي للفرق مع بيان موقف أهل السنة" },
@@ -166,9 +163,9 @@ export const HOME_MORE_SECTIONS_RAW = [
   { href: "/fiqh", title: seoNavLabel("/fiqh", "الفقه الإسلامي"), description: "الأحكام والأسئلة والمجمع الفقهي" },
   { href: "/seerah", title: seoNavLabel("/seerah", "السيرة النبوية"), description: "حياة النبي محمد ﷺ من المولد إلى الوفاة" },
   { href: "/prophetic-medicine", title: seoNavLabel("/prophetic-medicine", "الطب النبوي"), description: "ما ثبت في السنة من التداوي والوقاية" },
-  { href: "/updates", title: seoNavLabel("/updates", "آخر المستجدات"), description: "قرارات وأحكام ودروس جديدة" },
+  { href: "/occasions-lessons", title: seoNavLabel("/occasions-lessons", "المناسبات والدروس"), description: "مناسبات وتقويم دروس" },
   { href: "/assistant", title: seoNavLabel("/assistant", "المساعد العلمي"), description: "إرشاد داخل التطبيق" },
-  { href: "/library", title: seoNavLabel("/library", "المكتبة العلمية"), description: "كتب ومتون" },
+  { href: "/islamic-directory", title: seoNavLabel("/islamic-directory", "الدليل الإسلامي"), description: "مؤسسات ومساجد ومشاهد" },
   { href: "/learning/paths", title: seoNavLabel("/learning/paths", "المسارات العلمية"), description: "تعلم منظم من المبتدئ للمتقدم" },
   { href: "/my-learning", title: seoNavLabel("/my-learning", "حسابي"), description: "تقدمك وإنجازاتك" },
   { href: "/quiz", title: seoNavLabel("/quiz", "لعبة سين جيم"), description: "اختبر معلوماتك من خلال لعبة أسئلة وأجوبة ممتعة ومتدرجة" },
@@ -190,13 +187,12 @@ export const HOME_MORE_SECTIONS_RAW = [
   { href: "/janaza",         title: seoNavLabel("/janaza", "أحكام الجنائز"),      description: "دليل شامل لما يجب على المسلمين تجاه موتاهم من الغسل والتكفين والصلاة والدفن" },
   { href: "/sahabah",        title: seoNavLabel("/sahabah", "أعلام الصحابة الكرام"), description: "موسوعة كبار الصحابة رضي الله عنهم: سيرتهم وفضائلهم وإرثهم في الإسلام" },
   { href: "/tawba",          title: seoNavLabel("/tawba", "التوبة والاستغفار"),   description: "شروط التوبة النصوح وأنواعها وأفضل صيغ الاستغفار المأثورة وآثارها العظيمة" },
-  { href: "/ulum-quran",    title: seoNavLabel("/ulum-quran", "علوم القرآن الكريم"),  description: "النزول والجمع والتفسير والإعجاز والمحكم والمتشابه والناسخ والمنسوخ" },
+  { href: "/memorization", title: seoNavLabel("/memorization", "الحفظ والمراجعة"), description: "اختبارات وخطط الحفظ" },
   { href: "/tafsir",        title: seoNavLabel("/tafsir", "علم التفسير"),            description: "أنواع التفسير وأصوله وأشهر كتب المفسرين مع روابط المكتبة والمصحف" },
   { href: "/mawarith",      title: seoNavLabel("/mawarith", "المواريث والفرائض"),   description: "حصص الورثة الشرعية وأسباب الإرث وموانعه وأحكام العَصَبة والحجب والعَوْل والردّ" },
   { href: "/duas-quran",    title: seoNavLabel("/duas-quran", "أدعية القرآن الكريم"),  description: "أدعية قرآنية مأثورة: دعاء الأنبياء والمؤمنين مع سياقها وفوائدها" },
-  { href: "/knowledge-graph", title: seoNavLabel("/knowledge-graph", "استكشف المعرفة"),   description: "شبكة المعرفة الإسلامية وعلاقات العلوم الشرعية" },
-  { href: "/calendar", title: seoNavLabel("/calendar", "تقويم الدروس"), description: "التواريخ والأيام المميزة ومواعيد الدروس" },
-] as const;
+  { href: "/quran-knowledge", title: seoNavLabel("/quran-knowledge", "القرآن وعلومه"), description: "فهرس وعلوم وأسباب وقصص" },
+  ] as const;
 
 /** أقسام «المزيد» بعد تطبيق سياسة الإخفاء/الدمج. */
 export const HOME_MORE_SECTIONS = filterNavItems([...HOME_MORE_SECTIONS_RAW]);

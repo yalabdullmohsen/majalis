@@ -94,7 +94,7 @@ export default function OccasionsPage() {
   return (
     <div className="page-shell">
       <PageHeader
-        eyebrow="التذكير"
+        eyebrow="المناسبات والدروس"
         title="المناسبات الإسلامية"
         subtitle="مناسبات معتمدة مع الأعمال المستحبة والأدلة الصحيحة."
       />

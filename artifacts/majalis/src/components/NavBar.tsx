@@ -84,6 +84,10 @@ export default function NavBar() {
     return isNavHrefActive(location, href);
   };
 
+  useEffect(() => {
+    void import("@/styles/components/design-redesign.css");
+  }, []);
+
   // Bottom nav dispatches "sidenav-open" to open the drawer from outside
   useEffect(() => {
     const handler = () => openMenu();
@@ -143,14 +147,14 @@ export default function NavBar() {
               onClick={toggleMenu}
               aria-expanded={isMenuOpen}
               aria-controls="main-navigation-drawer"
-              aria-label={isMenuOpen ? t("nav_close") : t("nav_menu")}
+              aria-label={isMenuOpen ? "إغلاق القائمة" : "فتح القائمة"}
             >
               <span className="navbar-menu-btn__geo" aria-hidden="true" />
               {isMenuOpen
                 ? <X className="navbar-menu-btn__icon" size={16} strokeWidth={1.8} aria-hidden="true" />
                 : <Menu className="navbar-menu-btn__icon" size={16} strokeWidth={1.7} aria-hidden="true" />
               }
-              <span className="navbar-menu-btn__label">{isMenuOpen ? t("nav_close") : t("nav_menu")}</span>
+              <span className="navbar-menu-btn__label">{isMenuOpen ? "إغلاق" : "القائمة"}</span>
             </button>
           </div>
 
@@ -170,13 +174,22 @@ export default function NavBar() {
             </nav>
           )}
 
-          {/* الشريط المتحرك — يحلّ محل زر البحث في الهيدر (تكليف 2026-07-24).
-              البحث نفسه لم يُحذف: يبقى متاحًا عبر القائمة الجانبية (ابحث ←
-              البحث الشامل) واختصار Ctrl/Cmd+K القائم أصلاً. على الجوال
-              يشغل المساحة الوسطى الفارغة أصلاً؛ على سطح المكتب يحلّ محل
-              مربع البحث المضمّن تحديدًا. */}
-          {/* شريط الأحاديث/النصوص المتحرّك — يُمنع في مسارات الصلاة والمصحف */}
-          {isMobile && !isImmersiveChromePath(location) && <Suspense fallback={null}><HeaderTicker /></Suspense>}
+          {/* جوال: شعار مضغوط في الوسط بدل التيكر داخل الشبكة (كان يسبب تداخلاً) */}
+          {isMobile && (
+            <Link href="/" className="navbar-brand navbar-brand--compact" aria-label="المجلس العلمي — الرئيسية">
+              <img
+                src="/logo-calligraphy.png"
+                alt=""
+                className="navbar-brand__mark"
+                width={120}
+                height={36}
+                decoding="async"
+              />
+              <span className="navbar-brand__copy">
+                <strong>المجلس العلمي</strong>
+              </span>
+            </Link>
+          )}
 
           <div className="navbar-v3__end">
             {/* عداد الصلاة التالية — سطح المكتب فقط؛ يُخفى داخل صفحة المواقيت نفسها */}
@@ -194,15 +207,18 @@ export default function NavBar() {
                 : <Moon size={17} strokeWidth={1.6} aria-hidden="true" />
               }
             </button>
-            <button
-              type="button"
-              onClick={openSearch}
-              aria-label="فتح البحث الشامل"
-              title="البحث الشامل"
-              className="navbar-theme-toggle navbar-search-toggle"
-            >
-              <Search size={17} strokeWidth={1.8} aria-hidden="true" />
-            </button>
+            {/* سطح المكتب فقط — على الجوال صف البحث الكامل أدناه يغني عن الأيقونة */}
+            {!isMobile && (
+              <button
+                type="button"
+                onClick={openSearch}
+                aria-label="فتح البحث"
+                title="البحث"
+                className="navbar-theme-toggle navbar-search-toggle"
+              >
+                <Search size={17} strokeWidth={1.8} aria-hidden="true" />
+              </button>
+            )}
             {!isMobile && !isImmersiveChromePath(location) && <Suspense fallback={null}><HeaderTicker /></Suspense>}
             {!isMobile && desktopAuthLinks}
 
@@ -220,6 +236,30 @@ export default function NavBar() {
             )}
           </div>
         </div>
+
+        {/* صف بحث مستقل — لا يتداخل مع التبويبات أو التيكر */}
+        {isMobile && !isImmersiveChromePath(location) && (
+          <div className="navbar-v3__search-row">
+            <button
+              type="button"
+              className="navbar-v3__search-btn"
+              onClick={openSearch}
+              aria-label="فتح البحث"
+            >
+              <Search size={16} strokeWidth={1.8} aria-hidden="true" />
+              <span>ابحث في المحتوى…</span>
+            </button>
+          </div>
+        )}
+
+        {/* تبويبات الأقسام على الجوال عبر TopSectionBar فقط — تجنّب صفّين متداخلين */}
+
+        {/* صف مستقل تحت أزرار الهيدر — يمنع تداخل التيكر مع القائمة/البحث/الحساب */}
+        {isMobile && !isImmersiveChromePath(location) && (
+          <div className="navbar-ticker-row" aria-label="شريط تنبيهات ومقتطفات">
+            <Suspense fallback={null}><HeaderTicker /></Suspense>
+          </div>
+        )}
       </header>
 
       <SideNavDrawer

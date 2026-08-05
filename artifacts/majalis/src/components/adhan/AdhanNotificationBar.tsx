@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { X, Volume2 } from "lucide-react";
+import { X, Volume2, Clock, Landmark } from "lucide-react";
 import { ADHAN_EVENT_NAME, type AdhanEvent } from "@/lib/adhan-scheduler";
 import { stopAdhan } from "@/lib/adhan-audio";
 import "@/styles/components/adhan-notification.css";
@@ -59,7 +59,7 @@ function AdhanToast({ event, onDismiss }: { event: ActiveEvent; onDismiss: () =>
       role="alert"
     >
       <span className="anb-toast__emoji" aria-hidden="true">
-        {isAdhan ? "🕌" : "⏰"}
+        {isAdhan ? <Landmark size={22} strokeWidth={1.8} /> : <Clock size={22} strokeWidth={1.8} />}
       </span>
 
       <div className="anb-toast__body">

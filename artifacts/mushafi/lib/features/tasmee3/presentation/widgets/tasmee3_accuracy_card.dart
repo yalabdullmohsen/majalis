@@ -19,13 +19,13 @@ class Tasmee3AccuracyCard extends StatelessWidget {
 
     if (percent >= 90) {
       color = Colors.green.shade700;
-      label = 'ممتاز';
+      label = 'قراءة متقاربة';
     } else if (percent >= 75) {
       color = Colors.orange.shade800;
-      label = 'جيد';
+      label = 'جيدة تقريباً';
     } else {
       color = Colors.red.shade700;
-      label = 'يحتاج مراجعة';
+      label = 'تحتاج مراجعة';
     }
 
     return Container(
@@ -65,7 +65,7 @@ class Tasmee3AccuracyCard extends StatelessWidget {
                 ),
                 const SizedBox(height: 4),
                 Text(
-                  'أخطاء ظاهرة: ${result.mistakesCount}',
+                  'مواضع تحتاج مراجعة: ${result.mistakesCount}',
                   style: const TextStyle(
                     color: Color(0xFF9A8068),
                     fontSize: 15,

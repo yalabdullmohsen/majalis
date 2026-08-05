@@ -1,9 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { CheckCircle2, ClipboardList, Clock, Download, FolderOpen, GraduationCap, Library, Link2, MapPin, Mic2, Paperclip, PenLine, RefreshCw, Rocket, User, XCircle } from "lucide-react";
+import { CheckCircle2, ClipboardList, Clock, Download, FolderOpen, GraduationCap, Library, Link2, MapPin, Paperclip, PenLine, RefreshCw, User, XCircle } from "lucide-react";
 import {
   listSubmissions,
   reviewSubmission,
-  publishAdhanToLibrary,
   publishLessonAsDraft,
   getSubmissionStats,
   formatFileSize,
@@ -21,7 +20,7 @@ const STATUS_LABEL: Record<SubmissionStatus, string> = {
 };
 
 const TYPE_ICON: Record<SubmissionType, string> = {
-  adhan:  "أذان",
+  adhan:  "أذان (قديم)",
   lesson: "درس",
 };
 
@@ -165,36 +164,13 @@ function SubmissionCard({ sub, onReview }: {
             </div>
           )}
 
-          {/* Publish to muezzin library */}
-          {sub.status === "approved" && sub.type === "adhan" && (
+          {/* رفع الأذان ملغى — لا نشر لمكتبة المؤذنين */}
+          {sub.type === "adhan" && (
             <div className="srp-publish-box srp-publish-box--adhan">
-              <div className="srp-publish-title srp-publish-title--adhan"><Mic2 size={14} className="inline ml-1" />نشر في مكتبة المؤذنين</div>
-              <div className="srp-publish-desc">سيُضاف هذا التسجيل كمؤذن جديد في المكتبة ويظهر للمستخدمين.</div>
-              {published ? (
-                <div className="srp-publish-success srp-publish-success--adhan"><CheckCircle2 size={14} className="inline ml-1" />تم النشر في المكتبة!</div>
-              ) : (
-                <button
-                  type="button"
-                  disabled={publishing}
-                  onClick={async () => {
-                    setPublishing(true);
-                    setPublishError("");
-                    try {
-                      const res = await publishAdhanToLibrary(sub);
-                      if (res.ok) setPublished(true);
-                      else setPublishError(res.error || "فشل النشر في المكتبة.");
-                    } catch (e) {
-                      setPublishError(e instanceof Error ? e.message : "فشل النشر في المكتبة.");
-                    } finally {
-                      setPublishing(false);
-                    }
-                  }}
-                  className="srp-publish-btn"
-                >
-                  {publishing ? "جارٍ النشر..." : <><Rocket size={13} className="inline ml-1" />نشر في مكتبة المؤذنين</>}
-                </button>
-              )}
-              {publishError && <div className="srp-publish-error">{publishError}</div>}
+              <div className="srp-publish-title srp-publish-title--adhan">ميزة رفع الأذان ملغاة</div>
+              <div className="srp-publish-desc">
+                هذا سجل تاريخي فقط. لا يمكن قبول رفع أذان جديد ولا نشره في مكتبة المؤذنين.
+              </div>
             </div>
           )}
 
@@ -231,8 +207,8 @@ function SubmissionCard({ sub, onReview }: {
             </div>
           )}
 
-          {/* Review actions */}
-          {sub.status === "pending" && (
+          {/* Review actions — دروس فقط؛ طلبات الأذان القديمة تُرفض/تُغلق بلا قبول نشر */}
+          {sub.status === "pending" && sub.type === "lesson" && (
             <div className="srp-review-actions">
               <label className="srp-review-label">
                 ملاحظة للمستخدم (اختياري):
@@ -250,6 +226,28 @@ function SubmissionCard({ sub, onReview }: {
                 </button>
                 <button type="button" disabled={loading} onClick={() => handle("rejected")} className="srp-action-btn srp-action-btn--reject">
                   {loading ? "..." : <><XCircle size={13} className="inline ml-1" />رفض</>}
+                </button>
+              </div>
+            </div>
+          )}
+          {sub.status === "pending" && sub.type === "adhan" && (
+            <div className="srp-review-actions">
+              <p className="srp-publish-desc" style={{ marginBottom: "0.5rem" }}>
+                رفع الأذان ملغى — يمكن إغلاق هذا الطلب بالرفض مع ملاحظة للمستخدم.
+              </p>
+              <div className="srp-review-btns">
+                <button
+                  type="button"
+                  disabled={loading}
+                  onClick={async () => {
+                    const msg = note.trim() || "ميزة رفع الأذان أُلغيت نهائيًا.";
+                    setLoading(true);
+                    await onReview(sub.id, "rejected", msg);
+                    setLoading(false);
+                  }}
+                  className="srp-action-btn srp-action-btn--reject"
+                >
+                  {loading ? "..." : <><XCircle size={13} className="inline ml-1" />إغلاق الطلب</>}
                 </button>
               </div>
             </div>
@@ -316,7 +314,10 @@ export function SubmissionsReviewPanel() {
             { label: "معلق",       val: stats.pending,                     mod: "srp-stat-card--pending" },
             { label: "مقبول",      val: stats.approved,                    mod: "srp-stat-card--approved" },
             { label: "مرفوض",      val: stats.rejected,                    mod: "srp-stat-card--rejected" },
-            { label: "أذان / درس", val: `${stats.adhan}/${stats.lesson}`,  mod: "srp-stat-card--split" },
+            { label: "دروس", val: stats.lesson, mod: "srp-stat-card--split" },
+            ...(stats.adhanLegacy > 0
+              ? [{ label: "أذان قديم", val: stats.adhanLegacy, mod: "srp-stat-card--split" as const }]
+              : []),
           ].map((s) => (
             <div
               key={s.label}
@@ -342,14 +343,14 @@ export function SubmissionsReviewPanel() {
           </button>
         ))}
         <div className="srp-filter-divider" />
-        {(["all", "adhan", "lesson"] as const).map((t) => (
+        {(["all", "lesson"] as const).map((t) => (
           <button
             key={t}
             type="button"
             onClick={() => setFType(t)}
             className={`srp-filter-btn${filterType === t ? " srp-filter-btn--active-type" : ""}`}
           >
-            {{ all: "كل الأنواع", adhan: "أذان", lesson: "درس" }[t]}
+            {{ all: "كل الأنواع", lesson: "درس" }[t]}
           </button>
         ))}
       </div>

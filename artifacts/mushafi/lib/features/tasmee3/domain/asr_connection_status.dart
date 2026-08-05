@@ -31,7 +31,7 @@ class AsrConnectionStatus {
   factory AsrConnectionStatus.missingEndpoint() {
     return AsrConnectionStatus(
       type: AsrConnectionStatusType.missingEndpoint,
-      message: 'endpoint غير مضبوط.',
+      message: 'عنوان الخادم غير مضبوط.',
       checkedAt: DateTime.now(),
     );
   }
@@ -55,7 +55,7 @@ class AsrConnectionStatus {
   factory AsrConnectionStatus.unauthorized() {
     return AsrConnectionStatus(
       type: AsrConnectionStatusType.unauthorized,
-      message: 'مفتاح API غير صحيح أو مفقود.',
+      message: 'مفتاح الوصول غير صحيح أو مفقود.',
       checkedAt: DateTime.now(),
     );
   }

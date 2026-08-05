@@ -18,6 +18,7 @@
 /* ─ Rows ─ */
 .ads-row { display: flex; align-items: center; justify-content: space-between; min-height: 44px; }
 .ads-row-sep { display: flex; align-items: center; justify-content: space-between; min-height: 44px; border-bottom: 1px solid var(--msk-border); padding-bottom: 0.75rem; margin-bottom: 0.75rem; }
+.ads-row-sep.is-disabled { opacity: 0.55; }
 .ads-diagnostics-toggle {
   width: 100%; background: none; border: none; border-bottom: 1px solid var(--msk-border);
   margin-bottom: 0; padding: 0 1rem; cursor: pointer; font: inherit; color: var(--majalis-ink, #1A1A18);

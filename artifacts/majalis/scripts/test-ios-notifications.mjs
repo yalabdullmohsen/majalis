@@ -29,6 +29,8 @@ console.log("=== iOS / Web notifications hardening gates ===\n");
 const required = [
   "src/lib/prayer-local-notifications.ts",
   "src/lib/prayer-alert-scheduler.ts",
+  "src/lib/prayer-notification-copy.ts",
+  "src/lib/prayer-notification-sounds.ts",
   "src/lib/quran-daily-reminder.ts",
   "src/lib/local-notifications.ts",
   "src/lib/push-notifications.ts",
@@ -87,9 +89,22 @@ ok(settings.includes("getNotificationPermissionStatus"), "Capacitor-aware permis
 ok(settings.includes("notifDebug"), "hidden developer debug flag");
 
 const prayer = read("src/lib/prayer-local-notifications.ts");
-ok(prayer.includes("DEFAULT_ALERT_SOUND"), "prayer sound");
+ok(prayer.includes("DEFAULT_ALERT_SOUND"), "prayer sound fallback import");
+ok(prayer.includes("pickPrayerNotificationCopy"), "prayer varied copy");
+ok(prayer.includes("resolvePrayerNotificationSound") || prayer.includes("safeSound"), "prayer sound resolve");
 ok(prayer.includes("CHANNEL_PRAYER"), "prayer channel");
 ok(prayer.includes("allowWhileIdle"), "prayer allowWhileIdle");
+ok(!prayer.includes("— متبقي"), "no em-dash after prayer name");
+
+const copy = read("src/lib/prayer-notification-copy.ts");
+ok(copy.includes("pre-15"), "copy pools include pre-15");
+ok(copy.includes("post-soft"), "copy pools include post-soft");
+ok(!/اقتربت صلاة \{\{name\}\} —/.test(copy), "copy templates avoid em-dash after name");
+
+const sounds = read("src/lib/prayer-notification-sounds.ts");
+ok(sounds.includes("PRAYER_CUSTOM_SOUNDS_ENABLED"), "custom sounds flag");
+ok(sounds.includes("prayer_quiet.caf"), "quiet sound filename");
+ok(sounds.includes("DEFAULT_ALERT_SOUND"), "sound fallback to default");
 
 const quran = read("src/lib/quran-daily-reminder.ts");
 ok(quran.includes("ensureQuranDailyReminderScheduled"), "ensureQuranDailyReminderScheduled");
@@ -133,13 +148,17 @@ const main = read("src/main.tsx");
 ok(main.includes("if (!isNative)"), "SW registration skipped on native");
 
 console.log("\n--- unit suite ---\n");
-const unit = spawnSync(
-  process.execPath,
-  ["--import", "tsx", "src/lib/__tests__/notifications-hardening.test.ts"],
-  { cwd: root, stdio: "inherit", env: process.env },
-);
-if (unit.status !== 0) failed++;
-
+for (const unitFile of [
+  "src/lib/__tests__/notifications-hardening.test.ts",
+  "src/lib/__tests__/prayer-notification-copy-sounds.test.ts",
+]) {
+  const unit = spawnSync(
+    process.execPath,
+    ["--import", "tsx", unitFile],
+    { cwd: root, stdio: "inherit", env: process.env },
+  );
+  if (unit.status !== 0) failed++;
+}
 if (failed > 0) {
   console.error(`\nFAILED: ${failed} check(s)`);
   process.exit(1);

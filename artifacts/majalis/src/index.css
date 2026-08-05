@@ -260,11 +260,11 @@ html {
      3) --font-quran: المصحف حصرًا — خط عثماني موثق (Amiri Quran). لا يتغيّر أبدًا.
      4) --font-tafsir: نصوص التفسير — Amiri / Noto Naskh للقراءة الطويلة.
      5) --font-nav: قوائم المزيد/الدرج/الشريط — Cairo/Tajawal لواجهة حديثة نظيفة. */
-  --font-primary:  "Alexandria", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, -apple-system, sans-serif;
-  --font-ui:       "Alexandria", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, -apple-system, sans-serif;
-  --font-body:     "Alexandria", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, -apple-system, sans-serif;
-  --font-display:  "Alexandria", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, -apple-system, sans-serif;
-  --font-reading:  "Alexandria", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, -apple-system, sans-serif;
+  --font-primary:  "IBM Plex Sans Arabic", "Noto Sans Arabic", "Noto Naskh Arabic", "Alexandria", system-ui, -apple-system, sans-serif;
+  --font-ui:       "IBM Plex Sans Arabic", "Noto Sans Arabic", "Alexandria", system-ui, -apple-system, sans-serif;
+  --font-body:     "IBM Plex Sans Arabic", "Noto Sans Arabic", "Noto Naskh Arabic", "Alexandria", system-ui, -apple-system, sans-serif;
+  --font-display:  "IBM Plex Sans Arabic", "Noto Sans Arabic", "Alexandria", system-ui, -apple-system, sans-serif;
+  --font-reading:  "IBM Plex Sans Arabic", "Noto Sans Arabic", "Alexandria", system-ui, -apple-system, sans-serif;
   --font-quran:    "Amiri Quran", "Scheherazade New", "KFGQPC Hafs Uthmanic", serif;
   /* خط تراثي للعناوين البارزة فقط (لا يُستخدَم في النصوص الطويلة أو الفقرات) */
   --font-heritage: "Amiri", "Aref Ruqaa", "Scheherazade New", serif;
@@ -4994,299 +4994,11 @@ body.mobile-nav-body-lock {
   }
 }
 
-/* ── Drawer panel ── */
-/* عرض ~82% من الشاشة على الجوال، بحد أقصى ثابت 400px للآيباد/الشاشات
-   الكبيرة (كانت width:100% تُغطّي الشاشة كاملة على كل الجوالات تحت 480px،
-   فتُخفي طبقة الخلفية الداكنة بالكامل). */
+/* Drawer visuals moved to styles/components/sidebar-redesign.css */
 .mobile-nav-layer--drawer .side-nav-drawer--v2 {
-  width: 82vw;
-  max-width: 400px;
+  /* position set above; visuals via .sidebar-panel */
 }
 
-.side-nav-drawer--v2 {
-  /* Layout */
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  height: 100dvh;
-  overflow: hidden;
-  /* Positioning (set by .mobile-nav-layer--drawer .side-nav-drawer--v2 above) */
-  /* Visual */
-  background: #FFFFFF;
-  border-inline-start: none;
-  border-inline-end: none;
-  border-left: none;
-  border-right: none;
-  box-shadow: -4px 0 24px rgba(10, 30, 20, 0.14), -1px 0 4px rgba(10, 30, 20, 0.06);
-}
-
-/* ── Header ── */
-.side-nav-drawer__head--v2 {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-shrink: 0;
-  padding: max(1rem, env(safe-area-inset-top, 0px)) 1rem 0.875rem;
-  background: #FFFFFF;
-  border-bottom: 1px solid rgba(31, 77, 58, 0.10);
-}
-
-/* ── Brand ── */
-.side-nav-drawer__brand {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  font-size: 0.9375rem;
-  font-weight: 700;
-  color: var(--majalis-emerald-deep, #143F35);
-  text-decoration: none;
-}
-.side-nav-drawer__brand strong {
-  font-family: var(--font-display);
-  font-weight: 700;
-  font-size: 1.2rem;
-  letter-spacing: normal;
-}
-
-/* ── Close button ── */
-.side-nav-close {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 44px;
-  min-height: 44px;
-  border-radius: 50%;
-  border: none;
-  background: transparent;
-  cursor: pointer;
-  color: #5C5C56;
-  transition: background 0.15s ease, color 0.15s ease;
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-}
-.side-nav-close:hover { background: rgba(31, 77, 58, 0.07); color: var(--majalis-emerald-deep, #143F35); }
-
-/* ── Scrollable body ── */
-.side-nav-drawer__body {
-  flex: 1;
-  overflow-y: auto;
-  overflow-x: hidden;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior: contain;
-  padding: 0.5rem 0.75rem max(1.5rem, env(safe-area-inset-bottom, 0px));
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-}
-
-/* ── Collapsible group ── */
-.side-nav-group--v2 {
-  border-radius: var(--ds-radius-lg);
-}
-
-.side-nav-group--has-active > .side-nav-group__toggle {
-  background: rgba(31, 77, 58, 0.06);
-}
-
-.side-nav-group__toggle {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.5rem 0.6rem;
-  min-height: 44px;
-  border: none;
-  border-radius: 0.6rem;
-  background: transparent;
-  cursor: pointer;
-  text-align: start;
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-  transition: background 0.14s ease;
-}
-.side-nav-group__toggle:hover { background: rgba(31, 77, 58, 0.06); }
-
-.side-nav-group__toggle-label {
-  display: flex;
-  align-items: center;
-  gap: 0.45rem;
-}
-.side-nav-group__emoji {
-  font-size: 0.9375rem;
-  line-height: 1;
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 22px;
-  height: 22px;
-  color: var(--majalis-emerald-deep, #143F35);
-  opacity: 0.82;
-}
-
-.side-nav-group__emoji svg {
-  display: block;
-}
-.side-nav-group__title {
-  font-size: 0.8125rem;
-  font-weight: 600;
-  color: var(--majalis-ink, #143F35);
-  letter-spacing: normal;
-  text-transform: none;
-  margin: 0;
-}
-.side-nav-group__toggle svg { color: #9CA3AF; flex-shrink: 0; }
-
-/* ── Items inside group ── */
-.side-nav-group__items {
-  padding: 0.1rem 0 0.2rem 0.35rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.05rem;
-}
-
-/* ── Navigation link ── */
-.side-nav-link--v2 {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.45rem 0.6rem;
-  min-height: 44px;
-  border-radius: 0.55rem;
-  text-decoration: none;
-  color: #4A4A55;
-  font-size: var(--ds-text-sm);
-  font-weight: 500;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  width: 100%;
-  text-align: start;
-  transition: background 0.14s ease, color 0.14s ease;
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-}
-/* فاصل خفيف بين الصفوف المتتالية داخل نفس المجموعة */
-.side-nav-link--v2 + .side-nav-link--v2 {
-  border-top: 1px solid rgba(31, 77, 58, 0.07);
-}
-.side-nav-link--v2 svg { color: #9CA3AF; flex-shrink: 0; transition: color 0.14s ease; }
-.side-nav-link--v2:hover {
-  background: rgba(31, 77, 58, 0.07);
-  color: var(--majalis-emerald-deep, #143F35);
-}
-.side-nav-link--v2:hover svg { color: var(--majalis-emerald, #143F35); }
-.side-nav-link--v2.is-active {
-  background: rgba(31, 77, 58, 0.10);
-  color: var(--majalis-emerald-deep, #143F35);
-  font-weight: 700;
-}
-.side-nav-link--v2.is-active svg { color: var(--majalis-emerald-deep, #143F35); }
-
-/* ── Link label + description ── */
-.side-nav-link__content {
-  display: flex;
-  flex-direction: column;
-  gap: 0.05rem;
-  min-width: 0;
-  flex: 1;
-}
-.side-nav-link__label {
-  font-size: var(--ds-text-sm);
-  font-weight: inherit;
-  color: inherit;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.side-nav-link__desc {
-  font-size: 0.68rem;
-  color: #9CA3AF;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  line-height: 1.3;
-}
-.side-nav-link--v2.is-active .side-nav-link__desc { color: rgba(15, 68, 51, 0.55); }
-
-/* ── Danger link ── */
-.side-nav-link--danger { color: #DC2626; }
-.side-nav-link--danger svg { color: #DC2626; }
-.side-nav-link--danger:hover { background: #FEF2F2; }
-
-/* ── Subgroups inside "تعلّم" ── */
-.side-nav-subgroups-wrap {
-  padding: 0.1rem 0 0.15rem 0;
-}
-.side-nav-subgroup {
-  margin-bottom: 0.08rem;
-}
-.side-nav-subgroup__toggle {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0.28rem 0.55rem;
-  border: none;
-  border-radius: 0.45rem;
-  background: rgba(23,61,53, 0.055);
-  cursor: pointer;
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: var(--majalis-emerald, #226A56);
-  text-align: start;
-  letter-spacing: normal;
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-  transition: background 0.13s ease;
-  margin: 0.1rem 0.25rem;
-}
-.side-nav-subgroup__toggle:hover {
-  background: rgba(23,61,53, 0.1);
-}
-.side-nav-subgroup__toggle svg {
-  color: var(--majalis-emerald, #226A56);
-  opacity: 0.6;
-  flex-shrink: 0;
-}
-.side-nav-subgroup__items {
-  padding: 0.05rem 0 0.05rem 0.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.03rem;
-}
-
-/* ── User info block ── */
-.side-nav-user-info {
-  padding: 0.3rem 0.6rem;
-  font-size: 0.78rem;
-  color: #5C5C56;
-}
-.side-nav-user-name { font-weight: 700; color: var(--majalis-ink, #143F35); }
-
-/* ── Legacy aliases ── */
-.side-nav-backdrop--v2 { display: none; }
-body.side-nav-open { overflow: hidden; }
-.side-nav-group { margin-bottom: 1rem; }
-.side-nav-link {
-  display: block; padding: 0.5rem 0.65rem; border-radius: 0.45rem; text-decoration: none;
-  font-size: 0.88rem; font-weight: 600; margin-bottom: 0.15rem;
-}
-
-.site-footer--v3 { margin-top: 2rem; }
-.site-footer-inner--v3 { max-width: 72rem; }
-.site-footer-groups {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr)); gap: var(--ds-space-4); margin-top: 1rem;
-}
-.site-footer-group p,
-.site-footer-group__title { margin: 0 0 0.35rem; font-weight: 700; color: var(--majalis-emerald-deep); font-size: 0.88rem; }
-.site-footer-group nav { display: grid; gap: var(--ds-space-1); }
-
-.prayer-status-card { padding: var(--ds-space-5); margin-bottom: 1rem; text-align: center; }
-.prayer-status-card__label { margin: 0; font-size: 0.82rem; color: var(--majalis-ink-soft); }
-.prayer-status-card h2 { margin: 0.35rem 0; color: var(--majalis-emerald-deep); }
-.prayer-status-card__countdown { font-size: var(--ds-text-2xl); font-weight: 800; color: var(--majalis-brass-deep); margin: 0; }
-.prayer-times-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(8rem, 1fr)); gap: 0.65rem; }
 .prayer-time-cell { padding: 0.85rem; text-align: center; }
 .prayer-time-cell.is-next { border-color: var(--majalis-emerald); background: var(--majalis-sage); }
 
@@ -6388,15 +6100,16 @@ svg {
 
 /* ── Touch-friendly buttons (mobile base) ── */
 @media (max-width: 879px) {
+  /* لا max-height هنا — الهيدر متعدّد الصفوف (بحث/تيكّر)؛ القص كان يسبب تداخلاً */
   .navbar-v3 {
-    min-height: var(--mobile-header-h);
-    max-height: 4.5rem;
-    padding-top: env(safe-area-inset-top, 0px);
+    min-height: 0;
+    max-height: none;
+    height: auto;
   }
 
   .navbar-v3__inner {
-    min-height: calc(var(--mobile-header-h) - env(safe-area-inset-top, 0px));
-    max-height: 4.5rem;
+    min-height: var(--header-height, 3rem);
+    max-height: none;
     padding: 0.35rem var(--mobile-padding-x);
     gap: 0.35rem;
   }

@@ -5,15 +5,24 @@ import 'package:go_router/go_router.dart';
 import 'package:mushafi/core/constants/app_constants.dart';
 import 'package:mushafi/core/theme/app_theme.dart';
 import 'package:mushafi/features/mushaf/presentation/mushaf_bookmarks_screen.dart';
+import 'package:mushafi/features/mushaf/presentation/mushaf_deep_link_screen.dart';
 import 'package:mushafi/features/mushaf/presentation/mushaf_home_screen.dart';
 import 'package:mushafi/features/mushaf/presentation/mushaf_index_screen.dart';
 import 'package:mushafi/features/mushaf/presentation/mushaf_khatmah_screen.dart';
 import 'package:mushafi/features/mushaf/presentation/mushaf_screen.dart';
 import 'package:mushafi/features/mushaf/presentation/mushaf_search_screen.dart';
+import 'package:mushafi/features/mushaf/presentation/mushaf_settings_screen.dart';
 import 'package:mushafi/features/quran/presentation/providers/quran_providers.dart';
 import 'package:mushafi/features/quran/presentation/screens/home_shell.dart';
 import 'package:mushafi/features/settings/presentation/settings_screen.dart';
 import 'package:mushafi/features/tasmee3/presentation/tasmee3_entry_screen.dart';
+
+/// مسارات المصحف متوافقة قدر الإمكان مع موقع majlisilm.com
+/// (راجع UNIFIED_MUSHAF.md في جذر المستودع).
+int? _parsePositiveInt(String? raw) {
+  if (raw == null || raw.isEmpty) return null;
+  return int.tryParse(raw);
+}
 
 final _routerProvider = Provider<GoRouter>((ref) {
   return GoRouter(
@@ -24,11 +33,50 @@ final _routerProvider = Provider<GoRouter>((ref) {
         path: '/mushaf-home',
         builder: (_, __) => const MushafHomeScreen(),
       ),
+      // مطابق للموقع: /mushaf/page/:page
+      GoRoute(
+        path: '/mushaf/page/:page',
+        builder: (context, state) {
+          final page = _parsePositiveInt(state.pathParameters['page']) ?? 1;
+          final ayah = _parsePositiveInt(state.uri.queryParameters['ayah']);
+          final surah = _parsePositiveInt(state.uri.queryParameters['surah']);
+          return MushafDeepLinkScreen(
+            page: page.clamp(1, 604),
+            surah: surah,
+            ayah: ayah,
+          );
+        },
+      ),
+      GoRoute(
+        path: '/mushaf/page',
+        redirect: (_, __) => '/mushaf',
+      ),
+      // مطابق للموقع: /mushaf/:surah?ayah=
+      GoRoute(
+        path: '/mushaf/:surah',
+        builder: (context, state) {
+          final surah = _parsePositiveInt(state.pathParameters['surah']);
+          if (surah == null || surah < 1 || surah > 114) {
+            return const MushafScreen();
+          }
+          final ayah = _parsePositiveInt(state.uri.queryParameters['ayah']);
+          return MushafDeepLinkScreen(surah: surah, ayah: ayah);
+        },
+      ),
       GoRoute(
         path: '/mushaf',
         builder: (context, state) {
-          final page = int.tryParse(state.uri.queryParameters['page'] ?? '');
-          return MushafScreen(initialPage: page ?? 1);
+          final page = _parsePositiveInt(state.uri.queryParameters['page']);
+          final surah = _parsePositiveInt(state.uri.queryParameters['surah']);
+          final ayah = _parsePositiveInt(state.uri.queryParameters['ayah']);
+          if (surah != null || page != null) {
+            return MushafDeepLinkScreen(
+              page: page,
+              surah: surah,
+              ayah: ayah,
+            );
+          }
+          return const MushafScreen();
         },
       ),
       // Legacy paths → new mushaf / tasmee3 only.
@@ -51,6 +99,10 @@ final _routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: '/khatmah',
         builder: (_, __) => const MushafKhatmahScreen(),
+      ),
+      GoRoute(
+        path: '/mushaf-settings',
+        builder: (_, __) => const MushafSettingsScreen(),
       ),
       GoRoute(path: '/settings', builder: (_, __) => const SettingsScreen()),
       GoRoute(

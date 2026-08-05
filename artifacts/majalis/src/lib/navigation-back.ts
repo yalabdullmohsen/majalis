@@ -103,7 +103,7 @@ export function sectionAwareFallback(currentPath: string): string {
   if (p.startsWith("/lessons") || p.startsWith("/kuwait-lessons")) return "/lessons";
   if (p.startsWith("/adhkar") || p.startsWith("/daily-wird")) return "/adhkar";
   if (p.startsWith("/discover-islam")) return "/discover-islam";
-  if (p.startsWith("/library")) return "/library";
+  if (p.startsWith("/library")) return "/";
   if (p.startsWith("/learn") || p.startsWith("/learning")) return "/learn";
   if (p.startsWith("/admin")) return "/admin";
   if (p.startsWith("/fawaid")) return "/fawaid";

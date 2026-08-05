@@ -55,7 +55,7 @@ const FILTER_CHIPS: { key: string; label: string }[] = [
   { key: "all",     label: "الكل" },
   { key: "lesson",  label: "دروس" },
   { key: "library", label: "كتب" },
-  { key: "fatwa",   label: "فتاوى" },
+  { key: "ruling",  label: "أحكام" },
   { key: "hadith",  label: "أحاديث" },
   { key: "qa",      label: "أسئلة" },
   { key: "fawaid",  label: "فوائد" },
@@ -320,9 +320,9 @@ export function GlobalSearchModal({ onClose }: Props) {
               if (e.key === "Escape") onClose();
               if (e.key === "Enter") handleSubmitSearch();
             }}
-            placeholder="ابحث في الدروس والكتب والفتاوى والأحاديث..."
+            placeholder="ابحث في المحتوى…"
             dir="rtl"
-            aria-label="بحث شامل"
+            aria-label="ابحث في المحتوى"
             autoComplete="off"
             autoCorrect="off"
             autoCapitalize="off"
@@ -430,19 +430,19 @@ export function GlobalSearchModal({ onClose }: Props) {
                 <p className="gsm-section__label">تصفح</p>
                 <div className="gsm-quicklinks">
                   {[
-                    { href: "/flashcards",    label: "المراجعة",     Icon: CreditCard },
-                    { href: "/quran-hub",     label: "القرآن",       Icon: BookMarked },
-                    { href: "/adhkar",         label: "الأذكار",      Icon: RotateCw },
-                    { href: "/lessons",        label: "الدروس",       Icon: GraduationCap },
-                    { href: "/rulings",        label: "الأحكام الشرعية", Icon: Scale },
-                    { href: "/library",        label: "المكتبة",      Icon: BookOpen },
-                    { href: "/qa",             label: "الأسئلة",      Icon: HelpCircle },
-                    { href: "/hadith",         label: "الأحاديث",     Icon: Scroll },
-                    { href: "/knowledge-graph", label: "المعرفة",     Icon: Layers },
-                    { href: "/fawaid",         label: "الفوائد",      Icon: Lightbulb },
-                    { href: "/topics",         label: "الموضوعات",    Icon: Tag },
-                    { href: "/seerah",         label: "السيرة",       Icon: Star },
-                    { href: "/occasions",      label: "المناسبات",    Icon: Bell },
+                    { href: "/my-learning#flashcards", label: "المراجعة", Icon: CreditCard },
+                    { href: "/mushaf", label: "القرآن", Icon: BookMarked },
+                    { href: "/quran-knowledge", label: "القرآن وعلومه", Icon: BookOpen },
+                    { href: "/adhkar", label: "الأذكار", Icon: RotateCw },
+                    { href: "/lessons", label: "الدروس", Icon: GraduationCap },
+                    { href: "/fiqh", label: "الفقه والأحكام", Icon: Scale },
+                    { href: "/qa", label: "الأسئلة", Icon: HelpCircle },
+                    { href: "/hadith", label: "الحديث والسنة", Icon: Scroll },
+                    { href: "/memorization", label: "الحفظ", Icon: Layers },
+                    { href: "/islamic-directory", label: "الدليل", Icon: Layers },
+                    { href: "/fawaid", label: "الفوائد", Icon: Lightbulb },
+                    { href: "/seerah", label: "السيرة", Icon: Star },
+                    { href: "/occasions-lessons", label: "المناسبات والدروس", Icon: Bell },
                   ].map((l) => (
                     <button
                       key={l.href}
@@ -464,8 +464,8 @@ export function GlobalSearchModal({ onClose }: Props) {
           {!isEmpty && error && !loading && (
             <div className="gsm-error-state" role="alert" aria-live="assertive">
               <p className="gsm-state-icon"><AlertTriangle size={32} strokeWidth={1.5} aria-hidden="true" /></p>
-              <p className="gsm-state-title">تعذر الاتصال</p>
-              <p className="gsm-state-hint">تحقق من الاتصال بالإنترنت وأعد المحاولة.</p>
+              <p className="gsm-state-title">تعذر تنفيذ البحث. حاول مرة أخرى.</p>
+              <p className="gsm-state-hint">تحقق من الاتصال بالإنترنت ثم أعد المحاولة.</p>
               <button type="button" onClick={() => doSearch(query, activeFilter)} className="gsm-retry-btn">
                 أعد المحاولة
               </button>
@@ -475,7 +475,7 @@ export function GlobalSearchModal({ onClose }: Props) {
           {!isEmpty && !loading && !error && !hasResults && (
             <div className="gsm-empty-state">
               <p className="gsm-state-icon"><Search size={32} strokeWidth={1.5} aria-hidden="true" /></p>
-              <p className="gsm-state-title">لا نتائج لـ «{query}»</p>
+              <p className="gsm-state-title">لا توجد نتائج مطابقة.</p>
               <p className="gsm-state-hint">جرب تبسيط الكلمة أو إزالة التشكيل.</p>
               <div className="gsm-pills gsm-pills--center">
                 {POPULAR_QUERIES.slice(0, 4).map((q) => (

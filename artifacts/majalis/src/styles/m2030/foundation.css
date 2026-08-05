@@ -1,0 +1,187 @@
+/**
+ * Majlisilm 2030 — Foundation (ألوان/نصوص/أشكال من الرموز فقط)
+ */
+
+html {
+  background:
+    radial-gradient(ellipse 70% 40% at 100% 0%, color-mix(in srgb, var(--em-500) 6%, transparent), transparent 55%),
+    var(--bg);
+  color: var(--text);
+}
+
+body {
+  background: transparent !important;
+  color: var(--text) !important;
+  font-family: var(--font-body) !important;
+}
+
+#root,
+.app-shell,
+.majlisilm-app {
+  background: transparent;
+  color: var(--text);
+}
+
+h1, h2, h3, .ds-section__title {
+  color: var(--text-title);
+}
+
+p, li, label {
+  color: var(--text);
+}
+
+small, .meta, .text-muted, .text-secondary {
+  color: var(--text-muted);
+}
+
+.ds-card,
+.card-v2,
+.ui-card,
+.content-card,
+.lesson-unified-card,
+.book-card,
+.path-card,
+.scholar-card {
+  border-radius: var(--r-md) !important;
+  box-shadow: var(--e-1) !important;
+  border: 1px solid var(--border) !important;
+  background: var(--surface) !important;
+  color: var(--text) !important;
+}
+
+.ds-card:hover,
+.card-v2:hover,
+.ui-card:hover {
+  transform: none !important;
+  box-shadow: var(--e-2) !important;
+}
+
+.m2030-cut {
+  clip-path: polygon(
+    var(--cut) 0,
+    calc(100% - var(--cut)) 0,
+    100% var(--cut),
+    100% calc(100% - var(--cut)),
+    calc(100% - var(--cut)) 100%,
+    var(--cut) 100%,
+    0 calc(100% - var(--cut)),
+    0 var(--cut)
+  );
+}
+
+.ds-btn,
+.btn,
+.page-action-btn,
+.ds-btn--primary,
+.btn--primary {
+  border-radius: var(--r-sm) !important;
+  font-family: var(--font-body) !important;
+  min-height: 2.75rem;
+}
+
+.ds-btn--primary,
+.btn--primary,
+.page-action-btn--primary {
+  background: var(--brand) !important;
+  color: var(--text-on-brand) !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+.ds-btn--primary:hover,
+.btn--primary:hover {
+  background: var(--brand-hover) !important;
+}
+
+.ds-btn--ghost,
+.btn--secondary,
+.btn--ghost {
+  background: transparent !important;
+  color: var(--text-brand) !important;
+  border: 1px solid var(--border-strong) !important;
+}
+
+.geo-star-grid,
+.geo-hex,
+.geo-lattice,
+.geo-pattern-strip,
+.geo-dots-pattern,
+.geo-page-top-bar,
+.home-hero-pattern,
+.islamic-ornament-strip,
+.geo-corner-ornament {
+  display: none !important;
+}
+
+.pt-hero,
+.page-hero-dark,
+.mzd-hero,
+.quran-hub-hero,
+.hadith-hero,
+.fiqh-hero {
+  background:
+    linear-gradient(165deg, var(--em-900) 0%, var(--em-950) 55%, #0A1A16 100%) !important;
+  color: var(--text-on-dark) !important;
+  border-radius: 0 !important;
+  padding-block: 1.1rem !important;
+}
+
+.skeleton-base,
+.hp-skel {
+  background: linear-gradient(90deg, var(--surface-2), var(--surface-muted), var(--surface-2)) !important;
+  background-size: 200% 100%;
+  border-radius: var(--r-sm) !important;
+}
+
+.m2030-empty,
+.m2030-error,
+.async-empty,
+.async-error,
+.empty-state,
+.error-state {
+  display: grid;
+  place-items: center;
+  gap: var(--s-2);
+  padding: var(--s-8) var(--s-4);
+  text-align: center;
+  color: var(--text-2);
+  background:
+    radial-gradient(circle at 50% 18%, color-mix(in srgb, var(--em-500) 8%, transparent), transparent 55%),
+    var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+}
+
+.m2030-empty__mark,
+.m2030-error__mark {
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1.5px solid color-mix(in srgb, var(--brand) 40%, transparent);
+  transform: rotate(45deg);
+  margin-block-end: var(--s-1);
+}
+
+.m2030-section-rule {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  margin-block: var(--s-1) var(--s-3);
+  color: var(--text-meta);
+  font-size: var(--fs-sm);
+}
+
+.m2030-section-rule::before,
+.m2030-section-rule::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-strong), transparent);
+}
+
+.m2030-section-rule__diamond {
+  width: 0.4rem;
+  height: 0.4rem;
+  background: var(--brand);
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}

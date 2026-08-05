@@ -1,0 +1,160 @@
+/**
+ * Majlisilm 2030 — جلود الصفحات الأساسية (رموز فقط)
+ */
+
+html.pts-immersive,
+html.pts-immersive body {
+  background-color: var(--em-950) !important;
+}
+
+.pts-screen {
+  --pts-bg-0: var(--em-950);
+  --pts-bg-1: var(--em-900);
+  --pts-bg-2: var(--em-800);
+  --pts-gold: var(--gold-400);
+  --pts-gold-soft: color-mix(in srgb, var(--em-400) 20%, transparent);
+  --pts-gold-line: color-mix(in srgb, var(--em-400) 38%, transparent);
+  --pts-white: var(--text-on-dark);
+  --pts-muted: color-mix(in srgb, var(--text-on-dark) 72%, transparent);
+  --pts-row: color-mix(in srgb, var(--text-on-dark) 5%, transparent);
+  --pts-row-active: color-mix(in srgb, var(--em-400) 14%, transparent);
+  background-image:
+    radial-gradient(ellipse 80% 40% at 80% 0%, color-mix(in srgb, var(--em-400) 12%, transparent), transparent 55%),
+    linear-gradient(180deg, var(--em-900) 0%, var(--em-950) 55%, #0A1A16 100%) !important;
+  gap: 0.65rem !important;
+  padding-block-start: max(0.65rem, env(safe-area-inset-top, 0px)) !important;
+}
+
+.pts-screen::before {
+  opacity: 0.45;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72'%3E%3Cpath d='M36 8L41 24L57 20L48 36L57 52L41 48L36 64L31 48L15 52L24 36L15 20L31 24Z' fill='none' stroke='rgba(126,190,168,0.1)' stroke-width='1'/%3E%3C/svg%3E") !important;
+}
+
+.pts-next,
+.pts-hero-card,
+.pts-countdown {
+  border-radius: var(--r-md) !important;
+  border: 1px solid color-mix(in srgb, var(--em-400) 26%, transparent) !important;
+  background: color-mix(in srgb, var(--em-800) 88%, transparent) !important;
+  box-shadow: none !important;
+  padding: 0.85rem !important;
+}
+
+.pts-row.is-active,
+.pts-prayer-row.is-active {
+  box-shadow: inset -3px 0 0 var(--em-400);
+}
+
+.kids-hub-page--soon,
+.kids-hub-soon {
+  background:
+    radial-gradient(circle at 70% 10%, color-mix(in srgb, var(--em-500) 10%, transparent), transparent 45%),
+    var(--bg) !important;
+  padding-block: 1.5rem !important;
+}
+
+.kids-hub-soon__badge {
+  background: var(--em-900) !important;
+  color: var(--em-300) !important;
+  border: 1px solid color-mix(in srgb, var(--em-400) 35%, transparent) !important;
+  border-radius: var(--r-sm) !important;
+}
+
+.kids-hub-intro__title { color: var(--text-title) !important; }
+.kids-hub-intro__sub,
+.kids-hub-soon__note { color: var(--text-2) !important; }
+
+.kids-hub-soon__btn--primary {
+  background: var(--brand) !important;
+  color: var(--text-on-brand) !important;
+  border-radius: var(--r-sm) !important;
+}
+
+.lesson-unified-card,
+.lesson-card,
+.course-card {
+  background: var(--surface) !important;
+  border: 1px solid var(--border) !important;
+  border-radius: var(--r-md) !important;
+  box-shadow: var(--e-1) !important;
+  padding: 0.85rem !important;
+}
+
+.lesson-unified-card__btn--primary,
+.lesson-card__cta {
+  background: var(--brand) !important;
+  color: var(--text-on-brand) !important;
+  border-radius: var(--r-sm) !important;
+}
+
+.quiz-option,
+.quiz-answer,
+[class*="quiz"] button[class*="option"] {
+  min-height: 3rem !important;
+  border-radius: var(--r-sm) !important;
+  border: 1px solid var(--border-strong) !important;
+  background: var(--surface) !important;
+  color: var(--text) !important;
+  font-size: 1rem !important;
+  padding: 0.7rem 0.9rem !important;
+}
+
+.quiz-option.is-correct,
+.quiz-answer--correct {
+  border-color: var(--ok-fg) !important;
+  background: var(--ok-bg) !important;
+  color: var(--ok-fg) !important;
+}
+
+.quiz-option.is-wrong,
+.quiz-answer--wrong {
+  border-color: var(--danger-fg) !important;
+  background: var(--danger-bg) !important;
+  color: var(--danger-fg) !important;
+}
+
+.quiz-progress,
+[class*="quiz-progress"] {
+  height: 0.3rem !important;
+  background: var(--surface-3) !important;
+  border-radius: 999px !important;
+  overflow: hidden;
+}
+
+.quiz-progress > *,
+[class*="quiz-progress"] > * {
+  background: linear-gradient(90deg, var(--em-700), var(--em-500)) !important;
+}
+
+.surah-list-item,
+.quran-surah-row,
+[class*="surah-"] a {
+  border-radius: var(--r-sm) !important;
+  border-color: var(--border) !important;
+  color: var(--text) !important;
+  padding-block: 0.65rem !important;
+}
+
+.quran-hub-hero__ornament { display: none !important; }
+
+.ds-page-header,
+.page-header,
+.section-page-header {
+  border-block-end: 1px solid var(--border);
+  padding-block: 0.7rem;
+}
+
+.ds-page-header h1,
+.page-header h1 {
+  font-family: var(--font-display);
+  color: var(--text-title);
+  font-size: 1.35rem;
+}
+
+/* تقليل فراغات الهيرو العامة */
+.page-hero,
+.hub-hero,
+.section-hero {
+  padding-block: 1rem !important;
+  min-height: unset !important;
+}

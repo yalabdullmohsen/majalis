@@ -3,15 +3,15 @@
  * (يعمل فورًا بلا اتصال)، ويُزامَن مع Supabase عند تسجيل الدخول (جدول
  * user_homepage_prefs، صف واحد لكل مستخدم، نفس نمط user_learning_plans).
  *
- * القسمان الثابتان (البطل والبحث في الأعلى، "عن المجلس العلمي" في الأسفل)
- * غير قابلين للتخصيص عمدًا — هوية الصفحة الأساسية وخاتمتها.
+ * القسم الثابت (البطل في الأعلى) غير قابل للتخصيص عمدًا — هوية الصفحة الأساسية.
+ * خاتمة «عن المجلس / من نحن» أُزيلت من الرئيسية بعد تنظيف الاكتشاف (2026-08).
  */
 import { supabase } from "@/lib/supabase";
 
 export type HomeWidgetId =
   | "lessons" | "prayer" | "continue" | "daily-progress" | "week-streak"
   | "sunnah-time" | "explore" | "learning-seasons"
-  | "occasions" | "latest-updates" | "library" | "quiz"
+  | "occasions" | "quiz"
   | "prayer-ranks" | "interesting-topics" | "mind-map" | "daily-benefits" | "upcoming-events";
 
 /* ترتيب افتراضي — تحديث 2026-07-19 (تكليف ثانٍ، بند 4): "التقدم اليومي" كان
@@ -27,14 +27,12 @@ export const HOME_WIDGET_DEFS: { id: HomeWidgetId; label: string }[] = [
   { id: "learning-seasons", label: "مواسم التعلم" },
   { id: "daily-benefits", label: "فوائد منتقاة" },
   { id: "upcoming-events", label: "فعاليات وإعلانات علمية" },
-  { id: "library", label: "المكتبة العلمية" },
   { id: "quiz", label: "المسابقة" },
   { id: "sunnah-time", label: "سنن الوقت" },
   { id: "week-streak", label: "سجل الأسبوع" },
   { id: "mind-map", label: "الخرائط الذهنية" },
   { id: "prayer-ranks", label: "مراتب الصلاة" },
-  { id: "occasions", label: "المناسبات الإسلامية" },
-  { id: "latest-updates", label: "آخر التحديثات" },
+  { id: "occasions", label: "المناسبات والدروس" },
   { id: "interesting-topics", label: "مواضيع مشوقة" },
   { id: "prayer", label: "مواقيت الصلاة" },
   { id: "explore", label: "استكشف المنصة" },
@@ -65,9 +63,9 @@ export type HomepagePrefs = {
    (hadith/daily-corner/asma) يُفلتَر عبر VALID_IDS. daily-benefits بقيت —
    تغذية آلية من محتوى منشور، لا بطاقة تدوير يومي ثابتة. */
 const DEFAULT_HIDDEN: HomeWidgetId[] = [
-  "occasions", "prayer-ranks", "interesting-topics", "latest-updates", "prayer",
+  "occasions", "prayer-ranks", "interesting-topics", "prayer",
   "sunnah-time", "explore", "week-streak", "mind-map",
-  "daily-benefits", "upcoming-events", "quiz", "library",
+  "daily-benefits", "upcoming-events", "quiz",
 ];
 const DEFAULT_PREFS: HomepagePrefs = { order: DEFAULT_ORDER, hidden: DEFAULT_HIDDEN };
 const STORAGE_KEY = "majalis-homepage-prefs-v1";

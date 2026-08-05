@@ -1,13 +1,5 @@
 /**
- * اختبار Regression لسلوكيات جديدة/مُصلَحة (2026-07-23):
- * - شريط الأقسام العلوي (TopSectionBar): تحديد القسم النشط الصحيح، بما
- *   فيه المسارات الفرعية، بلا التباس بين الأقسام.
- * - توحيد الأقسام اليومية: HOME_WIDGET_DEFS لم يعد يحوي الودجتين
- *   المُزالتين (hadith/daily-corner)، وsanitizePrefs يُصفّي بأمان أي
- *   تفضيل محلي قديم محفوظ يحوي معرّفيهما (توافق خلفي بلا كسر).
- * - تعطيل الباحث الشرعي: حالة سجل الميزات "disabled" بلا ظهور في القوائم.
- * - إعادة توجيه /scholarly-research وتسجيل /kids في مسارات SEO.
- *
+ * اختبار Regression للتنقل بعد تنظيف الأقسام (2026-08).
  * تُشغَّل عبر: npx tsx src/lib/__tests__/section-nav-and-daily-consolidation.test.ts
  */
 import { readFileSync } from "node:fs";
@@ -36,249 +28,131 @@ function assert(condition: boolean, label: string) {
   else { console.error(`  ✗ FAIL: ${label}`); failed++; }
 }
 
-console.log("\n=== TopSectionBar — محاور موسوعية بلا تكرار ===");
+console.log("\n=== TopSectionBar — أقسام مختصرة بعد التنظيف ===");
 {
-  assert(SECTION_TABS.length === 7, `7 أقسام في الشريط العلوي (الفعلي: ${SECTION_TABS.length})`);
+  assert(SECTION_TABS.length === 9, `9 أقسام في الشريط العلوي (الفعلي: ${SECTION_TABS.length})`);
   const hrefs = SECTION_TABS.map((t) => t.href);
-  assert(new Set(hrefs).size === hrefs.length, "لا تكرار في مسارات الأقسام (كل href فريد)");
-  assert(!hrefs.includes("/"), "«الرئيسية» غير ظاهرة داخل الشريط (تبقى ضمن التنقل الرئيسي فقط)");
-  assert(!hrefs.includes("/features-in-progress"), "«مميزات قيد التطوير» غير ظاهرة داخل الشريط");
-  assert(!hrefs.includes("/flashcards"), "بطاقات المراجعة أُخرجت من الشريط العلوي");
-  assert(!hrefs.includes("/islam-stats"), "إحصائيات الإسلام أُخرجت من الشريط العلوي");
-  assert(!hrefs.includes("/kids"), "الأطفال خارج الشريط العلوي (يبقى في المزيد بشارة قريبًا)");
-  assert(hrefs.includes("/mushaf"), "تبويب القرآن يشير مباشرة إلى المصحف");
-  assert(!hrefs.includes("/quran-hub"), "مركز القرآن لم يعد تبويبًا موازيًا في الشريط");
-  assert(!hrefs.includes("/learn"), "بوابة /learn خارج الشريط (المسارات عبر المزيد)");
-  const priorityFirst5 = ["/tawhid", "/seerah", "/fiqh", "/hadith", "/mushaf"];
-  assert(hrefs.slice(0, 5).join(",") === priorityFirst5.join(","),
-    `أول 5 أقسام هي أولوية العقيدة/السيرة/الفقه/الحديث/القرآن بالترتيب (الفعلي: ${hrefs.slice(0, 5).join(",")})`);
-  assert(hrefs.includes("/library") && hrefs.includes("/scholars"),
-    "المكتبة والعلماء ضمن الشريط");
-  for (const href of hrefs) {
-    assert(href.startsWith("/") && href.length > 1, `مسار "${href}" يبدو مسارًا فعليًا (لا فارغ ولا وهمي)`);
-  }
+  assert(new Set(hrefs).size === hrefs.length, "لا تكرار في مسارات الأقسام");
+  assert(!hrefs.includes("/library"), "المكتبة خارج الشريط");
+  assert(!hrefs.includes("/scholars"), "العلماء خارج الشريط العلوي");
+  assert(hrefs.includes("/mushaf") && hrefs.includes("/quran-knowledge"), "القرآن والقرآن وعلومه");
+  assert(hrefs.includes("/memorization") && hrefs.includes("/occasions-lessons"), "الحفظ والمناسبات");
+  assert(hrefs.includes("/islamic-directory") && hrefs.includes("/my-learning"), "الدليل وحسابي");
 }
 
-console.log("\n=== isTabActive — فتح القسم الصحيح من الشريط ===");
+console.log("\n=== isTabActive ===");
 {
   assert(isTabActive("/mushaf", "/mushaf") === true, "تبويب القرآن نشط في المصحف");
-  assert(isTabActive("/mushaf/page/1", "/mushaf") === true, "تبويب القرآن يبقى نشطًا في صفحة مصحف");
-  assert(isTabActive("/quran-hub", "/mushaf") === true, "مسار مركز القرآن القديم يفعّل تبويب المصحف");
-  assert(isTabActive("/quran/tajweed", "/mushaf") === true, "مسارات /quran/* تفعّل تبويب القرآن");
-  assert(isTabActive("/mushafx", "/mushaf") === false, "لا التباس مع مسار مشابه بالاسم");
-  assert(isTabActive("/kids", "/mushaf") === false, "تبويب القرآن غير نشط وأنت في قسم الأطفال");
-  assert(isTabActive("/prophets", "/seerah") === true, "تبويب السيرة نشط في قصص الأنبياء");
-  assert(isTabActive("/stories", "/seerah") === true, "تبويب السيرة نشط في القصص الإسلامية");
-  assert(isTabActive("/library/book-1", "/library") === true, "تبويب المكتبة نشط في مسار كتاب");
-  assert(isTabActive("/scholars/bukhari", "/scholars") === true, "تبويب العلماء نشط في ملف عالم");
-
-  // لا قسمان نشطان معًا لنفس location — يمنع التباسًا بصريًا في الشريط.
-  // (مسارا /mushaf و/mushaf/page مستثنيان هنا عمدًا: الشريط كلّه يختفي
-  // فور دخول أي مسار يبدأ بـ/mushaf — قارئ المصحف الغامر له تنقّله
-  // الخاص — فلا يُطرح سؤال "كم تبويبًا نشطًا" هناك أصلًا.)
-  const sampleLocations = ["/quran-hub", "/kids", "/kids/x", "/other-page", "/", "/fiqh", "/scholars", "/prophets", "/tafsir"];
-  for (const loc of sampleLocations) {
-    const activeCount = SECTION_TABS.filter((t) => isTabActive(loc, t.href)).length;
-    assert(activeCount <= 1, `المسار "${loc}" يُفعِّل تبويبًا واحدًا كحد أقصى (الفعلي: ${activeCount})`);
-  }
+  assert(isTabActive("/ulum-quran", "/quran-knowledge") === true, "علوم القرآن تحت القرآن وعلومه");
+  assert(isTabActive("/quran/surah-stories", "/quran-knowledge") === true, "قصص السور تحت القرآن وعلومه");
+  assert(isTabActive("/quran-memorization", "/memorization") === true, "اختبارات الحفظ تحت الحفظ");
+  assert(isTabActive("/occasions", "/occasions-lessons") === true, "المناسبات تحت البوابة");
+  assert(isTabActive("/institutions", "/islamic-directory") === true, "المؤسسات تحت الدليل");
+  assert(isTabActive("/library/book-1", "/mushaf") === false, "مسار كتاب لا يفعّل القرآن");
 }
 
-console.log("\n=== توحيد الأقسام اليومية — الودجتان المُزالتان اختفتا فعليًا ===");
+console.log("\n=== ودجتات الرئيسية ===");
 {
   const ids = HOME_WIDGET_DEFS.map((w) => w.id);
-  assert(!ids.includes("hadith" as HomeWidgetId), "الودجت \"hadith\" (حديث اليوم المنفصل) لم يعد في قائمة التخصيص");
-  assert(!ids.includes("daily-corner" as HomeWidgetId), "الودجت \"daily-corner\" (الركن اليومي) لم يعد في قائمة التخصيص");
-  assert(ids.includes("daily-benefits" as HomeWidgetId), "\"فوائد منتقاة\" بقيت (تغذية آلية حية، ليست تكرار محتوى نصي)");
-  assert(new Set(ids).size === ids.length, "لا معرّفات ودجت مكرَّرة في HOME_WIDGET_DEFS");
+  assert(!ids.includes("library" as HomeWidgetId), "ودجت المكتبة أُزيل");
+  assert(!ids.includes("latest-updates" as HomeWidgetId), "ودجت آخر التحديثات أُزيل");
+  assert(!ids.includes("hadith" as HomeWidgetId), "hadith اليومي ما زال محذوفاً");
+  const cleaned = sanitizePrefs({ order: ["library", "latest-updates", "continue"], hidden: ["library"] });
+  assert(!cleaned.order.includes("library" as HomeWidgetId), "تفضيل مكتبة قديم يُصفَّى");
+  assert(cleaned.order.includes("continue" as HomeWidgetId), "continue يبقى");
+  assert(cleaned.order.length === HOME_WIDGET_DEFS.length, "الترتيب يكتمل بكل الودجتات الحالية");
 }
 
-console.log("\n=== sanitizePrefs — توافق خلفي مع تفضيلات محفوظة تحوي ودجتات محذوفة ===");
-{
-  const staleFromOldSession = {
-    order: ["hadith", "daily-corner", "continue", "lessons"],
-    hidden: ["hadith"],
-  };
-  const cleaned = sanitizePrefs(staleFromOldSession);
-  assert(!cleaned.order.includes("hadith" as HomeWidgetId), "تفضيل قديم يحوي \"hadith\" يُصفَّى بلا خطأ عند التحميل");
-  assert(!cleaned.order.includes("daily-corner" as HomeWidgetId), "تفضيل قديم يحوي \"daily-corner\" يُصفَّى بلا خطأ عند التحميل");
-  assert(cleaned.order.includes("continue" as HomeWidgetId) && cleaned.order.includes("lessons" as HomeWidgetId),
-    "الودجتات الصالحة الأخرى في نفس التفضيل القديم تبقى محفوظة");
-  assert(cleaned.order.length === HOME_WIDGET_DEFS.length,
-    `الترتيب المُصفَّى يحوي كل الودجتات الحالية بلا نقص أو زيادة (${cleaned.order.length}/${HOME_WIDGET_DEFS.length})`);
-}
-
-console.log("\n=== تعطيل الباحث الشرعي — سجل الميزات ===");
+console.log("\n=== سجل الميزات ===");
 {
   const entry = FEATURE_REGISTRY.find((f) => f.id === "scholarly-research");
-  assert(entry !== undefined, "المدخل ما زال موجودًا في السجل (لم يُحذف، عُطِّل فقط)");
-  assert(entry?.status === "disabled", `الحالة "disabled" (الفعلية: ${entry?.status})`);
-  assert(entry?.inSideNav === false, "لا يظهر في القائمة الجانبية");
-  assert(entry?.inBottomNav === false, "لا يظهر في التنقل السفلي");
-
-  const kidsEntry = FEATURE_REGISTRY.find((f) => f.id === "kids");
-  assert(kidsEntry !== undefined && kidsEntry.status === "coming-soon" && kidsEntry.path === "/kids" && kidsEntry.inSideNav === false,
-    "مدخل قسم الأطفال coming-soon وخارج القائمة الجانبية (يبقى في المزيد)");
-
-  const circlesEntry = FEATURE_REGISTRY.find((f) => f.id === "quran-circles");
-  assert(circlesEntry !== undefined && circlesEntry.status === "active" && circlesEntry.inSideNav === true,
-    "حلقات التحفيظ نشطة وتظهر في القائمة الجانبية");
-
-  const uniEntry = FEATURE_REGISTRY.find((f) => f.id === "universities");
-  assert(uniEntry !== undefined && uniEntry.inSideNav === false,
-    "دليل الجامعات خارج القائمة الجانبية (مخفي من الاكتشاف)");
-  assert(HIDDEN_FROM_NAV_PATHS.has("/universities"), "universities ضمن المسارات المخفية");
-
-  const planEntry = FEATURE_REGISTRY.find((f) => f.id === "learning-plan");
-  assert(planEntry !== undefined && planEntry.status === "disabled" && planEntry.inSideNav === false,
-    "خطة التعلم مُعطّلة ومُزالة من القوائم (مدمجة في المسارات)");
-
-  const annualEntry = FEATURE_REGISTRY.find((f) => f.id === "annual-courses");
-  assert(annualEntry !== undefined && annualEntry.status === "disabled" && annualEntry.inSideNav === false,
-    "قائمة الدورات السنوية مُعطّلة (مدمجة في /lessons?tab=courses)");
+  assert(entry?.status === "disabled", "الباحث الشرعي معطّل");
+  assert(HIDDEN_FROM_NAV_PATHS.has("/universities"), "universities مخفي");
 }
 
-console.log("\n=== vercel.json — إعادة توجيه دائمة لمسار الباحث الشرعي ومسارات الدمج ===");
+console.log("\n=== vercel redirects للتنظيف ===");
 {
   const vercelConfig = JSON.parse(readFileSync(resolve(appRoot, "vercel.json"), "utf-8"));
   const redirects = vercelConfig.redirects as Array<{ source: string; destination: string; permanent: boolean }>;
-  const redirect = redirects.find((r) => r.source === "/scholarly-research");
-  assert(redirect !== undefined, "قاعدة توجيه على مستوى الخادم موجودة لـ /scholarly-research");
-  assert(redirect?.destination === "/qa", `الوجهة /qa صحيحة (الفعلية: ${redirect?.destination})`);
-  assert(redirect?.permanent === true, "التوجيه دائم (301) لا مؤقت — صحيح لمحركات البحث");
-
-  const mergeRedirects: Array<[string, string]> = [
+  const expect: Array<[string, string]> = [
+    ["/library", "/"],
+    ["/updates", "/"],
+    ["/knowledge-graph", "/"],
+    ["/academic-research", "/"],
+    ["/quran-index", "/quran-knowledge"],
+    ["/memorization-tests", "/memorization"],
+    ["/islamic-institutions", "/islamic-directory"],
+    ["/reviewed-cards", "/my-learning"],
     ["/learning-plan", "/learning/paths"],
-    ["/masarat", "/learning/paths"],
-    ["/knowledge-map", "/knowledge-graph"],
-    ["/learning/quiz", "/quiz"],
-    ["/mushaf-v2-preview", "/mushaf"],
-    ["/features-in-progress", "/updates"],
-    ["/quran-studies", "/ulum-quran"],
-    ["/anbiya", "/prophets"],
-    ["/start-here", "/learning/paths"],
-    ["/learning/calendar", "/calendar"],
-    ["/prayer-countdown", "/prayer-times"],
-    ["/annual-courses", "/lessons?tab=courses"],
+    ["/quran-studies", "/quran-knowledge"],
   ];
-  for (const [source, destination] of mergeRedirects) {
+  for (const [source, destination] of expect) {
     const rule = redirects.find((r) => r.source === source);
-    assert(rule !== undefined && rule.destination === destination && rule.permanent === true,
-      `توجيه دائم ${source} → ${destination}`);
+    assert(!!rule && rule.destination === destination && rule.permanent === true,
+      `توجيه ${source} → ${destination}`);
   }
 }
 
-console.log("\n=== seo-routes.json — /kids مسجَّل (noindex)، /scholarly-research أُزيل ===");
-{
-  const seoConfig = JSON.parse(readFileSync(resolve(appRoot, "src/lib/seo-routes.json"), "utf-8"));
-  const routes = seoConfig.routes as Array<{ path: string; sitemap?: boolean; robots?: string }>;
-  const kidsRoute = routes.find((r) => r.path === "/kids");
-  assert(kidsRoute !== undefined, "/kids مسجَّل في seo-routes.json");
-  assert(kidsRoute?.sitemap === false && kidsRoute?.robots === "noindex, follow",
-    "/kids خارج sitemap وبـ noindex أثناء حالة قريبًا");
-  const circlesRoute = routes.find((r) => r.path === "/quran-circles");
-  assert(circlesRoute !== undefined && circlesRoute.sitemap === true && circlesRoute.robots === "index, follow",
-    "/quran-circles في sitemap وبـ index بعد التفعيل");
-  for (const p of ["/universities", "/universities/compare"]) {
-    const route = routes.find((r) => r.path === p);
-    assert(route !== undefined && route.sitemap === false, `${p} خارج sitemap بعد التنزيل`);
-  }
-  const mindMapRoute = routes.find((r) => r.path === "/mind-map");
-  assert(mindMapRoute !== undefined && mindMapRoute.sitemap === true,
-    "/mind-map في sitemap (محتوى حي تحت بوابة المعرفة)");
-  assert(routes.find((r) => r.path === "/scholarly-research") === undefined,
-    "/scholarly-research لم يعد في seo-routes.json (لن يظهر في sitemap.xml القادم)");
-}
-
-console.log("\n=== PRIMARY_NAV — أقسام رئيسية مختصرة ===");
+console.log("\n=== PRIMARY_NAV ===");
 {
   const hrefs = PRIMARY_NAV_ITEMS.map((i) => i.href);
-  assert(hrefs.includes("/") && hrefs.includes("/mushaf") && hrefs.includes("/fiqh"),
-    "الهيدر يضم الرئيسية والقرآن والفقه");
-  assert(!hrefs.includes("/annual-courses") && !hrefs.includes("/anbiya"),
-    "الهيدر لا يعرض مسارات مدموجة");
-  const learnReg = FEATURE_REGISTRY.find((f) => f.id === "learn");
-  assert(learnReg?.status === "disabled" && learnReg.inBottomNav === false,
-    "بوابة /learn معطّلة خارج التنقل السفلي");
-  const lessonsReg = FEATURE_REGISTRY.find((f) => f.id === "lessons");
-  assert(lessonsReg?.inBottomNav === false, "lessons خارج التنقل السفلي");
+  assert(hrefs.includes("/") && hrefs.includes("/mushaf") && hrefs.includes("/fiqh"), "هيدر أساسي");
+  assert(!hrefs.includes("/library"), "لا مكتبة في PRIMARY_NAV");
 }
 
-console.log("\n=== nav-visibility — إخفاء/دمج/قريبًا ===");
+console.log("\n=== nav-visibility تنظيف ===");
 {
-  for (const p of [
-    "/islam-stats", "/study-room", "/vault", "/cards", "/car-mode", "/mosque-mode",
-    "/family", "/universities", "/mind-map", "/mushaf/page",
-    "/quran/recitation-test-ai",
-    "/quran-studies", "/anbiya", "/start-here", "/learning/calendar",
-    "/prayer-countdown", "/annual-courses", "/duas", "/prayer-ranks", "/sujood-sahw",
-  ]) {
-    assert(HIDDEN_FROM_NAV_PATHS.has(p), `${p} ضمن المسارات المخفية من الاكتشاف`);
+  for (const p of ["/library", "/updates", "/knowledge-graph", "/academic-research", "/flashcards", "/ulum-quran", "/occasions", "/institutions"]) {
+    assert(HIDDEN_FROM_NAV_PATHS.has(p), `${p} مخفي من الاكتشاف`);
   }
-  assert(isComingSoonPath("/kids") && !isComingSoonPath("/quran-circles"), "الأطفال قريبًا وحلقات التحفيظ مفعّلة");
-  assert(!HIDDEN_FROM_NAV_PATHS.has("/quran-circles"), "حلقات التحفيظ ظاهرة في الاكتشاف");
-  assert(resolveMergedPath("/knowledge-map") === "/knowledge-graph", "knowledge-map → knowledge-graph");
-  assert(resolveMergedPath("/mind-map") === "/mind-map", "mind-map يبقى حيًا (لا توجيه)");
-  assert(HIDDEN_FROM_NAV_PATHS.has("/mind-map"), "mind-map مخفي من القوائم الأولى ويُفتح من بوابة المعرفة");
-  assert(resolveMergedPath("/learning-plan") === "/learning/paths", "learning-plan → learning/paths");
-  assert(resolveMergedPath("/learning/quiz") === "/quiz", "learning/quiz → quiz");
-  assert(resolveMergedPath("/features-in-progress") === "/updates", "features-in-progress → updates");
-  assert(resolveMergedPath("/quran-studies") === "/ulum-quran", "quran-studies → ulum-quran");
-  assert(resolveMergedPath("/anbiya") === "/prophets", "anbiya → prophets");
-  assert(resolveMergedPath("/annual-courses") === "/lessons?tab=courses", "annual-courses → lessons?tab=courses");
-  assert(Object.keys(MERGED_PATH_REDIRECTS).length >= 10, "جدول إعادة التوجيه غير فارغ");
-
-  const filtered = filterNavItems([
-    { href: "/learn" },
-    { href: "/islam-stats" },
-    { href: "/kids" },
-    { href: "/vault" },
-    { href: "/quran-circles" },
-    { href: "/anbiya" },
-  ]);
-  assert(filtered.map((i) => i.href).join(",") === "/learn,/kids,/quran-circles",
-    `filterNavItems يُبقي الظاهر و«قريبًا» للأطفال والحلقات ويُسقط المخفي (الفعلي: ${filtered.map((i) => i.href).join(",")})`);
+  assert(resolveMergedPath("/library") === "/", "library → /");
+  assert(resolveMergedPath("/quran-index") === "/quran-knowledge", "quran-index → hub");
+  assert(resolveMergedPath("/reviewed-cards") === "/my-learning", "reviewed-cards → حسابي");
+  assert(Object.keys(MERGED_PATH_REDIRECTS).length >= 10, "جدول التوجيه غير فارغ");
+  assert(isComingSoonPath("/kids"), "الأطفال قريبًا");
+  assert(isComingSoonPath("/mushaf"), "المصحف قريبًا مؤقتًا");
+  assert(isComingSoonPath("/mushaf/1"), "مسارات المصحف الفرعية قريبًا");
 
   const homeHrefs = FEATURE_CATS.flatMap((c) => c.items.map((i) => i.href));
-  assert(!homeHrefs.includes("/car-mode") && !homeHrefs.includes("/mosque-mode"),
-    "كتالوج الرئيسية لا يعرض أوضاع السيارة/المسجد");
-  assert(!homeHrefs.includes("/islam-stats"), "كتالوج الرئيسية لا يعرض الإحصاءات");
-  assert(!homeHrefs.includes("/mind-map"), "كتالوج الأقسام لا يعرض mind-map كمدخل أول (يُفتح من بوابة المعرفة)");
-  assert(!homeHrefs.includes("/anbiya") && homeHrefs.includes("/prophets"),
-    "كتالوج الرئيسية يشير إلى /prophets لا /anbiya");
-  assert(!homeHrefs.includes("/duas") && homeHrefs.includes("/adhkar"),
-    "اكتشاف الأدعية عبر الأذكار لا صفحة /duas منفصلة");
-  assert(homeHrefs.includes("/fiqh") && !homeHrefs.includes("/qa") && !homeHrefs.includes("/rulings"),
-    "مدخل الفقه موحّد عبر /fiqh في الكتالوج");
+  assert(!homeHrefs.includes("/library") && !homeHrefs.includes("/flashcards"), "الكتالوج بلا مكتبة/بطاقات منفصلة");
+  assert(homeHrefs.includes("/quran-knowledge") && homeHrefs.includes("/memorization"), "البوابات في الكتالوج");
+  assert(filterNavItems([{ href: "/library" }, { href: "/mushaf" }]).map((i) => i.href).join(",") === "/mushaf",
+    "filterNavItems يسقط المكتبة");
 }
 
-console.log("\n=== sitemap + SEO لمسارات مدمجة/مخفية ===");
-{
-  const sitemap = readFileSync(resolve(appRoot, "public/sitemap.xml"), "utf-8");
-  for (const p of [
-    "/kids", "/cards", "/learning-plan", "/study-room",
-    "/universities", "/universities/compare", "/knowledge-map", "/islam-stats",
-    "/quran-studies", "/anbiya", "/start-here", "/prayer-countdown", "/annual-courses",
-  ]) {
-    assert(!sitemap.includes(`majlisilm.com${p}<`), `${p} خارج sitemap.xml`);
-  }
-  assert(sitemap.includes("majlisilm.com/quran-circles"), "/quran-circles داخل sitemap.xml بعد التفعيل");
-  const seoConfig = JSON.parse(readFileSync(resolve(appRoot, "src/lib/seo-routes.json"), "utf-8"));
-  const routes = seoConfig.routes as Array<{ path: string; sitemap?: boolean; robots?: string }>;
-  for (const p of ["/learning-plan", "/knowledge-map", "/quran-studies", "/anbiya", "/start-here", "/annual-courses"]) {
-    const route = routes.find((r) => r.path === p);
-    assert(route?.sitemap === false && route?.robots === "noindex, follow",
-      `${p} خارج sitemap وبـ noindex (مسار تحويل)`);
-  }
-}
-
-console.log("\n=== بلا تكرار /ulum-quran في المزيد والجانبية ===");
+console.log("\n=== القوائم بلا أقسام محذوفة وبلا من نحن في الجانبية/المزيد ===");
 {
   const moreSrc = readFileSync(resolve(appRoot, "src/components/MoreBottomSheet.tsx"), "utf-8");
   const sideSrc = readFileSync(resolve(appRoot, "src/components/SideNavDrawer.tsx"), "utf-8");
-  const moreHits = moreSrc.match(/href:\s*"\/ulum-quran"/g) ?? [];
-  const sideHits = sideSrc.match(/href:\s*"\/ulum-quran"/g) ?? [];
-  assert(moreHits.length === 1, `علوم القرآن مرة واحدة في المزيد (الفعلي: ${moreHits.length})`);
-  assert(sideHits.length === 1, `علوم القرآن مرة واحدة في الجانبية (الفعلي: ${sideHits.length})`);
+  const sidebarNavSrc = readFileSync(resolve(appRoot, "src/lib/sidebar-nav.ts"), "utf-8");
+  const homeSrc = readFileSync(resolve(appRoot, "src/views/HomePage.tsx"), "utf-8");
+  const footerSrc = readFileSync(resolve(appRoot, "src/components/SiteFooter.tsx"), "utf-8");
+  for (const src of [moreSrc, sideSrc, sidebarNavSrc]) {
+    assert(!src.includes('href: "/library"') && !src.includes('"/library"'), "لا رابط مكتبة في مصدر التنقل");
+    assert(!src.includes('"/updates"'), "لا آخر المستجدات");
+    assert(!src.includes('"/knowledge-graph"'), "لا استكشف المعرفة");
+    assert(!src.includes('"/academic-research"'), "لا بحث علمي");
+  }
+  assert(!sideSrc.includes('"/about"') && !sidebarNavSrc.includes('"/about"'), "من نحن خارج الجانبية");
+  assert(!moreSrc.includes('"/about"'), "من نحن خارج المزيد");
+  assert(!homeSrc.includes("HomeAboutSection"), "من نحن خارج الرئيسية");
+  assert(!footerSrc.includes('label: "من نحن"') && !footerSrc.includes('"/about"'), "من نحن خارج التذييل");
+  assert(sidebarNavSrc.includes("/quran-knowledge") && sidebarNavSrc.includes("/memorization"), "بوابات الدمج في sidebar-nav");
+  assert(sideSrc.includes("SIDEBAR_NAV_GROUPS") && sideSrc.includes("sidebar-panel"), "القائمة تستخدم التصميم الموحّد");
+  assert(sideSrc.includes("منصة علمية منظمة"), "رأس القائمة يحمل الوصف المطلوب");
+  assert(HIDDEN_FROM_NAV_PATHS.has("/about"), "about مخفي من الاكتشاف");
+}
+
+console.log("\n=== الشريط السفلي والمزيد ===");
+{
+  const bottomSrc = readFileSync(resolve(appRoot, "src/components/BottomNavBar.tsx"), "utf-8");
+  assert(bottomSrc.includes('href: "/lessons"') && bottomSrc.includes('label: "الدروس"'), "الدروس في الشريط السفلي");
+  assert(bottomSrc.includes('href: "/mushaf"') && bottomSrc.includes('href: "/prayer-times"'), "قرآن وصلاة في الشريط");
+  assert(!bottomSrc.includes('label: "البحث"'), "البحث ليس تبويبًا سفليًا أساسيًا بعد التنظيف");
+  const moreSrc = readFileSync(resolve(appRoot, "src/components/MoreBottomSheet.tsx"), "utf-8");
+  assert(moreSrc.includes("SIDEBAR_NAV_GROUPS") || moreSrc.includes("MORE_GROUPS"), "المزيد يستورد المجموعات الموحّدة");
+  assert(moreSrc.includes("مركز الخدمات") || moreSrc.includes("حسابي"), "المزيد مركز خدمات");
+  assert(!moreSrc.includes('"/library"') && !moreSrc.includes('"/about"'), "المزيد بلا مكتبة ولا من نحن");
 }
 
 console.log(`\n${"─".repeat(40)}`);

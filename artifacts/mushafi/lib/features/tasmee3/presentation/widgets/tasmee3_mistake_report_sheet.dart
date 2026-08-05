@@ -28,7 +28,7 @@ class Tasmee3MistakeReportSheet extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               const Text(
-                'تقرير الأخطاء الظاهرة',
+                'تقرير المواضع التي تحتاج مراجعة',
                 style: TextStyle(
                   fontSize: 22,
                   fontWeight: FontWeight.bold,
@@ -40,7 +40,7 @@ class Tasmee3MistakeReportSheet extends StatelessWidget {
                 const Padding(
                   padding: EdgeInsets.all(24),
                   child: Text(
-                    'لا توجد أخطاء واضحة في هذه الجلسة.',
+                    'لا توجد مواضع واضحة تحتاج مراجعة في هذه الجلسة.',
                     style: TextStyle(fontSize: 16),
                   ),
                 )
@@ -80,7 +80,7 @@ class Tasmee3MistakeReportSheet extends StatelessWidget {
       case Tasmee3MistakeType.extraWord:
         return 'كلمة زائدة: ${mistake.recognizedWord ?? ''}';
       case Tasmee3MistakeType.wrongWord:
-        return 'الصحيح: ${mistake.expectedWord ?? ''} | المقروء: ${mistake.recognizedWord ?? ''}';
+        return 'المتوقع: ${mistake.expectedWord ?? ''} | ما سُمع: ${mistake.recognizedWord ?? ''}';
       case Tasmee3MistakeType.lowConfidence:
         return 'جودة صوت منخفضة';
     }

@@ -4,6 +4,7 @@ import "@/styles/pages/tahara.css";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { Droplets } from "lucide-react";
 import { SectionIcon } from "@/components/ui/SectionIcon";
 
 
@@ -187,7 +188,7 @@ export default function TaharaPage() {
       {/* hero */}
       <section className="th-hero">
         <div className="th-hero__badge">الفقه والعبادة</div>
-        <div className="th-hero__emoji">💧</div>
+        <div className="th-hero__emoji" aria-hidden="true"><Droplets size={28} strokeWidth={1.7} /></div>
         <h1 className="th-hero__title">الطهارة وأحكامها</h1>
         <p className="th-hero__sub">
           الطهارة مفتاح الصلاة، دليل شامل للوضوء والغسل والتيمم والنجاسات

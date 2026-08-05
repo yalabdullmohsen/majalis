@@ -1,21 +1,13 @@
 import { useEffect, useState, useRef, type ChangeEvent, type DragEvent, type FormEvent } from "react";
-import { AlertTriangle, CheckCircle2, FolderOpen, GraduationCap, Loader2, Mic2, ScrollText, Upload, XCircle } from "lucide-react";
+import { AlertTriangle, CheckCircle2, FolderOpen, GraduationCap, Loader2, ScrollText, Upload, XCircle } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
-import { submitAdhan, submitLesson } from "@/lib/user-submissions-service";
+import { submitLesson } from "@/lib/user-submissions-service";
 import "@/styles/pages/upload.css";
 
-type Tab = "adhan" | "lesson";
 type UploadState = "idle" | "uploading" | "success" | "error";
 
-const ADHAN_STYLES = ["خاشع", "رسمي", "تقليدي", "كلاسيكي"];
-const ADHAN_PRAYER_TYPES = [
-  { value: "general", label: "أذان عام (لجميع الصلوات)" },
-  { value: "fajr",    label: "أذان الفجر فقط" },
-  { value: "both",    label: "كلاهما (عام + فجر)" },
-];
 const LESSON_TOPICS = ["فقه", "عقيدة", "تفسير", "حديث", "سيرة", "أخلاق", "تزكية", "أخرى"];
 
-const MAX_AUDIO_MB = 30;
 const MAX_VIDEO_MB = 200;
 
 function FileDropZone({ accept, maxMb, onFile, file, hint }: {
@@ -97,103 +89,6 @@ function FileDropZone({ accept, maxMb, onFile, file, hint }: {
       </div>
       {err && <div className="ulp-dropzone__error">{err}</div>}
     </div>
-  );
-}
-
-function AdhanForm() {
-  const [file, setFile]             = useState<File | null>(null);
-  const [name, setName]             = useState("");
-  const [email, setEmail]           = useState("");
-  const [title, setTitle]           = useState("");
-  const [desc, setDesc]             = useState("");
-  const [style, setStyle]           = useState(ADHAN_STYLES[0]);
-  const [country, setCountry]       = useState("");
-  const [origin, setOrigin]         = useState("");
-  const [prayerType, setPrayerType] = useState<"general" | "fajr" | "both">("general");
-  const [uploadState, setUpload]    = useState<UploadState>("idle");
-  const [message, setMessage]       = useState("");
-
-  async function handleSubmit(e: FormEvent) {
-    e.preventDefault();
-    if (!file) { setMessage("الرجاء اختيار ملف صوتي."); return; }
-    setUpload("uploading");
-    setMessage("");
-
-    const res = await submitAdhan({
-      file,
-      title:          title || `أذان ${name}`,
-      description:    desc,
-      submitterName:  name,
-      submitterEmail: email || undefined,
-      meta:           { muezzin_style: style, country, origin, prayer_type: prayerType },
-    });
-
-    if (res.ok) {
-      setUpload("success");
-      setMessage("تم إرسال الأذان بنجاح! سيراجعه الفريق قريباً.");
-      setFile(null); setName(""); setEmail(""); setTitle(""); setDesc("");
-      setCountry(""); setOrigin("");
-    } else {
-      setUpload("error");
-      setMessage(res.error ?? "حدث خطأ، حاول مرة أخرى.");
-    }
-  }
-
-  return (
-    <form onSubmit={handleSubmit} className="ulp-form">
-      <div className="ulp-banner">
-        <span className="ulp-banner__icon" aria-hidden="true"><Mic2 size={22} strokeWidth={1.5} /></span>
-        <span className="ulp-banner__text">
-          ارفع تسجيلاً صوتياً للأذان · يُراجَع من قِبل الفريق قبل نشره في المكتبة.
-        </span>
-      </div>
-
-      <Field label="ملف الأذان (MP3 / AAC / WAV) *">
-        <FileDropZone accept="audio/*" maxMb={MAX_AUDIO_MB} onFile={setFile} file={file} hint="MP3, AAC, WAV, OGG" />
-      </Field>
-
-      <div className="ulp-row2">
-        <Field label="اسمك / اسم المؤذن *">
-          <input value={name} onChange={(e) => setName(e.target.value)} required className="ulp-inp" aria-label="مثال: أحمد الكويتي" placeholder="مثال: أحمد الكويتي" />
-        </Field>
-        <Field label="البريد الإلكتروني (اختياري)">
-          <input type="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} className="ulp-inp" aria-label="للتواصل عند القبول" placeholder="للتواصل عند القبول" />
-        </Field>
-      </div>
-
-      <Field label="عنوان الأذان *">
-        <input value={title} onChange={(e) => setTitle(e.target.value)} required className="ulp-inp" aria-label="مثال: أذان فجر خاشع" placeholder="مثال: أذان فجر خاشع" />
-      </Field>
-
-      <div className="ulp-row2">
-        <Field label="الدولة *">
-          <input value={country} onChange={(e) => setCountry(e.target.value)} required className="ulp-inp" aria-label="مثال: الكويت" placeholder="مثال: الكويت" />
-        </Field>
-        <Field label="المدينة">
-          <input value={origin} onChange={(e) => setOrigin(e.target.value)} className="ulp-inp" aria-label="مثال: الكويت العاصمة" placeholder="مثال: الكويت العاصمة" />
-        </Field>
-      </div>
-
-      <div className="ulp-row2">
-        <Field label="أسلوب الأذان *">
-          <select value={style} onChange={(e) => setStyle(e.target.value)} className="ulp-inp">
-            {ADHAN_STYLES.map((s) => <option key={s} value={s}>{s}</option>)}
-          </select>
-        </Field>
-        <Field label="نوع الأذان *">
-          <select value={prayerType} onChange={(e) => setPrayerType(e.target.value as typeof prayerType)} className="ulp-inp">
-            {ADHAN_PRAYER_TYPES.map((p) => <option key={p.value} value={p.value}>{p.label}</option>)}
-          </select>
-        </Field>
-      </div>
-
-      <Field label="وصف إضافي (اختياري)">
-        <textarea value={desc} onChange={(e) => setDesc(e.target.value)} rows={3} className="ulp-inp ulp-inp--textarea" aria-label="معلومات إضافية عن التسجيل" placeholder="معلومات إضافية عن التسجيل..." />
-      </Field>
-
-      <Feedback state={uploadState} message={message} />
-      <SubmitBtn loading={uploadState === "uploading"} label="إرسال الأذان للمراجعة" />
-    </form>
   );
 }
 
@@ -297,19 +192,17 @@ function LessonForm() {
 }
 
 export default function UploadPage() {
-  const [tab, setTab] = useState<Tab>("adhan");
-
   useEffect(() => {
     applyPageSeo({
       path: "/upload",
-      title: "رفع أذان أو درس | المجلس العلمي",
-      description: "أرسل تسجيل أذان أو درس علمي للمجلس العلمي، شارك العلم وأسهم في إثراء المكتبة الإسلامية.",
-      keywords: ["رفع أذان", "تسجيل درس", "رفع ملف صوتي", "مشاركة علمية", "المجلس العلمي"],
+      title: "رفع درس علمي | المجلس العلمي",
+      description: "أرسل درساً علمياً موثّقاً للمجلس العلمي للمراجعة قبل النشر.",
+      keywords: ["تسجيل درس", "رفع ملف صوتي", "مشاركة علمية", "المجلس العلمي"],
       jsonLd: [{
         "@context": "https://schema.org",
         "@type": "WebPage",
-        name: "رفع أذان أو درس",
-        description: "أرسل تسجيل أذان أو درس علمي للمجلس العلمي.",
+        name: "رفع درس علمي",
+        description: "أرسل درساً علمياً للمجلس العلمي.",
         url: "https://www.majlisilm.com/upload",
         publisher: { "@type": "Organization", name: "المجلس العلمي", url: "https://www.majlisilm.com" },
       }],
@@ -320,8 +213,8 @@ export default function UploadPage() {
     <div className="ulp-page">
       <div className="ulp-header">
         <p className="ulp-eyebrow">المشاركة</p>
-        <h1 className="ulp-title"><Upload size={22} strokeWidth={1.5} aria-hidden="true" /> رفع محتوى إسلامي</h1>
-        <p className="ulp-subtitle">شارك أذاناً أو درساً علمياً · يُراجَع من فريق المجلس العلمي قبل النشر.</p>
+        <h1 className="ulp-title"><Upload size={22} strokeWidth={1.5} aria-hidden="true" /> رفع درس علمي</h1>
+        <p className="ulp-subtitle">شارك درساً علمياً موثّقاً · يُراجَع من فريق المجلس العلمي قبل النشر.</p>
       </div>
 
       <div className="ulp-notice">
@@ -330,35 +223,26 @@ export default function UploadPage() {
           <strong>تنبيه:</strong> يُشترط أن يكون المحتوى موثوقاً من علماء معتمدين.
           لا يُقبل المحتوى المجهول المصدر أو المخالف لأهل السنة والجماعة.
           الفريق يراجع كل الطلبات ويحتفظ بحق القبول أو الرفض.
+          رفع تسجيلات الأذان أُلغي نهائيًا.
         </div>
       </div>
 
-      <div className="ulp-tabs">
-        {([
-          { id: "adhan",  Icon: Mic2,          label: "رفع أذان" },
-          { id: "lesson", Icon: GraduationCap,  label: "رفع درس"  },
-        ] as const).map((t) => (
-          <button
-            key={t.id}
-            type="button"
-            onClick={() => setTab(t.id as Tab)}
-            className={`ulp-tab${tab === t.id ? " is-active" : ""}`}
-          >
-            <span aria-hidden="true"><t.Icon size={16} strokeWidth={1.8} /></span>
-            <span>{t.label}</span>
-          </button>
-        ))}
+      <div className="ulp-tabs" aria-hidden="true">
+        <div className="ulp-tab is-active">
+          <span aria-hidden="true"><GraduationCap size={16} strokeWidth={1.8} /></span>
+          <span>رفع درس</span>
+        </div>
       </div>
 
       <div className="ulp-form-card">
-        {tab === "adhan" ? <AdhanForm /> : <LessonForm />}
+        <LessonForm />
       </div>
 
       <div className="ulp-steps">
         {[
           { num: "١", text: "ترسل الملف والمعلومات" },
           { num: "٢", text: "يراجع الفريق المحتوى خلال 2–5 أيام" },
-          { num: "٣", text: "عند القبول يُضاف للمكتبة ويُنسب لك" },
+          { num: "٣", text: "عند القبول يُضاف للدروس ويُنسب لك" },
         ].map((s) => (
           <div key={s.num} className="ulp-step">
             <span>{s.num}</span>
@@ -381,20 +265,20 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
 
 function Feedback({ state, message }: { state: UploadState; message: string }) {
   if (!message) return null;
-  const isSuccess = state === "success";
+  const ok = state === "success";
+  const bad = state === "error";
   return (
-    <div className={`ulp-feedback${isSuccess ? " ulp-feedback--success" : " ulp-feedback--error"}`}>
-      {isSuccess ? <CheckCircle2 size={16} strokeWidth={2} aria-hidden="true" /> : <XCircle size={16} strokeWidth={2} aria-hidden="true" />} {message}
+    <div className={`ulp-feedback${ok ? " is-success" : bad ? " is-error" : ""}`} role="status">
+      {ok ? <CheckCircle2 size={16} /> : bad ? <XCircle size={16} /> : null}
+      <span>{message}</span>
     </div>
   );
 }
 
 function SubmitBtn({ loading, label }: { loading: boolean; label: string }) {
   return (
-    <button type="submit" disabled={loading} className={`ulp-submit-btn${loading ? " is-loading" : ""}`}>
-      {loading ? (
-        <><Loader2 size={15} strokeWidth={2} className="ulp-submit-btn__spinner" aria-hidden="true" /> جارٍ الرفع...</>
-      ) : <><Upload size={15} strokeWidth={2} aria-hidden="true" /> {label}</>}
+    <button type="submit" className="ulp-submit" disabled={loading}>
+      {loading ? <><Loader2 size={16} className="animate-spin" /> جارٍ الإرسال...</> : label}
     </button>
   );
 }

@@ -1,31 +1,65 @@
 /**
  * تفضيلات تنبيه الصلاة القادمة (شريط داخل التطبيق + إشعار محلي + Live Activity).
  * منفصلة عن adhan-preferences.ts (تلك خاصة بتشغيل صوت الأذان لكل صلاة بدقائق
- * تحذير قابلة للتخصيص) — هذه خاصة بميزة العدّ التنازلي الموحّدة قبل ١٥ دقيقة.
+ * تحذير قابلة للتخصيص) — هذه خاصة بميزة العدّ التنازلي الموحّدة قبل الصلاة.
  * تُخزَّن في localStorage، تعمل بلا اتصال وبلا تسجيل دخول.
  */
 
+import type { PrayerSoundProfile } from "./prayer-notification-sounds";
+
 const STORE_KEY = "majalis-prayer-alert-prefs-v1";
 
-/** دقائق التنبيه المسبق قبل الصلاة — ثابتة حسب المواصفة. */
+/** دقائق التنبيه المسبق الافتراضية. */
 export const PRE_ALERT_MINUTES = 15;
+
+export const PRE_ALERT_MINUTE_OPTIONS = [5, 10, 15] as const;
+export type PreAlertMinutes = (typeof PRE_ALERT_MINUTE_OPTIONS)[number];
+
+/** دقائق بعد دخول الوقت لإشعار التذكير الخفيف. */
+export const POST_REMINDER_MINUTES = 5;
 
 /** مدة بقاء Live Activity بعد دخول وقت الصلاة قبل إنهائها تلقائياً. */
 export const LIVE_ACTIVITY_LINGER_MINUTES = 5;
 
 export type PrayerAlertPreferences = {
-  /** تنبيه قبل الصلاة بـ15 دقيقة (شريط داخل التطبيق + إشعار محلي). */
+  /** مفتاح رئيسي لإشعارات الصلاة (محلي/أصلي). */
+  alertsEnabled: boolean;
+  /** تنبيه قبل الصلاة (شريط داخل التطبيق + إشعار محلي). */
   preAlertEnabled: boolean;
+  /** دقائق التنبيه المسبق: 5 | 10 | 15. */
+  preAlertMinutes: PreAlertMinutes;
   /** تنبيه عند دخول وقت الصلاة. */
   enterAlertEnabled: boolean;
+  /** تذكير خفيف بعد دخول الوقت بقليل. */
+  postReminderEnabled: boolean;
+  /** ملف تعريف صوت الإشعار. */
+  soundProfile: PrayerSoundProfile;
   /** Live Activity في Dynamic Island وشاشة القفل (iOS 16.1+ فقط). */
   liveActivitiesEnabled: boolean;
 };
 
+function isPreAlertMinutes(v: unknown): v is PreAlertMinutes {
+  return v === 5 || v === 10 || v === 15;
+}
+
+function isSoundProfile(v: unknown): v is PrayerSoundProfile {
+  return (
+    v === "auto" ||
+    v === "quiet" ||
+    v === "clear" ||
+    v === "soft" ||
+    v === "system"
+  );
+}
+
 function defaultPrefs(): PrayerAlertPreferences {
   return {
+    alertsEnabled: true,
     preAlertEnabled: true,
+    preAlertMinutes: PRE_ALERT_MINUTES,
     enterAlertEnabled: true,
+    postReminderEnabled: false,
+    soundProfile: "auto",
     liveActivitiesEnabled: true,
   };
 }
@@ -37,8 +71,16 @@ export function loadPrayerAlertPrefs(): PrayerAlertPreferences {
     const parsed = JSON.parse(raw) as Partial<PrayerAlertPreferences>;
     const base = defaultPrefs();
     return {
+      alertsEnabled: parsed.alertsEnabled ?? base.alertsEnabled,
       preAlertEnabled: parsed.preAlertEnabled ?? base.preAlertEnabled,
+      preAlertMinutes: isPreAlertMinutes(parsed.preAlertMinutes)
+        ? parsed.preAlertMinutes
+        : base.preAlertMinutes,
       enterAlertEnabled: parsed.enterAlertEnabled ?? base.enterAlertEnabled,
+      postReminderEnabled: parsed.postReminderEnabled ?? base.postReminderEnabled,
+      soundProfile: isSoundProfile(parsed.soundProfile)
+        ? parsed.soundProfile
+        : base.soundProfile,
       liveActivitiesEnabled: parsed.liveActivitiesEnabled ?? base.liveActivitiesEnabled,
     };
   } catch {

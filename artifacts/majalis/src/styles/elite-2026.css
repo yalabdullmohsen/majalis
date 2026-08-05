@@ -7029,11 +7029,8 @@ html[data-theme="dark"] .sh-step__title {
   margin: 0;
 }
 
-/* 78 — محاذاة شعار الهيدر عمودياً وتصغيره (flex على header.navbar-v3) */
-header.navbar-v3 {
-  display: flex !important;
-  align-items: center !important;
-}
+/* 78 — هيدر متعدّد الصفوف يجب أن يبقى عموديًا (إصلاح تداخل الجوال) */
+header.navbar-v3{display:flex!important;flex-direction:column!important;align-items:stretch!important}
 .navbar-brand img.navbar-logo.navbar-logo--calligraphy {
   height: 40px !important;
   max-height: 40px !important;

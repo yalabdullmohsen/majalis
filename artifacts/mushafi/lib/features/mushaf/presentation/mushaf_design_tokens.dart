@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
 
 class MushafColors {
-  static const background = Color(0xFFFBF7EF);
-  static const paper = Color(0xFFFFFCF3);
-  static const surface = Color(0xFFFFFCF7);
-  static const primary = Color(0xFFA77A48);
-  static const primaryDark = Color(0xFF765332);
-  static const text = Color(0xFF11100E);
-  static const mutedText = Color(0xFF927962);
-  static const border = Color(0xFFE0C5A3);
-  static const success = Color(0xFF2E7D32);
-  static const warning = Color(0xFFF57C00);
-  static const danger = Color(0xFFC62828);
-  static const nightBackground = Color(0xFF0F0C09);
-  static const nightSurface = Color(0xFF17120D);
-  static const nightText = Color(0xFFF4E9D8);
+  /// خلفية عامة أسطع قليلاً مع ورق قراءة واضح.
+  static const background = Color(0xFFFDF9F1);
+  /// سطح صفحة القراءة — أبيض ورقي ساطع.
+  static const paper = Color(0xFFFFFDF7);
+  static const surface = Color(0xFFFFFDF7);
+  /// برونزي أغمق قليلاً لتباين أوضح مع النص الأبيض على الأزرار.
+  static const primary = Color(0xFF8F6638);
+  static const primaryDark = Color(0xFF6B4A28);
+  static const text = Color(0xFF12110F);
+  /// ثانوي أغمق ≥4.5:1 تقريباً على الورق الكريمي.
+  static const mutedText = Color(0xFF6F5A45);
+  static const border = Color(0xFFD9C0A0);
+  static const success = Color(0xFF1F6B38);
+  static const warning = Color(0xFFC45F00);
+  static const danger = Color(0xFFB71C1C);
+  static const nightBackground = Color(0xFF12100C);
+  static const nightSurface = Color(0xFF1C1711);
+  static const nightText = Color(0xFFF6ECDD);
 }
 
 class MushafSpacing {

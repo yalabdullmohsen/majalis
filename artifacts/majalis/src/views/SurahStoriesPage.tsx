@@ -41,7 +41,7 @@ export default function SurahStoriesPage() {
   return (
     <div className="page-shell surah-stories-page ds-page">
       <PageHeader
-        eyebrow="القرآن"
+        eyebrow="القرآن وعلومه"
         title="قصص القرآن"
         subtitle="سبب التسمية، زمان ومكان النزول، المحاور، والقصص القرآنية الموثقة: ١١٤ سورة."
       />
@@ -51,8 +51,8 @@ export default function SurahStoriesPage() {
         لا نسرد إسرائيليات ولا نعيّن أسماء/أعدادًا لم يرد بها نص، وأسباب النزول تُذكر عند ثبوتها لا بالتشهي.
       </aside>
 
-      <nav className="quran-subnav" aria-label="أقسام القرآن">
-        <Link href="/quran-hub" className="quran-subnav__link">مركز القرآن</Link>
+      <nav className="quran-subnav" aria-label="أقسام القرآن وعلومه">
+        <Link href="/quran-knowledge" className="quran-subnav__link">القرآن وعلومه</Link>
         <Link href="/quran/tajweed" className="quran-subnav__link">التجويد</Link>
         <Link href="/quran/surah-stories" className="quran-subnav__link is-active">قصص القرآن</Link>
       </nav>
@@ -79,7 +79,7 @@ export default function SurahStoriesPage() {
       <ExploreAlsoNav
         title="استكشف أيضًا"
         links={[
-          { href: "/quran-hub", label: "مركز القرآن" },
+          { href: "/quran-knowledge", label: "القرآن وعلومه" },
           { href: "/mushaf", label: "المصحف" },
           { href: "/stories", label: "القصص الإسلامية" },
           { href: "/ulum-quran", label: "علوم القرآن" },

@@ -6,6 +6,7 @@
 
 export const COMING_SOON_PATHS = new Set<string>([
   "/kids",
+  "/mushaf", // متوقف مؤقتًا — صفحة «قريبًا» بدل القارئ
 ]);
 
 /** عناصر أُزيلت من الاكتشاف العام حسب مراجعة الدمج/الإلغاء. */
@@ -17,28 +18,26 @@ export const HIDDEN_FROM_NAV_PATHS = new Set<string>([
   "/family",
   "/family-mode",
   "/learning-plan", // مدمج تحت المسارات
-  "/knowledge-map", // مدمج تحت شبكة المعرفة
+  "/knowledge-map",
   "/masarat",
-  "/islam-stats", // مُنزَّل من الاكتشاف (يبقى المسار حيًا)
+  "/islam-stats",
   "/study-room",
-  "/vault", // يُعرض من الإعدادات فقط
+  "/vault",
   "/cards",
-  "/universities", // مُنزَّل من المستوى الأول
-  "/mind-map", // يُفتح من صفحة استكشف المعرفة (لا قائمة أولى)
-  "/mushaf/page", // مدخل مصحف واحد: /mushaf
-  "/quran/recitation-test-ai", // تجريبي — من مركز القرآن/المصحف فقط
+  "/universities",
+  "/mind-map",
+  "/mushaf/page",
+  "/quran/recitation-test-ai",
 
-  // ── دمج هيكل المعلومات (2026-07-27) — مسارات مُعاد توجيهها أو مُنزَّلة من الاكتشاف
-  "/quran-studies", // → /ulum-quran
-  "/anbiya", // → /prophets
-  "/start-here", // → /learning/paths
-  "/learning/calendar", // → /calendar
-  "/prayer-countdown", // → /prayer-times
-  "/annual-courses", // القائمة → /lessons?tab=courses (التفاصيل تبقى)
-  "/duas", // اكتشاف الأدعية عبر /adhkar (الصفحة تبقى للروابط العميقة)
-  "/prayer-ranks", // يُفتح من دليل الصلاة
-  "/sujood-sahw", // يُفتح من دليل الصلاة
-  // فهارس موضوعات ثانوية — الاكتشاف عبر المسارات/الدروس/الفقه
+  "/quran-studies",
+  "/anbiya",
+  "/start-here",
+  "/learning/calendar",
+  "/prayer-countdown",
+  "/annual-courses",
+  "/duas",
+  "/prayer-ranks",
+  "/sujood-sahw",
   "/sunnah-studies",
   "/tazkiya-topics",
   "/tarikh-islami",
@@ -51,23 +50,75 @@ export const HIDDEN_FROM_NAV_PATHS = new Set<string>([
   "/arabic-language",
   "/maqasid-sharia",
   "/dalail-nubuwwah",
+
+  // ── تنظيف الأقسام (2026-08) — محذوفة أو مدمجة تحت بوابات (الصفحات تبقى للروابط العميقة)
+  "/library",
+  "/updates",
+  "/knowledge-graph",
+  "/academic-research",
+  "/fiqh-council/fatwas",
+  "/flashcards", // يظهر داخل حسابي فقط (رابط مباشر في الصفحة)
+  "/occasions",
+  "/calendar",
+  "/institutions",
+  "/islamic-landmarks",
+  "/ulum-quran",
+  "/quran/surahs",
+  "/quran/surah-stories",
+  "/quran-memorization",
+  "/quran/memorization-plans",
+  "/about", // خارج الاكتشاف؛ الصفحة تبقى للروابط العميقة
 ]);
 
-/** مسارات قديمة تُعاد كتابتها عند التسجيل في «الأخيرة» أو الروابط المحفوظة. */
+/**
+ * إعادة توجيه المسارات القديمة.
+ * لا تُوجَّه صفحات المحتوى التي تفتحها بوابات الدمج (مثل /ulum-quran) حتى لا تُغلق الحلقة.
+ */
 export const MERGED_PATH_REDIRECTS: Record<string, string> = {
-  "/knowledge-map": "/knowledge-graph",
+  "/knowledge-map": "/",
   "/learning-plan": "/learning/paths",
   "/masarat": "/learning/paths",
   "/family-mode": "/family",
   "/learning/quiz": "/quiz",
   "/mushaf-v2-preview": "/mushaf",
-  "/features-in-progress": "/updates",
-  "/quran-studies": "/ulum-quran",
+  "/features-in-progress": "/",
+  "/quran-studies": "/quran-knowledge",
   "/anbiya": "/prophets",
   "/start-here": "/learning/paths",
-  "/learning/calendar": "/calendar",
+  "/learning/calendar": "/occasions-lessons",
   "/prayer-countdown": "/prayer-times",
   "/annual-courses": "/lessons?tab=courses",
+
+  // أقسام محذوفة من الواجهة
+  "/library": "/",
+  "/updates": "/",
+  "/knowledge-graph": "/",
+  "/academic-research": "/",
+  "/researches": "/",
+  "/sharia-research": "/",
+  "/fiqh-council/fatwas": "/fiqh",
+
+  // اختصارات قديمة → البوابات المدمجة (ليست صفحات المحتوى النهائية)
+  "/quran-index": "/quran-knowledge",
+  "/asbab-al-nuzul": "/quran-knowledge",
+  "/quran-stories": "/quran-knowledge",
+  "/memorization-tests": "/memorization",
+  "/memorization-plans": "/memorization",
+  "/islamic-institutions": "/islamic-directory",
+  "/mosques": "/islamic-directory",
+  "/reviewed-cards": "/my-learning",
+  "/scientific-library": "/",
+  "/latest": "/",
+  "/fatwas": "/fiqh",
+  "/explore": "/",
+  "/research": "/",
+  "/news": "/",
+  "/events": "/occasions-lessons",
+  "/islamic-events": "/occasions-lessons",
+  "/lesson-calendar": "/occasions-lessons",
+  "/review-plans": "/memorization",
+  "/masajid": "/islamic-directory",
+  "/quran-sciences": "/quran-knowledge",
 };
 
 export function resolveMergedPath(href: string): string {
@@ -76,8 +127,13 @@ export function resolveMergedPath(href: string): string {
 }
 
 export function isComingSoonPath(href: string): boolean {
-  const clean = href.split("#")[0].split("?")[0] || href;
-  return COMING_SOON_PATHS.has(clean);
+  const clean = (href.split("#")[0].split("?")[0] || href).replace(/\/+$/, "") || "/";
+  if (COMING_SOON_PATHS.has(clean)) return true;
+  // بادئات: /mushaf و /mushaf/page/… إلخ
+  for (const path of COMING_SOON_PATHS) {
+    if (path !== "/" && (clean === path || clean.startsWith(`${path}/`))) return true;
+  }
+  return false;
 }
 
 export function isHiddenFromNav(href: string): boolean {
