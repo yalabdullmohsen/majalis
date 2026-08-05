@@ -43,7 +43,15 @@ function extractSpaAssets(spaHead) {
 /** استخرج meta + title + JSON-LD من ملف prerender */
 function extractSeoTags(prerenderHead) {
   const titleM = prerenderHead.match(/<title[^>]*>[\s\S]*?<\/title>/i);
-  const metas = [...prerenderHead.matchAll(/<meta[^>]+\/?>/gi)].map(m => m[0]);
+  // buildMergedHtml يحقن charset/viewport/color-scheme — لا تُكرَّر من الـ prerender
+  const metas = [...prerenderHead.matchAll(/<meta[^>]+\/?>/gi)]
+    .map((m) => m[0])
+    .filter((tag) => {
+      if (/\bcharset\s*=/i.test(tag)) return false;
+      if (/\bname\s*=\s*["']viewport["']/i.test(tag)) return false;
+      if (/\bname\s*=\s*["']color-scheme["']/i.test(tag)) return false;
+      return true;
+    });
   const links = [...prerenderHead.matchAll(/<link[^>]+(?:rel="canonical"|rel="alternate"|hreflang)[^>]*\/?>/gi)].map(m => m[0]);
   const jsonld = [...prerenderHead.matchAll(/<script type="application\/ld\+json">[\s\S]*?<\/script>/gi)].map(m => m[0]);
 

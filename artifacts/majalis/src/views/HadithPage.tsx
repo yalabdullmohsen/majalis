@@ -27,7 +27,6 @@ import { CitationActionBar } from "@/components/citation/CitationActionBar";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { HadithStatsPanel } from "@/components/hadith/HadithStatsPanel";
-import { HADITH_STATS_SOURCE, formatHadithStat } from "@/lib/hadith-stats";
 import { fetchAllHadiths, type CdnHadith } from "@/lib/hadith-cdn-service";
 import { fetchSahihaynLocal } from "@/lib/sahihayn-local";
 import { loadLocalVerifiedHadith } from "@/lib/verified-hadith-local-seed";
@@ -1250,35 +1249,12 @@ export default function HadithPage() {
         title="الأحاديث النبوية"
         subtitle="الصحيح ثم الموضوع ثم الضعيف."
       />
-      <p className="hadith-memorize-cta" style={{ margin: "0 0 1rem", textAlign: "center" }}>
-        <Link href="/memorize" className="hadith-books-banner__btn">
-          احفظ الأربعين النووية
-        </Link>
-      </p>
-      <HadithStatsPanel />
       <nav className="hadith-class-switch" aria-label="أقسام الحديث">
-        <Link href="/hadith/sahih" className="hadith-class-switch__link">الصحيح</Link>
+        <Link href="/hadith/sahih" className="hadith-class-switch__link is-active">الصحيح</Link>
         <Link href="/hadith/mawdu" className="hadith-class-switch__link">الموضوع</Link>
         <Link href="/hadith/daif" className="hadith-class-switch__link">الضعيف</Link>
         <Link href="/hadith/books" className="hadith-class-switch__link hadith-class-switch__link--books">الكتب كاملة</Link>
       </nav>
-      <div className="hadith-hub-gates" aria-label="بوابات أقسام الحديث">
-        <Link href="/hadith/sahih" className="hadith-hub-gate hadith-hub-gate--sahih">
-          <strong>الصحيح</strong>
-          <span>{formatHadithStat(HADITH_STATS_SOURCE.sahihayn)} حديثًا في الصحيحين</span>
-          <em>تصفّح المرجع ←</em>
-        </Link>
-        <Link href="/hadith/mawdu" className="hadith-hub-gate hadith-hub-gate--mawdu">
-          <strong>الموضوع</strong>
-          <span>{formatHadithStat(HADITH_STATS_SOURCE.curatedMawdu)} حديث موضوع مع بيان</span>
-          <em>للتمييز لا للاحتجاج ←</em>
-        </Link>
-        <Link href="/hadith/daif" className="hadith-hub-gate hadith-hub-gate--daif">
-          <strong>الضعيف</strong>
-          <span>{formatHadithStat(HADITH_STATS_SOURCE.curatedDaif)} رواية بدرجتها وتخريجها</span>
-          <em>بيان الدرجة والتخريج ←</em>
-        </Link>
-      </div>
       <HadithSection authenticityClass="sahih" embedded />
       <RecommendationWidget
         context="hadith"

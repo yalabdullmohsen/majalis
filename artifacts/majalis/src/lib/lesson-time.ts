@@ -249,6 +249,9 @@ function resolveDayIndex(day: string): number | null {
   return null;
 }
 
+/** مدة الدرس الافتراضية (دقيقة) — نافذة «جارٍ الآن» */
+export const LESSON_DURATION_MIN = 90;
+
 export function computeNextOccurrenceMs(day: string, time: string, now = new Date()): number {
   // دعم الأيام المتعددة: مفصولة بـ ، أو / أو " و " — يُعاد أقرب تكرار قادم
   if (/[،/]/.test(day) || / و /.test(day)) {
@@ -271,8 +274,9 @@ export function computeNextOccurrenceMs(day: string, time: string, now = new Dat
 
   let daysUntil = (targetDay - clock.weekday + 7) % 7;
 
-  // إذا كان الدرس اليوم لكن وقته مرّ → انتقل للأسبوع القادم
-  if (daysUntil === 0 && nowMinutes >= timeMinutes) {
+  // إذا كان الدرس اليوم ومرّ وقت البدء: أبقِ تكرار اليوم أثناء نافذة «جارٍ الآن»،
+  // ولا تقفز للأسبوع القادم إلا بعد انتهاء المدة الافتراضية.
+  if (daysUntil === 0 && nowMinutes >= timeMinutes + LESSON_DURATION_MIN) {
     daysUntil = 7;
   }
 
@@ -314,9 +318,6 @@ export function isLessonTimePassedToday(day: string, time: string, now = new Dat
   const nowMinutes  = clock.hour * 60 + clock.minute;
   return targetDay === clock.weekday && nowMinutes >= timeMinutes;
 }
-
-/** مدة الدرس الافتراضية (دقيقة) — نافذة "الآن" */
-const LESSON_DURATION_MIN = 90;
 
 /**
  * هل الدرس قائم الآن (بدأ ولم تنته نافذته الافتراضية البالغة 90 دقيقة)؟

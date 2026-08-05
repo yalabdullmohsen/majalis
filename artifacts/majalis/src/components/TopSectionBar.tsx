@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { Link, useLocation } from "wouter";
 import {
-  BookMarked, BookOpen, Brain, CalendarDays, Clock, MapPin, Scale, ScrollText, User,
+  BookOpen, Brain, CalendarDays, Clock, MapPin, Scale, ScrollText, User,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { isImmersiveChromePath } from "@/lib/immersive-chrome";
@@ -17,9 +17,8 @@ type SectionTab = {
 };
 
 /**
- * شريط الأقسام — مرتّب حسب أهمية الاستعمال اليومي:
- * الحفظ → علوم القرآن → الحديث → الفقه → الصلاة → المناسبات →
- * الحفظ/المراجعة → الدليل → حسابي → المصحف (قريبًا في النهاية).
+ * شريط الأقسام — مرتّب حسب أهمية الاستعمال اليومي.
+ * المصحف خارج الشريط أثناء «قريبًا» حتى لا يستهلك خانة معطّلة (يبقى مساره عبر COMING_SOON).
  */
 export const SECTION_TABS: SectionTab[] = [
   { href: "/memorize", label: "الحفظ", Icon: Brain, prefetch: () => import("@/views/MemorizePage") },
@@ -31,7 +30,6 @@ export const SECTION_TABS: SectionTab[] = [
   { href: "/memorization", label: "الحفظ والمراجعة", Icon: Brain, prefetch: () => import("@/views/MemorizationHubPage") },
   { href: "/islamic-directory", label: "الدليل الإسلامي", Icon: MapPin, prefetch: () => import("@/views/IslamicDirectoryHubPage") },
   { href: "/my-learning", label: "حسابي", Icon: User, prefetch: () => import("@/views/MyLearningPage") },
-  { href: "/mushaf", label: "القرآن", Icon: BookMarked, prefetch: () => import("@/views/MushafComingSoonPage") },
 ];
 
 export function isTabActive(location: string, href: string): boolean {

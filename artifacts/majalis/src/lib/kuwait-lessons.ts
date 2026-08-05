@@ -492,13 +492,16 @@ export const DEFAULT_KUWAIT_FILTERS: KuwaitLessonFilters = {
 export function getRelativeStatusLabel(lesson: KuwaitLessonRecord, archived = false): string {
   if (archived) return "منتهٍ";
 
+  // المصدر الأول للحقيقة: نافذة اليوم الفعلية — لا تعتمد على nextOccurrenceMs وحده
+  // (كان يقفز +٧ أيام أثناء الحصة فيظهر «بعد ٦ أيام» تحت عنوان «جارٍ الآن»).
+  if (lesson.day && isLessonInProgress(lesson.day, lesson.time)) {
+    return "جارٍ الآن";
+  }
+
   const now = Date.now();
   const diffMs = lesson.nextOccurrenceMs - now;
 
-  // الدرس جارٍ الآن (بدأ قبل ≤٩٠ دقيقة ولم ينتهِ بعد)
-  if (diffMs <= 0 && diffMs > -90 * 60_000) return "جارٍ الآن";
-
-  // تحقّق من انتهاء حصة اليوم فعليًا (nextOccurrenceMs قفز للأسبوع القادم)
+  // تحقّق من انتهاء حصة اليوم فعليًا
   if (lesson.day) {
     const clock = getKuwaitClock();
     const targetDay = DAY_INDEX[lesson.day];
@@ -510,6 +513,8 @@ export function getRelativeStatusLabel(lesson: KuwaitLessonRecord, archived = fa
       }
     }
   }
+
+  if (diffMs <= 0 && diffMs > -90 * 60_000) return "جارٍ الآن";
 
   return formatRelativeTimeDetailed(lesson.nextOccurrenceMs, lesson.time);
 }
