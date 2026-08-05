@@ -148,7 +148,7 @@ console.log("\n=== الشريط السفلي والمزيد ===");
 {
   const bottomSrc = readFileSync(resolve(appRoot, "src/components/BottomNavBar.tsx"), "utf-8");
   assert(bottomSrc.includes('href: "/lessons"') && bottomSrc.includes('label: "الدروس"'), "الدروس في الشريط السفلي");
-  assert(bottomSrc.includes('href: "/mushaf"') && bottomSrc.includes('href: "/prayer-times"'), "قرآن وصلاة في الشريط");
+  assert(bottomSrc.includes('href: "/quran-knowledge"') && bottomSrc.includes('href: "/prayer-times"'), "قرآن وصلاة في الشريط");
   assert(!bottomSrc.includes('label: "البحث"'), "البحث ليس تبويبًا سفليًا أساسيًا بعد التنظيف");
   const moreSrc = readFileSync(resolve(appRoot, "src/components/MoreBottomSheet.tsx"), "utf-8");
   assert(moreSrc.includes("SIDEBAR_NAV_GROUPS") || moreSrc.includes("MORE_GROUPS"), "المزيد يستورد المجموعات الموحّدة");

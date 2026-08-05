@@ -48,7 +48,7 @@ assert.equal(appSrc.includes("MushafPageView"), false, "قارئ المصحف غ
 assert.match(appSrc, /isImmersiveChromePath/);
 
 const bottomNav = readFileSync(resolve(appRoot, "src/components/BottomNavBar.tsx"), "utf8");
-assert.match(bottomNav, /href: "\/mushaf"/);
+assert.match(bottomNav, /href: "\/quran-knowledge"/);
 assert.equal(bottomNav.includes('href: "/quran-hub"'), false);
 assert.match(bottomNav, /isImmersiveChromePath/);
 

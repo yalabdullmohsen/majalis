@@ -4,6 +4,7 @@ import { BookOpen, Clock, GraduationCap, Home, LayoutGrid } from "lucide-react";
 import { isNavHrefActive } from "@/lib/nav-active";
 import { isImmersiveChromePath } from "@/lib/immersive-chrome";
 import { isComingSoonPath } from "@/lib/nav-visibility";
+import { isTabActive } from "./TopSectionBar";
 import { MoreBottomSheet } from "./MoreBottomSheet";
 
 type NavTab = {
@@ -15,7 +16,7 @@ type NavTab = {
 /** شريط سفلي 2030: الرئيسية · القرآن · الصلاة · الدروس · المزيد */
 const NAV_TABS: NavTab[] = [
   { href: "/", label: "الرئيسية", Icon: Home },
-  { href: "/mushaf", label: "القرآن", Icon: BookOpen },
+  { href: "/quran-knowledge", label: "القرآن", Icon: BookOpen },
   { href: "/prayer-times", label: "الصلاة", Icon: Clock },
   { href: "/lessons", label: "الدروس", Icon: GraduationCap },
 ];
@@ -24,7 +25,11 @@ export function BottomNavBar() {
   const [location] = useLocation();
   const [moreOpen, setMoreOpen] = useState(false);
 
-  const onPrimaryTab = NAV_TABS.some(({ href }) => isNavHrefActive(location, href));
+  const onPrimaryTab = NAV_TABS.some(({ href }) =>
+    href === "/quran-knowledge"
+      ? isTabActive(location, "/quran-knowledge")
+      : isNavHrefActive(location, href),
+  );
   const moreActive = moreOpen || !onPrimaryTab;
 
   if (isImmersiveChromePath(location)) return null;
@@ -33,7 +38,10 @@ export function BottomNavBar() {
     <>
       <nav className="bottom-nav bottom-nav--v2 bottom-nav--m2030 mj-nav-skin" aria-label="التنقل السفلي">
         {NAV_TABS.map(({ href, label, Icon }) => {
-          const active = isNavHrefActive(location, href);
+          const active =
+            href === "/quran-knowledge"
+              ? isTabActive(location, "/quran-knowledge")
+              : isNavHrefActive(location, href);
           const soon = isComingSoonPath(href);
           return (
             <Link
