@@ -31,7 +31,7 @@
   --radius-mj-lg: 22px;
   --radius-mj-pill: 999px;
 
-  --shadow-mj: 0 10px 26px -18px rgba(11, 32, 24, 0.45);
+  --shadow-mj: 0 6px 18px -14px rgba(11, 32, 24, 0.28);
 
   --spacing-mj-1: 4px;
   --spacing-mj-2: 8px;
@@ -75,7 +75,14 @@
   --mj-r-md: 16px;
   --mj-r-lg: 22px;
   --mj-r-pill: 999px;
-  --mj-sh: 0 10px 26px -18px rgba(11, 32, 24, 0.45);
+  --mj-sh: 0 6px 18px -14px rgba(11, 32, 24, 0.28);
+  --mj-sh-soft: 0 2px 8px -4px rgba(11, 32, 24, 0.12);
+  --mj-motion-fast: 120ms;
+  --mj-motion-base: 200ms;
+  --mj-z-nav: 40;
+  --mj-z-sheet: 60;
+  --mj-z-modal: 80;
+  --mj-z-toast: 90;
   --mj-s1: 4px;
   --mj-s2: 8px;
   --mj-s3: 12px;
@@ -275,20 +282,22 @@ a:active {
 
 .mj-card {
   background: var(--mj-surface);
-  border-radius: var(--mj-r-lg);
-  padding: var(--mj-s5);
-  border: 1px solid transparent;
+  border-radius: var(--mj-r-md);
+  padding: var(--mj-s4);
+  border: 1px solid var(--mj-hairline);
   color: var(--mj-ink);
 }
 .mj-card--link {
   cursor: pointer;
-  transition: border-color 0.15s;
+  transition: border-color var(--mj-motion-fast, 120ms) ease, box-shadow var(--mj-motion-fast, 120ms) ease;
 }
 .mj-card--link:hover {
-  border-color: var(--mj-brand);
+  border-color: color-mix(in srgb, var(--mj-brand) 45%, var(--mj-hairline));
+  box-shadow: var(--mj-sh-soft);
 }
 .mj-card--raised {
-  box-shadow: var(--mj-sh);
+  box-shadow: var(--mj-sh-soft);
+  border-color: var(--mj-hairline);
 }
 
 .mj-stats {
