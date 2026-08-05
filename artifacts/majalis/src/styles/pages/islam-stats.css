@@ -6,7 +6,7 @@
 
 /* hero */
 .is-hero {
-  background: linear-gradient(135deg, #0F172A 0%, #1E3A5F 55%, #226A56 100%);
+  background: linear-gradient(135deg, #0F172A 0%, #1E3A5F 55%, var(--mj-brand) 100%);
   padding: 3.5rem 1.25rem 2.75rem; text-align: center; color: #fff;
 }
 .is-hero__inner { max-width: 700px; margin: 0 auto; }
@@ -45,7 +45,7 @@
   color: #64748B; font-family: inherit; font-size: .8rem !important; font-weight: 600;
   cursor: pointer; transition: background .15s, color .15s; white-space: nowrap;
 }
-.is-tab--active { background: var(--majalis-emerald,#226A56); color: #fff; }
+.is-tab--active { background: var(--majalis-emerald,var(--mj-brand)); color: #fff; }
 
 /* section */
 .is-section { display: flex; flex-direction: column; gap: var(--ds-space-6); }
@@ -53,18 +53,18 @@
 /* stats grid */
 .is-stats-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: var(--ds-space-4); }
 .is-stat-card {
-  background: #fff; border-top: 3px solid var(--is-card-color, #226A56); border-radius: .9rem;
+  background: #fff; border-top: 3px solid var(--is-card-color, var(--mj-brand)); border-radius: .9rem;
   padding: 1rem 1.1rem; display: flex; flex-direction: column; gap: .3rem;
   box-shadow: 0 1px 6px rgba(0,0,0,.06);
 }
-.is-stat-card__val { font-size: var(--ds-text-2xl); font-weight: 900; line-height: 1; color: var(--is-card-color, #226A56); }
+.is-stat-card__val { font-size: var(--ds-text-2xl); font-weight: 900; line-height: 1; color: var(--is-card-color, var(--mj-brand)); }
 .is-stat-card__lbl { font-size: .82rem; font-weight: 700; color: #1E293B; }
 .is-stat-card__sub { font-size: 0.8rem; color: #94A3B8; line-height: 1.4; }
 
 /* section title */
 .is-section-title {
   display: flex; align-items: center; gap: .5rem;
-  color: var(--majalis-emerald,#226A56);
+  color: var(--majalis-emerald,var(--mj-brand));
 }
 .is-section-title h2 { font-size: .95rem; font-weight: 800; margin: 0; color: #0F172A; }
 
@@ -75,7 +75,7 @@
 .is-bar__track {
   flex: 1; height: 10px; background: #E2E8F0; border-radius: var(--ds-radius-full); overflow: hidden;
 }
-.is-bar__fill { height: 100%; border-radius: var(--ds-radius-full); background: var(--is-bar-color, #226A56); width: var(--is-bar-w, 0%); transition: width 0.8s ease; }
+.is-bar__fill { height: 100%; border-radius: var(--ds-radius-full); background: var(--is-bar-color, var(--mj-brand)); width: var(--is-bar-w, 0%); transition: width 0.8s ease; }
 .is-bar__val { width: 3rem; font-size: .78rem; font-weight: 700; color: #475569; flex-shrink: 0; }
 
 /* note */
@@ -87,7 +87,7 @@
 
 /* Quran highlight */
 .is-quran-highlight {
-  background: linear-gradient(135deg, #143F35, #226A56);
+  background: linear-gradient(135deg, var(--mj-brand-deep), var(--mj-brand));
   border-radius: var(--ds-radius-2xl); padding: 1.75rem 1.5rem; text-align: center; color: #fff;
 }
 .is-quran-highlight__text {
@@ -100,19 +100,19 @@
 .is-timeline { position: relative; padding-right: 1.5rem; }
 .is-timeline::before {
   content: ""; position: absolute; right: .6rem; top: 0; bottom: 0;
-  width: 2px; background: linear-gradient(to bottom, #226A56, transparent);
+  width: 2px; background: linear-gradient(to bottom, var(--mj-brand), transparent);
 }
 .is-timeline-item {
   display: flex; align-items: flex-start; gap: .75rem; margin-bottom: 1.1rem;
 }
 .is-timeline-item__year {
-  min-width: 4.5rem; font-size: .72rem; font-weight: 800; color: #226A56;
+  min-width: 4.5rem; font-size: .72rem; font-weight: 800; color: var(--mj-brand);
   text-align: left; padding-top: .15rem; flex-shrink: 0;
 }
 .is-timeline-item__dot {
-  width: 10px; height: 10px; border-radius: 50%; background: #226A56;
+  width: 10px; height: 10px; border-radius: 50%; background: var(--mj-brand);
   flex-shrink: 0; margin-top: .3rem; border: 2px solid #fff;
-  box-shadow: 0 0 0 2px #226A56;
+  box-shadow: 0 0 0 2px var(--mj-brand);
 }
 .is-timeline-item__content { flex: 1; }
 .is-timeline-item__event { font-size: .88rem; color: #1E293B; font-weight: 600; margin: 0; line-height: 1.5; }
@@ -121,12 +121,12 @@
 /* science */
 .is-science-intro {
   display: flex; align-items: flex-start; gap: .6rem;
-  background: rgba(31,77,58,.06); border-right: 3px solid #226A56;
+  background: rgba(31,77,58,.06); border-right: 3px solid var(--mj-brand);
   border-radius: .5rem; padding: .85rem 1rem;
   font-size: .875rem; color: #1E293B; line-height: 1.7;
 }
 .is-science-intro p { margin: 0; }
-.is-science-intro svg { color: #226A56; flex-shrink: 0; margin-top: .1rem; }
+.is-science-intro svg { color: var(--mj-brand); flex-shrink: 0; margin-top: .1rem; }
 
 .is-science-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: var(--ds-space-4); }
 .is-science-card {
@@ -135,7 +135,7 @@
   box-shadow: 0 1px 6px rgba(0,0,0,.05);
 }
 .is-science-card__topic {
-  font-size: .75rem; font-weight: 800; color: #226A56;
+  font-size: .75rem; font-weight: 800; color: var(--mj-brand);
   background: rgba(31,77,58,.1); padding: .25rem .7rem; border-radius: var(--ds-radius-full);
   align-self: flex-start; letter-spacing: normal;
 }
@@ -146,10 +146,10 @@
 .is-science-card__ref { font-size: .72rem; color: #94A3B8; margin: 0; }
 .is-science-card__discovery {
   display: flex; flex-direction: column; gap: .2rem;
-  background: #F0F7F4; border: 1px solid #D4E9DC; border-radius: .6rem;
+  background: var(--mj-brand-soft); border: 1px solid #D4E9DC; border-radius: .6rem;
   padding: .6rem .75rem;
 }
-.is-science-card__disc-label { font-size: .65rem; font-weight: 800; color: #143F35; letter-spacing: normal; }
+.is-science-card__disc-label { font-size: .65rem; font-weight: 800; color: var(--mj-brand-deep); letter-spacing: normal; }
 .is-science-card__disc-text { font-size: .82rem; color: #1E293B; font-weight: 600; }
 .is-science-card__disc-year { font-size: .72rem; color: #5C5C56; }
 

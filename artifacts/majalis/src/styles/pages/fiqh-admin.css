@@ -20,12 +20,12 @@
 
 .fiqh-admin-subnav-link--active {
   background: rgba(22, 78, 60, 0.1);
-  border-color: var(--emerald, #226A56);
+  border-color: var(--emerald, var(--mj-brand));
 }
 
 .fiqh-admin-page-header h1 {
   margin: 0 0 0.35rem;
-  color: var(--emerald-deep, #143F35);
+  color: var(--emerald-deep, var(--mj-brand-deep));
 }
 
 .fiqh-admin-page-header p {

@@ -136,9 +136,9 @@
 }
 .ahd-quiz__opt:disabled { cursor: default; }
 .ahd-quiz__opt--correct {
-  border-color: var(--color-success-fg, #15803D);
+  border-color: var(--color-success-fg, var(--mj-brand));
   background: var(--color-success-bg, #DCFCE7);
-  color: var(--color-success-fg, #15803D);
+  color: var(--color-success-fg, var(--mj-brand));
   font-weight: 700;
 }
 .ahd-quiz__opt--wrong {

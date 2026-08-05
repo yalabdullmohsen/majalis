@@ -84,13 +84,13 @@ export const NODE_TYPE_LABEL: Record<KnNodeType, string> = {
 };
 
 export const NODE_TYPE_COLOR: Record<KnNodeType, string> = {
-  quran_ayah:    "#065f46", // أخضر داكن
+  quran_ayah:    "var(--mj-brand)", // أخضر داكن
   hadith:        "#1d4ed8", // أزرق
   fatwa:         "#7c3aed", // بنفسجي
-  scholar:       "#143F35", // ذهبي
-  book:          "#143F35", // بني
+  scholar:       "var(--mj-brand-deep)", // ذهبي
+  book:          "var(--mj-brand-deep)", // بني
   lesson:        "#0369a1", // أزرق فاتح
-  benefit:       "#047857", // أخضر
+  benefit:       "var(--mj-brand)", // أخضر
   prophet_story: "#dc2626", // أحمر
   term:          "#6b7280", // رمادي
 };

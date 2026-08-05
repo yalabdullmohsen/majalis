@@ -538,7 +538,7 @@ export default function SinsAndRightsPage() {
                   textAlign: "center",
                 }}
               >
-                <div style={{ fontSize: "1.75rem", fontWeight: 700, color: "var(--elite-green, #18362A)" }}>
+                <div style={{ fontSize: "1.75rem", fontWeight: 700, color: "var(--elite-green, var(--mj-brand-deep))" }}>
                   {stat.value}
                 </div>
                 <div style={{ fontSize: "0.875rem", color: "var(--elite-ink-soft, #5D726A)" }}>{stat.label}</div>

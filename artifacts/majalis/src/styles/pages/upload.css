@@ -17,7 +17,7 @@
 /* ─ Tabs ─ */
 .ulp-tabs { display: flex; gap: var(--ds-space-2); margin-bottom: 1.5rem; background: rgba(255,255,255,0.05); border-radius: var(--ds-radius-lg); padding: var(--ds-space-1); }
 .ulp-tab { flex: 1; padding: 0.65rem; border-radius: 0.55rem; border: none; background: transparent; color: #6b7280; font-weight: 500; font-size: var(--ds-text-sm); cursor: pointer; font-family: inherit; box-shadow: none; transition: all 0.15s; display: flex; align-items: center; justify-content: center; gap: 0.4rem; }
-.ulp-tab.is-active { background: #fff; color: #143F35; font-weight: 700; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
+.ulp-tab.is-active { background: #fff; color: var(--mj-brand-deep); font-weight: 700; box-shadow: 0 1px 4px rgba(0,0,0,0.1); }
 
 /* ─ Form card ─ */
 .ulp-form-card { background: var(--majalis-panel, rgba(255,255,255,0.08)); border-radius: var(--ds-radius-xl); border: 1.5px solid rgba(255,255,255,0.10); padding: 1.25rem 1.25rem 1.5rem; }
@@ -62,7 +62,7 @@
 .ulp-feedback--error   { border: 1px solid var(--majalis-danger, #dc2626); background: var(--majalis-danger-muted, #fef2f2); color: var(--majalis-danger, #991b1b); }
 
 /* ─ Submit button ─ */
-.ulp-submit-btn { width: 100%; padding: var(--ds-space-3-5); border-radius: 0.875rem; border: none; background: linear-gradient(135deg, #143F35, #143F35); color: #fff; font-size: 0.9rem; font-weight: 700; cursor: pointer; font-family: inherit; display: flex; align-items: center; justify-content: center; gap: 0.4rem; }
+.ulp-submit-btn { width: 100%; padding: var(--ds-space-3-5); border-radius: 0.875rem; border: none; background: linear-gradient(135deg, var(--mj-brand-deep), var(--mj-brand-deep)); color: #fff; font-size: 0.9rem; font-weight: 700; cursor: pointer; font-family: inherit; display: flex; align-items: center; justify-content: center; gap: 0.4rem; }
 .ulp-submit-btn.is-loading { background: #9ca3af; cursor: not-allowed; }
 .ulp-submit-btn__spinner { animation: spin 1s linear infinite; display: inline-block; }
 

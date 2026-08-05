@@ -859,10 +859,10 @@ const CATEGORIES = ["الكل", "مدرسة سنية", "شيعة", "مدرسة �
 const STATUS_FILTER = ["الكل", "قائمة", "تاريخية"];
 
 const CATEGORY_COLOR: Record<string, string> = {
-  "مدرسة سنية": "#143F35",
+  "مدرسة سنية": "var(--mj-brand-deep)",
   "شيعة": "#2D5A8E",
   "مدرسة عقدية": "#4A6741",
-  "فرقة مستقلة": "#226A56",
+  "فرقة مستقلة": "var(--mj-brand)",
   "فرقة تاريخية": "#666",
 };
 
@@ -908,7 +908,7 @@ export default function IslamicSectsPage() {
       {/* Hero */}
       <div
         className="page-hero"
-        style={{ background: "linear-gradient(135deg, #143F35 0%, #143F35 100%)" }}
+        style={{ background: "linear-gradient(135deg, var(--mj-brand-deep) 0%, var(--mj-brand-deep) 100%)" }}
       >
         <div className="page-hero-content">
           <div className="page-hero-icon" style={{ fontSize: "3rem" }}>🕌</div>
@@ -975,9 +975,9 @@ export default function IslamicSectsPage() {
                 border: "1px solid",
                 fontSize: "0.85rem",
                 cursor: "pointer",
-                background: category === c ? "#143F35" : "transparent",
-                color: category === c ? "#fff" : "#143F35",
-                borderColor: "#143F35",
+                background: category === c ? "var(--mj-brand-deep)" : "transparent",
+                color: category === c ? "#fff" : "var(--mj-brand-deep)",
+                borderColor: "var(--mj-brand-deep)",
                 fontFamily: "inherit",
               }}
             >
@@ -997,9 +997,9 @@ export default function IslamicSectsPage() {
                 border: "1px solid",
                 fontSize: "0.82rem",
                 cursor: "pointer",
-                background: statusF === s ? "#143F35" : "transparent",
-                color: statusF === s ? "#fff" : "#143F35",
-                borderColor: "#143F35",
+                background: statusF === s ? "var(--mj-brand-deep)" : "transparent",
+                color: statusF === s ? "#fff" : "var(--mj-brand-deep)",
+                borderColor: "var(--mj-brand-deep)",
                 fontFamily: "inherit",
               }}
             >
@@ -1038,17 +1038,17 @@ export default function IslamicSectsPage() {
               background: "#fff",
               borderRadius: "1rem",
               padding: "1.25rem",
-              boxShadow: selected?.id === sect.id ? "0 0 0 3px #143F35" : "0 2px 8px rgba(0,0,0,0.08)",
+              boxShadow: selected?.id === sect.id ? "0 0 0 3px var(--mj-brand-deep)" : "0 2px 8px rgba(0,0,0,0.08)",
               cursor: "pointer",
               transition: "box-shadow 0.2s, transform 0.15s",
-              border: `2px solid ${selected?.id === sect.id ? "#143F35" : "transparent"}`,
+              border: `2px solid ${selected?.id === sect.id ? "var(--mj-brand-deep)" : "transparent"}`,
             }}
           >
             {/* Header */}
             <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "0.75rem" }}>
               <span style={{ fontSize: "2rem" }}><SectionIcon name={sect.icon} size={24} /></span>
               <div>
-                <div style={{ fontWeight: "700", fontSize: "1rem", color: "#143F35" }}>{sect.name}</div>
+                <div style={{ fontWeight: "700", fontSize: "1rem", color: "var(--mj-brand-deep)" }}>{sect.name}</div>
                 <div style={{ fontSize: "0.78rem", color: "#888" }}>{sect.era}</div>
               </div>
             </div>
@@ -1080,13 +1080,13 @@ export default function IslamicSectsPage() {
                   padding: "0.2rem 0.6rem",
                   borderRadius: "999px",
                   background: sect.status === "قائمة" ? "#e8f5e9" : "#f5f5f5",
-                  color: sect.status === "قائمة" ? "#143F35" : "#888",
+                  color: sect.status === "قائمة" ? "var(--mj-brand-deep)" : "#888",
                   fontWeight: "600",
                 }}
               >
                 {sect.status === "قائمة" ? "✅ قائمة" : "📜 تاريخية"}
               </span>
-              <span style={{ fontSize: "0.75rem", color: "#143F35" }}>
+              <span style={{ fontSize: "0.75rem", color: "var(--mj-brand-deep)" }}>
                 {selected?.id === sect.id ? "▲ إغلاق" : "▼ التفاصيل"}
               </span>
             </div>
@@ -1137,7 +1137,7 @@ export default function IslamicSectsPage() {
                     <blockquote
                       style={{
                         marginTop: "0.9rem",
-                        borderRight: "3px solid #143F35",
+                        borderRight: "3px solid var(--mj-brand-deep)",
                         paddingRight: "0.75rem",
                         color: "#444",
                         fontStyle: "normal",
@@ -1155,7 +1155,7 @@ export default function IslamicSectsPage() {
                         onClick={(e) => e.stopPropagation()}
                         style={{
                           display: "inline-block",
-                          background: "#143F35",
+                          background: "var(--mj-brand-deep)",
                           color: "#fff",
                           padding: "0.55rem 0.9rem",
                           borderRadius: "0.6rem",
@@ -1171,8 +1171,8 @@ export default function IslamicSectsPage() {
                         onClick={(e) => e.stopPropagation()}
                         style={{
                           display: "inline-block",
-                          border: "1px solid #143F35",
-                          color: "#143F35",
+                          border: "1px solid var(--mj-brand-deep)",
+                          color: "var(--mj-brand-deep)",
                           padding: "0.5rem 0.9rem",
                           borderRadius: "0.6rem",
                           fontWeight: 600,

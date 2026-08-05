@@ -63,7 +63,7 @@
 .prv-section-title {
   font-size: 1.1rem;
   font-weight: 800;
-  color: var(--majalis-ink, #143F35);
+  color: var(--majalis-ink, var(--mj-brand-deep));
   margin: 0 0 1rem;
   padding-bottom: 0.5rem;
   border-bottom: 2px solid var(--majalis-emerald-soft, #EBF5F0);
@@ -84,7 +84,7 @@
 .prv-virtue-title {
   font-weight: 700;
   font-size: 0.9rem;
-  color: var(--majalis-emerald-deep, #143F35);
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep));
   margin: 0;
 }
 
@@ -92,7 +92,7 @@
   font-family: var(--font-body);
   font-size: 0.92rem;
   line-height: 1.9;
-  color: var(--majalis-ink, #143F35);
+  color: var(--majalis-ink, var(--mj-brand-deep));
   margin: 0;
   direction: rtl;
   flex: 1;
@@ -115,12 +115,12 @@
 
 .prv-badge--sahih {
   background: var(--majalis-emerald-soft, #EBF5F0);
-  color: var(--majalis-emerald, #143F35);
+  color: var(--majalis-emerald, var(--mj-brand-deep));
 }
 
 .prv-badge--quran {
   background: rgba(124,58,237,0.10);
-  color: var(--brand, #226A56);
+  color: var(--brand, var(--mj-brand));
 }
 
 .prv-badge--other {
@@ -156,7 +156,7 @@
   width: 1.6rem;
   height: 1.6rem;
   border-radius: 50%;
-  background: var(--majalis-emerald, #143F35);
+  background: var(--majalis-emerald, var(--mj-brand-deep));
   color: #fff;
   font-weight: 900;
   font-size: var(--ds-text-xs);
@@ -168,7 +168,7 @@
 
 .prv-tip-text {
   font-size: 0.86rem;
-  color: var(--majalis-ink, #143F35);
+  color: var(--majalis-ink, var(--mj-brand-deep));
   line-height: 1.6;
   margin: 0;
 }

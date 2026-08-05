@@ -1,6 +1,6 @@
 /* 69b — TawhidPage Hub & Flow Layout */
 .twh-hub-hero {
-  background: linear-gradient(135deg, #226A56 0%, #143F35 100%);
+  background: linear-gradient(135deg, var(--mj-brand) 0%, var(--mj-brand-deep) 100%);
   border-radius: var(--ds-radius-2xl);
   padding: 2.25rem 1.75rem;
   margin-bottom: 2rem;
@@ -67,13 +67,13 @@
   box-sizing: border-box;
 }
 .twh-hub-card:hover {
-  border-color: var(--twh-hub-clr, #226A56);
+  border-color: var(--twh-hub-clr, var(--mj-brand));
   box-shadow: 0 4px 16px rgba(0,0,0,0.10);
   transform: none;
 }
 .twh-hub-card--current {
   background: linear-gradient(135deg, rgba(31,77,58,0.06) 0%, rgba(31,77,58,0.02) 100%);
-  border-color: var(--twh-hub-clr, #226A56);
+  border-color: var(--twh-hub-clr, var(--mj-brand));
 }
 .twh-hub-card__emoji {
   font-size: 1.75rem;
@@ -92,7 +92,7 @@
 .twh-hub-card__title {
   font-size: clamp(1.05rem, 3.6vw, 1.25rem);
   font-weight: 700;
-  color: var(--majalis-ink, #143F35);
+  color: var(--majalis-ink, var(--mj-brand-deep));
   margin: 0;
   line-height: 1.4;
   letter-spacing: 0;
@@ -100,7 +100,7 @@
   flex: 1;
   min-width: 0;
 }
-.twh-hub-card:hover .twh-hub-card__title { color: var(--twh-hub-clr, #226A56); }
+.twh-hub-card:hover .twh-hub-card__title { color: var(--twh-hub-clr, var(--mj-brand)); }
 .twh-hub-card__desc {
   font-size: clamp(0.875rem, 3vw, 1rem);
   color: #4A5C55;
@@ -118,7 +118,7 @@
   font-size: 0.75rem;
   font-weight: 600;
   color: #FFFFFF;
-  background: var(--twh-hub-clr, #226A56);
+  background: var(--twh-hub-clr, var(--mj-brand));
   padding: 0.2rem 0.55rem;
   border-radius: var(--ds-radius-full);
   white-space: nowrap;
@@ -131,7 +131,7 @@
   left: 0.75rem;
   font-size: 0.62rem;
   font-weight: 600;
-  color: var(--twh-hub-clr, #226A56);
+  color: var(--twh-hub-clr, var(--mj-brand));
   letter-spacing: 0;
 }
 .twh-hub-card--current .twh-hub-card__body { padding-top: 0.85rem; }
@@ -149,13 +149,13 @@ html[data-theme="dark"] .twh-hub-card__desc {
   gap: var(--ds-space-2);
   margin-bottom: 2rem;
   padding: 0.75rem 1rem;
-  background: var(--elite-sage-2, #F0F7F4);
+  background: var(--elite-sage-2, var(--mj-brand-soft));
   border-radius: var(--ds-radius-lg);
 }
 .twh-jumpnav__btn {
   font-size: 0.8125rem;
   font-weight: 600;
-  color: var(--majalis-emerald, #226A56);
+  color: var(--majalis-emerald, var(--mj-brand));
   text-decoration: none;
   padding: 0.3rem 0.75rem;
   border-radius: var(--ds-radius-full);
@@ -163,7 +163,7 @@ html[data-theme="dark"] .twh-hub-card__desc {
   border: 1px solid rgba(31,77,58,0.2);
   transition: all 0.15s;
 }
-.twh-jumpnav__btn:hover { background: var(--majalis-emerald, #226A56); color: #FFFFFF; }
+.twh-jumpnav__btn:hover { background: var(--majalis-emerald, var(--mj-brand)); color: #FFFFFF; }
 
 /* Section label */
 .twh-section-label {
@@ -174,7 +174,7 @@ html[data-theme="dark"] .twh-hub-card__desc {
   font-weight: 700;
   letter-spacing: normal;
   text-transform: uppercase;
-  color: var(--majalis-emerald, #226A56);
+  color: var(--majalis-emerald, var(--mj-brand));
   margin-bottom: 0.35rem;
 }
 .twh-section-label__emoji { font-size: var(--ds-text-base); line-height: 1; }
@@ -190,15 +190,15 @@ html[data-theme="dark"] .twh-hub-card__desc {
 .twh-goto-btn {
   display: inline-block;
   padding: 0.6rem 1.5rem;
-  border: 1.5px solid var(--majalis-emerald, #226A56);
+  border: 1.5px solid var(--majalis-emerald, var(--mj-brand));
   border-radius: var(--ds-radius-full);
   font-size: var(--ds-text-sm);
   font-weight: 600;
-  color: var(--majalis-emerald, #226A56);
+  color: var(--majalis-emerald, var(--mj-brand));
   text-decoration: none;
   transition: all 0.17s;
 }
-.twh-goto-btn:hover { background: var(--majalis-emerald, #226A56); color: #FFFFFF; }
+.twh-goto-btn:hover { background: var(--majalis-emerald, var(--mj-brand)); color: #FFFFFF; }
 
 /* Book level badges */
 .twh-book-level {
@@ -209,11 +209,11 @@ html[data-theme="dark"] .twh-hub-card__desc {
   display: inline-block;
   margin-bottom: 0.5rem;
 }
-.twh-book-level--beginner { background: #D1FAE5; color: #065F46; }
-.twh-book-level--mid      { background: rgba(23,61,53,.12); color: #226A56; }
+.twh-book-level--beginner { background: #D1FAE5; color: var(--mj-brand); }
+.twh-book-level--mid      { background: rgba(23,61,53,.12); color: var(--mj-brand); }
 .twh-book-level--adv      { background: #EDE9FE; color: #5B21B6; }
 /* --mid وحدها خلفيتها شفافة (تتلوّن بلون البطاقة المحيطة) فتصبح داكنة في
-   الوضع الليلي بينما نصها #226A56 يبقى داكنًا — نفس تصادم .sw-badge--wajib. */
+   الوضع الليلي بينما نصها var(--mj-brand) يبقى داكنًا — نفس تصادم .sw-badge--wajib. */
 html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 
 
@@ -237,18 +237,18 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .tawheed-type-card__num {
   background: var(--card-color, var(--majalis-emerald));
 }
-.tawheed-type-card--emerald { --card-color: var(--majalis-emerald, #226A56); }
-.tawheed-type-card--purple  { --card-color: var(--brand, #226A56); }
+.tawheed-type-card--emerald { --card-color: var(--majalis-emerald, var(--mj-brand)); }
+.tawheed-type-card--purple  { --card-color: var(--brand, var(--mj-brand)); }
 .tawheed-hadith-badge {
-  border-right-color: var(--grade-color, #15803d);
+  border-right-color: var(--grade-color, var(--mj-brand));
 }
 .tawheed-hadith-badge__grade {
   font-weight: 700;
-  color: var(--grade-color, #15803d);
+  color: var(--grade-color, var(--mj-brand));
   font-size: 0.68rem;
 }
-.tawheed-hadith-badge--sahih { --grade-color: var(--majalis-emerald, #226A56); }
-.tawheed-hadith-badge--hasan { --grade-color: var(--majalis-emerald-deep, #143F35); }
+.tawheed-hadith-badge--sahih { --grade-color: var(--majalis-emerald, var(--mj-brand)); }
+.tawheed-hadith-badge--hasan { --grade-color: var(--majalis-emerald-deep, var(--mj-brand-deep)); }
 .tawheed-hadith-badge--daif  { --grade-color: var(--majalis-danger, #9B1C1C); }
 .tawheed-hadith-badge--mawdu { --grade-color: var(--majalis-danger, #9B1C1C); }
 
@@ -257,9 +257,9 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
   font-family: var(--font-body);
   font-size: 0.95rem;
   line-height: 2;
-  color: var(--majalis-ink, #143F35);
-  background: var(--majalis-emerald-soft, #F0F7F4);
-  border-right: 3px solid var(--majalis-emerald, #226A56);
+  color: var(--majalis-ink, var(--mj-brand-deep));
+  background: var(--majalis-emerald-soft, var(--mj-brand-soft));
+  border-right: 3px solid var(--majalis-emerald, var(--mj-brand));
   padding: 0.65rem 1rem;
   border-radius: 0 0.5rem 0.5rem 0;
   margin: 0 0 1.25rem;
@@ -269,7 +269,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .twh-source-ref {
   font-size: 0.78rem;
   font-weight: 600;
-  color: var(--majalis-emerald-deep, #143F35);
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep));
   font-family: inherit;
 }
 
@@ -293,7 +293,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
   width: 2rem;
   height: 2rem;
   border-radius: 50%;
-  background: var(--majalis-emerald, #226A56);
+  background: var(--majalis-emerald, var(--mj-brand));
   color: #fff;
   font-weight: 900;
   font-size: 0.85rem;
@@ -308,7 +308,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .twh-pillar-title {
   font-weight: 700;
   font-size: 0.9rem;
-  color: var(--majalis-ink, #143F35);
+  color: var(--majalis-ink, var(--mj-brand-deep));
   margin: 0 0 0.3rem;
 }
 
@@ -336,7 +336,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 }
 
 .twh-asma-card:hover {
-  border-color: var(--majalis-emerald, #226A56);
+  border-color: var(--majalis-emerald, var(--mj-brand));
   box-shadow: 0 4px 12px rgba(31,77,58,0.10);
 }
 
@@ -344,7 +344,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
   font-family: var(--font-body);
   font-size: 1.2rem;
   font-weight: 700;
-  color: var(--majalis-emerald-deep, #143F35);
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep));
   margin: 0 0 0.4rem;
 }
 
@@ -366,7 +366,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .twh-book-card {
   background: var(--majalis-panel, #ffffff);
   border: 1px solid var(--majalis-line, #d4e6de);
-  border-right: 3px solid var(--majalis-emerald, #226A56);
+  border-right: 3px solid var(--majalis-emerald, var(--mj-brand));
   border-radius: var(--ds-radius-lg);
   padding: 0.875rem 1rem;
 }
@@ -374,13 +374,13 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .twh-book-title {
   font-weight: 700;
   font-size: 0.9rem;
-  color: var(--majalis-ink, #143F35);
+  color: var(--majalis-ink, var(--mj-brand-deep));
   margin: 0 0 0.2rem;
 }
 
 .twh-book-author {
   font-size: 0.78rem;
-  color: var(--majalis-emerald-deep, #143F35);
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep));
   font-weight: 600;
   margin: 0 0 0.4rem;
 }

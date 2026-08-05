@@ -41,7 +41,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
     title: "الطهارة",
     desc: "الوضوء والغسل والتيمم ونواقضها بترتيب عملي للمبتدئ.",
     href: "/tahara",
-    color: "#0F766E",
+    color: "var(--mj-brand)",
     kind: "guide",
   },
   {
@@ -50,7 +50,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
     title: "الصلاة",
     desc: "أحكام الصلاة: أركانها وشروطها وواجباتها وسننها وأوقاتها، مع ما يتعلق بالجماعة والمسافر.",
     href: "/salah-guide",
-    color: "#143F35",
+    color: "var(--mj-brand-deep)",
     kind: "guide",
   },
   {
@@ -77,7 +77,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
     title: "الحج والعمرة",
     desc: "مناسك الحج والعمرة: أركانها وواجباتها ومحرمات الإحرام، مرتّبة على مراحل السفر والطواف والرمي.",
     href: "/hajj",
-    color: "#226A56",
+    color: "var(--mj-brand)",
     kind: "guide",
   },
   {
@@ -95,7 +95,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
     title: "صلاة الجمعة",
     desc: "حكم الجمعة وشروطها وهيئة الخطبة والصلاة وآداب اليوم، مع ما يسقط الحضور من الأعذار.",
     href: "/jumuah",
-    color: "#143F35",
+    color: "var(--mj-brand-deep)",
     kind: "guide",
   },
   {
@@ -131,7 +131,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
     title: "الأضحية",
     desc: "حكم الأضحية وشروطها ووقتها وعيوبها المانعة وآداب الذبح والتوزيع.",
     href: "/udhiya",
-    color: "#0F766E",
+    color: "var(--mj-brand)",
     kind: "guide",
   },
   {
@@ -149,7 +149,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
     title: "الوقف",
     desc: "حقيقة الوقف وشروطه وأمانة النظّار، والفرق بينه وبين الصدقة الجارية المعاصرة.",
     href: "/waqf",
-    color: "#226A56",
+    color: "var(--mj-brand)",
     kind: "guide",
   },
   {
@@ -158,7 +158,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
     title: "الصدقة",
     desc: "فضل الصدقة وآداب الإنفاق والفرق بينها وبين الزكاة، وصدقة كل معروف.",
     href: "/sadaqa",
-    color: "#065F46",
+    color: "var(--mj-brand)",
     kind: "guide",
   },
   {
@@ -176,7 +176,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
     title: "القواعد الفقهية",
     desc: "القواعد الفقهية الكبرى: اليقين لا يزول بالشك والمشقة تجلب التيسير وغيرها، مع أمثلة تطبيقية في الفروع.",
     href: "/fiqh-qawaid",
-    color: "#143F35",
+    color: "var(--mj-brand-deep)",
     kind: "guide",
   },
   {
@@ -194,7 +194,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
     title: "الأسئلة والأجوبة",
     desc: "الأسئلة والأجوبة الشرعية: مسائل يطرحها طلاب العلم مع إجابات موثّقة بالأدلة من القرآن والسنة والإجماع.",
     href: "/qa",
-    color: "#0F766E",
+    color: "var(--mj-brand)",
     kind: "qa",
   },
   {
@@ -212,7 +212,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
     title: "الأحكام الشرعية",
     desc: "موسوعة الأحكام الشرعية: فتاوى وأحكام موثّقة بالأدلة من القرآن والسنة وقول العلماء المعتمدين.",
     href: FIQH_ENCYCLOPEDIA_HREF,
-    color: "#065F46",
+    color: "var(--mj-brand)",
     kind: "encyclopedia",
   },
   {
@@ -221,7 +221,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
     title: "المعاملات",
     desc: "أحكام المعاملات: البيع والإجارة والشركات والغرر، مع ضوابط الحلال والحرام في التجارة.",
     href: "/fiqh/topics/muamalat",
-    color: "#0F766E",
+    color: "var(--mj-brand)",
     kind: "topic",
     rulingsCategory: "المعاملات",
     relatedGuides: [
@@ -251,7 +251,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
     title: "الفقه الطبي",
     desc: "الفقه الطبي: أحكام العلاج والأدوية والعمليات والتبرع بالأعضاء، مع ضوابط الشرع في الطب الحديث.",
     href: "/fiqh/topics/medical",
-    color: "#065F46",
+    color: "var(--mj-brand)",
     kind: "topic",
     rulingsCategory: "النوازل المعاصرة",
     rulingsSubcategory: "الطب",
@@ -266,7 +266,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
     title: "المال الإسلامي",
     desc: "المال الإسلامي: أحكام البنوك والتأمين والاستثمار والصكوك، مع ضوابط التمويل الحلال.",
     href: "/fiqh/topics/islamic-finance",
-    color: "#143F35",
+    color: "var(--mj-brand-deep)",
     kind: "topic",
     rulingsCategory: "المعاملات",
     relatedGuides: [
@@ -281,7 +281,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
     title: "أصول الفقه",
     desc: "أصول الفقه: مصادر التشريع من قرآن وسنة وإجماع وقياس، وطرق الاستنباط والترجيح بين الأقوال.",
     href: "/fiqh/topics/usul-fiqh",
-    color: "#226A56",
+    color: "var(--mj-brand)",
     kind: "topic",
     rulingsCategory: "طلب العلم والدعوة",
     relatedGuides: [
@@ -320,7 +320,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
     title: "فقه الأقليات",
     desc: "فقه الأقليات: مسائل المسلمين في غير بلاد الإسلام، عبر قرارات المجمع الفقهي المعتمد والفتاوى الرسمية.",
     href: "/fiqh/topics/minorities",
-    color: "#143F35",
+    color: "var(--mj-brand-deep)",
     kind: "topic",
     rulingsCategory: "النوازل المعاصرة",
     relatedGuides: [
@@ -335,7 +335,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
     title: "فقه التقنية",
     desc: "فقه التقنية: نوازل الإنترنت والذكاء الاصطناعي والعملات الرقمية، عبر قرارات المجامع الفقهية المعتمدة.",
     href: "/fiqh/topics/tech-fiqh",
-    color: "#0F766E",
+    color: "var(--mj-brand)",
     kind: "topic",
     rulingsCategory: "النوازل المعاصرة",
     rulingsSubcategory: "التقنية",
@@ -367,7 +367,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
     title: "التمويل الإسلامي",
     desc: "التمويل الإسلامي: الصيرفة الإسلامية والتكافل والاستثمار الحلال، بضوابط الشرع في المعاملات المالية.",
     href: "/fiqh/topics/financing",
-    color: "#065F46",
+    color: "var(--mj-brand)",
     kind: "topic",
     rulingsCategory: "المعاملات",
     relatedGuides: [

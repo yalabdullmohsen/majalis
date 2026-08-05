@@ -89,7 +89,7 @@ export function ringConicGradient(slices: HadithRingSlice[]): string {
   /** ألوان الهوية: نجاح زمردي، تحذير رملي، خطأ نظام، رمل مساند، محايد زمردي باهت */
   const toneColor: Record<HadithRingSlice["tone"], string> = {
     sahih: "#34785F",
-    emerald: "#226A56",
+    emerald: "var(--mj-brand)",
     daif: "#B67A32",
     mawdu: "#B44A4A",
     sand: "#B8963F",

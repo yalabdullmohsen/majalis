@@ -65,12 +65,12 @@
 }
 .sr-timer__ring-fill {
   fill: none;
-  stroke: var(--ds-emerald, #226A56);
+  stroke: var(--ds-emerald, var(--mj-brand));
   stroke-width: 8;
   stroke-linecap: round;
   transition: stroke-dashoffset 1s linear, stroke 0.3s;
 }
-.sr-timer--rest .sr-timer__ring-fill { stroke: var(--ds-emerald-deep, #143F35); }
+.sr-timer--rest .sr-timer__ring-fill { stroke: var(--ds-emerald-deep, var(--mj-brand-deep)); }
 .sr-timer__content {
   position: absolute;
   top: 0;
@@ -111,7 +111,7 @@
 }
 .sr-btn--start { background: var(--ds-emerald); color: #fff; border-color: var(--ds-emerald); }
 .sr-btn--start:hover { background: var(--ds-emerald-deep); }
-.sr-btn--pause { background: var(--ds-emerald-deep, #143F35); color: #fff; border-color: var(--ds-emerald-deep, #143F35); }
+.sr-btn--pause { background: var(--ds-emerald-deep, var(--mj-brand-deep)); color: #fff; border-color: var(--ds-emerald-deep, var(--mj-brand-deep)); }
 .sr-btn--reset:hover { border-color: var(--ds-emerald); }
 
 .sr-stats {

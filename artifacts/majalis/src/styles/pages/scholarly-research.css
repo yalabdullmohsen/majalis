@@ -9,7 +9,7 @@
   align-items: center;
   text-align: center;
   padding: 2.25rem 1.25rem 1.5rem;
-  background: linear-gradient(160deg, #143F35, #143F35, #143F35);
+  background: linear-gradient(160deg, var(--mj-brand-deep), var(--mj-brand-deep), var(--mj-brand-deep));
   color: #FAFAF8;
 }
 .srp-hero__icon { color: rgba(250,248,242,.75); margin-bottom: 0.6rem; }
@@ -42,7 +42,7 @@
   border-bottom: 2px solid transparent;
   transition: color .15s, border-color .15s;
 }
-.srp-tab--active { color: #226A56; border-bottom-color: #226A56; }
+.srp-tab--active { color: var(--mj-brand); border-bottom-color: var(--mj-brand); }
 
 /* ── Body wrapper ── */
 .srp-body { max-width: 48rem; margin: 0 auto; padding: 1.25rem 1rem 2rem; }
@@ -63,7 +63,7 @@
   transition: border-color .15s;
   direction: rtl;
 }
-.srp-textarea:focus { outline: none; border-color: #226A56; }
+.srp-textarea:focus { outline: none; border-color: var(--mj-brand); }
 .srp-char-bar {
   height: 2px;
   background: rgba(0,0,0,.07);
@@ -73,7 +73,7 @@
 }
 .srp-char-bar__fill {
   height: 100%;
-  background: #226A56;
+  background: var(--mj-brand);
   border-radius: var(--ds-radius-full);
   transition: width .2s;
 }
@@ -107,10 +107,10 @@
   cursor: pointer;
   transition: border-color .15s, background .15s;
 }
-.srp-action-btn:hover { border-color: #226A56; color: #226A56; }
+.srp-action-btn:hover { border-color: var(--mj-brand); color: var(--mj-brand); }
 .srp-save-msg {
   font-size: 0.78rem;
-  color: #226A56;
+  color: var(--mj-brand);
   font-weight: 600;
 }
 
@@ -134,7 +134,7 @@
   gap: 0.3rem;
   font-size: 0.72rem;
   font-weight: 700;
-  color: #226A56;
+  color: var(--mj-brand);
 }
 .srp-history__clear {
   font-size: 0.67rem;
@@ -190,8 +190,8 @@
   transition: all .15s;
 }
 .srp-intent-chip--active {
-  background: #226A56;
-  border-color: #226A56;
+  background: var(--mj-brand);
+  border-color: var(--mj-brand);
   color: #FAFAF8;
 }
 .srp-prompts { display: flex; flex-direction: column; gap: 0.4rem; }
@@ -207,7 +207,7 @@
   line-height: 1.45;
   transition: border-color .15s, background .15s;
 }
-.srp-prompt-btn:hover { border-color: #226A56; background: rgba(23,61,53,.04); }
+.srp-prompt-btn:hover { border-color: var(--mj-brand); background: rgba(23,61,53,.04); }
 
 /* ── Loading ── */
 .srp-loading {
@@ -310,7 +310,7 @@
   font-weight: 600;
   background: rgba(23,61,53,.1);
   border: 1px solid rgba(23,61,53,.2);
-  color: #226A56;
+  color: var(--mj-brand);
 }
 .srp-lib-src-count {
   padding: 0.12rem 0.5rem;
@@ -324,7 +324,7 @@
 .srp-lib-search-btn {
   font-size: 0.77rem;
   font-weight: 600;
-  color: #226A56;
+  color: var(--mj-brand);
   background: none;
   border: none;
   cursor: pointer;
@@ -342,7 +342,7 @@
   margin-top: 0.75rem;
   font-size: 0.83rem;
   font-weight: 700;
-  color: #226A56;
+  color: var(--mj-brand);
   background: none;
   border: none;
   cursor: pointer;
@@ -361,14 +361,14 @@
 html[data-theme="dark"] .srp-textarea {
   background: rgba(255,255,255,.04);
   border-color: rgba(255,255,255,.1);
-  color: #e8f5ee;
+  color: var(--mj-brand-soft);
 }
 html[data-theme="dark"] .srp-history { background: rgba(23,61,53,.1); border-color: rgba(23,61,53,.25); }
-html[data-theme="dark"] .srp-history__chip { background: rgba(23,61,53,.14); color: #e8f5ee; }
-html[data-theme="dark"] .srp-prompt-btn { background: rgba(255,255,255,.04); color: #e8f5ee; border-color: rgba(255,255,255,.1); }
+html[data-theme="dark"] .srp-history__chip { background: rgba(23,61,53,.14); color: var(--mj-brand-soft); }
+html[data-theme="dark"] .srp-prompt-btn { background: rgba(255,255,255,.04); color: var(--mj-brand-soft); border-color: rgba(255,255,255,.1); }
 html[data-theme="dark"] .srp-intent-chip { background: rgba(255,255,255,.05); color: #c4d6cc; border-color: rgba(255,255,255,.1); }
 html[data-theme="dark"] .srp-lib-item { background: rgba(255,255,255,.03); border-color: rgba(255,255,255,.1); }
-html[data-theme="dark"] .srp-lib-title { color: #e8f5ee; }
+html[data-theme="dark"] .srp-lib-title { color: var(--mj-brand-soft); }
 html[data-theme="dark"] .srp-result-box { background: rgba(255,255,255,.03); border-color: rgba(255,255,255,.1); }
 html[data-theme="dark"] .srp-action-btn { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.12); color: #c4d6cc; }
 

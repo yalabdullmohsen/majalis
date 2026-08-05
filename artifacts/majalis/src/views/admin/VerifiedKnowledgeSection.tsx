@@ -28,7 +28,7 @@ function gapLabel(reason: string) {
 
 function priorityColor(priority: QualityGap["priority"]) {
   if (priority === "high") return "#991B1B";
-  if (priority === "medium") return "#143F35";
+  if (priority === "medium") return "var(--mj-brand-deep)";
   return "var(--majalis-ink-soft)";
 }
 

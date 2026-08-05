@@ -6,7 +6,7 @@
  *
  * توحيد 2030-refined (بعد مراجعة Teal الصارخ):
  *  Deep Emerald راقٍ · Soft Ivory · Sage Muted · Ink · Soft Gold محدود
- *  ممنوع: #143F35 الغابة القديمة · #2BB5A3 الصارخ · أبيض قاسٍ · أسود صافٍ
+ *  ممنوع: var(--mj-brand-deep) الغابة القديمة · #2BB5A3 الصارخ · أبيض قاسٍ · أسود صافٍ
  *
  * الأنظمة القديمة (--elite/--msk/--majalis/…) تبقى aliases فقط في آخر الملف.
  */

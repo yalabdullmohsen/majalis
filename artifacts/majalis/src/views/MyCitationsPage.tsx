@@ -21,8 +21,8 @@ const TABS = ["الكل", "المجلدات", "المفضلة", "الأكثر ا
 type Tab = (typeof TABS)[number];
 
 const FOLDER_COLORS = [
-  "#065f46", "#1d4ed8", "#7c3aed", "#143F35",
-  "#dc2626", "#0369a1", "#047857", "#6b7280",
+  "var(--mj-brand)", "#1d4ed8", "#7c3aed", "var(--mj-brand-deep)",
+  "#dc2626", "#0369a1", "var(--mj-brand)", "#6b7280",
 ];
 
 export default function MyCitationsPage() {

@@ -44,8 +44,8 @@ export function HomeExplorePlatform() {
           <div key={cat.id} className="hp-explore-cat">
             <div className="hp-explore-cat__head">
               <svg aria-hidden="true" width="28" height="28" viewBox="0 0 28 28" className="hp-explore-cat__ornament">
-                <polygon points="14,2 20,9 27,9 22,16 25,24 14,20 3,24 6,16 1,9 8,9" fill="#143F35"/>
-                <polygon points="14,6 18,11 23,11 19,15.5 21,21 14,18 7,21 9,15.5 5,11 10,11" fill="#143F35" opacity="0.6"/>
+                <polygon points="14,2 20,9 27,9 22,16 25,24 14,20 3,24 6,16 1,9 8,9" fill="var(--mj-brand-deep)"/>
+                <polygon points="14,6 18,11 23,11 19,15.5 21,21 14,18 7,21 9,15.5 5,11 10,11" fill="var(--mj-brand-deep)" opacity="0.6"/>
                 <circle cx="14" cy="14" r="3" fill="#FAFAF8"/>
               </svg>
               <h3 className="hp-explore-cat__title">{cat.label}</h3>

@@ -136,7 +136,7 @@
   border: none;
   cursor: pointer;
 }
-.trp-submit-btn:hover { background: var(--majalis-emerald-deep, #226A56); }
+.trp-submit-btn:hover { background: var(--majalis-emerald-deep, var(--mj-brand)); }
 .trp-submit-btn:disabled { opacity: .5; cursor: not-allowed; }
 .trp-result-card {
   border-radius: var(--ds-radius-xl);

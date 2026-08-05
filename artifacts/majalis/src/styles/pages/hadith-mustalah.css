@@ -6,7 +6,7 @@
 
 /* هيرو */
 .hs-hero {
-  background: linear-gradient(135deg, #143F35 0%, #226A56 55%, #226A56 100%);
+  background: linear-gradient(135deg, var(--mj-brand-deep) 0%, var(--mj-brand) 55%, var(--mj-brand) 100%);
   border-radius: var(--ds-radius-2xl);
   padding: 2.5rem 1.5rem 2rem;
   color: #FFFFFF;
@@ -51,10 +51,10 @@
 .hs-search {
   width: 100%;
   padding: 0.7rem 2.5rem 0.7rem 2rem;
-  border: 1.5px solid #D4E3DB;
+  border: 1.5px solid var(--mj-brand-soft);
   border-radius: var(--ds-radius-lg);
   font-size: 0.9rem;
-  color: #052E16;
+  color: var(--mj-brand-deep);
   background: #FFFFFF;
   outline: none;
   transition: border-color 0.15s;
@@ -62,7 +62,7 @@
   font-family: inherit;
   direction: rtl;
 }
-.hs-search:focus { border-color: #226A56; }
+.hs-search:focus { border-color: var(--mj-brand); }
 .hs-search-clear {
   position: absolute;
   left: 0.75rem;
@@ -80,17 +80,17 @@
 .hs-cat-chip {
   padding: 0.35rem 0.9rem;
   border-radius: var(--ds-radius-full);
-  border: 1.5px solid #D4E3DB;
+  border: 1.5px solid var(--mj-brand-soft);
   background: #FFFFFF;
   font-size: 0.8rem;
   font-weight: 600;
-  color: #143F35;
+  color: var(--mj-brand-deep);
   cursor: pointer;
   transition: all 0.15s;
   font-family: inherit;
 }
-.hs-cat-chip:hover { border-color: #226A56; color: #226A56; }
-.hs-cat-chip--active { background: #226A56; border-color: #226A56; color: #FFFFFF; }
+.hs-cat-chip:hover { border-color: var(--mj-brand); color: var(--mj-brand); }
+.hs-cat-chip--active { background: var(--mj-brand); border-color: var(--mj-brand); color: #FFFFFF; }
 
 /* شبكة المصطلحات */
 .hs-grid { display: flex; flex-direction: column; gap: 0.6rem; }
@@ -98,13 +98,13 @@
 /* بطاقة */
 .hs-card {
   background: #FFFFFF;
-  border: 1.5px solid #D4E3DB;
+  border: 1.5px solid var(--mj-brand-soft);
   border-radius: 0.9rem;
   overflow: hidden;
   transition: border-color 0.15s, box-shadow 0.15s;
 }
-.hs-card--open { border-color: #226A56; box-shadow: 0 3px 14px rgba(31,77,58,0.1); }
-.hs-card--accepted { border-right: 3px solid #226A56; }
+.hs-card--open { border-color: var(--mj-brand); box-shadow: 0 3px 14px rgba(31,77,58,0.1); }
+.hs-card--accepted { border-right: 3px solid var(--mj-brand); }
 .hs-card--rejected { border-right: 3px solid #C0392B; }
 .hs-card__header {
   width: 100%;
@@ -121,8 +121,8 @@
 }
 .hs-card__header:hover { background: rgba(31,77,58,0.04); }
 .hs-card__header-main { flex: 1; min-width: 0; }
-.hs-card__cat { font-size: 0.8rem; font-weight: 700; color: #226A56; text-transform: uppercase; letter-spacing: normal; margin-bottom: 0.18rem; }
-.hs-card__term { font-size: 0.97rem; font-weight: 800; color: #052E16; }
+.hs-card__cat { font-size: 0.8rem; font-weight: 700; color: var(--mj-brand); text-transform: uppercase; letter-spacing: normal; margin-bottom: 0.18rem; }
+.hs-card__term { font-size: 0.97rem; font-weight: 800; color: var(--mj-brand-deep); }
 
 /* شارة الحكم */
 .hs-grade {
@@ -133,28 +133,28 @@
   border-radius: var(--ds-radius-full);
   white-space: nowrap;
 }
-.hs-grade--accepted { background: rgba(31,77,58,0.1); color: #143F35; border: 1px solid rgba(31,77,58,0.25); }
+.hs-grade--accepted { background: rgba(31,77,58,0.1); color: var(--mj-brand-deep); border: 1px solid rgba(31,77,58,0.25); }
 .hs-grade--rejected { background: rgba(192,57,43,0.1); color: #922B21; border: 1px solid rgba(192,57,43,0.25); }
 .hs-grade--neutral  { background: rgba(90,90,90,0.08); color: #444; border: 1px solid rgba(0,0,0,0.12); }
 
 /* محتوى البطاقة */
-.hs-card__body { padding: 0 1.1rem 1rem; border-top: 1.5px solid #E8F2EE; }
-.hs-card__def { font-size: 0.88rem; color: #143F35; line-height: 1.75; margin: 0.85rem 0 0.6rem; }
+.hs-card__body { padding: 0 1.1rem 1rem; border-top: 1.5px solid var(--mj-brand-soft); }
+.hs-card__def { font-size: 0.88rem; color: var(--mj-brand-deep); line-height: 1.75; margin: 0.85rem 0 0.6rem; }
 .hs-card__example {
   font-size: 0.82rem;
-  color: #143F35;
+  color: var(--mj-brand-deep);
   background: rgba(31,77,58,0.05);
-  border-right: 3px solid #226A56;
+  border-right: 3px solid var(--mj-brand);
   border-radius: 0 0.5rem 0.5rem 0;
   padding: 0.5rem 0.75rem;
   margin-bottom: 0.6rem;
 }
-.hs-card__example-label { font-weight: 700; color: #226A56; margin-left: 0.3rem; }
+.hs-card__example-label { font-weight: 700; color: var(--mj-brand); margin-left: 0.3rem; }
 .hs-card__note {
   font-size: 0.8rem;
-  color: #226A56;
+  color: var(--mj-brand);
   background: #F8FBF9;
-  border: 1px solid #D4E3DB;
+  border: 1px solid var(--mj-brand-soft);
   border-radius: var(--ds-radius);
   padding: 0.5rem 0.75rem;
   line-height: 1.6;
@@ -165,23 +165,23 @@
 .hs-empty p { margin-top: 0.5rem; font-size: 0.9rem; }
 
 /* ذات صلة */
-.hs-related { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1.5px solid #E8F2EE; }
-.hs-related__title { font-size: var(--ds-text-base); font-weight: 700; color: #052E16; margin-bottom: 0.75rem; }
+.hs-related { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1.5px solid var(--mj-brand-soft); }
+.hs-related__title { font-size: var(--ds-text-base); font-weight: 700; color: var(--mj-brand-deep); margin-bottom: 0.75rem; }
 .hs-related__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--ds-space-2); }
 .hs-related__link {
   display: block;
   padding: 0.6rem 0.85rem;
-  border: 1.5px solid #D4E3DB;
+  border: 1.5px solid var(--mj-brand-soft);
   border-radius: 0.65rem;
   text-decoration: none;
   font-size: 0.83rem;
   font-weight: 600;
-  color: #052E16;
+  color: var(--mj-brand-deep);
   background: #FFFFFF;
   transition: all 0.15s;
   text-align: center;
 }
-.hs-related__link:hover { border-color: #226A56; background: rgba(31,77,58,0.05); color: #226A56; }
+.hs-related__link:hover { border-color: var(--mj-brand); background: rgba(31,77,58,0.05); color: var(--mj-brand); }
 
 @media (max-width: 600px) {
   .hs-hero__title { font-size: 1.65rem; }

@@ -88,6 +88,7 @@ export { PageHeader, Card, ListRow, Button as MjButton, Badge, Progress, SearchF
 export { PageHero } from "@/components/ui/PageHero";
 export { PatternBackdrop } from "@/components/ui/PatternBackdrop";
 export { FilterChips } from "@/components/ui/FilterChips";
+export { HubCard } from "@/components/ui/HubCard";
 
 export function Loading({ label = "جارٍ التحميل…", title }: { label?: string; title?: string } = {}) {
   return (
@@ -124,9 +125,9 @@ function IslamicLoaderInline() {
   return (
     <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} aria-hidden="true"
       className="ds-loader-svg">
-      <polygon points={pts} fill="none" stroke="var(--majalis-emerald,#143F35)" strokeWidth="1.6"
+      <polygon points={pts} fill="none" stroke="var(--majalis-emerald,var(--mj-brand-deep))" strokeWidth="1.6"
         strokeLinejoin="round" opacity="0.85" />
-      <circle cx={cx} cy={cx} r={size * 0.09} fill="var(--majalis-emerald,#143F35)" opacity="0.6" />
+      <circle cx={cx} cy={cx} r={size * 0.09} fill="var(--majalis-emerald,var(--mj-brand-deep))" opacity="0.6" />
     </svg>
   );
 }

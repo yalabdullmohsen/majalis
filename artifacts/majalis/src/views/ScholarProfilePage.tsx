@@ -83,7 +83,7 @@ function ScholarTimeline({ died }: { died: string }) {
               style={{
                 flex: 1,
                 background: c === century
-                  ? "var(--elite-green, #226A56)"
+                  ? "var(--elite-green, var(--mj-brand))"
                   : c <= 3
                     ? "var(--ds-parchment-deep, #ede8e0)"
                     : "var(--ds-parchment, #f5f0e8)",
@@ -105,7 +105,7 @@ function ScholarTimeline({ died }: { died: string }) {
               key={c}
               style={{
                 fontSize: "0.62rem",
-                color: c === century ? "var(--elite-green, #226A56)" : "var(--ds-ink-soft, #9ca3af)",
+                color: c === century ? "var(--elite-green, var(--mj-brand))" : "var(--ds-ink-soft, #9ca3af)",
                 fontWeight: c === century ? 700 : 400,
                 direction: "ltr",
               }}
@@ -129,7 +129,7 @@ function ScholarTimeline({ died }: { died: string }) {
                 fontSize: "0.68rem",
                 padding: "1px 6px",
                 borderRadius: "4px",
-                background: Number(c) === century ? "var(--elite-green, #226A56)" : "var(--ds-parchment-deep, #ede8e0)",
+                background: Number(c) === century ? "var(--elite-green, var(--mj-brand))" : "var(--ds-parchment-deep, #ede8e0)",
                 color: Number(c) === century ? "#fff" : "var(--ds-ink-soft, #6b7280)",
                 border: "1px solid var(--ds-line-color, #d4ccc2)",
               }}

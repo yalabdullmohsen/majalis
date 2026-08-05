@@ -32,7 +32,7 @@
   height: 44px;
   border-radius: var(--ds-radius-lg);
   background: rgba(31, 77, 58, 0.08);
-  color: var(--majalis-emerald-deep, #226A56);
+  color: var(--majalis-emerald-deep, var(--mj-brand));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -48,7 +48,7 @@
 .hmm-card__tag {
   font-size: 0.65rem;
   font-weight: 700;
-  color: var(--majalis-emerald, #226A56);
+  color: var(--majalis-emerald, var(--mj-brand));
   background: rgba(31, 77, 58, 0.08);
   padding: 0.1rem 0.4rem;
   border-radius: var(--ds-radius-full);
@@ -59,7 +59,7 @@
 .hmm-card__title {
   font-size: 0.9375rem;
   font-weight: 700;
-  color: var(--majalis-ink, #143F35);
+  color: var(--majalis-ink, var(--mj-brand-deep));
 }
 .hmm-card__desc {
   font-size: var(--ds-text-xs);
@@ -74,7 +74,7 @@
   transition: color 0.14s, transform 0.14s;
 }
 .hmm-card:hover .hmm-card__arrow {
-  color: var(--majalis-emerald, #226A56);
+  color: var(--majalis-emerald, var(--mj-brand));
   transform: translateX(-4px);
 }
 

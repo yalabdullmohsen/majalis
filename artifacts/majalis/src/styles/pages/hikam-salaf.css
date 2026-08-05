@@ -6,7 +6,7 @@
 
 /* هيرو */
 .hk-hero {
-  background: linear-gradient(135deg, #143F35 0%, #226A56 60%, #226A56 100%);
+  background: linear-gradient(135deg, var(--mj-brand-deep) 0%, var(--mj-brand) 60%, var(--mj-brand) 100%);
   border-radius: var(--ds-radius-2xl);
   padding: 2.5rem 1.5rem 2rem;
   color: #FFFFFF;
@@ -36,10 +36,10 @@
 .hk-search {
   width: 100%;
   padding: 0.65rem 2.4rem 0.65rem 2rem;
-  border: 1.5px solid #D4E3DB;
+  border: 1.5px solid var(--mj-brand-soft);
   border-radius: var(--ds-radius-lg);
   font-size: 0.88rem;
-  color: #052E16;
+  color: var(--mj-brand-deep);
   background: #FFFFFF;
   outline: none;
   transition: border-color 0.15s;
@@ -47,7 +47,7 @@
   font-family: inherit;
   direction: rtl;
 }
-.hk-search:focus { border-color: #226A56; }
+.hk-search:focus { border-color: var(--mj-brand); }
 .hk-search-clear {
   position: absolute;
   left: 0.7rem;
@@ -64,19 +64,19 @@
 .hk-cat {
   padding: 0.32rem 0.85rem;
   border-radius: var(--ds-radius-full);
-  border: 1.5px solid #D4E3DB;
+  border: 1.5px solid var(--mj-brand-soft);
   background: #FFFFFF;
   font-size: 0.78rem;
   font-weight: 600;
-  color: #143F35;
+  color: var(--mj-brand-deep);
   cursor: pointer;
   transition: all 0.15s;
   font-family: inherit;
 }
-.hk-cat:hover { border-color: #226A56; color: #226A56; }
-.hk-cat--active { background: #226A56; border-color: #226A56; color: #FFFFFF; }
-.hk-cat--fav-filter { border-color: #226A56; color: #226A56; }
-.hk-cat--fav-filter.hk-cat--active { background: #226A56; border-color: #226A56; color: #FFFFFF; }
+.hk-cat:hover { border-color: var(--mj-brand); color: var(--mj-brand); }
+.hk-cat--active { background: var(--mj-brand); border-color: var(--mj-brand); color: #FFFFFF; }
+.hk-cat--fav-filter { border-color: var(--mj-brand); color: var(--mj-brand); }
+.hk-cat--fav-filter.hk-cat--active { background: var(--mj-brand); border-color: var(--mj-brand); color: #FFFFFF; }
 
 /* شبكة الحكم */
 .hk-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: var(--ds-space-4); }
@@ -84,7 +84,7 @@
 /* بطاقة الحكمة */
 .hk-card {
   background: #FFFFFF;
-  border: 1.5px solid #D4E3DB;
+  border: 1.5px solid var(--mj-brand-soft);
   border-radius: var(--ds-radius-xl);
   padding: 1.1rem 1.15rem 0.9rem;
   display: flex;
@@ -93,19 +93,19 @@
   transition: border-color 0.15s, box-shadow 0.15s;
 }
 .hk-card:hover { box-shadow: 0 3px 12px rgba(31,77,58,0.09); }
-.hk-card--fav { border-color: #226A56; background: rgba(31,77,58,0.03); }
+.hk-card--fav { border-color: var(--mj-brand); background: rgba(31,77,58,0.03); }
 
 .hk-card__cat {
   font-size: 0.8rem;
   font-weight: 700;
-  color: #226A56;
+  color: var(--mj-brand);
   letter-spacing: normal;
   text-transform: uppercase;
 }
 .hk-card__quote { margin: 0; padding: 0; border: none; flex: 1; }
 .hk-card__text {
   font-size: 0.92rem;
-  color: #052E16;
+  color: var(--mj-brand-deep);
   line-height: 1.8;
   font-weight: 500;
   margin: 0 0 0.55rem;
@@ -120,9 +120,9 @@
   border-top: 1px dashed #C8DDD2;
 }
 .hk-card__footer { display: flex; flex-wrap: wrap; align-items: center; gap: 0.35rem; }
-.hk-card__scholar { font-size: 0.8rem; font-weight: 700; color: #226A56; }
+.hk-card__scholar { font-size: 0.8rem; font-weight: 700; color: var(--mj-brand); }
 .hk-card__died { font-size: 0.8rem; color: #6B9E86; }
-.hk-card__source { font-size: 0.8rem; color: #226A56; font-style: normal; }
+.hk-card__source { font-size: 0.8rem; color: var(--mj-brand); font-style: normal; }
 
 /* أزرار */
 .hk-card__actions { display: flex; gap: 0.45rem; align-items: center; }
@@ -131,42 +131,42 @@
   align-items: center;
   gap: 0.3rem;
   padding: 0.35rem 0.75rem;
-  border: 1.5px solid #D4E3DB;
+  border: 1.5px solid var(--mj-brand-soft);
   border-radius: var(--ds-radius);
   background: #FFFFFF;
   font-size: 0.76rem;
   font-weight: 600;
-  color: #143F35;
+  color: var(--mj-brand-deep);
   cursor: pointer;
   transition: all 0.15s;
   font-family: inherit;
 }
-.hk-btn:hover { border-color: #226A56; color: #226A56; }
+.hk-btn:hover { border-color: var(--mj-brand); color: var(--mj-brand); }
 .hk-btn--fav { padding: 0.35rem 0.55rem; }
-.hk-btn--fav-active { border-color: #226A56; color: #226A56; background: rgba(31,77,58,0.08); }
-.hk-btn--copied { border-color: #226A56; color: #226A56; background: rgba(31,77,58,0.1); }
+.hk-btn--fav-active { border-color: var(--mj-brand); color: var(--mj-brand); background: rgba(31,77,58,0.08); }
+.hk-btn--copied { border-color: var(--mj-brand); color: var(--mj-brand); background: rgba(31,77,58,0.1); }
 
 /* فارغ */
 .hk-empty { text-align: center; padding: 2.5rem 1rem; color: #6B9E86; font-size: 0.9rem; }
 
 /* ذات صلة */
-.hk-related { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1.5px solid #E8F2EE; }
-.hk-related__title { font-size: var(--ds-text-base); font-weight: 700; color: #052E16; margin-bottom: 0.75rem; }
+.hk-related { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1.5px solid var(--mj-brand-soft); }
+.hk-related__title { font-size: var(--ds-text-base); font-weight: 700; color: var(--mj-brand-deep); margin-bottom: 0.75rem; }
 .hk-related__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: var(--ds-space-2); }
 .hk-related__link {
   display: block;
   padding: 0.6rem 0.85rem;
-  border: 1.5px solid #D4E3DB;
+  border: 1.5px solid var(--mj-brand-soft);
   border-radius: 0.65rem;
   text-decoration: none;
   font-size: 0.83rem;
   font-weight: 600;
-  color: #052E16;
+  color: var(--mj-brand-deep);
   background: #FFFFFF;
   transition: all 0.15s;
   text-align: center;
 }
-.hk-related__link:hover { border-color: #226A56; background: rgba(31,77,58,0.05); color: #226A56; }
+.hk-related__link:hover { border-color: var(--mj-brand); background: rgba(31,77,58,0.05); color: var(--mj-brand); }
 
 @media (max-width: 640px) {
   .hk-hero__title { font-size: 1.65rem; }

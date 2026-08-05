@@ -1,8 +1,8 @@
 /* ── 194 — SourceCard color helpers ───────────────────────────────────────── */
-.src-type--quran-verse   { --sc-color: #226A56; }
+.src-type--quran-verse   { --sc-color: var(--mj-brand); }
 .src-type--hadith        { --sc-color: #856404; }
 .src-type--tafsir,
-.src-type--dhikr         { --sc-color: #143F35; }
+.src-type--dhikr         { --sc-color: var(--mj-brand-deep); }
 .src-type--fatwa         { --sc-color: #721c24; }
 .src-type--fiqh-decision { --sc-color: #004085; }
 .src-type--book,
@@ -17,23 +17,23 @@
 
 /* ── نُقل إلى styles/components/islamic-quiz-game.css ── */
 /* ── Shared dynamic color utility ───────────────────────────────────────────── */
-.rw-type--lesson     { --rw-color: var(--majalis-emerald, #226A56); }
+.rw-type--lesson     { --rw-color: var(--majalis-emerald, var(--mj-brand)); }
 .rw-type--hadith     { --rw-color: #1d4ed8; }
 .rw-type--fatwa,
 .rw-type--book,
 .rw-type--dhikr,
-.rw-type--quran-ayah { --rw-color: var(--majalis-emerald, #226A56); }
-.rw-type--benefit    { --rw-color: var(--majalis-emerald-deep, #143F35); }
-.rw-type--scholar    { --rw-color: var(--brand, #226A56); }
+.rw-type--quran-ayah { --rw-color: var(--majalis-emerald, var(--mj-brand)); }
+.rw-type--benefit    { --rw-color: var(--majalis-emerald-deep, var(--mj-brand-deep)); }
+.rw-type--scholar    { --rw-color: var(--brand, var(--mj-brand)); }
 .rw-type--qa         { --rw-color: #0369a1; }
 .rw-type--ruling     { --rw-color: var(--majalis-ink-soft, #4A4A4A); }
 .rw-type--story      { --rw-color: var(--majalis-danger, #9B1C1C); }
 .rw-type--miracle    { --rw-color: #0c4a6e; }
-.rw-color-bg { background: var(--rw-color, #065f46); }
+.rw-color-bg { background: var(--rw-color, var(--mj-brand)); }
 
 /* ── SheikhsPageClient (spc-*) ────────────────────────────────────────────────── */
 .spc-channels-section { margin-bottom: 2.5rem; }
-.spc-section-h2  { font-size: 1.1rem; font-weight: 700; color: var(--majalis-ink, #EDE9DD); margin-bottom: 1rem; border-right: 3px solid var(--majalis-brass, #226A56); padding-right: 0.75rem; }
+.spc-section-h2  { font-size: 1.1rem; font-weight: 700; color: var(--majalis-ink, #EDE9DD); margin-bottom: 1rem; border-right: 3px solid var(--majalis-brass, var(--mj-brand)); padding-right: 0.75rem; }
 .spc-section-note { font-size: 0.82rem; color: var(--majalis-ink-muted, #9BA3B5); margin-bottom: 1.25rem; }
 .spc-channels-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: var(--ds-space-5); }
 .spc-channel-card  { background: var(--majalis-panel, rgba(255,255,255,0.07)); border: 1px solid rgba(255,255,255,0.10); border-radius: var(--ds-radius-lg); overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.30); }

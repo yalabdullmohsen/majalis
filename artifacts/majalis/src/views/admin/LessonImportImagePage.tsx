@@ -23,7 +23,7 @@ const WEEK_DAYS = ["السبت", "الأحد", "الاثنين", "الثلاثا
 
 function ConfidenceBadge({ score }: { score: number }) {
   const pct = Math.round(score * 100);
-  const color = pct >= 75 ? "var(--majalis-emerald-deep)" : pct >= 45 ? "#143F35" : "#991B1B";
+  const color = pct >= 75 ? "var(--majalis-emerald-deep)" : pct >= 45 ? "var(--mj-brand-deep)" : "#991B1B";
   const bg = pct >= 75 ? "#D1FAE5" : pct >= 45 ? "rgba(23,61,53,0.08)" : "#FEE2E2";
   return (
     <span
@@ -77,7 +77,7 @@ function FieldStatusGrid({
         const isWarn = val && conf < 0.5;
         const isMissing = !val;
         const bg = isOk ? "#D1FAE5" : isWarn ? "rgba(23,61,53,0.08)" : "#FEE2E2";
-        const color = isOk ? "var(--majalis-emerald-deep)" : isWarn ? "#143F35" : "#991B1B";
+        const color = isOk ? "var(--majalis-emerald-deep)" : isWarn ? "var(--mj-brand-deep)" : "#991B1B";
         const icon = isOk ? "✓" : isWarn ? "⚠" : "✗";
         return (
           <div

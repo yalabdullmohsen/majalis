@@ -83,10 +83,10 @@
   width: 88px;
   height: 88px;
   font-size: 2.25rem;
-  background: var(--ds-emerald, #226A56);
+  background: var(--ds-emerald, var(--mj-brand));
   box-shadow: 0 4px 20px rgba(42,122,79,0.45);
 }
-.car-mode__btn--play:hover { background: var(--ds-emerald-deep, #226A56); }
+.car-mode__btn--play:hover { background: var(--ds-emerald-deep, var(--mj-brand)); }
 
 .car-mode__playlist {
   max-height: 240px;

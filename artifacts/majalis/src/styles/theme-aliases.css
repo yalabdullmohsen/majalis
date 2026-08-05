@@ -20,8 +20,8 @@
   --text-2: var(--mj-ink-2);
   --text-muted: var(--mj-muted);
   --text-meta: var(--mj-muted);
-  --text-on-brand: #ffffff;
-  --text-on-dark: #e9efec;
+  --text-on-brand: var(--mj-on-brand);
+  --text-on-dark: var(--mj-ink);
   --text-brand: var(--mj-brand);
   --text-brand-deep: var(--mj-brand-deep);
 
@@ -170,7 +170,7 @@ html.dark,
   --text-2: var(--mj-ink-2);
   --text-muted: var(--mj-muted);
   --text-meta: var(--mj-muted);
-  --text-on-brand: #0c1512;
+  --text-on-brand: var(--mj-on-brand);
   --text-on-dark: var(--mj-ink);
   --text-brand: var(--mj-brand);
   --text-brand-deep: var(--mj-brand);
@@ -215,7 +215,7 @@ html.dark,
   --card: var(--mj-surface);
   --card-foreground: var(--mj-ink);
   --primary: var(--mj-brand);
-  --primary-foreground: #0c1512;
+  --primary-foreground: var(--mj-brand-deep);
   --secondary: var(--mj-surface-2);
   --secondary-foreground: var(--mj-ink);
   --muted: var(--mj-surface-2);
@@ -435,5 +435,5 @@ html.dark .header-ticker__label {
 
 html[data-theme="dark"] .gl-cat--active,
 html.dark .gl-cat--active {
-  color: #0c1512 !important;
+  color: var(--mj-brand-deep) !important;
 }

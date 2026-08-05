@@ -194,7 +194,7 @@
 /* رأس البطاقة */
 .login-card__brand {
   font-size: 0.95rem;
-  color: var(--majalis-emerald-deep, #143F35);
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep));
 }
 
 .login-card__title {
@@ -213,7 +213,7 @@
 }
 
 .login-field input:focus {
-  border-color: var(--majalis-emerald, #226A56);
+  border-color: var(--majalis-emerald, var(--mj-brand));
   outline: none;
   box-shadow: 0 0 0 3px rgba(22, 96, 72, 0.1);
 }
@@ -222,7 +222,7 @@
 .login-submit {
   padding: var(--ds-space-3);
   border-radius: var(--ds-radius-lg);
-  background: var(--majalis-emerald, #226A56);
+  background: var(--majalis-emerald, var(--mj-brand));
   color: #fff;
   font-size: 0.9rem;
   font-weight: 700;
@@ -233,7 +233,7 @@
 }
 
 .login-submit:not(:disabled):hover {
-  background: var(--majalis-emerald-deep, #143F35);
+  background: var(--majalis-emerald-deep, var(--mj-brand-deep));
   box-shadow: 0 6px 20px rgba(22, 96, 72, 0.32);
   transform: translateY(-1px);
 }
@@ -297,18 +297,18 @@
 }
 
 .login-back-link:hover {
-  color: var(--majalis-emerald, #226A56);
+  color: var(--majalis-emerald, var(--mj-brand));
 }
 
 .login-back-link--primary {
-  color: var(--majalis-emerald, #226A56);
+  color: var(--majalis-emerald, var(--mj-brand));
   font-weight: 700;
 }
 
 
 /* ══ 14. Login Page ══════════════════════════════════════════════════════════ */
 .login-page {
-  background: linear-gradient(160deg, #143F35 0%, #1F4D3A 38%, #F0FDF4 72%, #FAFAFA 100%) !important;
+  background: linear-gradient(160deg, var(--mj-brand-deep) 0%, #1F4D3A 38%, #F0FDF4 72%, #FAFAFA 100%) !important;
   min-height: 100dvh;
   padding-block: max(2rem, env(safe-area-inset-top, 0px)) max(2rem, env(safe-area-inset-bottom, 0px));
 }
@@ -327,7 +327,7 @@
 }
 .login-card__subtitle { color: var(--txt-muted, #5C5C56) !important; }
 .login-submit {
-  background: var(--m26-green-800, #166534) !important;
+  background: var(--m26-green-800, var(--mj-brand)) !important;
   color: #FFFFFF !important;
   border: none !important;
   border-radius: var(--m26-r-md) !important;
@@ -336,7 +336,7 @@
   box-shadow: 0 2px 8px rgba(22,101,52,0.25) !important;
 }
 .login-submit:hover {
-  background: var(--m26-green-950, #052E16) !important;
+  background: var(--m26-green-950, var(--mj-brand-deep)) !important;
 }
 .login-oauth__btn {
   background: #FFFFFF !important;
@@ -359,8 +359,8 @@
   padding: 0.7rem 1.25rem;
   border-radius: var(--ds-radius);
   background: rgba(46,139,103,0.15);
-  border: 1.5px solid var(--majalis-emerald, #226A56);
-  color: var(--majalis-emerald, #226A56) !important;
+  border: 1.5px solid var(--majalis-emerald, var(--mj-brand));
+  color: var(--majalis-emerald, var(--mj-brand)) !important;
   font-weight: 700;
   font-size: 0.95rem;
   text-decoration: none;

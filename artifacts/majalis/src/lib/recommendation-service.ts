@@ -68,18 +68,18 @@ export const CONTENT_TYPE_LABEL: Record<RecContentType, string> = {
 export const CONTENT_TYPE_HREF = SHARED_CONTENT_TYPE_HREF;
 
 export const CONTENT_TYPE_COLOR: Record<RecContentType, string> = {
-  lesson:     "var(--majalis-emerald, #143F35)",
+  lesson:     "var(--majalis-emerald, var(--mj-brand-deep))",
   hadith:     "#1d4ed8",
-  fatwa:      "var(--majalis-emerald, #143F35)",
-  benefit:    "var(--majalis-emerald-deep, #143F35)",
-  book:       "var(--majalis-emerald, #143F35)",
+  fatwa:      "var(--majalis-emerald, var(--mj-brand-deep))",
+  benefit:    "var(--majalis-emerald-deep, var(--mj-brand-deep))",
+  book:       "var(--majalis-emerald, var(--mj-brand-deep))",
   scholar:    "#7c3aed",
   qa:         "#0369a1",
   ruling:     "var(--majalis-ink-soft, #4A4A4A)",
   story:      "var(--majalis-danger, #9B1C1C)",
   miracle:    "#0c4a6e",
-  dhikr:      "var(--majalis-emerald, #143F35)",
-  quran_ayah: "var(--majalis-emerald, #143F35)",
+  dhikr:      "var(--majalis-emerald, var(--mj-brand-deep))",
+  quran_ayah: "var(--majalis-emerald, var(--mj-brand-deep))",
 };
 
 // ── مساعدات ──────────────────────────────────────────────────────────────────

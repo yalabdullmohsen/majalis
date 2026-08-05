@@ -70,7 +70,7 @@
   color: var(--mzp-style-color, var(--majalis-ink-soft));
   font-weight: 600;
 }
-.mzp-style--emerald { --mzp-style-color: var(--majalis-emerald, #226A56); }
+.mzp-style--emerald { --mzp-style-color: var(--majalis-emerald, var(--mj-brand)); }
 .mzp-style--blue    { --mzp-style-color: #60A5FA; }
 .mzp-style--purple  { --mzp-style-color: #A78BFA; }
 .mzp-preview-btn {

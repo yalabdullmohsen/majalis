@@ -60,7 +60,7 @@
   max-width: calc(100% - 1.5rem);
   box-sizing: border-box;
   border-radius: var(--radius-md, 0.65rem);
-  background: var(--emerald-500, #143F35);
+  background: var(--emerald-500, var(--mj-brand-deep));
   color: #fff;
   box-shadow: 0 8px 24px rgba(20, 63, 53, 0.22);
   border: 1px solid rgba(255, 255, 255, 0.12);

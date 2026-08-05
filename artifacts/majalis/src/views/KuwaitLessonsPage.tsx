@@ -62,7 +62,7 @@ function SheikhCard({ sheikh }: { sheikh: (typeof KUWAIT_SHEIKHS)[number] }) {
             />
             <span
               className="sheikh-avatar sheikh-avatar--initials sheikh-avatar--hidden"
-              style={{ "--avatar-bg": ["#1b5e3b","#143F35","#1b3a5e","#5e1b1b","#3b1b5e","#143F35"][sheikh.name.split("").reduce((a,c)=>a+c.charCodeAt(0),0) % 6] } as React.CSSProperties}
+              style={{ "--avatar-bg": ["#1b5e3b","var(--mj-brand-deep)","#1b3a5e","#5e1b1b","#3b1b5e","var(--mj-brand-deep)"][sheikh.name.split("").reduce((a,c)=>a+c.charCodeAt(0),0) % 6] } as React.CSSProperties}
               aria-hidden="true"
             >
               {sheikh.name.trim().split(/\s+/).slice(0,2).map(w=>w[0]).join("")}
@@ -71,7 +71,7 @@ function SheikhCard({ sheikh }: { sheikh: (typeof KUWAIT_SHEIKHS)[number] }) {
         ) : (
           <span
             className="sheikh-avatar sheikh-avatar--initials"
-            style={{ "--avatar-bg": ["#1b5e3b","#143F35","#1b3a5e","#5e1b1b","#3b1b5e","#143F35"][sheikh.name.split("").reduce((a,c)=>a+c.charCodeAt(0),0) % 6] } as React.CSSProperties}
+            style={{ "--avatar-bg": ["#1b5e3b","var(--mj-brand-deep)","#1b3a5e","#5e1b1b","#3b1b5e","var(--mj-brand-deep)"][sheikh.name.split("").reduce((a,c)=>a+c.charCodeAt(0),0) % 6] } as React.CSSProperties}
             aria-hidden="true"
           >
             {sheikh.name.trim().split(/\s+/).slice(0,2).map(w=>w[0]).join("")}

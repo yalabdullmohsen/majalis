@@ -89,13 +89,15 @@ html.dark .pattern-backdrop {
 .page-hero-mj__actions .mj-btn--primary,
 .page-hero-mj__actions .m2030-btn--primary {
   background: var(--mj-brand) !important;
-  color: #fff !important;
+  color: var(--mj-on-brand) !important;
   border: none !important;
   border-radius: var(--mj-r-pill) !important;
   clip-path: none !important;
   min-height: 2.65rem;
   padding: 0.55rem 1.1rem;
-  font-weight: 600;
+  font-weight: 500;
+  font-family: var(--mj-ui);
+  font-size: var(--mj-fs-btn);
 }
 .page-hero-mj__actions .mj-btn--ghost,
 .page-hero-mj__actions .m2030-btn--ghost {

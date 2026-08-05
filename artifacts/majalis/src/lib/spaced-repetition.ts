@@ -173,7 +173,7 @@ export function qualityLabel(q: ReviewQuality): string {
 /** UI button set — values match Again/Hard/Good/Easy (0/3/4/5). */
 export const QUALITY_OPTIONS: { value: ReviewQuality; label: string; color: string }[] = [
   { value: 0, label: "لم أتذكر", color: "#dc2626" },
-  { value: 3, label: "صعب", color: "#143F35" },
+  { value: 3, label: "صعب", color: "var(--mj-brand-deep)" },
   { value: 4, label: "عرفته", color: "#16a34a" },
   { value: 5, label: "سهل", color: "#0284c7" },
 ];

@@ -234,7 +234,7 @@ export function RelationshipsSection() {
         {(["all", "verified", "pending"] as const).map((v) => (
           <button key={v} type="button" onClick={() => setFilterVerified(v)}
             className="rel-filter-btn"
-            style={filterVerified === v ? { "--rel-fb-bg": "#065f46", "--rel-fb-color": "#fff" } as React.CSSProperties : undefined}>
+            style={filterVerified === v ? { "--rel-fb-bg": "var(--mj-brand)", "--rel-fb-color": "#fff" } as React.CSSProperties : undefined}>
             {v === "all" ? "\u0627\u0644\u0643\u0644" : v === "verified" ? "\u0645\u062d\u0642\u0642\u0629" : "\u0642\u064a\u062f \u0627\u0644\u0645\u0631\u0627\u062c\u0639\u0629"}
           </button>
         ))}
@@ -275,7 +275,7 @@ export function RelationshipsSection() {
                     className="rel-verified-badge"
                     style={{
                       "--rel-vb-bg": r.is_verified ? "#d1fae5" : "#E6EDE9",
-                      "--rel-vb-color": r.is_verified ? "#065f46" : "#143F35",
+                      "--rel-vb-color": r.is_verified ? "var(--mj-brand)" : "var(--mj-brand-deep)",
                     } as React.CSSProperties}
                   >
                     {r.is_verified ? "\u0645\u062d\u0642\u0642\u0629" : "\u0642\u064a\u062f \u0627\u0644\u0645\u0631\u0627\u062c\u0639\u0629"}

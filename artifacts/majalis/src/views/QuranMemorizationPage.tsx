@@ -331,7 +331,7 @@ function QuestionCard({
         <button
           type="button"
           className="qmem-next-btn"
-          style={{ background: "#143F35" }}
+          style={{ background: "var(--mj-brand-deep)" }}
           onClick={() => { setAnswered(true); }}
         >
           اعرض الإجابة

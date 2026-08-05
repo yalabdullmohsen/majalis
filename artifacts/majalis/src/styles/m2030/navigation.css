@@ -23,10 +23,10 @@ header.navbar-v3,
 }
 
 .navbar-prayer-chip {
-  background: var(--surface-2) !important;
-  border: 1px solid var(--border) !important;
+  background: var(--mj-brand) !important;
+  border: 1px solid var(--mj-brand) !important;
   border-radius: var(--r-sm) !important;
-  color: var(--text) !important;
+  color: var(--mj-on-brand) !important;
 }
 
 .top-section-bar {

@@ -15,7 +15,7 @@
   color: #fff; font-size: .875rem; font-weight: 500; border-radius: .75rem;
   border: none; cursor: pointer; transition: background .15s;
 }
-.uap-save-btn:hover { background: var(--majalis-emerald-deep, #226A56); }
+.uap-save-btn:hover { background: var(--majalis-emerald-deep, var(--mj-brand)); }
 .uap-save-btn:disabled { opacity: .5; cursor: not-allowed; }
 .uap-cancel-btn {
   padding: .5rem 1rem; background: var(--majalis-parchment-deep, #f0ece4);
@@ -106,8 +106,8 @@
 .is-name { font-size: 0.975rem; font-weight: 700; color: #1e293b; }
 .is-meta { font-size: var(--ds-text-xs); color: #64748b; margin-top: 2px; }
 .is-badge { font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.55rem; border-radius: 9999px; letter-spacing: normal; }
-.is-badge.pending { background: rgba(23,61,53,0.08); color: #226A56; border: 1px solid rgba(24,54,42,0.3); }
-.is-badge.done { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+.is-badge.pending { background: rgba(23,61,53,0.08); color: var(--mj-brand); border: 1px solid rgba(24,54,42,0.3); }
+.is-badge.done { background: #dcfce7; color: var(--mj-brand); border: 1px solid #bbf7d0; }
 .is-toggle { font-size: var(--ds-text-xs); color: #94a3b8; }
 .is-body { padding: 1.1rem 1.25rem; border-top: 1px solid #e2e8f0; }
 .is-section-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: normal; color: #64748b; margin-bottom: 0.5rem; }

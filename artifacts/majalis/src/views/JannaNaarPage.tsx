@@ -153,7 +153,7 @@ const DUAS_LIST: Dua[] = [
 ];
 
 const TABS: { id: Tab; label: string; color: string }[] = [
-  { id: "janna",       label: "صفة الجنة",       color: "#143F35" },
+  { id: "janna",       label: "صفة الجنة",       color: "var(--mj-brand-deep)" },
   { id: "naar",        label: "صفة النار",        color: "#9B1C1C" },
   { id: "asbab-janna", label: "أسباب الجنة",      color: "#1a3a5c" },
   { id: "asbab-naar",  label: "أسباب النار",      color: "#7F1D1D" },

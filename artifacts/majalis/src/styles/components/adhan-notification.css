@@ -46,7 +46,7 @@
 
 /* ── Adhan Toast — إشعار الأذان ── */
 .anb-toast--adhan {
-  background: linear-gradient(135deg, #143F35 0%, #226A56 55%, #143F35 100%);
+  background: linear-gradient(135deg, var(--mj-brand-deep) 0%, var(--mj-brand) 55%, var(--mj-brand-deep) 100%);
   border: 1px solid rgba(255,255,255,0.12);
   color: #FFFFFF;
   animation: anb-rise 0.38s cubic-bezier(0.34,1.4,0.64,1) both,
@@ -68,7 +68,7 @@
 .anb-toast--reminder {
   background: rgba(255,255,255,0.97);
   border: 1.5px solid rgba(23,61,53,.18);
-  color: #143F35;
+  color: var(--mj-brand-deep);
   box-shadow: 0 4px 24px rgba(0,0,0,.14), 0 1px 4px rgba(0,0,0,.08),
               0 0 0 1px rgba(23,61,53,.06);
 }
@@ -91,7 +91,7 @@
   margin: 0 0 .2rem;
   letter-spacing: -.01em;
 }
-.anb-toast--reminder .anb-toast__title { color: #226A56; }
+.anb-toast--reminder .anb-toast__title { color: var(--mj-brand); }
 .anb-toast__sub {
   font-size: .78rem;
   opacity: .8;
@@ -135,7 +135,7 @@
 .anb-btn:active { transform: scale(.9); }
 .anb-toast--adhan  .anb-btn { background: rgba(255,255,255,.12); color: #fff; }
 .anb-toast--adhan  .anb-btn:hover { background: rgba(255,255,255,.24); }
-.anb-toast--reminder .anb-btn { background: rgba(23,61,53,.09); color: #226A56; }
+.anb-toast--reminder .anb-btn { background: rgba(23,61,53,.09); color: var(--mj-brand); }
 .anb-toast--reminder .anb-btn:hover { background: rgba(23,61,53,.18); }
 .anb-muted-tag {
   font-size: .65rem;

@@ -5,7 +5,7 @@
 .jnz-page { min-height: 100vh; background: #F9FAFB; padding-bottom: 4rem; }
 
 .jnz-hero {
-  background: linear-gradient(155deg, #143F35 0%, #226A56 70%, #143F35 100%);
+  background: linear-gradient(155deg, var(--mj-brand-deep) 0%, var(--mj-brand) 70%, var(--mj-brand-deep) 100%);
   color: #fff;
   padding: 2.5rem 1.25rem 0;
   text-align: center;
@@ -55,7 +55,7 @@
   min-width: 5rem;
 }
 .jnz-tab:hover { background: rgba(255,255,255,.22); color: #fff; }
-.jnz-tab--active { background: #F9FAFB; color: var(--majalis-emerald, #226A56); font-weight: 700; }
+.jnz-tab--active { background: #F9FAFB; color: var(--majalis-emerald, var(--mj-brand)); font-weight: 700; }
 .jnz-tab__icon { font-size: 1.1rem; }
 .jnz-tab__label { white-space: nowrap; font-size: 0.8rem; }
 
@@ -65,8 +65,8 @@
 .jnz-subtitle {
   font-size: var(--ds-text-base);
   font-weight: 700;
-  color: var(--majalis-emerald, #226A56);
-  border-right: 3px solid var(--majalis-emerald, #226A56);
+  color: var(--majalis-emerald, var(--mj-brand));
+  border-right: 3px solid var(--majalis-emerald, var(--mj-brand));
   padding-right: .6rem;
   margin: .3rem 0 .3rem;
 }
@@ -74,8 +74,8 @@
 /* صفحة الجنازة أسطحها بيضاء ثابتة؛ --majalis-emerald يصبح نعناعيًا ليليًا عبر aliases */
 html[data-theme="dark"] .jnz-subtitle,
 html.dark .jnz-subtitle {
-  color: #143F35;
-  border-right-color: #143F35;
+  color: var(--mj-brand-deep);
+  border-right-color: var(--mj-brand-deep);
 }
 
 .jnz-info--mt { margin-top: .5rem; }
@@ -87,7 +87,7 @@ html.dark .jnz-subtitle {
   display: flex;
   gap: .75rem;
   font-size: .87rem;
-  color: #143F35;
+  color: var(--mj-brand-deep);
   line-height: 1.65;
 }
 .jnz-info__icon { font-size: 1.15rem; flex-shrink: 0; }
@@ -105,7 +105,7 @@ html.dark .jnz-subtitle {
 .jnz-step__num {
   min-width: 2rem;
   height: 2rem;
-  background: var(--majalis-emerald, #226A56);
+  background: var(--majalis-emerald, var(--mj-brand));
   color: #fff;
   border-radius: 50%;
   display: flex;
@@ -131,7 +131,7 @@ html.dark .jnz-subtitle {
   padding-right: 1.6rem;
   position: relative;
 }
-.jnz-note::before { content: "•"; position: absolute; right: .7rem; color: var(--majalis-emerald, #226A56); font-weight: 900; font-size: 1.1rem; top: .45rem; }
+.jnz-note::before { content: "•"; position: absolute; right: .7rem; color: var(--majalis-emerald, var(--mj-brand)); font-weight: 900; font-size: 1.1rem; top: .45rem; }
 
 .jnz-takfin-card {
   background: #fff;
@@ -148,13 +148,13 @@ html.dark .jnz-subtitle {
 .jnz-takfin-card__title { font-size: .95rem; font-weight: 700; color: #111; }
 .jnz-takfin-card__desc { font-size: .85rem; color: #5C5C56; line-height: 1.65; margin: 0; }
 .jnz-dalil {
-  background: #F0F7F4;
-  border-right: 3px solid var(--majalis-emerald, #226A56);
+  background: var(--mj-brand-soft);
+  border-right: 3px solid var(--majalis-emerald, var(--mj-brand));
   border-radius: .5rem;
   padding: .65rem .9rem;
   margin: 0;
 }
-.jnz-dalil__text { font-size: .88rem; line-height: 1.85; color: #052E16; font-weight: 500; margin: 0 0 .3rem; }
+.jnz-dalil__text { font-size: .88rem; line-height: 1.85; color: var(--mj-brand-deep); font-weight: 500; margin: 0 0 .3rem; }
 .jnz-dalil__ref { font-size: .72rem; color: #16A34A; font-style: normal; display: block; }
 
 .jnz-arkan-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: .65rem; }
@@ -172,7 +172,7 @@ html.dark .jnz-subtitle {
   min-width: 1.6rem;
   height: 1.6rem;
   background: #D4FAE8;
-  color: var(--majalis-emerald, #226A56);
+  color: var(--majalis-emerald, var(--mj-brand));
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -180,13 +180,13 @@ html.dark .jnz-subtitle {
   font-size: .82rem;
   font-weight: 800;
   flex-shrink: 0;
-  border: 2px solid var(--majalis-emerald, #226A56);
+  border: 2px solid var(--majalis-emerald, var(--mj-brand));
 }
 .jnz-rukn-card__title { display: block; font-size: .88rem; font-weight: 700; color: #111; margin-bottom: .2rem; }
 .jnz-rukn-card__desc { font-size: .79rem; color: #4B5563; line-height: 1.5; margin: 0; }
 
 .jnz-dua-box {
-  background: #F0F7F4;
+  background: var(--mj-brand-soft);
   border: 1px solid #6EE7B7;
   border-radius: .7rem;
   padding: 1rem 1.1rem;
@@ -195,7 +195,7 @@ html.dark .jnz-subtitle {
   gap: .4rem;
 }
 .jnz-dua-box__label { font-size: .72rem; color: #16A34A; font-weight: 700; }
-.jnz-dua-box__text { font-size: .95rem; line-height: 2; color: #052E16; font-weight: 600; margin: 0; }
+.jnz-dua-box__text { font-size: .95rem; line-height: 2; color: var(--mj-brand-deep); font-weight: 600; margin: 0; }
 .jnz-dua-box__ref { font-size: .72rem; color: #16A34A; font-style: normal; }
 
 .jnz-dafn-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: .7rem; }
@@ -228,13 +228,13 @@ html.dark .jnz-subtitle {
 .jnz-adab-card__desc { font-size: .84rem; color: #5C5C56; line-height: 1.6; margin: 0; }
 
 .jnz-hadith-box {
-  background: #F0F7F4;
-  border-right: 3px solid var(--majalis-emerald, #226A56);
+  background: var(--mj-brand-soft);
+  border-right: 3px solid var(--majalis-emerald, var(--mj-brand));
   border-radius: .65rem;
   padding: .9rem 1rem;
   margin-top: .5rem;
 }
-.jnz-hadith-box__text { font-size: var(--ds-text-base); line-height: 1.9; color: #052E16; font-style: normal; font-weight: 600; margin: 0 0 .35rem; }
+.jnz-hadith-box__text { font-size: var(--ds-text-base); line-height: 1.9; color: var(--mj-brand-deep); font-style: normal; font-weight: 600; margin: 0 0 .35rem; }
 .jnz-hadith-box__ref { font-size: .72rem; color: #16A34A; font-style: normal; display: block; }
 
 .jnz-related { margin-top: 2.5rem; }
@@ -246,13 +246,13 @@ html.dark .jnz-subtitle {
   border-radius: .6rem;
   padding: .6rem .7rem;
   font-size: .82rem;
-  color: var(--majalis-emerald, #226A56);
+  color: var(--majalis-emerald, var(--mj-brand));
   text-align: center;
   text-decoration: none;
   font-weight: 600;
   transition: background .15s;
 }
-.jnz-related__link:hover { background: #F0F7F4; border-color: var(--majalis-emerald, #226A56); }
+.jnz-related__link:hover { background: var(--mj-brand-soft); border-color: var(--majalis-emerald, var(--mj-brand)); }
 
 @media (max-width: 640px) {
   .jnz-arkan-grid, .jnz-dafn-grid { grid-template-columns: 1fr; }

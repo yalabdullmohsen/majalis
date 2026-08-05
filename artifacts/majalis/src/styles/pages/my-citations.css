@@ -115,17 +115,17 @@
 .cit-color-swatch { background: var(--swatch-bg); }
 .cit-folder-dot   { background: var(--folder-dot-bg); }
 /* Citation content-type color tokens — set all 3 vars used across citation components */
-.cit-type--quran-ayah    { --cit-type-color: #065f46; --cm-type-color: #065f46; --cab-type-color: #065f46; }
+.cit-type--quran-ayah    { --cit-type-color: var(--mj-brand); --cm-type-color: var(--mj-brand); --cab-type-color: var(--mj-brand); }
 .cit-type--hadith        { --cit-type-color: #1d4ed8; --cm-type-color: #1d4ed8; --cab-type-color: #1d4ed8; }
-.cit-type--scholar-quote { --cit-type-color: var(--brand, #226A56); --cm-type-color: var(--brand, #226A56); --cab-type-color: var(--brand, #226A56); }
+.cit-type--scholar-quote { --cit-type-color: var(--brand, var(--mj-brand)); --cm-type-color: var(--brand, var(--mj-brand)); --cab-type-color: var(--brand, var(--mj-brand)); }
 .cit-type--fatwa,
-.cit-type--book          { --cit-type-color: #226A56; --cm-type-color: #226A56; --cab-type-color: #226A56; }
+.cit-type--book          { --cit-type-color: var(--mj-brand); --cm-type-color: var(--mj-brand); --cab-type-color: var(--mj-brand); }
 .cit-type--article       { --cit-type-color: #0369a1; --cm-type-color: #0369a1; --cab-type-color: #0369a1; }
 .cit-type--research      { --cit-type-color: #0c4a6e; --cm-type-color: #0c4a6e; --cab-type-color: #0c4a6e; }
-.cit-type--lesson        { --cit-type-color: #047857; --cm-type-color: #047857; --cab-type-color: #047857; }
-.cit-type--benefit       { --cit-type-color: #166534; --cm-type-color: #166534; --cab-type-color: #166534; }
+.cit-type--lesson        { --cit-type-color: var(--mj-brand); --cm-type-color: var(--mj-brand); --cab-type-color: var(--mj-brand); }
+.cit-type--benefit       { --cit-type-color: var(--mj-brand); --cm-type-color: var(--mj-brand); --cab-type-color: var(--mj-brand); }
 .cit-type--prophet-story { --cit-type-color: #dc2626; --cm-type-color: #dc2626; --cab-type-color: #dc2626; }
 .cit-type--qa            { --cit-type-color: #6b7280; --cm-type-color: #6b7280; --cab-type-color: #6b7280; }
-.cit-type-bar     { background: var(--cit-type-color, #065f46); }
-.cit-type-badge   { background: var(--cit-type-color, #065f46); }
+.cit-type-bar     { background: var(--cit-type-color, var(--mj-brand)); }
+.cit-type-badge   { background: var(--cit-type-color, var(--mj-brand)); }
 

@@ -16,7 +16,7 @@
   --fc-ink-2:#4A5A53;
   --fc-muted:#6B7B74;
   /* حالات التقييم — ثلاثة لا رابع لها */
-  --fc-ok:#1F7A5A;    --fc-ok-soft:#E4F0EA;
+  --fc-ok:var(--mj-brand);    --fc-ok-soft:var(--mj-brand-soft);
   --fc-later:#9A6B12; --fc-later-soft:#F7EEDA;
   --fc-hard:#9A3B22;  --fc-hard-soft:#F5DED7;
   /* الأنصاف والظلال والمسافات */
@@ -47,7 +47,7 @@
 .fc[data-theme="dark"]{
   --fc-bg:#101614; --fc-surface:#17201C; --fc-surface-2:#1E2925; --fc-hairline:#26332D;
   --fc-ink:#E9EFEC; --fc-ink-2:#B4C2BC; --fc-muted:#8A9A93;
-  --fc-ok:#4FB48B; --fc-ok-soft:#183329;
+  --fc-ok:var(--mj-brand); --fc-ok-soft:var(--mj-brand-soft);
   --fc-later:#D2A445; --fc-later-soft:#332A16;
   --fc-hard:#D77558; --fc-hard-soft:#33201A;
   --fc-sh:0 10px 26px -18px rgba(0,0,0,.7);
@@ -129,7 +129,7 @@
 .fc-rate .is-hard{background:var(--fc-hard-soft);color:var(--fc-hard)}
 .fc-rate .is-later{background:var(--fc-later-soft);color:var(--fc-later)}
 .fc-rate .is-ok{background:var(--fc-ok);color:#fff}
-[data-theme="dark"] .fc-rate .is-ok{color:#0C1512}
+[data-theme="dark"] .fc-rate .is-ok{color:var(--mj-brand-deep)}
 
 /* ── النتيجة والحالة الفارغة ── */
 .fc-result{background:var(--fc-surface);border-radius:var(--fc-r-md);padding:24px;text-align:center;margin-bottom:12px}
@@ -141,7 +141,7 @@
 .fc-row i.is-due{color:var(--fc-hard)}
 .fc-cta{border:0;width:100%;padding:15px;border-radius:var(--fc-r-md);background:var(--fc-ok);color:#fff;
   font-family:var(--fc-ui);font-size:13.5px;cursor:pointer;margin-top:auto}
-[data-theme="dark"] .fc-cta{color:#0C1512}
+[data-theme="dark"] .fc-cta{color:var(--mj-brand-deep)}
 .fc-empty{text-align:center;padding:36px 20px;background:var(--fc-surface);border-radius:var(--fc-r-md);margin:auto 0}
 .fc-empty .fc-dot{width:10px;height:10px;border-radius:50%;background:var(--fc-ok);margin:0 auto 14px}
 .fc-empty b{display:block;font-family:var(--fc-face);font-size:19px;margin-bottom:6px}

@@ -44,7 +44,7 @@
 .ct-review-meta {
   margin: 0.75rem 0 0;
   font-size: 0.8rem;
-  color: var(--majalis-muted, #226a56);
+  color: var(--majalis-muted, var(--mj-brand));
   line-height: 1.6;
 }
 

@@ -31,15 +31,15 @@
   height: 2.75rem;
   margin-bottom: 0.55rem;
   border-radius: 999px;
-  background: color-mix(in srgb, #143f35 12%, transparent);
-  color: #143f35;
+  background: color-mix(in srgb, var(--mj-brand-deep) 12%, transparent);
+  color: var(--mj-brand-deep);
 }
 
 .mpv-jump-dialog__title {
   margin: 0 0 0.35rem;
   font-size: 1.12rem;
   font-weight: 700;
-  color: #143f35;
+  color: var(--mj-brand-deep);
 }
 
 .mpv-jump-dialog__hint {
@@ -61,7 +61,7 @@
   min-height: 2.85rem;
   margin-bottom: 0.55rem;
   border-radius: 0.75rem;
-  border: 1px solid color-mix(in srgb, #143f35 28%, transparent);
+  border: 1px solid color-mix(in srgb, var(--mj-brand-deep) 28%, transparent);
   background: #fff;
   color: #1a2e24;
   font: inherit;
@@ -72,7 +72,7 @@
 }
 
 .mpv-jump-dialog__input:focus {
-  outline: 2px solid color-mix(in srgb, #143f35 45%, transparent);
+  outline: 2px solid color-mix(in srgb, var(--mj-brand-deep) 45%, transparent);
   outline-offset: 1px;
 }
 
@@ -100,14 +100,14 @@
 }
 
 .mpv-jump-dialog__cancel {
-  border: 1px solid color-mix(in srgb, #143f35 25%, transparent);
+  border: 1px solid color-mix(in srgb, var(--mj-brand-deep) 25%, transparent);
   background: transparent;
-  color: #143f35;
+  color: var(--mj-brand-deep);
 }
 
 .mpv-jump-dialog__ok {
   border: none;
-  background: #143f35;
+  background: var(--mj-brand-deep);
   color: #f4faf7;
 }
 
@@ -139,7 +139,7 @@
 }
 
 .mpv-navbar__page-jump:hover {
-  border-color: color-mix(in srgb, #143f35 40%, transparent);
+  border-color: color-mix(in srgb, var(--mj-brand-deep) 40%, transparent);
 }
 
 .qs-mushaf-footer-row__page-btn {
@@ -155,7 +155,7 @@
 }
 
 .qs-mushaf-footer-row__page-btn:hover {
-  background: color-mix(in srgb, #143f35 8%, transparent);
+  background: color-mix(in srgb, var(--mj-brand-deep) 8%, transparent);
 }
 
 @keyframes mpv-jump-fade {

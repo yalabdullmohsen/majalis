@@ -73,7 +73,7 @@
 .scp-submit-btn {
   width: 100%;
   padding: var(--ds-space-3);
-  background: #226A56;
+  background: var(--mj-brand);
   color: #fff;
   border: none;
   border-radius: var(--ds-radius);

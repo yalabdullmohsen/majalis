@@ -60,7 +60,7 @@ export default function SinsAndRightsDetailPage({ params }: { params: { slug: st
       <div className="snr-detail-page">
         <Empty text="الموضوع غير موجود." />
         <div style={{ textAlign: "center", marginTop: "1rem" }}>
-          <Link href="/sins-and-rights" style={{ color: "var(--elite-green, #18362A)", fontWeight: 600 }}>
+          <Link href="/sins-and-rights" style={{ color: "var(--elite-green, var(--mj-brand-deep))", fontWeight: 600 }}>
             ← العودة إلى الذنوب والحقوق
           </Link>
         </div>
@@ -128,7 +128,7 @@ export default function SinsAndRightsDetailPage({ params }: { params: { slug: st
         <div className="snr-detail-section-title">
           <span>📘</span> الشرح
         </div>
-        <p style={{ fontSize: "0.95rem", color: "var(--elite-ink, #122019)", lineHeight: 1.75 }}>
+        <p style={{ fontSize: "0.95rem", color: "var(--elite-ink, var(--mj-brand-deep))", lineHeight: 1.75 }}>
           {topic.explanation}
         </p>
       </section>

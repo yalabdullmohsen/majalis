@@ -159,7 +159,7 @@
 }
 
 .ruling-card__important {
-  color: var(--majalis-emerald, #143F35);
+  color: var(--majalis-emerald, var(--mj-brand-deep));
   font-weight: 600;
 }
 

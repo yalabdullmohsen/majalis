@@ -9,7 +9,7 @@
   position: relative;
   padding: 3.5rem 1.5rem 2.5rem;
   text-align: center;
-  background: linear-gradient(160deg, #0d3026 0%, #143F35 50%, #1a4535 100%);
+  background: linear-gradient(160deg, #0d3026 0%, var(--mj-brand-deep) 50%, #1a4535 100%);
   overflow: hidden;
 }
 
@@ -113,9 +113,9 @@
 
 .ilm-tab--active,
 .ilm-tab:hover {
-  background: var(--majalis-emerald, #226A56);
+  background: var(--majalis-emerald, var(--mj-brand));
   color: #fff;
-  border-color: var(--majalis-emerald, #226A56);
+  border-color: var(--majalis-emerald, var(--mj-brand));
 }
 
 .ilm-filter-row {
@@ -151,7 +151,7 @@
 
 .ilm-search:focus, .ilm-select:focus {
   outline: none;
-  border-color: var(--majalis-emerald, #226A56);
+  border-color: var(--majalis-emerald, var(--mj-brand));
 }
 
 .ilm-view-toggle {
@@ -173,9 +173,9 @@
 }
 
 .ilm-view-btn--active {
-  background: var(--majalis-emerald, #226A56);
+  background: var(--majalis-emerald, var(--mj-brand));
   color: #fff;
-  border-color: var(--majalis-emerald, #226A56);
+  border-color: var(--majalis-emerald, var(--mj-brand));
 }
 
 /* ── Map Container ────────────────────────────────────────────── */
@@ -234,7 +234,7 @@
 
 .ilm-card:hover {
   box-shadow: 0 6px 24px rgba(23,61,53,0.12);
-  border-color: var(--majalis-emerald, #226A56);
+  border-color: var(--majalis-emerald, var(--mj-brand));
 }
 
 .ilm-card--list {
@@ -244,7 +244,7 @@
 /* card image placeholder */
 .ilm-card__img {
   height: 160px;
-  background: linear-gradient(135deg, #143F35 0%, #226A56 100%);
+  background: linear-gradient(135deg, var(--mj-brand-deep) 0%, var(--mj-brand) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -311,7 +311,7 @@
 
 .ilm-badge--type {
   background: rgba(23,61,53,0.1);
-  color: var(--majalis-emerald, #226A56);
+  color: var(--majalis-emerald, var(--mj-brand));
 }
 
 .ilm-badge--era {
@@ -403,7 +403,7 @@
 
 .ilm-modal__img {
   height: 200px;
-  background: linear-gradient(135deg, #143F35 0%, #226A56 60%, #143F35 100%);
+  background: linear-gradient(135deg, var(--mj-brand-deep) 0%, var(--mj-brand) 60%, var(--mj-brand-deep) 100%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -432,7 +432,7 @@
 .ilm-modal__section-title {
   font-size: 0.82rem;
   font-weight: 700;
-  color: var(--majalis-emerald, #226A56);
+  color: var(--majalis-emerald, var(--mj-brand));
   text-transform: uppercase;
   letter-spacing: normal;
   margin: 1rem 0 0.4rem;
@@ -483,7 +483,7 @@
   gap: var(--ds-space-2);
   margin-top: 1.25rem;
   padding: 0.6rem 1.25rem;
-  background: var(--majalis-emerald, #226A56);
+  background: var(--majalis-emerald, var(--mj-brand));
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -494,7 +494,7 @@
   text-decoration: none;
 }
 
-.ilm-map-btn:hover { background: #143F35; }
+.ilm-map-btn:hover { background: var(--mj-brand-deep); }
 
 /* ── Share ─────────────────────────────────────────────────────── */
 .ilm-share-wrap {

@@ -1,6 +1,6 @@
 /* 69c — FiqhPage Hub (fqh-hub-*) */
 .fqh-hub-hero {
-  background: linear-gradient(135deg, #143F35 0%, #226A56 60%, #143F35 100%);
+  background: linear-gradient(135deg, var(--mj-brand-deep) 0%, var(--mj-brand) 60%, var(--mj-brand-deep) 100%);
   border-radius: var(--ds-radius-2xl);
   padding: 2rem 1.75rem 1.75rem;
   margin-bottom: 1.5rem;
@@ -203,7 +203,7 @@ html[data-theme="dark"] .fqh-hub-card__desc {
 .fqp-council-desc { font-size: .75rem; color: var(--majalis-ink-soft); margin-top: .125rem; }
 .fqp-arrow { color: var(--majalis-ink-soft); opacity: .6; font-size: var(--ds-text-lg); flex-shrink: 0; }
 .fqp-cta-btn { background: var(--majalis-emerald); }
-.fqp-cta-btn:hover { background: var(--majalis-emerald-deep, #143F35); }
+.fqp-cta-btn:hover { background: var(--majalis-emerald-deep, var(--mj-brand-deep)); }
 
 
 /* ============================================================
@@ -234,7 +234,7 @@ html[data-theme="dark"] .fqh-hub-card__desc {
 .fiqh-hub-strip__brand {
   font-size: 0.78rem !important;
   font-weight: 700 !important;
-  color: var(--elite-forest, #143F35) !important;
+  color: var(--elite-forest, var(--mj-brand-deep)) !important;
   text-decoration: none !important;
   white-space: nowrap !important;
   flex-shrink: 0 !important;
@@ -260,16 +260,16 @@ html[data-theme="dark"] .fqh-hub-card__desc {
 }
 .fiqh-hub-strip__tab:hover {
   background: rgba(24, 54, 42, 0.08) !important;
-  color: var(--elite-forest, #143F35) !important;
+  color: var(--elite-forest, var(--mj-brand-deep)) !important;
   text-decoration: none !important;
 }
 .fiqh-hub-strip__tab--active {
-  background: var(--elite-forest, #143F35) !important;
+  background: var(--elite-forest, var(--mj-brand-deep)) !important;
   color: #FAFAF8 !important;
   font-weight: 700 !important;
 }
 .fiqh-hub-strip__tab--active:hover {
-  background: var(--elite-forest, #143F35) !important;
+  background: var(--elite-forest, var(--mj-brand-deep)) !important;
   color: #FAFAF8 !important;
 }
 

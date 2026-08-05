@@ -266,11 +266,11 @@
 .seerah-phase--youth,
 .seerah-phase--prophethood,
 .seerah-phase--hijra,
-.seerah-phase--hudaybiyya-mecca { --phase-color: #143F35; --panel-color: #143F35; }
+.seerah-phase--hudaybiyya-mecca { --phase-color: var(--mj-brand-deep); --panel-color: var(--mj-brand-deep); }
 .seerah-phase--childhood,
-.seerah-phase--farewell          { --phase-color: #143F35; --panel-color: #143F35; }
+.seerah-phase--farewell          { --phase-color: var(--mj-brand-deep); --panel-color: var(--mj-brand-deep); }
 .seerah-phase--secret-dawah,
-.seerah-phase--death             { --phase-color: #143F35; --panel-color: #143F35; }
+.seerah-phase--death             { --phase-color: var(--mj-brand-deep); --panel-color: var(--mj-brand-deep); }
 .seerah-phase--open-dawah        { --phase-color: #9B1C1C; --panel-color: #9B1C1C; }
 .seerah-phase--year-of-sorrow    { --phase-color: #2A3E50; --panel-color: #2A3E50; }
 .seerah-phase--ghazawat          { --phase-color: #5C1C2A; --panel-color: #5C1C2A; }
@@ -542,17 +542,17 @@ html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --pane
 
 .seerah-related {
   max-width: 960px; margin: 2rem auto 0; padding: 1.5rem 1.25rem 0;
-  border-top: 1.5px solid var(--clr-border, #E8F2EE);
+  border-top: 1.5px solid var(--clr-border, var(--mj-brand-soft));
 }
-.seerah-related__title { font-size: var(--ds-text-base); font-weight: 700; margin: 0 0 .85rem; color: var(--clr-text-1, #052E16); }
+.seerah-related__title { font-size: var(--ds-text-base); font-weight: 700; margin: 0 0 .85rem; color: var(--clr-text-1, var(--mj-brand-deep)); }
 .seerah-related__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: .5rem; }
 .seerah-related__link {
   display: block; text-align: center; padding: .65rem .5rem;
-  border: 1px solid var(--clr-border, #E8F2EE); border-radius: .55rem;
-  background: #fff; color: var(--clr-text-1, #052E16);
+  border: 1px solid var(--clr-border, var(--mj-brand-soft)); border-radius: .55rem;
+  background: #fff; color: var(--clr-text-1, var(--mj-brand-deep));
   font-size: .88rem; font-weight: 600; text-decoration: none;
 }
-.seerah-related__link:hover { border-color: var(--majalis-emerald, #226A56); color: var(--majalis-emerald, #226A56); }
+.seerah-related__link:hover { border-color: var(--majalis-emerald, var(--mj-brand)); color: var(--majalis-emerald, var(--mj-brand)); }
 @media (max-width: 640px) {
   .seerah-related__grid { grid-template-columns: repeat(2, 1fr); }
 }
@@ -597,7 +597,7 @@ html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --pane
   align-items: center;
   gap: 0.4rem;
   font-size: 0.78rem;
-  color: var(--majalis-brass, #226A56);
+  color: var(--majalis-brass, var(--mj-brand));
   text-decoration: none;
   border: 1px solid rgba(23,61,53,0.25);
   border-radius: 999px;

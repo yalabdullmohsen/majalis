@@ -95,8 +95,8 @@
   transition: background .15s, color .15s, border-color .15s;
   font-family: inherit;
 }
-.tip-cat-btn:hover { background: var(--majalis-emerald-subtle, #F0F7F4); color: var(--majalis-emerald-deep, #166534); border-color: var(--majalis-emerald, #22c55e); }
-.tip-cat-btn--active { background: var(--majalis-emerald-deep, #166534); color: #fff; border-color: var(--majalis-emerald-deep, #166534); }
+.tip-cat-btn:hover { background: var(--majalis-emerald-subtle, var(--mj-brand-soft)); color: var(--majalis-emerald-deep, var(--mj-brand)); border-color: var(--majalis-emerald, #22c55e); }
+.tip-cat-btn--active { background: var(--majalis-emerald-deep, var(--mj-brand)); color: #fff; border-color: var(--majalis-emerald-deep, var(--mj-brand)); }
 
 .tip-section { margin-bottom: 2.5rem; }
 
@@ -128,7 +128,7 @@
   background: var(--majalis-panel, #fff);
   transition: background .15s, border-color .15s, color .15s;
 }
-.tip-link:hover { background: var(--majalis-emerald-subtle, #F0F7F4); border-color: var(--majalis-emerald, #22c55e); color: var(--majalis-emerald-deep, #166534); }
+.tip-link:hover { background: var(--majalis-emerald-subtle, var(--mj-brand-soft)); border-color: var(--majalis-emerald, #22c55e); color: var(--majalis-emerald-deep, var(--mj-brand)); }
 
 .tip-footer-note {
   margin-top: 3rem;
@@ -142,7 +142,7 @@
   justify-content: center;
   gap: .75rem;
 }
-.tip-footer-link { color: var(--majalis-emerald-deep, #166534); font-weight: 600; text-decoration: none; }
+.tip-footer-link { color: var(--majalis-emerald-deep, var(--mj-brand)); font-weight: 600; text-decoration: none; }
 .tip-footer-link:hover { text-decoration: underline; }
 
 /* ============================================================
@@ -182,7 +182,7 @@
 .cvp-submit-btn {
   padding: .55rem 1.25rem;
   border-radius: .55rem;
-  background: var(--majalis-emerald-deep, #166534);
+  background: var(--majalis-emerald-deep, var(--mj-brand));
   color: #fff;
   font-size: .9rem;
   font-weight: 700;
@@ -214,13 +214,13 @@
   margin-bottom: 2rem;
   text-align: center;
 }
-.cvp-result--valid { border: 2px solid var(--majalis-emerald-deep, #166534); background: #F0F7F4; }
+.cvp-result--valid { border: 2px solid var(--majalis-emerald-deep, var(--mj-brand)); background: var(--mj-brand-soft); }
 .cvp-result--invalid { border: 1.5px solid #fca5a5; background: #fff1f2; }
 
 .cvp-result-badge {
   width: 64px; height: 64px;
   border-radius: 50%;
-  background: var(--majalis-emerald-deep, #166534);
+  background: var(--majalis-emerald-deep, var(--mj-brand));
   color: #fff;
   font-size: 2rem;
   display: flex;
@@ -229,7 +229,7 @@
   margin: 0 auto 1rem;
 }
 .cvp-result-badge--invalid { background: #dc2626; }
-.cvp-result-title { font-size: var(--ds-text-xl); font-weight: 800; margin-bottom: .75rem; color: var(--majalis-emerald-deep, #166534); }
+.cvp-result-title { font-size: var(--ds-text-xl); font-weight: 800; margin-bottom: .75rem; color: var(--majalis-emerald-deep, var(--mj-brand)); }
 .cvp-result-title--invalid { color: #dc2626; }
 
 .cvp-cert-name { font-size: 1.1rem; font-weight: 700; margin-bottom: 1.25rem; }
@@ -265,9 +265,9 @@
 .cvp-step-num {
   width: 32px; height: 32px;
   border-radius: 50%;
-  background: var(--majalis-emerald-subtle, #F0F7F4);
+  background: var(--majalis-emerald-subtle, var(--mj-brand-soft));
   border: 1.5px solid var(--majalis-emerald, #22c55e);
-  color: var(--majalis-emerald-deep, #166534);
+  color: var(--majalis-emerald-deep, var(--mj-brand));
   font-weight: 800;
   font-size: .9rem;
   display: flex;
@@ -297,7 +297,7 @@
   text-decoration: none;
   transition: background .15s, color .15s;
 }
-.cvp-back-link:hover { background: var(--majalis-emerald-subtle, #F0F7F4); color: var(--majalis-emerald-deep, #166534); }
+.cvp-back-link:hover { background: var(--majalis-emerald-subtle, var(--mj-brand-soft)); color: var(--majalis-emerald-deep, var(--mj-brand)); }
 
 
 .upd-search-wrap { padding: .5rem 0 .75rem; }
@@ -308,7 +308,7 @@
    82 — UpdatesPage  (upd-*)
    ============================================================ */
 .updates-type-badge { background: var(--badge-color, #64748B); }
-.upd-auto-badge     { background: #0F766E; margin-inline-start: 0.35rem; }
+.upd-auto-badge     { background: var(--mj-brand); margin-inline-start: 0.35rem; }
 .upd-title-link     { text-decoration: none; }
 .upd-source-name    { font-size: 0.8125rem; opacity: 0.85; }
 

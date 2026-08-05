@@ -17,6 +17,7 @@ import { prewarmAudioCdns, prewarmTextApis, prewarmSupabaseOrigin } from "./lib/
 // هوية identity-v2 — الرموز أولاً (@theme + --mj-*) قبل أي طبقة قديمة
 import "./styles/theme.css";
 import "./styles/components/page-hero.css";
+import "./styles/components/hub-card.css";
 // Majlisilm 2030 + طبقات الأساس (تُبقى كما هي — لا حذف في هذا الـPR)
 import "./styles/brand-v4.css";
 import "./index.css";

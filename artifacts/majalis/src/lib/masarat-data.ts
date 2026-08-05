@@ -22,7 +22,7 @@ export const MASARAT: Masar[] = [
     title: "مسار التأسيس",
     subtitle: "للمسلم الذي يريد بناء أساس متين في دينه",
     icon: "🏗️",
-    color: "#047857",
+    color: "var(--mj-brand)",
     level: "مبتدئ",
     duration: "3 أشهر",
     steps: [

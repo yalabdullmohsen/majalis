@@ -20,7 +20,7 @@
 .rk-algo-badge {
   font-size: 0.65rem;
   font-weight: 600;
-  color: #226A56;
+  color: var(--mj-brand);
   background: rgba(23,61,53,.1);
   border: 1px solid rgba(23,61,53,.2);
   border-radius: var(--ds-radius-full);
@@ -47,7 +47,7 @@
   transition: border-color .15s, background .15s, transform .1s;
 }
 .rk-card:hover {
-  border-color: #226A56;
+  border-color: var(--mj-brand);
   background: rgba(23,61,53,.03);
   transform: translateY(-1px);
 }
@@ -55,7 +55,7 @@
   position: absolute;
   top: 0; right: 0;
   width: 3px; height: 100%;
-  background: linear-gradient(180deg, #226A56, #143F35);
+  background: linear-gradient(180deg, var(--mj-brand), var(--mj-brand-deep));
   border-radius: 0 0.75rem 0.75rem 0;
 }
 .rk-card__body { flex: 1; min-width: 0; padding-right: 0.25rem; }
@@ -79,7 +79,7 @@
   gap: 0.2rem;
   font-size: 0.62rem;
   font-weight: 600;
-  color: #226A56;
+  color: var(--mj-brand);
 }
 .rk-card__title {
   font-size: 0.84rem;
@@ -107,8 +107,8 @@ html[data-theme="dark"] .rk-card {
   background: rgba(255,255,255,.03);
   border-color: rgba(255,255,255,.1);
 }
-html[data-theme="dark"] .rk-card:hover { background: rgba(23,61,53,.1); border-color: #226A56; }
-html[data-theme="dark"] .rk-card__title { color: #e8f5ee; }
+html[data-theme="dark"] .rk-card:hover { background: rgba(23,61,53,.1); border-color: var(--mj-brand); }
+html[data-theme="dark"] .rk-card__title { color: var(--mj-brand-soft); }
 
 /* ═══════════════════════════════════════════════════════════════════
    67  KnowledgeRelatedItems — Knowledge graph card design
@@ -145,7 +145,7 @@ html[data-theme="dark"] .rk-card__title { color: #e8f5ee; }
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #226A56;
+  color: var(--mj-brand);
   flex-shrink: 0;
 }
 .kri-card__body { flex: 1; min-width: 0; }
@@ -170,7 +170,7 @@ html[data-theme="dark"] .rk-card__title { color: #e8f5ee; }
   border-radius: var(--ds-radius-full);
   background: rgba(23,61,53,.1);
   border: 1px solid rgba(23,61,53,.18);
-  color: #226A56;
+  color: var(--mj-brand);
   font-weight: 600;
 }
 .kri-card__arrow { color: var(--clr-ink-soft, #6b7280); flex-shrink: 0; }
@@ -181,11 +181,11 @@ html[data-theme="dark"] .kri-card {
   border-color: rgba(255,255,255,.1);
 }
 html[data-theme="dark"] .kri-card:hover { background: rgba(23,61,53,.1); border-color: rgba(23,61,53,.35); }
-html[data-theme="dark"] .kri-card__name { color: #e8f5ee; }
+html[data-theme="dark"] .kri-card__name { color: var(--mj-brand-soft); }
 html[data-theme="dark"] .kri-card__icon-wrap { background: rgba(23,61,53,.2); }
 
 
 /* ── 199 — KnowledgeRelatedItems (kri-*) ────────────────────────────────────── */
 .kri-aside { margin-top: 2rem; direction: rtl; }
-.kri-title { font-size: 0.9375rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--majalis-emerald, #226A56); }
+.kri-title { font-size: 0.9375rem; font-weight: 700; margin-bottom: 0.75rem; color: var(--majalis-emerald, var(--mj-brand)); }
 .kri-grid  { display: grid; gap: var(--ds-space-2); }

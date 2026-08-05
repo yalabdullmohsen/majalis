@@ -33,9 +33,9 @@
   border-radius: 999px;
   font-size: 0.78rem;
   font-weight: 700;
-  color: var(--brand-deep, #143f35);
-  background: color-mix(in srgb, var(--brand, #226a56) 16%, transparent);
-  border: 1px solid color-mix(in srgb, var(--brand, #226a56) 28%, transparent);
+  color: var(--brand-deep, var(--mj-brand-deep));
+  background: color-mix(in srgb, var(--brand, var(--mj-brand)) 16%, transparent);
+  border: 1px solid color-mix(in srgb, var(--brand, var(--mj-brand)) 28%, transparent);
 }
 .kids-hub-soon__note {
   margin: 0.85rem 0 0;
@@ -56,15 +56,15 @@
   gap: 0.35rem;
   padding: 0.55rem 0.85rem;
   border-radius: 10px;
-  border: 1px solid color-mix(in srgb, var(--brand-deep, #143f35) 18%, transparent);
+  border: 1px solid color-mix(in srgb, var(--brand-deep, var(--mj-brand-deep)) 18%, transparent);
   background: var(--bg, #fff);
-  color: var(--brand-deep, #143f35);
+  color: var(--brand-deep, var(--mj-brand-deep));
   text-decoration: none;
   font-size: 0.86rem;
   font-weight: 600;
 }
 .kids-hub-soon__btn--primary {
-  background: var(--brand-deep, #143f35);
+  background: var(--brand-deep, var(--mj-brand-deep));
   color: #fafaf8;
   border-color: transparent;
 }

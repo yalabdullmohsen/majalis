@@ -232,9 +232,9 @@ body.quran-immersive-sticky .scroll-to-top {
 
 .immersive-quran-page__verse.is-reciting {
   /* Audio tracking cursor — soft emerald pulse while recited */
-  box-shadow: inset 0 0 0 2px color-mix(in srgb, #176b57 45%, transparent);
+  box-shadow: inset 0 0 0 2px color-mix(in srgb, var(--mj-brand) 45%, transparent);
   border-radius: 10px;
-  background: color-mix(in srgb, #176b57 8%, transparent);
+  background: color-mix(in srgb, var(--mj-brand) 8%, transparent);
 }
 
 .immersive-verse-sheet__status {
@@ -242,7 +242,7 @@ body.quran-immersive-sticky .scroll-to-top {
   padding: 0.35rem 1.25rem;
   font-size: 0.85rem;
   font-weight: 600;
-  color: #176b57;
+  color: var(--mj-brand);
   text-align: center;
 }
 

@@ -9,7 +9,7 @@
 .ai-hero {
   text-align: center;
   padding: 2.5rem 1.5rem 2rem;
-  background: linear-gradient(135deg, #143F35 0%, #226A56 60%, #226A56 100%);
+  background: linear-gradient(135deg, var(--mj-brand-deep) 0%, var(--mj-brand) 60%, var(--mj-brand) 100%);
   border-radius: var(--ds-radius-2xl);
   color: #FFFFFF;
   margin-bottom: 2rem;
@@ -56,13 +56,13 @@
 /* بطاقة الركن */
 .ai-card {
   background: #FFFFFF;
-  border: 1.5px solid #D4E3DB;
+  border: 1.5px solid var(--mj-brand-soft);
   border-radius: var(--ds-radius-xl);
   overflow: hidden;
   box-shadow: 0 1px 6px rgba(31,77,58,0.06);
   transition: box-shadow 0.18s, border-color 0.18s;
 }
-.ai-card--open { border-color: #226A56; box-shadow: 0 4px 16px rgba(31,77,58,0.12); }
+.ai-card--open { border-color: var(--mj-brand); box-shadow: 0 4px 16px rgba(31,77,58,0.12); }
 .ai-card__header {
   display: flex;
   align-items: center;
@@ -79,14 +79,14 @@
 .ai-card__header:hover { background: rgba(31,77,58,0.04); }
 .ai-card__header-right { display: flex; align-items: center; gap: 0.85rem; flex: 1; min-width: 0; }
 .ai-card__icon { font-size: 2rem; flex-shrink: 0; line-height: 1; }
-.ai-card__num { font-size: 0.72rem; font-weight: 700; color: #226A56; text-transform: uppercase; letter-spacing: normal; margin-bottom: 0.15rem; }
-.ai-card__title { font-size: 0.98rem; font-weight: 800; color: #052E16; line-height: 1.35; }
-.ai-card__subtitle { font-size: 0.8rem; color: #226A56; margin-top: 0.15rem; }
-.ai-card__chevron { flex-shrink: 0; color: #226A56; transition: transform 0.2s; }
+.ai-card__num { font-size: 0.72rem; font-weight: 700; color: var(--mj-brand); text-transform: uppercase; letter-spacing: normal; margin-bottom: 0.15rem; }
+.ai-card__title { font-size: 0.98rem; font-weight: 800; color: var(--mj-brand-deep); line-height: 1.35; }
+.ai-card__subtitle { font-size: 0.8rem; color: var(--mj-brand); margin-top: 0.15rem; }
+.ai-card__chevron { flex-shrink: 0; color: var(--mj-brand); transition: transform 0.2s; }
 
 /* محتوى البطاقة */
-.ai-card__body { padding: 0 1.25rem 1.25rem; border-top: 1.5px solid #E8F2EE; }
-.ai-card__summary { font-size: 0.9rem; color: #143F35; line-height: 1.75; margin: 1rem 0 1.25rem; }
+.ai-card__body { padding: 0 1.25rem 1.25rem; border-top: 1.5px solid var(--mj-brand-soft); }
+.ai-card__summary { font-size: 0.9rem; color: var(--mj-brand-deep); line-height: 1.75; margin: 1rem 0 1.25rem; }
 
 /* كتل الأدلة */
 .ai-dalil {
@@ -94,15 +94,15 @@
   padding: 0.9rem 1rem;
   margin-bottom: 1rem;
 }
-.ai-dalil--quran { background: rgba(31,77,58,0.06); border-right: 3px solid #226A56; }
-.ai-dalil--hadith { background: rgba(23,61,53,0.05); border-right: 3px solid #226A56; }
+.ai-dalil--quran { background: rgba(31,77,58,0.06); border-right: 3px solid var(--mj-brand); }
+.ai-dalil--hadith { background: rgba(23,61,53,0.05); border-right: 3px solid var(--mj-brand); }
 .ai-dalil__head {
   display: flex;
   align-items: center;
   gap: 0.4rem;
   font-size: 0.78rem;
   font-weight: 800;
-  color: #226A56;
+  color: var(--mj-brand);
   text-transform: uppercase;
   letter-spacing: normal;
   margin-bottom: 0.7rem;
@@ -111,7 +111,7 @@
 .ai-dalil__quote:last-child { margin-bottom: 0; }
 .ai-dalil__text {
   font-size: clamp(1rem, 3.4vw, 1.15rem);
-  color: #052E16;
+  color: var(--mj-brand-deep);
   line-height: 1.9;
   letter-spacing: 0;
   font-weight: 600;
@@ -119,22 +119,22 @@
   font-family: var(--font-quran, "Amiri Quran", serif);
   overflow-wrap: anywhere;
 }
-.ai-dalil__ref { font-size: 0.78rem; color: #226A56; font-style: normal; }
+.ai-dalil__ref { font-size: 0.78rem; color: var(--mj-brand); font-style: normal; }
 
 /* تفاصيل عقدية */
 .ai-details { display: flex; flex-direction: column; gap: 0.7rem; margin-bottom: 1rem; }
 .ai-detail {
   background: #F8FBF9;
-  border: 1px solid #D4E3DB;
+  border: 1px solid var(--mj-brand-soft);
   border-radius: 0.65rem;
   padding: 0.75rem 1rem;
 }
-.ai-detail__label { font-size: 0.8rem; font-weight: 800; color: #226A56; margin-bottom: 0.3rem; }
-.ai-detail__body { font-size: 0.87rem; color: #143F35; line-height: 1.65; }
+.ai-detail__label { font-size: 0.8rem; font-weight: 800; color: var(--mj-brand); margin-bottom: 0.3rem; }
+.ai-detail__body { font-size: 0.87rem; color: var(--mj-brand-deep); line-height: 1.65; }
 
 /* قول عالم */
 .ai-scholar {
-  background: linear-gradient(135deg, #226A56, #143F35);
+  background: linear-gradient(135deg, var(--mj-brand), var(--mj-brand-deep));
   border-radius: 0.85rem;
   padding: 1rem 1.1rem;
   color: #FFFFFF;
@@ -148,23 +148,23 @@
 .ai-scholar blockquote footer { font-size: 0.78rem; color: rgba(255,255,255,0.75); font-weight: 700; }
 
 /* صفحات ذات صلة */
-.ai-related { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1.5px solid #E8F2EE; }
-.ai-related__title { font-size: var(--ds-text-base); font-weight: 700; color: #052E16; margin-bottom: 0.85rem; }
+.ai-related { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1.5px solid var(--mj-brand-soft); }
+.ai-related__title { font-size: var(--ds-text-base); font-weight: 700; color: var(--mj-brand-deep); margin-bottom: 0.85rem; }
 .ai-related__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: var(--ds-space-2); }
 .ai-related__link {
   display: block;
   padding: 0.6rem 0.85rem;
-  border: 1.5px solid #D4E3DB;
+  border: 1.5px solid var(--mj-brand-soft);
   border-radius: 0.65rem;
   text-decoration: none;
   font-size: 0.83rem;
   font-weight: 600;
-  color: #052E16;
+  color: var(--mj-brand-deep);
   background: #FFFFFF;
   transition: all 0.15s;
   text-align: center;
 }
-.ai-related__link:hover { border-color: #226A56; background: rgba(31,77,58,0.05); color: #226A56; }
+.ai-related__link:hover { border-color: var(--mj-brand); background: rgba(31,77,58,0.05); color: var(--mj-brand); }
 
 @media (max-width: 600px) {
   .ai-hero__title { font-size: 1.6rem; }

@@ -84,8 +84,8 @@
 }
 
 .cat-admin__tab.is-active {
-  background: var(--majalis-emerald-deep, #166534);
-  border-color: var(--majalis-emerald-deep, #166534);
+  background: var(--majalis-emerald-deep, var(--mj-brand));
+  border-color: var(--majalis-emerald-deep, var(--mj-brand));
   color: #fff;
 }
 

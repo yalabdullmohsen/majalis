@@ -31,7 +31,7 @@
   transition: transform .15s ease, box-shadow .15s ease;
 }
 .dii-path-card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(14,110,82,.12); }
-.dii-path-card strong { color: var(--majalis-emerald-deep, #143F35); font-size: .95rem; }
+.dii-path-card strong { color: var(--majalis-emerald-deep, var(--mj-brand-deep)); font-size: .95rem; }
 .dii-path-card span { font-size: .8rem; color: var(--majalis-ink-soft, #5A6660); }
 
 .dii-categories-grid {
@@ -53,7 +53,7 @@
   background: var(--majalis-emerald-soft, rgba(14,110,82,.1));
   color: var(--majalis-emerald, #0E6E52);
 }
-.dii-category-card strong { color: var(--majalis-emerald-deep, #143F35); font-size: .92rem; }
+.dii-category-card strong { color: var(--majalis-emerald-deep, var(--mj-brand-deep)); font-size: .92rem; }
 .dii-category-card span { font-size: .78rem; color: var(--majalis-ink-soft, #5A6660); line-height: 1.6; }
 
 .dii-journey { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: .5rem; }
@@ -78,7 +78,7 @@ html[data-theme="dark"] .dii-journey-step { background: rgba(255,255,255,.05); c
 .dii-contact-cta p { margin: 0 0 .85rem; color: var(--majalis-ink-soft, #5A6660); font-size: .88rem; }
 
 .dii-answer-card, .dii-shubha-text-card { padding: 1.1rem !important; }
-.dii-short-answer { font-size: 1.05rem; font-weight: 600; line-height: 1.8; margin: .5rem 0 0; color: var(--majalis-emerald-deep, #143F35); }
+.dii-short-answer { font-size: 1.05rem; font-weight: 600; line-height: 1.8; margin: .5rem 0 0; color: var(--majalis-emerald-deep, var(--mj-brand-deep)); }
 .dii-detailed-answer { line-height: 2; white-space: pre-line; }
 
 .dii-evidence-list { list-style: none; margin: .5rem 0 0; padding: 0; display: flex; flex-direction: column; gap: .6rem; }
@@ -87,7 +87,7 @@ html[data-theme="dark"] .dii-journey-step { background: rgba(255,255,255,.05); c
 .dii-evidence-grading { font-size: .78rem !important; color: var(--majalis-ink-soft, #5A6660) !important; font-family: var(--font-body) !important; }
 
 .dii-glossary { margin: .5rem 0 0; display: flex; flex-direction: column; gap: .5rem; }
-.dii-glossary dt { font-weight: 700; color: var(--majalis-emerald-deep, #143F35); }
+.dii-glossary dt { font-weight: 700; color: var(--majalis-emerald-deep, var(--mj-brand-deep)); }
 .dii-glossary dd { margin: 0; color: var(--majalis-ink-soft, #5A6660); font-size: .9rem; }
 
 .dii-sources-list { margin: .5rem 0 0; padding-inline-start: 1.2rem; display: flex; flex-direction: column; gap: .3rem; font-size: .88rem; }
@@ -102,7 +102,7 @@ html[data-theme="dark"] .dii-journey-step { background: rgba(255,255,255,.05); c
 .dii-shahada-ar {
   font-family: var(--font-quran, "Amiri Quran", serif);
   font-size: var(--ds-text-2xl); text-align: center; line-height: 2;
-  color: var(--majalis-emerald-deep, #143F35);
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep));
   margin: .75rem 0 .25rem;
 }
 .dii-shahada-translit { text-align: center; direction: ltr; font-style: italic; color: var(--majalis-ink-soft, #5A6660); margin: 0 0 .5rem; }
@@ -121,7 +121,7 @@ html[data-theme="dark"] .dii-journey-step { background: rgba(255,255,255,.05); c
   display: inline-flex; align-items: center; justify-content: center;
   width: 2rem; height: 2rem; border-radius: 50%;
   background: color-mix(in srgb, var(--majalis-emerald, #0E6E52) 12%, transparent);
-  color: var(--majalis-emerald-deep, #143F35);
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep));
   font-weight: 700; font-size: .85rem; flex-shrink: 0;
 }
 .dii-path-day-title { flex: 1; font-weight: 600; }
@@ -136,7 +136,7 @@ html[data-theme="dark"] .dii-journey-step { background: rgba(255,255,255,.05); c
   font-family: monospace; font-size: 1.3rem; letter-spacing: normal;
   text-align: center; padding: .6rem; border-radius: 8px;
   background: color-mix(in srgb, var(--majalis-emerald, #0E6E52) 10%, transparent);
-  color: var(--majalis-emerald-deep, #143F35);
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep));
 }
 
 .dii-article-cover { width: 100%; border-radius: 12px; margin: 1rem 0; max-height: 320px; object-fit: cover; }

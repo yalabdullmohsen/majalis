@@ -6,7 +6,7 @@
 
 /* هيرو */
 .sy-hero {
-  background: linear-gradient(135deg, #143F35 0%, #226A56 58%, #226A56 100%);
+  background: linear-gradient(135deg, var(--mj-brand-deep) 0%, var(--mj-brand) 58%, var(--mj-brand) 100%);
   border-radius: var(--ds-radius-2xl);
   padding: 2.5rem 1.5rem 2rem;
   color: #FFFFFF;
@@ -63,10 +63,10 @@
 .sy-search {
   width: 100%;
   padding: 0.65rem 2.4rem 0.65rem 2rem;
-  border: 1.5px solid #D4E3DB;
+  border: 1.5px solid var(--mj-brand-soft);
   border-radius: var(--ds-radius-lg);
   font-size: 0.88rem;
-  color: #052E16;
+  color: var(--mj-brand-deep);
   background: #FFFFFF;
   outline: none;
   transition: border-color 0.15s;
@@ -74,7 +74,7 @@
   font-family: inherit;
   direction: rtl;
 }
-.sy-search:focus { border-color: #226A56; }
+.sy-search:focus { border-color: var(--mj-brand); }
 .sy-search-clear {
   position: absolute;
   left: 0.7rem;
@@ -91,17 +91,17 @@
 .sy-cat-chip {
   padding: 0.32rem 0.85rem;
   border-radius: var(--ds-radius-full);
-  border: 1.5px solid #D4E3DB;
+  border: 1.5px solid var(--mj-brand-soft);
   background: #FFFFFF;
   font-size: 0.78rem;
   font-weight: 600;
-  color: #143F35;
+  color: var(--mj-brand-deep);
   cursor: pointer;
   transition: all 0.15s;
   font-family: inherit;
 }
-.sy-cat-chip:hover { border-color: #226A56; color: #226A56; }
-.sy-cat-chip--active { background: #226A56; border-color: #226A56; color: #FFFFFF; }
+.sy-cat-chip:hover { border-color: var(--mj-brand); color: var(--mj-brand); }
+.sy-cat-chip--active { background: var(--mj-brand); border-color: var(--mj-brand); color: #FFFFFF; }
 
 /* قائمة السنن */
 .sy-list { display: flex; flex-direction: column; gap: 0.7rem; }
@@ -111,18 +111,18 @@
   display: flex;
   gap: var(--ds-space-3);
   background: #FFFFFF;
-  border: 1.5px solid #D4E3DB;
+  border: 1.5px solid var(--mj-brand-soft);
   border-radius: 0.9rem;
   padding: 1rem 1.1rem;
   transition: border-color 0.15s, box-shadow 0.15s;
 }
-.sy-card--done { border-color: #226A56; background: rgba(31,77,58,0.03); }
+.sy-card--done { border-color: var(--mj-brand); background: rgba(31,77,58,0.03); }
 .sy-card__check {
   flex-shrink: 0;
   width: 26px;
   height: 26px;
   border-radius: 50%;
-  border: 2px solid #D4E3DB;
+  border: 2px solid var(--mj-brand-soft);
   background: #FFFFFF;
   cursor: pointer;
   display: flex;
@@ -132,18 +132,18 @@
   transition: all 0.15s;
   color: #FFFFFF;
 }
-.sy-card--done .sy-card__check { background: #226A56; border-color: #226A56; }
-.sy-card__check:hover { border-color: #226A56; }
+.sy-card--done .sy-card__check { background: var(--mj-brand); border-color: var(--mj-brand); }
+.sy-card__check:hover { border-color: var(--mj-brand); }
 
 .sy-card__body { flex: 1; min-width: 0; }
 .sy-card__head { display: flex; align-items: flex-start; justify-content: space-between; gap: var(--ds-space-2); margin-bottom: 0.4rem; }
-.sy-card__title { font-size: 0.95rem; font-weight: 800; color: #052E16; }
+.sy-card__title { font-size: 0.95rem; font-weight: 800; color: var(--mj-brand-deep); }
 .sy-card__time { font-size: 0.8rem; color: #6B9E86; white-space: nowrap; flex-shrink: 0; margin-top: 0.15rem; }
-.sy-card__text { font-size: 0.86rem; color: #143F35; line-height: 1.7; margin: 0 0 0.4rem; }
-.sy-card__source { font-size: 0.8rem; color: #226A56; font-weight: 600; margin-bottom: 0.4rem; }
+.sy-card__text { font-size: 0.86rem; color: var(--mj-brand-deep); line-height: 1.7; margin: 0 0 0.4rem; }
+.sy-card__source { font-size: 0.8rem; color: var(--mj-brand); font-weight: 600; margin-bottom: 0.4rem; }
 .sy-card__reward {
   font-size: 0.81rem;
-  color: #143F35;
+  color: var(--mj-brand-deep);
   background: rgba(31,77,58,0.07);
   border-radius: var(--ds-radius);
   padding: 0.4rem 0.65rem;
@@ -152,36 +152,36 @@
 }
 .sy-card__howto {
   font-size: 0.8rem;
-  color: #143F35;
+  color: var(--mj-brand-deep);
   background: #F8FBF9;
-  border: 1px solid #D4E3DB;
+  border: 1px solid var(--mj-brand-soft);
   border-radius: var(--ds-radius);
   padding: 0.4rem 0.65rem;
   line-height: 1.55;
 }
-.sy-card__howto-label { font-weight: 700; color: #226A56; margin-left: 0.3rem; }
+.sy-card__howto-label { font-weight: 700; color: var(--mj-brand); margin-left: 0.3rem; }
 
 /* فارغ */
 .sy-empty { text-align: center; padding: 2.5rem 1rem; color: #6B9E86; font-size: 0.9rem; }
 
 /* ذات صلة */
-.sy-related { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1.5px solid #E8F2EE; }
-.sy-related__title { font-size: var(--ds-text-base); font-weight: 700; color: #052E16; margin-bottom: 0.75rem; }
+.sy-related { margin-top: 2.5rem; padding-top: 1.5rem; border-top: 1.5px solid var(--mj-brand-soft); }
+.sy-related__title { font-size: var(--ds-text-base); font-weight: 700; color: var(--mj-brand-deep); margin-bottom: 0.75rem; }
 .sy-related__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: var(--ds-space-2); }
 .sy-related__link {
   display: block;
   padding: 0.6rem 0.85rem;
-  border: 1.5px solid #D4E3DB;
+  border: 1.5px solid var(--mj-brand-soft);
   border-radius: 0.65rem;
   text-decoration: none;
   font-size: 0.83rem;
   font-weight: 600;
-  color: #052E16;
+  color: var(--mj-brand-deep);
   background: #FFFFFF;
   transition: all 0.15s;
   text-align: center;
 }
-.sy-related__link:hover { border-color: #226A56; background: rgba(31,77,58,0.05); color: #226A56; }
+.sy-related__link:hover { border-color: var(--mj-brand); background: rgba(31,77,58,0.05); color: var(--mj-brand); }
 
 @media (max-width: 600px) {
   .sy-hero__title { font-size: 1.55rem; }

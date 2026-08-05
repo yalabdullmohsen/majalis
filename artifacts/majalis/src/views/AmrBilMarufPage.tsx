@@ -11,7 +11,7 @@ import {
 } from "@/lib/amr-bil-maruf-seed";
 
 const RANK_COLOR: Record<number, { bg: string; border: string; badge: string }> = {
-  1: { bg: "rgba(23,61,53,.08)", border: "#226A56", badge: "#226A56" },
+  1: { bg: "rgba(23,61,53,.08)", border: "var(--mj-brand)", badge: "var(--mj-brand)" },
   2: { bg: "#ECFDF5", border: "#10B981", badge: "#059669" },
   3: { bg: "#EFF6FF", border: "#3B82F6", badge: "#1D4ED8" },
 };
@@ -39,7 +39,7 @@ export default function AmrBilMarufPage() {
     <div className="page-shell narrow" dir="rtl" style={{ paddingBottom: "3rem" }}>
       {/* ═══ الهيدر ═══ */}
       <div style={{
-        background: "linear-gradient(160deg, #143F35 0%, #163728 55%, #0e2619 100%)",
+        background: "linear-gradient(160deg, var(--mj-brand-deep) 0%, #163728 55%, #0e2619 100%)",
         borderRadius: "1rem",
         padding: "2rem 1.5rem",
         marginBottom: "2rem",
@@ -82,10 +82,10 @@ export default function AmrBilMarufPage() {
         <blockquote style={{
           fontSize: "clamp(1rem, 2.5vw, 1.18rem)",
           fontWeight: 700,
-          color: "#122019",
+          color: "var(--mj-brand-deep)",
           margin: "0 0 0.6rem",
           lineHeight: 1.8,
-          borderRight: "3px solid #143F35",
+          borderRight: "3px solid var(--mj-brand-deep)",
           paddingRight: "1rem",
         }}>
           {AMR_BIL_MARUF_META.quran_basis}
@@ -122,15 +122,15 @@ export default function AmrBilMarufPage() {
       }}>
         <span style={{ fontSize: "1.4rem", flexShrink: 0 }}>⚖️</span>
         <div>
-          <p style={{ fontWeight: 700, color: "#15803D", margin: "0 0 0.2rem", fontSize: "0.88rem" }}>الحكم الشرعي</p>
-          <p style={{ margin: 0, fontSize: "0.88rem", color: "#166534", lineHeight: 1.6 }}>
+          <p style={{ fontWeight: 700, color: "var(--mj-brand)", margin: "0 0 0.2rem", fontSize: "0.88rem" }}>الحكم الشرعي</p>
+          <p style={{ margin: 0, fontSize: "0.88rem", color: "var(--mj-brand)", lineHeight: 1.6 }}>
             {AMR_BIL_MARUF_META.ruling}
           </p>
         </div>
       </div>
 
       {/* ═══ المراتب الثلاث ═══ */}
-      <h2 style={{ fontSize: "1.15rem", fontWeight: 800, color: "#122019", marginBottom: "1rem" }}>
+      <h2 style={{ fontSize: "1.15rem", fontWeight: 800, color: "var(--mj-brand-deep)", marginBottom: "1rem" }}>
         المراتب الثلاث
       </h2>
 
@@ -236,7 +236,7 @@ export default function AmrBilMarufPage() {
       </div>
 
       {/* ═══ الشروط العامة ═══ */}
-      <h2 style={{ fontSize: "1.15rem", fontWeight: 800, color: "#122019", marginBottom: "1rem" }}>
+      <h2 style={{ fontSize: "1.15rem", fontWeight: 800, color: "var(--mj-brand-deep)", marginBottom: "1rem" }}>
         الشروط العامة للأمر بالمعروف والنهي عن المنكر
       </h2>
 
@@ -247,11 +247,11 @@ export default function AmrBilMarufPage() {
             border: "1px solid #E8E7E2",
             borderRadius: "0.7rem",
             padding: "1rem",
-            borderTop: "3px solid #143F35",
+            borderTop: "3px solid var(--mj-brand-deep)",
           }}>
             <div style={{ display: "flex", gap: "0.6rem", alignItems: "flex-start" }}>
               <span style={{
-                background: "#143F35",
+                background: "var(--mj-brand-deep)",
                 color: "#fff",
                 borderRadius: "50%",
                 width: 24,
@@ -285,7 +285,7 @@ export default function AmrBilMarufPage() {
       </div>
 
       {/* ═══ المنكرات والمعروفات ═══ */}
-      <h2 style={{ fontSize: "1.15rem", fontWeight: 800, color: "#122019", marginBottom: "1rem" }}>
+      <h2 style={{ fontSize: "1.15rem", fontWeight: 800, color: "var(--mj-brand-deep)", marginBottom: "1rem" }}>
         أمثلة على المنكرات والمعروفات الكبرى
       </h2>
 
@@ -328,7 +328,7 @@ export default function AmrBilMarufPage() {
             padding: "0.85rem 1rem",
             marginBottom: "0.5rem",
           }}>
-            <p style={{ fontWeight: 700, color: "#15803D", margin: "0 0 0.5rem", fontSize: "0.88rem" }}>
+            <p style={{ fontWeight: 700, color: "var(--mj-brand)", margin: "0 0 0.5rem", fontSize: "0.88rem" }}>
               ✅ معروفات ينبغي الأمر بها
             </p>
           </div>
@@ -352,7 +352,7 @@ export default function AmrBilMarufPage() {
       </div>
 
       {/* ═══ أقوال العلماء ═══ */}
-      <h2 style={{ fontSize: "1.15rem", fontWeight: 800, color: "#122019", marginBottom: "1rem" }}>
+      <h2 style={{ fontSize: "1.15rem", fontWeight: 800, color: "var(--mj-brand-deep)", marginBottom: "1rem" }}>
         أقوال العلماء
       </h2>
 
@@ -364,7 +364,7 @@ export default function AmrBilMarufPage() {
             border: "1px solid #E8E7E2",
             borderRadius: "0.7rem",
             padding: "1rem 1.2rem",
-            borderRight: "3px solid #143F35",
+            borderRight: "3px solid var(--mj-brand-deep)",
           }}>
             <blockquote style={{
               margin: "0 0 0.5rem",

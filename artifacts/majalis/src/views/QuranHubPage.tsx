@@ -1,17 +1,18 @@
-import { Link } from "wouter";
+import { useEffect } from "react";
 import {
   Layers, Circle, Star,
-  ChevronLeft, BookMarked, BookOpen, Headphones, GraduationCap,
+  BookMarked, BookOpen, Headphones, GraduationCap,
   Moon, Heart, Sparkles, Mic, History, CalendarCheck, Search,
   type LucideIcon,
 } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
-import { useEffect } from "react";
 import { isComingSoonPath } from "@/lib/nav-visibility";
+import { HubCard } from "@/components/ui/HubCard";
+import { PageHero } from "@/components/ui/PageHero";
 import "@/styles/pages/quran-hub.css";
 
-type QuranSection = { href: string; title: string; desc: string; Icon: LucideIcon; accent: string; tag: string; featured?: boolean };
+type QuranSection = { href: string; title: string; desc: string; Icon: LucideIcon; tag: string; featured?: boolean };
 
 /* ── بيانات أقسام القرآن ──────────────────────────────────── */
 const QURAN_SECTIONS: QuranSection[] = [
@@ -20,7 +21,6 @@ const QURAN_SECTIONS: QuranSection[] = [
     title: "خطط الحفظ والمراجعة",
     desc: "خطط مرنة من سنة إلى خمس سنوات، ومراجعة مكثفة وتثبيت، مع حفظ تقدمك محليًا؛ يُستفاد في التعلم والتدبر",
     Icon: CalendarCheck,
-    accent: "#176B57",
     tag: "خطط مرنة",
   },
   {
@@ -28,7 +28,6 @@ const QURAN_SECTIONS: QuranSection[] = [
     title: "اختبار التسميع بالذكاء الاصطناعي",
     desc: "سمّع من حفظك واستمع التطبيق لتلاوتك لحظيًا، ويكشف المصحف الآيات كلما نطقتها صحيحة؛ يُستفاد في التعلم والتدبر",
     Icon: Mic,
-    accent: "#176B57",
     tag: "بالذكاء الاصطناعي",
     featured: true,
   },
@@ -37,7 +36,6 @@ const QURAN_SECTIONS: QuranSection[] = [
     title: "المصحف الشريف",
     desc: "صفحات مصحف حقيقية مطابقة لتقسيم مصحف المدينة، مع الاستماع والإشارات المرجعية والملاحظات؛ يُستفاد في التعلم والتدبر",
     Icon: BookOpen,
-    accent: "#143F35",
     tag: "٦٠٤ صفحة",
   },
   {
@@ -45,7 +43,6 @@ const QURAN_SECTIONS: QuranSection[] = [
     title: "بحث في الآيات",
     desc: "شاشة بحث منفصلة في نص القرآن الكريم — ابحث بكلمة أو جملة وانتقل مباشرة إلى موضع الآية في المصحف؛ يُستفاد في التعلم والتدبر",
     Icon: Search,
-    accent: "#143F35",
     tag: "بحث",
   },
   {
@@ -53,7 +50,6 @@ const QURAN_SECTIONS: QuranSection[] = [
     title: "فهرس السور",
     desc: "تصفّح السور الـ١١٤ كاملة: رقمها واسمها وعدد آياتها وتصنيفها، مع بحث ومفضلة؛ يُستفاد في التعلم والتدبر",
     Icon: BookMarked,
-    accent: "#143F35",
     tag: "١١٤ سورة",
   },
   {
@@ -61,7 +57,6 @@ const QURAN_SECTIONS: QuranSection[] = [
     title: "المكي والمدني",
     desc: "ضوابط التمييز بين المكي والمدني وخصائص كل منهما مع فهرست السور؛ يُستفاد في التعلم والتدبر",
     Icon: History,
-    accent: "#143F35",
     tag: "علوم",
   },
   {
@@ -69,7 +64,6 @@ const QURAN_SECTIONS: QuranSection[] = [
     title: "ترتيب نزول القرآن",
     desc: "خريطة زمنية للسور الـ١١٤ حسب تسلسل نزولها التاريخي الفعلي، لا حسب ترقيم المصحف؛ يُستفاد في التعلم والتدبر",
     Icon: CalendarCheck,
-    accent: "#143F35",
     tag: "١١٤ سورة",
   },
   {
@@ -77,7 +71,6 @@ const QURAN_SECTIONS: QuranSection[] = [
     title: "قصص القرآن",
     desc: "أسباب النزول ومحاور ١١٤ سورة قرآنية مع العبر والفوائد؛ يُستفاد في التعلم والتدبر",
     Icon: BookMarked,
-    accent: "#143F35",
     tag: "١١٤ سورة",
   },
   {
@@ -85,7 +78,6 @@ const QURAN_SECTIONS: QuranSection[] = [
     title: "علم التجويد",
     desc: "أحكام التجويد الشاملة مصنَّفة في ستة أبواب رئيسية؛ يُستفاد في التعلم والتدبر",
     Icon: GraduationCap,
-    accent: "#143F35",
     tag: "١٤ حكماً",
   },
   {
@@ -93,7 +85,6 @@ const QURAN_SECTIONS: QuranSection[] = [
     title: "علم التفسير",
     desc: "أنواع التفسير وأصوله وأشهر كتب المفسرين، مع روابط للمكتبة والمصحف؛ يُستفاد في التعلم والتدبر",
     Icon: BookOpen,
-    accent: "#143F35",
     tag: "علم",
   },
   {
@@ -101,7 +92,6 @@ const QURAN_SECTIONS: QuranSection[] = [
     title: "حلقات القرآن",
     desc: "دليل حلقات التحفيظ في الكويت والمنصات الموثوقة — بروابط تسجيل وتواصل",
     Icon: Circle,
-    accent: "#143F35",
     tag: "دليل",
   },
   {
@@ -109,7 +99,6 @@ const QURAN_SECTIONS: QuranSection[] = [
     title: "الورد اليومي",
     desc: "تتبع ورد قراءة القرآن اليومي مع السلسلة المتواصلة؛ يُستفاد في التعلم والتدبر",
     Icon: Moon,
-    accent: "#143F35",
     tag: "يومي",
   },
   {
@@ -117,7 +106,6 @@ const QURAN_SECTIONS: QuranSection[] = [
     title: "الأذكار الشرعية",
     desc: "أذكار الصباح والمساء والنوم وغيرها والتخريج من الصحيح؛ يُستفاد في التعلم والتدبر",
     Icon: Sparkles,
-    accent: "#143F35",
     tag: "أذكار",
   },
   {
@@ -125,7 +113,6 @@ const QURAN_SECTIONS: QuranSection[] = [
     title: "علوم القرآن",
     desc: "النزول والجمع والتفسير والإعجاز البياني والتشريعي والغيبي — بلا إعجاز عددي؛ يُستفاد في التعلم والتدبر",
     Icon: Layers,
-    accent: "#143F35",
     tag: "علم",
   },
   {
@@ -133,15 +120,10 @@ const QURAN_SECTIONS: QuranSection[] = [
     title: "أدعية القرآن الكريم",
     desc: "٣٠+ دعاءً قرآنياً مصنَّفاً بحسب النبي والمناسبة والفائدة؛ يُستفاد في التعلم والتدبر",
     Icon: Star,
-    accent: "#143F35",
     tag: "دعاء",
   },
 ];
 
-function qhcAccentMod(a: string) {
-  if (a === "#143F35") return "qhc-accent--deep";
-  return "qhc-accent--base";
-}
 
 /* ── إحصائيات سريعة ───────────────────────────────────────── */
 const STATS = [
@@ -189,59 +171,38 @@ export default function QuranHubPage() {
 
   return (
     <div className="quran-hub-page" dir="rtl">
-      {/* ── Hero ─────────────────────────────────────────────── */}
-      <section className="quran-hub-hero">
-        <div className="quran-hub-hero__ornament" aria-hidden="true">﴿ اقْرَأْ بِاسْمِ رَبِّكَ ﴾</div>
-        <h1 className="quran-hub-hero__title">القرآن الكريم</h1>
-        <p className="quran-hub-hero__sub">
-          كتاب الله العزيز، اقرأ، استمع، تعلّم، وتدبَّر
-        </p>
-
-        {/* إحصائيات */}
-        <div className="quran-hub-stats">
-          {STATS.map(s => (
-            <div key={s.label} className="quran-hub-stat">
-              <span className="quran-hub-stat__val">{s.value}</span>
-              <span className="quran-hub-stat__lbl">{s.label}</span>
+      <PageHero
+        title="القرآن الكريم"
+        description="كتاب الله العزيز، اقرأ، استمع، تعلّم، وتدبَّر"
+      >
+        <div className="hub-card-grid" style={{ marginBlockStart: "0.75rem" }} role="list">
+          {STATS.map((s) => (
+            <div key={s.label} className="mj-stat" role="listitem">
+              <strong>{s.value}</strong>
+              <span>{s.label}</span>
             </div>
+          ))}
+        </div>
+      </PageHero>
+
+      <section className="quran-hub-sections">
+        <h2 className="quran-hub-sections__title">أقسام القرآن</h2>
+        <div className="hub-card-grid">
+          {QURAN_SECTIONS.map((s) => (
+            <HubCard
+              key={s.href}
+              href={s.href}
+              title={s.title}
+              description={s.desc}
+              Icon={s.Icon}
+              badge={s.tag}
+              soon={isComingSoonPath(s.href)}
+              featured={s.featured}
+            />
           ))}
         </div>
       </section>
 
-      {/* ── أقسام القرآن ─────────────────────────────────────── */}
-      <section className="quran-hub-sections">
-        <h2 className="quran-hub-sections__title">أقسام القرآن</h2>
-        <div className="quran-hub-grid">
-          {QURAN_SECTIONS.map(s => {
-            const soon = isComingSoonPath(s.href);
-            return (
-              <Link
-                key={s.href}
-                href={s.href}
-                className={`quran-hub-card${s.featured ? " quran-hub-card--featured" : ""}${soon ? " quran-hub-card--soon" : ""}`}
-                aria-label={soon ? `${s.title} — قريبًا` : undefined}
-              >
-                <div className={`quran-hub-card__header ${qhcAccentMod(s.accent)}`}>
-                  <s.Icon size={28} className="quran-hub-card__icon" />
-                  <span className="quran-hub-card__tag">{soon ? "قريبًا" : s.tag}</span>
-                </div>
-                <div className="quran-hub-card__body">
-                  <h3 className="quran-hub-card__title">
-                    {s.title}
-                    {soon ? <span className="nav-soon-badge">قريبًا</span> : null}
-                  </h3>
-                  <p className="quran-hub-card__desc">{s.desc}</p>
-                  <span className="quran-hub-card__link">
-                    {soon ? "معاينة" : "استكشف"} <ChevronLeft size={14} />
-                  </span>
-                </div>
-              </Link>
-            );
-          })}
-        </div>
-      </section>
-
-      {/* ── مميزات ────────────────────────────────────────────── */}
       <section className="quran-hub-features">
         <h2 className="quran-hub-features__title">ماذا يقدّم المجلس العلمي للقرآن؟</h2>
         <div className="quran-hub-features__list">
@@ -254,9 +215,8 @@ export default function QuranHubPage() {
         </div>
       </section>
 
-      {/* ── آية الختام ──────────────────────────────────────────── */}
       <section className="quran-hub-closing">
-        <p className="quran-hub-closing__ayah">
+        <p className="quran-hub-closing__ayah mj-type-sacred">
           ﴿ إِنَّ هَذَا الْقُرْآنَ يَهْدِي لِلَّتِي هِيَ أَقْوَمُ ﴾
         </p>
         <span className="quran-hub-closing__ref">الإسراء: ٩</span>

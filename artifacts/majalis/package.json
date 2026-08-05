@@ -176,7 +176,7 @@
     "build:page-juz-index": "node --import tsx scripts/build-page-juz-index.mjs",
     "verify:no-mock-asr": "node scripts/verify-no-mock-asr-in-app.mjs",
     "test:no-mock-asr-guard": "node scripts/__tests__/verify-no-mock-asr-in-app.test.mjs",
-    "test:brand-identity": "node scripts/test-brand-identity-gate.mjs",
+    "test:brand-identity": "node scripts/test-brand-identity-gate.mjs && node scripts/verify-brand-green-hex.mjs",
     "test:color-contrast-gate": "node scripts/verify-color-contrast-gate.mjs",
     "audit:color-contrast": "node scripts/audit-color-contrast.mjs",
     "audit:site": "node scripts/majlisilm-audit.mjs crawl",

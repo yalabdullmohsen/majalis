@@ -31,8 +31,8 @@
   font-size: 0.7rem; font-weight: 700; padding: 0.2rem 0.55rem;
   border-radius: 9999px; letter-spacing: normal;
 }
-.ps-badge.pending { background: rgba(23,61,53,0.08); color: #226A56; border: 1px solid rgba(24,54,42,0.3); }
-.ps-badge.done { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+.ps-badge.pending { background: rgba(23,61,53,0.08); color: var(--mj-brand); border: 1px solid rgba(24,54,42,0.3); }
+.ps-badge.done { background: #dcfce7; color: var(--mj-brand); border: 1px solid #bbf7d0; }
 .ps-badge.edit-mode { background: #dbeafe; color: #1e40af; border: 1px solid #93c5fd; }
 .ps-toggle { font-size: 0.8rem; color: #94a3b8; }
 .ps-body { padding: 1.1rem 1.25rem; border-top: 1px solid #e2e8f0; }
@@ -64,12 +64,12 @@
 }
 .ps-actions { display: flex; gap: 0.6rem; align-items: center; flex-wrap: wrap; }
 .ps-approve-btn {
-  background: #15803D; color: #fff; border: none;
+  background: var(--mj-brand); color: #fff; border: none;
   border-radius: var(--ds-radius); padding: 0.5rem 1.1rem;
   font-size: var(--ds-text-sm); font-weight: 700; cursor: pointer;
   font-family: inherit; transition: background 0.15s;
 }
-.ps-approve-btn:hover:not(:disabled) { background: #15803d; }
+.ps-approve-btn:hover:not(:disabled) { background: var(--mj-brand); }
 .ps-approve-btn:disabled { background: #86efac; cursor: not-allowed; }
 .ps-revoke-btn {
   background: none; color: #dc2626; border: 1px solid #fca5a5;
@@ -93,7 +93,7 @@
 .ps-empty { text-align: center; padding: var(--ds-space-12); color: #64748b; }
 .ps-warning {
   background: rgba(23,61,53,0.06); border: 1px solid rgba(24,54,42,0.3); border-radius: var(--ds-radius);
-  padding: 0.75rem 1rem; font-size: 0.8125rem; color: #143F35;
+  padding: 0.75rem 1rem; font-size: 0.8125rem; color: var(--mj-brand-deep);
   margin-bottom: 1.25rem; line-height: 1.6;
 }
 

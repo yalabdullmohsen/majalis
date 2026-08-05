@@ -5,7 +5,7 @@
 .fa-page { min-height: 100vh; background: #F9FAFB; padding-bottom: 4rem; }
 
 .fa-hero {
-  background: linear-gradient(155deg, #143F35 0%, #226A56 70%, #226A56 100%);
+  background: linear-gradient(155deg, var(--mj-brand-deep) 0%, var(--mj-brand) 70%, var(--mj-brand) 100%);
   color: #fff;
   padding: 2.5rem 1.25rem 1.75rem;
   text-align: center;
@@ -53,7 +53,7 @@
   transition: border-color .18s;
   direction: rtl;
 }
-.fa-search:focus { border-color: var(--majalis-emerald, #226A56); box-shadow: 0 0 0 3px rgba(31,77,58,.1); }
+.fa-search:focus { border-color: var(--majalis-emerald, var(--mj-brand)); box-shadow: 0 0 0 3px rgba(31,77,58,.1); }
 
 .fa-cats {
   display: flex;
@@ -71,8 +71,8 @@
   cursor: pointer;
   transition: all .15s;
 }
-.fa-cat-btn:hover { border-color: var(--majalis-emerald, #226A56); color: var(--majalis-emerald, #226A56); }
-.fa-cat-btn--active { background: var(--majalis-emerald, #226A56); border-color: var(--majalis-emerald, #226A56); color: #fff; }
+.fa-cat-btn:hover { border-color: var(--majalis-emerald, var(--mj-brand)); color: var(--majalis-emerald, var(--mj-brand)); }
+.fa-cat-btn--active { background: var(--majalis-emerald, var(--mj-brand)); border-color: var(--majalis-emerald, var(--mj-brand)); color: #fff; }
 
 .fa-count { font-size: .78rem; color: #5C5C56; margin: 0 0 1rem; }
 
@@ -94,8 +94,8 @@
   transition: box-shadow .2s;
 }
 .fa-card:hover { box-shadow: 0 4px 14px rgba(31,77,58,.1); }
-.fa-card--sahih { border-top: 3px solid var(--majalis-emerald, #226A56); }
-.fa-card--hasan { border-top: 3px solid #226A56; }
+.fa-card--sahih { border-top: 3px solid var(--majalis-emerald, var(--mj-brand)); }
+.fa-card--hasan { border-top: 3px solid var(--mj-brand); }
 
 .fa-card__head { display: flex; justify-content: space-between; align-items: center; }
 .fa-card__icon { font-size: 1.7rem; }
@@ -107,8 +107,8 @@
   padding: .12rem .5rem;
   border-radius: var(--ds-radius-full);
 }
-.fa-card__grade--sahih { background: #D4E9DC; color: #143F35; }
-.fa-card__grade--hasan { background: rgba(23,61,53,.12); color: #226A56; }
+.fa-card__grade--sahih { background: #D4E9DC; color: var(--mj-brand-deep); }
+.fa-card__grade--hasan { background: rgba(23,61,53,.12); color: var(--mj-brand); }
 
 .fa-card__title { font-size: .92rem; font-weight: 700; color: #111; margin: 0; }
 .fa-card__text {
@@ -116,7 +116,7 @@
   line-height: 1.9;
   color: #1F2937;
   background: #F9FAFB;
-  border-right: 3px solid var(--majalis-emerald, #226A56);
+  border-right: 3px solid var(--majalis-emerald, var(--mj-brand));
   border-radius: .4rem;
   padding: .6rem .75rem;
   margin: 0;
@@ -141,13 +141,13 @@
   border-radius: .6rem;
   padding: .6rem .7rem;
   font-size: .82rem;
-  color: var(--majalis-emerald, #226A56);
+  color: var(--majalis-emerald, var(--mj-brand));
   text-align: center;
   text-decoration: none;
   font-weight: 600;
   transition: background .15s;
 }
-.fa-related__link:hover { background: #F0F7F4; border-color: var(--majalis-emerald, #226A56); }
+.fa-related__link:hover { background: var(--mj-brand-soft); border-color: var(--majalis-emerald, var(--mj-brand)); }
 
 @media (max-width: 640px) {
   .fa-grid { grid-template-columns: 1fr; }
