@@ -24,7 +24,7 @@ const SECTIONS = [
     ],
   },
   {
-    title: "الحديث والسنة",
+    title: "الحديث وعلومه",
     icon: "hadith",
     links: [
       { href: "/hadith",             label: "الأحاديث النبوية",   desc: "موسوعة الأحاديث" },

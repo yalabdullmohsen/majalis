@@ -83,7 +83,7 @@ export const ACCORDION_EXPLORE_LINKS = {
     { href: "/nations", label: "الأمم السابقة" },
   ],
   sunnah: [
-    { href: "/hadith", label: "الأحاديث" },
+    { href: "/hadith", label: "الحديث وعلومه" },
     { href: "/hadith-science", label: "مصطلح الحديث" },
     { href: "/arbaeen-nawawi", label: "الأربعون النووية" },
     { href: "/sunan-yawmiyya", label: "السنن اليومية" },

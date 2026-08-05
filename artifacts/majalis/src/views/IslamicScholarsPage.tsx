@@ -220,7 +220,7 @@ export default function IslamicScholarsPage() {
           <Star size={16} /> المسارات العلمية <ChevronLeft size={14} />
         </Link>
         <Link href="/hadith" className="sch-related-link">
-          <BookOpen size={16} /> الحديث والسنة <ChevronLeft size={14} />
+          <BookOpen size={16} /> الحديث وعلومه <ChevronLeft size={14} />
         </Link>
       </div>
     </div>

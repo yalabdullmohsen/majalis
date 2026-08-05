@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "wouter";
 import { supabase } from "@/lib/supabase";
 import "@/styles/components/content-actions-rag.css";
+import { ContentReportLink } from "@/components/ContentReportLink";
 
 interface Props {
   contentType: string;
@@ -13,11 +14,12 @@ interface Props {
 const REPORT_TYPES = ["خطأ_علمي", "خطأ_إملائي", "محتوى_غير_لائق", "رابط_مكسور", "أخرى"] as const;
 
 // أزرار المشاركة أُلغيت في كل أنحاء الموقع بطلب صريح من المالك
-// (2026-07-24). يبقى المكوّن مُصدَّرًا بنفس الواجهة كي لا تُكسَر نقاط
-// الاستدعاء القائمة (ContentDetailLayout وContentActions نفسه)؛ لا
-// يعرض شيئًا الآن.
-export function ShareButtons(_props: { title?: string; url?: string }) {
-  return null;
+// (2026-07-24). يبقى المكوّن مُصدَّرًا بنفس الواجهة؛ يُعرض بدلًا منه
+// رابط بلاغ المحتوى الموحّد.
+
+export function ShareButtons(props: { title?: string; url?: string }) {
+  const context = props.title || (typeof window !== "undefined" ? window.location.pathname : undefined);
+  return <ContentReportLink context={context} />;
 }
 
 export default function ContentActions({ contentType, contentId, shareTitle, shareUrl }: Props) {

@@ -45,7 +45,7 @@ export const SECTION_PROMOS: Omit<TickerContentItem, "kind">[] = [
   { id: "promo:tawhid", label: "قسم", text: "العقيدة والتوحيد — أصول الإيمان بمنهج واضح", href: "/tawhid" },
   { id: "promo:seerah", label: "قسم", text: "السيرة والتاريخ — سيرة النبي ﷺ ومفاصل الأمة", href: "/seerah" },
   { id: "promo:fiqh", label: "قسم", text: "الفقه والأحكام — عبادات ومعاملات بأسلوب ميسر", href: "/fiqh" },
-  { id: "promo:hadith", label: "قسم", text: "الحديث والسنة — أحاديث موثّقة مع التخريج", href: "/hadith" },
+  { id: "promo:hadith", label: "قسم", text: "الحديث وعلومه — أحاديث موثّقة مع التخريج", href: "/hadith" },
   { id: "promo:quran", label: "قسم", text: "مركز القرآن — مصحف وتلاوة وأدوات التعلّم", href: "/mushaf" },
   { id: "promo:quran-knowledge", label: "قسم", text: "القرآن وعلومه — فهرس وعلوم وأسباب نزول وقصص", href: "/quran-knowledge" },
   { id: "promo:scholars", label: "قسم", text: "العلماء — تراجم وأعلام ومدارس علمية", href: "/scholars" },

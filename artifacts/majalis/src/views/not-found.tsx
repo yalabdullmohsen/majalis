@@ -8,7 +8,7 @@ const SUGGESTIONS = [
   { href: "/quran-hub",    label: "مركز القرآن",       Icon: BookOpen   },
   { href: "/adhkar",       label: "الأذكار",           Icon: Scroll     },
   { href: "/lessons",      label: "الدروس",            Icon: BookText   },
-  { href: "/hadith",       label: "الأحاديث",          Icon: BookMarked },
+  { href: "/hadith",       label: "الحديث وعلومه",          Icon: BookMarked },
   { href: "/fawaid",       label: "الفوائد",           Icon: MessageCircle },
   { href: "/prayer-times", label: "مواقيت الصلاة",     Icon: Clock      },
   { href: "/quiz",         label: "المسابقات",         Icon: Compass    },
