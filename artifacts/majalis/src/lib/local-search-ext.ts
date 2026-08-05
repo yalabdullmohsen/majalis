@@ -1,17 +1,27 @@
 import { arabicMatchAny } from "@/lib/arabic-search";
-import { searchNawawi } from "@/lib/arbaeen-nawawi-seed";
-import { filterOccasions } from "@/lib/islamic-occasions-seed";
-import { filterAdhkar } from "@/lib/adhkar-seed";
-import { searchSurahStories } from "@/lib/surah-stories";
-import { filterIslamicStoriesSeed } from "@/lib/islamic-stories-seed";
 import { getSurahList } from "@/lib/quran-api";
-import { searchNations } from "@/lib/nations-seed";
 
 export async function searchLocalExtensions(query: string) {
   const q = query.trim();
   if (!q) {
     return { occasions: [], nawawi: [], quran: [], adhkar: [], surahStories: [], islamicStories: [], nations: [] };
   }
+
+  const [
+    { filterOccasions },
+    { searchNawawi },
+    { filterAdhkar },
+    { searchSurahStories },
+    { filterIslamicStoriesSeed },
+    { searchNations },
+  ] = await Promise.all([
+    import("@/lib/islamic-occasions-seed"),
+    import("@/lib/arbaeen-nawawi-seed"),
+    import("@/lib/adhkar-seed"),
+    import("@/lib/surah-stories"),
+    import("@/lib/islamic-stories-seed"),
+    import("@/lib/nations-seed"),
+  ]);
 
   const occasions = filterOccasions(q).map((o) => ({
     id: o.id,

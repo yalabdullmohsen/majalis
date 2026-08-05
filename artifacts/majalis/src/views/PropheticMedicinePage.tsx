@@ -7,10 +7,9 @@ import { Chip } from "@/components/ui-common";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
-import {
-  PROPHETIC_MEDICINE_ITEMS,
-  PM_CATEGORIES,
-  type PropheticMedicineCategory,
+import type {
+  PropheticMedicineCategory,
+  PropheticMedicineItem,
 } from "@/lib/prophetic-medicine-seed";
 import "@/styles/pages/prophetic-medicine.css";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
@@ -35,51 +34,72 @@ const PM_CAT_MOD: Record<string, string> = {
   "النظافة والوقاية": "pmp-cat--nathafa",
 };
 
+const FALLBACK_CATEGORIES: PropheticMedicineCategory[] = [
+  "الكل",
+  "الغذاء والتغذية",
+  "العلاج والدواء",
+  "العبادة والصحة",
+  "النظافة والوقاية",
+];
+
 export default function PropheticMedicinePage() {
   const [category, setCategory] = useState<PropheticMedicineCategory>("الكل");
   const [search, setSearch] = useState("");
+  const [allItems, setAllItems] = useState<PropheticMedicineItem[]>([]);
+  const [categories, setCategories] = useState<PropheticMedicineCategory[]>(FALLBACK_CATEGORIES);
+  const [dataReady, setDataReady] = useState(false);
 
   useEffect(() => {
-    applyPageSeo({
-      path: "/prophetic-medicine",
-      title: "الطب النبوي | المجلس العلمي",
-      description: "موسوعة الطب النبوي، هدي النبي ﷺ في الصحة والتداوي بالأغذية والأعشاب والرقية الشرعية. محتوى معتمد في منهج المجلس العلمي",
-      keywords: ["طب نبوي", "هدي النبي", "تداوي", "أعشاب إسلامية", "رقية شرعية"],
-      jsonLd: [
-        {
-          "@context": "https://schema.org",
-          "@type": "ItemList",
-          name: "موسوعة الطب النبوي",
-          description: "هدي النبي ﷺ في الصحة والتداوي من الأغذية والأعشاب والرقية الشرعية؛ محتوى معتمد في منهج المجلس العلمي",
-          numberOfItems: PROPHETIC_MEDICINE_ITEMS.length,
-          itemListElement: PROPHETIC_MEDICINE_ITEMS.slice(0, 20).map((item: { id: string; name: string }, i: number) => ({
-            "@type": "ListItem",
-            position: i + 1,
-            name: item.name,
-            url: `https://www.majlisilm.com/prophetic-medicine#${item.id}`,
-          })),
-        },
-      ],
+    let cancelled = false;
+    void import("@/lib/prophetic-medicine-seed").then((m) => {
+      if (cancelled) return;
+      setAllItems(m.PROPHETIC_MEDICINE_ITEMS);
+      setCategories(m.PM_CATEGORIES);
+      setDataReady(true);
+      applyPageSeo({
+        path: "/prophetic-medicine",
+        title: "الطب النبوي | المجلس العلمي",
+        description: "موسوعة الطب النبوي، هدي النبي ﷺ في الصحة والتداوي بالأغذية والأعشاب والرقية الشرعية. محتوى معتمد في منهج المجلس العلمي",
+        keywords: ["طب نبوي", "هدي النبي", "تداوي", "أعشاب إسلامية", "رقية شرعية"],
+        jsonLd: [
+          {
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            name: "موسوعة الطب النبوي",
+            description: "هدي النبي ﷺ في الصحة والتداوي من الأغذية والأعشاب والرقية الشرعية؛ محتوى معتمد في منهج المجلس العلمي",
+            numberOfItems: m.PROPHETIC_MEDICINE_ITEMS.length,
+            itemListElement: m.PROPHETIC_MEDICINE_ITEMS.slice(0, 20).map((item: { id: string; name: string }, i: number) => ({
+              "@type": "ListItem",
+              position: i + 1,
+              name: item.name,
+              url: `https://www.majlisilm.com/prophetic-medicine#${item.id}`,
+            })),
+          },
+        ],
+      });
     });
+    return () => {
+      cancelled = true;
+    };
   }, []);
   const [expanded, setExpanded] = useState<string | null>(null);
   const [filtersOpen, setFiltersOpen] = useState(false);
 
   const items = useMemo(() => {
     let result = category === "الكل"
-      ? PROPHETIC_MEDICINE_ITEMS
-      : PROPHETIC_MEDICINE_ITEMS.filter((i) => i.category === category);
+      ? allItems
+      : allItems.filter((i) => i.category === category);
     if (search.trim()) {
       result = result.filter((i) =>
         arabicMatchAny([i.name, i.arabicName, ...i.benefits], search),
       );
     }
     return result;
-  }, [category, search]);
+  }, [category, search, allItems]);
 
   const filterPanel = (
     <div className="pmp-filter-chips">
-      {PM_CATEGORIES.map((c) => (
+      {categories.map((c) => (
         <Chip key={c} active={category === c} onClick={() => setCategory(c)}>
           {c}
         </Chip>
@@ -126,6 +146,7 @@ export default function PropheticMedicinePage() {
 
       {/* الشبكة */}
       <div className="ds-grid">
+        {!dataReady && <p className="pmp-count" aria-busy="true">جارٍ تحميل الموسوعة…</p>}
         {items.map((item) => {
           const isOpen = expanded === item.id;
 

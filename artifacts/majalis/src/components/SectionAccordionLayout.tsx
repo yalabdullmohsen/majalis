@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { PageHeader } from "@/components/ui-common";
 import { ExploreAlsoNav, type ExploreAlsoLink } from "@/components/ExploreAlsoNav";
-import type { DarsSection } from "@/lib/durus-imaniyya-data";
+import type { DarsSection } from "@/lib/dars-types";
 
 type Props = {
   eyebrow: string;

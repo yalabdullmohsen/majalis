@@ -1,14 +1,13 @@
-import { SectionAccordionLayout } from "@/components/SectionAccordionLayout";
-import { TAZKIYA_TOPICS } from "@/lib/tazkiya-topics-data";
-import { accordionExploreLinks } from "@/lib/explore-links";
+import { LazySectionAccordionPage } from "@/components/LazySectionAccordionPage";
 
 export default function TazkiyaTopicsPage() {
   return (
-    <SectionAccordionLayout
+    <LazySectionAccordionPage
       eyebrow="تزكية النفس والأخلاق"
       title="الأخلاق والأمراض والأسئلة الكبرى"
-      sections={TAZKIYA_TOPICS}
-      relatedLinks={accordionExploreLinks("tazkiya")}
+      exportName="TAZKIYA_TOPICS"
+      relatedKey="tazkiya"
+      load={() => import("@/lib/tazkiya-topics-data")}
     />
   );
 }

@@ -1,14 +1,13 @@
-import { SectionAccordionLayout } from "@/components/SectionAccordionLayout";
-import { DURUS_MUTANAWWIA } from "@/lib/durus-mutanawwia-data";
-import { accordionExploreLinks } from "@/lib/explore-links";
+import { LazySectionAccordionPage } from "@/components/LazySectionAccordionPage";
 
 export default function DurusMutanawwiaPage() {
   return (
-    <SectionAccordionLayout
+    <LazySectionAccordionPage
       eyebrow="المحتوى التعليمي"
       title="دروس متنوعة"
-      sections={DURUS_MUTANAWWIA}
-      relatedLinks={accordionExploreLinks("durusMutanawwia")}
+      exportName="DURUS_MUTANAWWIA"
+      relatedKey="durusMutanawwia"
+      load={() => import("@/lib/durus-mutanawwia-data")}
     />
   );
 }

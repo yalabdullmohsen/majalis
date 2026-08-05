@@ -1,14 +1,13 @@
-import { SectionAccordionLayout } from "@/components/SectionAccordionLayout";
-import { ARABIC_LANGUAGE } from "@/lib/arabic-language-data";
-import { accordionExploreLinks } from "@/lib/explore-links";
+import { LazySectionAccordionPage } from "@/components/LazySectionAccordionPage";
 
 export default function ArabicLanguagePage() {
   return (
-    <SectionAccordionLayout
+    <LazySectionAccordionPage
       eyebrow="اللغة العربية"
       title="النحو والصرف والبلاغة لطالب العلم"
-      sections={ARABIC_LANGUAGE}
-      relatedLinks={accordionExploreLinks("arabic")}
+      exportName="ARABIC_LANGUAGE"
+      relatedKey="arabic"
+      load={() => import("@/lib/arabic-language-data")}
     />
   );
 }
