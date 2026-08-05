@@ -23,6 +23,9 @@ concurrency:
   group: resolve-conflicts-${{ github.event.pull_request.number || github.event.inputs.pr_number || 'batch' }}
   cancel-in-progress: true
 
+# الدفع بـ GITHUB_TOKEN لا يطلق workflows على الفرع المحدَّث؛ نفضّل PAT إن وُجد.
+# إن غاب PROD_DEPLOY_TOKEN نستخدم GITHUB_TOKEN مع persist-credentials بدل الفشل
+# المتكرر: fatal: could not read Username for 'https://github.com'.
 permissions:
   contents: write
   pull-requests: write
@@ -44,9 +47,7 @@ jobs:
           EVENT_NAME: ${{ github.event_name }}
         run: |
           set -euo pipefail
-          # فرع majalis-content-fill أُخرج من الأتمتة (2026-08-03): التدقيق
-          # التلقائي معطّل — لا تُحدَّث PRsه آليًا بعد الآن.
-          ALLOW='^((cursor|session|claude|codex|automation|fix|feature|chore|docs|security)/)'
+          ALLOW='^((cursor|session|claude|codex|automation|fix|feature|chore|docs|security|identity)/)'
           EXCLUDE_DUAL='^(automation/content|automation/tasks)$'
           nums=""
           if [ "$EVENT_NAME" = "pull_request" ] && [ -n "${PR_NUMBER:-}" ]; then
@@ -68,7 +69,19 @@ jobs:
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
           fetch-depth: 0
+          persist-credentials: true
           token: ${{ secrets.PROD_DEPLOY_TOKEN || secrets.GITHUB_TOKEN }}
+
+      - name: Configure git auth for push
+        if: steps.list.outputs.nums != ''
+        env:
+          TOKEN: ${{ secrets.PROD_DEPLOY_TOKEN || secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          # ضمان أن origin يستخدم token صريحًا (يتفادى terminal prompts disabled)
+          git remote set-url origin "https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
 
       - name: دمج main في الفروع المتعارضة
         if: steps.list.outputs.nums != ''
@@ -78,8 +91,6 @@ jobs:
           EXCLUDE_DUAL: ${{ steps.list.outputs.exclude_dual }}
         run: |
           set -u
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git fetch origin main
           for n in $NUMS; do
             echo "::group::PR #$n"

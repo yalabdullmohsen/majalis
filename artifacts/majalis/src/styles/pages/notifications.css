@@ -42,11 +42,11 @@
   font-size: 0.9rem !important;
 }
 .notif-row__sub { color: var(--elite-ink-soft, #4A5568) !important; font-size: 0.78rem !important; }
-/* لا يوجد استثناء للوضع الليلي هنا أصلاً (شُخِّص 2026-07-19) — الصف يقع
-   داخل حاوية "-card" تتحول خلفيتها لأخضر داكن #143F35 في الوضع الليلي
-   (قاعدة "Cards dark" العامة)، بينما يبقى النص #143F35 نفسه = 1:1. */
-html[data-theme="dark"] .notif-row__label {
-  color: #E5F0EC !important;
+/* .notif-card خلفية بيضاء ثابتة (#fff !important) — elite Cards dark غير محمّل.
+   نص فاتح هنا = تباين ~1.2:1. يبقى الحبر الغامق في الوضعين. */
+html[data-theme="dark"] .notif-row__label,
+html.dark .notif-row__label {
+  color: #143F35 !important;
 }
 
 /* التبديل */

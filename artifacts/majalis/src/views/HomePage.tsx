@@ -164,12 +164,12 @@ export default function HomePage() {
             {dailyCtx.subGreeting ? ` — ${dailyCtx.subGreeting}` : ""}
           </p>
           <div className="m2030-hero__cta">
-            <Link href={continueHref} className="mj-btn">
+            <Link href={continueHref} className="mj-btn m2030-btn m2030-btn--primary">
               ابدأ التصفح
             </Link>
             <button
               type="button"
-              className="mj-btn mj-btn--ghost"
+              className="mj-btn mj-btn--ghost m2030-btn m2030-btn--ghost"
               onClick={() => window.dispatchEvent(new CustomEvent("global-search-open"))}
               aria-label="ابحث في المحتوى"
             >

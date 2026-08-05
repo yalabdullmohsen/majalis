@@ -71,6 +71,13 @@
   margin: .3rem 0 .3rem;
 }
 
+/* صفحة الجنازة أسطحها بيضاء ثابتة؛ --majalis-emerald يصبح نعناعيًا ليليًا عبر aliases */
+html[data-theme="dark"] .jnz-subtitle,
+html.dark .jnz-subtitle {
+  color: #143F35;
+  border-right-color: #143F35;
+}
+
 .jnz-info--mt { margin-top: .5rem; }
 .jnz-info {
   background: #ECFDF5;
