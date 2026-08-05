@@ -3,6 +3,7 @@ name: Supabase Migrations
 # Lists migration status on push (read-only).
 # Applies ONLY via workflow_dispatch with apply=true.
 # --include-all requires a second explicit confirmation input.
+# عند غياب SUPABASE_* يتخطى بنجاح (لا فشل / لا إشعارات حمراء).
 
 on:
   push:
@@ -42,15 +43,29 @@ jobs:
       # Pin — never use "latest" in Production automation
       SUPABASE_CLI_VERSION: "2.110.0"
     steps:
+      - name: Check Supabase secrets
+        id: secrets
+        run: |
+          set -euo pipefail
+          if [ -z "${SUPABASE_ACCESS_TOKEN:-}" ] || [ -z "${SUPABASE_PROJECT_ID:-}" ]; then
+            echo "::notice::تخطي هجرات Supabase بنجاح: أسرار SUPABASE_ACCESS_TOKEN و/أو SUPABASE_PROJECT_ID غير موجودة في GitHub Secrets. أضِفهما لتفعيل الربط وdb push، أو الصق ملفات supabase/migrations في SQL Editor يدوياً."
+            echo "present=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "present=true" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Checkout
+        if: steps.secrets.outputs.present == 'true'
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
 
       - name: Setup Supabase CLI (pinned)
+        if: steps.secrets.outputs.present == 'true'
         uses: supabase/setup-cli@ab058987d8d6c725971f6cf9d0b5c98467e30bd1 # v1
         with:
           version: ${{ env.SUPABASE_CLI_VERSION }}
 
       - name: Verify CLI version
+        if: steps.secrets.outputs.present == 'true'
         run: |
           set -euo pipefail
           supabase --version
@@ -61,10 +76,10 @@ jobs:
 
       - name: Resolve migrations directory
         id: paths
+        if: steps.secrets.outputs.present == 'true'
         run: |
           set -euo pipefail
           # جذر المستودع يحمل الهجرات الكاملة (منها flashcards).
-          # artifacts/majalis/supabase كان يُفضَّل خطأً وفيه ملف واحد فقط.
           if [ -d supabase/migrations ]; then
             echo "workdir=." >> "$GITHUB_OUTPUT"
             echo "migrations=supabase/migrations" >> "$GITHUB_OUTPUT"
@@ -78,20 +93,15 @@ jobs:
           ls -la "$( [ -d supabase/migrations ] && echo supabase/migrations || echo artifacts/majalis/supabase/migrations )" | head -40
 
       - name: Link project
+        if: steps.secrets.outputs.present == 'true'
         working-directory: ${{ steps.paths.outputs.workdir }}
-        id: link
-        continue-on-error: true
         run: |
           set -euo pipefail
-          if [ -z "${SUPABASE_ACCESS_TOKEN:-}" ] || [ -z "${SUPABASE_PROJECT_ID:-}" ]; then
-            echo "::warning::أسرار SUPABASE_ACCESS_TOKEN / SUPABASE_PROJECT_ID غير موجودة."
-            exit 1
-          fi
           supabase link --project-ref "$SUPABASE_PROJECT_ID"
 
       - name: List migration status (read-only)
+        if: steps.secrets.outputs.present == 'true'
         working-directory: ${{ steps.paths.outputs.workdir }}
-        if: steps.link.outcome == 'success'
         run: |
           set -euo pipefail
           supabase migration list || true
@@ -99,20 +109,16 @@ jobs:
 
       - name: Decide apply (workflow_dispatch + apply=true ONLY)
         id: gate
+        if: steps.secrets.outputs.present == 'true'
         env:
           EVENT_NAME: ${{ github.event_name }}
           DISPATCH_APPLY: ${{ github.event_name == 'workflow_dispatch' && inputs.apply }}
           CONFIRM_INCLUDE_ALL: ${{ github.event_name == 'workflow_dispatch' && inputs.confirm_include_all }}
-          LINK_OK: ${{ steps.link.outcome }}
         run: |
           set -euo pipefail
           apply=false
           include_all=false
           if [ "$EVENT_NAME" = "workflow_dispatch" ] && [ "${DISPATCH_APPLY}" = "true" ]; then
-            if [ "$LINK_OK" != "success" ]; then
-              echo "::error::لا يمكن تطبيق الهجرات: أضف SUPABASE_ACCESS_TOKEN و SUPABASE_PROJECT_ID إلى GitHub Secrets، أو الصق supabase/migrations/20260805000000_flashcards.sql في SQL Editor."
-              exit 1
-            fi
             apply=true
           fi
           if [ "$apply" = "true" ] && [ "${CONFIRM_INCLUDE_ALL}" = "true" ]; then
@@ -123,7 +129,7 @@ jobs:
           echo "Apply migrations: ${apply} (include_all=${include_all})"
 
       - name: supabase db push (standard)
-        if: steps.gate.outputs.apply == 'true' && steps.gate.outputs.include_all != 'true'
+        if: steps.secrets.outputs.present == 'true' && steps.gate.outputs.apply == 'true' && steps.gate.outputs.include_all != 'true'
         working-directory: ${{ steps.paths.outputs.workdir }}
         run: |
           set -euo pipefail
@@ -131,14 +137,20 @@ jobs:
           supabase db push
 
       - name: supabase db push --include-all (explicit confirmation)
-        if: steps.gate.outputs.apply == 'true' && steps.gate.outputs.include_all == 'true'
+        if: steps.secrets.outputs.present == 'true' && steps.gate.outputs.apply == 'true' && steps.gate.outputs.include_all == 'true'
         working-directory: ${{ steps.paths.outputs.workdir }}
         run: |
           set -euo pipefail
           echo "::warning::Production db push WITH --include-all — confirmed via workflow_dispatch input"
           supabase db push --include-all
 
-      - name: Skip note
-        if: steps.gate.outputs.apply != 'true'
+      - name: Skip note (secrets present, apply not requested)
+        if: steps.secrets.outputs.present == 'true' && steps.gate.outputs.apply != 'true'
         run: |
           echo "::notice::Migrations were NOT applied. Push events are list-only. Use workflow_dispatch with apply=true to push."
+
+      - name: Skipped — missing secrets
+        if: steps.secrets.outputs.present != 'true'
+        run: |
+          echo "::notice::Supabase Migrations skipped successfully (missing SUPABASE_ACCESS_TOKEN / SUPABASE_PROJECT_ID)."
+          exit 0
