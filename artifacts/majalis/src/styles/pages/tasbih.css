@@ -15,7 +15,7 @@
 }
 
 .tasbih-stat span {
-  color: var(--msk-text-2, #5C5C56);
+  color: var(--msk-text-2, var(--mj-ink-2));
   font-size: 0.78rem;
 }
 
@@ -53,7 +53,7 @@
 }
 
 .tasbih-wird-tab {
-  border: 1px solid var(--msk-border, #E8E7E2);
+  border: 1px solid var(--msk-border, var(--mj-hairline));
   border-radius: 0.85rem;
   background: transparent;
   color: var(--majalis-ink);
@@ -73,7 +73,7 @@
 .tasbih-progress-label,
 .tasbih-saved,
 .tasbih-offline-note {
-  color: var(--msk-text-2, #5C5C56);
+  color: var(--msk-text-2, var(--mj-ink-2));
   font-size: 0.82rem;
 }
 
@@ -126,7 +126,7 @@
 .tasbih-target-field input,
 .tasbih-add-row input {
   min-height: 44px;
-  border: 1px solid var(--msk-border, #E8E7E2);
+  border: 1px solid var(--msk-border, var(--mj-hairline));
   border-radius: 0.65rem;
   padding: 0 0.75rem;
   background: transparent;
@@ -192,7 +192,7 @@
 
 .adhkar-tapper__cur {
   font-size: 1.6rem; font-weight: 800;
-  color: var(--majalis-emerald, #16A34A);
+  color: var(--majalis-emerald, var(--mj-brand));
   line-height: 1; font-variant-numeric: tabular-nums;
 }
 .adhkar-tapper__sep {
@@ -205,7 +205,7 @@
   margin-bottom: 0.1rem;
 }
 .adhkar-tapper__check {
-  font-size: 2.2rem; color: var(--majalis-emerald, #16A34A);
+  font-size: 2.2rem; color: var(--majalis-emerald, var(--mj-brand));
   animation: adhkarCheckPop 0.35s cubic-bezier(0.22,1,0.36,1);
 }
 @keyframes adhkarCheckPop {
@@ -214,11 +214,11 @@
 }
 
 .adhkar-tapper__hint {
-  font-size: 0.78rem; color: var(--txt-subdued, #5C5C56);
+  font-size: 0.78rem; color: var(--txt-subdued, var(--mj-ink-2));
   margin: 0; text-align: center;
 }
 .adhkar-tapper__complete {
   font-size: var(--ds-text-sm); font-weight: 600;
-  color: var(--majalis-emerald, #16A34A);
+  color: var(--majalis-emerald, var(--mj-brand));
   margin: 0; text-align: center;
 }

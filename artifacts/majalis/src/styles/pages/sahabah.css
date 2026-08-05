@@ -68,7 +68,7 @@
   background: #fff;
   font-size: .78rem;
   font-weight: 600;
-  color: #5C5C56;
+  color: var(--mj-ink-2);
   cursor: pointer;
   font-family: inherit;
   transition: all .15s;
@@ -78,14 +78,14 @@
   border-color: var(--majalis-emerald,var(--mj-brand));
   color: #fff;
 }
-.sb-count { font-size: .8rem; color: #5C5C56; margin: 0 0 1rem; }
+.sb-count { font-size: .8rem; color: var(--mj-ink-2); margin: 0 0 1rem; }
 
 /* card list */
 .sb-list { display: flex; flex-direction: column; gap: .75rem; }
 
 .sb-card {
   background: #fff;
-  border: 1.5px solid #E8E7E2;
+  border: 1.5px solid var(--mj-hairline);
   border-radius: .9rem;
   overflow: hidden;
   transition: border-color .15s, box-shadow .15s;
@@ -107,7 +107,7 @@
 .sb-card__icon { font-size: var(--ds-text-2xl); flex-shrink: 0; }
 .sb-card__info { flex: 1; min-width: 0; }
 .sb-card__name  { display: block; font-weight: 700; font-size: .95rem; color: #111; }
-.sb-card__kunya { display: block; font-size: .75rem; color: #5C5C56; margin-top: .15rem; }
+.sb-card__kunya { display: block; font-size: .75rem; color: var(--mj-ink-2); margin-top: .15rem; }
 .sb-card__tags  { display: flex; flex-wrap: wrap; gap: .3rem; }
 .sb-card__tag {
   background: var(--mj-brand-soft);
@@ -133,7 +133,7 @@
 }
 .sb-meta-item { background: #F9FAFB; border-radius: .6rem; padding: .55rem .75rem; }
 .sb-meta-item__label { display: block; font-size: .68rem; font-weight: 700; color: var(--majalis-emerald,var(--mj-brand)); margin-bottom: .2rem; }
-.sb-meta-item__value { font-size: .8rem; color: #5C5C56; line-height: 1.4; }
+.sb-meta-item__value { font-size: .8rem; color: var(--mj-ink-2); line-height: 1.4; }
 
 /* fadl box */
 .sb-fadl-box {
@@ -165,7 +165,7 @@
   align-items: flex-start;
   gap: .5rem;
   font-size: .83rem;
-  color: #5C5C56;
+  color: var(--mj-ink-2);
   line-height: 1.5;
 }
 .sb-legacy__item::before { content: "✦"; color: var(--majalis-emerald,var(--mj-brand)); font-size: .65rem; margin-top: .2rem; flex-shrink: 0; }
@@ -181,7 +181,7 @@
 .sb-related__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; }
 .sb-related__link {
   background: #fff;
-  border: 1px solid #E8E7E2;
+  border: 1px solid var(--mj-hairline);
   border-radius: .6rem;
   padding: .6rem .7rem;
   font-size: .82rem;

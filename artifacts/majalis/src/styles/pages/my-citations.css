@@ -125,7 +125,7 @@
 .cit-type--lesson        { --cit-type-color: var(--mj-brand); --cm-type-color: var(--mj-brand); --cab-type-color: var(--mj-brand); }
 .cit-type--benefit       { --cit-type-color: var(--mj-brand); --cm-type-color: var(--mj-brand); --cab-type-color: var(--mj-brand); }
 .cit-type--prophet-story { --cit-type-color: #dc2626; --cm-type-color: #dc2626; --cab-type-color: #dc2626; }
-.cit-type--qa            { --cit-type-color: #6b7280; --cm-type-color: #6b7280; --cab-type-color: #6b7280; }
+.cit-type--qa            { --cit-type-color: var(--mj-muted); --cm-type-color: var(--mj-muted); --cab-type-color: var(--mj-muted); }
 .cit-type-bar     { background: var(--cit-type-color, var(--mj-brand)); }
 .cit-type-badge   { background: var(--cit-type-color, var(--mj-brand)); }
 

@@ -60,7 +60,7 @@
   font-variant-numeric: tabular-nums;
 }
 .nf2-title { font-size: 1.3rem; font-weight: 800; margin: 0 0 0.65rem; color: var(--clr-ink, #1a1a1a); }
-.nf2-desc { font-size: 0.87rem; color: var(--clr-ink-soft, #6b7280); line-height: 1.75; margin: 0 0 1.4rem; max-width: 420px; }
+.nf2-desc { font-size: 0.87rem; color: var(--clr-ink-soft, var(--mj-muted)); line-height: 1.75; margin: 0 0 1.4rem; max-width: 420px; }
 
 /* أزرار الأكشن */
 .nf2-actions { display: flex; gap: var(--ds-space-3); flex-wrap: wrap; justify-content: center; margin-bottom: 1.75rem; }
@@ -86,7 +86,7 @@
 .nf2-suggestions__label {
   font-size: 0.78rem;
   font-weight: 700;
-  color: var(--clr-ink-soft, #6b7280);
+  color: var(--clr-ink-soft, var(--mj-muted));
   text-transform: uppercase;
   letter-spacing: normal;
   margin-bottom: 0.75rem;

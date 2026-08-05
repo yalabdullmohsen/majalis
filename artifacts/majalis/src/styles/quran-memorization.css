@@ -142,7 +142,7 @@
 
 .qmem-type-card__desc {
   font-size: 0.76rem;
-  color: var(--ds-text-2, #6b7280);
+  color: var(--ds-text-2, var(--mj-muted));
   line-height: 1.5;
 }
 
@@ -221,7 +221,7 @@
 
 .qmem-progress__text {
   font-size: 0.78rem;
-  color: var(--ds-text-2, #6b7280);
+  color: var(--ds-text-2, var(--mj-muted));
   white-space: nowrap;
   font-weight: 600;
   /* ⚠️ إصلاح جذري (2026-07-23): النص المنطقي "١ / ٥" (currentIdx+1 قبل
@@ -347,7 +347,7 @@
   border-radius: 50%;
   border: 1.5px solid var(--ds-border, #e5e7eb);
   background: var(--ds-surface, #fff);
-  color: var(--ds-text-2, #6b7280);
+  color: var(--ds-text-2, var(--mj-muted));
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -456,7 +456,7 @@
 
 .qmem-rating__label {
   font-size: 0.8rem;
-  color: var(--ds-text-2, #6b7280);
+  color: var(--ds-text-2, var(--mj-muted));
   font-weight: 600;
   margin-left: 0.5rem;
 }
@@ -515,7 +515,7 @@
 
 .qmem-end__sub {
   font-size: 0.9rem;
-  color: var(--ds-text-2, #6b7280);
+  color: var(--ds-text-2, var(--mj-muted));
   margin-bottom: 1.5rem;
 }
 
@@ -530,7 +530,7 @@
 
 .qmem-end__score-lbl {
   font-size: 0.85rem;
-  color: var(--ds-text-2, #6b7280);
+  color: var(--ds-text-2, var(--mj-muted));
 }
 
 .qmem-end__actions {
@@ -576,7 +576,7 @@
   overflow: visible;
 }
 
-.qmem-review-item__meta { font-size: 0.72rem; color: var(--ds-text-2, #6b7280); }
+.qmem-review-item__meta { font-size: 0.72rem; color: var(--ds-text-2, var(--mj-muted)); }
 
 .qmem-due-badge {
   padding: 0.15rem 0.5rem;

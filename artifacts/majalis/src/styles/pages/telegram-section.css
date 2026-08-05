@@ -8,7 +8,7 @@
 .tgm-empty          { text-align: center; color: var(--majalis-ink-soft); padding: var(--ds-space-8); font-size: var(--ds-text-sm); }
 .tgm-badge          { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.2rem 0.6rem; border-radius: var(--ds-radius-full); font-size: var(--ds-text-xs); font-weight: 600; background: var(--tgm-badge-bg, #e5e7eb); color: var(--tgm-badge-color, var(--majalis-ink)); }
 .tgm-badge--ok      { background: #dcfce7; color: var(--mj-brand); }
-.tgm-badge--error   { background: #fee2e2; color: #991b1b; }
+.tgm-badge--error   { background: #fee2e2; color: var(--mj-danger-deep); }
 .tgm-info-card      { background: var(--majalis-panel); border: 1px solid var(--majalis-line); border-radius: 0.625rem; padding: 0.875rem 1rem; }
 .tgm-info-title     { font-weight: 700; font-size: 0.85rem; margin-bottom: 0.625rem; color: var(--majalis-ink-soft); }
 .tgm-info-body      { display: grid; gap: 0.3rem; }

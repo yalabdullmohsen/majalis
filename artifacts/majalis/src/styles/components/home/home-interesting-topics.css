@@ -52,7 +52,7 @@
 }
 .hit-card__desc {
   font-size: 0.68rem;
-  color: #5C5C56;
+  color: var(--mj-ink-2);
   line-height: 1.4;
 }
 

@@ -19,7 +19,7 @@
 }
 .scw-banner__text {
   font-size: 0.81rem;
-  color: var(--clr-ink-soft, #6b7280);
+  color: var(--clr-ink-soft, var(--mj-muted));
   line-height: 1.65;
   margin: 0 0 0.5rem;
 }

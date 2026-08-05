@@ -87,7 +87,7 @@
 }
 .ps-edit-btn:hover:not(:disabled) { background: #dbeafe; }
 .ps-edit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
-.ps-approved-info { font-size: 0.8rem; color: #16a34a; }
+.ps-approved-info { font-size: 0.8rem; color: var(--mj-brand); }
 .ps-error { color: #dc2626; font-size: 0.8125rem; }
 .ps-loading { text-align: center; padding: var(--ds-space-12); color: #64748b; }
 .ps-empty { text-align: center; padding: var(--ds-space-12); color: #64748b; }

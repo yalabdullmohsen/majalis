@@ -30,7 +30,7 @@
 /* tabs */
 .uq-tabs-bar {
   display: flex; overflow-x: auto; gap: 0;
-  background: #F9FAFB; border-bottom: 2px solid #E8E7E2;
+  background: #F9FAFB; border-bottom: 2px solid var(--mj-hairline);
   padding: 0 .5rem; scrollbar-width: none;
 }
 .uq-tabs-bar::-webkit-scrollbar { display: none; }
@@ -39,7 +39,7 @@
   padding: .65rem .8rem; border: none; background: transparent;
   cursor: pointer; font-family: inherit; white-space: nowrap;
   border-bottom: 2px solid transparent; margin-bottom: -2px;
-  transition: all .15s; color: #5C5C56; font-size: .8rem;
+  transition: all .15s; color: var(--mj-ink-2); font-size: .8rem;
 }
 .uq-tab--active { border-bottom-color: var(--majalis-emerald,var(--mj-brand)); color: var(--majalis-emerald,var(--mj-brand)); font-weight: 700; }
 
@@ -47,7 +47,7 @@
 .uq-body    { padding: 1.25rem 1rem; }
 .uq-section { animation: uq-fade .25s ease; }
 @keyframes uq-fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
-.uq-lead    { font-size: .88rem; color: #5C5C56; line-height: 1.7; margin: 0 0 1.2rem; border-right: 3px solid var(--majalis-emerald,var(--mj-brand)); padding-right: .75rem; }
+.uq-lead    { font-size: .88rem; color: var(--mj-ink-2); line-height: 1.7; margin: 0 0 1.2rem; border-right: 3px solid var(--majalis-emerald,var(--mj-brand)); padding-right: .75rem; }
 .uq-subhead { font-size: var(--ds-text-base); font-weight: 700; color: #111; margin: 0 0 .75rem; }
 .uq-subhead--mt { margin-top: 1.5rem; }
 .uq-info-box--mt { margin-top: 1.2rem; }
@@ -61,10 +61,10 @@
 /* types */
 .uq-types-list { display: flex; flex-direction: column; gap: .75rem; }
 .uq-type-card {
-  background: #fff; border: 1.5px solid #E8E7E2; border-radius: .8rem; padding: .9rem 1rem;
+  background: #fff; border: 1.5px solid var(--mj-hairline); border-radius: .8rem; padding: .9rem 1rem;
 }
 .uq-type-card__title { font-weight: 700; font-size: .9rem; color: #111; margin: 0 0 .35rem; }
-.uq-type-card__desc  { font-size: .83rem; color: #5C5C56; line-height: 1.6; margin: 0 0 .5rem; }
+.uq-type-card__desc  { font-size: .83rem; color: var(--mj-ink-2); line-height: 1.6; margin: 0 0 .5rem; }
 .uq-dalil-box {
   display: flex; gap: .4rem; align-items: flex-start;
   background: #EEF2FF; border-radius: .5rem; padding: .45rem .65rem;
@@ -74,7 +74,7 @@
 
 /* jam */
 .uq-jam-list { display: flex; flex-direction: column; gap: .75rem; margin-bottom: 1.2rem; }
-.uq-jam-card { background: #fff; border: 1.5px solid #E8E7E2; border-radius: .8rem; overflow: hidden; }
+.uq-jam-card { background: #fff; border: 1.5px solid var(--mj-hairline); border-radius: .8rem; overflow: hidden; }
 .uq-jam-card--open { border-color: var(--majalis-emerald,var(--mj-brand)); }
 .uq-jam-head {
   display: flex; align-items: center; gap: .75rem;
@@ -91,7 +91,7 @@
 .uq-jam-chevron { font-size: .8rem; color: #9CA3AF; transition: transform .2s; }
 .uq-jam-chevron--open { transform: rotate(180deg); }
 .uq-jam-body { margin: 0; padding: .5rem 1rem .9rem 1rem; border-top: 1px solid #F3F4F6; list-style: none; display: flex; flex-direction: column; gap: .4rem; }
-.uq-jam-item { display: flex; gap: .5rem; align-items: flex-start; font-size: .83rem; color: #5C5C56; line-height: 1.5; }
+.uq-jam-item { display: flex; gap: .5rem; align-items: flex-start; font-size: .83rem; color: var(--mj-ink-2); line-height: 1.5; }
 .uq-jam-item::before { content: "●"; color: var(--majalis-emerald,var(--mj-brand)); font-size: .5rem; margin-top: .4rem; flex-shrink: 0; }
 
 /* info box */
@@ -107,11 +107,11 @@
 .uq-tafsir-types { display: flex; flex-direction: column; gap: .75rem; margin-bottom: 1.5rem; }
 .uq-tafsir-card {
   display: flex; gap: .75rem; align-items: flex-start;
-  background: #fff; border: 1.5px solid #E8E7E2; border-radius: .8rem; padding: .9rem 1rem;
+  background: #fff; border: 1.5px solid var(--mj-hairline); border-radius: .8rem; padding: .9rem 1rem;
 }
 .uq-tafsir-icon  { font-size: 1.4rem; flex-shrink: 0; }
 .uq-tafsir-title { font-weight: 700; font-size: .9rem; color: #111; display: block; margin-bottom: .25rem; }
-.uq-tafsir-desc  { font-size: .82rem; color: #5C5C56; line-height: 1.6; margin: 0 0 .3rem; }
+.uq-tafsir-desc  { font-size: .82rem; color: var(--mj-ink-2); line-height: 1.6; margin: 0 0 .3rem; }
 .uq-tafsir-ex    { font-size: .74rem; color: var(--majalis-emerald,var(--mj-brand)); font-weight: 600; }
 
 .uq-mufassirun { display: flex; flex-direction: column; gap: .5rem; }
@@ -124,17 +124,17 @@
 .uq-mufassir-name { font-weight: 700; font-size: .85rem; color: #111; }
 .uq-mufassir-era  { font-size: .72rem; color: #9CA3AF; }
 .uq-mufassir-kitab { display: block; font-size: .83rem; font-weight: 600; color: var(--majalis-emerald,var(--mj-brand)); }
-.uq-mufassir-note  { display: block; font-size: .72rem; color: #5C5C56; }
+.uq-mufassir-note  { display: block; font-size: .72rem; color: var(--mj-ink-2); }
 
 /* إعجاز */
 .uq-ijaz-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin-bottom: 1.5rem; }
 .uq-ijaz-card {
-  background: #fff; border: 1.5px solid #E8E7E2; border-radius: .8rem;
+  background: #fff; border: 1.5px solid var(--mj-hairline); border-radius: .8rem;
   padding: .9rem; text-align: center;
 }
 .uq-ijaz-icon  { font-size: 1.6rem; display: block; margin-bottom: .4rem; }
 .uq-ijaz-title { font-size: .8rem; font-weight: 700; color: #111; display: block; margin-bottom: .3rem; }
-.uq-ijaz-desc  { font-size: .73rem; color: #5C5C56; line-height: 1.5; margin: 0; }
+.uq-ijaz-desc  { font-size: .73rem; color: var(--mj-ink-2); line-height: 1.5; margin: 0; }
 
 .uq-ijaz-ayah {
   background: linear-gradient(135deg, var(--mj-brand-deep), var(--majalis-emerald,var(--mj-brand)));
@@ -145,9 +145,9 @@
 
 /* محكم ومتشابه */
 .uq-mm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
-.uq-mm-card { background: #fff; border: 1.5px solid #E8E7E2; border-radius: .8rem; padding: .9rem; }
+.uq-mm-card { background: #fff; border: 1.5px solid var(--mj-hairline); border-radius: .8rem; padding: .9rem; }
 .uq-mm-title { font-size: .9rem; font-weight: 800; color: var(--majalis-emerald,var(--mj-brand)); margin: 0 0 .4rem; }
-.uq-mm-def   { font-size: .8rem; color: #5C5C56; line-height: 1.6; margin: 0 0 .5rem; }
+.uq-mm-def   { font-size: .8rem; color: var(--mj-ink-2); line-height: 1.6; margin: 0 0 .5rem; }
 .uq-mm-examples { display: flex; flex-direction: column; gap: .25rem; }
 .uq-mm-examples__label { font-size: .7rem; font-weight: 700; color: #9CA3AF; display: block; margin-bottom: .1rem; }
 .uq-mm-examples__item  {
@@ -159,7 +159,7 @@
 .uq-naskh-list { display: flex; flex-direction: column; gap: .75rem; }
 .uq-naskh-card {
   display: flex; gap: .75rem; align-items: flex-start;
-  background: #fff; border: 1.5px solid #E8E7E2; border-radius: .8rem; padding: .9rem 1rem;
+  background: #fff; border: 1.5px solid var(--mj-hairline); border-radius: .8rem; padding: .9rem 1rem;
 }
 .uq-naskh-num {
   background: #1a1a2e; color: #fff;
@@ -168,7 +168,7 @@
   font-size: .8rem; font-weight: 800; flex-shrink: 0;
 }
 .uq-naskh-title { font-weight: 700; font-size: .88rem; color: #111; margin: 0 0 .25rem; display: block; }
-.uq-naskh-desc  { font-size: .82rem; color: #5C5C56; line-height: 1.6; margin: 0 0 .3rem; display: block; }
+.uq-naskh-desc  { font-size: .82rem; color: var(--mj-ink-2); line-height: 1.6; margin: 0 0 .3rem; display: block; }
 .uq-naskh-ex    { font-size: .74rem; color: var(--majalis-emerald,var(--mj-brand)); font-weight: 600; display: block; }
 
 /* related */
@@ -176,7 +176,7 @@
 .uq-related__title { font-size: var(--ds-text-base); font-weight: 700; color: #111; margin: 0 0 .75rem; }
 .uq-related__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; }
 .uq-related__link {
-  background: #fff; border: 1px solid #E8E7E2; border-radius: .6rem;
+  background: #fff; border: 1px solid var(--mj-hairline); border-radius: .6rem;
   padding: .6rem .7rem; font-size: .82rem; color: var(--majalis-emerald,var(--mj-brand));
   text-align: center; text-decoration: none; font-weight: 600;
   transition: background .15s; display: block;
@@ -220,7 +220,7 @@
   width: 1.8rem; height: 1.8rem;
   display: flex; align-items: center; justify-content: center;
   background: linear-gradient(135deg, var(--mj-brand), var(--mj-brand-deep));
-  color: #FAFAF8;
+  color: var(--mj-bg);
   border-radius: 50%;
   font-size: 0.78rem;
   font-weight: 700;
@@ -241,7 +241,7 @@
 .uq-qiraat-card__origin {
   margin-right: auto;
   font-size: 0.7rem;
-  color: #6b7280;
+  color: var(--mj-muted);
   white-space: nowrap;
   background: rgba(23,61,53,.07);
   padding: 0.15rem 0.55rem;
@@ -256,7 +256,7 @@
 }
 .uq-qiraat-card__rawi-label {
   font-size: 0.7rem;
-  color: #6b7280;
+  color: var(--mj-muted);
 }
 .uq-qiraat-card__rawi {
   font-size: 0.78rem;
@@ -296,7 +296,7 @@
 }
 .uq-usul-card__desc {
   font-size: 0.77rem;
-  color: #5C5C56;
+  color: var(--mj-ink-2);
   line-height: 1.65;
   margin: 0;
 }

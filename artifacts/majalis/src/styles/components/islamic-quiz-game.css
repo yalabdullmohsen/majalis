@@ -2,9 +2,9 @@
 .qzg-timer { margin: 0 0 0.875rem; }
 .qzg-timer__head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.3rem; }
 .qzg-timer__label { font-size: var(--ds-text-xs); color: var(--majalis-ink-soft); font-weight: 600; }
-.qzg-timer__count { font-size: 0.82rem; font-weight: 700; color: var(--qzg-timer-color, #22c55e); }
+.qzg-timer__count { font-size: 0.82rem; font-weight: 700; color: var(--qzg-timer-color, var(--mj-brand)); }
 .qzg-timer__track { height: 0.45rem; border-radius: var(--ds-radius-full); background: var(--ds-line-color, #e5e7eb); overflow: hidden; }
-.qzg-timer__fill  { height: 100%; border-radius: var(--ds-radius-full); background: var(--qzg-timer-color, #22c55e); width: var(--qzg-timer-pct, 100%); transition: width 1s linear, background 0.3s ease; }
+.qzg-timer__fill  { height: 100%; border-radius: var(--ds-radius-full); background: var(--qzg-timer-color, var(--mj-brand)); width: var(--qzg-timer-pct, 100%); transition: width 1s linear, background 0.3s ease; }
 
 .qzg-score-row { display: grid; grid-template-columns: 1fr 1fr; gap: var(--ds-space-3); margin-bottom: 1.25rem; }
 .qzg-score-row[data-team-count="1"] { grid-template-columns: 1fr; max-width: 260px; margin-inline: auto; }

@@ -17,10 +17,14 @@
   --color-on-brand: #FFFFFF;
   --color-accent: #B08A3E;
   --color-accent-soft: #F5EEDF;
+  --color-danger: #DC2626;
+  --color-danger-soft: #FEE2E2;
+  --color-danger-deep: #991B1B;
+  --color-splash: #011608;
 
   --font-face: "Amiri", serif;
-  --font-ui: "Tajawal", system-ui, sans-serif;
-  --font-num: "Alexandria", sans-serif;
+  --font-ui: "Alexandria", "IBM Plex Sans Arabic", system-ui, sans-serif;
+  --font-num: "Alexandria", "IBM Plex Sans Arabic", system-ui, sans-serif;
 
   --radius-mj-sm: 12px;
   --radius-mj-md: 16px;
@@ -37,14 +41,16 @@
   --spacing-mj-6: 24px;
   --spacing-mj-8: 32px;
 
+  /* سلّم طباعة موحّد — 6 أحجام فقط */
   --text-mj-display: 40px;
   --text-mj-h1: 28px;
-  --text-mj-h2: 19px;
-  --text-mj-sacred: 21px;
-  --text-mj-body: 13.5px;
-  --text-mj-btn: 13px;
-  --text-mj-small: 11.5px;
-  --text-mj-tiny: 9.5px;
+  --text-mj-h2: 20px;
+  --text-mj-body: 16px;
+  --text-mj-small: 14px;
+  --text-mj-tiny: 12px;
+  /* أسماء توافقية (تُعاد إلى السلّم الستة) */
+  --text-mj-sacred: 20px;
+  --text-mj-btn: 14px;
 }
 
 :root {
@@ -61,6 +67,10 @@
   --mj-on-brand: #FFFFFF;
   --mj-accent: #B08A3E;
   --mj-accent-soft: #F5EEDF;
+  --mj-danger: #DC2626;
+  --mj-danger-soft: #FEE2E2;
+  --mj-danger-deep: #991B1B;
+  --mj-splash: #011608;
   --mj-r-sm: 12px;
   --mj-r-md: 16px;
   --mj-r-lg: 22px;
@@ -74,21 +84,22 @@
   --mj-s6: 24px;
   --mj-s8: 32px;
   --mj-face: "Amiri", serif;
-  --mj-ui: "Tajawal", system-ui, sans-serif;
-  --mj-num: "Alexandria", sans-serif;
+  --mj-ui: "Alexandria", "IBM Plex Sans Arabic", system-ui, sans-serif;
+  --mj-num: "Alexandria", "IBM Plex Sans Arabic", system-ui, sans-serif;
   --mj-fs-display: 40px;
   --mj-fs-h1: 28px;
-  --mj-fs-h2: 19px;
-  --mj-fs-sacred: 21px;
-  --mj-fs-body: 13.5px;
-  --mj-fs-btn: 13px;
-  --mj-fs-small: 11.5px;
-  --mj-fs-tiny: 9.5px;
+  --mj-fs-h2: 20px;
+  --mj-fs-sacred: 20px;
+  --mj-fs-body: 16px;
+  --mj-fs-btn: 14px;
+  --mj-fs-small: 14px;
+  --mj-fs-tiny: 12px;
   --mj-lh-tight: 1;
   --mj-lh-title: 1.45;
-  --mj-lh-card: 1.5;
-  --mj-lh-ui: 1.9;
-  --mj-lh-small: 1.85;
+  --mj-lh-card: 1.55;
+  --mj-lh-ui: 1.7;
+  --mj-lh-body: 1.7;
+  --mj-lh-small: 1.65;
   --mj-lh-sacred: 2.1;
 }
 
@@ -110,6 +121,10 @@ html.dark,
   --mj-on-brand: #0C1512;
   --mj-accent: #D2A445;
   --mj-accent-soft: #332A16;
+  --mj-danger: #F87171;
+  --mj-danger-soft: #3F1D1D;
+  --mj-danger-deep: #FECACA;
+  --mj-splash: #011608;
   --mj-sh: 0 10px 26px -18px rgba(0, 0, 0, 0.7);
 
   --color-bg: #101614;
@@ -125,6 +140,10 @@ html.dark,
   --color-on-brand: #0C1512;
   --color-accent: #D2A445;
   --color-accent-soft: #332A16;
+  --color-danger: #F87171;
+  --color-danger-soft: #3F1D1D;
+  --color-danger-deep: #FECACA;
+  --color-splash: #011608;
   --shadow-mj: 0 10px 26px -18px rgba(0, 0, 0, 0.7);
 }
 
@@ -135,6 +154,22 @@ html.dark,
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* منع تكبير iOS التلقائي عند التركيز — دون تعطيل تكبير المستخدم */
+input,
+select,
+textarea {
+  font-size: max(16px, 1em);
+  font-family: var(--mj-ui);
+}
+
+body {
+  font-family: var(--mj-ui);
+  font-size: var(--mj-fs-body);
+  line-height: var(--mj-lh-body);
+  color: var(--mj-ink);
+  background: var(--mj-bg);
 }
 
 /* ═══════════ المكوّنات المشتركة mj-* ═══════════ */

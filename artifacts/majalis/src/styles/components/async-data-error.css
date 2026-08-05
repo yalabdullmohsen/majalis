@@ -12,7 +12,7 @@
   text-align: center;
 }
 .adv-error-state__icon { color: #dc2626; opacity: 0.75; }
-.adv-error-state__msg  { font-size: 0.88rem; color: var(--clr-ink-soft, #6b7280); margin: 0; max-width: 340px; }
+.adv-error-state__msg  { font-size: 0.88rem; color: var(--clr-ink-soft, var(--mj-muted)); margin: 0; max-width: 340px; }
 .adv-error-state__retry {
   display: inline-flex;
   align-items: center;
@@ -64,7 +64,7 @@ select:focus-visible {
 
 .ftw-type-badge--fatwa   { background: rgba(23,61,53,.1); color: var(--mj-brand); }
 .ftw-type-badge--article { background: rgba(59,130,246,.1); color: var(--brand, var(--mj-brand)); }
-.ftw-type-badge--general { background: rgba(107,114,128,.1); color: #6b7280; }
+.ftw-type-badge--general { background: rgba(107,114,128,.1); color: var(--mj-muted); }
 .ftw-type-badge--scholar { background: rgba(139,92,246,.1); color: var(--brand, var(--mj-brand)); }
 
 /* AI disclaimer bar in research pages */
@@ -76,7 +76,7 @@ select:focus-visible {
   border-right: 3px solid var(--mj-brand);
   padding: 0.7rem 0.9rem;
   font-size: 0.79rem;
-  color: var(--clr-ink-soft, #6b7280);
+  color: var(--clr-ink-soft, var(--mj-muted));
   border-radius: 0 0.5rem 0.5rem 0;
   margin-top: 1rem;
   direction: rtl;

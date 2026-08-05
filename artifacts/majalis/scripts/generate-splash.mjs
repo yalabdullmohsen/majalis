@@ -343,21 +343,19 @@ async function main() {
       file: join(ROOT, "public/manifest.json"),
       patterns: [
         [/"background_color":\s*"[#_][^"]*"/g, `"background_color": "${bgHex}"`],
-        [/"theme_color":\s*"[#_][^"]*"/g, `"theme_color": "${bgHex}"`],
+        // theme_color = هوية الواجهة (#1F7A5A) — لا يُستبدل بلون شاشة الدخول
       ],
     },
     {
       file: join(ROOT, "public/manifest.webmanifest"),
       patterns: [
         [/"background_color":\s*"[#_][^"]*"/g, `"background_color": "${bgHex}"`],
-        [/"theme_color":\s*"[#_][^"]*"/g, `"theme_color": "${bgHex}"`],
       ],
     },
     {
       file: join(ROOT, "public/site.webmanifest"),
       patterns: [
         [/"background_color":\s*"[#_][^"]*"/g, `"background_color": "${bgHex}"`],
-        [/"theme_color":\s*"[#_][^"]*"/g, `"theme_color": "${bgHex}"`],
       ],
     },
     {
@@ -383,12 +381,10 @@ async function main() {
       if (typeof rep === "function") continue;
       src = src.replace(re, rep);
     }
-    // index.html: ثبّت theme-color على لون الدخول
+    // index.html: لا تستبدل theme-color بلون شاشة الدخول —
+    // theme-color للواجهة = هوية --mj-brand؛ لون splash يبقى في CSS الحرج فقط.
     if (t.file.endsWith("index.html")) {
-      src = src.replace(
-        /(<meta name="theme-color"[^>]*content=")[^"]*(")/g,
-        `$1${bgHex}$2`,
-      );
+      /* intentionally no theme-color overwrite */
     }
     writeFileSync(t.file, src);
     console.log(`✓ حدّث اللون في ${t.file.replace(ROOT + "/", "")}`);

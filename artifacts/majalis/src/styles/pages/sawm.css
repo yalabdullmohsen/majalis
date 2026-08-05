@@ -89,7 +89,7 @@
   border-radius: .75rem;
   box-shadow: 0 1px 4px rgba(0,0,0,.07);
   overflow: hidden;
-  border: 1px solid #E8E7E2;
+  border: 1px solid var(--mj-hairline);
   transition: box-shadow .2s;
 }
 .sw-card--open { box-shadow: 0 4px 16px rgba(31,77,58,.12); border-color: var(--majalis-emerald, var(--mj-brand)); }
@@ -108,11 +108,11 @@
 .sw-card__icon { font-size: 1.6rem; flex-shrink: 0; }
 .sw-card__info { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: .1rem; }
 .sw-card__title { font-size: .95rem; font-weight: 700; color: #111; }
-.sw-card__sub { font-size: .78rem; color: #5C5C56; }
+.sw-card__sub { font-size: .78rem; color: var(--mj-ink-2); }
 .sw-card__chevron { font-size: var(--ds-text-base); color: #9CA3AF; transition: transform .25s; margin-right: auto; flex-shrink: 0; }
 .sw-card__chevron--open { transform: rotate(180deg); }
 .sw-card__body { padding: 0 1.1rem 1.1rem; border-top: 1px solid #F3F4F6; display: flex; flex-direction: column; gap: .75rem; }
-.sw-card__desc { font-size: .88rem; line-height: 1.7; color: #5C5C56; margin: .5rem 0 0; }
+.sw-card__desc { font-size: .88rem; line-height: 1.7; color: var(--mj-ink-2); margin: .5rem 0 0; }
 
 /* badges */
 .sw-badge {
@@ -146,13 +146,13 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
 }
 .sw-dalil--sm { padding: .5rem .75rem; }
 .sw-dalil__text { font-size: .92rem; line-height: 1.9; color: var(--mj-brand-deep); font-weight: 500; margin: 0; }
-.sw-dalil__ref { font-size: 0.8rem; color: #16A34A; font-style: normal; }
+.sw-dalil__ref { font-size: 0.8rem; color: var(--mj-brand); font-style: normal; }
 
 /* notes */
 .sw-notes { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: .35rem; }
 .sw-note {
   font-size: .85rem;
-  color: #5C5C56;
+  color: var(--mj-ink-2);
   padding-right: 1.2rem;
   position: relative;
   line-height: 1.6;
@@ -163,7 +163,7 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
 .sw-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: .75rem; }
 .sw-cond-card {
   background: #fff;
-  border: 1px solid #E8E7E2;
+  border: 1px solid var(--mj-hairline);
   border-radius: .65rem;
   padding: .85rem .9rem;
   display: flex;
@@ -196,7 +196,7 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
 /* muftirat */
 .sw-muf-card {
   background: #fff;
-  border: 1px solid #E8E7E2;
+  border: 1px solid var(--mj-hairline);
   border-radius: .7rem;
   padding: .9rem 1rem;
   display: flex;
@@ -209,12 +209,12 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
 .sw-muf-card__icon { font-size: var(--ds-text-2xl); flex-shrink: 0; }
 .sw-muf-card__content { flex: 1; display: flex; flex-direction: column; gap: .4rem; }
 .sw-muf-card__title { font-size: .9rem; font-weight: 700; color: #111; }
-.sw-muf-card__desc { font-size: .84rem; color: #5C5C56; line-height: 1.65; margin: 0; }
+.sw-muf-card__desc { font-size: .84rem; color: var(--mj-ink-2); line-height: 1.65; margin: 0; }
 
 /* exemptions */
 .sw-ex-card {
   background: #fff;
-  border: 1px solid #E8E7E2;
+  border: 1px solid var(--mj-hairline);
   border-radius: .7rem;
   padding: 1rem 1.1rem;
   display: flex;
@@ -234,13 +234,13 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
   border-radius: var(--ds-radius-full);
   font-weight: 600;
 }
-.sw-ex-card__details { font-size: .85rem; color: #5C5C56; line-height: 1.65; margin: 0; }
+.sw-ex-card__details { font-size: .85rem; color: var(--mj-ink-2); line-height: 1.65; margin: 0; }
 
 /* virtues */
 .sw-virtues-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(270px, 1fr)); gap: var(--ds-space-4); }
 .sw-virtue-card {
   background: #fff;
-  border: 1px solid #E8E7E2;
+  border: 1px solid var(--mj-hairline);
   border-radius: .85rem;
   padding: 1.1rem 1rem;
   display: flex;
@@ -251,7 +251,7 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
 .sw-virtue-card__icon { font-size: 1.8rem; }
 .sw-virtue-card__title { font-size: .9rem; font-weight: 700; color: var(--majalis-emerald, var(--mj-brand)); margin: 0; }
 .sw-virtue-card__text { font-size: .87rem; line-height: 1.85; color: #1F2937; font-style: normal; background: var(--mj-brand-soft); border-radius: .45rem; padding: .6rem .75rem; margin: 0; border-right: 3px solid var(--majalis-emerald, var(--mj-brand)); }
-.sw-virtue-card__source { font-size: .72rem; color: #5C5C56; }
+.sw-virtue-card__source { font-size: .72rem; color: var(--mj-ink-2); }
 
 /* related */
 .sw-related { margin-top: 2.5rem; }
@@ -259,7 +259,7 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
 .sw-related__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; }
 .sw-related__link {
   background: #fff;
-  border: 1px solid #E8E7E2;
+  border: 1px solid var(--mj-hairline);
   border-radius: .6rem;
   padding: .6rem .7rem;
   font-size: .82rem;

@@ -81,6 +81,14 @@ const { FIQH_ITEM_TYPE_LABELS } = await importSrc("src/lib/fiqh-council-types.ts
 const { SCHOLARS } = await importSrc("src/lib/scholars-data.ts");
 const { MUEZZINS } = await importSrc("src/lib/adhan-audio.ts");
 
+const QURAN_MANIFEST = JSON.parse(
+  await readFile(resolve(appRoot, "public/data/quran/manifest.json"), "utf8"),
+);
+const QURAN_SURAHS = Array.isArray(QURAN_MANIFEST.surahs) ? QURAN_MANIFEST.surahs : [];
+if (QURAN_SURAHS.length !== 114) {
+  throw new Error(`manifest السور أعاد ${QURAN_SURAHS.length} بدل 114`);
+}
+
 const SURAH_STORIES = getAllSurahStories();
 const PUBLIC_FIQH_ISSUES = FIQH_ISSUES_PUBLISHED_SEED.filter(isPublicIssue);
 
@@ -422,7 +430,12 @@ const HEAD_ASSETS = `<link rel="icon" type="image/svg+xml" href="/favicon.svg" /
 function prerenderHtml(route, extraJsonLd = "", richBody = "", parents = []) {
   const canonical = absoluteUrl(route.path);
   const image = absoluteUrl(route.image || DEFAULT_IMAGE);
-  const keywords = [...new Set([...(route.keywords || []), ...seoConfig.defaultKeywords])].join(", ");
+  // كلمات مفتاحية خاصة بالصفحة فقط — بلا دمج defaultKeywords (حشو يضر بالمصداقية).
+  // إن خلت الصفحة من keywords لا نُصدر الوسم أصلًا (محركات البحث لا تعتمد عليه).
+  const pageKeywords = [...new Set(route.keywords || [])].filter(Boolean);
+  const keywordsMeta = pageKeywords.length
+    ? `<meta name="keywords" content="${escapeHtml(pageKeywords.join(", "))}" />`
+    : "";
   const robots = route.robots || "index, follow";
   const ogType = route.ogType || "website";
   const title = pageTitle(route);
@@ -432,13 +445,16 @@ function prerenderHtml(route, extraJsonLd = "", richBody = "", parents = []) {
 <html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
     <title>${escapeHtml(title)}</title>
     <meta name="description" content="${escapeHtml(route.description)}" />
-    <meta name="keywords" content="${escapeHtml(keywords)}" />
+    ${keywordsMeta}
     <meta name="robots" content="${escapeHtml(robots)}" />
     <meta name="author" content="${escapeHtml(SITE_NAME)}" />
-    <meta name="theme-color" content="#164E3C" />
+    <meta name="theme-color" content="#1F7A5A" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#1F7A5A" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#4FB48B" />
     <link rel="canonical" href="${escapeHtml(canonical)}" />
     <link rel="alternate" hreflang="ar" href="${escapeHtml(canonical)}" />
     <link rel="alternate" hreflang="x-default" href="${escapeHtml(canonical)}" />
@@ -617,6 +633,10 @@ const LIST_JSON_LD = {
     "أسماء الله الحسنى",
   ),
   "/duas": itemListJsonLdScript(DUAS_SEED.map((d) => ({ name: d.title, url: `/duas#${d.id}` })), "الأدعية الشرعية الموثقة"),
+  "/quran/surahs": itemListJsonLdScript(
+    QURAN_SURAHS.map((s) => ({ name: s.name, url: `/quran/surahs#surah-${s.number}` })),
+    "فهرس سور القرآن الكريم",
+  ),
 };
 
 const RICH_BODY_MAP = {
@@ -661,6 +681,14 @@ ${linkList(
   "/quran/surah-stories": linkList(
     "قصص السور",
     SURAH_STORIES.slice(0, 30).map((s) => ({ name: `سورة ${s.name}`, url: `/quran/surah-stories/${s.number}` })),
+  ),
+  "/quran/surahs": linkList(
+    "سور القرآن الكريم الـ114",
+    QURAN_SURAHS.map((s) => ({
+      name: s.name,
+      url: `/mushaf/${s.number}`,
+      note: `${s.numberOfAyahs} آية`,
+    })),
   ),
   "/sins-and-rights": linkList("موضوعات الذنوب والحقوق", SINS_TOPICS.map((t) => ({ name: t.title, url: `/sins-and-rights/${t.slug}` }))),
   "/fiqh-council/issues": linkList(

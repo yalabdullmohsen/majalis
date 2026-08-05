@@ -3,9 +3,9 @@
 /* ── منقول من الطبقة الحرجة: AccountDeletionPage ── */
 /* ══ صفحة حذف الحساب (AccountDeletionPage) ═════════════════════════════════ */
 .accd-hero { text-align: center; padding: 2rem 1rem 1.5rem; }
-.accd-hero__icon { color: #DC2626 !important; margin: 0 auto 1rem; display: block; }
+.accd-hero__icon { color: var(--mj-danger) !important; margin: 0 auto 1rem; display: block; }
 /* .accd-hero لا خلفية داكنة له (يطابق [class$="-hero"] عن طريق الخطأ)، فيرث
-   لون تحذير أحمر (#DC2626 دلالي: حذف حساب نهائي) لكن يخسره أمام قاعدة
+   لون تحذير أحمر (var(--mj-danger) دلالي: حذف حساب نهائي) لكن يخسره أمام قاعدة
    [class$="-hero"]{color:#fff!important}. جُرِّب !important بتخصيص متصاعد
    (حتى ×4 تكرار صنف)، وحقن CSS متأخر بعد التحميل، وقاعدة inherit مطابقة
    تمامًا للأسلوب الناجح فعليًا في .an-hero/.sch-profile-hero بنفس الجلسة —
@@ -15,26 +15,26 @@
    inline style على العنصر مباشرة (AccountDeletionPage.tsx) — يتفوّق دومًا
    بصرف النظر عن أي غموض في الـcascade. هذه القاعدة أُبقيت كخط دفاع ثانٍ
    لا كإصلاح أساسي. */
-.accd-hero h1 { font-size: var(--ds-text-2xl); color: #DC2626 !important; }
+.accd-hero h1 { font-size: var(--ds-text-2xl); color: var(--mj-danger) !important; }
 .accd-hero p { opacity: 0.65; margin-top: 0.4rem; }
 
 .accd-info { margin-bottom: 1.5rem; border: 1px solid rgba(220,38,38,0.2); }
-.accd-info__title { font-size: var(--ds-text-base); font-weight: 700; color: #DC2626; margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.4rem; }
+.accd-info__title { font-size: var(--ds-text-base); font-weight: 700; color: var(--mj-danger); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.4rem; }
 .accd-info__list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 0.75rem; }
 .accd-info__list li { font-size: 0.9rem; padding-right: 0.75rem; }
-.accd-info__list li::before { content: "✗ "; color: #DC2626; }
+.accd-info__list li::before { content: "✗ "; color: var(--mj-danger); }
 .accd-info__note { font-size: 0.82rem; opacity: 0.6; border-top: 1px solid var(--clr-border); padding-top: 0.5rem; }
 
 .accd-actions { display: flex; flex-direction: column; gap: var(--ds-space-3); align-items: flex-start; }
 .accd-actions__email { font-size: 0.9rem; opacity: 0.7; }
-.btn-danger { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.6rem 1.25rem; background: #DC2626; color: #fff; border: none; border-radius: var(--ds-radius); font-weight: 700; cursor: pointer; font-size: 0.92rem; }
+.btn-danger { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.6rem 1.25rem; background: var(--mj-danger); color: #fff; border: none; border-radius: var(--ds-radius); font-weight: 700; cursor: pointer; font-size: 0.92rem; }
 .btn-danger:hover { background: #B91C1C; }
 .btn-danger:disabled { opacity: 0.4; cursor: not-allowed; }
 
 .accd-confirm { margin-bottom: 1.5rem; }
 .accd-confirm__warning { font-size: 0.92rem; margin-bottom: 1rem; }
-.accd-confirm__input { width: 100%; padding: 0.6rem 0.75rem; border: 1px solid #DC2626; border-radius: var(--ds-radius); font-size: var(--ds-text-base); text-align: right; }
-.accd-confirm__error { color: #DC2626; font-size: 0.85rem; margin-top: 0.5rem; }
+.accd-confirm__input { width: 100%; padding: 0.6rem 0.75rem; border: 1px solid var(--mj-danger); border-radius: var(--ds-radius); font-size: var(--ds-text-base); text-align: right; }
+.accd-confirm__error { color: var(--mj-danger); font-size: 0.85rem; margin-top: 0.5rem; }
 .accd-confirm__btns { display: flex; gap: var(--ds-space-3); margin-top: 1rem; }
 
 .accd-deleting { text-align: center; padding: var(--ds-space-8); }

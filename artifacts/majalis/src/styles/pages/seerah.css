@@ -14,7 +14,7 @@
   background-color: var(--majalis-emerald);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cpath d='M50,4 L57.27,32.45 L82.53,17.47 L67.55,42.73 L96,50 L67.55,57.27 L82.53,82.53 L57.27,67.55 L50,96 L42.73,67.55 L17.47,82.53 L32.45,57.27 L4,50 L32.45,42.73 L17.47,17.47 L42.73,32.45 Z' fill='none' stroke='%23FFFFFF' stroke-opacity='0.055' stroke-width='1.1'/%3E%3Ccircle cx='50' cy='50' r='1.4' fill='%23FFFFFF' fill-opacity='0.08'/%3E%3C/svg%3E");
   background-size: 100px 100px;
-  color: #FAFAF8;
+  color: var(--mj-bg);
   padding: 3.5rem 1.5rem 3rem;
   text-align: center;
   position: relative;
@@ -65,7 +65,7 @@
   border-radius: 999px;
   background: rgba(255, 255, 255, 0.14);
   border: 1px solid rgba(255, 255, 255, 0.28);
-  color: #FAFAF8;
+  color: var(--mj-bg);
   font-size: 0.95rem;
   font-weight: 700;
   text-decoration: none;
@@ -285,7 +285,7 @@ html[data-theme="dark"] .seerah-phase--hudaybiyya-mecca,
 html[data-theme="dark"] .seerah-phase--childhood,
 html[data-theme="dark"] .seerah-phase--farewell,
 html[data-theme="dark"] .seerah-phase--secret-dawah,
-html[data-theme="dark"] .seerah-phase--death { --phase-color: #5CC49A; --panel-color: #5CC49A; }
+html[data-theme="dark"] .seerah-phase--death { --phase-color: var(--mj-brand); --panel-color: var(--mj-brand); }
 html[data-theme="dark"] .seerah-phase--open-dawah { --phase-color: #F87171; --panel-color: #F87171; }
 html[data-theme="dark"] .seerah-phase--year-of-sorrow { --phase-color: #60A5FA; --panel-color: #60A5FA; }
 html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --panel-color: #FB7185; }
@@ -581,7 +581,7 @@ html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --pane
   padding: 1.25rem 1.25rem 1.25rem 1.25rem !important;
   border-radius: 12px !important;
   border: 1px solid var(--v2-border, #D8D2C7) !important;
-  background: var(--v2-surface, #FAFAF8) !important;
+  background: var(--v2-surface, var(--mj-bg)) !important;
   margin-bottom: 1rem !important;
   margin-right: 3rem !important;
   position: relative !important;

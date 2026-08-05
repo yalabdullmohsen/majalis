@@ -16,7 +16,7 @@
   padding: 1rem !important;
 }
 .vault-modal {
-  background: var(--v2-surface, #FAFAF8) !important;
+  background: var(--v2-surface, var(--mj-bg)) !important;
   border-radius: 16px !important;
   padding: 1.5rem !important;
   width: 100% !important;

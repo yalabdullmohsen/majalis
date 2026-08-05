@@ -24,7 +24,7 @@
 
 .occasions-filter__count {
   font-size: 0.8rem;
-  color: var(--elite-ink-muted, #5C5C56);
+  color: var(--elite-ink-muted, var(--mj-ink-2));
 }
 
 .occasions-filter__sacred-note {
@@ -78,7 +78,7 @@
 .occasion-detail__countdown {
   font-size: 0.78rem;
   font-weight: 600;
-  color: var(--elite-ink-muted, #5C5C56);
+  color: var(--elite-ink-muted, var(--mj-ink-2));
   white-space: nowrap;
   background: var(--elite-cream, #F4F4F1);
   border-radius: var(--ds-radius-full);

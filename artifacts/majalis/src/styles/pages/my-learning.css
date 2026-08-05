@@ -30,7 +30,7 @@
   border: 2px solid rgba(255,255,255,.32);
   display: flex; align-items: center; justify-content: center;
   font-size: 1.35rem; font-weight: 800;
-  color: #FAFAF8; flex-shrink: 0;
+  color: var(--mj-bg); flex-shrink: 0;
   box-shadow: 0 0 0 4px rgba(255,255,255,.07);
 }
 
@@ -39,7 +39,7 @@
 .myl2-hero__name {
   margin: 0;
   font-size: 1.15rem; font-weight: 800;
-  color: #FAFAF8; line-height: 1.2;
+  color: var(--mj-bg); line-height: 1.2;
 }
 
 .myl2-hero__email {
@@ -58,7 +58,7 @@
 }
 .myl2-badge--level {
   background: rgba(255,255,255,.14);
-  color: #FAFAF8;
+  color: var(--mj-bg);
   border: 1px solid rgba(255,255,255,.22);
 }
 .myl2-badge--fire {
@@ -89,7 +89,7 @@
   display: flex; flex-direction: column; align-items: center; flex: 1;
   position: relative;
 }
-.myl2-qstat__n { font-size: 1.2rem; font-weight: 800; color: #FAFAF8; line-height: 1; }
+.myl2-qstat__n { font-size: 1.2rem; font-weight: 800; color: var(--mj-bg); line-height: 1; }
 .myl2-qstat__l { font-size: 0.64rem; color: rgba(255,255,255,.45); margin-top: 0.12rem; }
 .myl2-qstat__sep {
   position: absolute; left: 0; top: 50%; transform: translateY(-50%);
@@ -172,7 +172,7 @@
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
 
-.myl2-resume-item__pct { font-size: 0.7rem; color: #6b7280; margin: 0; }
+.myl2-resume-item__pct { font-size: 0.7rem; color: var(--mj-muted); margin: 0; }
 
 .myl2-resume-item__arrow { color: #9ca3af; flex-shrink: 0; }
 
@@ -243,7 +243,7 @@
 .myl2-cert-item__title {
   font-size: 0.87rem; font-weight: 700; color: #1A1A18; margin: 0 0 0.18rem;
 }
-.myl2-cert-item__meta { font-size: 0.7rem; color: #6b7280; margin: 0; }
+.myl2-cert-item__meta { font-size: 0.7rem; color: var(--mj-muted); margin: 0; }
 
 /* ── Achievements ─────────────────────────────────────────────────────── */
 .myl2-badges-wrap { display: flex; flex-wrap: wrap; gap: 0.4rem; }
@@ -285,7 +285,7 @@
   display: flex; align-items: flex-start; gap: 0.4rem;
   padding: 0.42rem 0;
   border-bottom: 1px solid #f3f4f6;
-  font-size: 0.8rem; color: #5C5C56; line-height: 1.55;
+  font-size: 0.8rem; color: var(--mj-ink-2); line-height: 1.55;
 }
 .myl2-note-item:last-child { border-bottom: none; }
 .myl2-note-item svg { color: #9ca3af; margin-top: 2px; flex-shrink: 0; }
@@ -306,7 +306,7 @@
 .myl2-btn:hover { background: #e3efe8; }
 
 .myl2-btn--primary {
-  background: var(--mj-brand); color: #FAFAF8; border-color: var(--mj-brand);
+  background: var(--mj-brand); color: var(--mj-bg); border-color: var(--mj-brand);
 }
 .myl2-btn--primary:hover { background: var(--mj-brand); }
 
@@ -316,7 +316,7 @@
   padding: 1.4rem; text-align: center;
 }
 .myl2-empty svg  { color: #d1d5db; }
-.myl2-empty p    { font-size: 0.83rem; color: #6b7280; margin: 0; }
+.myl2-empty p    { font-size: 0.83rem; color: var(--mj-muted); margin: 0; }
 .myl2-empty__cta {
   font-size: 0.8rem; font-weight: 700;
   color: var(--mj-brand); text-decoration: none;

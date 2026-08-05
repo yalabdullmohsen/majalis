@@ -17,7 +17,7 @@
   padding: 0.65rem 0.85rem;
   border: 1px solid #FECACA;
   background: #FEF2F2;
-  color: #991B1B;
+  color: var(--mj-danger-deep);
   border-radius: 0.5rem;
   font-size: 0.85rem;
 }
@@ -32,7 +32,7 @@
   border: 1px solid var(--majalis-line, #e5e7eb);
   border-radius: 0.5rem;
   font-size: 0.82rem;
-  color: var(--majalis-ink-soft, #5c5c56);
+  color: var(--majalis-ink-soft, var(--mj-ink-2));
 }
 
 .cat-admin__stats strong {
@@ -78,7 +78,7 @@
   background: transparent;
   border-radius: 999px;
   font-size: 0.78rem;
-  color: var(--majalis-ink-soft, #5c5c56);
+  color: var(--majalis-ink-soft, var(--mj-ink-2));
   cursor: pointer;
   white-space: nowrap;
 }
@@ -132,7 +132,7 @@
 .cat-admin__needs-list p {
   margin: 0.25rem 0 0;
   font-size: 0.8rem;
-  color: var(--majalis-ink-soft, #5c5c56);
+  color: var(--majalis-ink-soft, var(--mj-ink-2));
 }
 
 .cat-admin__hint {
@@ -149,7 +149,7 @@
   margin-top: 1rem;
   padding: 0.65rem 0;
   font-size: 0.8rem;
-  color: var(--majalis-ink-soft, #5c5c56);
+  color: var(--majalis-ink-soft, var(--mj-ink-2));
   border-top: 1px solid var(--majalis-line, #e5e7eb);
 }
 
@@ -220,7 +220,7 @@
   gap: 0.3rem 0.5rem;
   align-items: center;
   font-size: 0.72rem;
-  color: var(--majalis-ink-soft, #5c5c56);
+  color: var(--majalis-ink-soft, var(--mj-ink-2));
 }
 
 .cat-node__slug {
@@ -299,7 +299,7 @@
 }
 
 .cat-node__menu button.is-danger {
-  color: #991B1B;
+  color: var(--mj-danger-deep);
 }
 
 .cat-node__children {
@@ -311,8 +311,8 @@
 .cat-node[data-status="published"] { border-inline-start: 3px solid #1E40AF; }
 .cat-node[data-status="pending_review"] { border-inline-start: 3px solid #0369A1; border-style: solid dashed solid solid; }
 .cat-node[data-status="draft"] { border-inline-start: 3px solid #9CA3AF; }
-.cat-node[data-status="hidden"] { border-inline-start: 3px dotted #6B7280; opacity: 0.92; }
-.cat-node[data-status="rejected"] { border-inline-start: 3px solid #991B1B; }
+.cat-node[data-status="hidden"] { border-inline-start: 3px dotted var(--mj-muted); opacity: 0.92; }
+.cat-node[data-status="rejected"] { border-inline-start: 3px solid var(--mj-danger-deep); }
 .cat-node[data-status="archived"] { border-inline-start: 3px double #78716C; }
 
 html[data-theme="dark"] .cat-node,

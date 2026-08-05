@@ -16,9 +16,9 @@
 .an-hero__progress { display: flex; align-items: center; gap: 0.6rem; justify-content: center; flex-wrap: wrap; }
 .an-prog { flex: 0 0 180px; height: 7px; background: #e5e7eb; border-radius: var(--ds-radius-full); overflow: hidden; }
 .an-prog__bar { height: 100%; width: var(--an-pct, 0%); background: var(--majalis-emerald); border-radius: inherit; transition: width 0.5s ease; }
-.an-hero .an-prog__label { font-size: 0.78rem; color: #6b7280 !important; }
-.an-reset-btn { font-size: 0.72rem; padding: 0.2rem 0.7rem; border-radius: var(--ds-radius-full); border: 1px solid #d1d5db; background: transparent; color: #6b7280; cursor: pointer; transition: background 0.15s, color 0.15s; }
-.an-reset-btn:hover { background: #f3f4f6; color: #5C5C56; }
+.an-hero .an-prog__label { font-size: 0.78rem; color: var(--mj-muted) !important; }
+.an-reset-btn { font-size: 0.72rem; padding: 0.2rem 0.7rem; border-radius: var(--ds-radius-full); border: 1px solid #d1d5db; background: transparent; color: var(--mj-muted); cursor: pointer; transition: background 0.15s, color 0.15s; }
+.an-reset-btn:hover { background: #f3f4f6; color: var(--mj-ink-2); }
 
 /* Today's hadith */
 .an-today { margin: 0 auto 2rem; max-width: 680px; padding: 0 1rem; }
@@ -35,7 +35,7 @@
 .an-read-btn { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.45rem 1.1rem; border-radius: var(--ds-radius-full); border: 1.5px solid rgba(255,255,255,0.5); background: transparent; color: #FFFFFF; font-size: 0.8rem; cursor: pointer; transition: background 0.15s, border-color 0.15s; }
 .an-read-btn:hover { background: rgba(255,255,255,0.15); }
 .an-read-btn--done { background: rgba(255,255,255,0.2); border-color: rgba(255,255,255,0.8); font-weight: 600; }
-.an-read-btn--sm { padding: 0.3rem 0.75rem; font-size: var(--ds-text-xs); border: 1px solid #d1d5db; background: transparent; color: #5C5C56; }
+.an-read-btn--sm { padding: 0.3rem 0.75rem; font-size: var(--ds-text-xs); border: 1px solid #d1d5db; background: transparent; color: var(--mj-ink-2); }
 .an-read-btn--sm:hover { background: #f3f4f6; }
 .an-read-btn--sm.an-read-btn--done { background: #ecfdf5; border-color: #6ee7b7; color: var(--mj-brand); font-weight: 600; }
 
@@ -44,7 +44,7 @@
 .an-search { width: 100%; padding: 0.65rem 1rem; border: 1.5px solid #d1d5db; border-radius: 0.6rem; font-size: 0.9rem; background: #fff; color: #1A1A18; outline: none; transition: border-color 0.15s; }
 .an-search:focus { border-color: var(--majalis-emerald); }
 .an-cats { display: flex; flex-wrap: wrap; gap: var(--ds-space-2); }
-.an-cat { padding: 0.35rem 0.9rem; border-radius: var(--ds-radius-full); border: 1.5px solid #d1d5db; background: transparent; font-size: 0.8rem; color: #5C5C56; cursor: pointer; transition: background 0.15s, border-color 0.15s, color 0.15s; }
+.an-cat { padding: 0.35rem 0.9rem; border-radius: var(--ds-radius-full); border: 1.5px solid #d1d5db; background: transparent; font-size: 0.8rem; color: var(--mj-ink-2); cursor: pointer; transition: background 0.15s, border-color 0.15s, color 0.15s; }
 .an-cat:hover { background: #f9fafb; }
 .an-cat--active { background: var(--majalis-emerald); border-color: var(--majalis-emerald); color: #FFFFFF; }
 .an-cat--read { border-color: #059669; color: #059669; }
@@ -63,13 +63,13 @@
 .an-card__num { font-size: 0.7rem; font-weight: 700; color: #FFFFFF; background: var(--majalis-emerald); border-radius: 50%; width: 1.6rem; height: 1.6rem; display: grid; place-items: center; flex-shrink: 0; }
 .an-card__title { font-size: 0.9rem; font-weight: 700; color: #1A1A18; flex: 1; }
 .an-card__today-badge { font-size: 0.65rem; font-weight: 700; padding: 0.15rem 0.5rem; border-radius: var(--ds-radius-full); background: var(--majalis-emerald); color: #FFFFFF; flex-shrink: 0; }
-.an-card__text { font-size: 0.85rem; line-height: 1.8; color: #5C5C56; font-family: var(--font-quran, serif); border: none; padding: 0; margin: 0 0 0.6rem; }
+.an-card__text { font-size: 0.85rem; line-height: 1.8; color: var(--mj-ink-2); font-family: var(--font-quran, serif); border: none; padding: 0; margin: 0 0 0.6rem; }
 .an-card__expl { font-size: 0.8rem; line-height: 1.7; color: #4b5563; border-inline-start: 2px solid #d1fae5; padding-inline-start: 0.7rem; margin-bottom: 0.6rem; }
 .an-card__benefit { display: flex; gap: var(--ds-space-2); font-size: 0.78rem; color: var(--mj-brand); background: #ecfdf5; border-radius: 0.4rem; padding: 0.5rem 0.7rem; margin-bottom: 0.6rem; align-items: flex-start; }
 .an-card__benefit-label { font-weight: 700; flex-shrink: 0; color: var(--mj-brand); }
 .an-card__footer { display: flex; align-items: center; justify-content: space-between; gap: 0.4rem; flex-wrap: wrap; }
 .an-card__source { font-size: 0.8rem; color: #9ca3af; }
 .an-card__actions { display: flex; gap: 0.4rem; align-items: center; }
-.an-expand-btn { font-size: var(--ds-text-xs); padding: 0.25rem 0.65rem; border-radius: var(--ds-radius-full); border: 1px solid #d1d5db; background: transparent; color: #6b7280; cursor: pointer; transition: background 0.15s; }
+.an-expand-btn { font-size: var(--ds-text-xs); padding: 0.25rem 0.65rem; border-radius: var(--ds-radius-full); border: 1px solid #d1d5db; background: transparent; color: var(--mj-muted); cursor: pointer; transition: background 0.15s; }
 .an-expand-btn:hover { background: #f3f4f6; }
 

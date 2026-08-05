@@ -10,7 +10,7 @@
   text-align: center;
   padding: 2.25rem 1.25rem 1.5rem;
   background: linear-gradient(160deg, var(--mj-brand-deep), var(--mj-brand-deep), var(--mj-brand-deep));
-  color: #FAFAF8;
+  color: var(--mj-bg);
 }
 .srp-hero__icon { color: rgba(250,248,242,.75); margin-bottom: 0.6rem; }
 .srp-hero__title {
@@ -35,7 +35,7 @@
   padding: 0.65rem 1.1rem;
   font-size: 0.83rem;
   font-weight: 600;
-  color: var(--clr-ink-soft, #6b7280);
+  color: var(--clr-ink-soft, var(--mj-muted));
   background: none;
   border: none;
   cursor: pointer;
@@ -185,14 +185,14 @@
   font-weight: 600;
   border: 1.5px solid var(--clr-border, rgba(0,0,0,.12));
   background: var(--clr-surface, #fff);
-  color: var(--clr-ink-soft, #6b7280);
+  color: var(--clr-ink-soft, var(--mj-muted));
   cursor: pointer;
   transition: all .15s;
 }
 .srp-intent-chip--active {
   background: var(--mj-brand);
   border-color: var(--mj-brand);
-  color: #FAFAF8;
+  color: var(--mj-bg);
 }
 .srp-prompts { display: flex; flex-direction: column; gap: 0.4rem; }
 .srp-prompt-btn {
@@ -220,7 +220,7 @@
 }
 .srp-loading__msg {
   font-size: 0.83rem;
-  color: var(--clr-ink-soft, #6b7280);
+  color: var(--clr-ink-soft, var(--mj-muted));
   animation: srp-fade 0.4s ease;
 }
 @keyframes srp-fade { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
@@ -280,7 +280,7 @@
 .srp-lib-del:hover { background: rgba(220,38,38,.1); color: #c0392b; }
 .srp-lib-excerpt {
   font-size: 0.8rem;
-  color: var(--clr-ink-soft, #6b7280);
+  color: var(--clr-ink-soft, var(--mj-muted));
   line-height: 1.6;
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -318,9 +318,9 @@
   font-size: 0.65rem;
   font-weight: 600;
   background: rgba(23,61,53,.07);
-  color: var(--clr-ink-soft, #6b7280);
+  color: var(--clr-ink-soft, var(--mj-muted));
 }
-.srp-lib-date { font-size: 0.68rem; color: var(--clr-ink-soft, #6b7280); }
+.srp-lib-date { font-size: 0.68rem; color: var(--clr-ink-soft, var(--mj-muted)); }
 .srp-lib-search-btn {
   font-size: 0.77rem;
   font-weight: 600;
@@ -335,7 +335,7 @@
 .srp-empty {
   text-align: center;
   padding: 3rem 1rem;
-  color: var(--clr-ink-soft, #6b7280);
+  color: var(--clr-ink-soft, var(--mj-muted));
 }
 .srp-empty__icon { margin: 0 auto 0.75rem; }
 .srp-start-search {

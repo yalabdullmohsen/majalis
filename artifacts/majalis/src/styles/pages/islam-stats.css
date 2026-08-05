@@ -151,7 +151,7 @@
 }
 .is-science-card__disc-label { font-size: .65rem; font-weight: 800; color: var(--mj-brand-deep); letter-spacing: normal; }
 .is-science-card__disc-text { font-size: .82rem; color: #1E293B; font-weight: 600; }
-.is-science-card__disc-year { font-size: .72rem; color: #5C5C56; }
+.is-science-card__disc-year { font-size: .72rem; color: var(--mj-ink-2); }
 
 @media (max-width: 640px) {
   .is-hero__title { font-size: var(--ds-text-2xl); }

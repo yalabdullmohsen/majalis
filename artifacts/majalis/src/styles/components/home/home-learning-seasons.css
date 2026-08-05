@@ -24,7 +24,7 @@
 .lsw-featured__source {
   margin: 0.35rem 0 0.75rem;
   font-size: 0.75rem;
-  color: var(--color-text-muted, #6B7280);
+  color: var(--color-text-muted, var(--mj-muted));
 }
 
 /* تمييز بصري لنوع المحتوى الشرعي/التاريخي */

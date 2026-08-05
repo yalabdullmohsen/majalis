@@ -314,7 +314,7 @@
 .ah-progress-bar-wrap {
   margin-bottom: 1.25rem;
   padding: 0.75rem 1rem;
-  background: var(--clr-canvas-1, #FAFAF8);
+  background: var(--clr-canvas-1, var(--mj-bg));
   border-radius: var(--ds-radius-lg);
   border: 1px solid rgba(23,61,53,0.08);
 }
@@ -323,7 +323,7 @@
   justify-content: space-between;
   font-size: 0.78rem;
   font-weight: 600;
-  color: #5C5C56;
+  color: var(--mj-ink-2);
   margin-bottom: 0.5rem;
 }
 .ah-progress-bar-track {

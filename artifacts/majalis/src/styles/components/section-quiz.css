@@ -39,7 +39,7 @@
   background: #fff;
   transition: border-color .2s;
 }
-.sq-card--correct { border-color: #16a34a; background: #f0fdf4; }
+.sq-card--correct { border-color: var(--mj-brand); background: #f0fdf4; }
 .sq-card--wrong   { border-color: #dc2626; background: #fef2f2; }
 
 .sq-question { font-size: .95rem; font-weight: 600; color: var(--ds-ink, #1C1C1C); margin: 0 0 .75rem; line-height: 1.6; }
@@ -97,7 +97,7 @@
 html[data-theme="dark"] .sq-section { background: var(--mj-brand-deep); border-color: rgba(92,196,154,.25); }
 html[data-theme="dark"] .sq-header { background: var(--mj-brand) !important; }
 html[data-theme="dark"] .sq-card { background: var(--mj-brand-deep); border-color: rgba(92,196,154,.15); color: #E8DED4; }
-html[data-theme="dark"] .sq-card--correct { background: var(--mj-brand-deep); border-color: #22c55e; }
+html[data-theme="dark"] .sq-card--correct { background: var(--mj-brand-deep); border-color: var(--mj-brand); }
 html[data-theme="dark"] .sq-card--wrong   { background: #2e0d0d; border-color: #ef4444; }
 html[data-theme="dark"] .sq-question { color: #E8DED4; }
 html[data-theme="dark"] .sq-answer-label,html[data-theme="dark"] .sq-summary-score { color: #7DDBB0; }

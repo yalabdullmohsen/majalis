@@ -16,7 +16,7 @@
 
 .sci-ann-section__lead {
   margin: 0.35rem 0 0;
-  color: var(--msk-text-2, #5C5C56);
+  color: var(--msk-text-2, var(--mj-ink-2));
   font-size: 0.92rem;
   line-height: 1.7;
   max-width: 38rem;
@@ -29,7 +29,7 @@
 }
 
 .sci-ann-card {
-  border: 1px solid var(--msk-border, #E8E7E2);
+  border: 1px solid var(--msk-border, var(--mj-hairline));
   border-radius: 0.85rem;
   background: linear-gradient(180deg, #faf8f4 0%, #f5f2eb 100%);
   overflow: hidden;
@@ -86,7 +86,7 @@
 .sci-ann-card__book {
   margin: 0;
   font-size: 0.85rem;
-  color: var(--msk-text-2, #5C5C56);
+  color: var(--msk-text-2, var(--mj-ink-2));
   line-height: 1.65;
 }
 
@@ -107,7 +107,7 @@
 .sci-ann-card__meta-label {
   font-size: 0.72rem;
   font-weight: 700;
-  color: var(--msk-text-2, #5C5C56);
+  color: var(--msk-text-2, var(--mj-ink-2));
 }
 
 .sci-ann-card__meta-row strong {
@@ -185,7 +185,7 @@
 }
 
 .sci-ann-detail {
-  border: 1px solid var(--msk-border, #E8E7E2);
+  border: 1px solid var(--msk-border, var(--mj-hairline));
   border-radius: var(--ds-radius-xl);
   background: linear-gradient(180deg, #faf8f4 0%, #f5f2eb 100%);
   overflow: hidden;
@@ -254,7 +254,7 @@
 .sci-ann-detail__row dt {
   font-size: var(--ds-text-xs);
   font-weight: 700;
-  color: var(--msk-text-2, #5C5C56);
+  color: var(--msk-text-2, var(--mj-ink-2));
 }
 
 .sci-ann-detail__row dd {
@@ -265,14 +265,14 @@
 
 .sci-ann-detail__muted {
   margin: 0 0 0.75rem;
-  color: var(--msk-text-2, #5C5C56);
+  color: var(--msk-text-2, var(--mj-ink-2));
   font-size: 0.85rem;
 }
 
 .sci-ann-detail__map {
   border-radius: 0.65rem;
   overflow: hidden;
-  border: 1px solid var(--msk-border, #E8E7E2);
+  border: 1px solid var(--msk-border, var(--mj-hairline));
   aspect-ratio: 16 / 10;
 }
 
@@ -285,7 +285,7 @@
 .sci-ann-detail__notes {
   margin: 0;
   padding-inline-start: 1.15rem;
-  color: var(--msk-text-2, #5C5C56);
+  color: var(--msk-text-2, var(--mj-ink-2));
   line-height: 1.75;
   font-size: 0.92rem;
 }

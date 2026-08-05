@@ -30,14 +30,15 @@ export function resolveTheme(preference: ThemePreference): "light" | "dark" {
   return "light";
 }
 
-/** نفس قيمتَي خلفية .navbar-v3 الفعليتين (elite-2026.css) — فاتحة/داكنة — كي
- *  يطابق لون شريط المتصفح/الحالة الهيدر الحقيقي بدل قيمة ثابتة واحدة (2026-07-18). */
-const THEME_COLOR_LIGHT = "#FFFFFF";
-const THEME_COLOR_DARK = "#0D1A14";
+/** يطابق رموز الهوية: --mj-brand نهاري/ليلي — مصدر واحد لشريط المتصفح. */
+const THEME_COLOR_LIGHT = "#1F7A5A";
+const THEME_COLOR_DARK = "#4FB48B";
 
 function syncThemeColorMeta(resolved: "light" | "dark") {
-  const meta = document.querySelector('meta[name="theme-color"]');
-  if (meta) meta.setAttribute("content", resolved === "dark" ? THEME_COLOR_DARK : THEME_COLOR_LIGHT);
+  const content = resolved === "dark" ? THEME_COLOR_DARK : THEME_COLOR_LIGHT;
+  for (const meta of document.querySelectorAll('meta[name="theme-color"]')) {
+    meta.setAttribute("content", content);
+  }
 }
 
 export function applyThemePreference(preference: ThemePreference) {

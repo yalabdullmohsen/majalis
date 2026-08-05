@@ -252,24 +252,17 @@ html {
   --color-parchment:     var(--msk-canvas,   #FFFFFF);
   --color-line:          var(--msk-border,   #E8E7E2);
 
-  /* ── الخطوط ── سياسة خط الواجهة الموحَّد Alexandria + خط تراثي محدود + خط قرآني (2026-07-19) ──
-     1) --font-ui / --font-body / --font-display / --font-reading: واجهة التطبيق
-        كاملة (تنقل، أزرار، قوائم، نصوص، عناوين، قراءة) — Alexandria، ببديل احتياطي
-        IBM Plex Sans Arabic / Noto Sans Arabic لو تعذّر تحميل Alexandria.
-     2) --font-heritage: عناوين تراثية محدودة فقط (لا نصوص طويلة) — Amiri.
-     3) --font-quran: المصحف حصرًا — خط عثماني موثق (Amiri Quran). لا يتغيّر أبدًا.
-     4) --font-tafsir: نصوص التفسير — Amiri / Noto Naskh للقراءة الطويلة.
-     5) --font-nav: قوائم المزيد/الدرج/الشريط — Cairo/Tajawal لواجهة حديثة نظيفة. */
-  --font-primary:  "IBM Plex Sans Arabic", "Noto Sans Arabic", "Noto Naskh Arabic", "Alexandria", system-ui, -apple-system, sans-serif;
-  --font-ui:       "IBM Plex Sans Arabic", "Noto Sans Arabic", "Alexandria", system-ui, -apple-system, sans-serif;
-  --font-body:     "IBM Plex Sans Arabic", "Noto Sans Arabic", "Noto Naskh Arabic", "Alexandria", system-ui, -apple-system, sans-serif;
-  --font-display:  "IBM Plex Sans Arabic", "Noto Sans Arabic", "Alexandria", system-ui, -apple-system, sans-serif;
-  --font-reading:  "IBM Plex Sans Arabic", "Noto Sans Arabic", "Alexandria", system-ui, -apple-system, sans-serif;
+  /* ── الخطوط ── واجهة موحّدة Alexandria (إطلاق 2026-08) ──
+     المصحف (--font-quran) والتفسير (--font-tafsir) والعناوين التراثية (--font-heritage) استثناءات. */
+  --font-primary:  "Alexandria", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, -apple-system, sans-serif;
+  --font-ui:       "Alexandria", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, -apple-system, sans-serif;
+  --font-body:     "Alexandria", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, -apple-system, sans-serif;
+  --font-display:  "Alexandria", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, -apple-system, sans-serif;
+  --font-reading:  "Alexandria", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, -apple-system, sans-serif;
   --font-quran:    "Amiri Quran", "Scheherazade New", "KFGQPC Hafs Uthmanic", serif;
-  /* خط تراثي للعناوين البارزة فقط (لا يُستخدَم في النصوص الطويلة أو الفقرات) */
   --font-heritage: "Amiri", "Aref Ruqaa", "Scheherazade New", serif;
   --font-tafsir:   "Amiri", "Noto Naskh Arabic", "Traditional Arabic", "Scheherazade New", serif;
-  --font-nav:      "Cairo", "Tajawal", "Alexandria", "IBM Plex Sans Arabic", system-ui, sans-serif;
+  --font-nav:      "Alexandria", "IBM Plex Sans Arabic", system-ui, sans-serif;
 
   /* ── ترتيب الطبقات — سلّم موحَّد يمنع تداخل البحث/الدرج/الهيدر ──
      القيم العددية أعلى من --z-* القديمة عمدًا لأن بعض الطبقات legacy

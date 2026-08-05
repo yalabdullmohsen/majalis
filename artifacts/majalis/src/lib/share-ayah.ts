@@ -108,7 +108,7 @@ export async function generateAyahImage(opts: ShareImageOptions): Promise<string
     // ── Background gradient ──
     const bg = ctx.createLinearGradient(0, 0, W, H);
     bg.addColorStop(0,   "#0d3527");
-    bg.addColorStop(0.5, "#164E3C");
+    bg.addColorStop(0.5, "#123F2E");
     bg.addColorStop(1,   "#0d3527");
     ctx.fillStyle = bg;
     ctx.fillRect(0, 0, W, H);

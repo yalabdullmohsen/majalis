@@ -12,6 +12,6 @@
 }
 .quiz-level-badge--hard {
   background: var(--majalis-danger-muted, #fee2e2) !important;
-  color: var(--majalis-danger, #991b1b) !important;
+  color: var(--majalis-danger, var(--mj-danger-deep)) !important;
 }
 

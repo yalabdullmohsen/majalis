@@ -8,7 +8,7 @@
   border-radius: 1.1rem;
   padding: 1.4rem 1.4rem 1rem;
   margin-bottom: 1.25rem;
-  color: #FAFAF8;
+  color: var(--mj-bg);
 }
 .lpd2-breadcrumb {
   display: flex;
@@ -23,7 +23,7 @@
   text-decoration: none;
   transition: color .15s;
 }
-.lpd2-breadcrumb a:hover { color: #FAFAF8; }
+.lpd2-breadcrumb a:hover { color: var(--mj-bg); }
 
 .lpd2-hero__body {
   display: flex;
@@ -54,7 +54,7 @@
 .lpd2-hero__title {
   font-size: 1.35rem;
   font-weight: 800;
-  color: #FAFAF8;
+  color: var(--mj-bg);
   margin-bottom: 0.4rem;
   line-height: 1.35;
 }
@@ -109,7 +109,7 @@
   padding: 0.75rem 1.25rem;
   border-radius: var(--ds-radius-lg);
   background: linear-gradient(135deg, var(--mj-brand), var(--mj-brand-deep));
-  color: #FAFAF8;
+  color: var(--mj-bg);
   border: none;
   cursor: pointer;
   font-size: 0.88rem;
@@ -240,7 +240,7 @@
   font-size: 0.72rem;
   font-weight: 700;
   flex-shrink: 0;
-  color: var(--clr-ink-soft, #6b7280);
+  color: var(--clr-ink-soft, var(--mj-muted));
 }
 .lpd2-module--done .lpd2-module__num { border-color: var(--mj-brand); }
 .lpd2-module__check { color: var(--mj-brand); }
@@ -250,7 +250,7 @@
   align-items: center;
   gap: 0.3rem;
   font-size: 0.7rem;
-  color: var(--clr-ink-soft, #6b7280);
+  color: var(--clr-ink-soft, var(--mj-muted));
   margin-bottom: 0.2rem;
 }
 .lpd2-module__title {
@@ -286,7 +286,7 @@
 }
 .lpd2-quiz-btn {
   background: var(--mj-brand);
-  color: #FAFAF8;
+  color: var(--mj-bg);
   text-decoration: none;
   border: none;
 }

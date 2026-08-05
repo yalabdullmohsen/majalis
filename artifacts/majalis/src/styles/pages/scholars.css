@@ -3,7 +3,7 @@
    ══════════════════════════════════════════════ */
 .sch-page {
   min-height: 100vh;
-  background: var(--elite-white, #FAFAF8);
+  background: var(--elite-white, var(--mj-bg));
   color: var(--elite-ink, #1A1A18);
   padding-bottom: 1.25rem;
   max-width: 72rem;
@@ -57,7 +57,7 @@
   top: 50%;
   right: 1rem;
   transform: translateY(-50%);
-  color: #5C5C56;
+  color: var(--mj-ink-2);
   pointer-events: none;
 }
 .sch-search-input {
@@ -82,14 +82,14 @@
   gap: 0.4rem;
   flex-wrap: wrap;
   font-size: 0.78rem;
-  color: #5C5C56;
+  color: var(--mj-ink-2);
 }
 .sch-filter-btn {
   padding: 0.25rem 0.65rem;
   border: 1px solid rgba(23,61,53,0.2);
   border-radius: 2rem;
   background: #FFFFFF;
-  color: #5C5C56;
+  color: var(--mj-ink-2);
   font-size: 0.76rem;
   cursor: pointer;
   transition: all 0.12s;
@@ -102,7 +102,7 @@
 }
 .sch-results-count {
   font-size: 0.8rem;
-  color: #5C5C56;
+  color: var(--mj-ink-2);
   margin: 0.75rem 0 1rem;
 }
 
@@ -154,7 +154,7 @@
 }
 .sch-card__fullname {
   font-size: 0.78rem;
-  color: #5C5C56;
+  color: var(--mj-ink-2);
   margin: 0 0 0.4rem;
 }
 .sch-card__tags { display: flex; flex-wrap: wrap; gap: 0.3rem; }
@@ -194,7 +194,7 @@
 }
 .sch-card__bio {
   font-size: 0.86rem;
-  color: #5C5C56;
+  color: var(--mj-ink-2);
   line-height: 1.65;
   margin: 0;
   padding: 0 1.25rem 1rem;
@@ -249,7 +249,7 @@
 }
 .sch-card__region {
   font-size: 0.78rem;
-  color: #5C5C56;
+  color: var(--mj-ink-2);
   margin: 0;
 }
 .sch-card__close {

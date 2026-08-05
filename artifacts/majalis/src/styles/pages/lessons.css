@@ -15,7 +15,7 @@
 
 .lessons-v2-stat {
   background: transparent;
-  border: 1px solid var(--msk-border, #E8E7E2);
+  border: 1px solid var(--msk-border, var(--mj-hairline));
   border-radius: var(--ds-radius-lg);
   padding: var(--ds-space-3);
   text-align: center;
@@ -215,14 +215,14 @@
 
 .admin-feature-status__eyebrow {
   font-size: var(--ds-text-xs);
-  color: var(--msk-text-2, #5C5C56);
+  color: var(--msk-text-2, var(--mj-ink-2));
   margin: 0 0 0.25rem;
 }
 
 .admin-feature-status__intro {
   margin: 0.5rem 0 0;
   font-size: 0.9rem;
-  color: var(--msk-text-2, #5C5C56);
+  color: var(--msk-text-2, var(--mj-ink-2));
   max-width: 42rem;
 }
 
@@ -270,20 +270,20 @@
 
 .feature-status-badge--done { background: #dcfce7; color: var(--mj-brand); }
 .feature-status-badge--partial { background: #E6EDE9; color: var(--mj-brand-deep); }
-.feature-status-badge--blocked { background: #fee2e2; color: #991b1b; }
+.feature-status-badge--blocked { background: #fee2e2; color: var(--mj-danger-deep); }
 .feature-status-badge--mock { background: #e0e7ff; color: #3730a3; }
 .feature-status-badge--missing { background: #f1f5f9; color: #475569; }
 
 .admin-feature-status__notes {
   font-size: 0.78rem;
-  color: var(--msk-text-2, #5C5C56);
+  color: var(--msk-text-2, var(--mj-ink-2));
   max-width: 14rem;
 }
 
 .admin-feature-status__cli {
   margin-top: 1rem;
   font-size: 0.85rem;
-  color: var(--msk-text-2, #5C5C56);
+  color: var(--msk-text-2, var(--mj-ink-2));
 }
 
 .admin-feature-status__error {

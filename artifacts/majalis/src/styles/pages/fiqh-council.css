@@ -89,14 +89,14 @@
 }
 
 .fiqh-council-category-count {
-  color: var(--msk-text-2, #5C5C56);
+  color: var(--msk-text-2, var(--mj-ink-2));
   font-size: var(--ds-text-xs);
 }
 
 .fiqh-council-filter-label {
   align-self: center;
   font-size: var(--ds-text-xs);
-  color: #6b7280;
+  color: var(--mj-muted);
   margin-inline-end: 0.35rem;
 }
 
@@ -112,7 +112,7 @@
   flex-direction: column;
   gap: var(--ds-space-1);
   font-size: var(--ds-text-xs);
-  color: #6b7280;
+  color: var(--mj-muted);
 }
 
 .fiqh-council-select,
@@ -128,7 +128,7 @@
 .fiqh-council-views {
   margin: 0.75rem 0 0;
   font-size: 0.8125rem;
-  color: #6b7280;
+  color: var(--mj-muted);
 }
 
 .fiqh-search-box {
@@ -153,14 +153,14 @@
 .fiqh-search-hint {
   margin: 0.35rem 0;
   font-size: 0.8125rem;
-  color: #6b7280;
+  color: var(--mj-muted);
 }
 
 .fiqh-search-label {
   display: block;
   margin-bottom: 0.35rem;
   font-size: var(--ds-text-xs);
-  color: #6b7280;
+  color: var(--mj-muted);
 }
 
 .fiqh-search-suggestions {
@@ -190,7 +190,7 @@
 
 .fiqh-search-result span {
   font-size: var(--ds-text-xs);
-  color: #6b7280;
+  color: var(--mj-muted);
 }
 
 .fiqh-council-admin-tabs {
@@ -298,13 +298,13 @@
 
 .fiqh-nawazil-topic-card span {
   font-size: var(--ds-text-xs);
-  color: #6b7280;
+  color: var(--mj-muted);
 }
 
 .fiqh-nawazil-note {
   margin-top: 1.5rem;
   font-size: 0.8125rem;
-  color: #6b7280;
+  color: var(--mj-muted);
 }
 
 .fiqh-advanced-search-form {
@@ -385,7 +385,7 @@
 
 .fiqh-compare-meta {
   font-size: var(--ds-text-xs);
-  color: #6b7280;
+  color: var(--mj-muted);
   margin: 0 0 0.75rem;
 }
 
@@ -409,7 +409,7 @@
 
 .fiqh-detail-trust {
   font-size: 0.8125rem;
-  color: #6b7280;
+  color: var(--mj-muted);
   margin: 0.5rem 0;
 }
 
@@ -464,7 +464,7 @@
 
 .fiqh-admin-stat span {
   font-size: var(--ds-text-xs);
-  color: #6b7280;
+  color: var(--mj-muted);
 }
 
 @media (max-width: 768px) {
@@ -496,7 +496,7 @@
   margin: 0.75rem 0;
   padding: 0.65rem 0.85rem;
   font-size: 0.8125rem;
-  color: #6b7280;
+  color: var(--mj-muted);
   background: rgba(22, 78, 60, 0.04);
   border-radius: var(--ds-radius);
 }
@@ -534,7 +534,7 @@
 .fiqh-research-msg-disclaimer {
   margin: 0.65rem 0 0;
   font-size: var(--ds-text-xs);
-  color: #6b7280;
+  color: var(--mj-muted);
   font-style: normal;
 }
 
@@ -609,7 +609,7 @@
 .fiqh-research-citation-meta {
   margin: 0.25rem 0;
   font-size: var(--ds-text-xs);
-  color: #6b7280;
+  color: var(--mj-muted);
 }
 
 .fiqh-research-citation-excerpt {
@@ -633,7 +633,7 @@
 .fiqh-info-table th {
   text-align: right;
   padding: 0.4rem 0.65rem;
-  color: #6b7280;
+  color: var(--mj-muted);
   font-weight: 600;
   width: 7rem;
   vertical-align: top;
@@ -655,7 +655,7 @@
 
 .fiqh-relations-meta {
   font-size: var(--ds-text-xs);
-  color: #6b7280;
+  color: var(--mj-muted);
 }
 
 .updates-timeline {

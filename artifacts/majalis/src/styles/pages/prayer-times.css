@@ -20,10 +20,10 @@ html.pts-immersive body {
   --pts-gold: var(--gold-300, #E3CB8C);
   --pts-gold-soft: color-mix(in srgb, var(--gold-400, #D2B063) 28%, transparent);
   --pts-gold-line: color-mix(in srgb, var(--gold-400, #D2B063) 40%, transparent);
-  --pts-white: var(--n-50, #FAFAF8);
+  --pts-white: var(--n-50, var(--mj-bg));
   /* ≥4.5:1 تقريبًا فوق --pts-bg-1 عند المزج مع الشفافية */
-  --pts-muted: color-mix(in srgb, var(--n-50, #FAFAF8) 78%, transparent);
-  --pts-row: color-mix(in srgb, var(--n-50, #FAFAF8) 6%, transparent);
+  --pts-muted: color-mix(in srgb, var(--n-50, var(--mj-bg)) 78%, transparent);
+  --pts-row: color-mix(in srgb, var(--n-50, var(--mj-bg)) 6%, transparent);
   --pts-row-active: color-mix(in srgb, var(--gold-400, #D2B063) 18%, transparent);
 
   direction: rtl;
