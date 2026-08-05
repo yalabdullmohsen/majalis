@@ -231,10 +231,22 @@ html.dark,
   --msk-text: var(--mj-ink);
 }
 
-/* تهدئة تدرّج الهيرو على الرئيسية — يعتمد على --em-* المُعاد توجيهها */
-.m2030-hero {
-  background: linear-gradient(160deg, var(--mj-brand-deep) 0%, var(--mj-brand) 55%, var(--mj-bg) 140%) !important;
-  color: var(--text-on-dark) !important;
+/* تهدئة تدرّج الهيرو على الرئيسية — نص داكن على --mj-bg (لا أبيض على فاتح) */
+.m2030-hero,
+.m2030-hero.page-hero-mj,
+.home-page-hero {
+  background: var(--mj-bg) !important;
+  color: var(--mj-ink) !important;
+}
+.m2030-hero .page-hero-mj__title,
+.m2030-hero .page-hero-mj__headline,
+.home-page-hero .page-hero-mj__title,
+.home-page-hero .page-hero-mj__headline {
+  color: var(--mj-ink) !important;
+}
+.m2030-hero .page-hero-mj__desc,
+.home-page-hero .page-hero-mj__desc {
+  color: var(--mj-ink-2) !important;
 }
 
 .bottom-nav--m2030,
@@ -333,15 +345,15 @@ html.dark .navbar-v3 .navbar-brand__mark {
   mask-image: linear-gradient(
     to left,
     transparent 0%,
-    #000 12%,
-    #000 88%,
+    #000 10%,
+    #000 90%,
     transparent 100%
   ) !important;
   -webkit-mask-image: linear-gradient(
     to left,
     transparent 0%,
-    #000 12%,
-    #000 88%,
+    #000 10%,
+    #000 90%,
     transparent 100%
   ) !important;
 }
@@ -351,6 +363,11 @@ html.dark .navbar-v3 .navbar-brand__mark {
 .header-ticker__source,
 .header-ticker__icon {
   color: var(--mj-ink) !important;
+}
+.header-ticker__text {
+  font-weight: 600 !important;
+  /* تشكيل خفيف أقل ازدحامًا: الاعتماد على وزن الخط لا تراكب تشكيل ثقيل */
+  text-rendering: optimizeLegibility;
 }
 .header-ticker__label {
   background: var(--mj-brand-soft) !important;

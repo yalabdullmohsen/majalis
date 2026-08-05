@@ -5,7 +5,7 @@
  * لا يُعتمد على الوقت وحده، ولا على القيم المُخزّنة مسبقاً
  */
 
-import { toLatinDigits } from "@/lib/numerals";
+import { toLatinDigits, toArabicIndicDigits } from "@/lib/numerals";
 
 export const KUWAIT_TZ = "Asia/Kuwait";
 
@@ -381,27 +381,29 @@ export function formatRelativeTime(targetMs: number, now = Date.now()): string {
   if (minutes <= 2)         return "الآن";
   if (minutes === 2)        return "بعد دقيقتين";
   if (minutes < 60) {
-    if (minutes <= 10)      return `بعد ${minutes} دقائق`;
-    return                  `بعد ${minutes} دقيقة`;
+    if (minutes <= 10)      return toArabicIndicDigits(`بعد ${minutes} دقائق`);
+    return                  toArabicIndicDigits(`بعد ${minutes} دقيقة`);
   }
   const hours = Math.floor(minutes / 60);
   const remMin = minutes % 60;
   if (hours < 24) {
     const hStr = hours === 1 ? "ساعة" : hours === 2 ? "ساعتين" : `${hours} ساعات`;
-    if (remMin === 0) return `بعد ${hStr}`;
-    return `بعد ${hStr} و${remMin} دقيقة`;
+    if (remMin === 0) return toArabicIndicDigits(`بعد ${hStr}`);
+    return toArabicIndicDigits(`بعد ${hStr} و${remMin} دقيقة`);
   }
 
   const days = Math.floor(minutes / (24 * 60));
   if (days === 1)           return "غداً";
   if (days === 2)           return "بعد يومين";
-  if (days <= 6)            return `بعد ${days} أيام`;
+  if (days <= 6)            return toArabicIndicDigits(`بعد ${days} أيام`);
   if (days <= 13)           return "الأسبوع القادم";
   if (days <= 20)           return "بعد أسبوعين";
 
   const months = Math.floor(days / 30);
-  if (months >= 1)          return months === 1 ? "بعد شهر" : `بعد ${months} أشهر`;
-  return `بعد ${days} أيام`;
+  if (months >= 1) {
+    return months === 1 ? "بعد شهر" : toArabicIndicDigits(`بعد ${months} أشهر`);
+  }
+  return toArabicIndicDigits(`بعد ${days} أيام`);
 }
 
 /**

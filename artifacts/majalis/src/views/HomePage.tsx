@@ -14,6 +14,7 @@ import { FridayBanner } from "@/components/FridayBanner";
 import { fetchPrayerTimes, computePrayerCountdown, type PrayerTimesPayload } from "@/lib/prayer-times";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
 import { toArabicDigits } from "@/lib/utils";
+import { PageHero } from "@/components/ui/PageHero";
 import { HomeCustomizeSheet } from "@/components/home/HomeCustomizeSheet";
 import { HomeRecentPagesBar } from "@/components/home/HomeRecentPagesBar";
 import { HomeExplorePlatform } from "@/components/home/HomeExplorePlatform";
@@ -153,17 +154,18 @@ export default function HomePage() {
         </div>
       )}
 
-      <section className="m2030-hero" aria-label="الصفحة الرئيسية">
-        <div className="m2030-hero__pattern" aria-hidden="true" />
-        <div className="m2030-hero__glow" aria-hidden="true" />
-        <div className="m2030-hero__inner">
-          <h1 className="m2030-hero__brand">المجلس العلمي</h1>
-          <p className="m2030-hero__headline">منصة علم شرعي بمعايير حديثة</p>
-          <p className="m2030-hero__lead">
+      <PageHero
+        className="m2030-hero home-page-hero"
+        title="المجلس العلمي"
+        headline="منصة علم شرعي بمعايير حديثة"
+        description={
+          <>
             {dailyCtx.greeting}
             {dailyCtx.subGreeting ? ` — ${dailyCtx.subGreeting}` : ""}
-          </p>
-          <div className="m2030-hero__cta">
+          </>
+        }
+        actions={
+          <>
             <Link href={continueHref} className="mj-btn m2030-btn m2030-btn--primary">
               ابدأ التصفح
             </Link>
@@ -175,9 +177,9 @@ export default function HomePage() {
             >
               ابحث في المحتوى
             </button>
-          </div>
-        </div>
-      </section>
+          </>
+        }
+      />
 
       {heroCountdown && (
         <section className="m2030-band" aria-label="ملخص الصلاة">
@@ -191,7 +193,7 @@ export default function HomePage() {
             </div>
             <div>
               <p className="m2030-prayer__name">{heroCountdown.name}</p>
-              <p className="m2030-prayer__time" dir="ltr">بعد {heroCountdown.hms}</p>
+              <p className="m2030-prayer__time">بعد {toArabicDigits(heroCountdown.hms)}</p>
               <p className="m2030-prayer__cta">عرض مواقيت اليوم ←</p>
             </div>
           </Link>

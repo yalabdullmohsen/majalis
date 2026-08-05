@@ -46,14 +46,25 @@ header.navbar-v3,
 }
 
 .top-section-bar__tab.is-active {
-  background: var(--surface-2) !important;
-  color: var(--text-brand) !important;
-  border-color: color-mix(in srgb, var(--brand) 35%, var(--border)) !important;
-  box-shadow: inset 0 -2px 0 var(--brand) !important;
+  background: var(--mj-brand-soft) !important;
+  color: var(--mj-brand) !important;
+  border-color: var(--mj-brand) !important;
+  box-shadow: inset 0 -2px 0 var(--mj-brand) !important;
+  font-weight: 700;
 }
 
 .top-section-bar__tab.is-soon:not(.is-active) {
   color: var(--text-meta) !important;
+}
+
+.top-section-bar__soon-badge {
+  font-size: 0.58rem;
+  font-weight: 700;
+  padding: 0.08rem 0.35rem;
+  border-radius: var(--mj-r-pill);
+  background: var(--mj-surface-2, var(--surface-2));
+  color: var(--mj-muted, var(--text-meta));
+  line-height: 1.2;
 }
 
 .bottom-nav,

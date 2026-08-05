@@ -3,6 +3,7 @@ import { Link } from "wouter";
 import type { LucideIcon } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
+import { PageHero } from "@/components/ui/PageHero";
 import "@/styles/pages/quran-hub.css";
 
 export type HubCard = {
@@ -32,11 +33,13 @@ export default function MergedSectionHubPage({ path, title, description, cards }
 
   return (
     <div className="quran-hub-page" dir="rtl">
-      <header className="quran-hub-hero">
-        <h1 className="quran-hub-hero__title">{title}</h1>
-        <p className="quran-hub-hero__sub">{description}</p>
-        <ShareButtons title={`${title} — المجلس العلمي`} url={`https://www.majlisilm.com${path}`} />
-      </header>
+      <PageHero
+        title={title}
+        description={description}
+        actions={
+          <ShareButtons title={`${title} — المجلس العلمي`} url={`https://www.majlisilm.com${path}`} />
+        }
+      />
 
       <section className="quran-hub-sections" aria-label={title}>
         <div className="quran-hub-grid">
