@@ -75,7 +75,7 @@ const WIDGET_LABEL: Record<string, string> = Object.fromEntries(HOME_WIDGET_DEFS
 
 const FEATURED_CATS = [
   { href: "/quran-knowledge", title: "القرآن وعلومه", desc: "فهرس وعلوم وأسباب نزول", cta: "استكشف", Icon: BookMarked },
-  { href: "/hadith", title: "الحديث والسنة", desc: "أحاديث موثقة مع الشرح", cta: "تصفح", Icon: Scroll },
+  { href: "/hadith", title: "الحديث وعلومه", desc: "أحاديث موثقة مع الشرح", cta: "تصفح", Icon: Scroll },
   { href: "/fiqh", title: "الفقه والأحكام", desc: "مسائل وأحكام مرتّبة", cta: "ادخل", Icon: Scale },
   { href: "/lessons", title: "الدروس العلمية", desc: "مسارات ودروس منظمة", cta: "افتح الدروس", Icon: GraduationCap },
   { href: "/memorization", title: "الحفظ والمراجعة", desc: "خطط واختبارات", cta: "ابدأ", Icon: Target },

@@ -48,7 +48,7 @@ export const QUICK_LINKS: { href: string; Icon: LucideIcon; label: string; desc:
 export const FEATURED: { href: string; Icon: LucideIcon; title: string; desc: string; cta: string }[] = [
   { href: "/mushaf", Icon: BookOpen, title: seoNavLabel("/mushaf", "القرآن"), desc: "المصحف الشريف للقراءة والتلاوة", cta: "افتح المصحف" },
   { href: "/quran-knowledge", Icon: BookMarked, title: seoNavLabel("/quran-knowledge", "القرآن وعلومه"), desc: "فهرس وعلوم وأسباب نزول وقصص", cta: "استكشف" },
-  { href: "/hadith", Icon: Scroll, title: seoNavLabel("/hadith", "الحديث والسنة"), desc: "أحاديث موثقة ومسندة مع الشرح والتخريج", cta: "تصفح الأحاديث" },
+  { href: "/hadith", Icon: Scroll, title: seoNavLabel("/hadith", "الحديث وعلومه"), desc: "أحاديث موثقة ومسندة مع الشرح والتخريج", cta: "تصفح الحديث وعلومه" },
   { href: "/fiqh", Icon: Scale, title: seoNavLabel("/fiqh", "الفقه والأحكام"), desc: "بوابة الأحكام والمسائل الفقهية", cta: "ادخل الفقه" },
   { href: "/memorization", Icon: Target, title: seoNavLabel("/memorization", "الحفظ والمراجعة"), desc: "اختبارات وخطط الحفظ والمراجعة", cta: "ابدأ الحفظ" },
   { href: "/occasions-lessons", Icon: CalendarDays, title: seoNavLabel("/occasions-lessons", "المناسبات والدروس"), desc: "المناسبات الإسلامية وتقويم الدروس", cta: "عرض التقويم" },

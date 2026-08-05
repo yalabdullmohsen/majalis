@@ -221,6 +221,27 @@ a:active {
   transform: translateY(0);
 }
 
+.mj-content-report {
+  margin-block: var(--mj-s6) var(--mj-s4);
+  padding-block: var(--mj-s3);
+  border-block-start: 1px solid var(--mj-hairline);
+  text-align: center;
+  font-size: var(--mj-fs-small);
+}
+.mj-content-report__link {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--mj-s2);
+  min-height: 44px;
+  color: var(--mj-ink-2);
+  text-decoration: none;
+  font-weight: 600;
+}
+.mj-content-report__link:hover,
+.mj-content-report__link:focus-visible {
+  color: var(--mj-brand);
+}
+
 /* ═══════════ المكوّنات المشتركة mj-* ═══════════ */
 
 .mj-page {

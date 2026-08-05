@@ -579,7 +579,7 @@ export default function SearchPage() {
               {([
                 { href: "/mushaf", Icon: BookOpen, label: "القرآن" },
                 { href: "/quran-knowledge", Icon: BookMarked, label: "القرآن وعلومه" },
-                { href: "/hadith", Icon: Scroll, label: "الحديث والسنة" },
+                { href: "/hadith", Icon: Scroll, label: "الحديث وعلومه" },
                 { href: "/fiqh", Icon: Scale, label: "الفقه والأحكام" },
                 { href: "/memorization", Icon: GraduationCap, label: "الحفظ والمراجعة" },
                 { href: "/occasions-lessons", Icon: Clock, label: "المناسبات والدروس" },

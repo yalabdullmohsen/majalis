@@ -674,7 +674,7 @@ export default function LessonsPage({
           { href: "/learning/paths", label: "مسارات التعلم" },
           { href: "/scholars", label: "العلماء" },
           { href: "/quran-knowledge", label: "القرآن وعلومه" },
-          { href: "/hadith", label: "الأحاديث" },
+          { href: "/hadith", label: "الحديث وعلومه" },
           { href: "/fiqh", label: "بوابة الفقه" },
         ]}
       />
