@@ -47,15 +47,13 @@ html[data-theme="dark"] {
   --shadow-soft: var(--e-2);
 }
 
-html { background: var(--color-background); }
+html { background: var(--mj-bg, var(--color-background)); }
 body {
   min-width: 320px;
   overflow-x: clip;
-  background:
-    radial-gradient(circle at 85% 0%, rgb(167 125 54 / 7%), transparent 24rem),
-    var(--color-background);
-  color: var(--color-text);
-  font-family: var(--font-body, "IBM Plex Sans Arabic", system-ui, sans-serif);
+  background: var(--mj-bg, var(--color-background));
+  color: var(--mj-ink, var(--color-text));
+  font-family: var(--font-body, "Tajawal", system-ui, sans-serif);
   line-height: 1.75;
 }
 
@@ -120,11 +118,11 @@ body {
   padding-block-start: env(safe-area-inset-top, 0px);
   z-index: var(--z-nav, 200);
   min-height: var(--header-height);
-  background: color-mix(in srgb, var(--color-surface) 92%, transparent);
+  background: var(--mj-surface, var(--color-surface));
   border: 0;
-  border-block-end: 1px solid var(--color-border);
-  box-shadow: 0 8px 24px rgb(23 61 53 / 4%);
-  backdrop-filter: blur(18px) saturate(1.2);
+  border-block-end: 1px solid var(--mj-hairline, var(--color-border));
+  box-shadow: none;
+  backdrop-filter: none;
 }
 .navbar-v3::after { content: none; }
 
@@ -265,12 +263,14 @@ html.dark .nav-soon-badge {
 .navbar-v3__tabs .nav-tab--active { color: var(--color-primary); background: var(--color-surface-muted); }
 .navbar-v3__start, .navbar-v3__end { gap: .45rem; }
 .navbar-menu-btn, .navbar-theme-toggle, .navbar-mobile-login {
-  min-width: 44px;
-  min-height: 44px;
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  background: var(--color-surface);
-  color: var(--color-primary);
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  min-height: 40px;
+  border: 1px solid var(--mj-hairline, var(--color-border));
+  border-radius: var(--mj-r-sm, var(--radius-md));
+  background: var(--mj-surface-2, var(--color-surface-muted));
+  color: var(--mj-ink-2, var(--color-text-muted));
   box-shadow: none;
   transition: background var(--motion-fast), color var(--motion-fast), border-color var(--motion-fast);
 }
@@ -298,19 +298,16 @@ html.dark .nav-soon-badge {
   overflow: hidden;
   min-width: 0;
   flex: 1 1 auto;
-  min-height: 44px;
+  height: 2.5rem;
+  min-height: 2.5rem;
+  max-height: 2.5rem;
   display: flex;
   align-items: center;
-  border: 1px solid color-mix(in srgb, var(--color-primary) 22%, var(--color-border));
-  border-radius: var(--radius-md);
-  background:
-    linear-gradient(
-      105deg,
-      color-mix(in srgb, var(--color-primary) 8%, var(--color-surface)) 0%,
-      var(--color-surface) 45%,
-      color-mix(in srgb, var(--color-primary) 6%, var(--color-surface)) 100%
-    );
-  padding-inline: .35rem;
+  border: 1px solid var(--mj-hairline, var(--color-border));
+  border-radius: var(--mj-r-sm, var(--radius-md));
+  background: var(--mj-surface, var(--color-surface));
+  padding-inline: 0;
+  cursor: pointer;
 }
 .header-ticker--empty { visibility: hidden; flex: 0 0 8rem; }
 .header-ticker--static { padding-inline: .7rem; }
@@ -1624,7 +1621,7 @@ header.navbar-v3,
 @media (max-width:879px){
   .navbar-v3{min-height:0!important}
   .navbar-theme-toggle.navbar-search-toggle{display:none!important}
-  .navbar-v3__search-row{width:100%;box-sizing:border-box;padding:.45rem var(--page-gutter,.75rem) .35rem;border-block-start:1px solid var(--color-border)}
-  .navbar-v3__search-btn{width:100%;min-height:44px;display:flex;align-items:center;gap:.55rem;padding:.55rem .9rem;border:1px solid var(--color-border);border-radius:14px;background:var(--color-surface);text-align:start}
-  .navbar-ticker-row .header-ticker{width:100%;min-width:0;border-radius:0;min-height:2.25rem}
+  .navbar-v3__search-row{width:100%;box-sizing:border-box;padding:.45rem var(--page-gutter,.75rem) .35rem;border-block-start:1px solid var(--mj-hairline,var(--color-border));background:var(--mj-bg,var(--color-background))}
+  .navbar-v3__search-btn{width:100%;min-height:44px;display:flex;align-items:center;gap:.55rem;padding:.55rem .9rem;border:1px solid var(--mj-hairline,var(--color-border));border-radius:var(--mj-r-pill,999px);background:var(--mj-surface,var(--color-surface));color:var(--mj-muted,var(--color-text-muted));text-align:start}
+  .navbar-ticker-row .header-ticker{width:100%;min-width:0;border-radius:0;min-height:2.5rem;height:2.5rem}
 }

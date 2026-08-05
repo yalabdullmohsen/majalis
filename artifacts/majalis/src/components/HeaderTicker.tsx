@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, type KeyboardEvent } from "react";
 import { Link } from "wouter";
 import { Clock, Repeat2, ScrollText, Heart, BookOpen, Sparkles, Megaphone } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
@@ -177,7 +177,9 @@ export function HeaderTicker() {
   const contentItems = useRotatingContent();
   const reducedMotion = useReducedMotion();
   const [activeIndex, setActiveIndex] = useState(0);
-  const [paused, setPaused] = useState(false);
+  const [stickyPaused, setStickyPaused] = useState(false);
+  const [hoverPaused, setHoverPaused] = useState(false);
+  const paused = stickyPaused || hoverPaused;
 
   const items = useMemo<TickerItem[]>(() => {
     const mapped: TickerItem[] = contentItems
@@ -210,13 +212,20 @@ export function HeaderTicker() {
   }
 
   const pauseHandlers = {
-    onPointerDown: () => setPaused(true),
-    onPointerUp: () => setPaused(false),
-    onPointerCancel: () => setPaused(false),
-    onMouseEnter: () => setPaused(true),
-    onMouseLeave: () => setPaused(false),
-    onFocusCapture: () => setPaused(true),
-    onBlurCapture: () => setPaused(false),
+    tabIndex: 0,
+    "aria-pressed": stickyPaused,
+    title: stickyPaused ? "استئناف الشريط" : "إيقاف الشريط",
+    onClick: () => setStickyPaused((p) => !p),
+    onMouseEnter: () => setHoverPaused(true),
+    onMouseLeave: () => setHoverPaused(false),
+    onFocusCapture: () => setHoverPaused(true),
+    onBlurCapture: () => setHoverPaused(false),
+    onKeyDown: (e: KeyboardEvent) => {
+      if (e.key === " " || e.key === "Enter") {
+        e.preventDefault();
+        setStickyPaused((p) => !p);
+      }
+    },
   };
 
   if (reducedMotion) {
