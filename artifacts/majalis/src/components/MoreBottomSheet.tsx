@@ -1,7 +1,6 @@
-import { createPortal } from "react-dom";
 import { Link, useLocation } from "wouter";
-import { useEffect, useId, useMemo, useRef, useState, type MouseEvent, type PointerEvent } from "react";
-import { ChevronLeft, Moon, Search, Sun, X } from "lucide-react";
+import { useId, useMemo, useRef, useState, type MouseEvent } from "react";
+import { ChevronLeft, Moon, Search, Sun } from "lucide-react";
 import { useAuth } from "@/components/AuthProvider";
 import { useThemePreference } from "@/components/ThemePreferenceProvider";
 import { THEME_OPTIONS, type ThemePreference } from "@/lib/theme-preference";
@@ -11,6 +10,7 @@ import {
   filterServicesCenterGroups,
   type ServicesCenterItem,
 } from "@/lib/services-center-nav";
+import { AppBottomSheet } from "@/components/ui/AppBottomSheet";
 import "@/styles/components/more-bottom-sheet.css";
 
 interface Props {
@@ -34,58 +34,10 @@ export function MoreBottomSheet({ open, onClose }: Props) {
   const { preference, resolvedTheme, setPreference, toggleDark } = useThemePreference();
   const { isLoggedIn, logout } = useAuth();
   const [query, setQuery] = useState("");
-  const titleId = useId();
   const searchId = useId();
-  const sheetRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLInputElement>(null);
-  const previouslyFocused = useRef<HTMLElement | null>(null);
-  const dragStartY = useRef<number | null>(null);
-  const [dragOffset, setDragOffset] = useState(0);
 
   const groups = useMemo(() => filterServicesCenterGroups(query), [query]);
-
-  useEffect(() => {
-    if (!open) {
-      setQuery("");
-      setDragOffset(0);
-      return;
-    }
-    previouslyFocused.current = document.activeElement as HTMLElement | null;
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    const frame = window.requestAnimationFrame(() => searchRef.current?.focus());
-
-    const keyHandler = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        e.preventDefault();
-        onClose();
-        return;
-      }
-      if (e.key !== "Tab" || !sheetRef.current) return;
-      const focusables = sheetRef.current.querySelectorAll<HTMLElement>(
-        'a[href], button:not([disabled]), input:not([disabled]), [tabindex]:not([tabindex="-1"])',
-      );
-      if (focusables.length === 0) return;
-      const first = focusables[0];
-      const last = focusables[focusables.length - 1];
-      if (e.shiftKey && document.activeElement === first) {
-        e.preventDefault();
-        last.focus();
-      } else if (!e.shiftKey && document.activeElement === last) {
-        e.preventDefault();
-        first.focus();
-      }
-    };
-    document.addEventListener("keydown", keyHandler);
-    return () => {
-      window.cancelAnimationFrame(frame);
-      document.body.style.overflow = prevOverflow;
-      document.removeEventListener("keydown", keyHandler);
-      previouslyFocused.current?.focus?.();
-    };
-  }, [open, onClose]);
-
-  if (!open || typeof document === "undefined") return null;
 
   const onSoonClick = (label: string) => {
     onClose();
@@ -144,21 +96,6 @@ export function MoreBottomSheet({ open, onClose }: Props) {
     else if (action.kind === "share") void shareApp();
     else if (action.kind === "rate") rateApp();
     else if (action.kind === "logout") void handleLogout();
-  };
-
-  const onHandlePointerDown = (e: PointerEvent) => {
-    dragStartY.current = e.clientY;
-    (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
-  };
-  const onHandlePointerMove = (e: PointerEvent) => {
-    if (dragStartY.current == null) return;
-    const delta = Math.max(0, e.clientY - dragStartY.current);
-    setDragOffset(delta);
-  };
-  const onHandlePointerUp = () => {
-    if (dragOffset > 88) onClose();
-    dragStartY.current = null;
-    setDragOffset(0);
   };
 
   const renderItem = (item: ServicesCenterItem, layout: "quick" | "list") => {
@@ -249,72 +186,49 @@ export function MoreBottomSheet({ open, onClose }: Props) {
     );
   };
 
-  return createPortal(
-    /* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions */
-    <div className="bottom-sheet-overlay" role="presentation" onClick={onClose}>
-      <div
-        ref={sheetRef}
-        className="bottom-sheet bottom-sheet--services"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby={titleId}
-        onClick={(e) => e.stopPropagation()}
-        style={dragOffset ? { transform: `translateY(${dragOffset}px)` } : undefined}
-      >
-        <div
-          className="bottom-sheet__handle"
-          role="presentation"
-          aria-hidden="true"
-          onPointerDown={onHandlePointerDown}
-          onPointerMove={onHandlePointerMove}
-          onPointerUp={onHandlePointerUp}
-          onPointerCancel={onHandlePointerUp}
+  return (
+    <AppBottomSheet
+      open={open}
+      onClose={() => {
+        setQuery("");
+        onClose();
+      }}
+      title="مركز الخدمات"
+      snap="full"
+      closeLabel="إغلاق"
+      className="bottom-sheet--services"
+      initialFocusRef={searchRef}
+    >
+      <div className="bottom-sheet__search">
+        <label htmlFor={searchId} className="sr-only">بحث في مركز الخدمات</label>
+        <Search className="bottom-sheet__search-icon" size={16} strokeWidth={1.8} aria-hidden="true" />
+        <input
+          ref={searchRef}
+          id={searchId}
+          type="search"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          className="bottom-sheet__search-input"
+          placeholder="ابحث في الخدمات…"
+          autoComplete="off"
+          enterKeyHint="search"
         />
-        <div className="bottom-sheet__head">
-          <h2 id={titleId} className="bottom-sheet__title">مركز الخدمات</h2>
-          <button
-            type="button"
-            onClick={onClose}
-            className="bottom-sheet__close-btn"
-            aria-label="إغلاق مركز الخدمات"
-          >
-            <X size={18} strokeWidth={1.8} aria-hidden="true" />
-          </button>
-        </div>
-
-        <div className="bottom-sheet__search">
-          <label htmlFor={searchId} className="sr-only">بحث في مركز الخدمات</label>
-          <Search className="bottom-sheet__search-icon" size={16} strokeWidth={1.8} aria-hidden="true" />
-          <input
-            ref={searchRef}
-            id={searchId}
-            type="search"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            className="bottom-sheet__search-input"
-            placeholder="ابحث في الخدمات…"
-            autoComplete="off"
-            enterKeyHint="search"
-          />
-        </div>
-
-        <div className="bottom-sheet__body">
-          {groups.length === 0 ? (
-            <p className="bottom-sheet__empty">لا نتائج مطابقة.</p>
-          ) : (
-            groups.map((group) => (
-              <section key={group.id} className="bottom-sheet__section" aria-labelledby={`svc-${group.id}`}>
-                <h3 id={`svc-${group.id}`} className="bottom-sheet__section-label">{group.title}</h3>
-                <div className={group.layout === "quick" ? "bottom-sheet__quick" : "bottom-sheet__list"}>
-                  {group.items.map((item) => renderItem(item, group.layout === "quick" ? "quick" : "list"))}
-                </div>
-              </section>
-            ))
-          )}
-        </div>
-        <div className="bottom-sheet__fade" aria-hidden="true" />
       </div>
-    </div>,
-    document.body,
+
+      <div className="bottom-sheet__body-inner">
+        {groups.length === 0 ? (
+          <p className="bottom-sheet__empty">لا نتائج مطابقة.</p>
+        ) : (
+          groups.map((group) => (
+            <section key={group.id} className="bottom-sheet__section" aria-labelledby={`svc-${group.id}`}>
+              <h3 id={`svc-${group.id}`} className="bottom-sheet__section-label">{group.title}</h3>
+              <div className={group.layout === "quick" ? "bottom-sheet__quick" : "bottom-sheet__list"}>
+                {group.items.map((item) => renderItem(item, group.layout === "quick" ? "quick" : "list"))}
+              </div>
+            </section>
+          ))
+        )}
+      </div>
+    </AppBottomSheet>
   );
 }

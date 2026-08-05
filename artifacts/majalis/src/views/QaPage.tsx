@@ -317,9 +317,9 @@ export default function QaPage({
   return (
     <div className="page-shell narrow content-hub-page qa-page qa-page-v2 ds-page">
       <PageHeader
-        eyebrow="المجلس العلمي"
+        eyebrow=""
         title="الأسئلة والأجوبة"
-        subtitle="أحدث الأسئلة والأجوبة الشرعية الموثقة."
+        subtitle="أسئلة وأجوبة شرعية موثّقة"
       />
 
       <FiqhHubStrip current="qa" />

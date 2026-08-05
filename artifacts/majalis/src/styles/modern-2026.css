@@ -167,29 +167,7 @@ body {
   line-height: var(--lh-normal, 1.55);
 }
 
-/* ══ 4. Typography Utilities ══════════════════════════════════════════════════ */
-.txt-display {
-  font-size: var(--type-display);
-  font-weight: var(--fw-bold);
-  line-height: var(--lh-tight);
-  letter-spacing: var(--ls-tighter);
-  color: var(--txt-primary);
-  font-family: var(--font-body);
-}
-.txt-h1 { font-size: var(--type-h1); font-weight: var(--fw-bold); line-height: var(--lh-snug); letter-spacing: var(--ls-tight); color: var(--txt-primary); font-family: var(--font-body); }
-.txt-h2 { font-size: var(--type-h2); font-weight: var(--fw-bold); line-height: var(--lh-snug); letter-spacing: var(--ls-tight); color: var(--txt-primary); font-family: var(--font-body); }
-.txt-h3 { font-size: var(--type-h3); font-weight: var(--fw-semibold); line-height: var(--lh-normal); color: var(--txt-primary); }
-.txt-h4 { font-size: var(--type-h4); font-weight: var(--fw-semibold); line-height: var(--lh-normal); color: var(--txt-primary); }
-.txt-h5 { font-size: var(--type-h5); font-weight: var(--fw-semibold); line-height: var(--lh-normal); color: var(--txt-secondary); }
-.txt-h6 { font-size: var(--type-h6); font-weight: var(--fw-bold); line-height: var(--lh-normal); letter-spacing: normal; color: var(--txt-secondary); text-transform: uppercase; }
-.txt-subtitle { font-size: var(--type-subtitle); font-weight: var(--fw-normal); line-height: var(--lh-relaxed); color: var(--txt-secondary); }
-.txt-body-lg  { font-size: var(--type-body-lg);  font-weight: var(--fw-normal); line-height: var(--lh-relaxed); color: var(--txt-secondary); }
-.txt-body     { font-size: var(--type-body);      font-weight: var(--fw-normal); line-height: var(--lh-normal);  color: var(--txt-secondary); }
-.txt-body-sm  { font-size: var(--type-body-sm);   font-weight: var(--fw-normal); line-height: var(--lh-normal);  color: var(--txt-muted); }
-.txt-caption  { font-size: var(--type-caption);   font-weight: var(--fw-normal); line-height: var(--lh-snug);    color: var(--txt-muted); }
-.txt-label    { font-size: var(--type-label);     font-weight: var(--fw-medium); line-height: var(--lh-snug);    letter-spacing: normal; color: var(--txt-muted); }
-.txt-btn      { font-size: var(--type-btn);       font-weight: var(--fw-semibold); line-height: 1; letter-spacing: normal; }
-
+/* ══ 4. Typography color utilities (مقاس العرض غير مستعمل — حُذف 2026-08) ══ */
 .txt-primary   { color: var(--txt-primary)   !important; }
 .txt-secondary { color: var(--txt-secondary) !important; }
 .txt-muted     { color: var(--txt-muted)     !important; }

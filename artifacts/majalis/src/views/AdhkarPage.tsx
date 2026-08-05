@@ -271,7 +271,7 @@ export default function AdhkarPage() {
       <PageHeader
         eyebrow="العبادة اليومية"
         title="الأذكار"
-        subtitle="قراءة ذكر واحد بتركيز كامل، من القرآن والسنة الصحيحة."
+        subtitle="من القرآن والسنة الصحيحة"
       />
 
       {/* شريط التصنيفات */}
@@ -301,7 +301,7 @@ export default function AdhkarPage() {
       {isLoading ? (
         <p className="adhkar-loading-hint">جاري تحميل الأذكار…</p>
       ) : isError ? (
-        <Empty text="تعذّر تحميل الأذكار من قاعدة البيانات." />
+        <Empty text="تعذّر تحميل الأذكار." />
       ) : total === 0 ? (
         <Empty text="لا توجد أذكار في هذا القسم." />
       ) : current ? (

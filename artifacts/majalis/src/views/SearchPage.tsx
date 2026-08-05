@@ -428,9 +428,9 @@ export default function SearchPage() {
   return (
     <div className="page-shell narrow search-page ds-page">
       <PageHeader
-        eyebrow="الاستكشاف"
-        title="البحث الشامل"
-        subtitle="يفهم المعنى ويربط الآيات والأحاديث والفتاوى والدروس."
+        eyebrow=""
+        title="البحث"
+        subtitle="في الآيات والأحاديث والفتاوى والدروس"
       />
 
       <form

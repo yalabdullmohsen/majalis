@@ -75,13 +75,7 @@
   box-shadow: var(--v2-shadow-3);
   transform: translateY(-3px);
 }
-.card-v2--flat { box-shadow: none; }
-.card-v2--flat:hover { box-shadow: var(--v2-shadow-2); transform: translateY(-2px); }
-.card-v2--accent-left { border-right: 3px solid var(--v2-green); }
-.card-v2--accent-gold { border-right: 3px solid var(--v2-gold); }
-.card-v2__body { padding: var(--ds-space-5); }
-.card-v2__header { padding: 1rem 1.25rem; border-bottom: 1px solid var(--v2-border-soft); }
-.card-v2__footer { padding: 0.875rem 1.25rem; border-top: 1px solid var(--v2-border-soft); background: var(--v2-surface-1); }
+/* متغيّرات card-v2--* / __body غير مستعملة في الشيفرة — حُذفت 2026-08 */
 
 /* ── 6. الهيكل المحسّن للناف بار (CSS فقط — لا تعدّل TSX) ── */
 
