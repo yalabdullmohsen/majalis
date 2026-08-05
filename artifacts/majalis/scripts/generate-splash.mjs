@@ -343,21 +343,19 @@ async function main() {
       file: join(ROOT, "public/manifest.json"),
       patterns: [
         [/"background_color":\s*"[#_][^"]*"/g, `"background_color": "${bgHex}"`],
-        [/"theme_color":\s*"[#_][^"]*"/g, `"theme_color": "${bgHex}"`],
+        // theme_color = هوية الواجهة (#1F7A5A) — لا يُستبدل بلون شاشة الدخول
       ],
     },
     {
       file: join(ROOT, "public/manifest.webmanifest"),
       patterns: [
         [/"background_color":\s*"[#_][^"]*"/g, `"background_color": "${bgHex}"`],
-        [/"theme_color":\s*"[#_][^"]*"/g, `"theme_color": "${bgHex}"`],
       ],
     },
     {
       file: join(ROOT, "public/site.webmanifest"),
       patterns: [
         [/"background_color":\s*"[#_][^"]*"/g, `"background_color": "${bgHex}"`],
-        [/"theme_color":\s*"[#_][^"]*"/g, `"theme_color": "${bgHex}"`],
       ],
     },
     {
