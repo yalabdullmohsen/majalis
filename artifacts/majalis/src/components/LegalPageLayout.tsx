@@ -5,6 +5,8 @@ type Props = {
   eyebrow: string;
   title: string;
   children: ReactNode;
+  /** تاريخ آخر تحديث ظاهر للمستخدم (مثل سياسة الخصوصية) */
+  updatedAt?: string;
 };
 
 function goBack() {
@@ -12,20 +14,25 @@ function goBack() {
   goBackOrFallback(currentPath);
 }
 
-export function LegalPageLayout({ eyebrow, title, children }: Props) {
+export function LegalPageLayout({ eyebrow, title, children, updatedAt }: Props) {
   return (
-    <div className="legal-page">
-      <div className="legal-page-hero">
+    <article className="legal-page" aria-labelledby="legal-page-title">
+      <header className="legal-page-hero">
         <div className="legal-page-inner">
-          <button type="button" className="legal-back-btn" onClick={goBack} aria-label="رجوع">
+          <button type="button" className="legal-back-btn" onClick={goBack} aria-label="رجوع إلى الصفحة السابقة">
             → رجوع
           </button>
           <p className="legal-page-eyebrow">{eyebrow}</p>
-          <h1>{title}</h1>
+          <h1 id="legal-page-title">{title}</h1>
+          {updatedAt ? (
+            <p className="legal-page-updated">
+              آخر تحديث: <time dateTime={updatedAt}>{updatedAt}</time>
+            </p>
+          ) : null}
         </div>
-      </div>
+      </header>
       <div className="legal-page-body legal-page-inner">{children}</div>
-    </div>
+    </article>
   );
 }
 
@@ -41,7 +48,7 @@ export function LegalSection({ title, children }: { title: string; children: Rea
 export function LegalBackLink() {
   return (
     <p className="legal-back">
-      <button type="button" className="legal-back-btn" onClick={goBack}>
+      <button type="button" className="legal-back-btn" onClick={goBack} aria-label="رجوع إلى الصفحة السابقة">
         → رجوع
       </button>
     </p>

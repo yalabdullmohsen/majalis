@@ -30,7 +30,7 @@ export default function AboutUsPage() {
   }, []);
 
   return (
-    <LegalPageLayout eyebrow="تعرّف علينا" title="من نحن">
+    <LegalPageLayout eyebrow="تعرّف علينا" title="من نحن" updatedAt="2026-08-05">
       <LegalSection title="رسالة المجلس وغايته">
         <p>
           المجلس العلمي منصة شرعية رقمية كويتية أُسِّست لتكون مرجعاً علمياً موثوقاً يجمع بين
