@@ -70,7 +70,7 @@
 .msr-card__audio-btn.is-playing { background: #ef4444; }
 .msr-card__reviewer-note { padding: 0.6rem 0.875rem; border-radius: var(--ds-radius); font-size: 0.82rem; margin-top: 0.5rem; }
 .msr-card__reviewer-note--approved { background: var(--majalis-emerald-muted); color: var(--majalis-emerald); }
-.msr-card__reviewer-note--rejected { background: var(--majalis-danger-muted, #fef2f2); color: var(--majalis-danger, #991b1b); }
+.msr-card__reviewer-note--rejected { background: var(--majalis-danger-muted, #fef2f2); color: var(--majalis-danger, var(--mj-danger-deep)); }
 .msr-card__notice { margin-top: 0.5rem; font-size: 0.78rem; color: var(--majalis-emerald); font-weight: 600; }
 .msr-card__resubmit { margin-top: 0.75rem; }
 .msr-card__resubmit-link { font-size: 0.78rem; color: var(--majalis-emerald); font-weight: 600; text-decoration: underline; cursor: pointer; }

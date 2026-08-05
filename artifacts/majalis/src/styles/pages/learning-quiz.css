@@ -10,7 +10,7 @@
   align-items: center;
   gap: 0.4rem;
   font-size: 0.78rem;
-  color: var(--clr-ink-soft, #6b7280);
+  color: var(--clr-ink-soft, var(--mj-muted));
   margin-bottom: 1.2rem;
 }
 .lqp2-breadcrumb a {
@@ -43,7 +43,7 @@
 .lqp2-progress__label {
   font-size: 0.74rem;
   font-weight: 700;
-  color: var(--clr-ink-soft, #6b7280);
+  color: var(--clr-ink-soft, var(--mj-muted));
   white-space: nowrap;
 }
 
@@ -248,7 +248,7 @@
 .lqp2-done__title { font-size: 1.1rem; font-weight: 800; margin: 0.1rem 0 0.4rem; }
 .lqp2-done__title--pass { color: var(--mj-brand); }
 .lqp2-done__title--fail { color: #dc2626; }
-.lqp2-done__sub { font-size: 0.85rem; color: var(--clr-ink-soft, #6b7280); margin: 0; line-height: 1.6; }
+.lqp2-done__sub { font-size: 0.85rem; color: var(--clr-ink-soft, var(--mj-muted)); margin: 0; line-height: 1.6; }
 .lqp2-done__actions {
   display: flex;
   gap: var(--ds-space-3);
@@ -292,7 +292,7 @@
 }
 .lqp2-error-card__body { flex: 1; }
 .lqp2-error-card__q { font-size: 0.87rem; font-weight: 600; margin: 0 0 0.4rem; color: var(--clr-ink, #1a1a1a); }
-.lqp2-error-card__exp { font-size: 0.82rem; color: var(--clr-ink-soft, #6b7280); margin: 0 0 0.3rem; line-height: 1.6; }
+.lqp2-error-card__exp { font-size: 0.82rem; color: var(--clr-ink-soft, var(--mj-muted)); margin: 0 0 0.3rem; line-height: 1.6; }
 .lqp2-error-card__ref {
   display: flex;
   align-items: center;
@@ -313,7 +313,7 @@
   text-align: center;
 }
 .lqp2-empty__icon { color: rgba(23,61,53,.35); }
-.lqp2-empty__msg { font-size: 0.9rem; color: var(--clr-ink-soft, #6b7280); margin: 0; }
+.lqp2-empty__msg { font-size: 0.9rem; color: var(--clr-ink-soft, var(--mj-muted)); margin: 0; }
 
 /* Dark mode 70 */
 html[data-theme="dark"] .lqp2-question-card {
@@ -394,7 +394,7 @@ html[data-theme="dark"] .lqp2-error-card { background: rgba(255,255,255,.04); bo
   align-items: center;
   gap: var(--ds-space-1);
   font-size: 0.76rem;
-  color: var(--clr-ink-soft, #6b7280);
+  color: var(--clr-ink-soft, var(--mj-muted));
 }
 
 /* زر الاشتراك */
@@ -417,7 +417,7 @@ html[data-theme="dark"] .lqp2-error-card { background: rgba(255,255,255,.04); bo
 .lcp2-subscribe-btn:hover:not(:disabled) { background: var(--mj-brand); color: #fff; }
 .lcp2-subscribe-btn--done {
   border-color: rgba(23,61,53,.3);
-  color: var(--clr-ink-soft, #6b7280);
+  color: var(--clr-ink-soft, var(--mj-muted));
   cursor: default;
 }
 .lcp2-subscribe-btn:disabled { opacity: 0.6; cursor: not-allowed; }
@@ -432,7 +432,7 @@ html[data-theme="dark"] .lqp2-error-card { background: rgba(255,255,255,.04); bo
   text-align: center;
 }
 .lcp2-empty__icon { color: rgba(23,61,53,.3); }
-.lcp2-empty__msg { font-size: 0.9rem; color: var(--clr-ink-soft, #6b7280); margin: 0; }
+.lcp2-empty__msg { font-size: 0.9rem; color: var(--clr-ink-soft, var(--mj-muted)); margin: 0; }
 
 /* Footer link */
 .lcp2-footer-link {

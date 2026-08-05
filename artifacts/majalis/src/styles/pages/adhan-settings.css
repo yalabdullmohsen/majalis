@@ -93,6 +93,6 @@ html[data-theme="dark"] .ads-diagnostics-toggle { color: var(--clr-text-1, var(-
   color: var(--msk-gold, var(--mj-brand));
 }
 .pasc-explainer__title { font-weight: 700; font-size: 0.85rem; margin: 0 0 0.2rem; color: var(--msk-text, #1A1A18); }
-.pasc-explainer__desc { font-size: 0.78rem; margin: 0 0 0.6rem; color: var(--msk-text-2, #5C5C56); line-height: 1.6; }
+.pasc-explainer__desc { font-size: 0.78rem; margin: 0 0 0.6rem; color: var(--msk-text-2, var(--mj-ink-2)); line-height: 1.6; }
 .pasc-explainer__actions { display: flex; gap: var(--ds-space-2); }
 

@@ -13,12 +13,12 @@
 
   /* ذهبي رملي هادئ — مساند فعلي (لا أخضر مسمّى ذهبيًا) */
   --mj-gold-900:       #9C7C41;
-  --mj-gold-600:       #B8963F;
+  --mj-gold-600:       var(--mj-accent);
   --mj-gold-300:       #FAF3E0;
   --mj-gold-text:      var(--mj-brand-deep);
 
   /* العاجي — خلفية الشعار الورقية */
-  --mj-ivory-50:  #FAFAF8;
+  --mj-ivory-50:  var(--mj-bg);
   --mj-ivory-100: #EFE9DC;
   --mj-surface:   #FFFFFF;
 
@@ -30,7 +30,7 @@
 
 /* ══ ترقيع المتغيرات القديمة --mn-* (غير معرَّفة — كانت تسقط على أسود) ══ */
 :root {
-  --mn-text-default:   var(--msk-text-2,  #5C5C56);
+  --mn-text-default:   var(--msk-text-2,  var(--mj-ink-2));
   --mn-border-default: var(--msk-border,  rgba(23,61,53,0.12));
   --mn-border-active:  var(--msk-gold,    var(--mj-brand));
   --mn-surface-hover:  rgba(23,61,53,0.05);
@@ -401,7 +401,7 @@
   to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 .toast-v2--success { background: var(--v2-green-soft);  border-right: 3px solid var(--v2-green); color: var(--v2-green-deep); }
-.toast-v2--error   { background: #FEE2E2;                border-right: 3px solid #DC2626;         color: #991B1B; }
+.toast-v2--error   { background: var(--mj-danger-soft);                border-right: 3px solid var(--mj-danger);         color: var(--mj-danger-deep); }
 .toast-v2--info    { background: var(--v2-blue-soft);   border-right: 3px solid var(--v2-blue);  color: var(--v2-blue-deep); }
 
 /* ── 19. تدرّج الهيدر للصفحات الداخلية ── */
@@ -581,7 +581,7 @@
   color: var(--majalis-emerald-deep, var(--mj-brand-deep)) !important;
 }
 .side-nav-close {
-  color: #5C5C56 !important;
+  color: var(--mj-ink-2) !important;
 }
 .side-nav-close:hover {
   background: rgba(23,61,53,0.08) !important;
@@ -665,7 +665,7 @@
 .msk-hadith-box__narrator,
 .msk-hadith-box__source {
   font-size: 0.72rem;
-  color: var(--msk-text-2, #5C5C56);
+  color: var(--msk-text-2, var(--mj-ink-2));
 }
 .msk-hadith-box__grade {
   font-size: 0.68rem;
@@ -719,7 +719,7 @@
 }
 .msk-featured-card__desc {
   font-size: 0.82rem;
-  color: var(--msk-text-2, #5C5C56);
+  color: var(--msk-text-2, var(--mj-ink-2));
   margin: 0;
   line-height: 1.55;
 }
@@ -769,7 +769,7 @@
 }
 .msk-numbered-card__desc {
   font-size: 0.8rem;
-  color: var(--msk-text-2, #5C5C56);
+  color: var(--msk-text-2, var(--mj-ink-2));
   margin: 0.15rem 0 0;
   line-height: 1.5;
 }
@@ -1181,7 +1181,7 @@
   color: var(--majalis-emerald-deep, var(--mj-brand-deep)) !important;
 }
 .lessons-v2-stat span {
-  color: var(--msk-text-2, #5C5C56) !important;
+  color: var(--msk-text-2, var(--mj-ink-2)) !important;
 }
 
 /* شريط التصفية والتبويبات */
@@ -1201,10 +1201,10 @@
   font-family: var(--mj-font-display) !important;
 }
 .lessons-v2-filters__close {
-  color: var(--msk-text-2, #5C5C56) !important;
+  color: var(--msk-text-2, var(--mj-ink-2)) !important;
 }
 .lessons-v2-filters-grid label {
-  color: var(--msk-text-2, #5C5C56) !important;
+  color: var(--msk-text-2, var(--mj-ink-2)) !important;
   font-size: 0.8rem !important;
 }
 .lessons-v2-filters-grid select,
@@ -1225,7 +1225,7 @@
 
 /* حالة الفراغ */
 .lessons-empty-state {
-  color: var(--msk-text-2, #5C5C56) !important;
+  color: var(--msk-text-2, var(--mj-ink-2)) !important;
 }
 
 /* وضع داكن — صفحة الدروس */
@@ -1297,7 +1297,7 @@
   font-family: var(--mj-font-display) !important;
 }
 .hadith-card__chapter {
-  color: var(--msk-text-2, #5C5C56) !important;
+  color: var(--msk-text-2, var(--mj-ink-2)) !important;
 }
 .hadith-card__text {
   border-inline-start-color: var(--majalis-emerald, var(--mj-brand)) !important;
@@ -1627,7 +1627,7 @@
 }
 .notif-banner--warn {
   background: rgba(24, 54, 42, 0.10) !important;
-  color: #5C5C56 !important;
+  color: var(--mj-ink-2) !important;
   border-color: rgba(24, 54, 42, 0.25) !important;
 }
 .notif-banner--err {
@@ -1648,7 +1648,7 @@
   color: var(--majalis-ink-soft);
 }
 /* var(--majalis-ink-soft) هنا يتحول أحيانًا لظل رمادي معتم مصمَّم للوضع
-   النهاري فقط (#5C5C56 من modern-2026.css) بلا نسخة ليلية تصل لهذا
+   النهاري فقط (var(--mj-ink-2) من modern-2026.css) بلا نسخة ليلية تصل لهذا
    السياق تحديدًا — نص باهت شبه غير مرئي فوق خلفيات داكنة. تثبيت مباشر
    (2026-07-17). */
 html[data-theme="dark"] .page-shell p,

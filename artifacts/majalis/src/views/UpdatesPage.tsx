@@ -12,7 +12,7 @@ import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import "@/styles/pages/updates.css";
 
 const TYPE_COLORS: Record<string, string> = {
-  قرار: "#164E3C",
+  قرار: "#123F2E",
   فتوى: "#2563EB",
   درس: "#7C3AED",
   دورة: "#1E4A37",

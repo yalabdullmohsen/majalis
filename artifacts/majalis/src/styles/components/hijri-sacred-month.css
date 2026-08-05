@@ -157,7 +157,7 @@
   white-space: nowrap;
 }
 .hmb-type-badge--urgent {
-  color: #DC2626;
+  color: var(--mj-danger);
   background: #FEF2F2;
   border-color: #FCA5A5;
 }
@@ -165,7 +165,7 @@
   width: 5px;
   height: 5px;
   border-radius: 50%;
-  background: #DC2626;
+  background: var(--mj-danger);
   flex-shrink: 0;
   animation: hmb-pulse 1.4s ease-in-out infinite;
 }

@@ -3,7 +3,7 @@
    ══════════════════════════════════════════════ */
 .quran-hub-page {
   min-height: 100vh;
-  background: var(--elite-white, #FAFAF8);
+  background: var(--elite-white, var(--mj-bg));
   color: var(--elite-ink, #1A1A18);
   /* الحشو السفلي يتكفّل به .app-main (الشريط السفلي + safe area) */
   padding-bottom: 1.25rem;
@@ -150,7 +150,7 @@
 }
 .quran-hub-card__desc {
   font-size: 0.86rem;
-  color: #5C5C56;
+  color: var(--mj-ink-2);
   line-height: 1.6;
   margin: 0;
   flex: 1;
@@ -247,7 +247,7 @@
   margin: 0;
   padding: 2rem 1rem;
   text-align: center;
-  color: var(--color-text-muted, #5C5C56);
+  color: var(--color-text-muted, var(--mj-ink-2));
   font-size: 0.95rem;
 }
 

@@ -40,9 +40,9 @@ const TEMPLATES: Template[] = [
     id: "clean_white",
     name: "أبيض نظيف",
     bg: "#ffffff",
-    textColor: "#164E3C",
+    textColor: "#123F2E",
     subColor: "#4D7A64",
-    border: "1px solid #164E3C",
+    border: "1px solid #123F2E",
     swatch: "#ffffff",
   },
   {
@@ -57,11 +57,11 @@ const TEMPLATES: Template[] = [
   {
     id: "emerald",
     name: "أخضر داكن",
-    bg: "linear-gradient(145deg, #0d2e24 0%, #164E3C 100%)",
+    bg: "linear-gradient(145deg, #0d2e24 0%, #123F2E 100%)",
     textColor: "#FAF5EA",
     subColor: "#CFE0D3",
     border: "1px solid rgba(250, 245, 234, 0.3)",
-    swatch: "#164E3C",
+    swatch: "#123F2E",
   },
 ];
 

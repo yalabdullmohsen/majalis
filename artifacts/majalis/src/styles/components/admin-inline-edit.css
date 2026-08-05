@@ -84,7 +84,7 @@
   border: none;
   font-size: 1.1rem;
   cursor: pointer;
-  color: var(--msk-text-3, #5C5C56);
+  color: var(--msk-text-3, var(--mj-ink-2));
   width: 2rem;
   height: 2rem;
   display: grid;
@@ -109,7 +109,7 @@
 .aie-field__label {
   font-size: 0.82rem;
   font-weight: 600;
-  color: var(--msk-text-2, #5C5C56);
+  color: var(--msk-text-2, var(--mj-ink-2));
   font-family: var(--mj-font-display);
 }
 .aie-field__input {
@@ -184,7 +184,7 @@
 .aie-btn--primary:hover:not(:disabled) { opacity: 0.88; transform: translateY(-1px); }
 .aie-btn--ghost {
   background: transparent;
-  color: var(--msk-text-2, #5C5C56);
+  color: var(--msk-text-2, var(--mj-ink-2));
   border: 1.5px solid rgba(0,0,0,0.12);
 }
 .aie-btn--ghost:hover:not(:disabled) { background: rgba(0,0,0,0.04); }

@@ -36,9 +36,9 @@
   border-radius: var(--ds-radius-xl);
   font-size: 0.7rem;
   font-weight: 600;
-  background: color-mix(in srgb, var(--mk-accent, #5C5C56) 25%, transparent);
-  color: var(--mk-accent, #5C5C56);
-  border: 1px solid color-mix(in srgb, var(--mk-accent, #5C5C56) 40%, transparent);
+  background: color-mix(in srgb, var(--mk-accent, var(--mj-ink-2)) 25%, transparent);
+  color: var(--mk-accent, var(--mj-ink-2));
+  border: 1px solid color-mix(in srgb, var(--mk-accent, var(--mj-ink-2)) 40%, transparent);
 }
 .miracle-item__src-badge {
   padding: 0.15rem 0.6rem;
@@ -76,18 +76,18 @@
 /* miracle-item — category palette modifiers (--mk-bg / --mk-accent) */
 .mk-cat--alkawn    { --mk-bg: var(--mj-brand-deep); --mk-accent: #D6D5CE; }
 .mk-cat--alfalak   { --mk-bg: var(--mj-brand-deep); --mk-accent: #D6D5CE; }
-.mk-cat--aljibaal  { --mk-bg: var(--mj-brand-deep); --mk-accent: #5C5C56; }
+.mk-cat--aljibaal  { --mk-bg: var(--mj-brand-deep); --mk-accent: var(--mj-ink-2); }
 .mk-cat--albihaar  { --mk-bg: var(--mj-brand-deep); --mk-accent: #D6D5CE; }
-.mk-cat--alajinna  { --mk-bg: var(--mj-brand-deep); --mk-accent: #5C5C56; }
-.mk-cat--alnabaat  { --mk-bg: var(--mj-brand-deep); --mk-accent: #5C5C56; }
-.mk-cat--alhayawan { --mk-bg: var(--mj-brand-deep); --mk-accent: #5C5C56; }
+.mk-cat--alajinna  { --mk-bg: var(--mj-brand-deep); --mk-accent: var(--mj-ink-2); }
+.mk-cat--alnabaat  { --mk-bg: var(--mj-brand-deep); --mk-accent: var(--mj-ink-2); }
+.mk-cat--alhayawan { --mk-bg: var(--mj-brand-deep); --mk-accent: var(--mj-ink-2); }
 .mk-cat--altib     { --mk-bg: var(--mj-brand-deep); --mk-accent: #D6D5CE; }
 .mk-cat--almiyaah  { --mk-bg: var(--mj-brand-deep); --mk-accent: #D6D5CE; }
-.mk-cat--alhadeed  { --mk-bg: var(--mj-brand-deep); --mk-accent: #5C5C56; }
+.mk-cat--alhadeed  { --mk-bg: var(--mj-brand-deep); --mk-accent: var(--mj-ink-2); }
 .mk-cat--alriyaah  { --mk-bg: var(--mj-brand-deep); --mk-accent: #D6D5CE; }
 .mk-cat--alsahaab  { --mk-bg: var(--mj-brand-deep); --mk-accent: #D6D5CE; }
-.mk-cat--alhasharat { --mk-bg: var(--mj-brand-deep); --mk-accent: #5C5C56; }
-.mk-cat--alarth    { --mk-bg: var(--mj-brand-deep); --mk-accent: #5C5C56; }
+.mk-cat--alhasharat { --mk-bg: var(--mj-brand-deep); --mk-accent: var(--mj-ink-2); }
+.mk-cat--alarth    { --mk-bg: var(--mj-brand-deep); --mk-accent: var(--mj-ink-2); }
 .mk-cat--alzaman   { --mk-bg: var(--mj-brand-deep); --mk-accent: #D6D5CE; }
 .mk-cat--althaw    { --mk-bg: var(--mj-brand-deep); --mk-accent: #d4e8a0; }
 .mk-cat--aljild    { --mk-bg: var(--mj-brand-deep); --mk-accent: #D6D5CE; }
@@ -121,7 +121,7 @@
 .miracle-card--cosmos { border-top: 3px solid var(--brand, var(--mj-brand)); }
 .miracle-card--astronomy { border-top: 3px solid #1d4ed8; }
 .miracle-card--sea { border-top: 3px solid #0ea5e9; }
-.miracle-card--plant { border-top: 3px solid #16a34a; }
+.miracle-card--plant { border-top: 3px solid var(--mj-brand); }
 .miracle-card--animal { border-top: 3px solid var(--mj-brand); }
 .miracle-card--embryo { border-top: 3px solid #db2777; }
 .miracle-card--medicine { border-top: 3px solid #dc2626; }

@@ -163,29 +163,29 @@
 .kng-nt--lesson        { --kng-nc: #0369a1; }
 .kng-nt--benefit       { --kng-nc: var(--mj-brand); }
 .kng-nt--prophet_story { --kng-nc: #dc2626; }
-.kng-nt--term          { --kng-nc: var(--text-2, #5C5C56); }
+.kng-nt--term          { --kng-nc: var(--text-2, var(--mj-ink-2)); }
 .kng-nt--fawaid        { --kng-nc: var(--mj-brand); }
-.kng-nt--question      { --kng-nc: var(--text-2, #5C5C56); }
-.kng-nt--all           { --kng-nc: var(--text-2, #5C5C56); }
+.kng-nt--question      { --kng-nc: var(--text-2, var(--mj-ink-2)); }
+.kng-nt--all           { --kng-nc: var(--text-2, var(--mj-ink-2)); }
 .kng-filter-chip--typed.is-active {
   background: var(--kng-nc, var(--majalis-emerald));
   border-color: var(--kng-nc, var(--majalis-emerald));
   color: #fff;
 }
-.kng-legend-dot { background: var(--kng-nc, var(--text-2, #5C5C56)); }
+.kng-legend-dot { background: var(--kng-nc, var(--text-2, var(--mj-ink-2))); }
 .kng-panel { border-color: var(--kng-nc, var(--majalis-line)); }
 .kng-type-badge {
   background: color-mix(in srgb, var(--kng-nc, var(--majalis-emerald)) 9%, transparent);
   color: var(--kng-nc, var(--majalis-emerald));
 }
 .kng-result-badge {
-  background: color-mix(in srgb, var(--kng-nc, var(--text-2, #5C5C56)) 9%, transparent);
-  color: var(--kng-nc, var(--text-2, #5C5C56));
+  background: color-mix(in srgb, var(--kng-nc, var(--text-2, var(--mj-ink-2))) 9%, transparent);
+  color: var(--kng-nc, var(--text-2, var(--mj-ink-2)));
 }
 .kng-result-card:hover { border-color: var(--kng-nc, var(--majalis-emerald)); }
 .kng-type-chip {
-  border-color: var(--kng-nc, var(--text-2, #5C5C56));
-  background: color-mix(in srgb, var(--kng-nc, var(--text-2, #5C5C56)) 6%, transparent);
-  color: var(--kng-nc, var(--text-2, #5C5C56));
+  border-color: var(--kng-nc, var(--text-2, var(--mj-ink-2)));
+  background: color-mix(in srgb, var(--kng-nc, var(--text-2, var(--mj-ink-2))) 6%, transparent);
+  color: var(--kng-nc, var(--text-2, var(--mj-ink-2)));
 }
 

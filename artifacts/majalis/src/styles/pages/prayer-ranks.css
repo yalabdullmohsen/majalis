@@ -40,7 +40,7 @@
 
 .prayer-rank-card__eyebrow,
 .prayer-rank-card__meta {
-  color: var(--msk-text-2, #5C5C56);
+  color: var(--msk-text-2, var(--mj-ink-2));
   font-size: 0.85rem;
 }
 

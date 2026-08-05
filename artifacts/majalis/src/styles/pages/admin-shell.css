@@ -74,7 +74,7 @@
 
 .admin-sidebar__user {
   font-size: 0.78rem;
-  color: var(--msk-text-2, #5C5C56);
+  color: var(--msk-text-2, var(--mj-ink-2));
   padding: 0 0.25rem;
 }
 

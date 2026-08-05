@@ -21,7 +21,7 @@
   align-items: center !important;
   justify-content: center !important;
   background: var(--elite-forest, var(--mj-brand-deep)) !important;
-  color: #FAFAF8 !important;
+  color: var(--mj-bg) !important;
   border-radius: 50% !important;
   font-size: 1.25rem !important;
   font-weight: 700 !important;
@@ -134,7 +134,7 @@
   padding: 0.5rem 0.75rem !important;
   border: 1.5px solid var(--elite-border-2, rgba(24,54,42,0.15)) !important;
   border-radius: var(--elite-r-sm, 8px) !important;
-  background: var(--elite-white, #FAFAF8) !important;
+  background: var(--elite-white, var(--mj-bg)) !important;
   transition: border-color 0.15s !important;
 }
 
@@ -159,13 +159,13 @@
 
 .settings-choice.is-active strong,
 .settings-choice.is-active span {
-  color: #FAFAF8 !important;
+  color: var(--mj-bg) !important;
 }
 
 /* ملاحظة نصية */
 .settings-note {
   font-size: 0.78rem !important;
-  color: var(--elite-ink-muted, #5C5C56) !important;
+  color: var(--elite-ink-muted, var(--mj-ink-2)) !important;
   line-height: 1.6 !important;
   margin: 0.25rem 0 0 !important;
 }

@@ -2,13 +2,13 @@
    94 — QiblaPage  (qibla-* additions)
    ============================================================ */
 
-.qibla-aligned    { color: #16A34A; }
+.qibla-aligned    { color: var(--mj-brand); }
 
 /* ── منقول من الطبقة الحرجة (elite-2026) ── */
 /* ══════════════════════════════════════════════
    QiblaPage — وصلة القبلة التفاعلية
    ══════════════════════════════════════════════ */
-.qibla-page { background: var(--elite-white, #FAFAF8) !important; }
+.qibla-page { background: var(--elite-white, var(--mj-bg)) !important; }
 .qibla-wrap {
   display: flex;
   flex-direction: column;
@@ -24,7 +24,7 @@
 }
 .qibla-aligned-badge {
   background: var(--elite-forest, var(--mj-brand-deep)) !important;
-  color: var(--elite-white, #FAFAF8) !important;
+  color: var(--elite-white, var(--mj-bg)) !important;
   border-radius: var(--ds-radius-full);
   padding: 0.45rem 1.25rem;
   font-size: 0.88rem;
@@ -57,7 +57,7 @@
 .qibla-info-label {
   font-size: 0.68rem;
   font-weight: 600;
-  color: var(--txt-muted, #5C5C56);
+  color: var(--txt-muted, var(--mj-ink-2));
   text-align: center;
 }
 .qibla-info-value {
@@ -77,13 +77,13 @@
 }
 .qibla-hint {
   font-size: 0.8rem;
-  color: var(--txt-muted, #5C5C56);
+  color: var(--txt-muted, var(--mj-ink-2));
   text-align: center;
   max-width: 260px;
 }
 .qibla-loading, .qibla-error {
   font-size: 0.9rem;
-  color: var(--txt-muted, #5C5C56);
+  color: var(--txt-muted, var(--mj-ink-2));
   text-align: center;
   padding: 2rem 1rem;
 }

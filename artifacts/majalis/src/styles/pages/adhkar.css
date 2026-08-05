@@ -16,7 +16,7 @@
 
 .adhkar-focus-counter {
   font-size: var(--ds-text-sm);
-  color: var(--txt-subdued, #5C5C56);
+  color: var(--txt-subdued, var(--mj-ink-2));
   letter-spacing: normal;
 }
 
@@ -41,7 +41,7 @@
 
 .adhkar-focus-count {
   font-size: 0.85rem;
-  color: var(--majalis-emerald, #16A34A);
+  color: var(--majalis-emerald, var(--mj-brand));
   font-weight: 600;
   margin: 0;
 }
@@ -66,14 +66,14 @@
 }
 .adhkar-focus-btn:hover:not(:disabled) {
   background: var(--m26-green-50, #F0FDF4);
-  border-color: var(--majalis-emerald, #16A34A);
+  border-color: var(--majalis-emerald, var(--mj-brand));
 }
 .adhkar-focus-btn:disabled {
   opacity: 0.35;
   cursor: not-allowed;
 }
 .adhkar-focus-btn--next {
-  background: var(--majalis-emerald, #16A34A);
+  background: var(--majalis-emerald, var(--mj-brand));
   color: #fff;
   border-color: transparent;
 }
@@ -81,8 +81,8 @@
   background: var(--m26-green-800, var(--mj-brand));
 }
 .adhkar-focus-btn--details {
-  color: var(--majalis-emerald, #16A34A);
-  border-color: var(--majalis-emerald, #16A34A);
+  color: var(--majalis-emerald, var(--mj-brand));
+  border-color: var(--majalis-emerald, var(--mj-brand));
 }
 
 .adhkar-focus-progress {
@@ -95,7 +95,7 @@
 }
 .adhkar-focus-progress-fill {
   height: 100%;
-  background: var(--majalis-emerald, #16A34A);
+  background: var(--majalis-emerald, var(--mj-brand));
   border-radius: 9999px;
   transition: width 0.3s ease;
 }
@@ -151,7 +151,7 @@
   background: none;
   border: none;
   font-size: 1.1rem;
-  color: var(--txt-subdued, #5C5C56);
+  color: var(--txt-subdued, var(--mj-ink-2));
   cursor: pointer;
   padding: 0.25rem 0.5rem;
   border-radius: var(--ds-radius);
@@ -190,7 +190,7 @@
   border-bottom: 1px solid var(--majalis-line, #e5e7eb);
 }
 .adhkar-sheet-row dt {
-  color: var(--txt-subdued, #5C5C56);
+  color: var(--txt-subdued, var(--mj-ink-2));
   font-weight: 500;
   white-space: nowrap;
 }
@@ -208,7 +208,7 @@
 }
 .adhkar-grade--sahih { background: #DCFCE7; color: var(--mj-brand); }
 .adhkar-grade--hasan { background: #e8f5f0; color: var(--mj-brand); }
-.adhkar-grade--other { background: #F3F4F6; color: #5C5C56; }
+.adhkar-grade--other { background: #F3F4F6; color: var(--mj-ink-2); }
 .adhkar-sheet-share {
   width: 100%;
   justify-content: center;
@@ -218,7 +218,7 @@
   display: block;
   width: 100%;
   padding: var(--ds-space-3-5);
-  background: var(--majalis-emerald, #16A34A);
+  background: var(--majalis-emerald, var(--mj-brand));
   color: #fff;
   border: none;
   border-radius: 0.875rem;

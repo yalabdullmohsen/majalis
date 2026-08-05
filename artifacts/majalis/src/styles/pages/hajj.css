@@ -95,7 +95,7 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
 .hj-overview-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: .75rem; margin-bottom: 1rem; }
 .hj-stat-card {
   background: #fff;
-  border: 1px solid #E8E7E2;
+  border: 1px solid var(--mj-hairline);
   border-radius: .7rem;
   padding: .9rem 1rem;
   display: flex;
@@ -104,7 +104,7 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
   box-shadow: 0 1px 3px rgba(0,0,0,.05);
 }
 .hj-stat-card__icon { font-size: 1.4rem; }
-.hj-stat-card__label { font-size: 0.8rem; color: #5C5C56; font-weight: 600; }
+.hj-stat-card__label { font-size: 0.8rem; color: var(--mj-ink-2); font-weight: 600; }
 .hj-stat-card__value { font-size: .88rem; color: #111; font-weight: 600; line-height: 1.4; }
 
 .hj-hadith-box {
@@ -115,12 +115,12 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
   margin-bottom: .5rem;
 }
 .hj-hadith-box__text { font-size: .93rem; line-height: 2; color: var(--mj-brand-deep); font-style: normal; margin: 0 0 .4rem; }
-.hj-hadith-box__ref { font-size: 0.8rem; color: #16A34A; }
+.hj-hadith-box__ref { font-size: 0.8rem; color: var(--mj-brand); }
 
 .hj-fadl-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: .65rem; margin-bottom: .5rem; }
 .hj-fadl-card {
   background: #fff;
-  border: 1px solid #E8E7E2;
+  border: 1px solid var(--mj-hairline);
   border-radius: .65rem;
   padding: .85rem .9rem;
   display: flex;
@@ -130,23 +130,23 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
 }
 .hj-fadl-card__icon { font-size: 1.4rem; }
 .hj-fadl-card__text { font-size: .84rem; line-height: 1.65; color: #1F2937; flex: 1; margin: 0; }
-.hj-fadl-card__ref { font-size: 0.8rem; color: #5C5C56; }
+.hj-fadl-card__ref { font-size: 0.8rem; color: var(--mj-ink-2); }
 
 .hj-types-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .6rem; }
 .hj-type-card {
   background: #fff;
-  border: 1px solid #E8E7E2;
+  border: 1px solid var(--mj-hairline);
   border-radius: .65rem;
   padding: .9rem .85rem;
   box-shadow: 0 1px 3px rgba(0,0,0,.04);
 }
 .hj-type-card__name { display: block; font-size: .92rem; font-weight: 700; color: var(--majalis-emerald, var(--mj-brand-deep)); margin-bottom: .35rem; }
-.hj-type-card__desc { font-size: .8rem; color: #5C5C56; line-height: 1.5; margin: 0; }
+.hj-type-card__desc { font-size: .8rem; color: var(--mj-ink-2); line-height: 1.5; margin: 0; }
 
 /* accordion cards */
 .hj-card {
   background: #fff;
-  border: 1px solid #E8E7E2;
+  border: 1px solid var(--mj-hairline);
   border-radius: .75rem;
   overflow: hidden;
   box-shadow: 0 1px 4px rgba(0,0,0,.06);
@@ -175,7 +175,7 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
 .hj-card__icon { font-size: var(--ds-text-2xl); flex-shrink: 0; }
 .hj-card__info { flex: 1; display: flex; flex-direction: column; gap: .1rem; align-items: flex-start; }
 .hj-card__title { font-size: .95rem; font-weight: 700; color: #111; }
-.hj-card__sub { font-size: .77rem; color: #5C5C56; }
+.hj-card__sub { font-size: .77rem; color: var(--mj-ink-2); }
 .hj-card__badge {
   background: var(--mj-brand-soft);
   color: var(--majalis-emerald, var(--mj-brand-deep));
@@ -198,12 +198,12 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
   margin: .5rem 0 0;
 }
 .hj-dalil__text { font-size: .92rem; line-height: 1.9; color: var(--mj-brand-deep); font-weight: 500; margin: 0 0 .3rem; }
-.hj-dalil__ref { font-size: .72rem; color: #16A34A; font-style: normal; }
+.hj-dalil__ref { font-size: .72rem; color: var(--mj-brand); font-style: normal; }
 
 .hj-detail-list { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: .35rem; }
 .hj-detail-item {
   font-size: .85rem;
-  color: #5C5C56;
+  color: var(--mj-ink-2);
   padding-right: 1.2rem;
   position: relative;
   line-height: 1.6;
@@ -213,7 +213,7 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
 /* wajibat */
 .hj-wajib-card {
   background: #fff;
-  border: 1px solid #E8E7E2;
+  border: 1px solid var(--mj-hairline);
   border-right: 4px solid var(--mj-brand);
   border-radius: .7rem;
   padding: .9rem 1rem;
@@ -225,7 +225,7 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
 .hj-wajib-card__icon { font-size: var(--ds-text-2xl); flex-shrink: 0; }
 .hj-wajib-card__content { flex: 1; display: flex; flex-direction: column; gap: .3rem; }
 .hj-wajib-card__title { font-size: .9rem; font-weight: 700; color: #111; }
-.hj-wajib-card__desc { font-size: .84rem; color: #5C5C56; line-height: 1.6; margin: 0; }
+.hj-wajib-card__desc { font-size: .84rem; color: var(--mj-ink-2); line-height: 1.6; margin: 0; }
 .hj-wajib-card__penalty {
   font-size: .75rem;
   color: var(--mj-brand);
@@ -256,7 +256,7 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
 /* mashaer */
 .hj-mashar-card {
   background: #fff;
-  border: 1px solid #E8E7E2;
+  border: 1px solid var(--mj-hairline);
   border-radius: .8rem;
   padding: 1rem 1.1rem;
   display: flex;
@@ -268,14 +268,14 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
 .hj-mashar-card__icon { font-size: 1.8rem; flex-shrink: 0; }
 .hj-mashar-card__name { display: block; font-size: var(--ds-text-base); font-weight: 700; color: #111; }
 .hj-mashar-card__day { display: block; font-size: .75rem; color: var(--majalis-emerald, var(--mj-brand-deep)); font-weight: 600; }
-.hj-mashar-card__desc { font-size: .87rem; color: #5C5C56; line-height: 1.65; margin: 0; }
+.hj-mashar-card__desc { font-size: .87rem; color: var(--mj-ink-2); line-height: 1.65; margin: 0; }
 .hj-mashar-dua {
   background: var(--mj-brand-soft);
   border-right: 3px solid var(--majalis-emerald, var(--mj-brand-deep));
   border-radius: .45rem;
   padding: .6rem .8rem;
 }
-.hj-mashar-dua__label { display: block; font-size: .68rem; color: #16A34A; font-weight: 700; margin-bottom: .3rem; }
+.hj-mashar-dua__label { display: block; font-size: .68rem; color: var(--mj-brand); font-weight: 700; margin-bottom: .3rem; }
 .hj-mashar-dua__text { font-size: .88rem; line-height: 1.8; color: var(--mj-brand-deep); font-weight: 500; margin: 0; }
 
 /* umra steps */
@@ -305,13 +305,13 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
 .hj-umra-step__icon { font-size: 1.4rem; flex-shrink: 0; }
 .hj-umra-step__content { flex: 1; display: flex; flex-direction: column; gap: .25rem; }
 .hj-umra-step__title { font-size: .9rem; font-weight: 700; color: #111; }
-.hj-umra-step__desc { font-size: .84rem; color: #5C5C56; line-height: 1.6; margin: 0; }
+.hj-umra-step__desc { font-size: .84rem; color: var(--mj-ink-2); line-height: 1.6; margin: 0; }
 
 /* mahzurat */
 .hj-mahzurat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: .5rem; margin-top: .75rem; }
 .hj-mahzur-item {
   background: #fff;
-  border: 1px solid #E8E7E2;
+  border: 1px solid var(--mj-hairline);
   border-radius: .6rem;
   padding: .65rem .5rem;
   display: flex;
@@ -322,7 +322,7 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
   box-shadow: 0 1px 2px rgba(0,0,0,.04);
 }
 .hj-mahzur-item__icon { font-size: 1.3rem; }
-.hj-mahzur-item__text { font-size: .72rem; color: #5C5C56; line-height: 1.3; }
+.hj-mahzur-item__text { font-size: .72rem; color: var(--mj-ink-2); line-height: 1.3; }
 
 /* related */
 .hj-related { margin-top: 2.5rem; }
@@ -330,7 +330,7 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
 .hj-related__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; }
 .hj-related__link {
   background: #fff;
-  border: 1px solid #E8E7E2;
+  border: 1px solid var(--mj-hairline);
   border-radius: .6rem;
   padding: .6rem .7rem;
   font-size: .82rem;
@@ -347,7 +347,7 @@ html[data-theme="dark"] .hj-related__link,
 html.dark .hj-related__link {
   color: var(--mj-brand-deep);
   background: #fff;
-  border-color: #E8E7E2;
+  border-color: var(--mj-hairline);
 }
 
 /* responsive */

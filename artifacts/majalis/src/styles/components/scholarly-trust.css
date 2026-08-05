@@ -23,7 +23,7 @@
   align-items: center;
   gap: 0.3rem;
   font-size: 0.79rem;
-  color: var(--clr-ink-soft, #6b7280);
+  color: var(--clr-ink-soft, var(--mj-muted));
   margin: 0;
 }
 .stb-missing__icon { color: #dc2626; flex-shrink: 0; }
@@ -63,7 +63,7 @@
 .stb-madhab {
   font-size: 0.71rem;
   font-weight: 600;
-  color: var(--clr-ink-soft, #6b7280);
+  color: var(--clr-ink-soft, var(--mj-muted));
   background: rgba(0,0,0,.06);
   padding: 0.15rem 0.45rem;
   border-radius: var(--ds-radius-full);
@@ -83,7 +83,7 @@
   line-height: 1.5;
 }
 .stb-row__icon { color: var(--mj-brand); margin-top: 0.15rem; flex-shrink: 0; }
-.stb-row__label { color: var(--clr-ink-soft, #6b7280); font-weight: 600; white-space: nowrap; }
+.stb-row__label { color: var(--clr-ink-soft, var(--mj-muted)); font-weight: 600; white-space: nowrap; }
 .stb-row__value { color: var(--clr-ink, #1a1a1a); }
 
 .stb-khilaf {

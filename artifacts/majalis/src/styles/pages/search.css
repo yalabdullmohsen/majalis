@@ -48,7 +48,7 @@
 .search-adv-dot {
   width: 6px;
   height: 6px;
-  background: #22C55E;
+  background: var(--mj-brand);
   border-radius: 50%;
   flex-shrink: 0;
 }
@@ -66,7 +66,7 @@
 
 .search-response-ms {
   font-size: 0.72rem;
-  color: var(--elite-ink-faint, #5C5C56);
+  color: var(--elite-ink-faint, var(--mj-ink-2));
   margin-right: auto;
 }
 
@@ -105,7 +105,7 @@
   padding: 0.45rem 0.65rem;
   border: 1.5px solid var(--elite-border-2, rgba(24,54,42,0.12));
   border-radius: var(--ds-radius);
-  background: var(--elite-white, #FAFAF8);
+  background: var(--elite-white, var(--mj-bg));
   color: var(--elite-ink, var(--mj-brand-deep));
   font-family: inherit;
   font-size: 0.82rem;
@@ -164,7 +164,7 @@
 
 .search-suggestion-chip {
   padding: 0.4rem 1rem;
-  background: var(--elite-white, #FAFAF8);
+  background: var(--elite-white, var(--mj-bg));
   border: 1.5px solid var(--elite-border-2, rgba(24,54,42,0.15));
   border-radius: var(--ds-radius-full);
   color: var(--elite-forest, var(--mj-brand-deep));
@@ -279,7 +279,7 @@
 .search-results-count {
   font-size: 0.72rem;
   font-weight: 700;
-  color: var(--elite-ink-faint, #5C5C56);
+  color: var(--elite-ink-faint, var(--mj-ink-2));
   background: var(--elite-sage-2, #F4F4F1);
   border-radius: var(--ds-radius-full);
   padding: 0.1rem 0.5rem;
@@ -343,7 +343,7 @@
 
 .search-result-meta {
   font-size: var(--ds-text-xs);
-  color: var(--elite-ink-muted, #5C5C56);
+  color: var(--elite-ink-muted, var(--mj-ink-2));
   line-height: 1.4;
 }
 
@@ -354,7 +354,7 @@
 }
 
 .search-verified-dot {
-  color: #16A34A;
+  color: var(--mj-brand);
 }
 
 /* شارات النوع */

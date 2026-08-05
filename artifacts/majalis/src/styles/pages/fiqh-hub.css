@@ -265,12 +265,12 @@ html[data-theme="dark"] .fqh-hub-card__desc {
 }
 .fiqh-hub-strip__tab--active {
   background: var(--elite-forest, var(--mj-brand-deep)) !important;
-  color: #FAFAF8 !important;
+  color: var(--mj-bg) !important;
   font-weight: 700 !important;
 }
 .fiqh-hub-strip__tab--active:hover {
   background: var(--elite-forest, var(--mj-brand-deep)) !important;
-  color: #FAFAF8 !important;
+  color: var(--mj-bg) !important;
 }
 
 /* صفحة باب فقهي مستقل */

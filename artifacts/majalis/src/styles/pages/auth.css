@@ -11,7 +11,7 @@
   max-width: 24rem;
   padding: var(--ds-space-8);
   border-radius: var(--ds-radius-lg);
-  border: 1px solid var(--msk-border, #E8E7E2);
+  border: 1px solid var(--msk-border, var(--mj-hairline));
   background: transparent;
   box-shadow: 0 10px 30px rgba(22, 78, 60, 0.06);
 }
@@ -41,7 +41,7 @@
 .login-card__tagline {
   margin: 0.35rem 0 0;
   font-size: 0.9rem;
-  color: var(--msk-text-2, #5C5C56);
+  color: var(--msk-text-2, var(--mj-ink-2));
 }
 
 .login-card__title {
@@ -54,7 +54,7 @@
 .login-card__subtitle {
   margin: 0;
   font-size: var(--ds-text-sm);
-  color: var(--msk-text-2, #5C5C56);
+  color: var(--msk-text-2, var(--mj-ink-2));
   line-height: 1.6;
 }
 
@@ -68,7 +68,7 @@
 }
 
 .login-alert--error {
-  color: #991b1b;
+  color: var(--mj-danger-deep);
   background: #fef2f2;
   border: 1px solid #fecaca;
 }
@@ -97,7 +97,7 @@
   box-sizing: border-box;
   padding: 0.625rem 0.75rem;
   border-radius: var(--ds-radius);
-  border: 1px solid var(--msk-border, #E8E7E2);
+  border: 1px solid var(--msk-border, var(--mj-hairline));
   background: var(--majalis-parchment);
   color: var(--majalis-ink);
   font-size: var(--ds-text-sm);
@@ -147,10 +147,10 @@
   width: calc(100% - 2rem);
   margin: 0 1rem 0.75rem;
   padding: 0.55rem 0.75rem;
-  border: 1px solid var(--msk-border, #E8E7E2);
+  border: 1px solid var(--msk-border, var(--mj-hairline));
   border-radius: 0.45rem;
   background: #fff;
-  color: #991b1b;
+  color: var(--mj-danger-deep);
   font-size: var(--ds-text-xs);
   font-weight: 700;
   font-family: inherit;
@@ -325,7 +325,7 @@
   font-size: var(--type-h2) !important;
   font-weight: var(--fw-bold) !important;
 }
-.login-card__subtitle { color: var(--txt-muted, #5C5C56) !important; }
+.login-card__subtitle { color: var(--txt-muted, var(--mj-ink-2)) !important; }
 .login-submit {
   background: var(--m26-green-800, var(--mj-brand)) !important;
   color: #FFFFFF !important;
@@ -341,7 +341,7 @@
 .login-oauth__btn {
   background: #FFFFFF !important;
   border: 1.5px solid rgba(0,0,0,0.10) !important;
-  color: var(--txt-secondary, #5C5C56) !important;
+  color: var(--txt-secondary, var(--mj-ink-2)) !important;
   border-radius: var(--m26-r-md) !important;
 }
 

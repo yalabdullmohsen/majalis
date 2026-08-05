@@ -12,7 +12,7 @@
 }
 .notif-banner--err {
   background: #FEF2F2 !important;
-  color: #991b1b !important;
+  color: var(--mj-danger-deep) !important;
   border: 1px solid rgba(185,28,28,0.22) !important;
   border-radius: 12px !important;
 }
@@ -67,7 +67,7 @@ html.dark .notif-row__label {
   border: 1.5px solid rgba(24,54,42,0.18) !important;
   border-radius: 10px !important;
   color: var(--elite-forest, var(--mj-brand-deep)) !important;
-  background: var(--elite-white, #FAFAF8) !important;
+  background: var(--elite-white, var(--mj-bg)) !important;
   font-weight: 700 !important;
   font-size: 1rem !important;
   padding: 0.4rem 0.6rem !important;
@@ -170,7 +170,7 @@ html.dark .notif-row__label {
 .nh-search-wrap {
   padding: 0.65rem 1rem !important;
   border-bottom: 1px solid rgba(24,54,42,0.07) !important;
-  background: var(--elite-white, #FAFAF8) !important;
+  background: var(--elite-white, var(--mj-bg)) !important;
   position: relative !important;
 }
 .nh-search {
@@ -207,7 +207,7 @@ html.dark .notif-row__label {
 .nh-tabs {
   display: flex !important;
   border-bottom: 1px solid rgba(24,54,42,0.08) !important;
-  background: var(--elite-white, #FAFAF8) !important;
+  background: var(--elite-white, var(--mj-bg)) !important;
   padding: 0 1rem !important;
 }
 .nh-tab {
@@ -317,7 +317,7 @@ html.dark .notif-row__label {
   justify-content: space-between;
   padding: 0.875rem 1rem;
   border-bottom: 1px solid color-mix(in srgb, var(--mj-emerald-950, var(--mj-brand-deep)) 8%, transparent);
-  background: var(--mj-ivory-50, #FAFAF8);
+  background: var(--mj-ivory-50, var(--mj-bg));
   flex-wrap: wrap;
   gap: var(--ds-space-2);
 }
@@ -374,7 +374,7 @@ html.dark .notif-row__label {
 .nh-search {
   width: 100%;
   padding: 0.5rem 2rem 0.5rem 0.75rem;
-  background: var(--mj-ivory-50, #FAFAF8);
+  background: var(--mj-ivory-50, var(--mj-bg));
   border: 1px solid color-mix(in srgb, var(--mj-emerald-950, var(--mj-brand-deep)) 12%, transparent);
   border-radius: 0.6rem;
   color: var(--mj-emerald-text, var(--mj-brand-deep));
@@ -385,7 +385,7 @@ html.dark .notif-row__label {
   min-height: 40px;
 }
 .nh-search:focus { outline: none; border-color: var(--mj-emerald-950, var(--mj-brand-deep)); background: #fff; }
-.nh-search::placeholder { color: var(--majalis-ink-soft, #5C5C56); }
+.nh-search::placeholder { color: var(--majalis-ink-soft, var(--mj-ink-2)); }
 .nh-search-clear {
   position: absolute;
   left: 1.5rem;
@@ -393,7 +393,7 @@ html.dark .notif-row__label {
   transform: translateY(-50%);
   background: none;
   border: none;
-  color: var(--majalis-ink-soft, #5C5C56);
+  color: var(--majalis-ink-soft, var(--mj-ink-2));
   cursor: pointer;
   font-size: 0.75rem;
   padding: 0.4rem;
@@ -410,7 +410,7 @@ html.dark .notif-row__label {
   border: none;
   border-bottom: 2px solid transparent;
   background: transparent;
-  color: var(--majalis-ink-soft, #5C5C56);
+  color: var(--majalis-ink-soft, var(--mj-ink-2));
   font-family: inherit;
   font-size: 0.82rem;
   font-variant-numeric: tabular-nums;
@@ -428,8 +428,8 @@ html.dark .notif-row__label {
   padding: 0.6rem 1rem 0.3rem;
   font-size: 0.72rem;
   font-weight: 700;
-  color: var(--majalis-ink-soft, #5C5C56);
-  background: var(--mj-ivory-50, #FAFAF8);
+  color: var(--majalis-ink-soft, var(--mj-ink-2));
+  background: var(--mj-ivory-50, var(--mj-bg));
   position: sticky;
   top: 0;
 }
@@ -463,7 +463,7 @@ html.dark .notif-row__label {
   touch-action: pan-y;
 }
 .nh-row-wrap:last-child .nh-row { border-bottom: none; }
-.nh-row:hover { background: var(--mj-ivory-50, #FAFAF8); }
+.nh-row:hover { background: var(--mj-ivory-50, var(--mj-bg)); }
 .nh-row--read { background: #fff; }
 
 .nh-row__icon {
@@ -477,13 +477,13 @@ html.dark .notif-row__label {
   background: color-mix(in srgb, var(--mj-emerald-950, var(--mj-brand-deep)) 10%, transparent);
   color: var(--mj-emerald-950, var(--mj-brand-deep));
 }
-.nh-row--read .nh-row__icon { background: var(--mj-ivory-50, #FAFAF8); color: var(--majalis-ink-soft, #5C5C56); }
+.nh-row--read .nh-row__icon { background: var(--mj-ivory-50, var(--mj-bg)); color: var(--majalis-ink-soft, var(--mj-ink-2)); }
 
 .nh-row__body { flex: 1; min-width: 0; }
 .nh-row__title { font-size: 0.875rem; font-weight: 700; color: var(--mj-emerald-text, var(--mj-brand-deep)); margin-bottom: 0.15rem; }
-.nh-row--read .nh-row__title { color: var(--majalis-ink-soft, #5C5C56); font-weight: 500; }
-.nh-row__body-text { font-size: 0.78rem; color: var(--majalis-ink-soft, #5C5C56); margin-bottom: 0.25rem; line-height: 1.6; }
-.nh-row__meta { font-size: 0.68rem; color: var(--majalis-ink-soft, #5C5C56); font-variant-numeric: tabular-nums; }
+.nh-row--read .nh-row__title { color: var(--majalis-ink-soft, var(--mj-ink-2)); font-weight: 500; }
+.nh-row__body-text { font-size: 0.78rem; color: var(--majalis-ink-soft, var(--mj-ink-2)); margin-bottom: 0.25rem; line-height: 1.6; }
+.nh-row__meta { font-size: 0.68rem; color: var(--majalis-ink-soft, var(--mj-ink-2)); font-variant-numeric: tabular-nums; }
 
 .nh-row__unread {
   width: 8px;
@@ -505,7 +505,7 @@ html.dark .notif-row__label {
 .nh-action {
   background: none;
   border: none;
-  color: var(--majalis-ink-soft, #5C5C56);
+  color: var(--majalis-ink-soft, var(--mj-ink-2));
   cursor: pointer;
   padding: 0.4rem;
   min-width: 32px;
@@ -533,7 +533,7 @@ html.dark .notif-row__label {
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background: var(--mj-ivory-50, #FAFAF8);
+  background: var(--mj-ivory-50, var(--mj-bg));
   border: 1.5px solid color-mix(in srgb, var(--mj-emerald-950, var(--mj-brand-deep)) 12%, transparent);
   display: flex;
   align-items: center;
@@ -542,7 +542,7 @@ html.dark .notif-row__label {
   margin-bottom: 0.2rem;
 }
 .nh-empty__msg { color: var(--mj-emerald-text, var(--mj-brand-deep)); font-weight: 700; font-size: 0.9rem; margin: 0; }
-.nh-empty__sub { color: var(--majalis-ink-soft, #5C5C56); font-size: 0.8rem; margin: 0; }
+.nh-empty__sub { color: var(--majalis-ink-soft, var(--mj-ink-2)); font-size: 0.8rem; margin: 0; }
 /* ══ نهاية تاريخ الإشعارات ════════════════════════════════════════════════ */
 
 /* ── منقول من الطبقة الحرجة: notif-* settings ── */
@@ -555,7 +555,7 @@ html.dark .notif-row__label {
   font-weight: 600;
 }
 .notif-banner--warn { background: rgba(24,54,42,0.06); color: var(--mj-brand-deep); border: 1px solid rgba(24,54,42,0.25); }
-.notif-banner--err  { background: #fee2e2; color: #991b1b; border: 1px solid #fca5a5; }
+.notif-banner--err  { background: #fee2e2; color: var(--mj-danger-deep); border: 1px solid #fca5a5; }
 
 .notif-card {
   background: var(--majalis-panel, #fff);

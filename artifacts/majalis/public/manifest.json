@@ -1,7 +1,7 @@
 {
   "id": "/",
-  "name": "Majlisilm",
-  "short_name": "Majlisilm",
+  "name": "المجلس العلمي",
+  "short_name": "المجلس العلمي",
   "description": "تطبيق عربي يجمع الدروس الشرعية والدورات والمحاضرات والقرآن والأذكار والفوائد في مكان واحد لطالب العلم.",
   "lang": "ar",
   "dir": "rtl",
@@ -10,7 +10,7 @@
   "display": "standalone",
   "display_override": ["standalone", "minimal-ui", "window-controls-overlay"],
   "background_color": "#011608",
-  "theme_color": "#011608",
+  "theme_color": "#1F7A5A",
   "orientation": "portrait-primary",
   "categories": ["education", "books", "lifestyle"],
   "prefer_related_applications": false,

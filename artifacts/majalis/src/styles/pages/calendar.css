@@ -17,7 +17,7 @@
 }
 
 .cal-nav-btn {
-  border: 1px solid var(--msk-border, #E8E7E2);
+  border: 1px solid var(--msk-border, var(--mj-hairline));
   background: transparent;
   border-radius: var(--ds-radius);
   width: 2rem;
@@ -32,7 +32,7 @@
 }
 
 .cal-view-tab {
-  border: 1px solid var(--msk-border, #E8E7E2);
+  border: 1px solid var(--msk-border, var(--mj-hairline));
   background: transparent;
   border-radius: var(--ds-radius);
   padding: 0.4rem 0.75rem;
@@ -52,7 +52,7 @@
   display: flex;
   align-items: center;
   gap: 0.35rem;
-  border: 1px solid var(--msk-border, #E8E7E2);
+  border: 1px solid var(--msk-border, var(--mj-hairline));
   background: transparent;
   border-radius: var(--ds-radius);
   padding: 0.4rem 0.75rem;
@@ -79,7 +79,7 @@
   margin-bottom: 0.5rem;
   font-size: var(--ds-text-xs);
   font-weight: 700;
-  color: var(--msk-text-2, #5C5C56);
+  color: var(--msk-text-2, var(--mj-ink-2));
   text-align: center;
 }
 
@@ -91,7 +91,7 @@
 
 .cal-cell {
   aspect-ratio: 1;
-  border: 1px solid var(--msk-border, #E8E7E2);
+  border: 1px solid var(--msk-border, var(--mj-hairline));
   border-radius: var(--ds-radius);
   background: transparent;
   display: flex;
@@ -153,7 +153,7 @@
 .cal-day-item {
   width: 100%;
   text-align: right;
-  border: 1px solid var(--msk-border, #E8E7E2);
+  border: 1px solid var(--msk-border, var(--mj-hairline));
   background: transparent;
   border-radius: var(--ds-radius);
   padding: var(--ds-space-2);
@@ -178,7 +178,7 @@
 }
 
 .cal-empty {
-  color: var(--msk-text-2, #5C5C56);
+  color: var(--msk-text-2, var(--mj-ink-2));
   font-size: 0.9rem;
   padding: 1rem 0;
 }

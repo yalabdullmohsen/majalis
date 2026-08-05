@@ -2,18 +2,18 @@
 <html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-title" content="Majlisilm" />
+    <meta name="apple-mobile-web-app-title" content="المجلس العلمي" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <title>المجلس العلمي | دروس شرعية ودورات علمية</title>
     <meta name="description" content="تطبيق عربي يجمع الدروس الشرعية والدورات والمحاضرات والقرآن والأذكار والفوائد في مكان واحد لطالب العلم." />
-    <meta name="keywords" content="المجلس العلمي, دروس علمية, دروس شرعية, محاضرات إسلامية, دورات شرعية, طلب العلم, القرآن الكريم, السنة النبوية, الفوائد العلمية, الأذكار" />
     <meta name="robots" content="index, follow" />
-    <meta name="theme-color" content="#011608" />
-    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#011608" />
-    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#011608" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#1F7A5A" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#1F7A5A" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#4FB48B" />
     <link rel="stylesheet" href="/brand/splash-boot.css" />
     <!-- apple-touch-startup-image: تُحقَن عبر assets:splash → brand/apple-splash/links.html -->
     <link rel="apple-touch-startup-image" media="(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3)" href="/brand/apple-splash/iPhone_15_Pro_Max__iPhone_15_Plus__iPhone_14_Pro_Max.png" />
@@ -102,24 +102,12 @@
     <link rel="dns-prefetch" href="https://everyayah.com" />
     <link rel="preconnect" href="https://server8.mp3quran.net" crossorigin />
     <link rel="dns-prefetch" href="https://server8.mp3quran.net" />
-    <meta name="color-scheme" content="light dark" />
-    <!-- خط المنصة الموحَّد: Alexandria لواجهة الاستخدام (نصوص، عناوين، قراءة) — خط عربي
-         حديث هادئ بثراء أوزان يناسب هوية فاخرة منخفضة الضجيج (إعادة تصميم الهوية v3،
-         2026-07-19، بدل Almarai). IBM Plex Sans Arabic يبقى مُحمَّلاً كبديل احتياطي فقط
-         (توافقًا مع مسارات توليد الصور/PDF القائمة التي ما زالت تشير إليه صراحةً).
-         الاستثناء الوحيد: خطوط الرسم القرآني/الصيغ الشرعية العثمانية للعناوين المميزة
-         والمصحف فقط. تحميل غير حاجب (media=print/onload) لتحسين Core Web Vitals. -->
-    <!-- Amiri Quran مُستضاف محليًا (public/fonts/amiri-quran/) لا عبر Google Fonts —
-         خط نص المصحف الافتراضي (الوضع الخفيف) لا يجوز أن يعتمد على شبكة CDN خارجية:
-         تطبيق iOS عبر Capacitor (WKWebView) قد يفتح بلا اتصال فوري، وأي تأخر/فشل هنا
-         يعني ظهور القرآن بخط بديل غير مقروء ولو للحظة — راجع @font-face في quran.css. -->
+    <!-- خط الواجهة الموحَّد: Alexandria (مع IBM Plex احتياطيًا). Amiri Quran محلي للمصحف فقط. -->
     <link rel="preload" href="/fonts/amiri-quran/AmiriQuran-Regular.woff2" as="font" type="font/woff2" crossorigin />
-    <!-- أوزان الواجهة الأساسية فقط أولاً (display=swap) — تقلّل بايتات الخطوط فوق الطية -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;600;700&family=Cairo:wght@400;600;700&family=Tajawal:wght@400;500;700&family=IBM+Plex+Sans+Arabic:wght@400;600;700&display=swap" media="print" onload="this.media='all'" />
-    <!-- خطوط العرض القرآني/الزخرفي مؤجّلة إلى ما بعد أول تفاعل أو خمول المتصفح -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Alexandria:wght@400;600;700&family=IBM+Plex+Sans+Arabic:wght@400;600;700&display=swap" media="print" onload="this.media='all'" />
     <script>
       (function () {
-        var href = "https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=Noto+Naskh+Arabic:wght@400;700&display=swap";
+        var href = "https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Scheherazade+New:wght@400;700&family=Noto+Naskh+Arabic:wght@400;700&display=swap";
         function loadDecorFonts() {
           if (document.getElementById("majalis-decor-fonts")) return;
           var l = document.createElement("link");

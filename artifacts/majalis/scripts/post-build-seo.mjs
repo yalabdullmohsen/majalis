@@ -61,7 +61,8 @@ function buildMergedHtml(seoTags, spaAssets, prerenderBody, spaBody) {
 <html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
     ${seoTags}
     <style>
       /* shell مرئي بدون JS (للزواحف غير المُنفِّذة) — root مخفي */

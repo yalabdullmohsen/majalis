@@ -12,8 +12,8 @@
 .src-type--article       { --sc-color: #3d1a78; }
 .src-type--ruling        { --sc-color: #856404; }
 .src-type--quote         { --sc-color: #212529; }
-.sc-color-bar { background: var(--sc-color, #5C5C56); }
-.sc-color-bg  { background: var(--sc-color, #5C5C56); }
+.sc-color-bar { background: var(--sc-color, var(--mj-ink-2)); }
+.sc-color-bg  { background: var(--sc-color, var(--mj-ink-2)); }
 
 /* ── نُقل إلى styles/components/islamic-quiz-game.css ── */
 /* ── Shared dynamic color utility ───────────────────────────────────────────── */

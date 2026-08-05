@@ -30,14 +30,14 @@
 /* tabs */
 .fq-tabs {
   display: flex; gap: .4rem; flex-wrap: nowrap; margin-bottom: 1.75rem;
-  background: #fff; border: 1px solid #E8E7E2; border-radius: var(--ds-radius-xl);
+  background: #fff; border: 1px solid var(--mj-hairline); border-radius: var(--ds-radius-xl);
   padding: .35rem; overflow-x: auto; scrollbar-width: none; -webkit-overflow-scrolling: touch;
 }
 .fq-tabs::-webkit-scrollbar { display: none; }
 .fq-tab {
   flex: none; padding: .55rem .8rem;
   border: none; border-radius: .7rem; background: transparent;
-  color: #5C5C56; font-family: inherit; font-size: .82rem; font-weight: 600;
+  color: var(--mj-ink-2); font-family: inherit; font-size: .82rem; font-weight: 600;
   cursor: pointer; transition: background .15s, color .15s;
   white-space: nowrap;
 }
@@ -47,13 +47,13 @@
 .fq-section { display: flex; flex-direction: column; gap: var(--ds-space-4); }
 .fq-intro {
   background: rgba(31,77,58,.05); border-right: 3px solid var(--majalis-emerald,var(--mj-brand));
-  border-radius: .5rem; padding: .9rem 1rem; font-size: .9rem; color: #5C5C56;
+  border-radius: .5rem; padding: .9rem 1rem; font-size: .9rem; color: var(--mj-ink-2);
   line-height: 1.7; margin: 0;
 }
 
 /* قاعدة كبرى card */
 .fq-card {
-  background: #fff; border: 1px solid #E8E7E2; border-radius: var(--ds-radius-xl);
+  background: #fff; border: 1px solid var(--mj-hairline); border-radius: var(--ds-radius-xl);
   overflow: hidden; transition: box-shadow .15s;
 }
 .fq-card:hover { box-shadow: 0 2px 16px rgba(31,77,58,.1); }
@@ -80,7 +80,7 @@
   display: flex; flex-direction: column; gap: var(--ds-space-4);
 }
 .fq-card__meaning, .fq-card__origin, .fq-card__section { display: flex; flex-direction: column; gap: .4rem; }
-.fq-card__meaning p, .fq-card__origin p, .fq-card__section p { margin: 0; font-size: .9rem; color: #5C5C56; line-height: 1.7; }
+.fq-card__meaning p, .fq-card__origin p, .fq-card__section p { margin: 0; font-size: .9rem; color: var(--mj-ink-2); line-height: 1.7; }
 .fq-label {
   font-size: .7rem; font-weight: 800; color: var(--majalis-emerald,var(--mj-brand));
   text-transform: uppercase; letter-spacing: normal;
@@ -89,7 +89,7 @@
 
 /* lists */
 .fq-list { margin: 0; padding-right: 1.2rem; display: flex; flex-direction: column; gap: .35rem; }
-.fq-list li { font-size: .88rem; color: #5C5C56; line-height: 1.6; }
+.fq-list li { font-size: .88rem; color: var(--mj-ink-2); line-height: 1.6; }
 .fq-list--faraa li { color: var(--mj-brand-deep); font-weight: 600; font-style: normal; }
 .fq-list--exception li { color: var(--mj-brand-deep); }
 
@@ -100,21 +100,21 @@
   background: #F8FFF8; border: 1px solid #D4E9DC; border-radius: .6rem;
   padding: .65rem .8rem; font-size: .85rem;
 }
-.fq-example__sit { flex: 1; color: #5C5C56; line-height: 1.5; }
+.fq-example__sit { flex: 1; color: var(--mj-ink-2); line-height: 1.5; }
 .fq-example__arrow { color: #9CA3AF; flex-shrink: 0; font-size: .8rem; padding-top: .15rem; }
 .fq-example__hukm { flex: 1; color: var(--mj-brand-deep); font-weight: 700; line-height: 1.5; }
 
 /* مؤلفون */
 .fq-card__scholars {
   display: flex; align-items: center; gap: .4rem;
-  color: #5C5C56; font-size: .78rem; padding-top: .5rem;
+  color: var(--mj-ink-2); font-size: .78rem; padding-top: .5rem;
   border-top: 1px solid #F3F4F6;
 }
 
 /* قواعد فرعية */
 .fq-search-bar {
   display: flex; align-items: center; gap: .5rem;
-  background: #fff; border: 1px solid #E8E7E2; border-radius: .75rem;
+  background: #fff; border: 1px solid var(--mj-hairline); border-radius: .75rem;
   padding: .55rem .9rem; color: #9CA3AF;
 }
 .fq-search-input {
@@ -124,7 +124,7 @@
 .fq-empty { text-align: center; color: #9CA3AF; padding: var(--ds-space-8); }
 .fq-faraa-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: var(--ds-space-4); }
 .fq-faraa-card {
-  background: #fff; border: 1px solid #E8E7E2; border-radius: .9rem; padding: 1rem 1.1rem;
+  background: #fff; border: 1px solid var(--mj-hairline); border-radius: .9rem; padding: 1rem 1.1rem;
   display: flex; flex-direction: column; gap: .55rem;
   transition: box-shadow .15s;
 }
@@ -135,7 +135,7 @@
   align-self: flex-start;
 }
 .fq-faraa-card__text { font-size: 1.05rem; font-weight: 800; color: #0F172A; margin: 0; font-family: var(--font-body); }
-.fq-faraa-card__explain { font-size: .83rem; color: #5C5C56; line-height: 1.6; margin: 0; }
+.fq-faraa-card__explain { font-size: .83rem; color: var(--mj-ink-2); line-height: 1.6; margin: 0; }
 .fq-faraa-card__example {
   display: flex; align-items: flex-start; gap: .4rem;
   background: var(--mj-brand-soft); border-radius: .5rem; padding: .5rem .7rem;
@@ -144,7 +144,7 @@
 
 /* ضوابط */
 .fq-daabit {
-  background: #fff; border: 1px solid #E8E7E2; border-radius: var(--ds-radius-xl); overflow: hidden;
+  background: #fff; border: 1px solid var(--mj-hairline); border-radius: var(--ds-radius-xl); overflow: hidden;
 }
 .fq-daabit__head {
   display: flex; align-items: center; gap: .75rem;
@@ -164,12 +164,12 @@
 .fq-daabit__rule-text { font-size: .95rem; font-weight: 700; color: #0F172A; margin: 0; font-family: var(--font-body); }
 .fq-daabit__rule-ex {
   display: flex; align-items: flex-start; gap: .35rem;
-  font-size: .8rem; color: #5C5C56; line-height: 1.5;
+  font-size: .8rem; color: var(--mj-ink-2); line-height: 1.5;
 }
 
 /* تطبيقات معاصرة */
 .fq-tatbiq {
-  background: #fff; border: 1px solid #E8E7E2; border-radius: var(--ds-radius-xl); overflow: hidden;
+  background: #fff; border: 1px solid var(--mj-hairline); border-radius: var(--ds-radius-xl); overflow: hidden;
 }
 .fq-tatbiq__head {
   display: flex; align-items: center; gap: .75rem;
@@ -191,20 +191,20 @@
   font-size: .88rem; color: #1E3A5F; font-weight: 600; line-height: 1.6;
 }
 .fq-tatbiq__q p { margin: 0; }
-.fq-tatbiq__a { font-size: .88rem; color: #5C5C56; line-height: 1.7; margin: 0; }
+.fq-tatbiq__a { font-size: .88rem; color: var(--mj-ink-2); line-height: 1.7; margin: 0; }
 .fq-tatbiq__source { font-size: .75rem; color: #9CA3AF; margin: 0; font-style: normal; }
 
 /* مراجع */
-.fq-ref { margin-top: 2.5rem; padding: var(--ds-space-6); background: #fff; border: 1px solid #E8E7E2; border-radius: var(--ds-radius-xl); }
+.fq-ref { margin-top: 2.5rem; padding: var(--ds-space-6); background: #fff; border: 1px solid var(--mj-hairline); border-radius: var(--ds-radius-xl); }
 .fq-ref__title { font-size: var(--ds-text-base); font-weight: 800; color: #0F172A; margin: 0 0 1rem; }
 .fq-ref__grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: .75rem; }
 .fq-ref__book {
   display: flex; align-items: flex-start; gap: .6rem;
-  background: #F8FAFC; border: 1px solid #E8E7E2; border-radius: .65rem; padding: .75rem .9rem;
+  background: #F8FAFC; border: 1px solid var(--mj-hairline); border-radius: .65rem; padding: .75rem .9rem;
   color: var(--majalis-emerald,var(--mj-brand));
 }
 .fq-ref__book-title { font-size: .85rem; font-weight: 700; color: #0F172A; margin: 0; }
-.fq-ref__book-author { font-size: .75rem; color: #5C5C56; margin: 0; }
+.fq-ref__book-author { font-size: .75rem; color: var(--mj-ink-2); margin: 0; }
 
 @media (max-width: 640px) {
   .fq-hero__title { font-size: 1.45rem; }

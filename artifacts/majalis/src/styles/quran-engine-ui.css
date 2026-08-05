@@ -18,9 +18,9 @@
 }
 
 .qe-page__nav button {
-  border: 1px solid color-mix(in srgb, var(--qe-emerald, #143f35) 28%, transparent);
+  border: 1px solid color-mix(in srgb, var(--qe-emerald, var(--mj-brand-deep)) 28%, transparent);
   background: transparent;
-  color: var(--qe-emerald, #143f35);
+  color: var(--qe-emerald, var(--mj-brand-deep));
   border-radius: 999px;
   padding: 0.4rem 0.95rem;
   font: inherit;
@@ -38,7 +38,7 @@
 }
 
 .qe-page__nav button.is-on {
-  background: var(--qe-emerald, #143f35);
+  background: var(--qe-emerald, var(--mj-brand-deep));
   color: #f4faf7;
 }
 
@@ -47,7 +47,7 @@
 .qe-abar {
   --qe-ink: var(--majalis-ink, #1a2420);
   --qe-muted: var(--color-muted, #5c6b66);
-  --qe-emerald: var(--majalis-emerald-deep, #143f35);
+  --qe-emerald: var(--majalis-emerald-deep, var(--mj-brand-deep));
   --qe-panel: var(--majalis-panel, #f7f4ef);
   --qe-line: var(--majalis-line, #d4cfc4);
   --qe-skel-a: #e8e4dc;

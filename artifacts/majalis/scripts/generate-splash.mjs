@@ -383,12 +383,10 @@ async function main() {
       if (typeof rep === "function") continue;
       src = src.replace(re, rep);
     }
-    // index.html: ثبّت theme-color على لون الدخول
+    // index.html: لا تستبدل theme-color بلون شاشة الدخول —
+    // theme-color للواجهة = هوية --mj-brand؛ لون splash يبقى في CSS الحرج فقط.
     if (t.file.endsWith("index.html")) {
-      src = src.replace(
-        /(<meta name="theme-color"[^>]*content=")[^"]*(")/g,
-        `$1${bgHex}$2`,
-      );
+      /* intentionally no theme-color overwrite */
     }
     writeFileSync(t.file, src);
     console.log(`✓ حدّث اللون في ${t.file.replace(ROOT + "/", "")}`);

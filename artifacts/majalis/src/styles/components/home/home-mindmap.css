@@ -63,7 +63,7 @@
 }
 .hmm-card__desc {
   font-size: var(--ds-text-xs);
-  color: #5C5C56;
+  color: var(--mj-ink-2);
   line-height: 1.4;
   margin: 0;
 }

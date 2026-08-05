@@ -93,7 +93,7 @@ html.dark .jnz-subtitle {
 .jnz-info__icon { font-size: 1.15rem; flex-shrink: 0; }
 .jnz-info p { margin: 0; }
 
-.jnz-steps { display: flex; flex-direction: column; gap: 0; background: #fff; border: 1px solid #E8E7E2; border-radius: .75rem; overflow: hidden; }
+.jnz-steps { display: flex; flex-direction: column; gap: 0; background: #fff; border: 1px solid var(--mj-hairline); border-radius: .75rem; overflow: hidden; }
 .jnz-step {
   display: flex;
   gap: var(--ds-space-4);
@@ -117,16 +117,16 @@ html.dark .jnz-subtitle {
 }
 .jnz-step__content { flex: 1; }
 .jnz-step__title { display: block; font-size: .9rem; font-weight: 700; color: #111; margin-bottom: .2rem; }
-.jnz-step__desc { font-size: .84rem; color: #5C5C56; line-height: 1.6; margin: 0; }
+.jnz-step__desc { font-size: .84rem; color: var(--mj-ink-2); line-height: 1.6; margin: 0; }
 
 .jnz-notes { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: .4rem; }
 .jnz-note {
   background: #fff;
-  border: 1px solid #E8E7E2;
+  border: 1px solid var(--mj-hairline);
   border-radius: .55rem;
   padding: .6rem .9rem;
   font-size: .85rem;
-  color: #5C5C56;
+  color: var(--mj-ink-2);
   line-height: 1.55;
   padding-right: 1.6rem;
   position: relative;
@@ -135,7 +135,7 @@ html.dark .jnz-subtitle {
 
 .jnz-takfin-card {
   background: #fff;
-  border: 1px solid #E8E7E2;
+  border: 1px solid var(--mj-hairline);
   border-radius: .75rem;
   padding: 1rem 1.1rem;
   display: flex;
@@ -146,7 +146,7 @@ html.dark .jnz-subtitle {
 .jnz-takfin-card__head { display: flex; align-items: center; gap: .65rem; }
 .jnz-takfin-card__icon { font-size: var(--ds-text-2xl); }
 .jnz-takfin-card__title { font-size: .95rem; font-weight: 700; color: #111; }
-.jnz-takfin-card__desc { font-size: .85rem; color: #5C5C56; line-height: 1.65; margin: 0; }
+.jnz-takfin-card__desc { font-size: .85rem; color: var(--mj-ink-2); line-height: 1.65; margin: 0; }
 .jnz-dalil {
   background: var(--mj-brand-soft);
   border-right: 3px solid var(--majalis-emerald, var(--mj-brand));
@@ -155,12 +155,12 @@ html.dark .jnz-subtitle {
   margin: 0;
 }
 .jnz-dalil__text { font-size: .88rem; line-height: 1.85; color: var(--mj-brand-deep); font-weight: 500; margin: 0 0 .3rem; }
-.jnz-dalil__ref { font-size: .72rem; color: #16A34A; font-style: normal; display: block; }
+.jnz-dalil__ref { font-size: .72rem; color: var(--mj-brand); font-style: normal; display: block; }
 
 .jnz-arkan-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: .65rem; }
 .jnz-rukn-card {
   background: #fff;
-  border: 1px solid #E8E7E2;
+  border: 1px solid var(--mj-hairline);
   border-radius: .65rem;
   padding: .8rem .9rem;
   display: flex;
@@ -194,14 +194,14 @@ html.dark .jnz-subtitle {
   flex-direction: column;
   gap: .4rem;
 }
-.jnz-dua-box__label { font-size: .72rem; color: #16A34A; font-weight: 700; }
+.jnz-dua-box__label { font-size: .72rem; color: var(--mj-brand); font-weight: 700; }
 .jnz-dua-box__text { font-size: .95rem; line-height: 2; color: var(--mj-brand-deep); font-weight: 600; margin: 0; }
-.jnz-dua-box__ref { font-size: .72rem; color: #16A34A; font-style: normal; }
+.jnz-dua-box__ref { font-size: .72rem; color: var(--mj-brand); font-style: normal; }
 
 .jnz-dafn-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: .7rem; }
 .jnz-dafn-card {
   background: #fff;
-  border: 1px solid #E8E7E2;
+  border: 1px solid var(--mj-hairline);
   border-radius: .65rem;
   padding: .85rem .9rem;
   display: flex;
@@ -215,7 +215,7 @@ html.dark .jnz-subtitle {
 
 .jnz-adab-card {
   background: #fff;
-  border: 1px solid #E8E7E2;
+  border: 1px solid var(--mj-hairline);
   border-radius: .7rem;
   padding: .9rem 1rem;
   display: flex;
@@ -225,7 +225,7 @@ html.dark .jnz-subtitle {
 }
 .jnz-adab-card__icon { font-size: var(--ds-text-2xl); flex-shrink: 0; }
 .jnz-adab-card__title { display: block; font-size: .9rem; font-weight: 700; color: #111; margin-bottom: .25rem; }
-.jnz-adab-card__desc { font-size: .84rem; color: #5C5C56; line-height: 1.6; margin: 0; }
+.jnz-adab-card__desc { font-size: .84rem; color: var(--mj-ink-2); line-height: 1.6; margin: 0; }
 
 .jnz-hadith-box {
   background: var(--mj-brand-soft);
@@ -235,14 +235,14 @@ html.dark .jnz-subtitle {
   margin-top: .5rem;
 }
 .jnz-hadith-box__text { font-size: var(--ds-text-base); line-height: 1.9; color: var(--mj-brand-deep); font-style: normal; font-weight: 600; margin: 0 0 .35rem; }
-.jnz-hadith-box__ref { font-size: .72rem; color: #16A34A; font-style: normal; display: block; }
+.jnz-hadith-box__ref { font-size: .72rem; color: var(--mj-brand); font-style: normal; display: block; }
 
 .jnz-related { margin-top: 2.5rem; }
 .jnz-related__title { font-size: var(--ds-text-base); font-weight: 700; color: #111; margin: 0 0 .75rem; }
 .jnz-related__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; }
 .jnz-related__link {
   background: #fff;
-  border: 1px solid #E8E7E2;
+  border: 1px solid var(--mj-hairline);
   border-radius: .6rem;
   padding: .6rem .7rem;
   font-size: .82rem;

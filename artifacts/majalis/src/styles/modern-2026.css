@@ -11,10 +11,10 @@
 /* ══ 1. Design Tokens ════════════════════════════════════════════════════════ */
 :root {
   /* ── ألوان الخلفية ── */
-  --m26-bg:           #FAFAF8;
+  --m26-bg:           var(--mj-bg);
   --m26-bg-2:         #F4F4F1;
   --m26-surface:      #FFFFFF;
-  --m26-surface-2:    #FAFAF8;
+  --m26-surface-2:    var(--mj-bg);
   --m26-surface-3:    #F4F4F1;
 
   /* ── الأخضر الداكن الرمادي — إعادة تصميم الهوية v3 ── */
@@ -27,21 +27,21 @@
 
   /* ── ذهبي رملي هادئ (مساند) ── */
   --m26-gold-900:     #9C7C41;
-  --m26-gold-700:     #B8963F;
-  --m26-gold-500:     #B8963F;
+  --m26-gold-700:     var(--mj-accent);
+  --m26-gold-500:     var(--mj-accent);
   --m26-gold-100:     #FAF3E0;
   --m26-gold-50:      #F7F1E5;
 
   /* ══ نظام ألوان النصوص — WCAG 2.2 متوافق ══════════════════════════════
-     النسب محسوبة على الخلفية الفعلية --msk-canvas #FAFAF8 (عاجية دافئة)،
+     النسب محسوبة على الخلفية الفعلية --msk-canvas var(--mj-bg) (عاجية دافئة)،
      لا الأبيض النقي كما كان مُفترَضًا سابقًا — الفرق كان يُسقط Muted/Hint
      تحت 4.5:1 فعليًا على كل صفحة حقيقية (48+ مخالفة مرصودة، 2026-07-21).
      ──────────────────────────────────────────────────────────────────────
      Primary   #1A1A18 → 17.3:1 (AAA) ✓
-     Secondary #5C5C56 → 9.1:1  (AAA) ✓
-     Muted     #5C5C56 → 5.5:1  (AA)  ✓
-     Subdued   #5C5C56 → 9.1:1  (AAA) ✓
-     Hint      #5C5C56 → 5.5:1  (AA)  ✓
+     Secondary var(--mj-ink-2) → 9.1:1  (AAA) ✓
+     Muted     var(--mj-ink-2) → 5.5:1  (AA)  ✓
+     Subdued   var(--mj-ink-2) → 9.1:1  (AAA) ✓
+     Hint      var(--mj-ink-2) → 5.5:1  (AA)  ✓
      Disabled  #A1A1AA → 2.2:1  ✗ — فقط للعناصر المعطّلة كلياً
      Success   var(--mj-brand) → 5.6:1  (AA)  ✓
      Warning   #92400E → 7.1:1  (AAA) ✓
@@ -50,10 +50,10 @@
      Accent    var(--mj-brand) → 8.1:1  (AAA) ✓
      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
   --txt-primary:    #1A1A18;
-  --txt-secondary:  #5C5C56;
-  --txt-muted:      #5C5C56;
-  --txt-subdued:    #5C5C56;
-  --txt-hint:       #5C5C56;
+  --txt-secondary:  var(--mj-ink-2);
+  --txt-muted:      var(--mj-ink-2);
+  --txt-subdued:    var(--mj-ink-2);
+  --txt-hint:       var(--mj-ink-2);
   --txt-disabled:   #B9BEBB;
   --txt-success:    #34785F;
   --txt-warning:    #B67A32;
@@ -129,36 +129,36 @@
    يُثبِّت --ds-emerald-deep وأخواتها على قيم الوضع النهاري داخل الوضع الليلي
    أيضًا — راجع .ds-filter-toggle كمثال ظهر فيه نص شبه معدوم التباين، 2026-07-16). */
 html:not([data-theme="dark"]) {
-  --msk-canvas:        #FAFAF8;
+  --msk-canvas:        var(--mj-bg);
   --msk-canvas-1:      #FFFFFF;
   --msk-canvas-2:      #F4F4F1;
   --msk-canvas-glass:  rgba(247,244,237,0.92);
   --msk-text:          #1A1A18;
-  --msk-text-2:        #5C5C56;
-  --msk-text-3:        #5C5C56;
-  --msk-border:        #E8E7E2;
+  --msk-text-2:        var(--mj-ink-2);
+  --msk-text-3:        var(--mj-ink-2);
+  --msk-border:        var(--mj-hairline);
   --msk-gold:          var(--mj-brand-deep);
   --msk-gold-deep:     var(--mj-brand-deep);
   --msk-green:         var(--mj-brand-deep);
   --msk-red:           #B44A4A;
   --msk-red-dim:       rgba(180,74,74,0.08);
   --majalis-ink:          #1A1A18;
-  --majalis-ink-soft:     #5C5C56;
-  --majalis-ink-muted:    #5C5C56;
+  --majalis-ink-soft:     var(--mj-ink-2);
+  --majalis-ink-muted:    var(--mj-ink-2);
   --majalis-emerald:      var(--mj-brand-deep);
-  --majalis-brass:        #B8963F;
+  --majalis-brass:        var(--mj-accent);
   --majalis-panel:        #FFFFFF;
   --majalis-panel-raised: #F4F4F1;
   --ds-emerald:      var(--mj-brand-deep);
   --ds-emerald-deep: var(--mj-brand-deep);
   --ds-ink:          #1A1A18;
-  --ds-ink-soft:     #5C5C56;
-  --ds-parchment:    #FAFAF8;
+  --ds-ink-soft:     var(--mj-ink-2);
+  --ds-parchment:    var(--mj-bg);
 }
 
 /* ══ 3. Base ══════════════════════════════════════════════════════════════════ */
 body {
-  background: var(--m26-bg, #FAFAF8);
+  background: var(--m26-bg, var(--mj-bg));
   color: var(--txt-primary, #1A1A18);
   font-family: var(--font-body);
   -webkit-font-smoothing: antialiased;
@@ -242,7 +242,7 @@ body {
 .ds-page p,
 .page-shell p,
 .ds-page p {
-  color: var(--txt-secondary, #5C5C56);
+  color: var(--txt-secondary, var(--mj-ink-2));
 }
 .ds-eyebrow {
   color: var(--m26-green-700, var(--mj-brand)) !important;
@@ -272,15 +272,15 @@ body {
   border-inline-end: 1px solid rgba(0,0,0,0.06) !important;
   box-shadow: var(--m26-shadow-xl) !important;
 }
-.side-nav-close { color: var(--txt-muted, #5C5C56) !important; }
+.side-nav-close { color: var(--txt-muted, var(--mj-ink-2)) !important; }
 .side-nav-group__title {
-  color: var(--txt-hint, #5C5C56) !important;
+  color: var(--txt-hint, var(--mj-ink-2)) !important;
   font-size: var(--type-label) !important;
   letter-spacing: normal !important;
   text-transform: uppercase !important;
 }
 .side-nav-item {
-  color: var(--txt-secondary, #5C5C56) !important;
+  color: var(--txt-secondary, var(--mj-ink-2)) !important;
   border-radius: var(--m26-r-md) !important;
 }
 .side-nav-item:hover {
@@ -300,7 +300,7 @@ body {
   border-top: 1px solid rgba(0,0,0,0.06) !important;
   box-shadow: 0 -2px 12px rgba(0,0,0,0.05) !important;
 }
-.bottom-nav__item { color: var(--txt-muted, #5C5C56) !important; }
+.bottom-nav__item { color: var(--txt-muted, var(--mj-ink-2)) !important; }
 .bottom-nav__item--active { color: var(--m26-green-800, var(--mj-brand)) !important; }
 
 /* ══ 9. Cards ════════════════════════════════════════════════════════════════ */
@@ -347,8 +347,8 @@ body {
   font-weight: var(--fw-bold) !important;
 }
 .ds-card__title { color: var(--txt-primary, #1A1A18) !important; font-weight: var(--fw-bold) !important; }
-.ds-card__body { color: var(--txt-secondary, #5C5C56) !important; }
-.ds-card__meta { color: var(--txt-muted, #5C5C56) !important; }
+.ds-card__body { color: var(--txt-secondary, var(--mj-ink-2)) !important; }
+.ds-card__meta { color: var(--txt-muted, var(--mj-ink-2)) !important; }
 
 /* ══ 10. Buttons ══════════════════════════════════════════════════════════ */
 .ds-btn {
@@ -372,11 +372,11 @@ body {
 .ds-btn--secondary {
   background: #FFFFFF !important;
   color: var(--m26-green-800, var(--mj-brand)) !important;
-  border: 1.5px solid var(--m26-green-600, #16A34A) !important;
+  border: 1.5px solid var(--m26-green-600, var(--mj-brand)) !important;
 }
 .ds-btn--ghost {
   background: transparent !important;
-  color: var(--txt-secondary, #5C5C56) !important;
+  color: var(--txt-secondary, var(--mj-ink-2)) !important;
   border: 1px solid rgba(0,0,0,0.10) !important;
 }
 .ds-btn--ghost:hover {
@@ -425,7 +425,7 @@ input::placeholder,
 textarea::placeholder,
 input::placeholder,
 textarea::placeholder {
-  color: var(--txt-hint, #5C5C56);
+  color: var(--txt-hint, var(--mj-ink-2));
 }
 input:focus,
 select:focus,
@@ -434,11 +434,11 @@ input:focus,
 select:focus,
 textarea:focus {
   outline: none;
-  border-color: var(--m26-green-600, #16A34A);
+  border-color: var(--m26-green-600, var(--mj-brand));
   box-shadow: 0 0 0 3px rgba(22,163,74,0.12);
 }
 label {
-  color: var(--txt-secondary, #5C5C56);
+  color: var(--txt-secondary, var(--mj-ink-2));
   font-size: var(--type-label);
   font-weight: var(--fw-medium);
 }
@@ -447,14 +447,14 @@ label {
 .kuwait-tab {
   background: #FFFFFF !important;
   border: 1px solid rgba(0,0,0,0.10) !important;
-  color: var(--txt-muted, #5C5C56) !important;
+  color: var(--txt-muted, var(--mj-ink-2)) !important;
   font-size: var(--type-label) !important;
   font-weight: var(--fw-medium) !important;
   border-radius: var(--m26-r-sm) !important;
   transition: all var(--m26-duration-base) !important;
 }
 .kuwait-tab:hover:not(.kuwait-tab--active) {
-  border-color: var(--m26-green-600, #16A34A) !important;
+  border-color: var(--m26-green-600, var(--mj-brand)) !important;
   color: var(--m26-green-800, var(--mj-brand)) !important;
   background: var(--m26-green-50, #F0FDF4) !important;
 }
@@ -480,40 +480,40 @@ label {
   font-size: 1.15rem !important;
   font-weight: var(--fw-bold) !important;
 }
-/* #6b7280 → 4.35:1 → نرفعه لـ #5C5C56 → 7.1:1 */
+/* var(--mj-muted) → 4.35:1 → نرفعه لـ var(--mj-ink-2) → 7.1:1 */
 .prophet-lux-card__pbuh {
-  color: var(--txt-muted, #5C5C56) !important;
+  color: var(--txt-muted, var(--mj-ink-2)) !important;
   font-size: var(--type-caption) !important;
 }
 .prophet-lux-card__place {
-  color: var(--txt-muted, #5C5C56) !important;
+  color: var(--txt-muted, var(--mj-ink-2)) !important;
   font-size: var(--type-caption) !important;
 }
 .prophet-lux-card__bio {
-  color: var(--txt-secondary, #5C5C56) !important;
+  color: var(--txt-secondary, var(--mj-ink-2)) !important;
   font-size: var(--type-body-sm) !important;
   line-height: var(--lh-relaxed) !important;
 }
-/* #9ca3af → 2.85:1 → FAILS → نرفعه لـ #5C5C56 → 7.1:1 */
+/* #9ca3af → 2.85:1 → FAILS → نرفعه لـ var(--mj-ink-2) → 7.1:1 */
 .prophet-lux-card__surahs {
-  color: var(--txt-muted, #5C5C56) !important;
+  color: var(--txt-muted, var(--mj-ink-2)) !important;
   font-size: var(--type-caption) !important;
 }
-.prophets-lux-count { color: var(--txt-muted, #5C5C56) !important; }
-.prophets-lux-empty { color: var(--txt-muted, #5C5C56) !important; }
+.prophets-lux-count { color: var(--txt-muted, var(--mj-ink-2)) !important; }
+.prophets-lux-empty { color: var(--txt-muted, var(--mj-ink-2)) !important; }
 .prophets-lux-disclaimer {
   color: var(--txt-warning, var(--mj-brand-deep)) !important;
   border-color: rgba(202,138,4,0.30) !important;
   background: var(--m26-gold-50, #f0faf5) !important;
 }
 .prophets-lux-tab {
-  color: var(--txt-muted, #5C5C56) !important;
+  color: var(--txt-muted, var(--mj-ink-2)) !important;
   border-color: rgba(0,0,0,0.12) !important;
   background: #FFFFFF !important;
 }
 .prophets-lux-tab--active {
   color: var(--m26-green-800, var(--mj-brand)) !important;
-  border-color: var(--m26-green-600, #16A34A) !important;
+  border-color: var(--m26-green-600, var(--mj-brand)) !important;
   background: var(--m26-green-50, #F0FDF4) !important;
   font-weight: var(--fw-bold) !important;
 }
@@ -528,15 +528,15 @@ label {
 .nh-row { border-color: rgba(0,0,0,0.06) !important; }
 .nh-row:hover { background: var(--m26-green-50, #F0FDF4) !important; }
 .nh-row__title { color: var(--txt-primary, #1A1A18) !important; }
-.nh-row__body-text { color: var(--txt-secondary, #5C5C56) !important; }
-.nh-row__meta { color: var(--txt-muted, #5C5C56) !important; }
-.nh-tab { color: var(--txt-muted, #5C5C56) !important; }
+.nh-row__body-text { color: var(--txt-secondary, var(--mj-ink-2)) !important; }
+.nh-row__meta { color: var(--txt-muted, var(--mj-ink-2)) !important; }
+.nh-tab { color: var(--txt-muted, var(--mj-ink-2)) !important; }
 .nh-tab--active {
   color: var(--m26-green-800, var(--mj-brand)) !important;
   border-bottom-color: var(--m26-green-800) !important;
 }
 .nh-search {
-  background: var(--m26-bg, #FAFAF8) !important;
+  background: var(--m26-bg, var(--mj-bg)) !important;
   border: 1.5px solid rgba(0,0,0,0.10) !important;
   color: var(--txt-primary, #1A1A18) !important;
   border-radius: var(--m26-r-md) !important;
@@ -550,9 +550,9 @@ label {
 }
 .notif-card__title { color: var(--txt-primary, #1A1A18) !important; }
 .notif-row__label { color: var(--txt-primary, #1A1A18) !important; }
-.notif-row__sub { color: var(--txt-muted, #5C5C56) !important; }
+.notif-row__sub { color: var(--txt-muted, var(--mj-ink-2)) !important; }
 .notif-toggle { background: rgba(0,0,0,0.12) !important; }
-.notif-toggle--on { background: var(--m26-green-600, #16A34A) !important; }
+.notif-toggle--on { background: var(--m26-green-600, var(--mj-brand)) !important; }
 .notif-test-btn {
   background: var(--m26-green-800, var(--mj-brand)) !important;
   color: #FFFFFF !important;
@@ -563,8 +563,8 @@ label {
   color: var(--m26-green-800, var(--mj-brand)) !important;
   border: 1px solid rgba(22,163,74,0.25) !important;
 }
-.notif-time__label { color: var(--txt-secondary, #5C5C56) !important; }
-.notif-time__hint { color: var(--txt-muted, #5C5C56) !important; }
+.notif-time__label { color: var(--txt-secondary, var(--mj-ink-2)) !important; }
+.notif-time__hint { color: var(--txt-muted, var(--mj-ink-2)) !important; }
 .notif-banner--warn {
   background: var(--m26-gold-50, #f0faf5) !important;
   border-color: rgba(202,138,4,0.35) !important;
@@ -587,17 +587,17 @@ label {
   font-family: var(--font-body) !important;
   font-weight: var(--fw-bold) !important;
 }
-.home-hero__sub { color: var(--txt-secondary, #5C5C56) !important; }
+.home-hero__sub { color: var(--txt-secondary, var(--mj-ink-2)) !important; }
 .home-more-card {
   background: #FFFFFF !important;
   border: 1px solid rgba(0,0,0,0.07) !important;
 }
-.home-about__body { color: var(--txt-secondary, #5C5C56) !important; }
+.home-about__body { color: var(--txt-secondary, var(--mj-ink-2)) !important; }
 
 /* ══ 19. Page Shell / Global Text ═══════════════════════════════════════════ */
 .page-shell { color: var(--txt-primary, #1A1A18) !important; }
-.page-meta { color: var(--txt-muted, #5C5C56) !important; }
-.page-desc { color: var(--txt-secondary, #5C5C56) !important; }
+.page-meta { color: var(--txt-muted, var(--mj-ink-2)) !important; }
+.page-desc { color: var(--txt-secondary, var(--mj-ink-2)) !important; }
 .page-tag {
   background: var(--m26-green-100, #DCFCE7) !important;
   color: var(--m26-green-800, var(--mj-brand)) !important;
@@ -617,13 +617,13 @@ label {
   line-height: var(--lh-snug) !important;
 }
 .ds-page-header .ds-subtitle {
-  color: var(--txt-secondary, #5C5C56) !important;
+  color: var(--txt-secondary, var(--mj-ink-2)) !important;
   font-size: var(--type-body-lg) !important;
   line-height: var(--lh-relaxed) !important;
 }
 
 /* ══ 20. Admin Shell ══════════════════════════════════════════════════════ */
-.admin-shell { background: var(--m26-bg, #FAFAF8) !important; }
+.admin-shell { background: var(--m26-bg, var(--mj-bg)) !important; }
 .admin-shell__sidebar {
   background: #FFFFFF !important;
   border-inline-end: 1px solid rgba(0,0,0,0.07) !important;
@@ -633,8 +633,8 @@ label {
 table,
 table { background: #FFFFFF; border-collapse: collapse; }
 th {
-  background: var(--m26-bg, #FAFAF8) !important;
-  color: var(--txt-secondary, #5C5C56) !important;
+  background: var(--m26-bg, var(--mj-bg)) !important;
+  color: var(--txt-secondary, var(--mj-ink-2)) !important;
   font-weight: var(--fw-bold) !important;
   font-size: var(--type-label) !important;
   letter-spacing: normal !important;
@@ -665,11 +665,11 @@ html[data-theme="dark"] td {
   background: #FFFFFF !important;
   border: 1px solid rgba(0,0,0,0.07) !important;
   border-radius: var(--m26-r-xl) !important;
-  color: var(--txt-muted, #5C5C56) !important;
+  color: var(--txt-muted, var(--mj-ink-2)) !important;
 }
 .empty-state h2,
 .empty-state h3 { color: var(--txt-primary, #1A1A18) !important; }
-.empty-state p { color: var(--txt-muted, #5C5C56) !important; }
+.empty-state p { color: var(--txt-muted, var(--mj-ink-2)) !important; }
 
 /* ══ 23. Skeleton ════════════════════════════════════════════════════════════ */
 @keyframes m26-shimmer {
@@ -697,8 +697,8 @@ html[data-theme="dark"] td {
 }
 .prophets-seerah-bridge__title { color: var(--m26-green-950, var(--mj-brand-deep)) !important; }
 .prophets-seerah-bridge__eyebrow { color: var(--m26-gold-700, var(--mj-brand)) !important; }
-.prophets-seerah-bridge__desc { color: var(--txt-secondary, #5C5C56) !important; }
-.prophets-seerah-bridge__arrow { color: var(--m26-green-600, #16A34A) !important; }
+.prophets-seerah-bridge__desc { color: var(--txt-secondary, var(--mj-ink-2)) !important; }
+.prophets-seerah-bridge__arrow { color: var(--m26-green-600, var(--mj-brand)) !important; }
 .seerah-back-link {
   color: var(--m26-green-800, var(--mj-brand)) !important;
   border-color: rgba(22,163,74,0.25) !important;
@@ -712,10 +712,10 @@ html[data-theme="dark"] td {
 .site-footer {
   background: var(--m26-bg-2, #F1F3F5) !important;
   border-top: 1px solid rgba(0,0,0,0.07) !important;
-  color: var(--txt-muted, #5C5C56) !important;
+  color: var(--txt-muted, var(--mj-ink-2)) !important;
 }
 .site-footer a {
-  color: var(--txt-secondary, #5C5C56) !important;
+  color: var(--txt-secondary, var(--mj-ink-2)) !important;
   text-decoration: none;
 }
 .site-footer a:hover,
@@ -742,7 +742,7 @@ html[data-theme="dark"] td {
 
 /* ══ 27. Accessibility ════════════════════════════════════════════════════════ */
 :focus-visible {
-  outline: 2px solid var(--m26-green-600, #16A34A);
+  outline: 2px solid var(--m26-green-600, var(--mj-brand));
   outline-offset: 2px;
   border-radius: var(--m26-r-sm);
 }
@@ -772,12 +772,12 @@ html[data-theme="dark"] td {
 
 /* ══ 29. Profile / Quick Links ═══════════════════════════════════════════════ */
 .profile-quick-link {
-  color: var(--txt-secondary, #5C5C56) !important;
+  color: var(--txt-secondary, var(--mj-ink-2)) !important;
   border-color: rgba(0,0,0,0.10) !important;
 }
 .profile-quick-link:hover {
   color: var(--m26-green-800, var(--mj-brand)) !important;
-  border-color: var(--m26-green-600, #16A34A) !important;
+  border-color: var(--m26-green-600, var(--mj-brand)) !important;
   background: var(--m26-green-50, #F0FDF4) !important;
 }
 
@@ -798,7 +798,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   border: 1px solid rgba(0,0,0,0.07) !important;
 }
 .adhkar-card__text { color: var(--txt-primary, #1A1A18) !important; }
-.adhkar-card__source { color: var(--txt-muted, #5C5C56) !important; }
+.adhkar-card__source { color: var(--txt-muted, var(--mj-ink-2)) !important; }
 
 /* ══ 33. Flashcards ══════════════════════════════════════════════════════════ */
 .flashcard {
@@ -820,41 +820,41 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   color: var(--txt-primary, #1A1A18) !important;
   font-weight: var(--fw-black) !important;
 }
-.stat-card__label { color: var(--txt-muted, #5C5C56) !important; }
+.stat-card__label { color: var(--txt-muted, var(--mj-ink-2)) !important; }
 
 /* ══ 35. Prayer Rank / Lesson Detail ════════════════════════════════════════ */
 .hcp-prayer-cell__time { color: var(--txt-primary, #1A1A18) !important; }
-.hcp-prayer-cell__name { color: var(--txt-secondary, #5C5C56) !important; }
+.hcp-prayer-cell__name { color: var(--txt-secondary, var(--mj-ink-2)) !important; }
 
 /* ══ 36. تاريخ الإسلامي / أذكار / تسبيح ════════════════════════════════════ */
 .tasbih-count {
   color: var(--txt-primary, #1A1A18) !important;
   font-weight: var(--fw-black) !important;
 }
-.tasbih-label { color: var(--txt-muted, #5C5C56) !important; }
+.tasbih-label { color: var(--txt-muted, var(--mj-ink-2)) !important; }
 
 /* ══ 37. Prophet Stories — Light Card Contrast Fixes ════════════════════════
    (.prophets-lux-count و.prophets-lux-empty مطابقتان حرفيًا لتعريفهما أعلى
    الملف — أُزيل التكرار هنا) ═══════════════════════════════════════════ */
-.prophet-lux-card__place { color: var(--txt-muted, #5C5C56) !important; }
+.prophet-lux-card__place { color: var(--txt-muted, var(--mj-ink-2)) !important; }
 
-.prophet-timeline__title { color: var(--txt-muted, #5C5C56) !important; }
+.prophet-timeline__title { color: var(--txt-muted, var(--mj-ink-2)) !important; }
 
-.prophet-timeline__era { color: var(--txt-muted, #5C5C56) !important; }
+.prophet-timeline__era { color: var(--txt-muted, var(--mj-ink-2)) !important; }
 
-.prophet-quiz__remark { color: var(--txt-muted, #5C5C56) !important; }
+.prophet-quiz__remark { color: var(--txt-muted, var(--mj-ink-2)) !important; }
 
-.prophets-lux-search-clear { color: var(--txt-muted, #5C5C56) !important; }
+.prophets-lux-search-clear { color: var(--txt-muted, var(--mj-ink-2)) !important; }
 
 /* ══ 38. Seerah Page — Timeline Contrast ════════════════════════════════════ */
-.seerah-timeline__dot { color: var(--txt-muted, #5C5C56) !important; }
+.seerah-timeline__dot { color: var(--txt-muted, var(--mj-ink-2)) !important; }
 
-.seerah-timeline__year { color: var(--txt-muted, #5C5C56) !important; }
+.seerah-timeline__year { color: var(--txt-muted, var(--mj-ink-2)) !important; }
 
 /* ══ 39. Muezzin Detail / Favorites — Contrast Fixes ════════════════════════ */
-.muezzin-meta { color: var(--txt-muted, #5C5C56) !important; }
+.muezzin-meta { color: var(--txt-muted, var(--mj-ink-2)) !important; }
 
-.muezzin-bio { color: var(--txt-muted, #5C5C56) !important; }
+.muezzin-bio { color: var(--txt-muted, var(--mj-ink-2)) !important; }
 
 /* ══ 39b. Back Button — زر الرجوع العالمي ══════════════════════════════════ */
 .ds-page-back-btn {
@@ -866,7 +866,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   border: 1.5px solid var(--majalis-line, #e5e7eb);
   border-radius: 9999px;
   background: var(--majalis-panel, #fff);
-  color: var(--txt-secondary, #5C5C56);
+  color: var(--txt-secondary, var(--mj-ink-2));
   font-size: 0.85rem;
   font-weight: 500;
   cursor: pointer;
@@ -875,8 +875,8 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
 }
 .ds-page-back-btn:hover {
   background: var(--m26-green-50, #F0FDF4);
-  border-color: var(--majalis-emerald, #16A34A);
-  color: var(--majalis-emerald, #16A34A);
+  border-color: var(--majalis-emerald, var(--mj-brand));
+  color: var(--majalis-emerald, var(--mj-brand));
 }
 
 /* زر الرجوع داخل legal-page-hero (خلفية داكنة) */
@@ -919,15 +919,15 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
 /* ══ 40. Legacy Token Bridge — إعادة تعريف الرموز القديمة للتوافق ═══════════ */
 :root {
   --text-base:       var(--txt-primary,   #1A1A18);
-  --text-soft:       var(--txt-secondary, #5C5C56);
-  --text-muted:      var(--txt-muted,     #5C5C56);
-  --text-subtle:     var(--txt-subdued,   #5C5C56);
+  --text-soft:       var(--txt-secondary, var(--mj-ink-2));
+  --text-muted:      var(--txt-muted,     var(--mj-ink-2));
+  --text-subtle:     var(--txt-subdued,   var(--mj-ink-2));
   --text-disabled:   var(--txt-disabled,  #B9BEBB);
   --text-accent:     var(--txt-accent,    var(--mj-brand-deep));
-  --text-inverse:    var(--txt-inverse,   #FAFAF8);
+  --text-inverse:    var(--txt-inverse,   var(--mj-bg));
 
   /* ── تحديث رموز m26 لتطابق إعادة تصميم الهوية v3 ── */
-  --m26-bg:           #FAFAF8;
+  --m26-bg:           var(--mj-bg);
   --m26-bg-2:         #F4F4F1;
   --m26-surface:      #FFFFFF;
   --m26-surface-2:    #F4F4F1;
@@ -950,7 +950,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   background-color: var(--mj-brand-deep);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cpath d='M50,4 L57.27,32.45 L82.53,17.47 L67.55,42.73 L96,50 L67.55,57.27 L82.53,82.53 L57.27,67.55 L50,96 L42.73,67.55 L17.47,82.53 L32.45,57.27 L4,50 L32.45,42.73 L17.47,17.47 L42.73,32.45 Z' fill='none' stroke='%23FFFFFF' stroke-opacity='0.055' stroke-width='1.1'/%3E%3Ccircle cx='50' cy='50' r='1.4' fill='%23FFFFFF' fill-opacity='0.08'/%3E%3C/svg%3E");
   background-size: 100px 100px;
-  color: #FAFAF8;
+  color: var(--mj-bg);
 }
 
 /* رأس النجمة — الوضع الاحتفالي للصفحات الرئيسية */
@@ -959,7 +959,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   background-color: var(--mj-brand);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cpath d='M50,4 L57.27,32.45 L82.53,17.47 L67.55,42.73 L96,50 L67.55,57.27 L82.53,82.53 L57.27,67.55 L50,96 L42.73,67.55 L17.47,82.53 L32.45,57.27 L4,50 L32.45,42.73 L17.47,17.47 L42.73,32.45 Z' fill='none' stroke='%23FFFFFF' stroke-opacity='0.06' stroke-width='1.2'/%3E%3Ccircle cx='50' cy='50' r='1.4' fill='%23FFFFFF' fill-opacity='0.09'/%3E%3C/svg%3E");
   background-size: 100px 100px;
-  color: #FAFAF8;
+  color: var(--mj-bg);
   padding: 2.5rem 1.5rem;
 }
 
@@ -1024,13 +1024,13 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   display: block;
   font-size: 0.58rem !important;
   font-weight: 700 !important;
-  color: var(--m26-green-600, #16A34A) !important;
+  color: var(--m26-green-600, var(--mj-brand)) !important;
   text-align: right;
   line-height: 1.2;
 }
 /* زر "اليوم" في التولبار */
 .cal-today-btn {
-  border: 1.5px solid var(--m26-green-600, #16A34A) !important;
+  border: 1.5px solid var(--m26-green-600, var(--mj-brand)) !important;
   color: var(--m26-green-700, var(--mj-brand)) !important;
   background: transparent !important;
   border-radius: 999px !important;
@@ -1073,7 +1073,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   align-items: center;
   gap: var(--ds-space-1);
   font-size: var(--ds-text-xs);
-  color: var(--txt-secondary, #6b7280);
+  color: var(--txt-secondary, var(--mj-muted));
   background: var(--surface-2, #f4f4f4);
   padding: 0.15rem 0.5rem;
   border-radius: 999px;
@@ -1094,7 +1094,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   --on-dark-primary:      #FFFFFF;
   --on-dark-secondary:    rgba(255, 255, 255, 0.88);
   --txt-body:             #1E1E1E;
-  --txt-body-light:       #5C5C56;
+  --txt-body-light:       var(--mj-ink-2);
 }
 
 /* ─── تحسين وزن الخط العام ─── */
@@ -1174,7 +1174,7 @@ p { line-height: var(--lh-normal, 1.65); }
 .page-meta,
 .page-desc,
 .content-detail-meta {
-  color: #5C5C56;
+  color: var(--mj-ink-2);
   line-height: var(--lh-normal, 1.65);
 }
 
