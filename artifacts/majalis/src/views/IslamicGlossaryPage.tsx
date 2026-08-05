@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { Link } from "wouter";
 import { BookOpen, ChevronDown, ChevronUp, Search, X } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
@@ -1476,6 +1477,11 @@ export default function IslamicGlossaryPage() {
             <BookOpen size={16} aria-hidden="true" />
             <span>{TERMS.length} مصطلحاً في ٦ علوم</span>
           </div>
+          <p className="gl-hero__sub" style={{ marginBlockStart: "0.75rem" }}>
+            <Link href="/memorize" className="gl-hero__cta" style={{ fontWeight: 700 }}>
+              راجِع بالبطاقات
+            </Link>
+          </p>
           {/* بحث */}
           <div className="gl-search">
             <Search size={16} aria-hidden="true" />

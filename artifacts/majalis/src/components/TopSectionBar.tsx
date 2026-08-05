@@ -21,6 +21,7 @@ type SectionTab = {
  */
 export const SECTION_TABS: SectionTab[] = [
   { href: "/mushaf", label: "القرآن", Icon: BookMarked, prefetch: () => import("@/views/MushafComingSoonPage") },
+  { href: "/memorize", label: "الحفظ", Icon: Brain, prefetch: () => import("@/views/MemorizePage") },
   { href: "/quran-knowledge", label: "القرآن وعلومه", Icon: BookOpen, prefetch: () => import("@/views/QuranKnowledgeHubPage") },
   { href: "/hadith", label: "الحديث والسنة", Icon: ScrollText, prefetch: () => import("@/views/HadithPage") },
   { href: "/fiqh", label: "الفقه والأحكام", Icon: Scale, prefetch: () => import("@/views/FiqhPage") },
@@ -39,6 +40,9 @@ export function isTabActive(location: string, href: string): boolean {
       location === "/quran-hub" ||
       location.startsWith("/quran-hub/")
     );
+  }
+  if (href === "/memorize") {
+    return location === "/memorize" || location.startsWith("/memorize/");
   }
   if (href === "/quran-knowledge") {
     return (
