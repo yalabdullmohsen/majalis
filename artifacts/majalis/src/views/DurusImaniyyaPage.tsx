@@ -1,16 +1,15 @@
-import { SectionAccordionLayout } from "@/components/SectionAccordionLayout";
-import { DURUS_IMANIYYA } from "@/lib/durus-imaniyya-data";
-import { accordionExploreLinks } from "@/lib/explore-links";
+import { LazySectionAccordionPage } from "@/components/LazySectionAccordionPage";
 
 export default function DurusImaniyyaPage() {
   return (
-    <SectionAccordionLayout
+    <LazySectionAccordionPage
       eyebrow="التربية والتزكية"
       title="الدروس الإيمانية والتربوية"
-      sections={DURUS_IMANIYYA}
+      exportName="DURUS_IMANIYYA"
+      relatedKey="durusImaniyya"
       stat3Label="سلاسل"
       stat3Value={5}
-      relatedLinks={accordionExploreLinks("durusImaniyya")}
+      load={() => import("@/lib/durus-imaniyya-data")}
     />
   );
 }

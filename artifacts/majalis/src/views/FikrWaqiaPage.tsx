@@ -1,14 +1,13 @@
-import { SectionAccordionLayout } from "@/components/SectionAccordionLayout";
-import { FIKR_WAQIA } from "@/lib/fikr-waqia-data";
-import { accordionExploreLinks } from "@/lib/explore-links";
+import { LazySectionAccordionPage } from "@/components/LazySectionAccordionPage";
 
 export default function FikrWaqiaPage() {
   return (
-    <SectionAccordionLayout
+    <LazySectionAccordionPage
       eyebrow="الفكر والواقع"
       title="الشباب والعمل والتقنية والقرارات"
-      sections={FIKR_WAQIA}
-      relatedLinks={accordionExploreLinks("fikr")}
+      exportName="FIKR_WAQIA"
+      relatedKey="fikr"
+      load={() => import("@/lib/fikr-waqia-data")}
     />
   );
 }

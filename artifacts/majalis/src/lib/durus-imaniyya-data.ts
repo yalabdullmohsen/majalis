@@ -1,14 +1,8 @@
+export type { DarsItem, DarsSection } from "@/lib/dars-types";
+import type { DarsItem, DarsSection } from "@/lib/dars-types";
+
 /** `summary`: سطر تعريفي موجز بمضمون الدرس — وصفي لا إفتائي. اختياري: الفهارس
  *  التي لم تُستكمل ملخصاتها بعد تظل تعمل كما هي بلا كسر. */
-export type DarsItem = { id: string; title: string; summary?: string; body?: string };
-export type DarsSection = {
-  id: string;
-  num: string;
-  title: string;
-  icon: string;
-  color: string;
-  lessons: DarsItem[];
-};
 
 /** يقبل عنواناً مجرداً أو زوجاً [عنوان، ملخص تعريفي موجز]. */
 /** يقبل عنواناً أو [عنوان، ملخص] أو [عنوان، ملخص، متن موجز]. */

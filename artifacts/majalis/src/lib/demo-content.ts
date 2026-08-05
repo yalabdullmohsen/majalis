@@ -1,15 +1,21 @@
 import { arabicMatchAny } from "./arabic-search";
 import { QA_CATEGORIES, filterSeedQa, loadSeedQa, getSeedQaCached, type SeedQaItem } from "./qa-seed";
-import { filterSeedFawaid } from "./fawaid-seed";
 import { FAWAID_CURATED_CATEGORIES } from "./fawaid-curated-categories";
 import { filterQualityFawaid } from "./content-quality";
-import { ADHKAR_CATEGORIES, filterAdhkar } from "./adhkar-seed";
 import { loadLessonsSeed, getLessonsSeedCached } from "./lessons-seed";
 import { filterMiraclesSeed, searchMiraclesSeed } from "./miracles-seed";
 import { getLibraryCatalog } from "./library-service";
 import { SHEIKHS_SEED, dedupeSheikhs } from "./sheikhs-seed";
 
-export { FAWAID_CURATED_CATEGORIES as FAWAID_CATEGORIES, filterSeedFawaid };
+export { FAWAID_CURATED_CATEGORIES as FAWAID_CATEGORIES };
+
+/** إعادة تصدير كسول — لا يسحب fawaid-seed (~500KB) إلى الحزمة عند الاستيراد. */
+export async function filterSeedFawaid(
+  ...args: Parameters<typeof import("./fawaid-seed").filterSeedFawaid>
+) {
+  const { filterSeedFawaid: filter } = await import("./fawaid-seed");
+  return filter(...args);
+}
 
 let fawaidCache: any[] | null = null;
 let fawaidLoading: Promise<any[]> | null = null;
@@ -123,10 +129,11 @@ export async function searchDemoContent(term: string): Promise<DemoSearchResults
     arabicMatchAny([f.text, f.author_name, f.category, f.source], q),
   );
 
-  const adhkar = filterAdhkar(q).slice(0, 15).map((item) => ({
+  const adhkarMod = await import("./adhkar-seed");
+  const adhkar = adhkarMod.filterAdhkar(q).slice(0, 15).map((item) => ({
     id: item.id,
     text: item.text,
-    category: ADHKAR_CATEGORIES.find((c) => c.id === item.categoryId)?.name,
+    category: adhkarMod.ADHKAR_CATEGORIES.find((c) => c.id === item.categoryId)?.name,
     source: item.source,
   }));
 

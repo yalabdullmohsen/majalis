@@ -6,7 +6,6 @@ import { usePageView } from "@/hooks/usePageView";
 import { ShareButtons } from "@/components/ContentActions";
 import { getFiqhHubTopic } from "@/lib/fiqh-hub-topics";
 import { getRulingsEncyclopedia } from "@/lib/rulings-service";
-import { RULINGS_ENCYCLOPEDIA_SEED } from "@/lib/rulings-encyclopedia-seed.generated";
 import type { ShariaRulingExtended } from "@/lib/rulings-types";
 import { RequestManager } from "@/lib/request-manager";
 import { SkeletonCardGrid, Empty, ErrorState } from "@/components/ui-common";
@@ -17,11 +16,12 @@ import { hrefRulings, hrefRulingsFilter } from "@/lib/content-href";
 import "@/styles/pages/fiqh-hub.css";
 import "@/styles/pages/fiqh-guide.css";
 
-function filterSeed(
+async function filterSeed(
   category?: string,
   subcategory?: string,
   limit = 12,
-): ShariaRulingExtended[] {
+): Promise<ShariaRulingExtended[]> {
+  const { RULINGS_ENCYCLOPEDIA_SEED } = await import("@/lib/rulings-encyclopedia-seed.generated");
   let rows = RULINGS_ENCYCLOPEDIA_SEED as ShariaRulingExtended[];
   if (category) {
     rows = rows.filter((r) => r.category === category);
@@ -79,22 +79,24 @@ export default function FiqhTopicPage() {
         }),
       { timeoutMs: 15_000 },
     )
-      .then((result) => {
+      .then(async (result) => {
         if (cancelled) return;
         if (result.data.length > 0) {
           setItems(result.data);
           setError(null);
           return;
         }
-        const seed = filterSeed(topic.rulingsCategory, topic.rulingsSubcategory);
+        const seed = await filterSeed(topic.rulingsCategory, topic.rulingsSubcategory);
+        if (cancelled) return;
         setItems(seed);
         if (result.dbError && result.dbError !== "empty" && seed.length === 0) {
           setError(result.dbError);
         }
       })
-      .catch((err) => {
+      .catch(async (err) => {
         if (cancelled) return;
-        const seed = filterSeed(topic.rulingsCategory, topic.rulingsSubcategory);
+        const seed = await filterSeed(topic.rulingsCategory, topic.rulingsSubcategory);
+        if (cancelled) return;
         setItems(seed);
         if (seed.length === 0) setError(String((err as Error)?.message || err));
       })

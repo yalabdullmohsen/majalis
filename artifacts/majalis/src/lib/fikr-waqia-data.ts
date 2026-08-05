@@ -1,4 +1,4 @@
-import type { DarsSection, DarsItem } from "@/lib/durus-imaniyya-data";
+import type { DarsSection, DarsItem } from "@/lib/dars-types";
 
 /** يقبل عنواناً أو [عنوان، ملخص] أو [عنوان، ملخص، متن موجز]. */
 function ls(prefix: string, items: (string | [string, string] | [string, string, string])[]): DarsItem[] {
