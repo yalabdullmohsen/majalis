@@ -164,12 +164,12 @@ export default function HomePage() {
             {dailyCtx.subGreeting ? ` — ${dailyCtx.subGreeting}` : ""}
           </p>
           <div className="m2030-hero__cta">
-            <Link href={continueHref} className="m2030-btn m2030-btn--primary">
+            <Link href={continueHref} className="mj-btn">
               ابدأ التصفح
             </Link>
             <button
               type="button"
-              className="m2030-btn m2030-btn--ghost"
+              className="mj-btn mj-btn--ghost"
               onClick={() => window.dispatchEvent(new CustomEvent("global-search-open"))}
               aria-label="ابحث في المحتوى"
             >
@@ -222,7 +222,7 @@ export default function HomePage() {
         <div className="m2030-band__head">
           <h2 className="m2030-band__title">تابع من حيث توقفت</h2>
         </div>
-        <div className="m2030-panel">
+        <div className="m2030-panel mj-card mj-card--raised">
           <SafeHomeSection name="continue">
             <HomeContinueWidget />
           </SafeHomeSection>

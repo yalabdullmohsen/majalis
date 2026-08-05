@@ -1,7 +1,7 @@
 import { createPortal } from "react-dom";
 import { Link, useLocation } from "wouter";
 import { useEffect } from "react";
-import { Moon, Settings, Sun, User, X } from "lucide-react";
+import { Brain, Moon, Settings, Sun, User, X } from "lucide-react";
 import { useThemePreference } from "@/components/ThemePreferenceProvider";
 import { isComingSoonPath } from "@/lib/nav-visibility";
 import { isNavHrefActive } from "@/lib/nav-active";
@@ -67,6 +67,16 @@ export function MoreBottomSheet({ open, onClose }: Props) {
               <Link href="/my-learning" onClick={onClose} className="more-sheet-item" aria-label="حسابي">
                 <span className="more-sheet-item__icon" aria-hidden="true"><User size={20} strokeWidth={1.8} /></span>
                 <span>حسابي</span>
+              </Link>
+              <Link
+                href="/memorize"
+                onClick={onClose}
+                className={`more-sheet-item${isNavHrefActive(location, "/memorize") ? " more-sheet-item--active" : ""}`}
+                aria-label="الحفظ"
+                aria-current={isNavHrefActive(location, "/memorize") ? "page" : undefined}
+              >
+                <span className="more-sheet-item__icon" aria-hidden="true"><Brain size={20} strokeWidth={1.8} /></span>
+                <span>الحفظ</span>
               </Link>
               <Link href="/settings" onClick={onClose} className="more-sheet-item" aria-label="الإعدادات">
                 <span className="more-sheet-item__icon" aria-hidden="true"><Settings size={20} strokeWidth={1.8} /></span>

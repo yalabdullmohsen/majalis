@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
-import { BookOpen, ChevronDown, ChevronUp, Search, X } from "lucide-react";
+import { BookOpen, ChevronDown, ChevronUp, X } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { SearchField, Card, Badge } from "@/components/ui-common";
 import "@/styles/pages/glossary.css";
 
 /* ══════════════════════════════════════════════════════════════════
@@ -24,14 +25,14 @@ interface GlossaryTerm {
   source?: string;
 }
 
-const CATEGORIES: { id: Category; label: string; color: string }[] = [
-  { id: "all",     label: "الكل",            color: "#143F35" },
-  { id: "aqeedah", label: "العقيدة",         color: "#1a5a7a" },
-  { id: "fiqh",    label: "الفقه",           color: "#226A56" },
-  { id: "hadith",  label: "علم الحديث",      color: "#312E81" },
-  { id: "quran",   label: "علوم القرآن",     color: "#065F46" },
-  { id: "seerah",  label: "السيرة والتاريخ", color: "#9B1C1C" },
-  { id: "tazkiya", label: "التزكية والأخلاق",color: "#143F35" },
+const CATEGORIES: { id: Category; label: string }[] = [
+  { id: "all",     label: "الكل" },
+  { id: "aqeedah", label: "العقيدة" },
+  { id: "fiqh",    label: "الفقه" },
+  { id: "hadith",  label: "علم الحديث" },
+  { id: "quran",   label: "علوم القرآن" },
+  { id: "seerah",  label: "السيرة والتاريخ" },
+  { id: "tazkiya", label: "التزكية والأخلاق" },
 ];
 
 const TERMS: GlossaryTerm[] = [
@@ -1464,29 +1465,27 @@ export default function IslamicGlossaryPage() {
   }, []);
 
   return (
-    <div className="gl-page" dir="rtl">
+    <div className="gl-page mj-page" dir="rtl">
       {/* ══ Hero ══ */}
-      <section className="gl-hero">
+      <section className="gl-hero mj-page-head">
         <div className="gl-hero__inner">
-          <div className="gl-hero__badge">القاموس الإسلامي</div>
+          <p className="mj-eyebrow">القاموس الإسلامي</p>
           <h1 className="gl-hero__title">المصطلحات الإسلامية</h1>
           <p className="gl-hero__sub">
             تعريفات دقيقة موثّقة لأهم المصطلحات في العلوم الشرعية، مرجع لطالب العلم في رحلته العلمية
           </p>
           <div className="gl-hero__count">
             <BookOpen size={16} aria-hidden="true" />
-            <span>{TERMS.length} مصطلحاً في ٦ علوم</span>
+            <span>{TERMS.length.toLocaleString("ar-EG")} مصطلحاً في ٦ علوم</span>
           </div>
           <p className="gl-hero__sub" style={{ marginBlockStart: "0.75rem" }}>
-            <Link href="/memorize" className="gl-hero__cta" style={{ fontWeight: 700 }}>
+            <Link href="/memorize" className="mj-btn mj-btn--soft">
               راجِع بالبطاقات
             </Link>
           </p>
           {/* بحث */}
           <div className="gl-search">
-            <Search size={16} aria-hidden="true" />
-            <input
-              className="gl-search__input"
+            <SearchField
               placeholder="ابحث عن مصطلح…"
               value={search}
               onChange={e => { setSearch(e.target.value); setAlpha(""); }}
@@ -1516,7 +1515,6 @@ export default function IslamicGlossaryPage() {
               type="button"
               role="tab"
               className={`gl-cat${activeCategory === c.id ? " gl-cat--active" : ""}`}
-              style={activeCategory === c.id ? { background: c.color, borderColor: c.color } : {}}
               onClick={() => { setActiveCategory(c.id); setAlpha(""); }}
               aria-selected={activeCategory === c.id}
             >
@@ -1541,7 +1539,7 @@ export default function IslamicGlossaryPage() {
             const cat = CATEGORIES.find(c => c.id === term.category)!;
             const isOpen = openTerm === term.id;
             return (
-              <div key={term.id} className={`gl-term${isOpen ? " gl-term--open" : ""}`}>
+              <Card key={term.id} className={`gl-term${isOpen ? " gl-term--open" : ""}`} raised={isOpen}>
                 <div
                   className="gl-term__head"
                   onClick={() => setOpenTerm(isOpen ? null : term.id)}
@@ -1553,9 +1551,7 @@ export default function IslamicGlossaryPage() {
                   <div className="gl-term__title-wrap">
                     <span className="gl-term__arabic">{term.term}</span>
                     {term.plural && <span className="gl-term__plural">(ج: {term.plural})</span>}
-                    <span className={`gl-term__cat gl-cat--${cat.id}`}>
-                      {cat.label}
-                    </span>
+                    <Badge tone="brand">{cat.label}</Badge>
                   </div>
                   <p className="gl-term__def-preview">{term.definition}</p>
                   <span className="gl-term__chevron" aria-hidden="true">
@@ -1596,7 +1592,7 @@ export default function IslamicGlossaryPage() {
                     )}
                   </div>
                 )}
-              </div>
+              </Card>
             );
           })}
         </div>

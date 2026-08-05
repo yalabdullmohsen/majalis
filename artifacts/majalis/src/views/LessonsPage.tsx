@@ -108,7 +108,7 @@ function LessonsFilterPanel({
   onClose?: () => void;
 }) {
   return (
-    <div className="lessons-v2-filters ui-card">
+    <div className="lessons-v2-filters ui-card mj-card">
       <div className="lessons-v2-filters__head">
         <h2>تصفية الدروس</h2>
         {onClose && (
@@ -492,7 +492,7 @@ export default function LessonsPage({
   );
 
   return (
-    <div className="page-shell lessons-page-v2 ds-page">
+    <div className="page-shell lessons-page-v2 ds-page mj-page">
       {/* نمط هندسي إسلامي، أطباق نجمية كلاسيكية */}
       <div className="lessons-geo-banner" aria-hidden="true">
         <svg className="lessons-geo-banner__pattern" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
