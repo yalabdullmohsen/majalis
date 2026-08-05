@@ -9,8 +9,8 @@
   "scope": "/",
   "display": "standalone",
   "display_override": ["standalone", "minimal-ui", "window-controls-overlay"],
-  "background_color": "#ffffff",
-  "theme_color": "#ffffff",
+  "background_color": "#011608",
+  "theme_color": "#011608",
   "orientation": "portrait-primary",
   "categories": ["education", "books", "lifestyle"],
   "prefer_related_applications": false,
@@ -52,7 +52,7 @@
       "purpose": "any"
     },
     {
-      "src": "/icon-512.png",
+      "src": "/brand/icon-512-maskable.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"

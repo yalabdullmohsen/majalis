@@ -14,6 +14,7 @@ import { setupStatusBar, setupKeyboard, isAndroid, isIOS, isNative } from "./lib
 import { purgeNativeWebRuntimeCaches } from "./lib/native-cache-freshness";
 import { initFinalPolish } from "./lib/init-final-polish";
 import { prewarmAudioCdns, prewarmTextApis, prewarmSupabaseOrigin } from "./lib/resource-prewarm";
+import { armSplashAutoHide } from "./lib/splash-screen";
 // هوية identity-v2 — الرموز أولاً (@theme + --mj-*) قبل أي طبقة قديمة
 import "./styles/theme.css";
 import "./styles/components/page-hero.css";
@@ -73,6 +74,9 @@ async function mount() {
       </QueryClientProvider>
     </ErrorBoundary>,
   );
+
+  // أخفِ شاشة الدخول عند أول عرض ناجح للمسار (سقف 2.5s)
+  armSplashAutoHide();
 
   void bootstrapSupabaseFromServer()
     .then(() => resetSupabaseClient())

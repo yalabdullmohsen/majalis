@@ -201,7 +201,8 @@
     "test:fawaid-curated-integrity": "node --import tsx src/lib/__tests__/fawaid-curated-integrity.test.ts",
     "test:religious-content": "node --import tsx src/lib/__tests__/religious-content-validator.test.ts",
     "assets:generate": "bash scripts/generate-capacitor-assets.sh",
-    "assets:generate:ios": "bash scripts/generate-capacitor-assets.sh --ios-only"
+    "assets:generate:ios": "bash scripts/generate-capacitor-assets.sh --ios-only",
+    "assets:splash": "node scripts/generate-splash.mjs"
   },
   "devDependencies": {
     "@capacitor/assets": "^3.0.5",
@@ -270,6 +271,7 @@
     "react-resizable-panels": "^2.1.7",
     "recharts": "^2.15.2",
     "rollup-plugin-visualizer": "^7.0.1",
+    "sharp": "^0.35.3",
     "sonner": "^2.0.7",
     "tailwind-merge": "catalog:",
     "tailwindcss": "catalog:",
