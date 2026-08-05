@@ -14,12 +14,18 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const root = resolve(__dirname, "../../../");
 
 // ── Phase 1: manifests ──────────────────────────────────────────────────────
+const splashMeta = JSON.parse(readFileSync(resolve(root, "public/brand/splash-meta.json"), "utf8"));
+assert.match(splashMeta.backgroundColor, /^#[0-9A-Fa-f]{6}$/);
+assert.ok(existsSync(resolve(root, "public/brand/splash-logo.png")));
+assert.ok(existsSync(resolve(root, "public/brand/splash-source.png")));
+
 const siteManifest = JSON.parse(readFileSync(resolve(root, "public/site.webmanifest"), "utf8"));
 assert.equal(siteManifest.display, "standalone");
 assert.equal(siteManifest.orientation, "portrait-primary");
 assert.equal(siteManifest.name, "Majlisilm");
 assert.equal(siteManifest.start_url, "/");
-assert.equal(siteManifest.theme_color, "#ffffff");
+assert.equal(siteManifest.theme_color, splashMeta.backgroundColor);
+assert.equal(siteManifest.background_color, splashMeta.backgroundColor);
 assert.ok(siteManifest.icons.some((i: { src: string }) => i.src.includes("icon-512")));
 assert.ok(existsSync(resolve(root, "public/manifest.webmanifest")));
 assert.ok(existsSync(resolve(root, "public/manifest.json")));
@@ -28,7 +34,8 @@ const jsonManifest = JSON.parse(readFileSync(resolve(root, "public/manifest.json
 assert.equal(jsonManifest.name, "Majlisilm");
 assert.equal(jsonManifest.start_url, "/");
 assert.equal(jsonManifest.display, "standalone");
-assert.equal(jsonManifest.theme_color, "#ffffff");
+assert.equal(jsonManifest.theme_color, splashMeta.backgroundColor);
+assert.equal(jsonManifest.background_color, splashMeta.backgroundColor);
 assert.ok(existsSync(resolve(root, "public/sw.js")));
 assert.ok(existsSync(resolve(root, "public/offline.html")));
 
