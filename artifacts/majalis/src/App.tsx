@@ -270,6 +270,7 @@ const MySubmissionsPage = lazy(() => import("@/views/MySubmissionsPage"));
 const UserStatsPage = lazy(() => import("@/views/UserStatsPage"));
 const ReadingPlansPage = lazy(() => import("@/views/ReadingPlansPage"));
 const FlashCardsPage = lazy(() => import("@/views/FlashCardsPage"));
+const MemorizePage = lazy(() => import("@/views/MemorizePage"));
 const CarModePage = lazy(() => import("@/views/CarModePage"));
 const MosqueModePage = lazy(() => import("@/views/MosqueModePage"));
 const NotificationSettingsPage = lazy(() => import("@/views/NotificationSettingsPage"));
@@ -328,7 +329,7 @@ function SeoManager() {
 /* وجهات شريط الأقسام العلوي (TopSectionBar) — التبديل بينها يُعامَل معاملة
    "الرجوع" (استعادة آخر موضع تمرير)، لا "تنقّل للأمام" (تمرير للأعلى)،
    لأن المستخدم يُنهي غالبًا جولة في قسم ثم يعود إليه لاحقًا عبر تبويبه. */
-const SECTION_BAR_PATHS = new Set(["/", "/mushaf", "/quran-knowledge", "/hadith", "/fiqh", "/memorization", "/occasions-lessons", "/islamic-directory", "/prayer-times", "/my-learning"]);
+const SECTION_BAR_PATHS = new Set(["/", "/mushaf", "/memorize", "/quran-knowledge", "/hadith", "/fiqh", "/memorization", "/occasions-lessons", "/islamic-directory", "/prayer-times", "/my-learning"]);
 
 /**
  * كان يفرض scrollTo(0,0) على كل تغيير مسار بلا استثناء، فيُفقِد موضع
@@ -622,6 +623,7 @@ function Router() {
       <Route path="/learning-plan"><Redirect to="/learning/paths" /></Route>
       <Route path="/reading-plans"><SafeLazyRoute component={ReadingPlansPage} /></Route>
       <Route path="/flashcards"><SafeLazyRoute component={FlashCardsPage} /></Route>
+      <Route path="/memorize"><SafeLazyRoute component={MemorizePage} /></Route>
       <Route path="/car-mode"><SafeLazyRoute component={CarModePage} /></Route>
       <Route path="/mosque-mode"><SafeLazyRoute component={MosqueModePage} /></Route>
       <Route path="/notification-settings"><SafeLazyRoute component={NotificationSettingsPage} /></Route>

@@ -39,6 +39,7 @@ const SIDEBAR_NAV_GROUPS_RAW: SidebarNavGroup[] = [
     items: [
       { href: "/", label: seoNavLabel("/", "الرئيسية"), description: "لوحة المنصة", Icon: Home },
       { href: "/mushaf", label: seoNavLabel("/mushaf", "القرآن"), description: "المصحف الشريف", Icon: BookOpen },
+      { href: "/memorize", label: seoNavLabel("/memorize", "الحفظ"), description: "بطاقات الحفظ والتكرار المتباعد", Icon: Brain },
       { href: "/prayer-times", label: seoNavLabel("/prayer-times", "الصلاة"), description: "مواقيت الصلاة", Icon: Clock },
     ],
   },

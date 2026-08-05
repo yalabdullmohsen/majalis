@@ -1239,6 +1239,11 @@ export default function HadithPage() {
         title="الأحاديث النبوية"
         subtitle="ثلاثة أقسام مرتّبة: الصحيح ثم الموضوع ثم الضعيف — مع إحصائيات علوم الحديث وبحث حديث مبسّط."
       />
+      <p className="hadith-memorize-cta" style={{ margin: "0 0 1rem", textAlign: "center" }}>
+        <Link href="/memorize" className="hadith-books-banner__btn">
+          احفظ الأربعين بالبطاقات
+        </Link>
+      </p>
       <HadithStatsPanel />
       <nav className="hadith-class-switch" aria-label="أقسام الحديث">
         <Link href="/hadith/sahih" className="hadith-class-switch__link">الصحيح</Link>
@@ -1287,6 +1292,7 @@ export default function HadithPage() {
         links={[
           { href: "/hadith/books", label: "كتب الحديث الكاملة" },
           { href: "/hadith-science", label: "مصطلح الحديث" },
+          { href: "/memorize", label: "بطاقات الحفظ" },
           { href: "/arbaeen-nawawi", label: "الأربعون النووية" },
           { href: "/scholars", label: "العلماء" },
         ]}
