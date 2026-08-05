@@ -11,6 +11,7 @@ import { HomeDailyProgress } from "@/components/home/HomeDailyProgress";
 import { HomeContinueWidget } from "@/components/home/HomeContinueWidget";
 import { HomeLearningSeasonsWidget } from "@/components/home/HomeLearningSeasonsWidget";
 import { HomeNowCard } from "@/components/home/HomeNowCard";
+import { HomeDiscoveryFeed } from "@/components/home/HomeDiscoveryFeed";
 import { HomeStartHereSection } from "@/components/home/HomeStartHereSection";
 import { FridayBanner } from "@/components/FridayBanner";
 import { fetchPrayerTimes, computePrayerCountdown, type PrayerTimesPayload } from "@/lib/prayer-times";
@@ -110,6 +111,7 @@ export default function HomePage() {
   const visibleWidgets = visibleWidgetOrder(homePrefs);
   // الأقسام المثبتة في الـDashboard لا تُكرَّر من التخصيص
   const pinnedIds = new Set(["lessons", "prayer", "continue", "daily-benefits", "quiz", "daily-progress", "learning-seasons"]);
+  // daily-benefits/quiz مثبتان لأن اكتشاف اليوم يعرض محتوى مكافئ في الأعلى
   const restWidgetOrder = visibleWidgets.filter((id) => !pinnedIds.has(id));
 
   const [heroPrayers, setHeroPrayers] = useState<PrayerTimesPayload | null>(null);
@@ -248,17 +250,12 @@ export default function HomePage() {
         <div className="m2030-band__head">
           <div>
             <h2 className="m2030-band__title">مقترح لك اليوم</h2>
-            <p className="m2030-band__sub">فائدة واختبار سريع بلا ضجيج اجتماعي</p>
+            <p className="m2030-band__sub">اكتشاف يومي موثّق — بلا تعليقات عامة</p>
           </div>
         </div>
-        <div className="hp-feed">
-          <SafeHomeSection name="daily-benefits">
-            <HomeDailyBenefits />
-          </SafeHomeSection>
-          <SafeHomeSection name="quiz">
-            <HomeQuizCard />
-          </SafeHomeSection>
-        </div>
+        <SafeHomeSection name="discovery-feed">
+          <HomeDiscoveryFeed />
+        </SafeHomeSection>
       </section>
 
       {visibleWidgets.includes("lessons") && (

@@ -471,5 +471,97 @@ html.dark .m2030-feature__title {
   gap: 0.85rem;
 }
 
+.hp-discovery {
+  display: grid;
+  gap: 0.7rem;
+}
+.hp-discovery__card {
+  padding: 0.9rem 1rem;
+  background: var(--surface, var(--mj-surface));
+  border: 1px solid var(--border, var(--mj-hairline));
+  border-radius: var(--mj-r-md, 16px);
+  box-shadow: var(--mj-sh-soft, none);
+}
+.hp-discovery__head {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  margin-block-end: 0.55rem;
+}
+.hp-discovery__icon {
+  display: grid;
+  place-items: center;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--mj-brand) 12%, transparent);
+  color: var(--mj-brand);
+  flex-shrink: 0;
+}
+.hp-discovery__eyebrow {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--mj-brand);
+  letter-spacing: 0.01em;
+}
+.hp-discovery__title {
+  margin: 0.1rem 0 0;
+  font-size: 0.92rem;
+  font-weight: 700;
+  font-family: var(--font-display);
+  color: var(--text-title, var(--mj-ink));
+}
+.hp-discovery__body {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.75;
+  color: var(--text, var(--mj-ink));
+}
+.hp-discovery__card--ayah .hp-discovery__body,
+.hp-discovery__card--hadith .hp-discovery__body,
+.hp-discovery__card--dhikr .hp-discovery__body {
+  font-size: 1.02rem;
+  line-height: 1.9;
+}
+.hp-discovery__meta {
+  margin: 0.45rem 0 0;
+  font-size: 0.78rem;
+  line-height: 1.5;
+  color: var(--text-muted, var(--mj-ink-2));
+}
+.hp-discovery__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-block-start: 0.75rem;
+}
+.hp-discovery__link,
+.hp-discovery__share {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  min-height: 2.5rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--mj-r-pill, 999px);
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: none;
+  border: 1px solid var(--border, var(--mj-hairline));
+  background: transparent;
+  color: var(--text-title, var(--mj-ink));
+  cursor: pointer;
+  font: inherit;
+}
+.hp-discovery__link {
+  background: var(--mj-brand);
+  border-color: var(--mj-brand);
+  color: #F7FAF8;
+}
+.hp-discovery__share:hover,
+.hp-discovery__link:hover {
+  opacity: 0.92;
+}
+
 .home-start-here--embedded .hsh-header { display: none; }
 .home-start-here--embedded { margin: 0; }
