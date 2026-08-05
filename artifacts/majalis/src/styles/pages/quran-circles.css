@@ -12,7 +12,7 @@
 
 .qc-hero__eyebrow {
   margin: 0;
-  color: var(--majalis-emerald-deep, #143f35);
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep));
   font-size: 0.8rem;
   font-weight: 700;
 }
@@ -37,7 +37,7 @@
 }
 
 .qc-hero__links a {
-  color: var(--majalis-emerald-deep, #143f35);
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep));
   font-weight: 600;
   text-decoration: none;
   font-size: 0.88rem;
@@ -104,7 +104,7 @@
 .qc-group__title {
   margin: 0 0 0.65rem;
   font-size: 1.05rem;
-  color: var(--majalis-emerald-deep, #143f35);
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep));
 }
 
 .qc-list {
@@ -148,7 +148,7 @@
   padding: 0.15rem 0.45rem;
   border-radius: 999px;
   background: rgba(20, 63, 53, 0.08);
-  color: #143f35;
+  color: var(--mj-brand-deep);
 }
 
 .qc-card__meta {
@@ -181,7 +181,7 @@
   gap: 0.25rem;
   font-size: 0.84rem;
   font-weight: 600;
-  color: #143f35;
+  color: var(--mj-brand-deep);
   text-decoration: none;
 }
 
@@ -201,7 +201,7 @@
 }
 
 .qc-footnote a {
-  color: #143f35;
+  color: var(--mj-brand-deep);
 }
 
 @media (max-width: 640px) {

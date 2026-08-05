@@ -1,12 +1,12 @@
 import { useEffect } from "react";
-import { Link } from "wouter";
 import type { LucideIcon } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { PageHero } from "@/components/ui/PageHero";
+import { HubCard } from "@/components/ui/HubCard";
 import "@/styles/pages/quran-hub.css";
 
-export type HubCard = {
+export type HubCardItem = {
   href: string;
   title: string;
   desc: string;
@@ -17,7 +17,7 @@ type Props = {
   path: string;
   title: string;
   description: string;
-  cards: HubCard[];
+  cards: HubCardItem[];
 };
 
 /** صفحة تجميع أقسام مدمجة — بطاقات داخلية دون تغيير المحتوى الأصلي. */
@@ -42,19 +42,15 @@ export default function MergedSectionHubPage({ path, title, description, cards }
       />
 
       <section className="quran-hub-sections" aria-label={title}>
-        <div className="quran-hub-grid">
+        <div className="hub-card-grid">
           {cards.map(({ href, title: cardTitle, desc, Icon }) => (
-            <Link key={`${href}:${cardTitle}`} href={href} className="quran-hub-card">
-              <div className="quran-hub-card__header qhc-accent--deep">
-                <span className="quran-hub-card__icon" aria-hidden="true">
-                  <Icon size={22} strokeWidth={1.6} />
-                </span>
-              </div>
-              <div className="quran-hub-card__body">
-                <strong className="quran-hub-card__title">{cardTitle}</strong>
-                <p className="quran-hub-card__desc">{desc}</p>
-              </div>
-            </Link>
+            <HubCard
+              key={`${href}:${cardTitle}`}
+              href={href}
+              title={cardTitle}
+              description={desc}
+              Icon={Icon}
+            />
           ))}
         </div>
       </section>

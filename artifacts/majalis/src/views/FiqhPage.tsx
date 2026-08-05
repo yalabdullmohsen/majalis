@@ -8,7 +8,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { getRulingsEncyclopedia } from "@/lib/rulings-service";
 import { RULINGS_CATEGORY_TREE } from "@/lib/rulings-categories";
-import { SkeletonCardGrid, Empty, ErrorState, PageHero } from "@/components/ui-common";
+import { SkeletonCardGrid, Empty, ErrorState, PageHero, HubCard } from "@/components/ui-common";
 import { getQaQuestions } from "@/lib/supabase";
 import { QA_CATEGORIES, loadSeedQa } from "@/lib/qa-seed";
 import { RequestManager } from "@/lib/request-manager";
@@ -168,18 +168,15 @@ export default function FiqhPage() {
         <h2 id="fiqh-hub-heading" className="tawheed-principles-heading fiqh-section-heading">
           أقسام الفقه والأحكام
         </h2>
-        <div className="fqh-hub-grid">
+        <div className="hub-card-grid fqh-hub-grid">
           {FIQH_HUB_TOPICS.map((t) => (
-            <Link
+            <HubCard
               key={t.id}
               href={t.href}
-              className="fqh-hub-card"
-              style={{ "--fqh-clr": t.color } as React.CSSProperties}
-            >
-              <span className="fqh-hub-card__emoji" aria-hidden="true"><SectionIcon name={t.emoji} size={28} /></span>
-              <p className="fqh-hub-card__title">{t.title}</p>
-              <p className="fqh-hub-card__desc">{t.desc}</p>
-            </Link>
+              title={t.title}
+              description={t.desc}
+              icon={<SectionIcon name={t.emoji} size={22} />}
+            />
           ))}
         </div>
       </section>

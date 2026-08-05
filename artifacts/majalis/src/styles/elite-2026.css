@@ -14,14 +14,14 @@
    ══════════════════════════════════════════════ */
 :root {
   /* ── الأخضر الداكن الرمادي — إعادة تصميم الهوية v3 (2026-07-19) ── */
-  --elite-forest:       #143F35;
-  --elite-forest-2:     #143F35;
-  --elite-green:        #143F35;
-  --elite-green-mid:    #226A56;
+  --elite-forest:       var(--mj-brand-deep);
+  --elite-forest-2:     var(--mj-brand-deep);
+  --elite-green:        var(--mj-brand-deep);
+  --elite-green-mid:    var(--mj-brand);
   --elite-green-light:  #5C5C56;
   --elite-sage:         #E8E7E2;
   --elite-sage-2:       #F4F4F1;
-  --elite-mark:         #143F35;
+  --elite-mark:         var(--mj-brand-deep);
 
   /* ── خلفيات وعاجي دافئ ── */
   --elite-white:        #FAFAF8;
@@ -162,7 +162,7 @@ body {
 }
 .navbar-theme-toggle:hover {
   background: var(--msk-gold-dim, rgba(31,77,58,.08)) !important;
-  color: var(--msk-gold, #226A56) !important;
+  color: var(--msk-gold, var(--mj-brand)) !important;
   border-color: var(--msk-gold-border, rgba(31,77,58,.22)) !important;
 }
 html[data-theme="dark"] .navbar-theme-toggle {
@@ -186,7 +186,7 @@ html[data-theme="dark"] .navbar-theme-toggle:hover {
   background: var(--msk-gold-dim, rgba(31,77,58,.08)) !important;
   border: 1px solid var(--msk-gold-border, rgba(31,77,58,.22)) !important;
   border-radius: 999px !important;
-  color: var(--msk-gold, #226A56) !important;
+  color: var(--msk-gold, var(--mj-brand)) !important;
   font-size: 0.78rem;
   font-weight: 700;
   flex-shrink: 0;
@@ -232,7 +232,7 @@ html[data-theme="dark"] .navbar-mobile-login {
   background: var(--elite-white, #FAFAF8) !important;
   border-color: var(--elite-border-2, rgba(24,54,42,0.15)) !important;
   box-shadow: var(--elite-shadow-sm, 0 2px 4px rgba(18,32,25,0.06)) !important;
-  color: var(--elite-forest, #143F35) !important;
+  color: var(--elite-forest, var(--mj-brand-deep)) !important;
 }
 
 /* ══════════════════════════════════════════════
@@ -241,7 +241,7 @@ html[data-theme="dark"] .navbar-mobile-login {
    على خلفية داكنة → نسبة تباين 1.14:1 / 1.27:1 (غير مرئي)
    ══════════════════════════════════════════════ */
 .ds-page-header {
-  background-color: var(--elite-forest, #143F35) !important;
+  background-color: var(--elite-forest, var(--mj-brand-deep)) !important;
   background-image: url("/star-pattern.svg") !important;
   background-size: 100px 100px !important;
   color: var(--elite-white, #FAFAF8) !important;
@@ -299,14 +299,14 @@ html[data-theme="dark"] .navbar-mobile-login {
 .fm-section-title,
 .rp-section-title {
   color: #fff !important;
-  background: var(--elite-forest, #143F35) !important;
+  background: var(--elite-forest, var(--mj-brand-deep)) !important;
   padding: 0.35rem 0.8rem !important;
   border-radius: 0.45rem !important;
   display: inline-block !important;
   margin-bottom: 0.75rem !important;
 }
 
-/* 4c-dark — شارات عناوين الأقسام تبقى خلفية غابة عميقة (#143F35) في الوضع
+/* 4c-dark — شارات عناوين الأقسام تبقى خلفية غابة عميقة (var(--mj-brand-deep)) في الوضع
    الليلي أيضًا (انظر إعادة ضبط --elite-forest لاحقًا في هذا الملف). النص
    يبقى أبيض كما في §4c — لا تُفرض لونًا داكنًا هنا (كان ذلك صالحًا فقط حين
    كان --elite-forest يُسطَّح إلى نعناعي فاتح). */
@@ -325,7 +325,7 @@ html[data-theme="dark"] .admin-section-title,
 html[data-theme="dark"] .fm-section-title,
 html[data-theme="dark"] .rp-section-title {
   color: var(--text-on-brand, #fff) !important;
-  background: var(--elite-forest, #143F35) !important;
+  background: var(--elite-forest, var(--mj-brand-deep)) !important;
 }
 
 /* إلغاء الشخطة الزخرفية الزمردية تحت عناوين الأقسام */
@@ -378,7 +378,7 @@ html[data-theme="dark"] .rp-section-title {
   font-weight: 700 !important;
   letter-spacing: normal !important;
   text-transform: uppercase !important;
-  color: var(--elite-green, #166534) !important;
+  color: var(--elite-green, var(--mj-brand)) !important;
   margin-bottom: 0.625rem !important;
 }
 
@@ -394,7 +394,7 @@ html[data-theme="dark"] .rp-section-title {
 .home-main--v3 .hit-card,
 .home-main--v3 .hmm-card,
 .home-main--v3 .ds-quiz-home-card {
-  background: var(--elite-forest, #143F35) !important;
+  background: var(--elite-forest, var(--mj-brand-deep)) !important;
   border-color: rgba(255,255,255,0.08) !important;
 }
 
@@ -438,7 +438,7 @@ html[data-theme="dark"] .rp-section-title {
    إلى #7ED4B5 — تراجعتُ عنها فورًا لأن نفس المتغيّر يُستخدَم أيضًا كخلفية
    لهذه البطاقات بالذات (.home-main--v3 .hmm-card/.ds-quiz-home-card
    { background: var(--elite-forest) })، فأصبحت الخلفية فاتحة (#7ED4B5)
-   بدل الداكنة الأصلية (#143F35) — عطل جديد (بطاقة فاتحة + نص فاتح = غير
+   بدل الداكنة الأصلية (var(--mj-brand-deep)) — عطل جديد (بطاقة فاتحة + نص فاتح = غير
    مقروء) أسوأ من الأصلي. الإصلاح الصحيح أدناه بدلاً من ذلك: استثناء
    .hnh__title/.ds-quiz-home-card__title من القاعدة العامة
    `[class*="card"] h*` (نفس نمط .sq-title). */
@@ -473,7 +473,7 @@ html[data-theme="dark"] .rp-section-title {
   color: rgba(255,255,255,0.88) !important;
 }
 
-/* ⑤ قيم مشفرة — hnh__source يستخدم #226A56 */
+/* ⑤ قيم مشفرة — hnh__source يستخدم var(--mj-brand) */
 .home-main--v3 .ui-card .hnh__source,
 .home-main--v3 .ui-card .hnh__benefit { color: rgba(255,255,255,0.72) !important; }
 
@@ -544,14 +544,14 @@ html[data-theme="dark"] .rp-section-title {
 }
 
 /* ⑩ .page-tag داخل الحاويات الداكنة — نعيدها للنص الداكن على الخلفية الفاتحة
-   السبب: ① تُغيّر --color-primary إلى #7ED4B5 (فاتح) فيظهر التباين ضعيفاً على خلفية #E8F2EE */
+   السبب: ① تُغيّر --color-primary إلى #7ED4B5 (فاتح) فيظهر التباين ضعيفاً على خلفية var(--mj-brand-soft) */
 .home-main--v3 .ui-card .page-tag,
 .home-main--v3 .ds-card .page-tag,
 .home-main--v3 .hit-card .page-tag,
 .home-main--v3 .hmm-card .page-tag,
 .myt-card .page-tag,
 .hdc__card .page-tag {
-  color: #143F35 !important;
+  color: var(--mj-brand-deep) !important;
   background: rgba(255,255,255,0.90) !important;
 }
 
@@ -605,7 +605,7 @@ html[data-theme="dark"] .rp-section-title {
   color: rgba(255,255,255,0.70) !important;
 }
 /* .ds-quiz-home-card__desc كانت الوحيدة بلا تجاوز هنا — لا تزال #4b5563
-   (رمادي داكن) من design-system.css فوق نفس الخلفية الداكنة #143F35، وهي
+   (رمادي داكن) من design-system.css فوق نفس الخلفية الداكنة var(--mj-brand-deep)، وهي
    نفس فخّ التباين الموثَّق في هذا القسم بالذات (راجع التعليق أعلاه) لكن
    بلا إصلاح فعلي حتى الآن — أُصلح الآن بنفس نمط الأسطر المجاورة (2026-07-18). */
 .home-main--v3 .ds-quiz-home-card .ds-quiz-home-card__desc {
@@ -737,7 +737,7 @@ html[data-theme="dark"] .rp-section-title {
   font-weight: 700 !important;
   letter-spacing: normal !important;
   text-transform: uppercase !important;
-  color: var(--elite-green, #166534) !important;
+  color: var(--elite-green, var(--mj-brand)) !important;
   margin-bottom: 0.25rem !important;
 }
 
@@ -745,7 +745,7 @@ html[data-theme="dark"] .rp-section-title {
 .ds-section__link {
   font-size: 0.8125rem !important;
   font-weight: 600 !important;
-  color: var(--elite-green, #166534) !important;
+  color: var(--elite-green, var(--mj-brand)) !important;
   text-decoration: none !important;
   white-space: nowrap !important;
   display: inline-flex !important;
@@ -756,7 +756,7 @@ html[data-theme="dark"] .rp-section-title {
 
 .home-section-link:hover,
 .ds-section__link:hover {
-  color: var(--elite-forest, #052E16) !important;
+  color: var(--elite-forest, var(--mj-brand-deep)) !important;
 }
 
 /* ══════════════════════════════════════════════
@@ -810,7 +810,7 @@ html[data-theme="dark"] .rp-section-title {
 }
 
 .lesson-unified-card__header {
-  background-color: var(--elite-forest, #143F35) !important;
+  background-color: var(--elite-forest, var(--mj-brand-deep)) !important;
   background-image: url("/star-pattern.svg") !important;
   background-size: 100px 100px !important;
   border-bottom: none !important;
@@ -831,7 +831,7 @@ html[data-theme="dark"] .rp-section-title {
    15. أزرار (CTA Buttons)
    ══════════════════════════════════════════════ */
 .ds-btn--primary {
-  background: var(--elite-forest, #052E16) !important;
+  background: var(--elite-forest, var(--mj-brand-deep)) !important;
   color: #FFFFFF !important;
   border-color: transparent !important;
   box-shadow: 0 1px 3px rgba(5,46,22,0.30), 0 4px 12px rgba(5,46,22,0.15) !important;
@@ -840,19 +840,19 @@ html[data-theme="dark"] .rp-section-title {
 }
 
 .ds-btn--primary:hover {
-  background: var(--elite-green, #166534) !important;
+  background: var(--elite-green, var(--mj-brand)) !important;
   box-shadow: 0 4px 20px rgba(5,46,22,0.35) !important;
   transform: translateY(-1px) !important;
 }
 
 .ds-btn--secondary {
   background: transparent !important;
-  color: var(--elite-forest, #052E16) !important;
-  border: 1.5px solid var(--elite-green, #166534) !important;
+  color: var(--elite-forest, var(--mj-brand-deep)) !important;
+  border: 1.5px solid var(--elite-green, var(--mj-brand)) !important;
 }
 
 .ds-btn--secondary:hover {
-  background: var(--elite-sage-2, #F0F7F4) !important;
+  background: var(--elite-sage-2, var(--mj-brand-soft)) !important;
 }
 
 /* ══════════════════════════════════════════════
@@ -886,7 +886,7 @@ html[data-theme="dark"] .rp-section-title {
 .bottom-nav__tab.is-active,
 .bottom-nav__item--active,
 .bottom-nav__tab.is-active {
-  color: var(--elite-green, #166534) !important;
+  color: var(--elite-green, var(--mj-brand)) !important;
 }
 
 /* تمييز تبويب «المزيد» بحد أُلغي — كان يوسّع التبويب ويقصّ التسمية على iPhone */
@@ -903,7 +903,7 @@ html[data-theme="dark"] .rp-section-title {
      نفسه) يُعيد تعريف --elite-forest محليًا إلى var(--text-on-primary) (أبيض)
      في قسم "تحييد العناوين الداكنة" أدناه، فتتحوّل خلفية هذا العنصر نفسه إلى
      أبيض بدل الأخضر الغامق المقصود (راجع صفحة مواقيت الصلاة، 2026-07-16). */
-  background-color: var(--majalis-emerald, #143F35) !important;
+  background-color: var(--majalis-emerald, var(--mj-brand-deep)) !important;
   background-image: url("/star-pattern.svg") !important;
   background-size: 100px 100px !important;
   border-radius: var(--elite-r-xl, 24px) !important;
@@ -944,7 +944,7 @@ html[data-theme="dark"] .rp-section-title {
 
 .pt-prayer--next {
   background: var(--elite-sage-2) !important;
-  border-color: var(--elite-green, #166534) !important;
+  border-color: var(--elite-green, var(--mj-brand)) !important;
 }
 
 .pt-prayer__name {
@@ -1058,8 +1058,8 @@ body > #root > div {
   font-size: 0.72rem; font-weight: 700;
   padding: 0.2rem 0.65rem;
   border-radius: 2rem;
-  background: color-mix(in srgb, var(--elite-forest, #143F35) 10%, transparent);
-  color: var(--elite-forest, #143F35) !important;
+  background: color-mix(in srgb, var(--elite-forest, var(--mj-brand-deep)) 10%, transparent);
+  color: var(--elite-forest, var(--mj-brand-deep)) !important;
 }
 .dmb__text {
   font-size: 0.92rem; line-height: 1.7;
@@ -1081,7 +1081,7 @@ body > #root > div {
 .dmb__source-btn {
   align-self: flex-start;
   font-size: 0.8rem; font-weight: 600;
-  color: var(--elite-forest, #143F35) !important;
+  color: var(--elite-forest, var(--mj-brand-deep)) !important;
   text-decoration: none;
   margin-top: 0.15rem;
 }
@@ -1113,8 +1113,8 @@ body > #root > div {
   white-space: nowrap;
 }
 .hue__row-badge--event {
-  background: color-mix(in srgb, var(--elite-forest, #143F35) 12%, transparent);
-  color: var(--elite-forest, #143F35);
+  background: color-mix(in srgb, var(--elite-forest, var(--mj-brand-deep)) 12%, transparent);
+  color: var(--elite-forest, var(--mj-brand-deep));
 }
 .hue__row-badge--announcement {
   background: rgba(176,141,46,.14);
@@ -1142,7 +1142,7 @@ html[data-theme="dark"] .hue__row-badge--announcement { color: #E8C97A; backgrou
   color: var(--elite-muted, #6b7280) !important;
   text-decoration: none;
 }
-.hue__row-link--primary { color: var(--elite-forest, #143F35) !important; }
+.hue__row-link--primary { color: var(--elite-forest, var(--mj-brand-deep)) !important; }
 .hue__row-link:hover { text-decoration: underline; }
 
 /* ══════════════════════════════════════════════
@@ -1160,7 +1160,7 @@ html[data-theme="dark"] .hue__row-badge--announcement { color: #E8C97A; backgrou
 }
 
 .page-search-input:focus {
-  border-color: var(--elite-green, #166534) !important;
+  border-color: var(--elite-green, var(--mj-brand)) !important;
   box-shadow: 0 0 0 3px rgba(22,101,52,0.10) !important;
   outline: none !important;
 }
@@ -1182,11 +1182,11 @@ html[data-theme="dark"] .hue__row-badge--announcement { color: #E8C97A; backgrou
 
 .content-hub-chip:hover {
   border-color: var(--elite-border-green) !important;
-  color: var(--elite-green, #166534) !important;
+  color: var(--elite-green, var(--mj-brand)) !important;
 }
 
 .content-hub-chip--active {
-  background: var(--elite-forest, #052E16) !important;
+  background: var(--elite-forest, var(--mj-brand-deep)) !important;
   color: #FFFFFF !important;
   border-color: transparent !important;
 }
@@ -1221,7 +1221,7 @@ html[data-theme="dark"] .hue__row-badge--announcement { color: #E8C97A; backgrou
   background: var(--elite-sage-2, #F4F4F1) !important;
   border: 1px solid var(--elite-border-2, rgba(24,54,42,0.15)) !important;
   border-radius: var(--elite-r-md) !important;
-  color: var(--elite-forest, #143F35) !important;
+  color: var(--elite-forest, var(--mj-brand-deep)) !important;
   padding: 0.875rem 1.25rem !important;
   font-size: 0.875rem !important;
   font-weight: 500 !important;
@@ -1250,7 +1250,7 @@ html[data-theme="dark"] .hue__row-badge--announcement { color: #E8C97A; backgrou
    33. Focus Accessibility
    ══════════════════════════════════════════════ */
 :focus-visible {
-  outline: 2px solid var(--elite-green, #166534) !important;
+  outline: 2px solid var(--elite-green, var(--mj-brand)) !important;
   outline-offset: 2px !important;
   border-radius: 2px !important;
 }
@@ -1278,7 +1278,7 @@ html {
   --majalis-ink:              var(--elite-ink, #1A1A18) !important;
   --majalis-ink-soft:         var(--elite-ink-soft, #4A4A4A) !important;
   --majalis-line:             var(--elite-border, rgba(0,0,0,0.07)) !important;
-  --majalis-sage:             var(--elite-sage-2, #F0F7F4) !important;
+  --majalis-sage:             var(--elite-sage-2, var(--mj-brand-soft)) !important;
 }
 
 /* ══════════════════════════════════════════════
@@ -1290,7 +1290,7 @@ html {
 
 /* Hero داخلي عام (all inner pages) */
 [style*="linear-gradient(to left, var(--majalis-emerald"] {
-  background-color: var(--elite-forest, #143F35) !important;
+  background-color: var(--elite-forest, var(--mj-brand-deep)) !important;
   background-image: url("/star-pattern.svg") !important;
   background-size: 100px 100px !important;
 }
@@ -1298,7 +1298,7 @@ html {
 /* Universities hero */
 .uni-hero,
 [class*="universities"] .text-white.py-10 {
-  background-color: var(--elite-forest, #143F35) !important;
+  background-color: var(--elite-forest, var(--mj-brand-deep)) !important;
   background-image: url("/star-pattern.svg") !important;
   background-size: 100px 100px !important;
   padding: 3rem 1.25rem !important;
@@ -1352,11 +1352,11 @@ html {
   border-color: var(--elite-border-green) !important;
 }
 
-.qa-ruling--halal  { --qa-badge-bg: #D1FAE5; --qa-badge-color: #065F46; }
+.qa-ruling--halal  { --qa-badge-bg: #D1FAE5; --qa-badge-color: var(--mj-brand); }
 .qa-ruling--mubah  { --qa-badge-bg: #DBEAFE; --qa-badge-color: #1E40AF; }
 .qa-ruling--sunna,
-.qa-ruling--mandub { --qa-badge-bg: rgba(23,61,53,0.08); --qa-badge-color: #143F35; }
-.qa-ruling--makruh { --qa-badge-bg: rgba(21,48,37,0.08); --qa-badge-color: #143F35; }
+.qa-ruling--mandub { --qa-badge-bg: rgba(23,61,53,0.08); --qa-badge-color: var(--mj-brand-deep); }
+.qa-ruling--makruh { --qa-badge-bg: rgba(21,48,37,0.08); --qa-badge-color: var(--mj-brand-deep); }
 .qa-ruling--haram  { --qa-badge-bg: #FEE2E2; --qa-badge-color: #991B1B; }
 .qa-badge {
   display: inline-flex;
@@ -1370,18 +1370,18 @@ html {
 }
 .qa-badge--published { background: var(--majalis-sage); color: var(--majalis-emerald-deep); }
 .qa-badge--draft     { background: var(--majalis-parchment-deep); color: var(--majalis-ink-soft); }
-.qa-badge--review    { background: rgba(23,61,53,0.08); color: #226A56; }
+.qa-badge--review    { background: rgba(23,61,53,0.08); color: var(--mj-brand); }
 
 /* ── Admin QA: ruling / review / publish badges ── */
-.qa-ruling-badge--halal  { background: #D1FAE5; color: #065F46; }
+.qa-ruling-badge--halal  { background: #D1FAE5; color: var(--mj-brand); }
 .qa-ruling-badge--mubah  { background: #DBEAFE; color: #1E40AF; }
 .qa-ruling-badge--sunnah,
-.qa-ruling-badge--mandub { background: rgba(23,61,53,0.08); color: #143F35; }
-.qa-ruling-badge--makruh { background: rgba(21,48,37,0.08); color: #143F35; }
+.qa-ruling-badge--mandub { background: rgba(23,61,53,0.08); color: var(--mj-brand-deep); }
+.qa-ruling-badge--makruh { background: rgba(21,48,37,0.08); color: var(--mj-brand-deep); }
 .qa-ruling-badge--haram  { background: #FEE2E2; color: #991B1B; }
 
-.qa-review-badge          { display: inline-block; font-size: 0.68rem; font-weight: 700; padding: 0.15rem 0.55rem; border-radius: var(--ds-radius-full); background: rgba(23,61,53,0.08); color: #226A56; }
-.qa-review-badge--approved { background: #D1FAE5; color: #065F46; }
+.qa-review-badge          { display: inline-block; font-size: 0.68rem; font-weight: 700; padding: 0.15rem 0.55rem; border-radius: var(--ds-radius-full); background: rgba(23,61,53,0.08); color: var(--mj-brand); }
+.qa-review-badge--approved { background: #D1FAE5; color: var(--mj-brand); }
 
 .qa-publish-btn           { font-size: 0.72rem; font-weight: 600; padding: 0.15rem 0.5rem; border-radius: 9999px; border: none; cursor: pointer; font-family: inherit; background: var(--majalis-parchment-deep); color: var(--majalis-ink-soft); }
 .qa-publish-btn--published { background: var(--majalis-emerald); color: var(--majalis-parchment); }
@@ -1448,8 +1448,8 @@ tr:last-child td {
    47. Tabs (All Pages)
    ══════════════════════════════════════════════ */
 .border-b-2.border-\[var\(--mn-border-active\)\] {
-  border-color: var(--elite-green, #166534) !important;
-  color: var(--elite-forest, #052E16) !important;
+  border-color: var(--elite-green, var(--mj-brand)) !important;
+  color: var(--elite-forest, var(--mj-brand-deep)) !important;
 }
 
 /* ══════════════════════════════════════════════
@@ -1464,7 +1464,7 @@ tr:last-child td {
 .miracles-hero,
 .stories-header,
 .page-hero-dark {
-  background-color: #143F35 !important;
+  background-color: var(--mj-brand-deep) !important;
   background-image: url("/star-pattern.svg") !important;
   background-size: 100px 100px !important;
   color: #FAFAF8 !important;
@@ -1479,7 +1479,7 @@ tr:last-child td {
 .miracles-page .ui-card {
   background: #FAFAF8 !important;
   border: 1px solid rgba(24,54,42,0.10) !important;
-  color: #143F35 !important;
+  color: var(--mj-brand-deep) !important;
 }
 
 /* شارة نوع القصة — زمردي فاتح */
@@ -1498,7 +1498,7 @@ tr:last-child td {
   background: #FFFFFF !important;
   border: 1px solid #E8E7E2 !important;
   border-radius: 12px !important;
-  color: #143F35 !important;
+  color: var(--mj-brand-deep) !important;
 }
 
 /* ══════════════════════════════════════════════
@@ -1506,10 +1506,10 @@ tr:last-child td {
    ══════════════════════════════════════════════ */
 .bottom-nav__item--active .bottom-nav__icon,
 .bottom-nav .active .bottom-nav__icon {
-  color: #143F35 !important;
+  color: var(--mj-brand-deep) !important;
 }
 .bottom-nav__item--active .bottom-nav__label {
-  color: #143F35 !important;
+  color: var(--mj-brand-deep) !important;
   font-weight: 700 !important;
 }
 
@@ -1526,7 +1526,7 @@ tr:last-child td {
 }
 [class*="amber-700"],
 [class*="amber-900"] {
-  color: #143F35 !important;
+  color: var(--mj-brand-deep) !important;
 }
 
 /* ══════════════════════════════════════════════
@@ -1546,22 +1546,22 @@ button.hcp-prayer-cell {
   font-family: inherit !important;
 }
 button.hcp-prayer-cell:focus-visible {
-  outline: 2px solid var(--elite-forest, #143F35) !important;
+  outline: 2px solid var(--elite-forest, var(--mj-brand-deep)) !important;
   outline-offset: 2px !important;
 }
 .hcp-prayer-cell--sel {
   background: rgba(24, 54, 42, 0.1) !important;
-  border-color: var(--elite-forest, #143F35) !important;
+  border-color: var(--elite-forest, var(--mj-brand-deep)) !important;
 }
 .hcp-prayer-cell--sel .hcp-prayer-cell__name {
-  color: var(--elite-forest, #143F35) !important;
+  color: var(--elite-forest, var(--mj-brand-deep)) !important;
   font-weight: 700 !important;
 }
 .hcp-prayer-cell--sel .hcp-prayer-cell__time {
-  color: var(--elite-forest, #143F35) !important;
+  color: var(--elite-forest, var(--mj-brand-deep)) !important;
 }
 .hcp-strip__countdown--sel {
-  color: var(--elite-forest, #143F35) !important;
+  color: var(--elite-forest, var(--mj-brand-deep)) !important;
   font-weight: 600 !important;
 }
 
@@ -1579,7 +1579,7 @@ button.hcp-prayer-cell:focus-visible {
   padding: 0.1rem 0.65rem;
   font-size: 0.72rem;
   font-weight: 600;
-  color: var(--elite-forest, #143F35);
+  color: var(--elite-forest, var(--mj-brand-deep));
   gap: var(--ds-space-1);
 }
 .hcp-since-pill__text {
@@ -1625,7 +1625,7 @@ button.hcp-prayer-cell:focus-visible {
 
 /* الـ hero: أخضر داكن + نمط النجوم */
 .lesson-detail-hero {
-  background-color: var(--elite-forest, #143F35) !important;
+  background-color: var(--elite-forest, var(--mj-brand-deep)) !important;
   background-image: url("/star-pattern.svg") !important;
   background-size: 100px 100px !important;
   border-radius: 0 !important;
@@ -1688,7 +1688,7 @@ button.hcp-prayer-cell:focus-visible {
    55. رابط "التفاصيل" في شريط مواقيت الصلاة
    ══════════════════════════════════════════════ */
 .hcp-strip__link {
-  color: var(--elite-forest, #143F35) !important;
+  color: var(--elite-forest, var(--mj-brand-deep)) !important;
   font-weight: 700 !important;
 }
 
@@ -1696,7 +1696,7 @@ button.hcp-prayer-cell:focus-visible {
    56. رأس بطاقة الدرس — أخضر داكن + نجوم
    ══════════════════════════════════════════════ */
 .lesson-unified-card__header {
-  background-color: var(--elite-forest, #143F35) !important;
+  background-color: var(--elite-forest, var(--mj-brand-deep)) !important;
   background-image: url("/star-pattern.svg") !important;
   background-size: 80px 80px !important;
 }
@@ -1717,14 +1717,14 @@ button.hcp-prayer-cell:focus-visible {
 
 /* زر التفاصيل — أخضر داكن يطابق رأس البطاقة */
 .lesson-unified-card__btn--primary {
-  background: var(--elite-forest, #143F35) !important;
-  border-color: var(--elite-forest, #143F35) !important;
+  background: var(--elite-forest, var(--mj-brand-deep)) !important;
+  border-color: var(--elite-forest, var(--mj-brand-deep)) !important;
   color: var(--elite-white, #FAFAF8) !important;
   box-shadow: 0 2px 8px rgba(24,54,42,0.30) !important;
 }
 .lesson-unified-card__btn--primary:hover {
-  background: #143F35 !important;
-  border-color: #143F35 !important;
+  background: var(--mj-brand-deep) !important;
+  border-color: var(--mj-brand-deep) !important;
   box-shadow: 0 4px 14px rgba(24,54,42,0.40) !important;
 }
 
@@ -1755,7 +1755,7 @@ button.hcp-prayer-cell:focus-visible {
 .page-shell .lessons-v2-section .lessons-v2-section__title,
 .page-shell .lessons-past-section .lessons-past-section__title {
   color: #fff !important;
-  background: #143F35 !important;
+  background: var(--mj-brand-deep) !important;
   padding: 0.35rem 0.85rem !important;
   border-radius: 0.45rem !important;
   display: inline-block !important;
@@ -1789,13 +1789,13 @@ button.hcp-prayer-cell:focus-visible {
 }
 
 .kuwait-tab:hover:not(.kuwait-tab--active) {
-  color: var(--majalis-emerald, #143F35) !important;
+  color: var(--majalis-emerald, var(--mj-brand-deep)) !important;
   background: rgba(24,54,42,0.07) !important;
   border: none !important;
 }
 
 .kuwait-tab--active {
-  background: var(--majalis-emerald, #143F35) !important;
+  background: var(--majalis-emerald, var(--mj-brand-deep)) !important;
   color: #fff !important;
   border: none !important;
   font-weight: 700 !important;
@@ -1808,7 +1808,7 @@ button.hcp-prayer-cell:focus-visible {
 .lessons-v2-filter-toggle {
   background: #fff !important;
   border: 1.5px solid rgba(24,54,42,0.14) !important;
-  color: var(--elite-forest, #143F35) !important;
+  color: var(--elite-forest, var(--mj-brand-deep)) !important;
   border-radius: 0.6rem !important;
   font-weight: 600 !important;
   font-size: 0.83rem !important;
@@ -1823,12 +1823,12 @@ button.hcp-prayer-cell:focus-visible {
   box-shadow: 0 2px 6px rgba(24,54,42,0.12) !important;
 }
 .lessons-v2-filter-toggle--active {
-  background: var(--elite-forest, #143F35) !important;
-  border-color: var(--elite-forest, #143F35) !important;
+  background: var(--elite-forest, var(--mj-brand-deep)) !important;
+  border-color: var(--elite-forest, var(--mj-brand-deep)) !important;
   color: #fff !important;
 }
 .lessons-v2-filter-toggle--active:hover {
-  background: #143F35 !important;
+  background: var(--mj-brand-deep) !important;
 }
 .lessons-v2-filter-badge {
   display: inline-flex;
@@ -1896,7 +1896,7 @@ input[type="email"]:focus,
 input[type="password"]:focus,
 textarea:focus,
 select:focus {
-  border-color: var(--elite-forest, #143F35) !important;
+  border-color: var(--elite-forest, var(--mj-brand-deep)) !important;
   box-shadow: 0 0 0 3px rgba(24,54,42,0.10) !important;
 }
 input::placeholder,
@@ -1917,7 +1917,7 @@ select:hover {
 .btn-primary,
 .btn--primary,
 button.primary {
-  background: #143F35 !important;
+  background: var(--mj-brand-deep) !important;
   color: #fff !important;
   border: none !important;
   border-radius: 0.6rem !important;
@@ -1928,7 +1928,7 @@ button.primary {
 .btn-primary:hover,
 .btn--primary:hover,
 button.primary:hover {
-  background: #143F35 !important;
+  background: var(--mj-brand-deep) !important;
   transform: translateY(-1px) !important;
 }
 
@@ -1953,13 +1953,13 @@ button.primary:hover {
   border-bottom: 1px solid rgba(24,54,42,0.08) !important;
 }
 .lessons-v2-filters__head h2 {
-  color: var(--elite-forest, #143F35) !important;
+  color: var(--elite-forest, var(--mj-brand-deep)) !important;
   font-weight: 800 !important;
 }
 .lessons-v2-filters__close {
   background: rgba(24,54,42,0.07) !important;
   border: none !important;
-  color: var(--elite-forest, #143F35) !important;
+  color: var(--elite-forest, var(--mj-brand-deep)) !important;
   border-radius: 0.45rem !important;
   cursor: pointer !important;
   font-size: 0.9rem !important;
@@ -2106,12 +2106,12 @@ button.primary:hover {
    var(--text-on-primary) (فاتح) في قسم "تحييد العناوين الداكنة"، فتتحوّل
    الخلفية هنا إلى لون فاتح بدل الأخضر الغامق المقصود — نص فاتح على خلفية
    فاتحة (صفحة الإعدادات وكل صفحات LegalPageLayout، 2026-07-16). */
-.legal-page-hero { background: var(--majalis-emerald, #226A56); color: var(--majalis-parchment, #FAFAF8); }
+.legal-page-hero { background: var(--majalis-emerald, var(--mj-brand)); color: var(--majalis-parchment, #FAFAF8); }
 /* var(--majalis-emerald) نفسه يتحوّل لأخضر نعناعي فاتح (#5CC49A) في الوضع
    الليلي عبر سلسلة إرث لم تُحسَم مصدرها بدقة (راجع التعليق أعلاه — نفس
    عائلة العطل تكرَّرت رغم تجنّب --majalis-emerald-deep) — تثبيت مباشر
    بدل الاعتماد على المتغير (2026-07-17). */
-html[data-theme="dark"] .legal-page-hero { background: #226A56 !important; }
+html[data-theme="dark"] .legal-page-hero { background: var(--mj-brand) !important; }
 
 /* ══════════════════════════════════════════════════════════════════
    إصلاح تباين إضافي — روابط <a> بخلفية/لون خاصَّين (أزرار وتبويبات)
@@ -2137,10 +2137,10 @@ html[data-theme="dark"] .lesson-unified-card__btn--primary {
 html[data-theme="dark"] .quran-subnav__link.is-active,
 html[data-theme="dark"] .page-action-btn,
 html[data-theme="dark"] .fiqh-hub-strip__tab {
-  background: #226A56 !important;
+  background: var(--mj-brand) !important;
 }
 html[data-theme="dark"] .tj-related-link {
-  color: #E5F0EC !important;
+  color: var(--mj-brand-soft) !important;
 }
 /* السبب الحقيقي (شُخِّص 2026-07-19 عبر تدقيق تباين آلي حي): index.css
    يضبط background:#fff صريحة وغير مشروطة على .fiqh-council-subnav-link
@@ -2149,7 +2149,7 @@ html[data-theme="dark"] .tj-related-link {
    1.17:1). الإصلاح: خلفية داكنة شفافة صريحة هنا تطابق نمط أزرار القائمة
    الأخرى في الوضع الليلي، بدل ترك #fff الأصلية تتسرب. */
 html[data-theme="dark"] .fiqh-council-subnav-link {
-  color: #E5F0EC !important;
+  color: var(--mj-brand-soft) !important;
   background: rgba(255,255,255,0.06) !important;
   border-color: rgba(92,196,154,.18) !important;
 }
@@ -2162,7 +2162,7 @@ html[data-theme="dark"] .fiqh-council-subnav-link--active {
    لـ#059669 (Emerald 600) في سياقات مختلفة — نفس اللون الذي فشل تباينه
    مرارًا هذه الجلسة (skip-link، bottom-nav، واتساب) — تثبيت مباشر. */
 html[data-theme="dark"] .lesson-unified-card__btn--primary {
-  background: #226A56 !important;
+  background: var(--mj-brand) !important;
 }
 
 /* ── 168 — FiqhAdminSubnav overrides ───────────────────────────────────── */
@@ -2276,7 +2276,7 @@ button, .btn {
 /* Improved home hero */
 
 /* ── 189 — AutonomousPlatformPage misc fixes ───────────────────────────── */
-.aup-db-connected { color: #143F35; }
+.aup-db-connected { color: var(--mj-brand-deep); }
 .aup-db-error     { color: #991B1B; }
 .aup-pipeline-pct { font-size: 0.65rem; margin-top: 0.2rem; color: var(--aup-pc-color, var(--majalis-ink-soft)); }
 .aup-pipeline-run-wrap { margin-top: 0.4rem; }
@@ -2587,8 +2587,8 @@ a:focus-visible {
 }
 .status-badge--pending {
   background: var(--color-accent-soft-bg);
-  color: var(--majalis-emerald-deep, #143F35);
-  border: 1px solid color-mix(in srgb, var(--majalis-emerald, #226A56) 30%, transparent);
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep));
+  border: 1px solid color-mix(in srgb, var(--majalis-emerald, var(--mj-brand)) 30%, transparent);
 }
 .status-badge--rejected {
   background: color-mix(in srgb, #ef4444 12%, transparent);
@@ -2658,12 +2658,12 @@ a:focus-visible {
 
 /* ─── نظام الألوان الموحد (Phase 5) ──────────────────────────── */
 :root {
-  --rd-emerald:       #143F35; /* Primary — إعادة تصميم الهوية v3 */
-  --rd-emerald-deep:  #143F35; /* Hover / dark active */
+  --rd-emerald:       var(--mj-brand-deep); /* Primary — إعادة تصميم الهوية v3 */
+  --rd-emerald-deep:  var(--mj-brand-deep); /* Hover / dark active */
   --rd-emerald-dark:  #0C211C; /* Hero dark */
   --rd-gold:          #B8963F; /* Secondary accent — ذهبي رملي فعلي */
   --rd-ivory:         #FAFAF8; /* Page background */
-  --rd-dark-card:     #143F35; /* Dark sections */
+  --rd-dark-card:     var(--mj-brand-deep); /* Dark sections */
   --rd-ink:           #1A1A18; /* Text on light bg */
   --rd-ink-soft:      #5C5C56; /* Muted text on light */
   --rd-ink-muted:     #5C5C56; /* Placeholder */
@@ -2969,7 +2969,7 @@ a:focus-visible {
   left: 50% !important;
   transform: translateX(-50%) !important;
   z-index: 9999 !important;
-  background: #226A56 !important;
+  background: var(--mj-brand) !important;
   color: #fff !important;
   padding: 10px 20px !important;
   border-radius: 0 0 8px 8px !important;
@@ -2984,7 +2984,7 @@ a:focus-visible {
 /* ─── Dark mode support ────────────────────────────────────────── */
 @media (prefers-color-scheme: dark) {
   :root {
-    --rd-white:      #143F35;
+    --rd-white:      var(--mj-brand-deep);
     --rd-ivory:      #14251F;
     --rd-ink:        #F3F4F6;
     --rd-ink-soft:   #D1D5DB;
@@ -3023,8 +3023,8 @@ img[loading="lazy"]:not([src=""]) {
 
 /* ─── لون العلامة الأساسي: أخضر رمادي داكن هادئ (إعادة تصميم الهوية v3) ─── */
 :root {
-  --rd-emerald:       #143F35;
-  --rd-emerald-light: #226A56;
+  --rd-emerald:       var(--mj-brand-deep);
+  --rd-emerald-light: var(--mj-brand);
 }
 
 /* ─── أيقونات الأقسام في الصفحة الرئيسية ───────────────────────── */
@@ -3049,11 +3049,11 @@ img[loading="lazy"]:not([src=""]) {
 
 /* ─── لون التبويب النشط (التخطيط/الأيقونة في final-release) ──────────────────────── */
 .bottom-nav--v2 .bottom-nav__tab.is-active {
-  color: #226A56 !important;
+  color: var(--mj-brand) !important;
 }
 
 .bottom-nav--v2 .bottom-nav__tab:hover {
-  color: #047857 !important;
+  color: var(--mj-brand) !important;
 }
 
 /* ─── أيقونات الوصول السريع: لون أعمق ──────────────────────────── */
@@ -3061,15 +3061,15 @@ img[loading="lazy"]:not([src=""]) {
 /* ─── badge تصنيف بطاقة الدرس ───────────────────────────────────── */
 .lesson-unified-card.lesson-unified-card--compact .lesson-unified-card__category {
   background: rgba(5,150,105,0.12) !important;
-  color: #047857 !important;
+  color: var(--mj-brand) !important;
 }
 
 .lesson-unified-card.lesson-unified-card--compact .lesson-unified-card__category::before {
-  background: #047857 !important;
+  background: var(--mj-brand) !important;
 }
 
 .lesson-unified-card.lesson-unified-card--compact .lesson-unified-card__sheikh {
-  color: #047857 !important;
+  color: var(--mj-brand) !important;
 }
 
 /* ─── focus-visible: لون أعمق ───────────────────────────────────── */
@@ -3240,9 +3240,9 @@ img[loading="lazy"]:not([src=""]) {
   background: #FFF5F5 !important;
 }
 .msk-toast--warning {
-  --toast-accent: #226A56 !important;
+  --toast-accent: var(--mj-brand) !important;
   --toast-icon-bg: var(--majalis-emerald-soft, #EBF5F0) !important;
-  --toast-icon-color: var(--majalis-emerald, #226A56) !important;
+  --toast-icon-color: var(--majalis-emerald, var(--mj-brand)) !important;
 }
 .msk-toast--info {
   --toast-accent: #2563EB !important;
@@ -3290,13 +3290,13 @@ img[loading="lazy"]:not([src=""]) {
   width: var(--nav-pct, 0%) !important;
   background: linear-gradient(
     90deg,
-    var(--majalis-emerald, #226A56) 0%,
-    #226A56 50%,
-    var(--majalis-emerald, #226A56) 100%
+    var(--majalis-emerald, var(--mj-brand)) 0%,
+    var(--mj-brand) 50%,
+    var(--majalis-emerald, var(--mj-brand)) 100%
   ) !important;
   border-radius: 0 2px 2px 0 !important;
   transition: width 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
-  box-shadow: 0 0 8px var(--majalis-emerald, #226A56) !important;
+  box-shadow: 0 0 8px var(--majalis-emerald, var(--mj-brand)) !important;
 }
 
 /* ── نهاية NAV-PROGRESS ─────────────────────────────────────────── */
@@ -3386,7 +3386,7 @@ img[loading="lazy"]:not([src=""]) {
 [class*="card"] h2:not(.ds-section__title):not(.cards-page-title):not(.fiqh-council-section-title):not(.sq-title):not(.hnh__title):not(.ds-quiz-home-card__title):not(.home-library-card__title),
 [class*="card"] h3:not(.ds-section__title):not(.cards-page-title):not(.fiqh-council-section-title):not(.sq-title):not(.hnh__title):not(.ds-quiz-home-card__title):not(.home-library-card__title),
 [class*="card"] h4:not(.ds-section__title):not(.cards-page-title):not(.fiqh-council-section-title):not(.sq-title):not(.hnh__title):not(.ds-quiz-home-card__title):not(.home-library-card__title) {
-  color: var(--elite-forest, #052E16) !important;
+  color: var(--elite-forest, var(--mj-brand-deep)) !important;
 }
 /* استثناء .sq-title (عنوان SectionQuiz، h2 داخل .sq-header الداكن — «اختبر
    معلوماتك...») — تدقيق تباين آلي حي (2026-07-19) وجد هذه القاعدة العامة
@@ -3425,7 +3425,7 @@ img[loading="lazy"]:not([src=""]) {
 .bg-white .text-white,
 .bg-gray-50 .text-white,
 .bg-gray-100 .text-white {
-  color: var(--elite-forest, #052E16) !important;
+  color: var(--elite-forest, var(--mj-brand-deep)) !important;
 }
 
 /* ── نهاية 55 ───────────────────────────────────────────── */
@@ -3459,7 +3459,7 @@ img[loading="lazy"]:not([src=""]) {
   border-radius: .375rem;
   transition: background .15s;
 }
-.cab-tooltip-btn:hover { background: var(--majalis-emerald-deep, #143F35); }
+.cab-tooltip-btn:hover { background: var(--majalis-emerald-deep, var(--mj-brand-deep)); }
 .cab-divider-wrap {
   border-top: 1px solid var(--majalis-line);
   padding-top: .5rem;
@@ -3504,23 +3504,23 @@ img[loading="lazy"]:not([src=""]) {
 
 /* ══ الوضع الليلي — elite-2026 dark overrides ══ */
 html[data-theme="dark"] {
-  --elite-white:        #143F35;
-  --elite-cream:        #143F35;
-  --elite-off-white:    #143F35;
-  --elite-mist:         #143F35;
-  --elite-sage:         #143F35;
-  --elite-sage-2:       #143F35;
+  --elite-white:        var(--mj-brand-deep);
+  --elite-cream:        var(--mj-brand-deep);
+  --elite-off-white:    var(--mj-brand-deep);
+  --elite-mist:         var(--mj-brand-deep);
+  --elite-sage:         var(--mj-brand-deep);
+  --elite-sage-2:       var(--mj-brand-deep);
   --elite-ink:          #E8DED4;
   --elite-ink-2:        #D0C8C0;
   --elite-ink-3:        #B8B0A8;
   --elite-ink-soft:     #A8BDB6;
   --elite-ink-muted:    #6E8E84;
-  --elite-ink-faint:    #226A56;
+  --elite-ink-faint:    var(--mj-brand);
   --elite-border:       rgba(92,196,154,.10);
   --elite-border-2:     rgba(92,196,154,.18);
   --elite-border-green: rgba(92,196,154,.25);
   /* خلفية بطاقات/شارات تبقى عميقة — النعناعي للتمييز النصي فقط */
-  --elite-forest:       #143F35;
+  --elite-forest:       var(--mj-brand-deep);
   --elite-forest-2:     #195345;
   --elite-green:        #5CC49A;
   --elite-green-mid:    #4BA882;
@@ -3528,8 +3528,8 @@ html[data-theme="dark"] {
   --elite-gold:         #E3CB8C;
   --elite-gold-warm:    #D2B063;
   --elite-gold-light:   #6E8E84;
-  --elite-gold-deep:    #226A56;
-  --elite-gold-pale:    #143F35;
+  --elite-gold-deep:    var(--mj-brand);
+  --elite-gold-pale:    var(--mj-brand-deep);
   --elite-shadow-xs:    0 1px 2px rgba(0,0,0,.40);
   --elite-shadow-sm:    0 2px 4px rgba(0,0,0,.45);
   --elite-shadow-md:    0 4px 12px rgba(0,0,0,.50);
@@ -3553,11 +3553,11 @@ html[data-theme="dark"] .navbar-prayer-chip {
 
 /* Side nav drawer dark */
 html[data-theme="dark"] .side-nav-drawer--v2 {
-  background: #143F35 !important;
+  background: var(--mj-brand-deep) !important;
   border-color: rgba(92,196,154,.10) !important;
 }
 html[data-theme="dark"] .side-nav-drawer__head--v2 {
-  background: #143F35 !important;
+  background: var(--mj-brand-deep) !important;
   border-color: rgba(92,196,154,.10) !important;
 }
 html[data-theme="dark"] .side-nav-group__toggle {
@@ -3577,17 +3577,17 @@ html[data-theme="dark"] .side-nav-link--v2.is-active {
 
 /* Cards dark — استثناء .twh-hub-card__current-tag: شارة صغيرة "أنت هنا"
    اسم صنفها يحوي السلسلة الفرعية "-card" مصادفةً (twh-HUB-CARD__current-tag)
-   رغم أنها ليست حاوية بطاقة أصلاً، فتكتسب خلفية داكنة #143F35 هنا تطابق
+   رغم أنها ليست حاوية بطاقة أصلاً، فتكتسب خلفية داكنة var(--mj-brand-deep) هنا تطابق
    لون نصها الافتراضي (--twh-hub-clr، أخضر داكن) بالضبط — تباين 1:1 (شُخِّص
    عبر تدقيق آلي حي 2026-07-19). */
 html[data-theme="dark"] .card,
 html[data-theme="dark"] [class*="-card"]:not(.twh-hub-card__current-tag):not(.quran-hub-card__link),
 html[data-theme="dark"] [class*="__card"]:not(.twh-hub-card__current-tag):not(.quran-hub-card__link) {
-  background: #143F35 !important;
+  background: var(--mj-brand-deep) !important;
   border-color: rgba(92,196,154,.10) !important;
 }
 /* .quran-hub-card__link مستبعَد أعلاه من فرض خلفية البطاقة الداكنة (رابط
-   نصي داخل بطاقة، لا بطاقة بذاته) — لكن لونه الخاص #143F35 يبقى بلا
+   نصي داخل بطاقة، لا بطاقة بذاته) — لكن لونه الخاص var(--mj-brand-deep) يبقى بلا
    تكيّف مع الوضع الليلي، فيتطابق حرفيًا مع خلفية البطاقة الأم الداكنة
    (نفس اللون تمامًا) — نص غير مرئي بآلية مختلفة. */
 html[data-theme="dark"] .quran-hub-card__link { color: #5CC49A !important; }
@@ -3596,7 +3596,7 @@ html[data-theme="dark"] .quran-hub-card__link { color: #5CC49A !important; }
 html[data-theme="dark"] input,
 html[data-theme="dark"] textarea,
 html[data-theme="dark"] select {
-  background: #143F35 !important;
+  background: var(--mj-brand-deep) !important;
   border-color: rgba(92,196,154,.15) !important;
   color: #E8DED4 !important;
 }
@@ -3639,7 +3639,7 @@ html[data-theme="dark"] .mobile-nav-backdrop {
   top: -100%;
   left: 50%;
   transform: translateX(-50%);
-  background: #226A56;
+  background: var(--mj-brand);
   color: #FAFAF8;
   padding: 0.55rem 1.25rem;
   border-radius: 0 0 0.6rem 0.6rem;
@@ -3658,7 +3658,7 @@ html[data-theme="dark"] .mobile-nav-backdrop {
 
 /* ── Global focus-visible ring ── */
 :focus-visible {
-  outline: 2.5px solid #226A56;
+  outline: 2.5px solid var(--mj-brand);
   outline-offset: 2px;
   border-radius: 4px;
 }
@@ -3754,13 +3754,13 @@ html[data-theme="dark"] .ds-skeleton {
   margin-bottom: 0.75rem;
 }
 .page-search-input:focus {
-  border-color: #226A56;
+  border-color: var(--mj-brand);
   box-shadow: 0 0 0 3px rgba(23,61,53,.12);
 }
 html[data-theme="dark"] .page-search-input {
   background: rgba(255,255,255,.04);
   border-color: rgba(255,255,255,.1);
-  color: #e8f5ee;
+  color: var(--mj-brand-soft);
 }
 
 /* ── Content hub chips ── */
@@ -3776,8 +3776,8 @@ html[data-theme="dark"] .page-search-input {
   transition: background .12s, color .12s, border-color .12s;
   white-space: nowrap;
 }
-.content-hub-chip:hover { border-color: #226A56; color: #226A56; }
-.content-hub-chip--active { background: rgba(23,61,53,.1); color: #226A56; border-color: rgba(23,61,53,.2); }
+.content-hub-chip:hover { border-color: var(--mj-brand); color: var(--mj-brand); }
+.content-hub-chip--active { background: rgba(23,61,53,.1); color: var(--mj-brand); border-color: rgba(23,61,53,.2); }
 
 /* ── Page header improvements ── */
 
@@ -3838,7 +3838,7 @@ html[data-theme="dark"] .crb-btn { border-color: rgba(255,255,255,.1); color: rg
 /* تمييز مصطلح البحث */
 mark.srch-hl {
   background: rgba(23,61,53,.15);
-  color: var(--clr-emerald, #226A56);
+  color: var(--clr-emerald, var(--mj-brand));
   border-radius: 2px;
   padding: 0 2px;
   font-weight: 700;
@@ -3878,14 +3878,14 @@ html[data-theme="dark"] mark.srch-hl {
 
 /* ── تحديث 2 Elite Tokens ليعكس النظام الجديد ── */
 :root {
-  --elite-forest:      var(--emerald-deep, #143F35);
-  --elite-forest-2:    var(--emerald-600, #226A56);
-  --elite-green:       var(--emerald-deep, #143F35);
-  --elite-green-mid:   var(--emerald-600, #226A56);
-  --elite-green-light: var(--emerald-400, #226A56);
+  --elite-forest:      var(--emerald-deep, var(--mj-brand-deep));
+  --elite-forest-2:    var(--emerald-600, var(--mj-brand));
+  --elite-green:       var(--emerald-deep, var(--mj-brand-deep));
+  --elite-green-mid:   var(--emerald-600, var(--mj-brand));
+  --elite-green-light: var(--emerald-400, var(--mj-brand));
   --elite-sage:        var(--emerald-100, #D7DEDA);
   --elite-sage-2:      var(--emerald-50, #EEF1F0);
-  --elite-mark:        var(--emerald-500, #143F35);
+  --elite-mark:        var(--emerald-500, var(--mj-brand-deep));
 
   /* خلفيات */
   --elite-white:    var(--ivory, #FAFAF8);
@@ -3982,21 +3982,21 @@ p { line-height: 1.7 !important; color: var(--clr-text-1); }
    نفسه (أخضر على أخضر) في أي تبويب/زر <a> نشط لا يملك !important خاصًّا به
    (مثال: .quran-subnav__link.is-active). */
 a {
-  color: var(--clr-primary, #226A56);
+  color: var(--clr-primary, var(--mj-brand));
   text-decoration: none !important;
   transition: color 140ms ease !important;
 }
-a:hover { color: var(--clr-primary-hov, #226A56); }
+a:hover { color: var(--clr-primary-hov, var(--mj-brand)); }
 
 /* ════════════════════════════════════
    77b — نظام الألوان الموحّد
    ════════════════════════════════════ */
 :root {
   /* semantic aliases — واضحة ومستخدَمة في المكونات */
-  --color-primary:       var(--clr-primary, #226A56);
-  --color-primary-deep:  var(--clr-primary-deep, #143F35);
-  --color-primary-hover: var(--clr-primary-hov, #226A56);
-  --color-primary-soft:  var(--clr-primary-soft, #E8F2EE);
+  --color-primary:       var(--clr-primary, var(--mj-brand));
+  --color-primary-deep:  var(--clr-primary-deep, var(--mj-brand-deep));
+  --color-primary-hover: var(--clr-primary-hov, var(--mj-brand));
+  --color-primary-soft:  var(--clr-primary-soft, var(--mj-brand-soft));
   --color-bg:            var(--clr-bg, #FAFAF8);
   --color-surface:       #FFFFFF;
   --color-surface-sec:   #F4F4F1;
@@ -4007,7 +4007,7 @@ a:hover { color: var(--clr-primary-hov, #226A56); }
   --color-border-strong: var(--clr-border-strong, #CBD2CE);
   --color-accent:        var(--sand, #B8963F);
   --color-accent-soft:   var(--sand-soft, #F4EEDF);
-  --color-success:       var(--sys-success, #226A56);
+  --color-success:       var(--sys-success, var(--mj-brand));
   --color-warning:       var(--sys-warning, #B98232);
   --color-error:         var(--sys-error, #B94A48);
 
@@ -4109,20 +4109,20 @@ a:hover { color: var(--clr-primary-hov, #226A56); }
 }
 
 .btn--primary, .ds-btn--primary, .btn-primary {
-  background: var(--color-primary, #226A56) !important;
+  background: var(--color-primary, var(--mj-brand)) !important;
   color: #fff !important;
-  border-color: var(--color-primary, #226A56) !important;
+  border-color: var(--color-primary, var(--mj-brand)) !important;
   box-shadow: 0 1px 3px rgba(23,61,53,.2) !important;
 }
 .btn--primary:hover, .ds-btn--primary:hover, .btn-primary:hover {
-  background: var(--color-primary-hover, #226A56) !important;
-  border-color: var(--color-primary-hover, #226A56) !important;
+  background: var(--color-primary-hover, var(--mj-brand)) !important;
+  border-color: var(--color-primary-hover, var(--mj-brand)) !important;
   box-shadow: 0 4px 12px rgba(23,61,53,.25) !important;
 }
 
 .btn--secondary, .ds-btn--secondary {
-  background: var(--color-primary-soft, var(--brand-soft, #F0F7F4)) !important;
-  color: var(--color-primary-strong, var(--brand-deep, #143F35)) !important;
+  background: var(--color-primary-soft, var(--brand-soft, var(--mj-brand-soft))) !important;
+  color: var(--color-primary-strong, var(--brand-deep, var(--mj-brand-deep))) !important;
   border-color: var(--border-brand, rgba(23,61,53,.15)) !important;
 }
 .btn--secondary:hover, .ds-btn--secondary:hover {
@@ -4205,7 +4205,7 @@ textarea, select {
 }
 input:focus, textarea:focus, select:focus {
   outline: none !important;
-  border-color: var(--color-primary, #226A56) !important;
+  border-color: var(--color-primary, var(--mj-brand)) !important;
   box-shadow: 0 0 0 3px rgba(23,61,53,.10) !important;
 }
 input::placeholder, textarea::placeholder {
@@ -4265,7 +4265,7 @@ label {
   transition: color 120ms ease !important;
 }
 .bottom-nav__tab.is-active {
-  color: var(--color-primary, #226A56) !important;
+  color: var(--color-primary, var(--mj-brand)) !important;
   font-weight: 600 !important;
 }
 
@@ -4273,7 +4273,7 @@ label {
    77h — Page Header / Hero محسَّن
    ════════════════════════════════════ */
 .ds-page-header {
-  background: var(--color-primary-deep, #143F35) !important;
+  background: var(--color-primary-deep, var(--mj-brand-deep)) !important;
   color: #fff !important;
   border-radius: 0 0 var(--elite-r-xl, 20px) var(--elite-r-xl, 20px) !important;
   position: relative !important;
@@ -4312,15 +4312,15 @@ label {
 /* PageHeader البسيط */
 .page-header-wrap h1,
 .section-header__title {
-  color: var(--color-primary-deep, #143F35) !important;
+  color: var(--color-primary-deep, var(--mj-brand-deep)) !important;
 }
 
 /* ════════════════════════════════════
    77i — نظام الشارات والـ Chips
    ════════════════════════════════════ */
 .page-tag, .sch-tag {
-  background: var(--color-primary-soft, #E8F2EE) !important;
-  color: var(--color-primary, #226A56) !important;
+  background: var(--color-primary-soft, var(--mj-brand-soft)) !important;
+  color: var(--color-primary, var(--mj-brand)) !important;
   border: 1px solid rgba(23,61,53,.15) !important;
   border-radius: var(--elite-r-pill) !important;
   font-size: 0.75rem !important;
@@ -4378,12 +4378,12 @@ label {
 .empty-state__icon {
   width: 56px;
   height: 56px;
-  background: var(--color-primary-soft, #E8F2EE);
+  background: var(--color-primary-soft, var(--mj-brand-soft));
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--color-primary, #226A56);
+  color: var(--color-primary, var(--mj-brand));
 }
 
 /* ════════════════════════════════════
@@ -4402,7 +4402,7 @@ html[data-theme="dark"] {
   --clr-text-2:       var(--text-2, #A9BDB5);
   --clr-text-muted:   var(--text-muted, #8AA096);
   --clr-primary:      var(--brand, #2A7A63);
-  --clr-primary-deep: var(--brand-deep, #226A56);
+  --clr-primary-deep: var(--brand-deep, var(--mj-brand));
   --clr-primary-hov:  var(--brand-hover, #33846C);
   --clr-primary-soft: var(--brand-soft, #16342B);
   --clr-primary-subtle: var(--surface-brand, #16342B);
@@ -4418,8 +4418,8 @@ html[data-theme="dark"] {
   --color-text-2:     var(--text-2, #A9BDB5);
   --color-text-muted: var(--text-muted, #8AA096);
   --color-primary:    var(--brand, #2A7A63);
-  --color-primary-strong: var(--brand-deep, #226A56);
-  --color-primary-deep: var(--brand-deep, #226A56);
+  --color-primary-strong: var(--brand-deep, var(--mj-brand));
+  --color-primary-deep: var(--brand-deep, var(--mj-brand));
   --color-primary-hover: var(--brand-hover, #33846C);
   --color-primary-soft: var(--brand-soft, #16342B);
   --color-accent:     var(--accent, #E3CB8C);
@@ -4441,7 +4441,7 @@ html[data-theme="dark"] {
   --elite-white:      var(--bg, #081A16);
   --elite-cream:      var(--bg, #081A16);
   /* خلفية بطاقات داكنة تبقى عميقة — لا نعناعي */
-  --elite-forest:     #143F35;
+  --elite-forest:     var(--mj-brand-deep);
   --elite-green:      var(--text-brand, #88C0AC);
   --elite-ink:        var(--text, #EDF2F0);
   --elite-ink-soft:   var(--text-2, #A9BDB5);
@@ -4454,7 +4454,7 @@ html[data-theme="dark"] {
 
 html[data-theme="dark"] body {
   background-color: #111714 !important;
-  color: #E5F0EC !important;
+  color: var(--mj-brand-soft) !important;
 }
 /* أغلفة صفحات مستقلة (sw-page، th-page، fa-page، jn-page، fq-page، gl-page،
    atl-page) تفرض خلفية فاتحة صريحة (#F9FAFB/#F8FAFC) بلا نظير ليلي — عناوين
@@ -4508,7 +4508,7 @@ html[data-theme="dark"] .bottom-nav--v2 {
   background: rgba(17,23,20,0.96) !important;
   border-top-color: rgba(255,255,255,.07) !important;
 }
-/* ألوان تبويبات الشريط السفلي أعلاه (#4B5563 / #226A56) مضبوطة لخلفية
+/* ألوان تبويبات الشريط السفلي أعلاه (#4B5563 / var(--mj-brand)) مضبوطة لخلفية
    فاتحة — فاشلة تباينًا فوق خلفية الشريط الداكنة هذه؛ نسخة ليلية صريحة. */
 html[data-theme="dark"] .bottom-nav--v2 .bottom-nav__tab {
   color: #9CA3AF !important;
@@ -4517,14 +4517,14 @@ html[data-theme="dark"] .bottom-nav--v2 .bottom-nav__tab.is-active {
   color: #5CC49A !important;
 }
 html[data-theme="dark"] .ds-page-header {
-  background: #143F35 !important;
+  background: var(--mj-brand-deep) !important;
 }
 html[data-theme="dark"] input,
 html[data-theme="dark"] textarea,
 html[data-theme="dark"] select {
   background: #1A2120 !important;
   border-color: rgba(255,255,255,.10) !important;
-  color: #E5F0EC !important;
+  color: var(--mj-brand-soft) !important;
 }
 html[data-theme="dark"] input:focus,
 html[data-theme="dark"] textarea:focus {
@@ -4567,11 +4567,11 @@ html[data-theme="dark"] .page-soft-tag {
 /* استثناء عناوين "الشارة" (.ds-section__title وأخواتها) أيضًا: نفس نمط
    استثناء .jnz-subtitle أعلاه — بلا هذا الاستثناء تفوز هذه القاعدة العامة
    (تخصيص html+h2+not = أعلى من شارة .page-shell .ds-section__title نفسها)
-   فتُبقي نصًا فاتحًا ثابتًا (#E5F0EC) فوق خلفية --elite-forest التي تصبح
+   فتُبقي نصًا فاتحًا ثابتًا (var(--mj-brand-soft)) فوق خلفية --elite-forest التي تصبح
    فاتحة نسبيًا (#5CC49A) في الوضع الليلي، فينتج تباين 2.39:1 فقط. */
 html[data-theme="dark"] h1, html[data-theme="dark"] h2:not(.jnz-subtitle):not(.jnz-related__title):not(.ds-section__title):not(.lessons-v2-section__title):not(.lessons-past-section__title):not(.cards-page-title):not(.search-page-title):not(.hadith-section-title):not(.fiqh-council-section-title):not(.qa-v2-section-title):not(.kuwait-lessons-section-title):not(.profile-section-title):not(.user-stats-section__title):not(.admin-section-title):not(.fm-section-title):not(.rp-section-title),
 html[data-theme="dark"] h3, html[data-theme="dark"] h4 {
-  color: #E5F0EC !important;
+  color: var(--mj-brand-soft) !important;
 }
 /* استبعادهما أعلاه من القانون العام يُعيدهما لقاعدتيهما الأصليتين
    (.jnz-subtitle تستخدم var(--majalis-emerald)، أخضر واعٍ بالسمة يتحول
@@ -4580,7 +4580,7 @@ html[data-theme="dark"] h3, html[data-theme="dark"] h4 {
    داكن ثابت هنا (لا واعٍ بالسمة) هو المناسب فعليًا لهذه الصفحة تحديدًا. */
 html[data-theme="dark"] .jnz-subtitle,
 html[data-theme="dark"] .jnz-related__title {
-  color: #143F35 !important;
+  color: var(--mj-brand-deep) !important;
 }
 /* الروابط ذات خلفية ملوَّنة خاصة بها (تبويبات/أزرار نشطة) تحتفظ بلون نصها
    المقصود — وإلا فاز هذا القانون العام بالأسبقية (0,1,1 > 0,1,0) فأنتج
@@ -4608,7 +4608,7 @@ html[data-theme="dark"] .hsh-step__cta,
 html[data-theme="dark"] .twh-jumpnav__btn,
 html[data-theme="dark"] .qcp-reg-banner__btn,
 html[data-theme="dark"] [class*="-related__link"] {
-  color: #143F35 !important;
+  color: var(--mj-brand-deep) !important;
 }
 html[data-theme="dark"] a:hover:not(.fiqh-hub-strip__tab--active):not(.hpv4-hero__cta-primary):not(.skip-link):not(.bottom-nav__tab) { color: #4DC09A !important; }
 
@@ -4654,7 +4654,7 @@ html[data-theme="dark"] a:hover:not(.fiqh-hub-strip__tab--active):not(.hpv4-hero
    77n — نظام Focus الوصولي
    ════════════════════════════════════ */
 :focus-visible {
-  outline: 2px solid var(--color-primary, #226A56) !important;
+  outline: 2px solid var(--color-primary, var(--mj-brand)) !important;
   outline-offset: 2px !important;
   border-radius: 4px !important;
 }
@@ -4724,14 +4724,14 @@ html[data-theme="dark"] a:hover:not(.fiqh-hub-strip__tab--active):not(.hpv4-hero
   transition: color 120ms !important;
 }
 [class*="breadcrumb"] a:hover {
-  color: var(--color-primary, #226A56) !important;
+  color: var(--color-primary, var(--mj-brand)) !important;
 }
 
 /* ════════════════════════════════════
    77r — SiteFooter محسَّن
    ════════════════════════════════════ */
 .site-footer, footer[class*="footer"] {
-  background: var(--color-primary-deep, #143F35) !important;
+  background: var(--color-primary-deep, var(--mj-brand-deep)) !important;
   color: rgba(255,255,255,.75) !important;
   font-family: var(--font-body) !important;
 }
@@ -4772,7 +4772,7 @@ html[data-theme="dark"] hr { border-top-color: rgba(255,255,255,.07) !important;
    77u — Tooltip & Toast
    ════════════════════════════════════ */
 .toast, [class*="toast"] {
-  background: var(--color-primary-deep, #143F35) !important;
+  background: var(--color-primary-deep, var(--mj-brand-deep)) !important;
   color: #fff !important;
   border-radius: var(--elite-r-md) !important;
   box-shadow: var(--elite-shadow-lg) !important;
@@ -4795,27 +4795,27 @@ html[data-theme="dark"] hr { border-top-color: rgba(255,255,255,.07) !important;
 
 /* ══════════════════════════════════════════════════════════════════════════════
    77w — تحديث ألوان المكونات الأساسية إلى نظام 2026
-   (يتجاوز القيم الصلبة القديمة #226A56 / #052E16 / #143F35)
+   (يتجاوز القيم الصلبة القديمة var(--mj-brand) / var(--mj-brand-deep) / var(--mj-brand-deep))
    ══════════════════════════════════════════════════════════════════════════════ */
 
 /* بطاقة الدرس الرئيسية */
 .lesson-unified-card__header {
-  background-color: var(--color-primary-deep, #143F35) !important;
+  background-color: var(--color-primary-deep, var(--mj-brand-deep)) !important;
 }
 
 /* زر أساسي من النظام القديم */
 .ds-btn--primary,
 .btn-primary,
 [class*="btn"][class*="primary"] {
-  background: var(--color-primary, #226A56) !important;
-  border-color: var(--color-primary, #226A56) !important;
+  background: var(--color-primary, var(--mj-brand)) !important;
+  border-color: var(--color-primary, var(--mj-brand)) !important;
   color: #fff !important;
   box-shadow: 0 1px 3px rgba(23,61,53,.20), 0 3px 10px rgba(23,61,53,.10) !important;
 }
 .ds-btn--primary:hover,
 .btn-primary:hover {
-  background: var(--color-primary-hover, #226A56) !important;
-  border-color: var(--color-primary-hover, #226A56) !important;
+  background: var(--color-primary-hover, var(--mj-brand)) !important;
+  border-color: var(--color-primary-hover, var(--mj-brand)) !important;
   box-shadow: 0 4px 18px rgba(23,61,53,.28) !important;
 }
 
@@ -4825,7 +4825,7 @@ html[data-theme="dark"] hr { border-top-color: rgba(255,255,255,.07) !important;
 .lesson-unified-card--today .lesson-unified-card__header,
 .lesson-unified-card--featured .lesson-unified-card__header,
 .lesson-unified-card--hero .lesson-unified-card__header {
-  background-color: var(--color-primary-deep, #143F35) !important;
+  background-color: var(--color-primary-deep, var(--mj-brand-deep)) !important;
 }
 
 /* Tabs الرئيسي — محدِّد فرعي [class*="tab"][class*="active"] حُذف (2026-07-16):
@@ -4836,18 +4836,18 @@ html[data-theme="dark"] hr { border-top-color: rgba(255,255,255,.07) !important;
    مخصصة أدق من هذا المحدِّد العام. */
 .nav-tab--active,
 .filter-tab--active {
-  color: var(--color-primary, #226A56) !important;
-  border-color: var(--color-primary, #226A56) !important;
+  color: var(--color-primary, var(--mj-brand)) !important;
+  border-color: var(--color-primary, var(--mj-brand)) !important;
 }
 
 /* أزرار الكارد القديمة */
 .lesson-unified-card__btn--primary {
-  background: var(--color-primary, #226A56) !important;
-  border-color: var(--color-primary, #226A56) !important;
+  background: var(--color-primary, var(--mj-brand)) !important;
+  border-color: var(--color-primary, var(--mj-brand)) !important;
   color: #fff !important;
 }
 .lesson-unified-card__btn--primary:hover {
-  background: var(--color-primary-hover, #226A56) !important;
+  background: var(--color-primary-hover, var(--mj-brand)) !important;
 }
 
 /* شارة الفئة في بطاقة الدرس */
@@ -4861,15 +4861,15 @@ html[data-theme="dark"] hr { border-top-color: rgba(255,255,255,.07) !important;
 .sch-icon-bg,
 [class*="icon-bg"],
 [class*="badge-green"] {
-  background: var(--color-primary-soft, #E8F2EE) !important;
-  color: var(--color-primary, #226A56) !important;
+  background: var(--color-primary-soft, var(--mj-brand-soft)) !important;
+  color: var(--color-primary, var(--mj-brand)) !important;
 }
 
 /* Hero section في الصفحة الرئيسية */
 .home-hero,
 [class*="hero"][class*="section"],
 .page-hero-wrap {
-  background: var(--color-primary-deep, #143F35) !important;
+  background: var(--color-primary-deep, var(--mj-brand-deep)) !important;
 }
 .home-hero::before,
 [class*="hero"]::before {
@@ -4889,14 +4889,14 @@ html[data-theme="dark"] hr { border-top-color: rgba(255,255,255,.07) !important;
    حاجة لمحدد الوسم الخام إطلاقًا. */
 .site-footer,
 [class*="footer-wrap"] {
-  background: var(--color-primary-deep, #143F35) !important;
+  background: var(--color-primary-deep, var(--mj-brand-deep)) !important;
 }
 
 /* عناوين الأقسام */
 .section-title,
 .page-section-title,
 .ds-section-heading {
-  color: var(--color-primary-deep, #143F35) !important;
+  color: var(--color-primary-deep, var(--mj-brand-deep)) !important;
   font-weight: 800 !important;
 }
 
@@ -4922,8 +4922,8 @@ html[data-theme="dark"] hr { border-top-color: rgba(255,255,255,.07) !important;
 }
 .filter-chip.active, .filter-chip--active,
 .filter-btn.active, .filter-btn--active {
-  background: var(--color-primary-soft, #E8F2EE) !important;
-  color: var(--color-primary, #226A56) !important;
+  background: var(--color-primary-soft, var(--mj-brand-soft)) !important;
+  color: var(--color-primary, var(--mj-brand)) !important;
   border-color: rgba(23,61,53,.20) !important;
   font-weight: 600 !important;
 }
@@ -4931,7 +4931,7 @@ html[data-theme="dark"] hr { border-top-color: rgba(255,255,255,.07) !important;
 /* Search results highlight */
 mark.srch-hl {
   background: rgba(23,61,53,.12) !important;
-  color: var(--color-primary-deep, #143F35) !important;
+  color: var(--color-primary-deep, var(--mj-brand-deep)) !important;
   border-radius: 3px !important;
   padding: 0.05em 0.15em !important;
 }
@@ -4942,8 +4942,8 @@ mark.srch-hl {
 progress,
 [class*="progress-bar"],
 [class*="progress__fill"] {
-  accent-color: var(--color-primary, #226A56) !important;
-  background-color: var(--color-primary, #226A56) !important;
+  accent-color: var(--color-primary, var(--mj-brand)) !important;
+  background-color: var(--color-primary, var(--mj-brand)) !important;
 }
 
 /* Scrollbar RTL */
@@ -4956,7 +4956,7 @@ html[data-theme="dark"] .scholars-page-header,
 html[data-theme="dark"] .courses-page-header,
 html[data-theme="dark"] .library-page-header,
 html[data-theme="dark"] .quran-page-header {
-  background-color: #143F35 !important;
+  background-color: var(--mj-brand-deep) !important;
 }
 html[data-theme="dark"] .section-title,
 html[data-theme="dark"] .page-section-title,
@@ -5072,7 +5072,7 @@ html[data-theme="dark"] ::-webkit-scrollbar-thumb {
 
 /* هذه العناصر يجب أن تحقق نسبة تباين 4.5:1 على الأقل */
 .lesson-unified-card__category {
-  /* أبيض على #143F35 — نسبة 9.1:1 ✓ */
+  /* أبيض على var(--mj-brand-deep) — نسبة 9.1:1 ✓ */
   color: rgba(255,255,255,0.92) !important;
 }
 .lesson-unified-card__status {
@@ -5100,7 +5100,7 @@ html[data-theme="dark"] ::-webkit-scrollbar-thumb {
 }
 .lesson-unified-card__btn--secondary:hover,
 .lesson-unified-card__btn--ghost:hover {
-  color: var(--color-primary, #226A56) !important;
+  color: var(--color-primary, var(--mj-brand)) !important;
 }
 
 /* ── Skip Navigation Link (WCAG 2.4.1) ── */
@@ -5108,19 +5108,19 @@ html[data-theme="dark"] ::-webkit-scrollbar-thumb {
 /* ── Keyboard Focus Enhancement ── */
 .bottom-nav__tab:focus-visible {
   background: rgba(23,61,53,.08) !important;
-  outline: 2px solid var(--color-primary, #226A56) !important;
+  outline: 2px solid var(--color-primary, var(--mj-brand)) !important;
   outline-offset: -2px !important;
   border-radius: 8px !important;
 }
 .nav-tab:focus-visible {
-  outline: 2px solid var(--color-primary, #226A56) !important;
+  outline: 2px solid var(--color-primary, var(--mj-brand)) !important;
   outline-offset: 2px !important;
   border-radius: 6px !important;
 }
 .lesson-unified-card__btn:focus-visible,
 .btn:focus-visible,
 .ds-btn:focus-visible {
-  outline: 2px solid var(--color-primary, #226A56) !important;
+  outline: 2px solid var(--color-primary, var(--mj-brand)) !important;
   outline-offset: 2px !important;
 }
 
@@ -5143,9 +5143,9 @@ html[data-theme="dark"] ::-webkit-scrollbar-thumb {
 
 /* ── Loader & Spinner ── */
 [class*="spinner"], [class*="loader"] {
-  color: var(--color-primary, #226A56) !important;
+  color: var(--color-primary, var(--mj-brand)) !important;
   border-color: rgba(23,61,53,.15) !important;
-  border-top-color: var(--color-primary, #226A56) !important;
+  border-top-color: var(--color-primary, var(--mj-brand)) !important;
 }
 
 /* ── Tabs Component Accessibility ── */
@@ -5176,11 +5176,11 @@ html[data-theme="dark"] ::-webkit-scrollbar-thumb {
   transition: color 120ms, border-color 120ms, background 120ms !important;
 }
 [role="tab"][aria-selected="true"] {
-  border-bottom-color: var(--color-primary, #226A56) !important;
+  border-bottom-color: var(--color-primary, var(--mj-brand)) !important;
 }
 [role="tab"]:hover {
-  color: var(--color-primary, #226A56) !important;
-  background: var(--color-primary-soft, #E8F2EE) !important;
+  color: var(--color-primary, var(--mj-brand)) !important;
+  background: var(--color-primary-soft, var(--mj-brand-soft)) !important;
 }
 
 /* ── Image alt text accessibility ── */
@@ -5376,8 +5376,8 @@ table {
   width: 100% !important;
 }
 th {
-  background: var(--color-primary-soft, #E8F2EE) !important;
-  color: var(--color-primary-deep, #143F35) !important;
+  background: var(--color-primary-soft, var(--mj-brand-soft)) !important;
+  color: var(--color-primary-deep, var(--mj-brand-deep)) !important;
   font-weight: 700 !important;
   padding: 0.7rem 0.9rem !important;
   text-align: right !important;
@@ -5388,7 +5388,7 @@ td {
   color: var(--color-text, #1A1A18) !important;
 }
 tr:hover td {
-  background: var(--color-primary-soft, #E8F2EE) !important;
+  background: var(--color-primary-soft, var(--mj-brand-soft)) !important;
 }
 
 html[data-theme="dark"] th {
@@ -5397,7 +5397,7 @@ html[data-theme="dark"] th {
 }
 html[data-theme="dark"] td {
   border-color: rgba(255,255,255,.07) !important;
-  color: #E5F0EC !important;
+  color: var(--mj-brand-soft) !important;
 }
 html[data-theme="dark"] tr:hover td {
   background: rgba(92,196,154,.06) !important;
@@ -5408,9 +5408,9 @@ html[data-theme="dark"] tr:hover td {
 /* ── النهاية: إعادة تعيين قيم اللون لأي تعريف خانئ ── */
 :root {
   /* التأكيد النهائي على القيم الصحيحة — إعادة تصميم الهوية v3 (2026-07-19) */
-  --clr-primary:       #143F35;
-  --clr-primary-deep:  #143F35;
-  --clr-primary-hov:   #226A56;
+  --clr-primary:       var(--mj-brand-deep);
+  --clr-primary-deep:  var(--mj-brand-deep);
+  --clr-primary-hov:   var(--mj-brand);
   --ivory:             #FAFAF8;
   --ink:               #1A1A18;
   --sand:              #B8963F;
@@ -5469,7 +5469,7 @@ footer *,
   color: inherit !important;
 }
 .sch-profile-hero .sch-tag {
-  color: var(--color-primary, #226A56) !important;
+  color: var(--color-primary, var(--mj-brand)) !important;
 }
 .sch-profile-hero .sch-tag--madhhab {
   color: #5b21b6 !important;
@@ -5507,12 +5507,12 @@ footer *,
 /* استثناء زر الرجوع داخل ds-page-header — له خلفية فاتحة فيحتاج نصاً داكناً
    79 تُجبر جميع أبناء .ds-page-header على #fff فيصبح النص أبيض على خلفية الزر البيضاء */
 .ds-page-header .ds-page-back-btn {
-  color: #143F35 !important;
+  color: var(--mj-brand-deep) !important;
   background: rgba(255,255,255,0.92) !important;
 }
 .ds-page-header .ds-page-back-btn:hover {
   background: rgba(255,255,255,1.0) !important;
-  color: #226A56 !important;
+  color: var(--mj-brand) !important;
 }
 
 /* استثناء خانة بحث الصفحة الرئيسية داخل .hpv4-hero — خلفيتها بيضاء تقريبًا
@@ -5530,11 +5530,11 @@ footer *,
    79 تُجبره على color:#fff فيصبح النص غير مرئي على خلفية شبه-شفافة */
 .navbar-v3 .navbar-prayer-chip,
 .navbar-v3 .navbar-prayer-chip * {
-  color: var(--majalis-emerald, #226A56) !important;
+  color: var(--mj-on-brand) !important;
 }
 .navbar-v3 .navbar-prayer-chip:hover,
 .navbar-v3 .navbar-prayer-chip:hover * {
-  color: var(--majalis-emerald-deep, #143F35) !important;
+  color: var(--mj-on-brand) !important;
 }
 
 /* استثناء أيقونة زر القائمة — الزر له خلفية فاتحة (#F5F5F4) داخل navbar الداكن
@@ -5548,7 +5548,7 @@ footer *,
    القائمة الكبيرة 74b تُجبره على color:#fff مما يُفقد النص التباين */
 .set-section.set-section--security,
 .set-section.set-section--security * {
-  color: var(--majalis-emerald-deep, #143F35) !important;
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep)) !important;
 }
 
 /* استثناء .asp-notice — خلفية نعناعية-فاتحة (#ECFDF5) مع نص داكن
@@ -5556,7 +5556,7 @@ footer *,
    نستخدم body .asp-notice (0,1,1) لنتغلب عليها */
 body .asp-notice,
 body .asp-notice * {
-  color: #143F35 !important;
+  color: var(--mj-brand-deep) !important;
 }
 
 /* استثناء بطاقات الأربعين النووية (an-card) — خلفية بيضاء (#fff)
@@ -5573,10 +5573,10 @@ body .an-card--read * {
 /* استثناء شارات جودة الإجابة (ra-badge) — خلفيات فاتحة
    القائمة الكبيرة 74b تُجبرها على color:#fff */
 body .ra-badge--full {
-  color: var(--mn-text-active, #143F35) !important;
+  color: var(--mn-text-active, var(--mj-brand-deep)) !important;
 }
 body .ra-badge--partial {
-  color: var(--majalis-emerald, #226A56) !important;
+  color: var(--majalis-emerald, var(--mj-brand)) !important;
 }
 
 /* ══════════════════════════════════════════════════════════════════
@@ -5584,16 +5584,16 @@ body .ra-badge--partial {
    هذه عناصر أُضيفت للقائمة الكبيرة 74b خطأً — خلفياتها شبه-شفافة فاتحة
    ══════════════════════════════════════════════════════════════════ */
 
-/* .sh-intro-box — rgba(23,61,53,.06) شبه-شفاف فاتح, color:#143F35 مكتوب في الأصل */
+/* .sh-intro-box — rgba(23,61,53,.06) شبه-شفاف فاتح, color:var(--mj-brand-deep) مكتوب في الأصل */
 body .sh-intro-box,
 body .sh-intro-box *:not(svg) {
-  color: #143F35 !important;
+  color: var(--mj-brand-deep) !important;
 }
 
 /* .jn-intro — rgba(31,77,58,.06) شبه-شفاف فاتح */
 body .jn-intro,
 body .jn-intro * {
-  color: #143F35 !important;
+  color: var(--mj-brand-deep) !important;
 }
 
 /* .nb-intro-box — rgba(31,77,58,.06) شبه-شفاف فاتح */
@@ -5605,12 +5605,12 @@ body .nb-intro-box * {
 /* .ra-opinions-note — rgba(31,77,58,.1) شبه-شفاف فاتح، نصه الأصلي زمردي */
 body .ra-opinions-note,
 body .ra-opinions-note * {
-  color: var(--majalis-emerald, #226A56) !important;
+  color: var(--majalis-emerald, var(--mj-brand)) !important;
 }
 
 /* .p2t-btn--outline — خلفيته var(--majalis-panel) فاتحة */
 body .p2t-btn--outline {
-  color: var(--majalis-emerald-deep, #143F35) !important;
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep)) !important;
 }
 
 /* .is-stat-card — خلفية #fff */
@@ -5622,7 +5622,7 @@ body .is-stat-card *:not(svg) {
 /* .is-science-intro — rgba(31,77,58,.06) فاتح */
 body .is-science-intro,
 body .is-science-intro * {
-  color: #143F35 !important;
+  color: var(--mj-brand-deep) !important;
 }
 
 /* .jn-desc-card — خلفية #fff */
@@ -5640,22 +5640,22 @@ body .jn-dua-card *:not(svg) {
 /* .atl-section-intro — rgba(31,77,58,.06) فاتح */
 body .atl-section-intro,
 body .atl-section-intro * {
-  color: #143F35 !important;
+  color: var(--mj-brand-deep) !important;
 }
 
 /* .nb-badge--azm — rgba(31,77,58,.12) فاتح */
 body .nb-badge--azm {
-  color: var(--majalis-emerald-deep, #143F35) !important;
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep)) !important;
 }
 
 /* .sg-rank-card__ruling — rgba(23,61,53,.1) فاتح */
 body .sg-rank-card__ruling {
-  color: var(--majalis-emerald, #226A56) !important;
+  color: var(--majalis-emerald, var(--mj-brand)) !important;
 }
 
 /* .tw-nawaa-hukm--mustahabb — خلفية #D4E9DC فاتحة */
 body .tw-nawaa-hukm--mustahabb {
-  color: #143F35 !important;
+  color: var(--mj-brand-deep) !important;
 }
 
 /* .sw-section__intro — خلفية #EFF6F3 فاتحة */
@@ -5673,65 +5673,65 @@ body .as-intro {
   color: var(--clr-text-1, #1A1A1A) !important;
 }
 
-/* .nf2-btn--outline — خلفية transparent، اللون الأصلي #226A56 */
+/* .nf2-btn--outline — خلفية transparent، اللون الأصلي var(--mj-brand) */
 body .nf2-btn--outline {
-  color: #226A56 !important;
+  color: var(--mj-brand) !important;
 }
 
 /* .hac__benefit-label — color-mix 10% شبه-شفاف فاتح */
 body .hac__benefit-label {
-  color: var(--hac-accent, #226A56) !important;
+  color: var(--hac-accent, var(--mj-brand)) !important;
 }
 
 /* .hac__category-badge — color-mix 8% شبه-شفاف فاتح */
 body .hac__category-badge {
-  color: color-mix(in srgb, var(--hac-accent, #226A56) 55%, transparent) !important;
+  color: color-mix(in srgb, var(--hac-accent, var(--mj-brand)) 55%, transparent) !important;
 }
 
 /* .hnh__num — color-mix 10% شبه-شفاف فاتح */
 body .hnh__num {
-  color: var(--clr-primary, #226A56) !important;
+  color: var(--clr-primary, var(--mj-brand)) !important;
 }
 
 /* .th-naj-group__title--amber — rgba(23,61,53,.12) فاتح */
 body .th-naj-group__title--amber {
-  color: #226A56 !important;
+  color: var(--mj-brand) !important;
 }
 
 /* .fa-card__grade--sahih — خلفية #D4E9DC فاتحة */
 body .fa-card__grade--sahih {
-  color: #143F35 !important;
+  color: var(--mj-brand-deep) !important;
 }
 
 /* .fa-card__grade--hasan — rgba(23,61,53,.12) فاتح */
 body .fa-card__grade--hasan {
-  color: #226A56 !important;
+  color: var(--mj-brand) !important;
 }
 
 /* .igst-badge--ok — خلفية #ECFDF5 فاتحة */
 body .igst-badge--ok {
-  color: #143F35 !important;
+  color: var(--mj-brand-deep) !important;
 }
 
 /* .tgm-badge--ok — خلفية #dcfce7 فاتحة */
 body .tgm-badge--ok {
-  color: #166534 !important;
+  color: var(--mj-brand) !important;
 }
 
 /* .ads-perm--ok و .ads-perm--warn — rgba فاتح */
 body .ads-perm--ok,
 body .ads-perm--warn {
-  color: #226A56 !important;
+  color: var(--mj-brand) !important;
 }
 
 /* .lsw-option--active — rgba(23,61,53,.1) فاتح */
 body .lsw-option--active {
-  color: #226A56 !important;
+  color: var(--mj-brand) !important;
 }
 
 /* .ftw-type-badge--fatwa — rgba(23,61,53,.1) فاتح */
 body .ftw-type-badge--fatwa {
-  color: #226A56 !important;
+  color: var(--mj-brand) !important;
 }
 
 /* .hit-card — color-mix 7%/12% (شبه-أبيض) */
@@ -5742,17 +5742,17 @@ body .hit-card:hover {
 
 /* .sh-step__link — rgba(23,61,53,.08) شبه-شفاف فاتح */
 body .sh-step__link {
-  color: var(--clr-primary, #226A56) !important;
+  color: var(--clr-primary, var(--mj-brand)) !important;
 }
 
 /* .hb-chapter-item--active — rgba(23,61,53,.12) فاتح */
 body .hb-chapter-item--active {
-  color: var(--ds-emerald, #226A56) !important;
+  color: var(--ds-emerald, var(--mj-brand)) !important;
 }
 
 /* .nav-tab--active — color-mix 10% شبه-شفاف فاتح */
 body .nav-tab--active {
-  color: var(--majalis-emerald-deep, #143F35) !important;
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep)) !important;
 }
 
 /* .related-knowledge__item:hover — color-mix 4% شبه-شفاف فاتح */
@@ -5762,14 +5762,14 @@ body .search-kind-badge--fatwa,
 body .search-kind-badge--ruling,
 body .search-kind-badge--story,
 body .search-kind-badge--stories {
-  color: #226A56 !important;
+  color: var(--mj-brand) !important;
 }
 
 /* .dvp-cta .dvp-btn--primary — خلفية #fff داخل قسم داكن */
 
 /* .kng-type-badge — color-mix 9% شبه-شفاف فاتح */
 body .kng-type-badge {
-  color: var(--kng-nc, var(--majalis-emerald, #226A56)) !important;
+  color: var(--kng-nc, var(--majalis-emerald, var(--mj-brand))) !important;
 }
 
 /* .nf-code — نص ضخم على خلفية var(--majalis-panel) فاتحة */
@@ -5806,7 +5806,7 @@ footer a:hover {
 /* الزر الأساسي (CTA) داخل الهيرو له خلفية فاتحة مقصودة — يحتفظ بلونه الغامق للتباين */
 .hpv4-hero a.hpv4-hero__cta-primary,
 .hpv4-hero a.hpv4-hero__cta-primary:hover {
-  color: #226A56 !important;
+  color: var(--mj-brand) !important;
 }
 
 /* أزرار داخل الخلفيات الداكنة */
@@ -5850,7 +5850,7 @@ html[data-theme="dark"] .site-footer * {
 html[data-theme="dark"] .hpv4-hero a.hpv4-hero__cta-primary,
 html[data-theme="dark"] .hpv4-hero a.hpv4-hero__cta-primary:hover,
 html[data-theme="dark"] .hpv4-hero a.hpv4-hero__cta-primary * {
-  color: #143F35 !important;
+  color: var(--mj-brand-deep) !important;
   stroke: currentColor !important;
 }.ds-page-header,
 .page-shell .ds-section__title,
@@ -6266,18 +6266,18 @@ html[data-theme="dark"] .trp-tab,
 html[data-theme="dark"] .trp-submit-btn,
 html[data-theme="dark"] .qzg-btn-primary,
 html[data-theme="dark"] .lpp-cat-btn {
-  color: var(--text-on-primary, #143F35) !important;
+  color: var(--text-on-primary, var(--mj-brand-deep)) !important;
 }
 
 /* .kng-source-btn.is-active: نفس علّة 79، لكن محدِّدها الفعلي بحالة
    is-active تحديدًا (الحالة الافتراضية بخلفية شفافة سليمة، لا تُمس). */
 html[data-theme="dark"] .kng-source-btn.is-active {
-  color: var(--text-on-primary, #143F35) !important;
+  color: var(--text-on-primary, var(--mj-brand-deep)) !important;
 }
 
 /* .ar-thesis-badge--phd: خلفيتها الفعلية في الوضع الداكن #4BA882 (قيمة
    مختلفة عن --clr-primary، مصدرها --majalis-emerald-deep غير معروف
-   السلسلة الدقيقة)؛ #143F35 يحقق ٤.١١:١ فقط (دون عتبة النص العادي)،
+   السلسلة الدقيقة)؛ var(--mj-brand-deep) يحقق ٤.١١:١ فقط (دون عتبة النص العادي)،
    فاستُخدم لون أدكن مخصص (٥.٨:١) بدل إعادة استخدام --text-on-primary. */
 html[data-theme="dark"] .ar-thesis-badge--phd {
   color: #0B2119 !important;
@@ -6443,7 +6443,7 @@ html[data-theme="dark"] .wn-card__cat,
 html[data-theme="dark"] .zk-card__rate,
 html[data-theme="dark"] .zk-card__title,
 html[data-theme="dark"] .zk-mustahiq__dalil {
-  color: var(--clr-text-1, #E5F0EC) !important;
+  color: var(--clr-text-1, var(--mj-brand-soft)) !important;
 }
 
 /* ══════════════════════════════════════════════════════════════════
@@ -6468,7 +6468,7 @@ html[data-theme="dark"] .seerah-panel__title,
 html[data-theme="dark"] .seerah-panel__events-title,
 html[data-theme="dark"] .fq-ref__title,
 html[data-theme="dark"] .sh-step__title {
-  color: var(--clr-text-1, #E5F0EC) !important;
+  color: var(--clr-text-1, var(--mj-brand-soft)) !important;
 }
 
 /* ============================================================
@@ -6833,7 +6833,7 @@ html[data-theme="dark"] .sh-step__title {
 
 /* ============================================================
    221ب — خريطة ترتيب نزول السور (revord-*) — المرحلة 9
-   خط زمني رأسي RTL. أخضر داكن (#143F35) = مكية، أخضر أفتح (#226A56) =
+   خط زمني رأسي RTL. أخضر داكن (var(--mj-brand-deep)) = مكية، أخضر أفتح (var(--mj-brand)) =
    مدنية — نفس زوج الألوان المستخدَم فعلاً لهذا الغرض التمييزي في
    .fiqh-timeline (src/index.css) لا اختراع جديد.
    ============================================================ */
@@ -6908,8 +6908,8 @@ html[data-theme="dark"] .sh-step__title {
   border-radius: 50%;
   flex-shrink: 0;
 }
-.revord-dot--meccan { background: #143F35; }
-.revord-dot--medinan { background: #226A56; }
+.revord-dot--meccan { background: var(--mj-brand-deep); }
+.revord-dot--medinan { background: var(--mj-brand); }
 
 .revord-skeletons {
   display: flex;
@@ -6957,10 +6957,10 @@ html[data-theme="dark"] .sh-step__title {
   width: .7rem;
   height: .7rem;
   border-radius: 50%;
-  background: #143F35;
+  background: var(--mj-brand-deep);
   border: 2px solid var(--majalis-panel);
 }
-.revord-marker--medinan { background: #226A56; }
+.revord-marker--medinan { background: var(--mj-brand); }
 
 .revord-card {
   display: flex;

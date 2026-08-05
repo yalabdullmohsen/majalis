@@ -31,15 +31,15 @@
   height: 2.75rem;
   margin-bottom: 0.65rem;
   border-radius: 999px;
-  background: color-mix(in srgb, #143f35 12%, transparent);
-  color: #143f35;
+  background: color-mix(in srgb, var(--mj-brand-deep) 12%, transparent);
+  color: var(--mj-brand-deep);
 }
 
 .qe-break-dialog__title {
   margin: 0 0 0.45rem;
   font-size: 1.15rem;
   font-weight: 700;
-  color: #143f35;
+  color: var(--mj-brand-deep);
 }
 
 .qe-break-dialog__msg {
@@ -54,7 +54,7 @@
   min-height: 2.75rem;
   border: none;
   border-radius: 0.75rem;
-  background: #143f35;
+  background: var(--mj-brand-deep);
   color: #f4faf7;
   font: inherit;
   font-weight: 700;

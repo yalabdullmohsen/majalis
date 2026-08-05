@@ -5,7 +5,7 @@
 
 /* Hero */
 .atl-hero {
-  background: linear-gradient(145deg, #0A1628 0%, #143F35 45%, #226A56 100%);
+  background: linear-gradient(145deg, #0A1628 0%, var(--mj-brand-deep) 45%, var(--mj-brand) 100%);
   padding: 3.5rem 1.5rem 2.5rem; text-align: center;
   position: relative; overflow: hidden;
 }
@@ -51,8 +51,8 @@
   border-radius: var(--ds-radius-full); padding: .4rem .9rem; font-size: .8rem; font-weight: 700;
   cursor: pointer; transition: all .18s ease; flex-shrink: 0;
 }
-.atl-tab:hover { border-color: #226A56; color: #226A56; }
-.atl-tab--active { background: #226A56; border-color: #226A56; color: #fff; }
+.atl-tab:hover { border-color: var(--mj-brand); color: var(--mj-brand); }
+.atl-tab--active { background: var(--mj-brand); border-color: var(--mj-brand); color: #fff; }
 
 /* Container */
 .atl-container { max-width: 900px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
@@ -60,7 +60,7 @@
 
 /* Section intro */
 .atl-section-intro {
-  background: rgba(31,77,58,.06); border-right: 3px solid #226A56;
+  background: rgba(31,77,58,.06); border-right: 3px solid var(--mj-brand);
   border-radius: .5rem; padding: .9rem 1.1rem;
 }
 .atl-section-intro p { font-size: .88rem; color: #1E293B; line-height: 1.75; margin: 0; }
@@ -68,15 +68,15 @@
 /* Cards for fadl */
 .atl-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: .85rem; }
 .atl-card { background: #fff; border: 1px solid #E2E8F0; border-radius: .9rem; padding: 1.1rem 1.2rem; box-shadow: 0 1px 5px rgba(0,0,0,.04); }
-.atl-card--hadith { border-top: 3px solid #226A56; }
-.atl-card__title { font-size: .9rem; font-weight: 800; color: #226A56; margin: 0 0 .45rem; }
+.atl-card--hadith { border-top: 3px solid var(--mj-brand); }
+.atl-card__title { font-size: .9rem; font-weight: 800; color: var(--mj-brand); margin: 0 0 .45rem; }
 .atl-card__text { font-size: .88rem; color: #334155; line-height: 1.75; margin: 0 0 .4rem; }
 .atl-card__source { font-size: 0.8rem; color: #94A3B8; margin: 0; }
 
 /* Accordion */
 .atl-accordion { display: flex; flex-direction: column; gap: .5rem; }
 .atl-acc-item { background: #fff; border: 1px solid #E2E8F0; border-radius: .8rem; overflow: hidden; }
-.atl-acc-item--open { border-color: #226A56; }
+.atl-acc-item--open { border-color: var(--mj-brand); }
 
 .atl-acc-head {
   width: 100%; display: flex; align-items: center; gap: .7rem;
@@ -86,7 +86,7 @@
 .atl-acc-head:hover { background: #F8FAFC; }
 .atl-acc-num {
   font-size: .7rem; font-weight: 900; color: #fff;
-  background: #226A56; border-radius: var(--ds-radius-full); width: 1.5rem; height: 1.5rem;
+  background: var(--mj-brand); border-radius: var(--ds-radius-full); width: 1.5rem; height: 1.5rem;
   display: flex; align-items: center; justify-content: center; flex-shrink: 0;
 }
 .atl-acc-title { flex: 1; font-size: .9rem; font-weight: 700; color: #0F172A; }
@@ -103,7 +103,7 @@
   box-shadow: 0 1px 5px rgba(0,0,0,.04);
 }
 .atl-stage__num {
-  font-size: var(--ds-text-2xl); font-weight: 900; color: #226A56;
+  font-size: var(--ds-text-2xl); font-weight: 900; color: var(--mj-brand);
   background: rgba(31,77,58,.1); border-radius: .6rem;
   width: 2.8rem; height: 2.8rem; display: flex; align-items: center; justify-content: center;
   flex-shrink: 0;
@@ -112,20 +112,20 @@
 .atl-stage__head { display: flex; align-items: center; gap: .7rem; flex-wrap: wrap; }
 .atl-stage__title { font-size: var(--ds-text-base); font-weight: 800; color: #0F172A; margin: 0; }
 .atl-stage__years {
-  font-size: .73rem; font-weight: 700; color: #226A56;
+  font-size: .73rem; font-weight: 700; color: var(--mj-brand);
   background: rgba(31,77,58,.1); border-radius: var(--ds-radius-full); padding: .15rem .6rem;
 }
 .atl-stage__focus { font-size: .86rem; color: #334155; line-height: 1.6; margin: 0; }
 .atl-stage__sign {
-  background: #F0F7F4; border: 1px solid #D4E9DC; border-radius: .5rem; padding: .6rem .8rem;
+  background: var(--mj-brand-soft); border: 1px solid #D4E9DC; border-radius: .5rem; padding: .6rem .8rem;
 }
-.atl-stage__sign p { font-size: .82rem; color: #143F35; margin: .25rem 0 0; line-height: 1.6; }
-.atl-label { font-size: .65rem; font-weight: 800; color: #226A56; letter-spacing: normal; }
+.atl-stage__sign p { font-size: .82rem; color: var(--mj-brand-deep); margin: .25rem 0 0; line-height: 1.6; }
+.atl-label { font-size: .65rem; font-weight: 800; color: var(--mj-brand); letter-spacing: normal; }
 
 /* Books */
 .atl-kutub-levels { display: flex; flex-direction: column; gap: var(--ds-space-6); }
 .atl-kutub-level__head { margin-bottom: .75rem; }
-.atl-kutub-level__title { font-size: var(--ds-text-base); font-weight: 800; color: #226A56; margin: 0 0 .25rem; }
+.atl-kutub-level__title { font-size: var(--ds-text-base); font-weight: 800; color: var(--mj-brand); margin: 0 0 .25rem; }
 .atl-kutub-level__desc { font-size: .82rem; color: #64748B; margin: 0; }
 .atl-kutub-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: .6rem; }
 .atl-kitab {
@@ -135,7 +135,7 @@
 .atl-kitab__name { font-size: .88rem; font-weight: 800; color: #0F172A; }
 .atl-kitab__author { font-size: .78rem; color: #64748B; }
 .atl-kitab__note {
-  font-size: .72rem; font-weight: 700; color: #226A56;
+  font-size: .72rem; font-weight: 700; color: var(--mj-brand);
   background: rgba(31,77,58,.08); border-radius: var(--ds-radius-full); padding: .1rem .5rem;
   align-self: flex-start;
 }

@@ -36,7 +36,7 @@ export function HomeDailyBenefits() {
 
   const icon = (
     <span aria-hidden="true">
-      <BookMarked size={18} strokeWidth={1.8} color="#143F35" />
+      <BookMarked size={18} strokeWidth={1.8} color="var(--mj-brand-deep)" />
     </span>
   );
 

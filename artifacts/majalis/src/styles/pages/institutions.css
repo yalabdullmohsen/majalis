@@ -78,7 +78,7 @@
 }
 .inst-card__link:hover { opacity: 0.8; }
 .inst-card__link--web { background: var(--ds-emerald-soft); color: var(--ds-emerald-deep); }
-.inst-card__link--map { background: color-mix(in srgb, var(--majalis-emerald) 8%, transparent); color: var(--majalis-emerald, #226A56); }
+.inst-card__link--map { background: color-mix(in srgb, var(--majalis-emerald) 8%, transparent); color: var(--majalis-emerald, var(--mj-brand)); }
 
 .inst-disclaimer {
   font-size: 0.78rem;

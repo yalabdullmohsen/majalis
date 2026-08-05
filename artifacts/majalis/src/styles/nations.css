@@ -357,8 +357,8 @@
 }
 .nation-evidence__text { margin: 0 0 0.35rem; font-size: 0.92rem; line-height: 2.1; }
 .nation-evidence__ref { font-size: 0.75rem; opacity: 0.75; font-style: normal; }
-.nation-evidence--hadith { border-inline-start-color: #0f766e; }
-.nation-evidence--hadith .nation-evidence__kind { background: #0f766e; }
+.nation-evidence--hadith { border-inline-start-color: var(--mj-brand); }
+.nation-evidence--hadith .nation-evidence__kind { background: var(--mj-brand); }
 .nation-evidence--tafsir { border-inline-start-color: #1d4ed8; }
 .nation-evidence--tafsir .nation-evidence__kind { background: #1d4ed8; }
 .nation-evidence--disputed { border-inline-start-color: #b45309; }

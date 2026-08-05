@@ -8,14 +8,14 @@
    بنفس الزمرد حتى لا يظهر شريط أبيض فوق الشاشة الخضراء. */
 html.pts-immersive,
 html.pts-immersive body {
-  background-color: #143F35;
+  background-color: var(--mj-brand-deep);
   background-image: none;
 }
 
 .pts-screen {
   /* مربوط بهوية v4 — لا باليتة موازية */
   --pts-bg-0: var(--em-950, #081A16);
-  --pts-bg-1: var(--em-800, #143F35);
+  --pts-bg-1: var(--em-800, var(--mj-brand-deep));
   --pts-bg-2: var(--em-700, #195345);
   --pts-gold: var(--gold-300, #E3CB8C);
   --pts-gold-soft: color-mix(in srgb, var(--gold-400, #D2B063) 28%, transparent);

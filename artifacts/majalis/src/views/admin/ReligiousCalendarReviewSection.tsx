@@ -107,7 +107,7 @@ export function ReligiousCalendarReviewSection() {
                   marginBottom: "0.35rem",
                   border: "1px solid var(--color-border, #e5e7eb)",
                   borderRadius: "0.5rem",
-                  background: selected?.record.id === record.id ? "color-mix(in srgb, #143F35 8%, white)" : "white",
+                  background: selected?.record.id === record.id ? "color-mix(in srgb, var(--mj-brand-deep) 8%, white)" : "white",
                   cursor: "pointer",
                 }}
               >

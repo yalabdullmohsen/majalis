@@ -83,15 +83,15 @@ export const CONTENT_TYPE_LABEL: Record<CitationContentType, string> = {
 };
 
 export const CONTENT_TYPE_COLOR: Record<CitationContentType, string> = {
-  quran_ayah:   "#065f46",
+  quran_ayah:   "var(--mj-brand)",
   hadith:       "#1d4ed8",
   scholar_quote:"#7c3aed",
-  fatwa:        "#143F35",
-  book:         "#143F35",
+  fatwa:        "var(--mj-brand-deep)",
+  book:         "var(--mj-brand-deep)",
   article:      "#0369a1",
   research:     "#0c4a6e",
-  lesson:       "#047857",
-  benefit:      "#166534",
+  lesson:       "var(--mj-brand)",
+  benefit:      "var(--mj-brand)",
   prophet_story:"#dc2626",
   qa:           "#6b7280",
 };
@@ -201,7 +201,7 @@ export async function fetchUserCitations(filters?: {
 
 export async function createCitationFolder(
   folderName: string,
-  color = "#065f46",
+  color = "var(--mj-brand)",
 ): Promise<{ ok: boolean; folder?: CitationFolder; error?: string }> {
   const token = await getAuthToken();
   if (!token) return { ok: false, error: "مطلوب تسجيل الدخول" };

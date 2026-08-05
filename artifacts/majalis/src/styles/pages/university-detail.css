@@ -99,8 +99,8 @@
 .is-lesson-item { display: flex; gap: var(--ds-space-2); align-items: flex-start; font-size: 0.8125rem; color: #334155; margin-bottom: 0.35rem; }
 .is-actions { display: flex; gap: 0.6rem; flex-wrap: wrap; }
 .is-btn { padding: 0.45rem 1rem; border-radius: var(--ds-radius-sm); font-size: 0.8125rem; font-weight: 600; cursor: pointer; font-family: inherit; border: none; transition: all 0.15s; }
-.is-btn.approve { background: #15803D; color: #fff; }
-.is-btn.approve:hover { background: #15803d; }
+.is-btn.approve { background: var(--mj-brand); color: #fff; }
+.is-btn.approve:hover { background: var(--mj-brand); }
 .is-btn.revoke { background: #fff; color: #dc2626; border: 1px solid #fca5a5; }
 .is-btn.revoke:hover { background: #fef2f2; }
 .is-btn.disabled { opacity: 0.45; cursor: not-allowed; }
@@ -113,5 +113,5 @@
    90 — UniversityDetailPage  (udp-*)
    ============================================================ */
 .udp-step-num  { background: var(--majalis-emerald); }
-.udp-acc-badge { background: var(--acc-color, #065f46); }
+.udp-acc-badge { background: var(--acc-color, var(--mj-brand)); }
 

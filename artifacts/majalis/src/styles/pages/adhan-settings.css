@@ -23,17 +23,17 @@
   width: 100%; background: none; border: none; border-bottom: 1px solid var(--msk-border);
   margin-bottom: 0; padding: 0 1rem; cursor: pointer; font: inherit; color: var(--majalis-ink, #1A1A18);
 }
-html[data-theme="dark"] .ads-diagnostics-toggle { color: var(--clr-text-1, #E5F0EC) !important; }
+html[data-theme="dark"] .ads-diagnostics-toggle { color: var(--clr-text-1, var(--mj-brand-soft)) !important; }
 
 /* ─ Location section ─ */
 .ads-gov-label { font-size: var(--ds-text-sm); font-weight: 600; color: var(--msk-text); }
 .ads-gov-select { border: 1.5px solid var(--msk-border); border-radius: 0.625rem; padding: 0.35rem 0.75rem; font-size: var(--ds-text-sm); font-weight: 600; color: var(--msk-text); background: var(--msk-canvas); font-family: inherit; cursor: pointer; min-width: 130px; }
 .ads-sunrise-inner { display: flex; align-items: center; gap: 0.4rem; color: var(--msk-text); font-size: var(--ds-text-sm); font-weight: 600; }
 .ads-sunrise-tag { font-size: 0.8rem; font-weight: 400; color: var(--msk-text-3); background: var(--msk-canvas-2); border-radius: var(--ds-radius-full); padding: 0.1rem 0.4rem; }
-/* color كان #143F35 ثابتًا (غير مرتبط بالسمة) — يبقى أخضر داكن فوق بطاقة
+/* color كان var(--mj-brand-deep) ثابتًا (غير مرتبط بالسمة) — يبقى أخضر داكن فوق بطاقة
    خضراء داكنة في الوضع الليلي (تباين 1:1، شُخِّص 2026-07-19). var(--msk-text)
    نفس المتغيّر المُستخدَم فعلاً في .ads-sunrise-inner المجاورة مباشرة. */
-.ads-sunrise-time { font-size: var(--ds-text-sm); font-weight: 700; color: var(--msk-text, #143F35); font-variant-numeric: tabular-nums; }
+.ads-sunrise-time { font-size: var(--ds-text-sm); font-weight: 700; color: var(--msk-text, var(--mj-brand-deep)); font-variant-numeric: tabular-nums; }
 
 /* ─ Adhan section ─ */
 .ads-adhan-desc { font-size: 0.78rem; color: var(--msk-text-2); margin-bottom: 0.75rem; }
@@ -90,7 +90,7 @@ html[data-theme="dark"] .ads-diagnostics-toggle { color: var(--clr-text-1, #E5F0
   border-radius: var(--ds-radius-lg);
   padding: 0.75rem 0.9rem;
   margin-block-end: 0.75rem;
-  color: var(--msk-gold, #226A56);
+  color: var(--msk-gold, var(--mj-brand));
 }
 .pasc-explainer__title { font-weight: 700; font-size: 0.85rem; margin: 0 0 0.2rem; color: var(--msk-text, #1A1A18); }
 .pasc-explainer__desc { font-size: 0.78rem; margin: 0 0 0.6rem; color: var(--msk-text-2, #5C5C56); line-height: 1.6; }

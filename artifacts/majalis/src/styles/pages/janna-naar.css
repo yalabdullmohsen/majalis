@@ -3,7 +3,7 @@
    ══════════════════════════════════════════════════════════════════ */
 .jn-page { min-height: 100vh; background: #F8FAFC; }
 
-.jn-hero { padding: 3.5rem 1.5rem 2.5rem; text-align: center; transition: background .3s ease; background: var(--jn-hero-bg, linear-gradient(145deg, #0A1628, #143F35, #226A56)); }
+.jn-hero { padding: 3.5rem 1.5rem 2.5rem; text-align: center; transition: background .3s ease; background: var(--jn-hero-bg, linear-gradient(145deg, #0A1628, var(--mj-brand-deep), var(--mj-brand))); }
 .jn-hero--naar { --jn-hero-bg: linear-gradient(145deg, #1A0000, #7B1010, #9B1C1C); }
 .jn-hero__inner { max-width: 680px; margin: 0 auto; }
 .jn-hero__badge {
@@ -26,25 +26,25 @@
   border-radius: var(--ds-radius-full); padding: .4rem .9rem; font-size: .8rem; font-weight: 700;
   cursor: pointer; flex-shrink: 0; transition: all .15s ease;
 }
-.jn-tab:hover { border-color: #226A56; color: #226A56; }
-.jn-tab--janna       { --jn-tab-active-bg: #226A56; }
+.jn-tab:hover { border-color: var(--mj-brand); color: var(--mj-brand); }
+.jn-tab--janna       { --jn-tab-active-bg: var(--mj-brand); }
 .jn-tab--naar        { --jn-tab-active-bg: #9B1C1C; }
 .jn-tab--asbab-janna { --jn-tab-active-bg: #1a3a5c; }
-.jn-tab--duas        { --jn-tab-active-bg: var(--brand-deep, #143F35); }
-.jn-tab--active { color: #fff; background: var(--jn-tab-active-bg, #226A56); border-color: var(--jn-tab-active-bg, #226A56); }
+.jn-tab--duas        { --jn-tab-active-bg: var(--brand-deep, var(--mj-brand-deep)); }
+.jn-tab--active { color: #fff; background: var(--jn-tab-active-bg, var(--mj-brand)); border-color: var(--jn-tab-active-bg, var(--mj-brand)); }
 
 .jn-container { max-width: 900px; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
 .jn-sections { display: flex; flex-direction: column; gap: var(--ds-space-8); }
 
-.jn-section--janna       { --jn-section-color: #226A56; }
+.jn-section--janna       { --jn-section-color: var(--mj-brand); }
 .jn-section--naar        { --jn-section-color: #9B1C1C; }
 .jn-section--asbab-janna { --jn-section-color: #1a3a5c; }
-.jn-section--duas        { --jn-section-color: var(--brand-deep, #143F35); }
-.jn-section__title { font-size: 1.1rem; font-weight: 800; margin: 0 0 .85rem; border-right: 3px solid currentColor; padding-right: .7rem; color: var(--jn-section-color, #226A56); }
+.jn-section--duas        { --jn-section-color: var(--brand-deep, var(--mj-brand-deep)); }
+.jn-section__title { font-size: 1.1rem; font-weight: 800; margin: 0 0 .85rem; border-right: 3px solid currentColor; padding-right: .7rem; color: var(--jn-section-color, var(--mj-brand)); }
 
 .jn-cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: .75rem; }
 .jn-desc-card {
-  background: #fff; border: 1px solid #E8E7E2; border-top: 3px solid var(--jn-section-color, #226A56);
+  background: #fff; border: 1px solid #E8E7E2; border-top: 3px solid var(--jn-section-color, var(--mj-brand));
   border-radius: .9rem; padding: 1rem 1.1rem;
   display: flex; flex-direction: column; gap: .4rem;
   box-shadow: 0 1px 4px rgba(0,0,0,.04);
@@ -60,7 +60,7 @@
   font-weight: 700; line-height: 1.6;
 }
 
-.jn-intro { background: rgba(31,77,58,.06); border-right: 3px solid #226A56; border-radius: .6rem; padding: .85rem 1rem; margin-bottom: 1.2rem; }
+.jn-intro { background: rgba(31,77,58,.06); border-right: 3px solid var(--mj-brand); border-radius: .6rem; padding: .85rem 1rem; margin-bottom: 1.2rem; }
 .jn-intro p { font-size: .88rem; color: #1E293B; line-height: 1.75; margin: 0; }
 
 .jn-asbab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: .8rem; }
@@ -70,7 +70,7 @@
 }
 .jn-sabab-num {
   font-size: .7rem; font-weight: 900; color: #fff;
-  background: #226A56; border-radius: var(--ds-radius-full); width: 1.5rem; height: 1.5rem;
+  background: var(--mj-brand); border-radius: var(--ds-radius-full); width: 1.5rem; height: 1.5rem;
   display: flex; align-items: center; justify-content: center;
 }
 .jn-sabab-title { font-size: .9rem; font-weight: 800; color: #0F172A; margin: 0; }
@@ -84,7 +84,7 @@
 
 .jn-duas-list { display: flex; flex-direction: column; gap: .8rem; }
 .jn-dua-card {
-  background: #fff; border: 1px solid #E8E7E2; border-right: 4px solid #226A56;
+  background: #fff; border: 1px solid #E8E7E2; border-right: 4px solid var(--mj-brand);
   border-radius: .8rem; padding: 1rem 1.2rem;
   display: flex; flex-direction: column; gap: .45rem;
 }
@@ -106,7 +106,7 @@
   background: #fff; color: #0F172A;
   font-size: .88rem; font-weight: 600; text-decoration: none;
 }
-.jn-related__link:hover { border-color: #226A56; color: #226A56; }
+.jn-related__link:hover { border-color: var(--mj-brand); color: var(--mj-brand); }
 
 @media (max-width: 640px) {
   .jn-hero__title { font-size: var(--ds-text-2xl); }

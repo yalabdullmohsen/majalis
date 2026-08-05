@@ -207,7 +207,7 @@
 .ra-opinion-link:hover { text-decoration:underline; }
 .ra-empty { color:var(--majalis-ink-soft); opacity:.6; text-align:center; padding:2rem 0; grid-column:1/-1; }
 .ra-ref-sup { color:var(--majalis-emerald); font-weight:700; margin-left:.125rem; cursor:default; }
-.ra-badge--full { background:var(--mn-surface-active,#d4e9dc); color:var(--mn-text-active,#143F35); }
+.ra-badge--full { background:var(--mn-surface-active,#d4e9dc); color:var(--mn-text-active,var(--mj-brand-deep)); }
 .ra-badge--partial { background:var(--majalis-emerald-muted,rgba(31,77,58,.12)); color:var(--majalis-emerald); }
 .ra-badge--dim { background:var(--majalis-parchment-deep,#f0ece4); color:var(--majalis-ink-soft); }
 

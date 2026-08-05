@@ -86,7 +86,7 @@ html {
 .ds-page-header__eyebrow {
   font-size: var(--ds-text-xs);
   font-weight: 700;
-  color: var(--majalis-brass-deep, #143F35);
+  color: var(--majalis-brass-deep, var(--mj-brand-deep));
   margin: 0 0 var(--ds-space-1);
   letter-spacing: normal;
 }
@@ -868,7 +868,7 @@ p, li {
 
 .miracle-item__ref {
   font-size: var(--ds-text-xs);
-  color: var(--majalis-brass-deep, #143F35);
+  color: var(--majalis-brass-deep, var(--mj-brand-deep));
   font-style: normal;
   margin: var(--ds-space-1) 0;
 }
@@ -1050,7 +1050,7 @@ p, li {
 .surah-story-num {
   font-size: var(--ds-text-xs);
   font-weight: 800;
-  color: var(--majalis-brass-deep, #143F35);
+  color: var(--majalis-brass-deep, var(--mj-brand-deep));
 }
 
 .surah-story-meta {
@@ -1219,11 +1219,11 @@ p, li {
   --ds-shadow-lg: 0 20px 25px -5px rgba(26,23,20,.07), 0 10px 10px -5px rgba(26,23,20,.03);
 
   /* ── Colors — مرتبطة بـ msk tokens من index.css ── */
-  --ds-emerald:        var(--msk-gold,        #226A56);
-  --ds-emerald-deep:   var(--msk-gold-deep,   #143F35);
+  --ds-emerald:        var(--msk-gold,        var(--mj-brand));
+  --ds-emerald-deep:   var(--msk-gold-deep,   var(--mj-brand-deep));
   --ds-emerald-soft:   var(--majalis-sage,    #EAF3EF);
   --ds-emerald-muted:  var(--msk-gold-dim,    rgba(23,61,53,.12));
-  --ds-gold:           var(--msk-gold,        #226A56);
+  --ds-gold:           var(--msk-gold,        var(--mj-brand));
   --ds-gold-soft:      var(--majalis-sage,    #EAF3EF);
   --ds-parchment:      var(--msk-canvas,      #FAF8F5);
   --ds-parchment-deep: var(--msk-canvas-2,    #F0EDE8);
@@ -1512,7 +1512,7 @@ hr.decorative,
   display: inline-block;
   padding: 0.2rem 0.625rem;
   background: rgba(23,61,53, 0.12);
-  color: var(--clr-primary, #226A56);
+  color: var(--clr-primary, var(--mj-brand));
   border-radius: 999px;
   font-size: 0.73rem;
   font-weight: 700;
@@ -1523,7 +1523,7 @@ hr.decorative,
 .ds-quiz-home-card__title {
   font-size: 1.3rem;
   font-weight: 800;
-  color: var(--ds-emerald-deep, #143F35);
+  color: var(--ds-emerald-deep, var(--mj-brand-deep));
   margin: 0 0 0.5rem;
   line-height: 1.3;
 }
@@ -1539,7 +1539,7 @@ hr.decorative,
 .ds-quiz-home-card__btn {
   display: inline-block;
   padding: 0.6rem 1.4rem;
-  background: var(--ds-emerald-deep, #143F35);
+  background: var(--ds-emerald-deep, var(--mj-brand-deep));
   color: #fff;
   border-radius: 0.5rem;
   font-size: 0.875rem;
@@ -1549,7 +1549,7 @@ hr.decorative,
 }
 
 .ds-quiz-home-card__btn:hover {
-  background: #143F35;
+  background: var(--mj-brand-deep);
 }
 
 .ds-quiz-home-card__grid {
@@ -1564,7 +1564,7 @@ hr.decorative,
   align-items: center;
   gap: 0.35rem;
   font-size: 0.75rem;
-  color: var(--ds-emerald-deep, #143F35);
+  color: var(--ds-emerald-deep, var(--mj-brand-deep));
   font-weight: 600;
   padding: 0.25rem 0.4rem;
   background: rgba(22, 78, 60, 0.07);
@@ -1574,13 +1574,13 @@ hr.decorative,
 
 .ds-quiz-home-card__cat svg {
   flex-shrink: 0;
-  color: var(--clr-primary, #226A56);
+  color: var(--clr-primary, var(--mj-brand));
 }
 
 /* المرحلة 6 — إحصاءات/تحدي اليوم، قيم أساسية آمنة للسياق الفاتح (تُستبدَل
    بتجاوزات .home-main--v3 في elite-2026.css عند الاستخدام الفعلي بالرئيسية). */
 .ds-quiz-home-card__stat {
-  color: var(--ds-emerald-deep, #143F35);
+  color: var(--ds-emerald-deep, var(--mj-brand-deep));
   background: rgba(22, 78, 60, 0.07);
 }
 .ds-quiz-home-card__stats-empty,
@@ -1592,10 +1592,10 @@ hr.decorative,
   border: 1px solid rgba(23,61,53, 0.18);
 }
 .ds-quiz-home-card__challenge-badge {
-  color: var(--clr-primary, #226A56);
+  color: var(--clr-primary, var(--mj-brand));
 }
 .ds-quiz-home-card__challenge-q {
-  color: var(--ds-emerald-deep, #143F35);
+  color: var(--ds-emerald-deep, var(--mj-brand-deep));
 }
 .ds-quiz-home-card__stats-skel {
   background: rgba(22, 78, 60, 0.08);
@@ -1633,7 +1633,7 @@ hr.decorative,
 .hcp-strip__label {
   font-size: 0.78rem;
   font-weight: 700;
-  color: var(--ds-emerald-deep, #143F35);
+  color: var(--ds-emerald-deep, var(--mj-brand-deep));
   display: flex;
   align-items: center;
   gap: 0.3rem;
@@ -1641,7 +1641,7 @@ hr.decorative,
 
 .hcp-strip__link {
   font-size: 0.73rem;
-  color: var(--clr-primary, #226A56);
+  color: var(--clr-primary, var(--mj-brand));
   text-decoration: none;
   font-weight: 600;
 }
@@ -1668,7 +1668,7 @@ hr.decorative,
 
 .hcp-prayer-cell--next {
   background: rgba(19, 74, 58, 0.08);
-  border-color: var(--ds-emerald-deep, #143F35);
+  border-color: var(--ds-emerald-deep, var(--mj-brand-deep));
 }
 
 .hcp-prayer-cell__name {
@@ -1678,7 +1678,7 @@ hr.decorative,
 }
 
 .hcp-prayer-cell--next .hcp-prayer-cell__name {
-  color: var(--ds-emerald-deep, #143F35);
+  color: var(--ds-emerald-deep, var(--mj-brand-deep));
 }
 
 .hcp-prayer-cell__time {
@@ -1690,7 +1690,7 @@ hr.decorative,
 }
 
 .hcp-prayer-cell--next .hcp-prayer-cell__time {
-  color: var(--ds-emerald-deep, #143F35);
+  color: var(--ds-emerald-deep, var(--mj-brand-deep));
 }
 
 /* ── البند 2: About Section ─────────────────────────────── */
@@ -1705,7 +1705,7 @@ hr.decorative,
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: normal;
-  color: var(--clr-primary, #226A56);
+  color: var(--clr-primary, var(--mj-brand));
   text-transform: uppercase;
   margin: 0 0 0.45rem;
 }
@@ -1713,7 +1713,7 @@ hr.decorative,
 .home-about__title {
   font-size: 1.4rem;
   font-weight: 800;
-  color: var(--ds-emerald-deep, #143F35);
+  color: var(--ds-emerald-deep, var(--mj-brand-deep));
   margin: 0 0 1rem;
 }
 
@@ -1740,7 +1740,7 @@ hr.decorative,
 }
 
 .site-footer-email a:hover {
-  color: var(--majalis-emerald, #226A56);
+  color: var(--majalis-emerald, var(--mj-brand));
 }
 
 /* ── Compact Prayer countdown row ───────────────────────── */
@@ -1759,13 +1759,13 @@ hr.decorative,
 .hcp-strip__countdown-time {
   font-size: 0.72rem;
   font-weight: 700;
-  color: var(--ds-emerald-deep, #143F35);
+  color: var(--ds-emerald-deep, var(--mj-brand-deep));
   font-variant-numeric: tabular-nums;
   letter-spacing: normal;
 }
 
 .hcp-strip__countdown--elapsed {
-  color: var(--ds-emerald-deep, #143F35);
+  color: var(--ds-emerald-deep, var(--mj-brand-deep));
   font-weight: 600;
 }
 
@@ -1824,12 +1824,12 @@ hr.decorative,
 
 .tc-ring-fill {
   fill: none;
-  stroke: var(--majalis-emerald, #143F35);
+  stroke: var(--majalis-emerald, var(--mj-brand-deep));
   stroke-width: 9;
 }
 
 .tc-ring-fill--done {
-  stroke: var(--majalis-emerald, #226A56);
+  stroke: var(--majalis-emerald, var(--mj-brand));
 }
 
 /* Content inside ring */
@@ -1848,7 +1848,7 @@ hr.decorative,
 .tc-ring-rounds {
   font-size: 0.75rem;
   font-weight: 700;
-  color: var(--majalis-emerald, #226A56);
+  color: var(--majalis-emerald, var(--mj-brand));
   letter-spacing: normal;
   line-height: 1;
 }
@@ -1856,13 +1856,13 @@ hr.decorative,
 .tc-ring-count {
   font-size: clamp(2rem, 8vw, 3.2rem);
   font-weight: 800;
-  color: var(--majalis-emerald-deep, #143F35);
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep));
   line-height: 1;
   font-variant-numeric: tabular-nums;
 }
 
 .tc-ring-btn--done .tc-ring-count {
-  color: var(--majalis-emerald, #226A56);
+  color: var(--majalis-emerald, var(--mj-brand));
 }
 
 .tc-ring-total {
@@ -1880,7 +1880,7 @@ hr.decorative,
 }
 
 .tc-ring-btn--done .tc-ring-hint {
-  color: var(--majalis-emerald, #226A56);
+  color: var(--majalis-emerald, var(--mj-brand));
 }
 
 /* Keyboard hint below counter */
@@ -1933,13 +1933,13 @@ hr.decorative,
 }
 
 .tasbih-wird-pill:hover {
-  border-color: var(--majalis-emerald, #143F35);
-  color: var(--majalis-emerald, #143F35);
+  border-color: var(--majalis-emerald, var(--mj-brand-deep));
+  color: var(--majalis-emerald, var(--mj-brand-deep));
 }
 
 .tasbih-wird-pill.is-active {
-  border-color: var(--majalis-emerald, #143F35);
-  background: var(--majalis-emerald, #143F35);
+  border-color: var(--majalis-emerald, var(--mj-brand-deep));
+  background: var(--majalis-emerald, var(--mj-brand-deep));
   color: #fff;
   font-weight: 700;
 }
@@ -2092,7 +2092,7 @@ hr.decorative,
 
 /* Streak stat cell */
 .tasbih-stat--streak strong {
-  color: var(--majalis-emerald, #226A56);
+  color: var(--majalis-emerald, var(--mj-brand));
 }
 
 /* Danger button variant */
@@ -2216,7 +2216,7 @@ hr.decorative,
   padding: 0.15rem 0.5rem;
   border-radius: 999px;
   background: color-mix(in srgb, var(--majalis-emerald) 8%, transparent);
-  color: var(--majalis-emerald, #226A56);
+  color: var(--majalis-emerald, var(--mj-brand));
   font-weight: 600;
 }
 
@@ -2321,7 +2321,7 @@ hr.decorative,
   width: 2rem;
   height: 2rem;
   border-radius: 50%;
-  background: var(--majalis-emerald, #143F35);
+  background: var(--majalis-emerald, var(--mj-brand-deep));
   color: #fff;
   font-size: 1rem;
   font-weight: 700;
@@ -2331,7 +2331,7 @@ hr.decorative,
   margin: 0;
   font-size: 1rem;
   font-weight: 800;
-  color: var(--majalis-emerald, #143F35);
+  color: var(--majalis-emerald, var(--mj-brand-deep));
 }
 .tawheed-type-card__subtitle {
   margin: 0;
@@ -2349,7 +2349,7 @@ hr.decorative,
 .tawheed-type-card__ayah {
   margin: 0.5rem 0 0;
   padding: 0.6rem 0.75rem;
-  border-right: 3px solid var(--majalis-emerald, #226A56);
+  border-right: 3px solid var(--majalis-emerald, var(--mj-brand));
   background: var(--bg-base, #faf9f6);
   border-radius: 0 0.375rem 0.375rem 0;
   font-family: "Amiri Quran", "Scheherazade New", serif;
@@ -2362,7 +2362,7 @@ hr.decorative,
   display: block;
   font-style: normal;
   font-size: 0.8rem;
-  color: var(--majalis-emerald, #226A56);
+  color: var(--majalis-emerald, var(--mj-brand));
   font-weight: 700;
   margin-top: 0.25rem;
   font-family: inherit;
@@ -2372,7 +2372,7 @@ hr.decorative,
 .tawheed-principles-heading {
   font-size: 1.1rem;
   font-weight: 800;
-  color: var(--majalis-emerald, #143F35);
+  color: var(--majalis-emerald, var(--mj-brand-deep));
   margin: 0 0 1rem;
   direction: rtl;
   border-bottom: 2px solid var(--ds-line-color, #E8E7E2);
@@ -2422,11 +2422,11 @@ hr.decorative,
   margin-bottom: 1.25rem;
   direction: rtl;
 }
-.tawheed-breadcrumb a { color: var(--majalis-emerald, #226A56); text-decoration: none; }
+.tawheed-breadcrumb a { color: var(--majalis-emerald, var(--mj-brand)); text-decoration: none; }
 .tawheed-breadcrumb a:hover { text-decoration: underline; }
 
 .tawheed-page-header {
-  background: linear-gradient(135deg, var(--majalis-emerald, #226A56) 0%, #143F35 100%);
+  background: linear-gradient(135deg, var(--majalis-emerald, var(--mj-brand)) 0%, var(--mj-brand-deep) 100%);
   color: #fff;
   border-radius: 1rem;
   padding: 2rem 1.5rem;
@@ -2506,7 +2506,7 @@ hr.decorative,
 .tawheed-related-card__label {
   font-size: 0.875rem;
   font-weight: 700;
-  color: var(--majalis-emerald, #226A56);
+  color: var(--majalis-emerald, var(--mj-brand));
 }
 .tawheed-related-card__desc {
   font-size: 0.75rem;
@@ -2838,7 +2838,7 @@ h1, h2, h3 {
   align-items: center;
   gap: 0.4rem;
   padding: 0.5rem 1.1rem;
-  background: var(--majalis-emerald, #226A56);
+  background: var(--majalis-emerald, var(--mj-brand));
   color: #fff;
   border: none;
   border-radius: 0.5rem;
@@ -2851,7 +2851,7 @@ h1, h2, h3 {
 }
 
 .btn-primary:hover {
-  background: var(--majalis-emerald-deep, #143F35);
+  background: var(--majalis-emerald-deep, var(--mj-brand-deep));
   box-shadow: 0 4px 14px rgba(31,77,58,0.28);
   transform: translateY(-1px);
 }
@@ -2879,7 +2879,7 @@ h1, h2, h3 {
   gap: 0.4rem;
   padding: 0.5rem 1.1rem;
   background: transparent;
-  color: var(--majalis-emerald, #226A56);
+  color: var(--majalis-emerald, var(--mj-brand));
   border: 1.5px solid rgba(31,77,58,0.25);
   border-radius: 0.5rem;
   font-family: inherit;
@@ -2901,7 +2901,7 @@ textarea:focus-visible,
 select:focus-visible {
   outline: 2px solid rgba(31,77,58,0.35);
   outline-offset: 1px;
-  border-color: var(--majalis-emerald, #226A56) !important;
+  border-color: var(--majalis-emerald, var(--mj-brand)) !important;
 }
 
 /* ── 25. تأثير الانتقال الصفحي (page-enter) ── */

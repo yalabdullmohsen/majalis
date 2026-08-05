@@ -239,7 +239,7 @@
   font-size: 0.8rem;
 }
 
-.env-ok { color: #15803d; }
+.env-ok { color: var(--mj-brand); }
 .env-missing { color: #b91c1c; }
 
 .admin-feature-status__table-scroll {
@@ -268,8 +268,8 @@
   font-weight: 700;
 }
 
-.feature-status-badge--done { background: #dcfce7; color: #166534; }
-.feature-status-badge--partial { background: #E6EDE9; color: #143F35; }
+.feature-status-badge--done { background: #dcfce7; color: var(--mj-brand); }
+.feature-status-badge--partial { background: #E6EDE9; color: var(--mj-brand-deep); }
 .feature-status-badge--blocked { background: #fee2e2; color: #991b1b; }
 .feature-status-badge--mock { background: #e0e7ff; color: #3730a3; }
 .feature-status-badge--missing { background: #f1f5f9; color: #475569; }
@@ -314,7 +314,7 @@
   background: rgba(255,255,255,0.07) !important;
 }
 .kuwait-tab--active {
-  background: var(--majalis-emerald, #226A56) !important;
+  background: var(--majalis-emerald, var(--mj-brand)) !important;
   color: #fff !important;
   border-color: transparent !important;
   font-weight: 700;
@@ -353,7 +353,7 @@
   color: var(--majalis-ink, #EDE9DD);
 }
 .lessons-filter-tab--active {
-  background: var(--majalis-emerald, #226A56);
+  background: var(--majalis-emerald, var(--mj-brand));
   color: #fff;
   font-weight: 700;
 }

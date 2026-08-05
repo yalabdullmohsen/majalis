@@ -12,7 +12,7 @@
   display: inline-block;
   padding: 0.75rem 1.5rem;
   border-radius: var(--ds-radius);
-  background: var(--emerald, #226A56);
+  background: var(--emerald, var(--mj-brand));
   color: #fff;
   font-weight: 700;
   text-decoration: none;

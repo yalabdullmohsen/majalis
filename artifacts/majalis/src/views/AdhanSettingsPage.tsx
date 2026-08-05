@@ -222,7 +222,7 @@ export default function AdhanSettingsPage() {
 
           <div className="ads-row">
             <div className="ads-sunrise-inner">
-              <Sunrise size={16} strokeWidth={2} color="#143F35" />
+              <Sunrise size={16} strokeWidth={2} color="var(--mj-brand-deep)" />
               الشروق
               <span className="ads-sunrise-tag">وقت الكراهة</span>
             </div>

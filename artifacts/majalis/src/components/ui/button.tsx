@@ -11,7 +11,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-           "bg-brand text-white border border-brand",
+           "bg-brand text-[var(--mj-on-brand)] border border-brand font-[family-name:var(--mj-ui)] text-[length:var(--mj-fs-btn)] font-medium leading-none",
         destructive:
           "bg-destructive text-destructive-foreground shadow-sm border-destructive-border",
         outline:

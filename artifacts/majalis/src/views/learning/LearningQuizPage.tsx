@@ -18,7 +18,7 @@ function ScoreRing({ pct, passed }: { pct: number; passed: boolean }) {
   const r    = 48;
   const circ = 2 * Math.PI * r;
   const off  = circ - (Math.min(100, pct) / 100) * circ;
-  const color = passed ? "#226A56" : "#dc2626";
+  const color = passed ? "var(--mj-brand)" : "#dc2626";
   return (
     <div className="lqp2-ring" aria-label={`النتيجة ${Math.round(pct)}%`}>
       <svg width="120" height="120" viewBox="0 0 120 120" aria-hidden="true">

@@ -48,7 +48,7 @@
 /* ============================================================
    91 — UniversitiesComparePage  (ucp-*)
    ============================================================ */
-.ucp-acc-badge   { background: var(--acc-color, #065f46); }
+.ucp-acc-badge   { background: var(--acc-color, var(--mj-brand)); }
 .ucp-apply-grid  {
   display: grid;
   grid-template-columns: repeat(var(--col-count, 1), minmax(0, 1fr));

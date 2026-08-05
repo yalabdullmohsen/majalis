@@ -15,7 +15,7 @@
      فينقلب أول لون في التدرّج إلى أبيض في الوضع الليلي (تحقّق حي: تدرّج
      أبيض←أخضر بدل أخضر داكن←أخضر، يُخفي نص التبويبات الأبيض فوقه،
      2026-07-22). */
-  background: linear-gradient(160deg, #143F35 0%, #226A56 100%);
+  background: linear-gradient(160deg, var(--mj-brand-deep) 0%, var(--mj-brand) 100%);
   color: #fff;
   padding: 2.5rem 1.25rem 0;
   text-align: center;
@@ -72,16 +72,16 @@
   min-width: 5.5rem;
 }
 .sw-tab:hover { background: rgba(255,255,255,.22); color: #fff; }
-.sw-tab--active { background: #F9FAFB; color: var(--majalis-emerald, #226A56); font-weight: 700; }
+.sw-tab--active { background: #F9FAFB; color: var(--majalis-emerald, var(--mj-brand)); font-weight: 700; }
 .sw-tab__icon { font-size: 1.1rem; line-height: 1; }
 .sw-tab__label { white-space: nowrap; }
 
 /* body */
 .sw-body { max-width: 760px; margin: 0 auto; padding: 1.5rem 1rem; }
 .sw-section { display: flex; flex-direction: column; gap: .75rem; }
-.sw-section__title { font-size: 1.05rem; font-weight: 700; color: var(--majalis-emerald, #226A56); margin: 0 0 .5rem; padding-right: .6rem; border-right: 3px solid var(--majalis-emerald, #226A56); }
+.sw-section__title { font-size: 1.05rem; font-weight: 700; color: var(--majalis-emerald, var(--mj-brand)); margin: 0 0 .5rem; padding-right: .6rem; border-right: 3px solid var(--majalis-emerald, var(--mj-brand)); }
 .sw-section__title--mt { margin-top: 2rem; }
-.sw-section__intro { background: #EFF6F3; border-right: 3px solid var(--majalis-emerald, #226A56); border-radius: .5rem; padding: .85rem 1rem; font-size: .9rem; line-height: 1.7; color: #1a1a1a; margin-bottom: .5rem; }
+.sw-section__intro { background: #EFF6F3; border-right: 3px solid var(--majalis-emerald, var(--mj-brand)); border-radius: .5rem; padding: .85rem 1rem; font-size: .9rem; line-height: 1.7; color: #1a1a1a; margin-bottom: .5rem; }
 
 /* accordion cards */
 .sw-card {
@@ -92,7 +92,7 @@
   border: 1px solid #E8E7E2;
   transition: box-shadow .2s;
 }
-.sw-card--open { box-shadow: 0 4px 16px rgba(31,77,58,.12); border-color: var(--majalis-emerald, #226A56); }
+.sw-card--open { box-shadow: 0 4px 16px rgba(31,77,58,.12); border-color: var(--majalis-emerald, var(--mj-brand)); }
 .sw-card__head {
   display: flex;
   align-items: center;
@@ -125,18 +125,18 @@
   flex-shrink: 0;
 }
 .sw-badge--fard { background: #FEF2F2; color: #B91C1C; }
-.sw-badge--wajib { background: rgba(23,61,53,.10); color: #226A56; }
+.sw-badge--wajib { background: rgba(23,61,53,.10); color: var(--mj-brand); }
 /* --fard/--nafl خلفياتهما لونان فاتحان صلبان (لا شفافية) فيبقيان واضحين
    بصرف النظر عن الوضع؛ --wajib وحدها خلفيتها شفافة (10% من لون البطاقة
    المحيطة نفسه) فتصبح داكنة تلقائيًا حين تصير البطاقة داكنة في الوضع
-   الليلي، بينما نصها #226A56 يبقى داكنًا أيضًا — تصادم لون على لون. */
+   الليلي، بينما نصها var(--mj-brand) يبقى داكنًا أيضًا — تصادم لون على لون. */
 html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
-.sw-badge--nafl { background: #F0F7F4; color: #15803D; }
+.sw-badge--nafl { background: var(--mj-brand-soft); color: var(--mj-brand); }
 
 /* dalil */
 .sw-dalil {
-  background: #F0F7F4;
-  border-right: 3px solid var(--majalis-emerald, #226A56);
+  background: var(--mj-brand-soft);
+  border-right: 3px solid var(--majalis-emerald, var(--mj-brand));
   border-radius: .5rem;
   padding: .75rem 1rem;
   margin: 0;
@@ -145,7 +145,7 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
   gap: .3rem;
 }
 .sw-dalil--sm { padding: .5rem .75rem; }
-.sw-dalil__text { font-size: .92rem; line-height: 1.9; color: #052E16; font-weight: 500; margin: 0; }
+.sw-dalil__text { font-size: .92rem; line-height: 1.9; color: var(--mj-brand-deep); font-weight: 500; margin: 0; }
 .sw-dalil__ref { font-size: 0.8rem; color: #16A34A; font-style: normal; }
 
 /* notes */
@@ -157,7 +157,7 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
   position: relative;
   line-height: 1.6;
 }
-.sw-note::before { content: "•"; position: absolute; right: 0; color: var(--majalis-emerald, #226A56); font-weight: 900; }
+.sw-note::before { content: "•"; position: absolute; right: 0; color: var(--majalis-emerald, var(--mj-brand)); font-weight: 900; }
 
 /* conditions grid */
 .sw-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: .75rem; }
@@ -171,7 +171,7 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
   gap: .6rem;
   box-shadow: 0 1px 3px rgba(0,0,0,.05);
 }
-.sw-cond-card--rukn { border-color: var(--majalis-emerald, #226A56); background: #F0F7F4; }
+.sw-cond-card--rukn { border-color: var(--majalis-emerald, var(--mj-brand)); background: var(--mj-brand-soft); }
 .sw-cond-card__icon { font-size: 1.4rem; flex-shrink: 0; }
 .sw-cond-card__title { display: block; font-size: .88rem; font-weight: 700; color: #111; margin-bottom: .2rem; }
 .sw-cond-card__body { font-size: .8rem; color: #4B5563; line-height: 1.5; margin: 0; }
@@ -186,7 +186,7 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
   gap: .75rem;
   align-items: flex-start;
   font-size: .87rem;
-  color: #143F35;
+  color: var(--mj-brand-deep);
   line-height: 1.6;
   margin-top: .5rem;
 }
@@ -205,7 +205,7 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
   box-shadow: 0 1px 3px rgba(0,0,0,.05);
 }
 .sw-muf-card--major { border-right: 4px solid #EF4444; }
-.sw-muf-card--detail { border-right: 4px solid #226A56; }
+.sw-muf-card--detail { border-right: 4px solid var(--mj-brand); }
 .sw-muf-card__icon { font-size: var(--ds-text-2xl); flex-shrink: 0; }
 .sw-muf-card__content { flex: 1; display: flex; flex-direction: column; gap: .4rem; }
 .sw-muf-card__title { font-size: .9rem; font-weight: 700; color: #111; }
@@ -249,8 +249,8 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
   box-shadow: 0 1px 4px rgba(0,0,0,.06);
 }
 .sw-virtue-card__icon { font-size: 1.8rem; }
-.sw-virtue-card__title { font-size: .9rem; font-weight: 700; color: var(--majalis-emerald, #226A56); margin: 0; }
-.sw-virtue-card__text { font-size: .87rem; line-height: 1.85; color: #1F2937; font-style: normal; background: #F0F7F4; border-radius: .45rem; padding: .6rem .75rem; margin: 0; border-right: 3px solid var(--majalis-emerald, #226A56); }
+.sw-virtue-card__title { font-size: .9rem; font-weight: 700; color: var(--majalis-emerald, var(--mj-brand)); margin: 0; }
+.sw-virtue-card__text { font-size: .87rem; line-height: 1.85; color: #1F2937; font-style: normal; background: var(--mj-brand-soft); border-radius: .45rem; padding: .6rem .75rem; margin: 0; border-right: 3px solid var(--majalis-emerald, var(--mj-brand)); }
 .sw-virtue-card__source { font-size: .72rem; color: #5C5C56; }
 
 /* related */
@@ -263,13 +263,13 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
   border-radius: .6rem;
   padding: .6rem .7rem;
   font-size: .82rem;
-  color: var(--majalis-emerald, #226A56);
+  color: var(--majalis-emerald, var(--mj-brand));
   text-align: center;
   text-decoration: none;
   font-weight: 600;
   transition: background .15s, border-color .15s;
 }
-.sw-related__link:hover { background: #F0F7F4; border-color: var(--majalis-emerald, #226A56); }
+.sw-related__link:hover { background: var(--mj-brand-soft); border-color: var(--majalis-emerald, var(--mj-brand)); }
 
 /* responsive */
 @media (max-width: 640px) {

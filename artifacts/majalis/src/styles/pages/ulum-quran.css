@@ -5,7 +5,7 @@
 
 /* hero */
 .uq-hero {
-  background: linear-gradient(135deg, #052E16 0%, var(--majalis-emerald,#226A56) 100%);
+  background: linear-gradient(135deg, var(--mj-brand-deep) 0%, var(--majalis-emerald,var(--mj-brand)) 100%);
   padding: 2.5rem 1.5rem 2rem;
   text-align: center;
   color: #fff;
@@ -41,13 +41,13 @@
   border-bottom: 2px solid transparent; margin-bottom: -2px;
   transition: all .15s; color: #5C5C56; font-size: .8rem;
 }
-.uq-tab--active { border-bottom-color: var(--majalis-emerald,#226A56); color: var(--majalis-emerald,#226A56); font-weight: 700; }
+.uq-tab--active { border-bottom-color: var(--majalis-emerald,var(--mj-brand)); color: var(--majalis-emerald,var(--mj-brand)); font-weight: 700; }
 
 /* body */
 .uq-body    { padding: 1.25rem 1rem; }
 .uq-section { animation: uq-fade .25s ease; }
 @keyframes uq-fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
-.uq-lead    { font-size: .88rem; color: #5C5C56; line-height: 1.7; margin: 0 0 1.2rem; border-right: 3px solid var(--majalis-emerald,#226A56); padding-right: .75rem; }
+.uq-lead    { font-size: .88rem; color: #5C5C56; line-height: 1.7; margin: 0 0 1.2rem; border-right: 3px solid var(--majalis-emerald,var(--mj-brand)); padding-right: .75rem; }
 .uq-subhead { font-size: var(--ds-text-base); font-weight: 700; color: #111; margin: 0 0 .75rem; }
 .uq-subhead--mt { margin-top: 1.5rem; }
 .uq-info-box--mt { margin-top: 1.2rem; }
@@ -55,8 +55,8 @@
 /* facts grid */
 .uq-facts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; margin-bottom: 1.5rem; }
 .uq-fact-item { background: #F0F7F4; border: 1px solid #BBF7D0; border-radius: .65rem; padding: .6rem .8rem; }
-.uq-fact-item__label { display: block; font-size: 0.8rem; font-weight: 700; color: var(--majalis-emerald,#226A56); margin-bottom: .2rem; }
-.uq-fact-item__value { font-size: .82rem; color: #052E16; font-weight: 600; }
+.uq-fact-item__label { display: block; font-size: 0.8rem; font-weight: 700; color: var(--majalis-emerald,var(--mj-brand)); margin-bottom: .2rem; }
+.uq-fact-item__value { font-size: .82rem; color: var(--mj-brand-deep); font-weight: 600; }
 
 /* types */
 .uq-types-list { display: flex; flex-direction: column; gap: .75rem; }
@@ -75,14 +75,14 @@
 /* jam */
 .uq-jam-list { display: flex; flex-direction: column; gap: .75rem; margin-bottom: 1.2rem; }
 .uq-jam-card { background: #fff; border: 1.5px solid #E8E7E2; border-radius: .8rem; overflow: hidden; }
-.uq-jam-card--open { border-color: var(--majalis-emerald,#226A56); }
+.uq-jam-card--open { border-color: var(--majalis-emerald,var(--mj-brand)); }
 .uq-jam-head {
   display: flex; align-items: center; gap: .75rem;
   width: 100%; padding: .85rem 1rem;
   background: transparent; border: none; cursor: pointer; font-family: inherit; text-align: right;
 }
 .uq-jam-num {
-  background: var(--majalis-emerald,#226A56); color: #fff;
+  background: var(--majalis-emerald,var(--mj-brand)); color: #fff;
   width: 1.7rem; height: 1.7rem; border-radius: 50%;
   display: flex; align-items: center; justify-content: center;
   font-size: .8rem; font-weight: 800; flex-shrink: 0;
@@ -92,7 +92,7 @@
 .uq-jam-chevron--open { transform: rotate(180deg); }
 .uq-jam-body { margin: 0; padding: .5rem 1rem .9rem 1rem; border-top: 1px solid #F3F4F6; list-style: none; display: flex; flex-direction: column; gap: .4rem; }
 .uq-jam-item { display: flex; gap: .5rem; align-items: flex-start; font-size: .83rem; color: #5C5C56; line-height: 1.5; }
-.uq-jam-item::before { content: "●"; color: var(--majalis-emerald,#226A56); font-size: .5rem; margin-top: .4rem; flex-shrink: 0; }
+.uq-jam-item::before { content: "●"; color: var(--majalis-emerald,var(--mj-brand)); font-size: .5rem; margin-top: .4rem; flex-shrink: 0; }
 
 /* info box */
 .uq-info-box {
@@ -112,7 +112,7 @@
 .uq-tafsir-icon  { font-size: 1.4rem; flex-shrink: 0; }
 .uq-tafsir-title { font-weight: 700; font-size: .9rem; color: #111; display: block; margin-bottom: .25rem; }
 .uq-tafsir-desc  { font-size: .82rem; color: #5C5C56; line-height: 1.6; margin: 0 0 .3rem; }
-.uq-tafsir-ex    { font-size: .74rem; color: var(--majalis-emerald,#226A56); font-weight: 600; }
+.uq-tafsir-ex    { font-size: .74rem; color: var(--majalis-emerald,var(--mj-brand)); font-weight: 600; }
 
 .uq-mufassirun { display: flex; flex-direction: column; gap: .5rem; }
 .uq-mufassir-row {
@@ -123,7 +123,7 @@
 .uq-mufassir-info { display: flex; flex-direction: column; min-width: 8rem; }
 .uq-mufassir-name { font-weight: 700; font-size: .85rem; color: #111; }
 .uq-mufassir-era  { font-size: .72rem; color: #9CA3AF; }
-.uq-mufassir-kitab { display: block; font-size: .83rem; font-weight: 600; color: var(--majalis-emerald,#226A56); }
+.uq-mufassir-kitab { display: block; font-size: .83rem; font-weight: 600; color: var(--majalis-emerald,var(--mj-brand)); }
 .uq-mufassir-note  { display: block; font-size: .72rem; color: #5C5C56; }
 
 /* إعجاز */
@@ -137,7 +137,7 @@
 .uq-ijaz-desc  { font-size: .73rem; color: #5C5C56; line-height: 1.5; margin: 0; }
 
 .uq-ijaz-ayah {
-  background: linear-gradient(135deg, #052E16, var(--majalis-emerald,#226A56));
+  background: linear-gradient(135deg, var(--mj-brand-deep), var(--majalis-emerald,var(--mj-brand)));
   border-radius: .8rem; padding: 1.1rem 1.3rem;
 }
 .uq-ijaz-ayah__text { font-family: var(--font-quran,"Scheherazade New",serif); font-size: 1.1rem; line-height: 2.1; color: #fff; margin: 0 0 .4rem; font-style: normal; }
@@ -146,13 +146,13 @@
 /* محكم ومتشابه */
 .uq-mm-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; }
 .uq-mm-card { background: #fff; border: 1.5px solid #E8E7E2; border-radius: .8rem; padding: .9rem; }
-.uq-mm-title { font-size: .9rem; font-weight: 800; color: var(--majalis-emerald,#226A56); margin: 0 0 .4rem; }
+.uq-mm-title { font-size: .9rem; font-weight: 800; color: var(--majalis-emerald,var(--mj-brand)); margin: 0 0 .4rem; }
 .uq-mm-def   { font-size: .8rem; color: #5C5C56; line-height: 1.6; margin: 0 0 .5rem; }
 .uq-mm-examples { display: flex; flex-direction: column; gap: .25rem; }
 .uq-mm-examples__label { font-size: .7rem; font-weight: 700; color: #9CA3AF; display: block; margin-bottom: .1rem; }
 .uq-mm-examples__item  {
   font-size: .75rem; background: #F0F7F4; border-radius: .4rem;
-  padding: .2rem .5rem; color: #052E16; font-weight: 600; display: block;
+  padding: .2rem .5rem; color: var(--mj-brand-deep); font-weight: 600; display: block;
 }
 
 /* ناسخ منسوخ */
@@ -169,7 +169,7 @@
 }
 .uq-naskh-title { font-weight: 700; font-size: .88rem; color: #111; margin: 0 0 .25rem; display: block; }
 .uq-naskh-desc  { font-size: .82rem; color: #5C5C56; line-height: 1.6; margin: 0 0 .3rem; display: block; }
-.uq-naskh-ex    { font-size: .74rem; color: var(--majalis-emerald,#226A56); font-weight: 600; display: block; }
+.uq-naskh-ex    { font-size: .74rem; color: var(--majalis-emerald,var(--mj-brand)); font-weight: 600; display: block; }
 
 /* related */
 .uq-related { margin-top: 2.5rem; }
@@ -177,11 +177,11 @@
 .uq-related__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; }
 .uq-related__link {
   background: #fff; border: 1px solid #E8E7E2; border-radius: .6rem;
-  padding: .6rem .7rem; font-size: .82rem; color: var(--majalis-emerald,#226A56);
+  padding: .6rem .7rem; font-size: .82rem; color: var(--majalis-emerald,var(--mj-brand));
   text-align: center; text-decoration: none; font-weight: 600;
   transition: background .15s; display: block;
 }
-.uq-related__link:hover { background: #F0F7F4; border-color: var(--majalis-emerald,#226A56); }
+.uq-related__link:hover { background: #F0F7F4; border-color: var(--majalis-emerald,var(--mj-brand)); }
 
 @media (max-width: 640px) {
   .uq-facts-grid, .uq-ijaz-grid, .uq-mm-grid { grid-template-columns: 1fr; }
@@ -219,7 +219,7 @@
   flex-shrink: 0;
   width: 1.8rem; height: 1.8rem;
   display: flex; align-items: center; justify-content: center;
-  background: linear-gradient(135deg, #226A56, #143F35);
+  background: linear-gradient(135deg, var(--mj-brand), var(--mj-brand-deep));
   color: #FAFAF8;
   border-radius: 50%;
   font-size: 0.78rem;
@@ -229,7 +229,7 @@
 .uq-qiraat-card__name {
   font-size: 0.92rem;
   font-weight: 700;
-  color: #226A56;
+  color: var(--mj-brand);
   margin: 0;
   line-height: 1.35;
 }
@@ -261,7 +261,7 @@
 .uq-qiraat-card__rawi {
   font-size: 0.78rem;
   font-weight: 600;
-  color: #143F35;
+  color: var(--mj-brand-deep);
   background: rgba(21,48,37,.07);
   padding: 0.15rem 0.5rem;
   border-radius: 6px;
@@ -291,7 +291,7 @@
 .uq-usul-card__title {
   font-size: 0.84rem;
   font-weight: 700;
-  color: #226A56;
+  color: var(--mj-brand);
   margin: 0 0 0.35rem;
 }
 .uq-usul-card__desc {

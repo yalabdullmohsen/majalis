@@ -24,7 +24,7 @@
 /* البطاقة الفعلية المُصدَرة كصورة */
 .fic-card {
   border-radius: var(--ds-radius-xl); overflow: hidden;
-  background: linear-gradient(145deg, #226A56 0%, #143F35 100%);
+  background: linear-gradient(145deg, var(--mj-brand) 0%, var(--mj-brand-deep) 100%);
   aspect-ratio: 1/1; width: 100%; position: relative;
 }
 .fic-card__inner {
@@ -67,18 +67,18 @@
   font-family: inherit; transition: opacity .14s;
 }
 .fic-btn:disabled { opacity: .55; cursor: not-allowed; }
-.fic-btn--primary { background: #226A56; color: #fff; }
+.fic-btn--primary { background: var(--mj-brand); color: #fff; }
 .fic-btn--primary:hover:not(:disabled) { opacity: .9; }
 .fic-btn--secondary { background: #f3f4f6; color: #333; }
 .fic-btn--secondary:hover:not(:disabled) { background: #e5e7eb; }
 .fic-hint { text-align: center; font-size: .82rem; margin: 0; }
-.fic-hint--ok { color: #226A56; }
+.fic-hint--ok { color: var(--mj-brand); }
 .fic-hint--err { color: #b91c1c; }
 
 /* زر البطاقة في شريط الإجراءات */
 .content-action-bar__btn--card {
   background: linear-gradient(135deg, rgba(23,61,53,.12), rgba(23,61,53,.06));
-  color: #226A56; border: 1px solid rgba(23,61,53,.2);
+  color: var(--mj-brand); border: 1px solid rgba(23,61,53,.2);
 }
 .content-action-bar__btn--card:hover {
   background: rgba(23,61,53,.18);

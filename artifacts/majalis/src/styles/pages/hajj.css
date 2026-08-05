@@ -13,7 +13,7 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
 
 /* hero */
 .hj-hero {
-  background: linear-gradient(160deg, #143F35 0%, #143F35 60%, #1A8A68 100%);
+  background: linear-gradient(160deg, var(--mj-brand-deep) 0%, var(--mj-brand-deep) 60%, #1A8A68 100%);
   color: #fff;
   padding: 2.5rem 1.25rem 0;
   text-align: center;
@@ -66,7 +66,7 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
   min-width: 5.2rem;
 }
 .hj-tab:hover { background: rgba(255,255,255,.22); color: #fff; }
-.hj-tab--active { background: #F9FAFB; color: var(--majalis-emerald, #143F35); font-weight: 700; }
+.hj-tab--active { background: #F9FAFB; color: var(--majalis-emerald, var(--mj-brand-deep)); font-weight: 700; }
 .hj-tab__icon { font-size: 1.1rem; line-height: 1; }
 .hj-tab__label { white-space: nowrap; font-size: .76rem; }
 
@@ -76,14 +76,14 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
 .hj-section__title {
   font-size: 1.05rem;
   font-weight: 700;
-  color: var(--majalis-emerald, #143F35);
+  color: var(--majalis-emerald, var(--mj-brand-deep));
   margin: .5rem 0 .4rem;
-  border-right: 3px solid var(--majalis-emerald, #143F35);
+  border-right: 3px solid var(--majalis-emerald, var(--mj-brand-deep));
   padding-right: .6rem;
 }
 .hj-section__intro {
   background: #EFF6F3;
-  border-right: 3px solid var(--majalis-emerald, #143F35);
+  border-right: 3px solid var(--majalis-emerald, var(--mj-brand-deep));
   border-radius: .5rem;
   padding: .85rem 1rem;
   font-size: .9rem;
@@ -108,13 +108,13 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
 .hj-stat-card__value { font-size: .88rem; color: #111; font-weight: 600; line-height: 1.4; }
 
 .hj-hadith-box {
-  background: #F0F7F4;
-  border-right: 3px solid var(--majalis-emerald, #143F35);
+  background: var(--mj-brand-soft);
+  border-right: 3px solid var(--majalis-emerald, var(--mj-brand-deep));
   border-radius: .65rem;
   padding: 1rem 1.1rem;
   margin-bottom: .5rem;
 }
-.hj-hadith-box__text { font-size: .93rem; line-height: 2; color: #052E16; font-style: normal; margin: 0 0 .4rem; }
+.hj-hadith-box__text { font-size: .93rem; line-height: 2; color: var(--mj-brand-deep); font-style: normal; margin: 0 0 .4rem; }
 .hj-hadith-box__ref { font-size: 0.8rem; color: #16A34A; }
 
 .hj-fadl-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: .65rem; margin-bottom: .5rem; }
@@ -140,7 +140,7 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
   padding: .9rem .85rem;
   box-shadow: 0 1px 3px rgba(0,0,0,.04);
 }
-.hj-type-card__name { display: block; font-size: .92rem; font-weight: 700; color: var(--majalis-emerald, #143F35); margin-bottom: .35rem; }
+.hj-type-card__name { display: block; font-size: .92rem; font-weight: 700; color: var(--majalis-emerald, var(--mj-brand-deep)); margin-bottom: .35rem; }
 .hj-type-card__desc { font-size: .8rem; color: #5C5C56; line-height: 1.5; margin: 0; }
 
 /* accordion cards */
@@ -152,7 +152,7 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
   box-shadow: 0 1px 4px rgba(0,0,0,.06);
   transition: box-shadow .2s;
 }
-.hj-card--open { box-shadow: 0 4px 16px rgba(31,77,58,.12); border-color: var(--majalis-emerald, #143F35); }
+.hj-card--open { box-shadow: 0 4px 16px rgba(31,77,58,.12); border-color: var(--majalis-emerald, var(--mj-brand-deep)); }
 .hj-card__head {
   display: flex;
   align-items: center;
@@ -168,7 +168,7 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
 .hj-card__num {
   font-size: 1.1rem;
   font-weight: 900;
-  color: var(--majalis-emerald, #143F35);
+  color: var(--majalis-emerald, var(--mj-brand-deep));
   width: 1.6rem;
   flex-shrink: 0;
 }
@@ -177,8 +177,8 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
 .hj-card__title { font-size: .95rem; font-weight: 700; color: #111; }
 .hj-card__sub { font-size: .77rem; color: #5C5C56; }
 .hj-card__badge {
-  background: #F0F7F4;
-  color: var(--majalis-emerald, #143F35);
+  background: var(--mj-brand-soft);
+  color: var(--majalis-emerald, var(--mj-brand-deep));
   border-radius: var(--ds-radius-full);
   padding: .18rem .6rem;
   font-size: .72rem;
@@ -191,13 +191,13 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
 
 /* dalil */
 .hj-dalil {
-  background: #F0F7F4;
-  border-right: 3px solid var(--majalis-emerald, #143F35);
+  background: var(--mj-brand-soft);
+  border-right: 3px solid var(--majalis-emerald, var(--mj-brand-deep));
   border-radius: .5rem;
   padding: .75rem 1rem;
   margin: .5rem 0 0;
 }
-.hj-dalil__text { font-size: .92rem; line-height: 1.9; color: #052E16; font-weight: 500; margin: 0 0 .3rem; }
+.hj-dalil__text { font-size: .92rem; line-height: 1.9; color: var(--mj-brand-deep); font-weight: 500; margin: 0 0 .3rem; }
 .hj-dalil__ref { font-size: .72rem; color: #16A34A; font-style: normal; }
 
 .hj-detail-list { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: .35rem; }
@@ -208,13 +208,13 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
   position: relative;
   line-height: 1.6;
 }
-.hj-detail-item::before { content: "◆"; position: absolute; right: 0; color: var(--majalis-emerald, #143F35); font-size: .5rem; top: .35rem; }
+.hj-detail-item::before { content: "◆"; position: absolute; right: 0; color: var(--majalis-emerald, var(--mj-brand-deep)); font-size: .5rem; top: .35rem; }
 
 /* wajibat */
 .hj-wajib-card {
   background: #fff;
   border: 1px solid #E8E7E2;
-  border-right: 4px solid #226A56;
+  border-right: 4px solid var(--mj-brand);
   border-radius: .7rem;
   padding: .9rem 1rem;
   display: flex;
@@ -228,7 +228,7 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
 .hj-wajib-card__desc { font-size: .84rem; color: #5C5C56; line-height: 1.6; margin: 0; }
 .hj-wajib-card__penalty {
   font-size: .75rem;
-  color: #226A56;
+  color: var(--mj-brand);
   background: rgba(23,61,53,.10);
   border-radius: var(--ds-radius-full);
   padding: .15rem .6rem;
@@ -247,7 +247,7 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
   display: flex;
   gap: .75rem;
   font-size: .87rem;
-  color: #143F35;
+  color: var(--mj-brand-deep);
   line-height: 1.6;
 }
 .hj-info-box__icon { font-size: 1.2rem; flex-shrink: 0; }
@@ -267,16 +267,16 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
 .hj-mashar-card__head { display: flex; align-items: center; gap: .75rem; }
 .hj-mashar-card__icon { font-size: 1.8rem; flex-shrink: 0; }
 .hj-mashar-card__name { display: block; font-size: var(--ds-text-base); font-weight: 700; color: #111; }
-.hj-mashar-card__day { display: block; font-size: .75rem; color: var(--majalis-emerald, #143F35); font-weight: 600; }
+.hj-mashar-card__day { display: block; font-size: .75rem; color: var(--majalis-emerald, var(--mj-brand-deep)); font-weight: 600; }
 .hj-mashar-card__desc { font-size: .87rem; color: #5C5C56; line-height: 1.65; margin: 0; }
 .hj-mashar-dua {
-  background: #F0F7F4;
-  border-right: 3px solid var(--majalis-emerald, #143F35);
+  background: var(--mj-brand-soft);
+  border-right: 3px solid var(--majalis-emerald, var(--mj-brand-deep));
   border-radius: .45rem;
   padding: .6rem .8rem;
 }
 .hj-mashar-dua__label { display: block; font-size: .68rem; color: #16A34A; font-weight: 700; margin-bottom: .3rem; }
-.hj-mashar-dua__text { font-size: .88rem; line-height: 1.8; color: #052E16; font-weight: 500; margin: 0; }
+.hj-mashar-dua__text { font-size: .88rem; line-height: 1.8; color: var(--mj-brand-deep); font-weight: 500; margin: 0; }
 
 /* umra steps */
 .hj-umra-steps { display: flex; flex-direction: column; gap: 0; }
@@ -292,7 +292,7 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
 .hj-umra-step__num {
   width: 2rem;
   height: 2rem;
-  background: var(--majalis-emerald, #143F35);
+  background: var(--majalis-emerald, var(--mj-brand-deep));
   color: #fff;
   border-radius: 50%;
   display: flex;
@@ -334,18 +334,18 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
   border-radius: .6rem;
   padding: .6rem .7rem;
   font-size: .82rem;
-  color: var(--majalis-emerald, #143F35);
+  color: var(--majalis-emerald, var(--mj-brand-deep));
   text-align: center;
   text-decoration: none;
   font-weight: 600;
   transition: background .15s;
 }
-.hj-related__link:hover { background: #F0F7F4; border-color: var(--majalis-emerald, #143F35); }
+.hj-related__link:hover { background: var(--mj-brand-soft); border-color: var(--majalis-emerald, var(--mj-brand-deep)); }
 
 /* خلفية الرابط بيضاء ثابتة — لا نعناعي ليلي فوق أبيض */
 html[data-theme="dark"] .hj-related__link,
 html.dark .hj-related__link {
-  color: #143F35;
+  color: var(--mj-brand-deep);
   background: #fff;
   border-color: #E8E7E2;
 }

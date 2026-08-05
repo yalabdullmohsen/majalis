@@ -3,21 +3,21 @@
 .mtd-head { text-align: center; margin-bottom: 2rem; }
 .mtd-head__icon {
   width: 4rem; height: 4rem;
-  background: linear-gradient(135deg, #226A56, #143F35);
+  background: linear-gradient(135deg, var(--mj-brand), var(--mj-brand-deep));
   color: #fff; border-radius: var(--ds-radius-xl);
   display: flex; align-items: center; justify-content: center;
   margin: 0 auto 1rem;
 }
-.mtd-head__title { font-size: 1.6rem; font-weight: 800; color: var(--majalis-ink, #143F35); margin-bottom: 0.5rem; }
-.mtd-head__sub { font-size: 0.95rem; color: var(--majalis-muted, #226A56); max-width: 560px; margin: 0 auto; line-height: 1.7; }
+.mtd-head__title { font-size: 1.6rem; font-weight: 800; color: var(--majalis-ink, var(--mj-brand-deep)); margin-bottom: 0.5rem; }
+.mtd-head__sub { font-size: 0.95rem; color: var(--majalis-muted, var(--mj-brand)); max-width: 560px; margin: 0 auto; line-height: 1.7; }
 .mtd-section { margin-bottom: 2rem; }
 .mtd-section--highlight {
   background: var(--majalis-panel, #f5f9f6);
   border: 1px solid var(--majalis-line, #d4e6de);
   border-radius: var(--ds-radius-lg); padding: var(--ds-space-5);
 }
-.mtd-section__title { font-size: 1.1rem; font-weight: 700; color: #226A56; margin-bottom: 0.85rem; }
-.mtd-section__body { font-size: 0.92rem; line-height: 1.8; color: var(--majalis-ink, #143F35); }
+.mtd-section__title { font-size: 1.1rem; font-weight: 700; color: var(--mj-brand); margin-bottom: 0.85rem; }
+.mtd-section__body { font-size: 0.92rem; line-height: 1.8; color: var(--majalis-ink, var(--mj-brand-deep)); }
 .mtd-steps { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.85rem; }
 .mtd-step {
   display: flex; align-items: flex-start; gap: var(--ds-space-3);
@@ -27,14 +27,14 @@
 }
 .mtd-step__num {
   width: 1.6rem; height: 1.6rem; border-radius: 50%;
-  background: #226A56; color: #fff;
+  background: var(--mj-brand); color: #fff;
   font-weight: 900; font-size: 0.72rem;
   display: flex; align-items: center; justify-content: center; flex-shrink: 0;
 }
-.mtd-step__icon { color: #226A56; flex-shrink: 0; margin-top: 0.1rem; }
+.mtd-step__icon { color: var(--mj-brand); flex-shrink: 0; margin-top: 0.1rem; }
 .mtd-step__body { flex: 1; }
-.mtd-step__title { font-size: 0.9rem; font-weight: 700; color: var(--majalis-ink, #143F35); display: block; margin-bottom: 0.2rem; }
-.mtd-step__desc { font-size: 0.82rem; color: var(--majalis-muted, #226A56); margin: 0; line-height: 1.6; }
+.mtd-step__title { font-size: 0.9rem; font-weight: 700; color: var(--majalis-ink, var(--mj-brand-deep)); display: block; margin-bottom: 0.2rem; }
+.mtd-step__desc { font-size: 0.82rem; color: var(--majalis-muted, var(--mj-brand)); margin: 0; line-height: 1.6; }
 .mtd-sources { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--ds-space-2); }
 .mtd-source {
   display: flex; align-items: center; gap: var(--ds-space-3);
@@ -42,10 +42,10 @@
   background: var(--majalis-panel, #fff); border: 1px solid var(--majalis-line, #d4e6de);
   border-radius: var(--ds-radius);
 }
-.mtd-source__name { font-weight: 700; font-size: 0.85rem; color: #226A56; min-width: 130px; }
-.mtd-source__desc { font-size: 0.8rem; color: var(--majalis-muted, #226A56); }
+.mtd-source__name { font-weight: 700; font-size: 0.85rem; color: var(--mj-brand); min-width: 130px; }
+.mtd-source__desc { font-size: 0.8rem; color: var(--majalis-muted, var(--mj-brand)); }
 .mtd-guarantees { padding-right: 1.25rem; margin: 0; }
-.mtd-guarantees li { font-size: 0.88rem; line-height: 1.7; color: var(--majalis-ink, #143F35); margin-bottom: 0.4rem; }
+.mtd-guarantees li { font-size: 0.88rem; line-height: 1.7; color: var(--majalis-ink, var(--mj-brand-deep)); margin-bottom: 0.4rem; }
 .mtd-back { margin-top: 2rem; }
 
 /* ══ banner تيليجرام ══ */
@@ -53,7 +53,7 @@
   display: flex;
   align-items: center;
   gap: var(--ds-space-3);
-  background: linear-gradient(135deg, #226A56 0%, #143F35 100%);
+  background: linear-gradient(135deg, var(--mj-brand) 0%, var(--mj-brand-deep) 100%);
   border-radius: 0.85rem;
   padding: 0.85rem 1rem;
   margin-bottom: 1rem;
@@ -86,7 +86,7 @@
 .tg-banner__cta {
   flex-shrink: 0;
   background: #fff;
-  color: #226A56;
+  color: var(--mj-brand);
   font-weight: 700;
   font-size: 0.82rem;
   padding: 0.4rem 0.9rem;
@@ -130,7 +130,7 @@
   margin-bottom: 1rem;
 }
 .hsh-eyebrow {
-  background: var(--clr-primary, #143F35);
+  background: var(--clr-primary, var(--mj-brand-deep));
   color: #fff;
   font-size: 0.8rem;
   font-weight: 700;
@@ -141,7 +141,7 @@
 .hsh-title {
   font-size: 1.05rem;
   font-weight: 800;
-  color: var(--clr-primary, #143F35);
+  color: var(--clr-primary, var(--mj-brand-deep));
 }
 .hsh-steps {
   list-style: none;
@@ -163,7 +163,7 @@
   flex-shrink: 0;
   width: 1.75rem;
   height: 1.75rem;
-  background: var(--clr-primary, #143F35);
+  background: var(--clr-primary, var(--mj-brand-deep));
   color: #fff;
   border-radius: 50%;
   display: flex;
@@ -193,7 +193,7 @@
 .hsh-step__cta {
   font-size: 0.78rem;
   font-weight: 700;
-  color: var(--clr-primary, #143F35);
+  color: var(--clr-primary, var(--mj-brand-deep));
   text-decoration: none;
 }
 .hsh-step__cta:hover { text-decoration: underline; }

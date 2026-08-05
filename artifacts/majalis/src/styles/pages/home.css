@@ -227,7 +227,7 @@ a.hp-quick-card {
 }
 .hp-quick-card__icon {
   background: linear-gradient(135deg, #edf6f1, #daf0e8);
-  color: #143f35;
+  color: var(--mj-brand-deep);
   padding: 0.38rem;
   border-radius: 0.4rem;
   display: flex;
@@ -289,7 +289,7 @@ a.hp-featured-card {
   padding: 1.2rem 1.1rem;
   border-radius: 1.1rem;
   text-decoration: none;
-  background: linear-gradient(145deg, #112a1e 0%, #1a3d2b 40%, #143f35 80%, #143f35 100%);
+  background: linear-gradient(145deg, #112a1e 0%, #1a3d2b 40%, var(--mj-brand-deep) 80%, var(--mj-brand-deep) 100%);
   color: #fff;
   box-shadow: 0 4px 16px rgba(15, 50, 30, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.12);
@@ -353,7 +353,7 @@ html[data-theme="dark"] .hp-explore-cat__head {
 .hp-explore-cat__title {
   font-size: 0.98rem;
   font-weight: 800;
-  color: #143f35;
+  color: var(--mj-brand-deep);
   margin: 0;
 }
 html[data-theme="dark"] .hp-explore-cat__title {
@@ -362,7 +362,7 @@ html[data-theme="dark"] .hp-explore-cat__title {
 .hp-explore-cat__count {
   margin-inline-start: auto;
   font-size: 0.68rem;
-  color: #143f35;
+  color: var(--mj-brand-deep);
   font-weight: 700;
   background: #e8f4ed;
   padding: 0.15rem 0.6rem;
@@ -396,7 +396,7 @@ html[data-theme="dark"] a.hp-explore-item {
   border-color: var(--border);
 }
 .hp-explore-item__icon {
-  background: linear-gradient(135deg, #143f35, #143f35);
+  background: linear-gradient(135deg, var(--mj-brand-deep), var(--mj-brand-deep));
   color: #fafaf8;
   padding: 0.38rem;
   border-radius: 0.4rem;
@@ -438,7 +438,7 @@ a.hp-explore-more {
   text-decoration: none;
   background: #eef6f2;
   border: 1.5px dashed #b9dbcb;
-  color: #143f35;
+  color: var(--mj-brand-deep);
   font-size: 0.78rem;
   font-weight: 700;
   text-align: center;

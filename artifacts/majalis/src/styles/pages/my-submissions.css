@@ -16,7 +16,7 @@
 .msp-search-label { font-size: 0.85rem; font-weight: 600; color: var(--majalis-ink-soft); margin: 0 0 0.875rem; }
 .msp-search-form { display: flex; gap: var(--ds-space-2); }
 .msp-email-input { flex: 1; padding: 0.65rem 0.875rem; border-radius: 0.6rem; border: 1.5px solid rgba(255,255,255,0.10); font-size: var(--ds-text-sm); font-family: inherit; direction: ltr; outline: none; }
-.msp-search-btn { padding: 0.65rem 1.25rem; border-radius: 0.6rem; border: none; background: #143F35; color: #fff; font-size: var(--ds-text-sm); font-weight: 600; cursor: pointer; font-family: inherit; flex-shrink: 0; }
+.msp-search-btn { padding: 0.65rem 1.25rem; border-radius: 0.6rem; border: none; background: var(--mj-brand-deep); color: #fff; font-size: var(--ds-text-sm); font-weight: 600; cursor: pointer; font-family: inherit; flex-shrink: 0; }
 .msp-search-btn.is-loading { background: #9ca3af; cursor: not-allowed; }
 
 /* ─ Error ─ */
@@ -42,8 +42,8 @@
 .msp-empty-state__msg { color: var(--majalis-ink-muted, #9BA3B5); font-size: 0.9rem; }
 
 /* ─ CTA buttons ─ */
-.msp-cta-btn { padding: 0.6rem 1.5rem; border-radius: 0.6rem; border: none; background: #143F35; color: #fff; font-family: inherit; font-size: var(--ds-text-sm); font-weight: 600; cursor: pointer; margin-top: 0.75rem; }
-.msp-cta-btn--gradient { padding: 0.7rem 2rem; border-radius: 0.875rem; font-size: 0.9rem; font-weight: 700; background: linear-gradient(135deg, #143F35, #143F35); margin-top: 0; }
+.msp-cta-btn { padding: 0.6rem 1.5rem; border-radius: 0.6rem; border: none; background: var(--mj-brand-deep); color: #fff; font-family: inherit; font-size: var(--ds-text-sm); font-weight: 600; cursor: pointer; margin-top: 0.75rem; }
+.msp-cta-btn--gradient { padding: 0.7rem 2rem; border-radius: 0.875rem; font-size: 0.9rem; font-weight: 700; background: linear-gradient(135deg, var(--mj-brand-deep), var(--mj-brand-deep)); margin-top: 0; }
 
 /* ─ Results count ─ */
 .msp-results-count { font-size: 0.78rem; color: var(--majalis-ink-muted, #9BA3B5); margin-bottom: 0.875rem; }
@@ -57,7 +57,7 @@
 .msr-status--approved { --msr-bg: #f0fdf4; --msr-color: var(--majalis-emerald); --msr-border: #86efac; }
 .msr-status--rejected { --msr-bg: #fef2f2; --msr-color: var(--msk-red, #C1595A); --msr-border: #fca5a5; }
 .msr-card { background: var(--majalis-panel, rgba(255,255,255,0.08)); border-radius: var(--ds-radius-xl); border: 1.5px solid var(--msr-border, #86efac); overflow: hidden; margin-bottom: 0.875rem; }
-.msr-card__status-bar { background: var(--msr-bg, #F0F7F4); padding: 0.5rem 1rem; display: flex; align-items: center; gap: 0.4rem; border-bottom: 1px solid var(--msr-border, #86efac); }
+.msr-card__status-bar { background: var(--msr-bg, var(--mj-brand-soft)); padding: 0.5rem 1rem; display: flex; align-items: center; gap: 0.4rem; border-bottom: 1px solid var(--msr-border, #86efac); }
 .msr-card__status-label { font-size: 0.78rem; font-weight: 700; color: var(--msr-color, var(--majalis-emerald)); }
 .msr-card__date { margin-right: auto; font-size: 0.72rem; color: var(--majalis-ink-muted, #9BA3B5); }
 .msr-card__body { padding: 0.875rem 1rem; }
@@ -66,7 +66,7 @@
 .msr-card__info { flex: 1; }
 .msr-card__title { font-weight: 700; font-size: 0.9rem; color: var(--majalis-ink); }
 .msr-card__meta { font-size: 0.72rem; color: var(--majalis-ink-muted, #9BA3B5); margin-top: 0.15rem; }
-.msr-card__audio-btn { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.3rem 0.65rem; border-radius: 0.4rem; border: none; background: #143F35; color: #fff; font-size: var(--ds-text-xs); font-weight: 600; cursor: pointer; font-family: inherit; margin-bottom: 0.5rem; }
+.msr-card__audio-btn { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.3rem 0.65rem; border-radius: 0.4rem; border: none; background: var(--mj-brand-deep); color: #fff; font-size: var(--ds-text-xs); font-weight: 600; cursor: pointer; font-family: inherit; margin-bottom: 0.5rem; }
 .msr-card__audio-btn.is-playing { background: #ef4444; }
 .msr-card__reviewer-note { padding: 0.6rem 0.875rem; border-radius: var(--ds-radius); font-size: 0.82rem; margin-top: 0.5rem; }
 .msr-card__reviewer-note--approved { background: var(--majalis-emerald-muted); color: var(--majalis-emerald); }

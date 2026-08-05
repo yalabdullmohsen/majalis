@@ -63,9 +63,9 @@
   color: var(--majalis-emerald-deep);
 }
 .cal-ics-btn:hover {
-  background: var(--clr-primary, #143F35);
+  background: var(--clr-primary, var(--mj-brand-deep));
   color: #fff;
-  border-color: var(--clr-primary, #143F35);
+  border-color: var(--clr-primary, var(--mj-brand-deep));
 }
 
 .cal-month {

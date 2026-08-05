@@ -5,7 +5,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
-  background: linear-gradient(135deg, var(--majalis-emerald-deep, #143F35) 0%, var(--majalis-emerald, #226A56) 100%);
+  background: linear-gradient(135deg, var(--majalis-emerald-deep, var(--mj-brand-deep)) 0%, var(--majalis-emerald, var(--mj-brand)) 100%);
   color: #FFFFFF !important;
   border: none;
   border-radius: 8px;
@@ -75,7 +75,7 @@
 .aie-modal__title {
   font-size: 1.05rem;
   font-weight: 700;
-  color: var(--mj-emerald-800, #143F35);
+  color: var(--mj-emerald-800, var(--mj-brand-deep));
   font-family: var(--mj-font-display);
   margin: 0;
 }
@@ -150,7 +150,7 @@
 }
 .aie-modal__success {
   font-size: 0.83rem;
-  color: #143F35;
+  color: var(--mj-brand-deep);
   margin-bottom: 0.75rem;
   padding: 0.5rem 0.75rem;
   background: rgba(23,61,53,0.08);
@@ -177,7 +177,7 @@
 }
 .aie-btn:disabled { opacity: 0.55; cursor: not-allowed; }
 .aie-btn--primary {
-  background: linear-gradient(135deg, #226A56, #143F35);
+  background: linear-gradient(135deg, var(--mj-brand), var(--mj-brand-deep));
   color: #FFFFFF;
   box-shadow: 0 2px 8px rgba(23,61,53,0.30);
 }

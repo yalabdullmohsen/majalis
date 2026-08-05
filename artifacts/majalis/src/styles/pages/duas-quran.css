@@ -60,7 +60,7 @@
 .dq-card__title-wrap { flex: 1; min-width: 0; }
 .dq-card__name    { display: block; font-weight: 700; font-size: .88rem; color: #111; margin-bottom: .15rem; }
 .dq-card__ref     { font-size: 0.8rem; color: #1E40AF; font-style: normal; font-weight: 600; display: block; margin-bottom: .1rem; }
-.dq-card__prophet { font-size: 0.8rem; color: #226A56; font-weight: 600; background: rgba(23,61,53,.10); padding: .1rem .4rem; border-radius: .3rem; display: inline-block; }
+.dq-card__prophet { font-size: 0.8rem; color: var(--mj-brand); font-weight: 600; background: rgba(23,61,53,.10); padding: .1rem .4rem; border-radius: .3rem; display: inline-block; }
 .dq-card__tags    { display: flex; flex-wrap: wrap; gap: .3rem; align-items: flex-start; }
 
 .dq-tag {
@@ -75,7 +75,7 @@
 .dq-arabic-wrap { padding: .5rem 1rem .75rem; border-top: 1px solid #F3F4F6; }
 .dq-arabic {
   font-family: var(--font-body);
-  font-size: 1.15rem; line-height: 2.1; color: #052E16;
+  font-size: 1.15rem; line-height: 2.1; color: var(--mj-brand-deep);
   text-align: right; margin: 0;
 }
 
@@ -115,11 +115,11 @@
 .dq-related__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; }
 .dq-related__link {
   background: #fff; border: 1px solid #E8E7E2; border-radius: .6rem;
-  padding: .6rem .7rem; font-size: .82rem; color: var(--majalis-emerald,#226A56);
+  padding: .6rem .7rem; font-size: .82rem; color: var(--majalis-emerald,var(--mj-brand));
   text-align: center; text-decoration: none; font-weight: 600;
   transition: background .15s; display: block;
 }
-.dq-related__link:hover { background: #F0F7F4; border-color: var(--majalis-emerald,#226A56); }
+.dq-related__link:hover { background: #F0F7F4; border-color: var(--majalis-emerald,var(--mj-brand)); }
 
 @media (max-width: 640px) {
   .dq-adab-grid { grid-template-columns: 1fr; }

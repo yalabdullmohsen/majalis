@@ -10,10 +10,11 @@
   --color-hairline: #E3E8E6;
   --color-ink: #16241E;
   --color-ink-2: #4A5A53;
-  --color-muted: #6B7B74;
+  --color-muted: #66766F;
   --color-brand: #1F7A5A;
   --color-brand-soft: #E4F0EA;
   --color-brand-deep: #123F2E;
+  --color-on-brand: #FFFFFF;
   --color-accent: #B08A3E;
   --color-accent-soft: #F5EEDF;
 
@@ -37,9 +38,11 @@
   --spacing-mj-8: 32px;
 
   --text-mj-display: 40px;
-  --text-mj-h1: 25px;
+  --text-mj-h1: 28px;
   --text-mj-h2: 19px;
+  --text-mj-sacred: 21px;
   --text-mj-body: 13.5px;
+  --text-mj-btn: 13px;
   --text-mj-small: 11.5px;
   --text-mj-tiny: 9.5px;
 }
@@ -51,10 +54,11 @@
   --mj-hairline: #E3E8E6;
   --mj-ink: #16241E;
   --mj-ink-2: #4A5A53;
-  --mj-muted: #6B7B74;
+  --mj-muted: #66766F;
   --mj-brand: #1F7A5A;
   --mj-brand-soft: #E4F0EA;
   --mj-brand-deep: #123F2E;
+  --mj-on-brand: #FFFFFF;
   --mj-accent: #B08A3E;
   --mj-accent-soft: #F5EEDF;
   --mj-r-sm: 12px;
@@ -73,11 +77,19 @@
   --mj-ui: "Tajawal", system-ui, sans-serif;
   --mj-num: "Alexandria", sans-serif;
   --mj-fs-display: 40px;
-  --mj-fs-h1: 25px;
+  --mj-fs-h1: 28px;
   --mj-fs-h2: 19px;
+  --mj-fs-sacred: 21px;
   --mj-fs-body: 13.5px;
+  --mj-fs-btn: 13px;
   --mj-fs-small: 11.5px;
   --mj-fs-tiny: 9.5px;
+  --mj-lh-tight: 1;
+  --mj-lh-title: 1.45;
+  --mj-lh-card: 1.5;
+  --mj-lh-ui: 1.9;
+  --mj-lh-small: 1.85;
+  --mj-lh-sacred: 2.1;
 }
 
 /* الوضع الليلي — ThemePreferenceProvider يضع data-theme و.dark معًا */
@@ -95,6 +107,7 @@ html.dark,
   --mj-brand: #4FB48B;
   --mj-brand-soft: #183329;
   --mj-brand-deep: #0C1512;
+  --mj-on-brand: #0C1512;
   --mj-accent: #D2A445;
   --mj-accent-soft: #332A16;
   --mj-sh: 0 10px 26px -18px rgba(0, 0, 0, 0.7);
@@ -109,6 +122,7 @@ html.dark,
   --color-brand: #4FB48B;
   --color-brand-soft: #183329;
   --color-brand-deep: #0C1512;
+  --color-on-brand: #0C1512;
   --color-accent: #D2A445;
   --color-accent-soft: #332A16;
   --shadow-mj: 0 10px 26px -18px rgba(0, 0, 0, 0.7);
@@ -252,12 +266,13 @@ html.dark,
   border: 0;
   cursor: pointer;
   font-family: var(--mj-ui);
-  font-size: var(--mj-fs-body);
+  font-size: var(--mj-fs-btn);
   font-weight: 500;
+  line-height: var(--mj-lh-tight);
   padding: 13px 24px;
   border-radius: var(--mj-r-md);
   background: var(--mj-brand);
-  color: #fff;
+  color: var(--mj-on-brand);
   transition: transform 0.12s ease;
 }
 .mj-btn:active {
@@ -272,6 +287,15 @@ html.dark,
   background: var(--mj-brand-soft);
   color: var(--mj-brand);
 }
+.mj-btn--deep {
+  background: var(--mj-brand-deep);
+  color: var(--mj-on-brand);
+}
+/* في الليل deep و on-brand نفس القيمة — النص يتبع الحبر الفاتح فوق الخلفية الداكنة */
+html[data-theme="dark"] .mj-btn--deep,
+html.dark .mj-btn--deep {
+  color: var(--mj-ink);
+}
 .mj-btn--pill {
   border-radius: var(--mj-r-pill);
 }
@@ -279,13 +303,51 @@ html.dark,
   opacity: 0.4;
   cursor: default;
 }
-html[data-theme="dark"] .mj-btn,
-html.dark .mj-btn {
-  color: #0c1512;
-}
 html[data-theme="dark"] .mj-btn--ghost,
 html.dark .mj-btn--ghost {
   color: var(--mj-ink);
+}
+
+/* سُلّم الخطوط — تطبيق موحّد */
+.mj-type-page {
+  font-family: var(--mj-face);
+  font-size: var(--mj-fs-h1);
+  font-weight: 700;
+  line-height: var(--mj-lh-title);
+  color: var(--mj-ink);
+}
+.mj-type-card {
+  font-family: var(--mj-face);
+  font-size: var(--mj-fs-h2);
+  font-weight: 700;
+  line-height: var(--mj-lh-card);
+  color: var(--mj-ink);
+}
+.mj-type-sacred {
+  font-family: var(--mj-face);
+  font-size: var(--mj-fs-sacred);
+  font-weight: 400;
+  line-height: var(--mj-lh-sacred);
+  color: var(--mj-ink);
+}
+.mj-type-ui {
+  font-family: var(--mj-ui);
+  font-size: var(--mj-fs-body);
+  font-weight: 400;
+  line-height: var(--mj-lh-ui);
+  color: var(--mj-ink);
+}
+.mj-type-muted {
+  font-family: var(--mj-ui);
+  font-size: var(--mj-fs-small);
+  font-weight: 400;
+  line-height: var(--mj-lh-small);
+  color: var(--mj-muted);
+}
+
+.page-hero-mj__title {
+  font-size: var(--mj-fs-h1) !important;
+  line-height: var(--mj-lh-title) !important;
 }
 
 .mj-badge {

@@ -1,13 +1,13 @@
 /* ═══════════════════════════════════════════════════════════════
    اختبار التسميع بالذكاء الاصطناعي — recitation-ai.css
-   هوية المجلس العلمي: زمردي var(--brand-deep, #143F35) / #153025، أسطح عاجية،
+   هوية المجلس العلمي: زمردي var(--brand-deep, var(--mj-brand-deep)) / #153025، أسطح عاجية،
    Amiri Quran للنص القرآني، var(--font-body) (IBM Plex Sans Arabic)
    للواجهة — لا خط "Almarai" (غير مُعتمَد في هذا المشروع، راجع فحص
    اتساق الخط في pre-commit gate).
    ═══════════════════════════════════════════════════════════════ */
 
 :root {
-  --rai-emerald: var(--brand-deep, #143F35);
+  --rai-emerald: var(--brand-deep, var(--mj-brand-deep));
   --rai-emerald-deep: #153025;
   --rai-ivory: #F8F7F3;
   --rai-ivory-warm: #F3EFE6;
@@ -50,8 +50,8 @@ html[data-theme="dark"] .rai-shell { background: #111714; }
   font-weight: 700;
   cursor: pointer;
 }
-html[data-theme="dark"] .rai-back-btn { color: #E5F0EC; }
-.rai-back-btn:hover { background: color-mix(in srgb, var(--rai-emerald, var(--brand-deep, #143F35)) 10%, transparent); }
+html[data-theme="dark"] .rai-back-btn { color: var(--mj-brand-soft); }
+.rai-back-btn:hover { background: color-mix(in srgb, var(--rai-emerald, var(--brand-deep, var(--mj-brand-deep))) 10%, transparent); }
 
 .rai-header {
   max-width: 720px;
@@ -65,7 +65,7 @@ html[data-theme="dark"] .rai-back-btn { color: #E5F0EC; }
   font-weight: 800;
   margin: 0 0 .4rem;
 }
-html[data-theme="dark"] .rai-header__title { color: #E5F0EC; }
+html[data-theme="dark"] .rai-header__title { color: var(--mj-brand-soft); }
 .rai-header__sub { color: #5C6660; font-size: .95rem; margin: 0; }
 html[data-theme="dark"] .rai-header__sub { color: #8BABA3; }
 
@@ -112,7 +112,7 @@ html[data-theme="dark"] .rai-setup__group { background: #1A2120; border-color: r
   margin: 0 0 .65rem;
   display: block;
 }
-html[data-theme="dark"] .rai-setup__label { color: #E5F0EC; }
+html[data-theme="dark"] .rai-setup__label { color: var(--mj-brand-soft); }
 
 .rai-choice-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: .6rem; }
 .rai-choice {
@@ -127,7 +127,7 @@ html[data-theme="dark"] .rai-setup__label { color: #E5F0EC; }
   color: #1A1A1A;
   transition: border-color .15s, background .15s;
 }
-html[data-theme="dark"] .rai-choice { background: #111714; color: #E5F0EC; border-color: rgba(94,196,154,.15); }
+html[data-theme="dark"] .rai-choice { background: #111714; color: var(--mj-brand-soft); border-color: rgba(94,196,154,.15); }
 .rai-choice--active { border-color: var(--rai-emerald); background: rgba(14,110,82,.08); font-weight: 700; }
 .rai-choice:disabled { opacity: .45; cursor: not-allowed; }
 .rai-choice__hint { display: block; font-size: .72rem; color: #6B7A74; margin-top: .2rem; }
@@ -172,7 +172,7 @@ html[data-theme="dark"] .rai-permission-guide__title { color: #FCA5A5; }
   padding: 0 1.2rem;
   border: none;
   border-radius: 10px;
-  background: var(--majalis-emerald, #176B57);
+  background: var(--majalis-emerald, var(--mj-brand));
   color: #fff;
   font-family: var(--font-body);
   font-weight: 700;
@@ -189,7 +189,7 @@ html[data-theme="dark"] .rai-permission-guide__title { color: #FCA5A5; }
   font-family: var(--font-body);
   color: #1A1A1A;
 }
-html[data-theme="dark"] .rai-surah-select, html[data-theme="dark"] .rai-range-inputs input { background: #111714; color: #E5F0EC; }
+html[data-theme="dark"] .rai-surah-select, html[data-theme="dark"] .rai-range-inputs input { background: #111714; color: var(--mj-brand-soft); }
 
 .rai-start-btn {
   background: linear-gradient(135deg, var(--rai-emerald), var(--rai-emerald-deep));
@@ -261,7 +261,7 @@ html[data-theme="dark"] .rai-session__topbar { background: rgba(17,23,20,.85); }
 }
 .rai-detecting .rai-listen-wave span { width: 5px; }
 .rai-detecting__title { font-size: 1.15rem; font-weight: 700; color: var(--rai-emerald-deep); margin: 0; }
-html[data-theme="dark"] .rai-detecting__title { color: #E5F0EC; }
+html[data-theme="dark"] .rai-detecting__title { color: var(--mj-brand-soft); }
 .rai-detecting__hint { font-size: .85rem; color: #6B7A74; margin: 0; }
 
 .rai-progress-bar { height: 4px; background: rgba(14,110,82,.15); border-radius: 4px; overflow: hidden; margin: .5rem 0 1rem; }
@@ -344,7 +344,7 @@ html[data-theme="dark"] .rai-correction-card__teacher-note { color: #FCA5A5; }
 }
 .rai-correction-card__heard { color: #B91C1C; text-decoration: line-through; text-decoration-thickness: 1.5px; }
 html[data-theme="dark"] .rai-correction-card__heard { color: #FCA5A5; }
-.rai-correction-card__correct { color: var(--majalis-emerald, #176B57); font-weight: 700; }
+.rai-correction-card__correct { color: var(--majalis-emerald, var(--mj-brand)); font-weight: 700; }
 html[data-theme="dark"] .rai-correction-card__correct { color: #6EE7B7; }
 .rai-correction-card__actions {
   display: flex;
@@ -356,7 +356,7 @@ html[data-theme="dark"] .rai-correction-card__correct { color: #6EE7B7; }
   min-height: 42px;
   border: none;
   border-radius: 10px;
-  background: var(--majalis-emerald, #176B57);
+  background: var(--majalis-emerald, var(--mj-brand));
   color: #fff;
   font-family: var(--font-body);
   font-weight: 700;
@@ -388,10 +388,10 @@ html[data-theme="dark"] .rai-correction-card__dismiss { color: #E8DED4; border-c
   cursor: pointer;
   color: var(--rai-emerald-deep);
 }
-html[data-theme="dark"] .rai-icon-btn { background: #1A2120; color: #E5F0EC; }
+html[data-theme="dark"] .rai-icon-btn { background: #1A2120; color: var(--mj-brand-soft); }
 
 .rai-plain-words { font-family: "Amiri Quran", "Scheherazade New", serif; font-size: var(--ds-text-2xl); line-height: 1.9; color: #1A1A1A; text-align: justify; }
-html[data-theme="dark"] .rai-plain-words { color: #E5F0EC; }
+html[data-theme="dark"] .rai-plain-words { color: var(--mj-brand-soft); }
 .rai-plain-word--correct { color: var(--rai-emerald-deep); }
 .rai-plain-word--error { color: var(--rai-error); text-decoration: underline wavy var(--rai-error); }
 .rai-plain-word--unclear { color: var(--rai-unclear); text-decoration: underline dotted var(--rai-unclear); }
@@ -409,7 +409,7 @@ html[data-theme="dark"] .rai-plain-words { color: #E5F0EC; }
   border-radius: 20px;
   padding: 1.75rem 1.5rem;
 }
-html[data-theme="dark"] .imr-page { background: #17201D; color: #E5F0EC; }
+html[data-theme="dark"] .imr-page { background: #17201D; color: var(--mj-brand-soft); }
 
 .imr-ayah { display: inline; transition: background-color .3s ease; }
 /* "آية مُسمَّعة" — تظليل دائم (لا مؤقّت كتوهّج imr-ayah-mark--glow) يبقى
@@ -488,7 +488,7 @@ html[data-theme="dark"] .imr-ayah--recited {
 .rai-report__stat { background: #fff; border-radius: 14px; padding: .8rem; text-align: center; border: 1px solid rgba(14,110,82,.12); }
 html[data-theme="dark"] .rai-report__stat { background: #1A2120; border-color: rgba(94,196,154,.15); }
 .rai-report__stat-val { display: block; font-size: 1.3rem; font-weight: 800; color: var(--rai-emerald-deep); }
-html[data-theme="dark"] .rai-report__stat-val { color: #E5F0EC; }
+html[data-theme="dark"] .rai-report__stat-val { color: var(--mj-brand-soft); }
 .rai-report__stat-lbl { font-size: .75rem; color: #6B7A74; }
 .rai-report__stat--unclear { border-color: rgba(139,92,246,.3); }
 .rai-report__stat--unclear .rai-report__stat-val { color: var(--rai-unclear); }
@@ -526,7 +526,7 @@ html[data-theme="dark"] .rai-mutashabih-note__title { color: #E8CB6B; }
   border-radius: 8px;
   padding: .4rem .6rem;
 }
-html[data-theme="dark"] .rai-mutashabih-note__diff p { background: #1A2120; color: #E5F0EC; }
+html[data-theme="dark"] .rai-mutashabih-note__diff p { background: #1A2120; color: var(--mj-brand-soft); }
 .rai-mutashabih-note__loc { font-family: var(--font-body); font-size: .7rem; color: #8A6D1B; }
 
 .rai-report__disclaimer {
@@ -594,5 +594,5 @@ html[data-theme="dark"] .rai-mutashabih-note__diff p { background: #1A2120; colo
 .rai-consent-screen__delete-btn:disabled { opacity: .6; cursor: not-allowed; }
 html[data-theme="dark"] .rai-consent-screen__delete-btn { color: #FCA5A5; border-color: #FCA5A5; }
 .rai-consent-screen__delete-status { margin: .5rem 0 0; font-family: var(--font-body); font-size: .8rem; }
-.rai-consent-screen__delete-status--ok { color: var(--majalis-emerald, #176B57); }
+.rai-consent-screen__delete-status--ok { color: var(--majalis-emerald, var(--mj-brand)); }
 .rai-consent-screen__delete-status--err { color: #B91C1C; }

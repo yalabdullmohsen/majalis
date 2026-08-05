@@ -91,7 +91,7 @@
 .qzg-btn-gold {
   padding: 0.875rem 1.5rem;
   border-radius: var(--ds-radius-lg, 0.625rem);
-  background: linear-gradient(135deg, var(--majalis-brass, #226A56), var(--majalis-brass-deep, #143F35));
+  background: linear-gradient(135deg, var(--majalis-brass, var(--mj-brand)), var(--majalis-brass-deep, var(--mj-brand-deep)));
   color: #fff;
   border: none;
   font-size: var(--ds-text-base);
@@ -182,7 +182,7 @@
 .qzg-board-cat { padding: 0.6rem 0.35rem; background: var(--ds-emerald-soft, var(--majalis-emerald-muted)); border-radius: var(--ds-radius, 0.5rem); text-align: center; font-size: 0.72rem; font-weight: 700; color: var(--ds-emerald-deep, var(--majalis-emerald-deep)); border: 1px solid var(--ds-line-color); line-height: 1.4; }
 .qzg-board-cat__icon { display: flex; justify-content: center; }
 .qzg-board-cat__name { margin-top: 0.2rem; }
-.qzg-board-cell { width: 100%; padding: 1rem 0.375rem; border-radius: var(--ds-radius, 0.5rem); border: 1px solid var(--ds-emerald, var(--majalis-emerald)); background: #fff; color: var(--ds-emerald-deep, #143F35); font-size: 1.2rem; font-weight: 800; cursor: pointer; transition: all 0.2s ease; opacity: 1; font-family: inherit; }
+.qzg-board-cell { width: 100%; padding: 1rem 0.375rem; border-radius: var(--ds-radius, 0.5rem); border: 1px solid var(--ds-emerald, var(--majalis-emerald)); background: #fff; color: var(--ds-emerald-deep, var(--mj-brand-deep)); font-size: 1.2rem; font-weight: 800; cursor: pointer; transition: all 0.2s ease; opacity: 1; font-family: inherit; }
 .qzg-board-cell--used { border-color: var(--ds-line-color); background: var(--ds-parchment-deep, var(--majalis-parchment-deep)); color: var(--ds-ink-soft); cursor: default; opacity: 0.4; }
 .qzg-board-reset-row { margin-top: 1.25rem; display: flex; justify-content: center; }
 
@@ -204,7 +204,7 @@
 .qzg-hint-text    { margin: 0.625rem 0 0; font-size: 0.85rem; color: var(--majalis-ink-soft); line-height: 1.6; padding-top: 0.625rem; border-top: 1px solid var(--ds-line-color); }
 .qzg-btn-ghost--mt { margin-top: 0.625rem; font-size: 0.78rem; }
 .qzg-result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--ds-space-2-5); margin-bottom: 0.875rem; }
-.qzg-btn-correct { padding: 0.875rem 1rem; border-radius: var(--ds-radius, 0.5rem); background: #226A56; color: #fff; border: none; font-weight: 700; font-size: 0.95rem; cursor: pointer; font-family: inherit; text-align: center; }
+.qzg-btn-correct { padding: 0.875rem 1rem; border-radius: var(--ds-radius, 0.5rem); background: var(--mj-brand); color: #fff; border: none; font-weight: 700; font-size: 0.95rem; cursor: pointer; font-family: inherit; text-align: center; }
 .qzg-btn-wrong   { padding: 0.875rem 1rem; border-radius: var(--ds-radius, 0.5rem); background: #8B1A1A; color: #fff; border: none; font-weight: 700; font-size: 0.95rem; cursor: pointer; font-family: inherit; text-align: center; }
 .qzg-lifelines-label { margin: 0 0 0.625rem; font-size: 0.82rem; color: var(--majalis-brass); font-weight: 700; }
 .qzg-lifelines-flex  { display: flex; gap: var(--ds-space-2); flex-wrap: wrap; }
@@ -226,7 +226,7 @@
 /* Winner Phase */
 .qzg-winner-wrap  { text-align: center; max-width: 480px; margin: 0 auto; padding-top: 1rem; }
 .qzg-winner-trophy { font-size: 4rem; margin-bottom: 1rem; }
-.qzg-winner-title { margin: 0 0 0.5rem; font-size: 2rem; color: var(--ds-emerald-deep, #143F35); font-weight: 800; }
+.qzg-winner-title { margin: 0 0 0.5rem; font-size: 2rem; color: var(--ds-emerald-deep, var(--mj-brand-deep)); font-weight: 800; }
 .qzg-winner-sub   { color: var(--majalis-ink-soft); margin-bottom: 2rem; font-size: 0.95rem; }
 .qzg-winner-grid  { display: grid; grid-template-columns: 1fr 1fr; gap: var(--ds-space-4); margin-bottom: 2rem; }
 .qzg-winner-grid[data-team-count="1"] { grid-template-columns: 1fr; max-width: 260px; margin-inline: auto; margin-bottom: 2rem; }

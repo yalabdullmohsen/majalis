@@ -1,7 +1,7 @@
 /* ============================================================
    93 — KuwaitLessonsPage  (sheikh-avatar additions)
    ============================================================ */
-.sheikh-avatar--initials { background: var(--avatar-bg, #226A56); }
+.sheikh-avatar--initials { background: var(--avatar-bg, var(--mj-brand)); }
 .sheikh-avatar--hidden   { display: none; }
 
 .kuwait-lessons-count {

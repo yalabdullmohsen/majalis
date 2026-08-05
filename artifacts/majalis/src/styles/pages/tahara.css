@@ -5,7 +5,7 @@
 .th-page { min-height: 100vh; background: #F9FAFB; padding-bottom: 4rem; }
 
 .th-hero {
-  background: linear-gradient(155deg, #143F35 0%, #226A56 65%, #226A56 100%);
+  background: linear-gradient(155deg, var(--mj-brand-deep) 0%, var(--mj-brand) 65%, var(--mj-brand) 100%);
   color: #fff;
   padding: 2.5rem 1.25rem 0;
   text-align: center;
@@ -32,8 +32,8 @@
   margin: 0 auto 1.5rem;
   text-align: center;
 }
-.th-ayah--body { background: #F0F7F4; border: 1px solid #A7F3D0; margin: 0 0 .85rem; text-align: right; }
-.th-ayah--body .th-ayah__text { color: #052E16; }
+.th-ayah--body { background: var(--mj-brand-soft); border: 1px solid #A7F3D0; margin: 0 0 .85rem; text-align: right; }
+.th-ayah--body .th-ayah__text { color: var(--mj-brand-deep); }
 .th-ayah--body .th-ayah__ref { color: #16A34A; }
 .th-ayah__text { font-size: 1.05rem; font-weight: 600; line-height: 2; color: #fff; margin: 0 0 .35rem; }
 .th-ayah__ref { font-size: .72rem; color: rgba(255,255,255,.75); font-style: normal; display: block; }
@@ -61,7 +61,7 @@
   min-width: 5.5rem;
 }
 .th-tab:hover { background: rgba(255,255,255,.22); color: #fff; }
-.th-tab--active { background: #F9FAFB; color: var(--majalis-emerald, #226A56); font-weight: 700; }
+.th-tab--active { background: #F9FAFB; color: var(--majalis-emerald, var(--mj-brand)); font-weight: 700; }
 .th-tab__icon { font-size: 1.1rem; }
 .th-tab__label { white-space: nowrap; }
 
@@ -70,14 +70,14 @@
 .th-section__title {
   font-size: var(--ds-text-base);
   font-weight: 700;
-  color: var(--majalis-emerald, #226A56);
-  border-right: 3px solid var(--majalis-emerald, #226A56);
+  color: var(--majalis-emerald, var(--mj-brand));
+  border-right: 3px solid var(--majalis-emerald, var(--mj-brand));
   padding-right: .6rem;
   margin: .4rem 0 .3rem;
 }
 .th-section__intro {
   background: #EFF6F3;
-  border-right: 3px solid var(--majalis-emerald, #226A56);
+  border-right: 3px solid var(--majalis-emerald, var(--mj-brand));
   border-radius: .5rem;
   padding: .85rem 1rem;
   font-size: .9rem;
@@ -101,7 +101,7 @@
 .th-fardh-card__num {
   font-size: var(--ds-text-base);
   font-weight: 900;
-  color: var(--majalis-emerald, #226A56);
+  color: var(--majalis-emerald, var(--mj-brand));
   width: 1.3rem;
 }
 .th-fardh-card__icon { font-size: 1.2rem; }
@@ -111,15 +111,15 @@
 /* sunnah */
 .th-sunnah-list { margin: 0; padding: 0; list-style: none; display: grid; grid-template-columns: repeat(2, 1fr); gap: .4rem; }
 .th-sunnah-item {
-  background: #F0F7F4;
+  background: var(--mj-brand-soft);
   border-radius: .45rem;
   padding: .5rem .75rem;
   font-size: .83rem;
-  color: #052E16;
+  color: var(--mj-brand-deep);
   position: relative;
   padding-right: 1.4rem;
 }
-.th-sunnah-item::before { content: "✓"; position: absolute; right: .5rem; color: var(--majalis-emerald, #226A56); font-weight: 700; }
+.th-sunnah-item::before { content: "✓"; position: absolute; right: .5rem; color: var(--majalis-emerald, var(--mj-brand)); font-weight: 700; }
 
 /* nawaqidh */
 .th-nawaqidh-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: .65rem; }
@@ -147,7 +147,7 @@
   display: flex;
   gap: .7rem;
   font-size: .86rem;
-  color: #143F35;
+  color: var(--mj-brand-deep);
   line-height: 1.6;
 }
 .th-info-box span { font-size: 1.1rem; flex-shrink: 0; }
@@ -171,7 +171,7 @@
 
 .th-faraidh-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: .7rem; }
 .th-faridh-card {
-  background: #F0F7F4;
+  background: var(--mj-brand-soft);
   border: 1px solid #6EE7B7;
   border-radius: .65rem;
   padding: .8rem .9rem;
@@ -180,7 +180,7 @@
   gap: .6rem;
 }
 .th-faridh-card__icon { font-size: 1.3rem; flex-shrink: 0; }
-.th-faridh-card__title { display: block; font-size: .88rem; font-weight: 700; color: var(--majalis-emerald, #226A56); margin-bottom: .2rem; }
+.th-faridh-card__title { display: block; font-size: .88rem; font-weight: 700; color: var(--majalis-emerald, var(--mj-brand)); margin-bottom: .2rem; }
 .th-faridh-card__desc { font-size: .8rem; color: #5C5C56; line-height: 1.5; margin: 0; }
 
 .th-steps-list { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: .4rem; }
@@ -199,7 +199,7 @@
 .th-step-item__num {
   min-width: 1.6rem;
   height: 1.6rem;
-  background: var(--majalis-emerald, #226A56);
+  background: var(--majalis-emerald, var(--mj-brand));
   color: #fff;
   border-radius: 50%;
   display: flex;
@@ -239,7 +239,7 @@
   width: 2rem;
   height: 2rem;
   background: #D4FAE8;
-  color: var(--majalis-emerald, #226A56);
+  color: var(--majalis-emerald, var(--mj-brand));
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -247,7 +247,7 @@
   font-size: .85rem;
   font-weight: 800;
   flex-shrink: 0;
-  border: 2px solid var(--majalis-emerald, #226A56);
+  border: 2px solid var(--majalis-emerald, var(--mj-brand));
 }
 .th-timeline-step__content { flex: 1; }
 .th-timeline-step__title { display: block; font-size: .9rem; font-weight: 700; color: #111; margin-bottom: .2rem; }
@@ -263,8 +263,8 @@
   display: inline-block;
 }
 .th-naj-group__title--red { background: #FEE2E2; color: #991B1B; }
-.th-naj-group__title--amber  { background: rgba(23,61,53,.12); color: #226A56; }
-.th-naj-group__title--orange { background: rgba(21,48,37,.1);   color: #143F35; }
+.th-naj-group__title--amber  { background: rgba(23,61,53,.12); color: var(--mj-brand); }
+.th-naj-group__title--orange { background: rgba(21,48,37,.1);   color: var(--mj-brand-deep); }
 
 .th-naj-card {
   background: #fff;
@@ -288,7 +288,7 @@
   flex-direction: column;
   gap: .35rem;
 }
-.th-water-card--green { background: #F0F7F4; border: 1px solid #6EE7B7; }
+.th-water-card--green { background: var(--mj-brand-soft); border: 1px solid #6EE7B7; }
 .th-water-card--blue { background: #EFF6FF; border: 1px solid #93C5FD; }
 .th-water-card--red { background: #FFF1F2; border: 1px solid #FDA4AF; }
 .th-water-card__label { font-size: .85rem; font-weight: 700; color: #111; }
@@ -304,13 +304,13 @@
   border-radius: .6rem;
   padding: .6rem .7rem;
   font-size: .82rem;
-  color: var(--majalis-emerald, #226A56);
+  color: var(--majalis-emerald, var(--mj-brand));
   text-align: center;
   text-decoration: none;
   font-weight: 600;
   transition: background .15s;
 }
-.th-related__link:hover { background: #F0F7F4; border-color: var(--majalis-emerald, #226A56); }
+.th-related__link:hover { background: var(--mj-brand-soft); border-color: var(--majalis-emerald, var(--mj-brand)); }
 
 @media (max-width: 640px) {
   .th-fardh-grid, .th-nawaqidh-grid, .th-mujibat-grid, .th-faraidh-grid,

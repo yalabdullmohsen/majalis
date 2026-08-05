@@ -114,10 +114,10 @@ function AutomationCenterContent() {
             <StatCard label="المصادر" value={stats?.sourcesCount ?? 0} />
             <StatCard label="نشط" value={stats?.activeSources ?? 0} />
             <StatCard label="مكتشف اليوم" value={stats?.todayDiscovered ?? 0} />
-            <StatCard label="منشور اليوم" value={stats?.todayPublished ?? 0} color="#065F46" />
+            <StatCard label="منشور اليوم" value={stats?.todayPublished ?? 0} color="var(--mj-brand)" />
             <StatCard label="مكرر" value={stats?.todayDuplicates ?? 0} />
             <StatCard label="أخطاء" value={stats?.todayErrors ?? 0} color="#991B1B" />
-            <StatCard label="صور قيد التحليل" value={stats?.pendingImages ?? 0} color="#143F35" />
+            <StatCard label="صور قيد التحليل" value={stats?.pendingImages ?? 0} color="var(--mj-brand-deep)" />
             <StatCard label="سرعة (ms)" value={stats?.avgDurationMs ?? "—"} />
           </div>
 

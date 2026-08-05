@@ -30,10 +30,10 @@
 .wird-count-btn {
   min-width: 3.5rem;
   padding: 0.55rem 0.9rem;
-  background: var(--elite-sage-2, #F0F7F4) !important;
+  background: var(--elite-sage-2, var(--mj-brand-soft)) !important;
   border: 1.5px solid rgba(22,163,74,0.25);
   border-radius: 0.6rem;
-  color: var(--elite-forest, #143F35) !important;
+  color: var(--elite-forest, var(--mj-brand-deep)) !important;
   font-size: 1.05rem;
   font-weight: 800;
   font-family: inherit;
@@ -42,7 +42,7 @@
 }
 
 .wird-count-btn:hover:not(:disabled) {
-  background: var(--elite-forest, #143F35) !important;
+  background: var(--elite-forest, var(--mj-brand-deep)) !important;
   color: #fff !important;
   border-color: transparent;
   transform: translateY(-1px);
@@ -111,7 +111,7 @@
 .wird-stat strong {
   font-size: 1.05rem;
   font-weight: 800;
-  color: var(--elite-forest, #143F35);
+  color: var(--elite-forest, var(--mj-brand-deep));
 }
 
 .wird-settings {
@@ -124,7 +124,7 @@
 .wird-settings__title {
   font-size: 0.95rem !important;
   font-weight: 700 !important;
-  color: var(--elite-ink, #143F35) !important;
+  color: var(--elite-ink, var(--mj-brand-deep)) !important;
   margin: 0 !important;
   padding-bottom: 0.5rem;
   border-bottom: 1px solid var(--elite-border, rgba(0,0,0,0.07));
@@ -145,7 +145,7 @@
   border: 1.5px solid var(--elite-border-2, rgba(24,54,42,0.15));
   border-radius: 0.6rem;
   background: var(--elite-white, #FAFAF8);
-  color: var(--elite-ink, #143F35);
+  color: var(--elite-ink, var(--mj-brand-deep));
   font-family: inherit;
   font-size: 0.9rem;
   font-weight: 600;
@@ -155,7 +155,7 @@
 .wird-field input:focus,
 .wird-field select:focus {
   outline: none;
-  border-color: var(--elite-forest, #143F35);
+  border-color: var(--elite-forest, var(--mj-brand-deep));
   box-shadow: 0 0 0 3px rgba(24,54,42,0.09);
 }
 
@@ -164,7 +164,7 @@
   align-items: center;
   gap: 0.4rem;
   padding: 0.6rem 1.1rem;
-  background: var(--elite-forest, #143F35) !important;
+  background: var(--elite-forest, var(--mj-brand-deep)) !important;
   color: #FAFAF8 !important;
   border-radius: 0.65rem;
   font-size: var(--ds-text-sm);
@@ -200,13 +200,13 @@
 }
 
 .wird-streak-icon {
-  color: var(--majalis-emerald, #226A56);
+  color: var(--majalis-emerald, var(--mj-brand));
 }
 
 .wird-streak-count {
   font-size: 1.8rem;
   font-weight: 900;
-  color: var(--majalis-emerald, #226A56);
+  color: var(--majalis-emerald, var(--mj-brand));
   line-height: 1;
 }
 
@@ -226,17 +226,17 @@
 }
 
 .wird-khatm-est svg {
-  color: var(--majalis-emerald, #226A56);
+  color: var(--majalis-emerald, var(--mj-brand));
   flex-shrink: 0;
 }
 
 .wird-streak-msg {
   margin: 0;
   font-size: 0.83rem;
-  color: var(--majalis-emerald-deep, #143F35);
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep));
   font-weight: 600;
   font-style: normal;
-  border-right: 2px solid var(--majalis-emerald, #226A56);
+  border-right: 2px solid var(--majalis-emerald, var(--mj-brand));
   padding-right: 0.6rem;
 }
 
@@ -267,7 +267,7 @@
 }
 .khatma-stat strong {
   font-size: 0.92rem;
-  color: var(--majalis-emerald, #226A56);
+  color: var(--majalis-emerald, var(--mj-brand));
   font-weight: 700;
 }
 .khatma-bar-wrap {
@@ -278,7 +278,7 @@
 }
 .khatma-bar-fill {
   height: 100%;
-  background: var(--majalis-emerald, #226A56);
+  background: var(--majalis-emerald, var(--mj-brand));
   border-radius: var(--ds-radius-full);
   transition: width 0.4s ease;
 }
@@ -290,7 +290,7 @@
   border-radius: 0.875rem;
   background: linear-gradient(135deg, rgba(23,61,53,.12), rgba(23,61,53,.06));
   border: 1px solid rgba(23,61,53,.25);
-  color: #226A56;
+  color: var(--mj-brand);
   animation: khatma-pop 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 .khatma-celebration strong {
@@ -305,7 +305,7 @@
   opacity: 0.8;
 }
 .khatma-celebration svg {
-  color: #226A56;
+  color: var(--mj-brand);
   flex-shrink: 0;
 }
 @keyframes khatma-pop {

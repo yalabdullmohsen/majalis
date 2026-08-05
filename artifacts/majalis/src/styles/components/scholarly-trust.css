@@ -43,7 +43,7 @@
   gap: var(--ds-space-1);
   font-size: 0.73rem;
   font-weight: 700;
-  color: #226A56;
+  color: var(--mj-brand);
   background: rgba(23,61,53,.12);
   padding: 0.18rem 0.55rem;
   border-radius: var(--ds-radius-full);
@@ -82,7 +82,7 @@
   font-size: 0.81rem;
   line-height: 1.5;
 }
-.stb-row__icon { color: #226A56; margin-top: 0.15rem; flex-shrink: 0; }
+.stb-row__icon { color: var(--mj-brand); margin-top: 0.15rem; flex-shrink: 0; }
 .stb-row__label { color: var(--clr-ink-soft, #6b7280); font-weight: 600; white-space: nowrap; }
 .stb-row__value { color: var(--clr-ink, #1a1a1a); }
 
@@ -107,7 +107,7 @@
 .stb-methodology-link {
   font-size: 0.76rem;
   font-weight: 600;
-  color: #226A56;
+  color: var(--mj-brand);
   text-decoration: none;
 }
 .stb-source-link:hover,
@@ -116,6 +116,6 @@
 /* Dark mode stb */
 html[data-theme="dark"] .stb-wrap { background: rgba(23,61,53,.08); border-color: rgba(23,61,53,.2); }
 html[data-theme="dark"] .stb-wrap--empty { background: rgba(255,255,255,.03); border-color: rgba(255,255,255,.08); }
-html[data-theme="dark"] .stb-row__value { color: #e8f5ee; }
+html[data-theme="dark"] .stb-row__value { color: var(--mj-brand-soft); }
 html[data-theme="dark"] .stb-row__label { color: rgba(232,245,238,.6); }
 

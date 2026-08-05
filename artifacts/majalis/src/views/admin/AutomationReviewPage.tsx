@@ -35,8 +35,8 @@ type DraftRow = {
 
 const DECISION_COLORS: Record<string, { bg: string; text: string }> = {
   approved: { bg: "#D1FAE5", text: "var(--majalis-emerald-deep)" },
-  pending_review: { bg: "rgba(23,61,53,0.08)", text: "#143F35" },
-  duplicate: { bg: "rgba(23,61,53,.10)", text: "#226A56" },
+  pending_review: { bg: "rgba(23,61,53,0.08)", text: "var(--mj-brand-deep)" },
+  duplicate: { bg: "rgba(23,61,53,.10)", text: "var(--mj-brand)" },
   rejected: { bg: "#FEE2E2", text: "#991B1B" },
 };
 
@@ -52,7 +52,7 @@ function formatDt(iso?: string) {
 function confidenceColor(score: number) {
   const pct = Math.round(score * 100);
   if (pct >= 75) return { bg: "#D1FAE5", text: "var(--majalis-emerald-deep)" };
-  if (pct >= 45) return { bg: "rgba(23,61,53,0.08)", text: "#143F35" };
+  if (pct >= 45) return { bg: "rgba(23,61,53,0.08)", text: "var(--mj-brand-deep)" };
   return { bg: "#FEE2E2", text: "#991B1B" };
 }
 
@@ -313,7 +313,7 @@ function AutomationReviewContent() {
                   <div className="arp-card-meta-row">
                     <div>
                       <strong>{u.title}</strong>
-                      <span className="arp-decision-badge" style={{ "--arp-db-bg": "rgba(23,61,53,0.08)", "--arp-db-color": "#143F35" } as React.CSSProperties}>
+                      <span className="arp-decision-badge" style={{ "--arp-db-bg": "rgba(23,61,53,0.08)", "--arp-db-color": "var(--mj-brand-deep)" } as React.CSSProperties}>
                         {CONTENT_TYPE_LABEL[u.content_type] || u.content_type}
                       </span>
                       {u.review_status === "needs_date_review" && (

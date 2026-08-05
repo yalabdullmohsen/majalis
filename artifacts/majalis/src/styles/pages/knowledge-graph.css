@@ -10,15 +10,15 @@
   margin-top: 0.85rem;
   padding: 0.45rem 0.85rem;
   border-radius: 999px;
-  border: 1px solid color-mix(in srgb, var(--majalis-emerald, #143F35) 28%, transparent);
-  background: color-mix(in srgb, var(--majalis-emerald, #143F35) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--majalis-emerald, var(--mj-brand-deep)) 28%, transparent);
+  background: color-mix(in srgb, var(--majalis-emerald, var(--mj-brand-deep)) 8%, transparent);
   color: inherit;
   text-decoration: none;
   font-size: 0.875rem;
 }
 .kng-mindmap-link:hover,
 .kng-mindmap-link:focus-visible {
-  background: color-mix(in srgb, var(--majalis-emerald, #143F35) 16%, transparent);
+  background: color-mix(in srgb, var(--majalis-emerald, var(--mj-brand-deep)) 16%, transparent);
   outline: none;
 }
 
@@ -155,16 +155,16 @@
    79 — KnowledgeGraphPage  (kng-* additions)
    ============================================================ */
 /* Node-type color tokens — set --kng-nc on the element */
-.kng-nt--quran_ayah    { --kng-nc: #065f46; }
+.kng-nt--quran_ayah    { --kng-nc: var(--mj-brand); }
 .kng-nt--hadith        { --kng-nc: #1d4ed8; }
-.kng-nt--fatwa         { --kng-nc: var(--brand, #226A56); }
-.kng-nt--scholar       { --kng-nc: #226A56; }
-.kng-nt--book          { --kng-nc: #226A56; }
+.kng-nt--fatwa         { --kng-nc: var(--brand, var(--mj-brand)); }
+.kng-nt--scholar       { --kng-nc: var(--mj-brand); }
+.kng-nt--book          { --kng-nc: var(--mj-brand); }
 .kng-nt--lesson        { --kng-nc: #0369a1; }
-.kng-nt--benefit       { --kng-nc: #047857; }
+.kng-nt--benefit       { --kng-nc: var(--mj-brand); }
 .kng-nt--prophet_story { --kng-nc: #dc2626; }
 .kng-nt--term          { --kng-nc: var(--text-2, #5C5C56); }
-.kng-nt--fawaid        { --kng-nc: #047857; }
+.kng-nt--fawaid        { --kng-nc: var(--mj-brand); }
 .kng-nt--question      { --kng-nc: var(--text-2, #5C5C56); }
 .kng-nt--all           { --kng-nc: var(--text-2, #5C5C56); }
 .kng-filter-chip--typed.is-active {

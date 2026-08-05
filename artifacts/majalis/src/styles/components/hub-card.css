@@ -1,0 +1,349 @@
+/**
+ * HubCard — بطاقات الأقسام (بلا كتلة داكنة فارغة)
+ */
+
+.hub-card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--mj-s3);
+}
+
+@media (min-width: 720px) {
+  .hub-card-grid {
+    grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+    gap: var(--mj-s4);
+  }
+}
+
+.hub-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mj-s3);
+  padding: var(--mj-s4);
+  background: var(--mj-surface);
+  border: 1px solid transparent;
+  border-radius: var(--mj-r-lg);
+  text-decoration: none;
+  color: inherit;
+  min-width: 0;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.hub-card:hover {
+  border-color: var(--mj-brand);
+  box-shadow: var(--mj-sh);
+  text-decoration: none;
+}
+
+.hub-card__icon {
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  border-radius: var(--mj-r-sm);
+  background: var(--mj-brand-soft);
+  color: var(--mj-brand);
+  font-size: 1.25rem;
+}
+
+.hub-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mj-s2);
+  min-width: 0;
+}
+
+.hub-card__heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--mj-s2);
+}
+
+.hub-card__title {
+  margin: 0;
+  font-family: var(--mj-face);
+  font-size: var(--mj-fs-h2);
+  font-weight: 700;
+  line-height: var(--mj-lh-card);
+  color: var(--mj-ink);
+}
+
+.hub-card__desc {
+  margin: 0;
+  font-family: var(--mj-ui);
+  font-size: var(--mj-fs-small);
+  font-weight: 400;
+  line-height: var(--mj-lh-small);
+  color: var(--mj-ink-2);
+}
+
+.hub-card__badge,
+.hub-card .mj-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--mj-r-pill);
+  background: var(--mj-brand-soft);
+  color: var(--mj-brand);
+  font-family: var(--mj-num);
+  font-size: var(--mj-fs-tiny);
+  font-weight: 400;
+  line-height: 1.3;
+}
+
+.hub-card__soon {
+  font-family: var(--mj-ui);
+  font-size: var(--mj-fs-tiny);
+  font-weight: 700;
+  color: var(--mj-muted);
+}
+
+.hub-card--soon {
+  opacity: 0.92;
+}
+
+.hub-card--featured {
+  border-color: color-mix(in srgb, var(--mj-accent) 55%, var(--mj-hairline));
+}
+
+/* إبطال الكتل الداكنة الفارغة للبطاقات القديمة */
+.quran-hub-card__header,
+.quran-hub-card--featured .quran-hub-card__header {
+  display: none !important;
+  height: 0 !important;
+  padding: 0 !important;
+  min-height: 0 !important;
+  background: transparent !important;
+}
+
+.quran-hub-card {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: var(--mj-s3) !important;
+  padding: var(--mj-s4) !important;
+  background: var(--mj-surface) !important;
+  border: 1px solid transparent !important;
+  border-radius: var(--mj-r-lg) !important;
+  box-shadow: none !important;
+  overflow: visible !important;
+}
+
+.quran-hub-card:hover {
+  border-color: var(--mj-brand) !important;
+  transform: none !important;
+  box-shadow: var(--mj-sh) !important;
+}
+
+.quran-hub-card__body {
+  padding: 0 !important;
+  background: transparent !important;
+  gap: var(--mj-s2) !important;
+}
+
+.quran-hub-card__title {
+  font-family: var(--mj-face) !important;
+  font-size: var(--mj-fs-h2) !important;
+  font-weight: 700 !important;
+  line-height: var(--mj-lh-card) !important;
+  color: var(--mj-ink) !important;
+}
+
+.quran-hub-card__desc {
+  font-family: var(--mj-ui) !important;
+  font-size: var(--mj-fs-small) !important;
+  line-height: var(--mj-lh-small) !important;
+  color: var(--mj-ink-2) !important;
+}
+
+.quran-hub-card__link {
+  color: var(--mj-brand) !important;
+  font-family: var(--mj-ui) !important;
+  font-size: var(--mj-fs-small) !important;
+}
+
+.quran-hub-card__icon {
+  width: 40px;
+  height: 40px;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--mj-r-sm);
+  background: var(--mj-brand-soft) !important;
+  color: var(--mj-brand) !important;
+  margin-block-end: 0;
+}
+
+/* فقه / توحيد — بطاقات بدون كتلة فارغة */
+.fqh-hub-card,
+.twh-hub-card {
+  background: var(--mj-surface) !important;
+  border: 1px solid transparent !important;
+  border-radius: var(--mj-r-lg) !important;
+  padding: var(--mj-s4) !important;
+  box-shadow: none !important;
+}
+
+.fqh-hub-card:hover,
+.twh-hub-card:hover {
+  border-color: var(--mj-brand) !important;
+}
+
+.fqh-hub-card__title,
+.twh-hub-card__title {
+  font-family: var(--mj-face) !important;
+  font-size: var(--mj-fs-h2) !important;
+  font-weight: 700 !important;
+  color: var(--mj-ink) !important;
+}
+
+.fqh-hub-card__desc,
+.twh-hub-card__desc {
+  font-family: var(--mj-ui) !important;
+  font-size: var(--mj-fs-small) !important;
+  line-height: var(--mj-lh-small) !important;
+  color: var(--mj-ink-2) !important;
+}
+
+.fqh-hub-card__emoji,
+.twh-hub-card__emoji {
+  width: 40px !important;
+  height: 40px !important;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--mj-r-sm) !important;
+  background: var(--mj-brand-soft) !important;
+  color: var(--mj-brand) !important;
+}
+
+/* أزرار خضراء — نص on-brand دائمًا */
+.page-action-btn,
+.page-action-btn:not(.page-action-btn--secondary),
+.ds-btn--primary,
+.btn--primary,
+.btn-primary,
+.m2030-btn--primary,
+.sq-header,
+.sq-reveal-btn {
+  background: var(--mj-brand) !important;
+  color: var(--mj-on-brand) !important;
+  border-color: var(--mj-brand) !important;
+}
+
+.sq-header .sq-title,
+.sq-header svg,
+.page-action-btn,
+.ds-btn--primary,
+.btn--primary,
+.btn-primary {
+  color: var(--mj-on-brand) !important;
+}
+
+.sq-section {
+  border-color: var(--mj-brand) !important;
+  background: var(--mj-surface) !important;
+  border-radius: var(--mj-r-lg) !important;
+  max-width: 36rem;
+  margin-inline: auto;
+}
+
+.sq-header {
+  border-radius: var(--mj-r-lg);
+  width: fit-content;
+  max-width: 100%;
+  min-width: min(100%, 18rem);
+  padding: 0.65rem 1rem !important;
+  gap: 0.5rem;
+}
+
+.sq-title {
+  font-family: var(--mj-ui) !important;
+  font-size: var(--mj-fs-btn) !important;
+  font-weight: 500 !important;
+  line-height: var(--mj-lh-tight) !important;
+}
+
+.sq-toggle {
+  color: var(--mj-on-brand) !important;
+  opacity: 0.9;
+  order: -1; /* RTL: سهم الطيّ في البداية المنطقية */
+}
+
+html[data-theme="dark"] .sq-section,
+html.dark .sq-section {
+  background: var(--mj-surface) !important;
+  border-color: var(--mj-hairline) !important;
+}
+
+html[data-theme="dark"] .sq-header,
+html.dark .sq-header {
+  background: var(--mj-brand) !important;
+  color: var(--mj-on-brand) !important;
+}
+
+html[data-theme="dark"] .sq-card,
+html.dark .sq-card {
+  background: var(--mj-surface-2) !important;
+  color: var(--mj-ink) !important;
+}
+
+/* شريط الصلاة — لا يُقصّ؛ خلفية brand ونص on-brand (deep=on-brand في الليل) */
+.navbar-prayer-chip {
+  overflow: visible !important;
+  max-width: none !important;
+  white-space: nowrap;
+  flex-shrink: 0;
+  min-height: 2.1rem;
+  padding-block: 0.35rem !important;
+  padding-inline: 0.7rem !important;
+  line-height: 1.35 !important;
+  align-self: center;
+  background: var(--mj-brand) !important;
+  border-color: var(--mj-brand) !important;
+  color: var(--mj-on-brand) !important;
+}
+
+.navbar-prayer-chip__name,
+.navbar-prayer-chip__hms {
+  overflow: visible !important;
+  text-overflow: clip !important;
+  white-space: nowrap !important;
+  color: var(--mj-on-brand) !important;
+}
+
+.navbar-v3__inner {
+  overflow: visible !important;
+  min-height: 3.25rem;
+  align-items: center;
+}
+
+/* قوائم المصادر */
+article ul,
+.surah-story ul,
+.page-shell article ul {
+  padding-inline-start: 1.35rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+article ul li,
+.surah-story ul li {
+  padding-inline-start: 0.25rem;
+  line-height: var(--mj-lh-ui);
+}
+
+.twh-hub-card__current-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--mj-r-pill);
+  background: var(--mj-brand-soft);
+  color: var(--mj-brand);
+  font-family: var(--mj-ui);
+  font-size: var(--mj-fs-tiny);
+  font-weight: 700;
+}

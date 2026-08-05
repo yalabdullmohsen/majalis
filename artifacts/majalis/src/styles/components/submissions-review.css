@@ -8,7 +8,7 @@
 .srp-stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: var(--ds-space-2); margin-bottom: 1.25rem; }
 .srp-stat-card  { background: var(--srp-stat-bg, #f3f4f6); border-radius: var(--ds-radius-lg); padding: 0.625rem 0.5rem; text-align: center; }
 .srp-stat-card--pending  { --srp-stat-bg: #F0F9FF;                             --srp-stat-color: #0369A1; }
-.srp-stat-card--approved { --srp-stat-bg: var(--majalis-emerald-soft,#EBF5F0); --srp-stat-color: var(--majalis-emerald-deep,#143F35); }
+.srp-stat-card--approved { --srp-stat-bg: var(--majalis-emerald-soft,#EBF5F0); --srp-stat-color: var(--majalis-emerald-deep,var(--mj-brand-deep)); }
 .srp-stat-card--rejected { --srp-stat-bg: var(--majalis-danger-muted,rgba(155,28,28,0.07)); --srp-stat-color: var(--majalis-danger,#9B1C1C); }
 .srp-stat-card--split    { --srp-stat-bg: #eff6ff; --srp-stat-color: #1d4ed8; }
 .srp-stat-val   { font-size: var(--ds-text-xl); font-weight: 800; color: var(--srp-stat-color, #5C5C56); }
@@ -27,8 +27,8 @@
   cursor: pointer;
   font-family: inherit;
 }
-.srp-filter-btn--active      { border-color: var(--majalis-emerald-deep, #143F35); background: var(--majalis-emerald-deep, #143F35); color: #fff; }
-.srp-filter-btn--active-type { border-color: var(--brand, #226A56); background: var(--brand, #226A56); color: #fff; }
+.srp-filter-btn--active      { border-color: var(--majalis-emerald-deep, var(--mj-brand-deep)); background: var(--majalis-emerald-deep, var(--mj-brand-deep)); color: #fff; }
+.srp-filter-btn--active-type { border-color: var(--brand, var(--mj-brand)); background: var(--brand, var(--mj-brand)); color: #fff; }
 
 .srp-state           { text-align: center; padding: var(--ds-space-8); color: #9ca3af; }
 .srp-state--error    { text-align: start; padding: var(--ds-space-4); background: var(--majalis-danger-muted, #fef2f2); border: 1px solid var(--majalis-danger, #dc2626); border-radius: 0.6rem; color: var(--majalis-danger, #991b1b); font-size: 0.85rem; }
@@ -46,7 +46,7 @@
 .srp-card-title { font-weight: 700; font-size: 0.9rem; color: var(--majalis-ink); }
 .srp-card-status-badge { padding: 0.15rem 0.5rem; border-radius: 9999px; font-size: 0.68rem; font-weight: 600; background: #e5e7eb; color: #5C5C56; border: 1px solid #d1d5db; }
 .srp-card-status-badge--pending  { background: #F0F9FF; color: #0369A1; border-color: #BAE6FD; }
-.srp-card-status-badge--approved { background: var(--majalis-emerald-soft, #EBF5F0); color: var(--majalis-emerald-deep, #143F35); border-color: rgba(23,61,53,0.25); }
+.srp-card-status-badge--approved { background: var(--majalis-emerald-soft, #EBF5F0); color: var(--majalis-emerald-deep, var(--mj-brand-deep)); border-color: rgba(23,61,53,0.25); }
 .srp-card-status-badge--rejected { background: var(--majalis-danger-muted, rgba(155,28,28,0.07)); color: var(--majalis-danger, #9B1C1C); border-color: rgba(155,28,28,0.2); }
 .srp-card-meta-row { font-size: var(--ds-text-xs); color: var(--majalis-ink-soft); margin-top: 0.2rem; }
 .srp-card-chips { display: flex; gap: var(--ds-space-2); flex-wrap: wrap; margin-top: 0.3rem; }
@@ -69,7 +69,7 @@
   padding: 0.3rem 0.65rem;
   border-radius: 0.4rem;
   border: none;
-  background: var(--majalis-emerald-deep, #143F35);
+  background: var(--majalis-emerald-deep, var(--mj-brand-deep));
   color: #fff;
   font-size: var(--ds-text-xs);
   font-weight: 600;
@@ -92,7 +92,7 @@
   padding: 0.45rem 1rem;
   border-radius: var(--ds-radius);
   border: none;
-  background: var(--majalis-emerald-deep, #143F35);
+  background: var(--majalis-emerald-deep, var(--mj-brand-deep));
   color: #fff;
   font-size: 0.8rem;
   font-weight: 600;
@@ -108,6 +108,6 @@
 .srp-review-textarea { margin-top: 0.35rem; width: 100%; padding: 0.5rem 0.75rem; border-radius: var(--ds-radius); border: 1.5px solid var(--majalis-line); font-family: inherit; font-size: 0.82rem; direction: rtl; box-sizing: border-box; resize: vertical; }
 .srp-review-btns     { display: flex; gap: var(--ds-space-2); }
 .srp-action-btn { flex: 1; padding: 0.55rem; border-radius: 0.6rem; border: none; color: #fff; font-size: 0.85rem; font-weight: 700; cursor: pointer; font-family: inherit; }
-.srp-action-btn--approve { background: #143F35; }
+.srp-action-btn--approve { background: var(--mj-brand-deep); }
 .srp-action-btn--reject  { background: #dc2626; }
 

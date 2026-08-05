@@ -7,8 +7,8 @@ import { Widget } from "@/components/widgets/Widget";
 
 const UpdatesIcon = () => (
   <svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16">
-    <polygon points="8,1 10,6 15.5,6 11,9.5 13,15 8,11.5 3,15 5,9.5 0.5,6 6,6" fill="none" stroke="#143F35" strokeWidth="1.2"/>
-    <circle cx="8" cy="8" r="2.2" fill="#143F35" opacity="0.4"/>
+    <polygon points="8,1 10,6 15.5,6 11,9.5 13,15 8,11.5 3,15 5,9.5 0.5,6 6,6" fill="none" stroke="var(--mj-brand-deep)" strokeWidth="1.2"/>
+    <circle cx="8" cy="8" r="2.2" fill="var(--mj-brand-deep)" opacity="0.4"/>
   </svg>
 );
 

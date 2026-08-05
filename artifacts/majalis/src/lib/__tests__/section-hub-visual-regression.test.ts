@@ -1,7 +1,6 @@
 /**
- * اختبار انحدار بصري خفيف لصفحتي الفقه والعقيدة على عروض جوال.
- * يتحقق برمجيًا من قواعد CSS الحرجة (بدون متصفح) + يُجهِّز مسار screenshot
- * عند توفر Playwright.
+ * اختبار انحدار بصري خفيف لصفحات الأقسام بعد توحيد HubCard.
+ * يتحقق برمجيًا من قواعد CSS الحرجة (بدون متصفح).
  *
  * تشغيل: npx tsx src/lib/__tests__/section-hub-visual-regression.test.ts
  */
@@ -23,24 +22,23 @@ const VIEWPORTS = [320, 375, 390, 430];
 
 console.log("\n=== قواعد CSS الحرجة لصفحات الأقسام ===");
 {
-  const tawhid = readFileSync(resolve(root, "src/styles/pages/tawhid.css"), "utf8");
+  const hubCard = readFileSync(resolve(root, "src/styles/components/hub-card.css"), "utf8");
   const fiqh = readFileSync(resolve(root, "src/styles/pages/fiqh-hub.css"), "utf8");
   const finalCss = readFileSync(resolve(root, "src/styles/final-release.css"), "utf8");
   const indexCss = readFileSync(resolve(root, "src/index.css"), "utf8");
 
   assert(indexCss.includes("overflow-x: hidden"), "html/body يمنع التمرير الأفقي");
-  assert(tawhid.includes("line-clamp: 3") || tawhid.includes("-webkit-line-clamp: 3"), "وصف بطاقة التوحيد: line-clamp 3");
-  assert(fiqh.includes("line-clamp: 3") || fiqh.includes("-webkit-line-clamp: 3"), "وصف بطاقة الفقه: line-clamp 3");
-  assert(tawhid.includes("twh-hub-card__heading"), "عنوان+شارة في صف flex");
-  assert(tawhid.includes("flex-shrink: 0"), "الشارة لا تنكمش");
-  assert(tawhid.includes("minmax(0, 1fr)") || tawhid.includes("repeat(2,"), "شبكة التوحيد متجاوبة");
-  assert(fiqh.includes("@media (min-width: 400px)"), "الفقه: عمود واحد تحت 400px");
+  assert(hubCard.includes(".hub-card-grid"), "شبكة HubCard موحّدة");
+  assert(hubCard.includes("repeat(2, minmax(0, 1fr))"), "عمودان على الجوال");
+  assert(hubCard.includes("background: var(--mj-surface)"), "بطاقة بسطح فاتح");
+  assert(hubCard.includes("background: var(--mj-brand-soft)"), "أيقونة بخلفية soft");
+  assert(
+    hubCard.includes(".quran-hub-card__header") && hubCard.includes("display: none"),
+    "إبطال الكتل الداكنة الفارغة",
+  );
+  assert(hubCard.includes("color: var(--mj-ink-2)"), "وصف البطاقة بتباين كافٍ");
   assert(fiqh.includes("scroll-snap-type"), "تبويبات الفقه: scroll-snap");
   assert(finalCss.includes("scroll-snap-type: x proximity"), "شريط الأقسام: scroll-snap");
-  assert(tawhid.includes("clamp(1.5rem, 5vw, 2rem)"), "مقياس عنوان الصفحة");
-  assert(tawhid.includes("clamp(1.05rem, 3.6vw, 1.25rem)"), "مقياس عنوان البطاقة");
-  assert(tawhid.includes("letter-spacing: 0"), "بلا letter-spacing للعربية");
-  assert(fiqh.includes("border-top: 1px dashed") || fiqh.includes("fiqh-section-divider"), "فاصل داخلي منقّط");
 
   for (const w of VIEWPORTS) {
     assert(w >= 320 && w <= 430, `عرض جوال مدعوم في خطة التحقق: ${w}px`);
@@ -49,9 +47,18 @@ console.log("\n=== قواعد CSS الحرجة لصفحات الأقسام ===")
 
 console.log("\n=== بنية المكوّنات ===");
 {
+  const hubCardTsx = readFileSync(resolve(root, "src/components/ui/HubCard.tsx"), "utf8");
   const tawhidPage = readFileSync(resolve(root, "src/views/TawhidPage.tsx"), "utf8");
+  const fiqhPage = readFileSync(resolve(root, "src/views/FiqhPage.tsx"), "utf8");
+  const quranHub = readFileSync(resolve(root, "src/views/QuranHubPage.tsx"), "utf8");
+  const merged = readFileSync(resolve(root, "src/views/MergedSectionHubPage.tsx"), "utf8");
   const topBar = readFileSync(resolve(root, "src/components/TopSectionBar.tsx"), "utf8");
-  assert(tawhidPage.includes("twh-hub-card__heading"), "TawhidPage يستخدم صف العنوان/الشارة");
+
+  assert(hubCardTsx.includes("hub-card__title"), "HubCard يعرّف العنوان");
+  assert(tawhidPage.includes("HubCard"), "TawhidPage يرحّل إلى HubCard");
+  assert(fiqhPage.includes("HubCard"), "FiqhPage يرحّل إلى HubCard");
+  assert(quranHub.includes("HubCard"), "QuranHubPage يرحّل إلى HubCard");
+  assert(merged.includes("HubCard"), "MergedSectionHubPage يرحّل إلى HubCard");
   assert(topBar.includes('aria-label="أقسام رئيسية"'), "TopSectionBar موجود");
   assert(existsSync(resolve(root, "scripts/strip-enrichment-boilerplate.mjs")), "سكربت التنظيف/التقرير موجود");
 }

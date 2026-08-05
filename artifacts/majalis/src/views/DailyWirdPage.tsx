@@ -33,7 +33,7 @@ function KhatmaRing({ pagesInKhatma, khatmasCompleted }: { pagesInKhatma: number
       <circle cx="62" cy="62" r={r} fill="none" stroke="var(--majalis-emerald-muted, rgba(23,61,53,.12))" strokeWidth="8" />
       <circle
         cx="62" cy="62" r={r} fill="none"
-        stroke={done ? "#226A56" : "var(--majalis-emerald, #143F35)"}
+        stroke={done ? "var(--mj-brand)" : "var(--majalis-emerald, var(--mj-brand-deep))"}
         strokeWidth="8" strokeLinecap="round"
         strokeDasharray={circ}
         strokeDashoffset={circ * (1 - pct)}
@@ -41,7 +41,7 @@ function KhatmaRing({ pagesInKhatma, khatmasCompleted }: { pagesInKhatma: number
         opacity={done ? "1" : "0.75"}
       />
       {khatmasCompleted > 0 && (
-        <text x="62" y="55" textAnchor="middle" fill={done ? "#226A56" : "var(--majalis-emerald)"} fontSize="20" fontWeight="800" fontFamily="inherit">
+        <text x="62" y="55" textAnchor="middle" fill={done ? "var(--mj-brand)" : "var(--majalis-emerald)"} fontSize="20" fontWeight="800" fontFamily="inherit">
           {toAr(khatmasCompleted)}
         </text>
       )}
@@ -67,7 +67,7 @@ function WirdRing({ pct, pages, target }: { pct: number; pages: number; target: 
       <circle
         cx="74" cy="74" r={r}
         fill="none"
-        stroke="var(--majalis-emerald, #143F35)"
+        stroke="var(--majalis-emerald, var(--mj-brand-deep))"
         strokeWidth="9"
         strokeLinecap="round"
         strokeDasharray={circ}
@@ -76,7 +76,7 @@ function WirdRing({ pct, pages, target }: { pct: number; pages: number; target: 
         className="dwd-ring-fill"
         opacity={done ? "1" : "0.7"}
       />
-      <text x="74" y="67" textAnchor="middle" fill="var(--majalis-emerald, #143F35)"
+      <text x="74" y="67" textAnchor="middle" fill="var(--majalis-emerald, var(--mj-brand-deep))"
         fontSize="24" fontWeight="800" fontFamily="inherit">
         {toAr(pages)}
       </text>
@@ -85,7 +85,7 @@ function WirdRing({ pct, pages, target }: { pct: number; pages: number; target: 
         من {toAr(target)} صفحة
       </text>
       {done && (
-        <text x="74" y="100" textAnchor="middle" fill="var(--majalis-emerald, #143F35)"
+        <text x="74" y="100" textAnchor="middle" fill="var(--majalis-emerald, var(--mj-brand-deep))"
           fontSize="12" fontWeight="700" fontFamily="inherit">✓ اكتمل</text>
       )}
     </svg>

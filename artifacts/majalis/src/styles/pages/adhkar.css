@@ -78,7 +78,7 @@
   border-color: transparent;
 }
 .adhkar-focus-btn--next:hover:not(:disabled) {
-  background: var(--m26-green-800, #166534);
+  background: var(--m26-green-800, var(--mj-brand));
 }
 .adhkar-focus-btn--details {
   color: var(--majalis-emerald, #16A34A);
@@ -206,8 +206,8 @@
   font-size: 0.8rem;
   font-weight: 600;
 }
-.adhkar-grade--sahih { background: #DCFCE7; color: #166534; }
-.adhkar-grade--hasan { background: #e8f5f0; color: #226A56; }
+.adhkar-grade--sahih { background: #DCFCE7; color: var(--mj-brand); }
+.adhkar-grade--hasan { background: #e8f5f0; color: var(--mj-brand); }
 .adhkar-grade--other { background: #F3F4F6; color: #5C5C56; }
 .adhkar-sheet-share {
   width: 100%;

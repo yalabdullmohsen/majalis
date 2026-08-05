@@ -34,11 +34,11 @@ export const QA_RULING_TYPES = ["حلال", "حرام", "مكروه", "مباح"
 
 // ألوان شارة نوع الحكم
 export const QA_RULING_COLORS: Record<string, { bg: string; text: string }> = {
-  "حلال": { bg: "#D1FAE5", text: "#065F46" },
+  "حلال": { bg: "#D1FAE5", text: "var(--mj-brand)" },
   "مباح": { bg: "#DBEAFE", text: "#1E40AF" },
-  "سنة": { bg: "rgba(23,61,53,0.08)", text: "#143F35" },
-  "مندوب": { bg: "rgba(23,61,53,0.08)", text: "#143F35" },
-  "مكروه": { bg: "rgba(21,48,37,0.08)", text: "#143F35" },
+  "سنة": { bg: "rgba(23,61,53,0.08)", text: "var(--mj-brand-deep)" },
+  "مندوب": { bg: "rgba(23,61,53,0.08)", text: "var(--mj-brand-deep)" },
+  "مكروه": { bg: "rgba(21,48,37,0.08)", text: "var(--mj-brand-deep)" },
   "حرام": { bg: "#FEE2E2", text: "#991B1B" },
 };
 

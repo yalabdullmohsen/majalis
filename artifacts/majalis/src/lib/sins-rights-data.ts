@@ -1271,7 +1271,7 @@ export const SINS_CATEGORIES: SinCategoryDef[] = [
     description: "الذنوب المتعلقة بحق الله هي التي تمثل مخالفة أمره أو ارتكاب ما نهى عنه من العبادات والمحرمات. والتوبة منها بالإقلاع والندم والعزم، مع تدارك الواجبات إن أمكن.",
     rightsCategory: "allah",
     icon: "🕌",
-    color: "#18362A",
+    color: "var(--mj-brand-deep)",
     topicSlugs: ["tark-salah", "riyaa", "kibr", "hasad", "shurb-khamr", "tark-sawm", "nazar-muharram"],
   },
   {

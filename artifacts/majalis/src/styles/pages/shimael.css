@@ -7,7 +7,7 @@
 /* hero */
 .sh-hero {
   position: relative; overflow: hidden;
-  background: linear-gradient(160deg, #143F35 0%, #226A56 60%, #226A56 100%);
+  background: linear-gradient(160deg, var(--mj-brand-deep) 0%, var(--mj-brand) 60%, var(--mj-brand) 100%);
   padding: 3.5rem 1.25rem 3rem; text-align: center; color: #fff;
 }
 .sh-hero__glow {
@@ -49,19 +49,19 @@
   color: #5C5C56; font-family: inherit; font-size: .8rem; font-weight: 600;
   cursor: pointer; transition: background .15s, color .15s; white-space: nowrap;
 }
-.sh-tab--active { background: #226A56; color: #fff; }
+.sh-tab--active { background: var(--mj-brand); color: #fff; }
 
 /* section */
 .sh-section { display: flex; flex-direction: column; gap: var(--ds-space-4); }
 .sh-intro-box {
   display: flex; align-items: flex-start; gap: .6rem;
-  background: rgba(23,61,53,.06); border-right: 3px solid #226A56;
+  background: rgba(23,61,53,.06); border-right: 3px solid var(--mj-brand);
   border-radius: .5rem; padding: .85rem 1rem;
   font-size: .875rem; line-height: 1.7;
-  color: #143F35;
+  color: var(--mj-brand-deep);
 }
 .sh-intro-box p { margin: 0; }
-.sh-intro-box svg { color: #226A56; flex-shrink: 0; margin-top: .15rem; }
+.sh-intro-box svg { color: var(--mj-brand); flex-shrink: 0; margin-top: .15rem; }
 
 /* باب */
 .sh-bab {
@@ -74,9 +74,9 @@
   padding: .9rem 1.1rem; cursor: pointer; user-select: none;
 }
 .sh-bab__icon { font-size: 1.4rem; flex-shrink: 0; }
-.sh-bab__title { flex: 1; font-size: .95rem; font-weight: 700; color: #143F35; }
+.sh-bab__title { flex: 1; font-size: .95rem; font-weight: 700; color: var(--mj-brand-deep); }
 .sh-bab__count {
-  font-size: 0.8rem; color: #226A56; font-weight: 700;
+  font-size: 0.8rem; color: var(--mj-brand); font-weight: 700;
   background: rgba(23,61,53,.1); padding: .2rem .65rem; border-radius: var(--ds-radius-full); flex-shrink: 0;
 }
 .sh-bab__chevron { color: #9CA3AF; flex-shrink: 0; display: flex; }
@@ -93,13 +93,13 @@
 }
 .sh-hadith__text {
   font-family: var(--font-body);
-  font-size: 1.05rem; color: #143F35; line-height: 1.9; margin: 0;
+  font-size: 1.05rem; color: var(--mj-brand-deep); line-height: 1.9; margin: 0;
 }
 .sh-hadith__meta {
   display: flex; align-items: center; gap: .75rem; flex-wrap: wrap;
 }
 .sh-hadith__rawi {
-  font-size: .75rem; color: #226A56; font-weight: 700;
+  font-size: .75rem; color: var(--mj-brand); font-weight: 700;
   background: rgba(23,61,53,.08); padding: .15rem .6rem; border-radius: var(--ds-radius-full);
 }
 .sh-hadith__src { font-size: .72rem; color: #9CA3AF; font-style: normal; }
@@ -107,7 +107,7 @@
 /* محبة */
 .sh-mahabbah-intro {
   display: flex; flex-direction: column; align-items: center; gap: .65rem;
-  background: linear-gradient(135deg, #143F35, #226A56);
+  background: linear-gradient(135deg, var(--mj-brand-deep), var(--mj-brand));
   border-radius: var(--ds-radius-2xl); padding: 2rem 1.5rem; color: #fff; text-align: center;
   margin-bottom: .5rem;
 }
@@ -128,23 +128,23 @@
 }
 .sh-mahabbah-card__num {
   width: 2rem; height: 2rem; border-radius: 50%;
-  background: rgba(23,61,53,.12); color: #226A56;
+  background: rgba(23,61,53,.12); color: var(--mj-brand);
   display: flex; align-items: center; justify-content: center;
   font-size: .8rem; font-weight: 900; flex-shrink: 0;
 }
-.sh-mahabbah-card__title { flex: 1; font-size: .95rem; font-weight: 700; color: #143F35; }
+.sh-mahabbah-card__title { flex: 1; font-size: .95rem; font-weight: 700; color: var(--mj-brand-deep); }
 .sh-mahabbah-card__body {
   border-top: 1px solid rgba(23,61,53,.08); padding: .9rem 1.1rem;
   display: flex; flex-direction: column; gap: .5rem;
 }
 .sh-mahabbah-card__text {
   font-family: var(--font-body);
-  font-size: 1.05rem; color: #143F35; line-height: 1.9; margin: 0;
+  font-size: 1.05rem; color: var(--mj-brand-deep); line-height: 1.9; margin: 0;
 }
 
 /* صلاة */
 .sh-salat-box {
-  margin-top: 1.5rem; background: linear-gradient(135deg, #143F35, #226A56);
+  margin-top: 1.5rem; background: linear-gradient(135deg, var(--mj-brand-deep), var(--mj-brand));
   border-radius: var(--ds-radius-2xl); padding: 1.75rem 1.5rem; color: #fff; text-align: center;
 }
 .sh-salat-box__head {

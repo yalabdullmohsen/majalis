@@ -29,7 +29,7 @@
   gap: var(--ds-space-1);
   font-size: 0.78rem;
   font-weight: 700;
-  color: #226A56;
+  color: var(--mj-brand);
   text-decoration: none;
 }
 .scw-banner__link:hover { text-decoration: underline; }

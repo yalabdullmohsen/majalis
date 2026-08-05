@@ -6,16 +6,16 @@
 /* ══ نظام ألوان مجالس (مستخرج رقمياً من الشعار) ══════════════════ */
 :root {
   /* الأخضر الداكن الرمادي — إعادة تصميم الهوية v3 */
-  --mj-emerald-950: #143F35;
-  --mj-emerald-800: #143F35;
-  --mj-emerald-600: #226A56;
-  --mj-emerald-text: #143F35;
+  --mj-emerald-950: var(--mj-brand-deep);
+  --mj-emerald-800: var(--mj-brand-deep);
+  --mj-emerald-600: var(--mj-brand);
+  --mj-emerald-text: var(--mj-brand-deep);
 
   /* ذهبي رملي هادئ — مساند فعلي (لا أخضر مسمّى ذهبيًا) */
   --mj-gold-900:       #9C7C41;
   --mj-gold-600:       #B8963F;
   --mj-gold-300:       #FAF3E0;
-  --mj-gold-text:      #143F35;
+  --mj-gold-text:      var(--mj-brand-deep);
 
   /* العاجي — خلفية الشعار الورقية */
   --mj-ivory-50:  #FAFAF8;
@@ -32,7 +32,7 @@
 :root {
   --mn-text-default:   var(--msk-text-2,  #5C5C56);
   --mn-border-default: var(--msk-border,  rgba(23,61,53,0.12));
-  --mn-border-active:  var(--msk-gold,    #226A56);
+  --mn-border-active:  var(--msk-gold,    var(--mj-brand));
   --mn-surface-hover:  rgba(23,61,53,0.05);
   --mn-transition:     200ms ease;
 }
@@ -148,7 +148,7 @@
 /* ── 7. BottomNavBar — ألوان التبويب النشط فقط؛ التخطيط في final-release ── */
 @media (max-width: 879px) {
   .bottom-nav__tab.is-active {
-    color: var(--v2-green, #226A56);
+    color: var(--v2-green, var(--mj-brand));
   }
   .bottom-nav__center-btn {
     background: linear-gradient(135deg, var(--v2-green) 0%, var(--v2-green-deep) 100%) !important;
@@ -467,32 +467,32 @@
   border-color: rgba(23,61,53,0.20) !important;
 }
 .lesson-unified-card__header {
-  background: color-mix(in srgb, #226A56 8%, transparent) !important;
+  background: color-mix(in srgb, var(--mj-brand) 8%, transparent) !important;
   border-bottom: 1px solid rgba(23,61,53,0.10) !important;
 }
 .lesson-unified-card__category {
-  color: #226A56 !important;
+  color: var(--mj-brand) !important;
   font-size: 0.75rem !important;
   font-weight: 700 !important;
 }
 .lesson-unified-card__status {
   background: rgba(23,61,53,0.10) !important;
-  color: #226A56 !important;
+  color: var(--mj-brand) !important;
   border: 1px solid rgba(23,61,53,0.15) !important;
   border-radius: 999px !important;
   font-size: 0.8rem !important;
   padding: 0.18rem 0.5rem !important;
 }
 .lesson-unified-card__btn--primary {
-  background: #226A56 !important;
+  background: var(--mj-brand) !important;
   color: #fff !important;
-  border-color: #226A56 !important;
+  border-color: var(--mj-brand) !important;
   box-shadow: 0 2px 8px rgba(23,61,53,0.25) !important;
   border-radius: 0.65rem !important;
   transition: transform 0.14s ease, box-shadow 0.14s ease !important;
 }
 .lesson-unified-card__btn--primary:hover {
-  background: #143F35 !important;
+  background: var(--mj-brand-deep) !important;
   box-shadow: 0 4px 14px rgba(23,61,53,0.35) !important;
 }
 .lesson-unified-card__btn:active {
@@ -527,7 +527,7 @@
 /* ── أزرار الـ navbar (زر البحث أُزيل من هذه القائمة — لم يعد موجودًا) ── */
 .navbar-menu-btn,
 .navbar-logout {
-  border: 1.5px solid #226A56 !important;
+  border: 1.5px solid var(--mj-brand) !important;
   box-shadow:
     0 0 0 1px rgba(217,174,92,0.25),
     0 1px 6px rgba(196,149,64,0.20) !important;
@@ -535,7 +535,7 @@
 }
 .navbar-menu-btn:hover {
   background: #fffdf5 !important;
-  border-color: #226A56 !important;
+  border-color: var(--mj-brand) !important;
   box-shadow:
     0 0 0 2px rgba(217,174,92,0.30),
     0 2px 10px rgba(196,149,64,0.28) !important;
@@ -578,28 +578,28 @@
   border-bottom: 1px solid rgba(23,61,53,0.10) !important;
 }
 .side-nav-drawer__brand {
-  color: var(--majalis-emerald-deep, #143F35) !important;
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep)) !important;
 }
 .side-nav-close {
   color: #5C5C56 !important;
 }
 .side-nav-close:hover {
   background: rgba(23,61,53,0.08) !important;
-  color: var(--majalis-emerald-deep, #143F35) !important;
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep)) !important;
 }
 .side-nav-group__title {
-  color: var(--majalis-emerald-deep, #143F35) !important;
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep)) !important;
 }
 .side-nav-link--v2 {
   color: #1A1A18 !important;
 }
 .side-nav-link--v2:hover:not(.is-active) {
   background: rgba(23,61,53,0.06) !important;
-  color: var(--majalis-emerald-deep, #143F35) !important;
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep)) !important;
 }
 .side-nav-link--v2.is-active {
   background: rgba(23,61,53,0.08) !important;
-  color: var(--majalis-emerald-deep, #143F35) !important;
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep)) !important;
   font-weight: 700 !important;
 }
 /* dark mode القائمة */
@@ -610,7 +610,7 @@
 .msk-quran-box {
   margin: 0.5rem 0 0;
   padding: 0.6rem 0.75rem;
-  border-right: 3px solid var(--msk-gold, #226A56);
+  border-right: 3px solid var(--msk-gold, var(--mj-brand));
   background: var(--msk-canvas-1, #F7FBF9);
   border-radius: 0 0.625rem 0.625rem 0;
   font-family: "Amiri Quran", "Scheherazade New", serif;
@@ -624,7 +624,7 @@
   display: block;
   font-style: normal;
   font-size: 0.72rem;
-  color: var(--msk-gold, #226A56);
+  color: var(--msk-gold, var(--mj-brand));
   font-weight: 700;
   margin-top: 0.3rem;
   letter-spacing: normal;
@@ -643,7 +643,7 @@
 .msk-hadith-box {
   margin: 0.5rem 0 0;
   padding: 0.75rem 1rem;
-  border-right: 3px solid var(--msk-gold, #226A56);
+  border-right: 3px solid var(--msk-gold, var(--mj-brand));
   background: var(--msk-canvas-1, #F7FBF9);
   border-radius: 0 0.625rem 0.625rem 0;
   direction: rtl;
@@ -673,8 +673,8 @@
   padding: 0.1rem 0.45rem;
   border-radius: 999px;
 }
-.msk-hadith-grade--sahih { background: rgba(21,128,61,0.10); color: #15803d; }
-.msk-hadith-grade--hasan { background: rgba(23,61,53,0.10); color: #226A56; }
+.msk-hadith-grade--sahih { background: rgba(21,128,61,0.10); color: var(--mj-brand); }
+.msk-hadith-grade--hasan { background: rgba(23,61,53,0.10); color: var(--mj-brand); }
 .msk-hadith-grade--daif  { background: rgba(220,38,38,0.10); color: #dc2626; }
 .msk-hadith-grade--mawdu { background: rgba(127,29,29,0.10); color: #7f1d1d; }
 
@@ -707,7 +707,7 @@
   padding: 0.15rem 0.5rem;
   border-radius: 999px;
   background: rgba(23,61,53,0.10);
-  color: var(--msk-gold, #226A56);
+  color: var(--msk-gold, var(--mj-brand));
   align-self: flex-start;
 }
 .msk-featured-card__title {
@@ -798,7 +798,7 @@
   font-family: var(--font-body) !important;
   font-size: clamp(1.25rem, 4vw, 1.65rem) !important;
   font-weight: 700 !important;
-  color: #226A56 !important;
+  color: var(--mj-brand) !important;
   letter-spacing: normal !important;
   white-space: nowrap !important;
   line-height: 1.1 !important;
@@ -815,31 +815,31 @@
 
 /* Bottom nav — لون التبويب النشط فقط (الأبعاد/التسميات في final-release) */
 .bottom-nav__tab.is-active {
-  color: #226A56 !important;
+  color: var(--mj-brand) !important;
 }
 
 /* Navbar — نص القائمة والبحث ذهبي */
 .navbar-menu-btn__label {
-  color: #226A56 !important;
+  color: var(--mj-brand) !important;
   font-weight: 700 !important;
 }
 .navbar-search-hint {
-  color: #226A56 !important;
+  color: var(--mj-brand) !important;
   font-weight: 700 !important;
 }
 /* Navbar brand — اسم التطبيق بجانب الشعار */
 .navbar-brand {
-  color: #226A56 !important;
+  color: var(--mj-brand) !important;
 }
 .navbar-brand-name,
 .navbar-brand strong,
 .navbar-brand span {
-  color: #226A56 !important;
+  color: var(--mj-brand) !important;
 }
 
 /* القائمة الجانبية — تسميات المجموعات ذهبية */
 .side-nav-group__title {
-  color: #226A56 !important;
+  color: var(--mj-brand) !important;
 }
 
 /* last-child border/glow أُلغي مع توحيد الشريط — لا حدود خاصة لـ«المزيد» */
@@ -853,19 +853,19 @@
   object-fit: contain;
   filter:
     /* طرز ذهبي صلب — طبقة أولى (1px) */
-    drop-shadow(1px  0px 0 #226A56)
-    drop-shadow(-1px 0px 0 #226A56)
-    drop-shadow(0px  1px 0 #226A56)
-    drop-shadow(0px -1px 0 #226A56)
+    drop-shadow(1px  0px 0 var(--mj-brand))
+    drop-shadow(-1px 0px 0 var(--mj-brand))
+    drop-shadow(0px  1px 0 var(--mj-brand))
+    drop-shadow(0px -1px 0 var(--mj-brand))
     /* طبقة ثانية (2px) لسُمك أكثر */
-    drop-shadow(2px  0px 0 #226A56)
-    drop-shadow(-2px 0px 0 #226A56)
-    drop-shadow(0px  2px 0 #226A56)
-    drop-shadow(0px -2px 0 #226A56)
-    drop-shadow(2px  2px 0 #226A56)
-    drop-shadow(-2px -2px 0 #226A56)
-    drop-shadow(2px -2px 0 #226A56)
-    drop-shadow(-2px 2px 0 #226A56)
+    drop-shadow(2px  0px 0 var(--mj-brand))
+    drop-shadow(-2px 0px 0 var(--mj-brand))
+    drop-shadow(0px  2px 0 var(--mj-brand))
+    drop-shadow(0px -2px 0 var(--mj-brand))
+    drop-shadow(2px  2px 0 var(--mj-brand))
+    drop-shadow(-2px -2px 0 var(--mj-brand))
+    drop-shadow(2px -2px 0 var(--mj-brand))
+    drop-shadow(-2px 2px 0 var(--mj-brand))
     /* توهّج ذهبي خارجي */
     drop-shadow(0 0 6px rgba(217,174,92,0.95))
     drop-shadow(0 0 16px rgba(196,149,64,0.65))
@@ -882,17 +882,17 @@
 
 /* عناوين الأقسام */
 .ds-section__title {
-  color: var(--majalis-emerald-deep, #143F35) !important;
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep)) !important;
   font-family: var(--mj-font-display) !important;
 }
 .ds-section__head {
   border-bottom-color: rgba(23,61,53,0.15) !important;
 }
 .ds-section__head::after {
-  background: linear-gradient(135deg, var(--majalis-emerald, #226A56), #226A56) !important;
+  background: linear-gradient(135deg, var(--majalis-emerald, var(--mj-brand)), var(--mj-brand)) !important;
 }
 .ds-section__link {
-  color: var(--majalis-emerald, #226A56) !important;
+  color: var(--majalis-emerald, var(--mj-brand)) !important;
 }
 
 /* ══════════════════════════════════════════════════════════════════
@@ -902,7 +902,7 @@
 
 /* ── focus ring عالمي بالأخضر الزمردي ── */
 :focus-visible {
-  outline: 2.5px solid var(--mj-emerald-600, #226A56) !important;
+  outline: 2.5px solid var(--mj-emerald-600, var(--mj-brand)) !important;
   outline-offset: 3px !important;
   border-radius: 4px !important;
 }
@@ -930,7 +930,7 @@
 /* ══ تذييل الصفحة — خلفية زمردية داكنة (emerald-950) ══ */
 .site-footer,
 .site-footer--v3 {
-  background: var(--mj-emerald-950, #143F35) !important;
+  background: var(--mj-emerald-950, var(--mj-brand-deep)) !important;
   border-top: none !important;
   color: var(--mj-ivory-50, #F4F3EE) !important;
 }
@@ -971,9 +971,9 @@
   width: 100% !important;
   height: 3px !important;
   background: linear-gradient(90deg,
-    var(--mj-emerald-800, #143F35) 0%,
-    var(--majalis-emerald, #226A56) 45%,
-    #226A56 55%,
+    var(--mj-emerald-800, var(--mj-brand-deep)) 0%,
+    var(--majalis-emerald, var(--mj-brand)) 45%,
+    var(--mj-brand) 55%,
     var(--majalis-emerald-soft, #EBF5F0) 100%
   ) !important;
   opacity: 0.75 !important;
@@ -1022,7 +1022,7 @@
   border-inline: 3px solid transparent !important;
   background-image:
     linear-gradient(white, white),
-    linear-gradient(180deg, var(--mj-emerald-600, #226A56), var(--majalis-emerald, #226A56)) !important;
+    linear-gradient(180deg, var(--mj-emerald-600, var(--mj-brand)), var(--majalis-emerald, var(--mj-brand))) !important;
   background-origin: border-box !important;
   background-clip: padding-box, border-box !important;
   border-radius: 4px !important;
@@ -1038,7 +1038,7 @@
   gap: 0.3rem !important;
   font-size: 0.72rem !important;
   font-weight: 600 !important;
-  color: var(--majalis-emerald-deep, #143F35) !important;
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep)) !important;
   background: linear-gradient(135deg,
     rgba(23,61,53,0.08),
     rgba(23,61,53,0.04)
@@ -1068,8 +1068,8 @@
 /* حد علوي بتدرج الشريطين */
 .assistant-page {
   --assistant-arch-border: linear-gradient(90deg,
-    var(--mj-emerald-800, #143F35),
-    var(--majalis-emerald, #226A56));
+    var(--mj-emerald-800, var(--mj-brand-deep)),
+    var(--majalis-emerald, var(--mj-brand)));
 }
 .assistant-message-assistant:not(.assistant-message-failure) {
   border-top: 2px solid rgba(46,106,54,0.35) !important;
@@ -1080,7 +1080,7 @@
 .achievement-card {
   position: relative;
   background: var(--mj-ivory-50, #F4F3EE);
-  border: 2px solid var(--majalis-emerald, #226A56);
+  border: 2px solid var(--majalis-emerald, var(--mj-brand));
   border-radius: 16px;
   padding: 2rem 1.5rem 1.5rem;
   text-align: center;
@@ -1118,12 +1118,12 @@
   font-family: var(--mj-font-display) !important;
   font-size: 1.2rem;
   font-weight: 700;
-  color: var(--mj-emerald-800, #143F35);
+  color: var(--mj-emerald-800, var(--mj-brand-deep));
   margin-bottom: 0.35rem;
 }
 .achievement-card__subtitle {
   font-size: 0.85rem;
-  color: var(--majalis-emerald, #226A56);
+  color: var(--majalis-emerald, var(--mj-brand));
   margin-bottom: 1rem;
   font-family: var(--mj-font-seal);
 }
@@ -1131,7 +1131,7 @@
   font-family: var(--mj-font-display) !important;
   font-size: var(--ds-text-2xl);
   font-weight: 700;
-  color: var(--mj-emerald-950, #143F35);
+  color: var(--mj-emerald-950, var(--mj-brand-deep));
   border-bottom: 1px solid rgba(23,61,53,0.20);
   padding-bottom: 0.75rem;
   margin-bottom: 0.75rem;
@@ -1141,7 +1141,7 @@
   font-size: 0.72rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--mj-emerald-600, #226A56);
+  color: var(--mj-emerald-600, var(--mj-brand));
   opacity: 0.75;
 }
 
@@ -1168,7 +1168,7 @@
 /* عناوين الأقسام داخل صفحة الدروس */
 .lessons-v2-section__title,
 .lessons-past-section__title {
-  color: var(--majalis-emerald-deep, #143F35) !important;
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep)) !important;
   font-family: var(--mj-font-display) !important;
 }
 
@@ -1178,7 +1178,7 @@
   border-color: rgba(23,61,53,0.12) !important;
 }
 .lessons-v2-stat strong {
-  color: var(--majalis-emerald-deep, #143F35) !important;
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep)) !important;
 }
 .lessons-v2-stat span {
   color: var(--msk-text-2, #5C5C56) !important;
@@ -1187,7 +1187,7 @@
 /* شريط التصفية والتبويبات */
 .lessons-v2-filter-toggle {
   border-color: rgba(23,61,53,0.20) !important;
-  color: var(--majalis-emerald-deep, #143F35) !important;
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep)) !important;
   background: rgba(23,61,53,0.04) !important;
 }
 .lessons-v2-filter-toggle:hover {
@@ -1197,7 +1197,7 @@
 
 /* لوحة التصفية */
 .lessons-v2-filters__head h2 {
-  color: var(--majalis-emerald-deep, #143F35) !important;
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep)) !important;
   font-family: var(--mj-font-display) !important;
 }
 .lessons-v2-filters__close {
@@ -1215,7 +1215,7 @@
 }
 .lessons-v2-filters-grid select:focus,
 .lessons-v2-search input:focus {
-  border-color: var(--majalis-emerald, #226A56) !important;
+  border-color: var(--majalis-emerald, var(--mj-brand)) !important;
 }
 
 /* اقتراحات البحث */
@@ -1257,7 +1257,7 @@
 .page-shell h3:not(.qlive-player__name):not(.seerah-panel__events-title):not(.ikm-card__title):not(.ds-section__title):not(.amr-level__title),
 .page-shell h4 {
   font-family: var(--mj-font-display) !important;
-  color: var(--majalis-emerald-deep, #143F35) !important;
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep)) !important;
 }
 /* ── 3. نماذج البحث العامة ── */
 .page-search-form input,
@@ -1268,7 +1268,7 @@
 }
 .page-search-form input:focus,
 .page-search-input:focus {
-  border-color: var(--majalis-emerald, #226A56) !important;
+  border-color: var(--majalis-emerald, var(--mj-brand)) !important;
   box-shadow: 0 0 0 3px rgba(23,61,53,0.10) !important;
 }
 
@@ -1277,7 +1277,7 @@
   background: var(--msk-canvas, #FFFFFF) !important;
 }
 .qa-item__question {
-  color: var(--majalis-emerald-deep, #143F35) !important;
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep)) !important;
   font-family: var(--mj-font-display) !important;
 }
 .qa-item__answer {
@@ -1285,7 +1285,7 @@
 }
 .qa-item__category {
   background: rgba(23,61,53,0.08) !important;
-  color: var(--majalis-emerald-deep, #143F35) !important;
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep)) !important;
 }
 
 /* ── 5. صفحة الأحاديث ── */
@@ -1293,14 +1293,14 @@
   background: var(--msk-canvas, #FFFFFF) !important;
 }
 .hadith-card__title {
-  color: var(--majalis-emerald-deep, #143F35) !important;
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep)) !important;
   font-family: var(--mj-font-display) !important;
 }
 .hadith-card__chapter {
   color: var(--msk-text-2, #5C5C56) !important;
 }
 .hadith-card__text {
-  border-inline-start-color: var(--majalis-emerald, #226A56) !important;
+  border-inline-start-color: var(--majalis-emerald, var(--mj-brand)) !important;
   background: rgba(23,61,53,0.04) !important;
   color: var(--msk-text, #1A1A18) !important;
 }
@@ -1310,7 +1310,7 @@
   color: inherit !important;
 }
 .home-library-card h3 {
-  color: var(--majalis-emerald-deep, #143F35) !important;
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep)) !important;
   font-family: var(--mj-font-display) !important;
 }
 
@@ -1318,7 +1318,7 @@
 .fatwa-item__title,
 .fatwa-card__title,
 .fatwa-question {
-  color: var(--majalis-emerald-deep, #143F35) !important;
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep)) !important;
   font-family: var(--mj-font-display) !important;
 }
 
@@ -1332,21 +1332,21 @@
 }
 /* العداد والتصنيف */
 .adhkar-card__count {
-  color: var(--majalis-emerald-deep, #143F35) !important;
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep)) !important;
   font-family: var(--mj-font-seal) !important;
 }
 
 /* الفوائد: عنوان البطاقة */
 .fawaid-card .page-card-header p,
 .fawaid-card-title {
-  color: var(--majalis-emerald-deep, #143F35) !important;
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep)) !important;
   font-family: var(--mj-font-display) !important;
 }
 
 /* ── 9. صفحة القرآن ── */
 .quran-surah-header h2,
 .quran-surah-name {
-  color: var(--majalis-emerald-deep, #143F35) !important;
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep)) !important;
   font-family: var(--mj-font-display) !important;
 }
 
@@ -1355,7 +1355,7 @@
 .seerah-card__title,
 .prophet-card__name,
 .islamic-story-card__title {
-  color: var(--majalis-emerald-deep, #143F35) !important;
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep)) !important;
   font-family: var(--mj-font-display) !important;
 }
 
@@ -1366,7 +1366,7 @@
 .fiqh-research-title,
 .rulings-card__title,
 .ruling-card-title {
-  color: var(--majalis-emerald-deep, #143F35) !important;
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep)) !important;
   font-family: var(--mj-font-display) !important;
 }
 
@@ -1374,7 +1374,7 @@
 .sheikh-card__name,
 .sheikh-name,
 .institution-card__name {
-  color: var(--majalis-emerald-deep, #143F35) !important;
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep)) !important;
   font-family: var(--mj-font-display) !important;
 }
 
@@ -1382,7 +1382,7 @@
 .course-card__title,
 .learning-path-item__title,
 .annual-course-card__title {
-  color: var(--majalis-emerald-deep, #143F35) !important;
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep)) !important;
   font-family: var(--mj-font-display) !important;
 }
 
@@ -1392,7 +1392,7 @@
 .contact-section h2,
 .legal-page h2,
 .legal-page h3 {
-  color: var(--majalis-emerald-deep, #143F35) !important;
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep)) !important;
   font-family: var(--mj-font-display) !important;
 }
 
@@ -1401,7 +1401,7 @@
 .topic-chip,
 .tag-chip,
 .search-chip {
-  color: var(--majalis-emerald-deep, #143F35) !important;
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep)) !important;
   border-color: rgba(23,61,53,0.22) !important;
   background: rgba(23,61,53,0.06) !important;
 }
@@ -1409,7 +1409,7 @@
 .filter-chip--active,
 .topic-chip.is-active,
 .tag-chip--active {
-  background: var(--majalis-emerald, #226A56) !important;
+  background: var(--majalis-emerald, var(--mj-brand)) !important;
   color: #FFFFFF !important;
   border-color: transparent !important;
 }
@@ -1418,14 +1418,14 @@
 .calendar-event-title,
 .announcement-card__title,
 .announcement-title {
-  color: var(--majalis-emerald-deep, #143F35) !important;
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep)) !important;
   font-family: var(--mj-font-display) !important;
 }
 
 /* ── 17. page-card-header: خط El Messiri لعناوين البطاقات العامة ── */
 .page-card-header p {
   font-family: var(--mj-font-display) !important;
-  color: var(--majalis-emerald-deep, #143F35) !important;
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep)) !important;
 }
 
 /* ── 18. إصلاح ألوان page-shell h2 على الخلفية الجديدة ── */
@@ -1446,7 +1446,7 @@
 .tawheed-subsection h3,
 .home-section h2:not(.ds-section__title):not(.lessons-v2-section__title):not(.lessons-past-section__title):not(.cards-page-title):not(.search-page-title):not(.hadith-section-title):not(.fiqh-council-section-title):not(.qa-v2-section-title):not(.kuwait-lessons-section-title):not(.profile-section-title):not(.user-stats-section__title):not(.admin-section-title):not(.fm-section-title):not(.rp-section-title) {
   font-family: var(--mj-font-display) !important;
-  color: var(--majalis-emerald-deep, #143F35) !important;
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep)) !important;
 }
 
 /* ══════════════════════════════════════════════════════════════════
@@ -1460,19 +1460,19 @@
 .page-shell h2:not(.ds-page-header__title):not(.lessons-v2-section__title):not(.lessons-past-section__title):not(.hadith-section-title):not(.fiqh-council-section-title):not(.qa-v2-section-title):not(.kuwait-lessons-section-title):not(.profile-section-title):not(.user-stats-section__title):not(.admin-section-title):not(.fm-section-title):not(.rp-section-title):not(.ds-section__title):not(.sq-title):not(.jn-section__title):not(.jn-subtitle):not(.jn-related__title):not(.sw-related__title):not(.hj-section__title):not(.hj-related__title):not(.th-section__title):not(.th-related__title):not(.fa-related__title):not(.seerah-panel__title):not(.fq-ref__title):not(.sh-step__title),
 .page-shell h3:not(.ds-section__title):not(.qlive-player__name):not(.seerah-panel__events-title):not(.ikm-card__title):not(.amr-level__title) {
   font-family: var(--mj-font-display) !important;
-  color: var(--majalis-emerald-deep, #143F35) !important;
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep)) !important;
 }
 /* ── 3. خلفية الصفحة — ظل خفيف (مطابقة .page-shell أعلى الملف، لا تكرار) ── */
 
 /* ── 4. صفحة الأسئلة والأجوبة (خلفية/سؤال/جواب مطابقة أعلى الملف؛ الفئة أدناه فقط قيمتها مختلفة هنا) ── */
 .qa-item__category {
   background: rgba(23,61,53,0.08) !important;
-  color: var(--majalis-emerald, #226A56) !important;
+  color: var(--majalis-emerald, var(--mj-brand)) !important;
 }
 
 /* ── 5. صفحة الحديث (الخلفية/العنوان مطابقان أعلى الملف؛ الفروق أدناه فقط) ── */
 .hadith-card__chapter {
-  color: var(--majalis-emerald, #226A56) !important;
+  color: var(--majalis-emerald, var(--mj-brand)) !important;
 }
 .hadith-card__text {
   color: var(--msk-text, #1A1A18) !important;
@@ -1492,7 +1492,7 @@
   color: var(--msk-text, #1A1A18) !important;
 }
 .adhkar-card__head .adhkar-card__count {
-  color: var(--majalis-emerald-deep, #143F35) !important;
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep)) !important;
 }
 .fawaid-card .ds-card {
   background: var(--msk-canvas, #FFFFFF) !important;
@@ -1507,21 +1507,21 @@
 }
 .page-search-form input:focus,
 .page-search-input:focus {
-  border-color: var(--majalis-emerald, #226A56) !important;
+  border-color: var(--majalis-emerald, var(--mj-brand)) !important;
 }
 
 /* ── 9. شرائح الفلاتر / الوسوم ── */
 .filter-chip,
 .tag-chip,
 .topic-chip {
-  color: var(--majalis-emerald-deep, #143F35) !important;
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep)) !important;
   border-color: rgba(23,61,53,0.20) !important;
   background: rgba(23,61,53,0.06) !important;
 }
 .filter-chip--active,
 .tag-chip--active,
 .topic-chip--active {
-  background: var(--majalis-emerald, #226A56) !important;
+  background: var(--majalis-emerald, var(--mj-brand)) !important;
   color: #FFFFFF !important;
   border-color: transparent !important;
 }
@@ -1529,14 +1529,14 @@
 /* ── 10. القصص / السيرة ── */
 .story-card__title,
 .seerah-card__title {
-  color: var(--majalis-emerald-deep, #143F35) !important;
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep)) !important;
   font-family: var(--mj-font-display) !important;
 }
 
 /* ── 11. صفحة المجلس الفقهي ── */
 .fiqh-council-card__title,
 .fiqh-item__title {
-  color: var(--majalis-emerald-deep, #143F35) !important;
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep)) !important;
   font-family: var(--mj-font-display) !important;
 }
 
@@ -1549,7 +1549,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  background: linear-gradient(135deg, var(--majalis-emerald-deep, #143F35) 0%, var(--majalis-emerald, #226A56) 100%);
+  background: linear-gradient(135deg, var(--majalis-emerald-deep, var(--mj-brand-deep)) 0%, var(--majalis-emerald, var(--mj-brand)) 100%);
   color: #FFFFFF !important;
   text-decoration: none !important;
   border-radius: 999px;
@@ -1589,7 +1589,7 @@
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
-  background: linear-gradient(135deg, var(--majalis-emerald-deep, #143F35), var(--majalis-emerald, #226A56)) !important;
+  background: linear-gradient(135deg, var(--majalis-emerald-deep, var(--mj-brand-deep)), var(--majalis-emerald, var(--mj-brand))) !important;
   color: #FFFFFF !important;
   border: none !important;
   border-radius: 8px;
@@ -1764,12 +1764,12 @@ table th {
 
 /* ── تصحيح ألوان design-system.css على الخلفية الداكنة ── */
 .hcp-prayer-cell__time                        { color: var(--majalis-ink, #EDE9DD) !important; }
-.hcp-prayer-cell--next .hcp-prayer-cell__name { color: var(--majalis-emerald, #226A56) !important; }
-.hcp-prayer-cell--next .hcp-prayer-cell__time { color: var(--majalis-emerald, #226A56) !important; }
+.hcp-prayer-cell--next .hcp-prayer-cell__name { color: var(--majalis-emerald, var(--mj-brand)) !important; }
+.hcp-prayer-cell--next .hcp-prayer-cell__time { color: var(--majalis-emerald, var(--mj-brand)) !important; }
 .hcp-strip__countdown                         { color: var(--majalis-ink-muted, #9BA3B5) !important; }
-.home-about__title                            { color: var(--majalis-emerald, #226A56) !important; }
+.home-about__title                            { color: var(--majalis-emerald, var(--mj-brand)) !important; }
 .home-about__body                             { color: var(--majalis-ink-soft, #C9C5B8) !important; }
-.home-about__eyebrow                          { color: var(--majalis-brass, #226A56) !important; }
+.home-about__eyebrow                          { color: var(--majalis-brass, var(--mj-brand)) !important; }
 
 /* رابط عكسي من السيرة لقصص الأنبياء */
 
@@ -1783,11 +1783,11 @@ table th {
   display: inline-flex;
   align-items: center;
   gap: 0.35rem;
-  padding: 0.25rem 0.65rem;
-  border-radius: 20px;
-  background: rgba(23,61,53, 0.12);
-  border: 1px solid rgba(23,61,53, 0.25);
-  color: var(--majalis-emerald, #226A56);
+  padding: 0.35rem 0.7rem;
+  border-radius: var(--mj-r-sm);
+  background: var(--mj-brand);
+  border: 1px solid var(--mj-brand);
+  color: var(--mj-on-brand);
   font-size: 0.78rem;
   font-weight: 600;
   text-decoration: none;
@@ -1796,25 +1796,26 @@ table th {
   cursor: pointer;
 }
 .navbar-prayer-chip:hover {
-  background: rgba(23,61,53, 0.2);
-  border-color: rgba(23,61,53, 0.4);
+  filter: brightness(0.95);
   text-decoration: none;
 }
 .navbar-prayer-chip__name {
   font-weight: 700;
+  color: var(--mj-on-brand);
 }
 .navbar-prayer-chip__hms {
   font-variant-numeric: tabular-nums;
-  opacity: 0.8;
+  opacity: 0.9;
   font-size: 0.72rem;
   direction: ltr;
+  color: var(--mj-on-brand);
 }
 /* وضع الليل */
 [data-theme="dark"] .navbar-prayer-chip,
 .dark .navbar-prayer-chip {
-  background: rgba(23,61,53, 0.18);
-  border-color: rgba(23,61,53, 0.35);
-  color: #5ECFA8;
+  background: var(--mj-brand);
+  border-color: var(--mj-brand);
+  color: var(--mj-on-brand);
 }
 /* ══ نهاية عداد الصلاة ══════════════════════════════════════════════════════ */
 
@@ -1841,7 +1842,7 @@ table th {
   height: 36px;
   border-radius: 50%;
   background: rgba(23,61,53, 0.12);
-  color: #226A56;
+  color: var(--mj-brand);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -1865,7 +1866,7 @@ table th {
 .hcw-card__bar span {
   display: block;
   height: 100%;
-  background: #226A56;
+  background: var(--mj-brand);
   border-radius: 2px;
   transition: width 0.3s;
 }
@@ -1886,6 +1887,6 @@ table th {
 /* ══ نهاية ودجت استمر ══════════════════════════════════════════════════════ */
 
 .sch-card__actions { display: flex; align-items: center; justify-content: space-between; margin-top: 1rem; }
-.sch-card__profile-link { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.85rem; font-weight: 600; color: #226A56; text-decoration: none; }
+.sch-card__profile-link { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.85rem; font-weight: 600; color: var(--mj-brand); text-decoration: none; }
 .sch-card__profile-link:hover { text-decoration: underline; }
 

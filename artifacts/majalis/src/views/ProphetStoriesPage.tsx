@@ -16,14 +16,14 @@ type Citation = { surah: string; ayahs: string; note: string };
 // ── Palette & Helpers ────────────────────────────────────────────────────────
 
 /* تنوّع ضمن هوية المنصة فقط: زمرد / فيروز / زيتوني / بحري-زمردي.
-   أولو العزم يبقون على #143F35 مع لمسة نحاسية (--prophet-accent) للتميّز. */
+   أولو العزم يبقون على var(--mj-brand-deep) مع لمسة نحاسية (--prophet-accent) للتميّز. */
 const PROPHET_HUE: Record<string, string> = {
   adam: "#3D6B52",
   idris: "#2A6B68",
   nuh: "#0E6B58",
   hud: "#4A6B3A",
   salih: "#3A6450",
-  ibrahim: "#143F35",
+  ibrahim: "var(--mj-brand-deep)",
   lut: "#1E6A48",
   ismail: "#1A6B40",
   "is-haq": "#2E6058",
@@ -31,18 +31,18 @@ const PROPHET_HUE: Record<string, string> = {
   yusuf: "#1B6B4A",
   ayyub: "#3A5C48",
   shuayb: "#17605A",
-  musa: "#143F35",
+  musa: "var(--mj-brand-deep)",
   harun: "#1A5C4A",
   "dhul-kifl": "#2C5044",
   dawud: "#254A3C",
-  sulayman: "#143F35",
+  sulayman: "var(--mj-brand-deep)",
   ilyas: "#2E5542",
   "al-yasa": "#186650",
   yunus: "#0F5C60",
   zakariyya: "#1A5A42",
   yahya: "#165840",
   isa: "#164A58",
-  muhammad: "#143F35",
+  muhammad: "var(--mj-brand-deep)",
 };
 
 /** لمسة ثانوية (نحاسي أو فيروزي فاتح) — ضمن هوية المنصة */

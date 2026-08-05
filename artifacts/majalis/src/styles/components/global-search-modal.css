@@ -260,7 +260,7 @@
   background: var(--gsm-rb-bg);
   color: var(--gsm-rb-color);
 }
-.gsm-highlight { background: rgba(31,77,58,0.10); color: #143F35; border-radius: 2px; padding: 0 2px; }
+.gsm-highlight { background: rgba(31,77,58,0.10); color: var(--mj-brand-deep); border-radius: 2px; padding: 0 2px; }
 .gsm-skeleton { padding: 0.5rem 0; }
 .gsm-skel-row {
   display: flex;

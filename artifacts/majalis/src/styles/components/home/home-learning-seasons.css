@@ -3,12 +3,12 @@
 .ds-skeleton--card { height: 6rem; border-radius: var(--ds-radius-lg); }
 
 /* lsw — Learning Seasons Widget — per-month color tokens */
-.lsw--month-1  { --lsw-color: #143F35; --lsw-dot-color: #143F35; }
-.lsw--month-3  { --lsw-color: #0F766E; --lsw-dot-color: #0F766E; }
+.lsw--month-1  { --lsw-color: var(--mj-brand-deep); --lsw-dot-color: var(--mj-brand-deep); }
+.lsw--month-3  { --lsw-color: var(--mj-brand); --lsw-dot-color: var(--mj-brand); }
 .lsw--month-7  { --lsw-color: #1e4d8a; --lsw-dot-color: #1e4d8a; }
 .lsw--month-8  { --lsw-color: #5B4B8A; --lsw-dot-color: #5B4B8A; }
-.lsw--month-9  { --lsw-color: var(--majalis-emerald-deep, #143F35); --lsw-dot-color: var(--majalis-emerald-deep, #143F35); }
-.lsw--month-12 { --lsw-color: var(--majalis-emerald, #226A56);     --lsw-dot-color: var(--majalis-emerald, #226A56); }
+.lsw--month-9  { --lsw-color: var(--majalis-emerald-deep, var(--mj-brand-deep)); --lsw-dot-color: var(--majalis-emerald-deep, var(--mj-brand-deep)); }
+.lsw--month-12 { --lsw-color: var(--majalis-emerald, var(--mj-brand));     --lsw-dot-color: var(--majalis-emerald, var(--mj-brand)); }
 .lsw-featured { border-color: var(--lsw-color, var(--majalis-emerald)); }
 .lsw-featured__name { color: var(--lsw-color, var(--majalis-emerald)); }
 .lsw-featured__now { background: var(--lsw-color, var(--majalis-emerald)); }
@@ -38,11 +38,11 @@
   letter-spacing: 0;
 }
 .religious-kind-badge--verified_fact {
-  background: color-mix(in srgb, #143F35 12%, white);
-  color: #143F35;
+  background: color-mix(in srgb, var(--mj-brand-deep) 12%, white);
+  color: var(--mj-brand-deep);
 }
 .religious-kind-badge--recommended_deed {
-  background: color-mix(in srgb, #226A56 14%, white);
+  background: color-mix(in srgb, var(--mj-brand) 14%, white);
   color: #145A45;
 }
 .religious-kind-badge--personal_suggestion {

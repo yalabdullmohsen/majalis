@@ -61,6 +61,7 @@ const ASSERTIONS = [
   // ودجتات الحديث/المسابقة/المكتبة التي أصبحت اختيارية من شاشة التخصيص.
   // لا تتغير عتبات WCAG؛ تغيرت فقط أهداف DOM لتطابق البنية المنشورة فعليًا.
   { route: "/", selector: ".m2030-btn--primary", mode: "light", min: 4.5 },
+  { route: "/", selector: ".m2030-btn--primary", mode: "dark", min: 4.5 },
   { route: "/", selector: ".m2030-band__title", mode: "light", min: 4.5 },
   { route: "/", selector: ".m2030-feature__title", mode: "light", min: 4.5 },
   // ── تكليف ثانٍ (2026-07-19، بند 7): عناوين "شارة" أقسام (نص أبيض/خلفية
@@ -91,6 +92,14 @@ const ASSERTIONS = [
   // .twh-hub-card__current-tag اكتسب خلفية داكنة بالخطأ (يطابق [class*="-card"]
   // اسميًا رغم أنه شارة صغيرة لا حاوية)، فتطابق لون نصه الخاص تقريبًا.
   { route: "/tawhid", selector: ".twh-hub-card__current-tag", mode: "dark", min: 3 },
+  { route: "/quran-knowledge", selector: ".hub-card__title", mode: "light", min: 3 },
+  { route: "/quran-knowledge", selector: ".hub-card__desc", mode: "light", min: 4.5 },
+  { route: "/quran-knowledge", selector: ".hub-card__title", mode: "dark", min: 3 },
+  { route: "/fiqh", selector: ".hub-card__title", mode: "light", min: 3 },
+  { route: "/quran/surah-stories/1", selector: ".mj-btn", mode: "light", min: 4.5 },
+  { route: "/quran/surah-stories/1", selector: ".mj-btn", mode: "dark", min: 4.5 },
+  { route: "/quran/surah-stories/1", selector: ".sq-header", mode: "light", min: 4.5 },
+  { route: "/quran/surah-stories/1", selector: ".sq-header", mode: "dark", min: 4.5 },
   // .notif-row__label و.ads-sunrise-time: لون نص ثابت لا يراعي السمة.
   { route: "/notification-settings", selector: ".notif-row__label", mode: "dark", min: 4.5 },
   { route: "/adhan-settings", selector: ".ads-sunrise-time", mode: "dark", min: 4.5 },

@@ -12,7 +12,7 @@
   padding-right: 1rem;
 }
 .sch-hero {
-  background: linear-gradient(160deg, #143F35, #143F35);
+  background: linear-gradient(160deg, var(--mj-brand-deep), var(--mj-brand-deep));
   margin: 0 -1rem;
   padding: 2.5rem 2rem 2rem;
   text-align: center;
@@ -70,7 +70,7 @@
   font-size: 0.9rem;
   outline: none;
 }
-.sch-search-input:focus { border-color: #143F35; }
+.sch-search-input:focus { border-color: var(--mj-brand-deep); }
 .sch-filters {
   display: flex;
   flex-direction: column;
@@ -94,11 +94,11 @@
   cursor: pointer;
   transition: all 0.12s;
 }
-.sch-filter-btn:hover { border-color: #143F35; color: #143F35; }
+.sch-filter-btn:hover { border-color: var(--mj-brand-deep); color: var(--mj-brand-deep); }
 .sch-filter-btn--active {
-  background: #143F35 !important;
+  background: var(--mj-brand-deep) !important;
   color: #FFFFFF !important;
-  border-color: #143F35 !important;
+  border-color: var(--mj-brand-deep) !important;
 }
 .sch-results-count {
   font-size: 0.8rem;
@@ -133,7 +133,7 @@
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #143F35, #226A56);
+  background: linear-gradient(135deg, var(--mj-brand-deep), var(--mj-brand));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -149,7 +149,7 @@
 .sch-card__name {
   font-size: 1.05rem;
   font-weight: 700;
-  color: var(--elite-forest, #052E16);
+  color: var(--elite-forest, var(--mj-brand-deep));
   margin: 0 0 0.15rem;
 }
 .sch-card__fullname {
@@ -163,7 +163,7 @@
   padding: 0.12rem 0.4rem;
   border-radius: var(--ds-radius-xl);
   background: rgba(23,61,53,0.08);
-  color: #143F35;
+  color: var(--mj-brand-deep);
   border: 1px solid rgba(23,61,53,0.12);
 }
 .sch-tag--madhhab {
@@ -181,7 +181,7 @@
 .sch-card__era {
   font-size: 0.8rem;
   font-weight: 700;
-  color: #143F35;
+  color: var(--mj-brand-deep);
   background: rgba(23,61,53,0.08);
   padding: 0.15rem 0.5rem;
   border-radius: var(--ds-radius-xl);
@@ -210,8 +210,8 @@
 .sch-card__quote {
   font-family: var(--font-body);
   font-size: 0.95rem;
-  color: #143F35;
-  border-right: 3px solid #143F35;
+  color: var(--mj-brand-deep);
+  border-right: 3px solid var(--mj-brand-deep);
   padding: 0.5rem 0.85rem;
   margin: 0;
   display: flex;
@@ -221,11 +221,11 @@
   border-radius: 0 0.5rem 0.5rem 0;
   line-height: 1.7;
 }
-.sch-card__quote-icon { color: #143F35; flex-shrink: 0; margin-top: 0.2rem; }
+.sch-card__quote-icon { color: var(--mj-brand-deep); flex-shrink: 0; margin-top: 0.2rem; }
 .sch-card__works-title {
   font-size: 0.82rem;
   font-weight: 700;
-  color: var(--elite-forest, #052E16);
+  color: var(--elite-forest, var(--mj-brand-deep));
   display: flex;
   align-items: center;
   gap: 0.35rem;
@@ -255,7 +255,7 @@
 .sch-card__close {
   background: none;
   border: 1px solid rgba(23,61,53,0.2);
-  color: #143F35;
+  color: var(--mj-brand-deep);
   font-size: 0.78rem;
   padding: 0.35rem 0.85rem;
   border-radius: var(--ds-radius-xl);
@@ -277,7 +277,7 @@
 .sch-empty button {
   background: none;
   border: 1px solid rgba(23,61,53,0.3);
-  color: #143F35;
+  color: var(--mj-brand-deep);
   padding: 0.45rem 1rem;
   border-radius: var(--ds-radius-xl);
   cursor: pointer;
@@ -297,7 +297,7 @@
   gap: 0.4rem;
   background: #FFFFFF;
   border: 1.5px solid rgba(23,61,53,0.2);
-  color: #143F35;
+  color: var(--mj-brand-deep);
   font-size: 0.88rem;
   font-weight: 600;
   padding: 0.5rem 1rem;
@@ -314,7 +314,7 @@
 /* روابط المؤلفات ↔ المكتبة */
 .sch-card__works-list a,
 .sch-profile-works a {
-  color: var(--majalis-emerald, #143F35);
+  color: var(--majalis-emerald, var(--mj-brand-deep));
   text-decoration: underline;
   text-underline-offset: 2px;
 }
@@ -350,7 +350,7 @@
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #226A56, #143F35);
+  background: linear-gradient(135deg, var(--mj-brand), var(--mj-brand-deep));
   display: flex;
   align-items: center;
   justify-content: center;
@@ -377,7 +377,7 @@
 .sch-profile-section__title {
   font-size: 1.05rem;
   font-weight: 700;
-  color: #226A56;
+  color: var(--mj-brand);
   margin-bottom: 0.75rem;
   display: flex;
   align-items: center;
@@ -386,13 +386,13 @@
 .sch-profile-bio { line-height: 1.9; }
 
 .sch-profile-quote {
-  border-inline-start: 4px solid #226A56;
+  border-inline-start: 4px solid var(--mj-brand);
   padding: 1rem 1.25rem;
   margin: 1.5rem 0;
   background: rgba(23,61,53,0.06);
   border-radius: 0 0.5rem 0.5rem 0;
 }
-.sch-profile-quote__icon { color: #226A56; margin-bottom: 0.5rem; }
+.sch-profile-quote__icon { color: var(--mj-brand); margin-bottom: 0.5rem; }
 .sch-profile-quote p { font-size: 1.05rem; line-height: 1.8; font-style: normal; }
 .sch-profile-quote footer { font-size: 0.82rem; opacity: 0.65; margin-top: 0.5rem; }
 
@@ -418,7 +418,7 @@
   font-size: 0.88rem;
   font-weight: 600;
   text-decoration: none;
-  color: #226A56;
+  color: var(--mj-brand);
   padding: 0.5rem 0.75rem;
   border: 1px solid rgba(23,61,53,0.3);
   border-radius: var(--ds-radius);

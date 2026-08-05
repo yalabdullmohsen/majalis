@@ -18,7 +18,7 @@
   align-items: center;
   gap: 0.4rem;
   padding: 0.5rem 1.1rem;
-  background: #226A56;
+  background: var(--mj-brand);
   color: #fff;
   border: none;
   border-radius: var(--ds-radius);
@@ -27,7 +27,7 @@
   cursor: pointer;
   transition: background .15s;
 }
-.adv-error-state__retry:hover { background: #143F35; }
+.adv-error-state__retry:hover { background: var(--mj-brand-deep); }
 
 /* ── نُقل إلى styles/components/scholarly-trust.css ── */
 /* ── نُقل إلى styles/components/sensitive-content.css ── */
@@ -40,7 +40,7 @@ a:focus-visible,
 input:focus-visible,
 textarea:focus-visible,
 select:focus-visible {
-  outline: 2.5px solid #226A56;
+  outline: 2.5px solid var(--mj-brand);
   outline-offset: 2px;
   border-radius: 4px;
 }
@@ -62,10 +62,10 @@ select:focus-visible {
 
 /* Fatwa content type badge */
 
-.ftw-type-badge--fatwa   { background: rgba(23,61,53,.1); color: #226A56; }
-.ftw-type-badge--article { background: rgba(59,130,246,.1); color: var(--brand, #226A56); }
+.ftw-type-badge--fatwa   { background: rgba(23,61,53,.1); color: var(--mj-brand); }
+.ftw-type-badge--article { background: rgba(59,130,246,.1); color: var(--brand, var(--mj-brand)); }
 .ftw-type-badge--general { background: rgba(107,114,128,.1); color: #6b7280; }
-.ftw-type-badge--scholar { background: rgba(139,92,246,.1); color: var(--brand, #226A56); }
+.ftw-type-badge--scholar { background: rgba(139,92,246,.1); color: var(--brand, var(--mj-brand)); }
 
 /* AI disclaimer bar in research pages */
 .ai-disclaimer-bar {
@@ -73,7 +73,7 @@ select:focus-visible {
   align-items: flex-start;
   gap: 0.6rem;
   background: rgba(23,61,53,.05);
-  border-right: 3px solid #226A56;
+  border-right: 3px solid var(--mj-brand);
   padding: 0.7rem 0.9rem;
   font-size: 0.79rem;
   color: var(--clr-ink-soft, #6b7280);
@@ -81,6 +81,6 @@ select:focus-visible {
   margin-top: 1rem;
   direction: rtl;
 }
-.ai-disclaimer-bar__icon { color: #226A56; flex-shrink: 0; margin-top: 0.1rem; }
+.ai-disclaimer-bar__icon { color: var(--mj-brand); flex-shrink: 0; margin-top: 0.1rem; }
 html[data-theme="dark"] .ai-disclaimer-bar { background: rgba(23,61,53,.1); }
 

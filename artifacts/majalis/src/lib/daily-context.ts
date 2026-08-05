@@ -67,23 +67,23 @@ interface HijriEvent {
 }
 
 const HIJRI_EVENTS: HijriEvent[] = [
-  { day: 1,  month: 1,  label: "بداية السنة الهجرية",       color: "#226A56" },
+  { day: 1,  month: 1,  label: "بداية السنة الهجرية",       color: "var(--mj-brand)" },
   { day: 10, month: 1,  label: "يوم عاشوراء",              color: "#5B21B6" },
-  { day: 12, month: 3,  label: "ذكرى المولد النبوي الشريف", color: "#0F766E" },
+  { day: 12, month: 3,  label: "ذكرى المولد النبوي الشريف", color: "var(--mj-brand)" },
   { day: 27, month: 7,  label: "ليلة الإسراء والمعراج",    color: "#4338CA" },
   { day: 15, month: 8,  label: "ليلة النصف من شعبان",      color: "#7C3AED" },
   { day: 1,  month: 9,  label: "بداية شهر رمضان المبارك",  color: "#059669" },
   { day: 27, month: 9,  label: "ليلة القدر المرتقبة",      color: "#DC2626" },
   { day: 1,  month: 10, label: "عيد الفطر المبارك",         color: "#D97706" },
-  { day: 9,  month: 12, label: "يوم عرفة المبارك",          color: "#065F46" },
+  { day: 9,  month: 12, label: "يوم عرفة المبارك",          color: "var(--mj-brand)" },
   { day: 10, month: 12, label: "عيد الأضحى المبارك",        color: "#B45309" },
 ];
 
 // ── أيام الأسبوع المميّزة ────────────────────────────────────────────────────
 
 const DAY_EVENTS: Partial<Record<DayOfWeek, { label: string; color: string }>> = {
-  friday:   { label: "يوم الجمعة المبارك", color: "#226A56" },
-  saturday: { label: "بداية أسبوع مثمر بإذن الله",             color: "#143F35" },
+  friday:   { label: "يوم الجمعة المبارك", color: "var(--mj-brand)" },
+  saturday: { label: "بداية أسبوع مثمر بإذن الله",             color: "var(--mj-brand-deep)" },
   monday:   { label: "يوم الإثنين — يوم صيام مستحب",           color: "#0F5132" },
   thursday: { label: "يوم الخميس — يوم صيام مستحب",            color: "#0F5132" },
 };
@@ -103,10 +103,10 @@ const TIME_SUGGESTIONS: Record<TimeOfDay, string> = {
 // ── الألوان الافتراضية حسب الوقت ────────────────────────────────────────────
 
 const TIME_COLORS: Record<TimeOfDay, string> = {
-  fajr:    "#143F35",
-  duha:    "#226A56",
-  zuhr:    "#0F766E",
-  asr:     "#226A56",
+  fajr:    "var(--mj-brand-deep)",
+  duha:    "var(--mj-brand)",
+  zuhr:    "var(--mj-brand)",
+  asr:     "var(--mj-brand)",
   maghrib: "#B45309",
   isha:    "#5B21B6",
   layl:    "#1F2937",

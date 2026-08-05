@@ -50,9 +50,9 @@ html {
 :root {
   /* أزواج لون مضمونة التباين (WCAG 2.2 AA). القاعدة: لا تخلط مقدمة من عائلة مع خلفية من أخرى.
      تُعرَّف هنا فقط، ولا يجوز لأي كتلة أخرى إعادة تعريفها — وإلا عاد «الأخضر على الأخضر». */
-  --color-accent-fg-on-soft: #226A56;  /* على --color-accent-soft-bg = 5.58:1 ✓ */
+  --color-accent-fg-on-soft: var(--mj-brand);  /* على --color-accent-soft-bg = 5.58:1 ✓ */
   --color-accent-soft-bg:    #E6F2EC;
-  --color-success-fg:        #15803D;  /* على #DCFCE7 = 4.57:1 ✓ (بدل #16a34a = 3.00:1 ✗) */
+  --color-success-fg:        var(--mj-brand);  /* على #DCFCE7 = 4.57:1 ✓ (بدل #16a34a = 3.00:1 ✗) */
   --color-success-bg:        #DCFCE7;
   --color-on-dark:           #FFFFFF;
 
@@ -106,11 +106,11 @@ html {
   --icon-nav-size:     20px;
   --icon-card-size:    24px;
 
-  --clr-primary:       var(--emerald-500, #143F35);
-  --clr-primary-deep:  var(--emerald-deep, #143F35);
-  --clr-primary-hov:   var(--emerald-600, #226A56);
-  --clr-primary-act:   var(--emerald-700, #143F35);
-  --clr-primary-soft:  #F0F7F4;
+  --clr-primary:       var(--emerald-500, var(--mj-brand-deep));
+  --clr-primary-deep:  var(--emerald-deep, var(--mj-brand-deep));
+  --clr-primary-hov:   var(--emerald-600, var(--mj-brand));
+  --clr-primary-act:   var(--emerald-700, var(--mj-brand-deep));
+  --clr-primary-soft:  var(--mj-brand-soft);
   --clr-primary-subtle:#FAFAF8;
   --clr-bg:            var(--ivory, #FAFAF8);
   --clr-surface:       #FFFFFF;
@@ -124,7 +124,7 @@ html {
   --clr-text-on-pri:   #FFFFFF;
   --clr-accent:        var(--sand, #B8963F);
   --clr-accent-soft:   var(--sand-soft, #FAF3E0);
-  --clr-emerald:       var(--emerald-500, #143F35);
+  --clr-emerald:       var(--emerald-500, var(--mj-brand-deep));
   --clr-ink:           var(--ink, #1A1A18);
   --clr-ink-soft:      #5C5C56;
   --clr-ink-muted:     #5C5C56;
@@ -134,15 +134,15 @@ html {
   --emerald-100: #D7DEDA;
   --emerald-200: #AEBEB6;
   --emerald-300: #6E8C81;
-  --emerald-400: #226A56;
-  --emerald-500: #143F35;  /* اللون الأساسي — إعادة تصميم الهوية v3 */
-  --emerald-600: #226A56;  /* Hover — أساسي فاتح */
-  --emerald-700: #143F35;
-  --emerald-800: #143F35;
-  --emerald-900: #143F35;
+  --emerald-400: var(--mj-brand);
+  --emerald-500: var(--mj-brand-deep);  /* اللون الأساسي — إعادة تصميم الهوية v3 */
+  --emerald-600: var(--mj-brand);  /* Hover — أساسي فاتح */
+  --emerald-700: var(--mj-brand-deep);
+  --emerald-800: var(--mj-brand-deep);
+  --emerald-900: var(--mj-brand-deep);
   --emerald-950: #0C211C;
   /* Deep Emerald للبطل والعناوين الكبيرة */
-  --emerald-deep: #143F35;
+  --emerald-deep: var(--mj-brand-deep);
 
   /* ── عاج دافئ وحبر ── */
   --ivory:      #FAFAF8;  /* خلفية عامة — عاجي دافئ */
@@ -244,7 +244,7 @@ html {
   --text-base:           var(--msk-text,     #1A1A18);
   --text-body:           var(--msk-text-2,   #5C5C56);
   --text-muted:          var(--msk-text-3,   #5C5C56);
-  --majalis-accent:      var(--msk-gold,     #143F35);
+  --majalis-accent:      var(--msk-gold,     var(--mj-brand-deep));
   --majalis-surface-2:   var(--msk-canvas-1, #FAFAF8);
   --majalis-surface-hover: rgba(23,61,53,0.04);
   --majalis-surface-muted: var(--msk-canvas-1, #FAFAF8);
@@ -331,8 +331,8 @@ html {
   --msk-canvas-1:      #FFFFFF;
   --msk-canvas-2:      #EFE9DC;
   --msk-canvas-glass:  rgba(247,244,237,.95);
-  --msk-gold:          #143F35;
-  --msk-gold-deep:     #143F35;
+  --msk-gold:          var(--mj-brand-deep);
+  --msk-gold-deep:     var(--mj-brand-deep);
   --msk-gold-dim:      rgba(23,61,53,.12);
   --msk-gold-glow:     rgba(23,61,53,.15);
   --msk-gold-border:   rgba(23,61,53,.22);
@@ -341,7 +341,7 @@ html {
   --msk-text:          #1A1A18;
   --msk-text-2:        #5C5C56;
   --msk-text-3:        #5C5C56;
-  --msk-green:         #143F35;
+  --msk-green:         var(--mj-brand-deep);
   --msk-red:           #B44A4A;
   --msk-red-dim:       rgba(180,74,74,.08);
   --msk-border:        #E8E7E2;
@@ -360,8 +360,8 @@ html {
   --majalis-parchment-deep:#EFE9DC;
   --majalis-panel:         #FFFFFF;
   --majalis-panel-raised:  #F4F4F1;
-  --majalis-emerald:       #143F35;
-  --majalis-emerald-deep:  #143F35;
+  --majalis-emerald:       var(--mj-brand-deep);
+  --majalis-emerald-deep:  var(--mj-brand-deep);
   --majalis-emerald-muted: rgba(23,61,53,.10);
   --majalis-emerald-soft:  #EEF1EC;
   --majalis-blue:          #1E7A9A;
@@ -384,8 +384,8 @@ html {
   --majalis-gold:          #B8963F;
   --majalis-gold-light:    rgba(184,148,82,.18);
   --majalis-ivory:         #FFFFFF;
-  --v2-green:        #143F35;
-  --v2-green-deep:   #143F35;
+  --v2-green:        var(--mj-brand-deep);
+  --v2-green-deep:   var(--mj-brand-deep);
   --v2-green-soft:   rgba(23,61,53,.06);
   --v2-green-mid:    rgba(23,61,53,.40);
   --v2-gold:         #B8963F;
@@ -428,7 +428,7 @@ html[data-theme="dark"] {
   --msk-red:           #EF9898;
   --msk-red-dim:       rgba(239,152,152,.12);
   --msk-border:        rgba(92,196,154,.10);
-  --msk-border-strong: #143F35;
+  --msk-border-strong: var(--mj-brand-deep);
   --msk-divider:       rgba(255,255,255,.05);
   --msk-shadow-sm:     0 1px 2px rgba(0,0,0,.40);
   --msk-shadow:        0 4px 12px rgba(0,0,0,.45), 0 1px 3px rgba(0,0,0,.35);
@@ -459,7 +459,7 @@ html[data-theme="dark"] {
   --majalis-success:       #5CC49A;
   --majalis-warning:       #5CC49A;
   --majalis-line:          rgba(92,196,154,.12);
-  --majalis-line-strong:   #143F35;
+  --majalis-line-strong:   var(--mj-brand-deep);
   --majalis-shadow:        0 4px 12px rgba(0,0,0,.45), 0 1px 3px rgba(0,0,0,.35);
   --majalis-shadow-sm:     0 1px 2px rgba(0,0,0,.40);
   --majalis-shadow-lg:     0 12px 32px rgba(0,0,0,.55);
@@ -649,7 +649,7 @@ img:not(.navbar-logo) {
   border: 1px solid rgba(24,54,42,0.35);
   border-radius: var(--ds-radius-xl);
   background: rgba(31,77,58,0.08);
-  color: #143F35;
+  color: var(--mj-brand-deep);
   padding: var(--ds-space-4);
   display: grid;
   gap: 0.35rem;
@@ -661,7 +661,7 @@ img:not(.navbar-logo) {
   border: 1px solid rgba(24,54,42,0.4);
   border-radius: var(--ds-radius);
   background: rgba(24,54,42,0.05);
-  color: #143F35;
+  color: var(--mj-brand-deep);
   padding: 0 0.85rem;
   font-family: inherit;
   font-weight: 800;
@@ -1001,7 +1001,7 @@ input, textarea, select { font-family: inherit; }
   border: 0;
   border-radius: 0.95rem;
   color: #fff;
-  background: var(--msk-gold, #143F35);
+  background: var(--msk-gold, var(--mj-brand-deep));
   font-weight: 800;
   font-size: 0.95rem;
   padding: 0.95rem 1.6rem;
@@ -1835,7 +1835,7 @@ input, textarea, select { font-family: inherit; }
   color: var(--majalis-parchment);
   background:
     radial-gradient(circle at 12% 16%, rgba(31, 77, 58, 0.25), transparent 18rem),
-    linear-gradient(135deg, #143F35, var(--majalis-emerald-deep));
+    linear-gradient(135deg, var(--mj-brand-deep), var(--majalis-emerald-deep));
   box-shadow: var(--majalis-shadow);
 }
 
@@ -3497,7 +3497,7 @@ input, textarea, select { font-family: inherit; }
 }
 
 .kuwait-tab--active {
-  background: var(--msk-gold, #143F35);
+  background: var(--msk-gold, var(--mj-brand-deep));
   color: #fff;
   border-color: transparent;
   font-weight: 700;
@@ -3511,7 +3511,7 @@ input, textarea, select { font-family: inherit; }
   padding: 0.05rem 0.4rem;
   border-radius: 999px;
   background: rgba(31, 77, 58, 0.12);
-  color: var(--msk-gold, #143F35);
+  color: var(--msk-gold, var(--mj-brand-deep));
 }
 .kuwait-tab--active .kuwait-tab__soon {
   background: rgba(255, 255, 255, 0.22);
@@ -3683,7 +3683,7 @@ input, textarea, select { font-family: inherit; }
 }
 
 html[data-theme="dark"] .search-suggestions-panel {
-  background: var(--color-surface, #143F35);
+  background: var(--color-surface, var(--mj-brand-deep));
   border-color: rgba(255, 255, 255, 0.14);
   box-shadow: 0 16px 40px rgba(0, 0, 0, 0.32);
 }
@@ -4185,7 +4185,7 @@ html[data-theme="dark"] .search-suggestions-panel {
 .lesson-unified-card__category {
   font-size: var(--ds-text-xs);
   font-weight: 700;
-  color: var(--majalis-emerald, #143F35);
+  color: var(--majalis-emerald, var(--mj-brand-deep));
 }
 
 .lesson-unified-card__status {
@@ -4194,14 +4194,14 @@ html[data-theme="dark"] .search-suggestions-panel {
   padding: 0.18rem 0.5rem;
   border-radius: 999px;
   background: rgba(31,77,58,0.10);
-  color: var(--majalis-emerald, #143F35);
+  color: var(--majalis-emerald, var(--mj-brand-deep));
   border: 1px solid rgba(31,77,58,0.15);
   white-space: nowrap;
 }
 
 .lesson-unified-card--today .lesson-unified-card__status {
-  background: var(--majalis-emerald, #143F35);
-  border-color: var(--majalis-emerald, #143F35);
+  background: var(--majalis-emerald, var(--mj-brand-deep));
+  border-color: var(--majalis-emerald, var(--mj-brand-deep));
   color: #fff;
 }
 .lesson-unified-card--today .lesson-unified-card__header {
@@ -4229,7 +4229,7 @@ html[data-theme="dark"] .search-suggestions-panel {
   margin: 0;
   font-size: 0.88rem;
   font-weight: 700;
-  color: var(--majalis-emerald, #143F35);
+  color: var(--majalis-emerald, var(--mj-brand-deep));
 }
 
 .lesson-unified-card__meta {
@@ -4295,13 +4295,13 @@ html[data-theme="dark"] .search-suggestions-panel {
 .lesson-unified-card__btn:active { transform: scale(0.97); }
 
 .lesson-unified-card__btn--primary {
-  background: var(--majalis-emerald, #143F35);
+  background: var(--majalis-emerald, var(--mj-brand-deep));
   color: #fff;
-  border-color: var(--majalis-emerald, #143F35);
+  border-color: var(--majalis-emerald, var(--mj-brand-deep));
   box-shadow: 0 2px 8px rgba(31,77,58,0.25);
 }
 .lesson-unified-card__btn--primary:hover {
-  background: var(--majalis-emerald-deep, #143F35);
+  background: var(--majalis-emerald-deep, var(--mj-brand-deep));
   box-shadow: 0 4px 14px rgba(31,77,58,0.35);
 }
 
@@ -4699,7 +4699,7 @@ body:not(.mobile-nav-body-lock) .mobile-nav-layer {
   align-items: center;
   gap: 0.55rem;
   text-decoration: none;
-  color: var(--majalis-emerald-deep, #143F35);
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep));
   min-width: 0;
 }
 
@@ -4714,7 +4714,7 @@ body:not(.mobile-nav-body-lock) .mobile-nav-layer {
   font-family: var(--font-body);
   font-size: 1.2rem;
   font-weight: 700;
-  color: var(--majalis-emerald-deep, #143F35);
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep));
   letter-spacing: normal;
   white-space: nowrap;
 }
@@ -4782,7 +4782,7 @@ body:not(.mobile-nav-body-lock) .mobile-nav-layer {
   background: var(--elite-white, #FAFAF8);
   border-color: var(--elite-border-2, rgba(24,54,42,0.15));
   box-shadow: var(--elite-shadow-sm, 0 2px 4px rgba(18,32,25,0.06));
-  color: var(--elite-forest, #143F35);
+  color: var(--elite-forest, var(--mj-brand-deep));
 }
 .navbar-menu-btn:active { transform: scale(0.97); }
 
@@ -5070,7 +5070,7 @@ body.mobile-nav-body-lock {
   border: 1px solid rgba(24,54,42,0.35);
   border-radius: var(--ds-radius-lg);
   background: rgba(31,77,58,0.08);
-  color: #143F35;
+  color: var(--mj-brand-deep);
   padding: var(--ds-space-4);
   margin-bottom: 1rem;
 }
@@ -5081,7 +5081,7 @@ body.mobile-nav-body-lock {
 }
 .quran-page--night { background: #1a1a1a; color: #eee; }
 .quran-page--night .ui-card { background: #242424; color: #eee; border-color: #333; }
-.quran-page--night .quran-science-card { background: #202b25; border-color: #226A56; }
+.quran-page--night .quran-science-card { background: #202b25; border-color: var(--mj-brand); }
 
 .radio-grid { display: grid; gap: 0.65rem; margin-bottom: 1rem; }
 .radio-card { padding: var(--ds-space-4); text-align: right; cursor: pointer; font-family: inherit; width: 100%; }
@@ -5650,7 +5650,7 @@ body.assistant-panel-open {
 }
 
 .breadcrumbs-item a {
-  color: var(--emerald-deep, #143F35);
+  color: var(--emerald-deep, var(--mj-brand-deep));
   text-decoration: none;
 }
 
@@ -5670,7 +5670,7 @@ body.assistant-panel-open {
 
 .content-detail-title {
   font-size: clamp(1.5rem, 4vw, 2rem);
-  color: var(--emerald-deep, #143F35);
+  color: var(--emerald-deep, var(--mj-brand-deep));
   line-height: 1.35;
   margin: 0 0 0.75rem;
 }
@@ -5692,7 +5692,7 @@ body.assistant-panel-open {
 
 .content-detail-heading {
   font-size: var(--ds-text-md);
-  color: var(--emerald-deep, #143F35);
+  color: var(--emerald-deep, var(--mj-brand-deep));
   margin: 1rem 0 0.5rem;
 }
 
@@ -5717,9 +5717,9 @@ body.assistant-panel-open {
   height: 44px;
   padding: .4rem .875rem;
   border-radius: 999px;
-  border: 1.5px solid var(--majalis-emerald, #226A56);
+  border: 1.5px solid var(--majalis-emerald, var(--mj-brand));
   background: transparent;
-  color: var(--majalis-emerald, #226A56);
+  color: var(--majalis-emerald, var(--mj-brand));
   cursor: pointer;
   font-family: inherit;
   font-size: .8125rem;
@@ -5729,7 +5729,7 @@ body.assistant-panel-open {
   transition: background .15s, color .15s;
 }
 .content-detail-action-btn:hover {
-  background: var(--majalis-emerald, #226A56);
+  background: var(--majalis-emerald, var(--mj-brand));
   color: #fff;
 }
 
@@ -5747,7 +5747,7 @@ body.assistant-panel-open {
 .content-detail-evidence h2,
 .content-detail-sources h2 {
   font-size: var(--ds-text-lg);
-  color: var(--emerald-deep, #143F35);
+  color: var(--emerald-deep, var(--mj-brand-deep));
   margin-bottom: 0.75rem;
 }
 
@@ -5779,7 +5779,7 @@ body.assistant-panel-open {
 
 /* ── نتائج القرآن الكريم ─────────────────────────────────────── */
 .search-result-row--quran {
-  border-inline-start: 3px solid var(--clr-primary, #226A56);
+  border-inline-start: 3px solid var(--clr-primary, var(--mj-brand));
   background: rgba(23,61,53, 0.03);
 }
 
@@ -5794,7 +5794,7 @@ body.assistant-panel-open {
   display: inline-block;
   margin-top: 0.2rem;
   font-size: 0.72rem;
-  color: var(--clr-primary, #226A56);
+  color: var(--clr-primary, var(--mj-brand));
   font-weight: 600;
 }
 
@@ -5804,7 +5804,7 @@ body.assistant-panel-open {
   padding: 0.1rem 0.45rem;
   border-radius: 999px;
   background: rgba(22, 78, 60, 0.1);
-  color: var(--emerald-deep, #143F35);
+  color: var(--emerald-deep, var(--mj-brand-deep));
   font-size: 0.7rem;
   font-weight: 700;
 }
@@ -5835,7 +5835,7 @@ body.assistant-panel-open {
 
 .fiqh-completion-bar-fill {
   height: 100%;
-  background: var(--emerald, #226A56);
+  background: var(--emerald, var(--mj-brand));
   border-radius: 999px;
 }
 
@@ -5958,7 +5958,7 @@ body.assistant-panel-open {
   display: block;
   font-size: var(--ds-text-2xl);
   font-weight: 700;
-  color: var(--emerald-deep, #143F35);
+  color: var(--emerald-deep, var(--mj-brand-deep));
 }
 
 .fiqh-quality-stat-label {
@@ -5968,7 +5968,7 @@ body.assistant-panel-open {
   margin-top: 0.25rem;
 }
 
-.fiqh-quality-stat--warn .fiqh-quality-stat-value { color: #143F35; }
+.fiqh-quality-stat--warn .fiqh-quality-stat-value { color: var(--mj-brand-deep); }
 .fiqh-quality-stat--error .fiqh-quality-stat-value { color: #b91c1c; }
 
 .fiqh-quality-meta {
@@ -6583,7 +6583,7 @@ body.has-assistant-fab .app-main {
   inset: 0;
   width: 100%;
   height: 180px;
-  color: var(--msk-gold, #143F35);
+  color: var(--msk-gold, var(--mj-brand-deep));
   opacity: 0.55;
 }
 
@@ -6656,8 +6656,8 @@ body.has-assistant-fab .app-main {
   --ds-t-fast: 0.14s var(--ds-ease);
   --ds-t-mid: 0.22s var(--ds-ease);
 
-  --ds-gold-grad: linear-gradient(135deg, #143F35 0%, #226A56 55%, #143F35 100%);
-  --ds-emerald-grad: linear-gradient(135deg, #143F35 0%, #143F35 100%);
+  --ds-gold-grad: linear-gradient(135deg, var(--mj-brand-deep) 0%, var(--mj-brand) 55%, var(--mj-brand-deep) 100%);
+  --ds-emerald-grad: linear-gradient(135deg, var(--mj-brand-deep) 0%, var(--mj-brand-deep) 100%);
   --ds-hero-grad: linear-gradient(155deg, #0F1220 0%, #171C2E 42%, #1F2540 72%, #131829 100%);
 }
 
@@ -7104,7 +7104,7 @@ body.has-assistant-fab .app-main {
   align-items: center;
   justify-content: center;
   border-radius: 50%;
-  background: var(--majalis-emerald, #226A56);
+  background: var(--majalis-emerald, var(--mj-brand));
   color: #fff;
   font-size: 0.85rem;
   font-weight: 700;
@@ -7268,8 +7268,8 @@ body.has-assistant-fab .app-main {
 }
 
 .content-hub-chip--active {
-  background: var(--majalis-emerald, #226A56);
-  border-color: var(--majalis-emerald, #226A56);
+  background: var(--majalis-emerald, var(--mj-brand));
+  border-color: var(--majalis-emerald, var(--mj-brand));
   color: #fff;
   box-shadow: 0 2px 8px rgba(22, 96, 72, 0.25);
 }
@@ -7278,7 +7278,7 @@ body.has-assistant-fab .app-main {
 /* ── Page Hero Header — v2 style applied globally ── */
 .ds-page-header {
   position: relative;
-  background-color: var(--elite-forest, #143F35);
+  background-color: var(--elite-forest, var(--mj-brand-deep));
   background-image: url("/star-pattern.svg");
   background-size: 100px 100px;
   color: var(--elite-white, #FAFAF8);
@@ -7452,7 +7452,7 @@ body.has-assistant-fab .app-main {
   height: 2.25rem;
   border-radius: 0.625rem;
   background: var(--majalis-emerald-soft, #EAF5EE);
-  color: var(--majalis-emerald, #226A56);
+  color: var(--majalis-emerald, var(--mj-brand));
 }
 
 /* ── BottomNavBar refinements ── */
@@ -7604,7 +7604,7 @@ body.has-assistant-fab .app-main {
 .lesson-detail-body h3 {
   font-size: var(--ds-text-base);
   font-weight: 700;
-  color: var(--majalis-emerald-deep, #143F35);
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep));
   margin: 1.5em 0 0.5em;
 }
 
@@ -7623,8 +7623,8 @@ body.has-assistant-fab .app-main {
   font-family: var(--font-display, "Amiri", serif);
   font-size: clamp(1rem, 3vw, 1.2rem);
   line-height: 2.2;
-  color: var(--majalis-emerald-deep, #143F35);
-  border-right: 3px solid var(--majalis-emerald, #226A56);
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep));
+  border-right: 3px solid var(--majalis-emerald, var(--mj-brand));
   padding-right: 1rem;
   margin: 1rem 0;
 }
@@ -7649,7 +7649,7 @@ body.has-assistant-fab .app-main {
 
 /* بطاقة حديث اليوم */
 .home-daily-card--hadith {
-  border-right: 3px solid var(--majalis-emerald, #226A56);
+  border-right: 3px solid var(--majalis-emerald, var(--mj-brand));
   position: relative;
   overflow: hidden;
 }
@@ -7762,7 +7762,7 @@ body.has-assistant-fab .app-main {
   to   { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
 }
 
-.flash-toast--success { background: var(--majalis-emerald, #226A56); }
+.flash-toast--success { background: var(--majalis-emerald, var(--mj-brand)); }
 .flash-toast--error   { background: var(--majalis-danger, #C0392B); }
 .flash-toast--info    { background: var(--majalis-brass-deep, #7A5214); }
 
@@ -7782,7 +7782,7 @@ body.has-assistant-fab .app-main {
 .adhkar-card__count {
   font-size: var(--ds-text-xs);
   background: var(--majalis-emerald-soft, #EAF5EE);
-  color: var(--majalis-emerald-deep, #143F35);
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep));
   padding: 0.2rem 0.6rem;
   border-radius: 999px;
   font-weight: 700;
@@ -7826,7 +7826,7 @@ body.has-assistant-fab .app-main {
 }
 
 .qa-card:hover {
-  border-right-color: var(--majalis-emerald, #226A56);
+  border-right-color: var(--majalis-emerald, var(--mj-brand));
 }
 
 /* بطاقات الفوائد */
@@ -7855,7 +7855,7 @@ body.has-assistant-fab .app-main {
 .page-tag--active,
 .content-tag--active {
   background: var(--majalis-emerald-soft, #EAF5EE);
-  color: var(--majalis-emerald-deep, #143F35);
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep));
   border-color: rgba(22, 96, 72, 0.25);
 }
 
@@ -7912,7 +7912,7 @@ body.has-assistant-fab .app-main {
   border-radius: 999px;
   border: 1px solid var(--majalis-line, #E8E7E2);
   background: var(--majalis-panel, #fff);
-  color: var(--majalis-emerald, #143F35);
+  color: var(--majalis-emerald, var(--mj-brand-deep));
   font-size: var(--ds-text-sm);
   font-weight: 600;
   font-family: inherit;
@@ -7922,7 +7922,7 @@ body.has-assistant-fab .app-main {
 }
 .share-btn:hover {
   background: rgba(31,77,58,0.06);
-  border-color: var(--majalis-emerald, #143F35);
+  border-color: var(--majalis-emerald, var(--mj-brand-deep));
 }
 .share-btn--sm {
   padding: 0.3rem 0.7rem;
@@ -8055,7 +8055,7 @@ body.has-assistant-fab .app-main {
 /* ── الوضع الليلي: تحسينات إضافية ── */
 html[data-theme="dark"] .home-lesson-card,
 html[data-theme="dark"] .home-library-card {
-  background: var(--majalis-panel, #143F35) !important;
+  background: var(--majalis-panel, var(--mj-brand-deep)) !important;
   border-color: rgba(92,196,154,0.08) !important;
 }
 
@@ -8071,7 +8071,7 @@ html[data-theme="dark"] .hpv4-hero::before {
 
 /* ── focus-visible عام WCAG 2.1 AA ── */
 :focus-visible {
-  outline: 2.5px solid #226A56 !important;
+  outline: 2.5px solid var(--mj-brand) !important;
   outline-offset: 2px !important;
   border-radius: 4px;
 }
@@ -8106,7 +8106,7 @@ button,
   gap: var(--ds-space-2);
   justify-content: center;
   padding: 0.4rem 1rem;
-  background: #143F35;
+  background: var(--mj-brand-deep);
   color: #d1fae5;
   font-size: 0.8rem;
   font-family: var(--font-primary);
@@ -8176,11 +8176,11 @@ button,
 
 /* ── الوضع الليلي: OfflineBanner ── */
 html[data-theme="dark"] .offline-banner {
-  background: #143F35;
+  background: var(--mj-brand-deep);
   color: #6ee7b7;
 }
 html[data-theme="dark"] .skeleton-base {
-  background: linear-gradient(90deg, #143F35 25%, #143F35 50%, #143F35 75%);
+  background: linear-gradient(90deg, var(--mj-brand-deep) 25%, var(--mj-brand-deep) 50%, var(--mj-brand-deep) 75%);
   background-size: 200% 100%;
 }
 

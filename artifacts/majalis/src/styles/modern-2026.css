@@ -19,9 +19,9 @@
 
   /* ── الأخضر الداكن الرمادي — إعادة تصميم الهوية v3 ── */
   --m26-green-950:    #0C211C;
-  --m26-green-800:    #143F35;
-  --m26-green-700:    #143F35;
-  --m26-green-600:    #226A56;
+  --m26-green-800:    var(--mj-brand-deep);
+  --m26-green-700:    var(--mj-brand-deep);
+  --m26-green-600:    var(--mj-brand);
   --m26-green-100:    #E4EAE7;
   --m26-green-50:     #EEF1EF;
 
@@ -43,11 +43,11 @@
      Subdued   #5C5C56 → 9.1:1  (AAA) ✓
      Hint      #5C5C56 → 5.5:1  (AA)  ✓
      Disabled  #A1A1AA → 2.2:1  ✗ — فقط للعناصر المعطّلة كلياً
-     Success   #15803D → 5.6:1  (AA)  ✓
+     Success   var(--mj-brand) → 5.6:1  (AA)  ✓
      Warning   #92400E → 7.1:1  (AAA) ✓
      Error     #B91C1C → 5.6:1  (AA)  ✓
      Info      #1E40AF → 6.5:1  (AA)  ✓
-     Accent    #166534 → 8.1:1  (AAA) ✓
+     Accent    var(--mj-brand) → 8.1:1  (AAA) ✓
      ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
   --txt-primary:    #1A1A18;
   --txt-secondary:  #5C5C56;
@@ -59,7 +59,7 @@
   --txt-warning:    #B67A32;
   --txt-error:      #B44A4A;
   --txt-info:       #1E40AF;
-  --txt-accent:     #143F35;
+  --txt-accent:     var(--mj-brand-deep);
   --txt-inverse:    #FFFFFF;
 
   /* ══ مقياس الطباعة ══════════════════════════════════════════════════════ */
@@ -137,20 +137,20 @@ html:not([data-theme="dark"]) {
   --msk-text-2:        #5C5C56;
   --msk-text-3:        #5C5C56;
   --msk-border:        #E8E7E2;
-  --msk-gold:          #143F35;
-  --msk-gold-deep:     #143F35;
-  --msk-green:         #143F35;
+  --msk-gold:          var(--mj-brand-deep);
+  --msk-gold-deep:     var(--mj-brand-deep);
+  --msk-green:         var(--mj-brand-deep);
   --msk-red:           #B44A4A;
   --msk-red-dim:       rgba(180,74,74,0.08);
   --majalis-ink:          #1A1A18;
   --majalis-ink-soft:     #5C5C56;
   --majalis-ink-muted:    #5C5C56;
-  --majalis-emerald:      #143F35;
+  --majalis-emerald:      var(--mj-brand-deep);
   --majalis-brass:        #B8963F;
   --majalis-panel:        #FFFFFF;
   --majalis-panel-raised: #F4F4F1;
-  --ds-emerald:      #143F35;
-  --ds-emerald-deep: #143F35;
+  --ds-emerald:      var(--mj-brand-deep);
+  --ds-emerald-deep: var(--mj-brand-deep);
   --ds-ink:          #1A1A18;
   --ds-ink-soft:     #5C5C56;
   --ds-parchment:    #FAFAF8;
@@ -245,7 +245,7 @@ body {
   color: var(--txt-secondary, #5C5C56);
 }
 .ds-eyebrow {
-  color: var(--m26-green-700, #15803D) !important;
+  color: var(--m26-green-700, var(--mj-brand)) !important;
   font-size: var(--type-label) !important;
   font-weight: var(--fw-semibold) !important;
   letter-spacing: normal !important;
@@ -261,7 +261,7 @@ body {
   box-shadow: 0 1px 0 rgba(0,0,0,0.04) !important;
 }
 .site-brand-name {
-  color: var(--m26-green-800, #166534) !important;
+  color: var(--m26-green-800, var(--mj-brand)) !important;
   text-shadow: none !important;
 }
 .navbar-menu-btn { color: var(--txt-primary, #1A1A18) !important; }
@@ -285,11 +285,11 @@ body {
 }
 .side-nav-item:hover {
   background: var(--m26-green-50, #F0FDF4) !important;
-  color: var(--m26-green-800, #166534) !important;
+  color: var(--m26-green-800, var(--mj-brand)) !important;
 }
 .side-nav-item--active {
   background: var(--m26-green-100, #DCFCE7) !important;
-  color: var(--m26-green-800, #166534) !important;
+  color: var(--m26-green-800, var(--mj-brand)) !important;
   font-weight: var(--fw-bold) !important;
 }
 
@@ -301,7 +301,7 @@ body {
   box-shadow: 0 -2px 12px rgba(0,0,0,0.05) !important;
 }
 .bottom-nav__item { color: var(--txt-muted, #5C5C56) !important; }
-.bottom-nav__item--active { color: var(--m26-green-800, #166534) !important; }
+.bottom-nav__item--active { color: var(--m26-green-800, var(--mj-brand)) !important; }
 
 /* ══ 9. Cards ════════════════════════════════════════════════════════════════ */
 .lesson-unified-card,
@@ -360,18 +360,18 @@ body {
   transition: all var(--m26-duration-fast) var(--m26-ease);
 }
 .ds-btn--primary {
-  background: var(--m26-green-800, #166534) !important;
+  background: var(--m26-green-800, var(--mj-brand)) !important;
   color: #FFFFFF !important;
   border-color: transparent !important;
   box-shadow: 0 1px 2px rgba(22,101,52,0.20) !important;
 }
 .ds-btn--primary:hover {
-  background: var(--m26-green-950, #052E16) !important;
+  background: var(--m26-green-950, var(--mj-brand-deep)) !important;
   box-shadow: 0 4px 12px rgba(22,101,52,0.25) !important;
 }
 .ds-btn--secondary {
   background: #FFFFFF !important;
-  color: var(--m26-green-800, #166534) !important;
+  color: var(--m26-green-800, var(--mj-brand)) !important;
   border: 1.5px solid var(--m26-green-600, #16A34A) !important;
 }
 .ds-btn--ghost {
@@ -455,11 +455,11 @@ label {
 }
 .kuwait-tab:hover:not(.kuwait-tab--active) {
   border-color: var(--m26-green-600, #16A34A) !important;
-  color: var(--m26-green-800, #166534) !important;
+  color: var(--m26-green-800, var(--mj-brand)) !important;
   background: var(--m26-green-50, #F0FDF4) !important;
 }
 .kuwait-tab--active {
-  background: var(--m26-green-800, #166534) !important;
+  background: var(--m26-green-800, var(--mj-brand)) !important;
   color: #FFFFFF !important;
   border-color: transparent !important;
   box-shadow: 0 2px 8px rgba(22,101,52,0.25) !important;
@@ -502,7 +502,7 @@ label {
 .prophets-lux-count { color: var(--txt-muted, #5C5C56) !important; }
 .prophets-lux-empty { color: var(--txt-muted, #5C5C56) !important; }
 .prophets-lux-disclaimer {
-  color: var(--txt-warning, #143F35) !important;
+  color: var(--txt-warning, var(--mj-brand-deep)) !important;
   border-color: rgba(202,138,4,0.30) !important;
   background: var(--m26-gold-50, #f0faf5) !important;
 }
@@ -512,7 +512,7 @@ label {
   background: #FFFFFF !important;
 }
 .prophets-lux-tab--active {
-  color: var(--m26-green-800, #166534) !important;
+  color: var(--m26-green-800, var(--mj-brand)) !important;
   border-color: var(--m26-green-600, #16A34A) !important;
   background: var(--m26-green-50, #F0FDF4) !important;
   font-weight: var(--fw-bold) !important;
@@ -532,7 +532,7 @@ label {
 .nh-row__meta { color: var(--txt-muted, #5C5C56) !important; }
 .nh-tab { color: var(--txt-muted, #5C5C56) !important; }
 .nh-tab--active {
-  color: var(--m26-green-800, #166534) !important;
+  color: var(--m26-green-800, var(--mj-brand)) !important;
   border-bottom-color: var(--m26-green-800) !important;
 }
 .nh-search {
@@ -554,13 +554,13 @@ label {
 .notif-toggle { background: rgba(0,0,0,0.12) !important; }
 .notif-toggle--on { background: var(--m26-green-600, #16A34A) !important; }
 .notif-test-btn {
-  background: var(--m26-green-800, #166534) !important;
+  background: var(--m26-green-800, var(--mj-brand)) !important;
   color: #FFFFFF !important;
   border-radius: var(--m26-r-md) !important;
 }
 .notif-saved {
   background: var(--m26-green-50, #F0FDF4) !important;
-  color: var(--m26-green-800, #166534) !important;
+  color: var(--m26-green-800, var(--mj-brand)) !important;
   border: 1px solid rgba(22,163,74,0.25) !important;
 }
 .notif-time__label { color: var(--txt-secondary, #5C5C56) !important; }
@@ -568,7 +568,7 @@ label {
 .notif-banner--warn {
   background: var(--m26-gold-50, #f0faf5) !important;
   border-color: rgba(202,138,4,0.35) !important;
-  color: var(--txt-warning, #143F35) !important;
+  color: var(--txt-warning, var(--mj-brand-deep)) !important;
 }
 .notif-banner--err {
   background: #FEF2F2 !important;
@@ -583,7 +583,7 @@ label {
   border-bottom: 1px solid rgba(0,0,0,0.06) !important;
 }
 .home-hero__title {
-  color: var(--m26-green-950, #052E16) !important;
+  color: var(--m26-green-950, var(--mj-brand-deep)) !important;
   font-family: var(--font-body) !important;
   font-weight: var(--fw-bold) !important;
 }
@@ -600,7 +600,7 @@ label {
 .page-desc { color: var(--txt-secondary, #5C5C56) !important; }
 .page-tag {
   background: var(--m26-green-100, #DCFCE7) !important;
-  color: var(--m26-green-800, #166534) !important;
+  color: var(--m26-green-800, var(--mj-brand)) !important;
   border: none !important;
   border-radius: var(--m26-r-full) !important;
   font-size: var(--type-caption) !important;
@@ -648,7 +648,7 @@ td {
    ثابتان حتى في الوضع الليلي (كل جدول في الموقع، مثال: صفحات تفاصيل
    جلسات المجمع الفقهي) (2026-07-17). */
 html[data-theme="dark"] table {
-  background: #143F35 !important;
+  background: var(--mj-brand-deep) !important;
 }
 html[data-theme="dark"] th {
   background: rgba(92,196,154,.12) !important;
@@ -656,7 +656,7 @@ html[data-theme="dark"] th {
   border-color: rgba(255,255,255,.08) !important;
 }
 html[data-theme="dark"] td {
-  color: #E5F0EC !important;
+  color: var(--mj-brand-soft) !important;
   border-color: rgba(255,255,255,.06) !important;
 }
 
@@ -695,12 +695,12 @@ html[data-theme="dark"] td {
   border-color: rgba(22,163,74,0.50) !important;
   box-shadow: var(--m26-shadow-md) !important;
 }
-.prophets-seerah-bridge__title { color: var(--m26-green-950, #052E16) !important; }
-.prophets-seerah-bridge__eyebrow { color: var(--m26-gold-700, #226A56) !important; }
+.prophets-seerah-bridge__title { color: var(--m26-green-950, var(--mj-brand-deep)) !important; }
+.prophets-seerah-bridge__eyebrow { color: var(--m26-gold-700, var(--mj-brand)) !important; }
 .prophets-seerah-bridge__desc { color: var(--txt-secondary, #5C5C56) !important; }
 .prophets-seerah-bridge__arrow { color: var(--m26-green-600, #16A34A) !important; }
 .seerah-back-link {
-  color: var(--m26-green-800, #166534) !important;
+  color: var(--m26-green-800, var(--mj-brand)) !important;
   border-color: rgba(22,163,74,0.25) !important;
 }
 .seerah-back-link:hover {
@@ -719,7 +719,7 @@ html[data-theme="dark"] td {
   text-decoration: none;
 }
 .site-footer a:hover,
-.site-footer a:hover { color: var(--m26-green-800, #166534) !important; }
+.site-footer a:hover { color: var(--m26-green-800, var(--mj-brand)) !important; }
 
 /* ══ 26. Text-on-image Protection ════════════════════════════════════════════ */
 .text-on-image {
@@ -776,7 +776,7 @@ html[data-theme="dark"] td {
   border-color: rgba(0,0,0,0.10) !important;
 }
 .profile-quick-link:hover {
-  color: var(--m26-green-800, #166534) !important;
+  color: var(--m26-green-800, var(--mj-brand)) !important;
   border-color: var(--m26-green-600, #16A34A) !important;
   background: var(--m26-green-50, #F0FDF4) !important;
 }
@@ -909,7 +909,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
 .legal-back .legal-back-btn {
   border-color: rgba(23,61,53,0.25);
   background: transparent;
-  color: var(--majalis-emerald-deep, #143F35);
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep));
 }
 .legal-back .legal-back-btn:hover {
   background: rgba(23,61,53,0.06);
@@ -923,7 +923,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   --text-muted:      var(--txt-muted,     #5C5C56);
   --text-subtle:     var(--txt-subdued,   #5C5C56);
   --text-disabled:   var(--txt-disabled,  #B9BEBB);
-  --text-accent:     var(--txt-accent,    #143F35);
+  --text-accent:     var(--txt-accent,    var(--mj-brand-deep));
   --text-inverse:    var(--txt-inverse,   #FAFAF8);
 
   /* ── تحديث رموز m26 لتطابق إعادة تصميم الهوية v3 ── */
@@ -933,9 +933,9 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   --m26-surface-2:    #F4F4F1;
   --m26-surface-3:    #EFE9DC;
   --m26-green-950:    #0C211C;
-  --m26-green-800:    #143F35;
-  --m26-green-700:    #143F35;
-  --m26-green-600:    #143F35;
+  --m26-green-800:    var(--mj-brand-deep);
+  --m26-green-700:    var(--mj-brand-deep);
+  --m26-green-600:    var(--mj-brand-deep);
   --m26-green-100:    #E4EAE7;
   --m26-green-50:     #EEF1EF;
 }
@@ -947,7 +947,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
  * يُمنع تماماً خلف: نص قرآني، نص حديث، نماذج، جداول.
  */
 .majalis-star-bg {
-  background-color: #143F35;
+  background-color: var(--mj-brand-deep);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cpath d='M50,4 L57.27,32.45 L82.53,17.47 L67.55,42.73 L96,50 L67.55,57.27 L82.53,82.53 L57.27,67.55 L50,96 L42.73,67.55 L17.47,82.53 L32.45,57.27 L4,50 L32.45,42.73 L17.47,17.47 L42.73,32.45 Z' fill='none' stroke='%23FFFFFF' stroke-opacity='0.055' stroke-width='1.1'/%3E%3Ccircle cx='50' cy='50' r='1.4' fill='%23FFFFFF' fill-opacity='0.08'/%3E%3C/svg%3E");
   background-size: 100px 100px;
   color: #FAFAF8;
@@ -956,7 +956,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
 /* رأس النجمة — الوضع الاحتفالي للصفحات الرئيسية */
 .majalis-star-hero {
   position: relative;
-  background-color: #226A56;
+  background-color: var(--mj-brand);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Cpath d='M50,4 L57.27,32.45 L82.53,17.47 L67.55,42.73 L96,50 L67.55,57.27 L82.53,82.53 L57.27,67.55 L50,96 L42.73,67.55 L17.47,82.53 L32.45,57.27 L4,50 L32.45,42.73 L17.47,17.47 L42.73,32.45 Z' fill='none' stroke='%23FFFFFF' stroke-opacity='0.06' stroke-width='1.2'/%3E%3Ccircle cx='50' cy='50' r='1.4' fill='%23FFFFFF' fill-opacity='0.09'/%3E%3C/svg%3E");
   background-size: 100px 100px;
   color: #FAFAF8;
@@ -992,13 +992,13 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
 .cal-cell-hijri {
   font-size: 0.62rem !important;
   font-weight: 500 !important;
-  color: var(--m26-green-700, #15803D) !important;
+  color: var(--m26-green-700, var(--mj-brand)) !important;
   opacity: 0.75;
   line-height: 1 !important;
 }
 /* اليوم الحالي */
 .cal-cell.is-today { background: var(--m26-green-50, #F0FDF4) !important; border-color: var(--m26-green-400, #4ADE80) !important; }
-.cal-cell.is-today .cal-cell-num { color: var(--m26-green-700, #15803D) !important; }
+.cal-cell.is-today .cal-cell-num { color: var(--m26-green-700, var(--mj-brand)) !important; }
 /* حدث داخل الخلية */
 .cal-cell-event {
   display: block;
@@ -1006,7 +1006,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   font-size: 0.8rem !important;
   font-weight: 600 !important;
   background: var(--m26-green-100, #DCFCE7) !important;
-  color: var(--m26-green-800, #166534) !important;
+  color: var(--m26-green-800, var(--mj-brand)) !important;
   border-radius: var(--ds-radius-xs);
   padding: 0.08rem 0.25rem;
   overflow: hidden;
@@ -1031,7 +1031,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
 /* زر "اليوم" في التولبار */
 .cal-today-btn {
   border: 1.5px solid var(--m26-green-600, #16A34A) !important;
-  color: var(--m26-green-700, #15803D) !important;
+  color: var(--m26-green-700, var(--mj-brand)) !important;
   background: transparent !important;
   border-radius: 999px !important;
   font-size: 0.75rem !important;
@@ -1052,7 +1052,7 @@ hr { border-color: rgba(0,0,0,0.07) !important; }
   right: 0;
   left: 0;
   height: 3px;
-  background: linear-gradient(to left, var(--color-primary, #226A56), #34d399);
+  background: linear-gradient(to left, var(--color-primary, var(--mj-brand)), #34d399);
   width: var(--rpb-pct, 0%);
   z-index: 9999;
   transition: width 0.1s linear;
@@ -1194,7 +1194,7 @@ p { line-height: var(--lh-normal, 1.65); }
 
 /* ─── ضمان النص الأبيض على شريط القراءة ─── */
 .reading-progress-bar {
-  background: linear-gradient(to right, var(--majalis-emerald, #226A56), #226A56);
+  background: linear-gradient(to right, var(--majalis-emerald, var(--mj-brand)), var(--mj-brand));
 }
 
 /* ─── تحسين الفهرس والتسميات المرئية ─── */

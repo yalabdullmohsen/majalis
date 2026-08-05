@@ -36,7 +36,7 @@
   background: var(--elite-white, #FAFAF8);
   border: 1.5px solid var(--elite-border-2, rgba(24,54,42,0.15));
   border-radius: 0.65rem;
-  color: var(--elite-ink, #143F35);
+  color: var(--elite-ink, var(--mj-brand-deep));
   font-size: 0.9rem;
   font-family: inherit;
   transition: border-color 0.15s;
@@ -45,7 +45,7 @@
 
 .isp-search:focus {
   outline: none;
-  border-color: var(--elite-forest, #143F35);
+  border-color: var(--elite-forest, var(--mj-brand-deep));
   box-shadow: 0 0 0 3px rgba(24,54,42,0.08);
 }
 
@@ -85,12 +85,12 @@
 }
 
 .isp-chip:hover {
-  border-color: var(--elite-forest, #143F35);
-  color: var(--elite-forest, #143F35);
+  border-color: var(--elite-forest, var(--mj-brand-deep));
+  color: var(--elite-forest, var(--mj-brand-deep));
 }
 
 .isp-chip.is-active {
-  background: var(--elite-forest, #143F35);
+  background: var(--elite-forest, var(--mj-brand-deep));
   border-color: transparent;
   color: #FAFAF8;
 }
@@ -114,7 +114,7 @@
   flex-direction: column;
   gap: 0.6rem;
   padding: 1.25rem 1.1rem;
-  background: var(--elite-forest, #143F35);
+  background: var(--elite-forest, var(--mj-brand-deep));
   border: 1px solid rgba(190,199,195,0.2);
   border-radius: var(--elite-r-lg, 16px);
   cursor: pointer;
@@ -128,7 +128,7 @@
   transform: translateY(-3px);
   box-shadow: 0 8px 24px rgba(24,54,42,0.28);
   border-color: rgba(190,199,195,0.45);
-  background: #143F35;
+  background: var(--mj-brand-deep);
   outline: none;
 }
 
@@ -278,12 +278,12 @@
 
 .isp-detail__back:hover {
   background: var(--elite-sage-2, #F4F4F1);
-  border-color: var(--elite-forest, #143F35);
-  color: var(--elite-forest, #143F35);
+  border-color: var(--elite-forest, var(--mj-brand-deep));
+  color: var(--elite-forest, var(--mj-brand-deep));
 }
 
 .isp-detail__hero {
-  background: var(--elite-forest, #143F35);
+  background: var(--elite-forest, var(--mj-brand-deep));
   background-image: url("/star-pattern.svg");
   background-size: 100px 100px;
   border-radius: var(--elite-r-xl, 24px);
@@ -335,17 +335,17 @@
   padding: 0 !important;
   border-radius: 0 !important;
   display: block !important;
-  color: var(--elite-forest, #143F35) !important;
+  color: var(--elite-forest, var(--mj-brand-deep)) !important;
 }
 
-.isp-detail__section-title--green  { color: #15803D !important; }
+.isp-detail__section-title--green  { color: var(--mj-brand) !important; }
 .isp-detail__section-title--purple { color: #6D28D9 !important; }
-.isp-detail__section-title--gold   { color: var(--majalis-emerald,#226A56) !important; }
+.isp-detail__section-title--gold   { color: var(--majalis-emerald,var(--mj-brand)) !important; }
 
 .isp-detail__body {
   font-size: 0.9rem;
   line-height: 1.9;
-  color: var(--elite-ink, #143F35);
+  color: var(--elite-ink, var(--mj-brand-deep));
   white-space: pre-wrap;
 }
 
@@ -362,13 +362,13 @@
   display: flex;
   gap: 0.6rem;
   font-size: var(--ds-text-sm);
-  color: var(--elite-ink, #143F35);
+  color: var(--elite-ink, var(--mj-brand-deep));
   line-height: 1.6;
   align-items: flex-start;
 }
 
 .isp-lessons-list__star {
-  color: #15803D;
+  color: var(--mj-brand);
   flex-shrink: 0;
   margin-top: 0.15rem;
 }

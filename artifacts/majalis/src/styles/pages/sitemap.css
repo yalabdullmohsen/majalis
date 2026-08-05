@@ -1,10 +1,10 @@
 /* ════════════════════════════════════════════════════════════
    SM — SiteMapPage (كل الأقسام)
    ════════════════════════════════════════════════════════════ */
-.sm-page { --sm-emerald: #226A56; }
+.sm-page { --sm-emerald: var(--mj-brand); }
 
 .sm-hero {
-  background: linear-gradient(135deg, #143F35, #226A56);
+  background: linear-gradient(135deg, var(--mj-brand-deep), var(--mj-brand));
   color: #ffffff;
   padding: 2rem 1.25rem 1.75rem;
   text-align: center;
@@ -89,5 +89,5 @@
   background: rgba(31,77,58,0.07);
   border: 1px solid rgba(31,77,58,0.15);
 }
-.hp-quick-link--all .hp-quick-link__label { color: var(--majalis-emerald-deep, #226A56); font-weight: 700; }
+.hp-quick-link--all .hp-quick-link__label { color: var(--majalis-emerald-deep, var(--mj-brand)); font-weight: 700; }
 

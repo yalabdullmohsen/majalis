@@ -96,7 +96,7 @@ export function DawahSection() {
                   <div className="arp-card-meta-row">
                     <div>
                       <strong>{item.title || item.title_ar}</strong>
-                      <span className="arp-decision-badge" style={{ "--arp-db-bg": "rgba(23,61,53,0.08)", "--arp-db-color": "#143F35" } as React.CSSProperties}>
+                      <span className="arp-decision-badge" style={{ "--arp-db-bg": "rgba(23,61,53,0.08)", "--arp-db-color": "var(--mj-brand-deep)" } as React.CSSProperties}>
                         {item.status}
                       </span>
                       <p className="arp-card-subtext">{(item.short_answer || item.summary_ar || "").slice(0, 160)}</p>
@@ -119,7 +119,7 @@ export function DawahSection() {
                   <div className="arp-card-meta-row">
                     <div>
                       <strong>{c.is_anonymous ? "طلب مجهول" : c.name || "بدون اسم"}</strong>
-                      <span className="arp-decision-badge" style={{ "--arp-db-bg": "rgba(23,61,53,0.08)", "--arp-db-color": "#143F35" } as React.CSSProperties}>
+                      <span className="arp-decision-badge" style={{ "--arp-db-bg": "rgba(23,61,53,0.08)", "--arp-db-color": "var(--mj-brand-deep)" } as React.CSSProperties}>
                         {c.lang} · {c.preferred_daee_gender}
                       </span>
                       <p className="arp-card-subtext">{c.topic}</p>

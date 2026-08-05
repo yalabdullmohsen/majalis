@@ -10,7 +10,7 @@ const NODE_W  = 110;
 const NODE_H  = 52;
 const H_GAP   = 50;   // الفجوة الأفقية بين الأعمدة
 const V_GAP   = 28;   // الفجوة الرأسية بين الإخوة
-const EMERALD = "#226A56";
+const EMERALD = "var(--mj-brand)";
 const ANCESTOR_CLR = "#5C5C56";
 
 // ── حساب تخطيط الشجرة ─────────────────────────────────────────────────────
@@ -219,7 +219,7 @@ export default function ProphetsFamilyTreePage() {
   const selectedNode = placed.find(p => p.node.id === selected)?.node;
 
   return (
-    <div dir="rtl" style={{ minHeight: "100vh", background: "#F0F7F4", fontFamily: "IBM Plex Sans Arabic, Noto Sans Arabic, sans-serif" }}>
+    <div dir="rtl" style={{ minHeight: "100vh", background: "var(--mj-brand-soft)", fontFamily: "IBM Plex Sans Arabic, Noto Sans Arabic, sans-serif" }}>
       {/* Header */}
       <header style={{
         background: "linear-gradient(135deg,#0c2318,#1a3d2b)",
@@ -267,7 +267,7 @@ export default function ProphetsFamilyTreePage() {
             <div style={{
               width: 14, height: 14, borderRadius: 4,
               background: color,
-              border: border ? "2px solid #D97706" : border2 ? "1.5px solid #226A56" : "none",
+              border: border ? "2px solid #D97706" : border2 ? "1.5px solid var(--mj-brand)" : "none",
             }}/>
             <span style={{ color: "#5C5C56" }}>{label}</span>
           </div>
@@ -343,7 +343,7 @@ export default function ProphetsFamilyTreePage() {
                   key={`${p.parentId}-${p.node.id}`}
                   d={`M${x1},${y1} C${mx},${y1} ${mx},${y2} ${x2},${y2}`}
                   fill="none"
-                  stroke={isDash ? "#9CA3AF" : "#226A56"}
+                  stroke={isDash ? "#9CA3AF" : "var(--mj-brand)"}
                   strokeWidth={isDash ? 1 : 1.5}
                   strokeDasharray={isDash ? "5,4" : undefined}
                   opacity={0.6}

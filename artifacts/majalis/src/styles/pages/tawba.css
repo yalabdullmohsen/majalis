@@ -9,7 +9,7 @@
 
 /* hero */
 .tw-hero {
-  background: linear-gradient(135deg, #0a1628 0%, #132240 50%, #143F35 100%);
+  background: linear-gradient(135deg, #0a1628 0%, #132240 50%, var(--mj-brand-deep) 100%);
   padding: 2.5rem 1.5rem 2rem;
   text-align: center;
   color: #fff;
@@ -149,7 +149,7 @@
 .tw-nawaa-title { display: block; font-weight: 700; font-size: .9rem; color: #111; margin-bottom: .2rem; }
 .tw-nawaa-hukm  { display: inline-block; padding: .15rem .5rem; border-radius: .35rem; font-size: .68rem; font-weight: 700; }
 .tw-nawaa-hukm--wajib    { background: #FEE2E2; color: #991B1B; }
-.tw-nawaa-hukm--mustahabb { background: #D4E9DC; color: #143F35; }
+.tw-nawaa-hukm--mustahabb { background: #D4E9DC; color: var(--mj-brand-deep); }
 .tw-nawaa-desc  { font-size: .82rem; color: #5C5C56; line-height: 1.6; margin: 0; }
 
 .tw-tawba-nasuh {
@@ -159,7 +159,7 @@
   padding: 1.1rem 1.2rem;
 }
 .tw-tawba-nasuh__title { font-size: var(--ds-text-base); font-weight: 800; color: #1e1b4b; margin: 0 0 .5rem; }
-.tw-tawba-nasuh__text  { font-size: .84rem; color: var(--brand-deep, #143F35); line-height: 1.7; margin: 0 0 .5rem; }
+.tw-tawba-nasuh__text  { font-size: .84rem; color: var(--brand-deep, var(--mj-brand-deep)); line-height: 1.7; margin: 0 0 .5rem; }
 .tw-tawba-nasuh__text:last-child { margin-bottom: 0; }
 
 /* أذكار */
@@ -190,8 +190,8 @@
 .tw-dhikr-body  { padding: .5rem .9rem .75rem; border-top: 1px solid #F3F4F6; }
 .tw-dhikr-reward {
   display: flex; gap: .45rem; align-items: flex-start;
-  background: #F0F7F4; border-radius: .5rem; padding: .45rem .65rem;
-  font-size: .78rem; color: #143F35; line-height: 1.5; margin-bottom: .4rem;
+  background: var(--mj-brand-soft); border-radius: .5rem; padding: .45rem .65rem;
+  font-size: .78rem; color: var(--mj-brand-deep); line-height: 1.5; margin-bottom: .4rem;
 }
 .tw-dhikr-reward__icon { flex-shrink: 0; }
 .tw-dhikr-source { font-size: .7rem; color: #9CA3AF; }
@@ -224,13 +224,13 @@
 .tw-mani-title { font-weight: 700; font-size: .88rem; color: #991B1B; margin: 0 0 .3rem; }
 .tw-mani-desc  { font-size: .82rem; color: #5C5C56; line-height: 1.6; margin: 0; }
 .tw-hope-box {
-  background: linear-gradient(135deg,#F0F7F4,#ECFDF5);
+  background: linear-gradient(135deg,var(--mj-brand-soft),#ECFDF5);
   border: 1px solid #BBF7D0;
   border-radius: .8rem;
   padding: 1.1rem 1.2rem;
 }
-.tw-hope-box__title { font-size: .95rem; font-weight: 700; color: #143F35; margin: 0 0 .5rem; }
-.tw-hope-box__text  { font-size: .83rem; color: #052E16; line-height: 1.7; margin: 0; }
+.tw-hope-box__title { font-size: .95rem; font-weight: 700; color: var(--mj-brand-deep); margin: 0 0 .5rem; }
+.tw-hope-box__text  { font-size: .83rem; color: var(--mj-brand-deep); line-height: 1.7; margin: 0; }
 
 /* آثار */
 .tw-athaar-grid { display: grid; grid-template-columns: 1fr 1fr; gap: .75rem; margin-bottom: 1.5rem; }
@@ -264,19 +264,19 @@
   border-radius: .6rem;
   padding: .6rem .7rem;
   font-size: .82rem;
-  color: var(--majalis-emerald,#143F35);
+  color: var(--majalis-emerald,var(--mj-brand-deep));
   text-align: center;
   text-decoration: none;
   font-weight: 600;
   transition: background .15s;
   display: block;
 }
-.tw-related__link:hover { background: #F0F7F4; border-color: var(--majalis-emerald,#143F35); }
+.tw-related__link:hover { background: var(--mj-brand-soft); border-color: var(--majalis-emerald,var(--mj-brand-deep)); }
 
 /* خلفية الرابط بيضاء ثابتة — لا نعناعي ليلي فوق أبيض */
 html[data-theme="dark"] .tw-related__link,
 html.dark .tw-related__link {
-  color: #143F35;
+  color: var(--mj-brand-deep);
   background: #fff;
   border-color: #E8E7E2;
 }

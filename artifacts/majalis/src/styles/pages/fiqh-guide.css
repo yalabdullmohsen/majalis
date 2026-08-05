@@ -9,7 +9,7 @@
 .fg-hero {
   background:
     radial-gradient(ellipse 80% 60% at 20% 0%, rgba(255, 255, 255, 0.08), transparent),
-    linear-gradient(135deg, #143f35 0%, #1e5a48 55%, #226a56 100%);
+    linear-gradient(135deg, var(--mj-brand-deep) 0%, #1e5a48 55%, var(--mj-brand) 100%);
   border-radius: var(--ds-radius-2xl, 1.25rem);
   padding: 2.35rem 1.4rem 2rem;
   color: #fff;

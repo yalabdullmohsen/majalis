@@ -6,6 +6,7 @@ import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
+import { HubCard } from "@/components/ui/HubCard";
 import "@/styles/pages/tawhid.css";
 
 // ─── أقسام العقيدة والتوحيد ──────────────────────────────────────────────────
@@ -24,7 +25,7 @@ const AQEEDA_SECTIONS: AqeedaSection[] = [
   {
     emoji: "🕌", title: "التوحيد ومسائله",
     desc: "أنواع التوحيد، الشرك، البدعة، والمسائل العقدية",
-    href: "/tawhid", badge: "أنت هنا", color: "#143F35", isCurrent: true,
+    href: "/tawhid", badge: "أنت هنا", color: "var(--mj-brand-deep)", isCurrent: true,
   },
   {
     emoji: "📘", title: "مدخل إلى العقيدة",
@@ -44,17 +45,17 @@ const AQEEDA_SECTIONS: AqeedaSection[] = [
   {
     emoji: "💎", title: "الأسماء الحسنى",
     desc: "أسماء الله الحسنى الثابتة، مع بيان منهج الإحصاء والتحفّظ من السرد الضعيف",
-    href: "/asma-husna", badge: "أسماء", color: "#0F766E",
+    href: "/asma-husna", badge: "أسماء", color: "var(--mj-brand)",
   },
   {
     emoji: "🌿", title: "الجنة والنار",
     desc: "صفة الجنة ونعيمها وصفة النار وعذابها",
-    href: "/janna-naar", badge: "عقيدة", color: "#143F35",
+    href: "/janna-naar", badge: "عقيدة", color: "var(--mj-brand-deep)",
   },
   {
     emoji: "⏳", title: "علامات الساعة",
     desc: "العلامات الصغرى والكبرى مرتبةً بالأدلة",
-    href: "/alamat-saah", badge: "صغرى وكبرى", color: "#226A56",
+    href: "/alamat-saah", badge: "صغرى وكبرى", color: "var(--mj-brand)",
   },
   {
     emoji: "👼", title: "الملائكة في الإسلام",
@@ -69,7 +70,7 @@ const AQEEDA_SECTIONS: AqeedaSection[] = [
   {
     emoji: "📖", title: "مسار تعلّم العقيدة",
     desc: "منهج متدرّج في أركان الإيمان والتوحيد من مصادر أهل السنة",
-    href: "/learning/paths/aqeedah", badge: "مسار", color: "#065F46",
+    href: "/learning/paths/aqeedah", badge: "مسار", color: "var(--mj-brand)",
   },
   {
     emoji: "🌟", title: "عقيدة أهل السنة والجماعة",
@@ -414,25 +415,18 @@ export default function TawhidPage() {
       {/* ══ شبكة أقسام العقيدة ══ */}
       <section aria-labelledby="hub-sections-heading" className="twh-section">
         <h2 id="hub-sections-heading" className="tawheed-principles-heading">أقسام العقيدة والتوحيد</h2>
-        <div className="twh-hub-grid">
+        <div className="hub-card-grid twh-hub-grid">
           {AQEEDA_SECTIONS.map((s) => (
-            <Link
+            <HubCard
               key={s.href}
               href={s.href}
-              className={`twh-hub-card${s.isCurrent ? "twh-hub-card--current" : ""}`}
-              style={{ "--twh-hub-clr": s.color } as React.CSSProperties}
-              aria-current={s.isCurrent ? "page" : undefined}
-            >
-              <span className="twh-hub-card__emoji" aria-hidden="true"><SectionIcon name={s.emoji} size={26} /></span>
-              <div className="twh-hub-card__body">
-                <div className="twh-hub-card__heading">
-                  <p className="twh-hub-card__title">{s.title}</p>
-                  <span className="twh-hub-card__badge">{s.badge}</span>
-                </div>
-                <p className="twh-hub-card__desc">{s.desc}</p>
-              </div>
-              {s.isCurrent && <span className="twh-hub-card__current-tag">أنت هنا</span>}
-            </Link>
+              title={s.title}
+              description={s.desc}
+              badge={s.badge}
+              icon={<SectionIcon name={s.emoji} size={22} />}
+              className={s.isCurrent ? "hub-card--featured" : undefined}
+              footer={s.isCurrent ? <span className="twh-hub-card__current-tag">أنت هنا</span> : null}
+            />
           ))}
         </div>
       </section>

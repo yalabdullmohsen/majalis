@@ -75,7 +75,7 @@
 
 .m2030-btn--primary {
   background: var(--mj-brand);
-  color: #fff;
+  color: var(--mj-on-brand);
 }
 
 .m2030-btn--primary:hover {

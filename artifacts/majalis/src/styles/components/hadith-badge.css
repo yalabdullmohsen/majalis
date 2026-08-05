@@ -8,8 +8,8 @@
   direction: rtl;
 }
 .hadith-badge__grade { font-weight: 700; color: var(--hdb-color); font-size: 0.68rem; }
-.hadith-badge--sahih { --hdb-color: var(--majalis-emerald, #226A56); }
-.hadith-badge--hasan { --hdb-color: var(--majalis-emerald-deep, #143F35); }
+.hadith-badge--sahih { --hdb-color: var(--majalis-emerald, var(--mj-brand)); }
+.hadith-badge--hasan { --hdb-color: var(--majalis-emerald-deep, var(--mj-brand-deep)); }
 .hadith-badge--daif  { --hdb-color: var(--majalis-danger, #9B1C1C); }
 .hadith-badge--mawdu { --hdb-color: var(--majalis-danger, #9B1C1C); }
 
