@@ -326,7 +326,15 @@ export default function HomePage() {
         </SafeHomeSection>
       </div>
 
-      <HomeRecentPagesBar />
+      <section className="m2030-band" aria-label="الأكثر استخدامًا">
+        <div className="m2030-band__head">
+          <div>
+            <h2 className="m2030-band__title">الأكثر استخدامًا</h2>
+            <p className="m2030-band__sub">من زياراتك الأخيرة على هذا الجهاز</p>
+          </div>
+        </div>
+        <HomeRecentPagesBar />
+      </section>
 
       <div className="m2030-band" style={{ textAlign: "center" }}>
         <button type="button" className="m2030-customize" onClick={() => setCustomizeOpen(true)}>
