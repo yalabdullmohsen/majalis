@@ -296,10 +296,18 @@
   gap: 0.3rem;
   padding: 0.9rem 0.85rem;
   text-decoration: none;
-  color: var(--text);
-  background: var(--surface);
+  /* ألوان صلبة قابلة للقياس — html يحمل تدرّجًا؛ بدون تحتية معتمة → NO_COLOR في البوابة */
+  color: #16241E;
+  background-color: #FFFFFF;
+  background-image: none;
   border: 1px solid var(--border);
   clip-path: polygon(0 0, calc(100% - 0.7rem) 0, 100% 0.7rem, 100% 100%, 0.7rem 100%, 0 calc(100% - 0.7rem));
+}
+
+html[data-theme="dark"] .m2030-feature,
+html.dark .m2030-feature {
+  color: #E9EFEC;
+  background-color: #17201C;
 }
 
 .m2030-feature__title {
@@ -307,7 +315,14 @@
   font-size: 1rem;
   font-weight: 700;
   font-family: var(--font-display);
-  color: var(--text-title);
+  color: #16241E;
+  background-color: transparent;
+  background-image: none;
+}
+
+html[data-theme="dark"] .m2030-feature__title,
+html.dark .m2030-feature__title {
+  color: #E9EFEC;
 }
 
 .m2030-feature__desc {

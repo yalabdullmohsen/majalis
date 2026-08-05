@@ -31,7 +31,7 @@ export function BottomNavBar() {
 
   return (
     <>
-      <nav className="bottom-nav bottom-nav--v2 bottom-nav--m2030" aria-label="التنقل السفلي">
+      <nav className="bottom-nav bottom-nav--v2 bottom-nav--m2030 mj-nav-skin" aria-label="التنقل السفلي">
         {NAV_TABS.map(({ href, label, Icon }) => {
           const active = isNavHrefActive(location, href);
           const soon = isComingSoonPath(href);

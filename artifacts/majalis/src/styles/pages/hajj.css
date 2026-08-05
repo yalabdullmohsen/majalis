@@ -342,6 +342,14 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
 }
 .hj-related__link:hover { background: #F0F7F4; border-color: var(--majalis-emerald, #143F35); }
 
+/* خلفية الرابط بيضاء ثابتة — لا نعناعي ليلي فوق أبيض */
+html[data-theme="dark"] .hj-related__link,
+html.dark .hj-related__link {
+  color: #143F35;
+  background: #fff;
+  border-color: #E8E7E2;
+}
+
 /* responsive */
 @media (max-width: 640px) {
   .hj-overview-grid { grid-template-columns: 1fr; }

@@ -44,17 +44,27 @@ env:
   GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
+  # يُلغى Auto-merge فقط عند فشل الفحص المطلوب لحماية main (Verify build)،
+  # لا عند فشل أي job اختياري داخل workflow CI (مثل Color contrast).
   cancel-on-ci-failure:
     if: github.repository == 'yalabdullmohsen/majalis' && github.event_name == 'workflow_run' && github.event.workflow_run.conclusion == 'failure'
     runs-on: ubuntu-latest
     timeout-minutes: 5
     steps:
-      - name: Disable auto-merge on CI failure
+      - name: Disable auto-merge only if required check Verify build failed
         env:
           WORKFLOW_HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
           WORKFLOW_HEAD_BRANCH: ${{ github.event.workflow_run.head_branch }}
+          WORKFLOW_RUN_ID: ${{ github.event.workflow_run.id }}
         run: |
           set -euo pipefail
+          # هل فشل job «Verify build» تحديدًا في هذا التشغيل؟
+          verify_failed=$(gh api "repos/${GITHUB_REPOSITORY}/actions/runs/${WORKFLOW_RUN_ID}/jobs" \
+            --jq '[.jobs[] | select(.name=="Verify build" and .conclusion=="failure")] | length' || echo "0")
+          if [ "${verify_failed}" = "0" ]; then
+            echo "skip: CI failed but required check Verify build did not fail — keep auto-merge"
+            exit 0
+          fi
           nums=$(gh api "repos/${GITHUB_REPOSITORY}/commits/${WORKFLOW_HEAD_SHA}/pulls" \
             --jq '[.[] | select(.base.ref=="main") | .number] | join(" ")' || true)
           if [ -z "${nums}" ]; then
@@ -64,7 +74,7 @@ jobs:
           fi
           for n in $nums; do
             gh -R "$GITHUB_REPOSITORY" pr merge "$n" --disable-auto || true
-            gh -R "$GITHUB_REPOSITORY" pr comment "$n" --body "⛔ أُلغي Auto-merge لأن CI فشل." || true
+            gh -R "$GITHUB_REPOSITORY" pr comment "$n" --body "⛔ أُلغي Auto-merge لأن الفحص المطلوب Verify build فشل." || true
           done
 
   auto-merge:

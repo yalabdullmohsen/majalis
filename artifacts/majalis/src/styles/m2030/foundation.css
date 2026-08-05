@@ -3,22 +3,34 @@
  */
 
 html {
-  background:
-    radial-gradient(ellipse 70% 40% at 100% 0%, color-mix(in srgb, var(--em-500) 6%, transparent), transparent 55%),
-    var(--bg);
+  /* تحتية معتمة أولاً حتى تقيس بوابة التباين خلفية صلبة تحت الزخرفة */
+  background-color: var(--mj-bg, #F2F4F3);
+  background-image:
+    radial-gradient(ellipse 70% 40% at 100% 0%, color-mix(in srgb, var(--em-500) 6%, transparent), transparent 55%);
   color: var(--text);
 }
 
+html[data-theme="dark"],
+html.dark {
+  background-color: var(--mj-bg, #101614);
+}
+
 body {
-  background: transparent !important;
+  background-color: var(--mj-bg, #F2F4F3) !important;
+  background-image: none !important;
   color: var(--text) !important;
   font-family: var(--font-body) !important;
+}
+
+html[data-theme="dark"] body,
+html.dark body {
+  background-color: var(--mj-bg, #101614) !important;
 }
 
 #root,
 .app-shell,
 .majlisilm-app {
-  background: transparent;
+  background-color: transparent;
   color: var(--text);
 }
 

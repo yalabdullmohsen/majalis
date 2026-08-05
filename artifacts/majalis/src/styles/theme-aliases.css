@@ -1,0 +1,267 @@
+/* ═══════════ جسر الهوية — aliases فقط، بلا حذف للملفات القديمة ═══════════
+ * يُحمَّل آخر شيء في main.tsx بعد brand-v4 / m2030 / index.css
+ * فيعيد توجيه الرموز القديمة إلى لوحة --mj-* الجديدة.
+ */
+
+:root {
+  /* أسطح ونصوص */
+  --bg: var(--mj-bg);
+  --bg-elevated: var(--mj-surface);
+  --surface: var(--mj-surface);
+  --surface-2: var(--mj-surface-2);
+  --surface-3: var(--mj-surface-2);
+  --surface-muted: var(--mj-surface-2);
+  --surface-brand: var(--mj-brand-soft);
+  --surface-inverse: var(--mj-brand-deep);
+  --surface-elevated: var(--mj-surface);
+
+  --text-title: var(--mj-ink);
+  --text: var(--mj-ink);
+  --text-2: var(--mj-ink-2);
+  --text-muted: var(--mj-muted);
+  --text-meta: var(--mj-muted);
+  --text-on-brand: #ffffff;
+  --text-on-dark: #e9efec;
+  --text-brand: var(--mj-brand);
+  --text-brand-deep: var(--mj-brand-deep);
+
+  --border: var(--mj-hairline);
+  --border-strong: var(--mj-hairline);
+  --border-interactive: var(--mj-ink-2);
+  --border-brand: var(--mj-brand-soft);
+
+  --brand: var(--mj-brand);
+  --brand-hover: var(--mj-brand);
+  --brand-active: var(--mj-brand-deep);
+  --brand-soft: var(--mj-brand-soft);
+  --brand-deep: var(--mj-brand-deep);
+
+  /* ذهبي — شارات فقط */
+  --accent: var(--mj-accent);
+  --accent-soft: var(--mj-accent-soft);
+  --accent-deep: var(--mj-accent);
+
+  /* سلّم emerald القديم → لوحة جديدة */
+  --em-50: var(--mj-brand-soft);
+  --em-100: var(--mj-brand-soft);
+  --em-200: color-mix(in srgb, var(--mj-brand) 28%, var(--mj-surface));
+  --em-300: color-mix(in srgb, var(--mj-brand) 45%, var(--mj-surface));
+  --em-400: color-mix(in srgb, var(--mj-brand) 70%, var(--mj-ink));
+  --em-500: var(--mj-brand);
+  --em-600: var(--mj-brand);
+  --em-700: var(--mj-brand-deep);
+  --em-800: var(--mj-brand-deep);
+  --em-900: var(--mj-brand-deep);
+  --em-950: var(--mj-brand-deep);
+
+  --n-0: var(--mj-surface);
+  --n-50: var(--mj-bg);
+  --n-100: var(--mj-surface-2);
+  --n-200: var(--mj-hairline);
+  --n-300: var(--mj-hairline);
+  --n-400: var(--mj-muted);
+  --n-450: var(--mj-muted);
+  --n-500: var(--mj-muted);
+  --n-600: var(--mj-ink-2);
+  --n-700: var(--mj-ink-2);
+  --n-800: var(--mj-ink);
+  --n-900: var(--mj-ink);
+  --n-950: var(--mj-brand-deep);
+
+  --gold-100: var(--mj-accent-soft);
+  --gold-200: var(--mj-accent-soft);
+  --gold-300: var(--mj-accent);
+  --gold-400: var(--mj-accent);
+  --gold-500: var(--mj-accent);
+  --gold-600: var(--mj-accent);
+  --gold-700: var(--mj-accent);
+
+  /* color-* الدلالية */
+  --color-bg: var(--mj-bg);
+  --color-background: var(--mj-bg);
+  --color-bg-soft: var(--mj-surface-2);
+  --color-surface: var(--mj-surface);
+  --color-surface-elevated: var(--mj-surface);
+  --color-text: var(--mj-ink);
+  --color-muted: var(--mj-ink-2);
+  --color-text-muted: var(--mj-muted);
+  --color-primary: var(--mj-brand);
+  --color-primary-dark: var(--mj-brand-deep);
+  --color-primary-strong: var(--mj-brand-deep);
+  --color-primary-soft: var(--mj-brand-soft);
+  --color-accent: var(--mj-accent);
+  --color-border: var(--mj-hairline);
+
+  /* خطوط */
+  --font-body: var(--mj-ui);
+  --font-display: var(--mj-face);
+  --font-ui: var(--mj-ui);
+  --font-face: var(--mj-face);
+
+  /* أنصاف وظلال */
+  --r-sm: var(--mj-r-sm);
+  --r-md: var(--mj-r-md);
+  --r-lg: var(--mj-r-lg);
+  --r-xl: var(--mj-r-lg);
+  --r-full: var(--mj-r-pill);
+  --radius-card: var(--mj-r-lg);
+  --e-1: var(--mj-sh);
+  --e-2: var(--mj-sh);
+  --e-3: var(--mj-sh);
+  --shadow-soft: var(--mj-sh);
+  --shadow-card: var(--mj-sh);
+  --focus-color: var(--mj-brand);
+  --focus-ring: 0 0 0 2px var(--mj-bg), 0 0 0 4px var(--mj-brand);
+
+  /* shadcn / Radix tokens */
+  --background: var(--mj-bg);
+  --foreground: var(--mj-ink);
+  --card: var(--mj-surface);
+  --card-foreground: var(--mj-ink);
+  --popover: var(--mj-surface);
+  --popover-foreground: var(--mj-ink);
+  --primary: var(--mj-brand);
+  --primary-foreground: #ffffff;
+  --secondary: var(--mj-surface-2);
+  --secondary-foreground: var(--mj-ink);
+  --muted: var(--mj-surface-2);
+  --muted-foreground: var(--mj-muted);
+  --destructive: #9a3b22;
+  --ring: var(--mj-brand);
+  --input: var(--mj-hairline);
+
+  /* أسماء شائعة قديمة */
+  --majalis-emerald: var(--mj-brand);
+  --majalis-emerald-deep: var(--mj-brand-deep);
+  --majalis-parchment: var(--mj-bg);
+  --majalis-ink: var(--mj-ink);
+  --majalis-ink-soft: var(--mj-ink-2);
+  --majalis-line: var(--mj-hairline);
+  --majalis-panel: var(--mj-surface);
+  --ds-emerald: var(--mj-brand);
+  --ds-emerald-deep: var(--mj-brand-deep);
+  --msk-gold: var(--mj-brand);
+  --msk-gold-dim: var(--mj-brand-soft);
+  --msk-canvas: var(--mj-bg);
+  --msk-canvas-1: var(--mj-surface);
+  --msk-canvas-2: var(--mj-surface-2);
+  --msk-text: var(--mj-ink);
+  --msk-text-2: var(--mj-ink-2);
+  --msk-text-3: var(--mj-muted);
+  --msk-border: var(--mj-hairline);
+}
+
+html[data-theme="dark"],
+html.dark,
+[data-theme="dark"],
+.dark {
+  --bg: var(--mj-bg);
+  --bg-elevated: var(--mj-surface);
+  --surface: var(--mj-surface);
+  --surface-2: var(--mj-surface-2);
+  --surface-3: var(--mj-surface-2);
+  --surface-muted: var(--mj-surface-2);
+  --surface-brand: var(--mj-brand-soft);
+  --surface-inverse: var(--mj-bg);
+  --surface-elevated: var(--mj-surface);
+
+  --text-title: var(--mj-ink);
+  --text: var(--mj-ink);
+  --text-2: var(--mj-ink-2);
+  --text-muted: var(--mj-muted);
+  --text-meta: var(--mj-muted);
+  --text-on-brand: #0c1512;
+  --text-on-dark: var(--mj-ink);
+  --text-brand: var(--mj-brand);
+  --text-brand-deep: var(--mj-brand);
+
+  --border: var(--mj-hairline);
+  --border-strong: var(--mj-hairline);
+  --border-interactive: var(--mj-ink-2);
+  --border-brand: var(--mj-brand-soft);
+
+  --brand: var(--mj-brand);
+  --brand-hover: var(--mj-brand);
+  --brand-active: var(--mj-brand);
+  --brand-soft: var(--mj-brand-soft);
+  --brand-deep: var(--mj-brand-deep);
+  --accent: var(--mj-accent);
+  --accent-soft: var(--mj-accent-soft);
+
+  --em-50: var(--mj-brand-soft);
+  --em-100: var(--mj-brand-soft);
+  --em-500: var(--mj-brand);
+  --em-600: var(--mj-brand);
+  --em-700: var(--mj-brand);
+  --em-800: var(--mj-brand-deep);
+  --em-900: var(--mj-brand-deep);
+  --em-950: var(--mj-bg);
+
+  --n-0: var(--mj-surface);
+  --n-50: var(--mj-bg);
+  --n-100: var(--mj-surface-2);
+  --n-900: var(--mj-ink);
+
+  --color-bg: var(--mj-bg);
+  --color-background: var(--mj-bg);
+  --color-surface: var(--mj-surface);
+  --color-text: var(--mj-ink);
+  --color-muted: var(--mj-ink-2);
+  --color-primary: var(--mj-brand);
+  --color-border: var(--mj-hairline);
+
+  --background: var(--mj-bg);
+  --foreground: var(--mj-ink);
+  --card: var(--mj-surface);
+  --card-foreground: var(--mj-ink);
+  --primary: var(--mj-brand);
+  --primary-foreground: #0c1512;
+  --secondary: var(--mj-surface-2);
+  --secondary-foreground: var(--mj-ink);
+  --muted: var(--mj-surface-2);
+  --muted-foreground: var(--mj-muted);
+  --ring: var(--mj-brand);
+  --border: var(--mj-hairline);
+
+  --majalis-emerald: var(--mj-brand);
+  --majalis-emerald-deep: var(--mj-brand-deep);
+  --majalis-parchment: var(--mj-bg);
+  --msk-gold: var(--mj-brand);
+  --msk-canvas: var(--mj-bg);
+  --msk-text: var(--mj-ink);
+}
+
+/* تهدئة تدرّج الهيرو على الرئيسية — يعتمد على --em-* المُعاد توجيهها */
+.m2030-hero {
+  background: linear-gradient(160deg, var(--mj-brand-deep) 0%, var(--mj-brand) 55%, var(--mj-bg) 140%) !important;
+  color: var(--text-on-dark) !important;
+}
+
+.bottom-nav--m2030,
+.bottom-nav {
+  background: var(--mj-surface) !important;
+  border-top-color: var(--mj-hairline) !important;
+}
+.bottom-nav__tab.is-active,
+.bottom-nav__tab[aria-current="page"] {
+  color: var(--mj-brand) !important;
+}
+
+.top-section-bar,
+.navbar-v3,
+.nav-bar {
+  background: var(--mj-surface);
+  border-color: var(--mj-hairline);
+  color: var(--mj-ink);
+}
+
+.gl-cat--active {
+  background: var(--mj-brand) !important;
+  border-color: var(--mj-brand) !important;
+  color: #fff !important;
+}
+
+html[data-theme="dark"] .gl-cat--active,
+html.dark .gl-cat--active {
+  color: #0c1512 !important;
+}

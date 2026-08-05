@@ -1,6 +1,5 @@
 import { AlertTriangle, RefreshCw } from "lucide-react";
 import { C } from "@/lib/theme";
-import { goBackOrFallback } from "@/lib/navigation-back";
 
 /* ── Skeleton primitives ── */
 
@@ -85,40 +84,7 @@ export function SkeletonPage({ title }: { title?: string } = {}) {
   );
 }
 
-export function PageHeader({
-  eyebrow,
-  title,
-  subtitle,
-  showBack = true,
-}: {
-  eyebrow?: string;
-  title: string;
-  subtitle?: string;
-  showBack?: boolean;
-}) {
-  const currentPath = window.location.pathname;
-  return (
-    <header className="ds-page-header" dir="rtl">
-      {showBack && (
-        <button
-          type="button"
-          className="ds-page-back-btn"
-          onClick={() => goBackOrFallback(currentPath)}
-          aria-label="رجوع"
-        >
-          → رجوع
-        </button>
-      )}
-      {eyebrow && <p className="ds-page-header__eyebrow">{eyebrow}</p>}
-      <h1 className="ds-page-header__title">{title}</h1>
-      {subtitle && <p className="ds-page-header__subtitle">{subtitle}</p>}
-    </header>
-  );
-}
-
-export function Card({ children, className = "" }: { children: React.ReactNode; className?: string }) {
-  return <div className={`ui-card ds-card ${className}`.trim()}>{children}</div>;
-}
+export { PageHeader, Card, ListRow, Button as MjButton, Badge, Progress, SearchField, EmptyState } from "@/components/ui/mj";
 
 export function Loading({ label = "جارٍ التحميل…", title }: { label?: string; title?: string } = {}) {
   return (

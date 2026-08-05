@@ -273,6 +273,14 @@
 }
 .tw-related__link:hover { background: #F0F7F4; border-color: var(--majalis-emerald,#143F35); }
 
+/* خلفية الرابط بيضاء ثابتة — لا نعناعي ليلي فوق أبيض */
+html[data-theme="dark"] .tw-related__link,
+html.dark .tw-related__link {
+  color: #143F35;
+  background: #fff;
+  border-color: #E8E7E2;
+}
+
 @media (max-width: 640px) {
   .tw-athaar-grid { grid-template-columns: 1fr; }
   .tw-awqat-grid  { grid-template-columns: 1fr; }

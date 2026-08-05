@@ -229,7 +229,7 @@ export default function LessonDetailPage({
   const addedDate = lesson?.created_at || lesson?.updated_at || unified.gregorianDate;
 
   return (
-    <div className="page-shell narrow lesson-detail-page">
+    <div className="page-shell narrow lesson-detail-page mj-page">
       <ReadingProgressBar />
       <nav className="lesson-detail-breadcrumb" aria-label="مسار التصفح">
         <Link href="/">الرئيسية</Link>
@@ -244,7 +244,7 @@ export default function LessonDetailPage({
       </Link>
 
       <SectionErrorBoundary name="تفاصيل الدرس">
-      <article className="ui-card lesson-detail-card">
+      <article className="ui-card lesson-detail-card mj-card mj-card--raised">
         <div className={`lesson-detail-hero${hasSheikhPhoto ? "" : " lesson-detail-hero--text-only"}`}>
           {hasSheikhPhoto && (
             <OptimizedSheikhImage

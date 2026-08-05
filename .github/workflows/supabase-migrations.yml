@@ -74,11 +74,13 @@ jobs:
 
       - name: Link project
         working-directory: ${{ steps.paths.outputs.workdir }}
+        # هجرة DB مستقلة عن بوابة دمج الواجهة — لا تفشل الـCI عند غياب الأسرار
+        continue-on-error: true
         run: |
           set -euo pipefail
           if [ -z "${SUPABASE_ACCESS_TOKEN:-}" ] || [ -z "${SUPABASE_PROJECT_ID:-}" ]; then
-            echo "::error::SUPABASE_ACCESS_TOKEN and SUPABASE_PROJECT_ID secrets are required"
-            exit 1
+            echo "::warning::تخطي هجرة Supabase: أسرار SUPABASE_ACCESS_TOKEN / SUPABASE_PROJECT_ID غير موجودة. طبّق SQL يدويًا من supabase/migrations إن لزم."
+            exit 0
           fi
           supabase link --project-ref "$SUPABASE_PROJECT_ID"
 

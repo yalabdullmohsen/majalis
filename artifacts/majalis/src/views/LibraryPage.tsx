@@ -8,7 +8,7 @@ import { getLibrary } from "@/lib/supabase";
 import { RequestManager } from "@/lib/request-manager";
 import { LIBRARY_CATEGORIES } from "@/lib/library-catalog";
 import { getLibraryCatalog } from "@/lib/library-service";
-import { Chip } from "@/components/ui-common";
+import { Chip, SearchField, Badge } from "@/components/ui-common";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { PageLoadingGuard } from "@/components/PageLoadingGuard";
 import { ContentHubLayout } from "@/components/layout/ContentHubLayout";
@@ -35,7 +35,7 @@ function BookCard({ item, view }: { item: any; view: ViewMode }) {
   return (
     <Link
       href={`/library/${item.id}`}
-      className={`lib-card lib-card--${view} ui-card ui-card--clickable`}
+      className={`lib-card lib-card--${view} ui-card ui-card--clickable mj-card mj-card--link`}
       aria-label={`${item.title}${item.author || item.author_name ? ` — ${item.author || item.author_name}` : ""}`}
     >
       {/* غلاف الكتاب */}
@@ -61,7 +61,7 @@ function BookCard({ item, view }: { item: any; view: ViewMode }) {
       {/* محتوى البطاقة */}
       <div className="lib-card-body">
         {item.category && (
-          <span className="lib-card-category page-tag">{item.category}</span>
+          <Badge tone="brand" className="lib-card-category">{item.category}</Badge>
         )}
         <h3 className="lib-card-title">{item.title}</h3>
         {(item.author || item.author_name) && (
@@ -182,11 +182,10 @@ export default function LibraryPage({
 
   const filtersPanel = (
     <>
-      <input
+      <SearchField
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         placeholder="ابحث في المكتبة..."
-        className="page-search-input full ds-input"
         aria-label="بحث في المكتبة"
       />
       <div className="page-chip-row library-category-chips">

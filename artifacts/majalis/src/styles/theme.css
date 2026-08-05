@@ -1,0 +1,344 @@
+/* ═══════════ هوية مجلس علم — طبقة الرموز (identity-v2) ═══════════
+ * تُحمَّل أولاً. القيم حرفية هنا وفي @theme لـ Tailwind v4.
+ * لا تحذف الملفات القديمة — انظر theme-aliases.css لإعادة الربط.
+ */
+
+@theme {
+  --color-bg: #F2F4F3;
+  --color-surface: #FFFFFF;
+  --color-surface-2: #E9EDEB;
+  --color-hairline: #E3E8E6;
+  --color-ink: #16241E;
+  --color-ink-2: #4A5A53;
+  --color-muted: #6B7B74;
+  --color-brand: #1F7A5A;
+  --color-brand-soft: #E4F0EA;
+  --color-brand-deep: #123F2E;
+  --color-accent: #B08A3E;
+  --color-accent-soft: #F5EEDF;
+
+  --font-face: "Amiri", serif;
+  --font-ui: "Tajawal", system-ui, sans-serif;
+  --font-num: "Alexandria", sans-serif;
+
+  --radius-mj-sm: 12px;
+  --radius-mj-md: 16px;
+  --radius-mj-lg: 22px;
+  --radius-mj-pill: 999px;
+
+  --shadow-mj: 0 10px 26px -18px rgba(11, 32, 24, 0.45);
+
+  --spacing-mj-1: 4px;
+  --spacing-mj-2: 8px;
+  --spacing-mj-3: 12px;
+  --spacing-mj-4: 16px;
+  --spacing-mj-5: 20px;
+  --spacing-mj-6: 24px;
+  --spacing-mj-8: 32px;
+
+  --text-mj-display: 40px;
+  --text-mj-h1: 25px;
+  --text-mj-h2: 19px;
+  --text-mj-body: 13.5px;
+  --text-mj-small: 11.5px;
+  --text-mj-tiny: 9.5px;
+}
+
+:root {
+  --mj-bg: #F2F4F3;
+  --mj-surface: #FFFFFF;
+  --mj-surface-2: #E9EDEB;
+  --mj-hairline: #E3E8E6;
+  --mj-ink: #16241E;
+  --mj-ink-2: #4A5A53;
+  --mj-muted: #6B7B74;
+  --mj-brand: #1F7A5A;
+  --mj-brand-soft: #E4F0EA;
+  --mj-brand-deep: #123F2E;
+  --mj-accent: #B08A3E;
+  --mj-accent-soft: #F5EEDF;
+  --mj-r-sm: 12px;
+  --mj-r-md: 16px;
+  --mj-r-lg: 22px;
+  --mj-r-pill: 999px;
+  --mj-sh: 0 10px 26px -18px rgba(11, 32, 24, 0.45);
+  --mj-s1: 4px;
+  --mj-s2: 8px;
+  --mj-s3: 12px;
+  --mj-s4: 16px;
+  --mj-s5: 20px;
+  --mj-s6: 24px;
+  --mj-s8: 32px;
+  --mj-face: "Amiri", serif;
+  --mj-ui: "Tajawal", system-ui, sans-serif;
+  --mj-num: "Alexandria", sans-serif;
+  --mj-fs-display: 40px;
+  --mj-fs-h1: 25px;
+  --mj-fs-h2: 19px;
+  --mj-fs-body: 13.5px;
+  --mj-fs-small: 11.5px;
+  --mj-fs-tiny: 9.5px;
+}
+
+/* الوضع الليلي — ThemePreferenceProvider يضع data-theme و.dark معًا */
+html[data-theme="dark"],
+html.dark,
+[data-theme="dark"],
+.dark {
+  --mj-bg: #101614;
+  --mj-surface: #17201C;
+  --mj-surface-2: #1E2925;
+  --mj-hairline: #26332D;
+  --mj-ink: #E9EFEC;
+  --mj-ink-2: #B4C2BC;
+  --mj-muted: #8A9A93;
+  --mj-brand: #4FB48B;
+  --mj-brand-soft: #183329;
+  --mj-brand-deep: #0C1512;
+  --mj-accent: #D2A445;
+  --mj-accent-soft: #332A16;
+  --mj-sh: 0 10px 26px -18px rgba(0, 0, 0, 0.7);
+
+  --color-bg: #101614;
+  --color-surface: #17201C;
+  --color-surface-2: #1E2925;
+  --color-hairline: #26332D;
+  --color-ink: #E9EFEC;
+  --color-ink-2: #B4C2BC;
+  --color-muted: #8A9A93;
+  --color-brand: #4FB48B;
+  --color-brand-soft: #183329;
+  --color-brand-deep: #0C1512;
+  --color-accent: #D2A445;
+  --color-accent-soft: #332A16;
+  --shadow-mj: 0 10px 26px -18px rgba(0, 0, 0, 0.7);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ═══════════ المكوّنات المشتركة mj-* ═══════════ */
+
+.mj-page {
+  max-width: 1180px;
+  margin-inline: auto;
+  padding: var(--mj-s5) var(--mj-s4) 96px;
+}
+
+.mj-page-head {
+  margin-bottom: var(--mj-s5);
+}
+.mj-eyebrow {
+  font-family: var(--mj-num);
+  font-size: var(--mj-fs-tiny);
+  letter-spacing: 0.18em;
+  color: var(--mj-brand);
+  margin: 0 0 var(--mj-s2);
+}
+.mj-page-head h1 {
+  margin: 0 0 var(--mj-s1);
+  font-family: var(--mj-face);
+  font-size: var(--mj-fs-h1);
+  font-weight: 700;
+  color: var(--mj-ink);
+}
+.mj-page-head p {
+  margin: 0;
+  font-size: var(--mj-fs-small);
+  color: var(--mj-muted);
+}
+
+.mj-card {
+  background: var(--mj-surface);
+  border-radius: var(--mj-r-lg);
+  padding: var(--mj-s5);
+  border: 1px solid transparent;
+  color: var(--mj-ink);
+}
+.mj-card--link {
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+.mj-card--link:hover {
+  border-color: var(--mj-brand);
+}
+.mj-card--raised {
+  box-shadow: var(--mj-sh);
+}
+.mj-card h2,
+.mj-card h3 {
+  margin-bottom: var(--mj-s1);
+  font-family: var(--mj-face);
+}
+.mj-card p {
+  margin: 0;
+  color: var(--mj-ink-2);
+}
+
+.mj-grid {
+  display: grid;
+  gap: var(--mj-s3);
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+}
+.mj-grid--2 {
+  grid-template-columns: 1fr 1fr;
+}
+
+.mj-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--mj-s3);
+  width: 100%;
+  text-align: start;
+  font-family: inherit;
+  font-size: var(--mj-fs-body);
+  color: inherit;
+  background: var(--mj-surface);
+  border: 1px solid transparent;
+  border-radius: var(--mj-r-sm);
+  padding: var(--mj-s4);
+  margin-bottom: var(--mj-s2);
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+.mj-row:hover {
+  border-color: var(--mj-brand);
+}
+.mj-row em {
+  font-style: normal;
+  display: block;
+  margin-top: 2px;
+  font-size: var(--mj-fs-small);
+  color: var(--mj-muted);
+}
+
+.mj-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--mj-s2);
+  border: 0;
+  cursor: pointer;
+  font-family: var(--mj-ui);
+  font-size: var(--mj-fs-body);
+  font-weight: 500;
+  padding: 13px 24px;
+  border-radius: var(--mj-r-md);
+  background: var(--mj-brand);
+  color: #fff;
+  transition: transform 0.12s ease;
+}
+.mj-btn:active {
+  transform: scale(0.97);
+}
+.mj-btn--ghost {
+  background: var(--mj-surface);
+  color: var(--mj-ink);
+  border: 1px solid var(--mj-hairline);
+}
+.mj-btn--soft {
+  background: var(--mj-brand-soft);
+  color: var(--mj-brand);
+}
+.mj-btn--pill {
+  border-radius: var(--mj-r-pill);
+}
+.mj-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+html[data-theme="dark"] .mj-btn,
+html.dark .mj-btn {
+  color: #0c1512;
+}
+html[data-theme="dark"] .mj-btn--ghost,
+html.dark .mj-btn--ghost {
+  color: var(--mj-ink);
+}
+
+.mj-badge {
+  font-family: var(--mj-num);
+  font-size: var(--mj-fs-tiny);
+  border-radius: var(--mj-r-pill);
+  padding: 4px 10px;
+  background: var(--mj-surface-2);
+  color: var(--mj-muted);
+  white-space: nowrap;
+}
+.mj-badge--brand {
+  background: var(--mj-brand-soft);
+  color: var(--mj-brand);
+}
+.mj-badge--accent {
+  background: var(--mj-accent-soft);
+  color: var(--mj-accent);
+}
+
+.mj-progress {
+  height: 5px;
+  background: var(--mj-surface-2);
+  border-radius: var(--mj-r-pill);
+  overflow: hidden;
+}
+.mj-progress i {
+  display: block;
+  height: 100%;
+  background: var(--mj-brand);
+  transition: width 0.26s ease;
+}
+
+.mj-search {
+  width: 100%;
+  background: var(--mj-surface);
+  border: 1px solid var(--mj-hairline);
+  border-radius: var(--mj-r-pill);
+  padding: 11px 18px;
+  font-family: var(--mj-ui);
+  font-size: var(--mj-fs-small);
+  color: var(--mj-ink);
+}
+.mj-search::placeholder {
+  color: var(--mj-muted);
+}
+
+.mj-empty {
+  text-align: center;
+  padding: 36px 20px;
+  background: var(--mj-surface);
+  border-radius: var(--mj-r-md);
+}
+.mj-empty .mj-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--mj-brand);
+  margin: 0 auto var(--mj-s3);
+}
+.mj-empty b {
+  display: block;
+  font-family: var(--mj-face);
+  font-size: 19px;
+  margin-bottom: var(--mj-s1);
+}
+.mj-empty span {
+  font-size: var(--mj-fs-small);
+  color: var(--mj-muted);
+}
+
+/* التنقل — طبقات مساعدة فوق NavBar/BottomNav الحاليين */
+.mj-nav-skin {
+  background: var(--mj-surface);
+  border-color: var(--mj-hairline);
+  color: var(--mj-ink);
+}
+.mj-nav-skin a[aria-current="page"],
+.mj-nav-skin .is-active {
+  color: var(--mj-brand);
+}
