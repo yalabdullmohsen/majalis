@@ -115,15 +115,15 @@ export function buildHadithStatsSnapshot(): HadithStatsSnapshot {
   const booksTotal = s.bukhariBooks + s.muslimBooks;
 
   return {
-    updatedLabel: "محدَّثة من مرجع الصحيحين والبذرة المنسّقة ومصطلح الحديث",
+    updatedLabel: "من الصحيحين ومصطلح الحديث",
     disclaimer:
-      "درجة الصحيحين = عضوية البخاري ومسلم. البطاقات المنسّقة للتحذير والتوعية تحمل تخريجًا منسوبًا؛ لا تُخلط مع الصحة المطلقة.",
+      "الصحة بعضوية البخاري ومسلم. روايات التحذير تحمل تخريجًا منسوبًا.",
     kpis: [
       {
         id: "sahihayn",
         label: "حديث في الصحيحين",
         value: s.sahihayn,
-        hint: "مرجع الصحة بالملكية",
+        hint: "من الصحيحين",
         href: "/hadith/sahih",
         tone: "sahih",
         pctOf: sectionTotal,
@@ -148,7 +148,7 @@ export function buildHadithStatsSnapshot(): HadithStatsSnapshot {
       },
       {
         id: "curated",
-        label: "بطاقة منسّقة",
+        label: "رواية مبيَّنة",
         value: curatedTotal,
         hint: `صحيح ${formatHadithPct(s.curatedSahih, curatedTotal)} · تحذير ${formatHadithPct(s.curatedDaif + s.curatedMawdu, curatedTotal)}`,
         tone: "sand",
@@ -187,16 +187,16 @@ export function buildHadithStatsSnapshot(): HadithStatsSnapshot {
         total: sectionTotal,
         tone: "mawdu",
         href: "/hadith/mawdu",
-        note: `${formatHadithPct(s.curatedMawdu, sectionTotal)} · ${formatHadithPct(s.curatedMawdu, curatedTotal)} من المنسّق`,
+        note: formatHadithPct(s.curatedMawdu, sectionTotal),
       },
       {
         id: "makthub",
-        label: "المكذوب",
+        label: "الضعيف",
         value: s.curatedDaif,
         total: sectionTotal,
         tone: "daif",
         href: "/hadith/daif",
-        note: `${formatHadithPct(s.curatedDaif, sectionTotal)} · ${formatHadithPct(s.curatedDaif, curatedTotal)} من المنسّق`,
+        note: formatHadithPct(s.curatedDaif, sectionTotal),
       },
     ],
     sahihaynBars: [
@@ -291,8 +291,8 @@ export function buildHadithStatsSnapshot(): HadithStatsSnapshot {
       { id: "muslim", label: "مسلم", value: s.muslim, tone: "sahih", href: "/hadith/books" },
     ],
     curatedRing: [
-      { id: "c-sahih", label: "صحيح منسّق", value: s.curatedSahih, tone: "sahih", href: "/hadith/sahih" },
-      { id: "c-daif", label: "المكذوب", value: s.curatedDaif, tone: "daif", href: "/hadith/daif" },
+      { id: "c-sahih", label: "صحيح", value: s.curatedSahih, tone: "sahih", href: "/hadith/sahih" },
+      { id: "c-daif", label: "الضعيف", value: s.curatedDaif, tone: "daif", href: "/hadith/daif" },
       { id: "c-mawdu", label: "موضوع", value: s.curatedMawdu, tone: "mawdu", href: "/hadith/mawdu" },
     ],
     mustalahRing: [
@@ -308,18 +308,13 @@ export function buildHadithStatsSnapshot(): HadithStatsSnapshot {
       },
       {
         label: "مرجع الصحة",
-        value: "عضوية",
-        hint: "الصحيحان بلا درجات ملفّقة",
+        value: "الصحيحان",
+        hint: "بلا درجات ملفّقة",
       },
       {
-        label: "عرض البطاقة",
+        label: "عرض القائمة",
         value: "متن",
         hint: "السند والتخريج في التفاصيل",
-      },
-      {
-        label: "تدقيق الجودة",
-        value: `${arNum(s.auditPasses)} تمريرات`,
-        hint: "اكتمال · نص · تخريج · عيّنات",
       },
     ],
     methods: [

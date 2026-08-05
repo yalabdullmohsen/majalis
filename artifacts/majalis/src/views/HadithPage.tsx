@@ -7,7 +7,7 @@ import { truncateAtWord } from "@/lib/utils";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { getVerifiedHadith } from "@/lib/supabase";
 import { RequestManager } from "@/lib/request-manager";
-import { arabicMatchAny } from "@/lib/arabic-search";
+import { normalizeArabic } from "@/lib/arabic-search";
 import {
   compareHadithAccess,
   extractDisplayMatn,
@@ -429,9 +429,9 @@ function HadithDetailModal({ h, onClose }: { h: HadithItem; onClose: () => void 
   const takhrijText = meta.takhrij ? String(meta.takhrij) : h.source_name;
   const methodLabel =
     meta.takhrij_method === "membership"
-      ? "عضوية الصحيحين"
+      ? "من الصحيحين"
       : meta.takhrij_method === "curated+membership"
-        ? "عضوية الصحيحين + تخريج منسّق"
+        ? "من الصحيحين · مع تخريج"
         : meta.muhaddith
           ? `تخريج منسوب (${String(meta.muhaddith)})`
           : "تخريج مرجعي";
@@ -650,24 +650,24 @@ export const HADITH_CLASS_META: Record<HadithClass, {
   eyebrow: string; title: string; subtitle: string; empty: string; countUnit: string;
 }> = {
   sahih: {
-    eyebrow: "مرجع الصحيحين",
+    eyebrow: "",
     title: "الأحاديث الصحيحة",
-    subtitle: "مرجع صحيح البخاري (٧٥٨٠) وصحيح مسلم (٧٣٦٠) كاملاً — الصحة بعضوية الصحيحين. البطاقات تعرض المتن فقط؛ السند والتخريج في التفاصيل.",
+    subtitle: "",
     empty: "لا توجد أحاديث في هذا التصنيف.",
     countUnit: "حديث",
   },
   daif: {
-    eyebrow: "التمييز والتحذير",
+    eyebrow: "",
     title: "الأحاديث الضعيفة",
-    subtitle: "روايات مشهورة على الألسنة، كلٌّ مقرونةٌ بدرجتها وتخريجها المنسوب — فيها الحسن الذي يُعمل به، وفيها الضعيف، وفيها ما لا تصح نسبته إلى النبي ﷺ. فالمعتمَد درجةُ كلِّ بطاقة وحدَها، لا حكمٌ جمليٌّ على القسم.",
-    empty: "لا تُدرَج في هذا القسم رواية إلا بتخريج ودرجة منسوبَين إلى إمام معتمد.",
+    subtitle: "كل رواية بدرجتها وتخريجها.",
+    empty: "لا تُدرَج رواية إلا بتخريج ودرجة منسوبَين.",
     countUnit: "حديث",
   },
   mawdu: {
-    eyebrow: "التحذير والبيان",
+    eyebrow: "",
     title: "الأحاديث الموضوعة",
-    subtitle: "أشهر الموضوعات على النبي ﷺ مع بيان من حكم بالوضع — للتحذير لا للاحتجاج.",
-    empty: "لا يُذكر الموضوع إلا مقروناً ببيان وضعه ومَن حكم عليه من الأئمة. والقاعدة: «من حدّث عني بحديث يُرى أنه كذب فهو أحد الكاذبين» — رواه مسلم.",
+    subtitle: "للتحذير لا للاحتجاج.",
+    empty: "لا يُذكر الموضوع إلا مع بيان من حكم بوضعه.",
     countUnit: "حديث موضوع",
   },
 };
@@ -769,34 +769,67 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
     return ["الكل", ...sorted];
   }, [items]);
 
+  /** فهرس مطبّع يُبنى مرة عند تحميل القائمة — لا تطبيع عربي في كل ضغطة. */
+  const searchIndex = useMemo(() => {
+    return items.map((h) => {
+      const matn = normalizeArabic([extractDisplayMatn(h.title, h.text), h.title].filter(Boolean).join(" "));
+      const takhrij = normalizeArabic([
+        h.source_name,
+        h.explanation,
+        String(h.metadata?.takhrij ?? ""),
+        String(h.metadata?.muhaddith ?? ""),
+        String(h.metadata?.takhrij_method ?? ""),
+        h.grade,
+        h.chapter,
+        h.hadith_number,
+        h.collection ? collectionLabel(h.collection) : "",
+        h.metadata?.book != null ? `الكتاب ${h.metadata.book}` : "",
+        h.metadata?.in_book != null ? `داخله ${h.metadata.in_book}` : "",
+      ].filter(Boolean).join(" "));
+      const full = normalizeArabic([
+        h.text,
+        extractDisplayMatn(h.title, h.text),
+        h.title,
+        h.narrator,
+        h.source_name,
+        h.explanation,
+        h.chapter,
+        h.hadith_number,
+        String(h.metadata?.takhrij ?? ""),
+        ...(h.keywords ?? []),
+      ].filter(Boolean).join(" "));
+      const categoryHay = normalizeArabic([
+        ...(h.keywords ?? []),
+        h.chapter,
+        h.title,
+        extractDisplayMatn(h.title, h.text),
+        h.text,
+        String(h.metadata?.takhrij ?? ""),
+        h.explanation,
+      ].filter(Boolean).join(" "));
+      return { id: h.id, matn, takhrij, full, categoryHay, item: h };
+    });
+  }, [items]);
+
   const displayItems = useMemo(() => {
-    let list = items;
+    let rows = searchIndex;
     if (activeCollection !== "الكل") {
-      list = list.filter((h) => h.collection === activeCollection);
+      rows = rows.filter((r) => r.item.collection === activeCollection);
     }
     if (activeCategory !== "الكل") {
       const cat = CATEGORIES.find((c) => c.id === activeCategory);
       if (cat?.keys) {
-        list = list.filter((h) => {
-          const hay = [
-            ...(h.keywords ?? []),
-            h.chapter,
-            h.title,
-            extractDisplayMatn(h.title, h.text),
-            h.text,
-            String(h.metadata?.takhrij ?? ""),
-            h.explanation,
-          ];
-          return cat.keys!.some((k) => arabicMatchAny(hay, k));
-        });
+        const keys = cat.keys.map((k) => normalizeArabic(k)).filter(Boolean);
+        rows = rows.filter((r) => keys.some((k) => r.categoryHay.includes(k)));
       }
     }
     if (debouncedNumber.trim()) {
-      list = list.filter((h) => hadithNumberMatches(h.hadith_number, debouncedNumber));
+      rows = rows.filter((r) => hadithNumberMatches(r.item.hadith_number, debouncedNumber));
     }
     if (debouncedBook.trim()) {
       const bq = normalizeHadithDigits(debouncedBook);
-      list = list.filter((h) => {
+      rows = rows.filter((r) => {
+        const h = r.item;
         const book = h.metadata?.book != null ? String(h.metadata.book) : "";
         const chapterDigits = normalizeHadithDigits(h.chapter || "");
         return (book && (book === bq || book.startsWith(bq))) ||
@@ -805,60 +838,38 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
     }
     if (debouncedInBook.trim()) {
       const iq = normalizeHadithDigits(debouncedInBook);
-      list = list.filter((h) => {
+      rows = rows.filter((r) => {
+        const h = r.item;
         const inBook = h.metadata?.in_book != null ? String(h.metadata.in_book) : "";
         const arabicNum = h.metadata?.arabic_number != null ? String(h.metadata.arabic_number) : "";
         return hadithNumberMatches(inBook, iq) || hadithNumberMatches(arabicNum, iq);
       });
     }
     if (debouncedSearch.trim()) {
-      const q = debouncedSearch.trim();
-      list = list.filter((h) => {
-        if (searchScope === "matn") {
-          return arabicMatchAny([extractDisplayMatn(h.title, h.text), h.title], q);
-        }
-        if (searchScope === "number") {
-          return (
-            hadithNumberMatches(h.hadith_number, q) ||
-            hadithNumberMatches(String(h.metadata?.book ?? ""), q) ||
-            hadithNumberMatches(String(h.metadata?.in_book ?? ""), q) ||
-            hadithNumberMatches(String(h.metadata?.arabic_number ?? ""), q)
-          );
-        }
-        if (searchScope === "takhrij") {
-          return arabicMatchAny([
-            h.source_name,
-            h.explanation,
-            String(h.metadata?.takhrij ?? ""),
-            String(h.metadata?.muhaddith ?? ""),
-            String(h.metadata?.takhrij_method ?? ""),
-            h.grade,
-            h.chapter,
-            h.hadith_number,
-            h.collection ? collectionLabel(h.collection) : "",
-            h.metadata?.book != null ? `الكتاب ${h.metadata.book}` : "",
-            h.metadata?.in_book != null ? `داخله ${h.metadata.in_book}` : "",
-          ], q);
-        }
-        return arabicMatchAny([
-          h.text,
-          extractDisplayMatn(h.title, h.text),
-          h.title,
-          h.narrator,
-          h.source_name,
-          h.explanation,
-          h.chapter,
-          h.hadith_number,
-          String(h.metadata?.takhrij ?? ""),
-          ...(h.keywords ?? []),
-        ], q);
-      });
+      const q = normalizeArabic(debouncedSearch.trim());
+      if (q) {
+        rows = rows.filter((r) => {
+          const h = r.item;
+          if (searchScope === "matn") return r.matn.includes(q);
+          if (searchScope === "number") {
+            return (
+              hadithNumberMatches(h.hadith_number, debouncedSearch) ||
+              hadithNumberMatches(String(h.metadata?.book ?? ""), debouncedSearch) ||
+              hadithNumberMatches(String(h.metadata?.in_book ?? ""), debouncedSearch) ||
+              hadithNumberMatches(String(h.metadata?.arabic_number ?? ""), debouncedSearch)
+            );
+          }
+          if (searchScope === "takhrij") return r.takhrij.includes(q);
+          return r.full.includes(q);
+        });
+      }
     }
+    let list = rows.map((r) => r.item);
     if (sortMode !== "default") {
       list = [...list].sort((a, b) => compareHadithAccess(a, b, sortMode));
     }
     return list;
-  }, [items, activeCollection, activeCategory, debouncedNumber, debouncedBook, debouncedInBook, debouncedSearch, sortMode, searchScope]);
+  }, [searchIndex, activeCollection, activeCategory, debouncedNumber, debouncedBook, debouncedInBook, debouncedSearch, sortMode, searchScope]);
 
   const totalPages = Math.max(1, Math.ceil(displayItems.length / PAGE_SIZE));
   const safePage = Math.min(page, totalPages);
@@ -878,7 +889,7 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
       />
 
       <div className="hadith-filter-section">
-        <p className="hadith-filter-label">نطاق البحث (طرق التخريج الحديثة)</p>
+        <p className="hadith-filter-label">نطاق البحث</p>
         <div className="content-hub-chips" role="group" aria-label="نطاق البحث">
           {([
             ["matn", "المتن فقط"],
@@ -1042,7 +1053,7 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
 
       {authenticityClass === "sahih" && <HadithStatsPanel compact className="hadith-stats-inline" />}
 
-      <div className="hadith-access-bar" aria-label="بحث حديث مبسّط">
+      <div className="hadith-access-bar" aria-label="بحث في الأحاديث">
         <div className="hadith-access-bar__row">
           <label className="hadith-access-bar__label" htmlFor={`hadith-q-${authenticityClass}`}>بحث</label>
           <input
@@ -1125,7 +1136,7 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
         <>
           {authenticityClass === "sahih" && (
             <p className="hadith-source-note" role="note">
-              المرجع الكامل: صحيح البخاري (٧٥٨٠) وصحيح مسلم (٧٣٦٠) — الصحة بعضوية الصحيحين.
+              صحيح البخاري ومسلم — المتن في القائمة، والسند في التفاصيل.
               العرض الخارجي للمتون فقط؛ السند والتخريج في التفاصيل.{" "}
               <Link href="/hadith/books">تصفح بالأبواب</Link>
             </p>
@@ -1170,7 +1181,7 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
         </aside>
       )}
 
-      <FilterBottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} aria-label="بحث وتصفية">
+      <FilterBottomSheet open={filtersOpen} onClose={() => setFiltersOpen(false)} title="بحث وتصفية">
         {filtersPanel}
       </FilterBottomSheet>
 
@@ -1237,11 +1248,11 @@ export default function HadithPage() {
       <PageHeader
         eyebrow="السنة النبوية الشريفة"
         title="الأحاديث النبوية"
-        subtitle="ثلاثة أقسام مرتّبة: الصحيح ثم الموضوع ثم الضعيف — مع إحصائيات علوم الحديث وبحث حديث مبسّط."
+        subtitle="الصحيح ثم الموضوع ثم الضعيف."
       />
       <p className="hadith-memorize-cta" style={{ margin: "0 0 1rem", textAlign: "center" }}>
         <Link href="/memorize" className="hadith-books-banner__btn">
-          احفظ الأربعين بالبطاقات
+          احفظ الأربعين النووية
         </Link>
       </p>
       <HadithStatsPanel />
@@ -1259,7 +1270,7 @@ export default function HadithPage() {
         </Link>
         <Link href="/hadith/mawdu" className="hadith-hub-gate hadith-hub-gate--mawdu">
           <strong>الموضوع</strong>
-          <span>{formatHadithStat(HADITH_STATS_SOURCE.curatedMawdu)} بطاقة تحذير منسّقة</span>
+          <span>{formatHadithStat(HADITH_STATS_SOURCE.curatedMawdu)} حديث موضوع مع بيان</span>
           <em>للتمييز لا للاحتجاج ←</em>
         </Link>
         <Link href="/hadith/daif" className="hadith-hub-gate hadith-hub-gate--daif">

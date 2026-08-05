@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "wouter";
-import { Search, Star, BookOpen, ChevronLeft } from "lucide-react";
+import { Search, Star, BookOpen } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import {
@@ -142,11 +142,7 @@ export default function SurahIndexPage() {
     <div className="surah-index-page" dir="rtl" data-testid="surah-index-page">
       <header className="surah-index-hero">
         <h1>فهرس السور</h1>
-        <p>{fmt(114)} سورة — رقمها واسمها، مع بحث سريع ومفضلة وفلترة حسب التصنيف.</p>
-        <Link href="/quran/revelation-order" className="surah-index-revelation-link">
-          خريطة ترتيب نزول السور
-          <ChevronLeft className="surah-index-revelation-link__chevron" size={16} strokeWidth={2} aria-hidden="true" />
-        </Link>
+
       </header>
 
       <div className="surah-index-controls">
@@ -184,7 +180,7 @@ export default function SurahIndexPage() {
           />
         </div>
 
-        <div className="surah-index-filters" role="tablist" aria-label="فلاتر السور">
+        <div className="surah-index-filters" role="tablist" aria-label="تصفية السور">
           <button
             type="button"
             role="tab"

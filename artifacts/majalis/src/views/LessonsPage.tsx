@@ -495,9 +495,8 @@ export default function LessonsPage({
   return (
     <div className="page-shell lessons-page-v2 ds-page mj-page">
       <PageHeader
-        eyebrow="المجلس العلمي"
         title="الدروس"
-        subtitle="جميع الدروس والدورات العلمية، مرتّبة حسب أقرب موعد."
+        subtitle="مرتّبة حسب أقرب موعد"
       />
 
       <div className="lessons-v2-toolbar">
@@ -517,7 +516,7 @@ export default function LessonsPage({
               type="button"
               className="lessons-v2-clear-btn"
               onClick={() => setFilters(DEFAULT_KUWAIT_FILTERS)}
-              aria-label="مسح جميع الفلاتر"
+              aria-label="مسح التصفية"
             >
               مسح ✕
             </button>
@@ -528,9 +527,9 @@ export default function LessonsPage({
             onClick={() => setFiltersOpen(true)}
             aria-label="فتح التصفية"
           >
-            تصفية وبحث
+            بحث وتصفية
             {activeFilterCount > 0 && (
-              <span className="lessons-v2-filter-badge" aria-label={`${toArabicDigits(activeFilterCount)} فلتر نشط`}>
+              <span className="lessons-v2-filter-badge" aria-label={`${toArabicDigits(activeFilterCount)} تصفية نشطة`}>
                 {toArabicDigits(activeFilterCount)}
               </span>
             )}
@@ -561,7 +560,7 @@ export default function LessonsPage({
             loading={loading}
             error={loadError}
             empty={false}
-            emptyText="لا توجد دروس مطابقة للفلاتر الحالية. أعد ضبط المنطقة أو التصنيف لعرض المزيد."
+            emptyText="لا توجد دروس مطابقة للتصفية الحالية. أعد ضبط المنطقة أو التصنيف لعرض المزيد."
             onRetry={() => safeLocationReload()}
           >
             <>
@@ -616,7 +615,7 @@ export default function LessonsPage({
               ) : !loading && !loadError ? (
                 <section className="lessons-past-section" aria-labelledby="past-lessons-heading">
                   <h2 id="past-lessons-heading" className="lessons-past-section__title">الدروس السابقة</h2>
-                  <p className="lessons-empty-state">لا دروس سابقة معروضة ضمن الفلاتر الحالية.</p>
+                  <p className="lessons-empty-state">لا دروس سابقة ضمن التصفية الحالية.</p>
                 </section>
               ) : null}
             </>
@@ -675,7 +674,7 @@ export default function LessonsPage({
           { href: "/scholars", label: "العلماء" },
           { href: "/quran-knowledge", label: "القرآن وعلومه" },
           { href: "/hadith", label: "الحديث وعلومه" },
-          { href: "/fiqh", label: "بوابة الفقه" },
+          { href: "/fiqh", label: "الفقه والأحكام" },
         ]}
       />
       <div className="px-4 pb-6 mt-4">

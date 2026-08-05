@@ -1,4 +1,4 @@
-import { BookMarked, BookOpen, BookText, GraduationCap } from "lucide-react";
+import { BookMarked, BookOpen, BookText, GraduationCap, Waypoints } from "lucide-react";
 import MergedSectionHubPage from "@/views/MergedSectionHubPage";
 
 export default function QuranKnowledgeHubPage() {
@@ -6,18 +6,24 @@ export default function QuranKnowledgeHubPage() {
     <MergedSectionHubPage
       path="/quran-knowledge"
       title="القرآن وعلومه"
-      description="فهرس القرآن وعلومه وأسباب النزول وقصص السور في مكان واحد."
+      description="فهرس وعلوم وأسباب نزول وقصص."
       cards={[
         {
           href: "/quran/surahs",
           title: "فهرس القرآن",
-          desc: "دليل السور الـ١١٤ مع البحث والفلاتر",
+          desc: "السور الـ١١٤",
           Icon: BookText,
+        },
+        {
+          href: "/quran/revelation-order",
+          title: "ترتيب النزول",
+          desc: "خط زمني للسور حسب النزول",
+          Icon: Waypoints,
         },
         {
           href: "/ulum-quran",
           title: "علوم القرآن",
-          desc: "النزول والجمع والإعجاز والتفسير",
+          desc: "النزول والجمع والتفسير",
           Icon: GraduationCap,
         },
         {
@@ -29,7 +35,7 @@ export default function QuranKnowledgeHubPage() {
         {
           href: "/quran/surah-stories",
           title: "قصص القرآن",
-          desc: "قصص السور والعبر المستفادة",
+          desc: "قصص السور والعبر",
           Icon: BookOpen,
         },
       ]}

@@ -123,16 +123,14 @@ export function HadithStatsPanel({ compact = false, className = "", snapshot }: 
     >
       <header className="hsp__head">
         <div>
-          <p className="hsp__eyebrow">لوحة إحصائيات الحديث</p>
           {/* عنوان غير h2 لتفادي قواعد .page-shell h2 الداكنة عالية الخصوصية */}
           <p className="hsp__title" role="heading" aria-level={2}>
             علوم الحديث بالأرقام
           </p>
-          <p className="hsp__sub">{stats.updatedLabel}</p>
         </div>
         {!compact && (
           <Link href="/hadith-science" className="hsp__science-link">
-            مصطلح الحديث ←
+            مصطلح الحديث
           </Link>
         )}
       </header>
@@ -180,12 +178,12 @@ export function HadithStatsPanel({ compact = false, className = "", snapshot }: 
               centerLabel="حديث"
             />
             <StatRing
-              title="توزيع البطاقات المنسّقة"
+              title="توزيع الروايات المبيَّنة"
               slices={stats.curatedRing}
               centerValue={formatHadithStat(
                 stats.curatedRing.reduce((n, s) => n + s.value, 0),
               )}
-              centerLabel="بطاقة"
+              centerLabel="رواية"
             />
             <StatRing
               title="مصطلح الحديث"
@@ -215,7 +213,7 @@ export function HadithStatsPanel({ compact = false, className = "", snapshot }: 
               </div>
             </div>
             <div className="hsp-panel">
-              <p className="hsp-panel__title" role="heading" aria-level={3}>علوم ومصطلح وجودة العرض</p>
+              <p className="hsp-panel__title" role="heading" aria-level={3}>علوم الحديث ومصطلحه</p>
               <div className="hsp-bars">
                 {stats.scienceBars.map((bar) => (
                   <StatBar key={bar.id} bar={bar} />

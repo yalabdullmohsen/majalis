@@ -1,34 +1,35 @@
 import { Link } from "wouter";
-import { BookMarked, Brain } from "lucide-react";
+import { Map, Waypoints } from "lucide-react";
 import { Widget } from "@/components/widgets/Widget";
 import "@/styles/components/home/home-mindmap.css";
 
 const MAPS = [
   {
-    href: "/quran-knowledge",
-    Icon: BookMarked,
-    title: "القرآن وعلومه",
-    desc: "فهرس القرآن وعلومه وأسباب النزول وقصص السور",
-    tag: "قسم",
+    href: "/mind-map",
+    Icon: Map,
+    title: "الخرائط الذهنية",
+    desc: "خرائط العلوم الشرعية للدراسة",
+    tag: "مركز",
   },
   {
-    href: "/memorization",
-    Icon: Brain,
-    title: "الحفظ والمراجعة",
-    desc: "اختبارات الحفظ وخطط الحفظ والمراجعة",
-    tag: "قسم",
+    href: "/quran/revelation-order",
+    Icon: Waypoints,
+    title: "ترتيب نزول السور",
+    desc: "خط زمني للسور حسب النزول",
+    tag: "قرآن",
   },
 ] as const;
 
+/** ودجت الرئيسية — يوجّه إلى مركز الخرائط وأداة النزول، لا إلى قوائم عامة. */
 export function HomeMindMapSection() {
   return (
     <Widget
       id="mind-map"
       className="hmm-section"
-      eyebrow="أقسام مقترحة"
-      title="تابع التعلم"
-      moreHref="/quran-knowledge"
-      moreLabel="القرآن وعلومه"
+      eyebrow=""
+      title="الخرائط الذهنية"
+      moreHref="/mind-map"
+      moreLabel="كل الخرائط"
       state="ready"
     >
       <div className="hmm-grid">
@@ -42,7 +43,7 @@ export function HomeMindMapSection() {
               <strong className="hmm-card__title">{title}</strong>
               <p className="hmm-card__desc">{desc}</p>
             </div>
-            <span className="hmm-card__arrow" aria-hidden="true">←</span>
+            <span className="hmm-card__arrow" aria-hidden="true">‹</span>
           </Link>
         ))}
       </div>

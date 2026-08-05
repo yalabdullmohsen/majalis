@@ -388,16 +388,25 @@ export default function PrayerTimesPage() {
         </nav>
       )}
 
-      <nav className="pts-dock" aria-label="أدوات الصلاة">
-        <Link href="/qibla" className="pts-dock__item">
-          <span className="pts-dock__icon"><Compass size={20} strokeWidth={1.7} /></span>
-          <span>القبلة</span>
-        </Link>
-        <Link href="/adhan-settings" className="pts-dock__item">
-          <span className="pts-dock__icon"><Bell size={20} strokeWidth={1.7} /></span>
-          <span>تنبيهات الأذان</span>
-        </Link>
-      </nav>
+      <details className="pts-more">
+        <summary>المزيد من الإعدادات</summary>
+        <nav className="pts-dock" aria-label="أدوات الصلاة">
+          <Link href="/qibla" className="pts-dock__item">
+            <span className="pts-dock__icon"><Compass size={20} strokeWidth={1.7} /></span>
+            <span>القبلة</span>
+          </Link>
+          <Link href="/adhan-settings" className="pts-dock__item">
+            <span className="pts-dock__icon"><Bell size={20} strokeWidth={1.7} /></span>
+            <span>تنبيهات الأذان</span>
+          </Link>
+        </nav>
+      </details>
+
+      <div className="pts-sheet-close">
+        <button type="button" className="pts-sheet-close__btn" onClick={handleBack}>
+          إغلاق
+        </button>
+      </div>
     </div>
   );
 }

@@ -385,7 +385,7 @@ function MindMap() {
               tabIndex={0}
               onKeyDown={(e) => e.key === "Enter" && toggle(node.id)}
             >
-              <span className={`snr-mindmap-toggle${openNodes[node.id] ? " snr-mindmap-toggle--open" : ""}`}>▶</span>
+              <span className={`snr-mindmap-toggle${openNodes[node.id] ? " snr-mindmap-toggle--open" : ""}`} aria-hidden="true">‹</span>
               <span className="snr-mindmap-node-icon">{node.icon}</span>
               <span className="snr-mindmap-node-label">{node.label}</span>
               <span className="snr-mindmap-node-count">{node.children.length}</span>
@@ -400,7 +400,7 @@ function MindMap() {
                       className="snr-mindmap-child-link"
                     >
                       <span>{child.label}</span>
-                      <span className="snr-mindmap-child-arrow">←</span>
+                      <span className="snr-mindmap-child-arrow">‹</span>
                     </Link>
                   ) : (
                     <div
@@ -550,15 +550,15 @@ export default function SinsAndRightsPage() {
           <div style={{ display: "flex", gap: "0.75rem", flexWrap: "wrap", marginBottom: "1rem" }}>
             <Link href="/tawba" className="snr-related-link" style={{ flex: "1 1 160px" }}>
               <span className="snr-related-link-label">📖 التوبة والاستغفار</span>
-              <span className="snr-mindmap-child-arrow">←</span>
+              <span className="snr-mindmap-child-arrow">‹</span>
             </Link>
             <Link href="/fiqh" className="snr-related-link" style={{ flex: "1 1 160px" }}>
               <span className="snr-related-link-label">⚖️ الأحكام الشرعية</span>
-              <span className="snr-mindmap-child-arrow">←</span>
+              <span className="snr-mindmap-child-arrow">‹</span>
             </Link>
             <Link href="/akhlaq" className="snr-related-link" style={{ flex: "1 1 160px" }}>
               <span className="snr-related-link-label">🌿 الأخلاق الإسلامية</span>
-              <span className="snr-mindmap-child-arrow">←</span>
+              <span className="snr-mindmap-child-arrow">‹</span>
             </Link>
           </div>
         </div>

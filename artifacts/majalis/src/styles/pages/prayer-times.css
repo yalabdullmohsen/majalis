@@ -435,6 +435,39 @@ html.pts-immersive body {
   cursor: pointer;
 }
 
+.pts-more {
+  margin: 0.75rem 1rem 0;
+  border-radius: var(--mj-r-md, 16px);
+  border: 1px solid color-mix(in srgb, currentColor 16%, transparent);
+  padding: 0.35rem 0.65rem;
+}
+.pts-more > summary {
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0.45rem 0.25rem;
+  list-style: none;
+}
+.pts-more > summary::-webkit-details-marker { display: none; }
+.pts-sheet-close {
+  position: sticky;
+  bottom: 0;
+  padding: 0.75rem 1rem calc(0.75rem + env(safe-area-inset-bottom, 0px));
+  background: linear-gradient(to top, var(--pts-bg, #0E241E) 70%, transparent);
+  margin-block-start: 0.5rem;
+}
+.pts-sheet-close__btn {
+  width: 100%;
+  min-height: 2.75rem;
+  border-radius: var(--mj-r-md, 16px);
+  border: 1px solid color-mix(in srgb, currentColor 28%, transparent);
+  background: color-mix(in srgb, currentColor 10%, transparent);
+  color: inherit;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .pts-row { transition: none; }
 }
