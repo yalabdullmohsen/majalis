@@ -24,7 +24,7 @@
 .ucp-table-row { border-bottom: 1px solid var(--majalis-line); }
 .ucp-table-row--even { background: var(--majalis-parchment); }
 .ucp-th-label {
-  padding: .75rem 1rem; text-align: right; font-size: .75rem; font-weight: 600;
+  padding: .75rem 1rem; text-align: end; font-size: .75rem; font-weight: 600;
   color: var(--majalis-ink-soft); width: 8rem;
   position: sticky; inset-inline-end: 0;
   background: var(--majalis-panel);

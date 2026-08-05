@@ -256,7 +256,7 @@
 .admin-feature-status__table td {
   border-bottom: 1px solid var(--mn-border-default);
   padding: 0.5rem 0.4rem;
-  text-align: right;
+  text-align: end;
   vertical-align: top;
 }
 

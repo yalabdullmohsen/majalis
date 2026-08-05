@@ -21,7 +21,7 @@
 .accd-info { margin-bottom: 1.5rem; border: 1px solid rgba(220,38,38,0.2); }
 .accd-info__title { font-size: var(--ds-text-base); font-weight: 700; color: var(--mj-danger); margin-bottom: 0.75rem; display: flex; align-items: center; gap: 0.4rem; }
 .accd-info__list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 0.75rem; }
-.accd-info__list li { font-size: 0.9rem; padding-right: 0.75rem; }
+.accd-info__list li { font-size: 0.9rem; padding-inline-end: 0.75rem; }
 .accd-info__list li::before { content: "✗ "; color: var(--mj-danger); }
 .accd-info__note { font-size: 0.82rem; opacity: 0.6; border-top: 1px solid var(--clr-border); padding-top: 0.5rem; }
 
@@ -33,7 +33,7 @@
 
 .accd-confirm { margin-bottom: 1.5rem; }
 .accd-confirm__warning { font-size: 0.92rem; margin-bottom: 1rem; }
-.accd-confirm__input { width: 100%; padding: 0.6rem 0.75rem; border: 1px solid var(--mj-danger); border-radius: var(--ds-radius); font-size: var(--ds-text-base); text-align: right; }
+.accd-confirm__input { width: 100%; padding: 0.6rem 0.75rem; border: 1px solid var(--mj-danger); border-radius: var(--ds-radius); font-size: var(--ds-text-base); text-align: end; }
 .accd-confirm__error { color: var(--mj-danger); font-size: 0.85rem; margin-top: 0.5rem; }
 .accd-confirm__btns { display: flex; gap: var(--ds-space-3); margin-top: 1rem; }
 

@@ -19,7 +19,7 @@
 .wn-hero__title { font-size: 2.1rem; font-weight: 800; margin: 0 0 .6rem; }
 .wn-hero__sub   { font-size: var(--ds-text-base); opacity: .82; margin: 0 0 1.2rem; line-height: 1.7; }
 .wn-hero__ayah  { font-size: .95rem; opacity: .75; border-top: 1px solid rgba(255,255,255,.15); padding-top: .9rem; }
-.wn-hero__ayah span { font-size: .82rem; opacity: .65; margin-right: .4rem; }
+.wn-hero__ayah span { font-size: .82rem; opacity: .65; margin-inline-end: .4rem; }
 
 /* Tabs */
 .wn-tabs {
@@ -89,7 +89,7 @@
 
 /* Intro */
 .wn-intro {
-  background: var(--clr-surface); border-right: 4px solid #78610a;
+  background: var(--clr-surface); border-inline-end: 4px solid #78610a;
   border-radius: .6rem; padding: 1rem 1.2rem; margin-bottom: 1.75rem;
   font-size: .95rem; line-height: 1.8; color: var(--clr-text-1);
 }
@@ -100,7 +100,7 @@
 .wn-card__head {
   display: flex; align-items: center; justify-content: space-between;
   padding: .9rem 1.2rem; cursor: pointer; gap: .5rem; width: 100%;
-  background: none; border: none; text-align: right;
+  background: none; border: none; text-align: end;
 }
 .wn-card__head:hover { background: var(--clr-surface); }
 .wn-card__left { display: flex; align-items: center; gap: .75rem; flex: 1; }
@@ -123,7 +123,7 @@
 /* Hadith block */
 .wn-hadith {
   font-size: .97rem; line-height: 1.85; color: var(--clr-text-1);
-  border-right: 3px solid #78610a; padding-right: .85rem;
+  border-inline-end: 3px solid #78610a; padding-inline-end: .85rem;
   margin: 0 0 .6rem; font-style: normal;
 }
 .wn-hadith--sm { font-size: .9rem; margin: .4rem 0 .5rem; }
@@ -132,13 +132,13 @@
   background: #fef9ec; border: 1px solid #e8d676; border-radius: .5rem;
   padding: .65rem .9rem; font-size: .87rem; line-height: 1.65; color: #5a490a;
 }
-.wn-benefit__label { font-weight: 700; margin-left: .4rem; }
+.wn-benefit__label { font-weight: 700; margin-inline-start: .4rem; }
 
 /* Khasisa list */
 .wn-khasisa-list { display: flex; flex-direction: column; gap: var(--ds-space-4); }
 .wn-khasisa-card {
   background: #fff; border: 1px solid var(--clr-border);
-  border-right: 4px solid #78610a; border-radius: .75rem;
+  border-inline-end: 4px solid #78610a; border-radius: .75rem;
   padding: 1.1rem 1.25rem;
 }
 .wn-khasisa-name { font-size: var(--ds-text-base); font-weight: 700; color: #78610a; margin: 0 0 .6rem; }

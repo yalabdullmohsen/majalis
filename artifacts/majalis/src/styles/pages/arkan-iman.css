@@ -72,7 +72,7 @@
   background: none;
   border: none;
   cursor: pointer;
-  text-align: right;
+  text-align: end;
   gap: var(--ds-space-3);
   transition: background 0.15s;
 }
@@ -94,8 +94,8 @@
   padding: 0.9rem 1rem;
   margin-bottom: 1rem;
 }
-.ai-dalil--quran { background: rgba(31,77,58,0.06); border-right: 3px solid var(--mj-brand); }
-.ai-dalil--hadith { background: rgba(23,61,53,0.05); border-right: 3px solid var(--mj-brand); }
+.ai-dalil--quran { background: rgba(31,77,58,0.06); border-inline-end: 3px solid var(--mj-brand); }
+.ai-dalil--hadith { background: rgba(23,61,53,0.05); border-inline-end: 3px solid var(--mj-brand); }
 .ai-dalil__head {
   display: flex;
   align-items: center;

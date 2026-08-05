@@ -12,17 +12,17 @@
 }
 .frb-geo {
   position: absolute;
-  top: 0; left: 0; right: 0;
+  top: 0; inset-inline-start: 0; inset-inline-end: 0;
   pointer-events: none;
 }
 .frb-geo--bottom {
-  top: auto; bottom: 0.5rem; right: 1rem;
-  left: auto; width: 60px;
+  top: auto; bottom: 0.5rem; inset-inline-end: 1rem;
+  inset-inline-start: auto; width: 60px;
 }
 .frb-dismiss {
   position: absolute;
   top: 0.55rem;
-  left: 0.65rem;
+  inset-inline-start: 0.65rem;
   background: transparent;
   border: none;
   color: rgba(250,248,242,0.35);

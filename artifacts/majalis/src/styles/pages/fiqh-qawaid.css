@@ -46,7 +46,7 @@
 /* section */
 .fq-section { display: flex; flex-direction: column; gap: var(--ds-space-4); }
 .fq-intro {
-  background: rgba(31,77,58,.05); border-right: 3px solid var(--majalis-emerald,var(--mj-brand));
+  background: rgba(31,77,58,.05); border-inline-end: 3px solid var(--majalis-emerald,var(--mj-brand));
   border-radius: .5rem; padding: .9rem 1rem; font-size: .9rem; color: var(--mj-ink-2);
   line-height: 1.7; margin: 0;
 }
@@ -88,7 +88,7 @@
 .fq-label--warn { color: var(--mj-brand-deep) !important; }
 
 /* lists */
-.fq-list { margin: 0; padding-right: 1.2rem; display: flex; flex-direction: column; gap: .35rem; }
+.fq-list { margin: 0; padding-inline-end: 1.2rem; display: flex; flex-direction: column; gap: .35rem; }
 .fq-list li { font-size: .88rem; color: var(--mj-ink-2); line-height: 1.6; }
 .fq-list--faraa li { color: var(--mj-brand-deep); font-weight: 600; font-style: normal; }
 .fq-list--exception li { color: var(--mj-brand-deep); }

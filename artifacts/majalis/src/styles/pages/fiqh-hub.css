@@ -11,7 +11,7 @@
 .fqh-hub-hero::after {
   content: "⚖️";
   position: absolute;
-  left: 1.5rem;
+  inset-inline-start: 1.5rem;
   top: 50%;
   transform: translateY(-50%);
   font-size: 5rem;
@@ -165,7 +165,7 @@ html[data-theme="dark"] .fqh-hub-card__desc {
   white-space: nowrap; border-bottom: 2px solid transparent;
   transition: color .15s, border-color .15s;
   color: var(--majalis-ink-soft); background: none; border-top: none;
-  border-left: none; border-right: none; cursor: pointer;
+  border-inline-start: none; border-inline-end: none; cursor: pointer;
   flex: 0 0 auto;
   scroll-snap-align: start;
 }

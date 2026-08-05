@@ -59,7 +59,7 @@
 /* تحكم */
 .sy-controls { margin-bottom: 1.25rem; }
 .sy-search-wrap { position: relative; margin-bottom: 0.75rem; }
-.sy-search-icon { position: absolute; right: 0.85rem; top: 50%; transform: translateY(-50%); color: #6B9E86; pointer-events: none; }
+.sy-search-icon { position: absolute; inset-inline-end: 0.85rem; top: 50%; transform: translateY(-50%); color: #6B9E86; pointer-events: none; }
 .sy-search {
   width: 100%;
   padding: 0.65rem 2.4rem 0.65rem 2rem;
@@ -77,7 +77,7 @@
 .sy-search:focus { border-color: var(--mj-brand); }
 .sy-search-clear {
   position: absolute;
-  left: 0.7rem;
+  inset-inline-start: 0.7rem;
   top: 50%;
   transform: translateY(-50%);
   background: none;
@@ -159,7 +159,7 @@
   padding: 0.4rem 0.65rem;
   line-height: 1.55;
 }
-.sy-card__howto-label { font-weight: 700; color: var(--mj-brand); margin-left: 0.3rem; }
+.sy-card__howto-label { font-weight: 700; color: var(--mj-brand); margin-inline-start: 0.3rem; }
 
 /* فارغ */
 .sy-empty { text-align: center; padding: 2.5rem 1rem; color: #6B9E86; font-size: 0.9rem; }

@@ -81,7 +81,7 @@
 .srp-char-hint {
   font-size: 0.68rem;
   color: #c0392b;
-  text-align: left;
+  text-align: start;
   margin-top: 0.15rem;
 }
 .srp-form-actions {
@@ -159,7 +159,7 @@
   border-radius: var(--ds-radius);
   color: var(--clr-ink, #1a1a1a);
   cursor: pointer;
-  text-align: right;
+  text-align: end;
   transition: background .15s;
 }
 .srp-history__chip:hover { background: rgba(23,61,53,.16); }
@@ -203,7 +203,7 @@
   font-size: 0.82rem;
   color: var(--clr-ink, #1a1a1a);
   cursor: pointer;
-  text-align: right;
+  text-align: end;
   line-height: 1.45;
   transition: border-color .15s, background .15s;
 }
@@ -384,7 +384,7 @@ html[data-theme="dark"] .srp-action-btn { background: rgba(255,255,255,.06); bor
   padding: .75rem 1.25rem; font-size: .875rem; font-weight: 500;
   border-bottom: 2px solid transparent; transition: color .15s, border-color .15s;
   color: var(--majalis-ink-soft); background: none; border-top: none;
-  border-left: none; border-right: none; cursor: pointer;
+  border-inline-start: none; border-inline-end: none; cursor: pointer;
   display: inline-flex; align-items: center; gap: .25rem;
 }
 .srp-tab:hover { color: var(--majalis-ink); }
@@ -407,7 +407,7 @@ html[data-theme="dark"] .srp-action-btn { background: rgba(255,255,255,.06); bor
   border-radius: .75rem; border: none; cursor: pointer; transition: background .15s;
 }
 .srp-action-btn:hover { background: var(--mn-surface-hover, rgba(31,77,58,.06)); }
-.srp-save-msg { font-size: .75rem; color: var(--majalis-ink-soft); margin-right: auto; }
+.srp-save-msg { font-size: .75rem; color: var(--majalis-ink-soft); margin-inline-end: auto; }
 
 .srp-prompt-btn {
   font-size: .75rem; padding: .375rem .75rem; border-radius: 9999px;
@@ -448,7 +448,7 @@ html[data-theme="dark"] .srp-action-btn { background: rgba(255,255,255,.06); bor
 .srp-lib-del:hover { color: var(--majalis-danger, #dc2626); }
 .srp-lib-excerpt { font-size: .75rem; color: var(--majalis-ink-soft); display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
 .srp-lib-tag { font-size: .75rem; background: var(--majalis-emerald-muted, rgba(31,77,58,.1)); color: var(--majalis-emerald); padding: .125rem .5rem; border-radius: 9999px; }
-.srp-lib-date { font-size: .75rem; color: var(--majalis-ink-soft); opacity: .4; margin-right: auto; }
+.srp-lib-date { font-size: .75rem; color: var(--majalis-ink-soft); opacity: .4; margin-inline-end: auto; }
 .srp-lib-search-btn { font-size: .75rem; color: var(--majalis-emerald); background: none; border: none; cursor: pointer; }
 .srp-lib-search-btn:hover { text-decoration: underline; }
 

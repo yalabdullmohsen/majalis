@@ -4,7 +4,7 @@
   margin-top: 0.45rem; font-size: 0.8rem; line-height: 1.4;
   color: var(--majalis-ink-soft); background: var(--majalis-parchment);
   border-radius: 0.35rem; padding: 0.18rem 0.45rem;
-  border-right: 3px solid var(--hdb-color, var(--majalis-emerald-deep));
+  border-inline-end: 3px solid var(--hdb-color, var(--majalis-emerald-deep));
   direction: rtl;
 }
 .hadith-badge__grade { font-weight: 700; color: var(--hdb-color); font-size: 0.68rem; }

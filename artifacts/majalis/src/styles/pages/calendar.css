@@ -152,7 +152,7 @@
 .cal-event-chip,
 .cal-day-item {
   width: 100%;
-  text-align: right;
+  text-align: end;
   border: 1px solid var(--msk-border, var(--mj-hairline));
   background: transparent;
   border-radius: var(--ds-radius);

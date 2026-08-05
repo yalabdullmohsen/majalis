@@ -191,7 +191,7 @@ html.dark .notif-row__label {
 }
 .nh-search-clear {
   position: absolute !important;
-  left: 1.5rem !important;
+  inset-inline-start: 1.5rem !important;
   top: 50% !important;
   transform: translateY(-50%) !important;
   color: var(--elite-ink-soft, #4A5568) !important;
@@ -388,7 +388,7 @@ html.dark .notif-row__label {
 .nh-search::placeholder { color: var(--majalis-ink-soft, var(--mj-ink-2)); }
 .nh-search-clear {
   position: absolute;
-  left: 1.5rem;
+  inset-inline-start: 1.5rem;
   top: 50%;
   transform: translateY(-50%);
   background: none;
@@ -439,7 +439,7 @@ html.dark .notif-row__label {
 .nh-row__swipe-del {
   position: absolute;
   inset-block: 0;
-  right: 0;
+  inset-inline-end: 0;
   width: 76px;
   border: none;
   background: #B44A4A;
@@ -600,21 +600,21 @@ html.dark .notif-row__label {
 .notif-toggle--on { background: var(--ds-emerald, var(--mj-brand)); }
 .notif-toggle__thumb {
   position: absolute;
-  top: 3px; right: 3px;
+  top: 3px; inset-inline-end: 3px;
   width: 21px; height: 21px;
   border-radius: 50%;
   background: #fff;
   box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   transition: right 0.2s;
 }
-.notif-toggle--on .notif-toggle__thumb { right: calc(100% - 24px); }
+.notif-toggle--on .notif-toggle__thumb { inset-inline-end: calc(100% - 24px); }
 
 .notif-time {
   display: flex;
   align-items: center;
   gap: 0.5rem;
 }
-.notif-time__label { font-size: 0.88rem; color: var(--majalis-ink-soft); margin-left: 0.5rem; }
+.notif-time__label { font-size: 0.88rem; color: var(--majalis-ink-soft); margin-inline-start: 0.5rem; }
 .notif-time__input {
   width: 60px;
   padding: 0.4rem 0.6rem;

@@ -926,7 +926,7 @@ function AppShellInner() {
       style={{ "--app-dir": dir } as React.CSSProperties}
     >
       <GlobalAppShortcuts onToggleSearch={() => setSearchOpen((v) => !v)} />
-      <a href="#main-content" className="skip-link">{t("skip_to_content")}</a>
+      <a href="#main-content" className="skip-link mj-skip-link">{t("skip_to_content")}</a>
       <OfflineBanner />
       <UpdateAvailableBanner />
       <NavProgressBar />

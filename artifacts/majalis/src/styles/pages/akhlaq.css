@@ -124,7 +124,7 @@
   border: none;
   cursor: pointer;
   width: 100%;
-  text-align: right;
+  text-align: end;
   direction: rtl;
 }
 .akl-card__icon {
@@ -171,9 +171,9 @@
   border-radius: var(--ds-radius-lg);
   padding: 0.85rem 1rem;
 }
-.akl-block--quran { background: rgba(31,77,58,0.05); border-right: 3px solid var(--mj-brand); }
-.akl-block--hadith { background: rgba(5,46,22,0.04); border-right: 3px solid var(--mj-brand-deep); }
-.akl-block--scholar { background: rgba(124,58,237,0.04); border-right: 3px solid var(--brand, var(--mj-brand)); }
+.akl-block--quran { background: rgba(31,77,58,0.05); border-inline-end: 3px solid var(--mj-brand); }
+.akl-block--hadith { background: rgba(5,46,22,0.04); border-inline-end: 3px solid var(--mj-brand-deep); }
+.akl-block--scholar { background: rgba(124,58,237,0.04); border-inline-end: 3px solid var(--brand, var(--mj-brand)); }
 .akl-block__label {
   display: block;
   font-size: 0.72rem;

@@ -134,7 +134,7 @@
   color: var(--majalis-ink-soft, #5D726A);
 }
 
-.prv-virtue-narrator::before { content: "·"; margin-left: 0.3rem; }
+.prv-virtue-narrator::before { content: "·"; margin-inline-start: 0.3rem; }
 
 .prv-tips-list {
   display: flex;

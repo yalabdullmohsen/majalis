@@ -72,7 +72,7 @@
   background: none;
   border: none;
   cursor: pointer;
-  text-align: right;
+  text-align: end;
   gap: var(--ds-space-3);
   font-family: inherit;
   transition: background 0.15s;
@@ -83,7 +83,7 @@
 .mdb-card__name { font-size: 1.05rem; font-weight: 900; color: var(--mj-brand-deep); }
 .mdb-card__founder { font-size: 0.8rem; color: var(--mj-brand-deep); margin-top: 0.15rem; }
 .mdb-card__origin { font-size: var(--ds-text-xs); color: var(--mj-brand); margin-top: 0.1rem; }
-.mdb-card__spread { flex-shrink: 0; font-size: var(--ds-text-xs); color: #6B9E86; max-width: 120px; text-align: left; line-height: 1.4; }
+.mdb-card__spread { flex-shrink: 0; font-size: var(--ds-text-xs); color: #6B9E86; max-width: 120px; text-align: start; line-height: 1.4; }
 
 /* محتوى البطاقة */
 .mdb-card__body { padding: 0 1.25rem 1.25rem; border-top: 1.5px solid var(--mj-brand-soft); }
@@ -111,11 +111,11 @@
 .mdb-feature {
   font-size: 0.86rem;
   color: var(--mj-brand-deep);
-  padding-right: 1.1rem;
+  padding-inline-end: 1.1rem;
   position: relative;
   line-height: 1.5;
 }
-.mdb-feature::before { content: "◆"; position: absolute; right: 0; font-size: 0.55rem; color: var(--mj-brand); top: 0.25rem; }
+.mdb-feature::before { content: "◆"; position: absolute; inset-inline-end: 0; font-size: 0.55rem; color: var(--mj-brand); top: 0.25rem; }
 
 /* الكتب */
 .mdb-books { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: var(--ds-space-2); }

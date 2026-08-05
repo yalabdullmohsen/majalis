@@ -46,7 +46,7 @@
   background: transparent;
   cursor: pointer;
   font-family: inherit;
-  text-align: right;
+  text-align: end;
   transition: border-color var(--mn-transition), box-shadow var(--mn-transition), background var(--mn-transition);
 }
 

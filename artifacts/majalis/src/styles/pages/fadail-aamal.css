@@ -116,7 +116,7 @@
   line-height: 1.9;
   color: #1F2937;
   background: #F9FAFB;
-  border-right: 3px solid var(--majalis-emerald, var(--mj-brand));
+  border-inline-end: 3px solid var(--majalis-emerald, var(--mj-brand));
   border-radius: .4rem;
   padding: .6rem .75rem;
   margin: 0;

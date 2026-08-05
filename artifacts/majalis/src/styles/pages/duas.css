@@ -50,7 +50,7 @@
 .duas-search-wrap { position: relative; }
 .duas-search-icon {
   position: absolute;
-  right: 0.85rem;
+  inset-inline-end: 0.85rem;
   top: 50%;
   transform: translateY(-50%);
   color: var(--mj-brand);
@@ -126,7 +126,7 @@
   background: none;
   border: none;
   cursor: pointer;
-  text-align: right;
+  text-align: end;
   direction: rtl;
   padding: 0;
 }
@@ -167,7 +167,7 @@
   padding: 0.85rem 1.15rem;
   margin: 0;
   direction: rtl;
-  text-align: right;
+  text-align: end;
 }
 
 .dua-card__body {

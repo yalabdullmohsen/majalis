@@ -39,7 +39,7 @@
 }
 .ah-hero__source {
   display: inline-block;
-  margin-right: 0.5rem;
+  margin-inline-end: 0.5rem;
   font-size: 0.78rem;
   color: rgba(255,255,255,0.65);
   font-style: normal;
@@ -69,7 +69,7 @@
 }
 .ah-search-icon {
   position: absolute;
-  right: 0.85rem;
+  inset-inline-end: 0.85rem;
   color: var(--mj-brand-deep);
   pointer-events: none;
 }
@@ -139,14 +139,14 @@
 }
 .ah-card__num {
   /* موضع مطلق بالزاوية المقابلة لزر المفضلة (position: absolute؛
-     left: 0.5rem أدناه) — بدل التدفّق العادي المُوسَّط الذي كان يضع
+     inset-inline-start: 0.5rem أدناه) — بدل التدفّق العادي المُوسَّط الذي كان يضع
      الشارة أعلى المنتصف، فتتقاطع مع زر المفضلة عندما يُكبَّر الأخير إلى
      44×44px إلزاميًا (قاعدة حد أدنى لمساحة النقر WCAG 2.5.5 العامة، لا
      يصح تصغيره لتفادي التقاطع). تحقّق حي: 199 حالة تقاطع مقاسة عبر
      بطاقات /asma-husna كلها كانت هذا النمط نفسه، 2026-07-22. */
   position: absolute;
   top: 0.5rem;
-  right: 0.5rem;
+  inset-inline-end: 0.5rem;
   font-size: 0.7rem;
   color: var(--mj-brand-deep);
   font-weight: 700;
@@ -170,7 +170,7 @@
 .ah-card__fav {
   position: absolute;
   top: 0.5rem;
-  left: 0.5rem;
+  inset-inline-start: 0.5rem;
   background: none;
   border: none;
   cursor: pointer;
@@ -195,9 +195,9 @@
 .ah-modal-backdrop {
   position: fixed;
   top: 0;
-  right: 0;
+  inset-inline-end: 0;
   bottom: 0;
-  left: 0;
+  inset-inline-start: 0;
   background: rgba(0,0,0,0.55);
   z-index: 1000;
   display: flex;
@@ -211,7 +211,7 @@
   padding: 1.75rem;
   max-width: 480px;
   width: 100%;
-  text-align: right;
+  text-align: end;
   direction: rtl;
   position: relative;
   box-shadow: 0 20px 60px rgba(0,0,0,0.25);
@@ -283,7 +283,7 @@
   background: rgba(23,61,53,0.04);
   padding: 0.5rem 0.75rem;
   border-radius: var(--ds-radius);
-  border-right: 3px solid var(--mj-brand-deep);
+  border-inline-end: 3px solid var(--mj-brand-deep);
 }
 .ah-modal__cat-badge {
   display: inline-block;
@@ -358,7 +358,7 @@
   color: #1a2e28;
   font-size: 0.92rem;
   line-height: 1.85;
-  text-align: right;
+  text-align: end;
 }
 .ah-method-note strong {
   color: var(--mj-brand-deep);
@@ -375,7 +375,7 @@ html[data-theme="dark"] .ah-method-note strong {
 .ah-card__status {
   position: absolute;
   top: 0.5rem;
-  left: 2.75rem;
+  inset-inline-start: 2.75rem;
   font-size: 0.68rem;
   font-weight: 700;
   padding: 0.15rem 0.45rem;

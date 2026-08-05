@@ -55,7 +55,7 @@
 .dq-card__head {
   display: flex; align-items: flex-start; gap: .7rem;
   width: 100%; padding: .85rem 1rem;
-  background: transparent; border: none; cursor: pointer; font-family: inherit; text-align: right;
+  background: transparent; border: none; cursor: pointer; font-family: inherit; text-align: end;
 }
 .dq-card__title-wrap { flex: 1; min-width: 0; }
 .dq-card__name    { display: block; font-weight: 700; font-size: .88rem; color: #111; margin-bottom: .15rem; }
@@ -76,14 +76,14 @@
 .dq-arabic {
   font-family: var(--font-body);
   font-size: 1.15rem; line-height: 2.1; color: var(--mj-brand-deep);
-  text-align: right; margin: 0;
+  text-align: end; margin: 0;
 }
 
 /* card body */
 .dq-card__body { padding: .5rem 1rem .85rem; border-top: 1px solid #F3F4F6; }
 .dq-context-box {
   background: #EFF6FF; border: 1px solid #BFDBFE;
-  border-right: 3px solid #1E40AF; border-radius: .65rem;
+  border-inline-end: 3px solid #1E40AF; border-radius: .65rem;
   padding: .7rem .9rem; margin-bottom: .6rem;
 }
 .dq-context-box__label { display: block; font-size: .7rem; font-weight: 700; color: #1E40AF; margin-bottom: .3rem; }

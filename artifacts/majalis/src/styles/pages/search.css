@@ -67,7 +67,7 @@
 .search-response-ms {
   font-size: 0.72rem;
   color: var(--elite-ink-faint, var(--mj-ink-2));
-  margin-right: auto;
+  margin-inline-end: auto;
 }
 
 /* لوحة الفلاتر المتقدمة */
@@ -312,7 +312,7 @@
 }
 
 .search-result-row--fiqh {
-  border-right: 2px solid var(--elite-forest, var(--mj-brand-deep));
+  border-inline-end: 2px solid var(--elite-forest, var(--mj-brand-deep));
 }
 
 .search-result-avatar {

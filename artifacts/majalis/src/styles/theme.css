@@ -170,6 +170,55 @@ body {
   line-height: var(--mj-lh-body);
   color: var(--mj-ink);
   background: var(--mj-bg);
+  overflow-x: clip;
+}
+
+/* أهداف لمس وحدود تفاعل — إطلاق (مع استثناء واجهات المصحف/التسميع) */
+button:not(.quran-shell button),
+[role="button"],
+.bottom-nav__tab,
+a.more-sheet-item,
+.surah-index-chip,
+.surah-index-jump {
+  min-height: 44px;
+}
+.quran-shell button,
+.quran-shell [role="button"],
+[class^="fc-"] button,
+[class*=" mpv-"] button,
+.mpv-root button {
+  min-height: unset;
+}
+button:active,
+[role="button"]:active,
+a:active {
+  transition: transform 80ms ease, background 80ms ease;
+}
+
+:focus-visible {
+  outline: 2px solid var(--mj-brand);
+  outline-offset: 2px;
+}
+
+.skip-link.mj-skip-link,
+.mj-skip-link {
+  position: absolute;
+  inset-inline-start: var(--mj-s3);
+  top: var(--mj-s3);
+  z-index: 100000;
+  padding: var(--mj-s2) var(--mj-s3);
+  background: var(--mj-brand);
+  color: var(--mj-on-brand);
+  border-radius: var(--mj-r-sm);
+  font-weight: 700;
+  text-decoration: none;
+  transform: translateY(-200%);
+}
+.skip-link.mj-skip-link:focus,
+.skip-link.mj-skip-link:focus-visible,
+.mj-skip-link:focus,
+.mj-skip-link:focus-visible {
+  transform: translateY(0);
 }
 
 /* ═══════════ المكوّنات المشتركة mj-* ═══════════ */

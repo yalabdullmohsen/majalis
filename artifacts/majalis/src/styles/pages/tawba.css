@@ -83,7 +83,7 @@
 .tw-body    { padding: 1.25rem 1rem; }
 .tw-section { animation: tw-fade .25s ease; }
 @keyframes tw-fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
-.tw-section-lead { font-size: .88rem; color: var(--mj-ink-2); line-height: 1.7; margin: 0 0 1.2rem; border-right: 3px solid #1a1a2e; padding-right: .75rem; }
+.tw-section-lead { font-size: .88rem; color: var(--mj-ink-2); line-height: 1.7; margin: 0 0 1.2rem; border-inline-end: 3px solid #1a1a2e; padding-inline-end: .75rem; }
 
 /* شروط */
 .tw-shurut-list { display: flex; flex-direction: column; gap: .9rem; margin-bottom: 1.5rem; }
@@ -183,8 +183,8 @@
   font-family: inherit;
 }
 .tw-dhikr-num   { background: #1a1a2e; color: #fff; width: 1.5rem; height: 1.5rem; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .72rem; font-weight: 800; flex-shrink: 0; }
-.tw-dhikr-times { flex: 1; font-size: .75rem; color: var(--mj-ink-2); text-align: right; }
-.tw-dhikr-chevron { font-size: .8rem; color: #9CA3AF; transition: transform .2s; margin-right: auto; }
+.tw-dhikr-times { flex: 1; font-size: .75rem; color: var(--mj-ink-2); text-align: end; }
+.tw-dhikr-chevron { font-size: .8rem; color: #9CA3AF; transition: transform .2s; margin-inline-end: auto; }
 .tw-dhikr-chevron--open { transform: rotate(180deg); }
 .tw-dhikr-arabic { font-family: var(--font-body); font-size: 1.05rem; line-height: 2; color: #111; padding: .5rem .9rem .7rem; margin: 0; border-top: 1px solid #F3F4F6; }
 .tw-dhikr-body  { padding: .5rem .9rem .75rem; border-top: 1px solid #F3F4F6; }

@@ -65,14 +65,14 @@
 
 /* البحث */
 .hb-search-wrap { position: relative; margin-bottom: 1.25rem; }
-.hb-search__icon { position: absolute; right: .75rem; top: 50%; transform: translateY(-50%);
+.hb-search__icon { position: absolute; inset-inline-end: .75rem; top: 50%; transform: translateY(-50%);
   color: var(--elite-ink-muted); pointer-events: none; }
 .hb-search-input { width: 100%; padding: .55rem .75rem .55rem 2.2rem;
   border: 1.5px solid var(--elite-border-2); border-radius: 8px;
   font-size: .88rem; font-family: inherit; background: var(--elite-white);
   color: var(--elite-ink); direction: rtl; outline: none; transition: border .18s; }
 .hb-search-input:focus { border-color: var(--ds-emerald, var(--mj-brand)); }
-.hb-search__clear { position: absolute; left: .75rem; top: 50%; transform: translateY(-50%);
+.hb-search__clear { position: absolute; inset-inline-start: .75rem; top: 50%; transform: translateY(-50%);
   background: none; border: none; cursor: pointer; color: var(--elite-ink-muted);
   display: flex; align-items: center; padding: .15rem; }
 .hb-search__clear:hover { color: var(--elite-ink); }
@@ -95,7 +95,7 @@
 .hb-chapter-item { display: flex; justify-content: space-between; align-items: center;
   width: 100%; padding: .4rem .55rem; border-radius: 6px; border: none;
   background: none; cursor: pointer; font-size: .78rem; font-family: inherit;
-  color: var(--elite-ink-soft); text-align: right; transition: background .15s; gap: .35rem; }
+  color: var(--elite-ink-soft); text-align: end; transition: background .15s; gap: .35rem; }
 .hb-chapter-item:hover { background: rgba(23,61,53,.07); color: var(--ds-emerald, var(--mj-brand)); }
 .hb-chapter-item--active { background: rgba(23,61,53,.12); color: var(--ds-emerald, var(--mj-brand)); font-weight: 600; }
 .hb-chapter-item__name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -126,7 +126,7 @@
   color: var(--ds-emerald, var(--mj-brand)); font-size: .7rem; font-weight: 700;
   display: flex; align-items: center; justify-content: center; margin-top: .05rem; }
 .hb-hadith-row__preview { flex: 1; font-size: .88rem; line-height: 1.6;
-  color: var(--elite-ink); text-align: right; font-family: var(--font-body); }
+  color: var(--elite-ink); text-align: end; font-family: var(--font-body); }
 .hb-hadith-row__chevron { flex-shrink: 0; color: var(--elite-ink-muted);
   transition: transform .2s; margin-top: .2rem; }
 .hb-hadith-row__chevron--open { transform: rotate(90deg); }

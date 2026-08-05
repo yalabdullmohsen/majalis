@@ -62,7 +62,7 @@
 .aup-source-err     { font-size: 0.7rem; color: var(--mj-danger-deep); margin-top: 0.2rem; }
 .aup-review-card    { padding: 0.6rem 0.75rem; border: 1px solid var(--majalis-line); border-radius: var(--ds-radius-sm); }
 .aup-review-head    { display: flex; gap: var(--ds-space-2); align-items: center; margin-bottom: 0.35rem; flex-wrap: wrap; }
-.aup-review-date    { font-size: 0.7rem; color: var(--majalis-ink-soft); margin-right: auto; }
+.aup-review-date    { font-size: 0.7rem; color: var(--majalis-ink-soft); margin-inline-end: auto; }
 .aup-review-text    { font-size: 0.8rem; margin-bottom: 0.5rem; color: var(--majalis-ink); }
 .aup-approve-btn    { padding: 0.25rem 0.6rem; background: var(--mj-brand-deep); color: #fff; border: none; border-radius: var(--ds-radius-xs); cursor: pointer; font-size: var(--ds-text-xs); font-family: inherit; }
 .aup-reject-btn     { padding: 0.25rem 0.6rem; background: var(--mj-danger-deep); color: #fff; border: none; border-radius: var(--ds-radius-xs); cursor: pointer; font-size: var(--ds-text-xs); font-family: inherit; }
@@ -79,7 +79,7 @@
 .aup-alert-sev--warning      { background: #226A5622; color: var(--mj-brand); }
 .aup-alert-sev--info         { background: rgba(23,61,53,0.13); color: var(--majalis-emerald-deep); }
 .aup-alert-title    { font-size: 0.8rem; font-weight: 700; }
-.aup-alert-comp     { font-size: 0.7rem; color: var(--majalis-ink-soft); margin-right: auto; }
+.aup-alert-comp     { font-size: 0.7rem; color: var(--majalis-ink-soft); margin-inline-end: auto; }
 .aup-alert-msg      { font-size: var(--ds-text-xs); color: var(--majalis-ink-soft); margin-bottom: 0.35rem; }
 .aup-alert-foot     { display: flex; justify-content: space-between; align-items: center; }
 .aup-alert-time     { font-size: 0.65rem; color: var(--majalis-ink-soft); }

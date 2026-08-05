@@ -2,9 +2,9 @@
 .mzp-overlay {
   position: fixed;
   top: 0;
-  right: 0;
+  inset-inline-end: 0;
   bottom: 0;
-  left: 0;
+  inset-inline-start: 0;
   z-index: 3000;
   background: rgba(0,0,0,0.65);
   display: flex;
@@ -62,7 +62,7 @@
 .mzp-name { font-weight: 600; font-size: 0.9rem; color: var(--majalis-ink, #EDE9DD); }
 .mzp-origin { font-size: 0.73rem; color: var(--majalis-ink-muted, #9BA3B5); margin-top: 0.1rem; }
 .mzp-style-badge {
-  margin-right: 0.5rem;
+  margin-inline-end: 0.5rem;
   padding: 0.1rem 0.4rem;
   border-radius: var(--ds-radius-full);
   font-size: 0.68rem;
