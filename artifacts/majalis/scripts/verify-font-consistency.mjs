@@ -60,11 +60,14 @@ function unwrapVar(value) {
 }
 
 const UI_FONT_MARKERS = [
-  "alexandria", "ibm plex sans arabic", "noto sans arabic", "system-ui", "-apple-system", "sans-serif",
+  "alexandria", "ibm plex sans arabic", "noto sans arabic", "tajawal",
+  "system-ui", "-apple-system", "sans-serif",
 ];
 
 function isAllowed(rawValue) {
   const value = rawValue.trim();
+  // بطاقات الحفظ (/memorize): متغيّرات --fc-* مستقلة (Amiri/Tajawal/Alexandria)
+  if (/^var\(\s*--fc-/i.test(value)) return true;
   if (/^var\(\s*--(mj-)?font-/i.test(value)) return true; // تُحلّ عبر :root إلى IBM Plex Sans Arabic (أو --font-quran المعتمد)
   const fallback = unwrapVar(value);
   if (fallback) return isAllowed(fallback); // يُحكَمُ على البديلِ المصرَّحِ لا على اسمِ المتغيّر

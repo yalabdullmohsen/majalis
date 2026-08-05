@@ -224,6 +224,11 @@
       "permanent": true
     },
     {
+      "source": "/flashcards",
+      "destination": "/memorize",
+      "permanent": true
+    },
+    {
       "source": "/scholarly-research",
       "destination": "/qa",
       "permanent": true
@@ -750,6 +755,14 @@
     },
     {
       "source": "/quran-engine/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/memorize",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/memorize/:path*",
       "destination": "/index.html"
     }
   ],
