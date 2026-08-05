@@ -76,7 +76,7 @@ const FEATURED_CATS = [
   { href: "/quran-knowledge", title: "القرآن وعلومه", desc: "فهرس وعلوم وأسباب نزول", cta: "استكشف", Icon: BookMarked },
   { href: "/hadith", title: "الحديث والسنة", desc: "أحاديث موثقة مع الشرح", cta: "تصفح", Icon: Scroll },
   { href: "/fiqh", title: "الفقه والأحكام", desc: "مسائل وأحكام مرتّبة", cta: "ادخل", Icon: Scale },
-  { href: "/lessons", title: "الدروس العلمية", desc: "مسارات ودروس منظمة", cta: "تعلّم", Icon: GraduationCap },
+  { href: "/lessons", title: "الدروس العلمية", desc: "مسارات ودروس منظمة", cta: "افتح الدروس", Icon: GraduationCap },
   { href: "/memorization", title: "الحفظ والمراجعة", desc: "خطط واختبارات", cta: "ابدأ", Icon: Target },
   { href: "/mushaf", title: "المصحف الشريف", desc: "قريبًا — قيد التجهيز", cta: "قريبًا", Icon: BookOpen },
 ] as const;
@@ -220,7 +220,7 @@ export default function HomePage() {
 
       <section className="m2030-band" aria-label="أكمل من حيث توقفت">
         <div className="m2030-band__head">
-          <h2 className="m2030-band__title">تابع التعلّم</h2>
+          <h2 className="m2030-band__title">تابع من حيث توقفت</h2>
         </div>
         <div className="m2030-panel">
           <SafeHomeSection name="continue">

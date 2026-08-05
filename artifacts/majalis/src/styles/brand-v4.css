@@ -4,54 +4,54 @@
  *  (يستبدل هوية brand-v4 القديمة: Forest/Cream/Gold manuscript)
  * ══════════════════════════════════════════════════════════════════════════
  *
- * لوحة جديدة (ممنوع إعادة #143F35 / #226A56 / كريمي المخطوطات):
- *  Midnight Emerald · Porcelain Ivory · Digital Sage · Ink Green
- *  Soft Gold (محدود) · Teal Glow · Warm Gray
+ * توحيد 2030-refined (بعد مراجعة Teal الصارخ):
+ *  Deep Emerald راقٍ · Soft Ivory · Sage Muted · Ink · Soft Gold محدود
+ *  ممنوع: #143F35 الغابة القديمة · #2BB5A3 الصارخ · أبيض قاسٍ · أسود صافٍ
  *
  * الأنظمة القديمة (--elite/--msk/--majalis/…) تبقى aliases فقط في آخر الملف.
  */
 
 :root {
   /* ══════════════════════════════════════════════════════════
-     ١) السلالم الأولية — Majlisilm 2030
+     ١) السلالم الأولية — موحّدة Light/Dark
      ══════════════════════════════════════════════════════════ */
 
-  /* Midnight Emerald → Digital Sage (تقنية، ليست غابة تقليدية) */
-  --em-50:  #E8EFEC;   /* Digital Sage soft */
-  --em-100: #D4DED9;
-  --em-200: #B7C9C0;
-  --em-300: #7FA396;
-  --em-400: #4A8F82;   /* Teal Glow mid */
-  --em-500: #2BB5A3;   /* Teal Glow */
-  --em-600: #1F9B8A;   /* تفاعلي أساسي — ليس #226A56 */
-  --em-700: #167A6C;
-  --em-800: #0F2A26;   /* Midnight mid */
-  --em-900: #0A1F1C;   /* Midnight Emerald */
-  --em-950: #051412;   /* Midnight deep */
+  /* Deep Emerald راقٍ (ليس Teal صارخًا ولا Forest القديم) */
+  --em-50:  #EEF3F0;   /* Primary Soft / Sage wash */
+  --em-100: #DCE7E1;
+  --em-200: #B7CDC3;
+  --em-300: #82A998;
+  --em-400: #4F8772;
+  --em-500: #2F735C;   /* تفاعل واضح غير صارخ */
+  --em-600: #1E5F4B;   /* Primary عميق راقٍ */
+  --em-700: #174A3A;
+  --em-800: #12362C;
+  --em-900: #0E241E;   /* خلفية عميقة / عناوين */
+  --em-950: #091814;
 
-  /* Soft Gold — لهجة محدودة جدًا (ليس #B8963F كثيفًا) */
-  --gold-100: #F3EFE4;
-  --gold-200: #E5DCC6;
-  --gold-300: #D4C49A;
-  --gold-400: #C4B07A;
-  --gold-500: #BBA46E;
-  --gold-600: #8F7C4A;
-  --gold-700: #6A5C37;
+  /* Soft Gold — لهجة محدودة */
+  --gold-100: #F4F0E6;
+  --gold-200: #E6DFCB;
+  --gold-300: #D2C49A;
+  --gold-400: #C0AF78;
+  --gold-500: #B09A5E;
+  --gold-600: #887746;
+  --gold-700: #655734;
 
-  /* Porcelain Ivory + Warm Gray (باردة نسبيًا — ليست parchment كريمي) */
-  --n-0:   #FFFFFF;
-  --n-50:  #F4F5F3;   /* Porcelain Ivory */
-  --n-100: #ECEAE5;   /* Warm Gray soft */
-  --n-200: #D5D0C8;
-  --n-300: #B8B2A8;
-  --n-400: #8B8680;
-  --n-450: #6F6A64;
-  --n-500: #58534E;
-  --n-600: #3F3B37;
-  --n-700: #2A2724;
-  --n-800: #152824;   /* Ink Green soft */
-  --n-900: #0C1916;   /* Ink Green */
-  --n-950: #060E0C;
+  /* Soft Ivory + Warm Gray (ليست بيضاء قاسية) */
+  --n-0:   #FFFEFB;
+  --n-50:  #F5F4F0;   /* Background */
+  --n-100: #ECEAE4;   /* Surface Muted */
+  --n-200: #D8D4CB;
+  --n-300: #B9B4A9;
+  --n-400: #8C877E;
+  --n-450: #706B63;
+  --n-500: #57534C;
+  --n-600: #3E3A35;
+  --n-700: #2A2723;
+  --n-800: #1A211E;
+  --n-900: #121916;   /* Text Primary */
+  --n-950: #0A0E0C;
 
   /* ألوان الحالة — كل زوج (نص/خلفية) متحقَّق ≥4.5:1 */
   --danger:      #C62828;
@@ -73,31 +73,41 @@
   --surface:         var(--n-0);
   --surface-2:       var(--em-50);
   --surface-3:       var(--n-100);
+  --surface-muted:   var(--n-100);
   --surface-brand:   var(--em-100);
   --surface-inverse: var(--em-900);
+  --surface-elevated: var(--n-0);
 
+  /* hierarchy نصوص */
+  --text-title:      var(--em-900);
   --text:            var(--n-900);
   --text-2:          var(--n-600);
   --text-muted:      var(--n-500);
-  --text-on-brand:   #F4F5F3;
-  --text-on-dark:    #E8EFEC;
+  --text-meta:       var(--n-450);
+  --text-on-brand:   #FFFEFB;
+  --text-on-dark:    #F1F5F3;
   --text-brand:      var(--em-700);
-  --text-brand-deep: var(--em-900);
+  --text-brand-deep: var(--em-800);
 
   --border:             var(--n-200);
   --border-strong:      var(--n-300);
   --border-interactive: var(--n-450);
   --border-brand:       var(--em-200);
 
-  /* Teal Glow تفاعلي · Midnight للعناوين العميقة */
+  /* Primary عميق راقٍ */
   --brand:        var(--em-600);
   --brand-hover:  var(--em-500);
   --brand-active: var(--em-700);
   --brand-soft:   var(--em-50);
-  --brand-deep:   var(--em-900);
+  --brand-deep:   var(--em-800);
   --accent:       var(--gold-500);
   --accent-soft:  var(--gold-100);
   --accent-deep:  var(--gold-700);
+
+  /* كثافة تخطيط موحّدة */
+  --space-section: var(--s-5);
+  --space-card:    var(--s-4);
+  --space-tight:   var(--s-3);
 
   /* أسماء دلالية موحّدة للواجهات الجديدة — aliases فقط، لا قيم صلبة إضافية */
   --color-bg:                var(--bg);
@@ -225,33 +235,37 @@
    ونصوص مخفّفة (#EDF2F0 لا أبيض نقي) لتقليل الوهج على OLED.
    ══════════════════════════════════════════════════════════════ */
 html[data-theme="dark"] {
-  --bg:              #051412;
-  --bg-elevated:     #0A1F1C;
-  --surface:         #0F2A26;
-  --surface-2:       #143430;
-  --surface-3:       #1A3E39;
-  --surface-brand:   #12332E;
+  --bg:              #0B1613;   /* أخضر فحمي مريح — ليس أسودًا صافيًا */
+  --bg-elevated:     #12201C;
+  --surface:         #15241F;
+  --surface-2:       #1A2C26;
+  --surface-3:       #213530;
+  --surface-muted:   #1A2C26;
+  --surface-brand:   #173028;
   --surface-inverse: var(--n-50);
+  --surface-elevated: #1A2C26;
 
-  --text:            #E8EFEC;
-  --text-2:          #B7C9C0;
-  --text-muted:      #8AA39A;
-  --text-on-dark:    #E8EFEC;
-  --text-brand:      var(--em-400);
-  --text-brand-deep: var(--em-300);
+  --text-title:      #F2F6F4;
+  --text:            #EDF2F0;
+  --text-2:          #B5C7C0;
+  --text-muted:      #8FA59C;
+  --text-meta:       #7A9088;
+  --text-on-dark:    #F2F6F4;
+  --text-brand:      #7EBEA8;
+  --text-brand-deep: #A5D4C4;
 
-  --border:             #1E3D38;
-  --border-strong:      #2A524B;
-  --border-interactive: #3D7A70;
-  --border-brand:       #2A524B;
+  --border:             #243832;
+  --border-strong:      #315048;
+  --border-interactive: #4A7A69;
+  --border-brand:       #315048;
 
-  /* Teal Glow متوسط ليتحمل نصًا فاتحًا على الأزرار */
-  --brand:        #1F9B8A;
-  --brand-hover:  #2BB5A3;
-  --brand-active: #167A6C;
-  --brand-soft:   #0F2A26;
-  --brand-deep:   #0A1F1C;
-  --text-on-brand: #F4F5F3;
+  /* Primary واضح غير صارخ — يتحمل نصًا فاتحًا على الأزرار */
+  --brand:        #2E8B6F;
+  --brand-hover:  #37987A;
+  --brand-active: #267A61;
+  --brand-soft:   #173028;
+  --brand-deep:   #1A3E34;
+  --text-on-brand: #FFFEFB;
   --accent:       var(--gold-300);
   --accent-soft:  #2A241633;
   --accent-deep:  var(--gold-200);

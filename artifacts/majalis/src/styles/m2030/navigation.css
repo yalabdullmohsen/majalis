@@ -1,13 +1,12 @@
 /**
- * Majlisilm 2030 — Navigation chrome (بديل الزجاج/الغابة القديم)
+ * Majlisilm 2030 — Navigation (موحّد Light/Dark)
  */
 
-/* ── Header ── */
 header.navbar-v3,
 .navbar-v3 {
   background: color-mix(in srgb, var(--em-950) 96%, transparent) !important;
   background-image: none !important;
-  border-bottom: 1px solid color-mix(in srgb, var(--em-500) 22%, transparent) !important;
+  border-bottom: 1px solid color-mix(in srgb, var(--em-400) 20%, transparent) !important;
   box-shadow: none !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
@@ -22,17 +21,17 @@ header.navbar-v3,
 }
 
 .navbar-prayer-chip {
-  background: color-mix(in srgb, var(--em-500) 18%, transparent) !important;
-  border: 1px solid color-mix(in srgb, var(--em-500) 35%, transparent) !important;
+  background: color-mix(in srgb, var(--em-500) 16%, transparent) !important;
+  border: 1px solid color-mix(in srgb, var(--em-400) 32%, transparent) !important;
   border-radius: var(--r-sm) !important;
   color: var(--text-on-dark) !important;
 }
 
-/* ── Top section bar ── */
 .top-section-bar {
   background: var(--bg) !important;
   border-bottom: 1px solid var(--border) !important;
   backdrop-filter: none !important;
+  padding-block: 0.35rem !important;
 }
 
 .top-section-bar__tab {
@@ -40,26 +39,25 @@ header.navbar-v3,
   background: transparent !important;
   color: var(--text-2) !important;
   border: 1px solid transparent !important;
+  min-height: 2.35rem;
+  padding-inline: 0.7rem !important;
 }
 
-.top-section-bar__tab.is-active,
-.top-section-bar__tab.is-soon.is-active {
+.top-section-bar__tab.is-active {
   background: var(--surface-2) !important;
   color: var(--text-brand-deep) !important;
-  border-color: color-mix(in srgb, var(--em-500) 40%, var(--border)) !important;
-  box-shadow: inset 0 -2px 0 var(--em-500) !important;
+  border-color: color-mix(in srgb, var(--brand) 35%, var(--border)) !important;
+  box-shadow: inset 0 -2px 0 var(--brand) !important;
 }
 
 .top-section-bar__tab.is-soon:not(.is-active) {
-  color: var(--text-muted) !important;
-  opacity: 0.85;
+  color: var(--text-meta) !important;
 }
 
-/* ── Bottom nav ── */
 .bottom-nav,
 .bottom-nav--v2 {
   background: color-mix(in srgb, var(--em-950) 97%, transparent) !important;
-  border-top: 1px solid color-mix(in srgb, var(--em-500) 25%, transparent) !important;
+  border-top: 1px solid color-mix(in srgb, var(--em-400) 22%, transparent) !important;
   box-shadow: none !important;
   backdrop-filter: none !important;
   -webkit-backdrop-filter: none !important;
@@ -67,63 +65,75 @@ header.navbar-v3,
 }
 
 .bottom-nav__tab {
-  color: color-mix(in srgb, var(--text-on-dark) 62%, transparent) !important;
+  color: color-mix(in srgb, var(--text-on-dark) 64%, transparent) !important;
   border-radius: 0 !important;
   position: relative;
+  min-height: 3rem;
 }
 
 .bottom-nav__tab.is-active {
-  color: var(--em-400) !important;
+  color: var(--em-300) !important;
   background: transparent !important;
 }
 
 .bottom-nav__tab.is-active::before {
   content: "";
   position: absolute;
-  top: 0.2rem;
-  inset-inline: 28%;
+  top: 0.15rem;
+  inset-inline: 30%;
   height: 2px;
-  background: var(--em-500);
-  box-shadow: 0 0 10px color-mix(in srgb, var(--em-500) 55%, transparent);
+  background: var(--em-400);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--em-400) 45%, transparent);
+}
+
+.bottom-nav__tab-label {
+  font-size: 0.68rem;
+  font-weight: 600;
 }
 
 .bottom-nav__tab.is-soon .bottom-nav__tab-label {
-  font-size: 0.65rem;
-  letter-spacing: 0.02em;
+  font-size: 0.62rem;
 }
 
-.bottom-nav__tab-icon {
-  background: transparent !important;
-}
-
-/* ── More sheet ── */
 .bottom-sheet {
   background: var(--bg) !important;
   border-radius: var(--r-xl) var(--r-xl) 0 0 !important;
   border-top: 1px solid var(--border) !important;
+  color: var(--text) !important;
 }
 
 .bottom-sheet__head {
   font-family: var(--font-display);
-  color: var(--text) !important;
+  color: var(--text-title) !important;
+}
+
+.bottom-sheet__section-label {
+  color: var(--text-meta) !important;
+  font-size: 0.72rem;
+  letter-spacing: 0.03em;
 }
 
 .more-sheet-item {
-  background: var(--surface-2) !important;
+  background: var(--surface) !important;
   border: 1px solid var(--border) !important;
   border-radius: var(--r-md) !important;
-  clip-path: polygon(0.55rem 0, calc(100% - 0.55rem) 0, 100% 0.55rem, 100% 100%, 0.55rem 100%, 0 calc(100% - 0.55rem));
+  clip-path: polygon(0.45rem 0, calc(100% - 0.45rem) 0, 100% 0.45rem, 100% 100%, 0.45rem 100%, 0 calc(100% - 0.45rem));
   color: var(--text) !important;
+  min-height: 4.75rem !important;
 }
 
 .more-sheet-item--active {
-  border-color: var(--em-500) !important;
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--em-500) 35%, transparent);
+  border-color: color-mix(in srgb, var(--brand) 45%, var(--border)) !important;
+  background: var(--brand-soft) !important;
+  color: var(--text-brand-deep) !important;
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--brand) 25%, transparent);
 }
 
 .more-sheet-item__icon {
-  color: var(--em-600) !important;
-  background: transparent !important;
+  color: var(--brand) !important;
+  background: var(--surface-2) !important;
+  border: 1px solid var(--border-brand) !important;
+  border-radius: var(--r-sm) !important;
 }
 
 .more-sheet-theme-toggle {
@@ -132,7 +142,6 @@ header.navbar-v3,
   border-radius: var(--r-md) !important;
 }
 
-/* ── Side drawer ── */
 .sidebar-panel,
 .side-nav-drawer--v2 {
   background: var(--bg) !important;
@@ -144,11 +153,7 @@ header.navbar-v3,
   color: var(--text-on-dark) !important;
 }
 
-.sidebar-item {
-  border-radius: var(--r-sm) !important;
-}
-
 .sidebar-item.active {
-  background: var(--surface-2) !important;
-  box-shadow: inset -3px 0 0 var(--em-500);
+  background: var(--brand-soft) !important;
+  box-shadow: inset -3px 0 0 var(--brand);
 }
