@@ -18,7 +18,7 @@
 }
 .atl-hero::after {
   content: "✦";
-  position: absolute; top: 1rem; left: 1.5rem;
+  position: absolute; top: 1rem; inset-inline-start: 1.5rem;
   font-size: 4rem; color: rgba(255,255,255,0.04);
   pointer-events: none; user-select: none;
 }
@@ -32,7 +32,7 @@
 .atl-hero__title { font-size: 2rem; font-weight: 800; color: #fff; margin: 0 0 .5rem; }
 .atl-hero__sub { color: rgba(255,255,255,.8); font-size: .93rem; margin: 0 0 1.2rem; line-height: 1.7; }
 .atl-hero__quote {
-  display: inline-block; background: rgba(255,255,255,.1); border-right: 3px solid rgba(255,255,255,.5);
+  display: inline-block; background: rgba(255,255,255,.1); border-inline-end: 3px solid rgba(255,255,255,.5);
   padding: .7rem 1rem; border-radius: .5rem; color: rgba(255,255,255,.9);
   font-size: .88rem; line-height: 1.6; max-width: 520px;
 }
@@ -60,7 +60,7 @@
 
 /* Section intro */
 .atl-section-intro {
-  background: rgba(31,77,58,.06); border-right: 3px solid var(--mj-brand);
+  background: rgba(31,77,58,.06); border-inline-end: 3px solid var(--mj-brand);
   border-radius: .5rem; padding: .9rem 1.1rem;
 }
 .atl-section-intro p { font-size: .88rem; color: #1E293B; line-height: 1.75; margin: 0; }
@@ -81,7 +81,7 @@
 .atl-acc-head {
   width: 100%; display: flex; align-items: center; gap: .7rem;
   padding: .85rem 1rem; cursor: pointer; background: none; border: none;
-  text-align: right;
+  text-align: end;
 }
 .atl-acc-head:hover { background: #F8FAFC; }
 .atl-acc-num {

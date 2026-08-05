@@ -32,7 +32,7 @@
   margin: 0 auto 1.5rem;
   text-align: center;
 }
-.th-ayah--body { background: var(--mj-brand-soft); border: 1px solid #A7F3D0; margin: 0 0 .85rem; text-align: right; }
+.th-ayah--body { background: var(--mj-brand-soft); border: 1px solid #A7F3D0; margin: 0 0 .85rem; text-align: end; }
 .th-ayah--body .th-ayah__text { color: var(--mj-brand-deep); }
 .th-ayah--body .th-ayah__ref { color: var(--mj-brand); }
 .th-ayah__text { font-size: 1.05rem; font-weight: 600; line-height: 2; color: #fff; margin: 0 0 .35rem; }
@@ -71,13 +71,13 @@
   font-size: var(--ds-text-base);
   font-weight: 700;
   color: var(--majalis-emerald, var(--mj-brand));
-  border-right: 3px solid var(--majalis-emerald, var(--mj-brand));
-  padding-right: .6rem;
+  border-inline-end: 3px solid var(--majalis-emerald, var(--mj-brand));
+  padding-inline-end: .6rem;
   margin: .4rem 0 .3rem;
 }
 .th-section__intro {
   background: #EFF6F3;
-  border-right: 3px solid var(--majalis-emerald, var(--mj-brand));
+  border-inline-end: 3px solid var(--majalis-emerald, var(--mj-brand));
   border-radius: .5rem;
   padding: .85rem 1rem;
   font-size: .9rem;
@@ -117,9 +117,9 @@
   font-size: .83rem;
   color: var(--mj-brand-deep);
   position: relative;
-  padding-right: 1.4rem;
+  padding-inline-end: 1.4rem;
 }
-.th-sunnah-item::before { content: "✓"; position: absolute; right: .5rem; color: var(--majalis-emerald, var(--mj-brand)); font-weight: 700; }
+.th-sunnah-item::before { content: "✓"; position: absolute; inset-inline-end: .5rem; color: var(--majalis-emerald, var(--mj-brand)); font-weight: 700; }
 
 /* nawaqidh */
 .th-nawaqidh-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: .65rem; }

@@ -94,7 +94,7 @@
 .tf-search-wrap { position: relative; margin-bottom: 0.85rem; }
 .tf-search-icon {
   position: absolute;
-  right: 0.85rem;
+  inset-inline-end: 0.85rem;
   top: 50%;
   transform: translateY(-50%);
   color: #6B9E86;
@@ -116,7 +116,7 @@
 .tf-search:focus { border-color: var(--mj-brand); }
 .tf-search-clear {
   position: absolute;
-  left: 0.75rem;
+  inset-inline-start: 0.75rem;
   top: 50%;
   transform: translateY(-50%);
   background: none;
@@ -168,7 +168,7 @@
   background: none;
   border: none;
   cursor: pointer;
-  text-align: right;
+  text-align: end;
   gap: var(--ds-space-3);
   font-family: inherit;
 }
@@ -192,7 +192,7 @@
   padding: 0.55rem 0.75rem;
   line-height: 1.55;
 }
-.tf-card__example-label { font-weight: 700; margin-left: 0.35rem; }
+.tf-card__example-label { font-weight: 700; margin-inline-start: 0.35rem; }
 .tf-card__note {
   margin-top: 0.55rem;
   font-size: 0.82rem;
@@ -328,7 +328,7 @@
   position: absolute;
   top: 0.5rem;
   bottom: 0.5rem;
-  right: 1.05rem;
+  inset-inline-end: 1.05rem;
   width: 2px;
   background: linear-gradient(180deg, var(--mj-brand) 0%, var(--mj-brand-soft) 100%);
   opacity: 0.55;
@@ -504,7 +504,7 @@
   .tf-hero { padding: 2rem 1.1rem 1.6rem; }
   .tf-path-grid,
   .tf-spotlight-grid { grid-template-columns: 1fr; }
-  .tf-timeline::before { right: 0.95rem; }
+  .tf-timeline::before { inset-inline-end: 0.95rem; }
 }
 
 .tf-mushaf-section { margin-top: 0.5rem; }

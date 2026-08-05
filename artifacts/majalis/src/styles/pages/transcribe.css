@@ -92,7 +92,7 @@
   border-radius: .75rem;
   border: 1px solid var(--majalis-line);
   padding: .75rem 1rem;
-  text-align: right;
+  text-align: end;
   outline: none;
   font-size: var(--ds-text-base);
   color: var(--majalis-ink);
@@ -148,8 +148,8 @@
 .trp-result-title { margin-bottom: 1rem; font-size: var(--ds-text-xl); font-weight: 700; color: var(--majalis-emerald); }
 .trp-result-body { font-size: var(--ds-text-lg); line-height: 1.75; color: var(--majalis-ink); }
 .trp-blockquote {
-  border-right: 4px solid var(--majalis-emerald);
-  padding-right: 1rem;
+  border-inline-end: 4px solid var(--majalis-emerald);
+  padding-inline-end: 1rem;
   font-style: normal;
   color: var(--majalis-ink-soft);
 }

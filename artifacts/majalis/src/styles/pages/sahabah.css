@@ -102,7 +102,7 @@
   border: none;
   cursor: pointer;
   font-family: inherit;
-  text-align: right;
+  text-align: end;
 }
 .sb-card__icon { font-size: var(--ds-text-2xl); flex-shrink: 0; }
 .sb-card__info { flex: 1; min-width: 0; }
@@ -139,7 +139,7 @@
 .sb-fadl-box {
   background: linear-gradient(135deg,var(--mj-brand-soft),#ECFDF5);
   border: 1px solid #BBF7D0;
-  border-right: 3px solid var(--majalis-emerald,var(--mj-brand));
+  border-inline-end: 3px solid var(--majalis-emerald,var(--mj-brand));
   border-radius: .7rem;
   padding: .8rem 1rem;
   margin-bottom: .8rem;

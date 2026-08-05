@@ -177,7 +177,7 @@
   background: transparent;
   font-family: inherit;
   color: var(--majalis-ink);
-  text-align: left;
+  text-align: start;
 }
 .cvp-submit-btn {
   padding: .55rem 1.25rem;

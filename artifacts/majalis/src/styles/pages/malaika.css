@@ -22,7 +22,7 @@
   font-size: .95rem; opacity: .75;
   border-top: 1px solid rgba(255,255,255,.15); padding-top: .9rem;
 }
-.mk-hero__ayah span { font-size: .82rem; opacity: .65; margin-right: .4rem; }
+.mk-hero__ayah span { font-size: .82rem; opacity: .65; margin-inline-end: .4rem; }
 
 /* Tabs */
 .mk-tabs {
@@ -45,7 +45,7 @@
 
 /* Intro */
 .mk-intro {
-  background: var(--clr-surface); border-right: 4px solid #1a3a5c;
+  background: var(--clr-surface); border-inline-end: 4px solid #1a3a5c;
   border-radius: .6rem; padding: 1rem 1.2rem; margin-bottom: 1.75rem;
   font-size: .95rem; line-height: 1.8; color: var(--clr-text-1);
 }
@@ -110,7 +110,7 @@
 .mk-fadail-list { display: flex; flex-direction: column; gap: var(--ds-space-4); }
 .mk-fadl-card {
   background: #fff; border: 1px solid var(--clr-border);
-  border-right: 4px solid #1a3a5c;
+  border-inline-end: 4px solid #1a3a5c;
   border-radius: .75rem; padding: 1.1rem 1.25rem;
   box-shadow: 0 1px 4px rgba(0,0,0,.04);
 }

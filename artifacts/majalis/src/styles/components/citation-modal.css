@@ -16,7 +16,7 @@
 .cm-field--readonly { background: var(--majalis-parchment-deep); color: var(--majalis-ink-soft); }
 .cm-preview-card { background: var(--majalis-parchment-deep); border-color: var(--majalis-line); }
 .cm-preview-title { color: var(--majalis-emerald-deep); }
-.cm-preview-text { color: var(--majalis-ink); border-right: 4px solid var(--majalis-emerald); }
+.cm-preview-text { color: var(--majalis-ink); border-inline-end: 4px solid var(--majalis-emerald); }
 .cm-preview-ref { color: var(--majalis-ink-soft); }
 .cm-qr-link { color: var(--majalis-ink-soft); }
 .cm-status { color: var(--mn-text-active, var(--majalis-emerald-deep)); }

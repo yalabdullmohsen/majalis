@@ -221,13 +221,13 @@
   background: #fff !important;
   border-radius: 50% !important;
   top: 0.2rem !important;
-  right: 0.2rem !important;
+  inset-inline-end: 0.2rem !important;
   transition: right 0.2s !important;
   box-shadow: 0 1px 4px rgba(0,0,0,0.22) !important;
 }
 
 .settings-toggle-row input[type="checkbox"]:checked::after {
-  right: calc(2.8rem - 1.15rem - 0.2rem) !important;
+  inset-inline-end: calc(2.8rem - 1.15rem - 0.2rem) !important;
 }
 
 .settings-toggle-row input[type="checkbox"]:focus-visible {

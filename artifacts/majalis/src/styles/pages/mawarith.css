@@ -55,7 +55,7 @@
 .mw-body    { padding: 1.25rem 1rem; }
 .mw-section { animation: mw-fade .25s ease; }
 @keyframes mw-fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
-.mw-lead    { font-size: .88rem; color: var(--mj-ink-2); line-height: 1.7; margin: 0 0 1.2rem; border-right: 3px solid var(--brand, var(--mj-brand)); padding-right: .75rem; }
+.mw-lead    { font-size: .88rem; color: var(--mj-ink-2); line-height: 1.7; margin: 0 0 1.2rem; border-inline-end: 3px solid var(--brand, var(--mj-brand)); padding-inline-end: .75rem; }
 
 /* shares legend */
 .mw-shares-legend { display: flex; flex-wrap: wrap; gap: .35rem; margin-bottom: 1.1rem; }
@@ -73,7 +73,7 @@
 .mw-warith-head {
   display: flex; align-items: center; gap: .7rem;
   width: 100%; padding: .8rem 1rem;
-  background: transparent; border: none; cursor: pointer; font-family: inherit; text-align: right;
+  background: transparent; border: none; cursor: pointer; font-family: inherit; text-align: end;
 }
 .mw-gender-badge {
   width: 1.8rem; height: 1.8rem; border-radius: 50%;
@@ -158,7 +158,7 @@
 .mw-hajb-list { display: flex; flex-direction: column; gap: .75rem; margin-bottom: 1.2rem; }
 .mw-hajb-card { background: #fff; border: 1.5px solid var(--mj-hairline); border-radius: .8rem; padding: .9rem 1rem; }
 .mw-hajb-type  { font-weight: 700; font-size: .88rem; color: #111; margin: 0 0 .5rem; }
-.mw-hajb-cases { margin: 0; padding-right: 1rem; display: flex; flex-direction: column; gap: .35rem; list-style: none; }
+.mw-hajb-cases { margin: 0; padding-inline-end: 1rem; display: flex; flex-direction: column; gap: .35rem; list-style: none; }
 .mw-hajb-case  { font-size: .82rem; color: var(--mj-ink-2); line-height: 1.5; }
 .mw-hajb-case::before { content: "✗ "; color: var(--mj-danger); font-weight: 700; }
 .mw-radd-box {
@@ -392,7 +392,7 @@
 }
 .mwc-saved__open {
   flex: 1;
-  text-align: right;
+  text-align: end;
   background: none;
   border: none;
   color: var(--majalis-ink);
@@ -506,7 +506,7 @@
 .mwc-advanced-toggle {
   display: block;
   width: 100%;
-  text-align: right;
+  text-align: end;
   background: none;
   border: none;
   color: var(--ds-emerald);

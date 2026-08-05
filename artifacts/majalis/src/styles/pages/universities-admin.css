@@ -35,7 +35,7 @@
   padding: .625rem 1rem; font-size: .875rem; font-weight: 500;
   border-bottom: 2px solid transparent; transition: color .15s, border-color .15s;
   color: var(--majalis-ink-soft); background: none; border-top: none;
-  border-left: none; border-right: none; cursor: pointer;
+  border-inline-start: none; border-inline-end: none; cursor: pointer;
   display: inline-flex; align-items: center; gap: .25rem;
 }
 .uap-tab:hover { color: var(--majalis-ink); }
@@ -89,7 +89,7 @@
 .is-stats { display: flex; gap: var(--ds-space-3); margin-top: 1rem; flex-wrap: wrap; }
 .is-stat { background: #f1f5f9; border-radius: var(--ds-radius); padding: 0.45rem 0.85rem; font-size: 0.8125rem; }
 .is-stat strong { color: #0f172a; }
-.is-stat span { color: #64748b; margin-right: 0.25rem; }
+.is-stat span { color: #64748b; margin-inline-end: 0.25rem; }
 .is-filters { display: flex; gap: var(--ds-space-2); margin-bottom: 1.25rem; flex-wrap: wrap; align-items: center; }
 .is-filters input { flex: 1; min-width: 160px; padding: 0.45rem 0.75rem; border: 1px solid #e2e8f0; border-radius: var(--ds-radius-sm); font-size: 0.8125rem; outline: none; font-family: inherit; direction: rtl; }
 .is-filters input:focus { border-color: #94a3b8; }

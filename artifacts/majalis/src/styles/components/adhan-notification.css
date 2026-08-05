@@ -2,7 +2,7 @@
 .anb-stack {
   position: fixed;
   bottom: calc(var(--bottom-nav-total, 5rem) + 0.35rem); /* فوق شريط التنقل السفلي */
-  inset-inline-start: 50%;
+  left: 50%;
   transform: translateX(-50%);
   z-index: 9990;
   display: flex;

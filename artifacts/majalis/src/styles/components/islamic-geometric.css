@@ -7,7 +7,7 @@
   position: fixed;
   z-index: 500;
   top: var(--cab-top, 0px);
-  left: var(--cab-left, 0px);
+  inset-inline-start: var(--cab-left, 0px);
   transform: translateX(-50%);
   display: flex;
   align-items: center;

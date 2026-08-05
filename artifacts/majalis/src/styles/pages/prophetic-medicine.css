@@ -16,8 +16,8 @@
 .pmp-desktop-filters { margin-bottom: 1rem; }
 .pmp-filter-chips { display: flex; flex-wrap: wrap; gap: var(--ds-space-2); }
 .pmp-search-wrap { position: relative; margin-bottom: 1rem; }
-.pmp-search-icon { position: absolute; right: 0.875rem; top: 50%; transform: translateY(-50%); color: var(--msk-text-2); pointer-events: none; }
-.pmp-search-input { padding-right: 2.5rem !important; }
+.pmp-search-icon { position: absolute; inset-inline-end: 0.875rem; top: 50%; transform: translateY(-50%); color: var(--msk-text-2); pointer-events: none; }
+.pmp-search-input { padding-inline-end: 2.5rem !important; }
 
 /* ─ Card ─ */
 .pmp-cat--ilaj    { --pm-bg: var(--mj-brand-deep); --pm-accent: #D6D5CE; }
@@ -44,7 +44,7 @@
 
 /* ─ Card body ─ */
 .pmp-card__body { padding: 0.875rem 1rem; flex: 1; display: flex; flex-direction: column; gap: 0.65rem; direction: rtl; }
-.pmp-hadith { border-right: 3px solid var(--msk-gold); padding-right: 0.65rem; margin: 0; font-size: 0.9rem; line-height: 1.8; color: var(--msk-text); font-weight: 600; }
+.pmp-hadith { border-inline-end: 3px solid var(--msk-gold); padding-inline-end: 0.65rem; margin: 0; font-size: 0.9rem; line-height: 1.8; color: var(--msk-text); font-weight: 600; }
 .pmp-hadith-source { font-size: 0.8rem; color: var(--msk-text-2); margin: 0; font-weight: 600; }
 .pmp-benefits { display: flex; flex-wrap: wrap; gap: 0.35rem; }
 .pmp-benefit-badge { padding: 0.2rem 0.6rem; border-radius: var(--ds-radius-xl); font-size: 0.8rem; background: rgba(24,54,42,0.08); color: var(--msk-gold); font-weight: 600; border: 1px solid rgba(24,54,42,0.18); }

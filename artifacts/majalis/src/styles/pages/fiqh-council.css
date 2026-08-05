@@ -286,7 +286,7 @@
   border-radius: var(--ds-radius-lg);
   border: 1px solid rgba(22, 78, 60, 0.12);
   background: #fff;
-  text-align: right;
+  text-align: end;
   cursor: pointer;
   font-family: inherit;
 }
@@ -631,7 +631,7 @@
 }
 
 .fiqh-info-table th {
-  text-align: right;
+  text-align: end;
   padding: 0.4rem 0.65rem;
   color: var(--mj-muted);
   font-weight: 600;
@@ -965,7 +965,7 @@
 
 .fiqh-live-topics ul {
   margin: 0.35rem 0 0;
-  padding-right: 1.25rem;
+  padding-inline-end: 1.25rem;
 }
 
 .fiqh-trust-box {

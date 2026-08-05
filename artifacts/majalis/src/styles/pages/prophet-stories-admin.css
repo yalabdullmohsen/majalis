@@ -8,7 +8,7 @@
 .ps-stats { display: flex; gap: var(--ds-space-4); margin-top: 1rem; flex-wrap: wrap; }
 .ps-stat { background: #f1f5f9; border-radius: var(--ds-radius); padding: 0.5rem 0.9rem; font-size: 0.8125rem; }
 .ps-stat strong { color: #0f172a; }
-.ps-stat span { color: #64748b; margin-right: 0.25rem; }
+.ps-stat span { color: #64748b; margin-inline-end: 0.25rem; }
 .ps-list { display: flex; flex-direction: column; gap: var(--ds-space-4); }
 .ps-card { background: #fff; border: 1px solid #e2e8f0; border-radius: var(--ds-radius-lg); overflow: hidden; }
 .ps-card.approved { border-color: #bbf7d0; }

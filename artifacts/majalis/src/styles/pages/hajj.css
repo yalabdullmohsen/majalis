@@ -78,12 +78,12 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
   font-weight: 700;
   color: var(--majalis-emerald, var(--mj-brand-deep));
   margin: .5rem 0 .4rem;
-  border-right: 3px solid var(--majalis-emerald, var(--mj-brand-deep));
-  padding-right: .6rem;
+  border-inline-end: 3px solid var(--majalis-emerald, var(--mj-brand-deep));
+  padding-inline-end: .6rem;
 }
 .hj-section__intro {
   background: #EFF6F3;
-  border-right: 3px solid var(--majalis-emerald, var(--mj-brand-deep));
+  border-inline-end: 3px solid var(--majalis-emerald, var(--mj-brand-deep));
   border-radius: .5rem;
   padding: .85rem 1rem;
   font-size: .9rem;
@@ -109,7 +109,7 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
 
 .hj-hadith-box {
   background: var(--mj-brand-soft);
-  border-right: 3px solid var(--majalis-emerald, var(--mj-brand-deep));
+  border-inline-end: 3px solid var(--majalis-emerald, var(--mj-brand-deep));
   border-radius: .65rem;
   padding: 1rem 1.1rem;
   margin-bottom: .5rem;
@@ -162,7 +162,7 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
   background: none;
   border: none;
   width: 100%;
-  text-align: right;
+  text-align: end;
   direction: rtl;
 }
 .hj-card__num {
@@ -192,7 +192,7 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
 /* dalil */
 .hj-dalil {
   background: var(--mj-brand-soft);
-  border-right: 3px solid var(--majalis-emerald, var(--mj-brand-deep));
+  border-inline-end: 3px solid var(--majalis-emerald, var(--mj-brand-deep));
   border-radius: .5rem;
   padding: .75rem 1rem;
   margin: .5rem 0 0;
@@ -204,17 +204,17 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
 .hj-detail-item {
   font-size: .85rem;
   color: var(--mj-ink-2);
-  padding-right: 1.2rem;
+  padding-inline-end: 1.2rem;
   position: relative;
   line-height: 1.6;
 }
-.hj-detail-item::before { content: "◆"; position: absolute; right: 0; color: var(--majalis-emerald, var(--mj-brand-deep)); font-size: .5rem; top: .35rem; }
+.hj-detail-item::before { content: "◆"; position: absolute; inset-inline-end: 0; color: var(--majalis-emerald, var(--mj-brand-deep)); font-size: .5rem; top: .35rem; }
 
 /* wajibat */
 .hj-wajib-card {
   background: #fff;
   border: 1px solid var(--mj-hairline);
-  border-right: 4px solid var(--mj-brand);
+  border-inline-end: 4px solid var(--mj-brand);
   border-radius: .7rem;
   padding: .9rem 1rem;
   display: flex;
@@ -271,7 +271,7 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
 .hj-mashar-card__desc { font-size: .87rem; color: var(--mj-ink-2); line-height: 1.65; margin: 0; }
 .hj-mashar-dua {
   background: var(--mj-brand-soft);
-  border-right: 3px solid var(--majalis-emerald, var(--mj-brand-deep));
+  border-inline-end: 3px solid var(--majalis-emerald, var(--mj-brand-deep));
   border-radius: .45rem;
   padding: .6rem .8rem;
 }

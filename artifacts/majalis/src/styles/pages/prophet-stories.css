@@ -52,7 +52,7 @@
 .prophets-lux-hero__star-wrap {
   position: absolute;
   top: var(--star-top);
-  left: var(--star-left);
+  inset-inline-start: var(--star-left);
   animation: lux-pulse 4s ease-in-out infinite;
   animation-delay: var(--star-delay, 0s);
 }
@@ -175,7 +175,7 @@
 .prophets-lux-search-clear {
   position: absolute;
   top: 50%;
-  right: 1rem;
+  inset-inline-end: 1rem;
   transform: translateY(-50%);
   background: none;
   border: none;
@@ -213,7 +213,7 @@
   cursor: pointer;
   transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
   overflow: hidden;
-  text-align: right;
+  text-align: end;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
 }
 .prophet-lux-card:hover,
@@ -226,7 +226,7 @@
 .prophet-lux-card__num {
   position: absolute;
   top: 0.75rem;
-  left: 0.75rem;
+  inset-inline-start: 0.75rem;
   width: 24px;
   height: 24px;
   background: color-mix(in srgb, var(--prophet-color, var(--ps-emerald)) 14%, transparent);
@@ -289,7 +289,7 @@
 .prophet-lux-card__bookmark {
   position: absolute;
   top: 0.6rem;
-  right: 0.6rem;
+  inset-inline-end: 0.6rem;
   background: none;
   border: none;
   font-size: var(--ds-text-base);
@@ -300,8 +300,8 @@
 .prophet-lux-card__border {
   position: absolute;
   bottom: 0;
-  left: 0;
-  right: 0;
+  inset-inline-start: 0;
+  inset-inline-end: 0;
   height: 3px;
   background: linear-gradient(
     90deg,
@@ -317,7 +317,7 @@
 .prophet-lux-card__azm-tag {
   position: absolute;
   top: 0.4rem;
-  right: 0.4rem;
+  inset-inline-end: 0.4rem;
   font-size: 0.8rem;
   font-weight: 700;
   padding: 0.15rem 0.5rem;
@@ -798,12 +798,12 @@
 .prophet-timeline__item--right {
   flex-direction: row;
   justify-content: flex-end;
-  padding-left: 55%;
+  padding-inline-start: 55%;
 }
 .prophet-timeline__item--left {
   flex-direction: row-reverse;
   justify-content: flex-end;
-  padding-right: 55%;
+  padding-inline-end: 55%;
 }
 .prophet-timeline__dot {
   position: absolute;
@@ -856,16 +856,16 @@
 }
 
 @media (max-width: 640px) {
-  .prophet-timeline__line { left: 20px; }
+  .prophet-timeline__line { inset-inline-start: 20px; }
   .prophet-timeline__item--right,
   .prophet-timeline__item--left {
     flex-direction: row;
     justify-content: flex-start;
-    padding-left: 0;
-    padding-right: 0;
+    padding-inline-start: 0;
+    padding-inline-end: 0;
     padding-inline-start: 60px;
   }
-  .prophet-timeline__dot { left: 20px; transform: translateX(-50%); }
+  .prophet-timeline__dot { inset-inline-start: 20px; transform: translateX(-50%); }
   .prophet-timeline__dot:hover { transform: translateX(-50%) scale(1.15); }
   .prophet-timeline__card { max-width: 100%; }
 }
@@ -1107,7 +1107,7 @@
 
 .nb-intro-box {
   background: color-mix(in srgb, var(--ps-emerald) 7%, transparent);
-  border-right: 3px solid var(--ps-emerald);
+  border-inline-end: 3px solid var(--ps-emerald);
   border-radius: 0.6rem;
   padding: 0.85rem 1rem;
   margin-bottom: 1.2rem;
@@ -1231,7 +1231,7 @@
   background: var(--ps-emerald);
   color: var(--mj-bg);
   padding: 0.6rem 0.8rem;
-  text-align: right;
+  text-align: end;
   white-space: nowrap;
 }
 .nb-table td {
@@ -1578,7 +1578,7 @@
 }
 
 .nb-miracle-card {
-  text-align: right;
+  text-align: end;
   cursor: pointer;
   font: inherit;
   width: 100%;

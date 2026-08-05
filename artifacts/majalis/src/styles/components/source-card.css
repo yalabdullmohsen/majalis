@@ -33,7 +33,7 @@
 
 /* ── SheikhsPageClient (spc-*) ────────────────────────────────────────────────── */
 .spc-channels-section { margin-bottom: 2.5rem; }
-.spc-section-h2  { font-size: 1.1rem; font-weight: 700; color: var(--majalis-ink, #EDE9DD); margin-bottom: 1rem; border-right: 3px solid var(--majalis-brass, var(--mj-brand)); padding-right: 0.75rem; }
+.spc-section-h2  { font-size: 1.1rem; font-weight: 700; color: var(--majalis-ink, #EDE9DD); margin-bottom: 1rem; border-inline-end: 3px solid var(--majalis-brass, var(--mj-brand)); padding-inline-end: 0.75rem; }
 .spc-section-note { font-size: 0.82rem; color: var(--majalis-ink-muted, #9BA3B5); margin-bottom: 1.25rem; }
 .spc-channels-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: var(--ds-space-5); }
 .spc-channel-card  { background: var(--majalis-panel, rgba(255,255,255,0.07)); border: 1px solid rgba(255,255,255,0.10); border-radius: var(--ds-radius-lg); overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.30); }

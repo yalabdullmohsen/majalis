@@ -8,8 +8,8 @@
   padding-bottom: 1.25rem;
   max-width: 72rem;
   margin: 0 auto;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  padding-inline-start: 1rem;
+  padding-inline-end: 1rem;
 }
 .sch-hero {
   background: linear-gradient(160deg, var(--mj-brand-deep), var(--mj-brand-deep));
@@ -55,7 +55,7 @@
 .sch-search-icon {
   position: absolute;
   top: 50%;
-  right: 1rem;
+  inset-inline-end: 1rem;
   transform: translateY(-50%);
   color: var(--mj-ink-2);
   pointer-events: none;
@@ -211,7 +211,7 @@
   font-family: var(--font-body);
   font-size: 0.95rem;
   color: var(--mj-brand-deep);
-  border-right: 3px solid var(--mj-brand-deep);
+  border-inline-end: 3px solid var(--mj-brand-deep);
   padding: 0.5rem 0.85rem;
   margin: 0;
   display: flex;

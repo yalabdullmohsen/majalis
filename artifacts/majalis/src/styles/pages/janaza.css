@@ -66,8 +66,8 @@
   font-size: var(--ds-text-base);
   font-weight: 700;
   color: var(--majalis-emerald, var(--mj-brand));
-  border-right: 3px solid var(--majalis-emerald, var(--mj-brand));
-  padding-right: .6rem;
+  border-inline-end: 3px solid var(--majalis-emerald, var(--mj-brand));
+  padding-inline-end: .6rem;
   margin: .3rem 0 .3rem;
 }
 
@@ -128,10 +128,10 @@ html.dark .jnz-subtitle {
   font-size: .85rem;
   color: var(--mj-ink-2);
   line-height: 1.55;
-  padding-right: 1.6rem;
+  padding-inline-end: 1.6rem;
   position: relative;
 }
-.jnz-note::before { content: "•"; position: absolute; right: .7rem; color: var(--majalis-emerald, var(--mj-brand)); font-weight: 900; font-size: 1.1rem; top: .45rem; }
+.jnz-note::before { content: "•"; position: absolute; inset-inline-end: .7rem; color: var(--majalis-emerald, var(--mj-brand)); font-weight: 900; font-size: 1.1rem; top: .45rem; }
 
 .jnz-takfin-card {
   background: #fff;
@@ -149,7 +149,7 @@ html.dark .jnz-subtitle {
 .jnz-takfin-card__desc { font-size: .85rem; color: var(--mj-ink-2); line-height: 1.65; margin: 0; }
 .jnz-dalil {
   background: var(--mj-brand-soft);
-  border-right: 3px solid var(--majalis-emerald, var(--mj-brand));
+  border-inline-end: 3px solid var(--majalis-emerald, var(--mj-brand));
   border-radius: .5rem;
   padding: .65rem .9rem;
   margin: 0;
@@ -229,7 +229,7 @@ html.dark .jnz-subtitle {
 
 .jnz-hadith-box {
   background: var(--mj-brand-soft);
-  border-right: 3px solid var(--majalis-emerald, var(--mj-brand));
+  border-inline-end: 3px solid var(--majalis-emerald, var(--mj-brand));
   border-radius: .65rem;
   padding: .9rem 1rem;
   margin-top: .5rem;

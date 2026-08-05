@@ -92,7 +92,7 @@
 .myl2-qstat__n { font-size: 1.2rem; font-weight: 800; color: var(--mj-bg); line-height: 1; }
 .myl2-qstat__l { font-size: 0.64rem; color: rgba(255,255,255,.45); margin-top: 0.12rem; }
 .myl2-qstat__sep {
-  position: absolute; left: 0; top: 50%; transform: translateY(-50%);
+  position: absolute; inset-inline-start: 0; top: 50%; transform: translateY(-50%);
   width: 1px; height: 28px;
   background: rgba(255,255,255,.13);
 }

@@ -53,12 +53,12 @@
 }
 .rk-card__bar {
   position: absolute;
-  top: 0; right: 0;
+  top: 0; inset-inline-end: 0;
   width: 3px; height: 100%;
   background: linear-gradient(180deg, var(--mj-brand), var(--mj-brand-deep));
   border-radius: 0 0.75rem 0.75rem 0;
 }
-.rk-card__body { flex: 1; min-width: 0; padding-right: 0.25rem; }
+.rk-card__body { flex: 1; min-width: 0; padding-inline-end: 0.25rem; }
 .rk-card__head {
   display: flex;
   align-items: center;

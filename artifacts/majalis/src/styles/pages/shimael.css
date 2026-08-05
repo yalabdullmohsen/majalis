@@ -55,7 +55,7 @@
 .sh-section { display: flex; flex-direction: column; gap: var(--ds-space-4); }
 .sh-intro-box {
   display: flex; align-items: flex-start; gap: .6rem;
-  background: rgba(23,61,53,.06); border-right: 3px solid var(--mj-brand);
+  background: rgba(23,61,53,.06); border-inline-end: 3px solid var(--mj-brand);
   border-radius: .5rem; padding: .85rem 1rem;
   font-size: .875rem; line-height: 1.7;
   color: var(--mj-brand-deep);

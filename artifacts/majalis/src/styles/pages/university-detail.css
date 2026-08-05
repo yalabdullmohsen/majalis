@@ -10,7 +10,7 @@
 .udp-prog-card { border: 1px solid var(--majalis-line); border-radius: .75rem; overflow: hidden; }
 .udp-prog-header-btn {
   display: flex; width: 100%; align-items: flex-start; gap: .75rem;
-  padding: var(--ds-space-4); text-align: right;
+  padding: var(--ds-space-4); text-align: end;
   background: none; border: none; cursor: pointer;
   transition: background .15s;
 }

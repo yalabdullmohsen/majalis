@@ -35,7 +35,7 @@
   height: 3px;
   background: linear-gradient(to left, var(--hmb-accent), color-mix(in srgb, var(--hmb-accent) 30%, transparent));
   position: absolute;
-  top: 0; left: 0; right: 0;
+  top: 0; inset-inline-start: 0; inset-inline-end: 0;
   z-index: 1;
 }
 

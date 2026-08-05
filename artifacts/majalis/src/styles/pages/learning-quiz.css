@@ -96,7 +96,7 @@
   background: var(--clr-surface, #fff);
   border: 1.5px solid var(--clr-border, rgba(0,0,0,.12));
   border-radius: var(--ds-radius-lg);
-  text-align: right;
+  text-align: end;
   font-size: 0.87rem;
   font-weight: 500;
   cursor: pointer;
@@ -167,7 +167,7 @@
   font-family: inherit;
   background: var(--clr-surface, #fff);
   color: var(--clr-ink, #1a1a1a);
-  text-align: right;
+  text-align: end;
   margin-bottom: 1.25rem;
   outline: none;
   box-sizing: border-box;

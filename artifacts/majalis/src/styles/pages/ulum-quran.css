@@ -47,7 +47,7 @@
 .uq-body    { padding: 1.25rem 1rem; }
 .uq-section { animation: uq-fade .25s ease; }
 @keyframes uq-fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
-.uq-lead    { font-size: .88rem; color: var(--mj-ink-2); line-height: 1.7; margin: 0 0 1.2rem; border-right: 3px solid var(--majalis-emerald,var(--mj-brand)); padding-right: .75rem; }
+.uq-lead    { font-size: .88rem; color: var(--mj-ink-2); line-height: 1.7; margin: 0 0 1.2rem; border-inline-end: 3px solid var(--majalis-emerald,var(--mj-brand)); padding-inline-end: .75rem; }
 .uq-subhead { font-size: var(--ds-text-base); font-weight: 700; color: #111; margin: 0 0 .75rem; }
 .uq-subhead--mt { margin-top: 1.5rem; }
 .uq-info-box--mt { margin-top: 1.2rem; }
@@ -79,7 +79,7 @@
 .uq-jam-head {
   display: flex; align-items: center; gap: .75rem;
   width: 100%; padding: .85rem 1rem;
-  background: transparent; border: none; cursor: pointer; font-family: inherit; text-align: right;
+  background: transparent; border: none; cursor: pointer; font-family: inherit; text-align: end;
 }
 .uq-jam-num {
   background: var(--majalis-emerald,var(--mj-brand)); color: #fff;
@@ -239,7 +239,7 @@
   margin: 0;
 }
 .uq-qiraat-card__origin {
-  margin-right: auto;
+  margin-inline-end: auto;
   font-size: 0.7rem;
   color: var(--mj-muted);
   white-space: nowrap;

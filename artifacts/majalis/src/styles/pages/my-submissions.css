@@ -59,7 +59,7 @@
 .msr-card { background: var(--majalis-panel, rgba(255,255,255,0.08)); border-radius: var(--ds-radius-xl); border: 1.5px solid var(--msr-border, #86efac); overflow: hidden; margin-bottom: 0.875rem; }
 .msr-card__status-bar { background: var(--msr-bg, var(--mj-brand-soft)); padding: 0.5rem 1rem; display: flex; align-items: center; gap: 0.4rem; border-bottom: 1px solid var(--msr-border, #86efac); }
 .msr-card__status-label { font-size: 0.78rem; font-weight: 700; color: var(--msr-color, var(--majalis-emerald)); }
-.msr-card__date { margin-right: auto; font-size: 0.72rem; color: var(--majalis-ink-muted, #9BA3B5); }
+.msr-card__date { margin-inline-end: auto; font-size: 0.72rem; color: var(--majalis-ink-muted, #9BA3B5); }
 .msr-card__body { padding: 0.875rem 1rem; }
 .msr-card__title-row { display: flex; gap: var(--ds-space-2); align-items: flex-start; margin-bottom: 0.5rem; }
 .msr-card__type-icon { font-size: var(--ds-text-xl); }

@@ -79,9 +79,9 @@
 /* body */
 .sw-body { max-width: 760px; margin: 0 auto; padding: 1.5rem 1rem; }
 .sw-section { display: flex; flex-direction: column; gap: .75rem; }
-.sw-section__title { font-size: 1.05rem; font-weight: 700; color: var(--majalis-emerald, var(--mj-brand)); margin: 0 0 .5rem; padding-right: .6rem; border-right: 3px solid var(--majalis-emerald, var(--mj-brand)); }
+.sw-section__title { font-size: 1.05rem; font-weight: 700; color: var(--majalis-emerald, var(--mj-brand)); margin: 0 0 .5rem; padding-inline-end: .6rem; border-inline-end: 3px solid var(--majalis-emerald, var(--mj-brand)); }
 .sw-section__title--mt { margin-top: 2rem; }
-.sw-section__intro { background: #EFF6F3; border-right: 3px solid var(--majalis-emerald, var(--mj-brand)); border-radius: .5rem; padding: .85rem 1rem; font-size: .9rem; line-height: 1.7; color: #1a1a1a; margin-bottom: .5rem; }
+.sw-section__intro { background: #EFF6F3; border-inline-end: 3px solid var(--majalis-emerald, var(--mj-brand)); border-radius: .5rem; padding: .85rem 1rem; font-size: .9rem; line-height: 1.7; color: #1a1a1a; margin-bottom: .5rem; }
 
 /* accordion cards */
 .sw-card {
@@ -102,14 +102,14 @@
   background: none;
   border: none;
   width: 100%;
-  text-align: right;
+  text-align: end;
   direction: rtl;
 }
 .sw-card__icon { font-size: 1.6rem; flex-shrink: 0; }
 .sw-card__info { flex: 1; min-width: 0; display: flex; flex-direction: column; align-items: flex-start; gap: .1rem; }
 .sw-card__title { font-size: .95rem; font-weight: 700; color: #111; }
 .sw-card__sub { font-size: .78rem; color: var(--mj-ink-2); }
-.sw-card__chevron { font-size: var(--ds-text-base); color: #9CA3AF; transition: transform .25s; margin-right: auto; flex-shrink: 0; }
+.sw-card__chevron { font-size: var(--ds-text-base); color: #9CA3AF; transition: transform .25s; margin-inline-end: auto; flex-shrink: 0; }
 .sw-card__chevron--open { transform: rotate(180deg); }
 .sw-card__body { padding: 0 1.1rem 1.1rem; border-top: 1px solid #F3F4F6; display: flex; flex-direction: column; gap: .75rem; }
 .sw-card__desc { font-size: .88rem; line-height: 1.7; color: var(--mj-ink-2); margin: .5rem 0 0; }
@@ -136,7 +136,7 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
 /* dalil */
 .sw-dalil {
   background: var(--mj-brand-soft);
-  border-right: 3px solid var(--majalis-emerald, var(--mj-brand));
+  border-inline-end: 3px solid var(--majalis-emerald, var(--mj-brand));
   border-radius: .5rem;
   padding: .75rem 1rem;
   margin: 0;
@@ -153,11 +153,11 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
 .sw-note {
   font-size: .85rem;
   color: var(--mj-ink-2);
-  padding-right: 1.2rem;
+  padding-inline-end: 1.2rem;
   position: relative;
   line-height: 1.6;
 }
-.sw-note::before { content: "•"; position: absolute; right: 0; color: var(--majalis-emerald, var(--mj-brand)); font-weight: 900; }
+.sw-note::before { content: "•"; position: absolute; inset-inline-end: 0; color: var(--majalis-emerald, var(--mj-brand)); font-weight: 900; }
 
 /* conditions grid */
 .sw-grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: .75rem; }
@@ -204,8 +204,8 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
   align-items: flex-start;
   box-shadow: 0 1px 3px rgba(0,0,0,.05);
 }
-.sw-muf-card--major { border-right: 4px solid #EF4444; }
-.sw-muf-card--detail { border-right: 4px solid var(--mj-brand); }
+.sw-muf-card--major { border-inline-end: 4px solid #EF4444; }
+.sw-muf-card--detail { border-inline-end: 4px solid var(--mj-brand); }
 .sw-muf-card__icon { font-size: var(--ds-text-2xl); flex-shrink: 0; }
 .sw-muf-card__content { flex: 1; display: flex; flex-direction: column; gap: .4rem; }
 .sw-muf-card__title { font-size: .9rem; font-weight: 700; color: #111; }
@@ -250,7 +250,7 @@ html[data-theme="dark"] .sw-badge--wajib { color: #7ED4B5 !important; }
 }
 .sw-virtue-card__icon { font-size: 1.8rem; }
 .sw-virtue-card__title { font-size: .9rem; font-weight: 700; color: var(--majalis-emerald, var(--mj-brand)); margin: 0; }
-.sw-virtue-card__text { font-size: .87rem; line-height: 1.85; color: #1F2937; font-style: normal; background: var(--mj-brand-soft); border-radius: .45rem; padding: .6rem .75rem; margin: 0; border-right: 3px solid var(--majalis-emerald, var(--mj-brand)); }
+.sw-virtue-card__text { font-size: .87rem; line-height: 1.85; color: #1F2937; font-style: normal; background: var(--mj-brand-soft); border-radius: .45rem; padding: .6rem .75rem; margin: 0; border-inline-end: 3px solid var(--majalis-emerald, var(--mj-brand)); }
 .sw-virtue-card__source { font-size: .72rem; color: var(--mj-ink-2); }
 
 /* related */

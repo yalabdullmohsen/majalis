@@ -107,8 +107,8 @@
 }
 
 .cpp-blockquote {
-  border-right: 4px solid var(--majalis-emerald);
-  padding-right: 1rem;
+  border-inline-end: 4px solid var(--majalis-emerald);
+  padding-inline-end: 1rem;
   margin: 0;
 }
 .cpp-quote-text {

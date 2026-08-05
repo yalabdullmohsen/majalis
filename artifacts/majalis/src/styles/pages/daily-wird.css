@@ -236,8 +236,8 @@
   color: var(--majalis-emerald-deep, var(--mj-brand-deep));
   font-weight: 600;
   font-style: normal;
-  border-right: 2px solid var(--majalis-emerald, var(--mj-brand));
-  padding-right: 0.6rem;
+  border-inline-end: 2px solid var(--majalis-emerald, var(--mj-brand));
+  padding-inline-end: 0.6rem;
 }
 
 /* ── بطاقة تقدم الختمة ── */

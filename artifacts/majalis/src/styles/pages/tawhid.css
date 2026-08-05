@@ -27,8 +27,8 @@
   font-size: clamp(1rem, 3.4vw, 1.15rem);
   font-family: var(--font-quran, "Amiri Quran", serif);
   color: rgba(255,255,255,0.95);
-  border-right: 3px solid rgba(255,255,255,0.4);
-  padding-right: 0.85rem;
+  border-inline-end: 3px solid rgba(255,255,255,0.4);
+  padding-inline-end: 0.85rem;
   margin: 0;
   font-style: normal;
   line-height: 1.9;
@@ -128,7 +128,7 @@
 .twh-hub-card__current-tag {
   position: absolute;
   top: 0.5rem;
-  left: 0.75rem;
+  inset-inline-start: 0.75rem;
   font-size: 0.62rem;
   font-weight: 600;
   color: var(--twh-hub-clr, var(--mj-brand));
@@ -259,7 +259,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
   line-height: 2;
   color: var(--majalis-ink, var(--mj-brand-deep));
   background: var(--majalis-emerald-soft, var(--mj-brand-soft));
-  border-right: 3px solid var(--majalis-emerald, var(--mj-brand));
+  border-inline-end: 3px solid var(--majalis-emerald, var(--mj-brand));
   padding: 0.65rem 1rem;
   border-radius: 0 0.5rem 0.5rem 0;
   margin: 0 0 1.25rem;
@@ -366,7 +366,7 @@ html[data-theme="dark"] .twh-book-level--mid { color: #7ED4B5 !important; }
 .twh-book-card {
   background: var(--majalis-panel, #ffffff);
   border: 1px solid var(--majalis-line, #d4e6de);
-  border-right: 3px solid var(--majalis-emerald, var(--mj-brand));
+  border-inline-end: 3px solid var(--majalis-emerald, var(--mj-brand));
   border-radius: var(--ds-radius-lg);
   padding: 0.875rem 1rem;
 }

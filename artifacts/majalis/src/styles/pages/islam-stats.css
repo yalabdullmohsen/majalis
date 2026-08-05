@@ -71,7 +71,7 @@
 /* bars */
 .is-bars { display: flex; flex-direction: column; gap: .65rem; }
 .is-bar { display: flex; align-items: center; gap: .65rem; }
-.is-bar__label { width: 5rem; font-size: .82rem; font-weight: 600; color: #334155; text-align: right; flex-shrink: 0; }
+.is-bar__label { width: 5rem; font-size: .82rem; font-weight: 600; color: #334155; text-align: end; flex-shrink: 0; }
 .is-bar__track {
   flex: 1; height: 10px; background: #E2E8F0; border-radius: var(--ds-radius-full); overflow: hidden;
 }
@@ -97,9 +97,9 @@
 .is-quran-highlight__ref { font-size: .8rem; color: rgba(200,240,220,.65); margin: 0; }
 
 /* timeline */
-.is-timeline { position: relative; padding-right: 1.5rem; }
+.is-timeline { position: relative; padding-inline-end: 1.5rem; }
 .is-timeline::before {
-  content: ""; position: absolute; right: .6rem; top: 0; bottom: 0;
+  content: ""; position: absolute; inset-inline-end: .6rem; top: 0; bottom: 0;
   width: 2px; background: linear-gradient(to bottom, var(--mj-brand), transparent);
 }
 .is-timeline-item {
@@ -107,7 +107,7 @@
 }
 .is-timeline-item__year {
   min-width: 4.5rem; font-size: .72rem; font-weight: 800; color: var(--mj-brand);
-  text-align: left; padding-top: .15rem; flex-shrink: 0;
+  text-align: start; padding-top: .15rem; flex-shrink: 0;
 }
 .is-timeline-item__dot {
   width: 10px; height: 10px; border-radius: 50%; background: var(--mj-brand);
@@ -121,7 +121,7 @@
 /* science */
 .is-science-intro {
   display: flex; align-items: flex-start; gap: .6rem;
-  background: rgba(31,77,58,.06); border-right: 3px solid var(--mj-brand);
+  background: rgba(31,77,58,.06); border-inline-end: 3px solid var(--mj-brand);
   border-radius: .5rem; padding: .85rem 1rem;
   font-size: .875rem; color: #1E293B; line-height: 1.7;
 }

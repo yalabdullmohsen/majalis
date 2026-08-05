@@ -31,8 +31,8 @@ export function AsyncDataView({
   status,
   error: _error,
   onRetry,
-  emptyText = "لا توجد بيانات حالياً",
-  errorText = "حدث خطأ أثناء التحميل، يرجى المحاولة مجدداً.",
+  emptyText = "لا توجد نتائج الآن. جرّب تعديل البحث أو الفلتر، أو عد لاحقًا.",
+  errorText = "تعذّر تحميل البيانات. تحقّق من الاتصال ثم اضغط «أعد المحاولة».",
   skeleton = "list",
   children,
 }: AsyncDataViewProps) {

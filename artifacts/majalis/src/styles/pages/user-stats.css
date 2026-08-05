@@ -272,7 +272,7 @@
 .profile-new-badges {
   position: fixed;
   bottom: 1.5rem;
-  right: 1rem;
+  inset-inline-end: 1rem;
   display: flex;
   flex-direction: column;
   gap: 0.4rem;

@@ -136,7 +136,7 @@
 .lpd2-what-you-learn ul { display: grid; gap: 0.4rem; margin: 0; padding: 0; list-style: none; }
 .lpd2-what-you-learn li {
   position: relative;
-  padding-right: 1.4rem;
+  padding-inline-end: 1.4rem;
   font-size: 0.88rem;
   color: var(--clr-ink, #1a1a1a);
   line-height: 1.6;
@@ -144,7 +144,7 @@
 .lpd2-what-you-learn li::before {
   content: "✓";
   position: absolute;
-  right: 0;
+  inset-inline-end: 0;
   color: var(--majalis-emerald, var(--mj-brand));
   font-weight: 800;
 }
@@ -172,7 +172,7 @@
   background: none;
   border: none;
   cursor: pointer;
-  text-align: right;
+  text-align: end;
 }
 .lpd2-course-card__head:disabled { cursor: not-allowed; }
 .lpd2-course-card__head-main { display: flex; align-items: center; gap: var(--ds-space-2); color: var(--majalis-emerald, var(--mj-brand)); }

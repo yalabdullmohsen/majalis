@@ -32,7 +32,7 @@
 /* تحكم */
 .hk-controls { margin-bottom: 1.25rem; }
 .hk-search-wrap { position: relative; margin-bottom: 0.75rem; }
-.hk-search-icon { position: absolute; right: 0.85rem; top: 50%; transform: translateY(-50%); color: #6B9E86; pointer-events: none; }
+.hk-search-icon { position: absolute; inset-inline-end: 0.85rem; top: 50%; transform: translateY(-50%); color: #6B9E86; pointer-events: none; }
 .hk-search {
   width: 100%;
   padding: 0.65rem 2.4rem 0.65rem 2rem;
@@ -50,7 +50,7 @@
 .hk-search:focus { border-color: var(--mj-brand); }
 .hk-search-clear {
   position: absolute;
-  left: 0.7rem;
+  inset-inline-start: 0.7rem;
   top: 50%;
   transform: translateY(-50%);
   background: none;
