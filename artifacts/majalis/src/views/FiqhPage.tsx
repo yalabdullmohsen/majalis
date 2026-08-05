@@ -8,7 +8,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { getRulingsEncyclopedia } from "@/lib/rulings-service";
 import { RULINGS_CATEGORY_TREE } from "@/lib/rulings-categories";
-import { SkeletonCardGrid, Empty, ErrorState } from "@/components/ui-common";
+import { SkeletonCardGrid, Empty, ErrorState, PageHero } from "@/components/ui-common";
 import { getQaQuestions } from "@/lib/supabase";
 import { QA_CATEGORIES, loadSeedQa } from "@/lib/qa-seed";
 import { RequestManager } from "@/lib/request-manager";
@@ -157,13 +157,11 @@ export default function FiqhPage() {
       </nav>
 
       {/* رأس بوابة الفقه */}
-      <header className="fqh-hub-hero">
-        <p className="fqh-hub-hero__eyebrow">الفقه الإسلامي الشامل</p>
-        <h1 className="fqh-hub-hero__title">الفقه والأحكام</h1>
-        <p className="fqh-hub-hero__sub">
-          مرجع موحّد للعبادات والأحكام وقرارات المجامع الفقهية، كل شيء من مصادر موثقة ومعتمدة
-        </p>
-      </header>
+      <PageHero
+        eyebrow="الفقه الإسلامي الشامل"
+        title="الفقه والأحكام"
+        description="مرجع موحّد للعبادات والأحكام وقرارات المجامع الفقهية، كل شيء من مصادر موثقة ومعتمدة"
+      />
 
       {/* شبكة أقسام الفقه */}
       <section aria-labelledby="fiqh-hub-heading">

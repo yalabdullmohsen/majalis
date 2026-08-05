@@ -1,4 +1,5 @@
 import { requestFetch } from "@/lib/request-manager";
+import { toArabicIndicDigits } from "@/lib/numerals";
 
 // ─── Kuwait Governorates ────────────────────────────────────────────────────
 
@@ -111,7 +112,7 @@ export function formatTime12(value: string) {
   const mins = minutes % 60;
   const period = hours24 >= 12 ? "م" : "ص";
   const hours12 = hours24 % 12 || 12;
-  return `${hours12}:${String(mins).padStart(2, "0")} ${period}`;
+  return toArabicIndicDigits(`${hours12}:${String(mins).padStart(2, "0")} ${period}`);
 }
 
 function buildPayload(
@@ -307,7 +308,9 @@ function formatHms(totalSeconds: number): string {
   const hours = Math.floor(safe / 3600);
   const minutes = Math.floor((safe % 3600) / 60);
   const seconds = safe % 60;
-  return `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+  return toArabicIndicDigits(
+    `${String(hours).padStart(2, "0")}:${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`,
+  );
 }
 
 const PRAYER_GRACE_MINUTES = 35;

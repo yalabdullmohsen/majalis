@@ -85,6 +85,9 @@ export function SkeletonPage({ title }: { title?: string } = {}) {
 }
 
 export { PageHeader, Card, ListRow, Button as MjButton, Badge, Progress, SearchField, EmptyState } from "@/components/ui/mj";
+export { PageHero } from "@/components/ui/PageHero";
+export { PatternBackdrop } from "@/components/ui/PatternBackdrop";
+export { FilterChips } from "@/components/ui/FilterChips";
 
 export function Loading({ label = "جارٍ التحميل…", title }: { label?: string; title?: string } = {}) {
   return (

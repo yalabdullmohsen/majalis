@@ -11,6 +11,7 @@ import {
   type PrayerSlot,
 } from "@/lib/prayer-times";
 import { getPreviousInternalRoute, goBackOrFallback, normalizeNavPath } from "@/lib/navigation-back";
+import { toArabicDigits } from "@/lib/utils";
 import "@/styles/pages/prayer-times.css";
 
 const PRAYER_AR: Record<string, string> = {
@@ -77,7 +78,9 @@ function formatHms(totalSeconds: number): string {
   const h = Math.floor(s / 3600);
   const m = Math.floor((s % 3600) / 60);
   const sec = s % 60;
-  return `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:${String(sec).padStart(2, "0")}`;
+  return toArabicDigits(
+    `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:${String(sec).padStart(2, "0")}`,
+  );
 }
 
 /** عرض 12 ساعة عربي (ص/م) — الحسابات تبقى على time24/minutes داخليًا */

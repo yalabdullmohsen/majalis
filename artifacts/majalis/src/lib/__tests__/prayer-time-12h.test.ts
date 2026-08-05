@@ -8,11 +8,11 @@ import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { formatTime12 } from "../prayer-times";
 
-assert.equal(formatTime12("15:31"), "3:31 م");
-assert.equal(formatTime12("03:05"), "3:05 ص");
-assert.equal(formatTime12("00:15"), "12:15 ص");
-assert.equal(formatTime12("12:00"), "12:00 م");
-assert.equal(formatTime12("23:59"), "11:59 م");
+assert.equal(formatTime12("15:31"), "٣:٣١ م");
+assert.equal(formatTime12("03:05"), "٣:٠٥ ص");
+assert.equal(formatTime12("00:15"), "١٢:١٥ ص");
+assert.equal(formatTime12("12:00"), "١٢:٠٠ م");
+assert.equal(formatTime12("23:59"), "١١:٥٩ م");
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "../..");
 const page = readFileSync(join(root, "views/PrayerTimesPage.tsx"), "utf8");

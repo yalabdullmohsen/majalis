@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
-import { goBackOrFallback } from "@/lib/navigation-back";
 import { cn } from "@/lib/utils";
+import { PageHero } from "./PageHero";
 
 export function PageHeader({
   eyebrow,
@@ -15,24 +15,15 @@ export function PageHeader({
   showBack?: boolean;
   className?: string;
 }) {
-  const currentPath = typeof window !== "undefined" ? window.location.pathname : "/";
   return (
-    <header className={cn("mj-page-head", className)} dir="rtl">
-      {showBack ? (
-        <button
-          type="button"
-          className="mj-btn mj-btn--ghost"
-          style={{ marginBottom: "var(--mj-s3)", padding: "8px 14px", fontSize: "var(--mj-fs-small)" }}
-          onClick={() => goBackOrFallback(currentPath)}
-          aria-label="رجوع"
-        >
-          → رجوع
-        </button>
-      ) : null}
-      {eyebrow ? <p className="mj-eyebrow">{eyebrow}</p> : null}
-      <h1>{title}</h1>
-      {subtitle ? <p>{subtitle}</p> : null}
-    </header>
+    <PageHero
+      eyebrow={eyebrow}
+      title={title}
+      description={subtitle}
+      showBack={showBack}
+      withPattern
+      className={cn("mj-page-head", className)}
+    />
   );
 }
 

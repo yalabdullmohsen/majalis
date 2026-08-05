@@ -121,8 +121,8 @@ check(
 const preFajrCrossDay = computePrayerTicker(slots, new Date("2026-07-30T03:59:00+03:00"));
 check(preFajrCrossDay?.mode === "countdown", "pre-fajr after midnight within 15m → countdown");
 
-check(formatDurationAr(65_000) === "1:05", "format mm:ss");
-check(formatDurationAr(3_661_000) === "1:01:01", "format hh:mm:ss");
+check(formatDurationAr(65_000) === "١:٠٥", "format mm:ss");
+check(formatDurationAr(3_661_000) === "١:٠١:٠١", "format hh:mm:ss");
 check(computePrayerTicker([], new Date()) === null, "empty slots → null");
 
 console.log("\n=== native audio session JS state ===");

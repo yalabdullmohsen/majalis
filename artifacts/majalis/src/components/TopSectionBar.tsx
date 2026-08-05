@@ -17,19 +17,21 @@ type SectionTab = {
 };
 
 /**
- * شريط الأقسام — محاور مختصرة بعد تنظيف التنقل (2026-08).
+ * شريط الأقسام — مرتّب حسب أهمية الاستعمال اليومي:
+ * الحفظ → علوم القرآن → الحديث → الفقه → الصلاة → المناسبات →
+ * الحفظ/المراجعة → الدليل → حسابي → المصحف (قريبًا في النهاية).
  */
 export const SECTION_TABS: SectionTab[] = [
-  { href: "/mushaf", label: "القرآن", Icon: BookMarked, prefetch: () => import("@/views/MushafComingSoonPage") },
   { href: "/memorize", label: "الحفظ", Icon: Brain, prefetch: () => import("@/views/MemorizePage") },
   { href: "/quran-knowledge", label: "القرآن وعلومه", Icon: BookOpen, prefetch: () => import("@/views/QuranKnowledgeHubPage") },
   { href: "/hadith", label: "الحديث والسنة", Icon: ScrollText, prefetch: () => import("@/views/HadithPage") },
   { href: "/fiqh", label: "الفقه والأحكام", Icon: Scale, prefetch: () => import("@/views/FiqhPage") },
-  { href: "/memorization", label: "الحفظ والمراجعة", Icon: Brain, prefetch: () => import("@/views/MemorizationHubPage") },
-  { href: "/occasions-lessons", label: "المناسبات والدروس", Icon: CalendarDays, prefetch: () => import("@/views/OccasionsLessonsHubPage") },
-  { href: "/islamic-directory", label: "الدليل الإسلامي", Icon: MapPin, prefetch: () => import("@/views/IslamicDirectoryHubPage") },
   { href: "/prayer-times", label: "الصلاة", Icon: Clock, prefetch: () => import("@/views/PrayerTimesPage") },
+  { href: "/occasions-lessons", label: "المناسبات والدروس", Icon: CalendarDays, prefetch: () => import("@/views/OccasionsLessonsHubPage") },
+  { href: "/memorization", label: "الحفظ والمراجعة", Icon: Brain, prefetch: () => import("@/views/MemorizationHubPage") },
+  { href: "/islamic-directory", label: "الدليل الإسلامي", Icon: MapPin, prefetch: () => import("@/views/IslamicDirectoryHubPage") },
   { href: "/my-learning", label: "حسابي", Icon: User, prefetch: () => import("@/views/MyLearningPage") },
+  { href: "/mushaf", label: "القرآن", Icon: BookMarked, prefetch: () => import("@/views/MushafComingSoonPage") },
 ];
 
 export function isTabActive(location: string, href: string): boolean {
@@ -126,7 +128,8 @@ export function TopSectionBar() {
               onMouseEnter={() => triggerPrefetch(tab)}
             >
               <tab.Icon size={14} strokeWidth={active ? 2.3 : 1.8} aria-hidden="true" />
-              <span>{soon ? "قريبًا" : tab.label}</span>
+              <span className="top-section-bar__tab-label">{tab.label}</span>
+              {soon ? <span className="top-section-bar__soon-badge">قريبًا</span> : null}
             </Link>
           );
         })}

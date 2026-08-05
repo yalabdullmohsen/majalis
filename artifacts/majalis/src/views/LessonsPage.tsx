@@ -4,8 +4,9 @@ import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { ShareButtons } from "@/components/ContentActions";
 import { useLocation } from "wouter";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
-import { PageHeader } from "@/components/ui-common";
+import { PageHeader, FilterChips } from "@/components/ui-common";
 import { PageLoadingGuard } from "@/components/PageLoadingGuard";
+import { toArabicDigits } from "@/lib/utils";
 import { useAuth } from "@/components/AuthProvider";
 import { UnifiedLessonCard } from "@/components/lessons/UnifiedLessonCard";
 import { computeNextOccurrenceMs, isLessonInProgress } from "@/lib/lesson-time";
@@ -493,38 +494,6 @@ export default function LessonsPage({
 
   return (
     <div className="page-shell lessons-page-v2 ds-page mj-page">
-      {/* نمط هندسي إسلامي، أطباق نجمية كلاسيكية */}
-      <div className="lessons-geo-banner" aria-hidden="true">
-        <svg className="lessons-geo-banner__pattern" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
-          <defs>
-            {/* نمط الأطباق النجمية الثمانية مع الموصلات الهندسية */}
-            <pattern id="girih-8star" x="0" y="0" width="112" height="112" patternUnits="userSpaceOnUse">
-              <g fill="none" stroke="currentColor" strokeWidth="0.75">
-                {/* نجمة ثمانية مركزية */}
-                <polygon points="56,34 60.4,45.6 72,41.2 67.6,52.8 79.2,57.2 67.6,61.6 72,73.2 60.4,68.8 56,80.4 51.6,68.8 40,73.2 44.4,61.6 32.8,57.2 44.4,52.8 40,41.2 51.6,45.6" opacity="0.65"/>
-                {/* مثمن داخلي */}
-                <polygon points="56,42 62.5,47.5 68,47.5 70,54 68,60.5 62.5,66 56,68 49.5,66 44,60.5 42,54 44,47.5 49.5,42" opacity="0.35"/>
-                {/* نجوم ربعية في الزوايا */}
-                <polygon points="0,0 5.6,11.2 17.2,6.8 11.6,18.4 23.2,22.8 11.6,27.2 17.2,38.8 5.6,34.4 0,45.6 -5.6,34.4 -17.2,38.8 -11.6,27.2 -23.2,22.8 -11.6,18.4 -17.2,6.8 -5.6,11.2" opacity="0.55"/>
-                <polygon points="112,0 117.6,11.2 129.2,6.8 123.6,18.4 135.2,22.8 123.6,27.2 129.2,38.8 117.6,34.4 112,45.6 106.4,34.4 94.8,38.8 100.4,27.2 88.8,22.8 100.4,18.4 94.8,6.8 106.4,11.2" opacity="0.55"/>
-                <polygon points="0,112 5.6,123.2 17.2,118.8 11.6,130.4 23.2,134.8 11.6,139.2 17.2,150.8 5.6,146.4 0,157.6 -5.6,146.4 -17.2,150.8 -11.6,139.2 -23.2,134.8 -11.6,130.4 -17.2,118.8 -5.6,123.2" opacity="0.55"/>
-                <polygon points="112,112 117.6,123.2 129.2,118.8 123.6,130.4 135.2,134.8 123.6,139.2 129.2,150.8 117.6,146.4 112,157.6 106.4,146.4 94.8,150.8 100.4,139.2 88.8,134.8 100.4,130.4 94.8,118.8 106.4,123.2" opacity="0.55"/>
-                {/* خطوط الوصل الهندسية */}
-                <line x1="56" y1="34" x2="56" y2="0" opacity="0.2"/>
-                <line x1="56" y1="80.4" x2="56" y2="112" opacity="0.2"/>
-                <line x1="32.8" y1="57.2" x2="0" y2="57.2" opacity="0.2"/>
-                <line x1="79.2" y1="57.2" x2="112" y2="57.2" opacity="0.2"/>
-                {/* موصلات قطرية */}
-                <line x1="40" y1="41.2" x2="17.2" y2="18.4" opacity="0.15"/>
-                <line x1="72" y1="41.2" x2="94.8" y2="18.4" opacity="0.15"/>
-                <line x1="40" y1="73.2" x2="17.2" y2="96" opacity="0.15"/>
-                <line x1="72" y1="73.2" x2="94.8" y2="96" opacity="0.15"/>
-              </g>
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#girih-8star)"/>
-        </svg>
-      </div>
       <PageHeader
         eyebrow="المجلس العلمي"
         title="الدروس"
@@ -532,21 +501,16 @@ export default function LessonsPage({
       />
 
       <div className="lessons-v2-toolbar">
-        <div className="kuwait-tabs" role="tablist" aria-label="تبويبات الدروس">
-          {(Object.keys(TAB_LABELS) as TabId[]).map((tabId) => (
-            <button
-              key={tabId}
-              type="button"
-              role="tab"
-              aria-selected={tab === tabId}
-              className={`kuwait-tab${tab === tabId ? " kuwait-tab--active" : ""}`}
-              onClick={() => setTab(tabId)}
-            >
-              {TAB_LABELS[tabId]}
-              {TAB_COMING_SOON[tabId] && <span className="kuwait-tab__soon">قريبًا</span>}
-            </button>
-          ))}
-        </div>
+        <FilterChips
+          ariaLabel="تبويبات الدروس"
+          value={tab}
+          onChange={(id) => setTab(id as TabId)}
+          items={(Object.keys(TAB_LABELS) as TabId[]).map((tabId) => ({
+            id: tabId,
+            label: TAB_LABELS[tabId],
+            soon: TAB_COMING_SOON[tabId],
+          }))}
+        />
         <div className="lessons-v2-toolbar-actions">
           {activeFilterCount > 0 && (
             <button
@@ -566,8 +530,8 @@ export default function LessonsPage({
           >
             تصفية وبحث
             {activeFilterCount > 0 && (
-              <span className="lessons-v2-filter-badge" aria-label={`${activeFilterCount} فلتر نشط`}>
-                {activeFilterCount}
+              <span className="lessons-v2-filter-badge" aria-label={`${toArabicDigits(activeFilterCount)} فلتر نشط`}>
+                {toArabicDigits(activeFilterCount)}
               </span>
             )}
           </button>

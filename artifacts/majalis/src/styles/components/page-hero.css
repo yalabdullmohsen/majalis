@@ -1,0 +1,174 @@
+/**
+ * PageHero + PatternBackdrop + FilterChips — هوية majlisilm
+ */
+
+/* ── PatternBackdrop ── */
+.pattern-backdrop {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+  color: var(--mj-brand);
+  opacity: 0.06;
+}
+html[data-theme="dark"] .pattern-backdrop,
+html.dark .pattern-backdrop {
+  opacity: 0.04;
+}
+.pattern-backdrop__svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 8rem;
+}
+
+/* ── PageHero ── */
+.page-hero-mj {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+  background: var(--mj-bg);
+  color: var(--mj-ink);
+  padding: clamp(0.85rem, 3.5vw, 1.35rem);
+  padding-block-end: 1.15rem;
+}
+.page-hero-mj__content {
+  position: relative;
+  z-index: 1;
+  max-width: 40rem;
+  display: grid;
+  gap: 0.45rem;
+}
+.page-hero-mj__back {
+  justify-self: start;
+  margin-block-end: 0.15rem;
+  min-height: 2.35rem;
+  padding: 0.4rem 0.85rem;
+  font-size: var(--mj-fs-small, 0.875rem);
+  color: var(--mj-ink) !important;
+  border: 1px solid var(--mj-hairline) !important;
+  background: var(--mj-surface) !important;
+  border-radius: var(--mj-r-pill);
+}
+.page-hero-mj__eyebrow {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: var(--mj-brand);
+}
+.page-hero-mj__title {
+  margin: 0;
+  font-family: var(--mj-face, var(--font-display));
+  font-size: clamp(1.65rem, 6.2vw, 2.55rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--mj-ink) !important;
+}
+.page-hero-mj__headline {
+  margin: 0;
+  font-size: clamp(0.95rem, 3vw, 1.15rem);
+  font-weight: 600;
+  line-height: 1.45;
+  color: var(--mj-ink) !important;
+}
+.page-hero-mj__desc {
+  margin: 0;
+  max-width: 38ch;
+  font-size: 0.92rem;
+  line-height: 1.65;
+  color: var(--mj-ink-2) !important;
+}
+.page-hero-mj__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-block-start: 0.35rem;
+}
+.page-hero-mj__actions .mj-btn--primary,
+.page-hero-mj__actions .m2030-btn--primary {
+  background: var(--mj-brand) !important;
+  color: #fff !important;
+  border: none !important;
+  border-radius: var(--mj-r-pill) !important;
+  clip-path: none !important;
+  min-height: 2.65rem;
+  padding: 0.55rem 1.1rem;
+  font-weight: 600;
+}
+.page-hero-mj__actions .mj-btn--ghost,
+.page-hero-mj__actions .m2030-btn--ghost {
+  background: var(--mj-surface) !important;
+  color: var(--mj-ink) !important;
+  border: 1px solid var(--mj-hairline) !important;
+  border-radius: var(--mj-r-pill) !important;
+  clip-path: none !important;
+  min-height: 2.65rem;
+  padding: 0.55rem 1.1rem;
+  font-weight: 600;
+}
+
+/* ── FilterChips ── */
+.filter-chips {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.45rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  padding: 0.4rem;
+  background: var(--mj-surface);
+  border: 1px solid var(--mj-hairline);
+  border-radius: var(--mj-r-pill);
+  position: relative;
+  z-index: 1;
+}
+.filter-chips::-webkit-scrollbar {
+  display: none;
+}
+.filter-chips__chip {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  min-height: 2.2rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: var(--mj-r-pill);
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--mj-ink-2);
+  font-size: 0.86rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.filter-chips__chip.is-active {
+  background: var(--mj-brand-soft);
+  color: var(--mj-brand);
+  border-color: var(--mj-brand);
+}
+.filter-chips__soon {
+  font-size: 0.68rem;
+  font-weight: 700;
+  opacity: 0.75;
+}
+
+/* دروس: الحاوية تقطع الزخرفة والمحتوى فوقها */
+.lessons-page-v2 {
+  position: relative;
+  overflow: hidden;
+}
+.lessons-page-v2 > .page-hero-mj,
+.lessons-page-v2 > .lessons-v2-toolbar,
+.lessons-page-v2 > .filter-chips,
+.lessons-page-v2 > .lessons-v2-result-count,
+.lessons-page-v2 > section,
+.lessons-page-v2 > .page-shell > * {
+  position: relative;
+  z-index: 1;
+}
+/* إبطال الزخرفة المحلية القديمة */
+.lessons-geo-banner {
+  display: none !important;
+}

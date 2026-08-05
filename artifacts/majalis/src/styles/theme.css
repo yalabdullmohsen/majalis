@@ -151,7 +151,7 @@ html.dark,
 .mj-page-head p {
   margin: 0;
   font-size: var(--mj-fs-small);
-  color: var(--mj-muted);
+  color: var(--mj-ink-2);
 }
 
 .mj-card {

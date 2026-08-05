@@ -76,6 +76,16 @@ const ASSERTIONS = [
   // "مواسم التعلّم" — شارة عنوان بقسم: نص على خلفية --elite-forest العميقة
   // (تبقى #143F35 في الوضع الليلي؛ لا تُسطَّح إلى نعناعي).
   { route: "/", selector: ".lsw-section .ds-section__title", mode: "dark", min: 3 },
+  // ── أبطال الصفحات (2026-08): سد ثغرة البوابة — كانت تمرّ رغم نص شبه أبيض
+  // على خلفية شبه بيضاء في الرئيسية لأن البطل لم يُقَس أصلًا. ملاصقة لمسار "/".
+  { route: "/", selector: ".page-hero-mj__title", mode: "light", min: 3 },
+  { route: "/", selector: ".page-hero-mj__headline", mode: "light", min: 4.5 },
+  { route: "/", selector: ".page-hero-mj__desc", mode: "light", min: 4.5 },
+  { route: "/", selector: ".page-hero-mj__actions .m2030-btn--ghost", mode: "light", min: 4.5 },
+  { route: "/", selector: ".page-hero-mj__title", mode: "dark", min: 3 },
+  { route: "/", selector: ".page-hero-mj__headline", mode: "dark", min: 4.5 },
+  { route: "/", selector: ".page-hero-mj__desc", mode: "dark", min: 4.5 },
+  { route: "/", selector: ".page-hero-mj__actions .m2030-btn--ghost", mode: "dark", min: 4.5 },
   // .sq-title (عنوان SectionQuiz داخل .sq-header الداكن) كان يخسر نفس المعركة.
   { route: "/cards", selector: ".sq-title", mode: "light", min: 4.5 },
   // .twh-hub-card__current-tag اكتسب خلفية داكنة بالخطأ (يطابق [class*="-card"]
@@ -100,6 +110,14 @@ const ASSERTIONS = [
   // وغيرها).
   { route: "/lessons", selector: ".lessons-v2-section__title", mode: "light", min: 4.5 },
   { route: "/lessons", selector: ".lessons-past-section__title", mode: "light", min: 4.5 },
+  { route: "/lessons", selector: ".page-hero-mj__title", mode: "light", min: 3 },
+  { route: "/lessons", selector: ".page-hero-mj__desc", mode: "light", min: 4.5 },
+  { route: "/lessons", selector: ".page-hero-mj__title", mode: "dark", min: 3 },
+  { route: "/lessons", selector: ".page-hero-mj__desc", mode: "dark", min: 4.5 },
+  { route: "/hadith", selector: ".page-hero-mj__title", mode: "light", min: 3 },
+  { route: "/hadith", selector: ".page-hero-mj__desc", mode: "light", min: 4.5 },
+  { route: "/fiqh", selector: ".page-hero-mj__title", mode: "light", min: 3 },
+  { route: "/quran-knowledge", selector: ".page-hero-mj__title", mode: "light", min: 3 },
   // ── تدقيق تباين آلي حي إضافي (2026-07-21، 154 مسارًا عامًا، خارج /admin):
   // اثنان من العطلين المنهجيين الأوسع أثرًا.
   // 1) --txt-muted/--msk-text-3 (#929995) كانت مُحسَبة أصلًا مقابل أبيض
@@ -153,18 +171,38 @@ const RATIO_FN = `(selector) => {
   }
   function effectiveBg(el) {
     let node = el;
+    let solid = null;
     while (node) {
       const cs = getComputedStyle(node);
-      // فضّل background-color الصلب حتى مع تدرّج فوقه (نمط شائع).
       const bg = parseColor(cs.backgroundColor);
       const hasImage = cs.backgroundImage && cs.backgroundImage !== "none";
-      // Opaque underlay under decorative gradients is measurable; bare
-      // images/gradients without underlay remain unmeasurable (null).
-      if (bg && bg.a > 0.5) return bg;
-      if (hasImage) return null;
+      if (bg && bg.a > 0.5) {
+        solid = bg;
+        break;
+      }
+      if (hasImage && !solid) return null;
       node = node.parentElement;
     }
-    return { r: 255, g: 255, b: 255, a: 1 };
+    if (!solid) solid = { r: 255, g: 255, b: 255, a: 1 };
+    // إن وُجدت طبقة .pattern-backdrop تحت النص: قِس مقابل أغمق نقطة مركّبة
+    // (لون --mj-brand بأعلى كثافة نقش: ٦٪ نهارًا / ٤٪ ليلًا).
+    const hero = el.closest(".page-hero-mj");
+    const pattern = hero && hero.querySelector(".pattern-backdrop");
+    if (pattern) {
+      const pcs = getComputedStyle(pattern);
+      const brand = parseColor(pcs.color) || parseColor(getComputedStyle(document.documentElement).getPropertyValue("--mj-brand")) || { r: 20, g: 63, b: 53, a: 1 };
+      // قراءة opacity المحسوبة للنقش
+      let op = parseFloat(pcs.opacity);
+      if (!Number.isFinite(op)) op = 0.06;
+      // brand فوق solid: darkest = solid*(1-op) + brand*op
+      return {
+        r: solid.r * (1 - op) + brand.r * op,
+        g: solid.g * (1 - op) + brand.g * op,
+        b: solid.b * (1 - op) + brand.b * op,
+        a: 1,
+      };
+    }
+    return solid;
   }
   const el = document.querySelector(selector);
   if (!el) return { error: "NOT_FOUND" };
@@ -234,15 +272,14 @@ async function main() {
   }
   const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
   const failures = [];
-  const routeCache = new Map();
+  let lastRoute = null;
 
   for (const a of ASSERTIONS) {
-    const cacheKey = `${a.route}|${a.mode}`;
     try {
-      if (!routeCache.has(a.route)) {
+      if (lastRoute !== a.route) {
         await page.goto(`${baseUrl}${a.route}`, { waitUntil: "networkidle", timeout: 15000 });
         await page.waitForTimeout(400);
-        routeCache.set(a.route, true);
+        lastRoute = a.route;
       }
       const currentMode = await page.evaluate(() => document.documentElement.dataset.theme || "light");
       if (currentMode !== a.mode) {
