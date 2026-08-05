@@ -1,6 +1,6 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "wouter";
-import { Search, Star, BookOpen, Sparkles } from "lucide-react";
+import { Search, Star, BookOpen, ChevronLeft } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import {
@@ -11,7 +11,9 @@ import {
   type SurahIndexEntry,
 } from "@/lib/surah-index";
 import { surahList, mushafPageHref } from "@/lib/quran-surah-list";
-import { toArabicDigits } from "@/lib/utils";
+import { useNumerals } from "@/hooks/useNumerals";
+import { toArabicIndicDigits } from "@/lib/numerals";
+import "@/styles/pages/surah-index.css";
 
 type RevelationFilter = "all" | "meccan" | "medinan" | "favorites";
 /** ترتيب العرض: "mushaf" هو الافتراضي الدائم (رقم السورة في المصحف —
@@ -20,21 +22,38 @@ type RevelationFilter = "all" | "meccan" | "medinan" | "favorites";
  *  الكامل). لا يُغيَّر الافتراضي أبدًا — طلب صريح من المالك. */
 type SortMode = "mushaf" | "revelation";
 
+const JUMPS = [
+  { id: "1-30", label: "١–٣٠", start: 1, end: 30 },
+  { id: "31-60", label: "٣١–٦٠", start: 31, end: 60 },
+  { id: "61-90", label: "٦١–٩٠", start: 61, end: 90 },
+  { id: "91-114", label: "٩١–١١٤", start: 91, end: 114 },
+] as const;
+
+function revelationLabel(type: SurahIndexEntry["revelationType"]): string | null {
+  if (type === "Meccan") return "مكية";
+  if (type === "Medinan") return "مدنية";
+  return null;
+}
+
 export default function SurahIndexPage() {
+  const fmt = useNumerals();
   const [surahs, setSurahs] = useState<SurahIndexEntry[]>([]);
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState(false);
   const [revelationLoaded, setRevelationLoaded] = useState(false);
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<RevelationFilter>("all");
-  const [sortMode, setSortMode] = useState<SortMode>("mushaf"); // الافتراضي: ترتيب المصحف، لا يتغيّر
+  const [sortMode, setSortMode] = useState<SortMode>("mushaf");
   const [favorites, setFavorites] = useState<Set<number>>(() => new Set());
+  const [activeJump, setActiveJump] = useState<string | null>(null);
+  const rowRefs = useRef<Map<number, HTMLLIElement>>(new Map());
 
   useEffect(() => {
     applyPageSeo({
       path: "/quran/surahs",
       title: "فهرس السور | المجلس العلمي",
-      description: "فهرس سور القرآن الكريم الـ114 كاملة: رقم السورة واسمها وعدد آياتها وتصنيفها المكي أو المدني، مع بحث سريع ومفضلة. محتوى معتمد في منهج مجالس",
+      description:
+        "فهرس سور القرآن الكريم الـ114 كاملة: رقم السورة واسمها وعدد آياتها وتصنيفها المكي أو المدني، مع بحث سريع ومفضلة. محتوى معتمد في منهج مجالس",
       keywords: ["فهرس السور", "سور القرآن", "مكية ومدنية", "المصحف"],
     });
   }, []);
@@ -46,15 +65,25 @@ export default function SurahIndexPage() {
   useEffect(() => {
     let cancelled = false;
     fetchSurahIndexLocal()
-      .then((list) => { if (!cancelled) setSurahs(list); })
-      .catch(() => { if (!cancelled) setLoadError(true); })
-      .finally(() => { if (!cancelled) setLoading(false); });
+      .then((list) => {
+        if (!cancelled) setSurahs(list);
+      })
+      .catch(() => {
+        if (!cancelled) setLoadError(true);
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
     fetchRevelationTypes().then((map) => {
       if (cancelled || map.size === 0) return;
-      setSurahs((prev) => prev.map((s) => ({ ...s, revelationType: map.get(s.number) ?? s.revelationType })));
+      setSurahs((prev) =>
+        prev.map((s) => ({ ...s, revelationType: map.get(s.number) ?? s.revelationType })),
+      );
       setRevelationLoaded(true);
     });
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
   const pageById = useMemo(
@@ -70,7 +99,12 @@ export default function SurahIndexPage() {
 
     const term = query.trim();
     if (term) {
-      list = list.filter((s) => arabicMatchAny([s.name, s.englishName], term) || String(s.number).startsWith(term));
+      list = list.filter(
+        (s) =>
+          arabicMatchAny([s.name, s.englishName], term) ||
+          String(s.number).startsWith(term) ||
+          toArabicIndicDigits(s.number).startsWith(term),
+      );
     }
 
     if (sortMode === "revelation") {
@@ -85,14 +119,33 @@ export default function SurahIndexPage() {
     setFavorites(toggleFavoriteSurah(number));
   }
 
+  function handleJump(jump: (typeof JUMPS)[number]) {
+    setActiveJump(jump.id);
+    const target = filtered.find((s) => s.number >= jump.start && s.number <= jump.end);
+    if (!target) return;
+    rowRefs.current.get(target.number)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function metaLine(s: SurahIndexEntry, startPage: number): string {
+    const parts: string[] = [];
+    const rev = revelationLabel(s.revelationType);
+    if (rev) parts.push(rev);
+    parts.push(`${fmt(s.numberOfAyahs)} آيات`);
+    parts.push(`صفحة ${fmt(startPage)}`);
+    if (sortMode === "revelation") {
+      parts.push(`سورة رقم ${fmt(s.number)} في المصحف`);
+    }
+    return parts.join(" · ");
+  }
+
   return (
-    <div className="surah-index-page" dir="rtl">
+    <div className="surah-index-page" dir="rtl" data-testid="surah-index-page">
       <header className="surah-index-hero">
         <h1>فهرس السور</h1>
-        <p>١١٤ سورة — رقمها واسمها، مع بحث سريع ومفضلة وفلترة حسب التصنيف.</p>
+        <p>{fmt(114)} سورة — رقمها واسمها، مع بحث سريع ومفضلة وفلترة حسب التصنيف.</p>
         <Link href="/quran/revelation-order" className="surah-index-revelation-link">
-          <Sparkles size={14} strokeWidth={1.8} aria-hidden="true" />
-          خريطة ترتيب نزول السور ←
+          خريطة ترتيب نزول السور
+          <ChevronLeft className="surah-index-revelation-link__chevron" size={16} strokeWidth={2} aria-hidden="true" />
         </Link>
       </header>
 
@@ -119,18 +172,28 @@ export default function SurahIndexPage() {
         </div>
 
         <div className="surah-index-search">
-          <Search size={16} strokeWidth={1.8} aria-hidden="true" />
+          <Search className="surah-index-search__icon" size={16} strokeWidth={1.8} aria-hidden="true" />
           <input
             type="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="ابحث عن سورة بالاسم أو الرقم..."
             aria-label="ابحث عن سورة"
+            enterKeyHint="search"
+            autoComplete="off"
           />
         </div>
 
         <div className="surah-index-filters" role="tablist" aria-label="فلاتر السور">
-          <button type="button" role="tab" aria-selected={filter === "all"} className={`surah-index-chip${filter === "all" ? " is-active" : ""}`} onClick={() => setFilter("all")}>الكل</button>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={filter === "all"}
+            className={`surah-index-chip${filter === "all" ? " is-active" : ""}`}
+            onClick={() => setFilter("all")}
+          >
+            الكل
+          </button>
           <button
             type="button"
             role="tab"
@@ -153,15 +216,37 @@ export default function SurahIndexPage() {
           >
             مدنية
           </button>
-          <button type="button" role="tab" aria-selected={filter === "favorites"} className={`surah-index-chip${filter === "favorites" ? " is-active" : ""}`} onClick={() => setFilter("favorites")}>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={filter === "favorites"}
+            className={`surah-index-chip${filter === "favorites" ? " is-active" : ""}`}
+            onClick={() => setFilter("favorites")}
+          >
             <Star size={12} strokeWidth={2} aria-hidden="true" /> المفضلة
           </button>
+        </div>
+
+        <div className="surah-index-jumps" role="group" aria-label="انتقال سريع">
+          {JUMPS.map((jump) => (
+            <button
+              key={jump.id}
+              type="button"
+              className={`surah-index-jump${activeJump === jump.id ? " is-active" : ""}`}
+              aria-pressed={activeJump === jump.id}
+              onClick={() => handleJump(jump)}
+            >
+              {jump.label}
+            </button>
+          ))}
         </div>
       </div>
 
       {loading ? (
         <div className="surah-index-skeletons" aria-hidden="true">
-          {Array.from({ length: 8 }).map((_, i) => <div key={i} className="surah-index-skel" />)}
+          {Array.from({ length: 8 }).map((_, i) => (
+            <div key={i} className="surah-index-skel" />
+          ))}
         </div>
       ) : loadError ? (
         <div className="surah-index-empty">
@@ -177,35 +262,44 @@ export default function SurahIndexPage() {
         <ol className="surah-index-list">
           {filtered.map((s) => {
             const startPage = pageById.get(s.number) ?? 1;
+            const fav = favorites.has(s.number);
+            const displayNum = sortMode === "revelation" ? s.revelationOrder : s.number;
             return (
-            <li key={s.number}>
-              <Link
-                href={mushafPageHref(startPage)}
-                className="surah-index-row"
-                title={s.description || undefined}
+              <li
+                key={s.number}
+                ref={(node) => {
+                  if (node) rowRefs.current.set(s.number, node);
+                  else rowRefs.current.delete(s.number);
+                }}
               >
-                <span className="surah-index-row__num" aria-hidden="true">
-                  {sortMode === "revelation" ? s.revelationOrder : s.number}
-                </span>
-                <span className="surah-index-row__body">
-                  <span className="surah-index-row__name" style={{ fontFamily: "var(--font-quran)" }}>{s.name}</span>
-                  {/* RN FlatList: «الاسم - صفحة N» — رقم الصفحة سياق تنقّل للمصحف. */}
-                  <span className="surah-index-row__meta">
-                    صفحة {toArabicDigits(startPage)}
-                    {sortMode === "revelation" ? ` · سورة رقم ${toArabicDigits(s.number)} في المصحف` : ""}
-                  </span>
-                </span>
-                <button
-                  type="button"
-                  className={`surah-index-row__fav${favorites.has(s.number) ? " is-active" : ""}`}
-                  onClick={(e) => handleToggleFavorite(s.number, e)}
-                  aria-label={favorites.has(s.number) ? `إزالة ${s.name} من المفضلة` : `إضافة ${s.name} إلى المفضلة`}
-                  aria-pressed={favorites.has(s.number)}
+                <Link
+                  href={mushafPageHref(startPage)}
+                  className="surah-index-row"
+                  title={s.description || undefined}
                 >
-                  <Star size={17} strokeWidth={1.8} fill={favorites.has(s.number) ? "currentColor" : "none"} aria-hidden="true" />
-                </button>
-              </Link>
-            </li>
+                  <span className="surah-index-row__num" aria-hidden="true">
+                    {fmt(displayNum)}
+                  </span>
+                  <span className="surah-index-row__body">
+                    <span className="surah-index-row__name">{s.name}</span>
+                    <span className="surah-index-row__meta">{metaLine(s, startPage)}</span>
+                  </span>
+                  <button
+                    type="button"
+                    className={`surah-index-row__fav${fav ? " is-active" : ""}`}
+                    onClick={(e) => handleToggleFavorite(s.number, e)}
+                    aria-label={fav ? `إزالة ${s.name} من المفضلة` : `إضافة ${s.name} إلى المفضلة`}
+                    aria-pressed={fav}
+                  >
+                    <Star
+                      size={18}
+                      strokeWidth={1.8}
+                      fill={fav ? "currentColor" : "none"}
+                      aria-hidden="true"
+                    />
+                  </button>
+                </Link>
+              </li>
             );
           })}
         </ol>
