@@ -29,7 +29,7 @@ assert.match(mushaf, /mpv-fill-enter/);
 assert.match(mushaf, /تكبير صفحة المصحف/);
 
 const more = readFileSync(join(root, "components/MoreBottomSheet.tsx"), "utf8");
-assert.match(more, /SIDEBAR_NAV_GROUPS/);
+assert.match(more, /services-center-nav|filterServicesCenterGroups/);
 assert.match(more, /مركز الخدمات/);
 
 const drawer = readFileSync(join(root, "components/SideNavDrawer.tsx"), "utf8");
@@ -37,8 +37,15 @@ assert.match(drawer, /SIDEBAR_NAV_GROUPS/);
 assert.match(drawer, /sidebar-panel/);
 
 const sidebarNav = readFileSync(join(root, "lib/sidebar-nav.ts"), "utf8");
-assert.match(sidebarNav, /\/quran-knowledge/);
-assert.match(sidebarNav, /القرآن وعلومه/);
+assert.match(sidebarNav, /getSidebarGroupsFromNavMap|SIDEBAR_NAV_GROUPS/);
+
+const navMap = readFileSync(join(root, "lib/nav-map.ts"), "utf8");
+assert.match(navMap, /\/quran-knowledge/);
+assert.match(navMap, /القرآن/);
+
+const servicesNav = readFileSync(join(root, "lib/services-center-nav.ts"), "utf8");
+assert.match(servicesNav, /\/quran-knowledge/);
+assert.match(servicesNav, /القرآن وعلومه/);
 
 const nav = readFileSync(join(root, "lib/navigation.ts"), "utf8");
 assert.match(nav, /href: "\/nations"/);
