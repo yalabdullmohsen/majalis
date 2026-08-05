@@ -764,6 +764,38 @@
     {
       "source": "/memorize/:path*",
       "destination": "/index.html"
+    },
+    {
+      "source": "/quran-knowledge",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/quran-knowledge/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/occasions-lessons",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/occasions-lessons/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/islamic-directory",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/islamic-directory/:path*",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/memorization",
+      "destination": "/index.html"
+    },
+    {
+      "source": "/memorization/:path*",
+      "destination": "/index.html"
     }
   ],
   "headers": [

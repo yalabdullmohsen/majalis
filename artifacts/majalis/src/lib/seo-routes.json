@@ -1864,6 +1864,59 @@
       "priority": 0.82
     },
     {
+      "path": "/quran-knowledge",
+      "title": "القرآن وعلومه",
+      "description": "فهرس القرآن وعلومه وأسباب النزول وقصص السور في مكان واحد.",
+      "keywords": [
+        "القرآن وعلومه",
+        "فهرس القرآن",
+        "علوم القرآن",
+        "أسباب النزول"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.85
+    },
+    {
+      "path": "/occasions-lessons",
+      "title": "المناسبات والدروس",
+      "description": "المناسبات الشرعية والدروس المرتبطة بها في مكان واحد.",
+      "keywords": [
+        "المناسبات الشرعية",
+        "الدروس",
+        "التقويم الهجري"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.8
+    },
+    {
+      "path": "/islamic-directory",
+      "title": "الدليل الإسلامي",
+      "description": "دليل المؤسسات والمعالم الإسلامية.",
+      "keywords": [
+        "الدليل الإسلامي",
+        "مؤسسات إسلامية",
+        "معالم إسلامية"
+      ],
+      "sitemap": true,
+      "changefreq": "monthly",
+      "priority": 0.75
+    },
+    {
+      "path": "/memorization",
+      "title": "الحفظ والمراجعة",
+      "description": "خطط الحفظ والمراجعة وأدوات تثبيت القرآن والمتون.",
+      "keywords": [
+        "الحفظ والمراجعة",
+        "خطط الحفظ",
+        "مراجعة القرآن"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.8
+    },
+    {
       "path": "/hadith-science",
       "title": "مصطلح الحديث",
       "description": "علم مصطلح الحديث — أنواع الحديث وقواعد التصحيح والتضعيف والجرح والتعديل.",

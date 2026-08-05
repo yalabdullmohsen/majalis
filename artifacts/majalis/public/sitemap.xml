@@ -441,6 +441,26 @@
     <priority>0.82</priority>
   </url>
   <url>
+    <loc>https://majlisilm.com/quran-knowledge</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/occasions-lessons</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/islamic-directory</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/memorization</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://majlisilm.com/hadith-science</loc>
     <changefreq>monthly</changefreq>
     <priority>0.78</priority>
