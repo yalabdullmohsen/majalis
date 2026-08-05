@@ -336,3 +336,140 @@ html.dark .m2030-feature__title {
   .m2030-hero__pattern,
   .m2030-hero__glow { animation: none !important; }
 }
+
+/* ── Dashboard يومي ── */
+.home-page-hero--compact.page-hero-mj,
+.home-page-hero--compact.m2030-hero {
+  min-height: unset;
+  padding-block: calc(0.65rem + env(safe-area-inset-top, 0px)) 0.95rem;
+}
+
+.m2030-quick--7 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+@media (min-width: 480px) {
+  .m2030-quick--7 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@media (min-width: 900px) {
+  .m2030-quick--7 { grid-template-columns: repeat(7, minmax(0, 1fr)); }
+}
+
+.m2030-tile--btn {
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+  width: 100%;
+}
+
+.m2030-featured--4 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+@media (min-width: 720px) {
+  .m2030-featured--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+.hp-now {
+  display: grid;
+  gap: 0.65rem;
+}
+.hp-now__head {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--mj-brand);
+}
+.hp-now__title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  font-family: var(--font-display);
+  color: var(--text-title);
+}
+.hp-now__grid {
+  display: grid;
+  gap: 0.55rem;
+}
+@media (min-width: 720px) {
+  .hp-now__grid { grid-template-columns: 1.2fr 1fr; align-items: stretch; }
+}
+.hp-now__prayer {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.85rem;
+  align-items: center;
+  padding: 0.9rem 1rem;
+  background: var(--mj-brand-deep, #145A42);
+  color: #F7FAF8;
+  text-decoration: none;
+  border-radius: var(--mj-r-lg);
+  min-height: 5.5rem;
+}
+.hp-now__prayer-ring {
+  --p: 72;
+  width: 3.6rem;
+  height: 3.6rem;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at center, var(--mj-brand-deep, #145A42) 58%, transparent 59%),
+    conic-gradient(from 210deg, color-mix(in srgb, #F7FAF8 85%, transparent) calc(var(--p) * 1%), color-mix(in srgb, #F7FAF8 16%, transparent) 0);
+  display: grid;
+  place-items: center;
+  font-size: 0.62rem;
+  color: color-mix(in srgb, #F7FAF8 80%, transparent);
+}
+.hp-now__prayer-name {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  font-family: var(--font-display);
+}
+.hp-now__prayer-time {
+  margin: 0.2rem 0 0;
+  font-size: 0.88rem;
+  opacity: 0.88;
+  font-variant-numeric: tabular-nums;
+}
+.hp-now__chip {
+  display: inline-block;
+  margin-block-start: 0.4rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  opacity: 0.9;
+}
+.hp-now__actions {
+  display: grid;
+  gap: 0.45rem;
+}
+.hp-now__action,
+.hp-now__fallback {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.75rem 0.85rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--mj-r-lg);
+  text-decoration: none;
+  color: var(--text);
+  min-height: 3.25rem;
+}
+.hp-now__action strong {
+  display: block;
+  font-size: 0.92rem;
+  color: var(--text-title);
+}
+.hp-now__action small {
+  display: block;
+  margin-block-start: 0.1rem;
+  font-size: 0.74rem;
+  color: var(--text-muted);
+}
+.hp-now__action svg { color: var(--mj-brand); flex-shrink: 0; }
+
+.hp-feed {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.home-start-here--embedded .hsh-header { display: none; }
+.home-start-here--embedded { margin: 0; }

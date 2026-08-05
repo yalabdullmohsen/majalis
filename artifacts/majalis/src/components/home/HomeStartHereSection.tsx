@@ -31,13 +31,15 @@ const START_STEPS = [
   },
 ];
 
-export function HomeStartHereSection() {
+export function HomeStartHereSection({ embedded = false }: { embedded?: boolean }) {
   return (
-    <section aria-label="ابدأ من هنا" className="home-start-here">
-      <div className="hsh-header">
-        <span className="hsh-eyebrow">للزائر الجديد</span>
-        <h2 className="hsh-title">ابدأ من هنا</h2>
-      </div>
+    <section aria-label={embedded ? undefined : "ابدأ من هنا"} className={`home-start-here${embedded ? " home-start-here--embedded" : ""}`}>
+      {!embedded && (
+        <div className="hsh-header">
+          <span className="hsh-eyebrow">للزائر الجديد</span>
+          <h2 className="hsh-title">ابدأ من هنا</h2>
+        </div>
+      )}
       <ol className="hsh-steps">
         {START_STEPS.map((s) => (
           <li key={s.num} className="hsh-step">

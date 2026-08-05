@@ -31,16 +31,24 @@ import {
 import { filterNavItems } from "@/lib/nav-visibility";
 
 /* ── روابط الوصول السريع ── */
-/* إجراءات سريعة مختصرة — 4 عناصر فقط (إعادة هيكلة الرئيسية، الأولوية 3):
-   أكمل وردك / تابع تعلّمك / اختبر معلوماتك / أذكار اليوم، بالحرف كما ورد
-   بالتكليف. القائمة الطويلة السابقة (١٩ رابطًا) كانت تكرارًا شبه كامل
-   لتبويب "المزيد" في الشريط السفلي — لا حذف وظيفة، كل تلك الروابط تبقى
-   متاحة عبر "المزيد" (MoreBottomSheet) أو /sitemap. */
-export const QUICK_LINKS: { href: string; Icon: LucideIcon; label: string; desc: string }[] = [
-  { href: "/daily-wird", Icon: Star,          label: seoNavLabel("/daily-wird", "أكمل وردك"),       desc: "الورد اليومي" },
-  { href: "/lessons",    Icon: GraduationCap, label: seoNavLabel("/lessons", "الدروس"),     desc: "الدروس والدورات" },
-  { href: "/quiz",       Icon: Target,        label: seoNavLabel("/quiz", "لعبة سين جيم"),  desc: "مسابقة معرفية" },
-  { href: "/adhkar",     Icon: RotateCw,      label: seoNavLabel("/adhkar", "أذكار اليوم"),     desc: "صباح ومساء ونوم" },
+/* Dashboard يومي: سبعة مسارات أساسية — البحث يُفتح عبر الحدث global-search-open */
+export type QuickLink = {
+  href: string;
+  Icon: LucideIcon;
+  label: string;
+  desc: string;
+  /** إن وُجد يُعامل كزر بحث بدل رابط */
+  action?: "search";
+};
+
+export const QUICK_LINKS: QuickLink[] = [
+  { href: "/quran-knowledge", Icon: BookOpen,      label: seoNavLabel("/quran-knowledge", "القرآن"),   desc: "علوم وفهرس" },
+  { href: "/lessons",         Icon: GraduationCap, label: seoNavLabel("/lessons", "الدروس"),           desc: "دروس ودورات" },
+  { href: "/prayer-times",    Icon: Clock,         label: seoNavLabel("/prayer-times", "الصلاة"),     desc: "مواقيت وأذان" },
+  { href: "/adhkar",          Icon: RotateCw,      label: seoNavLabel("/adhkar", "الأذكار"),          desc: "صباح ومساء" },
+  { href: "#search",          Icon: Sparkles,      label: "البحث", action: "search",                   desc: "ابحث في الكل" },
+  { href: "/quiz",            Icon: Target,        label: seoNavLabel("/quiz", "الاختبار"),           desc: "سين جيم" },
+  { href: "/scholars",        Icon: Landmark,      label: seoNavLabel("/scholars", "المكتبة"),        desc: "علماء وكتب" },
 ];
 
 

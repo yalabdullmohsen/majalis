@@ -129,6 +129,7 @@ export function buildTickerPool(): TickerContentItem[] {
   }
 
   for (const q of QUICK_LINKS) {
+    if (q.action === "search") continue;
     pool.push({
       id: `quick:${q.href}`,
       kind: "promo",

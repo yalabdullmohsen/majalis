@@ -1,6 +1,6 @@
 import { Suspense, useEffect, useState } from "react";
 import { Link } from "wouter";
-import { BookMarked, BookOpen, GraduationCap, Scale, Scroll, Target, Wrench } from "lucide-react";
+import { BookMarked, Scale, Scroll, Target, Wrench } from "lucide-react";
 import contentCounts from "@/data/content-counts.json";
 import { applyPageSeo } from "@/lib/seo";
 import { useDailyContext } from "@/lib/daily-context";
@@ -10,6 +10,8 @@ import { SectionErrorBoundary } from "@/components/ErrorBoundary";
 import { HomeDailyProgress } from "@/components/home/HomeDailyProgress";
 import { HomeContinueWidget } from "@/components/home/HomeContinueWidget";
 import { HomeLearningSeasonsWidget } from "@/components/home/HomeLearningSeasonsWidget";
+import { HomeNowCard } from "@/components/home/HomeNowCard";
+import { HomeStartHereSection } from "@/components/home/HomeStartHereSection";
 import { FridayBanner } from "@/components/FridayBanner";
 import { fetchPrayerTimes, computePrayerCountdown, type PrayerTimesPayload } from "@/lib/prayer-times";
 import { getSiteSettings, isMaintenanceMode } from "@/lib/site-settings";
@@ -73,14 +75,17 @@ const WIDGET_RENDERERS: Record<string, () => React.ReactNode> = {
 
 const WIDGET_LABEL: Record<string, string> = Object.fromEntries(HOME_WIDGET_DEFS.map((w) => [w.id, w.label]));
 
-const FEATURED_CATS = [
-  { href: "/quran-knowledge", title: "القرآن وعلومه", desc: "فهرس وعلوم وأسباب نزول", cta: "استكشف", Icon: BookMarked },
-  { href: "/hadith", title: "الحديث وعلومه", desc: "أحاديث موثقة مع الشرح", cta: "تصفح", Icon: Scroll },
-  { href: "/fiqh", title: "الفقه والأحكام", desc: "مسائل وأحكام مرتّبة", cta: "ادخل", Icon: Scale },
-  { href: "/lessons", title: "الدروس العلمية", desc: "مسارات ودروس منظمة", cta: "افتح الدروس", Icon: GraduationCap },
-  { href: "/memorization", title: "الحفظ والمراجعة", desc: "خطط واختبارات", cta: "ابدأ", Icon: Target },
-  { href: "/mushaf", title: "المصحف الشريف", desc: "قريبًا — قيد التجهيز", cta: "قريبًا", Icon: BookOpen },
+/** بوابات ثانوية — مختصرة؛ المصحف القادم ليس في الواجهة الأولى */
+const SCIENCE_HUBS = [
+  { href: "/quran-knowledge", title: "القرآن وعلومه", desc: "فهرس وعلوم وأسباب نزول", Icon: BookMarked },
+  { href: "/hadith", title: "الحديث وعلومه", desc: "أحاديث موثقة مع الشرح", Icon: Scroll },
+  { href: "/fiqh", title: "الفقه والأحكام", desc: "مسائل وأحكام مرتّبة", Icon: Scale },
+  { href: "/memorization", title: "الحفظ والمراجعة", desc: "خطط واختبارات", Icon: Target },
 ] as const;
+
+function openGlobalSearch() {
+  window.dispatchEvent(new CustomEvent("global-search-open"));
+}
 
 export default function HomePage() {
   const { isAdmin, user } = useAuth();
@@ -103,7 +108,9 @@ export default function HomePage() {
   }, [user?.id]);
 
   const visibleWidgets = visibleWidgetOrder(homePrefs);
-  const restWidgetOrder = visibleWidgets.filter((id) => id !== "lessons" && id !== "prayer" && id !== "continue");
+  // الأقسام المثبتة في الـDashboard لا تُكرَّر من التخصيص
+  const pinnedIds = new Set(["lessons", "prayer", "continue", "daily-benefits", "quiz", "daily-progress", "learning-seasons"]);
+  const restWidgetOrder = visibleWidgets.filter((id) => !pinnedIds.has(id));
 
   const [heroPrayers, setHeroPrayers] = useState<PrayerTimesPayload | null>(null);
   useEffect(() => {
@@ -147,7 +154,7 @@ export default function HomePage() {
   }, []);
 
   return (
-    <div className="m2030-home" dir="rtl">
+    <div className="m2030-home hp-dash" dir="rtl">
       {isMaintenanceMode() && (
         <div role="status" className="home-maintenance-banner">
           {getSiteSettings().maintenanceMessage}
@@ -155,9 +162,9 @@ export default function HomePage() {
       )}
 
       <PageHero
-        className="m2030-hero home-page-hero"
+        className="m2030-hero home-page-hero home-page-hero--compact"
         title="المجلس العلمي"
-        headline="منصة علم شرعي بمعايير حديثة"
+        headline="علم شرعي يومي، موثوق ومنظَّم"
         description={
           <>
             {dailyCtx.greeting}
@@ -166,77 +173,100 @@ export default function HomePage() {
         }
         actions={
           <>
-            <Link href={continueHref} className="mj-btn m2030-btn m2030-btn--primary">
-              ابدأ التصفح
-            </Link>
             <button
               type="button"
-              className="mj-btn mj-btn--ghost m2030-btn m2030-btn--ghost"
-              onClick={() => window.dispatchEvent(new CustomEvent("global-search-open"))}
+              className="mj-btn m2030-btn m2030-btn--primary"
+              onClick={openGlobalSearch}
               aria-label="ابحث في المحتوى"
             >
               ابحث في المحتوى
             </button>
+            <Link href={continueHref} className="mj-btn mj-btn--ghost m2030-btn m2030-btn--ghost">
+              {lastVisited ? "أكمل من حيث توقفت" : "ابدأ التعلّم"}
+            </Link>
           </>
         }
       />
 
-      {heroCountdown && (
-        <section className="m2030-band" aria-label="ملخص الصلاة">
-          <Link
-            href="/prayer-times"
-            className="m2030-prayer"
-            style={{ ["--p" as string]: String(heroCountdown.progress) }}
-          >
-            <div className="m2030-prayer__ring" aria-hidden="true">
-              <div className="m2030-prayer__ring-inner">صلاة</div>
-            </div>
-            <div>
-              <p className="m2030-prayer__name">{heroCountdown.name}</p>
-              <p className="m2030-prayer__time">بعد {toArabicDigits(heroCountdown.hms)}</p>
-              <p className="m2030-prayer__cta">عرض مواقيت اليوم ←</p>
-            </div>
-          </Link>
-        </section>
-      )}
+      <div className="m2030-band">
+        <HomeNowCard
+          prayerName={heroCountdown?.name}
+          prayerHms={heroCountdown?.hms}
+          prayerProgress={heroCountdown?.progress}
+          continueHref={continueHref}
+          continueLabel={lastVisited?.label ?? null}
+        />
+      </div>
 
       <section className="m2030-band m2030-band--sage" aria-label="إجراءات سريعة">
         <div className="m2030-band__head">
           <div>
             <h2 className="m2030-band__title">وصول سريع</h2>
-            <p className="m2030-band__sub">مسارات يومية بلا ازدحام</p>
+            <p className="m2030-band__sub">ما تحتاجه يوميًا في لمسة واحدة</p>
           </div>
         </div>
-        <div className="m2030-quick">
-          {QUICK_LINKS.map(({ href, Icon: Ico, label, desc }) => (
-            <Link key={label + href} href={href} className="m2030-tile" aria-label={label}>
-              <span className="m2030-tile__icon" aria-hidden="true">
-                <Ico size={14} strokeWidth={2} />
-              </span>
-              <span className="m2030-tile__label">{label}</span>
-              <span className="m2030-tile__desc">{desc}</span>
-            </Link>
-          ))}
+        <div className="m2030-quick m2030-quick--7">
+          {QUICK_LINKS.map(({ href, Icon: Ico, label, desc, action }) =>
+            action === "search" ? (
+              <button
+                key={label}
+                type="button"
+                className="m2030-tile m2030-tile--btn"
+                onClick={openGlobalSearch}
+                aria-label={label}
+              >
+                <span className="m2030-tile__icon" aria-hidden="true">
+                  <Ico size={14} strokeWidth={2} />
+                </span>
+                <span className="m2030-tile__label">{label}</span>
+                <span className="m2030-tile__desc">{desc}</span>
+              </button>
+            ) : (
+              <Link key={label + href} href={href} className="m2030-tile" aria-label={label}>
+                <span className="m2030-tile__icon" aria-hidden="true">
+                  <Ico size={14} strokeWidth={2} />
+                </span>
+                <span className="m2030-tile__label">{label}</span>
+                <span className="m2030-tile__desc">{desc}</span>
+              </Link>
+            ),
+          )}
         </div>
       </section>
 
       <section className="m2030-band" aria-label="أكمل من حيث توقفت">
         <div className="m2030-band__head">
-          <h2 className="m2030-band__title">تابع من حيث توقفت</h2>
+          <h2 className="m2030-band__title">أكمل من حيث توقفت</h2>
+          <Link href="/my-learning" className="m2030-band__link">نشاطي</Link>
         </div>
-        <div className="m2030-panel mj-card mj-card--raised">
-          <SafeHomeSection name="continue">
-            <HomeContinueWidget />
+        <SafeHomeSection name="continue">
+          <HomeContinueWidget />
+        </SafeHomeSection>
+      </section>
+
+      <section className="m2030-band m2030-band--sage" aria-label="مقترح لك اليوم">
+        <div className="m2030-band__head">
+          <div>
+            <h2 className="m2030-band__title">مقترح لك اليوم</h2>
+            <p className="m2030-band__sub">فائدة واختبار سريع بلا ضجيج اجتماعي</p>
+          </div>
+        </div>
+        <div className="hp-feed">
+          <SafeHomeSection name="daily-benefits">
+            <HomeDailyBenefits />
+          </SafeHomeSection>
+          <SafeHomeSection name="quiz">
+            <HomeQuizCard />
           </SafeHomeSection>
         </div>
       </section>
 
       {visibleWidgets.includes("lessons") && (
-        <section className="m2030-band m2030-band--sage" aria-label="دروس اليوم">
+        <section className="m2030-band" aria-label="دروس قريبة">
           <div className="m2030-band__head">
             <div>
-              <h2 className="m2030-band__title">اليوم في المنصة</h2>
-              <p className="m2030-band__sub">دروس ودورات قادمة</p>
+              <h2 className="m2030-band__title">دروس قريبة</h2>
+              <p className="m2030-band__sub">ما يُقدَّم قريبًا في المنصة</p>
             </div>
             <Link href="/lessons" className="m2030-band__link">كل الدروس</Link>
           </div>
@@ -247,24 +277,51 @@ export default function HomePage() {
         </section>
       )}
 
+      <section className="m2030-band m2030-band--sage" aria-label="رحلة طالب العلم">
+        <div className="m2030-band__head">
+          <div>
+            <h2 className="m2030-band__title">رحلة طالب العلم</h2>
+            <p className="m2030-band__sub">مبتدئ · متوسط · متقدم</p>
+          </div>
+          <Link href="/learning/paths" className="m2030-band__link">المسارات</Link>
+        </div>
+        <SafeHomeSection name="start-here">
+          <HomeStartHereSection embedded />
+        </SafeHomeSection>
+        {visibleWidgets.includes("learning-seasons") && (
+          <SafeHomeSection name="learning-seasons">
+            <HomeLearningSeasonsWidget />
+          </SafeHomeSection>
+        )}
+      </section>
+
       <section className="m2030-band" aria-label="أقسام علمية">
         <div className="m2030-band__head">
           <div>
-            <h2 className="m2030-band__title">بوابات العلم</h2>
-            <p className="m2030-band__sub">محاور شرعية منظمة</p>
+            <h2 className="m2030-band__title">محاور العلم</h2>
+            <p className="m2030-band__sub">أبواب منظمة بلا ازدحام</p>
           </div>
+          <Link href="/sitemap" className="m2030-band__link">كل الأقسام</Link>
         </div>
-        <div className="m2030-featured">
-          {FEATURED_CATS.map(({ href, title, desc, cta, Icon }) => (
+        <div className="m2030-featured m2030-featured--4">
+          {SCIENCE_HUBS.map(({ href, title, desc, Icon }) => (
             <Link key={href} href={href} className="m2030-feature">
               <Icon size={18} strokeWidth={1.8} aria-hidden="true" />
               <h3 className="m2030-feature__title">{title}</h3>
               <p className="m2030-feature__desc">{desc}</p>
-              <span className="m2030-feature__cta">{cta}</span>
+              <span className="m2030-feature__cta">افتح</span>
             </Link>
           ))}
         </div>
       </section>
+
+      {visibleWidgets.includes("daily-progress") && (
+        <section className="m2030-band m2030-band--sage" aria-label="تقدمك اليوم">
+          <SafeHomeSection name="daily-progress">
+            <HomeDailyProgress />
+          </SafeHomeSection>
+        </section>
+      )}
 
       <div className="m2030-band">
         <SafeHomeSection name="FridayBanner">
@@ -280,19 +337,21 @@ export default function HomePage() {
         </button>
       </div>
 
-      <main className="home-container home-main">
-        {restWidgetOrder.map((id) => (
-          <SafeHomeSection key={id} name={WIDGET_LABEL[id] ?? id}>
-            {WIDGET_RENDERERS[id]?.()}
-          </SafeHomeSection>
-        ))}
+      {restWidgetOrder.length > 0 && (
+        <main className="home-container home-main">
+          {restWidgetOrder.map((id) => (
+            <SafeHomeSection key={id} name={WIDGET_LABEL[id] ?? id}>
+              {WIDGET_RENDERERS[id]?.()}
+            </SafeHomeSection>
+          ))}
+        </main>
+      )}
 
-        {isAdmin && (
-          <p className="m2030-band__sub" style={{ textAlign: "center" }}>
-            محتوى مرجعي: {toArabicDigits(contentCounts.scholars)} عالم · {toArabicDigits(contentCounts.quizQuestions)} سؤال
-          </p>
-        )}
-      </main>
+      {isAdmin && (
+        <p className="m2030-band__sub" style={{ textAlign: "center", paddingBottom: "1rem" }}>
+          محتوى مرجعي: {toArabicDigits(contentCounts.scholars)} عالم · {toArabicDigits(contentCounts.quizQuestions)} سؤال
+        </p>
+      )}
 
       <HomeCustomizeSheet
         open={customizeOpen}
