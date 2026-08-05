@@ -11,9 +11,10 @@ type FooterMenuItem = {
   external?: boolean;
 };
 
-/** تذييل قانوني/تواصل فقط — بلا «من نحن/مكتبة/مستجدات» بعد تنظيف الاكتشاف. */
+/** تذييل قانوني/تواصل — من مصدر التنقّل (مجموعة عن المجلس) مع الرعاية. */
 const FOOTER_MENU_ITEMS: FooterMenuItem[] = [
-  { href: "/methodology", label: "منهجية التوثيق", Icon: Scale },
+  { href: "/about-us", label: "من نحن", Icon: Scale },
+  { href: "/about", label: "حول التطبيق", Icon: Scale },
   { href: "/privacy", label: "الخصوصية", Icon: Shield },
   { href: "/terms", label: "الشروط", Icon: Scale },
   { href: "/contact", label: "التواصل", Icon: Mail },

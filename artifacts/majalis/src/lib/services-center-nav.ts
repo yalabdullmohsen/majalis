@@ -1,0 +1,145 @@
+/**
+ * كتالوج مركز الخدمات (MoreBottomSheet) — ترتيب الإطلاق المعتمد.
+ * مستقل عن SIDEBAR_NAV_GROUPS حتى لا يُفلتر عبر HIDDEN_FROM_NAV.
+ */
+import type { LucideIcon } from "lucide-react";
+import {
+  BookMarked,
+  BookOpen,
+  Brain,
+  Building2,
+  Clock,
+  FileText,
+  HandHeart,
+  Heart,
+  Info,
+  Landmark,
+  Library,
+  Mail,
+  Moon,
+  TrendingUp,
+  Scale,
+  ScrollText,
+  Search,
+  Settings,
+  Share2,
+  Shield,
+  Star,
+  User,
+  BookA,
+  Bell,
+  LogOut,
+} from "lucide-react";
+
+export type ServicesCenterAction =
+  | { kind: "link"; href: string }
+  | { kind: "search" }
+  | { kind: "theme" }
+  | { kind: "share" }
+  | { kind: "rate" }
+  | { kind: "logout" };
+
+export type ServicesCenterItem = {
+  id: string;
+  label: string;
+  keywords?: string[];
+  Icon: LucideIcon;
+  action: ServicesCenterAction;
+};
+
+export type ServicesCenterGroup = {
+  id: string;
+  title: string;
+  layout?: "quick" | "list";
+  items: ServicesCenterItem[];
+};
+
+export const SERVICES_CENTER_GROUPS: ServicesCenterGroup[] = [
+  {
+    id: "quick",
+    title: "الأكثر استخداماً",
+    layout: "quick",
+    items: [
+      { id: "mushaf", label: "المصحف", keywords: ["قرآن", "قراءة"], Icon: BookOpen, action: { kind: "link", href: "/mushaf" } },
+      { id: "adhkar", label: "الأذكار", keywords: ["دعاء", "أذكار"], Icon: HandHeart, action: { kind: "link", href: "/adhkar" } },
+      { id: "prayer", label: "مواقيت الصلاة", keywords: ["صلاة", "أذان"], Icon: Clock, action: { kind: "link", href: "/prayer-times" } },
+      { id: "memorize", label: "بطاقات الحفظ", keywords: ["حفظ", "مراجعة"], Icon: Brain, action: { kind: "link", href: "/memorize" } },
+    ],
+  },
+  {
+    id: "knowledge",
+    title: "العلم والمحتوى",
+    layout: "list",
+    items: [
+      { id: "tawhid", label: "العقيدة", keywords: ["توحيد", "عقيدة"], Icon: Landmark, action: { kind: "link", href: "/tawhid" } },
+      { id: "quran-knowledge", label: "القرآن وعلومه", keywords: ["علوم قرآن"], Icon: BookMarked, action: { kind: "link", href: "/quran-knowledge" } },
+      { id: "hadith", label: "الحديث وعلومه", keywords: ["حديث", "سنة", "أحاديث"], Icon: ScrollText, action: { kind: "link", href: "/hadith" } },
+      { id: "seerah", label: "السيرة النبوية", keywords: ["سيرة"], Icon: BookA, action: { kind: "link", href: "/seerah" } },
+      { id: "fiqh", label: "الفقه وأصوله", keywords: ["فقه", "أحكام"], Icon: Scale, action: { kind: "link", href: "/fiqh" } },
+      { id: "tafsir", label: "التفسير", keywords: ["تفسير"], Icon: Library, action: { kind: "link", href: "/tafsir" } },
+      { id: "prophets", label: "قصص الأنبياء", keywords: ["أنبياء"], Icon: BookOpen, action: { kind: "link", href: "/prophets" } },
+      { id: "history", label: "التاريخ الإسلامي", keywords: ["تاريخ"], Icon: Building2, action: { kind: "link", href: "/tarikh-islami" } },
+      { id: "glossary", label: "المصطلحات", keywords: ["مصطلحات", "glossary"], Icon: BookMarked, action: { kind: "link", href: "/islamic-glossary" } },
+    ],
+  },
+  {
+    id: "library-contest",
+    title: "المكتبة والمسابقة",
+    layout: "list",
+    items: [
+      { id: "scholars-books", label: "العلماء وكتبهم", keywords: ["مكتبة", "كتب"], Icon: Library, action: { kind: "link", href: "/scholars" } },
+      { id: "quiz", label: "المسابقة", keywords: ["مسابقة", "اختبار", "quiz"], Icon: Star, action: { kind: "link", href: "/quiz" } },
+      { id: "lessons-lib", label: "الدروس والدورات", keywords: ["دروس", "دورات"], Icon: BookOpen, action: { kind: "link", href: "/lessons" } },
+    ],
+  },
+  {
+    id: "tools",
+    title: "أدوات",
+    layout: "list",
+    items: [
+      { id: "search", label: "البحث", keywords: ["بحث"], Icon: Search, action: { kind: "search" } },
+      { id: "favorites", label: "المحفوظات والمفضلة", keywords: ["مفضلة", "حفظ"], Icon: Heart, action: { kind: "link", href: "/my-citations" } },
+      { id: "progress", label: "متابعة التقدّم", keywords: ["تقدم", "إحصاء"], Icon: TrendingUp, action: { kind: "link", href: "/stats" } },
+      { id: "alerts", label: "التنبيهات", keywords: ["إشعار", "تنبيه"], Icon: Bell, action: { kind: "link", href: "/notification-settings" } },
+    ],
+  },
+  {
+    id: "about",
+    title: "عن المجلس",
+    layout: "list",
+    items: [
+      { id: "about-us", label: "من نحن", Icon: Info, action: { kind: "link", href: "/about-us" } },
+      { id: "about-app", label: "حول التطبيق", Icon: Star, action: { kind: "link", href: "/about" } },
+      { id: "privacy", label: "سياسة الخصوصية", Icon: Shield, action: { kind: "link", href: "/privacy" } },
+      { id: "terms", label: "شروط الاستخدام", Icon: FileText, action: { kind: "link", href: "/terms" } },
+      { id: "contact", label: "تواصل معنا", Icon: Mail, action: { kind: "link", href: "/contact" } },
+      { id: "share", label: "شارك التطبيق", Icon: Share2, action: { kind: "share" } },
+      { id: "rate", label: "قيّم التطبيق", Icon: Star, action: { kind: "rate" } },
+    ],
+  },
+  {
+    id: "account",
+    title: "الحساب والإعدادات",
+    layout: "list",
+    items: [
+      { id: "account", label: "حسابي", Icon: User, action: { kind: "link", href: "/my-learning" } },
+      { id: "settings", label: "الإعدادات", Icon: Settings, action: { kind: "link", href: "/settings" } },
+      { id: "theme", label: "المظهر", keywords: ["ليلي", "نهاري", "تلقائي", "وضع"], Icon: Moon, action: { kind: "theme" } },
+      { id: "logout", label: "تسجيل الخروج", Icon: LogOut, action: { kind: "logout" } },
+    ],
+  },
+];
+
+export function filterServicesCenterGroups(query: string): ServicesCenterGroup[] {
+  const q = query.trim().toLowerCase();
+  if (!q) return SERVICES_CENTER_GROUPS;
+  return SERVICES_CENTER_GROUPS
+    .map((group) => ({
+      ...group,
+      items: group.items.filter((item) => {
+        const hay = [item.label, ...(item.keywords ?? []), group.title].join(" ").toLowerCase();
+        return hay.includes(q);
+      }),
+    }))
+    .filter((group) => group.items.length > 0);
+}
