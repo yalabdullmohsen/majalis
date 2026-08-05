@@ -1,5 +1,23 @@
-/* NavBar */
-.navbar-v3{background:linear-gradient(135deg,var(--brand-deep),var(--brand))!important;border-bottom:1px solid rgba(255,255,255,.08)!important;box-shadow:var(--e-2)!important;position:relative;color:var(--text-on-brand)!important}
-.navbar-v3 .navbar-brand,.navbar-v3 .navbar-menu-btn,.navbar-v3 .navbar-logout,.navbar-v3 .navbar-login,.navbar-v3 .navbar-admin-link,.navbar-v3 .navbar-auth{color:rgba(255,255,255,.92)!important}
-.navbar-v3 .navbar-menu-btn:hover,.navbar-v3 .navbar-login:hover{background:rgba(255,255,255,.12)!important}
-.navbar-v3 .navbar-login{border-color:rgba(255,255,255,.4)!important;color:var(--text-on-brand)!important}
+/* قوائم/هيدر — رموز الهوية (لا تدرج زمردي داكن) */
+.navbar-v3 {
+  background: var(--mj-surface, var(--surface)) !important;
+  border-bottom: 1px solid var(--mj-hairline, var(--border)) !important;
+  box-shadow: none !important;
+  color: var(--mj-ink, var(--text)) !important;
+}
+.navbar-v3 .navbar-brand,
+.navbar-v3 .navbar-menu-btn,
+.navbar-v3 .navbar-logout,
+.navbar-v3 .navbar-login,
+.navbar-v3 .navbar-admin-link,
+.navbar-v3 .navbar-auth {
+  color: var(--mj-ink, var(--text)) !important;
+}
+.navbar-v3 .navbar-menu-btn:hover,
+.navbar-v3 .navbar-login:hover {
+  background: var(--mj-surface-2, var(--surface-2)) !important;
+}
+.navbar-v3 .navbar-login {
+  border-color: var(--mj-hairline, var(--border)) !important;
+  color: var(--mj-ink, var(--text)) !important;
+}

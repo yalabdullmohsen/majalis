@@ -45,9 +45,9 @@ export function ContentHubLayout({
       <PageHeader eyebrow={eyebrow} title={title} subtitle={subtitle} />
 
       {stats && stats.length > 0 && (
-        <div className="ds-stats-row" role="list">
+        <div className="mj-stats ds-stats-row" role="list">
           {stats.map((s) => (
-            <div key={s.label} className="ds-stat" role="listitem">
+            <div key={s.label} className="mj-stat ds-stat" role="listitem">
               <strong>{fmt(s.value)}</strong>
               <span>{s.label}</span>
             </div>

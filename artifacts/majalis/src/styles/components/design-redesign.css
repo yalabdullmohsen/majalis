@@ -1,6 +1,47 @@
-/* هيدر الجوال — مؤجّل عن المسار الحرج */
-.navbar-v3__search-row{width:100%;max-width:100%;min-width:0;box-sizing:border-box;padding-block:.45rem .35rem;padding-inline:var(--page-gutter,.75rem);border-block-start:1px solid var(--color-border,rgba(18,54,42,.14));background:var(--color-background,var(--bg,#fbf8f1))}
-.navbar-v3__search-btn{width:100%;max-width:100%;min-width:0;min-height:44px;display:flex;align-items:center;gap:.55rem;padding-block:.55rem;padding-inline:.9rem;border:1px solid var(--color-border,rgba(18,54,42,.14));border-radius:14px;background:var(--color-surface,#fff);color:var(--color-muted,#66736d);font:inherit;font-size:.9rem;text-align:start;cursor:pointer;box-sizing:border-box}
-.navbar-v3__search-btn:focus-visible{outline:3px solid color-mix(in srgb,var(--color-primary,#12362a) 55%,#fff);outline-offset:2px}
-.navbar-v3__search-btn span{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-html,body,#root{overflow-x:hidden;max-width:100%}
+/* هيدر الجوال — صف البحث بهوية mj */
+.navbar-v3__search-row {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  padding-block: 0.45rem 0.35rem;
+  padding-inline: var(--page-gutter, 0.75rem);
+  border-block-start: 1px solid var(--mj-hairline, var(--border));
+  background: var(--mj-bg, var(--bg));
+}
+.navbar-v3__search-btn {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding-block: 0.55rem;
+  padding-inline: 0.9rem;
+  border: 1px solid var(--mj-hairline, var(--border));
+  border-radius: var(--mj-r-pill, 999px);
+  background: var(--mj-surface, var(--surface));
+  color: var(--mj-muted, var(--text-muted));
+  font: inherit;
+  font-size: 0.9rem;
+  text-align: start;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+.navbar-v3__search-btn:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--mj-brand, var(--brand)) 55%, #fff);
+  outline-offset: 2px;
+}
+.navbar-v3__search-btn span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+html,
+body,
+#root {
+  overflow-x: hidden;
+  max-width: 100%;
+}

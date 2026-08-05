@@ -171,6 +171,31 @@ html.dark,
 .mj-card--raised {
   box-shadow: var(--mj-sh);
 }
+
+.mj-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(7.5rem, 1fr));
+  gap: var(--mj-s3);
+  margin-bottom: var(--mj-s5);
+}
+.mj-stat {
+  background: var(--mj-surface);
+  border: 1px solid var(--mj-hairline);
+  border-radius: var(--mj-r-md);
+  padding: var(--mj-s3) var(--mj-s4);
+  text-align: center;
+}
+.mj-stat strong {
+  display: block;
+  font-family: var(--mj-num);
+  font-size: var(--mj-fs-h2);
+  color: var(--mj-brand);
+  line-height: 1.2;
+}
+.mj-stat span {
+  font-size: var(--mj-fs-small);
+  color: var(--mj-muted);
+}
 .mj-card h2,
 .mj-card h3 {
   margin-bottom: var(--mj-s1);
