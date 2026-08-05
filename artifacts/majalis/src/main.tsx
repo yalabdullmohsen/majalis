@@ -27,6 +27,7 @@ import "./styles/capacitor-native-ux.css";
 import "./styles/m2030/foundation.css";
 import "./styles/m2030/navigation.css";
 import "./styles/m2030/pages.css";
+import "./styles/m2030/interactions.css";
 
 if (isNative) {
   document.documentElement.classList.add("capacitor-native");

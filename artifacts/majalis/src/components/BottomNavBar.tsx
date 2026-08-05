@@ -12,12 +12,12 @@ type NavTab = {
   Icon: React.ComponentType<{ size?: number; strokeWidth?: number; "aria-hidden"?: boolean }>;
 };
 
-/** شريط سفلي 2030: الرئيسية · القرآن · الصلاة · التعلّم · المزيد */
+/** شريط سفلي 2030: الرئيسية · القرآن · الصلاة · الدروس · المزيد */
 const NAV_TABS: NavTab[] = [
   { href: "/", label: "الرئيسية", Icon: Home },
   { href: "/mushaf", label: "القرآن", Icon: BookOpen },
   { href: "/prayer-times", label: "الصلاة", Icon: Clock },
-  { href: "/lessons", label: "التعلّم", Icon: GraduationCap },
+  { href: "/lessons", label: "الدروس", Icon: GraduationCap },
 ];
 
 export function BottomNavBar() {

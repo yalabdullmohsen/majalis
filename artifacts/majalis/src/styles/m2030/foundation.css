@@ -1,12 +1,10 @@
 /**
- * Majlisilm 2030 — Foundation
- * يحسم الخلفية والنص والأشكال العامة بعد إزالة elite/patterns من المسار الحرج.
+ * Majlisilm 2030 — Foundation (ألوان/نصوص/أشكال من الرموز فقط)
  */
 
 html {
   background:
-    radial-gradient(ellipse 80% 50% at 100% 0%, color-mix(in srgb, var(--em-500) 8%, transparent), transparent 55%),
-    radial-gradient(ellipse 60% 40% at 0% 100%, color-mix(in srgb, var(--em-900) 6%, transparent), transparent 50%),
+    radial-gradient(ellipse 70% 40% at 100% 0%, color-mix(in srgb, var(--em-500) 6%, transparent), transparent 55%),
     var(--bg);
   color: var(--text);
 }
@@ -24,7 +22,18 @@ body {
   color: var(--text);
 }
 
-/* بطاقات عامة — أحدّ، بلا رفع hover القديم */
+h1, h2, h3, .ds-section__title {
+  color: var(--text-title);
+}
+
+p, li, label {
+  color: var(--text);
+}
+
+small, .meta, .text-muted, .text-secondary {
+  color: var(--text-muted);
+}
+
 .ds-card,
 .card-v2,
 .ui-card,
@@ -37,6 +46,7 @@ body {
   box-shadow: var(--e-1) !important;
   border: 1px solid var(--border) !important;
   background: var(--surface) !important;
+  color: var(--text) !important;
 }
 
 .ds-card:hover,
@@ -46,7 +56,6 @@ body {
   box-shadow: var(--e-2) !important;
 }
 
-/* cut-corner اختياري للمكوّنات الجديدة */
 .m2030-cut {
   clip-path: polygon(
     var(--cut) 0,
@@ -60,7 +69,6 @@ body {
   );
 }
 
-/* أزرار هندسية */
 .ds-btn,
 .btn,
 .page-action-btn,
@@ -68,7 +76,6 @@ body {
 .btn--primary {
   border-radius: var(--r-sm) !important;
   font-family: var(--font-body) !important;
-  letter-spacing: 0.01em;
   min-height: 2.75rem;
 }
 
@@ -92,10 +99,8 @@ body {
   background: transparent !important;
   color: var(--text-brand) !important;
   border: 1px solid var(--border-strong) !important;
-  box-shadow: none !important;
 }
 
-/* إبطال زخارف patterns القديمة */
 .geo-star-grid,
 .geo-hex,
 .geo-lattice,
@@ -108,7 +113,6 @@ body {
   display: none !important;
 }
 
-/* أبطال الصفحات → Midnight */
 .pt-hero,
 .page-hero-dark,
 .mzd-hero,
@@ -116,14 +120,15 @@ body {
 .hadith-hero,
 .fiqh-hero {
   background:
-    linear-gradient(165deg, var(--em-900) 0%, var(--em-950) 55%, #061816 100%) !important;
+    linear-gradient(165deg, var(--em-900) 0%, var(--em-950) 55%, #0A1A16 100%) !important;
   color: var(--text-on-dark) !important;
   border-radius: 0 !important;
+  padding-block: 1.1rem !important;
 }
 
 .skeleton-base,
 .hp-skel {
-  background: linear-gradient(90deg, var(--surface-2), var(--n-100), var(--surface-2)) !important;
+  background: linear-gradient(90deg, var(--surface-2), var(--surface-muted), var(--surface-2)) !important;
   background-size: 200% 100%;
   border-radius: var(--r-sm) !important;
 }
@@ -136,31 +141,32 @@ body {
 .error-state {
   display: grid;
   place-items: center;
-  gap: var(--s-3);
-  padding: var(--s-10) var(--s-4);
+  gap: var(--s-2);
+  padding: var(--s-8) var(--s-4);
   text-align: center;
   color: var(--text-2);
   background:
-    radial-gradient(circle at 50% 20%, color-mix(in srgb, var(--em-500) 10%, transparent), transparent 55%),
+    radial-gradient(circle at 50% 18%, color-mix(in srgb, var(--em-500) 8%, transparent), transparent 55%),
     var(--surface-2);
   border: 1px solid var(--border);
+  border-radius: var(--r-md);
 }
 
 .m2030-empty__mark,
 .m2030-error__mark {
-  width: 3rem;
-  height: 3rem;
-  border: 1.5px solid color-mix(in srgb, var(--em-500) 45%, transparent);
+  width: 2.5rem;
+  height: 2.5rem;
+  border: 1.5px solid color-mix(in srgb, var(--brand) 40%, transparent);
   transform: rotate(45deg);
-  margin-block-end: var(--s-2);
+  margin-block-end: var(--s-1);
 }
 
 .m2030-section-rule {
   display: flex;
   align-items: center;
-  gap: var(--s-3);
-  margin-block: var(--s-2) var(--s-4);
-  color: var(--text-muted);
+  gap: var(--s-2);
+  margin-block: var(--s-1) var(--s-3);
+  color: var(--text-meta);
   font-size: var(--fs-sm);
 }
 
@@ -173,9 +179,9 @@ body {
 }
 
 .m2030-section-rule__diamond {
-  width: 0.45rem;
-  height: 0.45rem;
-  background: var(--em-500);
+  width: 0.4rem;
+  height: 0.4rem;
+  background: var(--brand);
   transform: rotate(45deg);
   flex-shrink: 0;
 }
