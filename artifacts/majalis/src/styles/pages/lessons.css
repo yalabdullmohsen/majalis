@@ -301,23 +301,34 @@
 /* ── منقول من الطبقة الحرجة: Lessons tabs/filters ── */
 /* ══ تبويبات الدروس — override للتصميم الداكن ══════════════════════════════ */
 .kuwait-tab {
-  border-color: rgba(255,255,255,0.10) !important;
-  color: var(--majalis-ink-muted, #9BA3B5) !important;
-  background: rgba(255,255,255,0.04) !important;
+  border-color: var(--mj-hairline, rgba(0, 0, 0, 0.12)) !important;
+  color: var(--mj-ink-2, #3d4a44) !important;
+  background: var(--mj-surface-2, transparent) !important;
   white-space: nowrap;
   cursor: pointer;
   font-family: inherit;
 }
 .kuwait-tab:hover:not(.kuwait-tab--active) {
-  border-color: rgba(23,61,53,0.30) !important;
-  color: var(--majalis-ink, #EDE9DD) !important;
-  background: rgba(255,255,255,0.07) !important;
+  border-color: color-mix(in srgb, var(--mj-brand) 35%, transparent) !important;
+  color: var(--mj-ink, #1a1a18) !important;
+  background: color-mix(in srgb, var(--mj-brand) 8%, transparent) !important;
 }
 .kuwait-tab--active {
   background: var(--majalis-emerald, var(--mj-brand)) !important;
-  color: #fff !important;
+  color: var(--mj-on-brand, #fff) !important;
   border-color: transparent !important;
   font-weight: 700;
+}
+html[data-theme="dark"] .kuwait-tab,
+html.dark .kuwait-tab {
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  color: var(--mj-ink-2, #c5cdc8) !important;
+  background: rgba(255, 255, 255, 0.04) !important;
+}
+html[data-theme="dark"] .kuwait-tab:hover:not(.kuwait-tab--active),
+html.dark .kuwait-tab:hover:not(.kuwait-tab--active) {
+  color: var(--mj-ink, #ede9dd) !important;
+  background: rgba(255, 255, 255, 0.07) !important;
 }
 /* ══ نهاية override التبويبات ═══════════════════════════════════════════════ */
 
@@ -339,7 +350,7 @@
   border-radius: 0.625rem;
   border: none;
   background: transparent;
-  color: var(--majalis-ink-muted, #9BA3B5);
+  color: var(--mj-ink-2, #3d4a44);
   font-family: inherit;
   font-size: 0.85rem;
   font-weight: 600;

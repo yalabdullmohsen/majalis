@@ -30,12 +30,13 @@ function assert(condition: boolean, label: string) {
 
 console.log("\n=== TopSectionBar — أقسام مختصرة بعد التنظيف ===");
 {
-  assert(SECTION_TABS.length === 10, `10 أقسام في الشريط العلوي (الفعلي: ${SECTION_TABS.length})`);
+  assert(SECTION_TABS.length === 9, `9 أقسام في الشريط العلوي (الفعلي: ${SECTION_TABS.length})`);
   const hrefs = SECTION_TABS.map((t) => t.href);
   assert(new Set(hrefs).size === hrefs.length, "لا تكرار في مسارات الأقسام");
   assert(!hrefs.includes("/library"), "المكتبة خارج الشريط");
   assert(!hrefs.includes("/scholars"), "العلماء خارج الشريط العلوي");
-  assert(hrefs.includes("/mushaf") && hrefs.includes("/quran-knowledge"), "القرآن والقرآن وعلومه");
+  assert(!hrefs.includes("/mushaf"), "المصحف خارج الشريط أثناء قريبًا");
+  assert(hrefs.includes("/quran-knowledge"), "القرآن وعلومه في الشريط");
   assert(hrefs.includes("/memorize") && hrefs.includes("/memorization"), "الحفظ (بطاقات) والحفظ والمراجعة");
   assert(hrefs.includes("/occasions-lessons"), "المناسبات");
   assert(hrefs.includes("/islamic-directory") && hrefs.includes("/my-learning"), "الدليل وحسابي");

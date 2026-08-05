@@ -79,7 +79,7 @@ const FEATURED_CATS = [
   { href: "/fiqh", title: "الفقه والأحكام", desc: "مسائل وأحكام مرتّبة", cta: "ادخل", Icon: Scale },
   { href: "/lessons", title: "الدروس العلمية", desc: "مسارات ودروس منظمة", cta: "افتح الدروس", Icon: GraduationCap },
   { href: "/memorization", title: "الحفظ والمراجعة", desc: "خطط واختبارات", cta: "ابدأ", Icon: Target },
-  { href: "/mushaf", title: "المصحف الشريف", desc: "قريبًا — قيد التجهيز", cta: "قريبًا", Icon: BookOpen },
+  { href: "/adhkar", title: "الأذكار", desc: "أذكار الصباح والمساء", cta: "افتح الأذكار", Icon: BookOpen },
 ] as const;
 
 export default function HomePage() {

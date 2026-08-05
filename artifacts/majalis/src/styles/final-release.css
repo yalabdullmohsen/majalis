@@ -66,8 +66,8 @@ body {
 }
 .app-main {
   min-height: calc(100dvh - var(--header-height));
-  /* خلوص المحتوى = ارتفاع الشريط الفعلي فقط (+ هامش تنفّس صغير)، بلا safe-area مكرّر */
-  padding-block-end: calc(var(--bottom-nav-total) + 0.35rem);
+  /* خلوص المحتوى فوق الشريط السفلي — هامش يمنع قصّ آخر بطاقة */
+  padding-block-end: calc(var(--bottom-nav-total) + 0.85rem);
 }
 
 :where(h1, h2, h3, h4) {
@@ -734,11 +734,11 @@ html.dark .nav-soon-badge {
   }
 
   .app-main {
-    padding-block-end: calc(var(--bottom-nav-total) + 0.35rem) !important;
+    padding-block-end: calc(var(--bottom-nav-total) + 0.85rem) !important;
   }
 
   body.has-assistant-fab .app-main {
-    padding-block-end: calc(var(--bottom-nav-total) + 0.35rem) !important;
+    padding-block-end: calc(var(--bottom-nav-total) + 0.85rem) !important;
   }
 
   .site-footer-inner--v3 {

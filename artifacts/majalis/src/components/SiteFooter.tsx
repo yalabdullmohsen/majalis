@@ -15,6 +15,8 @@ type FooterMenuItem = {
 const FOOTER_MENU_ITEMS: FooterMenuItem[] = [
   { href: "/about-us", label: "من نحن", Icon: Scale },
   { href: "/about", label: "حول التطبيق", Icon: Scale },
+  { href: "/methodology", label: "المنهجية", Icon: Scale },
+  { href: "/fatwa-policy", label: "سياسة الفتوى", Icon: Scale },
   { href: "/privacy", label: "الخصوصية", Icon: Shield },
   { href: "/terms", label: "الشروط", Icon: Scale },
   { href: "/contact", label: "التواصل", Icon: Mail },

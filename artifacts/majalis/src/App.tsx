@@ -70,6 +70,7 @@ const SiteMapPage = lazy(() => import("@/views/SiteMapPage"));
 const PrivacyPage = lazy(() => import("@/views/PrivacyPage"));
 const TermsPage = lazy(() => import("@/views/TermsPage"));
 const ContactPage = lazy(() => import("@/views/ContactPage"));
+const FatwaPolicyPage = lazy(() => import("@/views/FatwaPolicyPage"));
 
 const CalendarPage = lazy(() => import("@/views/CalendarPage"));
 const SearchPage = lazy(() => import("@/views/SearchPage"));
@@ -517,6 +518,7 @@ function Router() {
       <Route path="/man-nahnu"><Redirect to="/about-us" /></Route>
       <Route path="/about"><SafeLazyRoute component={AboutPage} /></Route>
       <Route path="/methodology"><SafeLazyRoute component={MethodologyPage} /></Route>
+      <Route path="/fatwa-policy"><SafeLazyRoute component={FatwaPolicyPage} /></Route>
       <Route path="/sitemap"><SafeLazyRoute component={SiteMapPage} /></Route>
       <Route path="/privacy"><SafeLazyRoute component={PrivacyPage} /></Route>
       <Route path="/privacy-policy"><Redirect to="/privacy" /></Route>

@@ -92,9 +92,9 @@
   --color-accent: var(--mj-accent);
   --color-border: var(--mj-hairline);
 
-  /* خطوط */
+  /* خطوط — واجهة Alexandria دائماً؛ Amiri (--mj-face) لنصوص القرآن/الحديث فقط عبر --font-face */
   --font-body: var(--mj-ui);
-  --font-display: var(--mj-face);
+  --font-display: var(--mj-ui);
   --font-ui: var(--mj-ui);
   --font-face: var(--mj-face);
 
