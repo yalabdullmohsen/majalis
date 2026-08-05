@@ -174,23 +174,6 @@ export default function NavBar() {
             </nav>
           )}
 
-          {/* جوال: شعار مضغوط في الوسط بدل التيكر داخل الشبكة (كان يسبب تداخلاً) */}
-          {isMobile && (
-            <Link href="/" className="navbar-brand navbar-brand--compact" aria-label="المجلس العلمي — الرئيسية">
-              <img
-                src="/logo-calligraphy.png"
-                alt=""
-                className="navbar-brand__mark"
-                width={120}
-                height={36}
-                decoding="async"
-              />
-              <span className="navbar-brand__copy">
-                <strong>المجلس العلمي</strong>
-              </span>
-            </Link>
-          )}
-
           <div className="navbar-v3__end">
             {/* عداد الصلاة التالية — سطح المكتب فقط؛ يُخفى داخل صفحة المواقيت نفسها */}
             {!isMobile && !isImmersiveChromePath(location) && <PrayerChip />}
