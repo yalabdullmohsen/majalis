@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import { SkeletonPage, Empty, ErrorState } from "@/components/ui-common";
+import { SkeletonPage, ErrorState } from "@/components/ui-common";
 import { ContentDetailLayout, RelatedLinks } from "@/components/platform/ContentDetailLayout";
 import { RulingDetailSections } from "@/components/rulings/RulingDetailSections";
-import { getRulingById, getRelatedRulingsEncyclopedia } from "@/lib/rulings-service";
+import { resolveRulingByIdentifier, getRelatedRulingsEncyclopedia } from "@/lib/rulings-service";
 import { buildRulingRelations } from "@/lib/rulings-relations";
 import type { RulingRelationLink, ShariaRulingExtended } from "@/lib/rulings-types";
 import { applyPageSeo } from "@/lib/seo";
@@ -10,9 +10,12 @@ import { breadcrumbJsonLd } from "@/lib/seo-structured-data";
 import { usePageView } from "@/hooks/usePageView";
 import { ScholarlyTrustBadge, type TrustData } from "@/components/ScholarlyTrustBadge";
 import { RelatedKnowledge } from "@/components/RelatedKnowledge";
+import NotFound from "@/views/not-found";
+import type { RulingResolveStatus } from "@/lib/rulings-resolver";
 
 export default function RulingDetailPage({ params }: { params: { id: string } }) {
   const [item, setItem] = useState<ShariaRulingExtended | null>(null);
+  const [resolveStatus, setResolveStatus] = useState<RulingResolveStatus | null>(null);
   const [related, setRelated] = useState<ShariaRulingExtended[]>([]);
   const [relations, setRelations] = useState<RulingRelationLink[]>([]);
   const [loading, setLoading] = useState(true);
@@ -22,21 +25,32 @@ export default function RulingDetailPage({ params }: { params: { id: string } })
   useEffect(() => {
     setLoading(true);
     setLoadError(null);
-    getRulingById(params.id)
-      .then(({ data, dbError }) => {
-        if (dbError && !data) {
-          setItem(null);
-          setLoadError(dbError);
-          return undefined;
+    setResolveStatus(null);
+    resolveRulingByIdentifier(params.id)
+      .then((resolved) => {
+        setResolveStatus(resolved.status);
+        if (resolved.dbError && resolved.status === "notFound" && !resolved.data) {
+          // خطأ شبكة مع عدم وجود بذرة محلية
+          if (resolved.dbError !== "supabase_not_configured") {
+            setLoadError(resolved.dbError);
+            setItem(null);
+            return undefined;
+          }
         }
-        setItem(data);
-        if (data) {
-          return getRelatedRulingsEncyclopedia(data.id, data.category, data.subcategory).then(setRelated);
+        if (resolved.status === "found" && resolved.data) {
+          setItem(resolved.data);
+          return getRelatedRulingsEncyclopedia(
+            resolved.data.id,
+            resolved.data.category,
+            resolved.data.subcategory,
+          ).then(setRelated);
         }
+        setItem(null);
         return undefined;
       })
       .catch((err) => {
         setItem(null);
+        setResolveStatus("notFound");
         setLoadError(String((err as Error)?.message || err));
       })
       .finally(() => setLoading(false));
@@ -61,26 +75,25 @@ export default function RulingDetailPage({ params }: { params: { id: string } })
   useEffect(() => {
     if (loading) return;
     if (!item) {
+      const gone = resolveStatus === "removed";
       applyPageSeo({
         path: `/rulings/${params.id}`,
-        title: "الحكم غير موجود | المجلس العلمي",
-        description: "لم يُعثر على هذا الحكم الشرعي.",
+        title: gone ? "الحكم محذوف | المجلس العلمي" : "الحكم غير موجود | المجلس العلمي",
+        description: gone ? "أُزيل هذا الحكم من الموسوعة." : "لم يُعثر على هذا الحكم الشرعي.",
         robots: "noindex, follow",
         jsonLd: [],
       });
       return;
     }
-    // params.id لا item.id: القسم الأول من هذه الدالة يقبل UUID أو slug
-    // (getRulingById تجرّب كليهما)، لكن canonical يجب أن يطابق الرابط
-    // الفعلي في شريط العنوان — item.id هو UUID قاعدة البيانات دومًا، فكان
-    // يُحوِّل روابط slug القابلة للقراءة (?rulings/ruling-wudu-nullifiers)
-    // إلى canonical بصيغة UUID مختلفة تمامًا عن الرابط المزار فعليًا —
-    // ثغرة SEO حقيقية (اكتُشفت 2026-07-25 عبر فحص حي لموقع الإنتاج).
     const path = `/rulings/${params.id}`;
+    const description =
+      item.summary ||
+      item.body?.replace(/\*\*/g, "").slice(0, 160) ||
+      item.title;
     applyPageSeo({
       path,
       title: `${item.title} | موسوعة الأحكام، المجلس العلمي`,
-      description: item.summary || item.body?.slice(0, 160) || item.title,
+      description,
       keywords: [...(item.keywords || []), item.category, item.subcategory || "", "أحكام شرعية", "فقه"],
       ogType: "article",
       canonicalPath: path,
@@ -89,7 +102,8 @@ export default function RulingDetailPage({ params }: { params: { id: string } })
           "@context": "https://schema.org",
           "@type": "Article",
           headline: item.title,
-          description: item.summary,
+          description: item.summary || description,
+          articleBody: item.body,
           inLanguage: "ar",
         },
         breadcrumbJsonLd([
@@ -99,7 +113,7 @@ export default function RulingDetailPage({ params }: { params: { id: string } })
         ]),
       ],
     });
-  }, [item, loading, params.id]);
+  }, [item, loading, params.id, resolveStatus]);
 
   if (loading) return <SkeletonPage />;
   if (loadError) {
@@ -110,11 +124,15 @@ export default function RulingDetailPage({ params }: { params: { id: string } })
       />
     );
   }
-  if (!item) return <Empty text="الحكم غير موجود." />;
+  if (!item || resolveStatus === "notFound" || resolveStatus === "invalidType" || resolveStatus === "wrongContentType") {
+    return <NotFound />;
+  }
+  if (resolveStatus === "removed") {
+    return <NotFound />;
+  }
 
   const copyText = [item.title, item.summary, item.body].filter(Boolean).join("\n\n");
 
-  // حقول الحوكمة قد لا تكون في النوع بعد — تُقرأ من البيانات كما هي، ولا تُخترع.
   const meta = item as typeof item & {
     reviewed_by?: string | null;
     reviewed_at?: string | null;
@@ -124,18 +142,17 @@ export default function RulingDetailPage({ params }: { params: { id: string } })
   };
 
   const trustData: TrustData = {
-    source:      item.source_origin || null,
-    sourceUrl:   meta.source_url    || null,
-    hadithGrade: item.hadith_grade  || null,
-    verifiedBy:  meta.reviewed_by   || null,
-    reviewedAt:  meta.reviewed_at   || null,
-    isApproved:  item.verification_status === "approved" ? true : false,
-    provenance:  meta.provenance    || null,
-    publishedAt: item.published_at  || item.created_at || null,
-    updatedAt:   item.updated_at    || null,
-    // لا نوع مخترع: يأتي من البيانات أو لا يُعرض.
-    contentType: meta.content_type  || null,
-    hasKhilaf:   !!(item.scholar_opinions && item.scholar_opinions.length > 1),
+    source: item.source_origin || null,
+    sourceUrl: meta.source_url || null,
+    hadithGrade: item.hadith_grade || null,
+    verifiedBy: meta.reviewed_by || null,
+    reviewedAt: meta.reviewed_at || null,
+    isApproved: item.verification_status === "approved" ? true : false,
+    provenance: meta.provenance || null,
+    publishedAt: item.published_at || item.created_at || null,
+    updatedAt: item.updated_at || null,
+    contentType: meta.content_type || null,
+    hasKhilaf: !!(item.scholar_opinions && item.scholar_opinions.length > 1),
   };
 
   return (
@@ -156,7 +173,7 @@ export default function RulingDetailPage({ params }: { params: { id: string } })
       related={
         <RelatedLinks
           items={related.map((r) => ({
-            href: `/rulings/${r.id}`,
+            href: `/rulings/${r.external_key || r.id}`,
             title: r.title,
             meta: [r.category, r.subcategory].filter(Boolean).join(" · "),
           }))}

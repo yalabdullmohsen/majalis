@@ -209,6 +209,16 @@
       "permanent": true
     },
     {
+      "source": "/qa",
+      "destination": "/quiz",
+      "permanent": true
+    },
+    {
+      "source": "/qa/:path*",
+      "destination": "/quiz",
+      "permanent": true
+    },
+    {
       "source": "/fatwa/:id",
       "destination": "/rulings/:id",
       "permanent": true
@@ -727,10 +737,6 @@
     },
     {
       "source": "/hadith/:path*",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/rulings/:path*",
       "destination": "/index.html"
     },
     {

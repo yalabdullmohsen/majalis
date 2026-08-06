@@ -436,7 +436,7 @@ export function GlobalSearchModal({ onClose }: Props) {
                     { href: "/adhkar", label: "الأذكار", Icon: RotateCw },
                     { href: "/lessons", label: "الدروس", Icon: GraduationCap },
                     { href: "/fiqh", label: "الفقه والأحكام", Icon: Scale },
-                    { href: "/qa", label: "الأسئلة", Icon: HelpCircle },
+                    { href: "/quiz", label: "الأسئلة", Icon: HelpCircle },
                     { href: "/hadith", label: "الحديث وعلومه", Icon: Scroll },
                     { href: "/memorization", label: "الحفظ", Icon: Layers },
                     { href: "/islamic-directory", label: "الدليل", Icon: Layers },

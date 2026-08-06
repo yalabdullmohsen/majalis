@@ -33,6 +33,8 @@ export type ShariaRulingExtended = {
   view_count?: number;
   status?: PlatformContentStatus;
   verification_status?: "draft" | "pending" | "approved" | "rejected" | "archived";
+  /** ruling | fiqhIssue | quizQuestion | educationalQA | legacyFatwa */
+  content_type?: string;
   related_ids?: string[];
   linked_qa_ids?: string[];
   linked_lesson_ids?: string[];

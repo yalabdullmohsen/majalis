@@ -29,6 +29,7 @@ import "@/styles/pages/lessons.css";
 import { registerForLesson, unregisterFromLesson, getMyRegistrations } from "@/lib/supabase";
 import { applyPageSeo } from "@/lib/seo";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
+import { formatSheikhName } from "@/lib/sheikh-name";
 
 type TabId = "all" | "men" | "women" | "courses" | "makkah" | "madinah";
 
@@ -167,7 +168,9 @@ function LessonsFilterPanel({
           الشيخ
           <select value={filters.sheikh} onChange={(e) => setFilter("sheikh", e.target.value)}>
             {options.sheikhs.map((v) => (
-              <option key={v} value={v}>{v === "كل المشايخ" ? v : `الشيخ: ${v}`}</option>
+              <option key={v} value={v}>
+                {v === "كل المشايخ" ? v : (formatSheikhName(v) || v)}
+              </option>
             ))}
           </select>
         </label>

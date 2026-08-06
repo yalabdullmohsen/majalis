@@ -3,6 +3,10 @@ const HONORIFIC_PREFIX =
 
 const DEGREE_PREFIX = /^(?:د\.|Dr\.)\s*/iu;
 
+/** لقب مُسبَق بصيغة «الشيخ:» أو «الشيخة:» أو مكرّر بلا اسم */
+const LABEL_PREFIX = /^(?:الشيخة?|الدكتور(?:ة)?|الأستاذ(?:ة)?|القارئ)\s*[:：]\s*/iu;
+const BARE_TITLES = new Set(["الشيخ", "الشيخة", "الدكتور", "الدكتورة", "الأستاذ", "الأستاذة", "القارئ", "د."]);
+
 const FEMALE_FIRST_NAMES = new Set([
   "فاطمة", "عائشة", "مريم", "أميرة", "نور", "سارة", "هند", "رقية",
   "خديجة", "زينب", "حفصة", "سمية", "ريم", "دلال", "ابتسام", "أسماء",
@@ -17,13 +21,18 @@ export function stripSheikhHonorifics(name: string): string {
   let value = String(name || "").trim();
   if (!value) return "";
 
+  // أزل «الشيخ:» إن وُجدت مسبقًا حتى لا تُضاعَف لاحقًا
+  value = value.replace(LABEL_PREFIX, "").trim();
+
   for (let i = 0; i < 4; i += 1) {
     const next = value.replace(HONORIFIC_PREFIX, "").replace(DEGREE_PREFIX, "").trim();
     if (next === value) break;
     value = next;
   }
 
-  return value.replace(/\s+/g, " ").trim();
+  value = value.replace(/\s+/g, " ").trim();
+  if (BARE_TITLES.has(value)) return "";
+  return value;
 }
 
 /** هل الاسم مؤنث؟ (يحمل "الشيخة" أو اسم أول نسائي) */
@@ -35,7 +44,10 @@ export function isFemaleName(name: string): boolean {
   return FEMALE_FIRST_NAMES.has(first);
 }
 
-/** Unified display: الشيخ/الشيخة: سالم الطويل */
+/**
+ * عرض موحّد: «الشيخ: سالم الطويل» دون تكرار اللقب.
+ * إن كان المدخل لقبًا بلا اسم → سلسلة فارغة.
+ */
 export function formatSheikhName(name: string): string {
   const core = stripSheikhHonorifics(name);
   if (!core) return "";
@@ -46,4 +58,23 @@ export function formatSheikhName(name: string): string {
 /** Compare/filter key without the prefix. */
 export function sheikhNameKey(name: string): string {
   return stripSheikhHonorifics(name).toLowerCase();
+}
+
+/** تطبيع للمقارنة بين وصفين (كتب/علماء) */
+export function normalizeProseForCompare(text: string): string {
+  return String(text || "")
+    .replace(/[….]+$/u, "")
+    .replace(/\s+/g, " ")
+    .replace(/[«»""]/g, '"')
+    .trim()
+    .toLowerCase();
+}
+
+/** هل الملخص مجرد بادئة للنبذة/الوصف الكامل؟ */
+export function isSummaryPrefixOfFull(summary: string, full: string): boolean {
+  const s = normalizeProseForCompare(summary);
+  const f = normalizeProseForCompare(full);
+  if (!s || !f) return false;
+  if (s === f) return true;
+  return f.startsWith(s) && s.length >= 40;
 }

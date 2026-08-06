@@ -61,6 +61,8 @@ const PLATFORM_SEED = JSON.parse(await readFile(resolve(__dirname, "platform-see
 // المصدر الوحيد لكتب المكتبة هو src/lib/library-catalog.ts (نفس ما تقرأه LibraryDetailPage.tsx فعليًا).
 // كان هذا الملف يقرأ سابقًا من src/data/library-catalog.json وهي مرآة يدوية انحرفت (102 مقابل 117 سجلًا حيًا).
 const { LIBRARY_CATALOG } = await importSrc("src/lib/library-catalog.ts");
+const { loadEncyclopediaRulingsForSeo, rulingRichBody } = await import("./generate-seo-rulings-helpers.mjs");
+const ENCYCLOPEDIA_RULINGS = await loadEncyclopediaRulingsForSeo(appRoot);
 
 const seoConfigPath = resolve(appRoot, "src/lib/seo-routes.json");
 const seoConfig = JSON.parse(await readFile(seoConfigPath, "utf8"));
@@ -599,11 +601,17 @@ const LIST_JSON_LD = {
     (PLATFORM_SEED.fiqh_decisions || []).map((r) => ({ name: r.title, url: `/fiqh-council/${r.slug || r.id}` })),
     "قرارات المجمع الفقهي",
   ),
-  "/qa": itemListJsonLdScript(
-    (PLATFORM_SEED.qa_items || []).map((r) => ({ name: r.question, url: `/qa#${r.id}` })),
-    "الأسئلة والأجوبة الشرعية",
+  "/quiz": itemListJsonLdScript(
+    (PLATFORM_SEED.qa_items || []).slice(0, 24).map((r) => ({ name: r.question, url: `/quiz` })),
+    "أسئلة لعبة سين جيم",
   ),
-  "/rulings": itemListJsonLdScript((PLATFORM_SEED.rulings || []).map((r) => ({ name: r.title, url: `/rulings/${r.id}` })), "الأحكام الشرعية"),
+  "/rulings": itemListJsonLdScript(
+    ENCYCLOPEDIA_RULINGS.slice(0, 40).map((r) => ({
+      name: r.title,
+      url: `/rulings/${r.external_key || r.id}`,
+    })),
+    "الأحكام الشرعية",
+  ),
   "/lessons": itemListJsonLdScript(lessonRows.slice(0, 30).map((r) => ({ name: r.title, url: `/lessons/${r.id}` })), "الدروس الشرعية"),
   "/adhkar": itemListJsonLdScript(ADHKAR_CATEGORIES.map((c) => ({ name: c.name, url: `/adhkar` })), "أقسام الأذكار"),
   "/prophets": itemListJsonLdScript(
@@ -662,9 +670,9 @@ ${linkList("روابط ذات صلة", [
     "من علماء المسلمين",
     SCHOLARS.slice(0, 30).map((s) => ({ name: s.name, url: `/scholars/${s.id}`, note: s.died })),
   ),
-  "/qa": linkList(
-    "أسئلة وأجوبة شرعية",
-    (PLATFORM_SEED.qa_items || []).slice(0, 12).map((q) => ({ name: q.question, url: `/qa#${q.id}` })),
+  "/quiz": linkList(
+    "من أسئلة سين جيم",
+    (PLATFORM_SEED.qa_items || []).slice(0, 12).map((q) => ({ name: q.question, url: `/quiz` })),
   ),
   "/prophets": linkList(
     "قصص الأنبياء",
@@ -703,7 +711,7 @@ ${linkList("أقسام الفقه", [
   { name: "النوازل المعاصرة", url: "/fiqh-council/nawazil" },
   { name: "القواعد الفقهية", url: "/fiqh-qawaid" },
   { name: "المذاهب الأربعة", url: "/madhahib" },
-  { name: "الأسئلة والأجوبة", url: "/qa" },
+  { name: "الأسئلة والأجوبة", url: "/quiz" },
   { name: "الطهارة", url: "/tahara" },
   { name: "دليل الصلاة", url: "/salah-guide" },
   { name: "الزكاة", url: "/zakat" },
@@ -748,7 +756,10 @@ ${linkList("روابط ذات صلة", [
   "/rulings": `<p>موسوعة الأحكام الشرعية: مسائل في العبادات والمعاملات والأسرة، مع ربط بالأدلة والمراجع المعتمدة قدر الإمكان.</p>
 ${linkList(
   "من الأحكام المتاحة",
-  (PLATFORM_SEED.rulings || []).slice(0, 20).map((r) => ({ name: r.title, url: `/rulings/${r.id}` })),
+  ENCYCLOPEDIA_RULINGS.slice(0, 20).map((r) => ({
+    name: r.title,
+    url: `/rulings/${r.external_key || r.id}`,
+  })),
 )}
 ${linkList("أقسام ذات صلة", [
   { name: "بوابة الفقه", url: "/fiqh" },
@@ -756,7 +767,7 @@ ${linkList("أقسام ذات صلة", [
   { name: "المسائل الفقهية", url: "/fiqh-council/issues" },
   { name: "القواعد الفقهية", url: "/fiqh-qawaid" },
   { name: "المذاهب الأربعة", url: "/madhahib" },
-  { name: "الأسئلة والأجوبة", url: "/qa" },
+  { name: "الأسئلة والأجوبة", url: "/quiz" },
   { name: "الطهارة", url: "/tahara" },
   { name: "دليل الصلاة", url: "/salah-guide" },
   { name: "الزكاة", url: "/zakat" },
@@ -1283,7 +1294,7 @@ ${linkList("روابط ذات صلة", [
   { name: "منهجيتنا", url: "/methodology" },
   { name: "سياسة الخصوصية", url: "/privacy" },
   { name: "شروط الاستخدام", url: "/terms" },
-  { name: "الأسئلة والأجوبة", url: "/qa" },
+  { name: "الأسئلة والأجوبة", url: "/quiz" },
 ])}`,
   "/privacy": `<p>سياسة الخصوصية لمنصة المجلس العلمي توضّح ما نجمعه من بيانات، وكيف نستخدمها، وما لا نجمعه، وحقوقك في الاطلاع والتصحيح والحذف.</p>
 <h2>البيانات التي نجمعها</h2>
@@ -1404,15 +1415,34 @@ ${linkList("روابط ذات صلة", [
   { name: "المسارات العلمية", url: "/learning/paths" },
   { name: "آخر المستجدات", url: "/updates" },
 ])}`,
-  "/quiz": `<p>اختبر معلوماتك من خلال لعبة أسئلة وأجوبة ممتعة ومتدرجة المستويات — للتثبيت والمراجعة، لا بديلًا عن الطلب المنهجي.</p>
-<p>تغطي الأسئلة مجالات القرآن والحديث والفقه والعقيدة والسيرة، ويمكن اللعب بمستويات متعددة داخل المنصة.</p>
+  "/quiz": (() => {
+    const cats = [
+      "القرآن وعلومه",
+      "الحديث وعلومه",
+      "الفقه وأصوله",
+      "العقيدة",
+      "السيرة والتاريخ",
+      "الآداب والأخلاق",
+    ];
+    return `<p>لعبة سين جيم لاختبار المعلومات الشرعية — للمراجعة والتثبيت، وليست فتوى شخصية ولا بديلاً عن طلب العلم المنهجي.</p>
+<h2>مجالات الأسئلة</h2>
+<ul>${cats.map((c) => `<li>${c}</li>`).join("")}</ul>
+<h2>مستويات الصعوبة وأنواع الأسئلة</h2>
+<ul>
+  <li>مستويات نقاط: ٢٠٠ · ٤٠٠ · ٦٠٠</li>
+  <li>أسئلة اختيار من متعدد وأسئلة مفتوحة قصيرة حسب المجال</li>
+  <li>وضع فردي أو فرق مع وسائل مساعدة محدودة</li>
+</ul>
+<h2>نظام النقاط والمراجعة</h2>
+<p>تحصل على نقاط السؤال عند الإجابة الصحيحة، ويمكن مراجعة الإجابات بعد الجولة. عدد الأسئلة المعتمدة في بنك اللعبة يُحدَّث مع المحتوى المنشور في المنصة.</p>
+<p><a href="${SITE_URL}/quiz">ابدأ اللعب</a></p>
 ${linkList("روابط ذات صلة", [
   { name: "البطاقات التعليمية", url: "/flashcards" },
   { name: "الفوائد", url: "/fawaid" },
-  { name: "الأسئلة والأجوبة", url: "/qa" },
   { name: "ابدأ من هنا", url: "/start-here" },
   { name: "المسارات العلمية", url: "/learning/paths" },
-])}`,
+])}`;
+  })(),
   "/flashcards": `<p>بطاقات تعليمية تفاعلية لمراجعة المفاهيم الشرعية وتثبيتها، مع ربط بالمسارات والاختبارات.</p>
 ${linkList("روابط ذات صلة", [
   { name: "لعبة سين جيم", url: "/quiz" },
@@ -1426,8 +1456,8 @@ ${linkList("روابط ذات صلة", [
   { name: "البحث", url: "/search" },
   { name: "الدروس الشرعية", url: "/lessons" },
   { name: "المكتبة العلمية", url: "/library" },
-  { name: "الأسئلة والأجوبة", url: "/qa" },
-  { name: "خريطة كل الأقسام", url: "/sitemap" },
+  { name: "الأسئلة والأجوبة", url: "/quiz" },
+  { name: "خريطة أهم الأقسام", url: "/sitemap" },
   { name: "منهجيتنا", url: "/methodology" },
 ])}`,
   "/mind-map": `<p>خرائط ذهنية لربط مفاهيم العلوم الشرعية بصريًا — مدخل موازٍ لخريطة المعرفة والمسارات.</p>
@@ -1949,15 +1979,21 @@ for (const row of verifiedFiqhSessions) {
   );
 }
 
-for (const row of PLATFORM_SEED.rulings || []) {
+for (const row of ENCYCLOPEDIA_RULINGS) {
+  const pathId = row.external_key || row.id;
+  const desc = tidyDesc(row.summary || row.body || row.title);
   addPage(
     {
-      path: `/rulings/${row.id}`,
+      path: `/rulings/${pathId}`,
       title: row.title,
-      description: padDesc(row.title, `حكم شرعي موثّق من الموسوعة الفقهية في ${SITE_NAME}`),
+      description: padDesc(desc, `حكم شرعي من موسوعة ${SITE_NAME}`),
       ogType: "article",
     },
-    { parents: [{ name: "الأحكام الشرعية", path: "/rulings" }], priority: 0.69 },
+    {
+      parents: [{ name: "الأحكام الشرعية", path: "/rulings" }],
+      priority: 0.69,
+      richBody: rulingRichBody(row),
+    },
   );
 }
 
@@ -1981,6 +2017,7 @@ for (const row of LIBRARY_CATALOG) {
     .slice(0, 6)
     .map((b) => ({ name: b.title, url: `/library/${b.id}`, note: b.author }));
   const desc = tidyDesc(row.description || row.title);
+  // لا تكرار: الوصف يظهر مرة في الفقرة الافتتاحية؛ «عن الكتاب» للبيانات فقط
   addPage(
     {
       path: `/library/${row.id}`,
@@ -1992,11 +2029,13 @@ for (const row of LIBRARY_CATALOG) {
       extraJsonLd: bookJsonLdScript({ ...row, description: desc }),
       parents: [{ name: "المكتبة العلمية", path: "/library" }],
       priority: 0.7,
-      richBody: `<h2>عن الكتاب</h2>
-<p>${escapeHtml(desc)}</p>
+      richBody: `<h2>بيانات الكتاب</h2>
 <ul>
   ${row.author ? `<li>المؤلف: ${escapeHtml(row.author)}</li>` : ""}
   ${row.category ? `<li>التصنيف: ${escapeHtml(row.category)}</li>` : ""}
+  ${row.type ? `<li>النوع: ${escapeHtml(row.type)}</li>` : ""}
+  ${row.parts_label ? `<li>الأجزاء: ${escapeHtml(row.parts_label)}</li>` : ""}
+  ${row.external_url ? `<li>المصدر: <a href="${escapeHtml(row.external_url)}">رابط القراءة</a></li>` : ""}
 </ul>
 ${linkList("كتب ذات صلة في نفس التصنيف", related)}
 ${linkList("روابط ذات صلة", [
@@ -2025,22 +2064,20 @@ ${linkList("روابط ذات صلة", [
 
 // العلماء — Person JSON-LD (٩٦ ترجمة). المعرّفات تُقرأ وقت البناء من scholars-data.ts.
 for (const s of SCHOLARS) {
-  const works = s.key_works?.length ? ` من مؤلفاته: ${s.key_works.slice(0, 3).join("، ")}.` : "";
+  const bioShort = clamp(s.bio || "", 155);
   addPage(
     {
-      // العنوان مطابق لما تضبطه ScholarProfilePage وقت التشغيل، فلا يتبدّل العنوان بعد التحميل.
       path: `/scholars/${s.id}`,
       title: `${s.name} — سيرة العالم`,
-      description: clamp(padDesc(s.bio, `ترجمة ${s.name} في ${SITE_NAME}`), 155),
+      description: clamp(padDesc(bioShort, `ترجمة ${s.name} في ${SITE_NAME}`), 155),
       keywords: [s.name, s.fullName, ...(s.specialty || []), "علماء الإسلام", "سير الأعلام"].filter(Boolean),
       ogType: "profile",
     },
     {
       extraJsonLd: scholarJsonLdScript(s),
       parents: [{ name: "أعلام العلماء المسلمين", path: "/scholars" }],
-      richBody: `<h2>نبذة</h2>
-<p>${escapeHtml(s.bio)}</p>
-<ul>
+      // النبذة مرة واحدة في الفقرة الافتتاحية؛ هنا بيانات + مؤلفات بلا تكرار النص
+      richBody: `<ul>
   ${s.fullName ? `<li>الاسم الكامل: ${escapeHtml(s.fullName)}</li>` : ""}
   ${s.era ? `<li>التصنيف: ${escapeHtml(s.era)}</li>` : ""}
   ${s.died ? `<li>الوفاة: ${escapeHtml(s.died)}</li>` : ""}
@@ -2048,8 +2085,7 @@ for (const s of SCHOLARS) {
   ${s.madhhab ? `<li>المذهب: ${escapeHtml(s.madhhab)}</li>` : ""}
   ${s.specialty?.length ? `<li>التخصص: ${escapeHtml(s.specialty.join("، "))}</li>` : ""}
 </ul>
-${s.key_works?.length ? `<h2>أبرز المؤلفات</h2>\n<ul>\n  ${s.key_works.map((w) => `<li>${escapeHtml(w)}</li>`).join("\n  ")}\n</ul>` : ""}
-${works ? "" : ""}`,
+${s.key_works?.length ? `<h2>أبرز المؤلفات</h2>\n<ul>\n  ${s.key_works.map((w) => `<li>${escapeHtml(w)}</li>`).join("\n  ")}\n</ul>` : ""}`,
       priority: 0.75,
       changefreq: "monthly",
     },
@@ -2282,10 +2318,10 @@ const rssItems = [
     description: `مادة من مجمع فقهي (${fiqhItemKind(row)}): ${row.title} — ${row.category || "المجمع الفقهي الإسلامي"}`,
     category: "مواد المجامع الفقهية",
   })),
-  ...(PLATFORM_SEED.rulings || []).slice(0, 4).map((row) => ({
+  ...(ENCYCLOPEDIA_RULINGS || []).slice(0, 4).map((row) => ({
     title: `[حكم شرعي] ${row.title}`,
-    link: absoluteUrl(`/rulings/${row.id}`),
-    description: `حكم شرعي موثق في ${row.category || "الفقه الإسلامي"}: ${row.title}`,
+    link: absoluteUrl(`/rulings/${row.external_key || row.id}`),
+    description: tidyDesc(row.summary || row.body || row.title),
     category: "أحكام شرعية",
   })),
   ...(PLATFORM_SEED.courses || []).slice(0, 3).map((row) => ({

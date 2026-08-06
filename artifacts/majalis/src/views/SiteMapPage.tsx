@@ -58,7 +58,7 @@ const SECTIONS = [
     icon: "fiqh",
     links: [
       { href: "/fiqh",        label: "مدخل الفقه",          desc: "بوابة الفقه والأحكام" },
-      { href: "/qa",          label: "الأسئلة والأجوبة",     desc: "أسئلة وأجوبة شرعية" },
+      { href: "/quiz",          label: "الأسئلة والأجوبة",     desc: "أسئلة وأجوبة شرعية" },
       { href: "/rulings",     label: "الأحكام الشرعية",      desc: "موسوعة الأحكام" },
       { href: "/tahara",      label: "الطهارة",              desc: "الوضوء والغسل والتيمم" },
       { href: "/salah-guide", label: "الصلاة",               desc: "دليل الصلاة كاملاً" },
@@ -148,12 +148,20 @@ const SECTIONS = [
     title: "المعلومات",
     icon: "info",
     links: [
-      { href: "/about",    label: "من نحن",       desc: "رسالتنا وأهدافنا" },
-      { href: "/methodology", label: "منهجنا العلمي",  desc: "منهج المراجعة والتوثيق" },
-      { href: "/contact",  label: "تواصل معنا",      desc: "للملاحظات والاقتراحات" },
-      { href: "/privacy",  label: "سياسة الخصوصية", desc: "كيف نحمي بياناتك" },
-      { href: "/terms",    label: "الشروط والأحكام", desc: "شروط استخدام المنصة" },
-            { href: "/kids",     label: "ركن الأطفال",     desc: "محتوى تعليمي ميسّر — قريبًا" },
+      { href: "/about", label: "من نحن", desc: "رسالتنا وأهدافنا" },
+      { href: "/methodology", label: "منهجنا العلمي", desc: "منهج المراجعة والتوثيق" },
+      { href: "/universities", label: "الجامعات الشرعية", desc: "دليل الجامعات والمقارنة" },
+      { href: "/universities/compare", label: "مقارنة الجامعات", desc: "مقارنة البرامج الشرعية" },
+      { href: "/fiqh-council", label: "المجمع الفقهي", desc: "قرارات المجامع الفقهية" },
+      { href: "/hadith-science", label: "علوم الحديث", desc: "مصطلح الحديث ودرجاته" },
+      { href: "/islamic-glossary", label: "المصطلحات", desc: "معجم المصطلحات الشرعية" },
+      { href: "/adhan-settings", label: "إعدادات الأذان", desc: "تنبيهات الصلاة والمؤذن" },
+      { href: "/rulings", label: "الأحكام الشرعية", desc: "موسوعة الأحكام" },
+      { href: "/contact", label: "التواصل والدعم", desc: "للملاحظات والاقتراحات" },
+      { href: "/privacy", label: "سياسة الخصوصية", desc: "كيف نحمي بياناتك" },
+      { href: "/terms", label: "الشروط والأحكام", desc: "شروط استخدام المنصة" },
+      { href: "/account-deletion", label: "حذف الحساب", desc: "طلب حذف حسابك وبياناتك" },
+      { href: "/kids", label: "ركن الأطفال", desc: "محتوى تعليمي ميسّر — قريبًا" },
     ],
   },
 ];
@@ -167,8 +175,8 @@ export default function SiteMapPage() {
   useEffect(() => {
     applyPageSeo({
       path: "/sitemap",
-      title: "كل الأقسام | المجلس العلمي",
-      description: "دليل شامل بجميع أقسام المجلس العلمي من قرآن وحديث وفقه وعقيدة وسيرة وأدوات التعلم.",
+      title: "أهم الأقسام | المجلس العلمي",
+      description: "دليل لأهم أقسام المجلس العلمي: قرآن وحديث وفقه وعقيدة وسيرة وأدوات التعلم والخدمات.",
       jsonLd: [{ "@context": "https://schema.org", "@type": "WebPage", name: "دليل أقسام المجلس العلمي", url: "https://www.majlisilm.com/sitemap", about: { "@type": "WebSite", name: "المجلس العلمي", url: "https://www.majlisilm.com" } }],
     });
   }, []);
@@ -178,8 +186,8 @@ export default function SiteMapPage() {
       {/* Hero */}
       <header className="sm-hero">
         <p className="sm-hero__eye">استكشف</p>
-        <h1 className="sm-hero__title">كل الأقسام</h1>
-        <p className="sm-hero__sub">دليل شامل بجميع أقسام ومحتويات المجلس العلمي</p>
+        <h1 className="sm-hero__title">أهم الأقسام</h1>
+        <p className="sm-hero__sub">دليل لأهم أقسام ومحتويات المجلس العلمي — والخريطة الكاملة في sitemap.xml</p>
       </header>
 
       <main className="sm-content">

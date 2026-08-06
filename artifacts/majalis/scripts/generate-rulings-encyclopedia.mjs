@@ -450,14 +450,22 @@ function dedupe(items) {
 }
 
 function main() {
+  // حوكمة 2026-08: أسئلة /qa والمسابقة لا تُدمَج في موسوعة /rulings.
+  // fromQaSeed() يبقى في الملف للترحيل اليدوي فقط ولا يُستدعى هنا.
   const all = dedupe([
     ...fromRulingsSeed(),
-    ...fromQaSeed(),
     ...fromFiqhCouncilSeed(),
     ...fromFiqhIssuesSeed(),
     ...fromFawaidSeed(),
     ...fromCurriculumRegistry(),
-  ]);
+  ]).filter((row) => {
+    const key = String(row.external_key || row.id || "");
+    if (key.startsWith("qa-ruling") || key.startsWith("qa-")) return false;
+    const title = String(row.title || "").trim();
+    if (/[؟?]\s*$/u.test(title)) return false;
+    if (/^(هل|كيف|متى|أين|لماذا|كم)\b/u.test(title)) return false;
+    return true;
+  });
 
   fs.mkdirSync(CHUNKS_DIR, { recursive: true });
 
