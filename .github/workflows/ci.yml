@@ -64,6 +64,9 @@ jobs:
           pnpm --filter @workspace/majalis exec node --import tsx scripts/generate-content-counts.ts --check
           pnpm --filter @workspace/majalis exec node scripts/generate-quran-pages-manifest.mjs --check
 
+      - name: Head shell gate (viewport / no keywords / zoom)
+        run: pnpm --filter @workspace/majalis run verify:head-shell-gate
+
       - name: Cron single-response gate
         run: pnpm run verify:single-response
 
