@@ -21,7 +21,8 @@
   --text-muted: var(--mj-muted);
   --text-meta: var(--mj-muted);
   --text-on-brand: var(--mj-on-brand);
-  --text-on-dark: var(--mj-ink);
+  /* نص فوق سطح داكن دائمًا — لا يُربَط بـ --mj-ink (أسود في الوضع الفاتح) */
+  --text-on-dark: #F1F5F3;
   --text-brand: var(--mj-brand);
   --text-brand-deep: var(--mj-brand-deep);
 
@@ -171,7 +172,8 @@ html.dark,
   --text-muted: var(--mj-muted);
   --text-meta: var(--mj-muted);
   --text-on-brand: var(--mj-on-brand);
-  --text-on-dark: var(--mj-ink);
+  /* نفس المعنى ليلًا: نص فاتح فوق الزمرد/الأسطح الداكنة الثابتة */
+  --text-on-dark: #F2F6F4;
   --text-brand: var(--mj-brand);
   --text-brand-deep: var(--mj-brand);
 

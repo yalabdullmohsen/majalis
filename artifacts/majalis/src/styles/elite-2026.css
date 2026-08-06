@@ -4051,7 +4051,7 @@ a:hover { color: var(--clr-primary-hov, var(--mj-brand)); }
    هنا عند المصدر هو الإصلاح الموثوق فعليًا، لا محاولات تجاوزها لاحقًا
    بقواعد !important تنافسية كانت تفشل أحيانًا حسب ترتيب حقن CSS). */
 [class$="od-card"],
-[class$="-hero"]:not(.revord-hero):not(.an-hero):not(.sch-profile-hero):not(.accd-hero):not(.surah-index-hero):not(.cvp-hero),
+[class$="-hero"]:not(.revord-hero):not(.an-hero):not(.sch-profile-hero):not(.accd-hero):not(.surah-index-hero):not(.cvp-hero):not(.pts-hero),
 .an-today__card {
   --clr-text-1:            var(--text-on-dark);
   --clr-text:              var(--text-on-dark);
@@ -4569,7 +4569,7 @@ html[data-theme="dark"] .page-soft-tag {
    (تخصيص html+h2+not = أعلى من شارة .page-shell .ds-section__title نفسها)
    فتُبقي نصًا فاتحًا ثابتًا (var(--mj-brand-soft)) فوق خلفية --elite-forest التي تصبح
    فاتحة نسبيًا (#5CC49A) في الوضع الليلي، فينتج تباين 2.39:1 فقط. */
-html[data-theme="dark"] h1, html[data-theme="dark"] h2:not(.jnz-subtitle):not(.jnz-related__title):not(.ds-section__title):not(.lessons-v2-section__title):not(.lessons-past-section__title):not(.cards-page-title):not(.search-page-title):not(.hadith-section-title):not(.fiqh-council-section-title):not(.qa-v2-section-title):not(.kuwait-lessons-section-title):not(.profile-section-title):not(.user-stats-section__title):not(.admin-section-title):not(.fm-section-title):not(.rp-section-title),
+html[data-theme="dark"] h1, html[data-theme="dark"] h2:not(.jnz-subtitle):not(.jnz-related__title):not(.ds-section__title):not(.lessons-v2-section__title):not(.lessons-past-section__title):not(.cards-page-title):not(.search-page-title):not(.hadith-section-title):not(.fiqh-council-section-title):not(.qa-v2-section-title):not(.kuwait-lessons-section-title):not(.profile-section-title):not(.user-stats-section__title):not(.admin-section-title):not(.fm-section-title):not(.rp-section-title):not(.pts-hero__name):not(.pts-title),
 html[data-theme="dark"] h3, html[data-theme="dark"] h4 {
   color: var(--mj-brand-soft) !important;
 }
@@ -4594,7 +4594,7 @@ html[data-theme="dark"] .jnz-related__title {
    (2026-07-21، 154 مسارًا عامًا) وجد 32 رابطًا إضافيًا بنفس العطل بالضبط —
    نص أخضر فاتح شبه غير مرئي (تباين 1.3–2.79:1) فوق خلفيات بيضاء/فاتحة أو
    خضراء متوسطة خاصة بها. */
-html[data-theme="dark"] a:not(.fiqh-hub-strip__tab--active):not(.hpv4-hero__cta-primary):not(.skip-link):not(.bottom-nav__tab):not(.quran-subnav__link):not(.page-action-btn):not(.fiqh-hub-strip__tab):not(.tj-related-link):not(.lesson-unified-card__btn--primary):not(.fiqh-council-subnav-link):not(.btn-primary):not(.btn--primary):not(.ds-btn--primary):not(.hadith-books-banner__btn):not(.lqp2-btn):not(.citation-btn--primary):not(.ar-contribute-banner__btn):not(.lsw-featured__cta):not(.hsh-step__cta):not(.twh-jumpnav__btn):not(.sb-related__link):not(.tw-related__link):not(.sg-related__link):not(.zk-related__link):not(.sw-related__link):not(.hj-related__link):not(.th-related__link):not(.jnz-related__link):not(.mw-related__link):not(.mdb-related__link):not(.arkan-related__link):not(.ai-related__link):not(.dq-related__link):not(.sy-related__link):not(.hs-related__link):not(.uq-related__link):not(.hk-related__link):not(.fa-related__link):not(.jn-related__link):not(.qcp-reg-banner__btn):not(.lesson-unified-card__btn):not(.surah-info-card__link):not(.lpp-nav-link):not(.myl2-empty__cta):not(.fiqh-council-section-link):not(.ui-card-btn):not(.mzp-cta__submissions-btn):not(.qc-card__wa-link):not(.snr-topic-chip):not(.wird-quran-link):not(.navbar-login):not(.widget-shell__empty-cta):not(.myl2-btn):not(.nf2-btn) { color: #5CC49A !important; }
+html[data-theme="dark"] a:not(.fiqh-hub-strip__tab--active):not(.hpv4-hero__cta-primary):not(.skip-link):not(.bottom-nav__tab):not(.quran-subnav__link):not(.page-action-btn):not(.fiqh-hub-strip__tab):not(.tj-related-link):not(.lesson-unified-card__btn--primary):not(.fiqh-council-subnav-link):not(.btn-primary):not(.btn--primary):not(.ds-btn--primary):not(.hadith-books-banner__btn):not(.lqp2-btn):not(.citation-btn--primary):not(.ar-contribute-banner__btn):not(.lsw-featured__cta):not(.hsh-step__cta):not(.twh-jumpnav__btn):not(.sb-related__link):not(.tw-related__link):not(.sg-related__link):not(.zk-related__link):not(.sw-related__link):not(.hj-related__link):not(.th-related__link):not(.jnz-related__link):not(.mw-related__link):not(.mdb-related__link):not(.arkan-related__link):not(.ai-related__link):not(.dq-related__link):not(.sy-related__link):not(.hs-related__link):not(.uq-related__link):not(.hk-related__link):not(.fa-related__link):not(.jn-related__link):not(.qcp-reg-banner__btn):not(.lesson-unified-card__btn):not(.surah-info-card__link):not(.lpp-nav-link):not(.myl2-empty__cta):not(.fiqh-council-section-link):not(.ui-card-btn):not(.mzp-cta__submissions-btn):not(.qc-card__wa-link):not(.snr-topic-chip):not(.wird-quran-link):not(.navbar-login):not(.widget-shell__empty-cta):not(.myl2-btn):not(.nf2-btn):not(.pts-dock__item):not(.pts-back) { color: #5CC49A !important; }
 /* .nf2-btn (404) و.qs-subnav__link (إذاعات القرآن) يظهران في سياقين
    مختلفين بخلفيتين مختلفتين تمامًا على نفس الصفحة (فاتحة في حالة وداكنة
    خضراء في أخرى) — لا لون ثابت واحد يخدم الحالتين معًا، فبقيا ضمن
@@ -5443,8 +5443,8 @@ footer *,
 .page-hero-wrap *,
 [class*="page-header"][class*="dark"],
 [class*="page-header"][class*="dark"] *,
-[class$="-hero"]:not(.revord-hero):not(.an-hero):not(.sch-profile-hero):not(.accd-hero):not(.hpv4-hero):not(.surah-index-hero):not(.cvp-hero),
-[class$="-hero"]:not(.revord-hero):not(.an-hero):not(.sch-profile-hero):not(.accd-hero):not(.hpv4-hero):not(.surah-index-hero):not(.cvp-hero) *,
+[class$="-hero"]:not(.revord-hero):not(.an-hero):not(.sch-profile-hero):not(.accd-hero):not(.hpv4-hero):not(.surah-index-hero):not(.cvp-hero):not(.pts-hero),
+[class$="-hero"]:not(.revord-hero):not(.an-hero):not(.sch-profile-hero):not(.accd-hero):not(.hpv4-hero):not(.surah-index-hero):not(.cvp-hero):not(.pts-hero) *,
 .dark-section *,
 .dark-bg *,
 /* Navbar dark elements */
@@ -5458,7 +5458,16 @@ footer *,
 .hadith-page-header *,
 .adhkar-page-header *,
 .fiqh-page-header *,
-.quiz-page-header * {
+.quiz-page-header *,
+/* شاشة مواقيت الصلاة — نص أبيض فوق زمرد دائم */
+.pts-screen,
+.pts-screen .pts-hero,
+.pts-screen .pts-hero *,
+.pts-screen .pts-row,
+.pts-screen .pts-row *,
+.pts-screen .pts-back,
+.pts-screen .pts-dates,
+.pts-screen .pts-dates * {
   color: #FFFFFF !important;
 }
 

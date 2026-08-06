@@ -20,10 +20,10 @@ html.pts-immersive body {
   --pts-gold: var(--gold-300, #E3CB8C);
   --pts-gold-soft: color-mix(in srgb, var(--gold-400, #D2B063) 28%, transparent);
   --pts-gold-line: color-mix(in srgb, var(--gold-400, #D2B063) 40%, transparent);
-  --pts-white: var(--n-50, var(--mj-bg));
-  /* ≥4.5:1 تقريبًا فوق --pts-bg-1 عند المزج مع الشفافية */
-  --pts-muted: color-mix(in srgb, var(--n-50, var(--mj-bg)) 78%, transparent);
-  --pts-row: color-mix(in srgb, var(--n-50, var(--mj-bg)) 6%, transparent);
+  /* أبيض صلب — لا --n-50/--mj-bg/--mj-ink (تنقلب سوداء حسب السمة) */
+  --pts-white: #FAFAF8;
+  --pts-muted: rgba(250, 250, 248, 0.78);
+  --pts-row: rgba(250, 250, 248, 0.06);
   --pts-row-active: color-mix(in srgb, var(--gold-400, #D2B063) 18%, transparent);
 
   direction: rtl;
@@ -480,4 +480,54 @@ html.pts-immersive body {
     box-shadow: none;
     min-height: 100dvh;
   }
+}
+
+/* ── حراسة نص أبيض: تتفوق على قواعد page-shell/h2/a العامة (!important) ── */
+.pts-screen,
+.pts-screen .pts-back,
+.pts-screen .pts-title,
+.pts-screen .pts-hero__label,
+.pts-screen .pts-hero__name,
+.pts-screen .pts-hero__countdown,
+.pts-screen .pts-hero__hint,
+.pts-screen .pts-row,
+.pts-screen .pts-row__name,
+.pts-screen .pts-row__status,
+.pts-screen .pts-row__time,
+.pts-screen .pts-dates,
+.pts-screen .pts-gov__chip,
+.pts-screen .pts-more > summary,
+.pts-screen .pts-retry,
+.pts-screen .pts-skeleton,
+.pts-screen .pts-error {
+  color: var(--pts-white) !important;
+}
+.pts-screen .pts-location,
+.pts-screen .pts-hero__reset,
+.pts-screen .pts-badge,
+.pts-screen .pts-dock__item,
+.pts-screen .pts-dock__icon,
+.pts-screen .pts-row--next .pts-row__name,
+.pts-screen .pts-row--next .pts-row__status,
+.pts-screen .pts-row--next .pts-row__time {
+  color: var(--pts-gold) !important;
+}
+.pts-screen .pts-hero__label,
+.pts-screen .pts-hero__hint,
+.pts-screen .pts-row__status,
+.pts-screen .pts-gov__chip:not(.pts-gov__chip--active),
+.pts-screen .pts-skeleton {
+  color: var(--pts-muted) !important;
+}
+.pts-screen .pts-row__time {
+  color: rgba(250, 250, 248, 0.88) !important;
+}
+.pts-screen .pts-gov__chip--active {
+  color: var(--pts-white) !important;
+}
+.pts-screen .pts-dock__item:hover {
+  color: var(--pts-white) !important;
+}
+.pts-screen .pts-error {
+  color: #F0A8A8 !important;
 }
