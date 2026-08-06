@@ -76,6 +76,9 @@ jobs:
       - name: Orphan discovery gate (R4)
         run: pnpm --filter @workspace/majalis run verify:orphan-discovery
 
+      - name: Methodology prerender depth gate (R4)
+        run: pnpm --filter @workspace/majalis run verify:methodology-prerender
+
       - name: Cron single-response gate
         run: pnpm run verify:single-response
 
