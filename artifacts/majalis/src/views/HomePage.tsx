@@ -20,6 +20,7 @@ import { HomeRecentPagesBar } from "@/components/home/HomeRecentPagesBar";
 import { HomeExplorePlatform } from "@/components/home/HomeExplorePlatform";
 import { HomeUpcomingLessons } from "@/components/home/HomeUpcomingLessons";
 import { HomeUpcomingCourses } from "@/components/home/HomeUpcomingCourses";
+import { HomeStartHereSection } from "@/components/home/HomeStartHereSection";
 import { lazyWithRetry } from "@/lib/lazy-with-retry";
 import { QUICK_LINKS } from "@/lib/home-feature-catalog";
 import {
@@ -87,11 +88,21 @@ export default function HomePage() {
   const dailyCtx = useDailyContext();
 
   const [lastVisited, setLastVisited] = useState<RecentPage | null>(null);
+  const [isFirstVisit, setIsFirstVisit] = useState(false);
   useEffect(() => {
     const pages = getRecentPages(2);
     setLastVisited(pages.find((p) => p.href !== "/") ?? null);
+    try {
+      const key = "majlis-home-welcomed-v1";
+      if (!localStorage.getItem(key)) {
+        setIsFirstVisit(true);
+        localStorage.setItem(key, "1");
+      }
+    } catch {
+      setIsFirstVisit(true);
+    }
   }, []);
-  const continueHref = lastVisited?.href ?? "/lessons";
+  const continueHref = lastVisited?.href ?? (isFirstVisit ? "/start-here" : "/lessons");
 
   const [homePrefs, setHomePrefs] = useState<HomepagePrefs>(() => getLocalHomepagePrefs());
   const [customizeOpen, setCustomizeOpen] = useState(false);
@@ -160,11 +171,23 @@ export default function HomePage() {
         headline="المعرفة الإسلامية الرقمية"
         description={dailyCtx.greeting}
         actions={
-          <Link href={continueHref} className="mj-btn m2030-btn m2030-btn--primary">
-            ابدأ التصفح
-          </Link>
+          <>
+            <Link
+              href={isFirstVisit ? "/start-here" : continueHref}
+              className="mj-btn m2030-btn m2030-btn--primary"
+            >
+              {isFirstVisit ? "ابدأ من هنا" : "تابع التصفح"}
+            </Link>
+            <Link href="/learning/paths" className="mj-btn m2030-btn m2030-btn--ghost">
+              المسارات العلمية
+            </Link>
+          </>
         }
       />
+
+      <section className="m2030-band m2030-band--sage" aria-label="مدخل المبتدئ">
+        <HomeStartHereSection />
+      </section>
 
       {heroCountdown && (
         <section className="m2030-band" aria-label="ملخص الصلاة">

@@ -37,6 +37,15 @@ export function HomeStartHereSection() {
       <div className="hsh-header">
         <span className="hsh-eyebrow">للزائر الجديد</span>
         <h2 className="hsh-title">ابدأ من هنا</h2>
+        <p className="hsh-lead">مسار واضح للمبتدئ، ثم المسارات العلمية حسب مستواك.</p>
+        <div className="hsh-actions">
+          <Link href="/start-here" className="hsh-actions__primary">
+            دليل ابدأ من هنا
+          </Link>
+          <Link href="/learning/paths" className="hsh-actions__secondary">
+            المسارات العلمية
+          </Link>
+        </div>
       </div>
       <ol className="hsh-steps">
         {START_STEPS.map((s) => (
