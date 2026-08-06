@@ -182,7 +182,7 @@ export function generateTimeAwarePrompts(
       kind: "morning_adhkar",
       titleAr: "أذكار الصباح",
       bodyAr: "حان وقت أذكار الصباح — احفظ بركة يومك.",
-      href: "/adhkar?cat=morning",
+      href: "/adhkar/morning",
       priority: 90,
     });
   }
@@ -192,7 +192,7 @@ export function generateTimeAwarePrompts(
       kind: "evening_adhkar",
       titleAr: "أذكار المساء",
       bodyAr: "لا تفوّت أذكار المساء قبل غروب اليوم.",
-      href: "/adhkar?cat=evening",
+      href: "/adhkar/evening",
       priority: 88,
     });
   }
@@ -208,7 +208,7 @@ export function generateTimeAwarePrompts(
   }
 
   if ((tod === "isha" || tod === "layl") && !isDismissed("bedtime_balance")) {
-    const sleepHref = "/adhkar?cat=sleep";
+    const sleepHref = "/adhkar/sleep";
     const quranLight = state.buckets.quran.activeMs < 5 * 60_000;
     prompts.push({
       kind: "bedtime_balance",

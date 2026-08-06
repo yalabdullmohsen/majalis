@@ -56,7 +56,7 @@ console.log("\n=== روابط التوصيات تحتفظ بالمعرّف (إع
   assert(CONTENT_TYPE_HREF.story("omar") === "/stories?slug=omar", "story → /stories?slug=");
   assert(CONTENT_TYPE_HREF.miracle("m1") === "/miracles#m1", "miracle → /miracles#id");
   assert(CONTENT_TYPE_HREF.hadith("h1") === "/hadith#h1", "hadith → /hadith#id");
-  assert(CONTENT_TYPE_HREF.dhikr("adh-morning") === "/adhkar?cat=adh-morning", "dhikr → /adhkar?cat=");
+  assert(CONTENT_TYPE_HREF.dhikr("adh-morning") === "/adhkar/morning", "dhikr → /adhkar/:slug");
 }
 
 console.log("\n=== روابط الرسم المعرفي تحتفظ بالمعرّف ===");

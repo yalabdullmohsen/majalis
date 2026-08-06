@@ -79,7 +79,7 @@ export function encodeDeepLink(target: DeepLinkTarget): string {
 /**
  * Parse path + search + hash into a deep-link target.
  * Accepts `/mushaf/2?ayah=255`, `/mushaf/2#ayah-255`, `#ayah-255`,
- * `?line=12#matn-line-12`, `/adhkar?cat=morning&id=…`.
+ * `?line=12#matn-line-12`, `/adhkar/morning?id=…`.
  */
 export function parseDeepLink(
   input?: string | { pathname?: string; search?: string; hash?: string },

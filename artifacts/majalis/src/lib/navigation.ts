@@ -108,8 +108,8 @@ export const HOME_FEATURE_CARDS = [
     icon: "sparkles",
   },
   {
-    href: "/adhkar?cat=distress",
-    title: seoNavLabel("/adhkar?cat=distress", "الدعاء"),
+    href: "/adhkar/distress",
+    title: seoNavLabel("/adhkar/distress", "الدعاء"),
     description: "أدعية مأثورة مع بيان المصدر حين يتوفر",
     icon: "hands",
   },

@@ -98,6 +98,71 @@
       "priority": 0.82
     },
     {
+      "path": "/adhkar/morning",
+      "title": "أذكار الصباح",
+      "description": "أذكار الصباح الواردة مع بيان المصدر والدرجة قدر الإمكان.",
+      "keywords": [
+        "أذكار",
+        "أذكار الصباح",
+        "ذكر الله"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.65
+    },
+    {
+      "path": "/adhkar/evening",
+      "title": "أذكار المساء",
+      "description": "أذكار المساء الواردة مع بيان المصدر والدرجة قدر الإمكان.",
+      "keywords": [
+        "أذكار",
+        "أذكار المساء",
+        "ذكر الله"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.65
+    },
+    {
+      "path": "/adhkar/sleep",
+      "title": "أذكار النوم",
+      "description": "أذكار النوم الواردة مع بيان المصدر والدرجة قدر الإمكان.",
+      "keywords": [
+        "أذكار",
+        "أذكار النوم",
+        "ذكر الله"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.65
+    },
+    {
+      "path": "/adhkar/after-salah",
+      "title": "أذكار بعد الصلاة",
+      "description": "أذكار ما بعد الصلاة مع بيان المصدر والدرجة قدر الإمكان.",
+      "keywords": [
+        "أذكار",
+        "أذكار بعد الصلاة",
+        "ذكر الله"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.65
+    },
+    {
+      "path": "/adhkar/distress",
+      "title": "أدعية الكرب",
+      "description": "أدعية الكرب والهم الواردة مع بيان المصدر قدر الإمكان.",
+      "keywords": [
+        "أذكار",
+        "أدعية الكرب",
+        "ذكر الله"
+      ],
+      "sitemap": true,
+      "changefreq": "weekly",
+      "priority": 0.65
+    },
+    {
       "path": "/quran/tajweed",
       "title": "علم التجويد",
       "description": "دروس وقواعد التجويد مع أمثلة صوتية واختبارات تعليمية.",
@@ -2189,7 +2254,10 @@
       "path": "/academic-research/submit",
       "title": "أضف بحثًا",
       "description": "تقديم بحث شرعي للمراجعة — لا يُنشر مباشرة.",
-      "keywords": ["إضافة بحث", "أبحاث شرعية"],
+      "keywords": [
+        "إضافة بحث",
+        "أبحاث شرعية"
+      ],
       "sitemap": false,
       "changefreq": "yearly",
       "priority": 0.3,
@@ -2199,7 +2267,10 @@
       "path": "/academic-research/assistant",
       "title": "مساعدة الباحث",
       "description": "أدوات مساعدة للبحث الشرعي دون كتابة البحث نيابة عن الطالب.",
-      "keywords": ["مساعدة بحث", "خطة بحث"],
+      "keywords": [
+        "مساعدة بحث",
+        "خطة بحث"
+      ],
       "sitemap": false,
       "changefreq": "monthly",
       "priority": 0.4,

@@ -54,9 +54,12 @@ export function hrefMiracles(id?: string | null): string {
   return t ? `/miracles#${encodeURIComponent(t)}` : "/miracles";
 }
 
+/** مسار تصنيف الأذكار: `/adhkar/:slug` — يقبل slug أو id (`adh-morning` → morning). */
 export function hrefAdhkar(cat?: string | null): string {
   const t = idOrEmpty(cat);
-  return t ? `/adhkar?cat=${encodeURIComponent(t)}` : "/adhkar";
+  if (!t) return "/adhkar";
+  const slug = t.startsWith("adh-") ? t.slice(4) : t;
+  return `/adhkar/${encodeURIComponent(slug)}`;
 }
 
 export function hrefQuranHub(): string {
