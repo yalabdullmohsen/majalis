@@ -9,7 +9,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { useReadingScrollMemory } from "@/hooks/useReadingScrollMemory";
 import "@/styles/pages/adhkar.css";
-import { RelatedKnowledge } from "@/components/RelatedKnowledge";
+import "@/styles/components/thumb-zone.css";
 
 const FEATURED_CATEGORY_SLUGS = new Set([
   "morning", "evening", "sleep", "wakeup", "home-in", "home-out",
@@ -391,7 +391,6 @@ export default function AdhkarPage() {
       {showSheet && current && (
         <DhikrSheet item={current} onClose={() => setShowSheet(false)} />
       )}
-      <RelatedKnowledge kind="book" query="الأذكار" title="كتب ومواد في الأذكار" limit={6} />
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="akhlaq" title="اختبر معلوماتك في الأخلاق والآداب" count={4} />
       </div>

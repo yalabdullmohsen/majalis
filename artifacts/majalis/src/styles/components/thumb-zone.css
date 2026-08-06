@@ -1,0 +1,49 @@
+/**
+ * منطقة الإبهام (R4-3): الإجراءات المتكررة في آخر ~220px من الشاشة.
+ */
+:root {
+  --mj-thumb-zone: 220px;
+}
+
+.mj-thumb-zone {
+  position: sticky;
+  inset-block-end: calc(var(--bottom-nav-h, 2.75rem) + env(safe-area-inset-bottom, 0px) + 8px);
+  z-index: 5;
+  padding-block: 8px;
+  background: linear-gradient(
+    to top,
+    color-mix(in srgb, var(--color-surface, #fff) 96%, transparent) 55%,
+    transparent
+  );
+}
+
+.mj-thumb-zone__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.mj-thumb-zone__actions > button,
+.mj-thumb-zone__actions > a,
+.mj-thumb-zone .adhkar-focus-btn--count {
+  min-block-size: 48px;
+  min-inline-size: 48px;
+}
+
+/* عدّاد الأذكار: يُقرَّب من منطقة الإبهام على الجوال */
+@media (max-width: 879px) {
+  .adhkar-focus-controls {
+    position: sticky;
+    inset-block-end: calc(var(--bottom-nav-h, 2.75rem) + 12px);
+    z-index: 4;
+    padding-block: 8px;
+    background: color-mix(in srgb, var(--color-surface, #fff) 94%, transparent);
+  }
+
+  .adhkar-focus-btn--count {
+    min-block-size: 64px !important;
+    font-size: 1.05rem;
+  }
+}

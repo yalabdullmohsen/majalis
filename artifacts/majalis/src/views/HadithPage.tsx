@@ -19,7 +19,6 @@ import {
   type HadithSortMode,
 } from "@/lib/hadith-access";
 import { PageHeader, SkeletonCardGrid, Empty, Chip } from "@/components/ui-common";
-import { RelatedKnowledge } from "@/components/RelatedKnowledge";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
 import { RecommendationWidget } from "@/components/recommendations/RecommendationWidget";
@@ -1199,9 +1198,6 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
         />
       )}
 
-      {!embedded && (
-        <RelatedKnowledge kind="hadith" title="مواد ذات صلة بالحديث" limit={6} />
-      )}
     </>
   );
 
@@ -1273,10 +1269,10 @@ export default function HadithPage() {
           تصفّح الكتب ←
         </Link>
       </div>
+      {/* كتب الحديث ظاهرة أعلاه في الشريط والبانر — لا تُكرَّر هنا (R4-3) */}
       <ExploreAlsoNav
         title="استكشف أيضًا"
         links={[
-          { href: "/hadith/books", label: "كتب الحديث الكاملة" },
           { href: "/hadith-science", label: "مصطلح الحديث" },
           { href: "/memorize", label: "بطاقات الحفظ" },
           { href: "/arbaeen-nawawi", label: "الأربعون النووية" },
