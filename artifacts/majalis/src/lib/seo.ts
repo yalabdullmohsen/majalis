@@ -257,7 +257,6 @@ export function applyPageSeo(options: PageSeoOptions) {
   // Prefer explicit page image → route default → branded OG share card
   const imagePath = options.image || seoData.defaultImage || "/majlisilm-og-2026.jpg";
   const image = /^https?:\/\//i.test(imagePath) ? imagePath : absoluteUrl(imagePath);
-  const pageKeywords = [...new Set(options.keywords || [])].filter(Boolean);
   const robots = options.robots || "index, follow";
   const ogType = options.ogType || "website";
 
@@ -266,12 +265,8 @@ export function applyPageSeo(options: PageSeoOptions) {
   document.title = options.title;
 
   upsertMeta("name", "description", options.description);
-  if (pageKeywords.length) {
-    upsertMeta("name", "keywords", pageKeywords.join(", "));
-  } else {
-    // إزالة حشو الكلمات العامة — محركات البحث لا تعتمد على الوسم
-    document.querySelector('meta[name="keywords"]')?.remove();
-  }
+  // meta keywords ملغاة نهائيًا — أزل أي وسم قديم من SPA أو prerender
+  document.querySelector('meta[name="keywords"]')?.remove();
   upsertMeta("name", "robots", robots);
   upsertMeta("name", "color-scheme", "light dark");
   // theme-color ديناميكي (فاتح/داكن) مُدار حصريًا عبر src/lib/theme-preference.ts

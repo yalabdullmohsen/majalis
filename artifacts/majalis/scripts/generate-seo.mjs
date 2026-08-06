@@ -432,12 +432,7 @@ const HEAD_ASSETS = `<link rel="icon" type="image/svg+xml" href="/favicon.svg" /
 function prerenderHtml(route, extraJsonLd = "", richBody = "", parents = []) {
   const canonical = absoluteUrl(route.path);
   const image = absoluteUrl(route.image || DEFAULT_IMAGE);
-  // كلمات مفتاحية خاصة بالصفحة فقط — بلا دمج defaultKeywords (حشو يضر بالمصداقية).
-  // إن خلت الصفحة من keywords لا نُصدر الوسم أصلًا (محركات البحث لا تعتمد عليه).
-  const pageKeywords = [...new Set(route.keywords || [])].filter(Boolean);
-  const keywordsMeta = pageKeywords.length
-    ? `<meta name="keywords" content="${escapeHtml(pageKeywords.join(", "))}" />`
-    : "";
+  // meta keywords أُلغيت نهائيًا (A0 / الجولة الثالثة) — محركات البحث لا تعتمد عليها والحشو يضر.
   const robots = route.robots || "index, follow";
   const ogType = route.ogType || "website";
   const title = pageTitle(route);
@@ -451,7 +446,6 @@ function prerenderHtml(route, extraJsonLd = "", richBody = "", parents = []) {
     <meta name="color-scheme" content="light dark" />
     <title>${escapeHtml(title)}</title>
     <meta name="description" content="${escapeHtml(route.description)}" />
-    ${keywordsMeta}
     <meta name="robots" content="${escapeHtml(robots)}" />
     <meta name="author" content="${escapeHtml(SITE_NAME)}" />
     <meta name="theme-color" content="#1F7A5A" />
