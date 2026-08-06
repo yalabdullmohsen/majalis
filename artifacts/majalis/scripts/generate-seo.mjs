@@ -1457,7 +1457,7 @@ ${linkList("روابط ذات صلة", [
   { name: "الدروس الشرعية", url: "/lessons" },
   { name: "المكتبة العلمية", url: "/library" },
   { name: "الأسئلة والأجوبة", url: "/quiz" },
-  { name: "خريطة كل الأقسام", url: "/sitemap" },
+  { name: "خريطة أهم الأقسام", url: "/sitemap" },
   { name: "منهجيتنا", url: "/methodology" },
 ])}`,
   "/mind-map": `<p>خرائط ذهنية لربط مفاهيم العلوم الشرعية بصريًا — مدخل موازٍ لخريطة المعرفة والمسارات.</p>
@@ -2017,6 +2017,7 @@ for (const row of LIBRARY_CATALOG) {
     .slice(0, 6)
     .map((b) => ({ name: b.title, url: `/library/${b.id}`, note: b.author }));
   const desc = tidyDesc(row.description || row.title);
+  // لا تكرار: الوصف يظهر مرة في الفقرة الافتتاحية؛ «عن الكتاب» للبيانات فقط
   addPage(
     {
       path: `/library/${row.id}`,
@@ -2028,11 +2029,13 @@ for (const row of LIBRARY_CATALOG) {
       extraJsonLd: bookJsonLdScript({ ...row, description: desc }),
       parents: [{ name: "المكتبة العلمية", path: "/library" }],
       priority: 0.7,
-      richBody: `<h2>عن الكتاب</h2>
-<p>${escapeHtml(desc)}</p>
+      richBody: `<h2>بيانات الكتاب</h2>
 <ul>
   ${row.author ? `<li>المؤلف: ${escapeHtml(row.author)}</li>` : ""}
   ${row.category ? `<li>التصنيف: ${escapeHtml(row.category)}</li>` : ""}
+  ${row.type ? `<li>النوع: ${escapeHtml(row.type)}</li>` : ""}
+  ${row.parts_label ? `<li>الأجزاء: ${escapeHtml(row.parts_label)}</li>` : ""}
+  ${row.external_url ? `<li>المصدر: <a href="${escapeHtml(row.external_url)}">رابط القراءة</a></li>` : ""}
 </ul>
 ${linkList("كتب ذات صلة في نفس التصنيف", related)}
 ${linkList("روابط ذات صلة", [
@@ -2061,22 +2064,20 @@ ${linkList("روابط ذات صلة", [
 
 // العلماء — Person JSON-LD (٩٦ ترجمة). المعرّفات تُقرأ وقت البناء من scholars-data.ts.
 for (const s of SCHOLARS) {
-  const works = s.key_works?.length ? ` من مؤلفاته: ${s.key_works.slice(0, 3).join("، ")}.` : "";
+  const bioShort = clamp(s.bio || "", 155);
   addPage(
     {
-      // العنوان مطابق لما تضبطه ScholarProfilePage وقت التشغيل، فلا يتبدّل العنوان بعد التحميل.
       path: `/scholars/${s.id}`,
       title: `${s.name} — سيرة العالم`,
-      description: clamp(padDesc(s.bio, `ترجمة ${s.name} في ${SITE_NAME}`), 155),
+      description: clamp(padDesc(bioShort, `ترجمة ${s.name} في ${SITE_NAME}`), 155),
       keywords: [s.name, s.fullName, ...(s.specialty || []), "علماء الإسلام", "سير الأعلام"].filter(Boolean),
       ogType: "profile",
     },
     {
       extraJsonLd: scholarJsonLdScript(s),
       parents: [{ name: "أعلام العلماء المسلمين", path: "/scholars" }],
-      richBody: `<h2>نبذة</h2>
-<p>${escapeHtml(s.bio)}</p>
-<ul>
+      // النبذة مرة واحدة في الفقرة الافتتاحية؛ هنا بيانات + مؤلفات بلا تكرار النص
+      richBody: `<ul>
   ${s.fullName ? `<li>الاسم الكامل: ${escapeHtml(s.fullName)}</li>` : ""}
   ${s.era ? `<li>التصنيف: ${escapeHtml(s.era)}</li>` : ""}
   ${s.died ? `<li>الوفاة: ${escapeHtml(s.died)}</li>` : ""}
@@ -2084,8 +2085,7 @@ for (const s of SCHOLARS) {
   ${s.madhhab ? `<li>المذهب: ${escapeHtml(s.madhhab)}</li>` : ""}
   ${s.specialty?.length ? `<li>التخصص: ${escapeHtml(s.specialty.join("، "))}</li>` : ""}
 </ul>
-${s.key_works?.length ? `<h2>أبرز المؤلفات</h2>\n<ul>\n  ${s.key_works.map((w) => `<li>${escapeHtml(w)}</li>`).join("\n  ")}\n</ul>` : ""}
-${works ? "" : ""}`,
+${s.key_works?.length ? `<h2>أبرز المؤلفات</h2>\n<ul>\n  ${s.key_works.map((w) => `<li>${escapeHtml(w)}</li>`).join("\n  ")}\n</ul>` : ""}`,
       priority: 0.75,
       changefreq: "monthly",
     },
