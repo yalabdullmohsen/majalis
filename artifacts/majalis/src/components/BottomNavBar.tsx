@@ -1,23 +1,18 @@
 import { useState } from "react";
 import { Link, useLocation } from "wouter";
 import { LayoutGrid } from "lucide-react";
-import { isNavHrefActive } from "@/lib/nav-active";
 import { isImmersiveChromePath } from "@/lib/immersive-chrome";
 import { isComingSoonPath } from "@/lib/nav-visibility";
 import { BOTTOM_NAV_TABS } from "@/lib/nav-map";
 import { isTabActive } from "./TopSectionBar";
 import { MoreBottomSheet } from "./MoreBottomSheet";
 
-/** شريط سفلي — مشتق من nav-map (مصدر واحد) */
+/** شريط سفلي — مشتق من nav-map (مصدر واحد): قرآن · علم · عبادة · فقه · المزيد */
 export function BottomNavBar() {
   const [location] = useLocation();
   const [moreOpen, setMoreOpen] = useState(false);
 
-  const onPrimaryTab = BOTTOM_NAV_TABS.some(({ href }) =>
-    href === "/quran-knowledge"
-      ? isTabActive(location, "/quran-knowledge")
-      : isNavHrefActive(location, href),
-  );
+  const onPrimaryTab = BOTTOM_NAV_TABS.some(({ href }) => isTabActive(location, href));
   const moreActive = moreOpen || !onPrimaryTab;
 
   if (isImmersiveChromePath(location)) return null;
@@ -26,10 +21,7 @@ export function BottomNavBar() {
     <>
       <nav className="bottom-nav bottom-nav--v2 bottom-nav--m2030 mj-nav-skin" aria-label="التنقل السفلي">
         {BOTTOM_NAV_TABS.map(({ href, label, Icon }) => {
-          const active =
-            href === "/quran-knowledge"
-              ? isTabActive(location, "/quran-knowledge")
-              : isNavHrefActive(location, href);
+          const active = isTabActive(location, href);
           const soon = isComingSoonPath(href);
           return (
             <Link

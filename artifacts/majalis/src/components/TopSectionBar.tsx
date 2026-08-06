@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { Link, useLocation } from "wouter";
 import {
-  BookOpen, Brain, CalendarDays, Clock, MapPin, Scale, ScrollText, User,
+  BookOpen, Clock, GraduationCap, Scale,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { isImmersiveChromePath } from "@/lib/immersive-chrome";
@@ -17,19 +17,14 @@ type SectionTab = {
 };
 
 /**
- * شريط الأقسام — مرتّب حسب أهمية الاستعمال اليومي.
- * المصحف خارج الشريط أثناء «قريبًا» حتى لا يستهلك خانة معطّلة (يبقى مساره عبر COMING_SOON).
+ * شريط الأقسام — نفس المساحات الأربع في الشريط السفلي (تنقّل موحّد).
+ * المزيد والبحث دائمان في الهيدر / الشريط السفلي.
  */
 export const SECTION_TABS: SectionTab[] = [
-  { href: "/memorize", label: "الحفظ", Icon: Brain, prefetch: () => import("@/views/MemorizePage") },
-  { href: "/quran-knowledge", label: "القرآن وعلومه", Icon: BookOpen, prefetch: () => import("@/views/QuranKnowledgeHubPage") },
-  { href: "/hadith", label: "الحديث وعلومه", Icon: ScrollText, prefetch: () => import("@/views/HadithPage") },
-  { href: "/fiqh", label: "الفقه والأحكام", Icon: Scale, prefetch: () => import("@/views/FiqhPage") },
-  { href: "/prayer-times", label: "الصلاة", Icon: Clock, prefetch: () => import("@/views/PrayerTimesPage") },
-  { href: "/occasions-lessons", label: "المناسبات والدروس", Icon: CalendarDays, prefetch: () => import("@/views/OccasionsLessonsHubPage") },
-  { href: "/memorization", label: "الحفظ والمراجعة", Icon: Brain, prefetch: () => import("@/views/MemorizationHubPage") },
-  { href: "/islamic-directory", label: "الدليل الإسلامي", Icon: MapPin, prefetch: () => import("@/views/IslamicDirectoryHubPage") },
-  { href: "/my-learning", label: "حسابي", Icon: User, prefetch: () => import("@/views/MyLearningPage") },
+  { href: "/quran-knowledge", label: "قرآن", Icon: BookOpen, prefetch: () => import("@/views/QuranKnowledgeHubPage") },
+  { href: "/lessons", label: "علم", Icon: GraduationCap, prefetch: () => import("@/views/LessonsPage") },
+  { href: "/prayer-times", label: "عبادة", Icon: Clock, prefetch: () => import("@/views/PrayerTimesPage") },
+  { href: "/fiqh", label: "فقه", Icon: Scale, prefetch: () => import("@/views/FiqhPage") },
 ];
 
 export function isTabActive(location: string, href: string): boolean {
@@ -40,9 +35,6 @@ export function isTabActive(location: string, href: string): boolean {
       location === "/quran-hub" ||
       location.startsWith("/quran-hub/")
     );
-  }
-  if (href === "/memorize") {
-    return location === "/memorize" || location.startsWith("/memorize/");
   }
   if (href === "/quran-knowledge") {
     return (
@@ -57,34 +49,88 @@ export function isTabActive(location: string, href: string): boolean {
       location === "/quran/surah-stories" ||
       location.startsWith("/quran/surah-stories/") ||
       location.startsWith("/quran/makki") ||
-      location.startsWith("/quran/revelation")
-    );
-  }
-  if (href === "/memorization") {
-    return (
+      location.startsWith("/quran/revelation") ||
+      location === "/mushaf" ||
+      location.startsWith("/mushaf/") ||
+      location === "/memorize" ||
+      location.startsWith("/memorize/") ||
       location === "/memorization" ||
       location.startsWith("/memorization/") ||
       location === "/quran-memorization" ||
       location.startsWith("/quran-memorization/") ||
-      location.startsWith("/quran/memorization-plans")
+      location.startsWith("/quran/memorization-plans") ||
+      location.startsWith("/quran/recitation")
     );
   }
-  if (href === "/occasions-lessons") {
+  if (href === "/lessons") {
     return (
+      location === "/lessons" ||
+      location.startsWith("/lessons/") ||
+      location === "/learn" ||
+      location.startsWith("/learn/") ||
+      location.startsWith("/learning/") ||
+      location === "/hadith" ||
+      location.startsWith("/hadith/") ||
+      location === "/hadith-science" ||
+      location.startsWith("/hadith-science/") ||
+      location === "/fawaid" ||
+      location.startsWith("/fawaid/") ||
+      location === "/seerah" ||
+      location.startsWith("/seerah/") ||
+      location === "/prophets" ||
+      location.startsWith("/prophets/") ||
+      location === "/scholars" ||
+      location.startsWith("/scholars/") ||
+      location === "/my-learning" ||
+      location.startsWith("/my-learning/") ||
       location === "/occasions-lessons" ||
-      location === "/occasions" ||
-      location.startsWith("/occasions/") ||
-      location === "/calendar" ||
-      location.startsWith("/calendar/")
+      location.startsWith("/occasions-lessons/")
     );
   }
-  if (href === "/islamic-directory") {
+  if (href === "/prayer-times") {
     return (
-      location === "/islamic-directory" ||
-      location === "/institutions" ||
-      location.startsWith("/institutions/") ||
-      location === "/islamic-landmarks" ||
-      location.startsWith("/islamic-landmarks/")
+      location === "/prayer-times" ||
+      location.startsWith("/prayer-times/") ||
+      location === "/adhkar" ||
+      location.startsWith("/adhkar/") ||
+      location === "/tasbih" ||
+      location.startsWith("/tasbih/") ||
+      location === "/daily-wird" ||
+      location.startsWith("/daily-wird/") ||
+      location === "/duas" ||
+      location.startsWith("/duas/") ||
+      location === "/qibla" ||
+      location.startsWith("/qibla/") ||
+      location === "/salah-guide" ||
+      location.startsWith("/salah-guide/") ||
+      location === "/adhan-settings" ||
+      location.startsWith("/adhan-settings/")
+    );
+  }
+  if (href === "/fiqh") {
+    return (
+      location === "/fiqh" ||
+      location.startsWith("/fiqh/") ||
+      location === "/rulings" ||
+      location.startsWith("/rulings/") ||
+      location === "/fiqh-council" ||
+      location.startsWith("/fiqh-council/") ||
+      location === "/madhahib" ||
+      location.startsWith("/madhahib/") ||
+      location === "/mawarith" ||
+      location.startsWith("/mawarith/") ||
+      location === "/fiqh-qawaid" ||
+      location.startsWith("/fiqh-qawaid/") ||
+      location === "/qa" ||
+      location.startsWith("/qa/") ||
+      location === "/tahara" ||
+      location.startsWith("/tahara/") ||
+      location === "/zakat" ||
+      location.startsWith("/zakat/") ||
+      location === "/sawm" ||
+      location.startsWith("/sawm/") ||
+      location === "/hajj" ||
+      location.startsWith("/hajj/")
     );
   }
   return location === href || location.startsWith(href + "/");
