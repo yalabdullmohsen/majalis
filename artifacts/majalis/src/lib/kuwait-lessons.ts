@@ -15,7 +15,8 @@ import {
   isLessonInProgress,
   getKuwaitClock,
   isOccurrencePast,
-  parseTimeToMinutes,
+  LESSON_DURATION_MIN,
+  resolveLessonTimeWindow,
 } from "@/lib/lesson-time";
 import { canonicalizeLessonPublicId } from "@/lib/lesson-id-aliases";
 
@@ -493,7 +494,7 @@ export function getRelativeStatusLabel(lesson: KuwaitLessonRecord, archived = fa
   if (archived) return "منتهٍ";
 
   // المصدر الأول للحقيقة: نافذة اليوم الفعلية — لا تعتمد على nextOccurrenceMs وحده
-  // (كان يقفز +٧ أيام أثناء الحصة فيظهر «بعد ٦ أيام» تحت عنوان «جارٍ الآن»).
+  // (كان يقفز أثناء الحصة فيظهر «بعد ٦/٢٣ ساعة» بدل «جارٍ الآن»).
   if (lesson.day && isLessonInProgress(lesson.day, lesson.time)) {
     return "جارٍ الآن";
   }
@@ -501,20 +502,20 @@ export function getRelativeStatusLabel(lesson: KuwaitLessonRecord, archived = fa
   const now = Date.now();
   const diffMs = lesson.nextOccurrenceMs - now;
 
-  // تحقّق من انتهاء حصة اليوم فعليًا
+  // انتهى اليوم: بدأ موعده اليوم ولم تعد نافذة الحصة نشطة (ساعتان أو حتى الوقت المحدد)
   if (lesson.day) {
     const clock = getKuwaitClock();
     const targetDay = DAY_INDEX[lesson.day];
     if (targetDay !== undefined && targetDay === clock.weekday) {
-      const timeMin = parseTimeToMinutes(lesson.time);
-      if (timeMin !== null) {
-        const nowMin = clock.hour * 60 + clock.minute;
-        if (nowMin > timeMin + 90) return "انتهى اليوم";
+      const win = resolveLessonTimeWindow(lesson.time);
+      if (win && clock.hour * 60 + clock.minute >= win.startMin) {
+        return "انتهى اليوم";
       }
     }
   }
 
-  if (diffMs <= 0 && diffMs > -90 * 60_000) return "جارٍ الآن";
+  // احتياطي: إن كان nextOccurrence في الماضي ضمن نافذة الحصة الافتراضية
+  if (diffMs <= 0 && diffMs > -LESSON_DURATION_MIN * 60_000) return "جارٍ الآن";
 
   return formatRelativeTimeDetailed(lesson.nextOccurrenceMs, lesson.time);
 }
