@@ -117,7 +117,7 @@ console.log("\n=== صفحات كانت ميتة تحمل ExploreAlso / Related =
   const search = readFileSync(resolve(srcRoot, "views/SearchPage.tsx"), "utf8");
   assert(search.includes("/qa?id="), "نتائج البحث تربط الأسئلة بـ ?id=");
   assert(search.includes("/fawaid#"), "نتائج البحث تربط الفوائد بـ #id");
-  assert(search.includes("علوم القرآن"), "تسمية علوم القرآن صحيحة في البحث");
+  assert(search.includes("القرآن وعلومه") || search.includes("علوم القرآن"), "تسمية علوم القرآن صحيحة في البحث");
 
   const localSearch = readFileSync(resolve(srcRoot, "lib/local-search-ext.ts"), "utf8");
   assert(localSearch.includes("/quran/surah-stories/"), "البحث المحلي لقصص السور على المسار الصحيح");

@@ -193,7 +193,7 @@ export const FIQH_HUB_TOPICS: FiqhHubTopic[] = [
     emoji: "❓",
     title: "الأسئلة والأجوبة",
     desc: "الأسئلة والأجوبة الشرعية: مسائل يطرحها طلاب العلم مع إجابات موثّقة بالأدلة من القرآن والسنة والإجماع.",
-    href: "/quiz",
+    href: "/qa",
     color: "var(--mj-brand)",
     kind: "qa",
   },

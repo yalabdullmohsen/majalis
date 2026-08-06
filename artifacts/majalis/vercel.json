@@ -209,16 +209,6 @@
       "permanent": true
     },
     {
-      "source": "/qa",
-      "destination": "/quiz",
-      "permanent": true
-    },
-    {
-      "source": "/qa/:path*",
-      "destination": "/quiz",
-      "permanent": true
-    },
-    {
       "source": "/fatwa/:id",
       "destination": "/rulings/:id",
       "permanent": true
