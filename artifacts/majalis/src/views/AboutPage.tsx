@@ -73,7 +73,8 @@ export default function AboutPage() {
       <LegalSection title="مصادر المحتوى">
         <p>
           يُستمد المحتوى من مصادر شرعية معتبرة قدر الإمكان، مع العزو والمراجعة. التفصيل المنهجي
-          في صفحة <Link href="/about-us">من نحن</Link> وصفحة <Link href="/methodology">منهجية التوثيق</Link>.
+          في صفحة <Link href="/about-us">من نحن</Link> وصفحة <Link href="/methodology">منهجية التوثيق</Link>
+          وصفحة <Link href="/sources">المصادر والتراخيص</Link>.
         </p>
       </LegalSection>
 

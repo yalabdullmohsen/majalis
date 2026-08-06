@@ -111,6 +111,7 @@ export const SERVICES_CENTER_GROUPS: ServicesCenterGroup[] = [
       { id: "about-us", label: "من نحن", Icon: Info, action: { kind: "link", href: "/about-us" } },
       { id: "about-app", label: "حول التطبيق", Icon: Star, action: { kind: "link", href: "/about" } },
       { id: "methodology", label: "منهجية التوثيق", Icon: BookOpen, action: { kind: "link", href: "/methodology" } },
+      { id: "sources", label: "المصادر والتراخيص", keywords: ["ترخيص", "مصدر", "مرجع"], Icon: FileText, action: { kind: "link", href: "/sources" } },
       { id: "fatwa-policy", label: "سياسة الفتوى", Icon: Scale, action: { kind: "link", href: "/fatwa-policy" } },
       { id: "privacy", label: "سياسة الخصوصية", Icon: Shield, action: { kind: "link", href: "/privacy" } },
       { id: "terms", label: "شروط الاستخدام", Icon: FileText, action: { kind: "link", href: "/terms" } },

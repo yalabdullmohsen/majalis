@@ -80,9 +80,11 @@ const ASSERTIONS = [
   // ── أبطال الصفحات (2026-08): بطل الرئيسية بعد ضغط أعلى الطية يعرض
   // title + description + زر أساسي فقط (بلا headline ولا زر ghost).
   { route: "/", selector: ".page-hero-mj__title", mode: "light", min: 3 },
+  { route: "/", selector: ".page-hero-mj__headline", mode: "light", min: 4.5 },
   { route: "/", selector: ".page-hero-mj__desc", mode: "light", min: 4.5 },
   { route: "/", selector: ".page-hero-mj__actions .m2030-btn--primary", mode: "light", min: 4.5 },
   { route: "/", selector: ".page-hero-mj__title", mode: "dark", min: 3 },
+  { route: "/", selector: ".page-hero-mj__headline", mode: "dark", min: 4.5 },
   { route: "/", selector: ".page-hero-mj__desc", mode: "dark", min: 4.5 },
   { route: "/", selector: ".page-hero-mj__actions .m2030-btn--primary", mode: "dark", min: 4.5 },
   // .sq-title (عنوان SectionQuiz داخل .sq-header الداكن) كان يخسر نفس المعركة.

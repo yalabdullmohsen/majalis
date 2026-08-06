@@ -75,6 +75,7 @@ export default function AboutUsPage() {
         <p>
           لمعرفة ما يقدّمه التطبيق وأقسامه راجع صفحة <Link href="/about">حول التطبيق</Link>.
           ولسياسة البيانات راجع <Link href="/privacy">سياسة الخصوصية</Link>.
+          ولمصادر البيانات والتراخيص راجع <Link href="/sources">المصادر والتراخيص</Link>.
         </p>
         <InstagramAcademyLink />
       </LegalSection>

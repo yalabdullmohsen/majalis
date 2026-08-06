@@ -30,7 +30,6 @@ import { SectionErrorBoundary } from "@/components/ErrorBoundary";
 import { KnowledgeRelatedItems } from "@/components/knowledge/KnowledgeRelatedItems";
 import { ScholarFollowButton } from "@/components/ScholarFollowButton";
 import { RecommendationWidget } from "@/components/recommendations/RecommendationWidget";
-import { ContentMindMap } from "@/components/ContentMindMap";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { canonicalizeLessonPublicId } from "@/lib/lesson-id-aliases";
 import { getLessonsModule, type LessonDbRow } from "@/features/lessons";
@@ -357,17 +356,6 @@ export default function LessonDetailPage({
             </div>
           </div>
         )}
-
-        {/* الخريطة الذهنية للدرس */}
-        <div className="lesson-detail-body">
-          <ContentMindMap
-            title={unified.title}
-            category={unified.category}
-            keywords={keywords}
-            author={sheikhName}
-            type="lesson"
-          />
-        </div>
 
         {unified.linkedLessons && unified.linkedLessons.length > 0 && (
           <div className="lesson-detail-body">

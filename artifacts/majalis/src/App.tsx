@@ -66,6 +66,7 @@ const HomePage = lazy(() => import("@/views/HomePage"));
 const QuranEnginePage = lazy(() => import("@/views/QuranEnginePage"));
 const AboutPage = lazy(() => import("@/views/AboutPage"));
 const AboutUsPage = lazy(() => import("@/views/AboutUsPage"));
+const SourcesLicensesPage = lazy(() => import("@/views/SourcesLicensesPage"));
 const SiteMapPage = lazy(() => import("@/views/SiteMapPage"));
 const PrivacyPage = lazy(() => import("@/views/PrivacyPage"));
 const TermsPage = lazy(() => import("@/views/TermsPage"));
@@ -516,6 +517,9 @@ function Router() {
       <Route path="/about-us"><SafeLazyRoute component={AboutUsPage} /></Route>
       <Route path="/man-nahnu"><Redirect to="/about-us" /></Route>
       <Route path="/about"><SafeLazyRoute component={AboutPage} /></Route>
+      <Route path="/sources"><SafeLazyRoute component={SourcesLicensesPage} /></Route>
+      <Route path="/sources-licenses"><Redirect to="/sources" /></Route>
+      <Route path="/licenses"><Redirect to="/sources" /></Route>
       <Route path="/methodology"><SafeLazyRoute component={MethodologyPage} /></Route>
       <Route path="/fatwa-policy"><SafeLazyRoute component={FatwaPolicyPage} /></Route>
       <Route path="/sitemap"><SafeLazyRoute component={SiteMapPage} /></Route>
