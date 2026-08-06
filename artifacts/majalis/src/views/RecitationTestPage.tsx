@@ -68,7 +68,7 @@ const MODE_LABELS: Record<RecitationMode, { label: string; hint: string }> = {
 const ALERT_LABELS: Record<AlertLevel, string> = { gentle: "لطيف", medium: "متوسط", immediate: "فوري", teacher: "معلّم حقيقي" };
 
 /**
- * موافقة مخصَّصة لميزة "اختبار التسميع بالذكاء الاصطناعي" تحديدًا — مفتاح
+ * موافقة مخصَّصة لميزة «التلاوة» تحديدًا — مفتاح
  * localStorage منفصل عمدًا عن recitation-test-consent-v1 (لوحة "استكشف
  * الآية" السريعة في RecitationTestPanel.tsx): هذه الميزة تحفظ نتائج
  * الجلسة (دقة، أخطاء، مدة) في قاعدة البيانات لحساب مسجَّل الدخول وتغذّي
@@ -209,8 +209,8 @@ function RecitationTestPageInner() {
   useEffect(() => {
     applyPageSeo({
       path: "/quran/recitation-test-ai",
-      title: "اختبار التسميع بالذكاء الاصطناعي | المجلس العلمي",
-      description: "سمّع من حفظك واستمع التطبيق لتلاوتك لحظيًا، مع كشف تدريجي للمصحف وتقرير تفصيلي. محتوى معتمد في منهج المجلس العلمي",
+      title: "التلاوة | المجلس العلمي",
+      description: "اختبر تلاوتك من حفظك؛ يستمع التطبيق لحظيًا مع كشف تدريجي للمصحف وتقرير تفصيلي. محتوى معتمد في منهج المجلس العلمي",
     });
   }, []);
 
@@ -1104,7 +1104,7 @@ function RecitationTestPageInner() {
         <div className="rai-consent-screen">
           <h1 className="rai-header__title">قبل أن نبدأ</h1>
           <p className="rai-consent-screen__intro">
-            "اختبار التسميع بالذكاء الاصطناعي" يستمع لتلاوتك عبر ميكروفون جهازك
+            «التلاوة» يستمع لتلاوتك عبر ميكروفون جهازك
             ليقارنها بنص الآيات فور نطقها. إليك بالتحديد ما يحدث ببياناتك:
           </p>
           <ul className="rai-consent-screen__list">
@@ -1146,7 +1146,7 @@ function RecitationTestPageInner() {
       <div className="rai-page">
         <div className="rai-header">
           <h1 className="rai-header__title">
-            اختبار التسميع بالذكاء الاصطناعي
+            التلاوة
             <span className="rai-experimental-badge">نسخة تجريبية</span>
           </h1>
         </div>
@@ -1171,10 +1171,10 @@ function RecitationTestPageInner() {
       <div className="rai-page">
         <div className="rai-header">
           <h1 className="rai-header__title">
-            اختبار التسميع بالذكاء الاصطناعي
+            التلاوة
             <span className="rai-experimental-badge">نسخة تجريبية</span>
           </h1>
-          <p className="rai-header__sub">سمّع من حفظك، واستمع لتلاوتك لحظيًا، والمصحف يكشف الآية فور نطقها</p>
+          <p className="rai-header__sub">اختبر تلاوتك من حفظك؛ يستمع التطبيق لحظيًا ويكشف المصحف الآية فور نطقها</p>
           <p className="rai-header__sub" style={{ fontSize: ".78rem", opacity: .85 }}>
             تحليل الحفظ الأساسي (كلمة صحيحة/خاطئة/ناقصة/زائدة) يعمل فعليًا. التحليل الصوتي الكامل
             (خصوصًا تفاصيل التجويد الدقيقة) لا يزال قيد التطوير.

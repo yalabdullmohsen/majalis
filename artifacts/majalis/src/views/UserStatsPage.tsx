@@ -142,7 +142,7 @@ function BadgeGrid({ earned }: { earned: Set<string> }) {
     tasbih: "الذكر والتسبيح",
     path: "المسارات الشرعية",
     content: "المحتوى المحفوظ",
-    recitation: "اختبار التسميع بالذكاء الاصطناعي",
+    recitation: "التلاوة",
   };
 
   const byCategory = BADGE_DEFS.reduce<Record<string, typeof BADGE_DEFS>>((acc, b) => {

@@ -78,7 +78,7 @@ export default function QuranMemorizationPlansPage() {
         <p className="qmp-kind-note">كرّر المقطع حتى يستقر، ثم راجع مقدار الأمس وآخر مراجعة أسبوعية. إن فاتك يوم فتابع من هنا؛ لا يتراكم عليك مقدار عقابي.</p>
         <div className="qmp-actions">
           {!finished && <button type="button" className="ds-btn ds-btn--primary" onClick={() => setSaved((state) => ({ ...state, completed: Math.min(plan.sessions, state.completed + 1) }))}><Check size={17} /> أتممت الجلسة</button>}
-          <Link href="/quran/recitation-test-ai" className="ds-btn ds-btn--secondary"><Mic size={17} /> اختبر تسميعك</Link>
+          <Link href="/quran/recitation-test-ai" className="ds-btn ds-btn--secondary"><Mic size={17} /> اختبر تلاوتك</Link>
           {saved.completed > 0 && <button type="button" className="ds-btn ds-btn--ghost" onClick={() => setSaved((state) => ({ ...state, completed: Math.max(0, state.completed - 1) }))}>تراجع عن آخر تسجيل</button>}
         </div>
       </section>
