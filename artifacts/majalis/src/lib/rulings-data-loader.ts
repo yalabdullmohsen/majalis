@@ -49,9 +49,17 @@ export async function loadAllRulingsFromChunks(): Promise<ShariaRulingExtended[]
   );
 
   const flat = chunks.flat();
+  const allowed = flat.filter((item) => {
+    const key = String(item.external_key || item.id || "");
+    if (key.startsWith("qa-ruling") || key.startsWith("qa-")) return false;
+    const title = String(item.title || "").trim();
+    if (/[؟?]\s*$/u.test(title)) return false;
+    if (/^(هل|كيف|متى|أين|لماذا|كم)\b/u.test(title)) return false;
+    return true;
+  });
   allChunksCache = CONTENT_CURRICULUM_ENABLED
-    ? flat
-    : flat.filter((item) => !isCurriculumRuling(item));
+    ? allowed
+    : allowed.filter((item) => !isCurriculumRuling(item));
   return allChunksCache;
 }
 

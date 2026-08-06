@@ -31,7 +31,7 @@ export function hrefRulings(id?: string | null): string {
 
 export function hrefQa(id?: string | null): string {
   const t = idOrEmpty(id);
-  return t ? `/qa?id=${encodeURIComponent(t)}` : "/qa";
+  return t ? `/quiz?id=${encodeURIComponent(t)}` : "/quiz";
 }
 
 export function hrefFawaid(id?: string | null): string {

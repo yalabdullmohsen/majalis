@@ -34,6 +34,15 @@ export function validateRuling(
   if (!ruling.title?.trim()) errors.push("العنوان مطلوب");
   if (!ruling.body?.trim()) errors.push("التفصيل الكامل مطلوب");
   if (!ruling.category?.trim()) errors.push("التصنيف مطلوب");
+
+  const contentType = String(ruling.content_type || "ruling");
+  if (["quizQuestion", "educationalQA"].includes(contentType)) {
+    errors.push("لا يُنشر سؤال مسابقة أو تعليمي تحت مسار الأحكام");
+  }
+  const title = ruling.title || "";
+  if (/[؟?]\s*$/u.test(title.trim()) || /^(هل|كيف|متى|أين|لماذا|كم)\b/u.test(title.trim())) {
+    errors.push("عنوان يشبه سؤال مسابقة — انقله إلى بنك اللعبة");
+  }
   if (!hasEvidence(ruling) && !hasReference(ruling)) {
     errors.push("يجب توثيق الدليل أو المرجع");
   }

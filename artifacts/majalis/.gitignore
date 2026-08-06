@@ -12,3 +12,4 @@ playwright-report/
 supabase/.temp/
 .env.vercel-production
 .tmp-seed-extract/
+.backup/

@@ -7,6 +7,9 @@ import type { CategoryStat, RulingListOptions, RulingListResult, ShariaRulingExt
 import { CONTENT_CURRICULUM_ENABLED, isCurriculumRuling } from "./content-flags";
 import { supabase, isSupabaseConfigured } from "./supabase";
 import { logSupabaseError, formatSupabaseError } from "./supabase-config";
+import { isAllowedOnRulingsRoute } from "./rulings-content-type";
+import { evaluateRulingRecord, type RulingResolveResult } from "./rulings-resolver";
+import { loadAllRulingsFromChunks, RULINGS_ENCYCLOPEDIA_SEED } from "./rulings-data-loader";
 
 const isConfigured = isSupabaseConfigured();
 
@@ -93,6 +96,7 @@ export async function getRulingsEncyclopedia(opts?: RulingListOptions): Promise<
     if (!CONTENT_CURRICULUM_ENABLED) {
       rows = rows.filter((r) => !isCurriculumRuling(r));
     }
+    rows = rows.filter((r) => isAllowedOnRulingsRoute(r));
     const total = rows.length > 0 && rows[0].total_count != null ? Number(rows[0].total_count) : rows.length;
 
     return { data: rows, total: total || rows.length, page, limit, usingSeed: false };
@@ -102,46 +106,91 @@ export async function getRulingsEncyclopedia(opts?: RulingListOptions): Promise<
   }
 }
 
-export async function getRulingById(id: string): Promise<{ data: ShariaRulingExtended | null; usingSeed: boolean; dbError?: string }> {
-  if (!isConfigured) return { data: null, usingSeed: false, dbError: "supabase_not_configured" };
-
-  const db = await checkRulingsDbReady();
-  if (!db.ready) return { data: null, usingSeed: false, dbError: db.reason };
+async function findRulingInLocalSeed(id: string): Promise<ShariaRulingExtended | null> {
+  const fromInline = RULINGS_ENCYCLOPEDIA_SEED.find(
+    (r) => r.id === id || r.external_key === id || r.slug === id,
+  );
+  if (fromInline && isAllowedOnRulingsRoute(fromInline)) return fromInline;
 
   try {
-    const byId = await supabase
-      .from("sharia_rulings")
-      .select("*")
-      .eq("id", id)
-      .eq("status", "approved")
-      .maybeSingle();
-    if (byId.data) {
-      const row = byId.data as ShariaRulingExtended;
-      if (!CONTENT_CURRICULUM_ENABLED && isCurriculumRuling(row)) {
-        return { data: null, usingSeed: false };
-      }
-      return { data: row, usingSeed: false };
-    }
-
-    const byKey = await supabase
-      .from("sharia_rulings")
-      .select("*")
-      .eq("external_key", id)
-      .eq("status", "approved")
-      .maybeSingle();
-    if (byKey.data) {
-      const row = byKey.data as ShariaRulingExtended;
-      if (!CONTENT_CURRICULUM_ENABLED && isCurriculumRuling(row)) {
-        return { data: null, usingSeed: false };
-      }
-      return { data: row, usingSeed: false };
-    }
-
-    return { data: null, usingSeed: false };
-  } catch (err) {
-    logSupabaseError("getRulingById", err, { id });
-    return { data: null, usingSeed: false, dbError: formatSupabaseError(err) };
+    const all = await loadAllRulingsFromChunks();
+    const hit = all.find((r) => r.id === id || r.external_key === id || r.slug === id);
+    if (hit && isAllowedOnRulingsRoute(hit)) return hit;
+  } catch {
+    /* ignore */
   }
+  return null;
+}
+
+export async function resolveRulingByIdentifier(id: string): Promise<RulingResolveResult & { usingSeed: boolean; dbError?: string }> {
+  const trimmed = String(id || "").trim();
+  const base = evaluateRulingRecord(trimmed, null);
+  if (base.status === "invalidType") return { ...base, usingSeed: false };
+
+  if (isConfigured) {
+    const db = await checkRulingsDbReady();
+    if (db.ready) {
+      try {
+        const byId = await supabase
+          .from("sharia_rulings")
+          .select("*")
+          .eq("id", trimmed)
+          .eq("status", "approved")
+          .maybeSingle();
+        if (byId.data) {
+          const row = byId.data as ShariaRulingExtended;
+          if (!CONTENT_CURRICULUM_ENABLED && isCurriculumRuling(row)) {
+            return { ...evaluateRulingRecord(trimmed, null), usingSeed: false };
+          }
+          return { ...evaluateRulingRecord(trimmed, row), usingSeed: false };
+        }
+
+        const byKey = await supabase
+          .from("sharia_rulings")
+          .select("*")
+          .eq("external_key", trimmed)
+          .eq("status", "approved")
+          .maybeSingle();
+        if (byKey.data) {
+          const row = byKey.data as ShariaRulingExtended;
+          if (!CONTENT_CURRICULUM_ENABLED && isCurriculumRuling(row)) {
+            return { ...evaluateRulingRecord(trimmed, null), usingSeed: false };
+          }
+          return { ...evaluateRulingRecord(trimmed, row), usingSeed: false };
+        }
+
+        const bySlug = await supabase
+          .from("sharia_rulings")
+          .select("*")
+          .eq("slug", trimmed)
+          .eq("status", "approved")
+          .maybeSingle();
+        if (bySlug.data) {
+          const row = bySlug.data as ShariaRulingExtended;
+          if (!CONTENT_CURRICULUM_ENABLED && isCurriculumRuling(row)) {
+            return { ...evaluateRulingRecord(trimmed, null), usingSeed: false };
+          }
+          return { ...evaluateRulingRecord(trimmed, row), usingSeed: false };
+        }
+      } catch (err) {
+        logSupabaseError("resolveRulingByIdentifier", err, { id: trimmed });
+        const local = await findRulingInLocalSeed(trimmed);
+        if (local) return { ...evaluateRulingRecord(trimmed, local), usingSeed: true, dbError: formatSupabaseError(err) };
+        return { ...evaluateRulingRecord(trimmed, null), usingSeed: false, dbError: formatSupabaseError(err) };
+      }
+    }
+  }
+
+  const local = await findRulingInLocalSeed(trimmed);
+  return { ...evaluateRulingRecord(trimmed, local), usingSeed: Boolean(local) };
+}
+
+export async function getRulingById(id: string): Promise<{ data: ShariaRulingExtended | null; usingSeed: boolean; dbError?: string }> {
+  const resolved = await resolveRulingByIdentifier(id);
+  if (resolved.status === "found" && resolved.data) {
+    return { data: resolved.data, usingSeed: resolved.usingSeed, dbError: resolved.dbError };
+  }
+  return { data: null, usingSeed: resolved.usingSeed, dbError: resolved.dbError || resolved.reason };
 }
 
 export async function getRelatedRulingsEncyclopedia(

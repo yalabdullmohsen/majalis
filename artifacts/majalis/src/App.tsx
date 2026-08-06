@@ -177,7 +177,6 @@ const FiqhTopicPage = lazy(() => import("@/views/FiqhTopicPage"));
 const SeerahPage = lazy(() => import("@/views/SeerahPage"));
 const RulingsPage = lazy(() => import("@/views/RulingsPage"));
 const RulingDetailPage = lazy(() => import("@/views/RulingDetailPage"));
-const QaPage = lazy(() => import("@/views/QaPage"));
 const _UpdatesPage = lazy(() => import("@/views/UpdatesPage"));
 const AutoContentDetailPage = lazy(() => import("@/views/AutoContentDetailPage"));
 const _KnowledgeGraphPage = lazy(() => import("@/views/KnowledgeGraphPage"));
@@ -563,7 +562,8 @@ function Router() {
       <Route path="/prophets"><SafeLazyRoute component={ProphetStoriesPage} /></Route>
       <Route path="/islamic-stories"><Redirect to="/stories" /></Route>
       <Route path="/adhkar"><SafeLazyRoute component={AdhkarPage} /></Route>
-      <Route path="/qa"><SafeLazyRoute component={QaPage} /></Route>
+      <Route path="/qa"><Redirect to="/quiz" /></Route>
+      <Route path="/qa/:path*"><Redirect to="/quiz" /></Route>
       <Route path="/quiz"><SafeLazyRoute component={QuizPage} /></Route>
       <Route path="/knowledge-graph"><Redirect to="/" /></Route>
       <Route path="/knowledge-map"><Redirect to="/" /></Route>
@@ -665,7 +665,7 @@ function Router() {
       </Route>
       {/* عُطِّلت 2026-07-23: توجيه دائم إلى الأسئلة والأجوبة، وvercel.json يوجّه
           الطلبات المباشرة على مستوى الخادم بنفس الوجهة. */}
-      <Route path="/scholarly-research"><Redirect to="/qa" /></Route>
+      <Route path="/scholarly-research"><Redirect to="/quiz" /></Route>
       <Route path="/academic-research/submit"><SafeLazyRoute component={ResearchSubmitPage} /></Route>
       <Route path="/academic-research/assistant"><SafeLazyRoute component={ResearchAssistantPage} /></Route>
       <Route path="/academic-research/:id"><SafeLazyRoute component={ResearchDetailPage} /></Route>
