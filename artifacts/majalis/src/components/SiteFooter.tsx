@@ -1,156 +1,127 @@
 import { useEffect, useId, useState } from "react";
-import { createPortal } from "react-dom";
 import { Link } from "wouter";
+import { ChevronDown } from "lucide-react";
+import { CONTACT_EMAIL } from "@/lib/site-config";
 import {
-  ChevronUp,
-  GraduationCap,
-  Handshake,
-  Mail,
-  Route,
-  Scale,
-  Shield,
-  Trash2,
-  X,
-} from "lucide-react";
-import { CONTACT_EMAIL, mailtoWithSubject } from "@/lib/site-config";
+  SITE_FOOTER_GROUPS,
+  SITE_FOOTER_TAGLINE,
+  type FooterGroup,
+} from "@/lib/site-footer-nav";
 
-type FooterMenuItem = {
-  href: string;
-  label: string;
-  Icon: typeof Mail;
-  external?: boolean;
-};
-
-/** تذييل قانوني/تواصل — ثقة + مبتدئ + قانوني (R4 اكتشاف). */
-const FOOTER_MENU_ITEMS: FooterMenuItem[] = [
-  { href: "/start-here", label: "ابدأ من هنا", Icon: Route },
-  { href: "/learning/paths", label: "المسارات العلمية", Icon: GraduationCap },
-  { href: "/about-us", label: "من نحن", Icon: Scale },
-  { href: "/about", label: "حول التطبيق", Icon: Scale },
-  { href: "/methodology", label: "المنهجية", Icon: Scale },
-  { href: "/fatwa-policy", label: "سياسة الفتوى", Icon: Scale },
-  { href: "/sources", label: "المصادر والتراخيص", Icon: Scale },
-  { href: "/privacy", label: "الخصوصية", Icon: Shield },
-  { href: "/terms", label: "الشروط", Icon: Scale },
-  { href: "/account-deletion", label: "حذف الحساب", Icon: Trash2 },
-  { href: "/contact", label: "التواصل", Icon: Mail },
-  {
-    href: mailtoWithSubject("عرض رعاية — المجلس العلمي"),
-    label: "نقبل بعروض الرعاية",
-    Icon: Handshake,
-    external: true,
-  },
-];
-
-function FooterAboutSheet({
+function FooterGroupBlock({
+  group,
   open,
-  onClose,
-  titleId,
+  onToggle,
+  mobile,
 }: {
+  group: FooterGroup;
   open: boolean;
-  onClose: () => void;
-  titleId: string;
+  onToggle: () => void;
+  mobile: boolean;
 }) {
-  useEffect(() => {
-    if (!open) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
-    };
-    document.addEventListener("keydown", onKey);
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = prev;
-    };
-  }, [open, onClose]);
+  const panelId = `footer-group-${group.id}`;
+  const titleId = `${panelId}-title`;
 
-  if (!open || typeof document === "undefined") return null;
-
-  return createPortal(
-    // نقر الخلفية للإغلاق مصحوب بمعالج Escape وزر إغلاق ظاهر.
-    /* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions */
-    <div className="footer-about-overlay" role="presentation" onClick={onClose}>
-      <div
-        className="footer-about-sheet"
-        role="dialog"
-        aria-modal="true"
-        aria-labelledby={titleId}
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="footer-about-sheet__handle" aria-hidden="true" />
-        <div className="footer-about-sheet__head">
-          <h2 id={titleId}>عن المجلس والتواصل</h2>
-          <button
-            type="button"
-            className="footer-about-sheet__close"
-            onClick={onClose}
-            aria-label="إغلاق"
-          >
-            <X size={18} strokeWidth={1.8} aria-hidden="true" />
-          </button>
-        </div>
-        <nav className="footer-about-sheet__nav" aria-label="روابط المجلس">
-          {FOOTER_MENU_ITEMS.map(({ href, label, Icon, external }) =>
-            external ? (
-              <a
-                key={href}
-                href={href}
-                className="footer-about-sheet__item footer-about-sheet__item--sponsor"
-                onClick={onClose}
-              >
-                <span className="footer-about-sheet__icon" aria-hidden="true">
-                  <Icon size={18} strokeWidth={1.8} />
-                </span>
-                <span>{label}</span>
-              </a>
-            ) : (
-              <Link
-                key={href}
-                href={href}
-                className="footer-about-sheet__item"
-                onClick={onClose}
-              >
-                <span className="footer-about-sheet__icon" aria-hidden="true">
-                  <Icon size={18} strokeWidth={1.8} />
-                </span>
-                <span>{label}</span>
-              </Link>
-            ),
-          )}
+  if (!mobile) {
+    return (
+      <div className="site-footer-group">
+        <h2 className="site-footer-group__title" id={titleId}>
+          {group.title}
+        </h2>
+        <nav aria-labelledby={titleId}>
+          {group.links.map((l) => (
+            <Link key={l.href + l.label} href={l.href} className="site-footer-link">
+              {l.label}
+            </Link>
+          ))}
         </nav>
-        <p className="footer-about-sheet__email">
-          <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
-        </p>
       </div>
-    </div>,
-    document.body,
+    );
+  }
+
+  return (
+    <div className="site-footer-group site-footer-group--accordion">
+      <button
+        type="button"
+        className="site-footer-accordion__btn"
+        aria-expanded={open}
+        aria-controls={panelId}
+        onClick={onToggle}
+      >
+        <span>{group.title}</span>
+        <ChevronDown
+          size={18}
+          strokeWidth={2}
+          aria-hidden="true"
+          className={open ? "site-footer-accordion__chevron is-open" : "site-footer-accordion__chevron"}
+        />
+      </button>
+      <nav
+        id={panelId}
+        className="site-footer-accordion__panel"
+        hidden={!open}
+        aria-label={group.title}
+      >
+        {group.links.map((l) => (
+          <Link key={l.href + l.label} href={l.href} className="site-footer-link">
+            {l.label}
+          </Link>
+        ))}
+      </nav>
+    </div>
   );
 }
 
 export function SiteFooter() {
-  const [open, setOpen] = useState(false);
-  const titleId = useId();
+  const year = new Date().getFullYear();
+  const labelId = useId();
+  const [isMobile, setIsMobile] = useState(false);
+  const [openId, setOpenId] = useState<string | null>(SITE_FOOTER_GROUPS[0]?.id ?? null);
 
   useEffect(() => {
     void import("@/styles/components/site-footer-menu.css");
   }, []);
 
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    const apply = () => setIsMobile(mq.matches);
+    apply();
+    mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
+  }, []);
+
   return (
-    <footer className="site-footer site-footer--minimal" dir="rtl" aria-label="تذييل موقع المجلس العلمي">
-      <div className="site-footer-inner site-footer-inner--minimal">
-        <button
-          type="button"
-          className="site-footer-menu-btn"
-          onClick={() => setOpen(true)}
-          aria-haspopup="dialog"
-          aria-expanded={open}
-        >
-          <span>عن المجلس والتواصل</span>
-          <ChevronUp size={16} strokeWidth={2} aria-hidden="true" />
-        </button>
+    <footer
+      className="site-footer site-footer--global"
+      dir="rtl"
+      aria-labelledby={labelId}
+    >
+      <div className="site-footer-inner site-footer-inner--global">
+        <p id={labelId} className="sr-only">
+          تذييل موقع المجلس العلمي
+        </p>
+
+        <div className="site-footer-groups">
+          {SITE_FOOTER_GROUPS.map((group) => (
+            <FooterGroupBlock
+              key={group.id}
+              group={group}
+              mobile={isMobile}
+              open={openId === group.id}
+              onToggle={() => setOpenId((cur) => (cur === group.id ? null : group.id))}
+            />
+          ))}
+        </div>
+
+        <div className="site-footer-bottom">
+          <p className="site-footer-copy">
+            © {year} المجلس العلمي — {SITE_FOOTER_TAGLINE}
+          </p>
+          <p className="site-footer-email">
+            <a href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
+          </p>
+        </div>
       </div>
-      <FooterAboutSheet open={open} onClose={() => setOpen(false)} titleId={titleId} />
     </footer>
   );
 }

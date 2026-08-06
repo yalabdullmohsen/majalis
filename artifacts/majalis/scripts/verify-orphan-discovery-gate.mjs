@@ -41,6 +41,7 @@ const ENTRY_FILES = [
   "components/SideNavDrawer.tsx",
   "lib/nav-map.ts",
   "lib/services-center-nav.ts",
+  "lib/site-footer-nav.ts",
 ];
 
 const ALLOWLIST_PATH = join(appRoot, "scripts/orphan-discovery-allowlist.json");
