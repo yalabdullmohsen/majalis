@@ -79,6 +79,9 @@ jobs:
       - name: Methodology prerender depth gate (R4)
         run: pnpm --filter @workspace/majalis run verify:methodology-prerender
 
+      - name: Related-links dedupe gate (R4)
+        run: pnpm --filter @workspace/majalis run verify:related-dedupe
+
       - name: Cron single-response gate
         run: pnpm run verify:single-response
 
