@@ -814,6 +814,12 @@
   border-radius: var(--radius-md, 0.65rem);
   background: var(--color-surface-muted, #F7F6F2);
 }
+
+@media (max-width: 640px) {
+  .hadith-page--stacked .hadith-access-bar--fold {
+    display: none;
+  }
+}
 .hadith-access-bar__row {
   display: flex;
   flex-wrap: wrap;

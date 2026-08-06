@@ -37,8 +37,14 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: var(--ds-space-3);
-  margin-bottom: 1rem;
+  gap: 0.5rem;
+  margin-bottom: 0.65rem;
+}
+
+.lessons-page-v2 .page-hero-mj,
+.lessons-page-v2 .mj-page-head {
+  padding-block: 0.5rem 0.65rem;
+  margin-bottom: 0.5rem;
 }
 
 .lessons-v2-filter-toggle {

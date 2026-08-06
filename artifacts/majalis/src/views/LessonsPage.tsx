@@ -497,6 +497,7 @@ export default function LessonsPage({
       <PageHeader
         title="الدروس"
         subtitle="مرتّبة حسب أقرب موعد"
+        showBack={false}
       />
 
       <div className="lessons-v2-toolbar">

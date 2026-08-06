@@ -157,27 +157,11 @@ export default function HomePage() {
       <PageHero
         className="m2030-hero home-page-hero"
         title="المجلس العلمي"
-        headline="منصة علم شرعي بمعايير حديثة"
-        description={
-          <>
-            {dailyCtx.greeting}
-            {dailyCtx.subGreeting ? ` — ${dailyCtx.subGreeting}` : ""}
-          </>
-        }
+        description={dailyCtx.greeting}
         actions={
-          <>
-            <Link href={continueHref} className="mj-btn m2030-btn m2030-btn--primary">
-              ابدأ التصفح
-            </Link>
-            <button
-              type="button"
-              className="mj-btn mj-btn--ghost m2030-btn m2030-btn--ghost"
-              onClick={() => window.dispatchEvent(new CustomEvent("global-search-open"))}
-              aria-label="ابحث في المحتوى"
-            >
-              ابحث في المحتوى
-            </button>
-          </>
+          <Link href={continueHref} className="mj-btn m2030-btn m2030-btn--primary">
+            ابدأ التصفح
+          </Link>
         }
       />
 
@@ -200,6 +184,33 @@ export default function HomePage() {
         </section>
       )}
 
+      {visibleWidgets.includes("lessons") && (
+        <section className="m2030-band m2030-band--sage" aria-label="دروس اليوم">
+          <div className="m2030-band__head">
+            <div>
+              <h2 className="m2030-band__title">اليوم في المنصة</h2>
+              <p className="m2030-band__sub">دروس ودورات قادمة</p>
+            </div>
+            <Link href="/lessons" className="m2030-band__link">كل الدروس</Link>
+          </div>
+          <SafeHomeSection name="lessons">
+            <HomeUpcomingLessons />
+            <HomeUpcomingCourses />
+          </SafeHomeSection>
+        </section>
+      )}
+
+      <section className="m2030-band" aria-label="أكمل من حيث توقفت">
+        <div className="m2030-band__head">
+          <h2 className="m2030-band__title">تابع من حيث توقفت</h2>
+        </div>
+        <div className="m2030-panel mj-card mj-card--raised">
+          <SafeHomeSection name="continue">
+            <HomeContinueWidget />
+          </SafeHomeSection>
+        </div>
+      </section>
+
       <section className="m2030-band m2030-band--sage" aria-label="إجراءات سريعة">
         <div className="m2030-band__head">
           <div>
@@ -219,33 +230,6 @@ export default function HomePage() {
           ))}
         </div>
       </section>
-
-      <section className="m2030-band" aria-label="أكمل من حيث توقفت">
-        <div className="m2030-band__head">
-          <h2 className="m2030-band__title">تابع من حيث توقفت</h2>
-        </div>
-        <div className="m2030-panel mj-card mj-card--raised">
-          <SafeHomeSection name="continue">
-            <HomeContinueWidget />
-          </SafeHomeSection>
-        </div>
-      </section>
-
-      {visibleWidgets.includes("lessons") && (
-        <section className="m2030-band m2030-band--sage" aria-label="دروس اليوم">
-          <div className="m2030-band__head">
-            <div>
-              <h2 className="m2030-band__title">اليوم في المنصة</h2>
-              <p className="m2030-band__sub">دروس ودورات قادمة</p>
-            </div>
-            <Link href="/lessons" className="m2030-band__link">كل الدروس</Link>
-          </div>
-          <SafeHomeSection name="lessons">
-            <HomeUpcomingLessons />
-            <HomeUpcomingCourses />
-          </SafeHomeSection>
-        </section>
-      )}
 
       <section className="m2030-band" aria-label="أقسام علمية">
         <div className="m2030-band__head">

@@ -123,6 +123,13 @@ html[data-theme="dark"] .fqh-hub-card__desc {
    FQP. FiqhPage
    ══════════════════════════════════════════════ */
 .fqp-root { min-height: 100svh; background: var(--majalis-parchment); direction: rtl; overflow-x: hidden; max-width: 100%; box-sizing: border-box; }
+.fqp-root .page-hero-mj {
+  padding: 0.5rem 0.85rem 0.65rem;
+  margin-bottom: 0.5rem;
+}
+.fqp-root .hub-card-grid {
+  margin-top: 0;
+}
 .fqp-tab-content { padding: 1.25rem 0 3rem; max-width: 100%; box-sizing: border-box; }
 
 .fiqh-section-divider {

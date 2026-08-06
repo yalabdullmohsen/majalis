@@ -1004,14 +1004,8 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
 
   const inner = (
     <>
-      {embedded ? (
-        <div className="hadith-section-header">
-          <span className="hadith-section-eyebrow">{meta.eyebrow}</span>
-          <h2 className="hadith-section-title">{meta.title}</h2>
-          <p className="hadith-section-subtitle">{meta.subtitle}</p>
-        </div>
-      ) : (
-        <PageHeader eyebrow={meta.eyebrow} title={meta.title} subtitle={meta.subtitle} />
+      {!embedded && (
+        <PageHeader eyebrow={meta.eyebrow} title={meta.title} subtitle={meta.subtitle} showBack={false} />
       )}
 
       <div className="ds-section__head">
@@ -1043,16 +1037,20 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
         <FilterToggle expanded={filtersOpen} onClick={() => setFiltersOpen(true)} label="بحث وتصفية" />
       </div>
 
-      <nav className="hadith-class-switch" aria-label="أقسام الحديث">
-        <Link href="/hadith/sahih" className={`hadith-class-switch__link${authenticityClass === "sahih" ? " is-active" : ""}`}>الصحيح</Link>
-        <Link href="/hadith/mawdu" className={`hadith-class-switch__link${authenticityClass === "mawdu" ? " is-active" : ""}`}>الموضوع</Link>
-        <Link href="/hadith/daif" className={`hadith-class-switch__link${authenticityClass === "daif" ? " is-active" : ""}`}>الضعيف</Link>
-        <Link href="/hadith/books" className="hadith-class-switch__link hadith-class-switch__link--books">الكتب كاملة</Link>
-      </nav>
+      {!embedded && (
+        <nav className="hadith-class-switch" aria-label="أقسام الحديث">
+          <Link href="/hadith/sahih" className={`hadith-class-switch__link${authenticityClass === "sahih" ? " is-active" : ""}`}>الصحيح</Link>
+          <Link href="/hadith/mawdu" className={`hadith-class-switch__link${authenticityClass === "mawdu" ? " is-active" : ""}`}>الموضوع</Link>
+          <Link href="/hadith/daif" className={`hadith-class-switch__link${authenticityClass === "daif" ? " is-active" : ""}`}>الضعيف</Link>
+          <Link href="/hadith/books" className="hadith-class-switch__link hadith-class-switch__link--books">الكتب كاملة</Link>
+        </nav>
+      )}
 
-      {authenticityClass === "sahih" && <HadithStatsPanel compact className="hadith-stats-inline" />}
+      {!embedded && authenticityClass === "sahih" && (
+        <HadithStatsPanel compact className="hadith-stats-inline" />
+      )}
 
-      <div className="hadith-access-bar" aria-label="بحث في الأحاديث">
+      <div className="hadith-access-bar hadith-access-bar--fold" aria-label="بحث في الأحاديث">
         <div className="hadith-access-bar__row">
           <label className="hadith-access-bar__label" htmlFor={`hadith-q-${authenticityClass}`}>بحث</label>
           <input
@@ -1248,6 +1246,7 @@ export default function HadithPage() {
         eyebrow="السنة النبوية الشريفة"
         title="الأحاديث النبوية"
         subtitle="الصحيح ثم الموضوع ثم الضعيف."
+        showBack={false}
       />
       <nav className="hadith-class-switch" aria-label="أقسام الحديث">
         <Link href="/hadith/sahih" className="hadith-class-switch__link is-active">الصحيح</Link>
