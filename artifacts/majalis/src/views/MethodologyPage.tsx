@@ -140,6 +140,10 @@ export default function MethodologyPage() {
         <p className="mtd-head__sub">
           هذه الصفحة تصف ما يفعله النظام فعلاً — لا ما نتمنّاه. الأمانة تقتضي أن نُبيّن حدودنا كما نُبيّن ضوابطنا.
         </p>
+        <p className="mtd-head__updated">
+          آخر تحديث للمضمون:{" "}
+          <time dateTime="2026-08-06">2026-08-06</time>
+        </p>
       </header>
 
       {/* لماذا الشفافية مهمة */}
@@ -273,6 +277,17 @@ export default function MethodologyPage() {
           المنصة أداة تُقرّب طالب العلم من المصادر، ولا تقوم مقام العالم. وفي مسائل الفتوى والنوازل
           والأحوال الشخصية: اسأل أهل العلم المعتبرين في بلدك.
         </p>
+      </section>
+
+      <section className="mtd-section mtd-section--highlight">
+        <h2 className="mtd-section__title">سياسة التصحيح والإبلاغ</h2>
+        <ul className="mtd-guarantees">
+          <li>استخدم زر «الإبلاغ عن خطأ» أسفل المادة عند توافره.</li>
+          <li>
+            أو راسلنا عبر <Link href="/contact">صفحة التواصل</Link> مع رابط الصفحة والمصدر المقترح.
+          </li>
+          <li>ما يثبت خطؤه يُصحَّح أو يُسحب بعد مراجعة بشرية — لا نُبقي معلومة مغلوطة لتجميل الواجهة.</li>
+        </ul>
       </section>
 
       <div className="px-4 pb-6 mt-4">
