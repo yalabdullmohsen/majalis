@@ -135,6 +135,10 @@ const ASSERTIONS = [
   // صفحة الصلاة أعادت البناء إلى pts-* (لا .pt-date-greg). التأكيد على
   // .pts-dates فوق الخلفية الزمردية الصلبة لـ .pts-screen.
   { route: "/prayer-times", selector: ".pts-dates", mode: "light", min: 4.5 },
+  { route: "/prayer-times", selector: ".pts-hero__name", mode: "light", min: 4.5 },
+  { route: "/prayer-times", selector: ".pts-row__name", mode: "light", min: 4.5 },
+  { route: "/prayer-times", selector: ".pts-hero__name", mode: "dark", min: 4.5 },
+  { route: "/prayer-times", selector: ".pts-row__name", mode: "dark", min: 4.5 },
   // 2) نفس نمط "كل <a> أخضر فاتح في الوضع الليلي" الموثَّق أعلاه — 32
   // رابطًا إضافيًا لم يكونا مستثنَيَين (نص شبه غير مرئي فوق خلفيات بيضاء
   // أو خضراء متوسطة خاصة بها، تباين 1.3–2.79:1).
