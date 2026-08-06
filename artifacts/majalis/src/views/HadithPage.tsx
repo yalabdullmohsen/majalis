@@ -23,6 +23,7 @@ import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
 import { RecommendationWidget } from "@/components/recommendations/RecommendationWidget";
 import { CitationActionBar } from "@/components/citation/CitationActionBar";
+import { IsnadAttributionBar } from "@/components/IsnadAttributionBar";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { HadithStatsPanel } from "@/components/hadith/HadithStatsPanel";
@@ -607,6 +608,19 @@ function HadithDetailModal({ h, onClose }: { h: HadithItem; onClose: () => void 
             {copiedFull ? "✓ تم نسخ السند+المتن" : "⎘ نسخ كاملاً (سند+متن)"}
           </button>
         </div>
+
+        <IsnadAttributionBar
+          className="hadith-modal__isnad"
+          data={{
+            source: h.source_name,
+            grade: h.grade,
+            narrator: h.narrator,
+            reference: h.hadith_number ? String(h.hadith_number) : takhrijText ? String(takhrijText) : null,
+            needsReview: !h.source_name || !h.grade,
+            reportContentType: "hadith",
+            reportContentId: h.id,
+          }}
+        />
 
         <CitationActionBar
           source={{
