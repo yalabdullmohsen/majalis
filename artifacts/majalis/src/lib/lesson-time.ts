@@ -249,8 +249,58 @@ function resolveDayIndex(day: string): number | null {
   return null;
 }
 
-/** مدة الدرس الافتراضية (دقيقة) — نافذة «جارٍ الآن» */
-export const LESSON_DURATION_MIN = 90;
+/**
+ * مدة الدرس الافتراضية (دقيقة) — نافذة «جارٍ الآن».
+ * ساعتان من البداية ما لم يُحدَّد وقت انتهاء صريح في نص الوقت.
+ */
+export const LESSON_DURATION_MIN = 120;
+
+export type LessonTimeWindow = {
+  /** دقائق من منتصف الليل لوقت البدء */
+  startMin: number;
+  /** دقائق من منتصف الليل لوقت الانتهاء (قد تتجاوز 1440 إن امتد لليوم التالي) */
+  endMin: number;
+  /** هل وُجد وقت انتهاء صريح في النص؟ */
+  hasExplicitEnd: boolean;
+};
+
+/**
+ * يستخرج نافذة الدرس من نص الوقت.
+ * إن وُجد مدى صريح («4:00 م - 6:00 م»، «من العصر إلى المغرب»، «حتى 8 م») يُلتزَم به،
+ * وإلا فالنافذة = البدء + ساعتان.
+ */
+export function resolveLessonTimeWindow(timeRaw: string): LessonTimeWindow | null {
+  const cleaned = normalizeArabicDigits(cleanTimeText(timeRaw));
+  if (!cleaned) return null;
+
+  // مدى صريح: بداية … نهاية (شرطة / إلى / حتى) — مع إبقاء صيغ الصلاة أحادية الكلمة سليمة
+  const rangeParts = cleaned.split(/\s*(?:-|–|—|إلى|حت[ىي])\s+/u).map((p) => p.trim()).filter(Boolean);
+  if (rangeParts.length >= 2) {
+    const startPart = rangeParts[0].replace(/^من\s+/u, "").trim();
+    const endPart = rangeParts[1].trim();
+    const startMin = parseTimeToMinutes(startPart);
+    const endMinRaw = parseTimeToMinutes(endPart);
+    if (startMin != null && endMinRaw != null) {
+      let endMin = endMinRaw;
+      if (endMin <= startMin) endMin += 24 * 60; // يمتد لما بعد منتصف الليل
+      return { startMin, endMin, hasExplicitEnd: true };
+    }
+  }
+
+  const startMin = parseTimeToMinutes(cleaned);
+  if (startMin == null) return null;
+  return {
+    startMin,
+    endMin: startMin + LESSON_DURATION_MIN,
+    hasExplicitEnd: false,
+  };
+}
+
+/** نهاية نافذة «جارٍ الآن» بالدقائق من منتصف الليل لليوم الحالي */
+export function lessonLiveEndMinutes(time: string): number | null {
+  const win = resolveLessonTimeWindow(time);
+  return win ? win.endMin : null;
+}
 
 export function computeNextOccurrenceMs(day: string, time: string, now = new Date()): number {
   // دعم الأيام المتعددة: مفصولة بـ ، أو / أو " و " — يُعاد أقرب تكرار قادم
@@ -268,15 +318,17 @@ export function computeNextOccurrenceMs(day: string, time: string, now = new Dat
     return now.getTime() + 365 * 24 * 60 * 60_000;
   }
 
-  const clock        = getKuwaitClock(now);
-  const timeMinutes  = parseTimeToMinutes(time) ?? effectivePrayerMinutes("المغرب");
-  const nowMinutes   = clock.hour * 60 + clock.minute;
+  const clock = getKuwaitClock(now);
+  const win = resolveLessonTimeWindow(time);
+  const timeMinutes = win?.startMin ?? effectivePrayerMinutes("المغرب");
+  const liveEndMin = win?.endMin ?? timeMinutes + LESSON_DURATION_MIN;
+  const nowMinutes = clock.hour * 60 + clock.minute;
 
   let daysUntil = (targetDay - clock.weekday + 7) % 7;
 
-  // إذا كان الدرس اليوم ومرّ وقت البدء: أبقِ تكرار اليوم أثناء نافذة «جارٍ الآن»،
-  // ولا تقفز للأسبوع القادم إلا بعد انتهاء المدة الافتراضية.
-  if (daysUntil === 0 && nowMinutes >= timeMinutes + LESSON_DURATION_MIN) {
+  // إذا كان الدرس اليوم ومرّ وقت البدء: أبقِ تكرار اليوم أثناء نافذة «جارٍ الآن»
+  // (ساعتان أو حتى وقت الانتهاء الصريح) — لا تقفز للأسبوع القادم أثناء الحصة.
+  if (daysUntil === 0 && nowMinutes >= liveEndMin) {
     daysUntil = 7;
   }
 
@@ -320,17 +372,22 @@ export function isLessonTimePassedToday(day: string, time: string, now = new Dat
 }
 
 /**
- * هل الدرس قائم الآن (بدأ ولم تنته نافذته الافتراضية البالغة 90 دقيقة)؟
+ * هل الدرس قائم الآن؟
+ * النافذة: من وقت البدء حتى وقت الانتهاء الصريح، وإلا ساعتان من البداية.
  */
 export function isLessonInProgress(day: string, time: string, now = new Date()): boolean {
   const targetDay = resolveDayIndex(day);
   if (targetDay == null) return false;
-  const clock       = getKuwaitClock(now);
+  const clock = getKuwaitClock(now);
   if (clock.weekday !== targetDay) return false;
-  const timeMinutes = parseTimeToMinutes(time);
-  if (timeMinutes == null) return false;
-  const nowMinutes  = clock.hour * 60 + clock.minute;
-  return nowMinutes >= timeMinutes && nowMinutes < timeMinutes + LESSON_DURATION_MIN;
+  const win = resolveLessonTimeWindow(time);
+  if (!win) return false;
+  const nowMinutes = clock.hour * 60 + clock.minute;
+  // امتداد لما بعد منتصف الليل: endMin قد يكون ≥ 1440
+  if (win.endMin > 24 * 60) {
+    return nowMinutes >= win.startMin || nowMinutes < (win.endMin - 24 * 60);
+  }
+  return nowMinutes >= win.startMin && nowMinutes < win.endMin;
 }
 
 export function formatGregorianDate(date: Date): string {
@@ -449,7 +506,7 @@ if (import.meta.env?.DEV) {
       { label: "مغرب السبت — من وقت الظهر",  day: "السبت",    time: "بعد المغرب", nowKWT: "2026-07-04T12:00:00+03:00", expectTodayOrFuture: "today" },
       { label: "درس الجمعة — من الأربعاء",    day: "الجمعة",   time: "9:00 م",     nowKWT: "2026-07-01T20:00:00+03:00", expectTodayOrFuture: "future" },
       { label: "درس اليوم نفسه — لم يمرّ",    day: "الأربعاء", time: "8:00 م",     nowKWT: "2026-07-01T18:00:00+03:00", expectTodayOrFuture: "today" },
-      { label: "درس اليوم نفسه — مرّ",        day: "الأربعاء", time: "8:00 م",     nowKWT: "2026-07-01T21:00:00+03:00", expectTodayOrFuture: "future" },
+      { label: "درس اليوم نفسه — مرّ",        day: "الأربعاء", time: "8:00 م",     nowKWT: "2026-07-01T22:05:00+03:00", expectTodayOrFuture: "future" },
       { label: "عشاء الخميس — من العصر",      day: "الخميس",   time: "بعد العشاء", nowKWT: "2026-07-02T15:30:00+03:00", expectTodayOrFuture: "today" },
       { label: "فجر يوم آخر — من منتصف الليل",day: "الجمعة",   time: "الفجر",      nowKWT: "2026-07-03T00:30:00+03:00", expectTodayOrFuture: "future" },
     ];
