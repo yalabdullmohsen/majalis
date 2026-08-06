@@ -1,7 +1,17 @@
 import { useEffect, useId, useState } from "react";
 import { createPortal } from "react-dom";
 import { Link } from "wouter";
-import { ChevronUp, Handshake, Mail, Scale, Shield, X } from "lucide-react";
+import {
+  ChevronUp,
+  GraduationCap,
+  Handshake,
+  Mail,
+  Route,
+  Scale,
+  Shield,
+  Trash2,
+  X,
+} from "lucide-react";
 import { CONTACT_EMAIL, mailtoWithSubject } from "@/lib/site-config";
 
 type FooterMenuItem = {
@@ -11,14 +21,18 @@ type FooterMenuItem = {
   external?: boolean;
 };
 
-/** تذييل قانوني/تواصل — من مصدر التنقّل (مجموعة عن المجلس) مع الرعاية. */
+/** تذييل قانوني/تواصل — ثقة + مبتدئ + قانوني (R4 اكتشاف). */
 const FOOTER_MENU_ITEMS: FooterMenuItem[] = [
+  { href: "/start-here", label: "ابدأ من هنا", Icon: Route },
+  { href: "/learning/paths", label: "المسارات العلمية", Icon: GraduationCap },
   { href: "/about-us", label: "من نحن", Icon: Scale },
   { href: "/about", label: "حول التطبيق", Icon: Scale },
   { href: "/methodology", label: "المنهجية", Icon: Scale },
   { href: "/fatwa-policy", label: "سياسة الفتوى", Icon: Scale },
+  { href: "/sources", label: "المصادر والتراخيص", Icon: Scale },
   { href: "/privacy", label: "الخصوصية", Icon: Shield },
   { href: "/terms", label: "الشروط", Icon: Scale },
+  { href: "/account-deletion", label: "حذف الحساب", Icon: Trash2 },
   { href: "/contact", label: "التواصل", Icon: Mail },
   {
     href: mailtoWithSubject("عرض رعاية — المجلس العلمي"),
