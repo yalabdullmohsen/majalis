@@ -1,0 +1,95 @@
+/**
+ * إيقاع PageShell الموحّد (الجولة الثالثة — B1 / C1).
+ * المساحات من سلّم --mj-s* فقط.
+ */
+
+.page-shell__intro {
+  margin-block-start: var(--mj-s4); /* 16 */
+  margin-block-end: var(--mj-s6); /* 24 */
+  /* الهدف: مقدمة مضغوطة (عنوان + سطر)؛ لا قصّ قسري حتى لا يُخفى المحتوى */
+}
+
+.page-shell__intro h1,
+.page-shell__intro .page-shell__title {
+  font-size: 1.5rem; /* 24px */
+  line-height: 1.35;
+  margin: 0 0 var(--mj-s2);
+}
+
+.page-shell__intro p,
+.page-shell__intro .page-shell__desc {
+  font-size: 0.9375rem; /* 15px */
+  line-height: 1.5;
+  margin: 0;
+  color: var(--ds-ink-soft, var(--mj-ink-soft, #5a6570));
+}
+
+.page-shell__content {
+  min-block-size: 0;
+}
+
+.page-shell__content > section + section,
+.page-shell__content > .page-shell-section + .page-shell-section {
+  margin-block-start: var(--mj-s8); /* 32 — أقرب سلم ≤ 48؛ يُوسَّع لاحقاً بـ s12 إن أُضيف */
+}
+
+@media (min-width: 768px) {
+  .page-shell__content > section + section,
+  .page-shell__content > .page-shell-section + .page-shell-section {
+    margin-block-start: 48px;
+  }
+}
+
+.page-shell__related {
+  margin-block-start: 48px;
+}
+
+.page-related__title {
+  font-size: 1.25rem; /* 20px */
+  margin: 0 0 var(--mj-s4);
+}
+
+.page-related__grid {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--mj-s3); /* 12 */
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 640px) {
+  .page-related__grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 960px) {
+  .page-related__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.page-related__link {
+  display: block;
+  padding: var(--mj-s3) var(--mj-s4);
+  border: 1px solid var(--ds-line-color, rgba(0, 0, 0, 0.08));
+  border-radius: var(--mj-r2, 8px);
+  text-decoration: none;
+  color: inherit;
+  min-block-size: 44px;
+}
+
+/* كثافات */
+.page-shell--dense .page-shell__content {
+  /* فهارس: صفوف متلاصقة بفاصل خط */
+}
+
+.page-shell--airy .page-shell__content {
+  max-inline-size: 68ch;
+}
+
+.page-shell--airy .page-shell__content p {
+  margin-block-end: var(--mj-s4);
+  line-height: 2;
+}

@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { goBackOrFallback } from "@/lib/navigation-back";
+import { PageShell } from "@/components/layout/PageShell";
 
 type Props = {
   eyebrow: string;
@@ -16,23 +17,30 @@ function goBack() {
 
 export function LegalPageLayout({ eyebrow, title, children, updatedAt }: Props) {
   return (
-    <article className="legal-page" aria-labelledby="legal-page-title">
-      <header className="legal-page-hero">
-        <div className="legal-page-inner">
-          <button type="button" className="legal-back-btn" onClick={goBack} aria-label="رجوع إلى الصفحة السابقة">
-            → رجوع
-          </button>
-          <p className="legal-page-eyebrow">{eyebrow}</p>
-          <h1 id="legal-page-title">{title}</h1>
-          {updatedAt ? (
-            <p className="legal-page-updated">
-              آخر تحديث: <time dateTime={updatedAt}>{updatedAt}</time>
-            </p>
-          ) : null}
-        </div>
-      </header>
-      <div className="legal-page-body legal-page-inner">{children}</div>
-    </article>
+    <PageShell
+      as="article"
+      variant="narrow"
+      density="airy"
+      className="legal-page"
+      aria-labelledby="legal-page-title"
+      intro={
+        <header className="legal-page-hero">
+          <div className="legal-page-inner">
+            <button type="button" className="legal-back-btn" onClick={goBack} aria-label="رجوع إلى الصفحة السابقة">
+              → رجوع
+            </button>
+            <p className="legal-page-eyebrow">{eyebrow}</p>
+            <h1 id="legal-page-title">{title}</h1>
+            {updatedAt ? (
+              <p className="legal-page-updated">
+                آخر تحديث: <time dateTime={updatedAt}>{updatedAt}</time>
+              </p>
+            ) : null}
+          </div>
+        </header>
+      }
+      content={<div className="legal-page-body legal-page-inner">{children}</div>}
+    />
   );
 }
 
