@@ -70,6 +70,9 @@ jobs:
       - name: PageShell gate (unified layouts)
         run: pnpm --filter @workspace/majalis run verify:pageshell-gate
 
+      - name: Body/meta separation gate (D1)
+        run: pnpm --filter @workspace/majalis run verify:body-meta-gate
+
       - name: Cron single-response gate
         run: pnpm run verify:single-response
 
