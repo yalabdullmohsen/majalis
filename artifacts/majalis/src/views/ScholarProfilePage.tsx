@@ -162,12 +162,15 @@ export default function ScholarProfilePage() {
       });
       return;
     }
-    const metaDesc = scholar.bio.length > 155 ? scholar.bio.slice(0, 152).replace(/\s+\S*$/, "") + "…" : scholar.bio;
+    // metaDescription مقصوص؛ النص الظاهر يبقى scholar.bio كاملاً في الجسم (D1)
+    const metaDesc =
+      scholar.bio.length > 155
+        ? scholar.bio.slice(0, 152).replace(/\s+\S*$/, "") + "…"
+        : scholar.bio;
     applyPageSeo({
       path: `/scholars/${scholar.id}`,
       title: `${scholar.name} — سيرة العالم | المجلس العلمي`,
       description: metaDesc,
-      keywords: [scholar.name, scholar.fullName, scholar.era, ...scholar.specialty],
       jsonLd: [{
         "@context": "https://schema.org",
         "@type": "Person",

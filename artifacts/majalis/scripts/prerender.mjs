@@ -89,17 +89,17 @@ function replaceJsonLd(html, jsonLdArr) {
 }
 function injectNoscript(html, route) {
   const h1 = esc(route.title.split(" | ")[0]);
-  const desc = esc(route.description);
-  const keywords = route.keywords ? route.keywords.slice(0, 5) : [];
-  const keywordLinks = keywords
-    .map(k => `<a href="${siteUrl}/search?q=${encodeURIComponent(k)}">${esc(k)}</a>`)
-    .join(" · ");
+  // D1: الظاهر = body/summary؛ لا تكرار وصف meta المقصوص إن وُجد بديل
+  const lead = String(route.body || route.summary || "").trim();
+  const meta = String(route.description || "").trim();
+  const visible =
+    lead ||
+    (meta && !meta.endsWith("…") && !meta.endsWith("...") ? meta : "");
   const noscript = [
     `<noscript>`,
     `<div dir="rtl" lang="ar" style="font-family:'IBM Plex Sans Arabic','Noto Sans Arabic',sans-serif;max-width:900px;margin:0 auto;padding:1rem">`,
     `<h1>${h1}</h1>`,
-    `<p>${desc}</p>`,
-    keywordLinks ? `<p>${keywordLinks}</p>` : "",
+    visible ? `<p>${esc(visible)}</p>` : "",
     `<nav><a href="${siteUrl}/">الرئيسية</a> · <a href="${siteUrl}/search">البحث</a></nav>`,
     `</div>`,
     `</noscript>`,

@@ -350,7 +350,8 @@ function scholarJsonLdScript(s) {
     name: s.name,
     url: absoluteUrl(`/scholars/${s.id}`),
     inLanguage: "ar",
-    description: clamp(s.bio, 300),
+    // وصف Person كامل — القصّ للـmeta فقط (D1)
+    description: String(s.bio || "").replace(/\s+/g, " ").trim(),
     ...(s.fullName ? { alternateName: s.fullName } : {}),
     ...(s.specialty?.length ? { jobTitle: s.specialty.join("، "), knowsAbout: s.specialty } : {}),
     ...(s.died ? { disambiguatingDescription: `توفي سنة ${s.died}` } : {}),
@@ -429,6 +430,27 @@ const HEAD_ASSETS = `<link rel="icon" type="image/svg+xml" href="/favicon.svg" /
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />`;
 
+/**
+ * D1: فصل حقول المحتوى
+ * - metaDescription / description → وسوم meta فقط (يجوز اختصارها بـ …)
+ * - body → النص الظاهر الكامل
+ * - summary → مقدمة ظاهرة قصيرة (بدون قصّ meta)
+ * - richBody → HTML منظم إضافي
+ * لا يُعاد استخدام وصف الـmeta المقصوص في الفقرة المرئية.
+ */
+function visibleLeadHtml(route, richBody) {
+  const body = String(route.body || "").trim();
+  if (body) return `<p>${escapeHtml(body)}</p>`;
+  const summary = String(route.summary || "").trim();
+  if (summary) return `<p>${escapeHtml(summary)}</p>`;
+  // صفحات بلا richBody: الوصف الساكن هو المحتوى الظاهر (غير مقصوص عادةً)
+  if (!richBody) {
+    const d = String(route.description || "").trim();
+    if (d && !d.endsWith("…") && !d.endsWith("...")) return `<p>${escapeHtml(d)}</p>`;
+  }
+  return "";
+}
+
 function prerenderHtml(route, extraJsonLd = "", richBody = "", parents = []) {
   const canonical = absoluteUrl(route.path);
   const image = absoluteUrl(route.image || DEFAULT_IMAGE);
@@ -437,6 +459,8 @@ function prerenderHtml(route, extraJsonLd = "", richBody = "", parents = []) {
   const ogType = route.ogType || "website";
   const title = pageTitle(route);
   const h1 = String(route.title || "").split(" | ")[0];
+  const metaDescription = String(route.metaDescription || route.description || "").trim();
+  const leadHtml = visibleLeadHtml(route, richBody);
 
   return `<!DOCTYPE html>
 <html lang="ar" dir="rtl">
@@ -445,7 +469,7 @@ function prerenderHtml(route, extraJsonLd = "", richBody = "", parents = []) {
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="color-scheme" content="light dark" />
     <title>${escapeHtml(title)}</title>
-    <meta name="description" content="${escapeHtml(route.description)}" />
+    <meta name="description" content="${escapeHtml(metaDescription)}" />
     <meta name="robots" content="${escapeHtml(robots)}" />
     <meta name="author" content="${escapeHtml(SITE_NAME)}" />
     <meta name="theme-color" content="#1F7A5A" />
@@ -459,7 +483,7 @@ function prerenderHtml(route, extraJsonLd = "", richBody = "", parents = []) {
     <meta property="og:locale" content="ar_KW" />
     <meta property="og:type" content="${escapeHtml(ogType)}" />
     <meta property="og:title" content="${escapeHtml(title)}" />
-    <meta property="og:description" content="${escapeHtml(route.description)}" />
+    <meta property="og:description" content="${escapeHtml(metaDescription)}" />
     <meta property="og:url" content="${escapeHtml(canonical)}" />
     <meta property="og:image" content="${escapeHtml(image)}" />
     <meta property="og:image:width" content="1200" />
@@ -467,13 +491,13 @@ function prerenderHtml(route, extraJsonLd = "", richBody = "", parents = []) {
     <meta property="og:image:alt" content="${escapeHtml(title)}" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${escapeHtml(title)}" />
-    <meta name="twitter:description" content="${escapeHtml(route.description)}" />
+    <meta name="twitter:description" content="${escapeHtml(metaDescription)}" />
     <meta name="twitter:image" content="${escapeHtml(image)}" />
     ${route.path === "/" ? siteJsonLdScript() : jsonLdScript({
       "@context": "https://schema.org",
       "@type": "WebPage",
       name: h1,
-      description: route.description,
+      description: metaDescription,
       url: canonical,
       inLanguage: "ar",
       publisher: {
@@ -499,7 +523,7 @@ function prerenderHtml(route, extraJsonLd = "", richBody = "", parents = []) {
     <main>
       <article>
         <h1>${escapeHtml(h1)}</h1>
-        <p>${escapeHtml(route.description)}</p>
+        ${leadHtml}
         ${richBody}
         <nav aria-label="التنقل">
           <a href="${escapeHtml(SITE_URL)}">الرئيسية</a>
@@ -2011,12 +2035,13 @@ for (const row of LIBRARY_CATALOG) {
     .slice(0, 6)
     .map((b) => ({ name: b.title, url: `/library/${b.id}`, note: b.author }));
   const desc = tidyDesc(row.description || row.title);
-  // لا تكرار: الوصف يظهر مرة في الفقرة الافتتاحية؛ «عن الكتاب» للبيانات فقط
+  // body = ظاهر كامل؛ description = meta (قد تُقصّ لاحقاً دون لمس الظاهر)
   addPage(
     {
       path: `/library/${row.id}`,
       title: row.title,
-      description: padDesc(desc, `كتاب من المكتبة الشرعية في ${SITE_NAME}`),
+      description: clamp(padDesc(desc, `كتاب من المكتبة الشرعية في ${SITE_NAME}`), 160),
+      body: desc,
       ogType: "book",
     },
     {
@@ -2058,19 +2083,22 @@ ${linkList("روابط ذات صلة", [
 
 // العلماء — Person JSON-LD (٩٦ ترجمة). المعرّفات تُقرأ وقت البناء من scholars-data.ts.
 for (const s of SCHOLARS) {
-  const bioShort = clamp(s.bio || "", 155);
+  const bioFull = String(s.bio || "").replace(/\s+/g, " ").trim();
+  const bioShort = clamp(bioFull, 155);
   addPage(
     {
       path: `/scholars/${s.id}`,
       title: `${s.name} — سيرة العالم`,
+      // meta فقط — يجوز «…»
       description: clamp(padDesc(bioShort, `ترجمة ${s.name} في ${SITE_NAME}`), 155),
-      keywords: [s.name, s.fullName, ...(s.specialty || []), "علماء الإسلام", "سير الأعلام"].filter(Boolean),
+      // النص الظاهر الكامل — بلا قصّ
+      body: bioFull,
       ogType: "profile",
     },
     {
       extraJsonLd: scholarJsonLdScript(s),
       parents: [{ name: "أعلام العلماء المسلمين", path: "/scholars" }],
-      // النبذة مرة واحدة في الفقرة الافتتاحية؛ هنا بيانات + مؤلفات بلا تكرار النص
+      // بيانات + مؤلفات؛ النبذة في route.body
       richBody: `<ul>
   ${s.fullName ? `<li>الاسم الكامل: ${escapeHtml(s.fullName)}</li>` : ""}
   ${s.era ? `<li>التصنيف: ${escapeHtml(s.era)}</li>` : ""}
