@@ -31,7 +31,6 @@ export const HIDDEN_FROM_NAV_PATHS = new Set<string>([
 
   "/quran-studies",
   "/anbiya",
-  "/start-here",
   "/learning/calendar",
   "/prayer-countdown",
   "/annual-courses",
@@ -83,7 +82,6 @@ export const MERGED_PATH_REDIRECTS: Record<string, string> = {
   "/features-in-progress": "/",
   "/quran-studies": "/quran-knowledge",
   "/anbiya": "/prophets",
-  "/start-here": "/learning/paths",
   "/learning/calendar": "/occasions-lessons",
   "/prayer-countdown": "/prayer-times",
   "/annual-courses": "/lessons?tab=courses",

@@ -260,6 +260,7 @@ const ContentProductionDashboardPage = lazyWithRetry(
 const FeatureStatusPage = lazyWithRetry(() => import("@/views/admin/FeatureStatusPage"), "FeatureStatusPage");
 const LearningPathsPage = lazy(() => import("@/views/learning/LearningPathsPage"));
 const LearningPathDetailPage = lazy(() => import("@/views/learning/LearningPathDetailPage"));
+const StartHerePage = lazy(() => import("@/views/StartHerePage"));
 const MyLearningPage = lazy(() => import("@/views/MyLearningPage"));
 const LearningQuizPage = lazy(() => import("@/views/learning/LearningQuizPage"));
 const CertificateVerifyPage = lazy(() => import("@/views/learning/CertificateVerifyPage"));
@@ -680,7 +681,7 @@ function Router() {
       <Route path="/learning-path/book/:bookId"><Redirect to="/learning/paths" /></Route>
       <Route path="/learning-path/:scienceSlug"><Redirect to="/learning/paths" /></Route>
       <Route path="/learning-path"><Redirect to="/learning/paths" /></Route>
-      <Route path="/start-here"><Redirect to="/learning/paths" /></Route>
+      <Route path="/start-here"><SafeLazyRoute component={StartHerePage} /></Route>
       <Route path="/universities/compare"><SafeLazyRoute component={UniversitiesComparePage} /></Route>
       <Route path="/universities/:slug"><SafeLazyRoute component={UniversityDetailPage} /></Route>
       <Route path="/universities"><SafeLazyRoute component={UniversitiesPage} /></Route>

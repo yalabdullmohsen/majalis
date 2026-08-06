@@ -7973,6 +7973,39 @@ body.has-assistant-fab .app-main {
 /* ── قسم "ابدأ من هنا" — خلفية أكثر دفئاً ── */
 .home-start-here {
   background: var(--msk-canvas-1, #F4F4F1) !important;
+  border-radius: var(--mj-r2, 8px);
+  padding: var(--mj-s4, 16px);
+}
+.home-start-here .hsh-lead {
+  margin: 0.35rem 0 0.75rem;
+  font-size: 0.9375rem;
+  color: var(--color-text-muted, var(--mj-ink-2));
+}
+.home-start-here .hsh-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-block-end: 0.75rem;
+}
+.home-start-here .hsh-actions__primary,
+.home-start-here .hsh-actions__secondary {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: 700;
+  text-decoration: none;
+  font-size: 0.875rem;
+}
+.home-start-here .hsh-actions__primary {
+  background: var(--color-primary, var(--mj-brand));
+  color: #fff;
+}
+.home-start-here .hsh-actions__secondary {
+  border: 1px solid color-mix(in srgb, var(--color-primary, var(--mj-brand)) 30%, transparent);
+  color: var(--color-primary-deep, var(--mj-brand-deep));
+  background: transparent;
 }
 
 /* ── بطاقات مجلس اليوم وأقسام الرئيسية ── */

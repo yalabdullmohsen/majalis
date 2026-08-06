@@ -34,6 +34,7 @@ const MUST_DISCOVER = [
 
 const ENTRY_FILES = [
   "views/HomePage.tsx",
+  "components/home/HomeStartHereSection.tsx",
   "components/BottomNavBar.tsx",
   "components/MoreBottomSheet.tsx",
   "components/NavBar.tsx",
