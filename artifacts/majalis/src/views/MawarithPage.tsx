@@ -549,7 +549,7 @@ export default function MawarithPage() {
               { href: "/janaza", label: "أحكام الجنائز" },
               { href: "/madhahib", label: "المذاهب الفقهية" },
               { href: "/rulings", label: "الأحكام الشرعية" },
-              { href: "/quiz", label: "الأسئلة والأجوبة" },
+              { href: "/qa", label: "الأسئلة والأجوبة" },
             ].map((r) => (
               <a key={r.href} href={r.href} className="mw-related__link">{r.label}</a>
             ))}

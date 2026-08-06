@@ -12,6 +12,7 @@ import {
   FileText,
   HandHeart,
   Heart,
+  HelpCircle,
   Info,
   Landmark,
   Library,
@@ -88,6 +89,7 @@ export const SERVICES_CENTER_GROUPS: ServicesCenterGroup[] = [
     layout: "list",
     items: [
       { id: "scholars-books", label: "العلماء وكتبهم", keywords: ["مكتبة", "كتب"], Icon: Library, action: { kind: "link", href: "/scholars" } },
+      { id: "qa", label: "الأسئلة والأجوبة", keywords: ["أسئلة", "أجوبة", "qa"], Icon: HelpCircle, action: { kind: "link", href: "/qa" } },
       { id: "quiz", label: "المسابقة", keywords: ["مسابقة", "اختبار", "quiz"], Icon: Star, action: { kind: "link", href: "/quiz" } },
       { id: "lessons-lib", label: "الدروس والدورات", keywords: ["دروس", "دورات"], Icon: BookOpen, action: { kind: "link", href: "/lessons" } },
     ],

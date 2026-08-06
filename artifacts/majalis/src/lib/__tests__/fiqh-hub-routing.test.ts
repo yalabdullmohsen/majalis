@@ -98,8 +98,8 @@ console.log("\n=== فقه — مسار الصفحة الموضوعية في App 
     "إعادة توجيه /fatwa/:id لا تسقط المعرّف",
   );
   assert(
-    appSrc.includes('<Route path="/qa"><Redirect to="/quiz" />'),
-    "/qa يُحوَّل دائمًا إلى /quiz (إلغاء الواجهة المستقلة)",
+    appSrc.includes('path="/qa"') && appSrc.includes("QaPage") && !appSrc.includes('<Route path="/qa"><Redirect to="/quiz" />'),
+    "/qa يعرض صفحة الأسئلة والأجوبة المستقلة (QaPage) وليس تحويلًا إلى /quiz",
   );
 }
 
