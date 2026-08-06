@@ -37,6 +37,22 @@ function walkCss(dir, out = []) {
   return out;
 }
 
+/* ── 0) أرقام ثابتة العرض لعدّادات الأذكار (R5-1) ── */
+const adhkarCss = read("src/styles/pages/adhkar.css");
+if (adhkarCss) {
+  for (const sel of [".adhkar-focus-counter", ".adhkar-focus-count"]) {
+    const re = new RegExp(
+      `${sel.replace(".", "\\.")}[^{]*\\{[^}]{0,280}font-variant-numeric:\\s*tabular-nums`,
+    );
+    if (!re.test(adhkarCss)) {
+      issues.push(`adhkar.css: ${sel} يحتاج font-variant-numeric: tabular-nums`);
+    }
+  }
+  if (!issues.some((i) => i.includes("adhkar.css"))) {
+    notes.push("✓ أرقام عدّادات الأذكار tabular-nums");
+  }
+}
+
 /* ── 1) عقد منطقة الإبهام ── */
 const thumb = read("src/styles/components/thumb-zone.css");
 if (thumb) {

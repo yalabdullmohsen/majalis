@@ -8,6 +8,7 @@ import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { DEMO_FAWAID, FAWAID_CATEGORIES, ensureDemoContentLoaded } from "@/lib/demo-content";
 import { canSubmitForm } from "@/lib/form-rate-limit";
 import { PageHeader, SkeletonCardGrid, Empty } from "@/components/ui-common";
+import { PageShell } from "@/components/layout/PageShell";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
 import { useAuth } from "@/components/AuthProvider";
 import { FaidahCard } from "@/components/fawaid/FaidahCard";
@@ -186,7 +187,7 @@ export default function FawaidPage({
   );
 
   return (
-    <div className="page-shell narrow content-hub-page fawaid-page ds-page">
+    <PageShell variant="narrow" className="content-hub-page fawaid-page">
       <PageHeader
         eyebrow="مختارات نافعة"
         title="الفوائد"
@@ -262,6 +263,6 @@ export default function FawaidPage({
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="hadith" title="اختبر معلوماتك في الحديث والفوائد" count={4} />
       </div>
-    </div>
+    </PageShell>
   );
 }
