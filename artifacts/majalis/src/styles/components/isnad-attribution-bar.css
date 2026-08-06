@@ -1,0 +1,23 @@
+.isnad-bar {
+  margin-block-start: 16px;
+  padding-block: 12px;
+  border-block-start: 1px solid color-mix(in srgb, var(--color-border, var(--mj-hairline)) 85%, transparent);
+  /* ارتفاع محجوز — CLS ≈ 0 حتى قبل اكتمال البيانات */
+  min-block-size: 64px;
+  box-sizing: border-box;
+}
+
+.isnad-bar__line {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.45;
+  color: var(--color-text-muted, var(--mj-ink-2, #5a6570));
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.isnad-bar__report {
+  margin-block-start: 6px;
+}

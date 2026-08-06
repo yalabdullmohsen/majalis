@@ -104,13 +104,13 @@ export const HOME_FEATURE_CARDS = [
   {
     href: "/adhkar",
     title: seoNavLabel("/adhkar", "الأذكار"),
-    description: "أذكار يومية مع تخريجها",
+    description: "أذكار يومية مع المصدر قدر الإمكان",
     icon: "sparkles",
   },
   {
     href: "/adhkar?cat=distress",
     title: seoNavLabel("/adhkar?cat=distress", "الدعاء"),
-    description: "أدعية من السنة",
+    description: "أدعية مأثورة مع بيان المصدر حين يتوفر",
     icon: "hands",
   },
   {
@@ -169,7 +169,7 @@ export const HOME_MORE_SECTIONS_RAW = [
   { href: "/scholars",     title: seoNavLabel("/scholars", "أعلام الإسلام"),        description: `${COUNTS.scholars} عالِمًا من الأئمة الأربعة حتى العلماء المعاصرين` },
   { href: "/asma-husna",  title: seoNavLabel("/asma-husna", "الأسماء الحسنى"),       description: "أسماء الله التسعة والتسعون — كل اسم بمعناه وآيته ومنفعته" },
   { href: "/akhlaq",     title: seoNavLabel("/akhlaq", "مكارم الأخلاق"),    description: "أخلاق إسلامية مع آيات وأحاديث وأقوال العلماء والتطبيق العملي" },
-  { href: "/adhkar",     title: seoNavLabel("/adhkar", "الأذكار والأدعية"), description: "أذكار يومية وأدعية مأثورة مع التخريج" },
+  { href: "/adhkar",     title: seoNavLabel("/adhkar", "الأذكار والأدعية"), description: "أذكار يومية وأدعية مأثورة مع المصدر قدر الإمكان" },
   { href: "/arkan",      title: seoNavLabel("/arkan", "أركان الإسلام الخمسة"),        description: "الأركان الخمسة مع الأدلة القرآنية والنبوية والتفاصيل الفقهية وأقوال العلماء" },
   { href: "/arkan-iman",    title: seoNavLabel("/arkan-iman", "أركان الإيمان الستة"),        description: "الأركان الستة مع أدلة القرآن والسنة وأقوال العلماء: الإيمان بالله والملائكة والكتب" },
   { href: "/hadith-science", title: seoNavLabel("/hadith-science", "مصطلح الحديث"),       description: "مصطلحات علوم الحديث: أنواع الأحاديث والسند والراوي والجرح والتعديل والكتب الستة" },
