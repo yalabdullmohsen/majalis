@@ -189,6 +189,534 @@
   ],
   "redirects": [
     {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "morning"
+        }
+      ],
+      "destination": "/adhkar/morning",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "adh-morning"
+        }
+      ],
+      "destination": "/adhkar/morning",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "evening"
+        }
+      ],
+      "destination": "/adhkar/evening",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "adh-evening"
+        }
+      ],
+      "destination": "/adhkar/evening",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "sleep"
+        }
+      ],
+      "destination": "/adhkar/sleep",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "adh-sleep"
+        }
+      ],
+      "destination": "/adhkar/sleep",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "wakeup"
+        }
+      ],
+      "destination": "/adhkar/wakeup",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "adh-wakeup"
+        }
+      ],
+      "destination": "/adhkar/wakeup",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "home-in"
+        }
+      ],
+      "destination": "/adhkar/home-in",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "adh-home-in"
+        }
+      ],
+      "destination": "/adhkar/home-in",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "home-out"
+        }
+      ],
+      "destination": "/adhkar/home-out",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "adh-home-out"
+        }
+      ],
+      "destination": "/adhkar/home-out",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "mosque"
+        }
+      ],
+      "destination": "/adhkar/mosque",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "adh-mosque"
+        }
+      ],
+      "destination": "/adhkar/mosque",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "food"
+        }
+      ],
+      "destination": "/adhkar/food",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "adh-food"
+        }
+      ],
+      "destination": "/adhkar/food",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "travel"
+        }
+      ],
+      "destination": "/adhkar/travel",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "adh-travel"
+        }
+      ],
+      "destination": "/adhkar/travel",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "wudu"
+        }
+      ],
+      "destination": "/adhkar/wudu",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "adh-wudu"
+        }
+      ],
+      "destination": "/adhkar/wudu",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "salah"
+        }
+      ],
+      "destination": "/adhkar/salah",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "adh-salah"
+        }
+      ],
+      "destination": "/adhkar/salah",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "after-salah"
+        }
+      ],
+      "destination": "/adhkar/after-salah",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "adh-after-salah"
+        }
+      ],
+      "destination": "/adhkar/after-salah",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "distress"
+        }
+      ],
+      "destination": "/adhkar/distress",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "adh-distress"
+        }
+      ],
+      "destination": "/adhkar/distress",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "istikharah"
+        }
+      ],
+      "destination": "/adhkar/istikharah",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "adh-istikharah"
+        }
+      ],
+      "destination": "/adhkar/istikharah",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "istighfar"
+        }
+      ],
+      "destination": "/adhkar/istighfar",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "adh-istighfar"
+        }
+      ],
+      "destination": "/adhkar/istighfar",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "salawat"
+        }
+      ],
+      "destination": "/adhkar/salawat",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "adh-salawat"
+        }
+      ],
+      "destination": "/adhkar/salawat",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "rain"
+        }
+      ],
+      "destination": "/adhkar/rain",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "adh-rain"
+        }
+      ],
+      "destination": "/adhkar/rain",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "wind"
+        }
+      ],
+      "destination": "/adhkar/wind",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "adh-wind"
+        }
+      ],
+      "destination": "/adhkar/wind",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "market"
+        }
+      ],
+      "destination": "/adhkar/market",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "adh-market"
+        }
+      ],
+      "destination": "/adhkar/market",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "clothing"
+        }
+      ],
+      "destination": "/adhkar/clothing",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "adh-clothing"
+        }
+      ],
+      "destination": "/adhkar/clothing",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "vehicle"
+        }
+      ],
+      "destination": "/adhkar/vehicle",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "adh-vehicle"
+        }
+      ],
+      "destination": "/adhkar/vehicle",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "misc"
+        }
+      ],
+      "destination": "/adhkar/misc",
+      "permanent": true
+    },
+    {
+      "source": "/adhkar",
+      "has": [
+        {
+          "type": "query",
+          "key": "cat",
+          "value": "adh-misc"
+        }
+      ],
+      "destination": "/adhkar/misc",
+      "permanent": true
+    },
+    {
       "source": "/researches",
       "destination": "/",
       "permanent": true

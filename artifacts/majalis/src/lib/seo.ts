@@ -251,7 +251,7 @@ function upsertJsonLd(data: Record<string, unknown> | Record<string, unknown>[])
 
 export function applyPageSeo(options: PageSeoOptions) {
   const normalized = normalizePath(options.path);
-  // المسار الأساسي بلا ? أو # — يمنع تكرار /adhkar?cat= و/lessons?tab= في الفهرسة
+  // المسار الأساسي بلا ? أو # — يمنع تكرار /adhkar/:slug و/lessons?tab= في الفهرسة
   const canonicalPath = normalizePath(options.canonicalPath || normalized);
   const canonical = absoluteUrl(canonicalPath);
   // Prefer explicit page image → route default → branded OG share card

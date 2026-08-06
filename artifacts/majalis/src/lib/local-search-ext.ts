@@ -54,7 +54,9 @@ export async function searchLocalExtensions(query: string) {
       title: a.text.slice(0, 80) + (a.text.length > 80 ? "..." : ""),
       meta: a.source || a.categoryId,
       href: a.categoryId
-        ? `/adhkar?cat=${encodeURIComponent(a.categoryId)}`
+        ? `/adhkar/${encodeURIComponent(
+            a.categoryId.startsWith("adh-") ? a.categoryId.slice(4) : a.categoryId,
+          )}`
         : "/adhkar",
     }));
 

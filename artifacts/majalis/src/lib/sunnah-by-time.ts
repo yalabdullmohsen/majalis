@@ -16,8 +16,8 @@ const PERIODS: Record<string, SunnahPeriod> = {
     id: "afterFajr",
     title: "بعد الفجر",
     suggestions: [
-      { label: "أذكار الصباح", href: "/adhkar?cat=morning" },
-      { label: "ركعتا الإشراق", href: "/adhkar?cat=salah" },
+      { label: "أذكار الصباح", href: "/adhkar/morning" },
+      { label: "ركعتا الإشراق", href: "/adhkar/salah" },
       { label: "ورد القرآن اليومي", href: "/daily-wird" },
       { label: "فائدة علمية", href: "/fawaid" },
       { label: "حكمة السلف", href: "/hikam-salaf" },
@@ -27,7 +27,7 @@ const PERIODS: Record<string, SunnahPeriod> = {
     id: "beforeDhuhr",
     title: "قبل الظهر",
     suggestions: [
-      { label: "صلاة الضحى", href: "/adhkar?cat=salah" },
+      { label: "صلاة الضحى", href: "/adhkar/salah" },
       { label: "قراءة القرآن", href: "/quran-hub" },
       { label: "الأسئلة والأجوبة", href: "/qa" },
       { label: "دروس الأسبوع", href: "/lessons" },
@@ -37,8 +37,8 @@ const PERIODS: Record<string, SunnahPeriod> = {
     id: "afterDhuhr",
     title: "بعد الظهر",
     suggestions: [
-      { label: "سنة الظهر البعدية", href: "/adhkar?cat=salah" },
-      { label: "أذكار ما بعد الصلاة", href: "/adhkar?cat=after-salah" },
+      { label: "سنة الظهر البعدية", href: "/adhkar/salah" },
+      { label: "أذكار ما بعد الصلاة", href: "/adhkar/after-salah" },
       { label: "قراءة القرآن", href: "/quran-hub" },
       { label: "فوائد علمية", href: "/fawaid" },
     ],
@@ -47,7 +47,7 @@ const PERIODS: Record<string, SunnahPeriod> = {
     id: "afterAsr",
     title: "بعد العصر",
     suggestions: [
-      { label: "أذكار المساء", href: "/adhkar?cat=evening" },
+      { label: "أذكار المساء", href: "/adhkar/evening" },
       { label: "قراءة القرآن", href: "/quran-hub" },
       { label: "قصص الأنبياء", href: "/prophets" },
       { label: "الرقائق والزهد", href: "/raqaiq" },
@@ -57,7 +57,7 @@ const PERIODS: Record<string, SunnahPeriod> = {
     id: "afterMaghrib",
     title: "بعد المغرب",
     suggestions: [
-      { label: "أذكار المساء", href: "/adhkar?cat=evening" },
+      { label: "أذكار المساء", href: "/adhkar/evening" },
       { label: "قراءة سورة الملك", href: "/mushaf/67" },
       { label: "الفوائد العلمية", href: "/fawaid" },
       { label: "الوصايا النبوية", href: "/wasaya-nabawiyya" },
@@ -67,9 +67,9 @@ const PERIODS: Record<string, SunnahPeriod> = {
     id: "afterIsha",
     title: "بعد العشاء",
     suggestions: [
-      { label: "الوتر", href: "/adhkar?cat=after-salah" },
-      { label: "أذكار النوم", href: "/adhkar?cat=sleep" },
-      { label: "قيام الليل", href: "/adhkar?cat=salah" },
+      { label: "الوتر", href: "/adhkar/after-salah" },
+      { label: "أذكار النوم", href: "/adhkar/sleep" },
+      { label: "قيام الليل", href: "/adhkar/salah" },
       { label: "الرقائق والمواعظ", href: "/raqaiq" },
     ],
   },

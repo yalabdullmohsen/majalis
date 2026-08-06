@@ -1,6 +1,7 @@
 import { BookMarked, BookOpen, Clock, FlaskConical, GraduationCap, Heart, Scale, Scroll } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { applyPageSeo } from "@/lib/seo";
+import { hrefAdhkar } from "@/lib/content-href";
 import { Link, useParams, useLocation, useSearch } from "wouter";
 import { searchEverything, type SearchResults } from "@/lib/supabase";
 import { searchDemoContent } from "@/lib/demo-content";
@@ -678,7 +679,7 @@ export default function SearchPage() {
                   <Group title="الأذكار" id="adhkar" items={results.adhkar} render={(a) => (
                     <ResultRow
                       key={a.id}
-                      href={a.category ? `/adhkar?cat=${encodeURIComponent(a.category)}` : "/adhkar"}
+                      href={a.category ? hrefAdhkar(a.category) : "/adhkar"}
                       kind="adhkar"
                       query={q}
                       title={displayText(a.text)}

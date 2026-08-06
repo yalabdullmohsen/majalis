@@ -631,7 +631,7 @@ const LIST_JSON_LD = {
     "الأحكام الشرعية",
   ),
   "/lessons": itemListJsonLdScript(lessonRows.slice(0, 30).map((r) => ({ name: r.title, url: `/lessons/${r.id}` })), "الدروس الشرعية"),
-  "/adhkar": itemListJsonLdScript(ADHKAR_CATEGORIES.map((c) => ({ name: c.name, url: `/adhkar` })), "أقسام الأذكار"),
+  "/adhkar": itemListJsonLdScript(ADHKAR_CATEGORIES.map((c) => ({ name: c.name, url: `/adhkar/${c.slug}` })), "أقسام الأذكار"),
   "/prophets": itemListJsonLdScript(
     PROPHETS.map((p) => ({ name: `قصة نبي الله ${p.arabicName} عليه السلام`, url: `/prophets/${p.slug}` })),
     "قصص الأنبياء",
@@ -676,7 +676,7 @@ const RICH_BODY_MAP = {
   ),
   "/adhkar": `${linkList(
     "أقسام الأذكار",
-    ADHKAR_CATEGORIES.map((c) => ({ name: c.name, url: `/adhkar?cat=${c.id}` })),
+    ADHKAR_CATEGORIES.map((c) => ({ name: c.name, url: `/adhkar/${c.slug}` })),
   )}
 <p>أذكار الصباح والمساء والنوم والصلاة والسفر وغيرها — نصوص مختارة مع بيان المصدر قدر الإمكان. يمكن أيضًا الانتقال إلى الأدعية الموثقة والتسبيح اليومي.</p>
 ${linkList("روابط ذات صلة", [

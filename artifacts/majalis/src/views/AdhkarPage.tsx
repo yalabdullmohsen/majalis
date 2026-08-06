@@ -1,16 +1,22 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Leaf, X } from "lucide-react";
-import { useLocation } from "wouter";
+import { useLocation, useParams } from "wouter";
 import { ADHKAR_CATEGORIES, type AdhkarItem } from "@/lib/adhkar-seed";
 import { usePublishedAdhkarItems } from "@/lib/adhkar-service";
 import { PageHeader, Empty } from "@/components/ui-common";
 import { ShareButton } from "@/components/ShareButton";
 import { IsnadAttributionBar } from "@/components/IsnadAttributionBar";
+import { hrefAdhkar } from "@/lib/content-href";
 import { applyPageSeo } from "@/lib/seo";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { useReadingScrollMemory } from "@/hooks/useReadingScrollMemory";
 import "@/styles/pages/adhkar.css";
 import "@/styles/components/thumb-zone.css";
+
+function resolveAdhkarCategory(token: string | null | undefined) {
+  if (!token) return null;
+  return ADHKAR_CATEGORIES.find((c) => c.slug === token || c.id === token) ?? null;
+}
 
 const FEATURED_CATEGORY_SLUGS = new Set([
   "morning", "evening", "sleep", "wakeup", "home-in", "home-out",
@@ -125,7 +131,8 @@ function hapticsComplete() {
 /* ══ الصفحة الرئيسية ══ */
 export default function AdhkarPage() {
   useReadingScrollMemory("adhkar");
-  const [location] = useLocation();
+  const [location, setLocation] = useLocation();
+  const routeParams = useParams<{ slug?: string }>();
   const [category, setCategory]       = useState("all");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [showSheet, setShowSheet]     = useState(false);
@@ -137,11 +144,17 @@ export default function AdhkarPage() {
   const { data: publishedItems = [], isLoading, isError } = usePublishedAdhkarItems();
 
   useEffect(() => {
+    const active = resolveAdhkarCategory(routeParams.slug);
+    const path = active ? hrefAdhkar(active.slug) : "/adhkar";
     applyPageSeo({
-      path: "/adhkar",
-      canonicalPath: "/adhkar",
-      title: "الأذكار والأدعية الإسلامية | المجلس العلمي",
-      description: "أذكار وأدعية مأثورة مع بيان المصدر والدرجة قدر الإمكان؛ ما لم يكتمل توثيقه يُعرض بوسم قيد المراجعة.",
+      path,
+      canonicalPath: path,
+      title: active
+        ? `${active.name} | الأذكار | المجلس العلمي`
+        : "الأذكار والأدعية الإسلامية | المجلس العلمي",
+      description: active
+        ? `${active.description.slice(0, 140)}… مع بيان المصدر والدرجة قدر الإمكان.`
+        : "أذكار وأدعية مأثورة مع بيان المصدر والدرجة قدر الإمكان؛ ما لم يكتمل توثيقه يُعرض بوسم قيد المراجعة.",
       keywords: ["أذكار", "أدعية", "أذكار الصباح", "أذكار المساء", "ذكر الله", "أذكار إسلامية"],
       jsonLd: [
         {
@@ -154,21 +167,43 @@ export default function AdhkarPage() {
             "@type": "ListItem",
             position: i + 1,
             name: c.name,
-            url: `https://www.majlisilm.com/adhkar`,
+            url: `https://www.majlisilm.com${hrefAdhkar(c.slug)}`,
           })),
         },
       ],
     });
-  }, []);
+  }, [routeParams.slug]);
+
+  /* ?cat= → /adhkar/:slug (استبدال دائم في العميل؛ Vercel يكمّل 301 للزحف) */
+  useEffect(() => {
+    const qs = new URLSearchParams(window.location.search);
+    const cat = qs.get("cat");
+    if (!cat) return;
+    const match = resolveAdhkarCategory(cat);
+    if (!match) return;
+    qs.delete("cat");
+    const rest = qs.toString();
+    setLocation(`${hrefAdhkar(match.slug)}${rest ? `?${rest}` : ""}`, { replace: true });
+  }, [location, setLocation]);
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const cat = params.get("cat");
-    if (cat) {
-      const match = ADHKAR_CATEGORIES.find((c) => c.slug === cat || c.id === cat);
-      if (match) { setCategory(match.id); setCurrentIndex(0); }
+    if (new URLSearchParams(window.location.search).get("cat")) return;
+    const match = resolveAdhkarCategory(routeParams.slug);
+    if (match) {
+      if (category !== match.id) {
+        setCategory(match.id);
+        setCurrentIndex(0);
+        setAnimKey((k) => k + 1);
+        setTapCount(0);
+        setDone(false);
+      }
+      return;
     }
-  }, [location]);
+    if (!routeParams.slug && category !== "all") {
+      setCategory("all");
+      setCurrentIndex(0);
+    }
+  }, [routeParams.slug, location, category]);
 
   const items = useMemo(() => {
     if (category === "all") return publishedItems;
@@ -185,6 +220,11 @@ export default function AdhkarPage() {
     setCurrentIndex(0);
     setAnimKey((k) => k + 1);
     resetCounter();
+    if (catId === "all") setLocation("/adhkar");
+    else {
+      const match = ADHKAR_CATEGORIES.find((c) => c.id === catId);
+      if (match) setLocation(hrefAdhkar(match.slug));
+    }
   }
 
   const goNext = useCallback(() => {

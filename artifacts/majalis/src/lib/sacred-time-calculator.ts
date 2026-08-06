@@ -144,7 +144,7 @@ export function buildSacredAzkarRecommendations(
       case "last_third_night":
         recs.push({
           titleAr: "قيام ودعاء السحر",
-          href: "/adhkar?cat=salah",
+          href: "/adhkar/salah",
           reasonAr: "الثلث الأخير — وقت إجابة وقيام.",
           markId: w.id,
           priority: 95,
@@ -153,7 +153,7 @@ export function buildSacredAzkarRecommendations(
       case "ishraq":
         recs.push({
           titleAr: "أذكار الصباح وصلاة الإشراق",
-          href: "/adhkar?cat=morning",
+          href: "/adhkar/morning",
           reasonAr: "بعد الشروق بقليل — أذكار الصباح والإشراق.",
           markId: w.id,
           priority: 88,
@@ -162,7 +162,7 @@ export function buildSacredAzkarRecommendations(
       case "duha":
         recs.push({
           titleAr: "صلاة الضحى",
-          href: "/adhkar?cat=salah",
+          href: "/adhkar/salah",
           reasonAr: "وقت الضحى مستحب للنفل.",
           markId: w.id,
           priority: 70,
@@ -171,7 +171,7 @@ export function buildSacredAzkarRecommendations(
       case "zawal":
         recs.push({
           titleAr: "استغفار وانتظار الظهر",
-          href: "/adhkar?cat=istighfar",
+          href: "/adhkar/istighfar",
           reasonAr: "الزوال — يُكره التنفل؛ ذِكر حتى الأذان.",
           markId: w.id,
           priority: 80,
@@ -180,7 +180,7 @@ export function buildSacredAzkarRecommendations(
       case "friday_answer_hour":
         recs.push({
           titleAr: "دعاء ساعة الإجابة",
-          href: "/adhkar?cat=istikharah",
+          href: "/adhkar/istikharah",
           reasonAr: "آخر ساعة قبل مغرب الجمعة.",
           markId: w.id,
           priority: 98,

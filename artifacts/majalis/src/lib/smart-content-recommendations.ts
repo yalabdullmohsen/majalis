@@ -38,13 +38,13 @@ const FIQH_TOPIC_MAP: Array<{ keys: string[]; title: string; href: string }> = [
 ];
 
 const ADHKAR_BY_TIME: Record<TimeOfDay, { title: string; href: string; reason: string }> = {
-  fajr: { title: "أذكار الصباح", href: "/adhkar?cat=morning", reason: "وقت أذكار الصباح" },
-  duha: { title: "أذكار الصباح", href: "/adhkar?cat=morning", reason: "امتداد أذكار الصباح" },
-  zuhr: { title: "أذكار بعد الصلاة", href: "/adhkar?cat=after-salah", reason: "أذكار ما بعد الفريضة" },
-  asr: { title: "أذكار متنوعة", href: "/adhkar?cat=misc", reason: "وقت مناسب للذكر" },
-  maghrib: { title: "أذكار المساء", href: "/adhkar?cat=evening", reason: "وقت أذكار المساء" },
-  isha: { title: "أذكار المساء", href: "/adhkar?cat=evening", reason: "أذكار المساء قبل النوم" },
-  layl: { title: "أذكار النوم", href: "/adhkar?cat=sleep", reason: "أذكار النوم وقيام الليل" },
+  fajr: { title: "أذكار الصباح", href: "/adhkar/morning", reason: "وقت أذكار الصباح" },
+  duha: { title: "أذكار الصباح", href: "/adhkar/morning", reason: "امتداد أذكار الصباح" },
+  zuhr: { title: "أذكار بعد الصلاة", href: "/adhkar/after-salah", reason: "أذكار ما بعد الفريضة" },
+  asr: { title: "أذكار متنوعة", href: "/adhkar/misc", reason: "وقت مناسب للذكر" },
+  maghrib: { title: "أذكار المساء", href: "/adhkar/evening", reason: "وقت أذكار المساء" },
+  isha: { title: "أذكار المساء", href: "/adhkar/evening", reason: "أذكار المساء قبل النوم" },
+  layl: { title: "أذكار النوم", href: "/adhkar/sleep", reason: "أذكار النوم وقيام الليل" },
 };
 
 function haystackOf(ctx: SmartRecContext): string {

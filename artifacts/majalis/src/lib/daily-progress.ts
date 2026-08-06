@@ -21,9 +21,9 @@ export type ProgressTask = {
 
 export const PROGRESS_TASKS: ProgressTask[] = [
   { id: "wird", label: "الورد اليومي", href: "/daily-wird", target: 1 },
-  { id: "morning-adhkar", label: "أذكار الصباح", href: "/adhkar?cat=morning", target: 1 },
-  { id: "evening-adhkar", label: "أذكار المساء", href: "/adhkar?cat=evening", target: 1 },
-  { id: "nawafil", label: "النوافل", href: "/adhkar?cat=salah", target: 1 },
+  { id: "morning-adhkar", label: "أذكار الصباح", href: "/adhkar/morning", target: 1 },
+  { id: "evening-adhkar", label: "أذكار المساء", href: "/adhkar/evening", target: 1 },
+  { id: "nawafil", label: "النوافل", href: "/adhkar/salah", target: 1 },
   { id: "tasbih", label: "التسبيح", href: "/tasbih", target: 100 },
   { id: "quran", label: "قراءة القرآن", href: "/quran-hub", target: 1 },
 ];

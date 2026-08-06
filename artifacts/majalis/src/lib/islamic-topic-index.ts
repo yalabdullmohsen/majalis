@@ -186,7 +186,7 @@ function adhkarToEvidence(items: AdhkarItem[], limit: number): TopicEvidenceItem
     kind: "adhkar" as const,
     id: a.id,
     title: a.text.slice(0, 60) + (a.text.length > 60 ? "…" : ""),
-    href: `/adhkar?cat=${ADHKAR_CATEGORIES.find((c) => c.id === a.categoryId)?.slug || ""}&id=${a.id}`,
+    href: `/adhkar/${ADHKAR_CATEGORIES.find((c) => c.id === a.categoryId)?.slug || "misc"}?id=${a.id}`,
     snippet: a.source,
     meta: a.categoryId,
   }));
