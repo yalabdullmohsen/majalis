@@ -73,6 +73,9 @@ jobs:
       - name: Body/meta separation gate (D1)
         run: pnpm --filter @workspace/majalis run verify:body-meta-gate
 
+      - name: Orphan discovery gate (R4)
+        run: pnpm --filter @workspace/majalis run verify:orphan-discovery
+
       - name: Cron single-response gate
         run: pnpm run verify:single-response
 

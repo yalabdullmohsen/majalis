@@ -141,7 +141,10 @@ console.log("\n=== القوائم بلا أقسام محذوفة — عن الم
   }
   assert(!homeSrc.includes("HomeAboutSection"), "من نحن خارج الرئيسية");
   assert(footerSrc.includes("/about-us") && footerSrc.includes("/privacy"), "تذييل عن المجلس");
+  assert(footerSrc.includes("/start-here") && footerSrc.includes("/learning/paths"), "تذييل ابدأ/مسارات");
   assert(servicesNavSrc.includes("/about-us") && servicesNavSrc.includes("/about"), "عن المجلس في مركز الخدمات");
+  assert(servicesNavSrc.includes("/start-here") && servicesNavSrc.includes("/learning/paths"), "ابدأ/مسارات في مركز الخدمات");
+  assert(servicesNavSrc.includes("/account-deletion"), "حذف الحساب في مركز الخدمات");
   assert(navMapSrc.includes("BOTTOM_NAV_TABS") && navMapSrc.includes("SERVICES_CENTER_GROUPS"), "nav-map مصدر موحّد");
   assert(sidebarNavSrc.includes("getSidebarGroupsFromNavMap"), "الجانبية تشتق من nav-map");
   assert(sideSrc.includes("SIDEBAR_NAV_GROUPS") && sideSrc.includes("sidebar-panel"), "القائمة تستخدم التصميم الموحّد");
