@@ -4,6 +4,7 @@ import { useLocation, useParams } from "wouter";
 import { ADHKAR_CATEGORIES, type AdhkarItem } from "@/lib/adhkar-seed";
 import { usePublishedAdhkarItems } from "@/lib/adhkar-service";
 import { PageHeader, Empty } from "@/components/ui-common";
+import { PageShell } from "@/components/layout/PageShell";
 import { ShareButton } from "@/components/ShareButton";
 import { IsnadAttributionBar } from "@/components/IsnadAttributionBar";
 import { hrefAdhkar } from "@/lib/content-href";
@@ -294,7 +295,7 @@ export default function AdhkarPage() {
   const isLast  = currentIndex === total - 1;
 
   return (
-    <div className="page-shell narrow content-hub-page adhkar-page adhkar-page--focus">
+    <PageShell variant="narrow" className="content-hub-page adhkar-page adhkar-page--focus">
       <PageHeader
         eyebrow="العبادة اليومية"
         title="الأذكار"
@@ -421,6 +422,6 @@ export default function AdhkarPage() {
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="akhlaq" title="اختبر معلوماتك في الأخلاق والآداب" count={4} />
       </div>
-    </div>
+    </PageShell>
   );
 }

@@ -4,6 +4,7 @@ import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { PageShell } from "@/components/layout/PageShell";
 import "@/styles/pages/duas.css";
 
 /* ─── بيانات الأدعية ─── */
@@ -1035,7 +1036,7 @@ export default function DuasPage() {
   };
 
   return (
-    <div className="page-shell duas-page">
+    <PageShell className="duas-page">
       {/* ═══ Hero ═══ */}
       <div className="duas-hero">
         <div className="duas-hero__bismillah">وَإِذَا سَأَلَكَ عِبَادِي عَنِّي فَإِنِّي قَرِيبٌ</div>
@@ -1156,6 +1157,6 @@ export default function DuasPage() {
       <div className="twh-share">
         <ShareButtons title="الأدعية الشرعية — المجلس العلمي" url="https://www.majlisilm.com/duas" />
       </div>
-    </div>
+    </PageShell>
   );
 }

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Flame } from "lucide-react";
 import { PageHeader } from "@/components/ui-common";
+import { PageShell } from "@/components/layout/PageShell";
 import { useAuth } from "@/components/AuthProvider";
 import { TasbeehCounter } from "@/components/reading/TasbeehCounter";
 import { setTaskProgress } from "@/lib/daily-progress";
@@ -129,7 +130,7 @@ export default function TasbihPage() {
   const activeStats = active ? computeTasbeehStats(active) : null;
 
   return (
-    <div className="page-shell narrow tasbih-pro-page tasbih-pro-page--v2" dir="rtl">
+    <PageShell variant="narrow" className="tasbih-pro-page tasbih-pro-page--v2">
       <PageHeader
         eyebrow="الأذكار"
         title="عداد التسبيح"
@@ -250,6 +251,6 @@ export default function TasbihPage() {
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId="akhlaq" title="اختبر معلوماتك في الأذكار والأخلاق" count={4} />
       </div>
-    </div>
+    </PageShell>
   );
 }

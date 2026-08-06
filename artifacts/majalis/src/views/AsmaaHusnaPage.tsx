@@ -9,6 +9,7 @@ import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { ASMAA, ASMA_CATEGORIES, type AsmaEntry, type AsmaStatus } from "@/lib/asma-husna-data";
 import { UnsourcedBadge } from "@/components/UnsourcedBadge";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
+import { PageShell } from "@/components/layout/PageShell";
 import { PAGE_EXPLORE_LINKS } from "@/lib/explore-links";
 
 const CATEGORIES = [...ASMA_CATEGORIES];
@@ -88,7 +89,7 @@ export default function AsmaaHusnaPage() {
   }), []);
 
   return (
-    <div className="page-shell ah-page">
+    <PageShell className="ah-page">
       {/* ═══ Hero ═══ */}
       <div className="ah-hero">
         <div className="ah-hero__bismillah">بسم الله الرحمن الرحيم</div>
@@ -280,6 +281,6 @@ export default function AsmaaHusnaPage() {
         title="مواضيع عقدية مرتبطة"
         links={[...PAGE_EXPLORE_LINKS.asmaHusna]}
       />
-    </div>
+    </PageShell>
   );
 }

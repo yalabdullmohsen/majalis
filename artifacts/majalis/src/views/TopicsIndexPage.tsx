@@ -3,6 +3,7 @@ import { BookMarked, BookOpen, Leaf, Moon, Scale, ScrollText, Shapes } from "luc
 import type { LucideIcon } from "lucide-react";
 import { Link } from "wouter";
 import { PageHeader, SkeletonCardGrid } from "@/components/ui-common";
+import { PageShell } from "@/components/layout/PageShell";
 import { fetchAllTopics } from "@/lib/scholarly-intelligence-service";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
@@ -132,7 +133,7 @@ export default function TopicsIndexPage() {
   }, [topics, activeCategory, search]);
 
   return (
-    <div className="page-shell narrow tip-page">
+    <PageShell variant="narrow" className="tip-page">
       <PageHeader
         eyebrow="المحتوى الشرعي الموضوعاتي"
         title="الموضوعات العلمية"
@@ -215,6 +216,6 @@ export default function TopicsIndexPage() {
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId={["quran", "hadith", "fiqh", "aqeeda"]} title="اختبر معلوماتك في العلوم الشرعية" count={4} />
       </div>
-    </div>
+    </PageShell>
   );
 }

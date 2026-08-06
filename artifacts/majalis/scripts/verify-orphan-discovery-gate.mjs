@@ -43,6 +43,9 @@ const ENTRY_FILES = [
   "lib/nav-map.ts",
   "lib/services-center-nav.ts",
   "lib/site-footer-nav.ts",
+  // الجولة الخامسة: خريطة الموقع + مركز علوم القرآن سطوح اكتشاف صريحة
+  "views/SiteMapPage.tsx",
+  "views/QuranKnowledgeHubPage.tsx",
 ];
 
 const ALLOWLIST_PATH = join(appRoot, "scripts/orphan-discovery-allowlist.json");
@@ -91,6 +94,17 @@ function skipPath(p, redirects) {
   );
 }
 
+/** مسار موصول مباشرة أو عبر أب ظاهر على سطح الدخول (R5-2). */
+function isOnEntrySurface(p, entry) {
+  if (entry.has(p)) return true;
+  const parts = p.split("/").filter(Boolean);
+  for (let i = parts.length - 1; i >= 1; i--) {
+    const parent = `/${parts.slice(0, i).join("/")}`;
+    if (entry.has(parent)) return true;
+  }
+  return false;
+}
+
 function loadAllowlist() {
   if (!existsSync(ALLOWLIST_PATH)) return [];
   const data = JSON.parse(readFileSync(ALLOWLIST_PATH, "utf8"));
@@ -102,7 +116,7 @@ const { staticRoutes, redirects } = collectStaticRoutesAndRedirects();
 
 const mustMissing = MUST_DISCOVER.filter((p) => !entry.has(p));
 const orphans = staticRoutes.filter(
-  (p) => !skipPath(p, redirects) && !entry.has(p),
+  (p) => !skipPath(p, redirects) && !isOnEntrySurface(p, entry),
 );
 
 if (writeAllowlist) {

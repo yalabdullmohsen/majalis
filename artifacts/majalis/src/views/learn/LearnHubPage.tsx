@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "wouter";
 import { BookOpen, BookUser, Landmark, Layers, Scale, Search, Shield, Star } from "lucide-react";
 import { PageHeader, SkeletonCardGrid } from "@/components/ui-common";
+import { PageShell } from "@/components/layout/PageShell";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { fetchPublishedCategoryTree, type CategoryWithCounts } from "@/lib/learn-library-service";
 import { applyPageSeo } from "@/lib/seo";
@@ -95,7 +96,7 @@ export default function LearnHubPage() {
   const totalSeries = tree.reduce((s, c) => s + c.seriesCount, 0);
 
   return (
-    <div className="page-shell lrn-hub">
+    <PageShell className="lrn-hub">
       <PageHeader
         eyebrow="بوابة التعلّم"
         title="تعلّم"
@@ -178,6 +179,6 @@ export default function LearnHubPage() {
           </div>
         )}
       </section>
-    </div>
+    </PageShell>
   );
 }

@@ -71,6 +71,15 @@ const requiredLayouts = [
   "src/components/platform/ContentDetailLayout.tsx",
   "src/components/layout/ContentHubLayout.tsx",
   "src/views/ScholarProfilePage.tsx",
+  // الجولة الخامسة — محاور محتوى عالية الزيارة
+  "src/views/AdhkarPage.tsx",
+  "src/views/FawaidPage.tsx",
+  "src/views/TopicsIndexPage.tsx",
+  "src/views/RulingsPage.tsx",
+  "src/views/TasbihPage.tsx",
+  "src/views/learn/LearnHubPage.tsx",
+  "src/views/DuasPage.tsx",
+  "src/views/AsmaaHusnaPage.tsx",
 ];
 
 for (const rel of requiredLayouts) {

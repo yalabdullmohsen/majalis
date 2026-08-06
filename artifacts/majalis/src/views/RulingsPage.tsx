@@ -10,6 +10,7 @@ import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { ShareButtons } from "@/components/ContentActions";
 import { useAuth } from "@/components/AuthProvider";
 import { PageHeader, SkeletonCardGrid, Empty, ErrorState } from "@/components/ui-common";
+import { PageShell } from "@/components/layout/PageShell";
 import { applyPageSeo } from "@/lib/seo";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
@@ -237,7 +238,7 @@ export default function RulingsPage() {
   );
 
   return (
-    <div className="page-shell narrow content-hub-page rulings-encyclopedia-page ds-page">
+    <PageShell variant="narrow" className="content-hub-page rulings-encyclopedia-page">
       <PageHeader
         eyebrow="موسوعة الفقه"
         title="الأحكام الشرعية"
@@ -338,6 +339,6 @@ export default function RulingsPage() {
         {filtersPanel}
       </FilterBottomSheet>
       <AdminQuickEdit section="rulings" />
-    </div>
+    </PageShell>
   );
 }
