@@ -88,19 +88,16 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
 ];
 
 /**
- * القائمة العلوية (top navbar) — 6 أقسام رئيسية.
+ * القائمة العلوية (top navbar) — أربع مساحات موحّدة مع الشريط السفلي.
  * البحث والحساب ليسا هنا لأن لهما عنصري واجهة دائمين مستقلّين في الهيدر
  * (زر البحث الشامل Ctrl+K، ورابط الحساب/تسجيل الدخول) — انظر NavBar.tsx.
  */
 export const PRIMARY_NAV_ITEMS: NavLink[] = [
   { href: "/", label: seoNavLabel("/", "الرئيسية") },
-  { href: "/mushaf", label: seoNavLabel("/mushaf", "القرآن"), description: "مصحف · علوم · حفظ" },
-  { href: "/quran-knowledge", label: seoNavLabel("/quran-knowledge", "القرآن وعلومه"), description: "فهرس · علوم · قصص" },
-  { href: "/hadith", label: seoNavLabel("/hadith", "الحديث وعلومه"), description: "أحاديث · مصطلح" },
-  { href: "/fiqh", label: seoNavLabel("/fiqh", "الفقه والأحكام"), description: "أحكام · مسائل" },
-  { href: "/memorization", label: seoNavLabel("/memorization", "الحفظ والمراجعة") },
-  { href: "/prayer-times", label: seoNavLabel("/prayer-times", "الصلاة") },
-  { href: "/my-learning", label: seoNavLabel("/my-learning", "حسابي") },
+  { href: "/quran-knowledge", label: seoNavLabel("/quran-knowledge", "قرآن"), description: "مصحف · علوم · حفظ" },
+  { href: "/lessons", label: seoNavLabel("/lessons", "علم"), description: "دروس · حديث · سيرة" },
+  { href: "/prayer-times", label: seoNavLabel("/prayer-times", "عبادة"), description: "صلاة · أذكار · ورد" },
+  { href: "/fiqh", label: seoNavLabel("/fiqh", "فقه"), description: "أحكام · مسائل · أسئلة" },
 ];
 
 export const HOME_FEATURE_CARDS = [

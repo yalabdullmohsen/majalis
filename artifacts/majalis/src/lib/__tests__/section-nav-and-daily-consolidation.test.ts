@@ -28,29 +28,29 @@ function assert(condition: boolean, label: string) {
   else { console.error(`  ✗ FAIL: ${label}`); failed++; }
 }
 
-console.log("\n=== TopSectionBar — أقسام مختصرة بعد التنظيف ===");
+console.log("\n=== TopSectionBar — مساحات موحّدة ===");
 {
-  assert(SECTION_TABS.length === 9, `9 أقسام في الشريط العلوي (الفعلي: ${SECTION_TABS.length})`);
+  assert(SECTION_TABS.length === 4, `4 مساحات في الشريط العلوي (الفعلي: ${SECTION_TABS.length})`);
   const hrefs = SECTION_TABS.map((t) => t.href);
+  const labels = SECTION_TABS.map((t) => t.label);
   assert(new Set(hrefs).size === hrefs.length, "لا تكرار في مسارات الأقسام");
+  assert(hrefs.includes("/quran-knowledge") && labels.includes("قرآن"), "مساحة قرآن");
+  assert(hrefs.includes("/lessons") && labels.includes("علم"), "مساحة علم");
+  assert(hrefs.includes("/prayer-times") && labels.includes("عبادة"), "مساحة عبادة");
+  assert(hrefs.includes("/fiqh") && labels.includes("فقه"), "مساحة فقه");
   assert(!hrefs.includes("/library"), "المكتبة خارج الشريط");
-  assert(!hrefs.includes("/scholars"), "العلماء خارج الشريط العلوي");
   assert(!hrefs.includes("/mushaf"), "المصحف خارج الشريط أثناء قريبًا");
-  assert(hrefs.includes("/quran-knowledge"), "القرآن وعلومه في الشريط");
-  assert(hrefs.includes("/memorize") && hrefs.includes("/memorization"), "الحفظ (بطاقات) والحفظ والمراجعة");
-  assert(hrefs.includes("/occasions-lessons"), "المناسبات");
-  assert(hrefs.includes("/islamic-directory") && hrefs.includes("/my-learning"), "الدليل وحسابي");
 }
 
 console.log("\n=== isTabActive ===");
 {
-  assert(isTabActive("/mushaf", "/mushaf") === true, "تبويب القرآن نشط في المصحف");
-  assert(isTabActive("/ulum-quran", "/quran-knowledge") === true, "علوم القرآن تحت القرآن وعلومه");
-  assert(isTabActive("/quran/surah-stories", "/quran-knowledge") === true, "قصص السور تحت القرآن وعلومه");
-  assert(isTabActive("/quran-memorization", "/memorization") === true, "اختبارات الحفظ تحت الحفظ");
-  assert(isTabActive("/occasions", "/occasions-lessons") === true, "المناسبات تحت البوابة");
-  assert(isTabActive("/institutions", "/islamic-directory") === true, "المؤسسات تحت الدليل");
-  assert(isTabActive("/library/book-1", "/mushaf") === false, "مسار كتاب لا يفعّل القرآن");
+  assert(isTabActive("/mushaf", "/quran-knowledge") === true, "المصحف تحت قرآن");
+  assert(isTabActive("/ulum-quran", "/quran-knowledge") === true, "علوم القرآن تحت قرآن");
+  assert(isTabActive("/quran/surah-stories", "/quran-knowledge") === true, "قصص السور تحت قرآن");
+  assert(isTabActive("/hadith", "/lessons") === true, "الحديث تحت علم");
+  assert(isTabActive("/adhkar", "/prayer-times") === true, "الأذكار تحت عبادة");
+  assert(isTabActive("/qa", "/fiqh") === true, "الأسئلة تحت فقه");
+  assert(isTabActive("/library/book-1", "/quran-knowledge") === false, "مسار كتاب لا يفعّل قرآن");
 }
 
 console.log("\n=== ودجتات الرئيسية ===");
@@ -98,8 +98,10 @@ console.log("\n=== vercel redirects للتنظيف ===");
 console.log("\n=== PRIMARY_NAV ===");
 {
   const hrefs = PRIMARY_NAV_ITEMS.map((i) => i.href);
-  assert(hrefs.includes("/") && hrefs.includes("/mushaf") && hrefs.includes("/fiqh"), "هيدر أساسي");
+  assert(hrefs.includes("/") && hrefs.includes("/quran-knowledge") && hrefs.includes("/fiqh"), "هيدر أساسي");
+  assert(hrefs.includes("/lessons") && hrefs.includes("/prayer-times"), "علم وعبادة في PRIMARY_NAV");
   assert(!hrefs.includes("/library"), "لا مكتبة في PRIMARY_NAV");
+  assert(!hrefs.includes("/mushaf"), "المصحف خارج PRIMARY_NAV أثناء قريبًا");
 }
 
 console.log("\n=== nav-visibility تنظيف ===");
@@ -151,9 +153,10 @@ console.log("\n=== الشريط السفلي والمزيد ===");
 {
   const bottomSrc = readFileSync(resolve(appRoot, "src/components/BottomNavBar.tsx"), "utf-8");
   assert(bottomSrc.includes("BOTTOM_NAV_TABS"), "الشريط من nav-map");
-  assert(bottomSrc.includes('href: "/lessons"') || bottomSrc.includes("BOTTOM_NAV_TABS"), "الدروس في الشريط السفلي");
   const navMapSrc = readFileSync(resolve(appRoot, "src/lib/nav-map.ts"), "utf-8");
-  assert(navMapSrc.includes('"/quran-knowledge"') && navMapSrc.includes('"/prayer-times"'), "قرآن وصلاة في الخريطة");
+  assert(navMapSrc.includes('label: "قرآن"') && navMapSrc.includes('label: "علم"'), "تسميات قرآن وعلم");
+  assert(navMapSrc.includes('label: "عبادة"') && navMapSrc.includes('label: "فقه"'), "تسميات عبادة وفقه");
+  assert(navMapSrc.includes('"/quran-knowledge"') && navMapSrc.includes('"/prayer-times"') && navMapSrc.includes('"/fiqh"') && navMapSrc.includes('"/lessons"'), "مسارات المساحات الأربع");
   assert(!bottomSrc.includes('label: "البحث"'), "البحث ليس تبويبًا سفليًا أساسيًا بعد التنظيف");
   const moreSrc = readFileSync(resolve(appRoot, "src/components/MoreBottomSheet.tsx"), "utf-8");
   assert(moreSrc.includes("filterServicesCenterGroups") || moreSrc.includes("services-center-nav"), "المزيد من كتالوج الخدمات");
