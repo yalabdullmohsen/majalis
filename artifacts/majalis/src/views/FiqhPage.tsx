@@ -149,24 +149,9 @@ export default function FiqhPage() {
 
   return (
     <div className="fqp-root page-shell" dir="rtl">
-      {/* مسار التنقل */}
-      <nav className="tawheed-breadcrumb" aria-label="مسار التنقل">
-        <Link href="/">الرئيسية</Link>
-        <span aria-hidden="true"> / </span>
-        <span aria-current="page">الفقه والأحكام</span>
-      </nav>
+      <PageHero title="الفقه والأحكام" />
 
-      {/* رأس بوابة الفقه */}
-      <PageHero
-        title="الفقه والأحكام"
-        description="عبادات وأحكام وقرارات مجامع."
-      />
-
-      {/* شبكة أقسام الفقه */}
-      <section aria-labelledby="fiqh-hub-heading">
-        <h2 id="fiqh-hub-heading" className="tawheed-principles-heading fiqh-section-heading">
-          أقسام الفقه والأحكام
-        </h2>
+      <section aria-label="أقسام الفقه والأحكام">
         <div className="hub-card-grid fqh-hub-grid">
           {FIQH_HUB_TOPICS.map((t) => (
             <HubCard
