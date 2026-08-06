@@ -10,6 +10,7 @@ import { KnowledgeRelatedItems } from "@/components/knowledge/KnowledgeRelatedIt
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import { resolveScholarWorkLink } from "@/lib/scholar-library-links";
 import { PAGE_EXPLORE_LINKS } from "@/lib/explore-links";
+import { PageShell } from "@/components/layout/PageShell";
 import "@/styles/pages/scholars.css";
 
 // ── تحويل أرقام عربية-هندية إلى رقم ─────────────────────────────────────
@@ -181,13 +182,13 @@ export default function ScholarProfilePage() {
 
   if (!scholar) {
     return (
-      <div className="page-shell">
+      <PageShell density="medium">
         <div className="sch-profile-notfound">
           <h1>العالم غير موجود</h1>
           <p>لم يُعثر على هذا العالم في قاعدة بياناتنا.</p>
           <Link href="/scholars" className="btn-primary">العودة لقائمة العلماء</Link>
         </div>
-      </div>
+      </PageShell>
     );
   }
 
@@ -196,7 +197,7 @@ export default function ScholarProfilePage() {
   const next = idx < SCHOLARS.length - 1 ? SCHOLARS[idx + 1] : null;
 
   return (
-    <div className="page-shell">
+    <PageShell density="medium">
       {/* Breadcrumb */}
       <nav className="sch-profile-breadcrumb" aria-label="مسار التنقل">
         <Link href="/scholars">أعلام الإسلام</Link>
@@ -314,6 +315,6 @@ export default function ScholarProfilePage() {
           <BookOpen size={16} /> كل العلماء <ChevronLeft size={14} />
         </Link>
       </div>
-    </div>
+    </PageShell>
   );
 }

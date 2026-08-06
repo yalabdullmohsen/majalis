@@ -67,6 +67,9 @@ jobs:
       - name: Head shell gate (viewport / no keywords / zoom)
         run: pnpm --filter @workspace/majalis run verify:head-shell-gate
 
+      - name: PageShell gate (unified layouts)
+        run: pnpm --filter @workspace/majalis run verify:pageshell-gate
+
       - name: Cron single-response gate
         run: pnpm run verify:single-response
 

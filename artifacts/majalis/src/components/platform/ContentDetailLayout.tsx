@@ -6,6 +6,7 @@ import { ReadingProgressBar } from "@/components/ReadingProgressBar";
 import { Clock, Copy } from "lucide-react";
 import { ShareButtons } from "@/components/ContentActions";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import { PageShell } from "@/components/layout/PageShell";
 
 function estimateReadMinutes(text?: string): number | null {
   if (!text || text.length < 200) return null;
@@ -90,7 +91,7 @@ export function ContentDetailLayout({
   adminEdit,
 }: Props) {
   return (
-    <div className="page-shell narrow content-detail-page">
+    <PageShell variant="narrow" density="medium" className="content-detail-page">
       <ReadingProgressBar />
       <Breadcrumbs items={breadcrumbs} />
 
@@ -158,7 +159,7 @@ export function ContentDetailLayout({
       <div className="px-4 pb-6 mt-4">
         <SectionQuiz categoryId={["fiqh", "aqeeda", "hadith"]} title="اختبر معلوماتك في العلوم الشرعية" count={4} />
       </div>
-    </div>
+    </PageShell>
   );
 }
 
