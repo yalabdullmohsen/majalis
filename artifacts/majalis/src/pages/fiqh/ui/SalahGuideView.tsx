@@ -3,7 +3,7 @@ import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect, useState, useMemo } from "react";
 import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
-import { RANKS } from "@/views/PrayerRanksPage";
+import { RANKS } from "@/pages/worship/PrayerRanksPage";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 

@@ -35,7 +35,7 @@ assert.equal(isImmersiveChromePath("/quran/recitation-test-ai"), true);
 assert.equal(isImmersiveChromePath("/"), false);
 assert.equal(isImmersiveChromePath("/hadith"), false);
 
-const prayerSrc = readFileSync(resolve(appRoot, "src/views/PrayerTimesPage.tsx"), "utf8");
+const prayerSrc = readFileSync(resolve(appRoot, "src/pages/worship/ui/PrayerTimesView.tsx"), "utf8");
 assert.equal(prayerSrc.includes("SectionQuiz"), false, "صفحة الصلاة بلا SectionQuiz");
 assert.equal(prayerSrc.includes("categoryId"), false, "صفحة الصلاة لا تحمّل تصنيفات اختبار");
 assert.match(prayerSrc, /مضى على الأذان/);
@@ -69,7 +69,7 @@ const navBar = readFileSync(resolve(appRoot, "src/components/NavBar.tsx"), "utf8
 assert.match(navBar, /isImmersiveChromePath\(location\) \|\| isPrayerTimesPath\(location\)\) return null/);
 assert.match(navBar, /isPrayerTimesPath/);
 
-const prayerRanks = readFileSync(resolve(appRoot, "src/views/PrayerRanksPage.tsx"), "utf8");
+const prayerRanks = readFileSync(resolve(appRoot, "src/pages/worship/ui/PrayerRanksView.tsx"), "utf8");
 assert.equal(prayerRanks.includes("SectionQuiz"), false, "مراتب الصلاة بلا SectionQuiz");
 
 const quranHub = readFileSync(resolve(appRoot, "src/pages/quran/ui/QuranHubView.tsx"), "utf8");

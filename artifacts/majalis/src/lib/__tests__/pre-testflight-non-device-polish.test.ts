@@ -72,7 +72,7 @@ assert.match(raiSrc, /goBackOrFallback\("\/quran\/recitation-test-ai"\)/);
 assert.match(raiSrc, /rai-back-btn/);
 assert.match(raiSrc, /aria-label="رجوع"/);
 
-const prayerSrc = read("src/views/PrayerTimesPage.tsx");
+const prayerSrc = read("src/pages/worship/ui/PrayerTimesView.tsx");
 assert.match(prayerSrc, /reload/);
 assert.match(prayerSrc, /pts-retry/);
 

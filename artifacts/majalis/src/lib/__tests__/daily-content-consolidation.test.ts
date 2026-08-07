@@ -59,7 +59,7 @@ console.log("\n=== لا منطق تدوير يومي متفرق متبقٍّ ف�
     "src/views/AlamatSaahPage.tsx",
     "src/views/MalaikaPage.tsx",
     "src/views/IslamicSectsPage.tsx",
-    "src/views/PrayerRanksPage.tsx",
+    "src/pages/worship/ui/PrayerRanksView.tsx",
     "src/views/WasayaNabawiyyaPage.tsx",
     "src/views/RaqaiqPage.tsx",
     "src/views/SeerahPage.tsx",
@@ -69,7 +69,7 @@ console.log("\n=== لا منطق تدوير يومي متفرق متبقٍّ ف�
     "src/pages/fiqh/ui/SalahGuideView.tsx",
     "src/views/TawbaPage.tsx",
     "src/pages/fiqh/ui/HajjView.tsx",
-    "src/views/DuasPage.tsx",
+    "src/pages/worship/ui/DuasView.tsx",
     "src/views/AsmaaHusnaPage.tsx",
   ];
   const dailyPattern = /function\s+todays[A-Z]\w*\s*\(|getDayOfYear\(\)\s*%|className="[a-z]+od-card"|واجب الصلاة اليوم|ذكر التوبة اليوم|ركن الحج اليوم|دعاء اليوم|اسم اليوم|حديث اليوم|فائدة اليوم/;

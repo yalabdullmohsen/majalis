@@ -1,4 +1,4 @@
-import { RANKS } from "@/views/PrayerRanksPage";
+import { RANKS } from "@/pages/worship/PrayerRanksPage";
 import { Widget } from "@/components/widgets/Widget";
 
 const RankIcon = () => (

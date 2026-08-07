@@ -4,7 +4,7 @@
 const TOP_ROUTES: Array<() => Promise<unknown>> = [
   () => import("@/views/HomePage"),
   () => import("@/pages/lessons/LessonsPage"),
-  () => import("@/views/PrayerTimesPage"),
+  () => import("@/pages/worship/PrayerTimesPage"),
   () => import("@/pages/quran/QuranKnowledgeHubPage"),
 ];
 

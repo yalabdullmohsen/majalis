@@ -20,7 +20,7 @@
 ## الإذن والاستخدام / Permissions & Usage
 
 ### 1. تحديد الموقع الجغرافي (Geolocation)
-- **الملف:** `src/views/QiblaPage.tsx` (سطر 139-151)
+- **الملف:** `src/pages/worship/ui/QiblaView.tsx` (سطر 139-151)
 - **الاستخدام:** `navigator.geolocation.getCurrentPosition()` — مرة واحدة عند فتح صفحة القبلة لحساب اتجاه الكعبة المشرفة والمسافة إليها.
 - **البديل اليدوي:** متاح — عند رفض الإذن تظهر رسالة خطأ. (مُضاف في هذه المرحلة: حقل إدخال المدينة يدوياً)
 - **لا يُخزَّن** الموقع على الخادم.
@@ -35,13 +35,13 @@
 - **Usage:** Optional push/local notifications for Islamic reminders and adhan. User-initiated permission.
 
 ### 3. الاهتزاز (Haptics / Vibration)
-- **الملفات:** `src/hooks/useTasbeehCounter.ts` (سطر 18)، `src/views/AdhkarPage.tsx` (سطر 109)
+- **الملفات:** `src/hooks/useTasbeehCounter.ts` (سطر 18)، `src/pages/worship/ui/AdhkarView.tsx` (سطر 109)
 - **الاستخدام:** `navigator.vibrate()` — نبضة خفيفة عند عد التسبيح والأذكار.
 - **لا يتطلب إذناً** — Web Vibration API.
 - **Usage:** Short vibration pulse on tasbih counter and adhkar counter taps. No permission required.
 
 ### 4. توجيه الجهاز (Device Orientation)
-- **الملف:** `src/views/QiblaPage.tsx` (سطر 154-166)
+- **الملف:** `src/pages/worship/ui/QiblaView.tsx` (سطر 154-166)
 - **الاستخدام:** `DeviceOrientationEvent` — تتبع اتجاه الجهاز لتوجيه بوصلة القبلة.
 - **الإذن:** `DeviceOrientationEvent.requestPermission()` على iOS — يطلب صراحةً.
 - **Usage:** Device heading for Qibla compass. Explicit permission on iOS.

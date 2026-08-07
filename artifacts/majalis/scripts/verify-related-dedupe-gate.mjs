@@ -9,7 +9,7 @@ import { fileURLToPath } from "node:url";
 const appRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 const issues = [];
 
-const adhkar = readFileSync(join(appRoot, "src/views/AdhkarPage.tsx"), "utf8");
+const adhkar = readFileSync(join(appRoot, "src/pages/worship/ui/AdhkarView.tsx"), "utf8");
 if (/RelatedKnowledge/.test(adhkar)) {
   issues.push("AdhkarPage: RelatedKnowledge يكرّر أقسام الصفحة — أُزل");
 }
