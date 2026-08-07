@@ -1,3 +1,5 @@
+import { isComingSoonPath } from "@/lib/nav-visibility";
+
 /**
  * مسارات «غمرية» تُخفى عنها عناصر التصفح العامة للموقع
  * (شريط الأقسام، شريط الأحاديث، التذييل، شريط تحرير المشرف).
@@ -5,6 +7,10 @@
  */
 export function isImmersiveChromePath(pathname: string): boolean {
   const p = pathname.replace(/\/+$/, "") || "/";
+  // أثناء «قريبًا» للمصحف: أبقِ الشريط السفلي ظاهرًا للخروج بسهولة
+  if (isComingSoonPath("/mushaf") && (p === "/mushaf" || p.startsWith("/mushaf/") || p === "/quran-hub" || p.startsWith("/quran-hub/"))) {
+    return false;
+  }
   return (
     p === "/mushaf" ||
     p.startsWith("/mushaf/") ||
