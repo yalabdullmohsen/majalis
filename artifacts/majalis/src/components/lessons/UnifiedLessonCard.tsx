@@ -10,7 +10,12 @@ import {
   type UnifiedLesson,
 } from "@/lib/unified-lesson-card";
 import { cleanDisplayText } from "@/lib/display-text";
-import { computeNextOccurrenceMs, formatRelativeTimeDetailed, isLessonInProgress } from "@/lib/lesson-time";
+import {
+  computeNextOccurrenceMs,
+  formatLessonAppointmentLine,
+  formatRelativeTimeDetailed,
+  isLessonInProgress,
+} from "@/lib/lesson-time";
 import { FavoriteButton } from "@/components/FavoriteButton";
 
 type Props = {
@@ -88,11 +93,18 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
     lesson.hasRecording ? "تسجيل متاح" : "",
     lesson.sessionCount ? `${lesson.sessionCount} لقاءات` : "",
   ].filter(Boolean);
+  const appointmentLine = formatLessonAppointmentLine({
+    day: lesson.day,
+    time: scheduleTime,
+    gregorianDate: lesson.gregorianDate,
+    hijriDate: lesson.hijriDate,
+  });
+  const placeLine = [lesson.mosque, lesson.region].filter(Boolean).join(" — ");
   const compactMeta = [
     lesson.activityType || lesson.category,
-    lesson.time,
-    lesson.sessionCount ? `${lesson.sessionCount} لقاءات` : (lesson.hasLiveStream ? "بث مباشر" : ""),
-    lesson.region || lesson.mosque,
+    appointmentLine || lesson.day || lesson.time,
+    placeLine,
+    lesson.hasLiveStream ? "بث مباشر" : "",
   ].filter(Boolean).slice(0, 4);
 
   return (
@@ -134,7 +146,7 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
         {compact && (
           <div className="lesson-unified-card__compact-meta" aria-label="ملخص الدرس">
             {compactMeta.map((item, index) => {
-              const Icon = index === 0 ? BookOpen : index === 1 ? Clock3 : index === 2 ? Radio : MapPin;
+              const Icon = index === 0 ? BookOpen : index === 1 ? Clock3 : index === 2 ? MapPin : Radio;
               return (
                 <span key={`${lesson.id}-${item}-${index}`} className="lesson-unified-card__compact-chip">
                   <Icon size={13} strokeWidth={1.8} aria-hidden="true" />
@@ -147,10 +159,7 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
 
         <div className={`lesson-unified-card__meta${compact ? " lesson-unified-card__meta--compact" : ""}`}>
           {!compact && <MetaCell label="نوع النشاط" value={lesson.activityType} />}
-          {!compact && <MetaCell label="اليوم" value={lesson.day} />}
-          {!compact && <MetaCell label="التاريخ" value={lesson.gregorianDate} />}
-          {!compact && <MetaCell label="التاريخ الهجري" value={lesson.hijriDate} />}
-          {!compact && <MetaCell label="الوقت" value={lesson.time} />}
+          {!compact && <MetaCell label="الموعد" value={appointmentLine || undefined} />}
           {!compact && <MetaCell label="المكان" value={lesson.mosque} />}
           {!compact && <MetaCell label="المنطقة" value={lesson.region} />}
           {!compact && <MetaCell label="المحافظة" value={lesson.governorate} />}

@@ -74,3 +74,4 @@ assert.match(globalBack, /isImmersiveChromePath/);
 console.log("immersive-chrome.test.ts: ok");
 import "./clean-lesson-display-title.test.ts";
 import "./lessons-archive-route.test.ts";
+import "./format-lesson-appointment.test.ts";
