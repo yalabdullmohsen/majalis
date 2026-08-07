@@ -2691,12 +2691,21 @@ a:focus-visible {
   color: #4B5563 !important;
 }
 
-.bottom-nav--v2 .bottom-nav__tab:hover {
-  color: var(--rd-emerald-deep) !important;
+.bottom-nav--v2 .bottom-nav__tab:active:not(.is-active) {
+  transform: scale(0.98);
+  transition: transform 100ms ease;
+  background: color-mix(in srgb, var(--rd-emerald) 10%, transparent) !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .bottom-nav--v2 .bottom-nav__tab:hover {
+    color: var(--rd-emerald-deep) !important;
+  }
 }
 
 .bottom-nav--v2 .bottom-nav__tab.is-active {
   color: var(--rd-emerald) !important;
+  font-weight: 800;
 }
 
 /* ─── بطاقات الدروس الموحدة المحسّنة (Phase 3) ────────────────── */

@@ -2,13 +2,16 @@ import { useCallback, useEffect, useState } from "react";
 import {
   computePrayerCountdown,
   fetchPrayerTimes,
+  getCachedPrayerTimes,
+  getSelectedGovernorate,
+  staticPrayerFallback,
   type PrayerCountdown,
   type PrayerTimesPayload,
 } from "@/lib/prayer-times";
 import { setPrayerTimesCache } from "@/lib/lesson-time";
 import { PRE_ALERT_MINUTES } from "@/lib/prayer-alert-preferences";
 
-const PRE_ALERT_MS = PRE_ALERT_MINUTES * 60 * 1000;
+const PRE_ALERT_MS = PRE_ALERT_MINUTES * 60_000;
 const FAST_TICK_MS = 1_000;
 const SLOW_TICK_MS = 30_000;
 
@@ -19,10 +22,32 @@ function tickIntervalFor(cd: PrayerCountdown | null): number {
   return SLOW_TICK_MS;
 }
 
+function syncLessonCache(payload: PrayerTimesPayload) {
+  const cache: Record<string, number> = {};
+  for (const p of payload.prayers) {
+    if (p.minutes != null) cache[p.name] = p.minutes;
+  }
+  setPrayerTimesCache(cache);
+}
+
+function initialPayload(governorateId?: string): PrayerTimesPayload {
+  const cached = getCachedPrayerTimes(governorateId);
+  if (cached?.ok && cached.prayers?.length) return cached;
+  const gov = governorateId
+    ? undefined
+    : getSelectedGovernorate();
+  const city = gov ? `الكويت – محافظة ${gov.name}` : "الكويت – محافظة العاصمة";
+  return staticPrayerFallback(city);
+}
+
 export function usePrayerCountdown(governorateId?: string) {
-  const [data, setData] = useState<PrayerTimesPayload | null>(null);
-  const [countdown, setCountdown] = useState<PrayerCountdown | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState<PrayerTimesPayload | null>(() => initialPayload(governorateId));
+  const [countdown, setCountdown] = useState<PrayerCountdown | null>(() => {
+    const seed = initialPayload(governorateId);
+    return seed.prayers?.length ? computePrayerCountdown(seed.prayers) : null;
+  });
+  /** لا يمنع الرسم — يبقى للتوافق مع المستهلكين القدامى */
+  const [loading, setLoading] = useState(false);
   const [reloadToken, setReloadToken] = useState(0);
 
   const reload = useCallback(() => {
@@ -31,25 +56,23 @@ export function usePrayerCountdown(governorateId?: string) {
 
   useEffect(() => {
     let cancelled = false;
-    setLoading(true);
-    fetchPrayerTimes(governorateId)
+    const seed = initialPayload(governorateId);
+    setData(seed);
+    setCountdown(seed.prayers?.length ? computePrayerCountdown(seed.prayers) : null);
+    syncLessonCache(seed);
+    setLoading(false);
+
+    void fetchPrayerTimes(governorateId)
       .then((payload) => {
-        if (!cancelled) {
-          setData(payload);
-          // مزامنة أوقات الصلاة الفعلية مع حساب مواعيد الدروس
-          const cache: Record<string, number> = {};
-          for (const p of payload.prayers) {
-            if (p.minutes != null) cache[p.name] = p.minutes;
-          }
-          setPrayerTimesCache(cache);
-        }
+        if (cancelled || !payload?.prayers?.length) return;
+        setData(payload);
+        syncLessonCache(payload);
+        setCountdown(computePrayerCountdown(payload.prayers));
       })
       .catch(() => {
-        if (!cancelled) setData(null);
-      })
-      .finally(() => {
-        if (!cancelled) setLoading(false);
+        /* الإبقاء على البذرة المحلية */
       });
+
     return () => {
       cancelled = true;
     };

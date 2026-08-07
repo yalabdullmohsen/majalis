@@ -186,7 +186,7 @@ export default function PrayerTimesPage() {
     });
   }, []);
 
-  const { data, countdown, loading, reload } = usePrayerCountdown(govId);
+  const { data, countdown, loading: _loading, reload } = usePrayerCountdown(govId);
   const [pinnedKey, setPinnedKey] = useState<string | null>(null);
   const gov = KUWAIT_GOVERNORATES.find((g) => g.id === govId) ?? KUWAIT_GOVERNORATES[0];
 
@@ -197,29 +197,10 @@ export default function PrayerTimesPage() {
     setGovOpen(false);
   }
 
-  if (loading) {
-    return (
-      <div className="pts-screen" dir="rtl">
-        <header className="pts-header">
-          <button
-            type="button"
-            className="pts-back"
-            onClick={handleBack}
-            aria-label="رجوع"
-          >
-            <ArrowRight size={18} strokeWidth={2} aria-hidden="true" />
-            <span>رجوع</span>
-          </button>
-        </header>
-        <h1 className="pts-title">الصلاة</h1>
-        <div className="pts-skeleton" aria-busy="true">جارٍ تحميل المواقيت…</div>
-      </div>
-    );
-  }
-
+  // لا شاشة تحميل تعترض — الهيكل يظهر دائماً؛ البيانات من الكاش/محلي فوراً
   if (!countdown?.next) {
     return (
-      <div className="pts-screen" dir="rtl">
+      <div className="pts-screen pts-screen--with-nav" dir="rtl">
         <header className="pts-header">
           <button
             type="button"
@@ -232,10 +213,24 @@ export default function PrayerTimesPage() {
           </button>
         </header>
         <h1 className="pts-title">الصلاة</h1>
-        <p className="pts-error" role="alert">تعذّر تحميل مواقيت الصلاة، تحقق من الاتصال.</p>
+        <p className="pts-error" role="alert">تعذّر تجهيز المواقيت محلياً. جرّب اختيار محافظة أخرى.</p>
         <button type="button" className="pts-retry" onClick={reload} aria-label="إعادة محاولة تحميل المواقيت">
           إعادة المحاولة
         </button>
+        <div id="pts-gov-panel" className="pts-gov" role="tablist" aria-label="اختيار المحافظة">
+          {KUWAIT_GOVERNORATES.map((g) => (
+            <button
+              key={g.id}
+              type="button"
+              role="tab"
+              className={`pts-gov__chip${govId === g.id ? " pts-gov__chip--active" : ""}`}
+              onClick={() => handleGov(g.id)}
+              aria-selected={govId === g.id}
+            >
+              {g.name}
+            </button>
+          ))}
+        </div>
       </div>
     );
   }
@@ -277,7 +272,7 @@ export default function PrayerTimesPage() {
   const gregStr = kuwaitDateReadable();
 
   return (
-    <div className="pts-screen" dir="rtl">
+    <div className="pts-screen pts-screen--with-nav" dir="rtl">
       <header className="pts-header">
         <div className="pts-header__top">
           <button
