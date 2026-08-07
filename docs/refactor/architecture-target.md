@@ -90,6 +90,10 @@
 
 - سلّم ٤/٨/١٢/١٦/٢٤/٣٢/٤٨ + `--page-gutter` على PageShell وفهرس السور.
 
+## E — طبقة البيانات
+
+- مستودعات scholar/book حية + DataResult + Zod للرسم + hooks Query.
+
 ## F — سجل المسارات
 
 - ROUTE_REGISTRY يغطي كل مسارات App (٣١٨) + verify:route-registry.

@@ -1,27 +1,10 @@
 /**
- * كيان Book — هيكل FSD (B).
- * المسارات model/api/ui تُفصل في E عند ربط البيانات الحقيقية.
+ * كيان Book — مستودع حي على library-catalog.
  */
-import type { EntityCardProps, EntityRepository } from "@/entities/_ports";
+export type { BookEntity } from "@/entities/book/api";
+export { bookRepository, fetchBooks } from "@/entities/book/api";
 
-export type BookId = string;
-
-export type BookEntity = {
-  slug: string;
-  titleAr: string;
-};
-
-export const bookRepository: EntityRepository<BookEntity> = {
-  async getAll() {
-    return [];
-  },
-  async getBySlug(_slug: string) {
-    return null;
-  },
-  async search(_query: string) {
-    return [];
-  },
-};
+import type { EntityCardProps } from "@/entities/_ports";
 
 export function BookCard({ titleAr, href, subtitleAr }: EntityCardProps) {
   return (

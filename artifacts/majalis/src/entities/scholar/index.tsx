@@ -1,27 +1,15 @@
 /**
- * كيان Scholar — هيكل FSD (B).
- * المسارات model/api/ui تُفصل في E عند ربط البيانات الحقيقية.
+ * كيان Scholar — مستودع حي على scholars-data + بطاقة UI.
  */
-import type { EntityCardProps, EntityRepository } from "@/entities/_ports";
+export type { ScholarEntity, ScholarId } from "@/entities/scholar/api";
+export {
+  scholarRepository,
+  fetchScholars,
+  fetchScholarBySlug,
+} from "@/entities/scholar/api";
+export { useScholarsQuery, useScholarQuery } from "@/entities/scholar/hooks";
 
-export type ScholarId = string;
-
-export type ScholarEntity = {
-  slug: string;
-  titleAr: string;
-};
-
-export const scholarRepository: EntityRepository<ScholarEntity> = {
-  async getAll() {
-    return [];
-  },
-  async getBySlug(_slug: string) {
-    return null;
-  },
-  async search(_query: string) {
-    return [];
-  },
-};
+import type { EntityCardProps } from "@/entities/_ports";
 
 export function ScholarCard({ titleAr, href, subtitleAr }: EntityCardProps) {
   return (
