@@ -168,7 +168,6 @@ export default function HomePage() {
       <PageHero
         className="m2030-hero home-page-hero"
         title="المجلس العلمي"
-        headline="المعرفة الإسلامية الرقمية"
         description={dailyCtx.greeting}
         actions={
           <>

@@ -4691,6 +4691,46 @@ body:not(.mobile-nav-body-lock) .mobile-nav-layer {
   gap: var(--ds-space-2);
 }
 
+.navbar-v3__tagline {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  text-align: center;
+  text-decoration: none;
+  font-family: var(--font-body);
+  font-size: clamp(0.72rem, 2.8vw, 0.92rem);
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--majalis-emerald-deep, var(--mj-brand-deep, #145a42)) !important;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-inline: 0.25rem;
+}
+
+.navbar-v3 a.navbar-v3__tagline:hover,
+.navbar-v3 a.navbar-v3__tagline:focus-visible {
+  color: var(--majalis-emerald, var(--mj-brand, #1f7a5a)) !important;
+}
+
+html[data-theme="dark"] .navbar-v3__tagline {
+  color: #8fd4b0 !important;
+}
+
+html[data-theme="dark"] .navbar-v3 a.navbar-v3__tagline:hover,
+html[data-theme="dark"] .navbar-v3 a.navbar-v3__tagline:focus-visible {
+  color: #b6ebcf !important;
+}
+
+@media (min-width: 880px) {
+  .navbar-v3__tagline {
+    flex: 0 1 13rem;
+    max-width: 13rem;
+    text-align: start;
+    font-size: 0.84rem;
+  }
+}
+
 .navbar-v3__tabs { display: flex; gap: 0.2rem; flex-wrap: wrap; justify-content: center; flex: 1; }
 
 .navbar-brand {
@@ -6114,9 +6154,13 @@ svg {
   }
 
   .navbar-v3__start {
-    flex: 1 1 auto;
+    flex: 0 0 auto;
     min-width: 0;
-    overflow: hidden;
+  }
+
+  .navbar-v3__tagline {
+    flex: 1 1 auto;
+    font-size: clamp(0.68rem, 3.1vw, 0.84rem);
   }
 
   .navbar-v3__end {
