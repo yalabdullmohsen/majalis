@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
-  AUTO_RELOAD_GRACE_MS,
   VERSION_CHECK_INTERVAL_MS,
   getLoadedCommit,
   isNewVersionAvailable,
@@ -10,44 +9,39 @@ import { safeLocationReload } from "@/lib/safe-reload";
 /**
  * يفحص دوريًا (كل بضع دقائق + فور رجوع التبويب من الخلفية) هل صار هناك
  * نشر أحدث من الذي حُمِّلت به هذه الجلسة، بمقارنة commit الحيّ في
- * /version.json بما حُمِّل فعليًا عند بدء الجلسة. عند اكتشاف تحديث حقيقي:
- * يعرض إشعارًا لثوانٍ قليلة (`AUTO_RELOAD_GRACE_MS`) ثم **يُعيد التحميل
- * تلقائيًا بلا حاجة لضغطة المستخدم** — بأمر صريح من المالك لمنع أي
- * احتمال لبقاء مستخدم على إصدار قديم. `applyUpdate` يبقى متاحًا لتسريع
- * التحديث فورًا (تجاوز المهلة) لمن يضغط الزر يدويًا.
+ * /version.json بما حُمِّل فعليًا عند بدء الجلسة. عند الاكتشاف يعرض شيتًا
+ * هادئًا دون إعادة تحميل قسرية — `applyUpdate` يُعيد التحميل عند طلب المستخدم.
  */
 export function useVersionCheck() {
   const [updateAvailable, setUpdateAvailable] = useState(false);
   const [loadedCommit] = useState(() => getLoadedCommit());
   const checkingRef = useRef(false);
-  const reloadTimerRef = useRef<number | null>(null);
+  const dismissedRef = useRef(false);
 
   const applyUpdate = useCallback(() => {
-    if (reloadTimerRef.current !== null) {
-      window.clearTimeout(reloadTimerRef.current);
-      reloadTimerRef.current = null;
-    }
     safeLocationReload();
   }, []);
 
+  const dismissUpdate = useCallback(() => {
+    dismissedRef.current = true;
+    setUpdateAvailable(false);
+  }, []);
+
   const check = useCallback(async () => {
-    if (!loadedCommit || checkingRef.current) return;
+    if (!loadedCommit || checkingRef.current || dismissedRef.current) return;
     checkingRef.current = true;
     try {
       const found = await isNewVersionAvailable(loadedCommit);
-      if (found) {
+      if (found && !dismissedRef.current) {
         setUpdateAvailable(true);
-        if (reloadTimerRef.current === null) {
-          reloadTimerRef.current = window.setTimeout(applyUpdate, AUTO_RELOAD_GRACE_MS);
-        }
       }
     } finally {
       checkingRef.current = false;
     }
-  }, [loadedCommit, applyUpdate]);
+  }, [loadedCommit]);
 
   useEffect(() => {
-    if (!loadedCommit || updateAvailable) return; // dev/local build أو تم الاكتشاف بالفعل
+    if (!loadedCommit || updateAvailable) return;
 
     const interval = window.setInterval(() => { void check(); }, VERSION_CHECK_INTERVAL_MS);
     const onVisibility = () => {
@@ -61,9 +55,5 @@ export function useVersionCheck() {
     };
   }, [loadedCommit, updateAvailable, check]);
 
-  useEffect(() => () => {
-    if (reloadTimerRef.current !== null) window.clearTimeout(reloadTimerRef.current);
-  }, []);
-
-  return { updateAvailable, applyUpdate };
+  return { updateAvailable, applyUpdate, dismissUpdate };
 }

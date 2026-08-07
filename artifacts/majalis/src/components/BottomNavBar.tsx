@@ -30,8 +30,8 @@ export function BottomNavBar() {
   const prefetched = useRef(new Set<string>());
 
   const activeId = getActiveTab(location);
-  // «المزيد» يُضاء فقط عندما لا ينتمي المسار لأي تبويب أساسي — لا يُشارك النشاط مع تبويب آخر
-  const moreActive = activeId === "more";
+  // اختيار أحادي: فتح شيت «المزيد» يلغي إضاءة التبويبات الأخرى
+  const moreActive = moreOpen || activeId === "more";
 
   if (isImmersiveChromePath(location)) return null;
 
@@ -47,7 +47,7 @@ export function BottomNavBar() {
       <nav className="bottom-nav bottom-nav--v2 bottom-nav--m2030 mj-nav-skin" aria-label="التنقل السفلي">
         {BOTTOM_NAV_TABS.map(({ href, label, Icon }) => {
           const id = HREF_TO_ID[href];
-          const active = id === activeId;
+          const active = !moreOpen && id === activeId;
           const soon = isComingSoonPath(href);
           return (
             <Link

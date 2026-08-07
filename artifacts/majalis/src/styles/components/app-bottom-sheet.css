@@ -116,6 +116,29 @@
   outline-offset: 2px;
 }
 
+.app-sheet__close--primary {
+  border-color: transparent;
+  background: var(--mj-brand, #1F7A5A);
+  color: #fff;
+}
+
+.app-sheet__footer-slot + .app-sheet__footer {
+  border-top: 0;
+  padding-block-start: 0.35rem;
+}
+
+.app-sheet__footer-slot .app-sheet__close {
+  margin-block-end: 0.45rem;
+}
+
+.update-available-sheet__copy {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--mj-ink-muted, var(--text-muted, #4a5c55));
+  text-align: center;
+}
+
 body.app-sheet-open {
   overflow: hidden;
 }
