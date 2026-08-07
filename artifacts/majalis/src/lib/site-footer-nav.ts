@@ -19,6 +19,7 @@ export const SITE_FOOTER_GROUPS: FooterGroup[] = [
       { href: "/quran-knowledge", label: "القرآن" },
       { href: "/lessons", label: "الدروس" },
       { href: "/teachers", label: "المشايخ" },
+      { href: "/lessons/archive", label: "أرشيف الدروس" },
       { href: "/learn", label: "المكتبة" },
       { href: "/scholars", label: "العلماء" },
       { href: "/fiqh", label: "الفقه" },
