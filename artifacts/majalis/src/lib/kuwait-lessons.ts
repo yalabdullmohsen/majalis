@@ -191,6 +191,28 @@ function enrichScheduleFields(
   };
 }
 
+/**
+ * العنوان المعروض = العنوان النظيف فقط.
+ * يزيل لاحقات الجلسة/الجدول التي كانت تُلحق تاريخياً بـ « — » بعد العنوان الأساسي
+ * عندما يطابق اللاحق يوماً أو وقتاً أو تسمية جلسة عامة — دون تخمين محتوى علمي.
+ */
+export function cleanLessonDisplayTitle(title: string, linkedLessons?: string[]): string {
+  const raw = String(title || "").trim();
+  if (!raw.includes(" — ")) return raw;
+  const parts = raw.split(" — ").map((p) => p.trim()).filter(Boolean);
+  if (parts.length < 2) return raw;
+  const tail = parts[parts.length - 1] || "";
+  const linked = new Set((linkedLessons || []).map((s) => s.trim()));
+  const looksLikeSession =
+    linked.has(tail) ||
+    /^(السبت|الأحد|الإثنين|الثلاثاء|الأربعاء|الخميس|الجمعة)\b/u.test(tail) ||
+    /^(المجلس الأسبوعي|البرنامج الأسبوعي)\b/u.test(tail) ||
+    /^\d{1,2}:\d{2}/.test(tail) ||
+    /بعد\s+(الفجر|الظهر|العصر|المغرب|العشاء)/u.test(tail);
+  if (looksLikeSession) return parts.slice(0, -1).join(" — ").trim() || raw;
+  return raw;
+}
+
 /** تحويل صف Supabase أو Seed إلى نموذج العرض الموحد. */
 export function mapLessonRow(row: any): KuwaitLessonRecord {
   const day = row.day_of_week || row.day || parseDayFromSchedule(row.schedule);
@@ -210,10 +232,11 @@ export function mapLessonRow(row: any): KuwaitLessonRecord {
   // بصمات kuwait-lessons التاريخية تُحوَّل للمعرّف الكانوني kw-* إن وُجد.
   const rawId = String(row.external_key || row.id || "").replace(/:/g, "-");
   const id = canonicalizeLessonPublicId(rawId);
+  const linkedLessons = Array.isArray(row.linked_titles) ? row.linked_titles : undefined;
 
   const partialLesson = enrichScheduleFields({
     id,
-    title: row.title,
+    title: cleanLessonDisplayTitle(row.title, linkedLessons),
     sheikhName: stripSheikhHonorifics(rawSheikh) || rawSheikh,
     organizerName: row.organizer_name ? stripSheikhHonorifics(row.organizer_name) : undefined,
     sheikhImage: row.sheikh_image_url || resolveLessonSheikhImage(row),
