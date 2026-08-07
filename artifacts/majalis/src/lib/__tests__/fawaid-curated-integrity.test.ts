@@ -1465,7 +1465,7 @@ assert(
  * سجلّاتِه بالوضعِ أو الكذبِ ما دام في الصنفِ سجلٌّ واحدٌ درجتُه مقبولة. ويبقى
  * `/hadith/mawdu` على وصفِه، فليس في سجلّاتِه درجةٌ مقبولةٌ مفردة.
  */
-const HADITH_PAGE_SRC = readFileSync(new URL("../../views/HadithPage.tsx", import.meta.url), "utf8");
+const HADITH_PAGE_SRC = readFileSync(new URL("../../pages/hadith/ui/HadithView.tsx", import.meta.url), "utf8");
 const FABRICATION_WORD = /مكذوب|موضوع|مختلَق|مفترى/;
 const classMetaBlocks = (["sahih", "daif", "mawdu"] as const).map((cls) => {
   const at = HADITH_PAGE_SRC.indexOf(`  ${cls}: {`);

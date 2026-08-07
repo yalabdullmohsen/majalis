@@ -47,3 +47,7 @@
 
 - ترحيل ٩ صفحات دروس/معلمين إلى `pages/lessons/`.
 - سكربت مساعد: `scripts/migrate-views-batch.mjs`.
+
+## C3 — الحديث
+
+- ترحيل ١٠ صفحات حديث إلى `pages/hadith/`.

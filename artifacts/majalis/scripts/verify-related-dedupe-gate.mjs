@@ -14,7 +14,7 @@ if (/RelatedKnowledge/.test(adhkar)) {
   issues.push("AdhkarPage: RelatedKnowledge يكرّر أقسام الصفحة — أُزل");
 }
 
-const hadith = readFileSync(join(appRoot, "src/views/HadithPage.tsx"), "utf8");
+const hadith = readFileSync(join(appRoot, "src/pages/hadith/ui/HadithView.tsx"), "utf8");
 if (/RelatedKnowledge/.test(hadith)) {
   issues.push("HadithPage: RelatedKnowledge يكرّر سياق الحديث — أُزل");
 }
