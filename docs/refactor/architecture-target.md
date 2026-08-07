@@ -85,3 +85,7 @@
 ## H — RelatedRail
 
 - GraphRelatedRail يقرأ links.json ويُعرض في ملف العالِم.
+
+## D2 — سلّم المسافات
+
+- سلّم ٤/٨/١٢/١٦/٢٤/٣٢/٤٨ + `--page-gutter` على PageShell وفهرس السور.

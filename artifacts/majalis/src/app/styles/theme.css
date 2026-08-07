@@ -37,9 +37,11 @@
   --spacing-mj-2: 8px;
   --spacing-mj-3: 12px;
   --spacing-mj-4: 16px;
-  --spacing-mj-5: 20px;
+  /* s5 انتقالي — الهدف السلّم: ٤/٨/١٢/١٦/٢٤/٣٢/٤٨ */
+  --spacing-mj-5: 16px;
   --spacing-mj-6: 24px;
   --spacing-mj-8: 32px;
+  --spacing-mj-12: 48px;
 
   /* سلّم طباعة موحّد — 6 أحجام فقط */
   --text-mj-display: 40px;
@@ -80,6 +82,7 @@
   --radius-card: var(--radius-mj-md);
   --shadow-sheet: var(--shadow-mj);
   --page-gutter: var(--gutter-inline-start);
+  --page-gutter-end: var(--gutter-inline-end);
 }
 
 :root {
@@ -126,6 +129,7 @@
   --radius-card: var(--mj-r-md);
   --shadow-sheet: var(--mj-sh);
   --page-gutter: var(--gutter-inline-start);
+  --page-gutter-end: var(--gutter-inline-end);
   --mj-r-sm: 12px;
   --mj-r-md: 16px;
   --mj-r-lg: 22px;
@@ -135,9 +139,10 @@
   --mj-s2: 8px;
   --mj-s3: 12px;
   --mj-s4: 16px;
-  --mj-s5: 20px;
+  --mj-s5: 16px;
   --mj-s6: 24px;
   --mj-s8: 32px;
+  --mj-s12: 48px;
   --mj-face: "Amiri", serif;
   --mj-ui: "Alexandria", "IBM Plex Sans Arabic", system-ui, sans-serif;
   --mj-num: "Alexandria", "IBM Plex Sans Arabic", system-ui, sans-serif;
@@ -371,7 +376,9 @@ a:active {
 .mj-page {
   max-width: 1180px;
   margin-inline: auto;
-  padding: var(--mj-s5) var(--mj-s4) 96px;
+  padding-block: var(--mj-s6) var(--mj-s12);
+  padding-inline: var(--page-gutter, var(--mj-s4)) var(--page-gutter-end, var(--page-gutter, var(--mj-s4)));
+  box-sizing: border-box;
 }
 
 .mj-page-head {
