@@ -1,9 +1,17 @@
 import { useEffect, useState } from "react";
 import { Wifi, WifiOff, RefreshCw } from "lucide-react";
-import { outboxPendingCount } from "@/lib/sync-outbox";
 import "@/styles/components/language-offline.css";
 
 type Status = "online" | "offline" | "back-online";
+
+async function readPendingCount(): Promise<number> {
+  try {
+    const { outboxPendingCount } = await import("@/lib/sync-outbox");
+    return await outboxPendingCount();
+  } catch {
+    return 0;
+  }
+}
 
 export function OfflineBanner() {
   const [status, setStatus] = useState<Status>(
@@ -14,7 +22,7 @@ export function OfflineBanner() {
   useEffect(() => {
     let timer: ReturnType<typeof setTimeout>;
     const refreshPending = () => {
-      void outboxPendingCount().then(setPending).catch(() => setPending(0));
+      void readPendingCount().then(setPending);
     };
     refreshPending();
 
