@@ -22,8 +22,8 @@ type SectionTab = {
  */
 export const SECTION_TABS: SectionTab[] = [
   { href: "/quran-knowledge", label: "قرآن", Icon: BookOpen, prefetch: () => import("@/views/QuranKnowledgeHubPage") },
-  { href: "/lessons", label: "علم", Icon: GraduationCap, prefetch: () => import("@/views/LessonsPage") },
-  { href: "/prayer-times", label: "عبادة", Icon: Clock, prefetch: () => import("@/views/PrayerTimesPage") },
+  { href: "/lessons", label: "الدروس", Icon: GraduationCap, prefetch: () => import("@/views/LessonsPage") },
+  { href: "/prayer-times", label: "الصلاة", Icon: Clock, prefetch: () => import("@/views/PrayerTimesPage") },
   { href: "/fiqh", label: "فقه", Icon: Scale, prefetch: () => import("@/views/FiqhPage") },
 ];
 

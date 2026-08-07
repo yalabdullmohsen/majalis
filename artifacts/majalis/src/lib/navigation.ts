@@ -95,8 +95,8 @@ export const PUBLIC_NAV_ITEMS: NavLink[] = [
 export const PRIMARY_NAV_ITEMS: NavLink[] = [
   { href: "/", label: seoNavLabel("/", "الرئيسية") },
   { href: "/quran-knowledge", label: seoNavLabel("/quran-knowledge", "قرآن"), description: "مصحف · علوم · حفظ" },
-  { href: "/lessons", label: seoNavLabel("/lessons", "علم"), description: "دروس · حديث · سيرة" },
-  { href: "/prayer-times", label: seoNavLabel("/prayer-times", "عبادة"), description: "صلاة · أذكار · ورد" },
+  { href: "/lessons", label: seoNavLabel("/lessons", "الدروس"), description: "دروس · حديث · سيرة" },
+  { href: "/prayer-times", label: seoNavLabel("/prayer-times", "الصلاة"), description: "صلاة · أذكار · ورد" },
   { href: "/fiqh", label: seoNavLabel("/fiqh", "فقه"), description: "أحكام · مسائل · أسئلة" },
 ];
 

@@ -7,7 +7,7 @@ import { BOTTOM_NAV_TABS } from "@/lib/nav-map";
 import { isTabActive } from "./TopSectionBar";
 import { MoreBottomSheet } from "./MoreBottomSheet";
 
-/** شريط سفلي — مشتق من nav-map (مصدر واحد): قرآن · علم · عبادة · فقه · المزيد */
+/** شريط سفلي — مشتق من nav-map (مصدر واحد): قرآن · الدروس · الصلاة · فقه · المزيد */
 export function BottomNavBar() {
   const [location] = useLocation();
   const [moreOpen, setMoreOpen] = useState(false);
