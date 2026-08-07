@@ -1,4 +1,6 @@
 import type { ReactNode } from "react";
+import { useEffect } from "react";
+import { ensureChromeMeta } from "@/lib/ensure-chrome-meta";
 import "@/styles/components/page-shell.css";
 
 export type PageShellDensity = "dense" | "medium" | "airy";
@@ -23,8 +25,7 @@ type Props = {
 
 /**
  * غلاف الصفحة الواحد — الأغلفة العامة تشتق منه.
- * إن مُرِّرت الفتحات (intro/content/related) تُرتَّب؛ وإلا يُمرَّر children كما هو
- * للحفاظ على محددات CSS الحالية أثناء الترحيل التدريجي.
+ * يفرض وسوم chrome (viewport/theme-color) من مصدر واحد.
  */
 export function PageShell({
   children,
@@ -37,6 +38,10 @@ export function PageShell({
   as: Tag = "div",
   "aria-labelledby": ariaLabelledBy,
 }: Props) {
+  useEffect(() => {
+    ensureChromeMeta();
+  }, []);
+
   const widthClass =
     variant === "narrow"
       ? "page-shell narrow"

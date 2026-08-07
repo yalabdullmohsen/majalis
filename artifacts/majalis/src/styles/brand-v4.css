@@ -220,14 +220,13 @@
   --focus-ring:   0 0 0 2px var(--bg), 0 0 0 4px var(--brand);
   --focus-color:  var(--brand);
 
-  /* أبعاد الهيكل — متوافقة مع App Shell في final-release (iPhone + Dynamic Island)
-     --bottom-nav-h = ارتفاع منطقة التبويبات فقط (أيقونة+نص+حشو)، بلا safe-area.
-     الـHome Indicator يُضاف مرة واحدة عبر padding-bottom على الشريط نفسه. */
-  --header-h:           3.25rem;
-  --bottom-nav-h:       2.75rem;
-  --header-height:      var(--header-h);
-  --bottom-nav-height:  var(--bottom-nav-h);
-  --content-max:        75rem;
+  /* أبعاد الهيكل — كروم بلا إنسِت؛ --header-h / --nav-h / --content-pb من theme.css */
+  --header-chrome: 56px;
+  --nav-chrome: 64px;
+  --header-height: var(--header-chrome);
+  --bottom-nav-h: var(--nav-chrome);
+  --bottom-nav-height: var(--nav-chrome);
+  --content-max:        70rem; /* ≈1120px لقراءة مريحة على iPad */
 }
 
 /* ══════════════════════════════════════════════════════════════

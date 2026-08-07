@@ -1,8 +1,3 @@
-/**
- * إيقاع PageShell الموحّد (الجولة الثالثة — B1 / C1).
- * المساحات من سلّم --mj-s* فقط.
- */
-
 .page-shell__intro {
   margin-block-start: var(--mj-s4); /* 16 */
   margin-block-end: var(--mj-s6); /* 24 */
