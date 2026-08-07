@@ -20,7 +20,7 @@
   --color-danger: #DC2626;
   --color-danger-soft: #FEE2E2;
   --color-danger-deep: #991B1B;
-  --color-splash: #011608;
+  --color-splash: #F2F4F3;
 
   --font-face: "Amiri", serif;
   --font-ui: "Alexandria", "IBM Plex Sans Arabic", system-ui, sans-serif;
@@ -70,7 +70,7 @@
   --mj-danger: #DC2626;
   --mj-danger-soft: #FEE2E2;
   --mj-danger-deep: #991B1B;
-  --mj-splash: #011608;
+  --mj-splash: #F2F4F3;
   --mj-r-sm: 12px;
   --mj-r-md: 16px;
   --mj-r-lg: 22px;
@@ -124,10 +124,7 @@ html.dark,
   --mj-danger: #F87171;
   --mj-danger-soft: #3F1D1D;
   --mj-danger-deep: #FECACA;
-  --mj-splash: #011608;
-  --mj-sh: 0 10px 26px -18px rgba(0, 0, 0, 0.7);
-
-  --color-bg: #101614;
+  --mj-splash: #101614;
   --color-surface: #17201C;
   --color-surface-2: #1E2925;
   --color-hairline: #26332D;
@@ -143,7 +140,7 @@ html.dark,
   --color-danger: #F87171;
   --color-danger-soft: #3F1D1D;
   --color-danger-deep: #FECACA;
-  --color-splash: #011608;
+  --color-splash: #101614;
   --shadow-mj: 0 10px 26px -18px rgba(0, 0, 0, 0.7);
 }
 

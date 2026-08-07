@@ -1,10 +1,10 @@
 /**
  * إخفاء شاشة الدخول (ويب + Capacitor) عند أول جاهزية للمسار.
- * سقف زمني 2.5s يخفيها على أي حال — بلا مؤقّت اصطناعي لإبراز الشعار.
+ * سقف زمني 1.2s يخفيها على أي حال — بارد البدء فقط، بلا إبقاء اصطناعي.
  */
 import { Capacitor } from "@capacitor/core";
 
-const MAX_MS = 2500;
+const MAX_MS = 1200;
 let hidden = false;
 
 function dismissWebSplash() {
@@ -35,7 +35,7 @@ export async function hideAppSplash() {
   }
 }
 
-/** يُستدعى مرة عند الإقلاع: يخفي عند أول إطار بعد التركيب، مع سقف 2.5s */
+/** يُستدعى مرة عند الإقلاع: يخفي عند أول إطار بعد التركيب، مع سقف 1.2s */
 export function armSplashAutoHide() {
   const deadline = window.setTimeout(() => {
     void hideAppSplash();
