@@ -133,6 +133,7 @@ console.log("\n=== القوائم بلا أقسام محذوفة — عن الم
   const navMapSrc = readFileSync(resolve(appRoot, "src/lib/nav-map.ts"), "utf-8");
   const homeSrc = readFileSync(resolve(appRoot, "src/views/HomePage.tsx"), "utf-8");
   const footerSrc = readFileSync(resolve(appRoot, "src/components/SiteFooter.tsx"), "utf-8");
+  const appSrc = readFileSync(resolve(appRoot, "src/App.tsx"), "utf-8");
   for (const src of [moreSrc, sideSrc, sidebarNavSrc, servicesNavSrc]) {
     assert(!src.includes('href: "/library"') && !src.includes('"/library"'), "لا رابط مكتبة قديم /library");
     assert(!src.includes('"/updates"'), "لا آخر المستجدات");
@@ -145,6 +146,14 @@ console.log("\n=== القوائم بلا أقسام محذوفة — عن الم
   assert(footerNavSrc.includes("/about-us") && footerNavSrc.includes("/privacy"), "تذييل عن المجلس");
   assert(footerNavSrc.includes("/start-here") && footerNavSrc.includes("/learning/paths"), "تذييل ابدأ/مسارات");
   assert(footerNavSrc.includes("SITE_FOOTER_GROUPS") && footerNavSrc.includes("الأقسام"), "تذييل رباعي المجموعات");
+  for (const title of ["الأقسام", "ابدأ", "الثقة", "قانوني"]) {
+    assert(footerNavSrc.includes(`title: "${title}"`), `مجموعة التذييل: ${title}`);
+  }
+  assert(!footerNavSrc.includes('title: "استكشف"'), "لا مجموعة خامسة في التذييل");
+  for (const href of ["/methodology", "/fatwa-policy", "/about", "/privacy", "/contact"]) {
+    assert(footerNavSrc.includes(href), `رابط التذييل: ${href}`);
+  }
+  assert(appSrc.includes("SiteFooter") && appSrc.includes("{!immersive && <SiteFooter />}"), "التذييل في غلاف التطبيق");
   assert(footerNavSrc.includes("الريادة الإسلامية الرقمية"), "سطر الريادة في التذييل");
   assert(servicesNavSrc.includes("/about-us") && servicesNavSrc.includes("/about"), "عن المجلس في مركز الخدمات");
   assert(servicesNavSrc.includes("/start-here") && servicesNavSrc.includes("/learning/paths"), "ابدأ/مسارات في مركز الخدمات");

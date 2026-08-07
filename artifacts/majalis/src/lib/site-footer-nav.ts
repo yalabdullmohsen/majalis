@@ -47,25 +47,6 @@ export const SITE_FOOTER_GROUPS: FooterGroup[] = [
     ],
   },
   {
-    id: "explore",
-    title: "استكشف",
-    links: [
-      { href: "/rulings", label: "موسوعة الأحكام" },
-      { href: "/topics", label: "المواضيع" },
-      { href: "/fawaid", label: "الفوائد" },
-      { href: "/learn", label: "تعلّم" },
-      { href: "/fiqh-council", label: "المجامع الفقهية" },
-      { href: "/hadith/sahih", label: "الصحيحان" },
-      { href: "/hadith/books", label: "كتب الحديث" },
-      { href: "/tasbih", label: "التسبيح" },
-      { href: "/duas", label: "الأدعية" },
-      { href: "/asma-husna", label: "أسماء الله الحسنى" },
-      { href: "/discover-islam", label: "اكتشف الإسلام" },
-      { href: "/assistant", label: "المساعد العلمي" },
-      { href: "/sitemap", label: "خريطة الموقع" },
-    ],
-  },
-  {
     id: "legal",
     title: "قانوني",
     links: [
