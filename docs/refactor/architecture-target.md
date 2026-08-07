@@ -86,6 +86,12 @@
 
 - GraphRelatedRail يقرأ links.json ويُعرض في ملف العالِم.
 - توسعة: GraphRelatedRail في تفاصيل المكتبة (`LibraryDetailView`, kind=book).
+- توسعة: GraphRelatedRail في تفاصيل الحكم (`RulingDetailView`, kind=ruling).
+
+## G2 — محاذاة معرّفات الرسم
+
+- تحديث `links.json` لتعكس معرّفات المنصة الحقيقية (`ibn-qudama`, `book-mughni`, `ruling-wudu-nullifiers`…).
+- إزالة روابط/عقد دروس وهمية كانت تشير لمسارات غير موجودة.
 
 ## D2 — سلّم المسافات
 
@@ -94,6 +100,7 @@
 ## E — طبقة البيانات
 
 - مستودعات scholar/book حية + DataResult + Zod للرسم + hooks Query.
+- E2: `useBooksQuery` / `useBookQuery` بجانب hooks العلماء.
 
 ## F — سجل المسارات
 

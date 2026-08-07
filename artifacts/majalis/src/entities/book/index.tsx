@@ -3,6 +3,7 @@
  */
 export type { BookEntity } from "@/entities/book/api";
 export { bookRepository, fetchBooks } from "@/entities/book/api";
+export { useBooksQuery, useBookQuery } from "@/entities/book/hooks";
 
 import type { EntityCardProps } from "@/entities/_ports";
 
