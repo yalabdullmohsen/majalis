@@ -409,8 +409,10 @@ html.pts-immersive body {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 40px;
-  height: 40px;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
   border-radius: 50%;
   background: rgba(212, 196, 160, 0.1);
   border: 1px solid var(--pts-gold-line);
@@ -445,9 +447,11 @@ html.pts-immersive body {
 
 .pts-more {
   margin: 0.75rem 1rem 0;
+  margin-block-start: auto;
   border-radius: var(--mj-r-md, 16px);
   border: 1px solid color-mix(in srgb, currentColor 16%, transparent);
   padding: 0.35rem 0.65rem;
+  order: 40;
 }
 .pts-more > summary {
   cursor: pointer;

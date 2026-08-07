@@ -326,7 +326,9 @@ html[data-theme="dark"] .hj-page { background: #111714 !important; }
 
 /* related */
 .hj-related { margin-top: 2.5rem; }
-.hj-related__title { font-size: var(--ds-text-base); font-weight: 700; color: #111; margin: 0 0 .75rem; }
+.hj-related__title { font-size: var(--ds-text-base); font-weight: 700; color: var(--mj-ink, #111); margin: 0 0 .75rem; }
+html[data-theme="dark"] .hj-related__title,
+html.dark .hj-related__title { color: var(--mj-ink, #F2F4F3); }
 .hj-related__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; }
 .hj-related__link {
   background: #fff;

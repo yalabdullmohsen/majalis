@@ -26,6 +26,7 @@ import "./styles/design-system.css";
 import "./styles/final-release.css";
 import "./styles/brand-v4-components.css";
 import "./styles/brand-v4-contrast-fixes.css";
+import "./styles/a11y-release-gate.css";
 import "./styles/capacitor-native-ux.css";
 import "./styles/m2030/foundation.css";
 import "./styles/m2030/navigation.css";

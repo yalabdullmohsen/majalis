@@ -526,8 +526,8 @@ label {
   border: 1px solid rgba(0,0,0,0.07) !important;
   border-radius: var(--m26-r-lg) !important;
 }
-.notif-card__title { color: var(--txt-primary, #1A1A18) !important; }
-.notif-row__label { color: var(--txt-primary, #1A1A18) !important; }
+.notif-card__title { color: var(--mj-brand-deep, #1A1A18) !important; }
+.notif-row__label { color: var(--mj-brand-deep, #1A1A18) !important; }
 .notif-row__sub { color: var(--txt-muted, var(--mj-ink-2)) !important; }
 .notif-toggle { background: rgba(0,0,0,0.12) !important; }
 .notif-toggle--on { background: var(--m26-green-600, var(--mj-brand)) !important; }
