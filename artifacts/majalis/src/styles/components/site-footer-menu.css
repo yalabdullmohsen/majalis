@@ -9,7 +9,7 @@
   background: color-mix(in srgb, var(--color-surface, #fff) 92%, var(--color-primary, var(--mj-brand)) 4%);
   color: var(--color-text-muted, var(--mj-ink-2));
   /* فراغ فوق الشريط السفلي على الجوال */
-  padding-block-end: calc(16px + env(safe-area-inset-bottom, 0px));
+  padding-block-end: calc(16px + var(--inset-bottom));
 }
 
 .site-footer-inner--global {

@@ -27,7 +27,7 @@
   justify-content: space-between;
   gap: 0.75rem;
   padding: 0.65rem 1rem;
-  padding-top: max(0.65rem, env(safe-area-inset-top, 0px));
+  padding-top: max(0.65rem, var(--inset-top));
   flex-shrink: 0;
 }
 
@@ -71,7 +71,7 @@
   flex-shrink: 0;
   border-top: 1px solid rgba(0, 0, 0, 0.08);
   background: #fff;
-  padding-bottom: env(safe-area-inset-bottom, 0px);
+  padding-bottom: var(--inset-bottom);
 }
 
 .majlisilm-app[data-dark="1"] .majlisilm-app__nav {
@@ -179,7 +179,7 @@
 }
 
 .majlisilm-app__edu {
-  padding: 1rem 1rem max(1rem, env(safe-area-inset-bottom, 0px));
+  padding: 1rem 1rem max(1rem, var(--inset-bottom));
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   height: 100%;
@@ -286,7 +286,7 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.65rem 0.75rem;
-  padding-top: max(0.65rem, env(safe-area-inset-top, 0px));
+  padding-top: max(0.65rem, var(--inset-top));
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
 }
 
@@ -426,7 +426,7 @@
   height: min(60vh, 32rem);
   background: #faf8f5;
   border-radius: 24px 24px 0 0;
-  padding: 1.25rem 1.5rem max(1.5rem, env(safe-area-inset-bottom, 0px));
+  padding: 1.25rem 1.5rem max(1.5rem, var(--inset-bottom));
   display: flex;
   flex-direction: column;
   box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.15);

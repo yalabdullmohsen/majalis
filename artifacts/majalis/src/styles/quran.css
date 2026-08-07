@@ -2187,9 +2187,9 @@ body.has-immersive-mushaf { overflow: hidden; }
   /* مخطط آية: عمود كامل الشاشة مع تباعد متوازن */
   justify-content: space-between;
   padding: 0.5rem;
-  padding-top: max(0.5rem, env(safe-area-inset-top, 0px));
-  padding-bottom: max(0.5rem, env(safe-area-inset-bottom, 0px));
-  padding-inline: max(0.5rem, env(safe-area-inset-left, 0px)) max(0.5rem, env(safe-area-inset-right, 0px));
+  padding-top: max(0.5rem, var(--inset-top));
+  padding-bottom: max(0.5rem, var(--inset-bottom));
+  padding-inline: max(0.5rem, var(--inset-left)) max(0.5rem, var(--inset-right));
   box-sizing: border-box;
   width: 100%;
   max-width: 100%;
@@ -2255,7 +2255,7 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
 
 .mpv-toolbar--ayah {
   position: absolute;
-  top: calc(2.25rem + env(safe-area-inset-top, 0px));
+  top: calc(2.25rem + var(--inset-top));
   left: 0;
   right: 0;
   background: transparent !important;
@@ -2289,7 +2289,7 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
   margin-block: 0.5rem;
   /* هامش أفقي آمن (≈ px-4) + safe-area — النص لا يلمس حافة الشاشة */
   padding-block: 0;
-  padding-inline: max(1rem, env(safe-area-inset-left, 0px)) max(1rem, env(safe-area-inset-right, 0px));
+  padding-inline: max(1rem, var(--inset-left)) max(1rem, var(--inset-right));
   box-sizing: border-box;
   width: 100%;
   max-width: 100%;
@@ -2300,7 +2300,7 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
 }
 @media (min-width: 640px) {
   .mpv-body--ayah {
-    padding-inline: max(1.5rem, env(safe-area-inset-left, 0px)) max(1.5rem, env(safe-area-inset-right, 0px));
+    padding-inline: max(1.5rem, var(--inset-left)) max(1.5rem, var(--inset-right));
   }
 }
 .quran-shell--chrome-hidden .mpv-body--ayah {
@@ -2317,7 +2317,7 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
 .quran-shell--page-fill .mpv-body--ayah {
   margin-block: 0;
   /* لا تقل عن 1rem حتى في وضع الامتلاء — كان 4px يقصّ الحواف على الجوال */
-  padding-inline: max(1rem, env(safe-area-inset-left, 0px)) max(1rem, env(safe-area-inset-right, 0px));
+  padding-inline: max(1rem, var(--inset-left)) max(1rem, var(--inset-right));
   max-height: none;
   height: 100%;
   min-height: 100dvh;
@@ -2334,8 +2334,8 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
 .mpv-fill-exit,
 .mpv-fill-enter {
   position: fixed;
-  top: max(0.55rem, env(safe-area-inset-top, 0px));
-  inset-inline-start: max(0.55rem, env(safe-area-inset-left, 0px));
+  top: max(0.55rem, var(--inset-top));
+  inset-inline-start: max(0.55rem, var(--inset-left));
   z-index: 60;
   display: inline-flex;
   align-items: center;
@@ -2381,12 +2381,12 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
   margin-inline: auto;
   max-height: 83vh;
   box-sizing: border-box;
-  padding-inline: max(1rem, env(safe-area-inset-left, 0px)) max(1rem, env(safe-area-inset-right, 0px));
+  padding-inline: max(1rem, var(--inset-left)) max(1rem, var(--inset-right));
 }
 @media (min-width: 768px) {
   .qs-mushaf-frame--ayah,
   .qs-mushaf-frame--ayah-chrome {
-    padding-inline: max(2rem, env(safe-area-inset-left, 0px)) max(2rem, env(safe-area-inset-right, 0px));
+    padding-inline: max(2rem, var(--inset-left)) max(2rem, var(--inset-right));
   }
 }
 .qs-mushaf-frame--ayah::before,
@@ -2500,9 +2500,9 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
   gap: .35rem;
   padding: .3rem .45rem;
   /* ⚠️ إصلاح جذري (2026-07-22): كانت بلا أي مراعاة للنوتش/الجزيرة الديناميكية
-     (env(safe-area-inset-top)) — الشريط السفلي .mpv-navbar كان يراعي
+     (var(--inset-top)) — الشريط السفلي .mpv-navbar كان يراعي
      inset-bottom أصلًا، هذا يوازيه للأعلى. */
-  padding-top: max(.3rem, env(safe-area-inset-top));
+  padding-top: max(.3rem, var(--inset-top));
   background: var(--bg-card, #fff);
   border-bottom: 1px solid var(--border, var(--mj-hairline));
   direction: rtl;
@@ -2542,7 +2542,7 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
 }
 .mpv-bookmark-status {
   position: fixed;
-  top: calc(3.25rem + env(safe-area-inset-top, 0px));
+  top: calc(3.25rem + var(--inset-top));
   inset-inline: 0;
   z-index: 40;
   margin: 0;
@@ -2568,9 +2568,9 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
   margin: 0;
   padding:
     6px
-    max(6px, env(safe-area-inset-left, 0px))
-    calc(3.1rem + env(safe-area-inset-bottom, 0px) + 6px)
-    max(6px, env(safe-area-inset-right, 0px));
+    max(6px, var(--inset-left))
+    calc(3.1rem + var(--inset-bottom) + 6px)
+    max(6px, var(--inset-right));
   direction: rtl;
   box-sizing: border-box;
   display: flex;
@@ -2580,7 +2580,7 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
 }
 /* عند إخفاء الأدوات باللمس: لا نحجز فراغًا للشريط السفلي */
 .quran-shell--chrome-hidden .mpv-body {
-  padding-bottom: max(6px, env(safe-area-inset-bottom, 0px));
+  padding-bottom: max(6px, var(--inset-bottom));
 }
 .mpv-resume-banner {
   display: flex;
@@ -2617,7 +2617,7 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
   align-items: center;
   gap: .4rem;
   padding: .35rem .5rem;
-  padding-bottom: max(.35rem, env(safe-area-inset-bottom));
+  padding-bottom: max(.35rem, var(--inset-bottom));
   background: var(--bg-card, #fff);
   border-top: 1px solid var(--border, var(--mj-hairline));
   direction: rtl;
@@ -2679,7 +2679,7 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
   overflow-y: auto;
   background: var(--bg-card, #fff);
   border-radius: 1.1rem 1.1rem 0 0;
-  padding: 1rem 1.1rem calc(1.5rem + env(safe-area-inset-bottom));
+  padding: 1rem 1.1rem calc(1.5rem + var(--inset-bottom));
   direction: rtl;
 }
 .mpv-settings-panel__head { display: flex; align-items: center; justify-content: space-between; margin-bottom: .9rem; }
@@ -2735,7 +2735,7 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
   overflow-y: auto;
   background: var(--bg-card, #fff);
   border-radius: 1.1rem 1.1rem 0 0;
-  padding: .5rem 0 calc(1rem + env(safe-area-inset-bottom));
+  padding: .5rem 0 calc(1rem + var(--inset-bottom));
   direction: rtl;
 }
 .aas-panel__handle { width: 36px; height: 4px; border-radius: var(--ds-radius-full); background: var(--border, var(--mj-hairline)); margin: .5rem auto .75rem; }

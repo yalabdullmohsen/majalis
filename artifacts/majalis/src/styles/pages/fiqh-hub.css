@@ -160,7 +160,7 @@ html[data-theme="dark"] .fqh-hub-card__desc {
   scroll-snap-type: x proximity;
   scroll-padding-inline: 0.75rem;
   padding-block: .5rem;
-  padding-inline: max(0.75rem, env(safe-area-inset-inline-start, 0px)) max(0.75rem, env(safe-area-inset-inline-end, 0px));
+  padding-inline: max(0.75rem, var(--gutter-inline-start)) max(0.75rem, var(--gutter-inline-end));
   max-width: 100%;
   box-sizing: border-box;
   direction: rtl;

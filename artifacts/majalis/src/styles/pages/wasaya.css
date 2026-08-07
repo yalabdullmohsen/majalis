@@ -2,7 +2,7 @@
    248 — الوصايا النبوية  (.wn-*)
    ══════════════════════════════════════════════════════════════════ */
 
-.wn-page { min-height: 100vh; background: var(--clr-bg); }
+.wn-page { min-height: 100svh; background: var(--clr-bg); }
 
 /* Hero */
 .wn-hero {

@@ -2185,7 +2185,7 @@ html[data-theme="dark"] .lesson-unified-card__btn--primary {
 .adv-skel-line3 { width: 100%; max-width: 24rem; height: 0.75rem; margin: 0 auto; }
 
 /* ── 176 — AppShell, SiteFooter, RelatedKnowledge ──────────────────────── */
-.app-shell { min-height: 100vh; direction: var(--app-dir, rtl); }
+.app-shell { min-height: 100svh; direction: var(--app-dir, rtl); }
 .navbar-v3-placeholder { min-height: 4rem; }
 .footer-star { opacity: 0.4; }
 

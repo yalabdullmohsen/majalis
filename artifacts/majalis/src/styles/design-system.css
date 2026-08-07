@@ -357,13 +357,13 @@ article {
 
 .ds-sheet {
   width: 100%;
-  max-height: min(85dvh, calc(100dvh - env(safe-area-inset-top, 0px)));
+  max-height: min(85dvh, calc(100dvh - var(--inset-top)));
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
   background: var(--majalis-panel, #fff);
   border-radius: var(--ds-radius-lg) var(--ds-radius-lg) 0 0;
-  padding: var(--ds-space-4) var(--ds-space-3) calc(var(--ds-space-4) + env(safe-area-inset-bottom, 0px));
+  padding: var(--ds-space-4) var(--ds-space-3) calc(var(--ds-space-4) + var(--inset-bottom));
 }
 
 /* ── Empty / loading ── */

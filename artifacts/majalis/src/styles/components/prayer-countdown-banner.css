@@ -25,8 +25,8 @@
 .pcb-wrap {
   direction: rtl;
   padding: 0.55rem 0.75rem 0.15rem;
-  padding-inline-start: max(0.75rem, env(safe-area-inset-left, 0px));
-  padding-inline-end: max(0.75rem, env(safe-area-inset-right, 0px));
+  padding-inline-start: max(0.75rem, var(--inset-left));
+  padding-inline-end: max(0.75rem, var(--inset-right));
   box-sizing: border-box;
   animation: pcb-in 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
 }

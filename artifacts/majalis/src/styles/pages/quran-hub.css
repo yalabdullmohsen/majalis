@@ -2,7 +2,7 @@
    54. Quran Hub Page — مركز القرآن الكريم
    ══════════════════════════════════════════════ */
 .quran-hub-page {
-  min-height: 100vh;
+  min-height: 100svh;
   background: var(--elite-white, var(--mj-bg));
   color: var(--elite-ink, #1A1A18);
   /* الحشو السفلي يتكفّل به .app-main (الشريط السفلي + safe area) */

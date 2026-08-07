@@ -5,7 +5,7 @@
   inset-block-end: 0;
   z-index: 12000;
   padding: 0.75rem;
-  padding-bottom: max(0.75rem, env(safe-area-inset-bottom, 0px));
+  padding-bottom: max(0.75rem, var(--inset-bottom));
   pointer-events: none;
 }
 

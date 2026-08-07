@@ -3,7 +3,7 @@
    ══════════════════════════════════════════════════════════ */
 
 /* page */
-.sw-page { min-height: 100vh; background: #F9FAFB; padding-bottom: 4rem; }
+.sw-page { min-height: 100svh; background: #F9FAFB; padding-bottom: 4rem; }
 
 /* hero */
 .sw-hero {

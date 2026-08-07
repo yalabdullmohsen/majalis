@@ -2,7 +2,7 @@
    240 — الشمائل المحمدية  (.sh-*)
    ══════════════════════════════════════════════════════════════════════ */
 
-.sh-page { background: var(--mj-bg); min-height: 100vh; }
+.sh-page { background: var(--mj-bg); min-height: 100svh; }
 
 /* hero */
 .sh-hero {

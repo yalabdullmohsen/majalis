@@ -18,7 +18,7 @@
   --rh-radius: 12px;
 
   display: flex;
-  min-height: 100vh;
+  min-height: 100svh;
   background: var(--rh-bg);
   color: var(--rh-ink);
   font-family: var(--font-primary, "Alexandria", "IBM Plex Sans Arabic", sans-serif);

@@ -2,7 +2,7 @@
 
 .cat-admin {
   direction: rtl;
-  padding-bottom: max(1.5rem, env(safe-area-inset-bottom, 0px));
+  padding-bottom: max(1.5rem, var(--inset-bottom));
 }
 
 .cat-admin__badges {
@@ -373,7 +373,7 @@ html.dark .cat-node__menu {
   }
 
   .cat-admin {
-    padding-bottom: max(4.5rem, calc(env(safe-area-inset-bottom, 0px) + 3.5rem));
+    padding-bottom: max(4.5rem, calc(var(--inset-bottom) + 3.5rem));
   }
 }
 

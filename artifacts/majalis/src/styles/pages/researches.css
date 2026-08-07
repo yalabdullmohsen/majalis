@@ -276,6 +276,6 @@
   }
 }
 
-@supports (padding: env(safe-area-inset-bottom)) {
-  .sr-page { padding-bottom: calc(3.5rem + env(safe-area-inset-bottom)); }
+@supports (padding: var(--inset-bottom)) {
+  .sr-page { padding-bottom: calc(3.5rem + var(--inset-bottom)); }
 }

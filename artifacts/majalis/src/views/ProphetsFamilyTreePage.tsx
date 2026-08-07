@@ -219,7 +219,7 @@ export default function ProphetsFamilyTreePage() {
   const selectedNode = placed.find(p => p.node.id === selected)?.node;
 
   return (
-    <div dir="rtl" style={{ minHeight: "100vh", background: "var(--mj-brand-soft)", fontFamily: "IBM Plex Sans Arabic, Noto Sans Arabic, sans-serif" }}>
+    <div dir="rtl" style={{ minHeight: "100svh", background: "var(--mj-brand-soft)", fontFamily: "IBM Plex Sans Arabic, Noto Sans Arabic, sans-serif" }}>
       {/* Header */}
       <header style={{
         background: "linear-gradient(135deg,#0c2318,#1a3d2b)",
@@ -284,7 +284,7 @@ export default function ProphetsFamilyTreePage() {
         ref={containerRef}
         style={{
           overflow: "hidden", cursor: "grab", userSelect: "none",
-          height: "calc(100vh - 130px)",
+          height: "calc(100svh - 130px)",
           position: "relative",
         }}
         onMouseDown={onMouseDown}

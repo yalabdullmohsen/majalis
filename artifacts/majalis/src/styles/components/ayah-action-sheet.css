@@ -14,7 +14,7 @@
   background: var(--majalis-panel);
   border-radius: 1.25rem 1.25rem 0 0;
   padding: .6rem 1rem 1rem;
-  padding-bottom: max(1rem, env(safe-area-inset-bottom, 0px));
+  padding-bottom: max(1rem, var(--inset-bottom));
 }
 .ayah-sheet__handle {
   width: 40px;
@@ -314,7 +314,7 @@
   background: var(--aas-cream) !important;
   color: var(--aas-ink);
   border-radius: 1.25rem 1.25rem 0 0;
-  padding: 0.35rem 0 calc(1rem + env(safe-area-inset-bottom, 0px));
+  padding: 0.35rem 0 calc(1rem + var(--inset-bottom));
   box-shadow: 0 -12px 40px rgba(20, 40, 32, 0.18);
   display: flex;
   flex-direction: column;

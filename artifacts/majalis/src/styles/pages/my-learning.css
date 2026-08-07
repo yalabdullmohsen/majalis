@@ -3,7 +3,7 @@
    ══════════════════════════════════════════════════════════════════════════ */
 
 .myl2-page {
-  min-height: 100vh;
+  min-height: 100svh;
   background: var(--mj-brand-soft);
   font-family: var(--font-body);
 }

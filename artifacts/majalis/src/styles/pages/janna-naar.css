@@ -1,7 +1,7 @@
 /* ══════════════════════════════════════════════════════════════════
    245 — JannaNaarPage  (.jn-*)
    ══════════════════════════════════════════════════════════════════ */
-.jn-page { min-height: 100vh; background: #F8FAFC; }
+.jn-page { min-height: 100svh; background: #F8FAFC; }
 
 .jn-hero { padding: 3.5rem 1.5rem 2.5rem; text-align: center; transition: background .3s ease; background: var(--jn-hero-bg, linear-gradient(145deg, #0A1628, var(--mj-brand-deep), var(--mj-brand))); }
 .jn-hero--naar { --jn-hero-bg: linear-gradient(145deg, #1A0000, #7B1010, #9B1C1C); }

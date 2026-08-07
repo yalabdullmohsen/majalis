@@ -20,7 +20,7 @@
 /* ── التخطيط العام ───────────────────────────────────────────────── */
 .admin-shell {
   display: flex;
-  min-height: calc(100vh - 60px);
+  min-height: calc(100svh - 60px);
   background: var(--majalis-parchment);
   color: var(--majalis-ink);
   direction: rtl;
@@ -86,7 +86,7 @@
   border-left: 1px solid rgba(0,0,0,0.25);
   padding: 0 0 2rem;
   overflow-y: auto;
-  max-height: calc(100vh - 60px);
+  max-height: calc(100svh - 60px);
   position: sticky;
   top: 0;
   display: flex;
