@@ -7317,6 +7317,34 @@ body.has-assistant-fab .app-main {
   box-shadow: 0 2px 8px rgba(22, 96, 72, 0.25);
 }
 
+/* اختيار أحادي: تظليل كامل لخيار واحد — بلا تراكم بصري */
+.exclusive-choice {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+.exclusive-choice__opt {
+  display: inline-flex;
+  align-items: center;
+}
+.exclusive-choice__opt--checked,
+.exclusive-choice--fill .content-hub-chip--active {
+  background: var(--majalis-emerald, var(--mj-brand));
+  color: #fff;
+}
+.exclusive-choice__box {
+  width: 1rem;
+  height: 1rem;
+  border: 1.5px solid currentColor;
+  border-radius: 0.2rem;
+  display: inline-block;
+  margin-inline-end: 0.35rem;
+  flex-shrink: 0;
+}
+.exclusive-choice__box[data-checked="true"] {
+  background: currentColor;
+}
+
 /* صفحات المحتوى: PageHeader تحسين */
 /* ── Page Hero Header — v2 style applied globally ── */
 .ds-page-header {

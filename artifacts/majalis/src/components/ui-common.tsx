@@ -201,16 +201,19 @@ export function Chip({
   children: React.ReactNode;
   onClick?: () => void;
   className?: string;
-  role?: "tab" | "button";
+  role?: "tab" | "button" | "radio";
 }) {
+  const isTab = role === "tab";
+  const isRadio = role === "radio";
   return (
     <button
       type="button"
       role={role}
       onClick={onClick}
       className={`ds-btn ds-btn--sm ${active ? "ds-btn--primary" : "ds-btn--ghost"} ${className}`.trim()}
-      aria-pressed={active}
-      aria-selected={role === "tab" ? Boolean(active) : undefined}
+      aria-pressed={!isTab && !isRadio ? Boolean(active) : undefined}
+      aria-selected={isTab ? Boolean(active) : undefined}
+      aria-checked={isRadio ? Boolean(active) : undefined}
     >
       {children}
     </button>
