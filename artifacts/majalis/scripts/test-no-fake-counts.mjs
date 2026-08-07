@@ -15,7 +15,7 @@ const appRoot = resolve(dirname(fileURLToPath(import.meta.url)), "..");
 /** الملفات التي تُعرض نصوصها في القوائم والرئيسية. */
 const WATCHED = [
   "src/lib/navigation.ts",
-  "src/views/HomePage.tsx",
+  "src/pages/account/ui/HomeView.tsx",
   "src/components/home/HomeAboutSection.tsx",
   "src/components/home/HomeQuizCard.tsx",
 ];

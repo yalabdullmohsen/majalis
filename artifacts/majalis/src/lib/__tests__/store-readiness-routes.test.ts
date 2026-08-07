@@ -11,7 +11,7 @@ const here = dirname(fileURLToPath(import.meta.url));
 const appRoot = join(here, "../../..");
 const appSrc = readFileSync(join(appRoot, "src/App.tsx"), "utf8");
 const navSrc = readFileSync(join(appRoot, "src/lib/services-center-nav.ts"), "utf8");
-const delSrc = readFileSync(join(appRoot, "src/views/AccountDeletionPage.tsx"), "utf8");
+const delSrc = readFileSync(join(appRoot, "src/pages/account/ui/AccountDeletionView.tsx"), "utf8");
 
 assert.match(appSrc, /path="\/who-we-are"/, "who-we-are alias");
 assert.match(appSrc, /path="\/delete-account"/, "delete-account alias");

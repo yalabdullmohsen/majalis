@@ -90,7 +90,7 @@ console.log("\n=== لا منطق تدوير يومي متفرق متبقٍّ ف�
 
 console.log("\n=== الرئيسية بلا مجلس اليوم / اسم الله اليومي ===");
 {
-  const homePageSrc = readSrc("src/views/HomePage.tsx");
+  const homePageSrc = readSrc("src/pages/account/ui/HomeView.tsx");
   assert(!homePageSrc.includes("HomeMajlisToday"), "HomePage لا يستورد مجلس اليوم");
   assert(!homePageSrc.includes("HomeAsmaCard"), "HomePage لا يستورد اسم الله اليومي");
   assert(!homePageSrc.includes("حديث اليوم"), "HomePage بلا نص حديث اليوم");
@@ -107,7 +107,7 @@ console.log("\n=== الرئيسية بلا مجلس اليوم / اسم الله
 
 console.log("\n=== لا مكوّنات يتيمة متبقية من الميزة المُلغاة ===");
 {
-  const homePageSrc = readSrc("src/views/HomePage.tsx");
+  const homePageSrc = readSrc("src/pages/account/ui/HomeView.tsx");
   assert(!homePageSrc.includes("HomeDailyQuestion"), "HomePage لا يستورد HomeDailyQuestion (مكوّن مُحذوف)");
   const dailyContentSrc = readSrc("src/lib/daily-content.ts");
   assert(!dailyContentSrc.includes("getDailyQa"), "getDailyQa (خاص بسؤال اليوم المُلغى) أُزيل من daily-content.ts");

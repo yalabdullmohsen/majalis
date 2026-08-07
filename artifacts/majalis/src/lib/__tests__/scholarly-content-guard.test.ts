@@ -47,7 +47,7 @@ console.log("\n=== تاريخ الطبري — لا وصف مبالَغ فيه �
 console.log("\n=== عدد الأنبياء — لا صياغة توهم أن كل الأنبياء 25 ===");
 {
   const filesWithProphetCount = [
-    "src/views/HomePage.tsx",
+    "src/pages/account/ui/HomeView.tsx",
     "src/components/SideNavDrawer.tsx",
     "src/views/SiteMapPage.tsx",
     "src/components/home/HomeInterestingTopics.tsx",

@@ -2,7 +2,7 @@
  * تحميل مسبق للمسارات الأربعة الأكثر زيارة عند خمول المتصفح.
  */
 const TOP_ROUTES: Array<() => Promise<unknown>> = [
-  () => import("@/views/HomePage"),
+  () => import("@/pages/account/HomePage"),
   () => import("@/pages/lessons/LessonsPage"),
   () => import("@/pages/worship/PrayerTimesPage"),
   () => import("@/pages/quran/QuranKnowledgeHubPage"),

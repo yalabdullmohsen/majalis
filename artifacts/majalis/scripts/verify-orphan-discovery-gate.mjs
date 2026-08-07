@@ -33,7 +33,7 @@ const MUST_DISCOVER = [
 ];
 
 const ENTRY_FILES = [
-  "views/HomePage.tsx",
+  "pages/account/ui/HomeView.tsx",
   "components/home/HomeStartHereSection.tsx",
   "components/BottomNavBar.tsx",
   "components/MoreBottomSheet.tsx",
