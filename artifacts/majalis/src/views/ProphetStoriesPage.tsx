@@ -9,6 +9,7 @@ import { supabase } from "@/lib/supabase";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { truncateAtWord } from "@/lib/utils";
 import { ScholarlyTrustBadge } from "@/components/ScholarlyTrustBadge";
+import { GraphRelatedRail } from "@/widgets/RelatedRail";
 import "@/styles/pages/prophet-stories.css";
 
 type Citation = { surah: string; ayahs: string; note: string };
@@ -654,6 +655,8 @@ function ProphetDetailView({
           <IslamicStar size={18} color={IVORY} opacity={0.6} />
         </footer>
       </article>
+
+      <GraphRelatedRail kind="prophet" slug={slug} titleAr="من الرسم البياني" />
 
       <div className="prophet-nav-lux">
         {prevProphet ? (

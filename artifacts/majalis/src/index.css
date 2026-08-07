@@ -1466,45 +1466,9 @@ input, textarea, select { font-family: inherit; }
   font-size: 0.88rem;
 }
 
-.home-demo-note {
-  font-size: 0.8125rem;
-  color: var(--majalis-brass-deep);
-  background: var(--majalis-parchment-deep);
-  border: 1px solid var(--msk-border, #E8E7E2);
-  border-radius: var(--ds-radius);
-  padding: 0.75rem 1rem;
-  margin-bottom: 1rem;
-  line-height: 1.6;
-}
 
-.home-cta-banner {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--ds-space-6);
-  flex-wrap: wrap;
-  margin-top: 2rem;
-  padding: clamp(1.25rem, 4vw, 2rem);
-  border-radius: var(--ds-radius-2xl);
-  border: 1px solid var(--msk-border, #E8E7E2);
-  background: linear-gradient(135deg, #f0e8d6, #fff);
-  box-shadow: var(--majalis-shadow);
-}
 
-.home-cta-banner h2 {
-  font-family: var(--font-body);
-  color: var(--majalis-emerald-deep);
-  font-size: clamp(1.08rem, 3.2vw, 1.6rem);
-  font-weight: 700;
-  margin: 0.5rem 0 0.65rem;
-}
 
-.home-cta-banner p {
-  color: var(--msk-text-2, #5C5C56);
-  max-width: 36rem;
-  line-height: 1.85;
-  font-weight: 600;
-}
 
 @media (max-width: 1050px) {
   .home-hero-grid,
@@ -2246,29 +2210,7 @@ input, textarea, select { font-family: inherit; }
   font-size: 0.88rem;
 }
 
-/* ── Skeleton الصلاة ── */
-.home-prayer-skel-banner {
-  height: 5rem;
-  border-radius: var(--ds-radius-xl);
-}
-.home-prayer-skel-grid {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: var(--ds-space-3);
-  margin-top: 0.75rem;
-}
-.home-prayer-skel-cell {
-  height: 3.5rem;
-  border-radius: var(--ds-radius-lg);
-}
 
-.home-inline-error {
-  color: #991b1b;
-  background: #fee2e2;
-  border-radius: var(--ds-radius-lg);
-  padding: 0.75rem 1rem;
-  font-weight: 700;
-}
 
 .prayer-status-card {
   margin-bottom: 1rem;
@@ -2578,104 +2520,17 @@ input, textarea, select { font-family: inherit; }
   box-shadow: 0 2px 8px rgba(31,111,82,.25);
 }
 
-.content-card-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 0.85rem;
-}
 
-.content-card-grid--qa {
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-}
 
-.content-mini-card {
-  border: 1px solid var(--msk-border, #E8E7E2);
-  background: transparent;
-  border-radius: 0.85rem;
-  padding: 1rem 1.05rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.55rem;
-  min-height: 100%;
-}
 
-.content-mini-card__tag {
-  display: inline-block;
-  font-size: 0.72rem;
-  font-weight: 700;
-  color: var(--majalis-emerald-deep);
-  background: var(--majalis-sage);
-  border-radius: 999px;
-  padding: 0.15rem 0.55rem;
-}
 
-.content-mini-card__body,
-.content-mini-card__answer {
-  margin: 0;
-  color: var(--majalis-ink);
-  font-size: 0.92rem;
-  line-height: 1.75;
-}
 
-.content-mini-card__head {
-  border: none;
-  background: transparent;
-  padding: 0;
-  text-align: right;
-  cursor: pointer;
-  font-family: inherit;
-  width: 100%;
-}
 
-.content-mini-card__question {
-  display: block;
-  font-weight: 700;
-  color: var(--majalis-emerald-deep);
-  font-size: 0.95rem;
-  line-height: 1.6;
-  margin-bottom: 0.45rem;
-}
 
-/* ── Content-first homepage rails ─────────────────────────────────────────── */
-.home-content-rail__grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-  gap: 0.85rem;
-}
 
-.home-content-card {
-  display: grid;
-  gap: 0.45rem;
-  min-height: 100%;
-  padding: var(--ds-space-4);
-  border: 1px solid var(--msk-border, #E8E7E2);
-  border-radius: var(--ds-radius-xl);
-  background: transparent;
-  color: var(--majalis-ink);
-  box-shadow: var(--card-shadow);
-  transition: transform 0.18s ease, border-color 0.18s ease;
-}
 
-.home-content-card:hover {
-  transform: translateY(-2px);
-  border-color: var(--majalis-emerald);
-}
 
-.home-content-card__meta {
-  width: fit-content;
-  padding: 0.15rem 0.55rem;
-  border-radius: 999px;
-  background: var(--majalis-sage);
-  color: var(--majalis-emerald-deep);
-  font-size: 0.72rem;
-  font-weight: 800;
-}
 
-.home-content-card p {
-  margin: 0;
-  color: var(--msk-text-2, #5C5C56);
-  font-size: 0.88rem;
-}
 
 /* ── Fiqh council mobile filters ──────────────────────────────────────────── */
 .fiqh-filter-toggle {
@@ -3077,11 +2932,6 @@ input, textarea, select { font-family: inherit; }
 }
 
 @media (max-width: 640px) {
-  .content-card-grid,
-  .content-card-grid--qa {
-    grid-template-columns: 1fr;
-  }
-
   .template-action-row {
     grid-template-columns: 1fr;
   }
@@ -4396,52 +4246,11 @@ html[data-theme="dark"] .search-suggestions-panel {
   background: transparent;
 }
 
-.lessons-contact-card {
-  margin-top: 2rem;
-  padding: 1.25rem 1.35rem;
-  border: 1px solid var(--msk-border, #E8E7E2);
-  border-radius: var(--ds-radius-lg);
-  background: transparent;
-  text-align: center;
-}
 
-.lessons-contact-card__title {
-  margin: 0 0 0.75rem;
-  font-size: 0.95rem;
-  font-weight: 700;
-  color: var(--majalis-emerald-deep);
-}
 
-.lessons-contact-card__links {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 0.65rem;
-}
 
-.lessons-contact-card__phone,
-.lessons-contact-card__whatsapp {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 42px;
-  padding: 0.55rem 1rem;
-  border-radius: var(--ds-radius);
-  font-size: 0.88rem;
-  font-weight: 700;
-  text-decoration: none;
-  border: 1px solid rgba(26, 60, 46, 0.14);
-}
 
-.lessons-contact-card__phone {
-  background: var(--majalis-emerald-deep);
-  color: var(--majalis-parchment);
-}
 
-.lessons-contact-card__whatsapp {
-  background: #fff;
-  color: var(--majalis-emerald-deep);
-}
 
 @media (max-width: 720px) {
   .lesson-unified-grid {
@@ -4515,22 +4324,6 @@ html[data-theme="dark"] .search-suggestions-panel {
   font-size: 0.88rem;
 }
 
-.home-banner {
-  padding: var(--ds-space-5);
-  margin-bottom: 1.25rem;
-  background: linear-gradient(135deg, #fff 0%, #f3ede0 100%);
-  border: 1px solid var(--msk-border, #E8E7E2);
-}
-.home-banner__title { margin: 0.35rem 0; color: var(--majalis-emerald-deep); font-size: 1.35rem; }
-.home-banner__lead { margin: 0; color: var(--majalis-ink-soft); line-height: 1.7; }
-.home-banner__prayer { margin: 0.75rem 0 0; font-weight: 700; color: var(--majalis-brass-deep); }
-.home-banner__actions { display: flex; gap: var(--ds-space-2); margin-top: 1rem; flex-wrap: wrap; }
-.home-banner__btn {
-  min-height: 42px; padding: 0.55rem 1rem; border-radius: var(--ds-radius); font-weight: 700;
-  text-decoration: none; font-size: 0.88rem;
-}
-.home-banner__btn--primary { background: var(--majalis-emerald-deep); color: var(--majalis-parchment); }
-.home-banner__btn--secondary { background: #fff; color: var(--majalis-emerald-deep); border: 1px solid var(--majalis-line); }
 
 .home-sunnah-card { padding: 1rem 1.15rem; margin-bottom: 1.25rem; }
 .home-sunnah-card__period { font-weight: 700; color: var(--majalis-brass-deep); margin: 0.25rem 0 0; }
@@ -6086,7 +5879,6 @@ svg {
 .page-card,
 .home-lesson-card,
 .home-sheikh-card,
-.home-banner,
 .home-sunnah-card {
   border-radius: var(--card-radius);
   box-shadow: var(--card-shadow);
@@ -6278,11 +6070,8 @@ svg {
     width: min(100%, 16rem);
   }
 
-  .home-content-rail__grid,
   .prayer-tracker-grid,
-  .prayer-times-grid,
-  .content-card-grid,
-  .content-card-grid--qa {
+  .prayer-times-grid {
     grid-template-columns: 1fr;
   }
 
@@ -6318,10 +6107,7 @@ svg {
   .page-action-btn,
   .ui-card-btn,
   .template-btn,
-  .home-search button,
-  .home-banner__btn,
-  .home-primary-action,
-  .home-secondary-action {
+  .home-search button {
     min-height: var(--mobile-touch-min);
     border-radius: var(--mobile-radius);
     font-size: clamp(0.82rem, 3.2vw, 0.9rem);
@@ -6409,13 +6195,6 @@ svg {
 }
 
 /* 640px — phablets / small tablets */
-@media (max-width: 640px) {
-
-  .content-card-grid,
-  .content-card-grid--qa {
-    grid-template-columns: 1fr;
-  }
-}
 
 /* 768px — tablets portrait */
 @media (max-width: 768px) {
@@ -6681,31 +6460,9 @@ body.has-assistant-fab .app-main {
 .ds-btn:hover { transform: translateY(-1px); }
 .ds-btn:active { transform: translateY(0); }
 .ds-btn:disabled { opacity: 0.48; cursor: not-allowed; transform: none !important; }
-.ds-btn-pill { border-radius: var(--ds-r-full); }
-.ds-btn-sm  { min-height: 36px; padding: 0.38rem 0.875rem; font-size: 0.8rem; }
-.ds-btn-lg  { min-height: 52px; padding: 0.75rem 1.75rem; font-size: var(--ds-text-base); }
 
-.ds-btn-primary {
-  background: var(--ds-gold-grad);
-  color: var(--msk-canvas);
-  box-shadow: 0 4px 18px var(--msk-gold-glow);
-  font-weight: 700;
-}
-.ds-btn-primary:hover { box-shadow: 0 8px 28px var(--msk-gold-glow); }
 
-.ds-btn-gold {
-  background: var(--ds-gold-grad);
-  color: var(--msk-canvas);
-  box-shadow: 0 4px 18px var(--msk-gold-glow);
-}
-.ds-btn-gold:hover { box-shadow: 0 8px 28px var(--msk-gold-glow); }
 
-.ds-btn-ghost {
-  background: transparent;
-  color: var(--msk-gold);
-  border: 1.5px solid var(--msk-gold-border);
-}
-.ds-btn-ghost:hover { background: var(--msk-gold-dim); border-color: var(--msk-gold); }
 
 /* ─── Phase 1: Unified Card Component ────────────────────── */
 .ds-card {
@@ -6855,7 +6612,6 @@ body.has-assistant-fab .app-main {
 .home-occasion-card,
 .home-progress-card,
 .home-empty-card,
-.home-banner,
 .home-sunnah-card,
 .ui-card,
 .page-card {
@@ -7361,19 +7117,7 @@ body.has-assistant-fab .app-main {
 }
 
 /* بطاقات المحتوى العام */
-.content-mini-card {
-  border-radius: 0.875rem;
-  border-color: var(--majalis-line, #E8E2D8);
-  transition: box-shadow 220ms cubic-bezier(0.16, 1, 0.3, 1),
-              border-color 220ms ease,
-              transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
-}
 
-.content-mini-card:hover {
-  box-shadow: 0 6px 20px rgba(22, 96, 72, 0.09);
-  border-color: color-mix(in srgb, var(--majalis-emerald) 22%, var(--majalis-line));
-  transform: translateY(-1px);
-}
 
 /* شريط الـ Tabs الرئيسي في Lessons/Library */
 .tabs-bar,
@@ -7565,18 +7309,11 @@ body.has-assistant-fab .app-main {
 .kuwait-tab:active { transform: scale(0.97); }
 
 /* تحسين الـ QA Cards */
-.content-card-grid .ui-card,
 .qa-card,
 .fawaid-card {
   transition: box-shadow 220ms cubic-bezier(0.16, 1, 0.3, 1),
               border-color 220ms ease,
               transform 220ms cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.content-card-grid .ui-card:hover {
-  box-shadow: 0 8px 24px rgba(22, 96, 72, 0.09);
-  border-color: color-mix(in srgb, var(--majalis-emerald) 20%, var(--majalis-line));
-  transform: translateY(-1px);
 }
 
 /* شارات الحكم الشرعي */

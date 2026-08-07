@@ -4,7 +4,7 @@ import { PageHeader, Loading, Empty, Card } from "@/components/ui-common";
 import { useAuth } from "@/components/AuthProvider";
 import { applyPageSeo } from "@/lib/seo";
 import "@/styles/pages/reading-plans.css";
-import { LIBRARY_CATALOG } from "@/lib/library-catalog";
+import { useBooksQuery, useBookQuery } from "@/entities/book";
 import {
   fetchUserPlans, createPlan, logReadingProgress, pausePlan, resumePlan, cancelPlan,
   computePlanMetrics, estimatePlanFeasibility,
@@ -112,13 +112,17 @@ function NewPlanForm({ userId, onCreated, onClose }: { userId: string; onCreated
   const [pace, setPace] = useState<PaceLevel>("medium");
   const [includeReview, setIncludeReview] = useState(true);
   const [saving, setSaving] = useState(false);
+  const { data: books = [] } = useBooksQuery();
+  const { data: selectedEntity } = useBookQuery(selectedSlug ?? undefined);
 
   const matches = useMemo(() => {
     if (!query.trim()) return [];
     const q = query.trim();
-    return LIBRARY_CATALOG.filter((b) => b.title.includes(q)).slice(0, 8);
-  }, [query]);
-  const selectedBook = LIBRARY_CATALOG.find((b) => b.id === selectedSlug);
+    return books.filter((b) => b.titleAr.includes(q)).slice(0, 8);
+  }, [query, books]);
+  const selectedBook = selectedEntity
+    ? { id: selectedEntity.slug, title: selectedEntity.titleAr, author: selectedEntity.authorAr ?? "" }
+    : null;
 
   const feasibility = useMemo(() => {
     const pages = Number(totalPages);
@@ -167,9 +171,9 @@ function NewPlanForm({ userId, onCreated, onClose }: { userId: string; onCreated
         {!selectedBook && matches.length > 0 && (
           <ul className="rp-suggestions">
             {matches.map((b) => (
-              <li key={b.id}>
-                <button type="button" onClick={() => { setSelectedSlug(b.id); setQuery(""); }}>
-                  {b.title} <span>— {b.author}</span>
+              <li key={b.slug}>
+                <button type="button" onClick={() => { setSelectedSlug(b.slug); setQuery(""); }}>
+                  {b.titleAr} <span>— {b.authorAr}</span>
                 </button>
               </li>
             ))}
