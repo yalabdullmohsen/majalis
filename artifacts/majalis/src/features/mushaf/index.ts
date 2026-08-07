@@ -5,6 +5,7 @@ export {
   MUSHAF_PAGE_LINE_SLOTS,
   type MushafFeatureFlags,
   type MushafSourceAdapter,
+  type MushafSourceId,
 } from "@/features/mushaf/config";
 export {
   buildAyahHitRegions,
@@ -14,3 +15,35 @@ export {
 export { MushafLayeredPage } from "@/features/mushaf/MushafLayeredPage";
 export { MushafHitLayer } from "@/features/mushaf/MushafHitLayer";
 export { MushafTextLayer } from "@/features/mushaf/MushafTextLayer";
+export {
+  MUSHAF_TAFSIR_EDITIONS,
+  DEFAULT_MUSHAF_TAFSIR_EDITION,
+  resolveMushafTafsirEditionId,
+  getMushafTafsirEdition,
+  type MushafTafsirEdition,
+} from "@/features/mushaf/tafsir-editions";
+export {
+  MUSHAF_TRANSLATION_EDITIONS,
+  DEFAULT_MUSHAF_TRANSLATION_EDITION,
+  resolveMushafTranslationEditionId,
+  getMushafTranslationEdition,
+  type MushafTranslationEdition,
+} from "@/features/mushaf/translation-editions";
+export {
+  fetchMushafAyahTafsir,
+  fetchMushafAyahTranslation,
+  clearMushafAyahContentMemory,
+  type AyahContentResult,
+} from "@/features/mushaf/fetch-ayah-content";
+export {
+  TAFSIR_FONT_SCALES,
+  readStoredTafsirEdition,
+  persistTafsirEdition,
+  readStoredTafsirFontScale,
+  persistTafsirFontScale,
+  readStoredTranslationEnabled,
+  persistTranslationEnabled,
+  readStoredTranslationEdition,
+  persistTranslationEdition,
+  type TafsirFontScale,
+} from "@/features/mushaf/reader-prefs";

@@ -487,10 +487,37 @@
   font-weight: 700;
 }
 
-.aas-reader__edition {
-  position: relative;
+.aas-reader__edition-row {
+  display: flex;
+  align-items: stretch;
+  gap: 0.45rem;
   margin: 0 1rem 0.55rem;
   flex-shrink: 0;
+}
+.aas-reader__edition {
+  position: relative;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.aas-reader__font-btn {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  min-width: 3.6rem;
+  padding: 0 0.65rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--aas-line);
+  background: color-mix(in srgb, var(--aas-cream-deep) 70%, #fff);
+  color: var(--aas-ink);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.aas-reader__font-btn:hover {
+  border-color: color-mix(in srgb, var(--aas-emerald) 45%, var(--aas-line));
 }
 .aas-reader__edition-btn {
   width: 100%;
@@ -622,15 +649,70 @@
 
 .aas-reader__prose {
   animation: aas-reader-fade 0.22s ease;
+  --aas-tafsir-base: 1.02rem;
 }
 .aas-reader__prose p {
   margin: 0 0 1rem;
   font-family: var(--font-body, "IBM Plex Sans Arabic", "Noto Sans Arabic", "Cairo", system-ui, sans-serif);
-  font-size: 1.02rem;
+  font-size: calc(var(--aas-tafsir-base) * var(--aas-tafsir-scale, 1));
   line-height: 2;
   color: var(--aas-ink);
   text-align: justify;
   text-justify: inter-word;
+}
+.aas-reader__prose.is-collapsed {
+  mask-image: linear-gradient(to bottom, #000 72%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent);
+}
+.aas-reader__expand {
+  display: block;
+  width: 100%;
+  margin: 0.15rem 0 0.35rem;
+  padding: 0.45rem 0.75rem;
+  border: 1px dashed color-mix(in srgb, var(--aas-emerald) 40%, var(--aas-line));
+  border-radius: 0.65rem;
+  background: color-mix(in srgb, var(--aas-emerald) 6%, transparent);
+  color: var(--aas-emerald);
+  font: inherit;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.aas-reader__expand:hover {
+  background: color-mix(in srgb, var(--aas-emerald) 12%, transparent);
+}
+.aas-reader__translation {
+  position: relative;
+  margin: 0 1rem 0.65rem;
+  flex-shrink: 0;
+}
+.aas-reader__translation-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+}
+.aas-reader__edition-btn--compact {
+  min-height: 2.15rem;
+  padding: 0.35rem 0.65rem;
+}
+.aas-reader__edition-menu--translation {
+  top: auto;
+  bottom: calc(100% + 0.35rem);
+}
+.aas-reader__translation-body {
+  margin-top: 0.55rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: 0.7rem;
+  border: 1px solid var(--aas-line);
+  background: color-mix(in srgb, var(--aas-cream-deep) 55%, #fff);
+}
+.aas-reader__translation-text {
+  margin: 0;
+  font-family: var(--font-body, "IBM Plex Sans Arabic", "Noto Sans Arabic", "Cairo", system-ui, sans-serif);
+  font-size: calc(0.95rem * var(--aas-tafsir-scale, 1));
+  line-height: 1.75;
+  color: var(--aas-ink);
 }
 .aas-reader__prose p:last-child {
   margin-bottom: 0;

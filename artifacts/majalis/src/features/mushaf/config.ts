@@ -1,16 +1,13 @@
 /**
- * إعداد مصادر المصحف (مرحلة ١ — الطبقات الثلاث).
+ * إعداد مصادر المصحف (مراحل ١–٢).
  * تبديل المصدر = تغيير هذا الملف فقط؛ لا تُخترع بيانات بلا مصدر موثَّق.
+ * العرض البصري ثابت على QPC V2 — لا مسار صور مدينة / مضلعات صور.
  */
 
 export type MushafFeatureFlags = {
-  /** صور صفحات مصحف المدينة (604) — غير موجودة محليًا بعد */
-  pageImages: boolean;
-  /** مضلعات/إحداثيات رسمية فوق صور المدينة — غير متوفرة؛ نستخدم مستطيلات مشتقّة من أسطر QPC */
-  imagePolygons: boolean;
   /** توقيتات تلاوة (بداية/نهاية آية بالملي ثانية داخل ملف واحد) */
   ayahTimingsMs: boolean;
-  /** حزم تفاسير محلية كاملة */
+  /** حزم تفاسير محلية كاملة (مرحلة ٢ تستخدم جلبًا كسولًا حيًا + كاش) */
   offlineTafsirPacks: boolean;
   /** نص إملائي مجرّد مضمّن كطبعة منفصلة */
   imlaeiEditionLocal: boolean;
@@ -22,8 +19,6 @@ export type MushafFeatureFlags = {
 
 /** أعلام الميزات — عطّل ما لا مصدر موثوق له */
 export const MUSHAF_FEATURES: MushafFeatureFlags = {
-  pageImages: false,
-  imagePolygons: false,
   ayahTimingsMs: false,
   offlineTafsirPacks: false,
   imlaeiEditionLocal: false,
@@ -33,11 +28,11 @@ export const MUSHAF_FEATURES: MushafFeatureFlags = {
 
 export type MushafSourceId =
   | "visual-qpc-v2"
-  | "visual-page-images"
   | "coords-qpc-lines"
-  | "coords-image-polygons"
   | "text-quran-v2"
-  | "text-uthmani-surahs";
+  | "text-uthmani-surahs"
+  | "tafsir-qurancom"
+  | "translation-alquran";
 
 export type MushafSourceAdapter = {
   id: MushafSourceId;
@@ -49,8 +44,8 @@ export type MushafSourceAdapter = {
 };
 
 /**
- * سجل المصادر — الواجهة الموحّدة لتبديل الخلفية لاحقًا.
- * visual النشط الآن: خطوط QPC V2 (ليس صور المدينة).
+ * سجل المصادر — الواجهة الموحّدة لتبديل الخلفية/المحتوى لاحقًا.
+ * visual النشط: خطوط QPC V2 فقط.
  */
 export const MUSHAF_SOURCES: readonly MushafSourceAdapter[] = [
   {
@@ -61,25 +56,11 @@ export const MUSHAF_SOURCES: readonly MushafSourceAdapter[] = [
     enabled: true,
   },
   {
-    id: "visual-page-images",
-    titleAr: "صور مصحف المدينة 604",
-    path: "(غير مضمّنة محليًا)",
-    licenseAr: "KFGQPC — معطّل حتى التوريد المرخَّص",
-    enabled: MUSHAF_FEATURES.pageImages,
-  },
-  {
     id: "coords-qpc-lines",
     titleAr: "إحداثيات نسبية مشتقّة من أسطر QPC (line_number + position)",
     path: "public/data/quran-v2/pages/page-*.json",
     licenseAr: "نفس مصدر quran-v2 — ليست مضلعات صور المدينة الرسمية",
-    enabled: MUSHAF_FEATURES.ayahHitLayer && !MUSHAF_FEATURES.imagePolygons,
-  },
-  {
-    id: "coords-image-polygons",
-    titleAr: "مضلعات فوق صور المدينة",
-    path: "(غير متوفرة)",
-    licenseAr: "—",
-    enabled: MUSHAF_FEATURES.imagePolygons,
+    enabled: MUSHAF_FEATURES.ayahHitLayer,
   },
   {
     id: "text-quran-v2",
@@ -93,6 +74,20 @@ export const MUSHAF_SOURCES: readonly MushafSourceAdapter[] = [
     titleAr: "نص عثماني كامل (سور)",
     path: "public/data/quran/surah-*.json",
     licenseAr: "Tanzil عبر AlQuran Cloud — docs/quran-data-source.md",
+    enabled: true,
+  },
+  {
+    id: "tafsir-qurancom",
+    titleAr: "تفاسير الآية (كسول) — Quran.com API v4",
+    path: "https://api.quran.com/api/v4/tafsirs/{slug}/by_ayah/{s}:{a}",
+    licenseAr: "نصوص عبر Quran.com / QUL — انظر docs/mushaf-phase2-tafsir-translation.md",
+    enabled: true,
+  },
+  {
+    id: "translation-alquran",
+    titleAr: "ترجمات الآية (اختيارية، كسولة) — AlQuran Cloud",
+    path: "https://api.alquran.cloud/v1/ayah/{s}:{a}/{edition}",
+    licenseAr: "طبعات الترجمة عبر AlQuran Cloud — انظر توثيق المرحلة ٢",
     enabled: true,
   },
 ] as const;
