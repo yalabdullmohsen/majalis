@@ -22,7 +22,7 @@ type SectionTab = {
  */
 export const SECTION_TABS: SectionTab[] = [
   { href: "/quran-knowledge", label: "قرآن", Icon: BookOpen, prefetch: () => import("@/pages/quran/QuranKnowledgeHubPage") },
-  { href: "/lessons", label: "الدروس", Icon: GraduationCap, prefetch: () => import("@/views/LessonsPage") },
+  { href: "/lessons", label: "الدروس", Icon: GraduationCap, prefetch: () => import("@/pages/lessons/LessonsPage") },
   { href: "/prayer-times", label: "الصلاة", Icon: Clock, prefetch: () => import("@/views/PrayerTimesPage") },
   { href: "/fiqh", label: "فقه", Icon: Scale, prefetch: () => import("@/views/FiqhPage") },
 ];
