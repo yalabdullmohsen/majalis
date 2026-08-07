@@ -20,7 +20,7 @@ const CONVERTED_PATHS = [
   "src/views/MethodologyPage.tsx",
   "src/views/SinsAndRightsDetailPage.tsx",
   "src/views/MindMapPage.tsx",
-  "src/views/ScholarProfilePage.tsx",
+  "src/pages/library/ui/ScholarProfileView.tsx",
   "src/views/MutashabihatPage.tsx",
 ] as const;
 

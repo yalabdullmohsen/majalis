@@ -110,7 +110,7 @@ git diff --name-only HEAD~1 HEAD | grep "src/data\|adhkar-seed\|quran"
 | `src/views/QuranPage.tsx` | شارة استئناف القراءة |
 | `src/views/FawaidPage.tsx` | useScrollRestore |
 | `src/pages/lessons/ui/LessonsView.tsx` | useScrollRestore |
-| `src/views/IslamicScholarsPage.tsx` | useScrollRestore |
+| `src/pages/library/ui/IslamicScholarsView.tsx` | useScrollRestore |
 
 ## 7. رابط الـ PR
 
