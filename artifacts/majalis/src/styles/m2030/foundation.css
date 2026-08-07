@@ -129,8 +129,7 @@ small, .meta, .text-muted, .text-secondary {
 .page-hero-dark,
 .mzd-hero,
 .quran-hub-hero,
-.hadith-hero,
-.fiqh-hero {
+.hadith-hero {
   background:
     linear-gradient(165deg, var(--em-900) 0%, var(--em-950) 55%, #0A1A16 100%) !important;
   color: var(--text-on-dark) !important;

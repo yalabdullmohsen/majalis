@@ -85,6 +85,7 @@
 ## H — RelatedRail
 
 - GraphRelatedRail يقرأ links.json ويُعرض في ملف العالِم.
+- توسعة: GraphRelatedRail في تفاصيل المكتبة (`LibraryDetailView`, kind=book).
 
 ## D2 — سلّم المسافات
 
@@ -105,3 +106,7 @@
 ## D3 — تنظيف CSS ميت (دفعة 1)
 
 - إزالة محددات مؤكَّدة عدم استخدامها من JSX: about-page، async-empty/error، admin-nav/panel/stat، ar-tabs/filter من مجموعات final-release.
+
+## D4 — تنظيف CSS ميت (دفعة 2)
+
+- ~208 سطر من index.css + design-system (شبكة/شارة/ورقة/قائمة افتراضية) + final-release + m2030/foundation — بعد تحقق rg من عدم الاستخدام في TSX.

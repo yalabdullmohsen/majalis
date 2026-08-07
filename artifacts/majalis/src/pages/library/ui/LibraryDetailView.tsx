@@ -12,6 +12,7 @@ import { RecommendationWidget } from "@/components/recommendations/Recommendatio
 import { ContentMindMap } from "@/components/ContentMindMap";
 import { ScholarlyTrustBadge, type TrustData } from "@/components/ScholarlyTrustBadge";
 import { resolveAuthorScholarLink } from "@/lib/author-scholar-links";
+import { GraphRelatedRail } from "@/widgets/RelatedRail";
 import "@/styles/pages/library.css";
 
 export default function LibraryDetailPage({ params }: { params: { id: string } }) {
@@ -165,6 +166,11 @@ export default function LibraryDetailPage({ params }: { params: { id: string } }
         </p>
       )}
       <KnowledgeRelatedItems sourceType="book" sourceId={String(item.id)} />
+      <GraphRelatedRail
+        kind="book"
+        slug={String(item.id)}
+        titleAr="من الرسم البياني"
+      />
       <RecommendationWidget
         useRelated
         contentId={String(item.id)}

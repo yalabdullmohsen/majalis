@@ -696,55 +696,6 @@ a { text-decoration: none; color: inherit; }
 button { cursor: pointer; font-family: inherit; }
 input, textarea, select { font-family: inherit; }
 
-.font-selector {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 0.35rem;
-}
-
-.font-selector-compact {
-  flex-direction: row;
-  align-items: center;
-  gap: 0.35rem;
-}
-
-.font-selector-label {
-  font-size: 0.78rem;
-  font-weight: 700;
-  color: var(--msk-text-2, #5C5C56);
-}
-
-.font-selector-options {
-  display: inline-flex;
-  gap: 0.35rem;
-  flex-wrap: wrap;
-}
-
-.font-selector-btn {
-  border: 1px solid var(--msk-border, #E8E7E2);
-  border-radius: 999px;
-  padding: 0.3rem 0.75rem;
-  background: transparent;
-  color: var(--msk-text-2, #5C5C56);
-  font-size: 0.78rem;
-  font-weight: 700;
-  line-height: 1.4;
-  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
-}
-
-.font-selector-btn.is-active {
-  background: var(--majalis-emerald);
-  border-color: var(--majalis-emerald);
-  color: var(--majalis-parchment);
-}
-
-.font-selector-compact .font-selector-btn {
-  min-width: 2rem;
-  padding: 0.28rem 0.55rem;
-  text-align: center;
-}
-
 .settings-account-card {
   display: grid;
   grid-template-columns: auto 1fr;
@@ -2167,10 +2118,6 @@ input, textarea, select { font-family: inherit; }
 
   .assistant-title {
     text-align: center;
-  }
-
-  .font-selector {
-    align-self: center;
   }
 
   .assistant-guidelines,
@@ -5856,17 +5803,6 @@ body.assistant-panel-open {
   font-weight: 600;
 }
 
-.fiqh-search-verified-badge {
-  display: inline-block;
-  margin-inline-start: 0.5rem;
-  padding: 0.1rem 0.45rem;
-  border-radius: 999px;
-  background: rgba(22, 78, 60, 0.1);
-  color: var(--emerald-deep, var(--mj-brand-deep));
-  font-size: 0.7rem;
-  font-weight: 700;
-}
-
 
 
 
@@ -7531,12 +7467,6 @@ body.has-assistant-fab .app-main {
   background: var(--majalis-line-strong, #D8D0C4);
 }
 
-.bottom-sheet__grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(5.5rem, 1fr));
-  gap: 0.75rem;
-}
-
 /* Item cards */
 .more-sheet-item {
   display: flex;
@@ -7844,41 +7774,16 @@ body.has-assistant-fab .app-main {
 }
 
 /* حالة التحميل للبطاقات */
-.card-loading-pulse {
-  animation: card-pulse 1.8s ease-in-out infinite;
-}
-
 @keyframes card-pulse {
   0%, 100% { opacity: 1; }
   50%       { opacity: 0.5; }
 }
 
 /* Toast / Flash notifications */
-.flash-toast {
-  position: fixed;
-  bottom: calc(var(--bottom-nav-total, 4.5rem) + 0.25rem);
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 9000;
-  background: var(--majalis-ink, #1A1714);
-  color: var(--majalis-parchment, #F9F6EF);
-  padding: 0.65rem 1.25rem;
-  border-radius: 999px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  box-shadow: 0 8px 24px rgba(26, 23, 20, 0.25);
-  animation: toast-in 300ms cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-  white-space: nowrap;
-}
-
 @keyframes toast-in {
   from { opacity: 0; transform: translateX(-50%) translateY(12px) scale(0.9); }
   to   { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
 }
-
-.flash-toast--success { background: var(--majalis-emerald, var(--mj-brand)); }
-.flash-toast--error   { background: var(--majalis-danger, #C0392B); }
-.flash-toast--info    { background: var(--majalis-brass-deep, #7A5214); }
 
 /* ══════════════════════════════════════════════════════════════
    Design System v5 — Adhkar & Islamic Content Cards
@@ -8226,9 +8131,7 @@ html[data-theme="dark"] .hpv4-hero::before {
 /* ── حد أدنى لأهداف اللمس ── */
 button,
 [role="button"],
-.btn-icon,
 .bottom-nav__tab,
-.adhkar-chip,
 .content-hub-chip,
 .ds-btn {
   min-height: 44px;
@@ -8268,10 +8171,6 @@ button,
 /* ── شارة الصلاة العائمة (bottom nav) ──
    مربوطة بنفس نقطة تجاوب .bottom-nav — بلا هذا القيد كانت تطفو فوق محتوى
    سطح المكتب رغم اختفاء الشريط السفلي نفسه هناك. */
-.bottom-nav__prayer-float {
-  display: none;
-}
-
 @media (max-width: 879px) {
   .bottom-nav__prayer-float {
     position: fixed;
