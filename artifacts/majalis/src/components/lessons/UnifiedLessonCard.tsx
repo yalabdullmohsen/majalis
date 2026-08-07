@@ -46,6 +46,11 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
   const [nowLive, setNowLive] = useState(() => isLessonInProgress(lesson.day, scheduleTime));
 
   useEffect(() => {
+    if (lesson.featuredHomeStatus) {
+      setNowLive(lesson.featuredHomeStatus === "مستمر");
+      setStatusLabel(lesson.featuredHomeStatus);
+      return;
+    }
     function refresh() {
       const live    = isLessonInProgress(lesson.day, scheduleTime);
       const freshMs = computeNextOccurrenceMs(lesson.day, scheduleTime);
@@ -56,7 +61,7 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
     const earlyTimer = window.setTimeout(refresh, 5_000);
     const timer = window.setInterval(refresh, 60_000);
     return () => { window.clearTimeout(earlyTimer); window.clearInterval(timer); };
-  }, [lesson.day, scheduleTime]);
+  }, [lesson.day, scheduleTime, lesson.featuredHomeStatus]);
 
   const handleCopy = useCallback(async () => {
     try {
@@ -96,7 +101,7 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
     >
       <header className="lesson-unified-card__header">
         <span className="lesson-unified-card__category">{lesson.category}</span>
-        {nowLive ? (
+        {nowLive && !lesson.featuredHomeStatus ? (
           <span className="lesson-now-badge" role="status" aria-label="الدرس جارٍ الآن">
             <span aria-hidden="true">●</span> الآن
           </span>

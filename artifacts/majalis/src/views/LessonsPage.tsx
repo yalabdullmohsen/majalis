@@ -9,14 +9,16 @@ import { PageLoadingGuard } from "@/components/PageLoadingGuard";
 import { toArabicDigits } from "@/lib/utils";
 import { useAuth } from "@/components/AuthProvider";
 import { UnifiedLessonCard } from "@/components/lessons/UnifiedLessonCard";
-import { computeNextOccurrenceMs, isLessonInProgress } from "@/lib/lesson-time";
+import { computeNextOccurrenceMs } from "@/lib/lesson-time";
 import { supabase } from "@/lib/supabase";
 import { safeLocationReload } from "@/lib/safe-reload";
 import {
   DEFAULT_KUWAIT_FILTERS,
   buildSearchSuggestions,
   extractFilterOptions,
+  filterFeaturedHomeLessons,
   filterKuwaitLessons,
+  getFeaturedHomeStatusLabel,
   sortKuwaitLessons,
   type KuwaitLessonFilters,
   type KuwaitLessonRecord,
@@ -357,26 +359,28 @@ export default function LessonsPage({
   }, [activeLessons]);
 
   const featuredSections = useMemo(() => {
-    const sorted = sortKuwaitLessons(tabLessons);
+    const pool = filterFeaturedHomeLessons(tabLessons);
+    const sorted = sortKuwaitLessons(pool);
     const now    = Date.now();
     const THRESHOLD_MS = 36 * 60 * 60 * 1000; // 36 ساعة
 
     // "الأقرب موعدًا": فقط الدروس الجارية الآن أو التي تبدأ خلال 36 ساعة
-    const upcoming = sorted.filter((l) =>
-      isLessonInProgress(l.day, l.time) ||
-      computeNextOccurrenceMs(l.day, l.time) - now <= THRESHOLD_MS
-    ).slice(0, 4);
+    const upcoming = sorted.filter((l) => {
+      const label = getFeaturedHomeStatusLabel(l);
+      if (label === "مستمر" || label === "يبدأ اليوم") return true;
+      return label === "قادم" && computeNextOccurrenceMs(l.day, l.time) - now <= THRESHOLD_MS;
+    }).slice(0, 4);
 
     const upcomingIds = new Set(upcoming.map((l) => l.id));
 
-    const popular = [...tabLessons]
+    const popular = [...pool]
       .sort((a, b) => (b.keywords?.length || 0) - (a.keywords?.length || 0))
       .filter((l) => !upcomingIds.has(l.id))
       .slice(0, 4);
     const popularIds = new Set(popular.map((l) => l.id));
 
     const shownIds = new Set([...upcomingIds, ...popularIds]);
-    const featured = tabLessons
+    const featured = pool
       .filter((l) => l.hasLiveStream && !shownIds.has(l.id))
       .slice(0, 4);
 
@@ -456,12 +460,12 @@ export default function LessonsPage({
     }
   }, [isAdmin]);
 
-  const renderGrid = (lessons: KuwaitLessonRecord[], prefix = "") => (
+  const renderGrid = (lessons: KuwaitLessonRecord[], prefix = "", featuredHome = false) => (
     <div className="page-card-grid lesson-unified-grid">
       {lessons.map((lesson) => (
         <div key={`${prefix}${lesson.id}`} className={isAdmin ? "lesson-card-admin-wrap" : ""}>
           <UnifiedLessonCard
-            lesson={fromKuwaitLesson(lesson, prefix.startsWith("archived"))}
+            lesson={fromKuwaitLesson(lesson, prefix.startsWith("archived"), { featuredHome })}
             compact
             showRegister={isLoggedIn && !lesson.id.startsWith("kw-")}
             registered={myReg.includes(lesson.id)}
@@ -573,22 +577,22 @@ export default function LessonsPage({
                   {featuredSections.upcoming.length > 0 && (
                     <section className="lessons-v2-section">
                       <h2 className="lessons-v2-section__title">
-                        {featuredSections.upcoming.some(l => isLessonInProgress(l.day, l.time))
+                        {featuredSections.upcoming.some(l => getFeaturedHomeStatusLabel(l) === "مستمر")
                           ? "جارٍ الآن"
                           : "الأقرب موعدًا"}
                       </h2>
-                      {renderGrid(featuredSections.upcoming)}
+                      {renderGrid(featuredSections.upcoming, "", true)}
                     </section>
                   )}
                   {featuredSections.featured.length > 0 && (
                     <section className="lessons-v2-section">
                       <h2 className="lessons-v2-section__title">المميز: بث مباشر</h2>
-                      {renderGrid(featuredSections.featured, "feat-")}
+                      {renderGrid(featuredSections.featured, "feat-", true)}
                     </section>
                   )}
                   <section className="lessons-v2-section">
                     <h2 className="lessons-v2-section__title">الشائع</h2>
-                    {renderGrid(featuredSections.popular, "pop-")}
+                    {renderGrid(featuredSections.popular, "pop-", true)}
                   </section>
                 </>
               )}

@@ -10,7 +10,12 @@ import {
   formatShortLessonTime,
 } from "./lesson-time";
 import type { ActivityType, KuwaitLessonRecord } from "./kuwait-lessons";
-import { getRelativeStatusLabel, isLessonComplete } from "./kuwait-lessons";
+import {
+  getFeaturedHomeStatusLabel,
+  getRelativeStatusLabel,
+  isLessonComplete,
+  type FeaturedHomeStatusLabel,
+} from "./kuwait-lessons";
 import {
   canonicalizeLessonPublicId,
   isOrphanKuwaitLessonHashId,
@@ -36,6 +41,8 @@ export type UnifiedLesson = {
   sortKey: number;
   nextOccurrenceMs: number;
   statusLabel: string;
+  /** عند التعيين: تسمية مبسّطة ثابتة للرئيسية/المميز (يبدأ اليوم · مستمر · قادم) */
+  featuredHomeStatus?: FeaturedHomeStatusLabel;
   /** فارغ إن لم يكن السجل قابلاً للعرض كصفحة تفاصيل منشورة */
   detailsHref: string;
   note?: string;
@@ -67,7 +74,11 @@ export function resolveLessonDetailsHref(lesson: Pick<KuwaitLessonRecord, "id"> 
   return `/lessons/${canonical}`;
 }
 
-export function fromKuwaitLesson(lesson: KuwaitLessonRecord, archived = false): UnifiedLesson {
+export function fromKuwaitLesson(
+  lesson: KuwaitLessonRecord,
+  archived = false,
+  options?: { featuredHome?: boolean },
+): UnifiedLesson {
   const canonicalId = canonicalizeLessonPublicId(lesson.id) || lesson.id;
   return {
     id: canonicalId,
@@ -86,6 +97,9 @@ export function fromKuwaitLesson(lesson: KuwaitLessonRecord, archived = false): 
     sortKey: lesson.nextOccurrenceMs,
     nextOccurrenceMs: lesson.nextOccurrenceMs,
     statusLabel: getRelativeStatusLabel(lesson, archived),
+    featuredHomeStatus: options?.featuredHome
+      ? getFeaturedHomeStatusLabel(lesson) ?? undefined
+      : undefined,
     detailsHref: resolveLessonDetailsHref({ ...lesson, id: canonicalId }),
     note: lesson.note ? cleanDisplayText(lesson.note) : undefined,
     description: lesson.description ? cleanDisplayText(lesson.description) : undefined,
