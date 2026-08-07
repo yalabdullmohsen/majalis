@@ -17,6 +17,8 @@ import {
   isLessonInProgress,
 } from "@/lib/lesson-time";
 import { FavoriteButton } from "@/components/FavoriteButton";
+import { hrefTeachers } from "@/lib/content-href";
+import { sheikhNameKey } from "@/lib/sheikh-name";
 
 type Props = {
   lesson: UnifiedLesson;
@@ -126,7 +128,10 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
         <h3 className="lesson-unified-card__title">{lesson.title}</h3>
         {lesson.sheikhName && (
           <p className="lesson-unified-card__sheikh">
-            المحاضر: {lesson.sheikhName.replace(/^الشيخ(?:ة)?:\s*/u, "")}
+            المحاضر:{" "}
+            <Link href={hrefTeachers(sheikhNameKey(lesson.sheikhName))} className="lesson-unified-card__sheikh-link">
+              {lesson.sheikhName.replace(/^الشيخ(?:ة)?:\s*/u, "")}
+            </Link>
           </p>
         )}
         {lesson.organizerName &&

@@ -376,3 +376,4 @@ html.dark .kuwait-tab:hover:not(.kuwait-tab--active) {
 }
 /* ══ نهاية شريط تصفية الدروس ════════════════════════════════════════════════ */
 
+.lesson-unified-card__sheikh-link{color:inherit;text-decoration:underline;text-underline-offset:2px}
