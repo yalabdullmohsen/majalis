@@ -50,7 +50,7 @@ console.log("\n=== بنية المكوّنات ===");
   const hubCardTsx = readFileSync(resolve(root, "src/components/ui/HubCard.tsx"), "utf8");
   const tawhidPage = readFileSync(resolve(root, "src/views/TawhidPage.tsx"), "utf8");
   const fiqhPage = readFileSync(resolve(root, "src/views/FiqhPage.tsx"), "utf8");
-  const quranHub = readFileSync(resolve(root, "src/views/QuranHubPage.tsx"), "utf8");
+  const quranHub = readFileSync(resolve(root, "src/pages/quran/ui/QuranHubView.tsx"), "utf8");
   const merged = readFileSync(resolve(root, "src/views/MergedSectionHubPage.tsx"), "utf8");
   const topBar = readFileSync(resolve(root, "src/components/TopSectionBar.tsx"), "utf8");
 

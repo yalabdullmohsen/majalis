@@ -72,7 +72,7 @@ assert.match(navBar, /isPrayerTimesPath/);
 const prayerRanks = readFileSync(resolve(appRoot, "src/views/PrayerRanksPage.tsx"), "utf8");
 assert.equal(prayerRanks.includes("SectionQuiz"), false, "مراتب الصلاة بلا SectionQuiz");
 
-const quranHub = readFileSync(resolve(appRoot, "src/views/QuranHubPage.tsx"), "utf8");
+const quranHub = readFileSync(resolve(appRoot, "src/pages/quran/ui/QuranHubView.tsx"), "utf8");
 assert.equal(quranHub.includes("SectionQuiz"), false, "مركز القرآن بلا SectionQuiz");
 
 const globalBack = readFileSync(resolve(appRoot, "src/components/GlobalBackButton.tsx"), "utf8");

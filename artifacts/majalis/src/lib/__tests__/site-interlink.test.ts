@@ -110,7 +110,7 @@ console.log("\n=== صفحات كانت ميتة تحمل ExploreAlso / Related =
   assert(stories.includes("?slug="), "القصص الإسلامية تدعم ?slug= للمشاركة");
   assert(stories.includes("ExploreAlsoNav"), "صفحة القصص تركّب ExploreAlsoNav");
 
-  const surah = readFileSync(resolve(srcRoot, "views/SurahStoriesPage.tsx"), "utf8");
+  const surah = readFileSync(resolve(srcRoot, "pages/quran/ui/SurahStoriesView.tsx"), "utf8");
   assert(surah.includes("ExploreAlsoNav"), "قصص السور تركّب ExploreAlsoNav");
   assert(surah.includes("path: \"/quran/surah-stories\""), "SEO قصص السور على المسار الصحيح");
 

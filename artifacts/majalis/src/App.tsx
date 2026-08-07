@@ -66,7 +66,7 @@ const GlobalSearchModal = lazyWithRetry(
 
 const NotFound = lazy(() => import("@/views/not-found"));
 const HomePage = lazy(() => import("@/views/HomePage"));
-const QuranEnginePage = lazy(() => import("@/views/QuranEnginePage"));
+const QuranEnginePage = lazy(() => import("@/pages/quran/QuranEnginePage"));
 const AboutPage = lazy(() => import("@/views/AboutPage"));
 const AboutUsPage = lazy(() => import("@/views/AboutUsPage"));
 const SourcesLicensesPage = lazy(() => import("@/views/SourcesLicensesPage"));
@@ -102,18 +102,18 @@ const HadithMawduPage = lazy(() => import("@/views/HadithMawduPage"));
 const HadithBooksPage = lazy(() => import("@/views/HadithBooksPage"));
 const HadithBooksAndRulingsPage = lazy(() => import("@/views/HadithBooksAndRulingsPage"));
 const ArbaeenLovePage = lazy(() => import("@/views/ArbaeenLovePage"));
-const QuranCirclesPage = lazy(() => import("@/views/QuranCirclesPage"));
+const QuranCirclesPage = lazy(() => import("@/pages/quran/QuranCirclesPage"));
 const KidsPage = lazy(() => import("@/views/KidsPage"));
-const SurahIndexPage = lazy(() => import("@/views/SurahIndexPage"));
-const QuranSearchPage = lazy(() => import("@/views/QuranSearchPage"));
+const SurahIndexPage = lazy(() => import("@/pages/quran/SurahIndexPage"));
+const QuranSearchPage = lazy(() => import("@/pages/quran/QuranSearchPage"));
 const RevelationOrderPage = lazy(() => import("@/views/RevelationOrderPage"));
 const MakkiMadaniPage = lazy(() => import("@/views/MakkiMadaniPage"));
-const MushafComingSoonPage = lazy(() => import("@/views/MushafComingSoonPage"));
+const MushafComingSoonPage = lazy(() => import("@/pages/quran/MushafComingSoonPage"));
 const RecitationTestPage = lazy(() => import("@/views/RecitationTestPage"));
-const SurahStoriesPage = lazy(() => import("@/views/SurahStoriesPage"));
+const SurahStoriesPage = lazy(() => import("@/pages/quran/SurahStoriesPage"));
 const QuranTajweedPage = lazy(() => import("@/views/QuranTajweedPage"));
 const SurahStoryDetailRoute = lazy(() =>
-  import("@/views/SurahStoriesPage").then(m => ({
+  import("@/pages/quran/SurahStoriesPage").then(m => ({
     default: ({ params }: { params?: Record<string, string> }) => {
       const n = parseInt(params?.number ?? "1", 10);
       return <m.SurahStoryDetailPage surahNumber={Number.isNaN(n) ? 1 : n} />;
@@ -196,7 +196,7 @@ const MindMapPage = lazy(() => import("@/views/MindMapPage"));
 const IslamicLandmarksPage = lazy(() => import("@/views/IslamicLandmarksPage"));
 const MutashabihatPage = lazy(() => import("@/views/MutashabihatPage"));
 const QuranMemorizationPage = lazy(() => import("@/views/QuranMemorizationPage"));
-const QuranMemorizationPlansPage = lazy(() => import("@/views/QuranMemorizationPlansPage"));
+const QuranMemorizationPlansPage = lazy(() => import("@/pages/quran/QuranMemorizationPlansPage"));
 const IslamicScholarsPage = lazy(() => import("@/views/IslamicScholarsPage"));
 const ScholarProfilePage = lazy(() => import("@/views/ScholarProfilePage"));
 const AsmaaHusnaPage = lazy(() => import("@/views/AsmaaHusnaPage"));
@@ -231,7 +231,7 @@ const SinsAndRightsPage = lazy(() => import("@/views/SinsAndRightsPage"));
 const SinsAndRightsDetailPage = lazy(() => import("@/views/SinsAndRightsDetailPage"));
 const AmrBilMarufPage = lazy(() => import("@/views/AmrBilMarufPage"));
 const UlumQuranPage = lazy(() => import("@/views/UlumQuranPage"));
-const QuranKnowledgeHubPage = lazy(() => import("@/views/QuranKnowledgeHubPage"));
+const QuranKnowledgeHubPage = lazy(() => import("@/pages/quran/QuranKnowledgeHubPage"));
 const MemorizationHubPage = lazy(() => import("@/views/MemorizationHubPage"));
 const OccasionsLessonsHubPage = lazy(() => import("@/views/OccasionsLessonsHubPage"));
 const IslamicDirectoryHubPage = lazy(() => import("@/views/IslamicDirectoryHubPage"));

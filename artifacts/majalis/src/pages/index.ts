@@ -1,5 +1,3 @@
-/**
- * صفحات Feature-Sliced — تُملأ في C1…C7 بنقل من `src/views`.
- * القاعدة: ≤١٥٠ سطرًا، بلا منطق بيانات مباشر.
- */
-export {};
+/** صفحات FSD — ترحيل تدريجي من views */
+export { default as QuranKnowledgeHubPage } from "@/pages/quran/QuranKnowledgeHubPage";
+export { default as QuranHubPage } from "@/pages/quran/QuranHubPage";

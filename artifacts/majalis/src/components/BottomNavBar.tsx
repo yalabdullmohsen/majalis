@@ -16,7 +16,7 @@ const HREF_TO_ID: Record<string, BottomTabId> = {
 };
 
 const TAB_PREFETCH: Record<string, () => Promise<unknown>> = {
-  "/quran-knowledge": () => import("@/views/QuranKnowledgeHubPage"),
+  "/quran-knowledge": () => import("@/pages/quran/QuranKnowledgeHubPage"),
   "/lessons": () => import("@/views/LessonsPage"),
   "/prayer-times": () => import("@/views/PrayerTimesPage"),
   "/fiqh": () => import("@/views/FiqhPage"),

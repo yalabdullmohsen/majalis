@@ -81,7 +81,7 @@ artifacts/majalis/src/
   core/audio/          AudioEngine
   core/tafseer/        TafseerService
   components/          HomeDashboard, QuranViewer, QuranActionBar
-  views/QuranEnginePage.tsx
+  pages/quran/QuranEnginePage.tsx
   styles/quran-engine-ui.css
   hooks/useQuranEngine.ts
   tests/               database-manager, audio-engine, scaffold
