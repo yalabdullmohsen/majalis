@@ -93,3 +93,7 @@
 ## F — سجل المسارات
 
 - ROUTE_REGISTRY يغطي كل مسارات App (٣١٨) + verify:route-registry.
+
+## I — بحث موحّد
+
+- فهرس محلي `public/data/search/index.json` (علماء/كتب/سور) + `parseQuickNav` + نتائج في SearchView.

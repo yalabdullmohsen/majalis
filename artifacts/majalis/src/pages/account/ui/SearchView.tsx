@@ -55,6 +55,12 @@ import { addSearchHistory, getSearchHistory, clearSearchHistory } from "@/lib/se
 import { trackSearchQuery } from "@/lib/content-analytics";
 import { usePersistedState } from "@/hooks/usePersistedState";
 import {
+  parseQuickNav,
+  loadUnifiedSearchIndex,
+  searchUnifiedIndex,
+  type UnifiedSearchHit,
+} from "@/features/search";
+import {
   searchFiqhCouncilForGlobal,
   mergeFiqhSearchResults,
   type FiqhGlobalSearchRow,
@@ -274,6 +280,7 @@ export default function SearchPage() {
     islamicStories: [] as { id: string; title: string; meta?: string; href: string }[],
     nations: [] as { id: string; title: string; meta?: string; href: string }[],
   });
+  const [unifiedHits, setUnifiedHits] = useState<Record<string, UnifiedSearchHit[]>>({});
 
   /* تحميل السجل عند الفتح وبعد كل بحث */
   const refreshHistory = () => setRecentSearches(getSearchHistory().slice(0, 6));
@@ -293,11 +300,19 @@ export default function SearchPage() {
         islamicStories: [],
         nations: [],
       });
+      setUnifiedHits({});
       return;
     }
     void searchLocalExtensions(q).then((extra) => {
       if (!cancelled) setLocalExtra(extra);
     });
+    void loadUnifiedSearchIndex()
+      .then((idx) => {
+        if (!cancelled) setUnifiedHits(searchUnifiedIndex(idx.docs, q));
+      })
+      .catch(() => {
+        if (!cancelled) setUnifiedHits({});
+      });
     return () => {
       cancelled = true;
     };
@@ -307,6 +322,12 @@ export default function SearchPage() {
     if (!rawQuery.trim()) {
       setResults(EMPTY);
       setIntelligentResults([]);
+      return;
+    }
+
+    const quick = parseQuickNav(rawQuery);
+    if (quick) {
+      navigate(quick.href);
       return;
     }
 
@@ -422,7 +443,8 @@ export default function SearchPage() {
     (results.hadith?.length || 0) + (results.stories?.length || 0) +
     localExtra.occasions.length + localExtra.nawawi.length + localExtra.quran.length +
     localExtra.adhkar.length + localExtra.surahStories.length + localExtra.islamicStories.length +
-    localExtra.nations.length;
+    localExtra.nations.length +
+    Object.values(unifiedHits).reduce((n, arr) => n + arr.length, 0);
 
   const total = intelligentTotal > 0 ? intelligentTotal : legacyTotal;
 
@@ -699,6 +721,15 @@ export default function SearchPage() {
                   )} />
                   <Group title="القرآن الكريم" items={localExtra.quran} render={(s) => (
                     <QuranAyahResultRow key={s.id} href={s.href} title={s.title} meta={s.meta} />
+                  )} />
+                  <Group title="العلماء (فهرس موحّد)" items={unifiedHits.scholar ?? []} render={(s) => (
+                    <ResultRow key={s.id} href={s.href} kind="scholar" query={q} title={s.titleAr} meta={s.meta} />
+                  )} />
+                  <Group title="الكتب (فهرس موحّد)" items={unifiedHits.book ?? []} render={(b) => (
+                    <ResultRow key={b.id} href={b.href} kind="book" query={q} title={b.titleAr} meta={b.meta} />
+                  )} />
+                  <Group title="السور (فهرس موحّد)" items={unifiedHits.surah ?? []} render={(s) => (
+                    <QuranAyahResultRow key={s.id} href={s.href} title={s.titleAr} meta={s.meta} />
                   )} />
                   {results.stories?.length === 0 && localExtra.islamicStories.length > 0 && (
                     <Group title="القصص الإسلامية" items={localExtra.islamicStories} render={(s) => (
