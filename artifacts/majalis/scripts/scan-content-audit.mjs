@@ -20,7 +20,7 @@ const files = [
   "lib/sheikhs-seed.ts", "lib/amr-bil-maruf-seed.ts", "lib/fiqh-issues-seed.ts",
   "lib/fiqh-council-seed.ts", "lib/mind-maps-data.ts", "lib/islamic-landmarks-data.ts",
   "views/IslamicGlossaryPage.tsx", "views/AkhlaqPage.tsx", "views/SahabahPage.tsx",
-  "views/DuasPage.tsx", "views/HadithSciencePage.tsx", "views/IslamicSectsPage.tsx",
+  "views/DuasPage.tsx", "pages/hadith/ui/HadithScienceView.tsx", "views/IslamicSectsPage.tsx",
   "views/SunanYawmiyyaPage.tsx", "views/WasayaNabawiyyaPage.tsx", "views/RaqaiqPage.tsx",
   "views/HikamSalafPage.tsx", "views/FadailAamalPage.tsx", "views/JannaNaarPage.tsx",
   "views/AdabTalabIlmPage.tsx", "views/MalaikaPage.tsx", "views/FiqhQawaidPage.tsx",

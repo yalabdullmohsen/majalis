@@ -67,4 +67,37 @@ for (const name of names) {
   }
 }
 
-console.log(JSON.stringify({ feature, moved }, null, 2));
+/** إعادة كتابة الاستيرادات ومسارات الاختبارات بعد النقل */
+function walkFiles(dir, out = []) {
+  if (!fs.existsSync(dir)) return out;
+  for (const ent of fs.readdirSync(dir, { withFileTypes: true })) {
+    if (ent.name === "node_modules" || ent.name === "dist" || ent.name.startsWith(".")) continue;
+    const p = path.join(dir, ent.name);
+    if (ent.isDirectory()) walkFiles(p, out);
+    else if (/\.(tsx?|jsx?|mjs|cjs|md)$/.test(ent.name)) out.push(p);
+  }
+  return out;
+}
+
+let rewriteCount = 0;
+for (const file of walkFiles(appRoot)) {
+  let text = fs.readFileSync(file, "utf8");
+  const orig = text;
+  for (const m of moved) {
+    const pagePath = `@/pages/${feature}/${m.name}`;
+    text = text.replaceAll(`@/views/${m.name}`, pagePath);
+    if (m.kind === "page") {
+      text = text.replaceAll(`src/views/${m.name}.tsx`, `src/pages/${feature}/${m.name}.tsx`);
+      text = text.replaceAll(`views/${m.name}.tsx`, `pages/${feature}/${m.name}.tsx`);
+    } else {
+      text = text.replaceAll(`src/views/${m.name}.tsx`, `src/pages/${feature}/ui/${m.viewName}.tsx`);
+      text = text.replaceAll(`views/${m.name}.tsx`, `pages/${feature}/ui/${m.viewName}.tsx`);
+    }
+  }
+  if (text !== orig) {
+    fs.writeFileSync(file, text);
+    rewriteCount++;
+  }
+}
+
+console.log(JSON.stringify({ feature, moved, rewriteCount }, null, 2));

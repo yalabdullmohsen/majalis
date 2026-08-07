@@ -14,7 +14,7 @@ const appRoot = join(here, "../../..");
 const CONVERTED_PATHS = [
   "src/styles/pages/surah-index.css",
   "src/views/TarikhIslamiPage.tsx",
-  "src/views/SunnahStudiesPage.tsx",
+  "src/pages/hadith/SunnahStudiesPage.tsx",
   "src/views/SujoodSahwPage.tsx",
   "src/views/AmradQalbiyyaPage.tsx",
   "src/views/MethodologyPage.tsx",

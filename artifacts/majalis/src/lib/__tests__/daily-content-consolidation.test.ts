@@ -36,7 +36,7 @@ console.log("\n=== لا منطق تدوير يومي متفرق متبقٍّ ف�
   const pagesWithFormerDailyWidgets = [
     "src/views/IslamicScholarsPage.tsx",
     "src/views/HikamSalafPage.tsx",
-    "src/views/HadithSciencePage.tsx",
+    "src/pages/hadith/ui/HadithScienceView.tsx",
     "src/pages/quran/ui/QuranTajweedView.tsx",
     "src/views/AkhlaqPage.tsx",
     "src/views/ArkanIslamPage.tsx",
@@ -78,7 +78,7 @@ console.log("\n=== لا منطق تدوير يومي متفرق متبقٍّ ف�
     assert(!dailyPattern.test(src), `${rel.split("/").pop()} خالٍ من منطق "X اليوم" المتفرق`);
   }
 
-  const arbaeenSrc = readSrc("src/views/ArbaeenNawawiPage.tsx");
+  const arbaeenSrc = readSrc("src/pages/hadith/ui/ArbaeenNawawiView.tsx");
   assert(!arbaeenSrc.includes("an-today"), "ArbaeenNawawiPage: قسم بطاقة \"حديث اليوم\" المنفصل لم يعُد");
   assert(!arbaeenSrc.includes("حديث اليوم"), "ArbaeenNawawiPage: لا نص \"حديث اليوم\" متبقٍّ كعنوان قسم");
 
@@ -119,7 +119,7 @@ console.log("\n=== المحتوى العلمي الأصلي لم يُحذف — 
   assert(hikamSrc.includes("HIKAM"), "بيانات حكم السلف (HIKAM) ما زالت موجودة ومستخدَمة في القائمة الكاملة");
   const sahabahSrc = readSrc("src/views/SahabahPage.tsx");
   assert(sahabahSrc.includes("SAHABAH"), "بيانات الصحابة (SAHABAH) ما زالت موجودة ومستخدَمة في القائمة الكاملة");
-  const arbaeenSrc = readSrc("src/views/ArbaeenNawawiPage.tsx");
+  const arbaeenSrc = readSrc("src/pages/hadith/ui/ArbaeenNawawiView.tsx");
   assert(arbaeenSrc.includes("ARBAEEN_NAWAWI"), "بيانات الأربعين النووية ما زالت موجودة ومستخدَمة في القائمة الكاملة");
   const salahSrc = readSrc("src/views/SalahGuidePage.tsx");
   assert(salahSrc.includes("WAJIBAAT"), "واجبات الصلاة ما زالت في التبويب الكامل");
