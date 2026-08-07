@@ -11,6 +11,7 @@ import { adhkarCatRedirectPath, hrefAdhkar, resolveAdhkarCategory } from "@/lib/
 import { applyPageSeo } from "@/lib/seo";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { useReadingScrollMemory } from "@/hooks/useReadingScrollMemory";
+import { haptics } from "@/lib/haptics";
 import "@/styles/pages/adhkar.css";
 import "@/styles/components/thumb-zone.css";
 
@@ -102,20 +103,12 @@ function ssSave(cat: string, currentIndex: number, tapCount: number) {
   try { sessionStorage.setItem(ssKey(cat), JSON.stringify({ currentIndex, tapCount })); } catch { /* */ }
 }
 
-/* ── اهتزاز مع إعداد التحكم ── */
+/* ── اهتزاز عبر الكتالوج الموحّد ── */
 function hapticsLight() {
-  try {
-    const enabled = localStorage.getItem("adhkar_haptics_enabled");
-    if (enabled === "false") return;
-    if (navigator.vibrate) navigator.vibrate(18);
-  } catch { /* */ }
+  haptics.light();
 }
 function hapticsComplete() {
-  try {
-    const enabled = localStorage.getItem("adhkar_haptics_enabled");
-    if (enabled === "false") return;
-    if (navigator.vibrate) navigator.vibrate([30, 60, 30]);
-  } catch { /* */ }
+  haptics.success();
 }
 
 /* ══ الصفحة الرئيسية ══ */

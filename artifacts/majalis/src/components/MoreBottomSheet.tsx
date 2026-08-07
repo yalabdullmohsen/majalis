@@ -11,6 +11,7 @@ import {
   type ServicesCenterItem,
 } from "@/lib/services-center-nav";
 import { AppBottomSheet } from "@/components/ui/AppBottomSheet";
+import { haptics } from "@/lib/haptics";
 import "@/styles/components/more-bottom-sheet.css";
 
 interface Props {
@@ -80,6 +81,7 @@ export function MoreBottomSheet({ open, onClose }: Props) {
   };
 
   const runItem = (item: ServicesCenterItem, e?: MouseEvent) => {
+    haptics.selection();
     const { action } = item;
     if (action.kind === "link") {
       if (isComingSoonPath(action.href)) {
@@ -162,7 +164,10 @@ export function MoreBottomSheet({ open, onClose }: Props) {
         <Link
           key={item.id}
           href={href}
-          onClick={onClose}
+          onClick={() => {
+            haptics.selection();
+            onClose();
+          }}
           className={className}
           aria-current={active ? "page" : undefined}
           aria-label={aria}

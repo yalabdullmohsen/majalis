@@ -5,6 +5,7 @@ import { isImmersiveChromePath } from "@/lib/immersive-chrome";
 import { isComingSoonPath } from "@/lib/nav-visibility";
 import { BOTTOM_NAV_TABS } from "@/lib/nav-map";
 import { getActiveTab, type BottomTabId } from "@/lib/get-active-tab";
+import { haptics } from "@/lib/haptics";
 import { MoreBottomSheet } from "./MoreBottomSheet";
 
 const HREF_TO_ID: Record<string, BottomTabId> = {
@@ -58,6 +59,7 @@ export function BottomNavBar() {
               onTouchStart={() => triggerPrefetch(href)}
               onMouseEnter={() => triggerPrefetch(href)}
               onFocus={() => triggerPrefetch(href)}
+              onClick={() => haptics.selection()}
             >
               <span className="bottom-nav__tab-icon" aria-hidden="true">
                 <Icon size={20} strokeWidth={active ? 2.25 : 1.75} aria-hidden={true} />
@@ -70,7 +72,10 @@ export function BottomNavBar() {
         <button
           type="button"
           className={`bottom-nav__tab${moreActive ? " is-active" : ""}`}
-          onClick={() => setMoreOpen(true)}
+          onClick={() => {
+            haptics.selection();
+            setMoreOpen(true);
+          }}
           aria-label="المزيد"
           aria-haspopup="dialog"
           aria-expanded={moreOpen}

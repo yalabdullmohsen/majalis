@@ -141,6 +141,17 @@ export default function SettingsPage() {
             </button>
           ))}
         </div>
+        <ToggleRow
+          label="الاهتزاز اللمسي"
+          checked={preferences.hapticsEnabled}
+          onChange={(value) => update("hapticsEnabled", value)}
+        />
+        <ToggleRow
+          label="تباين مرتفع"
+          checked={preferences.highContrast}
+          onChange={(value) => update("highContrast", value)}
+        />
+        <p className="settings-note">يحسّن وضوح النص والحدود دون تغيير لون الهوية الأخضر.</p>
         <label className="settings-field">
           <span>{t("settings_font_size")}</span>
           <select name="interface-font-size" value={preferences.fontSize} onChange={(e) => update("fontSize", e.target.value as UserPreferences["fontSize"])}>

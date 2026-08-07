@@ -101,6 +101,19 @@
   --mj-lh-body: 1.7;
   --mj-lh-small: 1.65;
   --mj-lh-sacred: 2.1;
+
+  /* طبقات ارتفاع — بديل ظل واحد */
+  --mj-elev-0: none;
+  --mj-elev-1: 0 1px 2px rgba(11, 32, 24, 0.06);
+  --mj-elev-2: 0 4px 12px -4px rgba(11, 32, 24, 0.12);
+  --mj-elev-3: 0 12px 28px -10px rgba(11, 32, 24, 0.2);
+
+  /* حركة فيزيائية تقريبية (CSS spring) — 120Hz-friendly */
+  --mj-ease-spring: cubic-bezier(0.22, 1.15, 0.36, 1);
+  --mj-ease-spring-soft: cubic-bezier(0.34, 1.25, 0.64, 1);
+  --mj-dur-fast: 140ms;
+  --mj-dur-med: 240ms;
+  --mj-touch-min: 48px;
 }
 
 /* الوضع الليلي — ThemePreferenceProvider يضع data-theme و.dark معًا */
@@ -142,6 +155,10 @@ html.dark,
   --color-danger-deep: #FECACA;
   --color-splash: #101614;
   --shadow-mj: 0 10px 26px -18px rgba(0, 0, 0, 0.7);
+  --mj-elev-1: 0 1px 3px rgba(0, 0, 0, 0.35);
+  --mj-elev-2: 0 6px 16px -6px rgba(0, 0, 0, 0.45);
+  --mj-elev-3: 0 14px 32px -12px rgba(0, 0, 0, 0.55);
+  --mj-sh: var(--mj-elev-2);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -151,6 +168,55 @@ html.dark,
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
+}
+
+/* تباين مرتفع — نظام أو تفضيل المستخدم دون تغيير أخضر الهوية */
+@media (prefers-contrast: more) {
+  :root {
+    --mj-ink: #0B1511;
+    --mj-ink-2: #2A3832;
+    --mj-muted: #3D4A44;
+    --mj-hairline: #8A9892;
+    --color-ink: #0B1511;
+    --color-ink-2: #2A3832;
+    --color-muted: #3D4A44;
+    --color-hairline: #8A9892;
+  }
+  html[data-theme="dark"],
+  html.dark,
+  [data-theme="dark"],
+  .dark {
+    --mj-ink: #F3F7F5;
+    --mj-ink-2: #D5E0DB;
+    --mj-muted: #C5D0CB;
+    --mj-hairline: #5A6B64;
+    --color-ink: #F3F7F5;
+    --color-ink-2: #D5E0DB;
+    --color-muted: #C5D0CB;
+    --color-hairline: #5A6B64;
+  }
+}
+
+html[data-contrast="high"] {
+  --mj-ink: #0B1511;
+  --mj-ink-2: #2A3832;
+  --mj-muted: #3D4A44;
+  --mj-hairline: #8A9892;
+  --color-ink: #0B1511;
+  --color-ink-2: #2A3832;
+  --color-muted: #3D4A44;
+  --color-hairline: #8A9892;
+}
+html[data-theme="dark"][data-contrast="high"],
+html.dark[data-contrast="high"] {
+  --mj-ink: #F3F7F5;
+  --mj-ink-2: #D5E0DB;
+  --mj-muted: #C5D0CB;
+  --mj-hairline: #5A6B64;
+  --color-ink: #F3F7F5;
+  --color-ink-2: #D5E0DB;
+  --color-muted: #C5D0CB;
+  --color-hairline: #5A6B64;
 }
 
 /* منع تكبير iOS التلقائي عند التركيز — دون تعطيل تكبير المستخدم */
@@ -170,14 +236,19 @@ body {
   overflow-x: clip;
 }
 
-/* أهداف لمس وحدود تفاعل — إطلاق (مع استثناء واجهات المصحف/التسميع) */
+/* أهداف لمس وحدود تفاعل — ≥48px (مع استثناء واجهات المصحف/التسميع) */
 button:not(.quran-shell button),
 [role="button"],
 .bottom-nav__tab,
 a.more-sheet-item,
 .surah-index-chip,
 .surah-index-jump {
-  min-height: 44px;
+  min-height: var(--mj-touch-min, 48px);
+}
+.mj-btn,
+.page-action-btn,
+.ds-btn {
+  min-height: var(--mj-touch-min, 48px);
 }
 .quran-shell button,
 .quran-shell [role="button"],
@@ -189,7 +260,8 @@ a.more-sheet-item,
 button:active,
 [role="button"]:active,
 a:active {
-  transition: transform 80ms ease, background 80ms ease;
+  transition: transform var(--mj-dur-fast, 140ms) var(--mj-ease-spring, ease),
+    background var(--mj-dur-fast, 140ms) ease;
 }
 
 :focus-visible {
@@ -229,7 +301,7 @@ a:active {
   display: inline-flex;
   align-items: center;
   gap: var(--mj-s2);
-  min-height: 44px;
+  min-height: var(--mj-touch-min, 48px);
   color: var(--mj-ink-2);
   text-decoration: none;
   font-weight: 600;
@@ -285,7 +357,7 @@ a:active {
   border-color: var(--mj-brand);
 }
 .mj-card--raised {
-  box-shadow: var(--mj-sh);
+  box-shadow: var(--mj-elev-2, var(--mj-sh));
 }
 
 .mj-stats {
@@ -375,7 +447,7 @@ a:active {
   border-radius: var(--mj-r-md);
   background: var(--mj-brand);
   color: var(--mj-on-brand);
-  transition: transform 0.12s ease;
+  transition: transform var(--mj-dur-fast, 140ms) var(--mj-ease-spring, ease);
 }
 .mj-btn:active {
   transform: scale(0.97);
@@ -530,4 +602,25 @@ html.dark .mj-btn--ghost {
 .mj-nav-skin a[aria-current="page"],
 .mj-nav-skin .is-active {
   color: var(--mj-brand);
+}
+
+/* شريط سفلي — أهداف لمس + spring خفيف */
+.bottom-nav--v2 .bottom-nav__tab {
+  min-width: var(--mj-touch-min, 48px);
+  min-height: var(--mj-touch-min, 48px);
+  transition:
+    transform var(--mj-dur-fast, 140ms) var(--mj-ease-spring, ease),
+    color var(--mj-dur-fast, 140ms) ease,
+    background var(--mj-dur-fast, 140ms) ease;
+}
+.bottom-nav--v2 .bottom-nav__tab:active:not(.is-active) {
+  transform: scale(0.96);
+  transition-timing-function: var(--mj-ease-spring-soft, ease);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bottom-nav--v2 .bottom-nav__tab,
+  .mj-btn {
+    transition-duration: 0.01ms;
+  }
 }
