@@ -67,16 +67,7 @@ export function SideNavDrawer({ open, onClose, onLogout }: DrawerProps) {
       >
         <header className="sidebar-header">
           <div className="sidebar-brand">
-            <img
-              src="/logo-calligraphy.png"
-              alt=""
-              className="sidebar-brand-logo"
-              loading="lazy"
-              decoding="async"
-            />
-            <div>
-              <p className="sidebar-title">المجلس العلمي</p>
-            </div>
+            <p className="sidebar-title">المجلس العلمي</p>
           </div>
           <button type="button" onClick={onClose} aria-label="إغلاق القائمة" className="sidebar-close">
             <X size={20} strokeWidth={2} aria-hidden="true" />
