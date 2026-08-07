@@ -71,3 +71,4 @@ const globalBack = readFileSync(resolve(appRoot, "src/components/GlobalBackButto
 assert.match(globalBack, /isImmersiveChromePath/);
 
 console.log("immersive-chrome.test.ts: ok");
+import "./clean-lesson-display-title.test.ts";
