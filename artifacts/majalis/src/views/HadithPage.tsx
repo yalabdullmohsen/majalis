@@ -19,6 +19,7 @@ import {
   type HadithSortMode,
 } from "@/lib/hadith-access";
 import { PageHeader, SkeletonCardGrid, Empty, Chip } from "@/components/ui-common";
+import { ExclusiveChoiceGroup } from "@/components/ui/ExclusiveChoiceGroup";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
 import { RecommendationWidget } from "@/components/recommendations/RecommendationWidget";
@@ -902,23 +903,17 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
 
       <div className="hadith-filter-section">
         <p className="hadith-filter-label">نطاق البحث</p>
-        <div className="content-hub-chips" role="group" aria-label="نطاق البحث">
-          {([
-            ["matn", "المتن فقط"],
-            ["full", "سند + متن"],
-            ["takhrij", "تخريج وشرح"],
-            ["number", "أرقام التخريج"],
-          ] as const).map(([id, label]) => (
-            <button
-              key={id}
-              type="button"
-              onClick={() => setSearchScope(id)}
-              className={searchScope === id ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
-            >
-              {label}
-            </button>
-          ))}
-        </div>
+        <ExclusiveChoiceGroup
+          ariaLabel="نطاق البحث"
+          value={searchScope}
+          onChange={(id) => setSearchScope(id as HadithSearchScope)}
+          items={[
+            { id: "matn", label: "المتن فقط" },
+            { id: "full", label: "سند + متن" },
+            { id: "takhrij", label: "تخريج وشرح" },
+            { id: "number", label: "أرقام التخريج" },
+          ]}
+        />
       </div>
 
       <div className="hadith-filter-section">
@@ -962,55 +957,57 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
 
       <div className="hadith-filter-section">
         <p className="hadith-filter-label">الترتيب</p>
-        <div className="content-hub-chips" role="group" aria-label="ترتيب الأحاديث">
-          {([
-            ["number", "حسب الرقم"],
-            ["default", "افتراضي"],
-          ] as const).map(([id, label]) => (
-            <button
-              key={id}
-              type="button"
-              onClick={() => setSortMode(id)}
-              className={sortMode === id ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
-            >
-              {label}
-            </button>
-          ))}
-        </div>
+        <ExclusiveChoiceGroup
+          ariaLabel="ترتيب الأحاديث"
+          value={sortMode}
+          onChange={(id) => setSortMode(id as HadithSortMode)}
+          items={[
+            { id: "number", label: "حسب الرقم" },
+            { id: "default", label: "افتراضي" },
+          ]}
+        />
       </div>
 
       <div className="hadith-filter-section">
         <p className="hadith-filter-label">المجموعة / طريق التخريج بالمصدر</p>
-        <div className="content-hub-chips" role="tablist" aria-label="تصفية مجموعة الحديث">
-          {collections.map((c) => (
-            <button
-              key={c}
-              role="tab"
-              type="button"
-              onClick={() => setActiveCollection(c)}
-              className={activeCollection === c ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
-              aria-selected={activeCollection === c}
-            >
-              {c === "الكل" ? "الكل" : collectionLabel(c)}
-            </button>
-          ))}
-        </div>
+        <ExclusiveChoiceGroup
+          ariaLabel="تصفية مجموعة الحديث"
+          value={activeCollection}
+          onChange={setActiveCollection}
+          items={collections.map((c) => ({
+            id: c,
+            label: c === "الكل" ? "الكل" : collectionLabel(c),
+          }))}
+        />
       </div>
 
       <div className="hadith-filter-section">
         <p className="hadith-filter-label">الموضوع</p>
-        <div className="content-hub-chips">
-          {CATEGORIES.map((cat) => (
-            <button
-              key={cat.id}
-              type="button"
-              onClick={() => setActiveCategory(cat.id)}
-              className={activeCategory === cat.id ? "content-hub-chip content-hub-chip--active" : "content-hub-chip"}
-            >
-              {cat.label}
-            </button>
-          ))}
-        </div>
+        <ExclusiveChoiceGroup
+          ariaLabel="تصفية موضوع الحديث"
+          value={activeCategory}
+          onChange={setActiveCategory}
+          items={CATEGORIES.map((cat) => ({ id: cat.id, label: cat.label }))}
+        />
+      </div>
+
+      <div className="hadith-filter-section">
+        <button
+          type="button"
+          className="hadith-clear-search"
+          onClick={() => {
+            setSearch("");
+            setNumberQuery("");
+            setBookQuery("");
+            setInBookQuery("");
+            setSearchScope("matn");
+            setActiveCollection("الكل");
+            setActiveCategory("الكل");
+            setSortMode(authenticityClass === "sahih" ? "number" : "default");
+          }}
+        >
+          إعادة الضبط
+        </button>
       </div>
     </div>
   );
@@ -1092,12 +1089,12 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
             className="hadith-access-bar__num hadith-access-bar__num--short"
             aria-label="تصفية برقم الحديث"
           />
-          <div className="hadith-access-bar__sort" role="group" aria-label="الترتيب">
-            <button type="button" className={sortMode === "number" ? "is-active" : ""} onClick={() => setSortMode("number")}>رقم</button>
-            <button type="button" className={sortMode === "default" ? "is-active" : ""} onClick={() => setSortMode("default")}>افتراضي</button>
+          <div className="hadith-access-bar__sort" role="radiogroup" aria-label="الترتيب">
+            <button type="button" role="radio" aria-checked={sortMode === "number"} className={sortMode === "number" ? "is-active" : ""} onClick={() => setSortMode("number")}>رقم</button>
+            <button type="button" role="radio" aria-checked={sortMode === "default"} className={sortMode === "default" ? "is-active" : ""} onClick={() => setSortMode("default")}>افتراضي</button>
           </div>
         </div>
-        <div className="hadith-access-bar__row hadith-access-bar__row--scope" role="group" aria-label="نطاق البحث">
+        <div className="hadith-access-bar__row hadith-access-bar__row--scope" role="radiogroup" aria-label="نطاق البحث">
           <span className="hadith-access-bar__label">نطاق</span>
           {([
             ["matn", "متن"],
@@ -1108,6 +1105,8 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
             <button
               key={id}
               type="button"
+              role="radio"
+              aria-checked={searchScope === id}
               className={searchScope === id ? "is-active" : ""}
               onClick={() => setSearchScope(id)}
             >
@@ -1118,11 +1117,11 @@ export function HadithSection({ authenticityClass = "sahih", embedded = false }:
       </div>
 
       {/* Category chips (quick filter on desktop) */}
-      <div className="hadith-quick-cats" role="tablist" aria-label="تصفية موضوع الحديث">
+      <div className="hadith-quick-cats" role="radiogroup" aria-label="تصفية موضوع الحديث">
         {CATEGORIES.map((cat) => (
           <Chip
             key={cat.id}
-            role="tab"
+            role="radio"
             active={activeCategory === cat.id}
             className="hadith-quick-cat"
             onClick={() => setActiveCategory(cat.id)}

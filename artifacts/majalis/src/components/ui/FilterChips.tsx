@@ -28,8 +28,8 @@ export function FilterChips({
 }: FilterChipsProps) {
   return (
     <div
-      className={cn("filter-chips", className)}
-      role="tablist"
+      className={cn("filter-chips exclusive-choice exclusive-choice--fill", className)}
+      role="radiogroup"
       aria-label={ariaLabel}
     >
       {items.map((item) => {
@@ -38,8 +38,8 @@ export function FilterChips({
           <button
             key={item.id}
             type="button"
-            role="tab"
-            aria-selected={active}
+            role="radio"
+            aria-checked={active}
             disabled={item.disabled}
             className={cn("filter-chips__chip", active && "is-active")}
             onClick={() => onChange(item.id)}
