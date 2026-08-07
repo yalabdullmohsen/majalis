@@ -89,3 +89,7 @@
 ## D2 — سلّم المسافات
 
 - سلّم ٤/٨/١٢/١٦/٢٤/٣٢/٤٨ + `--page-gutter` على PageShell وفهرس السور.
+
+## F — سجل المسارات
+
+- ROUTE_REGISTRY يغطي كل مسارات App (٣١٨) + verify:route-registry.

@@ -3,6 +3,7 @@ export {
   getRouteByPath,
   routesInNav,
   routesInSitemap,
+  routesBySection,
   type AppRoute,
   type AppRouteSection,
 } from "@/app/router/routes";
