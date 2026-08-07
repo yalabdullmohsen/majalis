@@ -76,7 +76,6 @@ export function SideNavDrawer({ open, onClose, onLogout }: DrawerProps) {
             />
             <div>
               <p className="sidebar-title">المجلس العلمي</p>
-              <p className="sidebar-subtitle">منصة علمية منظمة</p>
             </div>
           </div>
           <button type="button" onClick={onClose} aria-label="إغلاق القائمة" className="sidebar-close">

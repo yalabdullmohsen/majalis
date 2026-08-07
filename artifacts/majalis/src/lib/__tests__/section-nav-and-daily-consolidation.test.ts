@@ -152,7 +152,7 @@ console.log("\n=== القوائم بلا أقسام محذوفة — عن الم
   assert(navMapSrc.includes("BOTTOM_NAV_TABS") && navMapSrc.includes("SERVICES_CENTER_GROUPS"), "nav-map مصدر موحّد");
   assert(sidebarNavSrc.includes("getSidebarGroupsFromNavMap"), "الجانبية تشتق من nav-map");
   assert(sideSrc.includes("SIDEBAR_NAV_GROUPS") && sideSrc.includes("sidebar-panel"), "القائمة تستخدم التصميم الموحّد");
-  assert(sideSrc.includes("منصة علمية منظمة"), "رأس القائمة يحمل الوصف المطلوب");
+  assert(!sideSrc.includes("منصة علمية منظمة"), "لا وصف ترويجي في رأس القائمة");
   assert(!HIDDEN_FROM_NAV_PATHS.has("/about"), "about ظاهر للاكتشاف عبر عن المجلس");
 }
 
