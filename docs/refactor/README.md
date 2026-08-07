@@ -19,3 +19,7 @@ node artifacts/majalis/scripts/generate-codebase-inventory.mjs
 ```
 
 **قرار:** `if: false` على Resolve PR conflicts — **غير موجود** في `.github/workflows/resolve-pr-conflicts.yml` (مُزال مسبقًا).
+
+## الحزمة B
+
+انظر [`architecture-target.md`](./architecture-target.md) — هيكل FSD + `pnpm --filter @workspace/majalis run verify:fsd-layers`.

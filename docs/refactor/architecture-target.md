@@ -1,0 +1,35 @@
+# الهيكل المستهدف — Feature-Sliced Design (حزمة B)
+
+مرجع الترحيل بعد جرد الحزمة A (`docs/refactor/*`). هذا الـPR ينشئ الهيكل والملفات الجذرية فقط؛ النقل في C1…C7.
+
+## الطبقات
+
+| طبقة | المسار | المسؤولية |
+|---|---|---|
+| app | `src/app/` | providers، سجل المسارات، حدود الأخطاء، أنماط الجذر |
+| pages | `src/pages/` | صفحات رقيقة (≤١٥٠ سطرًا): تركيب widgets/features/entities |
+| widgets | `src/widgets/` | تراكيب UI مشتركة (Nav، RelatedRail، PageShell…) |
+| features | `src/features/` | تفاعلات: bookmark، memorize، search، audio، prayer… |
+| entities | `src/entities/` | كيان علمي: model + api + ui (بطاقة واحدة لكل كيان) |
+| shared | `src/shared/` | ui/lib/hooks/types/config بلا معرفة بميزة |
+
+## قواعد الاستيراد (تُفرض بـ `verify:fsd-layers`)
+
+1. `pages` → `widgets` | `features` | `entities` | `shared` فقط.
+2. `entities` لا تستورد من `features` ولا `pages` ولا `widgets`.
+3. `shared` لا تستورد من أي طبقة أعلى (`app`/`pages`/`widgets`/`features`/`entities`).
+4. لا استيراد نسبي بأكثر من مستوى واحد (`../../..` ممنوع) — استخدم `@/`.
+5. المصدر التشغيلي للمسارات يبقى `App.tsx` حتى حزمة F؛ `app/router/routes.ts` هو السجل المستهدف.
+
+## حالة الترحيل
+
+- **B (هذا الـPR):** هيكل + stubs + توثيق + بوابة طبقات.
+- **C1…C7:** نقل `src/views` → `src/pages/<feature>/` دون تغيير سلوكي.
+- **D1:** نقل رموز `@theme` إلى `src/app/styles/theme.css`.
+- **E/F:** تفعيل المستودعات وسجل المسارات.
+
+## قرار هندسي (B)
+
+- لم نُثبت `eslint-plugin-import` في B لتجنب تبعية جديدة؛ بوابة `scripts/verify-fsd-layers.mjs` تغطي القيود الحرجة.
+- لم نربط `AppProviders` / `routes.ts` بـ `main.tsx` بعد — صفر تغيير مرئي.
+- `features/lessons` الموجود يبقى كما هو ويُواءم تدريجيًا مع FSD.
