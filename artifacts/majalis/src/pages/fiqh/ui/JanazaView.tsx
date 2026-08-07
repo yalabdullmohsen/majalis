@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
-import { applyPageSeo } from "../lib/seo";
+import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";

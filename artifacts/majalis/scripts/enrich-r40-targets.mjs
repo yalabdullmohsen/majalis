@@ -15,7 +15,7 @@ const TARGETS = [
   { gap: "views_ShimaelPage.tsx.json", file: "src/views/ShimaelPage.tsx", kind: "shimael" },
   { gap: "views_SunanYawmiyyaPage.tsx.json", file: "src/views/SunanYawmiyyaPage.tsx", kind: "sunan" },
   { gap: "views_WasayaNabawiyyaPage.tsx.json", file: "src/views/WasayaNabawiyyaPage.tsx", kind: "wasaya" },
-  { gap: "views_SalahGuidePage.tsx.json", file: "src/views/SalahGuidePage.tsx", kind: "salah" },
+  { gap: "views_SalahGuidePage.tsx.json", file: "src/pages/fiqh/ui/SalahGuideView.tsx", kind: "salah" },
   { gap: "views_TaharaPage.tsx.json", file: "src/views/TaharaPage.tsx", kind: "tahara" },
   { gap: "lib_library-catalog.ts.json", file: "src/lib/library-catalog.ts", kind: "library" },
 ];

@@ -12,10 +12,10 @@ const ROOT = path.join(__dirname, "..");
 const GAPS_DIR = process.env.GAPS_DIR || "/tmp/gaps-by-file-r41";
 
 const TARGETS = [
-  { gap: "views_FiqhPage.tsx.json", file: "src/views/FiqhPage.tsx", kind: "fiqh" },
+  { gap: "views_FiqhPage.tsx.json", file: "src/pages/fiqh/ui/FiqhView.tsx", kind: "fiqh" },
   { gap: "views_InstitutionsPage.tsx.json", file: "src/views/InstitutionsPage.tsx", kind: "institutions" },
   { gap: "views_ArkanIslamPage.tsx.json", file: "src/views/ArkanIslamPage.tsx", kind: "arkan" },
-  { gap: "views_MawarithPage.tsx.json", file: "src/views/MawarithPage.tsx", kind: "mawarith" },
+  { gap: "views_MawarithPage.tsx.json", file: "src/pages/fiqh/ui/MawarithView.tsx", kind: "mawarith" },
   { gap: "views_UlumQuranPage.tsx.json", file: "src/pages/quran/ui/UlumQuranView.tsx", kind: "ulum-quran" },
   { gap: "lib_nations_data_others.ts.json", file: "src/lib/nations/data/others.ts", kind: "nations" },
   { gap: "lib_nations_data_firaun-bani-israil.ts.json", file: "src/lib/nations/data/firaun-bani-israil.ts", kind: "nations-firaun" },
@@ -25,7 +25,7 @@ const TARGETS = [
   { gap: "views_MadhahibPage.tsx.json", file: "src/views/MadhahibPage.tsx", kind: "madhahib" },
   { gap: "views_SeerahPage.tsx.json", file: "src/views/SeerahPage.tsx", kind: "seerah" },
   { gap: "views_RaqaiqPage.tsx.json", file: "src/views/RaqaiqPage.tsx", kind: "raqaiq" },
-  { gap: "views_ZakatPage.tsx.json", file: "src/views/ZakatPage.tsx", kind: "zakat" },
+  { gap: "views_ZakatPage.tsx.json", file: "src/pages/fiqh/ui/ZakatView.tsx", kind: "zakat" },
   { gap: "views_IslamicGlossaryPage.tsx.json", file: "src/views/IslamicGlossaryPage.tsx", kind: "glossary" },
   { gap: "views_HadithSciencePage.tsx.json", file: "src/pages/hadith/ui/HadithScienceView.tsx", kind: "hadith-science" },
   { gap: "views_QuranTajweedPage.tsx.json", file: "src/pages/quran/ui/QuranTajweedView.tsx", kind: "tajweed" },
