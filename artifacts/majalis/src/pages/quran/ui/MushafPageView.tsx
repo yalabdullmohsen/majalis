@@ -37,6 +37,7 @@ import {
 import { beginAbortScope, abortScope, guardAsync } from "@/lib/route-abort";
 import { logDiagnostic } from "@/lib/diagnostics";
 import { MushafPageV2 } from "@/components/quran/MushafPageV2";
+import { MushafLayeredPage } from "@/features/mushaf";
 import { goBackOrFallback } from "@/lib/navigation-back";
 import { SectionErrorBoundary } from "@/components/ErrorBoundary";
 import { afterNextPaint, yieldToMain } from "@/lib/yield-to-main";
@@ -165,6 +166,17 @@ export default function MushafPageView() {
   useEffect(() => {
     if (routePage) setPageState(clampPage(routePage));
   }, [routePage]);
+
+  /** Deep link: /mushaf/page/:n?ayah=2:255 أو /mushaf?ayah=… */
+  useEffect(() => {
+    const q = location.includes("?") ? location.slice(location.indexOf("?") + 1) : "";
+    const ayahParam = new URLSearchParams(q).get("ayah");
+    if (!ayahParam) return;
+    const [s, a] = ayahParam.split(":").map(Number);
+    if (s >= 1 && s <= 114 && a >= 1) {
+      setSelectedAyah({ surah: s, ayah: a });
+    }
+  }, [location]);
 
   useEffect(() => {
     // RN storageService.saveLastPage — dual-writes mj-quran-page-pos-v1 + `lastPage`
@@ -400,7 +412,11 @@ export default function MushafPageView() {
   // ── جسر بين مكوّني تخطيط السطر الحقيقي (V2/خفيف) وحالة الآية المختارة/المُشغَّلة القائمة أصلًا ──
   const handleV2AyahPress = useCallback((verseKey: string) => {
     const [s, a] = verseKey.split(":").map(Number);
+    if (!s || !a) return;
     setSelectedAyah({ surah: s, ayah: a });
+  }, []);
+  const clearAyahSelection = useCallback(() => {
+    setSelectedAyah(null);
   }, []);
   const v2ActiveKey = selectedAyah
     ? `${selectedAyah.surah}:${selectedAyah.ayah}`
@@ -589,22 +605,22 @@ export default function MushafPageView() {
                     {loading || !segAyahs ? (
                       <MushafPageV2 layout={null} bare />
                     ) : prefs.pageMode === "precision" ? (
-                      <MushafPageV2
+                      <MushafLayeredPage
                         layout={v2Layout}
                         activeAyahKey={v2ActiveKey}
                         onAyahPress={handleV2AyahPress}
+                        onBackgroundPress={clearAyahSelection}
                         showAyahNumbers={prefs.showAyahNumbers}
-                        bare
                       />
                     ) : (
-                      <MushafPageV2
+                      <MushafLayeredPage
                         layout={v2Layout}
                         activeAyahKey={v2ActiveKey}
                         onAyahPress={handleV2AyahPress}
+                        onBackgroundPress={clearAyahSelection}
                         sharedFontFamily={quranFontStack(prefs.fontId)}
                         renderWord={(w) => renderLightWord(w, prefs.showAyahNumbers)}
                         showAyahNumbers={prefs.showAyahNumbers}
-                        bare
                       />
                     )}
                   </div>

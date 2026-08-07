@@ -43,6 +43,11 @@ type Props = {
   bare?: boolean;
   /** إظهار أرقام الآيات في مسار التراجع Unicode (فشل خط QPC أو وضع خفيف). */
   showAyahNumbers?: boolean;
+  /**
+   * وضع بصري فقط: بلا أزرار/ضغط على مجموعات الآيات —
+   * التفاعل ينتقل لطبقة الإحداثيات (MushafHitLayer).
+   */
+  visualOnly?: boolean;
 };
 
 const ROW_COUNT_APPROX = 15;
@@ -83,6 +88,7 @@ export function MushafPageV2({
   renderWord,
   bare,
   showAyahNumbers = true,
+  visualOnly = false,
 }: Props) {
   const wantPrecision = !sharedFontFamily;
   const pageFont = useMushafPageFont(wantPrecision ? (layout?.pageNumber ?? null) : null);
@@ -199,10 +205,23 @@ export function MushafPageV2({
             >
               {groupWordsByAyah(row.words).map((group) => {
                 const verseKey = group[0].verseKey;
+                const active = verseKey === activeAyahKey;
+                if (visualOnly) {
+                  return (
+                    <span
+                      key={verseKey}
+                      className={`mf2-ayah-group${active ? " mf2-ayah-group--active" : ""}`}
+                      data-verse={verseKey}
+                      aria-hidden="true"
+                    >
+                      {group.map((w) => wordRenderer(w))}
+                    </span>
+                  );
+                }
                 return (
                   <span
                     key={verseKey}
-                    className={`mf2-ayah-group${verseKey === activeAyahKey ? " mf2-ayah-group--active" : ""}`}
+                    className={`mf2-ayah-group${active ? " mf2-ayah-group--active" : ""}`}
                     role="button"
                     tabIndex={0}
                     aria-label={`آية ${verseKey}`}

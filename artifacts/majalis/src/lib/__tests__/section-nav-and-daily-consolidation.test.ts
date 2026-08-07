@@ -34,19 +34,19 @@ console.log("\n=== TopSectionBar — مساحات موحّدة ===");
   const hrefs = SECTION_TABS.map((t) => t.href);
   const labels = SECTION_TABS.map((t) => t.label);
   assert(new Set(hrefs).size === hrefs.length, "لا تكرار في مسارات الأقسام");
-  assert(hrefs.includes("/quran-knowledge") && labels.includes("قرآن"), "مساحة قرآن");
+  assert(hrefs.includes("/mushaf") && labels.includes("قرآن"), "مساحة قرآن → المصحف");
   assert(hrefs.includes("/lessons") && labels.includes("الدروس"), "مساحة الدروس");
   assert(hrefs.includes("/prayer-times") && labels.includes("الصلاة"), "مساحة الصلاة");
   assert(hrefs.includes("/fiqh") && labels.includes("فقه"), "مساحة فقه");
   assert(!hrefs.includes("/library"), "المكتبة خارج الشريط");
-  assert(!hrefs.includes("/mushaf"), "المصحف خارج الشريط أثناء قريبًا");
 }
 
 console.log("\n=== isTabActive ===");
 {
-  assert(isTabActive("/mushaf", "/quran-knowledge") === true, "المصحف تحت قرآن");
-  assert(isTabActive("/ulum-quran", "/quran-knowledge") === true, "علوم القرآن تحت قرآن");
-  assert(isTabActive("/quran/surah-stories", "/quran-knowledge") === true, "قصص السور تحت قرآن");
+  assert(isTabActive("/mushaf", "/mushaf") === true, "المصحف تحت قرآن");
+  assert(isTabActive("/ulum-quran", "/mushaf") === true, "علوم القرآن تحت قرآن");
+  assert(isTabActive("/quran/surah-stories", "/mushaf") === true, "قصص السور تحت قرآن");
+  assert(isTabActive("/mushaf", "/quran-knowledge") === true, "توافق مسارات المعرفة");
   assert(isTabActive("/hadith", "/lessons") === true, "الحديث تحت الدروس");
   assert(isTabActive("/adhkar", "/prayer-times") === true, "الأذكار تحت الصلاة");
   assert(isTabActive("/qa", "/fiqh") === true, "الأسئلة تحت فقه");
@@ -98,10 +98,9 @@ console.log("\n=== vercel redirects للتنظيف ===");
 console.log("\n=== PRIMARY_NAV ===");
 {
   const hrefs = PRIMARY_NAV_ITEMS.map((i) => i.href);
-  assert(hrefs.includes("/") && hrefs.includes("/quran-knowledge") && hrefs.includes("/fiqh"), "هيدر أساسي");
+  assert(hrefs.includes("/") && hrefs.includes("/mushaf") && hrefs.includes("/fiqh"), "هيدر أساسي");
   assert(hrefs.includes("/lessons") && hrefs.includes("/prayer-times"), "الدروس والصلاة في PRIMARY_NAV");
   assert(!hrefs.includes("/library"), "لا مكتبة في PRIMARY_NAV");
-  assert(!hrefs.includes("/mushaf"), "المصحف خارج PRIMARY_NAV أثناء قريبًا");
 }
 
 console.log("\n=== nav-visibility تنظيف ===");
@@ -114,8 +113,8 @@ console.log("\n=== nav-visibility تنظيف ===");
   assert(resolveMergedPath("/reviewed-cards") === "/my-learning", "reviewed-cards → حسابي");
   assert(Object.keys(MERGED_PATH_REDIRECTS).length >= 10, "جدول التوجيه غير فارغ");
   assert(isComingSoonPath("/kids"), "الأطفال قريبًا");
-  assert(isComingSoonPath("/mushaf"), "المصحف قريبًا مؤقتًا");
-  assert(isComingSoonPath("/mushaf/1"), "مسارات المصحف الفرعية قريبًا");
+  assert(!isComingSoonPath("/mushaf"), "المصحف لم يعد قريبًا");
+  assert(!isComingSoonPath("/mushaf/1"), "مسارات المصحف الفرعية مفتوحة");
 
   const homeHrefs = FEATURE_CATS.flatMap((c) => c.items.map((i) => i.href));
   assert(!homeHrefs.includes("/library") && !homeHrefs.includes("/flashcards"), "الكتالوج بلا مكتبة/بطاقات منفصلة");
@@ -172,7 +171,7 @@ console.log("\n=== الشريط السفلي والمزيد ===");
   const navMapSrc = readFileSync(resolve(appRoot, "src/lib/nav-map.ts"), "utf-8");
   assert(navMapSrc.includes('label: "قرآن"') && navMapSrc.includes('label: "الدروس"'), "تسميات قرآن والدروس");
   assert(navMapSrc.includes('label: "الصلاة"') && navMapSrc.includes('label: "فقه"'), "تسميات الصلاة وفقه");
-  assert(navMapSrc.includes('"/quran-knowledge"') && navMapSrc.includes('"/prayer-times"') && navMapSrc.includes('"/fiqh"') && navMapSrc.includes('"/lessons"'), "مسارات المساحات الأربع");
+  assert(navMapSrc.includes('"/mushaf"') && navMapSrc.includes('"/prayer-times"') && navMapSrc.includes('"/fiqh"') && navMapSrc.includes('"/lessons"'), "مسارات المساحات الأربع");
   assert(!bottomSrc.includes('label: "البحث"'), "البحث ليس تبويبًا سفليًا أساسيًا بعد التنظيف");
   const moreSrc = readFileSync(resolve(appRoot, "src/components/MoreBottomSheet.tsx"), "utf-8");
   assert(moreSrc.includes("filterServicesCenterGroups") || moreSrc.includes("services-center-nav"), "المزيد من كتالوج الخدمات");
