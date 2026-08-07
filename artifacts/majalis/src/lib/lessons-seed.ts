@@ -94,11 +94,19 @@ export async function buildLessonsSeed(): Promise<LessonSeedRow[]> {
     const governorate = regions.resolveGovernorateForUi("", session.district);
     const genericLabel =
       session.label === "المجلس الأسبوعي" || session.label === "البرنامج الأسبوعي";
-    const title = genericLabel ? ad.title : `${ad.title} — ${session.label}`;
+    // العنوان المعروض = عنوان الإعلان النظيف فقط؛ الموعد/الجلسة في schedule وlinked_titles
+    const title = ad.title;
     const externalKey = `kw-${ad.id}-${sessionIndex}`;
     const isCourse = ad.category === "course";
     const lecturer = lecturerFromSessionLabel(session.label, ad.teacher);
     const organizer = ad.organizer ? sheikhName.stripSheikhHonorifics(ad.organizer) : undefined;
+    const sessionLabels = ad.sessions.map((s) => s.label).filter(Boolean);
+    const linkedTitles =
+      ad.sessions.length > 1
+        ? sessionLabels
+        : !genericLabel && session.label
+          ? [session.label]
+          : undefined;
 
     return {
       id: externalKey,
@@ -131,8 +139,7 @@ export async function buildLessonsSeed(): Promise<LessonSeedRow[]> {
       is_course: isCourse,
       course_id: isCourse ? ad.id : undefined,
       session_count: ad.sessions.length > 1 ? ad.sessions.length : undefined,
-      linked_titles:
-        ad.sessions.length > 1 ? ad.sessions.map((s) => s.label).filter(Boolean) : undefined,
+      linked_titles: linkedTitles,
       sheikhs: { name: lecturer },
     };
   }
