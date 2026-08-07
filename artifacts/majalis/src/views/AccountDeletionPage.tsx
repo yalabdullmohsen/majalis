@@ -57,6 +57,15 @@ export default function AccountDeletionPage() {
         const body = await res.json().catch(() => ({}));
         throw new Error(body.error ?? "فشل حذف الحساب");
       }
+      try {
+        const { clearLocalBookmarks } = await import("@/lib/local-bookmarks");
+        const { clearOfflineReading } = await import("@/lib/offline-reading-pack");
+        clearLocalBookmarks();
+        clearOfflineReading();
+        localStorage.removeItem("majalis-user-settings-v1");
+      } catch {
+        /* مسح محلي أفضل جهد */
+      }
       await logout();
       setStep("done");
     } catch (e: unknown) {

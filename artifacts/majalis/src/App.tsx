@@ -524,6 +524,7 @@ function Router() {
       <Route path="/quran-engine/viewer"><SafeLazyRoute component={QuranEnginePage} /></Route>
       <Route path="/quran-engine"><SafeLazyRoute component={QuranEnginePage} /></Route>
       <Route path="/about-us"><SafeLazyRoute component={AboutUsPage} /></Route>
+      <Route path="/who-we-are"><Redirect to="/about-us" /></Route>
       <Route path="/man-nahnu"><Redirect to="/about-us" /></Route>
       <Route path="/about"><SafeLazyRoute component={AboutPage} /></Route>
       <Route path="/sources"><SafeLazyRoute component={SourcesLicensesPage} /></Route>
@@ -537,7 +538,9 @@ function Router() {
       <Route path="/privacy-policy"><Redirect to="/privacy" /></Route>
       <Route path="/terms"><SafeLazyRoute component={TermsPage} /></Route>
       <Route path="/account-deletion"><SafeLazyRoute component={AccountDeletionPage} /></Route>
+      <Route path="/delete-account"><Redirect to="/account-deletion" /></Route>
       <Route path="/contact"><SafeLazyRoute component={ContactPage} /></Route>
+      <Route path="/support"><Redirect to="/contact" /></Route>
       <Route path="/settings"><SafeLazyRoute component={SettingsPage} /></Route>
       <Route path="/search/:q"><SafeLazyRoute component={SearchPage} /></Route>
       <Route path="/search"><SafeLazyRoute component={SearchPage} /></Route>
