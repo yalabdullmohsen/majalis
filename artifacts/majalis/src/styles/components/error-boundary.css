@@ -62,3 +62,17 @@
   text-align: center;
 }
 
+/* Telemetry section boundary — compact, does not dominate the viewport */
+.error-boundary-section {
+  max-width: 36rem;
+  margin: 1.25rem auto;
+  padding: 1.25rem 1rem;
+  border-radius: var(--ds-radius-lg);
+  border: 1px solid var(--majalis-line);
+  background: var(--majalis-parchment-deep);
+  text-align: center;
+}
+.error-boundary-section .error-boundary-page__title {
+  font-size: 1.1rem;
+}
+
