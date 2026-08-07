@@ -48,8 +48,9 @@ function AyahText({ surah, ayah: ayahNum, surahName }: { surah: number; ayah: nu
         direction: "rtl",
         padding: "0.75rem 1rem",
         background: "rgba(23,61,53,0.05)",
-        borderRight: "3px solid var(--mj-brand)",
-        borderRadius: "0 8px 8px 0",
+        borderInlineStart: "3px solid var(--mj-brand)",
+        borderStartEndRadius: 8,
+        borderEndEndRadius: 8,
         color: "var(--ds-text-1,#1a1a1a)",
         marginBottom: "0.5rem",
       }}
@@ -59,7 +60,7 @@ function AyahText({ surah, ayah: ayahNum, surahName }: { surah: number; ayah: nu
       ) : (
         <>
           ﴿{text}﴾
-          <span style={{ fontSize: "0.75rem", color: "#6b7280", marginRight: "0.5rem", fontFamily: "inherit" }}>
+          <span style={{ fontSize: "0.75rem", color: "#6b7280", marginInlineStart: "0.5rem", fontFamily: "inherit" }}>
             — {surahName}: {ayahNum}
           </span>
         </>
@@ -100,7 +101,7 @@ function MutashabihatCard({ pair }: { pair: MutashabihatPair }) {
           background: "none",
           border: "none",
           cursor: "pointer",
-          textAlign: "right",
+          textAlign: "start",
           fontFamily: "inherit",
         }}
       >

@@ -116,7 +116,7 @@ export default function SinsAndRightsDetailPage({ params }: { params: { slug: st
         {topic.reviewStatus === "reviewed" ? (
           <>
             <span className="snr-badge snr-badge--reviewed">✓ مراجع</span>
-            {topic.reviewedAt && <span style={{ marginRight: "0.25rem" }}>— آخر مراجعة: {topic.reviewedAt}</span>}
+            {topic.reviewedAt && <span style={{ marginInlineStart: "0.25rem" }}>— آخر مراجعة: {topic.reviewedAt}</span>}
           </>
         ) : (
           <span className="snr-badge snr-badge--pending">⏳ قيد المراجعة الشرعية</span>

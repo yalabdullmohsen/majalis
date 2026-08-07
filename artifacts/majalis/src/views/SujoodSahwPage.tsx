@@ -141,7 +141,7 @@ export default function SujoodSahwPage() {
             <div
               key={r.id}
               className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 overflow-hidden shadow-sm"
-              style={{ borderRight: `4px solid ${r.color}` }}
+              style={{ borderInlineStart: `4px solid ${r.color}` }}
             >
               <div className="p-5">
                 <div className="flex items-start justify-between gap-3 mb-2">
@@ -163,13 +163,13 @@ export default function SujoodSahwPage() {
                     📌 {r.detail}
                   </p>
                 </div>
-                <div className="mt-2 rounded-xl p-3 border-r-4" style={{ borderColor: r.color, background: `${r.color}0F` }}>
+                <div className="mt-2 rounded-xl p-3 border-s-4" style={{ borderColor: r.color, background: `${r.color}0F` }}>
                   <p className="text-gray-700 dark:text-gray-300 text-xs leading-relaxed">
                     <strong>الدليل:</strong> {r.evidence}
                   </p>
                 </div>
                 {r.khilaf && (
-                  <div className="mt-2 rounded-xl p-3 bg-amber-50 dark:bg-amber-900/20 border-r-4 border-amber-500">
+                  <div className="mt-2 rounded-xl p-3 bg-amber-50 dark:bg-amber-900/20 border-s-4 border-amber-500">
                     <p className="text-amber-900 dark:text-amber-200 text-xs leading-relaxed">
                       <strong>الخلاف المعتبر:</strong> {r.khilaf}
                     </p>

@@ -11,7 +11,7 @@ export default function TarikhIslamiPage() {
           className="max-w-3xl mx-auto px-4 pt-6"
           style={{
             background: "rgba(20,63,53,.06)",
-            borderRight: "4px solid var(--mj-brand-deep)",
+            borderInlineStart: "4px solid var(--mj-brand-deep)",
             borderRadius: ".6rem",
             padding: "1rem 1.2rem",
             marginBottom: "1rem",

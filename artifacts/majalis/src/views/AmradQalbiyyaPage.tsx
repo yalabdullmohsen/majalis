@@ -230,7 +230,7 @@ export default function AmradQalbiyyaPage() {
 
                 {/* دليل الباب — لا يُعرض حكمٌ ولا وصفٌ شرعي بلا مستند منسوب */}
                 <div
-                  className="mt-3 rounded-xl p-3 border-r-4"
+                  className="mt-3 rounded-xl p-3 border-s-4"
                   style={{ borderColor: d.color, background: `${d.color}0D` }}
                 >
                   <h4 className="text-xs font-extrabold mb-1" style={{ color: d.color }}>
