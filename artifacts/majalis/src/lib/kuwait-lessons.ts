@@ -14,6 +14,7 @@ import {
   formatRelativeTimeDetailed,
   isLessonInProgress,
   getKuwaitClock,
+  isLessonThisDay,
   isOccurrencePast,
   resolveLessonTimeWindow,
 } from "@/lib/lesson-time";
@@ -520,4 +521,48 @@ export function getRelativeStatusLabel(lesson: KuwaitLessonRecord, archived = fa
   }
 
   return formatRelativeTimeDetailed(lesson.nextOccurrenceMs, lesson.time);
+}
+
+/** تسميات الحالة المسموحة في أقسام «مميز» والرئيسية فقط */
+export const FEATURED_HOME_STATUS_LABELS = ["يبدأ اليوم", "مستمر", "قادم"] as const;
+export type FeaturedHomeStatusLabel = (typeof FEATURED_HOME_STATUS_LABELS)[number];
+
+const FEATURED_HOME_EXCLUDED_LABELS = new Set(["منتهٍ", "انتهى اليوم", "انتهى"]);
+
+export function isFeaturedHomeStatusLabel(label: string): label is FeaturedHomeStatusLabel {
+  return (FEATURED_HOME_STATUS_LABELS as readonly string[]).includes(label);
+}
+
+/** تسمية مبسّطة للعرض في الرئيسية والأقسام المميزة — null إن كان الدرس منتهيًا أو غير مؤهل */
+export function getFeaturedHomeStatusLabel(
+  lesson: KuwaitLessonRecord,
+  nowMs = Date.now(),
+): FeaturedHomeStatusLabel | null {
+  if (isExpired(lesson, nowMs)) return null;
+
+  const now = new Date(nowMs);
+  if (
+    isLessonComplete(lesson) &&
+    lesson.day &&
+    isLessonInProgress(lesson.day, lesson.time, now)
+  ) {
+    return "مستمر";
+  }
+
+  const raw = getRelativeStatusLabel(lesson, false);
+  if (FEATURED_HOME_EXCLUDED_LABELS.has(raw)) return null;
+
+  if (lesson.day && isLessonThisDay(lesson.day, now)) return "يبدأ اليوم";
+
+  return "قادم";
+}
+
+/** دروس نشطة فقط بأحد التسميات الثلاث المسموحة للرئيسية والمميز */
+export function filterFeaturedHomeLessons(
+  lessons: KuwaitLessonRecord[],
+  nowMs = Date.now(),
+): KuwaitLessonRecord[] {
+  return splitKuwaitLessons(lessons, nowMs).active.filter(
+    (lesson) => getFeaturedHomeStatusLabel(lesson, nowMs) != null,
+  );
 }

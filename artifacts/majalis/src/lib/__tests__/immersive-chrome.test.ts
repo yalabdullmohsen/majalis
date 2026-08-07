@@ -13,6 +13,7 @@ import {
   isQuranImmersivePath,
 } from "../immersive-chrome";
 import "./get-active-tab.test.ts";
+import "./featured-home-status.test.ts";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const appRoot = resolve(__dirname, "../../..");
