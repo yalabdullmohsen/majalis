@@ -4644,7 +4644,10 @@ html[data-theme="dark"] .search-suggestions-panel {
 .navbar-v3__inner {
   max-width: 72rem;
   margin: 0 auto;
-  padding: 0.65rem 1rem;
+  min-height: 56px;
+  padding: 0 1rem;
+  padding-top: env(safe-area-inset-top, 0px);
+  box-sizing: content-box;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -4657,6 +4660,7 @@ html[data-theme="dark"] .search-suggestions-panel {
   z-index: 9999;
   isolation: isolate;
   transform: none;
+  min-height: calc(56px + env(safe-area-inset-top, 0px));
 }
 
 .navbar-v3--menu-open {
