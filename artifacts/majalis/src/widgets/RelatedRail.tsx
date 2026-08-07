@@ -35,7 +35,7 @@ function hrefFor(kind: string, slug: string): string {
     case "dua":
       return `/duas`;
     case "prophet":
-      return `/prophet-stories`;
+      return `/prophets/${slug}`;
     case "story":
       return `/islamic-stories`;
     default:

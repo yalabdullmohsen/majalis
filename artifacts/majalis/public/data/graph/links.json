@@ -1,7 +1,7 @@
 {
   "version": 1,
   "generatedAt": "2026-08-07",
-  "descriptionAr": "رسم بياني علمي — معرّفات slug مطابقة لمسارات المنصة (علماء/كتب/أحكام).",
+  "descriptionAr": "رسم بياني علمي — معرّفات slug مطابقة لمسارات المنصة (علماء/كتب/أحكام)، موسَّع بحزم G.",
   "nodes": [
     {
       "kind": "scholar",
@@ -82,163 +82,467 @@
       "kind": "story",
       "slug": "musa-firawn",
       "titleAr": "موسى وفرعون"
+    },
+    {
+      "kind": "scholar",
+      "slug": "muslim",
+      "titleAr": "مسلم"
+    },
+    {
+      "kind": "scholar",
+      "slug": "nawawi",
+      "titleAr": "النووي"
+    },
+    {
+      "kind": "scholar",
+      "slug": "ibn-hajar",
+      "titleAr": "ابن حجر"
+    },
+    {
+      "kind": "book",
+      "slug": "book-ahmad",
+      "titleAr": "مسند أحمد"
+    },
+    {
+      "kind": "book",
+      "slug": "book-muslim",
+      "titleAr": "صحيح مسلم"
+    },
+    {
+      "kind": "book",
+      "slug": "book-riyadh",
+      "titleAr": "رياض الصالحين"
+    },
+    {
+      "kind": "book",
+      "slug": "book-nukhbah",
+      "titleAr": "نخبة الفكر"
     }
   ],
   "links": [
     {
-      "from": { "kind": "scholar", "slug": "ibn-qudama" },
+      "from": {
+        "kind": "scholar",
+        "slug": "ibn-qudama"
+      },
       "rel": "authored",
-      "to": { "kind": "book", "slug": "book-mughni" },
+      "to": {
+        "kind": "book",
+        "slug": "book-mughni"
+      },
       "labelAr": "من كتبه"
     },
     {
-      "from": { "kind": "book", "slug": "book-mughni" },
+      "from": {
+        "kind": "book",
+        "slug": "book-mughni"
+      },
       "rel": "authored_by",
-      "to": { "kind": "scholar", "slug": "ibn-qudama" },
+      "to": {
+        "kind": "scholar",
+        "slug": "ibn-qudama"
+      },
       "labelAr": "عكس: من كتبه",
       "autoReverse": true
     },
     {
-      "from": { "kind": "scholar", "slug": "ibn-qudama" },
+      "from": {
+        "kind": "scholar",
+        "slug": "ibn-qudama"
+      },
       "rel": "authored",
-      "to": { "kind": "book", "slug": "book-rawdah-nadhir" },
+      "to": {
+        "kind": "book",
+        "slug": "book-rawdah-nadhir"
+      },
       "labelAr": "من كتبه"
     },
     {
-      "from": { "kind": "book", "slug": "book-rawdah-nadhir" },
+      "from": {
+        "kind": "book",
+        "slug": "book-rawdah-nadhir"
+      },
       "rel": "authored_by",
-      "to": { "kind": "scholar", "slug": "ibn-qudama" },
+      "to": {
+        "kind": "scholar",
+        "slug": "ibn-qudama"
+      },
       "labelAr": "عكس: من كتبه",
       "autoReverse": true
     },
     {
-      "from": { "kind": "scholar", "slug": "bukhari" },
+      "from": {
+        "kind": "scholar",
+        "slug": "bukhari"
+      },
       "rel": "authored",
-      "to": { "kind": "book", "slug": "book-bukhari" },
+      "to": {
+        "kind": "book",
+        "slug": "book-bukhari"
+      },
       "labelAr": "من كتبه"
     },
     {
-      "from": { "kind": "book", "slug": "book-bukhari" },
+      "from": {
+        "kind": "book",
+        "slug": "book-bukhari"
+      },
       "rel": "authored_by",
-      "to": { "kind": "scholar", "slug": "bukhari" },
+      "to": {
+        "kind": "scholar",
+        "slug": "bukhari"
+      },
       "labelAr": "عكس: من كتبه",
       "autoReverse": true
     },
     {
-      "from": { "kind": "book", "slug": "book-bukhari" },
+      "from": {
+        "kind": "book",
+        "slug": "book-bukhari"
+      },
       "rel": "commentary",
-      "to": { "kind": "book", "slug": "book-fath-al-bari" },
+      "to": {
+        "kind": "book",
+        "slug": "book-fath-al-bari"
+      },
       "labelAr": "شروحه"
     },
     {
-      "from": { "kind": "book", "slug": "book-fath-al-bari" },
+      "from": {
+        "kind": "book",
+        "slug": "book-fath-al-bari"
+      },
       "rel": "commentary_of",
-      "to": { "kind": "book", "slug": "book-bukhari" },
+      "to": {
+        "kind": "book",
+        "slug": "book-bukhari"
+      },
       "labelAr": "عكس: شروحه",
       "autoReverse": true
     },
     {
-      "from": { "kind": "book", "slug": "book-umdat" },
+      "from": {
+        "kind": "book",
+        "slug": "book-umdat"
+      },
       "rel": "related_book",
-      "to": { "kind": "book", "slug": "book-mughni" },
+      "to": {
+        "kind": "book",
+        "slug": "book-mughni"
+      },
       "labelAr": "كتب ذات صلة"
     },
     {
-      "from": { "kind": "book", "slug": "book-mughni" },
+      "from": {
+        "kind": "book",
+        "slug": "book-mughni"
+      },
       "rel": "related_book",
-      "to": { "kind": "book", "slug": "book-umdat" },
+      "to": {
+        "kind": "book",
+        "slug": "book-umdat"
+      },
       "labelAr": "عكس: كتب ذات صلة",
       "autoReverse": true
     },
     {
-      "from": { "kind": "hadith", "slug": "bukhari-1" },
+      "from": {
+        "kind": "hadith",
+        "slug": "bukhari-1"
+      },
       "rel": "in_book",
-      "to": { "kind": "book", "slug": "book-bukhari" },
+      "to": {
+        "kind": "book",
+        "slug": "book-bukhari"
+      },
       "labelAr": "كتابه"
     },
     {
-      "from": { "kind": "book", "slug": "book-bukhari" },
+      "from": {
+        "kind": "book",
+        "slug": "book-bukhari"
+      },
       "rel": "contains_hadith",
-      "to": { "kind": "hadith", "slug": "bukhari-1" },
+      "to": {
+        "kind": "hadith",
+        "slug": "bukhari-1"
+      },
       "labelAr": "عكس: كتابه",
       "autoReverse": true
     },
     {
-      "from": { "kind": "ruling", "slug": "ruling-wudu-nullifiers" },
+      "from": {
+        "kind": "ruling",
+        "slug": "ruling-wudu-nullifiers"
+      },
       "rel": "referenced_in",
-      "to": { "kind": "book", "slug": "book-mughni" },
+      "to": {
+        "kind": "book",
+        "slug": "book-mughni"
+      },
       "labelAr": "مراجع فقهية"
     },
     {
-      "from": { "kind": "book", "slug": "book-mughni" },
+      "from": {
+        "kind": "book",
+        "slug": "book-mughni"
+      },
       "rel": "discusses",
-      "to": { "kind": "ruling", "slug": "ruling-wudu-nullifiers" },
+      "to": {
+        "kind": "ruling",
+        "slug": "ruling-wudu-nullifiers"
+      },
       "labelAr": "عكس: مراجع فقهية",
       "autoReverse": true
     },
     {
-      "from": { "kind": "scholar", "slug": "ahmad" },
+      "from": {
+        "kind": "scholar",
+        "slug": "ahmad"
+      },
       "rel": "related_scholar",
-      "to": { "kind": "scholar", "slug": "bukhari" },
+      "to": {
+        "kind": "scholar",
+        "slug": "bukhari"
+      },
       "labelAr": "علماء ذوو صلة"
     },
     {
-      "from": { "kind": "scholar", "slug": "bukhari" },
+      "from": {
+        "kind": "scholar",
+        "slug": "bukhari"
+      },
       "rel": "related_scholar",
-      "to": { "kind": "scholar", "slug": "ahmad" },
+      "to": {
+        "kind": "scholar",
+        "slug": "ahmad"
+      },
       "labelAr": "عكس: علماء ذوو صلة",
       "autoReverse": true
     },
     {
-      "from": { "kind": "term", "slug": "isnad" },
+      "from": {
+        "kind": "term",
+        "slug": "isnad"
+      },
       "rel": "appears_in",
-      "to": { "kind": "book", "slug": "book-bukhari" },
+      "to": {
+        "kind": "book",
+        "slug": "book-bukhari"
+      },
       "labelAr": "مواضع وروده"
     },
     {
-      "from": { "kind": "book", "slug": "book-bukhari" },
+      "from": {
+        "kind": "book",
+        "slug": "book-bukhari"
+      },
       "rel": "mentions_term",
-      "to": { "kind": "term", "slug": "isnad" },
+      "to": {
+        "kind": "term",
+        "slug": "isnad"
+      },
       "labelAr": "عكس: مواضع وروده",
       "autoReverse": true
     },
     {
-      "from": { "kind": "prophet", "slug": "musa" },
+      "from": {
+        "kind": "prophet",
+        "slug": "musa"
+      },
       "rel": "trial",
-      "to": { "kind": "story", "slug": "musa-firawn" },
+      "to": {
+        "kind": "story",
+        "slug": "musa-firawn"
+      },
       "labelAr": "ابتلاءاته"
     },
     {
-      "from": { "kind": "story", "slug": "musa-firawn" },
+      "from": {
+        "kind": "story",
+        "slug": "musa-firawn"
+      },
       "rel": "trial_of",
-      "to": { "kind": "prophet", "slug": "musa" },
+      "to": {
+        "kind": "prophet",
+        "slug": "musa"
+      },
       "labelAr": "عكس: ابتلاءاته",
       "autoReverse": true
     },
     {
-      "from": { "kind": "surah", "slug": "al-baqarah" },
+      "from": {
+        "kind": "surah",
+        "slug": "al-baqarah"
+      },
       "rel": "related_dua",
-      "to": { "kind": "dua", "slug": "rabbana-atina" },
+      "to": {
+        "kind": "dua",
+        "slug": "rabbana-atina"
+      },
       "labelAr": "أدعيتها"
     },
     {
-      "from": { "kind": "dua", "slug": "rabbana-atina" },
+      "from": {
+        "kind": "dua",
+        "slug": "rabbana-atina"
+      },
       "rel": "in_surah",
-      "to": { "kind": "surah", "slug": "al-baqarah" },
+      "to": {
+        "kind": "surah",
+        "slug": "al-baqarah"
+      },
       "labelAr": "عكس: أدعيتها",
       "autoReverse": true
     },
     {
-      "from": { "kind": "surah", "slug": "an-nahl" },
+      "from": {
+        "kind": "surah",
+        "slug": "an-nahl"
+      },
       "rel": "related_surah",
-      "to": { "kind": "surah", "slug": "al-baqarah" },
+      "to": {
+        "kind": "surah",
+        "slug": "al-baqarah"
+      },
       "labelAr": "سور ذات صلة"
     },
     {
-      "from": { "kind": "surah", "slug": "al-baqarah" },
+      "from": {
+        "kind": "surah",
+        "slug": "al-baqarah"
+      },
       "rel": "related_surah",
-      "to": { "kind": "surah", "slug": "an-nahl" },
+      "to": {
+        "kind": "surah",
+        "slug": "an-nahl"
+      },
       "labelAr": "عكس: سور ذات صلة",
+      "autoReverse": true
+    },
+    {
+      "from": {
+        "kind": "scholar",
+        "slug": "ahmad"
+      },
+      "rel": "authored",
+      "to": {
+        "kind": "book",
+        "slug": "book-ahmad"
+      },
+      "labelAr": "من كتبه"
+    },
+    {
+      "from": {
+        "kind": "book",
+        "slug": "book-ahmad"
+      },
+      "rel": "authored_by",
+      "to": {
+        "kind": "scholar",
+        "slug": "ahmad"
+      },
+      "labelAr": "عكس: من كتبه",
+      "autoReverse": true
+    },
+    {
+      "from": {
+        "kind": "scholar",
+        "slug": "muslim"
+      },
+      "rel": "authored",
+      "to": {
+        "kind": "book",
+        "slug": "book-muslim"
+      },
+      "labelAr": "من كتبه"
+    },
+    {
+      "from": {
+        "kind": "book",
+        "slug": "book-muslim"
+      },
+      "rel": "authored_by",
+      "to": {
+        "kind": "scholar",
+        "slug": "muslim"
+      },
+      "labelAr": "عكس: من كتبه",
+      "autoReverse": true
+    },
+    {
+      "from": {
+        "kind": "scholar",
+        "slug": "nawawi"
+      },
+      "rel": "authored",
+      "to": {
+        "kind": "book",
+        "slug": "book-riyadh"
+      },
+      "labelAr": "من كتبه"
+    },
+    {
+      "from": {
+        "kind": "book",
+        "slug": "book-riyadh"
+      },
+      "rel": "authored_by",
+      "to": {
+        "kind": "scholar",
+        "slug": "nawawi"
+      },
+      "labelAr": "عكس: من كتبه",
+      "autoReverse": true
+    },
+    {
+      "from": {
+        "kind": "scholar",
+        "slug": "ibn-hajar"
+      },
+      "rel": "authored",
+      "to": {
+        "kind": "book",
+        "slug": "book-fath-al-bari"
+      },
+      "labelAr": "من كتبه"
+    },
+    {
+      "from": {
+        "kind": "book",
+        "slug": "book-fath-al-bari"
+      },
+      "rel": "authored_by",
+      "to": {
+        "kind": "scholar",
+        "slug": "ibn-hajar"
+      },
+      "labelAr": "عكس: من كتبه",
+      "autoReverse": true
+    },
+    {
+      "from": {
+        "kind": "scholar",
+        "slug": "ibn-hajar"
+      },
+      "rel": "authored",
+      "to": {
+        "kind": "book",
+        "slug": "book-nukhbah"
+      },
+      "labelAr": "من كتبه"
+    },
+    {
+      "from": {
+        "kind": "book",
+        "slug": "book-nukhbah"
+      },
+      "rel": "authored_by",
+      "to": {
+        "kind": "scholar",
+        "slug": "ibn-hajar"
+      },
+      "labelAr": "عكس: من كتبه",
       "autoReverse": true
     }
   ]

@@ -117,3 +117,19 @@
 ## D4 — تنظيف CSS ميت (دفعة 2)
 
 - ~208 سطر من index.css + design-system (شبكة/شارة/ورقة/قائمة افتراضية) + final-release + m2030/foundation — بعد تحقق rg من عدم الاستخدام في TSX.
+
+## D5 — تنظيف CSS ميت (دفعة 3)
+
+- ~263 سطر من `index.css`: home-demo/cta/banner، content-card-grid/mini-card، home-content-*، lessons-contact، ds-btn-* (شرطة واحدة).
+
+## E3 — ربط hooks
+
+- `ReadingPlansView` / `NewPlanForm` يستخدم `useBooksQuery` + `useBookQuery`.
+
+## H2 — RelatedRail للأنبياء
+
+- `GraphRelatedRail` في `ProphetDetailView`؛ `hrefFor(prophet)` → `/prophets/:slug`.
+
+## G3 — توسيع الرسم
+
+- عقد/روابط: أحمد↔مسند، مسلم↔صحيحه، النووي↔رياض، ابن حجر↔فتح الباري/نخبة.
