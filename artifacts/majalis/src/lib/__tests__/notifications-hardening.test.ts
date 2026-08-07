@@ -82,7 +82,7 @@ console.log("  ✓ channel + test trigger constants");
   const prompt = read("src/components/PushPrompt.tsx");
   assert.match(prompt, /isNative/, "PushPrompt checks isNative");
 
-  const settings = read("src/views/NotificationSettingsPage.tsx");
+  const settings = read("src/pages/account/ui/NotificationSettingsView.tsx");
   assert.match(settings, /fireTestLocalNotification/, "settings has test trigger");
   assert.match(settings, /getNotificationPermissionStatus/, "settings uses Capacitor-aware permission");
   assert.match(settings, /!isNative/, "settings hides PWA push section on native");

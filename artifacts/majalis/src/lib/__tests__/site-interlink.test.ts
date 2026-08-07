@@ -114,7 +114,7 @@ console.log("\n=== صفحات كانت ميتة تحمل ExploreAlso / Related =
   assert(surah.includes("ExploreAlsoNav"), "قصص السور تركّب ExploreAlsoNav");
   assert(surah.includes("path: \"/quran/surah-stories\""), "SEO قصص السور على المسار الصحيح");
 
-  const search = readFileSync(resolve(srcRoot, "views/SearchPage.tsx"), "utf8");
+  const search = readFileSync(resolve(srcRoot, "pages/account/ui/SearchView.tsx"), "utf8");
   assert(search.includes("/qa?id="), "نتائج البحث تربط الأسئلة بـ ?id=");
   assert(search.includes("/fawaid#"), "نتائج البحث تربط الفوائد بـ #id");
   assert(search.includes("القرآن وعلومه") || search.includes("علوم القرآن"), "تسمية علوم القرآن صحيحة في البحث");

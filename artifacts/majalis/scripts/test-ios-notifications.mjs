@@ -40,7 +40,7 @@ const required = [
   "src/lib/notifications/test-trigger.ts",
   "src/lib/notifications/native-bootstrap.ts",
   "src/components/PushPrompt.tsx",
-  "src/views/NotificationSettingsPage.tsx",
+  "src/pages/account/ui/NotificationSettingsView.tsx",
   "ios/App/App/AppDelegate.swift",
   "ios/App/App/App.entitlements",
   "capacitor.config.ts",
@@ -83,7 +83,7 @@ ok(nativePush.includes("pushNotificationActionPerformed"), "click listener");
 const prompt = read("src/components/PushPrompt.tsx");
 ok(prompt.includes("isNative"), "PushPrompt hides on native");
 
-const settings = read("src/views/NotificationSettingsPage.tsx");
+const settings = read("src/pages/account/ui/NotificationSettingsView.tsx");
 ok(settings.includes("fireTestLocalNotification"), "test notification trigger in settings");
 ok(settings.includes("getNotificationPermissionStatus"), "Capacitor-aware permission status");
 ok(settings.includes("notifDebug"), "hidden developer debug flag");

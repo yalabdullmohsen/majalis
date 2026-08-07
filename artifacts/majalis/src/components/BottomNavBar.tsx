@@ -20,7 +20,7 @@ const TAB_PREFETCH: Record<string, () => Promise<unknown>> = {
   "/lessons": () => import("@/pages/lessons/LessonsPage"),
   "/prayer-times": () => import("@/pages/worship/PrayerTimesPage"),
   "/fiqh": () => import("@/pages/fiqh/FiqhPage"),
-  "/": () => import("@/views/HomePage"),
+  "/": () => import("@/pages/account/HomePage"),
 };
 
 /** شريط سفلي — مشتق من nav-map (مصدر واحد): قرآن · الدروس · الصلاة · فقه · المزيد */
