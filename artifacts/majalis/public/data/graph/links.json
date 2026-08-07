@@ -1,0 +1,379 @@
+{
+  "version": 1,
+  "generatedAt": "2026-08-07",
+  "descriptionAr": "رسم بياني علمي أولي — يُوسَّع في حزم لاحقة. المعرّفات slug ثابتة.",
+  "nodes": [
+    {
+      "kind": "scholar",
+      "slug": "ibn-qudamah",
+      "titleAr": "ابن قدامة"
+    },
+    {
+      "kind": "book",
+      "slug": "al-mughni",
+      "titleAr": "المغني"
+    },
+    {
+      "kind": "scholar",
+      "slug": "ahmad-ibn-hanbal",
+      "titleAr": "أحمد بن حنبل"
+    },
+    {
+      "kind": "scholar",
+      "slug": "al-bukhari",
+      "titleAr": "البخاري"
+    },
+    {
+      "kind": "book",
+      "slug": "umdat-al-ahkam",
+      "titleAr": "عمدة الأحكام"
+    },
+    {
+      "kind": "book",
+      "slug": "tanbih-al-afham",
+      "titleAr": "تنبيه الأفهام"
+    },
+    {
+      "kind": "scholar",
+      "slug": "abd-al-ghani-al-maqdisi",
+      "titleAr": "عبد الغني المقدسي"
+    },
+    {
+      "kind": "hadith",
+      "slug": "bukhari-1",
+      "titleAr": "حديث صحيح البخاري ١"
+    },
+    {
+      "kind": "book",
+      "slug": "sahih-al-bukhari",
+      "titleAr": "صحيح البخاري"
+    },
+    {
+      "kind": "ruling",
+      "slug": "nawaaqid-al-wudu",
+      "titleAr": "نواقض الوضوء"
+    },
+    {
+      "kind": "term",
+      "slug": "isnad",
+      "titleAr": "الإسناد"
+    },
+    {
+      "kind": "lesson",
+      "slug": "ulum-al-hadith-intro",
+      "titleAr": "مقدمة علوم الحديث"
+    },
+    {
+      "kind": "surah",
+      "slug": "an-nahl",
+      "titleAr": "سورة النحل"
+    },
+    {
+      "kind": "lesson",
+      "slug": "tafsir-an-nahl-othman-alkhamees",
+      "titleAr": "تفسير سورة النحل"
+    },
+    {
+      "kind": "scholar",
+      "slug": "othman-alkhamees",
+      "titleAr": "د. عثمان الخميس"
+    },
+    {
+      "kind": "prophet",
+      "slug": "musa",
+      "titleAr": "موسى عليه السلام"
+    },
+    {
+      "kind": "story",
+      "slug": "musa-firawn",
+      "titleAr": "موسى وفرعون"
+    },
+    {
+      "kind": "surah",
+      "slug": "al-baqarah",
+      "titleAr": "سورة البقرة"
+    },
+    {
+      "kind": "dua",
+      "slug": "rabbana-atina",
+      "titleAr": "ربنا آتنا في الدنيا"
+    }
+  ],
+  "links": [
+    {
+      "from": {
+        "kind": "scholar",
+        "slug": "ibn-qudamah"
+      },
+      "rel": "authored",
+      "to": {
+        "kind": "book",
+        "slug": "al-mughni"
+      },
+      "labelAr": "من كتبه"
+    },
+    {
+      "from": {
+        "kind": "book",
+        "slug": "al-mughni"
+      },
+      "rel": "authored_by",
+      "to": {
+        "kind": "scholar",
+        "slug": "ibn-qudamah"
+      },
+      "labelAr": "عكس: من كتبه",
+      "autoReverse": true
+    },
+    {
+      "from": {
+        "kind": "scholar",
+        "slug": "ahmad-ibn-hanbal"
+      },
+      "rel": "teacher_of",
+      "to": {
+        "kind": "scholar",
+        "slug": "al-bukhari"
+      },
+      "labelAr": "من تلاميذه"
+    },
+    {
+      "from": {
+        "kind": "scholar",
+        "slug": "al-bukhari"
+      },
+      "rel": "student_of",
+      "to": {
+        "kind": "scholar",
+        "slug": "ahmad-ibn-hanbal"
+      },
+      "labelAr": "عكس: من تلاميذه",
+      "autoReverse": true
+    },
+    {
+      "from": {
+        "kind": "book",
+        "slug": "umdat-al-ahkam"
+      },
+      "rel": "commentary",
+      "to": {
+        "kind": "book",
+        "slug": "tanbih-al-afham"
+      },
+      "labelAr": "شروحه"
+    },
+    {
+      "from": {
+        "kind": "book",
+        "slug": "tanbih-al-afham"
+      },
+      "rel": "commentary_of",
+      "to": {
+        "kind": "book",
+        "slug": "umdat-al-ahkam"
+      },
+      "labelAr": "عكس: شروحه",
+      "autoReverse": true
+    },
+    {
+      "from": {
+        "kind": "book",
+        "slug": "umdat-al-ahkam"
+      },
+      "rel": "authored_by",
+      "to": {
+        "kind": "scholar",
+        "slug": "abd-al-ghani-al-maqdisi"
+      },
+      "labelAr": "مؤلفه"
+    },
+    {
+      "from": {
+        "kind": "scholar",
+        "slug": "abd-al-ghani-al-maqdisi"
+      },
+      "rel": "authored",
+      "to": {
+        "kind": "book",
+        "slug": "umdat-al-ahkam"
+      },
+      "labelAr": "عكس: مؤلفه",
+      "autoReverse": true
+    },
+    {
+      "from": {
+        "kind": "hadith",
+        "slug": "bukhari-1"
+      },
+      "rel": "in_book",
+      "to": {
+        "kind": "book",
+        "slug": "sahih-al-bukhari"
+      },
+      "labelAr": "كتابه"
+    },
+    {
+      "from": {
+        "kind": "book",
+        "slug": "sahih-al-bukhari"
+      },
+      "rel": "contains_hadith",
+      "to": {
+        "kind": "hadith",
+        "slug": "bukhari-1"
+      },
+      "labelAr": "عكس: كتابه",
+      "autoReverse": true
+    },
+    {
+      "from": {
+        "kind": "hadith",
+        "slug": "bukhari-1"
+      },
+      "rel": "fiqh_issue",
+      "to": {
+        "kind": "ruling",
+        "slug": "nawaaqid-al-wudu"
+      },
+      "labelAr": "مسألته الفقهية"
+    },
+    {
+      "from": {
+        "kind": "ruling",
+        "slug": "nawaaqid-al-wudu"
+      },
+      "rel": "evidence",
+      "to": {
+        "kind": "hadith",
+        "slug": "bukhari-1"
+      },
+      "labelAr": "عكس: مسألته الفقهية",
+      "autoReverse": true
+    },
+    {
+      "from": {
+        "kind": "term",
+        "slug": "isnad"
+      },
+      "rel": "appears_in",
+      "to": {
+        "kind": "lesson",
+        "slug": "ulum-al-hadith-intro"
+      },
+      "labelAr": "مواضع وروده"
+    },
+    {
+      "from": {
+        "kind": "lesson",
+        "slug": "ulum-al-hadith-intro"
+      },
+      "rel": "mentions_term",
+      "to": {
+        "kind": "term",
+        "slug": "isnad"
+      },
+      "labelAr": "عكس: مواضع وروده",
+      "autoReverse": true
+    },
+    {
+      "from": {
+        "kind": "surah",
+        "slug": "an-nahl"
+      },
+      "rel": "tafsir_lesson",
+      "to": {
+        "kind": "lesson",
+        "slug": "tafsir-an-nahl-othman-alkhamees"
+      },
+      "labelAr": "دروس تفسيرها"
+    },
+    {
+      "from": {
+        "kind": "lesson",
+        "slug": "tafsir-an-nahl-othman-alkhamees"
+      },
+      "rel": "explains_surah",
+      "to": {
+        "kind": "surah",
+        "slug": "an-nahl"
+      },
+      "labelAr": "عكس: دروس تفسيرها",
+      "autoReverse": true
+    },
+    {
+      "from": {
+        "kind": "lesson",
+        "slug": "tafsir-an-nahl-othman-alkhamees"
+      },
+      "rel": "taught_by",
+      "to": {
+        "kind": "scholar",
+        "slug": "othman-alkhamees"
+      },
+      "labelAr": "شيخه"
+    },
+    {
+      "from": {
+        "kind": "scholar",
+        "slug": "othman-alkhamees"
+      },
+      "rel": "teaches",
+      "to": {
+        "kind": "lesson",
+        "slug": "tafsir-an-nahl-othman-alkhamees"
+      },
+      "labelAr": "عكس: شيخه",
+      "autoReverse": true
+    },
+    {
+      "from": {
+        "kind": "prophet",
+        "slug": "musa"
+      },
+      "rel": "trial",
+      "to": {
+        "kind": "story",
+        "slug": "musa-firawn"
+      },
+      "labelAr": "ابتلاءاته"
+    },
+    {
+      "from": {
+        "kind": "story",
+        "slug": "musa-firawn"
+      },
+      "rel": "trial_of",
+      "to": {
+        "kind": "prophet",
+        "slug": "musa"
+      },
+      "labelAr": "عكس: ابتلاءاته",
+      "autoReverse": true
+    },
+    {
+      "from": {
+        "kind": "surah",
+        "slug": "al-baqarah"
+      },
+      "rel": "related_dua",
+      "to": {
+        "kind": "dua",
+        "slug": "rabbana-atina"
+      },
+      "labelAr": "أدعيتها"
+    },
+    {
+      "from": {
+        "kind": "dua",
+        "slug": "rabbana-atina"
+      },
+      "rel": "in_surah",
+      "to": {
+        "kind": "surah",
+        "slug": "al-baqarah"
+      },
+      "labelAr": "عكس: أدعيتها",
+      "autoReverse": true
+    }
+  ]
+}

@@ -217,6 +217,7 @@
     "verify:meta-consistency": "node scripts/verify-meta-consistency-gate.mjs",
     "verify:ios-edge": "node scripts/verify-ios-edge-gate.mjs",
     "verify:fsd-layers": "node scripts/verify-fsd-layers.mjs",
+    "verify:knowledge-graph": "node scripts/verify-knowledge-graph.mjs",
     "verify:hadith-integrity": "node scripts/verify-hadith-integrity-gate.mjs",
     "test:spacing-gate": "node scripts/verify-spacing-gate.mjs",
     "fetch:hadith-sahihayn": "node scripts/fetch-hadith-sahihayn.mjs",
