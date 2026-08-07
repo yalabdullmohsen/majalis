@@ -3,6 +3,8 @@
   "siteUrl": "https://majlisilm.com",
   "siteName": "المجلس العلمي",
   "defaultImage": "/majlisilm-og-2026.jpg",
+  "ogImageWidth": 1200,
+  "ogImageHeight": 630,
   "defaultKeywords": [
     "المجلس العلمي",
     "دروس علمية",

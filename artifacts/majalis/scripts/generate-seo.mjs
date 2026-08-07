@@ -55,6 +55,28 @@ const SITE_URL = SITE.siteUrl;
 const SITE_NAME = SITE.siteName;
 const TITLE_SUFFIX = SITE.titleSuffix;
 const DEFAULT_IMAGE = SITE.defaultImage;
+const THEME_COLOR = SITE.themeColor || "#1F7A5A";
+const THEME_COLOR_DARK = SITE.themeColorDark || "#4FB48B";
+const OG_W = SITE.ogImageWidth || 1200;
+const OG_H = SITE.ogImageHeight || 630;
+const PRERENDER_NAV = Array.isArray(SITE.prerenderNav) && SITE.prerenderNav.length
+  ? SITE.prerenderNav
+  : [
+      { path: "/", label: "الرئيسية" },
+      { path: "/lessons", label: "الدروس" },
+      { path: "/quran-hub", label: "القرآن" },
+      { path: "/adhkar", label: "الأذكار" },
+      { path: "/prayer-times", label: "الصلاة" },
+      { path: "/fiqh", label: "الفقه" },
+      { path: "/search", label: "البحث" },
+    ];
+
+function prerenderNavHtml() {
+  return PRERENDER_NAV.map(
+    (item) =>
+      `<a href="${escapeHtml(absoluteUrl(item.path))}">${escapeHtml(item.label)}</a>`,
+  ).join("\n        ");
+}
 
 const LESSONS_SEED = JSON.parse(await readFile(resolve(__dirname, "lessons-seed.snapshot.json"), "utf8"));
 const PLATFORM_SEED = JSON.parse(await readFile(resolve(__dirname, "platform-seed.snapshot.json"), "utf8"));
@@ -473,9 +495,9 @@ function prerenderHtml(route, extraJsonLd = "", richBody = "", parents = []) {
     <meta name="description" content="${escapeHtml(metaDescription)}" />
     <meta name="robots" content="${escapeHtml(robots)}" />
     <meta name="author" content="${escapeHtml(SITE_NAME)}" />
-    <meta name="theme-color" content="#1F7A5A" />
-    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#1F7A5A" />
-    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#4FB48B" />
+    <meta name="theme-color" content="${escapeHtml(THEME_COLOR)}" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="${escapeHtml(THEME_COLOR)}" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="${escapeHtml(THEME_COLOR_DARK)}" />
     <link rel="canonical" href="${escapeHtml(canonical)}" />
     <link rel="alternate" hreflang="ar" href="${escapeHtml(canonical)}" />
     <link rel="alternate" hreflang="x-default" href="${escapeHtml(canonical)}" />
@@ -487,8 +509,8 @@ function prerenderHtml(route, extraJsonLd = "", richBody = "", parents = []) {
     <meta property="og:description" content="${escapeHtml(metaDescription)}" />
     <meta property="og:url" content="${escapeHtml(canonical)}" />
     <meta property="og:image" content="${escapeHtml(image)}" />
-    <meta property="og:image:width" content="1200" />
-    <meta property="og:image:height" content="630" />
+    <meta property="og:image:width" content="${OG_W}" />
+    <meta property="og:image:height" content="${OG_H}" />
     <meta property="og:image:alt" content="${escapeHtml(title)}" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${escapeHtml(title)}" />
@@ -507,18 +529,24 @@ function prerenderHtml(route, extraJsonLd = "", richBody = "", parents = []) {
         url: SITE_URL,
         logo: { "@type": "ImageObject", url: absoluteUrl("/logo.png") },
       },
+      isPartOf: {
+        "@type": "WebSite",
+        name: SITE_NAME,
+        url: SITE_URL,
+        potentialAction: {
+          "@type": "SearchAction",
+          target: `${SITE_URL}/search?q={search_term_string}`,
+          "query-input": "required name=search_term_string",
+        },
+      },
     })}
     ${breadcrumbFor(route, parents)}
     ${extraJsonLd}
   </head>
   <body>
     <header>
-      <nav>
-        <a href="${escapeHtml(SITE_URL)}">${escapeHtml(SITE_NAME)}</a>
-        <a href="${escapeHtml(absoluteUrl("/lessons"))}">الدروس</a>
-        <a href="${escapeHtml(absoluteUrl("/quran-hub"))}">القرآن</a>
-        <a href="${escapeHtml(absoluteUrl("/adhkar"))}">الأذكار</a>
-        <a href="${escapeHtml(absoluteUrl("/search"))}">البحث</a>
+      <nav aria-label="التنقل الرئيسي">
+        ${prerenderNavHtml()}
       </nav>
     </header>
     <main>

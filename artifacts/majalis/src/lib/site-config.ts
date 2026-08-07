@@ -12,6 +12,13 @@ export const TITLE_SUFFIX = config.titleSuffix;
 /** بريد التواصل الرسمي الوحيد للمنصة كاملةً — لا تكتب بريدًا آخر يدويًا في أي مكوّن. */
 export const CONTACT_EMAIL = config.contactEmail;
 export const DEFAULT_IMAGE = config.defaultImage;
+/** لون شريط المتصفح — نهاري (identity-v2 brand). */
+export const BRAND_THEME_COLOR = (config as { themeColor?: string }).themeColor ?? "#1F7A5A";
+/** لون شريط المتصفح — ليلي. */
+export const BRAND_THEME_COLOR_DARK =
+  (config as { themeColorDark?: string }).themeColorDark ?? "#4FB48B";
+export const OG_IMAGE_WIDTH = (config as { ogImageWidth?: number }).ogImageWidth ?? 1200;
+export const OG_IMAGE_HEIGHT = (config as { ogImageHeight?: number }).ogImageHeight ?? 630;
 
 /** رابط mailto: بموضوع محدَّد مسبقًا حسب نوع الطلب (استفسار عام، إبلاغ خطأ...). */
 export function mailtoWithSubject(subject: string): string {

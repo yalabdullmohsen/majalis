@@ -1,3 +1,8 @@
+import {
+  BRAND_THEME_COLOR,
+  BRAND_THEME_COLOR_DARK,
+} from "@/lib/site-config";
+
 export type ThemePreference = "light" | "dark" | "auto";
 
 export const THEME_STORAGE_KEY = "majalis-theme";
@@ -30,9 +35,9 @@ export function resolveTheme(preference: ThemePreference): "light" | "dark" {
   return "light";
 }
 
-/** يطابق رموز الهوية: --mj-brand نهاري/ليلي — مصدر واحد لشريط المتصفح. */
-const THEME_COLOR_LIGHT = "#1F7A5A";
-const THEME_COLOR_DARK = "#4FB48B";
+/** يطابق site.config.json → BRAND_THEME_COLOR* — مصدر واحد لشريط المتصفح. */
+const THEME_COLOR_LIGHT = BRAND_THEME_COLOR;
+const THEME_COLOR_DARK = BRAND_THEME_COLOR_DARK;
 
 function syncThemeColorMeta(resolved: "light" | "dark") {
   const content = resolved === "dark" ? THEME_COLOR_DARK : THEME_COLOR_LIGHT;
