@@ -46,9 +46,9 @@ assert.match(navSrc, /normalizeNavPath/);
 const appSrc = read("src/App.tsx");
 assert.match(appSrc, /SafeLazyRoute component=\{HomePage\}/);
 assert.match(appSrc, /auth\/update-password/);
-assert.match(appSrc, /!immersive && <AdhanNotificationBar/);
-assert.match(appSrc, /!immersive && <PrayerRespectBanner/);
-assert.match(appSrc, /!immersive && <ScrollToTop/);
+assert.match(appSrc, /!hideSiteChrome && <AdhanNotificationBar/);
+assert.match(appSrc, /!hideSiteChrome && <PrayerRespectBanner/);
+assert.match(appSrc, /!hideSiteChrome && <ScrollToTop/);
 
 const loginSrc = read("src/views/LoginPage.tsx");
 assert.match(loginSrc, /sanitizeAuthNext/);

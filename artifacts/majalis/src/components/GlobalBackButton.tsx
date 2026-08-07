@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import { DirectionalIcon } from "@/components/DirectionalIcon";
 import { useLocation } from "wouter";
-import { isImmersiveChromePath } from "@/lib/immersive-chrome";
+import { isImmersiveChromePath, isPrayerTimesPath } from "@/lib/immersive-chrome";
 import { goBackOrFallback } from "@/lib/navigation-back";
 
 /**
@@ -34,7 +34,7 @@ export function GlobalBackButton() {
 
   if (location === "/") return null;
   // مسارات غامرة لها زر رجوع داخل شريطها الخاص — لا نكرّر زرًا عائمًا فوقها.
-  if (isImmersiveChromePath(location)) return null;
+  if (isImmersiveChromePath(location) || isPrayerTimesPath(location)) return null;
   // مخفي بصريًا قبل عتبة التمرير: يُزال من شجرة VoiceOver تمامًا (لا opacity فقط).
   if (!pastThreshold) return null;
 

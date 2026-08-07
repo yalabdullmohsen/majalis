@@ -920,12 +920,13 @@ function AppShellInner() {
   const [comingSoonOpen, setComingSoonOpen] = useState(false);
   const [location] = useLocation();
   const immersive = isImmersiveChromePath(location);
+  const onPrayer = isPrayerTimesPath(location);
+  const hideSiteChrome = immersive || onPrayer;
 
   useEffect(() => {
-    const onPrayer = isPrayerTimesPath(location);
     document.documentElement.classList.toggle("pts-immersive", onPrayer);
     return () => document.documentElement.classList.remove("pts-immersive");
-  }, [location]);
+  }, [onPrayer]);
 
   useEffect(() => {
     const evtHandler = () => setSearchOpen(true);
@@ -966,23 +967,23 @@ function AppShellInner() {
       <NavBar />
       <TopSectionBar />
       {/* شريط العدّ التنازلي العام يُخفى في مسارات المواقيت والمصحف */}
-      {!immersive && <PrayerCountdownBanner />}
-      {!immersive && <AdhanNotificationBar />}
-      {!immersive && <PrayerRespectBanner />}
+      {!hideSiteChrome && <PrayerCountdownBanner />}
+      {!hideSiteChrome && <AdhanNotificationBar />}
+      {!hideSiteChrome && <PrayerRespectBanner />}
       <main id="main-content" className="app-main" tabIndex={-1}>
         <Router />
       </main>
-      {!immersive && <SiteFooter />}
+      {!hideSiteChrome && <SiteFooter />}
       <DeferredAssistantWidget />
       {/* أزرار تحرير المشرف العائمة لا تغطي المواقيت/المصحف */}
-      {isAdmin && !immersive && (
+      {isAdmin && !hideSiteChrome && (
         <Suspense fallback={null}>
           <AdminSiteEditBar />
         </Suspense>
       )}
-      {!immersive && <ScrollToTop />}
+      {!hideSiteChrome && <ScrollToTop />}
       <GlobalBackButton />
-      {!immersive && <PwaInstallBanner />}
+      {!hideSiteChrome && <PwaInstallBanner />}
       <BottomNavBar />
       {newBadges.length > 0 && (
         <AchievementToast badges={newBadges} onDismiss={dismissBadges} />

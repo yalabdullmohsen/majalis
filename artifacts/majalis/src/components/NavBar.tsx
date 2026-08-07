@@ -8,7 +8,7 @@ import { useThemePreference } from "./ThemePreferenceProvider";
 
 import { useMobileNavState } from "@/hooks/useMobileNavState";
 import { isNavHrefActive } from "@/lib/nav-active";
-import { isImmersiveChromePath } from "@/lib/immersive-chrome";
+import { isImmersiveChromePath, isPrayerTimesPath } from "@/lib/immersive-chrome";
 import { PRIMARY_NAV_ITEMS } from "@/lib/navigation";
 import { fetchPrayerTimes, computePrayerCountdown, type PrayerCountdown } from "@/lib/prayer-times";
 import "@/styles/components/dark-emerald-menus.css";
@@ -130,8 +130,10 @@ export default function NavBar() {
     </div>
   );
 
-  // مسارات غامرة (مصحف / صلاة / مركز قرآن) لها شريطها الخاص.
-  if (isImmersiveChromePath(location)) return null;
+  // مسارات غامرة (مصحف/تلاوة) لها شريطها الخاص.
+  // صفحة الصلاة: تُخفى الترويسة (بحث، وضع ليلي، حساب، شريط الأخبار) بالكامل
+  // مع بقاء شريط الأقسام العلوي والشريط السفلي للتنقّل.
+  if (isImmersiveChromePath(location) || isPrayerTimesPath(location)) return null;
 
   return (
     <>
