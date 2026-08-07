@@ -20,6 +20,7 @@ import {
 import { PushPrompt } from "@/components/PushPrompt";
 import { useLanguage } from "@/components/LanguageProvider";
 import { LanguageSwitcher } from "@/components/LanguageSwitcher";
+import { supabase } from "@/lib/supabase";
 import "@/styles/pages/settings.css";
 
 function ToggleRow({
@@ -122,6 +123,24 @@ export default function SettingsPage() {
           ))}
         </div>
         <p className="settings-note">الوضع الحالي: {resolvedTheme === "dark" ? "داكن" : "فاتح"}</p>
+        <div className="settings-option-grid" role="group" aria-label="كثافة الواجهة">
+          {(
+            [
+              { id: "comfortable" as const, label: "مريحة", description: "مسافات أوضح للقراءة" },
+              { id: "compact" as const, label: "مدمجة", description: "محتوى أكثر في الشاشة" },
+            ] as const
+          ).map((option) => (
+            <button
+              key={option.id}
+              type="button"
+              className={`settings-choice${preferences.uiDensity === option.id ? " is-active" : ""}`}
+              onClick={() => update("uiDensity", option.id)}
+            >
+              <strong>{option.label}</strong>
+              <span>{option.description}</span>
+            </button>
+          ))}
+        </div>
         <label className="settings-field">
           <span>{t("settings_font_size")}</span>
           <select name="interface-font-size" value={preferences.fontSize} onChange={(e) => update("fontSize", e.target.value as UserPreferences["fontSize"])}>
@@ -213,6 +232,12 @@ export default function SettingsPage() {
       </LegalSection>
 
       <LegalSection title={t("settings_media")}>
+        <ToggleRow
+          label="توفير البيانات"
+          checked={preferences.dataSaver}
+          onChange={(value) => update("dataSaver", value)}
+        />
+        <p className="settings-note">يقلّل إحماء المحتوى الثقيل والصوت عند الاتصال الضعيف أو تفعيل Data Saver في المتصفح.</p>
         <label className="settings-field">
           <span>{t("settings_image_quality")}</span>
           <select value={preferences.imageQuality} onChange={(e) => update("imageQuality", e.target.value as UserPreferences["imageQuality"])}>
@@ -241,6 +266,7 @@ export default function SettingsPage() {
       <LegalSection title={t("settings_privacy")}>
         <p>{t("settings_privacy_desc")}</p>
         <div className="settings-legal-links">
+          <Link href="/privacy-center" className="settings-legal-link">مركز الخصوصية</Link>
           <Link href="/privacy" className="settings-legal-link">سياسة الخصوصية</Link>
           <Link href="/terms" className="settings-legal-link">الشروط والأحكام</Link>
           {isLoggedIn && (
@@ -259,6 +285,34 @@ export default function SettingsPage() {
           }}>
             {t("settings_download_data")}
           </button>
+          {isLoggedIn && (
+            <button
+              type="button"
+              className="ui-card-btn"
+              onClick={() => {
+                void (async () => {
+                  const { data: { session } } = await supabase.auth.getSession();
+                  const token = session?.access_token;
+                  if (!token) return;
+                  const res = await fetch("/api/account/export", {
+                    method: "POST",
+                    headers: { Authorization: `Bearer ${token}` },
+                  });
+                  const body = await res.json().catch(() => ({}));
+                  if (!res.ok) return;
+                  const blob = new Blob([JSON.stringify(body, null, 2)], { type: "application/json" });
+                  const url = URL.createObjectURL(blob);
+                  const a = document.createElement("a");
+                  a.href = url;
+                  a.download = "majlisilm-data-export.json";
+                  a.click();
+                  URL.revokeObjectURL(url);
+                })();
+              }}
+            >
+              تصدير بيانات الحساب (خادم)
+            </button>
+          )}
           <button
             type="button"
             className="settings-danger-btn"

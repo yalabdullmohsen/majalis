@@ -104,6 +104,9 @@
   background: var(--mj-brand);
   animation: ob-slide-in 0.2s ease;
 }
+.offline-banner--pending {
+  background: var(--mj-ink-2, #4a5a53);
+}
 .offline-banner__icon { flex-shrink: 0; }
 @keyframes ob-slide-in {
   from { transform: translateY(-100%); opacity: 0; }

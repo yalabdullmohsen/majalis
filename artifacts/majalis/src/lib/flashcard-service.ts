@@ -202,6 +202,23 @@ export async function submitCardReview(
   // Always persist locally first (offline-safe)
   await saveLocalReview(localRow);
 
+  try {
+    const { enqueueOutbox } = await import("@/lib/sync-outbox");
+    await enqueueOutbox("flashcard_review", `${userId}::${card.card_type}:${card.card_id}`, {
+      user_id: userId,
+      card_type: card.card_type,
+      card_id: card.card_id,
+      next_review_at: metrics.nextReviewDate,
+      interval_days: metrics.interval,
+      ease_factor: metrics.easeFactor,
+      repetitions: metrics.repetitions,
+      last_quality: q,
+      reviewed_at: localRow.reviewed_at,
+    });
+  } catch {
+    /* outbox optional */
+  }
+
   if (!isOnline()) return;
 
   try {
@@ -253,6 +270,51 @@ export async function syncDirtyFlashcardReviews(userId: string): Promise<number>
     }
   }
   return synced;
+}
+
+/** Register LWW outbox handler once (idempotent). */
+let outboxRegistered = false;
+export function ensureFlashcardOutboxHandler(): void {
+  if (outboxRegistered) return;
+  outboxRegistered = true;
+  void import("@/lib/sync-outbox").then(({ registerOutboxHandler }) => {
+    registerOutboxHandler("flashcard_review", async (item) => {
+      const p = item.payload;
+      try {
+        await supabase.from("flashcard_reviews").upsert(
+          {
+            user_id: String(p.user_id || ""),
+            card_type: String(p.card_type || ""),
+            card_id: String(p.card_id || ""),
+            next_review_at: String(p.next_review_at || ""),
+            interval_days: Number(p.interval_days || 0),
+            ease_factor: Number(p.ease_factor || 2.5),
+            repetitions: Number(p.repetitions || 0),
+            last_quality: p.last_quality as ReviewQuality,
+            reviewed_at: String(p.reviewed_at || item.updatedAt),
+          },
+          { onConflict: "user_id,card_type,card_id" },
+        );
+        const row: LocalFlashReview = {
+          key: String(p.card_type) + ":" + String(p.card_id),
+          user_id: String(p.user_id || ""),
+          card_type: String(p.card_type || ""),
+          card_id: String(p.card_id || ""),
+          next_review_at: String(p.next_review_at || ""),
+          interval_days: Number(p.interval_days || 0),
+          ease_factor: Number(p.ease_factor || 2.5),
+          repetitions: Number(p.repetitions || 0),
+          last_quality: (p.last_quality as ReviewQuality) || 3,
+          reviewed_at: String(p.reviewed_at || item.updatedAt),
+          dirty: true,
+        };
+        await markReviewClean(row);
+        return true;
+      } catch {
+        return false;
+      }
+    });
+  });
 }
 
 // ─── Stats ─────────────────────────────────────────────────────────────────────

@@ -84,6 +84,7 @@ export const FEATURE_REGISTRY: FeatureEntry[] = [
   { id: "about",        label: "من نحن",             path: "/about",        group: "تطبيق",         status: "active",       inSideNav: false, inBottomNav: false },
   { id: "contact",      label: "تواصل معنا",          path: "/contact",      group: "تطبيق",         status: "active",       inSideNav: false, inBottomNav: false },
   { id: "privacy",      label: "سياسة الخصوصية",     path: "/privacy",      group: "تطبيق",         status: "active",       inSideNav: false, inBottomNav: false },
+  { id: "privacy-center", label: "مركز الخصوصية",   path: "/privacy-center", group: "تطبيق",     status: "active",       inSideNav: false, inBottomNav: false },
   { id: "terms",        label: "شروط الاستخدام",      path: "/terms",        group: "تطبيق",         status: "active",       inSideNav: false, inBottomNav: false },
   { id: "submit",       label: "أضف محتوى",           path: "/submit",       group: "تطبيق",         status: "active",       inSideNav: true,  inBottomNav: false },
   { id: "features-in-progress", label: "قيد التطوير", path: "/features-in-progress", group: "تطبيق", status: "disabled", inSideNav: false, inBottomNav: false },
