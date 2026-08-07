@@ -16,7 +16,7 @@ export function organizationJsonLd() {
     url: SITE_URL,
     logo: absoluteUrl("/logo.png"),
     description:
-      "منصة علمية عربية تجمع الدروس الشرعية والدورات والقرآن والأذكار والفوائد في مكان واحد.",
+      "دروس شرعية وقرآن وأذكار وفوائد لطلبة العلم، وفق منهج أهل السنة والجماعة.",
     inLanguage: "ar",
     sameAs: [],
   };
@@ -30,7 +30,7 @@ export function websiteJsonLd() {
     url: SITE_URL,
     inLanguage: "ar",
     description:
-      "منصة علمية عربية للدروس الشرعية والدورات العلمية وطلب العلم — القرآن، السنة، الأذكار، والفوائد.",
+      "دروس شرعية وقرآن وسنة وأذكار وفوائد — المجلس العلمي.",
     publisher: {
       "@type": "Organization",
       name: SITE_NAME,
