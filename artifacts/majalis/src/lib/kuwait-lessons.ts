@@ -252,16 +252,21 @@ export function mapLessonRow(row: any): KuwaitLessonRecord {
   return partialLesson;
 }
 
-function isExpired(lesson: KuwaitLessonRecord): boolean {
+function isExpired(lesson: KuwaitLessonRecord, nowMs = Date.now()): boolean {
   if (lesson.archivedAt) return true;
+  // فقط تواريخ صريحة (endDate / startDate) — لا نُفسّر تواريخ العناوين
   if (lesson.endDate) {
     const end = new Date(`${lesson.endDate}T23:59:59+03:00`);
-    if (!Number.isNaN(end.getTime()) && end.getTime() < Date.now()) return true;
+    if (!Number.isNaN(end.getTime())) {
+      if (end.getTime() < nowMs) return true;
+      // نهاية صريحة لم تحن — أبقِ نشطًا حتى endDate (لا تُؤرشف بيوم الأسبوع)
+      return false;
+    }
   }
 
   if (lesson.recurring === false && lesson.startDate) {
     const start = new Date(`${lesson.startDate}T23:59:59+03:00`);
-    if (!Number.isNaN(start.getTime()) && start.getTime() < Date.now()) return true;
+    if (!Number.isNaN(start.getTime()) && start.getTime() < nowMs) return true;
   }
 
   if (lesson.day && isOccurrencePast(lesson.day, lesson.time, lesson.recurring !== false)) {
@@ -290,11 +295,11 @@ export function isLessonComplete(lesson: KuwaitLessonRecord): boolean {
   );
 }
 
-export function splitKuwaitLessons(lessons: KuwaitLessonRecord[]) {
+export function splitKuwaitLessons(lessons: KuwaitLessonRecord[], nowMs = Date.now()) {
   const active: KuwaitLessonRecord[] = [];
   const archived: KuwaitLessonRecord[] = [];
   for (const lesson of lessons) {
-    if (isExpired(lesson)) archived.push(lesson);
+    if (isExpired(lesson, nowMs)) archived.push(lesson);
     else active.push(lesson);
   }
   return {

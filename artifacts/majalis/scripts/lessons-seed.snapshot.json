@@ -488,8 +488,8 @@
       "سيرة"
     ],
     "start_date": "2026-07-05",
-    "end_date": null,
-    "is_recurring": true,
+    "end_date": "2026-07-16",
+    "is_recurring": false,
     "activity_type": "درس",
     "is_course": false,
     "sheikhs": {
@@ -522,8 +522,8 @@
       "بث مباشر"
     ],
     "start_date": "2026-07-05",
-    "end_date": null,
-    "is_recurring": true,
+    "end_date": "2026-07-29",
+    "is_recurring": false,
     "activity_type": "دورة",
     "is_course": true,
     "course_id": "ajraa-murtaqa-course-3",
@@ -564,8 +564,8 @@
       "بث مباشر"
     ],
     "start_date": "2026-07-05",
-    "end_date": null,
-    "is_recurring": true,
+    "end_date": "2026-07-29",
+    "is_recurring": false,
     "activity_type": "دورة",
     "is_course": true,
     "course_id": "ajraa-murtaqa-course-3",
@@ -606,8 +606,8 @@
       "بث مباشر"
     ],
     "start_date": "2026-07-05",
-    "end_date": null,
-    "is_recurring": true,
+    "end_date": "2026-07-29",
+    "is_recurring": false,
     "activity_type": "دورة",
     "is_course": true,
     "course_id": "ajraa-murtaqa-course-3",
@@ -648,8 +648,8 @@
       "بث مباشر"
     ],
     "start_date": "2026-07-05",
-    "end_date": null,
-    "is_recurring": true,
+    "end_date": "2026-07-29",
+    "is_recurring": false,
     "activity_type": "دورة",
     "is_course": true,
     "course_id": "ajraa-murtaqa-course-3",

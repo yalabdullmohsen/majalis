@@ -124,8 +124,9 @@ export async function buildLessonsSeed(): Promise<LessonSeedRow[]> {
       book_url: session.referenceUrl,
       maps_url: session.mapUrl,
       start_date: ad.startDate,
-      end_date: null,
-      is_recurring: true,
+      end_date: ad.endDate ?? null,
+      // دورة/برنامج بنهاية صريحة = غير متكرر؛ يُؤرشف عبر end_date في kuwait-lessons
+      is_recurring: !ad.endDate,
       activity_type: activityTypeForAd(ad),
       is_course: isCourse,
       course_id: isCourse ? ad.id : undefined,
