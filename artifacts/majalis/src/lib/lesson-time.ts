@@ -442,6 +442,41 @@ export function formatHijriDate(date: Date): string {
  *  ≤ 20 days    → "بعد أسبوعين"
  *  months       → "بعد X أشهر"
  */
+/**
+ * صيغة الموعد الموحّدة للعرض:
+ * اليوم + ميلادي كامل + هجري بين قوسين + الوقت + «توقيت الكويت».
+ * لا صيغ مختصرة ملتبسة مثل 7/5–7/8.
+ */
+export function formatLessonAppointmentLine(input: {
+  day?: string | null;
+  time?: string | null;
+  gregorianDate?: string | null;
+  hijriDate?: string | null;
+  uncertain?: boolean;
+}): string {
+  const parts: string[] = [];
+  const day = (input.day || "").trim();
+  const greg = (input.gregorianDate || "").trim();
+  const hijri = (input.hijriDate || "").trim();
+  const time = cleanTimeText(input.time || "");
+
+  // إن كان الميلادي يبدأ باسم اليوم فلا نكرّر day منفصلاً
+  if (greg) {
+    parts.push(hijri ? `${greg} (${hijri})` : greg);
+  } else if (day) {
+    parts.push(day);
+  }
+
+  if (time) parts.push(time);
+  if (parts.length) parts.push("توقيت الكويت");
+
+  let line = parts.join(" · ");
+  if (input.uncertain) {
+    line = line ? `${line} · موعد غير مؤكد` : "موعد غير مؤكد";
+  }
+  return line;
+}
+
 export function formatRelativeTime(targetMs: number, now = Date.now()): string {
   const diffMs = targetMs - now;
 
