@@ -6,6 +6,7 @@
   display: flex;
   align-items: flex-end;
   justify-content: center;
+  padding-block-end: calc(16px + env(safe-area-inset-bottom, 0px));
 }
 .app-sheet-overlay__scrim {
   position: absolute;
@@ -23,33 +24,38 @@
 
 .app-sheet {
   width: min(100%, 40rem);
-  max-height: 90dvh;
+  max-height: 85dvh;
   display: flex;
   flex-direction: column;
   background: var(--mj-surface, var(--surface, #fff));
   color: var(--mj-ink, var(--text));
   border-radius: var(--mj-r-lg, 22px) var(--mj-r-lg, 22px) 0 0;
   box-shadow: var(--mj-sh, 0 -8px 28px rgba(11, 32, 24, 0.18));
-  padding-block-end: env(safe-area-inset-bottom, 0px);
-  transition: transform 200ms ease;
+  margin-block-end: 0;
+  transition: transform 180ms ease;
+  will-change: transform;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .app-sheet { transition: none; }
+  .app-sheet { transition: none !important; }
 }
 
-.app-sheet--half { max-height: 55dvh; }
-.app-sheet--full { max-height: 90dvh; }
+.app-sheet--half { max-height: min(55dvh, 85dvh); }
+.app-sheet--full { max-height: 85dvh; }
 
 .app-sheet__handle {
   flex-shrink: 0;
-  width: 2.5rem;
-  height: 0.28rem;
-  margin: 0.55rem auto 0.25rem;
+  width: 2.75rem;
+  height: 0.32rem;
+  margin: 0.65rem auto 0.35rem;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--mj-ink, #0E241E) 22%, transparent);
+  background: color-mix(in srgb, var(--mj-ink, #0E241E) 28%, transparent);
   touch-action: none;
   cursor: grab;
+  /* منطقة لمس أوسع للمقبض */
+  padding-block: 0.55rem;
+  box-sizing: content-box;
+  background-clip: content-box;
 }
 
 .app-sheet__head {
@@ -89,15 +95,20 @@
 
 .app-sheet__close {
   width: 100%;
-  min-height: 2.75rem;
+  min-height: 2.85rem;
   border-radius: var(--mj-r-md, 16px);
   border: 1px solid var(--mj-hairline, var(--border));
-  background: transparent;
+  background: color-mix(in srgb, var(--mj-brand, #1E5F4B) 8%, transparent);
   color: var(--mj-ink, var(--text));
   font: inherit;
-  font-weight: 600;
-  font-size: 0.95rem;
+  font-weight: 700;
+  font-size: 1rem;
   cursor: pointer;
+  touch-action: manipulation;
+}
+
+.app-sheet__close:active {
+  transform: scale(0.98);
 }
 
 .app-sheet__close:focus-visible {
