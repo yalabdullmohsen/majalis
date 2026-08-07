@@ -21,7 +21,7 @@ type SectionTab = {
  * المزيد والبحث دائمان في الهيدر / الشريط السفلي.
  */
 export const SECTION_TABS: SectionTab[] = [
-  { href: "/mushaf", label: "قرآن", Icon: BookOpen, prefetch: () => import("@/pages/quran/MushafPageView") },
+  { href: "/quran-knowledge", label: "قرآن", Icon: BookOpen, prefetch: () => import("@/pages/quran/QuranKnowledgeHubPage") },
   { href: "/lessons", label: "الدروس", Icon: GraduationCap, prefetch: () => import("@/pages/lessons/LessonsPage") },
   { href: "/prayer-times", label: "الصلاة", Icon: Clock, prefetch: () => import("@/pages/worship/PrayerTimesPage") },
   { href: "/fiqh", label: "فقه", Icon: Scale, prefetch: () => import("@/pages/fiqh/FiqhPage") },
@@ -33,27 +33,7 @@ export function isTabActive(location: string, href: string): boolean {
       location === "/mushaf" ||
       location.startsWith("/mushaf/") ||
       location === "/quran-hub" ||
-      location.startsWith("/quran-hub/") ||
-      location === "/quran-knowledge" ||
-      location.startsWith("/quran-knowledge/") ||
-      location === "/ulum-quran" ||
-      location.startsWith("/ulum-quran/") ||
-      location === "/tafsir" ||
-      location.startsWith("/tafsir/") ||
-      location === "/quran/surahs" ||
-      location.startsWith("/quran/surahs/") ||
-      location === "/quran/surah-stories" ||
-      location.startsWith("/quran/surah-stories/") ||
-      location.startsWith("/quran/makki") ||
-      location.startsWith("/quran/revelation") ||
-      location === "/memorize" ||
-      location.startsWith("/memorize/") ||
-      location === "/memorization" ||
-      location.startsWith("/memorization/") ||
-      location === "/quran-memorization" ||
-      location.startsWith("/quran-memorization/") ||
-      location.startsWith("/quran/memorization-plans") ||
-      location.startsWith("/quran/recitation")
+      location.startsWith("/quran-hub/")
     );
   }
   if (href === "/quran-knowledge") {

@@ -21,7 +21,7 @@ export type BottomNavTab = {
 
 /** الشريط السفلي: أربع مساحات + «المزيد» منفصل في المكوّن */
 export const BOTTOM_NAV_TABS: BottomNavTab[] = [
-  { href: "/mushaf", label: "قرآن", Icon: BookOpen },
+  { href: "/quran-knowledge", label: "قرآن", Icon: BookOpen },
   { href: "/lessons", label: "الدروس", Icon: GraduationCap },
   { href: "/prayer-times", label: "الصلاة", Icon: Clock },
   { href: "/fiqh", label: "فقه", Icon: Scale },
