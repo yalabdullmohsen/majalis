@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { ArrowRight } from "lucide-react";
+import { DirectionalIcon } from "@/components/DirectionalIcon";
 import { useLocation } from "wouter";
 import { isImmersiveChromePath } from "@/lib/immersive-chrome";
 import { goBackOrFallback } from "@/lib/navigation-back";
@@ -50,8 +51,8 @@ export function GlobalBackButton() {
       aria-label="رجوع"
       title="رجوع"
     >
-      {/* RTL: الرجوع يشير نحو البداية (يمين) — نفس اتّجاه PageHeader */}
-      <ArrowRight size={18} strokeWidth={2.2} aria-hidden="true" />
+      {/* RTL-authored: ArrowRight = back; DirectionalIcon mirrors for LTR */}
+      <DirectionalIcon icon={ArrowRight} size={18} strokeWidth={2.2} />
     </button>
   );
 }

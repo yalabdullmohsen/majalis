@@ -76,6 +76,12 @@ const accountDeleteRateLimit = createRateLimiter({
   keyPrefix: "account-delete",
 });
 
+const accountExportRateLimit = createRateLimiter({
+  windowMs: 60_000,
+  max: 8,
+  keyPrefix: "account-export",
+});
+
 const recommendationsRateLimit = createRateLimiter({
   windowMs: 60_000,
   max: 40,
@@ -251,6 +257,7 @@ export const API_ROUTES = [
   { prefix: "/api/cron/researches-daily-import", module: "./api-handlers/cron/researches-daily-import.js", allowGet: true, exact: true },
   { prefix: "/api/admin/submissions", module: "./api-handlers/admin/submissions.js", allowGet: true },
   { prefix: "/api/account/delete", module: "./api-handlers/account/delete.js", exact: true, rateLimit: accountDeleteRateLimit },
+  { prefix: "/api/account/export", module: "./api-handlers/account/export.js", exact: true, allowGet: true, rateLimit: accountExportRateLimit },
   // ── الباحث الشرعي (RAG) ────────────────────────────────────────────────────
   { prefix: "/api/rag", module: "./api-handlers/rag-research.js", allowGet: true, rateLimit: ragRateLimit },
   // ── نظام الاقتباسات ────────────────────────────────────────────────────────

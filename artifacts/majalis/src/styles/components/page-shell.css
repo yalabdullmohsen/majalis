@@ -93,3 +93,23 @@
   margin-block-end: var(--mj-s4);
   line-height: 2;
 }
+
+/* تفضيل كثافة المستخدم على html */
+html[data-ui-density="compact"] .page-shell {
+  --mj-s3: 10px;
+  --mj-s4: 12px;
+  --mj-s6: 18px;
+  --mj-s8: 24px;
+}
+html[data-ui-density="compact"] .page-shell__intro h1,
+html[data-ui-density="compact"] .page-shell__intro .page-shell__title {
+  font-size: 1.35rem;
+}
+
+/* أيقونات اتجاهية: مرسومة لـ RTL، تُعكس في LTR */
+.icon-directional--ltr {
+  transform: scaleX(-1);
+}
+.icon-fixed {
+  transform: none;
+}

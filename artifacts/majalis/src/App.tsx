@@ -69,6 +69,10 @@ const AboutUsPage = lazy(() => import("@/views/AboutUsPage"));
 const SourcesLicensesPage = lazy(() => import("@/views/SourcesLicensesPage"));
 const SiteMapPage = lazy(() => import("@/views/SiteMapPage"));
 const PrivacyPage = lazy(() => import("@/views/PrivacyPage"));
+const PrivacyCenterPage = lazy(() => import("@/views/PrivacyCenterPage"));
+const CookieConsentBanner = lazy(() =>
+  import("@/components/CookieConsentBanner").then((m) => ({ default: m.CookieConsentBanner })),
+);
 const TermsPage = lazy(() => import("@/views/TermsPage"));
 const ContactPage = lazy(() => import("@/views/ContactPage"));
 const FatwaPolicyPage = lazy(() => import("@/views/FatwaPolicyPage"));
@@ -529,6 +533,7 @@ function Router() {
       <Route path="/fatwa-policy"><SafeLazyRoute component={FatwaPolicyPage} /></Route>
       <Route path="/sitemap"><SafeLazyRoute component={SiteMapPage} /></Route>
       <Route path="/privacy"><SafeLazyRoute component={PrivacyPage} /></Route>
+      <Route path="/privacy-center"><SafeLazyRoute component={PrivacyCenterPage} /></Route>
       <Route path="/privacy-policy"><Redirect to="/privacy" /></Route>
       <Route path="/terms"><SafeLazyRoute component={TermsPage} /></Route>
       <Route path="/account-deletion"><SafeLazyRoute component={AccountDeletionPage} /></Route>
@@ -942,6 +947,9 @@ function AppShellInner() {
       <GlobalAppShortcuts onToggleSearch={() => setSearchOpen((v) => !v)} />
       <a href="#main-content" className="skip-link mj-skip-link">{t("skip_to_content")}</a>
       <OfflineBanner />
+      <Suspense fallback={null}>
+        <CookieConsentBanner />
+      </Suspense>
       <UpdateAvailableBanner />
       <NavProgressBar />
       <SeoManager />

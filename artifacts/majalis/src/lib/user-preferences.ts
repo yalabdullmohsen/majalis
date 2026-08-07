@@ -21,6 +21,10 @@ export type UserPreferences = {
   searchHistory: boolean;
   assistantVerbose: boolean;
   numeralSystem: "عربي" | "إنجليزي";
+  /** كثافة واجهة المستخدم — تُطبَّق على html[data-ui-density] */
+  uiDensity: "comfortable" | "compact";
+  /** توفير البيانات: يقلّل الإحماء الثقيل والوسائط عند الاتصال الضعيف */
+  dataSaver: boolean;
 };
 
 export const SETTINGS_KEY = "majalis-user-settings-v1";
@@ -47,6 +51,8 @@ export const DEFAULT_PREFERENCES: UserPreferences = {
   searchHistory: true,
   assistantVerbose: false,
   numeralSystem: "عربي",
+  uiDensity: "comfortable",
+  dataSaver: false,
 };
 
 export function readPreferences(): UserPreferences {
@@ -69,9 +75,19 @@ export function applyPreferences(prefs: UserPreferences = readPreferences()) {
   if (typeof document === "undefined") return;
   const root = document.documentElement;
 
+  let dataSaver = prefs.dataSaver;
+  try {
+    const conn = (navigator as Navigator & { connection?: { saveData?: boolean } }).connection;
+    if (conn?.saveData) dataSaver = true;
+  } catch {
+    /* ignore */
+  }
+
   const fontScale =
     prefs.fontSize === "صغير" ? "0.92" : prefs.fontSize === "كبير" ? "1.08" : "1";
+  const densityScale = prefs.uiDensity === "compact" ? "0.92" : "1";
   root.style.setProperty("--ui-font-scale", fontScale);
+  root.style.setProperty("--ui-density-scale", densityScale);
   root.style.setProperty("--reading-font-size", `${prefs.readingTextSize}px`);
   root.style.setProperty("--quran-font-size", `${prefs.quranFontScale}px`);
   root.style.setProperty(
@@ -85,5 +101,7 @@ export function applyPreferences(prefs: UserPreferences = readPreferences()) {
   root.dataset.readingMode = prefs.readingMode ? "quiet" : "normal";
   root.dataset.readingWidth = prefs.readingWidth;
   root.dir = prefs.direction;
-  root.dataset.imageQuality = prefs.imageQuality;
+  root.dataset.imageQuality = dataSaver ? "منخفض" : prefs.imageQuality;
+  root.dataset.uiDensity = prefs.uiDensity;
+  root.dataset.dataSaver = dataSaver ? "1" : "0";
 }

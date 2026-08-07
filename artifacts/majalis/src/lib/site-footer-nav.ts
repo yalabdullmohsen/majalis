@@ -53,6 +53,7 @@ export const SITE_FOOTER_GROUPS: FooterGroup[] = [
     title: "قانوني",
     links: [
       { href: "/privacy", label: "الخصوصية" },
+      { href: "/privacy-center", label: "مركز الخصوصية" },
       { href: "/terms", label: "شروط الاستخدام" },
       { href: "/account-deletion", label: "حذف الحساب" },
       { href: "/about", label: "حول التطبيق" },
