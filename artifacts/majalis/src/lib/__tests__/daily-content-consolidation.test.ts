@@ -43,16 +43,16 @@ console.log("\n=== لا منطق تدوير يومي متفرق متبقٍّ ف�
     "src/views/ArkanImanPage.tsx",
     "src/views/MadhahibPage.tsx",
     "src/views/SunanYawmiyyaPage.tsx",
-    "src/views/ZakatPage.tsx",
+    "src/pages/fiqh/ui/ZakatView.tsx",
     "src/views/SawmPage.tsx",
     "src/views/TaharaPage.tsx",
     "src/views/FadailAamalPage.tsx",
-    "src/views/JanazaPage.tsx",
+    "src/pages/fiqh/ui/JanazaView.tsx",
     "src/views/JannaNaarPage.tsx",
     "src/views/SahabahPage.tsx",
     "src/pages/quran/ui/UlumQuranView.tsx",
     "src/pages/quran/ui/DuasQuranView.tsx",
-    "src/views/FiqhQawaidPage.tsx",
+    "src/pages/fiqh/ui/FiqhQawaidView.tsx",
     "src/views/ShimaelPage.tsx",
     "src/views/IslamicGlossaryPage.tsx",
     "src/views/AdabTalabIlmPage.tsx",
@@ -66,9 +66,9 @@ console.log("\n=== لا منطق تدوير يومي متفرق متبقٍّ ف�
     "src/views/ProphetStoriesPage.tsx",
     "src/views/PropheticMedicinePage.tsx",
     "src/views/TawhidPage.tsx",
-    "src/views/SalahGuidePage.tsx",
+    "src/pages/fiqh/ui/SalahGuideView.tsx",
     "src/views/TawbaPage.tsx",
-    "src/views/HajjPage.tsx",
+    "src/pages/fiqh/ui/HajjView.tsx",
     "src/views/DuasPage.tsx",
     "src/views/AsmaaHusnaPage.tsx",
   ];
@@ -82,7 +82,7 @@ console.log("\n=== لا منطق تدوير يومي متفرق متبقٍّ ف�
   assert(!arbaeenSrc.includes("an-today"), "ArbaeenNawawiPage: قسم بطاقة \"حديث اليوم\" المنفصل لم يعُد");
   assert(!arbaeenSrc.includes("حديث اليوم"), "ArbaeenNawawiPage: لا نص \"حديث اليوم\" متبقٍّ كعنوان قسم");
 
-  const mawarithSrc = readSrc("src/views/MawarithPage.tsx");
+  const mawarithSrc = readSrc("src/pages/fiqh/ui/MawarithView.tsx");
   assert(!mawarithSrc.includes("mwod-card__badge") && !mawarithSrc.includes("mwod-card__formula"),
     "MawarithPage: عناصر بطاقة \"مسألة الميراث اليوم\" المنفصلة (badge/formula) لم تعُد");
   assert(!mawarithSrc.includes("مسألة الميراث اليوم"), "MawarithPage: لا نص \"مسألة الميراث اليوم\" متبقٍّ");
@@ -121,7 +121,7 @@ console.log("\n=== المحتوى العلمي الأصلي لم يُحذف — 
   assert(sahabahSrc.includes("SAHABAH"), "بيانات الصحابة (SAHABAH) ما زالت موجودة ومستخدَمة في القائمة الكاملة");
   const arbaeenSrc = readSrc("src/pages/hadith/ui/ArbaeenNawawiView.tsx");
   assert(arbaeenSrc.includes("ARBAEEN_NAWAWI"), "بيانات الأربعين النووية ما زالت موجودة ومستخدَمة في القائمة الكاملة");
-  const salahSrc = readSrc("src/views/SalahGuidePage.tsx");
+  const salahSrc = readSrc("src/pages/fiqh/ui/SalahGuideView.tsx");
   assert(salahSrc.includes("WAJIBAAT"), "واجبات الصلاة ما زالت في التبويب الكامل");
 }
 

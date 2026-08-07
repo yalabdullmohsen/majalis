@@ -88,7 +88,7 @@ console.log("\n=== صفحات كانت ميتة تحمل ExploreAlso / Related =
   assert(scholar.includes("KnowledgeRelatedItems"), "ملف العالِم يركّب KnowledgeRelatedItems");
   assert(scholar.includes("PAGE_EXPLORE_LINKS"), "ملف العالِم يستورد PAGE_EXPLORE_LINKS");
 
-  const topic = readFileSync(resolve(srcRoot, "views/FiqhTopicPage.tsx"), "utf8");
+  const topic = readFileSync(resolve(srcRoot, "pages/fiqh/ui/FiqhTopicView.tsx"), "utf8");
   assert(topic.includes("RelatedKnowledge"), "صفحة باب الفقه تركّب RelatedKnowledge");
   assert(topic.includes("hrefRulingsFilter"), "صفحة الباب تستخدم hrefRulingsFilter");
   assert(!topic.includes("style={{ marginTop"), "لا هوامش مضمنة في صفحة الباب");

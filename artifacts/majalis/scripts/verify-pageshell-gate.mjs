@@ -75,7 +75,7 @@ const requiredLayouts = [
   "src/views/AdhkarPage.tsx",
   "src/views/FawaidPage.tsx",
   "src/views/TopicsIndexPage.tsx",
-  "src/views/RulingsPage.tsx",
+  "src/pages/fiqh/ui/RulingsView.tsx",
   "src/views/TasbihPage.tsx",
   "src/views/learn/LearnHubPage.tsx",
   "src/views/DuasPage.tsx",

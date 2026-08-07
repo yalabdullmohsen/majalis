@@ -2,7 +2,7 @@ import { SectionIcon } from "@/components/ui/SectionIcon";
 import { useEffect, useState, useMemo } from "react";
 import { Link } from "wouter";
 import { Calculator } from "lucide-react";
-import { applyPageSeo } from "../lib/seo";
+import { applyPageSeo } from "@/lib/seo";
 import { ShareButtons } from "@/components/ContentActions";
 import { arabicMatchAny } from "@/lib/arabic-search";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";

@@ -78,7 +78,7 @@ console.log("\n=== فقه — لا إسقاط للدروس على /rulings با�
 
 console.log("\n=== فقه — تطابق رابط البطاقة مع بيانات الدرس في FiqhPage ===");
 {
-  const pageSrc = readFileSync(resolve(srcRoot, "views/FiqhPage.tsx"), "utf8");
+  const pageSrc = readFileSync(resolve(srcRoot, "pages/fiqh/ui/FiqhView.tsx"), "utf8");
   assert(pageSrc.includes('from "@/lib/fiqh-hub-topics"') || pageSrc.includes("from '@/lib/fiqh-hub-topics'"),
     "FiqhPage يستورد FIQH_HUB_TOPICS من المصدر المركزي");
   assert(pageSrc.includes("FIQH_HUB_TOPICS"), "FiqhPage يعرض FIQH_HUB_TOPICS");
