@@ -41,21 +41,22 @@ export const UnifiedLessonCard = memo(function UnifiedLessonCard({
 }: Props) {
   const [copied, setCopied] = useState(false);
   const [linkCopied, setLinkCopied] = useState(false);
+  const scheduleTime = lesson.scheduleTime || lesson.time;
   const [statusLabel, setStatusLabel] = useState(lesson.statusLabel);
-  const [nowLive, setNowLive] = useState(() => isLessonInProgress(lesson.day, lesson.time));
+  const [nowLive, setNowLive] = useState(() => isLessonInProgress(lesson.day, scheduleTime));
 
   useEffect(() => {
     function refresh() {
-      const live    = isLessonInProgress(lesson.day, lesson.time);
-      const freshMs = computeNextOccurrenceMs(lesson.day, lesson.time);
+      const live    = isLessonInProgress(lesson.day, scheduleTime);
+      const freshMs = computeNextOccurrenceMs(lesson.day, scheduleTime);
       setNowLive(live);
-      setStatusLabel(live ? "الآن" : formatRelativeTimeDetailed(freshMs, lesson.time));
+      setStatusLabel(live ? "الآن" : formatRelativeTimeDetailed(freshMs, scheduleTime));
     }
     refresh();
     const earlyTimer = window.setTimeout(refresh, 5_000);
     const timer = window.setInterval(refresh, 60_000);
     return () => { window.clearTimeout(earlyTimer); window.clearInterval(timer); };
-  }, [lesson.day, lesson.time]);
+  }, [lesson.day, scheduleTime]);
 
   const handleCopy = useCallback(async () => {
     try {

@@ -102,4 +102,12 @@ assert.equal(LESSON_DURATION_MIN, 120, "المدة الافتراضية ساعت
   assert.ok(diffDays > 5, "بعد المدى الصريح يقفز للأسبوع القادم");
 }
 
+{
+  const now = new Date();
+  assert.equal(isLessonInProgress("", "4:00 م", now), false, "بلا يوم → لا جارٍ الآن");
+  assert.equal(isLessonInProgress("الأربعاء", "", now), false, "بلا وقت → لا جارٍ الآن");
+  assert.equal(isLessonInProgress("يوم غير معروف", "4:00 م", now), false, "يوم غير قابل للتحليل → لا جارٍ الآن");
+  assert.equal(isLessonInProgress("الأربعاء", "وقت غير مفهوم", now), false, "وقت غير قابل للتحليل → لا جارٍ الآن");
+}
+
 console.log("  ✓ lesson live window");

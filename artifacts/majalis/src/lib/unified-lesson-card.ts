@@ -26,7 +26,10 @@ export type UnifiedLesson = {
   lessonImage?: string;
   category: string;
   day: string;
+  /** وقت العرض المختصر على البطاقة */
   time: string;
+  /** الوقت الخام لحساب «جارٍ الآن» — لا يُمرَّر عبر formatShortLessonTime */
+  scheduleTime: string;
   mosque: string;
   region: string;
   governorate: string;
@@ -76,6 +79,7 @@ export function fromKuwaitLesson(lesson: KuwaitLessonRecord, archived = false): 
     category: cleanDisplayText(lesson.category) || "",
     day: cleanDisplayText(lesson.day),
     time: formatShortLessonTime(lesson.time),
+    scheduleTime: lesson.time,
     mosque: cleanDisplayText(lesson.mosque),
     region: cleanDisplayText(lesson.region),
     governorate: cleanDisplayText(lesson.governorate),
@@ -144,6 +148,7 @@ export function fromDbLesson(lesson: {
     category: cleanDisplayText(lesson.category) || "",
     day: cleanDisplayText(day),
     time: formatShortLessonTime(time),
+    scheduleTime: time,
     mosque: cleanDisplayText(lesson.mosque),
     region: cleanDisplayText(lesson.region),
     governorate: cleanDisplayText(lesson.city),
