@@ -1,32 +1,21 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { Leaf, X } from "lucide-react";
 import { useLocation, useParams } from "wouter";
-import { ADHKAR_CATEGORIES, type AdhkarItem } from "@/lib/adhkar-seed";
+import { ADHKAR_CATEGORIES, FEATURED_ADHKAR_SLUGS, type AdhkarItem } from "@/lib/adhkar-seed";
 import { usePublishedAdhkarItems } from "@/lib/adhkar-service";
 import { PageHeader, Empty } from "@/components/ui-common";
 import { PageShell } from "@/components/layout/PageShell";
 import { ShareButton } from "@/components/ShareButton";
 import { IsnadAttributionBar } from "@/components/IsnadAttributionBar";
-import { hrefAdhkar } from "@/lib/content-href";
+import { adhkarCatRedirectPath, hrefAdhkar, resolveAdhkarCategory } from "@/lib/content-href";
 import { applyPageSeo } from "@/lib/seo";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { useReadingScrollMemory } from "@/hooks/useReadingScrollMemory";
 import "@/styles/pages/adhkar.css";
 import "@/styles/components/thumb-zone.css";
 
-function resolveAdhkarCategory(token: string | null | undefined) {
-  if (!token) return null;
-  return ADHKAR_CATEGORIES.find((c) => c.slug === token || c.id === token) ?? null;
-}
-
-const FEATURED_CATEGORY_SLUGS = new Set([
-  "morning", "evening", "sleep", "wakeup", "home-in", "home-out",
-  "mosque", "wudu", "salah", "after-salah", "travel", "food",
-  "rain", "wind", "distress", "istikharah", "istighfar", "misc",
-]);
-
 const FEATURED_CATEGORIES = ADHKAR_CATEGORIES.filter((c) =>
-  FEATURED_CATEGORY_SLUGS.has(c.slug),
+  FEATURED_ADHKAR_SLUGS.has(c.slug),
 );
 
 function toAr(n: number): string {
@@ -156,7 +145,6 @@ export default function AdhkarPage() {
       description: active
         ? `${active.description.slice(0, 140)}… مع بيان المصدر والدرجة قدر الإمكان.`
         : "أذكار وأدعية مأثورة مع بيان المصدر والدرجة قدر الإمكان؛ ما لم يكتمل توثيقه يُعرض بوسم قيد المراجعة.",
-      keywords: ["أذكار", "أدعية", "أذكار الصباح", "أذكار المساء", "ذكر الله", "أذكار إسلامية"],
       jsonLd: [
         {
           "@context": "https://schema.org",
@@ -177,14 +165,8 @@ export default function AdhkarPage() {
 
   /* ?cat= → /adhkar/:slug (استبدال دائم في العميل؛ Vercel يكمّل 301 للزحف) */
   useEffect(() => {
-    const qs = new URLSearchParams(window.location.search);
-    const cat = qs.get("cat");
-    if (!cat) return;
-    const match = resolveAdhkarCategory(cat);
-    if (!match) return;
-    qs.delete("cat");
-    const rest = qs.toString();
-    setLocation(`${hrefAdhkar(match.slug)}${rest ? `?${rest}` : ""}`, { replace: true });
+    const target = adhkarCatRedirectPath(window.location.search);
+    if (target) setLocation(target, { replace: true });
   }, [location, setLocation]);
 
   useEffect(() => {

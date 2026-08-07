@@ -13,6 +13,20 @@ test.describe("Adhkar — الأذكار", () => {
     expect(hasContent, "صفحة الأذكار لا تحتوي محتوى").toBe(true);
   });
 
+  test("adhkar morning route loads directly", async ({ page }) => {
+    await page.goto("/adhkar/morning");
+    await waitForContent(page);
+    await expect(page).toHaveURL(/\/adhkar\/morning$/);
+    const body = await page.locator("body").innerText();
+    expect(body.includes("صباح") || body.includes("أذكار"), "مسار /adhkar/morning لا يعرض محتوى").toBe(true);
+  });
+
+  test("legacy ?cat= redirects to slug path", async ({ page }) => {
+    await page.goto("/adhkar?cat=morning");
+    await waitForContent(page);
+    await expect(page).toHaveURL(/\/adhkar\/morning$/);
+  });
+
   test("adhkar category opens correctly", async ({ page }) => {
     await page.goto("/adhkar");
     await waitForContent(page);
