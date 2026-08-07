@@ -49,7 +49,7 @@ if (/content="[^"]*(?:maximum-scale|user-scalable\s*=\s*no)/i.test(indexHtml)) {
   issues.push("index.html: maximum-scale / user-scalable في viewport ممنوعان");
 }
 
-const themeCss = read("src/styles/theme.css");
+const themeCss = read("src/app/styles/theme.css");
 for (const tok of [
   "--inset-top",
   "--inset-bottom",
@@ -73,7 +73,7 @@ for (const file of walk(srcRoot)) {
   if (/content\s*=\s*["'][^"']*(?:maximum-scale|user-scalable\s*=\s*no)/i.test(src)) {
     issues.push(`${rel}: viewport مقيَّد ممنوع`);
   }
-  if (rel !== "styles/theme.css") {
+  if (rel !== "app/styles/theme.css") {
     const codeLines = src.split("\n").filter((l) => {
       const t = l.trim();
       if (t.startsWith("//") || t.startsWith("*") || t.startsWith("/*")) return false;
