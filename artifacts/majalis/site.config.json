@@ -2,7 +2,7 @@
   "$comment": "المصدر الوحيد لهوية المنصة. يُقرأ من التطبيق (src/lib/site-config.ts) ومن سكربتات البناء (scripts/*.mjs). لا تكتب اسم المنصة أو نطاقها أو بريدها يدويًا في أي ملف آخر.",
 
   "siteName": "المجلس العلمي",
-  "siteShortName": "المجلس العلمي",
+  "siteShortName": "المجلس",
   "siteDescription": "منصة علمية عربية للدروس الشرعية والدورات العلمية وطلب العلم.",
 
   "$domainNote": "النطاق المعتمد هو المجرّد (بلا www) منذ 2026-07-22 — الخادم يحوّل www إليه بـ308 (Vercel Primary Domain غُيِّر من طرف المالك مباشرة بعد حلقة إعادة توجيه لا نهائية كانت تُعطِّل كل مسار غير الرئيسية). للعودة لـwww: اعكس القيم هنا وفي لوحة Vercel معًا، ثم أعد البناء.",
@@ -22,5 +22,22 @@
   "forbiddenBrandNames": ["مجالس العلم", "منصة المجالس", "مجالس العلمية"],
   "forbiddenEmailDomains": ["gmail.com", "hotmail.com", "outlook.com", "yahoo.com"],
 
-  "defaultImage": "/majlisilm-og-2026.jpg"
+  "defaultImage": "/majlisilm-og-2026.jpg",
+  "ogImageWidth": 1200,
+  "ogImageHeight": 630,
+
+  "$themeNote": "رموز identity-v2 — مصدر واحد لـ theme-color في index.html وprerender وmanifest وtheme-preference.",
+  "themeColor": "#1F7A5A",
+  "themeColorDark": "#4FB48B",
+
+  "$navNote": "تنقّل قشرة الـprerender موحّد لكل الصفحات (لا يختلف عدد/ترتيب الروابط بين المسارات).",
+  "prerenderNav": [
+    { "path": "/", "label": "الرئيسية" },
+    { "path": "/lessons", "label": "الدروس" },
+    { "path": "/quran-hub", "label": "القرآن" },
+    { "path": "/adhkar", "label": "الأذكار" },
+    { "path": "/prayer-times", "label": "الصلاة" },
+    { "path": "/fiqh", "label": "الفقه" },
+    { "path": "/search", "label": "البحث" }
+  ]
 }

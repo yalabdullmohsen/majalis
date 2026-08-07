@@ -200,6 +200,26 @@ export function faqPageJsonLd(items: { question: string; answer: string }[]) {
   };
 }
 
+export function bookJsonLd(book: {
+  name: string;
+  description?: string;
+  url: string;
+  author?: string;
+  image?: string;
+}) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "Book",
+    name: book.name,
+    description: book.description,
+    url: absoluteUrl(book.url),
+    inLanguage: "ar",
+    image: book.image ? absoluteUrl(book.image.startsWith("http") ? book.image : book.image) : undefined,
+    author: book.author ? { "@type": "Person", name: book.author } : undefined,
+    publisher: { "@type": "Organization", name: SITE_NAME, url: SITE_URL },
+  };
+}
+
 export function prophetArticleJsonLd(prophet: {
   name: string;
   slug: string;

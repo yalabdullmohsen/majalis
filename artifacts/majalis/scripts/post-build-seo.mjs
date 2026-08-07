@@ -18,6 +18,57 @@ const appRoot = resolve(__dirname, "..");
 const distDir = resolve(appRoot, "dist");
 const prerenderDir = resolve(appRoot, "seo-prerender");
 
+const SITE = JSON.parse(await readFile(resolve(appRoot, "site.config.json"), "utf8"));
+const SITE_URL = SITE.siteUrl || "https://majlisilm.com";
+const THEME_COLOR = SITE.themeColor || "#1F7A5A";
+const THEME_COLOR_DARK = SITE.themeColorDark || "#4FB48B";
+const PRERENDER_NAV =
+  Array.isArray(SITE.prerenderNav) && SITE.prerenderNav.length
+    ? SITE.prerenderNav
+    : [
+        { path: "/", label: "الرئيسية" },
+        { path: "/lessons", label: "الدروس" },
+        { path: "/quran-hub", label: "القرآن" },
+        { path: "/adhkar", label: "الأذكار" },
+        { path: "/prayer-times", label: "الصلاة" },
+        { path: "/fiqh", label: "الفقه" },
+        { path: "/search", label: "البحث" },
+      ];
+
+function absoluteUrl(path) {
+  return new URL(path || "/", SITE_URL).toString();
+}
+
+/** توحيد تنقّل قشرة الـSEO عند الدمج — بلا إعادة كتابة آلاف ملفات seo-prerender المتتبَّعة. */
+function unifyPrerenderNav(body) {
+  const links = PRERENDER_NAV.map(
+    (item) => `<a href="${absoluteUrl(item.path)}">${item.label}</a>`,
+  ).join("\n        ");
+  const headerNav = `<header>
+      <nav aria-label="التنقل الرئيسي">
+        ${links}
+      </nav>
+    </header>`;
+  if (/<header>\s*<nav[\s\S]*?<\/nav>\s*<\/header>/i.test(body)) {
+    return body.replace(/<header>\s*<nav[\s\S]*?<\/nav>\s*<\/header>/i, headerNav);
+  }
+  return body;
+}
+
+/** فرض theme-color من site.config في وسوم الـSEO المدمجة. */
+function ensureThemeColorMetas(seoTags) {
+  let tags = seoTags
+    .split("\n")
+    .filter((line) => !/name=["']theme-color["']/.test(line))
+    .join("\n");
+  const block = [
+    `<meta name="theme-color" content="${THEME_COLOR}" />`,
+    `<meta name="theme-color" media="(prefers-color-scheme: light)" content="${THEME_COLOR}" />`,
+    `<meta name="theme-color" media="(prefers-color-scheme: dark)" content="${THEME_COLOR_DARK}" />`,
+  ].join("\n  ");
+  return `${block}\n  ${tags}`;
+}
+
 /** استخرج كتلة <head> الضرورية من ملف HTML */
 function extractHeadBlock(html) {
   const m = html.match(/<head[^>]*>([\s\S]*?)<\/head>/i);
@@ -135,9 +186,10 @@ async function main() {
     const prerenderHead = extractHeadBlock(prerenderHtml);
     const prerenderBody = extractBody(prerenderHtml);
 
-    const seoTags = extractSeoTags(prerenderHead);
+    const seoTags = ensureThemeColorMetas(extractSeoTags(prerenderHead));
+    const body = unifyPrerenderNav(prerenderBody);
 
-    const merged_html = buildMergedHtml(seoTags, spaAssets, prerenderBody, spaBody);
+    const merged_html = buildMergedHtml(seoTags, spaAssets, body, spaBody);
 
     const destPath = resolve(distDir, relPath);
     const destDir = dirname(destPath);
