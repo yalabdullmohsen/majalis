@@ -29,12 +29,12 @@
 - [x] **كل Usage Description مربوطة بموضع استخدام في الكود**
   | الإذن | الملف | السطر |
   |-------|-------|-------|
-  | NSLocationWhenInUseUsageDescription | `src/views/QiblaPage.tsx` | 185 |
-  | NSMotionUsageDescription | `src/views/QiblaPage.tsx` | 202 |
+  | NSLocationWhenInUseUsageDescription | `src/pages/worship/ui/QiblaView.tsx` | 185 |
+  | NSMotionUsageDescription | `src/pages/worship/ui/QiblaView.tsx` | 202 |
   | NSUserNotificationsUsageDescription | `src/lib/local-notifications.ts` | — |
 
 - [x] **رفض الموقع الجغرافي له بديل يدوي**
-  - `src/views/QiblaPage.tsx`: عند رفض إذن الموقع (`manualMode=true`)، تظهر قائمة اختيار المدينة (20 مدينة رئيسية)
+  - `src/pages/worship/ui/QiblaView.tsx`: عند رفض إذن الموقع (`manualMode=true`)، تظهر قائمة اختيار المدينة (20 مدينة رئيسية)
   - ✓ مُضاف في هذه المرحلة
 
 ---

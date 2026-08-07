@@ -23,7 +23,7 @@ test(existsSync(join(root, "src/lib/reading-progress.ts")), "reading-progress li
 test(existsSync(join(root, "src/lib/tasbeeh-storage.ts")), "tasbeeh-storage lib exists");
 test(existsSync(join(root, "src/styles/highlighted-content.css")), "highlighted-content.css exists");
 
-const adhkar = readFileSync(join(root, "src/views/AdhkarPage.tsx"), "utf8");
+const adhkar = readFileSync(join(root, "src/pages/worship/ui/AdhkarView.tsx"), "utf8");
 // الواجهة الحالية: وضع التركيز (adhkar-page--focus) مع ذاكرة تمرير القراءة
 // عبر useReadingScrollMemory — لا تخطيط v2 القديم ولا استيراد getReadingProgress المباشر.
 test(/adhkar-page--focus/.test(adhkar), "AdhkarPage focus layout");

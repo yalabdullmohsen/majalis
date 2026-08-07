@@ -26,7 +26,7 @@ assert.match(upload, /submitLesson/, "UploadPage still submits lessons");
 assert.match(upload, /رفع درس/, "UploadPage is lesson-focused");
 console.log("  ✓ UploadPage: adhan tab/form gone");
 
-const adhanSettings = read("src/views/AdhanSettingsPage.tsx");
+const adhanSettings = read("src/pages/worship/ui/AdhanSettingsView.tsx");
 assert.doesNotMatch(adhanSettings, /ارفع أذانك|\/upload/, "no upload CTA on adhan settings");
 console.log("  ✓ AdhanSettingsPage: upload link removed");
 

@@ -20,7 +20,7 @@ const files = [
   "lib/sheikhs-seed.ts", "lib/amr-bil-maruf-seed.ts", "lib/fiqh-issues-seed.ts",
   "lib/fiqh-council-seed.ts", "lib/mind-maps-data.ts", "lib/islamic-landmarks-data.ts",
   "views/IslamicGlossaryPage.tsx", "views/AkhlaqPage.tsx", "views/SahabahPage.tsx",
-  "views/DuasPage.tsx", "pages/hadith/ui/HadithScienceView.tsx", "views/IslamicSectsPage.tsx",
+  "pages/worship/ui/DuasView.tsx", "pages/hadith/ui/HadithScienceView.tsx", "views/IslamicSectsPage.tsx",
   "views/SunanYawmiyyaPage.tsx", "views/WasayaNabawiyyaPage.tsx", "views/RaqaiqPage.tsx",
   "views/HikamSalafPage.tsx", "views/FadailAamalPage.tsx", "views/JannaNaarPage.tsx",
   "views/AdabTalabIlmPage.tsx", "views/MalaikaPage.tsx", "pages/fiqh/ui/FiqhQawaidView.tsx",
@@ -29,7 +29,7 @@ const files = [
   "pages/fiqh/ui/ZakatView.tsx", "views/TaharaPage.tsx", "pages/fiqh/ui/JanazaView.tsx",
   "pages/fiqh/ui/MawarithView.tsx", "pages/quran/ui/UlumQuranView.tsx", "views/IslamStatsPage.tsx",
   "views/SeerahPage.tsx", "views/MadhahibPage.tsx", "views/AmradQalbiyyaPage.tsx",
-  "views/TawbaPage.tsx", "views/SujoodSahwPage.tsx", "views/PrayerRanksPage.tsx",
+  "views/TawbaPage.tsx", "views/SujoodSahwPage.tsx", "pages/worship/ui/PrayerRanksView.tsx",
   "views/AlamatSaahPage.tsx", "pages/quran/ui/DuasQuranView.tsx", "views/ArkanImanPage.tsx",
 ];
 

@@ -72,13 +72,13 @@ const requiredLayouts = [
   "src/components/layout/ContentHubLayout.tsx",
   "src/pages/library/ui/ScholarProfileView.tsx",
   // الجولة الخامسة — محاور محتوى عالية الزيارة
-  "src/views/AdhkarPage.tsx",
+  "src/pages/worship/ui/AdhkarView.tsx",
   "src/views/FawaidPage.tsx",
   "src/views/TopicsIndexPage.tsx",
   "src/pages/fiqh/ui/RulingsView.tsx",
-  "src/views/TasbihPage.tsx",
+  "src/pages/worship/ui/TasbihView.tsx",
   "src/views/learn/LearnHubPage.tsx",
-  "src/views/DuasPage.tsx",
+  "src/pages/worship/ui/DuasView.tsx",
   "src/views/AsmaaHusnaPage.tsx",
 ];
 
