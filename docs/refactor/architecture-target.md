@@ -77,3 +77,7 @@
 
 - نقل `styles/theme.css` → `app/styles/theme.css` مع أسماء دلالية.
 - shim توافقي في المسار القديم.
+
+## G — الرسم البياني
+
+- `public/data/graph/links.json` + `verify:knowledge-graph` + محمّل shared.
