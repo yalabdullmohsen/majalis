@@ -1070,17 +1070,6 @@ p, li {
   font-size: var(--ds-text-sm);
 }
 
-.admin-nav-item {
-  font-size: var(--ds-text-xs) !important;
-  padding: 0.35rem 0.625rem !important;
-}
-
-.admin-panel-card,
-.admin-stat-card {
-  padding: var(--ds-space-3) !important;
-  border-radius: var(--ds-radius-lg) !important;
-}
-
 .admin-table th,
 .admin-table td {
   padding: 0.4rem 0.625rem !important;
@@ -2544,7 +2533,6 @@ body {
 .lesson-detail-title,
 .profile-section-title,
 .user-stats-section__title,
-.admin-section-title,
 h1, h2, h3 {
   color: var(--ds-heading);
 }

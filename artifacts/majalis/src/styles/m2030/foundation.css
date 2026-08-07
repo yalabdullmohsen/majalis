@@ -147,8 +147,6 @@ small, .meta, .text-muted, .text-secondary {
 
 .m2030-empty,
 .m2030-error,
-.async-empty,
-.async-error,
 .empty-state,
 .error-state {
   display: grid;

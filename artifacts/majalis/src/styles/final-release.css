@@ -1251,7 +1251,6 @@ html[data-theme="dark"] .ds-page-back-btn {
   flex-shrink: 0;
 }
 .filter-chip,
-.ar-filter-chip,
 .kng-filter-chip,
 [class*="filter-chip"] {
   min-height: 44px;
@@ -1266,7 +1265,6 @@ html[data-theme="dark"] .ds-page-back-btn {
   border-radius: var(--radius-lg);
   border-color: var(--color-border);
 }
-.about-page,
 .settings-page,
 .ds-page {
   padding-inline: var(--page-gutter);
@@ -1508,7 +1506,6 @@ body {
   overscroll-behavior-x: contain;
   scrollbar-width: thin;
 }
-.ar-tabs-bar,
 .qcp-filter-row,
 .ra-tabs-bar,
 .up-country-chips,
@@ -1524,7 +1521,6 @@ body {
   scrollbar-width: none;
   scroll-padding-inline: 0.5rem;
 }
-.ar-tabs-bar::-webkit-scrollbar,
 .qcp-filter-row::-webkit-scrollbar,
 .ra-tabs-bar::-webkit-scrollbar,
 .up-country-chips::-webkit-scrollbar,
