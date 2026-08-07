@@ -15,7 +15,6 @@ import {
   isLessonInProgress,
   getKuwaitClock,
   isOccurrencePast,
-  LESSON_DURATION_MIN,
   resolveLessonTimeWindow,
 } from "@/lib/lesson-time";
 import { canonicalizeLessonPublicId } from "@/lib/lesson-id-aliases";
@@ -493,14 +492,15 @@ export const DEFAULT_KUWAIT_FILTERS: KuwaitLessonFilters = {
 export function getRelativeStatusLabel(lesson: KuwaitLessonRecord, archived = false): string {
   if (archived) return "منتهٍ";
 
-  // المصدر الأول للحقيقة: نافذة اليوم الفعلية — لا تعتمد على nextOccurrenceMs وحده
-  // (كان يقفز أثناء الحصة فيظهر «بعد ٦/٢٣ ساعة» بدل «جارٍ الآن»).
-  if (lesson.day && isLessonInProgress(lesson.day, lesson.time)) {
+  // «جارٍ الآن» فقط بجدول مؤكد (يوم+وقت قابل للتحليل) — لا احتياطي على nextOccurrenceMs
+  // بلا بيانات كافية (يكسر الحساب أو يدّعي البث كذبًا).
+  if (
+    isLessonComplete(lesson) &&
+    lesson.day &&
+    isLessonInProgress(lesson.day, lesson.time)
+  ) {
     return "جارٍ الآن";
   }
-
-  const now = Date.now();
-  const diffMs = lesson.nextOccurrenceMs - now;
 
   // انتهى اليوم: بدأ موعده اليوم ولم تعد نافذة الحصة نشطة (ساعتان أو حتى الوقت المحدد)
   if (lesson.day) {
@@ -513,9 +513,6 @@ export function getRelativeStatusLabel(lesson: KuwaitLessonRecord, archived = fa
       }
     }
   }
-
-  // احتياطي: إن كان nextOccurrence في الماضي ضمن نافذة الحصة الافتراضية
-  if (diffMs <= 0 && diffMs > -LESSON_DURATION_MIN * 60_000) return "جارٍ الآن";
 
   return formatRelativeTimeDetailed(lesson.nextOccurrenceMs, lesson.time);
 }

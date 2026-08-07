@@ -372,10 +372,22 @@ export function isLessonTimePassedToday(day: string, time: string, now = new Dat
 }
 
 /**
+ * هل يوم+وقت الدرس قابلان للتأكيد قبل إظهار «جارٍ الآن»؟
+ * بلا يوم معروف أو بلا نافذة وقت قابلة للتحليل → لا شارة حيّة (تجنّب الادعاء بلا بيانات).
+ */
+export function hasConfirmedLessonSchedule(day: string, time: string): boolean {
+  if (!String(day || "").trim() || !String(time || "").trim()) return false;
+  if (resolveDayIndex(day) == null) return false;
+  return resolveLessonTimeWindow(time) != null;
+}
+
+/**
  * هل الدرس قائم الآن؟
  * النافذة: من وقت البدء حتى وقت الانتهاء الصريح، وإلا ساعتان من البداية.
+ * يُشترَط جدول مؤكد (يوم + وقت قابل للتحليل) — وإلا false.
  */
 export function isLessonInProgress(day: string, time: string, now = new Date()): boolean {
+  if (!hasConfirmedLessonSchedule(day, time)) return false;
   const targetDay = resolveDayIndex(day);
   if (targetDay == null) return false;
   const clock = getKuwaitClock(now);
