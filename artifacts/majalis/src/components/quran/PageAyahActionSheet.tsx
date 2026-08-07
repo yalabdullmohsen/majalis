@@ -15,29 +15,38 @@ import {
   Mic2,
   Repeat,
   Gauge,
+  Type,
+  Languages,
 } from "lucide-react";
 import { copyAyahText, copyAyahTextPlain } from "@/lib/share-ayah";
 import { addBookmark, removeBookmark, isBookmarked, getNote, saveNote } from "@/lib/quran-personal";
-import { fetchTafsirAyahs } from "@/lib/quran-api";
-import { MUSHAF_TAFSIR_EDITIONS } from "@/lib/tafsir-seed";
 import { RECITERS } from "@/lib/quran-audio";
 import { CONTACT_EMAIL } from "@/lib/site-config";
 import { afterNextPaint, yieldToMain } from "@/lib/yield-to-main";
 import { prewarmTextApis } from "@/lib/resource-prewarm";
 import { toArabicDigits } from "@/lib/utils";
+import {
+  MUSHAF_TAFSIR_EDITIONS,
+  MUSHAF_TRANSLATION_EDITIONS,
+  TAFSIR_FONT_SCALES,
+  fetchMushafAyahTafsir,
+  fetchMushafAyahTranslation,
+  getMushafTafsirEdition,
+  getMushafTranslationEdition,
+  readStoredTafsirEdition,
+  persistTafsirEdition,
+  readStoredTafsirFontScale,
+  persistTafsirFontScale,
+  readStoredTranslationEnabled,
+  persistTranslationEnabled,
+  readStoredTranslationEdition,
+  persistTranslationEdition,
+  type TafsirFontScale,
+} from "@/features/mushaf";
 import "@/styles/components/ayah-action-sheet.css";
 
-const TAFSIR_EDITION_KEY = "majalis-mushaf-tafsir-edition-v1";
-
-function getStoredTafsirEdition(): string {
-  try {
-    const v = localStorage.getItem(TAFSIR_EDITION_KEY);
-    if (v && MUSHAF_TAFSIR_EDITIONS.some((e) => e.id === v)) return v;
-  } catch {
-    /* ignore */
-  }
-  return "ar.muyassar";
-}
+/** أطول من هذا يُطوى افتراضيًا مع زر «عرض المزيد» */
+const TAFSIR_COLLAPSE_CHARS = 720;
 
 /** Split long tafsir into readable paragraphs without inventing content. */
 function tafsirParagraphs(text: string): string[] {
@@ -45,14 +54,13 @@ function tafsirParagraphs(text: string): string[] {
   if (!cleaned) return [];
   const byBreak = cleaned.split(/\n{2,}|\n/).map((p) => p.trim()).filter(Boolean);
   if (byBreak.length > 1) return byBreak;
-  // Soft-split very long single blocks on sentence boundaries (Arabic / Latin)
   const soft = cleaned.split(/(?<=[.؟!。])\s+/).map((p) => p.trim()).filter(Boolean);
   return soft.length > 1 ? soft : [cleaned];
 }
 
 /**
- * ورقة إجراءات الآية — قارئ تفسير مُعاد تصميمه:
- * ترويسة واحدة · آية بارزة · منتقي تفسير منسدل · نص هادئ بمسافات واسعة.
+ * ورقة إجراءات الآية — قارئ تفسير مرحلة ٢:
+ * تبديل تفاسير · حجم خط · طيّ النص الطويل · ترجمة اختيارية كسولة.
  */
 type Props = {
   surahNum: number;
@@ -99,11 +107,20 @@ export function PageAyahActionSheet({
   const [reciterPickerOpen, setReciterPickerOpen] = useState(false);
   const [speedPickerOpen, setSpeedPickerOpen] = useState(false);
   const [editionMenuOpen, setEditionMenuOpen] = useState(false);
+  const [translationMenuOpen, setTranslationMenuOpen] = useState(false);
   const [tafsirText, setTafsirText] = useState<string | null>(null);
   const [tafsirLoading, setTafsirLoading] = useState(false);
   const [tafsirError, setTafsirError] = useState(false);
-  const [tafsirEdition, setTafsirEdition] = useState(getStoredTafsirEdition);
+  const [tafsirEdition, setTafsirEdition] = useState(readStoredTafsirEdition);
+  const [fontScale, setFontScale] = useState<TafsirFontScale>(readStoredTafsirFontScale);
+  const [tafsirExpanded, setTafsirExpanded] = useState(false);
+  const [showTranslation, setShowTranslation] = useState(readStoredTranslationEnabled);
+  const [translationEdition, setTranslationEdition] = useState(readStoredTranslationEdition);
+  const [translationText, setTranslationText] = useState<string | null>(null);
+  const [translationLoading, setTranslationLoading] = useState(false);
+  const [translationError, setTranslationError] = useState(false);
   const editionMenuRef = useRef<HTMLDivElement | null>(null);
+  const translationMenuRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     setBookmarked(isBookmarked(surahNum, ayahNum));
@@ -112,72 +129,165 @@ export function PageAyahActionSheet({
     setNoteOpen(false);
     setNoteSaved(false);
     setEditionMenuOpen(false);
+    setTranslationMenuOpen(false);
     setReciterPickerOpen(false);
     setSpeedPickerOpen(false);
     setTafsirText(null);
     setTafsirError(false);
+    setTafsirExpanded(false);
+    setTranslationText(null);
+    setTranslationError(false);
   }, [surahNum, ayahNum]);
 
-  const loadTafsir = async (edition: string) => {
-    setTafsirLoading(true);
-    setTafsirError(false);
-    try {
-      await afterNextPaint();
-      prewarmTextApis();
-      const ayahs = await fetchTafsirAyahs(surahNum, edition);
-      await yieldToMain();
-      const found = ayahs.find((a) => a.numberInSurah === ayahNum);
-      setTafsirText(found?.text ?? null);
-      if (!found) setTafsirError(true);
-    } catch {
-      setTafsirError(true);
-    } finally {
-      setTafsirLoading(false);
-    }
-  };
-
-  // Auto-load tafsir — reading is the primary job of this sheet
   useEffect(() => {
-    void loadTafsir(tafsirEdition);
+    const ac = new AbortController();
+    let cancelled = false;
+
+    const load = async () => {
+      setTafsirLoading(true);
+      setTafsirError(false);
+      try {
+        await afterNextPaint();
+        prewarmTextApis();
+        const row = await fetchMushafAyahTafsir(surahNum, ayahNum, tafsirEdition, ac.signal);
+        await yieldToMain();
+        if (cancelled) return;
+        setTafsirText(row?.text ?? null);
+        if (!row?.text) setTafsirError(true);
+      } catch (err) {
+        if (cancelled || (err instanceof DOMException && err.name === "AbortError")) return;
+        setTafsirError(true);
+        setTafsirText(null);
+      } finally {
+        if (!cancelled) setTafsirLoading(false);
+      }
+    };
+
+    void load();
+    return () => {
+      cancelled = true;
+      ac.abort();
+    };
   }, [surahNum, ayahNum, tafsirEdition]);
+
+  useEffect(() => {
+    if (!showTranslation) {
+      setTranslationText(null);
+      setTranslationError(false);
+      setTranslationLoading(false);
+      return;
+    }
+
+    const ac = new AbortController();
+    let cancelled = false;
+
+    const load = async () => {
+      setTranslationLoading(true);
+      setTranslationError(false);
+      try {
+        const row = await fetchMushafAyahTranslation(
+          surahNum,
+          ayahNum,
+          translationEdition,
+          ac.signal,
+        );
+        if (cancelled) return;
+        setTranslationText(row?.text ?? null);
+        if (!row?.text) setTranslationError(true);
+      } catch (err) {
+        if (cancelled || (err instanceof DOMException && err.name === "AbortError")) return;
+        setTranslationError(true);
+        setTranslationText(null);
+      } finally {
+        if (!cancelled) setTranslationLoading(false);
+      }
+    };
+
+    void load();
+    return () => {
+      cancelled = true;
+      ac.abort();
+    };
+  }, [surahNum, ayahNum, translationEdition, showTranslation]);
 
   const handleSelectEdition = (id: string) => {
     setTafsirEdition(id);
+    persistTafsirEdition(id);
     setEditionMenuOpen(false);
-    try {
-      localStorage.setItem(TAFSIR_EDITION_KEY, id);
-    } catch {
-      /* ignore */
-    }
+    setTafsirExpanded(false);
   };
 
-  const currentEditionMeta = MUSHAF_TAFSIR_EDITIONS.find((e) => e.id === tafsirEdition);
+  const handleSelectTranslation = (id: string) => {
+    setTranslationEdition(id);
+    persistTranslationEdition(id);
+    setTranslationMenuOpen(false);
+  };
+
+  const cycleFontScale = () => {
+    const idx = TAFSIR_FONT_SCALES.indexOf(fontScale);
+    const next = TAFSIR_FONT_SCALES[(idx + 1) % TAFSIR_FONT_SCALES.length]!;
+    setFontScale(next);
+    persistTafsirFontScale(next);
+  };
+
+  const toggleTranslation = () => {
+    const next = !showTranslation;
+    setShowTranslation(next);
+    persistTranslationEnabled(next);
+    setTranslationMenuOpen(false);
+  };
+
+  const currentEditionMeta = getMushafTafsirEdition(tafsirEdition);
+  const currentTranslationMeta = getMushafTranslationEdition(translationEdition);
   const paragraphs = useMemo(
     () => (tafsirText ? tafsirParagraphs(tafsirText) : []),
     [tafsirText],
   );
+  const tafsirNeedsCollapse = (tafsirText?.length ?? 0) > TAFSIR_COLLAPSE_CHARS;
+  const visibleParagraphs =
+    tafsirNeedsCollapse && !tafsirExpanded
+      ? (() => {
+          let count = 0;
+          const out: string[] = [];
+          for (const p of paragraphs) {
+            out.push(p);
+            count += p.length;
+            if (count >= TAFSIR_COLLAPSE_CHARS) break;
+          }
+          return out.length > 0 ? out : paragraphs.slice(0, 1);
+        })()
+      : paragraphs;
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         if (editionMenuOpen) setEditionMenuOpen(false);
+        else if (translationMenuOpen) setTranslationMenuOpen(false);
         else onClose();
       }
     };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
-  }, [onClose, editionMenuOpen]);
+  }, [onClose, editionMenuOpen, translationMenuOpen]);
 
   useEffect(() => {
-    if (!editionMenuOpen) return;
+    if (!editionMenuOpen && !translationMenuOpen) return;
     const onDoc = (e: MouseEvent) => {
-      if (editionMenuRef.current && !editionMenuRef.current.contains(e.target as Node)) {
+      const t = e.target as Node;
+      if (editionMenuOpen && editionMenuRef.current && !editionMenuRef.current.contains(t)) {
         setEditionMenuOpen(false);
+      }
+      if (
+        translationMenuOpen &&
+        translationMenuRef.current &&
+        !translationMenuRef.current.contains(t)
+      ) {
+        setTranslationMenuOpen(false);
       }
     };
     document.addEventListener("mousedown", onDoc);
     return () => document.removeEventListener("mousedown", onDoc);
-  }, [editionMenuOpen]);
+  }, [editionMenuOpen, translationMenuOpen]);
 
   const toggleBookmark = () => {
     if (bookmarked) {
@@ -200,7 +310,6 @@ export function PageAyahActionSheet({
   };
 
   const handleSaveNote = () => {
-    // Dual-writes mj-quran-notes-v1 + RN `userNotes` (surah:ayah).
     saveNote(surahNum, ayahNum, noteText);
     setNoteSaved(true);
     setTimeout(() => setNoteSaved(false), 1500);
@@ -214,6 +323,8 @@ export function PageAyahActionSheet({
   const reciterName =
     RECITERS.find((r) => r.id === reciterId)?.nameAr ?? RECITERS[0]?.nameAr ?? "القارئ";
 
+  const fontPercent = Math.round(fontScale * 100);
+
   return (
     /* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions */
     <div className="aas-sheet aas-sheet--reader" onClick={onClose} role="presentation">
@@ -226,7 +337,6 @@ export function PageAyahActionSheet({
       >
         <div className="aas-panel__handle" aria-hidden="true" />
 
-        {/* ── Single elegant header ── */}
         <header className="aas-reader__header">
           <div className="aas-reader__nav">
             {onPrev ? (
@@ -237,9 +347,7 @@ export function PageAyahActionSheet({
               <span className="aas-reader__icon-btn is-ghost" aria-hidden="true" />
             )}
             <div className="aas-reader__title">
-              <strong>
-                سورة {surahName}
-              </strong>
+              <strong>سورة {surahName}</strong>
               <span>الآية {toArabicDigits(ayahNum)}</span>
             </div>
             {onNext ? (
@@ -255,14 +363,12 @@ export function PageAyahActionSheet({
           </button>
         </header>
 
-        {/* ── Ayah card ── */}
         <section className="aas-reader__ayah" aria-label="نص الآية">
           <p className="aas-reader__ayah-text" dir="rtl">
             {ayahText}
           </p>
         </section>
 
-        {/* ── Audio strip (horizontal) ── */}
         {(canPlay || (reciterId && onSetReciter) || playbackRate !== undefined) && (
           <div className="aas-reader__audio-strip" role="toolbar" aria-label="التلاوة">
             {canPlay ? (
@@ -297,6 +403,7 @@ export function PageAyahActionSheet({
                     setReciterPickerOpen((v) => !v);
                     setSpeedPickerOpen(false);
                     setEditionMenuOpen(false);
+                    setTranslationMenuOpen(false);
                   }}
                   aria-expanded={reciterPickerOpen}
                 >
@@ -335,6 +442,7 @@ export function PageAyahActionSheet({
                     setSpeedPickerOpen((v) => !v);
                     setReciterPickerOpen(false);
                     setEditionMenuOpen(false);
+                    setTranslationMenuOpen(false);
                   }}
                   aria-expanded={speedPickerOpen}
                 >
@@ -366,46 +474,59 @@ export function PageAyahActionSheet({
           </div>
         )}
 
-        {/* ── Smart tafsir edition dropdown ── */}
-        <div className="aas-reader__edition" ref={editionMenuRef}>
+        <div className="aas-reader__edition-row">
+          <div className="aas-reader__edition" ref={editionMenuRef}>
+            <button
+              type="button"
+              className="aas-reader__edition-btn"
+              onClick={() => {
+                setEditionMenuOpen((v) => !v);
+                setReciterPickerOpen(false);
+                setSpeedPickerOpen(false);
+                setTranslationMenuOpen(false);
+              }}
+              aria-expanded={editionMenuOpen}
+              aria-haspopup="listbox"
+            >
+              <BookOpen size={16} aria-hidden="true" />
+              <span className="aas-reader__edition-label">
+                <em>التفسير</em>
+                <strong>{currentEditionMeta?.label ?? "اختر تفسيرًا"}</strong>
+              </span>
+              <ChevronDown size={16} aria-hidden="true" className={editionMenuOpen ? "is-open" : undefined} />
+            </button>
+            {editionMenuOpen ? (
+              <div className="aas-reader__edition-menu" role="listbox" aria-label="قائمة التفاسير">
+                {MUSHAF_TAFSIR_EDITIONS.map((ed) => (
+                  <button
+                    key={ed.id}
+                    type="button"
+                    role="option"
+                    aria-selected={ed.id === tafsirEdition}
+                    className={ed.id === tafsirEdition ? "is-active" : undefined}
+                    onClick={() => handleSelectEdition(ed.id)}
+                  >
+                    <strong>{ed.label}</strong>
+                    <span>
+                      {ed.author}
+                      {ed.level ? ` · ${ed.level}` : ""}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            ) : null}
+          </div>
+
           <button
             type="button"
-            className="aas-reader__edition-btn"
-            onClick={() => {
-              setEditionMenuOpen((v) => !v);
-              setReciterPickerOpen(false);
-              setSpeedPickerOpen(false);
-            }}
-            aria-expanded={editionMenuOpen}
-            aria-haspopup="listbox"
+            className="aas-reader__font-btn"
+            onClick={cycleFontScale}
+            aria-label={`حجم خط التفسير ${fontPercent}٪`}
+            title="تغيير حجم خط التفسير"
           >
-            <BookOpen size={16} aria-hidden="true" />
-            <span className="aas-reader__edition-label">
-              <em>التفسير</em>
-              <strong>{currentEditionMeta?.label ?? "اختر تفسيرًا"}</strong>
-            </span>
-            <ChevronDown size={16} aria-hidden="true" className={editionMenuOpen ? "is-open" : undefined} />
+            <Type size={16} aria-hidden="true" />
+            <span>{toArabicDigits(fontPercent)}٪</span>
           </button>
-          {editionMenuOpen ? (
-            <div className="aas-reader__edition-menu" role="listbox" aria-label="قائمة التفاسير">
-              {MUSHAF_TAFSIR_EDITIONS.map((ed) => (
-                <button
-                  key={ed.id}
-                  type="button"
-                  role="option"
-                  aria-selected={ed.id === tafsirEdition}
-                  className={ed.id === tafsirEdition ? "is-active" : undefined}
-                  onClick={() => handleSelectEdition(ed.id)}
-                >
-                  <strong>{ed.label}</strong>
-                  <span>
-                    {ed.author}
-                    {ed.level ? ` · ${ed.level}` : ""}
-                  </span>
-                </button>
-              ))}
-            </div>
-          ) : null}
         </div>
 
         {currentEditionMeta?.caution ? (
@@ -414,8 +535,12 @@ export function PageAyahActionSheet({
           </p>
         ) : null}
 
-        {/* ── Tafsir body (hero) ── */}
-        <section className="aas-reader__body" aria-live="polite" aria-busy={tafsirLoading}>
+        <section
+          className="aas-reader__body"
+          aria-live="polite"
+          aria-busy={tafsirLoading}
+          style={{ ["--aas-tafsir-scale" as string]: String(fontScale) }}
+        >
           {currentEditionMeta ? (
             <p className="aas-reader__author">
               <span>{currentEditionMeta.author}</span>
@@ -430,18 +555,101 @@ export function PageAyahActionSheet({
             </div>
           ) : tafsirError && !tafsirText ? (
             <p className="aas-reader__status">تعذّر تحميل التفسير. تحقّق من اتصالك ثم أعد المحاولة.</p>
-          ) : paragraphs.length > 0 ? (
-            <div className="aas-reader__prose" key={tafsirEdition}>
-              {paragraphs.map((p, i) => (
-                <p key={`${i}-${p.slice(0, 24)}`}>{p}</p>
-              ))}
-            </div>
+          ) : visibleParagraphs.length > 0 ? (
+            <>
+              <div
+                className={`aas-reader__prose${tafsirNeedsCollapse && !tafsirExpanded ? " is-collapsed" : ""}`}
+                key={tafsirEdition}
+              >
+                {visibleParagraphs.map((p, i) => (
+                  <p key={`${i}-${p.slice(0, 24)}`}>{p}</p>
+                ))}
+              </div>
+              {tafsirNeedsCollapse ? (
+                <button
+                  type="button"
+                  className="aas-reader__expand"
+                  onClick={() => setTafsirExpanded((v) => !v)}
+                  aria-expanded={tafsirExpanded}
+                >
+                  {tafsirExpanded ? "عرض أقل" : "عرض المزيد"}
+                </button>
+              ) : null}
+            </>
           ) : (
             <p className="aas-reader__status">لا يتوفر تفسير لهذه الآية في المصدر المختار.</p>
           )}
         </section>
 
-        {/* ── Secondary tools ── */}
+        <div className="aas-reader__translation" ref={translationMenuRef}>
+          <div className="aas-reader__translation-bar">
+            <button
+              type="button"
+              className={`aas-reader__audio-chip${showTranslation ? " is-on" : ""}`}
+              onClick={toggleTranslation}
+              aria-pressed={showTranslation}
+            >
+              <Languages size={15} aria-hidden="true" />
+              <span>ترجمة</span>
+            </button>
+            {showTranslation ? (
+              <button
+                type="button"
+                className={`aas-reader__edition-btn aas-reader__edition-btn--compact${translationMenuOpen ? " is-open" : ""}`}
+                onClick={() => {
+                  setTranslationMenuOpen((v) => !v);
+                  setEditionMenuOpen(false);
+                  setReciterPickerOpen(false);
+                  setSpeedPickerOpen(false);
+                }}
+                aria-expanded={translationMenuOpen}
+                aria-haspopup="listbox"
+              >
+                <span className="aas-reader__edition-label">
+                  <strong>{currentTranslationMeta?.label ?? "ترجمة"}</strong>
+                </span>
+                <ChevronDown size={14} aria-hidden="true" className={translationMenuOpen ? "is-open" : undefined} />
+              </button>
+            ) : null}
+          </div>
+          {showTranslation && translationMenuOpen ? (
+            <div className="aas-reader__edition-menu aas-reader__edition-menu--translation" role="listbox" aria-label="قائمة الترجمات">
+              {MUSHAF_TRANSLATION_EDITIONS.map((ed) => (
+                <button
+                  key={ed.id}
+                  type="button"
+                  role="option"
+                  aria-selected={ed.id === translationEdition}
+                  className={ed.id === translationEdition ? "is-active" : undefined}
+                  onClick={() => handleSelectTranslation(ed.id)}
+                >
+                  <strong>{ed.label}</strong>
+                  <span>{ed.author}</span>
+                </button>
+              ))}
+            </div>
+          ) : null}
+          {showTranslation ? (
+            <div className="aas-reader__translation-body" aria-live="polite" aria-busy={translationLoading}>
+              {translationLoading && !translationText ? (
+                <p className="aas-reader__status">جاري تحميل الترجمة…</p>
+              ) : translationError && !translationText ? (
+                <p className="aas-reader__status">تعذّر تحميل الترجمة.</p>
+              ) : translationText ? (
+                <p
+                  className="aas-reader__translation-text"
+                  dir={currentTranslationMeta?.dir ?? "ltr"}
+                  lang={translationEdition.startsWith("fr") ? "fr" : "en"}
+                >
+                  {translationText}
+                </p>
+              ) : (
+                <p className="aas-reader__status">لا تتوفر ترجمة لهذه الآية.</p>
+              )}
+            </div>
+          ) : null}
+        </div>
+
         {noteOpen ? (
           <div className="aas-reader__note">
             <textarea

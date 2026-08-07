@@ -1,6 +1,6 @@
 /**
  * اشتقاق مستطيلات نسبية (0..1) لكل آية من تخطيط أسطر QPC V2 المؤكَّد.
- * ليست مضلعات صور مصحف المدينة — انظر MUSHAF_FEATURES.imagePolygons.
+ * ليست مضلعات صور مصحف المدينة — مسار الصور/المضلعات أُزيل؛ نعتمد QPC فقط.
  */
 import type { MushafPageLayout, QpcWord } from "@/lib/mushaf-v2-data";
 import { MUSHAF_PAGE_LINE_SLOTS } from "@/features/mushaf/config";

@@ -20,11 +20,11 @@
 
 | العلم | السبب |
 |---|---|
-| `pageImages` | لا توجد صور مدينة 604 محليًا مرخَّصة في المستودع |
-| `imagePolygons` | لا ملف مضلعات/bbox رسمي فوق الصور |
 | `ayahTimingsMs` | لا JSON توقيتات بداية/نهاية آية داخل ملف تلاوة متصل |
-| `offlineTafsirPacks` | التفاسير الحالية جلب حي/كاش — حزم محلية كاملة لاحقًا (مرحلة ٢) |
+| `offlineTafsirPacks` | مرحلة ٢: جلب كسول حي لكل آية — لا حزم تفاسير محلية كاملة |
 | `imlaeiEditionLocal` | لا طبعة إملائية منفصلة محلية؛ البحث يطبّع عثمانيًا عند الحاجة لاحقًا |
+
+أُزيلت أعلام/مهايئات الصور الميتة (`pageImages` / `imagePolygons` / `visual-page-images` / `coords-image-polygons`) — الاعتماد على QPC V2 فقط. انظر مرحلة ٢: `docs/mushaf-phase2-tafsir-translation.md`.
 
 مفعّل في مرحلة ١: `ayahHitLayer`, `ayahTextLayer`.
 

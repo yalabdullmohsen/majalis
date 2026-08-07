@@ -95,7 +95,7 @@ export const TAFSIR_DEFINITION =
 export const TAFSIR_INTRO_PARAS = [
   "التفسير أشرف العلوم من حيث متعلَّقه؛ لأنه بيان لكلام الله. وليس المقصود تكثير الأقوال، بل فهم الهداية والعمل بها على بصيرة.",
   "أصحّ طرق التفسير ما اتصل بالمأثور الصحيح، ثم الرأي المحمود المبني على اللغة والأصول بلا معارضة للنص. أما الرأي المجرد عن الدليل، أو تحميل الآيات نظريات متغيرة، فليس من منهج السلف.",
-  "هذا القسم يجمع أنواع التفسير وأصوله وشروط المفسّر وطبقات المفسرين ومصطلحات الباب ومسار تعلّم عملي، مع دليل المفسرين وكتبهم، وتفسير كامل للقرآن آيةً آية في المصحف عبر عدة تفاسير معتمدة (الميسّر، الجلالين، البغوي، القرطبي، الوسيط).",
+  "هذا القسم يجمع أنواع التفسير وأصوله وشروط المفسّر وطبقات المفسرين ومصطلحات الباب ومسار تعلّم عملي، مع دليل المفسرين وكتبهم، وتفسير كامل للقرآن آيةً آية في المصحف عبر تفاسير معتمدة (الميسّر، السعدي، ابن كثير، البغوي، الطبري).",
 ];
 
 export const TAFSIR_STAGES: TafsirStage[] = [
@@ -371,55 +371,9 @@ function dedupeById<T extends { id: string }>(items: T[]): T[] {
 
 export const MUFASSIRUN: MufassirEntry[] = dedupeById(_MUFASSIRUN_RAW);
 
-/** تفاسير الآية المتاحة عبر AlQuran Cloud في قارئ المصحف — كامل القرآن */
-export type MushafTafsirEdition = {
-  id: string;
-  label: string;
-  author: string;
-  level: "مبتدئ" | "متوسط" | "متقدم";
-  caution?: string;
-};
-
-export const MUSHAF_TAFSIR_EDITIONS: MushafTafsirEdition[] = [
-  {
-    id: "ar.muyassar",
-    label: "التفسير الميسّر",
-    author: "مجمع الملك فهد",
-    level: "مبتدئ",
-  },
-  {
-    id: "ar.jalalayn",
-    label: "تفسير الجلالين",
-    author: "المحلّي والسيوطي",
-    level: "مبتدئ",
-  },
-  {
-    id: "ar.baghawi",
-    label: "تفسير البغوي",
-    author: "البغوي",
-    level: "متوسط",
-  },
-  {
-    id: "ar.qurtubi",
-    label: "تفسير القرطبي",
-    author: "القرطبي",
-    level: "متقدم",
-  },
-  {
-    id: "ar.waseet",
-    label: "التفسير الوسيط",
-    author: "محمد سيد طنطاوي",
-    level: "متوسط",
-  },
-  {
-    id: "ar.miqbas",
-    label: "تنوير المقباس",
-    author: "منسوب لابن عباس",
-    level: "متوسط",
-    caution:
-      "الكتاب المتداول بهذا الاسم لا تثبت نسبته إلى ابن عباس رضي الله عنه؛ فيه روايات واهية. يُعرض للاطلاع مع التحفّظ الشديد، ويُقدَّم عليه الميسّر وابن كثير والبغوي.",
-  },
-];
+/** تفاسير الآية في قارئ المصحف — مرحلة ٢ (Quran.com، جلب كسول لكل آية) */
+export type { MushafTafsirEdition } from "@/features/mushaf/tafsir-editions";
+export { MUSHAF_TAFSIR_EDITIONS } from "@/features/mushaf/tafsir-editions";
 
 export const BOOK_SPOTLIGHTS: BookSpotlight[] = [
   { id: "s-saadi", libraryId: "book-tafsir-al-saadi", title: "تيسير الكريم الرحمن", author: "السعدي", why: "أفضل مدخل ميسر لفهم معاني الآيات والهداية العملية دون إغراق.", level: "مبتدئ" },
