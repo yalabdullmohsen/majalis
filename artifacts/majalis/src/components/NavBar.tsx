@@ -67,6 +67,7 @@ export default function NavBar() {
   const [location, navigate] = useLocation();
   const isMobile = useIsMobile();
   const { isMenuOpen, toggleMenu, openMenu, closeMenu, closeAll } = useMobileNavState();
+  const [collapsed, setCollapsed] = useState(false);
 
   const isActive = (href: string) => {
     const path = href.split("?")[0] || href;
@@ -86,6 +87,13 @@ export default function NavBar() {
 
   useEffect(() => {
     void import("@/styles/components/design-redesign.css");
+  }, []);
+
+  useEffect(() => {
+    const onScroll = () => setCollapsed(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   // Bottom nav dispatches "sidenav-open" to open the drawer from outside
@@ -138,7 +146,7 @@ export default function NavBar() {
   return (
     <>
       <header
-        className={`navbar-v3 border-b mj-nav-skin${isMenuOpen ? " navbar-v3--menu-open" : ""}`}
+        className={`navbar-v3 border-b mj-nav-skin${isMenuOpen ? " navbar-v3--menu-open" : ""}${collapsed ? " is-collapsed" : ""}`}
       >
         <div className="navbar-v3__inner">
           <div className="navbar-v3__start">

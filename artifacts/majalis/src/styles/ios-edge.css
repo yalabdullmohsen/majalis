@@ -1,0 +1,114 @@
+/**
+ * طبقة iOS edge-to-edge — تُحمَّل آخرًا بعد theme-aliases.
+ * قواعد: خلفية bleed للحافة · محتوى inset عبر الرموز فقط.
+ */
+
+/* مدخلات ≥16px — يمنع تقريب iOS التلقائي عند التركيز */
+input,
+textarea,
+select {
+  font-size: max(16px, 1em);
+}
+
+/* شرائط أفقية: منطقة ميتة 20px من الحافتين + touch-action */
+.top-section-bar__scroll,
+[data-h-scroll],
+.fqp-tabs-scroll,
+.mj-h-scroll {
+  touch-action: pan-x;
+  scroll-padding-inline: var(--edge-deadzone);
+  padding-inline: max(var(--edge-deadzone), var(--gutter-inline-start))
+    max(var(--edge-deadzone), var(--gutter-inline-end));
+}
+
+button,
+a.bottom-nav__tab,
+.bottom-nav__tab,
+[role="button"] {
+  touch-action: manipulation;
+}
+
+/* واجهة فقط — لا تمنع نسخ النص الشرعي */
+.navbar-v3,
+.bottom-nav,
+.top-section-bar,
+.app-sheet__handle,
+.app-sheet__head,
+.app-sheet__footer {
+  -webkit-touch-callout: none;
+  user-select: none;
+}
+
+.quran-text,
+.mushaf-page,
+[data-sacred-text],
+.hadith-text,
+.fatwa-body,
+.ayah-text {
+  -webkit-touch-callout: default;
+  user-select: text;
+}
+
+/* شيتات: رمز الكيبورد من VisualViewport */
+.app-sheet-overlay {
+  padding-block-end: max(16px, calc(16px + var(--inset-bottom) + var(--keyboard-inset)));
+}
+.app-sheet {
+  width: 100%;
+  max-width: 40rem;
+  max-height: 85svh;
+  border-radius: 20px 20px 0 0;
+  transform: translateY(calc(-1 * var(--keyboard-inset)));
+}
+.app-sheet__footer {
+  padding-block-end: calc(0.65rem + var(--inset-bottom));
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .bottom-nav,
+  .bottom-nav--v2,
+  .top-section-bar {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background: var(--mj-surface, var(--color-surface)) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .app-sheet,
+  .navbar-v3 {
+    transition: none !important;
+  }
+}
+
+/* standalone مقابل Safari */
+@media (display-mode: standalone) {
+  .app-shell {
+    min-height: 100svh;
+    min-height: -webkit-fill-available;
+  }
+}
+
+/* iPad / عرض واسع: محتوى متمركز، تنقّل سفلي يختفي (≥880 موجود)، حد قراءة */
+@media (min-width: 880px) {
+  .app-main {
+    max-width: 1120px;
+    margin-inline: auto;
+    padding-block-end: 2rem;
+    padding-inline: var(--gutter-inline-start) var(--gutter-inline-end);
+  }
+  .page-shell,
+  .page-shell.narrow {
+    max-width: 68ch;
+  }
+  .page-shell.wide {
+    max-width: 1120px;
+  }
+}
+
+/* المسارات الغمرية (مصحف) والصلاة تدير حوافها بنفسها — لا gutter مضاعف */
+html.chrome-immersive .app-main,
+html.pts-immersive .app-main {
+  padding-inline: 0;
+  padding-block-end: 0;
+}

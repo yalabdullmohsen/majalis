@@ -12,11 +12,16 @@ export const TITLE_SUFFIX = config.titleSuffix;
 /** بريد التواصل الرسمي الوحيد للمنصة كاملةً — لا تكتب بريدًا آخر يدويًا في أي مكوّن. */
 export const CONTACT_EMAIL = config.contactEmail;
 export const DEFAULT_IMAGE = config.defaultImage;
-/** لون شريط المتصفح — نهاري (identity-v2 brand). */
-export const BRAND_THEME_COLOR = (config as { themeColor?: string }).themeColor ?? "#1F7A5A";
-/** لون شريط المتصفح — ليلي. */
+/** لون شريط الحالة / theme-color — سطح الصفحة نهاري (ليس لون العلامة). */
+export const BRAND_THEME_COLOR = (config as { themeColor?: string }).themeColor ?? "#F2F4F3";
+/** لون شريط الحالة — ليلي. */
 export const BRAND_THEME_COLOR_DARK =
-  (config as { themeColorDark?: string }).themeColorDark ?? "#4FB48B";
+  (config as { themeColorDark?: string }).themeColorDark ?? "#101614";
+/** لون العلامة identity-v2 — للاستخدام في الواجهة لا في شريط الحالة. */
+export const BRAND_ACCENT_COLOR =
+  (config as { brandColor?: string }).brandColor ?? "#1F7A5A";
+export const BRAND_ACCENT_COLOR_DARK =
+  (config as { brandColorDark?: string }).brandColorDark ?? "#4FB48B";
 export const OG_IMAGE_WIDTH = (config as { ogImageWidth?: number }).ogImageWidth ?? 1200;
 export const OG_IMAGE_HEIGHT = (config as { ogImageHeight?: number }).ogImageHeight ?? 630;
 

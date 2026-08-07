@@ -51,9 +51,48 @@
   /* أسماء توافقية (تُعاد إلى السلّم الستة) */
   --text-mj-sacred: 20px;
   --text-mj-btn: 14px;
+
+  /* حواف الجهاز — المصدر الوحيد لـ safe-area (لا تكتب env() خارج هذا الملف) */
+  --inset-top: env(safe-area-inset-top, 0px);
+  --inset-bottom: env(safe-area-inset-bottom, 0px);
+  --inset-left: env(safe-area-inset-left, 0px);
+  --inset-right: env(safe-area-inset-right, 0px);
+  --inset-start: var(--inset-left);
+  --inset-end: var(--inset-right);
+  --gutter: max(var(--inset-left), 16px);
+  --gutter-end: max(var(--inset-right), 16px);
+  /* RTL: بداية القراءة = اليمين الفيزيائي */
+  --gutter-inline-start: max(var(--inset-right), 16px);
+  --gutter-inline-end: max(var(--inset-left), 16px);
+  --header-chrome: 56px;
+  --nav-chrome: 64px;
+  --header-h: calc(var(--header-chrome) + var(--inset-top));
+  --nav-h: calc(var(--nav-chrome) + var(--inset-bottom));
+  --content-pb: calc(var(--nav-h) + 16px);
+  --keyboard-inset: 0px;
+  --edge-deadzone: 20px;
 }
 
 :root {
+  /* حواف الجهاز — مكررة في :root لأن بعض الطبقات القديمة لا تمر عبر @theme */
+  --inset-top: env(safe-area-inset-top, 0px);
+  --inset-bottom: env(safe-area-inset-bottom, 0px);
+  --inset-left: env(safe-area-inset-left, 0px);
+  --inset-right: env(safe-area-inset-right, 0px);
+  --inset-start: var(--inset-left);
+  --inset-end: var(--inset-right);
+  --gutter: max(var(--inset-left), 16px);
+  --gutter-end: max(var(--inset-right), 16px);
+  --gutter-inline-start: max(var(--inset-right), 16px);
+  --gutter-inline-end: max(var(--inset-left), 16px);
+  --header-chrome: 56px;
+  --nav-chrome: 64px;
+  --header-h: calc(var(--header-chrome) + var(--inset-top));
+  --nav-h: calc(var(--nav-chrome) + var(--inset-bottom));
+  --content-pb: calc(var(--nav-h) + 16px);
+  --keyboard-inset: 0px;
+  --edge-deadzone: 20px;
+
   --mj-bg: #F2F4F3;
   --mj-surface: #FFFFFF;
   --mj-surface-2: #E9EDEB;

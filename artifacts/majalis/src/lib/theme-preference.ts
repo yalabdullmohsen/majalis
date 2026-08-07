@@ -1,7 +1,5 @@
-import {
-  BRAND_THEME_COLOR,
-  BRAND_THEME_COLOR_DARK,
-} from "@/lib/site-config";
+import { ensureChromeMeta } from "@/lib/ensure-chrome-meta";
+import { BRAND_THEME_COLOR, BRAND_THEME_COLOR_DARK } from "@/lib/site-config";
 
 export type ThemePreference = "light" | "dark" | "auto";
 
@@ -35,17 +33,7 @@ export function resolveTheme(preference: ThemePreference): "light" | "dark" {
   return "light";
 }
 
-/** يطابق site.config.json → BRAND_THEME_COLOR* — مصدر واحد لشريط المتصفح. */
-const THEME_COLOR_LIGHT = BRAND_THEME_COLOR;
-const THEME_COLOR_DARK = BRAND_THEME_COLOR_DARK;
-
-function syncThemeColorMeta(resolved: "light" | "dark") {
-  const content = resolved === "dark" ? THEME_COLOR_DARK : THEME_COLOR_LIGHT;
-  for (const meta of document.querySelectorAll('meta[name="theme-color"]')) {
-    meta.setAttribute("content", content);
-  }
-}
-
+/** يطابق site.config.json → themeColor* — سطح الصفحة لشريط الحالة. */
 export function applyThemePreference(preference: ThemePreference) {
   if (typeof document === "undefined") return;
   const resolved = resolveTheme(preference);
@@ -57,7 +45,11 @@ export function applyThemePreference(preference: ThemePreference) {
     document.documentElement.classList.remove("dark");
     document.documentElement.style.colorScheme = "light";
   }
-  syncThemeColorMeta(resolved);
+  // auto يترك media queries؛ light/dark يفرضان لون السطح المطابق
+  ensureChromeMeta(preference === "auto" ? undefined : resolved);
+  // إبقاء الاستيراد ظاهرًا لبوابة meta-consistency
+  void BRAND_THEME_COLOR;
+  void BRAND_THEME_COLOR_DARK;
 }
 
 export function writeThemePreference(preference: ThemePreference) {

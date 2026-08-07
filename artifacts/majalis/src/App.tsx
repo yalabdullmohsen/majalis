@@ -12,7 +12,10 @@ import { BottomNavBar } from "@/components/BottomNavBar";
 import { TopSectionBar } from "@/components/TopSectionBar";
 import { ScrollToTop } from "@/components/ScrollToTop";
 import { GlobalBackButton } from "@/components/GlobalBackButton";
+import { SafeAreaDebugOverlay } from "@/components/SafeAreaDebugOverlay";
 import { ComingSoonDialog } from "@/components/ComingSoonDialog";
+import { VisualViewportKeyboardBridge } from "@/hooks/useVisualViewportOffset";
+import { ensureChromeMeta } from "@/lib/ensure-chrome-meta";
 import { AchievementToast } from "@/components/AchievementToast";
 import { useAchievementCheck } from "@/hooks/useAchievementCheck";
 import { ErrorBoundary, SectionErrorBoundary } from "@/components/ErrorBoundary";
@@ -924,9 +927,17 @@ function AppShellInner() {
   const hideSiteChrome = immersive || onPrayer;
 
   useEffect(() => {
+    ensureChromeMeta();
+  }, [location]);
+
+  useEffect(() => {
     document.documentElement.classList.toggle("pts-immersive", onPrayer);
-    return () => document.documentElement.classList.remove("pts-immersive");
-  }, [onPrayer]);
+    document.documentElement.classList.toggle("chrome-immersive", immersive);
+    return () => {
+      document.documentElement.classList.remove("pts-immersive");
+      document.documentElement.classList.remove("chrome-immersive");
+    };
+  }, [onPrayer, immersive]);
 
   useEffect(() => {
     const evtHandler = () => setSearchOpen(true);
@@ -985,6 +996,8 @@ function AppShellInner() {
       <GlobalBackButton />
       {!hideSiteChrome && <PwaInstallBanner />}
       <BottomNavBar />
+      <VisualViewportKeyboardBridge />
+      <SafeAreaDebugOverlay />
       {newBadges.length > 0 && (
         <AchievementToast badges={newBadges} onDismiss={dismissBadges} />
       )}
