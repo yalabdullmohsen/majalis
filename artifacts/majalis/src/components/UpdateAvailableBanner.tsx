@@ -1,34 +1,29 @@
-import { RefreshCw } from "lucide-react";
+import { AppBottomSheet } from "@/components/ui/AppBottomSheet";
 import { useVersionCheck } from "@/hooks/useVersionCheck";
 
 /**
- * شريط هادئ يظهر فقط عند اكتشاف نشر جديد فعلي على الخادم (مقارنةً بما
- * حُمِّلت به هذه الجلسة عبر /version.json)، ثم **يُعيد تحميل الصفحة
- * تلقائيًا** بعد مهلة قصيرة (انظر AUTO_RELOAD_GRACE_MS في useVersionCheck)
- * — لا حاجة لأي ضغطة من المستخدم. زر "تحديث الآن" يبقى متاحًا لمن يريد
- * تجاوز المهلة القصيرة والتحديث فورًا.
+ * شيت سفلي هادئ عند اكتشاف نشر أحدث عبر /version.json.
+ * لا إعادة تحميل قسرية — المستخدم يختار «تحديث» أو يغلق الشيت.
  */
 export function UpdateAvailableBanner() {
-  const { updateAvailable, applyUpdate } = useVersionCheck();
-
-  if (!updateAvailable) return null;
+  const { updateAvailable, applyUpdate, dismissUpdate } = useVersionCheck();
 
   return (
-    <div
-      role="status"
-      aria-live="polite"
-      aria-atomic="true"
-      className="update-available-banner"
+    <AppBottomSheet
+      open={updateAvailable}
+      onClose={dismissUpdate}
+      title="تتوفر نسخة جديدة"
+      snap="half"
+      closeLabel="لاحقاً"
+      footer={
+        <button type="button" className="app-sheet__close app-sheet__close--primary" onClick={applyUpdate}>
+          تحديث
+        </button>
+      }
     >
-      <RefreshCw size={14} aria-hidden="true" className="update-available-banner__icon update-available-banner__icon--spin" />
-      <span className="update-available-banner__text">يتوفر تحديث جديد — جارٍ التحديث تلقائيًا…</span>
-      <button
-        type="button"
-        onClick={applyUpdate}
-        className="update-available-banner__btn"
-      >
-        تحديث الآن
-      </button>
-    </div>
+      <p className="update-available-sheet__copy">
+        نُشرت نسخة أحدث من التطبيق. اضغط «تحديث» لتحميلها، أو «لاحقاً» للمتابعة بالنسخة الحالية.
+      </p>
+    </AppBottomSheet>
   );
 }

@@ -1,24 +1,12 @@
 /**
- * Lightweight "a newer deploy exists" detector + safe auto-apply.
- *
- * Context (full diagnosis lives in READY_FOR_MERGE.md and at the top of
- * scripts/generate-version.mjs / public/sw.js): the platform's real bug
- * behind "updates appear then vanish" is operational — direct pushes to
- * the `production` branch get reverse-merged into `main` later and wipe
- * out newer main-only work, because Vercel's actual production branch is
- * `main`. That is a workflow fix, not a code fix (see the warning in
- * READY_FOR_MERGE.md). This module is the technical mitigation that *is*
- * in scope: it lets a tab notice, on its own, that the commit currently
- * live on the server differs from the one it was loaded with, and applies
- * the update automatically (owner's explicit instruction: "فعّل النسخة
- * الجديدة مباشرة بدون انتظار") — a brief on-screen notice is shown first
- * so a reload is never a silent surprise, then the page reloads itself.
+ * Lightweight "a newer deploy exists" detector.
+ * Compares the session's baked commit with live /version.json so the UI
+ * can offer a quiet bottom-sheet update prompt (no forced reload).
  */
 import { getBuildMetadata } from "@/lib/error-report";
 
 const VERSION_URL = "/version.json";
 export const VERSION_CHECK_INTERVAL_MS = 5 * 60 * 1000; // كل 5 دقائق
-export const AUTO_RELOAD_GRACE_MS = 1500; // مهلة عرض قصيرة قبل إعادة التحميل التلقائي
 const FETCH_TIMEOUT_MS = 8000;
 
 type VersionPayload = {

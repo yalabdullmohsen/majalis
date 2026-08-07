@@ -38,6 +38,7 @@ html, body {
   -webkit-text-size-adjust: 100%;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: none; /* يمنع السحب للتحديث العرضي في WKWebView/PWA */
   box-sizing: border-box;
 }
 
@@ -45,6 +46,7 @@ html {
   font-size: 16px;
   text-size-adjust: 100%;
   overflow-x: hidden;
+  overscroll-behavior-y: none;
 }
 
 :root {
