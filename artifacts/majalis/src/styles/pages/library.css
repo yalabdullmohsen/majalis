@@ -91,6 +91,8 @@
 
 /* ── بطاقة الكتاب ─────────────────────────────────────────────── */
 .lib-card {
+  content-visibility: auto;
+  contain-intrinsic-size: 120px;
   display: flex;
   flex-direction: column;
   border-radius: 10px;
