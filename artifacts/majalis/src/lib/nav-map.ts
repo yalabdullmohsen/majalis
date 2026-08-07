@@ -2,7 +2,7 @@
  * مصدر واحد لخريطة التنقّل (إطلاق المجلس العلمي).
  * يشتق منه: الشريط السفلي، مركز الخدمات، التذييل، والجانبية.
  *
- * التنقّل الموحّد: قرآن · علم · عبادة · فقه · المزيد (+ بحث دائم في الهيدر)
+ * التنقّل الموحّد: قرآن · الدروس · الصلاة · فقه · المزيد (+ بحث دائم في الهيدر)
  */
 import type { LucideIcon } from "lucide-react";
 import { BookOpen, Clock, GraduationCap, Scale } from "lucide-react";
@@ -22,8 +22,8 @@ export type BottomNavTab = {
 /** الشريط السفلي: أربع مساحات + «المزيد» منفصل في المكوّن */
 export const BOTTOM_NAV_TABS: BottomNavTab[] = [
   { href: "/quran-knowledge", label: "قرآن", Icon: BookOpen },
-  { href: "/lessons", label: "علم", Icon: GraduationCap },
-  { href: "/prayer-times", label: "عبادة", Icon: Clock },
+  { href: "/lessons", label: "الدروس", Icon: GraduationCap },
+  { href: "/prayer-times", label: "الصلاة", Icon: Clock },
   { href: "/fiqh", label: "فقه", Icon: Scale },
 ];
 
