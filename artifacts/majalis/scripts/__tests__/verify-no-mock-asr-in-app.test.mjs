@@ -17,7 +17,7 @@ function assert(cond, msg) {
 console.log("═══ isViolatingImport ═══");
 {
   assert(
-    isViolatingImport("src/views/RecitationTestPage.tsx", 'import { MockQuranASRProvider } from "@/lib/recitation-ai/providers/mock-provider";'),
+    isViolatingImport("src/pages/quran/ui/RecitationTestView.tsx", 'import { MockQuranASRProvider } from "@/lib/recitation-ai/providers/mock-provider";'),
     "استيراد المزوّد الوهمي داخل ملف واجهة حقيقي ← مخالفة مكتشَفة",
   );
   assert(

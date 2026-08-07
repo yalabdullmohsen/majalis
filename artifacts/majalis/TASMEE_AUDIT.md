@@ -10,7 +10,7 @@
 
 | | النظام القديم («اختبر تلاوتك») | النظام الحالي («اختبار التسميع بالذكاء الاصطناعي») |
 |---|---|---|
-| الملفات | `src/hooks/useRecitationTest.ts`، `src/components/quran/RecitationTestPanel.tsx`، `src/lib/recitation-diff.ts` | `src/lib/recitation-ai/*` (35 ملفًا)، `src/views/RecitationTestPage.tsx` |
+| الملفات | `src/hooks/useRecitationTest.ts`، `src/components/quran/RecitationTestPanel.tsx`، `src/lib/recitation-diff.ts` | `src/lib/recitation-ai/*` (35 ملفًا)، `src/pages/quran/ui/RecitationTestView.tsx` |
 | أين يظهر | مضمَّن داخل `ExploreAyahPanel.tsx` ← `MushafPage.tsx` (`/mushaf`) — آية واحدة عند تصفّح المصحف العادي | صفحة مستقلة `/quran/recitation-test-ai` — جلسة كاملة (سورة/نطاق/صفحة/جزء/حزب/ربع/حر) |
 | خوارزمية المقارنة | LCS (أطول تتابع مشترك) — تصنيف ثنائي فقط: صحيح/غير مطابق، بلا تمييز نوع الخطأ | Needleman-Wunsch داخل نافذة منزلقة (`word-alignment.ts`) — 8 أنواع خطأ + تصنيف "غير واضح" بالثقة |
 | التطبيع | `normalizeArabic` مباشرة (الوحدة العامة الأساسية) | `normalizeQuranWord` (تبني فوق `normalizeArabic` + مرادفات رسم عثماني مثل الصلوة/الصلاة + تصحيحات موضعية مثل مالك/الفاتحة:4) |

@@ -38,3 +38,7 @@
 - نُقلت ١٠ صفحات إلى `src/pages/quran/`.
 - الصفحات >١٥٠ سطرًا: غلاف رقيق + `ui/*View.tsx`.
 - المؤجّل لـ C1b: MushafPageView، RecitationTest، Tajweed، DuasQuran، UlumQuran، QuranMemorization.
+
+## C1b — بقية القرآن
+
+- أكمل ترحيل صفحات القرآن المتبقية إلى `pages/quran/`.

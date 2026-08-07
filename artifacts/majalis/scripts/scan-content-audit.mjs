@@ -24,13 +24,13 @@ const files = [
   "views/SunanYawmiyyaPage.tsx", "views/WasayaNabawiyyaPage.tsx", "views/RaqaiqPage.tsx",
   "views/HikamSalafPage.tsx", "views/FadailAamalPage.tsx", "views/JannaNaarPage.tsx",
   "views/AdabTalabIlmPage.tsx", "views/MalaikaPage.tsx", "views/FiqhQawaidPage.tsx",
-  "views/TawhidPage.tsx", "views/ShimaelPage.tsx", "views/QuranTajweedPage.tsx",
+  "views/TawhidPage.tsx", "views/ShimaelPage.tsx", "pages/quran/ui/QuranTajweedView.tsx",
   "views/SalahGuidePage.tsx", "views/SawmPage.tsx", "views/HajjPage.tsx",
   "views/ZakatPage.tsx", "views/TaharaPage.tsx", "views/JanazaPage.tsx",
-  "views/MawarithPage.tsx", "views/UlumQuranPage.tsx", "views/IslamStatsPage.tsx",
+  "views/MawarithPage.tsx", "pages/quran/ui/UlumQuranView.tsx", "views/IslamStatsPage.tsx",
   "views/SeerahPage.tsx", "views/MadhahibPage.tsx", "views/AmradQalbiyyaPage.tsx",
   "views/TawbaPage.tsx", "views/SujoodSahwPage.tsx", "views/PrayerRanksPage.tsx",
-  "views/AlamatSaahPage.tsx", "views/DuasQuranPage.tsx", "views/ArkanImanPage.tsx",
+  "views/AlamatSaahPage.tsx", "pages/quran/ui/DuasQuranView.tsx", "views/ArkanImanPage.tsx",
 ];
 
 const natDir = path.join(ROOT, "lib/nations/data");
