@@ -41,7 +41,7 @@ assert.match(sidebarNav, /getSidebarGroupsFromNavMap|SIDEBAR_NAV_GROUPS/);
 
 const navMap = readFileSync(join(root, "lib/nav-map.ts"), "utf8");
 assert.match(navMap, /\/quran-knowledge/);
-assert.match(navMap, /القرآن/);
+assert.match(navMap, /قرآن/);
 
 const servicesNav = readFileSync(join(root, "lib/services-center-nav.ts"), "utf8");
 assert.match(servicesNav, /\/quran-knowledge/);
