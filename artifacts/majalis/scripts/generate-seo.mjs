@@ -81,6 +81,7 @@ const { FIQH_ISSUES_PUBLISHED_SEED } = await importSrc("src/lib/fiqh-issues-seed
 const { isPublicIssue } = await importSrc("src/lib/fiqh-council-trust.ts");
 const { FIQH_ITEM_TYPE_LABELS } = await importSrc("src/lib/fiqh-council-types.ts");
 const { SCHOLARS } = await importSrc("src/lib/scholars-data.ts");
+const { ADHKAR_CATEGORIES, FEATURED_ADHKAR_SLUGS } = await importSrc("src/lib/adhkar-seed.ts");
 const { MUEZZINS } = await importSrc("src/lib/adhan-audio.ts");
 
 const QURAN_MANIFEST = JSON.parse(
@@ -552,18 +553,7 @@ const verifiedFiqhSessions = (PLATFORM_SEED.fiqh_sessions || []).filter(
   (row) => row.verification_status === "verified" && row.publish_status === "published",
 );
 
-const ADHKAR_CATEGORIES = [
-  { id: "morning", slug: "morning", name: "أذكار الصباح" },
-  { id: "evening", slug: "evening", name: "أذكار المساء" },
-  { id: "sleep", slug: "sleep", name: "أذكار النوم" },
-  { id: "wakeup", slug: "wakeup", name: "أذكار الاستيقاظ" },
-  { id: "mosque", slug: "mosque", name: "أذكار المسجد" },
-  { id: "salah", slug: "salah", name: "أذكار الصلاة" },
-  { id: "after-salah", slug: "after-salah", name: "أذكار بعد الصلاة" },
-  { id: "travel", slug: "travel", name: "أذكار السفر" },
-  { id: "distress", slug: "distress", name: "أذكار الكرب" },
-  { id: "istighfar", slug: "istighfar", name: "أذكار الاستغفار" },
-];
+const FEATURED_ADHKAR = ADHKAR_CATEGORIES.filter((c) => FEATURED_ADHKAR_SLUGS.has(c.slug));
 
 const ASMAA_HUSNA = [
   { num: 1, arabic: "الله", meaning: "الاسم الجامع لجميع صفات الألوهية" },
@@ -631,7 +621,7 @@ const LIST_JSON_LD = {
     "الأحكام الشرعية",
   ),
   "/lessons": itemListJsonLdScript(lessonRows.slice(0, 30).map((r) => ({ name: r.title, url: `/lessons/${r.id}` })), "الدروس الشرعية"),
-  "/adhkar": itemListJsonLdScript(ADHKAR_CATEGORIES.map((c) => ({ name: c.name, url: `/adhkar/${c.slug}` })), "أقسام الأذكار"),
+  "/adhkar": itemListJsonLdScript(FEATURED_ADHKAR.map((c) => ({ name: c.name, url: `/adhkar/${c.slug}` })), "أقسام الأذكار"),
   "/prophets": itemListJsonLdScript(
     PROPHETS.map((p) => ({ name: `قصة نبي الله ${p.arabicName} عليه السلام`, url: `/prophets/${p.slug}` })),
     "قصص الأنبياء",
@@ -676,7 +666,7 @@ const RICH_BODY_MAP = {
   ),
   "/adhkar": `${linkList(
     "أقسام الأذكار",
-    ADHKAR_CATEGORIES.map((c) => ({ name: c.name, url: `/adhkar/${c.slug}` })),
+    FEATURED_ADHKAR.map((c) => ({ name: c.name, url: `/adhkar/${c.slug}` })),
   )}
 <p>أذكار الصباح والمساء والنوم والصلاة والسفر وغيرها — نصوص مختارة مع بيان المصدر قدر الإمكان. يمكن أيضًا الانتقال إلى الأدعية الموثقة والتسبيح اليومي.</p>
 ${linkList("روابط ذات صلة", [
@@ -2301,6 +2291,25 @@ for (const t of TOPICS) {
       keywords: [t.title, "مواضيع إسلامية", "أحكام شرعية"],
     },
     { parents: [{ name: "المواضيع الإسلامية", path: "/topics" }], priority: 0.66, changefreq: "monthly" },
+  );
+}
+
+// أقسام الأذكار — `/adhkar/:slug` (مصدر واحد: adhkar-seed.ts)
+for (const c of FEATURED_ADHKAR) {
+  const desc = clamp(padDesc(c.description, `${c.name} على ${SITE_NAME}`), 158);
+  addPage(
+    {
+      path: `/adhkar/${c.slug}`,
+      title: c.name,
+      description: desc,
+      ogType: "website",
+    },
+    {
+      parents: [{ name: "الأذكار", path: "/adhkar" }],
+      priority: 0.65,
+      changefreq: "weekly",
+      richBody: `<p>${escapeHtml(desc)}</p>`,
+    },
   );
 }
 

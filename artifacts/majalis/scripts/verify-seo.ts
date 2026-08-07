@@ -137,6 +137,8 @@ async function main() {
     "/fatwa/index.html",
     "/rulings/index.html",
     "/adhkar/index.html",
+    "/adhkar/morning/index.html",
+    "/adhkar/wakeup/index.html",
     "/prophets/index.html",
     "/fiqh-council/index.html",
     "/annual-courses/index.html",

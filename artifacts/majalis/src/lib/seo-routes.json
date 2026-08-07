@@ -85,82 +85,9 @@
       "path": "/adhkar",
       "title": "الأذكار",
       "description": "أذكار وأدعية مأثورة — صباح ومساء ونوم وسفر وصلاة — مع بيان المصدر والدرجة قدر الإمكان، وما لم يُراجع يُوسم قيد المراجعة.",
-      "keywords": [
-        "أذكار",
-        "أدعية",
-        "أذكار الصباح",
-        "أذكار المساء",
-        "حصن المسلم",
-        "تسبيح"
-      ],
       "sitemap": true,
       "changefreq": "weekly",
       "priority": 0.82
-    },
-    {
-      "path": "/adhkar/morning",
-      "title": "أذكار الصباح",
-      "description": "أذكار الصباح الواردة مع بيان المصدر والدرجة قدر الإمكان.",
-      "keywords": [
-        "أذكار",
-        "أذكار الصباح",
-        "ذكر الله"
-      ],
-      "sitemap": true,
-      "changefreq": "weekly",
-      "priority": 0.65
-    },
-    {
-      "path": "/adhkar/evening",
-      "title": "أذكار المساء",
-      "description": "أذكار المساء الواردة مع بيان المصدر والدرجة قدر الإمكان.",
-      "keywords": [
-        "أذكار",
-        "أذكار المساء",
-        "ذكر الله"
-      ],
-      "sitemap": true,
-      "changefreq": "weekly",
-      "priority": 0.65
-    },
-    {
-      "path": "/adhkar/sleep",
-      "title": "أذكار النوم",
-      "description": "أذكار النوم الواردة مع بيان المصدر والدرجة قدر الإمكان.",
-      "keywords": [
-        "أذكار",
-        "أذكار النوم",
-        "ذكر الله"
-      ],
-      "sitemap": true,
-      "changefreq": "weekly",
-      "priority": 0.65
-    },
-    {
-      "path": "/adhkar/after-salah",
-      "title": "أذكار بعد الصلاة",
-      "description": "أذكار ما بعد الصلاة مع بيان المصدر والدرجة قدر الإمكان.",
-      "keywords": [
-        "أذكار",
-        "أذكار بعد الصلاة",
-        "ذكر الله"
-      ],
-      "sitemap": true,
-      "changefreq": "weekly",
-      "priority": 0.65
-    },
-    {
-      "path": "/adhkar/distress",
-      "title": "أدعية الكرب",
-      "description": "أدعية الكرب والهم الواردة مع بيان المصدر قدر الإمكان.",
-      "keywords": [
-        "أذكار",
-        "أدعية الكرب",
-        "ذكر الله"
-      ],
-      "sitemap": true,
-      "changefreq": "weekly",
-      "priority": 0.65
     },
     {
       "path": "/quran/tajweed",

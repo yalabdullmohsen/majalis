@@ -4,6 +4,8 @@
  * تنحرف عن بعضها وتُسقِط المعرّف بصمت.
  */
 
+import { ADHKAR_CATEGORIES } from "@/lib/adhkar-seed";
+
 function idOrEmpty(id?: string | null): string {
   return String(id ?? "").trim();
 }
@@ -54,12 +56,30 @@ export function hrefMiracles(id?: string | null): string {
   return t ? `/miracles#${encodeURIComponent(t)}` : "/miracles";
 }
 
+export function resolveAdhkarCategory(token: string | null | undefined) {
+  if (!token) return null;
+  return ADHKAR_CATEGORIES.find((c) => c.slug === token || c.id === token) ?? null;
+}
+
 /** مسار تصنيف الأذكار: `/adhkar/:slug` — يقبل slug أو id (`adh-morning` → morning). */
 export function hrefAdhkar(cat?: string | null): string {
   const t = idOrEmpty(cat);
   if (!t) return "/adhkar";
-  const slug = t.startsWith("adh-") ? t.slice(4) : t;
+  const match = resolveAdhkarCategory(t);
+  const slug = match?.slug ?? (t.startsWith("adh-") ? t.slice(4) : t);
   return `/adhkar/${encodeURIComponent(slug)}`;
+}
+
+/** يحوّل `?cat=…` القديم إلى `/adhkar/:slug` مع بقية الاستعلام إن وُجد. */
+export function adhkarCatRedirectPath(search: string): string | null {
+  const qs = new URLSearchParams(search.startsWith("?") ? search.slice(1) : search);
+  const cat = qs.get("cat");
+  if (!cat) return null;
+  const match = resolveAdhkarCategory(cat);
+  if (!match) return null;
+  qs.delete("cat");
+  const rest = qs.toString();
+  return `${hrefAdhkar(match.slug)}${rest ? `?${rest}` : ""}`;
 }
 
 export function hrefQuranHub(): string {
