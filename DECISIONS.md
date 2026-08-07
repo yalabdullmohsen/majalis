@@ -10,5 +10,5 @@
 | 2026-08-07 | theme-color = سطح الصفحة (#F2F4F3/#101614) لا لون العلامة | شريط الحالة ثابت عبر المسارات؛ العلامة تبقى --mj-brand |
 | 2026-08-07 | إزالة padding safe-area من html/body | نموذج bleed/inset: الخلفية للحافة، المحتوى عبر --inset-* |
 | 2026-08-07 | --gutter-inline-* يعكس left/right في RTL | بداية القراءة = اليمين الفيزيائي على الآيفون |
-| 2026-08-07 | seo-prerender theme يُصحَّح في post-build | تجنّب لمس +1000 ملف في نفس الـPR |
+| 2026-08-07 | مزامنة seo-prerender كاملة مع theme-color السطحي | build يفشل بـ dirty tree إن لم تُلتَزم مخرجات generate:seo |
 | 2026-08-07 | بوابة verify:ios-edge في build | تفشل عند 100vh / env() خارج theme / viewport مقيَّد |
