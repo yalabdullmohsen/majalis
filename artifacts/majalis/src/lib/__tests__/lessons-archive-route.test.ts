@@ -4,8 +4,8 @@ import { resolve } from "node:path";
 
 const root = resolve(import.meta.dirname, "../..");
 const app = readFileSync(resolve(root, "App.tsx"), "utf8");
-const archivePage = readFileSync(resolve(root, "views/LessonsArchivePage.tsx"), "utf8");
-const lessonsPage = readFileSync(resolve(root, "views/LessonsPage.tsx"), "utf8");
+const archivePage = readFileSync(resolve(root, "pages/lessons/LessonsArchivePage.tsx"), "utf8");
+const lessonsPage = readFileSync(resolve(root, "pages/lessons/ui/LessonsView.tsx"), "utf8");
 
 assert.match(app, /path="\/lessons\/archive"/, "مسار الأرشيف مسجّل");
 const archiveIdx = app.indexOf('path="/lessons/archive"');

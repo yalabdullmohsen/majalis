@@ -4,10 +4,10 @@ import { resolve } from "node:path";
 
 const root = resolve(import.meta.dirname, "..");
 const card = await readFile(resolve(root, "src/components/lessons/UnifiedLessonCard.tsx"), "utf8");
-const lessonsPage = await readFile(resolve(root, "src/views/LessonsPage.tsx"), "utf8");
+const lessonsPage = await readFile(resolve(root, "src/pages/lessons/ui/LessonsView.tsx"), "utf8");
 const homeLessons = await readFile(resolve(root, "src/components/home/HomeUpcomingLessons.tsx"), "utf8");
 const homeCourses = await readFile(resolve(root, "src/components/home/HomeUpcomingCourses.tsx"), "utf8");
-const detailPage = await readFile(resolve(root, "src/views/LessonDetailPage.tsx"), "utf8");
+const detailPage = await readFile(resolve(root, "src/pages/lessons/ui/LessonDetailView.tsx"), "utf8");
 
 const failures = [];
 if (/<img\b|SheikhAvatar|lessonImage|posterUrl|qrCodeUrl|__poster|__media|__qr|__top/.test(card)) {
