@@ -315,62 +315,6 @@ article {
   gap: var(--ds-space-3);
 }
 
-.ds-grid--2 {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.ds-grid--3 {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-@media (min-width: 640px) {
-  .ds-grid--3 {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
-@media (min-width: 960px) {
-  .ds-grid--4 {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-}
-
-/* ── Badges ── */
-.ds-badge {
-  display: inline-flex;
-  align-items: center;
-  padding: 0.1rem 0.45rem;
-  font-size: var(--ds-text-xs);
-  font-weight: 700;
-  border-radius: 999px;
-  background: var(--ds-emerald-soft);
-  color: var(--ds-emerald-deep);
-}
-
-/* ── Bottom sheet ── */
-.ds-sheet-backdrop {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: var(--z-modal, 400);
-  background: rgba(0, 0, 0, 0.4);
-  display: flex;
-  align-items: flex-end;
-}
-
-.ds-sheet {
-  width: 100%;
-  max-height: min(85dvh, calc(100dvh - var(--inset-top)));
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
-  overscroll-behavior: contain;
-  background: var(--majalis-panel, #fff);
-  border-radius: var(--ds-radius-lg) var(--ds-radius-lg) 0 0;
-  padding: var(--ds-space-4) var(--ds-space-3) calc(var(--ds-space-4) + var(--inset-bottom));
-}
-
 /* ── Empty / loading ── */
 .ds-empty {
   text-align: center;
@@ -676,8 +620,7 @@ p, li {
   line-height: 1.4;
 }
 
-.page-tag,
-.ds-badge {
+.page-tag {
   flex-shrink: 0;
 }
 
@@ -755,32 +698,6 @@ p, li {
   .ds-section__head:not(:has(> :not(.ds-filter-toggle)))::after {
     display: none;
   }
-}
-
-.ds-sheet__head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: var(--ds-space-3);
-}
-
-.ds-sheet__head h2 {
-  font-size: var(--ds-text-md);
-  font-weight: 800;
-  color: var(--ds-emerald-deep);
-  margin: 0;
-}
-
-.ds-sheet__close {
-  width: 2rem;
-  height: 2rem;
-  border: none;
-  background: var(--ds-parchment-deep);
-  border-radius: var(--ds-radius-sm);
-  font-size: 1.25rem;
-  line-height: 1;
-  cursor: pointer;
-  color: var(--ds-ink-soft);
 }
 
 /* Lessons — hide sidebar on mobile, content first */
@@ -1159,7 +1076,6 @@ p, li {
 }
 
 /* Hide reading tools in content pages (settings only) */
-.faidah-card__tools,
 .qa-card__font-tools,
 .reading-toolbar-inline {
   display: none !important;
@@ -1309,13 +1225,6 @@ body {
   font-size: var(--ds-text-xs);
   color: var(--ds-ink-soft);
 }
-
-.ds-virtual-list {
-  max-height: min(70vh, 640px);
-  overflow-y: auto;
-}
-.ds-virtual-list__track { height: var(--vl-total, 0px); position: relative; }
-.ds-virtual-list__item  { position: absolute; top: var(--vl-top, 0); left: 0; right: 0; height: var(--vl-h, 48px); }
 
 .reading-toolbar--minimal {
   margin-top: var(--ds-space-2);
@@ -2526,7 +2435,6 @@ body {
 /* ── 2. العناوين — أسود/داكن بدل الزمرد ── */
 .ds-page-header__title,
 .ds-section__title,
-.ds-sheet__head h2,
 .search-page-title,
 .search-results-group-title,
 .page-card-header p,
@@ -2611,16 +2519,6 @@ h1, h2, h3 {
   border-color: var(--ds-emerald);
   box-shadow: 0 0 0 3px rgba(22, 96, 72, 0.12);
   outline: none;
-}
-
-/* ── 6. الشارات — أكثر دقة ── */
-.ds-badge {
-  font-size: var(--ds-text-2xs);
-  font-weight: 700;
-  border-radius: var(--ds-radius-full);
-  padding: 0.15rem 0.5rem;
-  background: var(--ds-emerald-soft);
-  color: var(--ds-emerald-deep);
 }
 
 /* ── 7. الهيكل العظمي (Skeleton) ── */
@@ -2813,7 +2711,6 @@ h1, h2, h3 {
 .full-content,
 .story-content,
 .lesson-content,
-.fatwa-content,
 .hadith-content {
   font-family: var(--font-reading, "Noto Naskh Arabic", serif);
   font-size: clamp(1rem, 2.5vw, 1.0625rem);
