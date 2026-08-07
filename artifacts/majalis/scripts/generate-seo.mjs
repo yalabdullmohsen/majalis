@@ -529,24 +529,18 @@ function prerenderHtml(route, extraJsonLd = "", richBody = "", parents = []) {
         url: SITE_URL,
         logo: { "@type": "ImageObject", url: absoluteUrl("/logo.png") },
       },
-      isPartOf: {
-        "@type": "WebSite",
-        name: SITE_NAME,
-        url: SITE_URL,
-        potentialAction: {
-          "@type": "SearchAction",
-          target: `${SITE_URL}/search?q={search_term_string}`,
-          "query-input": "required name=search_term_string",
-        },
-      },
     })}
     ${breadcrumbFor(route, parents)}
     ${extraJsonLd}
   </head>
   <body>
     <header>
-      <nav aria-label="التنقل الرئيسي">
-        ${prerenderNavHtml()}
+      <nav>
+        <a href="${escapeHtml(SITE_URL)}">${escapeHtml(SITE_NAME)}</a>
+        <a href="${escapeHtml(absoluteUrl("/lessons"))}">الدروس</a>
+        <a href="${escapeHtml(absoluteUrl("/quran-hub"))}">القرآن</a>
+        <a href="${escapeHtml(absoluteUrl("/adhkar"))}">الأذكار</a>
+        <a href="${escapeHtml(absoluteUrl("/search"))}">البحث</a>
       </nav>
     </header>
     <main>
