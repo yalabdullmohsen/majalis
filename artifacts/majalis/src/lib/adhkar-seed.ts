@@ -20,6 +20,13 @@ export type AdhkarItem = {
   keywords: string[];
 };
 
+/** تصنيفات الأذكار المميّزة في الواجهة وفي prerender SEO */
+export const FEATURED_ADHKAR_SLUGS = new Set([
+  "morning", "evening", "sleep", "wakeup", "home-in", "home-out",
+  "mosque", "wudu", "salah", "after-salah", "travel", "food",
+  "rain", "wind", "distress", "istikharah", "istighfar", "misc",
+]);
+
 export const ADHKAR_CATEGORIES: AdhkarCategory[] = [
   { id: "adh-morning", name: "أذكار الصباح", slug: "morning", description: "أذكار ما بعد صلاة الفجر إلى طلوع الشمس للحفظ والبركة ويُقال بالوارد دون زيادة غير ثابتة مع استحضار المعنى والخشوع لا مجرد التكرار. مما ثبت في السنة الصحيحة بحسب بابه" },
   { id: "adh-evening", name: "أذكار المساء", slug: "evening", description: "أذكار ما بعد صلاة العصر إلى المغرب للحفظ والطمأنينة مما ثبت في السنة الصحيحة بحسب بابه ويُقال بالوارد دون زيادة غير ثابتة. مع استحضار المعنى والخشوع لا مجرد التكرار" },
