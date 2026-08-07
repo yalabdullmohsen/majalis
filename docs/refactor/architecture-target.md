@@ -101,3 +101,7 @@
 ## I — بحث موحّد
 
 - فهرس محلي `public/data/search/index.json` (علماء/كتب/سور) + `parseQuickNav` + نتائج في SearchView.
+
+## D3 — تنظيف CSS ميت (دفعة 1)
+
+- إزالة محددات مؤكَّدة عدم استخدامها من JSX: about-page، async-empty/error، admin-nav/panel/stat، ar-tabs/filter من مجموعات final-release.
