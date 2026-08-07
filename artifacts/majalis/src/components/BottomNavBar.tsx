@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Link, useLocation } from "wouter";
 import { LayoutGrid } from "lucide-react";
 import { isImmersiveChromePath } from "@/lib/immersive-chrome";
@@ -7,15 +7,30 @@ import { BOTTOM_NAV_TABS } from "@/lib/nav-map";
 import { isTabActive } from "./TopSectionBar";
 import { MoreBottomSheet } from "./MoreBottomSheet";
 
+const TAB_PREFETCH: Record<string, () => Promise<unknown>> = {
+  "/quran-knowledge": () => import("@/views/QuranKnowledgeHubPage"),
+  "/lessons": () => import("@/views/LessonsPage"),
+  "/prayer-times": () => import("@/views/PrayerTimesPage"),
+  "/fiqh": () => import("@/views/FiqhPage"),
+};
+
 /** شريط سفلي — مشتق من nav-map (مصدر واحد): قرآن · الدروس · الصلاة · فقه · المزيد */
 export function BottomNavBar() {
   const [location] = useLocation();
   const [moreOpen, setMoreOpen] = useState(false);
+  const prefetched = useRef(new Set<string>());
 
   const onPrimaryTab = BOTTOM_NAV_TABS.some(({ href }) => isTabActive(location, href));
   const moreActive = moreOpen || !onPrimaryTab;
 
   if (isImmersiveChromePath(location)) return null;
+
+  function triggerPrefetch(href: string) {
+    const load = TAB_PREFETCH[href];
+    if (!load || prefetched.current.has(href)) return;
+    prefetched.current.add(href);
+    void load();
+  }
 
   return (
     <>
@@ -30,6 +45,9 @@ export function BottomNavBar() {
               className={`bottom-nav__tab${active ? " is-active" : ""}${soon ? " is-soon" : ""}`}
               aria-current={active ? "page" : undefined}
               aria-label={soon ? `${label} — قريبًا` : label}
+              onTouchStart={() => triggerPrefetch(href)}
+              onMouseEnter={() => triggerPrefetch(href)}
+              onFocus={() => triggerPrefetch(href)}
             >
               <span className="bottom-nav__tab-icon" aria-hidden="true">
                 <Icon size={20} strokeWidth={active ? 2.25 : 1.75} aria-hidden={true} />

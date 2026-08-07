@@ -7248,9 +7248,33 @@ body.has-assistant-fab .app-main {
 /* ── تأثيرات التفاعل العامة ── */
 .bottom-nav__tab:active,
 .kuwait-tab:active,
+.top-section-bar__tab:active,
+.m2030-tile:active,
+.m2030-btn:active,
+.mj-btn:active,
+.sidebar-item:active,
+.navbar-v3__tabs a:active,
+.navbar-mobile-login:active,
+.navbar-theme-toggle:active,
+.lesson-unified-card:active,
+.hsh-step__cta:active,
+.hsh-actions__primary:active,
+.hsh-actions__secondary:active,
 [role="button"]:active {
-  transform: scale(0.96);
-  transition: transform 0.1s ease;
+  transform: scale(0.97);
+  transition: transform 80ms ease;
+}
+
+.bottom-nav__tab,
+.top-section-bar__tab,
+.m2030-tile,
+.m2030-btn,
+.mj-btn,
+.sidebar-item,
+.navbar-theme-toggle,
+.navbar-mobile-login {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 /* ── انتقالات الصفحة ── */
