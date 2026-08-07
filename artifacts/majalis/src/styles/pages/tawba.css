@@ -256,7 +256,9 @@
 
 /* related */
 .tw-related { margin-top: 2.5rem; }
-.tw-related__title { font-size: var(--ds-text-base); font-weight: 700; color: #111; margin: 0 0 .75rem; }
+.tw-related__title { font-size: var(--ds-text-base); font-weight: 700; color: var(--mj-ink, #111); margin: 0 0 .75rem; }
+html[data-theme="dark"] .tw-related__title,
+html.dark .tw-related__title { color: var(--mj-ink, #F2F4F3); }
 .tw-related__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; }
 .tw-related__link {
   background: #fff;

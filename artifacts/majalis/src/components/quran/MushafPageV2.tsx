@@ -206,7 +206,29 @@ export function MushafPageV2({
                     role="button"
                     tabIndex={0}
                     aria-label={`آية ${verseKey}`}
-                    onClick={(e) => { e.stopPropagation(); onAyahPress?.(verseKey); }}
+                    onPointerDown={(e) => {
+                      if (e.button !== 0 && e.pointerType === "mouse") return;
+                      const target = e.currentTarget;
+                      const timer = window.setTimeout(() => {
+                        onAyahPress?.(verseKey);
+                      }, 350);
+                      target.dataset.ayahTimer = String(timer);
+                    }}
+                    onPointerUp={(e) => {
+                      const t = e.currentTarget.dataset.ayahTimer;
+                      if (t) window.clearTimeout(Number(t));
+                      delete e.currentTarget.dataset.ayahTimer;
+                    }}
+                    onPointerCancel={(e) => {
+                      const t = e.currentTarget.dataset.ayahTimer;
+                      if (t) window.clearTimeout(Number(t));
+                      delete e.currentTarget.dataset.ayahTimer;
+                    }}
+                    onPointerLeave={(e) => {
+                      const t = e.currentTarget.dataset.ayahTimer;
+                      if (t) window.clearTimeout(Number(t));
+                      delete e.currentTarget.dataset.ayahTimer;
+                    }}
                     onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onAyahPress?.(verseKey); } }}
                   >
                     {group.map((w) => wordRenderer(w))}
