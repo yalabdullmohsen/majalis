@@ -12,6 +12,14 @@ html.pts-immersive body {
   background-image: none;
 }
 
+.pts-screen--with-nav {
+  /* مع الشريط السفلي (والترويسة العامة): لا سحب تحت الكروم */
+  margin-block-start: 0 !important;
+  margin-inline: 0 !important;
+  padding-bottom: calc(var(--bottom-nav-total, 4.5rem) + 16px) !important;
+  box-sizing: border-box;
+}
+
 .pts-screen {
   /* مربوط بهوية v4 — لا باليتة موازية */
   --pts-bg-0: var(--em-950, #081A16);

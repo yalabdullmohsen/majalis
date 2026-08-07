@@ -1,5 +1,6 @@
 /**
- * مسارات الواجهة الغامرة — الصلاة والمصحف بلا شريط أقسام/تيكر/اختبارات مشتركة.
+ * مسارات الواجهة الغامرة — المصحف واختبار التلاوة بلا شريط مشترك.
+ * صفحة الصلاة تُبقي الشريط السفلي ظاهرًا (2026-08).
  * تشغيل: npx tsx src/lib/__tests__/immersive-chrome.test.ts
  */
 import assert from "node:assert/strict";
@@ -11,6 +12,7 @@ import {
   isPrayerTimesPath,
   isQuranImmersivePath,
 } from "../immersive-chrome";
+import "./get-active-tab.test.ts";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const appRoot = resolve(__dirname, "../../..");
@@ -24,7 +26,7 @@ assert.equal(isQuranImmersivePath("/mushaf/page/1"), true);
 assert.equal(isQuranImmersivePath("/quran-hub"), true);
 assert.equal(isQuranImmersivePath("/fiqh"), false);
 
-assert.equal(isImmersiveChromePath("/prayer-times"), true);
+assert.equal(isImmersiveChromePath("/prayer-times"), false, "الصلاة ليست غمرية — الشريط السفلي ظاهر");
 // أثناء إيقاف المصحف مؤقتًا («قريبًا») يبقى الشريط ظاهرًا
 assert.equal(isImmersiveChromePath("/mushaf"), false);
 assert.equal(isImmersiveChromePath("/mushaf/2"), false);

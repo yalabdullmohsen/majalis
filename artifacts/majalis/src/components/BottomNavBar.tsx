@@ -4,14 +4,22 @@ import { LayoutGrid } from "lucide-react";
 import { isImmersiveChromePath } from "@/lib/immersive-chrome";
 import { isComingSoonPath } from "@/lib/nav-visibility";
 import { BOTTOM_NAV_TABS } from "@/lib/nav-map";
-import { isTabActive } from "./TopSectionBar";
+import { getActiveTab, type BottomTabId } from "@/lib/get-active-tab";
 import { MoreBottomSheet } from "./MoreBottomSheet";
+
+const HREF_TO_ID: Record<string, BottomTabId> = {
+  "/quran-knowledge": "quran",
+  "/lessons": "lessons",
+  "/prayer-times": "prayer",
+  "/fiqh": "fiqh",
+};
 
 const TAB_PREFETCH: Record<string, () => Promise<unknown>> = {
   "/quran-knowledge": () => import("@/views/QuranKnowledgeHubPage"),
   "/lessons": () => import("@/views/LessonsPage"),
   "/prayer-times": () => import("@/views/PrayerTimesPage"),
   "/fiqh": () => import("@/views/FiqhPage"),
+  "/": () => import("@/views/HomePage"),
 };
 
 /** شريط سفلي — مشتق من nav-map (مصدر واحد): قرآن · الدروس · الصلاة · فقه · المزيد */
@@ -20,8 +28,9 @@ export function BottomNavBar() {
   const [moreOpen, setMoreOpen] = useState(false);
   const prefetched = useRef(new Set<string>());
 
-  const onPrimaryTab = BOTTOM_NAV_TABS.some(({ href }) => isTabActive(location, href));
-  const moreActive = moreOpen || !onPrimaryTab;
+  const activeId = getActiveTab(location);
+  // «المزيد» يُضاء فقط عندما لا ينتمي المسار لأي تبويب أساسي — لا يُشارك النشاط مع تبويب آخر
+  const moreActive = activeId === "more";
 
   if (isImmersiveChromePath(location)) return null;
 
@@ -36,7 +45,8 @@ export function BottomNavBar() {
     <>
       <nav className="bottom-nav bottom-nav--v2 bottom-nav--m2030 mj-nav-skin" aria-label="التنقل السفلي">
         {BOTTOM_NAV_TABS.map(({ href, label, Icon }) => {
-          const active = isTabActive(location, href);
+          const id = HREF_TO_ID[href];
+          const active = id === activeId;
           const soon = isComingSoonPath(href);
           return (
             <Link
@@ -64,6 +74,7 @@ export function BottomNavBar() {
           aria-label="المزيد"
           aria-haspopup="dialog"
           aria-expanded={moreOpen}
+          aria-current={moreActive ? "page" : undefined}
         >
           <span className="bottom-nav__tab-icon" aria-hidden="true">
             <LayoutGrid size={20} strokeWidth={moreActive ? 2.25 : 1.75} aria-hidden={true} />
