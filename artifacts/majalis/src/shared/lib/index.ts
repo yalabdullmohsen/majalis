@@ -8,3 +8,9 @@ export {
   type GraphLink,
   type GraphKind,
 } from "@/shared/lib/knowledge-graph";
+export {
+  okData,
+  errData,
+  wrapAsync,
+  type DataResult,
+} from "@/shared/lib/data-result";
