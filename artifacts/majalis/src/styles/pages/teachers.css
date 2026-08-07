@@ -1,0 +1,67 @@
+/* TeachersIndexPage / TeacherDetailPage (tch-*) */
+.tch-notice {
+  margin: 0 0 1.25rem;
+  padding: 0.85rem 1rem;
+  border-radius: var(--ds-radius, 0.5rem);
+  border: 1px solid var(--line, #e5e7eb);
+  background: var(--panel, #fff);
+  font-size: var(--ds-text-sm, 0.9rem);
+  line-height: 1.6;
+}
+.tch-notice a {
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.tch-search-wrap { padding: 0.25rem 0 1rem; }
+.tch-search-input { width: 100%; }
+.tch-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(168px, 1fr));
+  gap: var(--ds-space-3, 0.75rem);
+}
+.tch-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: var(--ds-space-4, 1rem);
+  border-radius: var(--ds-radius, 0.5rem);
+  border: 1px solid var(--line, #e5e7eb);
+  background: var(--panel, #fff);
+  text-decoration: none;
+  text-align: center;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+.tch-card:hover {
+  border-color: var(--accent, #0d9488);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+.tch-card__photo {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  background: var(--muted, #f3f4f6);
+}
+.tch-card__name {
+  font-weight: 700;
+  font-size: var(--ds-text-sm, 0.9rem);
+  line-height: 1.35;
+  color: inherit;
+}
+.tch-card__count {
+  font-size: var(--ds-text-xs, 0.8rem);
+  color: var(--muted-fg, #6b7280);
+}
+.tch-section { margin-top: 1.75rem; }
+.tch-section__title {
+  font-size: var(--ds-text-lg, 1.125rem);
+  font-weight: 700;
+  margin: 0 0 0.75rem;
+}
+.tch-empty {
+  padding: 1.5rem;
+  text-align: center;
+  color: var(--muted-fg, #6b7280);
+}

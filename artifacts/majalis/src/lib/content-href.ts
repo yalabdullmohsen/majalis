@@ -27,6 +27,12 @@ export function hrefScholars(id?: string | null): string {
   return pathWithId("/scholars", id);
 }
 
+/** مشايخ معاصرون من دروس الكويت — slug مُشتق من sheikhNameKey. */
+export function hrefTeachers(slug?: string | null): string {
+  const t = idOrEmpty(slug);
+  return t ? `/teachers/${encodeURIComponent(decodeURIComponent(t))}` : "/teachers";
+}
+
 export function hrefRulings(id?: string | null): string {
   return pathWithId("/rulings", id);
 }
