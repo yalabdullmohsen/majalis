@@ -1,0 +1,10 @@
+export type { EntityRepository, EntityCardProps } from "@/entities/_ports";
+export * from "@/entities/scholar";
+export * from "@/entities/book";
+export * from "@/entities/hadith";
+export * from "@/entities/lesson";
+export * from "@/entities/ruling";
+export * from "@/entities/term";
+export * from "@/entities/surah";
+export * from "@/entities/dua";
+export * from "@/entities/prophet";
