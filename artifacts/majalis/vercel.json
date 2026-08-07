@@ -189,6 +189,21 @@
   ],
   "redirects": [
     {
+      "source": "/support",
+      "destination": "/contact",
+      "permanent": false
+    },
+    {
+      "source": "/who-we-are",
+      "destination": "/about",
+      "permanent": false
+    },
+    {
+      "source": "/delete-account",
+      "destination": "/account-deletion",
+      "permanent": false
+    },
+    {
       "source": "/adhkar",
       "has": [
         {
