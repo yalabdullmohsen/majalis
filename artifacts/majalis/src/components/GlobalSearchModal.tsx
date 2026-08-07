@@ -185,10 +185,7 @@ export function GlobalSearchModal({ onClose }: Props) {
   // Preconnect text APIs while the modal is open (DNS/TLS warm for search).
   useResourcePrewarm(TEXT_API_ORIGINS, true);
 
-  useEffect(() => {
-    const t = setTimeout(() => inputRef.current?.focus(), 80);
-    return () => clearTimeout(t);
-  }, []);
+  /* لا تركيز تلقائي — الكيبورد لا يُفتح إلا بنقر المستخدم على الحقل. */
 
   useEffect(() => {
     const onPop = () => onClose();

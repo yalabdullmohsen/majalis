@@ -53,14 +53,15 @@ export function AppBottomSheet({
     }
     previouslyFocused.current = document.activeElement as HTMLElement | null;
     const prevOverflow = document.body.style.overflow;
+    const prevScrollY = window.scrollY;
     document.body.style.overflow = "hidden";
     document.body.classList.add("app-sheet-open", "filter-sheet-open");
 
-    const focusTarget = initialFocusRef?.current
-      ?? sheetRef.current?.querySelector<HTMLElement>(
-        'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
-      );
-    const frame = window.requestAnimationFrame(() => focusTarget?.focus());
+    // ركّز حاوية الشيت فقط — لا أول حقل (يمنع فتح الكيبورد على iOS).
+    const focusTarget = initialFocusRef?.current ?? sheetRef.current;
+    const frame = window.requestAnimationFrame(() => {
+      focusTarget?.focus({ preventScroll: true });
+    });
 
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -88,8 +89,9 @@ export function AppBottomSheet({
       window.cancelAnimationFrame(frame);
       document.body.style.overflow = prevOverflow;
       document.body.classList.remove("app-sheet-open", "filter-sheet-open");
+      window.scrollTo(0, prevScrollY);
       document.removeEventListener("keydown", onKey);
-      previouslyFocused.current?.focus?.();
+      previouslyFocused.current?.focus?.({ preventScroll: true });
     };
   }, [open, onClose, initialFocusRef]);
 
@@ -123,6 +125,7 @@ export function AppBottomSheet({
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
+        tabIndex={-1}
         style={dragOffset ? { transform: `translateY(${dragOffset}px)` } : undefined}
       >
         <div

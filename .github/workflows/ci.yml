@@ -76,6 +76,9 @@ jobs:
       - name: Orphan discovery gate (R4)
         run: pnpm --filter @workspace/majalis run verify:orphan-discovery
 
+      - name: No autofocus / keyboard gate
+        run: pnpm --filter @workspace/majalis run verify:no-autofocus
+
       - name: Methodology prerender depth gate (R4)
         run: pnpm --filter @workspace/majalis run verify:methodology-prerender
 

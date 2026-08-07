@@ -35,8 +35,7 @@ export function JumpPageModal({
     if (!open) return;
     setInputPage(String(currentPage));
     setError(null);
-    const t = window.setTimeout(() => inputRef.current?.focus(), 40);
-    return () => window.clearTimeout(t);
+    /* لا تركيز تلقائي — يمنع فتح الكيبورد على iOS دون نقر صريح. */
   }, [open, currentPage]);
 
   useEffect(() => {
