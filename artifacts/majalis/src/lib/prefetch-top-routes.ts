@@ -5,7 +5,7 @@ const TOP_ROUTES: Array<() => Promise<unknown>> = [
   () => import("@/views/HomePage"),
   () => import("@/views/LessonsPage"),
   () => import("@/views/PrayerTimesPage"),
-  () => import("@/views/QuranKnowledgeHubPage"),
+  () => import("@/pages/quran/QuranKnowledgeHubPage"),
 ];
 
 export function prefetchTopRoutesOnIdle(): void {

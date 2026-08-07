@@ -33,3 +33,8 @@
 - لم نُثبت `eslint-plugin-import` في B لتجنب تبعية جديدة؛ بوابة `scripts/verify-fsd-layers.mjs` تغطي القيود الحرجة.
 - لم نربط `AppProviders` / `routes.ts` بـ `main.tsx` بعد — صفر تغيير مرئي.
 - `features/lessons` الموجود يبقى كما هو ويُواءم تدريجيًا مع FSD.
+## C1 — قرآن/مصحف (جزئي)
+
+- نُقلت ١٠ صفحات إلى `src/pages/quran/`.
+- الصفحات >١٥٠ سطرًا: غلاف رقيق + `ui/*View.tsx`.
+- المؤجّل لـ C1b: MushafPageView، RecitationTest، Tajweed، DuasQuran، UlumQuran، QuranMemorization.

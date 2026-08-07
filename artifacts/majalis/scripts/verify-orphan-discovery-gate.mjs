@@ -45,7 +45,7 @@ const ENTRY_FILES = [
   "lib/site-footer-nav.ts",
   // الجولة الخامسة: خريطة الموقع + مركز علوم القرآن سطوح اكتشاف صريحة
   "views/SiteMapPage.tsx",
-  "views/QuranKnowledgeHubPage.tsx",
+  "pages/quran/QuranKnowledgeHubPage.tsx",
 ];
 
 const ALLOWLIST_PATH = join(appRoot, "scripts/orphan-discovery-allowlist.json");
