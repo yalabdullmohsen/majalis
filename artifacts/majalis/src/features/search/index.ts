@@ -1,2 +1,7 @@
-/** ميزة search — هيكل FSD (B). المنطق يُنقل من المكوّنات الحالية في C/J. */
-export {};
+export { parseQuickNav, type QuickNavResult } from "@/features/search/quick-nav";
+export {
+  loadUnifiedSearchIndex,
+  searchUnifiedIndex,
+  type UnifiedSearchDoc,
+  type UnifiedSearchHit,
+} from "@/features/search/unified-local";
