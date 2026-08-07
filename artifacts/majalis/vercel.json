@@ -1209,6 +1209,10 @@
       "destination": "/index.html"
     },
     {
+      "source": "/about-us",
+      "destination": "/index.html"
+    },
+    {
       "source": "/topics/:path*",
       "destination": "/index.html"
     },
