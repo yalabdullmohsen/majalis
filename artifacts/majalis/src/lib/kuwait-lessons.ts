@@ -518,7 +518,11 @@ export const DEFAULT_KUWAIT_FILTERS: KuwaitLessonFilters = {
   contentKind: "الكل",
 };
 
-export function getRelativeStatusLabel(lesson: KuwaitLessonRecord, archived = false): string {
+export function getRelativeStatusLabel(
+  lesson: KuwaitLessonRecord,
+  archived = false,
+  now: Date = new Date(),
+): string {
   if (archived) return "منتهٍ";
 
   // «جارٍ الآن» فقط بجدول مؤكد (يوم+وقت قابل للتحليل) — لا احتياطي على nextOccurrenceMs
@@ -526,14 +530,14 @@ export function getRelativeStatusLabel(lesson: KuwaitLessonRecord, archived = fa
   if (
     isLessonComplete(lesson) &&
     lesson.day &&
-    isLessonInProgress(lesson.day, lesson.time)
+    isLessonInProgress(lesson.day, lesson.time, now)
   ) {
     return "جارٍ الآن";
   }
 
   // انتهى اليوم: بدأ موعده اليوم ولم تعد نافذة الحصة نشطة (ساعتان أو حتى الوقت المحدد)
   if (lesson.day) {
-    const clock = getKuwaitClock();
+    const clock = getKuwaitClock(now);
     const targetDay = DAY_INDEX[lesson.day];
     if (targetDay !== undefined && targetDay === clock.weekday) {
       const win = resolveLessonTimeWindow(lesson.time);
@@ -572,7 +576,7 @@ export function getFeaturedHomeStatusLabel(
     return "مستمر";
   }
 
-  const raw = getRelativeStatusLabel(lesson, false);
+  const raw = getRelativeStatusLabel(lesson, false, now);
   if (FEATURED_HOME_EXCLUDED_LABELS.has(raw)) return null;
 
   if (lesson.day && isLessonThisDay(lesson.day, now)) return "يبدأ اليوم";
