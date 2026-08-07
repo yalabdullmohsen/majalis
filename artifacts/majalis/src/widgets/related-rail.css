@@ -1,0 +1,6 @@
+.related-rail{margin-block:1.5rem;padding-inline:var(--page-gutter,1rem)}
+.related-rail__title{font-size:1.05rem;font-weight:700;margin-bottom:.75rem;color:var(--text-primary,var(--mj-ink))}
+.related-rail__list{display:flex;flex-wrap:wrap;gap:.5rem .75rem;list-style:none;margin:0;padding:0}
+.related-rail__list a{color:var(--color-brand,var(--mj-brand));text-decoration:none;font-size:.95rem}
+.related-rail__list a:hover{text-decoration:underline}
+.related-rail__group{color:var(--text-muted,var(--mj-muted));font-size:.85rem}

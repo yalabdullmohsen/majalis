@@ -7,6 +7,7 @@ import { SCHOLARS, findScholarById } from "@/lib/scholars-data";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { ContentReportButton } from "@/components/ContentReportButton";
 import { KnowledgeRelatedItems } from "@/components/knowledge/KnowledgeRelatedItems";
+import { GraphRelatedRail } from "@/widgets/RelatedRail";
 import { ExploreAlsoNav } from "@/components/ExploreAlsoNav";
 import { resolveScholarWorkLink } from "@/lib/scholar-library-links";
 import { PAGE_EXPLORE_LINKS } from "@/lib/explore-links";
@@ -288,6 +289,11 @@ export default function ScholarProfilePage() {
       </div>
 
       <KnowledgeRelatedItems sourceType="scholar" sourceId={String(scholar.id)} />
+      <GraphRelatedRail
+        kind="scholar"
+        slug={String((scholar as { slug?: string }).slug ?? scholar.id)}
+        titleAr="من الرسم البياني"
+      />
 
       <ExploreAlsoNav
         title="مواضع ذات صلة في المنصة"
