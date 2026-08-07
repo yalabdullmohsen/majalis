@@ -81,3 +81,7 @@
 ## G — الرسم البياني
 
 - `public/data/graph/links.json` + `verify:knowledge-graph` + محمّل shared.
+
+## H — RelatedRail
+
+- GraphRelatedRail يقرأ links.json ويُعرض في ملف العالِم.
