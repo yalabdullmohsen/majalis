@@ -19,7 +19,7 @@ const files = [
   "lib/asma-husna-data.ts", "lib/arbaeen-nawawi-seed.ts", "lib/sins-rights-data.ts",
   "lib/sheikhs-seed.ts", "lib/amr-bil-maruf-seed.ts", "lib/fiqh-issues-seed.ts",
   "lib/fiqh-council-seed.ts", "lib/mind-maps-data.ts", "lib/islamic-landmarks-data.ts",
-  "views/IslamicGlossaryPage.tsx", "views/AkhlaqPage.tsx", "views/SahabahPage.tsx",
+  "pages/account/ui/IslamicGlossaryView.tsx", "views/AkhlaqPage.tsx", "views/SahabahPage.tsx",
   "pages/worship/ui/DuasView.tsx", "pages/hadith/ui/HadithScienceView.tsx", "views/IslamicSectsPage.tsx",
   "views/SunanYawmiyyaPage.tsx", "views/WasayaNabawiyyaPage.tsx", "views/RaqaiqPage.tsx",
   "views/HikamSalafPage.tsx", "views/FadailAamalPage.tsx", "views/JannaNaarPage.tsx",

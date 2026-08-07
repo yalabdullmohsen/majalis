@@ -54,7 +54,7 @@ console.log("\n=== لا منطق تدوير يومي متفرق متبقٍّ ف�
     "src/pages/quran/ui/DuasQuranView.tsx",
     "src/pages/fiqh/ui/FiqhQawaidView.tsx",
     "src/views/ShimaelPage.tsx",
-    "src/views/IslamicGlossaryPage.tsx",
+    "src/pages/account/ui/IslamicGlossaryView.tsx",
     "src/views/AdabTalabIlmPage.tsx",
     "src/views/AlamatSaahPage.tsx",
     "src/views/MalaikaPage.tsx",

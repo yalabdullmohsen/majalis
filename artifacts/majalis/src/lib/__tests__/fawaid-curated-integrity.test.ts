@@ -148,7 +148,7 @@ assert(
  * ٢٠٢٦-٠٧-١٨/١٩ مرَّتين ثمَّ ارتدَّ بالضخِّ الجديد (٢٢٤ فائدةً في ج-٢٨٤).
  */
 function displayedCategories(): Set<string> {
-  const page = readFileSync(new URL("../../views/FawaidPage.tsx", import.meta.url), "utf8");
+  const page = readFileSync(new URL("../../pages/account/ui/FawaidView.tsx", import.meta.url), "utf8");
   const block = page.match(/const LEGACY_CATEGORIES = \[([\s\S]*?)\] as const;/);
   if (!block) throw new Error("تعذَّر استخراج LEGACY_CATEGORIES من FawaidPage.tsx");
   const legacy = [...block[1].matchAll(/"([^"]+)"/g)].map((m) => m[1]);
