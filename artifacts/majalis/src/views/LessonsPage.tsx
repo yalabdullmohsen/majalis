@@ -2,7 +2,7 @@ import { useEffect, useMemo, useState, useCallback } from "react";
 import { Pencil, Trash2 } from "lucide-react";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { ShareButtons } from "@/components/ContentActions";
-import { useLocation } from "wouter";
+import { Link, useLocation } from "wouter";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import { PageHeader, FilterChips } from "@/components/ui-common";
 import { PageLoadingGuard } from "@/components/PageLoadingGuard";
@@ -338,10 +338,6 @@ export default function LessonsPage({
     [tabLessons, filters],
   );
 
-  const filteredArchived = useMemo(
-    () => filterKuwaitLessons(archivedLessons, filters),
-    [archivedLessons, filters],
-  );
 
   const pageStats = useMemo(() => {
     const sheikhs = new Set(activeLessons.map((l) => l.sheikhName).filter(Boolean));
@@ -615,15 +611,17 @@ export default function LessonsPage({
               </section>
               )}
 
-              {filteredArchived.length > 0 ? (
+              {!loading && !loadError ? (
                 <section className="lessons-past-section" aria-labelledby="past-lessons-heading">
                   <h2 id="past-lessons-heading" className="lessons-past-section__title">الدروس السابقة</h2>
-                  {renderGrid(filteredArchived, "archived-")}
-                </section>
-              ) : !loading && !loadError ? (
-                <section className="lessons-past-section" aria-labelledby="past-lessons-heading">
-                  <h2 id="past-lessons-heading" className="lessons-past-section__title">الدروس السابقة</h2>
-                  <p className="lessons-empty-state">لا دروس سابقة ضمن التصفية الحالية.</p>
+                  <p className="lessons-empty-state">
+                    الدروس المنتهية في{" "}
+                    <Link href="/lessons/archive">الأرشيف</Link>
+                    {archivedLessons.length > 0
+                      ? ` (${archivedLessons.length})`
+                      : " — لا يوجد مؤرشف حالياً"}
+                    .
+                  </p>
                 </section>
               ) : null}
             </>

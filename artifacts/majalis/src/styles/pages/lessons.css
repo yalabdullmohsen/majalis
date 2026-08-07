@@ -376,3 +376,26 @@ html.dark .kuwait-tab:hover:not(.kuwait-tab--active) {
 }
 /* ══ نهاية شريط تصفية الدروس ════════════════════════════════════════════════ */
 
+
+/* أرشيف الدروس */
+.lessons-archive-back {
+  margin-block: 0 var(--space-16, 1rem);
+  padding-inline: var(--space-16, 1rem);
+}
+.lessons-archive-search {
+  display: block;
+  margin-block-end: var(--space-16, 1rem);
+  padding-inline: var(--space-16, 1rem);
+}
+.lessons-archive-search input {
+  width: 100%;
+  min-height: 44px;
+}
+.lessons-archive-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-12, 0.75rem);
+  text-align: center;
+}
