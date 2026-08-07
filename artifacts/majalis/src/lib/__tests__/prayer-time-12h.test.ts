@@ -21,7 +21,7 @@ assert.match(page, /handleBack/);
 assert.match(page, /pts-back/);
 assert.doesNotMatch(page, /displayTime24/);
 
-const mushaf = readFileSync(join(root, "views/MushafPageView.tsx"), "utf8");
+const mushaf = readFileSync(join(root, "pages/quran/ui/MushafPageView.tsx"), "utf8");
 assert.match(mushaf, /pageFillMode/);
 assert.match(mushaf, /togglePageFillMode/);
 assert.match(mushaf, /quran-shell--page-fill/);

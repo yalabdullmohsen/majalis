@@ -72,7 +72,7 @@ console.log("═══ JUZ_START_PAGES + findPageForAyah ═══");
 
 console.log("═══ MushafPageView — بلا transform:scale، تمييز mf2، فهرس موسّع ═══");
 {
-  const viewSrc = readFileSync(path.join(ROOT, "src/views/MushafPageView.tsx"), "utf8");
+  const viewSrc = readFileSync(path.join(ROOT, "src/pages/quran/ui/MushafPageView.tsx"), "utf8");
   assert(!viewSrc.includes("transform: `scale("), "أُزيل تكبير transform:scale من قارئ المصحف");
   assert(viewSrc.includes("--qs-font-scale"), "تكبير الخط عبر متغير CSS قابل للتمرير");
   assert(viewSrc.includes("qs-mushaf-body--hl-"), "نمط التمييز يُمرَّر لحاوية الصفحة");

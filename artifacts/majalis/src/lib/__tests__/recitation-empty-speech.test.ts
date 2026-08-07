@@ -37,7 +37,7 @@ const err = new ASRProviderUnavailableError({
 assert.equal(err.detail.code, "NO_SPEECH");
 assert.ok(err.message.includes("كلام"));
 
-const memSrc = readFileSync(resolve(appRoot, "src/views/QuranMemorizationPage.tsx"), "utf8");
+const memSrc = readFileSync(resolve(appRoot, "src/pages/quran/ui/QuranMemorizationView.tsx"), "utf8");
 assert.match(memSrc, /getSpeechRecognitionPlugin/);
 assert.match(memSrc, /voiceError/);
 assert.match(memSrc, /لم يُكتشف كلام/);

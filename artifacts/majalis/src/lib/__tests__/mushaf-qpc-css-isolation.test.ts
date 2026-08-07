@@ -15,7 +15,7 @@ const appRoot = resolve(__dirname, "../../..");
 
 const elite = readFileSync(resolve(appRoot, "src/styles/elite-2026.css"), "utf8");
 const mushafV2 = readFileSync(resolve(appRoot, "src/styles/mushaf-v2.css"), "utf8");
-const viewSrc = readFileSync(resolve(appRoot, "src/views/MushafPageView.tsx"), "utf8");
+const viewSrc = readFileSync(resolve(appRoot, "src/pages/quran/ui/MushafPageView.tsx"), "utf8");
 const pageComp = readFileSync(resolve(appRoot, "src/components/quran/MushafPageV2.tsx"), "utf8");
 const dataLoader = readFileSync(resolve(appRoot, "src/lib/mushaf-v2-data.ts"), "utf8");
 
