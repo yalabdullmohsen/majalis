@@ -34,7 +34,7 @@ console.log("\n=== لا منطق تدوير يومي متفرق متبقٍّ ف�
   // (إعادة استخدام تصميم البطاقة، لا محتوى يومي).
   // ArbaeenNawawiPage يُبقي getDayOfYear() لشارة "اليوم" داخل القائمة الكاملة فقط.
   const pagesWithFormerDailyWidgets = [
-    "src/views/IslamicScholarsPage.tsx",
+    "src/pages/library/ui/IslamicScholarsView.tsx",
     "src/views/HikamSalafPage.tsx",
     "src/pages/hadith/ui/HadithScienceView.tsx",
     "src/pages/quran/ui/QuranTajweedView.tsx",

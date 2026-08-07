@@ -84,7 +84,7 @@ console.log("\n=== explore-links المركزي ===");
 
 console.log("\n=== صفحات كانت ميتة تحمل ExploreAlso / Related ===");
 {
-  const scholar = readFileSync(resolve(srcRoot, "views/ScholarProfilePage.tsx"), "utf8");
+  const scholar = readFileSync(resolve(srcRoot, "pages/library/ui/ScholarProfileView.tsx"), "utf8");
   assert(scholar.includes("KnowledgeRelatedItems"), "ملف العالِم يركّب KnowledgeRelatedItems");
   assert(scholar.includes("PAGE_EXPLORE_LINKS"), "ملف العالِم يستورد PAGE_EXPLORE_LINKS");
 

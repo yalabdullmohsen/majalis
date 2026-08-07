@@ -70,7 +70,7 @@ const requiredLayouts = [
   "src/components/LegalPageLayout.tsx",
   "src/components/platform/ContentDetailLayout.tsx",
   "src/components/layout/ContentHubLayout.tsx",
-  "src/views/ScholarProfilePage.tsx",
+  "src/pages/library/ui/ScholarProfileView.tsx",
   // الجولة الخامسة — محاور محتوى عالية الزيارة
   "src/views/AdhkarPage.tsx",
   "src/views/FawaidPage.tsx",
