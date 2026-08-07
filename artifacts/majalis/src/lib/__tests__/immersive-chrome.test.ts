@@ -27,7 +27,7 @@ assert.equal(isQuranImmersivePath("/mushaf/page/1"), true);
 assert.equal(isQuranImmersivePath("/quran-hub"), true);
 assert.equal(isQuranImmersivePath("/fiqh"), false);
 
-assert.equal(isImmersiveChromePath("/prayer-times"), false, "الصلاة ليست غمرية — الشريط السفلي ظاهر");
+assert.equal(isImmersiveChromePath("/prayer-times"), false, "الصلاة ليست غمرية كاملة — الشريط السفلي وشريط الأقسام ظاهران");
 // أثناء إيقاف المصحف مؤقتًا («قريبًا») يبقى الشريط ظاهرًا
 assert.equal(isImmersiveChromePath("/mushaf"), false);
 assert.equal(isImmersiveChromePath("/mushaf/2"), false);
@@ -43,24 +43,31 @@ assert.match(prayerSrc, /تنبيهات الأذان/);
 
 const topBar = readFileSync(resolve(appRoot, "src/components/TopSectionBar.tsx"), "utf8");
 assert.match(topBar, /isImmersiveChromePath/);
+// شريط الأقسام يبقى على الصلاة (لا يُخفى بـ isPrayerTimesPath)
+assert.equal(topBar.includes("isPrayerTimesPath"), false, "TopSectionBar لا يُخفى على الصلاة");
 
 const appSrc = readFileSync(resolve(appRoot, "src/App.tsx"), "utf8");
 assert.match(appSrc, /quran-hub"><Redirect to="\/mushaf"/);
 assert.match(appSrc, /MushafComingSoonPage/);
 assert.equal(appSrc.includes("MushafPageView"), false, "قارئ المصحف غير موصول أثناء الإيقاف المؤقت");
 assert.match(appSrc, /isImmersiveChromePath/);
+assert.match(appSrc, /isPrayerTimesPath/);
+assert.match(appSrc, /hideSiteChrome/);
 
 const bottomNav = readFileSync(resolve(appRoot, "src/components/BottomNavBar.tsx"), "utf8");
 assert.match(bottomNav, /BOTTOM_NAV_TABS/);
 assert.equal(bottomNav.includes('href: "/quran-hub"'), false);
 assert.match(bottomNav, /isImmersiveChromePath/);
+// الشريط السفلي لا يُخفى بمسار الصلاة
+assert.equal(bottomNav.includes("isPrayerTimesPath"), false);
 
 const navMap = readFileSync(resolve(appRoot, "src/lib/nav-map.ts"), "utf8");
 assert.match(navMap, /href: "\/quran-knowledge"/);
 assert.equal(navMap.includes('href: "/quran-hub"'), false);
 
 const navBar = readFileSync(resolve(appRoot, "src/components/NavBar.tsx"), "utf8");
-assert.match(navBar, /isImmersiveChromePath\(location\)\) return null/);
+assert.match(navBar, /isImmersiveChromePath\(location\) \|\| isPrayerTimesPath\(location\)\) return null/);
+assert.match(navBar, /isPrayerTimesPath/);
 
 const prayerRanks = readFileSync(resolve(appRoot, "src/views/PrayerRanksPage.tsx"), "utf8");
 assert.equal(prayerRanks.includes("SectionQuiz"), false, "مراتب الصلاة بلا SectionQuiz");
