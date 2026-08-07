@@ -78,6 +78,8 @@ const SearchPage = lazy(() => import("@/views/SearchPage"));
 const TopicPage = lazy(() => import("@/views/TopicPage"));
 const TopicsIndexPage = lazy(() => import("@/views/TopicsIndexPage"));
 const LessonsPage = lazy(() => import("@/views/LessonsPage"));
+const TeachersIndexPage = lazy(() => import("@/views/TeachersIndexPage"));
+const TeacherDetailPage = lazy(() => import("@/views/TeacherDetailPage"));
 const LessonDetailPage = lazy(() => import("@/views/LessonDetailPage"));
 const ScientificAnnouncementDetailPage = lazy(() => import("@/views/ScientificAnnouncementDetailPage"));
 const _LibraryPage = lazy(() => import("@/views/LibraryPage"));
@@ -539,6 +541,8 @@ function Router() {
       <Route path="/lessons/current"><Redirect to="/lessons" /></Route>
       <Route path="/lessons"><SafeLazyRoute component={LessonsPage} /></Route>
       <Route path="/lessons/:id"><SafeLazyRoute component={LessonDetailPage} /></Route>
+      <Route path="/teachers/:slug"><SafeLazyRoute component={TeacherDetailPage} /></Route>
+      <Route path="/teachers"><SafeLazyRoute component={TeachersIndexPage} /></Route>
       <Route path="/calendar"><SafeLazyRoute component={CalendarPage} /></Route>
       <Route path="/kuwait-lessons"><SafeLazyRoute component={KuwaitLessonsPage} /></Route>
       <Route path="/announcements"><Redirect to="/lessons" /></Route>
