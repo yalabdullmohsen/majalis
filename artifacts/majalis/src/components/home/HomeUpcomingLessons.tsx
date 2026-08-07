@@ -4,8 +4,12 @@ import { RequestManager } from "@/lib/request-manager";
 import { UnifiedLessonCard } from "@/components/lessons/UnifiedLessonCard";
 import { getUnifiedActiveLessons } from "@/lib/lessons-service";
 import type { KuwaitLessonRecord } from "@/lib/kuwait-lessons";
+import {
+  filterFeaturedHomeLessons,
+  getFeaturedHomeStatusLabel,
+} from "@/lib/kuwait-lessons";
 import { fromKuwaitLesson } from "@/lib/unified-lesson-card";
-import { computeNextOccurrenceMs, getKuwaitClock, isLessonThisDay } from "@/lib/lesson-time";
+import { computeNextOccurrenceMs, getKuwaitClock } from "@/lib/lesson-time";
 import { Widget } from "@/components/widgets/Widget";
 
 const LessonsIcon = () => (
@@ -74,11 +78,11 @@ export function HomeUpcomingLessons({
   const clock = getKuwaitClock();
   const todayArabic = ARABIC_WEEKDAY[clock.weekday] ?? "";
 
-  const nowMs = clock.dayStartMs + (clock.hour * 60 + clock.minute) * 60_000;
-  const TWO_HOURS_MS = 2 * 3_600_000;
-
-  const todayLessons = allLessons
-    .filter(l => isLessonThisDay(l.day))
+  const todayLessons = filterFeaturedHomeLessons(allLessons)
+    .filter((l) => {
+      const label = getFeaturedHomeStatusLabel(l);
+      return label === "يبدأ اليوم" || label === "مستمر";
+    })
     .map(l => {
       const freshMs = computeNextOccurrenceMs(l.day, l.time);
       const todayMs = freshMs > clock.dayStartMs + 24 * 3_600_000
@@ -86,7 +90,6 @@ export function HomeUpcomingLessons({
         : freshMs;
       return { ...l, nextOccurrenceMs: todayMs };
     })
-    .filter(l => nowMs <= l.nextOccurrenceMs + TWO_HOURS_MS)
     .sort((a, b) => a.nextOccurrenceMs - b.nextOccurrenceMs)
     .slice(0, 6);
 
@@ -109,7 +112,7 @@ export function HomeUpcomingLessons({
       >
         <div className="home-kuwait-grid lesson-unified-grid">
           {todayLessons.map((lesson) => (
-            <UnifiedLessonCard key={lesson.id} lesson={fromKuwaitLesson(lesson)} compact />
+            <UnifiedLessonCard key={lesson.id} lesson={fromKuwaitLesson(lesson, false, { featuredHome: true })} compact />
           ))}
         </div>
       </PageLoadingGuard>
