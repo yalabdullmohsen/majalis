@@ -10,7 +10,7 @@ import { VIEWPORT_CONTENT } from "../ensure-chrome-meta";
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
 const site = JSON.parse(readFileSync(resolve(root, "site.config.json"), "utf8"));
 const indexHtml = readFileSync(resolve(root, "index.html"), "utf8");
-const themeCss = readFileSync(resolve(root, "src/styles/theme.css"), "utf8");
+const themeCss = readFileSync(resolve(root, "src/app/styles/theme.css"), "utf8");
 
 assert.equal(site.themeColor, "#F2F4F3");
 assert.equal(site.themeColorDark, "#101614");

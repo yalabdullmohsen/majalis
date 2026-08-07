@@ -139,7 +139,7 @@ const cssFiles = [
   "src/styles/design-system.css",
   "src/styles/final-release.css",
   "src/styles/ios-edge.css",
-  "src/styles/theme.css",
+  "src/app/styles/theme.css",
 ].concat(
   walk(resolve(srcRoot, "styles/m2030"), (p) => p.endsWith(".css")).map((p) => rel(p))
 );

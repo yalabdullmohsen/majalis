@@ -17,7 +17,7 @@ import { prewarmAudioCdns, prewarmTextApis, prewarmSupabaseOrigin } from "./lib/
 import { armSplashAutoHide } from "./lib/splash-screen";
 import { prefetchTopRoutesOnIdle } from "./lib/prefetch-top-routes";
 // هوية identity-v2 — الرموز أولاً (@theme + --mj-*) قبل أي طبقة قديمة
-import "./styles/theme.css";
+import "./app/styles/theme.css";
 import "./styles/components/page-hero.css";
 import "./styles/components/hub-card.css";
 // Majlisilm 2030 + طبقات الأساس (تُبقى كما هي — لا حذف في هذا الـPR)
