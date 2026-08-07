@@ -188,6 +188,8 @@ const MutashabihatPage = lazy(() => import("@/views/MutashabihatPage"));
 const QuranMemorizationPage = lazy(() => import("@/views/QuranMemorizationPage"));
 const QuranMemorizationPlansPage = lazy(() => import("@/views/QuranMemorizationPlansPage"));
 const IslamicScholarsPage = lazy(() => import("@/views/IslamicScholarsPage"));
+const TeachersIndexPage = lazy(() => import("@/views/TeachersIndexPage"));
+const TeacherDetailPage = lazy(() => import("@/views/TeacherDetailPage"));
 const ScholarProfilePage = lazy(() => import("@/views/ScholarProfilePage"));
 const AsmaaHusnaPage = lazy(() => import("@/views/AsmaaHusnaPage"));
 const AkhlaqPage = lazy(() => import("@/views/AkhlaqPage"));
@@ -576,6 +578,8 @@ function Router() {
       <Route path="/mind-map"><SafeLazyRoute component={MindMapPage} /></Route>
       <Route path="/islamic-landmarks"><SafeLazyRoute component={IslamicLandmarksPage} /></Route>
       <Route path="/mutashabihat"><SafeLazyRoute component={MutashabihatPage} /></Route>
+      <Route path="/teachers/:slug"><SafeLazyRoute component={TeacherDetailPage} /></Route>
+      <Route path="/teachers"><SafeLazyRoute component={TeachersIndexPage} /></Route>
       <Route path="/scholars/:id"><SafeLazyRoute component={ScholarProfilePage} /></Route>
       <Route path="/scholars"><SafeLazyRoute component={IslamicScholarsPage} /></Route>
       <Route path="/asma-husna"><SafeLazyRoute component={AsmaaHusnaPage} /></Route>
