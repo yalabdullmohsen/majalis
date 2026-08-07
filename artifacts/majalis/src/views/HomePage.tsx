@@ -184,9 +184,21 @@ export default function HomePage() {
         }
       />
 
-      <section className="m2030-band m2030-band--sage" aria-label="مدخل المبتدئ">
-        <HomeStartHereSection />
-      </section>
+      {visibleWidgets.includes("lessons") && (
+        <section className="m2030-band m2030-band--sage" aria-label="دروس اليوم">
+          <div className="m2030-band__head">
+            <div>
+              <h2 className="m2030-band__title">اليوم في المنصة</h2>
+              <p className="m2030-band__sub">دروس ودورات قادمة</p>
+            </div>
+            <Link href="/lessons" className="m2030-band__link">كل الدروس</Link>
+          </div>
+          <SafeHomeSection name="lessons">
+            <HomeUpcomingLessons />
+            <HomeUpcomingCourses />
+          </SafeHomeSection>
+        </section>
+      )}
 
       {heroCountdown && (
         <section className="m2030-band" aria-label="ملخص الصلاة">
@@ -204,22 +216,6 @@ export default function HomePage() {
               <p className="m2030-prayer__cta">عرض مواقيت اليوم ←</p>
             </div>
           </Link>
-        </section>
-      )}
-
-      {visibleWidgets.includes("lessons") && (
-        <section className="m2030-band m2030-band--sage" aria-label="دروس اليوم">
-          <div className="m2030-band__head">
-            <div>
-              <h2 className="m2030-band__title">اليوم في المنصة</h2>
-              <p className="m2030-band__sub">دروس ودورات قادمة</p>
-            </div>
-            <Link href="/lessons" className="m2030-band__link">كل الدروس</Link>
-          </div>
-          <SafeHomeSection name="lessons">
-            <HomeUpcomingLessons />
-            <HomeUpcomingCourses />
-          </SafeHomeSection>
         </section>
       )}
 
@@ -252,6 +248,10 @@ export default function HomePage() {
             </Link>
           ))}
         </div>
+      </section>
+
+      <section className="m2030-band m2030-band--sage" aria-label="مدخل المبتدئ">
+        <HomeStartHereSection />
       </section>
 
       <section className="m2030-band" aria-label="أقسام علمية">
