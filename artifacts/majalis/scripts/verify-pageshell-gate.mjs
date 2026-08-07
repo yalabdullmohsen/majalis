@@ -73,7 +73,7 @@ const requiredLayouts = [
   "src/pages/library/ui/ScholarProfileView.tsx",
   // الجولة الخامسة — محاور محتوى عالية الزيارة
   "src/pages/worship/ui/AdhkarView.tsx",
-  "src/views/FawaidPage.tsx",
+  "src/pages/account/ui/FawaidView.tsx",
   "src/views/TopicsIndexPage.tsx",
   "src/pages/fiqh/ui/RulingsView.tsx",
   "src/pages/worship/ui/TasbihView.tsx",

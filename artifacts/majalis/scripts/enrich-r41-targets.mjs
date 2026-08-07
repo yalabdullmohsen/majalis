@@ -26,7 +26,7 @@ const TARGETS = [
   { gap: "views_SeerahPage.tsx.json", file: "src/views/SeerahPage.tsx", kind: "seerah" },
   { gap: "views_RaqaiqPage.tsx.json", file: "src/views/RaqaiqPage.tsx", kind: "raqaiq" },
   { gap: "views_ZakatPage.tsx.json", file: "src/pages/fiqh/ui/ZakatView.tsx", kind: "zakat" },
-  { gap: "views_IslamicGlossaryPage.tsx.json", file: "src/views/IslamicGlossaryPage.tsx", kind: "glossary" },
+  { gap: "views_IslamicGlossaryPage.tsx.json", file: "src/pages/account/ui/IslamicGlossaryView.tsx", kind: "glossary" },
   { gap: "views_HadithSciencePage.tsx.json", file: "src/pages/hadith/ui/HadithScienceView.tsx", kind: "hadith-science" },
   { gap: "views_QuranTajweedPage.tsx.json", file: "src/pages/quran/ui/QuranTajweedView.tsx", kind: "tajweed" },
   { gap: "views_IslamicSectsPage.tsx.json", file: "src/views/IslamicSectsPage.tsx", kind: "sects" },

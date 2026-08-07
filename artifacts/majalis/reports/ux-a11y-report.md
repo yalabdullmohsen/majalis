@@ -108,7 +108,7 @@ git diff --name-only HEAD~1 HEAD | grep "src/data\|adhkar-seed\|quran"
 | `src/index.css` | focus-visible + touch targets + reduced-motion + skeleton + page transitions |
 | `src/pages/worship/ui/AdhkarView.tsx` | sessionStorage + haptics |
 | `src/views/QuranPage.tsx` | شارة استئناف القراءة |
-| `src/views/FawaidPage.tsx` | useScrollRestore |
+| `src/pages/account/ui/FawaidView.tsx` | useScrollRestore |
 | `src/pages/lessons/ui/LessonsView.tsx` | useScrollRestore |
 | `src/pages/library/ui/IslamicScholarsView.tsx` | useScrollRestore |
 

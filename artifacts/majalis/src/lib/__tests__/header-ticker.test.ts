@@ -73,7 +73,7 @@ console.log("\n=== NavBar.tsx / App.tsx — نقطة دخول البحث موح�
   const gsmSrc = readFileSync(resolve(appRoot, "src/components/GlobalSearchModal.tsx"), "utf-8");
   assert(gsmSrc.includes("/flashcards") || gsmSrc.includes("/my-learning"), "رابط مراجعة من البحث الشامل");
 
-  const flashSrc = readFileSync(resolve(appRoot, "src/views/FlashCardsPage.tsx"), "utf-8");
+  const flashSrc = readFileSync(resolve(appRoot, "src/pages/account/ui/FlashCardsView.tsx"), "utf-8");
   assert(flashSrc.includes("Numpad1"), "جلسة المراجعة تدعم لوحة الأرقام للتقييم");
   assert(flashSrc.includes('e.key === "Enter"'), "Enter يكشف البطاقة");
   assert(flashSrc.includes('e.key === "Escape"'), "Escape يخفي الإجابة");
