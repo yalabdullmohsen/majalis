@@ -553,16 +553,16 @@ const verifiedFiqhSessions = (PLATFORM_SEED.fiqh_sessions || []).filter(
 );
 
 const ADHKAR_CATEGORIES = [
-  { id: "morning", name: "أذكار الصباح" },
-  { id: "evening", name: "أذكار المساء" },
-  { id: "sleep", name: "أذكار النوم" },
-  { id: "wakeup", name: "أذكار الاستيقاظ" },
-  { id: "mosque", name: "أذكار المسجد" },
-  { id: "salah", name: "أذكار الصلاة" },
-  { id: "after-salah", name: "أذكار بعد الصلاة" },
-  { id: "travel", name: "أذكار السفر" },
-  { id: "distress", name: "أذكار الكرب" },
-  { id: "istighfar", name: "أذكار الاستغفار" },
+  { id: "morning", slug: "morning", name: "أذكار الصباح" },
+  { id: "evening", slug: "evening", name: "أذكار المساء" },
+  { id: "sleep", slug: "sleep", name: "أذكار النوم" },
+  { id: "wakeup", slug: "wakeup", name: "أذكار الاستيقاظ" },
+  { id: "mosque", slug: "mosque", name: "أذكار المسجد" },
+  { id: "salah", slug: "salah", name: "أذكار الصلاة" },
+  { id: "after-salah", slug: "after-salah", name: "أذكار بعد الصلاة" },
+  { id: "travel", slug: "travel", name: "أذكار السفر" },
+  { id: "distress", slug: "distress", name: "أذكار الكرب" },
+  { id: "istighfar", slug: "istighfar", name: "أذكار الاستغفار" },
 ];
 
 const ASMAA_HUSNA = [

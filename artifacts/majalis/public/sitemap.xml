@@ -21,6 +21,31 @@
     <priority>0.82</priority>
   </url>
   <url>
+    <loc>https://majlisilm.com/adhkar/morning</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/adhkar/evening</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/adhkar/sleep</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/adhkar/after-salah</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/adhkar/distress</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
     <loc>https://majlisilm.com/quran/tajweed</loc>
     <changefreq>weekly</changefreq>
     <priority>0.82</priority>

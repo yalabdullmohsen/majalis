@@ -4713,6 +4713,15 @@ body:not(.mobile-nav-body-lock) .mobile-nav-layer {
   color: var(--majalis-emerald, var(--mj-brand, #1f7a5a)) !important;
 }
 
+html[data-theme="dark"] .navbar-v3__tagline {
+  color: #8fd4b0 !important;
+}
+
+html[data-theme="dark"] .navbar-v3 a.navbar-v3__tagline:hover,
+html[data-theme="dark"] .navbar-v3 a.navbar-v3__tagline:focus-visible {
+  color: #b6ebcf !important;
+}
+
 @media (min-width: 880px) {
   .navbar-v3__tagline {
     flex: 0 1 13rem;
