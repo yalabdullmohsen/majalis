@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, useRef } from "react";
+import { useEffect, useState, useCallback } from "react";
 import {
   BookOpen, CheckCircle2, Lock, PartyPopper, RotateCw,
   Layers, Trophy, CalendarCheck,
@@ -148,22 +148,15 @@ function QualityBar({
   card: FlashCard;
   onRate: (q: ReviewQuality) => void;
 }) {
-  const firstBtnRef = useRef<HTMLButtonElement | null>(null);
-
-  useEffect(() => {
-    firstBtnRef.current?.focus();
-  }, [card.id]);
-
   return (
     <div className="fc-quality" role="group" aria-label="تقييم التذكّر">
       <p className="fc-quality__label">كيف كان مستوى تذكّرك؟</p>
       <div className="fc-quality__buttons">
-        {QUALITY_OPTIONS.map((opt, i) => {
+        {QUALITY_OPTIONS.map((opt) => {
           const days = previewDays(card, opt.value);
           return (
             <button
               key={opt.value}
-              ref={i === 0 ? firstBtnRef : undefined}
               type="button"
               className={`fc-quality__btn ${FC_Q_MOD[opt.value] ?? ""}`}
               onClick={() => onRate(opt.value)}

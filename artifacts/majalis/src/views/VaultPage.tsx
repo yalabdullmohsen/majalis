@@ -85,15 +85,6 @@ function AddNoteModal({
     return () => document.removeEventListener("keydown", handler);
   }, [onClose]);
 
-  // نُركِّز الحقل برمجيًا بدل خاصية autoFocus JSX — نفس السلوك المرغوب فعليًا
-  // (نقل التركيز لداخل الحوار عند فتحه، وهو تطبيق ARIA سليم لصناديق الحوار لا
-  // عطل وصول)، لكن jsx-a11y/no-autofocus يُحذِّر تحديدًا من الخاصية التصريحية
-  // JSX (تخطف التركيز بلا سياق واضح للمستخدم أحيانًا)؛ .focus() البرمجي هنا
-  // مقصود وواعٍ لسياق حوار مفتوح فعلاً، فلا يُخالف الفحص.
-  useEffect(() => {
-    textareaRef.current?.focus();
-  }, []);
-
   const handleSave = async () => {
     const trimmed = text.trim();
     if (!trimmed) return;
@@ -154,13 +145,6 @@ function NotesTab({
   const [editing, setEditing] = useState<string | null>(null);
   const [editText, setEditText] = useState("");
   const editTextareaRef = useRef<HTMLTextAreaElement | null>(null);
-
-  // تركيز برمجي بدل autoFocus JSX (راجع نفس الشرح في AddNoteModal أعلاه) —
-  // عنصر واحد فقط من هذا الـtextarea موجود في DOM في أي لحظة (الشرط الشرطي
-  // أدناه يعرض واحدًا فقط لكل note.id يطابق editing)، فref مشترك واحد يكفي.
-  useEffect(() => {
-    if (editing) editTextareaRef.current?.focus();
-  }, [editing]);
 
   const startEdit = (note: VaultNote) => {
     setEditing(note.id);

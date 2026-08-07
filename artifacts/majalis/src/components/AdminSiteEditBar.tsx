@@ -63,8 +63,6 @@ function EditDialog({ el, path, onDone }: EditDialogProps) {
   const [text, setText] = useState((el.getAttribute("data-orig-text") || el.textContent || "").trim());
   const ta = useRef<HTMLTextAreaElement>(null);
 
-  useEffect(() => { ta.current?.focus(); ta.current?.select(); }, []);
-
   const save = useCallback(() => {
     const newText = text.trim();
     const key = elemKey(el);
