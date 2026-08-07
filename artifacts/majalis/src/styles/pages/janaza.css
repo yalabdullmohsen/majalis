@@ -238,9 +238,10 @@ html.dark .jnz-subtitle {
 .jnz-hadith-box__ref { font-size: .72rem; color: var(--mj-brand); font-style: normal; display: block; }
 
 .jnz-related { margin-top: 2.5rem; }
-.jnz-related__title { font-size: var(--ds-text-base); font-weight: 700; color: var(--mj-ink, #111); margin: 0 0 .75rem; }
+.jnz-related__title { font-size: var(--ds-text-base); font-weight: 700; color: var(--mj-brand-deep, #111); margin: 0 0 .75rem; }
+/* أسطح الجنازة بيضاء ثابتة — لا تبييض ليلي للنص */
 html[data-theme="dark"] .jnz-related__title,
-html.dark .jnz-related__title { color: var(--mj-ink, #F2F4F3); }
+html.dark .jnz-related__title { color: var(--mj-brand-deep, #143F35); }
 .jnz-related__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5rem; }
 .jnz-related__link {
   background: #fff;
