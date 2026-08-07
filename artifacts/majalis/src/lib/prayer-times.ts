@@ -23,6 +23,63 @@ export const KUWAIT_GOVERNORATES: KuwaitGovernorate[] = [
 ];
 
 const GOV_STORAGE_KEY = "majalis-governorate-v1";
+const PRAYER_CACHE_KEY = "majalis-prayer-cache-v2";
+const PRAYER_METHOD_ID = "kuwait-mwl-v1";
+
+type PrayerDayCache = {
+  method: string;
+  govId: string;
+  byDate: Record<string, PrayerTimesPayload>;
+  updatedAt: string;
+};
+
+function readPrayerCache(): PrayerDayCache | null {
+  try {
+    const raw = localStorage.getItem(PRAYER_CACHE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as PrayerDayCache;
+    if (!parsed?.byDate || typeof parsed.byDate !== "object") return null;
+    return parsed;
+  } catch {
+    return null;
+  }
+}
+
+function writePrayerCache(cache: PrayerDayCache): void {
+  try {
+    localStorage.setItem(PRAYER_CACHE_KEY, JSON.stringify(cache));
+  } catch {
+    /* ignore quota */
+  }
+}
+
+/** قراءة فورية من الكاش — بلا شبكة ولا انتظار. */
+export function getCachedPrayerTimes(governorateId?: string): PrayerTimesPayload | null {
+  const gov = governorateId
+    ? (KUWAIT_GOVERNORATES.find((g) => g.id === governorateId) ?? KUWAIT_GOVERNORATES[0])
+    : getSelectedGovernorate();
+  const cache = readPrayerCache();
+  if (!cache || cache.govId !== gov.id || cache.method !== PRAYER_METHOD_ID) return null;
+  return cache.byDate[kuwaitDateKey()] ?? null;
+}
+
+function putPrayerCacheDay(govId: string, dateKey: string, payload: PrayerTimesPayload): void {
+  const prev = readPrayerCache();
+  const byDate = prev?.govId === govId && prev.method === PRAYER_METHOD_ID ? { ...prev.byDate } : {};
+  byDate[dateKey] = payload;
+  // احتفظ بـ ~45 يوماً كحد أقصى في التخزين
+  const keys = Object.keys(byDate).sort();
+  while (keys.length > 45) {
+    const drop = keys.shift();
+    if (drop) delete byDate[drop];
+  }
+  writePrayerCache({
+    method: PRAYER_METHOD_ID,
+    govId,
+    byDate,
+    updatedAt: new Date().toISOString(),
+  });
+}
 
 export function getSelectedGovernorate(): KuwaitGovernorate {
   try {
@@ -197,7 +254,7 @@ async function computePrayerTimesLocal(
   };
 }
 
-function staticPrayerFallback(cityName = "الكويت – محافظة العاصمة"): PrayerTimesPayload {
+export function staticPrayerFallback(cityName = "الكويت – محافظة العاصمة"): PrayerTimesPayload {
   const month = new Date().getMonth() + 1;
   const isSummer = month >= 5 && month <= 9;
   const timings: Record<string, string> = isSummer
@@ -422,68 +479,137 @@ export function computePrayerStatus(prayers: PrayerSlot[]): PrayerStatus {
 }
 
 /**
- * Never throws — always returns usable prayer times.
- * Pass a governorateId to get times for a specific governorate;
- * omit to use the governorate stored in localStorage.
+ * مواقيت فورية: كاش → حساب محلي → fallback ثابت.
+ * الشبكة تُحدَّث في الخلفية عبر refreshPrayerTimesInBackground ولا تُعيق الفتح.
  */
 export async function fetchPrayerTimes(governorateId?: string): Promise<PrayerTimesPayload> {
   const gov = governorateId
     ? (KUWAIT_GOVERNORATES.find((g) => g.id === governorateId) ?? KUWAIT_GOVERNORATES[0])
     : getSelectedGovernorate();
-
   const cityName = `الكويت – محافظة ${gov.name}`;
+  const dateKey = kuwaitDateKey();
+
+  const cached = getCachedPrayerTimes(gov.id);
+  if (cached?.ok && cached.prayers?.length) {
+    void refreshPrayerTimesInBackground(gov.id);
+    return cached;
+  }
+
+  try {
+    const local = await computePrayerTimesLocal(gov.lat, gov.lon, cityName);
+    putPrayerCacheDay(gov.id, dateKey, local);
+    void warmPrayerCacheAhead(gov, 30);
+    void refreshPrayerTimesInBackground(gov.id);
+    return local;
+  } catch {
+    /* continue */
+  }
+
+  const fallback = staticPrayerFallback(cityName);
+  putPrayerCacheDay(gov.id, dateKey, fallback);
+  void refreshPrayerTimesInBackground(gov.id);
+  return fallback;
+}
+
+/** تحديث خلفي اختياري من الشبكة دون حجب الواجهة. */
+export async function refreshPrayerTimesInBackground(governorateId?: string): Promise<void> {
+  const gov = governorateId
+    ? (KUWAIT_GOVERNORATES.find((g) => g.id === governorateId) ?? KUWAIT_GOVERNORATES[0])
+    : getSelectedGovernorate();
+  const cityName = `الكويت – محافظة ${gov.name}`;
+  const dateKey = kuwaitDateKey();
   const isCapital = gov.id === "capital";
 
-  // Supabase / API cache only has Capital times — skip for other governorates
-  if (isCapital) {
-    try {
-      const { getPrayerTimesFromDb } = await import("./supabase");
-      const row = await getPrayerTimesFromDb(kuwaitDateKey());
-      if (row) {
-        const timings: Record<string, string> = {
-          Fajr: row.fajr,
-          Sunrise: row.sunrise,
-          Dhuhr: row.dhuhr,
-          Asr: row.asr,
-          Maghrib: row.maghrib,
-          Isha: row.isha,
-        };
-        return {
-          ...buildPayload(timings, { timezone: "Asia/Kuwait" }, {
-            gregorian: { date: kuwaitDateParam() },
-          }, cityName),
-          source: "مواقيت محدّثة",
-        };
+  try {
+    if (isCapital) {
+      try {
+        const { getPrayerTimesFromDb } = await import("./supabase");
+        const row = await getPrayerTimesFromDb(dateKey);
+        if (row) {
+          const timings: Record<string, string> = {
+            Fajr: row.fajr,
+            Sunrise: row.sunrise,
+            Dhuhr: row.dhuhr,
+            Asr: row.asr,
+            Maghrib: row.maghrib,
+            Isha: row.isha,
+          };
+          const payload = {
+            ...buildPayload(timings, { timezone: "Asia/Kuwait" }, {
+              gregorian: { date: kuwaitDateParam() },
+            }, cityName),
+            source: "مواقيت محدّثة",
+          };
+          putPrayerCacheDay(gov.id, dateKey, payload);
+          return;
+        }
+      } catch {
+        /* fall through */
       }
-    } catch {
-      // fall through
+
+      try {
+        const response = await requestFetch("/api/prayer-times", {
+          headers: { Accept: "application/json" },
+          signal: AbortSignal.timeout(5_000),
+        });
+        const data = (await response.json()) as PrayerTimesPayload & { message?: string };
+        if (response.ok && data.ok) {
+          putPrayerCacheDay(gov.id, dateKey, { ...data, city: cityName });
+          return;
+        }
+      } catch {
+        /* fall through */
+      }
     }
 
     try {
-      const response = await requestFetch("/api/prayer-times", {
-        headers: { Accept: "application/json" },
-      });
-
-      const data = (await response.json()) as PrayerTimesPayload & { message?: string };
-
-      if (response.ok && data.ok) {
-        // Tag the city correctly even when using the cached API response
-        return { ...data, city: cityName };
-      }
+      const remote = await fetchAlAdhanDirect(gov.lat, gov.lon, cityName);
+      putPrayerCacheDay(gov.id, dateKey, remote);
     } catch {
-      // fall through to AlAdhan direct
+      /* keep local cache */
     }
-  }
-
-  try {
-    return await fetchAlAdhanDirect(gov.lat, gov.lon, cityName);
   } catch {
-    /* API فشل — استخدم الحساب المحلي بدون اتصال */
+    /* ignore background errors */
   }
+}
 
+/** حساب مسبق لـ N يوماً محلياً وتعبئة الكاش. */
+export async function warmPrayerCacheAhead(gov: KuwaitGovernorate, days = 30): Promise<void> {
   try {
-    return await computePrayerTimesLocal(gov.lat, gov.lon, cityName);
+    const { Coordinates, CalculationMethod, PrayerTimes, Madhab } = await import("adhan");
+    const coordinates = new Coordinates(gov.lat, gov.lon);
+    const params = CalculationMethod.Kuwait();
+    params.madhab = Madhab.Shafi;
+    const cityName = `الكويت – محافظة ${gov.name}`;
+    for (let i = 0; i < days; i++) {
+      const d = new Date();
+      d.setDate(d.getDate() + i);
+      const dateKey = kuwaitDateKey(d);
+      const existing = readPrayerCache();
+      if (existing?.govId === gov.id && existing.byDate[dateKey]?.ok) continue;
+      const pt = new PrayerTimes(coordinates, d, params);
+      const timings: Record<string, string> = {
+        Fajr: toKuwaitTime(pt.fajr),
+        Sunrise: toKuwaitTime(pt.sunrise),
+        Dhuhr: toKuwaitTime(pt.dhuhr),
+        Asr: toKuwaitTime(pt.asr),
+        Maghrib: toKuwaitTime(pt.maghrib),
+        Isha: toKuwaitTime(pt.isha),
+      };
+      const readable = new Intl.DateTimeFormat("ar-KW", {
+        timeZone: "Asia/Kuwait",
+        weekday: "long",
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      }).format(d);
+      const payload = {
+        ...buildPayload(timings, { timezone: "Asia/Kuwait" }, { readable }, cityName),
+        source: "حساب محلي (adhan-js، طريقة الكويت)",
+      };
+      putPrayerCacheDay(gov.id, dateKey, payload);
+    }
   } catch {
-    return staticPrayerFallback(cityName);
+    /* ignore */
   }
 }
