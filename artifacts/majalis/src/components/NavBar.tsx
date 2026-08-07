@@ -158,6 +158,15 @@ export default function NavBar() {
             </button>
           </div>
 
+          {/* شعار المنصة بين القائمة وأزرار الطرف — مكان التأشير على الجوال */}
+          <Link
+            href="/"
+            className="navbar-v3__tagline"
+            aria-label="المعرفة الإسلامية الرقمية — الرئيسية"
+          >
+            المعرفة الإسلامية الرقمية
+          </Link>
+
           {/* Desktop tabs */}
           {!isMobile && (
             <nav className="navbar-v3__tabs" aria-label="التنقل الرئيسي">
