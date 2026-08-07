@@ -33,7 +33,7 @@ function MindNode({
   const content = (
     <div
       className={`mm-node mm-node--d${Math.min(depth, 4)}`}
-      style={depth === 0 ? {} : { marginRight: `${Math.min(depth, 3) * 1.1}rem` }}
+      style={depth === 0 ? {} : { marginInlineStart: `${Math.min(depth, 3) * 1.1}rem` }}
     >
       <button
         type="button"

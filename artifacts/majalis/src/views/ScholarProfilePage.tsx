@@ -88,7 +88,7 @@ function ScholarTimeline({ died }: { died: string }) {
                   : c <= 3
                     ? "var(--ds-parchment-deep, #ede8e0)"
                     : "var(--ds-parchment, #f5f0e8)",
-                borderRight: c < 15 ? "1px solid var(--ds-line-color, #d4ccc2)" : "none",
+                borderInlineEnd: c < 15 ? "1px solid var(--ds-line-color, #d4ccc2)" : "none",
               }}
             />
           ))}

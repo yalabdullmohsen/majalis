@@ -237,7 +237,7 @@ export default function MethodologyPage() {
       {/* مصادر التحقق */}
       <section className="mtd-section">
         <h2 className="mtd-section__title">
-          <Globe size={18} strokeWidth={1.8} aria-hidden="true" style={{ display: "inline", verticalAlign: "middle", marginLeft: "0.4rem" }} />
+          <Globe size={18} strokeWidth={1.8} aria-hidden="true" style={{ display: "inline", verticalAlign: "middle", marginInlineStart: "0.4rem" }} />
           مصادر التحقق المعتمدة
         </h2>
         <ul className="mtd-sources">
@@ -265,7 +265,7 @@ export default function MethodologyPage() {
       {/* حدود صريحة — ما لا نضمنه */}
       <section className="mtd-section">
         <h2 className="mtd-section__title">
-          <AlertTriangle size={18} strokeWidth={1.8} aria-hidden="true" style={{ display: "inline", verticalAlign: "middle", marginLeft: "0.4rem" }} />
+          <AlertTriangle size={18} strokeWidth={1.8} aria-hidden="true" style={{ display: "inline", verticalAlign: "middle", marginInlineStart: "0.4rem" }} />
           حدودنا — ما لا نضمنه بعد
         </h2>
         <ul className="mtd-guarantees">

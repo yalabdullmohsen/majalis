@@ -268,7 +268,7 @@ html.dark .surah-index-jump.is-active {
   min-height: 56px;
   margin: 0;
   padding-block: 0.55rem;
-  padding-inline: 0.15rem 0;
+  padding-inline: 0.15rem;
   box-sizing: border-box;
   text-decoration: none;
   color: var(--mj-ink);
