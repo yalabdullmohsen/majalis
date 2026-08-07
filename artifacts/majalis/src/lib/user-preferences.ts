@@ -25,6 +25,10 @@ export type UserPreferences = {
   uiDensity: "comfortable" | "compact";
   /** توفير البيانات: يقلّل الإحماء الثقيل والوسائط عند الاتصال الضعيف */
   dataSaver: boolean;
+  /** اهتزاز لمسي تفاعلي (كتالوج haptics.ts) */
+  hapticsEnabled: boolean;
+  /** تباين مرتفع اختياري — html[data-contrast=high] + prefers-contrast */
+  highContrast: boolean;
 };
 
 export const SETTINGS_KEY = "majalis-user-settings-v1";
@@ -53,12 +57,19 @@ export const DEFAULT_PREFERENCES: UserPreferences = {
   numeralSystem: "عربي",
   uiDensity: "comfortable",
   dataSaver: false,
+  hapticsEnabled: true,
+  highContrast: false,
 };
 
 export function readPreferences(): UserPreferences {
   if (typeof window === "undefined") return DEFAULT_PREFERENCES;
   try {
-    return { ...DEFAULT_PREFERENCES, ...JSON.parse(localStorage.getItem(SETTINGS_KEY) || "{}") };
+    const raw = JSON.parse(localStorage.getItem(SETTINGS_KEY) || "{}") as Partial<UserPreferences>;
+    const stored = { ...DEFAULT_PREFERENCES, ...raw };
+    if (!("hapticsEnabled" in raw) && localStorage.getItem("adhkar_haptics_enabled") === "false") {
+      stored.hapticsEnabled = false;
+    }
+    return stored;
   } catch {
     return DEFAULT_PREFERENCES;
   }
@@ -104,4 +115,10 @@ export function applyPreferences(prefs: UserPreferences = readPreferences()) {
   root.dataset.imageQuality = dataSaver ? "منخفض" : prefs.imageQuality;
   root.dataset.uiDensity = prefs.uiDensity;
   root.dataset.dataSaver = dataSaver ? "1" : "0";
+  root.dataset.contrast = prefs.highContrast ? "high" : "normal";
+  try {
+    localStorage.setItem("adhkar_haptics_enabled", prefs.hapticsEnabled ? "true" : "false");
+  } catch {
+    /* ignore */
+  }
 }
