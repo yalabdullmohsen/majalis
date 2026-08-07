@@ -21,31 +21,6 @@
     <priority>0.82</priority>
   </url>
   <url>
-    <loc>https://majlisilm.com/adhkar/morning</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.65</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/adhkar/evening</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.65</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/adhkar/sleep</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.65</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/adhkar/after-salah</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.65</priority>
-  </url>
-  <url>
-    <loc>https://majlisilm.com/adhkar/distress</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.65</priority>
-  </url>
-  <url>
     <loc>https://majlisilm.com/quran/tajweed</loc>
     <changefreq>weekly</changefreq>
     <priority>0.82</priority>
@@ -4829,5 +4804,95 @@
     <loc>https://majlisilm.com/topics/fath-makkah</loc>
     <changefreq>monthly</changefreq>
     <priority>0.66</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/adhkar/morning</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/adhkar/evening</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/adhkar/sleep</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/adhkar/wakeup</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/adhkar/home-in</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/adhkar/home-out</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/adhkar/mosque</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/adhkar/food</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/adhkar/travel</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/adhkar/wudu</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/adhkar/salah</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/adhkar/after-salah</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/adhkar/distress</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/adhkar/istikharah</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/adhkar/istighfar</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/adhkar/rain</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/adhkar/wind</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://majlisilm.com/adhkar/misc</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.65</priority>
   </url>
 </urlset>
