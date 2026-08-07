@@ -5,7 +5,8 @@
   width: 100%;
   max-width: 40rem;
   margin-inline: auto;
-  padding: var(--mj-s4);
+  padding-block: var(--mj-s4);
+  padding-inline: var(--page-gutter, var(--mj-s4)) var(--page-gutter-end, var(--page-gutter, var(--mj-s4)));
   padding-block-end: calc(var(--mj-s8) + var(--inset-bottom));
   box-sizing: border-box;
   color: var(--mj-ink);

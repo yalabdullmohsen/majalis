@@ -25,18 +25,18 @@
 
 .page-shell__content > section + section,
 .page-shell__content > .page-shell-section + .page-shell-section {
-  margin-block-start: var(--mj-s8); /* 32 — أقرب سلم ≤ 48؛ يُوسَّع لاحقاً بـ s12 إن أُضيف */
+  margin-block-start: var(--mj-s8); /* 32 */
 }
 
 @media (min-width: 768px) {
   .page-shell__content > section + section,
   .page-shell__content > .page-shell-section + .page-shell-section {
-    margin-block-start: 48px;
+    margin-block-start: var(--mj-s12, 48px);
   }
 }
 
 .page-shell__related {
-  margin-block-start: 48px;
+  margin-block-start: var(--mj-s12, 48px);
 }
 
 .page-related__title {

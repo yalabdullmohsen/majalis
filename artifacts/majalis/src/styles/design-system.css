@@ -25,20 +25,25 @@ html {
 .ds-page {
   width: min(100%, var(--ds-max));
   margin-inline: auto;
-  padding: var(--ds-space-4) var(--ds-space-3);
-  padding-bottom: var(--ds-space-6);
+  padding-block: var(--mj-s4, var(--ds-space-4));
+  padding-inline: var(--page-gutter, var(--ds-space-3)) var(--page-gutter-end, var(--page-gutter, var(--ds-space-3)));
+  padding-bottom: var(--mj-s12, var(--ds-space-6));
+  box-sizing: border-box;
 }
 
 @media (min-width: 768px) {
   .ds-page {
-    padding: var(--ds-space-5) var(--ds-space-4);
+    padding-block: var(--mj-s6, var(--ds-space-5));
+    padding-inline: var(--page-gutter, var(--ds-space-4)) var(--page-gutter-end, var(--page-gutter, var(--ds-space-4)));
   }
 }
 
 .page-shell {
   width: min(100%, var(--ds-max));
   margin-inline: auto;
-  padding: var(--ds-space-4) var(--ds-space-3);
+  padding-block: var(--mj-s4, var(--ds-space-4));
+  padding-inline: var(--page-gutter, var(--ds-space-3)) var(--page-gutter-end, var(--page-gutter, var(--ds-space-3)));
+  box-sizing: border-box;
 }
 
 .revelation-rule, .revelation-why, .revelation-sources { margin-block-end: var(--ds-space-5); line-height: 1.8; }
@@ -509,14 +514,16 @@ p, li {
   line-height: var(--ds-line);
 }
 
-/* Page layout */
+/* Page layout — حشوة جانبية من --page-gutter فقط (جذر فهرس السور وغيره) */
 .page-shell,
 .page-shell.narrow,
 .page-shell.wide {
   width: min(100%, var(--ds-max));
   margin-inline: auto;
-  padding: var(--ds-space-4) var(--ds-space-3);
-  padding-bottom: var(--ds-space-6);
+  padding-block: var(--mj-s4, var(--ds-space-4));
+  padding-inline: var(--page-gutter, var(--ds-space-3)) var(--page-gutter-end, var(--page-gutter, var(--ds-space-3)));
+  padding-bottom: var(--mj-s12, var(--ds-space-6));
+  box-sizing: border-box;
 }
 
 .page-shell.narrow {
