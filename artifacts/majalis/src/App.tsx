@@ -108,7 +108,8 @@ const SurahIndexPage = lazy(() => import("@/pages/quran/SurahIndexPage"));
 const QuranSearchPage = lazy(() => import("@/pages/quran/QuranSearchPage"));
 const RevelationOrderPage = lazy(() => import("@/pages/quran/RevelationOrderPage"));
 const MakkiMadaniPage = lazy(() => import("@/pages/quran/MakkiMadaniPage"));
-const MushafComingSoonPage = lazy(() => import("@/pages/quran/MushafComingSoonPage"));
+const MushafPageView = lazy(() => import("@/pages/quran/MushafPageView"));
+const MushafEditionInfoPage = lazy(() => import("@/pages/quran/MushafEditionInfoPage"));
 const RecitationTestPage = lazy(() => import("@/pages/quran/RecitationTestPage"));
 const SurahStoriesPage = lazy(() => import("@/pages/quran/SurahStoriesPage"));
 const QuranTajweedPage = lazy(() => import("@/pages/quran/QuranTajweedPage"));
@@ -712,12 +713,12 @@ function Router() {
         </ErrorBoundary>
       </Route>
       <Route path="/quran"><Redirect to="/mushaf" /></Route>
-      {/* المصحف متوقف مؤقتًا — كل مساراته تعرض صفحة «قريبًا» */}
-      <Route path="/mushaf/page/:page"><SafeLazyRoute component={MushafComingSoonPage} /></Route>
-      <Route path="/mushaf/page"><SafeLazyRoute component={MushafComingSoonPage} /></Route>
-      <Route path="/mushaf/about-edition"><SafeLazyRoute component={MushafComingSoonPage} /></Route>
-      <Route path="/mushaf/:surah"><SafeLazyRoute component={MushafComingSoonPage} /></Route>
-      <Route path="/mushaf"><SafeLazyRoute component={MushafComingSoonPage} /></Route>
+      <Route path="/mushaf/page/:page"><SafeLazyRoute component={MushafPageView} /></Route>
+      <Route path="/mushaf/page"><SafeLazyRoute component={MushafPageView} /></Route>
+      {/* ترتيب حرج: /mushaf/about-edition قبل /mushaf/:surah */}
+      <Route path="/mushaf/about-edition"><SafeLazyRoute component={MushafEditionInfoPage} /></Route>
+      <Route path="/mushaf/:surah"><SafeLazyRoute component={MushafPageView} /></Route>
+      <Route path="/mushaf"><SafeLazyRoute component={MushafPageView} /></Route>
       <Route path="/mushaf-v2-preview"><Redirect to="/mushaf" /></Route>
       <Route path="/quran-hub"><Redirect to="/mushaf" /></Route>
       <Route path="/quran-knowledge"><SafeLazyRoute component={QuranKnowledgeHubPage} /></Route>

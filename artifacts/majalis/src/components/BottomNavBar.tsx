@@ -9,14 +9,14 @@ import { haptics } from "@/lib/haptics";
 import { MoreBottomSheet } from "./MoreBottomSheet";
 
 const HREF_TO_ID: Record<string, BottomTabId> = {
-  "/quran-knowledge": "quran",
+  "/mushaf": "quran",
   "/lessons": "lessons",
   "/prayer-times": "prayer",
   "/fiqh": "fiqh",
 };
 
 const TAB_PREFETCH: Record<string, () => Promise<unknown>> = {
-  "/quran-knowledge": () => import("@/pages/quran/QuranKnowledgeHubPage"),
+  "/mushaf": () => import("@/pages/quran/MushafPageView"),
   "/lessons": () => import("@/pages/lessons/LessonsPage"),
   "/prayer-times": () => import("@/pages/worship/PrayerTimesPage"),
   "/fiqh": () => import("@/pages/fiqh/FiqhPage"),
