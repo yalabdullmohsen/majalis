@@ -2,7 +2,7 @@
    246 — علامات الساعة  (.as-*)
    ══════════════════════════════════════════════════════════════════ */
 
-.as-page { min-height: 100vh; background: var(--clr-bg); }
+.as-page { min-height: 100svh; background: var(--clr-bg); }
 
 /* Hero */
 .as-hero {

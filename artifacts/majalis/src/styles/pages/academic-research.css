@@ -3,7 +3,7 @@
    ══════════════════════════════════════════════════════════════════════ */
 
 .ar-page {
-  min-height: 100vh;
+  min-height: 100svh;
   background: var(--elite-white, var(--mj-bg));
   direction: rtl;
 }

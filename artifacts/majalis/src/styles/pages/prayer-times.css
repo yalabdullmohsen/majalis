@@ -60,8 +60,8 @@ html.pts-immersive .top-section-bar__tab.is-active {
   width: 100%;
   max-width: none;
   margin: 0;
-  margin-block-start: calc(-1 * env(safe-area-inset-top, 0px));
-  margin-inline: calc(-1 * env(safe-area-inset-left, 0px)) calc(-1 * env(safe-area-inset-right, 0px));
+  margin-block-start: calc(-1 * var(--inset-top));
+  margin-inline: calc(-1 * var(--inset-left)) calc(-1 * var(--inset-right));
   color: var(--pts-white);
   /* لون صلب تحت التدرّج — قياس التباين وfallback عند تعطيل الصور */
   background-color: var(--pts-bg-1);
@@ -69,10 +69,10 @@ html.pts-immersive .top-section-bar__tab.is-active {
     radial-gradient(ellipse 90% 55% at 70% 8%, rgba(212, 196, 160, 0.08), transparent 55%),
     linear-gradient(180deg, var(--pts-bg-1) 0%, var(--pts-bg-0) 48%, #0A221C 100%);
   padding:
-    max(0.85rem, env(safe-area-inset-top, 0px))
-    max(1.1rem, env(safe-area-inset-right, 0px))
-    calc(var(--bottom-nav-h, 64px) + 1.25rem + env(safe-area-inset-bottom, 0px))
-    max(1.1rem, env(safe-area-inset-left, 0px));
+    max(0.85rem, var(--inset-top))
+    max(1.1rem, var(--inset-right))
+    calc(var(--bottom-nav-h, 64px) + 1.25rem + var(--inset-bottom))
+    max(1.1rem, var(--inset-left));
   display: flex;
   flex-direction: column;
   gap: 0.85rem;
@@ -482,7 +482,7 @@ html.pts-immersive .top-section-bar__tab.is-active {
 .pts-sheet-close {
   position: sticky;
   bottom: 0;
-  padding: 0.75rem 1rem calc(0.75rem + env(safe-area-inset-bottom, 0px));
+  padding: 0.75rem 1rem calc(0.75rem + var(--inset-bottom));
   background: linear-gradient(to top, var(--pts-bg, #0E241E) 70%, transparent);
   margin-block-start: 0.5rem;
 }

@@ -18,7 +18,7 @@
   display: block;
   justify-content: unset;
   padding:
-    calc(0.55rem + env(safe-area-inset-top, 0px))
+    calc(0.55rem + var(--inset-top))
     var(--m2030-pad, clamp(0.85rem, 3.5vw, 1.35rem))
     0.75rem;
   overflow: hidden;

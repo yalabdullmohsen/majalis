@@ -2,7 +2,7 @@
    SR. SeerahPage
    ══════════════════════════════════════════════ */
 .seerah-page {
-  min-height: 100vh;
+  min-height: 100svh;
   background: var(--majalis-parchment);
   direction: rtl;
   font-family: var(--font-body);
@@ -141,7 +141,7 @@
   border-radius: 14px;
   padding: var(--ds-space-2);
   box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  max-height: calc(100vh - 2rem);
+  max-height: calc(100svh - 2rem);
   overflow-y: auto;
   scrollbar-width: thin;
   scrollbar-color: var(--majalis-line) transparent;

@@ -27,8 +27,8 @@
   overflow-y: auto;
   overflow-x: hidden;
   overscroll-behavior: contain;
-  padding: calc(env(safe-area-inset-top, 0px) + 16px) 14px
-    calc(env(safe-area-inset-bottom, 0px) + 18px);
+  padding: calc(var(--inset-top) + 16px) 14px
+    calc(var(--inset-bottom) + 18px);
   display: flex;
   flex-direction: column;
   gap: 4px;
@@ -204,8 +204,8 @@
   background: #fbfbf8;
   border-inline-start: 1px solid rgba(18, 54, 42, 0.14);
   box-shadow: -18px 0 45px rgba(0, 0, 0, 0.12);
-  padding: calc(env(safe-area-inset-top, 0px) + 16px) 14px
-    calc(env(safe-area-inset-bottom, 0px) + 18px);
+  padding: calc(var(--inset-top) + 16px) 14px
+    calc(var(--inset-bottom) + 18px);
   animation: sidebar-panel-in 240ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 

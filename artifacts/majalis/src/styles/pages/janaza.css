@@ -2,7 +2,7 @@
    232 · JanazaPage · /janaza
    ══════════════════════════════════════════════════════════ */
 
-.jnz-page { min-height: 100vh; background: #F9FAFB; padding-bottom: 4rem; }
+.jnz-page { min-height: 100svh; background: #F9FAFB; padding-bottom: 4rem; }
 
 .jnz-hero {
   background: linear-gradient(155deg, var(--mj-brand-deep) 0%, var(--mj-brand) 70%, var(--mj-brand-deep) 100%);

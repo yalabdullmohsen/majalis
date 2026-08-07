@@ -1,7 +1,7 @@
 /* ══════════════════════════════════════════════════════════════════
    242 — IslamicGlossaryPage  (.gl-*)
    ══════════════════════════════════════════════════════════════════ */
-.gl-page { min-height: 100vh; background: #F8FAFC; }
+.gl-page { min-height: 100svh; background: #F8FAFC; }
 
 /* Hero */
 .gl-hero {

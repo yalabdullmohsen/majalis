@@ -6,7 +6,7 @@
     min-height: 100dvh;
   }
   .offline-banner {
-    padding-top: max(0.35rem, env(safe-area-inset-top, 0px));
+    padding-top: max(0.35rem, var(--inset-top));
   }
 }
 
@@ -20,8 +20,8 @@
 
 /* Safe padding for primary scroll surfaces on notched devices */
 .app-main {
-  padding-inline: max(0px, env(safe-area-inset-inline-start, 0px))
-    max(0px, env(safe-area-inset-inline-end, 0px));
+  padding-inline: max(0px, var(--gutter-inline-start))
+    max(0px, var(--gutter-inline-end));
 }
 
 /* Optimized media — reserve space to reduce CLS */

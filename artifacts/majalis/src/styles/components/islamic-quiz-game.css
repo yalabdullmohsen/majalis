@@ -244,7 +244,7 @@
 .qzg-winner-unit        { margin: 0.25rem 0 0; font-size: 0.78rem; color: var(--majalis-ink-soft); }
 
 /* Root wrapper */
-.qzg-root  { min-height: calc(100vh - 64px); background: var(--ds-parchment, var(--majalis-parchment)); padding: 1.25rem 1rem; direction: rtl; font-family: inherit; color: var(--ds-ink, var(--majalis-ink)); }
+.qzg-root  { min-height: calc(100svh - 64px); background: var(--ds-parchment, var(--majalis-parchment)); padding: 1.25rem 1rem; direction: rtl; font-family: inherit; color: var(--ds-ink, var(--majalis-ink)); }
 .qzg-inner { max-width: 860px; margin: 0 auto; padding-bottom: 3rem; }
 .qzg-game-title-bar { text-align: center; margin-bottom: 1rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--ds-line-color); }
 .qzg-game-title { color: var(--majalis-brass); font-weight: 700; }

@@ -19,10 +19,10 @@
   display: flex;
   flex-direction: column;
   width: min(100%, 32rem);
-  max-height: min(92dvh, calc(100dvh - env(safe-area-inset-top, 0px) - 0.75rem));
+  max-height: min(92dvh, calc(100dvh - var(--inset-top) - 0.75rem));
   margin: 0;
   padding: 0;
-  padding-bottom: env(safe-area-inset-bottom, 0px);
+  padding-bottom: var(--inset-bottom);
   overflow: hidden;
   background: var(--mj-surface) !important;
   color: var(--mj-ink) !important;
@@ -143,7 +143,7 @@
   overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   overscroll-behavior: contain;
-  padding: var(--mj-s2) var(--mj-s4) calc(var(--mj-s6) + env(safe-area-inset-bottom, 0px));
+  padding: var(--mj-s2) var(--mj-s4) calc(var(--mj-s6) + var(--inset-bottom));
   background: var(--mj-surface) !important;
 }
 
@@ -312,7 +312,7 @@ html[dir="ltr"] .bottom-sheet--services .more-sheet-theme-switch__knob.is-on {
   pointer-events: none;
   position: absolute;
   inset-inline: 0;
-  bottom: env(safe-area-inset-bottom, 0px);
+  bottom: var(--inset-bottom);
   height: 2.5rem;
   background: linear-gradient(to top, var(--mj-surface), transparent);
 }

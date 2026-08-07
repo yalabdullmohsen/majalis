@@ -2,7 +2,7 @@
    249 — الرقائق والزهد  (.rq-*)
    ══════════════════════════════════════════════════════════════════ */
 
-.rq-page { min-height: 100vh; background: var(--clr-bg); }
+.rq-page { min-height: 100svh; background: var(--clr-bg); }
 
 /* Hero */
 .rq-hero {

@@ -310,7 +310,7 @@
 .login-page {
   background: linear-gradient(160deg, var(--mj-brand-deep) 0%, #1F4D3A 38%, #F0FDF4 72%, #FAFAFA 100%) !important;
   min-height: 100dvh;
-  padding-block: max(2rem, env(safe-area-inset-top, 0px)) max(2rem, env(safe-area-inset-bottom, 0px));
+  padding-block: max(2rem, var(--inset-top)) max(2rem, var(--inset-bottom));
 }
 .login-card {
   background: #FFFFFF !important;

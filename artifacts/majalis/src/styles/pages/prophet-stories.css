@@ -21,7 +21,7 @@
 
 /* ── Page Shell ── */
 .prophets-lux-page {
-  min-height: 100vh;
+  min-height: 100svh;
   background: var(--ps-canvas);
   color: var(--ps-ink);
   font-family: var(--font-body);
@@ -340,7 +340,7 @@
    Detail View — خلفية كحلية + نص فاتح واضح + تمييز زمردي/نحاسي
    ════════════════════════════════════════════════════════════ */
 .prophet-detail-lux {
-  min-height: 100vh;
+  min-height: 100svh;
   background:
     linear-gradient(
       180deg,

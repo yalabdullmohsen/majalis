@@ -3,7 +3,7 @@
    ══════════════════════════════════════════════════════════════════════ */
 
 /* hero */
-.fq-page { background: #F8FAFC; min-height: 100vh; }
+.fq-page { background: #F8FAFC; min-height: 100svh; }
 .fq-hero {
   background: linear-gradient(135deg, #0F172A 0%, #1E3A5F 60%, var(--mj-brand) 100%);
   padding: 3.5rem 1.25rem 2.5rem; text-align: center; color: #fff;

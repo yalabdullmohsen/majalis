@@ -1,10 +1,10 @@
 /* Capacitor / native shell — global touch & safe-area contract (Vite app) */
 
 :root {
-  --safe-area-inset-top: env(safe-area-inset-top, 0px);
-  --safe-area-inset-right: env(safe-area-inset-right, 0px);
-  --safe-area-inset-bottom: env(safe-area-inset-bottom, 0px);
-  --safe-area-inset-left: env(safe-area-inset-left, 0px);
+  --safe-area-inset-top: var(--inset-top);
+  --safe-area-inset-right: var(--inset-right);
+  --safe-area-inset-bottom: var(--inset-bottom);
+  --safe-area-inset-left: var(--inset-left);
   --safe-top: var(--safe-area-inset-top);
   --safe-right: var(--safe-area-inset-right);
   --safe-bottom: var(--safe-area-inset-bottom);

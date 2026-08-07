@@ -9,7 +9,7 @@
 .mj-thumb-zone {
   position: sticky;
   inset-block-end: calc(
-    var(--bottom-nav-total, var(--bottom-nav-h, 2.75rem)) + env(safe-area-inset-bottom, 0px) + 8px
+    var(--bottom-nav-total, var(--bottom-nav-h, 2.75rem)) + var(--inset-bottom) + 8px
   );
   z-index: 5;
   padding-block: 8px;
