@@ -28,6 +28,8 @@ export type LessonAd = {
   tags: string[];
   hasWomenSection?: boolean;
   startDate?: string;
+  /** نهاية برنامج/دورة محددة المدة — يُؤرشف بعدها (لا يُستنتج من العنوان). */
+  endDate?: string;
   detailIntro?: string;
   sessions: LessonSession[];
 };
@@ -342,6 +344,7 @@ export const lessonAds: LessonAd[] = [
     tags: ["برنامج تعليمي", "حضوري", "نساء فقط", "عقيدة", "فقه", "تفسير", "سيرة"],
     hasWomenSection: true,
     startDate: "2026-07-05",
+    endDate: "2026-07-16",
     detailIntro: "للتسجيل: @jouryaldahi على إنستقرام أو الاتصال على 66240438. الفترة: 5–16 يوليو 2026.",
     sessions: [
       {
@@ -366,6 +369,7 @@ export const lessonAds: LessonAd[] = [
     tags: ["دورة علمية", "حضوري", "عقيدة", "فقه", "نحو", "بث مباشر"],
     hasWomenSection: true,
     startDate: "2026-07-05",
+    endDate: "2026-07-29",
     detailIntro: "للتسجيل: 51104812 أو @murtaqaa_kw. الفترة: 5–29 يوليو 2026. سيتم توزيع المتون. تنظيم: محمد سليمان الأجراح.",
     sessions: [
       {
