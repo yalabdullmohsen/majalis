@@ -79,6 +79,7 @@ export function ExclusiveChoiceGroup({
       role="radiogroup"
       aria-labelledby={labelId}
       aria-label={ariaLabel}
+      tabIndex={0}
       onKeyDown={onKeyDown}
     >
       <span id={labelId} className="sr-only">

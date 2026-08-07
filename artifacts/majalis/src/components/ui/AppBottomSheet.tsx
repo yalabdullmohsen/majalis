@@ -14,20 +14,16 @@ type Props = {
   onClose: () => void;
   title: string;
   children: ReactNode;
-  /** نقطة استقرار ابتدائية: نصف أو كامل */
   snap?: "half" | "full";
-  /** تسمية زر الإغلاق السفلي */
   closeLabel?: string;
-  /** محتوى ثابت فوق الزر السفلي (اختياري) */
   footer?: ReactNode;
   className?: string;
-  /** يُستدعى عند الفتح لتركيز عنصر داخل الشيت */
   initialFocusRef?: React.RefObject<HTMLElement | null>;
 };
 
 /**
- * شيت سفلي موحّد للجوال — مقبض سحب، إغلاق أسفل، حجاب، Escape، حصر تركيز.
- * كل النوافذ المتنقلة يجب أن تمر عبر هذا المكوّن.
+ * شيت سفلي موحّد — خمس طرق إغلاق:
+ * سحب لأسفل · خلفية · زر سفلي · Escape/رجوع أندرويد · سحب من حافة الشاشة.
  */
 export function AppBottomSheet({
   open,
@@ -44,29 +40,56 @@ export function AppBottomSheet({
   const sheetRef = useRef<HTMLDivElement>(null);
   const previouslyFocused = useRef<HTMLElement | null>(null);
   const dragStartY = useRef<number | null>(null);
+  const dragStartT = useRef<number>(0);
+  const edgeStartX = useRef<number | null>(null);
+  const edgeStartY = useRef<number | null>(null);
+  const historyPushed = useRef(false);
   const [dragOffset, setDragOffset] = useState(0);
+  const closingRef = useRef(false);
+
+  const requestClose = () => {
+    if (closingRef.current) return;
+    closingRef.current = true;
+    onClose();
+  };
 
   useEffect(() => {
     if (!open) {
       setDragOffset(0);
+      closingRef.current = false;
       return;
     }
     previouslyFocused.current = document.activeElement as HTMLElement | null;
     const prevOverflow = document.body.style.overflow;
+    const prevPosition = document.body.style.position;
+    const prevTop = document.body.style.top;
+    const prevWidth = document.body.style.width;
     const prevScrollY = window.scrollY;
     document.body.style.overflow = "hidden";
+    document.body.style.position = "fixed";
+    document.body.style.top = `-${prevScrollY}px`;
+    document.body.style.width = "100%";
     document.body.classList.add("app-sheet-open", "filter-sheet-open");
 
-    // ركّز حاوية الشيت فقط — لا أول حقل (يمنع فتح الكيبورد على iOS).
     const focusTarget = initialFocusRef?.current ?? sheetRef.current;
     const frame = window.requestAnimationFrame(() => {
       focusTarget?.focus({ preventScroll: true });
     });
 
+    const onPop = () => {
+      historyPushed.current = false;
+      requestClose();
+    };
+    if (!historyPushed.current) {
+      window.history.pushState({ appSheet: true }, "");
+      historyPushed.current = true;
+    }
+    window.addEventListener("popstate", onPop);
+
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         e.preventDefault();
-        onClose();
+        requestClose();
         return;
       }
       if (e.key !== "Tab" || !sheetRef.current) return;
@@ -85,20 +108,40 @@ export function AppBottomSheet({
       }
     };
     document.addEventListener("keydown", onKey);
+
     return () => {
       window.cancelAnimationFrame(frame);
       document.body.style.overflow = prevOverflow;
+      document.body.style.position = prevPosition;
+      document.body.style.top = prevTop;
+      document.body.style.width = prevWidth;
       document.body.classList.remove("app-sheet-open", "filter-sheet-open");
       window.scrollTo(0, prevScrollY);
       document.removeEventListener("keydown", onKey);
+      window.removeEventListener("popstate", onPop);
+      if (historyPushed.current) {
+        historyPushed.current = false;
+        // إن أُغلق الشيت بوسيلة أخرى غير زر الرجوع، أزل المدخل الاصطناعي
+        if (window.history.state && (window.history.state as { appSheet?: boolean }).appSheet) {
+          window.history.back();
+        }
+      }
       previouslyFocused.current?.focus?.({ preventScroll: true });
+      closingRef.current = false;
     };
   }, [open, onClose, initialFocusRef]);
 
   if (!open || typeof document === "undefined") return null;
 
+  const dismissByDrag = (offset: number, elapsedMs: number) => {
+    const h = sheetRef.current?.offsetHeight ?? 400;
+    const velocity = elapsedMs > 0 ? offset / elapsedMs : 0;
+    return offset > h * 0.25 || (offset > 48 && velocity > 0.65);
+  };
+
   const onHandlePointerDown = (e: ReactPointerEvent) => {
     dragStartY.current = e.clientY;
+    dragStartT.current = performance.now();
     (e.currentTarget as HTMLElement).setPointerCapture(e.pointerId);
   };
   const onHandlePointerMove = (e: ReactPointerEvent) => {
@@ -106,18 +149,50 @@ export function AppBottomSheet({
     setDragOffset(Math.max(0, e.clientY - dragStartY.current));
   };
   const onHandlePointerUp = () => {
-    if (dragOffset > 88) onClose();
+    const elapsed = performance.now() - dragStartT.current;
+    if (dismissByDrag(dragOffset, elapsed)) requestClose();
     dragStartY.current = null;
     setDragOffset(0);
   };
 
+  /* سحب من حافة الشاشة (iOS): بداية من الحافة الداخلية ≤ 24px */
+  const onEdgePointerDown = (e: ReactPointerEvent) => {
+    const rtl = document.documentElement.dir === "rtl";
+    const fromEdge = rtl ? e.clientX >= window.innerWidth - 24 : e.clientX <= 24;
+    if (!fromEdge) return;
+    edgeStartX.current = e.clientX;
+    edgeStartY.current = e.clientY;
+  };
+  const onEdgePointerMove = (e: ReactPointerEvent) => {
+    if (edgeStartX.current == null || edgeStartY.current == null) return;
+    const dx = e.clientX - edgeStartX.current;
+    const dy = Math.abs(e.clientY - edgeStartY.current);
+    const rtl = document.documentElement.dir === "rtl";
+    const inward = rtl ? dx < -56 : dx > 56;
+    if (inward && dy < 48) {
+      edgeStartX.current = null;
+      edgeStartY.current = null;
+      requestClose();
+    }
+  };
+  const onEdgePointerUp = () => {
+    edgeStartX.current = null;
+    edgeStartY.current = null;
+  };
+
   return createPortal(
-    <div className="app-sheet-overlay">
+    <div
+      className="app-sheet-overlay"
+      onPointerDown={onEdgePointerDown}
+      onPointerMove={onEdgePointerMove}
+      onPointerUp={onEdgePointerUp}
+      onPointerCancel={onEdgePointerUp}
+    >
       <button
         type="button"
         className="app-sheet-overlay__scrim"
         aria-label="إغلاق"
-        onClick={onClose}
+        onClick={requestClose}
       />
       <div
         ref={sheetRef}
@@ -143,7 +218,7 @@ export function AppBottomSheet({
         <div className="app-sheet__body">{children}</div>
         {footer ? <div className="app-sheet__footer-slot">{footer}</div> : null}
         <div className="app-sheet__footer">
-          <button type="button" className="app-sheet__close" onClick={onClose}>
+          <button type="button" className="app-sheet__close" onClick={requestClose}>
             {closeLabel}
           </button>
         </div>
