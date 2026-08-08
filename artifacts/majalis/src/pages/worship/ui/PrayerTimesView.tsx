@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { applyPageSeo } from "@/lib/seo";
 import { Link, useLocation } from "wouter";
-import { ArrowRight, Bell, Compass, MapPin } from "lucide-react";
+import { ArrowRight, Bell, Compass, HandHeart, MapPin, CircleDot } from "lucide-react";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 import {
   KUWAIT_GOVERNORATES,
@@ -383,19 +383,24 @@ export default function PrayerTimesPage() {
         </nav>
       )}
 
-      <details className="pts-more">
-        <summary>المزيد من الإعدادات</summary>
-        <nav className="pts-dock" aria-label="أدوات الصلاة">
-          <Link href="/qibla" className="pts-dock__item">
-            <span className="pts-dock__icon"><Compass size={20} strokeWidth={1.7} /></span>
-            <span>القبلة</span>
-          </Link>
-          <Link href="/adhan-settings" className="pts-dock__item">
-            <span className="pts-dock__icon"><Bell size={20} strokeWidth={1.7} /></span>
-            <span>تنبيهات الأذان</span>
-          </Link>
-        </nav>
-      </details>
+      <nav className="pts-dock" aria-label="أدوات الصلاة">
+        <Link href="/adhkar" className="pts-dock__item">
+          <span className="pts-dock__icon"><HandHeart size={20} strokeWidth={1.7} /></span>
+          <span>الأذكار</span>
+        </Link>
+        <Link href="/tasbih" className="pts-dock__item">
+          <span className="pts-dock__icon"><CircleDot size={20} strokeWidth={1.7} /></span>
+          <span>التسبيح</span>
+        </Link>
+        <Link href="/qibla" className="pts-dock__item">
+          <span className="pts-dock__icon"><Compass size={20} strokeWidth={1.7} /></span>
+          <span>القبلة</span>
+        </Link>
+        <Link href="/adhan-settings" className="pts-dock__item">
+          <span className="pts-dock__icon"><Bell size={20} strokeWidth={1.7} /></span>
+          <span>الأذان</span>
+        </Link>
+      </nav>
 
       <div className="pts-sheet-close">
         <button type="button" className="pts-sheet-close__btn" onClick={handleBack}>

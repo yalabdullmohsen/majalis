@@ -64,10 +64,13 @@ export const SERVICES_CENTER_GROUPS: ServicesCenterGroup[] = [
     title: "الأكثر استخداماً",
     layout: "quick",
     items: [
-      { id: "mushaf", label: "المصحف", keywords: ["قرآن", "قراءة"], Icon: BookOpen, action: { kind: "link", href: "/mushaf" } },
+      /* بلا تكرار لمسارات الشريط السفلي (مصحف/دروس/صلاة/فقه) */
       { id: "adhkar", label: "الأذكار", keywords: ["دعاء", "أذكار"], Icon: HandHeart, action: { kind: "link", href: "/adhkar" } },
-      { id: "prayer", label: "مواقيت الصلاة", keywords: ["صلاة", "أذان"], Icon: Clock, action: { kind: "link", href: "/prayer-times" } },
       { id: "memorize", label: "بطاقات الحفظ", keywords: ["حفظ", "مراجعة"], Icon: Brain, action: { kind: "link", href: "/memorize" } },
+      { id: "tasbih-quick", label: "التسبيح", keywords: ["مسبحة", "تسبيح"], Icon: HandHeart, action: { kind: "link", href: "/tasbih" } },
+      { id: "daily-wird-quick", label: "الورد اليومي", keywords: ["ورد"], Icon: Moon, action: { kind: "link", href: "/daily-wird" } },
+      { id: "search-quick", label: "البحث", keywords: ["بحث"], Icon: Search, action: { kind: "search" } },
+      { id: "settings-quick", label: "الإعدادات", keywords: ["إعدادات"], Icon: Settings, action: { kind: "link", href: "/settings" } },
     ],
   },
   {
@@ -89,7 +92,6 @@ export const SERVICES_CENTER_GROUPS: ServicesCenterGroup[] = [
       { id: "quran-knowledge", label: "القرآن وعلومه", keywords: ["علوم قرآن"], Icon: BookMarked, action: { kind: "link", href: "/quran-knowledge" } },
       { id: "hadith", label: "الحديث وعلومه", keywords: ["حديث", "سنة", "أحاديث"], Icon: ScrollText, action: { kind: "link", href: "/hadith" } },
       { id: "seerah", label: "السيرة النبوية", keywords: ["سيرة"], Icon: BookA, action: { kind: "link", href: "/seerah" } },
-      { id: "fiqh", label: "الفقه وأصوله", keywords: ["فقه", "أحكام"], Icon: Scale, action: { kind: "link", href: "/fiqh" } },
       { id: "tafsir", label: "التفسير", keywords: ["تفسير"], Icon: Library, action: { kind: "link", href: "/tafsir" } },
       { id: "prophets", label: "قصص الأنبياء", keywords: ["أنبياء"], Icon: BookOpen, action: { kind: "link", href: "/prophets" } },
       { id: "history", label: "التاريخ الإسلامي", keywords: ["تاريخ"], Icon: Building2, action: { kind: "link", href: "/tarikh-islami" } },
@@ -103,7 +105,6 @@ export const SERVICES_CENTER_GROUPS: ServicesCenterGroup[] = [
       { id: "scholars-books", label: "العلماء وكتبهم", keywords: ["مكتبة", "كتب"], Icon: Library, action: { kind: "link", href: "/scholars" } },
       { id: "qa", label: "الأسئلة والأجوبة", keywords: ["أسئلة", "أجوبة", "qa"], Icon: HelpCircle, action: { kind: "link", href: "/qa" } },
       { id: "quiz", label: "المسابقة", keywords: ["مسابقة", "اختبار", "quiz"], Icon: Star, action: { kind: "link", href: "/quiz" } },
-      { id: "lessons-lib", label: "الدروس والدورات", keywords: ["دروس", "دورات"], Icon: BookOpen, action: { kind: "link", href: "/lessons" } },
     ],
   },
   {
@@ -111,11 +112,10 @@ export const SERVICES_CENTER_GROUPS: ServicesCenterGroup[] = [
     title: "عبادة وأدوات",
     layout: "list",
     items: [
-      { id: "tasbih", label: "التسبيح", keywords: ["مسبحة", "تسبيح"], Icon: HandHeart, action: { kind: "link", href: "/tasbih" } },
       { id: "duas", label: "الأدعية", keywords: ["دعاء"], Icon: Heart, action: { kind: "link", href: "/duas" } },
-      { id: "daily-wird", label: "الورد اليومي", keywords: ["ورد"], Icon: Moon, action: { kind: "link", href: "/daily-wird" } },
       { id: "calendar", label: "التقويم الهجري", keywords: ["تقويم", "هجري"], Icon: Clock, action: { kind: "link", href: "/calendar" } },
       { id: "quran-memorization", label: "الحفظ القرآني", keywords: ["حفظ", "مصحف"], Icon: Brain, action: { kind: "link", href: "/quran-memorization" } },
+      { id: "qibla", label: "القبلة", keywords: ["قبلة", "اتجاه"], Icon: Landmark, action: { kind: "link", href: "/qibla" } },
       { id: "adhan-settings", label: "إعدادات الأذان", keywords: ["أذان", "مؤذن"], Icon: Bell, action: { kind: "link", href: "/adhan-settings" } },
     ],
   },
