@@ -5,7 +5,13 @@ import { ADMIN_ACCESS_DENIED_MESSAGE, mapAuthError } from "@/lib/auth-messages";
 import { hasUnrestrictedAdminAccess, isOwnerAuthUser, resolveUserEmail } from "@/lib/owner-config";
 import { isSupabaseConfigured } from "@/lib/supabase-config";
 import { bootstrapSupabaseFromServer } from "@/lib/supabase-bootstrap";
-import { signInWithGoogle, GOOGLE_OAUTH_ENABLED, resetPasswordForEmail } from "@/lib/supabase";
+import {
+  signInWithGoogle,
+  signInWithApple,
+  GOOGLE_OAUTH_ENABLED,
+  APPLE_OAUTH_ENABLED,
+  resetPasswordForEmail,
+} from "@/lib/supabase";
 import { preloadRoute } from "@/lib/lazy-with-retry";
 import { Loading } from "@/components/ui-common";
 import { applyPageSeo } from "@/lib/seo";
@@ -236,26 +242,44 @@ export default function LoginPage() {
           </button>
         )}
 
-        {!adminLogin && authEnabled && GOOGLE_OAUTH_ENABLED && mode === "login" && (
+        {!adminLogin &&
+          authEnabled &&
+          (GOOGLE_OAUTH_ENABLED || APPLE_OAUTH_ENABLED) &&
+          mode === "login" && (
           <div className="login-oauth">
             <div className="login-oauth__divider"><span>أو</span></div>
-            <button
-              type="button"
-              className="login-oauth__btn"
-              onClick={async () => {
-                const { getAuthCallbackUrl } = await import("@/lib/auth-redirect");
-                await signInWithGoogle(getAuthCallbackUrl(nextPath !== "/" ? nextPath : "/"));
-              }}
-              disabled={loading}
-            >
-              <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
-                <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 01-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z"/>
-                <path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 009 18z"/>
-                <path fill="#FBBC05" d="M3.964 10.712A5.41 5.41 0 013.682 9c0-.593.102-1.17.282-1.712V4.956H.957A8.996 8.996 0 000 9c0 1.452.348 2.827.957 4.044l3.007-2.332z"/>
-                <path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 00.957 4.956L3.964 7.288C4.672 5.161 6.656 3.58 9 3.58z"/>
-              </svg>
-              تسجيل الدخول بـ Google
-            </button>
+            {GOOGLE_OAUTH_ENABLED ? (
+              <button
+                type="button"
+                className="login-oauth__btn"
+                onClick={async () => {
+                  const { getAuthCallbackUrl } = await import("@/lib/auth-redirect");
+                  await signInWithGoogle(getAuthCallbackUrl(nextPath !== "/" ? nextPath : "/"));
+                }}
+                disabled={loading}
+              >
+                <svg width="18" height="18" viewBox="0 0 18 18" aria-hidden="true">
+                  <path fill="#4285F4" d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 01-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z"/>
+                  <path fill="#34A853" d="M9 18c2.43 0 4.467-.806 5.956-2.184l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 009 18z"/>
+                  <path fill="#FBBC05" d="M3.964 10.712A5.41 5.41 0 013.682 9c0-.593.102-1.17.282-1.712V4.956H.957A8.996 8.996 0 000 9c0 1.452.348 2.827.957 4.044l3.007-2.332z"/>
+                  <path fill="#EA4335" d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 00.957 4.956L3.964 7.288C4.672 5.161 6.656 3.58 9 3.58z"/>
+                </svg>
+                تسجيل الدخول بـ Google
+              </button>
+            ) : null}
+            {APPLE_OAUTH_ENABLED ? (
+              <button
+                type="button"
+                className="login-oauth__btn"
+                onClick={async () => {
+                  const { getAuthCallbackUrl } = await import("@/lib/auth-redirect");
+                  await signInWithApple(getAuthCallbackUrl(nextPath !== "/" ? nextPath : "/"));
+                }}
+                disabled={loading}
+              >
+                تسجيل الدخول بـ Apple
+              </button>
+            ) : null}
           </div>
         )}
 

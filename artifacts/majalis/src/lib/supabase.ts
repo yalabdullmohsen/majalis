@@ -108,6 +108,12 @@ export async function updatePassword(newPassword: string) {
  */
 export const GOOGLE_OAUTH_ENABLED = false;
 
+/**
+ * Sign in with Apple — مطلوب بجانب أي دخول اجتماعي (Guideline 4.8) عند تفعيل Google.
+ * يبقى معطّلاً ما دام Google معطّلاً؛ فعّل الاثنين معاً من لوحة Supabase + هذا العلم.
+ */
+export const APPLE_OAUTH_ENABLED = false;
+
 export async function signInWithGoogle(redirectTo?: string) {
   const { getAuthCallbackUrl } = await import("@/lib/auth-redirect");
   const redirect = redirectTo || getAuthCallbackUrl();
@@ -117,6 +123,15 @@ export async function signInWithGoogle(redirectTo?: string) {
       redirectTo: redirect,
       queryParams: { access_type: "offline", prompt: "consent" },
     },
+  });
+}
+
+export async function signInWithApple(redirectTo?: string) {
+  const { getAuthCallbackUrl } = await import("@/lib/auth-redirect");
+  const redirect = redirectTo || getAuthCallbackUrl();
+  return await supabase.auth.signInWithOAuth({
+    provider: "apple",
+    options: { redirectTo: redirect },
   });
 }
 
