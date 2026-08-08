@@ -60,9 +60,10 @@ export default function AccountDeletionPage() {
       try {
         const { clearLocalBookmarks } = await import("@/lib/local-bookmarks");
         const { clearOfflineReading } = await import("@/lib/offline-reading-pack");
+        const { clearUserLocalData } = await import("@/lib/clear-user-local-data");
         clearLocalBookmarks();
         clearOfflineReading();
-        localStorage.removeItem("majalis-user-settings-v1");
+        clearUserLocalData();
       } catch {
         /* مسح محلي أفضل جهد */
       }

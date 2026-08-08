@@ -9,8 +9,8 @@
 | م1ب تجميد `majalis-mobile` | تم ✅ | [#924](https://github.com/yalabdullmohsen/majalis/pull/924) | استبعاد workspace بعد TestFlight |
 | م1ج خريطة المنصات + جرد تسميع | تم ✅ | [#925](https://github.com/yalabdullmohsen/majalis/pull/925) | — |
 | م2 مصحف صور/مضلعات/توقيتات | **محظور بلا أصول** | — | توريد PDF مدينة مرخّص؛ الأعلام تبقى off (QPC) |
-| م3 حواجز المتجر | جزئي ✅/قيد التوثيق | هذا الفرع | مسح محلي أوسع؛ أصول المتجر؛ Android lane |
-| م3 حذف الحساب | موجود ✅ | مسارات `/account-deletion` + API | تدقيق CASCADE لكل الجداول |
+| م3 حواجز المتجر | جزئي ✅ | [#926](https://github.com/yalabdullmohsen/majalis/pull/926) + هذا الفرع | أصول المتجر؛ Android lane؛ push_subscriptions |
+| م3 حذف الحساب | محسّن ✅ | `/account-deletion` + `clearUserLocalData` | تدقيق CASCADE لكل الجداول على الإنتاج |
 | م3 Sign in with Apple | غير مطلوب الآن | — | Google معطّل (`GOOGLE_OAUTH_ENABLED=false`)؛ جهّز مع التفعيل |
 | م3 خصوصية/شروط/دعم | موجود ✅ | `/privacy` `/terms` `/contact` `/support`→contact `/about` `/sources` | مطابقة PRIVACY_DATA_MAP |
 | م4 تراخيص | توثيق بدأ | CREDITS + LICENSE_RISKS | حسم بنود LICENSE_RISKS المفتوحة |
@@ -30,7 +30,9 @@
 ## تعريف «جاهز» لم3/م4
 
 - [x] حذف حساب داخل التطبيق مربوط من الإعدادات  
-- [ ] مسح محلي شامل + push_subscriptions موثّق/منفَّذ  
+- [x] مسح محلي أوسع عبر `clearUserLocalData`  
+- [ ] push_subscriptions حذف صريح على الخادم  
+
 - [x] خصوصية/شروط/مصادر بروابط ثابتة  
 - [x] PRIVACY_DATA_MAP / CREDITS / LICENSE_RISKS موجودة  
 - [ ] بنود LICENSE_RISKS الحرجة مغلقة أو المحتوى مخفي  
