@@ -63,6 +63,10 @@ const GlobalSearchModal = lazyWithRetry(
   () => import("@/components/GlobalSearchModal").then((m) => ({ default: m.GlobalSearchModal })),
   "GlobalSearchModal",
 );
+const QuranMiniPlayerBar = lazyWithRetry(
+  () => import("@/components/quran/QuranMiniPlayerBar").then((m) => ({ default: m.QuranMiniPlayerBar })),
+  "QuranMiniPlayerBar",
+);
 
 const NotFound = lazy(() => import("@/views/not-found"));
 const HomePage = lazy(() => import("@/pages/account/HomePage"));
@@ -990,6 +994,9 @@ function AppShellInner() {
       <GlobalBackButton />
       {!hideSiteChrome && <PwaInstallBanner />}
       <BottomNavBar />
+      <Suspense fallback={null}>
+        <QuranMiniPlayerBar />
+      </Suspense>
       <VisualViewportKeyboardBridge />
       <SafeAreaDebugOverlay />
       {newBadges.length > 0 && (

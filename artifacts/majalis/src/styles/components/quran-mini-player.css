@@ -1,0 +1,64 @@
+.quran-mini-player {
+  position: fixed;
+  inset-inline: 0;
+  bottom: calc(var(--bottom-nav-h, 56px) + env(safe-area-inset-bottom, 0px));
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 52px;
+  padding: 0.5rem 0.75rem;
+  background: var(--color-mushaf-surface, var(--mj-brand-deep, #0f3d2e));
+  color: #fff;
+  border-block-start: 1px solid color-mix(in srgb, #fff 18%, transparent);
+  box-shadow: 0 -4px 20px rgb(0 0 0 / 0.18);
+}
+
+.quran-mini-player__meta {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.1rem;
+  min-width: 0;
+  min-height: 44px;
+  padding: 0.25rem 0.35rem;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+
+.quran-mini-player__meta strong {
+  font-size: 0.95rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.quran-mini-player__meta span {
+  font-size: 0.8rem;
+  opacity: 0.85;
+}
+
+.quran-mini-player__toggle,
+.quran-mini-player__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 999px;
+  background: color-mix(in srgb, #fff 14%, transparent);
+  color: inherit;
+  cursor: pointer;
+}
+
+.quran-mini-player__toggle:active,
+.quran-mini-player__close:active {
+  background: color-mix(in srgb, #fff 24%, transparent);
+}

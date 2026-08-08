@@ -20,6 +20,7 @@ import {
 } from "lucide-react";
 import { copyAyahText, copyAyahTextPlain } from "@/lib/share-ayah";
 import { addBookmark, removeBookmark, isBookmarked, getNote, saveNote } from "@/lib/quran-personal";
+import { setMushafUnsavedWork } from "@/lib/mushaf-unsaved";
 import { RECITERS } from "@/lib/quran-audio";
 import { CONTACT_EMAIL } from "@/lib/site-config";
 import { afterNextPaint, yieldToMain } from "@/lib/yield-to-main";
@@ -123,8 +124,14 @@ export function PageAyahActionSheet({
   const translationMenuRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    const saved = getNote(surahNum, ayahNum);
+    setMushafUnsavedWork(noteText !== saved);
+  }, [noteText, surahNum, ayahNum]);
+
+  useEffect(() => {
     setBookmarked(isBookmarked(surahNum, ayahNum));
     setNoteText(getNote(surahNum, ayahNum));
+    setMushafUnsavedWork(false);
     setCopiedKind(null);
     setNoteOpen(false);
     setNoteSaved(false);
@@ -311,6 +318,7 @@ export function PageAyahActionSheet({
 
   const handleSaveNote = () => {
     saveNote(surahNum, ayahNum, noteText);
+    setMushafUnsavedWork(false);
     setNoteSaved(true);
     setTimeout(() => setNoteSaved(false), 1500);
   };
