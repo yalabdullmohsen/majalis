@@ -398,7 +398,7 @@ export default function PrayerTimesPage() {
         </Link>
         <Link href="/adhan-settings" className="pts-dock__item">
           <span className="pts-dock__icon"><Bell size={20} strokeWidth={1.7} /></span>
-          <span>الأذان</span>
+          <span>تنبيهات الأذان</span>
         </Link>
       </nav>
 
