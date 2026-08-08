@@ -5,11 +5,14 @@
 | Surface | Technology | Path |
 |---|---|---|
 | Web (production) | Vite + React SPA (RTL Arabic) | `artifacts/majalis` |
-| Mobile | Expo Router (React Native) | `artifacts/majalis-mobile` |
-| Native shell | Capacitor wrapping the Vite web app | `artifacts/majalis/ios`, `android` |
-| Legacy Flutter | Modular Quran/AI sketch (not the production store app) | `artifacts/majlisilm-flutter` |
+| Native shell (store) | Capacitor wrapping the Vite web app | `artifacts/majalis/ios` (+ android) |
+| Expo mobile | **Frozen** thin Expo wrapper — not store path | `artifacts/majalis-mobile` → `DEPRECATED.md` |
+| Legacy Flutter | **Frozen** sketch — not store path | `artifacts/majlisilm-flutter` → `DEPRECATED.md` |
+| Tasmee3 reference | Flutter + ASR server — **do not delete**; merge into product in 1.1 | `artifacts/mushafi` |
 | API | Express push notifications | `artifacts/api-server` |
 | Data | Hosted Supabase (Auth + Postgres + Storage) | browser → Supabase directly |
+
+Canonical platform map: [`PLATFORMS.md`](../PLATFORMS.md).
 
 This is **not** a Next.js application. SSR/SSG concerns map to Vite prerender + `seo-prerender/` for the web app.
 
