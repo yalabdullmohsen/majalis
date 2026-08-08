@@ -43,9 +43,11 @@ html.pts-immersive .top-section-bar__tab.is-active {
   --pts-bg-0: var(--em-950, #081A16);
   --pts-bg-1: var(--em-800, var(--mj-brand-deep));
   --pts-bg-2: var(--em-700, #195345);
-  --pts-gold: var(--gold-300, #E3CB8C);
-  --pts-gold-soft: color-mix(in srgb, var(--gold-400, #D2B063) 28%, transparent);
-  --pts-gold-line: color-mix(in srgb, var(--gold-400, #D2B063) 40%, transparent);
+  /* ذهب فاتح ثابت للنص على الخلفية الزمردية — لا --gold-300/=mj-accent الداكن
+     (#B08A3E ≈ 3.7:1 على #123F2E؛ #E3CB8C يمرّ ≥4.5:1 لبوابة التباين). */
+  --pts-gold: #E3CB8C;
+  --pts-gold-soft: color-mix(in srgb, #D2B063 28%, transparent);
+  --pts-gold-line: color-mix(in srgb, #D2B063 40%, transparent);
   /* أبيض صلب — لا --n-50/--mj-bg/--mj-ink (تنقلب سوداء حسب السمة) */
   --pts-white: #FAFAF8;
   --pts-muted: rgba(250, 250, 248, 0.78);
