@@ -28,6 +28,8 @@ const ROOT = new URL("..", import.meta.url).pathname;
 const QURAN_EXCEPTION_FONTS = [
   "amiri quran", "amiri", "scheherazade", "kfgqpc", "uthmanic", "hafs",
   "aref ruqaa", "noto naskh arabic",
+  // قياس عرض أسطر QCF V2 في measure-mushaf-line-deviation.mjs (خطوط p{n}.woff2)
+  "qpc",
 ];
 
 const MONOSPACE_MARKERS = [

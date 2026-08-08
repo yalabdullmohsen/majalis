@@ -38,7 +38,9 @@ async function fetchPage(pageNumber) {
   // نزّلناه (Phase 2) — حقل "text" الافتراضي يُعيد code_v1 (خط V1 أقدم
   // غير مُنزَّل هنا)، فيرندر حروفًا منفصلة خاطئة لا كلمات مركَّبة صحيحة
   // (اكتُشف بمقارنة حية مع quran.com نفسه — راجع docs/mushaf-rebuild-inventory.md).
-  const url = `https://api.qurancdn.com/api/qdc/verses/by_page/${pageNumber}?words=true&word_fields=text_uthmani,text_qpc_hafs,code_v2&mushaf=2&per_page=50`;
+  // mushaf=1 = QCF V2 (يطابق خطوط hafs/v2). كان mushaf=2 خطأً (تخطيط V1).
+  const url = `https://api.qurancdn.com/api/qdc/verses/by_page/${pageNumber}?words=true&word_fields=text_uthmani,text_qpc_hafs,code_v2&mushaf=1&per_page=50`;
+
   const data = await fetchJson(url);
   return data.verses ?? [];
 }

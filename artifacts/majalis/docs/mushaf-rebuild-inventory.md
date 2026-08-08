@@ -63,7 +63,8 @@
 
 **البديل المُتحقَّق فعليًا والمُعتمَد بدلًا منه:** واجهة `api.qurancdn.com` (API الإنتاجي العلني لـQuran.com، مبني على نفس بيانات QUL ونفس خطوط QPC V2 — يستخدمها موقع quran.com نفسه حيًّا، تحقّقتُ عبر مراقبة طلبات شبكة حقيقية لـ`quran.com/1`) توفّر:
 - خطوط الصفحات: `https://quran.com/fonts/quran/hafs/v2/woff2/p{1..604}.woff2` (تحقَّقتُ من الصفحات 1، 2، 300، 603، 604 — كلها HTTP 200، `content-type: font/woff2`، ~40-190 كيلوبايت/صفحة).
-- بيانات الكلمات/الأسطر: `https://api.qurancdn.com/api/qdc/verses/by_page/{n}?words=true&word_fields=text_uthmani,text_qpc_hafs&mushaf=2` — تُعيد لكل كلمة: `line_number` (1-15 الفعلي)، `text_qpc_hafs` (glyph مطابق لحرف الخط)، `text_uthmani`، بيانات الصفحة/الجزء/الحزب/السجدة كاملة.
+- بيانات الكلمات/الأسطر: `https://api.qurancdn.com/api/qdc/verses/by_page/{n}?words=true&word_fields=text_uthmani,text_qpc_hafs,code_v2,line_number,position&mushaf=1` — **mushaf=1 = QCF V2** المطابق لخطوط `hafs/v2` (كان التوثيق السابق يذكر `mushaf=2` خطأً؛ ذلك تخطيط V1 ويكسر عرض الأسطر). تُعيد لكل كلمة: `line_number` (1-15)، `code_v2`، `text_qpc_hafs`، `text_uthmani`، وبيانات الصفحة/الجزء/الحزب/السجدة.
+- **مزامنة الأسطر (2026-08):** السكربت `scripts/quran-import/sync-mushaf-v2-line-layout.mjs` يحدّث `line_number` و`position` فقط من `mushaf=1`. الصفحات التي تختلف تجزئتها عن mushaf=1 (حدود صفحة/تقطيع كلمات) تُتخطّى حتى إعادة بناء محتوى كاملة — انظر `.local/mushaf/sync-line-layout-report.json`.
 
 هذا يُبقي الالتزام الكامل بروح البرومبت (بيانات QPC V2 الحقيقية من نفس منظومة QUL، لا توليد ولا تخمين) مع مسار تنزيل آلي فعلي بدل بوابة تسجيل دخول غير قابلة للأتمتة في هذه البيئة.
 
