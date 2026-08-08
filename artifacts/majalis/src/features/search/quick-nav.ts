@@ -1,4 +1,5 @@
-import { normalizeArabic, toWesternDigits } from "@/shared/arabic-normalize";
+import { toWesternDigits } from "@/shared/arabic-normalize";
+import { parseMushafJumpQuery } from "@/features/search/mushaf-jump";
 
 export type QuickNavResult = {
   href: string;
@@ -6,7 +7,7 @@ export type QuickNavResult = {
 };
 
 /**
- * أوامر سريعة: «البقرة ٢٥٥» → آية، «صحيح البخاري ١» → حديث.
+ * أوامر سريعة: «البقرة ٢٥٥» → آية، «صحيح البخاري ١» → حديث، «٢٨٣» → صفحة مصحف.
  * يُفحص الحديث قبل نمط السورة+الرقم حتى لا يُلتقط «صحيح البخاري 1» كآية.
  */
 export function parseQuickNav(raw: string): QuickNavResult | null {
@@ -31,17 +32,19 @@ export function parseQuickNav(raw: string): QuickNavResult | null {
     };
   }
 
-  // سورة + رقم آية: البقرة 255 / البقرة ٢٥٥
-  const ayah = q.match(/^(?:سورة\s+)?(.+?)\s+(\d{1,3})$/u);
-  if (ayah) {
-    const name = normalizeArabic(ayah[1] ?? "");
-    const n = Number(ayah[2]);
-    if (name && n >= 1 && n <= 286) {
-      return {
-        href: `/quran/search?q=${encodeURIComponent(`${ayah[1]} ${n}`)}`,
-        titleAr: `آية: ${ayah[1]} ${n}`,
-      };
-    }
+  // مصحف: صفحة / سورة:آية / اسم سورة (+ آية) بأي رسم أرقام
+  const mushaf = parseMushafJumpQuery(q);
+  if (mushaf?.kind === "page") {
+    return {
+      href: `/mushaf/page/${mushaf.page}`,
+      titleAr: `المصحف · صفحة ${mushaf.page}`,
+    };
+  }
+  if (mushaf?.kind === "ayah") {
+    return {
+      href: `/mushaf/page/${mushaf.pageHint}?ayah=${mushaf.surah}:${mushaf.ayah}`,
+      titleAr: `آية ${mushaf.surah}:${mushaf.ayah}`,
+    };
   }
 
   return null;

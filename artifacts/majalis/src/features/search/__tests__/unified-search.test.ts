@@ -3,7 +3,7 @@ import { parseQuickNav } from "@/features/search/quick-nav";
 import { searchUnifiedIndex, type UnifiedSearchDoc } from "@/features/search/unified-local";
 
 const q1 = parseQuickNav("البقرة ٢٥٥");
-assert.ok(q1?.href.includes("quran"), "آية البقرة");
+assert.ok(q1?.href.includes("mushaf") || q1?.href.includes("ayah="), "آية البقرة → مصحف");
 const q2 = parseQuickNav("صحيح البخاري 1");
 assert.ok(q2?.href.includes("hadith"), "حديث البخاري");
 assert.equal(parseQuickNav(""), null);

@@ -1,10 +1,10 @@
 /**
- * Jump-to-page modal — web port of the RN mushaf sketch
- * (`isJumpModalVisible` / `inputPage` / `handleJump` for pages 1–604).
+ * Jump-to-page modal — يقبل أرقامًا عربية/إنجليزية ومرجع آية (سورة:آية) واسم سورة.
  */
 import { useEffect, useId, useRef, useState } from "react";
 import { BookOpen } from "lucide-react";
 import { toArabicDigits } from "@/lib/utils";
+import { parseMushafJumpQuery, type MushafJumpTarget } from "@/features/search/mushaf-jump";
 import "@/styles/components/jump-page-modal.css";
 
 export const MUSHAF_TOTAL_PAGES = 604;
@@ -14,8 +14,8 @@ export type JumpPageModalProps = {
   currentPage: number;
   totalPages?: number;
   onClose: () => void;
-  /** Navigate + persist; caller should clamp/save (e.g. goToPage). */
-  onJump: (page: number) => void;
+  /** انتقال لصفحة أو آية بعد تحليل الاستعلام المطبّع. */
+  onJump: (target: MushafJumpTarget) => void;
 };
 
 export function JumpPageModal({
@@ -50,15 +50,19 @@ export function JumpPageModal({
   if (!open) return null;
 
   const handleJump = () => {
-    const pageNum = Number.parseInt(inputPage, 10);
-    if (Number.isFinite(pageNum) && pageNum >= 1 && pageNum <= totalPages) {
-      onJump(pageNum);
-      onClose();
-      setInputPage("");
-      setError(null);
+    const target = parseMushafJumpQuery(inputPage);
+    if (!target) {
+      setError(`أدخل رقم صفحة (1–${totalPages}) أو سورة:آية أو اسم سورة`);
       return;
     }
-    setError(`يرجى إدخال رقم صفحة صحيح بين 1 و ${totalPages}`);
+    if (target.kind === "page" && (target.page < 1 || target.page > totalPages)) {
+      setError(`يرجى إدخال رقم صفحة صحيح بين 1 و ${totalPages}`);
+      return;
+    }
+    onJump(target);
+    onClose();
+    setInputPage("");
+    setError(null);
   };
 
   /* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions -- modal dismiss; Esc handled above */
@@ -76,22 +80,23 @@ export function JumpPageModal({
           <BookOpen size={22} />
         </div>
         <h2 id={titleId} className="mpv-jump-dialog__title">
-          الانتقال إلى صفحة
+          الانتقال في المصحف
         </h2>
         <p id={descId} className="mpv-jump-dialog__hint">
-          أدخل رقمًا بين {toArabicDigits(1)} و{toArabicDigits(totalPages)}
+          صفحة ({toArabicDigits(1)}–{toArabicDigits(totalPages)}) أو سورة:آية مثل ٢:٢٥٥ أو اسم سورة
         </p>
         <label className="mpv-jump-dialog__label" htmlFor="mpv-jump-page-input">
-          رقم الصفحة
+          صفحة أو آية أو سورة
         </label>
         <input
           ref={inputRef}
           id="mpv-jump-page-input"
-          type="number"
+          type="search"
           className="mpv-jump-dialog__input"
-          inputMode="numeric"
-          min={1}
-          max={totalPages}
+          inputMode="search"
+          enterKeyHint="search"
+          autoComplete="off"
+          placeholder="٢٨٣ أو 2:255 أو البقرة"
           value={inputPage}
           onChange={(e) => {
             setInputPage(e.target.value);
@@ -101,6 +106,7 @@ export function JumpPageModal({
             if (e.key === "Enter") {
               e.preventDefault();
               handleJump();
+              inputRef.current?.blur();
             }
           }}
           aria-invalid={Boolean(error)}
