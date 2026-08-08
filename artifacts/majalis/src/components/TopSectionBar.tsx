@@ -1,11 +1,9 @@
 import { useEffect, useRef } from "react";
 import { Link, useLocation } from "wouter";
-import {
-  BookOpen, Clock, GraduationCap, Scale,
-} from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import { isImmersiveChromePath } from "@/lib/immersive-chrome";
 import { isComingSoonPath } from "@/lib/nav-visibility";
+import { BOTTOM_NAV_TABS } from "@/lib/nav-map";
 
 /* هوية التبويب العلوي تُحسم عبر styles/m2030/navigation.css */
 
@@ -16,16 +14,23 @@ type SectionTab = {
   prefetch: () => void;
 };
 
+const PREFETCH_BY_HREF: Record<string, () => void> = {
+  "/mushaf": () => { void import("@/pages/quran/ui/MushafPageView"); },
+  "/lessons": () => { void import("@/pages/lessons/LessonsPage"); },
+  "/prayer-times": () => { void import("@/pages/worship/PrayerTimesPage"); },
+  "/fiqh": () => { void import("@/pages/fiqh/FiqhPage"); },
+};
+
 /**
- * شريط الأقسام — نفس المساحات الأربع في الشريط السفلي (تنقّل موحّد).
+ * شريط الأقسام — نفس المساحات الأربع من nav-map (تنقّل موحّد).
  * المزيد والبحث دائمان في الهيدر / الشريط السفلي.
  */
-export const SECTION_TABS: SectionTab[] = [
-  { href: "/mushaf", label: "قرآن", Icon: BookOpen, prefetch: () => import("@/pages/quran/ui/MushafPageView") },
-  { href: "/lessons", label: "الدروس", Icon: GraduationCap, prefetch: () => import("@/pages/lessons/LessonsPage") },
-  { href: "/prayer-times", label: "الصلاة", Icon: Clock, prefetch: () => import("@/pages/worship/PrayerTimesPage") },
-  { href: "/fiqh", label: "فقه", Icon: Scale, prefetch: () => import("@/pages/fiqh/FiqhPage") },
-];
+export const SECTION_TABS: SectionTab[] = BOTTOM_NAV_TABS.map((tab) => ({
+  href: tab.href,
+  label: tab.label,
+  Icon: tab.Icon,
+  prefetch: PREFETCH_BY_HREF[tab.href] ?? (() => undefined),
+}));
 
 export function isTabActive(location: string, href: string): boolean {
   if (href === "/mushaf") {

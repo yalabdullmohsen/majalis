@@ -637,8 +637,8 @@ html.dark .nav-soon-badge {
 @media (max-width: 879px) {
   :root {
     --header-height: 3rem;
-    --bottom-nav-h: 2.75rem;
-    --bottom-nav-height: 2.75rem;
+    --bottom-nav-h: 3rem;
+    --bottom-nav-height: 3rem; /* ≥ 48px — هدف لمس مريح فوق الحد الأدنى 44 */
   }
 
   .bottom-nav,
@@ -682,9 +682,9 @@ html.dark .nav-soon-badge {
     justify-content: center !important;
     gap: 0.1rem !important;
     min-width: 0 !important;
-    min-height: 44px !important;
+    min-height: max(44px, var(--mj-touch-min, 48px)) !important;
     height: var(--bottom-nav-height) !important;
-    max-height: var(--bottom-nav-height) !important;
+    max-height: none !important;
     padding: 0.15rem 0.1rem !important;
     border: 0 !important;
     border-radius: 0.5rem !important;
