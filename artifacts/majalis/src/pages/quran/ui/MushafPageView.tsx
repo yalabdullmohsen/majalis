@@ -6,6 +6,7 @@ import {
 } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { toArabicDigits } from "@/lib/utils";
+import { toArabicPageDigits } from "@/lib/numerals";
 import {
   fetchSurahDetail, getSurahList, getSurahMeta, getSurahForPage, SURAH_START_PAGES,
   savePagePosition, loadPagePosition, deriveHizbRub,
@@ -607,13 +608,11 @@ export default function MushafPageView() {
                 <circle cx="147.5" cy="22" r="1.5" fill="currentColor" opacity="0.9" />
                 <path d="M138 14 L139.4 16.6 L138 19.2 L136.6 16.6 Z" fill="currentColor" opacity="0.7" />
                 <path d="M138 24.8 L139.4 27.4 L138 30 L136.6 27.4 Z" fill="currentColor" opacity="0.7" />
-                {/* وريدات أعلى/أسفل الوسط */}
-                <path d="M80 3.5 L82.4 7.2 L80 10.9 L77.6 7.2 Z" fill="currentColor" opacity="0.8" />
-                <path d="M80 33.1 L82.4 36.8 L80 40.5 L77.6 36.8 Z" fill="currentColor" opacity="0.8" />
-                <circle cx="80" cy="7.2" r="0.7" fill="currentColor" opacity="0.55" />
-                <circle cx="80" cy="36.8" r="0.7" fill="currentColor" opacity="0.55" />
+                {/* زخارف أعلى/أسفل الإطار فقط — خارج نطاق الرقم حتى لا تُقرأ كفاصل عشري (٫) بين الرقمين */}
+                <path d="M80 1.2 L81.6 3.4 L80 5.6 L78.4 3.4 Z" fill="currentColor" opacity="0.75" />
+                <path d="M80 38.4 L81.6 40.6 L80 42.8 L78.4 40.6 Z" fill="currentColor" opacity="0.75" />
               </svg>
-              <span className="mpv-ayah-page-badge__num">{toArabicDigits(page)}</span>
+              <span className="mpv-ayah-page-badge__num">{toArabicPageDigits(page)}</span>
             </button>
           </footer>
         </>

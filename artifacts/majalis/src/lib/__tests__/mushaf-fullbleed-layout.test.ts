@@ -27,6 +27,14 @@ assert.match(mpvBodyBlock[0], /width:\s*100%/);
 assert.equal(/83vh/.test(mpvBodyBlock[0]), false, ".mpv-body--ayah بلا سقف 83vh");
 
 assert.match(quranCss, /\.quran-shell--chrome-hidden\s+\.mpv-body/);
+assert.match(quranCss, /\.mpv-toolbar\.mpv-toolbar--ayah\s*\{[\s\S]*?position:\s*absolute/);
+assert.match(
+  quranCss,
+  /\.mpv-toolbar\.mpv-toolbar--ayah\.mpv-toolbar--hidden\s*\{[\s\S]*?display:\s*none/,
+  "إخفاء الأدوات بلا حجز مساحة في التدفق",
+);
+assert.match(quranCss, /\.mpv-body\.mpv-body--ayah\s*\{[\s\S]*?padding-top:\s*6px/);
+assert.match(viewSrc, /toArabicPageDigits/);
 assert.match(viewSrc, /quran-shell--chrome-hidden/);
 assert.match(viewSrc, /quran-shell--ayah/);
 assert.match(viewSrc, /mpv-ayah-header/);
