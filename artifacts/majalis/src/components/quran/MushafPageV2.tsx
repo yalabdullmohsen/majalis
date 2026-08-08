@@ -227,16 +227,18 @@ export function MushafPageV2({
         size = next;
       }
 
-      // تمريرة ضبط: امنع قصّ أي سطر مرسوم ولو ببكسل
-      applyTempFontSize(sizingEls, size);
-      container.style.fontSize = `${size}px`;
-      let widestAtSize = 0;
-      for (const el of sizingEls) {
-        el.style.overflowX = "visible";
-        widestAtSize = Math.max(widestAtSize, el.scrollWidth);
-      }
-      if (widestAtSize > availableWidth) {
-        size *= (availableWidth / widestAtSize) * (opening ? 0.985 : 0.997);
+      // تصغير متكرر حتى لا يتجاوز أي سطر مرسوم الحاوية ولو ببكسل
+      // (اختلاف تلميح الخط بين المنصات قد يُبقي فائضًا بعد تمريرة واحدة)
+      for (let guard = 0; guard < 10; guard++) {
+        applyTempFontSize(sizingEls, size);
+        container.style.fontSize = `${size}px`;
+        let widestAtSize = 0;
+        for (const el of sizingEls) {
+          el.style.overflowX = "visible";
+          widestAtSize = Math.max(widestAtSize, el.scrollWidth);
+        }
+        if (widestAtSize <= availableWidth) break;
+        size *= (availableWidth / widestAtSize) * (opening ? 0.98 : 0.992);
       }
 
       applyTempFontSize(sizingEls, "");

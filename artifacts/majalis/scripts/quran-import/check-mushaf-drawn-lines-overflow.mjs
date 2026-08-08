@@ -137,9 +137,11 @@ body{margin:0}
       const sizeByHeight = ayahBudget / Math.max(1, sizing.ayahLineCount) / LINE_HEIGHT_EM;
       size = Math.min(size, sizeByHeight);
 
-      const widestAtSize = measureWidest(size);
-      if (widestAtSize > CONTAINER_W) {
-        size *= (CONTAINER_W / widestAtSize) * 0.997;
+      // نفس منطق المكوّن: صغّر حتى ينعدم التجاوز (فروق تلميح Linux/macOS)
+      for (let guard = 0; guard < 10; guard++) {
+        const widestAtSize = measureWidest(size);
+        if (widestAtSize <= CONTAINER_W) break;
+        size *= (CONTAINER_W / widestAtSize) * 0.992;
       }
       const finalWidest = measureWidest(size);
       const overflows = els
