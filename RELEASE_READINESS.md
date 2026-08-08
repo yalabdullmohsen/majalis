@@ -8,9 +8,9 @@
 | البند | الحالة | رقم PR | ملاحظة |
 |---|---|---|---|
 | 1 تطبيع أرقام/حروف البحث + قفز مصحف | تم ✅ | [#947](https://github.com/yalabdullmohsen/majalis/pull/947) | `normalizeForSearch` + `parseMushafJumpQuery` |
-| 2 Enter في حقول البحث | جارٍ | هذا الفرع | `SearchKeyboardBridge` + `enterKeyHint=search` |
-| 3 بلا autoFocus بحث | معلّق | — | بعد دمج 2 |
-| 4 تمرير لأعلى عند مسار جديد | معلّق | — | بعد دمج 2 |
+| 2 Enter في حقول البحث | تم ✅ | [#948](https://github.com/yalabdullmohsen/majalis/pull/948) | جسر كسول + `enterKeyHint=search` |
+| 3 بلا autoFocus بحث | جارٍ | هذا الفرع | إزالة تركيز بحث «المزيد» + حماية الشيت |
+| 4 تمرير لأعلى عند مسار جديد | معلّق | — | بعد دمج 3 |
 | 5–11 | معلّق | — | حسب الترتيب المتفق |
 
 | البند | الحالة | رقم PR | ما تبقّى |

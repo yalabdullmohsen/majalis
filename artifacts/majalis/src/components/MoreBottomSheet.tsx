@@ -1,5 +1,5 @@
 import { Link, useLocation } from "wouter";
-import { useId, useMemo, useRef, useState, type MouseEvent } from "react";
+import { useId, useMemo, useState, type MouseEvent } from "react";
 import { ChevronLeft, Moon, Search, Sun } from "lucide-react";
 import { useAuth } from "@/components/AuthProvider";
 import { useThemePreference } from "@/components/ThemePreferenceProvider";
@@ -36,7 +36,6 @@ export function MoreBottomSheet({ open, onClose }: Props) {
   const { isLoggedIn, logout } = useAuth();
   const [query, setQuery] = useState("");
   const searchId = useId();
-  const searchRef = useRef<HTMLInputElement>(null);
 
   const groups = useMemo(() => filterServicesCenterGroups(query), [query]);
 
@@ -202,13 +201,11 @@ export function MoreBottomSheet({ open, onClose }: Props) {
       snap="full"
       closeLabel="إغلاق"
       className="bottom-sheet--services"
-      initialFocusRef={searchRef}
     >
       <div className="bottom-sheet__search">
         <label htmlFor={searchId} className="sr-only">بحث في مركز الخدمات</label>
         <Search className="bottom-sheet__search-icon" size={16} strokeWidth={1.8} aria-hidden="true" />
         <input
-          ref={searchRef}
           id={searchId}
           type="search"
           enterKeyHint="search"

@@ -48,7 +48,18 @@ const focusHotspots = [
   "src/components/quran/JumpPageModal.tsx",
   "src/views/VaultPage.tsx",
   "src/components/AdminSiteEditBar.tsx",
+  "src/components/MoreBottomSheet.tsx",
 ];
+
+{
+  const morePath = join(appRoot, "src/components/MoreBottomSheet.tsx");
+  if (existsSync(morePath)) {
+    const moreSrc = stripComments(readFileSync(morePath, "utf8"));
+    if (/initialFocusRef\s*=\s*\{[^}]*search/i.test(moreSrc) || /initialFocusRef=\{searchRef\}/.test(moreSrc)) {
+      issues.push("src/components/MoreBottomSheet.tsx: لا تُمرّر initialFocusRef لحقل البحث — الكيبورد يُفتح باللمس فقط.");
+    }
+  }
+}
 
 for (const rel of focusHotspots) {
   const p = join(appRoot, rel);
