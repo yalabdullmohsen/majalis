@@ -52,5 +52,17 @@ export function useVisualViewportOffset() {
 /** يركّب المستمع مرة واحدة في الشجرة (App). */
 export function VisualViewportKeyboardBridge() {
   useVisualViewportOffset();
+  useEffect(() => {
+    let uninstall: (() => void) | undefined;
+    let cancelled = false;
+    void import("@/lib/search-keyboard-bridge").then((m) => {
+      if (cancelled) return;
+      uninstall = m.installSearchKeyboardBridge();
+    });
+    return () => {
+      cancelled = true;
+      uninstall?.();
+    };
+  }, []);
   return null;
 }

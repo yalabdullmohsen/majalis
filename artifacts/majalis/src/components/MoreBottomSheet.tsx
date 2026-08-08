@@ -211,12 +211,17 @@ export function MoreBottomSheet({ open, onClose }: Props) {
           ref={searchRef}
           id={searchId}
           type="search"
+          enterKeyHint="search"
+          inputMode="search"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") e.currentTarget.blur();
+          }}
           className="bottom-sheet__search-input"
           placeholder="ابحث في الخدمات…"
           autoComplete="off"
-          enterKeyHint="search"
+          data-search-field="1"
         />
       </div>
 

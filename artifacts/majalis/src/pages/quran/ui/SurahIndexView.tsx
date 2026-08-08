@@ -171,12 +171,17 @@ export default function SurahIndexPage() {
           <Search className="surah-index-search__icon" size={16} strokeWidth={1.8} aria-hidden="true" />
           <input
             type="search"
+            enterKeyHint="search"
+            inputMode="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === "Enter") e.currentTarget.blur();
+            }}
             placeholder="ابحث عن سورة بالاسم أو الرقم..."
             aria-label="ابحث عن سورة"
-            enterKeyHint="search"
             autoComplete="off"
+            data-search-field="1"
           />
         </div>
 

@@ -106,6 +106,13 @@ export function SearchSuggestions({
         event.preventDefault();
         onSubmit(flat[activeIndex].label);
         setOpen(false);
+        event.currentTarget.blur();
+      } else {
+        /* إرسال النموذج الأب إن وُجد؛ وإلا نفّذ البحث مباشرة */
+        event.preventDefault();
+        onSubmit(value);
+        setOpen(false);
+        event.currentTarget.blur();
       }
     } else if (event.key === "Escape") {
       setOpen(false);
@@ -118,6 +125,9 @@ export function SearchSuggestions({
       className={`search-suggestions-root${compact ? " search-suggestions-root--compact" : ""}`}
     >
       <input
+        type="search"
+        enterKeyHint="search"
+        inputMode="search"
         value={value}
         onChange={(e) => {
           loadIndex();
@@ -138,6 +148,9 @@ export function SearchSuggestions({
         aria-haspopup="listbox"
         className={inputClassName}
         autoComplete="off"
+        autoCorrect="off"
+        spellCheck={false}
+        data-search-field="1"
       />
 
       {open && value.trim().length < 2 && history.length > 0 && (

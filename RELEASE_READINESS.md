@@ -7,10 +7,10 @@
 
 | البند | الحالة | رقم PR | ملاحظة |
 |---|---|---|---|
-| 1 تطبيع أرقام/حروف البحث + قفز مصحف | جارٍ | هذا الفرع | `normalizeForSearch` + `parseMushafJumpQuery` |
-| 2 Enter في حقول البحث | معلّق | — | بعد دمج 1 |
-| 3 بلا autoFocus بحث | معلّق | — | بعد دمج 1 |
-| 4 تمرير لأعلى عند مسار جديد | معلّق | — | بعد دمج 1 |
+| 1 تطبيع أرقام/حروف البحث + قفز مصحف | تم ✅ | [#947](https://github.com/yalabdullmohsen/majalis/pull/947) | `normalizeForSearch` + `parseMushafJumpQuery` |
+| 2 Enter في حقول البحث | جارٍ | هذا الفرع | `SearchKeyboardBridge` + `enterKeyHint=search` |
+| 3 بلا autoFocus بحث | معلّق | — | بعد دمج 2 |
+| 4 تمرير لأعلى عند مسار جديد | معلّق | — | بعد دمج 2 |
 | 5–11 | معلّق | — | حسب الترتيب المتفق |
 
 | البند | الحالة | رقم PR | ما تبقّى |
