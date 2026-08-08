@@ -101,22 +101,33 @@ export function SurahList({ surahs: _surahs, currentSurah, onSelect, onClose, on
             <>
               {pageBookmarks.length > 0 ? (
                 <ul className="qs-surah-items" aria-label="فواصل الصفحات">
-                  {pageBookmarks.map((b) => (
+                  {pageBookmarks.map((b) => {
+                    const [surahStr, ayahStr] = (b.ayahKey || "").split(":");
+                    const surah = Number(surahStr);
+                    const ayah = Number(ayahStr);
+                    return (
                     <li key={`page-${b.id}`}>
                       <button
                         type="button"
                         className="qs-surah-item"
                         onClick={() => {
-                          onSelectPage?.(b.page);
+                          if (Number.isFinite(surah) && Number.isFinite(ayah)) {
+                            onSelectPage?.(b.page, { surah, ayah });
+                          } else {
+                            onSelectPage?.(b.page);
+                          }
                           onClose?.();
                         }}
                       >
                         <span className="qs-surah-num">{toArabicDigits(b.page)}</span>
                         <span className="qs-surah-name">{b.label}</span>
-                        <span className="qs-surah-meta">صفحة {toArabicDigits(b.page)} · {b.date}</span>
+                        <span className="qs-surah-meta">
+                          {b.ayahKey ? `${b.ayahKey} · ` : ""}صفحة {toArabicDigits(b.page)} · {b.date}
+                        </span>
                       </button>
                     </li>
-                  ))}
+                    );
+                  })}
                 </ul>
               ) : null}
               {bookmarks.length > 0 ? (

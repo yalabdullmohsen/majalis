@@ -15,6 +15,12 @@
 
 import { LruCache } from "@/lib/lru-cache";
 import { loadLastPageSync, saveLastPage } from "@/lib/quran-last-page";
+import {
+  ayahKeyToPage,
+  currentPageFirstAyah,
+  legacyPageToAyahKey,
+  legacyPageToCurrentPage,
+} from "@/lib/quran-my-bookmarks";
 
 const BASE = "https://api.alquran.cloud/v1";
 const LOCAL_QURAN_DATA_BASE = "/data/quran";
@@ -747,7 +753,11 @@ const PAGE_POS_KEY = "mj-quran-page-pos-v1";
 export function savePagePosition(page: number) {
   try {
     const clamped = Math.min(604, Math.max(1, Math.floor(page)));
-    localStorage.setItem(PAGE_POS_KEY, JSON.stringify({ page: clamped, at: Date.now() }));
+    const ayahKey = currentPageFirstAyah(clamped);
+    localStorage.setItem(
+      PAGE_POS_KEY,
+      JSON.stringify({ page: clamped, ayahKey, at: Date.now() }),
+    );
   } catch {
     // ignore
   }
@@ -759,18 +769,38 @@ export function loadPagePosition(): number | null {
   try {
     const raw = localStorage.getItem(PAGE_POS_KEY);
     if (raw) {
-      const page = Number(JSON.parse(raw)?.page);
-      if (Number.isFinite(page) && page >= 1 && page <= 604) {
-        // Keep RN `lastPage` in sync if only the legacy key existed.
+      const parsed = JSON.parse(raw) as { page?: number; ayahKey?: string };
+      if (typeof parsed?.ayahKey === "string" && /^\d{1,3}:\d{1,3}$/.test(parsed.ayahKey)) {
+        const fallback =
+          typeof parsed.page === "number" ? legacyPageToCurrentPage(parsed.page) : undefined;
+        const page = ayahKeyToPage(parsed.ayahKey, fallback);
         if (loadLastPageSync() == null) void saveLastPage(page);
         return page;
+      }
+      const page = Number(parsed?.page);
+      if (Number.isFinite(page) && page >= 1 && page <= 604) {
+        // هجرة: رقم صفحة قديم → صفحة mushaf=1 عبر أول آية كانت على الصفحة
+        const resolved = legacyPageToCurrentPage(page);
+        const ayahKey = legacyPageToAyahKey(page);
+        try {
+          localStorage.setItem(
+            PAGE_POS_KEY,
+            JSON.stringify({ page: resolved, ayahKey, at: Date.now() }),
+          );
+        } catch {
+          /* ignore */
+        }
+        if (loadLastPageSync() == null) void saveLastPage(resolved);
+        return resolved;
       }
     }
   } catch {
     /* fall through to lastPage */
   }
-  // Fallback: RN `lastPage` string key
-  return loadLastPageSync();
+  // Fallback: RN `lastPage` string key — يُهاجر أيضاً عبر خريطة الصفحات القديمة
+  const legacy = loadLastPageSync();
+  if (legacy == null) return null;
+  return legacyPageToCurrentPage(legacy);
 }
 
 /** الجزء/الحزب/الربع من hizbQuarter الخام (1–240 عبر كامل المصحف؛ كل حزب = 4 أرباع، كل جزء = حزبان). */

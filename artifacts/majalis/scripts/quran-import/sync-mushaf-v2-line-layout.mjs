@@ -26,8 +26,11 @@ const APP_ROOT = path.resolve(__dirname, "../..");
 const PAGES_DIR = path.join(APP_ROOT, "public/data/quran-v2/pages");
 const REPORT_PATH = path.join(APP_ROOT, ".local/mushaf/sync-line-layout-report.json");
 
-/** QCF V2 / hafs/v2 — يجب أن يطابق خطوط public/fonts/qpc-v2 */
+/** QCF V2 / hafs/v2 — يجب أن يطابق خطوط public/fonts/qpc-v2. يُمنع أي mushaf≠1. */
 export const MUSHAF_ID_QCF_V2 = 1;
+if (MUSHAF_ID_QCF_V2 !== 1) {
+  throw new Error("مرفوض: يُمنع مزامنة الأسطر من mushaf≠1 — راجع public/data/quran-v2/SOURCE.json");
+}
 const API = "https://api.qurancdn.com/api/qdc/verses/by_page";
 const TOTAL = 604;
 const CONCURRENCY = 6;

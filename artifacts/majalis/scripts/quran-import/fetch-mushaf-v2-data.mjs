@@ -18,6 +18,8 @@ const PAGES_DIR = path.join(OUT_DIR, "pages");
 const TOTAL_PAGES = 604;
 const CONCURRENCY = 8;
 const RETRY = 3;
+/** QCF V2 فقط — يطابق خطوط hafs/v2. أي mushaf≠1 ممنوع. */
+const MUSHAF_ID_QCF_V2 = 1;
 
 async function fetchJson(url, attempt = 1) {
   try {
@@ -38,8 +40,14 @@ async function fetchPage(pageNumber) {
   // نزّلناه (Phase 2) — حقل "text" الافتراضي يُعيد code_v1 (خط V1 أقدم
   // غير مُنزَّل هنا)، فيرندر حروفًا منفصلة خاطئة لا كلمات مركَّبة صحيحة
   // (اكتُشف بمقارنة حية مع quran.com نفسه — راجع docs/mushaf-rebuild-inventory.md).
-  // mushaf=1 = QCF V2 (يطابق خطوط hafs/v2). كان mushaf=2 خطأً (تخطيط V1).
-  const url = `https://api.qurancdn.com/api/qdc/verses/by_page/${pageNumber}?words=true&word_fields=text_uthmani,text_qpc_hafs,code_v2&mushaf=1&per_page=50`;
+  // المصدر الوحيد المسموح: mushaf=1 (QCF V2) — راجع public/data/quran-v2/SOURCE.json
+  if (MUSHAF_ID_QCF_V2 !== 1) {
+    throw new Error("مرفوض: يُمنع الجلب من mushaf≠1");
+  }
+  const url = `https://api.qurancdn.com/api/qdc/verses/by_page/${pageNumber}?words=true&word_fields=text_uthmani,text_qpc_hafs,code_v2,line_number,position&mushaf=${MUSHAF_ID_QCF_V2}&per_page=50`;
+  if (url.includes("mushaf=2") || /mushaf=(?!1)\d/.test(url)) {
+    throw new Error("مرفوض: عنوان الجلب يشير إلى mushaf≠1");
+  }
 
   const data = await fetchJson(url);
   return data.verses ?? [];
