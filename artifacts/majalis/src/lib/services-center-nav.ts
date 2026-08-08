@@ -94,6 +94,7 @@ export const SERVICES_CENTER_GROUPS: ServicesCenterGroup[] = [
       { id: "seerah", label: "السيرة النبوية", keywords: ["سيرة"], Icon: BookA, action: { kind: "link", href: "/seerah" } },
       { id: "tafsir", label: "التفسير", keywords: ["تفسير"], Icon: Library, action: { kind: "link", href: "/tafsir" } },
       { id: "prophets", label: "قصص الأنبياء", keywords: ["أنبياء"], Icon: BookOpen, action: { kind: "link", href: "/prophets" } },
+      { id: "prophet-trials", label: "ابتلاءات الأنبياء", keywords: ["ابتلاءات", "أنبياء", "ابتلاء"], Icon: BookOpen, action: { kind: "link", href: "/prophet-trials" } },
       { id: "history", label: "التاريخ الإسلامي", keywords: ["تاريخ"], Icon: Building2, action: { kind: "link", href: "/tarikh-islami" } },
     ],
   },

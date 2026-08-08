@@ -192,6 +192,7 @@ const FiqhCouncilItemDetailPage = lazy(() => import("@/views/FiqhCouncilItemDeta
 const FiqhPage = lazy(() => import("@/pages/fiqh/FiqhPage"));
 const FiqhTopicPage = lazy(() => import("@/pages/fiqh/FiqhTopicPage"));
 const SeerahPage = lazy(() => import("@/views/SeerahPage"));
+const ProphetTrialsPage = lazy(() => import("@/views/ProphetTrialsPage"));
 const RulingsPage = lazy(() => import("@/pages/fiqh/RulingsPage"));
 const RulingDetailPage = lazy(() => import("@/pages/fiqh/RulingDetailPage"));
 const _UpdatesPage = lazy(() => import("@/views/UpdatesPage"));
@@ -579,6 +580,7 @@ function Router() {
       <Route path="/prophet-stories/:slug"><SafeLazyRoute component={ProphetStoriesPage} /></Route>
       <Route path="/prophet-stories"><Redirect to="/prophets" /></Route>
       <Route path="/prophets/tree"><SafeLazyRoute component={ProphetsFamilyTreePage} /></Route>
+      <Route path="/prophet-trials"><SafeLazyRoute component={ProphetTrialsPage} /></Route>
       <Route path="/prophets/:slug"><SafeLazyRoute component={ProphetStoriesPage} /></Route>
       <Route path="/prophets"><SafeLazyRoute component={ProphetStoriesPage} /></Route>
       <Route path="/islamic-stories"><Redirect to="/stories" /></Route>
