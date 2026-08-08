@@ -16,6 +16,28 @@ const DB_VERSION = 1;
 const STORE = "surah-audio";
 const TOTAL_SURAHS = 114;
 
+/** سقف تخزين اختياري دون اتصال — لا تُحزَم ملفات صوت في حزمة التطبيق. */
+export const MAX_OFFLINE_AUDIO_BYTES = 1.5 * 1024 * 1024 * 1024; // 1.5 GiB
+/** أقصى عدد قرّاء مكتملين في التخزين المحلي في آن واحد. */
+export const MAX_FULL_OFFLINE_RECITERS = 2;
+
+export class OfflineAudioQuotaError extends Error {
+  constructor(message: string) {
+    super(message);
+    this.name = "OfflineAudioQuotaError";
+  }
+}
+
+async function totalOfflineBytes(): Promise<number> {
+  const statuses = await getAllDownloadStatuses();
+  return statuses.reduce((sum, s) => sum + s.totalBytes, 0);
+}
+
+async function completeOfflineReciterCount(excluding?: string): Promise<number> {
+  const statuses = await getAllDownloadStatuses();
+  return statuses.filter((s) => s.complete && s.reciterId !== excluding).length;
+}
+
 function openDb(): Promise<IDBDatabase> {
   return new Promise((resolve, reject) => {
     const req = indexedDB.open(DB_NAME, DB_VERSION);
@@ -132,13 +154,34 @@ export async function downloadReciter(
   onProgress: (p: DownloadProgress) => void,
   isCancelled: () => boolean,
 ): Promise<void> {
+  const status = await getReciterDownloadStatus(reciterId);
+  if (!status.complete) {
+    const othersComplete = await completeOfflineReciterCount(reciterId);
+    if (othersComplete >= MAX_FULL_OFFLINE_RECITERS) {
+      throw new OfflineAudioQuotaError(
+        `الحد الأقصى ${MAX_FULL_OFFLINE_RECITERS} قرّاء كاملين دون اتصال. احذف تنزيلاً أولاً.`,
+      );
+    }
+  }
+
   const existing = new Set((await listKeysForReciter(reciterId)).map((e) => e.surah));
   for (let surah = 1; surah <= TOTAL_SURAHS; surah++) {
     if (isCancelled()) return;
     if (!existing.has(surah)) {
+      const used = await totalOfflineBytes();
+      if (used >= MAX_OFFLINE_AUDIO_BYTES) {
+        throw new OfflineAudioQuotaError(
+          "تجاوز سقف التخزين المحلي للتلاوات (١٫٥ غيغابايت). احذف تنزيلاً أولاً.",
+        );
+      }
       const res = await fetch(getSurahAudioUrl(surah, reciterId));
       if (!res.ok) throw new Error(`فشل تنزيل السورة ${surah}: ${res.status}`);
       const blob = await res.blob();
+      if (used + blob.size > MAX_OFFLINE_AUDIO_BYTES) {
+        throw new OfflineAudioQuotaError(
+          "تجاوز سقف التخزين المحلي للتلاوات (١٫٥ غيغابايت). احذف تنزيلاً أولاً.",
+        );
+      }
       if (isCancelled()) return;
       await putBlob(reciterId, surah, blob);
     }

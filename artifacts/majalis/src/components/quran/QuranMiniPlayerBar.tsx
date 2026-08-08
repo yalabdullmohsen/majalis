@@ -6,6 +6,7 @@ import { useLocation } from "wouter";
 import { Pause, Play, X } from "lucide-react";
 import { AudioEngine, type AudioEngineSnapshot } from "@/core/audio/AudioEngine";
 import { getSurahMeta } from "@/lib/quran-api";
+import { getReciter } from "@/lib/quran-audio";
 import { ayahKeyToPage } from "@/lib/quran-my-bookmarks";
 import { toArabicDigits } from "@/lib/utils";
 import {
@@ -14,6 +15,7 @@ import {
   subscribeMiniPlayer,
 } from "@/lib/quran-mini-player";
 import { isImmersiveChromePath } from "@/lib/immersive-chrome";
+import { useMediaSession } from "@/hooks/useMediaSession";
 import "@/styles/components/quran-mini-player.css";
 
 export function QuranMiniPlayerBar() {
@@ -30,6 +32,25 @@ export function QuranMiniPlayerBar() {
     return engine.onSnapshot(setSnap);
   }, []);
 
+  const surahForSession = snap.surah != null ? getSurahMeta(snap.surah).name : "";
+  const playing = snap.playerState === "playing" || snap.playerState === "buffering";
+  useMediaSession(
+    visible && snap.surah != null && snap.ayah != null
+      ? {
+          title: `${surahForSession} — آية ${toArabicDigits(snap.ayah)}`,
+          artist: getReciter(snap.reciterId).nameAr,
+          playing,
+          onPlay: () => {
+            if (snap.surah != null && snap.ayah != null) {
+              void AudioEngine.getInstance().togglePlay(snap.surah, snap.ayah);
+            }
+          },
+          onPause: () => AudioEngine.getInstance().pause(),
+          onStop: () => stopMiniPlayer(),
+        }
+      : null,
+  );
+
   useEffect(() => {
     if (isImmersiveChromePath(location) && visible) {
       hideMiniPlayer();
@@ -40,7 +61,6 @@ export function QuranMiniPlayerBar() {
   if (snap.surah == null || snap.ayah == null) return null;
 
   const surahName = getSurahMeta(snap.surah).name.replace(/^سُورَةُ\s*/u, "");
-  const playing = snap.playerState === "playing" || snap.playerState === "buffering";
   const page = ayahKeyToPage(`${snap.surah}:${snap.ayah}`);
 
   return (
