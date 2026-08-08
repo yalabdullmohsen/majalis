@@ -52,15 +52,25 @@ type Props = {
 
 const ROW_COUNT_APPROX = 15;
 
-/** عرض glyph بخط الصفحة فقط — لا يُستخدم أبدًا مع Amiri/Noto. */
-const defaultRenderWord = (w: QpcWord) => (
-  <Fragment key={w.id}>
-    <span className="mf2-word">{w.glyphText}</span>
-    {w.charType === "end" && w.sajdahNumber !== null && (
-      <span className="mf2-sajda-badge">سجدة</span>
-    )}
-  </Fragment>
-);
+/** عرض glyph بخط الصفحة فقط — لا يُستخدم أبدًا مع Amiri/Noto.
+ * نهاية الآية = محرف الزخرفة من نفس خط الصفحة بلون ذهبي (لا دائرة CSS). */
+function defaultRenderWord(w: QpcWord, showAyahNumbers: boolean) {
+  if (w.charType === "end") {
+    return (
+      <Fragment key={w.id}>
+        {showAyahNumbers ? (
+          <span className="mf2-word mf2-ayah-marker" aria-hidden="true">{w.glyphText}</span>
+        ) : null}
+        {w.sajdahNumber !== null && <span className="mf2-sajda-badge">سجدة</span>}
+      </Fragment>
+    );
+  }
+  return (
+    <Fragment key={w.id}>
+      <span className="mf2-word">{w.glyphText}</span>
+    </Fragment>
+  );
+}
 
 /**
  * نص Unicode (textQpcHafs) — المسار الآمن مع Amiri Quran.
@@ -110,7 +120,7 @@ export function MushafPageV2({
   const wordRenderer = useMemo(() => {
     if (renderWord && !pageFont.failed) return renderWord;
     if (useUnicodeSafe) return (w: QpcWord) => renderUnicodeWord(w, showAyahNumbers);
-    return defaultRenderWord;
+    return (w: QpcWord) => defaultRenderWord(w, showAyahNumbers);
   }, [renderWord, pageFont.failed, useUnicodeSafe, showAyahNumbers]);
 
   const lineRefs = useRef(new Map<number, HTMLDivElement>());
@@ -137,7 +147,9 @@ export function MushafPageV2({
 
     const sizes = new Map<number, number>();
     const centered = new Set<number>();
-    const ITERATIONS = 14;
+    const ITERATIONS = 16;
+    /** امتلاء عرض السطر: دون هذا النسبة يُعدّ السطر قصيرًا (توسيط). */
+    const SHORT_FILL_RATIO = 0.92;
 
     for (const [lineNumber, el] of lineRefs.current.entries()) {
       if (!el) continue;
@@ -145,14 +157,19 @@ export function MushafPageV2({
       if (containerWidth <= 0) continue;
 
       const lineHeightAvailable = el.clientHeight || 999;
-      const MAX_FONT_PX = Math.min(45, lineHeightAvailable * 0.52);
+      // سقف مرتفع كفاية لملء عرض السطر المطبوع (15 خانة) — كان 0.52 يجمّد كل
+      // الأسطر عند ~16px فيُوسَّط الجميع خطأً كـ«قصيرة».
+      const MAX_FONT_PX = Math.min(64, Math.max(14, lineHeightAvailable * 0.9));
 
       let lo = 1;
       let hi = MAX_FONT_PX;
       el.style.fontSize = `${hi}px`;
       if (el.scrollWidth <= containerWidth) {
+        // يتّسع حتى عند السقف: إمّا سطر قصير طبيعيًا أو حاوية واسعة.
         sizes.set(lineNumber, hi);
-        centered.add(lineNumber);
+        if (el.scrollWidth < containerWidth * SHORT_FILL_RATIO) {
+          centered.add(lineNumber);
+        }
         continue;
       }
       for (let i = 0; i < ITERATIONS; i++) {
@@ -163,6 +180,10 @@ export function MushafPageV2({
       }
       el.style.fontSize = `${lo}px`;
       sizes.set(lineNumber, lo);
+      // بعد الملاءمة: إن بقي فراغ واضح (نادر مع QPC ممتلئ) وسّط
+      if (el.scrollWidth < containerWidth * SHORT_FILL_RATIO) {
+        centered.add(lineNumber);
+      }
     }
 
     setLineFontSizes(sizes);

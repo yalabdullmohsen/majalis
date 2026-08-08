@@ -60,9 +60,11 @@ assert.equal(
 );
 
 assert.match(quranCss, /\.quran-shell--ayah\s*\{/);
-assert.match(quranCss, /#FAF7F2/);
+assert.match(quranCss, /--color-mushaf-paper/);
 assert.match(quranCss, /\.mpv-ayah-page-badge\s*\{/);
-assert.match(quranCss, /border-radius:\s*999px/);
+assert.match(quranCss, /mpv-ayah-page-badge__cartouche/);
+assert.match(viewSrc, /mpv-ayah-page-badge__cartouche/);
+assert.match(viewSrc, /mpv-toolbar__btn--index/);
 assert.match(quranCss, /\.qs-mushaf-frame--ayah/);
 
 const mushafV2 = readFileSync(resolve(appRoot, "src/styles/mushaf-v2.css"), "utf8");
