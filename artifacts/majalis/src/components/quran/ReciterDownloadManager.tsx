@@ -6,6 +6,9 @@ import {
   downloadReciter,
   deleteReciterDownloads,
   estimateStorageUsage,
+  MAX_FULL_OFFLINE_RECITERS,
+  MAX_OFFLINE_AUDIO_BYTES,
+  OfflineAudioQuotaError,
   type ReciterDownloadStatus,
 } from "@/lib/quran-audio-downloads";
 import { toArabicDigits } from "@/lib/utils";
@@ -21,6 +24,7 @@ export function ReciterDownloadManager() {
   const [statuses, setStatuses] = useState<ReciterDownloadStatus[]>([]);
   const [activeDownload, setActiveDownload] = useState<{ reciterId: string; done: number; total: number } | null>(null);
   const [storage, setStorage] = useState<{ usage: number; quota: number } | null>(null);
+  const [quotaMsg, setQuotaMsg] = useState<string | null>(null);
   const cancelRef = useRef(false);
 
   const refresh = async () => {
@@ -32,6 +36,7 @@ export function ReciterDownloadManager() {
 
   const handleDownload = async (reciterId: string) => {
     cancelRef.current = false;
+    setQuotaMsg(null);
     setActiveDownload({ reciterId, done: 0, total: 114 });
     try {
       await downloadReciter(
@@ -39,10 +44,11 @@ export function ReciterDownloadManager() {
         (p) => setActiveDownload({ reciterId, done: p.done, total: p.total }),
         () => cancelRef.current,
       );
-    } catch {
-      // فشل جزئي (انقطاع شبكة أثناء التنزيل) — ما نجح تنزيله يبقى محفوظًا،
-      // والمستخدم يستطيع إعادة المحاولة لاحقًا فتُكمل من حيث توقفت (يتخطى
-      // downloadReciter السور المحمَّلة مسبقًا).
+    } catch (err) {
+      if (err instanceof OfflineAudioQuotaError) {
+        setQuotaMsg(err.message);
+      }
+      // فشل جزئي (انقطاع شبكة) — ما نُزّل يبقى؛ إعادة المحاولة تُكمل من موضع التوقّف.
     }
     setActiveDownload(null);
     await refresh();
@@ -58,13 +64,20 @@ export function ReciterDownloadManager() {
   return (
     <div className="mpv-settings-group">
       <span className="mpv-settings-group__label">
-        تنزيل التلاوة للاستماع دون اتصال
-        {storage && storage.quota > 0 && (
-          <small style={{ display: "block", opacity: .65, fontWeight: 400, marginTop: ".2rem" }}>
-            المساحة المستخدَمة على الجهاز: {formatMB(storage.usage)} ميغابايت
-          </small>
-        )}
+        تنزيل اختياري للاستماع دون اتصال (البث الحي هو الافتراضي)
+        <small style={{ display: "block", opacity: .65, fontWeight: 400, marginTop: ".2rem" }}>
+          سقف التطبيق: {formatMB(MAX_OFFLINE_AUDIO_BYTES)} م.ب · بحد أقصى{" "}
+          {toArabicDigits(MAX_FULL_OFFLINE_RECITERS)} قرّاء كاملين
+          {storage && storage.quota > 0
+            ? ` · الجهاز: ${formatMB(storage.usage)} م.ب`
+            : null}
+        </small>
       </span>
+      {quotaMsg ? (
+        <p role="alert" style={{ fontSize: ".85rem", color: "var(--mj-danger, #b91c1c)", margin: "0 0 .5rem" }}>
+          {quotaMsg}
+        </p>
+      ) : null}
       <div className="rdm-list">
         {RECITERS.map((r) => {
           const status = statuses.find((s) => s.reciterId === r.id);

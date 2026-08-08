@@ -9,6 +9,8 @@ const DATA_SOURCES = [
   { name: "sunnah.com", desc: "موسوعة الأحاديث النبوية مع ترجمات متعددة." },
   { name: "aladhan.com", desc: "خدمة حساب مواقيت الصلاة والتقويم الهجري." },
   { name: "alquran.cloud", desc: "بيانات القرآن الكريم بالرسم العثماني وصفحات المصحف." },
+  { name: "everyayah.com", desc: "بث تلاوات آية بآية (روابط خارجية؛ لا تُضمَّن ملفات صوت في الحزمة)." },
+  { name: "mp3quran.net", desc: "بث سور كاملة وتنزيل اختياري محلي بحدود حجم واضحة." },
   { name: "shamela.ws", desc: "المكتبة الشاملة — تراث إسلامي رقمي." },
   { name: "dar-alifta.net", desc: "دار الإفتاء المصرية — فتاوى رسمية منشورة." },
   { name: "binbaz.org.sa", desc: "موقع الشيخ ابن باز — فتاوى ومواد محقَّقة." },
@@ -47,6 +49,22 @@ export default function SourcesLicensesPage() {
         <p>
           أي مادة تُعرض في المنصة تُرفق بمصدرها قدر الإمكان؛ وما لم يُراجع بشريًا
           يبقى موسومًا «قيد المراجعة».
+        </p>
+      </LegalSection>
+
+      <LegalSection title="التلاوة الصوتية">
+        <p>
+          التشغيل الافتراضي بثّ حي من{" "}
+          <a href="https://everyayah.com" target="_blank" rel="noopener noreferrer">
+            everyayah.com
+          </a>{" "}
+          (آية بآية) و{" "}
+          <a href="https://mp3quran.net" target="_blank" rel="noopener noreferrer">
+            mp3quran.net
+          </a>{" "}
+          (سورة كاملة). لا تُحزَم ملفات صوت داخل التطبيق. التنزيل دون اتصال اختياري
+          وبسقف تخزين موضّح في الإعدادات. قائمة القرّاء ومجلداتهم في{" "}
+          <code dir="ltr">CREDITS.md</code>.
         </p>
       </LegalSection>
 
