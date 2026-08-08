@@ -9,7 +9,7 @@
   "scope": "/",
   "display": "standalone",
   "display_override": ["standalone", "minimal-ui", "window-controls-overlay"],
-  "background_color": "#F2F4F3",
+  "background_color": "#000300",
   "theme_color": "#F2F4F3",
   "orientation": "portrait-primary",
   "categories": ["education", "books", "lifestyle"],

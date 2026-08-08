@@ -167,7 +167,7 @@
 }
 
 
-/* صفحة تسجيل الدخول: شاشة شعار رسمية */
+/* صفحة تسجيل الدخول: نفس هوية شاشة الإطلاق (أخضر داكن + زخرفة) */
 .login-page {
   min-height: 100dvh;
   display: flex;
@@ -175,9 +175,9 @@
   align-items: center;
   padding: 24px;
   background:
-    radial-gradient(circle at center, rgba(58, 130, 85, 0.34) 0%, transparent 48%),
-    linear-gradient(180deg, #0f3326 0%, #154033 55%, #1f5a45 100%);
-  background-size: auto, cover;
+    linear-gradient(180deg, rgb(0 3 0 / 0.55) 0%, rgb(0 3 0 / 0.72) 100%),
+    url("/brand/splash-source.png") center / cover no-repeat,
+    #000300;
 }
 
 /* بطاقة تسجيل الدخول: elevation متميزة */

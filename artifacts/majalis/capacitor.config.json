@@ -11,7 +11,7 @@
     "SplashScreen": {
       "launchShowDuration": 0,
       "launchAutoHide": false,
-      "backgroundColor": "#101614",
+      "backgroundColor": "#000300",
       "showSpinner": false,
       "androidSplashResourceName": "splash",
       "androidScaleType": "CENTER_INSIDE",
@@ -20,7 +20,7 @@
     },
     "StatusBar": {
       "style": "DARK",
-      "backgroundColor": "#101614",
+      "backgroundColor": "#000300",
       "overlaysWebView": false
     },
     "Keyboard": {
@@ -51,7 +51,7 @@
   },
   "ios": {
     "contentInset": "never",
-    "backgroundColor": "#101614",
+    "backgroundColor": "#000300",
     "scrollEnabled": true
   }
 }

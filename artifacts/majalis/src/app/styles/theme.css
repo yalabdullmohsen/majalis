@@ -29,7 +29,7 @@
   --color-danger: #DC2626;
   --color-danger-soft: #FEE2E2;
   --color-danger-deep: #991B1B;
-  --color-splash: #F2F4F3;
+  --color-splash: #000300;
 
   --font-face: "Amiri", serif;
   --font-ui: "Alexandria", "IBM Plex Sans Arabic", system-ui, sans-serif;
@@ -148,7 +148,7 @@
   --mj-danger: #DC2626;
   --mj-danger-soft: #FEE2E2;
   --mj-danger-deep: #991B1B;
-  --mj-splash: #F2F4F3;
+  --mj-splash: #000300;
   --color-surface-raised: var(--mj-surface);
   --color-brand-strong: var(--mj-brand-deep);
   --text-primary: var(--mj-ink);
@@ -247,7 +247,7 @@ html.dark,
   --mj-danger: #F87171;
   --mj-danger-soft: #3F1D1D;
   --mj-danger-deep: #FECACA;
-  --mj-splash: #101614;
+  --mj-splash: #000300;
   --color-surface: #17201C;
   --color-surface-2: #1E2925;
   --color-hairline: #26332D;
