@@ -10,9 +10,9 @@
   "scripts": {
     "preinstall": "sh -c 'case \"${npm_command:-}\" in exec|run-script) exit 0;; esac; rm -f package-lock.json yarn.lock; case \"$npm_config_user_agent\" in pnpm/*) ;; *) echo \"Use pnpm instead\" >&2; exit 1 ;; esac'",
     "postinstall": "node scripts/ensure-cap-bin.mjs",
-    "build": "pnpm run typecheck && pnpm -r --filter \"!./artifacts/majalis-mobile\" --if-present run build",
+    "build": "pnpm run typecheck && pnpm -r --filter \"./artifacts/**\" --filter \"./scripts\" --filter \"!@workspace/api-server\" --filter \"!@workspace/majalis-mobile\" --if-present run build",
     "typecheck:libs": "tsc -b",
-    "typecheck": "pnpm run typecheck:libs && pnpm -r --filter \"./artifacts/**\" --filter \"./scripts\" --filter \"!@workspace/api-server\" --if-present run typecheck",
+    "typecheck": "pnpm run typecheck:libs && pnpm -r --filter \"./artifacts/**\" --filter \"./scripts\" --filter \"!@workspace/api-server\" --filter \"!@workspace/majalis-mobile\" --if-present run typecheck",
     "lint": "pnpm --filter @workspace/majalis run lint",
     "test": "pnpm --filter @workspace/majalis run test && pnpm run test:release-train && pnpm run test:safe-auto-merge",
     "verify:production-complete": "pnpm --filter @workspace/majalis run verify:production-complete",
