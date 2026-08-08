@@ -41,10 +41,12 @@ const SRC = join(dirname(fileURLToPath(import.meta.url)), "../..");
 }
 
 {
-  const bridge = readFileSync(join(SRC, "components/SearchKeyboardBridge.tsx"), "utf8");
+  const bridge = readFileSync(join(SRC, "lib/search-keyboard-bridge.ts"), "utf8");
+  assert.match(bridge, /installSearchKeyboardBridge/);
   assert.match(bridge, /enterkeyhint/);
   assert.match(bridge, /blur\(\)/);
-  assert.match(bridge, /focusin/);
+  const hook = readFileSync(join(SRC, "hooks/useVisualViewportOffset.ts"), "utf8");
+  assert.match(hook, /search-keyboard-bridge/);
 }
 
 {
@@ -58,11 +60,6 @@ const SRC = join(dirname(fileURLToPath(import.meta.url)), "../..");
     const src = readFileSync(join(SRC, rel), "utf8");
     assert.match(src, /enterKeyHint=["']search["']/, `${rel} يجب أن يصرّح enterKeyHint=search`);
   }
-}
-
-{
-  const app = readFileSync(join(SRC, "App.tsx"), "utf8");
-  assert.match(app, /SearchKeyboardBridge/);
 }
 
 console.log("search-input-enter: ok");
