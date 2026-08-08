@@ -286,7 +286,13 @@ export function MushafPageV2({
     </>
   );
 
-  if (bare) return <div dir="rtl" style={{ height: "100%" }}>{lines}</div>;
+  if (bare) {
+    return (
+      <div dir="rtl" style={{ height: "100%", width: "100%", display: "flex", flexDirection: "column", minHeight: 0 }}>
+        {lines}
+      </div>
+    );
+  }
 
   return (
     <div className="mf2-page" dir="rtl">

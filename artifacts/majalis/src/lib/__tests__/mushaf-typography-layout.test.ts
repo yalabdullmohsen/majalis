@@ -23,8 +23,8 @@ assert.match(quranCss, /\.mpv-body--ayah\s*\{[\s\S]*?box-sizing:\s*border-box/);
 assert.match(mushafV2, /\.mf2-page\s*\{[\s\S]*?box-sizing:\s*border-box/);
 assert.match(readerCss, /\.mushaf-v2__page\s*\{[\s\S]*?max\(1rem/);
 
-// 2) بلا space-between — نص متصل + word/letter-spacing طبيعي
-assert.match(mushafV2, /\.mf2-line\s*\{[\s\S]*?display:\s*block/);
+// 2) بلا space-between — نص متصل + word/letter-spacing طبيعي؛ خانات flex متساوية
+assert.match(mushafV2, /\.mf2-line\s*\{[\s\S]*?display:\s*flex/);
 assert.match(mushafV2, /\.mf2-line\s*\{[\s\S]*?word-spacing:\s*normal/);
 assert.match(mushafV2, /\.mf2-line\s*\{[\s\S]*?letter-spacing:\s*0/);
 assert.equal(
@@ -34,6 +34,7 @@ assert.equal(
 );
 assert.match(mushafV2, /\.mf2-line\s*\{[\s\S]*?flex:\s*1\s+1\s+0/, "15 خانة متساوية تملأ الارتفاع");
 assert.match(mushafV2, /\.mf2-line\s*\{[\s\S]*?justify-content:\s*flex-start/, "بلا space-between أفقيًا");
+assert.match(mushafV2, /\.mf2-lines\s*\{[\s\S]*?flex:\s*1\s+1\s+auto/, "حاوية الأسطر تملأ الارتفاع");
 
 // 3) حجم موحّد للصفحة — لا fit سطر-بسطر
 assert.match(pageComp, /LINE_HEIGHT_EM\s*=\s*1\.1/);
