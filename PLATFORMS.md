@@ -18,6 +18,18 @@
 
 Capacitor حول `artifacts/majalis` فقط (iOS/Android). لا Expo ولا Flutter للمتجر في هذا الإصدار.
 
+## نظافة مرآة Capacitor (webDir → native)
+
+| المسار | في git؟ | مصدر التوليد |
+|---|---|---|
+| `artifacts/majalis/dist/` | لا (gitignore) | `pnpm --filter @workspace/majalis run build` |
+| `artifacts/majalis/ios/App/App/public/**` | **لا** — مُستثنى في `ios/.gitignore`؛ يُتتبَّع فقط `.gitkeep` | `pnpm exec cap sync ios` بعد البناء |
+| `artifacts/majalis/android/.../assets/public` | لا | `cap sync android` |
+
+**لا تعتمد fastlane ولا workflows على نسخة ملتزَمة من `ios/.../public`.**  
+خطوات البناء الحيّة (`ios-testflight-deploy.yml`, `ios-native-macos.yml`, `scripts/prepare-ios.sh`, `mobile:sync`) تشغّل دائمًا: build ويب → `cap sync`.  
+أي محتوى ويب يظهر تحت `App/App/public` محليًا هو مخرجات مزامنة — لا يُرفع إلى المستودع.
+
 ## تنظيف لاحق
 
 الحذف الفعلي للمنصات المجمَّدة (`majalis-mobile`, `majlisilm-flutter`) فقط بعد:

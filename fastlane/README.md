@@ -2,6 +2,8 @@
 
 المسار: Capacitor app في `artifacts/majalis/ios/App`.
 
+`ios/App/App/public` **غير متتبَّع في git**؛ يُولَّد عبر `pnpm --filter @workspace/majalis run build` ثم `cap sync ios` (انظر workflows و`scripts/prepare-ios.sh`). لا ترفع حزمة من مرآة `public` قديمة ملتزَمة.
+
 ## Lanes
 
 | Lane | الوظيفة |
