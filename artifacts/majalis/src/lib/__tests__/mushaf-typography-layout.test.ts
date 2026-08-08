@@ -35,6 +35,9 @@ assert.equal(
 assert.match(mushafV2, /\.mf2-line\s*\{[\s\S]*?flex:\s*1\s+1\s+0/, "15 خانة متساوية تملأ الارتفاع");
 assert.match(mushafV2, /\.mf2-line\s*\{[\s\S]*?justify-content:\s*flex-start/, "بلا space-between أفقيًا");
 assert.match(mushafV2, /\.mf2-lines\s*\{[\s\S]*?flex:\s*1\s+1\s+auto/, "حاوية الأسطر تملأ الارتفاع");
+assert.match(mushafV2, /\.mf2-lines--opening-centered/, "حالة خاصة للصفحتين 1–2");
+assert.match(mushafV2, /\.mf2-surah-header__cartouche/, "خرطوش عنوان السورة");
+assert.match(pageComp, /opening-centered|ROW_COUNT_STANDARD/, "تحجيم بعدد أسطر فعلي للصفحتين الافتتاحيتين");
 
 // 3) حجم موحّد للصفحة — لا fit سطر-بسطر
 assert.match(pageComp, /LINE_HEIGHT_EM\s*=\s*1\.1/);
