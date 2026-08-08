@@ -221,7 +221,7 @@
     "verify:route-registry": "node --import tsx scripts/verify-route-registry.mjs",
     "verify:knowledge-graph": "node scripts/verify-knowledge-graph.mjs",
     "generate:search-index": "node --import tsx scripts/generate-unified-search-index.mjs",
-    "test:unified-search": "node --import tsx src/features/search/__tests__/unified-search.test.ts",
+    "test:unified-search": "node --import tsx src/features/search/__tests__/unified-search.test.ts && node --import tsx src/features/search/__tests__/search-normalize-digits.test.ts",
     "verify:json-schemas": "node --import tsx scripts/verify-json-schemas.mjs",
     "verify:hadith-integrity": "node scripts/verify-hadith-integrity-gate.mjs",
     "test:spacing-gate": "node scripts/verify-spacing-gate.mjs",

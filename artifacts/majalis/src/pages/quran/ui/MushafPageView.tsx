@@ -364,10 +364,17 @@ export default function MushafPageView() {
     setIsJumpModalVisible(true);
   }, []);
 
-  /** RN sketch handleJump → validate 1–604, save via goToPage, close modal. */
-  const handleJump = useCallback((pageNum: number) => {
-    goToPage(pageNum); // clamps + navigates; savePagePosition runs in page effect
-  }, [goToPage]);
+  /** انتقال من نافذة القفز بعد تطبيع الأرقام/الأسماء (٢٨٣ و 2:255 والبقرة). */
+  const handleJump = useCallback(
+    (target: { kind: "page"; page: number } | { kind: "ayah"; surah: number; ayah: number; pageHint: number }) => {
+      if (target.kind === "ayah") {
+        void goToPageOrAyah(target.pageHint, { surah: target.surah, ayah: target.ayah });
+        return;
+      }
+      goToPage(target.page);
+    },
+    [goToPage, goToPageOrAyah],
+  );
 
   const activeSurahForPlayer = primarySegment?.segment.surah ?? 1;
   const activeSurahAyahCount = primarySegment ? getSurahMeta(activeSurahForPlayer).ayahs : 0;

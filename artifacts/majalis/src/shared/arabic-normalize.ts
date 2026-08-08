@@ -43,10 +43,17 @@ function removeTashkeel(text: string): string {
     .replace(/[ۥ-ۦ]/g, "");
 }
 
+/** يزيل محارف غير مرئية (ZWSP/ZWNJ/BOM/علامات اتجاه) قبل المقارنة. */
+function stripInvisible(text: string): string {
+  return text
+    .replace(/[\u200B-\u200F\u202A-\u202E\u2060\u2066-\u2069\uFEFF]/g, "")
+    .replace(/\u00A0/g, " ");
+}
+
 /** Uncached normalize core — used by memoized wrapper. */
 function normalizeArabicUncached(text: string): string {
   // ─── توحيد الأرقام (لوحة مفاتيح عربية على iOS/Android تكتب ٢ لا 2) ──
-  let s = toWesternDigits(text);
+  let s = toWesternDigits(stripInvisible(text));
 
   s = removeTashkeel(s);
 
@@ -69,8 +76,10 @@ function normalizeArabicUncached(text: string): string {
   s = s.replace(/ـ/g, "");
 
   // ─── إزالة علامات الترقيم الفاصلة ───────────────────────────
-  // نحتفظ بالمسافات ونزيل: , . ; : ! ? ، ؛ ؟ « » " " ' ' ( ) [ ] { } - —
-  s = s.replace(/[,.;:!?،؛؟«»""''()[\]{}\-—]/g, " ");
+  // نحتفظ بالمسافات وبنقطتي مرجع الآية (2:255). نزيل: , . ; ! ? ، ؛ ؟ « » … — —
+  s = s.replace(/[,.;!?،؛؟«»""''()[\]{}\-—]/g, " ");
+  // نقطتان لستم بين رقمين → مسافة (تفادي كسر مراجع الآيات)
+  s = s.replace(/(?<!\d):(?!\d)/g, " ");
 
   // ─── توحيد المسافات ──────────────────────────────────────────
   s = s.replace(/\s+/g, " ").trim();
@@ -81,6 +90,10 @@ function normalizeArabicUncached(text: string): string {
 /**
  * يطبّع نصاً عربياً للفهرسة والبحث المقارن.
  * Cached (LRU) — repeated queries over Quran/Matn corpora hit memo.
+ *
+ * هذه هي دالة التطبيع المركزية الوحيدة للبحث في التطبيق:
+ * أرقام هندية/فارسية/غربية + ألف/ياء/ة + إزالة تشكيل/تطويل/محارف خفية.
+ * طبّقها على الاستعلام وعلى حقول الفهرس معًا.
  */
 export function normalizeArabic(text: string): string {
   if (!text) return "";
@@ -90,6 +103,9 @@ export function normalizeArabic(text: string): string {
   NORMALIZE_CACHE.set(text, out);
   return out;
 }
+
+/** اسم صريح لنقطة الدخول المشتركة — مرادف لـ normalizeArabic. */
+export const normalizeForSearch = normalizeArabic;
 
 /** Clear normalize memo (tests / memory pressure). */
 export function clearNormalizeArabicCache(): void {
