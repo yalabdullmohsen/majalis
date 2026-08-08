@@ -4,6 +4,7 @@
  * Does NOT archive or publish to TestFlight.
  */
 import { readFileSync, existsSync } from "node:fs";
+import { execSync } from "node:child_process";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -359,6 +360,35 @@ ok(
   /node_modules\/\.bin\/cap/.test(prepareIosCode) && /"\$CAP_BIN"\s+sync\s+ios/.test(prepareIosCode),
   "prepare-ios.sh invokes local node_modules/.bin/cap sync ios",
 );
+
+const iosGitignore = readFileSync(join(root, "ios", ".gitignore"), "utf8");
+ok(
+  /App\/App\/public\/\*\*/.test(iosGitignore) && /!App\/App\/public\/\.gitkeep/.test(iosGitignore),
+  "ios/.gitignore ignores App/App/public/** except .gitkeep",
+);
+ok(existsSync(join(iosApp, "App", "public", ".gitkeep")), "App/App/public/.gitkeep present");
+
+try {
+  const repoRoot = join(root, "../..");
+  const tracked = execSync("git ls-files -- artifacts/majalis/ios/App/App/public", {
+    cwd: repoRoot,
+    encoding: "utf8",
+  })
+    .trim()
+    .split("\n")
+    .filter(Boolean);
+  const unexpected = tracked.filter((f) => !f.endsWith("/.gitkeep") && !f.endsWith(".gitkeep"));
+  ok(
+    unexpected.length === 0,
+    `ios App/App/public not tracked in git except .gitkeep (extra=${unexpected.length})`,
+  );
+  ok(
+    tracked.some((f) => f.endsWith(".gitkeep")),
+    "public/.gitkeep is tracked so the directory survives clean clones",
+  );
+} catch (err) {
+  ok(false, `git ls-files public mirror check: ${err instanceof Error ? err.message : err}`);
+}
 
 if (failed) {
   console.error(`\n${failed} gate(s) failed`);
