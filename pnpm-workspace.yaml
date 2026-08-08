@@ -40,6 +40,8 @@ packages:
   - "!artifacts/majlisilm-flutter"
   # ملاحظة: majalis-mobile مجمَّد عبر DEPRECATED.md + فلتر typecheck/build في package.json
   # (استبعاده من workspace يؤجَّل لما بعد TestFlight لتفادي انفجار pnpm-lock).
+  # تسويق/mockup (pitch, promo, mockup-sandbox): تبقى في workspace بلا حذف؛
+  # مستبعدة من typecheck/build الجذر عبر فلاتر package.json (ضجيج CI / PORT).
   - lib/*
   - lib/integrations/*
   - scripts

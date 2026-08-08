@@ -6,6 +6,7 @@
 | `artifacts/majalis-mobile` | **غلاف مجمَّد** | Expo رفيع؛ بناء Replit؛ ليس مسار المتجر — انظر `DEPRECATED.md` |
 | `artifacts/majlisilm-flutter` | **تجربة مهجورة مجمَّدة** | Legacy Flutter — انظر `DEPRECATED.md` |
 | `artifacts/mushafi` | **مرجع تسميع قادم** | Flutter + خادم ASR؛ جرد: `artifacts/mushafi/TASMEE3_INVENTORY.md` |
+| `artifacts/majalis-pitch` / `majalis-promo` / `mockup-sandbox` | **غير إنتاج** | حزم تسويق/تجريب Replit؛ تبقى في المستودع؛ **مستبعدة** من `pnpm typecheck`/`build` الجذر |
 
 ## سطر إلزامي
 
