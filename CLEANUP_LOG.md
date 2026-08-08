@@ -25,6 +25,17 @@
 | `artifacts/majalis/src/components/ui/slider.tsx` | وحدة shadcn يتيمة | A✓ B✓ C✓ | #934 |
 | `artifacts/majalis/src/hooks/useStorageReconciler.ts` | خطاف غير مستورد | A✓ B✓ C✓ | #934 |
 
+|  | مخطط معرفة يتيم | A✓ B✓ C✓ | #935 |
+|  | shadcn يتيم | A✓ B✓ C✓ | #935 |
+|  | خطاف غير مستورد | A✓ B✓ C✓ | #935 |
+|  | shadcn يتيم | A✓ B✓ C✓ | #935 |
+|  | shadcn يتيم | A✓ B✓ C✓ | #935 |
+|  | shadcn يتيم | A✓ B✓ C✓ | #935 |
+|  | خطاف غير مستورد | A✓ B✓ C✓ | #935 |
+|  | خطاف غير مستورد | A✓ B✓ C✓ | #935 |
+|  | shadcn يتيم | A✓ B✓ C✓ | #935 |
+|  | shadcn يتيم | A✓ B✓ C✓ | #935 |
+
 ## عمليات بلا حذف
 
 | العملية | PR | ملاحظة |
