@@ -32,18 +32,27 @@ assert.equal(
   false,
   "أُلغي space-between من .mf2-line",
 );
-assert.match(mushafV2, /\.mf2-line\s*\{[\s\S]*?flex:\s*1\s+1\s+0/, "15 خانة متساوية تملأ الارتفاع");
+assert.match(mushafV2, /\.mf2-line\s*\{[\s\S]*?flex:\s*1\s+1\s+0/, "أسطر الآيات تتقاسم المتبقي");
 assert.match(mushafV2, /\.mf2-line\s*\{[\s\S]*?justify-content:\s*flex-start/, "بلا space-between أفقيًا");
 assert.match(mushafV2, /\.mf2-lines\s*\{[\s\S]*?flex:\s*1\s+1\s+auto/, "حاوية الأسطر تملأ الارتفاع");
+assert.match(mushafV2, /\.mf2-surah-header\s*\{[\s\S]*?flex:\s*0\s+0\s+auto/, "رأس السورة بارتفاع طبيعي");
+assert.match(mushafV2, /\.mf2-bismillah\s*\{[\s\S]*?font-size:\s*1em/, "البسملة ترث حجم الصفحة (sizingLines)");
+assert.equal(
+  /\.mf2-bismillah\s*\{[\s\S]*?overflow:\s*hidden/.test(mushafV2),
+  false,
+  "البسملة بلا overflow:hidden يقصّ النص",
+);
 assert.match(mushafV2, /\.mf2-lines--opening-centered/, "حالة خاصة للصفحتين 1–2");
 assert.match(mushafV2, /\.mf2-surah-header__cartouche/, "خرطوش عنوان السورة");
-assert.match(pageComp, /opening-centered|ROW_COUNT_STANDARD/, "تحجيم بعدد أسطر فعلي للصفحتين الافتتاحيتين");
+assert.match(pageComp, /sizingEls|sizing-line|ayahLineCount/, "تحجيم من sizingLines + آيات تتقاسم المتبقي");
 
-// 3) حجم موحّد للصفحة — لا fit سطر-بسطر
+// 3) حجم موحّد من أعرض sizingLine — لا fit سطر-بسطر ولا measurementExclusions
 assert.match(pageComp, /LINE_HEIGHT_EM\s*=\s*1\.1/);
 assert.match(pageComp, /sizeByWidth/);
 assert.match(pageComp, /sizeByHeight/);
 assert.match(pageComp, /pageFontSize/);
+assert.match(pageComp, /surahTitleRefs|basmalaRefs/, "عنوان وبسملة ضمن sizingLines");
+assert.match(pageComp, /measurement-exclusions|metric-only/, "استثناءات المقياس مفصولة عن التحجيم");
 assert.equal(/SHORT_FILL_RATIO/.test(pageComp), false, "بلا SHORT_FILL_RATIO / fit لكل سطر");
 assert.match(pageComp, /mf2-ayah-marker/, "علامة الآية من محرف الخط");
 assert.match(pageComp, /pageFont\.failed|useUnicodeSafe/, "تراجع تلقائي عند فشل خط QPC");

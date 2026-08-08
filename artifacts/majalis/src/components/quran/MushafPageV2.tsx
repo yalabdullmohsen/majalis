@@ -3,6 +3,7 @@ import { useMushafPageFont, mushafPageFontFamily } from "@/hooks/useMushafPageFo
 import { quranFontStack } from "@/lib/quran-font-options";
 import { toArabicDigits } from "@/lib/utils";
 import type { MushafPageLayout, QpcWord } from "@/lib/mushaf-v2-data";
+import { DRAWN_BASMALA_TEXT } from "@/lib/mushaf-sizing-lines";
 
 /** يُجمِّع كلمات سطر متتالية بنفس verseKey في عنقود واحد — الوحدة
  * التفاعلية الحقيقية هي "الآية" لا الكلمة المفردة (مطابقًا لـMushafPage.tsx
@@ -90,6 +91,34 @@ function renderUnicodeWord(w: QpcWord, showAyahNumbers: boolean) {
   return <span key={w.id} className="mf2-word">{w.textQpcHafs}</span>;
 }
 
+function collectSizingEls(map: Map<string | number, HTMLElement>): HTMLElement[] {
+  const out: HTMLElement[] = [];
+  for (const el of map.values()) {
+    if (el) out.push(el);
+  }
+  return out;
+}
+
+function measureWidest(els: HTMLElement[], fontSizePx: number): number {
+  let widest = 0;
+  for (const el of els) {
+    const prevOverflow = el.style.overflowX;
+    const prevSize = el.style.fontSize;
+    el.style.overflowX = "visible";
+    el.style.fontSize = `${fontSizePx}px`;
+    widest = Math.max(widest, el.scrollWidth);
+    el.style.fontSize = prevSize;
+    el.style.overflowX = prevOverflow;
+  }
+  return widest;
+}
+
+function applyTempFontSize(els: HTMLElement[], fontSizePx: number | ""): void {
+  for (const el of els) {
+    el.style.fontSize = fontSizePx === "" ? "" : `${fontSizePx}px`;
+  }
+}
+
 export function MushafPageV2({
   layout,
   activeAyahKey,
@@ -123,17 +152,22 @@ export function MushafPageV2({
     return (w: QpcWord) => defaultRenderWord(w, showAyahNumbers);
   }, [renderWord, pageFont.failed, useUnicodeSafe, showAyahNumbers]);
 
-  const lineRefs = useRef(new Map<number, HTMLDivElement>());
+  /** أسطر الآيات المرسومة — جزء من sizingLines */
+  const ayahLineRefs = useRef(new Map<number, HTMLDivElement>());
+  /** عناوين السور المرسومة — جزء من sizingLines (ليست measurementExclusions) */
+  const surahTitleRefs = useRef(new Map<string, HTMLElement>());
+  /** البسملات المرسومة — جزء من sizingLines */
+  const basmalaRefs = useRef(new Map<string, HTMLElement>());
+  /** كتل الرأس (عنوان±بسملة) لقياس الارتفاع الطبيعي */
+  const headerBlockRefs = useRef(new Map<string, HTMLElement>());
   const linesContainerRef = useRef<HTMLDivElement | null>(null);
   /** حجم خط موحّد للصفحة كلها (لا fit-to-width لكل سطر). */
   const [pageFontSize, setPageFontSize] = useState<number | null>(null);
   const [fitted, setFitted] = useState(false);
 
   /**
-   * حجم واحد لكل الأسطر كالمطبوع:
-   * size = min( العرض ÷ عرض أعرض سطر آيات ، (الارتفاع ÷ عدد_الخانات) ÷ معامل ارتفاع السطر )
-   * الصفحتان 1–2: عدد الخانات = الأسطر الفعلية (+ رأس مضغوط) — مقيّد بعرض أعرض سطر.
-   * باقي الصفحات: 15 خانة متساوية.
+   * حجم واحد من أعرض sizingLine (آية / بسملة / عنوان)، لا من measurementExclusions.
+   * رأسيًا: رؤوس السور بارتفاع طبيعي؛ أسطر الآيات وحدها تتقاسم المتبقي.
    */
   useLayoutEffect(() => {
     if (!fontReady || !layout) {
@@ -155,54 +189,61 @@ export function MushafPageV2({
     const LINE_HEIGHT_EM = 1.1;
     const REF_PX = 100;
     const opening = layout.layoutMode === "opening-centered";
-    const headerRows = layout.rows
-      .filter((r): r is Extract<typeof r, { kind: "surah-header" }> => r.kind === "surah-header")
-      .reduce((n, r) => n + r.spanRows, 0);
-    const rowCount = opening
-      ? Math.max(1, layout.ayahLineCount + headerRows)
-      : ROW_COUNT_STANDARD;
+    const ayahCount = Math.max(1, layout.ayahLineCount);
 
     const measure = () => {
       const availableWidth = container.clientWidth;
       const availableHeight = container.clientHeight;
       if (availableWidth <= 0 || availableHeight <= 0) return false;
 
-      let widestAtRef = 0;
-      for (const el of lineRefs.current.values()) {
-        if (!el) continue;
-        const prevOverflow = el.style.overflowX;
-        el.style.overflowX = "visible";
-        el.style.fontSize = `${REF_PX}px`;
-        widestAtRef = Math.max(widestAtRef, el.scrollWidth);
-        // أزل الحجم المؤقت فورًا — وإلا يبقى 100px ويتجاوز الحجم الموحّد
-        el.style.fontSize = "";
-        el.style.overflowX = prevOverflow;
-      }
+      const sizingEls = [
+        ...collectSizingEls(ayahLineRefs.current),
+        ...collectSizingEls(surahTitleRefs.current),
+        ...collectSizingEls(basmalaRefs.current),
+      ];
+      if (sizingEls.length === 0) return false;
+
+      const widestAtRef = measureWidest(sizingEls, REF_PX);
       if (widestAtRef <= 0) return false;
 
       const sizeByWidth = (availableWidth * REF_PX) / widestAtRef;
-      const sizeByHeight = (availableHeight / rowCount) / LINE_HEIGHT_EM;
-      let size = Math.min(sizeByWidth, sizeByHeight);
 
-      // تمريرة ضبط: امنع قصّ أعرض سطر (خصوصًا الصفحتين 1–2)
-      for (const el of lineRefs.current.values()) {
-        if (!el) continue;
-        el.style.overflowX = "visible";
-        el.style.fontSize = `${size}px`;
+      // ارتفاع: طبّق حجمًا مؤقتًا ثم اطرح ارتفاعات الرؤوس الطبيعية
+      let size = sizeByWidth;
+      for (let iter = 0; iter < 3; iter++) {
+        applyTempFontSize(sizingEls, size);
+        container.style.fontSize = `${size}px`;
+        let headersH = 0;
+        for (const el of headerBlockRefs.current.values()) {
+          if (el) headersH += el.getBoundingClientRect().height;
+        }
+        const ayahBudget = Math.max(0, availableHeight - headersH);
+        const sizeByHeight = (ayahBudget / ayahCount) / LINE_HEIGHT_EM;
+        const next = Math.min(sizeByWidth, sizeByHeight);
+        if (Math.abs(next - size) < 0.05) {
+          size = next;
+          break;
+        }
+        size = next;
       }
-      let widestAtSize = 0;
-      for (const el of lineRefs.current.values()) {
-        if (!el) continue;
-        widestAtSize = Math.max(widestAtSize, el.scrollWidth);
+
+      // تصغير متكرر حتى لا يتجاوز أي سطر مرسوم الحاوية ولو ببكسل
+      // (اختلاف تلميح الخط بين المنصات قد يُبقي فائضًا بعد تمريرة واحدة)
+      for (let guard = 0; guard < 10; guard++) {
+        applyTempFontSize(sizingEls, size);
+        container.style.fontSize = `${size}px`;
+        let widestAtSize = 0;
+        for (const el of sizingEls) {
+          el.style.overflowX = "visible";
+          widestAtSize = Math.max(widestAtSize, el.scrollWidth);
+        }
+        if (widestAtSize <= availableWidth) break;
+        size *= (availableWidth / widestAtSize) * (opening ? 0.98 : 0.992);
       }
-      for (const el of lineRefs.current.values()) {
-        if (!el) continue;
-        el.style.fontSize = "";
-        el.style.overflowX = "";
-      }
-      if (widestAtSize > availableWidth) {
-        size *= (availableWidth / widestAtSize) * (opening ? 0.97 : 0.995);
-      }
+
+      applyTempFontSize(sizingEls, "");
+      for (const el of sizingEls) el.style.overflowX = "";
+      container.style.fontSize = "";
 
       setPageFontSize(size);
       setFitted(true);
@@ -239,15 +280,13 @@ export function MushafPageV2({
       <div
         ref={linesContainerRef}
         className={linesClass}
+        data-sizing-lines="ayah,basmala,surah_title"
+        data-measurement-exclusions="metric-only"
         style={{
           opacity: fitted ? 1 : 0,
-          // حجم موحّد يورثه كل سطر — لا تحجيم فردي
+          // حجم موحّد يورثه كل سطر مرسوم — لا تحجيم فردي ولا clamp مستقل
           fontSize: !useUnicodeSafe && pageFontSize ? `${pageFontSize}px` : undefined,
           ["--mf2-lh" as string]: !useUnicodeSafe ? "1.1" : undefined,
-          ["--mf2-opening-line-h" as string]:
-            !useUnicodeSafe && pageFontSize && openingCentered
-              ? `${pageFontSize * 1.1}px`
-              : undefined,
           fontFamily: useUnicodeSafe
             ? fontFamily
             : fontFamily
@@ -257,13 +296,35 @@ export function MushafPageV2({
       >
         {layout.rows.map((row, idx) => {
           if (row.kind === "surah-header") {
-            return <SurahHeaderBanner key={`h-${row.surah.id}-${idx}`} chapter={row.surah} spanRows={row.spanRows} />;
+            const key = `h-${row.surah.id}-${idx}`;
+            return (
+              <SurahHeaderBanner
+                key={key}
+                chapter={row.surah}
+                blockRef={(el) => {
+                  if (el) headerBlockRefs.current.set(key, el);
+                  else headerBlockRefs.current.delete(key);
+                }}
+                titleRef={(el) => {
+                  if (el) surahTitleRefs.current.set(key, el);
+                  else surahTitleRefs.current.delete(key);
+                }}
+                basmalaRef={(el) => {
+                  if (el) basmalaRefs.current.set(key, el);
+                  else basmalaRefs.current.delete(key);
+                }}
+              />
+            );
           }
           return (
             <div
               key={`l-${row.lineNumber}`}
-              ref={(el) => { if (el) lineRefs.current.set(row.lineNumber, el); else lineRefs.current.delete(row.lineNumber); }}
+              ref={(el) => {
+                if (el) ayahLineRefs.current.set(row.lineNumber, el);
+                else ayahLineRefs.current.delete(row.lineNumber);
+              }}
               className={`mf2-line${useUnicodeSafe ? " mf2-line--unicode" : ""}`}
+              data-sizing-line="ayah"
               style={{ unicodeBidi: "isolate" }}
             >
               {groupWordsByAyah(row.words).map((group) => {
@@ -341,7 +402,13 @@ export function MushafPageV2({
 }
 
 /** إطار مزخرف لعنوان السورة — نفس لغة خرطوش رقم الصفحة الذهبي */
-function SurahNameCartouche({ label }: { label: string }) {
+function SurahNameCartouche({
+  label,
+  titleRef,
+}: {
+  label: string;
+  titleRef?: (el: HTMLElement | null) => void;
+}) {
   return (
     <div className="mf2-surah-header__frame">
       <svg
@@ -387,24 +454,46 @@ function SurahNameCartouche({ label }: { label: string }) {
         <path d="M140 1 L141.4 2.9 L140 4.8 L138.6 2.9 Z" fill="currentColor" opacity="0.75" />
         <path d="M140 35.2 L141.4 37.1 L140 39 L138.6 37.1 Z" fill="currentColor" opacity="0.75" />
       </svg>
-      <span className="mf2-surah-header__name">سُورَةُ {label}</span>
+      <span
+        className="mf2-surah-header__name"
+        data-sizing-line="surah_title"
+        ref={titleRef}
+      >
+        سُورَةُ {label}
+      </span>
     </div>
   );
 }
 
 export function SurahHeaderBanner({
   chapter,
-  spanRows,
+  blockRef,
+  titleRef,
+  basmalaRef,
 }: {
   chapter: MushafPageLayout["surahsOnPage"][number];
-  spanRows: number;
+  /** @deprecated لم يعد يُستخدم للـflex — الرأس بارتفاع طبيعي */
+  spanRows?: number;
+  blockRef?: (el: HTMLElement | null) => void;
+  titleRef?: (el: HTMLElement | null) => void;
+  basmalaRef?: (el: HTMLElement | null) => void;
 }) {
   return (
-    <div className="mf2-surah-header" style={{ flex: spanRows }}>
-      <SurahNameCartouche label={chapter.nameArabic} />
+    <div
+      className="mf2-surah-header"
+      ref={blockRef}
+      data-drawn-block="surah-header"
+    >
+      <SurahNameCartouche label={chapter.nameArabic} titleRef={titleRef} />
       {chapter.bismillahPre && (
-        <div className="mf2-bismillah" lang="ar" dir="rtl">
-          بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
+        <div
+          className="mf2-bismillah"
+          lang="ar"
+          dir="rtl"
+          data-sizing-line="basmala"
+          ref={basmalaRef}
+        >
+          {DRAWN_BASMALA_TEXT}
         </div>
       )}
     </div>

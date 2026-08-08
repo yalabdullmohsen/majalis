@@ -197,21 +197,20 @@ export async function loadMushafPage(pageNumber: number): Promise<MushafPageLayo
   const openingCentered = isOpeningCenteredPage(pageNumber);
 
   const rows: MushafPageRow[] = [];
-  let cursor = 1;
   const headerStartLines = [...surahStartsOnPage.entries()].sort((a, b) => a[1] - b[1]);
 
   for (const [surahNum, firstLine] of headerStartLines) {
-    if (firstLine > cursor) {
-      const chapter = chapters.get(surahNum);
-      if (chapter) {
-        // الصفحتان 1–2: لا تُحجز الفجوات العلوية كخانات فارغة — رأس مضغوط فقط
-        const spanRows = openingCentered
-          ? chapter.bismillahPre ? 2 : 1
-          : firstLine - cursor;
-        rows.push({ kind: "surah-header", surah: chapter, spanRows });
-      }
-    }
-    cursor = firstLine;
+    const chapter = chapters.get(surahNum);
+    if (!chapter) continue;
+    // الفجوة = الأسطر الفارغة بين آخر سطر آيات سابق وأول سطر للسورة الجديدة
+    // (لا firstLine-cursor من أول السورة السابقة — كان يضخّم spanRows ويسبّب تراكبًا)
+    const prevUsed = usedLines.filter((ln) => ln < firstLine).pop() ?? 0;
+    const gap = firstLine - prevUsed - 1;
+    const spanRows = openingCentered
+      ? chapter.bismillahPre ? 2 : 1
+      : Math.max(gap, chapter.bismillahPre ? 2 : 1);
+    // spanRows معلوماتي لخانات المصحف المطبوع — العرض يستخدم ارتفاعًا طبيعيًا للرأس
+    rows.push({ kind: "surah-header", surah: chapter, spanRows });
   }
 
   for (let ln = 1; ln <= maxLine; ln++) {

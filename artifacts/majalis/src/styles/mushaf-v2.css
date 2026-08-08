@@ -237,27 +237,34 @@ html[data-theme="dark"] .mf2-sajda-badge {
   border-color: rgba(232,201,122,.35);
 }
 
-/* رأس سورة زخرفي — خرطوش ذهبي بنفس لغة شارة رقم الصفحة */
+/* رأس سورة زخرفي — ارتفاع طبيعي؛ لا يشارك flex مع أسطر الآيات */
 .mf2-surah-header {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: .25em;
-  padding: .15em 0;
-  min-height: 0;
+  gap: 0.12em;
+  padding: 0.1em 0 0.15em;
+  flex: 0 0 auto;
+  flex-shrink: 0;
+  min-height: auto;
+  overflow: visible;
+  position: relative;
+  z-index: 1;
 }
 .mf2-surah-header__frame {
   position: relative;
   width: min(92%, 22rem);
+  max-width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 0.45em 1.6em;
+  padding: 0.35em 1.4em;
   border: none;
   background: transparent;
   color: var(--color-mushaf-gold, #B08A3E);
+  box-sizing: border-box;
 }
 .mf2-surah-header__cartouche {
   position: absolute;
@@ -271,11 +278,15 @@ html[data-theme="dark"] .mf2-sajda-badge {
   position: relative;
   z-index: 1;
   font-family: var(--font-display, "Amiri", serif);
-  font-size: 3.6cqw;
+  /* نسبة من حجم الصفحة الموحّد (sizingLines) — لا clamp/cqw مستقل يتجاوز الحاوية */
+  font-size: 1.05em;
   font-weight: 700;
   color: var(--color-mushaf-gold, #B08A3E);
   letter-spacing: normal;
-  line-height: 1.2;
+  line-height: 1.15;
+  white-space: nowrap;
+  max-width: 100%;
+  overflow: visible;
 }
 html[data-theme="dark"] .mf2-surah-header__name { color: #E8C97A; }
 .quran-shell--night .mf2-surah-header__name { color: #E8C97A; }
@@ -284,31 +295,32 @@ html[data-theme="dark"] .mf2-surah-header__frame,
   color: #E8C97A;
 }
 
-/* الصفحتان 1–2: كتلة متمركزة بلا خانات فارغة موزّعة على 15 */
+/* الصفحتان 1–2: رأس طبيعي + آيات تتقاسم المتبقي (≥80% امتلاء) */
 .mf2-lines--opening-centered {
-  justify-content: center;
-  gap: 0.05em;
+  justify-content: flex-start;
+  gap: 0;
 }
 .mf2-lines--opening-centered .mf2-line {
-  flex: 0 0 auto;
-  height: var(--mf2-opening-line-h, 1.1em);
+  flex: 1 1 0;
+  height: auto;
   max-height: none;
 }
 .mf2-lines--opening-centered .mf2-surah-header {
   flex: 0 0 auto !important;
-  margin-block-end: 0.15em;
+  margin-block-end: 0.1em;
 }
 .mf2-bismillah {
   font-family: var(--font-quran, "Amiri Quran", "Scheherazade New", serif);
-  /* يمنع انقسام البسملة مع إبقاء الحجم متناسبًا مع عرض الصفحة */
-  font-size: clamp(1.15rem, 5.4cqw, 2.15rem);
-  line-height: 2.15;
+  /* يرث حجم الصفحة الموحّد — يدخل في sizingLines؛ يُمنع القصّ */
+  font-size: 1em;
+  line-height: 1.25;
   text-align: center;
   white-space: nowrap;
   color: var(--mf2-ink, #111827);
-  margin: 0.15em auto 0.35em;
+  margin: 0.05em auto 0.1em;
   max-width: 100%;
-  overflow: hidden;
+  overflow: visible;
+  flex: 0 0 auto;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   font-feature-settings: "liga" 1, "calt" 1;
