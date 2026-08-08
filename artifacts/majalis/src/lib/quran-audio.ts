@@ -199,7 +199,7 @@ export const RECITERS: QuranReciter[] = [
     nameEn: "Ali Jaber",
     everyayahFolder: "Ali_Jaber_64kbps",
     surahBaseUrl: "https://server11.mp3quran.net/a_jbr",
-    featured: false,
+    featured: true,
   },
   {
     id: "budair",
