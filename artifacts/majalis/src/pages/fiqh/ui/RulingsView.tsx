@@ -50,7 +50,7 @@ function FiqhHubStrip({ current }: { current: FiqhTab }) {
   );
 }
 import { FilterBottomSheet, FilterToggle } from "@/components/layout/FilterBottomSheet";
-import { RulingCard } from "@/components/rulings/RulingCard";
+import { RulingCard } from "@/components/ui-common";
 import { RulingCategoryGrid } from "@/components/rulings/RulingCategoryGrid";
 import { RulingFilters } from "@/components/rulings/RulingFilters";
 import {

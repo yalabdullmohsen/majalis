@@ -179,7 +179,7 @@ system-ui, sans-serif` في `src/styles/elite-2026.css`، مُلزَم آليً�
 
 ## العناصر الزخرفية الإسلامية — ⚠️ نصفها حي، نصفها ميت
 
-`IslamicDivider`: ✅ حي — الملف موجود (`src/components/design/IslamicDivider.tsx`)
+`IslamicDivider`: ✅ حي — موحّد في `src/components/ui-common.tsx`
 ومُستخدَم فعليًا (4 مراجع). `IslamicOrnament`: ❌ ميت — لا ملف، صفر
 استخدام في كل شجرة `src` (بحث فعلي). لا تستخدم `IslamicOrnament` في أي
 كود جديد؛ إن احتجت زخرفة مشابهة استخدم `IslamicDivider` أو أنشئ بديلًا
