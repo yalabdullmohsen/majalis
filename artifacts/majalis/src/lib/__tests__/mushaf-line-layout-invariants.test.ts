@@ -27,15 +27,6 @@ const KNOWN_MAX_LINE_LT_15 = new Set([
   1, 2, 76, 207, 331, 341, 349, 366, 376, 414, 417, 445, 452, 498, 506, 525, 548, 555, 557, 584,
 ]);
 
-/**
- * صفحات تختلف تجزئتها/حدودها عن mushaf=1 (بيانات محلية أقدم من mushaf=2).
- * لا نفرض عليها max===15 من مصدر V2 حتى تُعاد بناؤها لاحقًا.
- */
-const SEGMENTATION_MISMATCH_PAGES = new Set([
-  120, 121, 122, 123, 144, 145, 531, 532, 533, 534, 564, 565, 567, 568, 569, 570, 575, 576, 583,
-  584, 585, 586, 587, 588, 589, 590, 591, 592, 593, 594, 595, 596, 597, 598, 599, 600,
-]);
-
 const files = readdirSync(pagesDir).filter((f) => f.endsWith(".json"));
 assert.equal(files.length, 604, "يجب وجود 604 ملف صفحة");
 
@@ -74,12 +65,7 @@ for (const file of files) {
 
   assert.ok(lines.size > 0, `صفحة ${pageNum}: لا أسطر`);
   const maxLn = Math.max(...lines);
-  if (
-    pageNum >= 3 &&
-    maxLn !== 15 &&
-    !KNOWN_MAX_LINE_LT_15.has(pageNum) &&
-    !SEGMENTATION_MISMATCH_PAGES.has(pageNum)
-  ) {
+  if (pageNum >= 3 && maxLn !== 15 && !KNOWN_MAX_LINE_LT_15.has(pageNum)) {
     assert.fail(`صفحة ${pageNum}: أقصى سطر=${maxLn} متوقع 15`);
   }
 }
@@ -96,7 +82,8 @@ const fetchSrc = readFileSync(
   "utf8",
 );
 assert.match(syncSrc, /MUSHAF_ID_QCF_V2\s*=\s*1/);
-assert.match(fetchSrc, /word_fields=[^`]*&mushaf=1&per_page/);
-assert.doesNotMatch(fetchSrc, /word_fields=[^`]*&mushaf=2&/);
+assert.match(fetchSrc, /MUSHAF_ID_QCF_V2\s*=\s*1/);
+assert.match(fetchSrc, /mushaf=\$\{MUSHAF_ID_QCF_V2\}/);
+assert.doesNotMatch(fetchSrc, /mushaf=2&/);
 
 console.log("mushaf-line-layout-invariants.test.ts: ok");

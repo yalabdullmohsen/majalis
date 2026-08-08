@@ -166,7 +166,7 @@
     "test:mushaf-qpc-isolation": "node --import tsx src/lib/__tests__/mushaf-qpc-css-isolation.test.ts",
     "verify:mushaf-v2": "node scripts/quran-import/verify-mushaf-v2-integrity.mjs",
     "test:mushaf-line-layout": "node --import tsx src/lib/__tests__/mushaf-line-layout-invariants.test.ts",
-    "test:mushaf-gates": "pnpm run test:mushaf-page-view && pnpm run test:mushaf-qpc-isolation && node --import tsx src/lib/__tests__/mushaf-fullbleed-layout.test.ts && node --import tsx src/lib/__tests__/mushaf-typography-layout.test.ts && node --import tsx src/lib/__tests__/mushaf-page-digits.test.ts && pnpm run test:mushaf-line-layout && pnpm run verify:mushaf-v2",
+    "test:mushaf-gates": "pnpm run test:mushaf-page-view && pnpm run test:mushaf-qpc-isolation && node --import tsx src/lib/__tests__/mushaf-fullbleed-layout.test.ts && node --import tsx src/lib/__tests__/mushaf-typography-layout.test.ts && node --import tsx src/lib/__tests__/mushaf-page-digits.test.ts && node --import tsx src/lib/__tests__/mushaf-page-boundaries.test.ts && pnpm run test:mushaf-line-layout && pnpm run verify:mushaf-v2",
     "test:governance": "node scripts/test-content-governance.mjs",
     "test:counts": "node scripts/test-content-counts.mjs",
     "test:library-integrity": "node scripts/test-library-integrity.mjs",
