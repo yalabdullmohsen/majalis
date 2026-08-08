@@ -28,44 +28,33 @@
     <link rel="apple-touch-startup-image" media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2)" href="/brand/apple-splash/iPad_Pro_11.png" />
     <link rel="apple-touch-startup-image" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)" href="/brand/apple-splash/iPad_Pro_12.9.png" />
     <style id="mj-splash-critical">
+      /* هوية واحدة: خلفية خضراء داكنة + شعار المجلس العلمي — بلا تأخير مصطنع */
       html:not([data-splash-done]),
       html:not([data-splash-done]) body {
-        background-color: #F2F4F3 !important;
+        background-color: #000300 !important;
         margin: 0;
-      }
-      @media (prefers-color-scheme: dark) {
-        html:not([data-splash-done]),
-        html:not([data-splash-done]) body {
-          background-color: #101614 !important;
-        }
       }
       #mj-boot-splash {
         position: fixed;
         inset: 0;
         z-index: 2147483000;
         display: flex;
-        align-items: flex-start;
+        align-items: center;
         justify-content: center;
-        padding-top: max(env(safe-area-inset-top, 0px), 0px);
-        padding-bottom: env(safe-area-inset-bottom, 0px);
-        padding-inline: env(safe-area-inset-left, 0px) env(safe-area-inset-right, 0px);
-        background: #F2F4F3;
+        padding: var(--inset-top, 0px) var(--inset-inline-end, 0px) var(--inset-bottom, 0px) var(--inset-inline-start, 0px);
+        background: #000300 url("/brand/splash-source.png") center / cover no-repeat;
         pointer-events: none;
       }
-      @media (prefers-color-scheme: dark) {
-        #mj-boot-splash { background: #101614; }
-      }
       #mj-boot-splash__logo {
-        width: min(60vw, 40vh);
+        width: min(58vw, 42vh);
         height: auto;
-        max-width: 60%;
-        max-height: 40%;
+        max-width: 72%;
+        max-height: 48%;
         object-fit: contain;
-        margin-top: calc(45vh - min(20vh, 12vw));
       }
       #mj-boot-splash.is-hiding {
         opacity: 0;
-        transition: opacity 200ms ease;
+        transition: opacity 160ms ease;
       }
       @media (prefers-reduced-motion: reduce) {
         #mj-boot-splash.is-hiding { transition: none; }

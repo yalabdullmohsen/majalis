@@ -12,8 +12,9 @@
 | 3 بلا autoFocus بحث | تم ✅ | [#949](https://github.com/yalabdullmohsen/majalis/pull/949) | لا تركيز بحث «المزيد» |
 | 4 تمرير لأعلى عند مسار جديد | تم ✅ | [#950](https://github.com/yalabdullmohsen/majalis/pull/950) | useLayoutEffect + خريطة ذاكرة |
 | 5 خروج ذكي من المصحف | تم ✅ | [#951](https://github.com/yalabdullmohsen/majalis/pull/951) | أصل الدخول + رجوع غامر + مشغّل مصغّر |
-| 6 شيت الآية الحديث | جارٍ | هذا الفرع | صف إجراءات + المزيد + رموز mushaf |
-| 7–11 | معلّق | — | حسب الترتيب المتفق |
+| 6 شيت الآية الحديث | تم ✅ | [#952](https://github.com/yalabdullmohsen/majalis/pull/952) | صف إجراءات + المزيد + رموز mushaf |
+| 11 توحيد شاشة الدخول | جارٍ | هذا الفرع | هوية خضراء واحدة (ويب + iOS/Android) |
+| 7–10 ثم 8–9 | معلّق | — | حسب الترتيب المتفق |
 
 | البند | الحالة | رقم PR | ما تبقّى |
 |---|---|---|---|

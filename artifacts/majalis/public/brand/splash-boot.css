@@ -1,15 +1,8 @@
-/* مولَّد لدخولية المجلس — خلفية فاتحة/داكنة */
+/* مولَّد بواسطة scripts/generate-splash.mjs — لا تعدّل يدوياً */
 html:not([data-splash-done]),
 html:not([data-splash-done]) body {
-  background-color: #F2F4F3 !important;
-}
-@media (prefers-color-scheme: dark) {
-  html:not([data-splash-done]),
-  html:not([data-splash-done]) body {
-    background-color: #101614 !important;
-  }
+  background-color: #000300 !important;
 }
 :root {
-  --mj-splash-bg: #F2F4F3;
-  --mj-splash-bg-dark: #101614;
+  --mj-splash-bg: #000300;
 }

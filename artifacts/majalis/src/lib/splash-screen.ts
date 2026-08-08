@@ -4,7 +4,8 @@
  */
 import { Capacitor } from "@capacitor/core";
 
-const MAX_MS = 1200;
+/** سقف أمان فقط — الإخفاء الأساسي عند أول إطار جاهز بلا تأخير مصطنع. */
+const MAX_MS = 900;
 let hidden = false;
 
 function dismissWebSplash() {
