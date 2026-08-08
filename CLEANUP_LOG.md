@@ -42,6 +42,10 @@
 | `artifacts/majalis/src/hooks/useSacredTime.ts` | وحدة يتيمة دفعة 3 — لا مستورد | A✓ B✓ C✓ | #936 |
 | `artifacts/majalis/src/lib/plugins/recitation-audio-capture.ts` | وحدة يتيمة دفعة 3 — لا مستورد | A✓ B✓ C✓ | #936 |
 
+|  | أصل عام بلا أي ذكر نصي | A✓ B✓ C✓ | #940 |
+|  | أصل عام بلا أي ذكر نصي | A✓ B✓ C✓ | #940 |
+|  | أصل عام بلا أي ذكر نصي | A✓ B✓ C✓ | #940 |
+
 ## عمليات بلا حذف
 
 | العملية | PR | ملاحظة |
