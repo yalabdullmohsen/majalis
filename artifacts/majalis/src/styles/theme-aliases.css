@@ -1,6 +1,7 @@
-/* ═══════════ جسر الهوية — aliases فقط، بلا حذف للملفات القديمة ═══════════
+/* ═══════════ جسر الهوية — aliases فقط ═══════════
  * يُحمَّل آخر شيء في main.tsx بعد brand-v4 / m2030 / index.css
- * فيعيد توجيه الرموز القديمة إلى لوحة --mj-* الجديدة.
+ * يعيد توجيه الرموز القديمة (--bg/--brand/--msk-*) إلى لوحة --mj-*.
+ * --background / --primary / --font-display مصدرها app/styles/theme.css فقط.
  */
 
 :root {
@@ -78,25 +79,17 @@
   --gold-700: var(--mj-accent);
 
   /* color-* الدلالية */
-  --color-bg: var(--mj-bg);
+  /* color-bg/primary/text من theme.css؛ بقية الجسور الدلالية */
   --color-background: var(--mj-bg);
   --color-bg-soft: var(--mj-surface-2);
-  --color-surface: var(--mj-surface);
   --color-surface-elevated: var(--mj-surface);
-  --color-text: var(--mj-ink);
-  --color-muted: var(--mj-ink-2);
   --color-text-muted: var(--mj-muted);
-  --color-primary: var(--mj-brand);
   --color-primary-dark: var(--mj-brand-deep);
   --color-primary-strong: var(--mj-brand-deep);
   --color-primary-soft: var(--mj-brand-soft);
-  --color-accent: var(--mj-accent);
   --color-border: var(--mj-hairline);
 
-  /* خطوط — واجهة Alexandria دائماً؛ Amiri (--mj-face) لنصوص القرآن/الحديث فقط عبر --font-face */
-  --font-body: var(--mj-ui);
-  --font-display: var(--mj-ui);
-  --font-ui: var(--mj-ui);
+  /* خطوط — Amiri (--mj-face) لنصوص القرآن/الحديث؛ --font-display/--font-ui من theme.css */
   --font-face: var(--mj-face);
 
   /* أنصاف وظلال */
@@ -114,22 +107,7 @@
   --focus-color: var(--mj-brand);
   --focus-ring: 0 0 0 2px var(--mj-bg), 0 0 0 4px var(--mj-brand);
 
-  /* shadcn / Radix tokens */
-  --background: var(--mj-bg);
-  --foreground: var(--mj-ink);
-  --card: var(--mj-surface);
-  --card-foreground: var(--mj-ink);
-  --popover: var(--mj-surface);
-  --popover-foreground: var(--mj-ink);
-  --primary: var(--mj-brand);
-  --primary-foreground: #ffffff;
-  --secondary: var(--mj-surface-2);
-  --secondary-foreground: var(--mj-ink);
-  --muted: var(--mj-surface-2);
-  --muted-foreground: var(--mj-muted);
-  --destructive: #9a3b22;
-  --ring: var(--mj-brand);
-  --input: var(--mj-hairline);
+  /* shadcn / Radix (--background/--primary/…) مُعرَّفة في theme.css فقط */
 
   /* أسماء شائعة قديمة */
   --majalis-emerald: var(--mj-brand);
@@ -204,26 +182,9 @@ html.dark,
   --n-100: var(--mj-surface-2);
   --n-900: var(--mj-ink);
 
-  --color-bg: var(--mj-bg);
+  /* shadcn/color-bg من theme.css تتبع --mj-* في الوضع الليلي تلقائيًا */
   --color-background: var(--mj-bg);
-  --color-surface: var(--mj-surface);
-  --color-text: var(--mj-ink);
-  --color-muted: var(--mj-ink-2);
-  --color-primary: var(--mj-brand);
   --color-border: var(--mj-hairline);
-
-  --background: var(--mj-bg);
-  --foreground: var(--mj-ink);
-  --card: var(--mj-surface);
-  --card-foreground: var(--mj-ink);
-  --primary: var(--mj-brand);
-  --primary-foreground: var(--mj-brand-deep);
-  --secondary: var(--mj-surface-2);
-  --secondary-foreground: var(--mj-ink);
-  --muted: var(--mj-surface-2);
-  --muted-foreground: var(--mj-muted);
-  --ring: var(--mj-brand);
-  --border: var(--mj-hairline);
 
   --majalis-emerald: var(--mj-brand);
   --majalis-emerald-deep: var(--mj-brand-deep);
