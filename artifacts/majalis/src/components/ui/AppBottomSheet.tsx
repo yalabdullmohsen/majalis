@@ -71,7 +71,13 @@ export function AppBottomSheet({
     document.body.style.width = "100%";
     document.body.classList.add("app-sheet-open", "filter-sheet-open");
 
-    const focusTarget = initialFocusRef?.current ?? sheetRef.current;
+    /* لا تركّز حقول إدخال/بحث عند الفتح — يمنع فتح الكيبورد على الجوال. */
+    const requested = initialFocusRef?.current;
+    const isTextField =
+      requested instanceof HTMLInputElement ||
+      requested instanceof HTMLTextAreaElement ||
+      requested instanceof HTMLSelectElement;
+    const focusTarget = requested && !isTextField ? requested : sheetRef.current;
     const frame = window.requestAnimationFrame(() => {
       focusTarget?.focus({ preventScroll: true });
     });

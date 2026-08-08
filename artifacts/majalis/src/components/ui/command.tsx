@@ -38,7 +38,7 @@ const CommandDialog = ({ children, ...props }: DialogProps) => {
 const CommandInput = React.forwardRef<
   React.ElementRef<typeof CommandPrimitive.Input>,
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input>
->(({ className, ...props }, ref) => (
+>(({ className, autoFocus = false, ...props }, ref) => (
   <div className="flex items-center border-b px-3" cmdk-input-wrapper="">
     <Search className="me-2 h-4 w-4 shrink-0 opacity-50" />
     <CommandPrimitive.Input
@@ -48,6 +48,9 @@ const CommandInput = React.forwardRef<
         className
       )}
       {...props}
+      /* لا تركيز تلقائي عند فتح Command/Dialog على الجوال — اللمس فقط. */
+      // eslint-disable-next-line jsx-a11y/no-autofocus -- false يعطّل افتراضي cmdk؛ لا نمرّر true من الخارج هنا
+      autoFocus={autoFocus}
     />
   </div>
 ))
