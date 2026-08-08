@@ -23,7 +23,8 @@ export const rulingRepository: EntityRepository<RulingEntity> = {
   },
 };
 
-export function RulingCard({ titleAr, href, subtitleAr }: EntityCardProps) {
+/** بطاقة كيان خام — رسالة الاسم RulingCard موحّدة في ui-common */
+export function RulingEntityCard({ titleAr, href, subtitleAr }: EntityCardProps) {
   return (
     <a href={href} className="entity-card entity-card--ruling">
       <span className="entity-card__title">{titleAr}</span>

@@ -108,7 +108,7 @@ const SurahIndexPage = lazy(() => import("@/pages/quran/SurahIndexPage"));
 const QuranSearchPage = lazy(() => import("@/pages/quran/QuranSearchPage"));
 const RevelationOrderPage = lazy(() => import("@/pages/quran/RevelationOrderPage"));
 const MakkiMadaniPage = lazy(() => import("@/pages/quran/MakkiMadaniPage"));
-const MushafPageView = lazy(() => import("@/pages/quran/MushafPageView"));
+const MushafPageView = lazy(() => import("@/pages/quran/ui/MushafPageView"));
 const MushafEditionInfoPage = lazy(() => import("@/pages/quran/MushafEditionInfoPage"));
 const RecitationTestPage = lazy(() => import("@/pages/quran/RecitationTestPage"));
 const SurahStoriesPage = lazy(() => import("@/pages/quran/SurahStoriesPage"));

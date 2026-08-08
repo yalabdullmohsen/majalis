@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { applyPageSeo } from "@/lib/seo";
-import { IslamicDivider, StarKhatam } from "@/components/IslamicDecorations";
+import { StarKhatam } from "@/components/IslamicDecorations";
+import { IslamicDivider } from "@/components/ui-common";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
 import {
   AMR_BIL_MARUF_LEVELS,

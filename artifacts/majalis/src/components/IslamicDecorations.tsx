@@ -136,64 +136,6 @@ export function MashrabiyaPattern({
   );
 }
 
-/** فاصل زخرفي — Ornamental divider with geometric motif */
-export function IslamicDivider({
-  width = 320,
-  color = "currentColor",
-  opacity = 0.35,
-  className = "",
-}: {
-  width?: number;
-  color?: string;
-  opacity?: number;
-  className?: string;
-}) {
-  const h = 24;
-  const cx = width / 2;
-  const cy = h / 2;
-  const r = 7;
-  return (
-    <svg
-      width={width}
-      height={h}
-      viewBox={`0 0 ${width} ${h}`}
-      aria-hidden="true"
-      className={className}
-      style={{ opacity }}
-      role="presentation"
-    >
-      {/* center star */}
-      {(() => {
-        const pts = Array.from({ length: 8 }, (_, i) => {
-          const outerA = (i * Math.PI) / 4 - Math.PI / 8;
-          const innerA = (i * Math.PI) / 4 + Math.PI / 8;
-          const ri = r * 0.4;
-          return [
-            `${cx + r * Math.cos(outerA)},${cy + r * Math.sin(outerA)}`,
-            `${cx + ri * Math.cos(innerA)},${cy + ri * Math.sin(innerA)}`,
-          ].join(" ");
-        }).join(" ");
-        return <polygon points={pts} fill={color} />;
-      })()}
-      {/* left line */}
-      <line x1={0} y1={cy} x2={cx - r - 10} y2={cy} stroke={color} strokeWidth={0.8} />
-      {/* right line */}
-      <line x1={cx + r + 10} y1={cy} x2={width} y2={cy} stroke={color} strokeWidth={0.8} />
-      {/* side diamonds */}
-      {[-1, 1].map((side) => {
-        const x = cx + side * (r + 22);
-        return (
-          <polygon
-            key={side}
-            points={`${x},${cy - 3} ${x + 4},${cy} ${x},${cy + 3} ${x - 4},${cy}`}
-            fill={color}
-          />
-        );
-      })}
-    </svg>
-  );
-}
-
 /** ركن هندسي — geometric corner ornament (للزوايا) */
 export function CornerOrnament({
   size = 60,

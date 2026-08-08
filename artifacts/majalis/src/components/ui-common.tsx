@@ -1,5 +1,7 @@
 import { AlertTriangle, RefreshCw } from "lucide-react";
+import { Link } from "wouter";
 import { C } from "@/lib/theme";
+import type { ShariaRulingExtended } from "@/lib/rulings-types";
 
 /* ── Skeleton primitives ── */
 
@@ -217,6 +219,116 @@ export function Chip({
     >
       {children}
     </button>
+  );
+}
+
+/** فاصل زخرفي موحّد — وضع CSS (افتراضي) أو SVG بعرض صريح */
+export function IslamicDivider({
+  className = "",
+  size = 28,
+  width,
+  color = "currentColor",
+  opacity = 0.35,
+}: {
+  className?: string;
+  size?: number;
+  width?: number;
+  color?: string;
+  opacity?: number;
+}) {
+  if (width != null) {
+    const h = 24;
+    const cx = width / 2;
+    const cy = h / 2;
+    const r = 7;
+    const pts = Array.from({ length: 8 }, (_, i) => {
+      const outerA = (i * Math.PI) / 4 - Math.PI / 8;
+      const innerA = (i * Math.PI) / 4 + Math.PI / 8;
+      const ri = r * 0.4;
+      return [
+        `${cx + r * Math.cos(outerA)},${cy + r * Math.sin(outerA)}`,
+        `${cx + ri * Math.cos(innerA)},${cy + ri * Math.sin(innerA)}`,
+      ].join(" ");
+    }).join(" ");
+    return (
+      <svg
+        width={width}
+        height={h}
+        viewBox={`0 0 ${width} ${h}`}
+        aria-hidden="true"
+        className={className}
+        style={{ opacity }}
+        role="presentation"
+      >
+        <polygon points={pts} fill={color} />
+        <line x1={0} y1={cy} x2={cx - r - 10} y2={cy} stroke={color} strokeWidth={0.8} />
+        <line x1={cx + r + 10} y1={cy} x2={width} y2={cy} stroke={color} strokeWidth={0.8} />
+        {[-1, 1].map((side) => {
+          const x = cx + side * (r + 22);
+          return (
+            <polygon
+              key={side}
+              points={`${x},${cy - 3} ${x + 4},${cy} ${x},${cy + 3} ${x - 4},${cy}`}
+              fill={color}
+            />
+          );
+        })}
+      </svg>
+    );
+  }
+
+  return (
+    <div className={`islamic-divider ${className}`.trim()} aria-hidden="true">
+      <span className="islamic-divider__line" />
+      <span className="islamic-divider__ornament">
+        <svg width={size} height={size} viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path
+            d="M16 3 L18.5 13.5 L29 16 L18.5 18.5 L16 29 L13.5 18.5 L3 16 L13.5 13.5 Z"
+            stroke="currentColor"
+            strokeWidth="1.2"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M16 3 L18.5 13.5 L29 16 L18.5 18.5 L16 29 L13.5 18.5 L3 16 L13.5 13.5 Z"
+            stroke="currentColor"
+            strokeWidth="1.2"
+            strokeLinejoin="round"
+            transform="rotate(45 16 16)"
+            opacity="0.6"
+          />
+          <circle cx="16" cy="16" r="2.5" fill="currentColor" opacity="0.7" />
+        </svg>
+      </span>
+      <span className="islamic-divider__line" />
+    </div>
+  );
+}
+
+/** بطاقة حكم شرعي — مصدر الحقيقة لقوائم الموسوعة */
+export function RulingCard({ ruling }: { ruling: ShariaRulingExtended }) {
+  return (
+    <Link href={`/rulings/${ruling.id}`} className="ruling-card ui-card">
+      <div className="ruling-card__head">
+        <span className="ruling-card__category">{ruling.category}</span>
+        {ruling.subcategory && <span className="ruling-card__sub">{ruling.subcategory}</span>}
+      </div>
+      <h2 className="ruling-card__title">{ruling.title}</h2>
+      {ruling.summary && <p className="ruling-card__summary">{ruling.summary}</p>}
+      <div className="ruling-card__meta">
+        {ruling.prevailing_view && <span className="ruling-card__badge">{ruling.prevailing_view}</span>}
+        {(ruling.view_count ?? 0) > 0 && <span>{ruling.view_count} مشاهدة</span>}
+        {(ruling.importance_score ?? 0) >= 75 && <span className="ruling-card__important">مهم</span>}
+      </div>
+      {ruling.keywords && ruling.keywords.length > 0 && (
+        <div className="ruling-card__tags">
+          {ruling.keywords.slice(0, 4).map((k) => (
+            <span key={k} className="ruling-card__tag">
+              {k}
+            </span>
+          ))}
+        </div>
+      )}
+    </Link>
   );
 }
 
