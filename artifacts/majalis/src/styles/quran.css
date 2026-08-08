@@ -2405,15 +2405,20 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
   width: 100%;
 }
 
-/* رأس سورة داخل الصفحة — أهدأ، بلا شريط أصفر/ذهبي ثقيل */
+/* رأس سورة داخل الصفحة — خرطوش ذهبي موحّد مع شارة رقم الصفحة */
 .quran-shell--ayah .mf2-surah-header__frame {
-  border-top-color: color-mix(in srgb, var(--ayah-meta, #8E8E93) 35%, transparent);
-  border-bottom-color: color-mix(in srgb, var(--ayah-meta, #8E8E93) 35%, transparent);
+  border: none;
   background: transparent;
+  color: var(--ayah-badge-ink, var(--color-mushaf-gold, #B08A3E));
 }
 .quran-shell--ayah .mf2-surah-header__name {
-  color: var(--ayah-meta, #8E8E93);
+  color: var(--ayah-badge-ink, var(--color-mushaf-gold, #B08A3E));
   font-weight: 600;
+}
+/* إزالة أي فراغ علوي زائد في الصفحتين الافتتاحيتين */
+.quran-shell--ayah .mf2-lines--opening-centered {
+  padding-top: 0;
+  margin-top: 0;
 }
 
 .mpv-ayah-footer {

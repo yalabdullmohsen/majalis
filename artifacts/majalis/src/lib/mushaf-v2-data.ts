@@ -63,7 +63,19 @@ export type MushafPageLayout = {
   juzNumber: number;
   rows: MushafPageRow[];
   surahsOnPage: MushafChapter[];
+  /**
+   * opening-centered: الصفحتان 1 و2 — عدد أسطر فعلي بلا خانات فارغة موزّعة،
+   * وكتلة متمركزة رأسيًا. standard: باقي الصفحات (15 خانة متساوية).
+   */
+  layoutMode: "standard" | "opening-centered";
+  /** عدد الأسطر الفعلية ذات الكلمات (من mushaf=1) — للتحجيم */
+  ayahLineCount: number;
 };
+
+/** صفحتا الفاتحة وأول البقرة — تخطيط متمركز بلا حشو فراغات علوية */
+export function isOpeningCenteredPage(pageNumber: number): boolean {
+  return pageNumber === 1 || pageNumber === 2;
+}
 
 let chaptersPromise: Promise<Map<number, MushafChapter>> | null = null;
 
@@ -182,6 +194,7 @@ export async function loadMushafPage(pageNumber: number): Promise<MushafPageLayo
 
   const usedLines = [...lineWords.keys()].sort((a, b) => a - b);
   const maxLine = usedLines.length ? Math.max(...usedLines) : 15;
+  const openingCentered = isOpeningCenteredPage(pageNumber);
 
   const rows: MushafPageRow[] = [];
   let cursor = 1;
@@ -190,7 +203,13 @@ export async function loadMushafPage(pageNumber: number): Promise<MushafPageLayo
   for (const [surahNum, firstLine] of headerStartLines) {
     if (firstLine > cursor) {
       const chapter = chapters.get(surahNum);
-      if (chapter) rows.push({ kind: "surah-header", surah: chapter, spanRows: firstLine - cursor });
+      if (chapter) {
+        // الصفحتان 1–2: لا تُحجز الفجوات العلوية كخانات فارغة — رأس مضغوط فقط
+        const spanRows = openingCentered
+          ? chapter.bismillahPre ? 2 : 1
+          : firstLine - cursor;
+        rows.push({ kind: "surah-header", surah: chapter, spanRows });
+      }
     }
     cursor = firstLine;
   }
@@ -233,6 +252,8 @@ export async function loadMushafPage(pageNumber: number): Promise<MushafPageLayo
     juzNumber: verses[0]?.juzNumber ?? 1,
     rows: merged,
     surahsOnPage,
+    layoutMode: openingCentered ? "opening-centered" : "standard",
+    ayahLineCount: usedLines.length,
   };
 }
 

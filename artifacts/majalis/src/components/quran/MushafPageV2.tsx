@@ -50,7 +50,7 @@ type Props = {
   visualOnly?: boolean;
 };
 
-const ROW_COUNT_APPROX = 15;
+const ROW_COUNT_STANDARD = 15;
 
 /** عرض glyph بخط الصفحة فقط — لا يُستخدم أبدًا مع Amiri/Noto.
  * نهاية الآية = محرف الزخرفة من نفس خط الصفحة بلون ذهبي (لا دائرة CSS). */
@@ -131,9 +131,9 @@ export function MushafPageV2({
 
   /**
    * حجم واحد لكل الأسطر كالمطبوع:
-   * size = min( العرض ÷ عرض أعرض سطر ، (الارتفاع ÷ 15) ÷ معامل ارتفاع السطر )
-   * الخط يملأ العرض — بلا space-between وبلا تحجيم سطر-بسطر.
-   * الامتلاء الرأسي ≥85%: عبر 15 خانة flex متساوية تملأ الحاوية (لا بتكبير يفيض عرضًا).
+   * size = min( العرض ÷ عرض أعرض سطر آيات ، (الارتفاع ÷ عدد_الخانات) ÷ معامل ارتفاع السطر )
+   * الصفحتان 1–2: عدد الخانات = الأسطر الفعلية (+ رأس مضغوط) — مقيّد بعرض أعرض سطر.
+   * باقي الصفحات: 15 خانة متساوية.
    */
   useLayoutEffect(() => {
     if (!fontReady || !layout) {
@@ -154,6 +154,13 @@ export function MushafPageV2({
     /** يجب أن يطابق --mf2-lh / line-height في .mf2-line (1.0–1.15). */
     const LINE_HEIGHT_EM = 1.1;
     const REF_PX = 100;
+    const opening = layout.layoutMode === "opening-centered";
+    const headerRows = layout.rows
+      .filter((r): r is Extract<typeof r, { kind: "surah-header" }> => r.kind === "surah-header")
+      .reduce((n, r) => n + r.spanRows, 0);
+    const rowCount = opening
+      ? Math.max(1, layout.ayahLineCount + headerRows)
+      : ROW_COUNT_STANDARD;
 
     const measure = () => {
       const availableWidth = container.clientWidth;
@@ -163,16 +170,39 @@ export function MushafPageV2({
       let widestAtRef = 0;
       for (const el of lineRefs.current.values()) {
         if (!el) continue;
+        const prevOverflow = el.style.overflowX;
+        el.style.overflowX = "visible";
         el.style.fontSize = `${REF_PX}px`;
         widestAtRef = Math.max(widestAtRef, el.scrollWidth);
         // أزل الحجم المؤقت فورًا — وإلا يبقى 100px ويتجاوز الحجم الموحّد
         el.style.fontSize = "";
+        el.style.overflowX = prevOverflow;
       }
       if (widestAtRef <= 0) return false;
 
       const sizeByWidth = (availableWidth * REF_PX) / widestAtRef;
-      const sizeByHeight = (availableHeight / ROW_COUNT_APPROX) / LINE_HEIGHT_EM;
-      const size = Math.min(sizeByWidth, sizeByHeight);
+      const sizeByHeight = (availableHeight / rowCount) / LINE_HEIGHT_EM;
+      let size = Math.min(sizeByWidth, sizeByHeight);
+
+      // تمريرة ضبط: امنع قصّ أعرض سطر (خصوصًا الصفحتين 1–2)
+      for (const el of lineRefs.current.values()) {
+        if (!el) continue;
+        el.style.overflowX = "visible";
+        el.style.fontSize = `${size}px`;
+      }
+      let widestAtSize = 0;
+      for (const el of lineRefs.current.values()) {
+        if (!el) continue;
+        widestAtSize = Math.max(widestAtSize, el.scrollWidth);
+      }
+      for (const el of lineRefs.current.values()) {
+        if (!el) continue;
+        el.style.fontSize = "";
+        el.style.overflowX = "";
+      }
+      if (widestAtSize > availableWidth) {
+        size *= (availableWidth / widestAtSize) * (opening ? 0.97 : 0.995);
+      }
 
       setPageFontSize(size);
       setFitted(true);
@@ -197,7 +227,12 @@ export function MushafPageV2({
       : <MushafPageSkeleton />;
   }
 
-  const linesClass = useUnicodeSafe ? "mf2-lines mf2-lines--unicode" : "mf2-lines";
+  const openingCentered = layout.layoutMode === "opening-centered";
+  const linesClass = [
+    "mf2-lines",
+    useUnicodeSafe ? "mf2-lines--unicode" : "",
+    openingCentered ? "mf2-lines--opening-centered" : "",
+  ].filter(Boolean).join(" ");
 
   const lines = (
     <>
@@ -209,6 +244,10 @@ export function MushafPageV2({
           // حجم موحّد يورثه كل سطر — لا تحجيم فردي
           fontSize: !useUnicodeSafe && pageFontSize ? `${pageFontSize}px` : undefined,
           ["--mf2-lh" as string]: !useUnicodeSafe ? "1.1" : undefined,
+          ["--mf2-opening-line-h" as string]:
+            !useUnicodeSafe && pageFontSize && openingCentered
+              ? `${pageFontSize * 1.1}px`
+              : undefined,
           fontFamily: useUnicodeSafe
             ? fontFamily
             : fontFamily
@@ -301,12 +340,68 @@ export function MushafPageV2({
   );
 }
 
-export function SurahHeaderBanner({ chapter, spanRows }: { chapter: MushafPageLayout["surahsOnPage"][number]; spanRows: number }) {
+/** إطار مزخرف لعنوان السورة — نفس لغة خرطوش رقم الصفحة الذهبي */
+function SurahNameCartouche({ label }: { label: string }) {
+  return (
+    <div className="mf2-surah-header__frame">
+      <svg
+        className="mf2-surah-header__cartouche"
+        viewBox="0 0 280 40"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+      >
+        <rect x="36" y="4" width="208" height="32" rx="3.5" fill="none" stroke="currentColor" strokeWidth="1.2" />
+        <rect x="40" y="8" width="200" height="24" rx="2" fill="none" stroke="currentColor" strokeWidth="0.6" opacity="0.5" />
+        <path
+          d="M36 20 C26 8, 16 10, 10 20 C16 30, 26 32, 36 20 Z"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.05"
+        />
+        <path
+          d="M36 20 C28 14, 20 15, 16 20 C20 25, 28 26, 36 20 Z"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="0.65"
+          opacity="0.7"
+        />
+        <circle cx="14" cy="20" r="1.4" fill="currentColor" opacity="0.9" />
+        <path d="M28 12.5 L29.3 14.8 L28 17.1 L26.7 14.8 Z" fill="currentColor" opacity="0.7" />
+        <path d="M28 22.9 L29.3 25.2 L28 27.5 L26.7 25.2 Z" fill="currentColor" opacity="0.7" />
+        <path
+          d="M244 20 C254 8, 264 10, 270 20 C264 30, 254 32, 244 20 Z"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.05"
+        />
+        <path
+          d="M244 20 C252 14, 260 15, 264 20 C260 25, 252 26, 244 20 Z"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="0.65"
+          opacity="0.7"
+        />
+        <circle cx="266" cy="20" r="1.4" fill="currentColor" opacity="0.9" />
+        <path d="M252 12.5 L253.3 14.8 L252 17.1 L250.7 14.8 Z" fill="currentColor" opacity="0.7" />
+        <path d="M252 22.9 L253.3 25.2 L252 27.5 L250.7 25.2 Z" fill="currentColor" opacity="0.7" />
+        <path d="M140 1 L141.4 2.9 L140 4.8 L138.6 2.9 Z" fill="currentColor" opacity="0.75" />
+        <path d="M140 35.2 L141.4 37.1 L140 39 L138.6 37.1 Z" fill="currentColor" opacity="0.75" />
+      </svg>
+      <span className="mf2-surah-header__name">سُورَةُ {label}</span>
+    </div>
+  );
+}
+
+export function SurahHeaderBanner({
+  chapter,
+  spanRows,
+}: {
+  chapter: MushafPageLayout["surahsOnPage"][number];
+  spanRows: number;
+}) {
   return (
     <div className="mf2-surah-header" style={{ flex: spanRows }}>
-      <div className="mf2-surah-header__frame">
-        <span className="mf2-surah-header__name">سُورَةُ {chapter.nameArabic}</span>
-      </div>
+      <SurahNameCartouche label={chapter.nameArabic} />
       {chapter.bismillahPre && (
         <div className="mf2-bismillah" lang="ar" dir="rtl">
           بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ
@@ -319,7 +414,7 @@ export function SurahHeaderBanner({ chapter, spanRows }: { chapter: MushafPageLa
 function MushafPageSkeleton({ overlay }: { overlay?: boolean }) {
   return (
     <div className={`mf2-skeleton${overlay ? " mf2-skeleton--overlay" : ""}`} aria-hidden="true">
-      {Array.from({ length: ROW_COUNT_APPROX }, (_, i) => (
+      {Array.from({ length: ROW_COUNT_STANDARD }, (_, i) => (
         <div key={i} className="mf2-skeleton__line" />
       ))}
     </div>

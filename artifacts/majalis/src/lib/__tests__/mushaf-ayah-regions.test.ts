@@ -10,6 +10,8 @@ const layout: MushafPageLayout = {
   pageNumber: 1,
   juzNumber: 1,
   surahsOnPage: [],
+  layoutMode: "opening-centered",
+  ayahLineCount: 1,
   rows: [
     {
       kind: "line",
