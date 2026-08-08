@@ -1,6 +1,6 @@
 /**
  * تخطيط المصحف بعرض كامل الشاشة بنمط «آية» —
- * خلفية ورقية، رأس/تذييل عائم، بلا بطاقات/إطار أصفر.
+ * خلفية ورقية، رأس/تذييل عائم، بلا وضع امتلاء منفصل.
  * تشغيل: npx tsx src/lib/__tests__/mushaf-fullbleed-layout.test.ts
  */
 import assert from "node:assert/strict";
@@ -21,10 +21,10 @@ assert.equal(
   false,
   ".mpv-body--ayah بلا max-width:720px الذي كان يحبس الصفحة",
 );
-assert.match(mpvBodyBlock[0], /max\(1rem/);
-assert.match(mpvBodyBlock[0], /83vh/);
+assert.match(mpvBodyBlock[0], /max\(8px/);
 assert.match(mpvBodyBlock[0], /box-sizing:\s*border-box/);
 assert.match(mpvBodyBlock[0], /width:\s*100%/);
+assert.equal(/83vh/.test(mpvBodyBlock[0]), false, ".mpv-body--ayah بلا سقف 83vh");
 
 assert.match(quranCss, /\.quran-shell--chrome-hidden\s+\.mpv-body/);
 assert.match(viewSrc, /quran-shell--chrome-hidden/);
@@ -37,13 +37,17 @@ assert.match(viewSrc, /• الحزب/);
 assert.match(viewSrc, /useState\(false\)/);
 assert.match(viewSrc, /mpv-body--ayah/);
 assert.equal(/mpv-ayah-nav-btn/.test(viewSrc), false, "بلا أسهم تنقّل في التذييل — الشارة فقط");
+assert.equal(/pageFillMode/.test(viewSrc), false, "بلا وضع امتلاء منفصل");
+assert.equal(/Maximize2|Minimize2|mpv-fill-enter/.test(viewSrc), false, "بلا أزرار تكبير/تصغير");
 
 assert.match(immersiveSrc, /AYAH_MUSHAF_PAPER_BG\s*=\s*"#FAF7F2"/);
 
-const bodyInner = quranCss.match(/\.qs-mushaf-body\s+\.qs-mushaf-body-inner\s*\{[^}]+\}/);
-assert.ok(bodyInner, ".qs-mushaf-body-inner موجود");
-assert.match(bodyInner[0], /aspect-ratio:\s*0\.72/);
-assert.match(bodyInner[0], /100cqh\s*\*\s*0\.72/);
+const bodyInner = quranCss.match(
+  /\.quran-shell--ayah\s+\.qs-mushaf-body\s+\.qs-mushaf-body-inner\s*\{[^}]+\}/,
+);
+assert.ok(bodyInner, ".qs-mushaf-body-inner لمسار آية موجود");
+assert.match(bodyInner[0], /height:\s*100%/);
+assert.match(bodyInner[0], /aspect-ratio:\s*auto/);
 
 assert.match(viewSrc, /mpv-ayah-header__juz/);
 assert.match(viewSrc, /mpv-ayah-header__surah/);

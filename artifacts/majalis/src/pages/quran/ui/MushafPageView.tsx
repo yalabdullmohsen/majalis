@@ -2,7 +2,7 @@ import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from "rea
 import { createPortal } from "react-dom";
 import { useParams, useLocation } from "wouter";
 import {
-  Menu, Settings, X, ChevronRight, ChevronLeft, RotateCcw, ArrowRight, Bookmark, Maximize2, Minimize2,
+  Menu, Settings, X, ChevronRight, ChevronLeft, RotateCcw, ArrowRight, Bookmark,
 } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { toArabicDigits } from "@/lib/utils";
@@ -150,7 +150,6 @@ export default function MushafPageView() {
   /* تجربة قراءة غامرة بنمط "آية": افتراضيًا الأدوات مخفية (رأس/شارة فقط)؛
      نقرة على جسم الصفحة تُظهر أدوات الرجوع/الفهرس/الإعدادات. */
   const [textChromeVisible, setTextChromeVisible] = useState(false);
-  const [pageFillMode, setPageFillMode] = useState(false);
   const [bookmarkStatus, setBookmarkStatus] = useState<string | null>(null);
   const [pageBookmarked, setPageBookmarked] = useState(() => isPageBookmarked(page));
   const touchStartX = useRef<number | null>(null);
@@ -340,42 +339,6 @@ export default function MushafPageView() {
     goBackOrFallback(location);
   }, [location]);
 
-  const togglePageFillMode = useCallback(() => {
-    setPageFillMode((prev) => {
-      const next = !prev;
-      if (next) {
-        setTextChromeVisible(false);
-        const root = document.documentElement;
-        const req = root.requestFullscreen?.bind(root)
-          || (root as HTMLElement & { webkitRequestFullscreen?: () => Promise<void> }).webkitRequestFullscreen?.bind(root);
-        if (req) {
-          try {
-            const result = req();
-            if (result && typeof (result as Promise<void>).catch === "function") {
-              (result as Promise<void>).catch(() => { /* iOS / unsupported — CSS fill still applies */ });
-            }
-          } catch {
-            /* ignore */
-          }
-        }
-      } else if (document.fullscreenElement) {
-        const exit = document.exitFullscreen?.bind(document)
-          || (document as Document & { webkitExitFullscreen?: () => Promise<void> }).webkitExitFullscreen?.bind(document);
-        if (exit) {
-          try {
-            const result = exit();
-            if (result && typeof (result as Promise<void>).catch === "function") {
-              (result as Promise<void>).catch(() => { /* ignore */ });
-            }
-          } catch {
-            /* ignore */
-          }
-        }
-      }
-      return next;
-    });
-  }, []);
-
   // ── سحب أفقي RTL صحيح الاتجاه: تحريك الإصبع لليسار = الصفحة التالية (تقدّم في القراءة) ──
   const onTouchStart = (e: React.TouchEvent) => { touchStartX.current = e.touches[0].clientX; };
   const onTouchEnd = (e: React.TouchEvent) => {
@@ -448,13 +411,13 @@ export default function MushafPageView() {
 
   return createPortal(
     <div
-      className={`quran-shell quran-shell--immersive quran-shell--ayah ${shellThemeClass}${textChromeVisible ? "" : " quran-shell--chrome-hidden"}${pageFillMode ? " quran-shell--page-fill" : ""}`}
+      className={`quran-shell quran-shell--immersive quran-shell--ayah ${shellThemeClass}${textChromeVisible ? "" : " quran-shell--chrome-hidden"}`}
       dir="rtl"
       style={{ ["--ayah-paper" as string]: immersivePaper }}
     >
       <>
           {/* هيدر عائم بسيط — بلا أزرار أو خلفيات (مطابق مخطط آية) */}
-          <header className="mpv-ayah-header" aria-label="معلومات الصفحة" hidden={pageFillMode}>
+          <header className="mpv-ayah-header" aria-label="معلومات الصفحة">
             <span className="mpv-ayah-header__juz">
               {juz
                 ? `الجزء ${toArabicDigits(juz)}${hizb ? ` • الحزب ${toArabicDigits(hizb)}` : ""}`
@@ -463,38 +426,8 @@ export default function MushafPageView() {
             <span className="mpv-ayah-header__surah">سورة {primarySurahMeta.name}</span>
           </header>
 
-          {pageFillMode ? (
-            <button
-              type="button"
-              className="mpv-fill-exit"
-              onClick={(e) => {
-                e.stopPropagation();
-                togglePageFillMode();
-              }}
-              aria-label="إنهاء العرض المكبّر"
-              title="تصغير"
-            >
-              <Minimize2 size={16} aria-hidden="true" />
-              <span>تصغير</span>
-            </button>
-          ) : (
-            <button
-              type="button"
-              className="mpv-fill-enter"
-              onClick={(e) => {
-                e.stopPropagation();
-                togglePageFillMode();
-              }}
-              aria-label="تكبير صفحة المصحف"
-              title="تكبير كامل"
-            >
-              <Maximize2 size={16} aria-hidden="true" />
-              <span>تكبير</span>
-            </button>
-          )}
-
-          {/* أدوات تظهر فقط عند النقر — خارج مساحة القراءة الافتراضية */}
-          <div className={`mpv-toolbar mpv-toolbar--ayah ${textChromeVisible && !pageFillMode ? "" : "mpv-toolbar--hidden"}`}>
+          {/* أدوات تظهر/تُخفى بلمسة واحدة على الصفحة — الصفحة دائمًا بكامل الشاشة */}
+          <div className={`mpv-toolbar mpv-toolbar--ayah ${textChromeVisible ? "" : "mpv-toolbar--hidden"}`}>
             <button type="button" className="mpv-toolbar__btn" onClick={goBack} aria-label="رجوع">
               <ArrowRight size={16} aria-hidden="true" />
             </button>
@@ -508,19 +441,6 @@ export default function MushafPageView() {
               فهرس
             </button>
             <span className="mpv-toolbar__spacer" aria-hidden="true" />
-            <button
-              type="button"
-              className={`mpv-toolbar__btn${pageFillMode ? " is-on" : ""}`}
-              onClick={(e) => {
-                e.stopPropagation();
-                togglePageFillMode();
-              }}
-              aria-label={pageFillMode ? "إنهاء تكبير الصفحة" : "تكبير صفحة المصحف"}
-              aria-pressed={pageFillMode}
-              title={pageFillMode ? "تصغير" : "تكبير كامل"}
-            >
-              {pageFillMode ? <Minimize2 size={16} aria-hidden="true" /> : <Maximize2 size={16} aria-hidden="true" />}
-            </button>
             <button
               type="button"
               className={`mpv-toolbar__btn${pageBookmarked ? " is-on" : ""}`}
@@ -646,39 +566,52 @@ export default function MushafPageView() {
             >
               <svg
                 className="mpv-ayah-page-badge__cartouche"
-                viewBox="0 0 120 36"
-                preserveAspectRatio="none"
+                viewBox="0 0 160 44"
+                preserveAspectRatio="xMidYMid meet"
                 aria-hidden="true"
               >
-                <rect
-                  x="2"
-                  y="2"
-                  width="116"
-                  height="32"
-                  rx="4"
-                  ry="4"
+                {/* إطار مزدوج مع قطع لطيف */}
+                <rect x="28" y="5" width="104" height="34" rx="4" fill="none" stroke="currentColor" strokeWidth="1.25" />
+                <rect x="32" y="9" width="96" height="26" rx="2" fill="none" stroke="currentColor" strokeWidth="0.65" opacity="0.5" />
+                {/* حلية يمين أغنى */}
+                <path
+                  d="M28 22 C20 10, 12 12, 8 22 C12 32, 20 34, 28 22 Z"
                   fill="none"
                   stroke="currentColor"
-                  strokeWidth="1.25"
-                />
-                <rect
-                  x="6"
-                  y="6"
-                  width="108"
-                  height="24"
-                  rx="2"
-                  ry="2"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="0.75"
-                  opacity="0.55"
+                  strokeWidth="1.1"
                 />
                 <path
-                  d="M14 18 H22 M98 18 H106 M60 6 V10 M60 26 V30"
+                  d="M28 22 C22 16, 16 17, 13 22 C16 27, 22 28, 28 22 Z"
+                  fill="none"
                   stroke="currentColor"
-                  strokeWidth="0.9"
+                  strokeWidth="0.7"
                   opacity="0.7"
                 />
+                <circle cx="12.5" cy="22" r="1.5" fill="currentColor" opacity="0.9" />
+                <path d="M22 14 L23.4 16.6 L22 19.2 L20.6 16.6 Z" fill="currentColor" opacity="0.7" />
+                <path d="M22 24.8 L23.4 27.4 L22 30 L20.6 27.4 Z" fill="currentColor" opacity="0.7" />
+                {/* حلية يسار أغنى */}
+                <path
+                  d="M132 22 C140 10, 148 12, 152 22 C148 32, 140 34, 132 22 Z"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.1"
+                />
+                <path
+                  d="M132 22 C138 16, 144 17, 147 22 C144 27, 138 28, 132 22 Z"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="0.7"
+                  opacity="0.7"
+                />
+                <circle cx="147.5" cy="22" r="1.5" fill="currentColor" opacity="0.9" />
+                <path d="M138 14 L139.4 16.6 L138 19.2 L136.6 16.6 Z" fill="currentColor" opacity="0.7" />
+                <path d="M138 24.8 L139.4 27.4 L138 30 L136.6 27.4 Z" fill="currentColor" opacity="0.7" />
+                {/* وريدات أعلى/أسفل الوسط */}
+                <path d="M80 3.5 L82.4 7.2 L80 10.9 L77.6 7.2 Z" fill="currentColor" opacity="0.8" />
+                <path d="M80 33.1 L82.4 36.8 L80 40.5 L77.6 36.8 Z" fill="currentColor" opacity="0.8" />
+                <circle cx="80" cy="7.2" r="0.7" fill="currentColor" opacity="0.55" />
+                <circle cx="80" cy="36.8" r="0.7" fill="currentColor" opacity="0.55" />
               </svg>
               <span className="mpv-ayah-page-badge__num">{toArabicDigits(page)}</span>
             </button>
