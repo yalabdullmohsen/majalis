@@ -7,17 +7,17 @@
  */
 
 :root {
-  /* ألوان/حواف/ظلال من brand-v4 فقط — لا قيم صلبة هنا (ما قبل إطلاق iOS). */
-  --color-background: var(--bg);
-  --color-surface: var(--surface);
-  --color-surface-muted: var(--surface-2);
-  --color-primary: var(--brand-deep);
-  --color-primary-hover: var(--brand);
-  --color-primary-foreground: var(--text-on-brand);
-  --color-accent: var(--accent);
-  --color-text: var(--text);
-  --color-text-muted: var(--text-2);
-  --color-border: var(--border);
+  /* تتبع لوحة theme.css (--mj-*) — لا تنافس brand-v4 على color-primary/bg */
+  --color-background: var(--mj-bg);
+  --color-surface: var(--mj-surface);
+  --color-surface-muted: var(--mj-surface-2);
+  --color-primary: var(--mj-brand);
+  --color-primary-hover: var(--mj-brand);
+  --color-primary-foreground: var(--mj-on-brand);
+  --color-accent: var(--mj-accent);
+  --color-text: var(--mj-ink);
+  --color-text-muted: var(--mj-muted);
+  --color-border: var(--mj-hairline);
   --color-success: var(--ok-fg);
   --color-warning: var(--warn-fg);
   --color-error: var(--danger-fg);
@@ -36,10 +36,7 @@
 }
 
 html[data-theme="dark"] {
-  /* على الأسطح الداكنة أيقونات/نص الهيدر تحتاج لون علامة فاتح لا زرًا داكنًا */
-  --color-primary: var(--text-brand);
-  --color-primary-hover: var(--text-brand-deep);
-  --color-primary-foreground: var(--text-on-brand);
+  /* --mj-* تتبدّل في theme.css؛ لا تُعاد color-primary إلى مسار brand-v4 */
   --shadow-soft: var(--e-2);
 }
 

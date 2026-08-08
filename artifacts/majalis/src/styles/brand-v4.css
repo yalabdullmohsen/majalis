@@ -109,22 +109,12 @@
   --space-card:    var(--s-4);
   --space-tight:   var(--s-3);
 
-  /* أسماء دلالية موحّدة للواجهات الجديدة — aliases فقط، لا قيم صلبة إضافية */
-  --color-bg:                var(--bg);
-  --color-background:        var(--bg);
+  /* color-bg/primary/text: لا تُعاد هنا — theme.css مصدرها عبر --mj-* */
   --color-bg-soft:           var(--surface-2);
-  --color-surface:           var(--surface);
   --color-surface-elevated:  var(--bg-elevated);
-  --color-text:              var(--text);
-  --color-muted:             var(--text-2);
-  --color-text-muted:        var(--text-2);
-  --color-primary:           var(--brand);
   --color-primary-dark:      var(--brand-deep);
   --color-primary-strong:    var(--brand-deep);
   --color-primary-soft:      var(--brand-soft);
-  --color-accent:            var(--accent);
-  --color-border:            rgba(12, 25, 22, 0.12);
-  --color-danger:            var(--danger);
   --color-warning-bg:        var(--danger-bg);
   --color-warning-text:      var(--danger-fg);
   --color-success:           var(--ok-fg);
@@ -136,8 +126,9 @@
   /* ══════════════════════════════════════════════════════════
      ٣) الطباعة — سُلَّم نسبي 1.2 (Minor Third)
      ══════════════════════════════════════════════════════════ */
-  --font-body:    "IBM Plex Sans Arabic", "Alexandria", "Noto Sans Arabic", system-ui, sans-serif;
-  --font-display: "Scheherazade New", "Aref Ruqaa", "Amiri", "IBM Plex Sans Arabic", serif;
+  /* خطوط الواجهة من theme.css (--mj-ui) — لا تنافس Scheherazade هنا */
+  --font-body:    var(--mj-ui);
+  --font-display: var(--mj-ui);
   --font-quran:   "Amiri Quran", "Scheherazade New", "Noto Naskh Arabic", serif;
 
   --fs-xs:   0.75rem;    /* 12px */
@@ -269,21 +260,12 @@ html[data-theme="dark"] {
   --accent-soft:  #2A241633;
   --accent-deep:  var(--gold-200);
 
-  --color-bg:                var(--bg);
-  --color-background:        var(--bg);
+  /* color-bg/primary/text/surface: من theme.css — لا تُعاد في الوضع الليلي هنا */
   --color-bg-soft:           var(--surface-2);
-  --color-surface:           var(--surface);
   --color-surface-elevated:  var(--bg-elevated);
-  --color-text:              var(--text);
-  --color-muted:             var(--text-2);
-  --color-text-muted:        var(--text-2);
-  --color-primary:           var(--brand);
   --color-primary-dark:      var(--brand-deep);
   --color-primary-strong:    var(--brand-deep);
   --color-primary-soft:      var(--brand-soft);
-  --color-accent:            var(--accent);
-  --color-border:            var(--border);
-  --color-danger:            var(--danger);
   --color-warning-bg:        var(--danger-bg);
   --color-warning-text:      var(--danger-fg);
   --color-success:           var(--ok-fg);
@@ -395,7 +377,8 @@ html[data-theme="dark"] {
   --elite-radius:  var(--r-lg);
   --elite-shadow:  var(--e-2);
 
-  --background:var(--bg);--surfaceElevated:var(--bg-elevated);--cardBackground:var(--surface);--textPrimary:var(--text);--textSecondary:var(--text-2);--textMuted:var(--text-muted);--iconPrimary:var(--text-brand);--accentText:var(--text-brand-deep);--selectedBackground:var(--brand-soft);--selectedText:var(--text-brand-deep);
+  /* --background/--primary/--font-display: مصدرها theme.css فقط — لا إعادة تعريف */
+  --surfaceElevated:var(--bg-elevated);--cardBackground:var(--surface);--textPrimary:var(--text);--textSecondary:var(--text-2);--textMuted:var(--text-muted);--iconPrimary:var(--text-brand);--accentText:var(--text-brand-deep);--selectedBackground:var(--brand-soft);--selectedText:var(--text-brand-deep);
   /* — أنظمة متفرقة — */
   --msk-primary: var(--brand);
   --msk-bg:      var(--bg);
@@ -405,8 +388,8 @@ html[data-theme="dark"] {
   --mn-primary:  var(--brand);
   --mn-bg:       var(--bg);
   --mn-text:     var(--text);
-  --mj-primary:  var(--brand);
-  --mj-bg:       var(--bg);
+  /* ممنوع إعادة تعيين --mj-bg هنا — مصدر الحقيقة app/styles/theme.css */
+  --mj-primary:  var(--mj-brand);
   --txt-1:       var(--text);
   --txt-2:       var(--text-2);
   --txt-muted:   var(--text-muted);

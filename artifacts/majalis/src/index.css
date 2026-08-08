@@ -269,11 +269,12 @@ body {
 
   /* ── الخطوط ── واجهة موحّدة Alexandria (إطلاق 2026-08) ──
      المصحف (--font-quran) والتفسير (--font-tafsir) والعناوين التراثية (--font-heritage) استثناءات. */
-  --font-primary:  "Alexandria", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, -apple-system, sans-serif;
-  --font-ui:       "Alexandria", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, -apple-system, sans-serif;
-  --font-body:     "Alexandria", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, -apple-system, sans-serif;
-  --font-display:  "Alexandria", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, -apple-system, sans-serif;
-  --font-reading:  "Alexandria", "IBM Plex Sans Arabic", "Noto Sans Arabic", system-ui, -apple-system, sans-serif;
+  /* خطوط الواجهة من theme.css — لا قيم مكررة متعارضة */
+  --font-primary:  var(--mj-ui);
+  --font-ui:       var(--mj-ui);
+  --font-body:     var(--mj-ui);
+  --font-display:  var(--mj-ui);
+  --font-reading:  var(--mj-ui);
   --font-quran:    "Amiri Quran", "Scheherazade New", "KFGQPC Hafs Uthmanic", serif;
   --font-heritage: "Amiri", "Aref Ruqaa", "Scheherazade New", serif;
   --font-tafsir:   "Amiri", "Noto Naskh Arabic", "Traditional Arabic", "Scheherazade New", serif;
@@ -588,47 +589,7 @@ html[data-font="naskh"] {
   /* alias للتوافق مع كود قديم */
   --majalis-border: var(--majalis-line);
 
-  /* ══ جسر shadcn → مِشكاة ══ */
-  --background:          var(--msk-canvas);
-  --foreground:          var(--msk-text);
-  --card:                var(--msk-canvas-1);
-  --card-foreground:     var(--msk-text);
-  --popover:             var(--msk-canvas-1);
-  --popover-foreground:  var(--msk-text);
-  --primary:             var(--msk-gold);
-  --primary-foreground:  var(--msk-canvas);
-  --secondary:           var(--msk-canvas-2);
-  --secondary-foreground:var(--msk-text-2);
-  --muted:               var(--msk-canvas-2);
-  --muted-foreground:    var(--msk-text-3);
-  --accent:              var(--msk-gold-dim);
-  --accent-foreground:   var(--msk-gold);
-  --destructive:         var(--msk-red);
-  --border:              var(--msk-border);
-  --input:               var(--msk-border);
-  --ring:                var(--msk-gold);
-}
-
-/* shadcn bridge للنهار — يرث من light tokens */
-html {
-  --background:          var(--msk-canvas);
-  --foreground:          var(--msk-text);
-  --card:                var(--msk-canvas-1);
-  --card-foreground:     var(--msk-text);
-  --popover:             var(--msk-canvas-1);
-  --popover-foreground:  var(--msk-text);
-  --primary:             var(--msk-gold);
-  --primary-foreground:  #FAF3E4;
-  --secondary:           var(--msk-canvas-2);
-  --secondary-foreground:var(--msk-text-2);
-  --muted:               var(--msk-canvas-2);
-  --muted-foreground:    var(--msk-text-3);
-  --accent:              var(--msk-gold-dim);
-  --accent-foreground:   var(--msk-gold);
-  --destructive:         var(--msk-red);
-  --border:              var(--msk-border);
-  --input:               var(--msk-border);
-  --ring:                var(--msk-gold);
+  /* shadcn tokens (--background/--primary/--font-display/…) مصدرها theme.css فقط */
 }
 
 body {

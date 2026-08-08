@@ -83,6 +83,18 @@
   --shadow-sheet: var(--shadow-mj);
   --page-gutter: var(--gutter-inline-start);
   --page-gutter-end: var(--gutter-inline-end);
+
+  /* shadcn / واجهة — مصدر @theme الوحيد (لا تُعاد في brand-v4/index) */
+  --background: var(--color-bg);
+  --foreground: var(--color-ink);
+  --card: var(--color-surface);
+  --card-foreground: var(--color-ink);
+  --primary: var(--color-brand);
+  --primary-foreground: var(--color-on-brand);
+  --ring: var(--color-brand);
+  --border: var(--color-hairline);
+  --font-sans: var(--font-ui);
+  --font-display: var(--font-ui);
 }
 
 :root {
@@ -174,6 +186,29 @@
   --mj-dur-fast: 140ms;
   --mj-dur-med: 240ms;
   --mj-touch-min: 48px;
+
+  /* جسر shadcn/خطوط → --mj-* (يتبع الوضع الليلي تلقائيًا) */
+  --background: var(--mj-bg);
+  --foreground: var(--mj-ink);
+  --card: var(--mj-surface);
+  --card-foreground: var(--mj-ink);
+  --popover: var(--mj-surface);
+  --popover-foreground: var(--mj-ink);
+  --primary: var(--mj-brand);
+  --primary-foreground: var(--mj-on-brand);
+  --secondary: var(--mj-surface-2);
+  --secondary-foreground: var(--mj-ink);
+  --muted: var(--mj-surface-2);
+  --muted-foreground: var(--mj-muted);
+  --ring: var(--mj-brand);
+  --border: var(--mj-hairline);
+  --input: var(--mj-hairline);
+  --font-sans: var(--mj-ui);
+  --font-display: var(--mj-ui);
+  --font-body: var(--mj-ui);
+  --color-bg: var(--mj-bg);
+  --color-primary: var(--mj-brand);
+  --color-text: var(--mj-ink);
 }
 
 /* الوضع الليلي — ThemePreferenceProvider يضع data-theme و.dark معًا */
