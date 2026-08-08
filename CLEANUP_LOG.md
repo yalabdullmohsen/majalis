@@ -51,6 +51,6 @@
 | توحيد IslamicDivider/RulingCard + إزالة غلاف المصحف | #931 | safe:ui |
 | توحيد رموز التصميم @theme | #932 | safe:ui + contrast |
 | مرحلة 0: CLEANUP_MANIFEST | #933 | إثبات قبل الحذف |
-| تقليم 13 حزمة UI غير مستخدمة (radix/sonner/resizable) | TBD | إزالة من package.json فقط |
+| تقليم 13 حزمة UI غير مستخدمة (radix/sonner/resizable) | #938 | إزالة من package.json فقط |
 | وسم التراجع `snapshot/pre-cleanup-2026-08` | — | مسار التراجع المعتمد |
 
