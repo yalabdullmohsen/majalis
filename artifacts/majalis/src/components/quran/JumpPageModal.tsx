@@ -96,7 +96,6 @@ export function JumpPageModal({
           inputMode="search"
           enterKeyHint="search"
           autoComplete="off"
-          autoFocus={false}
           placeholder="٢٨٣ أو 2:255 أو البقرة"
           value={inputPage}
           onChange={(e) => {
