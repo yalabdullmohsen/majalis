@@ -140,7 +140,7 @@ export default defineConfig({
           if (isReactCoreModule(id)) return "vendor";
           if (id.includes("zod") || id.includes("react-hook-form") || id.includes("@hookform")) return "forms";
           if (id.includes("framer-motion") || id.includes("motion")) return "animation";
-          if (id.includes("cmdk") || id.includes("vaul") || id.includes("sonner")) return "ui-extra";
+          if (id.includes("cmdk") || id.includes("vaul")) return "ui-extra";
           if (id.includes("mapbox") || id.includes("leaflet") || id.includes("maplibre")) return "maps";
         },
       },
