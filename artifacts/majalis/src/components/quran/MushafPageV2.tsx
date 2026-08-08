@@ -124,71 +124,71 @@ export function MushafPageV2({
   }, [renderWord, pageFont.failed, useUnicodeSafe, showAyahNumbers]);
 
   const lineRefs = useRef(new Map<number, HTMLDivElement>());
-  const [lineFontSizes, setLineFontSizes] = useState<Map<number, number>>(new Map());
-  const [centeredLines, setCenteredLines] = useState<Set<number>>(new Set());
+  const linesContainerRef = useRef<HTMLDivElement | null>(null);
+  /** حجم خط موحّد للصفحة كلها (لا fit-to-width لكل سطر). */
+  const [pageFontSize, setPageFontSize] = useState<number | null>(null);
   const [fitted, setFitted] = useState(false);
 
-  // خطوط QPC V2 مصمَّمة أصلًا ليمتد كل سطر حرفيًا حتى يملأ عرض الصفحة
-  // تمامًا (كما في المطبوع) — حجم خط عام واحد للصفحة كلها لا يحقق هذا أبدًا.
-  // الحل: بحث ثنائي (binary search) مباشر على حجم الخط لكل سطر.
-  // في الوضع Unicode الآمن نتخطّى القياس الضيق ونعتمد CSS (justify + lh).
+  /**
+   * حجم واحد لكل الأسطر كالمطبوع:
+   * size = min( العرض ÷ عرض أعرض سطر ، (الارتفاع ÷ 15) ÷ معامل ارتفاع السطر )
+   * الخط يملأ العرض — بلا space-between وبلا تحجيم سطر-بسطر.
+   * الامتلاء الرأسي ≥85%: عبر 15 خانة flex متساوية تملأ الحاوية (لا بتكبير يفيض عرضًا).
+   */
   useLayoutEffect(() => {
     if (!fontReady || !layout) {
       setFitted(false);
+      setPageFontSize(null);
       return;
     }
 
     if (useUnicodeSafe) {
-      setLineFontSizes(new Map());
-      setCenteredLines(new Set());
+      setPageFontSize(null);
       setFitted(true);
       return;
     }
 
-    const sizes = new Map<number, number>();
-    const centered = new Set<number>();
-    const ITERATIONS = 16;
-    /** امتلاء عرض السطر: دون هذا النسبة يُعدّ السطر قصيرًا (توسيط). */
-    const SHORT_FILL_RATIO = 0.92;
+    const container = linesContainerRef.current;
+    if (!container) return;
 
-    for (const [lineNumber, el] of lineRefs.current.entries()) {
-      if (!el) continue;
-      const containerWidth = el.parentElement?.clientWidth ?? 0;
-      if (containerWidth <= 0) continue;
+    /** يجب أن يطابق --mf2-lh / line-height في .mf2-line (1.0–1.15). */
+    const LINE_HEIGHT_EM = 1.1;
+    const REF_PX = 100;
 
-      const lineHeightAvailable = el.clientHeight || 999;
-      // سقف مرتفع كفاية لملء عرض السطر المطبوع (15 خانة) — كان 0.52 يجمّد كل
-      // الأسطر عند ~16px فيُوسَّط الجميع خطأً كـ«قصيرة».
-      const MAX_FONT_PX = Math.min(64, Math.max(14, lineHeightAvailable * 0.9));
+    const measure = () => {
+      const availableWidth = container.clientWidth;
+      const availableHeight = container.clientHeight;
+      if (availableWidth <= 0 || availableHeight <= 0) return false;
 
-      let lo = 1;
-      let hi = MAX_FONT_PX;
-      el.style.fontSize = `${hi}px`;
-      if (el.scrollWidth <= containerWidth) {
-        // يتّسع حتى عند السقف: إمّا سطر قصير طبيعيًا أو حاوية واسعة.
-        sizes.set(lineNumber, hi);
-        if (el.scrollWidth < containerWidth * SHORT_FILL_RATIO) {
-          centered.add(lineNumber);
-        }
-        continue;
+      let widestAtRef = 0;
+      for (const el of lineRefs.current.values()) {
+        if (!el) continue;
+        el.style.fontSize = `${REF_PX}px`;
+        widestAtRef = Math.max(widestAtRef, el.scrollWidth);
+        // أزل الحجم المؤقت فورًا — وإلا يبقى 100px ويتجاوز الحجم الموحّد
+        el.style.fontSize = "";
       }
-      for (let i = 0; i < ITERATIONS; i++) {
-        const mid = (lo + hi) / 2;
-        el.style.fontSize = `${mid}px`;
-        if (el.scrollWidth <= containerWidth) lo = mid;
-        else hi = mid;
-      }
-      el.style.fontSize = `${lo}px`;
-      sizes.set(lineNumber, lo);
-      // بعد الملاءمة: إن بقي فراغ واضح (نادر مع QPC ممتلئ) وسّط
-      if (el.scrollWidth < containerWidth * SHORT_FILL_RATIO) {
-        centered.add(lineNumber);
-      }
+      if (widestAtRef <= 0) return false;
+
+      const sizeByWidth = (availableWidth * REF_PX) / widestAtRef;
+      const sizeByHeight = (availableHeight / ROW_COUNT_APPROX) / LINE_HEIGHT_EM;
+      const size = Math.min(sizeByWidth, sizeByHeight);
+
+      setPageFontSize(size);
+      setFitted(true);
+      return true;
+    };
+
+    if (!measure()) {
+      const raf = requestAnimationFrame(() => { measure(); });
+      return () => cancelAnimationFrame(raf);
     }
 
-    setLineFontSizes(sizes);
-    setCenteredLines(centered);
-    setFitted(true);
+    const ro = typeof ResizeObserver !== "undefined"
+      ? new ResizeObserver(() => { measure(); })
+      : null;
+    ro?.observe(container);
+    return () => ro?.disconnect();
   }, [fontReady, layout, useUnicodeSafe]);
 
   if (!layout) {
@@ -201,28 +201,31 @@ export function MushafPageV2({
 
   const lines = (
     <>
-      <div className={linesClass} style={{ opacity: fitted ? 1 : 0 }}>
+      <div
+        ref={linesContainerRef}
+        className={linesClass}
+        style={{
+          opacity: fitted ? 1 : 0,
+          // حجم موحّد يورثه كل سطر — لا تحجيم فردي
+          fontSize: !useUnicodeSafe && pageFontSize ? `${pageFontSize}px` : undefined,
+          ["--mf2-lh" as string]: !useUnicodeSafe ? "1.1" : undefined,
+          fontFamily: useUnicodeSafe
+            ? fontFamily
+            : fontFamily
+              ? `"${fontFamily}"`
+              : undefined,
+        }}
+      >
         {layout.rows.map((row, idx) => {
           if (row.kind === "surah-header") {
             return <SurahHeaderBanner key={`h-${row.surah.id}-${idx}`} chapter={row.surah} spanRows={row.spanRows} />;
           }
-          const fittedSize = lineFontSizes.get(row.lineNumber);
           return (
             <div
               key={`l-${row.lineNumber}`}
               ref={(el) => { if (el) lineRefs.current.set(row.lineNumber, el); else lineRefs.current.delete(row.lineNumber); }}
-              className={`mf2-line${centeredLines.has(row.lineNumber) ? " mf2-line--short" : ""}${useUnicodeSafe ? " mf2-line--unicode" : ""}`}
-              style={{
-                // precision: اسم خط الصفحة وحده بلا Amiri/Noto في المكدس
-                // (تلك الخطوط تعيد تفسير Presentation Forms فتحرّف الرسم).
-                fontFamily: useUnicodeSafe
-                  ? fontFamily
-                  : fontFamily
-                    ? `"${fontFamily}"`
-                    : undefined,
-                fontSize: !useUnicodeSafe && fittedSize ? `${fittedSize}px` : undefined,
-                unicodeBidi: "isolate",
-              }}
+              className={`mf2-line${useUnicodeSafe ? " mf2-line--unicode" : ""}`}
+              style={{ unicodeBidi: "isolate" }}
             >
               {groupWordsByAyah(row.words).map((group) => {
                 const verseKey = group[0].verseKey;

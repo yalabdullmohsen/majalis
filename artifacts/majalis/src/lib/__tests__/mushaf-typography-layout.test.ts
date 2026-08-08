@@ -1,5 +1,5 @@
 /**
- * بوابات تخطيط طباعة المصحف: حشو آمن، تبرير، عدم قطع الكلمات، ارتفاع التشكيل.
+ * بوابات تخطيط طباعة المصحف: نص متصل، حجم موحّد، كثافة رأسية، هوامش ضيقة.
  * تشغيل: npx tsx src/lib/__tests__/mushaf-typography-layout.test.ts
  */
 import assert from "node:assert/strict";
@@ -17,39 +17,48 @@ const immersiveCss = readFileSync(resolve(appRoot, "src/styles/quran-immersive-r
 const pageComp = readFileSync(resolve(appRoot, "src/components/quran/MushafPageV2.tsx"), "utf8");
 const immersiveLib = readFileSync(resolve(appRoot, "src/lib/quran-immersive.ts"), "utf8");
 
-// 1) Horizontal safe padding + box model
-assert.match(mushafV2, /\.mf2-page\s*\{[\s\S]*?padding-inline:\s*max\(1rem/);
-assert.match(mushafV2, /\.mf2-page\s*\{[\s\S]*?box-sizing:\s*border-box/);
-assert.match(mushafV2, /\.mf2-frame\s*\{[\s\S]*?box-sizing:\s*border-box/);
-assert.match(quranCss, /\.mpv-body--ayah\s*\{[\s\S]*?max\(1rem/);
+// 1) هوامش جانبية ضيقة (8–12px) مع safe-area
+assert.match(quranCss, /\.mpv-body--ayah\s*\{[\s\S]*?max\(8px/);
 assert.match(quranCss, /\.mpv-body--ayah\s*\{[\s\S]*?box-sizing:\s*border-box/);
+assert.match(mushafV2, /\.mf2-page\s*\{[\s\S]*?box-sizing:\s*border-box/);
 assert.match(readerCss, /\.mushaf-v2__page\s*\{[\s\S]*?max\(1rem/);
 
-// 2) Mushaf justification
-assert.match(mushafV2, /\.mf2-line\s*\{[\s\S]*?justify-content:\s*space-between/);
-assert.match(mushafV2, /\.mf2-line--short\s*\{[\s\S]*?justify-content:\s*center/);
-assert.match(mushafV2, /\.mf2-line--short\s*\{[\s\S]*?text-align-last:\s*center/);
-assert.match(quranCss, /\.qs-mushaf-body\s*\{[\s\S]*?text-align:\s*justify/);
-assert.match(quranCss, /\.qs-mushaf-body\s*\{[\s\S]*?text-justify:\s*inter-word/);
-assert.match(readerCss, /\.mushaf-v2__ayahs\s*\{[\s\S]*?text-align:\s*justify/);
+// 2) بلا space-between — نص متصل + word/letter-spacing طبيعي
+assert.match(mushafV2, /\.mf2-line\s*\{[\s\S]*?display:\s*block/);
+assert.match(mushafV2, /\.mf2-line\s*\{[\s\S]*?word-spacing:\s*normal/);
+assert.match(mushafV2, /\.mf2-line\s*\{[\s\S]*?letter-spacing:\s*0/);
+assert.equal(
+  /\.mf2-line\s*\{[\s\S]*?justify-content:\s*space-between/.test(mushafV2),
+  false,
+  "أُلغي space-between من .mf2-line",
+);
+assert.match(mushafV2, /\.mf2-line\s*\{[\s\S]*?flex:\s*1\s+1\s+0/, "15 خانة متساوية تملأ الارتفاع");
+assert.match(mushafV2, /\.mf2-line\s*\{[\s\S]*?justify-content:\s*flex-start/, "بلا space-between أفقيًا");
 
-// 3) No word truncation
-assert.match(mushafV2, /\.mf2-word\s*\{[\s\S]*?word-break:\s*keep-all\s*!important/);
-assert.match(quranCss, /\.qs-mushaf-body\s*\{[\s\S]*?word-break:\s*keep-all\s*!important/);
-assert.match(readerCss, /\.mushaf-v2__ayah\s*\{[\s\S]*?word-break:\s*keep-all\s*!important/);
-assert.match(immersiveCss, /\.immersive-quran-page__verse-text\s*\{[\s\S]*?word-break:\s*keep-all\s*!important/);
-
-// 4) Tashkeel vertical safety
-assert.match(mushafV2, /\.mf2-line\s*\{[\s\S]*?line-height:\s*1\.35/);
-assert.match(mushafV2, /\.mf2-line\s*\{[\s\S]*?overflow-y:\s*visible/);
-assert.match(mushafV2, /\.mf2-line--unicode[\s\S]*?line-height:\s*2\.2/, "وضع Unicode: ارتفاع تشكيل 2.2");
-assert.match(mushafV2, /\.mf2-line--unicode[\s\S]*?text-align:\s*justify/, "وضع Unicode: تبرير");
-assert.match(pageComp, /lineHeightAvailable\s*\*\s*0\.9/, "سقف خط يكفي لملء عرض السطر المطبوع");
-assert.match(pageComp, /SHORT_FILL_RATIO\s*=\s*0\.92/, "كشف السطر القصير بنسبة امتلاء");
+// 3) حجم موحّد للصفحة — لا fit سطر-بسطر
+assert.match(pageComp, /LINE_HEIGHT_EM\s*=\s*1\.1/);
+assert.match(pageComp, /sizeByWidth/);
+assert.match(pageComp, /sizeByHeight/);
+assert.match(pageComp, /pageFontSize/);
+assert.equal(/SHORT_FILL_RATIO/.test(pageComp), false, "بلا SHORT_FILL_RATIO / fit لكل سطر");
 assert.match(pageComp, /mf2-ayah-marker/, "علامة الآية من محرف الخط");
 assert.match(pageComp, /pageFont\.failed|useUnicodeSafe/, "تراجع تلقائي عند فشل خط QPC");
+
+// 4) line-height ضمن 1.0–1.15 عبر --mf2-lh
+assert.match(mushafV2, /\.mf2-line\s*\{[\s\S]*?line-height:\s*var\(--mf2-lh/);
+assert.match(mushafV2, /\.mf2-line\s*\{[\s\S]*?overflow-y:\s*visible/);
+assert.match(mushafV2, /\.mf2-line--unicode[\s\S]*?line-height:\s*2\.2/, "وضع Unicode: ارتفاع تشكيل 2.2");
+
+// 5) كتلة الأسطر تملأ المساحة — بلا قيد 83vh / نسبة 0.72 على مسار آية
+assert.match(quranCss, /\.quran-shell--ayah\s+\.qs-mushaf-body\s+\.qs-mushaf-body-inner\s*\{[\s\S]*?aspect-ratio:\s*auto/);
+assert.match(quranCss, /\.quran-shell--ayah\s+\.qs-mushaf-body\s+\.qs-mushaf-body-inner\s*\{[\s\S]*?height:\s*100%/);
+assert.equal(/mpv-fill-enter/.test(quranCss), false, "أُزيلت أزرار وضع الامتلاء المنفصل");
+
+assert.match(quranCss, /\.qs-mushaf-body\s*\{[\s\S]*?text-align:\s*justify/);
+assert.match(readerCss, /\.mushaf-v2__ayah\s*\{[\s\S]*?word-break:\s*keep-all\s*!important/);
+assert.match(immersiveCss, /\.immersive-quran-page__verse-text\s*\{[\s\S]*?word-break:\s*keep-all\s*!important/);
+assert.match(mushafV2, /\.mf2-word\s*\{[\s\S]*?word-break:\s*keep-all\s*!important/);
 assert.match(readerCss, /\.mushaf-v2__ayah\s*\{[\s\S]*?line-height:\s*2\.5/);
 assert.match(immersiveLib, /IMMERSIVE_LINE_HEIGHT_RATIO\s*=\s*2\.4/);
-assert.match(quranCss, /\.qs-mushaf-frame--ayah[\s\S]*?max-width:\s*min\(100%,\s*56rem\)/, "حاوية المصحف max-w-4xl");
 
 console.log("mushaf-typography-layout.test.ts: ok");

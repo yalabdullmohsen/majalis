@@ -10,26 +10,25 @@
   direction: rtl;
   max-width: 100%;
   width: 100%;
+  height: 100%;
   margin: 0;
-  /* هامش أفقي آمن — يمنع اقتراب النص من حواف الشاشة/الإطار */
-  padding-block: 8px;
-  padding-inline: max(1rem, var(--inset-left)) max(1rem, var(--inset-right));
+  /* الهوامش تُدار من غلاف آية (.mpv-body--ayah) — هنا بلا حشو إضافي */
+  padding: 0;
   box-sizing: border-box;
 }
 
 .mf2-frame {
   position: relative;
   aspect-ratio: 0.72;
-  background: var(--mf2-page-bg, #F8F7F3);
+  background: var(--mf2-page-bg, var(--color-mushaf-paper, #FAF7F2));
   border-radius: 6px;
-  /* حشو داخلي أوفر للتشكيل العلوي/السفلي وحواف النص */
-  padding: 3.6cqw max(3cqw, 0.85rem);
+  padding: 0.35cqw 0;
   width: 100%;
+  height: 100%;
   max-width: 100%;
   box-sizing: border-box;
   container-type: inline-size;
   box-shadow: 0 2px 18px rgba(14, 110, 82, .12);
-  /* إطار زخرفي مزدوج — CSS بحت، منفصل كليًا عن النص (القسم 6.1). */
   outline: 2px solid var(--mf-gold, var(--brand-deep, var(--mj-brand-deep)));
   outline-offset: -8px;
 }
@@ -57,46 +56,39 @@ html[data-theme="dark"] .mf2-frame {
   height: 100%;
   display: flex;
   flex-direction: column;
+  /* 15 خانة متساوية تملأ الارتفاع المتاح بين الرأس والذيل */
+  justify-content: flex-start;
+  gap: 0;
   transition: opacity .2s ease;
+  --mf2-lh: 1.1;
 }
 
 .mf2-line {
-  flex: 1;
-  /* سطر مطبوع مستقل — عرض كامل الصفحة؛ الالتفاف من line_number لا من الشاشة */
+  /* خانة سطر مطبوعة: حصة متساوية من ارتفاع الصفحة (15 سطرًا) */
+  flex: 1 1 0;
+  /* نص متصل داخل الخانة — بلا space-between؛ الخط يملأ العرض */
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
-  /* نفس إصلاح min-width:0 للعناصر الأفقية (راجع .mf2-ayah-group) لكن على
-     المحور الرأسي هنا: .mf2-line نفسها عنصر flex ابن .mf2-lines
-     (flex-direction:column) — بلا min-height:0 يمنعها min-height:auto
-     الضمني من الانكماش لحصتها العادلة (ارتفاع الحاوية/15) إن كبر حجم
-     خطها مؤقتًا أثناء قياس البحث الثنائي، فتكبر الخانة نفسها وتتراكب
-     بصريًا مع الأسطر المجاورة رغم overflow:hidden (الذي يحمي من تجاوز
-     حدود الصندوق، لا من نمو الصندوق نفسه). */
   min-height: 0;
+  min-width: 0;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   direction: rtl;
-  /* عزل bidi لخطوط QPC Presentation Forms — يمنع وراثة
-     unicode-bidi:plaintext من قواعد elite العامة على حاويات *ayah*. */
+  text-align: start;
   unicode-bidi: isolate;
-  /* حجم خط نسبي لعرض حاوية الصفحة (لا الشاشة) — يتطابق عبر كل المقاسات
-     من iPhone SE إلى iPad دون كسر تخطيط (بوابة القبول 3). */
-  font-size: 5.6cqw;
-  /* ارتفاع أوفر من 1 لاستيعاب التشكيل فوق/تحت خط الأساس دون قص */
-  line-height: 1.35;
+  /* ارتفاع الحروف ضمن 1.0–1.15em — لا تمديد كلمات */
+  line-height: var(--mf2-lh, 1.1);
+  word-spacing: normal;
+  letter-spacing: 0;
   color: var(--mf2-ink, var(--color-mushaf-ink, #1A1510));
   white-space: nowrap;
   word-break: keep-all;
   overflow-wrap: normal;
-  /* منع تحديد النص بالسحب العرضي (يتعارض مع سحب تقليب الصفحات RTL) —
-     النسخ الشرعي محفوظ عبر زر "نسخ بالتشكيل" في قائمة إجراءات الآية
-     (PageAyahActionSheet)، فلا حاجة للتحديد اليدوي بالسحب. */
   user-select: none;
   -webkit-user-select: none;
   -webkit-tap-highlight-color: transparent;
-  /* قص أفقي فقط — overflow:hidden الكامل كان يقصّ علامات التشكيل رأسيًا. */
   overflow-x: hidden;
   overflow-y: visible;
 }
@@ -120,40 +112,14 @@ html[data-theme="dark"] .quran-shell--high-contrast .mf2-line {
 .quran-shell--night .mf2-line { --mf2-ink: #F9FAFB; }
 .quran-shell--warm .mf2-line { --mf2-ink: #1F2937; }
 .quran-shell--high-contrast .mf2-line { --mf2-ink: #000; }
-/* سطر قصير طبيعيًا (آية واحدة قصيرة على صفحة خاصة كالفاتحة) لا يُمدَّد
-   بحجم خط ضخم ليملأ العرض — يُتوسَّط بحجمه المعقول بدلًا من ذلك. */
-/* السطر القصير / الأخير غير الممتلئ — توسيط كآخر سطر في صفحة المصحف */
-.mf2-line--short {
-  justify-content: center;
-  gap: .5em;
-  text-align: center;
-  text-align-last: center;
-}
-
-/* الوحدة التفاعلية الحقيقية = الآية (role="button" هنا فقط)، لا كل
-   حرف/كلمة مفردة — كانت role="button" على .mf2-word نفسها تُفعِّل عمدًا
-   قاعدة إتاحة عامة موقعية حقيقية (WCAG 2.5.5، elite-2026.css:30100)
-   تفرض min-width:44px!important على أي [role="button"] على الموبايل،
-   فتكسر تحجيم الأسطر (اكتُشف بتحقيق دقيق: تطابق حسابي تام بين عدد
-   الكلمات×44px والفيضان المُقاس فعليًا). .mf2-ayah-group هي عنصر flex
-   الحقيقي الآن (ابن .mf2-line مباشرة) فتحتاج نفس إصلاح min-width:0. */
+/* الوحدة التفاعلية = الآية؛ عرض inline لبقاء النص متصلًا بلا تمديد تخطيط */
 .mf2-ayah-group {
-  display: inline-block;
+  display: inline;
   cursor: pointer;
   border-radius: 3px;
   transition: background-color .15s;
-  /* يمنع تأخير/بادرة التكبير المزدوج غير المقصودة عند النقر السريع
-     لفتح قائمة إجراءات الآية، بلا المساس بإمكانية التكبير بإصبعين
-     (pinch-zoom) — بخلاف user-scalable=no على viewport (يضرّ الإتاحة). */
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
-  /* !important ضروري هنا تحديدًا: قاعدة WCAG 2.5.5 العامة نفسها
-     !important (elite-2026.css:30100) — لا شيء أضعف يهزمها بصرف النظر
-     عن الخصوصية. هذا استثناء مقصود ومحدود لفئة مختلفة فعليًا عمّا تستهدفه
-     تلك القاعدة: نص عثماني متدفّق داخل سطر (لا زر منفصل قائم بذاته) —
-     فرض ٤٤px كحد أدنى هنا يكسر تخطيط المصحف المطابق حرفيًا بلا أي فائدة
-     إتاحة حقيقية (النقر على أي نقطة ضمن الآية داخل السطر يعمل بلا حاجة
-     لهامش ٤٤px حول كل كلمة/مجموعة قصيرة). */
   min-width: 0 !important;
   min-height: 0 !important;
   unicode-bidi: isolate;
@@ -188,9 +154,15 @@ html[data-theme="dark"] .quran-shell--high-contrast .mf2-line {
   color: var(--color-mushaf-gold, #B08A3E);
   font-weight: normal;
 }
-.mf2-word + .mf2-word,
-.mf2-ayah-group + .mf2-ayah-group .mf2-word:first-child {
-  margin-inline-start: 0.24em;
+/* دقة QPC: بلا مسافات CSS بين الكلمات — هندسة الخط تملأ العرض */
+.mf2-lines:not(.mf2-lines--unicode) .mf2-word + .mf2-word,
+.mf2-lines:not(.mf2-lines--unicode) .mf2-ayah-group + .mf2-ayah-group .mf2-word:first-child {
+  margin-inline-start: 0;
+}
+/* وضع Unicode يحتاج فاصلًا بصريًا بسيطًا */
+.mf2-lines--unicode .mf2-word + .mf2-word,
+.mf2-lines--unicode .mf2-ayah-group + .mf2-ayah-group .mf2-word:first-child {
+  margin-inline-start: 0.2em;
 }
 
 /* ── وضع Unicode الآمن (خفيف / تراجع عند فشل QPC) ─────────────────
