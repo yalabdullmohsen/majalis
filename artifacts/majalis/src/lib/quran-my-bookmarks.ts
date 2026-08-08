@@ -1,15 +1,16 @@
 /**
  * Web port of RN AsyncStorage `myBookmarks` — فواصل/إشارات المصحف.
  *
- * المرجع المستقر: آية `ayahKey` (سورة:آية) — لا ينزاح مع ترسيم الصفحات.
+ * المرجع المستقر: آية `ayahKey` (سورة:آية).
  * الحقل `page` مشتق للعرض. السجلات القديمة (page فقط) تُهاجر عبر
- * LEGACY_PAGE_FIRST_AYAH عند القراءة.
+ * خرائط mushaf=1 المضغوطة.
  */
 
 import {
-  AYAH_TO_PAGE_MUSHAF1,
-  LEGACY_PAGE_FIRST_AYAH,
-  PAGE_FIRST_AYAH_MUSHAF1,
+  findPageByFirstAyah,
+  legacyPageFirstAyahKey,
+  legacyPageToCurrentPageNum,
+  pageFirstAyahMushaf1,
 } from "@/lib/mushaf-ayah-page-index.generated";
 
 export const MY_BOOKMARKS_KEY = "myBookmarks";
@@ -22,7 +23,6 @@ export type MyBookmark = {
   /** رقم الصفحة الحالي المشتق من mushaf=1 (للعرض/التنقل) */
   page: number;
   label: string;
-  /** Locale date string (RN `toLocaleDateString()`). */
   date: string;
 };
 
@@ -43,21 +43,28 @@ function isAyahKey(s: unknown): s is string {
   return typeof s === "string" && /^\d{1,3}:\d{1,3}$/.test(s);
 }
 
-/** صفحة → أول آية كانت عليها قبل اعتماد mushaf=1 */
 export function legacyPageToAyahKey(page: number): string {
-  const p = clampPage(page);
-  return LEGACY_PAGE_FIRST_AYAH[p] ?? "1:1";
+  return legacyPageFirstAyahKey(page);
 }
 
-/** آية → رقم صفحة mushaf=1 الحالي */
-export function ayahKeyToPage(ayahKey: string): number {
-  return AYAH_TO_PAGE_MUSHAF1[ayahKey] ?? 1;
+/** صفحة قديمة → صفحة mushaf=1 الحالية (عبر أول آية كانت على الصفحة) */
+export function legacyPageToCurrentPage(page: number): number {
+  return legacyPageToCurrentPageNum(page);
 }
 
 /** أول آية على صفحة mushaf=1 الحالية */
 export function currentPageFirstAyah(page: number): string {
-  const p = clampPage(page);
-  return PAGE_FIRST_AYAH_MUSHAF1[p] ?? legacyPageToAyahKey(p);
+  return pageFirstAyahMushaf1(page);
+}
+
+/**
+ * آية → صفحة: إن وُجدت كأول آية لصفحة؛ وإلا يُستخدم fallbackPage.
+ */
+export function ayahKeyToPage(ayahKey: string, fallbackPage?: number): number {
+  const hit = findPageByFirstAyah(ayahKey);
+  if (hit != null) return hit;
+  if (typeof fallbackPage === "number") return clampPage(fallbackPage);
+  return 1;
 }
 
 function normalizeBookmark(raw: LegacyBookmark): MyBookmark | null {
@@ -66,17 +73,18 @@ function normalizeBookmark(raw: LegacyBookmark): MyBookmark | null {
     return null;
   }
   let ayahKey = isAyahKey(raw.ayahKey) ? raw.ayahKey : null;
+  let page: number;
   if (!ayahKey) {
     if (typeof raw.page !== "number") return null;
     ayahKey = legacyPageToAyahKey(raw.page);
+    page = legacyPageToCurrentPage(raw.page);
+  } else {
+    page =
+      typeof raw.page === "number"
+        ? clampPage(raw.page)
+        : ayahKeyToPage(ayahKey);
   }
-  return {
-    id: raw.id,
-    ayahKey,
-    page: ayahKeyToPage(ayahKey),
-    label: raw.label,
-    date: raw.date,
-  };
+  return { id: raw.id, ayahKey, page, label: raw.label, date: raw.date };
 }
 
 function migrateStorageIfNeeded(): void {
@@ -115,9 +123,6 @@ export function getMyBookmarks(): MyBookmark[] {
   }
 }
 
-/**
- * RN storageService.saveBookmarks — replace the whole `myBookmarks` list.
- */
 export async function saveBookmarks(bookmarks: MyBookmark[]): Promise<void> {
   try {
     const list = Array.isArray(bookmarks)
@@ -132,9 +137,6 @@ export async function saveBookmarks(bookmarks: MyBookmark[]): Promise<void> {
   }
 }
 
-/**
- * RN: addBookmark(page, label) — يحفظ بمرجع آية (أول آية على الصفحة الحالية).
- */
 export async function addBookmark(page: number, label: string): Promise<MyBookmark | null> {
   try {
     migrateStorageIfNeeded();
@@ -148,7 +150,7 @@ export async function addBookmark(page: number, label: string): Promise<MyBookma
     const newBookmark: MyBookmark = {
       id: Date.now(),
       ayahKey,
-      page: ayahKeyToPage(ayahKey),
+      page: p,
       label: (label || `صفحة ${p}`).trim(),
       date: new Date().toLocaleDateString("ar"),
     };

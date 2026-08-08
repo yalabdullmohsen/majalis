@@ -335,30 +335,69 @@ async function main() {
   }
   await writeFile(path.join(OUT_DIR, "chapters.json"), JSON.stringify(chapters, null, 0) + "\n");
 
-  // فهرس TypeScript لاستهلاك العلامات المرجعية (آية↔صفحة)
-  const ayahToPage = {};
-  const pageFirst = {};
+  // خرائط مضغوطة للعميل (Uint16) — بلا فهرس 6236 آية في الحزمة
+  const ayahToPage = new Map();
+  const pageFirst = [];
+  const legacyFirst = [];
+  const legacyToCurrent = [];
   for (let n = 1; n <= TOTAL; n++) {
-    pageFirst[n] = afterPages[n][0].verse_key;
-    for (const v of afterPages[n]) ayahToPage[v.verse_key] = n;
+    const verses = afterPages[n].map((v) => v.verse_key);
+    pageFirst.push(verses[0]);
+    for (const vk of verses) ayahToPage.set(vk, n);
   }
+  for (let n = 1; n <= TOTAL; n++) {
+    const ayah = legacyFirstAyah[n];
+    legacyFirst.push(ayah);
+    const cur = ayahToPage.get(ayah);
+    if (cur == null) throw new Error(`legacy ayah ${ayah} missing after adopt`);
+    legacyToCurrent.push(cur);
+  }
+  const pack = (key) => {
+    const [s, a] = key.split(":").map(Number);
+    if (s > 127 || a > 511) throw new Error(`pack overflow ${key}`);
+    return (s << 9) | a;
+  };
+  const pf = pageFirst.map(pack);
+  const lf = legacyFirst.map(pack);
   const genPath = path.join(APP_ROOT, "src/lib/mushaf-ayah-page-index.generated.ts");
   const gen = `/**
- * مولَّد تلقائياً بواسطة adopt-mushaf1-page-boundaries.mjs — لا تحرر يدوياً.
- * فهرس صفحة↔آية لمصحف mushaf=1 + خريطة هجرة الصفحات القديمة.
+ * مولَّد بواسطة adopt-mushaf1-page-boundaries.mjs — خرائط mushaf=1 مضغوطة.
+ * unpack: سورة = n>>9 ، آية = n&511
  */
 export const MUSHAF_ID = ${MUSHAF_ID_QCF_V2} as const;
 
-/** أول آية كانت على الصفحة قبل اعتماد mushaf=1 */
-export const LEGACY_PAGE_FIRST_AYAH: Record<number, string> = ${JSON.stringify(
-    Object.fromEntries(Object.entries(legacyFirstAyah).map(([k, v]) => [Number(k), v])),
-  )};
+const PF = [${pf.join(",")}];
+const LF = [${lf.join(",")}];
+const L2C = [${legacyToCurrent.join(",")}];
 
-/** أول آية على كل صفحة وفق mushaf=1 الحالي */
-export const PAGE_FIRST_AYAH_MUSHAF1: Record<number, string> = ${JSON.stringify(pageFirst)};
+function ayah(n: number): string {
+  return \`\${n >> 9}:\${n & 511}\`;
+}
 
-/** آية → صفحة mushaf=1 الحالية */
-export const AYAH_TO_PAGE_MUSHAF1: Record<string, number> = ${JSON.stringify(ayahToPage)};
+function clampPage(page: number): number {
+  if (!Number.isFinite(page)) return 1;
+  return Math.min(604, Math.max(1, Math.floor(page)));
+}
+
+export function pageFirstAyahMushaf1(page: number): string {
+  return ayah(PF[clampPage(page) - 1]!);
+}
+
+export function legacyPageFirstAyahKey(page: number): string {
+  return ayah(LF[clampPage(page) - 1]!);
+}
+
+export function legacyPageToCurrentPageNum(page: number): number {
+  return L2C[clampPage(page) - 1]!;
+}
+
+export function findPageByFirstAyah(ayahKey: string): number | null {
+  const [s, a] = ayahKey.split(":").map(Number);
+  if (!Number.isFinite(s) || !Number.isFinite(a)) return null;
+  const packed = (s << 9) | a;
+  const i = PF.indexOf(packed);
+  return i >= 0 ? i + 1 : null;
+}
 `;
   await writeFile(genPath, gen);
 
