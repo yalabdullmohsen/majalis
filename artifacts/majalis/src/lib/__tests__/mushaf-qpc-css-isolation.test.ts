@@ -1,7 +1,7 @@
 /**
- * حماية انحدار: نص QPC في المصحف لا يُصاد بقاعدة elite [class*="ayah"].
- * السبب الجذري لحادث «صفحات محرَّفة» (2026-07-30): unicode-bidi:plaintext
- * وخط Noto يُورَّثان من حاويات quran-shell--ayah / qs-mushaf-body--ayah / mpv-*.
+ * حماية انحدار: نص QPC في المصحف معزول عن قواعد ayah العامة التاريخية.
+ * كانت elite-2026.css تفرض unicode-bidi:plaintext عبر [class*="ayah"] —
+ * حُذفت الطبقة الميتة؛ هذا الاختبار يمنع إعادة استيرادها ويؤكّد عزل mushaf-v2.
  *
  * تشغيل: npx tsx src/lib/__tests__/mushaf-qpc-css-isolation.test.ts
  */
@@ -13,61 +13,16 @@ import { fileURLToPath } from "node:url";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const appRoot = resolve(__dirname, "../../..");
 
-const elite = readFileSync(resolve(appRoot, "src/styles/elite-2026.css"), "utf8");
+const elitePath = resolve(appRoot, "src/styles/elite-2026.css");
+assert.equal(existsSync(elitePath), false, "elite-2026.css يجب أن يبقى محذوفًا (طبقة ميتة)");
+
+const mainSrc = readFileSync(resolve(appRoot, "src/main.tsx"), "utf8");
+assert.doesNotMatch(mainSrc, /elite-2026/, "main.tsx لا يستورد elite-2026");
+
 const mushafV2 = readFileSync(resolve(appRoot, "src/styles/mushaf-v2.css"), "utf8");
 const viewSrc = readFileSync(resolve(appRoot, "src/pages/quran/ui/MushafPageView.tsx"), "utf8");
 const pageComp = readFileSync(resolve(appRoot, "src/components/quran/MushafPageV2.tsx"), "utf8");
 const dataLoader = readFileSync(resolve(appRoot, "src/lib/mushaf-v2-data.ts"), "utf8");
-
-const ayahRuleLine = elite
-  .split("\n")
-  .find((l) => l.includes('[class*="ayah"]:not(') && !l.trim().startsWith("/*") && !l.includes("بديل"));
-assert.ok(ayahRuleLine, "سطر قاعدة elite [class*=\"ayah\"] موجود");
-
-for (const required of [
-  "mushaf-v2__",
-  "mf2-",
-  "qs-ayah",
-  "qs-mushaf-",
-  "mpv-",
-  "quran-shell--ayah",
-]) {
-  assert.ok(
-    ayahRuleLine.includes(required),
-    `استثناء elite يجب أن يشمل "${required}" — وُجد: ${ayahRuleLine}`,
-  );
-}
-
-const ruleStart = elite.indexOf(ayahRuleLine!);
-const ruleBody = elite.slice(ruleStart, ruleStart + 800);
-assert.match(ruleBody, /unicode-bidi:\s*plaintext\s*!important/, "القاعدة ما زالت plaintext لغير المصحف");
-
-// أصناف قارئ آية المستخدمة حيًا — يجب ألا تطابق القاعدة بعد الاستثناءات
-const mushafAyahClasses = [
-  "quran-shell--ayah",
-  "qs-mushaf-frame--ayah",
-  "qs-mushaf-frame--ayah-chrome",
-  "qs-mushaf-body--ayah",
-  "mpv-body--ayah",
-  "mpv-ayah-header",
-  "mpv-ayah-page-badge",
-  "mpv-toolbar--ayah",
-  "mf2-ayah-group",
-];
-function eliteHits(className: string): boolean {
-  if (!className.includes("ayah")) return false;
-  const excluded =
-    className.includes("mushaf-v2__") ||
-    className.includes("mf2-") ||
-    className.includes("qs-ayah") ||
-    className.includes("qs-mushaf-") ||
-    className.includes("mpv-") ||
-    className.includes("quran-shell--ayah");
-  return !excluded;
-}
-for (const c of mushafAyahClasses) {
-  assert.equal(eliteHits(c), false, `الصنف ${c} يجب ألا يُصاد بقاعدة elite`);
-}
 
 assert.match(mushafV2, /\.mf2-line\s*\{[\s\S]*?unicode-bidi:\s*isolate/, "mf2-line يعزل bidi");
 assert.match(mushafV2, /\.mf2-word\s*\{[\s\S]*?unicode-bidi:\s*isolate/, "mf2-word يعزل bidi");
