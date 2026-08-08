@@ -5,10 +5,10 @@
 
 | البند | الحالة | رقم PR | ما تبقّى |
 |---|---|---|---|
-| م1أ تجميد `majlisilm-flutter` | قيد التنفيذ | — | DEPRECATED + استبعاد workspace |
-| م1ب حسم `majalis-mobile` | لم يبدأ | — | تجميد أو بناء محلي |
+| م1أ تجميد `majlisilm-flutter` | تم ✅ | [#923](https://github.com/yalabdullmohsen/majalis/pull/923) → `9faadc7af` | لا شيء |
+| م1ب حسم `majalis-mobile` | قيد التنفيذ | — | تجميد عبر DEPRECATED + فلتر build/typecheck (بدون حذف lockfile) |
 | م1ج `PLATFORMS.md` | لم يبدأ | — | توثيق التصنيف + حماية mushafi |
-| م2 مصحف (صور/مضلعات/أعلام) | لم يبدأ | — | يحتاج PDF مدينة مرخّص |
+| م2 مصحف (صور/مضلعات/أعلام) | لم يبدأ | — | يحتاج PDF مدينة مرخّص + توليد مضلعات |
 | م3 حواجز المتجر | لم يبدأ | — | حذف حساب، خصوصية، أصول، fastlane |
 | م4 تراخيص | لم يبدأ | — | CREDITS + LICENSE_RISKS |
 | م5 توثيق شرعي آلي | لم يبدأ | — | بوابة CI + quarantine |

@@ -38,6 +38,8 @@ packages:
   - artifacts/*
   # مجمَّد: تجربة Flutter مهجورة — انظر artifacts/majlisilm-flutter/DEPRECATED.md
   - "!artifacts/majlisilm-flutter"
+  # ملاحظة: majalis-mobile مجمَّد عبر DEPRECATED.md + فلتر typecheck/build في package.json
+  # (استبعاده من workspace يؤجَّل لما بعد TestFlight لتفادي انفجار pnpm-lock).
   - lib/*
   - lib/integrations/*
   - scripts
