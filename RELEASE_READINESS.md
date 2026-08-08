@@ -10,8 +10,9 @@
 | 1 تطبيع أرقام/حروف البحث + قفز مصحف | تم ✅ | [#947](https://github.com/yalabdullmohsen/majalis/pull/947) | `normalizeForSearch` + `parseMushafJumpQuery` |
 | 2 Enter في حقول البحث | تم ✅ | [#948](https://github.com/yalabdullmohsen/majalis/pull/948) | جسر كسول + `enterKeyHint=search` |
 | 3 بلا autoFocus بحث | تم ✅ | [#949](https://github.com/yalabdullmohsen/majalis/pull/949) | لا تركيز بحث «المزيد» |
-| 4 تمرير لأعلى عند مسار جديد | جارٍ | هذا الفرع | useLayoutEffect + خريطة ذاكرة؛ رجوع فقط يستعيد |
-| 5–11 | معلّق | — | حسب الترتيب المتفق |
+| 4 تمرير لأعلى عند مسار جديد | تم ✅ | [#950](https://github.com/yalabdullmohsen/majalis/pull/950) | useLayoutEffect + خريطة ذاكرة |
+| 5 خروج ذكي من المصحف | جارٍ | هذا الفرع | أصل الدخول + رجوع غامر + مشغّل مصغّر |
+| 6–11 | معلّق | — | حسب الترتيب المتفق |
 
 | البند | الحالة | رقم PR | ما تبقّى |
 |---|---|---|---|

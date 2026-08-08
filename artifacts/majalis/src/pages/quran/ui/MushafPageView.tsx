@@ -9,7 +9,7 @@ import { toArabicDigits } from "@/lib/utils";
 import { toArabicPageDigits } from "@/lib/numerals";
 import {
   fetchSurahDetail, getSurahList, getSurahMeta, getSurahForPage, SURAH_START_PAGES,
-  savePagePosition, loadPagePosition, deriveHizbRub,
+  savePagePosition, loadPagePosition, loadReadingAyahKey, deriveHizbRub,
   type Ayah, type SurahSummary,
 } from "@/lib/quran-api";
 import { loadPageJuzIndex, getSegmentsForPage, findPageForAyah, type QuranSegment } from "@/lib/recitation-ai/page-juz-lookup";
@@ -39,7 +39,13 @@ import { beginAbortScope, abortScope, guardAsync } from "@/lib/route-abort";
 import { logDiagnostic } from "@/lib/diagnostics";
 import { MushafPageV2 } from "@/components/quran/MushafPageV2";
 import { MushafLayeredPage } from "@/features/mushaf";
-import { goBackOrFallback } from "@/lib/navigation-back";
+import { getPreviousInternalRoute, goBackOrFallback, normalizeNavPath } from "@/lib/navigation-back";
+import {
+  captureMushafEntryOrigin,
+  consumeMushafEntryOrigin,
+} from "@/lib/mushaf-entry-origin";
+import { handoffMushafPlayback } from "@/lib/quran-mini-player";
+import { hasMushafUnsavedWork, setMushafUnsavedWork } from "@/lib/mushaf-unsaved";
 import { SectionErrorBoundary } from "@/components/ErrorBoundary";
 import { afterNextPaint, yieldToMain } from "@/lib/yield-to-main";
 import "@/styles/quran.css";
@@ -145,6 +151,8 @@ export default function MushafPageView() {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [isJumpModalVisible, setIsJumpModalVisible] = useState(false);
   const [selectedAyah, setSelectedAyah] = useState<{ surah: number; ayah: number } | null>(null);
+  /** تمييز استئناف القراءة دون فتح شيت الإجراءات. */
+  const [resumeAyahKey, setResumeAyahKey] = useState<string | null>(() => loadReadingAyahKey());
   const [resumeBanner, setResumeBanner] = useState<number | null>(null);
   const [jumpSurah, setJumpSurah] = useState(1);
   const [jumpAyah, setJumpAyah] = useState(1);
@@ -164,6 +172,11 @@ export default function MushafPageView() {
   }, []);
 
   useEffect(() => {
+    const prev = getPreviousInternalRoute(location);
+    captureMushafEntryOrigin(prev);
+  }, [location]);
+
+  useEffect(() => {
     if (routePage) setPageState(clampPage(routePage));
   }, [routePage]);
 
@@ -179,10 +192,12 @@ export default function MushafPageView() {
   }, [location]);
 
   useEffect(() => {
-    // RN storageService.saveLastPage — dual-writes mj-quran-page-pos-v1 + `lastPage`
-    savePagePosition(page);
+    const ayahKey = selectedAyah
+      ? `${selectedAyah.surah}:${selectedAyah.ayah}`
+      : undefined;
+    savePagePosition(page, ayahKey);
     setPageBookmarked(isPageBookmarked(page));
-  }, [page]);
+  }, [page, selectedAyah]);
 
   useEffect(() => {
     if (!bookmarkStatus) return;
@@ -332,14 +347,6 @@ export default function MushafPageView() {
   const nextPage = useCallback(() => goToPage(page + 1), [goToPage, page]);
   const prevPage = useCallback(() => goToPage(page - 1), [goToPage, page]);
 
-  // زر رجوع داخل الشريط العلوي — يُغني عن GlobalBackButton العائم العام
-  // الذي أُخفي على مسار /mushaf/page تحديدًا (راجع GlobalBackButton.tsx)
-  // لأنه يتراكب فعليًا فوق شريط التنقّل السفلي الثابت بعرض الشاشة هنا،
-  // اكتُشف حيًّا أثناء تحقّق Playwright (زر "السابقة" تعذّر النقر عليه).
-  const goBack = useCallback(() => {
-    goBackOrFallback(location);
-  }, [location]);
-
   // ── سحب أفقي RTL صحيح الاتجاه: تحريك الإصبع لليسار = الصفحة التالية (تقدّم في القراءة) ──
   const onTouchStart = (e: React.TouchEvent) => { touchStartX.current = e.touches[0].clientX; };
   const onTouchEnd = (e: React.TouchEvent) => {
@@ -379,11 +386,74 @@ export default function MushafPageView() {
   const activeSurahForPlayer = primarySegment?.segment.surah ?? 1;
   const activeSurahAyahCount = primarySegment ? getSurahMeta(activeSurahForPlayer).ayahs : 0;
   const { currentAyah, playerState, togglePlayAyah, reciterId, setReciterId, playbackRate, setPlaybackRate, repeatOn, setRepeatOn } = useAyahPlayer(activeSurahForPlayer, activeSurahAyahCount);
+  const playerStateRef = useRef(playerState);
+  const currentAyahRef = useRef(currentAyah);
+  const reciterIdRef = useRef(reciterId);
+  const activeSurahRef = useRef(activeSurahForPlayer);
+  playerStateRef.current = playerState;
+  currentAyahRef.current = currentAyah;
+  reciterIdRef.current = reciterId;
+  activeSurahRef.current = activeSurahForPlayer;
+
+  useEffect(() => {
+    return () => {
+      setMushafUnsavedWork(false);
+      if (
+        (playerStateRef.current === "playing" || playerStateRef.current === "buffering") &&
+        currentAyahRef.current != null
+      ) {
+        handoffMushafPlayback({
+          surah: activeSurahRef.current,
+          ayah: currentAyahRef.current,
+          reciterId: reciterIdRef.current,
+        });
+      }
+    };
+  }, []);
+
+  // زر رجوع داخل الشريط العلوي — يُغني عن GlobalBackButton العائم العام
+  // الذي أُخفي على مسار /mushaf/page تحديدًا (راجع GlobalBackButton.tsx).
+  // أول رجوع في الوضع الغامر يُظهر الأدوات؛ الثاني يخرج إلى أصل الدخول.
+  const goBack = useCallback(() => {
+    if (!textChromeVisible) {
+      setTextChromeVisible(true);
+      return;
+    }
+    if (hasMushafUnsavedWork()) {
+      const ok = window.confirm("لديك ملاحظة غير محفوظة. هل تريد الخروج دون حفظ؟");
+      if (!ok) return;
+      setMushafUnsavedWork(false);
+    }
+    if (
+      (playerState === "playing" || playerState === "buffering") &&
+      currentAyah != null
+    ) {
+      handoffMushafPlayback({
+        surah: activeSurahForPlayer,
+        ayah: currentAyah,
+        reciterId,
+      });
+    }
+    const origin = consumeMushafEntryOrigin();
+    if (origin && normalizeNavPath(origin) !== normalizeNavPath(location)) {
+      goBackOrFallback(location, origin);
+      return;
+    }
+    goBackOrFallback(location);
+  }, [
+    textChromeVisible,
+    location,
+    playerState,
+    currentAyah,
+    activeSurahForPlayer,
+    reciterId,
+  ]);
 
   // ── جسر بين مكوّني تخطيط السطر الحقيقي (V2/خفيف) وحالة الآية المختارة/المُشغَّلة القائمة أصلًا ──
   const handleV2AyahPress = useCallback((verseKey: string) => {
     const [s, a] = verseKey.split(":").map(Number);
     if (!s || !a) return;
+    setResumeAyahKey(null);
     setSelectedAyah({ surah: s, ayah: a });
   }, []);
   const clearAyahSelection = useCallback(() => {
@@ -393,7 +463,7 @@ export default function MushafPageView() {
     ? `${selectedAyah.surah}:${selectedAyah.ayah}`
     : (playerState === "playing" || playerState === "buffering") && currentAyah !== null
       ? `${activeSurahForPlayer}:${currentAyah}`
-      : null;
+      : resumeAyahKey;
 
   const shellThemeClass = `quran-shell--${prefs.readingTheme}`;
   /* Ayah reading surface is borderless by default; optional frame styles

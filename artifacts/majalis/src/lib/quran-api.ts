@@ -750,10 +750,13 @@ export function loadPosition(): { surah: number; ayah: number } | null {
 // ─── Page-view position persistence (وضع "الصفحة" الحقيقي) ────────────────
 const PAGE_POS_KEY = "mj-quran-page-pos-v1";
 
-export function savePagePosition(page: number) {
+export function savePagePosition(page: number, ayahKeyOverride?: string) {
   try {
     const clamped = Math.min(604, Math.max(1, Math.floor(page)));
-    const ayahKey = currentPageFirstAyah(clamped);
+    const ayahKey =
+      typeof ayahKeyOverride === "string" && /^\d{1,3}:\d{1,3}$/.test(ayahKeyOverride)
+        ? ayahKeyOverride
+        : currentPageFirstAyah(clamped);
     localStorage.setItem(
       PAGE_POS_KEY,
       JSON.stringify({ page: clamped, ayahKey, at: Date.now() }),
@@ -763,6 +766,21 @@ export function savePagePosition(page: number) {
   }
   // Dual-write RN sketch key `lastPage` (plain string).
   void saveLastPage(page);
+}
+
+/** آخر آية محفوظة للقراءة (ayahKey) — للاستئناف عند العودة للمصحف. */
+export function loadReadingAyahKey(): string | null {
+  try {
+    const raw = localStorage.getItem(PAGE_POS_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw) as { ayahKey?: string };
+    if (typeof parsed?.ayahKey === "string" && /^\d{1,3}:\d{1,3}$/.test(parsed.ayahKey)) {
+      return parsed.ayahKey;
+    }
+  } catch {
+    /* ignore */
+  }
+  return null;
 }
 
 export function loadPagePosition(): number | null {
