@@ -36,6 +36,8 @@ minimumReleaseAgeExclude:
 
 packages:
   - artifacts/*
+  # مجمَّد: تجربة Flutter مهجورة — انظر artifacts/majlisilm-flutter/DEPRECATED.md
+  - "!artifacts/majlisilm-flutter"
   - lib/*
   - lib/integrations/*
   - scripts
