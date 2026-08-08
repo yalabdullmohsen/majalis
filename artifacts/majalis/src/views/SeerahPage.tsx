@@ -8,6 +8,13 @@ import { usePageView } from "@/hooks/usePageView";
 import { AdminQuickEdit } from "@/components/AdminQuickEdit";
 import { ShareButton } from "@/components/ShareButton";
 import { SectionQuiz } from "@/components/ui/SectionQuiz";
+import {
+  SEERAH_PHASE_LABELS,
+  SEERAH_SOURCE_LABELS,
+  filterSeerahEvents,
+  type SeerahPhase,
+} from "@/content/seerah";
+import { toArabicDigits } from "@/lib/utils";
 import "@/styles/pages/seerah.css";
 
 const PHASES: { id: string; num: number; title: string; year: string; Icon: LucideIcon; color: string; desc: string; topics: string[]; keyEvents: string[] }[] = [
@@ -248,11 +255,17 @@ export default function SeerahPage() {
   usePageView("seerah", null);
   const [activeId, setActiveId] = useState(PHASES[0].id);
   const [search, setSearch] = useState("");
+  const [eventPhase, setEventPhase] = useState<SeerahPhase | "all">("all");
+  const [eventSearch, setEventSearch] = useState("");
   const filteredPhases = useMemo(() =>
     search.trim()
       ? PHASES.filter(p => arabicMatchAny([p.title, p.year, p.desc, ...p.topics, ...p.keyEvents], search))
       : PHASES,
   [search]);
+  const sourcedEvents = useMemo(
+    () => filterSeerahEvents({ phase: eventPhase, search: eventSearch }),
+    [eventPhase, eventSearch],
+  );
 
   useEffect(() => {
     applyPageSeo({
@@ -457,6 +470,85 @@ export default function SeerahPage() {
             ))}
           </div>
         </nav>
+
+        {/* خريطة أحداث موثّقة */}
+        <section className="seerah-events-map" aria-labelledby="seerah-events-heading">
+          <h2 id="seerah-events-heading" className="seerah-events-map__title">
+            <MapPin size={18} className="inline ms-2" aria-hidden="true" />
+            خريطة أحداث السيرة (موثّقة)
+          </h2>
+          <p className="seerah-events-map__lead">
+            أحداث منشورة بمراجع كلاسيكية فقط. ما لم يُوثَّق يبقى في قائمة مراجعة داخلية ولا يُعرض هنا.
+          </p>
+          <div className="seerah-events-map__filters">
+            <div className="seerah-events-map__chips" role="group" aria-label="تصفية حسب المرحلة">
+              {([
+                ["all", "الكل"],
+                ["pre_prophethood", SEERAH_PHASE_LABELS.pre_prophethood],
+                ["makki", SEERAH_PHASE_LABELS.makki],
+                ["madani", SEERAH_PHASE_LABELS.madani],
+              ] as const).map(([id, label]) => (
+                <button
+                  key={id}
+                  type="button"
+                  className={`seerah-events-map__chip${eventPhase === id ? " is-active" : ""}`}
+                  aria-pressed={eventPhase === id}
+                  onClick={() => setEventPhase(id)}
+                >
+                  {label}
+                </button>
+              ))}
+            </div>
+            <input
+              type="search"
+              className="ds-input sr-search-input"
+              placeholder="ابحث في الأحداث…"
+              value={eventSearch}
+              onChange={(e) => setEventSearch(e.target.value)}
+              enterKeyHint="search"
+              inputMode="search"
+              aria-label="بحث في أحداث السيرة الموثّقة"
+            />
+          </div>
+          <ol className="seerah-events-map__list">
+            {sourcedEvents.map((ev) => (
+              <li key={ev.id} className="seerah-events-map__item">
+                <header className="seerah-events-map__item-head">
+                  <h3 className="seerah-events-map__item-title">{ev.titleAr}</h3>
+                  <span className="seerah-events-map__meta">
+                    {SEERAH_PHASE_LABELS[ev.phase]}
+                    {ev.yearHijri != null ? ` · ${toArabicDigits(ev.yearHijri)} هـ` : ""}
+                    {ev.yearGregorian != null ? ` / ${toArabicDigits(ev.yearGregorian)} م` : ""}
+                    {ev.dateCertainty === "disputed" ? " · مختلف فيه" : ""}
+                  </span>
+                </header>
+                <p className="seerah-events-map__place">{ev.place}</p>
+                <p className="seerah-events-map__desc">{ev.shortDescription}</p>
+                {ev.caveat ? (
+                  <p className="seerah-events-map__caveat" role="note">{ev.caveat}</p>
+                ) : null}
+                {ev.people.length > 0 ? (
+                  <p className="seerah-events-map__people">
+                    الأشخاص: {ev.people.join(" · ")}
+                  </p>
+                ) : null}
+                <ul className="seerah-events-map__sources">
+                  {ev.sources.map((s, i) => (
+                    <li key={`${ev.id}-src-${i}`}>
+                      <strong>{SEERAH_SOURCE_LABELS[s.work]}</strong>
+                      {" — "}
+                      {s.reference}
+                      {s.note ? ` (${s.note})` : ""}
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ))}
+          </ol>
+          {sourcedEvents.length === 0 ? (
+            <p className="seerah-events-map__empty">لا نتائج مطابقة للتصفية الحالية.</p>
+          ) : null}
+        </section>
 
         {/* المصادر */}
         <div className="seerah-sources">

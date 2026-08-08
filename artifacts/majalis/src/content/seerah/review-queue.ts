@@ -1,0 +1,145 @@
+import type { SeerahReviewQueueItem } from "./types";
+
+/**
+ * قائمة مراجعة المالك — أحداث/تفاصيل ناقصة التوثيق أو محل خلاف.
+ * لا تُعرض للعامة كحقائق قاطعة حتى تُستكمل مصادرها أو تُحسم.
+ */
+export const SEERAH_REVIEW_QUEUE: SeerahReviewQueueItem[] = [
+  {
+    id: "rq-birth-day",
+    titleAr: "تعيين يوم المولد وشهره",
+    reasonAr: "خلاف مشهور بين أهل السيرة؛ لا يُرجَّح يوم بلا دليل قاطع ولا تُشرع عبادة عليه.",
+    kind: "disputed_date",
+    relatedEventId: "birth",
+  },
+  {
+    id: "rq-father-death-timing",
+    titleAr: "وقت وفاة عبد الله والد النبي ﷺ",
+    reasonAr: "المشهور أنه توفي وأمّه حامل، وفي بعض الروايات خلاف يسير في التوقيت.",
+    kind: "disputed_date",
+    relatedEventId: "birth",
+  },
+  {
+    id: "rq-bahira",
+    titleAr: "قصة بحيرا الراهب",
+    reasonAr: "رواية تاريخية؛ التفاصيل المطوَّلة تحتاج تحقيق سند ومتن قبل العرض كخبر ثابت.",
+    kind: "needs_grade",
+    notesAr: "تُذكر بحذر أو تُؤجَّل حتى يتوفر تخريج محرَّر.",
+  },
+  {
+    id: "rq-khadija-age",
+    titleAr: "عمر خديجة عند الزواج",
+    reasonAr: "لا يثبت تحديد العمر بحديث صحيح؛ المشهور الأربعون وقيل دونه.",
+    kind: "disputed_date",
+    relatedEventId: "marriage-khadija",
+  },
+  {
+    id: "rq-first-male-muslim",
+    titleAr: "ترتيب أوائل الرجال إسلاماً",
+    reasonAr: "خلاف بحسب قيد الحرّ/الصبي/العبد بين عليّ وأبي بكر وزيد رضي الله عنهم.",
+    kind: "needs_verification",
+    relatedEventId: "first-revelation",
+  },
+  {
+    id: "rq-abyssinia-counts",
+    titleAr: "عدد مهاجري الحبشة في الهجرتين",
+    reasonAr: "تختلف الروايات في العدد الدقيق؛ المعنى ثابت والتفصيل يحتاج تمحيصاً.",
+    kind: "needs_verification",
+    relatedEventId: "abyssinia-hijra",
+  },
+  {
+    id: "rq-boycott-parchment",
+    titleAr: "أكل الأرضة لصحيفة المقاطعة",
+    reasonAr: "من مراسيل السيرة لا من الصحيح المسند؛ تُذكر بتحفّظ أو تُستبعد من العرض العام.",
+    kind: "popular_unverified",
+    relatedEventId: "open-dawah",
+  },
+  {
+    id: "rq-isra-year",
+    titleAr: "تعيين سنة الإسراء والمعراج",
+    reasonAr: "الثبوت في الجملة قطعي؛ تعيين السنة فيه خلاف بين أهل المغازي.",
+    kind: "disputed_date",
+    relatedEventId: "isra-miraj",
+  },
+  {
+    id: "rq-badr-numbers",
+    titleAr: "أعداد المقاتلين في بدر",
+    reasonAr: "الأعداد التقريبية مما تتداوله كتب السيرة؛ يلزم توحيد رقم مع مصدر محرَّر أو الإشارة للخلاف.",
+    kind: "needs_verification",
+    relatedEventId: "badr",
+  },
+  {
+    id: "rq-qaynuqa",
+    titleAr: "تفاصيل جلاء بني قينقاع",
+    reasonAr: "الخبر معروف في المغازي؛ التفاصيل تحتاج إحالة دقيقة قبل إدراجها كحدث مستقل.",
+    kind: "missing_source",
+    notesAr: "مرشّح لحدث لاحق بعد استكمال المراجع.",
+  },
+  {
+    id: "rq-nadir",
+    titleAr: "تفاصيل جلاء بني النضير",
+    reasonAr: "كما في كتب السيرة المحرَّرة؛ يُؤجَّل العرض التفصيلي حتى يُربط بمراجع باب باب.",
+    kind: "missing_source",
+  },
+  {
+    id: "rq-letters-kings",
+    titleAr: "رسائل الدعوة إلى الملوك",
+    reasonAr: "ثابت المعنى في الجملة؛ تفاصيل كل رسالة ونصّها يحتاجان تخريجاً منفرداً.",
+    kind: "needs_grade",
+    relatedEventId: "hudaybiyya",
+  },
+  {
+    id: "rq-tulaqa-wording",
+    titleAr: "صيغة «اذهبوا فأنتم الطلقاء»",
+    reasonAr: "اشتهرت في السيرة؛ يُطلب تعيين أصحّ لفظ مسند قبل الجزم بالصيغة في الواجهة.",
+    kind: "needs_grade",
+    relatedEventId: "fath-makkah",
+  },
+  {
+    id: "rq-farewell-count",
+    titleAr: "عدد حجيج حجة الوداع",
+    reasonAr: "اختلفت الروايات في تقدير العدد؛ يُذكر الجمع العظيم دون الجزم برقم.",
+    kind: "disputed_date",
+    relatedEventId: "farewell-hajj",
+  },
+  {
+    id: "rq-kitab-sunnah-wording",
+    titleAr: "لفظ «كتاب الله وسنتي» في الخطبة",
+    reasonAr: "المعنى بالاعتصام بالكتاب ثابت؛ اللفظ المشهور مروي بطرق تُضعَّف عند كثير من أهل الحديث.",
+    kind: "needs_grade",
+    relatedEventId: "farewell-hajj",
+  },
+  {
+    id: "rq-death-day",
+    titleAr: "تعيين يوم الوفاة في ربيع الأول",
+    reasonAr: "المشهور ١٢ ربيع الأول مع خلاف؛ لا يُقطع به ولا تُشرع شعائر عليه.",
+    kind: "disputed_date",
+    relatedEventId: "death",
+  },
+  {
+    id: "rq-tabuk",
+    titleAr: "غزوة تبوك كحدث مستقل في الخريطة",
+    reasonAr: "ثابتة في الصحيح والمغازي؛ لم تُدرج بعد في SEERAH_EVENTS — تُضاف عند استكمال بطاقة مصادرها.",
+    kind: "missing_source",
+    notesAr: "أولوية متوسطة للتوسعة التالية.",
+  },
+  {
+    id: "rq-aqabah",
+    titleAr: "بيعتا العقبة كحدثين مستقلين",
+    reasonAr: "مذكورتان ضمن الهجرة؛ يُفضَّل فصلهما ببطاقتين مع مراجع ابن هشام والبخاري.",
+    kind: "missing_source",
+    relatedEventId: "hijra-madinah",
+  },
+  {
+    id: "rq-black-stone",
+    titleAr: "وضع الحجر الأسود عند إعادة البناء",
+    reasonAr: "مشهور في السيرة قبل البعثة؛ يحتاج مرجعاً محرَّراً قبل إضافته للخط الزمني.",
+    kind: "needs_verification",
+  },
+  {
+    id: "rq-half-al-fudul",
+    titleAr: "حلف الفضول",
+    reasonAr: "معناه ثابت في كتب السيرة؛ يُطلب نصّ المرجع الأدق قبل بطاقة حدث مستقلة.",
+    kind: "needs_verification",
+  },
+];

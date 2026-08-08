@@ -591,6 +591,111 @@ html[data-theme="dark"] .seerah-phase--ghazawat { --phase-color: #FB7185; --pane
   box-shadow: 0 4px 16px rgba(0,0,0,0.08) !important;
 }
 
+/* ── خريطة أحداث موثّقة ── */
+.seerah-events-map {
+  margin: 1.5rem 1rem 2rem;
+  padding: 1.25rem 1rem 1.5rem;
+  border-radius: 12px;
+  border: 1px solid var(--v2-border, #D8D2C7);
+  background: var(--v2-surface, var(--mj-bg));
+}
+.seerah-events-map__title {
+  margin: 0 0 .35rem;
+  font-size: 1.15rem;
+  color: var(--mj-brand-deep);
+  display: flex;
+  align-items: center;
+  gap: .35rem;
+}
+.seerah-events-map__lead {
+  margin: 0 0 1rem;
+  font-size: .88rem;
+  color: var(--clr-text-2, #4b5563);
+  line-height: 1.6;
+}
+.seerah-events-map__filters {
+  display: flex;
+  flex-direction: column;
+  gap: .65rem;
+  margin-bottom: 1rem;
+}
+.seerah-events-map__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .4rem;
+}
+.seerah-events-map__chip {
+  min-height: 44px;
+  padding: .4rem .85rem;
+  border-radius: .55rem;
+  border: 1px solid var(--clr-border, var(--mj-brand-soft));
+  background: #fff;
+  color: var(--mj-brand-deep);
+  font-size: .85rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.seerah-events-map__chip.is-active {
+  background: var(--majalis-emerald, var(--mj-brand));
+  border-color: transparent;
+  color: #fff;
+}
+.seerah-events-map__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: .85rem;
+}
+.seerah-events-map__item {
+  padding: .9rem .85rem;
+  border-radius: 10px;
+  border: 1px solid color-mix(in srgb, var(--mj-brand) 18%, transparent);
+  background: color-mix(in srgb, var(--majalis-parchment, #f7f3ea) 70%, #fff);
+}
+.seerah-events-map__item-title {
+  margin: 0;
+  font-size: 1.02rem;
+  color: var(--mj-brand-deep);
+}
+.seerah-events-map__meta {
+  display: block;
+  margin-top: .2rem;
+  font-size: .78rem;
+  color: var(--majalis-emerald, var(--mj-brand));
+  font-weight: 600;
+}
+.seerah-events-map__place,
+.seerah-events-map__desc,
+.seerah-events-map__people {
+  margin: .45rem 0 0;
+  font-size: .9rem;
+  line-height: 1.65;
+  color: var(--clr-text-1, #1f2937);
+}
+.seerah-events-map__caveat {
+  margin: .5rem 0 0;
+  font-size: .82rem;
+  line-height: 1.55;
+  color: #92400e;
+  background: #fffbeb;
+  border-radius: .45rem;
+  padding: .45rem .6rem;
+}
+.seerah-events-map__sources {
+  margin: .55rem 0 0;
+  padding-inline-start: 1.1rem;
+  font-size: .8rem;
+  line-height: 1.55;
+  color: var(--clr-text-2, #4b5563);
+}
+.seerah-events-map__empty {
+  margin: .75rem 0 0;
+  font-size: .9rem;
+  color: var(--clr-text-2, #4b5563);
+}
+
 /* ── منقول من الطبقة الحرجة: seerah-back-link ── */
 .seerah-back-link {
   display: inline-flex;
