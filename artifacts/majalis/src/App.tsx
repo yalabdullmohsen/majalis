@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useRef, useState, type ComponentType } from "react";
+import { Suspense, useEffect, useLayoutEffect, useRef, useState, type ComponentType } from "react";
 import { Redirect, Route, Switch, Router as WouterRouter, useLocation, useParams } from "wouter";
 import { AuthProvider, useAuth } from "@/components/AuthProvider";
 import { FontPreferenceProvider } from "@/components/FontPreferenceProvider";
@@ -341,18 +341,14 @@ function SeoManager() {
   return null;
 }
 
-/* وجهات شريط الأقسام العلوي (TopSectionBar) — التبديل بينها يُعامَل معاملة
-   "الرجوع" (استعادة آخر موضع تمرير)، لا "تنقّل للأمام" (تمرير للأعلى)،
-   لأن المستخدم يُنهي غالبًا جولة في قسم ثم يعود إليه لاحقًا عبر تبويبه. */
-const SECTION_BAR_PATHS = new Set(["/", "/mushaf", "/memorize", "/quran-knowledge", "/hadith", "/fiqh", "/memorization", "/occasions-lessons", "/islamic-directory", "/prayer-times", "/my-learning"]);
+/** مواضع تمرير في الذاكرة — مفتاحها المسار؛ تُستعاد عند الرجوع فقط. */
+const scrollPosByPath = new Map<string, number>();
 
 /**
- * كان يفرض scrollTo(0,0) على كل تغيير مسار بلا استثناء، فيُفقِد موضع
- * التمرير حتى عند الرجوع (زر الرجوع العام أو زر رجوع المتصفح) — طلب صريح
- * من المالك بحفظ حالة الصفحة (تمرير) عند الرجوع. الآن: يميّز بين تنقّل
- * "للأمام" (رابط/بطاقة جديدة → تمرير للأعلى كالمعتاد) و"للخلف" (popstate،
- * أو التبديل بين أقسام TopSectionBar → استعادة آخر موضع تمرير محفوظ لذلك
- * المسار من sessionStorage).
+ * مسار جديد (push/link) → أعلى الصفحة فورًا قبل الرسم (useLayoutEffect).
+ * رجوع (popstate) فقط → استعادة الموضع المحفوظ لذلك المسار.
+ * عُطّل استرجاع المتصفح الافتراضي وسلوك شريط الأقسام الذي كان يُبقي
+ * المستخدم في أسفل القوائم الطويلة عند الدخول للأقسام.
  */
 function ScrollResetOnNav() {
   const [location] = useLocation();
@@ -360,32 +356,29 @@ function ScrollResetOnNav() {
   const lastLocationRef = useRef(location);
 
   useEffect(() => {
+    if (typeof history !== "undefined" && "scrollRestoration" in history) {
+      history.scrollRestoration = "manual";
+    }
     const onPopState = () => { isPopRef.current = true; };
     window.addEventListener("popstate", onPopState);
     return () => window.removeEventListener("popstate", onPopState);
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const leavingLocation = lastLocationRef.current;
-    recordNavigationVisit(location, isPopRef.current ? "pop" : "push");
+    const isPop = isPopRef.current;
+    recordNavigationVisit(location, isPop ? "pop" : "push");
     if (leavingLocation !== location) {
-      try {
-        sessionStorage.setItem(`scroll-pos:${leavingLocation}`, String(window.scrollY));
-      } catch { /* sessionStorage غير متاح (وضع خاص مثلًا) — تجاهل بأمان */ }
+      scrollPosByPath.set(leavingLocation, window.scrollY);
     }
     lastLocationRef.current = location;
-
-    const shouldRestore = isPopRef.current || SECTION_BAR_PATHS.has(location);
     isPopRef.current = false;
-    if (shouldRestore) {
-      const saved = sessionStorage.getItem(`scroll-pos:${location}`);
-      if (saved != null) {
-        const top = Number(saved);
-        requestAnimationFrame(() => window.scrollTo({ top, left: 0, behavior: "instant" }));
-        return;
-      }
+
+    if (isPop) {
+      window.scrollTo(0, scrollPosByPath.get(location) ?? 0);
+      return;
     }
-    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+    window.scrollTo(0, 0);
   }, [location]);
 
   return null;
