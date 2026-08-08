@@ -6,6 +6,7 @@
  *   node scripts/quran-import/check-mushaf-drawn-lines-overflow.mjs
  *   node scripts/quran-import/check-mushaf-drawn-lines-overflow.mjs --pages 595,1,2
  */
+import { execFileSync } from "node:child_process";
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -161,12 +162,26 @@ body{margin:0}
   );
 }
 
+async function launchChromium() {
+  try {
+    return await chromium.launch({ headless: true });
+  } catch (first) {
+    // Verify build لا يثبّت متصفحات Playwright — ثبّتها عند الحاجة ثم أعد المحاولة
+    console.warn("playwright chromium missing — installing…");
+    execFileSync("pnpm", ["exec", "playwright", "install", "--with-deps", "chromium"], {
+      stdio: "inherit",
+      cwd: APP_ROOT,
+    });
+    return chromium.launch({ headless: true });
+  }
+}
+
 async function main() {
   const pages = parsePagesArg(process.argv) || Array.from({ length: 604 }, (_, i) => i + 1);
   const chapters = JSON.parse(await readFile(CHAPTERS_PATH, "utf8"));
   const chaptersById = new Map(chapters.map((c) => [c.id, c]));
 
-  const browser = await chromium.launch({ headless: true });
+  const browser = await launchChromium();
   const page = await browser.newPage();
   const failures = [];
 
