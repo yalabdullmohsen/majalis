@@ -11,8 +11,8 @@ import { createMountGuard } from "@/lib/route-abort";
 
 /**
  * useMushafPageFont — يحمّل خط QPC V2 الخاص بصفحة واحدة (public/fonts/qpc-v2/pN.woff2)
- * عبر FontFace API، مع تحميل مسبق للصفحة الحالية ± 2، وذاكرة
- * LRU لا تُبقي أكثر من 12 خط صفحة محمَّلًا.
+ * عبر FontFace API، مع تحميل مسبق للصفحة الحالية والمجاورتين فقط (±1)،
+ * وfont-display:block لتفادي وميض الاستبدال. LRU ≤ 12 خط صفحة.
  *
  * Part 16: waits document.fonts.ready after each face load so glyph layout
  * measurements (MushafPageV2 fit) never run against unparsed PUA glyphs.
@@ -140,7 +140,7 @@ export function useMushafPageFont(pageNumber: number | null): MushafPageFontStat
       }
     })();
 
-    for (const neighbor of [pageNumber - 2, pageNumber - 1, pageNumber + 1, pageNumber + 2]) {
+    for (const neighbor of [pageNumber - 1, pageNumber + 1]) {
       if (neighbor >= 1 && neighbor <= 604) void ensurePageFontLoaded(neighbor).catch(() => {});
     }
 

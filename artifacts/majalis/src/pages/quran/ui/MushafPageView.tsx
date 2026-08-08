@@ -498,9 +498,14 @@ export default function MushafPageView() {
             <button type="button" className="mpv-toolbar__btn" onClick={goBack} aria-label="رجوع">
               <ArrowRight size={16} aria-hidden="true" />
             </button>
-            <button type="button" className="mpv-toolbar__btn" onClick={() => setSidebarOpen(true)} aria-label="فهرس السور">
+            <button
+              type="button"
+              className="mpv-toolbar__btn mpv-toolbar__btn--index"
+              onClick={() => setSidebarOpen(true)}
+              aria-label="فهرس السور"
+            >
               <Menu size={16} aria-hidden="true" />
-              الفهرس
+              فهرس
             </button>
             <span className="mpv-toolbar__spacer" aria-hidden="true" />
             <button
@@ -629,7 +634,7 @@ export default function MushafPageView() {
             )}
           </div>
 
-          {/* رقم الصفحة فقط — شارة بيضاوية ناعمة (بلا بار تنقّل كحلي) */}
+          {/* رقم الصفحة — أرقام هندية داخل خرطوش SVG ذهبي */}
           <footer className="mpv-ayah-footer">
             <button
               type="button"
@@ -639,7 +644,43 @@ export default function MushafPageView() {
               aria-expanded={isJumpModalVisible}
               aria-label={`الانتقال إلى صفحة — الحالية ${toArabicDigits(page)} من ${toArabicDigits(TOTAL_PAGES)}`}
             >
-              {toArabicDigits(page)}
+              <svg
+                className="mpv-ayah-page-badge__cartouche"
+                viewBox="0 0 120 36"
+                preserveAspectRatio="none"
+                aria-hidden="true"
+              >
+                <rect
+                  x="2"
+                  y="2"
+                  width="116"
+                  height="32"
+                  rx="4"
+                  ry="4"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.25"
+                />
+                <rect
+                  x="6"
+                  y="6"
+                  width="108"
+                  height="24"
+                  rx="2"
+                  ry="2"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="0.75"
+                  opacity="0.55"
+                />
+                <path
+                  d="M14 18 H22 M98 18 H106 M60 6 V10 M60 26 V30"
+                  stroke="currentColor"
+                  strokeWidth="0.9"
+                  opacity="0.7"
+                />
+              </svg>
+              <span className="mpv-ayah-page-badge__num">{toArabicDigits(page)}</span>
             </button>
           </footer>
         </>
