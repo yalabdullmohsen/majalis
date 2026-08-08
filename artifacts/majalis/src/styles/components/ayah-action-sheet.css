@@ -863,3 +863,152 @@ html.dark .aas-reader__edition-menu,
     padding-inline: 0.15rem;
   }
 }
+
+/* ── شيت الآية v3: رأس مضغوط + صف إجراءات أساسي + المزيد ── */
+.aas-panel--v3 {
+  background: var(--color-mushaf-paper, #faf7f2);
+  color: var(--color-mushaf-ink, #1a1510);
+  border-color: var(--color-mushaf-badge-border, #d1c7bd);
+  animation: aas-v3-slide 220ms ease-out;
+}
+
+@keyframes aas-v3-slide {
+  from { transform: translateY(100%); opacity: 0.85; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .aas-panel--v3 {
+    animation: none;
+  }
+}
+
+.aas-v3__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  padding: 0.15rem 0.5rem 0.65rem;
+  text-align: center;
+}
+
+.aas-v3__header strong {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--color-mushaf-ink, #1a1510);
+}
+
+.aas-v3__header span {
+  font-size: 0.85rem;
+  color: var(--color-mushaf-meta, #9a7b3c);
+}
+
+.aas-v3__actions {
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  gap: 0.25rem;
+  padding: 0.15rem 0.2rem 0.55rem;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.aas-v3__action {
+  flex: 1 1 0;
+  min-width: 44px;
+  min-height: 56px;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  padding: 0.35rem 0.2rem;
+  border: 0;
+  border-radius: 0.75rem;
+  background: transparent;
+  color: var(--color-mushaf-ink, #1a1510);
+  font-family: inherit;
+  font-size: 0.68rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.aas-v3__action:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.aas-v3__action.is-on,
+.aas-v3__action:active {
+  background: color-mix(in srgb, var(--color-mushaf-gold, #b08a3e) 16%, transparent);
+  color: var(--color-mushaf-gold, #b08a3e);
+}
+
+.aas-v3__more-toggle,
+.aas-v3__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  width: 100%;
+  min-height: 44px;
+  margin-block: 0.25rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--color-mushaf-badge-border, #d1c7bd);
+  background: var(--color-mushaf-badge-bg, #f4efea);
+  color: var(--color-mushaf-ink, #1a1510);
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.aas-v3__more-toggle.is-on {
+  border-color: var(--color-mushaf-gold, #b08a3e);
+  color: var(--color-mushaf-gold, #b08a3e);
+}
+
+.aas-v3__more {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  padding: 0.35rem 0 0.6rem;
+}
+
+.aas-v3__nav-row {
+  display: flex;
+  gap: 0.4rem;
+}
+
+.aas-v3__more-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  min-height: 44px;
+  padding: 0.45rem 0.7rem;
+  border-radius: 0.65rem;
+  border: 1px solid var(--color-mushaf-badge-border, #d1c7bd);
+  background: transparent;
+  color: inherit;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  flex: 1;
+}
+
+.aas-v3__tafsir {
+  border-block-start: 1px solid var(--color-mushaf-badge-border, #d1c7bd);
+  padding-block-start: 0.5rem;
+  margin-block-start: 0.25rem;
+}
+
+.aas-v3__close {
+  margin-top: 0.5rem;
+  margin-bottom: max(0.35rem, var(--inset-bottom));
+  background: var(--color-mushaf-ink, #1a1510);
+  color: var(--color-mushaf-paper, #faf7f2);
+  border-color: transparent;
+}

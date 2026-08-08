@@ -11,8 +11,9 @@
 | 2 Enter في حقول البحث | تم ✅ | [#948](https://github.com/yalabdullmohsen/majalis/pull/948) | جسر كسول + `enterKeyHint=search` |
 | 3 بلا autoFocus بحث | تم ✅ | [#949](https://github.com/yalabdullmohsen/majalis/pull/949) | لا تركيز بحث «المزيد» |
 | 4 تمرير لأعلى عند مسار جديد | تم ✅ | [#950](https://github.com/yalabdullmohsen/majalis/pull/950) | useLayoutEffect + خريطة ذاكرة |
-| 5 خروج ذكي من المصحف | جارٍ | هذا الفرع | أصل الدخول + رجوع غامر + مشغّل مصغّر |
-| 6–11 | معلّق | — | حسب الترتيب المتفق |
+| 5 خروج ذكي من المصحف | تم ✅ | [#951](https://github.com/yalabdullmohsen/majalis/pull/951) | أصل الدخول + رجوع غامر + مشغّل مصغّر |
+| 6 شيت الآية الحديث | جارٍ | هذا الفرع | صف إجراءات + المزيد + رموز mushaf |
+| 7–11 | معلّق | — | حسب الترتيب المتفق |
 
 | البند | الحالة | رقم PR | ما تبقّى |
 |---|---|---|---|

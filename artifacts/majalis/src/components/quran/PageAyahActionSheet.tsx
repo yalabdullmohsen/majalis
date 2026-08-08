@@ -17,8 +17,11 @@ import {
   Gauge,
   Type,
   Languages,
+  Share2,
+  MoreHorizontal,
+  Save,
 } from "lucide-react";
-import { copyAyahText, copyAyahTextPlain } from "@/lib/share-ayah";
+import { copyAyahText, copyAyahTextPlain, shareAyahAsText } from "@/lib/share-ayah";
 import { addBookmark, removeBookmark, isBookmarked, getNote, saveNote } from "@/lib/quran-personal";
 import { setMushafUnsavedWork } from "@/lib/mushaf-unsaved";
 import { RECITERS } from "@/lib/quran-audio";
@@ -103,6 +106,8 @@ export function PageAyahActionSheet({
   const [bookmarked, setBookmarked] = useState(() => isBookmarked(surahNum, ayahNum));
   const [copiedKind, setCopiedKind] = useState<"full" | "plain" | null>(null);
   const [noteOpen, setNoteOpen] = useState(false);
+  const [showTafsirPanel, setShowTafsirPanel] = useState(true);
+  const [moreOpen, setMoreOpen] = useState(false);
   const [noteText, setNoteText] = useState(() => getNote(surahNum, ayahNum));
   const [noteSaved, setNoteSaved] = useState(false);
   const [reciterPickerOpen, setReciterPickerOpen] = useState(false);
@@ -333,63 +338,100 @@ export function PageAyahActionSheet({
 
   const fontPercent = Math.round(fontScale * 100);
 
+  const handleShare = async () => {
+    await shareAyahAsText(ayahText, surahName, ayahNum);
+  };
+
   return (
     /* eslint-disable jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions */
-    <div className="aas-sheet aas-sheet--reader" onClick={onClose} role="presentation">
+    <div className="aas-sheet aas-sheet--reader aas-sheet--v3" onClick={onClose} role="presentation">
       <div
-        className="aas-panel aas-panel--reader"
+        className="aas-panel aas-panel--reader aas-panel--v3"
         onClick={(e) => e.stopPropagation()}
         role="dialog"
         aria-modal="true"
-        aria-label={`تفسير سورة ${surahName} آية ${ayahNum}`}
+        aria-label={`سورة ${surahName} آية ${ayahNum}`}
       >
         <div className="aas-panel__handle" aria-hidden="true" />
 
-        <header className="aas-reader__header">
-          <div className="aas-reader__nav">
-            {onPrev ? (
-              <button type="button" className="aas-reader__icon-btn" onClick={onPrev} aria-label="الآية السابقة">
-                <ChevronRight size={18} aria-hidden="true" />
-              </button>
-            ) : (
-              <span className="aas-reader__icon-btn is-ghost" aria-hidden="true" />
-            )}
-            <div className="aas-reader__title">
-              <strong>سورة {surahName}</strong>
-              <span>الآية {toArabicDigits(ayahNum)}</span>
-            </div>
-            {onNext ? (
-              <button type="button" className="aas-reader__icon-btn" onClick={onNext} aria-label="الآية التالية">
-                <ChevronLeft size={18} aria-hidden="true" />
-              </button>
-            ) : (
-              <span className="aas-reader__icon-btn is-ghost" aria-hidden="true" />
-            )}
-          </div>
-          <button type="button" className="aas-reader__close" onClick={onClose} aria-label="إغلاق">
-            <X size={18} aria-hidden="true" />
-          </button>
+        <header className="aas-v3__header">
+          <strong>سورة {surahName}</strong>
+          <span>الآية {toArabicDigits(ayahNum)}</span>
         </header>
 
-        <section className="aas-reader__ayah" aria-label="نص الآية">
-          <p className="aas-reader__ayah-text" dir="rtl">
-            {ayahText}
-          </p>
-        </section>
+        <div className="aas-v3__actions" role="toolbar" aria-label="إجراءات الآية">
+          <button
+            type="button"
+            className={`aas-v3__action${showTafsirPanel ? " is-on" : ""}`}
+            onClick={() => { setShowTafsirPanel((v) => !v); setMoreOpen(false); }}
+          >
+            <BookOpen size={20} aria-hidden="true" />
+            <span>تفسير</span>
+          </button>
+          <button
+            type="button"
+            className={`aas-v3__action${isPlaying ? " is-on" : ""}`}
+            onClick={onTogglePlay}
+            disabled={!canPlay}
+            aria-label={isPlaying ? "إيقاف التلاوة" : "استماع"}
+          >
+            {isPlaying ? <Pause size={20} aria-hidden="true" /> : <Play size={20} aria-hidden="true" />}
+            <span>استماع</span>
+          </button>
+          <button type="button" className="aas-v3__action" onClick={() => void handleCopy(false)}>
+            {copiedKind === "full" ? <Check size={20} aria-hidden="true" /> : <Copy size={20} aria-hidden="true" />}
+            <span>نسخ</span>
+          </button>
+          <button type="button" className="aas-v3__action" onClick={() => void handleShare()}>
+            <Share2 size={20} aria-hidden="true" />
+            <span>مشاركة</span>
+          </button>
+          <button
+            type="button"
+            className={`aas-v3__action${bookmarked ? " is-on" : ""}`}
+            onClick={toggleBookmark}
+          >
+            <Bookmark size={20} aria-hidden="true" fill={bookmarked ? "currentColor" : "none"} />
+            <span>إشارة</span>
+          </button>
+          <button
+            type="button"
+            className={`aas-v3__action${noteOpen ? " is-on" : ""}`}
+            onClick={() => { setNoteOpen((v) => !v); setMoreOpen(false); }}
+          >
+            <Save size={20} aria-hidden="true" />
+            <span>حفظ</span>
+          </button>
+        </div>
 
-        {(canPlay || (reciterId && onSetReciter) || playbackRate !== undefined) && (
-          <div className="aas-reader__audio-strip" role="toolbar" aria-label="التلاوة">
-            {canPlay ? (
-              <button
-                type="button"
-                className={`aas-reader__audio-chip${isPlaying ? " is-on" : ""}`}
-                onClick={onTogglePlay}
-              >
-                {isPlaying ? <Pause size={15} aria-hidden="true" /> : <Play size={15} aria-hidden="true" />}
-                <span>{isPlaying ? "إيقاف" : "استماع"}</span>
-              </button>
+        <button
+          type="button"
+          className={`aas-v3__more-toggle${moreOpen ? " is-on" : ""}`}
+          onClick={() => setMoreOpen((v) => !v)}
+          aria-expanded={moreOpen}
+        >
+          <MoreHorizontal size={18} aria-hidden="true" />
+          المزيد
+        </button>
+
+        {moreOpen ? (
+          <div className="aas-v3__more" role="region" aria-label="إجراءات إضافية">
+            {(onPrev || onNext) ? (
+              <div className="aas-v3__nav-row">
+                {onPrev ? (
+                  <button type="button" className="aas-v3__more-btn" onClick={onPrev}>
+                    <ChevronRight size={18} aria-hidden="true" /> الآية السابقة
+                  </button>
+                ) : null}
+                {onNext ? (
+                  <button type="button" className="aas-v3__more-btn" onClick={onNext}>
+                    الآية التالية <ChevronLeft size={18} aria-hidden="true" />
+                  </button>
+                ) : null}
+              </div>
             ) : null}
-
+            {(canPlay || (reciterId && onSetReciter) || playbackRate !== undefined) && (
+          <div className="aas-reader__audio-strip" role="toolbar" aria-label="خيارات التلاوة">
             {canPlay && onToggleRepeat ? (
               <button
                 type="button"
@@ -481,7 +523,20 @@ export function PageAyahActionSheet({
             ) : null}
           </div>
         )}
+            <button type="button" className="aas-v3__more-btn" onClick={() => void handleCopy(true)}>
+              <Copy size={16} aria-hidden="true" /> نسخ بلا تشكيل
+            </button>
+            <a
+              className="aas-v3__more-btn"
+              href={`mailto:${CONTACT_EMAIL}?subject=${reportSubject}&body=${reportBody}`}
+            >
+              <Flag size={16} aria-hidden="true" /> إبلاغ عن خطأ
+            </a>
+          </div>
+        ) : null}
 
+        {showTafsirPanel ? (
+        <div className="aas-v3__tafsir">
         <div className="aas-reader__edition-row">
           <div className="aas-reader__edition" ref={editionMenuRef}>
             <button
@@ -658,6 +713,9 @@ export function PageAyahActionSheet({
           ) : null}
         </div>
 
+        </div>
+        ) : null}
+
         {noteOpen ? (
           <div className="aas-reader__note">
             <textarea
@@ -665,6 +723,7 @@ export function PageAyahActionSheet({
               onChange={(e) => setNoteText(e.target.value)}
               placeholder="اكتب ملاحظتك على هذه الآية..."
               dir="rtl"
+              aria-label="ملاحظة على الآية"
             />
             <button type="button" className="aas-reader__note-save" onClick={handleSaveNote}>
               {noteSaved ? <Check size={16} aria-hidden="true" /> : <StickyNote size={16} aria-hidden="true" />}
@@ -673,31 +732,10 @@ export function PageAyahActionSheet({
           </div>
         ) : null}
 
-        <div className="aas-reader__tools">
-          <button type="button" className={bookmarked ? "is-on" : undefined} onClick={toggleBookmark}>
-            <Bookmark size={16} aria-hidden="true" fill={bookmarked ? "currentColor" : "none"} />
-            {bookmarked ? "محفوظة" : "إشارة"}
-          </button>
-          <button type="button" className={noteOpen ? "is-on" : undefined} onClick={() => setNoteOpen((v) => !v)}>
-            <StickyNote size={16} aria-hidden="true" />
-            ملاحظة
-          </button>
-          <button type="button" onClick={() => void handleCopy(false)}>
-            {copiedKind === "full" ? <Check size={16} aria-hidden="true" /> : <Copy size={16} aria-hidden="true" />}
-            نسخ
-          </button>
-          <button type="button" onClick={() => void handleCopy(true)}>
-            {copiedKind === "plain" ? <Check size={16} aria-hidden="true" /> : <Copy size={16} aria-hidden="true" />}
-            بلا تشكيل
-          </button>
-          <a
-            className="aas-reader__report"
-            href={`mailto:${CONTACT_EMAIL}?subject=${reportSubject}&body=${reportBody}`}
-          >
-            <Flag size={16} aria-hidden="true" />
-            إبلاغ
-          </a>
-        </div>
+        <button type="button" className="aas-v3__close" onClick={onClose}>
+          <X size={18} aria-hidden="true" />
+          إغلاق
+        </button>
       </div>
     </div>
   );
