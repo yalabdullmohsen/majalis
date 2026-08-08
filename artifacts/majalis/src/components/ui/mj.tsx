@@ -140,9 +140,27 @@ export function Progress({ value, className }: { value: number; className?: stri
 
 export function SearchField({
   className,
+  onKeyDown,
   ...props
 }: React.InputHTMLAttributes<HTMLInputElement>) {
-  return <input type="search" className={cn("mj-search", className)} {...props} />;
+  return (
+    <input
+      type="search"
+      enterKeyHint="search"
+      inputMode="search"
+      autoComplete="off"
+      autoCorrect="off"
+      spellCheck={false}
+      className={cn("mj-search", className)}
+      {...props}
+      onKeyDown={(e) => {
+        onKeyDown?.(e);
+        if (e.key === "Enter" && !e.defaultPrevented) {
+          e.currentTarget.blur();
+        }
+      }}
+    />
+  );
 }
 
 export function EmptyState({

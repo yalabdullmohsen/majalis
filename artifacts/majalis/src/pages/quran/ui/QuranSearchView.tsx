@@ -85,6 +85,8 @@ export default function QuranSearchPage() {
         onSubmit={(e) => {
           e.preventDefault();
           setDebounced(searchQuery.trim());
+          const input = e.currentTarget.querySelector("input");
+          input?.blur();
         }}
       >
         <label className="quran-search-page__field">
@@ -93,12 +95,14 @@ export default function QuranSearchPage() {
           <input
             className="ds-input quran-search-page__input"
             type="search"
+            enterKeyHint="search"
+            inputMode="search"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="مثال: الرحمن، الصلاة، اهدنا الصراط…"
             autoComplete="off"
-            enterKeyHint="search"
             disabled={loadingDb || dbError}
+            data-search-field="1"
           />
         </label>
       </form>

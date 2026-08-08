@@ -311,11 +311,18 @@ export function GlobalSearchModal({ onClose }: Props) {
 
           <input
             ref={inputRef}
+            type="search"
+            enterKeyHint="search"
+            inputMode="search"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             onKeyDown={(e) => {
               if (e.key === "Escape") onClose();
-              if (e.key === "Enter") handleSubmitSearch();
+              if (e.key === "Enter") {
+                e.preventDefault();
+                handleSubmitSearch();
+                e.currentTarget.blur();
+              }
             }}
             placeholder="ابحث في المحتوى…"
             dir="rtl"
@@ -324,6 +331,7 @@ export function GlobalSearchModal({ onClose }: Props) {
             autoCorrect="off"
             autoCapitalize="off"
             spellCheck={false}
+            data-search-field="1"
             className={`gsm-input${isMobile ? " gsm-input--mobile" : ""}`}
           />
 

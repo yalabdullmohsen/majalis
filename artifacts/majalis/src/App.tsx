@@ -15,6 +15,7 @@ import { GlobalBackButton } from "@/components/GlobalBackButton";
 import { SafeAreaDebugOverlay } from "@/components/SafeAreaDebugOverlay";
 import { ComingSoonDialog } from "@/components/ComingSoonDialog";
 import { VisualViewportKeyboardBridge } from "@/hooks/useVisualViewportOffset";
+import { SearchKeyboardBridge } from "@/components/SearchKeyboardBridge";
 import { ensureChromeMeta } from "@/lib/ensure-chrome-meta";
 import { AchievementToast } from "@/components/AchievementToast";
 import { useAchievementCheck } from "@/hooks/useAchievementCheck";
@@ -998,6 +999,7 @@ function AppShellInner() {
       {!hideSiteChrome && <PwaInstallBanner />}
       <BottomNavBar />
       <VisualViewportKeyboardBridge />
+      <SearchKeyboardBridge />
       <SafeAreaDebugOverlay />
       {newBadges.length > 0 && (
         <AchievementToast badges={newBadges} onDismiss={dismissBadges} />
