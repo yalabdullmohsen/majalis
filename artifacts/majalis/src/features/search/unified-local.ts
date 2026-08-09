@@ -4,6 +4,7 @@ import {
   scoreTolerantMatch,
   type TolerantMatch,
 } from "@/features/search/tolerant-match";
+import { kindPriority } from "@/features/search/kind-priority";
 
 export type UnifiedSearchDoc = {
   id: string;
@@ -30,6 +31,15 @@ type IndexPayload = {
 };
 
 let cache: IndexPayload | null = null;
+
+/** للاختبارات أو الحقن المسبق دون شبكة. */
+export function primeUnifiedSearchIndex(payload: IndexPayload): void {
+  cache = payload;
+}
+
+export function clearUnifiedSearchIndexCache(): void {
+  cache = null;
+}
 
 export async function loadUnifiedSearchIndex(): Promise<IndexPayload> {
   if (cache) return cache;
@@ -82,6 +92,8 @@ export function searchUnifiedIndex(
   scored.sort((a, b) => {
     const c = compareTolerantMatches(a._m, b._m);
     if (c !== 0) return c;
+    const pk = kindPriority(a.kind) - kindPriority(b.kind);
+    if (pk !== 0) return pk;
     return a.titleAr.localeCompare(b.titleAr, "ar");
   });
 
@@ -141,7 +153,13 @@ export async function searchUnifiedIndexAsync(
     await new Promise<void>((r) => setTimeout(r, 0));
   }
 
-  scored.sort((a, b) => compareTolerantMatches(a._m, b._m));
+  scored.sort((a, b) => {
+    const c = compareTolerantMatches(a._m, b._m);
+    if (c !== 0) return c;
+    const pk = kindPriority(a.kind) - kindPriority(b.kind);
+    if (pk !== 0) return pk;
+    return a.titleAr.localeCompare(b.titleAr, "ar");
+  });
   const out: Record<string, UnifiedSearchHit[]> = {};
   const maxTotal = q.replace(/\s+/g, "").length <= 2 ? 12 : limit;
   let total = 0;

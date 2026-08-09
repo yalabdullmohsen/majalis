@@ -175,6 +175,22 @@
   transition: all 0.15s;
 }
 
+.search-section-chips {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.4rem;
+  overflow-x: auto;
+  padding: 0.35rem 0 0.6rem;
+  margin-bottom: 0.25rem;
+  -webkit-overflow-scrolling: touch;
+}
+
+.search-suggestion-chip.is-active {
+  background: var(--mj-brand-deep, var(--majalis-emerald, #0f5c4c));
+  color: #fff;
+  border-color: transparent;
+}
+
 .search-suggestion-chip:hover {
   background: var(--elite-forest, var(--mj-brand-deep));
   border-color: transparent;
