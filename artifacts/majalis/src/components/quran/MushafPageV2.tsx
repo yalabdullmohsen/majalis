@@ -272,7 +272,7 @@ export function MushafPageV2({
 
       /* حجم موحّد من العرض فقط — بلا سقف ارتفاع يُصغّر الخط */
       let size = (availableWidth * REF_PX) / widestAtRef;
-      const bound: "width" = "width";
+      const bound = "width" as const;
 
       for (let guard = 0; guard < 10; guard++) {
         applyTempFontSize(sizingEls, size);
