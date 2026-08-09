@@ -1,13 +1,13 @@
 /**
  * زخارف مصحف أصلية (SVG) — رسم أصلي للمجلس العلمي (لا يُستخرج من تطبيق آخر).
- * شارة السورة: شريط بسيط بلا نقش طرفي (الخيار الثاني).
+ * شارة السورة المزخرفة: انظر SurahBanner.tsx
  * انظر CREDITS.md و RELEASE_READINESS.md (بند QCF_BSML المؤجّل).
  */
 import { useId } from "react";
 
 /**
- * شارة سورة بسيطة: شريط بيج فاتح + إطار ذهبي رفيع — بلا زخرفة في الطرفين.
- * الاسم يُرسم فوق الشريط في المكوّن الأب.
+ * @deprecated استخدم SurahBanner — يُبقى للتوافق مع مسارات الاختبار القديمة.
+ * شارة سورة بسيطة: شريط بيج فاتح + إطار ذهبي رفيع.
  */
 export function MushafSurahBadgeFrame({ className }: { className?: string }) {
   return (
@@ -20,9 +20,25 @@ export function MushafSurahBadgeFrame({ className }: { className?: string }) {
   );
 }
 
-/** علامة رقم آية زخرفية — للوضع Unicode/خفيف؛ دقة QPC تبقى بمحارف خط الصفحة. */
+/** ميدالية رقم آية — قرص ذهبي بثماني بتلات + حشو لوحة */
 export function MushafAyahMarkerSvg({ className }: { className?: string }) {
   const uid = useId().replace(/:/g, "");
+  const petals: string[] = [];
+  const cx = 20;
+  const cy = 20;
+  const r = 17.2;
+  for (let i = 0; i < 8; i++) {
+    const a = (i * Math.PI) / 4 + Math.PI / 8;
+    const x = cx + Math.cos(a) * r;
+    const y = cy + Math.sin(a) * r;
+    const c1x = cx + Math.cos(a - 0.28) * (r * 0.62);
+    const c1y = cy + Math.sin(a - 0.28) * (r * 0.62);
+    const c2x = cx + Math.cos(a + 0.28) * (r * 0.62);
+    const c2y = cy + Math.sin(a + 0.28) * (r * 0.62);
+    petals.push(
+      `M${cx} ${cy} Q${c1x.toFixed(2)} ${c1y.toFixed(2)} ${x.toFixed(2)} ${y.toFixed(2)} Q${c2x.toFixed(2)} ${c2y.toFixed(2)} ${cx} ${cy}`,
+    );
+  }
   return (
     <svg
       className={className}
@@ -36,47 +52,37 @@ export function MushafAyahMarkerSvg({ className }: { className?: string }) {
       <defs>
         <linearGradient id={`${uid}-ay`} x1="0" y1="0" x2="1" y2="1">
           <stop offset="0%" stopColor="var(--color-mushaf-gold-soft, #C9B07A)" />
-          <stop offset="100%" stopColor="var(--color-mushaf-gold, #8B6914)" />
+          <stop offset="100%" stopColor="var(--color-mushaf-gold-strong, #A67C3D)" />
         </linearGradient>
       </defs>
+      <path
+        d={petals.join(" ")}
+        fill={`url(#${uid}-ay)`}
+        stroke="var(--color-mushaf-gold-strong, #A67C3D)"
+        strokeWidth="0.6"
+      />
       <circle
         cx="20"
         cy="20"
-        r="18.2"
-        fill="var(--color-mushaf-badge-bg, #F3EBE0)"
-        stroke={`url(#${uid}-ay)`}
+        r="11.6"
+        fill="var(--color-mushaf-panel, #FAF3E8)"
+        stroke="var(--color-mushaf-gold-strong, #A67C3D)"
         strokeWidth="1.1"
       />
       <circle
         cx="20"
         cy="20"
-        r="15.4"
+        r="9.4"
         fill="none"
-        stroke={`url(#${uid}-ay)`}
+        stroke="var(--color-mushaf-gold-soft, #C9B07A)"
         strokeWidth="0.45"
-        opacity="0.45"
+        opacity="0.55"
       />
-      <path
-        d="M12 7.2 C16 5.2 24 5.2 28 7.2 M14 9 C18 7.4 22 7.4 26 9"
-        fill="none"
-        stroke={`url(#${uid}-ay)`}
-        strokeWidth="0.7"
-        opacity="0.7"
-      />
-      <path
-        d="M12 32.8 C16 34.8 24 34.8 28 32.8 M14 31 C18 32.6 22 32.6 26 31"
-        fill="none"
-        stroke={`url(#${uid}-ay)`}
-        strokeWidth="0.7"
-        opacity="0.7"
-      />
-      <circle cx="20" cy="6.2" r="1.1" fill={`url(#${uid}-ay)`} opacity="0.55" />
-      <circle cx="20" cy="33.8" r="1.1" fill={`url(#${uid}-ay)`} opacity="0.55" />
     </svg>
   );
 }
 
-/** خرطوش رقم الصفحة — مستطيل بحواف مستديرة وحلية في كل طرف */
+/** خرطوش رقم الصفحة — بيضاوي بإطار ذهبي وحلية في كل طرف */
 export function MushafPageCartoucheSvg({ className }: { className?: string }) {
   const uid = useId().replace(/:/g, "");
   return (
@@ -90,29 +96,27 @@ export function MushafPageCartoucheSvg({ className }: { className?: string }) {
       <defs>
         <linearGradient id={`${uid}-pg`} x1="0" y1="0" x2="1" y2="1">
           <stop offset="0%" stopColor="var(--color-mushaf-gold-soft, #C9B07A)" />
-          <stop offset="100%" stopColor="var(--color-mushaf-gold, #8B6914)" />
+          <stop offset="100%" stopColor="var(--color-mushaf-gold-strong, #A67C3D)" />
         </linearGradient>
       </defs>
-      <rect
-        x="28"
-        y="6"
-        width="112"
-        height="32"
-        rx="12"
-        fill="var(--color-mushaf-badge-bg, #F3EBE0)"
+      <ellipse
+        cx="84"
+        cy="22"
+        rx="54"
+        ry="15"
+        fill="var(--color-mushaf-panel, #FAF3E8)"
         stroke={`url(#${uid}-pg)`}
-        strokeWidth="0.9"
+        strokeWidth="1.1"
       />
-      <rect
-        x="32"
-        y="10"
-        width="104"
-        height="24"
-        rx="10"
+      <ellipse
+        cx="84"
+        cy="22"
+        rx="48"
+        ry="11.5"
         fill="none"
         stroke={`url(#${uid}-pg)`}
         strokeWidth="0.45"
-        opacity="0.4"
+        opacity="0.45"
       />
       <g fill="none" stroke={`url(#${uid}-pg)`} strokeWidth="0.9">
         <circle cx="16" cy="22" r="4.4" />

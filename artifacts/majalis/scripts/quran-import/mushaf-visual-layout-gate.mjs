@@ -32,7 +32,7 @@ const BASE =
   process.env.MUSHAF_GATE_BASE_URL?.replace(/\/$/, "") ||
   "https://www.majlisilm.com";
 
-const DEFAULT_PAGES = [1, 2, 3, 13, 283, 587, 588, 589, 590, 591, 592, 593, 594, 595, 596, 604];
+const DEFAULT_PAGES = [1, 2, 3, 100, 283, 400, 500, 586, 595, 600, 604];
 const PAGES = (process.env.MUSHAF_GATE_PAGES || DEFAULT_PAGES.join(","))
   .split(",")
   .map((s) => Number(s.trim()))
@@ -44,13 +44,16 @@ const OUT_DIR =
 
 const MAX_MS = Number(process.env.MUSHAF_GATE_MAX_MS || 180_000);
 const VIEWPORT = { width: 390, height: 844 };
-/** أقصى مسافة بين مراكز أسطر متجاورة كنسبة من حجم الخط */
-const MAX_LINE_PITCH_EM = 1.6;
+/**
+ * أقصى مسافة بين مراكز أسطر متجاورة كنسبة من حجم الخط
+ * ≈ line-height(1.05) + gap≤0.55×lineH → ≈1.63em
+ */
+const MAX_LINE_PITCH_EM = 1.65;
 /** حد أدنى لنسبة حجم خط الصفحتين الافتتاحيتين من متوسط الصفحات العادية */
-const MIN_OPENING_FONT_RATIO = 0.8;
-/** امتلاء المحتوى داخل صندوق الأسطر المحتضَن */
-const MIN_FILL_NORMAL = 0.92;
-const MIN_FILL_OPENING = 0.8;
+const MIN_OPENING_FONT_RATIO = 0.95;
+/** امتلاء المحتوى داخل صندوق الأسطر (فجوات موزّعة) */
+const MIN_FILL_NORMAL = 0.9;
+const MIN_FILL_OPENING = 0.78;
 
 function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));

@@ -47,7 +47,6 @@ assert.equal(
   false,
   "حشو علوي أدنى من 1.35rem",
 );
-/* حرج: position:relative على .quran-shell--ayah يلغي fixed ويُخرج المصحف خارج الشاشة */
 assert.equal(
   /\.quran-shell--ayah\s*\{[^}]*position:\s*relative/.test(quranCss),
   false,
@@ -65,21 +64,22 @@ assert.match(viewSrc, /mpv-ayah-header/);
 assert.match(viewSrc, /mpv-ayah-page-badge/);
 assert.match(viewSrc, /AYAH_MUSHAF_PAPER_BG/);
 assert.match(viewSrc, /mpv-ayah-header__surah">\{headerSurahNames\}/);
-assert.match(viewSrc, /headerJuzHizb/);
-assert.match(viewSrc, /الحزب \$\{toArabicDigits\(hizb\)\}/, "الحزب في رأس الصفحة مع الجزء");
-assert.match(viewSrc, /`سورة \$\{n\}`/, "كلمة سورة في الرأس");
-assert.equal(/footerMetaLabel|footerHizbLabel|formatRubElHizbFooterLabel/.test(viewSrc), false, "بلا نص حزب/ربع في الذيل");
+assert.match(viewSrc, /headerJuzLabel/);
+assert.match(viewSrc, /الجزء \$\{toArabicDigits\(juz\)\}/, "الجزء فقط في الرأس");
+assert.equal(/headerJuzHizb/.test(viewSrc), false, "بلا حزب في الرأس");
+assert.match(viewSrc, /footerMetaLabel/);
+assert.match(viewSrc, /formatRubElHizbFooterLabel/);
+assert.match(viewSrc, /mpv-ayah-footer__meta/);
 assert.match(viewSrc, /useState\(false\)/);
 assert.match(viewSrc, /mpv-body--ayah/);
 assert.equal(/mpv-ayah-nav-btn/.test(viewSrc), false, "بلا أسهم تنقّل في التذييل — الشارة فقط");
 assert.equal(/pageFillMode/.test(viewSrc), false, "بلا وضع امتلاء منفصل");
 assert.equal(/Maximize2|Minimize2|mpv-fill-enter/.test(viewSrc), false, "بلا أزرار تكبير/تصغير");
 assert.match(viewSrc, /MushafPageCartoucheSvg/);
-assert.equal(/mpv-ayah-footer__hizb/.test(viewSrc), false, "الذيل بلا تسمية حزب");
-assert.match(quranCss, /\.mpv-ayah-footer\s*\{[\s\S]*?justify-content:\s*center/, "ذيل: خرطوش أسفل الوسط");
-assert.equal(/mpv-ayah-footer__meta/.test(viewSrc), false, "الذيل بلا غلاف meta يلصق العنصرين");
+assert.match(quranCss, /\.mpv-ayah-footer\s*\{[\s\S]*?justify-content:\s*space-between/, "ذيل: حزب + خرطوش");
+assert.match(quranCss, /\.mpv-ayah-header\s*\{[\s\S]*?font-size:\s*15px/, "رأس أوضح 15px");
 
-assert.match(immersiveSrc, /AYAH_MUSHAF_PAPER_BG\s*=\s*"#F7F0E4"/);
+assert.match(immersiveSrc, /AYAH_MUSHAF_PAPER_BG\s*=\s*"#FCF8F1"/);
 
 const bodyInner = quranCss.match(
   /\.quran-shell--ayah\s+\.qs-mushaf-body\s+\.qs-mushaf-body-inner\s*\{[^}]+\}/,

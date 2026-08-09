@@ -53,7 +53,7 @@ assert.match(quranCss, /@media\s*\(max-width:\s*480px\)/);
 assert.match(quranCss, /\.mpv-ayah-header\s*\{[\s\S]*?z-index:\s*32/);
 assert.match(
   quranCss,
-  /\.mpv-toolbar\.mpv-toolbar--ayah\s*\{[\s\S]*?top:\s*calc\(var\(--inset-top\)\s*\+\s*2\.55rem\)/,
+  /\.mpv-toolbar\.mpv-toolbar--ayah\s*\{[\s\S]*?top:\s*calc\(var\(--inset-top\)\s*\+\s*2\.75rem\)/,
 );
 
 console.log("mushaf-toolbar-layout.test.ts: ok");
