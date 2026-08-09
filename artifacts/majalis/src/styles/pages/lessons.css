@@ -35,10 +35,23 @@
 .lessons-v2-toolbar {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 0.65rem;
   margin-bottom: 0.65rem;
+  width: 100%;
+}
+.lessons-v2-toolbar .filter-chips {
+  flex: 1 1 100%;
+  min-width: 0;
+}
+/* يهزم أي قاعدة pill عامة على أزرار التصفية داخل الدروس */
+.lessons-page-v2 .filter-chips,
+.lessons-page-v2 .filter-chips__chip {
+  border-radius: var(--mj-r-sm, var(--ds-radius, 6px)) !important;
+}
+.lessons-page-v2 .filter-chips {
+  border-radius: var(--mj-r-md, var(--ds-radius, 8px)) !important;
 }
 
 .lessons-page-v2 .page-hero-mj,
