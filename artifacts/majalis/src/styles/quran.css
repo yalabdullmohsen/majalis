@@ -2187,7 +2187,7 @@ body.has-immersive-mushaf .cookie-consent { display: none !important; }
   user-select: none;
   -webkit-user-select: none;
   /* مخطط آية: عمود كامل الشاشة — حشو أدنى لترك المساحة للنص */
-  justify-content: space-between;
+  justify-content: stretch;
   padding: 0;
   padding-top: max(0.15rem, var(--inset-top));
   padding-bottom: max(0.15rem, var(--inset-bottom));
@@ -2195,6 +2195,7 @@ body.has-immersive-mushaf .cookie-consent { display: none !important; }
   box-sizing: border-box;
   width: 100%;
   max-width: 100%;
+  position: relative;
 }
 .quran-shell--ayah.quran-shell--night {
   --ayah-paper: #0F172A;
@@ -2243,7 +2244,12 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
   border: none;
   z-index: 32;
   pointer-events: none;
-  position: relative;
+  /* عائم — لا يزيح كتلة النص */
+  position: absolute;
+  top: max(0.1rem, var(--inset-top));
+  inset-inline: 0;
+  width: 100%;
+  box-sizing: border-box;
 }
 .mpv-ayah-header__juz,
 .mpv-ayah-header__surah {
@@ -2287,6 +2293,12 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
   flex: none;
 }
 .mpv-toolbar.mpv-toolbar--ayah.mpv-toolbar--hidden {
+  display: none !important;
+  transform: none;
+  opacity: 0;
+  pointer-events: none;
+}
+.quran-shell--chrome-hidden .mpv-toolbar.mpv-toolbar--ayah {
   display: none !important;
   transform: none;
   opacity: 0;
@@ -2534,9 +2546,9 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
 }
 .quran-shell--ayah .mf2-surah-header__name {
   color: var(--ayah-badge-ink, var(--color-mushaf-gold, #B08A3E));
-  font-weight: 600;
+  font-weight: 400;
 }
-/* إزالة أي فراغ علوي زائد في الصفحتين الافتتاحيتين */
+/* إزالة فراغ علوي زائد في الصفحتين الافتتاحيتين */
 .quran-shell--ayah .mf2-lines--opening-centered {
   padding-top: 0;
   margin-top: 0;
@@ -2553,6 +2565,10 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
   border: none;
   z-index: 25;
   box-sizing: border-box;
+  /* عائم — لا يزيح كتلة النص */
+  position: absolute;
+  bottom: max(0.1rem, var(--inset-bottom));
+  inset-inline: 0;
 }
 .mpv-ayah-footer__hizb {
   justify-self: start;
@@ -2717,15 +2733,19 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
   flex: 1;
   min-height: 0;
 }
-/* وضع آية: بعد shorthand أعلاه — هوامش رأسية 4–8px فقط، بلا حجز شريط سفلي */
+/* وضع آية: الجسم يملأ الشاشة؛ الرأس/الذيل/الأدوات طبقات عائمة فوقه */
 .mpv-body.mpv-body--ayah {
-  padding-top: 6px;
-  padding-bottom: 6px;
+  padding-top: 1.35rem;
+  padding-bottom: 2.15rem;
   padding-inline: max(8px, var(--inset-left)) max(8px, var(--inset-right));
+  flex: 1 1 auto;
+  min-height: 0;
+  height: 100%;
 }
 .quran-shell--ayah.quran-shell--chrome-hidden .mpv-body.mpv-body--ayah {
-  padding-top: 4px;
-  padding-bottom: 4px;
+  /* الأدوات مخفية — نفس الحشو لأن رأس الجزء/الذيل يبقيان عائمَين */
+  padding-top: 1.35rem;
+  padding-bottom: 2.15rem;
 }
 /* عند إخفاء الأدوات باللمس: لا نحجز فراغًا للشريط السفلي */
 .quran-shell--chrome-hidden .mpv-body:not(.mpv-body--ayah) {

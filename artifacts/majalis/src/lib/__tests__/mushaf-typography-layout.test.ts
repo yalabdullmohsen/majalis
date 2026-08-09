@@ -49,6 +49,7 @@ assert.match(
   /\.mf2-lines--opening-centered\s+\.mf2-line\s*\{[\s\S]*?flex:\s*0\s+0\s+auto/,
   "الصفحتان 1–2 بلا تمديد بين الأسطر",
 );
+assert.match(pageComp, /availableWidth\s*\/\s*0\.72/, "الصفحتان 1–2: خانة بنسبة صفحة مصحف");
 assert.match(mushafV2, /\.mf2-surah-badge/, "شارة سورة عريضة قابلة للتمدد");
 assert.match(pageComp, /MushafSurahBadgeFrame/);
 assert.match(pageComp, /sizingEls|sizing-line|ayahLineCount/, "تحجيم من أعرض سطر + عدد الأسطر الفعلي");
@@ -71,7 +72,11 @@ assert.match(pageComp, /pageFontSize/);
 assert.match(pageComp, /surahTitleRefs|basmalaRefs/, "عنوان وبسملة ضمن sizingLines");
 assert.match(pageComp, /measurement-exclusions|metric-only/, "استثناءات المقياس مفصولة عن التحجيم");
 assert.equal(/SHORT_FILL_RATIO/.test(pageComp), false, "بلا SHORT_FILL_RATIO / fit لكل سطر");
-assert.match(pageComp, /mf2-ayah-marker/, "علامة الآية من محرف الخط");
+assert.match(pageComp, /mf2-ayah-marker/, "علامة الآية دائرة + رقم هندي");
+assert.match(pageComp, /toArabicDigits\(ayahNumberFromEndWord/, "رقم الآية هندي لا محرف QPC");
+assert.match(pageComp, /drawnSurahTitleText/, "شارة السورة بالرسم العثماني");
+assert.match(pageComp, /TARGET_BLOCK_FILL[\s\S]*0\.85/, "هدف امتلاء الصفحتين 1–2 ≥ 85%");
+assert.match(pageComp, /data-mf2-bind|dataset\.mf2Bind/, "تشخيص قيد التحجيم");
 assert.match(pageComp, /pageFont\.failed|useUnicodeSafe/, "تراجع تلقائي عند فشل خط QPC");
 
 // 4) line-height ضمن 1.0–1.15 عبر --mf2-lh

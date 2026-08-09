@@ -67,7 +67,7 @@ function sizingLinesForPage(verses, chaptersById) {
     if (!ch) continue;
     lines.push({
       kind: "surah_title",
-      text: `${ch.name_arabic}`,
+      text: `سُورَةُ ${ch.name_arabic}`,
       font: "title",
     });
     if (ch.bismillah_pre) {

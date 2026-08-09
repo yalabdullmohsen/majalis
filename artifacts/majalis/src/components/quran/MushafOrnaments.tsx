@@ -1,107 +1,128 @@
 /**
- * زخارف مصحف أصلية (SVG) — نقش نباتي + وردة دائرية.
+ * زخارف مصحف أصلية (SVG) — شريط نباتي داخل إطار واحد قابل للتمدد.
  * مصدر التصميم: رسم أصلي للمجلس العلمي (لا يُستخرج من تطبيق آخر).
  * انظر CREDITS.md.
  */
 import { useId } from "react";
 
-/** طرف زخرفي ثابت العرض — وردة + أوراق */
-function OrnamentEnd({
+/** طرف داخلي: وردة + نقش نباتي بحشو بيج — جزء من الشريط لا عنصر معلّق */
+function BadgeEnd({
   mirror,
-  gradId,
+  uid,
 }: {
   mirror?: boolean;
-  gradId: string;
+  uid: string;
 }) {
+  const g = `${uid}-e${mirror ? "m" : "s"}`;
   return (
     <svg
       className="mf2-surah-badge__end"
-      viewBox="0 0 56 52"
-      width="56"
-      height="52"
+      viewBox="0 0 80 40"
       aria-hidden="true"
       focusable="false"
+      preserveAspectRatio="xMidYMid meet"
       style={mirror ? { transform: "scaleX(-1)" } : undefined}
     >
       <defs>
-        <linearGradient id={gradId} x1="0" y1="0" x2="1" y2="1">
+        <linearGradient id={g} x1="0" y1="0.5" x2="1" y2="0.5">
           <stop offset="0%" stopColor="var(--color-mushaf-gold-soft, #C9B07A)" />
           <stop offset="100%" stopColor="var(--color-mushaf-gold, #8B6914)" />
         </linearGradient>
       </defs>
-      <g fill="none" stroke={`url(#${gradId})`} strokeWidth="1.05">
-        <path d="M8 26 C14 12 28 14 36 26 C28 38 14 40 8 26Z" />
-        <path d="M8 26 C12 18 20 19 26 26 C20 33 12 34 8 26Z" opacity="0.75" />
-        <circle cx="40" cy="26" r="5.4" />
-        <circle cx="40" cy="26" r="2.3" fill={`url(#${gradId})`} stroke="none" opacity="0.55" />
-        <path
-          d="M40 20.6 Q42 23.5 40 26 Q38 23.5 40 20.6Z M40 31.4 Q42 28.5 40 26 Q38 28.5 40 31.4Z M34.6 26 Q37.5 28 40 26 Q37.5 24 34.6 26Z M45.4 26 Q42.5 28 40 26 Q42.5 24 45.4 26Z"
-          fill={`url(#${gradId})`}
-          stroke="none"
-          opacity="0.35"
+      <rect
+        x="0"
+        y="0"
+        width="80"
+        height="40"
+        fill="var(--color-mushaf-badge-bg, #F3EBE0)"
+      />
+      {/* نقش نباتي متكرر داخل الطرف */}
+      <g fill="none" stroke={`url(#${g})`} strokeWidth="0.7" opacity="0.78">
+        <path d="M4 20 C10 8 22 8 28 20 C22 32 10 32 4 20Z" />
+        <path d="M12 20 C16 13 22 13 26 20 C22 27 16 27 12 20Z" opacity="0.7" />
+        <path d="M30 20 C36 10 46 10 52 20 C46 30 36 30 30 20Z" />
+        <path d="M28 11 C34 7 40 9 42 13" />
+        <path d="M28 29 C34 33 40 31 42 27" />
+      </g>
+      {/* وردة دائرية واضحة */}
+      <g>
+        <circle
+          cx="64"
+          cy="20"
+          r="9"
+          fill="color-mix(in srgb, var(--color-mushaf-paper, #F7F0E4) 60%, #fff)"
+          stroke={`url(#${g})`}
+          strokeWidth="0.9"
         />
+        <circle cx="64" cy="20" r="5.2" fill="none" stroke={`url(#${g})`} strokeWidth="0.55" opacity="0.7" />
+        <circle cx="64" cy="20" r="2.2" fill={`url(#${g})`} opacity="0.5" />
         <path
-          d="M30 18 C34 14 38 15 40 18 C36 19 32 20 30 18Z"
-          fill={`url(#${gradId})`}
-          stroke="none"
-          opacity="0.45"
-        />
-        <path
-          d="M30 34 C34 38 38 37 40 34 C36 33 32 32 30 34Z"
-          fill={`url(#${gradId})`}
-          stroke="none"
-          opacity="0.45"
+          d="M64 12.2 Q67.2 16.2 64 20 Q60.8 16.2 64 12.2Z M64 27.8 Q67.2 23.8 64 20 Q60.8 23.8 64 27.8Z M56.2 20 Q60.2 23.2 64 20 Q60.2 16.8 56.2 20Z M71.8 20 Q67.8 23.2 64 20 Q67.8 16.8 71.8 20Z"
+          fill={`url(#${g})`}
+          opacity="0.38"
         />
       </g>
     </svg>
   );
 }
 
-/** شارة سورة عريضة: الطرفان يثبتان والوسط يمتد */
+/** شارة سورة: إطار رفيع موحّد، طرفان مزخرفان بالداخل، وسط فاتح يمتد */
 export function MushafSurahBadgeFrame({ className }: { className?: string }) {
   const uid = useId().replace(/:/g, "");
+  const stroke = `${uid}-stroke`;
   return (
     <div className={className ? `mf2-surah-badge ${className}` : "mf2-surah-badge"} aria-hidden="true">
-      <OrnamentEnd gradId={`${uid}-g1`} />
-      <svg
-        className="mf2-surah-badge__mid"
-        viewBox="0 0 200 52"
-        preserveAspectRatio="none"
-        focusable="false"
-      >
+      {/* إطار خارجي رفيع يوحّد الطرفين والوسط */}
+      <svg className="mf2-surah-badge__outline" viewBox="0 0 100 40" preserveAspectRatio="none" focusable="false">
+        <defs>
+          <linearGradient id={stroke} x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stopColor="var(--color-mushaf-gold-soft, #C9B07A)" />
+            <stop offset="50%" stopColor="var(--color-mushaf-gold, #8B6914)" />
+            <stop offset="100%" stopColor="var(--color-mushaf-gold-soft, #C9B07A)" />
+          </linearGradient>
+        </defs>
         <rect
-          x="1"
-          y="5"
-          width="198"
-          height="42"
-          rx="4"
-          fill="none"
-          stroke="var(--color-mushaf-gold, #8B6914)"
-          strokeWidth="1.35"
-        />
-        <rect
-          x="5"
-          y="11"
-          width="190"
-          height="30"
-          rx="2.5"
+          x="0.4"
+          y="0.4"
+          width="99.2"
+          height="39.2"
+          rx="3"
           fill="var(--color-mushaf-badge-bg, #F3EBE0)"
-          stroke="var(--color-mushaf-gold-soft, #C9B07A)"
+          stroke={`url(#${stroke})`}
           strokeWidth="0.7"
         />
-        <rect
-          x="8"
-          y="14.5"
-          width="184"
-          height="23"
-          rx="1.5"
-          fill="none"
-          stroke="var(--color-mushaf-gold-soft, #C9B07A)"
-          strokeWidth="0.45"
-          opacity="0.45"
-        />
       </svg>
-      <OrnamentEnd mirror gradId={`${uid}-g2`} />
+      <div className="mf2-surah-badge__row">
+        <BadgeEnd uid={uid} />
+        <svg className="mf2-surah-badge__mid" viewBox="0 0 200 40" preserveAspectRatio="none" focusable="false">
+          <rect
+            x="0"
+            y="4"
+            width="200"
+            height="32"
+            fill="color-mix(in srgb, var(--color-mushaf-paper, #F7F0E4) 72%, #fff)"
+          />
+          <line
+            x1="0"
+            y1="5"
+            x2="200"
+            y2="5"
+            stroke="var(--color-mushaf-gold-soft, #C9B07A)"
+            strokeWidth="0.45"
+            opacity="0.55"
+          />
+          <line
+            x1="0"
+            y1="35"
+            x2="200"
+            y2="35"
+            stroke="var(--color-mushaf-gold-soft, #C9B07A)"
+            strokeWidth="0.45"
+            opacity="0.55"
+          />
+        </svg>
+        <BadgeEnd mirror uid={uid} />
+      </div>
     </div>
   );
 }
@@ -131,7 +152,7 @@ export function MushafPageCartoucheSvg({ className }: { className?: string }) {
         rx="14"
         fill="var(--color-mushaf-badge-bg, #F3EBE0)"
         stroke={`url(#${uid}-pg)`}
-        strokeWidth="1.25"
+        strokeWidth="0.85"
       />
       <rect
         x="34"
@@ -141,10 +162,10 @@ export function MushafPageCartoucheSvg({ className }: { className?: string }) {
         rx="11"
         fill="none"
         stroke={`url(#${uid}-pg)`}
-        strokeWidth="0.55"
-        opacity="0.45"
+        strokeWidth="0.45"
+        opacity="0.4"
       />
-      <g fill="none" stroke={`url(#${uid}-pg)`} strokeWidth="1">
+      <g fill="none" stroke={`url(#${uid}-pg)`} strokeWidth="0.9">
         <circle cx="18" cy="22" r="4.2" />
         <circle cx="18" cy="22" r="1.8" fill={`url(#${uid}-pg)`} stroke="none" opacity="0.5" />
         <path d="M23 22 C28 15 34 17 38 22 C34 27 28 29 23 22Z" />

@@ -33,7 +33,14 @@ assert.match(
   /\.mpv-toolbar\.mpv-toolbar--ayah\.mpv-toolbar--hidden\s*\{[\s\S]*?display:\s*none/,
   "إخفاء الأدوات بلا حجز مساحة في التدفق",
 );
-assert.match(quranCss, /\.mpv-body\.mpv-body--ayah\s*\{[\s\S]*?padding-top:\s*6px/);
+assert.match(
+  quranCss,
+  /\.quran-shell--chrome-hidden\s+\.mpv-toolbar\.mpv-toolbar--ayah\s*\{[\s\S]*?display:\s*none/,
+  "إخفاء شريط الأدوات مع chrome-hidden",
+);
+assert.match(quranCss, /\.mpv-ayah-header\s*\{[\s\S]*?position:\s*absolute/, "رأس عائم لا يزيح النص");
+assert.match(quranCss, /\.mpv-ayah-footer\s*\{[\s\S]*?position:\s*absolute/, "ذيل عائم لا يزيح النص");
+assert.match(quranCss, /\.mpv-body\.mpv-body--ayah\s*\{[\s\S]*?padding-top:\s*1\.35rem/);
 assert.match(viewSrc, /toArabicPageDigits/);
 assert.match(viewSrc, /quran-shell--chrome-hidden/);
 assert.match(viewSrc, /quran-shell--ayah/);
