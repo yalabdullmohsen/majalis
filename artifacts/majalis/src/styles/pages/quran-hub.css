@@ -5,10 +5,70 @@
   min-height: 100svh;
   background: var(--elite-white, var(--mj-bg));
   color: var(--elite-ink, #1A1A18);
-  /* الشريط السفلي + safe-area — لا تُقصّ آخر بطاقة */
-  padding-bottom: calc(var(--bottom-nav-total, 5rem) + 1rem);
+  /* ارتفاع الشريط السفلي (يشمل safe-area عبر --bottom-nav-total) + هامش إضافي */
+  padding-bottom: calc(var(--bottom-nav-total, 5rem) + 2rem);
   padding-inline: var(--page-gutter, 1rem) var(--page-gutter-end, var(--page-gutter, 1rem));
   box-sizing: border-box;
+}
+
+/* بطاقة فتح المصحف — فوق البحث، لمسة واحدة تستأنف القراءة */
+.quran-hub-open-mushaf {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 0.35rem 0 0.15rem;
+  padding: 1.15rem 1.25rem;
+  border-radius: 1rem;
+  text-decoration: none;
+  color: #F7F3EA;
+  background:
+    linear-gradient(135deg, rgba(20, 63, 53, 0.97) 0%, rgba(28, 82, 68, 0.95) 55%, rgba(40, 72, 48, 0.92) 100%),
+    radial-gradient(ellipse at 12% 20%, rgba(201, 176, 122, 0.22), transparent 55%);
+  border: 1px solid rgba(201, 176, 122, 0.35);
+  box-shadow: 0 10px 28px rgba(12, 40, 32, 0.18);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  min-width: 0;
+}
+.quran-hub-open-mushaf:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 14px 32px rgba(12, 40, 32, 0.24);
+  color: #F7F3EA;
+}
+.quran-hub-open-mushaf:focus-visible {
+  outline: 2px solid var(--color-mushaf-gold, #C9B07A);
+  outline-offset: 3px;
+}
+.quran-hub-open-mushaf__icon {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 3.1rem;
+  height: 3.1rem;
+  border-radius: 0.85rem;
+  background: rgba(247, 243, 234, 0.1);
+  border: 1px solid rgba(201, 176, 122, 0.4);
+  color: #E8D5A8;
+}
+.quran-hub-open-mushaf__text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+.quran-hub-open-mushaf__title {
+  font-family: var(--font-display, var(--font-heading, "Amiri", serif));
+  font-size: clamp(1.35rem, 4.2vw, 1.65rem);
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: 0.01em;
+}
+.quran-hub-open-mushaf__resume {
+  font-size: 0.92rem;
+  line-height: 1.4;
+  color: rgba(247, 243, 234, 0.82);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .quran-hub-jump {

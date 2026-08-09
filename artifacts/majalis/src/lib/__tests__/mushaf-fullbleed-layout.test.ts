@@ -41,6 +41,17 @@ assert.match(
 assert.match(quranCss, /\.mpv-ayah-header\s*\{[\s\S]*?position:\s*absolute/, "رأس عائم لا يزيح النص");
 assert.match(quranCss, /\.mpv-ayah-footer\s*\{[\s\S]*?position:\s*absolute/, "ذيل عائم لا يزيح النص");
 assert.match(quranCss, /\.mpv-body\.mpv-body--ayah\s*\{[\s\S]*?padding-top:\s*1\.35rem/);
+/* حرج: position:relative على .quran-shell--ayah يلغي fixed ويُخرج المصحف خارج الشاشة */
+assert.equal(
+  /\.quran-shell--ayah\s*\{[^}]*position:\s*relative/.test(quranCss),
+  false,
+  ".quran-shell--ayah بلا position:relative يلغي immersive fixed",
+);
+assert.match(
+  quranCss,
+  /\.quran-shell--immersive\.quran-shell--ayah\s*\{[\s\S]*?position:\s*fixed/,
+  "المصحف الغامر fixed يملأ الشاشة",
+);
 assert.match(viewSrc, /toArabicPageDigits/);
 assert.match(viewSrc, /quran-shell--chrome-hidden/);
 assert.match(viewSrc, /quran-shell--ayah/);

@@ -2187,7 +2187,7 @@ body.has-immersive-mushaf .cookie-consent { display: none !important; }
   user-select: none;
   -webkit-user-select: none;
   /* مخطط آية: عمود كامل الشاشة — حشو أدنى لترك المساحة للنص */
-  justify-content: stretch;
+  justify-content: flex-start;
   padding: 0;
   padding-top: max(0.15rem, var(--inset-top));
   padding-bottom: max(0.15rem, var(--inset-bottom));
@@ -2195,7 +2195,17 @@ body.has-immersive-mushaf .cookie-consent { display: none !important; }
   box-sizing: border-box;
   width: 100%;
   max-width: 100%;
-  position: relative;
+  /*
+   * ⚠ لا تضبط التموضع هنا كـ relative — يلغي fixed من
+   * .quran-shell--immersive (نفس العنصر) فيخرج المصحف خارج الشاشة (y=viewport).
+   * العنصر fixed أصلاً حاوية لـ absolute (رأس/ذيل/أدوات).
+   */
+}
+/* تثبيت صريح فوق أي قاعدة لاحقة — المصحف الغامر يجب أن يملأ الشاشة */
+.quran-shell--immersive.quran-shell--ayah {
+  position: fixed;
+  inset: 0;
+  z-index: 10010;
 }
 .quran-shell--ayah.quran-shell--night {
   --ayah-paper: #0F172A;
