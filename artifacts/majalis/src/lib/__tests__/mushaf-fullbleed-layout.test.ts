@@ -70,7 +70,8 @@ assert.equal(/pageFillMode/.test(viewSrc), false, "بلا وضع امتلاء م
 assert.equal(/Maximize2|Minimize2|mpv-fill-enter/.test(viewSrc), false, "بلا أزرار تكبير/تصغير");
 assert.match(viewSrc, /MushafPageCartoucheSvg/);
 assert.match(viewSrc, /mpv-ayah-footer__hizb/);
-assert.match(viewSrc, /mpv-ayah-footer__meta/);
+assert.match(quranCss, /\.mpv-ayah-footer\s*\{[\s\S]*?justify-content:\s*space-between/, "ذيل: خرطوش يمين وحزب يسار");
+assert.equal(/mpv-ayah-footer__meta/.test(viewSrc), false, "الذيل بلا غلاف meta يلصق العنصرين");
 
 assert.match(immersiveSrc, /AYAH_MUSHAF_PAPER_BG\s*=\s*"#F7F0E4"/);
 
