@@ -1,5 +1,6 @@
 import { LIBRARY_CATALOG, type LibraryBook } from "@/lib/library-catalog";
 import { normalizeArabic } from "@/shared/arabic-normalize";
+import { scoreTolerantMatch, compareTolerantMatches } from "@/features/search/tolerant-match";
 import type { EntityRepository } from "@/entities/_ports";
 import { wrapAsync, type DataResult } from "@/shared/lib/data-result";
 
@@ -30,12 +31,14 @@ export const bookRepository: EntityRepository<BookEntity> = {
   async search(query: string) {
     const q = normalizeArabic(query);
     if (!q) return [];
-    return LIBRARY_CATALOG.filter((b) => {
-      const hay = normalizeArabic(
-        [b.title, b.author, b.category, ...(b.keywords ?? [])].join(" "),
-      );
-      return hay.includes(q);
-    }).map(toEntity);
+    const scored = LIBRARY_CATALOG.map((b) => {
+      const hay = [b.title, b.author, b.category, ...(b.keywords ?? [])].join(" ");
+      const hayNorm = normalizeArabic(hay);
+      const m = scoreTolerantMatch(hay, query, hayNorm);
+      return m ? { b, m } : null;
+    }).filter((x): x is NonNullable<typeof x> => !!x);
+    scored.sort((a, b) => compareTolerantMatches(a.m, b.m));
+    return scored.map(({ b }) => toEntity(b));
   },
 };
 
