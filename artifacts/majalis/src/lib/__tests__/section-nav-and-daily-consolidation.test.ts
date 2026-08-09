@@ -153,7 +153,11 @@ console.log("\n=== القوائم بلا أقسام محذوفة — عن الم
   for (const href of ["/methodology", "/fatwa-policy", "/about", "/privacy", "/contact"]) {
     assert(footerNavSrc.includes(href), `رابط التذييل: ${href}`);
   }
-  assert(appSrc.includes("SiteFooter") && appSrc.includes("{!hideSiteChrome && <SiteFooter />}"), "التذييل في غلاف التطبيق");
+  assert(
+    appSrc.includes("SiteFooter") &&
+      appSrc.includes("{!hideSiteChrome && !isNative && <SiteFooter />}"),
+    "التذييل في غلاف التطبيق (ويب فقط — مخفي على Capacitor)",
+  );
   assert(footerNavSrc.includes("الريادة الإسلامية الرقمية"), "سطر الريادة في التذييل");
   assert(servicesNavSrc.includes("/about-us") && servicesNavSrc.includes("/about"), "عن المجلس في مركز الخدمات");
   assert(servicesNavSrc.includes("/start-here") && servicesNavSrc.includes("/learning/paths"), "ابدأ/مسارات في مركز الخدمات");

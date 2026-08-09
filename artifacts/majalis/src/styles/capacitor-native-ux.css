@@ -84,3 +84,14 @@ html.capacitor-native [data-scroll="y"] {
   -webkit-overflow-scrolling: touch;
   overscroll-behavior-y: contain;
 }
+
+/* تذييل الموقع مخفي في التطبيق الأصلي — بلا هامش/تمرير زائد أسفل الصفحات */
+html.capacitor-native .site-footer,
+html.capacitor-native .site-footer--v3,
+html.capacitor-native .site-footer--global {
+  display: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
