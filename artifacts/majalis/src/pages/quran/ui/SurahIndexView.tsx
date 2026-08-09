@@ -1,8 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "wouter";
-import { Search, Star, BookOpen } from "lucide-react";
+import { Star, BookOpen } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
-import { arabicMatchAny } from "@/lib/arabic-search";
 import {
   fetchSurahIndexLocal,
   fetchRevelationTypes,
@@ -11,8 +10,9 @@ import {
   type SurahIndexEntry,
 } from "@/lib/surah-index";
 import { surahList, mushafPageHref } from "@/lib/quran-surah-list";
+import { displaySurahName } from "@/lib/quran-display";
+import { getSurahMeta } from "@/lib/quran-api";
 import { useNumerals } from "@/hooks/useNumerals";
-import { toArabicIndicDigits } from "@/lib/numerals";
 import "@/styles/pages/surah-index.css";
 
 type RevelationFilter = "all" | "meccan" | "medinan" | "favorites";
@@ -41,7 +41,6 @@ export default function SurahIndexPage() {
   const [loading, setLoading] = useState(true);
   const [loadError, setLoadError] = useState(false);
   const [revelationLoaded, setRevelationLoaded] = useState(false);
-  const [query, setQuery] = useState("");
   const [filter, setFilter] = useState<RevelationFilter>("all");
   const [sortMode, setSortMode] = useState<SortMode>("mushaf");
   const [favorites, setFavorites] = useState<Set<number>>(() => new Set());
@@ -97,21 +96,11 @@ export default function SurahIndexPage() {
     else if (filter === "meccan") list = list.filter((s) => s.revelationType === "Meccan");
     else if (filter === "medinan") list = list.filter((s) => s.revelationType === "Medinan");
 
-    const term = query.trim();
-    if (term) {
-      list = list.filter(
-        (s) =>
-          arabicMatchAny([s.name, s.englishName], term) ||
-          String(s.number).startsWith(term) ||
-          toArabicIndicDigits(s.number).startsWith(term),
-      );
-    }
-
     if (sortMode === "revelation") {
       list = [...list].sort((a, b) => a.revelationOrder - b.revelationOrder);
     }
     return list;
-  }, [surahs, filter, query, favorites, sortMode]);
+  }, [surahs, filter, favorites, sortMode]);
 
   function handleToggleFavorite(number: number, e: React.MouseEvent) {
     e.preventDefault();
@@ -165,24 +154,6 @@ export default function SurahIndexPage() {
           >
             ترتيب النزول
           </button>
-        </div>
-
-        <div className="surah-index-search">
-          <Search className="surah-index-search__icon" size={16} strokeWidth={1.8} aria-hidden="true" />
-          <input
-            type="search"
-            enterKeyHint="search"
-            inputMode="search"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") e.currentTarget.blur();
-            }}
-            placeholder="ابحث عن سورة بالاسم أو الرقم..."
-            aria-label="ابحث عن سورة"
-            autoComplete="off"
-            data-search-field="1"
-          />
         </div>
 
         <div className="surah-index-filters" role="tablist" aria-label="تصفية السور">
@@ -265,6 +236,7 @@ export default function SurahIndexPage() {
             const startPage = pageById.get(s.number) ?? 1;
             const fav = favorites.has(s.number);
             const displayNum = sortMode === "revelation" ? s.revelationOrder : s.number;
+            const plainName = displaySurahName(s.number);
             return (
               <li
                 key={s.number}
@@ -276,20 +248,20 @@ export default function SurahIndexPage() {
                 <Link
                   href={mushafPageHref(startPage)}
                   className="surah-index-row"
-                  title={s.description || undefined}
+                  title={s.description || getSurahMeta(s.number).description || undefined}
                 >
                   <span className="surah-index-row__num" aria-hidden="true">
                     {fmt(displayNum)}
                   </span>
                   <span className="surah-index-row__body">
-                    <span className="surah-index-row__name">{s.name}</span>
+                    <span className="surah-index-row__name">{plainName}</span>
                     <span className="surah-index-row__meta">{metaLine(s, startPage)}</span>
                   </span>
                   <button
                     type="button"
                     className={`surah-index-row__fav${fav ? " is-active" : ""}`}
                     onClick={(e) => handleToggleFavorite(s.number, e)}
-                    aria-label={fav ? `إزالة ${s.name} من المفضلة` : `إضافة ${s.name} إلى المفضلة`}
+                    aria-label={fav ? `إزالة ${plainName} من المفضلة` : `إضافة ${plainName} إلى المفضلة`}
                     aria-pressed={fav}
                   >
                     <Star

@@ -1,5 +1,9 @@
 export { parseQuickNav, type QuickNavResult } from "@/features/search/quick-nav";
-export { parseMushafJumpQuery, type MushafJumpTarget } from "@/features/search/mushaf-jump";
+export {
+  parseMushafJumpQuery,
+  matchSurahNumber,
+  type MushafJumpTarget,
+} from "@/features/search/mushaf-jump";
 export {
   normalizeArabic,
   normalizeForSearch,

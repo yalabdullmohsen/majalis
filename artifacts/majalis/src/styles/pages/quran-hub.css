@@ -5,8 +5,20 @@
   min-height: 100svh;
   background: var(--elite-white, var(--mj-bg));
   color: var(--elite-ink, #1A1A18);
-  /* الحشو السفلي يتكفّل به .app-main (الشريط السفلي + safe area) */
-  padding-bottom: 1.25rem;
+  /* الشريط السفلي + safe-area — لا تُقصّ آخر بطاقة */
+  padding-bottom: calc(var(--bottom-nav-total, 5rem) + 1rem);
+  padding-inline: var(--page-gutter, 1rem) var(--page-gutter-end, var(--page-gutter, 1rem));
+  box-sizing: border-box;
+}
+
+.quran-hub-jump {
+  padding-block: 0.85rem 0.5rem;
+  background: var(--mj-bg, var(--elite-white));
+}
+
+/* على مركز القرآن: أظهر قائمة السور بارتفاع مريح دون قفز تخطيط */
+.quran-hub-jump .quran-surah-jump__list {
+  max-height: min(52vh, 24rem);
 }
 
 /* Hero */
