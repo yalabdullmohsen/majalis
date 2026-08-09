@@ -26,7 +26,13 @@ import {
 import { copyAyahText, copyAyahTextPlain, shareAyahAsText } from "@/lib/share-ayah";
 import { addBookmark, removeBookmark, isBookmarked, getNote, saveNote } from "@/lib/quran-personal";
 import { setMushafUnsavedWork } from "@/lib/mushaf-unsaved";
-import { RECITERS } from "@/lib/quran-audio";
+import {
+  VALID_PLAYBACK_RATES,
+  getReciter,
+  getSelectableReciters,
+  reciterInitial,
+  ensureValidReciterPreference,
+} from "@/lib/quran-audio";
 import { CONTACT_EMAIL } from "@/lib/site-config";
 import { afterNextPaint, yieldToMain } from "@/lib/yield-to-main";
 import { prewarmTextApis } from "@/lib/resource-prewarm";
@@ -336,8 +342,7 @@ export function PageAyahActionSheet({
     `الصفحة: ${window.location.href}\nسورة: ${surahName} (${surahNum})\nآية: ${ayahNum}\n\nالملاحظة:\n`,
   );
 
-  const reciterName =
-    RECITERS.find((r) => r.id === reciterId)?.nameAr ?? RECITERS[0]?.nameAr ?? "القارئ";
+  const reciterName = reciterId ? getReciter(reciterId).nameAr : "القارئ";
 
   const fontPercent = Math.round(fontScale * 100);
 
@@ -465,6 +470,9 @@ export function PageAyahActionSheet({
                   type="button"
                   className={`aas-reader__audio-chip${reciterPickerOpen ? " is-on" : ""}`}
                   onClick={() => {
+                    void ensureValidReciterPreference().then((id) => {
+                      if (onSetReciter && id !== reciterId) onSetReciter(id);
+                    });
                     setReciterPickerOpen((v) => !v);
                     setSpeedPickerOpen(false);
                     setEditionMenuOpen(false);
@@ -478,7 +486,7 @@ export function PageAyahActionSheet({
                 </button>
                 {reciterPickerOpen ? (
                   <div className="aas-reader__dropdown" role="listbox" aria-label="اختيار القارئ">
-                    {RECITERS.map((r) => (
+                    {getSelectableReciters("ayah").map((r) => (
                       <button
                         key={r.id}
                         type="button"
@@ -490,7 +498,15 @@ export function PageAyahActionSheet({
                           setReciterPickerOpen(false);
                         }}
                       >
-                        {r.nameAr}
+                        <span className="aas-reader__reciter-initial" aria-hidden="true">
+                          {reciterInitial(r)}
+                        </span>
+                        <span className="aas-reader__reciter-meta">
+                          <span className="aas-reader__reciter-name">{r.nameAr}</span>
+                          <span className="aas-reader__reciter-sub">
+                            {r.riwaya} · {r.qualityLabel}
+                          </span>
+                        </span>
                       </button>
                     ))}
                   </div>
@@ -517,7 +533,7 @@ export function PageAyahActionSheet({
                 </button>
                 {speedPickerOpen ? (
                   <div className="aas-reader__dropdown aas-reader__dropdown--compact" role="listbox" aria-label="سرعة التلاوة">
-                    {[0.5, 0.75, 1, 1.25, 1.5, 1.75, 2].map((rate) => (
+                    {VALID_PLAYBACK_RATES.map((rate) => (
                       <button
                         key={rate}
                         type="button"

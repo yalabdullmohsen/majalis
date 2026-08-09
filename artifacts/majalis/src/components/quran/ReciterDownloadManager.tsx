@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Download, Trash2 } from "lucide-react";
-import { RECITERS } from "@/lib/quran-audio";
+import { getSelectableReciters } from "@/lib/quran-audio";
 import {
   getAllDownloadStatuses,
   downloadReciter,
@@ -79,7 +79,7 @@ export function ReciterDownloadManager() {
         </p>
       ) : null}
       <div className="rdm-list">
-        {RECITERS.map((r) => {
+        {getSelectableReciters("surah").map((r) => {
           const status = statuses.find((s) => s.reciterId === r.id);
           const isDownloading = activeDownload?.reciterId === r.id;
           const percent = isDownloading ? Math.round((activeDownload!.done / activeDownload!.total) * 100) : 0;

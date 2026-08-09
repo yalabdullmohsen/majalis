@@ -28,33 +28,37 @@
 
 كل صف: مجلد everyayah للآية + مسار mp3quran للسورة. الحالة «مفتوح مراجعة ToS» = مسموح بالبث الحي مع الإسناد؛ لا إعادة توزيع مجمّعة خارج التطبيق.
 
-| id | الاسم | everyayah | mp3quran | ملاحظة |
+| id | الاسم | everyayah | mp3quran | جودة / ملاحظة |
 |---|---|---|---|---|
-| alafasy | مشاري راشد العفاسي | Alafasy_64kbps | server8…/afs | مميّز |
-| abdulsamad | عبد الباسط عبد الصمد | Abdul_Basit_Murattal_64kbps | server7…/basit | مميّز |
-| husary | محمود خليل الحصري | Husary_64kbps | server13…/husr | مميّز |
-| minshawi | محمد صديق المنشاوي | Minshawy_Murattal_128kbps | server10…/minsh | مميّز |
-| sudais | عبد الرحمن السديس | Abdurrahmaan_As-Sudais_64kbps | server11…/sds | مميّز |
-| maher | ماهر المعيقلي | Maher_AlMuaiqly_64kbps | server12…/maher | مميّز |
-| shuraim | سعود الشريم | Saood_ash-Shuraym_64kbps | server7…/shur | مميّز |
-| dosari | ياسر الدوسري | Yasser_Ad-Dussary_128kbps | server11…/yasser | مميّز |
-| ghamdi | سعد الغامدي | Ghamadi_40kbps | server7…/s_gmd | مميّز |
-| ajamy | أحمد بن علي العجمي | Ahmed_ibn_Ali_al-Ajamy_64kbps_QuranExplorer.Com | server10…/ajm/128 | مميّز |
-| hudhaify | علي بن عبد الرحمن الحذيفي | Hudhaify_64kbps | server9…/hthfi | مميّز |
-| shatri | أبو بكر الشاطري | Abu_Bakr_Ash-Shaatree_128kbps | server11…/shatri | مميّز |
-| ali_jaber | علي جابر | Ali_Jaber_64kbps | server11…/a_jbr | مميّز |
-| ayyoub | محمد أيوب | Muhammad_Ayyoub_128kbps | server8…/ayyub | |
-| jibreel | محمد جبريل | Muhammad_Jibreel_64kbps | server8…/jbrl | |
-| qatami | ناصر القطامي | Nasser_Alqatami_128kbps | server6…/qtm | |
-| rifai | هاني الرفاعي | Hani_Rifai_192kbps | server8…/hani | |
-| basfar | عبد الله بصفر | Abdullah_Basfar_192kbps | server6…/bsfr | |
-| fares | فارس عباد | Fares_Abbad_64kbps | server8…/frs_a | |
-| mustafa_ismail | مصطفى إسماعيل | Mustafa_Ismail_48kbps | server8…/mustafa | |
-| tablawi | محمد محمود الطبلاوي | Mohammad_al_Tablaway_128kbps | server12…/tblawi | |
-| budair | صلاح البدير | Salah_Al_Budair_128kbps | server6…/s_bud | |
-| qasim | عبد المحسن القاسم | Muhsin_Al_Qasim_192kbps | server8…/qasm | |
-| matrood | عبد الله المطرود | Abdullah_Matroud_128kbps | server8…/mtrod | |
-| akhdar | إبراهيم الأخضر | Ibrahim_Akhdar_32kbps | server6…/akdr | |
-| bukhatir | صلاح بو خاطر | Salaah_AbdulRahman_Bukhatir_128kbps | server8…/bu_khtr | |
+| dosari | ياسر الدوسري | Yasser_Ad-Dussary_128kbps | server11…/yasser | 128kbps · مميّز · حفص |
+| ali_jaber | علي جابر | Ali_Jaber_64kbps | server11…/a_jbr | 64kbps · مميّز · حفص |
+| abdulsamad | عبد الباسط عبد الصمد | Abdul_Basit_Murattal_192kbps | server7…/basit | 192kbps · مميّز · حفص |
+| minshawi | محمد صديق المنشاوي | Minshawy_Murattal_128kbps | server10…/minsh | 128kbps · مميّز · حفص |
+| husary | محمود خليل الحصري | Husary_128kbps | server13…/husr | 128kbps · مميّز · حفص |
+| alafasy | مشاري راشد العفاسي | Alafasy_128kbps | server8…/afs | 128kbps · مميّز · حفص |
+| ghamdi | سعد الغامدي | Ghamadi_40kbps | server7…/s_gmd | 40kbps · مميّز · حفص |
+| maher | ماهر المعيقلي | MaherAlMuaiqly128kbps | server12…/maher | 128kbps · مميّز · حفص |
+| sudais | عبد الرحمن السديس | Abdurrahmaan_As-Sudais_192kbps | server11…/sds | 192kbps · مميّز · حفص |
+| shuraim | سعود الشريم | Saood_ash-Shuraym_128kbps | server7…/shur | 128kbps · مميّز · حفص |
+| ajamy | أحمد بن علي العجمي | …Ajamy_64kbps… | server10…/ajm/128 | 64kbps · مميّز · حفص |
+| qatami | ناصر القطامي | Nasser_Alqatami_128kbps | server6…/qtm | 128kbps · مميّز · حفص |
+| shatri | أبو بكر الشاطري | Abu_Bakr_Ash-Shaatree_128kbps | server11…/shatri | 128kbps · مميّز · حفص |
+| balilah | بندر بليلة | — (سورة فقط) | server6…/balilah | mp3quran فقط · حفص |
+| jaleel | خالد الجليل | — (سورة فقط) | server10…/jleel | mp3quran فقط · حفص |
+| abkar | إدريس أبكر | — (سورة فقط) | server6…/abkr | mp3quran فقط · حفص |
+| fares | فارس عباد | Fares_Abbad_64kbps | server8…/frs_a | 64kbps · مميّز · حفص |
+| rifai | هاني الرفاعي | Hani_Rifai_192kbps | server8…/hani | 192kbps · مميّز · حفص |
+| hudhaify | علي بن عبد الرحمن الحذيفي | Hudhaify_128kbps | server9…/hthfi | 128kbps · حفص |
+| ayyoub | محمد أيوب | Muhammad_Ayyoub_128kbps | server8…/ayyub | 128kbps |
+| jibreel | محمد جبريل | Muhammad_Jibreel_64kbps | server8…/jbrl | 64kbps |
+| basfar | عبد الله بصفر | Abdullah_Basfar_192kbps | server6…/bsfr | 192kbps |
+| mustafa_ismail | مصطفى إسماعيل | Mustafa_Ismail_48kbps | server8…/mustafa | 48kbps |
+| tablawi | محمد محمود الطبلاوي | Mohammad_al_Tablaway_128kbps | server12…/tblawi | 128kbps |
+| budair | صلاح البدير | Salah_Al_Budair_128kbps | server6…/s_bud | 128kbps |
+| qasim | عبد المحسن القاسم | Muhsin_Al_Qasim_192kbps | server8…/qasm | 192kbps |
+| matrood | عبد الله المطرود | Abdullah_Matroud_128kbps | server8…/mtrod | 128kbps |
+| akhdar | إبراهيم الأخضر | Ibrahim_Akhdar_32kbps | server6…/akdr | 32kbps |
+| bukhatir | صلاح بو خاطر | Salaah_AbdulRahman_Bukhatir_128kbps | server8…/bu_khtr | 128kbps |
 
-المصدر البرمجي للقائمة: `artifacts/majalis/src/lib/quran-audio.ts`.
+المصدر البرمجي: `artifacts/majalis/src/lib/quran-audio.ts` + `quran-audio-source.ts`.  
+مفتاح التعطيل التشغيلي: `artifacts/majalis/public/data/quran-audio-remote.json` (إخفاء قارئ أو مصدر everyayah/mp3quran بلا إصدار تطبيق جديد).
