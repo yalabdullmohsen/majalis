@@ -1,4 +1,5 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
+import { Link } from "wouter";
 import {
   Layers, Circle, Star,
   BookMarked, BookOpen, Headphones, GraduationCap,
@@ -11,6 +12,13 @@ import { isComingSoonPath } from "@/lib/nav-visibility";
 import { HubCard } from "@/components/ui/HubCard";
 import { PageHero } from "@/components/ui/PageHero";
 import { QuranSurahJumpSearch } from "@/components/quran/QuranSurahJumpSearch";
+import {
+  getSurahMeta,
+  loadPagePosition,
+  loadReadingAyahKey,
+} from "@/lib/quran-api";
+import { mushafPageHref } from "@/lib/quran-surah-list";
+import { toArabicDigits } from "@/lib/utils";
 import "@/styles/pages/quran-hub.css";
 
 type QuranSection = { href: string; title: string; desc: string; Icon: LucideIcon; tag: string; featured?: boolean };
@@ -145,6 +153,25 @@ const FEATURES = [
   { Icon: BookMarked,    text: "استكشف قصص القرآن وعبر السور؛ من علوم القرآن الكريم وأدواته؛ يُستفاد في التعلم والتدبر — مرجع المجلس العلمي — مرجع تربوي معتمد في منهج المجلس العلمي. — مرجع تربوي معتمد " },
 ];
 
+function mushafResumeTarget(): { href: string; resumeLabel: string } {
+  const page = loadPagePosition();
+  if (page == null) {
+    return { href: mushafPageHref(1), resumeLabel: "ابدأ من الصفحة ١" };
+  }
+  const ayahKey = loadReadingAyahKey();
+  let surahHint = "";
+  if (ayahKey) {
+    const surah = Number(ayahKey.split(":")[0]);
+    if (surah >= 1 && surah <= 114) {
+      surahHint = `سورة ${getSurahMeta(surah).name} · `;
+    }
+  }
+  return {
+    href: mushafPageHref(page),
+    resumeLabel: `آخر موضع: ${surahHint}ص ${toArabicDigits(page)}`,
+  };
+}
+
 export default function QuranHubPage() {
   useEffect(() => {
     applyPageSeo({
@@ -171,12 +198,10 @@ export default function QuranHubPage() {
     });
   }, []);
 
+  const mushafTarget = useMemo(() => mushafResumeTarget(), []);
+
   return (
     <div className="quran-hub-page" dir="rtl">
-      <section className="quran-hub-jump" aria-label="بحث السور والصفحات">
-        <QuranSurahJumpSearch />
-      </section>
-
       <PageHero
         title="القرآن الكريم"
         description="كتاب الله العزيز، اقرأ، استمع، تعلّم، وتدبَّر"
@@ -190,6 +215,24 @@ export default function QuranHubPage() {
           ))}
         </div>
       </PageHero>
+
+      <Link
+        href={mushafTarget.href}
+        className="quran-hub-open-mushaf"
+        aria-label={`افتح المصحف — ${mushafTarget.resumeLabel}`}
+      >
+        <span className="quran-hub-open-mushaf__icon" aria-hidden="true">
+          <BookOpen size={28} strokeWidth={1.75} />
+        </span>
+        <span className="quran-hub-open-mushaf__text">
+          <span className="quran-hub-open-mushaf__title">افتح المصحف</span>
+          <span className="quran-hub-open-mushaf__resume">{mushafTarget.resumeLabel}</span>
+        </span>
+      </Link>
+
+      <section className="quran-hub-jump" aria-label="بحث السور والصفحات">
+        <QuranSurahJumpSearch />
+      </section>
 
       <section className="quran-hub-sections">
         <h2 className="quran-hub-sections__title">أقسام القرآن</h2>

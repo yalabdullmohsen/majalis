@@ -88,6 +88,9 @@ jobs:
       - name: Cron single-response gate
         run: pnpm run verify:single-response
 
+      - name: Install Playwright Chromium (mushaf visibility gate)
+        run: pnpm --filter @workspace/majalis exec playwright install --with-deps chromium
+
       - name: Full package tests
         run: pnpm --filter @workspace/majalis run test
 
