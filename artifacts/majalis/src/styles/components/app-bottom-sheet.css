@@ -8,6 +8,9 @@
   justify-content: center;
   padding-block-end: calc(16px + var(--inset-bottom));
 }
+.app-sheet-overlay--elevated {
+  z-index: 10060;
+}
 .app-sheet-overlay__scrim {
   position: absolute;
   inset: 0;
