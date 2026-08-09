@@ -79,6 +79,12 @@ export async function clearUserLocalDataAndMedia(): Promise<{ removed: number }>
     /* أفضل جهد */
   }
   try {
+    const { clearAdhanFullDownloads } = await import("@/lib/adhan-downloads");
+    await clearAdhanFullDownloads();
+  } catch {
+    /* أفضل جهد */
+  }
+  try {
     if (typeof indexedDB !== "undefined") {
       await new Promise<void>((resolve) => {
         const req = indexedDB.deleteDatabase("majalis-quran-audio-resume");

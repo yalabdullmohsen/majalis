@@ -118,3 +118,13 @@ html[data-theme="dark"] .ads-diagnostics-toggle { color: var(--clr-text-1, var(-
 .pasc-explainer__desc { font-size: 0.78rem; margin: 0 0 0.6rem; color: var(--msk-text-2, var(--mj-ink-2)); line-height: 1.6; }
 .pasc-explainer__actions { display: flex; gap: var(--ds-space-2); }
 
+
+.ads-select {
+  font: inherit;
+  padding: 0.35rem 0.55rem;
+  border-radius: 0.5rem;
+  border: 1px solid color-mix(in srgb, var(--clr-border, #ccc) 80%, transparent);
+  background: var(--clr-surface, #fff);
+  color: inherit;
+  max-width: 9rem;
+}

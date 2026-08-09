@@ -38,6 +38,9 @@
 | قرآن شخصي | إشارات/ملاحظات/ختمة محلية | قراءة | مسح جزئي في الحذف |
 | تقدّم/سلسلة | `majalis-*-progress*`, streak | محلي | محلي |
 | موقع صلاة | محافظة/أذان | مواقيت | محلي |
+| تفضيلات الأذان | `majalis-adhan-prefs-v1` | مؤذن/صيغة/صوت/اهتزاز لكل صلاة | يُمسح مع `majalis-*` عند الحذف |
+| سلسلة مقاطع iOS (جلسة) | `sessionStorage` (`majalis-adhan-ios-chain-v1` / resume) | جدولة/إلغاء مقاطع الإشعار | جلسة فقط |
+| تنزيل أذان كامل (اختياري) | Cache API `majalis-adhan-full-v1` + `majalis-adhan-full-meta-v1` | نسخ كاملة دون اتصال؛ سقف ≈ 80 ميغابايت | `clearAdhanFullDownloads` عند حذف الحساب |
 | رمز APNs | `majalis_apns_device_token_v1` | دفع | محلي |
 | تلاوات دون اتصال | IndexedDB `majalis-quran-audio` (Blob MP3) | استماع دون شبكة | تُمسح عبر `clearAllOfflineAudioDownloads` عند حذف الحساب / مسح البيانات |
 | استئناف التلاوة | `majalis-quran-audio-resume` (+ مفتاح LS) | موضع التشغيل | يُمسح مع الحذف |

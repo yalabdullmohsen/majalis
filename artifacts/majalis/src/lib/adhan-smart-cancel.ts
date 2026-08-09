@@ -92,8 +92,7 @@ export function getAdhanResumeContext(): AdhanResumeContext | null {
 
 /** هل يُسمح بتجاوز الوضع الصامت/عدم الإزعاج؟ */
 export function shouldBypassSilentMode(): boolean {
-  const prefs = loadAdhanPrefs();
-  return Boolean((prefs as { bypassSilentMode?: boolean }).bypassSilentMode);
+  return loadAdhanPrefs().bypassSilentMode === true;
 }
 
 /**
@@ -183,7 +182,7 @@ export async function resumeAdhanInternally(opts?: {
     /* ويب أو فشل الجلسة — نكمل بـ HTMLAudio */
   }
 
-  const audio = playAdhan(muezzin, isFajr, "full");
+  const audio = playAdhan(muezzin, isFajr, "full", prefs.volume ?? 1);
   clearAdhanResumeContext();
   return Boolean(audio);
 }
