@@ -7,7 +7,7 @@
   max-width: 600px;
   margin: 0 auto;
   padding: 1.25rem 1rem;
-  padding-bottom: calc(5.5rem + var(--inset-bottom, 0px) + env(safe-area-inset-bottom, 0px));
+  padding-bottom: calc(5.5rem + var(--inset-bottom, 0px));
   box-sizing: border-box;
 }
 

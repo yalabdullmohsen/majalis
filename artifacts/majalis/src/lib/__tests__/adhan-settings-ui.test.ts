@@ -22,7 +22,8 @@ assert.match(css, /inset-inline-start/);
 assert.match(css, /\.ads-chip\s*\{[\s\S]*?height:\s*36px/);
 assert.match(css, /\.ads-chip-scroll/);
 assert.match(css, /\.ads-toast/);
-assert.match(css, /padding-bottom:\s*calc\(5\.5rem/);
+assert.match(css, /padding-bottom:\s*calc\(5\.5rem \+ var\(--inset-bottom/);
+assert.equal(/env\(safe-area/.test(css), false, "بلا env(safe-area) — استخدم --inset-*");
 assert.match(css, /prefers-reduced-motion/);
 
 assert.match(view, /الإعداد العام/);
