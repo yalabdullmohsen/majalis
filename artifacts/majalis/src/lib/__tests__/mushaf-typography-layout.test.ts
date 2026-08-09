@@ -94,6 +94,8 @@ assert.equal(
 // 3) حجم موحّد من أعرض سطر آيات — لا fit سطر-بسطر ولا measurementExclusions
 assert.match(pageComp, /LINE_HEIGHT_EM\s*=\s*1\.05/);
 assert.match(pageComp, /TARGET_BLOCK_FILL\s*=\s*0\.92/);
+assert.match(pageComp, /EDGE_GAP_PX\s*=\s*8/);
+assert.match(pageComp, /LH_CAP\s*=\s*1\.6/);
 assert.equal(/openingFewLines/.test(pageComp), false, "بلا فرع خاص لصفحتي الافتتاح");
 assert.match(pageComp, /sizeByWidth/);
 assert.match(pageComp, /sizeByHeight/);
@@ -105,7 +107,7 @@ assert.match(pageComp, /glyphText/, "علامة الآية في دقة QPC من 
 assert.match(pageComp, /mf2-ayah-marker/, "علامة آية SVG للوضع Unicode/خفيف");
 assert.match(pageComp, /MushafAyahMarkerSvg/);
 assert.match(pageComp, /drawnSurahTitleText/, "شارة السورة بالرسم العثماني");
-assert.match(pageComp, /TARGET_BLOCK_FILL/, "هدف امتلاء موحّد 0.92 كـ #990");
+assert.match(pageComp, /TARGET_BLOCK_FILL/, "هدف امتلاء صندوق الأسطر 0.92 مع سقف LH");
 assert.match(pageComp, /MIN_LINE_FILL/, "حد أدنى لامتلاء عرض السطر قبل scaleX (≤2%)");
 assert.equal(/EQUALIZE_PAGE_DEV_GATE/.test(pageComp), false, "تسوية دائمة لكل الأسطر دون بوابة ص1–2");
 assert.match(pageComp, /data-mf2-bind|dataset\.mf2Bind/, "تشخيص قيد التحجيم");
@@ -116,11 +118,11 @@ assert.match(mushafV2, /\.mf2-line\s*\{[\s\S]*?line-height:\s*var\(--mf2-lh/);
 assert.match(mushafV2, /\.mf2-line\s*\{[\s\S]*?overflow-y:\s*visible/);
 assert.match(mushafV2, /\.mf2-line--unicode[\s\S]*?line-height:\s*2\.2/, "وضع Unicode: ارتفاع تشكيل 2.2");
 
-// 5) خانة آية 100% + كتلة أسطر محتضَنة (height:auto) داخل طبقة absolute مُوسَّطة
+// 5) خانة آية 100% + كتلة أسطر محتضَنة مثبتة أعلى الفجوة (بلا تمركز يضخّم الفراغ العلوي)
 assert.match(quranCss, /\.quran-shell--ayah\s+\.qs-mushaf-body\s+\.qs-mushaf-body-inner\s*\{[\s\S]*?aspect-ratio:\s*auto/);
 assert.match(quranCss, /\.quran-shell--ayah\s+\.qs-mushaf-body\s+\.qs-mushaf-body-inner\s*\{[\s\S]*?height:\s*100%/);
 assert.match(quranCss, /\.quran-shell--ayah\s+\.mf2-lines\s*\{[\s\S]*?height:\s*auto/);
-assert.match(quranCss, /\.quran-shell--ayah\s+\.mfl-visual\s*\{[\s\S]*?justify-content:\s*center/);
+assert.match(quranCss, /\.quran-shell--ayah\s+\.mfl-visual\s*\{[\s\S]*?justify-content:\s*flex-start/);
 assert.equal(/mpv-fill-enter/.test(quranCss), false, "أُزيلت أزرار وضع الامتلاء المنفصل");
 
 assert.match(quranCss, /\.qs-mushaf-body\s*\{[\s\S]*?text-align:\s*justify/);

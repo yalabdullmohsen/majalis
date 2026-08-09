@@ -12,6 +12,7 @@ const layout: MushafPageLayout = {
   surahsOnPage: [],
   layoutMode: "standard",
   ayahLineCount: 1,
+  hizbNumber: 1,
   hizbStartingOnPage: 1,
   rubElHizbStartingOnPage: 1,
   rows: [

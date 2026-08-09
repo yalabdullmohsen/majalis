@@ -235,9 +235,14 @@ export function MushafPageV2({
     /** أساس line-height ضمن 1.0–1.1؛ يُرفع حتى سقف pitch 1.6 لبلوغ هدف الامتلاء */
     const LINE_HEIGHT_EM = 1.05;
     const REF_PX = 100;
-    /** هدف امتلاء موحّد كـ #990 — الصفحات قليلة الأسطر تترك الفراغ فوق/تحت طبيعيًا */
+    /**
+     * هدف امتلاء داخل صندوق الأسطر (≥0.92) باحتضان الارتفاع — بلا تمديد pitch فوق LH_CAP.
+     * امتلاء الفجوة رأس→ذيل (≥88%) يُبلَّغ في data-mf2-fill؛ إن منع العرض+LH بلوغه يُسجَّل الأقصى.
+     */
     const TARGET_BLOCK_FILL = 0.92;
-    const LH_CAP = 1.58;
+    const LH_CAP = 1.6;
+    /** فجوة مثبتة تحت الرأس / فوق الخرطوش — بلا حشو وهمي يضخّم الفراغ العلوي */
+    const EDGE_GAP_PX = 8;
     /** تسوية حتى انحراف ≤2% لكل أسطر الآيات القابلة للتمديد */
     const MIN_LINE_FILL = 0.98;
     const ayahCount = Math.max(1, layout.ayahLineCount);
@@ -260,7 +265,8 @@ export function MushafPageV2({
       if (hr && fr && fr.top > hr.bottom) {
         slotHeight = fr.top - hr.bottom;
       }
-      if (availableWidth <= 0 || slotHeight <= 0) return false;
+      const usableH = Math.max(0, slotHeight - EDGE_GAP_PX * 2);
+      if (availableWidth <= 0 || usableH <= 0) return false;
 
       /* التحجيم العرضي من أسطر الآيات فقط — بلا بسملة/عنوان */
       const sizingEls = collectSizingEls(ayahLineRefs.current);
@@ -283,7 +289,8 @@ export function MushafPageV2({
         for (const el of headerBlockRefs.current.values()) {
           if (el) headersH += el.getBoundingClientRect().height;
         }
-        const ayahBudget = Math.max(0, slotHeight - headersH);
+        /* الحجم من الفجوة الكاملة ÷ عدد الأسطر ÷ معامل ارتفاع السطر */
+        const ayahBudget = Math.max(0, usableH - headersH);
         const sizeByHeight = (ayahBudget / ayahCount) / LINE_HEIGHT_EM;
         if (sizeByHeight < sizeByWidth) bound = "height";
         else bound = "width";
@@ -317,7 +324,7 @@ export function MushafPageV2({
       for (const el of headerBlockRefs.current.values()) {
         if (el) headersH += el.getBoundingClientRect().height;
       }
-      const targetContentH = slotHeight * TARGET_BLOCK_FILL;
+      const targetContentH = usableH * TARGET_BLOCK_FILL;
       const lhForTarget = size > 0
         ? Math.max(0, targetContentH - headersH) / (ayahCount * size)
         : LINE_HEIGHT_EM;
@@ -361,12 +368,21 @@ export function MushafPageV2({
       }
       if (Number.isFinite(contentTop) && Number.isFinite(contentBot)) {
         const contentH = Math.max(0, contentBot - contentTop);
+        /* امتلاء الفجوة رأس→ذيل (ليس ارتفاع الصندوق الداخلي فقط) */
         fillRatio = slotHeight > 0 ? contentH / slotHeight : 0;
+        /*
+         * احتضان الكتلة: ارتفاع الصندوق ≈ المحتوى / هدف الامتلاء الداخلي،
+         * مع تثبيت أعلى الفجوة (margin-top = EDGE_GAP) — بلا تمركز يخلق فراغًا علويًا وهميًا.
+         * لا نمدّد المسافات بين الأسطر فوق LH_CAP (pitch ≤ 1.6×).
+         */
         const boxH = Math.min(
-          slotHeight,
+          usableH,
           Math.max(contentH, contentH / TARGET_BLOCK_FILL),
         );
         container.style.height = `${boxH}px`;
+        container.style.marginTop = `${EDGE_GAP_PX}px`;
+        container.style.marginBottom = "0";
+        container.style.justifyContent = "flex-start";
         container.style.flexGrow = "0";
         container.style.flexShrink = "0";
         container.style.flexBasis = "auto";
@@ -382,6 +398,9 @@ export function MushafPageV2({
       container.dataset.mf2Bind = bindLabel;
       container.dataset.mf2Fill = fillRatio.toFixed(3);
       container.dataset.mf2Target = String(TARGET_BLOCK_FILL);
+      container.dataset.mf2MaxFill = lhCapped
+        ? fillRatio.toFixed(3)
+        : String(TARGET_BLOCK_FILL);
 
       setPageFontSize(size);
       setPageLineHeightEm(lh);
@@ -391,6 +410,9 @@ export function MushafPageV2({
 
     const cleanupInline = () => {
       container.style.height = "";
+      container.style.marginTop = "";
+      container.style.marginBottom = "";
+      container.style.justifyContent = "";
       container.style.flexGrow = "";
       container.style.flexShrink = "";
       container.style.flexBasis = "";
@@ -580,13 +602,13 @@ export function MushafPageV2({
         dir="rtl"
         className="mf2-bare-root"
         style={{
-          height: "auto",
+          height: "100%",
           width: "100%",
           display: "flex",
           flexDirection: "column",
-          justifyContent: "center",
+          justifyContent: "flex-start",
           minHeight: 0,
-          flex: "0 0 auto",
+          flex: "1 1 auto",
         }}
       >
         {lines}

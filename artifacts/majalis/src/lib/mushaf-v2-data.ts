@@ -65,16 +65,18 @@ export type MushafPageLayout = {
   surahsOnPage: MushafChapter[];
   /**
    * تخطيط موحّد لكل الصفحات (بما فيها 1 و2): تحجيم من أعرض سطر،
-   * تمركز رأسي للكتلة عند قلّة الأسطر (الفراغ فوق/تحت فقط).
+   * الكتلة تُثبَّت أعلى الفجوة (تحت الرأس) دون تمركز يضخّم الفراغ العلوي.
    */
   layoutMode: "standard";
   /** عدد الأسطر الفعلية ذات الكلمات (من mushaf=1) — للتحجيم */
   ayahLineCount: number;
+  /** رقم الحزب الجاري على الصفحة (من أول آية) — للرأس */
+  hizbNumber: number;
   /** رقم الحزب إن بدأ حزب جديد في هذه الصفحة؛ وإلا null */
   hizbStartingOnPage: number | null;
   /**
    * rub_el_hizb_number إن بدأ ربع/نصف/ثلاثة أرباع (أو حزب) جديد في الصفحة.
-   * للذيل: ربع/نصف/ثلاثة أرباع فقط (بداية الحزب تُعرض كـ hizbStartingOnPage).
+   * كان يُعرض في الذيل؛ الحزب الجاري أصبح في الرأس (hizbNumber).
    */
   rubElHizbStartingOnPage: number | null;
 };
@@ -294,6 +296,7 @@ export async function loadMushafPage(pageNumber: number): Promise<MushafPageLayo
     surahsOnPage,
     layoutMode: "standard",
     ayahLineCount: usedLines.length,
+    hizbNumber: verses[0]?.hizbNumber ?? 1,
     hizbStartingOnPage,
     rubElHizbStartingOnPage,
   };

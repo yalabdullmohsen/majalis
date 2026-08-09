@@ -41,7 +41,7 @@ assert.match(
 );
 assert.match(quranCss, /\.mpv-ayah-header\s*\{[\s\S]*?position:\s*absolute/, "رأس عائم لا يزيح النص");
 assert.match(quranCss, /\.mpv-ayah-footer\s*\{[\s\S]*?position:\s*absolute/, "ذيل عائم لا يزيح النص");
-assert.match(quranCss, /\.mpv-body\.mpv-body--ayah\s*\{[\s\S]*?padding-top:\s*max\(1\.05rem/);
+assert.match(quranCss, /\.mpv-body\.mpv-body--ayah\s*\{[\s\S]*?padding-top:\s*max\(8px/);
 assert.equal(
   /\.mpv-body\.mpv-body--ayah\s*\{[\s\S]*?padding-top:\s*1\.35rem/.test(quranCss),
   false,
@@ -65,18 +65,18 @@ assert.match(viewSrc, /mpv-ayah-header/);
 assert.match(viewSrc, /mpv-ayah-page-badge/);
 assert.match(viewSrc, /AYAH_MUSHAF_PAPER_BG/);
 assert.match(viewSrc, /mpv-ayah-header__surah">\{headerSurahNames\}/);
-assert.match(viewSrc, /formatRubElHizbFooterLabel/);
-assert.match(viewSrc, /footerMetaLabel/);
-assert.equal(/• الحزب/.test(viewSrc), false, "الحزب ليس في رأس الصفحة");
-assert.equal(/سورة \{primarySurahMeta/.test(viewSrc), false, "بلا كلمة سورة في الرأس");
+assert.match(viewSrc, /headerJuzHizb/);
+assert.match(viewSrc, /الحزب \$\{toArabicDigits\(hizb\)\}/, "الحزب في رأس الصفحة مع الجزء");
+assert.match(viewSrc, /`سورة \$\{n\}`/, "كلمة سورة في الرأس");
+assert.equal(/footerMetaLabel|footerHizbLabel|formatRubElHizbFooterLabel/.test(viewSrc), false, "بلا نص حزب/ربع في الذيل");
 assert.match(viewSrc, /useState\(false\)/);
 assert.match(viewSrc, /mpv-body--ayah/);
 assert.equal(/mpv-ayah-nav-btn/.test(viewSrc), false, "بلا أسهم تنقّل في التذييل — الشارة فقط");
 assert.equal(/pageFillMode/.test(viewSrc), false, "بلا وضع امتلاء منفصل");
 assert.equal(/Maximize2|Minimize2|mpv-fill-enter/.test(viewSrc), false, "بلا أزرار تكبير/تصغير");
 assert.match(viewSrc, /MushafPageCartoucheSvg/);
-assert.match(viewSrc, /mpv-ayah-footer__hizb/);
-assert.match(quranCss, /\.mpv-ayah-footer\s*\{[\s\S]*?justify-content:\s*space-between/, "ذيل: خرطوش يمين وحزب يسار");
+assert.equal(/mpv-ayah-footer__hizb/.test(viewSrc), false, "الذيل بلا تسمية حزب");
+assert.match(quranCss, /\.mpv-ayah-footer\s*\{[\s\S]*?justify-content:\s*center/, "ذيل: خرطوش أسفل الوسط");
 assert.equal(/mpv-ayah-footer__meta/.test(viewSrc), false, "الذيل بلا غلاف meta يلصق العنصرين");
 
 assert.match(immersiveSrc, /AYAH_MUSHAF_PAPER_BG\s*=\s*"#F7F0E4"/);
