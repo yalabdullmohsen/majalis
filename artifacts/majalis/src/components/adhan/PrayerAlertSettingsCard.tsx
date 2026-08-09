@@ -39,7 +39,7 @@ function MiniToggle({
       aria-label={label}
       disabled={disabled}
       onClick={() => onChange(!checked)}
-      className={`ads-toggle${checked ? " is-on" : ""}${disabled ? " is-disabled" : ""}`}
+      className={`ads-toggle rounded-full icon-only${checked ? " is-on" : ""}${disabled ? " is-disabled" : ""}`}
     >
       <span className="ads-toggle__thumb" />
     </button>
