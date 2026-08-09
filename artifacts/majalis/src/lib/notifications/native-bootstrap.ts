@@ -38,6 +38,10 @@ export async function attachLocalNotificationListeners(): Promise<void> {
         event.notification?.id,
         event.notification?.extra,
       );
+      // سلسلة مقاطع الأذان: ألغِ البقية واستأنف داخليًا قبل أي deep-link
+      void import("@/lib/adhan-smart-cancel").then(({ onAdhanSegmentNotificationInteraction }) =>
+        onAdhanSegmentNotificationInteraction(event.notification?.extra),
+      );
       navigateFromNotificationExtra(event.notification?.extra);
     });
     await LocalNotifications.addListener("localNotificationReceived", (notification) => {
@@ -49,6 +53,9 @@ export async function attachLocalNotificationListeners(): Promise<void> {
     });
     _listenersAttached = true;
     console.info("[notifications] local listeners attached");
+    void import("@/lib/adhan-smart-cancel").then(({ attachAdhanSmartCancelListeners }) =>
+      attachAdhanSmartCancelListeners(),
+    );
   } catch (e) {
     console.warn("[notifications] attach local listeners failed", e);
   }

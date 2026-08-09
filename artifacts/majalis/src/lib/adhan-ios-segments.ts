@@ -90,18 +90,24 @@ export function buildAdhanIosSegmentPlan(opts: {
   return plan;
 }
 
+let _memoryChain: ChainRecord | null = null;
+
 function readChain(): ChainRecord | null {
   try {
-    const raw = sessionStorage.getItem(CHAIN_STORE_KEY);
-    if (!raw) return null;
-    return JSON.parse(raw) as ChainRecord;
+    if (typeof sessionStorage !== "undefined") {
+      const raw = sessionStorage.getItem(CHAIN_STORE_KEY);
+      if (raw) return JSON.parse(raw) as ChainRecord;
+    }
   } catch {
-    return null;
+    /* ignore */
   }
+  return _memoryChain;
 }
 
 function writeChain(rec: ChainRecord | null) {
+  _memoryChain = rec;
   try {
+    if (typeof sessionStorage === "undefined") return;
     if (!rec) sessionStorage.removeItem(CHAIN_STORE_KEY);
     else sessionStorage.setItem(CHAIN_STORE_KEY, JSON.stringify(rec));
   } catch {
@@ -196,5 +202,24 @@ export async function scheduleIosFullAdhan(opts: {
     startAtMs: opts.startAtMs,
     durationsSec: opts.durationsSec ?? defaultAdhanSegmentDurations(),
   });
-  return scheduleAdhanIosSegmentChain(plan);
+  const result = await scheduleAdhanIosSegmentChain(plan);
+  if (result.ok) {
+    try {
+      const { rememberAdhanResumeContext } = await import("./adhan-smart-cancel");
+      const key = opts.prayerKey as
+        | "fajr"
+        | "dhuhr"
+        | "asr"
+        | "maghrib"
+        | "isha";
+      rememberAdhanResumeContext({
+        prayerKey: key,
+        muezzinId: opts.recordingId,
+        isFajr: opts.isFajr,
+      });
+    } catch {
+      /* ignore */
+    }
+  }
+  return result;
 }
