@@ -14,14 +14,10 @@
 | 5 خروج ذكي من المصحف | تم ✅ | [#951](https://github.com/yalabdullmohsen/majalis/pull/951) | أصل الدخول + رجوع غامر + مشغّل مصغّر |
 | 6 شيت الآية الحديث | تم ✅ | [#952](https://github.com/yalabdullmohsen/majalis/pull/952) | صف إجراءات + المزيد + رموز mushaf |
 | 11 توحيد شاشة الدخول | تم ✅ | [#953](https://github.com/yalabdullmohsen/majalis/pull/953) | هوية خضراء واحدة |
-<<<<<<< HEAD
-| 10 تنقّل وأزرار | جارٍ | هذا الفرع | المزيد بلا تكرار L1 + رصيف صلاة + لمس ≥44 |
-| 7 ثم 8–9 | معلّق | — | حسب الترتيب المتفق |
-=======
 | 10 تنقّل وأزرار | تم ✅ | [#954](https://github.com/yalabdullmohsen/majalis/pull/954) | المزيد بلا تكرار L1 + رصيف صلاة + لمس ≥44 |
-| 7 القرّاء والتلاوة | جارٍ | هذا الفرع | بث + سقف تنزيل + CREDITS |
-| 8–9 سيرة / ابتلاءات | معلّق | — | محتوى موثّق فقط |
->>>>>>> a8e3946b1 (feat(quran-audio): توثيق القرّاء وسقف التنزيل دون اتصال)
+| 1–2 مصحف شريط/صفحتا 1–2 | تم ✅ | [#965](https://github.com/yalabdullmohsen/majalis/pull/965) | بدون تمديد أسطر؛ بوابات تباعد جديدة |
+| 7 القرّاء والتلاوة | جزئي ✅ | [#966](https://github.com/yalabdullmohsen/majalis/pull/966) + [#967](https://github.com/yalabdullmohsen/majalis/pull/967) | AudioSource + kill-switch + مؤقّت/شيت؛ FGS أندرويد في هذا الفرع |
+| 8–9 سيرة / ابتلاءات | معلّق لمراجعة المالك | [#956](https://github.com/yalabdullmohsen/majalis/pull/956) / [#957](https://github.com/yalabdullmohsen/majalis/pull/957) | طوابير: `docs/reviews/*_REVIEW_QUEUE.md` — لا دمج قبل الحكم |
 
 | البند | الحالة | رقم PR | ما تبقّى |
 |---|---|---|---|

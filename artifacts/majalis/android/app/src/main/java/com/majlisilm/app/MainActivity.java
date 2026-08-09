@@ -7,6 +7,7 @@ public class MainActivity extends BridgeActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         registerPlugin(MajlisSpeechRecognitionPlugin.class);
+        registerPlugin(MajlisMediaPlaybackPlugin.class);
         super.onCreate(savedInstanceState);
     }
 }

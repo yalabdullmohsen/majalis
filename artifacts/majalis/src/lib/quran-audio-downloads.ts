@@ -194,6 +194,17 @@ export async function deleteReciterDownloads(reciterId: string): Promise<void> {
   await Promise.all(entries.map((e) => deleteBlob(reciterId, e.surah)));
 }
 
+/** يحذف قاعدة IndexedDB للتلاوات المحمّلة بالكامل (حذف حساب / مسح بيانات). */
+export async function clearAllOfflineAudioDownloads(): Promise<void> {
+  if (typeof indexedDB === "undefined") return;
+  await new Promise<void>((resolve) => {
+    const req = indexedDB.deleteDatabase(DB_NAME);
+    req.onsuccess = () => resolve();
+    req.onerror = () => resolve();
+    req.onblocked = () => resolve();
+  });
+}
+
 /** رابط تشغيل محلي (Object URL) للسورة إن كانت مُنزَّلة، وإلا null (يُستخدَم عندها الرابط الحي كالمعتاد). استدعِ URL.revokeObjectURL على النتيجة عند انتهاء الاستخدام. */
 export async function getOfflineSurahUrl(reciterId: string, surah: number): Promise<string | null> {
   const blob = await getBlob(reciterId, surah);

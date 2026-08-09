@@ -39,11 +39,22 @@
 | تقدّم/سلسلة | `majalis-*-progress*`, streak | محلي | محلي |
 | موقع صلاة | محافظة/أذان | مواقيت | محلي |
 | رمز APNs | `majalis_apns_device_token_v1` | دفع | محلي |
+| تلاوات دون اتصال | IndexedDB `majalis-quran-audio` (Blob MP3) | استماع دون شبكة | تُمسح عبر `clearAllOfflineAudioDownloads` عند حذف الحساب / مسح البيانات |
+| استئناف التلاوة | `majalis-quran-audio-resume` (+ مفتاح LS) | موضع التشغيل | يُمسح مع الحذف |
+| تفضيل القارئ/السرعة | مفاتيح `majalis-*` / تفضيلات صوت | واجهة تشغيل | تُمسح مع `clearUserLocalData` |
+
+### صوت وتلاوات (بث فقط)
+
+| بند | التخزين | ملاحظة |
+|---|---|---|
+| بث آية بآية | everyayah (CDN) — لا يُعاد استضافته على خوادمنا | Kill-switch: `public/data/quran-audio-remote.json` |
+| بث سورة كاملة | mp3quran — لا يُعاد استضافته | نفسه |
+| تنزيل اختياري | جهاز المستخدم فقط، سقف ≈ 1.5 GiB | إدارة من واجهة التنزيلات |
 
 ## دخول اجتماعي
 
 - Google OAuth: الكود موجود لكن `GOOGLE_OAUTH_ENABLED = false` (الزر مخفي).
-- Sign in with Apple: **مطلوب بجانب Google عند تفعيل أي دخول اجتماعي** — يُجهَّز خلف علم `APPLE_OAUTH_ENABLED` قبل التفعيل في لوحة Supabase.
+- Sign in with Apple: الكود جاهز خلف `APPLE_OAUTH_ENABLED = false` — **يُفعَّل مع أي دخول اجتماعي** (Guideline 4.8) بعد إعداد Supabase Apple provider.
 
 ## تسميع 1.1 (تسجيل مبكر — لا يُشحن في 1.0.0)
 
