@@ -46,6 +46,7 @@
 | استئناف التلاوة | `majalis-quran-audio-resume` (+ مفتاح LS) | موضع التشغيل | يُمسح مع الحذف |
 | تفضيل القارئ/السرعة | مفاتيح `majalis-*` / تفضيلات صوت | واجهة تشغيل | تُمسح مع `clearUserLocalData` |
 | تفسير مختصر دون اتصال | IndexedDB `tafseer_cache` + `majalis-offline-tafsir-pack-v1` + `sessionStorage` (`mj-mushaf-tafsir-sess:*`) | نص تفسير منقول حرفياً من Quran.com/QUL لصفحة المصحف الحالية والمجاورتين | يُمسح مع حذف الحساب / `clearUserLocalData` (البادئة `majalis-` / `mj-`) |
+| استئناف تفسير صوتي | `majalis-tafsir-audio-resume-v1` + `mj-tafsir-playback-rate-v1` | موضع/سرعة بث التفسير الصوتي | يُمسح مع `majalis-*` / `mj-*` عند حذف الحساب |
 
 ### صوت وتلاوات (بث فقط)
 
@@ -53,6 +54,7 @@
 |---|---|---|
 | بث آية بآية | everyayah (CDN) — لا يُعاد استضافته على خوادمنا | Kill-switch: `public/data/quran-audio-remote.json` |
 | بث سورة كاملة | mp3quran — لا يُعاد استضافته | نفسه |
+| تفسير صوتي | بث فقط من كتالوج موثّق (فارغ حالياً) | Kill-switch: `public/data/tafsir-audio-remote.json`؛ سقف تنزيل اختياري ≈ 80 ميغابايت |
 | تنزيل اختياري | جهاز المستخدم فقط، سقف ≈ 1.5 GiB | إدارة من واجهة التنزيلات |
 
 ## دخول اجتماعي

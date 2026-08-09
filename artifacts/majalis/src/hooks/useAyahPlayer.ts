@@ -217,6 +217,10 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
 
     const t0 = performance.now();
     audio.pause();
+    void import("@/lib/exclusive-audio-bus").then(({ claimAudio, registerAudioStopper }) => {
+      registerAudioStopper("tilawa", () => stopRef.current());
+      void claimAudio("tilawa");
+    });
     void refreshQuranAudioRemoteConfig();
     const urlQueue = audioSourceUrlQueue({ kind: "ayah", surah, ayah, reciterId: reciter });
     let urlIndex = 0;

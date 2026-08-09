@@ -60,6 +60,9 @@ if (typeof requestIdleCallback === "function") {
     void import("./lib/adhan-audio-remote-config").then((m) =>
       m.refreshAdhanAudioRemoteConfig(),
     );
+    void import("./lib/tafsir-audio-remote-config").then((m) =>
+      m.refreshTafsirAudioRemoteConfig(),
+    );
   }, { timeout: 3_000 });
 } else {
   setTimeout(() => {
@@ -69,6 +72,9 @@ if (typeof requestIdleCallback === "function") {
     void refreshQuranAudioRemoteConfig();
     void import("./lib/adhan-audio-remote-config").then((m) =>
       m.refreshAdhanAudioRemoteConfig(),
+    );
+    void import("./lib/tafsir-audio-remote-config").then((m) =>
+      m.refreshTafsirAudioRemoteConfig(),
     );
   }, 1);
 }
