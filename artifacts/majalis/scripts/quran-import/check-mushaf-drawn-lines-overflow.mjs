@@ -18,7 +18,7 @@ const PAGES_DIR = path.join(APP_ROOT, "public/data/quran-v2/pages");
 const FONTS_DIR = path.join(APP_ROOT, "public/fonts/qpc-v2");
 const CHAPTERS_PATH = path.join(APP_ROOT, "public/data/quran-v2/chapters.json");
 
-const DRAWN_BASMALA = "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ";
+const DRAWN_BASMALA = "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ";
 const CONTAINER_W = 360;
 const CONTAINER_H = 560;
 const REF_PX = 100;

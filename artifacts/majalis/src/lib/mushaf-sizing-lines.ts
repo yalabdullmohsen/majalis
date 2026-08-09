@@ -23,7 +23,8 @@ export const SIZING_LINE_KINDS = ["ayah", "basmala", "surah_title"] as const;
 export type SizingLineKind = (typeof SIZING_LINE_KINDS)[number];
 
 /** نص البسملة المرسوم (Unicode) — يجب أن يدخل في sizingLines */
-export const DRAWN_BASMALA_TEXT = "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ";
+/** بسملة افتتاحية Unicode — تُرسم بخط الصفحة (qpc-page-N) كسطر مستقل */
+export const DRAWN_BASMALA_TEXT = "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ";
 
 /** تسمية عنوان السورة كما تُرسم في الواجهة */
 export function drawnSurahTitleText(nameArabic: string): string {

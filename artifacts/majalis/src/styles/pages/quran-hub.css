@@ -13,7 +13,12 @@
 
 .quran-hub-jump {
   padding-block: 0.85rem 0.5rem;
+  padding-inline: max(0.5rem, var(--inset-right, 0px))
+    max(0.5rem, var(--inset-left, 0px));
   background: var(--mj-bg, var(--elite-white));
+  box-sizing: border-box;
+  min-width: 0;
+  max-width: 100%;
 }
 
 /* على مركز القرآن: أظهر قائمة السور بارتفاع مريح دون قفز تخطيط */

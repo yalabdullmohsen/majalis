@@ -7,8 +7,8 @@
  *   2) لا تراكب هندسي بين كلمات الآية (bounding boxes)
  *   3) أقصى مسافة بين سطرين متجاورين ≤ 1.6 × حجم الخط (كل الصفحات)
  *   4) حجم الخط في الصفحتين 1 و2 ≥ 80% من متوسط حجم الخط في الصفحات العادية
- *
- * أُبطلت بوابة «نسبة الامتلاء ≥ 80%» — كانت تُشجّع تمديد الفراغات بين الأسطر.
+ *   5) امتلاء كتلة الأسطر داخل صندوق الصفحة: ≥90% (عادية) و≥80% (1–2)
+ *      عبر تقليص ارتفاع الصندوق — بلا تمديد فراغات بين الأسطر (pitch≤1.6)
  *
  * الاستخدام:
  *   MUSHAF_GATE_BASE_URL=https://www.majlisilm.com node scripts/quran-import/mushaf-visual-layout-gate.mjs
@@ -47,6 +47,9 @@ const VIEWPORT = { width: 390, height: 844 };
 const MAX_LINE_PITCH_EM = 1.6;
 /** حد أدنى لنسبة حجم خط الصفحتين الافتتاحيتين من متوسط الصفحات العادية */
 const MIN_OPENING_FONT_RATIO = 0.8;
+/** امتلاء المحتوى داخل صندوق الأسطر (بعد احتضان الارتفاع) */
+const MIN_FILL_OPENING = 0.8;
+const MIN_FILL_NORMAL = 0.9;
 
 function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
@@ -123,12 +126,39 @@ async function measurePage(page, pageNum) {
     }
 
     const blockRect = linesRoot.getBoundingClientRect();
-    const contentTopGap =
-      lines[0] ? Math.max(0, lines[0].top - blockRect.top) : 0;
-    const contentBottomGap =
-      lines.length
-        ? Math.max(0, blockRect.bottom - lines[lines.length - 1].bottom)
-        : 0;
+    const headers = [...linesRoot.querySelectorAll(".mf2-surah-header, .mf2-bismillah")];
+    let contentTop = lines[0] ? lines[0].top : blockRect.top;
+    let contentBot = lines.length ? lines[lines.length - 1].bottom : blockRect.bottom;
+    for (const h of headers) {
+      const r = h.getBoundingClientRect();
+      contentTop = Math.min(contentTop, r.top);
+      contentBot = Math.max(contentBot, r.bottom);
+    }
+    const contentH = Math.max(0, contentBot - contentTop);
+    const contentTopGap = Math.max(0, contentTop - blockRect.top);
+    const contentBottomGap = Math.max(0, blockRect.bottom - contentBot);
+    const fillRatio = blockRect.height > 0 ? contentH / blockRect.height : 0;
+
+    const bismillah = linesRoot.querySelector(".mf2-bismillah");
+    let bismillahFont = null;
+    let bismillahOverlapNext = 0;
+    if (bismillah) {
+      bismillahFont = getComputedStyle(bismillah).fontFamily;
+      const br = bismillah.getBoundingClientRect();
+      const nextLine = bismillah.parentElement?.nextElementSibling?.classList?.contains("mf2-line")
+        ? bismillah.parentElement.nextElementSibling
+        : bismillah.nextElementSibling?.classList?.contains("mf2-line")
+          ? bismillah.nextElementSibling
+          : null;
+      /* البسملة داخل رأس السورة — السطر التالي أول .mf2-line بعد الرأس */
+      const header = bismillah.closest(".mf2-surah-header");
+      const after = header?.nextElementSibling;
+      const probe = (after?.classList?.contains("mf2-line") ? after : nextLine);
+      if (probe) {
+        const nr = probe.getBoundingClientRect();
+        bismillahOverlapNext = Math.max(0, br.bottom - nr.top);
+      }
+    }
 
     return {
       fontSize,
@@ -142,13 +172,18 @@ async function measurePage(page, pageNum) {
       maxOverlapX,
       contentTopGap,
       contentBottomGap,
+      contentH,
+      fillRatio,
+      bismillahFont,
+      bismillahOverlapNext,
       rootH: rootRect.height,
       rootW: rootRect.width,
+      linesH: blockRect.height,
     };
   });
 
   const shotPath = join(OUT_DIR, `page-${String(pageNum).padStart(3, "0")}.png`);
-  const pageEl = page.locator(".qs-mushaf-body-inner, .mf2-page").first();
+  const pageEl = page.locator(".mf2-lines, .qs-mushaf-body-inner, .mf2-page").first();
   await pageEl.screenshot({ path: shotPath });
 
   return { pageNum, url, shotPath, ...metrics };
@@ -196,6 +231,19 @@ function evaluate(results) {
         });
       }
     }
+    const minFill = r.pageNum === 1 || r.pageNum === 2 ? MIN_FILL_OPENING : MIN_FILL_NORMAL;
+    if (typeof r.fillRatio === "number" && r.fillRatio + 0.02 < minFill) {
+      failures.push({
+        page: r.pageNum,
+        reason: `امتلاء كتلة الأسطر ${(r.fillRatio * 100).toFixed(1)}% < ${minFill * 100}% (محتوى ${r.contentH?.toFixed?.(0) ?? "?"} / صندوق ${r.linesH?.toFixed?.(0) ?? "?"})`,
+      });
+    }
+    if (r.pageNum === 2 && r.bismillahOverlapNext > 2) {
+      failures.push({
+        page: r.pageNum,
+        reason: `تراكب بسملة مع السطر التالي ${r.bismillahOverlapNext.toFixed(1)}px`,
+      });
+    }
   }
 
   return { failures, avgNormalFont };
@@ -208,7 +256,7 @@ async function main() {
   console.log(`[mushaf-visual-gate] pages=${PAGES.join(",")}`);
   console.log(`[mushaf-visual-gate] out=${OUT_DIR}`);
   console.log(
-    `[mushaf-visual-gate] rules: overflowX≤2px, overlap=0, maxPitch≤${MAX_LINE_PITCH_EM}em, openingFont≥${MIN_OPENING_FONT_RATIO * 100}% avg`,
+    `[mushaf-visual-gate] rules: overflowX≤2px, overlap=0, maxPitch≤${MAX_LINE_PITCH_EM}em, openingFont≥${MIN_OPENING_FONT_RATIO * 100}% avg, fill≥${MIN_FILL_NORMAL * 100}%/${MIN_FILL_OPENING * 100}%`,
   );
 
   const browser = await chromium.launch({ headless: true });
@@ -233,7 +281,7 @@ async function main() {
         console.log(`خطأ: ${r.error}`);
       } else {
         console.log(
-          `font=${r.fontSize.toFixed(1)} pitch=${r.maxPitchEm.toFixed(2)}em overflow=${r.overflowX.toFixed(1)} overlap=${r.overlapPairs} gaps≈${r.contentTopGap.toFixed(0)}/${r.contentBottomGap.toFixed(0)}`,
+          `font=${r.fontSize.toFixed(1)} pitch=${r.maxPitchEm.toFixed(2)}em fill=${((r.fillRatio || 0) * 100).toFixed(0)}% overflow=${r.overflowX.toFixed(1)} overlap=${r.overlapPairs} box=${(r.linesH || 0).toFixed(0)} content=${(r.contentH || 0).toFixed(0)}`,
         );
       }
     }
@@ -251,7 +299,9 @@ async function main() {
       maxOverlapPairs: 0,
       maxLinePitchEm: MAX_LINE_PITCH_EM,
       minOpeningFontRatio: MIN_OPENING_FONT_RATIO,
-      fillRatioGate: "disabled",
+      minFillOpening: MIN_FILL_OPENING,
+      minFillNormal: MIN_FILL_NORMAL,
+      fillRatioGate: "enabled-box-hug",
     },
     avgNormalFont,
     results,

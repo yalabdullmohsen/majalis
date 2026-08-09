@@ -312,21 +312,30 @@ html[data-theme="dark"] .mf2-surah-header__frame,
   margin-block-end: 0.1em;
 }
 .mf2-bismillah {
-  font-family: var(--font-quran, "Amiri Quran", "Scheherazade New", serif);
-  /* يرث حجم الصفحة الموحّد — يدخل في sizingLines؛ يُمنع القصّ */
+  /* خط الصفحة نفسه (qpc-page-N على .mf2-lines) — لا Amiri/واجهة بديلة */
+  font-family: inherit;
   font-size: 1em;
-  line-height: 1.25;
+  font-weight: inherit;
+  line-height: var(--mf2-lh, 1.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
   text-align: center;
   white-space: nowrap;
   color: var(--mf2-ink, #111827);
-  margin: 0.05em auto 0.1em;
-  max-width: 100%;
   overflow: visible;
   flex: 0 0 auto;
+  min-height: 0;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   font-feature-settings: "liga" 1, "calt" 1;
   user-select: none;
+  -webkit-user-select: none;
 }
 
 /* هيكل تحميل (skeleton) — أسطر عاجية باهتة بنبض خفيف، بلا أي نص إطلاقًا

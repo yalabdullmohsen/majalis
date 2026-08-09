@@ -165,6 +165,8 @@ export function MushafPageV2({
   const linesContainerRef = useRef<HTMLDivElement | null>(null);
   /** حجم خط موحّد للصفحة كلها (لا fit-to-width لكل سطر). */
   const [pageFontSize, setPageFontSize] = useState<number | null>(null);
+  /** ارتفاع سطر ديناميكي ≤1.6 لاقتراب امتلاء الهدف بلا تجاوز القيد */
+  const [pageLineHeightEm, setPageLineHeightEm] = useState(1.1);
   const [fitted, setFitted] = useState(false);
 
   /**
@@ -176,11 +178,13 @@ export function MushafPageV2({
     if (!fontReady || !layout) {
       setFitted(false);
       setPageFontSize(null);
+      setPageLineHeightEm(1.1);
       return;
     }
 
     if (useUnicodeSafe) {
       setPageFontSize(null);
+      setPageLineHeightEm(1.1);
       setFitted(true);
       return;
     }
@@ -191,13 +195,22 @@ export function MushafPageV2({
     /** يجب أن يطابق --mf2-lh / line-height في .mf2-line (1.0–1.15). */
     const LINE_HEIGHT_EM = 1.1;
     const REF_PX = 100;
+    /** امتلاء كتلة الأسطر من خانة الرأس↔الذيل — بلا تمديد بين الأسطر. */
+    const TARGET_BLOCK_FILL = layout.layoutMode === "opening-centered" ? 0.8 : 0.9;
     const opening = layout.layoutMode === "opening-centered";
     const ayahCount = Math.max(1, layout.ayahLineCount);
 
     const measure = () => {
+      /* خانة الرأس↔الذيل (الجسم) لا الصندوق الداخلي بعد الاحتضان */
+      const slotEl =
+        container.closest(".qs-mushaf-body") ||
+        container.closest(".mpv-body") ||
+        container.parentElement;
       const availableWidth = container.clientWidth;
-      const availableHeight = container.clientHeight;
-      if (availableWidth <= 0 || availableHeight <= 0) return false;
+      const slotHeight = slotEl instanceof HTMLElement
+        ? slotEl.clientHeight
+        : container.clientHeight;
+      if (availableWidth <= 0 || slotHeight <= 0) return false;
 
       const sizingEls = [
         ...collectSizingEls(ayahLineRefs.current),
@@ -220,7 +233,7 @@ export function MushafPageV2({
         for (const el of headerBlockRefs.current.values()) {
           if (el) headersH += el.getBoundingClientRect().height;
         }
-        const ayahBudget = Math.max(0, availableHeight - headersH);
+        const ayahBudget = Math.max(0, slotHeight - headersH);
         const sizeByHeight = (ayahBudget / ayahCount) / LINE_HEIGHT_EM;
         const next = Math.min(sizeByWidth, sizeByHeight);
         if (Math.abs(next - size) < 0.05) {
@@ -250,21 +263,76 @@ export function MushafPageV2({
          من الـDOM دون إعادة تطبيق (ResizeObserver يعيد measure كثيرًا). */
       container.style.fontSize = `${size}px`;
 
+      /* اقترب من امتلاء الهدف برفع --mf2-lh حتى سقف 1.6em (القيد)، ثم
+         احتضن ارتفاع الكتلة بحيث المحتوى ≥ TARGET من ارتفاع الصندوق؛
+         الفائض خارج الصندوق يُوسَّط في الطبقة البصرية — لا بين الأسطر فوق 1.6. */
+      let headersH = 0;
+      for (const el of headerBlockRefs.current.values()) {
+        if (el) headersH += el.getBoundingClientRect().height;
+      }
+      const targetContentH = slotHeight * TARGET_BLOCK_FILL;
+      const lhForTarget = size > 0
+        ? Math.max(0, targetContentH - headersH) / (ayahCount * size)
+        : LINE_HEIGHT_EM;
+      const lh = Math.min(1.6, Math.max(LINE_HEIGHT_EM, lhForTarget));
+      container.style.setProperty("--mf2-lh", String(lh));
+
+      let contentTop = Infinity;
+      let contentBot = -Infinity;
+      for (const child of container.children) {
+        if (!(child instanceof HTMLElement)) continue;
+        const r = child.getBoundingClientRect();
+        if (r.height <= 0 && r.width <= 0) continue;
+        contentTop = Math.min(contentTop, r.top);
+        contentBot = Math.max(contentBot, r.bottom);
+      }
+      if (Number.isFinite(contentTop) && Number.isFinite(contentBot)) {
+        const contentH = Math.max(0, contentBot - contentTop);
+        const boxH = Math.min(
+          slotHeight,
+          Math.max(contentH, contentH / TARGET_BLOCK_FILL),
+        );
+        container.style.height = `${boxH}px`;
+        container.style.flexGrow = "0";
+        container.style.flexShrink = "0";
+        container.style.flexBasis = "auto";
+      }
+
       setPageFontSize(size);
+      setPageLineHeightEm(lh);
       setFitted(true);
       return true;
     };
 
+    const cleanupInline = () => {
+      container.style.height = "";
+      container.style.flexGrow = "";
+      container.style.flexShrink = "";
+      container.style.flexBasis = "";
+      container.style.removeProperty("--mf2-lh");
+    };
+
     if (!measure()) {
       const raf = requestAnimationFrame(() => { measure(); });
-      return () => cancelAnimationFrame(raf);
+      return () => {
+        cancelAnimationFrame(raf);
+        cleanupInline();
+      };
     }
 
     const ro = typeof ResizeObserver !== "undefined"
       ? new ResizeObserver(() => { measure(); })
       : null;
-    ro?.observe(container);
-    return () => ro?.disconnect();
+    const slotObserve =
+      container.closest(".qs-mushaf-body") ||
+      container.closest(".mpv-body") ||
+      container.parentElement;
+    if (slotObserve) ro?.observe(slotObserve);
+    else ro?.observe(container);
+    return () => {
+      ro?.disconnect();
+      cleanupInline();
+    };
   }, [fontReady, layout, useUnicodeSafe]);
 
   if (!layout) {
@@ -291,7 +359,7 @@ export function MushafPageV2({
           opacity: fitted ? 1 : 0,
           // حجم موحّد يورثه كل سطر مرسوم — لا تحجيم فردي ولا clamp مستقل
           fontSize: !useUnicodeSafe && pageFontSize ? `${pageFontSize}px` : undefined,
-          ["--mf2-lh" as string]: !useUnicodeSafe ? "1.1" : undefined,
+          ["--mf2-lh" as string]: !useUnicodeSafe ? String(pageLineHeightEm) : undefined,
           fontFamily: useUnicodeSafe
             ? fontFamily
             : fontFamily
@@ -393,7 +461,19 @@ export function MushafPageV2({
 
   if (bare) {
     return (
-      <div dir="rtl" style={{ height: "100%", width: "100%", display: "flex", flexDirection: "column", minHeight: 0 }}>
+      <div
+        dir="rtl"
+        className="mf2-bare-root"
+        style={{
+          height: "auto",
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+          minHeight: 0,
+          flex: "0 0 auto",
+        }}
+      >
         {lines}
       </div>
     );
