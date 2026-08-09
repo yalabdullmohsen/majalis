@@ -29,6 +29,14 @@
 .mzp-title  { margin: 0; font-size: 1.05rem; font-weight: 700; color: var(--majalis-emerald); }
 .mzp-subtitle { margin: 0.3rem 0 0; font-size: 0.78rem; color: var(--majalis-ink-muted, #9BA3B5); }
 .mzp-list { padding: 0.5rem 1rem; }
+.mzp-pattern-group { margin-bottom: 0.75rem; }
+.mzp-pattern-label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--majalis-ink-muted, #9BA3B5);
+  padding: 0.35rem 0.25rem 0.5rem;
+  letter-spacing: 0.01em;
+}
 .mzp-item {
   display: flex;
   align-items: center;

@@ -11,6 +11,10 @@ const DATA_SOURCES = [
   { name: "alquran.cloud", desc: "بيانات القرآن الكريم بالرسم العثماني وصفحات المصحف." },
   { name: "everyayah.com", desc: "بث تلاوات آية بآية (روابط خارجية؛ لا تُضمَّن ملفات صوت في الحزمة)." },
   { name: "mp3quran.net", desc: "بث سور كاملة وتنزيل اختياري محلي بحدود حجم واضحة." },
+  {
+    name: "mohsalvi/adhan-audio (jsDelivr)",
+    desc: "بث تسجيلات أذان (عام/فجر). تُعرض حاليًا باسم النمط فقط بلا نسبة شخصية حتى التثبّت؛ التفاصيل في CREDITS.md.",
+  },
   { name: "shamela.ws", desc: "المكتبة الشاملة — تراث إسلامي رقمي." },
   { name: "dar-alifta.net", desc: "دار الإفتاء المصرية — فتاوى رسمية منشورة." },
   { name: "binbaz.org.sa", desc: "موقع الشيخ ابن باز — فتاوى ومواد محقَّقة." },
@@ -29,7 +33,7 @@ export default function SourcesLicensesPage() {
   }, []);
 
   return (
-    <LegalPageLayout eyebrow="الشفافية" title="المصادر والتراخيص" updatedAt="2026-08-06">
+    <LegalPageLayout eyebrow="الشفافية" title="المصادر والتراخيص" updatedAt="2026-08-09">
       <LegalSection title="الغرض من هذه الصفحة">
         <p>
           نعرض هنا أبرز المصادر الخارجية التي تُستفاد منها بيانات عامة أو روابط
@@ -67,6 +71,24 @@ export default function SourcesLicensesPage() {
           القرّاء ومجلداتهم في <code dir="ltr">CREDITS.md</code>. مفتاح تعطيل تشغيلي
           لإخفاء قارئ أو مصدر:{" "}
           <code dir="ltr">/data/quran-audio-remote.json</code>.
+        </p>
+      </LegalSection>
+
+      <LegalSection title="صوت الأذان">
+        <p>
+          بث حي من مستودع{" "}
+          <a
+            href="https://github.com/mohsalvi/adhan-audio"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            mohsalvi/adhan-audio
+          </a>{" "}
+          عبر jsDelivr. لا تُحزَم ملفات الأذان في الثنائي. ما لم تُتحقَّق نسبة
+          التسجيل إلى مؤذن بعينه يُعرض باسم النمط فقط (مثل «أذان الحرم المكي»).
+          جدول التسجيلات وحالة الترخيص في <code dir="ltr">CREDITS.md</code> و{" "}
+          <code dir="ltr">LICENSE_RISKS.md</code>. مفتاح تعطيل تشغيلي:{" "}
+          <code dir="ltr">/data/adhan-audio-remote.json</code>.
         </p>
       </LegalSection>
 

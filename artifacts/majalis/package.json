@@ -114,6 +114,7 @@
     "test:ios-gates": "node scripts/test-ios-capacitor-gates.mjs",
     "test:ios-notifications": "node scripts/test-ios-notifications.mjs",
     "test:ios-stability": "node --import tsx src/lib/__tests__/ios-stability-audit.test.ts",
+    "test:adhan-catalog": "node --import tsx src/lib/__tests__/adhan-catalog.test.ts",
     "test:ios-final-polish": "node --import tsx src/lib/__tests__/navigation-back.test.ts && node --import tsx src/lib/__tests__/prayer-time-12h.test.ts && node --import tsx src/lib/__tests__/auth-redirect.test.ts && node --import tsx src/lib/__tests__/recitation-empty-speech.test.ts && node --import tsx src/lib/__tests__/immersive-chrome.test.ts && node --import tsx src/lib/__tests__/recitation-mic-latency.test.ts && node --import tsx src/lib/__tests__/pre-testflight-non-device-polish.test.ts && node --import tsx src/lib/__tests__/version-check-soft-update.test.ts && node --import tsx src/lib/__tests__/prefetch-top-routes.test.ts",
     "test:critical-path-select": "node lib/__tests__/critical-path-no-select-star.test.mjs",
     "test:bundle-budget": "node scripts/test-bundle-budget.mjs",
