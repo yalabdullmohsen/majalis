@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { X, Volume2, Clock, Landmark } from "lucide-react";
-import { ADHAN_EVENT_NAME, type AdhanEvent } from "@/lib/adhan-scheduler";
-import { stopAdhan } from "@/lib/adhan-audio";
+import { ADHAN_EVENT_NAME, type AdhanEvent } from "@/lib/adhan-events";
+import { stopAdhan } from "@/lib/adhan-playback";
 import "@/styles/components/adhan-notification.css";
 
 type ActiveEvent = AdhanEvent & { id: number };

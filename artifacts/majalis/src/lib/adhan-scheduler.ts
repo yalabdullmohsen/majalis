@@ -20,16 +20,10 @@ import {
 } from "./adhan-preferences";
 import { getMuezzin, playAdhan } from "./adhan-audio";
 import { isNative } from "./capacitor-utils";
+import { ADHAN_EVENT_NAME, type AdhanEvent } from "./adhan-events";
 
-export type AdhanEvent = {
-  type: "adhan" | "advance";
-  prayerKey: PrayerKey;
-  prayerName: string;
-  minutesBefore?: number;
-};
-
-/** Fired on window when adhan or advance notification triggers */
-export const ADHAN_EVENT_NAME = "majalis:adhan";
+export type { AdhanEvent };
+export { ADHAN_EVENT_NAME };
 
 /**
  * أقصى تأخّر مسموح به قبل اعتبار المؤقّت "قديماً". مؤقّتات JS تتوقف أثناء نوم
@@ -127,7 +121,9 @@ function scheduleForPrayer(slot: PrayerSlot, key: PrayerKey) {
     const muezzinId = getEffectiveMuezzinId(fresh, key);
     const muezzin = getMuezzin(muezzinId);
     const isFajr = key === "fajr";
-    playAdhan(muezzin, isFajr);
+    // الفجر: لا يُشغَّل بلا نسخة تثويب؛ ولا يُستبدل بالعام
+    const audio = playAdhan(muezzin, isFajr);
+    if (!audio && isFajr) return;
     dispatchAdhanEvent({ type: "adhan", prayerKey: key, prayerName: slot.name });
   }, adhanDelay);
   _timers.push(t1);

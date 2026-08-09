@@ -23,7 +23,6 @@ import { usePageSeo } from "@/lib/seo";
 import { lazyWithRetry } from "@/lib/lazy-with-retry";
 import { LazyRouteFallback } from "@/components/LazyRouteFallback";
 import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
-import { startAdhanScheduler } from "@/lib/adhan-scheduler";
 import { AdhanNotificationBar } from "@/components/adhan/AdhanNotificationBar";
 import { PrayerRespectBanner } from "@/components/adhan/PrayerRespectBanner";
 import {
@@ -422,7 +421,10 @@ function AdhanSchedulerBootstrap() {
     setPrayerTimesCache(liveMinutes);
     if (started.current) return;
     started.current = true;
-    startAdhanScheduler(data).catch(() => {});
+    // ديناميكي: كتالوج الأذان لا يدخل حزمة الدخول
+    void import("@/lib/adhan-scheduler").then((m) =>
+      m.startAdhanScheduler(data).catch(() => {}),
+    );
   }, [data]);
   return null;
 }

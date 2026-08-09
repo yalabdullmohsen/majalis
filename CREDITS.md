@@ -15,8 +15,31 @@
 | زخارف شارة السورة وخرطوش رقم الصفحة (SVG) | واجهة المصحف نمط آية | **رسم أصلي للمجلس العلمي** — نقش نباتي + وردة؛ لا يُستخرج من تطبيق آخر — `artifacts/majalis/src/components/quran/MushafOrnaments.tsx` | داخلي |
 | مكتبات npm (React, Vite, Capacitor, …) | تشغيل التطبيق | رخص الحزم في `node_modules` / lockfile | — |
 | محتوى المكتبة (~117 كتاباً) | صفحات الكتب | **فهرسة فردية ناقصة** — انظر `LICENSE_RISKS.md` | داخلي |
+| mohsalvi/adhan-audio (عبر jsDelivr) | بث أذان حي (عام/فجر) — لا تُضمَّن ملفات في الحزمة | مستودع خارجي مفتوح؛ **ToS/حقوق المؤذنين غير موقَّعة كتابيًا** — النسبة الشخصية **موقوفة** (عرض باسم النمط فقط) حتى التثبّت؛ انظر الجدول أدناه و`LICENSE_RISKS.md` | https://github.com/mohsalvi/adhan-audio |
 
 أي صف «يُراجع» أو مخاطر = لا يُوسَّع استخدامه في 1.0.0 حتى يُحسم في `LICENSE_RISKS.md`.
+
+## تسجيلات الأذان (بث)
+
+المصدر البرمجي: `artifacts/majalis/src/lib/adhan-audio.ts` + `adhan-patterns.ts`.  
+مفتاح التعطيل: `artifacts/majalis/public/data/adhan-audio-remote.json` (إخفاء تسجيل/مصدر/نمط بلا إصدار تطبيق).
+
+| id | الاسم المعروض | النمط | المسجد | سنة | ملف عام | ملف فجر | نسبة | ترخيص / ملاحظة |
+|---|---|---|---|---|---|---|---|---|
+| makkah | أذان الحرم المكي | مكي | المسجد الحرام | — | general/makkah-haram-01.mp3 | fajr/makkah-fajr-01.mp3 | نمط فقط | mohsalvi — قيد مراجعة الحقوق |
+| alharam | أذان الحرم المكي (كلاسيكي) | مكي | المسجد الحرام | — | general/al-haram-01.mp3 | — | نمط فقط | mohsalvi — قيد مراجعة الحقوق |
+| madinah | أذان المسجد النبوي | مدني | المسجد النبوي | — | general/madinah-01.mp3 | — | نمط فقط | mohsalvi — قيد مراجعة الحقوق |
+| egypt | أذان مصري | مصري | — | — | general/egypt-traditional-01.mp3 | — | نمط فقط | mohsalvi — قيد مراجعة الحقوق |
+| abdulbasit | أذان مصري (تسجيل ثانٍ) | مصري | — | — | general/abdul-basit-abdul-samad-01.mp3 | — | نمط فقط (اسم ملف غير موثّق) | mohsalvi |
+| alafasy | أذان خليجي معاصر | مكي* | — | — | general/mishary-alafasy-01.mp3 | fajr/mishary-alafasy-fajr-01.mp3 | نمط فقط | mohsalvi |
+| qatami | أذان خليجي (تسجيل ثانٍ) | مكي* | — | — | general/nasser-al-qatami-01.mp3 | — | نمط فقط | mohsalvi |
+| nafees | أذان حجازي | مكي | — | — | general/ahmad-al-nafees-01.mp3 | — | نمط فقط | mohsalvi |
+| mansour | أذان سعودي رسمي | مكي | — | — | general/mansour-al-zahrani-01.mp3 | fajr/mansour-al-zahrani-fajr-01.mp3 | نمط فقط | mohsalvi |
+| aqsa-pending | أذان المسجد الأقصى | الأقصى | المسجد الأقصى | — | — | — | نمط فقط | **لا ملف مرخّص بعد** |
+| levantine-pending | أذان شامي | شامي | — | — | — | — | نمط فقط | **لا ملف مرخّص بعد** |
+| turkish-pending | أذان تركي / عثماني | تركي | — | — | — | — | نمط فقط | **لا ملف مرخّص بعد** |
+
+\* مصنَّف تحت المكي كأقرب نمط منتجيًا حتى يتوفّر تصنيف أدق أو مصدر مرخّص مستقل.
 
 ## سياسة صوت التلاوة
 
