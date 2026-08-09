@@ -27,15 +27,14 @@
   display: block;
 }
 
+/* طبقة الضغط فقط — بلا تظليل حاوية/سطر. التظليل البصري الوحيد على .mf2-ayah-group */
 .mfl-hit__ayah {
   fill: transparent;
   stroke: none;
   cursor: pointer;
-  transition: fill 180ms ease;
 }
-
 .mfl-hit__ayah--active {
-  fill: color-mix(in srgb, var(--majalis-emerald, #1f6f52) 22%, transparent);
+  fill: transparent;
 }
 
 .mfl-text {

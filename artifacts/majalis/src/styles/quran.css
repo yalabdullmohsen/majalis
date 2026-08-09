@@ -2041,7 +2041,7 @@ html[data-theme="dark"] .rtp-transcript {
 /* أنماط تمييز الآية لتخطيط QPC (mf2) — كانت الخيارات موجودة في الإعدادات
    دون أثر بصري على .mf2-ayah-group لأن التمييز القديم يستهدف .qs-ayah-inline فقط. */
 .qs-mushaf-body--hl-wash .mf2-ayah-group--active {
-  background: color-mix(in srgb, var(--mf-gold, var(--brand-deep, var(--mj-brand-deep))) 18%, transparent);
+  background: color-mix(in srgb, var(--mj-brand, var(--brand, var(--mf-gold))) 12%, transparent);
 }
 .qs-mushaf-body--hl-border .mf2-ayah-group--active {
   background: transparent;
