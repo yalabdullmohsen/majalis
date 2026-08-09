@@ -39,11 +39,10 @@ assert.match(mushafV2, /\.mf2-lines--qpc-contiguous/, "أسطر QPC متصلة �
 assert.match(mushafV2, /\.mf2-lines--opening/, "فرع افتتاحي ص1–2");
 assert.match(mushafV2, /\.mf2-surah-header\s*\{[\s\S]*?flex:\s*0\s+0\s+auto/, "رأس السورة بارتفاع طبيعي");
 assert.match(mushafV2, /\.mf2-bismillah\s*\{[\s\S]*?font-size:\s*0\.82em/, "البسملة الافتتاحية أخف من الآيات");
-assert.equal(
-  /\.mf2-bismillah\s*\{[\s\S]*?overflow:\s*hidden/.test(mushafV2),
-  false,
-  "البسملة بلا overflow:hidden يقصّ النص",
-);
+{
+  const basmalaBlock = mushafV2.match(/(?:^|\n)\.mf2-bismillah\s*\{[^}]+\}/)?.[0] ?? "";
+  assert.equal(/overflow:\s*hidden/.test(basmalaBlock), false, "البسملة بلا overflow:hidden يقصّ النص");
+}
 assert.match(mushafV2, /--mf2-line-sx/, "تسوية أطراف الأسطر عبر --mf2-line-sx");
 assert.match(pageComp, /lastSurahEndLineNumbers|noStretchLines/, "آخر سطر سورة بلا تمديد");
 assert.equal(
@@ -54,7 +53,7 @@ assert.equal(
 assert.match(mushafV2, /\.mf2-surah-banner/, "شارة سورة مزخرفة");
 assert.match(mushafV2, /\.mf2-surah-banner__svg/, "SVG الشارة");
 assert.match(pageComp, /SurahBanner/, "مكوّن SurahBanner");
-assert.match(mushafV2, /\.mf2-surah-header__name\s*\{[\s\S]*?max-width:\s*calc\(32%/, "اسم الشارة داخل اللوحة الوسطى");
+assert.match(mushafV2, /\.mf2-surah-header__name\s*\{[\s\S]*?max-width:\s*calc\(34%/, "اسم الشارة داخل اللوحة الوسطى");
 assert.match(
   readFileSync(resolve(appRoot, "src/components/quran/SurahBanner.tsx"), "utf8"),
   /PANEL_MARGIN_PX|scrollWidth/,
@@ -62,13 +61,18 @@ assert.match(
 );
 assert.match(
   readFileSync(resolve(appRoot, "src/components/quran/SurahBanner.tsx"), "utf8"),
-  /data-ornament="arabesque"/,
-  "شارة مزخرفة بنقش أرابيسك",
+  /data-ornament="wing-ref"/,
+  "شارة مرجعية بلا pattern",
 );
 assert.match(
   readFileSync(resolve(appRoot, "src/components/quran/SurahBanner.tsx"), "utf8"),
-  /<pattern|Octofoil/,
-  "نقش pattern أو وردة ثمانية في الشارة",
+  /Octofoil|SpiralArm/,
+  "وردة ثمانية + فرعان لولبيان",
+);
+assert.equal(
+  /<pattern/.test(readFileSync(resolve(appRoot, "src/components/quran/SurahBanner.tsx"), "utf8")),
+  false,
+  "ممنوع <pattern> مكرر في الشارة",
 );
 const nameBlock = mushafV2.match(/\.mf2-surah-header__name\s*\{[^}]+\}/)?.[0]
   ?? mushafV2.match(/\.mf2-surah-banner__name,\s*\n\.mf2-surah-header__name\s*\{[^}]+\}/)?.[0]
@@ -80,7 +84,7 @@ assert.equal(/from ["']@\/components\/quran\/AyahMarker["']/.test(pageComp), fal
 assert.match(pageComp, /glyphText/, "مجسم نهاية الآية من خط QPC");
 assert.match(pageComp, /data-ayah-numeral="qpc"/, "علامة رقم QPC");
 assert.match(pageComp, /sizingEls|sizing-line|ayahLineCount|ayahLineRefs/, "تحجيم من أعرض سطر");
-assert.match(pageComp, /TARGET_FILL_NORMAL|MUSHAF_LAYOUT_BASELINE|MUSHAF_BASELINE_GAP/, "تخطيط من أساس ٣١١");
+assert.match(pageComp, /MUSHAF_LAYOUT_BASELINE|MUSHAF_GRID/, "تخطيط من أساس ٣١١ + شبكة");
 assert.match(mushafV2, /data-ornament|mf2-surah-banner/, "شارة سورة");
 assert.match(pageComp, /SurahBanner/, "مكوّن SurahBanner");
 assert.equal(
@@ -89,20 +93,19 @@ assert.equal(
   "أسطر الآيات بلا flex:1 1 0 يمدّد الفراغ بين الأسطر",
 );
 
-// 3) تخطيط من أساس صفحة ٣١١
+// 3) تخطيط من أساس صفحة ٣١١ + شبكة مطلقة
 assert.match(pageComp, /MUSHAF_LAYOUT_BASELINE/);
+assert.match(pageComp, /MUSHAF_GRID/);
 assert.match(pageComp, /LINE_HEIGHT_EM\s*=\s*MUSHAF_LAYOUT_BASELINE\.lineHeightEm/);
-assert.match(pageComp, /TARGET_FILL_NORMAL\s*=\s*0\.9/);
-assert.match(pageComp, /MUSHAF_BASELINE_GAP_PER_EM/);
+assert.match(pageComp, /baselinesPct|data-grid-slot|data-mushaf-grid/);
 assert.match(pageComp, /isOpening/);
-assert.match(pageComp, /leftover \* 0\.45|0\.45/);
+assert.equal(/justifyContent:\s*"space-between"/.test(pageComp), false, "بلا justifyContent space-between");
 assert.match(pageComp, /pageFontSize/);
 assert.match(pageComp, /ayahLineRefs/, "أسطر الآيات للتحجيم العرضي");
 assert.match(pageComp, /measurement-exclusions|metric-only/, "استثناءات المقياس مفصولة عن التحجيم");
 assert.equal(/SHORT_FILL_RATIO/.test(pageComp), false, "بلا SHORT_FILL_RATIO / fit لكل سطر");
 assert.match(pageComp, /glyphText/, "مجسم الآية في دقة QPC");
 assert.match(pageComp, /drawnSurahTitleText/, "شارة السورة بالرسم العثماني");
-assert.match(pageComp, /topOffsetPct/, "إزاحة علوية من الأساس");
 assert.match(pageComp, /MIN_LINE_FILL/, "حد أدنى لامتلاء عرض السطر قبل scaleX");
 assert.match(pageComp, /data-mf2-bind|dataset\.mf2Bind/, "تشخيص قيد التحجيم");
 assert.match(pageComp, /pageFont\.failed|useUnicodeSafe/, "تراجع تلقائي عند فشل خط QPC");
@@ -121,7 +124,7 @@ assert.match(mushafV2, /\.mf2-line--unicode[\s\S]*?line-height:\s*2\.2/, "وضع
 
 assert.match(quranCss, /\.quran-shell--ayah\s+\.qs-mushaf-body\s+\.qs-mushaf-body-inner\s*\{[\s\S]*?aspect-ratio:\s*auto/);
 assert.match(quranCss, /\.quran-shell--ayah\s+\.qs-mushaf-body\s+\.qs-mushaf-body-inner\s*\{[\s\S]*?height:\s*100%/);
-assert.match(quranCss, /\.quran-shell--ayah\s+\.mf2-lines\s*\{[\s\S]*?height:\s*auto/);
+assert.match(quranCss, /\.quran-shell--ayah\s+\.mf2-lines\s*\{[\s\S]*?height:\s*100%/);
 assert.equal(/mpv-fill-enter/.test(quranCss), false, "أُزيلت أزرار وضع الامتلاء المنفصل");
 
 assert.match(quranCss, /\.qs-mushaf-body\s*\{[\s\S]*?text-align:\s*justify/);

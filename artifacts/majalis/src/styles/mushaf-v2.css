@@ -57,16 +57,32 @@ html[data-theme="dark"] .mf2-frame {
   height: 100%;
   min-height: 0;
   width: 100%;
-  display: flex;
-  flex-direction: column;
-  /* الفجوات الرأسية يضبطها MushafPageV2 (gap + padding) */
-  justify-content: flex-start;
-  gap: 0;
+  /* شبكة مطلقة على baselines — بلا flex توزيعي */
+  display: block;
   margin: 0;
   padding: 0;
   transition: opacity .2s ease;
   --mf2-lh: 1.05;
+  --mf2-slot-h-pct: 6.4286;
   box-sizing: border-box;
+}
+.mf2-grid-slot {
+  pointer-events: auto;
+  overflow: visible;
+}
+.mf2-grid-slot--line .mf2-line {
+  width: 100%;
+}
+.mf2-grid-slot--banner .mf2-surah-header,
+.mf2-grid-slot--banner .mf2-surah-header__frame {
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  max-height: none;
+}
+.mf2-grid-slot--basmala .mf2-bismillah {
+  width: 100%;
+  height: 100%;
 }
 /* الصفحتان الافتتاحيتان: أسطر بعرضها الطبيعي مركزية */
 .mf2-lines--opening .mf2-line {
@@ -261,17 +277,18 @@ html[data-theme="dark"] .mf2-sajda-badge {
   border-color: rgba(232,201,122,.35);
 }
 
-/* رأس سورة — شارة مزخرفة بعرض كامل؛ ارتفاع ≈ سطر ونصف */
+/* رأس سورة — شارة في خانة واحدة مساوية لارتفاع سطر الشبكة */
 .mf2-surah-header {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.08em;
-  padding: 0.06em 0 0.1em;
+  gap: 0;
+  padding: 0;
   flex: 0 0 auto;
   flex-shrink: 0;
-  min-height: auto;
+  min-height: 0;
+  height: 100%;
   overflow: visible;
   position: relative;
   z-index: 1;
@@ -286,10 +303,9 @@ html[data-theme="dark"] .mf2-sajda-badge {
   justify-content: center;
   text-align: center;
   padding: 0;
-  /* ارتفاع الشارة = سطر مرجعي × 1.35 (يُضبط من MushafPageV2) */
-  height: var(--mf2-banner-h, calc(var(--mf2-lh, 1.05) * 1.35em));
-  min-height: var(--mf2-banner-h, calc(var(--mf2-lh, 1.05) * 1.35em));
-  max-height: var(--mf2-banner-h, calc(var(--mf2-lh, 1.05) * 1.35em));
+  height: 100%;
+  min-height: 0;
+  max-height: none;
   border: none;
   background: transparent;
   color: var(--color-mushaf-gold-strong, #A67C3D);
@@ -349,7 +365,7 @@ html[data-theme="dark"] .mf2-sajda-badge {
   letter-spacing: normal;
   line-height: 1.2;
   white-space: nowrap;
-  max-width: calc(32% - 12px);
+  max-width: calc(34% - 12px);
   overflow: hidden;
   text-overflow: clip;
   padding-block: 0.1em;

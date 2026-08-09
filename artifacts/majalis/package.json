@@ -254,6 +254,7 @@
     "assets:generate:ios": "bash scripts/generate-capacitor-assets.sh --ios-only",
     "assets:splash": "node scripts/generate-splash.mjs",
     "test:mushaf-311-parity": "node scripts/quran-import/mushaf-311-parity-gate.mjs",
+    "test:mushaf-ref-parity": "node scripts/quran-import/mushaf-ref-parity-gate.mjs",
     "measure:mushaf-311-baseline": "node scripts/quran-import/measure-mushaf-311-baseline.mjs"
   },
   "devDependencies": {
