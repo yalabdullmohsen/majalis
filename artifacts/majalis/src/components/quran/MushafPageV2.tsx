@@ -228,9 +228,11 @@ export function MushafPageV2({
     const container = linesContainerRef.current;
     if (!container) return;
 
-    const LINE_HEIGHT_EM = 1.1;
+    /** أساس line-height ضمن 1.0–1.1؛ يُرفع حتى سقف pitch 1.6 لبلوغ هدف الامتلاء */
+    const LINE_HEIGHT_EM = 1.05;
     const REF_PX = 100;
-    const TARGET_BLOCK_FILL = 0.9;
+    const openingFewLines = layout.pageNumber <= 2;
+    const TARGET_BLOCK_FILL = openingFewLines ? 0.8 : 0.92;
     const LH_CAP = 1.58;
     /** حد التسوية بعد تفعيلها — يقارب ≤2% انحراف */
     const MIN_LINE_FILL = 0.98;
@@ -248,9 +250,17 @@ export function MushafPageV2({
         container.closest(".mpv-body") ||
         container.parentElement;
       const availableWidth = container.clientWidth;
-      const slotHeight = slotEl instanceof HTMLElement
+      /* الارتفاع المتاح = بين أسفل الرأس وأعلى الذيل إن وُجدا؛ وإلا خانة الجسم */
+      const headerEl = document.querySelector(".mpv-ayah-header");
+      const footerEl = document.querySelector(".mpv-ayah-footer");
+      const hr = headerEl?.getBoundingClientRect();
+      const fr = footerEl?.getBoundingClientRect();
+      let slotHeight = slotEl instanceof HTMLElement
         ? slotEl.clientHeight
         : container.clientHeight;
+      if (hr && fr && fr.top > hr.bottom) {
+        slotHeight = fr.top - hr.bottom;
+      }
       if (availableWidth <= 0 || slotHeight <= 0) return false;
 
       /* التحجيم العرضي من أسطر الآيات فقط — بلا بسملة/عنوان */

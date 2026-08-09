@@ -21,10 +21,11 @@ assert.equal(
   false,
   ".mpv-body--ayah بلا max-width:720px الذي كان يحبس الصفحة",
 );
-assert.match(mpvBodyBlock[0], /4\.5vw/);
+assert.match(mpvBodyBlock[0], /max\(2px,\s*var\(--inset-left\)\)/);
 assert.match(mpvBodyBlock[0], /box-sizing:\s*border-box/);
 assert.match(mpvBodyBlock[0], /width:\s*100%/);
 assert.equal(/83vh/.test(mpvBodyBlock[0]), false, ".mpv-body--ayah بلا سقف 83vh");
+assert.equal(/4\.5vw/.test(mpvBodyBlock[0]), false, "هوامش ضيّقة بلا 4.5vw");
 
 assert.match(quranCss, /\.quran-shell--chrome-hidden\s+\.mpv-body/);
 assert.match(quranCss, /\.mpv-toolbar\.mpv-toolbar--ayah\s*\{[\s\S]*?position:\s*absolute/);
@@ -40,7 +41,12 @@ assert.match(
 );
 assert.match(quranCss, /\.mpv-ayah-header\s*\{[\s\S]*?position:\s*absolute/, "رأس عائم لا يزيح النص");
 assert.match(quranCss, /\.mpv-ayah-footer\s*\{[\s\S]*?position:\s*absolute/, "ذيل عائم لا يزيح النص");
-assert.match(quranCss, /\.mpv-body\.mpv-body--ayah\s*\{[\s\S]*?padding-top:\s*1\.35rem/);
+assert.match(quranCss, /\.mpv-body\.mpv-body--ayah\s*\{[\s\S]*?padding-top:\s*max\(1\.05rem/);
+assert.equal(
+  /\.mpv-body\.mpv-body--ayah\s*\{[\s\S]*?padding-top:\s*1\.35rem/.test(quranCss),
+  false,
+  "حشو علوي أدنى من 1.35rem",
+);
 /* حرج: position:relative على .quran-shell--ayah يلغي fixed ويُخرج المصحف خارج الشاشة */
 assert.equal(
   /\.quran-shell--ayah\s*\{[^}]*position:\s*relative/.test(quranCss),

@@ -49,7 +49,8 @@ const MAX_LINE_PITCH_EM = 1.6;
 /** حد أدنى لنسبة حجم خط الصفحتين الافتتاحيتين من متوسط الصفحات العادية */
 const MIN_OPENING_FONT_RATIO = 0.8;
 /** امتلاء المحتوى داخل صندوق الأسطر المحتضَن */
-const MIN_FILL_NORMAL = 0.9;
+const MIN_FILL_NORMAL = 0.92;
+const MIN_FILL_OPENING = 0.8;
 
 function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
@@ -231,11 +232,14 @@ function evaluate(results) {
         });
       }
     }
-    if (typeof r.fillRatio === "number" && r.fillRatio + 0.02 < MIN_FILL_NORMAL) {
-      failures.push({
-        page: r.pageNum,
-        reason: `امتلاء كتلة الأسطر ${(r.fillRatio * 100).toFixed(1)}% < ${MIN_FILL_NORMAL * 100}% (محتوى ${r.contentH?.toFixed?.(0) ?? "?"} / صندوق ${r.linesH?.toFixed?.(0) ?? "?"})`,
-      });
+    if (typeof r.fillRatio === "number") {
+      const minFill = r.pageNum === 1 || r.pageNum === 2 ? MIN_FILL_OPENING : MIN_FILL_NORMAL;
+      if (r.fillRatio + 0.02 < minFill) {
+        failures.push({
+          page: r.pageNum,
+          reason: `امتلاء كتلة الأسطر ${(r.fillRatio * 100).toFixed(1)}% < ${minFill * 100}% (محتوى ${r.contentH?.toFixed?.(0) ?? "?"} / صندوق ${r.linesH?.toFixed?.(0) ?? "?"})`,
+        });
+      }
     }
     if (r.pageNum === 2 && r.bismillahOverlapNext > 2) {
       failures.push({
@@ -298,7 +302,7 @@ async function main() {
       maxOverlapPairs: 0,
       maxLinePitchEm: MAX_LINE_PITCH_EM,
       minOpeningFontRatio: MIN_OPENING_FONT_RATIO,
-      minFillOpening: MIN_FILL_NORMAL,
+      minFillOpening: MIN_FILL_OPENING,
       minFillNormal: MIN_FILL_NORMAL,
       fillRatioGate: "enabled-box-hug",
     },
