@@ -137,6 +137,15 @@ const ASSERTIONS = [
   { route: "/notification-settings", selector: ".notif-card__title", mode: "dark", min: 4.5 },
   // صفحة الجنازة أسطحها بيضاء ثابتة — العنوان يبقى غامقًا (لا نعناعي ليلي)
   { route: "/janaza", selector: ".jnz-related__title", mode: "dark", min: 4.5 },
+  // ── أذكار الوضع الليلي (2026-08): --txt-primary كان غير معرَّف → احتياطي
+  // #1A1A18 على بطاقة داكنة (تباين ~1.05:1). نص الذكر ≥7:1 (قراءة طويلة).
+  { route: "/adhkar", selector: ".adhkar-focus-text", mode: "dark", min: 7 },
+  { route: "/adhkar", selector: ".adhkar-focus-btn--prev", mode: "dark", min: 4.5 },
+  { route: "/adhkar", selector: ".adhkar-focus-btn--details", mode: "dark", min: 4.5 },
+  { route: "/adhkar", selector: ".adhkar-focus-btn--next", mode: "dark", min: 4.5 },
+  { route: "/adhkar", selector: ".adhkar-focus-counter", mode: "dark", min: 4.5 },
+  { route: "/adhkar", selector: ".adhkar-focus-text", mode: "light", min: 7 },
+  { route: "/hadith", selector: ".hadith-card__text", mode: "dark", min: 4.5 },
 ];
 
 /** مسارات عامة من seo-routes — فحص عنوان لكل مسار × وضعين (تغطية كاملة لا عيّنة). */

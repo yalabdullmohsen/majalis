@@ -208,7 +208,7 @@
 .lib-card-title {
   font-size: 0.9rem;
   font-weight: 700;
-  color: var(--clr-text, #1A1A18);
+  color: var(--clr-text, var(--mj-ink, #1A1A18));
   line-height: 1.4;
   margin: 0;
   display: -webkit-box;
@@ -268,18 +268,30 @@
   color: var(--majalis-emerald-deep, #0f2f28);
 }
 
-/* ── الوضع الداكن ───────────────────────────────────────────── */
-@media (prefers-color-scheme: dark) {
-  .lib-card {
-    background: var(--clr-canvas-1, #1A2120);
-    border-color: rgba(255,255,255,0.07);
-  }
-  .lib-card-title { color: var(--clr-text, var(--mj-brand-soft)); }
-  .lib-card-author,
-  .lib-card-desc,
-  .lib-toolbar__label { color: var(--clr-text-2, #8AA09A); }
-  .lib-sort-btn { color: #8AA09A; border-color: rgba(255,255,255,0.09); }
-  .lib-view-btn { color: #8AA09A; border-color: rgba(255,255,255,0.09); }
+/* ── الوضع الداكن (data-theme الصريح) ── */
+html[data-theme="dark"] .lib-card,
+html.dark .lib-card {
+  background: var(--mj-surface, #17201C);
+  border-color: var(--mj-hairline, #26332D);
+}
+html[data-theme="dark"] .lib-card-title,
+html.dark .lib-card-title {
+  color: var(--mj-ink, #E9EFEC);
+}
+html[data-theme="dark"] .lib-card-author,
+html[data-theme="dark"] .lib-card-desc,
+html[data-theme="dark"] .lib-toolbar__label,
+html.dark .lib-card-author,
+html.dark .lib-card-desc,
+html.dark .lib-toolbar__label {
+  color: var(--mj-ink-2, #B4C2BC);
+}
+html[data-theme="dark"] .lib-sort-btn,
+html[data-theme="dark"] .lib-view-btn,
+html.dark .lib-sort-btn,
+html.dark .lib-view-btn {
+  color: var(--mj-ink-2, #B4C2BC);
+  border-color: var(--mj-hairline, #26332D);
 }
 
 /* ── موبايل ──────────────────────────────────────────────────── */

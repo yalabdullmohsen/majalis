@@ -26,6 +26,10 @@
   --text-on-dark: #F1F5F3;
   --text-brand: var(--mj-brand);
   --text-brand-deep: var(--mj-brand-deep);
+  /* أسماء قديمة خاطئة شائعة — كانت تسقط لاحتياطي نهاري ثابت */
+  --txt-primary: var(--mj-ink);
+  --txt-subdued: var(--mj-ink-2);
+  --text-primary: var(--mj-ink);
 
   --border: var(--mj-hairline);
   --border-strong: var(--mj-hairline);
@@ -147,6 +151,9 @@ html.dark,
   --text-title: var(--mj-ink);
   --text: var(--mj-ink);
   --text-2: var(--mj-ink-2);
+  --txt-primary: var(--mj-ink);
+  --txt-subdued: var(--mj-ink-2);
+  --text-primary: var(--mj-ink);
   --text-muted: var(--mj-muted);
   --text-meta: var(--mj-muted);
   --text-on-brand: var(--mj-on-brand);

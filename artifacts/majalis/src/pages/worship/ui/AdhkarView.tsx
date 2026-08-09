@@ -309,9 +309,9 @@ export default function AdhkarPage() {
         <Empty text="لا توجد أذكار في هذا القسم." />
       ) : current ? (
         <div className="adhkar-focus-shell">
-          {/* عداد الأذكار */}
+          {/* عداد الأذكار — سياق واضح: الذكر ن من م */}
           <p className="adhkar-focus-counter" aria-live="polite">
-            {toAr(currentIndex + 1)} / {toAr(total)}
+            الذكر {toAr(currentIndex + 1)} من {toAr(total)}
           </p>
 
           {/* نص الذكر */}
