@@ -13,18 +13,23 @@ const css = readFileSync(resolve(appRoot, "src/styles/pages/prayer-times.css"), 
 
 assert.match(
   css,
-  /html\.pts-immersive\s+\.bottom-nav[\s\S]*?background:\s*transparent\s*!important/,
-  "شريط التبويب شفاف فوق خلفية الصفحة",
+  /html\.pts-immersive\s+\.bottom-nav[\s\S]*?background:\s*var\(--mj-brand-deep/,
+  "شريط التبويب بنفس زمرد الصفحة (يهزم --mj-surface)",
+);
+assert.match(
+  css,
+  /html\.pts-immersive\s+\.bottom-nav--m2030/,
+  "يغطي صنف m2030 من theme-aliases",
+);
+assert.match(
+  css,
+  /html\.pts-immersive\s+\.top-section-bar[\s\S]*?background:\s*var\(--mj-brand-deep[\s\S]*?!important/,
+  "شريط الأقسام زمردي بـ !important",
 );
 assert.match(
   css,
   /html\.pts-immersive,\s*\nhtml\.pts-immersive body\s*\{[\s\S]*?background-color:\s*var\(--mj-brand-deep\)/,
   "html/body زمرديان تحت الشريط",
-);
-assert.equal(
-  /html\.pts-immersive\s+\.bottom-nav[\s\S]*?--color-surface/.test(css),
-  false,
-  "بلا سطح فاتح على شريط الصلاة",
 );
 
 console.log("prayer-bottom-strip.test.ts: ok");
