@@ -42,6 +42,7 @@ import { PwaInstallBanner } from "@/components/PwaInstallBanner";
 import { setPrayerTimesCache } from "@/lib/lesson-time";
 import { recordNavigationVisit } from "@/lib/navigation-back";
 import { isImmersiveChromePath, isPrayerTimesPath } from "@/lib/immersive-chrome";
+import { isNative } from "@/lib/capacitor-utils";
 
 const lazy = lazyWithRetry;
 
@@ -983,7 +984,8 @@ function AppShellInner() {
       <main id="main-content" className="app-main" tabIndex={-1}>
         <Router />
       </main>
-      {!hideSiteChrome && <SiteFooter />}
+      {/* تذييل الموقع للويب فقط — داخل التطبيق الأصلي يُخفى (App Store: الروابط القانونية في الإعدادات) */}
+      {!hideSiteChrome && !isNative && <SiteFooter />}
       <DeferredAssistantWidget />
       {/* أزرار تحرير المشرف العائمة لا تغطي المواقيت/المصحف */}
       {isAdmin && !hideSiteChrome && (

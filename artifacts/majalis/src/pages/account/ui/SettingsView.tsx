@@ -274,12 +274,22 @@ export default function SettingsPage() {
         <ToggleRow label={t("settings_assistant_verbose")} checked={preferences.assistantVerbose} onChange={(v) => update("assistantVerbose", v)} />
       </LegalSection>
 
+      <LegalSection title="عن التطبيق">
+        <div className="settings-legal-links">
+          <Link href="/privacy" className="settings-legal-link">سياسة الخصوصية</Link>
+          <Link href="/terms" className="settings-legal-link">شروط الاستخدام</Link>
+          <Link href="/support" className="settings-legal-link">الدعم والتواصل</Link>
+          <Link href="/about" className="settings-legal-link">حول التطبيق</Link>
+        </div>
+      </LegalSection>
+
       <LegalSection title={t("settings_privacy")}>
         <p>{t("settings_privacy_desc")}</p>
         <div className="settings-legal-links">
           <Link href="/privacy-center" className="settings-legal-link">مركز الخصوصية</Link>
           <Link href="/privacy" className="settings-legal-link">سياسة الخصوصية</Link>
-          <Link href="/terms" className="settings-legal-link">الشروط والأحكام</Link>
+          <Link href="/terms" className="settings-legal-link">شروط الاستخدام</Link>
+          <Link href="/support" className="settings-legal-link">الدعم والتواصل</Link>
           {isLoggedIn && (
             <Link href="/account-deletion" className="settings-legal-link settings-legal-link--danger">حذف الحساب نهائياً</Link>
           )}
