@@ -1,7 +1,7 @@
-/* مولَّد بواسطة scripts/generate-splash.mjs — لا تعدّل يدوياً */
+/* مولَّد — خلفية الإطلاق مطابقة لـ assets/splash.png */
 html, body {
-  background-color: #000300;
+  background-color: #002b21;
 }
 :root {
-  --mj-splash-bg: #000300;
+  --mj-splash-bg: #002b21;
 }
