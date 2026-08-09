@@ -101,14 +101,25 @@ function scorePair(hay: string, needle: string): TolerantMatch | null {
   }
 
   // مسافة تحرير على الكلمات (والنص كامل إن تقارب الطول)
-  const maxDist = maxEditDistance(needleBare.length);
+  // نقارن بالاستعلام كاملًا وبلا «ال» — وإلا تفشل حالات مثل «الكهاف»↔«الكهف»
+  const maxDist = maxEditDistance(Math.max(needleBare.length, needle.length));
   let bestDist = Infinity;
-  const candidates = new Set<string>([hay, hayBare, ...hay.split(" "), ...hayBare.split(" ")]);
+  const candidates = new Set<string>();
+  for (const raw of [hay, hayBare, ...hay.split(" "), ...hayBare.split(" ")]) {
+    if (!raw) continue;
+    candidates.add(raw);
+    candidates.add(stripDefiniteArticle(raw));
+  }
+  const needles = [needle, needleBare];
   for (const c of candidates) {
     if (!c) continue;
-    if (Math.abs(c.length - needleBare.length) > maxDist) continue;
-    const d = levenshtein(c, needleBare);
-    if (d <= maxDist && d < bestDist) bestDist = d;
+    for (const n of needles) {
+      if (!n) continue;
+      if (Math.abs(c.length - n.length) > maxDist) continue;
+      const d = levenshtein(c, n);
+      if (d <= maxDist && d < bestDist) bestDist = d;
+      if (bestDist === 0) break;
+    }
     if (bestDist === 0) break;
   }
   if (bestDist <= maxDist) {

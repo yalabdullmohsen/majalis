@@ -2,15 +2,11 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useLocation } from "wouter";
 import {
   AlertTriangle, Bell, BookMarked, BookOpen, Clock, CreditCard, FileText, Flame,
-  GraduationCap, HelpCircle, Layers, Lightbulb,
-  Newspaper, RotateCw, Scale, Scroll, Search, Star, Tag, User,
+  GraduationCap, HelpCircle, Layers, Lightbulb, Mic2,
+  Newspaper, RotateCw, Scale, Scroll, Search, Star, Tag, User, Wrench,
 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
-import {
-  intelligentSearch,
-  trackSearchClick,
-  type IntelligentSearchResult,
-} from "@/lib/scholarly-intelligence-service";
+import { trackSearchClick } from "@/lib/scholarly-intelligence-service";
 import {
   addSearchHistory,
   clearSearchHistory,
@@ -18,6 +14,7 @@ import {
   getTopSearchQueries,
 } from "@/lib/search-history";
 import { highlightOriginalParts } from "@/features/search/tolerant-match";
+import { runAppSearch, type AppSearchResult } from "@/features/search/app-search";
 import { afterNextPaint, yieldToMain } from "@/lib/yield-to-main";
 import { TEXT_API_ORIGINS, useResourcePrewarm } from "@/lib/resource-prewarm";
 import "@/styles/components/global-search-modal.css";
@@ -33,6 +30,7 @@ const POPULAR_QUERIES = [
 const KIND_META: Record<string, { label: string; Icon: LucideIcon; color: string }> = {
   lesson:        { label: "درس",       Icon: GraduationCap, color: "var(--majalis-emerald, var(--mj-brand-deep))" },
   hadith:        { label: "حديث",      Icon: Scroll,        color: "#1E40AF" },
+  book:          { label: "كتاب",      Icon: BookOpen,      color: "var(--majalis-emerald, var(--mj-brand-deep))" },
   library:       { label: "كتاب",      Icon: BookOpen,      color: "var(--majalis-emerald, var(--mj-brand-deep))" },
   fatwa:         { label: "فتوى",      Icon: Scale,         color: "#5B21B6" },
   fiqh:          { label: "فقه",       Icon: Scale,         color: "var(--majalis-emerald, var(--mj-brand-deep))" },
@@ -40,27 +38,43 @@ const KIND_META: Record<string, { label: string; Icon: LucideIcon; color: string
   ruling:        { label: "حكم",       Icon: FileText,      color: "#1E40AF" },
   fawaid:        { label: "فائدة",     Icon: Lightbulb,     color: "var(--majalis-emerald, var(--mj-brand-deep))" },
   qa:            { label: "سؤال",      Icon: HelpCircle,    color: "#5B21B6" },
+  surah:         { label: "سورة",      Icon: BookMarked,    color: "var(--majalis-emerald, var(--mj-brand-deep))" },
   quran:         { label: "قرآن",      Icon: BookMarked,    color: "var(--majalis-emerald, var(--mj-brand-deep))" },
+  tafsir:        { label: "تفسير",     Icon: BookOpen,      color: "var(--majalis-emerald, var(--mj-brand-deep))" },
   course:        { label: "دورة",      Icon: GraduationCap, color: "#1E40AF" },
   miracle:       { label: "إعجاز",     Icon: Star,          color: "var(--majalis-emerald, var(--mj-brand-deep))" },
   article:       { label: "مقال",      Icon: Newspaper,     color: "#5B21B6" },
   update:        { label: "مستجد",     Icon: Bell,          color: "var(--majalis-emerald, var(--mj-brand-deep))" },
   topic:         { label: "موضوع",     Icon: Tag,           color: "#1E40AF" },
   knowledge:     { label: "معرفة",     Icon: Layers,        color: "var(--majalis-emerald, var(--mj-brand-deep))" },
+  scholar:       { label: "عالم",      Icon: User,          color: "#5B21B6" },
   sheikh:        { label: "شيخ",       Icon: User,          color: "#5B21B6" },
   adhkar:        { label: "ذكر",       Icon: RotateCw,      color: "var(--majalis-emerald, var(--mj-brand-deep))" },
+  dua:           { label: "دعاء",      Icon: RotateCw,      color: "var(--majalis-emerald, var(--mj-brand-deep))" },
+  seerah:        { label: "سيرة",      Icon: Star,          color: "#1E40AF" },
+  story:         { label: "قصة",       Icon: BookOpen,      color: "#5B21B6" },
+  nation:        { label: "أمة",       Icon: Layers,        color: "#1E40AF" },
+  prophet:       { label: "نبي",       Icon: Star,          color: "var(--majalis-emerald, var(--mj-brand-deep))" },
+  tajweed:       { label: "تجويد",     Icon: Mic2,          color: "#1E40AF" },
+  ulum:          { label: "علوم",      Icon: BookMarked,    color: "#5B21B6" },
+  hifz:          { label: "حفظ",       Icon: Layers,        color: "var(--majalis-emerald, var(--mj-brand-deep))" },
+  settings:      { label: "إعدادات",   Icon: Wrench,        color: "#5B21B6" },
+  app:           { label: "صفحة",      Icon: Layers,        color: "#1E40AF" },
 };
 
 const FILTER_CHIPS: { key: string; label: string }[] = [
   { key: "all",     label: "الكل" },
-  { key: "lesson",  label: "دروس" },
-  { key: "library", label: "كتب" },
-  { key: "ruling",  label: "أحكام" },
+  { key: "surah",   label: "قرآن" },
+  { key: "tafsir",  label: "تفسير" },
+  { key: "book",    label: "مكتبة" },
   { key: "hadith",  label: "أحاديث" },
-  { key: "qa",      label: "أسئلة" },
-  { key: "fawaid",  label: "فوائد" },
-  { key: "miracle", label: "إعجاز" },
-  { key: "course",  label: "دورات" },
+  { key: "qa",      label: "فتاوى" },
+  { key: "fiqh",    label: "فقه" },
+  { key: "lesson",  label: "دروس" },
+  { key: "scholar", label: "علماء" },
+  { key: "adhkar",  label: "أذكار" },
+  { key: "seerah",  label: "سيرة" },
+  { key: "settings", label: "إعدادات" },
 ];
 
 const DEBOUNCE_MS = 200;
@@ -103,9 +117,9 @@ function ResultCard({
   query,
   onSelect,
 }: {
-  result: IntelligentSearchResult;
+  result: AppSearchResult;
   query: string;
-  onSelect: (r: IntelligentSearchResult) => void;
+  onSelect: (r: AppSearchResult) => void;
 }) {
   const meta = KIND_META[result.kind] ?? { label: result.kind, Icon: FileText, color: "#5B21B6" };
   return (
@@ -163,7 +177,9 @@ type Props = { onClose: () => void };
 export function GlobalSearchModal({ onClose }: Props) {
   const [query, setQuery]           = useState("");
   const [activeFilter, setActiveFilter] = useState("all");
-  const [results, setResults]       = useState<IntelligentSearchResult[]>([]);
+  const [results, setResults]       = useState<AppSearchResult[]>([]);
+  const [groupCounts, setGroupCounts] = useState<Record<string, number>>({});
+  const [suggestion, setSuggestion] = useState<string | null>(null);
   const [loading, setLoading]       = useState(false);
   const [error, setError]           = useState(false);
   const [history, setHistory]       = useState<string[]>(() => getSearchHistory());
@@ -203,6 +219,8 @@ export function GlobalSearchModal({ onClose }: Props) {
     async (q: string, filter: string) => {
       if (!q.trim()) {
         setResults([]);
+        setGroupCounts({});
+        setSuggestion(null);
         setLoading(false);
         setError(false);
         return;
@@ -213,23 +231,35 @@ export function GlobalSearchModal({ onClose }: Props) {
       setLoading(true);
       setError(false);
       try {
-        // Yield so keystroke / filter-chip feedback paints before search work (INP).
         await afterNextPaint();
         await yieldToMain();
         if (ctrl.signal.aborted) return;
-        const opts = filter !== "all" ? { type: filter, limit: 20 } : { limit: 24 };
-        const res  = await intelligentSearch(q.trim(), opts);
+        const res = await runAppSearch(q.trim(), {
+          limit: filter !== "all" ? 20 : 28,
+          kind: filter !== "all" ? filter : undefined,
+          signal: ctrl.signal,
+        });
         if (ctrl.signal.aborted) return;
+        if (res.quickNavHref) {
+          addSearchHistory(q.trim());
+          onClose();
+          navigate(res.quickNavHref);
+          return;
+        }
         await yieldToMain();
         if (ctrl.signal.aborted) return;
-        setResults(res.results ?? []);
+        setResults(res.results);
+        setGroupCounts(res.counts);
+        setSuggestion(res.suggestion ?? null);
       } catch (err: unknown) {
-        if ((err as Error)?.name !== "AbortError") setError(true);
+        if ((err as Error)?.name !== "AbortError" && (err as DOMException)?.name !== "AbortError") {
+          setError(true);
+        }
       } finally {
         if (!ctrl.signal.aborted) setLoading(false);
       }
     },
-    [],
+    [navigate, onClose],
   );
 
   useEffect(() => {
@@ -245,7 +275,7 @@ export function GlobalSearchModal({ onClose }: Props) {
   }, [query, activeFilter, doSearch]);
 
   const handleSelect = useCallback(
-    (result: IntelligentSearchResult) => {
+    (result: AppSearchResult) => {
       addSearchHistory(query.trim());
       void trackSearchClick({ query: query.trim(), resultId: result.id, kind: result.kind });
       onClose();
@@ -475,8 +505,19 @@ export function GlobalSearchModal({ onClose }: Props) {
           {!isEmpty && !loading && !error && !hasResults && (
             <div className="gsm-empty-state">
               <p className="gsm-state-icon"><Search size={32} strokeWidth={1.5} aria-hidden="true" /></p>
-              <p className="gsm-state-title">لا توجد نتائج مطابقة.</p>
-              <p className="gsm-state-hint">جرب تبسيط الكلمة أو إزالة التشكيل.</p>
+              <p className="gsm-state-title">لا نتائج لـ «{query.trim()}».</p>
+              <button type="button" className="gsm-retry-btn" onClick={() => setQuery("")}>
+                مسح البحث
+              </button>
+              {suggestion && (
+                <p className="gsm-state-hint">
+                  هل تقصد{" "}
+                  <button type="button" className="gsm-pill" onClick={() => handleQuickQuery(suggestion)}>
+                    {suggestion}
+                  </button>
+                  ؟
+                </p>
+              )}
               <div className="gsm-pills gsm-pills--center">
                 {POPULAR_QUERIES.slice(0, 4).map((q) => (
                   <button
@@ -493,13 +534,22 @@ export function GlobalSearchModal({ onClose }: Props) {
           )}
 
           {hasResults && (
-            <ul className="gsm-result-list">
-              {results.map((r, i) => (
-                <li key={r.id ?? i}>
-                  <ResultCard result={r} query={query} onSelect={handleSelect} />
-                </li>
-              ))}
-            </ul>
+            <>
+              {Object.keys(groupCounts).length > 1 && (
+                <p className="gsm-section__label" style={{ padding: "0 12px 6px" }}>
+                  {Object.entries(groupCounts)
+                    .map(([k, n]) => `${KIND_META[k]?.label ?? k} (${n})`)
+                    .join(" · ")}
+                </p>
+              )}
+              <ul className="gsm-result-list">
+                {results.map((r, i) => (
+                  <li key={r.id ?? i}>
+                    <ResultCard result={r} query={query} onSelect={handleSelect} />
+                  </li>
+                ))}
+              </ul>
+            </>
           )}
         </div>
 

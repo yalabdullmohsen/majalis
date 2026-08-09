@@ -14,39 +14,18 @@ import { findSeedLessonById, loadLessonsSeed } from "@/lib/lessons-seed";
 import "@/styles/pages/search.css";
 import "@/styles/components/surface-polish.css";
 
-/* ── تمييز مصطلح البحث في النصوص ── */
-const ARABIC_DIACRITICS_RE = /[ؐ-ًؚ-ٰٟٓ-ٕ]/;
-
-function buildHighlightPattern(query: string): RegExp | null {
-  const words = query.trim().split(/\s+/).filter(w => w.length >= 2);
-  if (!words.length) return null;
-  const alts = words.map(w => {
-    const n = normalizeArabic(w)
-      .replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
-      .replace(/ه/g, "[هة]")
-      .replace(/ي/g, "[يى]")
-      .replace(/ا/g, "[اأإآٱ]")
-      .replace(/و/g, "[وؤ]");
-    return `(${n})`;
-  });
-  try { return new RegExp(alts.join("|"), "g"); }
-  catch { return null; }
-}
-
+/* ── تمييز على النص الأصلي عبر محرك التسامح الموحّد ── */
 function highlightText(text: string, query: string): React.ReactNode {
-  if (!text || !query.trim() || ARABIC_DIACRITICS_RE.test(text)) return text;
-  const pat = buildHighlightPattern(query);
-  if (!pat) return text;
-  const parts: React.ReactNode[] = [];
-  let last = 0;
-  let m: RegExpExecArray | null;
-  while ((m = pat.exec(text)) !== null) {
-    if (m.index > last) parts.push(text.slice(last, m.index));
-    parts.push(<mark key={m.index} className="srch-hl">{m[0]}</mark>);
-    last = m.index + m[0].length;
-  }
-  if (last < text.length) parts.push(text.slice(last));
-  return parts.length > 1 ? parts : text;
+  if (!text || !query.trim()) return text;
+  const parts = highlightOriginalParts(text, query.trim());
+  if (parts.length === 1 && !parts[0]!.hit) return text;
+  return parts.map((p, i) =>
+    p.hit ? (
+      <mark key={i} className="srch-hl">{p.text}</mark>
+    ) : (
+      <span key={i}>{p.text}</span>
+    ),
+  );
 }
 import { resolveLessonSheikhImage } from "@/lib/sheikh-image";
 import { searchLocalExtensions } from "@/lib/local-search-ext";
@@ -58,7 +37,10 @@ import {
   parseQuickNav,
   loadUnifiedSearchIndex,
   searchUnifiedIndex,
+  runAppSearch,
+  highlightOriginalParts,
   type UnifiedSearchHit,
+  type AppSearchResult,
 } from "@/features/search";
 import {
   searchFiqhCouncilForGlobal,
@@ -111,19 +93,33 @@ const KIND_GROUP_LABELS: Record<string, string> = {
   lesson: "الدروس",       lessons: "الدروس",
   fatwa: "الفقه والأحكام",        fatwas: "الفقه والأحكام",
   ruling: "الأحكام الشرعية", rulings: "الأحكام الشرعية",
-  qa: "الأسئلة والأجوبة",
+  qa: "الأسئلة والفتاوى",
   fawaid: "الفوائد",
   adhkar: "الأذكار",
+  book: "كتب ومراجع",
   library: "كتب ومراجع",
   miracle: "إشارات كونية", miracles: "إشارات كونية",
   course: "الدورات العلمية", courses: "الدورات العلمية",
   update: "إعلانات",  updates: "إعلانات",
+  fiqh: "الفقه",
   fiqh_decision: "المجمع الفقهي", fiqh_council: "المجمع الفقهي",
   knowledge: "محرك المعرفة",
+  surah: "سور القرآن",
   quran: "القرآن",
+  tafsir: "التفسير",
   hadith: "الأحاديث الصحيحة",
   story: "القصص الإسلامية", stories: "القصص الإسلامية",
+  scholar: "العلماء",
   sheikh: "المشايخ",
+  seerah: "السيرة",
+  nation: "الأمم السابقة",
+  prophet: "قصص الأنبياء",
+  dua: "الأدعية",
+  tajweed: "التجويد",
+  ulum: "علوم القرآن",
+  hifz: "الحفظ",
+  settings: "الإعدادات",
+  app: "صفحات التطبيق",
 };
 
 function KindBadge({ kind }: { kind: string }) {
@@ -281,6 +277,11 @@ export default function SearchPage() {
     nations: [] as { id: string; title: string; meta?: string; href: string }[],
   });
   const [unifiedHits, setUnifiedHits] = useState<Record<string, UnifiedSearchHit[]>>({});
+  const [appResults, setAppResults] = useState<AppSearchResult[]>([]);
+  const [appGroups, setAppGroups] = useState<Record<string, AppSearchResult[]>>({});
+  const [appSuggestion, setAppSuggestion] = useState<string | null>(null);
+  const [sectionFilter, setSectionFilter] = useState("all");
+  const searchAbortRef = useRef<AbortController | null>(null);
 
   /* تحميل السجل عند الفتح وبعد كل بحث */
   const refreshHistory = () => setRecentSearches(getSearchHistory().slice(0, 6));
@@ -322,6 +323,9 @@ export default function SearchPage() {
     if (!rawQuery.trim()) {
       setResults(EMPTY);
       setIntelligentResults([]);
+      setAppResults([]);
+      setAppGroups({});
+      setAppSuggestion(null);
       return;
     }
 
@@ -333,12 +337,37 @@ export default function SearchPage() {
 
     const query = normalizeArabic(rawQuery) || rawQuery.trim();
 
+    searchAbortRef.current?.abort();
+    const ctrl = new AbortController();
+    searchAbortRef.current = ctrl;
+
     setLoading(true);
     addSearchHistory(rawQuery);
     refreshHistory();
     void trackSearchQuery(rawQuery);
 
     try {
+      // المحرك الموحّد أولًا (فهرس مطبّع + تطبيع واحد)
+      const local = await runAppSearch(rawQuery, {
+        limit: 60,
+        kind: sectionFilter !== "all" ? sectionFilter : filters.type || undefined,
+        signal: ctrl.signal,
+      });
+      if (ctrl.signal.aborted) return;
+      setAppResults(local.results);
+      setAppGroups(local.groups);
+      setAppSuggestion(local.suggestion ?? null);
+      setResponseMs(Math.round(local.responseMs));
+
+      if (local.results.length > 0) {
+        setIntelligentResults([]);
+        setIntelligentGroups({});
+        setResults(EMPTY);
+        setFiqhResults([]);
+        setLoading(false);
+        return;
+      }
+
       const intel = await intelligentSearch(query, {
         limit: 50,
         type: filters.type || undefined,
@@ -346,11 +375,12 @@ export default function SearchPage() {
         status: filters.status || undefined,
         language: filters.language || undefined,
       });
+      if (ctrl.signal.aborted) return;
 
       setIntelligentResults(intel.results || []);
       setIntelligentGroups(intel.groups || {});
       setMatchedTopics(intel.topics || []);
-      setResponseMs(intel.response_ms ?? null);
+      if (intel.response_ms != null) setResponseMs(intel.response_ms);
 
       if ((intel.results?.length || 0) > 0) {
         setResults(EMPTY);
@@ -364,6 +394,7 @@ export default function SearchPage() {
         searchUnifiedLessons(query),
         searchFiqhCouncilForGlobal(query, 12),
       ]);
+      if (ctrl.signal.aborted) return;
 
       const mergedFiqh = mergeFiqhSearchResults(r.fiqh_decisions || [], fiqhBoost.rows);
       setFiqhResults(mergedFiqh);
@@ -384,7 +415,8 @@ export default function SearchPage() {
       ];
 
       setResults({ ...r, lessons: mergedLessons });
-    } catch {
+    } catch (err: unknown) {
+      if ((err as Error)?.name === "AbortError" || (err as DOMException)?.name === "AbortError") return;
       setFiqhResults([]);
       setFiqhQuery(false);
       setIntelligentResults([]);
@@ -396,7 +428,7 @@ export default function SearchPage() {
       const demo = await searchDemoContent(query);
       setResults({ ...demo, usingDemo: true, error: null, adhkar: demo.adhkar || [] });
     } finally {
-      setLoading(false);
+      if (!ctrl.signal.aborted) setLoading(false);
     }
   };
 
@@ -412,8 +444,8 @@ export default function SearchPage() {
 
   useEffect(() => {
     setTerm(q);
-    runSearch(q);
-  }, [q, filters.type, filters.author, filters.status, filters.language]);
+    void runSearch(q);
+  }, [q, filters.type, filters.author, filters.status, filters.language, sectionFilter]);
 
   const submitSearch = (value: string) => {
     const t = value.trim();
@@ -424,7 +456,7 @@ export default function SearchPage() {
     setTerm(value);
     if (debounceRef.current) clearTimeout(debounceRef.current);
     if (value.trim().length >= 2) {
-      debounceRef.current = setTimeout(() => runSearch(value), 280);
+      debounceRef.current = setTimeout(() => runSearch(value), 200);
     } else if (!value.trim()) {
       setResults(EMPTY);
       setIntelligentResults([]);
@@ -433,6 +465,7 @@ export default function SearchPage() {
 
   const hasActiveFilter = Object.values(filters).some(Boolean);
 
+  const appTotal = appResults.length;
   const intelligentTotal = intelligentResults.length;
   const legacyTotal =
     fiqhResults.length +
@@ -446,7 +479,22 @@ export default function SearchPage() {
     localExtra.nations.length +
     Object.values(unifiedHits).reduce((n, arr) => n + arr.length, 0);
 
-  const total = intelligentTotal > 0 ? intelligentTotal : legacyTotal;
+  const total = appTotal > 0 ? appTotal : intelligentTotal > 0 ? intelligentTotal : legacyTotal;
+
+  const SECTION_CHIPS: { key: string; label: string }[] = [
+    { key: "all", label: "الكل" },
+    { key: "surah", label: "قرآن" },
+    { key: "tafsir", label: "تفسير" },
+    { key: "book", label: "مكتبة" },
+    { key: "hadith", label: "أحاديث" },
+    { key: "qa", label: "فتاوى" },
+    { key: "fiqh", label: "فقه" },
+    { key: "lesson", label: "دروس" },
+    { key: "scholar", label: "علماء" },
+    { key: "adhkar", label: "أذكار" },
+    { key: "story", label: "قصص" },
+    { key: "settings", label: "إعدادات" },
+  ];
 
   return (
     <div className="page-shell narrow search-page ds-page">
@@ -470,6 +518,31 @@ export default function SearchPage() {
         />
         <button type="submit" className="search-page-submit ds-btn ds-btn--primary" aria-label="تنفيذ البحث">بحث</button>
       </form>
+
+      {/* شرائح تصفية الأقسام */}
+      {q.trim() && (
+        <div className="search-section-chips" role="tablist" aria-label="تصفية حسب القسم">
+          {SECTION_CHIPS.map((chip) => {
+            const count =
+              chip.key === "all"
+                ? appTotal
+                : (appGroups[chip.key]?.length ?? 0);
+            return (
+              <button
+                key={chip.key}
+                type="button"
+                role="tab"
+                aria-selected={sectionFilter === chip.key}
+                className={`search-suggestion-chip${sectionFilter === chip.key ? " is-active" : ""}`}
+                onClick={() => setSectionFilter(chip.key)}
+              >
+                {chip.label}
+                {count > 0 ? ` (${count})` : ""}
+              </button>
+            );
+          })}
+        </div>
+      )}
 
       {/* شريط الأدوات */}
       <div className="search-toolbar">
@@ -626,8 +699,23 @@ export default function SearchPage() {
         <div aria-live="polite" aria-atomic="false">
           {total === 0 ? (
             <div className="search-no-results" role="status">
-              <p className="search-no-results__msg">لا توجد نتائج مطابقة.</p>
-              <p className="search-no-results__hint">جرّب كلمات مختلفة أو تحقق من الإملاء.</p>
+              <p className="search-no-results__msg">لا نتائج لـ «{q}».</p>
+              <button
+                type="button"
+                className="ds-btn ds-btn--secondary"
+                onClick={() => { setTerm(""); navigate("/search"); }}
+              >
+                مسح البحث
+              </button>
+              {appSuggestion && (
+                <p className="search-no-results__hint">
+                  هل تقصد{" "}
+                  <button type="button" className="search-suggestion-chip" onClick={() => submitSearch(appSuggestion)}>
+                    {appSuggestion}
+                  </button>
+                  ؟
+                </p>
+              )}
             </div>
           ) : (
             <>
@@ -651,7 +739,25 @@ export default function SearchPage() {
                 </div>
               )}
 
-              {intelligentTotal > 0 ? (
+              {appTotal > 0 ? (
+                Object.entries(appGroups).map(([kind, items]) => (
+                  <Group
+                    key={kind}
+                    title={KIND_GROUP_LABELS[kind] || KIND_LABELS[kind] || kind}
+                    items={items}
+                    render={(item: AppSearchResult) => (
+                      <ResultRow
+                        key={item.id}
+                        href={item.href}
+                        kind={item.kind}
+                        query={q}
+                        title={item.title}
+                        meta={item.summary}
+                      />
+                    )}
+                  />
+                ))
+              ) : intelligentTotal > 0 ? (
                 Object.entries(intelligentGroups).map(([kind, items]) => (
                   <Group
                     key={kind}
