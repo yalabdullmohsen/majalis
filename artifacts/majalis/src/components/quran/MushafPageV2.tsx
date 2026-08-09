@@ -4,7 +4,7 @@ import { quranFontStack } from "@/lib/quran-font-options";
 import { toArabicDigits } from "@/lib/utils";
 import type { MushafPageLayout, QpcWord } from "@/lib/mushaf-v2-data";
 import { DRAWN_BASMALA_TEXT, drawnSurahTitleText } from "@/lib/mushaf-sizing-lines";
-import { MushafSurahBadgeFrame } from "@/components/quran/MushafOrnaments";
+import { MushafAyahMarkerSvg, MushafSurahBadgeFrame } from "@/components/quran/MushafOrnaments";
 import { wordKeyFromQpc } from "@/features/mushaf/ayah-word-keys";
 
 /** يُجمِّع كلمات سطر متتالية بنفس verseKey في عنقود واحد — للوضع التفاعلي بلا طبقة إحداثيات. */
@@ -65,10 +65,14 @@ function defaultRenderWord(w: QpcWord, showAyahNumbers: boolean) {
  */
 function renderUnicodeWord(w: QpcWord, showAyahNumbers: boolean) {
   if (w.charType === "end") {
+    const n = Number(w.textUthmani.replace(/\D/g, "")) || 0;
     return (
       <Fragment key={w.id}>
         {showAyahNumbers ? (
-          <span className="qs-ayah-num">{toArabicDigits(Number(w.textUthmani.replace(/\D/g, "")) || 0)}</span>
+          <span className="mf2-ayah-marker" aria-hidden="true">
+            <MushafAyahMarkerSvg className="mf2-ayah-marker__ring" />
+            <span className="mf2-ayah-marker__num">{toArabicDigits(n)}</span>
+          </span>
         ) : null}
         {w.sajdahNumber !== null && <span className="mf2-sajda-badge">سجدة</span>}
       </Fragment>
@@ -206,9 +210,9 @@ export function MushafPageV2({
   const [fitted, setFitted] = useState(false);
 
   /**
-   * حجم موحّد من أعرض سطر آيات — نفس الدالة لكل الصفحات (بما فيها 1 و2).
-   * بعد التحجيم: تسوية أطراف الأسطر بـ scaleX للأسطر أقصر من 98%
-   * (ما عدا آخر سطر سورة). الفراغ الرأسي يبقى فوق/تحت الكتلة عبر التمركز.
+   * حجم موحّد من أعرض سطر آيات — نفس الدالة لكل الصفحات (بما فيها 1 و2) بلا فرع خاص.
+   * بعد التحجيم: تسوية أطراف الأسطر بـ scaleX حتى امتلاء ≥98% (انحراف ≤2%)
+   * ما عدا العنوان والبسملة وآخر سطر سورة. الفراغ الرأسي يبقى فوق/تحت الكتلة.
    */
   useLayoutEffect(() => {
     if (!fontReady || !layout) {
@@ -231,16 +235,11 @@ export function MushafPageV2({
     /** أساس line-height ضمن 1.0–1.1؛ يُرفع حتى سقف pitch 1.6 لبلوغ هدف الامتلاء */
     const LINE_HEIGHT_EM = 1.05;
     const REF_PX = 100;
-    const openingFewLines = layout.pageNumber <= 2;
-    const TARGET_BLOCK_FILL = openingFewLines ? 0.8 : 0.92;
+    /** هدف امتلاء موحّد — الصفحات قليلة الأسطر تترك الفراغ فوق/تحت طبيعيًا */
+    const TARGET_BLOCK_FILL = 0.94;
     const LH_CAP = 1.58;
-    /** حد التسوية بعد تفعيلها — يقارب ≤2% انحراف */
+    /** تسوية حتى انحراف ≤2% لكل أسطر الآيات القابلة للتمديد */
     const MIN_LINE_FILL = 0.98;
-    /**
-     * لا تُفعَّل التسوية إلا إن كان أقصى انحراف جوهري >5% —
-     * يبقي ص3/ص600 على بصمتهما (انحراف خطّي طفيف)، ويصلّح ص1–2 فقط.
-     */
-    const EQUALIZE_PAGE_DEV_GATE = 0.05;
     const ayahCount = Math.max(1, layout.ayahLineCount);
     const noStretchLines = lastSurahEndLineNumbers(layout);
 
@@ -342,12 +341,8 @@ export function MushafPageV2({
         }
         lineFills.push({ ln, el, fill: contentW / availableWidth });
       }
-      const maxDev = lineFills.length
-        ? Math.max(...lineFills.map((x) => 1 - x.fill))
-        : 0;
-      const equalize = maxDev > EQUALIZE_PAGE_DEV_GATE;
       for (const { el, fill } of lineFills) {
-        if (equalize && fill < MIN_LINE_FILL) {
+        if (fill < MIN_LINE_FILL) {
           el.style.setProperty("--mf2-line-sx", String(1 / fill));
         } else {
           el.style.removeProperty("--mf2-line-sx");

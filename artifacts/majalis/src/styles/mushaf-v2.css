@@ -252,14 +252,14 @@ html[data-theme="dark"] .mf2-sajda-badge {
   border-color: rgba(232,201,122,.35);
 }
 
-/* رأس سورة زخرفي — ارتفاع طبيعي؛ لا يشارك flex مع أسطر الآيات */
+/* رأس سورة زخرفي — ارتفاع ≈ 1.6× سطر الآية؛ لا يشارك flex مع أسطر الآيات */
 .mf2-surah-header {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.12em;
-  padding: 0.1em 0 0.15em;
+  gap: 0.08em;
+  padding: 0.06em 0 0.1em;
   flex: 0 0 auto;
   flex-shrink: 0;
   min-height: auto;
@@ -275,14 +275,15 @@ html[data-theme="dark"] .mf2-sajda-badge {
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 0.38em 0;
-  min-height: 2.55em;
+  padding: 0;
+  height: 1.6em;
+  min-height: 1.6em;
   border: none;
   background: transparent;
   color: var(--color-mushaf-gold, #8B6914);
   box-sizing: border-box;
 }
-/* شارة عريضة بعرض كتلة النص: إطار موحّد + شريط زخرفي داخلي */
+/* شارة عريضة: SVG واحد — الوسط يتمدد والطرفان بعرض ثابت نسبيًا */
 .mf2-surah-badge {
   position: absolute;
   inset: 0;
@@ -293,30 +294,10 @@ html[data-theme="dark"] .mf2-sajda-badge {
   color: var(--color-mushaf-gold, #8B6914);
   overflow: hidden;
 }
-.mf2-surah-badge__outline {
+.mf2-surah-badge__svg {
   position: absolute;
   inset: 0;
   width: 100%;
-  height: 100%;
-}
-.mf2-surah-badge__row {
-  position: absolute;
-  inset: 0.12rem;
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
-  min-width: 0;
-}
-.mf2-surah-badge__end {
-  flex: 0 0 22%;
-  width: 22%;
-  max-width: 5.5rem;
-  height: 100%;
-  display: block;
-}
-.mf2-surah-badge__mid {
-  flex: 1 1 auto;
-  min-width: 0;
   height: 100%;
   display: block;
 }
@@ -332,19 +313,19 @@ html[data-theme="dark"] .mf2-sajda-badge {
 .mf2-surah-header__name {
   position: relative;
   z-index: 1;
-  /* خط مصحف/قرآن — لا Alexandria ولا وزن عريض للواجهة */
+  /* خط مصحف عثماني مشكّل — قريب من حجم أسطر الآيات */
   font-family: var(--font-quran, "Amiri Quran", "Amiri", "Scheherazade New", serif);
-  font-size: 0.9em;
+  font-size: 0.95em;
   font-weight: 400;
   color: var(--color-mushaf-gold, #8B6914);
   letter-spacing: normal;
-  line-height: 1.2;
+  line-height: 1.15;
   white-space: nowrap;
-  max-width: 52%;
+  max-width: 45%;
   overflow: hidden;
   text-overflow: clip;
-  padding-block: 0.22em;
-  padding-inline: 0.25em;
+  padding-block: 0.1em;
+  padding-inline: 0.2em;
 }
 html[data-theme="dark"] .mf2-surah-header__name { color: #E8C97A; }
 .quran-shell--night .mf2-surah-header__name { color: #E8C97A; }
@@ -354,31 +335,66 @@ html[data-theme="dark"] .mf2-surah-header__frame,
 }
 
 .mf2-bismillah {
-  /* بسملة افتتاحية فقط — رقعة/ثلث ممدود أخف من أسطر الآيات؛ خارج sizeByWidth */
+  /* بسملة افتتاحية فقط — ممدودة أخف من الآيات؛ ارتفاع سطر كامل بلا تراكب */
   font-family: "Amiri Quran", "Amiri", "Scheherazade New", serif;
   font-size: 0.82em;
   font-weight: 400;
-  line-height: 1.25;
+  line-height: var(--mf2-lh, 1.1);
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
-  margin: 0.05em 0 0.12em;
+  margin: 0;
   padding: 0;
   text-align: center;
   white-space: nowrap;
-  color: color-mix(in srgb, var(--mf2-ink, #111827) 78%, transparent);
+  color: color-mix(in srgb, var(--mf2-ink, var(--color-mushaf-ink, #14110E)) 82%, transparent);
   overflow: visible;
   flex: 0 0 auto;
-  min-height: 0;
-  letter-spacing: 0.04em;
+  min-height: 1em;
+  height: auto;
+  letter-spacing: 0.06em;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   font-feature-settings: "liga" 1, "calt" 1;
   user-select: none;
   -webkit-user-select: none;
+}
+
+/* علامة آية زخرفية — Unicode/خفيف؛ القطر = 1.15× حجم الخط وبلا تجاوز ارتفاع السطر */
+.mf2-ayah-marker {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  --mf2-marker-d: min(1.15em, calc(var(--mf2-lh, 1.1) * 1em));
+  width: var(--mf2-marker-d);
+  height: var(--mf2-marker-d);
+  vertical-align: middle;
+  margin-inline: 0.06em;
+  flex: 0 0 auto;
+  user-select: none;
+  -webkit-user-select: none;
+}
+.mf2-ayah-marker__ring {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.mf2-ayah-marker__num {
+  position: relative;
+  z-index: 1;
+  font-family: "Amiri", "Noto Naskh Arabic", var(--font-quran, serif);
+  font-size: 0.42em;
+  font-weight: 600;
+  line-height: 1;
+  color: var(--color-mushaf-gold, #8B6914);
+  unicode-bidi: isolate;
+  direction: ltr;
 }
 
 /* هيكل تحميل (skeleton) — أسطر عاجية باهتة بنبض خفيف، بلا أي نص إطلاقًا
