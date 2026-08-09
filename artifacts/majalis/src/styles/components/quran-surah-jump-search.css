@@ -3,8 +3,8 @@
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
-  padding-inline: max(0.25rem, env(safe-area-inset-left, 0px))
-    max(0.25rem, env(safe-area-inset-right, 0px));
+  padding-inline: max(0.25rem, var(--inset-right, 0px))
+    max(0.25rem, var(--inset-left, 0px));
   min-width: 0;
 }
 

@@ -334,8 +334,8 @@ html.dark .nav-soon-badge {
   border: 1px solid var(--mj-hairline, var(--color-border));
   border-radius: var(--mj-r-sm, var(--radius-md));
   background: var(--mj-surface, var(--color-surface));
-  padding-inline: max(0.65rem, env(safe-area-inset-left, 0px))
-    max(0.65rem, env(safe-area-inset-right, 0px));
+  padding-inline: max(0.65rem, var(--inset-right, 0px))
+    max(0.65rem, var(--inset-left, 0px));
   box-sizing: border-box;
   cursor: pointer;
 }
