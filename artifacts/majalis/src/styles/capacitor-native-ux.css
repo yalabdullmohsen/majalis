@@ -78,7 +78,7 @@ html.capacitor-native,
 html.capacitor-native body {
   overscroll-behavior-y: none;
   /* نفس لون الإطلاق — يمنع وميض أبيض بعد إخفاء Splash الأصلي */
-  background-color: var(--mj-splash-bg, #000300);
+  background-color: var(--mj-splash-bg, #002b21);
 }
 
 html.capacitor-native .scroll-y,
