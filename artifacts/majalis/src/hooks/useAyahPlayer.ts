@@ -6,7 +6,9 @@
  * Part 9: stall/network-drop recovery preserves playback position (no UI timeline reset).
  */
 import { useCallback, useEffect, useRef, useState } from "react";
-import { getAyahAudioUrl, loadReciterId, saveReciterId, loadPlaybackRate, savePlaybackRate } from "@/lib/quran-audio";
+import { loadReciterId, saveReciterId, loadPlaybackRate, savePlaybackRate } from "@/lib/quran-audio";
+import { audioSourceUrlQueue } from "@/lib/quran-audio-source";
+import { refreshQuranAudioRemoteConfig } from "@/lib/quran-audio-remote-config";
 import { getSurahMeta } from "@/lib/quran-api";
 import { useMediaSession } from "@/hooks/useMediaSession";
 import {
@@ -166,7 +168,15 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
 
     const t0 = performance.now();
     audio.pause();
-    audio.src = getAyahAudioUrl(surah, ayah, reciter);
+    void refreshQuranAudioRemoteConfig();
+    const urlQueue = audioSourceUrlQueue({ kind: "ayah", surah, ayah, reciterId: reciter });
+    let urlIndex = 0;
+    if (urlQueue.length === 0) {
+      if (mountedRef.current) setPlayerState("error");
+      logDiagnostic("audio-chunk-fail", "no-audio-source", { surah, ayah, reciter });
+      return;
+    }
+    audio.src = urlQueue[0]!;
     audio.playbackRate = playbackRateRef.current;
     if (mountedRef.current) {
       setCurrentAyah(ayah);
@@ -188,7 +198,13 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
       if (latency > 0) observeAudioThroughput(80_000, latency);
       setPlayerState("playing");
       if (policy.warmNextAyah && ayah < totalAyahs) {
-        prewarmUrl(getAyahAudioUrl(surah, ayah + 1, reciter), { mode: "cors" });
+        const next = audioSourceUrlQueue({
+          kind: "ayah",
+          surah,
+          ayah: ayah + 1,
+          reciterId: reciter,
+        })[0];
+        if (next) prewarmUrl(next, { mode: "cors" });
       }
     };
     const onPause = () => {
@@ -245,6 +261,15 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
     const onError = () => {
       const phase = stallRef.current?.getPhase();
       if (phase === "buffering" || phase === "recovering") return;
+      // جرب المرآة التالية قبل إعلان الفشل
+      if (urlIndex + 1 < urlQueue.length) {
+        urlIndex += 1;
+        audio.src = urlQueue[urlIndex]!;
+        audio.load();
+        void ensureNativePlaybackAudioSession().catch(() => undefined);
+        audio.play().catch(() => undefined);
+        return;
+      }
       // Network/decode errors that stall recovery already claimed — wait for failed phase
       const code = audio.error?.code;
       if (code === 1 || code === 2 || code === 4) {

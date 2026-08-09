@@ -62,9 +62,11 @@ export default function SourcesLicensesPage() {
           <a href="https://mp3quran.net" target="_blank" rel="noopener noreferrer">
             mp3quran.net
           </a>{" "}
-          (سورة كاملة). لا تُحزَم ملفات صوت داخل التطبيق. التنزيل دون اتصال اختياري
-          وبسقف تخزين موضّح في الإعدادات. قائمة القرّاء ومجلداتهم في{" "}
-          <code dir="ltr">CREDITS.md</code>.
+          (سورة كاملة). لا تُحزَم ملفات صوت داخل التطبيق ولا تُعاد استضافتها على
+          خوادمنا. التنزيل دون اتصال اختياري وبسقف تخزين موضّح في الإعدادات. قائمة
+          القرّاء ومجلداتهم في <code dir="ltr">CREDITS.md</code>. مفتاح تعطيل تشغيلي
+          لإخفاء قارئ أو مصدر:{" "}
+          <code dir="ltr">/data/quran-audio-remote.json</code>.
         </p>
       </LegalSection>
 
