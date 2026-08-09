@@ -542,6 +542,7 @@ function Router() {
       <Route path="/terms"><SafeLazyRoute component={TermsPage} /></Route>
       <Route path="/account-deletion"><SafeLazyRoute component={AccountDeletionPage} /></Route>
       <Route path="/delete-account"><Redirect to="/account-deletion" /></Route>
+      <Route path="/account/delete"><Redirect to="/account-deletion" /></Route>
       <Route path="/contact"><SafeLazyRoute component={ContactPage} /></Route>
       <Route path="/support"><Redirect to="/contact" /></Route>
       <Route path="/settings"><SafeLazyRoute component={SettingsPage} /></Route>

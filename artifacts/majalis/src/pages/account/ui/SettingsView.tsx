@@ -279,6 +279,7 @@ export default function SettingsPage() {
           <Link href="/privacy" className="settings-legal-link">سياسة الخصوصية</Link>
           <Link href="/terms" className="settings-legal-link">شروط الاستخدام</Link>
           <Link href="/support" className="settings-legal-link">الدعم والتواصل</Link>
+          <Link href="/sources" className="settings-legal-link">المصادر والتراخيص</Link>
           <Link href="/about" className="settings-legal-link">حول التطبيق</Link>
         </div>
       </LegalSection>
@@ -341,16 +342,9 @@ export default function SettingsPage() {
               updatePreferences(DEFAULT_PREFERENCES);
               clearLocalBookmarks();
               void clearOfflineReading();
-              try {
-                localStorage.removeItem("majalis-reading-progress-v1");
-                localStorage.removeItem("userNotes");
-                localStorage.removeItem("mj-quran-notes-v1");
-                localStorage.removeItem("myBookmarks");
-                localStorage.removeItem("lastPage");
-                localStorage.removeItem("mj-quran-page-pos-v1");
-              } catch {
-                /* ignore */
-              }
+              void import("@/lib/clear-user-local-data").then(({ clearUserLocalDataAndMedia }) =>
+                clearUserLocalDataAndMedia(),
+              );
             }}
           >
             {t("settings_clear_local")}

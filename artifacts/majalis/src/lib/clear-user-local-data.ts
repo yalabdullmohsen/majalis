@@ -65,3 +65,30 @@ export function clearUserLocalData(): { removed: number } {
   }
   return { removed: toRemove.length };
 }
+
+/**
+ * مسح محلي شامل عند حذف الحساب أو «مسح البيانات»:
+ * localStorage + تلاوات IndexedDB + حالة استئناف الصوت.
+ */
+export async function clearUserLocalDataAndMedia(): Promise<{ removed: number }> {
+  const { removed } = clearUserLocalData();
+  try {
+    const { clearAllOfflineAudioDownloads } = await import("@/lib/quran-audio-downloads");
+    await clearAllOfflineAudioDownloads();
+  } catch {
+    /* أفضل جهد */
+  }
+  try {
+    if (typeof indexedDB !== "undefined") {
+      await new Promise<void>((resolve) => {
+        const req = indexedDB.deleteDatabase("majalis-quran-audio-resume");
+        req.onsuccess = () => resolve();
+        req.onerror = () => resolve();
+        req.onblocked = () => resolve();
+      });
+    }
+  } catch {
+    /* أفضل جهد */
+  }
+  return { removed };
+}

@@ -15,6 +15,7 @@ const delSrc = readFileSync(join(appRoot, "src/pages/account/ui/AccountDeletionV
 
 assert.match(appSrc, /path="\/who-we-are"/, "who-we-are alias");
 assert.match(appSrc, /path="\/delete-account"/, "delete-account alias");
+assert.match(appSrc, /path="\/account\/delete"/, "account/delete alias");
 assert.match(appSrc, /path="\/support"/, "support alias");
 assert.match(appSrc, /Redirect to="\/about-us"/, "who-we-are → about-us");
 assert.match(appSrc, /Redirect to="\/account-deletion"/, "delete-account → account-deletion");
@@ -29,5 +30,6 @@ const aboutIdx = navSrc.indexOf('id: "about"');
 assert.ok(accountIdx > 0 && aboutIdx > accountIdx, "account group before about group");
 
 assert.match(delSrc, /clearLocalBookmarks/, "clears local bookmarks on delete");
+assert.match(delSrc, /clearUserLocalDataAndMedia/, "wipes local media + IndexedDB audio on delete");
 
 console.log("store-readiness-routes: OK");

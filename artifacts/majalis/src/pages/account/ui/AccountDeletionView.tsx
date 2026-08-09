@@ -60,10 +60,10 @@ export default function AccountDeletionPage() {
       try {
         const { clearLocalBookmarks } = await import("@/lib/local-bookmarks");
         const { clearOfflineReading } = await import("@/lib/offline-reading-pack");
-        const { clearUserLocalData } = await import("@/lib/clear-user-local-data");
+        const { clearUserLocalDataAndMedia } = await import("@/lib/clear-user-local-data");
         clearLocalBookmarks();
         clearOfflineReading();
-        clearUserLocalData();
+        await clearUserLocalDataAndMedia();
       } catch {
         /* مسح محلي أفضل جهد */
       }
