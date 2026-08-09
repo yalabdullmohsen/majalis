@@ -156,18 +156,33 @@ html[data-theme="dark"] .quran-shell--high-contrast .mf2-line {
   overflow-wrap: normal !important;
   white-space: nowrap;
 }
-/* رقم الآية — دائرة بيج مملوءة + إطار ذهبي؛ بلا تضخيم ارتفاع السطر (قيد pitch ≤1.6) */
+/* رقم الآية — دائرة 1:1؛ القطر ≈ 0.8em من خط السطر (ثابت النسبة بين الصفحات) */
 .mf2-ayah-marker {
-  display: inline;
-  padding: 0.04em 0.12em;
+  display: inline-block;
+  box-sizing: border-box;
+  /* font-size أولاً ثم width/height بـ em منه → قطر ≈ 0.81em سطر */
+  font-size: 0.52em;
+  width: 1.55em;
+  height: 1.55em;
+  min-width: 1.55em !important;
+  min-height: 1.55em !important;
+  max-width: 1.55em;
+  max-height: 1.55em;
+  padding: 0 !important;
+  margin: 0 0.1em;
   border-radius: 50%;
+  border: 1px solid var(--color-mushaf-gold-soft, #C9B07A);
   background: var(--color-mushaf-badge-bg, #F3EBE0);
-  border: 0.06em solid var(--color-mushaf-gold-soft, #C9B07A);
   color: var(--color-mushaf-gold, #8B6914);
-  font-weight: normal;
-  box-decoration-break: clone;
-  -webkit-box-decoration-break: clone;
-  box-shadow: inset 0 0 0 0.4px color-mix(in srgb, var(--color-mushaf-gold, #8B6914) 22%, transparent);
+  font-family: "Amiri Quran", "Amiri", "Noto Naskh Arabic", serif;
+  font-weight: 400;
+  line-height: 1.55em;
+  text-align: center;
+  vertical-align: middle;
+  overflow: hidden;
+  flex: none !important;
+  align-self: center;
+  box-shadow: inset 0 0 0 0.4px color-mix(in srgb, var(--color-mushaf-gold, #8B6914) 18%, transparent);
 }
 /* دقة QPC: بلا مسافات CSS بين الكلمات — هندسة الخط تملأ العرض */
 .mf2-lines:not(.mf2-lines--unicode) .mf2-word + .mf2-word,
@@ -270,42 +285,56 @@ html[data-theme="dark"] .mf2-sajda-badge {
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 0.45em 0.15em;
+  padding: 0.38em 0;
+  min-height: 2.55em;
   border: none;
   background: transparent;
   color: var(--color-mushaf-gold, #8B6914);
   box-sizing: border-box;
 }
-/* شارة عريضة: طرفان ثابتان + وسط ممتد */
+/* شارة عريضة بعرض كتلة النص: إطار موحّد + شريط زخرفي داخلي */
 .mf2-surah-badge {
   position: absolute;
   inset: 0;
-  display: flex;
-  flex-direction: row;
-  align-items: stretch;
   width: 100%;
+  max-width: 100%;
   height: 100%;
   pointer-events: none;
   color: var(--color-mushaf-gold, #8B6914);
+  overflow: hidden;
+}
+.mf2-surah-badge__outline {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.mf2-surah-badge__row {
+  position: absolute;
+  inset: 0.12rem;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  min-width: 0;
 }
 .mf2-surah-badge__end {
-  flex: 0 0 2.75rem;
-  width: 2.75rem;
+  flex: 0 0 22%;
+  width: 22%;
+  max-width: 5.5rem;
   height: 100%;
-  max-height: 3.25rem;
-  align-self: center;
+  display: block;
 }
 .mf2-surah-badge__mid {
   flex: 1 1 auto;
   min-width: 0;
   height: 100%;
-  max-height: 3.25rem;
-  align-self: center;
+  display: block;
 }
 .mf2-surah-header__cartouche {
   position: absolute;
   inset: 0;
   width: 100%;
+  max-width: 100%;
   height: 100%;
   pointer-events: none;
   color: inherit;
@@ -313,16 +342,19 @@ html[data-theme="dark"] .mf2-sajda-badge {
 .mf2-surah-header__name {
   position: relative;
   z-index: 1;
-  font-family: var(--font-display, "Amiri", serif);
-  font-size: 1.05em;
-  font-weight: 700;
+  /* خط مصحف/قرآن — لا Alexandria ولا وزن عريض للواجهة */
+  font-family: var(--font-quran, "Amiri Quran", "Amiri", "Scheherazade New", serif);
+  font-size: 0.9em;
+  font-weight: 400;
   color: var(--color-mushaf-gold, #8B6914);
   letter-spacing: normal;
-  line-height: 1.15;
+  line-height: 1.2;
   white-space: nowrap;
-  max-width: 70%;
-  overflow: visible;
-  padding-block: 0.35em;
+  max-width: 52%;
+  overflow: hidden;
+  text-overflow: clip;
+  padding-block: 0.22em;
+  padding-inline: 0.25em;
 }
 html[data-theme="dark"] .mf2-surah-header__name { color: #E8C97A; }
 .quran-shell--night .mf2-surah-header__name { color: #E8C97A; }
@@ -331,7 +363,7 @@ html[data-theme="dark"] .mf2-surah-header__frame,
   color: #E8C97A;
 }
 
-/* الصفحتان 1–2: تباعد أسطر ثابت + تمركز رأسي للكتلة (بلا تمديد بين الأسطر) */
+/* الصفحتان 1–2: كتلة متمركزة بتباعد ثابت — بلا تمديد بين الأسطر */
 .mf2-lines--opening-centered {
   justify-content: center;
   gap: 0;
@@ -343,9 +375,9 @@ html[data-theme="dark"] .mf2-surah-header__frame,
 }
 .mf2-lines--opening-centered .mf2-surah-header {
   flex: 0 0 auto !important;
-  margin-block-start: 0.35em;
-  margin-block-end: 0.25em;
-  padding-top: 0.2em;
+  margin-block-start: 0.25em;
+  margin-block-end: 0.2em;
+  padding-top: 0.3em;
 }
 .mf2-bismillah {
   /* خط الصفحة نفسه (qpc-page-N على .mf2-lines) — لا Amiri/واجهة بديلة */
