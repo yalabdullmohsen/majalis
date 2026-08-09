@@ -3,8 +3,9 @@ import { useMushafPageFont, mushafPageFontFamily } from "@/hooks/useMushafPageFo
 import { quranFontStack } from "@/lib/quran-font-options";
 import type { MushafPageLayout, QpcWord } from "@/lib/mushaf-v2-data";
 import { DRAWN_BASMALA_TEXT, drawnSurahTitleText } from "@/lib/mushaf-sizing-lines";
-import { AyahMarker } from "@/components/quran/AyahMarker";
+import { MushafAyahMarkerSvg } from "@/components/quran/MushafOrnaments";
 import { SurahBanner } from "@/components/quran/SurahBanner";
+import { toArabicDigits } from "@/lib/utils";
 import { wordKeyFromQpc } from "@/features/mushaf/ayah-word-keys";
 
 /** يُجمِّع كلمات سطر متتالية بنفس verseKey في عنقود واحد — للوضع التفاعلي بلا طبقة إحداثيات. */
@@ -39,15 +40,23 @@ const ROW_COUNT_STANDARD = 15;
  * دقة QPC: كل محرف من خط الصفحة — بما فيه علامة الآية (code_v2).
  * لا دائرة CSS ولا مسافات مُقحَمة؛ مواضع الكلمات من هندسة الخط.
  */
+/**
+ * دقة QPC: مجسم نهاية الآية من الخط كما هو (زخرفة + رقم في مجسم واحد).
+ * الفارق الوحيد: لون ذهبي عبر .mf2-word--ayah-end — لا استبدال بـ SVG.
+ */
 function defaultRenderWord(w: QpcWord, showAyahNumbers: boolean) {
   const wordKey = wordKeyFromQpc(w);
   if (w.charType === "end") {
     if (!showAyahNumbers) return null;
-    const n = Number(w.textUthmani.replace(/\D/g, "")) || 0;
     return (
       <Fragment key={w.id}>
-        <span className="mf2-word mf2-word--ayah-end" data-word-key={wordKey} data-char-type="end">
-          <AyahMarker ayahNumber={n} glyphText={w.glyphText} />
+        <span
+          className="mf2-word mf2-word--ayah-end"
+          data-word-key={wordKey}
+          data-char-type="end"
+          data-ayah-numeral="qpc"
+        >
+          {w.glyphText}
         </span>
         {w.sajdahNumber !== null && <span className="mf2-sajda-badge">سجدة</span>}
       </Fragment>
@@ -69,7 +78,12 @@ function renderUnicodeWord(w: QpcWord, showAyahNumbers: boolean) {
     const n = Number(w.textUthmani.replace(/\D/g, "")) || 0;
     return (
       <Fragment key={w.id}>
-        {showAyahNumbers ? <AyahMarker ayahNumber={n} /> : null}
+        {showAyahNumbers ? (
+          <span className="mf2-ayah-marker" aria-label={`آية ${toArabicDigits(n)}`}>
+            <MushafAyahMarkerSvg className="mf2-ayah-marker__ring" />
+            <span className="mf2-ayah-marker__num">{toArabicDigits(n)}</span>
+          </span>
+        ) : null}
         {w.sajdahNumber !== null && <span className="mf2-sajda-badge">سجدة</span>}
       </Fragment>
     );
@@ -206,9 +220,9 @@ export function MushafPageV2({
   const [fitted, setFitted] = useState(false);
 
   /**
-   * ملاءمة عرض → خط موحّد بلا سقف ارتفاع اصطناعي.
-   * المتبقي الرأسي يُوزَّع فجواتًا (سقف 0.55× ارتفاع السطر) ثم حشو 40٪ أعلى / 60٪ أسفل.
-   * الصفحتان 1–2: بلا scaleX، محاذاة مركزية، تمركز رأسي مع إزاحة −4٪ — بلا تبعثر لتحقيق بوابة.
+   * ملاءمة عرض → خط موحّد بلا سقف ارتفاع.
+   * العادية: فجوات بين الأسطر أولًا؛ الحشو العلوي ≤ ٢٪ من ارتفاع الصفحة.
+   * ص1–2: نفس سقف الفجوة، تمركز رأسي بلا تبعثر لبلوغ بوابة الامتلاء.
    */
   useLayoutEffect(() => {
     if (!fontReady || !layout) {
@@ -234,6 +248,7 @@ export function MushafPageV2({
     const TARGET_FILL_OPENING = 0.78;
     const GAP_CAP_RATIO = 0.55;
     const EDGE_GAP_PX = 2;
+    const MAX_TOP_PAD_RATIO = 0.02;
     const MIN_LINE_FILL = 0.98;
     const isOpening = layout.pageNumber === 1 || layout.pageNumber === 2;
     const targetFill = isOpening ? TARGET_FILL_OPENING : TARGET_FILL_NORMAL;
@@ -270,7 +285,6 @@ export function MushafPageV2({
       const widestAtRef = measureWidest(sizingEls, REF_PX);
       if (widestAtRef <= 0) return false;
 
-      /* حجم موحّد من العرض فقط — بلا سقف ارتفاع يُصغّر الخط */
       let size = (availableWidth * REF_PX) / widestAtRef;
       const bound = "width" as const;
 
@@ -332,37 +346,37 @@ export function MushafPageV2({
       const gaps = Math.max(0, childCount - 1);
       const remaining = Math.max(0, usableH - naturalH);
       const gapCap = GAP_CAP_RATIO * lineH;
-      let gap = gaps > 0 ? Math.min(remaining / gaps, gapCap) : 0;
-      if (isOpening) {
-        gap = Math.min(gap, gapCap * 0.65);
-      }
+      /* ص1–2: نفس سقف الفجوة — بلا تمديد إضافي لبلوغ بوابة الامتلاء */
+      const gap = gaps > 0 ? Math.min(remaining / gaps, gapCap) : 0;
       const usedByGaps = gap * gaps;
       const leftover = Math.max(0, remaining - usedByGaps);
-      let padTop = leftover * 0.4;
-      let padBot = leftover * 0.6;
+      const maxTopPad = slotHeight * MAX_TOP_PAD_RATIO;
+
+      let padTop: number;
+      let padBot: number;
+      if (isOpening) {
+        /* تمركز: وزّع المتبقي بالتساوي مع سقف علوي ٢٪ */
+        padTop = Math.min(leftover / 2, maxTopPad);
+        padBot = Math.max(0, leftover - padTop);
+        container.style.justifyContent = "center";
+        container.style.transform = "";
+      } else {
+        /* العادية: المتبقي بين الأسطر أولًا؛ العلوي ≤٢٪ والباقي أسفل */
+        padTop = Math.min(leftover * 0.15, maxTopPad);
+        padBot = Math.max(0, leftover - padTop);
+        container.style.justifyContent = "flex-start";
+        container.style.transform = "";
+      }
 
       container.style.height = `${usableH}px`;
       container.style.marginTop = `${EDGE_GAP_PX}px`;
       container.style.marginBottom = `${EDGE_GAP_PX}px`;
       container.style.gap = `${gap.toFixed(2)}px`;
+      container.style.paddingTop = `${padTop.toFixed(2)}px`;
+      container.style.paddingBottom = `${padBot.toFixed(2)}px`;
       container.style.flexGrow = "0";
       container.style.flexShrink = "0";
       container.style.flexBasis = "auto";
-
-      if (isOpening) {
-        const shift = usableH * 0.04;
-        padTop = Math.max(0, (leftover / 2) - shift);
-        padBot = Math.max(0, leftover - padTop);
-        container.style.justifyContent = "center";
-        container.style.paddingTop = `${padTop.toFixed(2)}px`;
-        container.style.paddingBottom = `${padBot.toFixed(2)}px`;
-        container.style.transform = "translateY(-4%)";
-      } else {
-        container.style.justifyContent = "flex-start";
-        container.style.paddingTop = `${padTop.toFixed(2)}px`;
-        container.style.paddingBottom = `${padBot.toFixed(2)}px`;
-        container.style.transform = "";
-      }
 
       let fillTop = Infinity;
       let fillBot = -Infinity;
@@ -377,6 +391,9 @@ export function MushafPageV2({
         ? Math.max(0, fillBot - fillTop)
         : 0;
       const fillRatio = slotHeight > 0 ? spanH / slotHeight : 0;
+      const topGapRatio = slotHeight > 0 && Number.isFinite(fillTop) && hr
+        ? Math.max(0, fillTop - hr.bottom) / slotHeight
+        : padTop / Math.max(1, slotHeight);
       const pitchEm = size > 0 ? (lineH + gap) / size : 0;
 
       container.dataset.mf2Size = size.toFixed(2);
@@ -387,6 +404,7 @@ export function MushafPageV2({
       container.dataset.mf2Target = String(targetFill);
       container.dataset.mf2MaxFill = fillRatio.toFixed(3);
       container.dataset.mf2PitchEm = pitchEm.toFixed(3);
+      container.dataset.mf2TopGap = topGapRatio.toFixed(3);
       container.dataset.mf2Opening = isOpening ? "1" : "0";
 
       setPageFontSize(size);

@@ -32,7 +32,7 @@ const BASE =
   process.env.MUSHAF_GATE_BASE_URL?.replace(/\/$/, "") ||
   "https://www.majlisilm.com";
 
-const DEFAULT_PAGES = [1, 2, 3, 100, 283, 400, 500, 586, 595, 600, 604];
+const DEFAULT_PAGES = [1, 2, 3, 100, 283, 306, 400, 500, 586, 595, 600, 604];
 const PAGES = (process.env.MUSHAF_GATE_PAGES || DEFAULT_PAGES.join(","))
   .split(",")
   .map((s) => Number(s.trim()))
@@ -54,6 +54,8 @@ const MIN_OPENING_FONT_RATIO = 0.95;
 /** امتلاء المحتوى داخل صندوق الأسطر (فجوات موزّعة) */
 const MIN_FILL_NORMAL = 0.9;
 const MIN_FILL_OPENING = 0.78;
+/** فجوة علوية رأس→أول سطر ≤ ٢٪ من ارتفاع الصفحة (صفحات عادية) */
+const MAX_TOP_GAP_RATIO = 0.02;
 
 function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
@@ -142,6 +144,18 @@ async function measurePage(page, pageNum) {
     const contentTopGap = Math.max(0, contentTop - blockRect.top);
     const contentBottomGap = Math.max(0, blockRect.bottom - contentBot);
     const fillRatio = blockRect.height > 0 ? contentH / blockRect.height : 0;
+    const pageHeader = document.querySelector(".mpv-ayah-header");
+    const pageFooter = document.querySelector(".mpv-ayah-footer");
+    const pageSlotTop = pageHeader?.getBoundingClientRect().bottom ?? blockRect.top;
+    const pageSlotBot = pageFooter?.getBoundingClientRect().top ?? blockRect.bottom;
+    const pageSlotH = Math.max(1, pageSlotBot - pageSlotTop);
+    const headerToContentGap = Math.max(0, contentTop - pageSlotTop);
+    const topGapRatio = headerToContentGap / pageSlotH;
+    /* أرقام الآيات: مجسمات QPC نهاية غير فارغة، أو Unicode بـ .mf2-ayah-marker__num */
+    const qpcEnds = [...linesRoot.querySelectorAll('.mf2-word--ayah-end[data-ayah-numeral="qpc"]')];
+    const unicodeNums = [...linesRoot.querySelectorAll(".mf2-ayah-marker__num")];
+    const emptyQpcEnds = qpcEnds.filter((el) => !String(el.textContent || "").trim()).length;
+    const emptyUnicodeNums = unicodeNums.filter((el) => !String(el.textContent || "").trim()).length;
 
     const bismillah = linesRoot.querySelector(".mf2-bismillah");
     let bismillahFont = null;
@@ -178,6 +192,10 @@ async function measurePage(page, pageNum) {
       contentBottomGap,
       contentH,
       fillRatio,
+      topGapRatio,
+      emptyQpcEnds,
+      emptyUnicodeNums,
+      qpcEndCount: qpcEnds.length,
       bismillahFont,
       bismillahOverlapNext,
       rootH: rootRect.height,
@@ -242,6 +260,29 @@ function evaluate(results) {
           page: r.pageNum,
           reason: `امتلاء كتلة الأسطر ${(r.fillRatio * 100).toFixed(1)}% < ${minFill * 100}% (محتوى ${r.contentH?.toFixed?.(0) ?? "?"} / صندوق ${r.linesH?.toFixed?.(0) ?? "?"})`,
         });
+      }
+    }
+    if (
+      r.pageNum !== 1 &&
+      r.pageNum !== 2 &&
+      typeof r.topGapRatio === "number" &&
+      r.topGapRatio > MAX_TOP_GAP_RATIO + 0.005
+    ) {
+      failures.push({
+        page: r.pageNum,
+        reason: `فجوة علوية ${(r.topGapRatio * 100).toFixed(1)}% > ${MAX_TOP_GAP_RATIO * 100}%`,
+      });
+    }
+    if ((r.emptyQpcEnds || 0) > 0 || (r.emptyUnicodeNums || 0) > 0) {
+      failures.push({
+        page: r.pageNum,
+        reason: `علامات آية بلا رقم (qpc فارغ=${r.emptyQpcEnds || 0}, unicode فارغ=${r.emptyUnicodeNums || 0})`,
+      });
+    }
+    if (r.pageNum === 306 && (r.qpcEndCount || 0) < 1 && (r.emptyUnicodeNums || 0) === 0) {
+      /* صفحة المرجع يجب أن تعرض مجسمات نهاية */
+      if ((r.qpcEndCount || 0) === 0) {
+        failures.push({ page: 306, reason: "صفحة المرجع 306 بلا مجسمات نهاية QPC ظاهرة" });
       }
     }
     if (r.pageNum === 2 && r.bismillahOverlapNext > 2) {
