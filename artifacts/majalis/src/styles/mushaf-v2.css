@@ -156,10 +156,18 @@ html[data-theme="dark"] .quran-shell--high-contrast .mf2-line {
   overflow-wrap: normal !important;
   white-space: nowrap;
 }
-/* رقم الآية = محرف الزخرفة من خط QPC للصفحة — ذهب هادئ، بلا دائرة CSS */
+/* رقم الآية — دائرة بيج مملوءة + إطار ذهبي؛ بلا تضخيم ارتفاع السطر (قيد pitch ≤1.6) */
 .mf2-ayah-marker {
-  color: var(--color-mushaf-gold, #B08A3E);
+  display: inline;
+  padding: 0.04em 0.12em;
+  border-radius: 50%;
+  background: var(--color-mushaf-badge-bg, #F3EBE0);
+  border: 0.06em solid var(--color-mushaf-gold-soft, #C9B07A);
+  color: var(--color-mushaf-gold, #8B6914);
   font-weight: normal;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+  box-shadow: inset 0 0 0 0.4px color-mix(in srgb, var(--color-mushaf-gold, #8B6914) 22%, transparent);
 }
 /* دقة QPC: بلا مسافات CSS بين الكلمات — هندسة الخط تملأ العرض */
 .mf2-lines:not(.mf2-lines--unicode) .mf2-word + .mf2-word,
@@ -256,17 +264,43 @@ html[data-theme="dark"] .mf2-sajda-badge {
 }
 .mf2-surah-header__frame {
   position: relative;
-  width: min(92%, 22rem);
+  width: 100%;
   max-width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
   text-align: center;
-  padding: 0.35em 1.4em;
+  padding: 0.45em 0.15em;
   border: none;
   background: transparent;
-  color: var(--color-mushaf-gold, #B08A3E);
+  color: var(--color-mushaf-gold, #8B6914);
   box-sizing: border-box;
+}
+/* شارة عريضة: طرفان ثابتان + وسط ممتد */
+.mf2-surah-badge {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  color: var(--color-mushaf-gold, #8B6914);
+}
+.mf2-surah-badge__end {
+  flex: 0 0 2.75rem;
+  width: 2.75rem;
+  height: 100%;
+  max-height: 3.25rem;
+  align-self: center;
+}
+.mf2-surah-badge__mid {
+  flex: 1 1 auto;
+  min-width: 0;
+  height: 100%;
+  max-height: 3.25rem;
+  align-self: center;
 }
 .mf2-surah-header__cartouche {
   position: absolute;
@@ -280,15 +314,15 @@ html[data-theme="dark"] .mf2-sajda-badge {
   position: relative;
   z-index: 1;
   font-family: var(--font-display, "Amiri", serif);
-  /* نسبة من حجم الصفحة الموحّد (sizingLines) — لا clamp/cqw مستقل يتجاوز الحاوية */
   font-size: 1.05em;
   font-weight: 700;
-  color: var(--color-mushaf-gold, #B08A3E);
+  color: var(--color-mushaf-gold, #8B6914);
   letter-spacing: normal;
   line-height: 1.15;
   white-space: nowrap;
-  max-width: 100%;
+  max-width: 70%;
   overflow: visible;
+  padding-block: 0.35em;
 }
 html[data-theme="dark"] .mf2-surah-header__name { color: #E8C97A; }
 .quran-shell--night .mf2-surah-header__name { color: #E8C97A; }
@@ -309,7 +343,9 @@ html[data-theme="dark"] .mf2-surah-header__frame,
 }
 .mf2-lines--opening-centered .mf2-surah-header {
   flex: 0 0 auto !important;
-  margin-block-end: 0.1em;
+  margin-block-start: 0.35em;
+  margin-block-end: 0.25em;
+  padding-top: 0.2em;
 }
 .mf2-bismillah {
   /* خط الصفحة نفسه (qpc-page-N على .mf2-lines) — لا Amiri/واجهة بديلة */

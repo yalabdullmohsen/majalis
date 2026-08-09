@@ -22,16 +22,16 @@ export const IMMERSIVE_PAPER_BG = "#F5F5DC";
  * راجع UNIFIED_MUSHAF.md — لا يغيّر محرّك QPC، فقط سطح القراءة.
  */
 /** يطابق `--color-mushaf-paper` في app/styles/theme.css */
-export const AYAH_MUSHAF_PAPER_BG = "#FAF7F2";
+export const AYAH_MUSHAF_PAPER_BG = "#F7F0E4";
 
 /** حبر شبه أسود — يطابق `--color-mushaf-ink`. */
-export const AYAH_MUSHAF_INK = "#1A1510";
+export const AYAH_MUSHAF_INK = "#14110E";
 
 /** ذهب هادئ للرأس — يطابق `--color-mushaf-meta`. */
-export const AYAH_MUSHAF_META = "#9A7B3C";
+export const AYAH_MUSHAF_META = "#A89060";
 
 /** ذهب الزخارف — يطابق `--color-mushaf-gold`. */
-export const AYAH_MUSHAF_GOLD = "#B08A3E";
+export const AYAH_MUSHAF_GOLD = "#8B6914";
 
 /** Flutter `Colors.black87` ≈ #000000 at 87% opacity on paper. */
 export const IMMERSIVE_INK = "rgba(0, 0, 0, 0.87)";

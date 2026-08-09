@@ -71,6 +71,8 @@ export type MushafPageLayout = {
   layoutMode: "standard" | "opening-centered";
   /** عدد الأسطر الفعلية ذات الكلمات (من mushaf=1) — للتحجيم */
   ayahLineCount: number;
+  /** رقم الحزب إن بدأ حزب جديد في هذه الصفحة؛ وإلا null */
+  hizbStartingOnPage: number | null;
 };
 
 /** صفحتا الفاتحة وأول البقرة — تخطيط متمركز بلا حشو فراغات علوية */
@@ -173,8 +175,28 @@ function fetchRawPage(pageNumber: number): Promise<QpcVerse[]> {
  * الرأسي الصحيح، مشتقًا كليًا من line_number الحقيقي — لا تخمين لعدد
  * الأسطر الفارغة، يُحسَب من الفجوة الفعلية بين آخر سطر مُستخدَم وأول سطر
  * تال. */
+/** هل يبدأ حزب جديد في هذه الصفحة؟ يقارن آخر آية بالصفحة السابقة. */
+async function resolveHizbStartingOnPage(
+  pageNumber: number,
+  verses: QpcVerse[],
+): Promise<number | null> {
+  if (!verses.length) return null;
+  if (pageNumber <= 1) return verses[0]!.hizbNumber || 1;
+  try {
+    const prev = await fetchRawPage(pageNumber - 1);
+    const prevLastHizb = prev[prev.length - 1]?.hizbNumber ?? 0;
+    for (const v of verses) {
+      if (v.hizbNumber > prevLastHizb) return v.hizbNumber;
+    }
+  } catch {
+    /* تجاهل — لا شارة حزب إن تعذّر السابق */
+  }
+  return null;
+}
+
 export async function loadMushafPage(pageNumber: number): Promise<MushafPageLayout> {
   const [verses, chapters] = await Promise.all([fetchRawPage(pageNumber), loadChapters()]);
+  const hizbStartingOnPage = await resolveHizbStartingOnPage(pageNumber, verses);
 
   const lineWords = new Map<number, QpcWord[]>();
   for (const v of verses) {
@@ -254,6 +276,7 @@ export async function loadMushafPage(pageNumber: number): Promise<MushafPageLayo
     surahsOnPage,
     layoutMode: openingCentered ? "opening-centered" : "standard",
     ayahLineCount: usedLines.length,
+    hizbStartingOnPage,
   };
 }
 

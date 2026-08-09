@@ -40,15 +40,19 @@ assert.match(viewSrc, /quran-shell--ayah/);
 assert.match(viewSrc, /mpv-ayah-header/);
 assert.match(viewSrc, /mpv-ayah-page-badge/);
 assert.match(viewSrc, /AYAH_MUSHAF_PAPER_BG/);
-assert.match(viewSrc, /سورة \{primarySurahMeta\.name\}/);
-assert.match(viewSrc, /• الحزب/);
+assert.match(viewSrc, /mpv-ayah-header__surah">\{primarySurahMeta\.name\}/);
+assert.match(viewSrc, /الحزب \$\{toArabicDigits\(hizbStartingOnPage\)\}/);
+assert.equal(/• الحزب/.test(viewSrc), false, "الحزب ليس في رأس الصفحة");
+assert.equal(/سورة \{primarySurahMeta/.test(viewSrc), false, "بلا كلمة سورة في الرأس");
 assert.match(viewSrc, /useState\(false\)/);
 assert.match(viewSrc, /mpv-body--ayah/);
 assert.equal(/mpv-ayah-nav-btn/.test(viewSrc), false, "بلا أسهم تنقّل في التذييل — الشارة فقط");
 assert.equal(/pageFillMode/.test(viewSrc), false, "بلا وضع امتلاء منفصل");
 assert.equal(/Maximize2|Minimize2|mpv-fill-enter/.test(viewSrc), false, "بلا أزرار تكبير/تصغير");
+assert.match(viewSrc, /MushafPageCartoucheSvg/);
+assert.match(viewSrc, /mpv-ayah-footer__hizb/);
 
-assert.match(immersiveSrc, /AYAH_MUSHAF_PAPER_BG\s*=\s*"#FAF7F2"/);
+assert.match(immersiveSrc, /AYAH_MUSHAF_PAPER_BG\s*=\s*"#F7F0E4"/);
 
 const bodyInner = quranCss.match(
   /\.quran-shell--ayah\s+\.qs-mushaf-body\s+\.qs-mushaf-body-inner\s*\{[^}]+\}/,

@@ -9,7 +9,7 @@ import { toArabicDigits } from "@/lib/utils";
 import { toArabicPageDigits } from "@/lib/numerals";
 import {
   fetchSurahDetail, getSurahList, getSurahMeta, getSurahForPage, SURAH_START_PAGES,
-  savePagePosition, loadPagePosition, loadReadingAyahKey, deriveHizbRub,
+  savePagePosition, loadPagePosition, loadReadingAyahKey,
   type Ayah, type SurahSummary,
 } from "@/lib/quran-api";
 import { loadPageJuzIndex, getSegmentsForPage, findPageForAyah, type QuranSegment } from "@/lib/recitation-ai/page-juz-lookup";
@@ -38,6 +38,7 @@ import {
 import { beginAbortScope, abortScope, guardAsync } from "@/lib/route-abort";
 import { logDiagnostic } from "@/lib/diagnostics";
 import { MushafPageV2 } from "@/components/quran/MushafPageV2";
+import { MushafPageCartoucheSvg } from "@/components/quran/MushafOrnaments";
 import { MushafLayeredPage } from "@/features/mushaf";
 import { getPreviousInternalRoute, goBackOrFallback, normalizeNavPath } from "@/lib/navigation-back";
 import {
@@ -288,10 +289,8 @@ export default function MushafPageView() {
   const primarySegment = segAyahs?.[0];
   const primarySurahMeta = primarySegment ? getSurahMeta(primarySegment.segment.surah) : getSurahForPage(page);
   const firstAyahOfPage = primarySegment?.ayahs[0];
-  const { hizb } = firstAyahOfPage?.hizbQuarter
-    ? deriveHizbRub(firstAyahOfPage.hizbQuarter)
-    : { hizb: 0 };
   const juz = firstAyahOfPage?.juz ?? 0;
+  const hizbStartingOnPage = v2Layout?.hizbStartingOnPage ?? null;
 
   useEffect(() => {
     applyPageSeo({
@@ -513,11 +512,9 @@ export default function MushafPageView() {
           {/* هيدر عائم بسيط — بلا أزرار أو خلفيات (مطابق مخطط آية) */}
           <header className="mpv-ayah-header" aria-label="معلومات الصفحة">
             <span className="mpv-ayah-header__juz">
-              {juz
-                ? `الجزء ${toArabicDigits(juz)}${hizb ? ` • الحزب ${toArabicDigits(hizb)}` : ""}`
-                : "—"}
+              {juz ? `الجزء ${toArabicDigits(juz)}` : "—"}
             </span>
-            <span className="mpv-ayah-header__surah">سورة {primarySurahMeta.name}</span>
+            <span className="mpv-ayah-header__surah">{primarySurahMeta.name}</span>
           </header>
 
           {/* أربعة أزرار ظاهرة + ⋯ — عائم تحت رأس الجزء/الحزب بلا تراكب */}
@@ -699,8 +696,14 @@ export default function MushafPageView() {
             )}
           </div>
 
-          {/* رقم الصفحة — أرقام هندية داخل خرطوش SVG ذهبي */}
+          {/* ذيل: حزب (إن بدأ) يسارًا + رقم الصفحة في الوسط */}
           <footer className="mpv-ayah-footer">
+            <span
+              className={`mpv-ayah-footer__hizb${hizbStartingOnPage ? "" : " mpv-ayah-footer__hizb--empty"}`}
+              aria-hidden={!hizbStartingOnPage}
+            >
+              {hizbStartingOnPage ? `الحزب ${toArabicDigits(hizbStartingOnPage)}` : ""}
+            </span>
             <button
               type="button"
               className="mpv-ayah-page-badge"
@@ -709,55 +712,10 @@ export default function MushafPageView() {
               aria-expanded={isJumpModalVisible}
               aria-label={`الانتقال إلى صفحة — الحالية ${toArabicDigits(page)} من ${toArabicDigits(TOTAL_PAGES)}`}
             >
-              <svg
-                className="mpv-ayah-page-badge__cartouche"
-                viewBox="0 0 160 44"
-                preserveAspectRatio="xMidYMid meet"
-                aria-hidden="true"
-              >
-                {/* إطار مزدوج مع قطع لطيف */}
-                <rect x="28" y="5" width="104" height="34" rx="4" fill="none" stroke="currentColor" strokeWidth="1.25" />
-                <rect x="32" y="9" width="96" height="26" rx="2" fill="none" stroke="currentColor" strokeWidth="0.65" opacity="0.5" />
-                {/* حلية يمين أغنى */}
-                <path
-                  d="M28 22 C20 10, 12 12, 8 22 C12 32, 20 34, 28 22 Z"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.1"
-                />
-                <path
-                  d="M28 22 C22 16, 16 17, 13 22 C16 27, 22 28, 28 22 Z"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="0.7"
-                  opacity="0.7"
-                />
-                <circle cx="12.5" cy="22" r="1.5" fill="currentColor" opacity="0.9" />
-                <path d="M22 14 L23.4 16.6 L22 19.2 L20.6 16.6 Z" fill="currentColor" opacity="0.7" />
-                <path d="M22 24.8 L23.4 27.4 L22 30 L20.6 27.4 Z" fill="currentColor" opacity="0.7" />
-                {/* حلية يسار أغنى */}
-                <path
-                  d="M132 22 C140 10, 148 12, 152 22 C148 32, 140 34, 132 22 Z"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.1"
-                />
-                <path
-                  d="M132 22 C138 16, 144 17, 147 22 C144 27, 138 28, 132 22 Z"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="0.7"
-                  opacity="0.7"
-                />
-                <circle cx="147.5" cy="22" r="1.5" fill="currentColor" opacity="0.9" />
-                <path d="M138 14 L139.4 16.6 L138 19.2 L136.6 16.6 Z" fill="currentColor" opacity="0.7" />
-                <path d="M138 24.8 L139.4 27.4 L138 30 L136.6 27.4 Z" fill="currentColor" opacity="0.7" />
-                {/* زخارف أعلى/أسفل الإطار فقط — خارج نطاق الرقم حتى لا تُقرأ كفاصل عشري (٫) بين الرقمين */}
-                <path d="M80 1.2 L81.6 3.4 L80 5.6 L78.4 3.4 Z" fill="currentColor" opacity="0.75" />
-                <path d="M80 38.4 L81.6 40.6 L80 42.8 L78.4 40.6 Z" fill="currentColor" opacity="0.75" />
-              </svg>
+              <MushafPageCartoucheSvg className="mpv-ayah-page-badge__cartouche" />
               <span className="mpv-ayah-page-badge__num">{toArabicPageDigits(page)}</span>
             </button>
+            <span className="mpv-ayah-footer__spacer" aria-hidden="true" />
           </footer>
         </>
 

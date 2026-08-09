@@ -22,7 +22,7 @@ assert.ok(MEASUREMENT_EXCLUSION_REASONS.includes("last_line_of_surah"));
 assert.ok(MEASUREMENT_EXCLUSION_REASONS.includes("surah_name|basmallah"));
 assert.equal(DRAWN_LINE_MAX_OVERFLOW_PX, 0);
 assert.ok(DRAWN_BASMALA_TEXT.includes("بِسْمِ"));
-assert.equal(drawnSurahTitleText("الشمس"), "سُورَةُ الشمس");
+assert.equal(drawnSurahTitleText("الشمس"), "الشمس");
 
 const pageComp = readFileSync(resolve(appRoot, "src/components/quran/MushafPageV2.tsx"), "utf8");
 assert.match(pageComp, /sizingEls/);

@@ -26,9 +26,9 @@ export type SizingLineKind = (typeof SIZING_LINE_KINDS)[number];
 /** بسملة افتتاحية Unicode — تُرسم بخط الصفحة (qpc-page-N) كسطر مستقل */
 export const DRAWN_BASMALA_TEXT = "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ";
 
-/** تسمية عنوان السورة كما تُرسم في الواجهة */
+/** تسمية عنوان السورة كما تُرسم في الشارة (اسم فقط بلا كلمة سورة) */
 export function drawnSurahTitleText(nameArabic: string): string {
-  return `سُورَةُ ${nameArabic}`;
+  return nameArabic;
 }
 
 /**
