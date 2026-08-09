@@ -56,7 +56,8 @@ function main() {
   check(typeof hooks.useColorScheme === "function", "hooks.useColorScheme");
   check(
     Array.isArray(constants.VALID_PLAYBACK_RATES) &&
-      (constants.VALID_PLAYBACK_RATES as readonly number[]).includes(0.5),
+      (constants.VALID_PLAYBACK_RATES as readonly number[]).includes(0.75) &&
+      (constants.VALID_PLAYBACK_RATES as readonly number[]).includes(2),
     "constants.VALID_PLAYBACK_RATES",
   );
   check(constants.IMMERSIVE_PAPER_BG === "#F5F5DC", "constants.IMMERSIVE_PAPER_BG");
