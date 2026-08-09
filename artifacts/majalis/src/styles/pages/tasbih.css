@@ -196,13 +196,26 @@
   line-height: 1; font-variant-numeric: tabular-nums;
 }
 .adhkar-tapper__sep {
-  font-size: var(--ds-text-base); color: rgba(0,0,0,0.2);
+  font-size: var(--ds-text-base);
+  color: var(--mj-ink-2);
   align-self: flex-end; margin-bottom: 0.15rem;
 }
 .adhkar-tapper__tot {
   font-size: 0.85rem; font-weight: 600;
-  color: rgba(0,0,0,0.35); align-self: flex-end;
+  color: var(--mj-ink-2);
+  align-self: flex-end;
   margin-bottom: 0.1rem;
+}
+html[data-theme="dark"] .adhkar-tapper__inner,
+html.dark .adhkar-tapper__inner {
+  background: var(--mj-surface, #17201C);
+  box-shadow: none;
+}
+html[data-theme="dark"] .adhkar-tapper__sep,
+html[data-theme="dark"] .adhkar-tapper__tot,
+html.dark .adhkar-tapper__sep,
+html.dark .adhkar-tapper__tot {
+  color: var(--mj-ink-2, #B4C2BC);
 }
 .adhkar-tapper__check {
   font-size: 2.2rem; color: var(--majalis-emerald, var(--mj-brand));

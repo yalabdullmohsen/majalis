@@ -59,11 +59,11 @@
 .duas-search {
   width: 100%;
   padding: 0.65rem 2.5rem 0.65rem 1rem;
-  border: 1.5px solid #C6D6CE;
+  border: 1.5px solid var(--mj-hairline, #C6D6CE);
   border-radius: var(--ds-radius-lg);
   font-size: 0.9rem;
-  background: #FFFFFF;
-  color: #1A1A18;
+  background: var(--mj-surface, #FFFFFF);
+  color: var(--mj-ink, #1A1A18);
   outline: none;
   direction: rtl;
   transition: border-color 0.2s;
@@ -218,6 +218,39 @@
   .duas-hero__title { font-size: 1.7rem; }
   .dua-detail--meta { grid-template-columns: 1fr; }
   .dua-card__arabic { font-size: 0.95rem; }
+}
+
+/* الوضع الليلي — بطاقات وأسطح صريحة */
+html[data-theme="dark"] .dua-card,
+html.dark .dua-card {
+  background: var(--mj-surface, #17201C);
+  border-color: var(--mj-hairline, #26332D);
+}
+html[data-theme="dark"] .dua-card__title,
+html[data-theme="dark"] .dua-card__arabic,
+html[data-theme="dark"] .dua-detail__text,
+html.dark .dua-card__title,
+html.dark .dua-card__arabic,
+html.dark .dua-detail__text {
+  color: var(--mj-ink, #E9EFEC);
+}
+html[data-theme="dark"] .dua-card__cat,
+html[data-theme="dark"] .duas-empty,
+html.dark .dua-card__cat,
+html.dark .duas-empty {
+  color: var(--mj-ink-2, #B4C2BC);
+}
+html[data-theme="dark"] .duas-cat,
+html.dark .duas-cat {
+  background: var(--mj-surface, #17201C);
+  border-color: var(--mj-hairline, #26332D);
+  color: var(--mj-brand, #4FB48B);
+}
+html[data-theme="dark"] .dua-virtue,
+html.dark .dua-virtue {
+  background: var(--mj-accent-soft, #332A16);
+  border-color: var(--mj-accent, #D2A445);
+  color: var(--mj-accent, #D2A445);
 }
 
 /* ── نهاية 220 ─────────────────────────────────────────── */
