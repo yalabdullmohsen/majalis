@@ -15,7 +15,6 @@ import { purgeNativeWebRuntimeCaches } from "./lib/native-cache-freshness";
 import { initFinalPolish } from "./lib/init-final-polish";
 import { prewarmAudioCdns, prewarmTextApis, prewarmSupabaseOrigin } from "./lib/resource-prewarm";
 import { refreshQuranAudioRemoteConfig } from "./lib/quran-audio-remote-config";
-import { refreshAdhanAudioRemoteConfig } from "./lib/adhan-audio-remote-config";
 import { armSplashAutoHide } from "./lib/splash-screen";
 import { prefetchTopRoutesOnIdle } from "./lib/prefetch-top-routes";
 // هوية identity-v2 — الرموز أولاً (@theme + --mj-*) قبل أي طبقة قديمة
