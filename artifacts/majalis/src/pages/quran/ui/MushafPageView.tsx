@@ -39,8 +39,7 @@ import {
 import { beginAbortScope, abortScope, guardAsync } from "@/lib/route-abort";
 import { logDiagnostic } from "@/lib/diagnostics";
 import { MushafPageV2 } from "@/components/quran/MushafPageV2";
-import { AyahMarker } from "@/components/quran/AyahMarker";
-import { MushafPageCartoucheSvg } from "@/components/quran/MushafOrnaments";
+import { MushafAyahMarkerSvg, MushafPageCartoucheSvg } from "@/components/quran/MushafOrnaments";
 import { MushafLayeredPage } from "@/features/mushaf";
 import { getPreviousInternalRoute, goBackOrFallback, normalizeNavPath } from "@/lib/navigation-back";
 import {
@@ -70,7 +69,12 @@ function renderLightWord(w: QpcWord, showAyahNumbers: boolean) {
     const n = Number(w.textUthmani.replace(/\D/g, "")) || 0;
     return (
       <Fragment key={w.id}>
-        {showAyahNumbers ? <AyahMarker ayahNumber={n} /> : null}
+        {showAyahNumbers ? (
+          <span className="mf2-ayah-marker" aria-label={`آية ${toArabicDigits(n)}`}>
+            <MushafAyahMarkerSvg className="mf2-ayah-marker__ring" />
+            <span className="mf2-ayah-marker__num">{toArabicDigits(n)}</span>
+          </span>
+        ) : null}
         {w.sajdahNumber !== null && <span className="mf2-sajda-badge">سجدة</span>}
       </Fragment>
     );

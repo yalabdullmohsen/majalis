@@ -1,13 +1,12 @@
 /**
- * زخارف مصحف أصلية (SVG) — رسم أصلي للمجلس العلمي (لا يُستخرج من تطبيق آخر).
- * شارة السورة المزخرفة: انظر SurahBanner.tsx
- * انظر CREDITS.md و RELEASE_READINESS.md (بند QCF_BSML المؤجّل).
+ * زخارف مصحف أصلية (SVG) — رسم أصلي للمجلس العلمي.
+ * علامة الآية في دقة QPC = مجسم الخط نفسه (لا تُستبدل بـ SVG).
+ * انظر CREDITS.md و RELEASE_READINESS.md.
  */
 import { useId } from "react";
 
 /**
- * @deprecated استخدم SurahBanner — يُبقى للتوافق مع مسارات الاختبار القديمة.
- * شارة سورة بسيطة: شريط بيج فاتح + إطار ذهبي رفيع.
+ * @deprecated الشارة الحية: SurahBanner — يُبقى للتوافق مع اختبارات قديمة.
  */
 export function MushafSurahBadgeFrame({ className }: { className?: string }) {
   return (
@@ -20,25 +19,12 @@ export function MushafSurahBadgeFrame({ className }: { className?: string }) {
   );
 }
 
-/** ميدالية رقم آية — قرص ذهبي بثماني بتلات + حشو لوحة */
+/**
+ * حلقة آية للوضع Unicode/خفيف فقط — دقة QPC تستخدم مجسم الخط مع لون ذهبي.
+ * يجب أن يظهر الرقم داخل الحلقة.
+ */
 export function MushafAyahMarkerSvg({ className }: { className?: string }) {
   const uid = useId().replace(/:/g, "");
-  const petals: string[] = [];
-  const cx = 20;
-  const cy = 20;
-  const r = 17.2;
-  for (let i = 0; i < 8; i++) {
-    const a = (i * Math.PI) / 4 + Math.PI / 8;
-    const x = cx + Math.cos(a) * r;
-    const y = cy + Math.sin(a) * r;
-    const c1x = cx + Math.cos(a - 0.28) * (r * 0.62);
-    const c1y = cy + Math.sin(a - 0.28) * (r * 0.62);
-    const c2x = cx + Math.cos(a + 0.28) * (r * 0.62);
-    const c2y = cy + Math.sin(a + 0.28) * (r * 0.62);
-    petals.push(
-      `M${cx} ${cy} Q${c1x.toFixed(2)} ${c1y.toFixed(2)} ${x.toFixed(2)} ${y.toFixed(2)} Q${c2x.toFixed(2)} ${c2y.toFixed(2)} ${cx} ${cy}`,
-    );
-  }
   return (
     <svg
       className={className}
@@ -55,40 +41,34 @@ export function MushafAyahMarkerSvg({ className }: { className?: string }) {
           <stop offset="100%" stopColor="var(--color-mushaf-gold-strong, #A67C3D)" />
         </linearGradient>
       </defs>
-      <path
-        d={petals.join(" ")}
-        fill={`url(#${uid}-ay)`}
-        stroke="var(--color-mushaf-gold-strong, #A67C3D)"
-        strokeWidth="0.6"
-      />
       <circle
         cx="20"
         cy="20"
-        r="11.6"
+        r="18.2"
         fill="var(--color-mushaf-panel, #FAF3E8)"
-        stroke="var(--color-mushaf-gold-strong, #A67C3D)"
+        stroke={`url(#${uid}-ay)`}
         strokeWidth="1.1"
       />
       <circle
         cx="20"
         cy="20"
-        r="9.4"
+        r="15.4"
         fill="none"
-        stroke="var(--color-mushaf-gold-soft, #C9B07A)"
+        stroke={`url(#${uid}-ay)`}
         strokeWidth="0.45"
-        opacity="0.55"
+        opacity="0.45"
       />
     </svg>
   );
 }
 
-/** خرطوش رقم الصفحة — بيضاوي بإطار ذهبي وحلية في كل طرف */
+/** خرطوش رقم الصفحة — ممتلئ واضح ≈24px مع طرفين مزخرفين */
 export function MushafPageCartoucheSvg({ className }: { className?: string }) {
   const uid = useId().replace(/:/g, "");
   return (
     <svg
       className={className}
-      viewBox="0 0 168 44"
+      viewBox="0 0 168 48"
       preserveAspectRatio="xMidYMid meet"
       aria-hidden="true"
       focusable="false"
@@ -99,32 +79,35 @@ export function MushafPageCartoucheSvg({ className }: { className?: string }) {
           <stop offset="100%" stopColor="var(--color-mushaf-gold-strong, #A67C3D)" />
         </linearGradient>
       </defs>
-      <ellipse
-        cx="84"
-        cy="22"
-        rx="54"
-        ry="15"
+      <rect
+        x="28"
+        y="8"
+        width="112"
+        height="32"
+        rx="10"
         fill="var(--color-mushaf-panel, #FAF3E8)"
-        stroke={`url(#${uid}-pg)`}
-        strokeWidth="1.1"
+        stroke="var(--color-mushaf-gold-strong, #A67C3D)"
+        strokeWidth="1.5"
       />
-      <ellipse
-        cx="84"
-        cy="22"
-        rx="48"
-        ry="11.5"
+      <rect
+        x="33"
+        y="12"
+        width="102"
+        height="24"
+        rx="8"
         fill="none"
         stroke={`url(#${uid}-pg)`}
-        strokeWidth="0.45"
-        opacity="0.45"
+        strokeWidth="0.55"
+        opacity="0.55"
       />
-      <g fill="none" stroke={`url(#${uid}-pg)`} strokeWidth="0.9">
-        <circle cx="16" cy="22" r="4.4" />
-        <circle cx="16" cy="22" r="1.9" fill={`url(#${uid}-pg)`} stroke="none" opacity="0.5" />
-        <path d="M21.5 22 C27 14.5 33 16.5 37.5 22 C33 27.5 27 29.5 21.5 22Z" />
-        <circle cx="152" cy="22" r="4.4" />
-        <circle cx="152" cy="22" r="1.9" fill={`url(#${uid}-pg)`} stroke="none" opacity="0.5" />
-        <path d="M146.5 22 C141 14.5 135 16.5 130.5 22 C135 27.5 141 29.5 146.5 22Z" />
+      {/* لولب صغير يمين/يسار */}
+      <g fill="none" stroke="var(--color-mushaf-gold-strong, #A67C3D)" strokeWidth="1.2">
+        <path d="M18 24 C12 18 8 20 10 24 C8 28 12 30 18 24" />
+        <path d="M22 24 C26 20 30 20 34 24 C30 28 26 28 22 24" />
+        <circle cx="16" cy="24" r="2.2" fill={`url(#${uid}-pg)`} stroke="none" opacity="0.7" />
+        <path d="M150 24 C156 18 160 20 158 24 C160 28 156 30 150 24" />
+        <path d="M146 24 C142 20 138 20 134 24 C138 28 142 28 146 24" />
+        <circle cx="152" cy="24" r="2.2" fill={`url(#${uid}-pg)`} stroke="none" opacity="0.7" />
       </g>
     </svg>
   );

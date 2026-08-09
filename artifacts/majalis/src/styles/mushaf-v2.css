@@ -347,11 +347,11 @@ html[data-theme="dark"] .mf2-sajda-badge {
   letter-spacing: normal;
   line-height: 1.2;
   white-space: nowrap;
-  max-width: 30%;
-  overflow: visible;
+  max-width: calc(32% - 12px);
+  overflow: hidden;
   text-overflow: clip;
   padding-block: 0.1em;
-  padding-inline: 0.35em;
+  padding-inline: 0;
   box-sizing: border-box;
   text-align: center;
 }
@@ -395,7 +395,13 @@ html[data-theme="dark"] .mf2-surah-header__frame,
   -webkit-user-select: none;
 }
 
-/* ميدالية آية ذهبية — خيار A يحجز عرض المجسم الأصلي */
+/* علامة نهاية الآية — مجسم QPC الأصلي بلون ذهبي (لا استبدال SVG) */
+.mf2-word--ayah-end {
+  color: var(--color-mushaf-gold-strong, #A67C3D);
+  /* حشو عاجي اختياري خلف المجسم — بلا تغيير عرض السطر */
+  background: radial-gradient(circle, var(--color-mushaf-panel, #FAF3E8) 0 42%, transparent 43%);
+}
+/* وضع Unicode/خفيف فقط */
 .mf2-ayah-marker {
   position: relative;
   display: inline-flex;
@@ -405,58 +411,10 @@ html[data-theme="dark"] .mf2-surah-header__frame,
   width: var(--mf2-marker-d);
   height: var(--mf2-marker-d);
   vertical-align: middle;
-  margin-inline: 0;
+  margin-inline: 0.04em;
   flex: 0 0 auto;
   user-select: none;
   -webkit-user-select: none;
-}
-.mf2-ayah-marker--measured {
-  display: inline-block;
-  width: auto;
-  height: auto;
-  line-height: 1;
-}
-.mf2-ayah-marker__advance {
-  visibility: hidden;
-  display: inline;
-  white-space: nowrap;
-  pointer-events: none;
-}
-.mf2-ayah-marker__face {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  height: 0.9em;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  pointer-events: none;
-}
-/* خيار B: مجسم أصلي بلون ذهبي + قرص لوحة خلفه */
-.mf2-ayah-marker--fallback-b {
-  width: auto;
-  height: 0.9em;
-}
-.mf2-ayah-marker--fallback-b::before {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 0.85em;
-  height: 0.85em;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  background: var(--color-mushaf-panel, #FAF3E8);
-  z-index: 0;
-}
-.mf2-ayah-marker__advance--gold {
-  visibility: visible;
-  position: relative;
-  z-index: 1;
-  color: var(--color-mushaf-gold-strong, #A67C3D);
 }
 .mf2-ayah-marker__ring {
   position: absolute;
@@ -475,12 +433,6 @@ html[data-theme="dark"] .mf2-surah-header__frame,
   color: var(--color-mushaf-numeral, #6B4E2A);
   unicode-bidi: isolate;
   direction: ltr;
-}
-.mf2-ayah-marker__face .mf2-ayah-marker__num {
-  font-size: 0.42em;
-}
-.mf2-word--ayah-end {
-  display: inline;
 }
 
 /* هيكل تحميل (skeleton) — أسطر عاجية باهتة بنبض خفيف، بلا أي نص إطلاقًا
