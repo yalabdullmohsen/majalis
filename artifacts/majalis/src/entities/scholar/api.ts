@@ -1,5 +1,6 @@
 import { SCHOLARS, type Scholar } from "@/lib/scholars-data";
 import { normalizeArabic } from "@/shared/arabic-normalize";
+import { scoreTolerantMatch, compareTolerantMatches } from "@/features/search/tolerant-match";
 import type { EntityRepository } from "@/entities/_ports";
 import { wrapAsync, type DataResult } from "@/shared/lib/data-result";
 
@@ -34,12 +35,14 @@ export const scholarRepository: EntityRepository<ScholarEntity> = {
   async search(query: string) {
     const q = normalizeArabic(query);
     if (!q) return [];
-    return SCHOLARS.filter((s) => {
-      const hay = normalizeArabic(
-        [s.name, s.fullName, s.era, ...(s.specialty ?? [])].join(" "),
-      );
-      return hay.includes(q);
-    }).map(toEntity);
+    const scored = SCHOLARS.map((s) => {
+      const hay = [s.name, s.fullName, s.era, ...(s.specialty ?? [])].join(" ");
+      const hayNorm = normalizeArabic(hay);
+      const m = scoreTolerantMatch(hay, query, hayNorm);
+      return m ? { s, m } : null;
+    }).filter((x): x is NonNullable<typeof x> => !!x);
+    scored.sort((a, b) => compareTolerantMatches(a.m, b.m));
+    return scored.map(({ s }) => toEntity(s));
   },
 };
 

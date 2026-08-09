@@ -9,6 +9,15 @@ export {
 export {
   loadUnifiedSearchIndex,
   searchUnifiedIndex,
+  searchUnifiedIndexAsync,
   type UnifiedSearchDoc,
   type UnifiedSearchHit,
 } from "@/features/search/unified-local";
+export {
+  scoreTolerantMatch,
+  tolerantIncludes,
+  highlightOriginalParts,
+  stripDefiniteArticle,
+  levenshtein,
+  type TolerantMatch,
+} from "@/features/search/tolerant-match";

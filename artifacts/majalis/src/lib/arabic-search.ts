@@ -7,6 +7,7 @@
  */
 import { normalizeArabic, normalizeArabicUtf8Copy } from "@/shared/arabic-normalize";
 import { expandSearchTerms } from "@/lib/search-synonyms";
+import { tolerantIncludes } from "@/features/search/tolerant-match";
 
 // إعادة تصدير للتوافق الخلفي مع الملفات التي تستورد من arabic-search
 export { normalizeArabic };
@@ -25,70 +26,12 @@ export function arabicIndexFingerprint(text: string): string {
   return `${hex}:${bytes.length}`;
 }
 
-function expandArabicVariants(normalized: string): string[] {
-  const variants = new Set<string>([normalized]);
-  if (!normalized) return [];
-
-  // مجلس ↔ مجالس and similar optional alif patterns
-  variants.add(normalized.replace(/لاس/g, "لس"));
-  variants.add(normalized.replace(/([^ا])لس/g, "$1لاس"));
-
-  // tolerate dropped alif in common roots
-  variants.add(normalized.replace(/ا/g, ""));
-
-  return [...variants].filter(Boolean);
-}
-
-function editDistanceAtMostOne(a: string, b: string): boolean {
-  if (a === b) return true;
-  if (Math.abs(a.length - b.length) > 1) return false;
-  let i = 0;
-  let j = 0;
-  let edits = 0;
-  while (i < a.length && j < b.length) {
-    if (a[i] === b[j]) {
-      i += 1;
-      j += 1;
-      continue;
-    }
-    edits += 1;
-    if (edits > 1) return false;
-    if (a.length > b.length) i += 1;
-    else if (b.length > a.length) j += 1;
-    else {
-      i += 1;
-      j += 1;
-    }
-  }
-  return edits + (a.length - i) + (b.length - j) <= 1;
-}
-
-function fuzzyWordIncludes(haystack: string, needle: string): boolean {
-  const needleWords = needle.split(" ").filter((word) => word.length >= 4);
-  if (!needleWords.length) return false;
-  const hayWords = haystack.split(" ").filter((word) => word.length >= 4);
-  return needleWords.every((needleWord) =>
-    hayWords.some((hayWord) =>
-      hayWord.includes(needleWord) ||
-      needleWord.includes(hayWord) ||
-      editDistanceAtMostOne(hayWord, needleWord),
-    ),
-  );
-}
-
 export function arabicIncludes(haystack: string | null | undefined, needle: string): boolean {
   if (!needle.trim()) return true;
   if (!haystack) return false;
 
-  const hayVariants = expandArabicVariants(normalizeArabic(haystack));
   const needles = expandSearchTerms(needle);
-
-  return hayVariants.some((h) =>
-    needles.some((raw) => {
-      const needleVariants = expandArabicVariants(normalizeArabic(raw));
-      return needleVariants.some((n) => n.length > 0 && (h.includes(n) || fuzzyWordIncludes(h, n)));
-    }),
-  );
+  return needles.some((raw) => tolerantIncludes(haystack, raw));
 }
 
 export function arabicMatchAny(

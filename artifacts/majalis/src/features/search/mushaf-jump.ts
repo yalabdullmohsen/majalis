@@ -3,6 +3,10 @@
  * أمثلة: «283» / «٢٨٣» / «2:255» / «٢:٢٥٥» / «البقرة» / «بقرة» / «al-baqarah» / «البقرة 255»
  */
 import { normalizeArabic, toWesternDigits } from "@/shared/arabic-normalize";
+import {
+  scoreTolerantMatch,
+  stripDefiniteArticle,
+} from "@/features/search/tolerant-match";
 import { SURAH_START_PAGES, getSurahMeta } from "@/lib/quran-api";
 
 export type MushafJumpTarget =
@@ -74,16 +78,27 @@ function matchSurahNumber(rawName: string): number | null {
   const needle = normalizeArabic(cleaned);
   if (!needle) return null;
 
-  // مطابقة اسم عربي مطبّع (كامل أو بلا «ال»)
+  // مطابقة اسم عربي مطبّع مع تسامح (بادئة/جزئي/تحرير) + «ال» اختيارية
+  let best: { n: number; rank: number; distance: number; nameLen: number } | null = null;
   for (let i = 1; i <= 114; i++) {
-    const name = normalizeArabic(getSurahMeta(i).name);
+    const rawName = getSurahMeta(i).name;
+    const name = normalizeArabic(rawName);
     if (!name) continue;
-    if (name === needle) return i;
-    if (name.replace(/^ال/, "") === needle.replace(/^ال/, "")) return i;
-    if (name.includes(needle) && needle.length >= 2) return i;
-    if (needle.includes(name) && name.length >= 2) return i;
+    const m = scoreTolerantMatch(rawName, cleaned, name);
+    if (!m) continue;
+    // رفض تطابقات substring قصيرة جداً على أسماء قصيرة (ضوضاء)
+    if (m.kind === "substring" && stripDefiniteArticle(needle).length < 3) continue;
+    const cand = { n: i, rank: m.rank, distance: m.distance, nameLen: name.length };
+    if (
+      !best ||
+      cand.rank < best.rank ||
+      (cand.rank === best.rank && cand.distance < best.distance) ||
+      (cand.rank === best.rank && cand.distance === best.distance && cand.nameLen < best.nameLen)
+    ) {
+      best = cand;
+    }
   }
-  return null;
+  return best?.n ?? null;
 }
 
 /**

@@ -5,6 +5,7 @@
  */
 
 import { normalizeArabic } from "@/shared/arabic-normalize";
+import { tolerantIncludes } from "@/features/search/tolerant-match";
 import { fetchSurahDetail, getSurahMeta } from "@/lib/quran-api";
 
 export type QuranVerseSearchItem = {
@@ -32,10 +33,10 @@ export function searchVerses<T extends { text: string }>(
   if (!raw) return [];
 
   const needleNorm = normalizeArabic(raw);
+  if (!needleNorm) return [];
   return quranDatabase.filter((item) => {
     if (item.text.includes(raw)) return true;
-    if (!needleNorm) return false;
-    return normalizeArabic(item.text).includes(needleNorm);
+    return tolerantIncludes(item.text, raw);
   });
 }
 

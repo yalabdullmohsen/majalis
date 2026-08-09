@@ -17,7 +17,7 @@ import {
   getSearchHistory,
   getTopSearchQueries,
 } from "@/lib/search-history";
-import { normalizeArabic } from "@/shared/arabic-normalize";
+import { highlightOriginalParts } from "@/features/search/tolerant-match";
 import { afterNextPaint, yieldToMain } from "@/lib/yield-to-main";
 import { TEXT_API_ORIGINS, useResourcePrewarm } from "@/lib/resource-prewarm";
 import "@/styles/components/global-search-modal.css";
@@ -63,7 +63,7 @@ const FILTER_CHIPS: { key: string; label: string }[] = [
   { key: "course",  label: "دورات" },
 ];
 
-const DEBOUNCE_MS = 300;
+const DEBOUNCE_MS = 200;
 
 // ── مساعدات ─────────────────────────────────────────────────────────────────
 
@@ -81,28 +81,19 @@ function useIsMobile() {
 
 function Highlight({ text, query }: { text: string; query: string }) {
   if (!query.trim() || !text) return <>{text}</>;
-  const nText  = normalizeArabic(text);
-  const nQuery = normalizeArabic(query.trim());
-  if (!nQuery || nQuery.length < 2) return <>{text}</>;
-
-  // إيجاد جميع المطابقات وإبرازها
-  const segments: React.ReactNode[] = [];
-  let pos = 0;
-  let searchFrom = 0;
-  while (searchFrom < nText.length) {
-    const idx = nText.indexOf(nQuery, searchFrom);
-    if (idx === -1) {
-      segments.push(text.slice(pos));
-      break;
-    }
-    if (idx > pos) segments.push(text.slice(pos, idx));
-    segments.push(
-      <mark key={idx} className="gsm-highlight">{text.slice(idx, idx + nQuery.length)}</mark>
-    );
-    pos = idx + nQuery.length;
-    searchFrom = pos;
-  }
-  return <>{segments}</>;
+  const parts = highlightOriginalParts(text, query.trim());
+  if (parts.length === 1 && !parts[0]!.hit) return <>{text}</>;
+  return (
+    <>
+      {parts.map((p, i) =>
+        p.hit ? (
+          <mark key={i} className="gsm-highlight">{p.text}</mark>
+        ) : (
+          <span key={i}>{p.text}</span>
+        ),
+      )}
+    </>
+  );
 }
 
 // ── بطاقة نتيجة واحدة ───────────────────────────────────────────────────────
@@ -217,21 +208,25 @@ export function GlobalSearchModal({ onClose }: Props) {
         return;
       }
       abortRef.current?.abort();
-      abortRef.current = new AbortController();
+      const ctrl = new AbortController();
+      abortRef.current = ctrl;
       setLoading(true);
       setError(false);
       try {
         // Yield so keystroke / filter-chip feedback paints before search work (INP).
         await afterNextPaint();
         await yieldToMain();
+        if (ctrl.signal.aborted) return;
         const opts = filter !== "all" ? { type: filter, limit: 20 } : { limit: 24 };
         const res  = await intelligentSearch(q.trim(), opts);
+        if (ctrl.signal.aborted) return;
         await yieldToMain();
+        if (ctrl.signal.aborted) return;
         setResults(res.results ?? []);
       } catch (err: unknown) {
         if ((err as Error)?.name !== "AbortError") setError(true);
       } finally {
-        setLoading(false);
+        if (!ctrl.signal.aborted) setLoading(false);
       }
     },
     [],
