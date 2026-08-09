@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useLocation } from "wouter";
 import {
-  X,
   Copy,
   Check,
   Bookmark,
@@ -23,6 +22,7 @@ import {
   MoreHorizontal,
   Save,
   Timer,
+  RefreshCw,
 } from "lucide-react";
 import { copyAyahText, copyAyahTextPlain, shareAyahAsText } from "@/lib/share-ayah";
 import { addBookmark, removeBookmark, isBookmarked, getNote, saveNote } from "@/lib/quran-personal";
@@ -62,10 +62,10 @@ import {
 } from "@/features/mushaf";
 import "@/styles/components/ayah-action-sheet.css";
 
-/** أطول من هذا يُطوى افتراضيًا مع زر «عرض المزيد» */
 const TAFSIR_COLLAPSE_CHARS = 720;
 
-/** Split long tafsir into readable paragraphs without inventing content. */
+type PanelMode = "none" | "tafsir" | "audio";
+
 function tafsirParagraphs(text: string): string[] {
   const cleaned = text.replace(/\r\n/g, "\n").trim();
   if (!cleaned) return [];
@@ -75,10 +75,6 @@ function tafsirParagraphs(text: string): string[] {
   return soft.length > 1 ? soft : [cleaned];
 }
 
-/**
- * ورقة إجراءات الآية — قارئ تفسير مرحلة ٢:
- * تبديل تفاسير · حجم خط · طيّ النص الطويل · ترجمة اختيارية كسولة.
- */
 type Props = {
   surahNum: number;
   surahName: string;
@@ -123,8 +119,9 @@ export function PageAyahActionSheet({
   const [, navigate] = useLocation();
   const [bookmarked, setBookmarked] = useState(() => isBookmarked(surahNum, ayahNum));
   const [copiedKind, setCopiedKind] = useState<"full" | "plain" | null>(null);
+  const [copyMenuOpen, setCopyMenuOpen] = useState(false);
   const [noteOpen, setNoteOpen] = useState(false);
-  const [showTafsirPanel, setShowTafsirPanel] = useState(true);
+  const [panelMode, setPanelMode] = useState<PanelMode>("none");
   const [moreOpen, setMoreOpen] = useState(false);
   const [noteText, setNoteText] = useState(() => getNote(surahNum, ayahNum));
   const [noteSaved, setNoteSaved] = useState(false);
@@ -136,6 +133,7 @@ export function PageAyahActionSheet({
   const [tafsirText, setTafsirText] = useState<string | null>(null);
   const [tafsirLoading, setTafsirLoading] = useState(false);
   const [tafsirError, setTafsirError] = useState(false);
+  const [tafsirRetryKey, setTafsirRetryKey] = useState(0);
   const [tafsirEdition, setTafsirEdition] = useState(readStoredTafsirEdition);
   const [fontScale, setFontScale] = useState<TafsirFontScale>(readStoredTafsirFontScale);
   const [tafsirExpanded, setTafsirExpanded] = useState(false);
@@ -147,6 +145,9 @@ export function PageAyahActionSheet({
   const editionMenuRef = useRef<HTMLDivElement | null>(null);
   const translationMenuRef = useRef<HTMLDivElement | null>(null);
 
+  const showTafsirPanel = panelMode === "tafsir";
+  const showAudioTools = panelMode === "audio";
+
   useEffect(() => {
     const saved = getNote(surahNum, ayahNum);
     setMushafUnsavedWork(noteText !== saved);
@@ -157,6 +158,7 @@ export function PageAyahActionSheet({
     setNoteText(getNote(surahNum, ayahNum));
     setMushafUnsavedWork(false);
     setCopiedKind(null);
+    setCopyMenuOpen(false);
     setNoteOpen(false);
     setNoteSaved(false);
     setEditionMenuOpen(false);
@@ -164,6 +166,7 @@ export function PageAyahActionSheet({
     setReciterSheetOpen(false);
     setSleepPickerOpen(false);
     setSpeedPickerOpen(false);
+    setMoreOpen(false);
     setTafsirText(null);
     setTafsirError(false);
     setTafsirExpanded(false);
@@ -172,6 +175,7 @@ export function PageAyahActionSheet({
   }, [surahNum, ayahNum]);
 
   useEffect(() => {
+    if (!showTafsirPanel) return;
     const ac = new AbortController();
     let cancelled = false;
 
@@ -200,10 +204,10 @@ export function PageAyahActionSheet({
       cancelled = true;
       ac.abort();
     };
-  }, [surahNum, ayahNum, tafsirEdition]);
+  }, [surahNum, ayahNum, tafsirEdition, showTafsirPanel, tafsirRetryKey]);
 
   useEffect(() => {
-    if (!showTranslation) {
+    if (!showTafsirPanel || !showTranslation) {
       setTranslationText(null);
       setTranslationError(false);
       setTranslationLoading(false);
@@ -240,7 +244,7 @@ export function PageAyahActionSheet({
       cancelled = true;
       ac.abort();
     };
-  }, [surahNum, ayahNum, translationEdition, showTranslation]);
+  }, [surahNum, ayahNum, translationEdition, showTranslation, showTafsirPanel]);
 
   const handleSelectEdition = (id: string) => {
     setTafsirEdition(id);
@@ -295,12 +299,14 @@ export function PageAyahActionSheet({
       if (e.key === "Escape") {
         if (editionMenuOpen) setEditionMenuOpen(false);
         else if (translationMenuOpen) setTranslationMenuOpen(false);
+        else if (copyMenuOpen) setCopyMenuOpen(false);
+        else if (moreOpen) setMoreOpen(false);
         else onClose();
       }
     };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
-  }, [onClose, editionMenuOpen, translationMenuOpen]);
+  }, [onClose, editionMenuOpen, translationMenuOpen, copyMenuOpen, moreOpen]);
 
   useEffect(() => {
     if (!editionMenuOpen && !translationMenuOpen) return;
@@ -337,6 +343,7 @@ export function PageAyahActionSheet({
       : await copyAyahText(ayahText, surahName, ayahNum);
     if (ok) {
       setCopiedKind(plain ? "plain" : "full");
+      setCopyMenuOpen(false);
       setTimeout(() => setCopiedKind((k) => (k === (plain ? "plain" : "full") ? null : k)), 1800);
     }
   };
@@ -354,11 +361,26 @@ export function PageAyahActionSheet({
   );
 
   const reciterName = reciterId ? getReciter(reciterId).nameAr : "القارئ";
-
   const fontPercent = Math.round(fontScale * 100);
 
   const handleShare = async () => {
     await shareAyahAsText(ayahText, surahName, ayahNum);
+  };
+
+  const selectPanel = (mode: PanelMode) => {
+    setPanelMode((prev) => (prev === mode ? "none" : mode));
+    setMoreOpen(false);
+    setCopyMenuOpen(false);
+    setSpeedPickerOpen(false);
+    setSleepPickerOpen(false);
+    setEditionMenuOpen(false);
+  };
+
+  const handleListen = () => {
+    setPanelMode("audio");
+    setMoreOpen(false);
+    setCopyMenuOpen(false);
+    if (canPlay) onTogglePlay();
   };
 
   return (
@@ -378,414 +400,440 @@ export function PageAyahActionSheet({
           <span>الآية {toArabicDigits(ayahNum)}</span>
         </header>
 
-        <div className="aas-v3__actions" role="toolbar" aria-label="إجراءات الآية">
-          <button
-            type="button"
-            className={`aas-v3__action${showTafsirPanel ? " is-on" : ""}`}
-            onClick={() => { setShowTafsirPanel((v) => !v); setMoreOpen(false); }}
-          >
-            <BookOpen size={20} aria-hidden="true" />
-            <span>تفسير</span>
-          </button>
-          <button
-            type="button"
-            className={`aas-v3__action${isPlaying ? " is-on" : ""}`}
-            onClick={onTogglePlay}
-            disabled={!canPlay}
-            aria-label={isPlaying ? "إيقاف التلاوة" : "استماع"}
-          >
-            {isPlaying ? <Pause size={20} aria-hidden="true" /> : <Play size={20} aria-hidden="true" />}
-            <span>استماع</span>
-          </button>
-          <button type="button" className="aas-v3__action" onClick={() => void handleCopy(false)}>
-            {copiedKind === "full" ? <Check size={20} aria-hidden="true" /> : <Copy size={20} aria-hidden="true" />}
-            <span>نسخ</span>
-          </button>
-          <button type="button" className="aas-v3__action" onClick={() => void handleShare()}>
-            <Share2 size={20} aria-hidden="true" />
-            <span>مشاركة</span>
-          </button>
-          <button
-            type="button"
-            className={`aas-v3__action${bookmarked ? " is-on" : ""}`}
-            onClick={toggleBookmark}
-          >
-            <Bookmark size={20} aria-hidden="true" fill={bookmarked ? "currentColor" : "none"} />
-            <span>إشارة</span>
-          </button>
-          <button
-            type="button"
-            className="aas-v3__action"
-            onClick={() => {
-              onClose();
-              navigate(`/quran/recitation-test-ai?surah=${surahNum}`);
-            }}
-            aria-label="تسميع هذه السورة"
-          >
-            <Mic size={20} aria-hidden="true" />
-            <span>تسميع</span>
-          </button>
-          <button
-            type="button"
-            className={`aas-v3__action${noteOpen ? " is-on" : ""}`}
-            onClick={() => { setNoteOpen((v) => !v); setMoreOpen(false); }}
-          >
-            <Save size={20} aria-hidden="true" />
-            <span>حفظ</span>
-          </button>
-        </div>
-
-        <button
-          type="button"
-          className={`aas-v3__more-toggle${moreOpen ? " is-on" : ""}`}
-          onClick={() => setMoreOpen((v) => !v)}
-          aria-expanded={moreOpen}
-        >
-          <MoreHorizontal size={18} aria-hidden="true" />
-          المزيد
-        </button>
-
-        {moreOpen ? (
-          <div className="aas-v3__more" role="region" aria-label="إجراءات إضافية">
-            {(onPrev || onNext) ? (
-              <div className="aas-v3__nav-row">
-                {onPrev ? (
-                  <button type="button" className="aas-v3__more-btn" onClick={onPrev}>
-                    <ChevronRight size={18} aria-hidden="true" /> الآية السابقة
-                  </button>
-                ) : null}
-                {onNext ? (
-                  <button type="button" className="aas-v3__more-btn" onClick={onNext}>
-                    الآية التالية <ChevronLeft size={18} aria-hidden="true" />
-                  </button>
-                ) : null}
-              </div>
-            ) : null}
-            {(canPlay || (reciterId && onSetReciter) || playbackRate !== undefined) && (
-          <div className="aas-reader__audio-strip" role="toolbar" aria-label="خيارات التلاوة">
-            {canPlay && onToggleRepeat ? (
-              <button
-                type="button"
-                className={`aas-reader__audio-chip${repeatOn ? " is-on" : ""}`}
-                onClick={onToggleRepeat}
-                aria-pressed={repeatOn}
-              >
-                <Repeat size={15} aria-hidden="true" />
-                <span>تكرار</span>
-              </button>
-            ) : null}
-
-            {reciterId && onSetReciter ? (
-              <button
-                type="button"
-                className={`aas-reader__audio-chip${reciterSheetOpen ? " is-on" : ""}`}
-                onClick={() => {
-                  void ensureValidReciterPreference().then((id) => {
-                    if (onSetReciter && id !== reciterId) onSetReciter(id);
-                  });
-                  setReciterSheetOpen(true);
-                  setSpeedPickerOpen(false);
-                  setSleepPickerOpen(false);
-                  setEditionMenuOpen(false);
-                  setTranslationMenuOpen(false);
-                }}
-                aria-haspopup="dialog"
-                aria-expanded={reciterSheetOpen}
-              >
-                <Mic2 size={15} aria-hidden="true" />
-                <span>{reciterName}</span>
-                <ChevronDown size={14} aria-hidden="true" />
-              </button>
-            ) : null}
-
-            {playbackRate !== undefined && onSetPlaybackRate ? (
-              <div className="aas-reader__dropdown-wrap">
-                <button
-                  type="button"
-                  className={`aas-reader__audio-chip${speedPickerOpen ? " is-on" : ""}`}
-                  onClick={() => {
-                    setSpeedPickerOpen((v) => !v);
-                    setSleepPickerOpen(false);
-                    setEditionMenuOpen(false);
-                    setTranslationMenuOpen(false);
-                  }}
-                  aria-expanded={speedPickerOpen}
-                >
-                  <Gauge size={15} aria-hidden="true" />
-                  <span>{playbackRate}×</span>
-                  <ChevronDown size={14} aria-hidden="true" />
-                </button>
-                {speedPickerOpen ? (
-                  <div className="aas-reader__dropdown aas-reader__dropdown--compact" role="listbox" aria-label="سرعة التلاوة">
-                    {VALID_PLAYBACK_RATES.map((rate) => (
-                      <button
-                        key={rate}
-                        type="button"
-                        role="option"
-                        aria-selected={rate === playbackRate}
-                        className={rate === playbackRate ? "is-active" : undefined}
-                        onClick={() => {
-                          onSetPlaybackRate(rate);
-                          setSpeedPickerOpen(false);
-                        }}
-                      >
-                        {rate}×
-                      </button>
-                    ))}
-                  </div>
-                ) : null}
-              </div>
-            ) : null}
-
-            {onSetSleepTimer ? (
-              <div className="aas-reader__dropdown-wrap">
-                <button
-                  type="button"
-                  className={`aas-reader__audio-chip${sleepTimerOption !== "off" || sleepPickerOpen ? " is-on" : ""}`}
-                  onClick={() => {
-                    setSleepPickerOpen((v) => !v);
-                    setSpeedPickerOpen(false);
-                    setEditionMenuOpen(false);
-                    setTranslationMenuOpen(false);
-                  }}
-                  aria-expanded={sleepPickerOpen}
-                >
-                  <Timer size={15} aria-hidden="true" />
-                  <span>{sleepTimerLabelAr(sleepTimerOption)}</span>
-                  <ChevronDown size={14} aria-hidden="true" />
-                </button>
-                {sleepPickerOpen ? (
-                  <div className="aas-reader__dropdown aas-reader__dropdown--compact" role="listbox" aria-label="مؤقّت الإيقاف">
-                    {SLEEP_TIMER_OPTIONS.map((opt) => (
-                      <button
-                        key={String(opt)}
-                        type="button"
-                        role="option"
-                        aria-selected={opt === sleepTimerOption}
-                        className={opt === sleepTimerOption ? "is-active" : undefined}
-                        onClick={() => {
-                          onSetSleepTimer(opt);
-                          setSleepPickerOpen(false);
-                        }}
-                      >
-                        {sleepTimerLabelAr(opt)}
-                      </button>
-                    ))}
-                  </div>
-                ) : null}
-              </div>
-            ) : null}
-          </div>
-        )}
-            <button type="button" className="aas-v3__more-btn" onClick={() => void handleCopy(true)}>
-              <Copy size={16} aria-hidden="true" /> نسخ بلا تشكيل
-            </button>
-            <a
-              className="aas-v3__more-btn"
-              href={`mailto:${CONTACT_EMAIL}?subject=${reportSubject}&body=${reportBody}`}
-            >
-              <Flag size={16} aria-hidden="true" /> إبلاغ عن خطأ
-            </a>
-          </div>
-        ) : null}
-
-        {showTafsirPanel ? (
-        <div className="aas-v3__tafsir">
-        <div className="aas-reader__edition-row">
-          <div className="aas-reader__edition" ref={editionMenuRef}>
+        <div className="aas-v3__scroll">
+          <div className="aas-v3__actions" role="toolbar" aria-label="إجراءات الآية">
             <button
               type="button"
-              className="aas-reader__edition-btn"
-              onClick={() => {
-                setEditionMenuOpen((v) => !v);
-                setReciterSheetOpen(false);
-                setSleepPickerOpen(false);
-                setSpeedPickerOpen(false);
-                setTranslationMenuOpen(false);
-              }}
-              aria-expanded={editionMenuOpen}
-              aria-haspopup="listbox"
+              className={`aas-v3__action${showTafsirPanel ? " is-on" : ""}`}
+              onClick={() => selectPanel("tafsir")}
+              aria-pressed={showTafsirPanel}
             >
-              <BookOpen size={16} aria-hidden="true" />
-              <span className="aas-reader__edition-label">
-                <em>التفسير</em>
-                <strong>{currentEditionMeta?.label ?? "اختر تفسيرًا"}</strong>
-              </span>
-              <ChevronDown size={16} aria-hidden="true" className={editionMenuOpen ? "is-open" : undefined} />
+              <BookOpen size={20} aria-hidden="true" />
+              <span>تفسير</span>
             </button>
-            {editionMenuOpen ? (
-              <div className="aas-reader__edition-menu" role="listbox" aria-label="قائمة التفاسير">
-                {MUSHAF_TAFSIR_EDITIONS.map((ed) => (
-                  <button
-                    key={ed.id}
-                    type="button"
-                    role="option"
-                    aria-selected={ed.id === tafsirEdition}
-                    className={ed.id === tafsirEdition ? "is-active" : undefined}
-                    onClick={() => handleSelectEdition(ed.id)}
-                  >
-                    <strong>{ed.label}</strong>
-                    <span>
-                      {ed.author}
-                      {ed.level ? ` · ${ed.level}` : ""}
-                    </span>
-                  </button>
-                ))}
-              </div>
-            ) : null}
+            <button
+              type="button"
+              className={`aas-v3__action${showAudioTools || isPlaying ? " is-on" : ""}`}
+              onClick={handleListen}
+              disabled={!canPlay}
+              aria-label={isPlaying ? "إيقاف التلاوة" : "استماع"}
+              aria-pressed={showAudioTools || isPlaying}
+            >
+              {isPlaying ? <Pause size={20} aria-hidden="true" /> : <Play size={20} aria-hidden="true" />}
+              <span>استماع</span>
+            </button>
+            <button
+              type="button"
+              className={`aas-v3__action${copyMenuOpen || copiedKind ? " is-on" : ""}`}
+              onClick={() => {
+                setCopyMenuOpen((v) => !v);
+                setMoreOpen(false);
+              }}
+              aria-expanded={copyMenuOpen}
+            >
+              {copiedKind ? <Check size={20} aria-hidden="true" /> : <Copy size={20} aria-hidden="true" />}
+              <span>نسخ</span>
+            </button>
+            <button type="button" className="aas-v3__action" onClick={() => void handleShare()}>
+              <Share2 size={20} aria-hidden="true" />
+              <span>مشاركة</span>
+            </button>
+            <button
+              type="button"
+              className={`aas-v3__action${bookmarked ? " is-on" : ""}`}
+              onClick={toggleBookmark}
+              aria-pressed={bookmarked}
+            >
+              <Bookmark size={20} aria-hidden="true" fill={bookmarked ? "currentColor" : "none"} />
+              <span>إشارة</span>
+            </button>
+            <button
+              type="button"
+              className={`aas-v3__action${moreOpen ? " is-on" : ""}`}
+              onClick={() => {
+                setMoreOpen((v) => !v);
+                setCopyMenuOpen(false);
+              }}
+              aria-expanded={moreOpen}
+            >
+              <MoreHorizontal size={20} aria-hidden="true" />
+              <span>المزيد</span>
+            </button>
           </div>
 
-          <button
-            type="button"
-            className="aas-reader__font-btn"
-            onClick={cycleFontScale}
-            aria-label={`حجم خط التفسير ${fontPercent}٪`}
-            title="تغيير حجم خط التفسير"
-          >
-            <Type size={16} aria-hidden="true" />
-            <span>{toArabicDigits(fontPercent)}٪</span>
-          </button>
-        </div>
-
-        {currentEditionMeta?.caution ? (
-          <p className="aas-reader__caution" role="note">
-            {currentEditionMeta.caution}
-          </p>
-        ) : null}
-
-        <section
-          className="aas-reader__body"
-          aria-live="polite"
-          aria-busy={tafsirLoading}
-          style={{ ["--aas-tafsir-scale" as string]: String(fontScale) }}
-        >
-          {currentEditionMeta ? (
-            <p className="aas-reader__author">
-              <span>{currentEditionMeta.author}</span>
-            </p>
+          {copyMenuOpen ? (
+            <div className="aas-v3__inline-menu" role="group" aria-label="خيارات النسخ">
+              <button type="button" className="aas-v3__chip" onClick={() => void handleCopy(false)}>
+                <Copy size={15} aria-hidden="true" />
+                نسخ بالتشكيل
+              </button>
+              <button type="button" className="aas-v3__chip" onClick={() => void handleCopy(true)}>
+                <Copy size={15} aria-hidden="true" />
+                نسخ بلا تشكيل
+              </button>
+            </div>
           ) : null}
 
-          {tafsirLoading && !tafsirText ? (
-            <div className="aas-reader__skel" aria-label="جاري تحميل التفسير">
-              <span />
-              <span />
-              <span />
-            </div>
-          ) : tafsirError && !tafsirText ? (
-            <p className="aas-reader__status">تعذّر تحميل التفسير. تحقّق من اتصالك ثم أعد المحاولة.</p>
-          ) : visibleParagraphs.length > 0 ? (
-            <>
-              <div
-                className={`aas-reader__prose${tafsirNeedsCollapse && !tafsirExpanded ? " is-collapsed" : ""}`}
-                key={tafsirEdition}
+          {moreOpen ? (
+            <div className="aas-v3__more" role="region" aria-label="إجراءات إضافية">
+              <button
+                type="button"
+                className="aas-v3__chip"
+                onClick={() => {
+                  onClose();
+                  navigate(`/quran/recitation-test-ai?surah=${surahNum}`);
+                }}
               >
-                {visibleParagraphs.map((p, i) => (
-                  <p key={`${i}-${p.slice(0, 24)}`}>{p}</p>
-                ))}
-              </div>
-              {tafsirNeedsCollapse ? (
+                <Mic size={15} aria-hidden="true" />
+                تسميع
+              </button>
+              <button
+                type="button"
+                className={`aas-v3__chip${noteOpen ? " is-on" : ""}`}
+                onClick={() => setNoteOpen((v) => !v)}
+              >
+                <Save size={15} aria-hidden="true" />
+                حفظ ملاحظة
+              </button>
+              <a
+                className="aas-v3__chip"
+                href={`mailto:${CONTACT_EMAIL}?subject=${reportSubject}&body=${reportBody}`}
+              >
+                <Flag size={15} aria-hidden="true" />
+                إبلاغ عن خطأ
+              </a>
+            </div>
+          ) : null}
+
+          {showAudioTools ? (
+            <div className="aas-v3__audio" role="toolbar" aria-label="خيارات التلاوة">
+              {canPlay && onToggleRepeat ? (
                 <button
                   type="button"
-                  className="aas-reader__expand"
-                  onClick={() => setTafsirExpanded((v) => !v)}
-                  aria-expanded={tafsirExpanded}
+                  className={`aas-v3__chip${repeatOn ? " is-on" : ""}`}
+                  onClick={onToggleRepeat}
+                  aria-pressed={repeatOn}
                 >
-                  {tafsirExpanded ? "عرض أقل" : "عرض المزيد"}
+                  <Repeat size={15} aria-hidden="true" />
+                  تكرار
                 </button>
               ) : null}
-            </>
-          ) : (
-            <p className="aas-reader__status">لا يتوفر تفسير لهذه الآية في المصدر المختار.</p>
-          )}
-        </section>
 
-        <div className="aas-reader__translation" ref={translationMenuRef}>
-          <div className="aas-reader__translation-bar">
-            <button
-              type="button"
-              className={`aas-reader__audio-chip${showTranslation ? " is-on" : ""}`}
-              onClick={toggleTranslation}
-              aria-pressed={showTranslation}
-            >
-              <Languages size={15} aria-hidden="true" />
-              <span>ترجمة</span>
-            </button>
-            {showTranslation ? (
-              <button
-                type="button"
-                className={`aas-reader__edition-btn aas-reader__edition-btn--compact${translationMenuOpen ? " is-open" : ""}`}
-                onClick={() => {
-                  setTranslationMenuOpen((v) => !v);
-                  setEditionMenuOpen(false);
-                  setReciterSheetOpen(false);
-                  setSleepPickerOpen(false);
-                  setSpeedPickerOpen(false);
-                }}
-                aria-expanded={translationMenuOpen}
-                aria-haspopup="listbox"
-              >
-                <span className="aas-reader__edition-label">
-                  <strong>{currentTranslationMeta?.label ?? "ترجمة"}</strong>
-                </span>
-                <ChevronDown size={14} aria-hidden="true" className={translationMenuOpen ? "is-open" : undefined} />
-              </button>
-            ) : null}
-          </div>
-          {showTranslation && translationMenuOpen ? (
-            <div className="aas-reader__edition-menu aas-reader__edition-menu--translation" role="listbox" aria-label="قائمة الترجمات">
-              {MUSHAF_TRANSLATION_EDITIONS.map((ed) => (
+              {reciterId && onSetReciter ? (
                 <button
-                  key={ed.id}
                   type="button"
-                  role="option"
-                  aria-selected={ed.id === translationEdition}
-                  className={ed.id === translationEdition ? "is-active" : undefined}
-                  onClick={() => handleSelectTranslation(ed.id)}
+                  className={`aas-v3__chip${reciterSheetOpen ? " is-on" : ""}`}
+                  onClick={() => {
+                    void ensureValidReciterPreference().then((id) => {
+                      if (onSetReciter && id !== reciterId) onSetReciter(id);
+                    });
+                    setReciterSheetOpen(true);
+                    setSpeedPickerOpen(false);
+                    setSleepPickerOpen(false);
+                  }}
+                  aria-haspopup="dialog"
+                  aria-expanded={reciterSheetOpen}
                 >
-                  <strong>{ed.label}</strong>
-                  <span>{ed.author}</span>
+                  <Mic2 size={15} aria-hidden="true" />
+                  <span className="aas-v3__chip-label">{reciterName}</span>
+                  <ChevronDown size={14} aria-hidden="true" />
                 </button>
-              ))}
+              ) : null}
+
+              {playbackRate !== undefined && onSetPlaybackRate ? (
+                <div className="aas-v3__disclosure">
+                  <button
+                    type="button"
+                    className={`aas-v3__chip${speedPickerOpen ? " is-on" : ""}`}
+                    onClick={() => {
+                      setSpeedPickerOpen((v) => !v);
+                      setSleepPickerOpen(false);
+                    }}
+                    aria-expanded={speedPickerOpen}
+                  >
+                    <Gauge size={15} aria-hidden="true" />
+                    {playbackRate}×
+                    <ChevronDown size={14} aria-hidden="true" />
+                  </button>
+                  {speedPickerOpen ? (
+                    <div className="aas-v3__inline-menu aas-v3__inline-menu--compact" role="listbox" aria-label="سرعة التلاوة">
+                      {VALID_PLAYBACK_RATES.map((rate) => (
+                        <button
+                          key={rate}
+                          type="button"
+                          role="option"
+                          aria-selected={rate === playbackRate}
+                          className={`aas-v3__chip${rate === playbackRate ? " is-on" : ""}`}
+                          onClick={() => {
+                            onSetPlaybackRate(rate);
+                            setSpeedPickerOpen(false);
+                          }}
+                        >
+                          {rate}×
+                        </button>
+                      ))}
+                    </div>
+                  ) : null}
+                </div>
+              ) : null}
+
+              {onSetSleepTimer ? (
+                <div className="aas-v3__disclosure">
+                  <button
+                    type="button"
+                    className={`aas-v3__chip${sleepTimerOption !== "off" || sleepPickerOpen ? " is-on" : ""}`}
+                    onClick={() => {
+                      setSleepPickerOpen((v) => !v);
+                      setSpeedPickerOpen(false);
+                    }}
+                    aria-expanded={sleepPickerOpen}
+                  >
+                    <Timer size={15} aria-hidden="true" />
+                    {sleepTimerLabelAr(sleepTimerOption)}
+                    <ChevronDown size={14} aria-hidden="true" />
+                  </button>
+                  {sleepPickerOpen ? (
+                    <div className="aas-v3__inline-menu" role="listbox" aria-label="مؤقّت الإيقاف">
+                      {SLEEP_TIMER_OPTIONS.map((opt) => (
+                        <button
+                          key={String(opt)}
+                          type="button"
+                          role="option"
+                          aria-selected={opt === sleepTimerOption}
+                          className={`aas-v3__chip${opt === sleepTimerOption ? " is-on" : ""}`}
+                          onClick={() => {
+                            onSetSleepTimer(opt);
+                            setSleepPickerOpen(false);
+                          }}
+                        >
+                          {sleepTimerLabelAr(opt)}
+                        </button>
+                      ))}
+                    </div>
+                  ) : null}
+                </div>
+              ) : null}
             </div>
           ) : null}
-          {showTranslation ? (
-            <div className="aas-reader__translation-body" aria-live="polite" aria-busy={translationLoading}>
-              {translationLoading && !translationText ? (
-                <p className="aas-reader__status">جاري تحميل الترجمة…</p>
-              ) : translationError && !translationText ? (
-                <p className="aas-reader__status">تعذّر تحميل الترجمة.</p>
-              ) : translationText ? (
-                <p
-                  className="aas-reader__translation-text"
-                  dir={currentTranslationMeta?.dir ?? "ltr"}
-                  lang={translationEdition.startsWith("fr") ? "fr" : "en"}
+
+          {showTafsirPanel ? (
+            <div className="aas-v3__tafsir">
+              <div className="aas-v3__tafsir-tools">
+                <div className="aas-v3__disclosure aas-v3__disclosure--grow" ref={editionMenuRef}>
+                  <button
+                    type="button"
+                    className={`aas-v3__chip aas-v3__chip--wide${editionMenuOpen ? " is-on" : ""}`}
+                    onClick={() => {
+                      setEditionMenuOpen((v) => !v);
+                      setTranslationMenuOpen(false);
+                    }}
+                    aria-expanded={editionMenuOpen}
+                    aria-haspopup="listbox"
+                  >
+                    <BookOpen size={15} aria-hidden="true" />
+                    <span className="aas-v3__chip-meta">
+                      <em>التفسير</em>
+                      <strong>{currentEditionMeta?.label ?? "اختر تفسيرًا"}</strong>
+                    </span>
+                    <ChevronDown size={14} aria-hidden="true" />
+                  </button>
+                  {editionMenuOpen ? (
+                    <div className="aas-v3__inline-menu" role="listbox" aria-label="قائمة التفاسير">
+                      {MUSHAF_TAFSIR_EDITIONS.map((ed) => (
+                        <button
+                          key={ed.id}
+                          type="button"
+                          role="option"
+                          aria-selected={ed.id === tafsirEdition}
+                          className={`aas-v3__menu-row${ed.id === tafsirEdition ? " is-on" : ""}`}
+                          onClick={() => handleSelectEdition(ed.id)}
+                        >
+                          <strong>{ed.label}</strong>
+                          <span>
+                            {ed.author}
+                            {ed.level ? ` · ${ed.level}` : ""}
+                          </span>
+                        </button>
+                      ))}
+                    </div>
+                  ) : null}
+                </div>
+
+                <button
+                  type="button"
+                  className="aas-v3__chip"
+                  onClick={cycleFontScale}
+                  aria-label={`حجم خط التفسير ${fontPercent}٪`}
                 >
-                  {translationText}
+                  <Type size={15} aria-hidden="true" />
+                  {toArabicDigits(fontPercent)}٪
+                </button>
+
+                <button
+                  type="button"
+                  className={`aas-v3__chip${showTranslation ? " is-on" : ""}`}
+                  onClick={toggleTranslation}
+                  aria-pressed={showTranslation}
+                >
+                  <Languages size={15} aria-hidden="true" />
+                  ترجمة
+                </button>
+              </div>
+
+              {currentEditionMeta?.caution ? (
+                <p className="aas-reader__caution" role="note">
+                  {currentEditionMeta.caution}
                 </p>
-              ) : (
-                <p className="aas-reader__status">لا تتوفر ترجمة لهذه الآية.</p>
-              )}
+              ) : null}
+
+              <section
+                className="aas-reader__body"
+                aria-live="polite"
+                aria-busy={tafsirLoading}
+                style={{ ["--aas-tafsir-scale" as string]: String(fontScale) }}
+              >
+                {currentEditionMeta ? (
+                  <p className="aas-reader__author">
+                    <span>{currentEditionMeta.author}</span>
+                  </p>
+                ) : null}
+
+                {tafsirLoading && !tafsirText ? (
+                  <div className="aas-reader__skel" aria-label="جاري تحميل التفسير">
+                    <span />
+                    <span />
+                    <span />
+                  </div>
+                ) : tafsirError && !tafsirText ? (
+                  <div className="aas-v3__error" role="alert">
+                    <p>تعذّر تحميل التفسير. تحقّق من اتصالك.</p>
+                    <button
+                      type="button"
+                      className="aas-v3__chip is-on"
+                      onClick={() => setTafsirRetryKey((k) => k + 1)}
+                    >
+                      <RefreshCw size={15} aria-hidden="true" />
+                      إعادة المحاولة
+                    </button>
+                  </div>
+                ) : visibleParagraphs.length > 0 ? (
+                  <>
+                    <div
+                      className={`aas-reader__prose${tafsirNeedsCollapse && !tafsirExpanded ? " is-collapsed" : ""}`}
+                      key={tafsirEdition}
+                    >
+                      {visibleParagraphs.map((p, i) => (
+                        <p key={`${i}-${p.slice(0, 24)}`}>{p}</p>
+                      ))}
+                    </div>
+                    {tafsirNeedsCollapse ? (
+                      <button
+                        type="button"
+                        className="aas-reader__expand"
+                        onClick={() => setTafsirExpanded((v) => !v)}
+                        aria-expanded={tafsirExpanded}
+                      >
+                        {tafsirExpanded ? "عرض أقل" : "عرض المزيد"}
+                      </button>
+                    ) : null}
+                  </>
+                ) : (
+                  <p className="aas-reader__status">لا يتوفر تفسير لهذه الآية في المصدر المختار.</p>
+                )}
+              </section>
+
+              {showTranslation ? (
+                <div className="aas-reader__translation" ref={translationMenuRef}>
+                  <div className="aas-v3__disclosure">
+                    <button
+                      type="button"
+                      className={`aas-v3__chip${translationMenuOpen ? " is-on" : ""}`}
+                      onClick={() => {
+                        setTranslationMenuOpen((v) => !v);
+                        setEditionMenuOpen(false);
+                      }}
+                      aria-expanded={translationMenuOpen}
+                      aria-haspopup="listbox"
+                    >
+                      <strong>{currentTranslationMeta?.label ?? "ترجمة"}</strong>
+                      <ChevronDown size={14} aria-hidden="true" />
+                    </button>
+                    {translationMenuOpen ? (
+                      <div className="aas-v3__inline-menu" role="listbox" aria-label="قائمة الترجمات">
+                        {MUSHAF_TRANSLATION_EDITIONS.map((ed) => (
+                          <button
+                            key={ed.id}
+                            type="button"
+                            role="option"
+                            aria-selected={ed.id === translationEdition}
+                            className={`aas-v3__menu-row${ed.id === translationEdition ? " is-on" : ""}`}
+                            onClick={() => handleSelectTranslation(ed.id)}
+                          >
+                            <strong>{ed.label}</strong>
+                            <span>{ed.author}</span>
+                          </button>
+                        ))}
+                      </div>
+                    ) : null}
+                  </div>
+                  <div className="aas-reader__translation-body" aria-live="polite" aria-busy={translationLoading}>
+                    {translationLoading && !translationText ? (
+                      <p className="aas-reader__status">جاري تحميل الترجمة…</p>
+                    ) : translationError && !translationText ? (
+                      <p className="aas-reader__status">تعذّر تحميل الترجمة.</p>
+                    ) : translationText ? (
+                      <p
+                        className="aas-reader__translation-text"
+                        dir={currentTranslationMeta?.dir ?? "ltr"}
+                        lang={translationEdition.startsWith("fr") ? "fr" : "en"}
+                      >
+                        {translationText}
+                      </p>
+                    ) : (
+                      <p className="aas-reader__status">لا تتوفر ترجمة لهذه الآية.</p>
+                    )}
+                  </div>
+                </div>
+              ) : null}
+            </div>
+          ) : null}
+
+          {noteOpen ? (
+            <div className="aas-reader__note">
+              <textarea
+                value={noteText}
+                onChange={(e) => setNoteText(e.target.value)}
+                placeholder="اكتب ملاحظتك على هذه الآية..."
+                dir="rtl"
+                aria-label="ملاحظة على الآية"
+              />
+              <button type="button" className="aas-v3__chip is-on" onClick={handleSaveNote}>
+                {noteSaved ? <Check size={15} aria-hidden="true" /> : <StickyNote size={15} aria-hidden="true" />}
+                {noteSaved ? "تم الحفظ" : "حفظ الملاحظة"}
+              </button>
             </div>
           ) : null}
         </div>
 
-        </div>
-        ) : null}
-
-        {noteOpen ? (
-          <div className="aas-reader__note">
-            <textarea
-              value={noteText}
-              onChange={(e) => setNoteText(e.target.value)}
-              placeholder="اكتب ملاحظتك على هذه الآية..."
-              dir="rtl"
-              aria-label="ملاحظة على الآية"
-            />
-            <button type="button" className="aas-reader__note-save" onClick={handleSaveNote}>
-              {noteSaved ? <Check size={16} aria-hidden="true" /> : <StickyNote size={16} aria-hidden="true" />}
-              {noteSaved ? "تم الحفظ" : "حفظ الملاحظة"}
-            </button>
-          </div>
+        {(onPrev || onNext) ? (
+          <nav className="aas-v3__nav" aria-label="التنقّل بين الآيات">
+            {onPrev ? (
+              <button type="button" className="aas-v3__nav-btn" onClick={onPrev}>
+                <ChevronRight size={18} aria-hidden="true" />
+                الآية السابقة
+              </button>
+            ) : (
+              <span className="aas-v3__nav-spacer" />
+            )}
+            {onNext ? (
+              <button type="button" className="aas-v3__nav-btn" onClick={onNext}>
+                الآية التالية
+                <ChevronLeft size={18} aria-hidden="true" />
+              </button>
+            ) : (
+              <span className="aas-v3__nav-spacer" />
+            )}
+          </nav>
         ) : null}
 
         {reciterId && onSetReciter ? (
@@ -797,11 +845,6 @@ export function PageAyahActionSheet({
             mode="ayah"
           />
         ) : null}
-
-        <button type="button" className="aas-v3__close" onClick={onClose}>
-          <X size={18} aria-hidden="true" />
-          إغلاق
-        </button>
       </div>
     </div>
   );

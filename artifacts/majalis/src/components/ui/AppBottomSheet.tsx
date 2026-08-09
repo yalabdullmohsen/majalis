@@ -18,6 +18,8 @@ type Props = {
   closeLabel?: string;
   footer?: ReactNode;
   className?: string;
+  /** يرفع الطبقة فوق شيتات أخرى (مثل شيت الآية z≈10020) */
+  elevated?: boolean;
   initialFocusRef?: React.RefObject<HTMLElement | null>;
 };
 
@@ -34,6 +36,7 @@ export function AppBottomSheet({
   closeLabel = "إغلاق",
   footer,
   className = "",
+  elevated = false,
   initialFocusRef,
 }: Props) {
   const titleId = useId();
@@ -188,7 +191,7 @@ export function AppBottomSheet({
 
   return createPortal(
     <div
-      className="app-sheet-overlay"
+      className={`app-sheet-overlay${elevated ? " app-sheet-overlay--elevated" : ""}`}
       onPointerDown={onEdgePointerDown}
       onPointerMove={onEdgePointerMove}
       onPointerUp={onEdgePointerUp}

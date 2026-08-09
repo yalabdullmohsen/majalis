@@ -1,4 +1,5 @@
-import { Check } from "lucide-react";
+import { useMemo, useState } from "react";
+import { Check, Search } from "lucide-react";
 import { AppBottomSheet } from "@/components/ui/AppBottomSheet";
 import {
   ensureValidReciterPreference,
@@ -17,7 +18,7 @@ type Props = {
 };
 
 /**
- * شيت سفلي لاختيار القارئ — نفس لغة التصميم (AppBottomSheet) مع حرف أول + رواية + جودة.
+ * شيت سفلي لاختيار القارئ — بحث + تمييز الحالي + ألوان المصحف فوق شيت الآية.
  */
 export function ReciterPickerSheet({
   open,
@@ -26,12 +27,40 @@ export function ReciterPickerSheet({
   onSelect,
   mode = "ayah",
 }: Props) {
+  const [query, setQuery] = useState("");
   const list = getSelectableReciters(mode);
+  const filtered = useMemo(() => {
+    const q = query.trim();
+    if (!q) return list;
+    return list.filter((r) => r.nameAr.includes(q) || r.id.includes(q));
+  }, [list, query]);
 
   return (
-    <AppBottomSheet open={open} onClose={onClose} title="اختر القارئ" snap="half">
+    <AppBottomSheet
+      open={open}
+      onClose={() => {
+        setQuery("");
+        onClose();
+      }}
+      title="اختر القارئ"
+      snap="half"
+      elevated
+      className="reciter-picker-sheet"
+    >
+      <label className="reciter-picker-sheet__search">
+        <Search size={16} aria-hidden="true" />
+        <input
+          type="search"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+          placeholder="ابحث عن قارئ…"
+          enterKeyHint="search"
+          autoComplete="off"
+          aria-label="بحث عن قارئ"
+        />
+      </label>
       <ul className="reciter-picker-sheet__list" role="listbox" aria-label="قائمة القرّاء">
-        {list.map((r) => {
+        {filtered.map((r) => {
           const active = r.id === reciterId;
           return (
             <li key={r.id}>
@@ -43,6 +72,7 @@ export function ReciterPickerSheet({
                 onClick={() => {
                   onSelect(r.id);
                   void ensureValidReciterPreference();
+                  setQuery("");
                   onClose();
                 }}
               >
@@ -55,15 +85,17 @@ export function ReciterPickerSheet({
                     {r.riwaya} · {r.qualityLabel}
                   </span>
                 </span>
-                {active ? <Check size={18} aria-hidden="true" className="reciter-picker-sheet__check" /> : null}
+                {active ? (
+                  <Check size={18} aria-hidden="true" className="reciter-picker-sheet__check" />
+                ) : null}
               </button>
             </li>
           );
         })}
       </ul>
-      {list.length === 0 ? (
+      {filtered.length === 0 ? (
         <p className="reciter-picker-sheet__empty" role="status">
-          لا يتوفر قرّاء لهذا الوضع حالياً. قد يكون المصدر معطّلاً مؤقتاً.
+          لا نتائج مطابقة. جرّب اسمًا آخر أو أعد تعيين البحث.
         </p>
       ) : null}
     </AppBottomSheet>
