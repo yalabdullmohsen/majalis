@@ -13,6 +13,7 @@ export const AUDIO_CDN_ORIGINS = [
 
 export const TEXT_API_ORIGINS = [
   "https://api.alquran.cloud",
+  "https://api.quran.com",
   "https://cdn.jsdelivr.net",
 ] as const;
 

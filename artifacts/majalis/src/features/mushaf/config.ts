@@ -20,7 +20,8 @@ export type MushafFeatureFlags = {
 /** أعلام الميزات — عطّل ما لا مصدر موثوق له */
 export const MUSHAF_FEATURES: MushafFeatureFlags = {
   ayahTimingsMs: false,
-  offlineTafsirPacks: false,
+  /** حزمة الميسّر في IndexedDB + جلب مسبق للصفحة ±1 */
+  offlineTafsirPacks: true,
   imlaeiEditionLocal: false,
   ayahHitLayer: true,
   ayahTextLayer: true,

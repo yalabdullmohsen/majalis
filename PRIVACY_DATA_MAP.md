@@ -45,6 +45,7 @@
 | تلاوات دون اتصال | IndexedDB `majalis-quran-audio` (Blob MP3) | استماع دون شبكة | تُمسح عبر `clearAllOfflineAudioDownloads` عند حذف الحساب / مسح البيانات |
 | استئناف التلاوة | `majalis-quran-audio-resume` (+ مفتاح LS) | موضع التشغيل | يُمسح مع الحذف |
 | تفضيل القارئ/السرعة | مفاتيح `majalis-*` / تفضيلات صوت | واجهة تشغيل | تُمسح مع `clearUserLocalData` |
+| تفسير مختصر دون اتصال | IndexedDB `tafseer_cache` + `majalis-offline-tafsir-pack-v1` + `sessionStorage` (`mj-mushaf-tafsir-sess:*`) | نص تفسير منقول حرفياً من Quran.com/QUL لصفحة المصحف الحالية والمجاورتين | يُمسح مع حذف الحساب / `clearUserLocalData` (البادئة `majalis-` / `mj-`) |
 
 ### صوت وتلاوات (بث فقط)
 

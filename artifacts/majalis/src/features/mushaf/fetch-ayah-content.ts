@@ -1,6 +1,6 @@
 /**
  * جلب كسول لتفسير/ترجمة آية واحدة — مرحلة ٢.
- * لا يُحمَّل سور كاملة ولا حزم offlineTafsirPacks.
+ * ترتيب: ذاكرة → جلسة → حزمة offline (IndexedDB) → شبكة → بديل TafseerService.
  */
 
 import {
@@ -11,6 +11,7 @@ import {
   getMushafTranslationEdition,
   type MushafTranslationEdition,
 } from "@/features/mushaf/translation-editions";
+import { MUSHAF_FEATURES } from "@/features/mushaf/config";
 
 const QURAN_COM = "https://api.quran.com/api/v4";
 const ALQURAN = "https://api.alquran.cloud/v1";
@@ -81,6 +82,20 @@ export async function fetchMushafAyahTafsir(
     return { text: sess, editionId: edition.id, fromCache: true };
   }
 
+  if (MUSHAF_FEATURES.offlineTafsirPacks) {
+    try {
+      const { readOfflineTafsirAyah } = await import("@/features/mushaf/offline-tafsir-pack");
+      const offline = await readOfflineTafsirAyah(surah, ayah, edition.id);
+      if (offline) {
+        tafsirMemory.set(key, offline);
+        writeTafsirSession(key, offline);
+        return { text: offline, editionId: edition.id, fromCache: true };
+      }
+    } catch {
+      /* تابع للشبكة */
+    }
+  }
+
   try {
     const url = `${QURAN_COM}/tafsirs/${encodeURIComponent(edition.quranComSlug)}/by_ayah/${surah}:${ayah}`;
     const res = await fetch(url, { signal: signal ?? AbortSignal.timeout(20_000) });
@@ -92,6 +107,11 @@ export async function fetchMushafAyahTafsir(
     if (!text) return null;
     tafsirMemory.set(key, text);
     writeTafsirSession(key, text);
+    if (MUSHAF_FEATURES.offlineTafsirPacks) {
+      void import("@/features/mushaf/offline-tafsir-pack").then(({ writeOfflineTafsirAyah }) =>
+        writeOfflineTafsirAyah(surah, ayah, edition.id, text),
+      );
+    }
     return { text, editionId: edition.id, fromCache: false };
   } catch (err) {
     if (err instanceof DOMException && err.name === "AbortError") throw err;

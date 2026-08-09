@@ -18,10 +18,16 @@ export { MushafTextLayer } from "@/features/mushaf/MushafTextLayer";
 export {
   MUSHAF_TAFSIR_EDITIONS,
   DEFAULT_MUSHAF_TAFSIR_EDITION,
+  DEFAULT_EXTENDED_TAFSIR_EDITION,
   resolveMushafTafsirEditionId,
   getMushafTafsirEdition,
   type MushafTafsirEdition,
 } from "@/features/mushaf/tafsir-editions";
+export {
+  prefetchOfflineTafsirForPage,
+  clearOfflineTafsirPackMeta,
+  isOfflineTafsirPacksEnabled,
+} from "@/features/mushaf/offline-tafsir-pack";
 export {
   MUSHAF_TRANSLATION_EDITIONS,
   DEFAULT_MUSHAF_TRANSLATION_EDITION,
