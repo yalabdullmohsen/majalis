@@ -389,7 +389,19 @@ export default function MushafPageView() {
 
   const activeSurahForPlayer = primarySegment?.segment.surah ?? 1;
   const activeSurahAyahCount = primarySegment ? getSurahMeta(activeSurahForPlayer).ayahs : 0;
-  const { currentAyah, playerState, togglePlayAyah, reciterId, setReciterId, playbackRate, setPlaybackRate, repeatOn, setRepeatOn } = useAyahPlayer(activeSurahForPlayer, activeSurahAyahCount);
+  const {
+    currentAyah,
+    playerState,
+    togglePlayAyah,
+    reciterId,
+    setReciterId,
+    playbackRate,
+    setPlaybackRate,
+    repeatOn,
+    setRepeatOn,
+    sleepTimer,
+    setSleepTimer,
+  } = useAyahPlayer(activeSurahForPlayer, activeSurahAyahCount);
   const playerStateRef = useRef(playerState);
   const currentAyahRef = useRef(currentAyah);
   const reciterIdRef = useRef(reciterId);
@@ -959,6 +971,8 @@ export default function MushafPageView() {
             onSetPlaybackRate={setPlaybackRate}
             repeatOn={repeatOn}
             onToggleRepeat={() => setRepeatOn(!repeatOn)}
+            sleepTimerOption={sleepTimer.option}
+            onSetSleepTimer={setSleepTimer}
           />
         </SectionErrorBoundary>
       )}

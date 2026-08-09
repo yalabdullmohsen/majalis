@@ -36,6 +36,11 @@ async function getPlugin(): Promise<PlaybackAudioPlugin | null> {
   return pluginPromise;
 }
 
+/** للاشتراك في أحداث المقاطعة/تغيير المسار من طبقة التشغيل. */
+export function getNativePlaybackPlugin(): Promise<PlaybackAudioPlugin | null> {
+  return getPlugin();
+}
+
 /** Call immediately before HTMLAudioElement.play() that needs background audio. */
 export async function ensureNativePlaybackAudioSession(): Promise<void> {
   const plugin = await getPlugin();
