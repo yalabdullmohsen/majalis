@@ -147,6 +147,8 @@ export function PageAyahActionSheet({
   const [tafsirEdition, setTafsirEdition] = useState(readStoredTafsirEdition);
   const [fontScale, setFontScale] = useState<TafsirFontScale>(readStoredTafsirFontScale);
   const [tafsirExpanded, setTafsirExpanded] = useState(false);
+  const [tafsirAudioBusy, setTafsirAudioBusy] = useState(false);
+  const [tafsirAudioMsg, setTafsirAudioMsg] = useState<string | null>(null);
   const [showTranslation, setShowTranslation] = useState(readStoredTranslationEnabled);
   const [translationEdition, setTranslationEdition] = useState(readStoredTranslationEdition);
   const [translationText, setTranslationText] = useState<string | null>(null);
@@ -180,9 +182,39 @@ export function PageAyahActionSheet({
     setTafsirText(null);
     setTafsirError(false);
     setTafsirExpanded(false);
+    setTafsirAudioMsg(null);
     setTranslationText(null);
     setTranslationError(false);
   }, [surahNum, ayahNum]);
+
+  const handleListenTafsirAudio = async () => {
+    setTafsirAudioBusy(true);
+    setTafsirAudioMsg(null);
+    try {
+      const {
+        loadTafsirAudioCatalog,
+        findTafsirAudioForAyah,
+        playTafsirAudioClip,
+        displayScholarLabel,
+      } = await import("@/features/mushaf/tafsir-audio");
+      const clips = await loadTafsirAudioCatalog();
+      const clip = findTafsirAudioForAyah(clips, surahNum, ayahNum);
+      if (!clip) {
+        setTafsirAudioMsg("لا يتوفر تفسير صوتي موثّق لهذه الآية حالياً.");
+        return;
+      }
+      const res = await playTafsirAudioClip(clip, { ayah: ayahNum, resume: true });
+      if (!res.ok) {
+        setTafsirAudioMsg(res.reason ?? "تعذّر التشغيل");
+        return;
+      }
+      setTafsirAudioMsg(`جاري الاستماع — ${displayScholarLabel(clip)}`);
+    } catch {
+      setTafsirAudioMsg("تعذّر تشغيل التفسير الصوتي.");
+    } finally {
+      setTafsirAudioBusy(false);
+    }
+  };
 
   useEffect(() => {
     if (!showTafsirPanel) return;
@@ -733,7 +765,23 @@ export function PageAyahActionSheet({
                   <Languages size={15} aria-hidden="true" />
                   ترجمة
                 </button>
+
+                <button
+                  type="button"
+                  className={`aas-v3__chip${tafsirAudioBusy ? " is-on" : ""}`}
+                  onClick={() => void handleListenTafsirAudio()}
+                  disabled={tafsirAudioBusy}
+                  aria-label="استماع للتفسير"
+                >
+                  <Mic2 size={15} aria-hidden="true" />
+                  استماع للتفسير
+                </button>
               </div>
+              {tafsirAudioMsg ? (
+                <p className="aas-reader__status" role="status">
+                  {tafsirAudioMsg}
+                </p>
+              ) : null}
 
               {currentEditionMeta?.caution ? (
                 <p className="aas-reader__caution" role="note">

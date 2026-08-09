@@ -301,6 +301,15 @@ export class AudioEngine {
    * On media failure sets `playerState` to `"error"` and resolves (does not throw).
    */
   async playAyah(surah: number, ayah: number, reciterId?: string): Promise<void> {
+    try {
+      const { claimAudio, registerAudioStopper } = await import("@/lib/exclusive-audio-bus");
+      registerAudioStopper("tilawa", () => {
+        this.stop();
+      });
+      await claimAudio("tilawa");
+    } catch {
+      /* ignore bus */
+    }
     if (reciterId) this.reciterId = reciterId;
     this.surah = surah;
     this.ayah = ayah;

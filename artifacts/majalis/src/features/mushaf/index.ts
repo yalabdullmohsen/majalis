@@ -53,3 +53,10 @@ export {
   persistTranslationEdition,
   type TafsirFontScale,
 } from "@/features/mushaf/reader-prefs";
+export {
+  loadTafsirAudioCatalog,
+  findTafsirAudioForAyah,
+  playTafsirAudioClip,
+  stopTafsirAudio,
+  displayScholarLabel,
+} from "@/features/mushaf/tafsir-audio";
