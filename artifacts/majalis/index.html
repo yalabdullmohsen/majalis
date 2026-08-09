@@ -14,8 +14,9 @@
     <meta name="theme-color" content="#F2F4F3" />
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F2F4F3" />
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#101614" />
+    <!-- لون WebView فقط لمنع الوميض الأبيض — شاشة الإطلاق الأصلية فقط، بلا طبقة ويب تكرر الشعار -->
     <link rel="stylesheet" href="/brand/splash-boot.css" />
-    <!-- apple-touch-startup-image: تُحقَن عبر assets:splash → brand/apple-splash/links.html -->
+    <!-- apple-touch-startup-image: PWA فقط — تُحقَن عبر assets:splash -->
     <link rel="apple-touch-startup-image" media="(device-width: 430px) and (device-height: 932px) and (-webkit-device-pixel-ratio: 3)" href="/brand/apple-splash/iPhone_15_Pro_Max__iPhone_15_Plus__iPhone_14_Pro_Max.png" />
     <link rel="apple-touch-startup-image" media="(device-width: 393px) and (device-height: 852px) and (-webkit-device-pixel-ratio: 3)" href="/brand/apple-splash/iPhone_15_Pro__iPhone_15__iPhone_14_Pro.png" />
     <link rel="apple-touch-startup-image" media="(device-width: 390px) and (device-height: 844px) and (-webkit-device-pixel-ratio: 3)" href="/brand/apple-splash/iPhone_14__iPhone_13_Pro__iPhone_13__iPhone_12_Pro__iPhone_12.png" />
@@ -28,36 +29,10 @@
     <link rel="apple-touch-startup-image" media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2)" href="/brand/apple-splash/iPad_Pro_11.png" />
     <link rel="apple-touch-startup-image" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)" href="/brand/apple-splash/iPad_Pro_12.9.png" />
     <style id="mj-splash-critical">
-      /* هوية واحدة: خلفية خضراء داكنة + شعار المجلس العلمي — بلا تأخير مصطنع */
-      html:not([data-splash-done]),
-      html:not([data-splash-done]) body {
-        background-color: #000300 !important;
+      /* خلفية WebView = لون الإطلاق — بلا شاشة ويب وسيطة */
+      html, body {
+        background-color: #000300;
         margin: 0;
-      }
-      #mj-boot-splash {
-        position: fixed;
-        inset: 0;
-        z-index: 2147483000;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: var(--inset-top, 0px) var(--inset-inline-end, 0px) var(--inset-bottom, 0px) var(--inset-inline-start, 0px);
-        background: #000300 url("/brand/splash-source.png") center / cover no-repeat;
-        pointer-events: none;
-      }
-      #mj-boot-splash__logo {
-        width: min(58vw, 42vh);
-        height: auto;
-        max-width: 72%;
-        max-height: 48%;
-        object-fit: contain;
-      }
-      #mj-boot-splash.is-hiding {
-        opacity: 0;
-        transition: opacity 160ms ease;
-      }
-      @media (prefers-reduced-motion: reduce) {
-        #mj-boot-splash.is-hiding { transition: none; }
       }
     </style>
     <meta name="author" content="المجلس العلمي" />
@@ -183,9 +158,6 @@
     </script>
   </head>
   <body>
-    <div id="mj-boot-splash" role="presentation" aria-hidden="true">
-      <img id="mj-boot-splash__logo" src="/brand/splash-logo.png" alt="" width="512" height="512" decoding="async" />
-    </div>
     <script>
       try {
         /* مِشكاة: تطبيق الوضع (ليل/نهار) فوراً لمنع الوميض */

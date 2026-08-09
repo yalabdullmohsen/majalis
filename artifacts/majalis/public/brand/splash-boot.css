@@ -1,7 +1,6 @@
 /* مولَّد بواسطة scripts/generate-splash.mjs — لا تعدّل يدوياً */
-html:not([data-splash-done]),
-html:not([data-splash-done]) body {
-  background-color: #000300 !important;
+html, body {
+  background-color: #000300;
 }
 :root {
   --mj-splash-bg: #000300;
