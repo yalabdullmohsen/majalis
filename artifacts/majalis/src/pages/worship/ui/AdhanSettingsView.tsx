@@ -1,5 +1,7 @@
-import { useCallback, useEffect, useRef, useState } from "react";
-import { CloudMoon, CloudSun, MapPin, Moon, Music, Bell, Sunrise, Sun, Sunset, Star } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import {
+  ChevronLeft, CloudMoon, CloudSun, MapPin, Moon, Music, Bell, Sunrise, Sun, Sunset, Star,
+} from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 import {
   loadAdhanPrefs,
@@ -47,16 +49,19 @@ const PRAYER_ICON_MAP: Record<string, LucideIcon> = {
   Moon, Sun, CloudSun, Sunset, CloudMoon,
 };
 
+/** مفتاح قياسي — class rounded-full icon-only لاستثناء قواعد 44px العامة */
 function Toggle({
   checked,
   onChange,
   id,
   label,
+  disabled,
 }: {
   checked: boolean;
   onChange: (v: boolean) => void;
   id?: string;
   label: string;
+  disabled?: boolean;
 }) {
   return (
     <button
@@ -65,11 +70,40 @@ function Toggle({
       aria-checked={checked}
       aria-label={label}
       id={id}
-      onClick={() => onChange(!checked)}
-      className={`ads-toggle${checked ? " is-on" : ""}`}
+      disabled={disabled}
+      onClick={(e) => {
+        e.stopPropagation();
+        if (!disabled) onChange(!checked);
+      }}
+      className={`ads-toggle rounded-full icon-only${checked ? " is-on" : ""}${disabled ? " is-disabled" : ""}`}
     >
       <span className="ads-toggle__thumb" />
     </button>
+  );
+}
+
+function AdvanceChips({
+  value,
+  onChange,
+  ariaLabel,
+}: {
+  value: AdvanceMinutes | null;
+  onChange: (m: AdvanceMinutes) => void;
+  ariaLabel: string;
+}) {
+  return (
+    <div className="ads-chip-scroll" role="group" aria-label={ariaLabel}>
+      {ADVANCE_OPTIONS.map((min) => (
+        <button
+          key={min}
+          type="button"
+          onClick={() => onChange(min)}
+          className={`ads-chip${value === min ? " is-active" : ""}`}
+        >
+          {min === 0 ? "بدون" : `${min} د`}
+        </button>
+      ))}
+    </div>
   );
 }
 
@@ -124,22 +158,20 @@ function AdhanDownloadRow({ onFlash }: { onFlash: () => void }) {
           حذف التخزين
         </button>
       </div>
-      {msg && <p className="ads-adhan-desc">{msg}</p>}
+      {msg ? <p className="ads-adhan-desc">{msg}</p> : null}
     </div>
   );
 }
 
-// "default" من Notification.permission و"prompt" من navigator.permissions.query()
-// يمثّلان نفس الحالة (لم يُطلب الإذن بعد) لكن باسمين مختلفين حسب الـ API.
 type PermissionState = "granted" | "denied" | "default" | "prompt" | "unsupported";
 
 function PermissionBadge({ value }: { value: PermissionState }) {
   const MAP: Record<PermissionState, { label: string; cls: string }> = {
-    granted:     { label: "مفعّل ✓",        cls: "ads-perm--ok" },
-    denied:      { label: "محجوب ✕",         cls: "ads-perm--err" },
-    default:     { label: "لم يُطلب بعد",    cls: "ads-perm--warn" },
-    prompt:      { label: "لم يُطلب بعد",    cls: "ads-perm--warn" },
-    unsupported: { label: "غير مدعوم",       cls: "ads-perm--muted" },
+    granted: { label: "مفعّل ✓", cls: "ads-perm--ok" },
+    denied: { label: "محجوب ✕", cls: "ads-perm--err" },
+    default: { label: "لم يُطلب بعد", cls: "ads-perm--warn" },
+    prompt: { label: "لم يُطلب بعد", cls: "ads-perm--warn" },
+    unsupported: { label: "غير مدعوم", cls: "ads-perm--muted" },
   };
   const { label, cls } = MAP[value];
   return <span className={`ads-perm-badge ${cls}`}>{label}</span>;
@@ -157,7 +189,6 @@ function LocationPermBadge() {
   return <PermissionBadge value={state} />;
 }
 
-/** على Capacitor: إذن Local Notifications لا يطابق window.Notification.permission. */
 function NotificationPermBadge() {
   const [state, setState] = useState<PermissionState>("default");
   useEffect(() => {
@@ -174,9 +205,128 @@ function NotificationPermBadge() {
   return <PermissionBadge value={state} />;
 }
 
+function commonAdvance(prefs: AdhanPreferences): AdvanceMinutes | null {
+  const vals = PRAYER_KEYS.map((k) => prefs.prayers[k].advanceMinutes);
+  const first = vals[0] ?? 0;
+  return vals.every((v) => v === first) ? first : null;
+}
+
+function PrayerCustomizeSheet({
+  prayerKey,
+  prefs,
+  onClose,
+  onFlash,
+  onOpenMuezzin,
+  onPrefs,
+}: {
+  prayerKey: PrayerKey;
+  prefs: AdhanPreferences;
+  onClose: () => void;
+  onFlash: () => void;
+  onOpenMuezzin: () => void;
+  onPrefs: (p: AdhanPreferences) => void;
+}) {
+  const p = prefs.prayers[prayerKey];
+  const muezzin = getMuezzin(getEffectiveMuezzinId(prefs, prayerKey));
+  const hasOverride = !!p.muezzinId;
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [onClose]);
+
+  return (
+    <div
+      className="ads-sheet-overlay"
+      role="presentation"
+      onClick={(e) => {
+        if (e.target === e.currentTarget) onClose();
+      }}
+    >
+      <div className="ads-sheet" role="dialog" aria-modal="true" aria-label={`تخصيص ${PRAYER_ARABIC[prayerKey]}`}>
+        <div className="ads-sheet__handle-row"><div className="ads-sheet__handle" /></div>
+        <div className="ads-sheet__head">
+          <h3 className="ads-sheet__title">تخصيص أذان {PRAYER_ARABIC[prayerKey]}</h3>
+        </div>
+        <div className="ads-sheet__body">
+          <div className="ads-row">
+            <div>
+              <div className="ads-global-label">المؤذن</div>
+              <div className="ads-global-desc">
+                {muezzin.name}
+                {hasOverride ? " · مخصّص" : " · من الإعداد العام"}
+              </div>
+            </div>
+            <div className="ads-prayer-muezzin-btns">
+              <button type="button" className="ads-pill-btn" onClick={onOpenMuezzin}>تغيير</button>
+              {hasOverride ? (
+                <button
+                  type="button"
+                  className="ads-pill-btn-ghost"
+                  onClick={() => {
+                    onPrefs(patchPrayerPrefs(prayerKey, { muezzinId: "" }));
+                    onFlash();
+                  }}
+                >
+                  إعادة للعام
+                </button>
+              ) : null}
+            </div>
+          </div>
+
+          <div className="ads-field-gap">
+            <div className="ads-global-label">تنبيه مسبق</div>
+            <AdvanceChips
+              value={p.advanceMinutes}
+              ariaLabel={`تنبيه مسبق لـ ${PRAYER_ARABIC[prayerKey]}`}
+              onChange={(minutes) => {
+                onPrefs(patchPrayerPrefs(prayerKey, { advanceMinutes: minutes }));
+                onFlash();
+              }}
+            />
+          </div>
+
+          {(prefs.playbackMode === "short" || prefs.playbackMode === "full") ? (
+            <div className="ads-field-gap">
+              <div className="ads-global-label">صيغة هذه الصلاة</div>
+              <div className="ads-chip-scroll" role="group" aria-label="صيغة التشغيل لهذه الصلاة">
+                {(["", "short", "full"] as const).map((mode) => (
+                  <button
+                    key={mode || "default"}
+                    type="button"
+                    className={`ads-chip${(p.deliveryMode || "") === mode ? " is-active" : ""}`}
+                    onClick={() => {
+                      onPrefs(patchPrayerPrefs(prayerKey, {
+                        deliveryMode: mode as AdhanDeliveryMode | "",
+                      }));
+                      onFlash();
+                    }}
+                  >
+                    {mode === "" ? "عام" : mode === "short" ? "قصير" : "كامل"}
+                  </button>
+                ))}
+              </div>
+              {isNative && isIOS && (p.deliveryMode === "full" || (!p.deliveryMode && prefs.playbackMode === "full")) ? (
+                <p className="ads-adhan-desc" style={{ marginTop: "0.5rem" }}>
+                  الكامل على iOS = عدة إشعارات متتابعة.
+                </p>
+              ) : null}
+            </div>
+          ) : null}
+        </div>
+        <div className="ads-sheet__foot">
+          <button type="button" className="ads-sheet__close" onClick={onClose}>إغلاق</button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 export default function AdhanSettingsPage() {
   const [prefs, setPrefs] = useState<AdhanPreferences>(() => loadAdhanPrefs());
   const [pickerFor, setPickerFor] = useState<PrayerKey | "default" | null>(null);
+  const [customizeFor, setCustomizeFor] = useState<PrayerKey | null>(null);
   const [saved, setSaved] = useState(false);
   const savedTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -216,8 +366,6 @@ export default function AdhanSettingsPage() {
     [],
   );
 
-  const refresh = useCallback(() => setPrefs(loadAdhanPrefs()), []);
-
   function flashSaved() {
     if (savedTimerRef.current) clearTimeout(savedTimerRef.current);
     setSaved(true);
@@ -225,34 +373,33 @@ export default function AdhanSettingsPage() {
   }
 
   function toggleGlobal(enabled: boolean) {
-    const next = patchAdhanPrefs({ ...prefs, globalEnabled: enabled });
-    setPrefs(next);
+    setPrefs(patchAdhanPrefs({ ...prefs, globalEnabled: enabled }));
+    flashSaved();
   }
 
   function setDefaultMuezzin(id: string) {
-    const next = patchAdhanPrefs({ ...prefs, defaultMuezzinId: id });
-    setPrefs(next);
+    setPrefs(patchAdhanPrefs({ ...prefs, defaultMuezzinId: id }));
     flashSaved();
   }
 
   function setPrayerMuezzin(key: PrayerKey, id: string) {
-    if (key === "fajr" && !hasFajrAdhan(getMuezzin(id))) {
-      // شرط شرعي: لا اختيار بلا تثويب للفجر
-      return;
-    }
-    const next = patchPrayerPrefs(key, { muezzinId: id });
-    setPrefs(next);
+    if (key === "fajr" && !hasFajrAdhan(getMuezzin(id))) return;
+    setPrefs(patchPrayerPrefs(key, { muezzinId: id }));
     flashSaved();
   }
 
   function togglePrayer(key: PrayerKey, enabled: boolean) {
-    const next = patchPrayerPrefs(key, { enabled });
-    setPrefs(next);
+    setPrefs(patchPrayerPrefs(key, { enabled }));
+    flashSaved();
   }
 
-  function setAdvance(key: PrayerKey, minutes: AdvanceMinutes) {
-    const next = patchPrayerPrefs(key, { advanceMinutes: minutes });
+  function setGlobalAdvance(minutes: AdvanceMinutes) {
+    let next = loadAdhanPrefs();
+    for (const key of PRAYER_KEYS) {
+      next = patchPrayerPrefs(key, { advanceMinutes: minutes });
+    }
     setPrefs(next);
+    flashSaved();
   }
 
   function handleGovChange(id: string) {
@@ -261,22 +408,23 @@ export default function AdhanSettingsPage() {
   }
 
   const defaultMuezzin = getMuezzin(prefs.defaultMuezzinId);
+  const sharedAdvance = useMemo(() => commonAdvance(prefs), [prefs]);
 
   return (
     <div className="ads-page">
       <h1 className="ads-title">إعدادات الأذان</h1>
-      <p className="ads-subtitle">خصّص المؤذن والتنبيهات لكل صلاة بشكل مستقل.</p>
+      <p className="ads-subtitle">إعداد عام سريع، وتخصيص دقيق لكل صلاة عند الحاجة.</p>
 
-      {saved && (
-        <div className="ads-saved">
-          <span>✓</span> تم الحفظ
+      {saved ? (
+        <div className="ads-toast" role="status" aria-live="polite">
+          <span aria-hidden="true">✓</span> تم الحفظ
         </div>
-      )}
+      ) : null}
 
-      {/* ══ الموقع ══ */}
-      <div className="ads-card">
-        <div className="ads-card__head">
-          <MapPin size={15} strokeWidth={2} />
+      {/* الموقع */}
+      <section className="ads-card" aria-labelledby="ads-loc-head">
+        <div className="ads-card__head" id="ads-loc-head">
+          <MapPin size={15} strokeWidth={2} aria-hidden="true" />
           <span>الموقع</span>
         </div>
         <div className="ads-card__body">
@@ -293,34 +441,38 @@ export default function AdhanSettingsPage() {
               ))}
             </select>
           </div>
-
           <div className="ads-row">
             <div className="ads-sunrise-inner">
-              <Sunrise size={16} strokeWidth={2} color="var(--mj-brand-deep)" />
+              <Sunrise size={16} strokeWidth={2} color="var(--mj-brand-deep)" aria-hidden="true" />
               الشروق
               <span className="ads-sunrise-tag">وقت الكراهة</span>
             </div>
             <span className="ads-sunrise-time">{sunriseTime ?? "—"}</span>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* ══ الأذان ══ */}
-      <div className="ads-card">
-        <div className="ads-card__head">
-          <Music size={15} strokeWidth={2} />
-          <span>الأذان</span>
+      {/* الإعداد العام */}
+      <section className="ads-card" aria-labelledby="ads-general-head">
+        <div className="ads-card__head" id="ads-general-head">
+          <Music size={15} strokeWidth={2} aria-hidden="true" />
+          <span>الإعداد العام</span>
         </div>
         <div className="ads-card__body">
           <p className="ads-adhan-desc">
-            المؤذن الافتراضي، يُستخدم لجميع الصلوات ما لم تخصّص مؤذناً لكل صلاة.
+            يُطبَّق على كل الصلوات ما لم تخصّص صلاةً من القائمة أدناه.
           </p>
 
           <div className="ads-row">
             <div>
-              <div className="ads-muezzin-name">{defaultMuezzin.name}</div>
+              <div className="ads-muezzin-name">
+                {defaultMuezzin.name}
+                <span className="ads-prayer-muezzin-override"> (افتراضي)</span>
+              </div>
               <div className="ads-muezzin-origin">
-                {defaultMuezzin.origin} · {defaultMuezzin.style}
+                {[defaultMuezzin.origin, defaultMuezzin.style].filter(Boolean).join(" · ")}
+                {" · "}
+                صيغة التشغيل: {ADHAN_PLAYBACK_MODE_LABELS[prefs.playbackMode]}
               </div>
             </div>
             <button type="button" onClick={() => setPickerFor("default")} className="ads-pill-btn">
@@ -328,7 +480,7 @@ export default function AdhanSettingsPage() {
             </button>
           </div>
 
-          <div className="ads-row-sep" style={{ flexDirection: "column", alignItems: "stretch", gap: "0.55rem" }}>
+          <div className="ads-field-gap">
             <div className="ads-global-label">صيغة التشغيل</div>
             <div className="ads-playback-modes" role="radiogroup" aria-label="صيغة تشغيل الأذان">
               {ADHAN_PLAYBACK_MODES.map((mode) => (
@@ -339,8 +491,7 @@ export default function AdhanSettingsPage() {
                     value={mode}
                     checked={prefs.playbackMode === mode}
                     onChange={() => {
-                      const next = patchAdhanPrefs({ playbackMode: mode as AdhanPlaybackMode });
-                      setPrefs(next);
+                      setPrefs(patchAdhanPrefs({ playbackMode: mode as AdhanPlaybackMode }));
                       flashSaved();
                     }}
                   />
@@ -348,34 +499,65 @@ export default function AdhanSettingsPage() {
                 </label>
               ))}
             </div>
-            <p className="ads-global-desc">
+            <p className="ads-global-desc" style={{ marginTop: "0.45rem" }}>
               الافتراضي «قصير» (تنبيه واحد). لا يُفعَّل الوضع الكامل تلقائيًا.
-              {isNative && isIOS && prefs.playbackMode === "full" && (
+              {isNative && isIOS && prefs.playbackMode === "full" ? (
                 <> على iOS يعني الوضع الكامل عدة إشعارات متتابعة (حتى ٤ مقاطع).</>
-              )}
+              ) : null}
               {" "}«صامت مع إشعار» يُبقي التنبيه بلا صوت.
             </p>
           </div>
 
-          <div className="ads-row">
-            <div>
-              <div className="ads-global-label">الإقامة (اختياري)</div>
-              <div className="ads-global-desc">مقطع ثالث إن توفّر للتسجيل المختار</div>
-            </div>
-            <Toggle
-              checked={prefs.iqamahEnabled}
-              onChange={(v) => {
-                const next = patchAdhanPrefs({ iqamahEnabled: v });
-                setPrefs(next);
-                flashSaved();
-              }}
-              id="iqamah-toggle"
-              label="تفعيل الإقامة"
+          <div className="ads-field-gap">
+            <div className="ads-global-label">تنبيه مسبق</div>
+            <div className="ads-global-desc">يُطبَّق على الصلوات الخمس — يمكن تخصيصه لكل صلاة من الشيت.</div>
+            <AdvanceChips
+              value={sharedAdvance}
+              ariaLabel="تنبيه مسبق عام"
+              onChange={setGlobalAdvance}
             />
           </div>
 
-          {prefs.iqamahEnabled && (
+          <div className="ads-field-gap">
             <div className="ads-row">
+              <div>
+                <div className="ads-global-label">تفعيل إشعارات الأذان</div>
+                <div className="ads-global-desc">تشغيل الأذان والتنبيه عند دخول الوقت</div>
+              </div>
+              <Toggle
+                checked={prefs.globalEnabled}
+                onChange={toggleGlobal}
+                id="global-toggle"
+                label="تفعيل إشعارات الأذان"
+              />
+            </div>
+            {!prefs.globalEnabled ? (
+              <div className="ads-global-disabled" style={{ marginTop: "0.65rem", marginBottom: 0 }}>
+                الإشعارات معطلة، لن يُشغَّل أذان ولن تصل تنبيهات.
+              </div>
+            ) : null}
+          </div>
+
+          <div className="ads-field-gap">
+            <div className="ads-row">
+              <div>
+                <div className="ads-global-label">الإقامة (اختياري)</div>
+                <div className="ads-global-desc">مقطع ثالث إن توفّر للتسجيل المختار</div>
+              </div>
+              <Toggle
+                checked={prefs.iqamahEnabled}
+                onChange={(v) => {
+                  setPrefs(patchAdhanPrefs({ iqamahEnabled: v }));
+                  flashSaved();
+                }}
+                id="iqamah-toggle"
+                label="تفعيل الإقامة"
+              />
+            </div>
+          </div>
+
+          {prefs.iqamahEnabled ? (
+            <div className="ads-row" style={{ marginTop: "0.55rem" }}>
               <div>
                 <div className="ads-global-label">تأخير تنبيه الإقامة</div>
                 <div className="ads-global-desc">بالدقائق بعد الأذان (٠ = مع الأذان)</div>
@@ -386,8 +568,7 @@ export default function AdhanSettingsPage() {
                 aria-label="تأخير تنبيه الإقامة"
                 onChange={(e) => {
                   const v = Number(e.target.value) as 0 | 5 | 10 | 15;
-                  const next = patchAdhanPrefs({ iqamahDelayMinutes: v });
-                  setPrefs(next);
+                  setPrefs(patchAdhanPrefs({ iqamahDelayMinutes: v }));
                   flashSaved();
                 }}
               >
@@ -396,28 +577,29 @@ export default function AdhanSettingsPage() {
                 ))}
               </select>
             </div>
-          )}
+          ) : null}
 
-          <div className="ads-row">
-            <div>
-              <div className="ads-global-label">مستوى الصوت</div>
-              <div className="ads-global-desc">مستقل عن صوت النظام قدر الإمكان</div>
+          <div className="ads-field-gap">
+            <div className="ads-row">
+              <div>
+                <div className="ads-global-label">مستوى الصوت</div>
+                <div className="ads-global-desc">مستقل عن صوت النظام قدر الإمكان</div>
+              </div>
+              <input
+                type="range"
+                min={0}
+                max={100}
+                value={Math.round((prefs.volume ?? 1) * 100)}
+                aria-label="مستوى صوت الأذان"
+                onChange={(e) => {
+                  setPrefs(patchAdhanPrefs({ volume: Number(e.target.value) / 100 }));
+                  flashSaved();
+                }}
+              />
             </div>
-            <input
-              type="range"
-              min={0}
-              max={100}
-              value={Math.round((prefs.volume ?? 1) * 100)}
-              aria-label="مستوى صوت الأذان"
-              onChange={(e) => {
-                const next = patchAdhanPrefs({ volume: Number(e.target.value) / 100 });
-                setPrefs(next);
-                flashSaved();
-              }}
-            />
           </div>
 
-          <div className="ads-row">
+          <div className="ads-row" style={{ marginTop: "0.55rem" }}>
             <div>
               <div className="ads-global-label">اهتزاز مع الأذان</div>
               <div className="ads-global-desc">نبضة قصيرة عند دخول الوقت</div>
@@ -425,8 +607,7 @@ export default function AdhanSettingsPage() {
             <Toggle
               checked={prefs.vibrateEnabled}
               onChange={(v) => {
-                const next = patchAdhanPrefs({ vibrateEnabled: v });
-                setPrefs(next);
+                setPrefs(patchAdhanPrefs({ vibrateEnabled: v }));
                 flashSaved();
               }}
               id="vibrate-toggle"
@@ -434,7 +615,7 @@ export default function AdhanSettingsPage() {
             />
           </div>
 
-          <div className="ads-row">
+          <div className="ads-row" style={{ marginTop: "0.55rem" }}>
             <div>
               <div className="ads-global-label">تجاوز الوضع الصامت</div>
               <div className="ads-global-desc">خيار صريح — قد لا يعمل على كل الأجهزة</div>
@@ -442,8 +623,7 @@ export default function AdhanSettingsPage() {
             <Toggle
               checked={prefs.bypassSilentMode}
               onChange={(v) => {
-                const next = patchAdhanPrefs({ bypassSilentMode: v });
-                setPrefs(next);
+                setPrefs(patchAdhanPrefs({ bypassSilentMode: v }));
                 flashSaved();
               }}
               id="bypass-silent-toggle"
@@ -451,223 +631,151 @@ export default function AdhanSettingsPage() {
             />
           </div>
 
-          <div className="ads-row">
-            <div>
-              <div className="ads-global-label">تطبيق المؤذن على كل الصلوات</div>
-              <div className="ads-global-desc">يمسح التخصيص لكل صلاة ويعتمد الافتراضي</div>
+          <div className="ads-field-gap">
+            <div className="ads-row">
+              <div>
+                <div className="ads-global-label">تطبيق المؤذن على كل الصلوات</div>
+                <div className="ads-global-desc">يمسح التخصيص لكل صلاة ويعتمد الافتراضي</div>
+              </div>
+              <button
+                type="button"
+                className="ads-pill-btn"
+                onClick={() => {
+                  setPrefs(applyDefaultMuezzinToAllPrayers(prefs.defaultMuezzinId));
+                  flashSaved();
+                }}
+              >
+                تطبيق
+              </button>
             </div>
-            <button
-              type="button"
-              className="ads-pill-btn"
-              onClick={() => {
-                const next = applyDefaultMuezzinToAllPrayers(prefs.defaultMuezzinId);
-                setPrefs(next);
-                flashSaved();
-              }}
-            >
-              تطبيق
-            </button>
           </div>
 
-          <AdhanDownloadRow onFlash={flashSaved} />
+          <div className="ads-field-gap">
+            <AdhanDownloadRow onFlash={flashSaved} />
+          </div>
         </div>
-      </div>
+      </section>
 
-      {/* ══ الإشعارات ══ */}
-      <div className="ads-card">
-        <div className="ads-card__head">
-          <Bell size={15} strokeWidth={2} />
-          <span>الإشعارات</span>
+      {/* الصلوات الخمس — مضغوطة */}
+      <section className="ads-card" aria-labelledby="ads-prayers-head">
+        <div className="ads-card__head" id="ads-prayers-head">
+          <Bell size={15} strokeWidth={2} aria-hidden="true" />
+          <span>الصلوات</span>
         </div>
         <div className="ads-card__body">
-          <div className="ads-row-sep">
-            <div>
-              <div className="ads-global-label">تفعيل إشعارات الأذان</div>
-              <div className="ads-global-desc">تشغيل الأذان وإرسال تنبيه عند كل وقت صلاة</div>
-            </div>
-            <Toggle checked={prefs.globalEnabled} onChange={toggleGlobal} id="global-toggle" label="تفعيل إشعارات الأذان" />
-          </div>
-
-          {!prefs.globalEnabled && (
-            <div className="ads-global-disabled">
-              الإشعارات معطلة، لن يُشغَّل أذان ولن تصل تنبيهات.
-            </div>
-          )}
-
-          {PRAYER_KEYS.map((key, idx) => {
-            const p = prefs.prayers[key];
-            const effectiveMuezzinId = getEffectiveMuezzinId(prefs, key);
-            const muezzin = getMuezzin(effectiveMuezzinId);
-            const hasOverride = !!p.muezzinId;
-            const isLast = idx === PRAYER_KEYS.length - 1;
-
-            return (
-              <div
-                key={key}
-                className={`ads-prayer-item${isLast ? " is-last" : ""}${!p.enabled ? " is-disabled" : ""}`}
-              >
-                <div className="ads-row">
-                  <div className="ads-prayer-icon-row">
-                    {(() => { const I = PRAYER_ICON_MAP[PRAYER_ICON[key]] ?? Moon; return <I size={16} className="ads-prayer-icon" />; })()}
-                    <span className="ads-prayer-name">{PRAYER_ARABIC[key]}</span>
-                  </div>
-                  <Toggle checked={p.enabled} onChange={(v) => togglePrayer(key, v)} label={`تفعيل أذان ${PRAYER_ARABIC[key]}`} />
-                </div>
-
-                {p.enabled && (
-                  <div className="ads-prayer-details">
-                    <div className="ads-prayer-muezzin-row">
-                      <span className="ads-prayer-muezzin-name">
+          <p className="ads-adhan-desc">اضغط الصف لتخصيص المؤذن أو التنبيه. المفتاح يفعّل/يعطّل الأذان.</p>
+          <div className="ads-prayer-list">
+            {PRAYER_KEYS.map((key) => {
+              const p = prefs.prayers[key];
+              const muezzin = getMuezzin(getEffectiveMuezzinId(prefs, key));
+              const Icon = PRAYER_ICON_MAP[PRAYER_ICON[key]] ?? Moon;
+              return (
+                <div
+                  key={key}
+                  className={`ads-prayer-row${p.enabled ? "" : " is-disabled"}`}
+                >
+                  <button
+                    type="button"
+                    className="ads-prayer-row__main"
+                    style={{ background: "none", border: "none", padding: 0, cursor: "pointer", font: "inherit", color: "inherit", textAlign: "start", flex: 1, minWidth: 0 }}
+                    onClick={() => setCustomizeFor(key)}
+                    aria-label={`تخصيص أذان ${PRAYER_ARABIC[key]}`}
+                  >
+                    <Icon size={16} className="ads-prayer-icon" aria-hidden="true" />
+                    <span className="ads-prayer-row__text">
+                      <span className="ads-prayer-row__name">{PRAYER_ARABIC[key]}</span>
+                      <span className="ads-prayer-row__meta">
                         {muezzin.name}
-                        {!hasOverride && (
-                          <span className="ads-prayer-muezzin-override">(افتراضي)</span>
-                        )}
+                        {p.advanceMinutes > 0 ? ` · قبل ${p.advanceMinutes} د` : ""}
                       </span>
-                      <div className="ads-prayer-muezzin-btns">
-                        <button type="button" onClick={() => setPickerFor(key)} className="ads-pill-btn">
-                          تغيير
-                        </button>
-                        {hasOverride && (
-                          <button
-                            type="button"
-                            onClick={() => { patchPrayerPrefs(key, { muezzinId: "" }); refresh(); }}
-                            className="ads-pill-btn-ghost"
-                          >
-                            إلغاء
-                          </button>
-                        )}
-                      </div>
-                    </div>
-
-                    <div>
-                      <div className="ads-advance-label">تنبيه مسبق</div>
-                      <div className="ads-advance-row">
-                        {ADVANCE_OPTIONS.map((min) => (
-                          <button
-                            key={min}
-                            type="button"
-                            onClick={() => setAdvance(key, min)}
-                            className={`ads-advance-btn${p.advanceMinutes === min ? " is-active" : ""}`}
-                          >
-                            {min === 0 ? "بدون" : `${min} د`}
-                          </button>
-                        ))}
-                      </div>
-                    </div>
-
-                    {(prefs.playbackMode === "short" || prefs.playbackMode === "full") && (
-                      <div>
-                        <div className="ads-advance-label">صيغة هذه الصلاة</div>
-                        <div className="ads-advance-row">
-                          {(["", "short", "full"] as const).map((mode) => (
-                            <button
-                              key={mode || "default"}
-                              type="button"
-                              onClick={() => {
-                                patchPrayerPrefs(key, {
-                                  deliveryMode: mode as AdhanDeliveryMode | "",
-                                });
-                                refresh();
-                              }}
-                              className={`ads-advance-btn${(p.deliveryMode || "") === mode ? " is-active" : ""}`}
-                            >
-                              {mode === "" ? "عام" : mode === "short" ? "قصير" : "كامل"}
-                            </button>
-                          ))}
-                        </div>
-                        {isNative && isIOS && (p.deliveryMode === "full" || (!p.deliveryMode && prefs.playbackMode === "full")) && (
-                          <p className="ads-adhan-desc">
-                            الكامل على iOS = عدة إشعارات متتابعة.
-                          </p>
-                        )}
-                      </div>
-                    )}
+                    </span>
+                    <ChevronLeft size={16} className="ads-prayer-row__chev" aria-hidden="true" />
+                  </button>
+                  <div className="ads-prayer-row__actions">
+                    <Toggle
+                      checked={p.enabled}
+                      onChange={(v) => togglePrayer(key, v)}
+                      label={`تفعيل أذان ${PRAYER_ARABIC[key]}`}
+                    />
                   </div>
-                )}
-              </div>
-            );
-          })}
+                </div>
+              );
+            })}
+          </div>
         </div>
-      </div>
+      </section>
 
       <PrayerAlertSettingsCard />
 
-      {/* ══ تذكير يوم الجمعة ══ */}
-      <div className="ads-card">
-        <div className="ads-card__head">
-          <Star size={15} strokeWidth={2} />
+      <section className="ads-card" aria-labelledby="ads-friday-head">
+        <div className="ads-card__head" id="ads-friday-head">
+          <Star size={15} strokeWidth={2} aria-hidden="true" />
           <span>تذكير يوم الجمعة</span>
         </div>
         <div className="ads-card__body">
-          <div className="ads-row-sep">
+          <div className="ads-row">
             <div>
               <div className="ads-global-label">عرض إعلان ليلة الجمعة ويومها</div>
               <div className="ads-global-desc">
-                يظهر شعار الآية الكريمة من مغرب الخميس حتى مغرب الجمعة
+                يظهر شعار الآية من مغرب الخميس حتى مغرب الجمعة
               </div>
             </div>
             <Toggle
               checked={prefs.fridayBannerEnabled}
               onChange={(v) => {
-                const next = patchAdhanPrefs({ ...prefs, fridayBannerEnabled: v });
-                setPrefs(next);
-                // إذا أُعيد التفعيل نمسح الإغلاق السابق للجلسة
+                setPrefs(patchAdhanPrefs({ ...prefs, fridayBannerEnabled: v }));
                 if (v) undismissFridayBanner();
+                flashSaved();
               }}
               id="friday-banner-toggle"
               label="عرض إعلان ليلة الجمعة ويومها"
             />
           </div>
-          <p className="ads-adhan-desc">
-            الآية المعروضة: «إِنَّ اللَّهَ وَمَلَائِكَتَهُ يُصَلُّونَ عَلَى النَّبِيِّ ۚ يَا أَيُّهَا الَّذِينَ آمَنُوا صَلُّوا عَلَيْهِ وَسَلِّمُوا تَسْلِيمًا» — الأحزاب: ٥٦
-          </p>
         </div>
-      </div>
+      </section>
 
-      {/* ══ حالة الأذونات ══ */}
-      <div className="ads-card">
-        <div className="ads-card__head">
-          <Bell size={15} strokeWidth={2} />
+      <section className="ads-card" aria-labelledby="ads-perm-head">
+        <div className="ads-card__head" id="ads-perm-head">
+          <Bell size={15} strokeWidth={2} aria-hidden="true" />
           <span>حالة الأذونات</span>
         </div>
         <div className="ads-card__body">
           <div className="ads-row-sep">
-            <span className="ads-adhan-desc">إذن الإشعارات</span>
+            <span className="ads-adhan-desc" style={{ margin: 0 }}>إذن الإشعارات</span>
             <NotificationPermBadge />
           </div>
           <div className="ads-row">
-            <span className="ads-adhan-desc">إذن الموقع الجغرافي</span>
+            <span className="ads-adhan-desc" style={{ margin: 0 }}>إذن الموقع الجغرافي</span>
             <LocationPermBadge />
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* ══ تشخيص: لماذا لا تصلني تنبيهات؟ ══ */}
-      <div className="ads-card">
+      <section className="ads-card">
         <button
           type="button"
           className="ads-row-sep ads-diagnostics-toggle"
           onClick={() => setDiagnosticsOpen((v) => !v)}
           aria-expanded={diagnosticsOpen}
         >
-          <div className="ads-card__head" style={{ margin: 0 }}>
-            <Bell size={15} strokeWidth={2} />
+          <div className="ads-card__head" style={{ margin: 0, border: "none", paddingInline: 0 }}>
+            <Bell size={15} strokeWidth={2} aria-hidden="true" />
             <span>لماذا لا تصلني تنبيهات؟</span>
           </div>
           <span aria-hidden="true">{diagnosticsOpen ? "▲" : "▼"}</span>
         </button>
-        {diagnosticsOpen && (
+        {diagnosticsOpen ? (
           <div className="ads-card__body">
             {!diagnostics ? (
               <p className="ads-adhan-desc">جارٍ الفحص…</p>
             ) : (
               <>
                 <div className="ads-row-sep">
-                  <span className="ads-adhan-desc">الصلاة القادمة</span>
+                  <span className="ads-adhan-desc" style={{ margin: 0 }}>الصلاة القادمة</span>
                   <span>{diagnostics.nextPrayer ? `${diagnostics.nextPrayer.name} — ${diagnostics.nextPrayer.time}` : "—"}</span>
                 </div>
                 <div className="ads-row-sep">
-                  <span className="ads-adhan-desc">تنبيه هذه الصلاة</span>
+                  <span className="ads-adhan-desc" style={{ margin: 0 }}>تنبيه هذه الصلاة</span>
                   <span>{diagnostics.nextPrayerEnabled ? "مفعّل ✓" : "معطّل ✕"}</span>
                 </div>
                 {diagnostics.blockingReasons.length === 0 ? (
@@ -678,8 +786,8 @@ export default function AdhanSettingsPage() {
                   <div style={{ marginTop: ".5rem" }}>
                     <p className="ads-adhan-desc"><strong>أسباب محتملة لعدم وصول التنبيه:</strong></p>
                     <ul style={{ margin: ".35rem 0 0", paddingInlineStart: "1.2rem", display: "flex", flexDirection: "column", gap: ".3rem" }}>
-                      {diagnostics.blockingReasons.map((r, i) => (
-                        <li key={i} className="ads-adhan-desc">{r}</li>
+                      {diagnostics.blockingReasons.map((r) => (
+                        <li key={r} className="ads-adhan-desc">{r}</li>
                       ))}
                     </ul>
                   </div>
@@ -687,25 +795,38 @@ export default function AdhanSettingsPage() {
               </>
             )}
           </div>
-        )}
-      </div>
+        ) : null}
+      </section>
 
-      {pickerFor && (
+      {customizeFor ? (
+        <PrayerCustomizeSheet
+          prayerKey={customizeFor}
+          prefs={prefs}
+          onPrefs={setPrefs}
+          onFlash={flashSaved}
+          onClose={() => setCustomizeFor(null)}
+          onOpenMuezzin={() => {
+            setPickerFor(customizeFor);
+          }}
+        />
+      ) : null}
+
+      {pickerFor ? (
         <MuezzinPicker
           selected={
             pickerFor === "default"
               ? prefs.defaultMuezzinId
-              : getEffectiveMuezzinId(prefs, pickerFor as PrayerKey)
+              : getEffectiveMuezzinId(prefs, pickerFor)
           }
           requireFajr={pickerFor === "fajr"}
           onSelect={(id) => {
             stopAdhan();
             if (pickerFor === "default") setDefaultMuezzin(id);
-            else setPrayerMuezzin(pickerFor as PrayerKey, id);
+            else setPrayerMuezzin(pickerFor, id);
           }}
           onClose={() => setPickerFor(null)}
         />
-      )}
+      ) : null}
     </div>
   );
 }

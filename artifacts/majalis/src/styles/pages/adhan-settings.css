@@ -1,130 +1,474 @@
 /* ══════════════════════════════════════════════════════
-   56  Adhan Settings Page  (ads-*)
+   Adhan Settings Page  (ads-*)
    ══════════════════════════════════════════════════════ */
 
-/* ─ Page ─ */
-.ads-page { direction: rtl; max-width: 600px; margin: 0 auto; padding: 1.25rem 1rem 5rem; }
-.ads-title { font-size: var(--ds-text-xl); font-weight: 800; color: var(--msk-text); margin-bottom: 0.2rem; }
-.ads-subtitle { font-size: 0.82rem; color: var(--msk-text-2); margin-bottom: 1.25rem; }
+.ads-page {
+  direction: rtl;
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 1.25rem 1rem;
+  padding-bottom: calc(5.5rem + var(--inset-bottom, 0px) + env(safe-area-inset-bottom, 0px));
+  box-sizing: border-box;
+}
 
-/* ─ Saved banner ─ */
-.ads-saved { background: var(--msk-gold-dim); border: 1px solid var(--msk-gold-border); border-radius: var(--ds-radius-lg); padding: 0.5rem 0.875rem; margin-bottom: 1rem; font-size: 0.82rem; color: var(--msk-gold); font-weight: 600; display: flex; align-items: center; gap: 0.4rem; }
+.ads-title {
+  font-size: var(--ds-text-xl);
+  font-weight: 800;
+  color: var(--msk-text);
+  margin-bottom: 0.2rem;
+}
 
-/* ─ Card ─ */
-.ads-card { background: var(--msk-canvas-1, #fff); border-radius: var(--ds-radius-xl); border: 1px solid var(--msk-border); overflow: hidden; margin-bottom: 1.25rem; }
-.ads-card__head { display: flex; align-items: center; gap: var(--ds-space-2); padding: 0.75rem 1rem 0.625rem; border-bottom: 1px solid var(--msk-border); color: var(--msk-gold); font-size: 0.8125rem; font-weight: 700; }
+.ads-subtitle {
+  font-size: 0.82rem;
+  color: var(--msk-text-2);
+  margin-bottom: 1rem;
+}
+
+/* Toast عابر — لا يحجز مساحة في التدفق */
+.ads-toast {
+  position: fixed;
+  inset-inline: 1rem;
+  bottom: calc(4.75rem + var(--inset-bottom, 0px));
+  z-index: 1200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.65rem 1rem;
+  border-radius: var(--ds-radius-lg, 0.75rem);
+  background: var(--msk-gold, var(--mj-brand-deep, #1c5244));
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  box-shadow: 0 6px 20px color-mix(in srgb, var(--msk-gold, #1c5244) 28%, transparent);
+  pointer-events: none;
+  animation: ads-toast-in 0.22s ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ads-toast { animation: none; }
+}
+@keyframes ads-toast-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* بطاقات موحّدة */
+.ads-card {
+  background: var(--msk-canvas-1, #fff);
+  border-radius: var(--ds-radius-xl, 1rem);
+  border: 1px solid var(--msk-border);
+  box-shadow: 0 1px 3px color-mix(in srgb, var(--msk-text, #000) 4%, transparent);
+  overflow: hidden;
+  margin-bottom: 0.9rem;
+}
+.ads-card__head {
+  display: flex;
+  align-items: center;
+  gap: var(--ds-space-2, 0.5rem);
+  padding: 0.75rem 1rem 0.625rem;
+  border-bottom: 1px solid var(--msk-border);
+  color: var(--msk-gold, var(--mj-brand-deep, #1c5244));
+  font-size: 0.8125rem;
+  font-weight: 700;
+}
 .ads-card__body { padding: 0.875rem 1rem; }
 
-/* ─ Rows ─ */
-.ads-row { display: flex; align-items: center; justify-content: space-between; min-height: 44px; }
-.ads-row-sep { display: flex; align-items: center; justify-content: space-between; min-height: 44px; border-bottom: 1px solid var(--msk-border); padding-bottom: 0.75rem; margin-bottom: 0.75rem; }
-.ads-row-sep.is-disabled { opacity: 0.55; }
-.ads-diagnostics-toggle {
-  width: 100%; background: none; border: none; border-bottom: 1px solid var(--msk-border);
-  margin-bottom: 0; padding: 0 1rem; cursor: pointer; font: inherit; color: var(--majalis-ink, #1A1A18);
+.ads-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  min-height: 44px;
 }
-html[data-theme="dark"] .ads-diagnostics-toggle { color: var(--clr-text-1, var(--mj-brand-soft)) !important; }
+.ads-row-sep {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  min-height: 44px;
+  border-bottom: 1px solid var(--msk-border);
+  padding-bottom: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+.ads-row-sep.is-disabled { opacity: 0.55; }
 
-/* ─ Location section ─ */
+.ads-diagnostics-toggle {
+  width: 100%;
+  background: none;
+  border: none;
+  border-bottom: 1px solid var(--msk-border);
+  margin-bottom: 0;
+  padding: 0 1rem;
+  cursor: pointer;
+  font: inherit;
+  color: var(--majalis-ink, #1A1A18);
+}
+html[data-theme="dark"] .ads-diagnostics-toggle {
+  color: var(--clr-text-1, var(--mj-brand-soft)) !important;
+}
+
 .ads-gov-label { font-size: var(--ds-text-sm); font-weight: 600; color: var(--msk-text); }
-.ads-gov-select { border: 1.5px solid var(--msk-border); border-radius: 0.625rem; padding: 0.35rem 0.75rem; font-size: var(--ds-text-sm); font-weight: 600; color: var(--msk-text); background: var(--msk-canvas); font-family: inherit; cursor: pointer; min-width: 130px; }
-.ads-sunrise-inner { display: flex; align-items: center; gap: 0.4rem; color: var(--msk-text); font-size: var(--ds-text-sm); font-weight: 600; }
-.ads-sunrise-tag { font-size: 0.8rem; font-weight: 400; color: var(--msk-text-3); background: var(--msk-canvas-2); border-radius: var(--ds-radius-full); padding: 0.1rem 0.4rem; }
-/* color كان var(--mj-brand-deep) ثابتًا (غير مرتبط بالسمة) — يبقى أخضر داكن فوق بطاقة
-   خضراء داكنة في الوضع الليلي (تباين 1:1، شُخِّص 2026-07-19). var(--msk-text)
-   نفس المتغيّر المُستخدَم فعلاً في .ads-sunrise-inner المجاورة مباشرة. */
-.ads-sunrise-time { font-size: var(--ds-text-sm); font-weight: 700; color: var(--msk-text, var(--mj-brand-deep)); font-variant-numeric: tabular-nums; }
+.ads-gov-select {
+  border: 1.5px solid var(--msk-border);
+  border-radius: 0.625rem;
+  padding: 0.35rem 0.75rem;
+  font-size: var(--ds-text-sm);
+  font-weight: 600;
+  color: var(--msk-text);
+  background: var(--msk-canvas);
+  font-family: inherit;
+  cursor: pointer;
+  min-width: 130px;
+  min-height: 44px;
+}
+.ads-sunrise-inner {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: var(--msk-text);
+  font-size: var(--ds-text-sm);
+  font-weight: 600;
+}
+.ads-sunrise-tag {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--msk-text-3);
+  background: var(--msk-canvas-2);
+  border-radius: 0.4rem;
+  padding: 0.1rem 0.4rem;
+}
+.ads-sunrise-time {
+  font-size: var(--ds-text-sm);
+  font-weight: 700;
+  color: var(--msk-text, var(--mj-brand-deep));
+  font-variant-numeric: tabular-nums;
+}
 
-/* ─ Adhan section ─ */
-.ads-adhan-desc { font-size: 0.78rem; color: var(--msk-text-2); margin-bottom: 0.75rem; }
+.ads-adhan-desc { font-size: 0.78rem; color: var(--msk-text-2); margin: 0 0 0.75rem; line-height: 1.55; }
+.ads-global-label { font-weight: 600; font-size: var(--ds-text-sm); color: var(--msk-text); line-height: 1.35; }
+.ads-global-desc { font-size: 0.8rem; color: var(--msk-text-2); margin-top: 0.1rem; line-height: 1.45; }
+.ads-global-disabled {
+  font-size: 0.78rem;
+  color: var(--msk-gold, var(--mj-brand-deep));
+  background: var(--msk-gold-dim);
+  padding: 0.5rem 0.75rem;
+  border-radius: var(--ds-radius, 0.5rem);
+  margin-bottom: 0.875rem;
+}
+
+.ads-muezzin-name { font-weight: 600; font-size: 0.9rem; color: var(--msk-text); }
+.ads-muezzin-origin { font-size: var(--ds-text-xs); color: var(--msk-text-2); margin-top: 0.15rem; }
+.ads-prayer-muezzin-override {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--msk-text-3, var(--msk-text-2));
+}
+.ads-perm-badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.2rem 0.55rem;
+  border-radius: 0.45rem;
+  white-space: nowrap;
+}
+.ads-perm--ok { background: color-mix(in srgb, var(--msk-gold, #1c5244) 14%, transparent); color: var(--msk-gold, var(--mj-brand-deep)); }
+.ads-perm--err { background: color-mix(in srgb, var(--msk-text, #1a1a18) 10%, transparent); color: var(--msk-text); }
+.ads-perm--warn { background: var(--msk-canvas-2); color: var(--msk-text-2); }
+.ads-perm--muted { background: var(--msk-canvas-2); color: var(--msk-text-3, var(--msk-text-2)); }
+.ads-field-gap { margin-top: 0.85rem; padding-top: 0.85rem; border-top: 1px solid var(--msk-border); }
+
+/* صيغة التشغيل — شبكة مضغوطة */
 .ads-playback-modes {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.45rem;
+  margin-top: 0.45rem;
 }
 .ads-playback-mode {
   display: flex;
   align-items: center;
   gap: 0.4rem;
+  min-height: 44px;
   font-size: 0.82rem;
   color: var(--msk-text-1, var(--mj-ink));
   padding: 0.45rem 0.55rem;
   border-radius: 0.55rem;
-  border: 1px solid var(--msk-border, rgba(0,0,0,0.08));
-  background: var(--msk-surface-2, rgba(0,0,0,0.02));
+  border: 1px solid var(--msk-border);
+  background: var(--msk-canvas-2, rgba(0, 0, 0, 0.02));
   cursor: pointer;
 }
 .ads-playback-mode:has(input:checked) {
-  border-color: var(--mj-brand-deep, #1c5244);
-  background: color-mix(in srgb, var(--mj-brand-deep, #1c5244) 10%, transparent);
+  border-color: var(--msk-gold, var(--mj-brand-deep, #1c5244));
+  background: color-mix(in srgb, var(--msk-gold, #1c5244) 10%, transparent);
 }
-.ads-playback-mode input { accent-color: var(--mj-brand-deep, #1c5244); }
-.ads-muezzin-name { font-weight: 600; font-size: 0.9rem; color: var(--msk-text); }
-.ads-muezzin-origin { font-size: var(--ds-text-xs); color: var(--msk-text-2); }
-.ads-quick-links { display: flex; gap: var(--ds-space-2); margin-top: 1rem; }
-.ads-quick-link-anchor { text-decoration: none; }
-.ads-quick-link-anchor--full { flex: 1; }
-.ads-quick-link { display: flex; align-items: center; justify-content: space-between; padding: 0.55rem 0.75rem; background: var(--msk-canvas-2); border: 1px solid var(--msk-border); border-radius: 0.625rem; cursor: pointer; }
-.ads-quick-link--upload { color: var(--msk-text-2); }
-.ads-quick-link__label { font-size: 0.82rem; color: var(--msk-gold); font-weight: 600; }
-.ads-quick-link--upload .ads-quick-link__label { color: var(--msk-text-2); }
+.ads-playback-mode input { accent-color: var(--msk-gold, var(--mj-brand-deep, #1c5244)); }
 
-/* ─ Notifications / global ─ */
-.ads-global-label { font-weight: 600; font-size: var(--ds-text-sm); color: var(--msk-text); }
-.ads-global-desc { font-size: 0.8rem; color: var(--msk-text-2); margin-top: 0.1rem; }
-.ads-global-disabled { font-size: 0.78rem; color: var(--msk-gold); background: var(--msk-gold-dim); padding: 0.5rem 0.75rem; border-radius: var(--ds-radius); margin-bottom: 0.875rem; }
-
-/* ─ Prayer list items ─ */
-.ads-prayer-item { border-bottom: 1px solid var(--msk-border); padding-bottom: 0.875rem; margin-bottom: 0.875rem; opacity: 1; transition: opacity 0.15s; }
-.ads-prayer-item.is-last { border-bottom: none; padding-bottom: 0; margin-bottom: 0; }
-.ads-prayer-item.is-disabled { opacity: 0.55; }
-.ads-prayer-icon-row { display: flex; align-items: center; gap: var(--ds-space-2); }
-.ads-prayer-icon { font-size: 1.05rem; }
-.ads-prayer-name { font-weight: 700; font-size: 0.95rem; color: var(--msk-text); }
-.ads-prayer-details { margin-top: 0.5rem; padding-inline-end: 1.75rem; }
-.ads-prayer-muezzin-row { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.375rem; }
-.ads-prayer-muezzin-name { font-size: 0.8rem; color: var(--msk-text-2); }
-.ads-prayer-muezzin-override { font-size: 0.8rem; color: var(--msk-text-3); margin-inline-end: 0.3rem; }
-.ads-prayer-muezzin-btns { display: flex; gap: 0.3rem; }
-.ads-advance-label { font-size: 0.8rem; color: var(--msk-text-3); margin-bottom: 0.25rem; }
-.ads-advance-row { display: flex; gap: 0.3rem; flex-wrap: wrap; }
-.ads-advance-btn { padding: 0.2rem 0.55rem; border-radius: var(--ds-radius-full); border: 1.5px solid var(--msk-border); background: transparent; color: var(--msk-text-2); font-size: 0.72rem; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.15s; }
-.ads-advance-btn.is-active { border-color: var(--msk-gold); background: var(--msk-gold); color: var(--msk-canvas); }
-
-/* ─ Toggle switch ─ */
-.ads-toggle { position: relative; display: inline-flex; align-items: center; width: 44px; height: 26px; border-radius: var(--ds-radius-full); border: none; background: var(--msk-border); cursor: pointer; transition: background 0.2s; flex-shrink: 0; padding: 0; }
-.ads-toggle.is-on { background: var(--msk-gold); }
-.ads-toggle__thumb { position: absolute; width: 20px; height: 20px; border-radius: 50%; background: #fff; box-shadow: 0 1px 4px rgba(0,0,0,0.2); transition: transform 0.2s; transform: translateX(3px); }
-.ads-toggle.is-on .ads-toggle__thumb { transform: translateX(20px); }
-.ads-toggle.is-disabled { opacity: 0.45; cursor: not-allowed; }
-
-/* ─ Shared pill buttons ─ */
-.ads-pill-btn { padding: 0.28rem 0.7rem; border-radius: var(--ds-radius-full); border: 1.5px solid var(--msk-gold-border); background: var(--msk-gold-dim); color: var(--msk-gold); font-size: 0.78rem; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.15s; flex-shrink: 0; }
-.ads-pill-btn-ghost { padding: 0.28rem 0.7rem; border-radius: var(--ds-radius-full); border: 1.5px solid var(--msk-border); background: transparent; color: var(--msk-text-2); font-size: 0.78rem; font-weight: 600; cursor: pointer; font-family: inherit; transition: all 0.15s; flex-shrink: 0; }
-
-/* ─ PrayerAlertSettingsCard: شارة شرح إذن الإشعارات ─ */
-.pasc-explainer {
+/* شرائح تنبيه مسبق — صف أفقي قابل للتمرير */
+.ads-chip-scroll {
   display: flex;
-  gap: 0.6rem;
-  align-items: flex-start;
-  background: var(--msk-gold-dim, rgba(23,61,53,0.08));
-  border: 1px solid var(--msk-gold-border, rgba(23,61,53,0.2));
-  border-radius: var(--ds-radius-lg);
-  padding: 0.75rem 0.9rem;
-  margin-block-end: 0.75rem;
-  color: var(--msk-gold, var(--mj-brand));
+  gap: 0.4rem;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 0.15rem 0 0.25rem;
+  margin-top: 0.4rem;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
 }
-.pasc-explainer__title { font-weight: 700; font-size: 0.85rem; margin: 0 0 0.2rem; color: var(--msk-text, #1A1A18); }
-.pasc-explainer__desc { font-size: 0.78rem; margin: 0 0 0.6rem; color: var(--msk-text-2, var(--mj-ink-2)); line-height: 1.6; }
-.pasc-explainer__actions { display: flex; gap: var(--ds-space-2); }
+.ads-chip-scroll::-webkit-scrollbar { display: none; }
+.ads-chip {
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  box-sizing: border-box;
+  height: 36px;
+  min-height: 36px !important;
+  max-height: 36px;
+  min-width: 3.25rem;
+  padding: 0 0.85rem;
+  border-radius: 0.55rem;
+  border: 1.5px solid var(--msk-border);
+  background: var(--msk-canvas-2, transparent);
+  color: var(--msk-text-2);
+  font-size: 0.78rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  white-space: nowrap;
+  transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.ads-chip.is-active {
+  border-color: var(--msk-gold, var(--mj-brand-deep, #1c5244));
+  background: var(--msk-gold, var(--mj-brand-deep, #1c5244));
+  color: #fff;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ads-chip { transition: none; }
+}
 
+/* قائمة الصلوات المضغوطة */
+.ads-prayer-list { display: flex; flex-direction: column; }
+.ads-prayer-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 0.65rem;
+  min-height: 52px;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid var(--msk-border);
+  background: transparent;
+  border-inline: none;
+  border-top: none;
+  width: 100%;
+  font: inherit;
+  color: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+.ads-prayer-row:last-child { border-bottom: none; padding-bottom: 0; }
+.ads-prayer-row.is-disabled { opacity: 0.55; }
+.ads-prayer-row__main {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  min-width: 0;
+}
+.ads-prayer-row__text { min-width: 0; flex: 1; }
+.ads-prayer-row__name {
+  display: block;
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: var(--msk-text);
+  line-height: 1.3;
+}
+.ads-prayer-row__meta {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--msk-text-2);
+  margin-top: 0.1rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.ads-prayer-row__actions {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  flex-shrink: 0;
+}
+.ads-prayer-row__chev {
+  color: var(--msk-text-3);
+  flex-shrink: 0;
+}
+.ads-prayer-icon { flex-shrink: 0; color: var(--msk-gold, var(--mj-brand-deep)); }
+
+/* مفتاح قياسي: مسار + مقبض — يغلب قواعد min-height:44 على الأزرار */
+.ads-toggle {
+  position: relative;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: flex-start;
+  box-sizing: border-box;
+  width: 51px !important;
+  height: 31px !important;
+  min-width: 51px !important;
+  min-height: 31px !important;
+  max-width: 51px !important;
+  max-height: 31px !important;
+  padding: 0 !important;
+  border: none !important;
+  border-radius: 999px !important;
+  background: var(--msk-border, #d0d0d0) !important;
+  cursor: pointer;
+  flex-shrink: 0;
+  align-self: center;
+  transition: background 0.2s ease;
+  box-shadow: none !important;
+  transform: none !important;
+}
+.ads-toggle.is-on {
+  background: var(--msk-gold, var(--mj-brand-deep, #1c5244)) !important;
+}
+.ads-toggle__thumb {
+  position: absolute;
+  top: 2px;
+  inset-inline-start: 2px;
+  width: 27px;
+  height: 27px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.18);
+  transition: inset-inline-start 0.2s ease;
+  pointer-events: none;
+}
+.ads-toggle.is-on .ads-toggle__thumb {
+  inset-inline-start: calc(100% - 29px);
+}
+.ads-toggle.is-disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.ads-toggle:active:not(:disabled) { transform: none !important; }
+@media (prefers-reduced-motion: reduce) {
+  .ads-toggle,
+  .ads-toggle__thumb { transition: none; }
+}
+
+.ads-pill-btn {
+  padding: 0.35rem 0.8rem;
+  min-height: 36px;
+  border-radius: 0.55rem;
+  border: 1.5px solid var(--msk-gold-border, color-mix(in srgb, var(--msk-gold, #1c5244) 35%, transparent));
+  background: var(--msk-gold-dim, color-mix(in srgb, var(--msk-gold, #1c5244) 10%, transparent));
+  color: var(--msk-gold, var(--mj-brand-deep, #1c5244));
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  flex-shrink: 0;
+}
+.ads-pill-btn-ghost {
+  padding: 0.35rem 0.8rem;
+  min-height: 36px;
+  border-radius: 0.55rem;
+  border: 1.5px solid var(--msk-border);
+  background: transparent;
+  color: var(--msk-text-2);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  flex-shrink: 0;
+}
 
 .ads-select {
   font: inherit;
   padding: 0.35rem 0.55rem;
+  min-height: 44px;
   border-radius: 0.5rem;
   border: 1px solid color-mix(in srgb, var(--clr-border, #ccc) 80%, transparent);
   background: var(--clr-surface, #fff);
   color: inherit;
   max-width: 9rem;
 }
+
+.ads-prayer-muezzin-btns { display: flex; gap: 0.3rem; flex-wrap: wrap; }
+
+/* شيت تخصيص صلاة */
+.ads-sheet-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 3000;
+  background: rgba(0, 0, 0, 0.55);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.ads-sheet {
+  width: min(100vw, 540px);
+  max-height: 70vh;
+  background: var(--msk-canvas-1, #fff);
+  border-radius: 1.25rem 1.25rem 0 0;
+  border: 1px solid var(--msk-border);
+  border-bottom: none;
+  box-shadow: 0 -8px 32px color-mix(in srgb, var(--msk-text, #000) 12%, transparent);
+  display: flex;
+  flex-direction: column;
+  direction: rtl;
+  overflow: hidden;
+}
+.ads-sheet__handle-row { display: flex; justify-content: center; padding: 0.65rem 0 0.25rem; }
+.ads-sheet__handle {
+  width: 40px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--msk-border);
+}
+.ads-sheet__head {
+  padding: 0.5rem 1.15rem 0.65rem;
+  border-bottom: 1px solid var(--msk-border);
+}
+.ads-sheet__title {
+  margin: 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--msk-gold, var(--mj-brand-deep, #1c5244));
+}
+.ads-sheet__body {
+  padding: 0.85rem 1.15rem;
+  overflow-y: auto;
+  flex: 1 1 auto;
+  min-height: 0;
+}
+.ads-sheet__foot {
+  padding: 0.65rem 1.15rem calc(0.85rem + var(--inset-bottom, 0px));
+  border-top: 1px solid var(--msk-border);
+}
+.ads-sheet__close {
+  width: 100%;
+  min-height: 44px;
+  border-radius: 0.65rem;
+  border: 1.5px solid var(--msk-border);
+  background: var(--msk-canvas-2, transparent);
+  color: var(--msk-text);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* PrayerAlertSettingsCard */
+.pasc-explainer {
+  display: flex;
+  gap: 0.6rem;
+  align-items: flex-start;
+  background: var(--msk-gold-dim, rgba(23, 61, 53, 0.08));
+  border: 1px solid var(--msk-gold-border, rgba(23, 61, 53, 0.2));
+  border-radius: var(--ds-radius-lg, 0.75rem);
+  padding: 0.75rem 0.9rem;
+  margin-block-end: 0.75rem;
+  color: var(--msk-gold, var(--mj-brand));
+}
+.pasc-explainer__title { font-weight: 700; font-size: 0.85rem; margin: 0 0 0.2rem; color: var(--msk-text, #1A1A18); }
+.pasc-explainer__desc { font-size: 0.78rem; margin: 0 0 0.6rem; color: var(--msk-text-2, var(--mj-ink-2)); line-height: 1.6; }
+.pasc-explainer__actions { display: flex; gap: var(--ds-space-2, 0.5rem); }
