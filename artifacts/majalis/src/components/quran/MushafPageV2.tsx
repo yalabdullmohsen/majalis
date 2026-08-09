@@ -4,6 +4,7 @@ import { quranFontStack } from "@/lib/quran-font-options";
 import { toArabicDigits } from "@/lib/utils";
 import type { MushafPageLayout, QpcWord } from "@/lib/mushaf-v2-data";
 import { DRAWN_BASMALA_TEXT } from "@/lib/mushaf-sizing-lines";
+import { MushafSurahBadgeFrame } from "@/components/quran/MushafOrnaments";
 import { wordKeyFromQpc } from "@/features/mushaf/ayah-word-keys";
 
 /** يُجمِّع كلمات سطر متتالية بنفس verseKey في عنقود واحد — الوحدة
@@ -274,7 +275,8 @@ export function MushafPageV2({
       const lhForTarget = size > 0
         ? Math.max(0, targetContentH - headersH) / (ayahCount * size)
         : LINE_HEIGHT_EM;
-      const lh = Math.min(1.6, Math.max(LINE_HEIGHT_EM, lhForTarget));
+      /* سقف 1.55 يترك هامشًا لعلامات الآية دون تجاوز pitch 1.6em */
+      const lh = Math.min(1.55, Math.max(LINE_HEIGHT_EM, lhForTarget));
       container.style.setProperty("--mf2-lh", String(lh));
 
       let contentTop = Infinity;
@@ -486,7 +488,7 @@ export function MushafPageV2({
   );
 }
 
-/** إطار مزخرف لعنوان السورة — نفس لغة خرطوش رقم الصفحة الذهبي */
+/** شارة سورة عريضة — زخرفة أصلية قابلة للتمدد */
 function SurahNameCartouche({
   label,
   titleRef,
@@ -496,55 +498,13 @@ function SurahNameCartouche({
 }) {
   return (
     <div className="mf2-surah-header__frame">
-      <svg
-        className="mf2-surah-header__cartouche"
-        viewBox="0 0 280 40"
-        preserveAspectRatio="none"
-        aria-hidden="true"
-      >
-        <rect x="36" y="4" width="208" height="32" rx="3.5" fill="none" stroke="currentColor" strokeWidth="1.2" />
-        <rect x="40" y="8" width="200" height="24" rx="2" fill="none" stroke="currentColor" strokeWidth="0.6" opacity="0.5" />
-        <path
-          d="M36 20 C26 8, 16 10, 10 20 C16 30, 26 32, 36 20 Z"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.05"
-        />
-        <path
-          d="M36 20 C28 14, 20 15, 16 20 C20 25, 28 26, 36 20 Z"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="0.65"
-          opacity="0.7"
-        />
-        <circle cx="14" cy="20" r="1.4" fill="currentColor" opacity="0.9" />
-        <path d="M28 12.5 L29.3 14.8 L28 17.1 L26.7 14.8 Z" fill="currentColor" opacity="0.7" />
-        <path d="M28 22.9 L29.3 25.2 L28 27.5 L26.7 25.2 Z" fill="currentColor" opacity="0.7" />
-        <path
-          d="M244 20 C254 8, 264 10, 270 20 C264 30, 254 32, 244 20 Z"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.05"
-        />
-        <path
-          d="M244 20 C252 14, 260 15, 264 20 C260 25, 252 26, 244 20 Z"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="0.65"
-          opacity="0.7"
-        />
-        <circle cx="266" cy="20" r="1.4" fill="currentColor" opacity="0.9" />
-        <path d="M252 12.5 L253.3 14.8 L252 17.1 L250.7 14.8 Z" fill="currentColor" opacity="0.7" />
-        <path d="M252 22.9 L253.3 25.2 L252 27.5 L250.7 25.2 Z" fill="currentColor" opacity="0.7" />
-        <path d="M140 1 L141.4 2.9 L140 4.8 L138.6 2.9 Z" fill="currentColor" opacity="0.75" />
-        <path d="M140 35.2 L141.4 37.1 L140 39 L138.6 37.1 Z" fill="currentColor" opacity="0.75" />
-      </svg>
+      <MushafSurahBadgeFrame className="mf2-surah-header__cartouche" />
       <span
         className="mf2-surah-header__name"
         data-sizing-line="surah_title"
         ref={titleRef}
       >
-        سُورَةُ {label}
+        {label}
       </span>
     </div>
   );

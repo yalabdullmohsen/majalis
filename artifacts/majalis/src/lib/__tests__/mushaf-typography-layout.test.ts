@@ -49,7 +49,8 @@ assert.match(
   /\.mf2-lines--opening-centered\s+\.mf2-line\s*\{[\s\S]*?flex:\s*0\s+0\s+auto/,
   "الصفحتان 1–2 بلا تمديد بين الأسطر",
 );
-assert.match(mushafV2, /\.mf2-surah-header__cartouche/, "خرطوش عنوان السورة");
+assert.match(mushafV2, /\.mf2-surah-badge/, "شارة سورة عريضة قابلة للتمدد");
+assert.match(pageComp, /MushafSurahBadgeFrame/);
 assert.match(pageComp, /sizingEls|sizing-line|ayahLineCount/, "تحجيم من أعرض سطر + عدد الأسطر الفعلي");
 assert.match(
   pageComp,

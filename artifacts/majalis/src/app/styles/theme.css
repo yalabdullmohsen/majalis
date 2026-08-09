@@ -17,15 +17,15 @@
   --color-on-brand: #FFFFFF;
   --color-accent: #B08A3E;
   --color-accent-soft: #F5EEDF;
-  /* مصحف نمط «آية» — مصدر وحيد لألوان الورقة/الحبر/الذهب */
-  --color-mushaf-paper: #FAF7F2;
-  --color-mushaf-ink: #1A1510;
-  --color-mushaf-gold: #B08A3E;
-  --color-mushaf-gold-soft: #C4A35A;
-  --color-mushaf-gold-faint: color-mix(in srgb, #B08A3E 22%, transparent);
-  --color-mushaf-meta: #9A7B3C;
-  --color-mushaf-badge-bg: #F4EFEA;
-  --color-mushaf-badge-border: #D1C7BD;
+  /* مصحف نمط «آية» — عاجي أدفأ، حبر شبه أسود، ذهب ثلاث درجات */
+  --color-mushaf-paper: #F7F0E4;
+  --color-mushaf-ink: #14110E;
+  --color-mushaf-gold: #8B6914;
+  --color-mushaf-gold-soft: #C9B07A;
+  --color-mushaf-gold-faint: color-mix(in srgb, #8B6914 20%, transparent);
+  --color-mushaf-meta: #A89060;
+  --color-mushaf-badge-bg: #F3EBE0;
+  --color-mushaf-badge-border: #D4C4A8;
   --color-danger: #DC2626;
   --color-danger-soft: #FEE2E2;
   --color-danger-deep: #991B1B;
@@ -139,7 +139,7 @@
   --mj-on-brand: #FFFFFF;
   --mj-accent: #B08A3E;
   --mj-accent-soft: #F5EEDF;
-  --mushaf-paper: var(--color-mushaf-paper, #FAF7F2);
+  --mushaf-paper: var(--color-mushaf-paper, #F7F0E4);
   --mushaf-ink: var(--color-mushaf-ink, #1A1510);
   --mushaf-gold: var(--color-mushaf-gold, #B08A3E);
   --mushaf-gold-soft: var(--color-mushaf-gold-soft, #C4A35A);
