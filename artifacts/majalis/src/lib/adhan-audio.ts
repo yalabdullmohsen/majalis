@@ -435,10 +435,12 @@ export function playAdhan(
   muezzin: Muezzin,
   isFajr = false,
   mode: AdhanPlaybackMode = "full",
+  volume = 1,
 ): HTMLAudioElement | null {
   const clip = resolveAdhanClip(muezzin, { isFajr, mode });
   if (!clip) return null;
-  return playAdhanUrl(clip.url, 1, { maxMs: clip.maxMs });
+  const vol = Math.min(1, Math.max(0, volume));
+  return playAdhanUrl(clip.url, vol, { maxMs: clip.maxMs });
 }
 
 /** تشغيل الإقامة إن وُجد ملف مستقل */

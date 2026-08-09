@@ -5,11 +5,13 @@ import {
   loadAdhanPrefs,
   patchAdhanPrefs,
   patchPrayerPrefs,
+  applyDefaultMuezzinToAllPrayers,
   PRAYER_KEYS,
   PRAYER_ARABIC,
   PRAYER_ICON,
   getEffectiveMuezzinId,
   type AdhanPreferences,
+  type AdhanDeliveryMode,
   type PrayerKey,
   type AdvanceMinutes,
 } from "@/lib/adhan-preferences";
@@ -19,6 +21,12 @@ import {
   ADHAN_PLAYBACK_MODE_LABELS,
   type AdhanPlaybackMode,
 } from "@/lib/adhan-playback-modes";
+import {
+  downloadAdhanFullClips,
+  clearAdhanFullDownloads,
+  formatAdhanDownloadCap,
+  getAdhanDownloadUsage,
+} from "@/lib/adhan-downloads";
 import { MuezzinPicker } from "@/components/adhan/MuezzinPicker";
 import { PrayerAlertSettingsCard } from "@/components/adhan/PrayerAlertSettingsCard";
 import {
@@ -30,6 +38,7 @@ import { usePrayerCountdown } from "@/hooks/usePrayerCountdown";
 import { applyPageSeo } from "@/lib/seo";
 import { undismissFridayBanner } from "@/lib/friday-prayer";
 import { computeNotificationDiagnostics, type NotificationDiagnostics } from "@/lib/notification-diagnostics";
+import { isIOS, isNative } from "@/lib/capacitor-utils";
 import "@/styles/pages/adhan-settings.css";
 
 const ADVANCE_OPTIONS: AdvanceMinutes[] = [0, 5, 10, 15, 20, 30];
@@ -61,6 +70,62 @@ function Toggle({
     >
       <span className="ads-toggle__thumb" />
     </button>
+  );
+}
+
+function AdhanDownloadRow({ onFlash }: { onFlash: () => void }) {
+  const [busy, setBusy] = useState(false);
+  const [msg, setMsg] = useState("");
+  const usage = getAdhanDownloadUsage();
+  const usedMb = (usage.totalBytes / (1024 * 1024)).toFixed(1);
+
+  return (
+    <div className="ads-row" style={{ flexDirection: "column", alignItems: "stretch", gap: "0.45rem" }}>
+      <div>
+        <div className="ads-global-label">تنزيل النسخ الكاملة (اختياري)</div>
+        <div className="ads-global-desc">
+          سقف {formatAdhanDownloadCap()} — المستخدم حاليًا ≈ {usedMb} ميغابايت. يُحذف مع حذف الحساب.
+        </div>
+      </div>
+      <div className="ads-prayer-muezzin-btns">
+        <button
+          type="button"
+          className="ads-pill-btn"
+          disabled={busy}
+          onClick={() => {
+            setBusy(true);
+            setMsg("");
+            void downloadAdhanFullClips().then((r) => {
+              setBusy(false);
+              setMsg(
+                r.ok
+                  ? "اكتمل التنزيل"
+                  : r.reason === "cap_reached"
+                    ? "وصل السقف — احذف ثم أعد المحاولة"
+                    : "تعذّر التنزيل",
+              );
+              onFlash();
+            });
+          }}
+        >
+          {busy ? "جارٍ…" : "تنزيل"}
+        </button>
+        <button
+          type="button"
+          className="ads-pill-btn-ghost"
+          disabled={busy || usage.totalBytes === 0}
+          onClick={() => {
+            void clearAdhanFullDownloads().then(() => {
+              setMsg("تم الحذف");
+              onFlash();
+            });
+          }}
+        >
+          حذف التخزين
+        </button>
+      </div>
+      {msg && <p className="ads-adhan-desc">{msg}</p>}
+    </div>
   );
 }
 
@@ -284,8 +349,11 @@ export default function AdhanSettingsPage() {
               ))}
             </div>
             <p className="ads-global-desc">
-              القصير مناسب للإشعار (≤ ٢٨ ثانية). الكامل يشغّل الأذان بتمامه داخل التطبيق.
-              «صامت مع إشعار» يُبقي التنبيه بلا صوت.
+              الافتراضي «قصير» (تنبيه واحد). لا يُفعَّل الوضع الكامل تلقائيًا.
+              {isNative && isIOS && prefs.playbackMode === "full" && (
+                <> على iOS يعني الوضع الكامل عدة إشعارات متتابعة (حتى ٤ مقاطع).</>
+              )}
+              {" "}«صامت مع إشعار» يُبقي التنبيه بلا صوت.
             </p>
           </div>
 
@@ -305,6 +373,103 @@ export default function AdhanSettingsPage() {
               label="تفعيل الإقامة"
             />
           </div>
+
+          {prefs.iqamahEnabled && (
+            <div className="ads-row">
+              <div>
+                <div className="ads-global-label">تأخير تنبيه الإقامة</div>
+                <div className="ads-global-desc">بالدقائق بعد الأذان (٠ = مع الأذان)</div>
+              </div>
+              <select
+                className="ads-select"
+                value={prefs.iqamahDelayMinutes}
+                aria-label="تأخير تنبيه الإقامة"
+                onChange={(e) => {
+                  const v = Number(e.target.value) as 0 | 5 | 10 | 15;
+                  const next = patchAdhanPrefs({ iqamahDelayMinutes: v });
+                  setPrefs(next);
+                  flashSaved();
+                }}
+              >
+                {[0, 5, 10, 15].map((m) => (
+                  <option key={m} value={m}>{m === 0 ? "مع الأذان" : `${m} د`}</option>
+                ))}
+              </select>
+            </div>
+          )}
+
+          <div className="ads-row">
+            <div>
+              <div className="ads-global-label">مستوى الصوت</div>
+              <div className="ads-global-desc">مستقل عن صوت النظام قدر الإمكان</div>
+            </div>
+            <input
+              type="range"
+              min={0}
+              max={100}
+              value={Math.round((prefs.volume ?? 1) * 100)}
+              aria-label="مستوى صوت الأذان"
+              onChange={(e) => {
+                const next = patchAdhanPrefs({ volume: Number(e.target.value) / 100 });
+                setPrefs(next);
+                flashSaved();
+              }}
+            />
+          </div>
+
+          <div className="ads-row">
+            <div>
+              <div className="ads-global-label">اهتزاز مع الأذان</div>
+              <div className="ads-global-desc">نبضة قصيرة عند دخول الوقت</div>
+            </div>
+            <Toggle
+              checked={prefs.vibrateEnabled}
+              onChange={(v) => {
+                const next = patchAdhanPrefs({ vibrateEnabled: v });
+                setPrefs(next);
+                flashSaved();
+              }}
+              id="vibrate-toggle"
+              label="اهتزاز مع الأذان"
+            />
+          </div>
+
+          <div className="ads-row">
+            <div>
+              <div className="ads-global-label">تجاوز الوضع الصامت</div>
+              <div className="ads-global-desc">خيار صريح — قد لا يعمل على كل الأجهزة</div>
+            </div>
+            <Toggle
+              checked={prefs.bypassSilentMode}
+              onChange={(v) => {
+                const next = patchAdhanPrefs({ bypassSilentMode: v });
+                setPrefs(next);
+                flashSaved();
+              }}
+              id="bypass-silent-toggle"
+              label="تجاوز الوضع الصامت"
+            />
+          </div>
+
+          <div className="ads-row">
+            <div>
+              <div className="ads-global-label">تطبيق المؤذن على كل الصلوات</div>
+              <div className="ads-global-desc">يمسح التخصيص لكل صلاة ويعتمد الافتراضي</div>
+            </div>
+            <button
+              type="button"
+              className="ads-pill-btn"
+              onClick={() => {
+                const next = applyDefaultMuezzinToAllPrayers(prefs.defaultMuezzinId);
+                setPrefs(next);
+                flashSaved();
+              }}
+            >
+              تطبيق
+            </button>
+          </div>
+
+          <AdhanDownloadRow onFlash={flashSaved} />
         </div>
       </div>
 
@@ -389,6 +554,34 @@ export default function AdhanSettingsPage() {
                         ))}
                       </div>
                     </div>
+
+                    {(prefs.playbackMode === "short" || prefs.playbackMode === "full") && (
+                      <div>
+                        <div className="ads-advance-label">صيغة هذه الصلاة</div>
+                        <div className="ads-advance-row">
+                          {(["", "short", "full"] as const).map((mode) => (
+                            <button
+                              key={mode || "default"}
+                              type="button"
+                              onClick={() => {
+                                patchPrayerPrefs(key, {
+                                  deliveryMode: mode as AdhanDeliveryMode | "",
+                                });
+                                refresh();
+                              }}
+                              className={`ads-advance-btn${(p.deliveryMode || "") === mode ? " is-active" : ""}`}
+                            >
+                              {mode === "" ? "عام" : mode === "short" ? "قصير" : "كامل"}
+                            </button>
+                          ))}
+                        </div>
+                        {isNative && isIOS && (p.deliveryMode === "full" || (!p.deliveryMode && prefs.playbackMode === "full")) && (
+                          <p className="ads-adhan-desc">
+                            الكامل على iOS = عدة إشعارات متتابعة.
+                          </p>
+                        )}
+                      </div>
+                    )}
                   </div>
                 )}
               </div>

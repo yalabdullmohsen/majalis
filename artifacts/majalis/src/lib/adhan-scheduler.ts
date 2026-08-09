@@ -17,9 +17,10 @@ import {
   PRAYER_ARABIC,
   type PrayerKey,
   getEffectiveMuezzinId,
+  getEffectivePlaybackMode,
 } from "./adhan-preferences";
 import { getMuezzin, hasFajrAdhan, playAdhan } from "./adhan-audio";
-import { isIOS, isNative } from "./capacitor-utils";
+import { hapticTap, isIOS, isNative } from "./capacitor-utils";
 import { ADHAN_EVENT_NAME, type AdhanEvent } from "./adhan-events";
 import {
   isAdhanAndroidAlarmAvailable,
@@ -123,8 +124,10 @@ function scheduleForPrayer(slot: PrayerSlot, key: PrayerKey) {
 
   const adhanTargetEpoch = Date.now() + adhanDelay;
 
+  const deliveryMode = getEffectivePlaybackMode(prefs, key);
+
   // أندرويد + وضع كامل: منبّه دقيق + خدمة أمامية (لا يعتمد على مؤقّت JS)
-  if (isAdhanAndroidAlarmAvailable() && prefs.playbackMode === "full") {
+  if (isAdhanAndroidAlarmAvailable() && deliveryMode === "full") {
     const muezzin = getMuezzin(getEffectiveMuezzinId(prefs, key));
     const isFajr = key === "fajr";
     const clip = resolveAdhanClip(muezzin, { isFajr, mode: "full" });
@@ -139,7 +142,7 @@ function scheduleForPrayer(slot: PrayerSlot, key: PrayerKey) {
   }
 
   // iOS + وضع كامل: سلسلة مقاطع إشعار ≤28ث (حد النظام 30ث) — لا يعتمد على مؤقّت JS في الخلفية
-  if (iosFullAdhanActive() && prefs.playbackMode === "full") {
+  if (iosFullAdhanActive() && deliveryMode === "full") {
     const muezzin = getMuezzin(getEffectiveMuezzinId(prefs, key));
     const isFajr = key === "fajr";
     if (!isFajr || hasFajrAdhan(muezzin)) {
@@ -160,22 +163,24 @@ function scheduleForPrayer(slot: PrayerSlot, key: PrayerKey) {
     if (Date.now() - adhanTargetEpoch > STALE_TOLERANCE_MS) return;
     const fresh = loadAdhanPrefs();
     if (!fresh.globalEnabled || !fresh.prayers[key].enabled) return;
+    const mode = getEffectivePlaybackMode(fresh, key);
     // على أندرويد/iOS في الوضع الكامل تتولى الطبقة الأصلية التشغيل
     if (
-      fresh.playbackMode === "full" &&
+      mode === "full" &&
       (isAdhanAndroidAlarmAvailable() || iosFullAdhanActive())
     ) {
+      if (fresh.vibrateEnabled) void hapticTap("medium");
       dispatchAdhanEvent({ type: "adhan", prayerKey: key, prayerName: slot.name });
       return;
     }
     const muezzinId = getEffectiveMuezzinId(fresh, key);
     const muezzin = getMuezzin(muezzinId);
     const isFajr = key === "fajr";
-    const mode = fresh.playbackMode ?? "short";
     // الفجر: لا يُشغَّل بلا نسخة تثويب؛ ولا يُستبدل بالعام
     // silent: إشعار فقط بلا صوت
-    const audio = playAdhan(muezzin, isFajr, mode);
+    const audio = playAdhan(muezzin, isFajr, mode, fresh.volume ?? 1);
     if (!audio && isFajr && mode !== "silent") return;
+    if (fresh.vibrateEnabled) void hapticTap("medium");
     dispatchAdhanEvent({ type: "adhan", prayerKey: key, prayerName: slot.name });
   }, adhanDelay);
   _timers.push(t1);
