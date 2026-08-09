@@ -29,6 +29,29 @@ html.pts-immersive .top-section-bar__tab.is-active {
   background: color-mix(in srgb, var(--gold-300, #E3CB8C) 88%, #fff);
 }
 
+/*
+ * الشريط السفلي + حشو safe-area: بلا سطح فاتح مختلف أسفل الصفحة.
+ * الخلفية الزمردية (html/body) تمتد تحت التبويبات حتى أسفل الشاشة.
+ */
+html.pts-immersive .bottom-nav,
+html.pts-immersive .bottom-nav--v2 {
+  background: transparent !important;
+  border-block-start-color: color-mix(in srgb, var(--gold-400, #D2B063) 28%, transparent) !important;
+  border-top-color: color-mix(in srgb, var(--gold-400, #D2B063) 28%, transparent) !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+html.pts-immersive .bottom-nav--v2 .bottom-nav__tab,
+html.pts-immersive .bottom-nav .bottom-nav__tab {
+  color: rgba(250, 250, 248, 0.72) !important;
+}
+html.pts-immersive .bottom-nav--v2 .bottom-nav__tab.is-active,
+html.pts-immersive .bottom-nav .bottom-nav__tab.is-active {
+  color: #E3CB8C !important;
+  background: color-mix(in srgb, var(--gold-400, #D2B063) 18%, transparent) !important;
+}
+
 .pts-screen--with-nav {
   /* مع شريط الأقسام العلوي + الشريط السفلي: لا سحب تحت النوتش */
   margin-block-start: 0 !important;
