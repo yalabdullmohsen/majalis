@@ -465,7 +465,13 @@ function PrayerAlertSchedulerBootstrap() {
       if (!isNative) return;
       void import("@capacitor/app").then(({ App: CapApp }) => {
         const sub = CapApp.addListener("appStateChange", ({ isActive }) => {
-          if (isActive) rescheduleOnForeground();
+          if (isActive) {
+            // إلغاء ذكي: فتح التطبيق يلغي بقية مقاطع الأذان ويستأنف المُشغّل الداخلي
+            void import("@/lib/adhan-smart-cancel").then(({ cancelAdhanNotificationChain, getAdhanResumeContext }) =>
+              cancelAdhanNotificationChain({ resumeInternal: Boolean(getAdhanResumeContext()) }),
+            );
+            rescheduleOnForeground();
+          }
         });
         void Promise.resolve(sub).then((handle) => {
           removeAppState = () => {
