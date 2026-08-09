@@ -2571,13 +2571,10 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
   font-weight: 400;
 }
 .mpv-ayah-footer {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.5rem;
+  display: block;
   flex-shrink: 0;
   width: 100%;
+  min-height: 36px;
   padding:
     0
     max(0.35rem, var(--inset-right))
@@ -2600,44 +2597,53 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
   line-height: 1.15;
   white-space: nowrap;
 }
+/* وصف الحزب — أسفل اليمين، لا يزيح الخرطوش عن المركز */
 .mpv-ayah-footer__meta {
-  flex: 1 1 auto;
-  min-width: 0;
+  position: absolute;
+  inset-inline-start: max(0.35rem, var(--inset-right));
+  bottom: calc(var(--inset-bottom) + 14px);
+  max-width: 42%;
   overflow: hidden;
   text-overflow: ellipsis;
   text-align: start;
   color: var(--color-mushaf-meta, #8F6A35);
   pointer-events: none;
+  z-index: 1;
 }
 .mpv-ayah-footer__meta:empty {
   visibility: hidden;
 }
-/* خرطوش رقم الصفحة — طرف ثابت (يسار في RTL عبر margin-inline-start:auto) */
+/* خرطوش رقم الصفحة — وسط أسفل الصفحة دائمًا */
 .mpv-ayah-page-badge {
   appearance: none;
-  position: relative;
+  position: absolute;
+  left: 50%;
+  bottom: calc(var(--inset-bottom) + 6px);
+  transform: translateX(-50%);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   flex: 0 0 auto;
-  margin-inline-start: auto;
-  min-width: 4.4rem;
-  height: 24px;
-  min-height: 24px;
-  padding: 0 1.1rem;
+  margin: 0;
+  min-width: 5.6rem;
+  width: 5.6rem;
+  height: 30px;
+  min-height: 30px;
+  padding: 0 1.25rem;
   border: none;
   border-radius: 0;
   background: transparent;
   color: var(--color-mushaf-numeral, #6B4E2A);
   font-family: "Amiri", "Noto Naskh Arabic", var(--font-display, serif);
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   line-height: 1;
   cursor: pointer;
   box-shadow: none;
   -webkit-tap-highlight-color: transparent;
-  transition: opacity 0.2s ease, transform 0.15s ease;
+  transition: opacity 0.2s ease;
   pointer-events: auto;
+  z-index: 2;
 }
 .mpv-ayah-page-badge__cartouche {
   position: absolute;
@@ -2662,7 +2668,7 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
   opacity: 0.92;
 }
 .mpv-ayah-page-badge:active {
-  transform: scale(0.97);
+  transform: translateX(-50%) scale(0.97);
 }
 .mpv-toolbar__btn--index {
   white-space: nowrap;

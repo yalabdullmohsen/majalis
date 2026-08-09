@@ -2,7 +2,47 @@
  * إعداد مصادر المصحف (مراحل ١–٢).
  * تبديل المصدر = تغيير هذا الملف فقط؛ لا تُخترع بيانات بلا مصدر موثَّق.
  * العرض البصري ثابت على QPC V2 — لا مسار صور مدينة / مضلعات صور.
+ *
+ * ثوابت التخطيط المرجعية = قياس صفحة ٣١١ (مريم) — انظر mushaf-baseline.json.
  */
+
+import baselineJson from "./mushaf-baseline.json";
+
+export type MushafLayoutBaseline = {
+  referencePage: number;
+  fontSizePx: number;
+  lineGapPx: number;
+  lineHeightEm: number;
+  topOffsetPct: number;
+  bottomOffsetPct: number;
+  sideMarginPx: number;
+  fillPct: number;
+  surahBannerHeightPx: number;
+};
+
+/** مرجع مطلق لكل صفحة عادية — مُستخرَج من ص٣١١ على 390×844 */
+export const MUSHAF_LAYOUT_BASELINE: MushafLayoutBaseline = {
+  referencePage: baselineJson.referencePage,
+  fontSizePx: baselineJson.fontSizePx,
+  lineGapPx: baselineJson.lineGapPx,
+  lineHeightEm: baselineJson.lineHeightEm,
+  topOffsetPct: baselineJson.topOffsetPct,
+  bottomOffsetPct: baselineJson.bottomOffsetPct,
+  sideMarginPx: baselineJson.sideMarginPx,
+  fillPct: baselineJson.fillPct,
+  surahBannerHeightPx: baselineJson.surahBannerHeightPx,
+};
+
+/** فجوة الأسطر النسبية (px لكل px من حجم الخط) من أساس ٣١١ */
+export const MUSHAF_BASELINE_GAP_PER_EM =
+  MUSHAF_LAYOUT_BASELINE.lineGapPx / MUSHAF_LAYOUT_BASELINE.fontSizePx;
+
+/** أقصى انحراف مسموح لحجم الخط عن الأساس (±٣٪) قبل استثناء السطر الطويل */
+export const MUSHAF_FONT_DEV_MAX = 0.03;
+/** أقصى انحراف لفجوة الأسطر النسبية (±٥٪) */
+export const MUSHAF_GAP_DEV_MAX = 0.05;
+/** أقصى انحراف للإزاحة العلوية (±٠٫٥ نقطة مئوية مطلقة) */
+export const MUSHAF_TOP_OFFSET_DEV_MAX = 0.005;
 
 export type MushafFeatureFlags = {
   /** توقيتات تلاوة (بداية/نهاية آية بالملي ثانية داخل ملف واحد) */

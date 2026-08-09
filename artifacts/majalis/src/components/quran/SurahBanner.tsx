@@ -1,8 +1,7 @@
 /**
- * شارة سورة بعرض كامل — إطار ذهبي مزدوج + جناحان بلون تان صلب + لوحة وسطى مستطيلة.
- * البديل الصلب معتمد صراحةً (أفضل من نقش ركيك). الاسم يُصغَّر تلقائيًا داخل اللوحة.
+ * شارة سورة مزخرفة بعرض كامل — جناحان بنقش أرابيسك (<pattern>) + وردة ثمانية + لوحة وسطى قائمة.
  */
-import { useLayoutEffect, useRef, type CSSProperties } from "react";
+import { useId, useLayoutEffect, useRef, type CSSProperties } from "react";
 
 type Props = {
   label: string;
@@ -13,7 +12,38 @@ type Props = {
 
 const PANEL_MARGIN_PX = 6;
 
+/** وردة ثمانية البتلات في منتصف الجناح */
+function Octofoil({ cx, cy, r = 5.2 }: { cx: number; cy: number; r?: number }) {
+  const petals: string[] = [];
+  for (let i = 0; i < 8; i++) {
+    const a = (i * Math.PI) / 4;
+    const x = cx + Math.cos(a) * r;
+    const y = cy + Math.sin(a) * r;
+    petals.push(
+      `M${cx.toFixed(2)} ${cy.toFixed(2)} Q${(cx + Math.cos(a - 0.35) * r * 0.55).toFixed(2)} ${(cy + Math.sin(a - 0.35) * r * 0.55).toFixed(2)} ${x.toFixed(2)} ${y.toFixed(2)} Q${(cx + Math.cos(a + 0.35) * r * 0.55).toFixed(2)} ${(cy + Math.sin(a + 0.35) * r * 0.55).toFixed(2)} ${cx.toFixed(2)} ${cy.toFixed(2)}`,
+    );
+  }
+  return (
+    <g aria-hidden="true">
+      <circle cx={cx} cy={cy} r={r * 0.35} fill="var(--color-mushaf-ornament-mid, #D8C39C)" />
+      <path
+        d={petals.join(" ")}
+        fill="var(--color-mushaf-ornament-mid, #D8C39C)"
+        stroke="var(--color-mushaf-ornament-line, #FFFFFF)"
+        strokeWidth="0.7"
+      />
+      <circle
+        cx={cx}
+        cy={cy}
+        r={r * 0.18}
+        fill="var(--color-mushaf-ornament-line, #FFFFFF)"
+      />
+    </g>
+  );
+}
+
 export function SurahBanner({ label, className, titleRef, style }: Props) {
+  const uid = useId().replace(/:/g, "");
   const aria = label.replace(/^(?:سُورَةُ|سورة)\s*/u, "").trim() || label;
   const nameRef = useRef<HTMLSpanElement | null>(null);
   const rootRef = useRef<HTMLDivElement | null>(null);
@@ -49,6 +79,7 @@ export function SurahBanner({ label, className, titleRef, style }: Props) {
   const panelX = (W - panelW) / 2;
   const panelY = 8;
   const panelH = H - 16;
+  const patternId = `${uid}-arabesque`;
 
   const setNameRef = (el: HTMLSpanElement | null) => {
     nameRef.current = el;
@@ -63,7 +94,7 @@ export function SurahBanner({ label, className, titleRef, style }: Props) {
       aria-level={2}
       aria-label={`سورة ${aria}`}
       style={style}
-      data-ornament="solid"
+      data-ornament="arabesque"
     >
       <svg
         className="mf2-surah-banner__svg"
@@ -72,7 +103,22 @@ export function SurahBanner({ label, className, titleRef, style }: Props) {
         aria-hidden="true"
         focusable="false"
       >
-        {/* إطار مزدوج */}
+        <defs>
+          <pattern
+            id={patternId}
+            patternUnits="userSpaceOnUse"
+            width="14"
+            height="16"
+          >
+            <path
+              d="M1 8 C3 2 7 2 9 8 C7 14 3 14 1 8 M7 8 C9 3 12 3 13 8 C12 13 9 13 7 8"
+              fill="none"
+              stroke="var(--color-mushaf-ornament-line, #FFFFFF)"
+              strokeWidth="1.2"
+            />
+          </pattern>
+        </defs>
+        {/* إطار خارجي ذهبي مزدوج rx=4 */}
         <rect
           x="1"
           y="1"
@@ -93,9 +139,28 @@ export function SurahBanner({ label, className, titleRef, style }: Props) {
           stroke="var(--color-mushaf-gold-strong, #A67C3D)"
           strokeWidth="1"
         />
-        {/* جناحان تان صلب — بلا نقش بيضاوي/نجمي */}
+        {/* جناح أيسر — أرضية + نقش pattern + وردة */}
         <rect
           x="6"
+          y="6"
+          width={wingW - 4}
+          height={H - 12}
+          rx="2"
+          fill="var(--color-mushaf-ornament-bg, #E3D2B4)"
+        />
+        <rect
+          x="6"
+          y="6"
+          width={wingW - 4}
+          height={H - 12}
+          rx="2"
+          fill={`url(#${patternId})`}
+          opacity="0.95"
+        />
+        <Octofoil cx={6 + (wingW - 4) / 2} cy={H / 2} r={Math.min(6.2, (wingW - 4) * 0.12)} />
+        {/* جناح أيمن */}
+        <rect
+          x={W - wingW - 2}
           y="6"
           width={wingW - 4}
           height={H - 12}
@@ -108,9 +173,15 @@ export function SurahBanner({ label, className, titleRef, style }: Props) {
           width={wingW - 4}
           height={H - 12}
           rx="2"
-          fill="var(--color-mushaf-ornament-bg, #E3D2B4)"
+          fill={`url(#${patternId})`}
+          opacity="0.95"
         />
-        {/* لوحة وسطى مستطيلة قائمة الزوايا */}
+        <Octofoil
+          cx={W - wingW - 2 + (wingW - 4) / 2}
+          cy={H / 2}
+          r={Math.min(6.2, (wingW - 4) * 0.12)}
+        />
+        {/* لوحة وسطى فاتحة — حواف رأسية مستقيمة (مستطيل) */}
         <rect
           x={panelX}
           y={panelY}
