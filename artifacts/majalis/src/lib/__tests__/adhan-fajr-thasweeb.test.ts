@@ -52,6 +52,8 @@ const basePrefs: AdhanPreferences = {
   browserNotificationsEnabled: false,
   silentReminderEnabled: true,
   defaultMuezzinId: generalOnly[0].id,
+  playbackMode: "full",
+  iqamahEnabled: false,
   prayers: {
     fajr: { enabled: true, muezzinId: generalOnly[0].id, advanceMinutes: 15 },
     dhuhr: { enabled: true, muezzinId: "", advanceMinutes: 10 },
@@ -106,10 +108,12 @@ assert.equal(
 );
 
 const audioSrc = readFileSync(resolve(appRoot, "src/lib/adhan-audio.ts"), "utf8");
+assert.match(audioSrc, /resolveAdhanClip/, "playAdhan يمر عبر resolveAdhanClip");
+const modesSrc = readFileSync(resolve(appRoot, "src/lib/adhan-playback-modes.ts"), "utf8");
 assert.match(
-  audioSrc,
-  /isFajr && !muezzin\.fajrUrl\) return null/,
-  "playAdhan يرفض الفجر بلا fajrUrl",
+  modesSrc,
+  /if \(opts\.isFajr\) \{[\s\S]*?if \(!sources\.fajrUrl\) return null/,
+  "resolveAdhanClip يرفض الفجر بلا fajrUrl",
 );
 
 console.log("adhan-fajr-thasweeb.test.ts: ok");

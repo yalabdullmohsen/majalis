@@ -14,6 +14,11 @@ import {
   type AdvanceMinutes,
 } from "@/lib/adhan-preferences";
 import { getMuezzin, hasFajrAdhan, stopAdhan } from "@/lib/adhan-audio";
+import {
+  ADHAN_PLAYBACK_MODES,
+  ADHAN_PLAYBACK_MODE_LABELS,
+  type AdhanPlaybackMode,
+} from "@/lib/adhan-playback-modes";
 import { MuezzinPicker } from "@/components/adhan/MuezzinPicker";
 import { PrayerAlertSettingsCard } from "@/components/adhan/PrayerAlertSettingsCard";
 import {
@@ -256,6 +261,49 @@ export default function AdhanSettingsPage() {
             <button type="button" onClick={() => setPickerFor("default")} className="ads-pill-btn">
               تغيير
             </button>
+          </div>
+
+          <div className="ads-row-sep" style={{ flexDirection: "column", alignItems: "stretch", gap: "0.55rem" }}>
+            <div className="ads-global-label">صيغة التشغيل</div>
+            <div className="ads-playback-modes" role="radiogroup" aria-label="صيغة تشغيل الأذان">
+              {ADHAN_PLAYBACK_MODES.map((mode) => (
+                <label key={mode} className="ads-playback-mode">
+                  <input
+                    type="radio"
+                    name="adhan-playback-mode"
+                    value={mode}
+                    checked={prefs.playbackMode === mode}
+                    onChange={() => {
+                      const next = patchAdhanPrefs({ playbackMode: mode as AdhanPlaybackMode });
+                      setPrefs(next);
+                      flashSaved();
+                    }}
+                  />
+                  <span>{ADHAN_PLAYBACK_MODE_LABELS[mode]}</span>
+                </label>
+              ))}
+            </div>
+            <p className="ads-global-desc">
+              القصير مناسب للإشعار (≤ ٢٨ ثانية). الكامل يشغّل الأذان بتمامه داخل التطبيق.
+              «صامت مع إشعار» يُبقي التنبيه بلا صوت.
+            </p>
+          </div>
+
+          <div className="ads-row">
+            <div>
+              <div className="ads-global-label">الإقامة (اختياري)</div>
+              <div className="ads-global-desc">مقطع ثالث إن توفّر للتسجيل المختار</div>
+            </div>
+            <Toggle
+              checked={prefs.iqamahEnabled}
+              onChange={(v) => {
+                const next = patchAdhanPrefs({ iqamahEnabled: v });
+                setPrefs(next);
+                flashSaved();
+              }}
+              id="iqamah-toggle"
+              label="تفعيل الإقامة"
+            />
           </div>
         </div>
       </div>

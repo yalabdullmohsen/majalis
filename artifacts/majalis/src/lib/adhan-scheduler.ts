@@ -121,9 +121,11 @@ function scheduleForPrayer(slot: PrayerSlot, key: PrayerKey) {
     const muezzinId = getEffectiveMuezzinId(fresh, key);
     const muezzin = getMuezzin(muezzinId);
     const isFajr = key === "fajr";
+    const mode = fresh.playbackMode ?? "short";
     // الفجر: لا يُشغَّل بلا نسخة تثويب؛ ولا يُستبدل بالعام
-    const audio = playAdhan(muezzin, isFajr);
-    if (!audio && isFajr) return;
+    // silent: إشعار فقط بلا صوت
+    const audio = playAdhan(muezzin, isFajr, mode);
+    if (!audio && isFajr && mode !== "silent") return;
     dispatchAdhanEvent({ type: "adhan", prayerKey: key, prayerName: slot.name });
   }, adhanDelay);
   _timers.push(t1);

@@ -21,6 +21,11 @@ import {
   playAdhanUrl,
   stopAdhan as playbackStop,
 } from "./adhan-playback";
+import {
+  resolveAdhanClip,
+  resolveIqamahClip,
+  type AdhanPlaybackMode,
+} from "./adhan-playback-modes";
 
 const CDN = "https://cdn.jsdelivr.net/gh/mohsalvi/adhan-audio@main";
 
@@ -55,6 +60,12 @@ export type Muezzin = {
   audioUrl: string;
   /** أذان الفجر بالتثويب — مستقل؛ لا يُستبدل بالعام */
   fajrUrl?: string;
+  /** مقطع قصير ≤28ث لصوت الإشعار (اختياري حتى يُورَّد مرخّصًا) */
+  shortUrl?: string;
+  /** تكبيرات الافتتاح فقط (اختياري) */
+  takbirUrl?: string;
+  /** الإقامة كمقطع ثالث اختياري */
+  iqamahUrl?: string;
   sourceId: AdhanAudioRemoteSource;
   /** مرجع توثيق في CREDITS / LICENSE_RISKS */
   licenseNote: string;
@@ -416,14 +427,25 @@ export function isAdhanPlaying() {
 }
 
 /**
- * تشغيل الأذان. للفجر: يستخدم fajrUrl فقط — بلا استبدال بالنسخة العامة.
- * إن طُلب الفجر بلا fajrUrl يُرجع null ولا يُشغَّل شيء.
+ * تشغيل الأذان حسب الصيغة.
+ * للفجر: fajrUrl فقط — بلا استبدال بالنسخة العامة.
+ * silent → null (إشعار بلا صوت).
  */
-export function playAdhan(muezzin: Muezzin, isFajr = false): HTMLAudioElement | null {
-  if (isFajr && !muezzin.fajrUrl) return null;
-  const url = isFajr ? muezzin.fajrUrl! : muezzin.audioUrl;
-  if (!url) return null;
-  return playAdhanUrl(url, 1);
+export function playAdhan(
+  muezzin: Muezzin,
+  isFajr = false,
+  mode: AdhanPlaybackMode = "full",
+): HTMLAudioElement | null {
+  const clip = resolveAdhanClip(muezzin, { isFajr, mode });
+  if (!clip) return null;
+  return playAdhanUrl(clip.url, 1, { maxMs: clip.maxMs });
+}
+
+/** تشغيل الإقامة إن وُجد ملف مستقل */
+export function playIqamah(muezzin: Muezzin): HTMLAudioElement | null {
+  const clip = resolveIqamahClip(muezzin);
+  if (!clip) return null;
+  return playAdhanUrl(clip.url, 1, { maxMs: clip.maxMs });
 }
 
 export function previewAdhan(muezzin: Muezzin): HTMLAudioElement {

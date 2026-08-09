@@ -9,8 +9,14 @@ import {
   getMuezzin,
   hasFajrAdhan,
 } from "./adhan-audio";
+import {
+  isAdhanPlaybackMode,
+  type AdhanPlaybackMode,
+} from "./adhan-playback-modes";
 
 const STORE_KEY = "majalis-adhan-prefs-v1";
+
+export type { AdhanPlaybackMode };
 
 export type PrayerKey = "fajr" | "dhuhr" | "asr" | "maghrib" | "isha";
 
@@ -46,6 +52,10 @@ export type AdhanPreferences = {
   browserNotificationsEnabled: boolean;
   silentReminderEnabled: boolean;
   defaultMuezzinId: string;         // fallback muezzin for all prayers
+  /** صيغة التشغيل: كامل / قصير / تكبير / صامت */
+  playbackMode: AdhanPlaybackMode;
+  /** تشغيل مقطع الإقامة بعد الأذان إن توفّر */
+  iqamahEnabled: boolean;
   prayers: Record<PrayerKey, PerPrayerPrefs>;
   fridayBannerEnabled: boolean;     // show Friday Jumuah banner
 };
@@ -72,6 +82,8 @@ function defaultPrefs(): AdhanPreferences {
     browserNotificationsEnabled: false,
     silentReminderEnabled: true,
     defaultMuezzinId: DEFAULT_MUEZZIN_ID,
+    playbackMode: "short",
+    iqamahEnabled: false,
     prayers,
     fridayBannerEnabled: true,
   };
@@ -88,6 +100,10 @@ export function loadAdhanPrefs(): AdhanPreferences {
       browserNotificationsEnabled: parsed.browserNotificationsEnabled ?? base.browserNotificationsEnabled,
       silentReminderEnabled: parsed.silentReminderEnabled ?? base.silentReminderEnabled,
       defaultMuezzinId: parsed.defaultMuezzinId ?? base.defaultMuezzinId,
+      playbackMode: isAdhanPlaybackMode(parsed.playbackMode)
+        ? parsed.playbackMode
+        : base.playbackMode,
+      iqamahEnabled: parsed.iqamahEnabled ?? base.iqamahEnabled,
       prayers: { ...base.prayers, ...parsed.prayers },
       fridayBannerEnabled: parsed.fridayBannerEnabled ?? base.fridayBannerEnabled,
     };
