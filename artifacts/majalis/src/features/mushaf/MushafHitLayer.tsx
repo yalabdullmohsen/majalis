@@ -5,6 +5,7 @@ import { buildAyahHitRegions } from "@/features/mushaf/ayah-hit-regions";
 
 type Props = {
   layout: MushafPageLayout | null;
+  /** لم يعد يُستخدم للتظليل — الطبقة شفافة دائماً (التظليل على الكلمات فقط) */
   activeAyahKey?: string | null;
   onAyahPress?: (verseKey: string) => void;
   onBackgroundPress?: () => void;
@@ -12,11 +13,10 @@ type Props = {
 
 /**
  * طبقة إحداثيات: مستطيلات SVG نسبية (viewBox 0..1) فوق الصفحة.
- * pointer-events على المضلعات فقط؛ الخلفية تلغي التحديد.
+ * بلا تظليل بصري — الضغط فقط؛ التظليل يلتصق بـ .mf2-ayah-group.
  */
 export function MushafHitLayer({
   layout,
-  activeAyahKey,
   onAyahPress,
   onBackgroundPress,
 }: Props) {
@@ -44,11 +44,10 @@ export function MushafHitLayer({
       {regions.map((region) =>
         region.rects.map((r, i) => {
           const key = `${region.verseKey}-${i}`;
-          const active = region.verseKey === activeAyahKey;
           return (
             <rect
               key={key}
-              className={`mfl-hit__ayah${active ? " mfl-hit__ayah--active" : ""}`}
+              className="mfl-hit__ayah"
               x={r.x}
               y={r.y}
               width={r.w}

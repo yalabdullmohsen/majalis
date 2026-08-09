@@ -4,6 +4,7 @@ import { quranFontStack } from "@/lib/quran-font-options";
 import { toArabicDigits } from "@/lib/utils";
 import type { MushafPageLayout, QpcWord } from "@/lib/mushaf-v2-data";
 import { DRAWN_BASMALA_TEXT } from "@/lib/mushaf-sizing-lines";
+import { wordKeyFromQpc } from "@/features/mushaf/ayah-word-keys";
 
 /** يُجمِّع كلمات سطر متتالية بنفس verseKey في عنقود واحد — الوحدة
  * التفاعلية الحقيقية هي "الآية" لا الكلمة المفردة (مطابقًا لـMushafPage.tsx
@@ -56,11 +57,12 @@ const ROW_COUNT_STANDARD = 15;
 /** عرض glyph بخط الصفحة فقط — لا يُستخدم أبدًا مع Amiri/Noto.
  * نهاية الآية = محرف الزخرفة من نفس خط الصفحة بلون ذهبي (لا دائرة CSS). */
 function defaultRenderWord(w: QpcWord, showAyahNumbers: boolean) {
+  const wordKey = wordKeyFromQpc(w);
   if (w.charType === "end") {
     return (
       <Fragment key={w.id}>
         {showAyahNumbers ? (
-          <span className="mf2-word mf2-ayah-marker" aria-hidden="true">{w.glyphText}</span>
+          <span className="mf2-word mf2-ayah-marker" data-word-key={wordKey} aria-hidden="true">{w.glyphText}</span>
         ) : null}
         {w.sajdahNumber !== null && <span className="mf2-sajda-badge">سجدة</span>}
       </Fragment>
@@ -68,7 +70,7 @@ function defaultRenderWord(w: QpcWord, showAyahNumbers: boolean) {
   }
   return (
     <Fragment key={w.id}>
-      <span className="mf2-word">{w.glyphText}</span>
+      <span className="mf2-word" data-word-key={wordKey}>{w.glyphText}</span>
     </Fragment>
   );
 }
