@@ -1,0 +1,154 @@
+/**
+ * نقطة الدخول الوحيدة للبحث الشامل في التطبيق.
+ * فهرس مطبّع مسبقًا + تطبيع مشترك + إلغاء الاستعلام السابق.
+ */
+import {
+  loadUnifiedSearchIndex,
+  searchUnifiedIndex,
+  searchUnifiedIndexAsync,
+  type UnifiedSearchHit,
+} from "@/features/search/unified-local";
+import { kindPriority } from "@/features/search/kind-priority";
+import { parseQuickNav } from "@/features/search/quick-nav";
+import { normalizeArabic } from "@/shared/arabic-normalize";
+import { scoreTolerantMatch, type TolerantMatch } from "@/features/search/tolerant-match";
+
+export type AppSearchResult = {
+  id: string;
+  kind: string;
+  title: string;
+  href: string;
+  summary?: string;
+  match?: TolerantMatch;
+};
+
+export type AppSearchResponse = {
+  results: AppSearchResult[];
+  groups: Record<string, AppSearchResult[]>;
+  counts: Record<string, number>;
+  quickNavHref?: string;
+  suggestion?: string | null;
+  responseMs: number;
+};
+
+const KIND_ALIASES: Record<string, string> = {
+  library: "book",
+  books: "book",
+  quran: "surah",
+  sheikh: "scholar",
+  scholars: "scholar",
+  fatwas: "fatwa",
+  lessons: "lesson",
+  courses: "course",
+  stories: "story",
+  settings: "app",
+};
+
+function flattenGroups(groups: Record<string, UnifiedSearchHit[]>): AppSearchResult[] {
+  const flat: AppSearchResult[] = [];
+  for (const [kind, hits] of Object.entries(groups)) {
+    for (const h of hits) {
+      flat.push({
+        id: h.id,
+        kind: h.kind || kind,
+        title: h.titleAr,
+        href: h.href,
+        summary: h.meta,
+        match: h.match,
+      });
+    }
+  }
+  flat.sort((a, b) => {
+    const ra = a.match?.rank ?? 9;
+    const rb = b.match?.rank ?? 9;
+    if (ra !== rb) return ra - rb;
+    const da = a.match?.distance ?? 99;
+    const db = b.match?.distance ?? 99;
+    if (da !== db) return da - db;
+    const pa = kindPriority(a.kind);
+    const pb = kindPriority(b.kind);
+    if (pa !== pb) return pa - pb;
+    return a.title.localeCompare(b.title, "ar");
+  });
+  return flat;
+}
+
+/** أقرب عنوان في الفهرس عند انعدام النتائج. */
+export function findClosestSuggestion(
+  docs: { titleAr: string; norm: string }[],
+  query: string,
+): string | null {
+  const q = normalizeArabic(query);
+  if (!q || q.length < 2) return null;
+  let best: { title: string; dist: number } | null = null;
+  for (const d of docs) {
+    const m = scoreTolerantMatch(d.titleAr, query, d.norm);
+    if (!m) continue;
+    if (m.rank <= 2) return d.titleAr;
+    if (!best || m.distance < best.dist) best = { title: d.titleAr, dist: m.distance };
+  }
+  return best?.title ?? null;
+}
+
+export async function runAppSearch(
+  rawQuery: string,
+  opts: { limit?: number; kind?: string; signal?: AbortSignal } = {},
+): Promise<AppSearchResponse> {
+  const t0 = performance.now();
+  const query = rawQuery.trim();
+  if (!query) {
+    return { results: [], groups: {}, counts: {}, responseMs: 0 };
+  }
+
+  const quick = parseQuickNav(query);
+  if (quick) {
+    return {
+      results: [
+        {
+          id: `quick:${quick.href}`,
+          kind: quick.href.includes("hadith") ? "hadith" : "quran",
+          title: query,
+          href: quick.href,
+          summary: "انتقال سريع",
+        },
+      ],
+      groups: {},
+      counts: {},
+      quickNavHref: quick.href,
+      responseMs: performance.now() - t0,
+    };
+  }
+
+  const { docs } = await loadUnifiedSearchIndex();
+  if (opts.signal?.aborted) throw new DOMException("Aborted", "AbortError");
+
+  const limit = opts.limit ?? 48;
+  const grouped =
+    docs.length > 2_500
+      ? await searchUnifiedIndexAsync(docs, query, limit, opts.signal)
+      : searchUnifiedIndex(docs, query, limit);
+
+  let results = flattenGroups(grouped);
+  if (opts.kind && opts.kind !== "all") {
+    const want = KIND_ALIASES[opts.kind] ?? opts.kind;
+    results = results.filter((r) => r.kind === want || r.kind === opts.kind);
+  }
+
+  const groups: Record<string, AppSearchResult[]> = {};
+  const counts: Record<string, number> = {};
+  for (const r of results) {
+    (groups[r.kind] ??= []).push(r);
+    counts[r.kind] = (counts[r.kind] ?? 0) + 1;
+  }
+
+  const suggestion =
+    results.length === 0 ? findClosestSuggestion(docs, query) : null;
+
+  return {
+    results,
+    groups,
+    counts,
+    suggestion,
+    responseMs: performance.now() - t0,
+  };
+}

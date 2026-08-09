@@ -12,6 +12,8 @@ export {
 } from "@/shared/arabic-normalize";
 export {
   loadUnifiedSearchIndex,
+  primeUnifiedSearchIndex,
+  clearUnifiedSearchIndexCache,
   searchUnifiedIndex,
   searchUnifiedIndexAsync,
   type UnifiedSearchDoc,
@@ -25,3 +27,10 @@ export {
   levenshtein,
   type TolerantMatch,
 } from "@/features/search/tolerant-match";
+export { kindPriority, KIND_PRIORITY } from "@/features/search/kind-priority";
+export {
+  runAppSearch,
+  findClosestSuggestion,
+  type AppSearchResult,
+  type AppSearchResponse,
+} from "@/features/search/app-search";
