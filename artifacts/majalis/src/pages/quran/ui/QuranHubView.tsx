@@ -10,6 +10,7 @@ import { ShareButtons } from "@/components/ContentActions";
 import { isComingSoonPath } from "@/lib/nav-visibility";
 import { HubCard } from "@/components/ui/HubCard";
 import { PageHero } from "@/components/ui/PageHero";
+import { QuranSurahJumpSearch } from "@/components/quran/QuranSurahJumpSearch";
 import "@/styles/pages/quran-hub.css";
 
 type QuranSection = { href: string; title: string; desc: string; Icon: LucideIcon; tag: string; featured?: boolean };
@@ -172,6 +173,10 @@ export default function QuranHubPage() {
 
   return (
     <div className="quran-hub-page" dir="rtl">
+      <section className="quran-hub-jump" aria-label="بحث السور والصفحات">
+        <QuranSurahJumpSearch />
+      </section>
+
       <PageHero
         title="القرآن الكريم"
         description="كتاب الله العزيز، اقرأ، استمع، تعلّم، وتدبَّر"

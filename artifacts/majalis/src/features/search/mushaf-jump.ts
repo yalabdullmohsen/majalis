@@ -58,7 +58,8 @@ function stripSurahPrefix(s: string): string {
   return s.replace(/^(?:سورة|سوره)\s+/u, "").trim();
 }
 
-function matchSurahNumber(rawName: string): number | null {
+/** يطابق رقم سورة من اسم/رقم/اسم إنجليزي مع تطبيع متسامح. */
+export function matchSurahNumber(rawName: string): number | null {
   const cleaned = stripSurahPrefix(rawName);
   if (!cleaned) return null;
 

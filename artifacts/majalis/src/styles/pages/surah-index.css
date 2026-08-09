@@ -5,9 +5,10 @@
   width: 100%;
   max-width: 40rem;
   margin-inline: auto;
-  padding-block: var(--mj-s4);
+  padding-block-start: max(var(--mj-s4), 0.75rem);
   padding-inline: var(--page-gutter, var(--mj-s4)) var(--page-gutter-end, var(--page-gutter, var(--mj-s4)));
-  padding-block-end: calc(var(--mj-s8) + var(--inset-bottom));
+  /* ارتفاع الشريط السفلي + safe-area — لا تُقصّ آخر بطاقة */
+  padding-block-end: calc(var(--bottom-nav-total, 5rem) + var(--mj-s4, 1rem));
   box-sizing: border-box;
   color: var(--mj-ink);
   font-family: var(--mj-ui);
@@ -327,7 +328,8 @@ html.dark .surah-index-row__num {
 .surah-index-row__name {
   display: block;
   width: 100%;
-  font-family: var(--font-quran, var(--mj-face));
+  /* خط الواجهة بلا تشكيل عثماني معلّق */
+  font-family: var(--mj-ui, var(--font-body));
   font-size: var(--mj-fs-h2);
   font-weight: 700;
   line-height: var(--mj-lh-title);
@@ -335,6 +337,7 @@ html.dark .surah-index-row__num {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-align: start;
 }
 
 .surah-index-row__meta {

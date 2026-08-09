@@ -54,7 +54,8 @@ export async function loadQuranVerseDatabase(): Promise<QuranVerseSearchItem[]> 
     );
     const items: QuranVerseSearchItem[] = [];
     for (const detail of details) {
-      const surahName = detail.name || getSurahMeta(detail.number).name;
+      // اسم العرض الموحّد بلا تشكيل — النص الخام للآية يبقى كما في المصدر
+      const surahName = getSurahMeta(detail.number).name;
       for (const ayah of detail.ayahs) {
         items.push({
           text: ayah.text,
