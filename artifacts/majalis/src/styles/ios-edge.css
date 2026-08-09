@@ -16,9 +16,9 @@ select {
 .fqp-tabs-scroll,
 .mj-h-scroll {
   touch-action: pan-x;
-  scroll-padding-inline: var(--edge-deadzone);
-  padding-inline: max(var(--edge-deadzone), var(--gutter-inline-start))
-    max(var(--edge-deadzone), var(--gutter-inline-end));
+  scroll-padding-inline: max(16px, var(--edge-deadzone));
+  padding-inline: max(16px, var(--edge-deadzone), var(--gutter-inline-start))
+    max(16px, var(--edge-deadzone), var(--gutter-inline-end));
 }
 
 button,

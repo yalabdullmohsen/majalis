@@ -4361,13 +4361,13 @@ html[data-theme="dark"] .search-suggestions-panel {
   max-width: 72rem;
   margin: 0 auto;
   min-height: 56px;
-  padding: 0 1rem;
-  padding-top: var(--inset-top);
-  box-sizing: content-box;
+  padding: 0 max(16px, var(--gutter-inline-start, 16px)) 0 max(16px, var(--gutter-inline-end, 16px));
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: var(--ds-space-3);
+  width: 100%;
 }
 
 .navbar-v3 {
@@ -5857,8 +5857,11 @@ svg {
   .navbar-v3__inner {
     min-height: var(--header-height, 3rem);
     max-height: none;
-    padding: 0.35rem var(--mobile-padding-x);
+    padding-block: 0.35rem;
+    padding-inline: max(16px, var(--gutter-inline-start, 16px))
+      max(16px, var(--gutter-inline-end, 16px));
     gap: 0.35rem;
+    box-sizing: border-box;
   }
 
   .navbar-v3__start {
@@ -6119,18 +6122,12 @@ svg {
 /* 390px — iPhone 13/14/15 */
 @media (max-width: 390px) {
   .navbar-v3__inner {
-    padding-inline: 0.55rem;
     gap: 0.28rem;
   }
 
   .site-brand-name {
     max-width: 4.25rem;
     font-size: 0.78rem;
-  }
-
-  .navbar-menu-btn--drawer {
-    min-width: 3.55rem;
-    width: 3.55rem;
   }
 
 }
