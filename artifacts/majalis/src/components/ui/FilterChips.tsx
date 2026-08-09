@@ -17,7 +17,7 @@ type FilterChipsProps = {
 };
 
 /**
- * صف شرائح تصفية أفقي قابل للتمرير بهوية --mj.
+ * شبكة أزرار تصفية مستطيلة — بلا شكل بيضوي، أهداف لمس ≥44px.
  */
 export function FilterChips({
   items,
@@ -28,7 +28,7 @@ export function FilterChips({
 }: FilterChipsProps) {
   return (
     <div
-      className={cn("filter-chips exclusive-choice exclusive-choice--fill", className)}
+      className={cn("filter-chips", className)}
       role="radiogroup"
       aria-label={ariaLabel}
     >
