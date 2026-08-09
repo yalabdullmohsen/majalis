@@ -4,7 +4,7 @@
  */
 import { useId } from "react";
 
-/** طرف نباتي كثيف ممتلئ + وردة كبيرة — يملأ مساحة الطرف بلا فراغ */
+/** طرف نباتي كثيف ممتلئ + وردة مركزية كبيرة — داخل الإطار */
 function SurahBadgeEnd({ mirror }: { mirror?: boolean }) {
   const uid = useId().replace(/:/g, "");
   const g = `${uid}-g`;
@@ -12,68 +12,70 @@ function SurahBadgeEnd({ mirror }: { mirror?: boolean }) {
   return (
     <svg
       className="mf2-surah-badge__end-svg"
-      viewBox="0 0 100 52"
+      viewBox="0 0 120 56"
       width="100%"
       height="100%"
-      preserveAspectRatio="xMidYMid slice"
+      preserveAspectRatio="none"
       aria-hidden="true"
       focusable="false"
       style={mirror ? { transform: "scaleX(-1)" } : undefined}
     >
       <defs>
-        <linearGradient id={g} x1="0" y1="0.15" x2="1" y2="0.85">
-          <stop offset="0%" stopColor="var(--color-mushaf-gold-soft, #C9B07A)" />
-          <stop offset="55%" stopColor="var(--color-mushaf-gold, #8B6914)" />
-          <stop offset="100%" stopColor="var(--color-mushaf-gold-soft, #C9B07A)" />
+        <linearGradient id={g} x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#C9B07A" />
+          <stop offset="45%" stopColor="#8B6914" />
+          <stop offset="100%" stopColor="#C9B07A" />
         </linearGradient>
       </defs>
-      {/* طبقة خلفية نباتية كثيفة تملأ الطرف */}
+      {/* حشو بيج الطرف */}
+      <rect x="0" y="0" width="120" height="56" fill="#D4C4A8" />
+      {/* أوراق/سيقان ممتلئة تغطي المساحة بالكامل حول الوردة */}
       <g fill={`url(#${g})`}>
-        <path d="M0 26 C6 4 26 2 44 14 C34 6 20 4 8 12 C3 18 1 23 0 26Z" opacity="0.92" />
-        <path d="M0 26 C6 48 26 50 44 38 C34 46 20 48 8 40 C3 34 1 29 0 26Z" opacity="0.92" />
-        <path d="M10 26 C18 10 36 8 52 18 C44 12 30 10 18 18 C13 21 11 24 10 26Z" opacity="0.95" />
-        <path d="M10 26 C18 42 36 44 52 34 C44 40 30 42 18 34 C13 31 11 28 10 26Z" opacity="0.95" />
-        <path d="M24 6 C36 1 54 3 66 14 C58 6 44 2 30 8 C26 10 24 8 24 6Z" opacity="0.9" />
-        <path d="M24 46 C36 51 54 49 66 38 C58 46 44 50 30 44 C26 42 24 44 24 46Z" opacity="0.9" />
-        <path d="M36 26 C44 12 62 10 76 20 C68 14 54 12 42 20 C38 22 36 24 36 26Z" opacity="0.88" />
-        <path d="M36 26 C44 40 62 42 76 32 C68 38 54 40 42 32 C38 30 36 28 36 26Z" opacity="0.88" />
-        <ellipse cx="16" cy="12" rx="7" ry="4.2" transform="rotate(-38 16 12)" opacity="0.85" />
-        <ellipse cx="16" cy="40" rx="7" ry="4.2" transform="rotate(38 16 40)" opacity="0.85" />
-        <ellipse cx="30" cy="8" rx="6.2" ry="3.6" transform="rotate(-22 30 8)" opacity="0.82" />
-        <ellipse cx="30" cy="44" rx="6.2" ry="3.6" transform="rotate(22 30 44)" opacity="0.82" />
-        <ellipse cx="44" cy="11" rx="5.8" ry="3.4" transform="rotate(-28 44 11)" opacity="0.8" />
-        <ellipse cx="44" cy="41" rx="5.8" ry="3.4" transform="rotate(28 44 41)" opacity="0.8" />
-        <ellipse cx="56" cy="15" rx="5.2" ry="3.1" transform="rotate(-18 56 15)" opacity="0.78" />
-        <ellipse cx="56" cy="37" rx="5.2" ry="3.1" transform="rotate(18 56 37)" opacity="0.78" />
-        <ellipse cx="20" cy="26" rx="8" ry="5" opacity="0.55" />
-        <ellipse cx="40" cy="26" rx="7" ry="4.5" opacity="0.5" />
-        <ellipse cx="58" cy="26" rx="6" ry="4" opacity="0.45" />
+        <path d="M0 28 C10 2 38 0 58 16 C48 6 28 2 12 12 C5 18 1 24 0 28Z" opacity="0.95" />
+        <path d="M0 28 C10 54 38 56 58 40 C48 50 28 54 12 44 C5 38 1 32 0 28Z" opacity="0.95" />
+        <path d="M62 28 C72 8 96 6 118 18 C108 10 90 8 74 18 C67 22 63 26 62 28Z" opacity="0.95" />
+        <path d="M62 28 C72 48 96 50 118 38 C108 46 90 48 74 38 C67 34 63 30 62 28Z" opacity="0.95" />
+        <path d="M8 8 C28 0 52 2 70 14 C56 4 34 0 16 10 C11 12 8 10 8 8Z" opacity="0.9" />
+        <path d="M8 48 C28 56 52 54 70 42 C56 52 34 56 16 46 C11 44 8 46 8 48Z" opacity="0.9" />
+        <path d="M50 6 C70 0 94 2 112 12 C98 4 76 0 58 8 C53 10 50 8 50 6Z" opacity="0.88" />
+        <path d="M50 50 C70 56 94 54 112 44 C98 52 76 56 58 48 C53 46 50 48 50 50Z" opacity="0.88" />
+        <ellipse cx="18" cy="14" rx="9" ry="5.5" transform="rotate(-40 18 14)" />
+        <ellipse cx="18" cy="42" rx="9" ry="5.5" transform="rotate(40 18 42)" />
+        <ellipse cx="36" cy="10" rx="8" ry="4.8" transform="rotate(-25 36 10)" />
+        <ellipse cx="36" cy="46" rx="8" ry="4.8" transform="rotate(25 36 46)" />
+        <ellipse cx="84" cy="12" rx="8" ry="4.8" transform="rotate(25 84 12)" />
+        <ellipse cx="84" cy="44" rx="8" ry="4.8" transform="rotate(-25 84 44)" />
+        <ellipse cx="102" cy="16" rx="7.5" ry="4.5" transform="rotate(35 102 16)" />
+        <ellipse cx="102" cy="40" rx="7.5" ry="4.5" transform="rotate(-35 102 40)" />
+        <ellipse cx="28" cy="28" rx="11" ry="7" opacity="0.65" />
+        <ellipse cx="92" cy="28" rx="11" ry="7" opacity="0.65" />
       </g>
-      <g fill="none" stroke={`url(#${g})`} strokeWidth="1.6" opacity="0.55">
-        <path d="M4 26 H62" />
-        <path d="M14 14 C28 20 42 20 56 14" />
-        <path d="M14 38 C28 32 42 32 56 38" />
-        <path d="M22 8 C34 16 46 16 58 10" />
-        <path d="M22 44 C34 36 46 36 58 42" />
+      <g fill="none" stroke={`url(#${g})`} strokeWidth="2.2" opacity="0.65">
+        <path d="M4 28 H48" />
+        <path d="M72 28 H116" />
+        <path d="M16 12 C30 20 42 20 52 14" />
+        <path d="M16 44 C30 36 42 36 52 42" />
+        <path d="M68 14 C82 20 94 20 108 12" />
+        <path d="M68 42 C82 36 94 36 108 44" />
       </g>
-      {/* وردة دائرية مركزية — واضحة البتلات وأكبر */}
-      <g transform="translate(78 26)">
-        <circle r="15.2" fill="color-mix(in srgb, var(--color-mushaf-badge-bg, #E8DFD0) 70%, #fff)" stroke={`url(#${g})`} strokeWidth="1.6" />
-        <circle r="12.6" fill="none" stroke={`url(#${g})`} strokeWidth="0.7" opacity="0.6" />
+      {/* وردة في مركز الطرف */}
+      <g transform="translate(60 28)">
+        <circle r="16.5" fill="#EDE4D4" stroke={`url(#${g})`} strokeWidth="2" />
+        <circle r="13.8" fill="none" stroke={`url(#${g})`} strokeWidth="0.9" opacity="0.65" />
         {petals.map((deg) => (
           <ellipse
             key={deg}
             cx="0"
-            cy="-8.4"
-            rx="3.6"
-            ry="6.4"
+            cy="-9.2"
+            rx="4"
+            ry="7.2"
             fill={`url(#${g})`}
-            opacity="0.8"
+            opacity="0.88"
             transform={`rotate(${deg})`}
           />
         ))}
-        <circle r="5" fill={`url(#${g})`} opacity="0.9" />
-        <circle r="2.4" fill="color-mix(in srgb, var(--color-mushaf-badge-bg, #E8DFD0) 65%, #fff)" />
+        <circle r="5.6" fill={`url(#${g})`} />
+        <circle r="2.6" fill="#EDE4D4" />
       </g>
     </svg>
   );
@@ -81,7 +83,6 @@ function SurahBadgeEnd({ mirror }: { mirror?: boolean }) {
 
 /**
  * شارة سورة: شريط بيج ممتلئ + إطار ذهبي متوسط + طرفان كثيفان + لوحة وسطى 45%.
- * الطرفان داخل الإطار؛ اللوحة متمركزة تمامًا.
  */
 export function MushafSurahBadgeFrame({ className }: { className?: string }) {
   return (

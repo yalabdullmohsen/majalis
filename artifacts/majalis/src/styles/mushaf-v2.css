@@ -303,11 +303,11 @@ html[data-theme="dark"] .mf2-sajda-badge {
   align-items: stretch;
   justify-content: center;
   box-sizing: border-box;
-  /* بيج أغمق قليلاً من ورقة الصفحة — لا شفاف ولا شبه أبيض */
-  background: color-mix(in srgb, var(--color-mushaf-badge-bg, #E8DFD0) 72%, var(--color-mushaf-gold, #8B6914) 28%);
-  border: 2.5px solid var(--color-mushaf-gold, #8B6914);
+  /* بيج أغمق من ورقة الصفحة — صلب بلا شفافية */
+  background: #D4C4A8;
+  border: 2.5px solid #8B6914;
   border-radius: 2px;
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--color-mushaf-gold-soft, #C9B07A) 55%, transparent);
+  box-shadow: inset 0 0 0 1px #C9B07A;
   overflow: hidden;
 }
 .mf2-surah-badge__end {
@@ -319,7 +319,7 @@ html[data-theme="dark"] .mf2-sajda-badge {
   align-items: stretch;
   justify-content: stretch;
   overflow: hidden;
-  background: color-mix(in srgb, var(--color-mushaf-badge-bg, #E8DFD0) 82%, var(--color-mushaf-gold, #8B6914) 18%);
+  background: #D4C4A8;
 }
 .mf2-surah-badge__end-svg {
   display: block;
@@ -330,12 +330,13 @@ html[data-theme="dark"] .mf2-sajda-badge {
   flex: 0 0 45%;
   width: 45%;
   max-width: 45%;
-  height: calc(100% - 0.22em);
+  height: calc(100% - 0.28em);
+  margin-block: 0.14em;
   align-self: center;
   box-sizing: border-box;
-  /* أفتح من الشريط — لا يميل لليمين (flex يتمركز) */
-  background: color-mix(in srgb, var(--color-mushaf-paper, #F7F0E4) 55%, var(--color-mushaf-badge-bg, #E8DFD0) 45%);
-  border: 1px solid var(--color-mushaf-gold-soft, #C9B07A);
+  /* أفتح من الشريط — متمركزة بـ flex (طرفان متساويان) */
+  background: #F0E8DA;
+  border: 1.25px solid #8B6914;
   border-radius: 1px;
   z-index: 1;
 }
