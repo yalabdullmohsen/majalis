@@ -132,19 +132,15 @@ async function extractLogoTransparent(srcPath, bg) {
     .toBuffer();
 }
 
-/** لوحة: خلفية صلبة + شعار في الوسط أفقياً وعلى 45% ارتفاع، بحدّ 60% عرض / 40% ارتفاع */
-async function composeSplash(logoBuf, bg, width, height) {
-  const meta = await sharp(logoBuf).metadata();
-  const maxW = Math.floor(width * 0.6);
-  const maxH = Math.floor(height * 0.4);
-  const scale = Math.min(maxW / meta.width, maxH / meta.height, 1);
-  const lw = Math.max(1, Math.round(meta.width * scale));
-  const lh = Math.max(1, Math.round(meta.height * scale));
-  const left = Math.round((width - lw) / 2);
-  const top = Math.round(height * 0.45 - lh / 2);
-
-  const resized = await sharp(logoBuf).resize(lw, lh, { fit: "inside" }).png().toBuffer();
-
+/**
+ * لوحة الإطلاق: غطاء كامل من splash-source (خلفية خضراء + زخرفة إسلامية + شعار).
+ * لوحة ألوان PNG لتقليل الحجم مع الحفاظ على الزخرفة الهندسية.
+ */
+async function composeSplash(_logoBuf, bg, width, height) {
+  const cover = await sharp(SOURCE)
+    .resize(width, height, { fit: "cover", position: "centre" })
+    .png()
+    .toBuffer();
   return sharp({
     create: {
       width,
@@ -153,7 +149,37 @@ async function composeSplash(logoBuf, bg, width, height) {
       background: bg,
     },
   })
-    .composite([{ input: resized, left, top }])
+    .composite([{ input: cover, left: 0, top: 0 }])
+    .png({
+      compressionLevel: 9,
+      adaptiveFiltering: true,
+      palette: true,
+      colors: 96,
+      dither: 0.5,
+    })
+    .toBuffer();
+}
+
+/** أيقونة التطبيق 1024×1024 — شعار على خلفية صلبة بلا شفافية */
+async function composeAppIcon(logoBuf, bg, size = 1024) {
+  const meta = await sharp(logoBuf).metadata();
+  const max = Math.floor(size * 0.72);
+  const scale = Math.min(max / (meta.width || 1), max / (meta.height || 1), 1);
+  const lw = Math.max(1, Math.round((meta.width || 1) * scale));
+  const lh = Math.max(1, Math.round((meta.height || 1) * scale));
+  const resized = await sharp(logoBuf).resize(lw, lh, { fit: "inside" }).png().toBuffer();
+  return sharp({
+    create: { width: size, height: size, channels: 3, background: bg },
+  })
+    .composite([
+      {
+        input: resized,
+        left: Math.round((size - lw) / 2),
+        top: Math.round((size - lh) / 2),
+      },
+    ])
+    .flatten({ background: bg })
+    .removeAlpha()
     .png()
     .toBuffer();
 }
@@ -204,31 +230,29 @@ async function main() {
   const logoMeta = await sharp(logoPath).metadata();
   console.log(`✓ splash-logo.png ${logoMeta.width}×${logoMeta.height}`);
 
-  // أيقونات PWA — شعار على خلفية اللون (لا تمديد)
-  for (const size of [192, 512]) {
-    const icon = await composeSplash(logoBuf, bg, size, size);
-    await sharp(icon).png().toFile(join(ROOT, `public/icon-${size}.png`));
+  // أيقونات PWA / المتجر — شعار على خلفية صلبة بلا شفافية (لا غطاء كامل)
+  for (const size of [192, 512, 1024]) {
+    const icon = await composeAppIcon(logoBuf, bg, size);
+    if (size === 1024) {
+      await sharp(icon).png().toFile(join(BRAND_DIR, "icon-1024.png"));
+      await sharp(icon).png().toFile(join(BRAND_DIR, "icon-1024-maskable.png"));
+    } else {
+      await sharp(icon).png().toFile(join(ROOT, `public/icon-${size}.png`));
+    }
   }
-  // maskable: مساحة آمنة أكبر قليلاً
   {
-    const size = 512;
-    const padCanvas = await sharp({
-      create: { width: size, height: size, channels: 3, background: bg },
-    })
-      .png()
-      .toBuffer();
-    const meta = await sharp(logoBuf).metadata();
-    const max = Math.floor(size * 0.55);
-    const scale = Math.min(max / meta.width, max / meta.height, 1);
-    const lw = Math.max(1, Math.round(meta.width * scale));
-    const lh = Math.max(1, Math.round(meta.height * scale));
-    const resized = await sharp(logoBuf).resize(lw, lh).png().toBuffer();
-    await sharp(padCanvas)
-      .composite([{ input: resized, left: Math.round((size - lw) / 2), top: Math.round((size - lh) / 2) }])
-      .png()
-      .toFile(join(BRAND_DIR, "icon-512-maskable.png"));
+    const icon512 = await composeAppIcon(logoBuf, bg, 512);
+    await sharp(icon512).png().toFile(join(BRAND_DIR, "icon-512-maskable.png"));
   }
-  console.log("✓ icon-192 / icon-512 / icon-512-maskable");
+  // iOS AppIcon (1024) — بلا شفافية
+  const iosIconDir = join(ROOT, "ios/App/App/Assets.xcassets/AppIcon.appiconset");
+  if (existsSync(iosIconDir)) {
+    const icon1024 = await composeAppIcon(logoBuf, bg, 1024);
+    await sharp(icon1024).png().toFile(join(iosIconDir, "AppIcon-512@2x.png"));
+    console.log("✓ iOS AppIcon 1024");
+  }
+  // Android mipmap launcher — حدّث foreground/background عبر أيقونة صلبة في drawable إن لزم
+  console.log("✓ icon-192 / icon-512 / icon-1024");
 
   // Apple startup images
   const appleLinks = [];
@@ -246,11 +270,9 @@ async function main() {
   // Capacitor @capacitor/assets مدخلات
   const splash2732 = await composeSplash(logoBuf, bg, 2732, 2732);
   await sharp(splash2732).png().toFile(join(ASSETS_DIR, "splash.png"));
-  // logo/icon-only: الشعار الشفاف على مربع بلون الخلفية (لأيقونة التطبيق)
-  const icon1024 = await composeSplash(logoBuf, bg, 1024, 1024);
-  await sharp(icon1024).png().toFile(join(ASSETS_DIR, "logo.png"));
-  await sharp(icon1024).png().toFile(join(ASSETS_DIR, "icon-only.png"));
-  // نسخة شفافة خالصة للأيقونة المركزية إن لزم
+  const icon1024Assets = await composeAppIcon(logoBuf, bg, 1024);
+  await sharp(icon1024Assets).png().toFile(join(ASSETS_DIR, "logo.png"));
+  await sharp(icon1024Assets).png().toFile(join(ASSETS_DIR, "icon-only.png"));
   await sharp(logoBuf).resize(1024, 1024, { fit: "inside" }).png().toFile(join(ASSETS_DIR, "splash-icon.png"));
   console.log("✓ assets/splash.png + logo.png + icon-only.png");
 
@@ -285,20 +307,22 @@ async function main() {
   // iOS Splash.imageset — تركيب غير ممتد
   const iosSplashDir = join(ROOT, "ios/App/App/Assets.xcassets/Splash.imageset");
   if (existsSync(iosSplashDir)) {
-    const variants = [
-      ["Default@1x~universal~anyany.png", 1366, 1366],
-      ["Default@2x~universal~anyany.png", 2732, 2732],
-      ["Default@3x~universal~anyany.png", 2732, 2732],
-      ["Default@1x~universal~anyany-dark.png", 1366, 1366],
-      ["Default@2x~universal~anyany-dark.png", 2732, 2732],
-      ["Default@3x~universal~anyany-dark.png", 2732, 2732],
-      ["splash-2732x2732.png", 2732, 2732],
-      ["splash-2732x2732-1.png", 2732, 2732],
-      ["splash-2732x2732-2.png", 2732, 2732],
+    // مقاسات أقل تكرارًا: 1x مربّع + 2x/3x مشتركان + نسخ dark مطابقة
+    const buf1 = await composeSplash(logoBuf, bg, 1366, 1366);
+    const buf2 = await composeSplash(logoBuf, bg, 2048, 2048);
+    const named = [
+      ["Default@1x~universal~anyany.png", buf1],
+      ["Default@2x~universal~anyany.png", buf2],
+      ["Default@3x~universal~anyany.png", buf2],
+      ["Default@1x~universal~anyany-dark.png", buf1],
+      ["Default@2x~universal~anyany-dark.png", buf2],
+      ["Default@3x~universal~anyany-dark.png", buf2],
+      ["splash-2732x2732.png", buf2],
+      ["splash-2732x2732-1.png", buf2],
+      ["splash-2732x2732-2.png", buf2],
     ];
-    for (const [name, w, h] of variants) {
-      const buf = await composeSplash(logoBuf, bg, w, h);
-      await sharp(buf).png().toFile(join(iosSplashDir, name));
+    for (const [name, buf] of named) {
+      await sharp(buf).png({ compressionLevel: 9, palette: true, colors: 96 }).toFile(join(iosSplashDir, name));
     }
     console.log("✓ iOS Splash.imageset");
   }
@@ -313,12 +337,12 @@ async function main() {
     generatedAt: new Date().toISOString(),
   };
   writeFileSync(join(BRAND_DIR, "splash-meta.json"), JSON.stringify(meta, null, 2) + "\n");
+  // لون WebView فقط — بلا شاشة ويب وسيطة تكرر الشعار (الإطلاق = أصلي فقط)
   writeFileSync(
     join(BRAND_DIR, "splash-boot.css"),
     `/* مولَّد بواسطة scripts/generate-splash.mjs — لا تعدّل يدوياً */\n` +
-      `html:not([data-splash-done]),\n` +
-      `html:not([data-splash-done]) body {\n` +
-      `  background-color: ${bgHex} !important;\n` +
+      `html, body {\n` +
+      `  background-color: ${bgHex};\n` +
       `}\n` +
       `:root {\n` +
       `  --mj-splash-bg: ${bgHex};\n` +

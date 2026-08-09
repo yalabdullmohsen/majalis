@@ -1,6 +1,6 @@
 /**
- * إخفاء شاشة الدخول (ويب + Capacitor) عند أول جاهزية للمسار.
- * سقف زمني 1.2s يخفيها على أي حال — بارد البدء فقط، بلا إبقاء اصطناعي.
+ * إخفاء شاشة الإطلاق الأصلية (Capacitor) عند أول جاهزية للمسار.
+ * لا توجد شاشة ويب وسيطة — الخلفية الخضراء في html/body تمنع الوميض فقط.
  */
 import { Capacitor } from "@capacitor/core";
 
@@ -8,35 +8,20 @@ import { Capacitor } from "@capacitor/core";
 const MAX_MS = 900;
 let hidden = false;
 
-function dismissWebSplash() {
-  document.documentElement.setAttribute("data-splash-done", "1");
-  const el = document.getElementById("mj-boot-splash");
-  if (!el) return;
-  const reduce = window.matchMedia?.("(prefers-reduced-motion: reduce)")?.matches;
-  if (reduce) {
-    el.remove();
-    return;
-  }
-  el.classList.add("is-hiding");
-  window.setTimeout(() => {
-    el.remove();
-  }, 200);
-}
-
 export async function hideAppSplash() {
   if (hidden) return;
   hidden = true;
-  dismissWebSplash();
   if (!Capacitor.isNativePlatform()) return;
   try {
     const { SplashScreen } = await import("@capacitor/splash-screen");
-    await SplashScreen.hide({ fadeOutDuration: 200 });
+    // بلا fade طويل — انتقال فوري تقريباً للمحتوى
+    await SplashScreen.hide({ fadeOutDuration: 0 });
   } catch {
     /* منصّة بلا ملحق — تجاهل */
   }
 }
 
-/** يُستدعى مرة عند الإقلاع: يخفي عند أول إطار بعد التركيب، مع سقف 1.2s */
+/** يُستدعى مرة عند الإقلاع: يخفي الإطلاق الأصلي عند أول إطار بعد التركيب */
 export function armSplashAutoHide() {
   const deadline = window.setTimeout(() => {
     void hideAppSplash();
@@ -47,7 +32,6 @@ export function armSplashAutoHide() {
     void hideAppSplash();
   };
 
-  // أول إطار بعد تركيب React ≈ جاهزية المسار الأولي
   if (typeof requestAnimationFrame === "function") {
     requestAnimationFrame(() => {
       requestAnimationFrame(hide);

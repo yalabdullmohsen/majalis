@@ -19,7 +19,7 @@ const config: CapacitorConfig = {
       backgroundColor: "#000300",
       showSpinner: false,
       androidSplashResourceName: "splash",
-      androidScaleType: "CENTER_INSIDE",
+      androidScaleType: "CENTER_CROP",
       splashImmersive: true,
       splashFullScreen: true,
     },
