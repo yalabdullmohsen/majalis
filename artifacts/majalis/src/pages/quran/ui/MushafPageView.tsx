@@ -282,6 +282,11 @@ export default function MushafPageView() {
     }).catch(() => {});
     if (page > 1) prefetchMushafPage(page - 1);
     if (page < TOTAL_PAGES) prefetchMushafPage(page + 1);
+    /* حزمة التفسير المختصر: الصفحة الحالية ± المجاورتان (خلفية، بلا حجب واجهة) */
+    void import("@/features/mushaf/offline-tafsir-pack").then(({ prefetchOfflineTafsirForPage }) => {
+      if (signal.aborted) return;
+      void prefetchOfflineTafsirForPage(page, { neighbors: true, signal });
+    });
     return () => {
       abortScope(`mushaf-layout:${page}`);
     };

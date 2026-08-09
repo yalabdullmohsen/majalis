@@ -24,7 +24,13 @@ import {
   Timer,
   RefreshCw,
 } from "lucide-react";
-import { copyAyahText, copyAyahTextPlain, shareAyahAsText } from "@/lib/share-ayah";
+import {
+  copyAyahText,
+  copyAyahTextPlain,
+  copyAyahWithTafsir,
+  shareAyahAsText,
+  shareAyahWithTafsir,
+} from "@/lib/share-ayah";
 import { addBookmark, removeBookmark, isBookmarked, getNote, saveNote } from "@/lib/quran-personal";
 import { setMushafUnsavedWork } from "@/lib/mushaf-unsaved";
 import {
@@ -46,6 +52,8 @@ import {
   MUSHAF_TAFSIR_EDITIONS,
   MUSHAF_TRANSLATION_EDITIONS,
   TAFSIR_FONT_SCALES,
+  DEFAULT_EXTENDED_TAFSIR_EDITION,
+  DEFAULT_MUSHAF_TAFSIR_EDITION,
   fetchMushafAyahTafsir,
   fetchMushafAyahTranslation,
   getMushafTafsirEdition,
@@ -62,7 +70,9 @@ import {
 } from "@/features/mushaf";
 import "@/styles/components/ayah-action-sheet.css";
 
-const TAFSIR_COLLAPSE_CHARS = 720;
+/** مختصر ظاهر مباشرة: نحو سطرين إلى أربعة */
+const TAFSIR_COLLAPSE_CHARS = 280;
+const TAFSIR_BRIEF_MAX_PARAS = 4;
 
 type PanelMode = "none" | "tafsir" | "audio";
 
@@ -121,7 +131,7 @@ export function PageAyahActionSheet({
   const [copiedKind, setCopiedKind] = useState<"full" | "plain" | null>(null);
   const [copyMenuOpen, setCopyMenuOpen] = useState(false);
   const [noteOpen, setNoteOpen] = useState(false);
-  const [panelMode, setPanelMode] = useState<PanelMode>("none");
+  const [panelMode, setPanelMode] = useState<PanelMode>("tafsir");
   const [moreOpen, setMoreOpen] = useState(false);
   const [noteText, setNoteText] = useState(() => getNote(surahNum, ayahNum));
   const [noteSaved, setNoteSaved] = useState(false);
@@ -279,20 +289,40 @@ export function PageAyahActionSheet({
     () => (tafsirText ? tafsirParagraphs(tafsirText) : []),
     [tafsirText],
   );
-  const tafsirNeedsCollapse = (tafsirText?.length ?? 0) > TAFSIR_COLLAPSE_CHARS;
+  const isBriefEdition = Boolean(currentEditionMeta?.brief);
+  const tafsirNeedsCollapse =
+    isBriefEdition &&
+    !tafsirExpanded &&
+    ((tafsirText?.length ?? 0) > TAFSIR_COLLAPSE_CHARS || paragraphs.length > TAFSIR_BRIEF_MAX_PARAS);
   const visibleParagraphs =
-    tafsirNeedsCollapse && !tafsirExpanded
+    tafsirNeedsCollapse
       ? (() => {
           let count = 0;
           const out: string[] = [];
           for (const p of paragraphs) {
             out.push(p);
             count += p.length;
-            if (count >= TAFSIR_COLLAPSE_CHARS) break;
+            if (out.length >= TAFSIR_BRIEF_MAX_PARAS || count >= TAFSIR_COLLAPSE_CHARS) break;
           }
           return out.length > 0 ? out : paragraphs.slice(0, 1);
         })()
       : paragraphs;
+
+  const openExtendedTafsir = () => {
+    if (isBriefEdition) {
+      setTafsirEdition(DEFAULT_EXTENDED_TAFSIR_EDITION);
+      persistTafsirEdition(DEFAULT_EXTENDED_TAFSIR_EDITION);
+      setEditionMenuOpen(false);
+    }
+    setTafsirExpanded(true);
+  };
+
+  const returnToBriefTafsir = () => {
+    setTafsirEdition(DEFAULT_MUSHAF_TAFSIR_EDITION);
+    persistTafsirEdition(DEFAULT_MUSHAF_TAFSIR_EDITION);
+    setEditionMenuOpen(false);
+    setTafsirExpanded(false);
+  };
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -364,7 +394,32 @@ export function PageAyahActionSheet({
   const fontPercent = Math.round(fontScale * 100);
 
   const handleShare = async () => {
+    if (tafsirText && currentEditionMeta) {
+      await shareAyahWithTafsir(
+        ayahText,
+        surahName,
+        ayahNum,
+        tafsirText,
+        currentEditionMeta.label,
+      );
+      return;
+    }
     await shareAyahAsText(ayahText, surahName, ayahNum);
+  };
+
+  const handleCopyWithTafsir = async () => {
+    if (!tafsirText || !currentEditionMeta) return;
+    const ok = await copyAyahWithTafsir(
+      ayahText,
+      surahName,
+      ayahNum,
+      tafsirText,
+      currentEditionMeta.label,
+    );
+    if (ok) {
+      setCopiedKind("full");
+      window.setTimeout(() => setCopiedKind(null), 1600);
+    }
   };
 
   const selectPanel = (mode: PanelMode) => {
@@ -695,6 +750,9 @@ export function PageAyahActionSheet({
                 {currentEditionMeta ? (
                   <p className="aas-reader__author">
                     <span>{currentEditionMeta.author}</span>
+                    {currentEditionMeta.sourceNoteAr ? (
+                      <span className="aas-reader__source"> · {currentEditionMeta.sourceNoteAr}</span>
+                    ) : null}
                   </p>
                 ) : null}
 
@@ -706,7 +764,7 @@ export function PageAyahActionSheet({
                   </div>
                 ) : tafsirError && !tafsirText ? (
                   <div className="aas-v3__error" role="alert">
-                    <p>تعذّر تحميل التفسير. تحقّق من اتصالك.</p>
+                    <p>تعذّر تحميل التفسير. تحقّق من اتصالك أو جرّب المصدر المحلي إن وُجد.</p>
                     <button
                       type="button"
                       className="aas-v3__chip is-on"
@@ -719,23 +777,42 @@ export function PageAyahActionSheet({
                 ) : visibleParagraphs.length > 0 ? (
                   <>
                     <div
-                      className={`aas-reader__prose${tafsirNeedsCollapse && !tafsirExpanded ? " is-collapsed" : ""}`}
+                      className={`aas-reader__prose${tafsirNeedsCollapse ? " is-collapsed" : ""}`}
                       key={tafsirEdition}
                     >
                       {visibleParagraphs.map((p, i) => (
                         <p key={`${i}-${p.slice(0, 24)}`}>{p}</p>
                       ))}
                     </div>
-                    {tafsirNeedsCollapse ? (
-                      <button
-                        type="button"
-                        className="aas-reader__expand"
-                        onClick={() => setTafsirExpanded((v) => !v)}
-                        aria-expanded={tafsirExpanded}
-                      >
-                        {tafsirExpanded ? "عرض أقل" : "عرض المزيد"}
-                      </button>
-                    ) : null}
+                    <div className="aas-v3__tafsir-actions">
+                      {isBriefEdition ? (
+                        <button
+                          type="button"
+                          className="aas-reader__expand"
+                          onClick={openExtendedTafsir}
+                        >
+                          التفسير المطوّل
+                        </button>
+                      ) : (
+                        <button
+                          type="button"
+                          className="aas-reader__expand"
+                          onClick={returnToBriefTafsir}
+                        >
+                          العودة للمختصر
+                        </button>
+                      )}
+                      {tafsirText ? (
+                        <button
+                          type="button"
+                          className="aas-v3__chip"
+                          onClick={() => void handleCopyWithTafsir()}
+                        >
+                          <Copy size={15} aria-hidden="true" />
+                          نسخ مع التفسير
+                        </button>
+                      ) : null}
+                    </div>
                   </>
                 ) : (
                   <p className="aas-reader__status">لا يتوفر تفسير لهذه الآية في المصدر المختار.</p>

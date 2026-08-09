@@ -73,7 +73,15 @@ function main() {
     MUSHAF_SOURCES.some((s) => s.id === "tafsir-qurancom" && s.enabled),
     "tafsir source registered",
   );
-  check(MUSHAF_FEATURES.offlineTafsirPacks === false, "offline packs still off");
+  check(MUSHAF_FEATURES.offlineTafsirPacks === true, "offline tafsir packs enabled");
+  check(
+    MUSHAF_TAFSIR_EDITIONS.some((e) => e.brief && e.id === DEFAULT_MUSHAF_TAFSIR_EDITION),
+    "default edition is brief (الميسّر)",
+  );
+  check(
+    MUSHAF_TAFSIR_EDITIONS.every((e) => Boolean(e.sourceNoteAr)),
+    "every edition has documented source",
+  );
 
   console.log(`\n${passed} passed, ${failed} failed`);
   if (failed > 0) process.exit(1);

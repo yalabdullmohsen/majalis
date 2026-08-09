@@ -700,6 +700,19 @@
   mask-image: linear-gradient(to bottom, #000 72%, transparent);
   -webkit-mask-image: linear-gradient(to bottom, #000 72%, transparent);
 }
+.aas-v3__tafsir-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 0.55rem;
+  align-items: center;
+}
+
+.aas-reader__source {
+  opacity: 0.72;
+  font-size: 0.85em;
+}
+
 .aas-reader__expand {
   display: block;
   width: 100%;

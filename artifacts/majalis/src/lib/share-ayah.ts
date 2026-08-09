@@ -28,6 +28,50 @@ export async function copyAyahText(text: string, surahName: string, ayahNum: num
   return copyPlainText(`${text} ﴿${ayahNum}﴾\n— سورة ${surahName}`);
 }
 
+/** نسخ الآية مع تفسيرها المنقول حرفياً من المصدر المعتمد. */
+export async function copyAyahWithTafsir(
+  ayahText: string,
+  surahName: string,
+  ayahNum: number,
+  tafsirText: string,
+  tafsirLabel: string,
+): Promise<boolean> {
+  const body = [
+    `${ayahText} ﴿${ayahNum}﴾`,
+    `— سورة ${surahName}`,
+    "",
+    `${tafsirLabel}:`,
+    tafsirText.trim(),
+  ].join("\n");
+  return copyPlainText(body);
+}
+
+export async function shareAyahWithTafsir(
+  ayahText: string,
+  surahName: string,
+  ayahNum: number,
+  tafsirText: string,
+  tafsirLabel: string,
+): Promise<boolean> {
+  const message = [
+    `آية من القرآن الكريم:`,
+    `${ayahText} ﴿${ayahNum}﴾`,
+    `— سورة ${surahName}`,
+    "",
+    `${tafsirLabel}:`,
+    tafsirText.trim(),
+  ].join("\n");
+  if (typeof navigator !== "undefined" && typeof navigator.share === "function") {
+    try {
+      await navigator.share({ text: message, title: `${tafsirLabel} — سورة ${surahName}` });
+      return true;
+    } catch (err) {
+      if ((err as Error)?.name === "AbortError") return false;
+    }
+  }
+  return copyPlainText(message);
+}
+
 /**
  * إزالة التشكيل فقط (الحركات، السكون، التنوين، المدّ...) دون أي تعديل آخر
  * على الحروف نفسها (لا توحيد للهمزات، لا حذف ألف خنجرية) — نسخة "قراءة
