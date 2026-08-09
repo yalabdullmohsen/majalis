@@ -7,7 +7,7 @@ import { BOTTOM_NAV_TABS } from "@/lib/nav-map";
 export type BottomTabId = "quran" | "lessons" | "prayer" | "fiqh" | "more";
 
 const TAB_IDS: { id: BottomTabId; href: string }[] = [
-  { id: "quran", href: "/mushaf" },
+  { id: "quran", href: "/quran-hub" },
   { id: "lessons", href: "/lessons" },
   { id: "prayer", href: "/prayer-times" },
   { id: "fiqh", href: "/fiqh" },

@@ -21,12 +21,12 @@ assert.equal(normalizeNavPath("/mushaf/page/12?x=1#y"), "/mushaf/page/12");
 assert.equal(normalizeNavPath("/mushaf/"), "/mushaf");
 assert.equal(normalizeNavPath("/fiqh/topics/tahara"), "/fiqh/topics/tahara");
 
-assert.equal(sectionAwareFallback("/quran/tajweed"), "/mushaf");
+assert.equal(sectionAwareFallback("/quran/tajweed"), "/quran-hub");
 assert.equal(sectionAwareFallback("/quran-memorization"), "/quran-memorization");
 assert.equal(sectionAwareFallback("/quran-circles"), "/quran-circles");
-assert.equal(sectionAwareFallback("/quran/recitation-test-ai"), "/quran/recitation-test-ai");
+assert.equal(sectionAwareFallback("/quran/recitation-test-ai"), "/quran-hub");
 assert.equal(sectionAwareFallback("/search/foo"), "/search");
-assert.equal(sectionAwareFallback("/mushaf/page/9"), "/mushaf");
+assert.equal(sectionAwareFallback("/mushaf/page/9"), "/quran-hub");
 
 assert.equal(isImmersiveChromePath("/quran/recitation-test-ai"), true);
 assert.equal(isImmersiveChromePath("/lessons"), false);

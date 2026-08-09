@@ -26,7 +26,7 @@ export const HIDDEN_FROM_NAV_PATHS = new Set<string>([
   "/universities",
   "/mind-map",
   "/mushaf/page",
-  "/quran/recitation-test-ai",
+  // التسميع ظاهر في مركز القرآن والمصحف وقوائم الاكتشاف
 
   "/quran-studies",
   "/anbiya",

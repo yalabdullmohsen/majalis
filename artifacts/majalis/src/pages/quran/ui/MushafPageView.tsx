@@ -2,7 +2,7 @@ import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from "rea
 import { createPortal } from "react-dom";
 import { useParams, useLocation } from "wouter";
 import {
-  Menu, Settings, X, ChevronRight, ChevronLeft, RotateCcw, ArrowRight, Bookmark,
+  Menu, Settings, X, ChevronRight, ChevronLeft, RotateCcw, ArrowRight, Bookmark, Mic, LayoutGrid,
 } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { toArabicDigits } from "@/lib/utils";
@@ -517,6 +517,26 @@ export default function MushafPageView() {
             >
               <Menu size={16} aria-hidden="true" />
               فهرس
+            </button>
+            <button
+              type="button"
+              className="mpv-toolbar__btn"
+              onClick={() => navigate("/quran-hub")}
+              aria-label="مركز القرآن"
+              title="مركز القرآن"
+            >
+              <LayoutGrid size={16} aria-hidden="true" />
+              أقسام
+            </button>
+            <button
+              type="button"
+              className="mpv-toolbar__btn"
+              onClick={() => navigate(`/quran/recitation-test-ai?surah=${primarySurahMeta.number}`)}
+              aria-label="التسميع"
+              title="التسميع"
+            >
+              <Mic size={16} aria-hidden="true" />
+              تسميع
             </button>
             <span className="mpv-toolbar__spacer" aria-hidden="true" />
             <button

@@ -24,19 +24,20 @@ const QURAN_SECTIONS: QuranSection[] = [
     tag: "خطط مرنة",
   },
   {
-    href: "/quran/recitation-test-ai",
-    title: "التلاوة",
-    desc: "اختبر تلاوتك من حفظك؛ يستمع التطبيق لحظيًا ويكشف المصحف الآيات كلما نطقتها صحيحة؛ يُستفاد في التعلم والتدبر",
-    Icon: Mic,
-    tag: "تلاوة",
-    featured: true,
-  },
-  {
     href: "/mushaf",
     title: "المصحف الشريف",
     desc: "صفحات مصحف حقيقية مطابقة لتقسيم مصحف المدينة، مع الاستماع والإشارات المرجعية والملاحظات؛ يُستفاد في التعلم والتدبر",
     Icon: BookOpen,
     tag: "٦٠٤ صفحة",
+    featured: true,
+  },
+  {
+    href: "/quran/recitation-test-ai",
+    title: "التسميع",
+    desc: "اختبر حفظك وتلاوتك؛ يستمع التطبيق لحظيًا ويكشف المصحف الآيات كلما نطقتها صحيحة؛ يُستفاد في التعلم والتدبر",
+    Icon: Mic,
+    tag: "تسميع",
+    featured: true,
   },
   {
     href: "/quran/search",
