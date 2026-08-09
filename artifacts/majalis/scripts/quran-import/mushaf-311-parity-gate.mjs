@@ -115,10 +115,13 @@ async function measurePage(page, pageNum, baseline) {
       /* مزامنة تقريبية عبر drawImage بعد decode — نستخدمpixels من raster عبر foreignObject بديل: عينة CSS */
       void url;
       void ctx;
-      /* عينة من مسار النقش: عدد عناصر pattern/path في الجناح */
+      /* مرجع الجناح: بلا pattern — وردة + لولبان (+ عقدة) */
       const patternCount = svg.querySelectorAll("pattern").length;
+      const wingParts = svg.querySelectorAll("[data-wing-part]").length;
       const wingPaths = svg.querySelectorAll("path").length;
-      bannerWingVariance = patternCount * 500 + wingPaths * 40;
+      bannerWingVariance = patternCount === 0
+        ? wingParts * 80 + wingPaths * 20
+        : 0;
       if (ornament === "solid") bannerWingVariance = 0;
     }
 

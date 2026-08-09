@@ -303,14 +303,16 @@ export default function MushafPageView() {
     if (!juz) return "—";
     return `الجزء ${toArabicDigits(juz)}`;
   }, [juz]);
-  /** يسار الرأس: اسم السورة مجرّدًا (بلا كلمة «سورة»)، مفصول بمسافتين عند التعدّد */
+  /** يسار الرأس: سور تبدأ في الصفحة فقط؛ وإلا السورة المستمرة — فاصل مسافتان */
   const headerSurahNames = useMemo(() => {
     const strip = (raw: string) =>
       String(raw ?? "").replace(/^(?:سُورَةُ|سورة)\s*/u, "").trim();
-    const names = (v2Layout?.surahsOnPage ?? [])
-      .map((s) => strip(s.nameArabic ?? ""))
-      .filter(Boolean);
-    if (names.length) return names.join("  ");
+    const starters = v2Layout?.surahsStartingOnPage ?? [];
+    if (starters.length) {
+      return starters.map((s) => strip(s.nameArabic ?? "")).filter(Boolean).join("  ");
+    }
+    const continuing = v2Layout?.surahsOnPage?.[0];
+    if (continuing) return strip(continuing.nameArabic ?? "");
     return strip(primarySurahMeta.name ?? "");
   }, [v2Layout, primarySurahMeta.name]);
   /** ذيل: ربع/نصف/ثلاثة أرباع أو بداية حزب */

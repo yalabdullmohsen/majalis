@@ -10,6 +10,7 @@ const layout: MushafPageLayout = {
   pageNumber: 1,
   juzNumber: 1,
   surahsOnPage: [],
+  surahsStartingOnPage: [],
   layoutMode: "standard",
   ayahLineCount: 1,
   hizbNumber: 1,
@@ -19,6 +20,7 @@ const layout: MushafPageLayout = {
     {
       kind: "line",
       lineNumber: 2,
+      gridSlot: 2,
       words: [
         {
           id: 1, position: 1, lineNumber: 2, charType: "word",

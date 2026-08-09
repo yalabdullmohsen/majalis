@@ -1,4 +1,4 @@
-import { Fragment, useLayoutEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { Fragment, useLayoutEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import { useMushafPageFont, mushafPageFontFamily } from "@/hooks/useMushafPageFont";
 import { quranFontStack } from "@/lib/quran-font-options";
 import type { MushafPageLayout, QpcWord } from "@/lib/mushaf-v2-data";
@@ -8,8 +8,8 @@ import { SurahBanner } from "@/components/quran/SurahBanner";
 import { toArabicDigits } from "@/lib/utils";
 import { wordKeyFromQpc } from "@/features/mushaf/ayah-word-keys";
 import {
-  MUSHAF_BASELINE_GAP_PER_EM,
   MUSHAF_FONT_DEV_MAX,
+  MUSHAF_GRID,
   MUSHAF_LAYOUT_BASELINE,
 } from "@/features/mushaf/config";
 
@@ -225,9 +225,8 @@ export function MushafPageV2({
   const [fitted, setFitted] = useState(false);
 
   /**
-   * ملاءمة عرض → خط موحّد بلا سقف ارتفاع.
-   * العادية: فجوات بين الأسطر أولًا؛ الحشو العلوي ≤ ٢٪ من ارتفاع الصفحة.
-   * ص1–2: نفس سقف الفجوة، تمركز رأسي بلا تبعثر لبلوغ بوابة الامتلاء.
+   * تحجيم عرضي فقط — التموضع الرأسي مطلق على MUSHAF_GRID.baselinesPct.
+   * ممنوع: flex توزيعي أو حشو ديناميكي بعد التموضع.
    */
   useLayoutEffect(() => {
     if (!fontReady || !layout) {
@@ -249,51 +248,34 @@ export function MushafPageV2({
 
     const LINE_HEIGHT_EM = MUSHAF_LAYOUT_BASELINE.lineHeightEm;
     const REF_PX = 100;
-    const TARGET_FILL_NORMAL = 0.9;
-    const TARGET_FILL_OPENING = 0.78;
-    const EDGE_GAP_PX = Math.max(2, MUSHAF_LAYOUT_BASELINE.sideMarginPx);
     const MIN_LINE_FILL = 0.98;
     const BASE_FONT = MUSHAF_LAYOUT_BASELINE.fontSizePx;
     const isOpening = layout.pageNumber === 1 || layout.pageNumber === 2;
-    const targetFill = isOpening ? TARGET_FILL_OPENING : TARGET_FILL_NORMAL;
     const noStretchLines = lastSurahEndLineNumbers(layout);
+    const slotHPct = MUSHAF_GRID.slotHeightPct;
 
     const measure = () => {
-      const slotEl =
-        container.closest(".qs-mushaf-body") ||
-        container.closest(".mpv-body") ||
-        container.parentElement;
       const availableWidth = container.clientWidth;
-      const headerEl = document.querySelector(".mpv-ayah-header");
-      const footerEl = document.querySelector(".mpv-ayah-footer");
-      const hr = headerEl?.getBoundingClientRect();
-      const fr = footerEl?.getBoundingClientRect();
-      let slotHeight = slotEl instanceof HTMLElement
-        ? slotEl.clientHeight
-        : container.clientHeight;
-      if (hr && fr && fr.top > hr.bottom) {
-        slotHeight = fr.top - hr.bottom;
-      }
-      const usableH = Math.max(0, slotHeight - EDGE_GAP_PX * 2);
-      if (availableWidth <= 0 || usableH <= 0) return false;
+      if (availableWidth <= 0) return false;
 
       const sizingEls = collectSizingEls(ayahLineRefs.current);
       if (sizingEls.length === 0) return false;
 
       for (const el of sizingEls) el.style.removeProperty("--mf2-line-sx");
-      container.style.gap = "0px";
+      container.style.gap = "0";
       container.style.paddingTop = "0";
       container.style.paddingBottom = "0";
       container.style.marginTop = "0";
       container.style.marginBottom = "0";
+      container.style.height = "100%";
+      container.style.justifyContent = "";
       container.style.transform = "";
 
       const widestAtRef = measureWidest(sizingEls, REF_PX);
       if (widestAtRef <= 0) return false;
 
-      /* ابدأ من أساس ٣١١؛ صغّر فقط عند تجاوز أفقي (استثناء السطر الطويل) */
       let size = BASE_FONT;
-      const bound = "baseline-311" as const;
+      const bound = "grid-311" as const;
       const maxFont = BASE_FONT * (1 + MUSHAF_FONT_DEV_MAX);
 
       for (let guard = 0; guard < 12; guard++) {
@@ -309,16 +291,16 @@ export function MushafPageV2({
         if (widestAtSize <= availableWidth) break;
         size *= (availableWidth / widestAtSize) * 0.992;
       }
-      /* لا نكبّر فوق الأساس+٣٪ — الصفحتان ١–٢ كانتا تكبران بلا داعٍ */
       if (size > maxFont) size = maxFont;
 
       applyTempFontSize(sizingEls, "");
       for (const el of sizingEls) el.style.overflowX = "";
       container.style.fontSize = `${size}px`;
       container.style.setProperty("--mf2-lh", String(LINE_HEIGHT_EM));
+      container.style.setProperty("--mf2-slot-h-pct", String(slotHPct));
       container.style.setProperty(
         "--mf2-banner-h",
-        `${(size * LINE_HEIGHT_EM * 1.35).toFixed(2)}px`,
+        `${(container.clientHeight * (slotHPct / 100)).toFixed(2)}px`,
       );
 
       if (!isOpening) {
@@ -342,79 +324,32 @@ export function MushafPageV2({
         }
       }
 
-      let childCount = 0;
-      for (const child of container.children) {
-        if (!(child instanceof HTMLElement)) continue;
-        const r = child.getBoundingClientRect();
-        if (r.height <= 0 && r.width <= 0) continue;
-        childCount += 1;
-      }
-
-      /* فجوة ثابتة من أساس ٣١١ (نسبية لحجم الخط) — ممنوع تمديدها لبلوغ امتلاء */
-      const gap = size * MUSHAF_BASELINE_GAP_PER_EM;
-      const gaps = Math.max(0, childCount - 1);
-      container.style.gap = `${gap.toFixed(2)}px`;
-      container.style.paddingTop = "0";
-      container.style.paddingBottom = "0";
-
+      const blockH = container.clientHeight || 1;
       let contentTop = Infinity;
       let contentBot = -Infinity;
-      for (const child of container.children) {
-        if (!(child instanceof HTMLElement)) continue;
+      for (const child of container.querySelectorAll<HTMLElement>("[data-grid-slot]")) {
         const r = child.getBoundingClientRect();
         if (r.height <= 0 && r.width <= 0) continue;
         contentTop = Math.min(contentTop, r.top);
         contentBot = Math.max(contentBot, r.bottom);
       }
-      const naturalH = Number.isFinite(contentTop) && Number.isFinite(contentBot)
+      const cr = container.getBoundingClientRect();
+      const spanH = Number.isFinite(contentTop) && Number.isFinite(contentBot)
         ? Math.max(0, contentBot - contentTop)
         : 0;
-
-      const lineH = size * LINE_HEIGHT_EM;
-      const topOffsetPx = MUSHAF_LAYOUT_BASELINE.topOffsetPct * slotHeight;
-      const leftover = Math.max(0, usableH - naturalH);
-
-      let marginTop: number;
-      let marginBot: number;
-      if (isOpening) {
-        /* تمركز رأسي: المتبقي ٤٥٪ أعلى / ٥٥٪ أسفل — بلا سقف ٢٪ يفرّغ الأسفل */
-        marginTop = EDGE_GAP_PX + leftover * 0.45;
-        marginBot = EDGE_GAP_PX + leftover * 0.55;
-        container.style.justifyContent = "flex-start";
-      } else {
-        marginTop = EDGE_GAP_PX + topOffsetPx;
-        marginBot = EDGE_GAP_PX + Math.max(0, leftover - topOffsetPx);
-        container.style.justifyContent = "flex-start";
-      }
-
-      /* احتضان الصندوق للمحتوى — الفراغ خارج الكتلة لا يُحسب امتلاءً داخليًا */
-      container.style.height = `${Math.max(naturalH, 1).toFixed(2)}px`;
-      container.style.marginTop = `${marginTop.toFixed(2)}px`;
-      container.style.marginBottom = `${marginBot.toFixed(2)}px`;
-      container.style.paddingTop = "0";
-      container.style.paddingBottom = "0";
-      container.style.flexGrow = "0";
-      container.style.flexShrink = "0";
-      container.style.flexBasis = "auto";
-      container.style.transform = "";
-
-      const fillRatio = slotHeight > 0 ? naturalH / slotHeight : 0;
-      const boxFill = 1;
-      const topGapRatio = slotHeight > 0 ? marginTop / slotHeight : 0;
-      const pitchEm = size > 0 ? (lineH + gap) / size : 0;
+      const topGapRatio = Number.isFinite(contentTop)
+        ? Math.max(0, contentTop - cr.top) / blockH
+        : 0;
 
       container.dataset.mf2Size = size.toFixed(2);
       container.dataset.mf2Lh = LINE_HEIGHT_EM.toFixed(3);
-      container.dataset.mf2Gap = gap.toFixed(2);
+      container.dataset.mf2Gap = "0";
       container.dataset.mf2Bind = bound;
-      container.dataset.mf2Fill = fillRatio.toFixed(3);
-      container.dataset.mf2BoxFill = boxFill.toFixed(3);
-      container.dataset.mf2Target = String(targetFill);
-      container.dataset.mf2MaxFill = fillRatio.toFixed(3);
-      container.dataset.mf2PitchEm = pitchEm.toFixed(3);
+      container.dataset.mf2Fill = (spanH / blockH).toFixed(3);
+      container.dataset.mf2BoxFill = "1";
       container.dataset.mf2TopGap = topGapRatio.toFixed(3);
       container.dataset.mf2Opening = isOpening ? "1" : "0";
-      container.dataset.mf2Gaps = String(gaps);
+      container.dataset.mf2Grid = "1";
 
       setPageFontSize(size);
       setPageLineHeightEm(LINE_HEIGHT_EM);
@@ -431,11 +366,9 @@ export function MushafPageV2({
       container.style.gap = "";
       container.style.justifyContent = "";
       container.style.transform = "";
-      container.style.flexGrow = "";
-      container.style.flexShrink = "";
-      container.style.flexBasis = "";
       container.style.removeProperty("--mf2-lh");
       container.style.removeProperty("--mf2-banner-h");
+      container.style.removeProperty("--mf2-slot-h-pct");
       for (const el of ayahLineRefs.current.values()) {
         el?.style.removeProperty("--mf2-line-sx");
       }
@@ -478,16 +411,46 @@ export function MushafPageV2({
     isOpeningPage ? "mf2-lines--opening" : "",
   ].filter(Boolean).join(" ");
 
+  const slotStyle = (gridSlot: number): CSSProperties => {
+    const idx = Math.max(0, Math.min(MUSHAF_GRID.slotCount - 1, gridSlot - 1));
+    const baseline = MUSHAF_GRID.baselinesPct[idx] ?? ((idx + 0.5) / MUSHAF_GRID.slotCount) * 100;
+    const h = MUSHAF_GRID.slotHeightPct;
+    return {
+      position: "absolute",
+      left: 0,
+      right: 0,
+      top: `${baseline}%`,
+      height: `${h}%`,
+      transform: "translateY(-50%)",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: isOpeningPage ? "center" : undefined,
+      width: "100%",
+      boxSizing: "border-box",
+      margin: 0,
+      padding: 0,
+    };
+  };
+
   const renderAyahLine = (row: Extract<MushafPageLayout["rows"][number], { kind: "line" }>) => {
     const lineWords = showAyahNumbers
       ? row.words
       : row.words.filter((w) => w.charType !== "end");
+    const wrap = (inner: ReactNode) => (
+      <div
+        key={`l-${row.lineNumber}`}
+        data-grid-slot={row.gridSlot}
+        style={slotStyle(row.gridSlot)}
+        className="mf2-grid-slot mf2-grid-slot--line"
+      >
+        {inner}
+      </div>
+    );
 
     /** دقة QPC + visualOnly: سطر متصل واحد بلا عزل bidi بين الكلمات */
     if (!useUnicodeSafe && visualOnly) {
-      return (
+      return wrap(
         <div
-          key={`l-${row.lineNumber}`}
           ref={(el) => {
             if (el) ayahLineRefs.current.set(row.lineNumber, el);
             else ayahLineRefs.current.delete(row.lineNumber);
@@ -499,13 +462,12 @@ export function MushafPageV2({
           <span className="mf2-line__run">
             {lineWords.map((w) => wordRenderer(w))}
           </span>
-        </div>
+        </div>,
       );
     }
 
-    return (
+    return wrap(
       <div
-        key={`l-${row.lineNumber}`}
         ref={(el) => {
           if (el) ayahLineRefs.current.set(row.lineNumber, el);
           else ayahLineRefs.current.delete(row.lineNumber);
@@ -566,7 +528,7 @@ export function MushafPageV2({
             </span>
           );
         })}
-      </div>
+      </div>,
     );
   };
 
@@ -577,6 +539,7 @@ export function MushafPageV2({
         className={linesClass}
         data-sizing-lines="ayah"
         data-measurement-exclusions="metric-only"
+        data-mushaf-grid="absolute"
         style={{
           opacity: fitted ? 1 : 0,
           fontSize: !useUnicodeSafe && pageFontSize ? `${pageFontSize}px` : undefined,
@@ -592,22 +555,50 @@ export function MushafPageV2({
           if (row.kind === "surah-header") {
             const key = `h-${row.surah.id}-${idx}`;
             return (
-              <SurahHeaderBanner
-                key={key}
-                chapter={row.surah}
-                blockRef={(el) => {
-                  if (el) headerBlockRefs.current.set(key, el);
-                  else headerBlockRefs.current.delete(key);
-                }}
-                titleRef={(el) => {
-                  if (el) surahTitleRefs.current.set(key, el);
-                  else surahTitleRefs.current.delete(key);
-                }}
-                basmalaRef={(el) => {
-                  if (el) basmalaRefs.current.set(key, el);
-                  else basmalaRefs.current.delete(key);
-                }}
-              />
+              <Fragment key={key}>
+                <div
+                  data-grid-slot={row.bannerSlot}
+                  className="mf2-grid-slot mf2-grid-slot--banner"
+                  style={slotStyle(row.bannerSlot)}
+                  ref={(el) => {
+                    if (el) headerBlockRefs.current.set(key, el);
+                    else headerBlockRefs.current.delete(key);
+                  }}
+                >
+                  <div className="mf2-surah-header" data-drawn-block="surah-header">
+                    <div className="mf2-surah-header__frame">
+                      <SurahBanner
+                        label={drawnSurahTitleText(row.surah.nameArabic, row.surah.id)}
+                        titleRef={(el) => {
+                          if (el) surahTitleRefs.current.set(key, el);
+                          else surahTitleRefs.current.delete(key);
+                        }}
+                        className="mf2-surah-header__cartouche"
+                      />
+                    </div>
+                  </div>
+                </div>
+                {row.basmalaSlot != null && row.surah.bismillahPre && (
+                  <div
+                    data-grid-slot={row.basmalaSlot}
+                    className="mf2-grid-slot mf2-grid-slot--basmala"
+                    style={slotStyle(row.basmalaSlot)}
+                  >
+                    <div
+                      className="mf2-bismillah"
+                      lang="ar"
+                      dir="rtl"
+                      data-sizing-line="basmala"
+                      ref={(el) => {
+                        if (el) basmalaRefs.current.set(key, el);
+                        else basmalaRefs.current.delete(key);
+                      }}
+                    >
+                      {DRAWN_BASMALA_TEXT}
+                    </div>
+                  </div>
+                )}
+              </Fragment>
             );
           }
           return renderAyahLine(row);

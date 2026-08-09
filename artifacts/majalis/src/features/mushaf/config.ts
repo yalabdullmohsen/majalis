@@ -7,6 +7,7 @@
  */
 
 import baselineJson from "./mushaf-baseline.json";
+import gridJson from "./mushaf-grid.json";
 
 export type MushafLayoutBaseline = {
   referencePage: number;
@@ -33,7 +34,15 @@ export const MUSHAF_LAYOUT_BASELINE: MushafLayoutBaseline = {
   surahBannerHeightPx: baselineJson.surahBannerHeightPx,
 };
 
-/** فجوة الأسطر النسبية (px لكل px من حجم الخط) من أساس ٣١١ */
+/** شبكة خطوط الأساس الـ١٥ — تموضع مطلق فقط (لا flex توزيعي) */
+export const MUSHAF_GRID = {
+  referencePage: gridJson.referencePage,
+  slotCount: gridJson.slotCount,
+  baselinesPct: gridJson.baselinesPct as readonly number[],
+  slotHeightPct: gridJson.slotHeightPct,
+} as const;
+
+/** فجوة الأسطر النسبية (px لكل px من حجم الخط) من أساس ٣١١ — للتوافق مع البوابات القديمة */
 export const MUSHAF_BASELINE_GAP_PER_EM =
   MUSHAF_LAYOUT_BASELINE.lineGapPx / MUSHAF_LAYOUT_BASELINE.fontSizePx;
 

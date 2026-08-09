@@ -51,21 +51,30 @@ export type MushafChapter = {
   pages: [number, number];
 };
 
-/** عنصر واحد ضمن الشبكة الرأسية لصفحة (15 خانة كحد أقصى): إما سطر آيات
- * حقيقي (له line_number من البيانات)، أو منطقة رأس سورة زخرفية تحجز
- * عدد الأسطر الفارغة قبل أول سطر آيات فعلي لتلك السورة على هذه الصفحة. */
+/** عنصر واحد ضمن الشبكة الرأسية لصفحة (15 خانة): سطر آيات أو شارة/بسملة
+ * كلٌّ في خانة مستقلة (`gridSlot` ١…١٥) على خط أساس mushaf-grid.json. */
 export type MushafPageRow =
-  | { kind: "line"; lineNumber: number; words: QpcWord[] }
-  | { kind: "surah-header"; surah: MushafChapter; spanRows: number };
+  | { kind: "line"; lineNumber: number; gridSlot: number; words: QpcWord[] }
+  | {
+      kind: "surah-header";
+      surah: MushafChapter;
+      spanRows: number;
+      /** خانة الشارة (١…١٥) */
+      bannerSlot: number;
+      /** خانة البسملة إن وُجدت */
+      basmalaSlot: number | null;
+    };
 
 export type MushafPageLayout = {
   pageNumber: number;
   juzNumber: number;
   rows: MushafPageRow[];
   surahsOnPage: MushafChapter[];
+  /** سور تبدأ فعليًا في هذه الصفحة (آية ١) — لرأس الصفحة */
+  surahsStartingOnPage: MushafChapter[];
   /**
    * تخطيط موحّد لكل الصفحات (بما فيها 1 و2): تحجيم من أعرض سطر،
-   * الكتلة تُثبَّت أعلى الفجوة (تحت الرأس) دون تمركز يضخّم الفراغ العلوي.
+   * تموضع مطلق على شبكة خطوط الأساس الـ١٥.
    */
   layoutMode: "standard";
   /** عدد الأسطر الفعلية ذات الكلمات (من mushaf=1) — للتحجيم */
@@ -240,53 +249,77 @@ export async function loadMushafPage(pageNumber: number): Promise<MushafPageLayo
 
   const usedLines = [...lineWords.keys()].sort((a, b) => a - b);
   const maxLine = usedLines.length ? Math.max(...usedLines) : 15;
-
-  const rows: MushafPageRow[] = [];
+  const isOpening = pageNumber === 1 || pageNumber === 2;
   const headerStartLines = [...surahStartsOnPage.entries()].sort((a, b) => a[1] - b[1]);
 
+  const headers: Extract<MushafPageRow, { kind: "surah-header" }>[] = [];
   for (const [surahNum, firstLine] of headerStartLines) {
     const chapter = chapters.get(surahNum);
     if (!chapter) continue;
-    // الفجوة = الأسطر الفارغة بين آخر سطر آيات سابق وأول سطر للسورة الجديدة
-    // (لا firstLine-cursor من أول السورة السابقة — كان يضخّم spanRows ويسبّب تراكبًا)
     const prevUsed = usedLines.filter((ln) => ln < firstLine).pop() ?? 0;
     const gap = firstLine - prevUsed - 1;
     const spanRows = Math.max(gap, chapter.bismillahPre ? 2 : 1);
-    // spanRows معلوماتي لخانات المصحف المطبوع — العرض يستخدم ارتفاعًا طبيعيًا للرأس
-    rows.push({ kind: "surah-header", surah: chapter, spanRows });
+    let bannerSlot: number;
+    let basmalaSlot: number | null = null;
+    if (isOpening) {
+      /* ص١–٢: الشارة في الخانة ٣، البسملة في ٤ إن وُجدت، ثم الأسطر تباعًا */
+      bannerSlot = 3;
+      if (chapter.bismillahPre) basmalaSlot = 4;
+    } else {
+      bannerSlot = Math.max(1, prevUsed + 1);
+      if (chapter.bismillahPre && gap >= 2) {
+        basmalaSlot = bannerSlot + 1;
+      } else if (chapter.bismillahPre && gap === 1) {
+        basmalaSlot = null;
+      }
+    }
+    headers.push({ kind: "surah-header", surah: chapter, spanRows, bannerSlot, basmalaSlot });
   }
 
-  for (let ln = 1; ln <= maxLine; ln++) {
-    if (lineWords.has(ln)) {
-      rows.push({ kind: "line", lineNumber: ln, words: lineWords.get(ln)! });
+  const lineRows: Extract<MushafPageRow, { kind: "line" }>[] = [];
+  if (isOpening) {
+    const startSlot = headers[0]?.basmalaSlot != null ? 5 : 4;
+    usedLines.forEach((ln, i) => {
+      lineRows.push({
+        kind: "line",
+        lineNumber: ln,
+        gridSlot: startSlot + i,
+        words: lineWords.get(ln)!,
+      });
+    });
+  } else {
+    for (let ln = 1; ln <= maxLine; ln++) {
+      if (lineWords.has(ln)) {
+        lineRows.push({
+          kind: "line",
+          lineNumber: ln,
+          gridSlot: ln,
+          words: lineWords.get(ln)!,
+        });
+      }
     }
   }
-  // أعد ترتيب rows زمنيًا صحيحًا: رؤوس السور يجب أن تسبق أول سطر آياتها،
-  // لا أن تُذيَّل بعد كل الأسطر — أعد البناء بدمج مرتّب حسب "أول سطر تالٍ".
+
   const merged: MushafPageRow[] = [];
-  const headerQueue = [...headerStartLines];
-  const lineRows = rows.filter((r): r is Extract<MushafPageRow, { kind: "line" }> => r.kind === "line");
+  const headerQueue = [...headers];
   for (const lineRow of lineRows) {
-    while (headerQueue.length && headerQueue[0][1] <= lineRow.lineNumber) {
-      const [surahNum] = headerQueue.shift()!;
-      const chapter = chapters.get(surahNum);
-      const headerRow = rows.find(
-        (r): r is Extract<MushafPageRow, { kind: "surah-header" }> => r.kind === "surah-header" && r.surah.id === surahNum,
-      );
-      if (chapter && headerRow) merged.push(headerRow);
+    while (
+      headerQueue.length &&
+      (isOpening
+        ? headerQueue[0]!.bannerSlot <= lineRow.gridSlot
+        : surahStartsOnPage.get(headerQueue[0]!.surah.id)! <= lineRow.lineNumber)
+    ) {
+      merged.push(headerQueue.shift()!);
     }
     merged.push(lineRow);
   }
-  // رؤوس سور بلا أي سطر آيات تالٍ على هذه الصفحة (نادر) تُضاف في النهاية.
-  for (const [surahNum] of headerQueue) {
-    const headerRow = rows.find(
-      (r): r is Extract<MushafPageRow, { kind: "surah-header" }> => r.kind === "surah-header" && r.surah.id === surahNum,
-    );
-    if (headerRow) merged.push(headerRow);
-  }
+  for (const h of headerQueue) merged.push(h);
 
   const surahsOnPage = [...new Set(verses.map((v) => v.surahNumber))]
     .map((n) => chapters.get(n))
+    .filter((c): c is MushafChapter => !!c);
+  const surahsStartingOnPage = headerStartLines
+    .map(([n]) => chapters.get(n))
     .filter((c): c is MushafChapter => !!c);
 
   return {
@@ -294,6 +327,7 @@ export async function loadMushafPage(pageNumber: number): Promise<MushafPageLayo
     juzNumber: verses[0]?.juzNumber ?? 1,
     rows: merged,
     surahsOnPage,
+    surahsStartingOnPage,
     layoutMode: "standard",
     ayahLineCount: usedLines.length,
     hizbNumber: verses[0]?.hizbNumber ?? 1,

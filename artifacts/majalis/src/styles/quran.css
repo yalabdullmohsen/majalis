@@ -2548,10 +2548,10 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
   pointer-events: none;
 }
 .quran-shell--ayah .mf2-lines {
-  /* الارتفاع يضبطه MushafPageV2 — بلا max-height:100% على أب غير محدد */
-  flex: 0 0 auto;
+  /* كتلة الصفحة = شبكة مطلقة ١٥ خانة — تملأ الفجوة بين الرأس والذيل */
+  flex: 1 1 auto;
   min-height: 0;
-  height: auto;
+  height: 100%;
   max-height: none;
   width: 100%;
   margin: 0;

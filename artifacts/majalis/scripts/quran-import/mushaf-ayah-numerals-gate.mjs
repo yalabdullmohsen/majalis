@@ -93,14 +93,17 @@ async function assertSource() {
     issues.push("لون مجسم النهاية ليس mushaf-gold-strong");
   }
   const banner = await readFile(path.join(ROOT, "src/components/quran/SurahBanner.tsx"), "utf8");
-  if (!/<pattern/.test(banner) || !/Octofoil/.test(banner)) {
-    issues.push("SurahBanner بلا نقش pattern/وردة ثمانية");
+  if (/<pattern/.test(banner)) {
+    issues.push("SurahBanner ما زال يستخدم <pattern> مكررًا");
   }
-  if (!/data-ornament="arabesque"/.test(banner)) {
-    issues.push("SurahBanner بلا data-ornament=arabesque");
+  if (!/Octofoil/.test(banner) || !/SpiralArm/.test(banner)) {
+    issues.push("SurahBanner بلا وردة ثمانية/فرعين لولبيين");
   }
-  if (!/MUSHAF_LAYOUT_BASELINE/.test(pageV2)) {
-    issues.push("MushafPageV2 لا يستخدم MUSHAF_LAYOUT_BASELINE من ص٣١١");
+  if (!/data-ornament="wing-ref"/.test(banner)) {
+    issues.push("SurahBanner بلا data-ornament=wing-ref");
+  }
+  if (!/MUSHAF_LAYOUT_BASELINE/.test(pageV2) || !/MUSHAF_GRID/.test(pageV2)) {
+    issues.push("MushafPageV2 لا يستخدم MUSHAF_LAYOUT_BASELINE/MUSHAF_GRID من ص٣١١");
   }
   return issues;
 }

@@ -119,7 +119,7 @@ assert.match(quranCss, /\.mpv-toolbar--ayah\s+\.mpv-toolbar__btn\s*\{[\s\S]*?whi
 assert.match(quranCss, /\.qs-mushaf-frame--ayah/);
 
 const mushafV2 = readFileSync(resolve(appRoot, "src/styles/mushaf-v2.css"), "utf8");
-const bismillah = mushafV2.match(/\.mf2-bismillah\s*\{[^}]+\}/);
+const bismillah = mushafV2.match(/(?:^|\n)\.mf2-bismillah\s*\{[^}]+\}/);
 assert.ok(bismillah, ".mf2-bismillah معرّف");
 assert.match(bismillah[0], /white-space:\s*nowrap/);
 assert.ok(

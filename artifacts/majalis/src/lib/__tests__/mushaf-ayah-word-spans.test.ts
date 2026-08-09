@@ -67,13 +67,19 @@ function layoutFromPageJson(pageNum: number): MushafPageLayout {
 
   const rows: MushafPageRow[] = [...lineWords.keys()]
     .sort((a, b) => a - b)
-    .map((ln) => ({ kind: "line" as const, lineNumber: ln, words: lineWords.get(ln)! }));
+    .map((ln) => ({
+      kind: "line" as const,
+      lineNumber: ln,
+      gridSlot: ln,
+      words: lineWords.get(ln)!,
+    }));
 
   return {
     pageNumber: pageNum,
     juzNumber: verses[0]?.juz_number ?? 1,
     rows,
     surahsOnPage: [],
+    surahsStartingOnPage: [],
     layoutMode: "standard",
     ayahLineCount: lineWords.size,
     hizbNumber: 1,
