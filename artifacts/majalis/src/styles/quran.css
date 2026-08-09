@@ -2244,20 +2244,23 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
   justify-content: space-between;
   align-items: center;
   flex-shrink: 0;
-  min-height: 0.85rem;
-  padding: 0.02rem 0.35rem 0.04rem;
-  font-size: 0.5rem;
+  min-height: 1rem;
+  padding:
+    calc(var(--inset-top) + 12px)
+    max(0.35rem, var(--inset-right))
+    0
+    max(0.35rem, var(--inset-left));
+  font-size: 15px;
   font-weight: 400;
-  font-family: var(--font-ui, "Alexandria", "Noto Naskh Arabic", sans-serif);
-  color: var(--ayah-meta, var(--color-mushaf-meta, #A89060));
-  letter-spacing: 0.01em;
+  font-family: "Amiri Quran", "Amiri", "Scheherazade New", "Traditional Arabic", serif;
+  color: var(--color-mushaf-meta, #8F6A35);
+  letter-spacing: 0;
   background: transparent;
   border: none;
   z-index: 32;
   pointer-events: none;
-  /* عائم — لا يزيح كتلة النص */
   position: absolute;
-  top: max(0.02rem, var(--inset-top));
+  top: 0;
   inset-inline: 0;
   width: 100%;
   box-sizing: border-box;
@@ -2268,7 +2271,7 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
   white-space: nowrap;
   max-width: 52%;
   font-weight: 400;
-  opacity: 0.92;
+  opacity: 1;
 }
 .mpv-ayah-header__surah {
   overflow: hidden;
@@ -2276,18 +2279,18 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
   white-space: nowrap;
   max-width: 46%;
   font-weight: 400;
-  opacity: 0.92;
-  font-family: "Amiri", "Noto Naskh Arabic", var(--font-display, serif);
-  font-size: 0.56rem;
-  color: var(--ayah-meta, var(--color-mushaf-meta, #A89060));
+  opacity: 1;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
   text-align: start;
 }
 
 /* عائم تحت رأس الجزء/الحزب — لا يتجاوز العرض ولا يتراكب مع الرأس */
 .mpv-toolbar.mpv-toolbar--ayah {
   position: absolute;
-  /* تحت .mpv-ayah-header مع فجوة واضحة (≥0.5rem) — لا تراكب مع رأس الجزء/الحزب */
-  top: calc(var(--inset-top) + 2.55rem);
+  /* تحت رأس الجزء/السورة مع فجوة واضحة — لا تراكب */
+  top: calc(var(--inset-top) + 2.75rem);
   inset-inline: 0.35rem;
   left: auto;
   right: auto;
@@ -2560,33 +2563,56 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
 .quran-shell--ayah .mf2-surah-header__frame {
   border: none;
   background: transparent;
-  color: var(--ayah-badge-ink, var(--color-mushaf-gold, #B08A3E));
+  color: var(--color-mushaf-gold-strong, #A67C3D);
 }
-.quran-shell--ayah .mf2-surah-header__name {
-  color: var(--ayah-badge-ink, var(--color-mushaf-gold, #B08A3E));
+.quran-shell--ayah .mf2-surah-header__name,
+.quran-shell--ayah .mf2-surah-banner__name {
+  color: var(--color-mushaf-ink, #161513);
   font-weight: 400;
 }
 .mpv-ayah-footer {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: center;
-  gap: 0;
+  justify-content: space-between;
+  gap: 0.5rem;
   flex-shrink: 0;
   width: 100%;
-  padding: 0.02rem 0.35rem 0.04rem;
+  padding:
+    0
+    max(0.35rem, var(--inset-right))
+    calc(var(--inset-bottom) + 8px)
+    max(0.35rem, var(--inset-left));
   background: transparent;
   border: none;
   z-index: 25;
   box-sizing: border-box;
-  /* عائم — لا يزيح كتلة النص */
   position: absolute;
-  bottom: max(0.02rem, var(--inset-bottom));
+  bottom: 0;
   inset-inline: 0;
   direction: rtl;
   pointer-events: none;
+  color: var(--color-mushaf-meta, #8F6A35);
+  font-family: "Amiri Quran", "Amiri", "Scheherazade New", "Traditional Arabic", serif;
+  font-size: 14px;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1.15;
+  white-space: nowrap;
 }
-/* خرطوش رقم الصفحة — أسفل الوسط، مستطيل بحواف مستديرة وحلية طرفية */
+.mpv-ayah-footer__meta {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: start;
+  color: var(--color-mushaf-meta, #8F6A35);
+  pointer-events: none;
+}
+.mpv-ayah-footer__meta:empty {
+  visibility: hidden;
+}
+/* خرطوش رقم الصفحة — طرف ثابت (يسار في RTL عبر margin-inline-start:auto) */
 .mpv-ayah-page-badge {
   appearance: none;
   position: relative;
@@ -2594,13 +2620,14 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
   align-items: center;
   justify-content: center;
   flex: 0 0 auto;
+  margin-inline-start: auto;
   min-width: 3.2rem;
   min-height: 1.35rem;
   padding: 0.08rem 0.95rem;
   border: none;
   border-radius: 0;
   background: transparent;
-  color: var(--ayah-badge-ink, var(--color-mushaf-gold, #8B6914));
+  color: var(--color-mushaf-numeral, #6B4E2A);
   font-family: "Amiri", "Noto Naskh Arabic", var(--font-display, serif);
   font-size: 0.68rem;
   font-weight: 600;
@@ -2617,7 +2644,7 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
   width: 100%;
   height: 100%;
   pointer-events: none;
-  color: var(--ayah-badge-ink, var(--color-mushaf-gold, #8B6914));
+  color: var(--color-mushaf-gold-strong, #A67C3D);
 }
 .mpv-ayah-page-badge__num {
   position: relative;
@@ -2625,7 +2652,7 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
   font-variant-numeric: normal;
   font-feature-settings: "tnum" 0, "lnum" 0;
   letter-spacing: 0.02em;
-  color: var(--color-mushaf-gold, #8B6914);
+  color: var(--color-mushaf-numeral, #6B4E2A);
   unicode-bidi: isolate;
   direction: ltr;
   text-align: center;
