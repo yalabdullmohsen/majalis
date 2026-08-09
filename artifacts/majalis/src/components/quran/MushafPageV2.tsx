@@ -235,8 +235,8 @@ export function MushafPageV2({
     /** أساس line-height ضمن 1.0–1.1؛ يُرفع حتى سقف pitch 1.6 لبلوغ هدف الامتلاء */
     const LINE_HEIGHT_EM = 1.05;
     const REF_PX = 100;
-    /** هدف امتلاء موحّد — الصفحات قليلة الأسطر تترك الفراغ فوق/تحت طبيعيًا */
-    const TARGET_BLOCK_FILL = 0.94;
+    /** هدف امتلاء موحّد كـ #990 — الصفحات قليلة الأسطر تترك الفراغ فوق/تحت طبيعيًا */
+    const TARGET_BLOCK_FILL = 0.92;
     const LH_CAP = 1.58;
     /** تسوية حتى انحراف ≤2% لكل أسطر الآيات القابلة للتمديد */
     const MIN_LINE_FILL = 0.98;

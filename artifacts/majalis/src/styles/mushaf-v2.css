@@ -252,7 +252,7 @@ html[data-theme="dark"] .mf2-sajda-badge {
   border-color: rgba(232,201,122,.35);
 }
 
-/* رأس سورة زخرفي — ارتفاع ≈ 1.6× سطر الآية؛ لا يشارك flex مع أسطر الآيات */
+/* رأس سورة زخرفي — ارتفاع ≈ 1.6× ارتفاع سطر الآية (font×lh) */
 .mf2-surah-header {
   display: flex;
   flex-direction: column;
@@ -276,14 +276,15 @@ html[data-theme="dark"] .mf2-sajda-badge {
   justify-content: center;
   text-align: center;
   padding: 0;
-  height: 1.6em;
-  min-height: 1.6em;
+  /* 1.6 × ارتفاع السطر = 1.6 × (--mf2-lh × 1em) — أطول بوضوح من 1.6em خام */
+  height: calc(var(--mf2-lh, 1.1) * 1.6em);
+  min-height: calc(var(--mf2-lh, 1.1) * 1.6em);
   border: none;
   background: transparent;
   color: var(--color-mushaf-gold, #8B6914);
   box-sizing: border-box;
 }
-/* شارة عريضة: SVG واحد — الوسط يتمدد والطرفان بعرض ثابت نسبيًا */
+/* شريط بيج ممتلئ + إطار ذهبي متوسط؛ الطرفان داخل الإطار؛ وسط 45% متمركز */
 .mf2-surah-badge {
   position: absolute;
   inset: 0;
@@ -294,12 +295,50 @@ html[data-theme="dark"] .mf2-sajda-badge {
   color: var(--color-mushaf-gold, #8B6914);
   overflow: hidden;
 }
-.mf2-surah-badge__svg {
+.mf2-surah-badge__bar {
   position: absolute;
   inset: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: center;
+  box-sizing: border-box;
+  /* بيج أغمق من ورقة الصفحة — صلب بلا شفافية */
+  background: #D4C4A8;
+  border: 2.5px solid #8B6914;
+  border-radius: 2px;
+  box-shadow: inset 0 0 0 1px #C9B07A;
+  overflow: hidden;
+}
+.mf2-surah-badge__end {
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: none;
+  height: 100%;
+  display: flex;
+  align-items: stretch;
+  justify-content: stretch;
+  overflow: hidden;
+  background: #D4C4A8;
+}
+.mf2-surah-badge__end-svg {
+  display: block;
   width: 100%;
   height: 100%;
-  display: block;
+}
+.mf2-surah-badge__mid {
+  flex: 0 0 45%;
+  width: 45%;
+  max-width: 45%;
+  height: calc(100% - 0.28em);
+  margin-block: 0.14em;
+  align-self: center;
+  box-sizing: border-box;
+  /* أفتح من الشريط — متمركزة بـ flex (طرفان متساويان) */
+  background: #F0E8DA;
+  border: 1.25px solid #8B6914;
+  border-radius: 1px;
+  z-index: 1;
 }
 .mf2-surah-header__cartouche {
   position: absolute;
@@ -312,20 +351,21 @@ html[data-theme="dark"] .mf2-sajda-badge {
 }
 .mf2-surah-header__name {
   position: relative;
-  z-index: 1;
-  /* خط مصحف عثماني مشكّل — قريب من حجم أسطر الآيات */
+  z-index: 2;
+  /* رسم عثماني مشكّل — حجم قريب من أسطر الآيات؛ تشكيل غير مقصوص */
   font-family: var(--font-quran, "Amiri Quran", "Amiri", "Scheherazade New", serif);
-  font-size: 0.95em;
+  font-size: 1em;
   font-weight: 400;
   color: var(--color-mushaf-gold, #8B6914);
   letter-spacing: normal;
-  line-height: 1.15;
+  line-height: 1.35;
   white-space: nowrap;
-  max-width: 45%;
-  overflow: hidden;
+  max-width: calc(45% - 0.7em);
+  overflow: visible;
   text-overflow: clip;
-  padding-block: 0.1em;
-  padding-inline: 0.2em;
+  padding-block: 0.18em;
+  padding-inline: 0.35em;
+  box-sizing: border-box;
 }
 html[data-theme="dark"] .mf2-surah-header__name { color: #E8C97A; }
 .quran-shell--night .mf2-surah-header__name { color: #E8C97A; }

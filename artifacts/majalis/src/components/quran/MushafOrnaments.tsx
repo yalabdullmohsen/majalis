@@ -4,110 +4,98 @@
  */
 import { useId } from "react";
 
-/** نقش طرف نباتي كثيف + وردة — داخل viewBox ثابت */
-function floralEndPaths(gradId: string) {
+/** طرف نباتي كثيف ممتلئ + وردة مركزية كبيرة — داخل الإطار */
+function SurahBadgeEnd({ mirror }: { mirror?: boolean }) {
+  const uid = useId().replace(/:/g, "");
+  const g = `${uid}-g`;
+  const petals = [0, 40, 80, 120, 160, 200, 240, 280, 320];
   return (
-    <>
-      <rect x="0" y="0" width="88" height="40" fill="var(--color-mushaf-badge-bg, #F3EBE0)" />
-      <g fill="none" stroke={`url(#${gradId})`} strokeWidth="0.65" opacity="0.85">
-        <path d="M3 20 C9 6 21 6 28 20 C21 34 9 34 3 20Z" />
-        <path d="M10 20 C15 11 23 11 28 20 C23 29 15 29 10 20Z" opacity="0.75" />
-        <path d="M26 20 C33 8 44 8 51 20 C44 32 33 32 26 20Z" />
-        <path d="M34 20 C39 13 46 13 51 20 C46 27 39 27 34 20Z" opacity="0.7" />
-        <path d="M24 9 C32 4 40 6 46 12" />
-        <path d="M24 31 C32 36 40 34 46 28" />
-        <path d="M8 12 C14 8 18 10 22 14" opacity="0.65" />
-        <path d="M8 28 C14 32 18 30 22 26" opacity="0.65" />
-        <path d="M48 11 C52 8 56 10 58 14 M48 29 C52 32 56 30 58 26" opacity="0.55" />
+    <svg
+      className="mf2-surah-badge__end-svg"
+      viewBox="0 0 120 56"
+      width="100%"
+      height="100%"
+      preserveAspectRatio="none"
+      aria-hidden="true"
+      focusable="false"
+      style={mirror ? { transform: "scaleX(-1)" } : undefined}
+    >
+      <defs>
+        <linearGradient id={g} x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stopColor="#C9B07A" />
+          <stop offset="45%" stopColor="#8B6914" />
+          <stop offset="100%" stopColor="#C9B07A" />
+        </linearGradient>
+      </defs>
+      {/* حشو بيج الطرف */}
+      <rect x="0" y="0" width="120" height="56" fill="#D4C4A8" />
+      {/* أوراق/سيقان ممتلئة تغطي المساحة بالكامل حول الوردة */}
+      <g fill={`url(#${g})`}>
+        <path d="M0 28 C10 2 38 0 58 16 C48 6 28 2 12 12 C5 18 1 24 0 28Z" opacity="0.95" />
+        <path d="M0 28 C10 54 38 56 58 40 C48 50 28 54 12 44 C5 38 1 32 0 28Z" opacity="0.95" />
+        <path d="M62 28 C72 8 96 6 118 18 C108 10 90 8 74 18 C67 22 63 26 62 28Z" opacity="0.95" />
+        <path d="M62 28 C72 48 96 50 118 38 C108 46 90 48 74 38 C67 34 63 30 62 28Z" opacity="0.95" />
+        <path d="M8 8 C28 0 52 2 70 14 C56 4 34 0 16 10 C11 12 8 10 8 8Z" opacity="0.9" />
+        <path d="M8 48 C28 56 52 54 70 42 C56 52 34 56 16 46 C11 44 8 46 8 48Z" opacity="0.9" />
+        <path d="M50 6 C70 0 94 2 112 12 C98 4 76 0 58 8 C53 10 50 8 50 6Z" opacity="0.88" />
+        <path d="M50 50 C70 56 94 54 112 44 C98 52 76 56 58 48 C53 46 50 48 50 50Z" opacity="0.88" />
+        <ellipse cx="18" cy="14" rx="9" ry="5.5" transform="rotate(-40 18 14)" />
+        <ellipse cx="18" cy="42" rx="9" ry="5.5" transform="rotate(40 18 42)" />
+        <ellipse cx="36" cy="10" rx="8" ry="4.8" transform="rotate(-25 36 10)" />
+        <ellipse cx="36" cy="46" rx="8" ry="4.8" transform="rotate(25 36 46)" />
+        <ellipse cx="84" cy="12" rx="8" ry="4.8" transform="rotate(25 84 12)" />
+        <ellipse cx="84" cy="44" rx="8" ry="4.8" transform="rotate(-25 84 44)" />
+        <ellipse cx="102" cy="16" rx="7.5" ry="4.5" transform="rotate(35 102 16)" />
+        <ellipse cx="102" cy="40" rx="7.5" ry="4.5" transform="rotate(-35 102 40)" />
+        <ellipse cx="28" cy="28" rx="11" ry="7" opacity="0.65" />
+        <ellipse cx="92" cy="28" rx="11" ry="7" opacity="0.65" />
       </g>
-      <circle
-        cx="70"
-        cy="20"
-        r="10"
-        fill="color-mix(in srgb, var(--color-mushaf-paper, #F7F0E4) 55%, #fff)"
-        stroke={`url(#${gradId})`}
-        strokeWidth="0.95"
-      />
-      <circle cx="70" cy="20" r="6.2" fill="none" stroke={`url(#${gradId})`} strokeWidth="0.55" opacity="0.75" />
-      <circle cx="70" cy="20" r="2.4" fill={`url(#${gradId})`} opacity="0.55" />
-      <path
-        d="M70 11.2 Q74 16 70 20 Q66 16 70 11.2Z M70 28.8 Q74 24 70 20 Q66 24 70 28.8Z M61.2 20 Q66 24 70 20 Q66 16 61.2 20Z M78.8 20 Q74 24 70 20 Q74 16 78.8 20Z"
-        fill={`url(#${gradId})`}
-        opacity="0.42"
-      />
-      <path
-        d="M70 14.5 L71.2 18.2 L75 18.5 L72 21.1 L72.9 24.8 L70 22.8 L67.1 24.8 L68 21.1 L65 18.5 L68.8 18.2Z"
-        fill={`url(#${gradId})`}
-        opacity="0.35"
-      />
-    </>
+      <g fill="none" stroke={`url(#${g})`} strokeWidth="2.2" opacity="0.65">
+        <path d="M4 28 H48" />
+        <path d="M72 28 H116" />
+        <path d="M16 12 C30 20 42 20 52 14" />
+        <path d="M16 44 C30 36 42 36 52 42" />
+        <path d="M68 14 C82 20 94 20 108 12" />
+        <path d="M68 42 C82 36 94 36 108 44" />
+      </g>
+      {/* وردة في مركز الطرف */}
+      <g transform="translate(60 28)">
+        <circle r="16.5" fill="#EDE4D4" stroke={`url(#${g})`} strokeWidth="2" />
+        <circle r="13.8" fill="none" stroke={`url(#${g})`} strokeWidth="0.9" opacity="0.65" />
+        {petals.map((deg) => (
+          <ellipse
+            key={deg}
+            cx="0"
+            cy="-9.2"
+            rx="4"
+            ry="7.2"
+            fill={`url(#${g})`}
+            opacity="0.88"
+            transform={`rotate(${deg})`}
+          />
+        ))}
+        <circle r="5.6" fill={`url(#${g})`} />
+        <circle r="2.6" fill="#EDE4D4" />
+      </g>
+    </svg>
   );
 }
 
 /**
- * شارة سورة — SVG جذر واحد: الطرفان بعرض ثابت نسبي (~27.5%) والوسط يمتد (~45%).
+ * شارة سورة: شريط بيج ممتلئ + إطار ذهبي متوسط + طرفان كثيفان + لوحة وسطى 45%.
  */
 export function MushafSurahBadgeFrame({ className }: { className?: string }) {
-  const uid = useId().replace(/:/g, "");
-  const stroke = `${uid}-stroke`;
-  const gL = `${uid}-gl`;
-  const gR = `${uid}-gr`;
   return (
     <div className={className ? `mf2-surah-badge ${className}` : "mf2-surah-badge"} aria-hidden="true">
-      <svg
-        className="mf2-surah-badge__svg"
-        width="100%"
-        height="100%"
-        viewBox="0 0 400 40"
-        preserveAspectRatio="none"
-        focusable="false"
-      >
-        <defs>
-          <linearGradient id={stroke} x1="0" y1="0" x2="1" y2="0">
-            <stop offset="0%" stopColor="var(--color-mushaf-gold-soft, #C9B07A)" />
-            <stop offset="50%" stopColor="var(--color-mushaf-gold, #8B6914)" />
-            <stop offset="100%" stopColor="var(--color-mushaf-gold-soft, #C9B07A)" />
-          </linearGradient>
-          <linearGradient id={gL} x1="0" y1="0.5" x2="1" y2="0.5">
-            <stop offset="0%" stopColor="var(--color-mushaf-gold-soft, #C9B07A)" />
-            <stop offset="100%" stopColor="var(--color-mushaf-gold, #8B6914)" />
-          </linearGradient>
-          <linearGradient id={gR} x1="0" y1="0.5" x2="1" y2="0.5">
-            <stop offset="0%" stopColor="var(--color-mushaf-gold-soft, #C9B07A)" />
-            <stop offset="100%" stopColor="var(--color-mushaf-gold, #8B6914)" />
-          </linearGradient>
-        </defs>
-        <rect
-          x="0.5"
-          y="0.5"
-          width="399"
-          height="39"
-          rx="2.5"
-          fill="var(--color-mushaf-badge-bg, #F3EBE0)"
-          stroke={`url(#${stroke})`}
-          strokeWidth="0.85"
-        />
-        {/* وسط فاتح ≈ 45% — يمتد مع العرض */}
-        <svg x="110" y="0" width="180" height="40" viewBox="0 0 180 40" preserveAspectRatio="none">
-          <rect
-            x="1"
-            y="5"
-            width="178"
-            height="30"
-            rx="1.5"
-            fill="color-mix(in srgb, var(--color-mushaf-paper, #F7F0E4) 70%, #fff)"
-            stroke="var(--color-mushaf-gold-soft, #C9B07A)"
-            strokeWidth="0.55"
-          />
-        </svg>
-        {/* طرفان: meet يحافظ على نسبة النقش */}
-        <svg x="2" y="1" width="108" height="38" viewBox="0 0 88 40" preserveAspectRatio="xMidYMid meet">
-          {floralEndPaths(gL)}
-        </svg>
-        <svg x="290" y="1" width="108" height="38" viewBox="0 0 88 40" preserveAspectRatio="xMidYMid meet">
-          <g transform="translate(88,0) scale(-1,1)">{floralEndPaths(gR)}</g>
-        </svg>
-      </svg>
+      <div className="mf2-surah-badge__bar">
+        <div className="mf2-surah-badge__end">
+          <SurahBadgeEnd />
+        </div>
+        <div className="mf2-surah-badge__mid" />
+        <div className="mf2-surah-badge__end">
+          <SurahBadgeEnd mirror />
+        </div>
+      </div>
     </div>
   );
 }
