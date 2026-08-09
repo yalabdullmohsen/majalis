@@ -169,7 +169,8 @@ export function MushafPageV2({
 
   /**
    * حجم واحد من أعرض sizingLine (آية / بسملة / عنوان)، لا من measurementExclusions.
-   * رأسيًا: رؤوس السور بارتفاع طبيعي؛ أسطر الآيات وحدها تتقاسم المتبقي.
+   * رأسيًا: يُحسب من الارتفاع ÷ عدد الأسطر مع line-height ثابت؛ الفراغ المتبقي
+   * يتمركز فوق/تحت الكتلة (CSS) ولا يُمدَّد بين الأسطر.
    */
   useLayoutEffect(() => {
     if (!fontReady || !layout) {
@@ -245,7 +246,9 @@ export function MushafPageV2({
 
       applyTempFontSize(sizingEls, "");
       for (const el of sizingEls) el.style.overflowX = "";
-      container.style.fontSize = "";
+      /* أبقِ الحجم على الحاوية — مسحه بـ"" بعد commit React يزيل font-size
+         من الـDOM دون إعادة تطبيق (ResizeObserver يعيد measure كثيرًا). */
+      container.style.fontSize = `${size}px`;
 
       setPageFontSize(size);
       setFitted(true);

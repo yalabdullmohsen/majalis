@@ -64,8 +64,9 @@ export type MushafPageLayout = {
   rows: MushafPageRow[];
   surahsOnPage: MushafChapter[];
   /**
-   * opening-centered: الصفحتان 1 و2 — عدد أسطر فعلي بلا خانات فارغة موزّعة،
-   * وكتلة متمركزة رأسيًا. standard: باقي الصفحات (15 خانة متساوية).
+   * opening-centered: الصفحتان 1 و2 — أسطر بارتفاع طبيعي (line-height ثابت)
+   * وكتلة متمركزة رأسيًا (الفراغ فوق/تحت فقط). standard: بقية الصفحات بنفس
+   * قاعدة التباعد الثابت والتمركز عند بقاء فراغ.
    */
   layoutMode: "standard" | "opening-centered";
   /** عدد الأسطر الفعلية ذات الكلمات (من mushaf=1) — للتحجيم */

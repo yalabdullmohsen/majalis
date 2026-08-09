@@ -76,7 +76,14 @@ assert.match(quranCss, /--color-mushaf-paper/);
 assert.match(quranCss, /\.mpv-ayah-page-badge\s*\{/);
 assert.match(quranCss, /mpv-ayah-page-badge__cartouche/);
 assert.match(viewSrc, /mpv-ayah-page-badge__cartouche/);
-assert.match(viewSrc, /mpv-toolbar__btn--index/);
+assert.match(viewSrc, /MoreHorizontal/);
+assert.match(viewSrc, /mpv-toolbar__more/);
+assert.match(viewSrc, /aria-label="فهرس السور"/);
+assert.match(viewSrc, /aria-label="التسميع"/);
+assert.match(viewSrc, /aria-label="إعدادات القراءة"/);
+assert.match(viewSrc, /aria-label="المزيد من الأدوات"/);
+assert.match(quranCss, /\.mpv-toolbar\.mpv-toolbar--ayah\s*\{[\s\S]*?max-width:\s*calc\(100%/);
+assert.match(quranCss, /\.mpv-toolbar--ayah\s+\.mpv-toolbar__btn\s*\{[\s\S]*?white-space:\s*nowrap/);
 assert.match(quranCss, /\.qs-mushaf-frame--ayah/);
 
 const mushafV2 = readFileSync(resolve(appRoot, "src/styles/mushaf-v2.css"), "utf8");

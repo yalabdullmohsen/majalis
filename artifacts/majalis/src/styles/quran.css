@@ -2234,7 +2234,9 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
   justify-content: space-between;
   align-items: center;
   flex-shrink: 0;
-  padding: 0.1rem 0.35rem 0;
+  /* ارتفاع ثابت تقريبًا — الشريط العائم يجلس تحته بمسافة آمنة */
+  min-height: 1.35rem;
+  padding: 0.15rem 0.45rem 0.2rem;
   font-size: 0.68rem;
   font-weight: 300;
   font-family: var(--font-ui, "Alexandria", "Noto Naskh Arabic", sans-serif);
@@ -2242,9 +2244,8 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
   letter-spacing: 0.01em;
   background: transparent;
   border: none;
-  z-index: 25;
+  z-index: 32;
   pointer-events: none;
-  /* خارج مساحة النص — لا يغطيها زر */
   position: relative;
 }
 .mpv-ayah-header__juz,
@@ -2262,27 +2263,32 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
   color: var(--ayah-meta, var(--color-mushaf-meta, #9A7B3C));
 }
 
-/* يُعاد تأكيد absolute بعد قاعدة .mpv-toolbar { position:sticky } أدناه —
-   وإلا يبقى الشريط في التدفق (~45px) حتى مع --hidden + translateY. */
+/* عائم تحت رأس الجزء/الحزب — لا يتجاوز العرض ولا يتراكب مع الرأس */
 .mpv-toolbar.mpv-toolbar--ayah {
   position: absolute;
-  top: calc(0.15rem + var(--inset-top));
-  left: 0;
-  right: 0;
+  /* تحت .mpv-ayah-header مع فجوة واضحة (≥0.5rem) — لا تراكب مع رأس الجزء/الحزب */
+  top: calc(var(--inset-top) + 2.55rem);
+  inset-inline: 0.35rem;
+  left: auto;
+  right: auto;
+  width: auto;
+  max-width: calc(100% - 0.7rem);
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.22rem;
+  padding: 0.15rem;
+  margin: 0;
+  overflow: visible;
   background: transparent !important;
   border: none !important;
   box-shadow: none !important;
-  /* لا padding-top من sticky العام — لا يحجز ارتفاعًا في التدفق */
-  padding: 0.15rem 0.45rem;
-  padding-top: 0.15rem;
   z-index: 30;
-  /* خارج التدفق صراحة */
   flex: none;
-  width: 100%;
-  box-sizing: border-box;
 }
 .mpv-toolbar.mpv-toolbar--ayah.mpv-toolbar--hidden {
-  /* إخفاء بلا حجز مساحة وبلا تحريك يوهم بالخروج من التدفق */
   display: none !important;
   transform: none;
   opacity: 0;
@@ -2295,14 +2301,101 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
   border: none !important;
 }
 .mpv-toolbar--ayah .mpv-toolbar__btn {
-  background: color-mix(in srgb, var(--ayah-paper, #FAF7F2) 82%, transparent);
+  flex: 0 0 auto;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.28rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: clip;
+  min-width: 44px;
+  max-width: 7.5rem;
+  padding: 0.35rem 0.45rem;
+  background: color-mix(in srgb, var(--ayah-paper, #FAF7F2) 88%, transparent);
   border-color: color-mix(in srgb, var(--ayah-badge-border, #D1C7BD) 70%, transparent);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
 }
+.mpv-toolbar--ayah .mpv-toolbar__label {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: clip;
+  max-width: 3.75rem;
+  font-size: 0.75rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.mpv-toolbar__more {
+  position: relative;
+  flex: 0 0 auto;
+}
+.mpv-toolbar__menu {
+  position: absolute;
+  top: calc(100% + 0.25rem);
+  inset-inline-end: 0;
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 9.5rem;
+  padding: 0.35rem;
+  border-radius: 0.65rem;
+  border: 1px solid color-mix(in srgb, var(--ayah-badge-border, #D1C7BD) 70%, transparent);
+  background: color-mix(in srgb, var(--ayah-paper, #FAF7F2) 96%, transparent);
+  box-shadow: 0 8px 24px rgb(23 61 53 / 12%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.mpv-toolbar__menu-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 44px;
+  padding: 0.35rem 0.55rem;
+  border: 0;
+  border-radius: 0.45rem;
+  background: transparent;
+  color: var(--ayah-ink, #1A1510);
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 600;
+  white-space: nowrap;
+  cursor: pointer;
+  text-align: start;
+}
+.mpv-toolbar__menu-item:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.mpv-toolbar__menu-item:hover:not(:disabled),
+.mpv-toolbar__menu-item:focus-visible {
+  background: color-mix(in srgb, var(--mj-brand, #176B57) 12%, transparent);
+  outline: none;
+}
 .mpv-toolbar__spacer {
   flex: 1;
   min-width: 0;
+}
+/* ≤480px: أيقونات فقط (320/390/430) — التسمية تبقى في aria-label */
+@media (max-width: 480px) {
+  .mpv-toolbar--ayah .mpv-toolbar__label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  .mpv-toolbar--ayah .mpv-toolbar__btn {
+    padding: 0.35rem;
+    max-width: 48px;
+  }
 }
 
 .mpv-body--ayah {
@@ -2482,7 +2575,6 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
 .mpv-toolbar__btn--index {
   white-space: nowrap;
   flex-shrink: 0;
-  min-width: 4.75rem;
   gap: 0.35rem;
 }
 
