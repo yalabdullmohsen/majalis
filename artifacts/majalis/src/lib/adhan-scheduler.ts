@@ -21,6 +21,11 @@ import {
 import { getMuezzin, playAdhan } from "./adhan-audio";
 import { isNative } from "./capacitor-utils";
 import { ADHAN_EVENT_NAME, type AdhanEvent } from "./adhan-events";
+import {
+  isAdhanAndroidAlarmAvailable,
+  scheduleAndroidFullAdhan,
+} from "./adhan-android-alarm";
+import { resolveAdhanClip } from "./adhan-playback-modes";
 
 export type { AdhanEvent };
 export { ADHAN_EVENT_NAME };
@@ -113,11 +118,32 @@ function scheduleForPrayer(slot: PrayerSlot, key: PrayerKey) {
   if (adhanDelay > 24 * 3600_000) return; // too far ahead
 
   const adhanTargetEpoch = Date.now() + adhanDelay;
+
+  // أندرويد + وضع كامل: منبّه دقيق + خدمة أمامية (لا يعتمد على مؤقّت JS)
+  if (isAdhanAndroidAlarmAvailable() && prefs.playbackMode === "full") {
+    const muezzin = getMuezzin(getEffectiveMuezzinId(prefs, key));
+    const isFajr = key === "fajr";
+    const clip = resolveAdhanClip(muezzin, { isFajr, mode: "full" });
+    if (clip) {
+      void scheduleAndroidFullAdhan({
+        atMs: adhanTargetEpoch,
+        url: clip.url,
+        title: `أذان ${PRAYER_ARABIC[key] ?? slot.name}`,
+        prayerKey: key,
+      });
+    }
+  }
+
   const t1 = setTimeout(() => {
     // مؤقّت متأخّر (نوم/خلفية): لا تُشغّل أذاناً فات وقته بأكثر من المسموح
     if (Date.now() - adhanTargetEpoch > STALE_TOLERANCE_MS) return;
     const fresh = loadAdhanPrefs();
     if (!fresh.globalEnabled || !fresh.prayers[key].enabled) return;
+    // على أندرويد في الوضع الكامل تتولى الخدمة الأصلية التشغيل
+    if (isAdhanAndroidAlarmAvailable() && fresh.playbackMode === "full") {
+      dispatchAdhanEvent({ type: "adhan", prayerKey: key, prayerName: slot.name });
+      return;
+    }
     const muezzinId = getEffectiveMuezzinId(fresh, key);
     const muezzin = getMuezzin(muezzinId);
     const isFajr = key === "fajr";
