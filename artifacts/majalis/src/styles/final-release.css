@@ -170,10 +170,10 @@ body {
      المحتوى تحت الحافة المنحنية)، وتضمن ظهور أول وآخر تبويب كاملين
      بدل التصاقهما بالحافة. */
   padding-block: 0.4rem;
-  padding-inline-start: max(0.75rem, var(--edge-deadzone), var(--inset-right));
-  padding-inline-end: max(0.75rem, var(--edge-deadzone), var(--inset-left));
+  padding-inline-start: max(16px, var(--edge-deadzone), var(--inset-right));
+  padding-inline-end: max(16px, var(--edge-deadzone), var(--inset-left));
   /* عند التمرير البرمجي لتبويب ما، لا يقف ملاصقًا للحافة. */
-  scroll-padding-inline: 0.75rem;
+  scroll-padding-inline: max(16px, 0.75rem);
   width: 100%;
   max-width: min(100%, var(--page-width));
   margin-inline: auto;
@@ -237,11 +237,16 @@ html.dark .nav-soon-badge {
   width: min(100%, var(--page-width));
   min-height: var(--header-height);
   margin-inline: auto;
-  padding-inline: var(--page-gutter);
+  /* 16px + safe-area في الجهتين — لا عنصر تفاعلي يلامس الحافة */
+  padding-inline: max(16px, var(--gutter-inline-start, var(--inset-right, 0px)))
+    max(16px, var(--gutter-inline-end, var(--inset-left, 0px)));
+  box-sizing: border-box;
   display: grid;
   grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
   gap: clamp(.6rem, 1.5vw, 1.25rem);
+  min-width: 0;
+  max-width: 100%;
 }
 .navbar-brand {
   display: inline-flex;
@@ -271,17 +276,30 @@ html.dark .nav-soon-badge {
 .navbar-v3__tabs .nav-tab::after { content: none; }
 .navbar-v3__tabs .nav-tab:hover,
 .navbar-v3__tabs .nav-tab--active { color: var(--color-primary); background: var(--color-surface-muted); }
-.navbar-v3__start, .navbar-v3__end { gap: .45rem; }
+.navbar-v3__start, .navbar-v3__end {
+  gap: .5rem;
+  flex-shrink: 0;
+  min-width: 0;
+}
+/* توحيد القائمة / الوضع الليلي / الحساب: نفس الحاوية والحجم ≥44×44 */
 .navbar-menu-btn, .navbar-theme-toggle, .navbar-mobile-login {
-  width: 40px;
-  height: 40px;
-  min-width: 40px;
-  min-height: 40px;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  min-height: 44px;
+  max-width: 44px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-sizing: border-box;
   border: 1px solid var(--mj-hairline, var(--color-border));
   border-radius: var(--mj-r-sm, var(--radius-md));
   background: var(--mj-surface-2, var(--color-surface-muted));
   color: var(--mj-ink-2, var(--color-text-muted));
   box-shadow: none;
+  text-decoration: none;
   transition: background var(--motion-fast), color var(--motion-fast), border-color var(--motion-fast);
 }
 .navbar-menu-btn:active,
@@ -316,7 +334,8 @@ html.dark .nav-soon-badge {
   border: 1px solid var(--mj-hairline, var(--color-border));
   border-radius: var(--mj-r-sm, var(--radius-md));
   background: var(--mj-surface, var(--color-surface));
-  padding-inline: 0;
+  padding-inline: 0.65rem;
+  box-sizing: border-box;
   cursor: pointer;
 }
 .header-ticker--empty { visibility: hidden; flex: 0 0 8rem; }
@@ -327,8 +346,22 @@ html.dark .nav-soon-badge {
 .header-ticker__viewport {
   overflow: hidden;
   width: 100%;
-  mask-image: linear-gradient(to left, transparent, #000 6%, #000 94%, transparent);
-  -webkit-mask-image: linear-gradient(to left, transparent, #000 6%, #000 94%, transparent);
+  min-width: 0;
+  /* تلاشي تدريجي عند الطرفين بدل قصّ حاد */
+  mask-image: linear-gradient(
+    to left,
+    transparent 0%,
+    #000 14%,
+    #000 86%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to left,
+    transparent 0%,
+    #000 14%,
+    #000 86%,
+    transparent 100%
+  );
 }
 
 .header-ticker__track {
@@ -772,6 +805,8 @@ html.dark .nav-soon-badge {
     overflow: hidden;
     min-height: 2.15rem;
     padding-block: 0.15rem;
+    padding-inline: max(16px, var(--gutter-inline-start, 16px))
+      max(16px, var(--gutter-inline-end, 16px));
   }
   /* الوضع الليلي داخل «المزيد»؛ البحث عبر الصف الكامل فقط */
   .navbar-theme-toggle { display: none; }
@@ -1425,9 +1460,8 @@ a.twitter-timeline {
 }
 
 @media (max-width: 359px) {
-  .navbar-v3__inner { gap: .35rem; padding-inline: .65rem; }
+  .navbar-v3__inner { gap: .35rem; }
   .navbar-brand__copy strong { font-size: .76rem; }
-  .navbar-menu-btn, .navbar-mobile-login { min-width: 44px; min-height: 44px; width: 44px; }
   /* على أضيق عرض: صغّر الخط قليلًا مع الإبقاء على nowrap — بلا ellipsis */
   .bottom-nav--v2 .bottom-nav__tab-label,
   .bottom-nav .bottom-nav__tab-label { font-size: 0.625rem !important; }
@@ -1626,7 +1660,7 @@ header.navbar-v3,
 @media (max-width:879px){
   .navbar-v3{min-height:0!important}
   .navbar-theme-toggle.navbar-search-toggle{display:none!important}
-  .navbar-v3__search-row{width:100%;box-sizing:border-box;padding:.45rem var(--page-gutter,.75rem) .35rem;border-block-start:1px solid var(--mj-hairline,var(--color-border));background:var(--mj-bg,var(--color-background))}
+  .navbar-v3__search-row{width:100%;box-sizing:border-box;padding:.45rem max(16px,var(--gutter-inline-start,16px)) .35rem max(16px,var(--gutter-inline-end,16px));border-block-start:1px solid var(--mj-hairline,var(--color-border));background:var(--mj-bg,var(--color-background))}
   .navbar-v3__search-btn{width:100%;min-height:44px;display:flex;align-items:center;gap:.55rem;padding:.55rem .9rem;border:1px solid var(--mj-hairline,var(--color-border));border-radius:var(--mj-r-pill,999px);background:var(--mj-surface,var(--color-surface));color:var(--mj-muted,var(--color-text-muted));text-align:start}
   .navbar-ticker-row .header-ticker{width:100%;min-width:0;border-radius:0;min-height:2.5rem;height:2.5rem}
 }
