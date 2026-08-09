@@ -8,14 +8,15 @@
    بنفس الزمرد حتى لا يظهر شريط أبيض فوق الشاشة الخضراء. */
 html.pts-immersive,
 html.pts-immersive body {
-  background-color: var(--mj-brand-deep);
-  background-image: none;
+  /* يوحَّد مع أسفل تدرّج .pts-screen ويهزم m2030 em-950 إن اختلف */
+  background-color: var(--em-950, var(--mj-brand-deep, #081A16)) !important;
+  background-image: none !important;
 }
 
 /* شريط الأقسام — يهزم theme-aliases (.top-section-bar { background: var(--mj-surface) !important }) */
 html.pts-immersive .top-section-bar.mj-nav-skin,
 html.pts-immersive .top-section-bar {
-  background: var(--mj-brand-deep, #0E241E) !important;
+  background: var(--em-950, var(--mj-brand-deep, #081A16)) !important;
   border-block-end-color: color-mix(in srgb, var(--gold-400, #D2B063) 28%, transparent) !important;
   border-color: color-mix(in srgb, var(--gold-400, #D2B063) 28%, transparent) !important;
   color: #FAFAF8 !important;
@@ -41,7 +42,7 @@ html.pts-immersive .bottom-nav.bottom-nav--v2,
 html.pts-immersive .bottom-nav--m2030,
 html.pts-immersive .bottom-nav--v2,
 html.pts-immersive .bottom-nav {
-  background: var(--mj-brand-deep, #0E241E) !important;
+  background: var(--em-950, var(--mj-brand-deep, #081A16)) !important;
   border-block-start-color: color-mix(in srgb, var(--gold-400, #D2B063) 28%, transparent) !important;
   border-top-color: color-mix(in srgb, var(--gold-400, #D2B063) 28%, transparent) !important;
   box-shadow: none !important;
