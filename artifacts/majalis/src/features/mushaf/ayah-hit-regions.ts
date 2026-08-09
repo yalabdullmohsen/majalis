@@ -1,12 +1,17 @@
 /**
- * اشتقاق مستطيلات نسبية (0..1) لكل آية من تخطيط أسطر QPC V2 المؤكَّد.
- * ليست مضلعات صور مصحف المدينة — مسار الصور/المضلعات أُزيل؛ نعتمد QPC فقط.
+ * اشتقاق مستطيلات نسبية (0..1) لكل آية من كلمات QPC (word ids / position).
+ * طبقة الضغط فقط — بلا تظليل بصري كبير (التظليل على .mf2-ayah-group).
+ *
+ * علامة رقم الآية (charType=end) تنتمي للآية التي تنهيها وتُحسب ضمن حيزها،
+ * بوزن أخف من الكلمة العادية حتى لا تسرق حيز الآية التالية.
  */
 import type { MushafPageLayout, QpcWord } from "@/lib/mushaf-v2-data";
 import { MUSHAF_PAGE_LINE_SLOTS } from "@/features/mushaf/config";
 
+/** وزن علامة رقم الآية نسبةً إلى كلمة عادية في تقدير الحيز الأفقي */
+export const AYAH_END_MARKER_WEIGHT = 0.35;
+
 export type AyahHitRect = {
-  /** نسبة من عرض الصفحة (0 يمين في RTL عبر SVG viewBox عادي: 0 يسار) */
   x: number;
   y: number;
   w: number;
@@ -14,44 +19,48 @@ export type AyahHitRect = {
 };
 
 export type AyahHitRegion = {
-  /** surah:ayah */
   verseKey: string;
   page: number;
   rects: AyahHitRect[];
 };
 
-function wordsOnLine(words: QpcWord[]): QpcWord[] {
-  return words.filter((w) => w.charType !== "end" || w.textUthmani.length > 0);
+function slotWeight(w: QpcWord): number {
+  return w.charType === "end" ? AYAH_END_MARKER_WEIGHT : 1;
 }
 
 /**
  * على سطر RTL تُعرض الكلمات من اليمين لليسار بنفس ترتيب المصفوفة.
- * نقارب الحيز الأفقي بنسبة عدد الكلمات.
+ * الحيز = مجموع أوزان الكلمات (العلامة أخف)، لا إزاحة محارف.
  */
-function horizontalSpan(
+export function horizontalSpan(
   lineWords: QpcWord[],
   ayahWords: QpcWord[],
 ): { x: number; w: number } {
-  const usable = wordsOnLine(lineWords);
-  const total = Math.max(1, usable.length);
-  if (!usable.length) return { x: 0, w: 1 };
+  if (!lineWords.length) return { x: 0, w: 1 };
 
   const ids = new Set(ayahWords.map((w) => w.id));
-  let first = -1;
-  let last = -1;
-  usable.forEach((w, i) => {
+  const weights = lineWords.map(slotWeight);
+  const total = weights.reduce((a, b) => a + b, 0) || 1;
+
+  let cum = 0;
+  let start = -1;
+  let end = -1;
+  for (let i = 0; i < lineWords.length; i++) {
+    const w = lineWords[i]!;
+    const wt = weights[i]!;
     if (ids.has(w.id)) {
-      if (first < 0) first = i;
-      last = i;
+      if (start < 0) start = cum;
+      end = cum + wt;
     }
-  });
-  if (first < 0) return { x: 0, w: 1 };
+    cum += wt;
+  }
+  if (start < 0) return { x: 0, w: 1 };
 
   // RTL: أول كلمة في المصفوفة على اليمين → x أكبر في إحداثيات LTR للـ SVG
-  const right = 1 - first / total;
-  const left = 1 - (last + 1) / total;
+  const right = 1 - start / total;
+  const left = 1 - end / total;
   const x = Math.min(left, right);
-  const w = Math.max(0.04, Math.abs(right - left));
+  const w = Math.max(0.02, Math.abs(right - left));
   return { x, w };
 }
 
@@ -95,7 +104,6 @@ export function buildAyahHitRegions(layout: MushafPageLayout | null): AyahHitReg
     }
   }
 
-  // ترتيب طبيعي: بسورة ثم آية
   regions.sort((a, b) => {
     const [as, aa] = a.verseKey.split(":").map(Number);
     const [bs, ba] = b.verseKey.split(":").map(Number);

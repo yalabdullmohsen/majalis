@@ -131,11 +131,13 @@ html[data-theme="dark"] .quran-shell--high-contrast .mf2-line {
 }
 .mf2-ayah-group:hover,
 .mf2-ayah-group:focus-visible {
-  background: color-mix(in srgb, var(--mf-gold, var(--brand-deep, var(--mj-brand-deep))) 10%, transparent);
+  background: color-mix(in srgb, var(--mj-brand, var(--brand, var(--mf-gold))) 8%, transparent);
   outline: none;
 }
+/* تظليل واحد خفيف يلتصق بالكلمات (لا طبقة سطر/حاوية) — من رموز الثيم */
 .mf2-ayah-group--active {
-  background: color-mix(in srgb, var(--mf-gold, var(--brand-deep, var(--mj-brand-deep))) 16%, transparent);
+  background: color-mix(in srgb, var(--mj-brand, var(--brand, var(--mf-gold))) 12%, transparent);
+  border-radius: 2px;
 }
 /* ⚠️ إصلاح جذري (2026-07-22): كل كلمة تُصيَّر كعنصر <span> منفصل (لتفعيل
    الملاءمة الدقيقة لحجم الخط لكل سطر، وربط النقر بالآية)، ونص الكلمة
