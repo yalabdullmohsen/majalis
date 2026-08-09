@@ -66,8 +66,14 @@ assert.equal(
   "مكوّن الصفحة بلا opening-centered",
 );
 assert.match(mushafV2, /\.mf2-surah-badge/, "شارة سورة عريضة قابلة للتمدد");
-assert.match(mushafV2, /\.mf2-surah-badge__svg/, "شارة سورة SVG واحد");
-assert.match(mushafV2, /\.mf2-surah-header__frame\s*\{[\s\S]*?height:\s*1\.6em/, "ارتفاع الشارة ≈ 1.6× سطر");
+assert.match(mushafV2, /\.mf2-surah-badge__bar/, "شريط شارة بإطار وبنية طرفين+وسط");
+assert.match(mushafV2, /\.mf2-surah-badge__mid\s*\{[\s\S]*?45%/, "لوحة وسطى ≈ 45%");
+assert.match(
+  mushafV2,
+  /\.mf2-surah-header__frame\s*\{[\s\S]*?1\.6em/,
+  "ارتفاع الشارة ≈ 1.6× ارتفاع سطر",
+);
+assert.match(mushafV2, /\.mf2-surah-header__name\s*\{[\s\S]*?overflow:\s*visible/, "تشكيل الاسم غير مقصوص");
 assert.match(mushafV2, /\.mf2-ayah-marker\s*\{[\s\S]*?1\.15em/, "قطر علامة الآية 1.15em");
 assert.match(pageComp, /MushafSurahBadgeFrame/);
 assert.match(pageComp, /sizingEls|sizing-line|ayahLineCount/, "تحجيم من أعرض سطر + عدد الأسطر الفعلي");
@@ -84,7 +90,7 @@ assert.equal(
 
 // 3) حجم موحّد من أعرض سطر آيات — لا fit سطر-بسطر ولا measurementExclusions
 assert.match(pageComp, /LINE_HEIGHT_EM\s*=\s*1\.05/);
-assert.match(pageComp, /TARGET_BLOCK_FILL\s*=\s*0\.94/);
+assert.match(pageComp, /TARGET_BLOCK_FILL\s*=\s*0\.92/);
 assert.equal(/openingFewLines/.test(pageComp), false, "بلا فرع خاص لصفحتي الافتتاح");
 assert.match(pageComp, /sizeByWidth/);
 assert.match(pageComp, /sizeByHeight/);
@@ -96,7 +102,7 @@ assert.match(pageComp, /glyphText/, "علامة الآية في دقة QPC من 
 assert.match(pageComp, /mf2-ayah-marker/, "علامة آية SVG للوضع Unicode/خفيف");
 assert.match(pageComp, /MushafAyahMarkerSvg/);
 assert.match(pageComp, /drawnSurahTitleText/, "شارة السورة بالرسم العثماني");
-assert.match(pageComp, /TARGET_BLOCK_FILL/, "هدف امتلاء موحّد 0.94 لكل الصفحات");
+assert.match(pageComp, /TARGET_BLOCK_FILL/, "هدف امتلاء موحّد 0.92 كـ #990");
 assert.match(pageComp, /MIN_LINE_FILL/, "حد أدنى لامتلاء عرض السطر قبل scaleX (≤2%)");
 assert.equal(/EQUALIZE_PAGE_DEV_GATE/.test(pageComp), false, "تسوية دائمة لكل الأسطر دون بوابة ص1–2");
 assert.match(pageComp, /data-mf2-bind|dataset\.mf2Bind/, "تشخيص قيد التحجيم");

@@ -2754,9 +2754,9 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
 }
 /* وضع آية: الجسم يملأ الشاشة؛ الرأس/الذيل طبقات عائمة — حشو أدنى لتفادي التراكب */
 .mpv-body.mpv-body--ayah {
-  /* فجوة صغيرة ثابتة تحت الرأس وفوق الذيل — بلا فراغ رأسي كبير */
+  /* حشو رأسي كـ #990 — امتلاء الصفحة 3 ≈ 74.1% */
   padding-top: max(1.05rem, calc(var(--inset-top) + 0.95rem));
-  padding-bottom: max(1.2rem, calc(var(--inset-bottom) + 1.05rem));
+  padding-bottom: max(1.55rem, calc(var(--inset-bottom) + 1.4rem));
   padding-inline: max(2px, var(--inset-left)) max(2px, var(--inset-right));
   flex: 1 1 auto;
   min-height: 0;
@@ -2764,7 +2764,7 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
 }
 .quran-shell--ayah.quran-shell--chrome-hidden .mpv-body.mpv-body--ayah {
   padding-top: max(1.05rem, calc(var(--inset-top) + 0.95rem));
-  padding-bottom: max(1.2rem, calc(var(--inset-bottom) + 1.05rem));
+  padding-bottom: max(1.55rem, calc(var(--inset-bottom) + 1.4rem));
 }
 /* عند إخفاء الأدوات باللمس: لا نحجز فراغًا للشريط السفلي */
 .quran-shell--chrome-hidden .mpv-body:not(.mpv-body--ayah) {
