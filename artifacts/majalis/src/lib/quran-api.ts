@@ -827,3 +827,20 @@ export function deriveHizbRub(hizbQuarter: number): { hizb: number; rubInHizb: n
   const rubInHizb = ((hizbQuarter - 1) % 4) + 1;
   return { hizb, rubInHizb };
 }
+
+/**
+ * تسمية علامة الربع/النصف/ثلاثة الأرباع للذيل (بلا بداية حزب).
+ * rubElHizb: 1–240 (rub_el_hizb_number من QPC).
+ */
+export function formatRubElHizbFooterLabel(
+  rubElHizb: number,
+  formatHizb: (n: number) => string = String,
+): string | null {
+  if (!Number.isFinite(rubElHizb) || rubElHizb < 1 || rubElHizb > 240) return null;
+  const { hizb, rubInHizb } = deriveHizbRub(rubElHizb);
+  const h = formatHizb(hizb);
+  if (rubInHizb === 1) return null;
+  if (rubInHizb === 2) return `ربع الحزب ${h}`;
+  if (rubInHizb === 3) return `نصف الحزب ${h}`;
+  return `ثلاثة أرباع الحزب ${h}`;
+}

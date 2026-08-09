@@ -10,6 +10,7 @@ import { toArabicPageDigits } from "@/lib/numerals";
 import {
   fetchSurahDetail, getSurahList, getSurahMeta, getSurahForPage, SURAH_START_PAGES,
   savePagePosition, loadPagePosition, loadReadingAyahKey,
+  formatRubElHizbFooterLabel,
   type Ayah, type SurahSummary,
 } from "@/lib/quran-api";
 import { loadPageJuzIndex, getSegmentsForPage, findPageForAyah, type QuranSegment } from "@/lib/recitation-ai/page-juz-lookup";
@@ -290,7 +291,23 @@ export default function MushafPageView() {
   const primarySurahMeta = primarySegment ? getSurahMeta(primarySegment.segment.surah) : getSurahForPage(page);
   const firstAyahOfPage = primarySegment?.ayahs[0];
   const juz = firstAyahOfPage?.juz ?? 0;
-  const hizbStartingOnPage = v2Layout?.hizbStartingOnPage ?? null;
+  /** أسماء السور على الصفحة بلا كلمة «سورة»، مفصولة بمسافتين عند التعدّد */
+  const headerSurahNames = useMemo(() => {
+    const names = (v2Layout?.surahsOnPage ?? [])
+      .map((s) => String(s.nameArabic ?? "").replace(/^(?:سُورَةُ|سورة)\s*/u, "").trim())
+      .filter(Boolean);
+    if (names.length) return names.join("  ");
+    return String(primarySurahMeta.name ?? "").replace(/^(?:سُورَةُ|سورة)\s*/u, "").trim();
+  }, [v2Layout, primarySurahMeta.name]);
+  const footerRubLabel = useMemo(() => {
+    const rub = v2Layout?.rubElHizbStartingOnPage;
+    if (rub == null) return null;
+    return formatRubElHizbFooterLabel(rub, toArabicDigits);
+  }, [v2Layout?.rubElHizbStartingOnPage]);
+  const footerHizbLabel = v2Layout?.hizbStartingOnPage
+    ? `الحزب ${toArabicDigits(v2Layout.hizbStartingOnPage)}`
+    : null;
+  const footerMetaLabel = footerRubLabel ?? footerHizbLabel;
 
   useEffect(() => {
     applyPageSeo({
@@ -514,7 +531,7 @@ export default function MushafPageView() {
             <span className="mpv-ayah-header__juz">
               {juz ? `الجزء ${toArabicDigits(juz)}` : "—"}
             </span>
-            <span className="mpv-ayah-header__surah">{primarySurahMeta.name}</span>
+            <span className="mpv-ayah-header__surah">{headerSurahNames}</span>
           </header>
 
           {/* أربعة أزرار ظاهرة + ⋯ — عائم تحت رأس الجزء/الحزب بلا تراكب */}
@@ -696,26 +713,27 @@ export default function MushafPageView() {
             )}
           </div>
 
-          {/* ذيل: حزب (إن بدأ) يسارًا + رقم الصفحة في الوسط */}
+          {/* ذيل: خرطوش رقم الصفحة أسفل اليسار + ربع/نصف/ثلاثة أرباع بجانبه */}
           <footer className="mpv-ayah-footer">
-            <span
-              className={`mpv-ayah-footer__hizb${hizbStartingOnPage ? "" : " mpv-ayah-footer__hizb--empty"}`}
-              aria-hidden={!hizbStartingOnPage}
-            >
-              {hizbStartingOnPage ? `الحزب ${toArabicDigits(hizbStartingOnPage)}` : ""}
-            </span>
-            <button
-              type="button"
-              className="mpv-ayah-page-badge"
-              onClick={openJumpModal}
-              aria-haspopup="dialog"
-              aria-expanded={isJumpModalVisible}
-              aria-label={`الانتقال إلى صفحة — الحالية ${toArabicDigits(page)} من ${toArabicDigits(TOTAL_PAGES)}`}
-            >
-              <MushafPageCartoucheSvg className="mpv-ayah-page-badge__cartouche" />
-              <span className="mpv-ayah-page-badge__num">{toArabicPageDigits(page)}</span>
-            </button>
-            <span className="mpv-ayah-footer__spacer" aria-hidden="true" />
+            <div className="mpv-ayah-footer__meta">
+              <span
+                className={`mpv-ayah-footer__hizb${footerMetaLabel ? "" : " mpv-ayah-footer__hizb--empty"}`}
+                aria-hidden={!footerMetaLabel}
+              >
+                {footerMetaLabel ?? ""}
+              </span>
+              <button
+                type="button"
+                className="mpv-ayah-page-badge"
+                onClick={openJumpModal}
+                aria-haspopup="dialog"
+                aria-expanded={isJumpModalVisible}
+                aria-label={`الانتقال إلى صفحة — الحالية ${toArabicDigits(page)} من ${toArabicDigits(TOTAL_PAGES)}`}
+              >
+                <MushafPageCartoucheSvg className="mpv-ayah-page-badge__cartouche" />
+                <span className="mpv-ayah-page-badge__num">{toArabicPageDigits(page)}</span>
+              </button>
+            </div>
           </footer>
         </>
 

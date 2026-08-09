@@ -17,14 +17,14 @@ const immersiveCss = readFileSync(resolve(appRoot, "src/styles/quran-immersive-r
 const pageComp = readFileSync(resolve(appRoot, "src/components/quran/MushafPageV2.tsx"), "utf8");
 const immersiveLib = readFileSync(resolve(appRoot, "src/lib/quran-immersive.ts"), "utf8");
 
-// 1) هوامش جانبية ضيقة (8–12px) مع safe-area
-assert.match(quranCss, /\.mpv-body--ayah\s*\{[\s\S]*?max\(8px/);
+// 1) هوامش جانبية ≈ 4.5% مع safe-area
+assert.match(quranCss, /\.mpv-body--ayah\s*\{[\s\S]*?4\.5vw/);
 assert.match(quranCss, /\.mpv-body--ayah\s*\{[\s\S]*?box-sizing:\s*border-box/);
 assert.match(mushafV2, /\.mf2-page\s*\{[\s\S]*?box-sizing:\s*border-box/);
 assert.match(readerCss, /\.mushaf-v2__page\s*\{[\s\S]*?max\(1rem/);
 
 // 2) بلا space-between — نص متصل؛ أسطر بارتفاع طبيعي + تمركز رأسي للكتلة
-assert.match(mushafV2, /\.mf2-line\s*\{[\s\S]*?display:\s*flex/);
+assert.match(mushafV2, /\.mf2-line\s*\{[\s\S]*?display:\s*block/);
 assert.match(mushafV2, /\.mf2-line\s*\{[\s\S]*?word-spacing:\s*normal/);
 assert.match(mushafV2, /\.mf2-line\s*\{[\s\S]*?letter-spacing:\s*0/);
 assert.equal(
@@ -33,11 +33,11 @@ assert.equal(
   "أُلغي space-between من .mf2-line",
 );
 assert.match(mushafV2, /\.mf2-line\s*\{[\s\S]*?flex:\s*0\s+0\s+auto/, "أسطر بارتفاع طبيعي بلا تمديد فراغات");
-assert.match(mushafV2, /\.mf2-line\s*\{[\s\S]*?justify-content:\s*flex-start/, "بلا space-between أفقيًا");
+assert.match(mushafV2, /\.mf2-lines--qpc-contiguous/, "أسطر QPC متصلة بلا عزل bidi");
 assert.match(mushafV2, /\.mf2-lines\s*\{[\s\S]*?justify-content:\s*center/, "تمركز رأسي — الفراغ فوق/تحت الكتلة");
 assert.match(mushafV2, /\.mf2-lines\s*\{[\s\S]*?flex:\s*1\s+1\s+auto/, "حاوية الأسطر تملأ الارتفاع");
 assert.match(mushafV2, /\.mf2-surah-header\s*\{[\s\S]*?flex:\s*0\s+0\s+auto/, "رأس السورة بارتفاع طبيعي");
-assert.match(mushafV2, /\.mf2-bismillah\s*\{[\s\S]*?font-size:\s*1em/, "البسملة ترث حجم الصفحة (sizingLines)");
+assert.match(mushafV2, /\.mf2-bismillah\s*\{[\s\S]*?font-size:\s*0\.82em/, "البسملة الافتتاحية أخف من الآيات");
 assert.equal(
   /\.mf2-bismillah\s*\{[\s\S]*?overflow:\s*hidden/.test(mushafV2),
   false,
@@ -49,14 +49,18 @@ assert.match(
   /\.mf2-lines--opening-centered\s+\.mf2-line\s*\{[\s\S]*?flex:\s*0\s+0\s+auto/,
   "الصفحتان 1–2 بلا تمديد بين الأسطر",
 );
-assert.match(pageComp, /availableWidth\s*\/\s*0\.72/, "الصفحتان 1–2: خانة بنسبة صفحة مصحف");
+assert.equal(
+  /availableWidth\s*\/\s*0\.72/.test(pageComp),
+  false,
+  "ص1–2 بلا تقليص خانة بنسبة 0.72 لفرض الامتلاء",
+);
 assert.match(mushafV2, /\.mf2-surah-badge/, "شارة سورة عريضة قابلة للتمدد");
 assert.match(pageComp, /MushafSurahBadgeFrame/);
 assert.match(pageComp, /sizingEls|sizing-line|ayahLineCount/, "تحجيم من أعرض سطر + عدد الأسطر الفعلي");
 assert.match(
   pageComp,
   /TARGET_BLOCK_FILL/,
-  "امتلاء كتلة الأسطر بتقليص ارتفاع الحاوية — بلا تمديد فراغات بين الأسطر",
+  "امتلاء كتلة الأسطر بتقليص ارتفاع الحاوية — صفحات عادية فقط",
 );
 assert.equal(
   /flex:\s*1\s+1\s+0/.test(mushafV2.match(/\.mf2-line\s*\{[\s\S]*?\n\}/)?.[0] ?? ""),
@@ -64,18 +68,18 @@ assert.equal(
   "أسطر الآيات بلا flex:1 1 0 يمدّد الفراغ بين الأسطر",
 );
 
-// 3) حجم موحّد من أعرض sizingLine — لا fit سطر-بسطر ولا measurementExclusions
+// 3) حجم موحّد من أعرض سطر آيات — لا fit سطر-بسطر ولا measurementExclusions
 assert.match(pageComp, /LINE_HEIGHT_EM\s*=\s*1\.1/);
 assert.match(pageComp, /sizeByWidth/);
 assert.match(pageComp, /sizeByHeight/);
 assert.match(pageComp, /pageFontSize/);
-assert.match(pageComp, /surahTitleRefs|basmalaRefs/, "عنوان وبسملة ضمن sizingLines");
+assert.match(pageComp, /ayahLineRefs/, "أسطر الآيات للتحجيم العرضي");
 assert.match(pageComp, /measurement-exclusions|metric-only/, "استثناءات المقياس مفصولة عن التحجيم");
 assert.equal(/SHORT_FILL_RATIO/.test(pageComp), false, "بلا SHORT_FILL_RATIO / fit لكل سطر");
-assert.match(pageComp, /mf2-ayah-marker/, "علامة الآية دائرة + رقم هندي");
-assert.match(pageComp, /toArabicDigits\(ayahNumberFromEndWord/, "رقم الآية هندي لا محرف QPC");
+assert.match(pageComp, /glyphText/, "علامة الآية من محارف خط الصفحة");
+assert.equal(/mf2-ayah-marker/.test(pageComp), false, "بلا دائرة CSS بديلة لعلامة الآية في دقة QPC");
 assert.match(pageComp, /drawnSurahTitleText/, "شارة السورة بالرسم العثماني");
-assert.match(pageComp, /TARGET_BLOCK_FILL[\s\S]*0\.85/, "هدف امتلاء الصفحتين 1–2 ≥ 85%");
+assert.match(pageComp, /opening[\s\S]*TARGET_BLOCK_FILL|opening[\s\S]*fill=n\/a/, "ص1–2 بلا هدف امتلاء");
 assert.match(pageComp, /data-mf2-bind|dataset\.mf2Bind/, "تشخيص قيد التحجيم");
 assert.match(pageComp, /pageFont\.failed|useUnicodeSafe/, "تراجع تلقائي عند فشل خط QPC");
 

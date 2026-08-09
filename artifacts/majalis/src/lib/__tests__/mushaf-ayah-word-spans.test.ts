@@ -76,6 +76,8 @@ function layoutFromPageJson(pageNum: number): MushafPageLayout {
     surahsOnPage: [],
     layoutMode: pageNum <= 2 ? "opening-centered" : "standard",
     ayahLineCount: lineWords.size,
+    hizbStartingOnPage: null,
+    rubElHizbStartingOnPage: null,
   };
 }
 

@@ -18,13 +18,19 @@ export const MEASUREMENT_EXCLUSION_REASONS = [
 
 export type MeasurementExclusionReason = (typeof MEASUREMENT_EXCLUSION_REASONS)[number];
 
-/** أنواع الأسطر التي تدخل في حساب حجم الخط (عرض) — العنوان خارج التحجيم العرضي */
+/**
+ * أنواع الأسطر ذات الصلة بالعرض:
+ * - ayah: وحدها تدخل في sizeByWidth (أعرض سطر آيات).
+ * - basmala / surah_title: تُرسم فقط — خارج التحجيم العرضي.
+ */
 export const SIZING_LINE_KINDS = ["ayah", "basmala", "surah_title"] as const;
 
 export type SizingLineKind = (typeof SIZING_LINE_KINDS)[number];
 
-/** نص البسملة المرسوم (Unicode) — يجب أن يدخل في sizingLines */
-/** بسملة افتتاحية Unicode — تُرسم بخط الصفحة (qpc-page-N) كسطر مستقل */
+/** أنواع تدخل فعليًا في حساب حجم الخط الموحّد للصفحة */
+export const WIDTH_SIZING_LINE_KINDS = ["ayah"] as const;
+
+/** بسملة افتتاحية Unicode — خط رقعة/ثلث ممدود أخف من أسطر الآيات (ليست آية الفاتحة) */
 export const DRAWN_BASMALA_TEXT = "بِسْمِ ٱللَّهِ ٱلرَّحْمَٰنِ ٱلرَّحِيمِ";
 
 /**
