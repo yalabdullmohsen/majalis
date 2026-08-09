@@ -23,7 +23,7 @@ import {
   type TafsirAudioClip,
 } from "@/features/mushaf/tafsir-audio";
 
-let stopped: string[] = [];
+const stopped: string[] = [];
 registerAudioStopper("tilawa", () => {
   stopped.push("tilawa");
 });
