@@ -10,7 +10,6 @@ import { toArabicPageDigits } from "@/lib/numerals";
 import {
   fetchSurahDetail, getSurahList, getSurahMeta, getSurahForPage, SURAH_START_PAGES,
   savePagePosition, loadPagePosition, loadReadingAyahKey,
-  formatRubElHizbFooterLabel,
   type Ayah, type SurahSummary,
 } from "@/lib/quran-api";
 import { loadPageJuzIndex, getSegmentsForPage, findPageForAyah, type QuranSegment } from "@/lib/recitation-ai/page-juz-lookup";
@@ -297,24 +296,24 @@ export default function MushafPageView() {
   const primarySegment = segAyahs?.[0];
   const primarySurahMeta = primarySegment ? getSurahMeta(primarySegment.segment.surah) : getSurahForPage(page);
   const firstAyahOfPage = primarySegment?.ayahs[0];
-  const juz = firstAyahOfPage?.juz ?? 0;
-  /** أسماء السور على الصفحة بلا كلمة «سورة»، مفصولة بمسافتين عند التعدّد */
+  const juz = v2Layout?.juzNumber ?? firstAyahOfPage?.juz ?? 0;
+  const hizb = v2Layout?.hizbNumber ?? 0;
+  /** يمين الرأس: الجزء · الحزب — مطابق مرجع مصحف المدينة */
+  const headerJuzHizb = useMemo(() => {
+    if (!juz) return "—";
+    if (hizb) return `الجزء ${toArabicDigits(juz)} · الحزب ${toArabicDigits(hizb)}`;
+    return `الجزء ${toArabicDigits(juz)}`;
+  }, [juz, hizb]);
+  /** يسار الرأس: «سورة …» (مع كلمة سورة)، مفصولة بمسافتين عند التعدّد */
   const headerSurahNames = useMemo(() => {
+    const strip = (raw: string) =>
+      String(raw ?? "").replace(/^(?:سُورَةُ|سورة)\s*/u, "").trim();
     const names = (v2Layout?.surahsOnPage ?? [])
-      .map((s) => String(s.nameArabic ?? "").replace(/^(?:سُورَةُ|سورة)\s*/u, "").trim())
+      .map((s) => strip(s.nameArabic ?? ""))
       .filter(Boolean);
-    if (names.length) return names.join("  ");
-    return String(primarySurahMeta.name ?? "").replace(/^(?:سُورَةُ|سورة)\s*/u, "").trim();
+    const bare = names.length ? names : [strip(primarySurahMeta.name ?? "")].filter(Boolean);
+    return bare.map((n) => `سورة ${n}`).join("  ");
   }, [v2Layout, primarySurahMeta.name]);
-  const footerRubLabel = useMemo(() => {
-    const rub = v2Layout?.rubElHizbStartingOnPage;
-    if (rub == null) return null;
-    return formatRubElHizbFooterLabel(rub, toArabicDigits);
-  }, [v2Layout?.rubElHizbStartingOnPage]);
-  const footerHizbLabel = v2Layout?.hizbStartingOnPage
-    ? `الحزب ${toArabicDigits(v2Layout.hizbStartingOnPage)}`
-    : null;
-  const footerMetaLabel = footerRubLabel ?? footerHizbLabel;
 
   useEffect(() => {
     applyPageSeo({
@@ -535,9 +534,7 @@ export default function MushafPageView() {
       <>
           {/* هيدر عائم بسيط — بلا أزرار أو خلفيات (مطابق مخطط آية) */}
           <header className="mpv-ayah-header" aria-label="معلومات الصفحة">
-            <span className="mpv-ayah-header__juz">
-              {juz ? `الجزء ${toArabicDigits(juz)}` : "—"}
-            </span>
+            <span className="mpv-ayah-header__juz">{headerJuzHizb}</span>
             <span className="mpv-ayah-header__surah">{headerSurahNames}</span>
           </header>
 
@@ -720,7 +717,7 @@ export default function MushafPageView() {
             )}
           </div>
 
-          {/* ذيل: خرطوش رقم الصفحة يمينًا + ربع/حزب يسارًا — بلا التصاق */}
+          {/* ذيل: خرطوش رقم الصفحة أسفل الوسط — بلا نص حزب/ربع */}
           <footer className="mpv-ayah-footer">
             <button
               type="button"
@@ -733,12 +730,6 @@ export default function MushafPageView() {
               <MushafPageCartoucheSvg className="mpv-ayah-page-badge__cartouche" />
               <span className="mpv-ayah-page-badge__num">{toArabicPageDigits(page)}</span>
             </button>
-            <span
-              className={`mpv-ayah-footer__hizb${footerMetaLabel ? "" : " mpv-ayah-footer__hizb--empty"}`}
-              aria-hidden={!footerMetaLabel}
-            >
-              {footerMetaLabel ?? ""}
-            </span>
           </footer>
         </>
 

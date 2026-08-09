@@ -59,8 +59,8 @@ html[data-theme="dark"] .mf2-frame {
   width: 100%;
   display: flex;
   flex-direction: column;
-  /* تمركز رأسي للكتلة — الفراغ فوق/تحت فقط، لا بين الأسطر */
-  justify-content: center;
+  /* تثبيت أعلى الفجوة — الفراغ المتبقي تحت الكتلة فقط، لا بين الأسطر */
+  justify-content: flex-start;
   gap: 0;
   margin: 0;
   padding: 0;
