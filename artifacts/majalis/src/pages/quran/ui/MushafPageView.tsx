@@ -39,7 +39,7 @@ import {
 import { beginAbortScope, abortScope, guardAsync } from "@/lib/route-abort";
 import { logDiagnostic } from "@/lib/diagnostics";
 import { MushafPageV2 } from "@/components/quran/MushafPageV2";
-import { MushafPageCartoucheSvg } from "@/components/quran/MushafOrnaments";
+import { MushafAyahMarkerSvg, MushafPageCartoucheSvg } from "@/components/quran/MushafOrnaments";
 import { MushafLayeredPage } from "@/features/mushaf";
 import { getPreviousInternalRoute, goBackOrFallback, normalizeNavPath } from "@/lib/navigation-back";
 import {
@@ -63,15 +63,17 @@ function clampPage(n: number): number {
   return Math.min(TOTAL_PAGES, Math.max(1, n));
 }
 
-/** عرض كلمة للوضع الخفيف: نص Unicode عادي (لا PUA خاص بخط الصفحة) —
- * شارة نجمية زمردية زخرفية موحّدة لرقم نهاية الآية بدل glyph خط الصفحة
- * (خط QPC غير مُحمَّل أصلًا في هذا الوضع). */
+/** عرض كلمة للوضع الخفيف: نص Unicode + علامة آية SVG أصلية (لا glyph QPC). */
 function renderLightWord(w: QpcWord, showAyahNumbers: boolean) {
   if (w.charType === "end") {
+    const n = Number(w.textUthmani.replace(/\D/g, "")) || 0;
     return (
       <Fragment key={w.id}>
         {showAyahNumbers ? (
-          <span className="qs-ayah-num">{toArabicDigits(Number(w.textUthmani.replace(/\D/g, "")) || 0)}</span>
+          <span className="mf2-ayah-marker" aria-hidden="true">
+            <MushafAyahMarkerSvg className="mf2-ayah-marker__ring" />
+            <span className="mf2-ayah-marker__num">{toArabicDigits(n)}</span>
+          </span>
         ) : null}
         {w.sajdahNumber !== null && <span className="mf2-sajda-badge">سجدة</span>}
       </Fragment>
