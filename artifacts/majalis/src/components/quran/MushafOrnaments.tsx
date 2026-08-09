@@ -62,13 +62,13 @@ export function MushafAyahMarkerSvg({ className }: { className?: string }) {
   );
 }
 
-/** خرطوش رقم الصفحة — ممتلئ واضح ≈24px مع طرفين مزخرفين */
+/** خرطوش رقم الصفحة — مزخرف واضح، يُعرض وسط أسفل الصفحة */
 export function MushafPageCartoucheSvg({ className }: { className?: string }) {
   const uid = useId().replace(/:/g, "");
   return (
     <svg
       className={className}
-      viewBox="0 0 168 48"
+      viewBox="0 0 200 56"
       preserveAspectRatio="xMidYMid meet"
       aria-hidden="true"
       focusable="false"
@@ -79,35 +79,36 @@ export function MushafPageCartoucheSvg({ className }: { className?: string }) {
           <stop offset="100%" stopColor="var(--color-mushaf-gold-strong, #A67C3D)" />
         </linearGradient>
       </defs>
+      {/* جسم الخرطوش */}
       <rect
-        x="28"
-        y="8"
-        width="112"
-        height="32"
-        rx="10"
+        x="36"
+        y="10"
+        width="128"
+        height="36"
+        rx="12"
         fill="var(--color-mushaf-panel, #FAF3E8)"
         stroke="var(--color-mushaf-gold-strong, #A67C3D)"
-        strokeWidth="1.5"
+        strokeWidth="1.75"
       />
       <rect
-        x="33"
-        y="12"
-        width="102"
-        height="24"
-        rx="8"
+        x="42"
+        y="15"
+        width="116"
+        height="26"
+        rx="9"
         fill="none"
         stroke={`url(#${uid}-pg)`}
-        strokeWidth="0.55"
-        opacity="0.55"
+        strokeWidth="0.7"
+        opacity="0.65"
       />
-      {/* لولب صغير يمين/يسار */}
-      <g fill="none" stroke="var(--color-mushaf-gold-strong, #A67C3D)" strokeWidth="1.2">
-        <path d="M18 24 C12 18 8 20 10 24 C8 28 12 30 18 24" />
-        <path d="M22 24 C26 20 30 20 34 24 C30 28 26 28 22 24" />
-        <circle cx="16" cy="24" r="2.2" fill={`url(#${uid}-pg)`} stroke="none" opacity="0.7" />
-        <path d="M150 24 C156 18 160 20 158 24 C160 28 156 30 150 24" />
-        <path d="M146 24 C142 20 138 20 134 24 C138 28 142 28 146 24" />
-        <circle cx="152" cy="24" r="2.2" fill={`url(#${uid}-pg)`} stroke="none" opacity="0.7" />
+      {/* لفائف جانبية أوضح */}
+      <g fill="none" stroke="var(--color-mushaf-gold-strong, #A67C3D)" strokeWidth="1.35">
+        <path d="M28 28 C18 18 10 20 12 28 C10 36 18 38 28 28" />
+        <path d="M32 28 C38 22 44 22 50 28 C44 34 38 34 32 28" />
+        <circle cx="22" cy="28" r="3" fill={`url(#${uid}-pg)`} stroke="none" opacity="0.85" />
+        <path d="M172 28 C182 18 190 20 188 28 C190 36 182 38 172 28" />
+        <path d="M168 28 C162 22 156 22 150 28 C156 34 162 34 168 28" />
+        <circle cx="178" cy="28" r="3" fill={`url(#${uid}-pg)`} stroke="none" opacity="0.85" />
       </g>
     </svg>
   );

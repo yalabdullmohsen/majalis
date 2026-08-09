@@ -286,8 +286,10 @@ html[data-theme="dark"] .mf2-sajda-badge {
   justify-content: center;
   text-align: center;
   padding: 0;
-  height: clamp(44px, 6cqh, 64px);
-  min-height: clamp(44px, calc(var(--mf2-lh, 1.05) * 1.5em), 64px);
+  /* ارتفاع الشارة = سطر مرجعي × 1.35 (يُضبط من MushafPageV2) */
+  height: var(--mf2-banner-h, calc(var(--mf2-lh, 1.05) * 1.35em));
+  min-height: var(--mf2-banner-h, calc(var(--mf2-lh, 1.05) * 1.35em));
+  max-height: var(--mf2-banner-h, calc(var(--mf2-lh, 1.05) * 1.35em));
   border: none;
   background: transparent;
   color: var(--color-mushaf-gold-strong, #A67C3D);

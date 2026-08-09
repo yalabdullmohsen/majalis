@@ -32,7 +32,7 @@ const BASE =
   process.env.MUSHAF_GATE_BASE_URL?.replace(/\/$/, "") ||
   "https://www.majlisilm.com";
 
-const DEFAULT_PAGES = [1, 2, 3, 100, 283, 306, 400, 500, 586, 595, 600, 604];
+const DEFAULT_PAGES = [1, 2, 3, 4, 100, 283, 311, 400, 500, 586, 596, 600, 604];
 const PAGES = (process.env.MUSHAF_GATE_PAGES || DEFAULT_PAGES.join(","))
   .split(",")
   .map((s) => Number(s.trim()))
@@ -51,11 +51,11 @@ const VIEWPORT = { width: 390, height: 844 };
 const MAX_LINE_PITCH_EM = 1.65;
 /** حد أدنى لنسبة حجم خط الصفحتين الافتتاحيتين من متوسط الصفحات العادية */
 const MIN_OPENING_FONT_RATIO = 0.95;
-/** امتلاء المحتوى داخل صندوق الأسطر (فجوات موزّعة) */
+/** امتلاء المحتوى داخل صندوق الأسطر المحتضن */
 const MIN_FILL_NORMAL = 0.9;
-const MIN_FILL_OPENING = 0.78;
-/** فجوة علوية رأس→أول سطر ≤ ٢٪ من ارتفاع الصفحة (صفحات عادية) */
-const MAX_TOP_GAP_RATIO = 0.02;
+const MIN_FILL_OPENING = 0.9;
+/** فجوة علوية رأس→أول سطر — أساس ٣١١ ≈٠ ±١٪ */
+const MAX_TOP_GAP_RATIO = 0.01;
 
 function sleep(ms) {
   return new Promise((r) => setTimeout(r, ms));
@@ -143,12 +143,13 @@ async function measurePage(page, pageNum) {
     const contentH = Math.max(0, contentBot - contentTop);
     const contentTopGap = Math.max(0, contentTop - blockRect.top);
     const contentBottomGap = Math.max(0, blockRect.bottom - contentBot);
-    const fillRatio = blockRect.height > 0 ? contentH / blockRect.height : 0;
     const pageHeader = document.querySelector(".mpv-ayah-header");
     const pageFooter = document.querySelector(".mpv-ayah-footer");
     const pageSlotTop = pageHeader?.getBoundingClientRect().bottom ?? blockRect.top;
     const pageSlotBot = pageFooter?.getBoundingClientRect().top ?? blockRect.bottom;
     const pageSlotH = Math.max(1, pageSlotBot - pageSlotTop);
+    const fillRatio = blockRect.height > 0 ? contentH / blockRect.height : 0;
+    const slotFillRatio = contentH / pageSlotH;
     const headerToContentGap = Math.max(0, contentTop - pageSlotTop);
     const topGapRatio = headerToContentGap / pageSlotH;
     /* أرقام الآيات: مجسمات QPC نهاية غير فارغة، أو Unicode بـ .mf2-ayah-marker__num */
@@ -192,6 +193,7 @@ async function measurePage(page, pageNum) {
       contentBottomGap,
       contentH,
       fillRatio,
+      slotFillRatio,
       topGapRatio,
       emptyQpcEnds,
       emptyUnicodeNums,

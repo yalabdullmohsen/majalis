@@ -728,12 +728,13 @@ export default function MushafPageView() {
             )}
           </div>
 
-          {/* ذيل: وصف الحزب/الربع يمينًا + خرطوش رقم الصفحة يسارًا (ثابت الاتجاه) */}
+          {/* ذيل: وصف الحزب يمينًا + خرطوش رقم الصفحة في الوسط (لا يُزاح) */}
           <footer className="mpv-ayah-footer">
             <span className="mpv-ayah-footer__meta">{footerMetaLabel ?? ""}</span>
             <button
               type="button"
               className="mpv-ayah-page-badge"
+              data-cartouche-center="1"
               onClick={openJumpModal}
               aria-haspopup="dialog"
               aria-expanded={isJumpModalVisible}

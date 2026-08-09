@@ -76,7 +76,8 @@ assert.equal(/mpv-ayah-nav-btn/.test(viewSrc), false, "بلا أسهم تنقّ�
 assert.equal(/pageFillMode/.test(viewSrc), false, "بلا وضع امتلاء منفصل");
 assert.equal(/Maximize2|Minimize2|mpv-fill-enter/.test(viewSrc), false, "بلا أزرار تكبير/تصغير");
 assert.match(viewSrc, /MushafPageCartoucheSvg/);
-assert.match(quranCss, /\.mpv-ayah-footer\s*\{[\s\S]*?justify-content:\s*space-between/, "ذيل: حزب + خرطوش");
+assert.match(quranCss, /\.mpv-ayah-page-badge\s*\{[\s\S]*?left:\s*50%/, "خرطوش وسط أسفل الصفحة");
+assert.match(viewSrc, /data-cartouche-center="1"/, "علامة مركزية الخرطوش");
 assert.match(quranCss, /\.mpv-ayah-header\s*\{[\s\S]*?font-size:\s*15px/, "رأس أوضح 15px");
 
 assert.match(immersiveSrc, /AYAH_MUSHAF_PAPER_BG\s*=\s*"#FCF8F1"/);
