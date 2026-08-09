@@ -309,7 +309,7 @@ export default function MushafPageView() {
       String(raw ?? "").replace(/^(?:سُورَةُ|سورة)\s*/u, "").trim();
     const starters = v2Layout?.surahsStartingOnPage ?? [];
     if (starters.length) {
-      return starters.map((s) => strip(s.nameArabic ?? "")).filter(Boolean).join("  ");
+      return starters.map((s) => strip(s.nameArabic ?? "")).filter(Boolean).join("\u00A0\u00A0");
     }
     const continuing = v2Layout?.surahsOnPage?.[0];
     if (continuing) return strip(continuing.nameArabic ?? "");

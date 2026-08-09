@@ -125,7 +125,7 @@ async function measurePage(page, pageNum, grid) {
       maxGapPct,
       bannerTopPct,
       wingOk,
-      headerSurah: (surahHeader?.textContent || "").replace(/\s+/g, " ").trim(),
+      headerSurah: (surahHeader?.textContent || "").replace(/[\u00A0]/g, " ").replace(/ +/g, (m) => m.length >= 2 ? "  " : " ").trim(),
       slotCount: slots.length,
       blockH,
       ornament: banner?.getAttribute("data-ornament") || null,
