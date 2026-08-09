@@ -1,101 +1,21 @@
 /**
  * زخارف مصحف أصلية (SVG) — رسم أصلي للمجلس العلمي (لا يُستخرج من تطبيق آخر).
- * انظر CREDITS.md.
+ * شارة السورة: شريط بسيط بلا نقش طرفي (الخيار الثاني).
+ * انظر CREDITS.md و RELEASE_READINESS.md (بند QCF_BSML المؤجّل).
  */
 import { useId } from "react";
 
-/** طرف نباتي كثيف ممتلئ + وردة مركزية كبيرة — داخل الإطار */
-function SurahBadgeEnd({ mirror }: { mirror?: boolean }) {
-  const uid = useId().replace(/:/g, "");
-  const g = `${uid}-g`;
-  const petals = [0, 40, 80, 120, 160, 200, 240, 280, 320];
-  return (
-    <svg
-      className="mf2-surah-badge__end-svg"
-      viewBox="0 0 120 56"
-      width="100%"
-      height="100%"
-      preserveAspectRatio="none"
-      aria-hidden="true"
-      focusable="false"
-      style={mirror ? { transform: "scaleX(-1)" } : undefined}
-    >
-      <defs>
-        <linearGradient id={g} x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="#C9B07A" />
-          <stop offset="45%" stopColor="#8B6914" />
-          <stop offset="100%" stopColor="#C9B07A" />
-        </linearGradient>
-      </defs>
-      {/* حشو بيج الطرف */}
-      <rect x="0" y="0" width="120" height="56" fill="#D4C4A8" />
-      {/* أوراق/سيقان ممتلئة تغطي المساحة بالكامل حول الوردة */}
-      <g fill={`url(#${g})`}>
-        <path d="M0 28 C10 2 38 0 58 16 C48 6 28 2 12 12 C5 18 1 24 0 28Z" opacity="0.95" />
-        <path d="M0 28 C10 54 38 56 58 40 C48 50 28 54 12 44 C5 38 1 32 0 28Z" opacity="0.95" />
-        <path d="M62 28 C72 8 96 6 118 18 C108 10 90 8 74 18 C67 22 63 26 62 28Z" opacity="0.95" />
-        <path d="M62 28 C72 48 96 50 118 38 C108 46 90 48 74 38 C67 34 63 30 62 28Z" opacity="0.95" />
-        <path d="M8 8 C28 0 52 2 70 14 C56 4 34 0 16 10 C11 12 8 10 8 8Z" opacity="0.9" />
-        <path d="M8 48 C28 56 52 54 70 42 C56 52 34 56 16 46 C11 44 8 46 8 48Z" opacity="0.9" />
-        <path d="M50 6 C70 0 94 2 112 12 C98 4 76 0 58 8 C53 10 50 8 50 6Z" opacity="0.88" />
-        <path d="M50 50 C70 56 94 54 112 44 C98 52 76 56 58 48 C53 46 50 48 50 50Z" opacity="0.88" />
-        <ellipse cx="18" cy="14" rx="9" ry="5.5" transform="rotate(-40 18 14)" />
-        <ellipse cx="18" cy="42" rx="9" ry="5.5" transform="rotate(40 18 42)" />
-        <ellipse cx="36" cy="10" rx="8" ry="4.8" transform="rotate(-25 36 10)" />
-        <ellipse cx="36" cy="46" rx="8" ry="4.8" transform="rotate(25 36 46)" />
-        <ellipse cx="84" cy="12" rx="8" ry="4.8" transform="rotate(25 84 12)" />
-        <ellipse cx="84" cy="44" rx="8" ry="4.8" transform="rotate(-25 84 44)" />
-        <ellipse cx="102" cy="16" rx="7.5" ry="4.5" transform="rotate(35 102 16)" />
-        <ellipse cx="102" cy="40" rx="7.5" ry="4.5" transform="rotate(-35 102 40)" />
-        <ellipse cx="28" cy="28" rx="11" ry="7" opacity="0.65" />
-        <ellipse cx="92" cy="28" rx="11" ry="7" opacity="0.65" />
-      </g>
-      <g fill="none" stroke={`url(#${g})`} strokeWidth="2.2" opacity="0.65">
-        <path d="M4 28 H48" />
-        <path d="M72 28 H116" />
-        <path d="M16 12 C30 20 42 20 52 14" />
-        <path d="M16 44 C30 36 42 36 52 42" />
-        <path d="M68 14 C82 20 94 20 108 12" />
-        <path d="M68 42 C82 36 94 36 108 44" />
-      </g>
-      {/* وردة في مركز الطرف */}
-      <g transform="translate(60 28)">
-        <circle r="16.5" fill="#EDE4D4" stroke={`url(#${g})`} strokeWidth="2" />
-        <circle r="13.8" fill="none" stroke={`url(#${g})`} strokeWidth="0.9" opacity="0.65" />
-        {petals.map((deg) => (
-          <ellipse
-            key={deg}
-            cx="0"
-            cy="-9.2"
-            rx="4"
-            ry="7.2"
-            fill={`url(#${g})`}
-            opacity="0.88"
-            transform={`rotate(${deg})`}
-          />
-        ))}
-        <circle r="5.6" fill={`url(#${g})`} />
-        <circle r="2.6" fill="#EDE4D4" />
-      </g>
-    </svg>
-  );
-}
-
 /**
- * شارة سورة: شريط بيج ممتلئ + إطار ذهبي متوسط + طرفان كثيفان + لوحة وسطى 45%.
+ * شارة سورة بسيطة: شريط بيج فاتح + إطار ذهبي رفيع — بلا زخرفة في الطرفين.
+ * الاسم يُرسم فوق الشريط في المكوّن الأب.
  */
 export function MushafSurahBadgeFrame({ className }: { className?: string }) {
   return (
-    <div className={className ? `mf2-surah-badge ${className}` : "mf2-surah-badge"} aria-hidden="true">
-      <div className="mf2-surah-badge__bar">
-        <div className="mf2-surah-badge__end">
-          <SurahBadgeEnd />
-        </div>
-        <div className="mf2-surah-badge__mid" />
-        <div className="mf2-surah-badge__end">
-          <SurahBadgeEnd mirror />
-        </div>
-      </div>
+    <div
+      className={className ? `mf2-surah-badge ${className}` : "mf2-surah-badge"}
+      aria-hidden="true"
+    >
+      <div className="mf2-surah-badge__bar" />
     </div>
   );
 }

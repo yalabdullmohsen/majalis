@@ -24,8 +24,8 @@
   --color-mushaf-gold-soft: #C9B07A;
   --color-mushaf-gold-faint: color-mix(in srgb, #8B6914 20%, transparent);
   --color-mushaf-meta: #A89060;
-  /* حشو شارة/خرطوش — أغمق قليلاً من ورقة الصفحة العاجية */
-  --color-mushaf-badge-bg: #E8DFD0;
+  /* حشو شارة/خرطوش — بيج فاتح */
+  --color-mushaf-badge-bg: #F3EBE0;
   --color-mushaf-badge-border: #D4C4A8;
   --color-danger: #DC2626;
   --color-danger-soft: #FEE2E2;
