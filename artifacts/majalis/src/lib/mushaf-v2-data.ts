@@ -73,6 +73,11 @@ export type MushafPageLayout = {
   ayahLineCount: number;
   /** رقم الحزب إن بدأ حزب جديد في هذه الصفحة؛ وإلا null */
   hizbStartingOnPage: number | null;
+  /**
+   * rub_el_hizb_number إن بدأ ربع/نصف/ثلاثة أرباع (أو حزب) جديد في الصفحة.
+   * للذيل: ربع/نصف/ثلاثة أرباع فقط (بداية الحزب تُعرض كـ hizbStartingOnPage).
+   */
+  rubElHizbStartingOnPage: number | null;
 };
 
 /** صفحتا الفاتحة وأول البقرة — تخطيط متمركز بلا حشو فراغات علوية */
@@ -194,9 +199,31 @@ async function resolveHizbStartingOnPage(
   return null;
 }
 
+/** أول rub_el_hizb_number جديد يبدأ في هذه الصفحة (مقارنةً بآخر الصفحة السابقة). */
+async function resolveRubElHizbStartingOnPage(
+  pageNumber: number,
+  verses: QpcVerse[],
+): Promise<number | null> {
+  if (!verses.length) return null;
+  if (pageNumber <= 1) return verses[0]!.rubElHizbNumber || 1;
+  try {
+    const prev = await fetchRawPage(pageNumber - 1);
+    const prevLastRub = prev[prev.length - 1]?.rubElHizbNumber ?? 0;
+    for (const v of verses) {
+      if (v.rubElHizbNumber > prevLastRub) return v.rubElHizbNumber;
+    }
+  } catch {
+    /* تجاهل */
+  }
+  return null;
+}
+
 export async function loadMushafPage(pageNumber: number): Promise<MushafPageLayout> {
   const [verses, chapters] = await Promise.all([fetchRawPage(pageNumber), loadChapters()]);
-  const hizbStartingOnPage = await resolveHizbStartingOnPage(pageNumber, verses);
+  const [hizbStartingOnPage, rubElHizbStartingOnPage] = await Promise.all([
+    resolveHizbStartingOnPage(pageNumber, verses),
+    resolveRubElHizbStartingOnPage(pageNumber, verses),
+  ]);
 
   const lineWords = new Map<number, QpcWord[]>();
   for (const v of verses) {
@@ -277,6 +304,7 @@ export async function loadMushafPage(pageNumber: number): Promise<MushafPageLayo
     layoutMode: openingCentered ? "opening-centered" : "standard",
     ayahLineCount: usedLines.length,
     hizbStartingOnPage,
+    rubElHizbStartingOnPage,
   };
 }
 

@@ -77,12 +77,9 @@ html[data-theme="dark"] .mf2-frame {
   min-height: 0;
   min-width: 0;
   height: auto;
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
+  display: block;
   direction: rtl;
   text-align: start;
-  unicode-bidi: isolate;
   /* ارتفاع الحروف ضمن 1.0–1.15em — موحّد مع كل الصفحات */
   line-height: var(--mf2-lh, 1.1);
   word-spacing: normal;
@@ -96,6 +93,16 @@ html[data-theme="dark"] .mf2-frame {
   -webkit-tap-highlight-color: transparent;
   overflow-x: hidden;
   overflow-y: visible;
+}
+/* سطر آيات QPC: نص متصل واحد — بلا عزل bidi بين المحارف */
+.mf2-lines--qpc-contiguous .mf2-line {
+  unicode-bidi: plaintext;
+}
+.mf2-line__run {
+  display: inline;
+  white-space: nowrap;
+  word-spacing: normal;
+  letter-spacing: 0;
 }
 html[data-theme="dark"] .mf2-line { --mf2-ink: #F9FAFB; }
 /* ورقة آية فاتحة تحت الوضع الداكن العام — أبقِ الحبر داكنًا حتى لا يبهت النص */
@@ -127,7 +134,9 @@ html[data-theme="dark"] .quran-shell--high-contrast .mf2-line {
   -webkit-tap-highlight-color: transparent;
   min-width: 0 !important;
   min-height: 0 !important;
-  unicode-bidi: isolate;
+}
+.mf2-lines--qpc-contiguous .mf2-ayah-group {
+  unicode-bidi: normal;
 }
 .mf2-ayah-group:hover,
 .mf2-ayah-group:focus-visible {
@@ -150,41 +159,19 @@ html[data-theme="dark"] .quran-shell--high-contrast .mf2-line {
    الفعلي المعروض، فتتكيّف تلقائيًا مع العرض الإضافي). */
 .mf2-word {
   display: inline;
-  unicode-bidi: isolate;
   /* لا تُقطع الكلمة العربية عبر حدود السطر — يهزم قاعدة elite على span */
   word-break: keep-all !important;
   overflow-wrap: normal !important;
   white-space: nowrap;
-}
-/* رقم الآية — دائرة 1:1؛ القطر ≈ 0.8em من خط السطر (ثابت النسبة بين الصفحات) */
-.mf2-ayah-marker {
-  display: inline-block;
-  box-sizing: border-box;
-  /* font-size أولاً ثم width/height بـ em منه → قطر ≈ 0.81em سطر */
-  font-size: 0.52em;
-  width: 1.55em;
-  height: 1.55em;
-  min-width: 1.55em !important;
-  min-height: 1.55em !important;
-  max-width: 1.55em;
-  max-height: 1.55em;
-  padding: 0 !important;
-  margin: 0 0.1em;
-  border-radius: 50%;
-  border: 1px solid var(--color-mushaf-gold-soft, #C9B07A);
-  background: var(--color-mushaf-badge-bg, #F3EBE0);
-  color: var(--color-mushaf-gold, #8B6914);
-  font-family: "Amiri Quran", "Amiri", "Noto Naskh Arabic", serif;
-  font-weight: 400;
-  line-height: 1.55em;
-  text-align: center;
-  vertical-align: middle;
-  overflow: hidden;
-  flex: none !important;
-  align-self: center;
-  box-shadow: inset 0 0 0 0.4px color-mix(in srgb, var(--color-mushaf-gold, #8B6914) 18%, transparent);
+  margin: 0;
+  padding: 0;
+  letter-spacing: 0;
+  word-spacing: normal;
 }
 /* دقة QPC: بلا مسافات CSS بين الكلمات — هندسة الخط تملأ العرض */
+.mf2-lines--qpc-contiguous .mf2-word {
+  unicode-bidi: normal;
+}
 .mf2-lines:not(.mf2-lines--unicode) .mf2-word + .mf2-word,
 .mf2-lines:not(.mf2-lines--unicode) .mf2-ayah-group + .mf2-ayah-group .mf2-word:first-child {
   margin-inline-start: 0;
@@ -380,25 +367,26 @@ html[data-theme="dark"] .mf2-surah-header__frame,
   padding-top: 0.3em;
 }
 .mf2-bismillah {
-  /* خط الصفحة نفسه (qpc-page-N على .mf2-lines) — لا Amiri/واجهة بديلة */
-  font-family: inherit;
-  font-size: 1em;
-  font-weight: inherit;
-  line-height: var(--mf2-lh, 1.1);
+  /* بسملة افتتاحية فقط — رقعة/ثلث ممدود أخف من أسطر الآيات؛ خارج sizeByWidth */
+  font-family: "Amiri Quran", "Amiri", "Scheherazade New", serif;
+  font-size: 0.82em;
+  font-weight: 400;
+  line-height: 1.25;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
-  margin: 0;
+  margin: 0.05em 0 0.12em;
   padding: 0;
   text-align: center;
   white-space: nowrap;
-  color: var(--mf2-ink, #111827);
+  color: color-mix(in srgb, var(--mf2-ink, #111827) 78%, transparent);
   overflow: visible;
   flex: 0 0 auto;
   min-height: 0;
+  letter-spacing: 0.04em;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   font-feature-settings: "liga" 1, "calt" 1;

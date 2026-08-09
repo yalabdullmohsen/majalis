@@ -12,7 +12,7 @@
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { deriveHizbRub, JUZ_START_PAGES } from "../quran-api";
+import { deriveHizbRub, formatRubElHizbFooterLabel, JUZ_START_PAGES } from "../quran-api";
 import { stripArabicDiacritics } from "../share-ayah";
 import { findPageForAyah } from "../recitation-ai/page-juz-lookup";
 
@@ -32,6 +32,9 @@ console.log("═══ deriveHizbRub — حدود كل حزب (4 أرباع) ═
   assert(JSON.stringify(deriveHizbRub(4)) === JSON.stringify({ hizb: 1, rubInHizb: 4 }), "الربع 4 ← آخر ربع في الحزب 1");
   assert(JSON.stringify(deriveHizbRub(5)) === JSON.stringify({ hizb: 2, rubInHizb: 1 }), "الربع 5 ← أول ربع في الحزب 2");
   assert(JSON.stringify(deriveHizbRub(240)) === JSON.stringify({ hizb: 60, rubInHizb: 4 }), "الربع 240 (الأخير) ← الحزب 60، الربع 4");
+  assert(formatRubElHizbFooterLabel(1) === null, "بداية الحزب بلا تسمية ربع في الذيل");
+  assert(formatRubElHizbFooterLabel(239) === "نصف الحزب 60", "ص596: نصف الحزب");
+  assert(formatRubElHizbFooterLabel(240, (n) => String(n)) === "ثلاثة أرباع الحزب 60", "ص600: ثلاثة أرباع");
 }
 
 console.log("═══ stripArabicDiacritics — إزالة الحركات فقط، لا توحيد حروف ═══");

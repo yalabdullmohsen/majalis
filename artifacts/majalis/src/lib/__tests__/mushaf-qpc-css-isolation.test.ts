@@ -24,9 +24,17 @@ const viewSrc = readFileSync(resolve(appRoot, "src/pages/quran/ui/MushafPageView
 const pageComp = readFileSync(resolve(appRoot, "src/components/quran/MushafPageV2.tsx"), "utf8");
 const dataLoader = readFileSync(resolve(appRoot, "src/lib/mushaf-v2-data.ts"), "utf8");
 
-assert.match(mushafV2, /\.mf2-line\s*\{[\s\S]*?unicode-bidi:\s*isolate/, "mf2-line يعزل bidi");
-assert.match(mushafV2, /\.mf2-word\s*\{[\s\S]*?unicode-bidi:\s*isolate/, "mf2-word يعزل bidi");
-assert.match(pageComp, /unicodeBidi:\s*["']isolate["']/, "MushafPageV2 يضبط isolate inline");
+assert.match(
+  mushafV2,
+  /\.mf2-lines--qpc-contiguous\s+\.mf2-line\s*\{[\s\S]*?unicode-bidi:\s*plaintext/,
+  "أسطر QPC متصلة plaintext بلا عزل بين المحارف",
+);
+assert.match(
+  mushafV2,
+  /\.mf2-lines--qpc-contiguous\s+\.mf2-word\s*\{[\s\S]*?unicode-bidi:\s*normal/,
+  "كلمات QPC بلا isolate يقطع التشكيل",
+);
+assert.match(pageComp, /mf2-lines--qpc-contiguous/, "مسار الدقة يفعّل الأسطر المتصلة");
 assert.match(pageComp, /textQpcHafs/, "مسار Unicode الآمن يستخدم textQpcHafs لا glyph عند الفشل");
 assert.match(pageComp, /pageFont\.failed/, "فشل خط الصفحة يفعّل التراجع");
 

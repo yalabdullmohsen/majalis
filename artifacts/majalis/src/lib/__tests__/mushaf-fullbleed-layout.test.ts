@@ -21,7 +21,7 @@ assert.equal(
   false,
   ".mpv-body--ayah بلا max-width:720px الذي كان يحبس الصفحة",
 );
-assert.match(mpvBodyBlock[0], /max\(8px/);
+assert.match(mpvBodyBlock[0], /4\.5vw/);
 assert.match(mpvBodyBlock[0], /box-sizing:\s*border-box/);
 assert.match(mpvBodyBlock[0], /width:\s*100%/);
 assert.equal(/83vh/.test(mpvBodyBlock[0]), false, ".mpv-body--ayah بلا سقف 83vh");
@@ -58,8 +58,9 @@ assert.match(viewSrc, /quran-shell--ayah/);
 assert.match(viewSrc, /mpv-ayah-header/);
 assert.match(viewSrc, /mpv-ayah-page-badge/);
 assert.match(viewSrc, /AYAH_MUSHAF_PAPER_BG/);
-assert.match(viewSrc, /mpv-ayah-header__surah">\{primarySurahMeta\.name\}/);
-assert.match(viewSrc, /الحزب \$\{toArabicDigits\(hizbStartingOnPage\)\}/);
+assert.match(viewSrc, /mpv-ayah-header__surah">\{headerSurahNames\}/);
+assert.match(viewSrc, /formatRubElHizbFooterLabel/);
+assert.match(viewSrc, /footerMetaLabel/);
 assert.equal(/• الحزب/.test(viewSrc), false, "الحزب ليس في رأس الصفحة");
 assert.equal(/سورة \{primarySurahMeta/.test(viewSrc), false, "بلا كلمة سورة في الرأس");
 assert.match(viewSrc, /useState\(false\)/);
@@ -69,6 +70,7 @@ assert.equal(/pageFillMode/.test(viewSrc), false, "بلا وضع امتلاء م
 assert.equal(/Maximize2|Minimize2|mpv-fill-enter/.test(viewSrc), false, "بلا أزرار تكبير/تصغير");
 assert.match(viewSrc, /MushafPageCartoucheSvg/);
 assert.match(viewSrc, /mpv-ayah-footer__hizb/);
+assert.match(viewSrc, /mpv-ayah-footer__meta/);
 
 assert.match(immersiveSrc, /AYAH_MUSHAF_PAPER_BG\s*=\s*"#F7F0E4"/);
 
@@ -113,11 +115,11 @@ const bismillah = mushafV2.match(/\.mf2-bismillah\s*\{[^}]+\}/);
 assert.ok(bismillah, ".mf2-bismillah معرّف");
 assert.match(bismillah[0], /white-space:\s*nowrap/);
 assert.ok(
-  bismillah[0].includes("font-family: inherit"),
-  "البسملة ترث خط الصفحة (qpc-page-N)",
+  bismillah[0].includes("Amiri Quran"),
+  "البسملة الافتتاحية بخط رقعة/ثلث (Amiri) أخف من الآيات",
 );
-assert.equal(bismillah[0].includes("Amiri Quran"), false, "البسملة بخط الصفحة لا Amiri");
-assert.ok(bismillah[0].includes("line-height: var(--mf2-lh"), "ارتفاع بسملة = --mf2-lh");
+assert.equal(bismillah[0].includes("font-family: inherit"), false, "البسملة الافتتاحية لا ترث qpc-page");
+assert.match(bismillah[0], /0\.82em/, "بسملة أخف من أسطر الآيات");
 assert.match(bismillah[0], /optimizeLegibility/);
 
 console.log("mushaf-fullbleed-layout.test.ts: ok");

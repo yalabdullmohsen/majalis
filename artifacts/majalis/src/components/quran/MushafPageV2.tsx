@@ -7,20 +7,7 @@ import { DRAWN_BASMALA_TEXT, drawnSurahTitleText } from "@/lib/mushaf-sizing-lin
 import { MushafSurahBadgeFrame } from "@/components/quran/MushafOrnaments";
 import { wordKeyFromQpc } from "@/features/mushaf/ayah-word-keys";
 
-function ayahNumberFromEndWord(w: QpcWord): number {
-  const fromText = Number(String(w.textUthmani).replace(/\D/g, ""));
-  if (Number.isFinite(fromText) && fromText > 0) return fromText;
-  const ayah = Number(String(w.verseKey).split(":")[1]);
-  return Number.isFinite(ayah) && ayah > 0 ? ayah : 0;
-}
-
-/** يُجمِّع كلمات سطر متتالية بنفس verseKey في عنقود واحد — الوحدة
- * التفاعلية الحقيقية هي "الآية" لا الكلمة المفردة (مطابقًا لـMushafPage.tsx
- * القائم: role="button" واحد لكل آية، لا لكل حرف/كلمة). هذا ليس تجميلًا:
- * وضع role="button" على كل glyph مفرد فعليًا فعّل قاعدة إتاحة عامة موقعية
- * حقيقية (WCAG 2.5.5 — elite-2026.css:30100) تفرض min-width:44px!important
- * على أي [role="button"]، فكسرت تحجيم الأسطر تمامًا على الموبايل (رُصد
- * ودُقِّق فعليًا: تطابق حسابي تام بين عدد الكلمات×44px والفيضان المُقاس). */
+/** يُجمِّع كلمات سطر متتالية بنفس verseKey في عنقود واحد — للوضع التفاعلي بلا طبقة إحداثيات. */
 export function groupWordsByAyah(words: QpcWord[]): QpcWord[][] {
   const groups: QpcWord[][] = [];
   for (const w of words) {
@@ -35,23 +22,9 @@ type Props = {
   layout: MushafPageLayout | null;
   activeAyahKey?: string | null;
   onAyahPress?: (verseKey: string) => void;
-  /** خط موحّد بديل (الوضع الخفيف) — يتخطى تحميل خط QPC الخاص بالصفحة
-   * كليًا (لا طلب شبكة إضافي)، يفترض أن الخط مُحمَّل أصلًا في التطبيق.
-   * افتراضيًا: خط QPC الرقمي الخاص بكل صفحة (وضع الدقة المطبعية). */
   sharedFontFamily?: string;
-  /** عرض كلمة مخصَّص — الوضع الخفيف يستبدل شارة رقم الآية الافتراضية
-   * (glyph من خط الصفحة) بشارة زخرفية موحّدة ونص Unicode عادي. المُعِدّ
-   * مسؤول عن وضع key={w.id} على العقدة المُعادة. افتراضيًا: نفس عرض
-   * وضع الدقة المطبعية (glyph الصفحة + شارة سجدة نصية). */
   renderWord?: (w: QpcWord) => ReactNode;
-  /** true: يُصدَّر .mf2-lines وحدها بلا .mf2-page/.mf2-frame الخاصين بها
-   * (بلا إطار/outline/خلفية/aspect-ratio مستقلة) — لاستخدام هذا المكوّن
-   * متداخلاً داخل إطار صفحة قائم أصلًا (مثل .qs-mushaf-frame في
-   * MushafPageView) بلا إطارين متداخلين بصريًا. المُستدعي عندها مسؤول
-   * عن توفير حاوية بنسبة عرض/ارتفاع صفحة ثابتة (aspect-ratio) لتعمل
-   * flex:1 الخاصة بكل سطر بشكل صحيح. */
   bare?: boolean;
-  /** إظهار أرقام الآيات في مسار التراجع Unicode (فشل خط QPC أو وضع خفيف). */
   showAyahNumbers?: boolean;
   /**
    * وضع بصري فقط: بلا أزرار/ضغط على مجموعات الآيات —
@@ -62,17 +35,19 @@ type Props = {
 
 const ROW_COUNT_STANDARD = 15;
 
-/** كلمات الصفحة بخط QPC؛ علامة الآية = دائرة CSS + رقم هندي (لا محرف نهاية طويل). */
+/**
+ * دقة QPC: كل محرف من خط الصفحة — بما فيه علامة الآية (code_v2).
+ * لا دائرة CSS ولا مسافات مُقحَمة؛ مواضع الكلمات من هندسة الخط.
+ */
 function defaultRenderWord(w: QpcWord, showAyahNumbers: boolean) {
   const wordKey = wordKeyFromQpc(w);
   if (w.charType === "end") {
+    if (!showAyahNumbers) return null;
     return (
       <Fragment key={w.id}>
-        {showAyahNumbers ? (
-          <span className="mf2-word mf2-ayah-marker" data-word-key={wordKey} aria-hidden="true">
-            {toArabicDigits(ayahNumberFromEndWord(w))}
-          </span>
-        ) : null}
+        <span className="mf2-word" data-word-key={wordKey} data-char-type="end">
+          {w.glyphText}
+        </span>
         {w.sajdahNumber !== null && <span className="mf2-sajda-badge">سجدة</span>}
       </Fragment>
     );
@@ -143,10 +118,6 @@ export function MushafPageV2({
   const wantPrecision = !sharedFontFamily;
   const pageFont = useMushafPageFont(wantPrecision ? (layout?.pageNumber ?? null) : null);
 
-  /**
-   * تراجع تلقائي: فشل خط QPC → Unicode + Amiri بدل glyph محرَّف.
-   * الوضع الخفيف الصريح (sharedFontFamily) يبقى كما هو.
-   */
   const useUnicodeSafe = Boolean(sharedFontFamily) || pageFont.failed;
   const fontReady = useUnicodeSafe ? true : pageFont.ready;
 
@@ -163,25 +134,21 @@ export function MushafPageV2({
     return (w: QpcWord) => defaultRenderWord(w, showAyahNumbers);
   }, [renderWord, pageFont.failed, useUnicodeSafe, showAyahNumbers]);
 
-  /** أسطر الآيات المرسومة — جزء من sizingLines */
+  /** أسطر الآيات المرسومة — وحدها تدخل في sizeByWidth */
   const ayahLineRefs = useRef(new Map<number, HTMLDivElement>());
-  /** عناوين السور المرسومة — جزء من sizingLines (ليست measurementExclusions) */
+  /** عناوين السور — خارج التحجيم العرضي */
   const surahTitleRefs = useRef(new Map<string, HTMLElement>());
-  /** البسملات المرسومة — جزء من sizingLines */
+  /** البسملات الافتتاحية — خارج التحجيم العرضي */
   const basmalaRefs = useRef(new Map<string, HTMLElement>());
-  /** كتل الرأس (عنوان±بسملة) لقياس الارتفاع الطبيعي */
   const headerBlockRefs = useRef(new Map<string, HTMLElement>());
   const linesContainerRef = useRef<HTMLDivElement | null>(null);
-  /** حجم خط موحّد للصفحة كلها (لا fit-to-width لكل سطر). */
   const [pageFontSize, setPageFontSize] = useState<number | null>(null);
-  /** ارتفاع سطر ديناميكي ≤1.6 لاقتراب امتلاء الهدف بلا تجاوز القيد */
   const [pageLineHeightEm, setPageLineHeightEm] = useState(1.1);
   const [fitted, setFitted] = useState(false);
 
   /**
-   * حجم واحد من أعرض sizingLine (آية / بسملة / عنوان)، لا من measurementExclusions.
-   * رأسيًا: يُحسب من الارتفاع ÷ عدد الأسطر مع line-height ثابت؛ الفراغ المتبقي
-   * يتمركز فوق/تحت الكتلة (CSS) ولا يُمدَّد بين الأسطر.
+   * حجم موحّد من أعرض سطر آيات فقط.
+   * الصفحتان 1–2: بلا هدف امتلاء رأسي — فراغ علوي/سفلي كما المرجع؛ lh ≤ 1.6.
    */
   useLayoutEffect(() => {
     if (!fontReady || !layout) {
@@ -201,38 +168,27 @@ export function MushafPageV2({
     const container = linesContainerRef.current;
     if (!container) return;
 
-    /** يجب أن يطابق --mf2-lh / line-height في .mf2-line (1.0–1.15). */
     const LINE_HEIGHT_EM = 1.1;
     const REF_PX = 100;
-    /** امتلاء كتلة الأسطر من خانة الرأس↔الذيل — بلا تمديد بين الأسطر. */
-    const TARGET_BLOCK_FILL = layout.layoutMode === "opening-centered" ? 0.85 : 0.9;
-    /** سقف pitch ≤ 1.6؛ هامش بسيط لدوائر الآية الدائرية */
+    /** امتلاء رأسي لصفحات عادية فقط — مُعطَّل للصفحتين الافتتاحيتين */
+    const TARGET_BLOCK_FILL = 0.9;
     const LH_CAP = 1.58;
     const opening = layout.layoutMode === "opening-centered";
     const ayahCount = Math.max(1, layout.ayahLineCount);
 
     const measure = () => {
-      /* خانة الرأس↔الذيل (الجسم) لا الصندوق الداخلي بعد الاحتضان */
       const slotEl =
         container.closest(".qs-mushaf-body") ||
         container.closest(".mpv-body") ||
         container.parentElement;
       const availableWidth = container.clientWidth;
-      const viewportSlotH = slotEl instanceof HTMLElement
+      const slotHeight = slotEl instanceof HTMLElement
         ? slotEl.clientHeight
         : container.clientHeight;
-      if (availableWidth <= 0 || viewportSlotH <= 0) return false;
-      /* الصفحتان 1–2: خانة بنسبة صفحة مصحف (≤ عرض/0.72) حتى تملأ الأسطر ≥85%
-         دون تمديد pitch فوق 1.6 — صفحات 3+ تبقى على ارتفاع الشاشة الكامل. */
-      const slotHeight = opening
-        ? Math.min(viewportSlotH, availableWidth / 0.72)
-        : viewportSlotH;
+      if (availableWidth <= 0 || slotHeight <= 0) return false;
 
-      /* التحجيم من آيات + بسملة فقط — عنوان الشارة بخط قرآن منفصل ولا يضيّق العرض */
-      const sizingEls = [
-        ...collectSizingEls(ayahLineRefs.current),
-        ...collectSizingEls(basmalaRefs.current),
-      ];
+      /* التحجيم العرضي من أسطر الآيات فقط — بلا بسملة/عنوان */
+      const sizingEls = collectSizingEls(ayahLineRefs.current);
       if (sizingEls.length === 0) return false;
 
       const widestAtRef = measureWidest(sizingEls, REF_PX);
@@ -240,30 +196,30 @@ export function MushafPageV2({
 
       const sizeByWidth = (availableWidth * REF_PX) / widestAtRef;
 
-      // ارتفاع: طبّق حجمًا مؤقتًا ثم اطرح ارتفاعات الرؤوس الطبيعية
       let size = sizeByWidth;
       let bound: "width" | "height" = "width";
-      for (let iter = 0; iter < 3; iter++) {
-        applyTempFontSize(sizingEls, size);
-        container.style.fontSize = `${size}px`;
-        let headersH = 0;
-        for (const el of headerBlockRefs.current.values()) {
-          if (el) headersH += el.getBoundingClientRect().height;
-        }
-        const ayahBudget = Math.max(0, slotHeight - headersH);
-        const sizeByHeight = (ayahBudget / ayahCount) / LINE_HEIGHT_EM;
-        if (sizeByHeight < sizeByWidth) bound = "height";
-        else bound = "width";
-        const next = Math.min(sizeByWidth, sizeByHeight);
-        if (Math.abs(next - size) < 0.05) {
+
+      if (!opening) {
+        for (let iter = 0; iter < 3; iter++) {
+          applyTempFontSize(sizingEls, size);
+          container.style.fontSize = `${size}px`;
+          let headersH = 0;
+          for (const el of headerBlockRefs.current.values()) {
+            if (el) headersH += el.getBoundingClientRect().height;
+          }
+          const ayahBudget = Math.max(0, slotHeight - headersH);
+          const sizeByHeight = (ayahBudget / ayahCount) / LINE_HEIGHT_EM;
+          if (sizeByHeight < sizeByWidth) bound = "height";
+          else bound = "width";
+          const next = Math.min(sizeByWidth, sizeByHeight);
+          if (Math.abs(next - size) < 0.05) {
+            size = next;
+            break;
+          }
           size = next;
-          break;
         }
-        size = next;
       }
 
-      // تصغير متكرر حتى لا يتجاوز أي سطر مرسوم الحاوية ولو ببكسل
-      // (اختلاف تلميح الخط بين المنصات قد يُبقي فائضًا بعد تمريرة واحدة)
       for (let guard = 0; guard < 10; guard++) {
         applyTempFontSize(sizingEls, size);
         container.style.fontSize = `${size}px`;
@@ -279,45 +235,55 @@ export function MushafPageV2({
 
       applyTempFontSize(sizingEls, "");
       for (const el of sizingEls) el.style.overflowX = "";
-      /* أبقِ الحجم على الحاوية — مسحه بـ"" بعد commit React يزيل font-size
-         من الـDOM دون إعادة تطبيق (ResizeObserver يعيد measure كثيرًا). */
       container.style.fontSize = `${size}px`;
 
-      /* اقترب من امتلاء الهدف برفع --mf2-lh حتى سقف pitch، ثم احتضن الكتلة. */
-      let headersH = 0;
-      for (const el of headerBlockRefs.current.values()) {
-        if (el) headersH += el.getBoundingClientRect().height;
-      }
-      const targetContentH = slotHeight * TARGET_BLOCK_FILL;
-      const lhForTarget = size > 0
-        ? Math.max(0, targetContentH - headersH) / (ayahCount * size)
-        : LINE_HEIGHT_EM;
-      const lhRaw = Math.max(LINE_HEIGHT_EM, lhForTarget);
-      const lh = Math.min(LH_CAP, lhRaw);
-      const lhCapped = lhRaw > LH_CAP;
-      container.style.setProperty("--mf2-lh", String(lh));
-
-      let contentTop = Infinity;
-      let contentBot = -Infinity;
-      for (const child of container.children) {
-        if (!(child instanceof HTMLElement)) continue;
-        const r = child.getBoundingClientRect();
-        if (r.height <= 0 && r.width <= 0) continue;
-        contentTop = Math.min(contentTop, r.top);
-        contentBot = Math.max(contentBot, r.bottom);
-      }
+      let lhCapped = false;
       let fillRatio = 0;
-      if (Number.isFinite(contentTop) && Number.isFinite(contentBot)) {
-        const contentH = Math.max(0, contentBot - contentTop);
-        fillRatio = slotHeight > 0 ? contentH / slotHeight : 0;
-        const boxH = Math.min(
-          slotHeight,
-          Math.max(contentH, contentH / TARGET_BLOCK_FILL),
-        );
-        container.style.height = `${boxH}px`;
-        container.style.flexGrow = "0";
-        container.style.flexShrink = "0";
-        container.style.flexBasis = "auto";
+      let lh: number;
+
+      if (opening) {
+        /* ص1–2: تباعد ثابت ≤1.6؛ بلا احتضان ارتفاع لفرض امتلاء */
+        lh = LINE_HEIGHT_EM;
+        container.style.setProperty("--mf2-lh", String(lh));
+        container.style.height = "";
+        container.style.flexGrow = "";
+        container.style.flexShrink = "";
+        container.style.flexBasis = "";
+      } else {
+        let headersH = 0;
+        for (const el of headerBlockRefs.current.values()) {
+          if (el) headersH += el.getBoundingClientRect().height;
+        }
+        const targetContentH = slotHeight * TARGET_BLOCK_FILL;
+        const lhForTarget = size > 0
+          ? Math.max(0, targetContentH - headersH) / (ayahCount * size)
+          : LINE_HEIGHT_EM;
+        const lhRaw = Math.max(LINE_HEIGHT_EM, lhForTarget);
+        lh = Math.min(LH_CAP, lhRaw);
+        lhCapped = lhRaw > LH_CAP;
+        container.style.setProperty("--mf2-lh", String(lh));
+
+        let contentTop = Infinity;
+        let contentBot = -Infinity;
+        for (const child of container.children) {
+          if (!(child instanceof HTMLElement)) continue;
+          const r = child.getBoundingClientRect();
+          if (r.height <= 0 && r.width <= 0) continue;
+          contentTop = Math.min(contentTop, r.top);
+          contentBot = Math.max(contentBot, r.bottom);
+        }
+        if (Number.isFinite(contentTop) && Number.isFinite(contentBot)) {
+          const contentH = Math.max(0, contentBot - contentTop);
+          fillRatio = slotHeight > 0 ? contentH / slotHeight : 0;
+          const boxH = Math.min(
+            slotHeight,
+            Math.max(contentH, contentH / TARGET_BLOCK_FILL),
+          );
+          container.style.height = `${boxH}px`;
+          container.style.flexGrow = "0";
+          container.style.flexShrink = "0";
+          container.style.flexBasis = "auto";
+        }
       }
 
       const bindLabel = lhCapped && bound === "width"
@@ -329,14 +295,12 @@ export function MushafPageV2({
       container.dataset.mf2Lh = lh.toFixed(3);
       container.dataset.mf2Bind = bindLabel;
       container.dataset.mf2Fill = fillRatio.toFixed(3);
-      container.dataset.mf2Target = String(TARGET_BLOCK_FILL);
+      container.dataset.mf2Target = opening ? "none" : String(TARGET_BLOCK_FILL);
       if (opening) {
-        // تشخيص مطلوب للصفحتين 1–2 — يظهر في لقطات/فحص DOM
         console.info(
           `[mushaf-fit] page=${layout.pageNumber} size=${size.toFixed(2)}px ` +
-            `lh=${lh.toFixed(3)} bind=${bindLabel} fill=${(fillRatio * 100).toFixed(1)}% ` +
-            `target=${(TARGET_BLOCK_FILL * 100).toFixed(0)}% ayahLines=${ayahCount} ` +
-            `slot=${slotHeight.toFixed(0)}×${availableWidth.toFixed(0)}`,
+            `lh=${lh.toFixed(3)} bind=${bindLabel} fill=n/a (opening) ` +
+            `ayahLines=${ayahCount} slot=${slotHeight.toFixed(0)}×${availableWidth.toFixed(0)}`,
         );
       }
 
@@ -388,18 +352,110 @@ export function MushafPageV2({
     "mf2-lines",
     useUnicodeSafe ? "mf2-lines--unicode" : "",
     openingCentered ? "mf2-lines--opening-centered" : "",
+    !useUnicodeSafe ? "mf2-lines--qpc-contiguous" : "",
   ].filter(Boolean).join(" ");
+
+  const renderAyahLine = (row: Extract<MushafPageLayout["rows"][number], { kind: "line" }>) => {
+    const lineWords = showAyahNumbers
+      ? row.words
+      : row.words.filter((w) => w.charType !== "end");
+
+    /** دقة QPC + visualOnly: سطر متصل واحد بلا عزل bidi بين الكلمات */
+    if (!useUnicodeSafe && visualOnly) {
+      return (
+        <div
+          key={`l-${row.lineNumber}`}
+          ref={(el) => {
+            if (el) ayahLineRefs.current.set(row.lineNumber, el);
+            else ayahLineRefs.current.delete(row.lineNumber);
+          }}
+          className="mf2-line"
+          data-sizing-line="ayah"
+          data-line={row.lineNumber}
+        >
+          <span className="mf2-line__run">
+            {lineWords.map((w) => wordRenderer(w))}
+          </span>
+        </div>
+      );
+    }
+
+    return (
+      <div
+        key={`l-${row.lineNumber}`}
+        ref={(el) => {
+          if (el) ayahLineRefs.current.set(row.lineNumber, el);
+          else ayahLineRefs.current.delete(row.lineNumber);
+        }}
+        className={`mf2-line${useUnicodeSafe ? " mf2-line--unicode" : ""}`}
+        data-sizing-line="ayah"
+        data-line={row.lineNumber}
+        style={useUnicodeSafe ? { unicodeBidi: "isolate" } : undefined}
+      >
+        {groupWordsByAyah(lineWords).map((group) => {
+          const verseKey = group[0].verseKey;
+          const active = verseKey === activeAyahKey;
+          if (visualOnly) {
+            return (
+              <span
+                key={verseKey}
+                className={`mf2-ayah-group${active ? " mf2-ayah-group--active" : ""}`}
+                data-verse={verseKey}
+                aria-hidden="true"
+              >
+                {group.map((w) => wordRenderer(w))}
+              </span>
+            );
+          }
+          return (
+            <span
+              key={verseKey}
+              className={`mf2-ayah-group${active ? " mf2-ayah-group--active" : ""}`}
+              role="button"
+              tabIndex={0}
+              aria-label={`آية ${verseKey}`}
+              onPointerDown={(e) => {
+                if (e.button !== 0 && e.pointerType === "mouse") return;
+                const target = e.currentTarget;
+                const timer = window.setTimeout(() => {
+                  onAyahPress?.(verseKey);
+                }, 350);
+                target.dataset.ayahTimer = String(timer);
+              }}
+              onPointerUp={(e) => {
+                const t = e.currentTarget.dataset.ayahTimer;
+                if (t) window.clearTimeout(Number(t));
+                delete e.currentTarget.dataset.ayahTimer;
+              }}
+              onPointerCancel={(e) => {
+                const t = e.currentTarget.dataset.ayahTimer;
+                if (t) window.clearTimeout(Number(t));
+                delete e.currentTarget.dataset.ayahTimer;
+              }}
+              onPointerLeave={(e) => {
+                const t = e.currentTarget.dataset.ayahTimer;
+                if (t) window.clearTimeout(Number(t));
+                delete e.currentTarget.dataset.ayahTimer;
+              }}
+              onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onAyahPress?.(verseKey); } }}
+            >
+              {group.map((w) => wordRenderer(w))}
+            </span>
+          );
+        })}
+      </div>
+    );
+  };
 
   const lines = (
     <>
       <div
         ref={linesContainerRef}
         className={linesClass}
-        data-sizing-lines="ayah,basmala,surah_title"
+        data-sizing-lines="ayah"
         data-measurement-exclusions="metric-only"
         style={{
           opacity: fitted ? 1 : 0,
-          // حجم موحّد يورثه كل سطر مرسوم — لا تحجيم فردي ولا clamp مستقل
           fontSize: !useUnicodeSafe && pageFontSize ? `${pageFontSize}px` : undefined,
           ["--mf2-lh" as string]: !useUnicodeSafe ? String(pageLineHeightEm) : undefined,
           fontFamily: useUnicodeSafe
@@ -431,70 +487,7 @@ export function MushafPageV2({
               />
             );
           }
-          return (
-            <div
-              key={`l-${row.lineNumber}`}
-              ref={(el) => {
-                if (el) ayahLineRefs.current.set(row.lineNumber, el);
-                else ayahLineRefs.current.delete(row.lineNumber);
-              }}
-              className={`mf2-line${useUnicodeSafe ? " mf2-line--unicode" : ""}`}
-              data-sizing-line="ayah"
-              style={{ unicodeBidi: "isolate" }}
-            >
-              {groupWordsByAyah(row.words).map((group) => {
-                const verseKey = group[0].verseKey;
-                const active = verseKey === activeAyahKey;
-                if (visualOnly) {
-                  return (
-                    <span
-                      key={verseKey}
-                      className={`mf2-ayah-group${active ? " mf2-ayah-group--active" : ""}`}
-                      data-verse={verseKey}
-                      aria-hidden="true"
-                    >
-                      {group.map((w) => wordRenderer(w))}
-                    </span>
-                  );
-                }
-                return (
-                  <span
-                    key={verseKey}
-                    className={`mf2-ayah-group${active ? " mf2-ayah-group--active" : ""}`}
-                    role="button"
-                    tabIndex={0}
-                    aria-label={`آية ${verseKey}`}
-                    onPointerDown={(e) => {
-                      if (e.button !== 0 && e.pointerType === "mouse") return;
-                      const target = e.currentTarget;
-                      const timer = window.setTimeout(() => {
-                        onAyahPress?.(verseKey);
-                      }, 350);
-                      target.dataset.ayahTimer = String(timer);
-                    }}
-                    onPointerUp={(e) => {
-                      const t = e.currentTarget.dataset.ayahTimer;
-                      if (t) window.clearTimeout(Number(t));
-                      delete e.currentTarget.dataset.ayahTimer;
-                    }}
-                    onPointerCancel={(e) => {
-                      const t = e.currentTarget.dataset.ayahTimer;
-                      if (t) window.clearTimeout(Number(t));
-                      delete e.currentTarget.dataset.ayahTimer;
-                    }}
-                    onPointerLeave={(e) => {
-                      const t = e.currentTarget.dataset.ayahTimer;
-                      if (t) window.clearTimeout(Number(t));
-                      delete e.currentTarget.dataset.ayahTimer;
-                    }}
-                    onKeyDown={(e) => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); onAyahPress?.(verseKey); } }}
-                  >
-                    {group.map((w) => wordRenderer(w))}
-                  </span>
-                );
-              })}
-            </div>
-          );
+          return renderAyahLine(row);
         })}
       </div>
       {!fitted && <MushafPageSkeleton overlay />}
@@ -557,7 +550,6 @@ export function SurahHeaderBanner({
   basmalaRef,
 }: {
   chapter: MushafPageLayout["surahsOnPage"][number];
-  /** @deprecated لم يعد يُستخدم للـflex — الرأس بارتفاع طبيعي */
   spanRows?: number;
   blockRef?: (el: HTMLElement | null) => void;
   titleRef?: (el: HTMLElement | null) => void;

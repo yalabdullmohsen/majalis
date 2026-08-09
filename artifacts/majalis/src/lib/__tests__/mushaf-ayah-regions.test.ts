@@ -12,6 +12,8 @@ const layout: MushafPageLayout = {
   surahsOnPage: [],
   layoutMode: "opening-centered",
   ayahLineCount: 1,
+  hizbStartingOnPage: 1,
+  rubElHizbStartingOnPage: 1,
   rows: [
     {
       kind: "line",
