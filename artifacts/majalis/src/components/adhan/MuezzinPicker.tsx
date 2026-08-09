@@ -21,12 +21,17 @@ type Props = {
   selected: string;
   onSelect: (id: string) => void;
   onClose: () => void;
+  /** للفجر: اعرض فقط من لديه أذان تثويب مستقل */
+  requireFajr?: boolean;
 };
 
-export function MuezzinPicker({ selected, onSelect, onClose }: Props) {
+export function MuezzinPicker({ selected, onSelect, onClose, requireFajr = false }: Props) {
   const [previewing, setPreviewing] = useState<string | null>(null);
   const previewTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const selectable = useMemo(() => listSelectableMuezzins(), []);
+  const selectable = useMemo(
+    () => listSelectableMuezzins({ requireFajr }),
+    [requireFajr],
+  );
 
   const grouped = useMemo(() => {
     const map = new Map<AdhanPatternId, Muezzin[]>();
@@ -88,9 +93,13 @@ export function MuezzinPicker({ selected, onSelect, onClose }: Props) {
         </div>
 
         <div className="mzp-header">
-          <h3 className="mzp-title">اختر نمط الأذان</h3>
+          <h3 className="mzp-title">
+            {requireFajr ? "أذان الفجر (بالتثويب)" : "اختر نمط الأذان"}
+          </h3>
           <p className="mzp-subtitle">
-            اضغط ▶ للمعاينة • النسبة الشخصية لا تُعرض إلا بعد التثبّت
+            {requireFajr
+              ? "يُعرض فقط من لديه «الصلاة خير من النوم» — بلا استبدال بالأذان العام"
+              : "اضغط ▶ للمعاينة • النسبة الشخصية لا تُعرض إلا بعد التثبّت"}
           </p>
         </div>
 
