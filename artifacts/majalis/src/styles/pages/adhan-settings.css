@@ -37,6 +37,28 @@ html[data-theme="dark"] .ads-diagnostics-toggle { color: var(--clr-text-1, var(-
 
 /* ─ Adhan section ─ */
 .ads-adhan-desc { font-size: 0.78rem; color: var(--msk-text-2); margin-bottom: 0.75rem; }
+.ads-playback-modes {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.45rem;
+}
+.ads-playback-mode {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.82rem;
+  color: var(--msk-text-1, var(--mj-ink));
+  padding: 0.45rem 0.55rem;
+  border-radius: 0.55rem;
+  border: 1px solid var(--msk-border, rgba(0,0,0,0.08));
+  background: var(--msk-surface-2, rgba(0,0,0,0.02));
+  cursor: pointer;
+}
+.ads-playback-mode:has(input:checked) {
+  border-color: var(--mj-brand-deep, #1c5244);
+  background: color-mix(in srgb, var(--mj-brand-deep, #1c5244) 10%, transparent);
+}
+.ads-playback-mode input { accent-color: var(--mj-brand-deep, #1c5244); }
 .ads-muezzin-name { font-weight: 600; font-size: 0.9rem; color: var(--msk-text); }
 .ads-muezzin-origin { font-size: var(--ds-text-xs); color: var(--msk-text-2); }
 .ads-quick-links { display: flex; gap: var(--ds-space-2); margin-top: 1rem; }
