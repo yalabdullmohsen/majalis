@@ -97,6 +97,9 @@ html[data-theme="dark"] .mf2-frame {
 /* سطر آيات QPC: نص متصل واحد — بلا عزل bidi بين المحارف */
 .mf2-lines--qpc-contiguous .mf2-line {
   unicode-bidi: plaintext;
+  /* تسوية الأطراف: --mf2-line-sx من MushafPageV2 عند قصر السطر عن العرض */
+  transform: scaleX(var(--mf2-line-sx, 1));
+  transform-origin: right center;
 }
 .mf2-line__run {
   display: inline;
@@ -350,22 +353,6 @@ html[data-theme="dark"] .mf2-surah-header__frame,
   color: #E8C97A;
 }
 
-/* الصفحتان 1–2: كتلة متمركزة بتباعد ثابت — بلا تمديد بين الأسطر */
-.mf2-lines--opening-centered {
-  justify-content: center;
-  gap: 0;
-}
-.mf2-lines--opening-centered .mf2-line {
-  flex: 0 0 auto;
-  height: auto;
-  max-height: none;
-}
-.mf2-lines--opening-centered .mf2-surah-header {
-  flex: 0 0 auto !important;
-  margin-block-start: 0.25em;
-  margin-block-end: 0.2em;
-  padding-top: 0.3em;
-}
 .mf2-bismillah {
   /* بسملة افتتاحية فقط — رقعة/ثلث ممدود أخف من أسطر الآيات؛ خارج sizeByWidth */
   font-family: "Amiri Quran", "Amiri", "Scheherazade New", serif;

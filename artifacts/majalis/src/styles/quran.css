@@ -2563,18 +2563,12 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
   color: var(--ayah-badge-ink, var(--color-mushaf-gold, #B08A3E));
   font-weight: 400;
 }
-/* إزالة فراغ علوي زائد في الصفحتين الافتتاحيتين */
-.quran-shell--ayah .mf2-lines--opening-centered {
-  padding-top: 0;
-  margin-top: 0;
-}
-
 .mpv-ayah-footer {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: flex-end;
-  gap: 0.45rem;
+  justify-content: space-between;
+  gap: 0.75rem;
   flex-shrink: 0;
   width: 100%;
   padding: 0.1rem 0.55rem 0.15rem;
@@ -2587,13 +2581,7 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
   bottom: max(0.1rem, var(--inset-bottom));
   inset-inline: 0;
   direction: rtl;
-}
-.mpv-ayah-footer__meta {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  /* يسار الشاشة فعليًا (نهاية الصف في RTL) */
-  margin-inline-start: auto;
+  pointer-events: none;
 }
 .mpv-ayah-footer__hizb {
   font-family: var(--font-ui, "Alexandria", sans-serif);
@@ -2602,17 +2590,28 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
   color: var(--ayah-meta, var(--color-mushaf-meta, #A89060));
   white-space: nowrap;
   min-height: 1rem;
+  max-width: min(52%, 12rem);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  /* يسار الشاشة في RTL = نهاية الصف */
+  margin-inline-start: 0;
+  pointer-events: none;
 }
 .mpv-ayah-footer__hizb--empty {
-  display: none;
+  visibility: hidden;
+  min-width: 0;
+  max-width: 0;
+  overflow: hidden;
+  pointer-events: none;
 }
-/* خرطوش مزخرف (SVG) لرقم الصفحة — أسفل اليسار بجانب علامة الربع */
+/* خرطوش رقم الصفحة — أسفل اليمين (أول عنصر في صف RTL) */
 .mpv-ayah-page-badge {
   appearance: none;
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  flex: 0 0 auto;
   min-width: 4.5rem;
   min-height: 1.9rem;
   padding: 0.2rem 1.45rem;
@@ -2628,6 +2627,7 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
   box-shadow: none;
   -webkit-tap-highlight-color: transparent;
   transition: opacity 0.2s ease, transform 0.15s ease;
+  pointer-events: auto;
 }
 .mpv-ayah-page-badge__cartouche {
   position: absolute;

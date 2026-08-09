@@ -713,27 +713,25 @@ export default function MushafPageView() {
             )}
           </div>
 
-          {/* ذيل: خرطوش رقم الصفحة أسفل اليسار + ربع/نصف/ثلاثة أرباع بجانبه */}
+          {/* ذيل: خرطوش رقم الصفحة يمينًا + ربع/حزب يسارًا — بلا التصاق */}
           <footer className="mpv-ayah-footer">
-            <div className="mpv-ayah-footer__meta">
-              <span
-                className={`mpv-ayah-footer__hizb${footerMetaLabel ? "" : " mpv-ayah-footer__hizb--empty"}`}
-                aria-hidden={!footerMetaLabel}
-              >
-                {footerMetaLabel ?? ""}
-              </span>
-              <button
-                type="button"
-                className="mpv-ayah-page-badge"
-                onClick={openJumpModal}
-                aria-haspopup="dialog"
-                aria-expanded={isJumpModalVisible}
-                aria-label={`الانتقال إلى صفحة — الحالية ${toArabicDigits(page)} من ${toArabicDigits(TOTAL_PAGES)}`}
-              >
-                <MushafPageCartoucheSvg className="mpv-ayah-page-badge__cartouche" />
-                <span className="mpv-ayah-page-badge__num">{toArabicPageDigits(page)}</span>
-              </button>
-            </div>
+            <button
+              type="button"
+              className="mpv-ayah-page-badge"
+              onClick={openJumpModal}
+              aria-haspopup="dialog"
+              aria-expanded={isJumpModalVisible}
+              aria-label={`الانتقال إلى صفحة — الحالية ${toArabicDigits(page)} من ${toArabicDigits(TOTAL_PAGES)}`}
+            >
+              <MushafPageCartoucheSvg className="mpv-ayah-page-badge__cartouche" />
+              <span className="mpv-ayah-page-badge__num">{toArabicPageDigits(page)}</span>
+            </button>
+            <span
+              className={`mpv-ayah-footer__hizb${footerMetaLabel ? "" : " mpv-ayah-footer__hizb--empty"}`}
+              aria-hidden={!footerMetaLabel}
+            >
+              {footerMetaLabel ?? ""}
+            </span>
           </footer>
         </>
 

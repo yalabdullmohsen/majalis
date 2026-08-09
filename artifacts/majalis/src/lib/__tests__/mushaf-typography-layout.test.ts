@@ -43,16 +43,26 @@ assert.equal(
   false,
   "البسملة بلا overflow:hidden يقصّ النص",
 );
-assert.match(mushafV2, /\.mf2-lines--opening-centered/, "حالة خاصة للصفحتين 1–2");
+assert.equal(
+  /\.mf2-lines--opening-centered/.test(mushafV2),
+  false,
+  "أُزيل فرع opening-centered — منطق موحّد مع ص3",
+);
 assert.match(
   mushafV2,
-  /\.mf2-lines--opening-centered\s+\.mf2-line\s*\{[\s\S]*?flex:\s*0\s+0\s+auto/,
-  "الصفحتان 1–2 بلا تمديد بين الأسطر",
+  /--mf2-line-sx/,
+  "تسوية أطراف الأسطر عبر --mf2-line-sx",
 );
+assert.match(pageComp, /lastSurahEndLineNumbers|noStretchLines/, "آخر سطر سورة بلا تمديد");
 assert.equal(
   /availableWidth\s*\/\s*0\.72/.test(pageComp),
   false,
-  "ص1–2 بلا تقليص خانة بنسبة 0.72 لفرض الامتلاء",
+  "بلا تقليص خانة بنسبة 0.72 لفرض الامتلاء",
+);
+assert.equal(
+  /opening-centered/.test(pageComp),
+  false,
+  "مكوّن الصفحة بلا opening-centered",
 );
 assert.match(mushafV2, /\.mf2-surah-badge/, "شارة سورة عريضة قابلة للتمدد");
 assert.match(pageComp, /MushafSurahBadgeFrame/);
@@ -79,7 +89,9 @@ assert.equal(/SHORT_FILL_RATIO/.test(pageComp), false, "بلا SHORT_FILL_RATIO 
 assert.match(pageComp, /glyphText/, "علامة الآية من محارف خط الصفحة");
 assert.equal(/mf2-ayah-marker/.test(pageComp), false, "بلا دائرة CSS بديلة لعلامة الآية في دقة QPC");
 assert.match(pageComp, /drawnSurahTitleText/, "شارة السورة بالرسم العثماني");
-assert.match(pageComp, /opening[\s\S]*TARGET_BLOCK_FILL|opening[\s\S]*fill=n\/a/, "ص1–2 بلا هدف امتلاء");
+assert.match(pageComp, /TARGET_BLOCK_FILL/, "هدف امتلاء موحّد لكل الصفحات");
+assert.match(pageComp, /MIN_LINE_FILL/, "حد أدنى لامتلاء عرض السطر قبل scaleX");
+assert.match(pageComp, /EQUALIZE_PAGE_DEV_GATE/, "تسوية فقط عند انحراف صفحة واضح (ص1–2)");
 assert.match(pageComp, /data-mf2-bind|dataset\.mf2Bind/, "تشخيص قيد التحجيم");
 assert.match(pageComp, /pageFont\.failed|useUnicodeSafe/, "تراجع تلقائي عند فشل خط QPC");
 

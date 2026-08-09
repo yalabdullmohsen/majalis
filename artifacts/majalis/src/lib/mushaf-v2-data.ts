@@ -64,11 +64,10 @@ export type MushafPageLayout = {
   rows: MushafPageRow[];
   surahsOnPage: MushafChapter[];
   /**
-   * opening-centered: الصفحتان 1 و2 — أسطر بارتفاع طبيعي (line-height ثابت)
-   * وكتلة متمركزة رأسيًا (الفراغ فوق/تحت فقط). standard: بقية الصفحات بنفس
-   * قاعدة التباعد الثابت والتمركز عند بقاء فراغ.
+   * تخطيط موحّد لكل الصفحات (بما فيها 1 و2): تحجيم من أعرض سطر،
+   * تمركز رأسي للكتلة عند قلّة الأسطر (الفراغ فوق/تحت فقط).
    */
-  layoutMode: "standard" | "opening-centered";
+  layoutMode: "standard";
   /** عدد الأسطر الفعلية ذات الكلمات (من mushaf=1) — للتحجيم */
   ayahLineCount: number;
   /** رقم الحزب إن بدأ حزب جديد في هذه الصفحة؛ وإلا null */
@@ -79,11 +78,6 @@ export type MushafPageLayout = {
    */
   rubElHizbStartingOnPage: number | null;
 };
-
-/** صفحتا الفاتحة وأول البقرة — تخطيط متمركز بلا حشو فراغات علوية */
-export function isOpeningCenteredPage(pageNumber: number): boolean {
-  return pageNumber === 1 || pageNumber === 2;
-}
 
 let chaptersPromise: Promise<Map<number, MushafChapter>> | null = null;
 
@@ -244,7 +238,6 @@ export async function loadMushafPage(pageNumber: number): Promise<MushafPageLayo
 
   const usedLines = [...lineWords.keys()].sort((a, b) => a - b);
   const maxLine = usedLines.length ? Math.max(...usedLines) : 15;
-  const openingCentered = isOpeningCenteredPage(pageNumber);
 
   const rows: MushafPageRow[] = [];
   const headerStartLines = [...surahStartsOnPage.entries()].sort((a, b) => a[1] - b[1]);
@@ -256,9 +249,7 @@ export async function loadMushafPage(pageNumber: number): Promise<MushafPageLayo
     // (لا firstLine-cursor من أول السورة السابقة — كان يضخّم spanRows ويسبّب تراكبًا)
     const prevUsed = usedLines.filter((ln) => ln < firstLine).pop() ?? 0;
     const gap = firstLine - prevUsed - 1;
-    const spanRows = openingCentered
-      ? chapter.bismillahPre ? 2 : 1
-      : Math.max(gap, chapter.bismillahPre ? 2 : 1);
+    const spanRows = Math.max(gap, chapter.bismillahPre ? 2 : 1);
     // spanRows معلوماتي لخانات المصحف المطبوع — العرض يستخدم ارتفاعًا طبيعيًا للرأس
     rows.push({ kind: "surah-header", surah: chapter, spanRows });
   }
@@ -301,7 +292,7 @@ export async function loadMushafPage(pageNumber: number): Promise<MushafPageLayo
     juzNumber: verses[0]?.juzNumber ?? 1,
     rows: merged,
     surahsOnPage,
-    layoutMode: openingCentered ? "opening-centered" : "standard",
+    layoutMode: "standard",
     ayahLineCount: usedLines.length,
     hizbStartingOnPage,
     rubElHizbStartingOnPage,

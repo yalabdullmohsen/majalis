@@ -7,9 +7,9 @@
  *   2) لا تراكب هندسي بين كلمات الآية (bounding boxes)
  *   3) أقصى مسافة بين سطرين متجاورين ≤ 1.6 × حجم الخط (كل الصفحات)
  *   4) حجم الخط في الصفحتين 1 و2 ≥ 80% من متوسط حجم الخط في الصفحات العادية
- *   5) امتلاء كتلة الأسطر داخل صندوق الصفحة: ≥90% للصفحات العادية فقط
- *      (الصفحتان 1–2 بلا بوابة امتلاء — فراغ علوي/سفلي كالمرجع)
+ *   5) امتلاء كتلة الأسطر داخل صندوق الأسطر: ≥90% لكل الصفحات
  *      عبر تقليص ارتفاع الصندوق — بلا تمديد فراغات بين الأسطر (pitch≤1.6)
+ *      (الفراغ فوق/تحت الصندوق يبقى في الخانة الخارجية عند قلّة الأسطر)
  *
  * الاستخدام:
  *   MUSHAF_GATE_BASE_URL=https://www.majlisilm.com node scripts/quran-import/mushaf-visual-layout-gate.mjs
@@ -48,7 +48,7 @@ const VIEWPORT = { width: 390, height: 844 };
 const MAX_LINE_PITCH_EM = 1.6;
 /** حد أدنى لنسبة حجم خط الصفحتين الافتتاحيتين من متوسط الصفحات العادية */
 const MIN_OPENING_FONT_RATIO = 0.8;
-/** امتلاء المحتوى داخل صندوق الأسطر — صفحات عادية فقط (ص1–2 مُعفاة) */
+/** امتلاء المحتوى داخل صندوق الأسطر المحتضَن */
 const MIN_FILL_NORMAL = 0.9;
 
 function sleep(ms) {
@@ -231,14 +231,11 @@ function evaluate(results) {
         });
       }
     }
-    /* ص1–2: بلا بوابة امتلاء — يبقى فقط pitch≤1.6 وfont≥80% */
-    if (r.pageNum !== 1 && r.pageNum !== 2) {
-      if (typeof r.fillRatio === "number" && r.fillRatio + 0.02 < MIN_FILL_NORMAL) {
-        failures.push({
-          page: r.pageNum,
-          reason: `امتلاء كتلة الأسطر ${(r.fillRatio * 100).toFixed(1)}% < ${MIN_FILL_NORMAL * 100}% (محتوى ${r.contentH?.toFixed?.(0) ?? "?"} / صندوق ${r.linesH?.toFixed?.(0) ?? "?"})`,
-        });
-      }
+    if (typeof r.fillRatio === "number" && r.fillRatio + 0.02 < MIN_FILL_NORMAL) {
+      failures.push({
+        page: r.pageNum,
+        reason: `امتلاء كتلة الأسطر ${(r.fillRatio * 100).toFixed(1)}% < ${MIN_FILL_NORMAL * 100}% (محتوى ${r.contentH?.toFixed?.(0) ?? "?"} / صندوق ${r.linesH?.toFixed?.(0) ?? "?"})`,
+      });
     }
     if (r.pageNum === 2 && r.bismillahOverlapNext > 2) {
       failures.push({
@@ -258,7 +255,7 @@ async function main() {
   console.log(`[mushaf-visual-gate] pages=${PAGES.join(",")}`);
   console.log(`[mushaf-visual-gate] out=${OUT_DIR}`);
   console.log(
-    `[mushaf-visual-gate] rules: overflowX≤2px, overlap=0, maxPitch≤${MAX_LINE_PITCH_EM}em, openingFont≥${MIN_OPENING_FONT_RATIO * 100}% avg, fill≥${MIN_FILL_NORMAL * 100}% (normal only; opening exempt)`,
+    `[mushaf-visual-gate] rules: overflowX≤2px, overlap=0, maxPitch≤${MAX_LINE_PITCH_EM}em, openingFont≥${MIN_OPENING_FONT_RATIO * 100}% avg, fill≥${MIN_FILL_NORMAL * 100}%`,
   );
 
   const browser = await chromium.launch({ headless: true });
@@ -301,9 +298,9 @@ async function main() {
       maxOverlapPairs: 0,
       maxLinePitchEm: MAX_LINE_PITCH_EM,
       minOpeningFontRatio: MIN_OPENING_FONT_RATIO,
-      minFillOpening: null,
+      minFillOpening: MIN_FILL_NORMAL,
       minFillNormal: MIN_FILL_NORMAL,
-      fillRatioGate: "enabled-box-hug-except-opening",
+      fillRatioGate: "enabled-box-hug",
     },
     avgNormalFont,
     results,

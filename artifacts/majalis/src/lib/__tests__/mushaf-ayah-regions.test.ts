@@ -10,7 +10,7 @@ const layout: MushafPageLayout = {
   pageNumber: 1,
   juzNumber: 1,
   surahsOnPage: [],
-  layoutMode: "opening-centered",
+  layoutMode: "standard",
   ayahLineCount: 1,
   hizbStartingOnPage: 1,
   rubElHizbStartingOnPage: 1,
