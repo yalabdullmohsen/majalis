@@ -13,7 +13,7 @@ import {
   type PrayerKey,
   type AdvanceMinutes,
 } from "@/lib/adhan-preferences";
-import { getMuezzin, stopAdhan } from "@/lib/adhan-audio";
+import { getMuezzin, hasFajrAdhan, stopAdhan } from "@/lib/adhan-audio";
 import { MuezzinPicker } from "@/components/adhan/MuezzinPicker";
 import { PrayerAlertSettingsCard } from "@/components/adhan/PrayerAlertSettingsCard";
 import {
@@ -166,6 +166,10 @@ export default function AdhanSettingsPage() {
   }
 
   function setPrayerMuezzin(key: PrayerKey, id: string) {
+    if (key === "fajr" && !hasFajrAdhan(getMuezzin(id))) {
+      // شرط شرعي: لا اختيار بلا تثويب للفجر
+      return;
+    }
     const next = patchPrayerPrefs(key, { muezzinId: id });
     setPrefs(next);
     flashSaved();
@@ -452,6 +456,7 @@ export default function AdhanSettingsPage() {
               ? prefs.defaultMuezzinId
               : getEffectiveMuezzinId(prefs, pickerFor as PrayerKey)
           }
+          requireFajr={pickerFor === "fajr"}
           onSelect={(id) => {
             stopAdhan();
             if (pickerFor === "default") setDefaultMuezzin(id);

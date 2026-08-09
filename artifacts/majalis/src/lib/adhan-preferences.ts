@@ -3,7 +3,12 @@
  * No server dependency; works offline and without login.
  */
 
-import { DEFAULT_MUEZZIN_ID } from "./adhan-audio";
+import {
+  DEFAULT_MUEZZIN_ID,
+  getDefaultFajrMuezzin,
+  getMuezzin,
+  hasFajrAdhan,
+} from "./adhan-audio";
 
 const STORE_KEY = "majalis-adhan-prefs-v1";
 
@@ -78,7 +83,7 @@ export function loadAdhanPrefs(): AdhanPreferences {
     if (!raw) return defaultPrefs();
     const parsed = JSON.parse(raw) as Partial<AdhanPreferences>;
     const base = defaultPrefs();
-    return {
+    const merged: AdhanPreferences = {
       globalEnabled: parsed.globalEnabled ?? base.globalEnabled,
       browserNotificationsEnabled: parsed.browserNotificationsEnabled ?? base.browserNotificationsEnabled,
       silentReminderEnabled: parsed.silentReminderEnabled ?? base.silentReminderEnabled,
@@ -86,22 +91,23 @@ export function loadAdhanPrefs(): AdhanPreferences {
       prayers: { ...base.prayers, ...parsed.prayers },
       fridayBannerEnabled: parsed.fridayBannerEnabled ?? base.fridayBannerEnabled,
     };
+    return sanitizeFajrMuezzinPrefs(merged);
   } catch {
     return defaultPrefs();
   }
 }
 
-export function saveAdhanPrefs(prefs: AdhanPreferences): void {
+export function saveAdhanPrefs(prefs: AdhanPreferences): AdhanPreferences {
+  const safe = sanitizeFajrMuezzinPrefs(prefs);
   try {
-    localStorage.setItem(STORE_KEY, JSON.stringify(prefs));
+    localStorage.setItem(STORE_KEY, JSON.stringify(safe));
   } catch { /* ignore quota errors */ }
+  return safe;
 }
 
 export function patchAdhanPrefs(patch: Partial<AdhanPreferences>): AdhanPreferences {
   const current = loadAdhanPrefs();
-  const next = { ...current, ...patch };
-  saveAdhanPrefs(next);
-  return next;
+  return saveAdhanPrefs({ ...current, ...patch });
 }
 
 export function patchPrayerPrefs(
@@ -109,18 +115,41 @@ export function patchPrayerPrefs(
   patch: Partial<PerPrayerPrefs>,
 ): AdhanPreferences {
   const current = loadAdhanPrefs();
-  const next: AdhanPreferences = {
+  return saveAdhanPrefs({
     ...current,
     prayers: {
       ...current.prayers,
       [key]: { ...current.prayers[key], ...patch },
     },
-  };
-  saveAdhanPrefs(next);
-  return next;
+  });
 }
 
 export function getEffectiveMuezzinId(prefs: AdhanPreferences, key: PrayerKey): string {
   const override = prefs.prayers[key].muezzinId;
-  return override || prefs.defaultMuezzinId || DEFAULT_MUEZZIN_ID;
+  const raw = override || prefs.defaultMuezzinId || DEFAULT_MUEZZIN_ID;
+  if (key !== "fajr") return raw;
+  // الفجر: لا يُسند تسجيل بلا تثويب — ولا يُستبدل بأذانه العام
+  const candidate = getMuezzin(raw);
+  if (hasFajrAdhan(candidate)) return candidate.id;
+  return getDefaultFajrMuezzin().id;
+}
+
+/**
+ * إن كان للفجر مؤذن بلا تثويب مخزَّن صراحةً، امسحه أو استبدله بمؤهل.
+ * يُستدعى عند التحميل/الحفظ حتى لا يبقى اختيار غير شرعي.
+ */
+export function sanitizeFajrMuezzinPrefs(prefs: AdhanPreferences): AdhanPreferences {
+  const fajrId = prefs.prayers.fajr.muezzinId;
+  if (!fajrId) {
+    // يعتمد على الافتراضي — يُحلّ عبر getEffectiveMuezzinId
+    return prefs;
+  }
+  if (hasFajrAdhan(getMuezzin(fajrId))) return prefs;
+  return {
+    ...prefs,
+    prayers: {
+      ...prefs.prayers,
+      fajr: { ...prefs.prayers.fajr, muezzinId: getDefaultFajrMuezzin().id },
+    },
+  };
 }

@@ -366,20 +366,43 @@ export function isMuezzinSelectable(m: Muezzin): boolean {
 }
 
 /** التسجيلات الظاهرة للاختيار (بعد مفتاح التعطيل وتوفّر الصوت) */
-export function listSelectableMuezzins(): Muezzin[] {
-  return MUEZZINS.filter(isMuezzinSelectable);
+export function listSelectableMuezzins(opts?: { requireFajr?: boolean }): Muezzin[] {
+  return MUEZZINS.filter((m) => {
+    if (!isMuezzinSelectable(m)) return false;
+    if (opts?.requireFajr && !m.fajrUrl) return false;
+    return true;
+  });
 }
 
-export function getMuezzin(id: string): Muezzin {
+export function getMuezzin(id: string, opts?: { requireFajr?: boolean }): Muezzin {
   const hit = MUEZZINS.find((m) => m.id === id);
-  if (hit && isMuezzinSelectable(hit)) return hit;
-  const fallback = listSelectableMuezzins()[0] ?? MUEZZINS[0];
+  if (hit && isMuezzinSelectable(hit) && (!opts?.requireFajr || hit.fajrUrl)) {
+    return hit;
+  }
+  const fallback = listSelectableMuezzins(opts)[0] ?? listSelectableMuezzins()[0] ?? MUEZZINS[0];
   return fallback;
 }
 
-/** هل يصلح هذا التسجيل لأذان الفجر (تثويب مستقل)؟ */
+/**
+ * هل يصلح هذا التسجيل لأذان الفجر؟
+ * شرط شرعي: نسخة مستقلة بالتثويب — لا يكفي الأذان العام.
+ */
 export function hasFajrAdhan(m: Muezzin): boolean {
-  return Boolean(m.fajrUrl && m.audioAvailable && isMuezzinSelectable(m));
+  return Boolean(
+    m.fajrUrl &&
+      m.audioAvailable &&
+      isMuezzinSelectable(m) &&
+      m.fajrUrl !== m.audioUrl &&
+      m.fajrUrl.includes("/fajr/"),
+  );
+}
+
+/** أول تسجيل متاح بأذان فجر بالتثويب */
+export function getDefaultFajrMuezzin(): Muezzin {
+  return (
+    listSelectableMuezzins({ requireFajr: true })[0] ??
+    getMuezzin(DEFAULT_MUEZZIN_ID, { requireFajr: true })
+  );
 }
 
 // ─── Audio Engine (يوكّل إلى adhan-playback الخفيف) ───────────────────────────
