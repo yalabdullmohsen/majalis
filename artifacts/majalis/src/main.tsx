@@ -56,7 +56,10 @@ if (typeof requestIdleCallback === "function") {
     prewarmTextApis();
     prewarmSupabaseOrigin();
     void refreshQuranAudioRemoteConfig();
-    void refreshAdhanAudioRemoteConfig();
+    // ديناميكي: لا يُثقِل حزمة الدخول (سقف gzip)
+    void import("./lib/adhan-audio-remote-config").then((m) =>
+      m.refreshAdhanAudioRemoteConfig(),
+    );
   }, { timeout: 3_000 });
 } else {
   setTimeout(() => {
@@ -64,7 +67,9 @@ if (typeof requestIdleCallback === "function") {
     prewarmTextApis();
     prewarmSupabaseOrigin();
     void refreshQuranAudioRemoteConfig();
-    void refreshAdhanAudioRemoteConfig();
+    void import("./lib/adhan-audio-remote-config").then((m) =>
+      m.refreshAdhanAudioRemoteConfig(),
+    );
   }, 1);
 }
 

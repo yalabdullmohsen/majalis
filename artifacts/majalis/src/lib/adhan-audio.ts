@@ -16,6 +16,11 @@ import {
   isAdhanSourceDisabled,
   type AdhanAudioRemoteSource,
 } from "./adhan-audio-remote-config";
+import {
+  isAdhanPlaying as playbackIsPlaying,
+  playAdhanUrl,
+  stopAdhan as playbackStop,
+} from "./adhan-playback";
 
 const CDN = "https://cdn.jsdelivr.net/gh/mohsalvi/adhan-audio@main";
 
@@ -377,49 +382,34 @@ export function hasFajrAdhan(m: Muezzin): boolean {
   return Boolean(m.fajrUrl && m.audioAvailable && isMuezzinSelectable(m));
 }
 
-// ─── Audio Engine ─────────────────────────────────────────────────────────────
+// ─── Audio Engine (يوكّل إلى adhan-playback الخفيف) ───────────────────────────
 
-let _current: HTMLAudioElement | null = null;
+export function stopAdhan() {
+  playbackStop();
+}
+
+export function isAdhanPlaying() {
+  return playbackIsPlaying();
+}
 
 /**
  * تشغيل الأذان. للفجر: يستخدم fajrUrl فقط — بلا استبدال بالنسخة العامة.
  * إن طُلب الفجر بلا fajrUrl يُرجع null ولا يُشغَّل شيء.
  */
 export function playAdhan(muezzin: Muezzin, isFajr = false): HTMLAudioElement | null {
-  stopAdhan();
   if (isFajr && !muezzin.fajrUrl) return null;
   const url = isFajr ? muezzin.fajrUrl! : muezzin.audioUrl;
   if (!url) return null;
-  const audio = new Audio(url);
-  audio.volume = 1.0;
-  audio.play().catch(() => {});
-  _current = audio;
-  return audio;
-}
-
-export function stopAdhan() {
-  if (_current) {
-    _current.pause();
-    _current.currentTime = 0;
-    _current = null;
-  }
-}
-
-export function isAdhanPlaying() {
-  return !!_current && !_current.paused;
+  return playAdhanUrl(url, 1);
 }
 
 export function previewAdhan(muezzin: Muezzin): HTMLAudioElement {
-  stopAdhan();
   if (!muezzin.audioUrl) {
     throw new Error(`لا ملف معاينة للتسجيل: ${muezzin.id}`);
   }
-  const audio = new Audio(muezzin.audioUrl);
-  audio.volume = 0.8;
+  const audio = playAdhanUrl(muezzin.audioUrl, 0.8);
   audio.addEventListener("loadedmetadata", () => {
     setTimeout(() => stopAdhan(), 15_000);
   });
-  audio.play().catch(() => {});
-  _current = audio;
   return audio;
 }
