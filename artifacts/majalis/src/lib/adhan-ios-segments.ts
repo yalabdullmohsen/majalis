@@ -175,3 +175,26 @@ export function defaultAdhanSegmentDurations(count = ADHAN_IOS_MAX_SEGMENTS): nu
     ADHAN_IOS_SEGMENT_MAX_SEC,
   );
 }
+
+/**
+ * جدولة أذان كامل على iOS من معرّف التسجيل.
+ * الفجر يستخدم مقاطع التثويب فقط (`*_fajr_sN`).
+ */
+export async function scheduleIosFullAdhan(opts: {
+  prayerKey: string;
+  prayerName: string;
+  recordingId: string;
+  isFajr: boolean;
+  startAtMs: number;
+  durationsSec?: number[];
+}): Promise<{ ok: boolean; ids: number[] }> {
+  const plan = buildAdhanIosSegmentPlan({
+    prayerKey: opts.prayerKey,
+    prayerName: opts.prayerName,
+    recordingId: opts.recordingId,
+    isFajr: opts.isFajr,
+    startAtMs: opts.startAtMs,
+    durationsSec: opts.durationsSec ?? defaultAdhanSegmentDurations(),
+  });
+  return scheduleAdhanIosSegmentChain(plan);
+}

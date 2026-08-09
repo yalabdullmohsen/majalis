@@ -9,6 +9,7 @@ import {
   adhanIosSoundName,
   buildAdhanIosSegmentPlan,
   defaultAdhanSegmentDurations,
+  scheduleIosFullAdhan,
 } from "../adhan-ios-segments";
 
 assert.equal(ADHAN_IOS_MAX_SEGMENTS, 4);
@@ -55,5 +56,15 @@ assert.ok(overlong.every((p) => p.sound.includes("_gen_")));
 assert.equal(overlong[1].atMs - overlong[0].atMs, ADHAN_IOS_SEGMENT_MAX_SEC * 1000);
 
 assert.equal(defaultAdhanSegmentDurations().length, 4);
+
+const scheduled = await scheduleIosFullAdhan({
+  prayerKey: "isha",
+  prayerName: "العشاء",
+  recordingId: "madinah",
+  isFajr: false,
+  startAtMs: start,
+});
+assert.equal(scheduled.ok, true);
+assert.equal(scheduled.ids.length, 4);
 
 console.log("adhan-ios-segments.test.ts: ok");
