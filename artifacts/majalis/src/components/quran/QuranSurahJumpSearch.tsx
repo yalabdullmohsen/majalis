@@ -24,6 +24,8 @@ export type QuranSurahJumpSearchProps = {
   className?: string;
   /** إخفاء قائمة السور الكاملة (مثلاً إن وُجدت قائمة أخرى تحت الحقل) */
   hideCatalog?: boolean;
+  /** إخفاء العنوان الظاهر (شيت الفهرس له رأس خاص) */
+  hideTitle?: boolean;
   placeholder?: string;
 };
 
@@ -119,7 +121,8 @@ export function QuranSurahJumpSearch({
   onNavigateToPage,
   className,
   hideCatalog = false,
-  placeholder = "ابحث عن سورة أو صفحة أو آية (٢:٢٥٥)…",
+  hideTitle = false,
+  placeholder = "سورة أو صفحة أو آية",
 }: QuranSurahJumpSearchProps) {
   const [, navigate] = useLocation();
   const [query, setQuery] = useState("");
@@ -217,8 +220,10 @@ export function QuranSurahJumpSearch({
           openFirstResult();
         }}
       >
+        {hideTitle ? null : (
+          <h2 className="quran-surah-jump__title">بحث السور والصفحات والآيات</h2>
+        )}
         <label className="quran-surah-jump__field">
-          <span className="sr-only">بحث السور والصفحات والآيات</span>
           <Search size={18} strokeWidth={1.8} className="quran-surah-jump__icon" aria-hidden="true" />
           <input
             ref={inputRef}
@@ -229,6 +234,7 @@ export function QuranSurahJumpSearch({
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder={placeholder}
+            aria-label="بحث السور والصفحات والآيات"
             autoComplete="off"
             data-search-field="1"
           />

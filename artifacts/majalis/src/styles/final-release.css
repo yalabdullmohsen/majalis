@@ -334,7 +334,8 @@ html.dark .nav-soon-badge {
   border: 1px solid var(--mj-hairline, var(--color-border));
   border-radius: var(--mj-r-sm, var(--radius-md));
   background: var(--mj-surface, var(--color-surface));
-  padding-inline: 0.65rem;
+  padding-inline: max(0.65rem, env(safe-area-inset-left, 0px))
+    max(0.65rem, env(safe-area-inset-right, 0px));
   box-sizing: border-box;
   cursor: pointer;
 }
@@ -347,19 +348,19 @@ html.dark .nav-soon-badge {
   overflow: hidden;
   width: 100%;
   min-width: 0;
-  /* تلاشي تدريجي عند الطرفين بدل قصّ حاد */
+  /* تلاشي خفيف جدًا — قناع 14% كان يقصّ بداية «تنبيه الحديث» */
   mask-image: linear-gradient(
     to left,
     transparent 0%,
-    #000 14%,
-    #000 86%,
+    #000 4%,
+    #000 96%,
     transparent 100%
   );
   -webkit-mask-image: linear-gradient(
     to left,
     transparent 0%,
-    #000 14%,
-    #000 86%,
+    #000 4%,
+    #000 96%,
     transparent 100%
   );
 }

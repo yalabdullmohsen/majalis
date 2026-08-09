@@ -51,10 +51,15 @@ assert.match(
 );
 assert.match(mushafV2, /\.mf2-surah-header__cartouche/, "خرطوش عنوان السورة");
 assert.match(pageComp, /sizingEls|sizing-line|ayahLineCount/, "تحجيم من أعرض سطر + عدد الأسطر الفعلي");
+assert.match(
+  pageComp,
+  /TARGET_BLOCK_FILL/,
+  "امتلاء كتلة الأسطر بتقليص ارتفاع الحاوية — بلا تمديد فراغات بين الأسطر",
+);
 assert.equal(
-  /MIN_FILL|fillRatio\s*[>=]|نسبة الامتلاء/.test(pageComp),
+  /flex:\s*1\s+1\s+0/.test(mushafV2.match(/\.mf2-line\s*\{[\s\S]*?\n\}/)?.[0] ?? ""),
   false,
-  "بلا بوابة/منطق نسبة امتلاء يعتمد تمديد الفراغات",
+  "أسطر الآيات بلا flex:1 1 0 يمدّد الفراغ بين الأسطر",
 );
 
 // 3) حجم موحّد من أعرض sizingLine — لا fit سطر-بسطر ولا measurementExclusions
@@ -73,9 +78,11 @@ assert.match(mushafV2, /\.mf2-line\s*\{[\s\S]*?line-height:\s*var\(--mf2-lh/);
 assert.match(mushafV2, /\.mf2-line\s*\{[\s\S]*?overflow-y:\s*visible/);
 assert.match(mushafV2, /\.mf2-line--unicode[\s\S]*?line-height:\s*2\.2/, "وضع Unicode: ارتفاع تشكيل 2.2");
 
-// 5) كتلة الأسطر تملأ المساحة — بلا قيد 83vh / نسبة 0.72 على مسار آية
+// 5) خانة آية 100% + كتلة أسطر محتضَنة (height:auto) داخل طبقة absolute مُوسَّطة
 assert.match(quranCss, /\.quran-shell--ayah\s+\.qs-mushaf-body\s+\.qs-mushaf-body-inner\s*\{[\s\S]*?aspect-ratio:\s*auto/);
 assert.match(quranCss, /\.quran-shell--ayah\s+\.qs-mushaf-body\s+\.qs-mushaf-body-inner\s*\{[\s\S]*?height:\s*100%/);
+assert.match(quranCss, /\.quran-shell--ayah\s+\.mf2-lines\s*\{[\s\S]*?height:\s*auto/);
+assert.match(quranCss, /\.quran-shell--ayah\s+\.mfl-visual\s*\{[\s\S]*?justify-content:\s*center/);
 assert.equal(/mpv-fill-enter/.test(quranCss), false, "أُزيلت أزرار وضع الامتلاء المنفصل");
 
 assert.match(quranCss, /\.qs-mushaf-body\s*\{[\s\S]*?text-align:\s*justify/);

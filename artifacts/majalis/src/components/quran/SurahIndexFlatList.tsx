@@ -20,6 +20,7 @@ export function SurahIndexFlatList({
   return (
     <QuranSurahJumpSearch
       className={className}
+      hideTitle
       onNavigateToPage={
         onNavigateToPage
           ? (page, opts) => {

@@ -20,10 +20,14 @@
 .quran-search-page__icon {
   position: absolute;
   inset-inline-start: 0.85rem;
-  top: 50%;
-  transform: translateY(-50%);
+  top: 0;
+  bottom: 0;
+  margin-block: auto;
+  width: 18px;
+  height: 18px;
   color: var(--mj-ink-2, #5d726a);
   pointer-events: none;
+  z-index: 1;
 }
 
 .quran-search-page__input {

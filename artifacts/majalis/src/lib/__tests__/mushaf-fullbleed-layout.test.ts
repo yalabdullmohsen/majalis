@@ -90,7 +90,12 @@ const mushafV2 = readFileSync(resolve(appRoot, "src/styles/mushaf-v2.css"), "utf
 const bismillah = mushafV2.match(/\.mf2-bismillah\s*\{[^}]+\}/);
 assert.ok(bismillah, ".mf2-bismillah معرّف");
 assert.match(bismillah[0], /white-space:\s*nowrap/);
-assert.match(bismillah[0], /Amiri Quran/);
+assert.ok(
+  bismillah[0].includes("font-family: inherit"),
+  "البسملة ترث خط الصفحة (qpc-page-N)",
+);
+assert.equal(bismillah[0].includes("Amiri Quran"), false, "البسملة بخط الصفحة لا Amiri");
+assert.ok(bismillah[0].includes("line-height: var(--mf2-lh"), "ارتفاع بسملة = --mf2-lh");
 assert.match(bismillah[0], /optimizeLegibility/);
 
 console.log("mushaf-fullbleed-layout.test.ts: ok");

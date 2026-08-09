@@ -314,15 +314,15 @@ html.dark .navbar-v3 .navbar-brand__mark {
   mask-image: linear-gradient(
     to left,
     transparent 0%,
-    #000 14%,
-    #000 86%,
+    #000 4%,
+    #000 96%,
     transparent 100%
   ) !important;
   -webkit-mask-image: linear-gradient(
     to left,
     transparent 0%,
-    #000 14%,
-    #000 86%,
+    #000 4%,
+    #000 96%,
     transparent 100%
   ) !important;
 }

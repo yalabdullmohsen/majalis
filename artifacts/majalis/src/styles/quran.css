@@ -2477,7 +2477,13 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
 html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-shell--high-contrast) .qs-mushaf-body--ayah {
   color: var(--ayah-ink, #F9FAFB);
 }
-/* كتلة الأسطر تملأ المساحة بين الرأس والذيل — بلا قيد نسبة 0.72/83vh */
+/* خانة الجسم 100%؛ الطبقة البصرية absolute تُوسِّط كتلة الأسطر المحتضَنة */
+.quran-shell--ayah .qs-mushaf-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+}
 .quran-shell--ayah .qs-mushaf-body .qs-mushaf-body-inner {
   width: 100%;
   max-width: 100%;
@@ -2486,16 +2492,40 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
   aspect-ratio: auto;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
   min-height: 0;
   flex: 1 1 auto;
+  position: relative;
 }
-.quran-shell--ayah .mfl-page,
-.quran-shell--ayah .mfl-visual,
-.quran-shell--ayah .mf2-lines {
+/* mfl-page يملأ الخانة؛ mfl-visual مطلقة (inset:0) فتُوسِّط الكتلة داخليًا */
+.quran-shell--ayah .mfl-page {
   flex: 1 1 auto;
   min-height: 0;
   height: 100%;
   width: 100%;
+  position: relative;
+}
+.quran-shell--ayah .mfl-visual {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  height: auto;
+  max-height: none;
+  width: 100%;
+  pointer-events: none;
+}
+.quran-shell--ayah .mf2-lines {
+  /* الارتفاع يضبطه MushafPageV2 — بلا max-height:100% على أب غير محدد */
+  flex: 0 0 auto;
+  min-height: 0;
+  height: auto;
+  max-height: none;
+  width: 100%;
+  pointer-events: auto;
 }
 
 /* رأس سورة داخل الصفحة — خرطوش ذهبي موحّد مع شارة رقم الصفحة */
