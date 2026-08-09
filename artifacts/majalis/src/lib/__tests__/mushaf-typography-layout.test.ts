@@ -17,9 +17,10 @@ const immersiveCss = readFileSync(resolve(appRoot, "src/styles/quran-immersive-r
 const pageComp = readFileSync(resolve(appRoot, "src/components/quran/MushafPageV2.tsx"), "utf8");
 const immersiveLib = readFileSync(resolve(appRoot, "src/lib/quran-immersive.ts"), "utf8");
 
-// 1) هوامش جانبية ≈ 4.5% مع safe-area
-assert.match(quranCss, /\.mpv-body--ayah\s*\{[\s\S]*?4\.5vw/);
+// 1) هوامش جانبية ضيّقة 3px + safe-area (--inset-*)
+assert.match(quranCss, /\.mpv-body--ayah\s*\{[\s\S]*?max\(2px,\s*var\(--inset-left\)\)/);
 assert.match(quranCss, /\.mpv-body--ayah\s*\{[\s\S]*?box-sizing:\s*border-box/);
+assert.equal(/4\.5vw/.test(quranCss.match(/\.mpv-body--ayah\s*\{[\s\S]*?\n\}/)?.[0] ?? ""), false, "بلا هامش 4.5vw");
 assert.match(mushafV2, /\.mf2-page\s*\{[\s\S]*?box-sizing:\s*border-box/);
 assert.match(readerCss, /\.mushaf-v2__page\s*\{[\s\S]*?max\(1rem/);
 
@@ -79,7 +80,8 @@ assert.equal(
 );
 
 // 3) حجم موحّد من أعرض سطر آيات — لا fit سطر-بسطر ولا measurementExclusions
-assert.match(pageComp, /LINE_HEIGHT_EM\s*=\s*1\.1/);
+assert.match(pageComp, /LINE_HEIGHT_EM\s*=\s*1\.05/);
+assert.match(pageComp, /TARGET_BLOCK_FILL\s*=\s*openingFewLines\s*\?\s*0\.8\s*:\s*0\.92/);
 assert.match(pageComp, /sizeByWidth/);
 assert.match(pageComp, /sizeByHeight/);
 assert.match(pageComp, /pageFontSize/);
@@ -89,7 +91,7 @@ assert.equal(/SHORT_FILL_RATIO/.test(pageComp), false, "بلا SHORT_FILL_RATIO 
 assert.match(pageComp, /glyphText/, "علامة الآية من محارف خط الصفحة");
 assert.equal(/mf2-ayah-marker/.test(pageComp), false, "بلا دائرة CSS بديلة لعلامة الآية في دقة QPC");
 assert.match(pageComp, /drawnSurahTitleText/, "شارة السورة بالرسم العثماني");
-assert.match(pageComp, /TARGET_BLOCK_FILL/, "هدف امتلاء موحّد لكل الصفحات");
+assert.match(pageComp, /TARGET_BLOCK_FILL/, "هدف امتلاء: 0.92 عادي / 0.8 لصفحتي الافتتاح");
 assert.match(pageComp, /MIN_LINE_FILL/, "حد أدنى لامتلاء عرض السطر قبل scaleX");
 assert.match(pageComp, /EQUALIZE_PAGE_DEV_GATE/, "تسوية فقط عند انحراف صفحة واضح (ص1–2)");
 assert.match(pageComp, /data-mf2-bind|dataset\.mf2Bind/, "تشخيص قيد التحجيم");
