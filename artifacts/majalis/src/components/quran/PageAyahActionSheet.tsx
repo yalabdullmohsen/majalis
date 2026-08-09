@@ -22,6 +22,7 @@ import {
   Share2,
   MoreHorizontal,
   Save,
+  Timer,
 } from "lucide-react";
 import { copyAyahText, copyAyahTextPlain, shareAyahAsText } from "@/lib/share-ayah";
 import { addBookmark, removeBookmark, isBookmarked, getNote, saveNote } from "@/lib/quran-personal";
@@ -29,10 +30,14 @@ import { setMushafUnsavedWork } from "@/lib/mushaf-unsaved";
 import {
   VALID_PLAYBACK_RATES,
   getReciter,
-  getSelectableReciters,
-  reciterInitial,
   ensureValidReciterPreference,
 } from "@/lib/quran-audio";
+import {
+  SLEEP_TIMER_OPTIONS,
+  sleepTimerLabelAr,
+  type SleepTimerOption,
+} from "@/lib/quran-sleep-timer";
+import { ReciterPickerSheet } from "@/components/quran/ReciterPickerSheet";
 import { CONTACT_EMAIL } from "@/lib/site-config";
 import { afterNextPaint, yieldToMain } from "@/lib/yield-to-main";
 import { prewarmTextApis } from "@/lib/resource-prewarm";
@@ -91,6 +96,8 @@ type Props = {
   onSetPlaybackRate?: (rate: number) => void;
   repeatOn?: boolean;
   onToggleRepeat?: () => void;
+  sleepTimerOption?: SleepTimerOption;
+  onSetSleepTimer?: (option: SleepTimerOption) => void;
 };
 
 export function PageAyahActionSheet({
@@ -110,6 +117,8 @@ export function PageAyahActionSheet({
   onSetPlaybackRate,
   repeatOn,
   onToggleRepeat,
+  sleepTimerOption = "off",
+  onSetSleepTimer,
 }: Props) {
   const [, navigate] = useLocation();
   const [bookmarked, setBookmarked] = useState(() => isBookmarked(surahNum, ayahNum));
@@ -119,8 +128,9 @@ export function PageAyahActionSheet({
   const [moreOpen, setMoreOpen] = useState(false);
   const [noteText, setNoteText] = useState(() => getNote(surahNum, ayahNum));
   const [noteSaved, setNoteSaved] = useState(false);
-  const [reciterPickerOpen, setReciterPickerOpen] = useState(false);
+  const [reciterSheetOpen, setReciterSheetOpen] = useState(false);
   const [speedPickerOpen, setSpeedPickerOpen] = useState(false);
+  const [sleepPickerOpen, setSleepPickerOpen] = useState(false);
   const [editionMenuOpen, setEditionMenuOpen] = useState(false);
   const [translationMenuOpen, setTranslationMenuOpen] = useState(false);
   const [tafsirText, setTafsirText] = useState<string | null>(null);
@@ -151,7 +161,8 @@ export function PageAyahActionSheet({
     setNoteSaved(false);
     setEditionMenuOpen(false);
     setTranslationMenuOpen(false);
-    setReciterPickerOpen(false);
+    setReciterSheetOpen(false);
+    setSleepPickerOpen(false);
     setSpeedPickerOpen(false);
     setTafsirText(null);
     setTafsirError(false);
@@ -465,53 +476,26 @@ export function PageAyahActionSheet({
             ) : null}
 
             {reciterId && onSetReciter ? (
-              <div className="aas-reader__dropdown-wrap">
-                <button
-                  type="button"
-                  className={`aas-reader__audio-chip${reciterPickerOpen ? " is-on" : ""}`}
-                  onClick={() => {
-                    void ensureValidReciterPreference().then((id) => {
-                      if (onSetReciter && id !== reciterId) onSetReciter(id);
-                    });
-                    setReciterPickerOpen((v) => !v);
-                    setSpeedPickerOpen(false);
-                    setEditionMenuOpen(false);
-                    setTranslationMenuOpen(false);
-                  }}
-                  aria-expanded={reciterPickerOpen}
-                >
-                  <Mic2 size={15} aria-hidden="true" />
-                  <span>{reciterName}</span>
-                  <ChevronDown size={14} aria-hidden="true" />
-                </button>
-                {reciterPickerOpen ? (
-                  <div className="aas-reader__dropdown" role="listbox" aria-label="اختيار القارئ">
-                    {getSelectableReciters("ayah").map((r) => (
-                      <button
-                        key={r.id}
-                        type="button"
-                        role="option"
-                        aria-selected={r.id === reciterId}
-                        className={r.id === reciterId ? "is-active" : undefined}
-                        onClick={() => {
-                          onSetReciter(r.id);
-                          setReciterPickerOpen(false);
-                        }}
-                      >
-                        <span className="aas-reader__reciter-initial" aria-hidden="true">
-                          {reciterInitial(r)}
-                        </span>
-                        <span className="aas-reader__reciter-meta">
-                          <span className="aas-reader__reciter-name">{r.nameAr}</span>
-                          <span className="aas-reader__reciter-sub">
-                            {r.riwaya} · {r.qualityLabel}
-                          </span>
-                        </span>
-                      </button>
-                    ))}
-                  </div>
-                ) : null}
-              </div>
+              <button
+                type="button"
+                className={`aas-reader__audio-chip${reciterSheetOpen ? " is-on" : ""}`}
+                onClick={() => {
+                  void ensureValidReciterPreference().then((id) => {
+                    if (onSetReciter && id !== reciterId) onSetReciter(id);
+                  });
+                  setReciterSheetOpen(true);
+                  setSpeedPickerOpen(false);
+                  setSleepPickerOpen(false);
+                  setEditionMenuOpen(false);
+                  setTranslationMenuOpen(false);
+                }}
+                aria-haspopup="dialog"
+                aria-expanded={reciterSheetOpen}
+              >
+                <Mic2 size={15} aria-hidden="true" />
+                <span>{reciterName}</span>
+                <ChevronDown size={14} aria-hidden="true" />
+              </button>
             ) : null}
 
             {playbackRate !== undefined && onSetPlaybackRate ? (
@@ -521,7 +505,7 @@ export function PageAyahActionSheet({
                   className={`aas-reader__audio-chip${speedPickerOpen ? " is-on" : ""}`}
                   onClick={() => {
                     setSpeedPickerOpen((v) => !v);
-                    setReciterPickerOpen(false);
+                    setSleepPickerOpen(false);
                     setEditionMenuOpen(false);
                     setTranslationMenuOpen(false);
                   }}
@@ -552,6 +536,45 @@ export function PageAyahActionSheet({
                 ) : null}
               </div>
             ) : null}
+
+            {onSetSleepTimer ? (
+              <div className="aas-reader__dropdown-wrap">
+                <button
+                  type="button"
+                  className={`aas-reader__audio-chip${sleepTimerOption !== "off" || sleepPickerOpen ? " is-on" : ""}`}
+                  onClick={() => {
+                    setSleepPickerOpen((v) => !v);
+                    setSpeedPickerOpen(false);
+                    setEditionMenuOpen(false);
+                    setTranslationMenuOpen(false);
+                  }}
+                  aria-expanded={sleepPickerOpen}
+                >
+                  <Timer size={15} aria-hidden="true" />
+                  <span>{sleepTimerLabelAr(sleepTimerOption)}</span>
+                  <ChevronDown size={14} aria-hidden="true" />
+                </button>
+                {sleepPickerOpen ? (
+                  <div className="aas-reader__dropdown aas-reader__dropdown--compact" role="listbox" aria-label="مؤقّت الإيقاف">
+                    {SLEEP_TIMER_OPTIONS.map((opt) => (
+                      <button
+                        key={String(opt)}
+                        type="button"
+                        role="option"
+                        aria-selected={opt === sleepTimerOption}
+                        className={opt === sleepTimerOption ? "is-active" : undefined}
+                        onClick={() => {
+                          onSetSleepTimer(opt);
+                          setSleepPickerOpen(false);
+                        }}
+                      >
+                        {sleepTimerLabelAr(opt)}
+                      </button>
+                    ))}
+                  </div>
+                ) : null}
+              </div>
+            ) : null}
           </div>
         )}
             <button type="button" className="aas-v3__more-btn" onClick={() => void handleCopy(true)}>
@@ -575,7 +598,8 @@ export function PageAyahActionSheet({
               className="aas-reader__edition-btn"
               onClick={() => {
                 setEditionMenuOpen((v) => !v);
-                setReciterPickerOpen(false);
+                setReciterSheetOpen(false);
+                setSleepPickerOpen(false);
                 setSpeedPickerOpen(false);
                 setTranslationMenuOpen(false);
               }}
@@ -693,7 +717,8 @@ export function PageAyahActionSheet({
                 onClick={() => {
                   setTranslationMenuOpen((v) => !v);
                   setEditionMenuOpen(false);
-                  setReciterPickerOpen(false);
+                  setReciterSheetOpen(false);
+                  setSleepPickerOpen(false);
                   setSpeedPickerOpen(false);
                 }}
                 aria-expanded={translationMenuOpen}
@@ -761,6 +786,16 @@ export function PageAyahActionSheet({
               {noteSaved ? "تم الحفظ" : "حفظ الملاحظة"}
             </button>
           </div>
+        ) : null}
+
+        {reciterId && onSetReciter ? (
+          <ReciterPickerSheet
+            open={reciterSheetOpen}
+            onClose={() => setReciterSheetOpen(false)}
+            reciterId={reciterId}
+            onSelect={onSetReciter}
+            mode="ayah"
+          />
         ) : null}
 
         <button type="button" className="aas-v3__close" onClick={onClose}>

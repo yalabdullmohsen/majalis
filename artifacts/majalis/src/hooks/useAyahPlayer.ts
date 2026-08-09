@@ -38,7 +38,16 @@ import { holdPreviousWhileLoading } from "@/lib/cls-layout-reserve";
 import {
   deactivateNativeAudioSession,
   ensureNativePlaybackAudioSession,
+  getNativePlaybackPlugin,
 } from "@/lib/native-playback-audio";
+import {
+  createSleepTimerState,
+  markSleepTimerFired,
+  shouldStopAfterAyahEnd,
+  type SleepTimerOption,
+  type SleepTimerState,
+} from "@/lib/quran-sleep-timer";
+import { getReciter } from "@/lib/quran-audio";
 
 export type PlayerState = "idle" | "loading" | "playing" | "paused" | "error" | "buffering";
 
@@ -47,6 +56,8 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
   const stallRef = useRef<StallRecoveryHandle | null>(null);
   const pauseCleanupRef = useRef<(() => void) | null>(null);
   const delayTimerRef = useRef<number | null>(null);
+  const sleepWallTimerRef = useRef<number | null>(null);
+  const sleepStateRef = useRef<SleepTimerState>(createSleepTimerState("off"));
   const mountedRef = useRef(true);
   const lastAyahRef = useRef<number | null>(null);
   const [reciterId, setReciterIdState] = useState<string>(loadReciterId);
@@ -59,7 +70,11 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
   const playbackRateRef = useRef(playbackRate);
   const loopRuntimeRef = useRef<AyahLoopRuntime | null>(null);
   const [loopConfig, setLoopConfigState] = useState<AyahLoopConfig | null>(null);
+  const [sleepTimer, setSleepTimerUi] = useState<SleepTimerState>(createSleepTimerState("off"));
   const loadAndPlayRef = useRef<(surah: number, ayah: number, reciter: string) => void>(() => undefined);
+  const stopRef = useRef<() => void>(() => undefined);
+  const resumeRef = useRef<() => void>(() => undefined);
+  const pauseRef = useRef<() => void>(() => undefined);
 
   // Part 19: keep screen awake only while actively playing; release on pause/blur
   useWakeLock(playerState === "playing" || playerState === "buffering" || playerState === "loading");
@@ -70,6 +85,40 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
       delayTimerRef.current = null;
     }
   }, []);
+
+  const clearSleepWallTimer = useCallback(() => {
+    if (sleepWallTimerRef.current != null) {
+      window.clearTimeout(sleepWallTimerRef.current);
+      sleepWallTimerRef.current = null;
+    }
+  }, []);
+
+  const applySleepState = useCallback((next: SleepTimerState) => {
+    sleepStateRef.current = next;
+    setSleepTimerUi(next);
+  }, []);
+
+  const setSleepTimer = useCallback(
+    (option: SleepTimerOption) => {
+      clearSleepWallTimer();
+      const next = createSleepTimerState(option);
+      applySleepState(next);
+      if (typeof next.option === "number" && next.deadlineMs != null) {
+        const delay = Math.max(0, next.deadlineMs - Date.now());
+        sleepWallTimerRef.current = window.setTimeout(() => {
+          const fired = markSleepTimerFired(sleepStateRef.current);
+          applySleepState(fired);
+          const audio = audioRef.current;
+          const playing = audio && !audio.paused && !audio.ended;
+          if (!playing) {
+            stopRef.current();
+            applySleepState(createSleepTimerState("off"));
+          }
+        }, delay);
+      }
+    },
+    [applySleepState, clearSleepWallTimer],
+  );
 
   const setReciterId = useCallback((id: string) => {
     setReciterIdState(id);
@@ -230,6 +279,11 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
       stallRef.current?.reset();
       if (!mountedRef.current) return;
 
+      if (shouldStopAfterAyahEnd(sleepStateRef.current, ayah, totalAyahs)) {
+        stopRef.current();
+        return;
+      }
+
       const loopRt = loopRuntimeRef.current;
       if (loopRt?.active) {
         const { runtime, next } = advanceAfterAyahEnded(loopRt, ayah);
@@ -316,7 +370,7 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
       setPlayerState("error");
       logDiagnostic("audio-chunk-fail", "play-rejected", { surah, ayah });
     });
-  }, [totalAyahs, clearDelayTimer]);
+  }, [totalAyahs, clearDelayTimer, clearSleepWallTimer, applySleepState]);
 
   loadAndPlayRef.current = loadAndPlay;
 
@@ -336,6 +390,8 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
 
   const stop = useCallback(() => {
     clearDelayTimer();
+    clearSleepWallTimer();
+    applySleepState(createSleepTimerState("off"));
     const audio = audioRef.current;
     if (!audio) return;
     stallRef.current?.reset();
@@ -350,7 +406,11 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
     setCurrentAyah(null);
     setPlayerState("idle");
     void deactivateNativeAudioSession().catch(() => undefined);
-  }, [clearDelayTimer]);
+  }, [clearDelayTimer, clearSleepWallTimer, applySleepState]);
+
+  stopRef.current = stop;
+  pauseRef.current = pause;
+  resumeRef.current = resume;
 
   const togglePlayAyah = useCallback((ayah: number) => {
     if (currentAyah === ayah && playerState === "playing") {
@@ -373,7 +433,7 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
     currentAyah
       ? {
           title: `سورة ${getSurahMeta(surahNum).name} — آية ${currentAyah}`,
-          artist: "تلاوة القرآن الكريم — المجلس العلمي",
+          artist: getReciter(reciterId).nameAr,
           playing: playerState === "playing" || playerState === "buffering",
           onPlay: resume,
           onPause: pause,
@@ -383,6 +443,34 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
         }
       : null,
   );
+
+  // استئناف بعد المكالمات / انقطاع السماعات (iOS AVAudioSession)
+  useEffect(() => {
+    let remove: (() => Promise<void>) | undefined;
+    let cancelled = false;
+    void getNativePlaybackPlugin().then((plugin) => {
+      if (!plugin?.addListener || cancelled) return;
+      void plugin.addListener("audioInterruption", (data) => {
+        const type = String(data.type ?? "");
+        if (type === "began") {
+          pauseRef.current();
+          return;
+        }
+        if (type === "ended" && data.shouldResume === true) {
+          resumeRef.current();
+        }
+      }).then((handle) => {
+        remove = () => handle.remove();
+      });
+      void plugin.addListener("audioRouteChange", () => {
+        /* انقطاع سماعة — الإيقاف المؤقت يُعالَج عبر interruption عادةً */
+      });
+    });
+    return () => {
+      cancelled = true;
+      void remove?.();
+    };
+  }, []);
 
   // Part 21 CLS shield: hold previous ayah highlight during loading/buffering
   // so word/ayah highlight does not unmount → remount (layout shift).
@@ -406,6 +494,8 @@ export function useAyahPlayer(surahNum: number, totalAyahs: number) {
     /** Memorization loop config (null = disabled). Additive — existing UI ignores it. */
     loopConfig,
     setLoopConfig,
+    sleepTimer,
+    setSleepTimer,
     playFromAyah,
     togglePlayAyah,
     pause,
