@@ -12,6 +12,7 @@ const tsx = readFileSync(join(root, "components/quran/PageAyahActionSheet.tsx"),
 const css = readFileSync(join(root, "styles/components/ayah-action-sheet.css"), "utf8");
 
 assert.match(tsx, /aas-v3__actions/);
+assert.match(tsx, /تسميع هذه السورة|recitation-test-ai\?surah=/);
 assert.match(tsx, /aas-v3__header/);
 assert.match(tsx, /aas-v3__close/);
 assert.match(tsx, /shareAyahAsText/);

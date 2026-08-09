@@ -114,6 +114,7 @@ const RevelationOrderPage = lazy(() => import("@/pages/quran/RevelationOrderPage
 const MakkiMadaniPage = lazy(() => import("@/pages/quran/MakkiMadaniPage"));
 const MushafPageView = lazy(() => import("@/pages/quran/ui/MushafPageView"));
 const MushafEditionInfoPage = lazy(() => import("@/pages/quran/MushafEditionInfoPage"));
+const QuranHubPage = lazy(() => import("@/pages/quran/QuranHubPage"));
 const RecitationTestPage = lazy(() => import("@/pages/quran/RecitationTestPage"));
 const SurahStoriesPage = lazy(() => import("@/pages/quran/SurahStoriesPage"));
 const QuranTajweedPage = lazy(() => import("@/pages/quran/QuranTajweedPage"));
@@ -709,7 +710,7 @@ function Router() {
           </Suspense>
         </ErrorBoundary>
       </Route>
-      <Route path="/quran"><Redirect to="/mushaf" /></Route>
+      <Route path="/quran"><Redirect to="/quran-hub" /></Route>
       {/* المصحف متوقف مؤقتًا — كل مساراته تعرض صفحة «قريبًا» */}
       <Route path="/mushaf/page/:page"><SafeLazyRoute component={MushafPageView} /></Route>
       <Route path="/mushaf/page"><SafeLazyRoute component={MushafPageView} /></Route>
@@ -717,7 +718,7 @@ function Router() {
       <Route path="/mushaf/:surah"><SafeLazyRoute component={MushafPageView} /></Route>
       <Route path="/mushaf"><SafeLazyRoute component={MushafPageView} /></Route>
       <Route path="/mushaf-v2-preview"><Redirect to="/mushaf" /></Route>
-      <Route path="/quran-hub"><Redirect to="/mushaf" /></Route>
+      <Route path="/quran-hub"><SafeLazyRoute component={QuranHubPage} /></Route>
       <Route path="/quran-knowledge"><SafeLazyRoute component={QuranKnowledgeHubPage} /></Route>
       <Route path="/memorization"><SafeLazyRoute component={MemorizationHubPage} /></Route>
       <Route path="/occasions-lessons"><SafeLazyRoute component={OccasionsLessonsHubPage} /></Route>

@@ -15,6 +15,7 @@ type SectionTab = {
 };
 
 const PREFETCH_BY_HREF: Record<string, () => void> = {
+  "/quran-hub": () => { void import("@/pages/quran/QuranHubPage"); },
   "/mushaf": () => { void import("@/pages/quran/ui/MushafPageView"); },
   "/lessons": () => { void import("@/pages/lessons/LessonsPage"); },
   "/prayer-times": () => { void import("@/pages/worship/PrayerTimesPage"); },
@@ -33,12 +34,12 @@ export const SECTION_TABS: SectionTab[] = BOTTOM_NAV_TABS.map((tab) => ({
 }));
 
 export function isTabActive(location: string, href: string): boolean {
-  if (href === "/mushaf") {
+  if (href === "/quran-hub" || href === "/mushaf") {
     return (
-      location === "/mushaf" ||
-      location.startsWith("/mushaf/") ||
       location === "/quran-hub" ||
       location.startsWith("/quran-hub/") ||
+      location === "/mushaf" ||
+      location.startsWith("/mushaf/") ||
       location === "/quran-knowledge" ||
       location.startsWith("/quran-knowledge/") ||
       location === "/ulum-quran" ||

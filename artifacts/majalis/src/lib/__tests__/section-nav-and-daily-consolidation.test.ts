@@ -34,7 +34,7 @@ console.log("\n=== TopSectionBar — مساحات موحّدة ===");
   const hrefs = SECTION_TABS.map((t) => t.href);
   const labels = SECTION_TABS.map((t) => t.label);
   assert(new Set(hrefs).size === hrefs.length, "لا تكرار في مسارات الأقسام");
-  assert(hrefs.includes("/mushaf") && labels.includes("قرآن"), "مساحة قرآن → المصحف");
+  assert(hrefs.includes("/quran-hub") && labels.includes("قرآن"), "مساحة قرآن → مركز القرآن");
   assert(hrefs.includes("/lessons") && labels.includes("الدروس"), "مساحة الدروس");
   assert(hrefs.includes("/prayer-times") && labels.includes("الصلاة"), "مساحة الصلاة");
   assert(hrefs.includes("/fiqh") && labels.includes("فقه"), "مساحة فقه");
@@ -43,9 +43,10 @@ console.log("\n=== TopSectionBar — مساحات موحّدة ===");
 
 console.log("\n=== isTabActive ===");
 {
-  assert(isTabActive("/mushaf", "/mushaf") === true, "المصحف تحت قرآن");
-  assert(isTabActive("/ulum-quran", "/mushaf") === true, "علوم القرآن تحت قرآن");
-  assert(isTabActive("/quran/surah-stories", "/mushaf") === true, "قصص السور تحت قرآن");
+  assert(isTabActive("/mushaf", "/quran-hub") === true, "المصحف تحت قرآن");
+  assert(isTabActive("/quran-hub", "/quran-hub") === true, "مركز القرآن تحت قرآن");
+  assert(isTabActive("/ulum-quran", "/quran-hub") === true, "علوم القرآن تحت قرآن");
+  assert(isTabActive("/quran/surah-stories", "/quran-hub") === true, "قصص السور تحت قرآن");
   assert(isTabActive("/mushaf", "/quran-knowledge") === true, "توافق مسارات المعرفة");
   assert(isTabActive("/hadith", "/lessons") === true, "الحديث تحت الدروس");
   assert(isTabActive("/adhkar", "/prayer-times") === true, "الأذكار تحت الصلاة");
@@ -98,7 +99,7 @@ console.log("\n=== vercel redirects للتنظيف ===");
 console.log("\n=== PRIMARY_NAV ===");
 {
   const hrefs = PRIMARY_NAV_ITEMS.map((i) => i.href);
-  assert(hrefs.includes("/") && hrefs.includes("/mushaf") && hrefs.includes("/fiqh"), "هيدر أساسي");
+  assert(hrefs.includes("/") && hrefs.includes("/quran-hub") && hrefs.includes("/fiqh"), "هيدر أساسي");
   assert(hrefs.includes("/lessons") && hrefs.includes("/prayer-times"), "الدروس والصلاة في PRIMARY_NAV");
   assert(!hrefs.includes("/library"), "لا مكتبة في PRIMARY_NAV");
 }
@@ -171,7 +172,7 @@ console.log("\n=== الشريط السفلي والمزيد ===");
   const navMapSrc = readFileSync(resolve(appRoot, "src/lib/nav-map.ts"), "utf-8");
   assert(navMapSrc.includes('label: "قرآن"') && navMapSrc.includes('label: "الدروس"'), "تسميات قرآن والدروس");
   assert(navMapSrc.includes('label: "الصلاة"') && navMapSrc.includes('label: "فقه"'), "تسميات الصلاة وفقه");
-  assert(navMapSrc.includes('"/mushaf"') && navMapSrc.includes('"/prayer-times"') && navMapSrc.includes('"/fiqh"') && navMapSrc.includes('"/lessons"'), "مسارات المساحات الأربع");
+  assert(navMapSrc.includes('"/quran-hub"') && navMapSrc.includes('"/prayer-times"') && navMapSrc.includes('"/fiqh"') && navMapSrc.includes('"/lessons"'), "مسارات المساحات الأربع");
   assert(!bottomSrc.includes('label: "البحث"'), "البحث ليس تبويبًا سفليًا أساسيًا بعد التنظيف");
   const moreSrc = readFileSync(resolve(appRoot, "src/components/MoreBottomSheet.tsx"), "utf-8");
   assert(moreSrc.includes("filterServicesCenterGroups") || moreSrc.includes("services-center-nav"), "المزيد من كتالوج الخدمات");

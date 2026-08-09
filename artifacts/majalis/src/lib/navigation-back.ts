@@ -89,11 +89,12 @@ export function getPreviousInternalRoute(currentPath: string): string | null {
 export function sectionAwareFallback(currentPath: string): string {
   const p = normalizeNavPath(currentPath);
   if (p === "/" || p === "") return "/";
-  if (p.startsWith("/mushaf") || p === "/quran-hub" || p.startsWith("/quran-hub/")) return "/mushaf";
+  if (p.startsWith("/mushaf")) return "/quran-hub";
+  if (p === "/quran-hub" || p.startsWith("/quran-hub/")) return "/quran-hub";
   if (p === "/quran-memorization" || p.startsWith("/quran/memorization")) return "/quran-memorization";
   if (p.startsWith("/quran-circles")) return "/quran-circles";
-  if (p.startsWith("/quran/recitation")) return "/quran/recitation-test-ai";
-  if (p === "/quran" || p.startsWith("/quran/")) return "/mushaf";
+  if (p.startsWith("/quran/recitation")) return "/quran-hub";
+  if (p === "/quran" || p.startsWith("/quran/")) return "/quran-hub";
   if (p.startsWith("/prayer") || p.startsWith("/qibla") || p.startsWith("/adhan") || p.startsWith("/tasbih")) {
     return "/prayer-times";
   }

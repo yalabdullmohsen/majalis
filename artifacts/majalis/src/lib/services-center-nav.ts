@@ -18,6 +18,7 @@ import {
   Landmark,
   Library,
   Mail,
+  Mic,
   Moon,
   Route,
   TrendingUp,
@@ -33,6 +34,7 @@ import {
   BookA,
   Bell,
   LogOut,
+  Users,
 } from "lucide-react";
 
 export type ServicesCenterAction =
@@ -89,11 +91,14 @@ export const SERVICES_CENTER_GROUPS: ServicesCenterGroup[] = [
     layout: "list",
     items: [
       { id: "tawhid", label: "العقيدة", keywords: ["توحيد", "عقيدة"], Icon: Landmark, action: { kind: "link", href: "/tawhid" } },
+      { id: "quran-hub", label: "مركز القرآن", keywords: ["قرآن", "مصحف", "تسميع", "تجويد"], Icon: BookOpen, action: { kind: "link", href: "/quran-hub" } },
       { id: "quran-knowledge", label: "القرآن وعلومه", keywords: ["علوم قرآن"], Icon: BookMarked, action: { kind: "link", href: "/quran-knowledge" } },
+      { id: "tasmee", label: "التسميع", keywords: ["تسميع", "تلاوة", "اختبار حفظ"], Icon: Mic, action: { kind: "link", href: "/quran/recitation-test-ai" } },
       { id: "hadith", label: "الحديث وعلومه", keywords: ["حديث", "سنة", "أحاديث"], Icon: ScrollText, action: { kind: "link", href: "/hadith" } },
       { id: "seerah", label: "السيرة النبوية", keywords: ["سيرة"], Icon: BookA, action: { kind: "link", href: "/seerah" } },
       { id: "tafsir", label: "التفسير", keywords: ["تفسير"], Icon: Library, action: { kind: "link", href: "/tafsir" } },
       { id: "prophets", label: "قصص الأنبياء", keywords: ["أنبياء"], Icon: BookOpen, action: { kind: "link", href: "/prophets" } },
+      { id: "nations", label: "الأمم السابقة", keywords: ["أمم", "عاد", "ثمود", "فرعون"], Icon: Users, action: { kind: "link", href: "/nations" } },
       { id: "history", label: "التاريخ الإسلامي", keywords: ["تاريخ"], Icon: Building2, action: { kind: "link", href: "/tarikh-islami" } },
     ],
   },

@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { useLocation } from "wouter";
 import {
   X,
   Copy,
@@ -12,6 +13,7 @@ import {
   ChevronDown,
   Flag,
   BookOpen,
+  Mic,
   Mic2,
   Repeat,
   Gauge,
@@ -103,6 +105,7 @@ export function PageAyahActionSheet({
   repeatOn,
   onToggleRepeat,
 }: Props) {
+  const [, navigate] = useLocation();
   const [bookmarked, setBookmarked] = useState(() => isBookmarked(surahNum, ayahNum));
   const [copiedKind, setCopiedKind] = useState<"full" | "plain" | null>(null);
   const [noteOpen, setNoteOpen] = useState(false);
@@ -393,6 +396,18 @@ export function PageAyahActionSheet({
           >
             <Bookmark size={20} aria-hidden="true" fill={bookmarked ? "currentColor" : "none"} />
             <span>إشارة</span>
+          </button>
+          <button
+            type="button"
+            className="aas-v3__action"
+            onClick={() => {
+              onClose();
+              navigate(`/quran/recitation-test-ai?surah=${surahNum}`);
+            }}
+            aria-label="تسميع هذه السورة"
+          >
+            <Mic size={20} aria-hidden="true" />
+            <span>تسميع</span>
           </button>
           <button
             type="button"
