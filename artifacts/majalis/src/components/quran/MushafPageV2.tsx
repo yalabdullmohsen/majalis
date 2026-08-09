@@ -601,7 +601,7 @@ export function MushafPageV2({
   );
 }
 
-/** شارة سورة عريضة — زخرفة أصلية قابلة للتمدد */
+/** شارة سورة بسيطة — شريط بيج + اسم عثماني مشكّل في الوسط */
 function SurahNameCartouche({
   label,
   titleRef,
@@ -615,6 +615,8 @@ function SurahNameCartouche({
       <span
         className="mf2-surah-header__name"
         data-sizing-line="surah_title"
+        lang="ar"
+        dir="rtl"
         ref={titleRef}
       >
         {label}

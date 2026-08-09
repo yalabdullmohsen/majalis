@@ -65,15 +65,18 @@ assert.equal(
   false,
   "مكوّن الصفحة بلا opening-centered",
 );
-assert.match(mushafV2, /\.mf2-surah-badge/, "شارة سورة عريضة قابلة للتمدد");
-assert.match(mushafV2, /\.mf2-surah-badge__bar/, "شريط شارة بإطار وبنية طرفين+وسط");
-assert.match(mushafV2, /\.mf2-surah-badge__mid\s*\{[\s\S]*?45%/, "لوحة وسطى ≈ 45%");
+assert.match(mushafV2, /\.mf2-surah-badge/, "شارة سورة بسيطة");
+assert.match(mushafV2, /\.mf2-surah-badge__bar/, "شريط شارة بإطار");
+assert.equal(/mf2-surah-badge__end/.test(mushafV2), false, "بلا زخرفة طرفية في الشارة");
+assert.equal(/mf2-surah-badge__mid/.test(mushafV2), false, "بلا لوحة وسطى منفصلة");
 assert.match(
   mushafV2,
   /\.mf2-surah-header__frame\s*\{[\s\S]*?1\.6em/,
   "ارتفاع الشارة ≈ 1.6× ارتفاع سطر",
 );
 assert.match(mushafV2, /\.mf2-surah-header__name\s*\{[\s\S]*?overflow:\s*visible/, "تشكيل الاسم غير مقصوص");
+const nameBlock = mushafV2.match(/\.mf2-surah-header__name\s*\{[^}]+\}/)?.[0] ?? "";
+assert.ok(nameBlock.includes("inherit,"), "اسم الشارة يرث خط/حجم الصفحة مع احتياطي قرآن");
 assert.match(mushafV2, /\.mf2-ayah-marker\s*\{[\s\S]*?1\.15em/, "قطر علامة الآية 1.15em");
 assert.match(pageComp, /MushafSurahBadgeFrame/);
 assert.match(pageComp, /sizingEls|sizing-line|ayahLineCount/, "تحجيم من أعرض سطر + عدد الأسطر الفعلي");
