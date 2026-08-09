@@ -18,8 +18,8 @@ import {
   type PrayerKey,
   getEffectiveMuezzinId,
 } from "./adhan-preferences";
-import { getMuezzin, playAdhan } from "./adhan-audio";
-import { isNative } from "./capacitor-utils";
+import { getMuezzin, hasFajrAdhan, playAdhan } from "./adhan-audio";
+import { isIOS, isNative } from "./capacitor-utils";
 import { ADHAN_EVENT_NAME, type AdhanEvent } from "./adhan-events";
 import {
   isAdhanAndroidAlarmAvailable,
@@ -29,6 +29,10 @@ import { resolveAdhanClip } from "./adhan-playback-modes";
 
 export type { AdhanEvent };
 export { ADHAN_EVENT_NAME };
+
+function iosFullAdhanActive(): boolean {
+  return isNative && isIOS;
+}
 
 /**
  * أقصى تأخّر مسموح به قبل اعتبار المؤقّت "قديماً". مؤقّتات JS تتوقف أثناء نوم
@@ -134,13 +138,33 @@ function scheduleForPrayer(slot: PrayerSlot, key: PrayerKey) {
     }
   }
 
+  // iOS + وضع كامل: سلسلة مقاطع إشعار ≤28ث (حد النظام 30ث) — لا يعتمد على مؤقّت JS في الخلفية
+  if (iosFullAdhanActive() && prefs.playbackMode === "full") {
+    const muezzin = getMuezzin(getEffectiveMuezzinId(prefs, key));
+    const isFajr = key === "fajr";
+    if (!isFajr || hasFajrAdhan(muezzin)) {
+      void import("./adhan-ios-segments").then(({ scheduleIosFullAdhan }) =>
+        scheduleIosFullAdhan({
+          prayerKey: key,
+          prayerName: PRAYER_ARABIC[key] ?? slot.name,
+          recordingId: muezzin.id,
+          isFajr,
+          startAtMs: adhanTargetEpoch,
+        }),
+      );
+    }
+  }
+
   const t1 = setTimeout(() => {
     // مؤقّت متأخّر (نوم/خلفية): لا تُشغّل أذاناً فات وقته بأكثر من المسموح
     if (Date.now() - adhanTargetEpoch > STALE_TOLERANCE_MS) return;
     const fresh = loadAdhanPrefs();
     if (!fresh.globalEnabled || !fresh.prayers[key].enabled) return;
-    // على أندرويد في الوضع الكامل تتولى الخدمة الأصلية التشغيل
-    if (isAdhanAndroidAlarmAvailable() && fresh.playbackMode === "full") {
+    // على أندرويد/iOS في الوضع الكامل تتولى الطبقة الأصلية التشغيل
+    if (
+      fresh.playbackMode === "full" &&
+      (isAdhanAndroidAlarmAvailable() || iosFullAdhanActive())
+    ) {
       dispatchAdhanEvent({ type: "adhan", prayerKey: key, prayerName: slot.name });
       return;
     }
@@ -195,6 +219,12 @@ function scheduleForPrayer(slot: PrayerSlot, key: PrayerKey) {
  */
 export async function startAdhanScheduler(payload: PrayerTimesPayload): Promise<void> {
   clearAllTimers();
+  // لا تتداخل سلسلتان — ألغِ أي سلسلة سابقة قبل إعادة الجدولة
+  if (iosFullAdhanActive()) {
+    void import("./adhan-ios-segments").then(({ cancelAdhanIosSegmentChain }) =>
+      cancelAdhanIosSegmentChain(),
+    );
+  }
 
   const SLOT_KEYS: Array<[string, PrayerKey]> = [
     ["Fajr", "fajr"],
@@ -223,6 +253,11 @@ export async function startAdhanScheduler(payload: PrayerTimesPayload): Promise<
 
 export function stopAdhanScheduler() {
   clearAllTimers();
+  if (iosFullAdhanActive()) {
+    void import("./adhan-ios-segments").then(({ cancelAdhanIosSegmentChain }) =>
+      cancelAdhanIosSegmentChain(),
+    );
+  }
 }
 
 /** Posts SCHEDULE_ADHAN to the SW so notifications fire even in background tabs. */
