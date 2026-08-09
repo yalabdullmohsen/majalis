@@ -1,15 +1,11 @@
 {
-  "backgroundColor": "#000300",
+  "backgroundColor": "#002b21",
   "backgroundRgb": {
     "r": 0,
-    "g": 3,
-    "b": 0
+    "g": 43,
+    "b": 33
   },
-  "source": "public/brand/splash-source.png",
+  "source": "assets/splash.png",
   "logo": "public/brand/splash-logo.png",
-  "logoSize": {
-    "width": 1023,
-    "height": 1454
-  },
-  "generatedAt": "2026-08-09T10:22:47.661Z"
+  "generatedAt": "2026-08-09T20:45:00.000Z"
 }

@@ -13,7 +13,8 @@ const root = resolve(__dirname, "../../..");
 const indexHtml = readFileSync(resolve(root, "index.html"), "utf8");
 assert.doesNotMatch(indexHtml, /id="mj-boot-splash"/, "لا شاشة ويب وسيطة");
 assert.doesNotMatch(indexHtml, /mj-boot-splash__logo/, "لا شعار ويب مكرر");
-assert.match(indexHtml, /background-color:\s*#000300/, "خلفية WebView خضراء");
+assert.match(indexHtml, /background-color:\s*#002b21/, "خلفية WebView خضراء داكنة");
+assert.match(indexHtml, /html,\s*body,\s*#root/, "خلفية inline على html/body/#root");
 
 const splashTs = readFileSync(resolve(root, "src/lib/splash-screen.ts"), "utf8");
 assert.doesNotMatch(splashTs, /mj-boot-splash/, "splash-screen لا يمس طبقة ويب");
@@ -46,7 +47,7 @@ const colors = readFileSync(
   resolve(root, "android/app/src/main/res/values/colors.xml"),
   "utf8",
 );
-assert.match(colors, /splash_background">#000300</);
+assert.match(colors, /splash_background">#002b21</);
 
 assert.ok(existsSync(resolve(root, "public/brand/splash-source.png")));
 assert.ok(existsSync(resolve(root, "ios/App/App/Assets.xcassets/Splash.imageset")));
