@@ -12,21 +12,50 @@ html.pts-immersive body {
   background-image: none;
 }
 
-/* شريط الأقسام يبقى ظاهرًا فوق الصلاة — يُلوَّن لينسجم مع الشاشة الزمردية */
+/* شريط الأقسام — يهزم theme-aliases (.top-section-bar { background: var(--mj-surface) !important }) */
+html.pts-immersive .top-section-bar.mj-nav-skin,
 html.pts-immersive .top-section-bar {
-  background: color-mix(in srgb, var(--mj-brand-deep, #0E241E) 94%, transparent);
-  border-block-end-color: color-mix(in srgb, var(--gold-400, #D2B063) 28%, transparent);
-  backdrop-filter: none;
+  background: var(--mj-brand-deep, #0E241E) !important;
+  border-block-end-color: color-mix(in srgb, var(--gold-400, #D2B063) 28%, transparent) !important;
+  border-color: color-mix(in srgb, var(--gold-400, #D2B063) 28%, transparent) !important;
+  color: #FAFAF8 !important;
+  backdrop-filter: none !important;
 }
 html.pts-immersive .top-section-bar__tab {
-  color: rgba(250, 250, 248, 0.72);
+  color: rgba(250, 250, 248, 0.72) !important;
 }
 html.pts-immersive .top-section-bar__tab:hover {
-  color: #FAFAF8;
+  color: #FAFAF8 !important;
 }
 html.pts-immersive .top-section-bar__tab.is-active {
-  color: #0E241E;
-  background: color-mix(in srgb, var(--gold-300, #E3CB8C) 88%, #fff);
+  color: #0E241E !important;
+  background: color-mix(in srgb, var(--gold-300, #E3CB8C) 88%, #fff) !important;
+}
+
+/*
+ * الشريط السفلي + حشو safe-area: نفس زمرد الصفحة — يهزم
+ * theme-aliases (.bottom-nav--m2030 { background: var(--mj-surface) !important }).
+ */
+html.pts-immersive .bottom-nav.bottom-nav--m2030,
+html.pts-immersive .bottom-nav.bottom-nav--v2,
+html.pts-immersive .bottom-nav--m2030,
+html.pts-immersive .bottom-nav--v2,
+html.pts-immersive .bottom-nav {
+  background: var(--mj-brand-deep, #0E241E) !important;
+  border-block-start-color: color-mix(in srgb, var(--gold-400, #D2B063) 28%, transparent) !important;
+  border-top-color: color-mix(in srgb, var(--gold-400, #D2B063) 28%, transparent) !important;
+  box-shadow: none !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+html.pts-immersive .bottom-nav--v2 .bottom-nav__tab,
+html.pts-immersive .bottom-nav .bottom-nav__tab {
+  color: rgba(250, 250, 248, 0.72) !important;
+}
+html.pts-immersive .bottom-nav--v2 .bottom-nav__tab.is-active,
+html.pts-immersive .bottom-nav .bottom-nav__tab.is-active {
+  color: #E3CB8C !important;
+  background: color-mix(in srgb, var(--gold-400, #D2B063) 18%, transparent) !important;
 }
 
 .pts-screen--with-nav {
