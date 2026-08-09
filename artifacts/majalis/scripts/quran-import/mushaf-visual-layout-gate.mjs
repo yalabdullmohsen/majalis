@@ -1,166 +1,281 @@
 #!/usr/bin/env node
 /**
- * انحدار بصري إلزامي قبل الدمج:
- * لقطات + تحقق آلي (لا تجاوز أفقي، لا تراكب، امتلاء ≥ 80%)
- * للصفحات: 1, 2, 283, 587–596, 604
+ * بوابة تخطيط المصحف (قياس DOM عبر Playwright — لا تعتمد على لقطات بصرية وحدها).
  *
- *   node scripts/quran-import/mushaf-visual-layout-gate.mjs --base http://127.0.0.1:24216
- *   node scripts/quran-import/mushaf-visual-layout-gate.mjs --base https://www.majlisilm.com
+ * القاعدة الملزمة:
+ *   1) لا تجاوز أفقي خارج إطار الصفحة
+ *   2) لا تراكب هندسي بين كلمات الآية (bounding boxes)
+ *   3) أقصى مسافة بين سطرين متجاورين ≤ 1.6 × حجم الخط (كل الصفحات)
+ *   4) حجم الخط في الصفحتين 1 و2 ≥ 80% من متوسط حجم الخط في الصفحات العادية
+ *
+ * أُبطلت بوابة «نسبة الامتلاء ≥ 80%» — كانت تُشجّع تمديد الفراغات بين الأسطر.
+ *
+ * الاستخدام:
+ *   MUSHAF_GATE_BASE_URL=https://www.majlisilm.com node scripts/quran-import/mushaf-visual-layout-gate.mjs
+ *   MUSHAF_GATE_BASE_URL=http://127.0.0.1:24216 node ...
+ *
+ * اختياري:
+ *   MUSHAF_GATE_PAGES=1,2,3,13,283,604
+ *   MUSHAF_GATE_OUT_DIR=artifacts/...
+ *   MUSHAF_GATE_MAX_MS=180000
  */
-import { mkdir, writeFile } from "node:fs/promises";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
 import { chromium } from "playwright";
+import { mkdirSync, writeFileSync, existsSync } from "node:fs";
+import { join, dirname } from "node:path";
+import { fileURLToPath } from "node:url";
 
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const APP_ROOT = path.resolve(__dirname, "../..");
+const __dirname = dirname(fileURLToPath(import.meta.url));
+const ROOT = join(__dirname, "../..");
 
-const GATE_PAGES = [1, 2, 283, 587, 588, 589, 590, 591, 592, 593, 594, 595, 596, 604];
-const MIN_FILL = 0.8;
+const BASE =
+  process.env.MUSHAF_GATE_BASE_URL?.replace(/\/$/, "") ||
+  "https://www.majlisilm.com";
 
-function arg(name, fallback) {
-  const i = process.argv.indexOf(`--${name}`);
-  return i >= 0 ? process.argv[i + 1] : fallback;
+const DEFAULT_PAGES = [1, 2, 3, 13, 283, 587, 588, 589, 590, 591, 592, 593, 594, 595, 596, 604];
+const PAGES = (process.env.MUSHAF_GATE_PAGES || DEFAULT_PAGES.join(","))
+  .split(",")
+  .map((s) => Number(s.trim()))
+  .filter((n) => Number.isFinite(n) && n >= 1 && n <= 604);
+
+const OUT_DIR =
+  process.env.MUSHAF_GATE_OUT_DIR ||
+  join(ROOT, "../../.cursor/projects/Users-alabdullmohsen-majlis-app/artifacts/mushaf-layout-gate");
+
+const MAX_MS = Number(process.env.MUSHAF_GATE_MAX_MS || 180_000);
+const VIEWPORT = { width: 390, height: 844 };
+/** أقصى مسافة بين مراكز أسطر متجاورة كنسبة من حجم الخط */
+const MAX_LINE_PITCH_EM = 1.6;
+/** حد أدنى لنسبة حجم خط الصفحتين الافتتاحيتين من متوسط الصفحات العادية */
+const MIN_OPENING_FONT_RATIO = 0.8;
+
+function sleep(ms) {
+  return new Promise((r) => setTimeout(r, ms));
 }
 
-const base = (arg("base", "") || "").replace(/\/$/, "");
-const outDir = path.resolve(APP_ROOT, arg("out", ".local/mushaf/visual-gate"));
+async function measurePage(page, pageNum) {
+  const url = `${BASE}/mushaf/page/${pageNum}`;
+  await page.goto(url, { waitUntil: "domcontentloaded", timeout: 60_000 });
+  /* وضع آية يصدّر .mf2-lines داخل .qs-mushaf-body دون غلاف .mf2-page */
+  await page.waitForSelector(".mf2-lines .mf2-line, .mf2-page .mf2-line", { timeout: 45_000 });
+  await sleep(900);
 
-async function main() {
-  if (!base) {
-    console.error("مطلوب --base URL (محلي أو إنتاج)");
-    process.exit(2);
-  }
-  await mkdir(outDir, { recursive: true });
-  const browser = await chromium.launch({ headless: true });
-  const context = await browser.newContext({
-    viewport: { width: 390, height: 844 },
-    deviceScaleFactor: 2,
-    locale: "ar",
-  });
-  const page = await context.newPage();
-  const report = [];
+  const metrics = await page.evaluate(() => {
+    const root =
+      document.querySelector(".qs-mushaf-body-inner") ||
+      document.querySelector(".mf2-page") ||
+      document.querySelector(".mf2-lines");
+    const linesRoot = document.querySelector(".mf2-lines") || root;
+    if (!root || !linesRoot) return { error: "no mushaf lines root" };
+    const rootRect = root.getBoundingClientRect();
+    const style = getComputedStyle(linesRoot);
+    const fontSize = parseFloat(style.fontSize) || 0;
 
-  for (const n of GATE_PAGES) {
-    const url = `${base}/mushaf/page/${n}`;
-    console.log("gate", url);
-    await page.goto(url, { waitUntil: "networkidle", timeout: 90_000 });
-    await page.waitForSelector(".mf2-lines", { timeout: 60_000 });
-    await page.waitForFunction(() => {
-      const lines = document.querySelector(".mf2-lines");
-      return lines && getComputedStyle(lines).opacity !== "0";
-    }, { timeout: 30_000 }).catch(() => {});
-    await page.waitForTimeout(1200);
-
-    await page.evaluate(() => {
-      document.querySelectorAll(".mpv-toolbar, .mpv-resume-banner, .assistant-fab, .bottom-nav, .navbar-v3").forEach((el) => {
-        el.style.visibility = "hidden";
-      });
+    const lines = [...linesRoot.querySelectorAll(".mf2-line")].map((el, i) => {
+      const r = el.getBoundingClientRect();
+      return { i, top: r.top, bottom: r.bottom, height: r.height, midY: r.top + r.height / 2 };
     });
 
-    const metrics = await page.evaluate((minFill) => {
-      const container = document.querySelector(".mf2-lines");
-      if (!container) return { ok: false, reason: "no-container" };
-      const cRect = container.getBoundingClientRect();
-      const drawn = [
-        ...container.querySelectorAll(".mf2-line, .mf2-bismillah, .mf2-surah-header__name"),
-      ];
-      const blocks = [
-        ...container.querySelectorAll(".mf2-line, .mf2-surah-header"),
-      ];
+    /** تباعد بين أسطر آيات متجاورة فقط — يُستثنى ما يفصل بينهما رأس سورة/بسملة */
+    let maxPitchPx = 0;
+    const children = [...linesRoot.children];
+    for (let i = 1; i < children.length; i++) {
+      const prev = children[i - 1];
+      const cur = children[i];
+      if (!prev.classList.contains("mf2-line") || !cur.classList.contains("mf2-line")) continue;
+      const a = prev.getBoundingClientRect();
+      const b = cur.getBoundingClientRect();
+      const pitch = b.top + b.height / 2 - (a.top + a.height / 2);
+      if (pitch > maxPitchPx) maxPitchPx = pitch;
+    }
 
-      const overflows = [];
-      for (const el of drawn) {
-        const sw = el.scrollWidth;
-        const cw = el.clientWidth || container.clientWidth;
-        if (sw > container.clientWidth + 0.5) {
-          overflows.push({
-            kind: el.getAttribute("data-sizing-line") || el.className,
-            scrollWidth: sw,
-            container: container.clientWidth,
-          });
-        }
-        if (sw > cw + 0.5 && el.classList.contains("mf2-line")) {
-          overflows.push({
-            kind: "line-self",
-            scrollWidth: sw,
-            clientWidth: cw,
-          });
-        }
-      }
+    const words = [...linesRoot.querySelectorAll(".mf2-word")];
+    let overflowRight = 0;
+    let overflowLeft = 0;
+    const pad = 1.5;
+    for (const w of words) {
+      const r = w.getBoundingClientRect();
+      if (r.right > rootRect.right + pad) overflowRight = Math.max(overflowRight, r.right - rootRect.right);
+      if (r.left < rootRect.left - pad) overflowLeft = Math.max(overflowLeft, rootRect.left - r.left);
+    }
 
-      const rects = blocks.map((el) => {
-        const r = el.getBoundingClientRect();
-        return {
-          kind: el.classList.contains("mf2-surah-header") ? "header" : "line",
-          left: r.left,
-          right: r.right,
-          top: r.top,
-          bottom: r.bottom,
-        };
-      });
-      const overlaps = [];
-      for (let i = 0; i < rects.length; i++) {
-        for (let j = i + 1; j < rects.length; j++) {
-          const a = rects[i];
-          const b = rects[j];
-          const overlap = !(
-            a.right <= b.left + 0.5 ||
-            b.right <= a.left + 0.5 ||
-            a.bottom <= b.top + 0.5 ||
-            b.bottom <= a.top + 0.5
-          );
-          if (overlap) overlaps.push({ a: a.kind, b: b.kind, i, j });
+    const byLine = new Map();
+    for (const w of words) {
+      const line = w.closest(".mf2-line");
+      if (!line) continue;
+      const key = line.getAttribute("data-line") || String(line.offsetTop);
+      if (!byLine.has(key)) byLine.set(key, []);
+      byLine.get(key).push(w.getBoundingClientRect());
+    }
+    let overlapPairs = 0;
+    let maxOverlapX = 0;
+    for (const boxes of byLine.values()) {
+      const sorted = [...boxes].sort((a, b) => a.left - b.left);
+      for (let i = 1; i < sorted.length; i++) {
+        const prev = sorted[i - 1];
+        const cur = sorted[i];
+        const overlap = prev.right - cur.left;
+        /* >2px حقيقي؛ ≤2 غالبًا تلميح/تقريب صندوق الحرف لا تراكب بصري */
+        if (overlap > 2) {
+          overlapPairs += 1;
+          maxOverlapX = Math.max(maxOverlapX, overlap);
         }
       }
+    }
 
-      let minTop = Infinity;
-      let maxBottom = -Infinity;
-      for (const el of blocks) {
-        const r = el.getBoundingClientRect();
-        if (r.height <= 0) continue;
-        minTop = Math.min(minTop, r.top);
-        maxBottom = Math.max(maxBottom, r.bottom);
-      }
-      const contentH = maxBottom > minTop ? maxBottom - minTop : 0;
-      const fill = cRect.height > 0 ? contentH / cRect.height : 0;
+    const blockRect = linesRoot.getBoundingClientRect();
+    const contentTopGap =
+      lines[0] ? Math.max(0, lines[0].top - blockRect.top) : 0;
+    const contentBottomGap =
+      lines.length
+        ? Math.max(0, blockRect.bottom - lines[lines.length - 1].bottom)
+        : 0;
 
-      return {
-        ok: overflows.length === 0 && overlaps.length === 0 && fill >= minFill,
-        overflows,
-        overlaps,
-        fill,
-        containerH: cRect.height,
-        contentH,
-      };
-    }, MIN_FILL);
+    return {
+      fontSize,
+      lineCount: lines.length,
+      maxPitchPx,
+      maxPitchEm: fontSize > 0 ? maxPitchPx / fontSize : 0,
+      overflowRight,
+      overflowLeft,
+      overflowX: Math.max(overflowRight, overflowLeft),
+      overlapPairs,
+      maxOverlapX,
+      contentTopGap,
+      contentBottomGap,
+      rootH: rootRect.height,
+      rootW: rootRect.width,
+    };
+  });
 
-    const shot = path.join(outDir, `page-${String(n).padStart(3, "0")}.png`);
-    const target = await page.$(".qs-mushaf-body-inner, .mf2-page, .qs-mushaf-frame");
-    if (target) await target.screenshot({ path: shot });
-    else await page.screenshot({ path: shot, fullPage: false });
+  const shotPath = join(OUT_DIR, `page-${String(pageNum).padStart(3, "0")}.png`);
+  const pageEl = page.locator(".qs-mushaf-body-inner, .mf2-page").first();
+  await pageEl.screenshot({ path: shotPath });
 
-    report.push({ page: n, ...metrics, shot });
-    const status = metrics.ok ? "OK" : "FAIL";
-    console.log(
-      `p${n} ${status} fill=${(metrics.fill * 100).toFixed(1)}% overflows=${metrics.overflows?.length ?? "?"} overlaps=${metrics.overlaps?.length ?? "?"}`,
-    );
-  }
-
-  await browser.close();
-  const reportPath = path.join(outDir, "report.json");
-  await writeFile(reportPath, JSON.stringify({ base, minFill: MIN_FILL, report }, null, 2));
-  console.log("wrote", reportPath);
-
-  const failed = report.filter((r) => !r.ok);
-  if (failed.length) {
-    console.error(`فشل انحدار بصري على ${failed.length} صفحة`);
-    process.exit(1);
-  }
-  console.log("mushaf-visual-layout-gate: ok");
+  return { pageNum, url, shotPath, ...metrics };
 }
 
-main().catch((e) => {
-  console.error(e);
+function evaluate(results) {
+  const failures = [];
+  const normalFonts = results
+    .filter((r) => r.pageNum !== 1 && r.pageNum !== 2 && r.fontSize > 0)
+    .map((r) => r.fontSize);
+  const avgNormalFont =
+    normalFonts.length > 0
+      ? normalFonts.reduce((a, b) => a + b, 0) / normalFonts.length
+      : 0;
+
+  for (const r of results) {
+    if (r.error) {
+      failures.push({ page: r.pageNum, reason: r.error });
+      continue;
+    }
+    if (r.overflowX > 2) {
+      failures.push({
+        page: r.pageNum,
+        reason: `تجاوز أفقي ${r.overflowX.toFixed(2)}px`,
+      });
+    }
+    if (r.overlapPairs > 0) {
+      failures.push({
+        page: r.pageNum,
+        reason: `تراكب كلمات: ${r.overlapPairs} زوجًا (أقصى ${r.maxOverlapX.toFixed(2)}px)`,
+      });
+    }
+    if (r.maxPitchEm > MAX_LINE_PITCH_EM + 0.02) {
+      failures.push({
+        page: r.pageNum,
+        reason: `تباعد أسطر مفرط: ${r.maxPitchEm.toFixed(3)}em > ${MAX_LINE_PITCH_EM}em (خط ${r.fontSize.toFixed(2)}px، pitch ${r.maxPitchPx.toFixed(1)}px)`,
+      });
+    }
+    if ((r.pageNum === 1 || r.pageNum === 2) && avgNormalFont > 0) {
+      const ratio = r.fontSize / avgNormalFont;
+      if (ratio < MIN_OPENING_FONT_RATIO - 0.005) {
+        failures.push({
+          page: r.pageNum,
+          reason: `خط الصفحة الافتتاحية ${(ratio * 100).toFixed(1)}% من متوسط العادية (${r.fontSize.toFixed(2)} / ${avgNormalFont.toFixed(2)}) — المطلوب ≥ ${MIN_OPENING_FONT_RATIO * 100}%`,
+        });
+      }
+    }
+  }
+
+  return { failures, avgNormalFont };
+}
+
+async function main() {
+  mkdirSync(OUT_DIR, { recursive: true });
+  const started = Date.now();
+  console.log(`[mushaf-visual-gate] base=${BASE}`);
+  console.log(`[mushaf-visual-gate] pages=${PAGES.join(",")}`);
+  console.log(`[mushaf-visual-gate] out=${OUT_DIR}`);
+  console.log(
+    `[mushaf-visual-gate] rules: overflowX≤2px, overlap=0, maxPitch≤${MAX_LINE_PITCH_EM}em, openingFont≥${MIN_OPENING_FONT_RATIO * 100}% avg`,
+  );
+
+  const browser = await chromium.launch({ headless: true });
+  const context = await browser.newContext({
+    viewport: VIEWPORT,
+    locale: "ar-SA",
+    isMobile: true,
+    hasTouch: true,
+  });
+  const page = await context.newPage();
+
+  const results = [];
+  try {
+    for (const n of PAGES) {
+      if (Date.now() - started > MAX_MS) {
+        throw new Error(`تجاوز مهلة البوابة ${MAX_MS}ms`);
+      }
+      process.stdout.write(`  قياس صفحة ${n}… `);
+      const r = await measurePage(page, n);
+      results.push(r);
+      if (r.error) {
+        console.log(`خطأ: ${r.error}`);
+      } else {
+        console.log(
+          `font=${r.fontSize.toFixed(1)} pitch=${r.maxPitchEm.toFixed(2)}em overflow=${r.overflowX.toFixed(1)} overlap=${r.overlapPairs} gaps≈${r.contentTopGap.toFixed(0)}/${r.contentBottomGap.toFixed(0)}`,
+        );
+      }
+    }
+  } finally {
+    await browser.close();
+  }
+
+  const { failures, avgNormalFont } = evaluate(results);
+  const report = {
+    base: BASE,
+    generatedAt: new Date().toISOString(),
+    viewport: VIEWPORT,
+    rules: {
+      maxOverflowXPx: 2,
+      maxOverlapPairs: 0,
+      maxLinePitchEm: MAX_LINE_PITCH_EM,
+      minOpeningFontRatio: MIN_OPENING_FONT_RATIO,
+      fillRatioGate: "disabled",
+    },
+    avgNormalFont,
+    results,
+    failures,
+    ok: failures.length === 0,
+  };
+
+  const reportPath = join(OUT_DIR, "report.json");
+  writeFileSync(reportPath, JSON.stringify(report, null, 2), "utf8");
+  console.log(`[mushaf-visual-gate] report → ${reportPath}`);
+  console.log(`[mushaf-visual-gate] avgNormalFont=${avgNormalFont.toFixed(2)}px`);
+
+  if (failures.length) {
+    console.error("[mushaf-visual-gate] FAIL");
+    for (const f of failures) {
+      console.error(`  صفحة ${f.page}: ${f.reason}`);
+    }
+    process.exit(1);
+  }
+
+  console.log("[mushaf-visual-gate] OK");
+}
+
+main().catch((err) => {
+  console.error("[mushaf-visual-gate] ERROR:", err?.message || err);
   process.exit(1);
 });

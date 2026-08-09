@@ -23,7 +23,7 @@ assert.match(quranCss, /\.mpv-body--ayah\s*\{[\s\S]*?box-sizing:\s*border-box/);
 assert.match(mushafV2, /\.mf2-page\s*\{[\s\S]*?box-sizing:\s*border-box/);
 assert.match(readerCss, /\.mushaf-v2__page\s*\{[\s\S]*?max\(1rem/);
 
-// 2) بلا space-between — نص متصل + word/letter-spacing طبيعي؛ خانات flex متساوية
+// 2) بلا space-between — نص متصل؛ أسطر بارتفاع طبيعي + تمركز رأسي للكتلة
 assert.match(mushafV2, /\.mf2-line\s*\{[\s\S]*?display:\s*flex/);
 assert.match(mushafV2, /\.mf2-line\s*\{[\s\S]*?word-spacing:\s*normal/);
 assert.match(mushafV2, /\.mf2-line\s*\{[\s\S]*?letter-spacing:\s*0/);
@@ -32,8 +32,9 @@ assert.equal(
   false,
   "أُلغي space-between من .mf2-line",
 );
-assert.match(mushafV2, /\.mf2-line\s*\{[\s\S]*?flex:\s*1\s+1\s+0/, "أسطر الآيات تتقاسم المتبقي");
+assert.match(mushafV2, /\.mf2-line\s*\{[\s\S]*?flex:\s*0\s+0\s+auto/, "أسطر بارتفاع طبيعي بلا تمديد فراغات");
 assert.match(mushafV2, /\.mf2-line\s*\{[\s\S]*?justify-content:\s*flex-start/, "بلا space-between أفقيًا");
+assert.match(mushafV2, /\.mf2-lines\s*\{[\s\S]*?justify-content:\s*center/, "تمركز رأسي — الفراغ فوق/تحت الكتلة");
 assert.match(mushafV2, /\.mf2-lines\s*\{[\s\S]*?flex:\s*1\s+1\s+auto/, "حاوية الأسطر تملأ الارتفاع");
 assert.match(mushafV2, /\.mf2-surah-header\s*\{[\s\S]*?flex:\s*0\s+0\s+auto/, "رأس السورة بارتفاع طبيعي");
 assert.match(mushafV2, /\.mf2-bismillah\s*\{[\s\S]*?font-size:\s*1em/, "البسملة ترث حجم الصفحة (sizingLines)");
@@ -43,8 +44,18 @@ assert.equal(
   "البسملة بلا overflow:hidden يقصّ النص",
 );
 assert.match(mushafV2, /\.mf2-lines--opening-centered/, "حالة خاصة للصفحتين 1–2");
+assert.match(
+  mushafV2,
+  /\.mf2-lines--opening-centered\s+\.mf2-line\s*\{[\s\S]*?flex:\s*0\s+0\s+auto/,
+  "الصفحتان 1–2 بلا تمديد بين الأسطر",
+);
 assert.match(mushafV2, /\.mf2-surah-header__cartouche/, "خرطوش عنوان السورة");
-assert.match(pageComp, /sizingEls|sizing-line|ayahLineCount/, "تحجيم من sizingLines + آيات تتقاسم المتبقي");
+assert.match(pageComp, /sizingEls|sizing-line|ayahLineCount/, "تحجيم من أعرض سطر + عدد الأسطر الفعلي");
+assert.equal(
+  /MIN_FILL|fillRatio\s*[>=]|نسبة الامتلاء/.test(pageComp),
+  false,
+  "بلا بوابة/منطق نسبة امتلاء يعتمد تمديد الفراغات",
+);
 
 // 3) حجم موحّد من أعرض sizingLine — لا fit سطر-بسطر ولا measurementExclusions
 assert.match(pageComp, /LINE_HEIGHT_EM\s*=\s*1\.1/);

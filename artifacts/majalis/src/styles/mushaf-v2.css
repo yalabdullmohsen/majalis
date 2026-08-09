@@ -59,8 +59,8 @@ html[data-theme="dark"] .mf2-frame {
   width: 100%;
   display: flex;
   flex-direction: column;
-  /* 15 خانة متساوية تملأ الارتفاع المتاح بين الرأس والذيل */
-  justify-content: flex-start;
+  /* تمركز رأسي للكتلة — الفراغ فوق/تحت فقط، لا بين الأسطر */
+  justify-content: center;
   gap: 0;
   margin: 0;
   padding: 0;
@@ -69,21 +69,21 @@ html[data-theme="dark"] .mf2-frame {
 }
 
 .mf2-line {
-  /* خانة سطر مطبوعة: حصة متساوية من ارتفاع الصفحة (15 سطرًا) */
-  flex: 1 1 0;
-  /* نص متصل داخل الخانة — بلا space-between؛ الخط يملأ العرض */
+  /* ارتفاع طبيعي من line-height — ممنوع تمديد الفراغات لملء الصفحة */
+  flex: 0 0 auto;
   width: 100%;
   max-width: 100%;
   box-sizing: border-box;
   min-height: 0;
   min-width: 0;
+  height: auto;
   display: flex;
   align-items: center;
   justify-content: flex-start;
   direction: rtl;
   text-align: start;
   unicode-bidi: isolate;
-  /* ارتفاع الحروف ضمن 1.0–1.15em — لا تمديد كلمات */
+  /* ارتفاع الحروف ضمن 1.0–1.15em — موحّد مع كل الصفحات */
   line-height: var(--mf2-lh, 1.1);
   word-spacing: normal;
   letter-spacing: 0;
@@ -297,13 +297,13 @@ html[data-theme="dark"] .mf2-surah-header__frame,
   color: #E8C97A;
 }
 
-/* الصفحتان 1–2: رأس طبيعي + آيات تتقاسم المتبقي (≥80% امتلاء) */
+/* الصفحتان 1–2: تباعد أسطر ثابت + تمركز رأسي للكتلة (بلا تمديد بين الأسطر) */
 .mf2-lines--opening-centered {
-  justify-content: flex-start;
+  justify-content: center;
   gap: 0;
 }
 .mf2-lines--opening-centered .mf2-line {
-  flex: 1 1 0;
+  flex: 0 0 auto;
   height: auto;
   max-height: none;
 }

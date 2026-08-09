@@ -2,7 +2,7 @@ import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from "rea
 import { createPortal } from "react-dom";
 import { useParams, useLocation } from "wouter";
 import {
-  Menu, Settings, X, ChevronRight, ChevronLeft, RotateCcw, ArrowRight, Bookmark, Mic, LayoutGrid,
+  Menu, Settings, X, ChevronRight, ChevronLeft, RotateCcw, ArrowRight, Bookmark, Mic, LayoutGrid, MoreHorizontal,
 } from "lucide-react";
 import { applyPageSeo } from "@/lib/seo";
 import { toArabicDigits } from "@/lib/utils";
@@ -159,6 +159,10 @@ export default function MushafPageView() {
   /* تجربة قراءة غامرة بنمط "آية": افتراضيًا الأدوات مخفية (رأس/شارة فقط)؛
      نقرة على جسم الصفحة تُظهر أدوات الرجوع/الفهرس/الإعدادات. */
   const [textChromeVisible, setTextChromeVisible] = useState(false);
+  const [toolbarMoreOpen, setToolbarMoreOpen] = useState(false);
+  useEffect(() => {
+    if (!textChromeVisible) setToolbarMoreOpen(false);
+  }, [textChromeVisible]);
   const [bookmarkStatus, setBookmarkStatus] = useState<string | null>(null);
   const [pageBookmarked, setPageBookmarked] = useState(() => isPageBookmarked(page));
   const touchStartX = useRef<number | null>(null);
@@ -504,71 +508,102 @@ export default function MushafPageView() {
             <span className="mpv-ayah-header__surah">سورة {primarySurahMeta.name}</span>
           </header>
 
-          {/* أدوات تظهر/تُخفى بلمسة واحدة على الصفحة — الصفحة دائمًا بكامل الشاشة */}
-          <div className={`mpv-toolbar mpv-toolbar--ayah ${textChromeVisible ? "" : "mpv-toolbar--hidden"}`}>
+          {/* أربعة أزرار ظاهرة + ⋯ — عائم تحت رأس الجزء/الحزب بلا تراكب */}
+          <div
+            className={`mpv-toolbar mpv-toolbar--ayah ${textChromeVisible ? "" : "mpv-toolbar--hidden"}`}
+            role="toolbar"
+            aria-label="أدوات المصحف"
+          >
             <button type="button" className="mpv-toolbar__btn" onClick={goBack} aria-label="رجوع">
               <ArrowRight size={16} aria-hidden="true" />
             </button>
             <button
               type="button"
-              className="mpv-toolbar__btn mpv-toolbar__btn--index"
-              onClick={() => setSidebarOpen(true)}
+              className="mpv-toolbar__btn"
+              onClick={() => { setToolbarMoreOpen(false); setSidebarOpen(true); }}
               aria-label="فهرس السور"
             >
               <Menu size={16} aria-hidden="true" />
-              فهرس
+              <span className="mpv-toolbar__label">فهرس</span>
             </button>
             <button
               type="button"
               className="mpv-toolbar__btn"
-              onClick={() => navigate("/quran-hub")}
-              aria-label="مركز القرآن"
-              title="مركز القرآن"
-            >
-              <LayoutGrid size={16} aria-hidden="true" />
-              أقسام
-            </button>
-            <button
-              type="button"
-              className="mpv-toolbar__btn"
-              onClick={() => navigate(`/quran/recitation-test-ai?surah=${primarySurahMeta.number}`)}
+              onClick={() => {
+                setToolbarMoreOpen(false);
+                navigate(`/quran/recitation-test-ai?surah=${primarySurahMeta.number}`);
+              }}
               aria-label="التسميع"
-              title="التسميع"
             >
               <Mic size={16} aria-hidden="true" />
-              تسميع
+              <span className="mpv-toolbar__label">تسميع</span>
             </button>
-            <span className="mpv-toolbar__spacer" aria-hidden="true" />
             <button
               type="button"
-              className={`mpv-toolbar__btn${pageBookmarked ? " is-on" : ""}`}
-              onClick={() => void saveCurrentPageBookmark()}
-              aria-label={pageBookmarked ? "الصفحة محفوظة كفاصل" : "حفظ فاصل لهذه الصفحة"}
-              title={pageBookmarked ? "محفوظة" : "فاصل"}
+              className="mpv-toolbar__btn"
+              onClick={() => { setToolbarMoreOpen(false); setSettingsOpen(true); }}
+              aria-label="إعدادات القراءة"
             >
-              <Bookmark size={16} aria-hidden="true" fill={pageBookmarked ? "currentColor" : "none"} />
-            </button>
-            <button type="button" className="mpv-toolbar__btn" onClick={() => setSettingsOpen(true)} aria-label="إعدادات القراءة">
               <Settings size={16} aria-hidden="true" />
+              <span className="mpv-toolbar__label">إعدادات</span>
             </button>
-            <button
-              type="button"
-              className="mpv-toolbar__btn"
-              onClick={prevPage}
-              disabled={page <= 1}
-              aria-label="الصفحة السابقة"
-            >
-              <ChevronRight size={16} aria-hidden="true" />
-            </button>
-            <button
-              type="button"
-              className="mpv-toolbar__btn"
-              onClick={nextPage}
-              disabled={page >= TOTAL_PAGES}
-              aria-label="الصفحة التالية"
-            >
-              <ChevronLeft size={16} aria-hidden="true" />
-            </button>
+            <div className="mpv-toolbar__more">
+              <button
+                type="button"
+                className={`mpv-toolbar__btn${toolbarMoreOpen ? " is-on" : ""}`}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setToolbarMoreOpen((v) => !v);
+                }}
+                aria-label="المزيد من الأدوات"
+                aria-expanded={toolbarMoreOpen}
+                aria-haspopup="menu"
+              >
+                <MoreHorizontal size={16} aria-hidden="true" />
+              </button>
+              {toolbarMoreOpen ? (
+                <div className="mpv-toolbar__menu" role="menu" aria-label="أدوات إضافية">
+                  <button
+                    type="button"
+                    role="menuitem"
+                    className="mpv-toolbar__menu-item"
+                    onClick={() => { setToolbarMoreOpen(false); navigate("/quran-hub"); }}
+                  >
+                    <LayoutGrid size={16} aria-hidden="true" />
+                    <span>أقسام</span>
+                  </button>
+                  <button
+                    type="button"
+                    role="menuitem"
+                    className="mpv-toolbar__menu-item"
+                    onClick={() => { setToolbarMoreOpen(false); void saveCurrentPageBookmark(); }}
+                  >
+                    <Bookmark size={16} aria-hidden="true" fill={pageBookmarked ? "currentColor" : "none"} />
+                    <span>{pageBookmarked ? "فاصل محفوظ" : "حفظ فاصل"}</span>
+                  </button>
+                  <button
+                    type="button"
+                    role="menuitem"
+                    className="mpv-toolbar__menu-item"
+                    onClick={() => { setToolbarMoreOpen(false); prevPage(); }}
+                    disabled={page <= 1}
+                  >
+                    <ChevronRight size={16} aria-hidden="true" />
+                    <span>السابقة</span>
+                  </button>
+                  <button
+                    type="button"
+                    role="menuitem"
+                    className="mpv-toolbar__menu-item"
+                    onClick={() => { setToolbarMoreOpen(false); nextPage(); }}
+                    disabled={page >= TOTAL_PAGES}
+                  >
+                    <ChevronLeft size={16} aria-hidden="true" />
+                    <span>التالية</span>
+                  </button>
+                </div>
+              ) : null}
+            </div>
           </div>
           {bookmarkStatus ? (
             <p className="mpv-bookmark-status" role="status" aria-live="polite">
