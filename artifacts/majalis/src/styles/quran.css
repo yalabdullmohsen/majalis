@@ -1585,6 +1585,7 @@
   color: var(--mf-ink, #1A1610);
   padding-top:    0.35rem;
   padding-bottom: 0.35rem;
+/* overflow:auto أدناه للنمط القديم — وضع الآية يتجاوزه بـ .qs-mushaf-body--ayah */
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -2501,6 +2502,15 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
   box-sizing: border-box;
   width: 100%;
   max-width: 100%;
+  /* لا قصّ رأسي لحبر التشكيل — التمرير الجانبي يُمنع من الغلاف الغامر */
+  overflow: visible;
+}
+/* يتفوّق على .qs-mushaf-frame .qs-mushaf-body { overflow:auto } */
+.quran-shell--ayah .qs-mushaf-frame .qs-mushaf-body,
+.qs-mushaf-frame--ayah .qs-mushaf-body,
+.qs-mushaf-frame--ayah-chrome .qs-mushaf-body {
+  overflow: visible;
+  overscroll-behavior: auto;
 }
 .quran-shell--ayah.quran-shell--night .qs-mushaf-body--ayah,
 html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-shell--high-contrast) .qs-mushaf-body--ayah {
@@ -2512,6 +2522,7 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
   flex-direction: column;
   justify-content: flex-start;
   align-items: stretch;
+  overflow: visible;
 }
 .quran-shell--ayah .qs-mushaf-body .qs-mushaf-body-inner {
   width: 100%;
@@ -2526,6 +2537,7 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
   min-height: 0;
   flex: 1 1 auto;
   position: relative;
+  overflow: visible;
 }
 /* mfl-page يملأ الخانة؛ mfl-visual مطلقة (inset:0) تثبّت الكتلة من الأعلى */
 .quran-shell--ayah .mfl-page {
@@ -2557,6 +2569,7 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
   margin: 0;
   padding: 0;
   pointer-events: auto;
+  overflow: visible;
 }
 
 /* رأس سورة داخل الصفحة — خرطوش ذهبي موحّد مع شارة رقم الصفحة */

@@ -62,13 +62,16 @@ html[data-theme="dark"] .mf2-frame {
   margin: 0;
   padding: 0;
   transition: opacity .2s ease;
-  --mf2-lh: 1.05;
-  --mf2-slot-h-pct: 6.4286;
+  --mf2-lh: 1.35;
+  --mf2-slot-h-pct: 7.2;
   box-sizing: border-box;
+  /* ممنوع القص الرأسي — حبر QPC يمتد فوق/تحت صندوق الـem */
+  overflow: visible;
 }
 .mf2-grid-slot {
   pointer-events: auto;
   overflow: visible;
+  contain: none;
 }
 .mf2-grid-slot--line .mf2-line {
   width: 100%;
@@ -84,7 +87,7 @@ html[data-theme="dark"] .mf2-frame {
   width: 100%;
   height: 100%;
 }
-/* الصفحتان الافتتاحيتان: أسطر بعرضها الطبيعي مركزية */
+/* الصفحتان الافتتاحيتان: أسطر بعرضها الطبيعي مركزية + إطار زخرفي */
 .mf2-lines--opening .mf2-line {
   text-align: center;
   transform: none;
@@ -92,9 +95,26 @@ html[data-theme="dark"] .mf2-frame {
 .mf2-lines--opening.mf2-lines--qpc-contiguous .mf2-line {
   transform: none;
 }
+.mf2-opening-frame {
+  position: absolute;
+  /* يشغل ≈٨٪→٩٢٪ من ارتفاع الكتلة (≥٨٠٪) */
+  top: 8%;
+  bottom: 8%;
+  left: 12px;
+  right: 12px;
+  z-index: 0;
+  pointer-events: none;
+  box-sizing: border-box;
+}
+.mf2-opening-frame__svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
 
 .mf2-line {
-  /* ارتفاع طبيعي من line-height — ممنوع تمديد الفراغات لملء الصفحة */
+  /* بلا حدّ رأسي يقصّ الحبر — التموضع على خط الأساس مطلقًا */
   flex: 0 0 auto;
   width: 100%;
   max-width: 100%;
@@ -105,8 +125,9 @@ html[data-theme="dark"] .mf2-frame {
   display: block;
   direction: rtl;
   text-align: start;
-  /* ارتفاع الحروف ضمن 1.0–1.15em — موحّد مع كل الصفحات */
-  line-height: var(--mf2-lh, 1.1);
+  /* normal داخليًا + --mf2-lh كحد أدنى بصري للهبوط */
+  line-height: normal;
+  padding-block: 0.12em;
   word-spacing: normal;
   letter-spacing: 0;
   color: var(--mf2-ink, var(--color-mushaf-ink, #1A1510));
@@ -116,8 +137,10 @@ html[data-theme="dark"] .mf2-frame {
   user-select: none;
   -webkit-user-select: none;
   -webkit-tap-highlight-color: transparent;
-  overflow-x: hidden;
-  overflow-y: visible;
+  /* overflow-x المخفي يحوّل overflow-y إلى auto قسرًا (مواصفة CSS) فيقصّ الحبر */
+  overflow: visible;
+  clip-path: none;
+  contain: none;
 }
 /* سطر آيات QPC: نص متصل واحد — بلا عزل bidi بين المحارف */
 .mf2-lines--qpc-contiguous .mf2-line {

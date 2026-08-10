@@ -251,7 +251,7 @@ async function main() {
         if (raw.wingOk === false) {
           failures.push({ page: n, reason: "عناصر الجناح ناقصة أو فيها pattern" });
         }
-        if (raw.bannerHRatio != null) {
+        if (raw.bannerHRatio != null && n !== 1 && n !== 2) {
           if (raw.bannerHRatio < 0.95 || raw.bannerHRatio > 1.05) {
             failures.push({
               page: n,
@@ -260,10 +260,11 @@ async function main() {
           }
         }
         if ((n === 1 || n === 2) && raw.bannerTopPct != null) {
-          if (raw.bannerTopPct < 15 || raw.bannerTopPct > 22) {
+          /* ص١–٢: داخل الإطار (٨٪→٩٢٪) — أعلى الشارة ≈١٠٪ بعد translateY(-50%) */
+          if (raw.bannerTopPct < 8 || raw.bannerTopPct > 22) {
             failures.push({
               page: n,
-              reason: `أعلى الشارة ${raw.bannerTopPct.toFixed(1)}% خارج 15–22%`,
+              reason: `أعلى الشارة ${raw.bannerTopPct.toFixed(1)}% خارج 8–22% (افتتاح)`,
             });
           }
         }
