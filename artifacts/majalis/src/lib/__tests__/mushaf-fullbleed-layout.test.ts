@@ -31,8 +31,8 @@ assert.match(quranCss, /\.quran-shell--chrome-hidden\s+\.mpv-body/);
 assert.match(quranCss, /\.mpv-toolbar\.mpv-toolbar--ayah\s*\{[\s\S]*?position:\s*absolute/);
 assert.match(
   quranCss,
-  /\.mpv-toolbar\.mpv-toolbar--ayah\s*\{[\s\S]*?bottom:\s*calc\(\s*env\(safe-area-inset-bottom/,
-  "شريط آية أسفل الشاشة فوق safe-area",
+  /\.mpv-toolbar\.mpv-toolbar--ayah\s*\{[\s\S]*?bottom:\s*calc\(\s*var\(--inset-bottom/,
+  "شريط آية أسفل الشاشة فوق inset-bottom",
 );
 assert.equal(
   /\.mpv-toolbar\.mpv-toolbar--ayah\s*\{[^}]*top:\s*calc\(\s*var\(--inset-top\)/.test(quranCss),

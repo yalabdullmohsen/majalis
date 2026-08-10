@@ -2291,8 +2291,8 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
 .mpv-toolbar.mpv-toolbar--ayah {
   position: absolute;
   top: auto;
-  /* فوق شارة رقم الصفحة في الذيل + safe-area */
-  bottom: calc(env(safe-area-inset-bottom, 0px) + 40px);
+  /* فوق شارة رقم الصفحة في الذيل + inset السفلي (لا env مباشرة — بوابة iOS edge) */
+  bottom: calc(var(--inset-bottom, 0px) + 40px);
   inset-inline: 0.35rem;
   left: auto;
   right: auto;

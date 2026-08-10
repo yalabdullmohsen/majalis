@@ -54,8 +54,8 @@ function rectsOverlap(a, b) {
 const css = readFileSync(join(ROOT, "src/styles/quran.css"), "utf8");
 const ayahTb = css.match(/\.mpv-toolbar\.mpv-toolbar--ayah\s*\{[^}]*\}/);
 const failures = [];
-if (!ayahTb || !/bottom:\s*calc\(\s*env\(safe-area-inset-bottom/.test(ayahTb[0])) {
-  failures.push({ page: 0, reason: "CSS: شريط آية بلا bottom فوق safe-area" });
+if (!ayahTb || !/bottom:\s*calc\(\s*var\(--inset-bottom/.test(ayahTb[0])) {
+  failures.push({ page: 0, reason: "CSS: شريط آية بلا bottom فوق inset-bottom" });
 }
 if (ayahTb && /top:\s*calc\(\s*var\(--inset-top\)/.test(ayahTb[0])) {
   failures.push({ page: 0, reason: "CSS: شريط آية ما زال top تحت الرأس" });
