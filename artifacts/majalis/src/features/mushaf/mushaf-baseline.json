@@ -1,20 +1,20 @@
 {
-  "referencePage": 7,
+  "referencePage": 283,
   "viewport": {
     "width": 390,
     "height": 844
   },
   "measuredFrom": "https://majlisilm.com",
-  "measuredAt": "2026-08-10T08:30:00.000Z",
+  "measuredAt": "2026-08-10T12:20:00.000Z",
   "fontSizePx": 24.382,
   "lineGapPx": 14.078,
   "lineHeightEm": 1.35,
   "topOffsetPct": 0,
   "bottomOffsetPct": 0,
-  "sideMarginPx": 0,
-  "fillPct": 0.933,
+  "sideMarginPx": 2,
+  "fillPct": 0.943,
   "slotHeightPx": 58.068,
   "lineCount": 15,
   "surahBannerHeightPx": 34.56,
-  "notes": "مرجع الامتلاء = صفحة ٧ الحيّة. fontSize/lineGap من قياس الخط؛ fill = (lastInkBot−firstInkTop)/100 من حبر الأسطر."
+  "notes": "مرجع الامتلاء = صفحة ٢٨٣ الحيّة (لا ٧). fontSize من قياس الخط؛ fillBody ≈ (lastInk−firstInk)/body. قاعدة الرأس تبقى surahsStartingOnPage — لا تُستورد صيغة رأس ٢٨٣ القديمة."
 }

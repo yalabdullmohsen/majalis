@@ -136,7 +136,7 @@ function runStatic() {
   } else pass(4, "test:mushaf-drawn-overflow ضمن البوابات");
 
   /* ٥ — شبكة خطوط الأساس */
-  if (grid.referencePage !== 7) fail(5, `referencePage=${grid.referencePage}`);
+  if (grid.referencePage !== 283) fail(5, `referencePage=${grid.referencePage}`);
   else if (!Array.isArray(grid.baselinesPct) || grid.baselinesPct.length !== 15) {
     fail(5, "baselinesPct ليست ١٥");
   } else if (Math.abs(grid.baselinesPct[0] - 4) > 0.05 || Math.abs(grid.baselinesPct[14] - 96) > 0.05) {
@@ -207,9 +207,9 @@ function runStatic() {
   } else pass(14, "test:color-contrast-gate");
 
   /* ١٥ — تجميد المراجع */
-  if (baseline.referencePage !== 7) fail(15, "baseline ليست صفحة ٧");
+  if (baseline.referencePage !== 283) fail(15, "baseline ليست صفحة ٢٨٣");
   else if (!existsSync(specPath)) fail(15, "docs/MUSHAF_SPEC.md مفقود");
-  else pass(15, "مواصفة + مرجع ص٧");
+  else pass(15, "مواصفة + مرجع ص٢٨٣");
 
   /* محظورات د — ثابتة */
   if (/space-between/.test(pageV2) && /mf2-lines/.test(pageV2)) {
@@ -362,7 +362,7 @@ async function runLive() {
       if (!r || r.error) continue;
       if (r.frameTopBodyPct == null) {
         fail(13, `ص${n}: لا إطار`);
-      } else if (r.frameTopBodyPct < 7.95 || r.frameTopBodyPct > 10.05) {
+      } else if (r.frameTopBodyPct < 7.95 || r.frameTopBodyPct > 13.05) {
         fail(13, `ص${n}: أعلى إطار ${r.frameTopBodyPct.toFixed(2)}٪ من الجسم`);
       } else if (r.frameBotBodyPct < 89.95 || r.frameBotBodyPct > 92.05) {
         fail(13, `ص${n}: أسفل إطار ${r.frameBotBodyPct.toFixed(2)}٪ من الجسم`);

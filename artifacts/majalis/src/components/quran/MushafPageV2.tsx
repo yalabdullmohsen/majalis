@@ -339,21 +339,30 @@ export function MushafPageV2({
       container.style.justifyContent = "";
       container.style.transform = "";
 
-      /* ارتفاع الكتلة = فجوة الرأس→الذيل حرفيًا — نفس شبكة ص٣ لكل الصفحات */
+      /* ارتفاع الكتلة = فجوة الرأس→الذيل − حجز شريط أدوات سفلي دائم (لا يزيح عند الإظهار) */
       const headerEl = document.querySelector(".mpv-ayah-header");
       const footerEl = document.querySelector(".mpv-ayah-footer");
       const hr = headerEl?.getBoundingClientRect();
       const fr = footerEl?.getBoundingClientRect();
+      /** حجز أسفل لشريط الأدوات — صفحات عادية فقط (ص١–٢ الإطار يحتاج امتداد الجسم) */
+      const TOOLBAR_RESERVE_PX = isOpening ? 0 : 46;
       let blockH = container.parentElement instanceof HTMLElement
         ? container.parentElement.clientHeight
         : container.clientHeight;
       if (hr && fr && fr.top > hr.bottom) {
-        blockH = fr.top - hr.bottom;
+        blockH = Math.max(120, fr.top - hr.bottom - TOOLBAR_RESERVE_PX);
+      } else if (TOOLBAR_RESERVE_PX > 0 && blockH > TOOLBAR_RESERVE_PX + 120) {
+        blockH -= TOOLBAR_RESERVE_PX;
       }
       if (blockH > 0) {
         container.style.height = `${blockH.toFixed(2)}px`;
+        container.style.maxHeight = `${blockH.toFixed(2)}px`;
+        container.style.flexGrow = "0";
+        container.style.flexShrink = "0";
+        container.style.flexBasis = "auto";
       } else {
         container.style.height = "100%";
+        container.style.maxHeight = "";
       }
 
       /* ص١–٢: عرض الملاءمة = داخل الإطار − ٢٠px من كل جهة */
@@ -612,6 +621,10 @@ export function MushafPageV2({
 
     const cleanupInline = () => {
       container.style.height = "";
+      container.style.maxHeight = "";
+      container.style.flexGrow = "";
+      container.style.flexShrink = "";
+      container.style.flexBasis = "";
       container.style.marginTop = "";
       container.style.marginBottom = "";
       container.style.paddingTop = "";

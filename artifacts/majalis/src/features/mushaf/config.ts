@@ -3,7 +3,7 @@
  * تبديل المصدر = تغيير هذا الملف فقط؛ لا تُخترع بيانات بلا مصدر موثَّق.
  * العرض البصري ثابت على QPC V2 — لا مسار صور مدينة / مضلعات صور.
  *
- * ثوابت التخطيط المرجعية = قياس صفحة ٧ — انظر mushaf-baseline.json / mushaf-grid.json.
+ * ثوابت التخطيط المرجعية = قياس صفحة ٢٨٣ — انظر mushaf-baseline.json / mushaf-grid.json.
  */
 
 import baselineJson from "./mushaf-baseline.json";
@@ -21,7 +21,7 @@ export type MushafLayoutBaseline = {
   surahBannerHeightPx: number;
 };
 
-/** مرجع مطلق لكل صفحة عادية — مُستخرَج من ص٧ على 390×844 */
+/** مرجع مطلق لكل صفحة عادية — مُستخرَج من ص٢٨٣ على 390×844 */
 export const MUSHAF_LAYOUT_BASELINE: MushafLayoutBaseline = {
   referencePage: baselineJson.referencePage,
   fontSizePx: baselineJson.fontSizePx,

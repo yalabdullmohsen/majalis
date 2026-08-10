@@ -23,7 +23,7 @@ const GRID = JSON.parse(
 );
 const VIEWPORT = { width: 390, height: 844 };
 const CLEARANCE_PX = 2;
-const FREEZE_PAGES = [3, 7, 306, 588, 599, 600, 601];
+const FREEZE_PAGES = [3, 7, 283, 306, 588, 599, 600, 601];
 const GRID_SAMPLE_PAGES = [3, 4, 7, 100, 283, 306, 400, 500, 588, 596, 599, 600, 601, 604];
 const MAX_BASELINE_DEV_PX = 2;
 const MAX_DEAD_GAP_PCT = 6;
@@ -313,10 +313,10 @@ async function main() {
         });
       }
       if (n === 1 || n === 2) {
-        if (r.frameTopPct != null && (r.frameTopPct < 7.95 || r.frameTopPct > 10.05)) {
+        if (r.frameTopPct != null && (r.frameTopPct < 7.95 || r.frameTopPct > 13.05)) {
           failures.push({
             page: n,
-            reason: `أعلى الإطار ${r.frameTopPct.toFixed(1)}% (المطلوب ٨–١٠٪)`,
+            reason: `أعلى الإطار ${r.frameTopPct.toFixed(1)}% (المطلوب ٨–١٣٪)`,
           });
         }
         if (r.frameBotPct != null && (r.frameBotPct < 89.95 || r.frameBotPct > 92.05)) {

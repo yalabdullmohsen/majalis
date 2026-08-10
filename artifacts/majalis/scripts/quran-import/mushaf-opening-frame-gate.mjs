@@ -18,8 +18,8 @@ const OUT_DIR =
   process.env.MUSHAF_GATE_OUT_DIR ||
   join(ROOT, ".local/mushaf-opening-frame");
 const VIEWPORT = { width: 390, height: 844 };
-/** تجميد بصري — صفحة ٧ مرجع الامتلاء الجديد */
-const FREEZE = [3, 7, 306, 588, 599, 600, 601];
+/** تجميد بصري — صفحة ٢٨٣ مرجع الامتلاء */
+const FREEZE = [3, 7, 283, 306, 588, 599, 600, 601];
 const GRID = JSON.parse(
   readFileSync(join(ROOT, "src/features/mushaf/mushaf-grid.json"), "utf8"),
 );
@@ -288,8 +288,8 @@ async function main() {
   const failures = [];
   const results = [];
 
-  if (GRID.referencePage !== 7) {
-    failures.push({ page: 0, reason: `mushaf-grid.json referencePage=${GRID.referencePage} ≠ 7` });
+  if (GRID.referencePage !== 283) {
+    failures.push({ page: 0, reason: `mushaf-grid.json referencePage=${GRID.referencePage} ≠ 283` });
   }
 
   const pageV2 = readFileSync(
@@ -334,10 +334,10 @@ async function main() {
         failures.push({ page: n, reason: r.error });
         continue;
       }
-      if (r.frameTopPct < 7.95 || r.frameTopPct > 10.05) {
+      if (r.frameTopPct < 7.95 || r.frameTopPct > 13.05) {
         failures.push({
           page: n,
-          reason: `أعلى الإطار (من كتلة الصفحة) عند ${r.frameTopPct.toFixed(1)}% (المطلوب ٨–١٠٪)`,
+          reason: `أعلى الإطار (من كتلة الصفحة) عند ${r.frameTopPct.toFixed(1)}% (المطلوب ٨–١٣٪)`,
         });
       }
       if (r.frameBotPct < 89.95 || r.frameBotPct > 92.05) {

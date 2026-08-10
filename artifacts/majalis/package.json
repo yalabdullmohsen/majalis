@@ -186,7 +186,7 @@
     "test:mushaf-ayah-numerals": "node scripts/quran-import/mushaf-ayah-numerals-gate.mjs",
     "test:mushaf-ayah-spans": "node --import tsx src/lib/__tests__/mushaf-ayah-word-spans.test.ts",
     "test:ayah1-display": "node --import tsx src/lib/__tests__/quran-ayah1-display-bismillah.test.ts",
-    "test:mushaf-gates": "pnpm run test:ayah1-display && pnpm run test:mushaf-page-view && pnpm run test:mushaf-qpc-isolation && node --import tsx src/lib/__tests__/mushaf-fullbleed-layout.test.ts && node --import tsx src/lib/__tests__/mushaf-typography-layout.test.ts && node --import tsx src/lib/__tests__/mushaf-toolbar-layout.test.ts && node --import tsx src/lib/__tests__/mushaf-page-digits.test.ts && node --import tsx src/lib/__tests__/mushaf-page-boundaries.test.ts && node --import tsx src/lib/__tests__/mushaf-line-deviation-metric.test.ts && pnpm run test:mushaf-sizing-lines && pnpm run test:mushaf-line-layout && pnpm run test:mushaf-drawn-overflow && pnpm run test:mushaf-ayah-spans && pnpm run test:mushaf-ayah-numerals && node --import tsx src/lib/__tests__/mushaf-surah-banner-fit.test.ts && pnpm run verify:mushaf-v2 && node --import tsx src/lib/__tests__/mushaf-smart-exit.test.ts && node --import tsx src/lib/__tests__/ayah-action-sheet-v3.test.ts && pnpm run test:mushaf-render-visibility && pnpm run test:mushaf-spec-lockdown",
+    "test:mushaf-gates": "pnpm run test:ayah1-display && pnpm run test:mushaf-page-view && pnpm run test:mushaf-qpc-isolation && node --import tsx src/lib/__tests__/mushaf-fullbleed-layout.test.ts && node --import tsx src/lib/__tests__/mushaf-typography-layout.test.ts && node --import tsx src/lib/__tests__/mushaf-toolbar-layout.test.ts && node --import tsx src/lib/__tests__/mushaf-page-digits.test.ts && node --import tsx src/lib/__tests__/mushaf-page-boundaries.test.ts && node --import tsx src/lib/__tests__/mushaf-line-deviation-metric.test.ts && pnpm run test:mushaf-sizing-lines && pnpm run test:mushaf-line-layout && pnpm run test:mushaf-drawn-overflow && pnpm run test:mushaf-ayah-spans && pnpm run test:mushaf-ayah-numerals && node --import tsx src/lib/__tests__/mushaf-surah-banner-fit.test.ts && pnpm run verify:mushaf-v2 && node --import tsx src/lib/__tests__/mushaf-smart-exit.test.ts && node --import tsx src/lib/__tests__/ayah-action-sheet-v3.test.ts && pnpm run test:mushaf-render-visibility && pnpm run test:mushaf-spec-lockdown && pnpm run test:mushaf-toolbar-overlap",
     "test:governance": "node scripts/test-content-governance.mjs",
     "test:counts": "node scripts/test-content-counts.mjs",
     "test:library-integrity": "node scripts/test-library-integrity.mjs",
@@ -259,6 +259,7 @@
     "test:mushaf-ink-clip": "node scripts/quran-import/mushaf-ink-clip-gate.mjs",
     "test:mushaf-opening-frame": "node scripts/quran-import/mushaf-opening-frame-gate.mjs",
     "test:mushaf-spec-lockdown": "node scripts/quran-import/mushaf-spec-lockdown-gate.mjs",
+    "test:mushaf-toolbar-overlap": "node scripts/quran-import/mushaf-toolbar-overlap-gate.mjs",
     "measure:mushaf-311-baseline": "node scripts/quran-import/measure-mushaf-311-baseline.mjs"
   },
   "devDependencies": {
