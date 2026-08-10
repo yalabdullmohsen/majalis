@@ -240,12 +240,7 @@ export function GlobalSearchModal({ onClose }: Props) {
           signal: ctrl.signal,
         });
         if (ctrl.signal.aborted) return;
-        if (res.quickNavHref) {
-          addSearchHistory(q.trim());
-          onClose();
-          navigate(res.quickNavHref);
-          return;
-        }
+        // لا انتقال تلقائي عبر quickNav — اعرض النتائج ليختار المستخدم.
         await yieldToMain();
         if (ctrl.signal.aborted) return;
         setResults(res.results);
@@ -259,7 +254,7 @@ export function GlobalSearchModal({ onClose }: Props) {
         if (!ctrl.signal.aborted) setLoading(false);
       }
     },
-    [navigate, onClose],
+    [],
   );
 
   useEffect(() => {

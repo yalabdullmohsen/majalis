@@ -26,6 +26,7 @@ export type AppSearchResponse = {
   results: AppSearchResult[];
   groups: Record<string, AppSearchResult[]>;
   counts: Record<string, number>;
+  /** @deprecated لم يعد يُستخدم للانتقال التلقائي — الاختصار ضمن results */
   quickNavHref?: string;
   suggestion?: string | null;
   /** أقرب ٣ بدائل عند انعدام النتائج */
@@ -115,24 +116,18 @@ export async function runAppSearch(
     return { results: [], groups: {}, counts: {}, responseMs: 0 };
   }
 
+  // اختصار مصحف/حديث = نتيجة اختيارية في أعلى القائمة فقط.
+  // لا نُرجع quickNavHref ولا ننتقل تلقائيًا — المستخدم يختار من الخيارات.
   const quick = parseQuickNav(query);
-  if (quick) {
-    return {
-      results: [
-        {
-          id: `quick:${quick.href}`,
-          kind: quick.href.includes("hadith") ? "hadith" : "quran",
-          title: query,
-          href: quick.href,
-          summary: "انتقال سريع",
-        },
-      ],
-      groups: {},
-      counts: {},
-      quickNavHref: quick.href,
-      responseMs: performance.now() - t0,
-    };
-  }
+  const quickHit: AppSearchResult | null = quick
+    ? {
+        id: `quick:${quick.href}`,
+        kind: quick.href.includes("hadith") ? "hadith" : "surah",
+        title: quick.titleAr || query,
+        href: quick.href,
+        summary: "انتقال سريع — اضغط للفتح",
+      }
+    : null;
 
   const { docs } = await loadUnifiedSearchIndex();
   if (opts.signal?.aborted) throw new DOMException("Aborted", "AbortError");
@@ -147,6 +142,15 @@ export async function runAppSearch(
   if (opts.kind && opts.kind !== "all") {
     const want = KIND_ALIASES[opts.kind] ?? opts.kind;
     results = results.filter((r) => r.kind === want || r.kind === opts.kind);
+  }
+
+  if (quickHit) {
+    const seen = new Set(results.map((r) => r.href));
+    if (!seen.has(quickHit.href)) {
+      results = [quickHit, ...results];
+    } else {
+      results = [quickHit, ...results.filter((r) => r.href !== quickHit.href)];
+    }
   }
 
   const groups: Record<string, AppSearchResult[]> = {};
