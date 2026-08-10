@@ -193,6 +193,7 @@ function RecitationTestPageInner() {
    * الصفحة المختارة كنطاق) — يمنع تكرار التمرير التلقائي لنفس الصفحة،
    * ويُصفَّر عند كل بدء جلسة جديدة كي لا يُحمَل رقم صفحة من جلسة سابقة. */
   const lastScrolledPageRef = useRef<number | null>(null);
+  const lastScrolledWordKeyRef = useRef<string | null>(null);
   const unsubRef = useRef<(() => void) | null>(null);
   const sessionStartRef = useRef<number>(0);
   /** يُلغي جلسة اكتشاف "التسميع الحر" الجارية — يُضبَط داخل startSessionFreeform فقط. */
@@ -452,6 +453,7 @@ function RecitationTestPageInner() {
       setCorrectionCard(null);
       setTeacherHold(false);
       lastScrolledPageRef.current = null;
+      lastScrolledWordKeyRef.current = null;
       activeModeRef.current = mode;
       hintsUsedRef.current = 0;
       setHintLevel(0);
@@ -641,6 +643,7 @@ function RecitationTestPageInner() {
         setCorrectionCard(null);
         setTeacherHold(false);
         lastScrolledPageRef.current = null;
+        lastScrolledWordKeyRef.current = null;
         activeModeRef.current = "freeform";
         hintsUsedRef.current = 0;
         setHintLevel(0);
@@ -1062,6 +1065,23 @@ function RecitationTestPageInner() {
     const el = document.getElementById(`rai-page-${currentPage}`);
     el?.scrollIntoView({ behavior: "smooth", block: "center" });
   }, [currentPage, isMultiPageRange, phase, distinctPages]);
+
+  // تمرير حي على مستوى الكلمة أثناء التسميع — يبقي الموضع المتوقع في وسط الشاشة
+  // دون إجبار إن كانت الكلمة ظاهرة أصلًا (تجنّب اهتزاز الواجهة).
+  useEffect(() => {
+    if (phase !== "session") return;
+    const w = referenceWords[currentWordIndex];
+    if (!w) return;
+    const key = `${w.surah}:${w.ayah}:${w.wordIndex}`;
+    if (lastScrolledWordKeyRef.current === key) return;
+    lastScrolledWordKeyRef.current = key;
+    const el = document.getElementById(`rai-word-${w.surah}-${w.ayah}-${w.wordIndex}`);
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    const margin = 96;
+    const inView = rect.top >= margin && rect.bottom <= window.innerHeight - margin;
+    if (!inView) el.scrollIntoView({ behavior: "smooth", block: "center" });
+  }, [currentWordIndex, phase, referenceWords]);
 
   const correctCount = liveEvents.filter((e) => e.kind === "correct").length;
   const errorEvents = liveEvents.filter((e): e is Extract<AlignmentEvent, { kind: "error" }> => e.kind === "error");
@@ -1611,7 +1631,12 @@ function RecitationTestPageInner() {
                     {isMultiPageRange && pageStartIndices.has(i) && (
                       <span id={`rai-page-${w.page}`} className="rai-page-marker" aria-hidden="true" />
                     )}
-                    <span className={cls}>{showText ? w.raw : "ــــ"}</span>
+                    <span
+                      id={`rai-word-${w.surah}-${w.ayah}-${w.wordIndex}`}
+                      className={`${cls}${i === currentWordIndex ? " rai-plain-word--cursor" : ""}`}
+                    >
+                      {showText ? w.raw : "ــــ"}
+                    </span>
                     {i < referenceWords.length - 1 ? " " : ""}
                   </Fragment>
                 );

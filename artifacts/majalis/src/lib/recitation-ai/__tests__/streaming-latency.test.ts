@@ -9,12 +9,16 @@ import { fileURLToPath } from "node:url";
 import { EnergyVad } from "../vad";
 import { softEqualNormalized, levenshteinAtMost } from "../soft-match";
 import { dedupeOverlappingWords, SLICE_MS, WINDOW_SLICES } from "../providers/server-provider";
+import { getRecitationWsUrl, SLICE_MS as SharedSlice } from "../streaming-audio";
 import { alignFittingWindow } from "../word-alignment";
+import { normalizeQuranWord } from "../quran-normalize";
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../..");
 
-assert.ok(SLICE_MS <= 500 && SLICE_MS >= 200, `SLICE_MS في النطاق 200–500 (حصل ${SLICE_MS})`);
+assert.equal(SLICE_MS, SharedSlice);
+assert.ok(SLICE_MS <= 300 && SLICE_MS >= 200, `SLICE_MS في النطاق 200–300 (حصل ${SLICE_MS})`);
 assert.ok(WINDOW_SLICES >= 2 && WINDOW_SLICES <= 4, "نافذة شرائح معقولة");
+assert.equal(getRecitationWsUrl(), null, "بلا VITE_RECITATION_WS_URL في الاختبار");
 
 const vad = new EnergyVad({ speechThreshold: 0.02, startFrames: 2, endFrames: 3 });
 assert.equal(vad.tick(0).speaking, false);
@@ -34,6 +38,10 @@ assert.equal(softEqualNormalized("اب", "ام"), false); // قصيرة — بل
 assert.ok(levenshteinAtMost("الصراط", "الصراط", 1) === 0);
 assert.ok(softEqualNormalized("الصراط", "الصراظ") || levenshteinAtMost("الصراط", "الصراظ", 1) === 1);
 
+// تطبيع عربي حي: تشكيل + ألف/ياء
+assert.equal(normalizeQuranWord("الْحَمْدُ"), "الحمد");
+assert.equal(normalizeQuranWord("ٱلرَّحْمَٰنِ"), normalizeQuranWord("الرحمن"));
+
 const { fresh, nextNormsTail } = dedupeOverlappingWords(["الحمد", "لله"], ["الحمد", "لله", "رب"]);
 assert.deepEqual(fresh.map((w) => w), ["رب"]);
 assert.ok(nextNormsTail.includes("رب"));
@@ -46,6 +54,16 @@ assert.match(serverSrc, /EnergyVad/);
 assert.match(serverSrc, /MAX_IN_FLIGHT/);
 assert.match(serverSrc, /speechEnded/);
 assert.match(serverSrc, /onPipelineStatus/);
+assert.match(serverSrc, /streaming-audio/);
+
+const wsSrc = readFileSync(resolve(root, "lib/recitation-ai/providers/websocket-provider.ts"), "utf8");
+assert.match(wsSrc, /WebSocketQuranASRProvider/);
+assert.match(wsSrc, /EnergyVad/);
+assert.match(wsSrc, /SLICE_MS/);
+assert.match(wsSrc, /getRecitationWsUrl/);
+
+const regSrc = readFileSync(resolve(root, "lib/recitation-ai/provider-registry.ts"), "utf8");
+assert.match(regSrc, /WebSocketQuranASRProvider/);
 
 const webSrc = readFileSync(resolve(root, "lib/recitation-ai/providers/web-speech-provider.ts"), "utf8");
 assert.match(webSrc, /INTERIM_CONFIDENCE/);
@@ -54,5 +72,11 @@ assert.match(webSrc, /emittedInterimNorms/);
 const viewSrc = readFileSync(resolve(root, "pages/quran/ui/RecitationTestView.tsx"), "utf8");
 assert.match(viewSrc, /جاري المطابقة/);
 assert.match(viewSrc, /onPipelineStatus/);
+assert.match(viewSrc, /rai-word-/);
+assert.match(viewSrc, /MicPermissionHelp/);
+
+const mushafSrc = readFileSync(resolve(root, "components/quran/InteractiveMushafReveal.tsx"), "utf8");
+assert.match(mushafSrc, /imr-word--cursor/);
+assert.match(mushafSrc, /rai-word-/);
 
 console.log("streaming-latency.test.ts: ok");

@@ -81,6 +81,13 @@ export function InteractiveMushafReveal({ words, revealGranularity, justComplete
     return set;
   }, [words]);
 
+  /** أول كلمة لم تُحسَم بعد — مؤشر الموضع الحي للتمرير والتمييز */
+  const cursorKey = useMemo(() => {
+    const next = words.find((w) => w.state === "hidden");
+    if (!next) return null;
+    return `${next.word.surah}:${next.word.ayah}:${next.word.wordIndex}`;
+  }, [words]);
+
   return (
     <div className="imr-page" dir="rtl" role="group" aria-label="صفحة المصحف التفاعلية">
       {byAyah.map(([ayahNum, ayahWords]) => {
@@ -93,12 +100,14 @@ export function InteractiveMushafReveal({ words, revealGranularity, justComplete
           >
             {ayahWords.map((w, idx) => {
               const wordKey = `${w.word.surah}:${w.word.ayah}:${w.word.wordIndex}`;
+              const isCursor = cursorKey === wordKey;
               return (
               <Fragment key={wordKey}>
                 {pageStartKeys.has(wordKey) && (
                   <span id={`rai-page-${w.word.page}`} className="imr-page-marker" aria-hidden="true" />
                 )}
                 <span
+                  id={`rai-word-${w.word.surah}-${w.word.ayah}-${w.word.wordIndex}`}
                   className={[
                     "imr-word",
                     revealGranularity === "page"
@@ -109,6 +118,7 @@ export function InteractiveMushafReveal({ words, revealGranularity, justComplete
                     revealGranularity !== "page" && w.state === "error" ? "imr-word--pulse-error" : "",
                     revealGranularity !== "page" && w.state === "unclear" ? "imr-word--pulse-unclear" : "",
                     revealGranularity !== "page" && w.state === "needs_repeat" ? "imr-word--pulse-needs-repeat" : "",
+                    isCursor && revealGranularity === "word" ? "imr-word--cursor" : "",
                   ].join(" ").trim()}
                 >
                   {w.word.raw}
