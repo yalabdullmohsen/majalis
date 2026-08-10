@@ -32,9 +32,28 @@ export function usePublishedAdhkarItems() {
     queryKey: ["adhkar", "published", "no-daif"],
     queryFn: async () => {
       const cacheKey = "published:no-daif";
-      const remote = await fetchVerifiedAdhkarItems();
-      const local = getPublishedAdhkarItems();
-      const merged = mergeAdhkarSources(local, remote);
+      const { withOfflineFirst, getCachedAdhkarPack, cacheAdhkarPack } = await import(
+        "@/lib/offline-content-store"
+      );
+
+      const { data } = await withOfflineFirst({
+        readCache: async () => {
+          const pack = await getCachedAdhkarPack();
+          if (pack?.length) return mergeAdhkarSources(pack, []);
+          return null;
+        },
+        fetchOnline: async () => {
+          const remote = await fetchVerifiedAdhkarItems();
+          const local = getPublishedAdhkarItems();
+          return mergeAdhkarSources(local, remote);
+        },
+        writeCache: async (merged) => {
+          await cacheAdhkarPack(merged, `adhkar:${merged.length}`);
+        },
+      });
+
+      const merged =
+        data ?? mergeAdhkarSources(getPublishedAdhkarItems(), []);
       ADHKAR_LIST_CACHE.set(cacheKey, merged);
       return merged;
     },

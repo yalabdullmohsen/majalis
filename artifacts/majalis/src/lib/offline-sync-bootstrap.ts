@@ -78,6 +78,15 @@ async function syncCorePacks(): Promise<boolean> {
       const { ADHKAR_ITEMS } = await import("@/lib/adhkar-seed");
       await cacheAdhkarPack(ADHKAR_ITEMS, `adhkar:${ADHKAR_ITEMS.length}`);
 
+      // ترحيل المفضّلات من localStorage → Dexie (مرة عند الدفء)
+      try {
+        const { listLocalBookmarks } = await import("@/lib/local-bookmarks");
+        const { migrateLocalBookmarksToIdb } = await import("@/lib/offline-bookmarks");
+        await migrateLocalBookmarksToIdb(listLocalBookmarks());
+      } catch {
+        /* optional */
+      }
+
       // Curated fawaid excerpts (articles/books-style content) — skip on data saver
       if (!light) {
         try {

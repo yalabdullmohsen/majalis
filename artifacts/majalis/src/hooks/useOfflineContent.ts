@@ -1,18 +1,21 @@
 import { useCallback, useEffect, useState } from "react";
 import { isOnline } from "@/lib/offline-db";
-import { withOfflineFallback } from "@/lib/offline-content-store";
+import { withOfflineFallback, withOfflineFirst } from "@/lib/offline-content-store";
 
 /**
  * Generic offline-first reader for any content key.
- * Returns cached data when the network fails — never surfaces a thrown error.
+ * Default: IndexedDB أولًا ثم الشبكة إن كان الكاش فارغًا.
  */
 export function useOfflineContent<T>(options: {
   enabled?: boolean;
+  /** cache-first (افتراضي) أو network-first */
+  strategy?: "cache-first" | "network-first";
   fetchOnline: () => Promise<T>;
   readCache: () => Promise<T | null>;
   writeCache?: (value: T) => Promise<void>;
 }) {
   const enabled = options.enabled !== false;
+  const strategy = options.strategy ?? "cache-first";
   const [data, setData] = useState<T | null>(null);
   const [fromCache, setFromCache] = useState(false);
   const [loading, setLoading] = useState(enabled);
@@ -21,7 +24,8 @@ export function useOfflineContent<T>(options: {
   const reload = useCallback(async () => {
     if (!enabled) return;
     setLoading(true);
-    const result = await withOfflineFallback({
+    const runner = strategy === "network-first" ? withOfflineFallback : withOfflineFirst;
+    const result = await runner({
       fetchOnline: options.fetchOnline,
       readCache: options.readCache,
       writeCache: options.writeCache,
@@ -29,7 +33,7 @@ export function useOfflineContent<T>(options: {
     setData(result.data);
     setFromCache(result.fromCache);
     setLoading(false);
-  }, [enabled, options.fetchOnline, options.readCache, options.writeCache]);
+  }, [enabled, strategy, options.fetchOnline, options.readCache, options.writeCache]);
 
   useEffect(() => {
     void reload();

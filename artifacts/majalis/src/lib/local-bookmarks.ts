@@ -40,7 +40,12 @@ function readAll(): LocalBookmark[] {
 
 function writeAll(items: LocalBookmark[]) {
   if (typeof window === "undefined") return;
-  writeLocalJson(STORAGE_KEY, items.slice(0, MAX_ITEMS));
+  const trimmed = items.slice(0, MAX_ITEMS);
+  writeLocalJson(STORAGE_KEY, trimmed);
+  // مرآة Dexie — لا تُعطّل المسار المتزامن إن فشل IndexedDB
+  void import("@/lib/offline-bookmarks")
+    .then((m) => m.persistOfflineBookmarks(trimmed))
+    .catch(() => undefined);
 }
 
 export function listLocalBookmarks(): LocalBookmark[] {
@@ -88,4 +93,23 @@ export function removeLocalBookmark(contentType: string, contentId: string): voi
 export function clearLocalBookmarks(): void {
   if (typeof window === "undefined") return;
   localStorage.removeItem(STORAGE_KEY);
+  void import("@/lib/offline-bookmarks")
+    .then((m) => m.clearOfflineBookmarks())
+    .catch(() => undefined);
+}
+
+/** قراءة offline-first: IndexedDB ثم localStorage. */
+export async function listBookmarksOfflineFirst(): Promise<LocalBookmark[]> {
+  try {
+    const { listOfflineBookmarks, migrateLocalBookmarksToIdb } = await import(
+      "@/lib/offline-bookmarks"
+    );
+    const local = readAll();
+    await migrateLocalBookmarksToIdb(local);
+    const idb = await listOfflineBookmarks();
+    if (idb.length) return idb;
+    return local.sort((a, b) => (a.savedAt < b.savedAt ? 1 : -1));
+  } catch {
+    return listLocalBookmarks();
+  }
 }

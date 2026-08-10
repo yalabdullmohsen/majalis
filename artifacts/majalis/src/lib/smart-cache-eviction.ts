@@ -165,7 +165,8 @@ export function isProtectedIdbKey(store: OfflineStoreName, key: string): boolean
   if (store === OFFLINE_STORES.articles && key.startsWith("annotation:")) return true;
   if (store === OFFLINE_STORES.meta && PROTECTED_IDB_META_KEYS.has(key)) return true;
   if (store === OFFLINE_STORES.quran && (key === "surah-list" || key.startsWith("surah-"))) return true;
-  if (store === OFFLINE_STORES.adhkar && key === "adhkar-pack") return true;
+  if (store === OFFLINE_STORES.adhkar && (key === "adhkar-pack" || key === "adhkar-pack-v1")) return true;
+  if (store === OFFLINE_STORES.bookmarks) return true;
   return false;
 }
 

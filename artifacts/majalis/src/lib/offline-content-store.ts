@@ -109,3 +109,56 @@ export async function withOfflineFallback<T>(options: {
     return { data: null, fromCache: true };
   }
 }
+
+/**
+ * Offline-first: اقرأ IndexedDB أولًا؛ إن كان فارغًا اجلب من الشبكة واملأ الكاش.
+ * عند وجود كاش واتصال: أعد الكاش فورًا وحدّث في الخلفية (SWR خفيف).
+ */
+export async function withOfflineFirst<T>(options: {
+  fetchOnline: () => Promise<T>;
+  readCache: () => Promise<T | null>;
+  writeCache?: (value: T) => Promise<void>;
+  /** إن true (افتراضي) يُحدَّث الكاش من الشبكة في الخلفية بعد إرجاع الكاش */
+  revalidate?: boolean;
+}): Promise<{ data: T | null; fromCache: boolean }> {
+  const revalidate = options.revalidate !== false;
+
+  let cached: T | null;
+  try {
+    cached = await options.readCache();
+  } catch {
+    cached = null;
+  }
+
+  if (cached != null) {
+    if (revalidate && isOnline()) {
+      void (async () => {
+        try {
+          const fresh = await options.fetchOnline();
+          if (options.writeCache) await options.writeCache(fresh);
+        } catch {
+          /* background refresh best-effort */
+        }
+      })();
+    }
+    return { data: cached, fromCache: true };
+  }
+
+  if (!isOnline()) {
+    return { data: null, fromCache: true };
+  }
+
+  try {
+    const data = await options.fetchOnline();
+    if (options.writeCache) {
+      try {
+        await options.writeCache(data);
+      } catch {
+        /* ignore */
+      }
+    }
+    return { data, fromCache: false };
+  } catch {
+    return { data: null, fromCache: false };
+  }
+}
