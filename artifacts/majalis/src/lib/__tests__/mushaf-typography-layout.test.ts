@@ -134,11 +134,18 @@ assert.equal(
   false,
   "ممنوع overflow-x المخفي على .mf2-line (يقصّ الحبر رأسيًا قسرًا)",
 );
-assert.match(mushafV2, /\.mf2-opening-frame/, "إطار زخرفي لصفحتي الافتتاح");
+assert.equal(
+  /\.mf2-opening-frame/.test(mushafV2) &&
+    /OpeningPageFrame/.test(
+      readFileSync(resolve(appRoot, "src/components/quran/MushafPageV2.tsx"), "utf8"),
+    ),
+  false,
+  "لا إطار زخرفي مفعّل لصفحتي الافتتاح",
+);
 assert.match(
   readFileSync(resolve(appRoot, "src/components/quran/MushafPageV2.tsx"), "utf8"),
-  /OpeningPageFrame/,
-  "مكوّن إطار الافتتاح",
+  /OPENING_BANNER_TOP_PCT\s*=\s*28/,
+  "شارة الافتتاح عند ٢٨٪",
 );
 assert.match(mushafV2, /\.mf2-line--unicode[\s\S]*?line-height:\s*2\.2/, "وضع Unicode: ارتفاع تشكيل 2.2");
 

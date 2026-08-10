@@ -1,4 +1,4 @@
-import { Fragment, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Fragment, useCallback, useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
 import { createPortal } from "react-dom";
 import { useParams, useLocation } from "wouter";
 import {
@@ -20,6 +20,7 @@ import { useAyahPlayer } from "@/hooks/useAyahPlayer";
 import { useKeepAwake } from "@/hooks/useKeepAwake";
 import { useRestoreLastPage } from "@/hooks/useRestoreLastPage";
 import { useImmersiveSystemUi } from "@/hooks/useImmersiveSystemUi";
+import { useMushafPageCurl } from "@/hooks/useMushafPageCurl";
 import { AYAH_MUSHAF_PAPER_BG } from "@/lib/quran-immersive";
 import { useThemePreference } from "@/components/ThemePreferenceProvider";
 import { addBookmark as addPageBookmark, isPageBookmarked } from "@/lib/quran-my-bookmarks";
@@ -169,7 +170,7 @@ export default function MushafPageView() {
   }, [textChromeVisible]);
   const [bookmarkStatus, setBookmarkStatus] = useState<string | null>(null);
   const [pageBookmarked, setPageBookmarked] = useState(() => isPageBookmarked(page));
-  const touchStartX = useRef<number | null>(null);
+  const curlStageRef = useRef<HTMLDivElement | null>(null);
 
   // ── استئناف تلقائي: عند الدخول دون رقم صفحة صريح في الرابط، نبدأ من آخر موضع محفوظ محليًا ──
   useEffect(() => {
@@ -386,15 +387,24 @@ export default function MushafPageView() {
   const nextPage = useCallback(() => goToPage(page + 1), [goToPage, page]);
   const prevPage = useCallback(() => goToPage(page - 1), [goToPage, page]);
 
-  // ── سحب أفقي RTL صحيح الاتجاه: تحريك الإصبع لليسار = الصفحة التالية (تقدّم في القراءة) ──
-  const onTouchStart = (e: React.TouchEvent) => { touchStartX.current = e.touches[0].clientX; };
-  const onTouchEnd = (e: React.TouchEvent) => {
-    if (touchStartX.current === null) return;
-    const delta = e.changedTouches[0].clientX - touchStartX.current;
-    touchStartX.current = null;
-    if (Math.abs(delta) < 55) return;
-    if (delta < 0) nextPage(); else prevPage();
-  };
+  const curlDisabled =
+    Boolean(settingsOpen || sidebarOpen || selectedAyah || isJumpModalVisible || textChromeVisible);
+
+  const { curl, curlHandlers, setCurlWidth } = useMushafPageCurl({
+    onNext: nextPage,
+    onPrev: prevPage,
+    disabled: curlDisabled,
+  });
+
+  useEffect(() => {
+    const el = curlStageRef.current;
+    if (!el) return;
+    const sync = () => setCurlWidth(el.clientWidth || window.innerWidth);
+    sync();
+    const ro = typeof ResizeObserver !== "undefined" ? new ResizeObserver(sync) : null;
+    ro?.observe(el);
+    return () => ro?.disconnect();
+  }, [setCurlWidth, page]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -659,9 +669,10 @@ export default function MushafPageView() {
               للوصول بلوحة المفاتيح في مكان آخر بالصفحة. */}
           <div
             className="mpv-body mpv-body--ayah"
-            onTouchStart={onTouchStart}
-            onTouchEnd={onTouchEnd}
-            onClick={() => setTextChromeVisible((v) => !v)}
+            onClick={() => {
+              if (curl.active || curl.settling) return;
+              setTextChromeVisible((v) => !v);
+            }}
             onKeyDown={(e) => {
               if (e.key === "Enter" || e.key === " ") {
                 e.preventDefault();
@@ -702,7 +713,20 @@ export default function MushafPageView() {
                     ["--qs-font-scale" as string]: String(prefs.fontScale / QURAN_FONT_DEFAULT_PX),
                   }}
                 >
-                  <div className="qs-mushaf-body-inner">
+                  <div
+                    ref={curlStageRef}
+                    className={`mpv-curl-stage${curl.active || curl.settling ? " mpv-curl-stage--active" : ""}${curl.reducedMotion ? " mpv-curl-stage--reduced" : ""}`}
+                    data-curl-progress={curl.progress.toFixed(3)}
+                    style={
+                      {
+                        ["--mpv-curl" as string]: String(curl.progress),
+                        ["--mpv-curl-abs" as string]: String(Math.abs(curl.progress)),
+                      } as CSSProperties
+                    }
+                    {...curlHandlers}
+                  >
+                    <div className="mpv-curl-underlay" aria-hidden="true" />
+                    <div className="qs-mushaf-body-inner mpv-curl-leaf">
                     {loading || !segAyahs ? (
                       <MushafPageV2 layout={null} bare />
                     ) : prefs.pageMode === "precision" ? (
@@ -724,19 +748,24 @@ export default function MushafPageView() {
                         showAyahNumbers={prefs.showAyahNumbers}
                       />
                     )}
+                    </div>
+                    <div className="mpv-curl-shade" aria-hidden="true" />
                   </div>
                 </div>
               </div>
             )}
           </div>
 
-          {/* ذيل: وصف الحزب يمينًا + خرطوش رقم الصفحة في الوسط (لا يُزاح) */}
-          <footer className="mpv-ayah-footer">
+          {/* ذيل: خرطوش يتناوب فردي/زوجي · وصف الحزب في الجهة المقابلة */}
+          <footer
+            className="mpv-ayah-footer"
+            data-page-parity={page % 2 === 1 ? "odd" : "even"}
+          >
             <span className="mpv-ayah-footer__meta">{footerMetaLabel ?? ""}</span>
             <button
               type="button"
               className="mpv-ayah-page-badge"
-              data-cartouche-center="1"
+              data-cartouche-side={page % 2 === 1 ? "end" : "start"}
               onClick={openJumpModal}
               aria-haspopup="dialog"
               aria-expanded={isJumpModalVisible}
