@@ -81,7 +81,8 @@ function runStatic() {
   const pageV2 = read("src/components/quran/MushafPageV2.tsx");
   const frameCss = read("src/styles/mushaf-v2.css");
   const banner = read("src/components/quran/SurahBanner.tsx");
-  const opening = read("src/components/quran/OpeningPageFrame.tsx");
+  const openingGone = !existsSync(join(ROOT, "src/components/quran/OpeningPageFrame.tsx"));
+  const opening = openingGone ? "" : read("src/components/quran/OpeningPageFrame.tsx");
   const specPath = join(ROOT, "docs/MUSHAF_SPEC.md");
 
   /* ١ — سلامة النص */
@@ -183,21 +184,19 @@ function runStatic() {
     fail(11, "الرأس لا يستخدم surahsStartingOnPage");
   } else pass(11, "headerSurahNames ← surahsStartingOnPage");
 
-  /* ١٢ — الخرطوش مركزي */
-  if (!/\.mf2-surah-header__cartouche/.test(frameCss) && !/cartouche/.test(banner)) {
-    fail(12, "خرطوش غير موجود");
-  } else pass(12, "خرطوش موجود — الحيّ يتحقق من المركز");
+  /* ١٢ — خرطوش الصفحة يتناوب فردي/زوجي (لا مركزي دائم) */
+  if (!/data-page-parity/.test(pageView)) {
+    fail(12, "تناوب خرطوش الصفحة غير مثبت");
+  } else pass(12, "data-page-parity فردي/زوجي");
 
-  /* ١٣ — الإطار ٨–١٠ / ٩–٩٢ من كتلة الصفحة */
-  if (!/OPENING_FRAME_TOP_OF_CONTENT\s*=\s*0\.09/.test(pageV2)) {
-    fail(13, "OPENING_FRAME_TOP_OF_CONTENT ≠ 0.09");
-  } else if (!/OPENING_FRAME_BOT_OF_CONTENT\s*=\s*0\.91/.test(pageV2)) {
-    fail(13, "OPENING_FRAME_BOT_OF_CONTENT ≠ 0.91");
+  /* ١٣ — ص١–٢ بلا إطار · شارة عند ٢٨٪ */
+  if (existsSync(join(ROOT, "src/components/quran/OpeningPageFrame.tsx"))) {
+    fail(13, "OpeningPageFrame.tsx ما زال موجودًا");
+  } else if (!/OPENING_BANNER_TOP_PCT\s*=\s*28/.test(pageV2)) {
+    fail(13, "OPENING_BANNER_TOP_PCT ≠ 28");
   } else if (!/mpv-toolbar-band|MUSHAF_LAYOUT_BANDS/.test(pageV2 + read("src/styles/quran.css"))) {
     fail(13, "نطاقات التخطيط غير مثبتة");
-  } else if (!/data-side-rails="straight"/.test(opening)) {
-    fail(13, "أضلاع غير مستقيمة");
-  } else pass(13, "ثوابت contentBand ٩٪/٩١٪ + نطاقات");
+  } else pass(13, "بلا إطار + شارة ٢٨٪ + نطاقات");
 
   /* ١٤ — التباين */
   if (!/test:color-contrast-gate/.test(read("package.json"))) {
@@ -359,22 +358,15 @@ async function runLive() {
     for (const n of [1, 2]) {
       const r = live[n];
       if (!r || r.error) continue;
-      if (r.frameTopBodyPct == null) {
-        fail(13, `ص${n}: لا إطار`);
-      } else if (r.frameTopBodyPct < 7.95 || r.frameTopBodyPct > 13.05) {
-        fail(13, `ص${n}: أعلى إطار ${r.frameTopBodyPct.toFixed(2)}٪ من الجسم`);
-      } else if (r.frameBotBodyPct < 89.95 || r.frameBotBodyPct > 92.05) {
-        fail(13, `ص${n}: أسفل إطار ${r.frameBotBodyPct.toFixed(2)}٪ من الجسم`);
+      if (r.frameTopBodyPct != null) {
+        fail(13, `ص${n}: إطار ما زال مرسومًا`);
       } else {
         const prev = gateStatus[13];
         gateStatus[13] = {
           ok: true,
           detail: {
             ...(prev?.detail && typeof prev.detail === "object" ? prev.detail : {}),
-            [`p${n}`]: {
-              top: +r.frameTopBodyPct.toFixed(2),
-              bot: +r.frameBotBodyPct.toFixed(2),
-            },
+            [`p${n}`]: { noFrame: true },
           },
         };
       }

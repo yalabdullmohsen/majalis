@@ -5,7 +5,6 @@ import type { MushafPageLayout, QpcWord } from "@/lib/mushaf-v2-data";
 import { DRAWN_BASMALA_TEXT, drawnSurahTitleText } from "@/lib/mushaf-sizing-lines";
 import { MushafAyahMarkerSvg } from "@/components/quran/MushafOrnaments";
 import { SurahBanner } from "@/components/quran/SurahBanner";
-import { OpeningPageFrame } from "@/components/quran/OpeningPageFrame";
 import { toArabicDigits } from "@/lib/utils";
 import { wordKeyFromQpc } from "@/features/mushaf/ayah-word-keys";
 import {
@@ -19,31 +18,30 @@ import {
 } from "@/features/mushaf/layout-bands";
 
 /**
- * إطار صفحتي الافتتاح — النسب من ارتفاع **نطاق النص** (`.mf2-lines` = contentBand)
- * بعد طرح الرأس/الذيل/الشريط. البوابة تقيس داخل contentBand.
+ * صفحتا الافتتاح (١–٢): بلا إطار زخرفي.
+ * الشارة أعلاها عند ≈٢٨٪ من contentBand؛ فراغ علوي مقصود؛ بلا ملاءمة عرض.
  */
-const OPENING_FRAME_TOP_OF_CONTENT = 0.09; /* ٨–١٣٪ من contentBand */
-const OPENING_FRAME_BOT_OF_CONTENT = 0.91; /* ٩٠–٩٢٪ من contentBand */
-/** ارتفاع خانة الشارة (٪ من .mf2-lines) — يُحدَّث مركزها بعد قياس الإطار */
+/** أعلى الشارة (٪ من .mf2-lines) — ٢٦–٣٠٪ */
+const OPENING_BANNER_TOP_PCT = 28;
+/** ارتفاع خانة الشارة (٪ من .mf2-lines) */
 const OPENING_BANNER_H_PCT = 6.2;
 /** فاصل أدنى بين أسفل الشارة وأعلى حبر البسملة (px) */
 const OPENING_BASMALA_GAP_PX = 22;
-/** هامش سفلي داخل الإطار قبل الضلع السفلي (٪ من الخطوط) */
-const OPENING_INNER_BOT_PAD_PCT = 5.0;
-const OPENING_SIDE_PAD_PX = 20;
+/** هامش سفلي مقصود تحت آخر سطر (٪ من contentBand) */
+const OPENING_BOTTOM_MARGIN_PCT = 12;
 const OPENING_BODY_SLOT_H_PCT = 7.0;
-const OPENING_REF_BLOCK_H = 780;
-const OPENING_GAP_PCT = (OPENING_BASMALA_GAP_PX / OPENING_REF_BLOCK_H) * 100;
-const OPENING_ASCENT_PAD_PCT = (14 / OPENING_REF_BLOCK_H) * 100;
-/** قيم CSS أولية قبل قياس الجسم — تُستبدل بالبكسل في measure() */
-const OPENING_FRAME_TOP_PCT = OPENING_FRAME_TOP_OF_CONTENT * 100;
-const OPENING_FRAME_BOT_PCT = OPENING_FRAME_BOT_OF_CONTENT * 100;
+const OPENING_GAP_PCT = (OPENING_BASMALA_GAP_PX / 700) * 100;
+const OPENING_ASCENT_PAD_PCT = (14 / 700) * 100;
+/** مركز الشارة للتموضع المطلق (translateY -50%) */
+const OPENING_BANNER_MID_PCT = OPENING_BANNER_TOP_PCT + OPENING_BANNER_H_PCT / 2;
+/** مركز أول سطر جسم: أسفل الشارة + فاصل ≥22px + نصف ارتفاع الخانة */
 const OPENING_BODY_TOP_PCT =
-  OPENING_FRAME_TOP_PCT +
-  OPENING_BANNER_H_PCT / 2 +
+  OPENING_BANNER_TOP_PCT +
+  OPENING_BANNER_H_PCT +
   OPENING_GAP_PCT +
+  OPENING_BODY_SLOT_H_PCT / 2 +
   OPENING_ASCENT_PAD_PCT;
-const OPENING_BODY_BOT_PCT = OPENING_FRAME_BOT_PCT - OPENING_INNER_BOT_PAD_PCT;
+const OPENING_BODY_BOT_PCT = 100 - OPENING_BOTTOM_MARGIN_PCT;
 
 /** يُجمِّع كلمات سطر متتالية بنفس verseKey في عنقود واحد — للوضع التفاعلي بلا طبقة إحداثيات. */
 export function groupWordsByAyah(words: QpcWord[]): QpcWord[][] {
@@ -316,18 +314,16 @@ export function MushafPageV2({
     const BASE_FONT = MUSHAF_LAYOUT_BASELINE.fontSizePx;
     const isOpening = layout.pageNumber === 1 || layout.pageNumber === 2;
     const noStretchLines = lastSurahEndLineNumbers(layout);
-    /* صفحتا الافتتاح: آخر سطر آية في الصفحة لا يُمطّ إن قصر (مثل «المفلحون» ص٢) */
+    /* صفحتا الافتتاح: بلا ملاءمة عرض لأي سطر — عرض طبيعي مركزي */
     if (isOpening) {
-      let maxLn = 0;
       for (const row of layout.rows) {
-        if (row.kind === "line") maxLn = Math.max(maxLn, row.lineNumber);
+        if (row.kind === "line") noStretchLines.add(row.lineNumber);
       }
-      if (maxLn > 0) noStretchLines.add(maxLn);
     }
     const slotHPct = MUSHAF_GRID.slotHeightPct;
 
     const measure = () => {
-      let availableWidth = container.clientWidth;
+      const availableWidth = container.clientWidth;
       if (availableWidth <= 0) return false;
 
       const sizingEls = collectSizingEls(ayahLineRefs.current);
@@ -390,12 +386,9 @@ export function MushafPageV2({
         container.style.maxHeight = "";
       }
 
-      /* ص١–٢: عرض الملاءمة = داخل الإطار − ٢٠px من كل جهة */
+      /* ص١–٢: بلا إطار — العرض الكامل للحاوية؛ لا مطّ لاحقاً */
       if (isOpening) {
-        const frameEl = container.querySelector<HTMLElement>("[data-opening-frame]");
-        const frameW = frameEl?.getBoundingClientRect().width ?? availableWidth;
-        availableWidth = Math.max(80, frameW - OPENING_SIDE_PAD_PX * 2 - 14);
-        container.style.setProperty("--mf2-opening-line-w", `${availableWidth.toFixed(1)}px`);
+        container.style.removeProperty("--mf2-opening-line-w");
       } else {
         container.style.removeProperty("--mf2-opening-line-w");
       }
@@ -432,18 +425,20 @@ export function MushafPageV2({
         `${(container.clientHeight * (slotHPct / 100)).toFixed(2)}px`,
       );
 
-      /* ملاءمة عرض الأسطر — يُستثنى آخر سطر سورة + البسملة (ليست ayah) في كل المصحف */
+      /* ملاءمة عرض الأسطر — ص١–٢ بلا مطّ؛ يُستثنى آخر سطر سورة في بقية المصحف */
       for (const [ln, el] of ayahLineRefs.current) {
         if (!el) continue;
-        if (noStretchLines.has(ln)) {
+        if (isOpening || noStretchLines.has(ln)) {
           el.style.removeProperty("--mf2-line-sx");
-          el.classList.add("mf2-line--surah-end");
-          el.classList.remove("mf2-line--natural");
+          el.classList.add(isOpening ? "mf2-line--natural" : "mf2-line--surah-end");
+          if (isOpening) el.classList.add("mf2-line--opening-natural");
+          else el.classList.remove("mf2-line--natural");
           el.dataset.noStretch = "1";
           continue;
         }
         el.classList.remove("mf2-line--surah-end");
         el.classList.remove("mf2-line--natural");
+        el.classList.remove("mf2-line--opening-natural");
         el.removeAttribute("data-no-stretch");
         const contentW = measureLineContentWidth(el);
         if (contentW <= 0) {
@@ -485,33 +480,22 @@ export function MushafPageV2({
       container.dataset.mf2Opening = isOpening ? "1" : "0";
       container.dataset.mf2Grid = "1";
 
-      /* ص١–٢: ثبّت الإطار على ٩٪/٩١٪ من contentBand (.mf2-lines) */
+      /* ص١–٢: شارة عند ٢٨٪ بلا إطار — توزيع الجسم تحتها مع هامش سفلي */
       if (isOpening) {
-        const frameEl = container.querySelector<HTMLElement>("[data-opening-frame]");
         const crNow = container.getBoundingClientRect();
-        if (frameEl && crNow.height > 40) {
-          const topPx = crNow.height * OPENING_FRAME_TOP_OF_CONTENT;
-          const botPx = crNow.height * (1 - OPENING_FRAME_BOT_OF_CONTENT);
-          frameEl.style.top = `${topPx.toFixed(2)}px`;
-          frameEl.style.bottom = `${botPx.toFixed(2)}px`;
-          const frameTopPct = OPENING_FRAME_TOP_PCT;
-          const frameBotPct = OPENING_FRAME_BOT_PCT;
-          const bodyTop =
-            frameTopPct +
-            OPENING_BANNER_H_PCT / 2 +
-            OPENING_GAP_PCT +
-            OPENING_ASCENT_PAD_PCT;
-          const bodyBot = frameBotPct - OPENING_INNER_BOT_PAD_PCT;
+        if (crNow.height > 40) {
+          const bodyTop = OPENING_BODY_TOP_PCT;
+          const bodyBot = OPENING_BODY_BOT_PCT;
           const bodyBand = Math.max(8, bodyBot - bodyTop);
-          container.dataset.mf2FrameTopBody = frameTopPct.toFixed(2);
-          container.dataset.mf2FrameBotBody = frameBotPct.toFixed(2);
-          container.dataset.mf2FrameBand = "content";
+          container.dataset.mf2BannerTopPct = String(OPENING_BANNER_TOP_PCT);
+          container.dataset.mf2OpeningNoFrame = "1";
+          container.dataset.mf2FrameBand = "none";
 
           const banners = [
             ...container.querySelectorAll<HTMLElement>(".mf2-grid-slot--banner"),
           ];
           for (const ban of banners) {
-            ban.style.top = `${frameTopPct.toFixed(3)}%`;
+            ban.style.top = `${OPENING_BANNER_MID_PCT.toFixed(3)}%`;
             ban.style.height = `${OPENING_BANNER_H_PCT}%`;
           }
           const bodySlots = [
@@ -701,7 +685,7 @@ export function MushafPageV2({
     if (isOpeningPage && openingSlots.all.length > 0) {
       const isBanner = openingSlots.banners.includes(gridSlot);
       if (isBanner) {
-        baseline = OPENING_FRAME_TOP_PCT;
+        baseline = OPENING_BANNER_MID_PCT;
         h = OPENING_BANNER_H_PCT;
       } else {
         const body = openingSlots.body;
@@ -875,7 +859,6 @@ export function MushafPageV2({
           overflow: "visible",
         }}
       >
-        {isOpeningPage ? <OpeningPageFrame /> : null}
         {layout.rows.map((row, idx) => {
           if (row.kind === "surah-header") {
             const key = `h-${row.surah.id}-${idx}`;

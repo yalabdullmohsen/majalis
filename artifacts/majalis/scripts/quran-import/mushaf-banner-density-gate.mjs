@@ -260,11 +260,11 @@ async function main() {
           }
         }
         if ((n === 1 || n === 2) && raw.bannerTopPct != null) {
-          /* ص١–٢: الشارة على الضلع العلوي للإطار (≈٨٪) → أعلاها ≈٤٪ بعد translateY */
-          if (raw.bannerTopPct < 2 || raw.bannerTopPct > 14) {
+          /* ص١–٢: أعلى الشارة ٢٦–٣٠٪ من contentBand */
+          if (raw.bannerTopPct < 26 || raw.bannerTopPct > 30) {
             failures.push({
               page: n,
-              reason: `أعلى الشارة ${raw.bannerTopPct.toFixed(1)}% خارج 2–14% (افتتاح/ضلع علوي)`,
+              reason: `أعلى الشارة ${raw.bannerTopPct.toFixed(1)}% خارج 26–30% (افتتاح)`,
             });
           }
         }

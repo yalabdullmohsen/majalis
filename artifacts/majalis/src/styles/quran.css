@@ -2638,7 +2638,6 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
 /* وصف الحزب — أسفل اليمين داخل نطاق الذيل */
 .mpv-ayah-footer__meta {
   position: absolute;
-  inset-inline-start: max(0.35rem, var(--inset-right));
   top: 50%;
   bottom: auto;
   transform: translateY(-50%);
@@ -2650,17 +2649,26 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
   pointer-events: none;
   z-index: 1;
 }
+/* فردي: وصف الحزب يسار · زوجي: وصف الحزب يمين */
+.mpv-ayah-footer[data-page-parity="odd"] .mpv-ayah-footer__meta {
+  left: max(0.35rem, var(--inset-left));
+  right: auto;
+  text-align: start;
+}
+.mpv-ayah-footer[data-page-parity="even"] .mpv-ayah-footer__meta {
+  right: max(0.35rem, var(--inset-right));
+  left: auto;
+  text-align: end;
+}
 .mpv-ayah-footer__meta:empty {
   visibility: hidden;
 }
-/* خرطوش رقم الصفحة — وسط نطاق الذيل */
+/* خرطوش رقم الصفحة — تناوب: فردي يمين · زوجي يسار */
 .mpv-ayah-page-badge {
   appearance: none;
   position: absolute;
-  left: 50%;
   top: 50%;
   bottom: auto;
-  transform: translate(-50%, -50%);
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -2685,6 +2693,16 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
   transition: opacity 0.2s ease;
   pointer-events: auto;
   z-index: 2;
+  transform: translateY(-50%);
+}
+/* فردي: أسفل اليمين · زوجي: أسفل اليسار (إحداثيات فيزيائية) */
+.mpv-ayah-footer[data-page-parity="odd"] .mpv-ayah-page-badge {
+  right: max(0.35rem, var(--inset-right));
+  left: auto;
+}
+.mpv-ayah-footer[data-page-parity="even"] .mpv-ayah-page-badge {
+  left: max(0.35rem, var(--inset-left));
+  right: auto;
 }
 .mpv-ayah-page-badge__cartouche {
   position: absolute;
@@ -2709,7 +2727,7 @@ html[data-theme="dark"] .quran-shell--ayah:not(.quran-shell--warm):not(.quran-sh
   opacity: 0.92;
 }
 .mpv-ayah-page-badge:active {
-  transform: translate(-50%, -50%) scale(0.97);
+  transform: translateY(-50%) scale(0.97);
 }
 .mpv-toolbar__btn--index {
   white-space: nowrap;

@@ -303,28 +303,14 @@ async function main() {
           reason: `${r.clipped.length} سطرًا بلا هامش ٢px (عيّنة: ${JSON.stringify(r.clipped.slice(0, 2))})`,
         });
       }
-      if (
-        (n === 1 || n === 2) &&
-        (r.framePct == null || r.framePct < OPENING_FRAME_MIN_PCT)
-      ) {
+      if ((n === 1 || n === 2) && r.framePct != null) {
         failures.push({
           page: n,
-          reason: `إطار الافتتاح ${r.framePct?.toFixed?.(1) ?? "null"}% < ${OPENING_FRAME_MIN_PCT}%`,
+          reason: `إطار افتتاح موجود (${r.framePct?.toFixed?.(1)}%) — يجب صفر`,
         });
       }
       if (n === 1 || n === 2) {
-        if (r.frameTopPct != null && (r.frameTopPct < 7.95 || r.frameTopPct > 13.05)) {
-          failures.push({
-            page: n,
-            reason: `أعلى الإطار ${r.frameTopPct.toFixed(1)}% (المطلوب ٨–١٣٪)`,
-          });
-        }
-        if (r.frameBotPct != null && (r.frameBotPct < 89.95 || r.frameBotPct > 92.05)) {
-          failures.push({
-            page: n,
-            reason: `أسفل الإطار ${r.frameBotPct.toFixed(1)}% (المطلوب ٩٠–٩٢٪)`,
-          });
-        }
+        /* لا فحوص نسب إطار — الإطار محذوف */
       }
       for (const g of r.basmalaGaps || []) {
         if (g < 20) {

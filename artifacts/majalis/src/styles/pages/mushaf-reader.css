@@ -318,3 +318,78 @@ html[data-theme="dark"] .mushaf-v2__sajda-mark {
   cursor: pointer;
 }
 
+
+/* ── لفّ صفحة المصحف (transform/opacity فقط) ── */
+.mpv-curl-stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  flex: 1 1 auto;
+  perspective: 1400px;
+  touch-action: pan-y;
+  overflow: visible;
+}
+.mpv-curl-stage--active {
+  touch-action: none;
+}
+.mpv-curl-underlay {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, color-mix(in srgb, #000 6%, transparent), transparent 18%),
+    var(--ayah-paper, #FAF7F2);
+  opacity: calc(var(--mpv-curl-abs, 0) * 0.85);
+}
+.mpv-curl-leaf {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  transform-origin: right center;
+  transform: rotateY(calc(var(--mpv-curl, 0) * -28deg)) translate3d(calc(var(--mpv-curl, 0) * 8%), 0, 0);
+  will-change: transform, opacity;
+  backface-visibility: hidden;
+  background: var(--ayah-paper, #FAF7F2);
+}
+.mpv-curl-stage--active .mpv-curl-leaf,
+.mpv-curl-stage--active .mpv-curl-shade {
+  transition: none;
+}
+.mpv-curl-stage:not(.mpv-curl-stage--active) .mpv-curl-leaf,
+.mpv-curl-stage:not(.mpv-curl-stage--active) .mpv-curl-shade {
+  transition: transform 160ms ease-out, opacity 160ms ease-out;
+}
+.mpv-curl-shade {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in srgb, #000 14%, transparent) 42%,
+    color-mix(in srgb, #000 4%, transparent) 58%,
+    transparent 100%
+  );
+  opacity: calc(var(--mpv-curl-abs, 0) * 0.9);
+  transform: translate3d(calc(var(--mpv-curl, 0) * 35%), 0, 0);
+  will-change: transform, opacity;
+}
+.mpv-curl-stage--reduced .mpv-curl-leaf {
+  transform: none;
+  opacity: calc(1 - var(--mpv-curl-abs, 0) * 0.35);
+}
+.mpv-curl-stage--reduced .mpv-curl-shade,
+.mpv-curl-stage--reduced .mpv-curl-underlay {
+  opacity: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .mpv-curl-leaf,
+  .mpv-curl-shade {
+    transition: opacity 120ms ease !important;
+    transform: none !important;
+  }
+}
