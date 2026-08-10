@@ -1,13 +1,18 @@
 /**
- * server-provider.ts
- * مزوّد خادمي: getUserMedia + MediaRecorder بنافذة متداخلة (~3.5ث كل ~1.8ث)
- * لتقليل فقدان الكلمات على حدود المقاطع، مع إزالة تكرار البادئة عبر
- * تطبيع قرآني. يُرسل إلى /api/recitation-transcribe (Groq whisper-large-v3).
+ * server-provider.ts — مسار بث منخفض الكمون
  *
- * لا صوت يُخزَّن — المقطع يُعالَج ويُهمَل.
+ * MediaRecorder timeslice قصير (400ms) + نافذة متداخلة + VAD على الجهاز:
+ * - لا يُرسل صمتًا للخادم
+ * - يُفرّغ المخزن فور انتهاء الكلام (speechEnded)
+ * - طابور إعادة محاولة عند انقطاع الشبكة
+ * - حد أقصى لطلبات متزامنة لتفادي تراكم الكمون
+ *
+ * الخادم: POST /api/recitation-transcribe → Groq whisper-large-v3
+ * (Vercel لا يدعم WebSocket ASR طويل العمر — هذا أقرب بديل عملي).
  */
 import type {
   ASRSession,
+  AsrPipelineStatus,
   AudioChunk,
   FinalResult,
   PartialResult,
@@ -20,17 +25,24 @@ import { isNative } from "../../capacitor-utils";
 import { SITE_URL } from "../../site-config";
 import { normalizeQuranWord } from "../quran-normalize";
 import { getWaveformSampleIntervalMs } from "@/lib/render-fps-throttle";
+import { EnergyVad, rmsToLevel01 } from "../vad";
 
 const ENDPOINT = isNative ? `${SITE_URL}/api/recitation-transcribe` : "/api/recitation-transcribe";
-/** مدة كل دفعة timeslice من المُسجِّل المستمر */
-const SLICE_MS = 1800;
-/** أقصى عدد شرائح نُبقيها في النافذة المتداخلة (~3.6ث) */
-const WINDOW_SLICES = 2;
-/** ثقة تقديرية لكلمات Whisper (لا ثقة حقيقية لكل كلمة) — تحت عتبة needs_repeat
- * كي لا نجزِم بخطأ عند التباس عام؛ فوق unclear حتى لا نُعلِّق كل كلمة. */
+
+/** مدة كل دفعة — هدف 200–500ms للمطابقة شبه اللحظية */
+export const SLICE_MS = 400;
+/** عدد الشرائح في النافذة المتداخلة (~1.2ث سياق) */
+export const WINDOW_SLICES = 3;
+/** أقصى طلبات Whisper متزامنة */
+const MAX_IN_FLIGHT = 2;
+/** أقصى مقاطع في طابور إعادة المحاولة */
+const MAX_QUEUE = 8;
 const WHISPER_ESTIMATED_CONFIDENCE = 72;
+const MIN_BLOB_BYTES = 120;
 
 type ApiTimedWord = { word?: string; start?: number | null; end?: number | null };
+
+type QueuedSegment = { blob: Blob; enqueuedAt: number; retries: number };
 
 type Active = {
   stream: MediaStream;
@@ -38,20 +50,24 @@ type Active = {
   mimeType: string;
   words: string[];
   timedWords: TimedWordResult[];
-  /** إزاحة زمنية تقريبية لبداية النافذة الحالية (ث) — لدمج طوابع Whisper النسبية. */
   windowOffsetSec: number;
   lastEmittedNorms: string[];
   listeners: Set<(word: string, atMs: number, confidence?: number) => void>;
   levelListeners: Set<(level01: number) => void>;
+  statusListeners: Set<(status: AsrPipelineStatus) => void>;
   stopped: boolean;
   pendingSegments: Promise<void>[];
   interrupted: boolean;
   sliceChunks: Blob[];
   analyser: AnalyserNode | null;
   audioCtx: AudioContext | null;
-  /** Part 22: visibility-aware waveform cancel (replaces raw setInterval id). */
   levelCancel: (() => void) | null;
   sessionStartedAt: number;
+  vad: EnergyVad;
+  speaking: boolean;
+  inFlight: number;
+  queue: QueuedSegment[];
+  lastStatus: AsrPipelineStatus;
 };
 
 function pickSupportedMimeType(): string {
@@ -91,14 +107,13 @@ export function dedupeOverlappingWords(previousNorms: string[], nextRaw: string[
     if (ok) { skip = k; break; }
   }
   const fresh = nextRaw.filter((_, i) => normalizeQuranWord(nextRaw[i])).slice(skip);
-  const merged = [...previousNorms, ...nextNorms.slice(skip)].slice(-12);
+  const merged = [...previousNorms, ...nextNorms.slice(skip)].slice(-16);
   return { fresh, nextNormsTail: merged };
 }
 
 export class ServerQuranASRProvider implements QuranASRProvider {
   readonly id = "server";
   readonly supportsStreaming = true;
-  /** ملاحظات تجويد زمنية من طوابع Whisper — ليس تحليلًا فونيميًا. */
   readonly supportsTajweed = true;
   readonly worksOffline = false;
   readonly capturesAudioInternally = true;
@@ -129,7 +144,12 @@ export class ServerQuranASRProvider implements QuranASRProvider {
     let stream: MediaStream;
     try {
       stream = await navigator.mediaDevices.getUserMedia({
-        audio: { echoCancellation: true, noiseSuppression: true, autoGainControl: true, channelCount: 1 },
+        audio: {
+          echoCancellation: true,
+          noiseSuppression: true,
+          autoGainControl: true,
+          channelCount: 1,
+        },
       });
     } catch {
       throw new ASRProviderUnavailableError({ code: "PERMISSION_DENIED", message: "لم يُمنح إذن الميكروفون." });
@@ -143,10 +163,10 @@ export class ServerQuranASRProvider implements QuranASRProvider {
       audioCtx = new AC();
       const source = audioCtx.createMediaStreamSource(stream);
       analyser = audioCtx.createAnalyser();
-      analyser.fftSize = 256;
+      analyser.fftSize = 512;
       source.connect(analyser);
     } catch {
-      /* مؤشر المستوى اختياري — الجلسة تعمل بدونه */
+      /* مؤشر المستوى اختياري */
     }
 
     const active: Active = {
@@ -159,6 +179,7 @@ export class ServerQuranASRProvider implements QuranASRProvider {
       lastEmittedNorms: [],
       listeners: new Set(),
       levelListeners: new Set(),
+      statusListeners: new Set(),
       stopped: false,
       pendingSegments: [],
       interrupted: false,
@@ -167,8 +188,14 @@ export class ServerQuranASRProvider implements QuranASRProvider {
       audioCtx,
       levelCancel: null,
       sessionStartedAt: Date.now(),
+      vad: new EnergyVad({ speechThreshold: 0.018, startFrames: 2, endFrames: 6 }),
+      speaking: false,
+      inFlight: 0,
+      queue: [],
+      lastStatus: "listening",
     };
     this.sessions.set(id, active);
+    this.emitStatus(active, "listening");
 
     for (const track of active.stream.getAudioTracks()) {
       track.onmute = () => { active.interrupted = true; };
@@ -178,22 +205,25 @@ export class ServerQuranASRProvider implements QuranASRProvider {
 
     if (analyser) {
       const data = new Uint8Array(analyser.frequencyBinCount);
-      // Part 19: battery-aware sample interval (downscale when battery < 20%)
-      const sampleMs = getWaveformSampleIntervalMs(100);
-      // Part 22: freeze waveform sampling while tab/phone screen is hidden
+      const sampleMs = Math.min(50, getWaveformSampleIntervalMs(50));
       void import("@/lib/visibility-raf").then(({ startVisibilityAwareInterval }) => {
         if (active.stopped) return;
         const handle = startVisibilityAwareInterval(() => {
           if (!active.analyser || active.stopped) return;
           active.analyser.getByteTimeDomainData(data);
-          let sum = 0;
-          for (let i = 0; i < data.length; i++) {
-            const v = (data[i]! - 128) / 128;
-            sum += v * v;
-          }
-          const rms = Math.sqrt(sum / data.length);
-          const level = Math.min(1, rms * 4);
+          const vad = active.vad.tickFromTimeDomain(data);
+          active.speaking = vad.speaking;
+          const level = rmsToLevel01(vad.rms);
           for (const cb of active.levelListeners) cb(level);
+
+          if (vad.speechStarted) this.emitStatus(active, "speech");
+          if (vad.speechEnded) {
+            // تفريغ فوري بعد انتهاء الكلام — لا انتظار المهلة الشبكية
+            this.flushWindow(active, true);
+            if (active.inFlight === 0) this.emitStatus(active, "listening");
+          } else if (vad.speaking && active.lastStatus === "listening") {
+            this.emitStatus(active, "speech");
+          }
         }, sampleMs);
         active.levelCancel = () => handle.cancel();
       });
@@ -203,30 +233,38 @@ export class ServerQuranASRProvider implements QuranASRProvider {
     return { id, provider: this.id };
   }
 
-  /** تسجيل مستمر بـ timeslice + نافذة شرائح متداخلة تُرسل دوريًا. */
+  private emitStatus(active: Active, status: AsrPipelineStatus) {
+    if (active.lastStatus === status) return;
+    active.lastStatus = status;
+    for (const cb of active.statusListeners) cb(status);
+  }
+
   private startContinuousRecorder(sessionId: string, active: Active) {
     if (active.stopped) return;
-    const recorder = new MediaRecorder(active.stream, { mimeType: active.mimeType });
+    let recorder: MediaRecorder;
+    try {
+      recorder = new MediaRecorder(active.stream, {
+        mimeType: active.mimeType,
+        audioBitsPerSecond: 24_000,
+      });
+    } catch {
+      recorder = new MediaRecorder(active.stream, { mimeType: active.mimeType });
+    }
     active.recorder = recorder;
 
     recorder.ondataavailable = (e) => {
       if (active.stopped || active.interrupted) return;
-      if (e.data.size > 0) {
-        active.sliceChunks.push(e.data);
-        if (active.sliceChunks.length > WINDOW_SLICES) active.sliceChunks.shift();
-        if (active.sliceChunks.length >= 1) {
-          const blob = new Blob(active.sliceChunks, { type: active.mimeType });
-          if (blob.size > 200) {
-            const p = this.sendSegment(active, blob).catch(() => {});
-            active.pendingSegments.push(p);
-          }
-        }
+      if (e.data.size <= 0) return;
+      active.sliceChunks.push(e.data);
+      if (active.sliceChunks.length > WINDOW_SLICES) active.sliceChunks.shift();
+      // أثناء الكلام فقط — تجنّب إرسال صمت (كمون فارغ)
+      if (active.speaking || active.sliceChunks.length >= WINDOW_SLICES) {
+        this.flushWindow(active, false);
       }
     };
 
     recorder.onstop = () => {
       if (!active.stopped && !active.interrupted) {
-        // إعادة تشغيل بعد توقف غير متوقع
         try { this.startContinuousRecorder(sessionId, active); } catch { /* ignore */ }
       }
     };
@@ -234,15 +272,55 @@ export class ServerQuranASRProvider implements QuranASRProvider {
     try {
       recorder.start(SLICE_MS);
     } catch {
-      // بعض المتصفحات ترفض timeslice — نسقط لحلقة مقاطع منفصلة
       this.fallbackSegmentLoop(sessionId, active);
+    }
+  }
+
+  private flushWindow(active: Active, force: boolean) {
+    if (active.sliceChunks.length === 0) return;
+    if (!force && !active.speaking && active.sliceChunks.length < WINDOW_SLICES) return;
+    const blob = new Blob(active.sliceChunks, { type: active.mimeType });
+    if (blob.size < MIN_BLOB_BYTES) return;
+    this.enqueueSegment(active, blob);
+  }
+
+  private enqueueSegment(active: Active, blob: Blob) {
+    if (active.queue.length >= MAX_QUEUE) active.queue.shift();
+    active.queue.push({ blob, enqueuedAt: Date.now(), retries: 0 });
+    if (active.inFlight >= MAX_IN_FLIGHT) {
+      this.emitStatus(active, "queued");
+      return;
+    }
+    void this.drainQueue(active);
+  }
+
+  private async drainQueue(active: Active): Promise<void> {
+    while (!active.stopped && active.queue.length > 0 && active.inFlight < MAX_IN_FLIGHT) {
+      const item = active.queue.shift()!;
+      active.inFlight += 1;
+      this.emitStatus(active, "matching");
+      const p = this.sendSegment(active, item.blob)
+        .catch(() => {
+          if (item.retries < 2 && !active.stopped) {
+            item.retries += 1;
+            active.queue.unshift(item);
+            this.emitStatus(active, "reconnecting");
+          }
+        })
+        .finally(() => {
+          active.inFlight -= 1;
+          if (active.queue.length > 0) void this.drainQueue(active);
+          else if (!active.speaking) this.emitStatus(active, "listening");
+          else this.emitStatus(active, "speech");
+        });
+      active.pendingSegments.push(p);
     }
   }
 
   private fallbackSegmentLoop(sessionId: string, active: Active) {
     if (active.stopped) return;
     if (active.interrupted) {
-      setTimeout(() => this.fallbackSegmentLoop(sessionId, active), 500);
+      setTimeout(() => this.fallbackSegmentLoop(sessionId, active), 400);
       return;
     }
     const recorder = new MediaRecorder(active.stream, { mimeType: active.mimeType });
@@ -251,8 +329,8 @@ export class ServerQuranASRProvider implements QuranASRProvider {
     recorder.ondataavailable = (e) => { if (e.data.size > 0) chunks.push(e.data); };
     recorder.onstop = () => {
       const blob = new Blob(chunks, { type: active.mimeType });
-      if (blob.size > 200 && !active.interrupted) {
-        active.pendingSegments.push(this.sendSegment(active, blob).catch(() => {}));
+      if (blob.size > MIN_BLOB_BYTES && !active.interrupted && active.speaking) {
+        this.enqueueSegment(active, blob);
       }
       if (!active.stopped) setTimeout(() => this.fallbackSegmentLoop(sessionId, active), 0);
     };
@@ -267,8 +345,9 @@ export class ServerQuranASRProvider implements QuranASRProvider {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ audioBase64, mimeType: active.mimeType }),
+      signal: AbortSignal.timeout(12_000),
     });
-    if (!res.ok) return;
+    if (!res.ok) throw new Error(`transcribe ${res.status}`);
     const data = await res.json();
     const text = typeof data?.text === "string" ? data.text : "";
     const apiWords: ApiTimedWord[] = Array.isArray(data?.words) ? data.words : [];
@@ -289,7 +368,7 @@ export class ServerQuranASRProvider implements QuranASRProvider {
     active.words.push(...fresh);
     const now = Date.now();
     for (let i = 0; i < fresh.length; i++) {
-      const w = fresh[i];
+      const w = fresh[i]!;
       const meta = apiWords[skip + i];
       const hasTs =
         typeof meta?.start === "number" &&
@@ -314,12 +393,19 @@ export class ServerQuranASRProvider implements QuranASRProvider {
     return () => active.listeners.delete(callback);
   }
 
-  /** مؤشر مستوى الصوت الحي (0–1) لموجة الواجهة. */
   onAudioLevel(session: ASRSession, callback: (level01: number) => void): () => void {
     const active = this.sessions.get(session.id);
     if (!active) return () => {};
     active.levelListeners.add(callback);
     return () => active.levelListeners.delete(callback);
+  }
+
+  onPipelineStatus(session: ASRSession, callback: (status: AsrPipelineStatus) => void): () => void {
+    const active = this.sessions.get(session.id);
+    if (!active) return () => {};
+    active.statusListeners.add(callback);
+    callback(active.lastStatus);
+    return () => active.statusListeners.delete(callback);
   }
 
   async endSession(session: ASRSession): Promise<FinalResult> {
@@ -328,6 +414,7 @@ export class ServerQuranASRProvider implements QuranASRProvider {
     if (!active) return { fullText: "", words: [] };
 
     active.stopped = true;
+    this.flushWindow(active, true);
     try {
       active.levelCancel?.();
     } catch {
@@ -340,7 +427,9 @@ export class ServerQuranASRProvider implements QuranASRProvider {
     for (const track of active.stream.getTracks()) track.stop();
     try { await active.audioCtx?.close(); } catch { /* ignore */ }
 
+    // انتظر الطلبات الجارية ثم صفّر الطابور
     await Promise.all(active.pendingSegments).catch(() => {});
+    active.queue.length = 0;
     return {
       fullText: active.words.join(" "),
       words: active.words,

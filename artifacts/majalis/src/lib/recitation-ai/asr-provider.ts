@@ -51,6 +51,15 @@ export type FinalResult = {
   timedWords?: TimedWordResult[];
 };
 
+/** حالة أنبوبة البث الحي — مؤشرات دقيقة بلا تجميد الشاشة */
+export type AsrPipelineStatus =
+  | "idle"
+  | "listening"
+  | "speech"
+  | "matching"
+  | "queued"
+  | "reconnecting";
+
 export type ASRProviderError = {
   code:
     | "NOT_CONFIGURED"
@@ -94,5 +103,7 @@ export interface QuranASRProvider {
   onPartialWord?(session: ASRSession, callback: (word: string, atMs: number, confidence?: number) => void): () => void;
   /** مؤشر مستوى صوت حي اختياري (0–1) — للواجهة فقط. */
   onAudioLevel?(session: ASRSession, callback: (level01: number) => void): () => void;
+  /** حالة الأنبوبة (استماع / مطابقة / طابور) — اختياري. */
+  onPipelineStatus?(session: ASRSession, callback: (status: AsrPipelineStatus) => void): () => void;
   endSession(session: ASRSession): Promise<FinalResult>;
 }
