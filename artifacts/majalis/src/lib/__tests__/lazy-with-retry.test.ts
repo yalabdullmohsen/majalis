@@ -30,6 +30,8 @@ assert.equal(isChunkLoadError(new Error("Importing a module script failed.")), t
 assert.equal(isChunkLoadError(new Error("TypeError: Importing a module script failed")), true);
 assert.equal(isChunkLoadError(new Error("Failed to fetch dynamically imported module")), true);
 assert.equal(isChunkLoadError(new Error("Loading chunk 5 failed")), true);
+assert.equal(isChunkLoadError(new Error("Loading CSS chunk 3 failed")), true);
+assert.equal(isChunkLoadError(Object.assign(new Error("fail"), { name: "ChunkLoadError" })), true);
 assert.equal(isChunkLoadError(new Error("random")), false);
 
 store.clear();
@@ -73,6 +75,7 @@ const boundary = readFileSync(join(root, "components/ErrorBoundary.tsx"), "utf8"
 assert.match(boundary, /SectionErrorBoundary/);
 assert.match(boundary, /isChunkLoadError/);
 assert.match(boundary, /remountKey/);
-assert.match(boundary, /consumeChunkReloadAllowance/);
+assert.match(boundary, /tryRecoverFromStaleChunk/);
+assert.match(boundary, /hardRecoverStaleDeploy/);
 
 console.log("lazy-with-retry.test.ts: ok");

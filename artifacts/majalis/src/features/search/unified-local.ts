@@ -43,9 +43,13 @@ export function clearUnifiedSearchIndexCache(): void {
 
 export async function loadUnifiedSearchIndex(): Promise<IndexPayload> {
   if (cache) return cache;
-  const res = await fetch("/data/search/index.json", { credentials: "omit" });
-  if (!res.ok) throw new Error(`search index HTTP ${res.status}`);
-  cache = (await res.json()) as IndexPayload;
+  const { fetchStaticJsonCached } = await import("@/lib/static-json-cache");
+  const empty: IndexPayload = { version: 0, docs: [] };
+  const json = await fetchStaticJsonCached<IndexPayload>("/data/search/index.json", empty);
+  if (!Array.isArray(json.docs) || json.docs.length === 0) {
+    throw new Error("search index unavailable");
+  }
+  cache = json;
   return cache;
 }
 

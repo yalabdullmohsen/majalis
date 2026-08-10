@@ -2,6 +2,7 @@ import { createRoot } from "react-dom/client";
 import { QueryClientProvider } from "@tanstack/react-query";
 import App from "./App";
 import { ErrorBoundary } from "./components/ErrorBoundary";
+import { ChunkRecoveryToast } from "./components/ChunkRecoveryToast";
 import { applyFontPreference, readFontPreference } from "./lib/font-preference";
 import { readThemePreference, resolveTheme } from "./lib/theme-preference";
 import { initClientErrorReporting } from "./lib/error-report";
@@ -26,6 +27,7 @@ import "./styles/brand-v4.css";
 import "./index.css";
 import "./styles/design-system.css";
 import "./styles/components/instant-interaction.css";
+import "./styles/components/chunk-recovery-toast.css";
 import "./styles/final-release.css";
 import "./styles/brand-v4-components.css";
 import "./styles/brand-v4-contrast-fixes.css";
@@ -90,11 +92,14 @@ async function mount() {
 
   // Render immediately — do not block the shell on Supabase bootstrap.
   createRoot(document.getElementById("root")!).render(
-    <ErrorBoundary>
-      <QueryClientProvider client={queryClient}>
-        <App />
-      </QueryClientProvider>
-    </ErrorBoundary>,
+    <>
+      <ChunkRecoveryToast />
+      <ErrorBoundary>
+        <QueryClientProvider client={queryClient}>
+          <App />
+        </QueryClientProvider>
+      </ErrorBoundary>
+    </>,
   );
 
   // أخفِ شاشة الدخول عند أول عرض ناجح للمسار (سقف 2.5s)

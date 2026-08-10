@@ -1,26 +1,47 @@
 import { Component, type ErrorInfo, type ReactNode } from "react";
 import { buildErrorReport, copyErrorId, createErrorId, logClientError } from "@/lib/error-report";
 import { CONTACT_EMAIL } from "@/lib/site-config";
-import { safeLocationReload } from "@/lib/safe-reload";
 import {
-  clearChunkReloadGuard,
-  consumeChunkReloadAllowance,
+  hardRecoverStaleDeploy,
   isChunkLoadError,
-} from "@/lib/lazy-with-retry";
+  isChunkRecoveryInFlight,
+  tryRecoverFromStaleChunk,
+} from "@/lib/chunk-recovery";
+import { clearChunkReloadGuard } from "@/lib/lazy-with-retry";
 import "@/styles/components/error-boundary.css";
 
 type Props = { children: ReactNode };
-type State = { error: Error | null; copied: boolean; errorId: string; componentStack: string | null };
+type State = {
+  error: Error | null;
+  copied: boolean;
+  errorId: string;
+  componentStack: string | null;
+  /** استعادة chunk جارية — لا تُعرض شاشة الخطأ الصلبة */
+  recovering: boolean;
+};
 
 function userFacingBody(): string {
   return "حدث خلل أثناء تحميل هذا القسم. يمكنك إعادة المحاولة أو العودة للرئيسية.";
 }
 
 export class ErrorBoundary extends Component<Props, State> {
-  state: State = { error: null, copied: false, errorId: "", componentStack: null };
+  state: State = {
+    error: null,
+    copied: false,
+    errorId: "",
+    componentStack: null,
+    recovering: false,
+  };
 
   static getDerivedStateFromError(error: Error): Partial<State> {
-    return { error, copied: false, errorId: createErrorId("MJL"), componentStack: null };
+    // نقي: واجهة استعادة تفاؤلية لأخطاء chunk؛ الحسم في componentDidCatch.
+    return {
+      error,
+      copied: false,
+      errorId: createErrorId("MJL"),
+      componentStack: null,
+      recovering: isChunkLoadError(error),
+    };
   }
 
   componentDidCatch(error: Error, info: ErrorInfo) {
@@ -35,14 +56,21 @@ export class ErrorBoundary extends Component<Props, State> {
       }),
     );
 
-    if (isChunkLoadError(error) && consumeChunkReloadAllowance()) {
-      safeLocationReload();
+    if (isChunkLoadError(error)) {
+      const started = tryRecoverFromStaleChunk("boundary-catch") || isChunkRecoveryInFlight();
+      if (!started) this.setState({ recovering: false });
     }
   }
 
   reset = () => {
     clearChunkReloadGuard();
-    this.setState({ error: null, copied: false, errorId: "", componentStack: null });
+    this.setState({
+      error: null,
+      copied: false,
+      errorId: "",
+      componentStack: null,
+      recovering: false,
+    });
   };
 
   goHome = () => {
@@ -64,26 +92,47 @@ export class ErrorBoundary extends Component<Props, State> {
     this.setState({ copied: true });
   };
 
+  hardRecover = () => {
+    void hardRecoverStaleDeploy();
+  };
+
   render() {
     if (this.state.error) {
       const isDev = import.meta.env?.DEV;
       const chunkError = isChunkLoadError(this.state.error);
+
+      if (this.state.recovering || (chunkError && isChunkRecoveryInFlight())) {
+        return (
+          <div className="error-boundary-page error-boundary-page--recovering" role="status" aria-live="polite" dir="rtl">
+            <h1 className="error-boundary-page__title">جاري تحديث العرض</h1>
+            <p className="error-boundary-page__body">
+              تم تحديث المنصة، جاري تحسين العرض…
+            </p>
+          </div>
+        );
+      }
 
       return (
         <div role="alert" className="error-boundary-page">
           <h1 className="error-boundary-page__title">تعذّر عرض هذه الصفحة</h1>
           <p className="error-boundary-page__body">
             {chunkError
-              ? "تعذّر تحميل ملفات الصفحة بعد تحديث المنصة. حدّث المتصفح أو اضغط إعادة المحاولة."
+              ? "تعذّر تحميل ملفات الصفحة بعد تحديث المنصة. اضغط «تحديث المنصة» لمسح الكاش وإعادة التحميل."
               : userFacingBody()}
           </p>
           <p className="error-boundary-page__id">
             رقم التتبع: <code>{this.state.errorId}</code>
           </p>
           <div className="error-boundary-page__actions">
-            <button type="button" onClick={this.reset} className="error-boundary-btn error-boundary-btn--primary">
-              إعادة المحاولة
-            </button>
+            {chunkError ? (
+              <button type="button" onClick={this.hardRecover} className="error-boundary-btn error-boundary-btn--primary">
+                تحديث المنصة
+              </button>
+            ) : (
+              <button type="button" onClick={this.reset} className="error-boundary-btn error-boundary-btn--primary">
+                إعادة المحاولة
+              </button>
+            )}
             <button type="button" onClick={this.goHome} className="error-boundary-btn error-boundary-btn--secondary">
               العودة للرئيسية
             </button>
@@ -125,17 +174,21 @@ type SectionBoundaryState = {
   errorId: string;
   /** Bumps on retry so failed React.lazy factories are not reused. */
   remountKey: number;
-  autoReloadTried: boolean;
+  recovering: boolean;
 };
 
 /**
  * Lazy-section boundary: one chunk reload max, then Arabic retry that remounts children.
  */
 export class SectionErrorBoundary extends Component<SectionBoundaryProps, SectionBoundaryState> {
-  state: SectionBoundaryState = { error: null, errorId: "", remountKey: 0, autoReloadTried: false };
+  state: SectionBoundaryState = { error: null, errorId: "", remountKey: 0, recovering: false };
 
   static getDerivedStateFromError(error: Error): Partial<SectionBoundaryState> {
-    return { error, errorId: createErrorId("SEC") };
+    return {
+      error,
+      errorId: createErrorId("SEC"),
+      recovering: isChunkLoadError(error),
+    };
   }
 
   componentDidCatch(error: Error, info: ErrorInfo) {
@@ -148,9 +201,10 @@ export class SectionErrorBoundary extends Component<SectionBoundaryProps, Sectio
       }),
     );
 
-    if (isChunkLoadError(error) && !this.state.autoReloadTried && consumeChunkReloadAllowance()) {
-      this.setState({ autoReloadTried: true });
-      safeLocationReload();
+    if (isChunkLoadError(error)) {
+      const started =
+        tryRecoverFromStaleChunk(`section:${this.props.name}`) || isChunkRecoveryInFlight();
+      if (!started) this.setState({ recovering: false });
     }
   }
 
@@ -159,35 +213,38 @@ export class SectionErrorBoundary extends Component<SectionBoundaryProps, Sectio
       error: null,
       errorId: "",
       remountKey: s.remountKey + 1,
-      autoReloadTried: s.autoReloadTried,
+      recovering: false,
     }));
   };
 
-  hardReload = () => {
-    if (consumeChunkReloadAllowance()) {
-      safeLocationReload();
-      return;
-    }
-    this.reset();
+  hardRecover = () => {
+    void hardRecoverStaleDeploy();
   };
 
   render() {
     if (this.state.error) {
       const chunkError = isChunkLoadError(this.state.error);
+      if (this.state.recovering || (chunkError && isChunkRecoveryInFlight())) {
+        return (
+          <div className="adv-error-state adv-error-state--section" role="status" aria-live="polite" dir="rtl">
+            <p className="adv-error-state__msg">تم تحديث المنصة، جاري تحسين العرض…</p>
+          </div>
+        );
+      }
       return (
         <div className="adv-error-state adv-error-state--section" role="alert" aria-live="assertive" dir="rtl">
           <p className="adv-error-state__msg">
             {chunkError
-              ? `تعذّر تحميل قسم «${this.props.name}» بعد تحديث المنصة. أعد المحاولة مرة واحدة.`
+              ? `تعذّر تحميل قسم «${this.props.name}» بعد تحديث المنصة. اضغط لتحديث المنصة.`
               : `تعذّر عرض قسم «${this.props.name}». يمكنك إعادة المحاولة.`}
           </p>
           <button
             type="button"
             className="adv-error-state__retry"
-            onClick={chunkError ? this.hardReload : this.reset}
-            aria-label="إعادة المحاولة"
+            onClick={chunkError ? this.hardRecover : this.reset}
+            aria-label={chunkError ? "تحديث المنصة" : "إعادة المحاولة"}
           >
-            إعادة المحاولة
+            {chunkError ? "تحديث المنصة" : "إعادة المحاولة"}
           </button>
         </div>
       );

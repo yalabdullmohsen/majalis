@@ -1,21 +1,24 @@
 import { lazy, type ComponentType, type LazyExoticComponent } from "react";
 import { PAGE_LOAD_TIMEOUT_MS } from "@/lib/request-manager";
-import { safeLocationReload } from "@/lib/safe-reload";
 
 /** Unified session key — shared with ErrorBoundary / SectionErrorBoundary. */
 export const CHUNK_RELOAD_KEY = "majalis-chunk-reload";
 
 export function isChunkLoadError(error: unknown): boolean {
   const message = error instanceof Error ? error.message : String(error);
+  const name = error instanceof Error ? error.name : "";
   const lower = message.toLowerCase();
+  const nameLower = name.toLowerCase();
   return (
+    nameLower === "chunkloaderror" ||
     lower.includes("failed to fetch dynamically imported module") ||
     lower.includes("importing a module script failed") ||
     lower.includes("is not a valid javascript mime type") ||
     lower.includes("error loading dynamically imported module") ||
+    lower.includes("loading css chunk") ||
     lower.includes("loading chunk") ||
     lower.includes("chunkloaderror") ||
-    /\/assets\/[^?\s]+\.js/i.test(message)
+    /\/assets\/[^?\s]+\.(js|mjs|css)/i.test(message)
   );
 }
 
@@ -58,8 +61,9 @@ export function lazyWithRetry<T extends ComponentType<unknown>>(
       return mod;
     } catch (error) {
       if (typeof window !== "undefined" && isChunkLoadError(error)) {
-        if (consumeChunkReloadAllowance(label || "1")) {
-          safeLocationReload();
+        // استيراد ديناميكي لكسر دورة الاعتماد مع chunk-recovery
+        const { tryRecoverFromStaleChunk } = await import("@/lib/chunk-recovery");
+        if (tryRecoverFromStaleChunk(label || "1")) {
           await new Promise<void>((resolve) => {
             window.setTimeout(resolve, PAGE_LOAD_TIMEOUT_MS);
           });

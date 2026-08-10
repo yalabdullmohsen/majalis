@@ -65,12 +65,12 @@ let cache: QuranPerson[] | null = null;
 
 export async function loadQuranPeople(): Promise<QuranPerson[]> {
   if (cache) return cache;
-  const res = await fetch("/data/quran-people/people.json", { credentials: "omit" });
-  if (!res.ok) {
-    cache = [];
-    return cache;
-  }
-  const json = (await res.json()) as PeopleCatalog;
+  const { fetchStaticJsonCached } = await import("@/lib/static-json-cache");
+  const json = await fetchStaticJsonCached<PeopleCatalog>(
+    "/data/quran-people/people.json",
+    { version: 0, updatedAt: "", people: [] },
+    { credentials: "omit" },
+  );
   cache = (json.people ?? []).filter((p) => p.status === "published");
   return cache;
 }
