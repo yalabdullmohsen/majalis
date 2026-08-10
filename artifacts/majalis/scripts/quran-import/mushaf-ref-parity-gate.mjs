@@ -186,10 +186,10 @@ async function main() {
         });
       }
       if (opening && r.bannerTopPct != null) {
-        if (r.bannerTopPct < 8 || r.bannerTopPct > 22) {
+        if (r.bannerTopPct < 2 || r.bannerTopPct > 14) {
           failures.push({
             page: n,
-            reason: `أعلى الشارة ${r.bannerTopPct.toFixed(1)}% خارج 8–22% (افتتاح)`,
+            reason: `أعلى الشارة ${r.bannerTopPct.toFixed(1)}% خارج 2–14% (افتتاح/ضلع علوي)`,
           });
         }
       }

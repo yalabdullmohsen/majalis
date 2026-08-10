@@ -1,6 +1,6 @@
 /**
- * إطار زخرفي لصفحتي الفاتحة/البقرة الأولى — يحوّل الفراغ إلى مساحة مقصودة.
- * نفس لغة لفّات الشارة بمقاس أصغر — بلا وسم pattern مكرر.
+ * إطار زخرفي لصفحتي الفاتحة/البقرة الأولى.
+ * أضلاع جانبية مستقيمة متناظرة — بلا تموجات.
  */
 type Props = {
   className?: string;
@@ -45,45 +45,42 @@ function CornerRose({ cx, cy, r }: { cx: number; cy: number; r: number }) {
   );
 }
 
-function SideScroll({
-  x,
-  y0,
-  y1,
-  dir,
-}: {
-  x: number;
-  y0: number;
-  y1: number;
-  dir: 1 | -1;
-}) {
-  const h = Math.abs(y1 - y0);
+/** زخرفة جانبية مستقيمة (خط رأسي + عقد صغيرة) — بلا انحناء */
+function SideRail({ x, y0, y1 }: { x: number; y0: number; y1: number }) {
   const mid = (y0 + y1) / 2;
-  const amp = 5.5 * dir;
-  const d = [
-    `M ${x.toFixed(2)} ${y0.toFixed(2)}`,
-    `C ${(x + amp).toFixed(2)} ${(y0 + h * 0.18).toFixed(2)},`,
-    `${(x - amp).toFixed(2)} ${(y0 + h * 0.36).toFixed(2)},`,
-    `${x.toFixed(2)} ${mid.toFixed(2)}`,
-    `C ${(x + amp).toFixed(2)} ${(y0 + h * 0.64).toFixed(2)},`,
-    `${(x - amp).toFixed(2)} ${(y0 + h * 0.82).toFixed(2)},`,
-    `${x.toFixed(2)} ${y1.toFixed(2)}`,
-  ].join(" ");
+  const q1 = y0 + (y1 - y0) * 0.28;
+  const q2 = y0 + (y1 - y0) * 0.72;
   return (
-    <path
-      data-opening-part="side-scroll"
-      d={d}
-      fill="none"
-      stroke="var(--color-mushaf-gold-soft, #C9B07A)"
-      strokeWidth="1.15"
-      strokeLinecap="round"
-    />
+    <g data-opening-part="side-rail">
+      <line
+        x1={x}
+        y1={y0}
+        x2={x}
+        y2={y1}
+        stroke="var(--color-mushaf-gold-strong, #A67C3D)"
+        strokeWidth="1.25"
+        strokeLinecap="square"
+      />
+      {[q1, mid, q2].map((cy, i) => (
+        <circle
+          key={i}
+          cx={x}
+          cy={cy}
+          r={1.35}
+          fill="var(--color-mushaf-ornament-mid, #EDE0C4)"
+          stroke="var(--color-mushaf-gold-strong, #A67C3D)"
+          strokeWidth="0.85"
+        />
+      ))}
+    </g>
   );
 }
 
 export function OpeningPageFrame({ className }: Props) {
   const W = 200;
   const H = 280;
-  const m = 8; /* هامش داخلي للـ viewBox ≈١٢px بصريًا */
+  /* هامش viewBox ضيّق حتى يطابق الضلع الخارجي حافة الحاوية (٨٪→٩٢٪) */
+  const m = 2;
   const outer = { x: m, y: m, w: W - m * 2, h: H - m * 2 };
   const gap = 5;
   const inner = {
@@ -108,6 +105,7 @@ export function OpeningPageFrame({ className }: Props) {
       aria-hidden="true"
       data-opening-frame="1"
       data-frame-span-pct="84"
+      data-side-rails="straight"
     >
       <svg
         className="mf2-opening-frame__svg"
@@ -135,13 +133,8 @@ export function OpeningPageFrame({ className }: Props) {
           stroke="var(--color-mushaf-gold-strong, #A67C3D)"
           strokeWidth="1"
         />
-        <SideScroll x={inner.x + 4} y0={inner.y + 18} y1={inner.y + inner.h - 18} dir={1} />
-        <SideScroll
-          x={inner.x + inner.w - 4}
-          y0={inner.y + 18}
-          y1={inner.y + inner.h - 18}
-          dir={-1}
-        />
+        <SideRail x={inner.x + 3.5} y0={inner.y + 16} y1={inner.y + inner.h - 16} />
+        <SideRail x={inner.x + inner.w - 3.5} y0={inner.y + 16} y1={inner.y + inner.h - 16} />
         {corners.map(([cx, cy], i) => (
           <CornerRose key={i} cx={cx} cy={cy} r={roseR} />
         ))}

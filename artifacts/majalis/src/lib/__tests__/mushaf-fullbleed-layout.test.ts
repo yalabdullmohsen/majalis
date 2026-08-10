@@ -127,7 +127,7 @@ assert.ok(
   "البسملة الافتتاحية بخط رقعة/ثلث (Amiri) أخف من الآيات",
 );
 assert.equal(bismillah[0].includes("font-family: inherit"), false, "البسملة الافتتاحية لا ترث qpc-page");
-assert.match(bismillah[0], /0\.82em/, "بسملة أخف من أسطر الآيات");
+assert.match(bismillah[0], /font-size:\s*1em/, "بسملة بمقاس سطر الآية");
 assert.match(bismillah[0], /optimizeLegibility/);
 
 console.log("mushaf-fullbleed-layout.test.ts: ok");

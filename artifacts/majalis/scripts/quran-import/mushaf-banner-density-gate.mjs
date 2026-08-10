@@ -260,11 +260,11 @@ async function main() {
           }
         }
         if ((n === 1 || n === 2) && raw.bannerTopPct != null) {
-          /* ص١–٢: داخل الإطار (٨٪→٩٢٪) — أعلى الشارة ≈١٠٪ بعد translateY(-50%) */
-          if (raw.bannerTopPct < 8 || raw.bannerTopPct > 22) {
+          /* ص١–٢: الشارة على الضلع العلوي للإطار (≈٨٪) → أعلاها ≈٤٪ بعد translateY */
+          if (raw.bannerTopPct < 2 || raw.bannerTopPct > 14) {
             failures.push({
               page: n,
-              reason: `أعلى الشارة ${raw.bannerTopPct.toFixed(1)}% خارج 8–22% (افتتاح)`,
+              reason: `أعلى الشارة ${raw.bannerTopPct.toFixed(1)}% خارج 2–14% (افتتاح/ضلع علوي)`,
             });
           }
         }

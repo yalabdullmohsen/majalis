@@ -257,6 +257,7 @@
     "test:mushaf-ref-parity": "node scripts/quran-import/mushaf-ref-parity-gate.mjs",
     "test:mushaf-banner-density": "node scripts/quran-import/mushaf-banner-density-gate.mjs",
     "test:mushaf-ink-clip": "node scripts/quran-import/mushaf-ink-clip-gate.mjs",
+    "test:mushaf-opening-frame": "node scripts/quran-import/mushaf-opening-frame-gate.mjs",
     "measure:mushaf-311-baseline": "node scripts/quran-import/measure-mushaf-311-baseline.mjs"
   },
   "devDependencies": {

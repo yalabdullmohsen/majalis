@@ -14,9 +14,15 @@ import {
   MUSHAF_LAYOUT_BASELINE,
 } from "@/features/mushaf/config";
 
-/** نطاق المحتوى داخل إطار ص١–٢ (٪ من ارتفاع الكتلة) — أوسع من الشبكة العادية */
-const OPENING_CONTENT_TOP_PCT = 14;
-const OPENING_CONTENT_BOT_PCT = 86;
+/** نطاق الإطار والمحتوى لصفحتي الافتتاح (٪ من ارتفاع الكتلة) */
+const OPENING_FRAME_TOP_PCT = 8;
+const OPENING_FRAME_BOT_PCT = 92;
+/** أول محتوى بعد الضلع العلوي ≤٣٪ من ارتفاع الإطار */
+const OPENING_INNER_TOP_PCT =
+  OPENING_FRAME_TOP_PCT + (OPENING_FRAME_BOT_PCT - OPENING_FRAME_TOP_PCT) * 0.03;
+/** هامش سفلي ≈٢٤px على شاشة مرجعية (~٣٫٥٪) + فراغ للإطار */
+const OPENING_INNER_BOT_PCT = OPENING_FRAME_BOT_PCT - 4.2;
+const OPENING_SIDE_PAD_PX = 20;
 
 /** يُجمِّع كلمات سطر متتالية بنفس verseKey في عنقود واحد — للوضع التفاعلي بلا طبقة إحداثيات. */
 export function groupWordsByAyah(words: QpcWord[]): QpcWord[][] {
@@ -231,16 +237,22 @@ export function MushafPageV2({
 
   /** خانات المحتوى المستخدمة — لإعادة توزيع ص١–٢ داخل الإطار بتباعد أوسع */
   const openingSlots = useMemo(() => {
-    if (!layout || (layout.pageNumber !== 1 && layout.pageNumber !== 2)) return [] as number[];
-    const slots = new Set<number>();
+    if (!layout || (layout.pageNumber !== 1 && layout.pageNumber !== 2)) {
+      return { all: [] as number[], banners: [] as number[], body: [] as number[] };
+    }
+    const banners = new Set<number>();
+    const all = new Set<number>();
     for (const row of layout.rows) {
-      if (row.kind === "line") slots.add(row.gridSlot);
+      if (row.kind === "line") all.add(row.gridSlot);
       else {
-        slots.add(row.bannerSlot);
-        if (row.basmalaSlot != null) slots.add(row.basmalaSlot);
+        banners.add(row.bannerSlot);
+        all.add(row.bannerSlot);
+        if (row.basmalaSlot != null) all.add(row.basmalaSlot);
       }
     }
-    return [...slots].sort((a, b) => a - b);
+    const allArr = [...all].sort((a, b) => a - b);
+    const body = allArr.filter((s) => !banners.has(s));
+    return { all: allArr, banners: [...banners].sort((a, b) => a - b), body };
   }, [layout]);
 
   /**
@@ -274,7 +286,7 @@ export function MushafPageV2({
     const slotHPct = MUSHAF_GRID.slotHeightPct;
 
     const measure = () => {
-      const availableWidth = container.clientWidth;
+      let availableWidth = container.clientWidth;
       if (availableWidth <= 0) return false;
 
       const sizingEls = collectSizingEls(ayahLineRefs.current);
@@ -304,6 +316,16 @@ export function MushafPageV2({
         container.style.height = `${blockH.toFixed(2)}px`;
       } else {
         container.style.height = "100%";
+      }
+
+      /* ص١–٢: عرض الملاءمة = داخل الإطار − ٢٠px من كل جهة */
+      if (isOpening) {
+        const frameEl = container.querySelector<HTMLElement>("[data-opening-frame]");
+        const frameW = frameEl?.getBoundingClientRect().width ?? availableWidth;
+        availableWidth = Math.max(80, frameW - OPENING_SIDE_PAD_PX * 2 - 14);
+        container.style.setProperty("--mf2-opening-line-w", `${availableWidth.toFixed(1)}px`);
+      } else {
+        container.style.removeProperty("--mf2-opening-line-w");
       }
 
       const widestAtRef = measureWidest(sizingEls, REF_PX);
@@ -338,24 +360,24 @@ export function MushafPageV2({
         `${(container.clientHeight * (slotHPct / 100)).toFixed(2)}px`,
       );
 
-      if (!isOpening) {
-        for (const [ln, el] of ayahLineRefs.current) {
-          if (!el) continue;
-          if (noStretchLines.has(ln)) {
-            el.style.removeProperty("--mf2-line-sx");
-            continue;
-          }
-          const contentW = measureLineContentWidth(el);
-          if (contentW <= 0) {
-            el.style.removeProperty("--mf2-line-sx");
-            continue;
-          }
-          const fill = contentW / availableWidth;
-          if (fill < MIN_LINE_FILL) {
-            el.style.setProperty("--mf2-line-sx", String(1 / fill));
-          } else {
-            el.style.removeProperty("--mf2-line-sx");
-          }
+      /* ملاءمة عرض الأسطر — ص١–٢ أيضًا (البسملة تُستثنى لأنها ليست ayah line) */
+      for (const [ln, el] of ayahLineRefs.current) {
+        if (!el) continue;
+        /* في الصفحات العادية: آخر سطر سورة لا يُمدّ؛ في الافتتاح يُمدّ الكل عدا البسملة */
+        if (!isOpening && noStretchLines.has(ln)) {
+          el.style.removeProperty("--mf2-line-sx");
+          continue;
+        }
+        const contentW = measureLineContentWidth(el);
+        if (contentW <= 0) {
+          el.style.removeProperty("--mf2-line-sx");
+          continue;
+        }
+        const fill = contentW / availableWidth;
+        if (fill < MIN_LINE_FILL) {
+          el.style.setProperty("--mf2-line-sx", String(1 / fill));
+        } else {
+          el.style.removeProperty("--mf2-line-sx");
         }
       }
 
@@ -449,16 +471,23 @@ export function MushafPageV2({
   const slotStyle = (gridSlot: number): CSSProperties => {
     let baseline: number;
     let h: number;
-    if (isOpeningPage && openingSlots.length > 0) {
-      const idx = Math.max(0, openingSlots.indexOf(gridSlot));
-      const n = openingSlots.length;
-      const band = OPENING_CONTENT_BOT_PCT - OPENING_CONTENT_TOP_PCT;
-      /* تباعد متساوٍ داخل النطاق ≈١٫٤–١٫٦× الشبكة العادية */
-      baseline =
-        n === 1
-          ? (OPENING_CONTENT_TOP_PCT + OPENING_CONTENT_BOT_PCT) / 2
-          : OPENING_CONTENT_TOP_PCT + (idx / (n - 1)) * band;
-      h = Math.min(11, Math.max(7.2, (band / Math.max(1, n - 1)) * 0.72));
+    if (isOpeningPage && openingSlots.all.length > 0) {
+      const isBanner = openingSlots.banners.includes(gridSlot);
+      if (isBanner) {
+        /* الشارة على الضلع العلوي للإطار */
+        baseline = OPENING_FRAME_TOP_PCT;
+        h = 7.5;
+      } else {
+        const body = openingSlots.body;
+        const idx = Math.max(0, body.indexOf(gridSlot));
+        const n = body.length;
+        const top = OPENING_INNER_TOP_PCT + 3.2; /* مركز أول سطر بعد الهامش */
+        const bot = OPENING_INNER_BOT_PCT - 3.2;
+        const band = Math.max(8, bot - top);
+        baseline =
+          n <= 1 ? (top + bot) / 2 : top + (idx / (n - 1)) * band;
+        h = Math.min(10, Math.max(6.5, (band / Math.max(1, n - 1)) * 0.7));
+      }
     } else {
       const idx = Math.max(0, Math.min(MUSHAF_GRID.slotCount - 1, gridSlot - 1));
       baseline = MUSHAF_GRID.baselinesPct[idx] ?? ((idx + 0.5) / MUSHAF_GRID.slotCount) * 100;
